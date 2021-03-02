@@ -149,6 +149,7 @@ g.which_key_map = {
     d = 'diff',
     D = 'diff split',
     h = 'diffget',
+    i = 'init',
     k = 'diffget',
     l = 'log',
     e = 'push',
