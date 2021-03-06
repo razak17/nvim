@@ -1,6 +1,6 @@
 local vim = vim
 local g = vim.g
-local G = require "global"
+local G = require "core.global"
 
 -- Netrw
 -- Set map leader (needs to be set before mappings)

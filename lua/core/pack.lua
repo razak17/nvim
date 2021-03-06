@@ -1,7 +1,10 @@
-local G = require 'global'
+local G = require 'core.global'
 local packer = nil
+local packer_compiled = G.local_nvim .. 'site/plugin/packges.vim'
+local load_plugins = require 'utils.funcs'.plug_config
+local Packer = {}
 
-local function load_plugins()
+local function repos()
   return {
     { repo = 'christianchiarulli/nvcode-color-schemes.vim' },
     { repo = 'norcalli/nvim-colorizer.lua' },
@@ -56,59 +59,61 @@ local function load_plugins()
   }
 end
 
-local function init()
-  if packer == nil then
+function Packer:load_packer()
+  if not packer then
     packer = require('packer')
-    packer.init({
-      compile_path = G.local_nvim .. 'site' .. G.path_sep .. 'plugin' .. G.path_sep .. 'packges.vim',
-      config = {
-        display = {
-          _open_fn = function(name)
-            local ok, float_win = pcall(function()
-              return require('plenary.window.float').percentage_range_window(0.8, 0.8)
-            end)
-
-            if not ok then
-              vim.cmd [[65vnew  [packer] ]]
-              return vim.api.nvim_get_current_win(), vim.api.nvim_get_current_buf()
-            end
-
-            local bufnr = float_win.buf
-            local win = float_win.win
-
-            vim.api.nvim_buf_set_name(bufnr, name)
-            vim.api.nvim_win_set_option(win, 'winblend', 10)
-
-            return win, bufnr
-          end
-        }
-      }
-    })
   end
+  packer.init({
+    compile_path = packer_compiled,
+    config = {
+      display = {
+        _open_fn = function(name)
+          local ok, float_win = pcall(function()
+            return require('plenary.window.float').percentage_range_window(0.8, 0.8)
+          end)
+
+          if not ok then
+            vim.cmd [[65vnew  [packer] ]]
+            return vim.api.nvim_get_current_win(), vim.api.nvim_get_current_buf()
+          end
+
+          local bufnr = float_win.buf
+          local win = float_win.win
+
+          vim.api.nvim_buf_set_name(bufnr, name)
+          vim.api.nvim_win_set_option(win, 'winblend', 10)
+
+          return win, bufnr
+        end
+      }
+    }
+  })
 
   local use = packer.use
   packer.reset()
 
   use {'wbthomason/packer.nvim', opt = true}
   use 'tpope/vim-surround'
+end
+
+local function init()
+  if packer == nil then
+    Packer:load_packer()
+  end
 
   if vim.fn.exists('g:vscode') == 0 then
-    for  _, item in ipairs(load_plugins()) do
-      require 'utils.funcs'.plug_config(use, item)
+    for  _, item in ipairs(repos()) do
+      load_plugins(use, item)
     end
   end
 end
 
-local plugins =
-  setmetatable(
-  {},
-  {
-    __index = function(_, key)
-      init()
-      return packer[key]
-    end
-  }
-)
+local plugins = setmetatable({}, {
+  __index = function(_, key)
+    init()
+    return packer[key]
+  end
+})
 
 return plugins
 

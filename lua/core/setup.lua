@@ -1,4 +1,4 @@
-local G = require "global"
+local G = require "core.global"
 local cmd, fn = vim.cmd, vim.fn
 
 local function createDirs()

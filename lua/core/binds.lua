@@ -159,6 +159,10 @@ if vim.fn.exists('g:vscode') == 0 then
   -- Plugins
   ------------------------------------------------------------------------------
 
+  -- Bufferline
+  nnoremap('<Leader>bb', ':BufferLineMovePrev<CR>')
+  nnoremap('<Leader>bn', ':BufferLineMoveNext<CR>')
+
   -- Packer
   nnoremap('<Leader>Pc', ':PlugCompile<CR>')
   nnoremap('<Leader>PC', ':PlugClean<CR>')
@@ -202,7 +206,7 @@ if vim.fn.exists('g:vscode') == 0 then
 
   -- Other remaps
   nnoremap('<Leader><CR>', ':so ~/.config/nvim/init.vim<CR>')
-  nnoremap('<Leader>,',    ':e ~/.config/nvim/lua/init.lua<CR>')
+  nnoremap('<Leader>,',    ':e ~/.config/nvim/lua/core/init.lua<CR>')
   nnoremap('<Leader>.',    ':e $MYVIMRC<CR>')
   nnoremap('<leader>ar',   ':call EmptyRegisters()<CR>')
   nnoremap('<Leader>Ic',   ':checkhealth<CR>')

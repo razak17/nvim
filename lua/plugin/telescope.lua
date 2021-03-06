@@ -37,7 +37,7 @@ require('telescope').setup({
     selection_strategy = "reset",
     sorting_strategy = "descending",
     layout_strategy = "horizontal",
-    file_ignore_patterns = {"target/*"},
+    file_ignore_patterns = {"target/*", "node_modules/*", "dist/*"},
     shorten_path = true,
     winblend = 0,
     width = 0.75,
@@ -59,6 +59,26 @@ require('telescope').setup({
 })
 
 require('telescope').load_extension('fzy_native')
+
+local M = {}
+M.search_dotfiles = function()
+    require("telescope.builtin").find_files({
+        prompt_title = "< VimRC >",
+        cwd = "$HOME/dots/.config/nvim",
+    })
+end
+
+M.git_branches = function()
+    require("telescope.builtin").git_branches({
+        attach_mappings = function(prompt_bufnr, map)
+            map('i', '<c-d>', actions.git_delete_branch)
+            map('n', '<c-d>', actions.git_delete_branch)
+            return true
+        end
+    })
+end
+
+-- return M
 
 -- Finder
 nnoremap('<Leader>ff', ':lua require("telescope.builtin").find_files()<CR>')

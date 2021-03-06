@@ -2,7 +2,7 @@ local devicons = require 'nvim-web-devicons'
 
 local gl = require('galaxyline')
 local gls = gl.section
-local colors = require 'aesth.colors'
+local colors = require 'modules.aesth.statusline.colors'
 gl.short_line_list = {'LuaTree','vista','dbui'}
 
 local buffer_not_empty = function()
@@ -15,7 +15,7 @@ end
 gls.left[1] = {
   ViMode = {
     provider = function()
-      local mode = require 'aesth.icons'
+      local mode = require 'modules.aesth.statusline.icons'
 
       local vimMode = mode[vim.fn.mode()]
 

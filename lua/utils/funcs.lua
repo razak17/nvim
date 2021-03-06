@@ -1,7 +1,7 @@
 local M = {}
 local vim = vim
 local api =  vim.api
-local G = require 'global'
+local G = require 'core.global'
 local HOME = G.home
 
 function _G.dump(...)
@@ -9,11 +9,9 @@ function _G.dump(...)
   print(unpack(objects))
 end
 
-function M.load_config(dir, plugin, stp)
-  if plugin and stp then
-    require(dir .. '.' .. plugin).setup()
-  elseif plugin then
-    require(dir .. '.' .. plugin)
+function M.load_config(dir, stp)
+  if stp then
+    require(dir).setup()
   else
     require(dir)
   end

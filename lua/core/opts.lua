@@ -1,5 +1,5 @@
 local vim = vim
-local G = require 'global'
+local G = require 'core.global'
 local scopes = {o = vim.o, b = vim.bo, w = vim.wo}
 
 local function opt(scope, key, value)

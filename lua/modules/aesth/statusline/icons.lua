@@ -1,4 +1,4 @@
-local colors = require 'aesth.colors'
+local colors = require 'modules.aesth.statusline.colors'
 
 -- indicator_ok = '',
 local icons_mode = {

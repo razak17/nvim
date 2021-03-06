@@ -53,8 +53,10 @@ g.which_key_map = {
     z = "force exit",
   },
   b = {
-    name = "+Find",
-    s = "word"
+    name = "+Buffer",
+    n = "move next",
+    b = "move previous",
+    s = "word",
   },
   c = {
     name = "+Command",

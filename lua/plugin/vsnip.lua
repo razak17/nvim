@@ -1,4 +1,4 @@
-local G = require "global"
+local G = require "core.global"
 local g =  vim.g
 local mappings = require('utils.map')
 local xmap, imap, smap, nnoremap = mappings.xmap, mappings.imap, mappings.smap, mappings.nnoremap

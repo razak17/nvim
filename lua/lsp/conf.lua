@@ -1,7 +1,7 @@
 local vim, fn = vim, vim.fn
 local lspconfig = require 'lspconfig'
 local on_attach = require 'lsp.on_attach'
-local G = require 'global'
+local G = require 'core.global'
 local M = {}
 
 -- List of servers where config = {on_attach = on_attach}
