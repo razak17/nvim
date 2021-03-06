@@ -61,10 +61,13 @@ end
 
 function Packer:load_packer()
   if not packer then
+    vim.api.nvim_command('packadd packer.nvim')
     packer = require('packer')
   end
   packer.init({
     compile_path = packer_compiled,
+    git = { clone_timeout = 120 },
+    disable_commands = true,
     config = {
       display = {
         _open_fn = function(name)
@@ -88,18 +91,18 @@ function Packer:load_packer()
       }
     }
   })
-
-  local use = packer.use
-  packer.reset()
-
-  use {'wbthomason/packer.nvim', opt = true}
-  use 'tpope/vim-surround'
 end
 
 local function init()
   if packer == nil then
     Packer:load_packer()
   end
+
+  local use = packer.use
+  packer.reset()
+
+  use {'wbthomason/packer.nvim', opt = true }
+  use 'tpope/vim-surround'
 
   if vim.fn.exists('g:vscode') == 0 then
     for  _, item in ipairs(repos()) do

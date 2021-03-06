@@ -1,8 +1,6 @@
 local M = {}
 local vim = vim
 local api =  vim.api
-local G = require 'core.global'
-local HOME = G.home
 
 function _G.dump(...)
   local objects = vim.tbl_map(vim.inspect, {...})
