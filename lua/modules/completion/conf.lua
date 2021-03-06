@@ -72,7 +72,7 @@ function config.telescope()
       -- prompt_prefix = '🍔 ',
       sorting_strategy = "descending",
       layout_strategy = "horizontal",
-      file_ignore_patterns = {"target/*", "node_modules/*", "dist/*"},
+      file_ignore_patterns = {"target/*", "node_modules/*", "dist/*", ".git/*"},
       width = 0.75,
       preview_cutoff = 120,
       results_height = 1,
@@ -117,6 +117,7 @@ function config.telescope()
   })
 
   require('telescope').load_extension('fzy_native')
+  require'telescope'.load_extension('dotfiles')
 end
 
 return config

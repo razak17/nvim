@@ -81,9 +81,8 @@ vmap("<leader>/", "<Plug>kommentary_visual_default")
 nnoremap('<Leader>cR', ':RooterToggle<CR>')
 
 -- Telescope
-nnoremap('<Leader>ff', ':lua require("telescope.builtin").find_files()<CR>')
-nnoremap('<Leader>fcs', ':lua require("utils.funcs").search_dotfiles()<CR>')
-
+nnoremap('<Leader>ff',  ':lua require("telescope.builtin").find_files()<CR>')
+nnoremap('<Leader>frc', ':Telescope dotfiles<CR>')
 -- Commands
 nnoremap('<Leader>fce', ':lua require"telescope.builtin".planets{}<CR>')
 nnoremap('<Leader>fcA', ':lua require("telescope.builtin").autocommands()<CR>')
@@ -99,18 +98,15 @@ nnoremap('<Leader>fcr', ':lua require("telescope.builtin").registers()<CR>')
 nnoremap('<Leader>fcT', ':lua require("telescope.builtin").treesitter()<CR>')
 nnoremap('<Leader>fcv', ':lua require("telescope.builtin").vim_options()<CR>')
 nnoremap('<Leader>fcz', ':lua require("telescope.builtin").current_buffer_fuzzy_find()<CR>')
-
 -- Lsp
 nnoremap('<Leader>fva', ':lua require("telescope.builtin").lsp_code_action()<CR>')
 nnoremap('<Leader>fvr', ':lua require("telescope.builtin").lsp_references()<CR>')
 nnoremap('<Leader>fvsd', ':lua require("telescope.builtin").lsp_document_symbols()<CR>')
 nnoremap('<Leader>fvsw', ':lua require("telescope.builtin").lsp_workspace_symbols()<CR>')
-
 -- Live
 nnoremap('<Leader>flg', ':lua require("telescope.builtin").live_grep()<CR>')
 nnoremap('<Leader>flw', ':lua require("telescope.builtin").grep_string { search = vim.fn.expand("<cword>") }<CR>')
 nnoremap('<Leader>fle', ':lua require("telescope.builtin").grep_string({ search = vim.fn.input("Grep For > ")})<CR>')
-
 -- Git
 nnoremap('<Leader>fgb', ':lua require("telescope.builtin").git_branches()<CR>')
 nnoremap('<Leader>fgc', ':lua require("telescope.builtin").git_commits()<CR>')

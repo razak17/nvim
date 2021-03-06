@@ -44,12 +44,6 @@ function M.OpenTerminal()
   api.nvim_command("resize 10")
 end
 
-function M.search_dotfiles()
-  require('telescope.builtin').find_files {
-    find_command = {'git', '--git-dir=', HOME .. '/dots/', '--work-tree', HOME, 'ls-tree', '--full-tree', '-r', '--name-only', 'HEAD'}
-  }
-end
-
 function M.ColorMyPencils()
   vim.o['background']='dark'
   -- vim.cmd('highlight ColorColumn ctermbg=0 guibg=cyan')

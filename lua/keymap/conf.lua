@@ -139,7 +139,6 @@ function config.which_key()
         l = "loclist",
         o = "old files",
         r = "registers",
-        s = "custom finder",
         T = "treesitter",
         v = "vim options",
         z = "current file fuzzy find",
@@ -154,6 +153,10 @@ function config.which_key()
         g = "grep",
         w = "current word",
         e = "prompt",
+      },
+      r = {
+        name = "+Config",
+        c = "vimrc"
       },
       v = {
         name = "+Lsp",
