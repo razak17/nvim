@@ -122,4 +122,16 @@ function config.hijackc()
   cmd("highlight! LspDiagnosticsSignError guifg=red")
 end
 
+function config.ColorMyPencils()
+  vim.o['background']='dark'
+  -- vim.cmd('highlight ColorColumn ctermbg=0 guibg=cyan')
+  vim.cmd('highlight Normal guibg=none')
+  vim.cmd('highlight LineNr guifg=#4dd2dc')
+  vim.cmd('highlight netrwDir guifg=#aeacec')
+  vim.cmd('highlight qfFileName guifg=#aed75f')
+  vim.cmd('hi TelescopeBorder guifg=#4dd2dc')
+  vim.cmd('hi FloatermBorder guifg=#4dd2dc')
+  vim.cmd("hi TsVirtText guifg=#4dd2dc")
+end
+
 return config

@@ -31,11 +31,10 @@ local buf = {
   {"BufLeave", "*", "silent! update"},
   {"BufWritePre", "COMMIT_EDITMSG", "setlocal noundofile"},
   {"BufWritePre", "MERGE_MSG", "setlocal noundofile"},
-  {"BufEnter", "*", "set relativenumber number"},
+  -- {"BufEnter", "*", "set relativenumber number"},
   {"BufEnter,WinEnter,InsertLeave", "*", "set cursorline"},
   {"BufLeave,WinLeave,InsertEnter", "*", "set nocursorline"},
   {"BufWritePre", "*", ":call TrimWhitespace()"},
-  {"BufWritePost", "plugins.lua", "PlugCompile"},
   {"BufWritePost,BufRead", "*.md", "setlocal spell"},
   {"BufWritePre", "*.tmp,*.bak", "setlocal noundofile"},
   {"BufEnter", "*", "set fo-=c fo-=r fo -=o"},
@@ -71,13 +70,13 @@ local win = {
   -- Force write shada on leaving nvim
   {"VimLeave", "*", [[if has('nvim') | wshada! | else | wviminfo! | endif]]};
   -- Check if file changed when its window is focus, more eager than 'autoread'
-  -- {"FocusGained", "* checktime"};
+  {"FocusGained", "* checktime"};
 }
 
 local ft = {
-  {"FileType", "python", "noremap <F10> :lua require 'utils.funcs'.RunPython()<CR>"},
-  {"FileType", "typescript", "noremap <F10> :lua require 'utils.funcs'.RunTS()<CR>"},
-  {"FileType", "javascript", "noremap <F10> :lua require 'utils.funcs'.RunJS()<CR>"},
+  {"FileType", "python", "noremap <F10> :lua require 'internal.quickrun'.RunPython()<CR>"},
+  {"FileType", "typescript", "noremap <F10> :lua require 'internal.quickrun'.RunTS()<CR>"},
+  {"FileType", "javascript", "noremap <F10> :lua require 'internal.quickrun'.RunJS()<CR>"},
   {"FileType", "c", "noremap <F10> :!gcc % -o %< && ./%< <CR>"},
   {"FileType", "cpp", "noremap <F10> :!g++ % -o %< && ./%< <CR>"},
   {"FileType", "cpp", "setlocal tabstop=4 shiftwidth=4"},
@@ -90,6 +89,7 @@ local ft = {
 
 
 local plug = {
+  {"BufWritePost","*.lua","lua require('core.pack').auto_compile()"},
   {
     "InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost",
     "*.rs",

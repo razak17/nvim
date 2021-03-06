@@ -2,6 +2,8 @@ local G = require 'core.global'
 local packer = nil
 local packer_compiled = G.local_nvim .. 'site/plugin/packges.vim'
 local load_plugins = require 'utils.funcs'.plug_config
+local vim_path = require('core.global').vim_path
+local modules_dir = vim_path .. '/lua/modules'
 local Packer = {}
 
 local function repos()
@@ -117,6 +119,14 @@ local plugins = setmetatable({}, {
     return packer[key]
   end
 })
+
+function plugins.auto_compile()
+  local file = vim.fn.expand('%:p')
+  if file:match(modules_dir) then
+    plugins.clean()
+    plugins.compile()
+  end
+end
 
 return plugins
 

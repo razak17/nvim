@@ -61,9 +61,6 @@ if !exists('g:vscode')
   " snake_case -> kebab-case
   " TODO: implement
 
-  command! -nargs=0 RestartLsp lua require 'utils.funcs'.restart_lsp()
-  command! -nargs=0 LspLog execute 'edit ' . luaeval('vim.lsp.get_log_path()')
-
   augroup Razak_Mo
     autocmd!
     autocmd! FileType which_key
