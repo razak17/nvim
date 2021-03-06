@@ -1,5 +1,3 @@
-local load_config = require 'utils.funcs'.load_config
-
 if vim.fn.exists('g:vscode') == 0 then
   require('core.setup')
   require('core.conf')
@@ -11,17 +9,13 @@ local load_core = function()
   require('core.pack')
 
   if vim.fn.exists('g:vscode') == 0 then
-    require('utils.cmd')
     require('core.autocmd')
+    require('utils.cmd')
+    require('keymap')
     require('modules.aesth')
     require('modules.completion')
     require('modules.tools')
-    require('keymap')
-
-    -- Plugins
-    load_config('plugin.ts', 'stp')
-    require('plugin.telescope')
-    require('plugin.which-key')
+    require('modules.lang')
   end
 end
 

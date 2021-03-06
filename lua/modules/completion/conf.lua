@@ -1,4 +1,5 @@
 local G = require "core.global"
+local actions = require 'telescope.actions'
 local config = {}
 
 function config.compe()
@@ -60,6 +61,62 @@ end
 
 function config.vsnip()
   vim.g["vsnip_snippet_dir"] = G.vim_path .. "snippets"
+end
+
+function config.telescope()
+  vim.cmd("hi TelescopeBorder guifg=#7ec0ee")
+
+  require('telescope').setup({
+    defaults = {
+      prompt_prefix = ">",
+      -- prompt_prefix = '🍔 ',
+      sorting_strategy = "descending",
+      layout_strategy = "horizontal",
+      file_ignore_patterns = {"target/*", "node_modules/*", "dist/*"},
+      width = 0.75,
+      preview_cutoff = 120,
+      results_height = 1,
+      results_width = 0.8,
+      border = {},
+      borderchars = { '─', '│', '─', '│', '╭', '╮', '╯', '╰'},
+      color_devicons = true,
+      use_less = true,
+      set_env = { ['COLORTERM'] = 'truecolor' },
+      file_sorter =  require'telescope.sorters'.get_fzy_sorter,
+      generic_sorter =  require'telescope.sorters'.get_generic_fuzzy_sorter,
+      file_previewer = require'telescope.previewers'.vim_buffer_cat.new,
+      grep_previewer = require'telescope.previewers'.vim_buffer_vimgrep.new,
+      qflist_previewer = require'telescope.previewers'.vim_buffer_qflist.new,
+      mappings = {
+        i = {
+          ["<esc>"] = actions.close,
+          ["<C-x>"] = false,
+          ["<C-e>"] = actions.select_tab,
+          ["<CR>"] = actions.select_default,
+          ["<C-b>"] = actions.move_selection_previous,
+          ["<C-v>"] = actions.select_vertical,
+          ["<C-i>"] = actions.select_horizontal,
+        },
+      },
+      vimgrep_arguments = {
+        'rg',
+        '--color=never',
+        '--no-heading',
+        '--with-filename',
+        '--line-number',
+        '--column',
+        '--smart-case'
+      },
+      extensions = {
+        fzy_native = {
+          override_generic_sorter = false,
+          override_file_sorter = true,
+        }
+      },
+    }
+  })
+
+  require('telescope').load_extension('fzy_native')
 end
 
 return config

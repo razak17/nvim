@@ -15,6 +15,7 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] =
 )
 require('modules.completion.lspconf').setup()
 
+conf.telescope()
 conf.compe()
 conf.emmet()
 conf.vsnip()

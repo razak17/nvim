@@ -2,6 +2,7 @@ local mp = require('keymap.map')
 local nmap, vmap, xmap, imap, smap, nnoremap, inoremap = mp.nmap, mp.vmap, mp.xmap, mp.imap, mp.smap, mp.nnoremap, mp.inoremap
 local opts = { expr = true }
 require('keymap.conf')
+require('keymap.conf').which_key()
 
 -- vsnip
 xmap("<C-l>", "<Plug>(vsnip-select-text)")
