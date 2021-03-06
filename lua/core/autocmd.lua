@@ -60,7 +60,7 @@ local niceties = {
 }
 
 local win = {
-  {"TermOpen", "*", "startinsert"},
+  -- {"TermOpen", "*", "startinsert"},
   -- Equalize window dimensions when resizing vim window
   {"VimResized", "*", [[tabdo wincmd =]]},
   -- Force write shada on leaving nvim
@@ -71,7 +71,7 @@ local win = {
   -- Force write shada on leaving nvim
   {"VimLeave", "*", [[if has('nvim') | wshada! | else | wviminfo! | endif]]};
   -- Check if file changed when its window is focus, more eager than 'autoread'
-  {"FocusGained", "* checktime"};
+  -- {"FocusGained", "* checktime"};
 }
 
 local ft = {
