@@ -1,4 +1,3 @@
-local load_config = require 'utils.funcs'.load_config
 local conf = require('modules.aesth.conf')
 
 local load_aesth = function()
@@ -9,8 +8,8 @@ local load_aesth = function()
   conf.illuminate()
   conf.colorizer()
   conf.cool()
-  load_config('modules.aesth.statusline')
-  load_config('modules.aesth.dashboard')
+  require('modules.aesth.statusline')
+  require('modules.aesth.dashboard')
 end
 
 load_aesth()

@@ -27,7 +27,7 @@ local on_attach = function(client, bufnr)
   map(bufnr, 'n', "K", "<cmd>lua require('lspsaga.hover').render_hover_doc()<CR>", opts)
 
   -- Diagnostics
-  saga.init_lsp_saga(require 'modules.completion.saga')
+  saga.init_lsp_saga(require 'modules.completion.conf'.saga())
   leader_buf_map(bufnr, "vdb", "require'lspsaga.diagnostic'.lsp_jump_diagnostic_prev()", opts)
   leader_buf_map(bufnr, "vdn", "require'lspsaga.diagnostic'.lsp_jump_diagnostic_next()", opts)
   leader_buf_map(bufnr, "vdc", "require'lspsaga.diagnostic'.show_line_diagnostics()", opts)
