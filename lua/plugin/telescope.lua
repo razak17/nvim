@@ -1,6 +1,4 @@
-local mappings = require('utils.map')
 local actions = require 'telescope.actions'
-local nnoremap = mappings.nnoremap
 
 vim.cmd("hi TelescopeBorder guifg=#7ec0ee")
 
@@ -79,45 +77,4 @@ M.git_branches = function()
 end
 
 -- return M
-
--- Finder
-nnoremap('<Leader>ff', ':lua require("telescope.builtin").find_files()<CR>')
-nnoremap('<Leader>fcs', ':lua require("utils.funcs").search_dotfiles()<CR>')
-
--- Commands
-nnoremap('<Leader>fce', ':lua require"telescope.builtin".planets{}<CR>')
-nnoremap('<Leader>fcA', ':lua require("telescope.builtin").autocommands()<CR>')
-nnoremap('<Leader>fcb', ':lua require("telescope.builtin").buffers()<CR>')
-nnoremap('<Leader>fcc', ':lua require("telescope.builtin").commands()<CR>')
-nnoremap('<Leader>fcf', ':lua require("telescope.builtin").builtin()<CR>')
-nnoremap('<Leader>fch', ':lua require("telescope.builtin").help_tags()<CR>')
-nnoremap('<Leader>fcH', ':lua require("telescope.builtin").command_history()<CR>')
-nnoremap('<Leader>fck', ':lua require("telescope.builtin").keymaps()<CR>')
-nnoremap('<Leader>fcl', ':lua require("telescope.builtin").loclist()<CR>')
-nnoremap('<Leader>fco', ':lua require("telescope.builtin").oldfiles()<CR>')
-nnoremap('<Leader>fcr', ':lua require("telescope.builtin").registers()<CR>')
-nnoremap('<Leader>fcT', ':lua require("telescope.builtin").treesitter()<CR>')
-nnoremap('<Leader>fcv', ':lua require("telescope.builtin").vim_options()<CR>')
-nnoremap('<Leader>fcz', ':lua require("telescope.builtin").current_buffer_fuzzy_find()<CR>')
-
--- Lsp
-nnoremap('<Leader>fva', ':lua require("telescope.builtin").lsp_code_action()<CR>')
-nnoremap('<Leader>fvr', ':lua require("telescope.builtin").lsp_references()<CR>')
-nnoremap('<Leader>fvsd', ':lua require("telescope.builtin").lsp_document_symbols()<CR>')
-nnoremap('<Leader>fvsw', ':lua require("telescope.builtin").lsp_workspace_symbols()<CR>')
-
--- Live
-nnoremap('<Leader>flg', ':lua require("telescope.builtin").live_grep()<CR>')
-nnoremap('<Leader>flw', ':lua require("telescope.builtin").grep_string { search = vim.fn.expand("<cword>") }<CR>')
-nnoremap('<Leader>fle', ':lua require("telescope.builtin").grep_string({ search = vim.fn.input("Grep For > ")})<CR>')
-
--- Git
-nnoremap('<Leader>fgb', ':lua require("telescope.builtin").git_branches()<CR>')
-nnoremap('<Leader>fgc', ':lua require("telescope.builtin").git_commits()<CR>')
-nnoremap('<Leader>fgC', ':lua require("telescope.builtin").git_bcommits()<CR>')
-nnoremap('<Leader>fgf', ':lua require("telescope.builtin").git_files()<CR>')
-nnoremap('<Leader>fgs', ':lua require("telescope.builtin").git_status()<CR>')
-
--- Extensions
-nnoremap('<leader>fee', ':lua require("telescope").extensions.packer.plugins()<CR>')
 

@@ -1,12 +1,14 @@
 local vim = vim
 local g = vim.g
 local cmd = vim.cmd
-local mappings = require('utils.map')
-local nnoremap = mappings.nnoremap
 local config = {}
 
 function config.illuminate()
-  vim.g.Illuminate_ftblacklist = { 'javascript', 'typescript', 'jsx', 'tsx', 'html' }
+  g.Illuminate_ftblacklist = { 'javascript', 'typescript', 'jsx', 'tsx', 'html' }
+end
+
+function config.cool()
+  g.CoolTotalMatches = 1
 end
 
 function config.colorizer()
@@ -61,11 +63,6 @@ function config.nvim_tree()
       untracked = "★"
     },
   }
-
-  -- binds
-  nnoremap('<Leader>cv', ':NvimTreeToggle<CR>')
-  nnoremap('<Leader>cr', ':NvimTreeRefresh<CR>')
-  nnoremap('<Leader>cf', ':NvimTreeFindFile<CR>')
 
   vim.cmd[[ highlight NvimTreeFolderIcon guibg=yellow ]]
 end

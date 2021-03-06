@@ -1,6 +1,6 @@
 local vim = vim
-local mappings = require('utils.map')
-local nmap, vmap, nnoremap, inoremap, vnoremap, xnoremap, tnoremap = mappings.nmap, mappings.vmap,  mappings.nnoremap, mappings.inoremap, mappings.vnoremap, mappings.xnoremap, mappings.tnoremap
+local mp = require('keymap.map')
+local nnoremap, inoremap, vnoremap, xnoremap, tnoremap = mp.nnoremap, mp.inoremap, mp.vnoremap, mp.xnoremap, mp.tnoremap
 
 -- Basic Key Mappings
 nnoremap('n', 'j')
@@ -154,55 +154,6 @@ if vim.fn.exists('g:vscode') == 0 then
   nnoremap("<S-Return>", "zMzvzt")
   nnoremap("<Leader>afl", "za")
   nnoremap("<Leader>afe", ":lua require 'utils.funcs'.ToggleFold()<CR>")
-
-  ------------------------------------------------------------------------------
-  -- Plugins
-  ------------------------------------------------------------------------------
-
-  -- Bufferline
-  nnoremap('<Leader>bb', ':BufferLineMovePrev<CR>')
-  nnoremap('<Leader>bn', ':BufferLineMoveNext<CR>')
-
-  -- Packer
-  nnoremap('<Leader>Pc', ':PlugCompile<CR>')
-  nnoremap('<Leader>PC', ':PlugClean<CR>')
-  nnoremap('<Leader>Pi', ':PlugInstall<CR>')
-  nnoremap('<Leader>Ps', ':PlugSync<CR>')
-  nnoremap('<Leader>PU', ':PlugUpdate<CR>')
-
-  -- Git
-  nnoremap("<Leader>ga", ":Git fetch --all<CR>")
-  nnoremap("<Leader>gA", ":Git blame<CR>")
-  nnoremap("<Leader>gb", ":GBranches<CR>")
-  nnoremap("<Leader>gcm", ":Git commit<CR>")
-  nnoremap("<Leader>gca", ":Git commit --amend -m ")
-  nnoremap("<Leader>gC", ":Git checkout -b ")
-  nnoremap("<Leader>gd", ":Git diff<CR>")
-  nnoremap("<Leader>gD", ":Gdiffsplit<CR>")
-  nnoremap("<Leader>gh", ":diffget //3<CR>")
-  nnoremap("<Leader>gi", ":Git init<CR>")
-  nnoremap("<Leader>gk", ":diffget //2<CR>")
-  nnoremap("<Leader>gl", ":Git log<CR>")
-  nnoremap("<Leader>ge", ":Git push<CR>")
-  nnoremap("<Leader>gp", ":Git poosh<CR>")
-  nnoremap("<Leader>gP", ":Git pull<CR>")
-  nnoremap("<Leader>gr", ":GRemove<CR>")
-  nnoremap("<Leader>gs", ":G<CR>")
-
-  -- Floaterm
-  nnoremap("<Leader>Te", ":FloatermToggle<CR>")
-  nnoremap("<Leader>Tn", ":FloatermNew node<CR>")
-  nnoremap("<Leader>TN", ":FloatermNew<CR>")
-  nnoremap("<Leader>Tp", ":FloatermNew python<CR>")
-  nnoremap("<Leader>Tr", ":FloatermNew ranger<CR>")
-
-  -- Kommentary
-  nmap("<leader>/", "<Plug>kommentary_line_default")
-  nmap("<leader>a/", "<Plug>kommentary_motion_default")
-  vmap("<leader>/", "<Plug>kommentary_visual_default")
-
-  -- Rooter
-  nnoremap('<Leader>cR', ':RooterToggle<CR>')
 
   -- Other remaps
   nnoremap('<Leader><CR>', ':so ~/.config/nvim/init.vim<CR>')

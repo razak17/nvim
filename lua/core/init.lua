@@ -15,19 +15,16 @@ local load_core = function()
     -- load_config('core.autocmd')
     load_config('modules.aesth')
     load_config('modules.completion')
+    load_config('keymap')
 
     -- Plugins
     load_config('plugin.ts', 'stp')
     load_config('plugin.autopairs')
-    load_config('plugin.compe')
-    load_config('plugin.cool')
-    load_config('plugin.emmet')
     load_config('plugin.far')
     load_config('plugin.floaterm')
     load_config('plugin.rooter')
     load_config('plugin.tagalong')
     load_config('plugin.telescope')
-    load_config('plugin.vsnip')
     load_config('plugin.which-key')
   end
 end

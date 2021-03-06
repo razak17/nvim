@@ -1,12 +1,7 @@
 local G = require "core.global"
-local g =  vim.g
-local mappings = require('utils.map')
-local xmap, imap, smap, nnoremap = mappings.xmap, mappings.imap, mappings.smap, mappings.nnoremap
 local npairs = require('nvim-autopairs')
 
-_G.MUtils = {}
-
-MUtils.completion_confirm=function()
+_G.completion_confirm=function()
   if vim.fn.pumvisible() ~= 0  then
     if vim.fn.complete_info()["selected"] ~= -1 then
       vim.fn["compe#confirm"]()
@@ -21,7 +16,7 @@ MUtils.completion_confirm=function()
   end
 end
 
-MUtils.tab=function()
+_G.tab=function()
   if vim.fn.pumvisible() ~= 0  then
     return npairs.esc("<C-n>")
   else
@@ -34,7 +29,7 @@ MUtils.tab=function()
   end
 end
 
-MUtils.s_tab=function()
+_G.s_tab=function()
   if vim.fn.pumvisible() ~= 0  then
     return npairs.esc("<C-p>")
   else
@@ -47,20 +42,4 @@ MUtils.s_tab=function()
   end
 end
 
-g["vsnip_snippet_dir"] = G.vim_path .. "snippets"
-
-local opts = { expr = true }
-
-xmap("<C-l>", "<Plug>(vsnip-select-text)")
-xmap("<C-x>", "<Plug>(vsnip-cut-text)")
-
--- Autocompletion and snippets
-imap("<CR>", "v:lua.MUtils.completion_confirm()", opts)
-imap("<Tab>", "v:lua.MUtils.tab()", opts)
-imap("<S-Tab>", "v:lua.MUtils.s_tab()", opts)
-
-nnoremap('<Leader>cs', ':VsnipOpen<CR> 1<CR><CR>')
-imap("<C-l>", "vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'", opts)
-smap("<C-l>", "vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'", opts)
-imap('<C-y>', "vsnip#expandable() ? '<Plug>(vsnip-expand)' : '<C-space>'", opts)
-smap('<C-y>', "vsnip#expandable() ? '<Plug>(vsnip-expand)' : '<C-space>'", opts)
+vim.g["vsnip_snippet_dir"] = G.vim_path .. "snippets"

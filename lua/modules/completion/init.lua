@@ -1,3 +1,5 @@
+local conf = require('modules.completion.conf')
+
 vim.lsp.handlers["textDocument/publishDiagnostics"] =
   vim.lsp.with(
   vim.lsp.diagnostic.on_publish_diagnostics,
@@ -11,5 +13,7 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] =
     signs = true,
   }
 )
-require('modules.completion.conf').setup()
+require('modules.completion.lspconf').setup()
 
+conf.compe()
+conf.emmet()
