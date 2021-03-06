@@ -11,5 +11,5 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] =
     signs = true,
   }
 )
-require('lsp.conf').setup()
+require('modules.completion.conf').setup()
 

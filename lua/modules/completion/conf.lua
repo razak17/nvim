@@ -1,6 +1,6 @@
 local vim, fn = vim, vim.fn
 local lspconfig = require 'lspconfig'
-local on_attach = require 'lsp.on_attach'
+local on_attach = require 'modules.completion..on_attach'
 local G = require 'core.global'
 local M = {}
 
