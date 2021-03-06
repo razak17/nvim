@@ -50,8 +50,10 @@ function M.setup()
       select = {
         enable = true,
         keymaps = {
-          ["<leader>eV"] = "@function.outer", -- replace with block.inner and block.outer when its supported in more languages
-          ["<leader>ev"] = "@function.inner"
+          ["af"] = "@function.outer",
+          ["if"] = "@function.inner",
+          ["ac"] = "@class.outer",
+          ["ic"] = "@class.inner",
         }
       },
       swap = {

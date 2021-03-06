@@ -1,4 +1,3 @@
-local G = require "core.global"
 local npairs = require('nvim-autopairs')
 
 _G.completion_confirm=function()
@@ -41,5 +40,3 @@ _G.s_tab=function()
     end
   end
 end
-
-vim.g["vsnip_snippet_dir"] = G.vim_path .. "snippets"

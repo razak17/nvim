@@ -17,3 +17,4 @@ require('modules.completion.lspconf').setup()
 
 conf.compe()
 conf.emmet()
+conf.vsnip()
