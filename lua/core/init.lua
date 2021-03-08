@@ -6,15 +6,12 @@ end
 local load_core = function()
   require('core.opts')
   require('core.binds')
-  require('core.pack')
+  require('core.pack').ensure_plugins()
 
   if vim.fn.exists('g:vscode') == 0 then
     require('core.autocmd')
     require('keymap')
-    require('modules.aesth')
-    require('modules.completion')
-    require('modules.tools')
-    require('modules.lang')
+    require('modules.aesth.conf').hijackc()
 
     vim.cmd [[command! PlugCompile lua require('core.pack').compile()]]
     vim.cmd [[command! PlugInstall lua require('core.pack').install()]]

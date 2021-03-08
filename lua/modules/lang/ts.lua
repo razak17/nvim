@@ -16,7 +16,7 @@ local parsers = {
 local synoff = function()
   local filetypes = vim.fn.join(fts, ",")
   vim.cmd("au FileType "..filetypes.." set syn=off")
-  vim.cmd("au FileType "..filetypes.." lua require'modules.lang.conf'.matchit()")
+  vim.cmd("au FileType "..filetypes.." lua require'modules.lang.utils'.matchit()")
 end
 
 function M.setup()
@@ -60,17 +60,17 @@ function M.setup()
 
   api.nvim_set_keymap('n', 'R', ':write | edit | TSBufEnable highlight<CR>', {});
   api.nvim_exec([[
-    command! ToggleTsVtx lua require'modules.lang.conf'.toggle_ts_virt_text()
+    command! ToggleTsVtx lua require'modules.lang.utils'.toggle_ts_virt_text()
     hi TsVirtText guifg=#89ddff
     augroup TSVirtualText
       au!
-      au BufEnter,CursorMoved,CursorMovedI,WinEnter,CompleteDone,InsertEnter,InsertLeave * lua require'modules.lang.conf'.ts_virt_text()
+      au BufEnter,CursorMoved,CursorMovedI,WinEnter,CompleteDone,InsertEnter,InsertLeave * lua require'modules.lang.utils'.ts_virt_text()
     augroup END
 
-    command! ToggleTsHlGroups lua require'modules.lang.conf'.toggle_ts_hl_groups()
+    command! ToggleTsHlGroups lua require'modules.lang.utils'.toggle_ts_hl_groups()
     augroup TSVirtualTextHlGroups
       au!
-      au BufEnter,CursorMoved,CursorMovedI,WinEnter,CompleteDone,InsertEnter,InsertLeave * lua require'modules.lang.conf'.ts_hl_groups()
+      au BufEnter,CursorMoved,CursorMovedI,WinEnter,CompleteDone,InsertEnter,InsertLeave * lua require'modules.lang.utils'.ts_hl_groups()
     augroup END
   ]], '')
 end

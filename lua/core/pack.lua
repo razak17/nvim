@@ -1,64 +1,32 @@
 local G = require 'core.global'
-local packer = nil
+local fn,uv,api = vim.fn,vim.loop,vim.api
 local packer_compiled = G.local_nvim .. 'site/plugin/packges.vim'
-local load_plugins = require 'utils.funcs'.plug_config
-local vim_path = require('core.global').vim_path
-local modules_dir = vim_path .. '/lua/modules'
-local Packer = {}
+local modules_dir = G.vim_path .. '/lua/modules'
+local data_dir = G.local_nvim .. 'site/'
+local packer = nil
 
-local function repos()
-  return {
-    { repo = 'christianchiarulli/nvcode-color-schemes.vim' },
-    { repo = 'norcalli/nvim-colorizer.lua' },
-    { repo = 'tpope/vim-fugitive' },
-    { repo = 'b3nj5m1n/kommentary' },
-    { repo = 'mbbill/undotree' },
-    { repo = 'tjdevries/lsp_extensions.nvim' },
-    { repo = 'glepnir/lspsaga.nvim' },
-    { repo = 'onsails/lspkind-nvim' },
-    { repo = 'tweekmonster/startuptime.vim', cmd = "StartupTime" },
-    { repo = 'kyazdani42/nvim-tree.lua' },
-    { repo = 'nvim-telescope/telescope-packer.nvim' },
-    { repo = 'nvim-telescope/telescope-fzy-native.nvim' },
-    { repo = 'glepnir/dashboard-nvim' },
-    { repo = 'brooth/far.vim' },
-    { repo = 'voldikss/vim-floaterm' },
-    { repo = 'AndrewRadev/tagalong.vim' },
-    { repo = 'romainl/vim-cool' },
-    { repo = 'RRethy/vim-illuminate' },
-    { repo = 'liuchengxu/vim-which-key' },
-    { repo = 'mattn/emmet-vim' },
-    { repo = "akinsho/nvim-bufferline.lua" },
-    { repo = "hrsh7th/nvim-compe" },
-    { repo = 'windwp/nvim-autopairs' },
-    { repo = 'neovim/nvim-lspconfig' },
-    { repo = 'airblade/vim-rooter' },
-    {
-      repo = 'glacambre/firenvim',
-      run = function() vim.fn['firenvim#install'](0) end
-    },
-    {
-      repo = "hrsh7th/vim-vsnip",
-      requires = {'hrsh7th/vim-vsnip-integ'}
-    },
-    {
-      repo = 'nvim-telescope/telescope.nvim',
-      requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}, {'kyazdani42/nvim-web-devicons'}}
-    },
-    {
-      repo = 'glepnir/galaxyline.nvim',
-      branch = 'main',
-      requires = {'kyazdani42/nvim-web-devicons'}
-    },
-    {
-      repo = 'nvim-treesitter/nvim-treesitter',
-      run = ':TSUpdate',
-      requires = {
-        {'nvim-treesitter/playground', after = 'nvim-treesitter'},
-        {'romgrk/nvim-treesitter-context', after = 'nvim-treesitter'}
-      },
-    },
-  }
+local Packer = {}
+Packer.__index = Packer
+
+function Packer:load_plugins()
+  self.repos = {}
+
+  local get_plugins_list = function ()
+    local list = {}
+    local tmp = vim.split(fn.globpath(modules_dir,'/*/plugins.lua'),'\n')
+    for _,f in ipairs(tmp) do
+      list[#list+1] = f:sub(#modules_dir - 7,-1)
+    end
+    return list
+  end
+
+  local plugins_file = get_plugins_list()
+  for _,m in ipairs(plugins_file) do
+    local repos = require(m:sub(0,#m-4))
+    for repo,conf in pairs(repos) do
+      self.repos[#self.repos+1] = vim.tbl_extend('force',{repo},conf)
+    end
+  end
 end
 
 function Packer:load_packer()
@@ -93,12 +61,6 @@ function Packer:load_packer()
       }
     }
   })
-end
-
-local function init()
-  if packer == nil then
-    Packer:load_packer()
-  end
 
   local use = packer.use
   packer.reset()
@@ -107,18 +69,40 @@ local function init()
   use 'tpope/vim-surround'
 
   if vim.fn.exists('g:vscode') == 0 then
-    for  _, item in ipairs(repos()) do
-      load_plugins(use, item)
+    self:load_plugins()
+    for _,repo in ipairs(self.repos) do
+      use(repo)
     end
+  end
+end
+
+function Packer:init_ensure_plugins()
+  local packer_dir = data_dir..'pack/packer/opt/packer.nvim'
+  local state = uv.fs_stat(packer_dir)
+  if not state then
+    local cmd = "!git clone https://github.com/wbthomason/packer.nvim " ..packer_dir
+    api.nvim_command(cmd)
+    uv.fs_mkdir(data_dir..'plugin',511,function()
+      assert("make compile path dir faield")
+    end)
+    self:load_packer()
+    packer.install()
+    packer.compile()
   end
 end
 
 local plugins = setmetatable({}, {
   __index = function(_, key)
-    init()
+    if packer == nil then
+      Packer:load_packer()
+    end
     return packer[key]
   end
 })
+
+function plugins.ensure_plugins()
+  Packer:init_ensure_plugins()
+end
 
 function plugins.auto_compile()
   local file = vim.fn.expand('%:p')

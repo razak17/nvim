@@ -1,8 +1,8 @@
 local vim = vim
 local map = vim.api.nvim_buf_set_keymap;
-local utils = require 'modules.completion.utils'
+local utils = require 'modules.completion.lsp.utils'
 local saga = require 'lspsaga'
-local leader_buf_map = require 'modules.completion.utils'.leader_buf_map
+local leader_buf_map = require 'modules.completion.lsp.utils'.leader_buf_map
 
 local on_attach = function(client, bufnr)
   require('lspkind').init()
@@ -32,17 +32,17 @@ local on_attach = function(client, bufnr)
   leader_buf_map(bufnr, "vdn", "require'lspsaga.diagnostic'.lsp_jump_diagnostic_next()", opts)
   leader_buf_map(bufnr, "vdc", "require'lspsaga.diagnostic'.show_line_diagnostics()", opts)
   leader_buf_map(bufnr, 'vdl', 'vim.lsp.diagnostic.set_loclist()', opts)
-  vim.api.nvim_command("au CursorMoved * lua require 'modules.completion.utils'.show_lsp_diagnostics()")
+  vim.api.nvim_command("au CursorMoved * lua require 'modules.completion.lsp.utils'.show_lsp_diagnostics()")
 
-  if utils.can_format(client) then
-    require 'modules.completion.utils'.format()
+  if client.resolved_capabilities.document_formatting then
+    require 'modules.completion.lsp.utils'.format()
   end
 
   if client.config.flags then
     client.config.flags.allow_incremental_sync = true
   end
 
-  if utils.can_highlight(client) then
+  if client.resolved_capabilities.document_highlight then
     vim.api.nvim_command('augroup lsp_aucmds')
     vim.api.nvim_command('au!')
     vim.api.nvim_command('au CursorHold <buffer> lua vim.lsp.buf.document_highlight()')

@@ -1,23 +1,19 @@
 local M = {}
 function M.get_cursor_pos() return {vim.fn.line('.'), vim.fn.col('.')} end
 
-
-local function nvim_create_augroup(group_name,definitions)
-  vim.api.nvim_command('augroup '..group_name)
-  vim.api.nvim_command('autocmd!')
-  for _, def in ipairs(definitions) do
-    local command = table.concat(vim.tbl_flatten{'autocmd', def}, ' ')
-    vim.api.nvim_command(command)
-  end
-  vim.api.nvim_command('augroup END')
-end
-
 function M.format()
   local defs = {}
   local ext = vim.fn.expand('%:e')
   table.insert(defs,{"BufWritePre", '*.'..ext ,
   "lua vim.lsp.buf.formatting_sync(nil,1000)"})
-  nvim_create_augroup('lsp_before_save', defs)
+  vim.api.nvim_command('augroup lsp_before_save')
+  vim.api.nvim_command('autocmd!')
+  for _, def in ipairs(defs) do
+  local command = table.concat(vim.tbl_flatten{'autocmd', def}, ' ')
+  vim.api.nvim_command(command)
+  end
+  vim.api.nvim_command('augroup END')
+  -- vim.api.nvim_buf_set_keymap(0, 'n', '<leader>vF', '<cmd>lua vim.lsp.buf.formatting()<cr>', opts)
 end
 
 function M.leader_buf_map(bufnr, key, command, opts)
@@ -54,14 +50,5 @@ M.show_lsp_diagnostics = (function()
     end
   end
 end)()
-
-function _G.dump(...)
-  local args = {...}
-  if #args == 1 then
-    print(vim.inspect(args[1]))
-  else
-    print(vim.inspect(args))
-  end
-end
 
 return M

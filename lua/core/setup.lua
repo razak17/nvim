@@ -79,7 +79,7 @@ local function packerInit()
         print(out)
         print("Downloading packer.nvim...")
         cmd("set runtimepath+=" .. G.plugins .. "opt" .. G.path_sep .. "packer.nvim")
-        require "plugins".install()
+        require "core.pack".install()
     end
 end
 

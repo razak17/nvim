@@ -1,8 +1,10 @@
-local G = require "core.global"
-local actions = require 'telescope.actions'
 local config = {}
 
-function config.compe()
+function config.nvim_lsp()
+  require('modules.completion.lsp')
+end
+
+function config.nvim_compe()
   require('compe').setup {
     enabled = true;
     autocomplete = true;
@@ -50,6 +52,10 @@ function config.saga()
   return opts
 end
 
+function config.vim_vsnip()
+  vim.g["vsnip_snippet_dir"] = G.vim_path .. "snippets"
+end
+
 function config.emmet()
   vim.g.user_emmet_leader_key='<C-y>'
 
@@ -59,19 +65,14 @@ function config.emmet()
   vim.cmd('autocmd FileType html,css EmmetInstall')
 end
 
-function config.vsnip()
-  vim.g["vsnip_snippet_dir"] = G.vim_path .. "snippets"
-end
-
-function config.telescope()
+function config.nvim_telescope()
   vim.cmd("hi TelescopeBorder guifg=#7ec0ee")
 
   require('telescope').setup({
     defaults = {
-      prompt_prefix = ">",
+      prompt_prefix = "> ",
       -- prompt_prefix = '🍔 ',
-      sorting_strategy = "descending",
-      layout_strategy = "horizontal",
+      sorting_strategy = "ascending",
       file_ignore_patterns = {"target/*", "node_modules/*", "dist/*", ".git/*"},
       width = 0.75,
       preview_cutoff = 120,
@@ -80,7 +81,6 @@ function config.telescope()
       border = {},
       borderchars = { '─', '│', '─', '│', '╭', '╮', '╯', '╰'},
       color_devicons = true,
-      use_less = true,
       set_env = { ['COLORTERM'] = 'truecolor' },
       file_sorter =  require'telescope.sorters'.get_fzy_sorter,
       generic_sorter =  require'telescope.sorters'.get_generic_fuzzy_sorter,
@@ -89,23 +89,14 @@ function config.telescope()
       qflist_previewer = require'telescope.previewers'.vim_buffer_qflist.new,
       mappings = {
         i = {
-          ["<esc>"] = actions.close,
+          ["<esc>"] = require 'telescope.actions'.close,
           ["<C-x>"] = false,
-          ["<C-e>"] = actions.select_tab,
-          ["<CR>"] = actions.select_default,
-          ["<C-b>"] = actions.move_selection_previous,
-          ["<C-v>"] = actions.select_vertical,
-          ["<C-i>"] = actions.select_horizontal,
+          ["<C-e>"] = require 'telescope.actions'.select_tab,
+          ["<CR>"] = require 'telescope.actions'.select_default,
+          ["<C-b>"] = require 'telescope.actions'.move_selection_previous,
+          ["<C-v>"] = require 'telescope.actions'.select_vertical,
+          ["<C-i>"] = require 'telescope.actions'.select_horizontal,
         },
-      },
-      vimgrep_arguments = {
-        'rg',
-        '--color=never',
-        '--no-heading',
-        '--with-filename',
-        '--line-number',
-        '--column',
-        '--smart-case'
       },
       extensions = {
         fzy_native = {
@@ -121,3 +112,4 @@ function config.telescope()
 end
 
 return config
+
