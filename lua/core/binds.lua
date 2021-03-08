@@ -143,12 +143,13 @@ if vim.fn.exists('g:vscode') == 0 then
   nnoremap("<Leader>av", "<C-W>v")
   nnoremap("<Leader>ax", ":wq!<CR>")
   nnoremap("<Leader>az", ":q!<CR>")
+  nnoremap("<Leader>ad", ":bdelete!<CR>")
 
   -- Session
-  nnoremap("<Leader>Sc", "SClose<CR>")
-  nnoremap("<Leader>Sd", ":SDelete<CR>")
-  nnoremap("<Leader>Sl", ":SLoad<CR>")
-  nnoremap("<Leader>Ss", ":SSave<CR>")
+  --[[ nnoremap("<Leader>Sc", "SClose<CR>")
+  nnoremap("<Leader>Sd", ":SDelete<CR>") ]]
+  nnoremap("<Leader>Sl", ":SessionLoad<CR>")
+  nnoremap("<Leader>Ss", ":SessionSave<CR>")
 
   -- Folds
   nnoremap("<S-Return>", "zMzvzt")
@@ -162,8 +163,9 @@ if vim.fn.exists('g:vscode') == 0 then
   nnoremap('<leader>ar',   ':call EmptyRegisters()<CR>')
   nnoremap('<Leader>Ic',   ':checkhealth<CR>')
   nnoremap('<Leader>Ie',   ':TSInstallInfo<CR>')
-  nnoremap('<Leader>Ili',  ':LspInfo<CR>')
-  nnoremap('<Leader>Ill',  ':LspLog<CR>')
+  nnoremap('<Leader>Li',  ':LspInfo<CR>')
+  nnoremap('<Leader>Ll',  ':LspLog<CR>')
+  nnoremap('<Leader>Lr',  ':LspRestart<CR>')
   nnoremap('<leader>ev',   ':ToggleTsVtx<CR>')
   nnoremap('<leader>eh',   ':ToggleTsHlGroups<CR>')
   nnoremap('<Leader>vwm',  ':lua require "modules.aesth.conf".ColorMyPencils()<CR>')

@@ -1,8 +1,7 @@
 local G = require 'core.global'
-local fn,uv,api = vim.fn,vim.loop,vim.api
+local fn = vim.fn
 local packer_compiled = G.local_nvim .. 'site/plugin/packges.vim'
 local modules_dir = G.vim_path .. '/lua/modules'
-local data_dir = G.local_nvim .. 'site/'
 local packer = nil
 
 local Packer = {}
@@ -77,18 +76,9 @@ function Packer:load_packer()
 end
 
 function Packer:init_ensure_plugins()
-  local packer_dir = data_dir..'pack/packer/opt/packer.nvim'
-  local state = uv.fs_stat(packer_dir)
-  if not state then
-    local cmd = "!git clone https://github.com/wbthomason/packer.nvim " ..packer_dir
-    api.nvim_command(cmd)
-    uv.fs_mkdir(data_dir..'plugin',511,function()
-      assert("make compile path dir faield")
-    end)
-    self:load_packer()
-    packer.install()
-    packer.compile()
-  end
+  self:load_packer()
+  packer.install()
+  packer.compile()
 end
 
 local plugins = setmetatable({}, {

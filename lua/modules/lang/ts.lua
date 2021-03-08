@@ -37,12 +37,6 @@ function M.setup()
     indent = {
       enable = true,
     },
-    playground = {
-      enable = true,
-      disable = {},
-      updatetime = 25, -- Debounced time for highlighting nodes in the playground from source code
-      persist_queries = false -- Whether the query persists across vim sessions
-    },
     textobjects = {
       select = {
         enable = true,
@@ -60,18 +54,9 @@ function M.setup()
 
   api.nvim_set_keymap('n', 'R', ':write | edit | TSBufEnable highlight<CR>', {});
   api.nvim_exec([[
-    command! ToggleTsVtx lua require'modules.lang.utils'.toggle_ts_virt_text()
     hi TsVirtText guifg=#89ddff
-    augroup TSVirtualText
-      au!
-      au BufEnter,CursorMoved,CursorMovedI,WinEnter,CompleteDone,InsertEnter,InsertLeave * lua require'modules.lang.utils'.ts_virt_text()
-    augroup END
-
+    command! ToggleTsVtx lua require'modules.lang.utils'.toggle_ts_virt_text()
     command! ToggleTsHlGroups lua require'modules.lang.utils'.toggle_ts_hl_groups()
-    augroup TSVirtualTextHlGroups
-      au!
-      au BufEnter,CursorMoved,CursorMovedI,WinEnter,CompleteDone,InsertEnter,InsertLeave * lua require'modules.lang.utils'.ts_hl_groups()
-    augroup END
   ]], '')
 end
 

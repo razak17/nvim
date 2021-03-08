@@ -70,9 +70,10 @@ function config.which_key()
     a = {
       name = "+Actions",
       ["/"] = "comment motion default",
-      d = "delete all buffers and exit",
+      d = "force delete buffer",
       D = "delete all",
       e = "turn off guides",
+      E = "delete all buffers and exit",
       f = {
         name = "+Fold",
         e = "toggle",
@@ -209,17 +210,18 @@ function config.which_key()
       name = "+Info",
       c = "check health",
       e = "treesitter",
-      l = {
-        name = "+Lsp",
-        i = "info",
-        l = "log",
-      },
     },
     l = {
       name = "+Delete buffer",
       d = "all",
       h = "to left",
       x = "all except current",
+    },
+    L = {
+      name = "+Lsp utils",
+      i = "info",
+      l = "log",
+      r = "restart"
     },
     m = {
       name = "+Surround",

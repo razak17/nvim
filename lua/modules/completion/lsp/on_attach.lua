@@ -2,7 +2,7 @@ local vim = vim
 local map = vim.api.nvim_buf_set_keymap;
 local utils = require 'modules.completion.lsp.utils'
 local saga = require 'lspsaga'
-local leader_buf_map = require 'modules.completion.lsp.utils'.leader_buf_map
+local leader_buf_map = utils.leader_buf_map
 
 local on_attach = function(client, bufnr)
   require('lspkind').init()
@@ -24,6 +24,7 @@ local on_attach = function(client, bufnr)
   buf_map("vlr",  "vim.lsp.buf.references()")
   buf_map("vlsd", "vim.lsp.buf.document_symbol()")
   buf_map("vlsw", "vim.lsp.buf.workspace_symbol()")
+  buf_map("vlsh", "require'lspsaga.hover'.render_hover_doc()")
   map(bufnr, 'n', "K", "<cmd>lua require('lspsaga.hover').render_hover_doc()<CR>", opts)
 
   -- Diagnostics

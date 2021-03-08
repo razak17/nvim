@@ -1,26 +1,27 @@
 local G = {}
 local home = os.getenv("HOME")
 local path_sep = G.is_windows and '\\' or '/'
+local os_name = vim.loop.os_uname().sysname
 
-function G.load_variables()
-  G.home = home
-  G.path_sep = path_sep
-  G.is_mac = jit.os == 'OSX'
-  G.is_linux = jit.os == 'Linux'
-  G.is_windows = jit.os == 'Windows'
-  G.config = home .. path_sep .. '.config' .. path_sep
-  G.share = home .. path_sep .. '.local' .. path_sep .. 'share' .. path_sep
-  G.cache_dir = home .. path_sep .. '.cache' .. path_sep .. 'nvim' .. path_sep
-  G.vim_path = G.config .. path_sep .. 'nvim' .. path_sep
-  G.modules_dir = G.vim_path .. 'modules'
-  G.fnm = home .. path_sep .. '.fnm' .. path_sep .. 'node-versions' .. path_sep
-  G.python3 = G.cache_dir .. 'venv' .. path_sep .. 'neovim' .. path_sep
-  G.node = G.fnm .. "v15.5.1/installation/lib/node_modules/bin/neovim-node-host"
-  G.local_nvim = G.share .. 'nvim' .. path_sep
-  G.plugins = G.share .. 'nvim' .. path_sep .. 'site' .. path_sep .. 'pack' .. path_sep
-  G.sumneko_root_path = G.cache_dir .. 'nvim_lsp' .. path_sep .. 'lua-language-server' .. path_sep
-  G.sumneko_binary = G.sumneko_root_path .. 'bin' .. path_sep .. 'Linux' .. path_sep .. 'lua-language-server'
-  G.sumneko_binary = G.sumneko_root_path .. '/bin/Linux/lua-language-server'
+function G:load_variables()
+  self.home = home
+  self.path_sep = path_sep
+  self.is_mac = os_name == 'OSX'
+  self.is_linux = os_name == 'Linux'
+  self.is_windows = os_name == 'Windows'
+  self.config = home .. path_sep .. '.config' .. path_sep
+  self.share = home .. path_sep .. '.local' .. path_sep .. 'share' .. path_sep
+  self.cache_dir = home .. path_sep .. '.cache' .. path_sep .. 'nvim' .. path_sep
+  self.vim_path = G.config .. path_sep .. 'nvim' .. path_sep
+  self.modules_dir = G.vim_path .. 'modules'
+  self.fnm = home .. path_sep .. '.fnm' .. path_sep .. 'node-versions' .. path_sep
+  self.python3 = G.cache_dir .. 'venv' .. path_sep .. 'neovim' .. path_sep
+  self.node = G.fnm .. "v15.5.1/installation/lib/node_modules/bin/neovim-node-host"
+  self.local_nvim = G.share .. 'nvim' .. path_sep
+  self.plugins = G.share .. 'nvim' .. path_sep .. 'site' .. path_sep .. 'pack' .. path_sep
+  self.sumneko_root_path = G.cache_dir .. 'nvim_lsp' .. path_sep .. 'lua-language-server' .. path_sep
+  self.sumneko_binary = G.sumneko_root_path .. 'bin' .. path_sep .. 'Linux' .. path_sep .. 'lua-language-server'
+  self.sumneko_binary = G.sumneko_root_path .. '/bin/Linux/lua-language-server'
 end
 
 --- Check if a file or directory exists in this path
@@ -85,6 +86,6 @@ function G.has_key(tab, idx)
   return false
 end
 
-G.load_variables()
+G:load_variables()
 
 return G

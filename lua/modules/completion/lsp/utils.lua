@@ -13,7 +13,6 @@ function M.format()
   vim.api.nvim_command(command)
   end
   vim.api.nvim_command('augroup END')
-  -- vim.api.nvim_buf_set_keymap(0, 'n', '<leader>vF', '<cmd>lua vim.lsp.buf.formatting()<cr>', opts)
 end
 
 function M.leader_buf_map(bufnr, key, command, opts)

@@ -53,6 +53,7 @@ function config.saga()
 end
 
 function config.vim_vsnip()
+local G = require 'core.global'
   vim.g["vsnip_snippet_dir"] = G.vim_path .. "snippets"
 end
 

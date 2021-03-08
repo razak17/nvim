@@ -170,6 +170,14 @@
 		],
 		"description": "Folding Region End"
 	},
+	"Log to the console with cl": {
+		"prefix": "cl",
+		"body": [
+			"console.log($1);",
+			"$0"
+		],
+		"description": "Log to the console"
+	},
 	"Log to the console": {
 		"prefix": "log",
 		"body": [

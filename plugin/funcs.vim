@@ -59,7 +59,7 @@ if !exists('g:vscode')
   endfunction
 
   nnoremap <silent> <Leader>d  :call <SID>DellThisBuf()<CR>
-  nnoremap <silent> <Leader>ld :call <SID>DellAllBuf()<CR> :q!<CR>
+  nnoremap <silent> <Leader>lE :call <SID>DellAllBuf()<CR> :q!<CR>
   nnoremap <silent> <Leader>lh :call <SID>DelToLeft()<CR>
   nnoremap <silent> <Leader>lx :call <SID>DelAllExcept()<CR>
 endif
