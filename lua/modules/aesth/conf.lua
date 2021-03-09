@@ -126,7 +126,6 @@ function config.hijackc()
   vim.cmd('autocmd ColorScheme * highlight Normal ctermbg=NONE guibg=NONE')
 
   vim.cmd('hi LineNr ctermbg=NONE guibg=NONE ')
-  vim.cmd('hi Comment cterm=italic')
 
   vim.cmd("highlight! LSPCurlyUnderline gui=undercurl")
   vim.cmd("highlight! LSPUnderline gui=underline")
@@ -138,6 +137,9 @@ function config.hijackc()
   vim.cmd("highlight! LspDiagnosticsSignInformation guifg=lightblue")
   vim.cmd("highlight! LspDiagnosticsSignWarning guifg=darkyellow")
   vim.cmd("highlight! LspDiagnosticsSignError guifg=red")
+  vim.cmd('hi Comment cterm=italic')
+
+  vim.cmd[[ hi! TelescopeBorder guifg=#ffff00 ]]
 end
 
 function config.ColorMyPencils()

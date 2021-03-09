@@ -67,8 +67,6 @@ function config.emmet()
 end
 
 function config.nvim_telescope()
-  vim.cmd("hi TelescopeBorder guifg=#7ec0ee")
-
   require('telescope').setup({
     defaults = {
       prompt_prefix = "> ",
