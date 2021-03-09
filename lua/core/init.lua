@@ -11,7 +11,6 @@ local load_core = function()
   if vim.fn.exists('g:vscode') == 0 then
     require('core.autocmd')
     require('keymap')
-    require('modules.aesth.conf').hijackc()
 
     vim.cmd [[command! PlugCompile lua require('core.pack').compile()]]
     vim.cmd [[command! PlugInstall lua require('core.pack').install()]]

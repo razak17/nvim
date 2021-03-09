@@ -39,14 +39,14 @@ local buf = {
   {"BufEnter", "*", "set fo-=c fo-=r fo -=o"},
   {"BufEnter", "*.py", "setlocal tabstop=4 shiftwidth=4"},
   {"BufEnter", "*.md", "setlocal tabstop=4 shiftwidth=4 conceallevel=2"},
-  {"BufEnter,CursorMoved,CursorMovedI,WinEnter,CompleteDone,InsertEnter,InsertLeave",
+  --[[ {"BufEnter,CursorMoved,CursorMovedI,WinEnter,CompleteDone,InsertEnter,InsertLeave",
     "*",
     "lua require'modules.lang.utils'.ts_virt_text()"
   },
   {"BufEnter,CursorMoved,CursorMovedI,WinEnter,CompleteDone,InsertEnter,InsertLeave",
     "*",
     "lua require'modules.lang.utils'.ts_hl_groups()"
-  },
+  }, ]]
 }
 
 local niceties = {

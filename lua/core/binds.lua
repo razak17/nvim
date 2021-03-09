@@ -154,7 +154,7 @@ if vim.fn.exists('g:vscode') == 0 then
   -- Folds
   nnoremap("<S-Return>", "zMzvzt")
   nnoremap("<Leader>afl", "za")
-  nnoremap("<Leader>afe", ":lua require 'modules.editor.conf'.ToggleFold()<CR>")
+  nnoremap("<Leader>afe", ":lua require 'internal.utils'.ToggleFold()<CR>")
 
   -- Other remaps
   nnoremap('<Leader><CR>', ':so ~/.config/nvim/init.vim<CR>')
@@ -169,7 +169,7 @@ if vim.fn.exists('g:vscode') == 0 then
   nnoremap('<leader>ev',   ':ToggleTsVtx<CR>')
   nnoremap('<leader>eh',   ':ToggleTsHlGroups<CR>')
   nnoremap('<Leader>vwm',  ':lua require "modules.aesth.conf".ColorMyPencils()<CR>')
-  nnoremap('<Leader>aT',   ':lua require "modules.editor.conf".OpenTerminal()<CR>')
-  nnoremap('<leader>ao',   ':lua require "modules.editor.conf".TurnOnGuides()<CR>')
-  nnoremap('<leader>ae',   ':lua require "modules.editor.conf".TurnOffGuides()<CR>')
+  nnoremap('<Leader>aT',   ':lua require "internals.utils".OpenTerminal()<CR>')
+  nnoremap('<leader>ao',   ':lua require "internals.utils".TurnOnGuides()<CR>')
+  nnoremap('<leader>ae',   ':lua require "internals.utils".TurnOffGuides()<CR>')
 end

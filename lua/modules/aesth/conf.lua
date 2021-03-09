@@ -7,6 +7,12 @@ function config.bg()
   vim.g.onedark_hide_endofbuffer=1
   vim.g.onedark_terminal_italics=1
   vim.g.onedark_termcolors=256
+
+  vim.cmd('autocmd ColorScheme * highlight clear SignColumn')
+  vim.cmd('autocmd ColorScheme * highlight Normal ctermbg=NONE guibg=NONE')
+
+  vim.cmd('hi LineNr ctermbg=NONE guibg=NONE ')
+  vim.cmd('hi Comment cterm=italic')
 end
 
 function config.galaxyline()
@@ -16,11 +22,9 @@ end
 function config.nvim_bufferline()
   require('bufferline').setup{
     options = {
-      show_buffer_close_icons = false,
       close_icon = ' ',
       buffer_close_icon = '',
       modified_icon = "",
-      -- modified_icon = '✥',
       tab_size = 0,
       left_trunc_marker = '',
       right_trunc_marker = '',
@@ -29,9 +33,9 @@ function config.nvim_bufferline()
       enforce_regular_tabs = false,
       diagnostics =  "nvim_lsp",
       separator_style = { ' ', ' ' },
-      --[[ diagnostics_indicator = function(count, level)
+      diagnostics_indicator = function(count, level)
       return ''
-      end, ]]
+      end,
       filter = function(buf_num)
         if not vim.t.is_help_tab then return nil end
         return vim.api.nvim_buf_get_option(buf_num, "buftype") == "help"
@@ -96,16 +100,12 @@ function config.nvim_tree()
   }
   vim.g.nvim_tree_icons = {
     default =  '',
-    -- default =  '',
     symlink = '',
     git = {
       unstaged = "✗",
-      -- unstaged = "✚",
       staged = "✓",
-      -- unmerged = "",
-      unmerged =  "≠",
-      -- renamed = "➜",
-      renamed =  "≫",
+      unmerged = "",
+      renamed = "➜",
       untracked = "★"
     },
   }
@@ -113,38 +113,7 @@ function config.nvim_tree()
   vim.cmd[[ highlight NvimTreeFolderIcon guibg=NONE ]]
 end
 
-function config.illuminate()
-  vim.g.Illuminate_ftblacklist = { 'javascript', 'typescript', 'jsx', 'tsx', 'html' }
-end
-
-function config.cool()
-  vim.g.CoolTotalMatches = 1
-end
-
-function config.hijackc()
-  vim.cmd('autocmd ColorScheme * highlight clear SignColumn')
-  vim.cmd('autocmd ColorScheme * highlight Normal ctermbg=NONE guibg=NONE')
-
-  vim.cmd('hi LineNr ctermbg=NONE guibg=NONE ')
-
-  vim.cmd("highlight! LSPCurlyUnderline gui=undercurl")
-  vim.cmd("highlight! LSPUnderline gui=underline")
-  vim.cmd("highlight! LspDiagnosticsUnderlineHint gui=undercurl")
-  vim.cmd("highlight! LspDiagnosticsUnderlineInformation gui=undercurl")
-  vim.cmd("highlight! LspDiagnosticsUnderlineWarning gui=undercurl guisp=darkyellow")
-  vim.cmd("highlight! LspDiagnosticsUnderlineError gui=undercurl guisp=red")
-  vim.cmd("highlight! LspDiagnosticsSignHint guifg=yellow")
-  vim.cmd("highlight! LspDiagnosticsSignInformation guifg=lightblue")
-  vim.cmd("highlight! LspDiagnosticsSignWarning guifg=darkyellow")
-  vim.cmd("highlight! LspDiagnosticsSignError guifg=red")
-  vim.cmd('hi Comment cterm=italic')
-
-  vim.cmd[[ hi! TelescopeBorder guifg=#ffff00 ]]
-end
-
 function config.ColorMyPencils()
-  vim.o['background']='dark'
-  -- vim.cmd('highlight ColorColumn ctermbg=0 guibg=cyan')
   vim.cmd('highlight Normal guibg=none')
   vim.cmd('highlight LineNr guifg=#4dd2dc')
   vim.cmd('highlight netrwDir guifg=#aeacec')

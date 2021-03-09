@@ -27,11 +27,15 @@ aesth['kyazdani42/nvim-tree.lua'] = {
 }
 
 aesth['romainl/vim-cool'] = {
-  config = conf.cool
+  config = function ()
+    vim.g.CoolTotalMatches = 1
+  end
 }
 
 aesth['RRethy/vim-illuminate'] = {
-  config = conf.illuminate
+  config = function ()
+    vim.g.Illuminate_ftblacklist = { 'javascript', 'typescript', 'jsx', 'tsx', 'html' }
+  end
 }
 
 

@@ -53,7 +53,7 @@ function config.saga()
 end
 
 function config.vim_vsnip()
-local G = require 'core.global'
+  local G = require 'core.global'
   vim.g["vsnip_snippet_dir"] = G.vim_path .. "snippets"
 end
 
@@ -105,6 +105,8 @@ function config.nvim_telescope()
       },
     }
   })
+
+  vim.cmd [[ hi! TelescopeBorder guifg=#51afef ]]
 
   require('telescope').load_extension('fzy_native')
   require'telescope'.load_extension('dotfiles')

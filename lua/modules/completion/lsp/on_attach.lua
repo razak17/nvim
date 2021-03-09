@@ -9,6 +9,17 @@ local on_attach = function(client, bufnr)
 
   local opts = { noremap=true, silent=true }
 
+  vim.cmd("highlight! LSPCurlyUnderline gui=undercurl")
+  vim.cmd("highlight! LSPUnderline gui=underline")
+  vim.cmd("highlight! LspDiagnosticsUnderlineHint gui=undercurl")
+  vim.cmd("highlight! LspDiagnosticsUnderlineInformation gui=undercurl")
+  vim.cmd("highlight! LspDiagnosticsUnderlineWarning gui=undercurl guisp=darkyellow")
+  vim.cmd("highlight! LspDiagnosticsUnderlineError gui=undercurl guisp=red")
+  vim.cmd("highlight! LspDiagnosticsSignHint guifg=yellow")
+  vim.cmd("highlight! LspDiagnosticsSignInformation guifg=lightblue")
+  vim.cmd("highlight! LspDiagnosticsSignWarning guifg=darkyellow")
+  vim.cmd("highlight! LspDiagnosticsSignError guifg=red")
+
   -- Binds
   local function buf_map(key, command)
     leader_buf_map(bufnr, key, command, opts)

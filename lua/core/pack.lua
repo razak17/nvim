@@ -103,4 +103,3 @@ function plugins.auto_compile()
 end
 
 return plugins
-

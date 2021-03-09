@@ -2,14 +2,13 @@ local vim = vim
 local g = vim.g
 local G = require "core.global"
 
--- Netrw
 -- Set map leader (needs to be set before mappings)
 if vim.fn.exists('g:vscode') == 0 then
   g["mapleader"] = " "
   g["maplocalleader"] = " "
   g["completion_confirm_key"] = ""
 end
-  -------------------- VARIABLES ----------------------------
+
 if G.isdir(G.python3 .. "bin") then
     g["python3_host_prog"] = G.python3 .. "bin" .. G.path_sep .. "python"
 end
