@@ -33,12 +33,10 @@ local buf = {
   {"BufWritePre", "MERGE_MSG", "setlocal noundofile"},
   {"BufEnter,WinEnter,InsertLeave", "*", "set cursorline"},
   {"BufLeave,WinLeave,InsertEnter", "*", "set nocursorline"},
-  {"BufWritePre", "*", ":call TrimWhitespace()"},
+  {"BufWritePre", "*", ":call autocmds#TrimWhitespace()"},
   {"BufWritePost,BufRead", "*.md", "setlocal spell"},
   {"BufWritePre", "*.tmp,*.bak", "setlocal noundofile"},
   {"BufEnter", "*", "set fo-=c fo-=r fo -=o"},
-  {"BufEnter", "*.py", "setlocal tabstop=4 shiftwidth=4"},
-  {"BufEnter", "*.md", "setlocal tabstop=4 shiftwidth=4 conceallevel=2"},
   --[[ {"BufEnter,CursorMoved,CursorMovedI,WinEnter,CompleteDone,InsertEnter,InsertLeave",
     "*",
     "lua require'modules.lang.utils'.ts_virt_text()"
@@ -81,13 +79,6 @@ local win = {
 }
 
 local ft = {
-  {"FileType", "python", "noremap <F10> :lua require 'internal.quickrun'.RunPython()<CR>"},
-  {"FileType", "typescript", "noremap <F10> :lua require 'internal.quickrun'.RunTS()<CR>"},
-  {"FileType", "javascript", "noremap <F10> :lua require 'internal.quickrun'.RunJS()<CR>"},
-  {"FileType", "c", "noremap <F10> :!gcc % -o %< && ./%< <CR>"},
-  {"FileType", "cpp", "noremap <F10> :!g++ % -o %< && ./%< <CR>"},
-  {"FileType", "cpp", "setlocal tabstop=4 shiftwidth=4"},
-  {"FileType", "c", "setlocal tabstop=4 shiftwidth=4"},
   {"FocusLost", "*", "silent! wall"},
   {"BufEnter,FocusGained", "*", "silent! checktime"},
   {"FileType", "dashboard", "set showtabline=0 | autocmd WinLeave <buffer> set showtabline=2"};

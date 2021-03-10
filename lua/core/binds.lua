@@ -3,7 +3,8 @@ local mp = require('keymap.map')
 local nnoremap, inoremap, vnoremap, xnoremap, tnoremap = mp.nnoremap, mp.inoremap, mp.vnoremap, mp.xnoremap, mp.tnoremap
 
 -- Basic Key Mappings
-nnoremap('n', 'j')
+nnoremap('k', 'gk')
+nnoremap('n', 'gj')
 nnoremap('z', 'u')
 
 -- Yank from cursor position to end-of-line
@@ -160,7 +161,7 @@ if vim.fn.exists('g:vscode') == 0 then
   nnoremap('<Leader><CR>', ':so ~/.config/nvim/init.vim<CR>')
   nnoremap('<Leader>,',    ':e ~/.config/nvim/lua/core/init.lua<CR>')
   nnoremap('<Leader>.',    ':e $MYVIMRC<CR>')
-  nnoremap('<leader>ar',   ':call EmptyRegisters()<CR>')
+  nnoremap('<leader>ar',   ':call autocmds#EmptyRegisters()<CR>')
   nnoremap('<Leader>Ic',   ':checkhealth<CR>')
   nnoremap('<Leader>Ie',   ':TSInstallInfo<CR>')
   nnoremap('<Leader>Li',  ':LspInfo<CR>')
@@ -169,7 +170,7 @@ if vim.fn.exists('g:vscode') == 0 then
   nnoremap('<leader>ev',   ':ToggleTsVtx<CR>')
   nnoremap('<leader>eh',   ':ToggleTsHlGroups<CR>')
   nnoremap('<Leader>vwm',  ':lua require "modules.aesth.conf".ColorMyPencils()<CR>')
-  nnoremap('<Leader>aT',   ':lua require "internals.utils".OpenTerminal()<CR>')
-  nnoremap('<leader>ao',   ':lua require "internals.utils".TurnOnGuides()<CR>')
-  nnoremap('<leader>ae',   ':lua require "internals.utils".TurnOffGuides()<CR>')
+  nnoremap('<Leader>aT',   ':lua require "internal.utils".OpenTerminal()<CR>')
+  nnoremap('<leader>ao',   ':lua require "internal.utils".TurnOnGuides()<CR>')
+  nnoremap('<leader>ae',   ':lua require "internal.utils".TurnOffGuides()<CR>')
 end

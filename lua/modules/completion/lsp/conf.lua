@@ -18,18 +18,14 @@ vim.cmd('command! -nargs=0 LspLog call v:lua.open_lsp_log()')
 vim.cmd('command! -nargs=0 LspRestart call v:lua.reload_lsp()')
 
 vim.lsp.handlers["textDocument/publishDiagnostics"] =
-  vim.lsp.with(
-  vim.lsp.diagnostic.on_publish_diagnostics,
-  {
+  vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
     underline = true,
     update_in_insert = true,
     virtual_text = {
       spacing = 4,
-      -- prefix = '',
     },
     signs = true,
-  }
-)
+})
 
 -- List of servers where config = {on_attach = on_attach}
 local simple_lsp = {
@@ -45,10 +41,6 @@ function M.setup()
   -- List of installed LSP servers
   if fn.executable("bash-language-server") == 1 then
     lspconfig.bashls.setup {
-      cmd = {
-        "bash-language-server",
-        "start"
-      },
       cmd_env = {
         GLOB_PATTERN = "*@(.sh|.zsh|.inc|.bash|.command)"
       },
@@ -69,16 +61,10 @@ function M.setup()
 
   if fn.executable("css-languageserver") == 1 then
     lspconfig.cssls.setup {
-      filetypes = {
-        "css",
-        "less",
-        "sass",
-        "scss"
-      },
       root_dir = function(fname)
       return lspconfig.util.root_pattern(
         '.git',
-        'package.json'
+        '.gitignore'
       )(fname)
       or lspconfig.util.find_git_ancestor(fname) or vim.loop.os_homedir()
       end,
@@ -119,18 +105,6 @@ function M.setup()
 
   if fn.executable("typescript-language-server") == 1 then
     lspconfig.tsserver.setup {
-      cmd = {
-        "typescript-language-server",
-        "--stdio"
-      },
-      filetypes = {
-        "javascript",
-        "javascriptreact",
-        "javascript.jsx",
-        "typescript",
-        "typescriptreact",
-        "typescript.tsx"
-      },
       root_dir = function(fname)
       return lspconfig.util.root_pattern(
         'tsconfig.json',
@@ -162,10 +136,10 @@ function M.setup()
       '--cross-file-rename'
       },
       init_options = {
-      clangdFileStatus = true,
-      usePlaceholders = true,
-      completeUnimported = true,
-      semanticHighlighting = true
+        clangdFileStatus = true,
+        usePlaceholders = true,
+        completeUnimported = true,
+        semanticHighlighting = true
       },
       on_attach = on_attach
     }
@@ -173,8 +147,6 @@ function M.setup()
 
   if vim.fn.executable("pyls") > 0 then
     lspconfig.pyls.setup {
-      cmd = {'pyls'},
-      filetypes = {'python'},
       preload = {enabled = true},
       pydocstyle = {
         enabled = true,
@@ -194,14 +166,8 @@ function M.setup()
       on_attach = on_attach,
       root_dir = function(fname)
       return lspconfig.util.root_pattern(
-        'pyproject.toml',
-        'setup.py',
-        'setup.cfg',
         'requirements.txt',
         'reqs.txt',
-        'mypy.ini',
-        '.pylintrc',
-        '.flake8rc',
         '.gitignore'
       )(fname)
       or lspconfig.util.find_git_ancestor(fname) or vim.loop.os_homedir()

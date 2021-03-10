@@ -1,17 +1,4 @@
 if !exists('g:vscode')
-  fun! TrimWhitespace()
-    let l:save = winsaveview()
-    keeppatterns %s/\s\+$//e
-    call winrestview(l:save)
-  endfun
-
-  fun! EmptyRegisters()
-    let regs=split('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/-"', '\zs')
-    for r in regs
-        call setreg(r, [])
-    endfor
-  endfun
-
   fun! s:buf_filt(inc_cur)
     fun! s:filt_fn(include_current, idx, val)
       if !bufexists(a:val) ||
