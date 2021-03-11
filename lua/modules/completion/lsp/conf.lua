@@ -1,7 +1,7 @@
-local vim, fn, ex = vim, vim.fn, vim.fn.executable
+local vim, ex = vim, vim.fn.executable
 local lspconfig = require 'lspconfig'
-local on_attach = require 'modules.completion.lsp.on_attach'
 local rpattern = require'lspconfig.util'.root_pattern
+local on_attach = require 'modules.completion.lsp.on_attach'
 local G = require 'core.global'
 local M = {}
 
@@ -17,7 +17,7 @@ local simple_lsp = {
 
 function M.setup()
   -- List of installed LSP servers
-  if fn.executable("bash-language-server") == 1 then
+  if ex("bash-language-server") == 1 then
     lspconfig.bashls.setup {
       cmd_env = {
         GLOB_PATTERN = "*@(.sh|.zsh|.inc|.bash|.command)"
@@ -30,14 +30,14 @@ function M.setup()
     }
   end
 
-  if fn.executable("css-languageserver") == 1 then
+  if ex("css-languageserver") == 1 then
     lspconfig.cssls.setup {
       root_dir = rpattern('.git', '.gitignore', '.git', vim.fn.getcwd()),
       on_attach = on_attach
     }
   end
 
-  if fn.executable("vscode-json-languageserver") == 1 then
+  if ex("vscode-json-languageserver") == 1 then
     lspconfig.jsonls.setup {
       cmd = {
         "vscode-json-languageserver",
@@ -47,7 +47,7 @@ function M.setup()
     }
   end
 
-  if fn.executable(G.sumneko_binary) == 1 then
+  if ex(G.sumneko_binary) == 1 then
     lspconfig.sumneko_lua.setup {
       on_attach = on_attach,
       cmd = {G.sumneko_binary, "-E", G.sumneko_root_path .. "/main.lua"},
@@ -76,14 +76,14 @@ function M.setup()
   end
 
   for lsp, executable in pairs(simple_lsp) do
-    if vim.fn.executable(executable) == 1 then
+    if ex(executable) == 1 then
       lspconfig[lsp].setup {
         on_attach = on_attach
       }
     end
   end
 
-  if vim.fn.executable("clangd") > 0 then
+  if ex("clangd") > 0 then
     lspconfig.clangd.setup {
       cmd = {
       'clangd',
@@ -103,7 +103,7 @@ function M.setup()
     }
   end
 
-  if vim.fn.executable("pyls") > 0 then
+  if ex("pyls") > 0 then
     lspconfig.pyls.setup {
       jedi_completion = {enabled = true},
       jedi_hover = {enabled = true},
@@ -123,20 +123,20 @@ function M.setup()
     }
   end
 
-  if vim.fn.executable("gopls") > 0 then
+  if ex("gopls") > 0 then
     lspconfig.gopls.setup {
       on_attach = on_attach
     }
   end
 
-  if vim.fn.executable("rust-analyzer") > 0 then
+  if ex("rust-analyzer") > 0 then
     lspconfig.rust_analyzer.setup {
       checkOnSave = {
           command = "clippy"
       },
       on_attach = on_attach
     }
-  elseif vim.fn.executable("rls") > 0 then
+  elseif ex("rls") > 0 then
     lspconfig.rls.setup {
       on_attach = on_attach
     }

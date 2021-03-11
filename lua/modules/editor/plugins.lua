@@ -2,7 +2,7 @@ local conf = require('modules.editor.conf')
 local editor = {}
 
 editor['norcalli/nvim-colorizer.lua'] = {
-  ft = { 'html','css','sass','vim','typescript','typescriptreact'},
+  -- ft = { 'html','css','sass','vim','typescript','typescriptreact'},
   config = conf.nvim_colorizer
 }
 

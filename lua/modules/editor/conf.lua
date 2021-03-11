@@ -1,19 +1,22 @@
 local config = {}
 
-function config.colorizer()
-  require 'colorizer'.setup(
-      {'*';},
-      {
-        RGB      = true;         -- #RGB hex codes
-        RRGGBB   = true;         -- #RRGGBB hex codes
-        names    = false;         -- "Name" codes like Blue
-        RRGGBBAA = true;         -- #RRGGBBAA hex codes
-        rgb_fn   = true;         -- CSS rgb() and rgba() functions
-        hsl_fn   = true;         -- CSS hsl() and hsla() functions
-        css      = true;         -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
-        css_fn   = true;         -- Enable all CSS *functions*: rgb_fn, hsl_fn
-      }
-  )
+function config.nvim_colorizer()
+  require 'colorizer'.setup {
+    '*';
+    css = { rgb_fn = true; };
+    scss = { rgb_fn = true; };
+    sass = { rgb_fn = true; };
+    stylus = { rgb_fn = true; };
+    vim = { names = true; };
+    tmux = { names = false; };
+    'javascript';
+    'javascriptreact';
+    'typescript';
+    'typescriptreact';
+    html = {
+      mode = 'foreground';
+    }
+  }
 end
 
 function config.autopairs()
