@@ -34,7 +34,6 @@ local buf = {
   {"BufEnter,WinEnter,InsertLeave", "*", "set cursorline"},
   {"BufLeave,WinLeave,InsertEnter", "*", "set nocursorline"},
   {"BufWritePre", "*", ":call autocmds#TrimWhitespace()"},
-  {"BufWritePost,BufRead", "*.md", "setlocal spell"},
   {"BufWritePre", "*.tmp,*.bak", "setlocal noundofile"},
   {"BufEnter", "*", "set fo-=c fo-=r fo -=o"},
   --[[ {"BufEnter,CursorMoved,CursorMovedI,WinEnter,CompleteDone,InsertEnter,InsertLeave",

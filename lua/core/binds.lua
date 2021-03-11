@@ -116,23 +116,6 @@ if vim.fn.exists('g:vscode') == 0 then
   nnoremap('<Leader>aV', 'gg"+VG')
   nnoremap('<Leader>aD', 'gg"+VGd')
 
-  -- Replace type  with Option<Type>
-  vnoremap("<leader>mO", [[:s/\%V\(.*\)\%V/Option<\1>/ <CR> <bar> :nohlsearch<CR>]])
-  -- Replace type  with Result<Type, Err>
-  vnoremap("<leader>mR", [[:s/\%V\(.*\)\%V/Result<\1, Err>/ <CR> <bar> :nohlsearch<CR>]])
-  -- Replace val  with Some(val)
-  vnoremap("<leader>ms", [[:s/\%V\(.*\)\%V/Some(\1)/ <CR> <bar> :nohlsearch<CR>]])
-  -- Replace val  with Ok(val)
-  vnoremap("<leader>mo", [[:s/\%V\(.*\)\%V/Ok(\1)/ <CR> <bar> :nohlsearch<CR>]])
-  -- Replace val  with Err(val)
-  vnoremap("<leader>me", [[:s/\%V\(.*\)\%V/Err(\1)/ <CR> <bar> :nohlsearch<CR>]])
-  -- Replace val  with (val)
-  vnoremap("<leader>m(", [[:s/\%V\(.*\)\%V/(\1)/ <CR> <bar> :nohlsearch<CR>]])
-  -- Replace val  with 'val'
-  vnoremap("<leader>m'", [[:s/\%V\(.*\)\%V/'\1'/ <CR> <bar> :nohlsearch<CR>]])
-  -- Replace val  with "val"
-  vnoremap("<leader>m\"", [[:s/\%V\(.*\)\%V/"\1"/ <CR> <bar> :nohlsearch<CR>]])
-
   -- actions
   nnoremap("<Leader>=", "<C-W>=")
   nnoremap("<Leader>ah", "<C-W>s")
