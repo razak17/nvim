@@ -41,7 +41,7 @@ opt('o', 'showbreak', '↳  ')
 opt('o', 'pumblend', 10)                       -- transparency for the popup-menu
 opt('o', 'lazyredraw', true)                   -- Don't redraw screen while running macros
 opt('w', 'signcolumn', 'yes')                  -- Always show the signcolumn, otherwise it would shift the text each time
-opt('w', 'colorcolumn', '80')                  -- Highlight the 80th character limit
+opt('w', 'colorcolumn', '+1')                  -- Highlight the 80th character limit
 opt('w', 'number', true)                       -- Print line number
 opt('w', 'relativenumber', true)               -- Show line number relative to current line
 opt('w', 'list', true)                         -- Show hidden characters

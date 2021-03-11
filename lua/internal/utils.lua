@@ -19,27 +19,24 @@ function config.OpenTerminal()
 end
 
 function config.TurnOnGuides()
-  vim.cmd('set rnu')
-  vim.cmd('set nu ')
-  vim.cmd('set signcolumn=yes')
-  vim.cmd('set colorcolumn=80')
+  vim.wo.number = true
+  vim.wo.relativenumber = true
+  vim.wo.signcolumn = "yes"
+  vim.wo.colorcolumn = "+1"
 end
 
 function config.TurnOffGuides()
-  vim.cmd('set nornu')
-  vim.cmd('set nonu')
-  vim.cmd('set signcolumn=no')
-  vim.cmd('set colorcolumn=800')
+  vim.wo.number = false
+  vim.wo.relativenumber = false
+  vim.wo.signcolumn = "no"
+  vim.wo.colorcolumn = ""
 end
 
 function config.ToggleFold()
-  local fold = false
-  if fold then
-    fold = false
-    vim.cmd('set foldenable')
-  else
-    fold = true
+  if vim.wo.foldenable == true then
     vim.cmd('set nofoldenable')
+  else
+    vim.cmd('set foldenable')
   end
 end
 

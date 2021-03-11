@@ -1,18 +1,11 @@
+local api = vim.api
 local M = {}
+
 function M.get_cursor_pos() return {vim.fn.line('.'), vim.fn.col('.')} end
 
-function M.format()
-  local defs = {}
-  local ext = vim.fn.expand('%:e')
-  table.insert(defs,{"BufWritePre", '*.'..ext ,
-  "lua vim.lsp.buf.formatting_sync(nil,1000)"})
-  vim.api.nvim_command('augroup lsp_before_save')
-  vim.api.nvim_command('autocmd!')
-  for _, def in ipairs(defs) do
-  local command = table.concat(vim.tbl_flatten{'autocmd', def}, ' ')
-  vim.api.nvim_command(command)
-  end
-  vim.api.nvim_command('augroup END')
+function M.mapper(key, command)
+  local options = { noremap=true, silent=true }
+  api.nvim_buf_set_keymap(0, 'n', key, command, options)
 end
 
 function M.leader_buf_map(bufnr, key, command, opts)
@@ -20,7 +13,21 @@ function M.leader_buf_map(bufnr, key, command, opts)
   if opts then
     options = vim.tbl_extend('force', options, opts)
   end
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>' ..key, "<cmd>lua " .. command .. "<CR>", opts)
+  api.nvim_buf_set_keymap(bufnr, 'n', '<leader>' ..key, "<cmd>lua " .. command .. "<CR>", opts)
+end
+
+function M.format()
+  local defs = {}
+  local ext = vim.fn.expand('%:e')
+  table.insert(defs,{"BufWritePre", '*.'..ext ,
+  "lua vim.lsp.buf.formatting_sync(nil,1000)"})
+  api.nvim_command('augroup lsp_before_save')
+  api.nvim_command('autocmd!')
+  for _, def in ipairs(defs) do
+  local command = table.concat(vim.tbl_flatten{'autocmd', def}, ' ')
+  api.nvim_command(command)
+  end
+  api.nvim_command('augroup END')
 end
 
 function M.debounce(func, timeout)

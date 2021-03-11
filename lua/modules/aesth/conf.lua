@@ -8,11 +8,11 @@ function config.bg()
   vim.g.onedark_terminal_italics=1
   vim.g.onedark_termcolors=256
 
-  vim.cmd('autocmd ColorScheme * highlight clear SignColumn')
-  vim.cmd('autocmd ColorScheme * highlight Normal ctermbg=NONE guibg=NONE')
-
-  vim.cmd('hi LineNr ctermbg=NONE guibg=NONE ')
-  vim.cmd('hi Comment cterm=italic')
+  vim.cmd [[ autocmd ColorScheme * highlight clear SignColumn ]]
+  vim.cmd [[ autocmd ColorScheme * highlight Normal ctermbg=NONE guibg=NONE ]]
+  vim.cmd [[ hi ColorColumn ctermbg=lightgrey ]]
+  vim.cmd [[ hi LineNr ctermbg=NONE guibg=NONE ]]
+  vim.cmd [[ hi Comment cterm=italic ]]
 end
 
 function config.galaxyline()
@@ -33,7 +33,7 @@ function config.nvim_bufferline()
       enforce_regular_tabs = false,
       diagnostics =  "nvim_lsp",
       separator_style = { ' ', ' ' },
-      diagnostics_indicator = function(count, level)
+      diagnostics_indicator = function()
       return ''
       end,
       filter = function(buf_num)
@@ -114,13 +114,14 @@ function config.nvim_tree()
 end
 
 function config.ColorMyPencils()
-  vim.cmd('highlight Normal guibg=none')
-  vim.cmd('highlight LineNr guifg=#4dd2dc')
-  vim.cmd('highlight netrwDir guifg=#aeacec')
-  vim.cmd('highlight qfFileName guifg=#aed75f')
-  vim.cmd('hi TelescopeBorder guifg=#4dd2dc')
-  vim.cmd('hi FloatermBorder guifg=#4dd2dc')
-  vim.cmd("hi TsVirtText guifg=#4dd2dc")
+  vim.cmd [[ hi ColorColumn ctermbg=cyan guibg=cyan ]]
+  vim.cmd [[ hi Normal guibg=none ]]
+  vim.cmd [[ hi LineNr guifg=#4dd2dc ]]
+  vim.cmd [[ hi netrwDir guifg=#aeacec ]]
+  vim.cmd [[ hi qfFileName guifg=#aed75f ]]
+  vim.cmd [[ hi TelescopeBorder guifg=#4dd2dc  ]]
+  vim.cmd [[ hi FloatermBorder guifg=#4dd2dc ]]
+  vim.cmd [[ hi TsVirtText guifg=#4dd2dc ]]
 end
 
 return config

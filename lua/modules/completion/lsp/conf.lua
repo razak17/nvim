@@ -1,31 +1,9 @@
-local vim, fn = vim, vim.fn
+local vim, fn, ex = vim, vim.fn, vim.fn.executable
 local lspconfig = require 'lspconfig'
 local on_attach = require 'modules.completion.lsp.on_attach'
+local rpattern = require'lspconfig.util'.root_pattern
 local G = require 'core.global'
 local M = {}
-
-function _G.reload_lsp()
-  vim.lsp.stop_client(vim.lsp.get_active_clients())
-  vim.cmd [[edit]]
-end
-
-function _G.open_lsp_log()
-  local path = vim.lsp.get_log_path()
-  vim.cmd("edit " .. path)
-end
-
-vim.cmd('command! -nargs=0 LspLog call v:lua.open_lsp_log()')
-vim.cmd('command! -nargs=0 LspRestart call v:lua.reload_lsp()')
-
-vim.lsp.handlers["textDocument/publishDiagnostics"] =
-  vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-    underline = true,
-    update_in_insert = true,
-    virtual_text = {
-      spacing = 4,
-    },
-    signs = true,
-})
 
 -- List of servers where config = {on_attach = on_attach}
 local simple_lsp = {
@@ -48,26 +26,13 @@ function M.setup()
         "sh",
         "zsh"
       },
-      root_dir = function(fname)
-      return lspconfig.util.root_pattern(
-        '.git',
-        '.gitignore'
-      )(fname)
-      or lspconfig.util.find_git_ancestor(fname) or vim.loop.os_homedir()
-      end,
       on_attach = on_attach
     }
   end
 
   if fn.executable("css-languageserver") == 1 then
     lspconfig.cssls.setup {
-      root_dir = function(fname)
-      return lspconfig.util.root_pattern(
-        '.git',
-        '.gitignore'
-      )(fname)
-      or lspconfig.util.find_git_ancestor(fname) or vim.loop.os_homedir()
-      end,
+      root_dir = rpattern('.git', '.gitignore', '.git', vim.fn.getcwd()),
       on_attach = on_attach
     }
   end
@@ -103,16 +68,9 @@ function M.setup()
     }
   end
 
-  if fn.executable("typescript-language-server") == 1 then
+  if ex("typescript-language-server") == 1 then
     lspconfig.tsserver.setup {
-      root_dir = function(fname)
-      return lspconfig.util.root_pattern(
-        'tsconfig.json',
-        'package.json',
-          '.git'
-      )(fname)
-      or lspconfig.util.find_git_ancestor(fname) or vim.loop.os_homedir()
-      end,
+      root_dir = rpattern('tsconfig.json', 'package.json', '.git', vim.fn.getcwd()),
       on_attach = on_attach
     }
   end
@@ -147,31 +105,21 @@ function M.setup()
 
   if vim.fn.executable("pyls") > 0 then
     lspconfig.pyls.setup {
-      preload = {enabled = true},
-      pydocstyle = {
-        enabled = true,
-        match = '(?!test_).*\\.py',
-        matchDir = '[^\\.].*',
-      },
-      pycodestyle = {
-        enabled = true,
-        hangClosing = true,
-        maxLineLength = 80
-      },
-      pylint =  { enabled = false },
-      mccabe = {enabled = true, threshold = 15},
-      rope_completion = {enabled = true},
-      pyflakes = {enabled = true},
-      yapf = {enabled = true},
+      jedi_completion = {enabled = true},
+      jedi_hover = {enabled = true},
+      jedi_references = {enabled = true},
+      jedi_signature_help = {enabled = true},
+      jedi_symbols = {enabled = true, all_scopes = true},
+      yapf = {enabled = false},
+      pylint = {enabled = false},
+      pyflakes = {enabled = false},
+      pycodestyle = {enabled = false},
+      pydocstyle = {enabled = false},
+      mccabe = {enabled = false},
+      preload = {enabled = false},
+      rope_completion = {enabled = false},
       on_attach = on_attach,
-      root_dir = function(fname)
-      return lspconfig.util.root_pattern(
-        'requirements.txt',
-        'reqs.txt',
-        '.gitignore'
-      )(fname)
-      or lspconfig.util.find_git_ancestor(fname) or vim.loop.os_homedir()
-      end
+      root_dir = rpattern('requirements.txt', '.gitignore', '.git', vim.fn.getcwd()),
     }
   end
 

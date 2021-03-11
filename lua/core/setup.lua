@@ -42,21 +42,21 @@ local function nodeHostInit()
     -- install neovim node host
     if not G.exists(G.node) then
       local needs_install = {
-        "neovim",
+        "typescript",
+        "typescript-language-server",
         "bash-language-server",
-        "vscode-css-languageserver-bin",
         "dockerfile-language-server-nodejs",
         "graphql-language-service-cli",
+        "vim-language-server",
+        "yaml-language-server",
+        "vscode-css-languageserver-bin",
         "vscode-html-languageserver-bin",
         "vscode-json-languageserver",
         "sql-language-server",
         "svelte-language-server",
-        "typescript",
-        "typescript-language-server",
-        "vim-language-server",
         "vls",
-        "yaml-language-server"
       }
+      print("Installing lsp servers...")
       for _, v in pairs(needs_install) do
         os.execute("npm install -g " .. v)
       end

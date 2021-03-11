@@ -4,6 +4,19 @@ local opts = { expr = true }
 require('keymap.conf')
 require('keymap.conf').which_key()
 
+-- Lsp
+nnoremap('<Leader>Li',  ':LspInfo<CR>')
+nnoremap('<Leader>Ll',  ':LspLog<CR>')
+nnoremap('<Leader>Lr',  ':LspRestart<CR>')
+
+-- Undo tree
+nnoremap("<Leader>au", ":UndotreeToggle<CR>")
+
+-- TS
+nnoremap('<Leader>Ie',   ':TSInstallInfo<CR>')
+nnoremap('<leader>ev',   ':ToggleTsVtx<CR>')
+nnoremap('<leader>eh',   ':ToggleTsHlGroups<CR>')
+
 -- vsnip
 xmap("<C-l>", "<Plug>(vsnip-select-text)")
 xmap("<C-x>", "<Plug>(vsnip-cut-text)")
@@ -113,6 +126,5 @@ nnoremap('<Leader>fgc', ':lua require("telescope.builtin").git_commits()<CR>')
 nnoremap('<Leader>fgC', ':lua require("telescope.builtin").git_bcommits()<CR>')
 nnoremap('<Leader>fgf', ':lua require("telescope.builtin").git_files()<CR>')
 nnoremap('<Leader>fgs', ':lua require("telescope.builtin").git_status()<CR>')
-
 -- Extensions
 nnoremap('<leader>fee', ':lua require("telescope").extensions.packer.plugins()<CR>')

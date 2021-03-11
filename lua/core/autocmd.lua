@@ -14,6 +14,8 @@ local function augroups(definitions)
 end
 
 local buf = {
+  -- Disable autocommenting on newline and retrieve last position
+  { "BufWinEnter", "*", [[exec "normal! g'\""]]},
   -- Reload vim config automatically
   {"BufWritePost", [[$VIM_PATH/{*.vim,*.yaml,vimrc} nested source $MYVIMRC | redraw]]},
   -- Reload Vim script automatically if setlocal autoread

@@ -76,8 +76,11 @@ function config.which_key()
       E = "delete all buffers and exit",
       f = {
         name = "+Fold",
+        l = "under curosr",
         e = "toggle",
-        l = "line",
+        r = "recursive cursor",
+        o = "open all",
+        x = "close all",
       },
       F = "resize 90%",
       h = "horizontal split",

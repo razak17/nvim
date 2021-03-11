@@ -123,7 +123,6 @@ if vim.fn.exists('g:vscode') == 0 then
   nnoremap("<Leader>aN", ":set nonumber!<CR>")
   nnoremap("<Leader>aR", ":set norelativenumber!<CR>")
   nnoremap("<Leader>as", ":wq!<CR>")
-  nnoremap("<Leader>au", ":UndotreeToggle<CR>")
   nnoremap("<Leader>av", "<C-W>v")
   nnoremap("<Leader>ax", ":wq!<CR>")
   nnoremap("<Leader>az", ":q!<CR>")
@@ -137,7 +136,10 @@ if vim.fn.exists('g:vscode') == 0 then
 
   -- Folds
   nnoremap("<S-Return>", "zMzvzt")
-  nnoremap("<Leader>afl", "za")
+  nnoremap("<Leader>afr", "zA") -- Recursively toggle
+  nnoremap("<Leader>afl", "za") -- Toggle fold under the cursor
+  nnoremap("<Leader>afo", "zR") -- Open all folds
+  nnoremap("<Leader>afx", "zM") -- Close all folds
   nnoremap("<Leader>afe", ":lua require 'internal.utils'.ToggleFold()<CR>")
 
   -- Other remaps
@@ -146,12 +148,6 @@ if vim.fn.exists('g:vscode') == 0 then
   nnoremap('<Leader>.',    ':e $MYVIMRC<CR>')
   nnoremap('<leader>ar',   ':call autocmds#EmptyRegisters()<CR>')
   nnoremap('<Leader>Ic',   ':checkhealth<CR>')
-  nnoremap('<Leader>Ie',   ':TSInstallInfo<CR>')
-  nnoremap('<Leader>Li',  ':LspInfo<CR>')
-  nnoremap('<Leader>Ll',  ':LspLog<CR>')
-  nnoremap('<Leader>Lr',  ':LspRestart<CR>')
-  nnoremap('<leader>ev',   ':ToggleTsVtx<CR>')
-  nnoremap('<leader>eh',   ':ToggleTsHlGroups<CR>')
   nnoremap('<Leader>vwm',  ':lua require "modules.aesth.conf".ColorMyPencils()<CR>')
   nnoremap('<Leader>aT',   ':lua require "internal.utils".OpenTerminal()<CR>')
   nnoremap('<leader>ao',   ':lua require "internal.utils".TurnOnGuides()<CR>')

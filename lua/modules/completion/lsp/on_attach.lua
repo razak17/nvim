@@ -1,25 +1,27 @@
-local vim = vim
-local map = vim.api.nvim_buf_set_keymap;
 local utils = require 'modules.completion.lsp.utils'
 local saga = require 'lspsaga'
-local leader_buf_map = utils.leader_buf_map
+
+local hl_cmds = [[
+  highlight! LSPCurlyUnderline gui=undercurl
+  highlight! LSPUnderline gui=underline
+  highlight! LspDiagnosticsUnderlineHint gui=undercurl
+  highlight! LspDiagnosticsUnderlineInformation gui=undercurl
+  highlight! LspDiagnosticsUnderlineWarning gui=undercurl guisp=darkyellow
+  highlight! LspDiagnosticsUnderlineError gui=undercurl guisp=red
+
+  highlight! LspDiagnosticsSignHint guifg=yellow
+  highlight! LspDiagnosticsSignInformation guifg=lightblue
+  highlight! LspDiagnosticsSignWarning guifg=darkyellow
+  highlight! LspDiagnosticsSignError guifg=red
+]]
 
 local on_attach = function(client, bufnr)
   require('lspkind').init()
+  vim.api.nvim_exec(hl_cmds, false)
 
   local opts = { noremap=true, silent=true }
 
-  vim.cmd("highlight! LSPCurlyUnderline gui=undercurl")
-  vim.cmd("highlight! LSPUnderline gui=underline")
-  vim.cmd("highlight! LspDiagnosticsUnderlineHint gui=undercurl")
-  vim.cmd("highlight! LspDiagnosticsUnderlineInformation gui=undercurl")
-  vim.cmd("highlight! LspDiagnosticsUnderlineWarning gui=undercurl guisp=darkyellow")
-  vim.cmd("highlight! LspDiagnosticsUnderlineError gui=undercurl guisp=red")
-  vim.cmd("highlight! LspDiagnosticsSignHint guifg=yellow")
-  vim.cmd("highlight! LspDiagnosticsSignInformation guifg=lightblue")
-  vim.cmd("highlight! LspDiagnosticsSignWarning guifg=darkyellow")
-  vim.cmd("highlight! LspDiagnosticsSignError guifg=red")
-
+  local leader_buf_map = utils.leader_buf_map
   -- Binds
   local function buf_map(key, command)
     leader_buf_map(bufnr, key, command, opts)
@@ -36,7 +38,7 @@ local on_attach = function(client, bufnr)
   buf_map("vlsd", "vim.lsp.buf.document_symbol()")
   buf_map("vlsw", "vim.lsp.buf.workspace_symbol()")
   buf_map("vlsh", "require'lspsaga.hover'.render_hover_doc()")
-  map(bufnr, 'n', "K", "<cmd>lua require('lspsaga.hover').render_hover_doc()<CR>", opts)
+  buf_map("K",    "require'lspsaga.hover'.render_hover_doc()")
 
   -- Diagnostics
   saga.init_lsp_saga(require 'modules.completion.conf'.saga())

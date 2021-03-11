@@ -1,4 +1,4 @@
-if vim.fn.exists('g:vscode') == 0 then
+if vim.fn.has('nvim') then
   require('core.setup')
   require('core.conf')
 end
@@ -8,7 +8,7 @@ local load_core = function()
   require('core.binds')
   require('core.pack').ensure_plugins()
 
-  if vim.fn.exists('g:vscode') == 0 then
+  if vim.fn.has('nvim') then
     require('core.autocmd')
     require('keymap')
 
