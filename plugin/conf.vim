@@ -22,12 +22,6 @@ if !exists('g:vscode')
         \ . ' setlocal filetype=' . kv[0]
     endif
   endfor
-
-  " json 5 comment
-  autocmd FileType json
-                 \ syntax region Comment start="//" end="$" |
-                 \ syntax region Comment start="/\*" end="\*/" |
-                 \ setlocal commentstring=//\ %s
   augroup END
 
   " Filetypes names where q does :q<CR>

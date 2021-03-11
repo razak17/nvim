@@ -158,8 +158,8 @@ if vim.fn.exists('g:vscode') == 0 then
   nnoremap("<Leader>afe", ":lua require 'internal.utils'.ToggleFold()<CR>")
 
   -- Other remaps
-  nnoremap('<Leader><CR>', ':so ~/.config/nvim/init.vim<CR>')
-  nnoremap('<Leader>,',    ':e ~/.config/nvim/lua/core/init.lua<CR>')
+  nnoremap('<Leader><CR>', ':so ~/env/nvim/init.vim<CR>')
+  nnoremap('<Leader>,',    ':e ~/env/nvim/lua/core/init.lua<CR>')
   nnoremap('<Leader>.',    ':e $MYVIMRC<CR>')
   nnoremap('<leader>ar',   ':call autocmds#EmptyRegisters()<CR>')
   nnoremap('<Leader>Ic',   ':checkhealth<CR>')

@@ -12,6 +12,7 @@ end
 if G.isdir(G.python3 .. "bin") then
     g["python3_host_prog"] = G.python3 .. "bin" .. G.path_sep .. "python"
 end
+
 if G.exists(G.node) then
   g["node_host_prog"] = G.node
 end

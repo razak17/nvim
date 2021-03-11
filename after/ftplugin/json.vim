@@ -13,3 +13,8 @@ if s:bufname && s:bufname ==# 'jsonschema'
   setlocal softtabstop=2
   setlocal tabstop=4
 endif
+
+  " json 5 comment
+syntax region Comment start="//" end="$" |
+syntax region Comment start="/\*" end="\*/" |
+setlocal commentstring=//\ %s
