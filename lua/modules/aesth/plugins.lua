@@ -26,17 +26,5 @@ aesth['kyazdani42/nvim-tree.lua'] = {
   requires = {'kyazdani42/nvim-web-devicons'}
 }
 
-aesth['romainl/vim-cool'] = {
-  config = function ()
-    vim.g.CoolTotalMatches = 1
-  end
-}
-
-aesth['RRethy/vim-illuminate'] = {
-  config = function ()
-    vim.g.Illuminate_ftblacklist = { 'javascript', 'typescript', 'jsx', 'tsx', 'html' }
-  end
-}
-
 
 return aesth

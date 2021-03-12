@@ -2,7 +2,6 @@ local conf = require('modules.editor.conf')
 local editor = {}
 
 editor['norcalli/nvim-colorizer.lua'] = {
-  -- ft = { 'html','css','sass','vim','typescript','typescriptreact'},
   config = conf.nvim_colorizer
 }
 
@@ -14,14 +13,27 @@ editor['voldikss/vim-floaterm'] = {
   config = conf.floaterm
 }
 
-editor['tpope/vim-fugitive'] = {
-  config = conf.fugitive
-}
-
 editor['b3nj5m1n/kommentary'] = {
-  config = conf.kommentary
+  config = function ()
+    require('kommentary.config').configure_language("default", {
+      prefer_single_line_comments = true,
+    })
+  end
 }
 
+editor['romainl/vim-cool'] = {
+  config = function ()
+    vim.g.CoolTotalMatches = 1
+  end
+}
+
+editor['RRethy/vim-illuminate'] = {
+  config = function ()
+    vim.g.Illuminate_ftblacklist = { 'javascript', 'typescript', 'jsx', 'tsx', 'html' }
+  end
+}
+
+editor['tpope/vim-fugitive'] = {}
 
 return editor
 
