@@ -2,13 +2,13 @@ local api = vim.api
 local M = {}
 
 local fts = {
-  "c", "cpp", "css", "graphql", "go", "haskell", "html", "javascript", "jsdoc",
+  "c", "cpp", "css", "erlang", "graphql", "go", "haskell", "html", "javascript", "jsdoc",
   "julia", "json", "html", "lua", "python", "rust", "sh", "toml",
   "tsx", "typescript", "yaml"
 }
 
 local parsers = {
-  "bash", "c", "cpp", "css", "graphql", "go", "haskell", "html", "javascript", "jsdoc",
+  "bash", "c", "cpp", "css", "erlang", "graphql", "go", "haskell", "html", "javascript", "jsdoc",
   "julia", "json", "html", "lua", "python", "rust", "toml",
   "tsx", "typescript", "yaml"
 }

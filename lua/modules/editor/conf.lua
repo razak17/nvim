@@ -9,6 +9,7 @@ function config.nvim_colorizer()
     stylus = { rgb_fn = true; };
     vim = { names = true; };
     tmux = { names = false; };
+    lua = { names = false; };
     'javascript';
     'javascriptreact';
     'typescript';
@@ -35,9 +36,7 @@ end
 
 function config.floaterm()
   vim.g.floaterm_borderchars = {'─', '│', '─', '│', '╭', '╮', '╯', '╰'}
-  -- vim.g.floaterm_borderchars = {'═', '║', '═', '║', '╔', '╗', '╝', '╚'}
 
-  -- Set floaterm window's background to black
   vim.cmd [[ hi FloatermBorder guifg=#51afef ]]
   vim.cmd [[ autocmd FileType floaterm setlocal winblend=0 ]]
 
@@ -48,7 +47,6 @@ function config.floaterm()
   -- vim.g.floaterm_keymap_kill   = '<F10>'
   vim.g.floaterm_keymap_toggle = '<F12>'
 
-  -- Floaterm
   vim.g.floaterm_gitcommit='floaterm'
   vim.g.floaterm_autoinsert=1
   vim.g.floaterm_width=0.8

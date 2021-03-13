@@ -51,6 +51,7 @@ nnoremap("<Leader>FD", ":Fardo<CR>")
 -- Bufferline
 nnoremap('<Leader>bb', ':BufferLineMovePrev<CR>')
 nnoremap('<Leader>bn', ':BufferLineMoveNext<CR>')
+nnoremap('gb', ':BufferLinePick<CR>')
 
 -- Packer
 nnoremap('<Leader>Pc', ':PlugCompile<CR>')

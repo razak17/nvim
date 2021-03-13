@@ -1,5 +1,6 @@
 local utils = require 'modules.completion.lsp.utils'
 local saga = require 'lspsaga'
+local api = vim.api
 
 local hl_cmds = [[
   highlight! LSPCurlyUnderline gui=undercurl
@@ -17,11 +18,12 @@ local hl_cmds = [[
 
 local on_attach = function(client, bufnr)
   require('lspkind').init()
-  vim.api.nvim_exec(hl_cmds, false)
+  api.nvim_exec(hl_cmds, false)
 
   local opts = { noremap=true, silent=true }
 
   local leader_buf_map = utils.leader_buf_map
+
   -- Binds
   local function buf_map(key, command)
     leader_buf_map(bufnr, key, command, opts)
@@ -46,10 +48,12 @@ local on_attach = function(client, bufnr)
   leader_buf_map(bufnr, "vdn", "require'lspsaga.diagnostic'.lsp_jump_diagnostic_next()", opts)
   leader_buf_map(bufnr, "vdc", "require'lspsaga.diagnostic'.show_line_diagnostics()", opts)
   leader_buf_map(bufnr, 'vdl', 'vim.lsp.diagnostic.set_loclist()', opts)
-  vim.api.nvim_command("au CursorMoved * lua require 'modules.completion.lsp.utils'.show_lsp_diagnostics()")
+  -- api.nvim_command("au CursorMoved * lua require 'modules.completion.lsp.utils'.show_lsp_diagnostics()")
 
   if client.resolved_capabilities.document_formatting then
     require 'modules.completion.lsp.utils'.format()
+  elseif client.resolved_capabilities.document_range_formatting then
+    buf_map("vlf", "lua vim.lsp.buf.range_formatting()")
   end
 
   if client.config.flags then
@@ -57,13 +61,20 @@ local on_attach = function(client, bufnr)
   end
 
   if client.resolved_capabilities.document_highlight then
-    vim.api.nvim_command('augroup lsp_aucmds')
-    vim.api.nvim_command('au!')
-    vim.api.nvim_command('au CursorHold <buffer> lua vim.lsp.buf.document_highlight()')
-    vim.api.nvim_command('au CursorHoldI <buffer> lua vim.lsp.buf.document_highlight()')
-    vim.api.nvim_command('au CursorMoved <buffer> lua vim.lsp.buf.clear_references()')
-    vim.api.nvim_command('augroup END')
+    api.nvim_exec([[
+      hi LspReferenceRead cterm=bold ctermbg=red guibg=#282c34
+      hi LspReferenceText cterm=bold ctermbg=red guibg=#282c34
+      hi LspReferenceWrite cterm=bold ctermbg=red guibg=#282c34
+      augroup lsp_aucmds
+        autocmd! * <buffer>
+        au CursorHold <buffer> lua vim.lsp.buf.document_highlight()
+        au CursorHoldI <buffer> lua vim.lsp.buf.document_highlight()
+        au CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+      augroup END
+    ]], false)
   end
+
+  api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 end
 
 return on_attach

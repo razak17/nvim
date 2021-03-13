@@ -13,7 +13,7 @@ function M.leader_buf_map(bufnr, key, command, opts)
   if opts then
     options = vim.tbl_extend('force', options, opts)
   end
-  api.nvim_buf_set_keymap(bufnr, 'n', '<leader>' ..key, "<cmd>lua " .. command .. "<CR>", opts)
+  api.nvim_buf_set_keymap(bufnr, 'n', '<leader>' .. key, "<cmd>lua " .. command .. "<CR>", opts)
 end
 
 function M.format()

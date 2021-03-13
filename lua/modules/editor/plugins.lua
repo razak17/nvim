@@ -29,7 +29,7 @@ editor['romainl/vim-cool'] = {
 
 editor['RRethy/vim-illuminate'] = {
   config = function ()
-    vim.g.Illuminate_ftblacklist = { 'javascript', 'typescript', 'jsx', 'tsx', 'html' }
+    vim.g.Illuminate_ftblacklist = { 'javascript', 'typescript', 'jsx', 'tsx', 'html', 'lua' }
   end
 }
 

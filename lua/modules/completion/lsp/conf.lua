@@ -19,14 +19,17 @@ function M.setup()
   -- List of installed LSP servers
   if ex("bash-language-server") == 1 then
     lspconfig.bashls.setup {
-      cmd_env = {
-        GLOB_PATTERN = "*@(.sh|.zsh|.inc|.bash|.command)"
-      },
-      filetypes = {
-        "sh",
-        "zsh"
-      },
+      cmd_env = { GLOB_PATTERN = "*@(.sh|.zsh|.inc|.bash|.command)" },
+      filetypes = { "sh", "zsh" },
       on_attach = on_attach
+    }
+  end
+
+  if ex(G.elixirls_binary) == 1 then
+    lspconfig.elixirls.setup {
+      cmd = { G.elixirls_root_path .. ".bin/language_server.sh" },
+      root_dir = rpattern('mix.es', '.git', vim.fn.getcwd()),
+      on_attach = on_attach,
     }
   end
 

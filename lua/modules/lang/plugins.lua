@@ -16,5 +16,9 @@ lang['nvim-treesitter/nvim-treesitter-textobjects'] = {
   after = 'nvim-treesitter'
 }
 
+lang['elixir-editors/vim-elixir'] = {
+  ft = {'elixir'}
+}
+
 return lang
 
