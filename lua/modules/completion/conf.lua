@@ -88,13 +88,12 @@ function config.nvim_telescope()
       qflist_previewer = require'telescope.previewers'.vim_buffer_qflist.new,
       mappings = {
         i = {
-          ["<esc>"] = require 'telescope.actions'.close,
           ["<C-x>"] = false,
-          ["<C-e>"] = require 'telescope.actions'.select_tab,
-          ["<CR>"] = require 'telescope.actions'.select_default,
+          -- ["<CR>"] = require 'telescope.actions'.select_default,
           ["<C-b>"] = require 'telescope.actions'.move_selection_previous,
           ["<C-v>"] = require 'telescope.actions'.select_vertical,
           ["<C-i>"] = require 'telescope.actions'.select_horizontal,
+          ["<C-e>"] = require 'telescope.actions'.send_to_qflist,
         },
       },
       extensions = {

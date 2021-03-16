@@ -19,14 +19,6 @@ function config.tagalong()
   vim.g.tagalong_verbose = 1
 end
 
-function config.rooter()
-  vim.g.rooter_change_directory_for_non_project_files = 'current'
-  vim.g.rooter_patterns = {'=src', '.git', 'Makefile', '*.sln', 'build/env.sh'}
-  vim.g.rooter_manual_only = 1
-  vim.g.rooter_silent_chdir = 1
-  vim.g.rooter_resolve_links = 1
-end
-
 return config
 
 

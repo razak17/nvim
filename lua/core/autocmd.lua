@@ -14,8 +14,6 @@ local function augroups(definitions)
 end
 
 local buf = {
-  -- Disable autocommenting on newline and retrieve last position
-  { "BufWinEnter", "*", [[exec "normal! g'\""]]},
   -- Reload vim config automatically
   {"BufWritePost", [[$VIM_PATH/{*.vim,*.yaml,vimrc} nested source $MYVIMRC | redraw]]},
   -- Reload Vim script automatically if setlocal autoread
@@ -37,15 +35,16 @@ local buf = {
   {"BufLeave,WinLeave,InsertEnter", "*", "set nocursorline"},
   {"BufWritePre", "*", ":call autocmds#TrimWhitespace()"},
   {"BufWritePre", "*.tmp,*.bak", "setlocal noundofile"},
-  {"BufEnter", "*", "set fo-=c fo-=r fo -=o"},
-  --[[ {"BufEnter,CursorMoved,CursorMovedI,WinEnter,CompleteDone,InsertEnter,InsertLeave",
-    "*",
-    "lua require'modules.lang.utils'.ts_virt_text()"
-  },
-  {"BufEnter,CursorMoved,CursorMovedI,WinEnter,CompleteDone,InsertEnter,InsertLeave",
-    "*",
-    "lua require'modules.lang.utils'.ts_hl_groups()"
-  }, ]]
+  {"BufEnter", "*", "set fo-=cro"},
+  -- TODO
+  -- {"BufEnter,CursorMoved,CursorMovedI,WinEnter,CompleteDone,InsertEnter,InsertLeave",
+  --   "*",
+  --   "lua require'modules.lang.utils'.ts_virt_text()"
+  -- },
+  -- {"BufEnter,CursorMoved,CursorMovedI,WinEnter,CompleteDone,InsertEnter,InsertLeave",
+  --   "*",
+  --   "lua require'modules.lang.utils'.ts_hl_groups()"
+  -- },
 }
 
 local niceties = {

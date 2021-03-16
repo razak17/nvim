@@ -19,13 +19,14 @@ end
 function M.format()
   local defs = {}
   local ext = vim.fn.expand('%:e')
-  table.insert(defs,{"BufWritePre", '*.'..ext ,
-  "lua vim.lsp.buf.formatting_sync(nil,1000)"})
+  table.insert(
+    defs,{"BufWritePre", '*.'..ext , "lua vim.lsp.buf.formatting_sync(nil,1000)"}
+  )
   api.nvim_command('augroup lsp_before_save')
   api.nvim_command('autocmd!')
   for _, def in ipairs(defs) do
-  local command = table.concat(vim.tbl_flatten{'autocmd', def}, ' ')
-  api.nvim_command(command)
+    local command = table.concat(vim.tbl_flatten{'autocmd', def}, ' ')
+    api.nvim_command(command)
   end
   api.nvim_command('augroup END')
 end

@@ -142,6 +142,10 @@ if vim.fn.exists('g:vscode') == 0 then
   nnoremap("<Leader>afx", "zM") -- Close all folds
   nnoremap("<Leader>afe", ":lua require 'internal.utils'.ToggleFold()<CR>")
 
+  -- qflist
+  nnoremap("<C-k>", ":cnext<CR>")
+  nnoremap("<C-b>", ":cprev<CR>")
+
   -- Other remaps
   nnoremap('<Leader><CR>', ':so ~/env/nvim/init.vim<CR>')
   nnoremap('<Leader>,',    ':e ~/env/nvim/lua/core/init.lua<CR>')

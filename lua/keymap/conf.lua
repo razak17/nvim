@@ -102,6 +102,13 @@ function config.which_key()
       name = "+Buffer",
       n = "move next",
       b = "move previous",
+      d = {
+        name = "+Delete buffer",
+        A = "all",
+        h = "to left",
+        x = "all except current",
+      },
+
       s = "word",
     },
     c = {
@@ -214,12 +221,6 @@ function config.which_key()
       c = "check health",
       e = "treesitter",
     },
-    l = {
-      name = "+Delete buffer",
-      d = "all",
-      h = "to left",
-      x = "all except current",
-    },
     L = {
       name = "+Lsp utils",
       i = "info",
@@ -292,14 +293,13 @@ function config.which_key()
         },
         h = "show hover doc",
         i = "implementation",
-        p = "peek Definition",
         r = "references",
         R = "rename",
         S = "signature",
         s = {
             name = "+Symbols",
             d = "document symbols",
-            -- w = "workspace symbols"
+            w = "workspace symbols"
         },
         t = "type definition",
       },

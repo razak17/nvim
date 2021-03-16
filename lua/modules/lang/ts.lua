@@ -3,14 +3,12 @@ local M = {}
 
 local fts = {
   "c", "cpp", "css", "erlang", "graphql", "go", "haskell", "html", "javascript", "jsdoc",
-  "julia", "json", "html", "lua", "python", "rust", "sh", "toml",
-  "tsx", "typescript", "yaml"
+  "julia", "json", "lua", "python", "rust", "sh", "toml", "tsx", "typescript", "yaml"
 }
 
 local parsers = {
   "bash", "c", "cpp", "css", "erlang", "graphql", "go", "haskell", "html", "javascript", "jsdoc",
-  "julia", "json", "html", "lua", "python", "rust", "toml",
-  "tsx", "typescript", "yaml"
+  "julia", "json", "lua", "python", "rust", "toml", "tsx", "typescript", "yaml"
 }
 
 local synoff = function()
@@ -28,7 +26,6 @@ function M.setup()
     },
     incremental_selection = {
       enable = true,
-      disable = {},
       keymaps = {
         init_selection = "<leader>en",
         scope_incremental = "<leader>em",

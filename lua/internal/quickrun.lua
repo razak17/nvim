@@ -13,4 +13,8 @@ function config.RunJS()
   api.nvim_command('exec "! node %"')
 end
 
+function config.RunEX()
+  api.nvim_command('exec "! elixir %"')
+end
+
 return config

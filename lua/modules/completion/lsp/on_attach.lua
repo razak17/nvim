@@ -35,25 +35,23 @@ local on_attach = function(client, bufnr)
   buf_map("vlR",  "require'lspsaga.rename'.rename()")
   buf_map("vli",  "vim.lsp.buf.implementation()")
   buf_map("vlt",  "vim.lsp.buf.type_definition()")
-  buf_map("vlp",  "vim.lsp.buf.peek_definition()")
   buf_map("vlr",  "vim.lsp.buf.references()")
   buf_map("vlsd", "vim.lsp.buf.document_symbol()")
   buf_map("vlsw", "vim.lsp.buf.workspace_symbol()")
-  buf_map("vlsh", "require'lspsaga.hover'.render_hover_doc()")
-  buf_map("K",    "require'lspsaga.hover'.render_hover_doc()")
+  api.nvim_buf_set_keymap(bufnr, 'n', "K", "<cmd>lua require'lspsaga.hover'.render_hover_doc()<CR>", opts)
 
   -- Diagnostics
   saga.init_lsp_saga(require 'modules.completion.conf'.saga())
-  leader_buf_map(bufnr, "vdb", "require'lspsaga.diagnostic'.lsp_jump_diagnostic_prev()", opts)
-  leader_buf_map(bufnr, "vdn", "require'lspsaga.diagnostic'.lsp_jump_diagnostic_next()", opts)
-  leader_buf_map(bufnr, "vdc", "require'lspsaga.diagnostic'.show_line_diagnostics()", opts)
-  leader_buf_map(bufnr, 'vdl', 'vim.lsp.diagnostic.set_loclist()', opts)
+  buf_map("vdb", "require'lspsaga.diagnostic'.lsp_jump_diagnostic_prev()")
+  buf_map("vdn", "require'lspsaga.diagnostic'.lsp_jump_diagnostic_next()")
+  buf_map("vdc", "require'lspsaga.diagnostic'.show_line_diagnostics()")
+  buf_map('vdl', 'vim.lsp.diagnostic.set_loclist()')
   -- api.nvim_command("au CursorMoved * lua require 'modules.completion.lsp.utils'.show_lsp_diagnostics()")
 
   if client.resolved_capabilities.document_formatting then
     require 'modules.completion.lsp.utils'.format()
   elseif client.resolved_capabilities.document_range_formatting then
-    buf_map("vlf", "lua vim.lsp.buf.range_formatting()")
+    buf_map("vlf", "vim.lsp.buf.range_formatting()")
   end
 
   if client.config.flags then
@@ -62,9 +60,6 @@ local on_attach = function(client, bufnr)
 
   if client.resolved_capabilities.document_highlight then
     api.nvim_exec([[
-      hi LspReferenceRead cterm=bold ctermbg=red guibg=#282c34
-      hi LspReferenceText cterm=bold ctermbg=red guibg=#282c34
-      hi LspReferenceWrite cterm=bold ctermbg=red guibg=#282c34
       augroup lsp_aucmds
         autocmd! * <buffer>
         au CursorHold <buffer> lua vim.lsp.buf.document_highlight()

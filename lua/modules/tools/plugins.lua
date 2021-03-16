@@ -11,10 +11,6 @@ tools['AndrewRadev/tagalong.vim'] = {
   config = conf.tagalong
 }
 
-tools['airblade/vim-rooter'] = {
-  config = conf.rooter
-}
-
 tools['mbbill/undotree'] = {}
 
 tools['tweekmonster/startuptime.vim'] = {

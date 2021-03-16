@@ -16,7 +16,6 @@ local simple_lsp = {
 }
 
 function M.setup()
-  -- List of installed LSP servers
   if ex("bash-language-server") == 1 then
     lspconfig.bashls.setup {
       cmd_env = { GLOB_PATTERN = "*@(.sh|.zsh|.inc|.bash|.command)" },
@@ -28,7 +27,7 @@ function M.setup()
   if ex(G.elixirls_binary) == 1 then
     lspconfig.elixirls.setup {
       cmd = { G.elixirls_root_path .. ".bin/language_server.sh" },
-      root_dir = rpattern('mix.es', '.git', vim.fn.getcwd()),
+      elixirls = { dialyzerEnabled = false },
       on_attach = on_attach,
     }
   end
