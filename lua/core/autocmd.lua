@@ -36,15 +36,6 @@ local buf = {
   {"BufWritePre", "*", ":call autocmds#TrimWhitespace()"},
   {"BufWritePre", "*.tmp,*.bak", "setlocal noundofile"},
   {"BufEnter", "*", "set fo-=cro"},
-  -- TODO
-  -- {"BufEnter,CursorMoved,CursorMovedI,WinEnter,CompleteDone,InsertEnter,InsertLeave",
-  --   "*",
-  --   "lua require'modules.lang.utils'.ts_virt_text()"
-  -- },
-  -- {"BufEnter,CursorMoved,CursorMovedI,WinEnter,CompleteDone,InsertEnter,InsertLeave",
-  --   "*",
-  --   "lua require'modules.lang.utils'.ts_hl_groups()"
-  -- },
 }
 
 local niceties = {
@@ -82,9 +73,7 @@ local ft = {
   {"FocusLost", "*", "silent! wall"},
   {"BufEnter,FocusGained", "*", "silent! checktime"},
   {"FileType", "dashboard", "set showtabline=0 | autocmd WinLeave <buffer> set showtabline=2"};
-  {"BufNewFile,BufRead","*.toml"," setf toml"},
 }
-
 
 local plug = {
   {"BufWritePost","*.lua","lua require('core.pack').auto_compile()"},
