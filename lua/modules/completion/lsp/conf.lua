@@ -93,6 +93,40 @@ function M.setup(enhance_attach)
     }
   end
 
+  if ex("efm-langserver") then
+    -- lua
+    local luaFormat = {
+      formatCommand = "lua-format -i --no-keep-simple-function-one-line --column-limit=80",
+      formatStdin = true
+    }
+
+    -- JavaScript/React/TypeScript
+    local prettier = {formatCommand = "prettier --stdin-filepath ${INPUT}", formatStdin = true}
+    local eslint = {
+      lintCommand = "eslint -f unix --stdin --stdin-filename ${INPUT}",
+      lintIgnoreExitCode = true,
+      lintStdin = true,
+      lintFormats = {"%f:%l:%c: %m"},
+      formatCommand = "eslint --fix-to-stdout --stdin --stdin-filename=${INPUT}",
+      formatStdin = true
+    }
+
+    lspconfig.efm.setup {
+      on_attach = enhance_attach,
+      root_dir = rpattern('.git', '.gitignore', vim.fn.getcwd()),
+      init_options = { documentFormatting = true, codeAction = false },
+      filetypes = {"lua", "python", "javascriptreact", "javascript", "sh", "html", "css", "json", "yaml"},
+      settings = {
+        rootMarkers = {".git/"},
+        languages = {
+          lua = {luaFormat},
+          javascriptreact = {prettier, eslint},
+          javascript = {prettier, eslint},
+        }
+      }
+    }
+  end
+
   local simple_lsp = {
     gopls = "gopls",
     jsonls = "vscode-json-languageserver",

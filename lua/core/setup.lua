@@ -37,6 +37,16 @@ local function pythonvenvInit()
     end
 end
 
+local function luaInit()
+  if fn.executable('luarocks') then
+    os.execute('luarocks install --server=https://luarocks.org/dev luaformatter')
+  end
+
+  if fn.executable('go') then
+    os.execute("go get github.com/mattn/efm-langserver")
+  end
+end
+
 local function nodeHostInit()
   if fn.executable("npm") then
     -- install neovim node host
@@ -89,5 +99,6 @@ if vim.fn.exists('g:vscode') == 0 then
   createDirs()
   pythonvenvInit()
   nodeHostInit()
+  -- luaInit()
   packerInit()
 end
