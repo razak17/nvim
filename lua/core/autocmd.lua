@@ -39,6 +39,7 @@ local buf = {
 }
 
 local niceties = {
+  {"VimEnter", "*", ":lua require('modules.aesth.conf').MyColors()"},
   {"TextYankPost", "*", [[ silent! lua vim.highlight.on_yank({higroup="IncSearch", timeout=77})]]},
   {"Syntax", "*", [[if line('$') > 5000 | syntax sync minlines=300 | endif]]},
   {

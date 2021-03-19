@@ -20,6 +20,21 @@ function config.nvim_colorizer()
   }
 end
 
+function config.rnvimr()
+    -- Make Ranger replace netrw and be the file explorer
+  vim.g.rnvimr_ex_enable = 1
+  vim.g.rnvimr_draw_border = 1
+
+  -- Make Ranger to be hidden after picking a file
+  vim.g.rnvimr_pick_enable = 1
+
+  -- Make Neovim to wipe the buffers corresponding to the files deleted by Ranger
+  vim.g.rnvimr_bw_enable = 1
+
+  -- Change the border's color
+  vim.g.rnvimr_border_attr = {fg = 12, bg = -1}
+end
+
 function config.autopairs()
   require('nvim-autopairs').setup({
     pairs_map = {
@@ -37,7 +52,6 @@ end
 function config.floaterm()
   vim.g.floaterm_borderchars = {'─', '│', '─', '│', '╭', '╮', '╯', '╰'}
 
-  vim.cmd [[ hi FloatermBorder guifg=#51afef ]]
   vim.cmd [[ autocmd FileType floaterm setlocal winblend=0 ]]
 
   -- vim.g.floaterm_wintype='normal'

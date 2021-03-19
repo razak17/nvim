@@ -113,6 +113,17 @@ function config.nvim_tree()
   vim.cmd[[ highlight NvimTreeFolderIcon guibg=NONE ]]
 end
 
+function config.MyColors()
+  vim.cmd [[ hi ColorColumn ctermbg=cyan guibg=cyan ]]
+  vim.cmd [[ hi Normal guibg=none ]]
+  -- vim.cmd [[ hi LineNr guifg=#4dd2dc ]]
+  -- vim.cmd [[ hi netrwDir guifg=#aeacec ]]
+  -- vim.cmd [[ hi qfFileName guifg=#aed75f ]]
+  vim.cmd [[ hi TelescopeBorder guifg=#7ec0ee  ]]
+  vim.cmd [[ hi FloatermBorder guifg=#ff0000 ]]
+  -- vim.cmd [[ hi TsVirtText guifg=#4dd2dc ]]
+end
+
 function config.ColorMyPencils()
   vim.cmd [[ hi ColorColumn ctermbg=cyan guibg=cyan ]]
   vim.cmd [[ hi Normal guibg=none ]]

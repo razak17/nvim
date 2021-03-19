@@ -5,7 +5,7 @@ local G = require 'core.global'
 local M = {}
 
 function M.setup(enhance_attach)
-  if ex("bash-language-server") == 1 then
+  if ex("bash-language-server") then
     lspconfig.bashls.setup {
       cmd_env = { GLOB_PATTERN = "*@(.sh|.zsh|.inc|.bash|.command)" },
       filetypes = { "sh", "zsh" },
@@ -13,7 +13,7 @@ function M.setup(enhance_attach)
     }
   end
 
-  if ex(G.elixirls_binary) == 1 then
+  if ex(G.elixirls_binary) then
     lspconfig.elixirls.setup {
       cmd = { G.elixirls_root_path .. ".bin/language_server.sh" },
       elixirls = { dialyzerEnabled = false },
@@ -21,7 +21,7 @@ function M.setup(enhance_attach)
     }
   end
 
-  if ex(G.sumneko_binary) == 1 then
+  if ex(G.sumneko_binary) then
     lspconfig.sumneko_lua.setup {
       on_attach = enhance_attach,
       cmd = {G.sumneko_binary, "-E", G.sumneko_root_path .. "/main.lua"},
@@ -42,7 +42,7 @@ function M.setup(enhance_attach)
     }
   end
 
-  if ex("typescript-language-server") == 1 then
+  if ex("typescript-language-server") then
     lspconfig.tsserver.setup {
       root_dir = rpattern('tsconfig.json', 'package.json', '.git', vim.fn.getcwd()),
       settings = { documentFormatting = false },
@@ -59,7 +59,7 @@ function M.setup(enhance_attach)
     }
   end
 
-  if ex("clangd") > 0 then
+  if ex("clangd") then
     lspconfig.clangd.setup {
       cmd = {
       'clangd',
@@ -80,14 +80,14 @@ function M.setup(enhance_attach)
     }
   end
 
-  if ex("rust-analyzer") > 0 then
+  if ex("rust-analyzer") then
     lspconfig.rust_analyzer.setup {
       checkOnSave = {
           command = "clippy"
       },
       on_attach = enhance_attach
     }
-  elseif ex("rls") > 0 then
+  elseif ex("rls") then
     lspconfig.rls.setup {
       on_attach = enhance_attach
     }
@@ -106,7 +106,7 @@ function M.setup(enhance_attach)
   }
 
   for lsp, exec in pairs(simple_lsp) do
-    if ex(exec) == 1 then
+    if ex(exec) then
       lspconfig[lsp].setup {
         on_attach = enhance_attach,
         root_dir = rpattern('.git', '.gitignore', vim.fn.getcwd()),

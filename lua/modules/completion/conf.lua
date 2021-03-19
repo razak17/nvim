@@ -105,8 +105,6 @@ function config.nvim_telescope()
     }
   })
 
-  vim.cmd [[ hi TelescopeBorder guifg=#51afef ]]
-
   require('telescope').load_extension('fzy_native')
   require'telescope'.load_extension('dotfiles')
 end

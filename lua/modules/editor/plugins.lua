@@ -5,6 +5,10 @@ editor['norcalli/nvim-colorizer.lua'] = {
   config = conf.nvim_colorizer
 }
 
+editor['kevinhwang91/rnvimr'] = {
+  config = conf.rnvimr
+}
+
 editor['windwp/nvim-autopairs'] = {
   config = conf.autopairs
 }
