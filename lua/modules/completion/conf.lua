@@ -31,7 +31,7 @@ function config.saga()
   local opts =  {
     error_sign = '',
     warn_sign = '',
-    hint_sign = '',
+    hint_sign = '',
     infor_sign = '',
     use_saga_diagnostic_sign = true,
     dianostic_header_icon = '   ',
@@ -70,7 +70,7 @@ function config.nvim_telescope()
   require('telescope').setup({
     defaults = {
       prompt_prefix = "> ",
-      -- prompt_prefix = '🍔 ',
+      -- prompt_prefix = '🔭 ',
       sorting_strategy = "ascending",
       file_ignore_patterns = {"target/*", "node_modules/*", "dist/*", ".git/*"},
       width = 0.75,

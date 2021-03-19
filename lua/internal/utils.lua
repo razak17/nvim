@@ -6,13 +6,6 @@ function _G.dump(...)
   print(unpack(objects))
 end
 
-function config.makeScratch()
-  vim.api.nvim_command('enew') -- equivalent to :enew
-  vim.bo[0].buftype='nofile' -- set the current buffer's (buffer 0) buftype to nofile
-  vim.bo[0].bufhidden='hide'
-  vim.bo[0].swapfile=false
-end
-
 function config.OpenTerminal()
   vim.api.nvim_command("split term://zsh")
   vim.api.nvim_command("resize 10")

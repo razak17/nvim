@@ -37,7 +37,7 @@ local hl_cmds = [[
   highlight! LspDiagnosticsUnderlineWarning gui=undercurl guisp=darkyellow
   highlight! LspDiagnosticsUnderlineError gui=undercurl guisp=red
 
-  highlight! LspDiagnosticsSignHint guifg=yellow
+  highlight! LspDiagnosticsSignHint guifg=cyan
   highlight! LspDiagnosticsSignInformation guifg=lightblue
   highlight! LspDiagnosticsSignWarning guifg=darkyellow
   highlight! LspDiagnosticsSignError guifg=red
@@ -86,9 +86,6 @@ local enhance_attach = function(client, bufnr)
 
   if client.resolved_capabilities.document_highlight then
     api.nvim_exec([[
-      hi LspReferenceRead cterm=bold ctermbg=red guibg=#464646
-      hi LspReferenceText cterm=bold ctermbg=red guibg=#464646
-      hi LspReferenceWrite cterm=bold ctermbg=red guibg=#464646
       augroup lsp_document_highlight
         autocmd! * <buffer>
         au CursorHold <buffer> lua vim.lsp.buf.document_highlight()

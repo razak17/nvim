@@ -114,25 +114,25 @@ function config.nvim_tree()
 end
 
 function config.MyColors()
-  vim.cmd [[ hi ColorColumn ctermbg=cyan guibg=cyan ]]
-  vim.cmd [[ hi Normal guibg=none ]]
-  -- vim.cmd [[ hi LineNr guifg=#4dd2dc ]]
-  -- vim.cmd [[ hi netrwDir guifg=#aeacec ]]
-  -- vim.cmd [[ hi qfFileName guifg=#aed75f ]]
+  vim.cmd [[ hi cursorLineNr guifg=#c678dd ]]
+  vim.cmd [[ hi netrwDir guifg=#c678dd ]]
+  vim.cmd [[ hi qfFileName guifg=#aed75f ]]
   vim.cmd [[ hi TelescopeBorder guifg=#7ec0ee  ]]
-  vim.cmd [[ hi FloatermBorder guifg=#ff0000 ]]
-  -- vim.cmd [[ hi TsVirtText guifg=#4dd2dc ]]
+  vim.cmd [[ hi FloatermBorder guifg=#7ec0ee ]]
+  vim.cmd [[ hi WhichKey guifg=#c678dd ]]
+  vim.cmd [[ hi WhichKeySeperator guifg=#aed75f ]]
+  vim.cmd [[ hi WhichKeyGroup guifg=#7ec0ee ]]
+  vim.cmd [[ hi WhichKeyDesc guifg=#7ec0ee  ]]
 end
 
 function config.ColorMyPencils()
-  vim.cmd [[ hi ColorColumn ctermbg=cyan guibg=cyan ]]
+  vim.cmd [[ hi ColorColumn guibg=#aeacec ]]
   vim.cmd [[ hi Normal guibg=none ]]
   vim.cmd [[ hi LineNr guifg=#4dd2dc ]]
-  vim.cmd [[ hi netrwDir guifg=#aeacec ]]
-  vim.cmd [[ hi qfFileName guifg=#aed75f ]]
-  vim.cmd [[ hi TelescopeBorder guifg=#4dd2dc  ]]
-  vim.cmd [[ hi FloatermBorder guifg=#4dd2dc ]]
-  vim.cmd [[ hi TsVirtText guifg=#4dd2dc ]]
+  vim.cmd [[ hi TelescopeBorder guifg=#aeacec ]]
+  vim.cmd [[ hi FloatermBorder guifg= #aeacec ]]
+  vim.cmd [[ hi WhichKeyGroup guifg=#4dd2dc ]]
+  vim.cmd [[ hi WhichKeyDesc guifg=#4dd2dc  ]]
 end
 
 return config
