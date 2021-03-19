@@ -53,6 +53,12 @@ function M.setup(enhance_attach)
     }
   end
 
+  if ex("pyright") then
+    lspconfig.pyright.setup {
+      on_attach = enhance_attach
+    }
+  end
+
   if ex("clangd") > 0 then
     lspconfig.clangd.setup {
       cmd = {
@@ -71,26 +77,6 @@ function M.setup(enhance_attach)
         semanticHighlighting = true
       },
       on_attach = enhance_attach
-    }
-  end
-
-  if ex("pyls") > 0 then
-    lspconfig.pyls.setup {
-      jedi_completion = {enabled = true},
-      jedi_hover = {enabled = true},
-      jedi_references = {enabled = true},
-      jedi_signature_help = {enabled = true},
-      jedi_symbols = {enabled = true, all_scopes = true},
-      yapf = {enabled = false},
-      pylint = {enabled = false},
-      pyflakes = {enabled = false},
-      pycodestyle = {enabled = false},
-      pydocstyle = {enabled = false},
-      mccabe = {enabled = false},
-      preload = {enabled = false},
-      rope_completion = {enabled = false},
-      on_attach = enhance_attach,
-      root_dir = rpattern('requirements.txt', '.gitignore', '.git', vim.fn.getcwd()),
     }
   end
 
