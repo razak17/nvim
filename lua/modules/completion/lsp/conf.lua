@@ -1,26 +1,15 @@
-local vim, ex = vim, vim.fn.executable
+local ex = vim.fn.executable
 local lspconfig = require 'lspconfig'
 local rpattern = require'lspconfig.util'.root_pattern
-local on_attach = require 'modules.completion.lsp.on_attach'
 local G = require 'core.global'
 local M = {}
 
--- List of servers where config = {on_attach = on_attach}
-local simple_lsp = {
-  dockerls = "docker-langserver",
-  graphql = "graphql-lsp",
-  html = "html-languageserver",
-  svelte= "svelteserver",
-  vimls = "vim-language-server",
-  yamlls = "yaml-language-server",
-}
-
-function M.setup()
+function M.setup(enhance_attach)
   if ex("bash-language-server") == 1 then
     lspconfig.bashls.setup {
       cmd_env = { GLOB_PATTERN = "*@(.sh|.zsh|.inc|.bash|.command)" },
       filetypes = { "sh", "zsh" },
-      on_attach = on_attach
+      on_attach = enhance_attach
     }
   end
 
@@ -28,30 +17,13 @@ function M.setup()
     lspconfig.elixirls.setup {
       cmd = { G.elixirls_root_path .. ".bin/language_server.sh" },
       elixirls = { dialyzerEnabled = false },
-      on_attach = on_attach,
-    }
-  end
-
-  if ex("css-languageserver") == 1 then
-    lspconfig.cssls.setup {
-      root_dir = rpattern('.git', '.gitignore', '.git', vim.fn.getcwd()),
-      on_attach = on_attach
-    }
-  end
-
-  if ex("vscode-json-languageserver") == 1 then
-    lspconfig.jsonls.setup {
-      cmd = {
-        "vscode-json-languageserver",
-        "--stdio"
-      },
-      on_attach = on_attach
+      on_attach = enhance_attach,
     }
   end
 
   if ex(G.sumneko_binary) == 1 then
     lspconfig.sumneko_lua.setup {
-      on_attach = on_attach,
+      on_attach = enhance_attach,
       cmd = {G.sumneko_binary, "-E", G.sumneko_root_path .. "/main.lua"},
       settings = {
         Lua = {
@@ -73,22 +45,19 @@ function M.setup()
   if ex("typescript-language-server") == 1 then
     lspconfig.tsserver.setup {
       root_dir = rpattern('tsconfig.json', 'package.json', '.git', vim.fn.getcwd()),
-      on_attach = on_attach
+      settings = { documentFormatting = false },
+      on_attach = function(client, bufnr)
+        client.resolved_capabilities.document_formatting = false
+        enhance_attach(client, bufnr)
+      end
     }
-  end
-
-  for lsp, executable in pairs(simple_lsp) do
-    if ex(executable) == 1 then
-      lspconfig[lsp].setup {
-        on_attach = on_attach
-      }
-    end
   end
 
   if ex("clangd") > 0 then
     lspconfig.clangd.setup {
       cmd = {
       'clangd',
+      "--background-index",
       '--clang-tidy',
       '--completion-style=bundled',
       '--header-insertion=iwyu',
@@ -101,7 +70,7 @@ function M.setup()
         completeUnimported = true,
         semanticHighlighting = true
       },
-      on_attach = on_attach
+      on_attach = enhance_attach
     }
   end
 
@@ -120,14 +89,8 @@ function M.setup()
       mccabe = {enabled = false},
       preload = {enabled = false},
       rope_completion = {enabled = false},
-      on_attach = on_attach,
+      on_attach = enhance_attach,
       root_dir = rpattern('requirements.txt', '.gitignore', '.git', vim.fn.getcwd()),
-    }
-  end
-
-  if ex("gopls") > 0 then
-    lspconfig.gopls.setup {
-      on_attach = on_attach
     }
   end
 
@@ -136,12 +99,33 @@ function M.setup()
       checkOnSave = {
           command = "clippy"
       },
-      on_attach = on_attach
+      on_attach = enhance_attach
     }
   elseif ex("rls") > 0 then
     lspconfig.rls.setup {
-      on_attach = on_attach
+      on_attach = enhance_attach
     }
+  end
+
+  local simple_lsp = {
+    gopls = "gopls",
+    jsonls = "vscode-json-languageserver",
+    cssls = "css-languageserver",
+    dockerls = "docker-langserver",
+    graphql = "graphql-lsp",
+    html = "html-languageserver",
+    svelte= "svelteserver",
+    vimls = "vim-language-server",
+    yamlls = "yaml-language-server",
+  }
+
+  for lsp, exec in pairs(simple_lsp) do
+    if ex(exec) == 1 then
+      lspconfig[lsp].setup {
+        on_attach = enhance_attach,
+        root_dir = rpattern('.git', '.gitignore', vim.fn.getcwd()),
+      }
+    end
   end
 end
 

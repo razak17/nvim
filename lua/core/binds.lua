@@ -57,10 +57,8 @@ if vim.fn.exists('g:vscode') == 0 then
   -- Window Resize
   -- nnoremap('<Leader>cv', ':wincmd v<bar> :Ex <bar> :vertical resize 30<CR>')
   -- nnoremap('<Leader>cv', ':Sex!<CR> :vertical resize 30<CR>')
-  -- nnoremap('<Leader>ca', ':vertical resize 30<CR>')
+  nnoremap('<Leader>ca', ':vertical resize 30<CR>')
   nnoremap('<Leader>aF', ':vertical resize 90<CR>')
-  nnoremap('<Leader>+', ':vertical resize +5<CR>')
-  nnoremap('<Leader>-', ':vertical resize -5<CR>')
 
   -- Search Files
   nnoremap('<Leader>chw', ':h <C-R>=expand("<cword>")<CR><CR>')

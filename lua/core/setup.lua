@@ -58,7 +58,9 @@ local function nodeHostInit()
       }
       print("Installing lsp servers...")
       for _, v in pairs(needs_install) do
-        os.execute("npm install -g " .. v)
+        if (vim.fn.executable(v) == 0) then
+          os.execute("npm install -g " .. v)
+        end
       end
       os.execute("npm install -g neovim")
     end

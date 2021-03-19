@@ -1,4 +1,4 @@
-if !exists('g:vscode')
+if has('nvim')
   fun! s:buf_filt(inc_cur)
     fun! s:filt_fn(include_current, idx, val)
       if !bufexists(a:val) ||

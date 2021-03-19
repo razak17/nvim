@@ -1,4 +1,5 @@
-local vim, g, api, fn = vim, vim.g, vim.api, vim.fn
+local g, api, fn = vim.g, vim.api, vim.fn
+local opts = { noremap=true, silent=true }
 local config = {}
 
 function config.setup()
@@ -10,14 +11,12 @@ function config.setup()
     ['<TAB>'] =  '⇆'
   }
 
-  api.nvim_set_keymap('n', "<leader>", ":<c-u> :WhichKey '<space>'<cr>",  {noremap = true, silent = true})
-  api.nvim_set_keymap('v', "<leader>", ":<c-u> :WhichKeyVisual '<space>'<cr>",  {noremap = true, silent = true})
+  api.nvim_set_keymap('n', "<leader>", ":<c-u> :WhichKey '<space>'<CR>", opts)
+  api.nvim_set_keymap('v', "<leader>", ":<c-u> :WhichKeyVisual '<space>'<CR>", opts)
   fn['which_key#register']('<space>', 'g:which_key_map')
 
   g.which_key_map = {
     ["="] = "Balance window",
-    ["-"] = "Decrease split by 5",
-    ["+"] = "Increase split by 5",
     ["."] = "Open init.vim",
     [","] = "Open init.lua",
     ["/"] = "Comment",
@@ -71,6 +70,7 @@ function config.setup()
     },
     c = {
       name = "+Command",
+      a = "vertical resize 30",
       h = {
         name = "+Help",
         w = "word"
