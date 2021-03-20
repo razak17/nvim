@@ -2,7 +2,9 @@ local api = vim.api
 local saga = require 'lspsaga'
 local utils = require 'modules.completion.lsp.utils'
 local lspconf = require 'modules.completion.lsp.conf'
-local cmd = utils.cmd
+local hl_cmds = utils.hl_cmds
+local global_cmd = utils.global_cmd
+local document_highlight = utils.document_highlight
 local buf_map = utils.buf_map
 local leader_buf_map = utils.leader_buf_map
 
@@ -28,10 +30,24 @@ function _G.lsp_toggle_virtual_text()
                                {virtual_text = virtual_text.show})
 end
 
-cmd("LspLog", "open_lsp_log")
-cmd("LspRestart", "reload_lsp")
-cmd("LspFormatting", "lsp_formatting")
-cmd("LspToggleVirtualText", "lsp_toggle_virtual_text")
+function _G.lsp_before_save()
+    local defs = {}
+    local ext = vim.fn.expand('%:e')
+    table.insert(defs, {
+        "BufWritePre", '*.' .. ext, "lua vim.lsp.buf.formatting_sync(nil,1000)"
+    })
+    api.nvim_command('augroup lsp_before_save')
+    api.nvim_command('autocmd!')
+    for _, def in ipairs(defs) do
+        local command = table.concat(vim.tbl_flatten {'autocmd', def}, ' ')
+        api.nvim_command(command)
+    end
+    api.nvim_command('augroup END')
+end
+
+global_cmd("LspLog", "open_lsp_log")
+global_cmd("LspRestart", "reload_lsp")
+global_cmd("LspToggleVirtualText", "lsp_toggle_virtual_text")
 
 vim.lsp.handlers["textDocument/publishDiagnostics"] =
     vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
@@ -40,20 +56,6 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] =
         virtual_text = {spacing = 4},
         signs = {enable = true, priority = 20}
     })
-
-local hl_cmds = [[
-  highlight! LSPCurlyUnderline gui=undercurl
-  highlight! LSPUnderline gui=underline
-  highlight! LspDiagnosticsUnderlineHint gui=undercurl
-  highlight! LspDiagnosticsUnderlineInformation gui=undercurl
-  highlight! LspDiagnosticsUnderlineWarning gui=undercurl guisp=darkyellow
-  highlight! LspDiagnosticsUnderlineError gui=undercurl guisp=red
-
-  highlight! LspDiagnosticsSignHint guifg=cyan
-  highlight! LspDiagnosticsSignInformation guifg=lightblue
-  highlight! LspDiagnosticsSignWarning guifg=darkyellow
-  highlight! LspDiagnosticsSignError guifg=red
-]]
 
 local enhance_attach = function(client, bufnr)
     require('lspkind').init()
@@ -84,7 +86,9 @@ local enhance_attach = function(client, bufnr)
     -- api.nvim_command("au CursorMoved * lua require 'modules.completion.lsp.utils'.show_lsp_diagnostics()")
 
     if client.resolved_capabilities.document_formatting then
-        utils.lsp_before_save()
+        global_cmd("LspBeforeSave", "lsp_before_save")
+        global_cmd("LspFormatting", "lsp_formatting")
+        vim.cmd [[ LspBeforeSave ]]
     end
 
     if client.config.flags then
@@ -92,7 +96,7 @@ local enhance_attach = function(client, bufnr)
     end
 
     if client.resolved_capabilities.document_highlight then
-        utils.document_highlight()
+        document_highlight()
     end
 
     api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")

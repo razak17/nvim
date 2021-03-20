@@ -123,16 +123,17 @@ function M.setup(enhance_attach)
             root_dir = rpattern(vim.fn.getcwd()),
             init_options = {documentFormatting = true, codeAction = false},
             filetypes = {
-                "lua", "python", "javascript", "javascriptreact", "typescript",
-                "typescriptreact"
+                "lua", "javascript", "javascriptreact", "typescript",
+                "typescriptreact", "python"
             },
             settings = {
                 rootMarkers = {
-                    "package.json", "tsconfig.json", ".gitignore", ".git/"
+                    "package.json", "tsconfig.json", "requirements.txt",
+                    ".gitignore", ".git/"
                 },
                 languages = {
                     lua = {luaFormat},
-                    python = {isort, yapf},
+                    python = {yapf, isort},
                     javascript = {prettier, eslint},
                     javascriptreact = {prettier, eslint},
                     typescript = {prettier, eslint},

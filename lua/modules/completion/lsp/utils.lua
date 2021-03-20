@@ -5,7 +5,7 @@ function M.get_cursor_pos()
     return {vim.fn.line('.'), vim.fn.col('.')}
 end
 
-function M.cmd(name, func)
+function M.global_cmd(name, func)
     vim.cmd('command! -nargs=0 ' .. name .. ' call v:lua.' .. func .. '()')
 end
 
@@ -61,19 +61,18 @@ function M.document_highlight()
     ]], false)
 end
 
-function M.lsp_before_save()
-    local defs = {}
-    local ext = vim.fn.expand('%:e')
-    table.insert(defs, {
-        "BufWritePre", '*.' .. ext, "lua vim.lsp.buf.formatting_sync(nil,1000)"
-    })
-    api.nvim_command('augroup lsp_before_save')
-    api.nvim_command('autocmd!')
-    for _, def in ipairs(defs) do
-        local command = table.concat(vim.tbl_flatten {'autocmd', def}, ' ')
-        api.nvim_command(command)
-    end
-    api.nvim_command('augroup END')
-end
+M.hl_cmds = [[
+  highlight! LSPCurlyUnderline gui=undercurl
+  highlight! LSPUnderline gui=underline
+  highlight! LspDiagnosticsUnderlineHint gui=undercurl
+  highlight! LspDiagnosticsUnderlineInformation gui=undercurl
+  highlight! LspDiagnosticsUnderlineWarning gui=undercurl guisp=darkyellow
+  highlight! LspDiagnosticsUnderlineError gui=undercurl guisp=red
+
+  highlight! LspDiagnosticsSignHint guifg=cyan
+  highlight! LspDiagnosticsSignInformation guifg=lightblue
+  highlight! LspDiagnosticsSignWarning guifg=darkyellow
+  highlight! LspDiagnosticsSignError guifg=red
+]]
 
 return M
