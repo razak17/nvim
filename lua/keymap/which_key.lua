@@ -148,6 +148,7 @@ function config.setup()
         l = {
             name = "+Lsp utils",
             i = "info",
+            f = "format",
             l = "log",
             r = "restart",
             v = "toggle virtual text",

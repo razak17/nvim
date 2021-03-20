@@ -5,6 +5,10 @@ function M.get_cursor_pos()
     return {vim.fn.line('.'), vim.fn.col('.')}
 end
 
+function M.cmd(name, func)
+    vim.cmd('command! -nargs=0 ' .. name .. ' call v:lua.' .. func .. '()')
+end
+
 function M.map(bufnr, mode, key, command, opts)
     local options = {noremap = true, silent = true}
     if opts then options = vim.tbl_extend('force', options, opts) end
@@ -70,17 +74,6 @@ function M.lsp_before_save()
         api.nvim_command(command)
     end
     api.nvim_command('augroup END')
-end
-
-M.virtual_text = {}
-local virtual_text = M.virtual_text
-
-virtual_text.show = true
-
-M.toggleVirtualText = function()
-    virtual_text.show = not virtual_text.show
-    vim.lsp.diagnostic.display(vim.lsp.diagnostic.get(0, 1), 0, 1,
-                               {virtual_text = virtual_text.show})
 end
 
 return M

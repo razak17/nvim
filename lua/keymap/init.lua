@@ -54,10 +54,11 @@ end
 which_key()
 
 -- Lsp
+nnoremap('<Leader>lf', ':LspFormatting<CR>')
 nnoremap('<Leader>li', ':LspInfo<CR>')
 nnoremap('<Leader>ll', ':LspLog<CR>')
 nnoremap('<Leader>lr', ':LspRestart<CR>')
-nnoremap('<Leader>lv', ':LspVirtualTextToggle<CR>')
+nnoremap('<Leader>lv', ':LspToggleVirtualText<CR>')
 nnoremap('<Leader>lx', ':cclose<CR>')
 
 -- Undo tree

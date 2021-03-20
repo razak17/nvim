@@ -2,6 +2,9 @@ local api = vim.api
 local saga = require 'lspsaga'
 local utils = require 'modules.completion.lsp.utils'
 local lspconf = require 'modules.completion.lsp.conf'
+local cmd = utils.cmd
+local buf_map = utils.buf_map
+local leader_buf_map = utils.leader_buf_map
 
 function _G.reload_lsp()
     vim.lsp.stop_client(vim.lsp.get_active_clients())
@@ -13,8 +16,22 @@ function _G.open_lsp_log()
     vim.cmd("edit " .. path)
 end
 
-vim.cmd('command! -nargs=0 LspLog call v:lua.open_lsp_log()')
-vim.cmd('command! -nargs=0 LspRestart call v:lua.reload_lsp()')
+function _G.lsp_formatting()
+    vim.lsp.buf.formatting()
+end
+
+function _G.lsp_toggle_virtual_text()
+    local virtual_text = {}
+    virtual_text.show = true
+    virtual_text.show = not virtual_text.show
+    vim.lsp.diagnostic.display(vim.lsp.diagnostic.get(0, 1), 0, 1,
+                               {virtual_text = virtual_text.show})
+end
+
+cmd("LspLog", "open_lsp_log")
+cmd("LspRestart", "reload_lsp")
+cmd("LspFormatting", "lsp_formatting")
+cmd("LspToggleVirtualText", "lsp_toggle_virtual_text")
 
 vim.lsp.handlers["textDocument/publishDiagnostics"] =
     vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
@@ -43,9 +60,6 @@ local enhance_attach = function(client, bufnr)
 
     api.nvim_exec(hl_cmds, false)
 
-    local leader_buf_map = utils.leader_buf_map
-    local buf_map = utils.buf_map
-
     local function lbuf_map(key, command)
         leader_buf_map(bufnr, key, command)
     end
@@ -67,9 +81,6 @@ local enhance_attach = function(client, bufnr)
     lbuf_map("vdn", "require'lspsaga.diagnostic'.lsp_jump_diagnostic_next()")
     lbuf_map("vdc", "require'lspsaga.diagnostic'.show_line_diagnostics()")
     lbuf_map('vdl', 'vim.lsp.diagnostic.set_loclist()')
-    vim.cmd(
-        'command! -nargs=0 LspVirtualTextToggle lua require"modules.completion.lsp.utils".toggleVirtualText()')
-
     -- api.nvim_command("au CursorMoved * lua require 'modules.completion.lsp.utils'.show_lsp_diagnostics()")
 
     if client.resolved_capabilities.document_formatting then

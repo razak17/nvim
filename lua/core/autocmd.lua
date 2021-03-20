@@ -34,7 +34,7 @@ local buf = {
     {"BufLeave,WinLeave,InsertEnter", "*", "set nocursorline"},
     {"BufWritePre", "*", ":call autocmds#TrimWhitespace()"},
     {"BufWritePre", "*.tmp,*.bak", "setlocal noundofile"},
-    {"BufEnter", "*", "set fo-=cro"}
+    {"BufEnter,BufNewFile", "*", "set fo-=cro"}
 }
 
 local niceties = {

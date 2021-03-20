@@ -61,7 +61,10 @@ function M.setup(enhance_attach)
     end
 
     if ex("pyright") then
-        lspconfig.pyright.setup {on_attach = enhance_attach}
+        lspconfig.pyright.setup {
+            on_attach = enhance_attach,
+            root_dir = rpattern('.git', vim.fn.getcwd())
+        }
     end
 
     if ex("clangd") then
@@ -97,12 +100,15 @@ function M.setup(enhance_attach)
             formatStdin = true
         }
 
+        -- python
+        local isort = {formatCommand = "isort --quiet -", formatStdin = true}
+        local yapf = {formatCommand = "yapf --quiet", formatStdin = true}
+
         -- JavaScript/React/TypeScript
         local prettier = {
-            formatCommand = "./node_modules/.bin/prettier --stdin-filepath ${INPUT}",
+            formatCommand = "prettier --stdin-filepath ${INPUT}",
             formatStdin = true
         }
-
         local eslint = {
             lintCommand = "./node_modules/.bin/eslint -f unix --stdin --stdin-filename ${INPUT}",
             lintIgnoreExitCode = true,
@@ -114,18 +120,23 @@ function M.setup(enhance_attach)
 
         lspconfig.efm.setup {
             on_attach = enhance_attach,
-            root_dir = rpattern('.git', '.gitignore', vim.fn.getcwd()),
+            root_dir = rpattern(vim.fn.getcwd()),
             init_options = {documentFormatting = true, codeAction = false},
             filetypes = {
-                "lua", "python", "javascriptreact", "javascript", "sh", "html",
-                "css", "json", "yaml"
+                "lua", "python", "javascript", "javascriptreact", "typescript",
+                "typescriptreact"
             },
             settings = {
-                rootMarkers = {".git/"},
+                rootMarkers = {
+                    "package.json", "tsconfig.json", ".gitignore", ".git/"
+                },
                 languages = {
                     lua = {luaFormat},
+                    python = {isort, yapf},
+                    javascript = {prettier, eslint},
                     javascriptreact = {prettier, eslint},
-                    javascript = {prettier, eslint}
+                    typescript = {prettier, eslint},
+                    typescriptreact = {prettier, eslint}
                 }
             }
         }

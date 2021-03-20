@@ -47,7 +47,7 @@ au BufRead,BufNewFile *.info set ft=info
 " javascript
 au BufNewFile,BufRead yarn.lock ft=yaml
 au BufNewFile,BufRead *.js.map ft=json
-au BufNewFile,BufRead .eslintrc ft=json
+" au BufNewFile,BufRead .eslintrc ft=json
 au BufNewFile,BufRead .jscsrc ft=json
 au BufNewFile,BufRead .babelrc ft=json
 au BufNewFile,BufRead .watchmanconfig ft=json
