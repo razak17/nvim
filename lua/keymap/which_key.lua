@@ -145,7 +145,14 @@ function config.setup()
             s = 'status'
         },
         I = {name = "+Info", c = "check health", e = "treesitter"},
-        L = {name = "+Lsp utils", i = "info", l = "log", r = "restart"},
+        l = {
+            name = "+Lsp utils",
+            i = "info",
+            l = "log",
+            r = "restart",
+            v = "toggle virtual text",
+            x = "close quickfix"
+        },
         m = {
             name = "+Surround",
             O = "Type => Option<Type>",

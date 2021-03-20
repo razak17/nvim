@@ -67,6 +67,9 @@ local enhance_attach = function(client, bufnr)
     lbuf_map("vdn", "require'lspsaga.diagnostic'.lsp_jump_diagnostic_next()")
     lbuf_map("vdc", "require'lspsaga.diagnostic'.show_line_diagnostics()")
     lbuf_map('vdl', 'vim.lsp.diagnostic.set_loclist()')
+    vim.cmd(
+        'command! -nargs=0 LspVirtualTextToggle lua require"modules.completion.lsp.utils".toggleVirtualText()')
+
     -- api.nvim_command("au CursorMoved * lua require 'modules.completion.lsp.utils'.show_lsp_diagnostics()")
 
     if client.resolved_capabilities.document_formatting then

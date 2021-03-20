@@ -1,63 +1,70 @@
 local mp = require('keymap.map')
-local nmap, vmap, xmap, imap, smap, nnoremap, inoremap = mp.nmap, mp.vmap, mp.xmap, mp.imap, mp.smap, mp.nnoremap, mp.inoremap
+local nmap, vmap, xmap, imap, smap, nnoremap, inoremap = mp.nmap, mp.vmap,
+                                                         mp.xmap, mp.imap,
+                                                         mp.smap, mp.nnoremap,
+                                                         mp.inoremap
 local which_key = require('keymap.which_key').setup
 local npairs = require('nvim-autopairs')
-local opts = { expr = true }
+local opts = {expr = true}
 
-_G.completion_confirm=function()
-  if vim.fn.pumvisible() ~= 0  then
-    if vim.fn.complete_info()["selected"] ~= -1 then
-      vim.fn["compe#confirm"]()
-      return npairs.esc("")
+_G.completion_confirm = function()
+    if vim.fn.pumvisible() ~= 0 then
+        if vim.fn.complete_info()["selected"] ~= -1 then
+            vim.fn["compe#confirm"]()
+            return npairs.esc("")
+        else
+            vim.fn.nvim_select_popupmenu_item(0, false, false, {})
+            vim.fn["compe#confirm"]()
+            return npairs.esc("<c-n>")
+        end
     else
-      vim.fn.nvim_select_popupmenu_item(0, false, false,{})
-      vim.fn["compe#confirm"]()
-      return npairs.esc("<c-n>")
+        return npairs.check_break_line_char()
     end
-  else
-    return npairs.check_break_line_char()
-  end
 end
 
-_G.tab=function()
-  if vim.fn.pumvisible() ~= 0  then
-    return npairs.esc("<C-n>")
-  else
-    if vim.fn["vsnip#available"](1) ~= 0 then
-      vim.fn.feedkeys(string.format('%c%c%c(vsnip-expand-or-jump)', 0x80, 253, 83))
-      return npairs.esc("")
+_G.tab = function()
+    if vim.fn.pumvisible() ~= 0 then
+        return npairs.esc("<C-n>")
     else
-      return npairs.esc("<Tab>")
+        if vim.fn["vsnip#available"](1) ~= 0 then
+            vim.fn.feedkeys(string.format('%c%c%c(vsnip-expand-or-jump)', 0x80,
+                                          253, 83))
+            return npairs.esc("")
+        else
+            return npairs.esc("<Tab>")
+        end
     end
-  end
 end
 
-_G.s_tab=function()
-  if vim.fn.pumvisible() ~= 0  then
-    return npairs.esc("<C-p>")
-  else
-    if vim.fn["vsnip#jumpable"](-1) ~= 0 then
-      vim.fn.feedkeys(string.format('%c%c%c(vsnip-jump-prev)', 0x80, 253, 83))
-      return npairs.esc("")
+_G.s_tab = function()
+    if vim.fn.pumvisible() ~= 0 then
+        return npairs.esc("<C-p>")
     else
-      return npairs.esc("<C-h>")
+        if vim.fn["vsnip#jumpable"](-1) ~= 0 then
+            vim.fn.feedkeys(string.format('%c%c%c(vsnip-jump-prev)', 0x80, 253,
+                                          83))
+            return npairs.esc("")
+        else
+            return npairs.esc("<C-h>")
+        end
     end
-  end
 end
 
 --  Which Key
 which_key()
 
 -- Lsp
-nnoremap('<Leader>Li',  ':LspInfo<CR>')
-nnoremap('<Leader>Ll',  ':LspLog<CR>')
-nnoremap('<Leader>Lr',  ':LspRestart<CR>')
+nnoremap('<Leader>li', ':LspInfo<CR>')
+nnoremap('<Leader>ll', ':LspLog<CR>')
+nnoremap('<Leader>lr', ':LspRestart<CR>')
+nnoremap('<Leader>lv', ':LspVirtualTextToggle<CR>')
+nnoremap('<Leader>lx', ':cclose<CR>')
 
 -- Undo tree
 nnoremap("<Leader>au", ":UndotreeToggle<CR>")
 
 -- TS
-nnoremap('<Leader>Ie',   ':TSInstallInfo<CR>')
+nnoremap('<Leader>Ie', ':TSInstallInfo<CR>')
 
 -- vsnip
 xmap("<C-l>", "<Plug>(vsnip-select-text)")
@@ -68,8 +75,10 @@ imap("<Tab>", "v:lua.tab()", opts)
 imap("<S-Tab>", "v:lua.s_tab()", opts)
 
 nnoremap('<Leader>cs', ':VsnipOpen<CR> 1<CR><CR>')
-imap("<C-l>", "vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'", opts)
-smap("<C-l>", "vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'", opts)
+imap("<C-l>", "vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'",
+     opts)
+smap("<C-l>", "vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'",
+     opts)
 imap('<C-y>', "vsnip#expandable() ? '<Plug>(vsnip-expand)' : '<C-space>'", opts)
 smap('<C-y>', "vsnip#expandable() ? '<Plug>(vsnip-expand)' : '<C-space>'", opts)
 
@@ -80,10 +89,10 @@ nnoremap('<Leader>cf', ':NvimTreeFindFile<CR>')
 
 -- Compe
 inoremap("<C-Space>", "compe#complete()", opts)
-inoremap("<CR> ",     "compe#confirm('<CR>')", opts)
-inoremap("<C-e>",     "compe#close('<C-e>')", opts)
-inoremap("<C-f>",     "compe#scroll({ 'delta': +4 })", opts)
-inoremap("<C-d>",     "compe#scroll({ 'delta': -4 })", opts)
+inoremap("<CR> ", "compe#confirm('<CR>')", opts)
+inoremap("<C-e>", "compe#close('<C-e>')", opts)
+inoremap("<C-f>", "compe#scroll({ 'delta': +4 })", opts)
+inoremap("<C-d>", "compe#scroll({ 'delta': -4 })", opts)
 
 -- Far
 nnoremap("<Leader>Ff", ":Farr --source=vimgrep<CR>")
@@ -134,8 +143,9 @@ nmap("<leader>a/", "<Plug>kommentary_motion_default")
 vmap("<leader>/", "<Plug>kommentary_visual_default")
 
 -- Telescope
-nnoremap('<Leader>ff',  ':lua require("telescope.builtin").find_files()<CR>')
-nnoremap('<Leader>frc', ':Telescope dotfiles path='..os.getenv("HOME")..'/env/nvim'..'<CR>')
+nnoremap('<Leader>ff', ':lua require("telescope.builtin").find_files()<CR>')
+nnoremap('<Leader>frc', ':Telescope dotfiles path=' .. os.getenv("HOME") ..
+             '/env/nvim' .. '<CR>')
 -- Commands
 nnoremap('<Leader>fce', ':lua require"telescope.builtin".planets{}<CR>')
 nnoremap('<Leader>fcA', ':lua require("telescope.builtin").autocommands()<CR>')
@@ -143,23 +153,30 @@ nnoremap('<Leader>fcb', ':lua require("telescope.builtin").buffers()<CR>')
 nnoremap('<Leader>fcc', ':lua require("telescope.builtin").commands()<CR>')
 nnoremap('<Leader>fcf', ':lua require("telescope.builtin").builtin()<CR>')
 nnoremap('<Leader>fch', ':lua require("telescope.builtin").help_tags()<CR>')
-nnoremap('<Leader>fcH', ':lua require("telescope.builtin").command_history()<CR>')
+nnoremap('<Leader>fcH',
+         ':lua require("telescope.builtin").command_history()<CR>')
 nnoremap('<Leader>fck', ':lua require("telescope.builtin").keymaps()<CR>')
 nnoremap('<Leader>fcl', ':lua require("telescope.builtin").loclist()<CR>')
 nnoremap('<Leader>fco', ':lua require("telescope.builtin").oldfiles()<CR>')
 nnoremap('<Leader>fcr', ':lua require("telescope.builtin").registers()<CR>')
 nnoremap('<Leader>fcT', ':lua require("telescope.builtin").treesitter()<CR>')
 nnoremap('<Leader>fcv', ':lua require("telescope.builtin").vim_options()<CR>')
-nnoremap('<Leader>fcz', ':lua require("telescope.builtin").current_buffer_fuzzy_find()<CR>')
+nnoremap('<Leader>fcz',
+         ':lua require("telescope.builtin").current_buffer_fuzzy_find()<CR>')
 -- Lsp
-nnoremap('<Leader>fva', ':lua require("telescope.builtin").lsp_code_action()<CR>')
+nnoremap('<Leader>fva',
+         ':lua require("telescope.builtin").lsp_code_action()<CR>')
 nnoremap('<Leader>fvr', ':lua require("telescope.builtin").lsp_references()<CR>')
-nnoremap('<Leader>fvsd', ':lua require("telescope.builtin").lsp_document_symbols()<CR>')
-nnoremap('<Leader>fvsw', ':lua require("telescope.builtin").lsp_workspace_symbols()<CR>')
+nnoremap('<Leader>fvsd',
+         ':lua require("telescope.builtin").lsp_document_symbols()<CR>')
+nnoremap('<Leader>fvsw',
+         ':lua require("telescope.builtin").lsp_workspace_symbols()<CR>')
 -- Live
 nnoremap('<Leader>flg', ':lua require("telescope.builtin").live_grep()<CR>')
-nnoremap('<Leader>flw', ':lua require("telescope.builtin").grep_string { search = vim.fn.expand("<cword>") }<CR>')
-nnoremap('<Leader>fle', ':lua require("telescope.builtin").grep_string({ search = vim.fn.input("Grep For > ")})<CR>')
+nnoremap('<Leader>flw',
+         ':lua require("telescope.builtin").grep_string { search = vim.fn.expand("<cword>") }<CR>')
+nnoremap('<Leader>fle',
+         ':lua require("telescope.builtin").grep_string({ search = vim.fn.input("Grep For > ")})<CR>')
 -- Git
 nnoremap('<Leader>fgb', ':lua require("telescope.builtin").git_branches()<CR>')
 nnoremap('<Leader>fgc', ':lua require("telescope.builtin").git_commits()<CR>')
@@ -167,4 +184,5 @@ nnoremap('<Leader>fgC', ':lua require("telescope.builtin").git_bcommits()<CR>')
 nnoremap('<Leader>fgf', ':lua require("telescope.builtin").git_files()<CR>')
 nnoremap('<Leader>fgs', ':lua require("telescope.builtin").git_status()<CR>')
 -- Extensions
-nnoremap('<leader>fee', ':lua require("telescope").extensions.packer.plugins()<CR>')
+nnoremap('<leader>fee',
+         ':lua require("telescope").extensions.packer.plugins()<CR>')
