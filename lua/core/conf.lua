@@ -4,18 +4,16 @@ local G = require "core.global"
 
 -- Set map leader (needs to be set before mappings)
 if vim.fn.exists('g:vscode') == 0 then
-  g["mapleader"] = " "
-  g["maplocalleader"] = " "
-  g["completion_confirm_key"] = ""
+    g["mapleader"] = " "
+    g["maplocalleader"] = " "
+    g["completion_confirm_key"] = ""
 end
 
 if G.isdir(G.python3 .. "bin") then
     g["python3_host_prog"] = G.python3 .. "bin" .. G.path_sep .. "python"
 end
 
-if G.exists(G.node) then
-  g["node_host_prog"] = G.node
-end
+if G.exists(G.node) then g["node_host_prog"] = G.node end
 
 -- Disable builtin plugins
 g["loaded_gzip"] = 1
