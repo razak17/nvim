@@ -2,6 +2,7 @@ local ex = vim.fn.executable
 local lspconfig = require 'lspconfig'
 local rpattern = require'lspconfig.util'.root_pattern
 local G = require 'core.global'
+local efm_config = require 'modules.completion.lsp.efm'
 local M = {}
 
 function M.setup(enhance_attach)
@@ -55,6 +56,7 @@ function M.setup(enhance_attach)
             settings = {documentFormatting = false},
             on_attach = function(client, bufnr)
                 client.resolved_capabilities.document_formatting = false
+                client.resolved_capabilities.document_highlight = false
                 enhance_attach(client, bufnr)
             end
         }
@@ -84,6 +86,8 @@ function M.setup(enhance_attach)
         }
     end
 
+    if ex("efm-langserver") then efm_config.setup(enhance_attach) end
+
     if ex("rust-analyzer") then
         lspconfig.rust_analyzer.setup {
             checkOnSave = {command = "clippy"},
@@ -91,75 +95,6 @@ function M.setup(enhance_attach)
         }
     elseif ex("rls") then
         lspconfig.rls.setup {on_attach = enhance_attach}
-    end
-
-    if ex("efm-langserver") then
-        -- lua
-        local luaFormat = {
-            formatCommand = "lua-format -i --no-keep-simple-function-one-line --column-limit=80",
-            formatStdin = true
-        }
-
-        -- python
-        local isort = {formatCommand = "isort --quiet -", formatStdin = true}
-        local yapf = {formatCommand = "yapf --quiet", formatStdin = true}
-
-        -- JavaScript/React/TypeScript
-        local prettier = {
-            formatCommand = "prettier --stdin-filepath ${INPUT}",
-            formatStdin = true
-        }
-        local prettier_yaml = {
-            formatCommand = "prettier --stdin-filepath ${INPUT}",
-            formatStdin = true
-        }
-        local eslint = {
-            lintCommand = "./node_modules/.bin/eslint -f unix --stdin --stdin-filename ${INPUT}",
-            lintIgnoreExitCode = true,
-            lintStdin = true,
-            lintFormats = {"%f:%l:%c: %m"},
-            formatCommand = "./node_modules/.bin/eslint --fix-to-stdout --stdin --stdin-filename=${INPUT}",
-            formatStdin = true
-        }
-
-        local shellcheck = {
-            LintCommand = 'shellcheck -f gcc -x',
-            lintFormats = {
-                '%f:%l:%c: %trror: %m', '%f:%l:%c: %tarning: %m',
-                '%f:%l:%c: %tote: %m'
-            }
-        }
-
-        local shfmt = {formatCommand = 'shfmt -ci -s -bn', formatStdin = true}
-
-        lspconfig.efm.setup {
-            on_attach = enhance_attach,
-            root_dir = rpattern(vim.fn.getcwd()),
-            init_options = {documentFormatting = true, codeAction = false},
-            filetypes = {
-                "lua", "javascript", "javascriptreact", "typescript",
-                "typescriptreact", "python", "html", "css", "json", "yaml", "sh"
-            },
-            settings = {
-                rootMarkers = {
-                    "package.json", "tsconfig.json", "requirements.txt",
-                    ".gitignore", ".git/"
-                },
-                languages = {
-                    lua = {luaFormat},
-                    python = {yapf, isort},
-                    javascript = {prettier, eslint},
-                    javascriptreact = {prettier, eslint},
-                    typescript = {prettier, eslint},
-                    typescriptreact = {prettier, eslint},
-                    html = {prettier},
-                    css = {prettier},
-                    json = {prettier},
-                    yaml = {prettier_yaml},
-                    sh = {shellcheck, shfmt}
-                }
-            }
-        }
     end
 
     local simple_lsp = {
