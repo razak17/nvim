@@ -25,14 +25,15 @@ local function pythonvenvInit()
     end
 end
 
-local function luaInit()
-    if fn.executable('lua-format') == 0 then
-        os.execute(
-            'luarocks install --server=https://luarocks.org/dev luaformatter')
-    end
-
-    if fn.executable('go') and fn.executable('efm-langserver') == 0 then
-        os.execute("go get github.com/mattn/efm-langserver")
+local function golangInit()
+    if not G.exists(G.golang) then
+        local needs_install = {
+            ['efm-langserver'] = 'github.com/mattn/efm-langserver',
+            gopls = 'golang.org/x/tools/gopls@latest'
+        }
+        for i, v in pairs(needs_install) do
+            if fn.executable(i) == 0 then os.execute("go get " .. v) end
+        end
     end
 end
 
@@ -80,6 +81,6 @@ if vim.fn.exists('g:vscode') == 0 then
     createDirs()
     pythonvenvInit()
     nodeHostInit()
-    luaInit()
+    golangInit()
     packerInit()
 end
