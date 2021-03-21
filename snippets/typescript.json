@@ -66,6 +66,28 @@
     "prefix": ["logg"],
     "body": "console.log(${1:$TM_SELECTED_TEXT});"
   },
+  "Import React": {
+    "prefix": "imr",
+    "body": ["import React from 'react';"],
+    "description": "Imports React"
+  },
+  "Normal Import": {
+    "prefix": "imm",
+    "body": ["import $2 from '$1';"],
+    "description": "Imports normal package"
+  },
+  "Destructured Import": {
+    "prefix": "imd",
+    "body": ["import { $2 } from '$1';"],
+    "description": "Imports destructured package"
+  },
+	"Log to the console with cl": {
+		"prefix": "cl",
+		"body": [
+			"console.log($1);"
+		],
+		"description": "Log to the console"
+	},
 	"Log to the console": {
 		"prefix": "log",
 		"body": [

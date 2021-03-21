@@ -55,7 +55,7 @@ function M.setup(enhance_attach)
             settings = {documentFormatting = false},
             on_attach = function(client, bufnr)
                 client.resolved_capabilities.document_formatting = false
-                client.resolved_capabilities.document_highlight = false
+                -- client.resolved_capabilities.document_highlight = false
                 enhance_attach(client, bufnr)
             end
         }
@@ -110,6 +110,10 @@ function M.setup(enhance_attach)
             formatCommand = "prettier --stdin-filepath ${INPUT}",
             formatStdin = true
         }
+        local prettier_yaml = {
+            formatCommand = "prettier --stdin-filepath ${INPUT}",
+            formatStdin = true
+        }
         local eslint = {
             lintCommand = "./node_modules/.bin/eslint -f unix --stdin --stdin-filename ${INPUT}",
             lintIgnoreExitCode = true,
@@ -125,7 +129,7 @@ function M.setup(enhance_attach)
             init_options = {documentFormatting = true, codeAction = false},
             filetypes = {
                 "lua", "javascript", "javascriptreact", "typescript",
-                "typescriptreact", "python"
+                "typescriptreact", "python", "html", "css", "json", "yaml"
             },
             settings = {
                 rootMarkers = {
@@ -140,7 +144,11 @@ function M.setup(enhance_attach)
                     typescript = {prettier, eslint},
                     typescriptreact = {prettier, eslint},
                     ["javascript.jsx"] = {prettier, eslint},
-                    ["typescript.tsx"] = {prettier, eslint}
+                    ["typescript.tsx"] = {prettier, eslint},
+                    html = {prettier},
+                    css = {prettier},
+                    json = {prettier},
+                    yaml = {prettier_yaml}
                 }
             }
         }

@@ -52,6 +52,9 @@ end)()
 
 function M.document_highlight()
     api.nvim_exec([[
+      hi LspReferenceRead cterm=bold ctermbg=red guibg=#2c323c guifg=#e5c07b
+      hi LspReferenceText cterm=bold ctermbg=red guibg=#2c323c
+      hi LspReferenceWrite cterm=bold ctermbg=red guibg=#2c323c
       augroup lsp_document_highlight
         autocmd! * <buffer>
         au CursorHold <buffer> lua vim.lsp.buf.document_highlight()
