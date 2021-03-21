@@ -11,7 +11,7 @@ au BufNewFile,BufRead docker-compose*.{yaml,yml}* set ft=yaml.docker-compose
 
 " elixir
 au BufNewFile,BufRead *.ex,*.exs set ft=elixir
-au BufNewFile,BufRead *.eex,*.leex set ft=eelixir
+au BufNewFile,BufRead *.eex,*.leex set ft=elixir
 au BufNewFile,BufRead mix.lock set ft=elixir
 
 " erlang
@@ -45,14 +45,15 @@ au BufNewFile,BufRead *.hsig set ft=haskell
 au BufRead,BufNewFile *.info set ft=info
 
 " javascript
-au BufNewFile,BufRead yarn.lock ft=yaml
-au BufNewFile,BufRead *.js.map ft=json
-" au BufNewFile,BufRead .eslintrc ft=json
-au BufNewFile,BufRead .jscsrc ft=json
-au BufNewFile,BufRead .babelrc ft=json
-au BufNewFile,BufRead .watchmanconfig ft=json
+au BufNewFile,BufRead yarn.lock set ft=yaml
+au BufNewFile,BufRead *.js.map set ft=json
+au BufNewFile,BufRead .eslintrc set ft=json
+au BufNewFile,BufRead .prettierrc set ft=json
+au BufNewFile,BufRead .jscsrc set ft=json
+au BufNewFile,BufRead .babelrc set ft=json
+au BufNewFile,BufRead .watchmanconfig set ft=json
 au BufNewFile,BufRead *.{js,mjs,cjs,jsm,es,es6},Jakefile set ft=javascript
-au BufNewFile,BufRead .tern-{project,port} ft=json
+au BufNewFile,BufRead .tern-{project,port} set ft=json
 
 " json
 au BufNewFile,BufRead *.json set ft=json
