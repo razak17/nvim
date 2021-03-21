@@ -86,8 +86,6 @@ function M.setup(enhance_attach)
         }
     end
 
-    if ex("efm-langserver") then efm_config.setup(enhance_attach) end
-
     if ex("rust-analyzer") then
         lspconfig.rust_analyzer.setup {
             checkOnSave = {command = "clippy"},
@@ -96,6 +94,8 @@ function M.setup(enhance_attach)
     elseif ex("rls") then
         lspconfig.rls.setup {on_attach = enhance_attach}
     end
+
+    if ex("efm-langserver") then efm_config.setup(enhance_attach) end
 
     local simple_lsp = {
         gopls = "gopls",
