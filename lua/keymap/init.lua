@@ -67,6 +67,9 @@ nnoremap("<Leader>au", ":UndotreeToggle<CR>")
 -- TS
 nnoremap('<Leader>Ie', ':TSInstallInfo<CR>')
 
+-- rnvimr
+nnoremap('<Leader>ar', ':RnvimrToggle<CR>')
+
 -- vsnip
 xmap("<C-l>", "<Plug>(vsnip-select-text)")
 xmap("<C-x>", "<Plug>(vsnip-cut-text)")
@@ -132,11 +135,12 @@ nnoremap("<Leader>gr", ":GRemove<CR>")
 nnoremap("<Leader>gs", ":G<CR>")
 
 -- Floaterm
-nnoremap("<Leader>Te", ":FloatermToggle<CR>")
-nnoremap("<Leader>Tn", ":FloatermNew node<CR>")
-nnoremap("<Leader>TN", ":FloatermNew<CR>")
-nnoremap("<Leader>Tp", ":FloatermNew python<CR>")
-nnoremap("<Leader>Tr", ":FloatermNew ranger<CR>")
+nnoremap("<Leader>ee", ":FloatermToggle<CR>")
+nnoremap("<Leader>el", ":FloatermNew lazygit<CR>")
+nnoremap("<Leader>en", ":FloatermNew node<CR>")
+nnoremap("<Leader>eN", ":FloatermNew<CR>")
+nnoremap("<Leader>ep", ":FloatermNew python<CR>")
+nnoremap("<Leader>er", ":FloatermNew ranger<CR>")
 
 -- Kommentary
 nmap("<leader>/", "<Plug>kommentary_line_default")

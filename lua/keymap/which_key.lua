@@ -43,7 +43,7 @@ function config.setup()
             n = "no highlight",
             N = "toggle line numbers",
             o = "turn on guides",
-            r = "empty registers",
+            r = "toggle rnvimr",
             R = "toggle relative line numbers",
             s = "save and exit",
             u = "undotreeToggle",
@@ -72,6 +72,7 @@ function config.setup()
             h = {name = "+Help", w = "word"},
             f = "nvim-tree find",
             r = "nvim-tree refresh",
+            R = "empty registers",
             s = "edit snippet",
             v = "nvim-tree toggle"
         },
@@ -82,9 +83,13 @@ function config.setup()
             s = 'camelCase/PascalCase -> snake_case'
         },
         e = {
-            name = "+Treesitter",
-            m = "scope incremental",
-            n = "init selection"
+            name = "+Floaterm",
+            e = 'toggle',
+            l = 'lazygit',
+            n = 'node',
+            N = 'new terminal',
+            p = 'python',
+            r = 'ranger'
         },
         f = {
             name = "+Telescope",
@@ -193,12 +198,9 @@ function config.setup()
             s = 'save Session'
         },
         T = {
-            name = "+Floaterm",
-            e = 'toggle',
-            n = 'node',
-            N = 'new terminal',
-            p = 'python',
-            r = 'ranger'
+            name = "+Treesitter",
+            m = "scope incremental",
+            n = "init selection"
         },
         v = {
             name = "+Code",

@@ -22,11 +22,11 @@ if has('nvim')
 
   " snake_case -> kebab-case
   " TODO: implement
+  autocmd! FileType which_key
+  autocmd  FileType which_key set laststatus=0 noshowmode noruler
+        \| autocmd BufLeave <buffer> set laststatus=2 noshowmode ruler
 
-  augroup Razak_Mo
-    autocmd!
-    autocmd! FileType which_key
-    autocmd  FileType which_key set laststatus=0 noshowmode noruler
-     \| autocmd BufLeave <buffer> set laststatus=2 noshowmode ruler
-  augroup END
+  " augroup Razak_Mo
+  "   autocmd!
+  " augroup END
 endif

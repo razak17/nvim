@@ -77,7 +77,7 @@ if vim.fn.exists('g:vscode') == 0 then
     inoremap('<C-j>', '<C-\\><C-N><C-w>j')
     inoremap('<C-k>', '<C-\\><C-N><C-w>k')
     inoremap('<C-l>', '<C-\\><C-N><C-w>l')
-    tnoremap('<Esc>', '<C-\\><C-N>')
+    -- tnoremap('<Esc>', '<C-\\><C-N>')
 
     -- TAB in general mode will move to text buffer, SHIFT-TAB will go back
     nnoremap('<TAB>', ':bnext<CR>')
@@ -152,7 +152,7 @@ if vim.fn.exists('g:vscode') == 0 then
     nnoremap('<Leader><CR>', ':so ~/env/nvim/init.vim<CR>')
     nnoremap('<Leader>,', ':e ~/env/nvim/lua/core/init.lua<CR>')
     nnoremap('<Leader>.', ':e $MYVIMRC<CR>')
-    nnoremap('<leader>ar', ':call autocmds#EmptyRegisters()<CR>')
+    nnoremap('<leader>cR', ':call autocmds#EmptyRegisters()<CR>')
     nnoremap('<Leader>Ic', ':checkhealth<CR>')
     nnoremap('<Leader>vwm',
              ':lua require "modules.aesth.conf".ColorMyPencils()<CR>')
