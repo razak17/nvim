@@ -55,6 +55,7 @@ function M.setup(enhance_attach)
             settings = {documentFormatting = false},
             on_attach = function(client, bufnr)
                 client.resolved_capabilities.document_formatting = false
+                client.resolved_capabilities.document_highlight = false
                 enhance_attach(client, bufnr)
             end
         }
@@ -137,7 +138,9 @@ function M.setup(enhance_attach)
                     javascript = {prettier, eslint},
                     javascriptreact = {prettier, eslint},
                     typescript = {prettier, eslint},
-                    typescriptreact = {prettier, eslint}
+                    typescriptreact = {prettier, eslint},
+                    ["javascript.jsx"] = {prettier, eslint},
+                    ["typescript.tsx"] = {prettier, eslint}
                 }
             }
         }

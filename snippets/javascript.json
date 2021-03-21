@@ -173,8 +173,7 @@
 	"Log to the console with cl": {
 		"prefix": "cl",
 		"body": [
-			"console.log($1);",
-			"$0"
+			"console.log($1);"
 		],
 		"description": "Log to the console"
 	},

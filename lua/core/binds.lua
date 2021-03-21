@@ -145,7 +145,7 @@ if vim.fn.exists('g:vscode') == 0 then
     nnoremap("<Leader>afe", ":lua require 'internal.utils'.ToggleFold()<CR>")
 
     -- qflist
-    nnoremap("<C-n>", ":cnext<CR>")
+    nnoremap("<C-k>", ":cnext<CR>")
     nnoremap("<C-b>", ":cprev<CR>")
 
     -- Other remaps

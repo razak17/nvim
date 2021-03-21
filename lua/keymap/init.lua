@@ -144,7 +144,7 @@ nmap("<leader>a/", "<Plug>kommentary_motion_default")
 vmap("<leader>/", "<Plug>kommentary_visual_default")
 
 -- Telescope
-nnoremap('<Leader>ff', ':lua require("telescope.builtin").find_files()<CR>')
+nnoremap('<Leader>ff', ':Telescope find_files<CR>')
 nnoremap('<Leader>frc', ':Telescope dotfiles path=' .. os.getenv("HOME") ..
              '/env/nvim' .. '<CR>')
 -- Commands
