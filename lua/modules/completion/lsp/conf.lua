@@ -123,13 +123,23 @@ function M.setup(enhance_attach)
             formatStdin = true
         }
 
+        local shellcheck = {
+            LintCommand = 'shellcheck -f gcc -x',
+            lintFormats = {
+                '%f:%l:%c: %trror: %m', '%f:%l:%c: %tarning: %m',
+                '%f:%l:%c: %tote: %m'
+            }
+        }
+
+        local shfmt = {formatCommand = 'shfmt -ci -s -bn', formatStdin = true}
+
         lspconfig.efm.setup {
             on_attach = enhance_attach,
             root_dir = rpattern(vim.fn.getcwd()),
             init_options = {documentFormatting = true, codeAction = false},
             filetypes = {
                 "lua", "javascript", "javascriptreact", "typescript",
-                "typescriptreact", "python", "html", "css", "json", "yaml"
+                "typescriptreact", "python", "html", "css", "json", "yaml", "sh"
             },
             settings = {
                 rootMarkers = {
@@ -143,12 +153,11 @@ function M.setup(enhance_attach)
                     javascriptreact = {prettier, eslint},
                     typescript = {prettier, eslint},
                     typescriptreact = {prettier, eslint},
-                    ["javascript.jsx"] = {prettier, eslint},
-                    ["typescript.tsx"] = {prettier, eslint},
                     html = {prettier},
                     css = {prettier},
                     json = {prettier},
-                    yaml = {prettier_yaml}
+                    yaml = {prettier_yaml},
+                    sh = {shellcheck, shfmt}
                 }
             }
         }

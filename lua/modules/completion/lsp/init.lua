@@ -4,7 +4,6 @@ local utils = require 'modules.completion.lsp.utils'
 local lspconf = require 'modules.completion.lsp.conf'
 local hl_cmds = utils.hl_cmds
 local global_cmd = utils.global_cmd
-local document_highlight = utils.document_highlight
 local buf_map = utils.buf_map
 local leader_buf_map = utils.leader_buf_map
 
@@ -96,7 +95,17 @@ local enhance_attach = function(client, bufnr)
     end
 
     if client.resolved_capabilities.document_highlight then
-        document_highlight()
+        api.nvim_exec([[
+          hi LspReferenceRead cterm=bold ctermbg=red guibg=#2c323c guifg=#e5c07b
+          hi LspReferenceText cterm=bold ctermbg=red guibg=#2c323c
+          hi LspReferenceWrite cterm=bold ctermbg=red guibg=#2c323c
+          augroup lsp_document_highlight
+            autocmd! * <buffer>
+            au CursorHold <buffer> lua vim.lsp.buf.document_highlight()
+            au CursorHoldI <buffer> lua vim.lsp.buf.document_highlight()
+            au CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+          augroup END
+        ]], false)
     end
 
     api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
