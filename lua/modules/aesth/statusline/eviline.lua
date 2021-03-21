@@ -136,6 +136,17 @@ gls.right[1] = {
     }
 }
 
+-- gls.right[2] = {
+--     FileFormat = {
+--         provider = function()
+--             return vim.bo.filetype
+--         end,
+--         separator = ' ',
+--         separator_highlight = {'NONE', colors.bg},
+--         highlight = {colors.magenta, colors.bg}
+--     }
+-- }
+
 gls.right[2] = {
     DiffAdd = {
         provider = 'DiffAdd',
