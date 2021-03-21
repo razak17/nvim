@@ -131,8 +131,6 @@ if vim.fn.exists('g:vscode') == 0 then
     nnoremap("<Leader>ad", ":bdelete!<CR>")
 
     -- Session
-    --[[ nnoremap("<Leader>Sc", "SClose<CR>")
-  nnoremap("<Leader>Sd", ":SDelete<CR>") ]]
     nnoremap("<Leader>Sl", ":SessionLoad<CR>")
     nnoremap("<Leader>Ss", ":SessionSave<CR>")
 

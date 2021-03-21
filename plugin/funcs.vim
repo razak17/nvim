@@ -50,5 +50,3 @@ if has('nvim')
   nnoremap <silent> <Leader>bdh :call <SID>DelToLeft()<CR>
   nnoremap <silent> <Leader>bdx :call <SID>DelAllExcept()<CR>
 endif
-
-

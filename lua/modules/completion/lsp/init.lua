@@ -18,7 +18,8 @@ function _G.open_lsp_log()
 end
 
 function _G.lsp_formatting()
-    vim.lsp.buf.formatting()
+    vim.lsp.buf.formatting(vim.g[string.format("format_options_%s",
+                                               vim.bo.filetype)] or {})
 end
 
 function _G.lsp_toggle_virtual_text()
@@ -82,7 +83,13 @@ local enhance_attach = function(client, bufnr)
     lbuf_map("vdn", "require'lspsaga.diagnostic'.lsp_jump_diagnostic_next()")
     lbuf_map("vdc", "require'lspsaga.diagnostic'.show_line_diagnostics()")
     lbuf_map('vdl', 'vim.lsp.diagnostic.set_loclist()')
-    -- api.nvim_command("au CursorMoved * lua require 'modules.completion.lsp.utils'.show_lsp_diagnostics()")
+
+    api.nvim_exec([[
+      augroup hover_diagnostics
+        autocmd! * <buffer>
+        au CursorHold * lua require 'modules.completion.lsp.utils'.show_lsp_diagnostics()
+      augroup END
+    ]], false)
 
     if client.resolved_capabilities.document_formatting then
         global_cmd("LspBeforeSave", "lsp_before_save")

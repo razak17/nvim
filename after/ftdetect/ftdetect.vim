@@ -193,7 +193,3 @@ augroup shebang
     " try to detect filetype after enter to buffer
     au BufEnter * if !did_filetype() | call s:shebang() | endif
 augroup END
-
-
-
-

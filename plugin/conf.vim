@@ -1,5 +1,4 @@
 if has('nvim')
-
   if exists('+termguicolors')
     let &t_8f="\<Esc>[38;2;%lu;%lu;%lum"
     let &t_8b="\<Esc>[48;2;%lu;%lu;%lum"
@@ -20,13 +19,6 @@ if has('nvim')
   nmap <silent> <Leader>Cs viw<Leader>Cs
   vnoremap <silent> <Leader>Cs :s/\%V\(\l\)\(\u\)/\1_\l\2/g<CR>`<vu
 
-  " snake_case -> kebab-case
   " TODO: implement
-  autocmd! FileType which_key
-  autocmd  FileType which_key set laststatus=0 noshowmode noruler
-        \| autocmd BufLeave <buffer> set laststatus=2 noshowmode ruler
-
-  " augroup Razak_Mo
-  "   autocmd!
-  " augroup END
+  " snake_case -> kebab-case
 endif
