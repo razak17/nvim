@@ -110,7 +110,12 @@ function config.setup()
                 v = "vim options",
                 z = "current file fuzzy find"
             },
-            e = {name = "+Extensions", e = "packer"},
+            e = {
+                name = "+Extensions",
+                e = "packer",
+                m = "media files",
+                b = 'change background'
+            },
             f = "find files",
             l = {name = "+Live", g = "grep", w = "current word", e = "prompt"},
             r = {name = "+Config", c = "vimrc"},
@@ -229,6 +234,7 @@ function config.setup()
                 },
                 t = "type definition"
             },
+            v = "vista",
             w = {name = "+Color", m = "pencils"}
         }
     }

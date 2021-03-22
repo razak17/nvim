@@ -3,7 +3,7 @@ local nmap, vmap, xmap, imap, smap, nnoremap, inoremap = mp.nmap, mp.vmap,
                                                          mp.xmap, mp.imap,
                                                          mp.smap, mp.nnoremap,
                                                          mp.inoremap
-local which_key = require('keymap.which_key').setup
+local which_key = require('keymap.which_key')
 local npairs = require('nvim-autopairs')
 local opts = {expr = true}
 
@@ -51,7 +51,10 @@ _G.s_tab = function()
 end
 
 --  Which Key
-which_key()
+which_key.setup()
+
+-- Vista
+nnoremap('<Leader>vv', ':Vista!!<CR>')
 
 -- Lsp
 nnoremap('<Leader>lf', ':LspFormatting<CR>')
@@ -191,3 +194,7 @@ nnoremap('<Leader>fgs', ':lua require("telescope.builtin").git_status()<CR>')
 -- Extensions
 nnoremap('<leader>fee',
          ':lua require("telescope").extensions.packer.plugins()<CR>')
+nnoremap('<Leader>fem',
+         ':lua require("telescope").extensions.media_files.media_files()<CR>')
+nnoremap('<Leader>feb',
+         ':lua require("modules.completion.telescope.conf").anime_selector()<CR>')

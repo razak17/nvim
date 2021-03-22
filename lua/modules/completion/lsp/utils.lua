@@ -36,6 +36,16 @@ function M.leader_buf_map(bufnr, key, command, opts)
     M.map(bufnr, 'n', '<leader>' .. key, "<cmd>lua " .. command .. "<CR>", opts)
 end
 
+function M.nvim_create_augroup(group_name, definitions)
+    vim.api.nvim_command('augroup ' .. group_name)
+    vim.api.nvim_command('autocmd!')
+    for _, def in ipairs(definitions) do
+        local command = table.concat(vim.tbl_flatten {'autocmd', def}, ' ')
+        vim.api.nvim_command(command)
+    end
+    vim.api.nvim_command('augroup END')
+end
+
 M.show_lsp_diagnostics = (function()
     local debounced = debounce(
                           require'lspsaga.diagnostic'.show_line_diagnostics, 300)

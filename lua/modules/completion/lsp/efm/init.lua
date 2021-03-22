@@ -1,41 +1,18 @@
+local formatters = require 'modules.completion.lsp.efm.formatters'
+local linters = require 'modules.completion.lsp.efm.linters'
 local M = {}
 
--- lua
-local luaFormat = {
-    formatCommand = "lua-format -i --no-keep-simple-function-one-line --column-limit=80",
-    formatStdin = true
-}
+local luaFormat = formatters.luaFormat
 
--- python
-local isort = {formatCommand = "isort --quiet -", formatStdin = true}
-local yapf = {formatCommand = "yapf --quiet", formatStdin = true}
+local eslint = linters.eslint
+local prettier = formatters.prettier
+local prettier_yaml = formatters.prettier_yaml
 
--- JavaScript/React/TypeScript
-local prettier = {
-    formatCommand = "prettier --stdin-filepath ${INPUT}",
-    formatStdin = true
-}
-local prettier_yaml = {
-    formatCommand = "prettier --stdin-filepath ${INPUT}",
-    formatStdin = true
-}
-local eslint = {
-    lintCommand = "./node_modules/.bin/eslint -f unix --stdin --stdin-filename ${INPUT}",
-    lintIgnoreExitCode = true,
-    lintStdin = true,
-    lintFormats = {"%f:%l:%c: %m"},
-    formatCommand = "./node_modules/.bin/eslint --fix-to-stdout --stdin --stdin-filename=${INPUT}",
-    formatStdin = true
-}
+local yapf = formatters.yapf
+local isort = formatters.isort
 
-local shellcheck = {
-    LintCommand = 'shellcheck -f gcc -x',
-    lintFormats = {
-        '%f:%l:%c: %trror: %m', '%f:%l:%c: %tarning: %m', '%f:%l:%c: %tote: %m'
-    }
-}
-
-local shfmt = {formatCommand = 'shfmt -ci -s -bn', formatStdin = true}
+local shellcheck = linters.shellcheck
+local shfmt = formatters.shfmt
 
 function M.setup(enhance_attach)
     require'lspconfig'.efm.setup {
@@ -69,3 +46,4 @@ function M.setup(enhance_attach)
 end
 
 return M
+

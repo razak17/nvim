@@ -71,45 +71,5 @@ function config.emmet()
     vim.cmd('autocmd FileType html,css EmmetInstall')
 end
 
-function config.nvim_telescope()
-    require('telescope').setup({
-        defaults = {
-            prompt_prefix = "> ",
-            selection_caret = " ",
-            sorting_strategy = "ascending",
-            file_ignore_patterns = {
-                "target/*", "node_modules/*", "dist/*", ".git/*"
-            },
-            width = 0.75,
-            border = {},
-            borderchars = {
-                '─', '│', '─', '│', '╭', '╮', '╯', '╰'
-            },
-            set_env = {['COLORTERM'] = 'truecolor'},
-            file_sorter = require'telescope.sorters'.get_fzy_sorter,
-            generic_sorter = require'telescope.sorters'.get_generic_fuzzy_sorter,
-            mappings = {
-                i = {
-                    ["<C-x>"] = false,
-                    ["<CR>"] = require'telescope.actions'.select_default,
-                    ["<C-b>"] = require'telescope.actions'.move_selection_previous,
-                    ["<C-v>"] = require'telescope.actions'.select_vertical,
-                    ["<C-i>"] = require'telescope.actions'.select_horizontal,
-                    ["<C-e>"] = require'telescope.actions'.send_to_qflist
-                }
-            },
-            extensions = {
-                fzy_native = {
-                    override_generic_sorter = false,
-                    override_file_sorter = true
-                }
-            }
-        }
-    })
-
-    require('telescope').load_extension('fzy_native')
-    require'telescope'.load_extension('dotfiles')
-end
-
 return config
 

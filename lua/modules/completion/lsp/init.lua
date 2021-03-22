@@ -6,6 +6,7 @@ local hl_cmds = utils.hl_cmds
 local global_cmd = utils.global_cmd
 local buf_map = utils.buf_map
 local leader_buf_map = utils.leader_buf_map
+local nvim_create_augroup = utils.nvim_create_augroup
 
 function _G.reload_lsp()
     vim.lsp.stop_client(vim.lsp.get_active_clients())
@@ -36,13 +37,7 @@ function _G.lsp_before_save()
     table.insert(defs, {
         "BufWritePre", '*.' .. ext, "lua vim.lsp.buf.formatting_sync(nil,750)"
     })
-    api.nvim_command('augroup lsp_before_save')
-    api.nvim_command('autocmd!')
-    for _, def in ipairs(defs) do
-        local command = table.concat(vim.tbl_flatten {'autocmd', def}, ' ')
-        api.nvim_command(command)
-    end
-    api.nvim_command('augroup END')
+    nvim_create_augroup('lsp_before_save', defs)
 end
 
 global_cmd("LspLog", "open_lsp_log")
