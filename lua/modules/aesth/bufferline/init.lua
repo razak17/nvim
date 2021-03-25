@@ -25,7 +25,7 @@ local highlights = {
     fill = {guifg = fg_def, guibg = bg_def},
     background = {guifg = fg_def, guibg = bg_def},
     buffer_visible = {guifg = fg_def, guibg = bg_def},
-    buffer_selected = {guifg = fg_sel, guibg = bg_def},
+    buffer_selected = {guifg = '#bebebe', guibg = bg_def},
     modified = {guibg = bg_def},
     modified_visible = {guibg = bg_def},
     modified_selected = {guibg = bg_def},
