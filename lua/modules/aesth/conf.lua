@@ -20,25 +20,7 @@ function config.galaxyline()
 end
 
 function config.nvim_bufferline()
-    require('bufferline').setup {
-        options = {
-            view = "multiwindow",
-            close_icon = ' ',
-            buffer_close_icon = '',
-            modified_icon = "",
-            tab_size = 0,
-            enforce_regular_tabs = false,
-            diagnostics = "nvim_lsp",
-            separator_style = {' ', ' '},
-            diagnostics_indicator = function()
-                return ''
-            end,
-            filter = function(buf_num)
-                if not vim.t.is_help_tab then return nil end
-                return vim.api.nvim_buf_get_option(buf_num, "buftype") == "help"
-            end
-        }
-    }
+    require('modules.aesth.bufferline')
 end
 
 function config.dashboard()
