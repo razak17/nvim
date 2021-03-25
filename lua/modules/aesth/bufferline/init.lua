@@ -14,8 +14,7 @@ local options = {
     number_style = "superscript",
     show_buffer_close_icons = false,
     persist_buffer_sort = true,
-    always_show_bufferline = true,
-    sort_by = 'directory'
+    always_show_bufferline = true
 }
 
 local bg_def = 'none'
