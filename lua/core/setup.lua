@@ -77,10 +77,8 @@ local function packerInit()
     end
 end
 
-if vim.fn.exists('g:vscode') == 0 then
-    createDirs()
-    pythonvenvInit()
-    nodeHostInit()
-    golangInit()
-    packerInit()
-end
+createDirs()
+pythonvenvInit()
+nodeHostInit()
+golangInit()
+packerInit()

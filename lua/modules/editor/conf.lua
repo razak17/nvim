@@ -4,7 +4,7 @@ function config.nvim_colorizer()
     require'colorizer'.setup {
         '*',
         css = {rgb_fn = true},
-        scss = {rgb_fn = true},
+        scss = {rgb_fn = true, hsl_fn = true},
         sass = {rgb_fn = true},
         stylus = {rgb_fn = true},
         vim = {names = true},

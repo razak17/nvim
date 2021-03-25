@@ -22,14 +22,11 @@ end
 function config.nvim_bufferline()
     require('bufferline').setup {
         options = {
+            view = "multiwindow",
             close_icon = ' ',
             buffer_close_icon = '',
             modified_icon = "",
             tab_size = 0,
-            left_trunc_marker = '',
-            right_trunc_marker = '',
-            max_name_length = 18,
-            max_prefix_length = 15,
             enforce_regular_tabs = false,
             diagnostics = "nvim_lsp",
             separator_style = {' ', ' '},
@@ -82,13 +79,13 @@ function config.dashboard()
                 '  Find  word                              SPC f w'
             },
             command = 'DashboardFindWord'
+        },
+        find_dotfiles = {
+            description = {
+                '  Open Personal dotfiles                  SPC f d'
+            },
+            command = 'Telescope dotfiles path=' .. home .. '/env/nvim'
         }
-        --[[ find_dotfiles = {
-      description = {'  Open Personal dotfiles                  SPC f d'},
-      command = 'Telescope dotfiles path=' .. home ..'/.dotfiles'},
-    go_source = {
-      description = {'  Find Go Source Code                     SPC f s'},
-      command = 'Telescope gosource'}, ]]
     }
 end
 

@@ -10,5 +10,3 @@ fun! autocmds#EmptyRegisters()
       call setreg(r, [])
   endfor
 endfun
-
-

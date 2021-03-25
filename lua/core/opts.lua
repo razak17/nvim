@@ -67,8 +67,8 @@ opt('w', 'conceallevel', 0) -- So that I can see `` in markdown files
 opt('w', 'wrap', false) -- No wrap by default
 opt('o', 'maxmempattern', 1300) -- Limit memory used for pattern matching
 opt('o', 'errorbells', false) -- Disable error bells
--- opt('o', 'linebreak', true)                    -- Break long lines at 'breakat'
--- opt('o', 'breakat', [[\ \	;:,!?]])             -- Long lines break chars
+opt('o', 'linebreak', true) -- Break long lines at 'breakat'
+opt('o', 'breakat', [[\ \	;:,!?]]) -- Long lines break chars
 opt('o', 'startofline', false) -- Cursor in same column for few commands
 opt('o', 'equalalways', false) -- Don't resize windows on split or close
 opt('o', 'whichwrap', 'h,l,<,>,[,],~') -- Move to following line on certain keys

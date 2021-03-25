@@ -17,13 +17,9 @@ function G:load_variables()
     self.modules_dir = G.vim_path .. 'modules'
     self.asdf = home .. path_sep .. '.asdf' .. path_sep .. 'installs' ..
                     path_sep
-    self.fnm = home .. path_sep .. '.fnm' .. path_sep .. 'node-versions' ..
-                   path_sep
     self.python3 = G.cache_dir .. 'venv' .. path_sep .. 'neovim' .. path_sep
     self.golang = G.asdf .. "golang/1.16.2/go/bin/go"
     self.node = G.asdf .. "nodejs/15.5.1/.npm/bin/neovim-node-host"
-    self.node2 = G.fnm ..
-                     "v15.5.1/installation/lib/node_modules/bin/neovim-node-host"
     self.local_nvim = G.share .. 'nvim' .. path_sep
     self.plugins =
         G.share .. 'nvim' .. path_sep .. 'site' .. path_sep .. 'pack' ..
@@ -32,8 +28,6 @@ function G:load_variables()
                                  'lua-language-server' .. path_sep
     self.elixirls_root_path = G.cache_dir .. 'nvim_lsp' .. path_sep ..
                                   'elixirls' .. path_sep
-    self.sumneko_binary = G.sumneko_root_path .. 'bin' .. path_sep .. 'Linux' ..
-                              path_sep .. 'lua-language-server'
     self.sumneko_binary = G.sumneko_root_path ..
                               '/bin/Linux/lua-language-server'
     self.elixirls_binary = G.elixirls_root_path .. '/.bin/language_server.sh'

@@ -29,7 +29,11 @@ function M.setup()
             enable = true,
             keymaps = {
                 init_selection = "<leader>Tn",
-                scope_incremental = "<leader>Tm"
+                scope_incremental = "<leader>Tm",
+                -- init_selection = "gnn",
+                node_incremental = "grn",
+                -- scope_incremental = "grc",
+                node_decremental = "grm"
             }
         },
         indent = {enable = true},
