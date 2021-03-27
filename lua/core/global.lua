@@ -14,6 +14,7 @@ function G:load_variables()
     self.cache_dir = home .. path_sep .. '.cache' .. path_sep .. 'nvim' ..
                          path_sep
     self.vim_path = G.config .. path_sep .. 'nvim' .. path_sep
+    self.data_dir = string.format('%s/site/',vim.fn.stdpath('data'))
     self.modules_dir = G.vim_path .. 'modules'
     self.asdf = home .. path_sep .. '.asdf' .. path_sep .. 'installs' ..
                     path_sep

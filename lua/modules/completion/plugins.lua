@@ -30,7 +30,7 @@ completion['mattn/emmet-vim'] = {
 
 completion['nvim-telescope/telescope.nvim'] =
     {
-        config = require'modules.completion.telescope'.setup(),
+        config = conf.telescope_nvim,
         requires = {
             {'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'},
             {'nvim-telescope/telescope-fzy-native.nvim'},

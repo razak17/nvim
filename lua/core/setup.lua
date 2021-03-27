@@ -21,7 +21,7 @@ local function pythonvenvInit()
         os.execute("python3 -m venv " .. G.python3)
         -- install python language server, neovim host, and neovim remote
         cmd("!" .. G.python3 .. "bin" .. G.path_sep ..
-                "pip3 install -U setuptools pynvim jedi 'python-language-server[all]' isort pyls-isort neovim-remote")
+                "pip3 install -U setuptools pynvim jedi isort neovim-remote")
     end
 end
 
@@ -80,5 +80,5 @@ end
 createDirs()
 pythonvenvInit()
 nodeHostInit()
-golangInit()
+-- golangInit()
 packerInit()

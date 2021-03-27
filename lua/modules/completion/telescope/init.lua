@@ -1,8 +1,5 @@
 local actions = require('telescope.actions')
 
-local M = {}
-
-function M.setup()
     require('telescope').setup({
         defaults = {
             prompt_prefix = "> ",
@@ -54,6 +51,3 @@ function M.setup()
     require'telescope'.load_extension('packer')
     require'telescope'.load_extension('fzy_native')
     require'telescope'.load_extension('dotfiles')
-end
-
-return M
