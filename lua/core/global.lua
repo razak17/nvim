@@ -14,7 +14,7 @@ function G:load_variables()
     self.cache_dir = home .. path_sep .. '.cache' .. path_sep .. 'nvim' ..
                          path_sep
     self.vim_path = G.config .. path_sep .. 'nvim' .. path_sep
-    self.data_dir = string.format('%s/site/',vim.fn.stdpath('data'))
+    self.data_dir = string.format('%s/site/', vim.fn.stdpath('data'))
     self.modules_dir = G.vim_path .. 'modules'
     self.asdf = home .. path_sep .. '.asdf' .. path_sep .. 'installs' ..
                     path_sep
@@ -22,13 +22,11 @@ function G:load_variables()
     self.golang = G.asdf .. "golang/1.16.2/go/bin/go"
     self.node = G.asdf .. "nodejs/15.5.1/.npm/bin/neovim-node-host"
     self.local_nvim = G.share .. 'nvim' .. path_sep
-    self.plugins =
-        G.share .. 'nvim' .. path_sep .. 'site' .. path_sep .. 'pack' ..
-            path_sep
+    self.plugins = G.data_dir .. path_sep .. 'pack' .. path_sep
     self.sumneko_root_path = G.cache_dir .. 'nvim_lsp' .. path_sep ..
                                  'lua-language-server' .. path_sep
     self.elixirls_root_path = G.cache_dir .. 'nvim_lsp' .. path_sep ..
-                                  'elixirls' .. path_sep
+                                  'elixir-ls' .. path_sep
     self.sumneko_binary = G.sumneko_root_path ..
                               '/bin/Linux/lua-language-server'
     self.elixirls_binary = G.elixirls_root_path .. '/.bin/language_server.sh'
@@ -52,38 +50,6 @@ function G.isdir(path)
     if path == '' or path == nil then return false end
     -- "/" works on both Unix and Windows
     return G.exists(path .. "/")
-end
-
-function G.dump(o)
-    if type(o) == 'table' then
-        local s = '{ '
-        for k, v in pairs(o) do
-            if type(k) ~= 'number' then k = '"' .. k .. '"' end
-            s = s .. '[' .. k .. '] = ' .. G.dump(v) .. ','
-        end
-        return s .. '} '
-    else
-        return tostring(o)
-    end
-end
-
-function G.readAll(file)
-    local f = assert(io.open(file, "rb"))
-    local content = f:read("*all")
-    f:close()
-    return content
-end
-
--- check value in table
-function G.has_value(tab, val)
-    for _, value in ipairs(tab) do if value == val then return true end end
-    return false
-end
-
--- check index in table
-function G.has_key(tab, idx)
-    for index, _ in pairs(tab) do if index == idx then return true end end
-    return false
 end
 
 G:load_variables()

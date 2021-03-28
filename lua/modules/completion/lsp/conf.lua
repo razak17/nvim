@@ -5,6 +5,9 @@ local G = require 'core.global'
 local efm_config = require 'modules.completion.lsp.efm'
 local M = {}
 
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+
 function M.setup(enhance_attach)
     if ex("bash-language-server") then
         lspconfig.bashls.setup {
@@ -95,10 +98,18 @@ function M.setup(enhance_attach)
         lspconfig.rls.setup {on_attach = enhance_attach}
     end
 
+    if ex('gopls') then
+        lspconfig.gopls.setup {
+            cmd = {"gopls", "--remote=auto"},
+            on_attach = enhance_attach,
+            capabilities = capabilities,
+            init_options = {usePlaceholders = true, completeUnimported = true}
+        }
+    end
+
     if ex("efm-langserver") then efm_config.setup(enhance_attach) end
 
     local simple_lsp = {
-        gopls = "gopls",
         jsonls = "vscode-json-languageserver",
         cssls = "css-languageserver",
         dockerls = "docker-langserver",

@@ -3,7 +3,6 @@ local cmd, fn = vim.cmd, vim.fn
 
 local function createDirs()
     -- Create all cache directories
-    -- Install python virtualenv and language server
     local data_dir = {
         G.cache_dir .. "backup", G.cache_dir .. "session",
         G.cache_dir .. "swap", G.cache_dir .. "tags", G.cache_dir .. "undodir",
@@ -19,14 +18,13 @@ local function pythonvenvInit()
     if not G.isdir(G.python3) and fn.executable("python3") then
         os.execute("mkdir -p " .. G.python3)
         os.execute("python3 -m venv " .. G.python3)
-        -- install python language server, neovim host, and neovim remote
         cmd("!" .. G.python3 .. "bin" .. G.path_sep ..
                 "pip3 install -U setuptools pynvim jedi isort neovim-remote")
     end
 end
 
 local function golangInit()
-    if not G.exists(G.golang) then
+    if G.isdir(G.golang) then
         local needs_install = {
             ['efm-langserver'] = 'github.com/mattn/efm-langserver',
             gopls = 'golang.org/x/tools/gopls@latest'
@@ -39,24 +37,27 @@ end
 
 local function nodeHostInit()
     if fn.executable("npm") then
-        -- install neovim node host
-        if not G.exists(G.node) then
-            local needs_install = {
-                "typescript", "typescript-language-server",
-                "bash-language-server", "dockerfile-language-server-nodejs",
-                "graphql-language-service-cli", "vim-language-server",
-                "yaml-language-server", "vscode-css-languageserver-bin",
-                "vscode-html-languageserver-bin", "vscode-json-languageserver",
-                "sql-language-server", "svelte-language-server", "vls"
-            }
-            print("Installing lsp servers...")
-            for _, v in pairs(needs_install) do
-                if fn.executable(v) == 0 then
-                    os.execute("npm install -g " .. v)
-                end
+        local simple_lsp = {
+            ['vscode-json-languageserver'] = "vscode-json-languageserver",
+            ['css-languageserver'] = "vscode-css-languageserver-bin",
+            ['docker-langserver'] = "dockerfile-language-server-nodejs",
+            ['graphql-lsp'] = "graphql-language-service-cli",
+            ['html-languageserver'] = "vscode-html-languageserver-bin",
+            ['svelteserver'] = "svelte-language-server",
+            ['vim-language-server'] = "vim-language-server",
+            ['yaml-language-server'] = "yaml-language-server",
+            ['bash-language-server'] = "bash-language-server",
+            ['sql-language-server'] = "sql-language-server",
+            ['typescript-language-server'] = 'typescript-language-server',
+            ['tsserver'] = 'typescript',
+            ['pyright'] = 'pyright'
+        }
+        for i, v in pairs(simple_lsp) do
+            if fn.executable(i) == 0 then
+                os.execute("npm install -g " .. v)
             end
-            os.execute("npm install -g neovim")
         end
+        if not G.exists(G.node) then os.execute("npm install -g neovim") end
     end
 end
 
@@ -80,5 +81,5 @@ end
 createDirs()
 pythonvenvInit()
 nodeHostInit()
--- golangInit()
+golangInit()
 packerInit()

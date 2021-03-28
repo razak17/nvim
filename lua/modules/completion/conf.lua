@@ -35,7 +35,7 @@ function config.saga()
         infor_sign = '',
         use_saga_diagnostic_sign = true,
         dianostic_header_icon = '   ',
-        code_action_icon = ' ',
+        code_action_icon = '💡',
         rename_prompt_prefix = '➤',
         finder_definition_icon = '  ',
         finder_reference_icon = '  ',

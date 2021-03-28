@@ -20,12 +20,21 @@ local options = {
 local bg_def = 'none'
 local fg_def = '#4e4e4e'
 local fg_sel = '#c678dd'
+local warn_fg = '#ffcc77'
+local error_fg = '#ff2211'
+local fg_buf = '#bebebe'
 
 local highlights = {
     fill = {guifg = fg_def, guibg = bg_def},
     background = {guifg = fg_def, guibg = bg_def},
     buffer_visible = {guifg = fg_def, guibg = bg_def},
-    buffer_selected = {guifg = '#bebebe', guibg = bg_def},
+    buffer_selected = {guifg = fg_buf, guibg = bg_def},
+    warning = {guifg = warn_fg},
+    warning_visible = {guifg = warn_fg},
+    warning_selected = {guifg = fg_buf},
+    error = {guifg = error_fg, guibg = bg_def},
+    error_visible = {guifg = error_fg},
+    error_selected = {guifg = fg_buf},
     modified = {guibg = bg_def},
     modified_visible = {guibg = bg_def},
     modified_selected = {guibg = bg_def},

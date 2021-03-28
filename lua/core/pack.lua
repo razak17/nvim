@@ -1,6 +1,6 @@
-local G = require 'core.global'
 local fn = vim.fn
-local packer_compiled = G.local_nvim .. 'site/plugin/packges.vim'
+local G = require 'core.global'
+local packer_compiled = G.local_nvim .. 'site/plugin/packages.vim'
 local modules_dir = G.vim_path .. 'lua/modules'
 local data_dir = G.data_dir
 local packer = nil
@@ -37,41 +37,12 @@ function Packer:load_packer()
     packer.init({
         compile_path = packer_compiled,
         git = {clone_timeout = 120},
-        disable_commands = true,
-        config = {
-            display = {
-                _open_fn = function(name)
-                    local ok, float_win =
-                        pcall(function()
-                            return
-                                require('plenary.window.float').percentage_range_window(
-                                    0.8, 0.8)
-                        end)
-
-                    if not ok then
-                        vim.cmd [[65vnew  [packer] ]]
-                        return vim.api.nvim_get_current_win(),
-                               vim.api.nvim_get_current_buf()
-                    end
-
-                    local bufnr = float_win.buf
-                    local win = float_win.win
-
-                    vim.api.nvim_buf_set_name(bufnr, name)
-                    vim.api.nvim_win_set_option(win, 'winblend', 10)
-
-                    return win, bufnr
-                end
-            }
-        }
+        disable_commands = true
     })
-
     local use = packer.use
     packer.reset()
-
     use {'wbthomason/packer.nvim', opt = true}
     use 'tpope/vim-surround'
-
     if vim.fn.exists('g:vscode') == 0 then
         self:load_plugins()
         for _, repo in ipairs(self.repos) do use(repo) end
@@ -96,42 +67,38 @@ function plugins.ensure_plugins()
 end
 
 function plugins.convert_compile_file()
-  local compile_to_lua = data_dir..'lua/_compiled.lua'
-  local lines = {}
-  local lnum = 1
-  lines[#lines+1] = 'vim.cmd [[packadd packer.nvim]]\n'
+    local compile_to_lua = data_dir .. 'lua/_compiled.lua'
+    local lines = {}
+    local lnum = 1
+    lines[#lines + 1] = 'vim.cmd [[packadd packer.nvim]]\n'
 
-  for line in io.lines(packer_compiled) do
-    lnum = lnum + 1
-    if lnum > 15 then
-      lines[#lines+1] = line .. '\n'
-      if line == 'END' then
-        break
-      end
+    for line in io.lines(packer_compiled) do
+        lnum = lnum + 1
+        if lnum > 15 then
+            lines[#lines + 1] = line .. '\n'
+            if line == 'END' then break end
+        end
     end
-  end
-  table.remove(lines,#lines)
+    table.remove(lines, #lines)
 
-  if vim.fn.filereadable(compile_to_lua) == 1 then
-    os.remove(compile_to_lua)
-  else
-    if vim.fn.isdirectory(data_dir .. 'lua') ~= 1 then
-      os.execute('mkdir -p '..data_dir .. 'lua')
+    if vim.fn.filereadable(compile_to_lua) == 1 then
+        os.remove(compile_to_lua)
+    else
+        if vim.fn.isdirectory(data_dir .. 'lua') ~= 1 then
+            os.execute('mkdir -p ' .. data_dir .. 'lua')
+        end
     end
-  end
 
-  local file = io.open(compile_to_lua,"w")
-  for _,line in ipairs(lines) do
-    file:write(line)
-  end
-  file:close()
+    local file = io.open(compile_to_lua, "w")
+    for _, line in ipairs(lines) do file:write(line) end
+    file:close()
 
-  os.remove(packer_compiled)
+    os.remove(packer_compiled)
 end
 
 function plugins.magic_compile()
-  plugins.compile()
-  plugins.convert_compile_file()
+    plugins.compile()
+    plugins.convert_compile_file()
 end
 
 function plugins.auto_compile()

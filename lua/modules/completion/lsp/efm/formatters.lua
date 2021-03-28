@@ -1,7 +1,13 @@
 local M = {}
 
+local lua_indent = ' --tab-width=2 --indent-width=2'
+local lua_no_simple_block = ' --no-keep-simple-control-block-one-line'
+local lua_no_simple_func = ' --no-keep-simple-function-one-line'
+local lua_limit = ' --column-limit=80'
+
 M.luaFormat = {
-    formatCommand = "lua-format -i --no-keep-simple-function-one-line --column-limit=80",
+    formatCommand = "lua-format -i" .. lua_indent .. lua_no_simple_block ..
+        lua_no_simple_func .. lua_limit,
     formatStdin = true
 }
 
