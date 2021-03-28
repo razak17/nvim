@@ -10,85 +10,52 @@
   },
   "Normal Import": {
     "prefix": "imm",
-		"body": [
-			"import $0 from \"${1:module}\";"
-		],
+    "body": ["import $0 from \"${1:module}\";"],
     "description": "Imports normal package"
   },
   "Destructured Import": {
     "prefix": "imd",
-		"body": [
-			"import { $0 } from \"${1:module}\";"
-		],
+    "body": ["import { $0 } from \"${1:module}\";"],
     "description": "Imports destructured package"
   },
-	"Function Statement": {
-		"prefix": "function",
-		"body": [
-			"function ${1:name}(${2:params}: ${3:string}) {",
-			"\t$0",
-			"}"
-		],
-		"description": "Function Statement"
-	},
-	"const function Statement": {
-		"prefix": "const",
-		"body": [
-			"const ${1:name} = (${2:params}: ${3:string}) => {",
-			"\t$0",
-			"}"
-		],
-		"description": "const function Statement"
-	},
-	"For Loop": {
-		"prefix": "for",
-		"body": [
-			"for (let ${1:index} = 0; ${1:index} < ${2:array}.length; ${1:index}++) {",
-			"\tconst ${3:element} = ${2:array}[${1:index}];",
-			"\t$0",
-			"}"
-		],
-		"description": "For Loop"
-	},
-	"If Statement": {
-		"prefix": "if",
-		"body": [
-			"if (${1:condition}) {",
-			"\t$0",
-			"}"
-		],
-		"description": "If Statement"
-	},
-	"If-Else Statement": {
-		"prefix": "ifelse",
-		"body": [
-			"if (${1:condition}) {",
-			"\t$0",
-			"} else {",
-			"\t",
-			"}"
-		],
-		"description": "If-Else Statement"
-	},
-	"While Statement": {
-		"prefix": "while",
-		"body": [
-			"while (${1:condition}) {",
-			"\t$0",
-			"}"
-		],
-		"description": "While Statement"
-	},
-	"Try-Catch Statement": {
-		"prefix": "trycatch",
-		"body": [
-			"try {",
-			"\t$0",
-			"} catch (${1:error}) {",
-			"\t",
-			"}"
-		],
-		"description": "Try-Catch Statement"
-	}
+  "Function Statement": {
+    "prefix": "function",
+    "body": ["function ${1:name}(${2:params}: ${3:string}) {", "\t$0", "}"],
+    "description": "Function Statement"
+  },
+  "const function Statement": {
+    "prefix": "const",
+    "body": ["const ${1:name} = (${2:params}: ${3:string}) => {", "\t$0", "}"],
+    "description": "const function Statement"
+  },
+  "For Loop": {
+    "prefix": "for",
+    "body": [
+      "for (let ${1:index} = 0; ${1:index} < ${2:array}.length; ${1:index}++) {",
+      "\tconst ${3:element} = ${2:array}[${1:index}];",
+      "\t$0",
+      "}"
+    ],
+    "description": "For Loop"
+  },
+  "If Statement": {
+    "prefix": "if",
+    "body": ["if (${1:condition}) {", "\t$0", "}"],
+    "description": "If Statement"
+  },
+  "If-Else Statement": {
+    "prefix": "ifelse",
+    "body": ["if (${1:condition}) {", "\t$0", "} else {", "\t", "}"],
+    "description": "If-Else Statement"
+  },
+  "While Statement": {
+    "prefix": "while",
+    "body": ["while (${1:condition}) {", "\t$0", "}"],
+    "description": "While Statement"
+  },
+  "Try-Catch Statement": {
+    "prefix": "trycatch",
+    "body": ["try {", "\t$0", "} catch (${1:error}) {", "\t", "}"],
+    "description": "Try-Catch Statement"
+  }
 }
-

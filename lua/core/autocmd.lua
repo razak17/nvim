@@ -84,8 +84,8 @@ local plug = {
     {"BufWritePost", "*.lua", "lua require('core.pack').auto_compile()"}, {
         "InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost", "*.rs",
         [[ lua require'lsp_extensions'.inlay_hints{ prefix = '', highlight = "Comment", enabled = {"TypeHint", "ChainingHint", "ParameterHint"}} ]]
-    }
-    -- {"BufEnter", "*", "call v:lua.WhichKey.SetKeyOnFT()"},
+    },
+    {"BufEnter", "*", "call v:lua.WhichKey.SetKeyOnFT()"},
 }
 
 local definitions = {buf, ft, win, niceties, plug}

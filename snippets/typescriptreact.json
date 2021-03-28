@@ -10,16 +10,12 @@
   },
   "Normal Import": {
     "prefix": "imm",
-		"body": [
-			"import $0 from \"${1:module}\";"
-		],
+    "body": ["import $0 from \"${1:module}\";"],
     "description": "Imports normal package"
   },
   "Destructured Import": {
     "prefix": "imd",
-		"body": [
-			"import { $0 } from \"${1:module}\";"
-		],
+    "body": ["import { $0 } from \"${1:module}\";"],
     "description": "Imports destructured package"
   },
   "Import React": {
@@ -27,24 +23,16 @@
     "body": ["import React from 'react';"],
     "description": "Imports React"
   },
-	"Function Statement": {
-		"prefix": "function",
-		"body": [
-			"function ${1:name}(${2:params}: ${3:string}) {",
-			"\t$0",
-			"}"
-		],
-		"description": "Function Statement"
-	},
-	"const function Statement": {
-		"prefix": "const",
-		"body": [
-			"const ${1:name} = (${2:params}: ${3:string}) => {",
-			"\t$0",
-			"}"
-		],
-		"description": "const function Statement"
-	},
+  "Function Statement": {
+    "prefix": "function",
+    "body": ["function ${1:name}(${2:params}: ${3:string}) {", "\t$0", "}"],
+    "description": "Function Statement"
+  },
+  "const function Statement": {
+    "prefix": "const",
+    "body": ["const ${1:name} = (${2:params}: ${3:string}) => {", "\t$0", "}"],
+    "description": "const function Statement"
+  },
   "componentFunctionalTypescript": {
     "prefix": "rfc",
     "body": [

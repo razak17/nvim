@@ -3,6 +3,7 @@ local G = require 'core.global'
 local data_dir = G.data_dir
 local packer_compiled = data_dir .. 'plugin/packages.vim'
 local modules_dir = G.vim_path .. 'lua/modules'
+local compile_to_lua = data_dir .. 'lua/_compiled.lua'
 local packer = nil
 
 local Packer = {}
@@ -68,7 +69,6 @@ function plugins.ensure_plugins()
 end
 
 function plugins.convert_compile_file()
-  local compile_to_lua = data_dir .. 'lua/_compiled.lua'
   local lines = {}
   local lnum = 1
   lines[#lines + 1] = 'vim.cmd [[packadd packer.nvim]]\n'
@@ -84,10 +84,9 @@ function plugins.convert_compile_file()
   end
   table.remove(lines, #lines)
 
-  if vim.fn.filereadable(compile_to_lua) == 1 then
+  if G.exists(compile_to_lua) then
     os.remove(compile_to_lua)
-  else
-    if vim.fn.isdirectory(data_dir .. 'lua') ~= 1 then
+  else if not G.isdir(data_dir .. 'lua') then
       os.execute('mkdir -p ' .. data_dir .. 'lua')
     end
   end
@@ -113,6 +112,20 @@ function plugins.auto_compile()
     plugins.compile()
     plugins.convert_compile_file()
   end
+end
+
+function plugins.load_compile()
+  if G.exists(compile_to_lua) then
+    require('_compiled')
+  else
+    assert('Missing packer compile file Run PackerCompile Or PackerInstall to fix')
+  end
+  vim.cmd [[command! PackerCompile lua require('core.pack').magic_compile()]]
+  vim.cmd [[command! PackerInstall lua require('core.pack').install()]]
+  vim.cmd [[command! PackerUpdate lua require('core.pack').update()]]
+  vim.cmd [[command! PackerSync lua require('core.pack').sync()]]
+  vim.cmd [[command! PackerClean lua require('core.pack').clean()]]
+  vim.cmd [[autocmd User PackerComplete lua require('core.pack').magic_compile()]]
 end
 
 return plugins
