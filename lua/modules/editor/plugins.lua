@@ -10,28 +10,37 @@ editor['windwp/nvim-autopairs'] = {config = conf.autopairs}
 editor['voldikss/vim-floaterm'] = {config = conf.floaterm}
 
 editor['b3nj5m1n/kommentary'] = {
-    config = function()
-        require('kommentary.config').configure_language("default", {
-            prefer_single_line_comments = true
-        })
-    end
+  config = function()
+    require('kommentary.config').configure_language("default", {
+      prefer_single_line_comments = true
+    })
+  end
 }
 
 editor['romainl/vim-cool'] = {
-    config = function()
-        vim.g.CoolTotalMatches = 1
-    end
+  config = function()
+    vim.g.CoolTotalMatches = 1
+  end
 }
 
 editor['RRethy/vim-illuminate'] = {
-    config = function()
-        vim.g.Illuminate_ftblacklist = {
-            'javascript', 'python', 'typescript', 'jsx', 'tsx', 'html'
-        }
-    end
+  config = function()
+    vim.g.Illuminate_ftblacklist = {
+      'javascript', 'python', 'typescript', 'jsx', 'tsx', 'html'
+    }
+  end
 }
 
 editor['tpope/vim-fugitive'] = {}
+
+editor['tpope/vim-surround'] = {}
+
+editor['unblevable/quick-scope'] = {
+  config = function()
+    vim.g.qs_highlight_on_keys = {'f', 'F', 't', 'T'}
+    vim.g.qs_max_chars = 150
+  end
+}
 
 return editor
 
