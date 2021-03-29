@@ -3,8 +3,10 @@ local G = require 'core.global'
 local scopes = {o = vim.o, b = vim.bo, w = vim.wo}
 
 local function opt(scope, key, value)
-    scopes[scope][key] = value
-    if scope ~= 'o' then scopes['o'][key] = value end
+  scopes[scope][key] = value
+  if scope ~= 'o' then
+    scopes['o'][key] = value
+  end
 end
 
 opt('o', 'iskeyword', '@,48-57,_,192-255,-,#') -- Treat dash separated words as a word text object'
@@ -30,7 +32,7 @@ opt('o', 'backup', false) -- Do not make file backups
 opt('o', 'undolevels', 1000) -- How many steps of undo history Vim should remember
 opt('o', 'history', 2000) -- History saving
 
--- -- Editor UI Appearance
+-- Editor UI Appearance
 opt('o', 'guicursor', 'n-v-c-sm:block,i-ci-ve:block,r-cr-o:block')
 opt('w', 'listchars', 'tab:»·,nbsp:+,trail:·,precedes:,extends:')
 opt('o', 'display', 'lastline')
@@ -43,7 +45,7 @@ opt('w', 'colorcolumn', '+1') -- Highlight the 80th character limit
 opt('w', 'number', true) -- Print line number
 opt('w', 'relativenumber', true) -- Show line number relative to current line
 opt('w', 'list', true) -- Show hidden characters
-opt('w', 'cursorline', true) -- Highlight the current line
+opt('w', 'cursorline', false) -- Highlight the current line
 opt('o', 'laststatus', 2) -- Always display the status line
 opt('o', 'background', 'dark') -- Tell vim what the background color looks like
 opt('o', 'cmdheight', 2) -- More space for displaying messages
@@ -135,9 +137,4 @@ opt('o', 'sessionoptions', 'curdir,help,tabpages,winsize')
 opt('o', 'clipboard', 'unnamedplus')
 
 --  ShaDa/viminfo:
---   ' - Maximum number of previously edited files marks
---   < - Maximum number of lines saved for each register
---   @ - Maximum number of items in the input-line history to be
---   s - Maximum size of an item contents in KiB
---   h - Disable the effect of 'hlsearch' when loading the shada
 opt('o', 'shada', "!,'300,<50,@100,s10,h")

@@ -35,7 +35,9 @@ function _G.lsp_before_save()
   local defs = {}
   local ext = vim.fn.expand('%:e')
   table.insert(defs, {
-    "BufWritePre", '*.' .. ext, "lua vim.lsp.buf.formatting_sync(nil,1000)"
+    "BufWritePre",
+    '*.' .. ext,
+    "lua vim.lsp.buf.formatting_sync(nil,1000)"
   })
   nvim_create_augroup('lsp_before_save', defs)
 end
@@ -114,4 +116,3 @@ local enhance_attach = function(client, bufnr)
 end
 
 lspconf.setup(enhance_attach)
-

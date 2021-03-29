@@ -9,10 +9,9 @@ function G:load_variables()
   self.is_mac = os_name == 'OSX'
   self.is_linux = os_name == 'Linux'
   self.is_windows = os_name == 'Windows'
-  self.config = home .. path_sep .. '.config' .. path_sep
   self.cache_dir = home .. path_sep .. '.cache' .. path_sep .. 'nvim' ..
                        path_sep
-  self.vim_path = G.config .. path_sep .. 'nvim' .. path_sep
+  self.vim_path = vim.fn.stdpath('config')
   self.data_dir = string.format('%s/site/', vim.fn.stdpath('data'))
   self.asdf = home .. path_sep .. '.asdf' .. path_sep .. 'installs' .. path_sep
   self.python3 = G.cache_dir .. 'venv' .. path_sep .. 'neovim' .. path_sep

@@ -2,7 +2,7 @@ local fn = vim.fn
 local G = require 'core.global'
 local data_dir = G.data_dir
 local packer_compiled = data_dir .. 'plugin/packages.vim'
-local modules_dir = G.vim_path .. 'lua/modules'
+local modules_dir = G.vim_path .. '/lua/modules'
 local compile_to_lua = data_dir .. 'lua/_compiled.lua'
 local packer = nil
 

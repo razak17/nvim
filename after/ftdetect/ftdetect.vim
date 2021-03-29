@@ -2,7 +2,7 @@
 au BufNewFile,BufRead *.csv,*.dat,*.tsv,*.tab set ft=csv
 
 " dockerfile
-au BufNewFile,BufRead [Dd]ockerfile set ft=Dockerfile
+au BufNewFile,BufRead [Dd]ockerfile set ft=false
 au BufNewFile,BufRead Dockerfile* set ft=Dockerfile
 au BufNewFile,BufRead [Dd]ockerfile.vim set ft=vim
 au BufNewFile,BufRead *.dock set ft=Dockerfile
@@ -110,6 +110,10 @@ au BufNewFile,BufRead *.tsx set ft=typescriptreact
 
 " vue
 au BufNewFile,BufRead *.vue,*.wpy set ft=vue
+
+" tmp, bak
+au BufWritePre *.bak,*.tmp,COMMIT_EDITMSG,MERGE_MSG setlocal noundofile
+au BufNewFile,BufReadPre /tmp/*,$TMPDIR/*,$TMP/*,$TEMP/*,*/shm/*,/private/var/*,.vault.vim, setlocal noswapfile noundofile nobackup nowritebackup viminfo= shada="
 
 " Shebang
 " Auto Detection

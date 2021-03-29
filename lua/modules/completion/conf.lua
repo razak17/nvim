@@ -7,24 +7,27 @@ end
 function config.nvim_compe()
   require('compe').setup {
     enabled = true,
-    autocomplete = true,
     debug = false,
     min_length = 1,
-    preselect = "enable",
-    throttle_time = 80,
-    source_timeout = 200,
-    incomplete_delay = 400,
-    documentation = true,
+    preselect = "always",
     allow_prefix_unmatch = false,
     source = {
-      nvim_lsp = true,
       buffer = true,
+      path = true,
+      spell = true,
+      tags = true,
       calc = true,
       vsnip = true,
-      path = true,
-      treesitter = true
+      nvim_lsp = true,
+      treesitter = true,
+      nvim_lua = true
     }
   }
+end
+
+function config.vim_vsnip()
+  local G = require 'core.global'
+  vim.g["vsnip_snippet_dir"] = G.vim_path .. "/snippets"
 end
 
 function config.saga()
@@ -55,11 +58,6 @@ function config.saga()
     rename_action_keys = {quit = '<C-c>', exec = '<CR>'}
   }
   return opts
-end
-
-function config.vim_vsnip()
-  local G = require 'core.global'
-  vim.g["vsnip_snippet_dir"] = G.vim_path .. "snippets"
 end
 
 function config.emmet()
