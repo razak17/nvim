@@ -8,46 +8,45 @@ local npairs = require('nvim-autopairs')
 local opts = {expr = true}
 
 _G.completion_confirm = function()
-    if vim.fn.pumvisible() ~= 0 then
-        if vim.fn.complete_info()["selected"] ~= -1 then
-            vim.fn["compe#confirm"]()
-            return npairs.esc("")
-        else
-            vim.fn.nvim_select_popupmenu_item(0, false, false, {})
-            vim.fn["compe#confirm"]()
-            return npairs.esc("<c-n>")
-        end
+  if vim.fn.pumvisible() ~= 0 then
+    if vim.fn.complete_info()["selected"] ~= -1 then
+      vim.fn["compe#confirm"]()
+      return npairs.esc("")
     else
-        return npairs.check_break_line_char()
+      vim.fn.nvim_select_popupmenu_item(0, false, false, {})
+      vim.fn["compe#confirm"]()
+      return npairs.esc("<c-n>")
     end
+  else
+    return npairs.check_break_line_char()
+  end
 end
 
 _G.tab = function()
-    if vim.fn.pumvisible() ~= 0 then
-        return npairs.esc("<C-n>")
+  if vim.fn.pumvisible() ~= 0 then
+    return npairs.esc("<C-n>")
+  else
+    if vim.fn["vsnip#available"](1) ~= 0 then
+      vim.fn.feedkeys(string.format('%c%c%c(vsnip-expand-or-jump)', 0x80, 253,
+                                    83))
+      return npairs.esc("")
     else
-        if vim.fn["vsnip#available"](1) ~= 0 then
-            vim.fn.feedkeys(string.format('%c%c%c(vsnip-expand-or-jump)', 0x80,
-                                          253, 83))
-            return npairs.esc("")
-        else
-            return npairs.esc("<Tab>")
-        end
+      return npairs.esc("<Tab>")
     end
+  end
 end
 
 _G.s_tab = function()
-    if vim.fn.pumvisible() ~= 0 then
-        return npairs.esc("<C-p>")
+  if vim.fn.pumvisible() ~= 0 then
+    return npairs.esc("<C-p>")
+  else
+    if vim.fn["vsnip#jumpable"](-1) ~= 0 then
+      vim.fn.feedkeys(string.format('%c%c%c(vsnip-jump-prev)', 0x80, 253, 83))
+      return npairs.esc("")
     else
-        if vim.fn["vsnip#jumpable"](-1) ~= 0 then
-            vim.fn.feedkeys(string.format('%c%c%c(vsnip-jump-prev)', 0x80, 253,
-                                          83))
-            return npairs.esc("")
-        else
-            return npairs.esc("<C-h>")
-        end
+      return npairs.esc("<C-h>")
     end
+  end
 end
 
 --  Which Key
@@ -89,17 +88,17 @@ smap("<C-l>", "vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'",
 imap('<C-y>', "vsnip#expandable() ? '<Plug>(vsnip-expand)' : '<C-space>'", opts)
 smap('<C-y>', "vsnip#expandable() ? '<Plug>(vsnip-expand)' : '<C-space>'", opts)
 
--- Tree
-nnoremap('<Leader>cv', ':NvimTreeToggle<CR>')
-nnoremap('<Leader>cr', ':NvimTreeRefresh<CR>')
-nnoremap('<Leader>cf', ':NvimTreeFindFile<CR>')
-
 -- Compe
 inoremap("<C-Space>", "compe#complete()", opts)
 inoremap("<CR> ", "compe#confirm('<CR>')", opts)
 inoremap("<C-e>", "compe#close('<C-e>')", opts)
 inoremap("<C-f>", "compe#scroll({ 'delta': +4 })", opts)
 inoremap("<C-d>", "compe#scroll({ 'delta': -4 })", opts)
+
+-- Tree
+nnoremap('<Leader>cv', ':NvimTreeToggle<CR>')
+nnoremap('<Leader>cr', ':NvimTreeRefresh<CR>')
+nnoremap('<Leader>cf', ':NvimTreeFindFile<CR>')
 
 -- Far
 nnoremap("<Leader>Ff", ":Farr --source=vimgrep<CR>")

@@ -12,9 +12,9 @@ tools['mbbill/undotree'] = {}
 tools['tweekmonster/startuptime.vim'] = {cmd = "StartupTime"}
 
 tools['glacambre/firenvim'] = {
-    run = function()
-        vim.fn['firenvim#install'](0)
-    end
+  run = function()
+    vim.fn['firenvim#install'](0)
+  end
 }
 
 return tools
