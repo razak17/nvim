@@ -88,7 +88,7 @@ imap('<C-y>', "vsnip#expandable() ? '<Plug>(vsnip-expand)' : '<C-space>'", opts)
 smap('<C-y>', "vsnip#expandable() ? '<Plug>(vsnip-expand)' : '<C-space>'", opts)
 
 -- Compe
-imap("<CR>", "v:lua.completion_confirm()", opts)
+imap("<C-l>", "v:lua.completion_confirm()", opts)
 inoremap("<C-Space>", "compe#complete()", opts)
 inoremap("<CR> ", "compe#confirm('<CR>')", opts)
 inoremap("<C-e>", "compe#close('<C-e>')", opts)
