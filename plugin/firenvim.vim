@@ -18,8 +18,9 @@ if !exists('g:vscode')
   let fc['https?://twitter.com.*'] = { 'takeover': 'never', 'priority': 1 }
   let fc['https://.*gmail.com.*'] = { 'takeover': 'never', 'priority': 1 }
   let fc['https?://.*twitch.tv.*'] = { 'takeover': 'never', 'priority': 1 }
-  let fc['http://127.0.0.1:8888'] = { 'takeover': 'never', 'priority': 1 }
-  let fc['http://localhost:8888'] = { 'takeover': 'never', 'priority': 1 }
+  let fc['http://127.0.0.1:8888/*'] = { 'takeover': 'never', 'priority': 1 }
+  let fc['http://localhost:8888/*'] = { 'takeover': 'never', 'priority': 1 }
+  let fc['https://colab.research.google.com/*'] = { 'takeover': 'never', 'priority': 1 }
 
   function! s:IsFirenvimActive(event) abort
     if !exists('*nvim_get_chan_info')
