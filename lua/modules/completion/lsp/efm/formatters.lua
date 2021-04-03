@@ -4,7 +4,7 @@ local lua_indent = ' --tab-width=2 --indent-width=2'
 local lua_no_simple_block = ' --no-keep-simple-control-block-one-line'
 local lua_no_simple_func = ' --no-keep-simple-function-one-line'
 local lua_break =
-    ' --break-after-table-lb --break-before-table-rb --no-chop-down-table '
+    ' --break-after-table-lb --break-before-table-rb --chop-down-table '
 local lua_limit = ' --column-limit=80'
 
 M.luaFormat = {

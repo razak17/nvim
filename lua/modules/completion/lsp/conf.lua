@@ -31,7 +31,14 @@ function M.setup(enhance_attach)
           runtime = {version = "LuaJIT", path = vim.split(package.path, ';')},
           diagnostics = {
             globals = {
-              "vim", "map", "filter", "range", "reduce", "head", "tail", "nth",
+              "vim",
+              "map",
+              "filter",
+              "range",
+              "reduce",
+              "head",
+              "tail",
+              "nth",
               "use"
             }
           },
@@ -69,9 +76,13 @@ function M.setup(enhance_attach)
   if ex("clangd") then
     lspconfig.clangd.setup {
       cmd = {
-        'clangd', "--background-index", '--clang-tidy',
-        '--completion-style=bundled', '--header-insertion=iwyu',
-        '--suggest-missing-includes', '--cross-file-rename'
+        'clangd',
+        "--background-index",
+        '--clang-tidy',
+        '--completion-style=bundled',
+        '--header-insertion=iwyu',
+        '--suggest-missing-includes',
+        '--cross-file-rename'
       },
       init_options = {
         clangdFileStatus = true,

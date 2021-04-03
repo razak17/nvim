@@ -76,7 +76,6 @@ nnoremap('<Leader>ar', ':RnvimrToggle<CR>')
 xmap("<C-l>", "<Plug>(vsnip-select-text)")
 xmap("<C-x>", "<Plug>(vsnip-cut-text)")
 
-imap("<CR>", "v:lua.completion_confirm()", opts)
 imap("<Tab>", "v:lua.tab()", opts)
 imap("<S-Tab>", "v:lua.s_tab()", opts)
 
@@ -89,6 +88,7 @@ imap('<C-y>', "vsnip#expandable() ? '<Plug>(vsnip-expand)' : '<C-space>'", opts)
 smap('<C-y>', "vsnip#expandable() ? '<Plug>(vsnip-expand)' : '<C-space>'", opts)
 
 -- Compe
+imap("<CR>", "v:lua.completion_confirm()", opts)
 inoremap("<C-Space>", "compe#complete()", opts)
 inoremap("<CR> ", "compe#confirm('<CR>')", opts)
 inoremap("<C-e>", "compe#close('<C-e>')", opts)
@@ -152,7 +152,7 @@ vmap("<leader>/", "<Plug>kommentary_visual_default")
 -- Telescope
 nnoremap('<Leader>ff', ':Telescope find_files<CR>')
 nnoremap('<Leader>frc', ':Telescope dotfiles path=' .. os.getenv("HOME") ..
-             '/env/nvim' .. '<CR>')
+             '/.config/nvim' .. '<CR>')
 -- Commands
 nnoremap('<Leader>fce', ':lua require"telescope.builtin".planets{}<CR>')
 nnoremap('<Leader>fcA', ':lua require("telescope.builtin").autocommands()<CR>')
