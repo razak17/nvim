@@ -8,8 +8,8 @@ function config.nvim_compe()
   require('compe').setup {
     enabled = true,
     debug = false,
-    min_length = 1,
-    preselect = "always",
+    min_length = 2,
+    preselect = "disable",
     allow_prefix_unmatch = false,
     source = {
       buffer = true,
