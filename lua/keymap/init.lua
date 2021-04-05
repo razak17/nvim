@@ -3,7 +3,6 @@ local nmap, vmap, xmap, imap, smap, nnoremap, inoremap = mp.nmap, mp.vmap,
                                                          mp.xmap, mp.imap,
                                                          mp.smap, mp.nnoremap,
                                                          mp.inoremap
-local which_key = require('keymap.which_key')
 local npairs = require('nvim-autopairs')
 local opts = {expr = true}
 
@@ -48,9 +47,6 @@ _G.s_tab = function()
     end
   end
 end
-
---  Which Key
-which_key.setup()
 
 -- Vista
 nnoremap('<Leader>vv', ':Vista!!<CR>')

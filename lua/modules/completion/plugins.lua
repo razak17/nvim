@@ -13,7 +13,12 @@ completion['neovim/nvim-lspconfig'] = {
 
 completion['hrsh7th/nvim-compe'] = {config = conf.nvim_compe}
 
-completion['liuchengxu/vim-which-key'] = {}
+completion['liuchengxu/vim-which-key'] =
+    {
+      config = function()
+        require 'keymap.which_key'
+      end
+    }
 
 completion['hrsh7th/vim-vsnip'] = {
   requires = {'hrsh7th/vim-vsnip-integ'},

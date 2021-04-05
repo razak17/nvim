@@ -15,24 +15,31 @@ end
 
 local buf = {
   {
-    "BufWritePost,FileWritePost", "*.vim",
+    "BufWritePost,FileWritePost",
+    "*.vim",
     [[nested if &l:autoread > 0 | source <afile> | echo 'source ' . bufname('%') | endif]]
-  }, {"BufLeave", "*", "silent! update"},
+  },
+  {"BufLeave", "*", "silent! update"},
   {"BufWritePre", "*", ":call autocmds#TrimWhitespace()"},
   {"BufEnter,BufNewFile", "*", "set fo-=cro"}
 }
 
 local niceties = {
-  {"VimEnter", "*", ":lua require('modules.aesth.conf').MyColors()"}, {
-    "TextYankPost", "*",
+  {"VimEnter", "*", ":lua require('modules.aesth.conf').MyColors()"},
+  {
+    "TextYankPost",
+    "*",
     [[ silent! lua vim.highlight.on_yank({higroup="IncSearch", timeout=77})]]
   },
   {"Syntax", "*", [[if line('$') > 5000 | syntax sync minlines=300 | endif]]},
   {
-    "BufWritePost", "*",
+    "BufWritePost",
+    "*",
     [[nested  if &l:filetype ==# '' || exists('b:ftdetect') | unlet! b:ftdetect | filetype detect | endif]]
-  }, {
-    "BufReadPost", "*",
+  },
+  {
+    "BufReadPost",
+    "*",
     [[if &ft !~# 'commit' && ! &diff && line("'\"") >= 1 && line("'\"") <= line("$") | execute 'normal! g`"zvzz' | endif]]
   }
 }
@@ -44,10 +51,13 @@ local win = {
   {"VimLeave", "*", "wshada!"},
   -- Highlight current line only on focused window
   {
-    "WinEnter,BufEnter,InsertLeave", "*",
+    "WinEnter,BufEnter,InsertLeave",
+    "*",
     [[if ! &cursorline && &filetype !~# '^\(dashboard\|telescope_\)' && ! &pvw | setlocal cursorline | endif]]
-  }, {
-    "WinLeave,BufLeave,InsertEnter", "*",
+  },
+  {
+    "WinLeave,BufLeave,InsertEnter",
+    "*",
     [[if &cursorline && &filetype !~# '^\(dashboard\|telescope_\)' && ! &pvw | setlocal nocursorline | endif]]
   }, -- Force write shada on leaving nvim
   {"VimLeave", "*", [[if has('nvim') | wshada! | else | wviminfo! | endif]]},
@@ -57,18 +67,22 @@ local win = {
 
 local ft = {
   {"FocusLost", "*", "silent! wall"},
-  {"BufEnter,FocusGained", "*", "silent! checktime"}, {
-    "FileType", "dashboard",
+  {"BufEnter,FocusGained", "*", "silent! checktime"},
+  {
+    "FileType",
+    "dashboard",
     "set showtabline=0 | autocmd WinLeave <buffer> set showtabline=2"
   }
 }
 
 local plug = {
-  {"BufWritePost", "*.lua", "lua require('core.pack').auto_compile()"}, {
-    "InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost", "*.rs",
+  {"BufWritePost", "*.lua", "lua require('core.pack').auto_compile()"},
+  {
+    "InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost",
+    "*.rs",
     [[ lua require'lsp_extensions'.inlay_hints{ prefix = '', highlight = "Comment", enabled = {"TypeHint", "ChainingHint", "ParameterHint"}} ]]
   },
--- {"BufEnter", "*", "call v:lua.WhichKey.SetKeyOnFT()"}
+  {"BufEnter", "*", "call v:lua.WhichKey.SetKeyOnFT()"}
 }
 
 local definitions = {buf, ft, win, niceties, plug}
