@@ -55,28 +55,22 @@ local map_leader = function()
 end
 
 local load_core = function()
+  local pack = require('core.pack')
+
   disable_builtin_plugins()
   disable_providers()
   set_host_prog()
   global_utils()
   map_leader()
 
-  local pack = require('core.pack')
-
-  if vim.fn.has('nvim') then
-    require('core.setup')
-  end
-
+  require('core.setup')
   require('core.opts')
   require('core.binds')
+
   pack.ensure_plugins()
-
-  if vim.fn.has('nvim') then
-    require('core.autocmd')
-    require('keymap')
-
-    pack.load_compile()
-  end
+  require('keymap')
+  require('core.autocmd')
+  pack.load_compile()
 end
 
 load_core()
