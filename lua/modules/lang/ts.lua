@@ -31,13 +31,13 @@ local synoff = function()
               " lua require'modules.lang.utils'.matchit()")
 end
 
-local parsers = table.remove(fts, 17)
-parsers = table.insert(fts, 'bash')
+table.remove(fts, 16)
+table.insert(fts, 'bash')
 
 function M.setup()
   synoff()
   require'nvim-treesitter.configs'.setup {
-    ensure_installed = parsers,
+    ensure_installed = fts,
     highlight = {enable = true},
     incremental_selection = {
       enable = true,
