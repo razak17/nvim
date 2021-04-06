@@ -109,7 +109,6 @@ end
 function plugins.auto_compile()
   local file = vim.fn.expand('%:p')
   if file:match(modules_dir) then
-    plugins.clean()
     plugins.compile()
     plugins.convert_compile_file()
   end
