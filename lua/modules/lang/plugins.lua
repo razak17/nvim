@@ -1,5 +1,5 @@
 local lang = {}
-local conf = require('modules.lang.conf')
+local conf = require('modules.lang.config')
 
 lang['nvim-treesitter/nvim-treesitter'] =
     {

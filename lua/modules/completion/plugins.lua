@@ -1,5 +1,5 @@
 local completion = {}
-local conf = require 'modules.completion.conf'
+local conf = require 'modules.completion.config'
 
 completion['neovim/nvim-lspconfig'] = {
   event = 'BufReadPre',

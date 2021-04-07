@@ -1,13 +1,15 @@
-local conf = require('modules.editor.conf')
+local conf = require('modules.editor.config')
 local editor = {}
 
-editor['norcalli/nvim-colorizer.lua'] = {config = conf.nvim_colorizer}
+editor['tpope/vim-surround'] = {}
 
-editor['kevinhwang91/rnvimr'] = {config = conf.rnvimr}
+editor['phaazon/hop.nvim'] = {as = 'hop'}
+
+editor['AndrewRadev/tagalong.vim'] = {config = conf.tagalong}
 
 editor['windwp/nvim-autopairs'] = {config = conf.autopairs}
 
-editor['voldikss/vim-floaterm'] = {config = conf.floaterm}
+editor['norcalli/nvim-colorizer.lua'] = {config = conf.nvim_colorizer}
 
 editor['b3nj5m1n/kommentary'] = {
   config = function()
@@ -17,28 +19,19 @@ editor['b3nj5m1n/kommentary'] = {
   end
 }
 
-editor['romainl/vim-cool'] = {
+editor['hrsh7th/vim-eft'] = {
+  opt = true,
   config = function()
-    vim.g.CoolTotalMatches = 1
+    vim.g.eft_ignorecase = true
   end
 }
 
-editor['RRethy/vim-illuminate'] = {
+editor['monaqa/dial.nvim'] = {config = conf.dial}
+
+editor['MattesGroeger/vim-bookmarks'] = {
   config = function()
-    vim.g.Illuminate_ftblacklist = {
-      'javascript', 'python', 'typescript', 'jsx', 'tsx', 'html'
-    }
-  end
-}
-
-editor['tpope/vim-fugitive'] = {}
-
-editor['tpope/vim-surround'] = {}
-
-editor['unblevable/quick-scope'] = {
-  config = function()
-    vim.g.qs_highlight_on_keys = {'f', 'F', 't', 'T'}
-    vim.g.qs_max_chars = 150
+    vim.g.bookmark_no_default_key_mappings = 1
+    vim.g.bookmark_sign = ''
   end
 }
 

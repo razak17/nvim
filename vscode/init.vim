@@ -7,12 +7,6 @@ packadd quickscope
 luafile ~/.config/nvim/lua/core/opts.lua
 luafile ~/.config/nvim/lua/core/binds.lua
 
-let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
-
-highlight QuickScopePrimary guifg='#00C7DF' gui=underline ctermfg=155 cterm=underline
-highlight QuickScopeSecondary guifg='#eF5F70' gui=underline ctermfg=81 cterm=underline
-let g:qs_max_chars=150
-
 "VSCode
 function! s:split(...) abort
     let direction = a:1

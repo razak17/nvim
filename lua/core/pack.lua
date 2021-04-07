@@ -1,8 +1,8 @@
-local fn = vim.fn
-local G = require 'core.global'
-local data_dir = G.data_dir
-local packer_compiled = data_dir .. 'plugin/packages.vim'
-local modules_dir = G.vim_path .. '/lua/modules'
+local fn, api = vim.fn, vim.api
+local vim_path = require('core.global').vim_path
+local data_dir = require('core.global').data_dir
+local modules_dir = vim_path .. '/lua/modules'
+local packer_compiled = data_dir .. 'packer_compiled.vim'
 local compile_to_lua = data_dir .. 'lua/_compiled.lua'
 local packer = nil
 
@@ -16,7 +16,7 @@ function Packer:load_plugins()
     local list = {}
     local tmp = vim.split(fn.globpath(modules_dir, '*/plugins.lua'), '\n')
     for _, f in ipairs(tmp) do
-      list[#list + 1] = f:sub(#modules_dir - 7, -1)
+      list[#list + 1] = f:sub(#modules_dir - 6, -1)
     end
     return list
   end
@@ -32,7 +32,7 @@ end
 
 function Packer:load_packer()
   if not packer then
-    vim.api.nvim_command('packadd packer.nvim')
+    api.nvim_command('packadd packer.nvim')
     packer = require('packer')
   end
   packer.init({
@@ -40,29 +40,28 @@ function Packer:load_packer()
     git = {clone_timeout = 120},
     disable_commands = true
   })
-  local use = packer.use
   packer.reset()
-  use {'wbthomason/packer.nvim', opt = true}
+  local use = packer.use
   self:load_plugins()
+  use {"wbthomason/packer.nvim", opt = true}
   for _, repo in ipairs(self.repos) do
     use(repo)
   end
 end
 
-function Packer:init_ensure_plugins()
-  self:load_packer()
-  packer.install()
-  packer.compile()
-end
-
 local plugins = setmetatable({}, {
   __index = function(_, key)
-    if packer == nil then
+    if not packer then
       Packer:load_packer()
     end
     return packer[key]
   end
 })
+
+function Packer:init_ensure_plugins()
+  self:load_packer()
+  packer.install()
+end
 
 function plugins.ensure_plugins()
   Packer:init_ensure_plugins()
@@ -84,12 +83,12 @@ function plugins.convert_compile_file()
   end
   table.remove(lines, #lines)
 
-  if G.exists(compile_to_lua) then
+  if vim.fn.isdirectory(data_dir .. 'lua') ~= 1 then
+    os.execute('mkdir -p ' .. data_dir .. 'lua')
+  end
+
+  if vim.fn.filereadable(compile_to_lua) == 1 then
     os.remove(compile_to_lua)
-  else
-    if not G.isdir(data_dir .. 'lua') then
-      os.execute('mkdir -p ' .. data_dir .. 'lua')
-    end
   end
 
   local file = io.open(compile_to_lua, "w")
@@ -109,24 +108,26 @@ end
 function plugins.auto_compile()
   local file = vim.fn.expand('%:p')
   if file:match(modules_dir) then
+    -- plugins.clean()
     plugins.compile()
     plugins.convert_compile_file()
   end
 end
 
 function plugins.load_compile()
-  if G.exists(compile_to_lua) then
+  if vim.fn.filereadable(compile_to_lua) == 1 then
     require('_compiled')
   else
     assert(
         'Missing packer compile file Run PackerCompile Or PackerInstall to fix')
   end
-  vim.cmd [[command! PlugCompile lua require('core.pack').magic_compile()]]
-  vim.cmd [[command! PlugInstall lua require('core.pack').install()]]
-  vim.cmd [[command! PlugUpdate lua require('core.pack').update()]]
-  vim.cmd [[command! PlugSync lua require('core.pack').sync()]]
-  vim.cmd [[command! PlugClean lua require('core.pack').clean()]]
-  vim.cmd [[autocmd User PlugComplete lua require('core.pack').magic_compile()]]
+  vim.cmd [[command! PackerCompile lua require('core.pack').magic_compile()]]
+  vim.cmd [[command! PackerInstall lua require('core.pack').install()]]
+  vim.cmd [[command! PackerUpdate lua require('core.pack').update()]]
+  vim.cmd [[command! PackerSync lua require('core.pack').sync()]]
+  vim.cmd [[command! PackerClean lua require('core.pack').clean()]]
+  vim.cmd [[autocmd User PackerComplete lua require('core.pack').magic_compile()]]
 end
 
 return plugins
+

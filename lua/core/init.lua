@@ -68,9 +68,10 @@ local load_core = function()
   require('core.binds')
 
   pack.ensure_plugins()
-  require('keymap')
-  require('core.autocmd')
   pack.load_compile()
+
+  require('keymap')
+  -- require('core.autocmd')
 end
 
 load_core()

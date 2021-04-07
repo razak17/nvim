@@ -161,17 +161,7 @@ g.which_key_map = {
     v = "toggle virtual text",
     x = "close quickfix"
   },
-  m = {
-    name = "+Surround",
-    O = "Type => Option<Type>",
-    R = "Type => Option<Type, Err>",
-    s = "val => Some(val)",
-    o = "val => Ok(val)",
-    e = "val => Err(val)",
-    ['('] = "val => (val)",
-    ["'"] = "val => 'val'",
-    ['"'] = 'val => "val"'
-  },
+  m = {name = "+mark", e = "toggle", b = "previous mark", k = "next mark"},
   P = {
     name = "+Plug",
     c = 'compile',
@@ -180,7 +170,6 @@ g.which_key_map = {
     s = 'sync',
     U = 'update'
   },
-  -- r = { name = "+Visual"},
   s = {
     name = "+Tab",
     b = 'previous',
@@ -192,13 +181,7 @@ g.which_key_map = {
     L = 'move right',
     N = 'new'
   },
-  S = {
-    name = "+Session",
-    c = 'close Session',
-    d = 'delete Session',
-    l = 'load Session',
-    s = 'save Session'
-  },
+  S = {name = "+Session", l = 'load Session', s = 'save Session'},
   T = {name = "+Treesitter", m = "scope incremental", n = "init selection"},
   v = {
     name = "+Code",

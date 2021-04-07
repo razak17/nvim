@@ -68,6 +68,24 @@ nnoremap('<Leader>Ie', ':TSInstallInfo<CR>')
 -- rnvimr
 nnoremap('<Leader>ar', ':RnvimrToggle<CR>')
 
+-- zen
+nnoremap('<Leader>z', ':Goyo<CR>')
+
+-- Prodoc
+nnoremap('gce', ':ProDoc<CR>')
+
+-- Hop
+nnoremap('S', ':HopWord<CR>')
+nnoremap('L', ':HopLine<CR>')
+nnoremap('s', ':HopChar2<CR>')
+-- nnoremap('gce', ':HopChar1<CR>')
+-- nnoremap('gce', ':HopPattern<CR>')
+
+-- Bookmark
+nnoremap('<Leader>me', ':BookmarkToggle<CR>')
+nnoremap('<Leader>mb', ':BookmarkPrev<CR>')
+nnoremap('<Leader>mk', ':BookmarkNext<CR>')
+
 -- vsnip
 xmap("<C-l>", "<Plug>(vsnip-select-text)")
 xmap("<C-x>", "<Plug>(vsnip-cut-text)")
@@ -97,8 +115,8 @@ nnoremap('<Leader>cr', ':NvimTreeRefresh<CR>')
 nnoremap('<Leader>cf', ':NvimTreeFindFile<CR>')
 
 -- Far
-nnoremap("<Leader>Ff", ":Farr --source=vimgrep<CR>")
-nnoremap("<Leader>Fr", ":Farr --source=rgnvim<CR>")
+nnoremap("<Leader>Ff", ":Farf<CR>")
+nnoremap("<Leader>Fr", ":Farf<CR>")
 nnoremap("<Leader>FD", ":Fardo<CR>")
 
 -- Bufferline
@@ -147,6 +165,7 @@ vmap("<leader>/", "<Plug>kommentary_visual_default")
 
 -- Telescope
 nnoremap('<Leader>ff', ':Telescope find_files<CR>')
+nnoremap('<Leader>fb', ':Telescope file_browser<CR>')
 nnoremap('<Leader>frc', ':Telescope dotfiles path=' .. os.getenv("HOME") ..
              '/.config/nvim' .. '<CR>')
 -- Commands

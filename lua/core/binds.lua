@@ -153,7 +153,7 @@ if vim.fn.exists('g:vscode') == 0 then
     nnoremap('<leader>cR', ':call autocmds#EmptyRegisters()<CR>')
     nnoremap('<Leader>Ic', ':checkhealth<CR>')
     nnoremap('<Leader>vwm',
-             ':lua require "modules.aesth.conf".ColorMyPencils()<CR>')
+             ':lua require "modules.aesth.config".ColorMyPencils()<CR>')
     nnoremap('<Leader>;', ':lua require "internal.utils".OpenTerminal()<CR>')
     nnoremap('<leader>ao', ':lua require "internal.utils".TurnOnGuides()<CR>')
     nnoremap('<leader>ae', ':lua require "internal.utils".TurnOffGuides()<CR>')

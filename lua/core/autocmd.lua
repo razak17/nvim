@@ -25,7 +25,7 @@ local buf = {
 }
 
 local niceties = {
-  {"VimEnter", "*", ":lua require('modules.aesth.conf').MyColors()"},
+  {"VimEnter", "*", ":lua require('modules.aesth.config').MyColors()"},
   {
     "TextYankPost",
     "*",

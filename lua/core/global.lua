@@ -12,12 +12,12 @@ function G:load_variables()
   self.cache_dir = home .. path_sep .. '.cache' .. path_sep .. 'nvim' ..
                        path_sep
   self.vim_path = vim.fn.stdpath('config')
-  self.data_dir = string.format('%s/site/', vim.fn.stdpath('data'))
+  self.data_dir = string.format('%s/site/', vim.fn.stdpath('data')) .. path_sep
   self.asdf = home .. path_sep .. '.asdf' .. path_sep .. 'installs' .. path_sep
   self.python3 = G.cache_dir .. 'venv' .. path_sep .. 'neovim' .. path_sep
   self.golang = G.asdf .. "golang/1.16.2/go/bin/go"
   self.node = G.asdf .. "nodejs/15.5.1/.npm/bin/neovim-node-host"
-  self.plugins = G.data_dir .. path_sep .. 'pack' .. path_sep
+  self.plugins = G.data_dir .. 'pack' .. path_sep
   self.sumneko_root_path = G.cache_dir .. 'nvim_lsp' .. path_sep ..
                                'lua-language-server' .. path_sep
   self.elixirls_root_path =

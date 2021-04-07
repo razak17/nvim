@@ -1,7 +1,7 @@
 local api = vim.api
 local saga = require 'lspsaga'
 local utils = require 'modules.completion.lsp.utils'
-local lspconf = require 'modules.completion.lsp.conf'
+local lspconf = require 'modules.completion.lsp.config'
 local hl_cmds = utils.hl_cmds
 local global_cmd = utils.global_cmd
 local buf_map = utils.buf_map
@@ -75,7 +75,7 @@ local enhance_attach = function(client, bufnr)
   lbuf_map("vlsw", "vim.lsp.buf.workspace_symbol()")
   buf_map(bufnr, "K", "require'lspsaga.hover'.render_hover_doc()")
 
-  saga.init_lsp_saga(require'modules.completion.conf'.saga())
+  saga.init_lsp_saga(require'modules.completion.config'.saga())
   lbuf_map("vdb", "require'lspsaga.diagnostic'.lsp_jump_diagnostic_prev()")
   lbuf_map("vdn", "require'lspsaga.diagnostic'.lsp_jump_diagnostic_next()")
   lbuf_map("vdc", "require'lspsaga.diagnostic'.show_line_diagnostics()")
