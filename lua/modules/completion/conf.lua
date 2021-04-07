@@ -9,7 +9,7 @@ function config.nvim_compe()
     enabled = true,
     debug = false,
     min_length = 2,
-    preselect = "disable",
+    preselect = "always",
     allow_prefix_unmatch = false,
     source = {
       buffer = true,

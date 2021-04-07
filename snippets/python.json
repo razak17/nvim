@@ -15,9 +15,24 @@
     "description": "Code snippet for an if statement with else"
   },
   "print": {
-    "prefix": ["pr"],
+    "prefix": ["print"],
     "body": ["print(${1:expression})"],
     "description": "print"
+  },
+  "printf": {
+    "prefix": ["printf"],
+    "body": ["print(\"${1:expression}\".format(${2:params}))"],
+    "description": "print"
+  },
+  "from": {
+    "prefix": ["from"],
+    "body": ["from ${1:module} import ${2:package}"],
+    "description": "import"
+  },
+  "import": {
+    "prefix": ["import"],
+    "body": ["import ${0:package}"],
+    "description": "import"
   },
   "for": {
     "prefix": "for",
