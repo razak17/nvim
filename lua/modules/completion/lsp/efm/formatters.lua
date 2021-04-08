@@ -5,7 +5,7 @@ local lua_no_simple_block = ' --no-keep-simple-control-block-one-line'
 local lua_no_simple_func = ' --no-keep-simple-function-one-line'
 local lua_break =
     ' --break-after-table-lb --break-before-table-rb --chop-down-table '
-local lua_limit = ' --column-limit=80'
+local lua_limit = ' --align-parameter --chop-down-parameter --column-limit=80'
 
 M.luaFormat = {
   formatCommand = "lua-format -i" .. lua_indent .. lua_no_simple_block ..

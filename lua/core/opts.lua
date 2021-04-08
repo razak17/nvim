@@ -138,3 +138,4 @@ opt('o', 'clipboard', 'unnamedplus')
 
 --  ShaDa/viminfo:
 opt('o', 'shada', "!,'300,<50,@100,s10,h")
+

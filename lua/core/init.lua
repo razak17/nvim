@@ -71,7 +71,7 @@ local load_core = function()
   pack.load_compile()
 
   require('keymap')
-  -- require('core.autocmd')
+  require('core.autocmd')
 end
 
 load_core()

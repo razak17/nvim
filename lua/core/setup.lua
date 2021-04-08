@@ -4,8 +4,12 @@ local cmd, fn = vim.cmd, vim.fn
 local function createDirs()
   -- Create all cache directories
   local data_dir = {
-    G.cache_dir .. "backup", G.cache_dir .. "session", G.cache_dir .. "swap",
-    G.cache_dir .. "tags", G.cache_dir .. "undodir", G.cache_dir .. "nvim_lsp"
+    G.cache_dir .. "backup",
+    G.cache_dir .. "session",
+    G.cache_dir .. "swap",
+    G.cache_dir .. "tags",
+    G.cache_dir .. "undodir",
+    G.cache_dir .. "nvim_lsp"
   }
   if not G.isdir(G.cache_dir) then
     os.execute("mkdir -p " .. G.cache_dir)
@@ -88,3 +92,4 @@ pythonvenvInit()
 nodeHostInit()
 golangInit()
 packerInit()
+

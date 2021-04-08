@@ -3,88 +3,8 @@ local nmap, vmap, xmap, imap, smap, nnoremap, inoremap = mp.nmap, mp.vmap,
                                                          mp.xmap, mp.imap,
                                                          mp.smap, mp.nnoremap,
                                                          mp.inoremap
-local npairs = require('nvim-autopairs')
 local opts = {expr = true}
-
-_G.completion_confirm = function()
-  if vim.fn.pumvisible() ~= 0 then
-    if vim.fn.complete_info()["selected"] ~= -1 then
-      vim.fn["compe#confirm"]()
-      return npairs.esc("")
-    else
-      vim.fn.nvim_select_popupmenu_item(0, false, false, {})
-      vim.fn["compe#confirm"]()
-      return npairs.esc("<c-n>")
-    end
-  else
-    return npairs.check_break_line_char()
-  end
-end
-
-_G.tab = function()
-  if vim.fn.pumvisible() ~= 0 then
-    return npairs.esc("<C-n>")
-  else
-    if vim.fn["vsnip#available"](1) ~= 0 then
-      vim.fn.feedkeys(string.format('%c%c%c(vsnip-expand-or-jump)', 0x80, 253,
-                                    83))
-      return npairs.esc("")
-    else
-      return npairs.esc("<Tab>")
-    end
-  end
-end
-
-_G.s_tab = function()
-  if vim.fn.pumvisible() ~= 0 then
-    return npairs.esc("<C-p>")
-  else
-    if vim.fn["vsnip#jumpable"](-1) ~= 0 then
-      vim.fn.feedkeys(string.format('%c%c%c(vsnip-jump-prev)', 0x80, 253, 83))
-      return npairs.esc("")
-    else
-      return npairs.esc("<C-h>")
-    end
-  end
-end
-
--- Vista
-nnoremap('<Leader>vv', ':Vista!!<CR>')
-
--- Lsp
-nnoremap('<Leader>lf', ':LspFormatting<CR>')
-nnoremap('<Leader>li', ':LspInfo<CR>')
-nnoremap('<Leader>ll', ':LspLog<CR>')
-nnoremap('<Leader>lr', ':LspRestart<CR>')
-nnoremap('<Leader>lv', ':LspToggleVirtualText<CR>')
-nnoremap('<Leader>lx', ':cclose<CR>')
-
--- Undo tree
-nnoremap("<Leader>au", ":UndotreeToggle<CR>")
-
--- TS
-nnoremap('<Leader>Ie', ':TSInstallInfo<CR>')
-
--- rnvimr
-nnoremap('<Leader>ar', ':RnvimrToggle<CR>')
-
--- zen
-nnoremap('<Leader>z', ':Goyo<CR>')
-
--- Prodoc
-nnoremap('gce', ':ProDoc<CR>')
-
--- Hop
-nnoremap('S', ':HopWord<CR>')
-nnoremap('L', ':HopLine<CR>')
-nnoremap('s', ':HopChar2<CR>')
--- nnoremap('gce', ':HopChar1<CR>')
--- nnoremap('gce', ':HopPattern<CR>')
-
--- Bookmark
-nnoremap('<Leader>me', ':BookmarkToggle<CR>')
-nnoremap('<Leader>mb', ':BookmarkPrev<CR>')
-nnoremap('<Leader>mk', ':BookmarkNext<CR>')
+require('keymap.config')
 
 -- vsnip
 xmap("<C-l>", "<Plug>(vsnip-select-text)")
@@ -109,15 +29,74 @@ inoremap("<C-e>", "compe#close('<C-e>')", opts)
 inoremap("<C-f>", "compe#scroll({ 'delta': +4 })", opts)
 inoremap("<C-d>", "compe#scroll({ 'delta': -4 })", opts)
 
+-- Undo tree
+nnoremap("<Leader>au", ":UndotreeToggle<CR>")
+
+-- TS
+nnoremap('<Leader>Ie', ':TSInstallInfo<CR>')
+
+-- rnvimr
+nnoremap('<Leader>ar', ':RnvimrToggle<CR>')
+
+-- zen
+nnoremap('<Leader>z', ':Goyo<CR>')
+
+-- Prodoc
+nnoremap('gce', ':ProDoc<CR>')
+
+-- Vista
+nnoremap('<Leader>vv', ':Vista!!<CR>')
+
+-- Hop
+nnoremap('S', ':HopWord<CR>')
+nnoremap('L', ':HopLine<CR>')
+nnoremap('s', ':HopChar2<CR>')
+-- nnoremap('gce', ':HopChar1<CR>')
+-- nnoremap('gce', ':HopPattern<CR>')
+
+-- Bookmark
+nnoremap('<Leader>me', ':BookmarkToggle<CR>')
+nnoremap('<Leader>mb', ':BookmarkPrev<CR>')
+nnoremap('<Leader>mk', ':BookmarkNext<CR>')
+
+-- acceleratedjk
+nmap("j", 'v:lua.enhance_jk_move("j")', {silent = true, expr = true})
+nmap("k", 'v:lua.enhance_jk_move("k")', {silent = true, expr = true})
+
+-- vim-eft
+nmap(";", "v:lua.enhance_ft_move(';')", {expr = true})
+xmap(";", "v:lua.enhance_ft_move(';')", {expr = true})
+nmap("f", "v:lua.enhance_ft_move('f')", {expr = true})
+nmap("f", "v:lua.enhance_ft_move('f')", {expr = true})
+nmap("f", "v:lua.enhance_ft_move('f')", {expr = true})
+nmap("F", "v:lua.enhance_ft_move('F')", {expr = true})
+nmap("F", "v:lua.enhance_ft_move('F')", {expr = true})
+nmap("F", "v:lua.enhance_ft_move('F')", {expr = true})
+
+-- markdown preview
+nnoremap('<Leader>om', ':MarkdownPreview<CR>')
+
+-- dadbob
+nnoremap('<Leader>od', ':DBUIToggle<CR>')
+
+-- Lsp
+nnoremap('<Leader>lf', ':LspFormatting<CR>')
+nnoremap('<Leader>li', ':LspInfo<CR>')
+nnoremap('<Leader>ll', ':LspLog<CR>')
+nnoremap('<Leader>lr', ':LspRestart<CR>')
+nnoremap('<Leader>lv', ':LspToggleVirtualText<CR>')
+nnoremap('<Leader>lx', ':cclose<CR>')
+
 -- Tree
 nnoremap('<Leader>cv', ':NvimTreeToggle<CR>')
 nnoremap('<Leader>cr', ':NvimTreeRefresh<CR>')
 nnoremap('<Leader>cf', ':NvimTreeFindFile<CR>')
 
 -- Far
-nnoremap("<Leader>Ff", ":Farf<CR>")
-nnoremap("<Leader>Fr", ":Farf<CR>")
+nnoremap("<Leader>Ff", ":Farr --source=vimgrep<CR>")
+nnoremap("<Leader>Fr", ":Farr --source=rgnvim<CR>")
 nnoremap("<Leader>FD", ":Fardo<CR>")
+nnoremap("<Leader>Fz", ":Farf<CR>")
 
 -- Bufferline
 nnoremap('<Leader>bb', ':BufferLineMovePrev<CR>')

@@ -66,3 +66,4 @@ nnoremap <silent> <Leader>d  :call <SID>DellThisBuf()<CR>
 nnoremap <silent> <Leader>bdA :call <SID>DellAllBuf()<CR> :q!<CR>
 nnoremap <silent> <Leader>bdh :call <SID>DelToLeft()<CR>
 nnoremap <silent> <Leader>bdx :call <SID>DelAllExcept()<CR>
+

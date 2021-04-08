@@ -5,9 +5,13 @@ editor['tpope/vim-surround'] = {}
 
 editor['phaazon/hop.nvim'] = {as = 'hop'}
 
-editor['AndrewRadev/tagalong.vim'] = {config = conf.tagalong}
+editor['rhysd/accelerated-jk'] = {opt = true}
+
+editor['monaqa/dial.nvim'] = {config = conf.dial}
 
 editor['windwp/nvim-autopairs'] = {config = conf.autopairs}
+
+editor['AndrewRadev/tagalong.vim'] = {config = conf.tagalong}
 
 editor['norcalli/nvim-colorizer.lua'] = {config = conf.nvim_colorizer}
 
@@ -25,8 +29,6 @@ editor['hrsh7th/vim-eft'] = {
     vim.g.eft_ignorecase = true
   end
 }
-
-editor['monaqa/dial.nvim'] = {config = conf.dial}
 
 editor['MattesGroeger/vim-bookmarks'] = {
   config = function()

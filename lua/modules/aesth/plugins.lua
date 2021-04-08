@@ -1,16 +1,11 @@
 local conf = require('modules.aesth.config')
 local aesth = {}
 
-aesth['junegunn/goyo.vim'] = {}
-
-aesth['glepnir/indent-guides.nvim'] = {
-  event = 'BufRead',
-  config = conf.indent
-}
+aesth['junegunn/goyo.vim'] = {cmd = "Goyo"}
 
 aesth['glepnir/dashboard-nvim'] = {config = conf.dashboard}
 
-aesth['christianchiarulli/nvcode-color-schemes.vim'] = {config = conf.bg}
+aesth['razak17/zephyr-nvim'] = {config = conf.bg}
 
 aesth['glepnir/galaxyline.nvim'] = {
   branch = 'main',

@@ -43,3 +43,4 @@ augroup THE_PRIMEAGEN
   au BufEnter stackoverflow_*.txt filetype=markdown
   autocmd UIEnter * call OnUIEnter(deepcopy(v:event))
 augroup END
+
