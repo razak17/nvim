@@ -72,8 +72,6 @@ function config.nvim_tree()
       untracked = "★"
     }
   }
-
-  vim.cmd [[ highlight NvimTreeFolderIcon guibg=NONE ]]
 end
 
 function config.bg()

@@ -1,6 +1,6 @@
 local api = vim.api
-local ts = require'nvim-treesitter.ts_utils'
-local tslocals = require'nvim-treesitter.locals'
+local ts = require 'nvim-treesitter.ts_utils'
+local tslocals = require 'nvim-treesitter.locals'
 local M = {}
 
 -- matchit based on treesitter (experiment)
@@ -12,14 +12,14 @@ function _G.tsMatchit()
   local srow, scol, erow, ecol = node:range()
 
   if lnum - srow < erow - lnum then
-    api.nvim_win_set_cursor(0, {erow+1, ecol})
+    api.nvim_win_set_cursor(0, {erow + 1, ecol})
   else
-    api.nvim_win_set_cursor(0, {srow+1, scol})
+    api.nvim_win_set_cursor(0, {srow + 1, scol})
   end
 end
 
 function M.matchit()
-  api.nvim_buf_set_keymap(0, 'n', '%', ':lua tsMatchit()<CR>', {silent=true})
+  api.nvim_buf_set_keymap(0, 'n', '%', ':lua tsMatchit()<CR>', {silent = true})
 end
 
 return M

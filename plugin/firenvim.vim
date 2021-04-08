@@ -12,11 +12,7 @@ let g:firenvim_config = {
     \ }
 \ }
 let fc = g:firenvim_config['localSettings']
-let fc['https://studio.youtube.com.*'] = { 'takeover': 'never', 'priority': 1 }
-let fc['https?://instagram.com.*'] = { 'takeover': 'never', 'priority': 1 }
 let fc['https?://twitter.com.*'] = { 'takeover': 'never', 'priority': 1 }
-let fc['https://.*gmail.com.*'] = { 'takeover': 'never', 'priority': 1 }
-let fc['https?://.*twitch.tv.*'] = { 'takeover': 'never', 'priority': 1 }
 let fc['http://127.0.0.1:*/*'] = { 'takeover': 'never', 'priority': 1 }
 let fc['http://localhost:*/*'] = { 'takeover': 'never', 'priority': 1 }
 let fc['https://colab.research.google.com/*'] = { 'takeover': 'never', 'priority': 1 }
@@ -39,8 +35,6 @@ endfunction
 augroup THE_PRIMEAGEN
   autocmd!
   au BufEnter github.com_*.txt set filetype=markdown
-  au BufEnter txti.es_*.txt set filetype=typescript
-  au BufEnter stackoverflow_*.txt filetype=markdown
   autocmd UIEnter * call OnUIEnter(deepcopy(v:event))
 augroup END
 

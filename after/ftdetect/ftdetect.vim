@@ -3,10 +3,6 @@ au BufNewFile,BufRead *.csv,*.dat,*.tsv,*.tab set ft=csv
 
 " dockerfile
 au BufNewFile,BufRead [Dd]ockerfile set ft=false
-au BufNewFile,BufRead Dockerfile* set ft=Dockerfile
-au BufNewFile,BufRead [Dd]ockerfile.vim set ft=vim
-au BufNewFile,BufRead *.dock set ft=Dockerfile
-au BufNewFile,BufRead *.[Dd]ockerfile set ft=Dockerfile
 au BufNewFile,BufRead docker-compose*.{yaml,yml}* set ft=yaml.docker-compose
 
 " elixir
@@ -49,18 +45,11 @@ au BufNewFile,BufRead yarn.lock set ft=yaml
 au BufNewFile,BufRead *.js.map set ft=json
 au BufNewFile,BufRead .eslintrc set ft=json
 au BufNewFile,BufRead .prettierrc set ft=json
-au BufNewFile,BufRead .jscsrc set ft=json
 au BufNewFile,BufRead .babelrc set ft=json
-au BufNewFile,BufRead .watchmanconfig set ft=json
 au BufNewFile,BufRead *.{js,mjs,cjs,jsm,es,es6},Jakefile set ft=javascript
-au BufNewFile,BufRead .tern-{project,port} set ft=json
 
 " json
 au BufNewFile,BufRead *.json set ft=json
-au BufNewFile,BufRead *.jsonl set ft=json
-au BufNewFile,BufRead *.jsonp set ft=json
-au BufNewFile,BufRead *.geojson set ft=json
-au BufNewFile,BufRead *.template set ft=json
 
 " jsx
 au BufNewFile,BufRead *.jsx set ft=javascriptreact
@@ -72,6 +61,7 @@ au BufNewFile         *.jl       0put =\"#!/usr/bin/env julia\<nl>\<nl>\"|$
 " log
 au BufNewFile,BufRead *.log set ft=log
 au BufNewFile,BufRead *_log set ft=log
+
 " nginx
 au BufNewFile,BufRead *.nginx set ft=nginx
 au BufNewFile,BufRead nginx*.conf set ft=nginx
@@ -107,9 +97,6 @@ au BufRead,BufNewFile Makefile.toml set ft=cargo-make
 " typescript
 au BufNewFile,BufRead *.ts set ft=typescript
 au BufNewFile,BufRead *.tsx set ft=typescriptreact
-
-" vue
-au BufNewFile,BufRead *.vue,*.wpy set ft=vue
 
 " tmp, bak
 au BufWritePre *.bak,*.tmp,COMMIT_EDITMSG,MERGE_MSG setlocal noundofile
@@ -182,9 +169,6 @@ AddShebangPattern! javascript    ^#!.*\s\+node\>
 AddShebangPattern! python        ^#!.*\s\+python\>
 AddShebangPattern! python        ^#!.*[s]\?bin/python\>
 AddShebangPattern! python        ^#!.*\s\+pypy\>
-AddShebangPattern! python        ^#!.*[s]\?bin/pypy\>
-AddShebangPattern! python        ^#!.*\s\+jython\>
-AddShebangPattern! python        ^#!.*[s]\?bin/jython\>
 " support most of shells: bash, zsh
 AddShebangPattern! sh            ^#!.*[s]\?bin/sh\>    let\ b:is_sh=1|if\ exists('b:is_bash')|unlet\ b:is_bash|endif
 AddShebangPattern! sh            ^#!.*[s]\?bin/bash\>  let\ b:is_bash=1|if\ exists('b:is_sh')|unlet\ b:is_sh|endif

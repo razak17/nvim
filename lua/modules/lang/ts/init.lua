@@ -28,7 +28,7 @@ local synoff = function()
   local filetypes = vim.fn.join(fts, ",")
   vim.cmd("au FileType " .. filetypes .. " set syn=off")
   vim.cmd("au FileType " .. filetypes ..
-              " lua require'modules.lang.utils'.matchit()")
+              " lua require'modules.lang.ts.config'.matchit()")
 end
 
 table.remove(fts, 16)
