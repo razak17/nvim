@@ -44,7 +44,7 @@ local niceties = {
 }
 
 local win = {
-  -- {"TermOpen", "*", "startinsert"},
+  {"TermOpen", "*", "startinsert"},
   -- Equalize window dimensions when resizing vim window
   {"VimResized", "*", [[tabdo wincmd =]]}, -- Force write shada on leaving nvim
   {"VimLeave", "*", "wshada!"},
@@ -58,15 +58,15 @@ local win = {
     "WinLeave,BufLeave,InsertEnter",
     "*",
     [[if &cursorline && &filetype !~# '^\(dashboard\|telescope_\)' && ! &pvw | setlocal nocursorline | endif]]
-  }, -- Force write shada on leaving nvim
+  },
+  -- Force write shada on leaving nvim
   {"VimLeave", "*", [[if has('nvim') | wshada! | else | wviminfo! | endif]]},
   -- Check if file changed when its window is focus, more eager than 'autoread'
-  {"FocusGained", "* checktime"}
+  {"BufEnter,FocusGained", "*", "silent! checktime"}
 }
 
 local ft = {
   {"FocusLost", "*", "silent! wall"},
-  {"BufEnter,FocusGained", "*", "silent! checktime"},
   {
     "FileType",
     "dashboard",
@@ -75,12 +75,7 @@ local ft = {
 }
 
 local plug = {
-  {"BufWritePost", "*.lua", "lua require('core.pack').auto_compile()"},
-  {
-    "InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost",
-    "*.rs",
-    [[ lua require'lsp_extensions'.inlay_hints{ prefix = '', highlight = "Comment", enabled = {"TypeHint", "ChainingHint", "ParameterHint"}} ]]
-  }
+  {"BufWritePost", "*.lua", "lua require('core.plug').auto_compile()"}
 }
 
 local definitions = {buf, ft, win, niceties, plug}

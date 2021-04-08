@@ -1,8 +1,6 @@
 local tools = {}
 local conf = require('modules.tools.config')
 
-tools['tpope/vim-fugitive'] = {}
-
 tools['mbbill/undotree'] = {cmd = "UndotreeToggle"}
 
 tools['kevinhwang91/rnvimr'] = {config = conf.rnvimr}

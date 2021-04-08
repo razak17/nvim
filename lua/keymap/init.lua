@@ -147,7 +147,6 @@ nnoremap('<Leader>ff', ':Telescope find_files<CR>')
 nnoremap('<Leader>fb', ':Telescope file_browser<CR>')
 nnoremap('<Leader>frc', ':Telescope dotfiles path=' .. os.getenv("HOME") ..
              '/.config/nvim' .. '<CR>')
--- Commands
 nnoremap('<Leader>fce', ':lua require"telescope.builtin".planets{}<CR>')
 nnoremap('<Leader>fcA', ':lua require("telescope.builtin").autocommands()<CR>')
 nnoremap('<Leader>fcb', ':lua require("telescope.builtin").buffers()<CR>')
@@ -164,7 +163,6 @@ nnoremap('<Leader>fcT', ':lua require("telescope.builtin").treesitter()<CR>')
 nnoremap('<Leader>fcv', ':lua require("telescope.builtin").vim_options()<CR>')
 nnoremap('<Leader>fcz',
          ':lua require("telescope.builtin").current_buffer_fuzzy_find()<CR>')
--- Lsp
 nnoremap('<Leader>fva',
          ':lua require("telescope.builtin").lsp_code_action()<CR>')
 nnoremap('<Leader>fvr', ':lua require("telescope.builtin").lsp_references()<CR>')
@@ -172,19 +170,16 @@ nnoremap('<Leader>fvsd',
          ':lua require("telescope.builtin").lsp_document_symbols()<CR>')
 nnoremap('<Leader>fvsw',
          ':lua require("telescope.builtin").lsp_workspace_symbols()<CR>')
--- Live
 nnoremap('<Leader>flg', ':lua require("telescope.builtin").live_grep()<CR>')
 nnoremap('<Leader>flw',
          ':lua require("telescope.builtin").grep_string { search = vim.fn.expand("<cword>") }<CR>')
 nnoremap('<Leader>fle',
          ':lua require("telescope.builtin").grep_string({ search = vim.fn.input("Grep For > ")})<CR>')
--- Git
 nnoremap('<Leader>fgb', ':lua require("telescope.builtin").git_branches()<CR>')
 nnoremap('<Leader>fgc', ':lua require("telescope.builtin").git_commits()<CR>')
 nnoremap('<Leader>fgC', ':lua require("telescope.builtin").git_bcommits()<CR>')
 nnoremap('<Leader>fgf', ':lua require("telescope.builtin").git_files()<CR>')
 nnoremap('<Leader>fgs', ':lua require("telescope.builtin").git_status()<CR>')
--- Extensions
 nnoremap('<leader>fee',
          ':lua require("telescope").extensions.packer.plugins()<CR>')
 nnoremap('<Leader>fem',

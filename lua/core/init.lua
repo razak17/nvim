@@ -32,13 +32,8 @@ local disable_providers = function()
 end
 
 local set_host_prog = function()
-  if G.isdir(G.python3 .. "bin") then
-    g["python3_host_prog"] = G.python3 .. "bin" .. G.path_sep .. "python"
-  end
-
-  if G.exists(G.node) then
-    g["node_host_prog"] = G.node
-  end
+  g["python3_host_prog"] = G.python3 .. "bin" .. G.path_sep .. "python"
+  g["node_host_prog"] = G.node
 end
 
 local global_utils = function()
@@ -55,20 +50,19 @@ local map_leader = function()
 end
 
 local load_core = function()
-  local pack = require('core.pack')
-
   disable_builtin_plugins()
   disable_providers()
   set_host_prog()
   global_utils()
   map_leader()
 
-  require('core.setup')
+  local plug = require('core.plug')
+
   require('core.opts')
   require('core.binds')
 
-  pack.ensure_plugins()
-  pack.load_compile()
+  plug.ensure_plugins()
+  plug.load_compile()
 
   require('keymap')
   require('core.autocmd')

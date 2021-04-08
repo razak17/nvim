@@ -18,11 +18,7 @@ nnoremap("gh", "g^")
 nnoremap("gl", "g$")
 
 -- Move selected line / block of text in visual mode
-xnoremap('K', ":move '<-2<CR>gv-gv")
-xnoremap('J', ":move '>+1<CR>gv-gv")
-xnoremap('N', ":move '>+1<CR>gv-gv")
 xnoremap('K', ":m '<-2<CR>gv=gv")
-xnoremap('J', ":m '>+1<CR>gv=gv")
 xnoremap('N', ":m '>+1<CR>gv=gv")
 
 -- no way
@@ -39,20 +35,8 @@ if vim.fn.exists('g:vscode') == 0 then
   -- Start new line from any cursor position
   inoremap("<S-Return>", "<C-o>o")
 
-  -- g Leader key
-  nnoremap('<Space>', '<Nop>')
-
-  -- Remapping the escape key
-  inoremap('kj', '<Esc>')
-  inoremap('jj', '<Esc>')
-  inoremap('jk', '<Esc>')
-
-  -- Easy CAPS
-  inoremap('<C-u>', '<Esc>viwUi')
-  inoremap('<C-u>', 'viwU<Esc>')
-
   -- Use alt + hjkl to resize windows
-  nnoremap('<M-j>', ':resize -2<CR>')
+  nnoremap('<M-n>', ':resize -2<CR>')
   nnoremap('<M-k>', ':resize +2<CR>')
   nnoremap('<M-h>', ':vertical resize -2<CR>')
   nnoremap('<M-l>', ':vertical resize +2<CR>')
@@ -94,7 +78,8 @@ if vim.fn.exists('g:vscode') == 0 then
   nnoremap('<C-s>', ':w<CR>')
 
   -- Alternate way to quit
-  nnoremap('<C-Q>', ':wq!<CR>')
+  nnoremap("<Leader>ax", ":wq!<CR>")
+  nnoremap("<Leader>az", ":q!<CR>")
   nnoremap('<Leader>x', ':q<CR>')
   nnoremap('<C-z>', ':undo<CR>')
 
@@ -118,13 +103,10 @@ if vim.fn.exists('g:vscode') == 0 then
   -- actions
   nnoremap("<Leader>=", "<C-W>=")
   nnoremap("<Leader>ah", "<C-W>s")
+  nnoremap("<Leader>av", "<C-W>v")
   nnoremap("<Leader>an", ":let @/ = ''<CR>")
   nnoremap("<Leader>aN", ":set nonumber!<CR>")
   nnoremap("<Leader>aR", ":set norelativenumber!<CR>")
-  nnoremap("<Leader>as", ":wq!<CR>")
-  nnoremap("<Leader>av", "<C-W>v")
-  nnoremap("<Leader>ax", ":wq!<CR>")
-  nnoremap("<Leader>az", ":q!<CR>")
   nnoremap("<Leader>ad", ":bdelete!<CR>")
 
   -- Session

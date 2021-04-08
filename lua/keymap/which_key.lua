@@ -46,7 +46,7 @@ g.which_key_map = {
     u = "undotreeToggle",
     v = "vertical split",
     V = "select all",
-    x = "exit",
+    x = "save and exit",
     Y = "yank all",
     z = "force exit"
   },

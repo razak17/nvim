@@ -1,8 +1,6 @@
 local conf = require('modules.editor.config')
 local editor = {}
 
-editor['tpope/vim-surround'] = {}
-
 editor['phaazon/hop.nvim'] = {as = 'hop'}
 
 editor['rhysd/accelerated-jk'] = {opt = true}
