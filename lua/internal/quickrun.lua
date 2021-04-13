@@ -2,14 +2,17 @@ local config = {}
 local api = vim.api
 
 function config.RunTS()
+  api.nvim_command('exec "w!"')
   api.nvim_command('exec "! ts-node %"')
 end
 
 function config.RunJS()
+  api.nvim_command('exec "w!"')
   api.nvim_command('exec "! node %"')
 end
 
 function config.RunEX()
+  api.nvim_command('exec "w!"')
   api.nvim_command('exec "! elixir %"')
 end
 

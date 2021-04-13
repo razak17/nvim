@@ -3,7 +3,7 @@ local nmap, vmap, xmap, imap, smap, nnoremap, inoremap = mp.nmap, mp.vmap,
                                                          mp.xmap, mp.imap,
                                                          mp.smap, mp.nnoremap,
                                                          mp.inoremap
-local opts = {expr = true, noremap = true}
+local opts = {expr = true}
 require('keymap.config')
 
 -- vsnip
@@ -111,7 +111,7 @@ nnoremap('<Leader>Pi', ':PlugInstall<CR>')
 nnoremap('<Leader>Ps', ':PlugSync<CR>')
 nnoremap('<Leader>PU', ':PlugUpdate<CR>')
 
--- Git
+-- Fugitive
 nnoremap("<Leader>ga", ":Git fetch --all<CR>")
 nnoremap("<Leader>gA", ":Git blame<CR>")
 nnoremap("<Leader>gb", ":GBranches<CR>")
@@ -148,7 +148,7 @@ nnoremap('<Leader>ff', ':Telescope find_files<CR>')
 nnoremap('<Leader>fb', ':Telescope file_browser<CR>')
 nnoremap('<Leader>frc', ':Telescope dotfiles path=' .. os.getenv("HOME") ..
              '/.config/nvim' .. '<CR>')
-nnoremap('<Leader>fce', ':lua require"telescope.builtin".planets{}<CR>')
+nnoremap('<Leader>fce', ':lua require"telescope.builtin".planets()<CR>')
 nnoremap('<Leader>fcA', ':lua require("telescope.builtin").autocommands()<CR>')
 nnoremap('<Leader>fcb', ':lua require("telescope.builtin").buffers()<CR>')
 nnoremap('<Leader>fcc', ':lua require("telescope.builtin").commands()<CR>')
