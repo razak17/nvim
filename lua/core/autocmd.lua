@@ -44,7 +44,7 @@ local niceties = {
 }
 
 local win = {
-  {"TermOpen", "*", "startinsert"},
+  -- {"TermOpen", "*", "startinsert"},
   -- Equalize window dimensions when resizing vim window
   {"VimResized", "*", [[tabdo wincmd =]]}, -- Force write shada on leaving nvim
   {"VimLeave", "*", "wshada!"},

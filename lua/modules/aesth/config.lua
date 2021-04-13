@@ -58,6 +58,7 @@ function config.nvim_tree()
   vim.g.nvim_tree_indent_markers = 1
   vim.g.nvim_tree_bindings = {
     ["l"] = ":lua require'nvim-tree'.on_keypress('edit')<CR>",
+    ["h"] = ":lua require'nvim-tree'.on_keypress('close_node')<CR>",
     ["s"] = ":lua require'nvim-tree'.on_keypress('vsplit')<CR>",
     ["i"] = ":lua require'nvim-tree'.on_keypress('split')<CR>"
   }

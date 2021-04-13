@@ -119,7 +119,6 @@ if vim.fn.exists('g:vscode') == 0 then
   nnoremap("<Leader>afl", "za") -- Toggle fold under the cursor
   nnoremap("<Leader>afo", "zR") -- Open all folds
   nnoremap("<Leader>afx", "zM") -- Close all folds
-  nnoremap("<Leader>afe", ":lua require 'internal.utils'.ToggleFold()<CR>")
 
   -- qflist
   nnoremap("<C-k>", ":cnext<CR>")

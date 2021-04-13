@@ -36,10 +36,10 @@
   "componentFunctionalTypescript": {
     "prefix": "rfc",
     "body": [
-      "import React from 'react';",
+      "import * as React from 'react';",
       "",
-      "const ${1:${TM_DIRECTORY/^.*(\\/|\\\\)([^(\\/|\\\\)]+)$/$2/}}: React.FC = () => {",
-      "  return <div />;",
+      "const ${1:${TM_DIRECTORY/^.*(\\/|\\\\)([^(\\/|\\\\)]+)$/$2/}}: React.VFC = () => {",
+      "  return ();",
       "}",
       "",
       "export default ${1:${TM_DIRECTORY/^.*(\\/|\\\\)([^(\\/|\\\\)]+)$/$2/}};"

@@ -135,6 +135,8 @@ gls.right[1] = {
       end
       return true
     end,
+    separator = ' ',
+    separator_highlight = {'NONE', colors.bg},
     highlight = {colors.cyan, colors.bg, 'bold'}
   }
 }
@@ -155,7 +157,9 @@ gls.right[2] = {
     provider = 'DiffAdd',
     condition = condition.hide_in_width,
     icon = '  ',
-    highlight = {colors.green, colors.bg}
+    highlight = {colors.green, colors.bg},
+    separator = ' ',
+    separator_highlight = {'NONE', colors.bg}
   }
 }
 gls.right[3] = {

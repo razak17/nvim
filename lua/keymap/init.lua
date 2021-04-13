@@ -3,16 +3,14 @@ local nmap, vmap, xmap, imap, smap, nnoremap, inoremap = mp.nmap, mp.vmap,
                                                          mp.xmap, mp.imap,
                                                          mp.smap, mp.nnoremap,
                                                          mp.inoremap
-local opts = {expr = true}
+local opts = {expr = true, noremap = true}
 require('keymap.config')
 
 -- vsnip
 xmap("<C-l>", "<Plug>(vsnip-select-text)")
 xmap("<C-x>", "<Plug>(vsnip-cut-text)")
-
 imap("<Tab>", "v:lua.tab()", opts)
 imap("<S-Tab>", "v:lua.s_tab()", opts)
-
 nnoremap('<Leader>cs', ':VsnipOpen<CR> 1<CR><CR>')
 imap("<C-l>", "vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'",
      opts)
@@ -22,12 +20,15 @@ imap('<C-y>', "vsnip#expandable() ? '<Plug>(vsnip-expand)' : '<C-space>'", opts)
 smap('<C-y>', "vsnip#expandable() ? '<Plug>(vsnip-expand)' : '<C-space>'", opts)
 
 -- Compe
-imap("<C-l>", "v:lua.completion_confirm()", opts)
+imap("<C-y>", "v:lua.completion_confirm()", opts)
 inoremap("<C-Space>", "compe#complete()", opts)
 inoremap("<CR> ", "compe#confirm('<CR>')", opts)
 inoremap("<C-e>", "compe#close('<C-e>')", opts)
 inoremap("<C-f>", "compe#scroll({ 'delta': +4 })", opts)
 inoremap("<C-d>", "compe#scroll({ 'delta': -4 })", opts)
+
+-- autopairs
+imap("<CR>", "v:lua.autopairs_confirm()", opts)
 
 -- Undo tree
 nnoremap("<Leader>au", ":UndotreeToggle<CR>")

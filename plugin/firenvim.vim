@@ -11,6 +11,7 @@ let g:firenvim_config = {
         \ },
     \ }
 \ }
+
 let fc = g:firenvim_config['localSettings']
 let fc['https?://twitter.com.*'] = { 'takeover': 'never', 'priority': 1 }
 let fc['http://127.0.0.1:*/*'] = { 'takeover': 'never', 'priority': 1 }
