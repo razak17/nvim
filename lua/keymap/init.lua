@@ -20,15 +20,12 @@ imap('<C-y>', "vsnip#expandable() ? '<Plug>(vsnip-expand)' : '<C-space>'", opts)
 smap('<C-y>', "vsnip#expandable() ? '<Plug>(vsnip-expand)' : '<C-space>'", opts)
 
 -- Compe
-imap("<C-y>", "v:lua.completion_confirm()", opts)
+imap("<CR>", "v:lua.completion_confirm()", opts)
 inoremap("<C-Space>", "compe#complete()", opts)
 inoremap("<CR> ", "compe#confirm('<CR>')", opts)
 inoremap("<C-e>", "compe#close('<C-e>')", opts)
 inoremap("<C-f>", "compe#scroll({ 'delta': +4 })", opts)
 inoremap("<C-d>", "compe#scroll({ 'delta': -4 })", opts)
-
--- autopairs
-imap("<CR>", "v:lua.autopairs_confirm()", opts)
 
 -- Undo tree
 nnoremap("<Leader>au", ":UndotreeToggle<CR>")
@@ -38,12 +35,6 @@ nnoremap('<Leader>Ie', ':TSInstallInfo<CR>')
 
 -- rnvimr
 nnoremap('<Leader>ar', ':RnvimrToggle<CR>')
-
--- zen
-nnoremap('<Leader>z', ':Goyo<CR>')
-
--- Prodoc
-nnoremap('gce', ':ProDoc<CR>')
 
 -- Vista
 nnoremap('<Leader>vv', ':Vista!!<CR>')
@@ -96,7 +87,7 @@ nnoremap('<Leader>cf', ':NvimTreeFindFile<CR>')
 -- Far
 nnoremap("<Leader>Ff", ":Farr --source=vimgrep<CR>")
 nnoremap("<Leader>Fr", ":Farr --source=rgnvim<CR>")
-nnoremap("<Leader>FD", ":Fardo<CR>")
+nnoremap("<Leader>Fd", ":Fardo<CR>")
 nnoremap("<Leader>Fz", ":Farf<CR>")
 
 -- Bufferline

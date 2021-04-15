@@ -1,8 +1,6 @@
 local conf = require('modules.aesth.config')
 local aesth = {}
 
-aesth['junegunn/goyo.vim'] = {cmd = "Goyo"}
-
 aesth['glepnir/dashboard-nvim'] = {config = conf.dashboard}
 
 aesth['razak17/zephyr-nvim'] = {config = conf.bg}

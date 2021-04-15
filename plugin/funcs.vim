@@ -37,31 +37,6 @@ fun RevStr(str)
   return join(reverse(l:chars), '')
 endfunction
 
-function! s:goyo_enter()
-  if executable('tmux') && strlen($TMUX)
-    silent !tmux set status off
-    silent !tmux list-panes -F '\#F' | grep -q Z || tmux resize-pane -Z
-  endif
-  set noshowmode
-  set noshowcmd
-  set scrolloff=999
-  set laststatus=0
-endfunction
-
-function! s:goyo_leave()
-  if executable('tmux') && strlen($TMUX)
-    silent !tmux set status on
-    silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
-  endif
-  set showmode
-  set showcmd
-  set scrolloff=5
-  set laststatus=2
-endfunction
-
-autocmd! User GoyoEnter nested call <SID>goyo_enter()
-autocmd! User GoyoLeave nested call <SID>goyo_leave()
-
 nnoremap <silent> <Leader>d  :call <SID>DellThisBuf()<CR>
 nnoremap <silent> <Leader>bdA :call <SID>DellAllBuf()<CR> :q!<CR>
 nnoremap <silent> <Leader>bdh :call <SID>DelToLeft()<CR>

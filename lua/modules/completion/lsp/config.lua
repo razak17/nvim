@@ -50,6 +50,7 @@ function config.nvim_create_augroup(group_name, definitions)
   end
   vim.api.nvim_command('augroup END')
 end
+
 config.show_lsp_diagnostics = (function()
   local debounced = debounce(require'lspsaga.diagnostic'.show_line_diagnostics,
                              300)
@@ -63,6 +64,7 @@ config.show_lsp_diagnostics = (function()
     end
   end
 end)()
+
 config.hl_cmds = [[
   highlight! LSPCurlyUnderline gui=undercurl
   highlight! LSPUnderline gui=underline

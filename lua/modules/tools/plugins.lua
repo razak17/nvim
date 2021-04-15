@@ -5,13 +5,13 @@ tools['mbbill/undotree'] = {cmd = "UndotreeToggle"}
 
 tools['kevinhwang91/rnvimr'] = {config = conf.rnvimr}
 
-tools['glepnir/prodoc.nvim'] = {event = 'BufReadPre'}
-
 tools['voldikss/vim-floaterm'] = {config = conf.floaterm}
 
 tools['tweekmonster/startuptime.vim'] = {cmd = "StartupTime"}
 
 tools['liuchengxu/vista.vim'] = {cmd = 'Vista', config = conf.vim_vista}
+
+tools['MattesGroeger/vim-bookmarks'] = {config = conf.bookmarks}
 
 tools['brooth/far.vim'] = {
   cmd = {'Far', 'Farr', 'Farp', 'Farf'},
@@ -27,6 +27,12 @@ tools['iamcco/markdown-preview.nvim'] = {
   end
 }
 
+tools['glacambre/firenvim'] = {
+  run = function()
+    vim.fn['firenvim#install'](0)
+  end
+}
+
 tools['kristijanhusak/vim-dadbod-ui'] = {
   cmd = {
     'DBUIToggle',
@@ -37,12 +43,6 @@ tools['kristijanhusak/vim-dadbod-ui'] = {
   },
   config = conf.vim_dadbod_ui,
   requires = {{'tpope/vim-dadbod', opt = true}}
-}
-
-tools['glacambre/firenvim'] = {
-  run = function()
-    vim.fn['firenvim#install'](0)
-  end
 }
 
 return tools

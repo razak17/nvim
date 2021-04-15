@@ -9,17 +9,17 @@ editor['monaqa/dial.nvim'] = {config = conf.dial}
 
 editor['windwp/nvim-autopairs'] = {config = conf.autopairs}
 
-editor['AndrewRadev/tagalong.vim'] = {config = conf.tagalong}
+editor['windwp/nvim-ts-autotag'] = {
+  opt = true,
+  after = 'nvim-treesitter',
+  config = function()
+    require('nvim-ts-autotag').setup()
+  end
+}
 
 editor['norcalli/nvim-colorizer.lua'] = {config = conf.nvim_colorizer}
 
-editor['b3nj5m1n/kommentary'] = {
-  config = function()
-    require('kommentary.config').configure_language("default", {
-      prefer_single_line_comments = true
-    })
-  end
-}
+editor['b3nj5m1n/kommentary'] = {config = conf.kommentary}
 
 editor['hrsh7th/vim-eft'] = {
   opt = true,
@@ -28,12 +28,4 @@ editor['hrsh7th/vim-eft'] = {
   end
 }
 
-editor['MattesGroeger/vim-bookmarks'] = {
-  config = function()
-    vim.g.bookmark_no_default_key_mappings = 1
-    vim.g.bookmark_sign = ''
-  end
-}
-
 return editor
-

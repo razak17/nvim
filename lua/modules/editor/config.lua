@@ -36,23 +36,6 @@ function config.dial()
   ]])
 end
 
-function config.tagalong()
-  vim.g.tagalong_filetypes = {
-    'html',
-    'xml',
-    'jsx',
-    'eruby',
-    'ejs',
-    'eco',
-    'php',
-    'htmldjango',
-    'javascriptreact',
-    'typescriptreact',
-    'javascript'
-  }
-  vim.g.tagalong_verbose = 1
-end
-
 function config.autopairs()
   require('nvim-autopairs').setup({
     pairs_map = {
@@ -64,6 +47,12 @@ function config.autopairs()
       ['`'] = '`'
     },
     disable_filetype = {"TelescopePrompt", "vim"}
+  })
+end
+
+function config.kommentary()
+  require('kommentary.config').configure_language("default", {
+    prefer_single_line_comments = true
   })
 end
 

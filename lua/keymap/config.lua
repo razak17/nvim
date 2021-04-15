@@ -4,30 +4,15 @@ local t = function(str)
   return vim.api.nvim_replace_termcodes(str, true, true, true)
 end
 
-_G.autopairs_confirm=function()
-  if vim.fn.pumvisible() ~= 0  then
-    if vim.fn.complete_info()["selected"] ~= -1 then
-      require'completion'.confirmCompletion()
-      return npairs.esc("<c-y>")
-    else
-      vim.api.nvim_select_popupmenu_item(0 , false , false ,{})
-      require'completion'.confirmCompletion()
-      return npairs.esc("<c-n><c-y>")
-    end
-  else
-    return npairs.check_break_line_char()
-  end
-end
-
 _G.completion_confirm = function()
   if vim.fn.pumvisible() ~= 0 then
     if vim.fn.complete_info()["selected"] ~= -1 then
       vim.fn["compe#confirm"]()
-      return npairs.esc("")
+      return npairs.esc("<c-y>")
     else
       vim.fn.nvim_select_popupmenu_item(0, false, false, {})
       vim.fn["compe#confirm"]()
-      return npairs.esc("<c-n>")
+      return npairs.esc("<c-n><c-y>")
     end
   else
     return npairs.check_break_line_char()

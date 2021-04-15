@@ -21,7 +21,7 @@ local buf = {
   },
   {"BufLeave", "*", "silent! update"},
   {"BufWritePre", "*", ":call autocmds#TrimWhitespace()"},
-  {"BufEnter,BufNewFile", "*", "set fo-=cro"}
+  {"BufEnter,BufNewFile", "*", "set fo-=cro noshowmode"}
 }
 
 local niceties = {

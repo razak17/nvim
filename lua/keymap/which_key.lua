@@ -131,7 +131,12 @@ g.which_key_map = {
       s = "status"
     }
   },
-  F = {name = "+Far", f = "replace in File", r = "replace in Project"},
+  F = {
+    name = "+Far",
+    f = "replace in File",
+    r = "replace in Project",
+    z = "replace iteratively"
+  },
   g = {
     name = "+Git",
     a = 'fetch all',

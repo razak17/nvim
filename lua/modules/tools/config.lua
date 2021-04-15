@@ -61,5 +61,10 @@ function config.vim_dadbod_ui()
   -- vim.g.dbs = load_dbs()
 end
 
+function config.bookmarks()
+  vim.g.bookmark_no_default_key_mappings = 1
+  vim.g.bookmark_sign = ''
+end
+
 return config
 

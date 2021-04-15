@@ -4,9 +4,9 @@ local conf = require 'modules.completion.config'
 completion['neovim/nvim-lspconfig'] = {
   event = 'BufReadPre',
   requires = {
-    {'tjdevries/lsp_extensions.nvim'},
-    {'glepnir/lspsaga.nvim'},
-    {'onsails/lspkind-nvim'}
+    'tjdevries/lsp_extensions.nvim',
+    'glepnir/lspsaga.nvim',
+    'onsails/lspkind-nvim'
   },
   config = conf.nvim_lsp
 }
@@ -22,7 +22,7 @@ completion['liuchengxu/vim-which-key'] =
 
 completion['hrsh7th/vim-vsnip'] = {
   event = 'InsertCharPre',
-  requires = 'hrsh7th/vim-vsnip-integ',
+  requires = {'hrsh7th/vim-vsnip-integ', 'rafamadriz/friendly-snippets'},
   config = conf.vim_vsnip
 }
 
@@ -42,11 +42,11 @@ completion['mattn/emmet-vim'] = {
 completion['nvim-telescope/telescope.nvim'] =
     {
       requires = {
-        {'nvim-lua/popup.nvim'},
-        {'nvim-lua/plenary.nvim'},
-        {'nvim-telescope/telescope-fzy-native.nvim'},
-        {'razak17/telescope-packer.nvim'},
-        {'nvim-telescope/telescope-media-files.nvim'}
+        'nvim-lua/popup.nvim',
+        'nvim-lua/plenary.nvim',
+        'nvim-telescope/telescope-fzy-native.nvim',
+        'razak17/telescope-packer.nvim',
+        'nvim-telescope/telescope-media-files.nvim'
       },
       config = conf.telescope_nvim
     }
