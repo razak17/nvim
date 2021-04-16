@@ -9,6 +9,10 @@ editor['monaqa/dial.nvim'] = {config = conf.dial}
 
 editor['windwp/nvim-autopairs'] = {config = conf.autopairs}
 
+editor['norcalli/nvim-colorizer.lua'] = {config = conf.nvim_colorizer}
+
+editor['b3nj5m1n/kommentary'] = {config = conf.kommentary}
+
 editor['windwp/nvim-ts-autotag'] = {
   opt = true,
   after = 'nvim-treesitter',
@@ -16,10 +20,6 @@ editor['windwp/nvim-ts-autotag'] = {
     require('nvim-ts-autotag').setup()
   end
 }
-
-editor['norcalli/nvim-colorizer.lua'] = {config = conf.nvim_colorizer}
-
-editor['b3nj5m1n/kommentary'] = {config = conf.kommentary}
 
 editor['hrsh7th/vim-eft'] = {
   opt = true,

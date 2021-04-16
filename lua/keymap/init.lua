@@ -52,7 +52,7 @@ nnoremap('<Leader>mb', ':BookmarkPrev<CR>')
 nnoremap('<Leader>mk', ':BookmarkNext<CR>')
 
 -- acceleratedjk
-nmap("j", 'v:lua.enhance_jk_move("j")', {silent = true, expr = true})
+nmap("n", 'v:lua.enhance_jk_move("n")', {silent = true, expr = true})
 nmap("k", 'v:lua.enhance_jk_move("k")', {silent = true, expr = true})
 
 -- vim-eft
@@ -72,10 +72,10 @@ nnoremap('<Leader>om', ':MarkdownPreview<CR>')
 nnoremap('<Leader>od', ':DBUIToggle<CR>')
 
 -- Lsp
+nnoremap('<Leader>Li', ':LspInfo<CR>')
+nnoremap('<Leader>Ll', ':LspLog<CR>')
+nnoremap('<Leader>Lr', ':LspRestart<CR>')
 nnoremap('<Leader>lf', ':LspFormatting<CR>')
-nnoremap('<Leader>li', ':LspInfo<CR>')
-nnoremap('<Leader>ll', ':LspLog<CR>')
-nnoremap('<Leader>lr', ':LspRestart<CR>')
 nnoremap('<Leader>lv', ':LspToggleVirtualText<CR>')
 nnoremap('<Leader>lx', ':cclose<CR>')
 

@@ -37,8 +37,13 @@ fun RevStr(str)
   return join(reverse(l:chars), '')
 endfunction
 
+if exists('+termguicolors')
+  let &t_8f="\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b="\<Esc>[48;2;%lu;%lu;%lum"
+endif
+
+vnoremap <Leader>rev :s/\%V.\+\%V./\=RevStr(submatch(0))<CR>gv
 nnoremap <silent> <Leader>d  :call <SID>DellThisBuf()<CR>
 nnoremap <silent> <Leader>bdA :call <SID>DellAllBuf()<CR> :q!<CR>
 nnoremap <silent> <Leader>bdh :call <SID>DelToLeft()<CR>
 nnoremap <silent> <Leader>bdx :call <SID>DelAllExcept()<CR>
-

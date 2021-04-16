@@ -10,6 +10,8 @@ function M.TurnOnGuides()
   vim.wo.relativenumber = true
   vim.wo.signcolumn = "yes"
   vim.wo.colorcolumn = "+1"
+  vim.o.laststatus = 2
+  vim.o.showtabline = 2
 end
 
 function M.TurnOffGuides()
@@ -17,6 +19,8 @@ function M.TurnOffGuides()
   vim.wo.relativenumber = false
   vim.wo.signcolumn = "no"
   vim.wo.colorcolumn = ""
+  vim.o.laststatus = 0
+  vim.o.showtabline = 0
 end
 
 return M

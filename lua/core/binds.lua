@@ -7,7 +7,7 @@ local nnoremap, inoremap, vnoremap, xnoremap, tnoremap = mp.nnoremap,
                                                          mp.tnoremap
 
 -- Basic Key Mappings
-nnoremap('n', 'j')
+-- nnoremap('n', 'j')
 nnoremap('z', 'u')
 
 -- Yank from cursor position to end-of-line

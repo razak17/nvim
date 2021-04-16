@@ -15,7 +15,7 @@ g.which_key_map = {
   ["="] = "Balance window",
   [";"] = "terminal",
   ["."] = "Open init.vim",
-  [","] = "Open init.lua",
+  [","] = "Open lua/init.lua",
   ["/"] = "Comment",
   ["<CR>"] = "Source init.vim",
   d = "Delete current buffer",
@@ -30,7 +30,6 @@ g.which_key_map = {
     f = {
       name = "+Fold",
       l = "under curosr",
-      e = "toggle",
       r = "recursive cursor",
       o = "open all",
       x = "close all"
@@ -72,12 +71,6 @@ g.which_key_map = {
     R = "empty registers",
     s = "edit snippet",
     v = "nvim-tree toggle"
-  },
-  C = {
-    name = "+Switch case",
-    c = 'shake_case -> camelCase',
-    P = 'snake_case -> PascalCase',
-    s = 'camelCase/PascalCase -> snake_case'
   },
   e = {
     name = "+Floaterm",
@@ -158,14 +151,12 @@ g.which_key_map = {
   },
   I = {name = "+Info", c = "check health", e = "treesitter"},
   l = {
-    name = "+Lsp utils",
-    i = "info",
+    name = "+Lsp actions",
     f = "format",
-    l = "log",
-    r = "restart",
     v = "toggle virtual text",
     x = "close quickfix"
   },
+  L = {name = "+Lsp utils", i = "info", l = "log", r = "restart"},
   m = {name = "+mark", e = "toggle", b = "previous mark", k = "next mark"},
   P = {
     name = "+Plug",

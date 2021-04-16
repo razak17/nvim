@@ -11,7 +11,7 @@ completion['neovim/nvim-lspconfig'] = {
   config = conf.nvim_lsp
 }
 
-completion['hrsh7th/nvim-compe'] = {config = conf.nvim_compe}
+completion['mfussenegger/nvim-dap'] = {}
 
 completion['liuchengxu/vim-which-key'] =
     {

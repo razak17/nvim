@@ -38,4 +38,3 @@ augroup THE_PRIMEAGEN
   au BufEnter github.com_*.txt set filetype=markdown
   autocmd UIEnter * call OnUIEnter(deepcopy(v:event))
 augroup END
-
