@@ -1,9 +1,5 @@
 local config = {}
 
-function config.nvim_lsp()
-  require('modules.completion.lsp')
-end
-
 function config.nvim_compe()
   require('compe').setup {
     enabled = true,

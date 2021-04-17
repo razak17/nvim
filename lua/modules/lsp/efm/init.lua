@@ -1,5 +1,5 @@
-local formatters = require 'modules.completion.lsp.efm.formatters'
-local linters = require 'modules.completion.lsp.efm.linters'
+local formatters = require 'modules.lsp.efm.formatters'
+local linters = require 'modules.lsp.efm.linters'
 local M = {}
 
 local luaFormat = formatters.luaFormat

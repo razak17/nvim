@@ -1,7 +1,7 @@
 local api = vim.api
 local ex = vim.fn.executable
 local G = require 'core.global'
-local conf = require 'modules.completion.lsp.config'
+local conf = require 'modules.lsp.lspconfig.config'
 local rpattern = require'lspconfig.util'.root_pattern
 local lspconfig = require 'lspconfig'
 local buf_map = conf.buf_map
@@ -95,7 +95,7 @@ local enhance_attach = function(client, bufnr)
   api.nvim_exec([[
       augroup hover_diagnostics
         autocmd! * <buffer>
-        au CursorHold * lua require 'modules.completion.lsp.config'.show_lsp_diagnostics()
+        au CursorHold * lua require 'modules.lsp.lspconfig.config'.show_lsp_diagnostics()
       augroup END
     ]], false)
 
@@ -216,7 +216,7 @@ if ex('gopls') then
 end
 
 if ex("efm-langserver") then
-  require'modules.completion.lsp.efm'.setup(enhance_attach)
+  require'modules.lsp.efm'.setup(enhance_attach)
 end
 
 for lsp, exec in pairs(simple_lsp) do

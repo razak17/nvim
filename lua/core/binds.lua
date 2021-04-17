@@ -123,6 +123,7 @@ if vim.fn.exists('g:vscode') == 0 then
   -- qflist
   nnoremap("<C-k>", ":cnext<CR>")
   nnoremap("<C-b>", ":cprev<CR>")
+  nnoremap("<Leader>lo", ":copen<CR>")
 
   -- Other remaps
   nnoremap('<Leader><CR>', ':so ~/.config/nvim/init.vim<CR>')

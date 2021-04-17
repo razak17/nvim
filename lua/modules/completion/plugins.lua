@@ -1,18 +1,6 @@
 local completion = {}
 local conf = require 'modules.completion.config'
 
-completion['neovim/nvim-lspconfig'] = {
-  event = 'BufReadPre',
-  requires = {
-    'tjdevries/lsp_extensions.nvim',
-    'glepnir/lspsaga.nvim',
-    'onsails/lspkind-nvim'
-  },
-  config = conf.nvim_lsp
-}
-
-completion['mfussenegger/nvim-dap'] = {}
-
 completion['liuchengxu/vim-which-key'] =
     {
       config = function()
