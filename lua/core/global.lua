@@ -14,6 +14,7 @@ function G:load_variables()
   self.data_dir = string.format('%s/site/', vim.fn.stdpath('data')) .. path_sep
   self.asdf = G.home .. '.asdf' .. path_sep .. 'installs' .. path_sep
   self.python3 = G.cache_dir .. 'venv' .. path_sep .. 'neovim' .. path_sep
+  self.dap = G.cache_dir .. 'venv' .. path_sep .. 'dap' .. path_sep
   self.golang = G.asdf .. "golang/1.16.2/go/bin/go"
   self.node = G.asdf .. "nodejs/15.5.1/.npm/bin/neovim-node-host"
   self.plugins = G.data_dir .. 'pack' .. path_sep

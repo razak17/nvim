@@ -1,6 +1,7 @@
 local nnoremap = require'keymap.map'.nnoremap
 
-require 'modules.dbg.dap.typescript'
+require('modules.dbg.dap.typescript')
+require('modules.dbg.dap.python')
 
 -- dap
 nnoremap('<leader>dc', '<cmd>lua require"dap".continue()<CR>')
