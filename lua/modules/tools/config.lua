@@ -1,4 +1,5 @@
 local config = {}
+local G = require 'core.global'
 
 function config.rnvimr()
   vim.g.rnvimr_ex_enable = 1

@@ -11,7 +11,11 @@ require('telescope').setup({
     borderchars = {'─', '│', '─', '│', '╭', '╮', '╯', '╰'},
     set_env = {['COLORTERM'] = 'truecolor'},
     vimgrep_arguments = {
-      'rg', '--no-heading', '--with-filename', '--line-number', '--column',
+      'rg',
+      '--no-heading',
+      '--with-filename',
+      '--line-number',
+      '--column',
       '--smart-case'
     },
     file_sorter = require'telescope.sorters'.get_fzy_sorter,
@@ -45,3 +49,4 @@ require'telescope'.load_extension('media_files')
 require'telescope'.load_extension('packer')
 require'telescope'.load_extension('fzy_native')
 require'telescope'.load_extension('dotfiles')
+require'telescope'.load_extension('dap')

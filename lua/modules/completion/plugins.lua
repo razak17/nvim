@@ -1,6 +1,8 @@
 local completion = {}
 local conf = require 'modules.completion.config'
 
+completion['hrsh7th/nvim-compe'] = {config = conf.nvim_compe}
+
 completion['liuchengxu/vim-which-key'] =
     {
       config = function()
@@ -34,7 +36,8 @@ completion['nvim-telescope/telescope.nvim'] =
         'nvim-lua/plenary.nvim',
         'nvim-telescope/telescope-fzy-native.nvim',
         'razak17/telescope-packer.nvim',
-        'nvim-telescope/telescope-media-files.nvim'
+        'nvim-telescope/telescope-media-files.nvim',
+        'nvim-telescope/telescope-dap.nvim'
       },
       config = conf.telescope_nvim
     }

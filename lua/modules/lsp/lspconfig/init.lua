@@ -74,6 +74,11 @@ local enhance_attach = function(client, bufnr)
     leader_buf_map(bufnr, key, command)
   end
 
+  local function buf_set_option(...)
+    vim.api.nvim_buf_set_option(bufnr, ...)
+  end
+  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+
   lbuf_map("vD", "require'lspsaga.provider'.preview_definition()")
   lbuf_map("vf", "require'lspsaga.provider'.lsp_finder()")
   lbuf_map("va", "require'lspsaga.codeaction'.code_action()")
@@ -122,9 +127,39 @@ local enhance_attach = function(client, bufnr)
           augroup END
         ]], false)
   end
-
-  api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 end
+
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+-- Code actions
+capabilities.textDocument.codeAction = {
+  dynamicRegistration = false,
+  codeActionLiteralSupport = {
+    codeActionKind = {
+      valueSet = (function()
+        local res = vim.tbl_values(vim.lsp.protocol.CodeActionKind)
+        table.sort(res)
+        return res
+      end)()
+    }
+  }
+  -- codeActionLiteralSupport = {
+  --   codeActionKind = {
+  --     valueSet = {
+  --       "",
+  --       "quickfix",
+  --       "refactor",
+  --       "refactor.extract",
+  --       "refactor.inline",
+  --       "refactor.rewrite",
+  --       "source",
+  --       "source.organizeImports"
+  --     }
+  --   }
+  -- }
+}
 
 if ex("bash-language-server") then
   lspconfig.bashls.setup {
@@ -138,12 +173,14 @@ if ex(G.elixirls_binary) then
   lspconfig.elixirls.setup {
     cmd = {G.elixirls_root_path .. ".bin/language_server.sh"},
     elixirls = {dialyzerEnabled = false},
+    capabilities = capabilities,
     on_attach = enhance_attach
   }
 end
 
 if ex(G.sumneko_binary) then
   lspconfig.sumneko_lua.setup {
+    capabilities = capabilities,
     on_attach = enhance_attach,
     cmd = {G.sumneko_binary, "-E", G.sumneko_root_path .. "/main.lua"},
     settings = {
@@ -160,6 +197,7 @@ if ex("typescript-language-server") then
   lspconfig.tsserver.setup {
     root_dir = rpattern('tsconfig.json', 'package.json', '.git', vim.fn.getcwd()),
     settings = {documentFormatting = false},
+    capabilities = capabilities,
     on_attach = function(client, bufnr)
       client.resolved_capabilities.document_formatting = false
       client.resolved_capabilities.document_highlight = false
@@ -171,7 +209,8 @@ end
 if ex("pyright") then
   lspconfig.pyright.setup {
     on_attach = enhance_attach,
-    root_dir = rpattern('.git', vim.fn.getcwd())
+    root_dir = rpattern('.git', vim.fn.getcwd()),
+    capabilities = capabilities
   }
 end
 
@@ -192,6 +231,7 @@ if ex("clangd") then
       completeUnimported = true,
       semanticHighlighting = true
     },
+    capabilities = capabilities,
     on_attach = enhance_attach
   }
 end
@@ -204,13 +244,10 @@ if ex("rust-analyzer") then
 end
 
 if ex('gopls') then
-  local capabilities = vim.lsp.protocol.make_client_capabilities()
-  capabilities.textDocument.completion.completionItem.snippetSupport = true
-
   lspconfig.gopls.setup {
     cmd = {"gopls", "--remote=auto"},
-    on_attach = enhance_attach,
     capabilities = capabilities,
+    on_attach = enhance_attach,
     init_options = {usePlaceholders = true, completeUnimported = true}
   }
 end
@@ -222,6 +259,7 @@ end
 for lsp, exec in pairs(simple_lsp) do
   if ex(exec) then
     lspconfig[lsp].setup {
+      capabilities = capabilities,
       on_attach = enhance_attach,
       root_dir = rpattern('.git', '.gitignore', vim.fn.getcwd())
     }

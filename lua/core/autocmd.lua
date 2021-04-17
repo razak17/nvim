@@ -75,7 +75,8 @@ local ft = {
 }
 
 local plug = {
-  {"BufWritePost", "*.lua", "lua require('core.plug').auto_compile()"}
+  {"BufWritePost", "*.lua", "lua require('core.plug').auto_compile()"},
+  {"FileType", "dap-repl", "lua require('dap.ext.autocompl').attach()"}
 }
 
 local definitions = {buf, ft, win, niceties, plug}

@@ -18,7 +18,6 @@ g.which_key_map = {
   [","] = "Open lua/init.lua",
   ["/"] = "Comment",
   ["<CR>"] = "Source init.vim",
-  d = "Delete current buffer",
   x = "Quit",
   y = "Yank",
   a = {
@@ -72,6 +71,11 @@ g.which_key_map = {
     s = "edit snippet",
     v = "nvim-tree toggle"
   },
+  d = {
+    name = "+Debug",
+    c = "continue",
+    s = {name = "+Step", i = "into", o = "out", v = "over"}
+  },
   e = {
     name = "+Floaterm",
     e = 'toggle',
@@ -79,7 +83,8 @@ g.which_key_map = {
     n = 'node',
     N = 'new terminal',
     p = 'python',
-    r = 'ranger'
+    r = 'ranger',
+    x = 'Delete current buffer'
   },
   f = {
     name = "+Telescope",

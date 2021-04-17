@@ -43,7 +43,7 @@ if exists('+termguicolors')
 endif
 
 vnoremap <Leader>rev :s/\%V.\+\%V./\=RevStr(submatch(0))<CR>gv
-nnoremap <silent> <Leader>d  :call <SID>DellThisBuf()<CR>
+nnoremap <silent> <Leader>ex  :call <SID>DellThisBuf()<CR>
 nnoremap <silent> <Leader>bdA :call <SID>DellAllBuf()<CR> :q!<CR>
 nnoremap <silent> <Leader>bdh :call <SID>DelToLeft()<CR>
 nnoremap <silent> <Leader>bdx :call <SID>DelAllExcept()<CR>
