@@ -157,6 +157,14 @@ g.which_key_map = {
     r = 'remove',
     s = 'status'
   },
+  h = {
+    name = "+Gitsigns",
+    b = "blame line",
+    e = "preview hunk",
+    r = "reset hunk",
+    s = "stage hunk",
+    u = "undo stage hunk"
+  },
   I = {name = "+Info", c = "check health", e = "treesitter"},
   l = {
     name = "+Lsp actions",
