@@ -13,25 +13,21 @@ tools['liuchengxu/vista.vim'] = {cmd = 'Vista', config = conf.vim_vista}
 
 tools['MattesGroeger/vim-bookmarks'] = {config = conf.bookmarks}
 
+tools['airblade/vim-rooter'] = {config = conf.rooter}
+
+tools['kevinhwang91/nvim-bqf'] = {config = conf.bqf}
+
+tools['gennaro-tedesco/nvim-peekup'] = {
+  config = function()
+    vim.g.peekup_open = '<Leader>"'
+    require('nvim-peekup.config').on_keystroke["autoclose"] = false
+  end
+}
+
 tools['brooth/far.vim'] = {
   cmd = {'Far', 'Farr', 'Farp', 'Farf'},
   config = function()
     vim.g['far#source'] = 'rg'
-  end
-}
-tools['airblade/vim-rooter'] = {
-  config = function()
-    vim.g.rooter_patterns = {
-      '.git',
-      'Makefile',
-      '*.sln',
-      'build/env.sh',
-      '.venv',
-      'venv',
-      'package.json'
-    }
-    vim.g.rooter_silent_chdir = 1
-    vim.g.rooter_resolve_links = 1
   end
 }
 
@@ -58,22 +54,6 @@ tools['kristijanhusak/vim-dadbod-ui'] = {
   },
   config = conf.vim_dadbod_ui,
   requires = {{'tpope/vim-dadbod', opt = true}}
-}
-
-tools['kevinhwang91/nvim-bqf'] = {
-  config = function()
-    require('bqf').setup({
-      auto_enable = true,
-      preview = {win_height = 12, win_vheight = 12, delay_syntax = 80},
-      func_map = {vsplit = '<C-v>', ptogglemode = 'z,', stoggleup = 'z<Tab>'},
-      filter = {
-        fzf = {
-          action_for = {['ctrl-s'] = 'split'},
-          extra_opts = {'--bind', 'ctrl-o:toggle-all', '--prompt', '> '}
-        }
-      }
-    })
-  end
 }
 
 return tools

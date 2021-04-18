@@ -1,4 +1,5 @@
 local mp = require('keymap.map')
+local G = require 'core.global'
 local nmap, vmap, xmap, imap, smap, nnoremap, inoremap = mp.nmap, mp.vmap,
                                                          mp.xmap, mp.imap,
                                                          mp.smap, mp.nnoremap,
@@ -38,6 +39,9 @@ nnoremap('<Leader>ar', ':RnvimrToggle<CR>')
 
 -- Vista
 nnoremap('<Leader>vv', ':Vista!!<CR>')
+
+-- Context
+nnoremap('<Leader>cc', ':ContextToggle<CR>')
 
 -- Hop
 nnoremap('S', ':HopWord<CR>')
@@ -134,17 +138,6 @@ nnoremap('<leader>dsbm',
 nnoremap('<leader>dro', '<cmd>lua require"dap".repl.open()<CR>')
 nnoremap('<leader>drl', '<cmd>lua require"dap".repl.run_last()<CR>')
 
--- telescope-dap
-nnoremap('<leader>fdcc',
-         '<cmd>lua require"telescope".extensions.dap.commands{}<CR>')
-nnoremap('<leader>fdco',
-         '<cmd>lua require"telescope".extensions.dap.configurations{}<CR>')
-nnoremap('<leader>fdlb',
-         '<cmd>lua require"telescope".extensions.dap.list_breakpoints{}<CR>')
-nnoremap('<leader>fdv',
-         '<cmd>lua require"telescope".extensions.dap.variables{}<CR>')
-nnoremap('<leader>df', '<cmd>lua require"telescope".extensions.dap.frames{}<CR>')
-
 -- Floaterm
 nnoremap("<Leader>ee", ":FloatermToggle<CR>")
 nnoremap("<Leader>el", ":FloatermNew lazygit<CR>")
@@ -161,8 +154,6 @@ vmap("<leader>/", "<Plug>kommentary_visual_default")
 -- Telescope
 nnoremap('<Leader>ff', ':Telescope find_files<CR>')
 nnoremap('<Leader>fb', ':Telescope file_browser<CR>')
-nnoremap('<Leader>frc', ':Telescope dotfiles path=' .. os.getenv("HOME") ..
-             '/.config/nvim' .. '<CR>')
 nnoremap('<Leader>fce', ':lua require"telescope.builtin".planets()<CR>')
 nnoremap('<Leader>fcA', ':lua require("telescope.builtin").autocommands()<CR>')
 nnoremap('<Leader>fcb', ':lua require("telescope.builtin").buffers()<CR>')
@@ -191,14 +182,33 @@ nnoremap('<Leader>flw',
          ':lua require("telescope.builtin").grep_string { search = vim.fn.expand("<cword>") }<CR>')
 nnoremap('<Leader>fle',
          ':lua require("telescope.builtin").grep_string({ search = vim.fn.input("Grep For > ")})<CR>')
+
+-- Telescope git
 nnoremap('<Leader>fgb', ':lua require("telescope.builtin").git_branches()<CR>')
 nnoremap('<Leader>fgc', ':lua require("telescope.builtin").git_commits()<CR>')
 nnoremap('<Leader>fgC', ':lua require("telescope.builtin").git_bcommits()<CR>')
 nnoremap('<Leader>fgf', ':lua require("telescope.builtin").git_files()<CR>')
 nnoremap('<Leader>fgs', ':lua require("telescope.builtin").git_status()<CR>')
+
+-- Telescope extensions
+nnoremap('<leader>fep',
+         ':lua require("telescope").extensions.project.project{}<CR>')
 nnoremap('<leader>fee',
          ':lua require("telescope").extensions.packer.plugins()<CR>')
 nnoremap('<Leader>fem',
          ':lua require("telescope").extensions.media_files.media_files()<CR>')
 nnoremap('<Leader>feb',
          ':lua require("modules.completion.telescope.conf").anime_selector()<CR>')
+nnoremap('<Leader>frc',
+         ':Telescope dotfiles path=' .. G.home .. '.config/nvim' .. '<CR>')
+
+-- telescope-dap
+nnoremap('<leader>fdcc',
+         '<cmd>lua require"telescope".extensions.dap.commands{}<CR>')
+nnoremap('<leader>fdco',
+         '<cmd>lua require"telescope".extensions.dap.configurations{}<CR>')
+nnoremap('<leader>fdlb',
+         '<cmd>lua require"telescope".extensions.dap.list_breakpoints{}<CR>')
+nnoremap('<leader>fdv',
+         '<cmd>lua require"telescope".extensions.dap.variables{}<CR>')
+nnoremap('<leader>df', '<cmd>lua require"telescope".extensions.dap.frames{}<CR>')

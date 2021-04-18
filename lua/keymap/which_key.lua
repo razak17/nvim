@@ -13,6 +13,7 @@ fn['which_key#register']('<space>', 'g:which_key_map')
 
 g.which_key_map = {
   ["="] = "Balance window",
+  ['"'] = "Open peekup window",
   [";"] = "terminal",
   ["."] = "Open init.vim",
   [","] = "Open lua/init.lua",
@@ -64,6 +65,7 @@ g.which_key_map = {
   c = {
     name = "+Command",
     a = "vertical resize 30",
+    c = "Toggle context",
     h = {name = "+Help", w = "word"},
     f = "nvim-tree find",
     r = "nvim-tree refresh",
@@ -109,7 +111,8 @@ g.which_key_map = {
       name = "+Extensions",
       e = "packer",
       m = "media files",
-      b = 'change background'
+      b = 'change background',
+      p = 'project'
     },
     f = "find files",
     l = {name = "+Live", g = "grep", w = "current word", e = "prompt"},

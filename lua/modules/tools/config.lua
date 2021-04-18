@@ -1,5 +1,4 @@
 local config = {}
-local G = require 'core.global'
 
 function config.rnvimr()
   vim.g.rnvimr_ex_enable = 1
@@ -65,6 +64,34 @@ end
 function config.bookmarks()
   vim.g.bookmark_no_default_key_mappings = 1
   vim.g.bookmark_sign = ''
+end
+
+function config.rooter()
+  vim.g.rooter_patterns = {
+    '.git',
+    'Makefile',
+    '*.sln',
+    'build/env.sh',
+    '.venv',
+    'venv',
+    'package.json'
+  }
+  vim.g.rooter_silent_chdir = 1
+  vim.g.rooter_resolve_links = 1
+end
+
+function config.bqf()
+  require('bqf').setup({
+    auto_enable = true,
+    preview = {win_height = 12, win_vheight = 12, delay_syntax = 80},
+    func_map = {vsplit = '<C-v>', ptogglemode = 'z,', stoggleup = 'z<Tab>'},
+    filter = {
+      fzf = {
+        action_for = {['ctrl-s'] = 'split'},
+        extra_opts = {'--bind', 'ctrl-o:toggle-all', '--prompt', '> '}
+      }
+    }
+  })
 end
 
 return config
