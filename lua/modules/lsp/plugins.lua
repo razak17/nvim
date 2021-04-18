@@ -11,9 +11,4 @@ lsp['neovim/nvim-lspconfig'] = {
   config = conf.nvim_lsp
 }
 
-lsp['kabouzeid/nvim-lspinstall'] = {
-  cmd = {'LspInstall'},
-  config = conf.lspinstall
-}
-
 return lsp

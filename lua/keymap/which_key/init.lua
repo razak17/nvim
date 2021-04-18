@@ -194,21 +194,11 @@ g.which_key_map = {
     d = {
       name = "+Diagnostics",
       b = "goto previous",
-      c = "current line",
       l = "set loc list",
       n = "goto next"
     },
     f = "find the cursor word definition and reference",
-    l = {
-      name = "+Lsp",
-      h = "show hover doc",
-      i = "implementation",
-      r = "references",
-      R = "rename",
-      S = "signature",
-      s = {name = "+Symbols", d = "document symbols", w = "workspace symbols"},
-      t = "type definition"
-    },
+    l = {name = "+Lsp", r = "rename", s = "signature", e = "type definition"},
     v = "vista",
     w = {name = "+Color", m = "pencils"}
   }

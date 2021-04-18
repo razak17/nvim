@@ -1,12 +1,11 @@
-local api = vim.api
-local ex = vim.fn.executable
+local api, ex = vim.api, vim.fn.executable
 local G = require 'core.global'
-local conf = require 'modules.lsp.lspconfig.config'
+local utils = require 'modules.lsp.lspconfig.utils'
 local rpattern = require'lspconfig.util'.root_pattern
 local lspconfig = require 'lspconfig'
-local buf_map = conf.buf_map
-local global_cmd = conf.global_cmd
-local leader_buf_map = conf.leader_buf_map
+local buf_map, global_cmd, leader_buf_map = utils.buf_map, utils.global_cmd,
+                                            utils.leader_buf_map
+require 'modules.lsp.lspconfig.config'
 
 local simple_lsp = {
   jsonls = "vscode-json-languageserver",
@@ -18,40 +17,6 @@ local simple_lsp = {
   vimls = "vim-language-server",
   yamlls = "yaml-language-server"
 }
-
-function _G.reload_lsp()
-  vim.lsp.stop_client(vim.lsp.get_active_clients())
-  vim.cmd [[edit]]
-end
-
-function _G.open_lsp_log()
-  local path = vim.lsp.get_log_path()
-  vim.cmd("edit " .. path)
-end
-
-function _G.lsp_formatting()
-  vim.lsp.buf.formatting(vim.g[string.format("format_options_%s",
-                                             vim.bo.filetype)] or {})
-end
-
-function _G.lsp_toggle_virtual_text()
-  local virtual_text = {}
-  virtual_text.show = true
-  virtual_text.show = not virtual_text.show
-  vim.lsp.diagnostic.display(vim.lsp.diagnostic.get(0, 1), 0, 1,
-                             {virtual_text = virtual_text.show})
-end
-
-function _G.lsp_before_save()
-  local defs = {}
-  local ext = vim.fn.expand('%:e')
-  table.insert(defs, {
-    "BufWritePre",
-    '*.' .. ext,
-    "lua vim.lsp.buf.formatting_sync(nil,1000)"
-  })
-  conf.nvim_create_augroup('lsp_before_save', defs)
-end
 
 global_cmd("LspLog", "open_lsp_log")
 global_cmd("LspRestart", "reload_lsp")
@@ -68,7 +33,7 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] =
 local enhance_attach = function(client, bufnr)
   require('lspkind').init()
 
-  api.nvim_exec(conf.hl_cmds, false)
+  api.nvim_exec(utils.hl_cmds, false)
 
   local function lbuf_map(key, command)
     leader_buf_map(bufnr, key, command)
@@ -77,30 +42,30 @@ local enhance_attach = function(client, bufnr)
   local function buf_set_option(...)
     vim.api.nvim_buf_set_option(bufnr, ...)
   end
+
   buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
   lbuf_map("vD", "require'lspsaga.provider'.preview_definition()")
   lbuf_map("vf", "require'lspsaga.provider'.lsp_finder()")
   lbuf_map("va", "require'lspsaga.codeaction'.code_action()")
-  lbuf_map("vlS", "require'lspsaga.signaturehelp'.signature_help()")
-  lbuf_map("vlR", "require'lspsaga.rename'.rename()")
-  lbuf_map("vli", "vim.lsp.buf.implementation()")
-  lbuf_map("vlr", "vim.lsp.buf.references()")
-  lbuf_map("vlt", "vim.lsp.buf.type_definition()")
-  lbuf_map("vlsd", "vim.lsp.buf.document_symbol()")
-  lbuf_map("vlsw", "vim.lsp.buf.workspace_symbol()")
+  lbuf_map("vls", "require'lspsaga.signaturehelp'.signature_help()")
+  lbuf_map("vlr", "require'lspsaga.rename'.rename()")
+  lbuf_map("vle", "vim.lsp.buf.type_definition()")
+  buf_map(bufnr, "gsd", "vim.lsp.buf.document_symbol()")
+  buf_map(bufnr, "gsw", "vim.lsp.buf.workspace_symbol()")
+  buf_map(bufnr, "gi", "vim.lsp.buf.implementation()")
+  buf_map(bufnr, "gr", "vim.lsp.buf.references()")
   buf_map(bufnr, "K", "require'lspsaga.hover'.render_hover_doc()")
 
   require'lspsaga'.init_lsp_saga(require'modules.completion.config'.saga())
   lbuf_map("vdb", "require'lspsaga.diagnostic'.lsp_jump_diagnostic_prev()")
   lbuf_map("vdn", "require'lspsaga.diagnostic'.lsp_jump_diagnostic_next()")
-  lbuf_map("vdc", "require'lspsaga.diagnostic'.show_line_diagnostics()")
   lbuf_map('vdl', 'vim.lsp.diagnostic.set_loclist()')
 
   api.nvim_exec([[
       augroup hover_diagnostics
         autocmd! * <buffer>
-        au CursorHold * lua require 'modules.lsp.lspconfig.config'.show_lsp_diagnostics()
+        au CursorHold * lua require 'modules.lsp.lspconfig.utils'.show_lsp_diagnostics()
       augroup END
     ]], false)
 
@@ -115,51 +80,13 @@ local enhance_attach = function(client, bufnr)
   end
 
   if client.resolved_capabilities.document_highlight then
-    api.nvim_exec([[
-          hi LspReferenceRead cterm=bold ctermbg=red guibg=#2c323c
-          hi LspReferenceText cterm=bold ctermbg=red guibg=#2c323c
-          hi LspReferenceWrite cterm=bold ctermbg=red guibg=#2c323c
-          augroup lsp_document_highlight
-            autocmd! * <buffer>
-            au CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-            au CursorHoldI <buffer> lua vim.lsp.buf.document_highlight()
-            au CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-          augroup END
-        ]], false)
+    utils.document_highlight()
   end
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
-
 capabilities.textDocument.completion.completionItem.snippetSupport = true
-
--- Code actions
-capabilities.textDocument.codeAction = {
-  dynamicRegistration = false,
-  codeActionLiteralSupport = {
-    codeActionKind = {
-      valueSet = (function()
-        local res = vim.tbl_values(vim.lsp.protocol.CodeActionKind)
-        table.sort(res)
-        return res
-      end)()
-    }
-  }
-  -- codeActionLiteralSupport = {
-  --   codeActionKind = {
-  --     valueSet = {
-  --       "",
-  --       "quickfix",
-  --       "refactor",
-  --       "refactor.extract",
-  --       "refactor.inline",
-  --       "refactor.rewrite",
-  --       "source",
-  --       "source.organizeImports"
-  --     }
-  --   }
-  -- }
-}
+capabilities.textDocument.codeAction = utils.code_action
 
 if ex("bash-language-server") then
   lspconfig.bashls.setup {
@@ -196,7 +123,6 @@ end
 if ex("typescript-language-server") then
   lspconfig.tsserver.setup {
     root_dir = rpattern('tsconfig.json', 'package.json', '.git', vim.fn.getcwd()),
-    settings = {documentFormatting = false},
     capabilities = capabilities,
     on_attach = function(client, bufnr)
       client.resolved_capabilities.document_formatting = false
@@ -261,7 +187,7 @@ for lsp, exec in pairs(simple_lsp) do
     lspconfig[lsp].setup {
       capabilities = capabilities,
       on_attach = enhance_attach,
-      root_dir = rpattern('.git', '.gitignore', vim.fn.getcwd())
+      root_dir = rpattern('.gitignore', '.git', vim.fn.getcwd())
     }
   end
 end
