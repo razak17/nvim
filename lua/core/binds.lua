@@ -7,7 +7,6 @@ local nnoremap, inoremap, vnoremap, xnoremap, tnoremap = mp.nnoremap,
                                                          mp.tnoremap
 
 -- Basic Key Mappings
--- nnoremap('n', 'j')
 nnoremap('z', 'u')
 
 -- Yank from cursor position to end-of-line
@@ -20,6 +19,10 @@ nnoremap("gl", "g$")
 -- Move selected line / block of text in visual mode
 xnoremap('K', ":m '<-2<CR>gv=gv")
 xnoremap('N', ":m '>+1<CR>gv=gv")
+
+if vim.fn.exists('g:vscode') == 1 then
+  nnoremap('n', 'j')
+end
 
 -- no way
 if vim.fn.exists('g:vscode') == 0 then

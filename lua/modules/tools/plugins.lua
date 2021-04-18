@@ -19,6 +19,21 @@ tools['brooth/far.vim'] = {
     vim.g['far#source'] = 'rg'
   end
 }
+tools['airblade/vim-rooter'] = {
+  config = function()
+    vim.g.rooter_patterns = {
+      '.git',
+      'Makefile',
+      '*.sln',
+      'build/env.sh',
+      '.venv',
+      'venv',
+      'package.json'
+    }
+    vim.g.rooter_silent_chdir = 1
+    vim.g.rooter_resolve_links = 1
+  end
+}
 
 tools['iamcco/markdown-preview.nvim'] = {
   ft = 'markdown',

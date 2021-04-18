@@ -7,7 +7,7 @@ dap.adapters.node2 = {
   args = {G.cache_dir .. 'dap/vscode-node-debug2/out/src/nodeDebug.js'}
 }
 
-dap.configurations.javascript = {
+dap.configurations.typescript = {
   {
     type = 'node2',
     request = 'launch',
