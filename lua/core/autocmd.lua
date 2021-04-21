@@ -71,6 +71,11 @@ local ft = {
     "FileType",
     "dashboard",
     "set showtabline=0 | autocmd WinLeave <buffer> set showtabline=2"
+  },
+  {
+    "FileType",
+    "which_key",
+    "set laststatus=0 noshowmode noruler | autocmd BufLeave <buffer> set laststatus=2 ruler"
   }
 }
 

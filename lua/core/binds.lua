@@ -129,7 +129,6 @@ if vim.fn.exists('g:vscode') == 0 then
   nnoremap("<Leader>lo", ":copen<CR>")
 
   -- Other remaps
-  nnoremap('<Leader><CR>', ':so ~/.config/nvim/init.vim<CR>')
   nnoremap('<Leader>,', ':e ~/.config/nvim/lua/core/init.lua<CR>')
   nnoremap('<Leader>.', ':e $MYVIMRC<CR>')
   nnoremap('<leader>cR', ':call autocmds#EmptyRegisters()<CR>')

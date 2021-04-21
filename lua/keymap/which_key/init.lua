@@ -18,7 +18,6 @@ g.which_key_map = {
   ["."] = "Open init.vim",
   [","] = "Open lua/init.lua",
   ["/"] = "Comment",
-  ["<CR>"] = "Source init.vim",
   x = "Quit",
   y = "Yank",
   a = {

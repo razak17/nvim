@@ -122,7 +122,6 @@ function plugins.auto_compile()
   if file:match(modules_dir) then
     plugins.clean()
     plugins.compile()
-    plugins.convert_compile_file()
   end
 end
 

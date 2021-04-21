@@ -1,7 +1,7 @@
 local config = {}
 
 function config.galaxyline()
-  require('modules.aesth.statusline.eviline')
+  require('modules.aesth.statusline')
 end
 
 function config.nvim_bufferline()
