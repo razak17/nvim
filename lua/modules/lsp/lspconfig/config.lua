@@ -1,4 +1,4 @@
-local utils = require 'modules.lsp.lspconfig.utils'
+local utils = require 'internal.utils'
 
 function _G.reload_lsp()
   vim.lsp.stop_client(vim.lsp.get_active_clients())
