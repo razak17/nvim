@@ -20,7 +20,7 @@ local options = {
 local bg_def = 'none'
 local bg_dark = '#202328'
 local fg_def = '#4e4e4e'
-local fg_sel = '#bebebe'
+local fg_sel = '#dedede'
 local fg_error = '#ff000e'
 local fg_warn = '#ffcc77'
 

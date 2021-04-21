@@ -26,36 +26,6 @@ function config.vim_vsnip()
   vim.g["vsnip_snippet_dir"] = G.vim_path .. "/snippets"
 end
 
-function config.saga()
-  local opts = {
-    error_sign = '',
-    warn_sign = '',
-    hint_sign = '',
-    infor_sign = '',
-    use_saga_diagnostic_sign = true,
-    dianostic_header_icon = '   ',
-    code_action_icon = '💡',
-    rename_prompt_prefix = '➤',
-    finder_definition_icon = '  ',
-    finder_reference_icon = '  ',
-    definition_preview_icon = '  ',
-    code_action_keys = {quit = 'q', exec = '<CR>'},
-    max_preview_lines = 10,
-    finder_action_keys = {
-      open = 'o',
-      vsplit = 's',
-      split = 'i',
-      quit = 'x',
-      scroll_down = '<C-n>',
-      scroll_up = '<C-b>'
-    },
-    -- 1: thin border | 2: rounded border | 3: thick border | 4: ascii border
-    border_style = 1,
-    rename_action_keys = {quit = '<C-c>', exec = '<CR>'}
-  }
-  return opts
-end
-
 function config.emmet()
   vim.g.user_emmet_leader_key = '<C-y>'
   vim.g.user_emmet_complete_tag = 0
@@ -69,4 +39,3 @@ function config.telescope_nvim()
 end
 
 return config
-

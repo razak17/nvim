@@ -95,4 +95,3 @@ function config.bqf()
 end
 
 return config
-

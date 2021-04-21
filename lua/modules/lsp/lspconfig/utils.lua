@@ -48,7 +48,7 @@ M.lsp_mappings = function(bufnr)
   buf_map(bufnr, "gr", "vim.lsp.buf.references()")
   buf_map(bufnr, "K", "require'lspsaga.hover'.render_hover_doc()")
 
-  require'lspsaga'.init_lsp_saga(require'modules.completion.config'.saga())
+  require'lspsaga'.init_lsp_saga(require'modules.lsp.config'.lsp_saga())
   lbuf_map("vdb", "require'lspsaga.diagnostic'.lsp_jump_diagnostic_prev()")
   lbuf_map("vdn", "require'lspsaga.diagnostic'.lsp_jump_diagnostic_next()")
   lbuf_map('vdl', 'vim.lsp.diagnostic.set_loclist()')
