@@ -75,7 +75,14 @@ g.which_key_map = {
   d = {
     name = "+Debug",
     c = "continue",
-    s = {name = "+Step", i = "into", o = "out", v = "over"}
+    r = {name = "+Repl", o = "open", l = "run last"},
+    s = {name = "+Step", i = "into", o = "out", v = "over"},
+    b = {
+      name = "+Breakpoints",
+      l = "set log point",
+      s = "set condition",
+      t = "toggle",
+    }
   },
   e = {
     name = "+Floaterm",
@@ -112,6 +119,14 @@ g.which_key_map = {
       m = "media files",
       b = 'change background',
       p = 'project'
+    },
+    d = {
+      name = "+Dap",
+      b = "breakpoints",
+      c = "commands",
+      f = "frames",
+      o = "configurations",
+      v = "variables"
     },
     f = "find files",
     l = {name = "+Live", g = "grep", w = "current word", e = "prompt"},

@@ -127,16 +127,16 @@ nnoremap("<Leader>gs", ":G<CR>")
 
 -- dap
 nnoremap('<leader>dc', '<cmd>lua require"dap".continue()<CR>')
+nnoremap('<leader>dso', '<cmd>lua require"dap".step_out()<CR>')
 nnoremap('<leader>dsv', '<cmd>lua require"dap".step_over()<CR>')
 nnoremap('<leader>dsi', '<cmd>lua require"dap".step_into()<CR>')
-nnoremap('<leader>dso', '<cmd>lua require"dap".step_out()<CR>')
-nnoremap('<leader>dtb', '<cmd>lua require"dap".toggle_breakpoint()<CR>')
-nnoremap('<leader>dsbr',
-         '<cmd>lua require"dap".set_breakpoint(vim.fn.input("Breakpoint condition: "))<CR>')
-nnoremap('<leader>dsbm',
-         '<cmd>lua require"dap".set_breakpoint(nil, nil, vim.fn.input("Log point message: "))<CR>')
 nnoremap('<leader>dro', '<cmd>lua require"dap".repl.open()<CR>')
 nnoremap('<leader>drl', '<cmd>lua require"dap".repl.run_last()<CR>')
+nnoremap('<leader>dbt', '<cmd>lua require"dap".toggle_breakpoint()<CR>')
+nnoremap('<leader>dbl',
+         '<cmd>lua require"dap".set_breakpoint(nil, nil, vim.fn.input("Log point message: "))<CR>')
+nnoremap('<leader>dbs',
+         '<cmd>lua require"dap".set_breakpoint(vim.fn.input("Breakpoint condition: "))<CR>')
 
 -- Floaterm
 nnoremap("<Leader>ee", ":FloatermToggle<CR>")
@@ -203,12 +203,13 @@ nnoremap('<Leader>frc',
          ':Telescope dotfiles path=' .. G.home .. '.config/nvim' .. '<CR>')
 
 -- telescope-dap
-nnoremap('<leader>fdcc',
+nnoremap('<leader>fdc',
          '<cmd>lua require"telescope".extensions.dap.commands{}<CR>')
-nnoremap('<leader>fdco',
+nnoremap('<leader>fdo',
          '<cmd>lua require"telescope".extensions.dap.configurations{}<CR>')
-nnoremap('<leader>fdlb',
+nnoremap('<leader>fdb',
          '<cmd>lua require"telescope".extensions.dap.list_breakpoints{}<CR>')
 nnoremap('<leader>fdv',
          '<cmd>lua require"telescope".extensions.dap.variables{}<CR>')
-nnoremap('<leader>df', '<cmd>lua require"telescope".extensions.dap.frames{}<CR>')
+nnoremap('<leader>fdf',
+         '<cmd>lua require"telescope".extensions.dap.frames{}<CR>')

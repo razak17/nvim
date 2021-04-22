@@ -73,7 +73,7 @@ local function lsp_setup()
 end
 
 M.enhance_attach = enhance_attach
-M.setup = lsp_setup
 M.capabilities = capabilities
+M.setup = lsp_setup
 
 return M

@@ -76,14 +76,11 @@ local ft = {
     "FileType",
     "which_key",
     "set laststatus=0 noshowmode noruler | autocmd BufLeave <buffer> set laststatus=2 ruler"
-  }
-}
-
-local plug = {
+  },
   {"FileType", "dap-repl", "lua require('dap.ext.autocompl').attach()"}
 }
 
-local definitions = {buf, ft, win, niceties, plug}
+local definitions = {buf, ft, win, niceties}
 
 augroups(definitions)
 
