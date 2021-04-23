@@ -17,6 +17,7 @@ let fc['https?://twitter.com.*'] = { 'takeover': 'never', 'priority': 1 }
 let fc['http://127.0.0.1:*/*'] = { 'takeover': 'never', 'priority': 1 }
 let fc['http://localhost:*/*'] = { 'takeover': 'never', 'priority': 1 }
 let fc['https://colab.research.google.com/*'] = { 'takeover': 'never', 'priority': 1 }
+let fc['https://campus.datacamp.com/*'] = { 'takeover': 'never', 'priority': 1 }
 
 function! s:IsFirenvimActive(event) abort
   if !exists('*nvim_get_chan_info')
