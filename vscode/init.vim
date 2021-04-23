@@ -1,13 +1,8 @@
-" TODO there is a more contemporary version of this file
-" TODO Also some of it is redundant
-
 packadd vim-surround
-packadd quickscope
 
 luafile ~/.config/nvim/lua/core/opts.lua
 luafile ~/.config/nvim/lua/core/binds.lua
 
-"VSCode
 function! s:split(...) abort
     let direction = a:1
     let file = a:2
@@ -110,3 +105,5 @@ nmap gc  <Plug>VSCodeCommentary
 omap gc  <Plug>VSCodeCommentary
 nmap gcc <Plug>VSCodeCommentaryLine
 
+nmap <Tab> :Tabnext<CR>
+nmap <S-Tab> :Tabprev<CR>
