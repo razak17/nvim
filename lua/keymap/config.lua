@@ -4,8 +4,17 @@ local t = function(str)
   return vim.api.nvim_replace_termcodes(str, true, true, true)
 end
 
+local function check_back_space()
+  local col = vim.fn.col('.') - 1
+  if col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') then
+    return true
+  else
+    return false
+  end
+end
+
 _G.completion_confirm = function()
-  if vim.fn.pumvisible() ~= 0 then
+  if vim.fn.pumvisible() == 1 then
     if vim.fn.complete_info()["selected"] ~= -1 then
       vim.fn["compe#confirm"]()
       return npairs.esc("<c-y>")
@@ -20,29 +29,24 @@ _G.completion_confirm = function()
 end
 
 _G.tab = function()
-  if vim.fn.pumvisible() ~= 0 then
-    return npairs.esc("<C-n>")
+  if vim.fn.pumvisible() == 1 then
+    return t "<C-n>"
+  elseif vim.fn.call("vsnip#available", {1}) == 1 then
+    return t "<Plug>(vsnip-expand-or-jump)"
+  elseif check_back_space() then
+    return t "<Tab>"
   else
-    if vim.fn["vsnip#available"](1) ~= 0 then
-      vim.fn.feedkeys(string.format('%c%c%c(vsnip-expand-or-jump)', 0x80, 253,
-                                    83))
-      return npairs.esc("")
-    else
-      return npairs.esc("<Tab>")
-    end
+    return vim.fn['compe#complete']()
   end
 end
 
 _G.s_tab = function()
-  if vim.fn.pumvisible() ~= 0 then
-    return npairs.esc("<C-p>")
+  if vim.fn.pumvisible() == 1 then
+    return t "<C-p>"
+  elseif vim.fn.call("vsnip#jumpable", {-1}) == 1 then
+    return t "<Plug>(vsnip-jump-prev)"
   else
-    if vim.fn["vsnip#jumpable"](-1) ~= 0 then
-      vim.fn.feedkeys(string.format('%c%c%c(vsnip-jump-prev)', 0x80, 253, 83))
-      return npairs.esc("")
-    else
-      return npairs.esc("<C-h>")
-    end
+    return t "<S-Tab>"
   end
 end
 
