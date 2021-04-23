@@ -1,11 +1,28 @@
 local api = vim.api
 local utils = require 'internal.utils'
-local buf_map, global_cmd, leader_buf_map = utils.buf_map, utils.global_cmd,
-                                            utils.leader_buf_map
+local buf_map, leader_buf_map, global_cmd = utils.buf_map, utils.leader_buf_map,
+                                            utils.global_cmd
+
 local M = {}
 
 M.lspkind = function()
   require('lspkind').init()
+end
+
+M.lsp_saga = function(bufnr)
+  require'lspsaga'.init_lsp_saga(require'modules.lsp.config'.lsp_saga())
+
+  leader_buf_map(bufnr, "vD", "require'lspsaga.provider'.preview_definition()")
+  leader_buf_map(bufnr, "vf", "require'lspsaga.provider'.lsp_finder()")
+  leader_buf_map(bufnr, "va", "require'lspsaga.codeaction'.code_action()")
+  leader_buf_map(bufnr, "vls", "require'lspsaga.signaturehelp'.signature_help()")
+  leader_buf_map(bufnr, "vlr", "require'lspsaga.rename'.rename()")
+  leader_buf_map(bufnr, "vdb",
+                 "require'lspsaga.diagnostic'.lsp_jump_diagnostic_prev()")
+  leader_buf_map(bufnr, "vdn",
+                 "require'lspsaga.diagnostic'.lsp_jump_diagnostic_next()")
+  leader_buf_map(bufnr, 'vdl', 'vim.lsp.diagnostic.set_loclist()')
+  buf_map(bufnr, "K", "require'lspsaga.hover'.render_hover_doc()")
 end
 
 M.lsp_highlight_cmds = function()
@@ -32,26 +49,11 @@ M.lsp_highlight_cmds = function()
 end
 
 M.lsp_mappings = function(bufnr)
-  local function lbuf_map(key, command)
-    leader_buf_map(bufnr, key, command)
-  end
-
-  lbuf_map("vD", "require'lspsaga.provider'.preview_definition()")
-  lbuf_map("vf", "require'lspsaga.provider'.lsp_finder()")
-  lbuf_map("va", "require'lspsaga.codeaction'.code_action()")
-  lbuf_map("vls", "require'lspsaga.signaturehelp'.signature_help()")
-  lbuf_map("vlr", "require'lspsaga.rename'.rename()")
-  lbuf_map("vle", "vim.lsp.buf.type_definition()")
+  leader_buf_map(bufnr, "vle", "vim.lsp.buf.type_definition()")
   buf_map(bufnr, "gsd", "vim.lsp.buf.document_symbol()")
   buf_map(bufnr, "gsw", "vim.lsp.buf.workspace_symbol()")
   buf_map(bufnr, "gi", "vim.lsp.buf.implementation()")
   buf_map(bufnr, "gr", "vim.lsp.buf.references()")
-  buf_map(bufnr, "K", "require'lspsaga.hover'.render_hover_doc()")
-
-  require'lspsaga'.init_lsp_saga(require'modules.lsp.config'.lsp_saga())
-  lbuf_map("vdb", "require'lspsaga.diagnostic'.lsp_jump_diagnostic_prev()")
-  lbuf_map("vdn", "require'lspsaga.diagnostic'.lsp_jump_diagnostic_next()")
-  lbuf_map('vdl', 'vim.lsp.diagnostic.set_loclist()')
 end
 
 M.lsp_document_formatting = function(client)
