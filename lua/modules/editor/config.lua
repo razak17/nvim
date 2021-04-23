@@ -10,6 +10,7 @@ function config.nvim_colorizer()
     vim = {names = true},
     tmux = {names = false},
     lua = {names = false},
+    python = {names = false},
     'javascript',
     'javascriptreact',
     'typescript',
