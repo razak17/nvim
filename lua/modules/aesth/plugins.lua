@@ -22,19 +22,6 @@ aesth['romainl/vim-cool'] = {
   end
 }
 
-aesth['RRethy/vim-illuminate'] = {
-  config = function()
-    vim.g.Illuminate_ftblacklist = {
-      'javascript',
-      'python',
-      'typescript',
-      'jsx',
-      'tsx',
-      'html'
-    }
-  end
-}
-
 aesth['lewis6991/gitsigns.nvim'] = {
   event = {'BufRead', 'BufNewFile'},
   config = conf._gitsigns,
