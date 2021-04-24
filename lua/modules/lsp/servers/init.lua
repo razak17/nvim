@@ -75,6 +75,7 @@ end
 
 M.enhance_attach = enhance_attach
 M.capabilities = capabilities
+M.on_init = on_init
 M.setup = lsp_setup
 
 return M
