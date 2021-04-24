@@ -52,12 +52,12 @@ local win = {
   {
     "WinEnter,BufEnter,InsertLeave",
     "*",
-    [[if ! &cursorline && &filetype !~# '^\(dashboard\|telescope_\)' && ! &pvw | setlocal cursorline | endif]]
+    [[if ! &cursorline && &filetype !~# '^\(dashboard\|telescope_\)' && ! &pvw | setlocal cursorline showtabline=2 | endif]]
   },
   {
     "WinLeave,BufLeave,InsertEnter",
     "*",
-    [[if &cursorline && &filetype !~# '^\(dashboard\|telescope_\)' && ! &pvw | setlocal nocursorline | endif]]
+    [[if &cursorline && &filetype !~# '^\(dashboard\|telescope_\)' && ! &pvw | setlocal nocursorline showtabline=0 | endif]]
   },
   -- Force write shada on leaving nvim
   {"VimLeave", "*", [[if has('nvim') | wshada! | else | wviminfo! | endif]]},
