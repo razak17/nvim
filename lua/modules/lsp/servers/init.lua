@@ -57,7 +57,6 @@ local function lsp_setup()
   require 'modules.lsp.servers.rust'
   require 'modules.lsp.servers.sumneko_lua'
   require 'modules.lsp.servers.tsserver'
-  require 'modules.lsp.servers.efm'
 
   for lsp, exec in pairs(simple_lsp) do
     if vim.fn.executable(exec) then
@@ -71,6 +70,7 @@ local function lsp_setup()
     end
   end
 
+  require 'modules.lsp.servers.efm'
 end
 
 M.enhance_attach = enhance_attach
