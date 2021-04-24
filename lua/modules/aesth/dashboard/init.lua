@@ -3,14 +3,14 @@ local g = vim.g
 
 g.dashboard_footer_icon = '🐬 '
 g.dashboard_preview_command = 'cat'
-g.dashboard_preview_pipeline = 'lolcat'
+g.dashboard_preview_pipeline = 'lolcat -F 0.3'
 g.dashboard_preview_file = home .. '/.config/nvim/static/pokemon.txt'
 g.dashboard_preview_file_height = 12
-g.dashboard_preview_file_width = 80
+g.dashboard_preview_file_width = 70
 g.dashboard_default_executive = 'telescope'
 g.dashboard_custom_section = {
   last_session = {
-    description = {'  Recently laset session                  SPC s l'},
+    description = {'  Recently saved session                  SPC s l'},
     command = 'SessionLoad'
   },
   find_history = {
@@ -19,7 +19,11 @@ g.dashboard_custom_section = {
   },
   find_file = {
     description = {'  Find  File                              SPC f f'},
-    command = 'DashboardFindFile'
+    command = 'Telescope find_files find_command=rg,--hidden,--files'
+  },
+  file_browser = {
+    description = {'  File Browser                            SPC f b'},
+    command = 'Telescope file_browser'
   },
   new_file = {
     description = {'  New   File                              SPC t f'},

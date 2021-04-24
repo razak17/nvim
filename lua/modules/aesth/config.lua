@@ -12,7 +12,7 @@ function config.dashboard()
   require('modules.aesth.dashboard')
 end
 
-function config._gitsigns()
+function config.gitsigns()
   require('gitsigns').setup {
     signs = {
       add = {hl = 'GitGutterAdd', text = '▋'},
@@ -40,6 +40,7 @@ function config._gitsigns()
       ['n <leader>hr'] = '<cmd>lua require"gitsigns".reset_hunk()<CR>',
       ['n <leader>he'] = '<cmd>lua require"gitsigns".preview_hunk()<CR>',
       ['n <leader>hb'] = '<cmd>lua require"gitsigns".blame_line()<CR>',
+      ['n <leader>ht'] = '<cmd>lua require"gitsigns".toggle_current_line_blame()<CR>',
 
       -- Text objects
       ['o ih'] = ':<C-U>lua require"gitsigns".text_object()<CR>',

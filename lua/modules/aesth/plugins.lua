@@ -24,8 +24,8 @@ aesth['romainl/vim-cool'] = {
 
 aesth['lewis6991/gitsigns.nvim'] = {
   event = {'BufRead', 'BufNewFile'},
-  config = conf._gitsigns,
-  requires = {'nvim-lua/plenary.nvim', opt = true}
+  config = conf.gitsigns,
+  requires = 'nvim-lua/plenary.nvim'
 }
 
 aesth['kyazdani42/nvim-tree.lua'] = {

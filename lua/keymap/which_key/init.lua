@@ -81,7 +81,7 @@ g.which_key_map = {
       name = "+Breakpoints",
       l = "set log point",
       s = "set condition",
-      t = "toggle",
+      t = "toggle"
     }
   },
   e = {
@@ -177,6 +177,7 @@ g.which_key_map = {
     e = "preview hunk",
     r = "reset hunk",
     s = "stage hunk",
+    t = "toggle line blame",
     u = "undo stage hunk"
   },
   I = {name = "+Info", c = "check health", e = "treesitter"},
