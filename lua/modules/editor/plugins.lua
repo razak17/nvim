@@ -13,6 +13,11 @@ editor['norcalli/nvim-colorizer.lua'] = {config = conf.nvim_colorizer}
 
 editor['b3nj5m1n/kommentary'] = {config = conf.kommentary}
 
+editor['Raimondi/delimitMate'] = {
+  event = 'InsertEnter',
+  config = conf.delimimate,
+}
+
 editor['windwp/nvim-ts-autotag'] = {
   opt = true,
   after = 'nvim-treesitter',

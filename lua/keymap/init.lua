@@ -17,16 +17,12 @@ imap("<C-l>", "vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'",
      opts)
 smap("<C-l>", "vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'",
      opts)
-imap('<C-y>', "vsnip#expandable() ? '<Plug>(vsnip-expand)' : '<C-space>'", opts)
-smap('<C-y>', "vsnip#expandable() ? '<Plug>(vsnip-expand)' : '<C-space>'", opts)
 
 -- Compe
-imap("<CR>", "v:lua.completion_confirm()", opts)
+imap("<CR>", [[compe#confirm({ 'keys': "\<Plug>delimitMateCR", 'mode': '' })]],
+     {noremap = true, expr = true})
 inoremap("<C-Space>", "compe#complete()", opts)
-inoremap("<CR> ", "compe#confirm('<CR>')", opts)
 inoremap("<C-e>", "compe#close('<C-e>')", opts)
-inoremap("<C-f>", "compe#scroll({ 'delta': +4 })", opts)
-inoremap("<C-d>", "compe#scroll({ 'delta': -4 })", opts)
 
 -- Undo tree
 nnoremap("<Leader>au", ":UndotreeToggle<CR>")
