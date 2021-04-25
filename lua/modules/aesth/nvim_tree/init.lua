@@ -3,6 +3,7 @@ vim.g.nvim_tree_ignore = {'.git', 'node_modules', '.cache'}
 vim.g.nvim_tree_quit_on_open = 0
 vim.g.nvim_tree_hide_dotfiles = 0
 vim.g.nvim_tree_follow = 1
+vim.g.nvim_tree_width = 35
 vim.g.nvim_tree_indent_markers = 1
 vim.g.nvim_tree_indent_markers = 1
 vim.g.nvim_tree_bindings = {

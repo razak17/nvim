@@ -1,10 +1,10 @@
-local home = os.getenv('HOME')
+local G = require 'core.global'
 local g = vim.g
 
 g.dashboard_footer_icon = '🐬 '
 g.dashboard_preview_command = 'cat'
 g.dashboard_preview_pipeline = 'lolcat -F 0.3'
-g.dashboard_preview_file = home .. '/.config/nvim/static/pokemon.txt'
+g.dashboard_preview_file = G.home .. '.config/nvim/static/pokemon.txt'
 g.dashboard_preview_file_height = 12
 g.dashboard_preview_file_width = 70
 g.dashboard_default_executive = 'telescope'
@@ -35,7 +35,7 @@ g.dashboard_custom_section = {
   },
   find_dotfiles = {
     description = {'  Open Personal dotfiles                  SPC f d'},
-    command = 'Telescope dotfiles path=' .. home .. '/env/nvim'
+    command = 'Telescope dotfiles path=' .. G.home .. 'env/nvim'
   }
 }
 

@@ -1,4 +1,4 @@
-local vim = vim
+-- local vim = vim
 local mp = require('keymap.map')
 local nnoremap, inoremap, vnoremap, xnoremap, tnoremap = mp.nnoremap,
                                                          mp.inoremap,
@@ -85,6 +85,7 @@ if vim.fn.exists('g:vscode') == 0 then
   nnoremap("<Leader>az", ":q!<CR>")
   nnoremap('<Leader>x', ':q<CR>')
   nnoremap('<C-z>', ':undo<CR>')
+  inoremap('<C-z>', ':undo<CR>')
 
   -- Use control-c instead of escape
   nnoremap('<C-c>', '<Esc>')
