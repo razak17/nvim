@@ -16,7 +16,7 @@ M.lsp_saga = function(bufnr)
   leader_buf_map(bufnr, "vf", "require'lspsaga.provider'.lsp_finder()")
   leader_buf_map(bufnr, "va", "require'lspsaga.codeaction'.code_action()")
   leader_buf_map(bufnr, "vls", "require'lspsaga.signaturehelp'.signature_help()")
-  leader_buf_map(bufnr, "vlr", "require'lspsaga.rename'.rename()")
+  leader_buf_map(bufnr, "vrr", "require'lspsaga.rename'.rename()")
   leader_buf_map(bufnr, "vdb",
                  "require'lspsaga.diagnostic'.lsp_jump_diagnostic_prev()")
   leader_buf_map(bufnr, "vdn",
@@ -54,6 +54,7 @@ M.lsp_mappings = function(bufnr)
   buf_map(bufnr, "gsw", "vim.lsp.buf.workspace_symbol()")
   buf_map(bufnr, "gi", "vim.lsp.buf.implementation()")
   buf_map(bufnr, "gr", "vim.lsp.buf.references()")
+  leader_buf_map(bufnr, "vrn", "vim.lsp.buf.rename()")
 end
 
 M.lsp_document_formatting = function(client)

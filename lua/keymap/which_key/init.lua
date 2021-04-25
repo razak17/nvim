@@ -221,7 +221,8 @@ g.which_key_map = {
       n = "goto next"
     },
     f = "find the cursor word definition and reference",
-    l = {name = "+Lsp", r = "rename", s = "signature", e = "type definition"},
+    l = {name = "+Lsp", s = "signature", e = "type definition"},
+    r = {name = "+Rename", n = "builtin lsp", r = "lsp_saga"},
     v = "vista",
     w = {name = "+Color", m = "pencils"}
   }
