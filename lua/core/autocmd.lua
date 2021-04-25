@@ -52,12 +52,12 @@ local win = {
   {
     "WinEnter,BufEnter,InsertLeave",
     "*",
-    [[if ! &cursorline && &filetype !~# '^\(dashboard\|telescope_\)' && ! &pvw | setlocal cursorline showtabline=2 | endif]]
+    [[if ! &cursorline && &filetype !~# '^\(dashboard\|clap_\)' && ! &pvw | setlocal cursorline | endif]]
   },
   {
     "WinLeave,BufLeave,InsertEnter",
     "*",
-    [[if &cursorline && &filetype !~# '^\(dashboard\|telescope_\)' && ! &pvw | setlocal nocursorline showtabline=0 | endif]]
+    [[if &filetype !~# '^\(dashboard\|clap_\)' | setlocal nocursorline | endif]]
   },
   -- Force write shada on leaving nvim
   {"VimLeave", "*", [[if has('nvim') | wshada! | else | wviminfo! | endif]]},
@@ -67,11 +67,7 @@ local win = {
 
 local ft = {
   {"FocusLost", "*", "silent! wall"},
-  {
-    "FileType",
-    "dashboard",
-    "set showtabline=0 | autocmd WinLeave <buffer> set showtabline=2"
-  },
+  {"FileType", "dashboard", "set showtabline=0"},
   {
     "FileType",
     "which_key",
