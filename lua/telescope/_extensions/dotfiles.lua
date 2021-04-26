@@ -24,7 +24,7 @@ local dotfiles = function(opts)
   local results = dotfiles_list(opts)
 
   pickers.new(opts, {
-    prompt_title = 'find in dotfiles',
+    prompt_title = 'Find in dotfiles',
     results_title = 'Dotfiles',
     finder = finders.new_table {
       results = results,

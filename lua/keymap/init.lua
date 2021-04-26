@@ -193,10 +193,9 @@ nnoremap('<leader>fee',
          ':lua require("telescope").extensions.packer.plugins()<CR>')
 nnoremap('<Leader>fem',
          ':lua require("telescope").extensions.media_files.media_files()<CR>')
-nnoremap('<Leader>feb',
-         ':lua require("modules.completion.telescope.conf").anime_selector()<CR>')
 nnoremap('<Leader>frc',
          ':Telescope dotfiles path=' .. G.home .. '.config/nvim' .. '<CR>')
+nnoremap('<Leader>feb', ':Telescope bg_selector<CR>')
 
 -- telescope-dap
 nnoremap('<leader>fdc',
