@@ -204,7 +204,7 @@ g.which_key_map = {
     H = 'move left',
     k = 'delete Session',
     K = 'last',
-    l = 'next',
+    n = 'next',
     L = 'move right',
     N = 'new'
   },

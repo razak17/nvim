@@ -71,7 +71,7 @@ if vim.fn.exists('g:vscode') == 0 then
   nnoremap('<Leader>sb', ':tabprevious<CR>')
   nnoremap('<Leader>sK', ':tablast<CR>')
   nnoremap('<Leader>sk', ':tabfirst<CR>')
-  nnoremap('<Leader>sl', ':tabnext<CR>')
+  nnoremap('<Leader>sn', ':tabnext<CR>')
   nnoremap('<Leader>sN', ':tabnew<CR>')
   nnoremap('<Leader>sd', ':tabclose<CR>')
   nnoremap('<Leader>sH', ':-tabmove<CR>')

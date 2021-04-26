@@ -19,7 +19,7 @@ local options = {
 
 local bg_dark = '#282a36'
 -- local bg_def = 'none'
-local bg_sel = '#282a36'
+local bg_sel = '#000000'
 local fg_def = '#7e7e7e'
 local fg_sel = '#dedede'
 local fg_error = '#ff000e'
@@ -33,17 +33,20 @@ local highlights = {
   tab = {guifg = fg_def, guibg = bg_dark},
   tab_selected = {guifg = fg_sel, guibg = bg_sel},
   tab_close = {guifg = fg_def, guibg = bg_dark},
+  duplicate = {guifg = fg_def, guibg = bg_dark},
+  duplicate_visible = {guifg = fg_def, guibg = bg_dark},
+  duplicate_selected = {guifg = fg_sel, guibg = bg_sel},
   buffer_visible = {guifg = fg_def, guibg = bg_dark},
   buffer_selected = {guifg = fg_sel, guibg = bg_sel},
   error = {guifg = fg_error, guibg = bg_dark},
   error_visible = {guifg = fg_error, guibg = bg_dark},
-  error_selected = {guifg = fg_sel, guibg = bg_sel},
+  error_selected = {guifg = fg_error, guibg = bg_sel},
   info = {guifg = fg_info, guibg = bg_dark},
   info_visible = {guifg = fg_info, guibg = bg_dark},
-  info_selected = {guifg = fg_sel, guibg = bg_sel},
+  info_selected = {guifg = fg_info, guibg = bg_sel},
   warning = {guifg = fg_warn, guibg = bg_dark},
   warning_visible = {guifg = fg_warn, guibg = bg_dark},
-  warning_selected = {guifg = fg_sel, guibg = bg_sel},
+  warning_selected = {guifg = fg_warn, guibg = bg_sel},
   modified = {guibg = bg_dark},
   modified_visible = {guibg = bg_dark},
   modified_selected = {guibg = bg_sel},
@@ -57,3 +60,4 @@ local highlights = {
 }
 
 require'bufferline'.setup {options = options, highlights = highlights}
+
