@@ -27,8 +27,8 @@ function config.lsp_saga()
       scroll_down = '<C-n>',
       scroll_up = '<C-b>'
     },
-    -- 1: thin border | 2: rounded border | 3: thick border | 4: ascii border
-    border_style = 1,
+    -- "single" "double" "round" "plus"
+    border_style = "single",
     rename_action_keys = {quit = '<C-c>', exec = '<CR>'}
   }
   return opts
