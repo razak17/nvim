@@ -61,7 +61,8 @@ function M.setup()
           ["ic"] = "@class.inner"
         }
       }
-    }
+    },
+    rainbow = {enable = true, extended_mode = true}
   }
 
   vim.wo.foldexpr = "nvim_treesitter#foldexpr()"
