@@ -18,6 +18,7 @@ local shfmt = formatters.shfmt
 function M.setup(enhance_attach)
   require'lspconfig'.efm.setup {
     on_attach = enhance_attach,
+    handlers = require'modules.lsp.lspconfig.utils'.diagnostics,
     root_dir = require'lspconfig.util'.root_pattern(vim.fn.getcwd()),
     init_options = {documentFormatting = true, codeAction = false},
     filetypes = {

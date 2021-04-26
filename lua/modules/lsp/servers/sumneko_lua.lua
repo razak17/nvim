@@ -2,7 +2,7 @@ local G = require 'core.global'
 
 if vim.fn.executable(G.sumneko_binary) then
   require'lspconfig'.sumneko_lua.setup {
-    capabilities = require'modules.lsp.servers'.capabilities,
+    handlers = require'modules.lsp.lspconfig.utils'.diagnostics,
     on_attach = require'modules.lsp.servers'.enhance_attach,
     cmd = {G.sumneko_binary, "-E", G.sumneko_root_path .. "/main.lua"},
     settings = {

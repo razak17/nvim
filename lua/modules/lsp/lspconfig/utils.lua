@@ -2,12 +2,31 @@ local api = vim.api
 local utils = require 'internal.utils'
 local buf_map, leader_buf_map, global_cmd = utils.buf_map, utils.leader_buf_map,
                                             utils.global_cmd
-
 local M = {}
 
 M.lspkind = function()
   require('lspkind').init()
 end
+
+M.diagnostics = {
+  ["textDocument/publishDiagnostics"] = vim.lsp.with(
+      vim.lsp.diagnostic.on_publish_diagnostics, {
+        underline = true,
+        update_in_insert = true,
+        virtual_text = {spacing = 4},
+        signs = {enable = true, priority = 20}
+      })
+}
+
+M.diagnostics_off = {
+  ["textDocument/publishDiagnostics"] = vim.lsp.with(
+      vim.lsp.diagnostic.on_publish_diagnostics, {
+        underline = false,
+        update_in_insert = false,
+        virtual_text = false,
+        signs = false
+      })
+}
 
 M.lsp_saga = function(bufnr)
   require'lspsaga'.init_lsp_saga(require'modules.lsp.config'.lsp_saga())

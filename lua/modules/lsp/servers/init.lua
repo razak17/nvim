@@ -61,8 +61,8 @@ local function lsp_setup()
   for lsp, exec in pairs(simple_lsp) do
     if vim.fn.executable(exec) then
       require'lspconfig'[lsp].setup {
-        capabilities = capabilities,
         on_attach = enhance_attach,
+        handlers = lsp_utils.handlers,
         on_init = on_init,
         root_dir = require'lspconfig.util'.root_pattern('.gitignore', '.git',
                                                         vim.fn.getcwd())
@@ -74,7 +74,6 @@ local function lsp_setup()
 end
 
 M.enhance_attach = enhance_attach
-M.capabilities = capabilities
 M.on_init = on_init
 M.setup = lsp_setup
 
