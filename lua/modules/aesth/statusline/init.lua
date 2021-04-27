@@ -113,7 +113,7 @@ gls.left[10] = {
   DiagnosticHint = {
     provider = 'DiagnosticHint',
     icon = '  ',
-    highlight = {colors.cyan, colors.bg}
+    highlight = {colors.green, colors.bg}
   }
 }
 

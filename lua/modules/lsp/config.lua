@@ -17,8 +17,15 @@ function config.lsp_saga()
     finder_definition_icon = '  ',
     finder_reference_icon = '  ',
     definition_preview_icon = '  ',
-    code_action_keys = {quit = 'q', exec = '<CR>'},
     max_preview_lines = 10,
+    code_action_prompt = {
+      enable = true,
+      sign = true,
+      sign_priority = 20,
+      virtual_text = true
+    },
+    code_action_keys = {quit = 'q', exec = '<CR>'},
+    rename_action_keys = {quit = '<C-c>', exec = '<CR>'},
     finder_action_keys = {
       open = 'o',
       vsplit = 's',
@@ -28,8 +35,7 @@ function config.lsp_saga()
       scroll_up = '<C-b>'
     },
     -- "single" "double" "round" "plus"
-    border_style = "single",
-    rename_action_keys = {quit = '<C-c>', exec = '<CR>'}
+    border_style = "single"
   }
   return opts
 end

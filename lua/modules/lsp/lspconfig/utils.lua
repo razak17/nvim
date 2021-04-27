@@ -53,8 +53,8 @@ M.lsp_highlight_cmds = function()
     highlight! LspDiagnosticsUnderlineWarning gui=undercurl guisp=darkyellow
     highlight! LspDiagnosticsUnderlineError gui=undercurl guisp=red
 
-    highlight! LspDiagnosticsSignHint guifg=cyan
-    highlight! LspDiagnosticsSignInformation guifg=lightblue
+    highlight! LspDiagnosticsSignHint guifg=#98be65
+    highlight! LspDiagnosticsSignInformation guifg=#51afef
     highlight! LspDiagnosticsSignWarning guifg=darkyellow
     highlight! LspDiagnosticsSignError guifg=red
   ]], false)

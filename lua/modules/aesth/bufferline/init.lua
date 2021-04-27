@@ -23,8 +23,8 @@ local bg_sel = '#000000'
 local fg_def = '#7e7e7e'
 local fg_sel = '#dedede'
 local fg_error = '#ff000e'
-local fg_warn = '#ffcc77'
-local fg_info = '#7ec0ee'
+local fg_warn = '#ecbe7b'
+local fg_info = '#51afef'
 local pick_fg = '#c678dd'
 
 local highlights = {

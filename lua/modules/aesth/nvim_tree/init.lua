@@ -27,3 +27,5 @@ g.nvim_tree_icons = {
     untracked = "★"
   }
 }
+
+vim.api.nvim_exec([[ hi NvimTreeOpenedFolderName guifg=#51afef ]], false)
