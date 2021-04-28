@@ -15,10 +15,11 @@ local flake8 = linters.flake8
 local shellcheck = linters.shellcheck
 local shfmt = formatters.shfmt
 
-function M.setup(enhance_attach)
+function M.setup()
   require'lspconfig'.efm.setup {
-    on_attach = enhance_attach,
     handlers = require'modules.lsp.lspconfig.utils'.diagnostics,
+    capabilities = require'modules.lsp.servers'.capabilities,
+    on_attach = require'modules.lsp.servers'.enhance_attach,
     root_dir = require'lspconfig.util'.root_pattern(vim.fn.getcwd()),
     init_options = {documentFormatting = true, codeAction = false},
     filetypes = {

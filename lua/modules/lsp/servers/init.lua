@@ -21,6 +21,8 @@ end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
+capabilities.textDocument.completion.completionItem.resolveSupport =
+    {properties = {'documentation', 'detail', 'additionalTextEdits'}}
 capabilities.textDocument.codeAction = {
   dynamicRegistration = false,
   codeActionLiteralSupport = {
@@ -40,7 +42,6 @@ local enhance_attach = function(client, bufnr)
   end
   buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
-  lsp_utils.lspkind()
   lsp_utils.lsp_saga(bufnr)
   lsp_utils.lsp_highlight_cmds()
   lsp_utils.lsp_mappings(bufnr)
@@ -62,7 +63,8 @@ local function lsp_setup()
     if vim.fn.executable(exec) then
       require'lspconfig'[lsp].setup {
         on_attach = enhance_attach,
-        handlers = lsp_utils.handlers,
+        capabilities = capabilities,
+        handlers = lsp_utils.diagnostics,
         on_init = on_init,
         root_dir = require'lspconfig.util'.root_pattern('.gitignore', '.git',
                                                         vim.fn.getcwd())
@@ -74,6 +76,7 @@ local function lsp_setup()
 end
 
 M.enhance_attach = enhance_attach
+M.capabilities = capabilities
 M.on_init = on_init
 M.setup = lsp_setup
 

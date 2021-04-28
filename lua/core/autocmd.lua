@@ -67,7 +67,7 @@ local win = {
 
 local ft = {
   {"FocusLost", "*", "silent! wall"},
-  {"FileType", "dashboard", "set showtabline=0"},
+  {"BufLeave", "dashboard", "set showtabline=2 number relativenumber"},
   {
     "FileType",
     "which_key",

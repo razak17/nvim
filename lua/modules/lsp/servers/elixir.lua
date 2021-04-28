@@ -5,6 +5,7 @@ if vim.fn.executable(G.elixirls_binary) then
     cmd = {G.elixirls_root_path .. ".bin/language_server.sh"},
     elixirls = {dialyzerEnabled = false},
     handlers = require'modules.lsp.lspconfig.utils'.diagnostics,
+    capabilities = require'modules.lsp.servers'.capabilities,
     on_attach = require'modules.lsp.servers'.enhance_attach
   }
 end

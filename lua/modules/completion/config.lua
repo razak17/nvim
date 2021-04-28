@@ -3,20 +3,19 @@ local config = {}
 function config.nvim_compe()
   require('compe').setup {
     enabled = true,
-    debug = false,
     min_length = 2,
     preselect = "always",
-    allow_prefix_unmatch = false,
     source = {
-      buffer = true,
-      path = true,
-      spell = true,
-      tags = true,
-      calc = true,
-      vsnip = true,
-      nvim_lsp = true,
-      treesitter = true,
-      nvim_lua = true
+      buffer = {kind = "   (Buffer)"},
+      path = {kind = "   (Path)"},
+      spell = {kind = "   (Spell)"},
+      calc = {kind = "   (Calc)"},
+      vsnip = {kind = "   (Snippet)"},
+      nvim_lsp = {kind = "   (LSP)"},
+      vim_dadbod_completion = true,
+      emoji = {kind = " ﲃ  (Emoji)", filetypes = {"markdown", "text"}},
+      tags = false,
+      nvim_lua = false
     }
   }
 end

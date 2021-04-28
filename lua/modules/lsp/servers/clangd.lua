@@ -16,6 +16,7 @@ if vim.fn.executable("clangd") then
       semanticHighlighting = true
     },
     handlers = require'modules.lsp.lspconfig.utils'.diagnostics,
+    capabilities = require'modules.lsp.servers'.capabilities,
     on_attach = require'modules.lsp.servers'.enhance_attach
   }
 end
