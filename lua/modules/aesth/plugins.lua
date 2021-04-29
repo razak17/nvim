@@ -32,7 +32,6 @@ aesth['romainl/vim-cool'] = {
 
 aesth['lewis6991/gitsigns.nvim'] = {
   event = {'BufRead', 'BufNewFile'},
-  after = 'plenary.nvim',
   config = conf.gitsigns
 }
 

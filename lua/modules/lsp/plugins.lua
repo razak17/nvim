@@ -3,12 +3,12 @@ local conf = require 'modules.lsp.config'
 
 lsp['neovim/nvim-lspconfig'] = {
   event = 'BufReadPre',
-  requires = {
-    'tjdevries/lsp_extensions.nvim',
-    'glepnir/lspsaga.nvim',
-    'onsails/lspkind-nvim'
-  },
+  requires = {'tjdevries/lsp_extensions.nvim'},
   config = conf.nvim_lsp
 }
+
+lsp['glepnir/lspsaga.nvim'] = {cmd = 'Lspsaga'}
+
+lsp['onsails/lspkind-nvim'] = {event = 'InsertEnter'}
 
 return lsp

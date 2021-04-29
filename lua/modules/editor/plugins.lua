@@ -9,13 +9,16 @@ editor['monaqa/dial.nvim'] = {config = conf.dial}
 
 editor['windwp/nvim-autopairs'] = {config = conf.autopairs}
 
-editor['norcalli/nvim-colorizer.lua'] = {config = conf.nvim_colorizer}
+editor['norcalli/nvim-colorizer.lua'] = {
+  ft = {'html', 'css', 'sass', 'vim', 'typescript', 'typescriptreact'},
+  config = conf.nvim_colorizer
+}
 
 editor['b3nj5m1n/kommentary'] = {config = conf.kommentary}
 
 editor['Raimondi/delimitMate'] = {
   event = 'InsertEnter',
-  config = conf.delimimate,
+  config = conf.delimimate
 }
 
 editor['windwp/nvim-ts-autotag'] = {

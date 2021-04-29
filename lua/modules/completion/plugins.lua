@@ -1,7 +1,10 @@
 local completion = {}
 local conf = require 'modules.completion.config'
 
-completion['hrsh7th/nvim-compe'] = {config = conf.nvim_compe}
+completion['hrsh7th/nvim-compe'] = {
+  event = 'InsertEnter',
+  config = conf.nvim_compe
+}
 
 completion['liuchengxu/vim-which-key'] =
     {
@@ -31,17 +34,17 @@ completion['mattn/emmet-vim'] = {
 
 completion['nvim-telescope/telescope.nvim'] =
     {
+      cmd = 'Telescope',
+      config = conf.telescope_nvim,
       requires = {
-        'nvim-lua/popup.nvim',
-        'nvim-lua/plenary.nvim',
-        'nvim-telescope/telescope-fzy-native.nvim',
-        'razak17/telescope-packer.nvim',
-        'nvim-telescope/telescope-media-files.nvim',
-        'nvim-telescope/telescope-dap.nvim',
-        'nvim-telescope/telescope-project.nvim'
-      },
-      config = conf.telescope_nvim
+        {'nvim-lua/popup.nvim', opt = true},
+        {'nvim-lua/plenary.nvim', opt = true},
+        {'nvim-telescope/telescope-fzy-native.nvim', opt = true},
+        {'razak17/telescope-packer.nvim', opt = true},
+        {'nvim-telescope/telescope-media-files.nvim', opt = true},
+        {'nvim-telescope/telescope-dap.nvim', opt = true},
+        {'nvim-telescope/telescope-project.nvim', opt = true}
+      }
     }
 
 return completion
-

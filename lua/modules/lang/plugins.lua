@@ -6,10 +6,7 @@ lang['nvim-treesitter/nvim-treesitter'] =
       run = ':TSUpdate',
       event = 'BufRead',
       after = 'telescope.nvim',
-      requires = {
-        {'nvim-treesitter/playground', after = 'nvim-treesitter'},
-        {'romgrk/nvim-treesitter-context', after = 'nvim-treesitter'}
-      },
+      requires = {{'romgrk/nvim-treesitter-context', after = 'nvim-treesitter'}},
       config = conf.nvim_treesitter
     }
 

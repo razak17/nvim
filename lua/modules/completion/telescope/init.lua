@@ -1,9 +1,20 @@
 local actions = require('telescope.actions')
 
+if not packer_plugins['plenary.nvim'].loaded then
+  vim.cmd [[packadd plenary.nvim]]
+  vim.cmd [[packadd popup.nvim]]
+  vim.cmd [[packadd telescope-fzy-native.nvim]]
+  vim.cmd [[packadd telescope-media-files.nvim]]
+  vim.cmd [[packadd telescope-packer.nvim]]
+  vim.cmd [[packadd telescope-dap.nvim]]
+  vim.cmd [[packadd telescope-project.nvim]]
+end
+
 require('telescope').setup({
   defaults = {
     prompt_prefix = "> ",
     selection_caret = " ",
+    -- selection_caret = " ",
     sorting_strategy = "ascending",
     file_ignore_patterns = {"target/*", "node_modules/*", "dist/*", ".git/*"},
     width = 0.75,
@@ -46,9 +57,10 @@ require('telescope').setup({
 })
 
 require'telescope'.load_extension('media_files')
-require'telescope'.load_extension('packer')
 require'telescope'.load_extension('fzy_native')
-require'telescope'.load_extension('dotfiles')
-require'telescope'.load_extension('bg_selector')
-require'telescope'.load_extension('dap')
 require'telescope'.load_extension('project')
+require'telescope'.load_extension('packer')
+require'telescope'.load_extension('dap')
+require'telescope'.load_extension('nvim_files')
+require'telescope'.load_extension('grep_string_prompt')
+require'telescope'.load_extension('bg_selector')

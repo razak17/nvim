@@ -107,6 +107,7 @@ g.which_key_map = {
       H = "history",
       k = "keymaps",
       l = "loclist",
+      m = "man pages",
       r = "registers",
       T = "treesitter",
       v = "vim options",

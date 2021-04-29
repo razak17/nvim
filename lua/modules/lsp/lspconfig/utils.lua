@@ -1,7 +1,7 @@
 local api = vim.api
 local utils = require 'internal.utils'
-local buf_map, leader_buf_map, global_cmd = utils.buf_map, utils.leader_buf_map,
-                                            utils.global_cmd
+local buf_cmd_map, buf_map, global_cmd = utils.buf_cmd_map, utils.buf_map,
+                                         utils.global_cmd
 local M = {}
 
 M.lspkind = function()
@@ -29,19 +29,22 @@ M.diagnostics_off = {
 }
 
 M.lsp_saga = function(bufnr)
-  require'lspsaga'.init_lsp_saga(require'modules.lsp.config'.lsp_saga())
+  -- require'lspsaga'.init_lsp_saga(require'modules.lsp.config'.lsp_saga())
+  if not packer_plugins['lspsaga.nvim'].loaded then
+    vim.cmd [[packadd lspsaga.nvim]]
+  end
 
-  leader_buf_map(bufnr, "vD", "require'lspsaga.provider'.preview_definition()")
-  leader_buf_map(bufnr, "vf", "require'lspsaga.provider'.lsp_finder()")
-  leader_buf_map(bufnr, "va", "require'lspsaga.codeaction'.code_action()")
-  leader_buf_map(bufnr, "vls", "require'lspsaga.signaturehelp'.signature_help()")
-  leader_buf_map(bufnr, "vrr", "require'lspsaga.rename'.rename()")
-  leader_buf_map(bufnr, "vdb",
-                 "require'lspsaga.diagnostic'.lsp_jump_diagnostic_prev()")
-  leader_buf_map(bufnr, "vdn",
-                 "require'lspsaga.diagnostic'.lsp_jump_diagnostic_next()")
-  leader_buf_map(bufnr, 'vdl', 'vim.lsp.diagnostic.set_loclist()')
-  buf_map(bufnr, "K", "require'lspsaga.hover'.render_hover_doc()")
+  local saga = require 'lspsaga'
+  saga.init_lsp_saga(require'modules.lsp.config'.lsp_saga())
+
+  buf_map(bufnr, "<Leader>vD", "Lspsaga preview_definition")
+  buf_map(bufnr, "<Leader>vf", "Lspsaga lsp_finder")
+  buf_map(bufnr, "<Leader>va", "Lspsaga lsp_finder")
+  buf_map(bufnr, "<Leader>vls", "Lspsaga signature_help")
+  buf_map(bufnr, "<Leader>vrr", "Lspsaga rename")
+  buf_map(bufnr, "<Leader>vdb", "Lspsaga diagnostic_jump_prev")
+  buf_map(bufnr, "<Leader>vdn", "Lspsaga diagnostic_jump_next")
+  buf_map(bufnr, "K", "Lspsaga hover_doc")
 end
 
 M.lsp_highlight_cmds = function()
@@ -58,22 +61,25 @@ M.lsp_highlight_cmds = function()
     highlight! LspDiagnosticsSignWarning guifg=darkyellow
     highlight! LspDiagnosticsSignError guifg=red
   ]], false)
+end
 
+M.lsp_line_diagnostics = function()
   api.nvim_exec([[
-      augroup hover_diagnostics
-        autocmd! * <buffer>
-        au CursorHold * lua require 'modules.lsp.lspconfig.utils'.show_lsp_diagnostics()
-      augroup END
-    ]], false)
+    augroup hover_diagnostics
+      autocmd! * <buffer>
+      au CursorHold * Lspsaga show_line_diagnostics
+    augroup END
+  ]], false)
 end
 
 M.lsp_mappings = function(bufnr)
-  leader_buf_map(bufnr, "vle", "vim.lsp.buf.type_definition()")
-  buf_map(bufnr, "gsd", "vim.lsp.buf.document_symbol()")
-  buf_map(bufnr, "gsw", "vim.lsp.buf.workspace_symbol()")
-  buf_map(bufnr, "gi", "vim.lsp.buf.implementation()")
-  buf_map(bufnr, "gr", "vim.lsp.buf.references()")
-  leader_buf_map(bufnr, "vrn", "vim.lsp.buf.rename()")
+  buf_cmd_map(bufnr, "gsd", "vim.lsp.buf.document_symbol()")
+  buf_cmd_map(bufnr, "gsw", "vim.lsp.buf.workspace_symbol()")
+  buf_cmd_map(bufnr, "gi", "vim.lsp.buf.implementation()")
+  buf_cmd_map(bufnr, "gr", "vim.lsp.buf.references()")
+  buf_cmd_map(bufnr, "<Leader>vle", "vim.lsp.buf.type_definition()")
+  buf_cmd_map(bufnr, "<Leader>vdl", 'vim.lsp.diagnostic.set_loclist()')
+  buf_cmd_map(bufnr, "<Leader>vrn", "vim.lsp.buf.rename()")
 end
 
 M.lsp_document_formatting = function(client)
@@ -99,19 +105,5 @@ M.lsp_document_highlight = function(client)
     ]], false)
   end
 end
-
-M.show_lsp_diagnostics = (function()
-  local debounced = utils.debounce(
-                        require'lspsaga.diagnostic'.show_line_diagnostics, 300)
-  local cursorpos = utils.get_cursor_pos()
-  return function()
-    local new_cursor = utils.get_cursor_pos()
-    if (new_cursor[1] ~= 1 and new_cursor[2] ~= 1) and
-        (new_cursor[1] ~= cursorpos[1] or new_cursor[2] ~= cursorpos[2]) then
-      cursorpos = new_cursor
-      debounced()
-    end
-  end
-end)()
 
 return M

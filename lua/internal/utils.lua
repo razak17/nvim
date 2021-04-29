@@ -23,23 +23,8 @@ function M.TurnOffGuides()
   vim.o.showtabline = 0
 end
 
-function M.get_cursor_pos()
-  return {vim.fn.line('.'), vim.fn.col('.')}
-end
-
-function M.debounce(func, timeout)
-  local timer_id = nil
-  return function(...)
-    if timer_id ~= nil then
-      vim.fn.timer_stop(timer_id)
-    end
-    local args = {...}
-
-    timer_id = vim.fn.timer_start(timeout, function()
-      func(args)
-      timer_id = nil
-    end)
-  end
+function M.global_cmd(name, func)
+  vim.cmd('command! -nargs=0 ' .. name .. ' call v:lua.' .. func .. '()')
 end
 
 function M.map(bufnr, mode, key, command, opts)
@@ -50,16 +35,12 @@ function M.map(bufnr, mode, key, command, opts)
   vim.api.nvim_buf_set_keymap(bufnr, mode, key, command, options)
 end
 
-function M.global_cmd(name, func)
-  vim.cmd('command! -nargs=0 ' .. name .. ' call v:lua.' .. func .. '()')
-end
-
 function M.buf_map(bufnr, key, command, opts)
-  M.map(bufnr, 'n', key, "<cmd>lua " .. command .. "<CR>", opts)
+  M.map(bufnr, 'n', key, ":" .. command .. "<CR>", opts)
 end
 
-function M.leader_buf_map(bufnr, key, command, opts)
-  M.map(bufnr, 'n', '<leader>' .. key, "<cmd>lua " .. command .. "<CR>", opts)
+function M.buf_cmd_map(bufnr, key, command, opts)
+  M.map(bufnr, 'n', key, "<cmd>lua " .. command .. "<CR>", opts)
 end
 
 function M.nvim_create_augroup(group_name, definitions)

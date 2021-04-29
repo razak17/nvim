@@ -1,17 +1,6 @@
 local lsp_utils = require 'modules.lsp.lspconfig.utils'
 local M = {}
 
-local simple_lsp = {
-  jsonls = "vscode-json-languageserver",
-  cssls = "css-languageserver",
-  dockerls = "docker-langserver",
-  graphql = "graphql-lsp",
-  html = "html-languageserver",
-  svelte = "svelteserver",
-  vimls = "vim-language-server",
-  yamlls = "yaml-language-server"
-}
-
 local on_init = function(client)
   client.config.flags = {}
   if client.config.flags then
@@ -44,6 +33,7 @@ local enhance_attach = function(client, bufnr)
 
   lsp_utils.lsp_saga(bufnr)
   lsp_utils.lsp_highlight_cmds()
+  -- lsp_utils.lsp_line_diagnostics()
   lsp_utils.lsp_mappings(bufnr)
   lsp_utils.lsp_document_formatting(client)
   lsp_utils.lsp_document_highlight(client)
@@ -58,20 +48,7 @@ local function lsp_setup()
   require 'modules.lsp.servers.rust'
   require 'modules.lsp.servers.sumneko_lua'
   require 'modules.lsp.servers.tsserver'
-
-  for lsp, exec in pairs(simple_lsp) do
-    if vim.fn.executable(exec) then
-      require'lspconfig'[lsp].setup {
-        on_attach = enhance_attach,
-        capabilities = capabilities,
-        handlers = lsp_utils.diagnostics,
-        on_init = on_init,
-        root_dir = require'lspconfig.util'.root_pattern('.gitignore', '.git',
-                                                        vim.fn.getcwd())
-      }
-    end
-  end
-
+  require 'modules.lsp.servers.simple_lsp'
   require 'modules.lsp.servers.efm'
 end
 

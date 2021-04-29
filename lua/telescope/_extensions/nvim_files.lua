@@ -5,7 +5,7 @@ local make_entry = require('telescope.make_entry')
 local conf = require('telescope.config').values
 local G = require('core.global')
 
-local dotfiles_list = function(opts)
+local nvim_files_list = function(opts)
   local dir = opts.path or ''
   local list = {}
   local p = io.popen('rg --files --hidden ' .. dir)
@@ -19,9 +19,9 @@ local dotfiles_list = function(opts)
   return list
 end
 
-local dotfiles = function(opts)
+local nvim_files = function(opts)
   opts = opts or {}
-  local results = dotfiles_list(opts)
+  local results = nvim_files_list(opts)
 
   pickers.new(opts, {
     prompt_title = 'Find in dotfiles',
@@ -35,4 +35,4 @@ local dotfiles = function(opts)
   }):find()
 end
 
-return telescope.register_extension {exports = {dotfiles = dotfiles}}
+return telescope.register_extension {exports = {nvim_files = nvim_files}}
