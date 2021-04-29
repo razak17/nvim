@@ -11,6 +11,14 @@ aesth['glepnir/galaxyline.nvim'] = {
   requires = {'kyazdani42/nvim-web-devicons'}
 }
 
+aesth['lukas-reineke/indent-blankline.nvim'] =
+    {event = 'BufRead', branch = 'lua', config = conf.indent_blankline}
+
+aesth['itchyny/vim-cursorword'] = {
+  event = {'BufReadPre', 'BufNewFile'},
+  config = conf.vim_cursorwod
+}
+
 aesth['akinsho/nvim-bufferline.lua'] = {
   config = conf.nvim_bufferline,
   requires = {'kyazdani42/nvim-web-devicons'}
@@ -43,7 +51,7 @@ aesth['p00f/nvim-ts-rainbow'] = {
       hi rainbowcol3 guifg=#d16d9e
       hi rainbowcol4 guifg=#e7e921
       hi rainbowcol5 guifg=#689d6a
-      hi rainbowcol6 guifg=#d65d0e
+      hi rainbowcol6 guifg=#d67d4e
       hi rainbowcol7 guifg=#7ec0ee
     ]], false)
   end

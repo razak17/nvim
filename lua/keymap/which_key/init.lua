@@ -107,7 +107,6 @@ g.which_key_map = {
       H = "history",
       k = "keymaps",
       l = "loclist",
-      o = "old files",
       r = "registers",
       T = "treesitter",
       v = "vim options",
@@ -130,7 +129,7 @@ g.which_key_map = {
     },
     f = "find files",
     l = {name = "+Live", g = "grep", w = "current word", e = "prompt"},
-    r = {name = "+Config", c = "vimrc"},
+    r = {name = "+Config", c = "vimrc", r = "old files"},
     v = {
       name = "+Lsp",
       a = "code action",

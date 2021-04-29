@@ -44,7 +44,7 @@ local niceties = {
 }
 
 local win = {
-  -- {"TermOpen", "*", "startinsert"},
+  {"TermOpen", "*", "startinsert"},
   -- Equalize window dimensions when resizing vim window
   {"VimResized", "*", [[tabdo wincmd =]]}, -- Force write shada on leaving nvim
   {"VimLeave", "*", "wshada!"},
@@ -66,11 +66,6 @@ local win = {
 }
 
 local ft = {
-  -- {
-  --   "FileType",
-  --   "dashboard",
-  --   "set showtabline=0 | autocmd WinLeave <buffer> set showtabline=2"
-  -- },
   {"FocusLost", "*", "silent! wall"},
   {
     "FileType",
