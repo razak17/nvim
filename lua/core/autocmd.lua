@@ -57,7 +57,7 @@ local win = {
   {
     "WinLeave,BufLeave,InsertEnter",
     "*",
-    [[if &filetype !~# '^\(dashboard\|clap_\)' | setlocal nocursorline | endif]]
+    [[if &cursorline && &filetype !~# '^\(dashboard\|clap_\)' && ! &pvw | setlocal nocursorline | endif]]
   },
   -- Force write shada on leaving nvim
   {"VimLeave", "*", [[if has('nvim') | wshada! | else | wviminfo! | endif]]},
@@ -66,8 +66,12 @@ local win = {
 }
 
 local ft = {
+  -- {
+  --   "FileType",
+  --   "dashboard",
+  --   "set showtabline=0 | autocmd WinLeave <buffer> set showtabline=2"
+  -- },
   {"FocusLost", "*", "silent! wall"},
-  {"BufLeave", "dashboard", "set showtabline=2 number relativenumber"},
   {
     "FileType",
     "which_key",

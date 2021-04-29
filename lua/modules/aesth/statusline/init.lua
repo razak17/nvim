@@ -126,33 +126,6 @@ gls.left[11] = {
 }
 
 gls.right[1] = {
-  ShowLspClient = {
-    provider = 'GetLspClient',
-    condition = function()
-      local tbl = {['dashboard'] = true, [''] = true}
-      if tbl[vim.bo.filetype] then
-        return false
-      end
-      return true
-    end,
-    separator = ' ',
-    separator_highlight = {'NONE', colors.bg},
-    highlight = {colors.cyan, colors.bg, 'bold'}
-  }
-}
-
--- gls.right[2] = {
---     FileFormat = {
---         provider = function()
---             return vim.bo.filetype
---         end,
---         separator = ' ',
---         separator_highlight = {'NONE', colors.bg},
---         highlight = {colors.magenta, colors.bg}
---     }
--- }
-
-gls.right[2] = {
   DiffAdd = {
     provider = 'DiffAdd',
     condition = condition.hide_in_width,
@@ -162,7 +135,7 @@ gls.right[2] = {
     separator_highlight = {'NONE', colors.bg}
   }
 }
-gls.right[3] = {
+gls.right[2] = {
   DiffModified = {
     provider = 'DiffModified',
     condition = condition.hide_in_width,
@@ -170,7 +143,7 @@ gls.right[3] = {
     highlight = {colors.orange, colors.bg}
   }
 }
-gls.right[4] = {
+gls.right[3] = {
   DiffRemove = {
     provider = 'DiffRemove',
     condition = condition.hide_in_width,
@@ -179,25 +152,66 @@ gls.right[4] = {
   }
 }
 
+gls.right[4] = {
+  ShowLspClient = {
+    provider = 'GetLspClient',
+    condition = function()
+      local tbl = {['dashboard'] = true, [''] = true}
+      if tbl[vim.bo.filetype] then
+        return false
+      end
+      return true
+    end,
+    icon = ' LSP:',
+    highlight = {colors.cyan, colors.bg, 'bold'}
+  }
+}
+
 gls.right[5] = {
+  FileEncode = {
+    provider = 'FileEncode',
+    -- condition = condition.hide_in_width,
+    separator = ' ',
+    separator_highlight = {'NONE', colors.bg},
+    highlight = {colors.green, colors.bg, 'bold'}
+  }
+}
+
+gls.right[6] = {
+  FileFormat = {
+    provider = 'FileFormat',
+    -- condition = condition.hide_in_width,
+    separator = ' ',
+    separator_highlight = {'NONE', colors.bg},
+    highlight = {colors.green, colors.bg, 'bold'}
+  }
+}
+
+gls.right[7] = {
   LineInfo = {
     provider = 'LineColumn',
+    condition = function()
+      return vim.bo.filetype ~= 'dashboard'
+    end,
     separator = ' ',
     separator_highlight = {'NONE', colors.bg},
     highlight = {colors.fg, colors.bg}
   }
 }
 
-gls.right[6] = {
+gls.right[8] = {
   PerCent = {
     provider = 'LinePercent',
+    condition = function()
+      return vim.bo.filetype ~= 'dashboard'
+    end,
     separator = ' ',
     separator_highlight = {'NONE', colors.bg},
     highlight = {colors.fg, colors.bg, 'bold'}
   }
 }
 
-gls.right[7] = {
+gls.right[9] = {
   RainbowBlue = {
     provider = function()
       return ' ▊'

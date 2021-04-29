@@ -58,11 +58,11 @@ local load_core = function()
 
   local plug = require('core.plug')
 
-  require('core.opts')
-  require('core.binds')
-
   plug.ensure_plugins()
   plug.load_compile()
+
+  require('core.opts')
+  require('core.binds')
 
   require('keymap')
   require('core.autocmd')

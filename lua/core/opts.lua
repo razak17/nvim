@@ -85,7 +85,7 @@ opt('o', 'jumpoptions', 'stack') -- list of words that change the behavior of th
 
 -- Tabs and Indents
 opt('o', 'breakindentopt', 'shift:2,min:20')
-opt('o', 'showtabline', 2) -- Always show tabs
+-- opt('o', 'showtabline', 2) -- Always show tabs
 opt('b', 'tabstop', 2) -- The number of spaces a tab is
 opt('b', 'softtabstop', -1) -- Number of spaces to use in auto(indent)
 opt('b', 'expandtab', true) -- Expand tabs to spaces.
