@@ -72,7 +72,7 @@ M.lsp_line_diagnostics = function()
   api.nvim_exec([[
     augroup hover_diagnostics
       autocmd! * <buffer>
-      au CursorHold * Lspsaga show_line_diagnostics
+      au CursorHold * lua require("modules.lsp.lspconfig.utils").show_lsp_diagnostics()
     augroup END
   ]], false)
 end
@@ -110,5 +110,23 @@ M.lsp_document_highlight = function(client)
     ]], false)
   end
 end
+
+M.show_lsp_diagnostics = (function()
+  if not packer_plugins['lspsaga.nvim'].loaded then
+    vim.cmd [[packadd lspsaga.nvim]]
+  end
+
+  local debounced = utils.debounce(
+                        require'lspsaga.diagnostic'.show_line_diagnostics, 300)
+  local cursorpos = utils.get_cursor_pos()
+  return function()
+    local new_cursor = utils.get_cursor_pos()
+    if (new_cursor[1] ~= 1 and new_cursor[2] ~= 1) and
+        (new_cursor[1] ~= cursorpos[1] or new_cursor[2] ~= cursorpos[2]) then
+      cursorpos = new_cursor
+      debounced()
+    end
+  end
+end)()
 
 return M

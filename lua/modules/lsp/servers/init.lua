@@ -33,7 +33,7 @@ local enhance_attach = function(client, bufnr)
 
   lsp_utils.lsp_saga(bufnr)
   lsp_utils.lsp_highlight_cmds()
-  -- lsp_utils.lsp_line_diagnostics()
+  lsp_utils.lsp_line_diagnostics()
   lsp_utils.lsp_mappings(bufnr)
   lsp_utils.lsp_document_formatting(client)
   lsp_utils.lsp_document_highlight(client)

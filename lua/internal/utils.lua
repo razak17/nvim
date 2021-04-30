@@ -23,6 +23,25 @@ function M.TurnOffGuides()
   vim.o.showtabline = 0
 end
 
+function M.get_cursor_pos()
+  return {vim.fn.line('.'), vim.fn.col('.')}
+end
+
+function M.debounce(func, timeout)
+  local timer_id = nil
+  return function(...)
+    if timer_id ~= nil then
+      vim.fn.timer_stop(timer_id)
+    end
+    local args = {...}
+
+    timer_id = vim.fn.timer_start(timeout, function()
+      func(args)
+      timer_id = nil
+    end)
+  end
+end
+
 function M.global_cmd(name, func)
   vim.cmd('command! -nargs=0 ' .. name .. ' call v:lua.' .. func .. '()')
 end
