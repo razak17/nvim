@@ -1,45 +1,16 @@
-{
-  "Log to the console with cl": {
-    "prefix": "cl",
-    "body": ["console.log($0);"],
-    "description": "Log to the console"
-  },
-  "log": {
-    "prefix": ["logg"],
-    "body": "console.log(${1:$TM_SELECTED_TEXT});"
-  },
-  "Normal Import": {
-    "prefix": "imm",
-    "body": ["import $0 from \"${1:module}\";"],
-    "description": "Imports normal package"
-  },
-  "Destructured Import": {
-    "prefix": "imd",
-    "body": ["import { $0 } from \"${1:module}\";"],
-    "description": "Imports destructured package"
-  },
+
   "Import React": {
     "prefix": "imr",
     "body": ["import React from 'react';"],
     "description": "Imports React"
   },
-  "Function Statement": {
-    "prefix": "function",
-    "body": ["function ${1:name}(${2:params}: ${3:string}) {", "\t$0", "}"],
-    "description": "Function Statement"
-  },
-  "const function Statement": {
-    "prefix": "const",
-    "body": ["const ${1:name} = (${2:params}: ${3:string}) => {", "\t$0", "}"],
-    "description": "const function Statement"
-  },
   "componentFunctionalTypescript": {
     "prefix": "rfc",
     "body": [
-      "import * as React from 'react';",
+      "import React from 'react';",
       "",
-      "const ${1:${TM_DIRECTORY/^.*(\\/|\\\\)([^(\\/|\\\\)]+)$/$2/}}: React.VFC = () => {",
-      "  return ();",
+      "const ${1:${TM_DIRECTORY/^.*(\\/|\\\\)([^(\\/|\\\\)]+)$/$2/}}: React.FC = () => {",
+      "  return <div />;",
       "}",
       "",
       "export default ${1:${TM_DIRECTORY/^.*(\\/|\\\\)([^(\\/|\\\\)]+)$/$2/}};"
@@ -88,5 +59,37 @@
     "prefix": "useRef",
     "body": ["const ${1:refContainer} = useRef(${2:initialValue});"],
     "description": "Creates React useRef hook"
+  },
+  "Create useImperativeHandle hook": {
+    "prefix": "useImperativeHandle",
+    "body": ["useImperativeHandle(${1:initialValue}, () => {", "\t", "}, []);"],
+    "description": "Creates React useImperativeHandle hook"
+  },
+  "Create useLayoutEffect hook": {
+    "prefix": "useLayoutEffect",
+    "body": ["useLayoutEffect(() => {", "\t", "}, []);"],
+    "description": "Creates React useLayoutEffect hook"
+  },
+  "Create useDebugValue hook": {
+    "prefix": "useDebugValue",
+    "body": ["useDebugValue(${1:value}"],
+    "description": "Creates React useDebugValue hook"
+  },
+  "Create useSelector hook": {
+    "prefix": "useSelector",
+    "body": [
+      "const ${1:selectedData} = useSelector(state => state.${2:YourObject});"
+    ],
+    "description": "Creates Redux useSelector hook"
+  },
+  "Create useDispatch hook": {
+    "prefix": "useDispatch",
+    "body": ["const dispatch = useDispatch();"],
+    "description": "Creates Redux useDispatch hook"
+  },
+  "Create useStore hook": {
+    "prefix": "useStore",
+    "body": ["const store = useStore();"],
+    "description": "Creates Redux useStore hook"
   }
 }

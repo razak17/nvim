@@ -1,0 +1,135 @@
+# A valid snippet should starts with:
+#
+#		snippet trigger_word [ "description" [ options ] ]
+#
+# and end with:
+#
+#		endsnippet
+#
+# Snippet options:
+#
+#		b - Beginning of line.
+#		i - In-word expansion.
+#		w - Word boundary.
+#		r - Regular expression
+#		e - Custom context snippet
+#		A - Snippet will be triggered automatically, when condition matches.
+#
+# Basic example:
+#
+#		snippet emitter "emitter properties" b
+#		private readonly ${1} = new Emitter<$2>()
+#		public readonly ${1/^_(.*)/$1/}: Event<$2> = this.$1.event
+#		endsnippet
+#
+# Online reference: https://github.com/SirVer/ultisnips/blob/master/doc/UltiSnips.txt
+snippet tmp "cp template main" b
+#include <bits/stdc++.h>
+
+typedef long long int ll;
+typedef unsigned long long int ull;
+
+#define inf 1e9
+#define pb push_back
+#define nl printf("\n")
+
+#define pf(n) printf("%d\n",n)
+#define pfs(s) printf("%s\n",s)
+#define pfl(n) printf("%lld\n",n)
+
+#define sf(n) scanf("%d", &n)
+#define sff(n,m) scanf("%d%d",&n,&m)
+#define sfl(n) scanf("%lld", &n)
+
+using namespace std;
+
+void solve() {
+	int i, j, k;
+	int n;
+	sf(n);
+	$1
+}
+
+int main() {
+	solve();
+	std::cout.setf(std::ios::boolalpha);
+	return 0;
+}
+endsnippet
+
+snippet tmps "cp template alternative " b
+#include <algorithm>
+#include <iostream>
+#include <stdio.h>
+#include <vector>
+#include <string>
+#include <cmath>
+
+typedef long long int ll;
+typedef unsigned long long int ull;
+
+#define dbg printf("in\n")
+#define nl printf("\n")
+#define N 5010
+#define inf 1e9
+
+#define sf(n) scanf("%d", &n)
+#define sff(n,m) scanf("%d%d",&n,&m)
+#define sfl(n) scanf("%I64d", &n)
+#define sffl(n,m) scanf("%I64d%I64d",&n,&m)
+
+#define pf(n) printf("%d",n)
+#define pff(n,m) printf("%d %d",n,m)
+#define pffl(n,m) printf("%I64d %I64d",n,m)
+#define pfl(n) printf("%I64d",n)
+#define pfs(s) printf("%s",s)
+
+#define pb push_back
+#define pp pair<int, int>
+
+void solve();
+$1
+int main() {
+	std::cout.setf(std::ios::boolalpha);
+	solve();
+	return 0;
+}
+
+void compute() {
+	int x, y;
+	std::cout << "Enter two numbers: ";
+	std::cin >> x >> y;
+	std::cout << "The sum of " << x << " and " << y << " is " << x + y << "\n";
+}
+endsnippet
+
+snippet tmpm "minimal template" b
+#include <iostream>
+$1
+int main() {
+	return 0;
+}
+endsnippet
+
+snippet tmpd "template with bits" b
+#include <bits/stdc++.h>
+
+void solve() {
+	int t, n;
+	int i, j, k;
+	$1
+}
+
+int main() {
+	solve();
+	return 0;
+}
+endsnippet
+snippet s "std" b
+std::$1;
+endsnippet
+
+snippet cout "cout" b
+std::cout << $1 << "\n";
+endsnippet
+
