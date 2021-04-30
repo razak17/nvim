@@ -1,13 +1,5 @@
 local config = {}
 
-function config.rnvimr()
-  vim.g.rnvimr_ex_enable = 1
-  vim.g.rnvimr_draw_border = 1
-  vim.g.rnvimr_pick_enable = 1
-  vim.g.rnvimr_bw_enable = 1
-  vim.g.rnvimr_border_attr = {fg = 12, bg = -1}
-end
-
 function config.floaterm()
   vim.g.floaterm_borderchars = {
     '─',
@@ -67,20 +59,6 @@ end
 function config.bookmarks()
   vim.g.bookmark_no_default_key_mappings = 1
   vim.g.bookmark_sign = ''
-end
-
-function config.rooter()
-  vim.g.rooter_patterns = {
-    '.git',
-    'Makefile',
-    '*.sln',
-    'build/env.sh',
-    '.venv',
-    'venv',
-    'package.json'
-  }
-  vim.g.rooter_silent_chdir = 1
-  vim.g.rooter_resolve_links = 1
 end
 
 function config.bqf()

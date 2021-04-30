@@ -18,6 +18,7 @@ g.which_key_map = {
   ["."] = "Open init.vim",
   [","] = "Open lua/init.lua",
   ["/"] = "Comment",
+  [" "] = "delete current buffer",
   x = "Quit",
   y = "Yank",
   a = {
@@ -91,8 +92,7 @@ g.which_key_map = {
     n = 'node',
     N = 'new terminal',
     p = 'python',
-    r = 'ranger',
-    x = 'Delete current buffer'
+    r = 'ranger'
   },
   f = {
     name = "+Telescope",
@@ -189,6 +189,7 @@ g.which_key_map = {
   },
   L = {name = "+Lsp_utils", i = "info", l = "log", r = "restart"},
   m = {name = "+mark", e = "toggle", b = "previous mark", k = "next mark"},
+  o = {name = "+Toggle_cmds"},
   P = {
     name = "+Plug",
     c = 'compile',

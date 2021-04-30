@@ -15,7 +15,5 @@ lang['nvim-treesitter/nvim-treesitter-textobjects'] =
 
 lang['elixir-editors/vim-elixir'] = {ft = {'elixir'}}
 
-lang['ekalinin/Dockerfile.vim'] = {ft = {'Dockerfile'}}
-
 return lang
 

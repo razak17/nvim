@@ -40,7 +40,7 @@ g.dashboard_custom_section = {
     command = 'DashboardFindHistory'
   },
   find_file = {
-    description = {'  Find  File                        SPC f f  '},
+    description = {'  Find File                         SPC f f  '},
     command = 'Telescope find_files find_command=rg,--hidden,--files'
   },
   file_browser = {
@@ -48,11 +48,11 @@ g.dashboard_custom_section = {
     command = 'Telescope file_browser'
   },
   find_word = {
-    description = {'  Find  word                        SPC f l w'},
+    description = {'  Find word                         SPC f l w'},
     command = 'DashboardFindWord'
   },
   find_dotfiles = {
-    description = {'  Nvim config dotfiles              SPC f r c'},
+    description = {'  Nvim config files                 SPC f r c'},
     command = 'Telescope dotfiles'
   }
 }

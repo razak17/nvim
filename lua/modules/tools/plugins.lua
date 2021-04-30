@@ -3,8 +3,6 @@ local conf = require('modules.tools.config')
 
 tools['mbbill/undotree'] = {cmd = "UndotreeToggle"}
 
-tools['kevinhwang91/rnvimr'] = {config = conf.rnvimr}
-
 tools['voldikss/vim-floaterm'] = {config = conf.floaterm}
 
 tools['tweekmonster/startuptime.vim'] = {cmd = "StartupTime"}
@@ -12,8 +10,6 @@ tools['tweekmonster/startuptime.vim'] = {cmd = "StartupTime"}
 tools['liuchengxu/vista.vim'] = {cmd = 'Vista', config = conf.vim_vista}
 
 tools['MattesGroeger/vim-bookmarks'] = {config = conf.bookmarks}
-
-tools['airblade/vim-rooter'] = {config = conf.rooter}
 
 tools['kevinhwang91/nvim-bqf'] = {config = conf.bqf}
 

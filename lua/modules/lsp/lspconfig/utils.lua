@@ -4,10 +4,6 @@ local buf_cmd_map, buf_map, global_cmd = utils.buf_cmd_map, utils.buf_map,
                                          utils.global_cmd
 local M = {}
 
-M.lspkind = function()
-  require('lspkind').init()
-end
-
 M.diagnostics = {
   ["textDocument/publishDiagnostics"] = vim.lsp.with(
       vim.lsp.diagnostic.on_publish_diagnostics, {

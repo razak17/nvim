@@ -9,6 +9,4 @@ lsp['neovim/nvim-lspconfig'] = {
 
 lsp['glepnir/lspsaga.nvim'] = {cmd = 'Lspsaga'}
 
-lsp['onsails/lspkind-nvim'] = {event = 'InsertEnter'}
-
 return lsp
