@@ -1,3 +1,6 @@
+local lsp_servers = require 'modules.lang.lsp.servers'
+local lsp_utils = require 'modules.lang.lsp.lspconfig.utils'
+
 local simple_lsp = {
   jsonls = "vscode-json-languageserver",
   cssls = "css-languageserver",
@@ -12,10 +15,10 @@ local simple_lsp = {
 for lsp, exec in pairs(simple_lsp) do
   if vim.fn.executable(exec) then
     require'lspconfig'[lsp].setup {
-      handlers = require'modules.lang.lsp.lspconfig.utils'.diagnostics,
-      capabilities = require'modules.lang.lsp.servers'.capabilities,
-      on_attach = require'modules.lang.lsp.servers'.enhance_attach,
-      on_init = require'modules.lang.lsp.servers'.on_init,
+      handlers = lsp_utils.diagnostics,
+      capabilities = lsp_servers.capabilities,
+      on_attach = lsp_servers.enhance_attach,
+      on_init = lsp_servers.on_init,
       root_dir = require'lspconfig.util'.root_pattern('.gitignore', '.git',
                                                       vim.fn.getcwd())
     }
