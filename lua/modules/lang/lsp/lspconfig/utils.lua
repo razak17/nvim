@@ -30,7 +30,7 @@ M.lsp_saga = function(bufnr)
   end
 
   local saga = require 'lspsaga'
-  saga.init_lsp_saga(require'modules.lsp.config'.lsp_saga())
+  saga.init_lsp_saga(require'modules.lang.config'.lsp_saga())
 
   buf_map(bufnr, "<Leader>vD", "Lspsaga preview_definition")
   buf_map(bufnr, "<Leader>vf", "Lspsaga lsp_finder")
@@ -68,7 +68,7 @@ M.lsp_line_diagnostics = function()
   api.nvim_exec([[
     augroup hover_diagnostics
       autocmd! * <buffer>
-      au CursorHold * lua require("modules.lsp.lspconfig.utils").show_lsp_diagnostics()
+      au CursorHold * lua require("modules.lang.lsp.lspconfig.utils").show_lsp_diagnostics()
     augroup END
   ]], false)
 end

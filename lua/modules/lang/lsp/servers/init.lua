@@ -1,4 +1,4 @@
-local lsp_utils = require 'modules.lsp.lspconfig.utils'
+local lsp_utils = require 'modules.lang.lsp.lspconfig.utils'
 local M = {}
 
 local on_init = function(client)
@@ -40,16 +40,16 @@ local enhance_attach = function(client, bufnr)
 end
 
 local function lsp_setup()
-  require 'modules.lsp.servers.bash'
-  require 'modules.lsp.servers.clangd'
-  require 'modules.lsp.servers.elixir'
-  require 'modules.lsp.servers.go'
-  require 'modules.lsp.servers.python'
-  require 'modules.lsp.servers.rust'
-  require 'modules.lsp.servers.sumneko_lua'
-  require 'modules.lsp.servers.tsserver'
-  require 'modules.lsp.servers.simple_lsp'
-  require 'modules.lsp.servers.efm'
+  require 'modules.lang.lsp.servers.bash'
+  require 'modules.lang.lsp.servers.clangd'
+  require 'modules.lang.lsp.servers.elixir'
+  require 'modules.lang.lsp.servers.go'
+  require 'modules.lang.lsp.servers.python'
+  require 'modules.lang.lsp.servers.rust'
+  require 'modules.lang.lsp.servers.sumneko_lua'
+  require 'modules.lang.lsp.servers.tsserver'
+  require 'modules.lang.lsp.servers.simple_lsp'
+  require 'modules.lang.lsp.servers.efm'
 end
 
 M.enhance_attach = enhance_attach

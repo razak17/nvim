@@ -12,10 +12,10 @@ local simple_lsp = {
 for lsp, exec in pairs(simple_lsp) do
   if vim.fn.executable(exec) then
     require'lspconfig'[lsp].setup {
-      handlers = require'modules.lsp.lspconfig.utils'.diagnostics,
-      capabilities = require'modules.lsp.servers'.capabilities,
-      on_attach = require'modules.lsp.servers'.enhance_attach,
-      on_init = require'modules.lsp.servers'.on_init,
+      handlers = require'modules.lang.lsp.lspconfig.utils'.diagnostics,
+      capabilities = require'modules.lang.lsp.servers'.capabilities,
+      on_attach = require'modules.lang.lsp.servers'.enhance_attach,
+      on_init = require'modules.lang.lsp.servers'.on_init,
       root_dir = require'lspconfig.util'.root_pattern('.gitignore', '.git',
                                                       vim.fn.getcwd())
     }

@@ -68,4 +68,4 @@ vim.lsp.protocol.CompletionItemKind = {
   "   (TypeParameter)"
 }
 
-require'modules.lsp.servers'.setup()
+require'modules.lang.lsp.servers'.setup()

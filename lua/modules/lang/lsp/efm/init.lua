@@ -1,5 +1,5 @@
-local formatters = require 'modules.lsp.efm.formatters'
-local linters = require 'modules.lsp.efm.linters'
+local formatters = require 'modules.lang.lsp.efm.formatters'
+local linters = require 'modules.lang.lsp.efm.linters'
 local M = {}
 
 local luaFormat = formatters.luaFormat
@@ -17,9 +17,9 @@ local shfmt = formatters.shfmt
 
 function M.setup()
   require'lspconfig'.efm.setup {
-    handlers = require'modules.lsp.lspconfig.utils'.diagnostics,
-    capabilities = require'modules.lsp.servers'.capabilities,
-    on_attach = require'modules.lsp.servers'.enhance_attach,
+    handlers = require'modules.lang.lsp.lspconfig.utils'.diagnostics,
+    capabilities = require'modules.lang.lsp.servers'.capabilities,
+    on_attach = require'modules.lang.lsp.servers'.enhance_attach,
     root_dir = require'lspconfig.util'.root_pattern(vim.fn.getcwd()),
     init_options = {documentFormatting = true, codeAction = false},
     filetypes = {

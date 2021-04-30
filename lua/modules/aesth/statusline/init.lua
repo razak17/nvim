@@ -191,7 +191,7 @@ gls.right[7] = {
   LineInfo = {
     provider = 'LineColumn',
     condition = function()
-      return vim.bo.filetype ~= 'dashboard'
+      return vim.bo.filetype ~= 'dashboard' and condition.hide_in_width
     end,
     separator = ' ',
     separator_highlight = {'NONE', colors.bg},
@@ -203,7 +203,7 @@ gls.right[8] = {
   PerCent = {
     provider = 'LinePercent',
     condition = function()
-      return vim.bo.filetype ~= 'dashboard'
+      return vim.bo.filetype ~= 'dashboard' and condition.hide_in_width
     end,
     separator = ' ',
     separator_highlight = {'NONE', colors.bg},
@@ -214,7 +214,7 @@ gls.right[8] = {
 gls.right[9] = {
   RainbowBlue = {
     provider = function()
-      return ' ▊'
+      return vim.bo.filetype ~= 'dashboard' and ' ▊' or '  ▊'
     end,
     highlight = {colors.blue, colors.bg}
   }
