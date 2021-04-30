@@ -29,7 +29,6 @@ M.diagnostics_off = {
 }
 
 M.lsp_saga = function(bufnr)
-  -- require'lspsaga'.init_lsp_saga(require'modules.lsp.config'.lsp_saga())
   if not packer_plugins['lspsaga.nvim'].loaded then
     vim.cmd [[packadd lspsaga.nvim]]
   end
@@ -39,12 +38,18 @@ M.lsp_saga = function(bufnr)
 
   buf_map(bufnr, "<Leader>vD", "Lspsaga preview_definition")
   buf_map(bufnr, "<Leader>vf", "Lspsaga lsp_finder")
-  buf_map(bufnr, "<Leader>va", "Lspsaga lsp_finder")
+  buf_map(bufnr, "<Leader>va", "Lspsaga code_action")
+  buf_map(bufnr, "<Leader>va", "Lspsaga range_code_action")
   buf_map(bufnr, "<Leader>vls", "Lspsaga signature_help")
   buf_map(bufnr, "<Leader>vrr", "Lspsaga rename")
   buf_map(bufnr, "<Leader>vdb", "Lspsaga diagnostic_jump_prev")
   buf_map(bufnr, "<Leader>vdn", "Lspsaga diagnostic_jump_next")
+  buf_map(bufnr, "<Leader>vdl", "Lspsaga show_line_diagnostics")
   buf_map(bufnr, "K", "Lspsaga hover_doc")
+  buf_cmd_map(bufnr, "<C-f>",
+              "require('lspsaga.action').smart_scroll_with_saga(1)")
+  buf_cmd_map(bufnr, "<c-b>",
+              "require('lspsaga.action').smart_scroll_with_saga(-1)")
 end
 
 M.lsp_highlight_cmds = function()
@@ -78,7 +83,7 @@ M.lsp_mappings = function(bufnr)
   buf_cmd_map(bufnr, "gi", "vim.lsp.buf.implementation()")
   buf_cmd_map(bufnr, "gr", "vim.lsp.buf.references()")
   buf_cmd_map(bufnr, "<Leader>vle", "vim.lsp.buf.type_definition()")
-  buf_cmd_map(bufnr, "<Leader>vdl", 'vim.lsp.diagnostic.set_loclist()')
+  buf_cmd_map(bufnr, "<Leader>vll", 'vim.lsp.diagnostic.set_loclist()')
   buf_cmd_map(bufnr, "<Leader>vrn", "vim.lsp.buf.rename()")
 end
 

@@ -7,18 +7,25 @@ editor['rhysd/accelerated-jk'] = {opt = true}
 
 editor['monaqa/dial.nvim'] = {config = conf.dial}
 
+editor['b3nj5m1n/kommentary'] = {config = conf.kommentary}
+
 editor['windwp/nvim-autopairs'] = {config = conf.autopairs}
 
 editor['norcalli/nvim-colorizer.lua'] = {
-  ft = {'html', 'css', 'sass', 'vim', 'typescript', 'typescriptreact'},
+  ft = {'html', 'lua', 'css', 'sass', 'vim', 'typescript', 'typescriptreact'},
   config = conf.nvim_colorizer
 }
-
-editor['b3nj5m1n/kommentary'] = {config = conf.kommentary}
 
 editor['Raimondi/delimitMate'] = {
   event = 'InsertEnter',
   config = conf.delimimate
+}
+
+editor['hrsh7th/vim-eft'] = {
+  opt = true,
+  config = function()
+    vim.g.eft_ignorecase = true
+  end
 }
 
 editor['windwp/nvim-ts-autotag'] = {
@@ -26,13 +33,6 @@ editor['windwp/nvim-ts-autotag'] = {
   after = 'nvim-treesitter',
   config = function()
     require('nvim-ts-autotag').setup()
-  end
-}
-
-editor['hrsh7th/vim-eft'] = {
-  opt = true,
-  config = function()
-    vim.g.eft_ignorecase = true
   end
 }
 

@@ -217,11 +217,16 @@ g.which_key_map = {
     d = {
       name = "+Diagnostics",
       b = "goto previous",
-      l = "set loc list",
+      l = "current line",
       n = "goto next"
     },
     f = "find the cursor word definition and reference",
-    l = {name = "+Lsp", s = "signature", e = "type definition"},
+    l = {
+      name = "+Lsp",
+      l = "set loc list",
+      s = "signature",
+      e = "type definition"
+    },
     r = {name = "+Rename", n = "builtin lsp", r = "lsp_saga"},
     v = "vista",
     w = {name = "+Color", m = "pencils"}
