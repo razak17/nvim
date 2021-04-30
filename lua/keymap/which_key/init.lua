@@ -182,12 +182,12 @@ g.which_key_map = {
   },
   I = {name = "+Info", c = "check health", e = "treesitter"},
   l = {
-    name = "+Lsp actions",
+    name = "+Lsp_actions",
     f = "format",
     v = "toggle virtual text",
     x = "close quickfix"
   },
-  L = {name = "+Lsp utils", i = "info", l = "log", r = "restart"},
+  L = {name = "+Lsp_utils", i = "info", l = "log", r = "restart"},
   m = {name = "+mark", e = "toggle", b = "previous mark", k = "next mark"},
   P = {
     name = "+Plug",

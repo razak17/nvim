@@ -25,36 +25,34 @@ vim.cmd [[
   END
 ]]
 
-g.dashboard_footer_icon = '🍔 '
+g.dashboard_footer_icon = '🐬 '
 g.dashboard_preview_pipeline = 'lolcat -F 0.3'
--- g.dashboard_preview_command = 'cat'
--- g.dashboard_preview_file = G.home .. '.config/nvim/static/neovim.cat'
 g.dashboard_preview_file_height = 12
 g.dashboard_preview_file_width = 70
 g.dashboard_default_executive = 'telescope'
 g.dashboard_custom_section = {
   last_session = {
-    description = {'  Load last session                 SPC s l'},
+    description = {'  Load last session                 SPC S l  '},
     command = 'SessionLoad'
   },
   find_history = {
-    description = {'  Recent files                      SPC f h'},
+    description = {'  Recent files                      SPC f c h'},
     command = 'DashboardFindHistory'
   },
   find_file = {
-    description = {'  Find  File                        SPC f f'},
+    description = {'  Find  File                        SPC f f  '},
     command = 'Telescope find_files find_command=rg,--hidden,--files'
   },
   file_browser = {
-    description = {'  File Browser                      SPC f b'},
+    description = {'  File Browser                      SPC f b  '},
     command = 'Telescope file_browser'
   },
   find_word = {
-    description = {'  Find  word                        SPC f w'},
+    description = {'  Find  word                        SPC f l w'},
     command = 'DashboardFindWord'
   },
   find_dotfiles = {
-    description = {'  Open Personal dotfiles            SPC f d'},
+    description = {'  Nvim config dotfiles              SPC f r c'},
     command = 'Telescope dotfiles'
   }
 }
