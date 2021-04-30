@@ -55,7 +55,6 @@ g.dashboard_custom_section = {
   },
   find_dotfiles = {
     description = {'  Open Personal dotfiles            SPC f d'},
-    command = 'Telescope dotfiles path=' .. G.home .. 'env/nvim'
+    command = 'Telescope dotfiles'
   }
 }
-

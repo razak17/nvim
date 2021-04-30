@@ -1,15 +1,9 @@
 local conf = require('modules.aesth.config')
 local aesth = {}
 
-aesth['glepnir/dashboard-nvim'] = {config = conf.dashboard}
-
 aesth['razak17/zephyr-nvim'] = {config = conf.bg}
 
-aesth['glepnir/galaxyline.nvim'] = {
-  branch = 'main',
-  config = conf.galaxyline,
-  requires = {'kyazdani42/nvim-web-devicons'}
-}
+aesth['glepnir/dashboard-nvim'] = {config = conf.dashboard}
 
 aesth['lukas-reineke/indent-blankline.nvim'] =
     {event = 'BufRead', branch = 'lua', config = conf.indent_blankline}
@@ -21,7 +15,7 @@ aesth['itchyny/vim-cursorword'] = {
 
 aesth['akinsho/nvim-bufferline.lua'] = {
   config = conf.nvim_bufferline,
-  requires = {'kyazdani42/nvim-web-devicons'}
+  requires = 'kyazdani42/nvim-web-devicons'
 }
 
 aesth['romainl/vim-cool'] = {
@@ -30,15 +24,23 @@ aesth['romainl/vim-cool'] = {
   end
 }
 
+aesth['glepnir/galaxyline.nvim'] = {
+  branch = 'main',
+  config = conf.galaxyline,
+  requires = 'kyazdani42/nvim-web-devicons'
+}
+
 aesth['lewis6991/gitsigns.nvim'] = {
   event = {'BufRead', 'BufNewFile'},
-  config = conf.gitsigns
+  config = conf.gitsigns,
+  requires = {'nvim-lua/plenary.nvim', opt = true}
+
 }
 
 aesth['kyazdani42/nvim-tree.lua'] = {
   cmd = {'NvimTreeToggle', 'NvimTreeOpen'},
   config = conf.nvim_tree,
-  requires = {'kyazdani42/nvim-web-devicons'}
+  requires = 'kyazdani42/nvim-web-devicons'
 }
 
 aesth['p00f/nvim-ts-rainbow'] = {

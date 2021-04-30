@@ -1,6 +1,6 @@
 local actions = require('telescope.actions')
 
-if not packer_plugins['plenary.nvim'].loaded then
+if not packer_plugins['popup.nvim'].loaded then
   vim.cmd [[packadd plenary.nvim]]
   vim.cmd [[packadd popup.nvim]]
   vim.cmd [[packadd telescope-fzy-native.nvim]]
@@ -14,7 +14,6 @@ require('telescope').setup({
   defaults = {
     prompt_prefix = "> ",
     selection_caret = " ",
-    -- selection_caret = " ",
     sorting_strategy = "ascending",
     file_ignore_patterns = {"target/*", "node_modules/*", "dist/*", ".git/*"},
     width = 0.75,
