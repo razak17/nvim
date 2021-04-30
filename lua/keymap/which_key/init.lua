@@ -130,7 +130,7 @@ g.which_key_map = {
     },
     f = "find files",
     l = {name = "+Live", g = "grep", w = "current word", e = "prompt"},
-    r = {name = "+Config", c = "vimrc", r = "old files"},
+    r = {name = "+Config", c = "vimrc", r = "recent files"},
     v = {
       name = "+Lsp",
       a = "code action",
