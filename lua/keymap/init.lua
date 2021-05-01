@@ -41,9 +41,14 @@ nnoremap('<Leader>cc', ':ContextToggle<CR>')
 -- Hop
 nnoremap('S', ':HopWord<CR>')
 nnoremap('L', ':HopLine<CR>')
-nnoremap('s', ':HopChar2<CR>')
+-- nnoremap('s', ':HopChar2<CR>')
 -- nnoremap('gce', ':HopChar1<CR>')
 -- nnoremap('gce', ':HopPattern<CR>')
+
+-- vim-operator-surround
+nmap('sa', '<Plug>(operator-surround-append)', {silent = true})
+nmap('sd', '<Plug>(operator-surround-delete)', {silent = true})
+nmap('sr', '<Plug>(operator-surround-relace)', {silent = true})
 
 -- Bookmark
 nnoremap('<Leader>me', ':BookmarkToggle<CR>')

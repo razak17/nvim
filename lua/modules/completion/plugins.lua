@@ -28,18 +28,7 @@ completion['rafamadriz/friendly-snippets'] =
       }
     }
 
-completion['mattn/emmet-vim'] = {
-  event = 'InsertEnter',
-  ft = {
-    'html',
-    'css',
-    'javascript',
-    'javascriptreact',
-    'typescript',
-    'typescriptreact'
-  },
-  config = conf.emmet
-}
+completion['mattn/emmet-vim'] = {event = 'InsertEnter', config = conf.emmet}
 
 completion['nvim-telescope/telescope.nvim'] =
     {

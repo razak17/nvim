@@ -30,11 +30,12 @@ function config.vim_vsnip()
 end
 
 function config.emmet()
-  vim.g.user_emmet_leader_key = '<C-y>'
   vim.g.user_emmet_complete_tag = 0
   vim.g.user_emmet_install_global = 0
+  vim.g.user_emmet_install_command = 0
   vim.g.user_emmet_mode = 'i'
-  vim.cmd('autocmd FileType html,css EmmetInstall')
+  vim.cmd(
+      'autocmd FileType html,css,javascript,javascriptreact,vue,typescript,typescriptreact EmmetInstall')
 end
 
 function config.telescope_nvim()

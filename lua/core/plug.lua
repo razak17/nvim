@@ -117,15 +117,6 @@ function plugins.magic_compile()
   plugins.convert_compile_file()
 end
 
-function plugins.auto_compile()
-  local file = vim.fn.expand('%:p')
-  if file:match(modules_dir) then
-    plugins.clean()
-    plugins.compile()
-    plugins.convert_compile_file()
-  end
-end
-
 function plugins.load_compile()
   if vim.fn.filereadable(compile_to_lua) == 1 then
     require('_compiled')

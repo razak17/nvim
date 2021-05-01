@@ -72,8 +72,7 @@ local ft = {
     "which_key",
     "set laststatus=0 noshowmode noruler | autocmd BufLeave <buffer> set laststatus=2 ruler"
   },
-  {"FileType", "dap-repl", "lua require('dap.ext.autocompl').attach()"},
-  {"BufWritePost", "*.lua", "lua require('core.plug').auto_compile()"}
+  {"FileType", "dap-repl", "lua require('dap.ext.autocompl').attach()"}
 }
 
 local definitions = {buf, ft, win, niceties}

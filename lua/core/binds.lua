@@ -1,4 +1,3 @@
--- local vim = vim
 local mp = require('keymap.map')
 local nnoremap, inoremap, vnoremap, xnoremap, tnoremap = mp.nnoremap,
                                                          mp.inoremap,
@@ -139,6 +138,5 @@ if vim.fn.exists('g:vscode') == 0 then
   nnoremap('<Leader>;', ':lua require "internal.utils".OpenTerminal()<CR>')
   nnoremap('<leader>ao', ':lua require "internal.utils".TurnOnGuides()<CR>')
   nnoremap('<leader>ae', ':lua require "internal.utils".TurnOffGuides()<CR>')
-  nnoremap('mf', ':lua require "internal.fsevent".file_event()<CR>')
 end
 

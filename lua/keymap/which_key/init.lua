@@ -150,7 +150,7 @@ g.which_key_map = {
     name = "+Far",
     f = "replace in File",
     r = "replace in Project",
-    z = "replace iteratively"
+    z = "search iteratively"
   },
   g = {
     name = "+Git",
