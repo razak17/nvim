@@ -1,9 +1,13 @@
 local config = {}
 
+function config.which_key()
+  require 'keymap.which_key'
+end
+
 function config.nvim_compe()
   require('compe').setup {
     enabled = true,
-    min_length = 2,
+    min_length = 1,
     preselect = "always",
     source = {
       buffer = {kind = "   (Buffer)"},

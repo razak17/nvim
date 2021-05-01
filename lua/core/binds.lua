@@ -45,7 +45,7 @@ if vim.fn.exists('g:vscode') == 0 then
   nnoremap('<M-l>', ':vertical resize +2<CR>')
 
   -- Window Resize
-  nnoremap('<Leader>ca', ':vertical resize 30<CR>')
+  nnoremap('<Leader>ca', ':vertical resize 40<CR>')
   nnoremap('<Leader>aF', ':vertical resize 90<CR>')
 
   -- Search Files

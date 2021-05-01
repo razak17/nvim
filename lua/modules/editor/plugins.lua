@@ -11,21 +11,7 @@ editor['b3nj5m1n/kommentary'] = {config = conf.kommentary}
 
 editor['windwp/nvim-autopairs'] = {config = conf.autopairs}
 
-editor['norcalli/nvim-colorizer.lua'] = {
-  ft = {
-    'html',
-    'tmux',
-    'yaml',
-    'conf',
-    'lua',
-    'css',
-    'sass',
-    'vim',
-    'typescript',
-    'typescriptreact'
-  },
-  config = conf.nvim_colorizer
-}
+editor['norcalli/nvim-colorizer.lua'] = {config = conf.nvim_colorizer}
 
 editor['Raimondi/delimitMate'] = {
   event = 'InsertEnter',

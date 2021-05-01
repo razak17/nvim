@@ -19,12 +19,12 @@
     "description": "Imports destructured package"
   },
   "Function Statement": {
-    "prefix": "function",
+    "prefix": "fun",
     "body": ["function ${1:name}(${2:params}: ${3:string}) {", "\t$0", "}"],
     "description": "Function Statement"
   },
   "const function Statement": {
-    "prefix": "const",
+    "prefix": "co",
     "body": ["const ${1:name} = (${2:params}: ${3:string}) => {", "\t$0", "}"],
     "description": "const function Statement"
   },

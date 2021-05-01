@@ -6,18 +6,27 @@ completion['hrsh7th/nvim-compe'] = {
   config = conf.nvim_compe
 }
 
-completion['liuchengxu/vim-which-key'] =
-    {
-      config = function()
-        require 'keymap.which_key'
-      end
-    }
+completion['liuchengxu/vim-which-key'] = {config = conf.which_key}
 
 completion['hrsh7th/vim-vsnip'] = {
   event = 'InsertCharPre',
-  requires = {'hrsh7th/vim-vsnip-integ', 'rafamadriz/friendly-snippets'},
   config = conf.vim_vsnip
 }
+
+completion['rafamadriz/friendly-snippets'] =
+    {
+      event = 'InsertEnter',
+      ft = {
+        'c',
+        'html',
+        'css',
+        'javascript',
+        'javascriptreact',
+        'typescript',
+        'python',
+        'typescriptreact'
+      }
+    }
 
 completion['mattn/emmet-vim'] = {
   event = 'InsertEnter',
