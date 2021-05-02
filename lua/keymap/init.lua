@@ -185,7 +185,7 @@ nnoremap('<Leader>fgf', ':Telescope git_files<CR>')
 nnoremap('<Leader>fgs', ':Telescope git_status<CR>')
 
 -- Telescope extensions
-nnoremap('<Leader>frc', ':Telescope dotfiles<CR>')
+nnoremap('<Leader>frc', ':Telescope nvim_files<CR>')
 nnoremap('<Leader>fem', ':Telescope media_files<CR>')
 nnoremap('<leader>fep', ':Telescope project<CR>')
 nnoremap('<leader>fee', ':Telescope packer plugins<CR>')

@@ -5,13 +5,10 @@ aesth['razak17/zephyr-nvim'] = {config = conf.bg}
 
 aesth['glepnir/dashboard-nvim'] = {config = conf.dashboard}
 
+aesth['itchyny/vim-cursorword'] = {config = conf.vim_cursorwod}
+
 aesth['lukas-reineke/indent-blankline.nvim'] =
     {event = 'BufRead', branch = 'lua', config = conf.indent_blankline}
-
-aesth['itchyny/vim-cursorword'] = {
-  event = {'BufReadPre', 'BufNewFile'},
-  config = conf.vim_cursorwod
-}
 
 aesth['akinsho/nvim-bufferline.lua'] = {
   config = conf.nvim_bufferline,
@@ -19,6 +16,7 @@ aesth['akinsho/nvim-bufferline.lua'] = {
 }
 
 aesth['romainl/vim-cool'] = {
+  event = {'BufRead', 'BufNewFile'},
   config = function()
     vim.g.CoolTotalMatches = 1
   end

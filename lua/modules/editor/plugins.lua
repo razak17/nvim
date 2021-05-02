@@ -1,17 +1,32 @@
 local conf = require('modules.editor.config')
 local editor = {}
 
-editor['phaazon/hop.nvim'] = {as = 'hop'}
+editor['phaazon/hop.nvim'] = {event = {'BufReadPre', 'BufNewFile'}, as = 'hop'}
 
-editor['rhysd/accelerated-jk'] = {opt = true}
+editor['norcalli/nvim-colorizer.lua'] = {
+  event = {'BufReadPre', 'BufNewFile'},
+  config = conf.nvim_colorizer
+}
 
-editor['monaqa/dial.nvim'] = {config = conf.dial}
+editor['rhysd/accelerated-jk'] = {
+  event = {'BufReadPre', 'BufNewFile'},
+  opt = true
+}
 
-editor['b3nj5m1n/kommentary'] = {config = conf.kommentary}
+editor['monaqa/dial.nvim'] = {
+  event = {'BufReadPre', 'BufNewFile'},
+  config = conf.dial
+}
 
-editor['windwp/nvim-autopairs'] = {config = conf.autopairs}
+editor['b3nj5m1n/kommentary'] = {
+  event = {'BufReadPre', 'BufNewFile'},
+  config = conf.kommentary
+}
 
-editor['norcalli/nvim-colorizer.lua'] = {config = conf.nvim_colorizer}
+editor['windwp/nvim-autopairs'] = {
+  event = 'InsertEnter',
+  config = conf.autopairs
+}
 
 editor['Raimondi/delimitMate'] = {
   event = 'InsertEnter',
@@ -19,6 +34,7 @@ editor['Raimondi/delimitMate'] = {
 }
 
 editor['hrsh7th/vim-eft'] = {
+  event = {'BufReadPre', 'BufNewFile'},
   opt = true,
   config = function()
     vim.g.eft_ignorecase = true
@@ -26,6 +42,7 @@ editor['hrsh7th/vim-eft'] = {
 }
 
 editor['windwp/nvim-ts-autotag'] = {
+  event = {'BufReadPre', 'BufNewFile'},
   opt = true,
   after = 'nvim-treesitter',
   config = function()

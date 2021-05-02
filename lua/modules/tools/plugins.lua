@@ -3,17 +3,24 @@ local conf = require('modules.tools.config')
 
 tools['mbbill/undotree'] = {cmd = "UndotreeToggle"}
 
-tools['voldikss/vim-floaterm'] = {config = conf.floaterm}
+tools['kevinhwang91/nvim-bqf'] = {config = conf.bqf}
 
 tools['tweekmonster/startuptime.vim'] = {cmd = "StartupTime"}
 
 tools['liuchengxu/vista.vim'] = {cmd = 'Vista', config = conf.vim_vista}
 
-tools['MattesGroeger/vim-bookmarks'] = {config = conf.bookmarks}
+tools['MattesGroeger/vim-bookmarks'] = {
+  event = {'BufReadPre', 'BufNewFile'},
+  config = conf.bookmarks
+}
 
-tools['kevinhwang91/nvim-bqf'] = {config = conf.bqf}
+tools['voldikss/vim-floaterm'] = {
+  event = {'BufReadPre', 'BufNewFile'},
+  config = conf.floaterm
+}
 
 tools['gennaro-tedesco/nvim-peekup'] = {
+  event = {'BufReadPre', 'BufNewFile'},
   config = function()
     vim.g.peekup_open = '<Leader>"'
     require('nvim-peekup.config').on_keystroke["autoclose"] = false
@@ -21,6 +28,7 @@ tools['gennaro-tedesco/nvim-peekup'] = {
 }
 
 tools['brooth/far.vim'] = {
+  event = {'BufReadPre', 'BufNewFile'},
   cmd = {'Far', 'Farr', 'Farp', 'Farf'},
   config = function()
     vim.g['far#source'] = 'rg'
@@ -28,6 +36,7 @@ tools['brooth/far.vim'] = {
 }
 
 tools['iamcco/markdown-preview.nvim'] = {
+  event = {'BufReadPre', 'BufNewFile'},
   ft = 'markdown',
   config = function()
     vim.g.mkdp_auto_start = 0
