@@ -38,13 +38,6 @@ nnoremap('<Leader>vv', ':Vista!!<CR>')
 -- Context
 nnoremap('<Leader>cc', ':ContextToggle<CR>')
 
--- Hop
-nnoremap('S', ':HopWord<CR>')
-nnoremap('L', ':HopLine<CR>')
--- nnoremap('s', ':HopChar2<CR>')
--- nnoremap('gce', ':HopChar1<CR>')
--- nnoremap('gce', ':HopPattern<CR>')
-
 -- vim-operator-surround
 nmap('sa', '<Plug>(operator-surround-append)', {silent = true})
 nmap('sd', '<Plug>(operator-surround-delete)', {silent = true})
@@ -66,7 +59,7 @@ nmap("f", "v:lua.enhance_ft_move('f')", {expr = true})
 nmap("f", "v:lua.enhance_ft_move('f')", {expr = true})
 nmap("f", "v:lua.enhance_ft_move('f')", {expr = true})
 nmap("F", "v:lua.enhance_ft_move('F')", {expr = true})
-nmap("F", "v:lua.enhance_ft_move('F')", {expr = true})
+nmap("F", "v:lu.enhance_ft_move('F')", {expr = true})
 nmap("F", "v:lua.enhance_ft_move('F')", {expr = true})
 
 -- markdown preview
@@ -188,12 +181,4 @@ nnoremap('<Leader>fgs', ':Telescope git_status<CR>')
 nnoremap('<Leader>frc', ':Telescope nvim_files<CR>')
 nnoremap('<Leader>fem', ':Telescope media_files<CR>')
 nnoremap('<leader>fep', ':Telescope project<CR>')
-nnoremap('<leader>fee', ':Telescope packer plugins<CR>')
 nnoremap('<Leader>feb', ':Telescope bg_selector<CR>')
-
--- telescope-dap
-nnoremap('<leader>fdc', ':Telescope dap commands<CR>')
-nnoremap('<leader>fdo', ':Telescope dap configurations<CR>')
-nnoremap('<leader>fdb', ':Telescope dap list_breakpoints<CR>')
-nnoremap('<leader>fdv', ':Telescope dap variables<CR>')
-nnoremap('<leader>fdf', ':Telescope dap frames<CR>')

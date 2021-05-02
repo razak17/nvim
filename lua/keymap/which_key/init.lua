@@ -115,18 +115,9 @@ g.which_key_map = {
     },
     e = {
       name = "+Extensions",
-      e = "packer",
       m = "media files",
       b = 'change background',
       p = 'project'
-    },
-    d = {
-      name = "+Dap",
-      b = "breakpoints",
-      c = "commands",
-      f = "frames",
-      o = "configurations",
-      v = "variables"
     },
     f = "find files",
     l = {name = "+Live", g = "grep", w = "current word", e = "prompt"},

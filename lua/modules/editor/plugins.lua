@@ -1,8 +1,6 @@
 local conf = require('modules.editor.config')
 local editor = {}
 
-editor['phaazon/hop.nvim'] = {event = {'BufReadPre', 'BufNewFile'}, as = 'hop'}
-
 editor['norcalli/nvim-colorizer.lua'] = {
   event = {'BufReadPre', 'BufNewFile'},
   config = conf.nvim_colorizer

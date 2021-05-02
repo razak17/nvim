@@ -38,9 +38,7 @@ completion['nvim-telescope/telescope.nvim'] =
         {'nvim-lua/popup.nvim', opt = true},
         {'nvim-lua/plenary.nvim', opt = true},
         {'nvim-telescope/telescope-fzy-native.nvim', opt = true},
-        {'razak17/telescope-packer.nvim', opt = true},
         {'nvim-telescope/telescope-media-files.nvim', opt = true},
-        {'nvim-telescope/telescope-dap.nvim', opt = true},
         {'nvim-telescope/telescope-project.nvim', opt = true}
       }
     }

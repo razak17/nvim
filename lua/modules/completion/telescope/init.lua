@@ -42,6 +42,7 @@ require('telescope').setup({
         ["<C-e>"] = actions.send_to_qflist
       }
     },
+    file_browser = {hidden = true},
     extensions = {
       fzy_native = {
         override_generic_sorter = false,

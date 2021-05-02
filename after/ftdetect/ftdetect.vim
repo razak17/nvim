@@ -1,6 +1,6 @@
 " csv
 au BufNewFile,BufRead *.csv,*.dat,*.tsv,*.tab set ft=csv
-au FileType dashboard set showtabline=0 | autocmd WinLeave <buffer> set showtabline=2 number
+au FileType dashboard set showtabline=0 | autocmd WinLeave <buffer> set showtabline=2
 
 " dockerfile
 au BufNewFile,BufRead [Dd]ockerfile set ft=false
