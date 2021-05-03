@@ -59,8 +59,6 @@ require('telescope').setup({
 require'telescope'.load_extension('media_files')
 require'telescope'.load_extension('fzy_native')
 require'telescope'.load_extension('project')
-require'telescope'.load_extension('packer')
-require'telescope'.load_extension('dap')
 require'telescope'.load_extension('nvim_files')
 require'telescope'.load_extension('grep_string_prompt')
 require'telescope'.load_extension('bg_selector')
