@@ -14,10 +14,7 @@ tools['MattesGroeger/vim-bookmarks'] = {
   config = conf.bookmarks
 }
 
-tools['voldikss/vim-floaterm'] = {
-  event = {'BufReadPre', 'BufNewFile'},
-  config = conf.floaterm
-}
+tools['voldikss/vim-floaterm'] = {config = conf.floaterm}
 
 tools['brooth/far.vim'] = {
   event = {'BufReadPre', 'BufNewFile'},

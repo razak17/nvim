@@ -53,6 +53,6 @@ g.dashboard_custom_section = {
   },
   find_dotfiles = {
     description = {'  Nvim config files                 SPC f r c'},
-    command = 'Telescope dotfiles'
+    command = 'Telescope nvim_files'
   }
 }
