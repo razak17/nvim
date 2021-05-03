@@ -19,13 +19,13 @@ tools['voldikss/vim-floaterm'] = {
   config = conf.floaterm
 }
 
--- tools['gennaro-tedesco/nvim-peekup'] = {
---   event = {'BufReadPre', 'BufNewFile'},
---   config = function()
---     vim.g.peekup_open = '<Leader>"'
---     require('nvim-peekup.config').on_keystroke["autoclose"] = false
---   end
--- }
+tools['gennaro-tedesco/nvim-peekup'] = {
+  event = {'BufReadPre', 'BufNewFile'},
+  config = function()
+    vim.g.peekup_open = '<Leader>"'
+    require('nvim-peekup.config').on_keystroke["autoclose"] = false
+  end
+}
 
 tools['brooth/far.vim'] = {
   event = {'BufReadPre', 'BufNewFile'},
