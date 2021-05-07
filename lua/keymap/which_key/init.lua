@@ -125,6 +125,7 @@ g.which_key_map = {
     v = {
       name = "+Lsp",
       a = "code action",
+      A = "range code action",
       r = "references",
       s = {name = "+Symbols", d = "document", w = "workspace"}
     },
@@ -205,6 +206,7 @@ g.which_key_map = {
   v = {
     name = "+Code",
     a = "code action",
+    A = "range code action",
     D = "preview definition",
     d = {
       name = "+Diagnostics",

@@ -11,8 +11,6 @@ lang['nvim-treesitter/nvim-treesitter'] =
 lang['nvim-treesitter/nvim-treesitter-textobjects'] =
     {after = 'nvim-treesitter'}
 
-lang['elixir-editors/vim-elixir'] = {event = 'BufRead', ft = {'elixir'}}
-
 lang['mfussenegger/nvim-dap'] = {config = conf.dap}
 
 lang['rcarriga/nvim-dap-ui'] = {config = conf.dap_ui}

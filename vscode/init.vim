@@ -1,26 +1,10 @@
 packadd vim-surround
 
-luafile ~/.config/nvim/lua/core/opts.lua
-luafile ~/.config/nvim/lua/core/binds.lua
-
-function! s:split(...) abort
-    let direction = a:1
-    let file = a:2
-    call VSCodeCall(direction == 'h' ? 'workbench.action.splitEditorDown' : 'workbench.action.splitEditorRight')
-    if file != ''
-        call VSCodeExtensionNotify('open-file', expand(file), 'all')
-    endif
-endfunction
-
-function! s:splitNew(...)
-    let file = a:2
-    call s:split(a:1, file == '' ? '__vscode_new__' : file)
-endfunction
-
-function! s:closeOtherEditors()
-    call VSCodeNotify('workbench.action.closeEditorsInOtherGroups')
-    call VSCodeNotify('workbench.action.closeOtherEditors')
-endfunction
+set noshowmode
+set noshowcmd
+set guicursor=n-v-c-sm:block,i-ci-ve:block,r-cr-o:block
+set scrolloff=3
+set sidescrolloff=5
 
 function! s:manageEditorSize(...)
     let count = a:1
@@ -104,6 +88,10 @@ xmap gc  <Plug>VSCodeCommentary
 nmap gc  <Plug>VSCodeCommentary
 omap gc  <Plug>VSCodeCommentary
 nmap gcc <Plug>VSCodeCommentaryLine
+
+nnoremap n j
+vnoremap n j
+nnoremap z u
 
 nmap <Tab> :Tabnext<CR>
 nmap <S-Tab> :Tabprev<CR>

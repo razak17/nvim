@@ -88,5 +88,10 @@
     "prefix": "useRef",
     "body": ["const ${1:refContainer} = useRef(${2:initialValue});"],
     "description": "Creates React useRef hook"
+  },
+  "Export default": {
+    "prefix": "exd",
+    "body": ["export default ${1};"],
+    "description": "export default"
   }
 }

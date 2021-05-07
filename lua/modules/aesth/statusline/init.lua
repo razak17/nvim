@@ -4,6 +4,16 @@ local condition = require('galaxyline.condition')
 local gls = gl.section
 gl.short_line_list = {'NvimTree', 'vista', 'dbui', 'packer'}
 
+local function hide_in_width()
+  local tbl = {['dashboard'] = true, [''] = true}
+  local squeeze_width = vim.fn.winwidth(0) / 2
+  if tbl[vim.bo.filetype] or squeeze_width < 45 then
+    return false
+  end
+  return true
+
+end
+
 gls.left[1] = {
   RainbowRed = {
     provider = function()
@@ -49,7 +59,7 @@ gls.left[3] = {
   FileSize = {
     provider = 'FileSize',
     -- condition = condition.buffer_not_empty,
-    condition = condition.hide_in_width,
+    condition = hide_in_width,
     highlight = {colors.fg, colors.bg}
   }
 }
@@ -128,7 +138,7 @@ gls.left[11] = {
 gls.right[1] = {
   DiffAdd = {
     provider = 'DiffAdd',
-    condition = condition.hide_in_width,
+    condition = hide_in_width,
     icon = '  ',
     highlight = {colors.green, colors.bg},
     separator = ' ',
@@ -138,15 +148,15 @@ gls.right[1] = {
 gls.right[2] = {
   DiffModified = {
     provider = 'DiffModified',
-    condition = condition.hide_in_width,
-    icon = ' ',
+    condition = hide_in_width,
+    icon = ' 柳 ',
     highlight = {colors.orange, colors.bg}
   }
 }
 gls.right[3] = {
   DiffRemove = {
     provider = 'DiffRemove',
-    condition = condition.hide_in_width,
+    condition = hide_in_width,
     icon = '  ',
     highlight = {colors.red, colors.bg}
   }
@@ -155,14 +165,8 @@ gls.right[3] = {
 gls.right[4] = {
   ShowLspClient = {
     provider = 'GetLspClient',
-    condition = function()
-      local tbl = {['dashboard'] = true, [''] = true}
-      if tbl[vim.bo.filetype] then
-        return false
-      end
-      return true
-    end,
-    icon = ' LSP:',
+    condition = hide_in_width,
+    icon = 'LSP:',
     highlight = {colors.cyan, colors.bg, 'bold'}
   }
 }
@@ -170,7 +174,16 @@ gls.right[4] = {
 gls.right[5] = {
   FileEncode = {
     provider = 'FileEncode',
-    -- condition = condition.hide_in_width,
+    condition = function()
+      local squeeze_width = vim.fn.winwidth(0) / 2
+      if vim.bo.filetype == 'dashboard' then
+        return true
+      elseif squeeze_width < 50 then
+        return false
+      else
+        return true
+      end
+    end,
     separator = ' ',
     separator_highlight = {'NONE', colors.bg},
     highlight = {colors.green, colors.bg, 'bold'}
@@ -180,7 +193,16 @@ gls.right[5] = {
 gls.right[6] = {
   FileFormat = {
     provider = 'FileFormat',
-    -- condition = condition.hide_in_width,
+    condition = function()
+      local squeeze_width = vim.fn.winwidth(0) / 2
+      if vim.bo.filetype == 'dashboard' then
+        return true
+      elseif squeeze_width < 50 then
+        return false
+      else
+        return true
+      end
+    end,
     separator = ' ',
     separator_highlight = {'NONE', colors.bg},
     highlight = {colors.green, colors.bg, 'bold'}
@@ -191,7 +213,7 @@ gls.right[7] = {
   LineInfo = {
     provider = 'LineColumn',
     condition = function()
-      return vim.bo.filetype ~= 'dashboard' and condition.hide_in_width
+      return vim.bo.filetype ~= 'dashboard'
     end,
     separator = ' ',
     separator_highlight = {'NONE', colors.bg},
@@ -203,10 +225,10 @@ gls.right[8] = {
   PerCent = {
     provider = 'LinePercent',
     condition = function()
-      return vim.bo.filetype ~= 'dashboard' and condition.hide_in_width
+      return vim.bo.filetype ~= 'dashboard'
     end,
-    separator = ' ',
-    separator_highlight = {'NONE', colors.bg},
+    -- separator = ' ',
+    -- separator_highlight = {'NONE', colors.bg},
     highlight = {colors.fg, colors.bg, 'bold'}
   }
 }

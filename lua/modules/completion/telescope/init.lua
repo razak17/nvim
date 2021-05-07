@@ -15,7 +15,16 @@ require('telescope').setup({
     prompt_prefix = "> ",
     selection_caret = " ",
     sorting_strategy = "ascending",
-    file_ignore_patterns = {"target/*", "node_modules/*", "dist/*", ".git/*"},
+    file_ignore_patterns = {
+      "target/*",
+      "node_modules/*",
+      "dist/*",
+      ".git/*",
+      "venv/*",
+      ".venv/*",
+      "env/*",
+      ".env/*"
+    },
     width = 0.75,
     border = {},
     borderchars = {'─', '│', '─', '│', '╭', '╮', '╯', '╰'},

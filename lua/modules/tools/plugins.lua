@@ -10,7 +10,6 @@ tools['tweekmonster/startuptime.vim'] = {cmd = "StartupTime"}
 tools['liuchengxu/vista.vim'] = {cmd = 'Vista', config = conf.vim_vista}
 
 tools['MattesGroeger/vim-bookmarks'] = {
-  event = {'BufReadPre', 'BufNewFile'},
   config = conf.bookmarks
 }
 
