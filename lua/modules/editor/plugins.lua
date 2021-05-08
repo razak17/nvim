@@ -16,10 +16,7 @@ editor['monaqa/dial.nvim'] = {
   config = conf.dial
 }
 
-editor['b3nj5m1n/kommentary'] = {
-  event = {'BufReadPre', 'BufNewFile'},
-  config = conf.kommentary
-}
+editor['b3nj5m1n/kommentary'] = {config = conf.kommentary}
 
 editor['windwp/nvim-autopairs'] = {
   event = 'InsertEnter',

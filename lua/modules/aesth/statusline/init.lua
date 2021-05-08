@@ -139,7 +139,7 @@ gls.right[1] = {
   DiffAdd = {
     provider = 'DiffAdd',
     condition = hide_in_width,
-    icon = '  ',
+    icon = '  ',
     highlight = {colors.green, colors.bg},
     separator = ' ',
     separator_highlight = {'NONE', colors.bg}
@@ -149,7 +149,7 @@ gls.right[2] = {
   DiffModified = {
     provider = 'DiffModified',
     condition = hide_in_width,
-    icon = ' 柳 ',
+    icon = '  ',
     highlight = {colors.orange, colors.bg}
   }
 }
@@ -157,7 +157,7 @@ gls.right[3] = {
   DiffRemove = {
     provider = 'DiffRemove',
     condition = hide_in_width,
-    icon = '  ',
+    icon = '  ',
     highlight = {colors.red, colors.bg}
   }
 }
@@ -227,8 +227,8 @@ gls.right[8] = {
     condition = function()
       return vim.bo.filetype ~= 'dashboard'
     end,
-    -- separator = ' ',
-    -- separator_highlight = {'NONE', colors.bg},
+    separator = ' ',
+    separator_highlight = {'NONE', colors.bg},
     highlight = {colors.fg, colors.bg, 'bold'}
   }
 }
