@@ -1,38 +1,30 @@
-local telescope = require('telescope')
-local finders = require('telescope.finders')
-local pickers = require('telescope.pickers')
-local make_entry = require('telescope.make_entry')
-local conf = require('telescope.config').values
-local G = require('core.global')
+local nv_config = {}
+local cwd = "~/.dots/nvim"
 
-local nvim_files_list = function(opts)
-  local dir = opts.path or ''
-  local list = {}
-  local p = io.popen('rg --files --hidden ' .. dir)
-  for file in p:lines() do
-    table.insert(list, file)
-  end
-  local nvim_conf = io.popen('rg --files ' .. G.home .. '.config/nvim')
-  for file in nvim_conf:lines() do
-    table.insert(list, file)
-  end
-  return list
+nv_config.files = function()
+  require("telescope.builtin").find_files(
+      {prompt_title = "< VimRC >", cwd = "$HOME/.config/nvim/"})
 end
 
-local nvim_files = function(opts)
-  opts = opts or {}
-  local results = nvim_files_list(opts)
-
-  pickers.new(opts, {
-    prompt_title = 'Find in dotfiles',
-    results_title = 'Dotfiles',
-    finder = finders.new_table {
-      results = results,
-      entry_maker = make_entry.gen_from_file(opts)
-    },
-    previewer = conf.file_previewer(opts),
-    sorter = conf.file_sorter(opts)
-  }):find()
+nv_config.commits = function()
+  require("telescope.builtin").git_commits(
+      {prompt_title = 'Git commits for nvim config', cwd = cwd})
 end
 
-return telescope.register_extension {exports = {nvim_files = nvim_files}}
+nv_config.bcommits = function()
+  require("telescope.builtin").git_bcommits(
+      {prompt_title = 'Git bcommits for nvim config', cwd = cwd})
+end
+
+nv_config.branches = function()
+  require("telescope.builtin").git_branches(
+      {prompt_title = 'Git branches for nvim config', cwd = cwd})
+end
+
+nv_config.status = function()
+  require("telescope.builtin").git_branches(
+      {prompt_title = 'Git status for nvim config', cwd = cwd})
+end
+
+return require'telescope'.register_extension {exports = nv_config}
+

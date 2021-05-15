@@ -40,7 +40,7 @@ local grep_string_prompt = function(opts)
   end
 
   pickers.new(opts, {
-    prompt_title = 'Find Word',
+    prompt_title = 'Find Word From Prompt',
     finder = finders.new_oneshot_job(args, opts),
     previewer = conf.grep_previewer(opts),
     sorter = conf.generic_sorter(opts)

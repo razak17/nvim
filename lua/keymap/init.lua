@@ -176,7 +176,18 @@ nnoremap('<Leader>fgf', ':Telescope git_files<CR>')
 nnoremap('<Leader>fgs', ':Telescope git_status<CR>')
 
 -- Telescope extensions
-nnoremap('<Leader>frc', ':Telescope nvim_files<CR>')
+nnoremap('<Leader>frf', ':Telescope nvim_files files<CR>')
+nnoremap('<Leader>frB', ':Telescope nvim_files bcommits<CR>')
+nnoremap('<Leader>frc', ':Telescope nvim_files commits<CR>')
+nnoremap('<Leader>frb', ':Telescope nvim_files branches<CR>')
+nnoremap('<Leader>frs', ':Telescope nvim_files status<CR>')
+
+nnoremap('<Leader>fdf', ':Telescope dotfiles git_files<CR>')
+nnoremap('<Leader>fdB', ':Telescope dotfiles bcommits<CR>')
+nnoremap('<Leader>fdc', ':Telescope dotfiles commits<CR>')
+nnoremap('<Leader>fdb', ':Telescope dotfiles branches<CR>')
+nnoremap('<Leader>fds', ':Telescope dotfiles status<CR>')
+
 nnoremap('<Leader>fem', ':Telescope media_files<CR>')
 nnoremap('<leader>fep', ':Telescope project<CR>')
 nnoremap('<Leader>feb', ':Telescope bg_selector<CR>')

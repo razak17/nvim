@@ -111,6 +111,15 @@ g.which_key_map = {
       v = "vim options",
       z = "current file fuzzy find"
     },
+    d = {
+      name = "+Dotfiles",
+      b = "branches",
+      B = "bcommits",
+      c = "commits",
+      f = "git files",
+      r = "recent files",
+      s = "status"
+    },
     e = {
       name = "+Extensions",
       m = "media files",
@@ -119,7 +128,15 @@ g.which_key_map = {
     },
     f = "find files",
     l = {name = "+Live", g = "grep", w = "current word", e = "prompt"},
-    r = {name = "+Config", c = "vimrc", r = "recent files"},
+    r = {
+      name = "+Config",
+      b = "branches",
+      B = "bcommits",
+      c = "commits",
+      f = "nvim files",
+      r = "recent files",
+      s = "status"
+    },
     v = {
       name = "+Lsp",
       a = "code action",

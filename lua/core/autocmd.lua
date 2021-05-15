@@ -67,7 +67,7 @@ local ft = {
 }
 
 local plug = {
-  {"BufWritePost", "*.lua", "lua require('core.pack').magic_compile()"}
+  {"BufWritePost", "*.lua", "lua require('core.plug').magic_compile()"}
 }
 
 local definitions = {buf, ft, win, niceties, plug}
