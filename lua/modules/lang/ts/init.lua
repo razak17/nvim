@@ -60,19 +60,8 @@ function M.setup()
     ensure_installed = fts,
     highlight = {enable = true},
     rainbow = {enable = true, extended_mode = true},
-    autopairs = {enable = true},
-    indent = {enable = true},
-    textobjects = {
-      select = {
-        enable = true,
-        keymaps = {
-          ["af"] = "@function.outer",
-          ["if"] = "@function.inner",
-          ["ac"] = "@class.outer",
-          ["ic"] = "@class.inner"
-        }
-      }
-    }
+    indent = {enable = true}
+    -- autotag = {enable = true, filetypes = {"html", "xml"}}
   }
 
   vim.wo.foldexpr = "nvim_treesitter#foldexpr()"

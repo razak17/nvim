@@ -20,37 +20,14 @@ require('telescope').setup({
       "node_modules/*",
       "dist/*",
       ".git/*",
-      "venv/*",
       ".venv/*",
-      "env/*",
       ".env/*"
-    },
-    width = 0.75,
-    border = {},
-    borderchars = {'─', '│', '─', '│', '╭', '╮', '╯', '╰'},
-    set_env = {['COLORTERM'] = 'truecolor'},
-    vimgrep_arguments = {
-      'rg',
-      '--no-heading',
-      '--with-filename',
-      '--line-number',
-      '--column',
-      '--smart-case'
     },
     file_sorter = require'telescope.sorters'.get_fzy_sorter,
     file_previewer = require'telescope.previewers'.vim_buffer_cat.new,
     grep_previewer = require'telescope.previewers'.vim_buffer_vimgrep.new,
     qflist_previewer = require'telescope.previewers'.vim_buffer_qflist.new,
-    mappings = {
-      i = {
-        ["<C-x>"] = false,
-        ["<CR>"] = actions.select_default,
-        ["<C-b>"] = actions.move_selection_previous,
-        ["<C-v>"] = actions.select_vertical,
-        ["<C-i>"] = actions.select_horizontal,
-        ["<C-e>"] = actions.send_to_qflist
-      }
-    },
+    mappings = {i = {["<C-b>"] = actions.move_selection_previous}},
     file_browser = {hidden = true},
     extensions = {
       fzy_native = {

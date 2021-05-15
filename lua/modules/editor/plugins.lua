@@ -1,22 +1,19 @@
 local conf = require('modules.editor.config')
 local editor = {}
 
-editor['norcalli/nvim-colorizer.lua'] = {
-  event = {'BufReadPre', 'BufNewFile'},
-  config = conf.nvim_colorizer
-}
+editor['norcalli/nvim-colorizer.lua'] = {config = conf.nvim_colorizer}
 
-editor['rhysd/accelerated-jk'] = {
-  event = {'BufReadPre', 'BufNewFile'},
-  opt = true
-}
+editor['rhysd/accelerated-jk'] = {opt = true}
 
 editor['monaqa/dial.nvim'] = {
   event = {'BufReadPre', 'BufNewFile'},
   config = conf.dial
 }
 
-editor['b3nj5m1n/kommentary'] = {config = conf.kommentary}
+editor['b3nj5m1n/kommentary'] = {
+  event = {'BufReadPre', 'BufNewFile'},
+  config = conf.kommentary
+}
 
 editor['windwp/nvim-autopairs'] = {
   event = 'InsertEnter',
@@ -29,7 +26,6 @@ editor['Raimondi/delimitMate'] = {
 }
 
 editor['hrsh7th/vim-eft'] = {
-  event = {'BufReadPre', 'BufNewFile'},
   opt = true,
   config = function()
     vim.g.eft_ignorecase = true
@@ -37,8 +33,8 @@ editor['hrsh7th/vim-eft'] = {
 }
 
 editor['windwp/nvim-ts-autotag'] = {
-  event = {'BufReadPre', 'BufNewFile'},
   opt = true,
+  event = "InsertLeavePre",
   after = 'nvim-treesitter',
   config = function()
     require('nvim-ts-autotag').setup()

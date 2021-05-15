@@ -87,10 +87,8 @@ g.which_key_map = {
   },
   e = {
     name = "+Floaterm",
-    e = 'toggle',
     l = 'lazygit',
     n = 'node',
-    N = 'new terminal',
     p = 'python',
     r = 'ranger'
   },

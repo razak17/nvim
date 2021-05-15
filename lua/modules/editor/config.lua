@@ -11,7 +11,6 @@ end
 
 function config.nvim_colorizer()
   require'colorizer'.setup {
-    '*',
     css = {rgb_fn = true},
     scss = {rgb_fn = true, hsl_fn = true},
     sass = {rgb_fn = true},
@@ -20,6 +19,13 @@ function config.nvim_colorizer()
     tmux = {names = false},
     lua = {names = false},
     python = {names = false},
+    'javascript',
+    'javascriptreact',
+    'typescript',
+    'typescriptreact',
+    'tmux',
+    'yaml',
+    'lua',
     html = {mode = 'foreground'}
   }
 end

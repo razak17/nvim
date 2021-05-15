@@ -20,6 +20,7 @@ local buf = {
     [[nested if &l:autoread > 0 | source <afile> | echo 'source ' . bufname('%') | endif]]
   },
   {"BufLeave", "*", "silent! update"},
+  {"BufEnter,FocusGained", "*", "silent! checktime"},
   {"BufWritePre", "*", ":call autocmds#TrimWhitespace()"},
   {"BufEnter,BufNewFile", "*", "set fo-=cro noshowmode"}
 }
@@ -30,21 +31,12 @@ local niceties = {
     "*",
     [[ silent! lua vim.highlight.on_yank({higroup="IncSearch", timeout=77})]]
   },
-  {"Syntax", "*", [[if line('$') > 5000 | syntax sync minlines=300 | endif]]},
-  {
-    "BufWritePost",
-    "*",
-    [[nested  if &l:filetype ==# '' || exists('b:ftdetect') | unlet! b:ftdetect | filetype detect | endif]]
-  },
-  {
-    "BufReadPost",
-    "*",
-    [[if &ft !~# 'commit' && ! &diff && line("'\"") >= 1 && line("'\"") <= line("$") | execute 'normal! g`"zvzz' | endif]]
-  }
+  {"Syntax", "*", [[if line('$') > 5000 | syntax sync minlines=300 | endif]]}
 }
 
 local win = {
   {"TermOpen", "*", "startinsert"},
+  {"FocusLost", "*", "silent! wall"},
   -- Equalize window dimensions when resizing vim window
   {"VimResized", "*", [[tabdo wincmd =]]}, -- Force write shada on leaving nvim
   {"VimLeave", "*", "wshada!"},
@@ -60,22 +52,25 @@ local win = {
     [[if &cursorline && &filetype !~# '^\(dashboard\|clap_\)' && ! &pvw | setlocal nocursorline | endif]]
   },
   -- Force write shada on leaving nvim
-  {"VimLeave", "*", [[if has('nvim') | wshada! | else | wviminfo! | endif]]},
+  {"VimLeave", "*", [[if has('nvim') | wshada! | else | wviminfo! | endif]]}
   -- Check if file changed when its window is focus, more eager than 'autoread'
-  {"BufEnter,FocusGained", "*", "silent! checktime"}
 }
 
 local ft = {
-  {"FocusLost", "*", "silent! wall"},
+  {"FileType", "dap-repl", "lua require('dap.ext.autocompl').attach()"},
+  {"FileType", "floaterm", "setlocal winblend=0"},
   {
     "FileType",
     "which_key",
     "set laststatus=0 noshowmode noruler | autocmd BufLeave <buffer> set laststatus=2 ruler"
-  },
-  {"FileType", "dap-repl", "lua require('dap.ext.autocompl').attach()"}
+  }
 }
 
-local definitions = {buf, ft, win, niceties}
+local plug = {
+  {"BufWritePost", "*.lua", "lua require('core.pack').magic_compile()"}
+}
+
+local definitions = {buf, ft, win, niceties, plug}
 
 augroups(definitions)
 

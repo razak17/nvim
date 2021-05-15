@@ -18,7 +18,7 @@ function config.nvim_compe()
       nvim_lsp = {kind = "   (LSP)"},
       vim_dadbod_completion = true,
       emoji = {kind = " ﲃ  (Emoji)", filetypes = {"markdown", "text"}},
-      tags = false,
+      tags = true,
       nvim_lua = false
     }
   }
@@ -34,8 +34,6 @@ function config.emmet()
   vim.g.user_emmet_install_global = 0
   vim.g.user_emmet_install_command = 0
   vim.g.user_emmet_mode = 'i'
-  vim.cmd(
-      'autocmd FileType html,css,javascript,javascriptreact,vue,typescript,typescriptreact EmmetInstall')
 end
 
 function config.telescope_nvim()
