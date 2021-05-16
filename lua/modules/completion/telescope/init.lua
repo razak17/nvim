@@ -23,11 +23,17 @@ require('telescope').setup({
       ".venv/*",
       ".env/*"
     },
+    borderchars = {'─', '│', '─', '│', '┌', '┐', '┘', '└'},
     file_sorter = require'telescope.sorters'.get_fzy_sorter,
     file_previewer = require'telescope.previewers'.vim_buffer_cat.new,
     grep_previewer = require'telescope.previewers'.vim_buffer_vimgrep.new,
     qflist_previewer = require'telescope.previewers'.vim_buffer_qflist.new,
-    mappings = {i = {["<C-b>"] = actions.move_selection_previous}},
+    mappings = {
+      i = {
+        ["<C-b>"] = actions.move_selection_previous,
+        ["<C-e>"] = actions.send_to_qflist
+      }
+    },
     file_browser = {hidden = true},
     extensions = {
       fzy_native = {

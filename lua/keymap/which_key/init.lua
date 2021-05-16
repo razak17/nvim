@@ -13,7 +13,6 @@ fn['which_key#register']('<space>', 'g:which_key_map')
 
 g.which_key_map = {
   ["="] = "Balance window",
-  ['"'] = "Open peekup window",
   [";"] = "terminal",
   ["."] = "Open init.vim",
   [","] = "Open lua/init.lua",
@@ -237,8 +236,17 @@ g.which_key_map = {
       e = "type definition"
     },
     r = {name = "+Rename", n = "builtin lsp", r = "lsp_saga"},
+    s = "Symbols outline",
     v = "vista",
-    w = {name = "+Color", m = "pencils"}
+    w = {name = "+Color", m = "pencils"},
+    x = {
+      name = "+Trouble",
+      d = 'document',
+      e = 'quickfix',
+      l = 'loclist',
+      r = 'references',
+      w = 'workspace'
+    }
   }
 }
 

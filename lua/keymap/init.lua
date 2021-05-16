@@ -35,6 +35,16 @@ nnoremap('<Leader>ar', ':RnvimrToggle<CR>')
 -- Vista
 nnoremap('<Leader>vv', ':Vista!!<CR>')
 
+-- Symbols Outline
+nnoremap('<Leader>vs', ':SymbolsOutline<CR>')
+
+-- trouble
+nnoremap('<Leader>vxd', ':TroubleToggle lsp_document_diagnostics<CR>')
+nnoremap('<Leader>vxe', ':TroubleToggle quickfix<CR>')
+nnoremap('<Leader>vxl', ':TroubleToggle loclist<CR>')
+nnoremap('<Leader>vxr', ':TroubleToggle lsp_references<CR>')
+nnoremap('<Leader>vxw', ':TroubleToggle lsp_workspace_diagnostics<CR>')
+
 -- Context
 nnoremap('<Leader>cc', ':ContextToggle<CR>')
 

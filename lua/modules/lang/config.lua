@@ -1,11 +1,30 @@
 local config = {}
 
-function config.nvim_treesitter()
+function config.treesitter()
   require('modules.lang.ts').setup()
 end
 
 function config.nvim_lsp()
   require('modules.lang.lsp.lspconfig')
+end
+
+function config.dap()
+  require 'modules.lang.dap'
+end
+
+function config.symbols()
+  require("symbols-outline").setup {
+    highlight_hovered_item = true,
+    show_guides = true
+  }
+end
+
+function config.trouble()
+  require("trouble").setup {
+    height = 12,
+    use_lsp_diagnostic_signs = true,
+    action_keys = {toggle_fold = "ze"}
+  }
 end
 
 function config.dap_ui()
@@ -20,30 +39,15 @@ function config.dap_ui()
   })
 end
 
-function config.dap()
-  require 'modules.lang.dap'
-end
-
 function config.lsp_saga()
   local opts = {
     error_sign = '',
     warn_sign = '',
     hint_sign = '',
     infor_sign = '',
-    dianostic_header_icon = '   ',
     code_action_icon = '💡',
     rename_prompt_prefix = '➤',
-    finder_definition_icon = '  ',
-    finder_reference_icon = '  ',
-    definition_preview_icon = '  ',
-    finder_action_keys = {
-      open = 'o',
-      vsplit = 's',
-      split = 'i',
-      quit = 'x',
-      scroll_down = '<C-f>',
-      scroll_up = '<C-b>'
-    }
+    finder_action_keys = {quit = 'x'}
   }
   return opts
 end

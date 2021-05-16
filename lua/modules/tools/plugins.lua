@@ -3,11 +3,7 @@ local conf = require('modules.tools.config')
 
 tools['mbbill/undotree'] = {cmd = "UndotreeToggle"}
 
-tools['kevinhwang91/nvim-bqf'] = {event = {'BufReadPre'}, config = conf.bqf}
-
 tools['tweekmonster/startuptime.vim'] = {cmd = "StartupTime"}
-
-tools['liuchengxu/vista.vim'] = {cmd = 'Vista', config = conf.vim_vista}
 
 tools['MattesGroeger/vim-bookmarks'] = {
   event = {'BufReadPre', 'BufNewFile'},
