@@ -39,7 +39,7 @@ end
 function config.bg()
   vim.cmd [[ colo zephyr ]]
   vim.cmd [[ autocmd ColorScheme * highlight clear SignColumn ]]
-  vim.cmd [[ autocmd ColorScheme * highlight Normal ctermbg=NONE guibg=NONE ]]
+  -- vim.cmd [[ autocmd ColorScheme * highlight Normal ctermbg=NONE guibg=NONE ]]
   vim.cmd [[ hi ColorColumn ctermbg=lightgrey ]]
   vim.cmd [[ hi LineNr ctermbg=NONE guibg=NONE ]]
   vim.cmd [[ hi Comment cterm=italic ]]

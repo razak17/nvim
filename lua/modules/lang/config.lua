@@ -46,10 +46,39 @@ function config.lsp_saga()
     hint_sign = '',
     infor_sign = '',
     code_action_icon = '💡',
-    rename_prompt_prefix = '➤',
     finder_action_keys = {quit = 'x'}
   }
   return opts
+end
+
+function config.bqf()
+  require('bqf').setup({
+    auto_enable = true,
+    preview = {win_height = 12, win_vheight = 12, delay_syntax = 80},
+    func_map = {vsplit = '<C-v>', ptogglemode = 'z,', stoggleup = 'z<Tab>'},
+    filter = {
+      fzf = {
+        action_for = {['ctrl-s'] = 'split'},
+        extra_opts = {'--bind', 'ctrl-o:toggle-all', '--prompt', '> '}
+      }
+    }
+  })
+end
+
+function config.vim_vista()
+  vim.g['vista#renderer#enable_icon'] = 1
+  vim.g.vista_icon_indent = [["╰─▸ "], ["├─▸ "]]
+  vim.g.vista_disable_statusline = 1
+  vim.g.vista_default_executive = 'ctags'
+  vim.g.vista_echo_cursor_strategy = 'floating_win'
+  vim.g.vista_vimwiki_executive = 'markdown'
+  vim.g.vista_executive_for = {
+    vimwiki = 'markdown',
+    pandoc = 'markdown',
+    markdown = 'toc',
+    typescript = 'nvim_lsp',
+    typescriptreact = 'nvim_lsp'
+  }
 end
 
 return config

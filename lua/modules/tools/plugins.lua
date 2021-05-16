@@ -3,6 +3,8 @@ local conf = require('modules.tools.config')
 
 tools['mbbill/undotree'] = {cmd = "UndotreeToggle"}
 
+tools['voldikss/vim-floaterm'] = {config = conf.floaterm}
+
 tools['tweekmonster/startuptime.vim'] = {cmd = "StartupTime"}
 
 tools['MattesGroeger/vim-bookmarks'] = {
@@ -10,13 +12,9 @@ tools['MattesGroeger/vim-bookmarks'] = {
   config = conf.bookmarks
 }
 
-tools['voldikss/vim-floaterm'] = {config = conf.floaterm}
-
-tools['brooth/far.vim'] = {
-  event = {'BufReadPre', 'BufNewFile'},
-  cmd = {'Far', 'Farr', 'Farp', 'Farf'},
-  config = function()
-    vim.g['far#source'] = 'rg'
+tools['glacambre/firenvim'] = {
+  run = function()
+    vim.fn['firenvim#install'](0)
   end
 }
 
@@ -27,9 +25,11 @@ tools['iamcco/markdown-preview.nvim'] = {
   end
 }
 
-tools['glacambre/firenvim'] = {
-  run = function()
-    vim.fn['firenvim#install'](0)
+tools['brooth/far.vim'] = {
+  event = {'BufReadPre', 'BufNewFile'},
+  cmd = {'Far', 'Farr', 'Farp', 'Farf'},
+  config = function()
+    vim.g['far#source'] = 'rg'
   end
 }
 
