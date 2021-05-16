@@ -44,6 +44,9 @@ function M.matchit()
   api.nvim_buf_set_keymap(0, 'n', '%', ':lua tsMatchit()<CR>', {silent = true})
 end
 
+function M.ts_init()
+end
+
 local synoff = function()
   local filetypes = vim.fn.join(fts, ",")
   vim.cmd("au FileType " .. filetypes .. " set syn=off")
@@ -51,17 +54,16 @@ local synoff = function()
               " lua require'modules.lang.ts'.matchit()")
 end
 
-table.remove(fts, 16)
-table.insert(fts, 'bash')
-
 function M.setup()
   synoff()
+  table.remove(fts, 16)
+  table.insert(fts, 'bash')
   require'nvim-treesitter.configs'.setup {
     ensure_installed = fts,
     highlight = {enable = true},
     rainbow = {enable = true, extended_mode = true},
-    indent = {enable = true}
-    -- autotag = {enable = true, filetypes = {"html", "xml"}}
+    indent = {enable = true},
+    autotag = {enable = true}
   }
 
   vim.wo.foldexpr = "nvim_treesitter#foldexpr()"

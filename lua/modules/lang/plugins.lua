@@ -12,7 +12,11 @@ lang['glepnir/lspsaga.nvim'] = {
 }
 
 lang['nvim-treesitter/nvim-treesitter'] =
-    {event = 'BufRead', after = 'telescope.nvim', config = conf.nvim_treesitter}
+    {
+      event = 'VimEnter',
+      after = 'telescope.nvim',
+      config = conf.nvim_treesitter
+    }
 
 lang['mfussenegger/nvim-dap'] = {config = conf.dap}
 

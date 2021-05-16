@@ -73,4 +73,3 @@ local plug = {
 local definitions = {buf, ft, win, niceties, plug}
 
 augroups(definitions)
-

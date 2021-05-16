@@ -36,9 +36,6 @@ editor['windwp/nvim-ts-autotag'] = {
   opt = true,
   event = "InsertLeavePre",
   after = 'nvim-treesitter',
-  config = function()
-    require('nvim-ts-autotag').setup()
-  end
 }
 
 return editor
