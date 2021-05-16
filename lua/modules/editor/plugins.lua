@@ -35,7 +35,14 @@ editor['hrsh7th/vim-eft'] = {
 editor['windwp/nvim-ts-autotag'] = {
   opt = true,
   event = "InsertLeavePre",
-  after = 'nvim-treesitter',
+  after = 'nvim-treesitter'
+}
+
+editor['kkoomen/vim-doge'] = {
+  run = ':call doge#install()',
+  config = function()
+    vim.g.doge_mapping = '<Leader>D'
+  end
 }
 
 return editor
