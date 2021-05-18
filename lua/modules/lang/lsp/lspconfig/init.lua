@@ -1,14 +1,14 @@
 local global_cmd = require'internal.utils'.global_cmd
 local utils = require 'internal.utils'
 
-function _G.reload_lsp()
-  vim.lsp.stop_client(vim.lsp.get_active_clients())
-  vim.cmd [[edit]]
-end
-
 function _G.open_lsp_log()
   local path = vim.lsp.get_log_path()
   vim.cmd("edit " .. path)
+end
+
+function _G.reload_lsp()
+  vim.lsp.stop_client(vim.lsp.get_active_clients())
+  vim.cmd [[edit]]
 end
 
 function _G.lsp_formatting()
@@ -38,6 +38,7 @@ end
 global_cmd("LspLog", "open_lsp_log")
 global_cmd("LspRestart", "reload_lsp")
 global_cmd("LspToggleVirtualText", "lsp_toggle_virtual_text")
+global_cmd("LspBeforeSave", "lsp_before_save")
 
 -- symbols for autocomplete
 vim.lsp.protocol.CompletionItemKind = {

@@ -44,8 +44,6 @@ function Plug:load_packer()
   local use = packer.use
   self:load_plugins()
   use {"wbthomason/packer.nvim", opt = true}
-  use 'tpope/vim-surround'
-  use 'tpope/vim-fugitive'
   for _, repo in ipairs(self.repos) do
     use(repo)
   end

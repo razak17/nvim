@@ -56,9 +56,10 @@ function config.autopairs()
       ['('] = ')',
       ['['] = ']',
       ['{'] = '}',
-      ['`'] = '`'
+      ['`'] = '`',
+      ['<'] = '>'
     },
-    disable_filetype = {"TelescopePrompt", "vim"}
+    disable_filetype = {"TelescopePrompt", "vim", "lua", "c", "cpp"}
   })
 end
 

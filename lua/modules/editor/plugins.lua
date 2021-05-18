@@ -1,9 +1,11 @@
 local conf = require('modules.editor.config')
 local editor = {}
 
-editor['norcalli/nvim-colorizer.lua'] = {config = conf.nvim_colorizer}
-
 editor['rhysd/accelerated-jk'] = {opt = true}
+
+editor['tpope/vim-surround'] = {event = {'BufReadPre', 'BufNewFile'}}
+
+editor['norcalli/nvim-colorizer.lua'] = {config = conf.nvim_colorizer}
 
 editor['monaqa/dial.nvim'] = {
   event = {'BufReadPre', 'BufNewFile'},

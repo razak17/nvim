@@ -1,4 +1,14 @@
 {
+  "main": {
+    "prefix": "main",
+    "body": [
+      "#include <stdio.h>\n",
+      "int main(int argc, const char** argv) {",
+      "\t${1}",
+      "}"
+    ],
+    "description": "Code snippet for 'for' loop"
+  },
   "for": {
     "prefix": "for",
     "body": [

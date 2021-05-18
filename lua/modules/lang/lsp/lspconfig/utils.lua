@@ -8,8 +8,8 @@ M.diagnostics = {
   ["textDocument/publishDiagnostics"] = vim.lsp.with(
       vim.lsp.diagnostic.on_publish_diagnostics, {
         underline = true,
-        update_in_insert = true,
-        virtual_text = {spacing = 4, prefix = '»'},
+        update_in_insert = false,
+        virtual_text = {spacing = 4, prefix = ''},
         signs = {enable = true, priority = 20}
       })
 }
@@ -48,22 +48,6 @@ M.lsp_saga = function(bufnr)
               "require('lspsaga.action').smart_scroll_with_saga(-1)")
 end
 
-M.lsp_highlight_cmds = function()
-  api.nvim_exec([[
-    highlight! LSPCurlyUnderline gui=undercurl
-    highlight! LSPUnderline gui=underline
-    highlight! LspDiagnosticsUnderlineHint gui=undercurl
-    highlight! LspDiagnosticsUnderlineInformation gui=undercurl
-    highlight! LspDiagnosticsUnderlineWarning gui=undercurl guisp=darkyellow
-    highlight! LspDiagnosticsUnderlineError gui=undercurl guisp=red
-
-    highlight! LspDiagnosticsSignHint guifg=#80a0c2
-    highlight! LspDiagnosticsSignInformation guifg=#51afef
-    highlight! LspDiagnosticsSignWarning guifg=darkyellow
-    highlight! LspDiagnosticsSignError guifg=red
-  ]], false)
-end
-
 M.lsp_line_diagnostics = function()
   api.nvim_exec([[
     augroup hover_diagnostics
@@ -85,7 +69,6 @@ end
 
 M.lsp_document_formatting = function(client)
   if client.resolved_capabilities.document_formatting then
-    global_cmd("LspBeforeSave", "lsp_before_save")
     global_cmd("LspFormatting", "lsp_formatting")
     vim.cmd [[ LspBeforeSave ]]
   end

@@ -8,6 +8,8 @@ completion['hrsh7th/nvim-compe'] = {
 
 completion['liuchengxu/vim-which-key'] = {config = conf.which_key}
 
+completion['mattn/emmet-vim'] = {event = 'InsertEnter', config = conf.emmet}
+
 completion['hrsh7th/vim-vsnip'] = {
   event = 'InsertCharPre',
   config = conf.vim_vsnip
@@ -27,8 +29,6 @@ completion['rafamadriz/friendly-snippets'] =
         'typescriptreact'
       }
     }
-
-completion['mattn/emmet-vim'] = {event = 'InsertEnter', config = conf.emmet}
 
 completion['nvim-telescope/telescope.nvim'] =
     {

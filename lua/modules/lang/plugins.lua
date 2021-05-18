@@ -5,7 +5,7 @@ lang['mfussenegger/nvim-dap'] = {config = conf.dap}
 
 lang['rcarriga/nvim-dap-ui'] = {config = conf.dap_ui}
 
-lang['glepnir/lspsaga.nvim'] = {event = {'BufRead'}, cmd = 'Lspsaga'}
+lang['glepnir/lspsaga.nvim'] = {cmd = 'Lspsaga'}
 
 lang['kevinhwang91/nvim-bqf'] = {event = {'BufReadPre'}, config = conf.bqf}
 

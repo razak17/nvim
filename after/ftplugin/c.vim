@@ -1,6 +1,6 @@
-setlocal shiftwidth=4
-setlocal softtabstop=4
-setlocal tabstop=4
+setlocal shiftwidth=2
+setlocal softtabstop=2
+setlocal tabstop=2
 
-noremap <F10> :!gcc % -o %< && ./%< <CR>"
+nnoremap <F10> :!gcc % -o %< && ./%< <CR>
 

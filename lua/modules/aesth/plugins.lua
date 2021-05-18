@@ -28,17 +28,17 @@ aesth['glepnir/galaxyline.nvim'] = {
   requires = 'kyazdani42/nvim-web-devicons'
 }
 
+aesth['kyazdani42/nvim-tree.lua'] = {
+  cmd = {'NvimTreeToggle', 'NvimTreeOpen'},
+  config = conf.nvim_tree,
+  requires = 'kyazdani42/nvim-web-devicons'
+}
+
 aesth['lewis6991/gitsigns.nvim'] = {
   event = {'BufRead', 'BufNewFile'},
   config = conf.gitsigns,
   requires = {'nvim-lua/plenary.nvim', opt = true}
 
-}
-
-aesth['kyazdani42/nvim-tree.lua'] = {
-  cmd = {'NvimTreeToggle', 'NvimTreeOpen'},
-  config = conf.nvim_tree,
-  requires = 'kyazdani42/nvim-web-devicons'
 }
 
 return aesth
