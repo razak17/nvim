@@ -8,27 +8,18 @@ completion['hrsh7th/nvim-compe'] = {
 
 completion['liuchengxu/vim-which-key'] = {config = conf.which_key}
 
-completion['mattn/emmet-vim'] = {event = 'InsertEnter', config = conf.emmet}
+completion['rafamadriz/friendly-snippets'] = {event = 'InsertEnter'}
 
 completion['hrsh7th/vim-vsnip'] = {
   event = 'InsertCharPre',
   config = conf.vim_vsnip
 }
 
-completion['rafamadriz/friendly-snippets'] =
-    {
-      event = 'InsertEnter',
-      ft = {
-        'c',
-        'html',
-        'css',
-        'javascript',
-        'javascriptreact',
-        'typescript',
-        'python',
-        'typescriptreact'
-      }
-    }
+completion['mattn/emmet-vim'] = {
+  event = 'InsertEnter',
+  ft = {'html', 'css'},
+  config = conf.emmet
+}
 
 completion['nvim-telescope/telescope.nvim'] =
     {

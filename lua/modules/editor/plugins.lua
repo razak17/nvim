@@ -5,12 +5,12 @@ editor['rhysd/accelerated-jk'] = {opt = true}
 
 editor['tpope/vim-surround'] = {event = {'BufReadPre', 'BufNewFile'}}
 
-editor['norcalli/nvim-colorizer.lua'] = {config = conf.nvim_colorizer}
-
-editor['monaqa/dial.nvim'] = {
-  event = {'BufReadPre', 'BufNewFile'},
-  config = conf.dial
+editor['norcalli/nvim-colorizer.lua'] = {
+  ft = {'typescript', 'lua', 'css', 'yaml', 'tmux'},
+  config = conf.nvim_colorizer
 }
+
+editor['monaqa/dial.nvim'] = {event = {'BufReadPre', 'BufNewFile'}}
 
 editor['b3nj5m1n/kommentary'] = {
   event = {'BufReadPre', 'BufNewFile'},
@@ -36,17 +36,6 @@ editor['hrsh7th/vim-eft'] = {
 
 editor['kkoomen/vim-doge'] = {
   run = ':call doge#install()',
-  filetype = {
-    'typescriptreact',
-    'typescript',
-    'javascript',
-    'javascriptreact',
-    'python',
-    'lua',
-    'c',
-    'cpp',
-    'rust'
-  },
   config = function()
     vim.g.doge_mapping = '<Leader>D'
   end

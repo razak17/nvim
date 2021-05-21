@@ -18,8 +18,7 @@ local options = {
 }
 
 local bg_dark = '#282a36'
--- local bg_def = 'none'
-local bg_sel = '#131323'
+local bg_sel = '#1c1f24'
 local fg_def = '#7e7e7e'
 local fg_sel = '#dedede'
 local fg_error = '#ff000e'

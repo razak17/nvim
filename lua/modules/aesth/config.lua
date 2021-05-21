@@ -25,24 +25,16 @@ function config.indent_blankline()
 end
 
 function config.vim_cursorwod()
-  vim.api.nvim_command('augroup user_plugin_cursorword')
-  vim.api.nvim_command('autocmd!')
-  vim.api.nvim_command(
-      'autocmd FileType NvimTree,lspsagafinder,dashboard,vista let b:cursorword = 0')
-  vim.api.nvim_command(
-      'autocmd WinEnter * if &diff || &pvw | let b:cursorword = 0 | endif')
-  vim.api.nvim_command('autocmd InsertEnter * let b:cursorword = 0')
-  vim.api.nvim_command('autocmd InsertLeave * let b:cursorword = 1')
-  vim.api.nvim_command('augroup END')
-end
+  vim.api.nvim_exec([[
+    augroup user_plugin_cursorword
+      autocmd!
+      autocmd FileType NvimTree,lspsagafinder,dashboard,vista let b:cursorword = 0
+      autocmd WinEnter * if &diff || &pvw | let b:cursorword = 0 | endif
+      autocmd InsertEnter * let b:cursorword = 0
+      autocmd InsertLeave * let b:cursorword = 1
+    augroup END
 
-function config.bg()
-  vim.cmd [[ colo zephyr ]]
-  vim.cmd [[ autocmd ColorScheme * highlight clear SignColumn ]]
-  -- vim.cmd [[ autocmd ColorScheme * highlight Normal ctermbg=NONE guibg=NONE ]]
-  vim.cmd [[ hi ColorColumn ctermbg=lightgrey ]]
-  vim.cmd [[ hi LineNr ctermbg=NONE guibg=NONE ]]
-  vim.cmd [[ hi Comment cterm=italic ]]
+  ]], false)
 end
 
 function config.ColorMyPencils()

@@ -1,4 +1,3 @@
-local G = require 'core.global'
 local g = vim.g
 
 vim.cmd [[

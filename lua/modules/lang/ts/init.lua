@@ -5,20 +5,16 @@ local fts = {
   "c",
   "cpp",
   "css",
-  "erlang",
   "graphql",
   "go",
-  "haskell",
   "html",
   "javascript",
   "jsdoc",
-  "julia",
   "json",
   "lua",
   "python",
   "rust",
   "sh",
-  "toml",
   "tsx",
   "typescript",
   "yaml"
@@ -31,10 +27,11 @@ end
 
 function M.setup()
   synoff()
-  table.remove(fts, 16)
+  table.remove(fts, 13)
   table.insert(fts, 'bash')
   require'nvim-treesitter.configs'.setup {
     highlight = {enable = true},
+    autotag = {enable = true},
     indent = {enable = {"javascriptreact"}},
     rainbow = {enable = true, extended_mode = true},
     ensure_installed = fts

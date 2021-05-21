@@ -1,11 +1,11 @@
 local conf = require('modules.aesth.config')
 local aesth = {}
 
-aesth['razak17/zephyr-nvim'] = {config = conf.bg}
-
 aesth['glepnir/dashboard-nvim'] = {config = conf.dashboard}
 
 aesth['itchyny/vim-cursorword'] = {config = conf.vim_cursorwod}
+
+aesth['razak17/zephyr-nvim'] = {config = [[vim.cmd('colo zephyr')]]}
 
 aesth['lukas-reineke/indent-blankline.nvim'] =
     {event = 'BufRead', branch = 'lua', config = conf.indent_blankline}
@@ -15,11 +15,9 @@ aesth['akinsho/nvim-bufferline.lua'] = {
   requires = 'kyazdani42/nvim-web-devicons'
 }
 
-aesth['romainl/vim-cool'] = {
-  event = {'BufRead', 'BufNewFile'},
-  config = function()
-    vim.g.CoolTotalMatches = 1
-  end
+aesth['kyazdani42/nvim-tree.lua'] = {
+  config = conf.nvim_tree,
+  requires = 'kyazdani42/nvim-web-devicons'
 }
 
 aesth['glepnir/galaxyline.nvim'] = {
@@ -28,10 +26,11 @@ aesth['glepnir/galaxyline.nvim'] = {
   requires = 'kyazdani42/nvim-web-devicons'
 }
 
-aesth['kyazdani42/nvim-tree.lua'] = {
-  cmd = {'NvimTreeToggle', 'NvimTreeOpen'},
-  config = conf.nvim_tree,
-  requires = 'kyazdani42/nvim-web-devicons'
+aesth['romainl/vim-cool'] = {
+  event = {'BufRead', 'BufNewFile'},
+  config = function()
+    vim.g.CoolTotalMatches = 1
+  end
 }
 
 aesth['lewis6991/gitsigns.nvim'] = {

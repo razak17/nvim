@@ -1,4 +1,4 @@
-setlocal synmaxcol=0 " syntax highlighting in every line
+setlocal synmaxcol=0
 setlocal nofoldenable
 setlocal spell
 setlocal shiftwidth=4

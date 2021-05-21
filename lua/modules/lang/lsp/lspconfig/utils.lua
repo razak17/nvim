@@ -4,6 +4,25 @@ local buf_cmd_map, buf_map, global_cmd = utils.buf_cmd_map, utils.buf_map,
                                          utils.global_cmd
 local M = {}
 
+local get_cursor_pos = function()
+  return {vim.fn.line('.'), vim.fn.col('.')}
+end
+
+local debounce = function(func, timeout)
+  local timer_id = nil
+  return function(...)
+    if timer_id ~= nil then
+      vim.fn.timer_stop(timer_id)
+    end
+    local args = {...}
+
+    timer_id = vim.fn.timer_start(timeout, function()
+      func(args)
+      timer_id = nil
+    end)
+  end
+end
+
 M.diagnostics = {
   ["textDocument/publishDiagnostics"] = vim.lsp.with(
       vim.lsp.diagnostic.on_publish_diagnostics, {
@@ -33,7 +52,7 @@ M.lsp_saga = function(bufnr)
   saga.init_lsp_saga(require'modules.lang.config'.lsp_saga())
 
   buf_map(bufnr, "<Leader>vD", "Lspsaga preview_definition")
-  buf_map(bufnr, "<Leader>vf", "Lspsaga lsp_finder")
+  buf_map(bufnr, "<Leader>vc", "Lspsaga lsp_finder")
   buf_map(bufnr, "<Leader>va", "Lspsaga code_action")
   buf_map(bufnr, "<Leader>vA", "Lspsaga range_code_action")
   buf_map(bufnr, "<Leader>vls", "Lspsaga signature_help")
@@ -77,9 +96,6 @@ end
 M.lsp_document_highlight = function(client)
   if client.resolved_capabilities.document_highlight then
     api.nvim_exec([[
-      hi LspReferenceRead cterm=bold ctermbg=red guibg=#2c323c
-      hi LspReferenceText cterm=bold ctermbg=red guibg=#2c323c
-      hi LspReferenceWrite cterm=bold ctermbg=red guibg=#2c323c
       augroup lsp_document_highlight
       autocmd! * <buffer>
       au CursorHold <buffer> lua vim.lsp.buf.document_highlight()
@@ -95,11 +111,11 @@ M.show_lsp_diagnostics = (function()
     vim.cmd [[packadd lspsaga.nvim]]
   end
 
-  local debounced = utils.debounce(
-                        require'lspsaga.diagnostic'.show_line_diagnostics, 300)
-  local cursorpos = utils.get_cursor_pos()
+  local debounced = debounce(require'lspsaga.diagnostic'.show_line_diagnostics,
+                             300)
+  local cursorpos = get_cursor_pos()
   return function()
-    local new_cursor = utils.get_cursor_pos()
+    local new_cursor = get_cursor_pos()
     if (new_cursor[1] ~= 1 and new_cursor[2] ~= 1) and
         (new_cursor[1] ~= cursorpos[1] or new_cursor[2] ~= cursorpos[2]) then
       cursorpos = new_cursor

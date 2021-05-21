@@ -187,12 +187,6 @@ g.which_key_map = {
     u = "undo stage hunk"
   },
   I = {name = "+Info", c = "check health", e = "treesitter"},
-  l = {
-    name = "+Lsp_actions",
-    f = "format",
-    v = "toggle virtual text",
-    x = "close quickfix"
-  },
   L = {name = "+Lsp_utils", i = "info", l = "log", r = "restart"},
   m = {name = "+mark", e = "toggle", b = "previous mark", k = "next mark"},
   o = {name = "+Toggle_cmds"},
@@ -221,6 +215,7 @@ g.which_key_map = {
     name = "+Code",
     a = "code action",
     A = "range code action",
+    c = "find the cursor word definition and reference",
     D = "preview definition",
     d = {
       name = "+Diagnostics",
@@ -228,7 +223,7 @@ g.which_key_map = {
       l = "current line",
       n = "goto next"
     },
-    f = "find the cursor word definition and reference",
+    f = 'format',
     l = {
       name = "+Lsp",
       l = "set loc list",
@@ -237,7 +232,8 @@ g.which_key_map = {
     },
     r = {name = "+Rename", n = "builtin lsp", r = "lsp_saga"},
     s = "Symbols outline",
-    v = "vista",
+    v = "toggle virtual text",
+    V = "vista",
     w = {name = "+Color", m = "pencils"},
     x = {
       name = "+Trouble",

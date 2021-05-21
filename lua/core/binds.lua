@@ -117,9 +117,7 @@ nnoremap("<Leader>afo", "zR") -- Open all folds
 nnoremap("<Leader>afx", "zM") -- Close all folds
 
 -- qflist
-nnoremap("<C-k>", ":cnext<CR>")
-nnoremap("<C-b>", ":cprev<CR>")
-nnoremap("<Leader>lo", ":copen<CR>")
+nnoremap("<Leader>vo", ":copen<CR>")
 
 -- Other remaps
 nnoremap('<Leader>,', ':e ~/.config/nvim/lua/core/init.lua<CR>')

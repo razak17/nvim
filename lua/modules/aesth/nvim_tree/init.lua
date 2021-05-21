@@ -15,6 +15,7 @@ g.nvim_tree_indent_markers = 1
 g.nvim_tree_width_allow_resize = 1
 g.nvim_tree_add_trailing = 1
 g.nvim_tree_lsp_diagnostics = 1
+-- g.nvim_tree_git_hl = 1
 g.nvim_tree_special_files = {'README.md', 'Makefile', 'MAKEFILE'}
 g.nvim_tree_bindings = {
   ["l"] = ":lua require'nvim-tree'.on_keypress('edit')<CR>",
@@ -22,14 +23,4 @@ g.nvim_tree_bindings = {
   ["s"] = ":lua require'nvim-tree'.on_keypress('vsplit')<CR>",
   ["i"] = ":lua require'nvim-tree'.on_keypress('split')<CR>"
 }
-g.nvim_tree_icons = {
-  default = '',
-  symlink = '',
-  git = {
-    unstaged = "✗",
-    staged = "✓",
-    unmerged = "",
-    renamed = "➜",
-    untracked = "★"
-  }
-}
+g.nvim_tree_icons = {default = ''}

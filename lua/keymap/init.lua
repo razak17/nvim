@@ -6,6 +6,16 @@ local nmap, vmap, xmap, imap, smap, nnoremap, inoremap = mp.nmap, mp.vmap,
 local opts = {expr = true}
 require('keymap.config')
 
+-- Dial
+vim.cmd([[
+  nmap <C-a> <Plug>(dial-increment)
+  nmap <C-x> <Plug>(dial-decrement)
+  vmap <C-a> <Plug>(dial-increment)
+  vmap <C-x> <Plug>(dial-decrement)
+  vmap g<C-a> <Plug>(dial-increment-additional)
+  vmap g<C-x> <Plug>(dial-decrement-additional)
+]])
+
 -- vsnip
 xmap("<C-l>", "<Plug>(vsnip-select-text)")
 xmap("<C-x>", "<Plug>(vsnip-cut-text)")
@@ -33,7 +43,7 @@ nnoremap('<Leader>Ie', ':TSInstallInfo<CR>')
 nnoremap('<Leader>ar', ':RnvimrToggle<CR>')
 
 -- Vista
-nnoremap('<Leader>vv', ':Vista!!<CR>')
+nnoremap('<Leader>vV', ':Vista!!<CR>')
 
 -- Symbols Outline
 nnoremap('<Leader>vs', ':SymbolsOutline<CR>')
@@ -82,9 +92,8 @@ nnoremap('<Leader>od', ':DBUIToggle<CR>')
 nnoremap('<Leader>Li', ':LspInfo<CR>')
 nnoremap('<Leader>Ll', ':LspLog<CR>')
 nnoremap('<Leader>Lr', ':LspRestart<CR>')
-nnoremap('<Leader>lf', ':LspFormatting<CR>')
-nnoremap('<Leader>lv', ':LspToggleVirtualText<CR>')
-nnoremap('<Leader>lx', ':cclose<CR>')
+nnoremap('<Leader>vf', ':LspFormatting<CR>')
+nnoremap('<Leader>vv', ':LspToggleVirtualText<CR>')
 
 -- Tree
 nnoremap('<Leader>cv', ':NvimTreeToggle<CR>')

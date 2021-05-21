@@ -20,9 +20,11 @@ local buf = {
     [[nested if &l:autoread > 0 | source <afile> | echo 'source ' . bufname('%') | endif]]
   },
   {"BufLeave", "*", "silent! update"},
+  -- Check if file changed when its window is focus, more eager than 'autoread'
   {"BufEnter,FocusGained", "*", "silent! checktime"},
+  -- Trim whitespace on save
   {"BufWritePre", "*", ":call autocmds#TrimWhitespace()"},
-  {"BufEnter,BufNewFile", "*", "set fo-=cro noshowmode"}
+  {"BufEnter,BufNewFile", "*", "set fo-=cro"}
 }
 
 local niceties = {
@@ -36,10 +38,10 @@ local niceties = {
 
 local win = {
   {"TermOpen", "*", "startinsert"},
+  -- Autosave when nvim loses focus
   {"FocusLost", "*", "silent! wall"},
   -- Equalize window dimensions when resizing vim window
-  {"VimResized", "*", [[tabdo wincmd =]]}, -- Force write shada on leaving nvim
-  {"VimLeave", "*", "wshada!"},
+  {"VimResized", "*", [[tabdo wincmd =]]},
   -- Highlight current line only on focused window
   {
     "WinEnter,BufEnter,InsertLeave",
@@ -52,8 +54,9 @@ local win = {
     [[if &cursorline && &filetype !~# '^\(dashboard\|clap_\)' && ! &pvw | setlocal nocursorline | endif]]
   },
   -- Force write shada on leaving nvim
-  {"VimLeave", "*", [[if has('nvim') | wshada! | else | wviminfo! | endif]]}
-  -- Check if file changed when its window is focus, more eager than 'autoread'
+  {"VimLeave", "*", [[if has('nvim') | wshada! | else | wviminfo! | endif]]},
+  -- Compile everytime a lua file is saved
+  {"BufWritePost", "*.lua", "lua require('core.plug').magic_compile()"}
 }
 
 local ft = {
