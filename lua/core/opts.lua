@@ -20,14 +20,15 @@ opt('o', 'backupskip',
 -- Timing
 opt('o', 'timeout', true)
 opt('o', 'ttimeout', true)
-opt('o', 'updatetime', 100) -- Idle time to write swap and trigger CursorHold
-opt('o', 'timeoutlen', 500) -- Time out on mappings
-opt('o', 'ttimeoutlen', 10) -- Time out on key codes
-opt('o', 'redrawtime', 1500) -- Time in milliseconds for stopping display redraw
+opt('o', 'timeoutlen', 500)
+opt('o', 'ttimeoutlen', 10)
+opt('o', 'updatetime', 100)
+opt('o', 'redrawtime', 1500)
 
 -- Folds
 opt('w', 'foldcolumn', '0')
-opt('w', 'foldmethod', 'expr')
+opt('w', 'foldenable', true)
+opt('o', 'foldlevelstart', 99)
 opt('o', 'foldopen', 'hor,mark,percent,quickfix,search,tag,undo')
 
 -- Editor UI Appearance
@@ -122,15 +123,15 @@ opt('b', 'smartindent', true) -- Insert indents automatically
 -- Searching
 opt('o', 'grepprg', 'rg --hidden --vimgrep --smart-case --')
 opt('o', 'grepformat', '%f:%l:%c:%m')
-opt('o', 'smartcase', true) -- Keep case when searching with *
-opt('o', 'ignorecase', true) -- Search ignoring case
-opt('o', 'infercase', true) -- Adjust case in insert completion mode
-opt('o', 'incsearch', true) -- Incremental search
-opt('o', 'hlsearch', true) -- Highlight search results
-opt('o', 'wrapscan', true) -- Searches wrap around the end of the file
-opt('o', 'showmatch', true) -- Jump to matching bracket
-opt('o', 'matchpairs', '(:),{:},[:],<:>') -- Add HTML brackets to pair matching
-opt('o', 'matchtime', 1) -- Tenths of a second to show the matching paren
+opt('o', 'smartcase', true)
+opt('o', 'ignorecase', true)
+opt('o', 'infercase', true)
+opt('o', 'incsearch', true)
+opt('o', 'hlsearch', true)
+opt('o', 'wrapscan', true)
+opt('o', 'showmatch', true)
+opt('o', 'matchpairs', '(:),{:},[:]')
+opt('o', 'matchtime', 1)
 
 -- Wildmenu
 opt('o', 'wildmode', 'list:longest,full')

@@ -37,7 +37,6 @@ aesth['lewis6991/gitsigns.nvim'] = {
   event = {'BufRead', 'BufNewFile'},
   config = conf.gitsigns,
   requires = {'nvim-lua/plenary.nvim', opt = true}
-
 }
 
 return aesth

@@ -1,23 +1,22 @@
-local api = vim.api
 local M = {}
 
 local fts = {
-  "c",
-  "cpp",
-  "css",
-  "graphql",
-  "go",
-  "html",
-  "javascript",
-  "jsdoc",
-  "json",
   "lua",
-  "python",
-  "rust",
-  "sh",
-  "tsx",
+  "javascript",
   "typescript",
-  "yaml"
+  "html"
+  -- "typescriptreact",
+  -- "css"
+  -- "sh",
+  -- "c",
+  -- "cpp",
+  -- "graphql",
+  -- "go",
+  -- "jsdoc",
+  -- "json",
+  -- "python",
+  -- "rust",
+  -- "yaml"
 }
 
 local synoff = function()
@@ -26,9 +25,10 @@ local synoff = function()
 end
 
 function M.setup()
-  synoff()
-  table.remove(fts, 13)
-  table.insert(fts, 'bash')
+  -- synoff()
+  -- table.remove(fts, 13)
+  -- table.remove(fts, 15)
+  -- table.insert(fts, 'bash')
   require'nvim-treesitter.configs'.setup {
     highlight = {enable = true},
     autotag = {enable = true},
@@ -36,10 +36,10 @@ function M.setup()
     rainbow = {enable = true, extended_mode = true},
     ensure_installed = fts
   }
-
-  vim.wo.foldexpr = "nvim_treesitter#foldexpr()"
-
-  api.nvim_set_keymap('n', 'R', ':write | edit | TSBufEnable highlight<CR>', {});
+  vim.api.nvim_command('set foldmethod=expr')
+  vim.api.nvim_command('set foldexpr=nvim_treesitter#foldexpr()')
+  vim.api.nvim_set_keymap('n', 'R', ':write | edit | TSBufEnable highlight<CR>',
+                          {});
 end
 
 return M

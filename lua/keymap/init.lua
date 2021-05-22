@@ -102,9 +102,10 @@ nnoremap('<Leader>cf', ':NvimTreeFindFile<CR>')
 
 -- Far
 nnoremap("<Leader>Ff", ":Farr --source=vimgrep<CR>")
-nnoremap("<Leader>Fr", ":Farr --source=rgnvim<CR>")
 nnoremap("<Leader>Fd", ":Fardo<CR>")
-nnoremap("<Leader>Fz", ":Farf<CR>")
+nnoremap("<Leader>Fi", ":Farf<CR>")
+nnoremap("<Leader>Fr", ":Farr --source=rgnvim<CR>")
+nnoremap("<Leader>Fz", ":Farundo<CR>")
 
 -- Bufferline
 nnoremap('<Leader>bb', ':BufferLineMovePrev<CR>')

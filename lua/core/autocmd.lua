@@ -56,12 +56,18 @@ local win = {
   -- Force write shada on leaving nvim
   {"VimLeave", "*", [[if has('nvim') | wshada! | else | wviminfo! | endif]]},
   -- Compile everytime a lua file is saved
-  {"BufWritePost", "*.lua", "lua require('core.plug').magic_compile()"}
+  {"VimLeave", "*.lua", "lua require('core.plug').magic_compile()"}
 }
 
 local ft = {
   {"FileType", "dap-repl", "lua require('dap.ext.autocompl').attach()"},
   {"FileType", "floaterm", "setlocal winblend=0"},
+  {
+    "FileType",
+    "dashboard",
+    "set showtabline=0 | autocmd WinLeave <buffer> set showtabline=2"
+  },
+  {"WinLeave", "dashboard", ":write | edit | TSBufEnable highlight<CR>"},
   {
     "FileType",
     "which_key",

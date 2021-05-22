@@ -29,9 +29,9 @@ tools['iamcco/markdown-preview.nvim'] = {
 
 tools['brooth/far.vim'] = {
   event = {'BufReadPre', 'BufNewFile'},
-  cmd = {'Far', 'Farr', 'Farp', 'Farf'},
   config = function()
     vim.g['far#source'] = 'rg'
+    vim.g['far#enable_undo'] = 1
   end
 }
 
