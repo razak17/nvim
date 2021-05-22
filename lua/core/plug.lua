@@ -49,15 +49,6 @@ function Plug:load_packer()
   end
 end
 
-local plugins = setmetatable({}, {
-  __index = function(_, key)
-    if not packer then
-      Plug:load_packer()
-    end
-    return packer[key]
-  end
-})
-
 function Plug:init_ensure_plugins()
   local packer_dir = data_dir .. 'pack/packer/opt/packer.nvim'
   local state = uv.fs_stat(packer_dir)
@@ -72,6 +63,15 @@ function Plug:init_ensure_plugins()
     packer.install()
   end
 end
+
+local plugins = setmetatable({}, {
+  __index = function(_, key)
+    if not packer then
+      Plug:load_packer()
+    end
+    return packer[key]
+  end
+})
 
 function plugins.ensure_plugins()
   Plug:init_ensure_plugins()
@@ -115,13 +115,23 @@ function plugins.magic_compile()
   plugins.convert_compile_file()
 end
 
+function plugins.auto_compile()
+  local file = vim.fn.expand('%:p')
+  if file:match(modules_dir) then
+    plugins.clean()
+    plugins.compile()
+    plugins.convert_compile_file()
+  end
+end
+
 function plugins.load_compile()
   if vim.fn.filereadable(compile_to_lua) == 1 then
     require('_compiled')
   else
+    -- assert(
+    --     'Missing packer compile file Run PackerCompile Or PackerInstall to fix')
     plugins.magic_compile()
   end
-
   vim.cmd [[command! PlugCompile lua require('core.plug').magic_compile()]]
   vim.cmd [[command! PlugInstall lua require('core.plug').install()]]
   vim.cmd [[command! PlugUpdate lua require('core.plug').update()]]
