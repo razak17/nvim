@@ -17,6 +17,7 @@ local load_core = function()
 
   require('keymap')
   require('core.autocmd')
+  require('modules.lang.ts')
 end
 
 load_core()

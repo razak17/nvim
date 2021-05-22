@@ -1,14 +1,12 @@
 local actions = require('telescope.actions')
 
-if not packer_plugins['popup.nvim'].loaded then
-  vim.cmd [[packadd plenary.nvim]]
-  vim.cmd [[packadd popup.nvim]]
-  vim.cmd [[packadd telescope-fzy-native.nvim]]
-  vim.cmd [[packadd telescope-media-files.nvim]]
-  vim.cmd [[packadd telescope-packer.nvim]]
-  vim.cmd [[packadd telescope-dap.nvim]]
-  vim.cmd [[packadd telescope-project.nvim]]
-end
+vim.cmd [[packadd plenary.nvim]]
+vim.cmd [[packadd popup.nvim]]
+vim.cmd [[packadd telescope-fzy-native.nvim]]
+vim.cmd [[packadd telescope-media-files.nvim]]
+vim.cmd [[packadd telescope-packer.nvim]]
+vim.cmd [[packadd telescope-dap.nvim]]
+vim.cmd [[packadd telescope-project.nvim]]
 
 require('telescope').setup({
   defaults = {
@@ -20,20 +18,14 @@ require('telescope').setup({
       "node_modules/*",
       "dist/*",
       ".git/*",
-      ".venv/*",
-      ".env/*"
+      ".venv/*"
     },
     borderchars = {'─', '│', '─', '│', '┌', '┐', '┘', '└'},
     file_sorter = require'telescope.sorters'.get_fzy_sorter,
     file_previewer = require'telescope.previewers'.vim_buffer_cat.new,
     grep_previewer = require'telescope.previewers'.vim_buffer_vimgrep.new,
     qflist_previewer = require'telescope.previewers'.vim_buffer_qflist.new,
-    mappings = {
-      i = {
-        ["<C-b>"] = actions.move_selection_previous,
-        ["<C-e>"] = actions.send_to_qflist
-      }
-    },
+    mappings = {i = {["<C-e>"] = actions.send_to_qflist}},
     file_browser = {hidden = true},
     extensions = {
       fzy_native = {

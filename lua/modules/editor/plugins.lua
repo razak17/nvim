@@ -1,7 +1,7 @@
 local conf = require('modules.editor.config')
 local editor = {}
 
-editor['rhysd/accelerated-jk'] = {opt = true}
+editor['rhysd/accelerated-jk'] = {opt = true, event = "VimEnter"}
 
 editor['tpope/vim-surround'] = {event = {'BufReadPre', 'BufNewFile'}}
 

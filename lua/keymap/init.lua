@@ -38,6 +38,7 @@ nnoremap("<Leader>au", ":UndotreeToggle<CR>")
 
 -- TS
 nnoremap('<Leader>Ie', ':TSInstallInfo<CR>')
+nnoremap('<Leader>mw', ':<c-u>MatchupWhereAmI?<CR>')
 
 -- rnvimr
 nnoremap('<Leader>ar', ':RnvimrToggle<CR>')

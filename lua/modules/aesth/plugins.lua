@@ -3,9 +3,9 @@ local aesth = {}
 
 aesth['glepnir/dashboard-nvim'] = {config = conf.dashboard}
 
-aesth['itchyny/vim-cursorword'] = {config = conf.vim_cursorwod}
-
 aesth['razak17/zephyr-nvim'] = {config = [[vim.cmd('colo zephyr')]]}
+
+aesth['itchyny/vim-cursorword'] = {event = {'BufReadPre', 'BufNewFile'}}
 
 aesth['lukas-reineke/indent-blankline.nvim'] =
     {event = 'BufRead', branch = 'lua', config = conf.indent_blankline}
@@ -36,7 +36,7 @@ aesth['romainl/vim-cool'] = {
 aesth['lewis6991/gitsigns.nvim'] = {
   event = {'BufRead', 'BufNewFile'},
   config = conf.gitsigns,
-  requires = {'nvim-lua/plenary.nvim', opt = true}
+  requires = {{'nvim-lua/plenary.nvim', opt = true}}
 }
 
 return aesth

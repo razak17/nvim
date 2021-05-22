@@ -6,7 +6,8 @@ completion['hrsh7th/nvim-compe'] = {
   config = conf.nvim_compe
 }
 
-completion['liuchengxu/vim-which-key'] = {config = conf.which_key}
+completion['liuchengxu/vim-which-key'] =
+    {event = 'VimEnter', config = conf.which_key}
 
 completion['rafamadriz/friendly-snippets'] = {event = 'InsertEnter'}
 

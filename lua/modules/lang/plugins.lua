@@ -7,20 +7,16 @@ lang['mfussenegger/nvim-dap'] = {config = conf.dap}
 
 lang['rcarriga/nvim-dap-ui'] = {config = conf.dap_ui}
 
+lang['andymass/vim-matchup'] = {event = 'BufReadPre'}
+
 lang['kevinhwang91/nvim-bqf'] = {event = 'BufReadPre'}
 
--- lang['p00f/nvim-ts-rainbow'] = {opt = true}
+lang['p00f/nvim-ts-rainbow'] = {opt = true, after = 'nvim-treesitter'}
 
 lang['neovim/nvim-lspconfig'] = {event = 'BufRead', config = conf.nvim_lsp}
 
 lang['nvim-treesitter/nvim-treesitter'] =
-    {
-      -- event = {'VimEnter'},
-      event = 'BufRead',
-      after = 'telescope.nvim',
-      -- run = ':TSUpdate',
-      config = conf.treesitter
-    }
+    {event = 'BufRead', after = 'telescope.nvim', config = conf.treesitter}
 
 lang['liuchengxu/vista.vim'] = {
   event = 'BufRead',
@@ -40,10 +36,10 @@ lang['folke/trouble.nvim'] = {
   config = conf.trouble
 }
 
--- lang['windwp/nvim-ts-autotag'] = {
---   opt = true,
---   after = 'nvim-treesitter',
---   event = "InsertLeavePre"
--- }
+lang['windwp/nvim-ts-autotag'] = {
+  opt = true,
+  after = 'nvim-treesitter',
+  event = "InsertLeavePre"
+}
 
 return lang

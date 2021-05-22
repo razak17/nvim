@@ -24,19 +24,6 @@ function config.indent_blankline()
   require('modules.aesth.indent_blankline')
 end
 
-function config.vim_cursorwod()
-  vim.api.nvim_exec([[
-    augroup user_plugin_cursorword
-      autocmd!
-      autocmd FileType NvimTree,lspsagafinder,dashboard,vista let b:cursorword = 0
-      autocmd WinEnter * if &diff || &pvw | let b:cursorword = 0 | endif
-      autocmd InsertEnter * let b:cursorword = 0
-      autocmd InsertLeave * let b:cursorword = 1
-    augroup END
-
-  ]], false)
-end
-
 function config.ColorMyPencils()
   vim.cmd [[ hi ColorColumn guibg=#aeacec ]]
   vim.cmd [[ hi Normal guibg=none ]]

@@ -1,13 +1,7 @@
 local config = {}
 
-local fts = {"lua", "javascript", "typescript", "html"}
 function config.treesitter()
-  vim.api.nvim_command('set foldmethod=expr')
-  vim.api.nvim_command('set foldexpr=nvim_treesitter#foldexpr()')
-  require'nvim-treesitter.configs'.setup {
-    ensure_installed = fts,
-    highlight = {enable = true}
-  }
+  require('modules.lang.ts').setup()
 end
 
 function config.nvim_lsp()

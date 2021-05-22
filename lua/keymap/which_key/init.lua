@@ -190,7 +190,13 @@ g.which_key_map = {
   },
   I = {name = '+Info', c = 'check health', e = 'treesitter'},
   L = {name = '+Lsp_utils', i = 'info', l = 'log', r = 'restart'},
-  m = {name = '+mark', e = 'toggle', b = 'previous mark', k = 'next mark'},
+  m = {
+    name = '+mark',
+    e = 'toggle',
+    b = 'previous mark',
+    k = 'next mark',
+    w = 'where_am_i'
+  },
   o = {name = '+Toggle_cmds'},
   P = {
     name = '+Plug',

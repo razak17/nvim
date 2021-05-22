@@ -1,6 +1,4 @@
-if not packer_plugins['plenary.nvim'].loaded then
-  vim.cmd [[packadd plenary.nvim]]
-end
+vim.cmd [[packadd plenary.nvim]]
 
 require('gitsigns').setup {
   signs = {
