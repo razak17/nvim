@@ -1,16 +1,17 @@
 local conf = require('modules.aesth.config')
 local aesth = {}
 
-aesth['glepnir/dashboard-nvim'] = {config = conf.dashboard}
+aesth['glepnir/dashboard-nvim'] = {event = "VimEnter", config = conf.dashboard}
 
 aesth['razak17/zephyr-nvim'] = {config = [[vim.cmd('colo zephyr')]]}
 
 aesth['itchyny/vim-cursorword'] = {event = {'BufReadPre', 'BufNewFile'}}
 
 aesth['lukas-reineke/indent-blankline.nvim'] =
-    {event = 'BufRead', branch = 'lua', config = conf.indent_blankline}
+    {event = 'VimEnter', branch = 'lua', config = conf.indent_blankline}
 
 aesth['akinsho/nvim-bufferline.lua'] = {
+  event = "VimEnter",
   config = conf.nvim_bufferline,
   requires = 'kyazdani42/nvim-web-devicons'
 }
