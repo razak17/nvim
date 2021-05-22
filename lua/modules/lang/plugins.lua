@@ -18,22 +18,26 @@ lang['neovim/nvim-lspconfig'] = {event = 'BufRead', config = conf.nvim_lsp}
 lang['nvim-treesitter/nvim-treesitter'] =
     {event = 'BufRead', after = 'telescope.nvim', config = conf.treesitter}
 
+lang['windwp/nvim-ts-autotag'] = {
+  opt = true,
+  after = 'nvim-treesitter',
+  event = "InsertLeavePre"
+}
+
 lang['simrat39/symbols-outline.nvim'] = {
   event = 'BufRead',
   cmd = 'SymbolsOutline',
-  config = conf.symbols
+  config = function()
+    require("symbols-outline").setup {show_guides = true}
+  end
 }
 
 lang['folke/trouble.nvim'] = {
   event = 'BufRead',
   requires = "kyazdani42/nvim-web-devicons",
-  config = conf.trouble
-}
-
-lang['windwp/nvim-ts-autotag'] = {
-  opt = true,
-  after = 'nvim-treesitter',
-  event = "InsertLeavePre"
+  config = function()
+    require("trouble").setup {use_lsp_diagnostic_signs = true}
+  end
 }
 
 return lang

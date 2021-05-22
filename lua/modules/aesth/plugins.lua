@@ -5,8 +5,6 @@ aesth['glepnir/dashboard-nvim'] = {event = "VimEnter", config = conf.dashboard}
 
 aesth['razak17/zephyr-nvim'] = {config = [[vim.cmd('colo zephyr')]]}
 
-aesth['itchyny/vim-cursorword'] = {event = 'VimEnter'}
-
 aesth['lukas-reineke/indent-blankline.nvim'] =
     {event = 'VimEnter', branch = 'lua', config = conf.indent_blankline}
 
@@ -25,13 +23,6 @@ aesth['glepnir/galaxyline.nvim'] = {
   branch = 'main',
   config = conf.galaxyline,
   requires = 'kyazdani42/nvim-web-devicons'
-}
-
-aesth['romainl/vim-cool'] = {
-  event = {'BufRead', 'BufNewFile'},
-  config = function()
-    vim.g.CoolTotalMatches = 1
-  end
 }
 
 aesth['lewis6991/gitsigns.nvim'] = {

@@ -20,16 +20,4 @@ function config.nvim_colorizer()
   }, {names = false, mode = 'background'})
 end
 
-function config.autopairs()
-  require('nvim-autopairs').setup({
-    disable_filetype = {"TelescopePrompt", "vim", "lua", "c", "cpp"}
-  })
-end
-
-function config.kommentary()
-  require('kommentary.config').configure_language("default", {
-    prefer_single_line_comments = true
-  })
-end
-
 return config

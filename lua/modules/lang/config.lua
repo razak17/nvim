@@ -12,21 +12,6 @@ function config.dap()
   require 'modules.lang.dap'
 end
 
-function config.symbols()
-  require("symbols-outline").setup {
-    highlight_hovered_item = true,
-    show_guides = true
-  }
-end
-
-function config.trouble()
-  require("trouble").setup {
-    height = 12,
-    use_lsp_diagnostic_signs = true,
-    action_keys = {toggle_fold = "ze"}
-  }
-end
-
 function config.dap_ui()
   require("dapui").setup({
     mappings = {expand = "<CR>", open = "o", remove = "d"},
@@ -45,8 +30,7 @@ function config.lsp_saga()
     warn_sign = '',
     hint_sign = '',
     infor_sign = '',
-    code_action_icon = '💡',
-    finder_action_keys = {quit = 'x'}
+    code_action_icon = '💡'
   }
   return opts
 end
