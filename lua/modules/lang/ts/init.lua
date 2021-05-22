@@ -13,7 +13,6 @@ local filetypes = {
   "yaml",
   "c",
   "cpp",
-  "go",
   "python"
 }
 
@@ -31,7 +30,7 @@ function M.setup()
     highlight = {enable = true},
     autotag = {enable = true},
     rainbow = {enable = true, extended_mode = true},
-    matchup = {enable = true, disable = {"c", "ruby"}},
+    matchup = {enable = true, disable = {"c", "python"}},
     ensure_installed = filetypes
   }
   vim.api.nvim_command('set foldmethod=expr')

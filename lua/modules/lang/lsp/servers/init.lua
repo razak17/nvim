@@ -41,10 +41,7 @@ end
 local function lsp_setup()
   require 'modules.lang.lsp.servers.bash'
   require 'modules.lang.lsp.servers.clangd'
-  require 'modules.lang.lsp.servers.elixir'
-  require 'modules.lang.lsp.servers.go'
   require 'modules.lang.lsp.servers.python'
-  require 'modules.lang.lsp.servers.rust'
   require 'modules.lang.lsp.servers.sumneko_lua'
   require 'modules.lang.lsp.servers.tsserver'
   require 'modules.lang.lsp.servers.simple_lsp'

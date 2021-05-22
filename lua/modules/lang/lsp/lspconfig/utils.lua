@@ -45,10 +45,8 @@ M.diagnostics_off = {
 
 M.lsp_saga = function(bufnr)
   vim.cmd [[packadd lspsaga.nvim]]
-
   local saga = require 'lspsaga'
   saga.init_lsp_saga(require'modules.lang.config'.lsp_saga())
-
   buf_map(bufnr, "<Leader>vD", "Lspsaga preview_definition")
   buf_map(bufnr, "<Leader>vc", "Lspsaga lsp_finder")
   buf_map(bufnr, "<Leader>va", "Lspsaga code_action")
@@ -106,7 +104,6 @@ end
 
 M.show_lsp_diagnostics = (function()
   vim.cmd [[packadd lspsaga.nvim]]
-
   local debounced = debounce(require'lspsaga.diagnostic'.show_line_diagnostics,
                              300)
   local cursorpos = get_cursor_pos()

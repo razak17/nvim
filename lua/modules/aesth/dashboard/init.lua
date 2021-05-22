@@ -1,4 +1,5 @@
 local g = vim.g
+local G = require 'core.global'
 
 vim.cmd [[
   let g:dashboard_custom_header =<< trim END
@@ -29,14 +30,11 @@ g.dashboard_preview_pipeline = 'lolcat -F 0.3'
 g.dashboard_preview_file_height = 12
 g.dashboard_preview_file_width = 70
 g.dashboard_default_executive = 'telescope'
+g.dashboard_session_directory = G.cache_dir .. 'sessions'
 g.dashboard_custom_section = {
-  last_session = {
-    description = {'  Load last session                 SPC S l  '},
-    command = 'SessionLoad'
-  },
   find_history = {
     description = {'  Recent files                      SPC f c h'},
-    command = 'DashboardFindHistory'
+    command = 'Telescope oldfiles'
   },
   find_file = {
     description = {'  Find File                         SPC f f  '},
@@ -48,10 +46,14 @@ g.dashboard_custom_section = {
   },
   find_word = {
     description = {'  Find word                         SPC f l w'},
-    command = 'DashboardFindWord'
+    command = 'Telescope live_grep'
+  },
+  last_session = {
+    description = {'  Load last session                 SPC S l  '},
+    command = 'SessionLoad'
   },
   find_dotfiles = {
     description = {'  Nvim config files                 SPC f r c'},
-    command = 'Telescope nvim_files'
+    command = 'Telescope nvim_files files'
   }
 }

@@ -27,7 +27,7 @@ local buf = {
   {"BufEnter,BufNewFile", "*", "set fo-=cro"},
   {
     "BufEnter,BufNewFile",
-    "*.lua,*.html,*.css,*.js,*.ts,*.tsx,*.py,*.c,*.cpp,*.go,*.json,*.yml.*.tmux.conf",
+    "*.lua,*.html,*.css,*.js,*.ts,*.tsx,*.py,*.c,*.cpp,*.go,*.json,*.yml,*.tmux.conf",
     ":edit | TSBufEnable highlight<CR>"
   }
 }
@@ -42,7 +42,7 @@ local niceties = {
 }
 
 local win = {
-  {"TermOpen", "*", "startinsert"},
+  -- {"TermOpen", "*", "startinsert"},
   -- Autosave when nvim loses focus
   {"FocusLost", "*", "silent! wall"},
   -- Equalize window dimensions when resizing vim window
@@ -61,11 +61,12 @@ local win = {
   -- Force write shada on leaving nvim
   {"VimLeave", "*", [[if has('nvim') | wshada! | else | wviminfo! | endif]]},
   -- Compile everytime a lua file is saved
-  {"VimLeave", "*.lua", "lua require('core.plug').magic_compile()"}
+  {"VimLeave", "*.lua", "lua require('core.plug').magic_compile()"},
+  {"VimLeavePre", "*", "SessionSave"}
 }
 
 local ft = {
-  {"FileType", "dap-repl", "lua require('dap.ext.autocompl').attach()"},
+  -- {"FileType", "dap-repl", "lua require('dap.ext.autocompl').attach()"},
   {"FileType", "floaterm", "setlocal winblend=0"},
   {"FileType", "Trouble", "set colorcolumn=0"},
   {

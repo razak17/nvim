@@ -14,13 +14,7 @@ end
 
 function config.dap_ui()
   require("dapui").setup({
-    mappings = {expand = "<CR>", open = "o", remove = "d"},
-    sidebar = {
-      elements = {"scopes", "stacks", "watches"},
-      width = 60,
-      position = "left"
-    },
-    tray = {elements = {"repl"}, height = 10, position = "bottom"}
+    mappings = {expand = "<CR>", open = "o", remove = "d"}
   })
 end
 
