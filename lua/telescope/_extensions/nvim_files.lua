@@ -22,7 +22,7 @@ nv_config.branches = function()
 end
 
 nv_config.status = function()
-  require("telescope.builtin").git_branches(
+  require("telescope.builtin").git_status(
       {prompt_title = 'Git status for nvim config', cwd = cwd})
 end
 

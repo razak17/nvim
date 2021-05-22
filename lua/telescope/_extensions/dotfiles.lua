@@ -21,20 +21,24 @@ dots_config.git_files = function(opts)
             }), opts)
       })
 end
+
 dots_config.commits = function()
   require("telescope.builtin").git_commits(
       {prompt_title = 'Git commits for dotfiles', cwd = cwd})
 end
+
 dots_config.bcommits = function()
   require("telescope.builtin").git_bcommits(
       {prompt_title = 'Git bcommits For dotfiles', cwd = cwd})
 end
+
 dots_config.branches = function()
   require("telescope.builtin").git_branches(
       {prompt_title = 'Git branches for dotfiles', cwd = cwd})
 end
+
 dots_config.status = function()
-  require("telescope.builtin").git_branches(
+  require("telescope.builtin").git_status(
       {prompt_title = 'Git status for dotfiles', cwd = cwd})
 end
 
