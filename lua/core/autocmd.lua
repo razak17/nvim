@@ -67,6 +67,7 @@ local win = {
 local ft = {
   {"FileType", "dap-repl", "lua require('dap.ext.autocompl').attach()"},
   {"FileType", "floaterm", "setlocal winblend=0"},
+  {"FileType", "Trouble", "set colorcolumn=0"},
   {
     "FileType",
     "dashboard",
@@ -84,7 +85,6 @@ local user_plugin_cursorword = {
   {"WinEnter", "*", [[if &diff || &pvw | let b:cursorword = 0  | endif]]},
   {"InsertEnter", "*", "let b:cursorword = 0"},
   {"InsertLeave", "*", "let b:cursorword = 1"}
-
 }
 
 local definitions = {buf, ft, win, niceties, user_plugin_cursorword}
