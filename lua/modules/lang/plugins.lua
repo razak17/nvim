@@ -18,12 +18,6 @@ lang['neovim/nvim-lspconfig'] = {event = 'BufRead', config = conf.nvim_lsp}
 lang['nvim-treesitter/nvim-treesitter'] =
     {event = 'BufRead', after = 'telescope.nvim', config = conf.treesitter}
 
-lang['liuchengxu/vista.vim'] = {
-  event = 'BufRead',
-  cmd = 'Vista',
-  config = conf.vim_vista
-}
-
 lang['simrat39/symbols-outline.nvim'] = {
   event = 'BufRead',
   cmd = 'SymbolsOutline',

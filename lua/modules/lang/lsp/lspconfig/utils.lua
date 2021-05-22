@@ -44,9 +44,7 @@ M.diagnostics_off = {
 }
 
 M.lsp_saga = function(bufnr)
-  if not packer_plugins['lspsaga.nvim'].loaded then
-    vim.cmd [[packadd lspsaga.nvim]]
-  end
+  vim.cmd [[packadd lspsaga.nvim]]
 
   local saga = require 'lspsaga'
   saga.init_lsp_saga(require'modules.lang.config'.lsp_saga())
@@ -107,9 +105,7 @@ M.lsp_document_highlight = function(client)
 end
 
 M.show_lsp_diagnostics = (function()
-  if not packer_plugins['lspsaga.nvim'].loaded then
-    vim.cmd [[packadd lspsaga.nvim]]
-  end
+  vim.cmd [[packadd lspsaga.nvim]]
 
   local debounced = debounce(require'lspsaga.diagnostic'.show_line_diagnostics,
                              300)

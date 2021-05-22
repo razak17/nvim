@@ -43,9 +43,6 @@ nnoremap('<Leader>mw', ':<c-u>MatchupWhereAmI?<CR>')
 -- rnvimr
 nnoremap('<Leader>ar', ':RnvimrToggle<CR>')
 
--- Vista
-nnoremap('<Leader>vV', ':Vista!!<CR>')
-
 -- Symbols Outline
 nnoremap('<Leader>vs', ':SymbolsOutline<CR>')
 

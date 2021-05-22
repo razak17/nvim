@@ -242,7 +242,6 @@ g.which_key_map = {
     r = {name = '+Rename', n = 'builtin lsp', r = 'lsp_saga'},
     s = 'Symbols outline',
     v = 'toggle virtual text',
-    V = 'vista',
     w = {name = '+Color', m = 'pencils'},
     x = {
       name = '+Trouble',

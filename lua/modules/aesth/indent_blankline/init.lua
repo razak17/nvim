@@ -13,7 +13,7 @@ vim.g.indent_blankline_filetype_exclude =
       "markdown",
       "json",
       "txt",
-      "vista",
+      "outline",
       "help",
       "todoist",
       "NvimTree",
