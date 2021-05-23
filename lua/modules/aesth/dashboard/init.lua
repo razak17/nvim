@@ -45,7 +45,7 @@ g.dashboard_custom_section = {
     command = 'Telescope file_browser'
   },
   find_word = {
-    description = {'  Find word                         SPC f l w'},
+    description = {'  Find word                         SPC f l g'},
     command = 'Telescope live_grep'
   },
   last_session = {

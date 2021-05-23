@@ -93,6 +93,7 @@ g.which_key_map = {
   },
   f = {
     name = '+Telescope',
+    b = "file browser",
     c = {
       name = '+Command',
       A = 'autocmds',
