@@ -34,7 +34,7 @@ lang['simrat39/symbols-outline.nvim'] = {
 
 lang['folke/trouble.nvim'] = {
   event = 'BufRead',
-  requires = "kyazdani42/nvim-web-devicons",
+  requires = {{"kyazdani42/nvim-web-devicons", opt = true}},
   config = function()
     require("trouble").setup {use_lsp_diagnostic_signs = true}
   end

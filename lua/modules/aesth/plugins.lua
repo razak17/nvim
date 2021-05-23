@@ -3,7 +3,10 @@ local aesth = {}
 
 aesth['glepnir/dashboard-nvim'] = {event = "VimEnter", config = conf.dashboard}
 
-aesth['razak17/zephyr-nvim'] = {config = [[vim.cmd('colo zephyr')]]}
+aesth['razak17/zephyr-nvim'] = {
+  event = "VimEnter",
+  config = [[vim.cmd('colo zephyr')]]
+}
 
 aesth['lukas-reineke/indent-blankline.nvim'] =
     {event = 'VimEnter', branch = 'lua', config = conf.indent_blankline}
@@ -11,18 +14,19 @@ aesth['lukas-reineke/indent-blankline.nvim'] =
 aesth['akinsho/nvim-bufferline.lua'] = {
   event = "VimEnter",
   config = conf.nvim_bufferline,
-  requires = 'kyazdani42/nvim-web-devicons'
+  requires = {{"kyazdani42/nvim-web-devicons", opt = true}}
 }
 
 aesth['kyazdani42/nvim-tree.lua'] = {
+  event = "VimEnter",
   config = conf.nvim_tree,
-  requires = 'kyazdani42/nvim-web-devicons'
+  requires = {{"kyazdani42/nvim-web-devicons", opt = true}}
 }
 
 aesth['glepnir/galaxyline.nvim'] = {
   branch = 'main',
   config = conf.galaxyline,
-  requires = 'kyazdani42/nvim-web-devicons'
+  requires = {{"kyazdani42/nvim-web-devicons", opt = true}}
 }
 
 aesth['lewis6991/gitsigns.nvim'] = {

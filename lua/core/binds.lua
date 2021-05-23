@@ -12,8 +12,8 @@ local nnoremap, inoremap, vnoremap, xnoremap, tnoremap = mp.nnoremap,
 nnoremap('Y', 'y$')
 
 -- Easier line-wise movement
-nnoremap("gh", "g^")
-nnoremap("gl", "g$")
+-- nnoremap("gh", "g^")
+-- nnoremap("gl", "g$")
 
 -- Move selected line / block of text in visual mode
 xnoremap('K', ":m '<-2<CR>gv=gv")

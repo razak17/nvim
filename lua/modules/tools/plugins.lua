@@ -3,7 +3,7 @@ local conf = require('modules.tools.config')
 
 tools['mbbill/undotree'] = {cmd = "UndotreeToggle"}
 
-tools['voldikss/vim-floaterm'] = {config = conf.floaterm}
+tools['voldikss/vim-floaterm'] = {event = "VimEnter", config = conf.floaterm}
 
 tools['tweekmonster/startuptime.vim'] = {cmd = "StartupTime"}
 

@@ -91,7 +91,6 @@ nnoremap('<Leader>od', ':DBUIToggle<CR>')
 nnoremap('<Leader>Li', ':LspInfo<CR>')
 nnoremap('<Leader>Ll', ':LspLog<CR>')
 nnoremap('<Leader>Lr', ':LspRestart<CR>')
-nnoremap('<Leader>vf', ':LspFormatting<CR>')
 nnoremap('<Leader>vv', ':LspToggleVirtualText<CR>')
 
 -- Tree

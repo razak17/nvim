@@ -47,20 +47,33 @@ M.lsp_saga = function(bufnr)
   vim.cmd [[packadd lspsaga.nvim]]
   local saga = require 'lspsaga'
   saga.init_lsp_saga(require'modules.lang.config'.lsp_saga())
-  buf_map(bufnr, "<Leader>vD", "Lspsaga preview_definition")
-  buf_map(bufnr, "<Leader>vc", "Lspsaga lsp_finder")
+  buf_map(bufnr, "gd", "Lspsaga lsp_finder")
+  buf_map(bufnr, "gsh", "Lspsaga signature_help")
+  buf_map(bufnr, "gh", "Lspsaga preview_definition")
+  buf_map(bufnr, "grr", "Lspsaga rename")
+  buf_map(bufnr, "K", "Lspsaga hover_doc")
   buf_map(bufnr, "<Leader>va", "Lspsaga code_action")
   buf_map(bufnr, "<Leader>vA", "Lspsaga range_code_action")
-  buf_map(bufnr, "<Leader>vls", "Lspsaga signature_help")
-  buf_map(bufnr, "<Leader>vrr", "Lspsaga rename")
   buf_map(bufnr, "<Leader>vdb", "Lspsaga diagnostic_jump_prev")
   buf_map(bufnr, "<Leader>vdn", "Lspsaga diagnostic_jump_next")
   buf_map(bufnr, "<Leader>vdl", "Lspsaga show_line_diagnostics")
-  buf_map(bufnr, "K", "Lspsaga hover_doc")
   buf_cmd_map(bufnr, "<C-f>",
               "require('lspsaga.action').smart_scroll_with_saga(1)")
   buf_cmd_map(bufnr, "<c-b>",
               "require('lspsaga.action').smart_scroll_with_saga(-1)")
+end
+
+M.lsp_mappings = function(bufnr, client)
+  buf_cmd_map(bufnr, "gsd", "vim.lsp.buf.document_symbol()")
+  buf_cmd_map(bufnr, "gsw", "vim.lsp.buf.workspace_symbol()")
+  buf_cmd_map(bufnr, "gi", "vim.lsp.buf.implementation()")
+  buf_cmd_map(bufnr, "gR", "vim.lsp.buf.references()")
+  buf_cmd_map(bufnr, "gD", "vim.lsp.buf.definition()")
+  buf_cmd_map(bufnr, "grn", "vim.lsp.buf.rename()")
+  buf_map(bufnr, '<Leader>vf', 'LspFormatting')
+  if client.resolved_capabilities.type_definition then
+    buf_cmd_map(bufnr, "<Leader>vle", "vim.lsp.buf.type_definition()")
+  end
 end
 
 M.lsp_line_diagnostics = function()
@@ -70,16 +83,6 @@ M.lsp_line_diagnostics = function()
       au CursorHold * lua require("modules.lang.lsp.lspconfig.utils").show_lsp_diagnostics()
     augroup END
   ]], false)
-end
-
-M.lsp_mappings = function(bufnr)
-  buf_cmd_map(bufnr, "gsd", "vim.lsp.buf.document_symbol()")
-  buf_cmd_map(bufnr, "gsw", "vim.lsp.buf.workspace_symbol()")
-  buf_cmd_map(bufnr, "gi", "vim.lsp.buf.implementation()")
-  buf_cmd_map(bufnr, "gr", "vim.lsp.buf.references()")
-  buf_cmd_map(bufnr, "<Leader>vle", "vim.lsp.buf.type_definition()")
-  buf_cmd_map(bufnr, "<Leader>vll", 'vim.lsp.diagnostic.set_loclist()')
-  buf_cmd_map(bufnr, "<Leader>vrn", "vim.lsp.buf.rename()")
 end
 
 M.lsp_document_formatting = function(client)

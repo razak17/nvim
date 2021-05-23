@@ -224,8 +224,6 @@ g.which_key_map = {
     name = '+Code',
     a = 'code action',
     A = 'range code action',
-    c = 'find the cursor word definition and reference',
-    D = 'preview definition',
     d = {
       name = '+Diagnostics',
       b = 'goto previous',
@@ -233,14 +231,8 @@ g.which_key_map = {
       n = 'goto next'
     },
     f = 'format',
-    l = {
-      name = '+Lsp',
-      l = 'set loc list',
-      s = 'signature',
-      e = 'type definition'
-    },
+    l = {name = '+Lsp', l = 'set loc list', e = 'type definition'},
     o = 'open qflist',
-    r = {name = '+Rename', n = 'builtin lsp', r = 'lsp_saga'},
     s = 'Symbols outline',
     v = 'toggle virtual text',
     w = {name = '+Color', m = 'pencils'},

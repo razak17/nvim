@@ -1,6 +1,7 @@
 local config = {}
 
 function config.floaterm()
+  vim.cmd [[packadd vim-floaterm]]
   vim.g.floaterm_keymap_kill = '<F6>'
   vim.g.floaterm_keymap_new = '<F7>'
   vim.g.floaterm_keymap_prev = '<F8>'

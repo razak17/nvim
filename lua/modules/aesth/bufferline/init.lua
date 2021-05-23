@@ -1,3 +1,5 @@
+vim.cmd [[packadd nvim-web-devicons]]
+
 local options = {
   view = "default",
   close_icon = '',
@@ -31,7 +33,7 @@ local highlights = {
   fill = {guifg = fg_def, guibg = bg},
   background = {guifg = fg_def, guibg = bg},
   tab = {guifg = fg_def, guibg = bg},
-  tab_selected = {guifg = fg_sel, guibg = bg_sel},
+  tab_selected = {guifg = fg_sel, guibg = bg},
   tab_close = {guifg = fg_def, guibg = bg},
   duplicate = {guifg = fg_def, guibg = bg},
   duplicate_visible = {guifg = fg_def, guibg = bg},
@@ -52,11 +54,11 @@ local highlights = {
   modified_selected = {guibg = bg_sel},
   separator = {guifg = fg_warn, guibg = bg},
   separator_visible = {guifg = fg_warn, guibg = bg},
-  separator_selected = {guifg = fg_warn, guibg = bg_sel},
+  separator_selected = {guifg = fg_warn, guibg = bg},
   pick = {guifg = pick_fg, guibg = bg},
   pick_visible = {guifg = pick_fg, guibg = bg},
-  pick_selected = {guifg = fg_info, guibg = bg_sel},
-  indicator_selected = {guifg = bg, guibg = bg_sel}
+  pick_selected = {guifg = fg_info, guibg = bg},
+  indicator_selected = {guifg = bg, guibg = bg}
 }
 
 require'bufferline'.setup {options = options, highlights = highlights}
