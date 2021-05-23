@@ -150,6 +150,12 @@ nnoremap('<leader>dbs',
          '<cmd>lua require"dap".set_breakpoint(vim.fn.input("Breakpoint condition: "))<CR>')
 
 -- Floaterm
+nnoremap("<F6>", ":FloatermKill<CR>")
+nnoremap("<F7>", ":FloatermNew<CR>")
+nnoremap("<F8>", ":FloatermPrev<CR>")
+nnoremap("<F9>", ":FloatermNext<CR>")
+nnoremap("<F12>", ":FloatermToggle<CR>")
+nnoremap("<Leader>eN", ":FloatermNew<CR>")
 nnoremap("<Leader>el", ":FloatermNew lazygit<CR>")
 nnoremap("<Leader>en", ":FloatermNew node<CR>")
 nnoremap("<Leader>ep", ":FloatermNew python<CR>")

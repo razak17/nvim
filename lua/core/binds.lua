@@ -54,7 +54,7 @@ inoremap('<C-h>', '<C-\\><C-N><C-w>h')
 inoremap('<C-j>', '<C-\\><C-N><C-w>j')
 inoremap('<C-k>', '<C-\\><C-N><C-w>k')
 inoremap('<C-l>', '<C-\\><C-N><C-w>l')
--- tnoremap('<Esc>', '<C-\\><C-N>')
+tnoremap('<Esc>', '<C-\\><C-N>')
 
 -- TAB in general mode will move to text buffer, SHIFT-TAB will go back
 nnoremap('<TAB>', ':bnext<CR>')
