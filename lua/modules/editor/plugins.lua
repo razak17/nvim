@@ -6,7 +6,8 @@ editor['rhysd/accelerated-jk'] = {opt = true, event = "VimEnter"}
 editor['tpope/vim-surround'] = {event = {'BufReadPre', 'BufNewFile'}}
 
 editor['norcalli/nvim-colorizer.lua'] = {
-  ft = {'typescript', 'lua', 'css', 'yaml', 'tmux'},
+  -- ft = {'typescript', 'lua', 'css', 'yaml', 'tmux'},
+  event = {'BufReadPre', 'BufNewFile'},
   config = conf.nvim_colorizer
 }
 
