@@ -33,7 +33,7 @@ g.dashboard_default_executive = 'telescope'
 g.dashboard_session_directory = G.cache_dir .. 'sessions'
 g.dashboard_custom_section = {
   find_history = {
-    description = {'  Recent files                      SPC f c h'},
+    description = {'  Recent files                      SPC f r r'},
     command = 'Telescope oldfiles'
   },
   find_file = {
