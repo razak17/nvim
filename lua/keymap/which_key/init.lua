@@ -188,7 +188,7 @@ g.which_key_map = {
     t = 'toggle line blame',
     u = 'undo stage hunk'
   },
-  I = {name = '+Info', c = 'check health', e = 'treesitter'},
+  I = {name = '+Info', c = 'check health', e = 'ts info', u = 'ts update'},
   L = {name = '+Lsp_utils', i = 'info', l = 'log', r = 'restart'},
   m = {
     name = '+mark',

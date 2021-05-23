@@ -14,31 +14,29 @@ local function augroups(definitions)
 end
 
 local buf = {
+  -- Check if file changed when its window is focus, more eager than 'autoread'
+  {"BufLeave", "*", "silent! update"},
+  {"BufEnter,FocusGained", "*", "silent! checktime"},
+  {"BufWritePre", "*", ":call autocmds#TrimWhitespace()"},
   {
     "BufWritePost,FileWritePost",
     "*.vim",
     [[nested if &l:autoread > 0 | source <afile> | echo 'source ' . bufname('%') | endif]]
   },
-  {"BufLeave", "*", "silent! update"},
-  -- Check if file changed when its window is focus, more eager than 'autoread'
-  {"BufEnter,FocusGained", "*", "silent! checktime"},
-  -- Trim whitespace on save
-  {"BufWritePre", "*", ":call autocmds#TrimWhitespace()"},
-  {"BufEnter,BufNewFile", "*", "set fo-=cro"},
   {
-    "BufEnter,BufNewFile",
-    "*.lua,*.html,*.css,*.js,*.ts,*.tsx,*.py,*.c,*.cpp,*.go,*.json,*.yml,*.tmux.conf",
+    "VimEnter,BufRead",
+    "*.lua,*.html,*.css,*.js,*.graphql,*.ts,*.tsx,*.py,*.c,*.cpp,*.rs,*.go,*.json,*.yml,*.tmux.conf",
     ":edit | TSBufEnable highlight<CR>"
   }
 }
 
 local niceties = {
+  {"Syntax", "*", [[if line('$') > 5000 | syntax sync minlines=300 | endif]]},
   {
     "TextYankPost",
     "*",
     [[ silent! lua vim.highlight.on_yank({higroup="IncSearch", timeout=77})]]
-  },
-  {"Syntax", "*", [[if line('$') > 5000 | syntax sync minlines=300 | endif]]}
+  }
 }
 
 local win = {
@@ -47,7 +45,9 @@ local win = {
   {"FocusLost", "*", "silent! wall"},
   -- Equalize window dimensions when resizing vim window
   {"VimResized", "*", [[tabdo wincmd =]]},
-  -- Highlight current line only on focused window
+  {"VimLeave", "*.lua", "lua require('core.plug').magic_compile()"},
+  -- Force write shada on leaving nvim
+  {"VimLeave", "*", [[if has('nvim') | wshada! | else | wviminfo! | endif]]},
   {
     "WinEnter,BufEnter,InsertLeave",
     "*",
@@ -57,12 +57,7 @@ local win = {
     "WinLeave,BufLeave,InsertEnter",
     "*",
     [[if &cursorline && &filetype !~# '^\(dashboard\|clap_\)' && ! &pvw | setlocal nocursorline | endif]]
-  },
-  -- Force write shada on leaving nvim
-  {"VimLeave", "*", [[if has('nvim') | wshada! | else | wviminfo! | endif]]},
-  -- Compile everytime a lua file is saved
-  {"VimLeave", "*.lua", "lua require('core.plug').magic_compile()"},
-  {"VimLeavePre", "*", "SessionSave"}
+  }
 }
 
 local ft = {

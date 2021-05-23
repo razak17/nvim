@@ -120,18 +120,18 @@ gls.left[9] = {
 }
 
 gls.left[10] = {
-  DiagnosticHint = {
-    provider = 'DiagnosticHint',
-    icon = '  ',
-    highlight = {'#1abc9c', colors.bg}
-  }
-}
-
-gls.left[11] = {
   DiagnosticInfo = {
     provider = 'DiagnosticInfo',
     icon = '  ',
     highlight = {colors.blue, colors.bg}
+  }
+}
+
+gls.left[11] = {
+  DiagnosticHint = {
+    provider = 'DiagnosticHint',
+    icon = '  ',
+    highlight = {'#1abc9c', colors.bg}
   }
 }
 

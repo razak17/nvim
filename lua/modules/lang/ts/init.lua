@@ -1,7 +1,6 @@
 local M = {}
 
-local filetypes = {
-  "lua",
+local fts = {
   "html",
   "css",
   "javascript",
@@ -11,27 +10,30 @@ local filetypes = {
   "jsdoc",
   "json",
   "yaml",
+  "go",
   "c",
   "cpp",
+  "lua",
+  "rust",
   "python"
 }
 
-local synoff = function(fts)
+local synoff = function(fts_disabled)
   local ex = ",javascript,typescriptreact,sh"
-  local fts_disable = vim.fn.join(fts, ",")
-  vim.cmd("au FileType " .. fts_disable .. ex .. " set syn=off")
+  local fts_synoff = vim.fn.join(fts_disabled, ",")
+  vim.cmd("au FileType " .. fts_synoff .. ex .. " set syn=off")
 end
 
 function M.setup()
-  synoff(filetypes)
-  table.insert(filetypes, 'tsx')
-  table.insert(filetypes, 'bash')
+  synoff(fts)
+  table.insert(fts, 'tsx')
+  table.insert(fts, 'bash')
   require'nvim-treesitter.configs'.setup {
     highlight = {enable = true},
     autotag = {enable = true},
     rainbow = {enable = true, extended_mode = true},
     matchup = {enable = true, disable = {"c", "python"}},
-    ensure_installed = filetypes
+    ensure_installed = fts
   }
   vim.api.nvim_command('set foldmethod=expr')
   vim.api.nvim_command('set foldexpr=nvim_treesitter#foldexpr()')
@@ -40,4 +42,3 @@ function M.setup()
 end
 
 return M
-

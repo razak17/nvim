@@ -115,6 +115,7 @@ nnoremap("<Leader>afr", "zA") -- Recursively toggle
 nnoremap("<Leader>afl", "za") -- Toggle fold under the cursor
 nnoremap("<Leader>afo", "zR") -- Open all folds
 nnoremap("<Leader>afx", "zM") -- Close all folds
+nnoremap("<Leader>aO", ":set fo-=cro<CR>") -- Close all folds
 
 -- qflist
 nnoremap("<Leader>vo", ":copen<CR>")

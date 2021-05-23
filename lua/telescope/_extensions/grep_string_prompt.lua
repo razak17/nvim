@@ -50,4 +50,3 @@ end
 return telescope.register_extension {
   exports = {grep_string_prompt = grep_string_prompt}
 }
-
