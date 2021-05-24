@@ -107,7 +107,7 @@ end
 
 M.show_lsp_diagnostics = (function()
   vim.cmd [[packadd lspsaga.nvim]]
-  local debounced = debounce(require'lspsaga.diagnostic'.show_line_diagnostics,
+  local debounced = debounce(require'lspsaga.diagnostic'.show_cursor_diagnostics,
                              300)
   local cursorpos = get_cursor_pos()
   return function()
