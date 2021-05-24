@@ -1,12 +1,9 @@
 local conf = require('modules.aesth.config')
 local aesth = {}
 
-aesth['glepnir/dashboard-nvim'] = {event = "VimEnter", config = conf.dashboard}
+aesth['razak17/zephyr-nvim'] = {config = [[vim.cmd('colo zephyr')]]}
 
-aesth['razak17/zephyr-nvim'] = {
-  event = "VimEnter",
-  config = [[vim.cmd('colo zephyr')]]
-}
+aesth['glepnir/dashboard-nvim'] = {event = "VimEnter", config = conf.dashboard}
 
 aesth['lukas-reineke/indent-blankline.nvim'] =
     {event = 'VimEnter', branch = 'lua', config = conf.indent_blankline}
@@ -15,6 +12,13 @@ aesth['akinsho/nvim-bufferline.lua'] = {
   event = "VimEnter",
   config = conf.nvim_bufferline,
   requires = {{"kyazdani42/nvim-web-devicons", opt = true}}
+}
+
+aesth['sunjon/shade.nvim'] = {
+  event = {'BufRead', 'BufNewFile'},
+  config = function()
+    require'shade'.setup({keys = {toggle = '<Leader>R'}})
+  end
 }
 
 aesth['kyazdani42/nvim-tree.lua'] = {
