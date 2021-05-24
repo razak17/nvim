@@ -2,6 +2,8 @@ local vim = vim
 local G = require 'core.global'
 local scopes = {o = vim.o, b = vim.bo, w = vim.wo}
 
+require('internal.folds')
+
 local function opt(scope, key, value)
   scopes[scope][key] = value
   if scope ~= 'o' then
@@ -38,7 +40,6 @@ opt('o', 'laststatus', 2)
 opt('o', 'showcmd', false)
 opt('o', 'showtabline', 2)
 opt('o', 'showmode', false)
--- opt('o', 'showbreak', '↳  ')
 opt('o', 'showbreak', [[↪ ]])
 opt('o', 'syntax', 'enable')
 opt('o', 'encoding', 'utf-8')
@@ -67,7 +68,6 @@ opt('o', 'lazyredraw', true)
 opt('o', 'equalalways', false)
 opt('o', 'numberwidth', 4)
 opt('b', 'fileencoding', 'utf-8')
--- opt('b', 'formatoptions', '1jql')
 opt('w', 'list', true)
 opt('w', 'number', true)
 opt('w', 'signcolumn', 'yes')
