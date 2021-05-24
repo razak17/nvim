@@ -1,5 +1,3 @@
-local M = {}
-
 local fts = {
   "html",
   "css",
@@ -15,30 +13,51 @@ local fts = {
   "cpp",
   "lua",
   "rust",
-  "python"
+  "python",
+  "bash"
 }
 
-local synoff = function(fts_disabled)
-  local ex = ",javascript,typescriptreact,sh"
-  local fts_synoff = vim.fn.join(fts_disabled, ",")
-  vim.cmd("au FileType " .. fts_synoff .. ex .. " set syn=off")
+local get_filetypes = function()
+  local parsers = require("nvim-treesitter.parsers")
+  local configs = parsers.get_parser_configs()
+  return vim.tbl_map(function(ft)
+    return configs[ft].filetype or ft
+  end, parsers.available_parsers())
 end
 
-function M.setup()
-  synoff(fts)
-  table.insert(fts, 'tsx')
-  table.insert(fts, 'bash')
-  require'nvim-treesitter.configs'.setup {
-    highlight = {enable = true},
-    autotag = {enable = true},
-    rainbow = {enable = true, extended_mode = true},
-    matchup = {enable = true, disable = {"c", "python"}},
-    ensure_installed = fts
-  }
-  vim.api.nvim_command('set foldmethod=expr')
-  vim.api.nvim_command('set foldexpr=nvim_treesitter#foldexpr()')
-  vim.api.nvim_set_keymap('n', 'R', ':write | edit | TSBufEnable highlight<CR>',
-                          {});
-end
+vim.cmd [[packadd nvim-treesitter]]
+require'nvim-treesitter.configs'.setup {
+  highlight = {enable = true},
+  autotag = {enable = true},
+  autopairs = {enable = true},
+  rainbow = {
+    enable = true,
+    extended_mode = true,
+    disable = {"lua", "json"},
+    colors = {
+      "royalblue3",
+      "darkorange3",
+      "seagreen3",
+      "firebrick",
+      "darkorchid3"
+    }
+  },
+  matchup = {enable = true, disable = {"c", "python"}},
+  ensure_installed = fts
+}
 
-return M
+local fold = "set foldmethod=expr foldexpr=nvim_treesitter#foldexpr()"
+local syn_off = "set syntax=off"
+-- TODO
+-- local highlight = ":edit | TSBufEnable highlight<CR>"
+
+local targets = get_filetypes()
+local filetypes = table.concat(targets, ",")
+
+-- vim.cmd [[edit | TSBufEnable highlight]]
+vim.cmd(string.format("autocmd FileType %s %s", filetypes, syn_off))
+vim.cmd(string.format("autocmd FileType %s %s", filetypes, fold))
+-- vim.cmd(string.format("autocmd FileType %s %s", filetypes, highlight))
+
+vim.api.nvim_set_keymap('n', 'R', ':write | edit | TSBufEnable highlight<CR>',
+                        {});

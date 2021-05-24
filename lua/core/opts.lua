@@ -26,10 +26,10 @@ opt('o', 'updatetime', 100)
 opt('o', 'redrawtime', 1500)
 
 -- Folds
-opt('w', 'foldcolumn', '0')
-opt('w', 'foldenable', true)
-opt('o', 'foldlevelstart', 99)
-opt('o', 'foldopen', 'hor,mark,percent,quickfix,search,tag,undo')
+opt('o', 'foldtext', "v:lua.folds()")
+opt('o', 'foldopen', 'hor,mark,quickfix,search,tag')
+opt('o', 'foldlevelstart', 10)
+opt('w', 'foldmethod', 'indent')
 
 -- Editor UI Appearance
 opt('o', 't_Co', '256')
@@ -38,7 +38,8 @@ opt('o', 'laststatus', 2)
 opt('o', 'showcmd', false)
 opt('o', 'showtabline', 2)
 opt('o', 'showmode', false)
-opt('o', 'showbreak', '↳  ')
+-- opt('o', 'showbreak', '↳  ')
+opt('o', 'showbreak', [[↪ ]])
 opt('o', 'syntax', 'enable')
 opt('o', 'encoding', 'utf-8')
 opt('o', 'background', 'dark')
@@ -71,9 +72,18 @@ opt('w', 'list', true)
 opt('w', 'number', true)
 opt('w', 'signcolumn', 'yes')
 opt('w', 'relativenumber', true)
-opt('w', 'listchars', 'tab:»·,nbsp:+,trail:·,precedes:,extends:')
+opt('w', 'listchars', 'tab:»•,nbsp:+,trail:·,precedes:,extends:')
+opt('o', 'diffopt',
+    'vertical,iwhite,hiddenoff,foldcolumn:0,context:4,algorithm:histogram,indent-heuristic')
+opt('w', 'fillchars',
+    'vert:▕,fold: ,eob: ,diff:─,msgsep: ,foldopen:▾,foldsep:│,foldclose:▸,eob: ')
 
 -- Behavior
+vim.o.title = true
+vim.o.titlelen = 70
+vim.o.titlestring = " ❐ %t %r %m"
+vim.o.titleold = '%{fnamemodify(getcwd(), ":t")}'
+opt('o', 'eadirection', 'hor')
 opt('b', 'swapfile', false)
 opt('b', 'undofile', true)
 opt('w', 'concealcursor', 'niv')
@@ -93,7 +103,6 @@ opt('o', 'linebreak', true)
 opt('o', 'maxmempattern', 1300)
 opt('o', 'inccommand', 'nosplit')
 opt('o', 'switchbuf', 'useopen,usetab,vsplit')
-opt('o', 'diffopt', 'filler,iwhite,internal,algorithm:patience')
 opt('o', 'completeopt', 'menu,menuone,noselect,noinsert')
 opt('o', 'complete', '.,w,b,k') -- No wins, buffs, tags, include scanning
 opt('o', 'iskeyword', '@,48-57,_,192-255,-,#') -- Treat dash separated words as a word text object'
@@ -121,7 +130,8 @@ opt('b', 'expandtab', true) -- Expand tabs to spaces.
 opt('b', 'smartindent', true) -- Insert indents automatically
 
 -- Searching
-opt('o', 'grepprg', 'rg --hidden --vimgrep --smart-case --')
+opt('o', 'grepprg',
+    [[rg --hidden --glob "!.git" --no-heading --smart-case --vimgrep --follow $*]])
 opt('o', 'grepformat', '%f:%l:%c:%m')
 opt('o', 'smartcase', true)
 opt('o', 'ignorecase', true)
@@ -134,15 +144,16 @@ opt('o', 'matchpairs', '(:),{:},[:]')
 opt('o', 'matchtime', 1)
 
 -- Wildmenu
+opt('o', 'wildignore',
+    '*.so,.git,.hg,.svn,.stversions,*.pyc,*.spl,*.o,*.out,*~,%*,*.jpg,*.jpeg,*.png,*.gif,*.zip,**/tmp/**,*.DS_Store,**/node_modules/**,**/bower_modules/**,*/.sass-cache/*,application/vendor/**,**/vendor/ckeditor/**,media/vendor/**,__pycache__,*.egg-info')
 opt('o', 'wildmode', 'list:longest,full')
 opt('o', 'wildoptions', 'tagfile')
 opt('o', 'wildignorecase', true)
 opt('o', 'wildmenu', false)
-opt('o', 'wildignore',
-    '*.so,.git,.hg,.svn,.stversions,*.pyc,*.spl,*.o,*.out,*~,%*,*.jpg,*.jpeg,*.png,*.gif,*.zip,**/tmp/**,*.DS_Store,**/node_modules/**,**/bower_modules/**,*/.sass-cache/*,application/vendor/**,**/vendor/ckeditor/**,media/vendor/**,__pycache__,*.egg-info')
 
 -- What to save for views and sessions:
 opt('o', 'clipboard', 'unnamedplus')
 opt('o', 'shada', "!,'300,<50,@100,s10,h")
-opt('o', 'viewoptions', 'folds,cursor,curdir,slash,unix')
+opt('o', 'viewoptions', 'cursor,folds')
 opt('o', 'sessionoptions', 'curdir,help,tabpages,winsize')
+vim.g.vimsyn_embed = "lPr" -- allow embedded syntax highlighting for lua,python and ruby

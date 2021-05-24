@@ -11,6 +11,8 @@ local load_core = function()
 
   require('core.opts')
   require('core.binds')
+  -- TODO
+  require('internal.folds')
 
   plug.ensure_plugins()
   plug.load_compile()

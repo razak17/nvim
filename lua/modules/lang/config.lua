@@ -1,7 +1,7 @@
 local config = {}
 
 function config.treesitter()
-  require('modules.lang.ts').setup()
+  require('modules.lang.ts')
 end
 
 function config.nvim_lsp()

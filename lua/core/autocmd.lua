@@ -22,11 +22,6 @@ local buf = {
     "BufWritePost,FileWritePost",
     "*.vim",
     [[nested if &l:autoread > 0 | source <afile> | echo 'source ' . bufname('%') | endif]]
-  },
-  {
-    "VimEnter,BufRead",
-    "*.lua,*.html,*.css,*.js,*.graphql,*.ts,*.tsx,*.py,*.c,*.cpp,*.rs,*.go,*.json,*.yml,*.tmux.conf",
-    ":edit | TSBufEnable highlight<CR>"
   }
 }
 
@@ -73,7 +68,8 @@ local ft = {
     "FileType",
     "which_key",
     "set laststatus=0 noshowmode noruler | autocmd BufLeave <buffer> set laststatus=2 ruler"
-  }
+  },
+  -- {"FileType", "lua", "edit | TSBufEnable highlight"}
 }
 
 local tmux = {

@@ -1,8 +1,8 @@
 local M = {}
 
 function M.OpenTerminal()
-  vim.api.nvim_command("split term://zsh")
-  vim.api.nvim_command("resize 10")
+  vim.cmd("split term://zsh")
+  vim.cmd("resize 10")
 end
 
 function M.TurnOnGuides()
@@ -44,13 +44,13 @@ function M.buf_cmd_map(bufnr, key, command, opts)
 end
 
 function M.nvim_create_augroup(group_name, definitions)
-  vim.api.nvim_command('augroup ' .. group_name)
-  vim.api.nvim_command('autocmd!')
+  vim.cmd('augroup ' .. group_name)
+  vim.cmd('autocmd!')
   for _, def in ipairs(definitions) do
     local command = table.concat(vim.tbl_flatten {'autocmd', def}, ' ')
-    vim.api.nvim_command(command)
+    vim.cmd(command)
   end
-  vim.api.nvim_command('augroup END')
+  vim.cmd('augroup END')
 end
 
 return M

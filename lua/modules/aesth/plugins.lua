@@ -15,7 +15,7 @@ aesth['akinsho/nvim-bufferline.lua'] = {
 }
 
 aesth['kyazdani42/nvim-tree.lua'] = {
-  event = "VimEnter",
+  event = {'BufRead', 'BufNewFile'},
   config = conf.nvim_tree,
   requires = {{"kyazdani42/nvim-web-devicons", opt = true}}
 }
