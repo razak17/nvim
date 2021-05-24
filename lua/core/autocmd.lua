@@ -76,6 +76,11 @@ local ft = {
   }
 }
 
+local tmux = {
+  {"VimEnter", "*", "lua require 'internal.tmux'.on_enter()"},
+  {"VimLeave", "*", "lua require 'internal.tmux'.on_leave()"}
+}
+
 local user_plugin_cursorword = {
   {"FileType", "NvimTree,lspsagafinder,dashboard,vista", "let b:cursorword = 0"},
   {"WinEnter", "*", [[if &diff || &pvw | let b:cursorword = 0  | endif]]},
@@ -83,6 +88,6 @@ local user_plugin_cursorword = {
   {"InsertLeave", "*", "let b:cursorword = 1"}
 }
 
-local definitions = {buf, ft, win, niceties, user_plugin_cursorword}
+local definitions = {buf, ft, win, niceties, user_plugin_cursorword, tmux}
 
 augroups(definitions)
