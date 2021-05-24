@@ -40,7 +40,7 @@ local win = {
   {"FocusLost", "*", "silent! wall"},
   -- Equalize window dimensions when resizing vim window
   {"VimResized", "*", [[tabdo wincmd =]]},
-  {"VimLeave", "*.lua", "lua require('core.plug').magic_compile()"},
+  {"VimLeave", "*", "lua require('core.plug').magic_compile()"},
   -- Force write shada on leaving nvim
   {"VimLeave", "*", [[if has('nvim') | wshada! | else | wviminfo! | endif]]},
   {
@@ -56,9 +56,9 @@ local win = {
 }
 
 local ft = {
-  -- {"FileType", "dap-repl", "lua require('dap.ext.autocompl').attach()"},
+  {"FileType", "dap-repl", "lua require('dap.ext.autocompl').attach()"},
   {"FileType", "floaterm", "setlocal winblend=0"},
-  {"FileType", "Trouble", "set colorcolumn=0"},
+  {"FileType", "Trouble,Packer", "set colorcolumn=0"},
   {
     "FileType",
     "dashboard",
@@ -68,8 +68,7 @@ local ft = {
     "FileType",
     "which_key",
     "set laststatus=0 noshowmode noruler | autocmd BufLeave <buffer> set laststatus=2 ruler"
-  },
-  -- {"FileType", "lua", "edit | TSBufEnable highlight"}
+  }
 }
 
 local tmux = {
