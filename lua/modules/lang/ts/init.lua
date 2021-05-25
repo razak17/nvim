@@ -1,19 +1,19 @@
 local fts = {
-  -- "html",
-  -- "css",
-  -- "javascript",
-  -- "typescript",
-  -- "tsx",
-  -- "graphql",
-  -- "jsdoc",
-  -- "json",
-  -- "yaml",
-  -- "go",
-  -- "c",
-  -- "cpp",
-  -- "rust",
-  -- "python",
-  -- "bash",
+  "html",
+  "css",
+  "javascript",
+  "typescript",
+  "tsx",
+  "graphql",
+  "jsdoc",
+  "json",
+  "yaml",
+  "go",
+  "c",
+  "cpp",
+  "rust",
+  "python",
+  "bash",
   "lua"
 }
 
@@ -28,21 +28,21 @@ end
 vim.cmd [[packadd nvim-treesitter]]
 require'nvim-treesitter.configs'.setup {
   highlight = {enable = true},
-  -- autotag = {enable = true},
-  -- autopairs = {enable = true},
-  -- rainbow = {
-  --   enable = true,
-  --   extended_mode = true,
-  --   disable = {"lua", "json"},
-  --   colors = {
-  --     "royalblue3",
-  --     "darkorange3",
-  --     "seagreen3",
-  --     "firebrick",
-  --     "darkorchid3"
-  --   }
-  -- },
-  -- matchup = {enable = true, disable = {"c", "python"}},
+  autotag = {enable = true},
+  autopairs = {enable = true},
+  rainbow = {
+    enable = true,
+    extended_mode = true,
+    disable = {"lua", "json"},
+    colors = {
+      "royalblue3",
+      "darkorange3",
+      "seagreen3",
+      "firebrick",
+      "darkorchid3"
+    }
+  },
+  matchup = {enable = true, disable = {"c", "python"}},
   ensure_installed = fts
 }
 
