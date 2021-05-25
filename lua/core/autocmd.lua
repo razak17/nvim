@@ -40,7 +40,7 @@ local win = {
   {"FocusLost", "*", "silent! wall"},
   -- Equalize window dimensions when resizing vim window
   {"VimResized", "*", [[tabdo wincmd =]]},
-  -- {"VimLeave", "*", "lua require('core.plug').magic_compile()"},
+  {"VimLeave", "*", "lua require('core.plug').magic_compile()"},
   -- Force write shada on leaving nvim
   {"VimLeave", "*", [[if has('nvim') | wshada! | else | wviminfo! | endif]]},
   {

@@ -1,10 +1,12 @@
 local actions = require('telescope.actions')
 
-vim.cmd [[packadd popup.nvim]]
-vim.cmd [[packadd plenary.nvim]]
-vim.cmd [[packadd telescope-fzy-native.nvim]]
-vim.cmd [[packadd telescope-media-files.nvim]]
-vim.cmd [[packadd telescope-project.nvim]]
+if not packer_plugins['plenary.nvim'].loaded then
+  vim.cmd [[packadd popup.nvim]]
+  vim.cmd [[packadd plenary.nvim]]
+  vim.cmd [[packadd telescope-fzy-native.nvim]]
+  vim.cmd [[packadd telescope-media-files.nvim]]
+  vim.cmd [[packadd telescope-project.nvim]]
+end
 
 require('telescope').setup({
   defaults = {
