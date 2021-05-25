@@ -13,7 +13,10 @@ completion['rafamadriz/friendly-snippets'] = {event = 'InsertEnter'}
 
 completion['hrsh7th/vim-vsnip'] = {
   event = 'InsertCharPre',
-  config = conf.vim_vsnip
+  config = function()
+    local G = require 'core.global'
+    vim.g.vsnip_snippet_dir = G.vim_path .. "/snippets"
+  end
 }
 
 completion['mattn/emmet-vim'] = {

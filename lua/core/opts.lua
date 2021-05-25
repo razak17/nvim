@@ -29,7 +29,7 @@ opt('o', 'redrawtime', 1500)
 
 -- Folds
 -- opt('o', 'foldopen', 'hor,mark,quickfix,search,tag')
--- opt('w', 'foldmethod', 'indent')
+opt('w', 'foldmethod', 'expr')
 opt('o', 'foldtext', "v:lua.folds()")
 opt('o', 'foldlevelstart', 10)
 opt('w', 'foldenable', true)

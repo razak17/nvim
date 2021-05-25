@@ -12,7 +12,7 @@ editor['norcalli/nvim-colorizer.lua'] = {
 
 editor['monaqa/dial.nvim'] = {event = {'BufReadPre', 'BufNewFile'}}
 
-editor['itchyny/vim-cursorword'] = {event = {'BufReadPre', 'BufNewFile'}}
+editor['itchyny/vim-cursorword'] = {event = 'BufReadPre'}
 
 editor['b3nj5m1n/kommentary'] = {
   event = {'BufReadPre', 'BufNewFile'},
