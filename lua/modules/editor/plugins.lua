@@ -12,7 +12,7 @@ editor['norcalli/nvim-colorizer.lua'] = {
 
 editor['monaqa/dial.nvim'] = {event = {'BufReadPre', 'BufNewFile'}}
 
-editor['itchyny/vim-cursorword'] = {event = 'VimEnter'}
+editor['itchyny/vim-cursorword'] = {event = {'BufReadPre', 'BufNewFile'}}
 
 editor['b3nj5m1n/kommentary'] = {
   event = {'BufReadPre', 'BufNewFile'},
@@ -38,7 +38,7 @@ editor['Raimondi/delimitMate'] = {
 }
 
 editor['romainl/vim-cool'] = {
-  event = {'BufRead', 'BufNewFile'},
+  event = {'BufReadPre', 'BufNewFile'},
   config = function()
     vim.g.CoolTotalMatches = 1
   end

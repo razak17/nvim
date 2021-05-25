@@ -25,7 +25,7 @@ completion['mattn/emmet-vim'] = {
 completion['nvim-telescope/telescope.nvim'] =
     {
       cmd = 'Telescope',
-      config = conf.telescope_nvim,
+      config = conf.telescope,
       requires = {
         {'nvim-lua/popup.nvim', opt = true},
         {'nvim-lua/plenary.nvim', opt = true},
