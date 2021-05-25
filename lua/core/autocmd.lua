@@ -58,7 +58,7 @@ local win = {
 local ft = {
   {"FileType", "dap-repl", "lua require('dap.ext.autocompl').attach()"},
   {"FileType", "floaterm", "setlocal winblend=0"},
-  {"FileType", "Trouble,Packer", "set colorcolumn=0"},
+  {"FileType", "Trouble,Packer,text", "set colorcolumn=0 textwidth=120"},
   {
     "FileType",
     "dashboard",
