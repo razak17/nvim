@@ -14,6 +14,13 @@ aesth['akinsho/nvim-bufferline.lua'] = {
   requires = {{"kyazdani42/nvim-web-devicons", opt = true}}
 }
 
+aesth['sunjon/shade.nvim'] = {
+  event = "BufReadPre",
+  config = function()
+    require'shade'.setup({keys = {toggle = '<Leader>R'}})
+  end
+}
+
 aesth['kyazdani42/nvim-tree.lua'] = {
   event = {'BufRead', 'BufNewFile'},
   config = conf.nvim_tree,
