@@ -9,7 +9,26 @@ lang['rcarriga/nvim-dap-ui'] = {config = conf.dap_ui}
 
 lang['andymass/vim-matchup'] = {ft = {'html'}}
 
-lang['kevinhwang91/nvim-bqf'] = {event = 'VimEnter'}
+lang['kevinhwang91/nvim-bqf'] = {
+  event = 'VimEnter',
+  config = function()
+    require('bqf').setup({
+      preview = {
+        border_chars = {
+          '│',
+          '│',
+          '─',
+          '─',
+          '┌',
+          '┐',
+          '└',
+          '┘',
+          '█'
+        }
+      }
+    })
+  end
+}
 
 lang['p00f/nvim-ts-rainbow'] = {opt = true, after = 'nvim-treesitter'}
 
