@@ -46,7 +46,8 @@ require'nvim-treesitter.configs'.setup {
   ensure_installed = fts
 }
 
-local fold = "set foldmethod=expr foldexpr=nvim_treesitter#foldexpr()"
+local fold =
+    "set foldmethod=expr foldtext=v:lua.folds() foldexpr=nvim_treesitter#foldexpr()"
 local syn_off = "set syntax=off"
 -- TODO
 -- local highlight = ":edit | TSBufEnable highlight<CR>"

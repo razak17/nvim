@@ -28,10 +28,11 @@ opt('o', 'updatetime', 100)
 opt('o', 'redrawtime', 1500)
 
 -- Folds
+-- opt('o', 'foldopen', 'hor,mark,quickfix,search,tag')
+-- opt('w', 'foldmethod', 'indent')
 opt('o', 'foldtext', "v:lua.folds()")
-opt('o', 'foldopen', 'hor,mark,quickfix,search,tag')
 opt('o', 'foldlevelstart', 10)
-opt('w', 'foldmethod', 'indent')
+opt('w', 'foldenable', true)
 
 -- Editor UI Appearance
 opt('o', 't_Co', '256')
