@@ -10,6 +10,9 @@ function config.RunJS()
   api.nvim_command('exec "w!"')
   api.nvim_command('exec "! node %"')
 end
+function config.RunGo()
+  api.nvim_command('exec "! go run %"')
+end
 
 function config.RunEX()
   api.nvim_command('exec "w!"')
