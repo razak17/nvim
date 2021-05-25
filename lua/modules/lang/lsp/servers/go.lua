@@ -7,7 +7,9 @@ if vim.fn.executable('gopls') then
     handlers = lsp_utils.diagnostics,
     capabilities = lsp_servers.capabilities,
     on_attach = lsp_servers.enhance_attach,
-    init_options = {usePlaceholders = true, completeUnimported = true}
+    init_options = {usePlaceholders = true, completeUnimported = true},
+    root_dir = require'lspconfig.util'.root_pattern('main.go', '.gitignore',
+                                                    '.git', vim.fn.getcwd())
   }
 end
 
