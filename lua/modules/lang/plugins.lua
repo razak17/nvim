@@ -1,7 +1,7 @@
 local lang = {}
 local conf = require('modules.lang.config')
 
-lang['glepnir/lspsaga.nvim'] = {cmd = 'Lspsaga'}
+lang['glepnir/lspsaga.nvim'] = {event = "BufReadPre"}
 
 lang['mfussenegger/nvim-dap'] = {config = conf.dap}
 

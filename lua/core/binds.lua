@@ -1,9 +1,10 @@
 local mp = require('keymap.map')
-local nnoremap, inoremap, vnoremap, xnoremap, tnoremap = mp.nnoremap,
-                                                         mp.inoremap,
-                                                         mp.vnoremap,
-                                                         mp.xnoremap,
-                                                         mp.tnoremap
+local nmap, nnoremap, inoremap, vnoremap, xnoremap, tnoremap = mp.nmap,
+                                                               mp.nnoremap,
+                                                               mp.inoremap,
+                                                               mp.vnoremap,
+                                                               mp.xnoremap,
+                                                               mp.tnoremap
 
 -- Basic Key Mappings
 -- nnoremap('z', ':undo<CR>')
@@ -76,6 +77,7 @@ nnoremap('<C-s>', ':w<CR>')
 -- Alternate way to quit
 nnoremap("<Leader>ax", ":wq!<CR>")
 nnoremap("<Leader>az", ":q!<CR>")
+nmap('W', 'q')
 nnoremap('<Leader>x', ':q<CR>')
 nnoremap('<C-z>', ':undo<CR>')
 
