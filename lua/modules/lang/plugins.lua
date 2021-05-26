@@ -32,7 +32,10 @@ lang['kevinhwang91/nvim-bqf'] = {
 
 lang['p00f/nvim-ts-rainbow'] = {opt = true, after = 'nvim-treesitter'}
 
-lang['neovim/nvim-lspconfig'] = {event = 'BufReadPre', config = conf.nvim_lsp}
+lang['neovim/nvim-lspconfig'] = {
+  event = {'BufReadPre', 'BufNewFile'},
+  config = conf.nvim_lsp
+}
 
 lang['nvim-treesitter/nvim-treesitter'] =
     {event = 'BufRead', after = 'telescope.nvim', config = conf.nvim_treesitter}

@@ -38,7 +38,7 @@ function Plug:load_packer()
   packer.init({
     compile_path = packer_compiled,
     git = {clone_timeout = 120},
-    display = {open_fn = require('packer.util').float},
+    display = {open_fn = require('packer.util').float({border = 'single'})},
     disable_commands = true
   })
   packer.reset()
@@ -138,7 +138,8 @@ function plugins.load_compile()
   vim.cmd [[command! PlugUpdate lua require('core.plug').update()]]
   vim.cmd [[command! PlugSync lua require('core.plug').sync()]]
   vim.cmd [[command! PlugClean lua require('core.plug').clean()]]
-  vim.cmd [[autocmd User PlugComplete lua require('core.plug').magic_compile()]]
+  vim.cmd [[autocmd User PackerComplete lua require('core.plug').magic_compile()]]
+  vim.cmd [[command! PlugStatus  lua require('packer').status()]]
 end
 
 return plugins

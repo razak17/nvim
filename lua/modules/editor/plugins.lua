@@ -12,7 +12,7 @@ editor['norcalli/nvim-colorizer.lua'] = {
 
 editor['monaqa/dial.nvim'] = {event = {'BufReadPre', 'BufNewFile'}}
 
-editor['itchyny/vim-cursorword'] = {event = 'BufReadPre'}
+editor['itchyny/vim-cursorword'] = {event = 'BufRead'}
 
 editor['b3nj5m1n/kommentary'] = {
   event = {'BufReadPre', 'BufNewFile'},
@@ -27,7 +27,7 @@ editor['windwp/nvim-autopairs'] = {
   event = 'InsertEnter',
   config = function()
     require('nvim-autopairs').setup({
-      disable_filetype = {"TelescopePrompt", "vim", "lua", "c", "cpp"}
+      disable_filetype = {"TelescopePrompt", "vim"}
     })
   end
 }

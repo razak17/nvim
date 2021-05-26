@@ -28,7 +28,6 @@ opt('o', 'updatetime', 100)
 opt('o', 'redrawtime', 1500)
 
 -- Folds
--- opt('o', 'foldopen', 'hor,mark,quickfix,search,tag')
 opt('w', 'foldmethod', 'expr')
 opt('o', 'foldtext', "v:lua.folds()")
 opt('o', 'foldlevelstart', 10)
@@ -104,8 +103,8 @@ opt('o', 'linebreak', true)
 opt('o', 'maxmempattern', 1300)
 opt('o', 'inccommand', 'nosplit')
 opt('o', 'switchbuf', 'useopen,usetab,vsplit')
-opt('o', 'completeopt', 'menu,menuone,noselect,noinsert')
 opt('o', 'complete', '.,w,b,k') -- No wins, buffs, tags, include scanning
+opt('o', 'completeopt', 'menu,menuone,noselect,noinsert')
 opt('o', 'iskeyword', '@,48-57,_,192-255,-,#') -- Treat dash separated words as a word text object'
 opt('o', 'breakat', [[\ \	;:,!?]]) -- Long lines break chars
 opt('o', 'startofline', false) -- Cursor in same column for few commands
@@ -147,10 +146,9 @@ opt('o', 'matchtime', 1)
 -- Wildmenu
 opt('o', 'wildignore',
     '*.so,.git,.hg,.svn,.stversions,*.pyc,*.spl,*.o,*.out,*~,%*,*.jpg,*.jpeg,*.png,*.gif,*.zip,**/tmp/**,*.DS_Store,**/node_modules/**,**/bower_modules/**,*/.sass-cache/*,application/vendor/**,**/vendor/ckeditor/**,media/vendor/**,__pycache__,*.egg-info')
-opt('o', 'wildmode', 'list:longest,full')
-opt('o', 'wildoptions', 'tagfile')
+opt('o', 'wildmode', 'longest,full')
+opt('o', 'wildoptions', 'pum')
 opt('o', 'wildignorecase', true)
-opt('o', 'wildmenu', false)
 
 -- What to save for views and sessions:
 opt('o', 'clipboard', 'unnamedplus')

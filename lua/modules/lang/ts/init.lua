@@ -10,6 +10,7 @@ local fts = {
   "yaml",
   "go",
   "c",
+  "dart",
   "cpp",
   "rust",
   "python",
