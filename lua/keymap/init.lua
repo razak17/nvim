@@ -41,9 +41,6 @@ nnoremap('<Leader>Ie', ':TSInstallInfo<CR>')
 nnoremap('<Leader>Iu', ':TSUpdate<CR>')
 nnoremap('<Leader>mw', ':<c-u>MatchupWhereAmI?<CR>')
 
--- rnvimr
-nnoremap('<Leader>ar', ':RnvimrToggle<CR>')
-
 -- Symbols Outline
 nnoremap('<Leader>vs', ':SymbolsOutline<CR>')
 
@@ -57,17 +54,12 @@ nnoremap('<Leader>vxw', ':TroubleToggle lsp_workspace_diagnostics<CR>')
 -- Context
 nnoremap('<Leader>cc', ':ContextToggle<CR>')
 
--- vim-operator-surround
-nmap('sa', '<Plug>(operator-surround-append)', {silent = true})
-nmap('sd', '<Plug>(operator-surround-delete)', {silent = true})
-nmap('sr', '<Plug>(operator-surround-relace)', {silent = true})
-
 -- Bookmark
 nnoremap('<Leader>me', ':BookmarkToggle<CR>')
 nnoremap('<Leader>mb', ':BookmarkPrev<CR>')
 nnoremap('<Leader>mk', ':BookmarkNext<CR>')
 
--- acceleratedjk
+-- accelerated jk
 nmap("n", 'v:lua.enhance_jk_move("n")', {silent = true, expr = true})
 nmap("k", 'v:lua.enhance_jk_move("k")', {silent = true, expr = true})
 
