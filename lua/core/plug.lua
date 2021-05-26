@@ -38,7 +38,7 @@ function Plug:load_packer()
   packer.init({
     compile_path = packer_compiled,
     git = {clone_timeout = 120},
-    display = {open_fn = require('packer.util').float({border = 'single'})},
+    display = {open_fn = require('packer.util').float},
     disable_commands = true
   })
   packer.reset()
