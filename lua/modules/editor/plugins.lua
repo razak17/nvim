@@ -16,7 +16,7 @@ editor['norcalli/nvim-colorizer.lua'] = {
 
 editor['Raimondi/delimitMate'] = {
   event = 'InsertEnter',
-  config = conf.delimimate
+  -- config = conf.delimimate
 }
 
 editor['b3nj5m1n/kommentary'] = {
