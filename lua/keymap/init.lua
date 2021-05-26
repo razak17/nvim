@@ -107,6 +107,7 @@ nnoremap('<Leader>Pc', ':PlugCompile<CR>')
 nnoremap('<Leader>PC', ':PlugClean<CR>')
 nnoremap('<Leader>Pi', ':PlugInstall<CR>')
 nnoremap('<Leader>Ps', ':PlugSync<CR>')
+nnoremap('<Leader>PS', ':PlugStatus<CR>')
 nnoremap('<Leader>PU', ':PlugUpdate<CR>')
 
 -- Fugitive
