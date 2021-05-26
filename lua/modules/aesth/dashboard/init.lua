@@ -25,7 +25,7 @@ vim.cmd [[
   END
 ]]
 
-g.dashboard_footer_icon = '🐬 '
+g.dashboard_footer_icon = ''
 g.dashboard_preview_pipeline = 'lolcat -F 0.3'
 g.dashboard_preview_file_height = 12
 g.dashboard_preview_file_width = 70
