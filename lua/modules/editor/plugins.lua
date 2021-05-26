@@ -10,7 +10,7 @@ editor['norcalli/nvim-colorizer.lua'] = {
   config = conf.nvim_colorizer
 }
 
-editor['monaqa/dial.nvim'] = {event = {'BufReadPre', 'BufNewFile'}}
+editor['monaqa/dial.nvim'] = {event = 'BufReadPre'}
 
 editor['itchyny/vim-cursorword'] = {event = 'BufRead'}
 
