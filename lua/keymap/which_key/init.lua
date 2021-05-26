@@ -41,6 +41,7 @@ g.which_key_map = {
     r = 'toggle rnvimr',
     R = 'toggle relative line numbers',
     s = 'save and exit',
+    S = 'Toggle Shade',
     u = 'undotreeToggle',
     v = 'vertical split',
     V = 'select all',
@@ -230,6 +231,7 @@ g.which_key_map = {
       l = 'current line',
       n = 'goto next'
     },
+    D = "DOGe",
     f = 'format',
     l = {name = '+Lsp', l = 'set loc list', e = 'type definition'},
     o = 'open qflist',

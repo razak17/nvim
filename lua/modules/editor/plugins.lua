@@ -1,6 +1,10 @@
 local conf = require('modules.editor.config')
 local editor = {}
 
+editor['monaqa/dial.nvim'] = {event = 'BufReadPre'}
+
+editor['itchyny/vim-cursorword'] = {event = 'BufRead'}
+
 editor['rhysd/accelerated-jk'] = {opt = true, event = "VimEnter"}
 
 editor['tpope/vim-surround'] = {event = {'BufReadPre', 'BufNewFile'}}
@@ -10,9 +14,10 @@ editor['norcalli/nvim-colorizer.lua'] = {
   config = conf.nvim_colorizer
 }
 
-editor['monaqa/dial.nvim'] = {event = 'BufReadPre'}
-
-editor['itchyny/vim-cursorword'] = {event = 'BufRead'}
+editor['Raimondi/delimitMate'] = {
+  event = 'InsertEnter',
+  config = conf.delimimate
+}
 
 editor['b3nj5m1n/kommentary'] = {
   event = {'BufReadPre', 'BufNewFile'},
@@ -32,11 +37,6 @@ editor['windwp/nvim-autopairs'] = {
   end
 }
 
-editor['Raimondi/delimitMate'] = {
-  event = 'InsertEnter',
-  config = conf.delimimate
-}
-
 editor['romainl/vim-cool'] = {
   event = {'BufReadPre', 'BufNewFile'},
   config = function()
@@ -54,7 +54,7 @@ editor['hrsh7th/vim-eft'] = {
 editor['kkoomen/vim-doge'] = {
   run = ':call doge#install()',
   config = function()
-    vim.g.doge_mapping = '<Leader>D'
+    vim.g.doge_mapping = '<Leader>vD'
   end
 }
 

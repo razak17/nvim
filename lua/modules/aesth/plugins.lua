@@ -17,7 +17,7 @@ aesth['akinsho/nvim-bufferline.lua'] = {
 aesth['sunjon/shade.nvim'] = {
   event = "BufReadPre",
   config = function()
-    require'shade'.setup({keys = {toggle = '<Leader>R'}})
+    require'shade'.setup({keys = {toggle = '<Leader>aS'}})
   end
 }
 
