@@ -2,8 +2,8 @@ local fn, uv, api = vim.fn, vim.loop, vim.api
 local vim_path = require('core.global').vim_path
 local data_dir = require('core.global').data_dir
 local modules_dir = vim_path .. '/lua/modules'
-local packer_compiled = data_dir .. 'packer_compiled.vim'
-local compile_to_lua = data_dir .. 'lua/_compiled.lua'
+local packer_compiled = data_dir .. '_pcompiled.vim'
+local compile_to_lua = data_dir .. 'lua/_pcompiled.lua'
 local packer = nil
 
 local Plug = {}
@@ -126,13 +126,7 @@ function plugins.auto_compile()
 end
 
 function plugins.load_compile()
-  if vim.fn.filereadable(compile_to_lua) == 1 then
-    require('_compiled')
-  else
-    -- assert(
-    --     'Missing packer compile file Run PackerCompile Or PackerInstall to fix')
-    plugins.magic_compile()
-  end
+  plugins.magic_compile()
   vim.cmd [[command! PlugCompile lua require('core.plug').magic_compile()]]
   vim.cmd [[command! PlugInstall lua require('core.plug').install()]]
   vim.cmd [[command! PlugUpdate lua require('core.plug').update()]]

@@ -17,7 +17,6 @@ local buf = {
   -- Check if file changed when its window is focus, more eager than 'autoread'
   {"BufLeave", "*", "silent! update"},
   {"BufEnter,FocusGained", "*", "silent! checktime"},
-  {"BufWritePre", "*", ":call autocmds#TrimWhitespace()"},
   {
     "BufWritePost,FileWritePost",
     "*.vim",
@@ -35,7 +34,6 @@ local niceties = {
 }
 
 local win = {
-  -- {"TermOpen", "*", "startinsert"},
   -- Autosave when nvim loses focus
   {"FocusLost", "*", "silent! wall"},
   -- Equalize window dimensions when resizing vim window
@@ -56,7 +54,6 @@ local win = {
 }
 
 local ft = {
-  {"FileType", "dap-repl", "lua require('dap.ext.autocompl').attach()"},
   {"FileType", "floaterm", "setlocal winblend=0"},
   {"FileType", "Trouble,Packer,text,qf", "set colorcolumn=0 textwidth=0"},
   {
@@ -71,11 +68,6 @@ local ft = {
   }
 }
 
-local tmux = {
-  {"VimEnter", "*", "lua require 'internal.tmux'.on_enter()"},
-  {"VimLeave", "*", "lua require 'internal.tmux'.on_leave()"}
-}
-
 local user_plugin_cursorword = {
   {"FileType", "NvimTree,lspsagafinder,dashboard,vista", "let b:cursorword = 0"},
   {"WinEnter", "*", [[if &diff || &pvw | let b:cursorword = 0  | endif]]},
@@ -83,6 +75,6 @@ local user_plugin_cursorword = {
   {"InsertLeave", "*", "let b:cursorword = 1"}
 }
 
-local definitions = {buf, ft, win, niceties, user_plugin_cursorword, tmux}
+local definitions = {buf, ft, win, niceties, user_plugin_cursorword}
 
 augroups(definitions)

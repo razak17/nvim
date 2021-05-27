@@ -1,9 +1,5 @@
 local mp = require('keymap.map')
-local nmap, vmap, xmap, imap, smap, nnoremap, inoremap = mp.nmap, mp.vmap,
-                                                         mp.xmap, mp.imap,
-                                                         mp.smap, mp.nnoremap,
-                                                         mp.inoremap
-local opts = {expr = true}
+local nmap, vmap, xmap, nnoremap = mp.nmap, mp.vmap, mp.xmap, mp.nnoremap
 require('keymap.config')
 
 -- Dial
@@ -16,43 +12,10 @@ vim.cmd([[
   vmap g<C-x> <Plug>(dial-decrement-additional)
 ]])
 
--- vsnip
-xmap("<C-l>", "<Plug>(vsnip-select-text)")
-xmap("<C-x>", "<Plug>(vsnip-cut-text)")
-imap("<Tab>", "v:lua.tab()", opts)
-imap("<S-Tab>", "v:lua.s_tab()", opts)
-nnoremap('<Leader>cs', ':VsnipOpen<CR> 1<CR><CR>')
-imap("<C-l>", "vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'",
-     opts)
-smap("<C-l>", "vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'",
-     opts)
-
--- Compe
-imap("<CR>", [[compe#confirm({ 'keys': "\<Plug>delimitMateCR", 'mode': '' })]],
-     {noremap = true, expr = true})
-inoremap("<C-Space>", "compe#complete()", opts)
-inoremap("<C-e>", "compe#close('<C-e>')", opts)
-
--- Undo tree
-nnoremap("<Leader>au", ":UndotreeToggle<CR>")
-
 -- TS
 nnoremap('<Leader>Ie', ':TSInstallInfo<CR>')
 nnoremap('<Leader>Iu', ':TSUpdate<CR>')
 nnoremap('<Leader>mw', ':<c-u>MatchupWhereAmI?<CR>')
-
--- Symbols Outline
-nnoremap('<Leader>vs', ':SymbolsOutline<CR>')
-
--- trouble
-nnoremap('<Leader>vxd', ':TroubleToggle lsp_document_diagnostics<CR>')
-nnoremap('<Leader>vxe', ':TroubleToggle quickfix<CR>')
-nnoremap('<Leader>vxl', ':TroubleToggle loclist<CR>')
-nnoremap('<Leader>vxr', ':TroubleToggle lsp_references<CR>')
-nnoremap('<Leader>vxw', ':TroubleToggle lsp_workspace_diagnostics<CR>')
-
--- Context
-nnoremap('<Leader>cc', ':ContextToggle<CR>')
 
 -- Bookmark
 nnoremap('<Leader>me', ':BookmarkToggle<CR>')
@@ -63,39 +26,10 @@ nnoremap('<Leader>mk', ':BookmarkNext<CR>')
 nmap("n", 'v:lua.enhance_jk_move("n")', {silent = true, expr = true})
 nmap("k", 'v:lua.enhance_jk_move("k")', {silent = true, expr = true})
 
--- vim-eft
-nmap(";", "v:lua.enhance_ft_move(';')", {expr = true})
-xmap(";", "v:lua.enhance_ft_move(';')", {expr = true})
-nmap("f", "v:lua.enhance_ft_move('f')", {expr = true})
-nmap("f", "v:lua.enhance_ft_move('f')", {expr = true})
-nmap("f", "v:lua.enhance_ft_move('f')", {expr = true})
-nmap("F", "v:lua.enhance_ft_move('F')", {expr = true})
-nmap("F", "v:lu.enhance_ft_move('F')", {expr = true})
-nmap("F", "v:lua.enhance_ft_move('F')", {expr = true})
-
--- markdown preview
-nnoremap('<Leader>om', ':MarkdownPreview<CR>')
-
--- dadbob
-nnoremap('<Leader>od', ':DBUIToggle<CR>')
-
--- Lsp
-nnoremap('<Leader>Li', ':LspInfo<CR>')
-nnoremap('<Leader>Ll', ':LspLog<CR>')
-nnoremap('<Leader>Lr', ':LspRestart<CR>')
-nnoremap('<Leader>vv', ':LspToggleVirtualText<CR>')
-
 -- Tree
 nnoremap('<Leader>cv', ':NvimTreeToggle<CR>')
 nnoremap('<Leader>cr', ':NvimTreeRefresh<CR>')
 nnoremap('<Leader>cf', ':NvimTreeFindFile<CR>')
-
--- Far
-nnoremap("<Leader>Ff", ":Farr --source=vimgrep<CR>")
-nnoremap("<Leader>Fd", ":Fardo<CR>")
-nnoremap("<Leader>Fi", ":Farf<CR>")
-nnoremap("<Leader>Fr", ":Farr --source=rgnvim<CR>")
-nnoremap("<Leader>Fz", ":Farundo<CR>")
 
 -- Bufferline
 nnoremap('<Leader>bb', ':BufferLineMovePrev<CR>')
@@ -128,31 +62,6 @@ nnoremap("<Leader>gp", ":Git poosh<CR>")
 nnoremap("<Leader>gP", ":Git pull<CR>")
 nnoremap("<Leader>gr", ":GRemove<CR>")
 nnoremap("<Leader>gs", ":G<CR>")
-
--- dap
-nnoremap('<leader>dc', '<cmd>lua require"dap".continue()<CR>')
-nnoremap('<leader>dso', '<cmd>lua require"dap".step_out()<CR>')
-nnoremap('<leader>dsv', '<cmd>lua require"dap".step_over()<CR>')
-nnoremap('<leader>dsi', '<cmd>lua require"dap".step_into()<CR>')
-nnoremap('<leader>dro', '<cmd>lua require"dap".repl.open()<CR>')
-nnoremap('<leader>drl', '<cmd>lua require"dap".repl.run_last()<CR>')
-nnoremap('<leader>dbt', '<cmd>lua require"dap".toggle_breakpoint()<CR>')
-nnoremap('<leader>dbl',
-         '<cmd>lua require"dap".set_breakpoint(nil, nil, vim.fn.input("Log point message: "))<CR>')
-nnoremap('<leader>dbs',
-         '<cmd>lua require"dap".set_breakpoint(vim.fn.input("Breakpoint condition: "))<CR>')
-
--- Floaterm
-nnoremap("<F6>", ":FloatermKill<CR>")
-nnoremap("<F7>", ":FloatermNew<CR>")
-nnoremap("<F8>", ":FloatermPrev<CR>")
-nnoremap("<F9>", ":FloatermNext<CR>")
-nnoremap("<F12>", ":FloatermToggle<CR>")
-nnoremap("<Leader>eN", ":FloatermNew<CR>")
-nnoremap("<Leader>el", ":FloatermNew lazygit<CR>")
-nnoremap("<Leader>en", ":FloatermNew node<CR>")
-nnoremap("<Leader>ep", ":FloatermNew python<CR>")
-nnoremap("<Leader>er", ":FloatermNew ranger<CR>")
 
 -- Kommentary
 nmap("<leader>/", "<Plug>kommentary_line_default")
@@ -206,5 +115,4 @@ nnoremap('<Leader>fdb', ':Telescope dotfiles branches<CR>')
 nnoremap('<Leader>fds', ':Telescope dotfiles status<CR>')
 
 nnoremap('<Leader>fem', ':Telescope media_files<CR>')
-nnoremap('<leader>fep', ':Telescope project<CR>')
 nnoremap('<Leader>feb', ':Telescope bg_selector<CR>')

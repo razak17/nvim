@@ -5,7 +5,6 @@ if not packer_plugins['popup.nvim'].loaded then
   vim.cmd [[packadd plenary.nvim]]
   vim.cmd [[packadd telescope-fzy-native.nvim]]
   vim.cmd [[packadd telescope-media-files.nvim]]
-  vim.cmd [[packadd telescope-project.nvim]]
 end
 
 require('telescope').setup({
@@ -42,8 +41,3 @@ require('telescope').setup({
 
 require'telescope'.load_extension('media_files')
 require'telescope'.load_extension('fzy_native')
-require'telescope'.load_extension('project')
-require'telescope'.load_extension('nvim_files')
-require'telescope'.load_extension('dotfiles')
-require'telescope'.load_extension('grep_string_prompt')
-require'telescope'.load_extension('bg_selector')

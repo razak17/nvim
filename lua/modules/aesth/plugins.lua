@@ -5,9 +5,6 @@ aesth['razak17/zephyr-nvim'] = {config = [[vim.cmd('colo zephyr')]]}
 
 aesth['glepnir/dashboard-nvim'] = {event = "VimEnter", config = conf.dashboard}
 
-aesth['lukas-reineke/indent-blankline.nvim'] =
-    {event = 'VimEnter', branch = 'lua', config = conf.indent_blankline}
-
 aesth['akinsho/nvim-bufferline.lua'] = {
   event = "VimEnter",
   config = conf.nvim_bufferline,

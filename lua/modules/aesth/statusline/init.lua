@@ -104,37 +104,6 @@ gls.left[7] = {
   }
 }
 
-gls.left[8] = {
-  DiagnosticError = {
-    provider = 'DiagnosticError',
-    icon = '  ',
-    highlight = {colors.red, colors.bg}
-  }
-}
-gls.left[9] = {
-  DiagnosticWarn = {
-    provider = 'DiagnosticWarn',
-    icon = '  ',
-    highlight = {colors.yellow, colors.bg}
-  }
-}
-
-gls.left[10] = {
-  DiagnosticInfo = {
-    provider = 'DiagnosticInfo',
-    icon = '  ',
-    highlight = {colors.blue, colors.bg}
-  }
-}
-
-gls.left[11] = {
-  DiagnosticHint = {
-    provider = 'DiagnosticHint',
-    icon = '  ',
-    highlight = {'#1abc9c', colors.bg}
-  }
-}
-
 gls.right[1] = {
   DiffAdd = {
     provider = 'DiffAdd',
@@ -163,15 +132,6 @@ gls.right[3] = {
 }
 
 gls.right[4] = {
-  ShowLspClient = {
-    provider = 'GetLspClient',
-    condition = hide_in_width,
-    icon = 'LSP:',
-    highlight = {colors.cyan, colors.bg, 'bold'}
-  }
-}
-
-gls.right[5] = {
   FileEncode = {
     provider = 'FileEncode',
     condition = function()
@@ -190,7 +150,7 @@ gls.right[5] = {
   }
 }
 
-gls.right[6] = {
+gls.right[5] = {
   FileFormat = {
     provider = 'FileFormat',
     condition = function()
@@ -209,7 +169,7 @@ gls.right[6] = {
   }
 }
 
-gls.right[7] = {
+gls.right[6] = {
   LineInfo = {
     provider = 'LineColumn',
     condition = function()
@@ -221,7 +181,7 @@ gls.right[7] = {
   }
 }
 
-gls.right[8] = {
+gls.right[7] = {
   PerCent = {
     provider = 'LinePercent',
     condition = function()
@@ -233,7 +193,7 @@ gls.right[8] = {
   }
 }
 
-gls.right[9] = {
+gls.right[8] = {
   RainbowBlue = {
     provider = function()
       return vim.bo.filetype ~= 'dashboard' and ' ▊' or '  ▊'

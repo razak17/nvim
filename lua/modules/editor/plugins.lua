@@ -14,11 +14,6 @@ editor['norcalli/nvim-colorizer.lua'] = {
   config = conf.nvim_colorizer
 }
 
-editor['Raimondi/delimitMate'] = {
-  event = 'InsertEnter',
-  -- config = conf.delimimate
-}
-
 editor['b3nj5m1n/kommentary'] = {
   event = {'BufReadPre', 'BufNewFile'},
   config = function()
@@ -28,33 +23,10 @@ editor['b3nj5m1n/kommentary'] = {
   end
 }
 
-editor['windwp/nvim-autopairs'] = {
-  event = 'InsertEnter',
-  config = function()
-    require('nvim-autopairs').setup({
-      disable_filetype = {"TelescopePrompt", "vim"}
-    })
-  end
-}
-
 editor['romainl/vim-cool'] = {
   event = {'BufReadPre', 'BufNewFile'},
   config = function()
     vim.g.CoolTotalMatches = 1
-  end
-}
-
-editor['hrsh7th/vim-eft'] = {
-  opt = true,
-  config = function()
-    vim.g.eft_ignorecase = true
-  end
-}
-
-editor['kkoomen/vim-doge'] = {
-  run = ':call doge#install()',
-  config = function()
-    vim.g.doge_mapping = '<Leader>vD'
   end
 }
 

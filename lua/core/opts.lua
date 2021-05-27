@@ -2,8 +2,6 @@ local vim = vim
 local G = require 'core.global'
 local scopes = {o = vim.o, b = vim.bo, w = vim.wo}
 
-require('internal.folds')
-
 local function opt(scope, key, value)
   scopes[scope][key] = value
   if scope ~= 'o' then
@@ -16,8 +14,6 @@ opt('o', 'udir', G.cache_dir .. 'undodir')
 opt('o', 'directory', G.cache_dir .. 'swap')
 opt('o', 'backupdir', G.cache_dir .. 'backup')
 opt('o', 'viewdir', G.cache_dir .. 'view')
-opt('o', 'backupskip',
-    '/tmp/*,$TMPDIR/*,$TMP/*,$TEMP/*,*/shm/*,/private/var/*,.vault.vim')
 
 -- Timing
 opt('o', 'timeout', true)
@@ -27,16 +23,10 @@ opt('o', 'ttimeoutlen', 10)
 opt('o', 'updatetime', 100)
 opt('o', 'redrawtime', 1500)
 
--- Folds
-opt('w', 'foldmethod', 'expr')
-opt('o', 'foldtext', "v:lua.folds()")
-opt('o', 'foldlevelstart', 10)
-opt('w', 'foldenable', true)
-
 -- Editor UI Appearance
-opt('o', 't_Co', '256')
+opt('o', 't_Co', '16')
 opt('o', 'ruler', true)
-opt('o', 'laststatus', 2)
+opt('o', 'laststatus', 4)
 opt('o', 'showcmd', false)
 opt('o', 'showtabline', 2)
 opt('o', 'showmode', false)
@@ -44,7 +34,7 @@ opt('o', 'showbreak', [[↪ ]])
 opt('o', 'syntax', 'enable')
 opt('o', 'encoding', 'utf-8')
 opt('o', 'background', 'dark')
-opt('w', 'colorcolumn', '+1')
+opt('w', 'colorcolumn', '0')
 opt('w', 'cursorline', false)
 opt('o', 'cursorcolumn', false)
 opt('o', 'termguicolors', true)
@@ -72,30 +62,30 @@ opt('w', 'list', true)
 opt('w', 'number', true)
 opt('w', 'signcolumn', 'yes')
 opt('w', 'relativenumber', true)
-opt('w', 'listchars', 'tab:»•,nbsp:+,trail:·,precedes:,extends:')
 opt('o', 'diffopt',
+-- opt('w', 'listchars', 'tab:»•,nbsp:+,trail:·,precedes:,extends:')
     'vertical,iwhite,hiddenoff,foldcolumn:0,context:4,algorithm:histogram,indent-heuristic')
 opt('w', 'fillchars',
     'vert:▕,fold: ,eob: ,diff:─,msgsep: ,foldopen:▾,foldsep:│,foldclose:▸,eob: ')
 
 -- Behavior
-vim.o.title = true
-vim.o.titlelen = 70
-vim.o.titlestring = " ❐ %t %r %m"
-vim.o.titleold = '%{fnamemodify(getcwd(), ":t")}'
-opt('o', 'eadirection', 'hor')
 opt('b', 'swapfile', false)
+opt('o', 'backup', false)
 opt('b', 'undofile', true)
+opt('w', 'wrap', false)
+opt('o', 'errorbells', false)
+opt('o', 'writebackup', false)
+
+vim.o.title = true
+-- vim.o.titlestring = "%(%F%)%a\ -\ VIM%(\ %M%)"
+
+opt('o', 'eadirection', 'hor')
 opt('w', 'concealcursor', 'niv')
 opt('w', 'conceallevel', 0)
-opt('w', 'wrap', false)
 opt('o', 'report', 2)
-opt('o', 'backup', false)
 opt('o', 'history', 2000)
-opt('o', 'writebackup', false)
 opt('o', 'undolevels', 1000)
 opt('o', 'shell', '/bin/zsh')
-opt('o', 'errorbells', false)
 opt('o', 'splitbelow', true)
 opt('o', 'splitright', true)
 opt('o', 'mouse', 'a')
@@ -117,17 +107,17 @@ opt('o', 'virtualedit', 'block') -- list of words that change the behavior of th
 opt('o', 'magic', true) -- list of words that change the behavior of the jumplist
 
 -- Tabs and Indents
-opt('o', 'breakindentopt', 'shift:2,min:20')
+-- opt('o', 'breakindentopt', 'shift:2,min:20')
 opt('o', 'cindent', true) -- Increase indent on line after opening brace
 opt('o', 'smarttab', true) -- Tab insert blanks according to 'shiftwidth'
 opt('o', 'autoindent', true) -- Use same indenting on new lines
 opt('o', 'shiftround', true) -- Round indent to multiple of 'shiftwidth'
 opt('b', 'tabstop', 2) -- The number of spaces a tab is
 opt('b', 'shiftwidth', 2) -- Number of spaces to use in auto(indent)
-opt('b', 'textwidth', 80) -- Text width maximum chars before wrapping
+-- opt('b', 'textwidth', 80) -- Text width maximum chars before wrapping
 opt('b', 'softtabstop', -1) -- Number of spaces to use in auto(indent)
 opt('b', 'expandtab', true) -- Expand tabs to spaces.
-opt('b', 'smartindent', true) -- Insert indents automatically
+-- opt('b', 'smartindent', true) -- Insert indents automatically
 
 -- Searching
 opt('o', 'grepprg',
@@ -152,6 +142,8 @@ opt('o', 'wildignorecase', true)
 
 -- What to save for views and sessions:
 opt('o', 'clipboard', 'unnamedplus')
+opt('o', 'autoread', true)
+opt('o', 'autowrite', true)
 opt('o', 'shada', "!,'300,<50,@100,s10,h")
 opt('o', 'viewoptions', 'cursor,folds')
 opt('o', 'sessionoptions', 'curdir,help,tabpages,winsize')
