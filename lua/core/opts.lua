@@ -25,9 +25,9 @@ opt('o', 'redrawtime', 1500)
 
 -- Editor UI Appearance
 opt('o', 't_Co', '16')
-opt('o', 'ruler', false)
+opt('o', 'ruler', true)
 opt('o', 'laststatus', 0)
-opt('w', 'colorcolumn', '0')
+opt('w', 'colorcolumn', '+1')
 opt('o', 'showtabline', 0)
 -- opt('w', 'cursorline', false)
 opt('o', 'showcmd', false)
@@ -107,14 +107,14 @@ opt('o', 'virtualedit', 'block') -- list of words that change the behavior of th
 opt('o', 'magic', true) -- list of words that change the behavior of the jumplist
 
 -- Tabs and Indents
--- opt('o', 'breakindentopt', 'shift:2,min:20')
+opt('o', 'breakindentopt', 'shift:2,min:20')
 -- opt('o', 'cindent', true) -- Increase indent on line after opening brace
 opt('o', 'smarttab', true) -- Tab insert blanks according to 'shiftwidth'
 opt('o', 'autoindent', true) -- Use same indenting on new lines
 -- opt('o', 'shiftround', true) -- Round indent to multiple of 'shiftwidth'
 opt('b', 'tabstop', 2) -- The number of spaces a tab is
 opt('b', 'shiftwidth', 2) -- Number of spaces to use in auto(indent)
--- opt('b', 'textwidth', 80) -- Text width maximum chars before wrapping
+opt('b', 'textwidth', 104) -- Text width maximum chars before wrapping
 opt('b', 'softtabstop', -1) -- Number of spaces to use in auto(indent)
 opt('b', 'expandtab', true) -- Expand tabs to spaces.
 opt('b', 'smartindent', true) -- Insert indents automatically

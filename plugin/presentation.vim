@@ -23,7 +23,7 @@ function! DisplayPresentationBoundaries()
   else
     highlight lastoflines ctermbg=darkred guibg=darkred
     match lastoflines /\%23l/
-    set colorcolumn=80
+    set colorcolumn=105
     let g:presentationBoundsDisplayed = 1
   endif
 endfunction
