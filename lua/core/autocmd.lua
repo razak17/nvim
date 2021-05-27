@@ -41,31 +41,11 @@ local win = {
   {"VimEnter", "*", "lua require('core.plug').magic_compile()"},
   -- Force write shada on leaving nvim
   {"VimLeave", "*", [[if has('nvim') | wshada! | else | wviminfo! | endif]]},
-  {
-    "WinEnter,BufEnter,InsertLeave",
-    "*",
-    [[if ! &cursorline && &filetype !~# '^\(dashboard\|clap_\)' && ! &pvw | setlocal cursorline | endif]]
-  },
-  {
-    "WinLeave,BufLeave,InsertEnter",
-    "*",
-    [[if &cursorline && &filetype !~# '^\(dashboard\|clap_\)' && ! &pvw | setlocal nocursorline | endif]]
-  }
 }
 
 local ft = {
   {"FileType", "floaterm", "setlocal winblend=0"},
   {"FileType", "Trouble,Packer,text,qf", "set colorcolumn=0 textwidth=0"},
-  {
-    "FileType",
-    "dashboard",
-    "set showtabline=0 | autocmd WinLeave <buffer> set showtabline=2"
-  },
-  {
-    "FileType",
-    "which_key",
-    "set laststatus=0 noshowmode noruler | autocmd BufLeave <buffer> set laststatus=2 ruler"
-  }
 }
 
 local user_plugin_cursorword = {
@@ -75,6 +55,11 @@ local user_plugin_cursorword = {
   {"InsertLeave", "*", "let b:cursorword = 1"}
 }
 
-local definitions = {buf, ft, win, niceties, user_plugin_cursorword}
+local tmux = {
+  {"VimEnter", "*", "lua require 'internal.tmux'.on_enter()"},
+  {"VimLeave", "*", "lua require 'internal.tmux'.on_leave()"}
+}
+
+local definitions = {buf, ft, win, niceties, tmux, user_plugin_cursorword}
 
 augroups(definitions)

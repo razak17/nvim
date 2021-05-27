@@ -64,9 +64,13 @@ function SimpleFoldText()
 endfunction
 
 set titlestring=%(%F%)%a\ -\ VIM%(\ %M%)
+set nocursorline
 set foldlevelstart=20
 set foldmethod=expr
 set foldexpr=ListFolds()
+filetype off
+syntax on
+set hidden
 
 nmap <S-Enter> O<Esc>
 nmap <CR> o<Esc>
@@ -80,27 +84,27 @@ noremap <Down> <NOP>
 " presentation mode
 noremap <Left> :silent bp<CR> :redraw!<CR>
 noremap <Right> :silent bn<CR> :redraw!<CR>
-nmap <F5> :set relativenumber! number! showmode! showcmd! hidden! ruler!<CR>
+nmap <F5> :set relativenumber! number! nocursorline ruler!<CR>
 nmap <F2> :call DisplayPresentationBoundaries()<CR>
-nmap <F3> :call FindExecuteCommand()<CR>
+" nmap <F3> :call FindExecuteCommand()<CR>
 
 " jump to slides
-nmap <F9> :call JumpFirstBuffer()<CR> :redraw!<CR>
-nmap <F10> :call JumpSecondToLastBuffer()<CR> :redraw!<CR>
-nmap <F11> :call JumpLastBuffer()<CR> :redraw!<CR>
+" nmap <F9> :call JumpFirstBuffer()<CR> :redraw!<CR>
+" nmap <F10> :call JumpSecondToLastBuffer()<CR> :redraw!<CR>
+" nmap <F11> :call JumpLastBuffer()<CR> :redraw!<CR>
 
 " shows all open buffers and their status
 nmap <leader>bl :ls<CR>
 " toggles the paste mode
-nmap <C-p> :set paste!<CR>
+" nmap <C-p> :set paste!<CR>
 " toggles word wrap
 nmap <C-w> :set wrap! linebreak<CR>
 " toggles spell checking
 nmap <C-]> :set spell! spelllang=en_us<CR>
 " opens the last buffer
-nnoremap Al <C-^>
+" nnoremap Al <C-^>
 " adds a line of <
-nmap <leader>AA :normal 20i<<CR>
+" nmap <leader>AA :normal 20i<<CR>
 
 " makes Ascii art font
 nmap <leader>AF :.!toilet -w 200 -f standard<CR>
@@ -117,7 +121,7 @@ let &t_te.="\e[0 q"
 nmap <leader><Enter> !!zsh<CR>
 
 " AsciiDoc preview
-nmap <leader>v :!asciidoc-view %<CR><CR>
+nmap <leader>Av :!asciidoc-view %<CR><CR>
 
 " Transparent editing of gpg encrypted files.
 " By Wouter Hanegraaff

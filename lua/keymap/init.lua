@@ -1,7 +1,10 @@
 local mp = require('keymap.map')
-local nmap, vmap, xmap, nnoremap = mp.nmap, mp.vmap, mp.xmap, mp.nnoremap
+local nmap, vmap, xmap, imap, smap, nnoremap, inoremap = mp.nmap, mp.vmap,
+                                                         mp.xmap, mp.imap,
+                                                         mp.smap, mp.nnoremap,
+                                                         mp.inoremap
 require('keymap.config')
-
+local opts = {expr = true}
 -- Dial
 vim.cmd([[
   nmap <C-a> <Plug>(dial-increment)
@@ -11,6 +14,23 @@ vim.cmd([[
   vmap g<C-a> <Plug>(dial-increment-additional)
   vmap g<C-x> <Plug>(dial-decrement-additional)
 ]])
+
+-- Compe
+imap("<CR>", [[compe#confirm({ 'keys': "\<Plug>delimitMateCR", 'mode': '' })]],
+     {noremap = true, expr = true})
+inoremap("<C-Space>", "compe#complete()", opts)
+inoremap("<C-e>", "compe#close('<C-e>')", opts)
+
+-- vsnip
+xmap("<C-l>", "<Plug>(vsnip-select-text)")
+xmap("<C-x>", "<Plug>(vsnip-cut-text)")
+imap("<Tab>", "v:lua.tab()", opts)
+imap("<S-Tab>", "v:lua.s_tab()", opts)
+nnoremap('<Leader>cs', ':VsnipOpen<CR> 1<CR><CR>')
+imap("<C-l>", "vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'",
+     opts)
+smap("<C-l>", "vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'",
+     opts)
 
 -- TS
 nnoremap('<Leader>Ie', ':TSInstallInfo<CR>')
@@ -100,19 +120,3 @@ nnoremap('<Leader>fgc', ':Telescope git_commits<CR>')
 nnoremap('<Leader>fgC', ':Telescope git_bcommits<CR>')
 nnoremap('<Leader>fgf', ':Telescope git_files<CR>')
 nnoremap('<Leader>fgs', ':Telescope git_status<CR>')
-
--- Telescope extensions
-nnoremap('<Leader>frf', ':Telescope nvim_files files<CR>')
-nnoremap('<Leader>frB', ':Telescope nvim_files bcommits<CR>')
-nnoremap('<Leader>frc', ':Telescope nvim_files commits<CR>')
-nnoremap('<Leader>frb', ':Telescope nvim_files branches<CR>')
-nnoremap('<Leader>frs', ':Telescope nvim_files status<CR>')
-
-nnoremap('<Leader>fdf', ':Telescope dotfiles git_files<CR>')
-nnoremap('<Leader>fdB', ':Telescope dotfiles bcommits<CR>')
-nnoremap('<Leader>fdc', ':Telescope dotfiles commits<CR>')
-nnoremap('<Leader>fdb', ':Telescope dotfiles branches<CR>')
-nnoremap('<Leader>fds', ':Telescope dotfiles status<CR>')
-
-nnoremap('<Leader>fem', ':Telescope media_files<CR>')
-nnoremap('<Leader>feb', ':Telescope bg_selector<CR>')

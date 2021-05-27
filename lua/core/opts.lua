@@ -25,17 +25,17 @@ opt('o', 'redrawtime', 1500)
 
 -- Editor UI Appearance
 opt('o', 't_Co', '16')
-opt('o', 'ruler', true)
-opt('o', 'laststatus', 4)
+opt('o', 'ruler', false)
+opt('o', 'laststatus', 0)
+opt('w', 'colorcolumn', '0')
+opt('o', 'showtabline', 0)
+-- opt('w', 'cursorline', false)
 opt('o', 'showcmd', false)
-opt('o', 'showtabline', 2)
 opt('o', 'showmode', false)
 opt('o', 'showbreak', [[↪ ]])
-opt('o', 'syntax', 'enable')
+-- opt('o', 'syntax', 'enable')
 opt('o', 'encoding', 'utf-8')
 opt('o', 'background', 'dark')
-opt('w', 'colorcolumn', '0')
-opt('w', 'cursorline', false)
 opt('o', 'cursorcolumn', false)
 opt('o', 'termguicolors', true)
 opt('o', 'shortmess', 'aoOTIcF')
@@ -59,9 +59,9 @@ opt('o', 'equalalways', false)
 opt('o', 'numberwidth', 4)
 opt('b', 'fileencoding', 'utf-8')
 opt('w', 'list', true)
-opt('w', 'number', true)
+opt('w', 'number', false)
 opt('w', 'signcolumn', 'yes')
-opt('w', 'relativenumber', true)
+-- opt('w', 'relativenumber', true)
 opt('o', 'diffopt',
 -- opt('w', 'listchars', 'tab:»•,nbsp:+,trail:·,precedes:,extends:')
     'vertical,iwhite,hiddenoff,foldcolumn:0,context:4,algorithm:histogram,indent-heuristic')
@@ -108,16 +108,16 @@ opt('o', 'magic', true) -- list of words that change the behavior of the jumplis
 
 -- Tabs and Indents
 -- opt('o', 'breakindentopt', 'shift:2,min:20')
-opt('o', 'cindent', true) -- Increase indent on line after opening brace
+-- opt('o', 'cindent', true) -- Increase indent on line after opening brace
 opt('o', 'smarttab', true) -- Tab insert blanks according to 'shiftwidth'
 opt('o', 'autoindent', true) -- Use same indenting on new lines
-opt('o', 'shiftround', true) -- Round indent to multiple of 'shiftwidth'
+-- opt('o', 'shiftround', true) -- Round indent to multiple of 'shiftwidth'
 opt('b', 'tabstop', 2) -- The number of spaces a tab is
 opt('b', 'shiftwidth', 2) -- Number of spaces to use in auto(indent)
 -- opt('b', 'textwidth', 80) -- Text width maximum chars before wrapping
 opt('b', 'softtabstop', -1) -- Number of spaces to use in auto(indent)
 opt('b', 'expandtab', true) -- Expand tabs to spaces.
--- opt('b', 'smartindent', true) -- Insert indents automatically
+opt('b', 'smartindent', true) -- Insert indents automatically
 
 -- Searching
 opt('o', 'grepprg',

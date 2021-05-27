@@ -140,7 +140,6 @@ g.which_key_map = {
     k = 'next mark',
     w = 'where_am_i'
   },
-  o = {name = '+Toggle_cmds'},
   P = {
     name = '+Plug',
     c = 'compile',
@@ -161,6 +160,5 @@ g.which_key_map = {
     N = 'new'
   },
   S = {name = '+Session', l = 'load Session', s = 'save Session'},
-  T = {name = '+Treesitter', m = 'scope incremental', n = 'init selection'}
 }
 
