@@ -1,0 +1,8 @@
+
+{
+   "check mark": {
+    "prefix": "cm",
+    "body": ["✓"],
+    "description": "check maark"
+  },
+}

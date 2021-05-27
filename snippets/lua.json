@@ -1,0 +1,19 @@
+
+{
+   "point": {
+    "prefix": "ce",
+    "body": ["•"],
+    "description": "point"
+  },
+   "check mark": {
+    "prefix": "cm",
+    "body": ["✓"],
+    "description": "check mark"
+  },
+   "coffee": {
+    "prefix": "co",
+    "body": ["☕"],
+    "description": "coffee"
+  }
+}
+
