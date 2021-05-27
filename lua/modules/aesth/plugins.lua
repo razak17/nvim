@@ -1,7 +1,8 @@
 local conf = require('modules.aesth.config')
 local aesth = {}
 
-aesth['razak17/zephyr-nvim'] = {config = [[vim.cmd('colo zephyr')]]}
+-- aesth['razak17/zephyr-nvim'] = {config = [[vim.cmd('colo zephyr')]]}
+aesth['glepnir/zephyr-nvim'] = {config = [[vim.cmd('colo zephyr')]]}
 
 aesth['glepnir/dashboard-nvim'] = {event = "VimEnter", config = conf.dashboard}
 
