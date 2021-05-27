@@ -36,6 +36,11 @@ local enhance_attach = function(client, bufnr)
   lsp_utils.lsp_line_diagnostics()
   lsp_utils.lsp_document_highlight(client)
   lsp_utils.lsp_document_formatting(client)
+  require"lsp_signature".on_attach({
+    bind = true, -- This is mandatory, otherwise border config won't get registered.
+    hint_prefix = "🐼 ", -- Panda for parameter
+    handler_opts = {border = "single"}
+  })
 end
 
 local function lsp_setup()
