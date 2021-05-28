@@ -87,6 +87,8 @@ noremap <Right> :silent bn<CR> :redraw!<CR>
 nmap <F5> :set relativenumber! number! nocursorline ruler!<CR>
 nmap <F2> :call DisplayPresentationBoundaries()<CR>
 " nmap <F3> :call FindExecuteCommand()<CR>
+nnoremap <leader>Bl :highlight Normal guibg=#c3eeff guifg=#030303<CR>
+nnoremap <leader>Bd :highlight Normal guibg=#282a36 guifg=default<CR>
 
 " jump to slides
 " nmap <F9> :call JumpFirstBuffer()<CR> :redraw!<CR>
