@@ -7,7 +7,7 @@ tools['voldikss/vim-floaterm'] = {event = "VimEnter", config = conf.floaterm}
 
 tools['tweekmonster/startuptime.vim'] = {cmd = "StartupTime"}
 
-tools['tpope/vim-fugitive'] = {event = {'VimEnter'}}
+tools['tpope/vim-fugitive'] = {event = 'VimEnter'}
 
 tools['MattesGroeger/vim-bookmarks'] = {
   event = {'BufReadPre', 'BufNewFile'},
@@ -44,7 +44,10 @@ tools['brooth/far.vim'] = {
 --     'DBUIRenameBuffer'
 --   },
 --   config = conf.vim_dadbod_ui,
---   requires = {{'tpope/vim-dadbod', opt = true}}
+--   requires = {
+--     {'tpope/vim-dadbod', opt = true},
+--     {'kristijanhusak/vim-dadbod-completion', opt = true}
+--   }
 -- }
 
 return tools

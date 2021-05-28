@@ -32,8 +32,6 @@ lang['kevinhwang91/nvim-bqf'] = {
 
 lang['p00f/nvim-ts-rainbow'] = {opt = true, after = 'nvim-treesitter'}
 
-lang['ray-x/lsp_signature.nvim'] = {event = 'BufReadPre'}
-
 lang['neovim/nvim-lspconfig'] = {
   event = {'BufReadPre', 'BufNewFile'},
   config = conf.nvim_lsp
