@@ -51,9 +51,6 @@ nnoremap('<Leader>vxl', ':TroubleToggle loclist<CR>')
 nnoremap('<Leader>vxr', ':TroubleToggle lsp_references<CR>')
 nnoremap('<Leader>vxw', ':TroubleToggle lsp_workspace_diagnostics<CR>')
 
--- Context
-nnoremap('<Leader>cc', ':ContextToggle<CR>')
-
 -- Bookmark
 nnoremap('<Leader>me', ':BookmarkToggle<CR>')
 nnoremap('<Leader>mb', ':BookmarkPrev<CR>')
