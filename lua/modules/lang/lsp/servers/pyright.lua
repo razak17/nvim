@@ -6,7 +6,7 @@ if vim.fn.executable("pyright") then
     handlers = lsp_utils.diagnostics,
     capabilities = lsp_servers.capabilities,
     on_attach = lsp_servers.enhance_attach,
-    root_dir = require'lspconfig.util'.root_pattern('.git', vim.fn.getcwd())
+    settings = {python = {analysis = {typeCheckingMode = "off"}}}
   }
 end
 
