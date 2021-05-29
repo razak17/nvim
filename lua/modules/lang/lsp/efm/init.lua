@@ -8,8 +8,9 @@ local eslint = linters.eslint
 local prettier = formatters.prettier
 local prettier_yaml = formatters.prettier_yaml
 
-local yapf = formatters.yapf
+local isort = formatters.isort
 local black = formatters.black
+local yapf = formatters.yapf
 local flake8 = linters.flake8
 
 local shellcheck = linters.shellcheck
@@ -45,7 +46,7 @@ function M.setup()
       },
       languages = {
         lua = {luaFormat},
-        python = {yapf, black, flake8},
+        python = {isort, black, yapf, flake8},
         javascript = {prettier, eslint},
         javascriptreact = {prettier, eslint},
         typescript = {prettier, eslint},

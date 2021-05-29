@@ -15,10 +15,7 @@ M.luaFormat = {
 
 M.isort = {formatCommand = "isort --quiet -", formatStdin = true}
 M.yapf = {formatCommand = "yapf --quiet", formatStdin = true}
-M.black = {
-  formatCommand = "black --quiet --stdin-filename ",
-  formatStdin = true
-}
+M.black = {formatCommand = "black --quiet -", formatStdin = true}
 
 M.prettier = {
   formatCommand = "prettier --stdin-filepath ${INPUT}",

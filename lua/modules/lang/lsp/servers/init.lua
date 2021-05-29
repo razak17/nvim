@@ -42,7 +42,7 @@ local function lsp_setup()
   require 'modules.lang.lsp.servers.bash'
   require 'modules.lang.lsp.servers.clangd'
   require 'modules.lang.lsp.servers.gopls'
-  require 'modules.lang.lsp.servers.pyright'
+  -- require 'modules.lang.lsp.servers.pyright'
   require 'modules.lang.lsp.servers.sumneko_lua'
   require 'modules.lang.lsp.servers.tsserver'
   require 'modules.lang.lsp.servers.simple_lsp'
