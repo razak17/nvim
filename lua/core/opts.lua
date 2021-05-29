@@ -62,8 +62,8 @@ opt('w', 'list', true)
 opt('w', 'number', false)
 opt('w', 'signcolumn', 'yes')
 -- opt('w', 'relativenumber', true)
-opt('o', 'diffopt',
 -- opt('w', 'listchars', 'tab:»•,nbsp:+,trail:·,precedes:,extends:')
+opt('o', 'diffopt',
     'vertical,iwhite,hiddenoff,foldcolumn:0,context:4,algorithm:histogram,indent-heuristic')
 opt('w', 'fillchars',
     'vert:▕,fold: ,eob: ,diff:─,msgsep: ,foldopen:▾,foldsep:│,foldclose:▸,eob: ')
