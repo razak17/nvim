@@ -7,7 +7,7 @@ tools['voldikss/vim-floaterm'] = {event = "VimEnter", config = conf.floaterm}
 
 tools['tweekmonster/startuptime.vim'] = {cmd = "StartupTime"}
 
-tools['tpope/vim-fugitive'] = {event = 'VimEnter'}
+-- tools['tpope/vim-fugitive'] = {event = 'VimEnter'}
 
 tools['MattesGroeger/vim-bookmarks'] = {
   event = {'BufReadPre', 'BufNewFile'},
