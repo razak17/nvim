@@ -10,10 +10,3 @@ fun! autocmds#EmptyRegisters()
       call setreg(r, [])
   endfor
 endfun
-
-fun! autocmds#RunPython()
-  let s:current_file = expand("%")
-  enew|silent execute ".!python " . shellescape(s:current_file, 1)
-  setlocal buftype=nofile bufhidden=wipe noswapfile nowrap
-  setlocal nobuflisted
-endfun

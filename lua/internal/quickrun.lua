@@ -1,19 +1,41 @@
 local config = {}
-local api = vim.api
 
+-- TODO: get local variables working
+--
 function config.RunTS()
-  api.nvim_command('exec "! ts-node %"')
+  vim.api.nvim_exec([[
+    let current_file = expand("%")
+    enew|silent execute ".!ts-node " . shellescape(current_file, 1)
+    setlocal buftype=nofile bufhidden=wipe noswapfile nowrap
+    setlocal nobuflisted
+  ]], true)
 end
 
 function config.RunJS()
-  api.nvim_command('exec "! node %"')
-end
-function config.RunGo()
-  api.nvim_command('exec "! go run %"')
+  vim.api.nvim_exec([[
+    let current_file = expand("%")
+    enew|silent execute ".!node " . shellescape(current_file, 1)
+    setlocal buftype=nofile bufhidden=wipe noswapfile nowrap
+    setlocal nobuflisted
+  ]], true)
 end
 
-function config.RunEX()
-  api.nvim_command('exec "! elixir %"')
+function config.RunGo()
+  vim.api.nvim_exec([[
+    let current_file = expand("%")
+    enew|silent execute ".!go run " . shellescape(current_file, 1)
+    setlocal buftype=nofile bufhidden=wipe noswapfile nowrap
+    setlocal nobuflisted
+  ]], true)
+end
+
+function config.RunPython()
+  vim.api.nvim_exec([[
+    let current_file = expand("%")
+    enew|silent execute ".!python " . shellescape(current_file, 1)
+    setlocal buftype=nofile bufhidden=wipe noswapfile nowrap
+    setlocal nobuflisted
+  ]], true)
 end
 
 return config
