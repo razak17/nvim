@@ -1,5 +1,29 @@
 local M = {}
 
+-- https://github.com/CalinLeafshade/dots/blob/master/nvim/.config/nvim/lua/leafshade/rename.lua
+function M.rename(name)
+  local curfilepath = vim.fn.expand("%:p:h")
+  local newname = curfilepath .. "/" .. name
+  vim.api.nvim_command(" saveas " .. newname)
+end
+
+function M.TrimWhitespace()
+  vim.api.nvim_exec([[
+    let bsave = winsaveview()
+    keeppatterns %s/\s\+$//e
+    call winrestview(bsave)
+  ]], false)
+end
+
+function M.EmptyRegisters()
+  vim.api.nvim_exec([[
+    let regs=split('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/-"', '\zs')
+    for r in regs
+        call setreg(r, [])
+    endfor
+  ]], false)
+end
+
 function M.OpenTerminal()
   vim.cmd("split term://zsh")
   vim.cmd("resize 10")

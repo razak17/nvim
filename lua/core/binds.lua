@@ -102,9 +102,6 @@ nnoremap('<Leader>aD', 'gg"+VGd')
 nnoremap("<Leader>=", "<C-W>=")
 nnoremap("<Leader>ah", "<C-W>s")
 nnoremap("<Leader>av", "<C-W>v")
-nnoremap("<Leader>an", ":let @/ = ''<CR>")
-nnoremap("<Leader>aN", ":set nonumber!<CR>")
-nnoremap("<Leader>aR", ":set norelativenumber!<CR>")
 nnoremap("<Leader>ad", ":bdelete!<CR>")
 
 -- Session
@@ -125,10 +122,11 @@ nnoremap("<Leader>vo", ":copen<CR>")
 -- Other remaps
 nnoremap('<Leader>,', ':e ~/.config/nvim/lua/core/init.lua<CR>')
 nnoremap('<Leader>.', ':e $MYVIMRC<CR>')
-nnoremap('<leader>cR', ':call autocmds#EmptyRegisters()<CR>')
 nnoremap('<Leader>Ic', ':checkhealth<CR>')
 nnoremap('<Leader>vwm',
          ':lua require "modules.aesth.config".ColorMyPencils()<CR>')
+nnoremap('<leader>ar', ':lua require "internal.utils".rename()<CR>')
+nnoremap('<leader>aR', ':lua require "internal.utils".EmptyRegisters()<CR>')
 nnoremap('<Leader>;', ':lua require "internal.utils".OpenTerminal()<CR>')
 nnoremap('<leader>ao', ':lua require "internal.utils".TurnOnGuides()<CR>')
 nnoremap('<leader>ae', ':lua require "internal.utils".TurnOffGuides()<CR>')

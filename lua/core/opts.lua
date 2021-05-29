@@ -122,12 +122,12 @@ opt('o', 'cindent', true) -- Increase indent on line after opening brace
 opt('o', 'smarttab', true) -- Tab insert blanks according to 'shiftwidth'
 opt('o', 'autoindent', true) -- Use same indenting on new lines
 opt('o', 'shiftround', true) -- Round indent to multiple of 'shiftwidth'
-opt('b', 'tabstop', 2) -- The number of spaces a tab is
-opt('b', 'shiftwidth', 2) -- Number of spaces to use in auto(indent)
-opt('b', 'textwidth', 80) -- Text width maximum chars before wrapping
-opt('b', 'softtabstop', -1) -- Number of spaces to use in auto(indent)
-opt('b', 'expandtab', true) -- Expand tabs to spaces.
-opt('b', 'smartindent', true) -- Insert indents automatically
+opt('b', 'tabstop', 2)
+opt('b', 'shiftwidth', 2)
+opt('b', 'textwidth', 80)
+opt('b', 'softtabstop', -1)
+opt('b', 'expandtab', true)
+opt('b', 'smartindent', true)
 
 -- Searching
 opt('o', 'grepprg',

@@ -14,11 +14,11 @@ tools['MattesGroeger/vim-bookmarks'] = {
   config = conf.bookmarks
 }
 
-tools['glacambre/firenvim'] = {
-  run = function()
-    vim.fn['firenvim#install'](0)
-  end
-}
+-- tools['glacambre/firenvim'] = {
+--   run = function()
+--     vim.fn['firenvim#install'](0)
+--   end
+-- }
 
 tools['iamcco/markdown-preview.nvim'] = {
   ft = 'markdown',

@@ -17,7 +17,7 @@ local buf = {
   -- Check if file changed when its window is focus, more eager than 'autoread'
   {"BufLeave", "*", "silent! update"},
   {"BufEnter,FocusGained", "*", "silent! checktime"},
-  {"BufWritePre", "*", ":call autocmds#TrimWhitespace()"},
+  {"BufWritePre", "*", "lua require 'internal.utils'.TrimWhitespace()"},
   {
     "BufWritePost,FileWritePost",
     "*.vim",
@@ -35,7 +35,7 @@ local niceties = {
 }
 
 local win = {
-  -- {"TermOpen", "*", "startinsert"},
+  {"TermOpen", "*:zsh", "startinsert"},
   -- Autosave when nvim loses focus
   {"FocusLost", "*", "silent! wall"},
   -- Equalize window dimensions when resizing vim window

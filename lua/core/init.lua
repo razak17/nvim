@@ -11,13 +11,12 @@ local load_core = function()
 
   require('core.opts')
   require('core.binds')
-  require('internal.rename')
 
   plug.ensure_plugins()
   plug.load_compile()
 
   require('keymap')
-  require('core.autocmd')
+  require('core.autocmds')
 end
 
 load_core()
