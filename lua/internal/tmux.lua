@@ -1,4 +1,4 @@
-local G = require 'core.global'
+-- local G = require 'core.global'
 local M = {}
 
 local fn = vim.fn
@@ -8,11 +8,10 @@ local fmt = string.format
 function M.on_enter()
   local session = fn.fnamemodify(vim.loop.cwd(), ":t") or "Neovim"
   local window_title = session
-
-  local fname = fn.expand("%:t")
-  if G.is_empty(fname) then
-    return
-  end
+  -- local fname = fn.expand("%:t")
+  -- if G.is_empty(fname) then
+  --   return
+  -- end
   window_title = fmt("%s", session)
   fn.jobstart(fmt("tmux rename-window '%s'", window_title))
 end

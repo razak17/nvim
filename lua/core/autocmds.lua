@@ -43,16 +43,8 @@ local win = {
   {"VimEnter", "*", "lua require('core.plug').magic_compile()"},
   -- Force write shada on leaving nvim
   {"VimLeave", "*", [[if has('nvim') | wshada! | else | wviminfo! | endif]]},
-  {
-    "WinEnter,BufEnter,InsertLeave",
-    "*",
-    [[if ! &cursorline && &filetype !~# '^\(dashboard\|clap_\)' && ! &pvw | setlocal cursorline | endif]]
-  },
-  {
-    "WinLeave,BufLeave,InsertEnter",
-    "*",
-    [[if &cursorline && &filetype !~# '^\(dashboard\|clap_\)' && ! &pvw | setlocal nocursorline | endif]]
-  }
+  {"FocusGained", "dashboard", "set nocursorline showtabline=0"},
+  {"FocusLost", "dashboard", "set cursorline showtabline=2"}
 }
 
 local ft = {
@@ -61,13 +53,8 @@ local ft = {
   {"FileType", "Trouble,Packer,text,qf,help", "set colorcolumn=0 textwidth=0"},
   {
     "FileType",
-    "dashboard",
-    "set showtabline=0 | autocmd WinLeave <buffer> set showtabline=2"
-  },
-  {
-    "FileType",
     "which_key",
-    "set laststatus=0 noshowmode noruler | autocmd BufLeave <buffer> set laststatus=2 ruler"
+    "set laststatus=0 noshowmode | autocmd BufLeave <buffer> set laststatus=2"
   }
 }
 

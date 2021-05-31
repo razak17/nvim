@@ -32,6 +32,7 @@ end
 function M.TurnOnGuides()
   vim.wo.number = true
   vim.wo.relativenumber = true
+  vim.wo.cursorline = false
   vim.wo.signcolumn = "yes"
   vim.wo.colorcolumn = "+1"
   vim.o.laststatus = 2
@@ -41,6 +42,7 @@ end
 function M.TurnOffGuides()
   vim.wo.number = false
   vim.wo.relativenumber = false
+  vim.wo.cursorline = true
   vim.wo.signcolumn = "no"
   vim.wo.colorcolumn = ""
   vim.o.laststatus = 0
