@@ -51,12 +51,7 @@ g.which_key_map = {
     name = '+Buffer',
     n = 'move next',
     b = 'move previous',
-    d = {
-      name = '+Delete buffer',
-      A = 'all',
-      h = 'to left',
-      x = 'all except current'
-    },
+    d = {name = '+Delete', A = 'all', h = 'to left', x = 'all except current'},
 
     s = 'word'
   },
@@ -217,7 +212,6 @@ g.which_key_map = {
     N = 'new'
   },
   S = {name = '+Session', l = 'load Session', s = 'save Session'},
-  T = {name = '+Treesitter', m = 'scope incremental', n = 'init selection'},
   v = {
     name = '+Code',
     a = 'code action',

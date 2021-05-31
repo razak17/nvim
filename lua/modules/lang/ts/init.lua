@@ -47,11 +47,7 @@ require'nvim-treesitter.configs'.setup {
   ensure_installed = fts
 }
 
-local fold =
-    "set foldmethod=expr foldtext=v:lua.folds() foldexpr=nvim_treesitter#foldexpr()"
-local targets = get_filetypes()
-local filetypes = table.concat(targets, ",")
+local fold = "set foldtext=v:lua.folds() foldexpr=nvim_treesitter#foldexpr()"
+local filetypes = table.concat(get_filetypes(), ",")
 vim.cmd(string.format("autocmd FileType %s %s", filetypes, fold))
-
-vim.api.nvim_set_keymap('n', 'R', ':write | edit | TSBufEnable highlight<CR>',
-                        {});
+vim.api.nvim_set_keymap('n', 'R', ':edit | TSBufEnable highlight<CR>', {});
