@@ -1,13 +1,13 @@
 local lang = {}
 local conf = require('modules.lang.config')
 
-lang['glepnir/lspsaga.nvim'] = {event = "BufReadPre"}
-
 lang['mfussenegger/nvim-dap'] = {config = conf.dap}
 
 lang['rcarriga/nvim-dap-ui'] = {config = conf.dap_ui}
 
-lang['andymass/vim-matchup'] = {ft = {'html'}}
+lang['glepnir/lspsaga.nvim'] = {event = "BufReadPre"}
+
+lang['andymass/vim-matchup'] = {after = 'nvim-treesitter'}
 
 lang['kevinhwang91/nvim-bqf'] = {
   event = 'VimEnter',
