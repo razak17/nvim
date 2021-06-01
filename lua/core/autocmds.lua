@@ -59,8 +59,8 @@ local ft = {
 }
 
 local tmux = {
-  {"VimEnter", "*", "lua require 'internal.tmux'.on_enter()"},
-  {"VimLeave", "*", "lua require 'internal.tmux'.on_leave()"}
+  {"VimEnter", "*", "lua require 'internal.utils'.on_enter()"},
+  {"VimLeave", "*", "lua require 'internal.utils'.on_leave()"}
 }
 
 local user_plugin_cursorword = {

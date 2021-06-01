@@ -1,4 +1,18 @@
 local M = {}
+local fn = vim.fn
+local fmt = string.format
+
+-- https://github.com/akinsho/dotfiles/blob/main/.config/nvim/lua/as/tmux.lua
+function M.on_enter()
+  local session = fn.fnamemodify(vim.loop.cwd(), ":t") or "Neovim"
+  local window_title = session
+  window_title = fmt("%s", session)
+  fn.jobstart(fmt("tmux rename-window '%s'", window_title))
+end
+
+function M.on_leave()
+  fn.jobstart("tmux set-window-option automatic-rename on")
+end
 
 -- https://github.com/CalinLeafshade/dots/blob/master/nvim/.config/nvim/lua/leafshade/rename.lua
 function M.rename(name)

@@ -11,8 +11,6 @@ completion['liuchengxu/vim-which-key'] =
 
 completion['rafamadriz/friendly-snippets'] = {event = 'InsertEnter'}
 
-completion['golang/vscode-go'] = {event = 'InsertEnter'}
-
 completion['hrsh7th/vim-vsnip'] = {
   event = 'InsertCharPre',
   config = function()

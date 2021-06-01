@@ -14,6 +14,7 @@ require('telescope').setup({
     selection_caret = " ",
     sorting_strategy = "ascending",
     file_ignore_patterns = {
+      "yarn.lock",
       "target/*",
       "node_modules/*",
       "dist/*",
