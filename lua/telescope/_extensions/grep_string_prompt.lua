@@ -4,26 +4,10 @@ local pickers = require('telescope.pickers')
 local make_entry = require('telescope.make_entry')
 local conf = require('telescope.config').values
 
-local escape_chars = function(string)
-  return string.gsub(string, "[%(|%)|\\|%[|%]|%-|%{%}|%?|%+|%*]", {
-    ["\\"] = "\\\\",
-    ["-"] = "\\-",
-    ["("] = "\\(",
-    [")"] = "\\)",
-    ["["] = "\\[",
-    ["]"] = "\\]",
-    ["{"] = "\\{",
-    ["}"] = "\\}",
-    ["?"] = "\\?",
-    ["+"] = "\\+",
-    ["*"] = "\\*"
-  })
-end
-
 local grep_string_prompt = function(opts)
   local vimgrep_arguments = opts.vimgrep_arguments or conf.vimgrep_arguments
   local search_dirs = opts.search_dirs
-  local search = escape_chars(opts.search or vim.fn.input("Grep For > "))
+  local search = vim.fn.input("Grep For > ")
   local word_match = opts.word_match
   opts.entry_maker = opts.entry_maker or make_entry.gen_from_vimgrep(opts)
 
@@ -34,7 +18,6 @@ local grep_string_prompt = function(opts)
   end
 
   local args = vim.tbl_flatten {vimgrep_arguments, word_match, search}
-
   if search_dirs then
     table.insert(args, search_dirs)
   end

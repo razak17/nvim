@@ -39,7 +39,6 @@ local image_selector = function(prompt, cwd)
   end
 end
 
-local bg_selector = image_selector("Choose Wallpaper",
-                                   "~/Pictures/wallpapers/distro")
+local bg_selector = image_selector("Choose Wallpaper", "~/pics")
 
 return telescope.register_extension {exports = {bg_selector = bg_selector}}
