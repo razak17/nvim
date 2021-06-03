@@ -224,7 +224,7 @@ g.which_key_map = {
     },
     D = "DOGe",
     f = 'format',
-    l = {name = '+Lsp', l = 'set loc list', e = 'type definition'},
+    l = 'set loc list',
     o = 'open qflist',
     s = 'Symbols outline',
     v = 'toggle virtual text',

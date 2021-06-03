@@ -71,8 +71,9 @@ M.lsp_mappings = function(bufnr, client)
   buf_cmd_map(bufnr, "gD", "vim.lsp.buf.definition()")
   buf_cmd_map(bufnr, "grn", "vim.lsp.buf.rename()")
   buf_map(bufnr, '<Leader>vf', 'LspFormatting')
+  buf_cmd_map(bufnr, "<Leader>vl", 'vim.lsp.diagnostic.set_loclist()')
   if client.resolved_capabilities.type_definition then
-    buf_cmd_map(bufnr, "<Leader>vle", "vim.lsp.buf.type_definition()")
+    buf_cmd_map(bufnr, "ge", "vim.lsp.buf.type_definition()")
   end
 end
 
@@ -107,8 +108,8 @@ end
 
 M.show_lsp_diagnostics = (function()
   vim.cmd [[packadd lspsaga.nvim]]
-  local debounced = debounce(require'lspsaga.diagnostic'.show_cursor_diagnostics,
-                             300)
+  local debounced = debounce(
+                        require'lspsaga.diagnostic'.show_cursor_diagnostics, 30)
   local cursorpos = get_cursor_pos()
   return function()
     local new_cursor = get_cursor_pos()

@@ -2,6 +2,49 @@ local M = {}
 local fn = vim.fn
 local fmt = string.format
 
+function M.open_link()
+  local file = fn.expand("<cfile>")
+  if fn.isdirectory(file) > 0 then
+    vim.cmd("edit " .. file)
+  else
+    fn.jobstart({vim.g.open_command, file}, {detach = true})
+  end
+end
+
+function M.open_file_or_create_new()
+  local path = fn.expand("<cfile>")
+  if not path or path == "" then
+    return false
+  end
+
+  -- TODO handle terminal buffers
+
+  if pcall(vim.cmd, "norm!gf") then
+    return true
+  end
+
+  local answer = fn.input("Create a new file, (Y)es or (N)o? ")
+  if not answer or string.lower(answer) ~= "y" then
+    return vim.cmd "redraw"
+  end
+  vim.cmd "redraw"
+  local new_path = fn.fnamemodify(fn.expand("%:p:h") .. "/" .. path, ":p")
+  local ext = fn.fnamemodify(new_path, ":e")
+
+  if ext and ext ~= "" then
+    return vim.cmd("edit " .. new_path)
+  end
+
+  local suffixes = fn.split(vim.bo.suffixesadd, ",")
+
+  for _, suffix in ipairs(suffixes) do
+    if fn.filereadable(new_path .. suffix) then
+      return vim.cmd("edit " .. new_path .. suffix)
+    end
+  end
+
+  return vim.cmd("edit " .. new_path .. suffixes[1])
+end
 -- https://github.com/akinsho/dotfiles/blob/main/.config/nvim/lua/as/tmux.lua
 function M.on_enter()
   local session = fn.fnamemodify(vim.loop.cwd(), ":t") or "Neovim"
