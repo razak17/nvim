@@ -1,4 +1,4 @@
-local G = require 'core.global'
+local G = require 'core.globals'
 local lsp_servers = require 'modules.lang.lsp.servers'
 local lsp_utils = require 'modules.lang.lsp.lspconfig.utils'
 

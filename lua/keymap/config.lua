@@ -1,3 +1,5 @@
+_G._mappings = {}
+
 local t = function(str)
   return vim.api.nvim_replace_termcodes(str, true, true, true)
 end
@@ -53,4 +55,3 @@ _G.enhance_ft_move = function(key)
   }
   return t(map[key])
 end
-

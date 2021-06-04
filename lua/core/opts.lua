@@ -1,5 +1,5 @@
 local vim = vim
-local G = require 'core.global'
+local G = require 'core.globals'
 local scopes = {o = vim.o, b = vim.bo, w = vim.wo}
 
 require('internal.folds')

@@ -1,5 +1,5 @@
 local g = vim.g
-local G = require 'core.global'
+local G = require 'core.globals'
 
 vim.cmd [[
   let g:dashboard_custom_header =<< trim END

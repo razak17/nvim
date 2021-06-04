@@ -1,7 +1,10 @@
-local G = {}
+require("core.globals.utils")
+
 local home = os.getenv("HOME")
-local path_sep = G.is_windows and '\\' or '/'
 local os_name = vim.loop.os_uname().sysname
+
+local G = {}
+local path_sep = G.is_windows and '\\' or '/'
 
 function G:load_variables()
   self.home = home .. path_sep
@@ -64,4 +67,3 @@ end
 G:load_variables()
 
 return G
-

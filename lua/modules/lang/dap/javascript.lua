@@ -1,5 +1,5 @@
 local dap = require 'dap'
-local G = require 'core.global'
+local G = require 'core.globals'
 
 dap.adapters.node2 = {
   type = 'executable',

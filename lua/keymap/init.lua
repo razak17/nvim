@@ -1,12 +1,23 @@
-local mp = require('keymap.map')
-local nmap, vmap, xmap, imap, smap, nnoremap, inoremap = mp.nmap, mp.vmap,
-                                                         mp.xmap, mp.imap,
-                                                         mp.smap, mp.nnoremap,
-                                                         mp.inoremap
+local r17 = _G.r17
+local nmap = r17.nmap
+local imap = r17.imap
+local smap = r17.smap
+local xmap = r17.xmap
+local vmap = r17.vmap
+local nnoremap = r17.nnoremap
+local inoremap = r17.inoremap
+
+--- work around to place functions in the global scope but
+--- namespaced within a table.
+--- TODO refactor this once nvim allows passing lua functions to mappings
+_G._mappings = {}
+
 local opts = {expr = true}
+
 require('keymap.config')
 
 -- Dial
+-- Making command here to reduce starrtup time
 vim.cmd([[
   nmap <C-a> <Plug>(dial-increment)
   nmap <C-x> <Plug>(dial-decrement)

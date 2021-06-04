@@ -1,4 +1,4 @@
-local G = require 'core.global'
+local G = require 'core.globals'
 local dap = require 'dap'
 
 dap.adapters.python = {

@@ -14,7 +14,7 @@ completion['rafamadriz/friendly-snippets'] = {event = 'InsertEnter'}
 completion['hrsh7th/vim-vsnip'] = {
   event = 'InsertCharPre',
   config = function()
-    local G = require 'core.global'
+    local G = require 'core.globals'
     vim.g.vsnip_snippet_dir = G.vim_path .. "/snippets"
   end
 }
