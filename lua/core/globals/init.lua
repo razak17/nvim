@@ -1,6 +1,5 @@
 require("core.globals.utils")
 
-local fn = vim.fn
 local home = os.getenv("HOME")
 local os_name = vim.loop.os_uname().sysname
 
@@ -63,34 +62,6 @@ function G.isdir(path)
   end
   -- "/" works on both Unix and Windows
   return G.exists(path .. "/")
-end
-
-local installed
----Check if a plugin is on the system not whether or not it is loaded
----@param plugin_name string
----@return boolean
-function G.plugin_installed(plugin_name)
-  if not installed then
-    local dirs = fn.expand(fn.stdpath("data") .. "/site/pack/packer/start/*",
-                           true, true)
-    local opt = fn.expand(fn.stdpath("data") .. "/site/pack/packer/opt/*", true,
-                          true)
-    vim.list_extend(dirs, opt)
-    installed = vim.tbl_map(function(path)
-      return fn.fnamemodify(path, ":t")
-    end, dirs)
-  end
-  return vim.tbl_contains(installed, plugin_name)
-end
-
----NOTE: this plugin returns the currently loaded state of a plugin given
----given certain assumptions i.e. it will only be true if the plugin has been
----loaded e.g. lazy loading will return false
----@param plugin_name string
----@return boolean?
-function G.plugin_loaded(plugin_name)
-  local plugins = _G.packer_plugins or {}
-  return plugins[plugin_name] and plugins[plugin_name].loaded
 end
 
 G:load_variables()

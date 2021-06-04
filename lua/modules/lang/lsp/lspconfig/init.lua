@@ -1,5 +1,5 @@
-local global_cmd = require'internal.utils'.global_cmd
-local utils = require 'internal.utils'
+local r17 = _G.r17
+local global_cmd = r17.global_cmd
 
 function _G.open_lsp_log()
   local path = vim.lsp.get_log_path()
@@ -25,14 +25,14 @@ function _G.lsp_toggle_virtual_text()
 end
 
 function _G.lsp_before_save()
-  local defs = {}
   local ext = vim.fn.expand('%:e')
+  local defs = {}
   table.insert(defs, {
     "BufWritePre",
     '*.' .. ext,
     "lua vim.lsp.buf.formatting_sync(nil,1000)"
   })
-  utils.nvim_create_augroup('lsp_before_save', defs)
+  r17.nvim_create_augroup('lsp_before_save', {defs})
 end
 
 global_cmd("LspLog", "open_lsp_log")
@@ -44,8 +44,8 @@ global_cmd("LspBeforeSave", "lsp_before_save")
 vim.lsp.protocol.CompletionItemKind = {
   "   (Text) ",
   "   (Method)",
-  "   (Function)",
-  "   (Constructor)",
+  " ƒ  (Function)",
+  "   (Constructor)",
   " ﴲ  (Field)",
   "   (Variable)",
   "   (Class)",
@@ -54,7 +54,7 @@ vim.lsp.protocol.CompletionItemKind = {
   " 襁 (Property)",
   "   (Unit)",
   "   (Value)",
-  " 練 (Enum)",
+  " 了 (Enum)",
   "   (Keyword)",
   "   (Snippet)",
   "   (Color)",
@@ -62,9 +62,9 @@ vim.lsp.protocol.CompletionItemKind = {
   "   (Reference)",
   "   (Folder)",
   "   (EnumMember)",
-  " ﲀ  (Constant)",
+  "   (Constant)",
   " ﳤ  (Struct)",
-  "   (Event)",
+  " 鬒 (Event)",
   "   (Operator)",
   "   (TypeParameter)"
 }

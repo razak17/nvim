@@ -1,11 +1,11 @@
-local M = require('keymap.map')
-local nmap = M.nmap
-local imap = M.imap
-local smap = M.smap
-local xmap = M.xmap
-local vmap = M.vmap
-local nnoremap = M.nnoremap
-local inoremap = M.inoremap
+local r17 = _G.r17
+local nmap = r17.nmap
+local imap = r17.imap
+local smap = r17.smap
+local xmap = r17.xmap
+local vmap = r17.vmap
+local nnoremap = r17.nnoremap
+local inoremap = r17.inoremap
 
 --- work around to place functions in the global scope but
 --- namespaced within a table.

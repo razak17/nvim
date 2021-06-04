@@ -1,12 +1,11 @@
-local M = require('keymap.map')
+local nmap = r17.nmap
+local nnoremap = r17.nnoremap
+local xnoremap = r17.xnoremap
+local vnoremap = r17.vnoremap
+local inoremap = r17.inoremap
+local tnoremap = r17.tnoremap
+local cnoremap = r17.cnoremap
 local utils = require 'internal.utils'
-local nmap = M.nmap
-local nnoremap = M.nnoremap
-local xnoremap = M.xnoremap
-local vnoremap = M.vnoremap
-local inoremap = M.inoremap
-local tnoremap = M.tnoremap
-local cnoremap = M.cnoremap
 
 -- Yank from cursor position to end-of-line
 nnoremap('Y', 'y$')
@@ -112,7 +111,7 @@ nnoremap("<Leader>aO", ":set fo-=cro<CR>") -- Close all folds
 nnoremap("<Leader>vo", ":copen<CR>")
 
 -- Terminal {{{
-M.augroup("AddTerminalMappings", {
+r17.augroup("AddTerminalMappings", {
   {
     events = {"TermOpen"},
     targets = {"term://*"},
@@ -190,7 +189,7 @@ xnoremap("&", "<cmd>&&<CR>")
 ----------------------------------------------------------------------------------
 -- https://github.com/tpope/vim-rsi/blob/master/plugin/rsi.vim
 -- c-a / c-e everywhere - RSI.vim provides these
-cnoremap("<C-n>", "<Down>")
+-- cnoremap("<C-n>", "<Down>")
 cnoremap("<C-p>", "<Up>")
 
 -- Zero should go to the first non-blank character not to the first column (which could be blank)
@@ -240,7 +239,7 @@ cnoremap("%%", "<C-r>=fnameescape(expand('%'))<cr>")
 cnoremap("::", "<C-r>=fnameescape(expand('%:p:h'))<cr>/")
 
 -- GX - replicate netrw functionality
-nnoremap("gx", function()
+nnoremap("gX", function()
   utils.open_link()
 end)
 

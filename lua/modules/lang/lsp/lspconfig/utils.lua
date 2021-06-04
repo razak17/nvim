@@ -1,7 +1,7 @@
 local api = vim.api
-local utils = require 'internal.utils'
-local buf_cmd_map, buf_map, global_cmd = utils.buf_cmd_map, utils.buf_map,
-                                         utils.global_cmd
+local r17 = _G.r17
+local buf_cmd_map, buf_map, global_cmd = r17.buf_cmd_map, r17.buf_map,
+                                         r17.global_cmd
 local M = {}
 
 local get_cursor_pos = function()

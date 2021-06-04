@@ -1,6 +1,7 @@
 local fn = vim.fn
 local api = vim.api
 local fmt = string.format
+local r17 = _G.r17
 
 local M = {}
 
@@ -187,36 +188,6 @@ function M.TurnOffGuides()
   vim.wo.colorcolumn = ""
   vim.o.laststatus = 0
   vim.o.showtabline = 0
-end
-
-function M.global_cmd(name, func)
-  vim.cmd('command! -nargs=0 ' .. name .. ' call v:lua.' .. func .. '()')
-end
-
-function M.map(bufnr, mode, key, command, opts)
-  local options = {noremap = true, silent = true}
-  if opts then
-    options = vim.tbl_extend('force', options, opts)
-  end
-  vim.api.nvim_buf_set_keymap(bufnr, mode, key, command, options)
-end
-
-function M.buf_map(bufnr, key, command, opts)
-  M.map(bufnr, 'n', key, ":" .. command .. "<CR>", opts)
-end
-
-function M.buf_cmd_map(bufnr, key, command, opts)
-  M.map(bufnr, 'n', key, "<cmd>lua " .. command .. "<CR>", opts)
-end
-
-function M.nvim_create_augroup(group_name, definitions)
-  vim.cmd('augroup ' .. group_name)
-  vim.cmd('autocmd!')
-  for _, def in ipairs(definitions) do
-    local command = table.concat(vim.tbl_flatten {'autocmd', def}, ' ')
-    vim.cmd(command)
-  end
-  vim.cmd('augroup END')
 end
 
 return M

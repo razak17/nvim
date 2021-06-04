@@ -1,3 +1,4 @@
+local r17 = _G.r17
 local fts = {
   "html",
   "css",
@@ -18,9 +19,9 @@ local fts = {
   "lua"
 }
 
-vim.cmd [[packadd nvim-treesitter]]
 require'nvim-treesitter.configs'.setup {
   highlight = {enable = true},
+  indent = {enable = true},
   autotag = {enable = true},
   autopairs = {enable = true},
   rainbow = {
@@ -42,10 +43,10 @@ require'nvim-treesitter.configs'.setup {
 vim.api.nvim_set_keymap('n', 'R', ':edit | TSBufEnable highlight<CR>', {});
 
 -- Only apply folding to supported files:
--- r17.augroup("TreesitterFolds", {
---   {
---     events = {"FileType"},
---     targets = require'internal.utils'.get_filetypes(),
---     command = "setlocal foldmethod=expr foldexpr=nvim_treesitter#foldexpr()"
---   }
--- })
+r17.augroup("TreesitterFolds", {
+  {
+    events = {"FileType"},
+    targets = require'internal.utils'.get_filetypes(),
+    command = "setlocal foldtext=v:lua.folds() foldmethod=expr foldexpr=nvim_treesitter#foldexpr()"
+  }
+})
