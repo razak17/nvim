@@ -1,5 +1,3 @@
-local fn = vim.fn
-
 _G._mappings = {}
 
 local t = function(str)
@@ -56,13 +54,4 @@ _G.enhance_ft_move = function(key)
     [';'] = '<Plug>(eft-repeat)'
   }
   return t(map[key])
-end
-
-function _G._mappings.google(pat, lucky)
-  local query = '"' .. fn.substitute(pat, '["\n]', " ", "g") .. '"'
-  query = fn.substitute(query, "[[:punct:] ]",
-                        [[\=printf("%%%02X", char2nr(submatch(0)))]], "g")
-  fn.system(fn.printf(vim.g.open_command ..
-                          ' "https://www.google.com/search?%sq=%s"',
-                      lucky and "btnI&" or "", query))
 end

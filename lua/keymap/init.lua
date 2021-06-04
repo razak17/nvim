@@ -1,13 +1,23 @@
-local mp = require('keymap.map')
-local nmap, vmap, xmap, imap, smap, nnoremap, inoremap, xnoremap, vnoremap =
-    mp.nmap, mp.vmap, mp.xmap, mp.imap, mp.smap, mp.nnoremap, mp.inoremap,
-    mp.xnoremap, mp.vnoremap
+local M = require('keymap.map')
+local nmap = M.nmap
+local imap = M.imap
+local smap = M.smap
+local xmap = M.xmap
+local vmap = M.vmap
+local nnoremap = M.nnoremap
+local inoremap = M.inoremap
+
+--- work around to place functions in the global scope but
+--- namespaced within a table.
+--- TODO refactor this once nvim allows passing lua functions to mappings
+_G._mappings = {}
+
 local opts = {expr = true}
-local fn = vim.fn
-local api = vim.api
+
 require('keymap.config')
 
 -- Dial
+-- Making command here to reduce starrtup time
 vim.cmd([[
   nmap <C-a> <Plug>(dial-increment)
   nmap <C-x> <Plug>(dial-decrement)
@@ -16,92 +26,6 @@ vim.cmd([[
   vmap g<C-a> <Plug>(dial-increment-additional)
   vmap g<C-x> <Plug>(dial-decrement-additional)
 ]])
-
--- open a new file in the same directory
-nnoremap("<leader>nf", [[:e <C-R>=expand("%:p:h") . "/" <CR>]], {silent = false})
-
--- open a new file in the same directory
-nnoremap("<leader>ns", [[:vsp <C-R>=expand("%:p:h") . "/" <CR>]],
-         {silent = false})
-
--- Arrows
-nnoremap("<down>", "<nop>")
-nnoremap("<up>", "<nop>")
-nnoremap("<left>", "<nop>")
-nnoremap("<right>", "<nop>")
-inoremap("<up>", "<nop>")
-inoremap("<down>", "<nop>")
-inoremap("<left>", "<nop>")
-inoremap("<right>", "<nop>")
-
--- Zero should go to the first non-blank character not to the first column (which could be blank)
-nnoremap("0", "^")
-
--- when going to the end of the line in visual mode ignore whitespace characters
-vnoremap("$", "g_")
-
--- This line opens the vimrc in a vertical split
-nnoremap("<leader>ev", [[:vsplit $MYVIMRC<cr>]])
-
--- Quotes
-nnoremap([[<leader>"]], [[ciw"<c-r>""<esc>]])
-nnoremap("<leader>`", [[ciw`<c-r>"`<esc>]])
-nnoremap("<leader>'", [[ciw'<c-r>"'<esc>]])
-nnoremap("<leader>)", [[ciw(<c-r>")<esc>]])
-nnoremap("<leader>}", [[ciw{<c-r>"}<esc>]])
-
--- Map Q to replay q register
-nnoremap("Q", "@q")
-
--- if the file under the cursor doesn't exist create it
--- see :h gf a simpler solution of :edit <cfile> is recommended but doesn't work.
--- If you select require('buffers/file') in lua for example
--- this makes the cfile -> buffers/file rather than my_dir/buffer/file.lua
--- Credit: 1,2
-nnoremap("gf", ':lua require "internal.utils".open_file_or_create_new()<CR>')
-
--- GX - replicate netrw functionality
-nnoremap("gx", ':lua require "internal.utils".open_link()<CR>')
-
--- Credit: June Gunn <Leader>?/! | Google it / Feeling lucky
-nnoremap("<localleader>?",
-         [[:lua _mappings.google(vim.fn.expand("<cWORD>"), false)<cr>]])
-nnoremap("<localleader>!",
-         [[:lua _mappings.google(vim.fn.expand("<cWORD>"), true)<cr>]])
-xnoremap("<localleader>?",
-         [["gy:lua _mappings.google(vim.api.nvim_eval("@g"), false)<cr>gv]])
-xnoremap("<localleader>!",
-         [["gy:lua _mappings.google(vim.api.nvim_eval("@g"), false, true)<cr>gv]])
-
--- Toggle list
-local function toggle_list(prefix)
-  for _, win in ipairs(api.nvim_list_wins()) do
-    local buf = api.nvim_win_get_buf(win)
-    local location_list = fn.getloclist(0, {filewinid = 0})
-    local is_loc_list = location_list.filewinid > 0
-    if vim.bo[buf].filetype == "qf" or is_loc_list then
-      fn.execute(prefix .. "close")
-      return
-    end
-  end
-  if prefix == "l" and vim.tbl_isempty(fn.getloclist(0)) then
-    fn["utils#message"]("Location List is Empty.", "Title")
-    return
-  end
-
-  local winnr = fn.winnr()
-  fn.execute(prefix .. "open")
-  if fn.winnr() ~= winnr then
-    vim.cmd [[wincmd p]]
-  end
-end
-
--- nnoremap("<leader>ls", function()
---   toggle_list("c")
--- end)
--- nnoremap("<leader>li", function()
---   toggle_list("l")
--- end)
 
 -- vsnip
 xmap("<C-l>", "<Plug>(vsnip-select-text)")

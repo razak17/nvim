@@ -38,7 +38,18 @@ lang['neovim/nvim-lspconfig'] = {
 }
 
 lang['nvim-treesitter/nvim-treesitter'] =
-    {event = 'BufRead', after = 'telescope.nvim', config = conf.nvim_treesitter}
+    {
+      event = 'BufRead',
+      after = 'telescope.nvim',
+      config = conf.nvim_treesitter,
+      requires = {
+        {
+          "nvim-treesitter/playground",
+          cmd = "TSPlaygroundToggle",
+          module = "nvim-treesitter-playground"
+        }
+      }
+    }
 
 lang['windwp/nvim-ts-autotag'] = {
   opt = true,

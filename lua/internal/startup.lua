@@ -1,5 +1,5 @@
 local g = vim.g
-local G = require 'core.global'
+local G = require 'core.globals'
 local M = {}
 
 local disable_builtin_plugins = function()

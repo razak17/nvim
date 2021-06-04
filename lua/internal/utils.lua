@@ -1,6 +1,89 @@
-local M = {}
 local fn = vim.fn
+local api = vim.api
 local fmt = string.format
+
+local M = {}
+
+local ts_playground_loaded, ts_hl_info
+
+function M.command(args)
+  local nargs = args.nargs or 0
+  local name = args[1]
+  local rhs = args[2]
+  local types = (args.types and type(args.types) == "table") and
+                    table.concat(args.types, " ") or ""
+
+  if type(rhs) == "function" then
+    local fn_id = r17._create(rhs)
+    rhs = string.format("lua as._execute(%d%s)", fn_id,
+                        nargs > 0 and ", <f-args>" or "")
+  end
+
+  vim.cmd(string.format("command! -nargs=%s %s %s %s", nargs, types, name, rhs))
+end
+
+-----------------------------------------------------------------------------//
+-- CREDIT: @Cocophon
+-- This function allows you to see the syntax highlight token of the cursor word and that token's links
+---> https://github.com/cocopon/pgmnt.vim/blob/master/autoload/pgmnt/dev.vim
+-----------------------------------------------------------------------------//
+local function hi_chain(syn_id)
+  local name = fn.synIDattr(syn_id, "name")
+  local names = {}
+  table.insert(names, name)
+  local original = fn.synIDtrans(syn_id)
+  if syn_id ~= original then
+    table.insert(names, fn.synIDattr(original, "name"))
+  end
+
+  return names
+end
+
+function M.token_inspect()
+  if not ts_playground_loaded then
+    ts_playground_loaded, ts_hl_info = pcall(require,
+                                             "nvim-treesitter-playground.hl-info")
+  end
+  if vim.tbl_contains(M.get_filetypes(), vim.bo.filetype) then
+    ts_hl_info.show_hl_captures()
+  else
+    local syn_id = fn.synID(fn.line("."), fn.col("."), 1)
+    local names = hi_chain(syn_id)
+    r17.echomsg(fn.join(names, " -> "))
+  end
+end
+
+function M.get_filetypes()
+  vim.cmd [[packadd nvim-treesitter]]
+  local parsers = require("nvim-treesitter.parsers")
+  local configs = parsers.get_parser_configs()
+  return vim.tbl_map(function(ft)
+    return configs[ft].filetype or ft
+  end, parsers.available_parsers())
+end
+
+-- Toggle list
+function M.toggle_list(prefix)
+  for _, win in ipairs(api.nvim_list_wins()) do
+    local buf = api.nvim_win_get_buf(win)
+    local location_list = fn.getloclist(0, {filewinid = 0})
+    local is_loc_list = location_list.filewinid > 0
+    if vim.bo[buf].filetype == "qf" or is_loc_list then
+      fn.execute(prefix .. "close")
+      return
+    end
+  end
+  if prefix == "l" and vim.tbl_isempty(fn.getloclist(0)) then
+    fn["utils#message"]("Location List is Empty.", "Title")
+    return
+  end
+
+  local winnr = fn.winnr()
+  fn.execute(prefix .. "open")
+  if fn.winnr() ~= winnr then
+    vim.cmd [[wincmd p]]
+  end
+end
 
 function M.open_link()
   local file = fn.expand("<cfile>")
