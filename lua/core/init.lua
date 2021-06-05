@@ -21,11 +21,3 @@ local load_core = function()
 end
 
 load_core()
-
--- vim.defer_fn(vim.schedule_wrap(function()
---   vim.cmd [[filetype on]]
---   vim.opt.syntax = 'on'
---   vim.defer_fn(function()
---     vim.cmd [[syntax on]]
---   end, 50)
--- end), 0)
