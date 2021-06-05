@@ -71,6 +71,19 @@ function r17.lsp.autocmds(client, _)
       }
     })
   end
+  r17.augroup("NvimLightbulb", {
+    {
+      events = {"CursorHold", "CursorHoldI"},
+      targets = {"*"},
+      command = function()
+        vim.cmd [[packadd nvim-lightbulb]]
+        require("nvim-lightbulb").update_lightbulb {
+          sign = {enabled = false},
+          virtual_text = {enabled = true}
+        }
+      end
+    }
+  })
   if client and client.resolved_capabilities.document_formatting then
     -- format on save
     r17.augroup("LspFormat", {

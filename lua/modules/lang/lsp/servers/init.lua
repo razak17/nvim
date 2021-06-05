@@ -48,7 +48,7 @@ local enhance_attach = function(client, bufnr)
   r17.lsp.autocmds(client, bufnr)
 end
 
-local function lsp_setup()
+local function setup_servers()
   require 'modules.lang.lsp.servers.bash'
   require 'modules.lang.lsp.servers.clangd'
   require 'modules.lang.lsp.servers.gopls'
@@ -62,6 +62,6 @@ end
 M.enhance_attach = enhance_attach
 M.capabilities = capabilities
 M.on_init = on_init
-M.setup = lsp_setup
+M.setup = setup_servers
 
 return M

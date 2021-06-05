@@ -34,7 +34,8 @@ lang['p00f/nvim-ts-rainbow'] = {opt = true, after = 'nvim-treesitter'}
 
 lang['neovim/nvim-lspconfig'] = {
   event = {'BufReadPre', 'BufNewFile'},
-  config = conf.nvim_lsp
+  config = conf.nvim_lsp,
+  requires = {{"kosayoda/nvim-lightbulb", opt = true}}
 }
 
 lang['nvim-treesitter/nvim-treesitter'] =
