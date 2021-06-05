@@ -1,5 +1,4 @@
 local lsp_servers = require 'modules.lang.lsp.servers'
-local lsp_utils = require 'modules.lang.lsp.lspconfig.utils'
 
 local simple_lsp = {
   jsonls = "vscode-json-languageserver",
@@ -15,7 +14,6 @@ local simple_lsp = {
 for lsp, exec in pairs(simple_lsp) do
   if vim.fn.executable(exec) then
     require'lspconfig'[lsp].setup {
-      handlers = lsp_utils.diagnostics,
       capabilities = lsp_servers.capabilities,
       on_attach = lsp_servers.enhance_attach,
       on_init = lsp_servers.on_init,

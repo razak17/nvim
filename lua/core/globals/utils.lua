@@ -3,6 +3,7 @@ _GlobalCallbacks = _GlobalCallbacks or {}
 _G.r17 = {_store = _GlobalCallbacks}
 
 local api = vim.api
+local fmt = string.format
 
 function r17._create(f)
   table.insert(r17._store, f)
@@ -25,27 +26,9 @@ function r17.echomsg(msg, hl)
   vim.api.nvim_echo(msg, true, {})
 end
 
-function r17.map(bufnr, mode, key, command, opts)
-  local options = {noremap = true, silent = true}
-  if opts then
-    options = vim.tbl_extend('force', options, opts)
-  end
-  vim.api.nvim_buf_set_keymap(bufnr, mode, key, command, options)
+function r17.lsp_cmd(name, func)
+  vim.cmd('command! -nargs=0 ' .. name .. ' call v:lua.r17.lsp.' .. func .. '()')
 end
-
-function r17.global_cmd(name, func)
-  vim.cmd('command! -nargs=0 ' .. name .. ' call v:lua.' .. func .. '()')
-end
-
-function r17.buf_map(bufnr, key, command, opts)
-  r17.map(bufnr, 'n', key, ":" .. command .. "<CR>", opts)
-end
-
-function r17.buf_cmd_map(bufnr, key, command, opts)
-  r17.map(bufnr, 'n', key, "<cmd>lua " .. command .. "<CR>", opts)
-end
-
-local fmt = string.format
 
 function r17.augroup(name, commands)
   vim.cmd("augroup " .. name)
@@ -54,23 +37,13 @@ function r17.augroup(name, commands)
     local command = c.command
     if type(command) == "function" then
       local fn_id = r17._create(command)
-      command = fmt("lua as._execute(%s)", fn_id)
+      command = fmt("lua r17._execute(%s)", fn_id)
     end
     vim.cmd(string.format("autocmd %s %s %s %s", table.concat(c.events, ","),
                           table.concat(c.targets or {}, ","),
                           table.concat(c.modifiers or {}, " "), command))
   end
   vim.cmd("augroup END")
-end
-
-function r17.nvim_create_augroup(group_name, definitions)
-  vim.api.nvim_command('augroup ' .. group_name)
-  vim.api.nvim_command('autocmd!')
-  for _, def in ipairs(definitions) do
-    local command = table.concat(vim.tbl_flatten {'autocmd', def}, ' ')
-    vim.api.nvim_command(command)
-  end
-  vim.api.nvim_command('augroup END')
 end
 
 ---check if a mapping already exists

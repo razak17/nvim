@@ -1,4 +1,7 @@
+--- Global treesitter object containing treesitter related utilities
 local r17 = _G.r17
+r17.ts = {}
+
 local fts = {
   "html",
   "css",
@@ -19,6 +22,17 @@ local fts = {
   "lua"
 }
 
+---Get all filetypes for which we have a treesitter parser installed
+---@return string[]
+function r17.ts.get_filetypes()
+  vim.cmd [[packadd nvim-treesitter]]
+  local parsers = require("nvim-treesitter.parsers")
+  local configs = parsers.get_parser_configs()
+  return vim.tbl_map(function(ft)
+    return configs[ft].filetype or ft
+  end, parsers.available_parsers())
+end
+
 require'nvim-treesitter.configs'.setup {
   highlight = {enable = true},
   indent = {enable = true},
@@ -36,6 +50,11 @@ require'nvim-treesitter.configs'.setup {
       "darkorchid3"
     }
   },
+  query_linter = {
+    enable = true,
+    use_virtual_text = true,
+    lint_events = {"BufWrite", "CursorHold"}
+  },
   matchup = {enable = true, disable = {"c", "python"}},
   ensure_installed = fts
 }
@@ -46,7 +65,7 @@ vim.api.nvim_set_keymap('n', 'R', ':edit | TSBufEnable highlight<CR>', {});
 r17.augroup("TreesitterFolds", {
   {
     events = {"FileType"},
-    targets = require'internal.utils'.get_filetypes(),
+    targets = r17.ts.get_filetypes(),
     command = "setlocal foldtext=v:lua.folds() foldmethod=expr foldexpr=nvim_treesitter#foldexpr()"
   }
 })

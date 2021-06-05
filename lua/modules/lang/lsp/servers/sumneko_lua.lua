@@ -1,11 +1,9 @@
 local G = require 'core.globals'
 local lsp_servers = require 'modules.lang.lsp.servers'
-local lsp_utils = require 'modules.lang.lsp.lspconfig.utils'
 
 if vim.fn.executable(G.sumneko_binary) then
   require'lspconfig'.sumneko_lua.setup {
     cmd = {G.sumneko_binary, "-E", G.sumneko_root_path .. "/main.lua"},
-    handlers = lsp_utils.diagnostics,
     capabilities = lsp_servers.capabilities,
     on_attach = lsp_servers.enhance_attach,
     settings = {

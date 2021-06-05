@@ -16,7 +16,7 @@ function M.command(args)
 
   if type(rhs) == "function" then
     local fn_id = r17._create(rhs)
-    rhs = string.format("lua as._execute(%d%s)", fn_id,
+    rhs = string.format("lua r17._execute(%d%s)", fn_id,
                         nargs > 0 and ", <f-args>" or "")
   end
 
@@ -45,22 +45,13 @@ function M.token_inspect()
     ts_playground_loaded, ts_hl_info = pcall(require,
                                              "nvim-treesitter-playground.hl-info")
   end
-  if vim.tbl_contains(M.get_filetypes(), vim.bo.filetype) then
+  if vim.tbl_contains(r17.ts.get_filetypes(), vim.bo.filetype) then
     ts_hl_info.show_hl_captures()
   else
     local syn_id = fn.synID(fn.line("."), fn.col("."), 1)
     local names = hi_chain(syn_id)
     r17.echomsg(fn.join(names, " -> "))
   end
-end
-
-function M.get_filetypes()
-  vim.cmd [[packadd nvim-treesitter]]
-  local parsers = require("nvim-treesitter.parsers")
-  local configs = parsers.get_parser_configs()
-  return vim.tbl_map(function(ft)
-    return configs[ft].filetype or ft
-  end, parsers.available_parsers())
 end
 
 -- Toggle list
