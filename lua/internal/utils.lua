@@ -1,5 +1,5 @@
 local fn = vim.fn
-local api = vim.api
+local api, cmd = vim.api, vim.cmd
 local fmt = string.format
 local r17 = _G.r17
 
@@ -121,14 +121,14 @@ function M.open_file_or_create_new()
   return vim.cmd("edit " .. new_path .. suffixes[1])
 end
 -- https://github.com/akinsho/dotfiles/blob/main/.config/nvim/lua/as/tmux.lua
-function M.on_enter()
+function M.tmux_on_enter()
   local session = fn.fnamemodify(vim.loop.cwd(), ":t") or "Neovim"
   local window_title = session
   window_title = fmt("%s", session)
   fn.jobstart(fmt("tmux rename-window '%s'", window_title))
 end
 
-function M.on_leave()
+function M.tmux_on_leave()
   fn.jobstart("tmux set-window-option automatic-rename on")
 end
 
@@ -179,6 +179,16 @@ function M.TurnOffGuides()
   vim.wo.colorcolumn = ""
   vim.o.laststatus = 0
   vim.o.showtabline = 0
+end
+
+function M.on_file_enter()
+  cmd('syntax enable')
+  cmd('filetype plugin indent on')
+  cmd('filetype on')
+
+  -- if vim.fn.getpos('"') then
+  --   vim.cmd("norm '\"")
+  -- end
 end
 
 return M

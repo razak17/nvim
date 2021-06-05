@@ -28,7 +28,7 @@ capabilities.textDocument.codeAction = {
 vim.lsp.handlers["textDocument/publishDiagnostics"] =
     vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
       underline = true,
-      virtual_text = false,
+      virtual_text = true,
       signs = true,
       update_in_insert = false
     })
@@ -52,8 +52,8 @@ local function lsp_setup()
   require 'modules.lang.lsp.servers.bash'
   require 'modules.lang.lsp.servers.clangd'
   require 'modules.lang.lsp.servers.gopls'
-  -- require 'modules.lang.lsp.servers.pyright'
-  -- require 'modules.lang.lsp.servers.tsserver'
+  require 'modules.lang.lsp.servers.pyright'
+  require 'modules.lang.lsp.servers.tsserver'
   require 'modules.lang.lsp.servers.sumneko_lua'
   require 'modules.lang.lsp.servers.simple_lsp'
   require 'modules.lang.lsp.servers.efm'

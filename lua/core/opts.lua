@@ -1,158 +1,165 @@
 local vim = vim
 local G = require 'core.globals'
-local scopes = {o = vim.o, b = vim.bo, w = vim.wo}
 
 require('internal.folds')
 
-local function opt(scope, key, value)
-  scopes[scope][key] = value
-  if scope ~= 'o' then
-    scopes['o'][key] = value
-  end
+local function set(key, value)
+  vim.opt[key] = value
 end
 
+-- Disable to improve startup time
+vim.cmd [[
+  syntax off
+  filetype plugin indent off
+  filetype off
+  set nospell
+]]
+
+vim.cmd('set iskeyword+=-')
+vim.o.formatoptions = "cro"
+vim.go.t_Co = "256"
+vim.g.vimsyn_embed = "lPr" -- allow embedded syntax highlighting for lua,python and ruby
+
 -- Neovim Directories
-opt('o', 'udir', G.cache_dir .. 'undodir')
-opt('o', 'directory', G.cache_dir .. 'swap')
-opt('o', 'backupdir', G.cache_dir .. 'backup')
-opt('o', 'viewdir', G.cache_dir .. 'view')
-opt('o', 'backupskip',
+set('udir', G.cache_dir .. 'undodir')
+set('directory', G.cache_dir .. 'swap')
+set('backupdir', G.cache_dir .. 'backup')
+set('viewdir', G.cache_dir .. 'view')
+set('backupskip',
     '/tmp/*,$TMPDIR/*,$TMP/*,$TEMP/*,*/shm/*,/private/var/*,.vault.vim')
 
 -- Timing
-opt('o', 'timeout', true)
-opt('o', 'ttimeout', true)
-opt('o', 'timeoutlen', 500)
-opt('o', 'ttimeoutlen', 10)
-opt('o', 'updatetime', 100)
-opt('o', 'redrawtime', 1500)
+set('timeout', true)
+set('ttimeout', true)
+set('timeoutlen', 500)
+set('ttimeoutlen', 10)
+set('updatetime', 100)
+set('redrawtime', 1500)
 
 -- Folds
-opt('w', 'foldmethod', 'expr')
-opt('o', 'foldtext', "v:lua.folds()")
-opt('o', 'foldlevelstart', 10)
-opt('w', 'foldenable', true)
+set('foldmethod', 'expr')
+set('foldenable', true)
+set('foldlevelstart', 10)
+set('foldtext', "v:lua.folds()")
+
+-- Tabs and Indents
+set('breakindentopt', 'shift:2,min:20')
+set('cindent', true) -- Increase indent on line after opening brace
+set('smarttab', true) -- Tab insert blanks according to 'shiftwidth'
+set('autoindent', true) -- Use same indenting on new lines
+set('shiftround', true) -- Round indent to multiple of 'shiftwidth'
+set('tabstop', 2)
+set('shiftwidth', 2)
+set('textwidth', 80)
+set('softtabstop', -1)
+set('expandtab', true)
+set('smartindent', true)
 
 -- Editor UI Appearance
-opt('o', 't_Co', '256')
-opt('o', 'ruler', true)
-opt('o', 'laststatus', 2)
-opt('o', 'showcmd', false)
-opt('o', 'showtabline', 2)
-opt('o', 'showmode', false)
-opt('o', 'showbreak', [[↪ ]])
-opt('o', 'syntax', 'enable')
-opt('o', 'encoding', 'utf-8')
-opt('o', 'background', 'dark')
-opt('w', 'colorcolumn', '+1')
-opt('w', 'cursorline', true)
-opt('o', 'cursorcolumn', false)
-opt('o', 'termguicolors', true)
-opt('o', 'shortmess', 'aoOTIcF')
-opt('o', 'guicursor', 'n-v-c-sm:block,i-ci-ve:block,r-cr-o:block')
-opt('o', 'sidescrolloff', 5)
-opt('o', 'scrolloff', 2)
-opt('o', 'pumheight', 15)
-opt('o', 'pumblend', 10)
-opt('o', 'cmdheight', 2)
-opt('o', 'cmdwinheight', 5)
-opt('o', 'winblend', 10)
-opt('o', 'winwidth', 30)
-opt('o', 'winminwidth', 10)
-opt('o', 'hidden', true)
-opt('o', 'helpheight', 12)
-opt('o', 'previewheight', 12)
-opt('o', 'synmaxcol', 2500)
-opt('o', 'display', 'lastline')
-opt('o', 'lazyredraw', true)
-opt('o', 'equalalways', false)
-opt('o', 'numberwidth', 4)
-opt('b', 'fileencoding', 'utf-8')
-opt('w', 'list', true)
-opt('w', 'number', true)
-opt('w', 'signcolumn', 'yes')
-opt('w', 'relativenumber', true)
-opt('w', 'listchars', 'tab:»•,nbsp:+,trail:·,precedes:,extends:')
-opt('o', 'diffopt',
+set('ruler', true)
+set('laststatus', 2)
+set('showcmd', false)
+set('showtabline', 2)
+set('showmode', false)
+set('showbreak', [[↪ ]])
+set('encoding', 'utf-8')
+set('background', 'dark')
+set('colorcolumn', '+1')
+set('cursorline', true)
+set('cursorcolumn', false)
+set('termguicolors', true)
+set('shortmess', 'aoOTIcF')
+set('guicursor', 'n-v-c-sm:block,i-ci-ve:block,r-cr-o:block')
+set('sidescrolloff', 5)
+set('scrolloff', 2)
+set('more', false)
+set('title', true)
+set('titlelen', 70)
+set('titlestring', ' ❐ %t %r %m')
+set('titleold', '%{fnamemodify(getcwd(), ":t")}')
+set('pumheight', 15)
+set('pumblend', 10)
+set('cmdheight', 2)
+set('cmdwinheight', 5)
+set('winblend', 10)
+set('winwidth', 30)
+set('winminwidth', 10)
+set('hidden', true)
+set('helpheight', 12)
+set('previewheight', 12)
+set('synmaxcol', 2500)
+set('display', 'lastline')
+set('lazyredraw', true)
+set('equalalways', false)
+set('numberwidth', 4)
+set('fileencoding', 'utf-8')
+set('list', true)
+set('number', true)
+set('signcolumn', 'yes')
+set('relativenumber', true)
+set('listchars', 'tab:»•,nbsp:+,trail:·,precedes:,extends:')
+set('diffopt',
     'vertical,iwhite,hiddenoff,foldcolumn:0,context:4,algorithm:histogram,indent-heuristic')
-opt('w', 'fillchars',
+set('fillchars',
     'vert:▕,fold: ,eob: ,diff:─,msgsep: ,foldopen:▾,foldsep:│,foldclose:▸,eob: ')
 
 -- Behavior
-vim.o.title = true
-vim.o.titlelen = 70
-vim.o.titlestring = " ❐ %t %r %m"
-vim.o.titleold = '%{fnamemodify(getcwd(), ":t")}'
-opt('o', 'eadirection', 'hor')
-opt('b', 'swapfile', false)
-opt('b', 'undofile', true)
-opt('w', 'concealcursor', 'niv')
-opt('w', 'conceallevel', 0)
-opt('w', 'wrap', false)
-opt('o', 'report', 2)
-opt('o', 'backup', false)
-opt('o', 'history', 2000)
-opt('o', 'writebackup', false)
-opt('o', 'undolevels', 1000)
-opt('o', 'shell', '/bin/zsh')
-opt('o', 'errorbells', false)
-opt('o', 'splitbelow', true)
-opt('o', 'splitright', true)
-opt('o', 'mouse', 'a')
-opt('o', 'linebreak', true)
-opt('o', 'maxmempattern', 1300)
-opt('o', 'inccommand', 'nosplit')
-opt('o', 'switchbuf', 'useopen,usetab,vsplit')
-opt('o', 'complete', '.,w,b,k') -- No wins, buffs, tags, include scanning
-opt('o', 'completeopt', 'menu,menuone,noselect,noinsert')
-opt('o', 'iskeyword', '@,48-57,_,192-255,-,#') -- Treat dash separated words as a word text object'
-opt('o', 'breakat', [[\ \	;:,!?]]) -- Long lines break chars
-opt('o', 'startofline', false) -- Cursor in same column for few commands
-opt('o', 'whichwrap', 'h,l,<,>,[,],~') -- Move to following line on certain keys
-opt('o', 'backspace', 'indent,eol,start') -- Intuitive backspacing in insert mode
-opt('o', 'showfulltag', true) -- Show tag and tidy search in completion
-opt('o', 'joinspaces', false) -- Insert only one space when joining lines that contain sentence-terminating punctuation like `.`.
-opt('o', 'jumpoptions', 'stack') -- list of words that change the behavior of the jumplist
-opt('o', 'virtualedit', 'block') -- list of words that change the behavior of the jumplist
-opt('o', 'magic', true) -- list of words that change the behavior of the jumplist
-
--- Tabs and Indents
-opt('o', 'breakindentopt', 'shift:2,min:20')
-opt('o', 'cindent', true) -- Increase indent on line after opening brace
-opt('o', 'smarttab', true) -- Tab insert blanks according to 'shiftwidth'
-opt('o', 'autoindent', true) -- Use same indenting on new lines
-opt('o', 'shiftround', true) -- Round indent to multiple of 'shiftwidth'
-opt('b', 'tabstop', 2)
-opt('b', 'shiftwidth', 2)
-opt('b', 'textwidth', 80)
-opt('b', 'softtabstop', -1)
-opt('b', 'expandtab', true)
-opt('b', 'smartindent', true)
+set('eadirection', 'hor')
+set('swapfile', false)
+set('undofile', true)
+set('concealcursor', 'niv')
+set('conceallevel', 0)
+set('wrap', false)
+set('report', 2)
+set('backup', false)
+set('history', 2000)
+set('writebackup', false)
+set('undolevels', 1000)
+set('shell', '/bin/zsh')
+set('errorbells', false)
+set('splitbelow', true)
+set('splitright', true)
+set('mouse', 'a')
+set('linebreak', true)
+set('maxmempattern', 1300)
+set('inccommand', 'nosplit')
+set('switchbuf', 'useopen,usetab,vsplit')
+set('complete', '.,w,b,k') -- No wins, buffs, tags, include scanning
+set('completeopt', 'menu,menuone,noselect,noinsert')
+set('iskeyword', '@,48-57,_,192-255,-,#') -- Treat dash separated words as a word text object'
+set('breakat', [[\ \	;:,!?]]) -- Long lines break chars
+set('startofline', false) -- Cursor in same column for few commands
+set('whichwrap', 'h,l,<,>,[,],~') -- Move to following line on certain keys
+set('backspace', 'indent,eol,start') -- Intuitive backspacing in insert mode
+set('showfulltag', true) -- Show tag and tidy search in completion
+set('joinspaces', false) -- Insert only one space when joining lines that contain sentence-terminating punctuation like `.`.
+set('jumpoptions', 'stack') -- list of words that change the behavior of the jumplist
+set('virtualedit', 'block') -- list of words that change the behavior of the jumplist
+set('magic', true) -- list of words that change the behavior of the jumplist
 
 -- Searching
-opt('o', 'grepprg',
+set('grepprg',
     [[rg --hidden --glob "!.git" --no-heading --smart-case --vimgrep --follow $*]])
-opt('o', 'grepformat', '%f:%l:%c:%m')
-opt('o', 'smartcase', true)
-opt('o', 'ignorecase', true)
-opt('o', 'infercase', true)
-opt('o', 'incsearch', true)
-opt('o', 'hlsearch', true)
-opt('o', 'wrapscan', true)
-opt('o', 'showmatch', true)
-opt('o', 'matchpairs', '(:),{:},[:]')
-opt('o', 'matchtime', 1)
+set('grepformat', '%f:%l:%c:%m')
+set('smartcase', true)
+set('ignorecase', true)
+set('infercase', true)
+set('incsearch', true)
+set('hlsearch', true)
+set('wrapscan', true)
+set('showmatch', true)
+set('matchpairs', '(:),{:},[:]')
+set('matchtime', 1)
 
 -- Wildmenu
-opt('o', 'wildignore',
+set('wildignore',
     '*.so,.git,.hg,.svn,.stversions,*.pyc,*.spl,*.o,*.out,*~,%*,*.jpg,*.jpeg,*.png,*.gif,*.zip,**/tmp/**,*.DS_Store,**/node_modules/**,**/bower_modules/**,*/.sass-cache/*,application/vendor/**,**/vendor/ckeditor/**,media/vendor/**,__pycache__,*.egg-info')
-opt('o', 'wildmode', 'longest,full')
-opt('o', 'wildoptions', 'pum')
-opt('o', 'wildignorecase', true)
+set('wildmode', 'longest,full')
+set('wildoptions', 'pum')
+set('wildignorecase', true)
 
 -- What to save for views and sessions:
-opt('o', 'clipboard', 'unnamedplus')
-opt('o', 'shada', "!,'300,<50,@100,s10,h")
-opt('o', 'viewoptions', 'cursor,folds')
-opt('o', 'sessionoptions', 'curdir,help,tabpages,winsize')
-vim.g.vimsyn_embed = "lPr" -- allow embedded syntax highlighting for lua,python and ruby
+set('clipboard', 'unnamedplus')
+set('shada', "!,'300,<50,@100,s10,h")
+set('viewoptions', 'cursor,folds')
+set('sessionoptions', 'curdir,help,tabpages,winsize')

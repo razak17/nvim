@@ -48,6 +48,7 @@ local win = {
 }
 
 local ft = {
+  {"BufReadPre,VimEnter", "*", "lua require 'internal.utils'.on_file_enter()"},
   {"FileType", "floaterm", "setlocal winblend=0"},
   {"FileType", "Trouble,Packer,text,qf,help", "set colorcolumn=0 textwidth=0"},
   {
@@ -58,8 +59,8 @@ local ft = {
 }
 
 local tmux = {
-  {"VimEnter", "*", "lua require 'internal.utils'.on_enter()"},
-  {"VimLeave", "*", "lua require 'internal.utils'.on_leave()"}
+  {"VimEnter", "*", "lua require 'internal.utils'.tmux_on_enter()"},
+  {"VimLeave", "*", "lua require 'internal.utils'.tmux_on_leave()"}
 }
 
 local user_plugin_cursorword = {
