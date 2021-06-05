@@ -7,22 +7,6 @@ local M = {}
 
 local ts_playground_loaded, ts_hl_info
 
-function M.command(args)
-  local nargs = args.nargs or 0
-  local name = args[1]
-  local rhs = args[2]
-  local types = (args.types and type(args.types) == "table") and
-                    table.concat(args.types, " ") or ""
-
-  if type(rhs) == "function" then
-    local fn_id = r17._create(rhs)
-    rhs = string.format("lua r17._execute(%d%s)", fn_id,
-                        nargs > 0 and ", <f-args>" or "")
-  end
-
-  vim.cmd(string.format("command! -nargs=%s %s %s %s", nargs, types, name, rhs))
-end
-
 -----------------------------------------------------------------------------//
 -- CREDIT: @Cocophon
 -- This function allows you to see the syntax highlight token of the cursor word and that token's links

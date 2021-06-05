@@ -2,7 +2,7 @@ local r17 = _G.r17
 
 r17.lsp = {}
 
-local lsp_cmd = r17.lsp_cmd
+local command = r17.command
 
 local get_cursor_pos = function()
   return {vim.fn.line('.'), vim.fn.col('.')}
@@ -83,40 +83,51 @@ function r17.lsp.autocmds(client, _)
   end
 end
 
-function r17.lsp.open_log()
-  local path = vim.lsp.get_log_path()
-  vim.cmd("edit " .. path)
-end
+command {
+  "LspLog",
+  function()
+    local path = vim.lsp.get_log_path()
+    vim.cmd("edit " .. path)
+  end
+}
 
-function r17.lsp.reload()
-  vim.lsp.stop_client(vim.lsp.get_active_clients())
-  vim.cmd [[edit]]
-end
+command {
+  "LspFormat",
+  function()
+    vim.lsp.buf.formatting(vim.g[string.format("format_options_%s",
+                                               vim.bo.filetype)] or {})
+  end
+}
 
-function r17.lsp.format()
-  vim.lsp.buf.formatting(vim.g[string.format("format_options_%s",
-                                             vim.bo.filetype)] or {})
-end
+command {
+  "LspRestart",
+  function()
+    vim.lsp.stop_client(vim.lsp.get_active_clients())
+    vim.cmd [[edit]]
+  end
+}
 
-function r17.lsp.toggle_virtual_text()
-  local virtual_text = {}
-  virtual_text.show = true
-  virtual_text.show = not virtual_text.show
-  vim.lsp.diagnostic.display(vim.lsp.diagnostic.get(0, 1), 0, 1,
-                             {virtual_text = virtual_text.show})
-end
-
-lsp_cmd("LspLog", "open_log")
-lsp_cmd("LspRestart", "reload")
-lsp_cmd("LspToggleVirtualText", "toggle_virtual_text")
-lsp_cmd("LspFormat", "format")
+command {
+  "LspToggleVirtualText",
+  function()
+    local virtual_text = {}
+    virtual_text.show = true
+    virtual_text.show = not virtual_text.show
+    vim.lsp.diagnostic.display(vim.lsp.diagnostic.get(0, 1), 0, 1,
+                               {virtual_text = virtual_text.show})
+  end
+}
 
 function r17.lsp.saga(bufnr)
   vim.cmd [[packadd lspsaga.nvim]]
+  local saga = require 'lspsaga'
+  saga.init_lsp_saga {
+    use_saga_diagnostic_sign = false,
+    code_action_icon = '💡',
+    code_action_prompt = {enable = false, sign = false, virtual_text = false}
+  }
   local nnoremap, vnoremap, opts = r17.nnoremap, r17.vnoremap,
                                    {buffer = bufnr, check_existing = true}
-  local saga = require 'lspsaga'
-  saga.init_lsp_saga(require'modules.lang.config'.lsp_saga())
   nnoremap("gd", ":Lspsaga lsp_finder<CR>", opts)
   nnoremap("gsh", ":Lspsaga signature_help<CR>", opts)
   nnoremap("gh", ":Lspsaga preview_definition<CR>", opts)
@@ -132,7 +143,6 @@ end
 function r17.lsp.mappings(bufnr, client)
   local nnoremap, vnoremap, opts = r17.nnoremap, r17.vnoremap,
                                    {buffer = bufnr, check_existing = true}
-
   if client.resolved_capabilities.implementation then
     nnoremap("gi", vim.lsp.buf.implementation, opts)
   end
@@ -140,15 +150,15 @@ function r17.lsp.mappings(bufnr, client)
   if client.resolved_capabilities.type_definition then
     nnoremap("<leader>ge", vim.lsp.buf.type_definition, opts)
   end
-
   nnoremap("gsd", vim.lsp.buf.document_symbol, opts)
   nnoremap("gsw", vim.lsp.buf.workspace_symbol, opts)
   nnoremap("gI", vim.lsp.buf.incoming_calls, opts)
-  vnoremap("<leader>cA", vim.lsp.buf.range_code_action, opts)
   nnoremap("gR", vim.lsp.buf.references, opts)
   nnoremap("gD", vim.lsp.buf.definition, opts)
   nnoremap("grn", vim.lsp.buf.rename, opts)
-  nnoremap("<leader>vf", r17.lsp.format, opts)
+  vnoremap("<leader>va", vim.lsp.buf.code_action, opts)
+  vnoremap("<leader>vA", vim.lsp.buf.range_code_action, opts)
+  nnoremap("<leader>vf", vim.lsp.buf.formatting, opts)
   nnoremap("<leader>vl", vim.lsp.diagnostic.set_loclist, opts)
 end
 
@@ -180,5 +190,28 @@ vim.lsp.protocol.CompletionItemKind = {
   "   (Operator)",
   "   (TypeParameter)"
 }
+
+vim.fn.sign_define({
+  {
+    name = "LspDiagnosticsSignError",
+    text = "",
+    texthl = "LspDiagnosticsSignError"
+  },
+  {
+    name = "LspDiagnosticsSignWarning",
+    text = "",
+    texthl = "LspDiagnosticsSignWarning"
+  },
+  {
+    name = "LspDiagnosticsSignHint",
+    text = "",
+    texthl = "LspDiagnosticsSignHint"
+  },
+  {
+    name = "LspDiagnosticsSignInformation",
+    text = "",
+    texthl = "LspDiagnosticsSignInformation"
+  }
+})
 
 require'modules.lang.lsp.servers'.setup()

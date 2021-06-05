@@ -26,8 +26,20 @@ function r17.echomsg(msg, hl)
   vim.api.nvim_echo(msg, true, {})
 end
 
-function r17.lsp_cmd(name, func)
-  vim.cmd('command! -nargs=0 ' .. name .. ' call v:lua.r17.lsp.' .. func .. '()')
+function r17.command(args)
+  local nargs = args.nargs or 0
+  local name = args[1]
+  local rhs = args[2]
+  local types = (args.types and type(args.types) == "table") and
+                    table.concat(args.types, " ") or ""
+
+  if type(rhs) == "function" then
+    local fn_id = r17._create(rhs)
+    rhs = string.format("lua r17._execute(%d%s)", fn_id,
+                        nargs > 0 and ", <f-args>" or "")
+  end
+
+  vim.cmd(string.format("command! -nargs=%s %s %s %s", nargs, types, name, rhs))
 end
 
 function r17.augroup(name, commands)

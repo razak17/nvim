@@ -18,15 +18,4 @@ function config.dap_ui()
   })
 end
 
-function config.lsp_saga()
-  local opts = {
-    error_sign = '',
-    warn_sign = '',
-    hint_sign = '',
-    infor_sign = '',
-    code_action_icon = '💡'
-  }
-  return opts
-end
-
 return config

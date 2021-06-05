@@ -28,9 +28,9 @@ capabilities.textDocument.codeAction = {
 vim.lsp.handlers["textDocument/publishDiagnostics"] =
     vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
       underline = true,
-      virtual_text = true,
-      signs = true,
-      update_in_insert = false
+      update_in_insert = false,
+      virtual_text = {spacing = 4, prefix = ''},
+      signs = {enable = true, priority = 20}
     })
 
 -- NOTE: the hover handler returns the bufnr,winnr so can be use for mappings

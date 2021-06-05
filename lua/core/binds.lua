@@ -255,7 +255,7 @@ end)
 -- Commands
 -----------------------------------------------------------------------------//
 
-utils.command {
+r17.command {
   "Todo",
   [[noautocmd silent! grep! 'TODO\|FIXME\|BUG\|HACK' | copen]]
 }
