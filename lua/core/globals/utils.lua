@@ -26,6 +26,18 @@ function r17.echomsg(msg, hl)
   vim.api.nvim_echo(msg, true, {})
 end
 
+-- https://stackoverflow.com/questions/1283388/lua-merge-tables
+function r17.deep_merge(t1, t2)
+  for k, v in pairs(t2) do
+    if (type(v) == "table") and (type(t1[k] or false) == "table") then
+      r17.deep_merge(t1[k], t2[k])
+    else
+      t1[k] = v
+    end
+  end
+  return t1
+end
+
 function r17.command(args)
   local nargs = args.nargs or 0
   local name = args[1]

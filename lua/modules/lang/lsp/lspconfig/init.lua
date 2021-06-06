@@ -76,7 +76,6 @@ function r17.lsp.autocmds(client, _)
       events = {"CursorHold", "CursorHoldI"},
       targets = {"*"},
       command = function()
-        vim.cmd [[packadd nvim-lightbulb]]
         require("nvim-lightbulb").update_lightbulb {
           sign = {enabled = false},
           virtual_text = {enabled = true}
@@ -95,41 +94,6 @@ function r17.lsp.autocmds(client, _)
     })
   end
 end
-
-command {
-  "LspLog",
-  function()
-    local path = vim.lsp.get_log_path()
-    vim.cmd("edit " .. path)
-  end
-}
-
-command {
-  "LspFormat",
-  function()
-    vim.lsp.buf.formatting(vim.g[string.format("format_options_%s",
-                                               vim.bo.filetype)] or {})
-  end
-}
-
-command {
-  "LspRestart",
-  function()
-    vim.lsp.stop_client(vim.lsp.get_active_clients())
-    vim.cmd [[edit]]
-  end
-}
-
-command {
-  "LspToggleVirtualText",
-  function()
-    local virtual_text = {}
-    virtual_text.show = true
-    virtual_text.show = not virtual_text.show
-    vim.lsp.diagnostic.display(vim.lsp.diagnostic.get(0, 1), 0, 1,
-                               {virtual_text = virtual_text.show})
-  end
-}
 
 function r17.lsp.saga(bufnr)
   vim.cmd [[packadd lspsaga.nvim]]
@@ -204,6 +168,41 @@ vim.lsp.protocol.CompletionItemKind = {
   "   (TypeParameter)"
 }
 
+command {
+  "LspLog",
+  function()
+    local path = vim.lsp.get_log_path()
+    vim.cmd("edit " .. path)
+  end
+}
+
+command {
+  "LspFormat",
+  function()
+    vim.lsp.buf.formatting(vim.g[string.format("format_options_%s",
+                                               vim.bo.filetype)] or {})
+  end
+}
+
+command {
+  "LspRestart",
+  function()
+    vim.lsp.stop_client(vim.lsp.get_active_clients())
+    vim.cmd [[edit]]
+  end
+}
+
+command {
+  "LspToggleVirtualText",
+  function()
+    local virtual_text = {}
+    virtual_text.show = true
+    virtual_text.show = not virtual_text.show
+    vim.lsp.diagnostic.display(vim.lsp.diagnostic.get(0, 1), 0, 1,
+                               {virtual_text = virtual_text.show})
+  end
+}
+
 vim.fn.sign_define({
   {
     name = "LspDiagnosticsSignError",
@@ -226,5 +225,6 @@ vim.fn.sign_define({
     texthl = "LspDiagnosticsSignInformation"
   }
 })
+
 
 require'modules.lang.lsp.servers'.setup()

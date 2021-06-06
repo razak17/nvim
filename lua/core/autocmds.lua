@@ -17,26 +17,21 @@ local buf = {
   -- Check if file changed when its window is focus, more eager than 'autoread'
   {"BufLeave", "*", "silent! update"},
   {"BufEnter,FocusGained", "*", "silent! checktime"},
-  {"BufWritePre", "*", "lua require 'internal.utils'.TrimWhitespace()"},
-  {
-    "BufWritePost,FileWritePost",
-    "*.vim",
+  {"BufWritePre", "*", "lua require 'internal.utils'.TrimWhitespace()"}, {
+    "BufWritePost,FileWritePost", "*.vim",
     [[nested if &l:autoread > 0 | source <afile> | echo 'source ' . bufname('%') | endif]]
   }
 }
 
 local niceties = {
-  {"Syntax", "*", [[if line('$') > 5000 | syntax sync minlines=300 | endif]]},
-  {
-    "TextYankPost",
-    "*",
+  {"Syntax", "*", [[if line('$') > 5000 | syntax sync minlines=300 | endif]]}, {
+    "TextYankPost", "*",
     [[ silent! lua vim.highlight.on_yank({higroup="IncSearch", timeout=77})]]
   }
 }
 
 local win = {
-  {"TermOpen", "*:zsh", "startinsert"},
-  -- Autosave when nvim loses focus
+  {"TermOpen", "*:zsh", "startinsert"}, -- Autosave when nvim loses focus
   {"FocusLost", "*", "silent! wall"},
   -- Equalize window dimensions when resizing vim window
   {"VimResized", "*", [[tabdo wincmd =]]},
@@ -49,15 +44,11 @@ local win = {
 
 local ft = {
   {"BufReadPre,VimEnter", "*", "lua require 'internal.utils'.on_file_enter()"},
-  {"FileType", "floaterm", "setlocal winblend=0"},
-  {
-    "FileType",
-    "Trouble,Packer,text,qf,help",
+  {"FileType", "floaterm", "setlocal winblend=0"}, {
+    "FileType", "Trouble,Packer,text,qf,help",
     "setlocal colorcolumn=0 textwidth=0"
-  },
-  {
-    "FileType",
-    "which_key",
+  }, {
+    "FileType", "which_key",
     "set laststatus=0 noshowmode | autocmd BufLeave <buffer> set laststatus=2"
   }
 }
