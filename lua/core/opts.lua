@@ -5,7 +5,6 @@ require('internal.folds')
 
 local function set(key, value) vim.opt[key] = value end
 
--- Disable to improve startup time
 vim.cmd [[
   syntax off
   filetype plugin indent off
@@ -62,7 +61,7 @@ set('showbreak', [[↪ ]])
 set('encoding', 'utf-8')
 set('background', 'dark')
 set('colorcolumn', '+1')
--- set('cursorline', true)
+set('cursorline', true)
 set('cursorcolumn', false)
 set('termguicolors', true)
 set('shortmess', 'aoOTIcF')

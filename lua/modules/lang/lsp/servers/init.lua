@@ -1,4 +1,3 @@
-local r17 = _G.r17
 local M = {}
 
 local on_init = function(client)

@@ -57,3 +57,15 @@ g.dashboard_custom_section = {
     command = 'Telescope nvim_files files'
   }
 }
+
+r17.augroup("DashBoardMode", {
+  {
+    events = {"FocusGained", "WinEnter"},
+    targets = {"dashboard"},
+    command = "setlocal nocursorline showtabline=0"
+  }, {
+    events = {"FocusLost", "WinLeave"},
+    targets = {"dashboard"},
+    command = "set colorcolumn=+1 showtabline=2"
+  }
+})

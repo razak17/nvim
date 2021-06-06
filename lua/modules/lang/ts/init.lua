@@ -1,5 +1,4 @@
 --- Global treesitter object containing treesitter related utilities
-local r17 = _G.r17
 r17.ts = {}
 
 local fts = {

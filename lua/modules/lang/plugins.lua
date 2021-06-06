@@ -27,7 +27,8 @@ lang['folke/trouble.nvim'] = {
 }
 
 lang['kevinhwang91/nvim-bqf'] = {
-  event = 'VimEnter',
+  event = 'BufRead',
+  after = 'telescope.nvim',
   config = function()
     require('bqf').setup({
       preview = {

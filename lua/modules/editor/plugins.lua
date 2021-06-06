@@ -4,16 +4,19 @@ local editor = {}
 
 editor['monaqa/dial.nvim'] = {event = 'BufReadPre'}
 
-editor['itchyny/vim-cursorword'] = {event = 'BufRead'}
-
-editor['rhysd/accelerated-jk'] = {opt = true, event = "VimEnter"}
-
-editor['tpope/vim-surround'] = {event = {'BufReadPre', 'BufNewFile'}}
+editor['itchyny/vim-cursorword'] = {
+  event = 'BufRead',
+  config = conf.vim_cursorword
+}
 
 editor['norcalli/nvim-colorizer.lua'] = {
   event = {'BufReadPre', 'BufNewFile'},
   config = conf.nvim_colorizer
 }
+
+editor['rhysd/accelerated-jk'] = {opt = true, event = "BufRead"}
+
+editor['tpope/vim-surround'] = {event = {'BufReadPre', 'BufNewFile'}}
 
 editor['Raimondi/delimitMate'] = {
   event = 'InsertEnter',

@@ -16,8 +16,16 @@ local load_core = function()
   plug.ensure_plugins()
   plug.load_compile()
 
+  require('core.autocommands')
   require('keymap')
-  require('core.autocmds')
 end
 
 load_core()
+
+r17.augroup("OnEnter", {
+  {
+    events = {"VimEnter", "BufReadPre"},
+    targets = {"*"},
+    command = function() require'internal.utils'.on_file_enter() end
+  }
+})

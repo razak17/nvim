@@ -20,4 +20,26 @@ function config.nvim_colorizer()
   }, {names = false, mode = 'background'})
 end
 
+function config.vim_cursorword()
+  r17.augroup("CursorWordMode", {
+    {
+      events = {"FileType"},
+      targets = {"NvimTree", "lspsagafinder", "dashboard", "outline"},
+      command = "let b:cursorword = 0"
+    }, {
+      events = {"WinEnter"},
+      targets = {"which_key"},
+      command = [[if &diff || &pvw | let b:cursorword = 0  | endif]]
+    }, {
+      events = {"InsertEnter"},
+      targets = {"which_key"},
+      command = "let b:cursorword = 0"
+    }, {
+      events = {"InsertLeave"},
+      targets = {"which_key"},
+      command = "let b:cursorword = 1"
+    }
+  })
+end
+
 return config

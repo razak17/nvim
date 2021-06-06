@@ -1,9 +1,5 @@
 indent_width: 2
 tab_width: 2
-keep-simple-control-block-one-line: false
-keep-simple-function-one-line: false
-break-after-table-lb: true
-break-before-table-rb: true
 chop-down-table: true
 align-parameter: true
 chop-down-parameter: true

@@ -1,7 +1,6 @@
 local fn = vim.fn
 local api, cmd = vim.api, vim.cmd
 local fmt = string.format
-local r17 = _G.r17
 
 local M = {}
 
@@ -158,7 +157,6 @@ end
 function M.on_file_enter()
   cmd('syntax enable')
   cmd('filetype plugin indent on')
-  cmd('filetype on')
   cmd('verbose set formatoptions-=cro')
 end
 

@@ -1,4 +1,3 @@
-local r17 = _G.r17
 local nmap = r17.nmap
 local imap = r17.imap
 local smap = r17.smap

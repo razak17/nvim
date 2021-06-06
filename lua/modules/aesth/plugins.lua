@@ -3,13 +3,13 @@ local aesth = {}
 
 aesth['razak17/zephyr-nvim'] = {config = [[vim.cmd('colo zephyr')]]}
 
-aesth['glepnir/dashboard-nvim'] = {event = "VimEnter", config = conf.dashboard}
+aesth['glepnir/dashboard-nvim'] = {event = "BufRead", config = conf.dashboard}
 
 aesth['lukas-reineke/indent-blankline.nvim'] =
-    {event = 'VimEnter', branch = 'lua', config = conf.indent_blankline}
+    {event = 'BufRead', branch = 'lua', config = conf.indent_blankline}
 
 aesth['akinsho/nvim-bufferline.lua'] = {
-  event = "VimEnter",
+  event = "BufRead",
   config = conf.nvim_bufferline,
   requires = {{"kyazdani42/nvim-web-devicons", opt = true}}
 }

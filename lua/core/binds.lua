@@ -254,6 +254,6 @@ nnoremap('<Leader>vwm',
          function() require"modules.aesth.config".ColorMyPencils() end)
 nnoremap('<leader>ar', function() utils.rename() end)
 nnoremap('<leader>aR', function() utils.EmptyRegisters() end)
-nnoremap('<Leader>;', function() utils.openTerminal() end)
+nnoremap('<Leader>;', function() utils.OpenTerminal() end)
 nnoremap('<leader>ao', function() utils.TurnOnGuides() end)
 nnoremap('<leader>ae', function() utils.TurnOffGuides() end)

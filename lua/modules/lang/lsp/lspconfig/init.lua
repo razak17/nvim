@@ -1,5 +1,3 @@
-local r17 = _G.r17
-
 r17.lsp = {}
 
 local command = r17.command

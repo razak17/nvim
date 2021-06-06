@@ -6,6 +6,13 @@ function config.floaterm()
   vim.g.floaterm_width = 0.8
   vim.g.floaterm_height = 0.9
   vim.g.floaterm_autoclose = 1
+  r17.augroup("FloatTermMode", {
+    {
+      events = {"FileType"},
+      targets = {"floaterm"},
+      command = "setlocal winblend=0"
+    }
+  })
 end
 
 function config.vim_dadbod_ui()
