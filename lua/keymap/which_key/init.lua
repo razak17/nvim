@@ -17,8 +17,13 @@ g.which_key_map = {
   ['.'] = 'Open init.vim',
   [','] = 'Open lua/init.lua',
   ['/'] = 'Comment',
-  ['['] = 'Replace all',
-  [']'] = 'Replace one',
+  ['['] = 'Find and Replace all',
+  [']'] = 'Find and Replace one',
+  ['`'] = 'Wrap single back ticks',
+  ["'"] = 'Wrap single quotes',
+  ['"'] = 'Wrap double quotes',
+  [')'] = 'Wrap parenthesis ',
+  ['}'] = 'Wrap curly braces',
   ['_'] = 'Delete current buffer',
   x = 'Quit',
   y = 'Yank',
@@ -86,6 +91,7 @@ g.which_key_map = {
     p = 'python',
     r = 'ranger'
   },
+  E = 'Inspect token',
   f = {
     name = '+Telescope',
     b = "file browser",
@@ -185,15 +191,21 @@ g.which_key_map = {
     u = 'undo stage hunk'
   },
   I = {name = '+Info', c = 'check health', e = 'ts info', u = 'ts update'},
+  l = {name = "+LocList", i = 'empty', s = 'toggle'},
   L = {name = '+Lsp_utils', i = 'info', l = 'log', r = 'restart'},
   m = {
-    name = '+mark',
+    name = '+Mark',
     e = 'toggle',
     b = 'previous mark',
     k = 'next mark',
     w = 'where_am_i'
   },
-  o = {name = '+Toggle_cmds'},
+  n = {
+    name = "+New",
+    f = "open in same dir",
+    s = "create in same dir"
+  },
+  o = {name = '+Toggle'},
   P = {
     name = '+Plug',
     c = 'compile',
@@ -239,6 +251,11 @@ g.which_key_map = {
       r = 'references',
       w = 'workspace'
     }
+  },
+  w = {
+    name = "+Orientation",
+    h = "change to horizontal",
+    v = "change to vertical",
   }
 }
 

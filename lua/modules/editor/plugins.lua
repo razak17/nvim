@@ -24,6 +24,9 @@ editor['arecarn/vim-fold-cycle'] = {
   event = {'BufReadPre', 'BufNewFile'},
   config = function()
     vim.g.fold_cycle_default_mapping = 0
+    vim.g.fold_cycle_toggle_max_open = 0
+    vim.g.fold_cycle_toggle_max_close = 0
+
   end
 }
 

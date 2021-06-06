@@ -30,9 +30,7 @@ nnoremap('<C-l>', '<C-w>l')
 -- Start new line from any cursor position
 inoremap("<S-Return>", "<C-o>o")
 
-nnoremap("<leader>E", function()
-  utils.token_inspect()
-end, {silent = false})
+nnoremap("<leader>E", function() utils.token_inspect() end, {silent = false})
 
 -- Use alt + hjkl to resize windows
 nnoremap('<M-n>', ':resize -2<CR>')
@@ -143,9 +141,7 @@ xnoremap("p", "pgvy")
 -- search visual selection
 vnoremap("//", [[y/<C-R>"<CR>]])
 
-----------------------------------------------------------------------------------
 -- Windows
-----------------------------------------------------------------------------------
 -- Change two horizontally split windows to vertical splits
 nnoremap("<localleader>wh", "<C-W>t <C-W>K")
 -- Change two vertically split windows to horizontal splits
@@ -165,7 +161,7 @@ vnoremap("<leader>[", [["zy:%s/<C-r><C-o>"/]], noisy)
 
 -- open a new file in the same directory
 nnoremap("<leader>nf", [[:e <C-R>=expand("%:p:h") . "/" <CR>]], {silent = false})
--- open a new file in the same directory
+-- create a new file in the same directory
 nnoremap("<leader>ns", [[:vsp <C-R>=expand("%:p:h") . "/" <CR>]],
          {silent = false})
 
@@ -215,9 +211,7 @@ nnoremap("Q", "@q")
 -- If you select require('buffers/file') in lua for example
 -- this makes the cfile -> buffers/file rather than my_dir/buffer/file.lua
 -- Credit: 1,2
-nnoremap("gf", function()
-  utils.open_file_or_create_new()
-end)
+nnoremap("gf", function() utils.open_file_or_create_new() end)
 
 -----------------------------------------------------------------------------//
 -- Command mode related
@@ -238,47 +232,28 @@ cnoremap("%%", "<C-r>=fnameescape(expand('%'))<cr>")
 cnoremap("::", "<C-r>=fnameescape(expand('%:p:h'))<cr>/")
 
 -- GX - replicate netrw functionality
-nnoremap("gX", function()
-  utils.open_link()
-end)
+nnoremap("gX", function() utils.open_link() end)
 
 -- toggle_list
-nnoremap("<leader>ls", function()
-  utils.toggle_list("c")
-end)
-nnoremap("<leader>li", function()
-  utils.toggle_list("l")
-end)
+nnoremap("<leader>ls", function() utils.toggle_list("c") end)
+nnoremap("<leader>li", function() utils.toggle_list("l") end)
 
 -----------------------------------------------------------------------------//
 -- Commands
 -----------------------------------------------------------------------------//
 
 r17.command {
-  "Todo",
-  [[noautocmd silent! grep! 'TODO\|FIXME\|BUG\|HACK' | copen]]
+  "Todo", [[noautocmd silent! grep! 'TODO\|FIXME\|BUG\|HACK' | copen]]
 }
 
 -- Other remaps
 nnoremap('<Leader>,', ':e ~/.config/nvim/lua/core/init.lua<CR>')
 nnoremap('<Leader>.', ':e $MYVIMRC<CR>')
 nnoremap('<Leader>Ic', ':checkhealth<CR>')
-nnoremap('<Leader>vwm', function()
-  require"modules.aesth.config".ColorMyPencils()
-end)
-nnoremap('<leader>ar', function()
-  utils.rename()
-end)
-nnoremap('<leader>aR', function()
-  utils.EmptyRegisters()
-end)
-nnoremap('<Leader>;', function()
-  utils.openTerminal()
-end)
-nnoremap('<leader>ao', function()
-  utils.TurnOnGuides()
-end)
-nnoremap('<leader>ae', function()
-  utils.TurnOffGuides()
-end)
-
+nnoremap('<Leader>vwm',
+         function() require"modules.aesth.config".ColorMyPencils() end)
+nnoremap('<leader>ar', function() utils.rename() end)
+nnoremap('<leader>aR', function() utils.EmptyRegisters() end)
+nnoremap('<Leader>;', function() utils.openTerminal() end)
+nnoremap('<leader>ao', function() utils.TurnOnGuides() end)
+nnoremap('<leader>ae', function() utils.TurnOffGuides() end)
