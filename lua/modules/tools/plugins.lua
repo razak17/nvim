@@ -1,11 +1,9 @@
 local tools = {}
 local conf = require('modules.tools.config')
 
-tools['mbbill/undotree'] = {cmd = "UndotreeToggle"}
+-- tools['mbbill/undotree'] = {cmd = "UndotreeToggle"}
 
 -- tools['tpope/vim-fugitive'] = {event = 'VimEnter'}
---
-tools['tweekmonster/startuptime.vim'] = {cmd = "StartupTime"}
 
 tools['voldikss/vim-floaterm'] = {event = "VimEnter", config = conf.floaterm}
 

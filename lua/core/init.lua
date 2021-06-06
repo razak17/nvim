@@ -1,11 +1,13 @@
-local startup = require 'internal.startup'
+local load_niceties = function()
+  vim.defer_fn(vim.schedule_wrap(function()
+    vim.cmd [[syntax on]]
+    vim.cmd [[filetype plugin indent  on]]
+    vim.cmd [[verbose set formatoptions-=cro]]
+  end), 0)
+end
 
-local load_core = function()
-  startup.disable_builtin_plugins()
-  startup.disable_providers()
-  startup.set_host_prog()
-  startup.global_utils()
-  startup.map_leader()
+local load_core = function ()
+  require'internal.startup'.init()
 
   local plug = require('core.plug')
 
@@ -16,16 +18,9 @@ local load_core = function()
   plug.ensure_plugins()
   plug.load_compile()
 
-  require('core.autocommands')
+  load_niceties()
   require('keymap')
+  require('core.autocommands')
 end
 
 load_core()
-
-r17.augroup("OnEnter", {
-  {
-    events = {"VimEnter", "BufReadPre"},
-    targets = {"*"},
-    command = function() require'internal.utils'.on_file_enter() end
-  }
-})

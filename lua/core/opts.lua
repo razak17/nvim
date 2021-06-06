@@ -3,7 +3,9 @@ local G = require 'core.globals'
 
 require('internal.folds')
 
-local function set(key, value) vim.opt[key] = value end
+local function set(key, value)
+  vim.opt[key] = value
+end
 
 vim.cmd [[
   syntax off

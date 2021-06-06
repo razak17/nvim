@@ -4,19 +4,19 @@ local editor = {}
 
 editor['monaqa/dial.nvim'] = {event = 'BufReadPre'}
 
-editor['itchyny/vim-cursorword'] = {
-  event = 'BufRead',
-  config = conf.vim_cursorword
-}
+editor['rhysd/accelerated-jk'] = {opt = true, event = "BufRead"}
+
+editor['tpope/vim-surround'] = {event = {'BufReadPre', 'BufNewFile'}}
+
+editor['razak17/vim-cursorword'] = {
+  event = {'BufReadPre', 'BufNewFile',
+  config = conf.cursorword,
+}}
 
 editor['norcalli/nvim-colorizer.lua'] = {
   event = {'BufReadPre', 'BufNewFile'},
   config = conf.nvim_colorizer
 }
-
-editor['rhysd/accelerated-jk'] = {opt = true, event = "BufRead"}
-
-editor['tpope/vim-surround'] = {event = {'BufReadPre', 'BufNewFile'}}
 
 editor['Raimondi/delimitMate'] = {
   event = 'InsertEnter',
@@ -53,17 +53,23 @@ editor['windwp/nvim-autopairs'] = {
 
 editor['romainl/vim-cool'] = {
   event = {'BufReadPre', 'BufNewFile'},
-  config = function() vim.g.CoolTotalMatches = 1 end
+  config = function()
+    vim.g.CoolTotalMatches = 1
+  end
 }
 
 editor['hrsh7th/vim-eft'] = {
   opt = true,
-  config = function() vim.g.eft_ignorecase = true end
+  config = function()
+    vim.g.eft_ignorecase = true
+  end
 }
 
 editor['kkoomen/vim-doge'] = {
   run = ':call doge#install()',
-  config = function() vim.g.doge_mapping = '<Leader>vD' end
+  config = function()
+    vim.g.doge_mapping = '<Leader>vD'
+  end
 }
 
 return editor

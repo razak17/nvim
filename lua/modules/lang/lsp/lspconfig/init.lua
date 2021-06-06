@@ -2,12 +2,16 @@ r17.lsp = {}
 
 local command = r17.command
 
-local get_cursor_pos = function() return {vim.fn.line('.'), vim.fn.col('.')} end
+local get_cursor_pos = function()
+  return {vim.fn.line('.'), vim.fn.col('.')}
+end
 
 local debounce = function(func, timeout)
   local timer_id = nil
   return function(...)
-    if timer_id ~= nil then vim.fn.timer_stop(timer_id) end
+    if timer_id ~= nil then
+      vim.fn.timer_stop(timer_id)
+    end
     local args = {...}
 
     timer_id = vim.fn.timer_start(timeout, function()
@@ -52,11 +56,13 @@ function r17.lsp.autocmds(client, _)
         events = {"CursorHold"},
         targets = {"<buffer>"},
         command = "lua vim.lsp.buf.document_highlight()"
-      }, {
+      },
+      {
         events = {"CursorHoldI"},
         targets = {"<buffer>"},
         command = "lua vim.lsp.buf.document_highlight()"
-      }, {
+      },
+      {
         events = {"CursorMoved"},
         targets = {"<buffer>"},
         command = "lua vim.lsp.buf.clear_references()"
@@ -77,11 +83,15 @@ function r17.lsp.autocmds(client, _)
   })
   if client and client.resolved_capabilities.document_formatting then
     -- format on save
-    r17.augroup("LspFormat", {
+    r17.augroup("Format", {
       {
         events = {"BufWritePre"},
         targets = {"<buffer>"},
-        command = "lua vim.lsp.buf.formatting_sync(nil, 5000)"
+        command = "lua vim.lsp.buf.formatting_sync(nil, 2000)"
+        -- command = function()
+        --   vim.lsp.buf.formatting(vim.g[string.format("format_options_%s",
+        --                                              vim.bo.filetype)] or {})
+        -- end
       }
     })
   end
@@ -133,38 +143,60 @@ end
 
 -- symbols for autocomplete
 vim.lsp.protocol.CompletionItemKind = {
-  "   (Text) ", "   (Method)", " ƒ  (Function)", "   (Constructor)",
-  " ﴲ  (Field)", "   (Variable)", "   (Class)", " ﰮ  (Interface)",
-  "   (Module)", " 襁 (Property)", "   (Unit)", "   (Value)",
-  " 了 (Enum)", "   (Keyword)", "   (Snippet)", "   (Color)",
-  "   (File)", "   (Reference)", "   (Folder)", "   (EnumMember)",
-  "   (Constant)", " ﳤ  (Struct)", " 鬒 (Event)", "   (Operator)",
+  "   (Text) ",
+  "   (Method)",
+  " ƒ  (Function)",
+  "   (Constructor)",
+  " ﴲ  (Field)",
+  "   (Variable)",
+  "   (Class)",
+  " ﰮ  (Interface)",
+  "   (Module)",
+  " 襁 (Property)",
+  "   (Unit)",
+  "   (Value)",
+  " 了 (Enum)",
+  "   (Keyword)",
+  "   (Snippet)",
+  "   (Color)",
+  "   (File)",
+  "   (Reference)",
+  "   (Folder)",
+  "   (EnumMember)",
+  "   (Constant)",
+  " ﳤ  (Struct)",
+  " 鬒 (Event)",
+  "   (Operator)",
   "   (TypeParameter)"
 }
 
 command {
-  "LspLog", function()
+  "LspLog",
+  function()
     local path = vim.lsp.get_log_path()
     vim.cmd("edit " .. path)
   end
 }
 
 command {
-  "LspFormat", function()
+  "LspFormat",
+  function()
     vim.lsp.buf.formatting(vim.g[string.format("format_options_%s",
                                                vim.bo.filetype)] or {})
   end
 }
 
 command {
-  "LspRestart", function()
+  "LspRestart",
+  function()
     vim.lsp.stop_client(vim.lsp.get_active_clients())
     vim.cmd [[edit]]
   end
 }
 
 command {
-  "LspToggleVirtualText", function()
+  "LspToggleVirtualText",
+  function()
     local virtual_text = {}
     virtual_text.show = true
     virtual_text.show = not virtual_text.show
@@ -178,15 +210,18 @@ vim.fn.sign_define({
     name = "LspDiagnosticsSignError",
     text = "",
     texthl = "LspDiagnosticsSignError"
-  }, {
+  },
+  {
     name = "LspDiagnosticsSignWarning",
     text = "",
     texthl = "LspDiagnosticsSignWarning"
-  }, {
+  },
+  {
     name = "LspDiagnosticsSignHint",
     text = "",
     texthl = "LspDiagnosticsSignHint"
-  }, {
+  },
+  {
     name = "LspDiagnosticsSignInformation",
     text = "",
     texthl = "LspDiagnosticsSignInformation"

@@ -24,17 +24,26 @@ function config.vim_cursorword()
   r17.augroup("CursorWordMode", {
     {
       events = {"FileType"},
-      targets = {"NvimTree", "lspsagafinder", "dashboard", "outline"},
+      targets = {
+        "NvimTree",
+        "lspsagafinder",
+        "dashboard",
+        "outline",
+        "telescope"
+      },
       command = "let b:cursorword = 0"
-    }, {
+    },
+    {
       events = {"WinEnter"},
       targets = {"which_key"},
       command = [[if &diff || &pvw | let b:cursorword = 0  | endif]]
-    }, {
+    },
+    {
       events = {"InsertEnter"},
       targets = {"which_key"},
       command = "let b:cursorword = 0"
-    }, {
+    },
+    {
       events = {"InsertLeave"},
       targets = {"which_key"},
       command = "let b:cursorword = 1"

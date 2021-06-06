@@ -2,7 +2,9 @@ local M = {}
 
 local on_init = function(client)
   client.config.flags = {}
-  if client.config.flags then client.config.flags.allow_incremental_sync = true end
+  if client.config.flags then
+    client.config.flags.allow_incremental_sync = true
+  end
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -25,9 +27,9 @@ capabilities.textDocument.codeAction = {
 vim.lsp.handlers["textDocument/publishDiagnostics"] =
     vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
       underline = true,
-      virtual_text = false,
-      signs = true,
-      update_in_insert = false
+      update_in_insert = false,
+      virtual_text = {spacing = 4, prefix = ''},
+      signs = {enable = true, priority = 20}
     })
 
 -- NOTE: the hover handler returns the bufnr,winnr so can be use for mappings
@@ -35,8 +37,7 @@ vim.lsp.handlers["textDocument/hover"] =
     vim.lsp.with(vim.lsp.handlers.hover, {border = "single"})
 
 local enhance_attach = function(client, bufnr)
-  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
-  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
   if client.resolved_capabilities.goto_definition then
     vim.bo[bufnr].tagfunc = "v:lua.as.lsp.tagfunc"

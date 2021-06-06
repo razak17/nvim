@@ -50,10 +50,12 @@ local map_leader = function()
   g["completion_confirm_key"] = ""
 end
 
-M.disable_builtin_plugins = disable_builtin_plugins
-M.disable_providers = disable_providers
-M.set_host_prog = set_host_prog
-M.global_utils = global_utils
-M.map_leader = map_leader
+M.init = function()
+  disable_builtin_plugins()
+  disable_providers()
+  set_host_prog()
+  global_utils()
+  map_leader()
+end
 
 return M

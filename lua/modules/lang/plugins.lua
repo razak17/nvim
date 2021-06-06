@@ -7,15 +7,20 @@ lang['mfussenegger/nvim-dap'] = {config = conf.dap}
 lang['rcarriga/nvim-dap-ui'] = {config = conf.dap_ui}
 
 lang['neovim/nvim-lspconfig'] = {
-  event = {'BufReadPre', 'BufNewFile'},
+  event = 'BufReadPre',
   config = conf.nvim_lsp,
-  requires = {{'kosayoda/nvim-lightbulb'}, {'glepnir/lspsaga.nvim', opt = true}}
+  requires = {
+    {'kosayoda/nvim-lightbulb', event = "BufReadPre"},
+    {'glepnir/lspsaga.nvim', opt = true}
+  }
 }
 
 lang['simrat39/symbols-outline.nvim'] = {
   event = 'BufReadPre',
   cmd = 'SymbolsOutline',
-  config = function() require("symbols-outline").setup {show_guides = true} end
+  config = function()
+    require("symbols-outline").setup {show_guides = true}
+  end
 }
 
 lang['folke/trouble.nvim'] = {
@@ -33,7 +38,15 @@ lang['kevinhwang91/nvim-bqf'] = {
     require('bqf').setup({
       preview = {
         border_chars = {
-          '│', '│', '─', '─', '┌', '┐', '└', '┘', '█'
+          '│',
+          '│',
+          '─',
+          '─',
+          '┌',
+          '┐',
+          '└',
+          '┘',
+          '█'
         }
       }
     })
@@ -50,8 +63,14 @@ lang['nvim-treesitter/nvim-treesitter'] =
           "nvim-treesitter/playground",
           cmd = "TSPlaygroundToggle",
           module = "nvim-treesitter-playground"
-        }, {'p00f/nvim-ts-rainbow', after = 'nvim-treesitter'},
-        {'andymass/vim-matchup', after = 'nvim-treesitter'}, {
+        },
+        {'p00f/nvim-ts-rainbow', after = 'nvim-treesitter'},
+        {
+          'andymass/vim-matchup',
+          event = "BufReadPre",
+          after = 'nvim-treesitter'
+        },
+        {
           'windwp/nvim-ts-autotag',
           opt = true,
           after = 'nvim-treesitter',

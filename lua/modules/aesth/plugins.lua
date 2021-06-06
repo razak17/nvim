@@ -1,9 +1,15 @@
 local conf = require('modules.aesth.config')
 local aesth = {}
 
-aesth['razak17/zephyr-nvim'] = {config = [[vim.cmd('colo zephyr')]]}
+aesth['razak17/zephyr-nvim'] = {
+  event = {'BufRead', 'BufNewFile'},
+  config = [[vim.cmd('colo zephyr')]]
+}
 
-aesth['glepnir/dashboard-nvim'] = {event = "BufRead", config = conf.dashboard}
+aesth['glepnir/dashboard-nvim'] = {
+  event = {'BufRead', 'BufNewFile'},
+  config = conf.dashboard
+}
 
 aesth['lukas-reineke/indent-blankline.nvim'] =
     {event = 'BufRead', branch = 'lua', config = conf.indent_blankline}

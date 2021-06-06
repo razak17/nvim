@@ -1,5 +1,5 @@
 local fn = vim.fn
-local api, cmd = vim.api, vim.cmd
+local api = vim.api
 local fmt = string.format
 
 local M = {}
@@ -152,12 +152,6 @@ function M.TurnOffGuides()
   vim.wo.colorcolumn = ""
   vim.o.laststatus = 0
   vim.o.showtabline = 0
-end
-
-function M.on_file_enter()
-  cmd('syntax enable')
-  cmd('filetype plugin indent on')
-  cmd('verbose set formatoptions-=cro')
 end
 
 return M
