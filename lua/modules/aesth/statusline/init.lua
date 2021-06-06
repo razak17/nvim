@@ -7,18 +7,14 @@ gl.short_line_list = {'NvimTree', 'vista', 'dbui', 'packer'}
 local function hide_in_width()
   local tbl = {['dashboard'] = true, [''] = true}
   local squeeze_width = vim.fn.winwidth(0) / 2
-  if tbl[vim.bo.filetype] or squeeze_width < 45 then
-    return false
-  end
+  if tbl[vim.bo.filetype] or squeeze_width < 45 then return false end
   return true
 
 end
 
 gls.left[1] = {
   RainbowRed = {
-    provider = function()
-      return '▊ '
-    end,
+    provider = function() return '▊ ' end,
     highlight = {colors.blue, colors.bg}
   }
 }
@@ -68,8 +64,7 @@ gls.left[4] = {
     provider = 'FileIcon',
     condition = condition.buffer_not_empty,
     highlight = {
-      require('galaxyline.provider_fileinfo').get_file_icon_color,
-      colors.bg
+      require('galaxyline.provider_fileinfo').get_file_icon_color, colors.bg
     }
   }
 }
@@ -84,9 +79,7 @@ gls.left[5] = {
 
 gls.left[6] = {
   GitIcon = {
-    provider = function()
-      return '  '
-    end,
+    provider = function() return '  ' end,
     condition = condition.check_git_workspace,
     separator = ' ',
     separator_highlight = {'NONE', colors.bg},
@@ -212,9 +205,7 @@ gls.right[6] = {
 gls.right[7] = {
   LineInfo = {
     provider = 'LineColumn',
-    condition = function()
-      return vim.bo.filetype ~= 'dashboard'
-    end,
+    condition = function() return vim.bo.filetype ~= 'dashboard' end,
     separator = ' ',
     separator_highlight = {'NONE', colors.bg},
     highlight = {colors.fg, colors.bg}
@@ -224,9 +215,7 @@ gls.right[7] = {
 gls.right[8] = {
   PerCent = {
     provider = 'LinePercent',
-    condition = function()
-      return vim.bo.filetype ~= 'dashboard'
-    end,
+    condition = function() return vim.bo.filetype ~= 'dashboard' end,
     separator = ' ',
     separator_highlight = {'NONE', colors.bg},
     highlight = {colors.fg, colors.bg, 'bold'}
