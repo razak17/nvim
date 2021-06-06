@@ -56,9 +56,7 @@ function M.toggle_list(prefix)
 
   local winnr = fn.winnr()
   fn.execute(prefix .. "open")
-  if fn.winnr() ~= winnr then
-    vim.cmd [[wincmd p]]
-  end
+  if fn.winnr() ~= winnr then vim.cmd [[wincmd p]] end
 end
 
 function M.open_link()
@@ -72,27 +70,19 @@ end
 
 function M.open_file_or_create_new()
   local path = fn.expand("<cfile>")
-  if not path or path == "" then
-    return false
-  end
+  if not path or path == "" then return false end
 
   -- TODO handle terminal buffers
 
-  if pcall(vim.cmd, "norm!gf") then
-    return true
-  end
+  if pcall(vim.cmd, "norm!gf") then return true end
 
   local answer = fn.input("Create a new file, (Y)es or (N)o? ")
-  if not answer or string.lower(answer) ~= "y" then
-    return vim.cmd "redraw"
-  end
+  if not answer or string.lower(answer) ~= "y" then return vim.cmd "redraw" end
   vim.cmd "redraw"
   local new_path = fn.fnamemodify(fn.expand("%:p:h") .. "/" .. path, ":p")
   local ext = fn.fnamemodify(new_path, ":e")
 
-  if ext and ext ~= "" then
-    return vim.cmd("edit " .. new_path)
-  end
+  if ext and ext ~= "" then return vim.cmd("edit " .. new_path) end
 
   local suffixes = fn.split(vim.bo.suffixesadd, ",")
 
@@ -169,6 +159,7 @@ function M.on_file_enter()
   cmd('syntax enable')
   cmd('filetype plugin indent on')
   cmd('filetype on')
+  cmd('verbose set formatoptions-=cro')
 end
 
 return M

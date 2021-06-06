@@ -39,14 +39,20 @@ local win = {
   -- Force write shada on leaving nvim
   {"VimLeave", "*", [[if has('nvim') | wshada! | else | wviminfo! | endif]]},
   {"FocusGained", "dashboard", "set nocursorline showtabline=0"},
-  {"FocusLost", "dashboard", "set cursorline showtabline=2"}
+  {"FocusLost", "dashboard", "set cursorline showtabline=2"}, {
+    "FocusGained,WinEnter,BufEnter", "*",
+    "if &ft != 'dashboard' && &ft != 'which_key' && &ft != '' | set cursorline | endif"
+  }, {
+    "FocusLost,WinLeave", "*",
+    "if &ft != 'dashboard' && &ft != '' | set nocursorline | endif"
+  }
 }
 
 local ft = {
   {"VimEnter,BufReadPre", "*", "lua require 'internal.utils'.on_file_enter()"},
   {"FileType", "floaterm", "setlocal winblend=0"}, {
     "FileType", "Trouble,Packer,text,qf,help",
-    "setlocal colorcolumn=0 textwidth=0"
+    "setlocal nocursorline colorcolumn=0 textwidth=0"
   }, {
     "FileType", "which_key",
     "set laststatus=0 noshowmode | autocmd BufLeave <buffer> set laststatus=2"

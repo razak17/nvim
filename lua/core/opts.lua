@@ -3,9 +3,7 @@ local G = require 'core.globals'
 
 require('internal.folds')
 
-local function set(key, value)
-  vim.opt[key] = value
-end
+local function set(key, value) vim.opt[key] = value end
 
 -- Disable to improve startup time
 vim.cmd [[
@@ -16,7 +14,6 @@ vim.cmd [[
 ]]
 
 vim.cmd('set iskeyword+=-')
-vim.o.formatoptions = "cro"
 vim.go.t_Co = "256"
 vim.g.vimsyn_embed = "lPr" -- allow embedded syntax highlighting for lua,python and ruby
 
@@ -65,7 +62,7 @@ set('showbreak', [[↪ ]])
 set('encoding', 'utf-8')
 set('background', 'dark')
 set('colorcolumn', '+1')
-set('cursorline', true)
+-- set('cursorline', true)
 set('cursorcolumn', false)
 set('termguicolors', true)
 set('shortmess', 'aoOTIcF')
