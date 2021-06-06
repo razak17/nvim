@@ -19,10 +19,10 @@ g.which_key_map = {
   ['/'] = 'Comment',
   ['['] = 'Find and Replace all',
   [']'] = 'Find and Replace one',
-  ['`'] = 'Wrap single back ticks',
+  ['`'] = 'Wrap backticks',
   ["'"] = 'Wrap single quotes',
   ['"'] = 'Wrap double quotes',
-  [')'] = 'Wrap parenthesis ',
+  [')'] = 'Wrap parenthesis',
   ['}'] = 'Wrap curly braces',
   ['_'] = 'Delete current buffer',
   x = 'Quit',
@@ -200,11 +200,7 @@ g.which_key_map = {
     k = 'next mark',
     w = 'where_am_i'
   },
-  n = {
-    name = "+New",
-    f = "open in same dir",
-    s = "create in same dir"
-  },
+  n = {name = "+New", f = "open in same dir", s = "create in same dir"},
   o = {name = '+Toggle'},
   P = {
     name = '+Plug',
@@ -255,7 +251,7 @@ g.which_key_map = {
   w = {
     name = "+Orientation",
     h = "change to horizontal",
-    v = "change to vertical",
+    v = "change to vertical"
   }
 }
 
