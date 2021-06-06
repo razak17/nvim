@@ -1,8 +1,6 @@
-local r17 = _G.r17
+local conf = require('modules.lang.config')
 
 local lang = {}
-
-local conf = require('modules.lang.config')
 
 lang['mfussenegger/nvim-dap'] = {config = conf.dap}
 
@@ -17,9 +15,7 @@ lang['neovim/nvim-lspconfig'] = {
 lang['simrat39/symbols-outline.nvim'] = {
   event = 'BufReadPre',
   cmd = 'SymbolsOutline',
-  config = function()
-    require("symbols-outline").setup {show_guides = true}
-  end
+  config = function() require("symbols-outline").setup {show_guides = true} end
 }
 
 lang['folke/trouble.nvim'] = {
@@ -36,15 +32,7 @@ lang['kevinhwang91/nvim-bqf'] = {
     require('bqf').setup({
       preview = {
         border_chars = {
-          '│',
-          '│',
-          '─',
-          '─',
-          '┌',
-          '┐',
-          '└',
-          '┘',
-          '█'
+          '│', '│', '─', '─', '┌', '┐', '└', '┘', '█'
         }
       }
     })
@@ -61,10 +49,8 @@ lang['nvim-treesitter/nvim-treesitter'] =
           "nvim-treesitter/playground",
           cmd = "TSPlaygroundToggle",
           module = "nvim-treesitter-playground"
-        },
-        {'p00f/nvim-ts-rainbow', after = 'nvim-treesitter'},
-        {'andymass/vim-matchup', after = 'nvim-treesitter'},
-        {
+        }, {'p00f/nvim-ts-rainbow', after = 'nvim-treesitter'},
+        {'andymass/vim-matchup', after = 'nvim-treesitter'}, {
           'windwp/nvim-ts-autotag',
           opt = true,
           after = 'nvim-treesitter',

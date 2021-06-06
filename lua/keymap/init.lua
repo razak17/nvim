@@ -27,6 +27,9 @@ vim.cmd([[
   vmap g<C-x> <Plug>(dial-decrement-additional)
 ]])
 
+-- vim-fold-cycle
+nmap("<BS>", "<Plug>(fold-cycle-close)")
+
 -- vsnip
 xmap("<C-l>", "<Plug>(vsnip-select-text)")
 xmap("<C-x>", "<Plug>(vsnip-cut-text)")
