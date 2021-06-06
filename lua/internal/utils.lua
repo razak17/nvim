@@ -169,10 +169,6 @@ function M.on_file_enter()
   cmd('syntax enable')
   cmd('filetype plugin indent on')
   cmd('filetype on')
-
-  -- if vim.fn.getpos('"') then
-  --   vim.cmd("norm '\"")
-  -- end
 end
 
 return M

@@ -157,9 +157,7 @@ vnoremap("*", [[y/<C-R>"<CR>]])
 -- make . work with visually selected lines
 vnoremap(".", ":norm.<CR>")
 
------------------------------------------------------------------------------//
 -- Quick find/replace
------------------------------------------------------------------------------//
 local noisy = {silent = false}
 nnoremap("<leader>[", [[:%s/\<<C-r>=expand("<cword>")<CR>\>/]], noisy)
 nnoremap("<leader>]", [[:s/\<<C-r>=expand("<cword>")<CR>\>/]], noisy)
@@ -180,6 +178,7 @@ inoremap("<up>", "<nop>")
 inoremap("<down>", "<nop>")
 inoremap("<left>", "<nop>")
 inoremap("<right>", "<nop>")
+
 -- Repeat last substitute with flags
 nnoremap("&", "<cmd>&&<CR>")
 xnoremap("&", "<cmd>&&<CR>")

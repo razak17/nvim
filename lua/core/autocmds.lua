@@ -43,7 +43,7 @@ local win = {
 }
 
 local ft = {
-  {"BufReadPre,VimEnter", "*", "lua require 'internal.utils'.on_file_enter()"},
+  {"VimEnter,BufReadPre", "*", "lua require 'internal.utils'.on_file_enter()"},
   {"FileType", "floaterm", "setlocal winblend=0"}, {
     "FileType", "Trouble,Packer,text,qf,help",
     "setlocal colorcolumn=0 textwidth=0"

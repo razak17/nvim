@@ -7,11 +7,6 @@ local vmap = r17.vmap
 local nnoremap = r17.nnoremap
 local inoremap = r17.inoremap
 
---- work around to place functions in the global scope but
---- namespaced within a table.
---- TODO refactor this once nvim allows passing lua functions to mappings
-_G._mappings = {}
-
 local opts = {expr = true}
 
 require('keymap.config')
