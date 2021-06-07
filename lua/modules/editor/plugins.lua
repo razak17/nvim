@@ -2,16 +2,15 @@ local conf = require('modules.editor.config')
 
 local editor = {}
 
-editor['monaqa/dial.nvim'] = {event = 'BufReadPre'}
+editor['rhysd/accelerated-jk'] = {opt = true}
 
-editor['rhysd/accelerated-jk'] = {opt = true, event = "BufRead"}
+editor['monaqa/dial.nvim'] = {event = 'BufReadPre'}
 
 editor['tpope/vim-surround'] = {event = {'BufReadPre', 'BufNewFile'}}
 
 editor['razak17/vim-cursorword'] = {
-  event = {'BufReadPre', 'BufNewFile',
-  config = conf.cursorword,
-}}
+  event = {'BufReadPre', 'BufNewFile', config = conf.cursorword}
+}
 
 editor['norcalli/nvim-colorizer.lua'] = {
   event = {'BufReadPre', 'BufNewFile'},

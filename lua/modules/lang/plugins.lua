@@ -65,11 +65,7 @@ lang['nvim-treesitter/nvim-treesitter'] =
           module = "nvim-treesitter-playground"
         },
         {'p00f/nvim-ts-rainbow', after = 'nvim-treesitter'},
-        {
-          'andymass/vim-matchup',
-          event = "BufReadPre",
-          after = 'nvim-treesitter'
-        },
+        {'andymass/vim-matchup', after = 'nvim-treesitter'},
         {
           'windwp/nvim-ts-autotag',
           opt = true,

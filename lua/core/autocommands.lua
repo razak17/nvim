@@ -70,12 +70,12 @@ r17.augroup("Templates", {
   {
     events = {"BufNewFile"},
     targets = {"*.sh"},
-    command = "0r $DOTFILES/.config/nvim/templates/skeleton.sh"
+    command = "0r $HOME/.config/nvim/templates/skeleton.sh"
   },
   {
     events = {"BufNewFile"},
     targets = {"*.lua"},
-    command = "0r $DOTFILES/.config/nvim/templates/skeleton.lua"
+    command = "0r $HOME/.config/nvim/templates/skeleton.lua"
   }
 })
 
