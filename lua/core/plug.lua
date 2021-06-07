@@ -144,7 +144,7 @@ function plugins.load_compile()
   vim.cmd [[command! PlugSync lua require('core.plug').sync()]]
   vim.cmd [[command! PlugClean lua require('core.plug').clean()]]
   vim.cmd [[autocmd User PackerComplete lua require('core.plug').magic_compile()]]
-  vim.cmd [[command! PlugStatus  lua require('packer').status()]]
+  vim.cmd [[command! PlugStatus  lua require('core.plug').status()]]
 end
 
 return plugins

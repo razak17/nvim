@@ -69,9 +69,9 @@ nnoremap <silent> <Leader>bdx :call <SID>DelAllExcept()<CR>
 
 augroup Cursorline
   autocmd!
-  autocmd BufEnter * if s:should_show_cursorline() | setlocal cursorline | endif
-  autocmd InsertEnter * setlocal nocursorline
-  autocmd InsertLeave * setlocal cursorline
+  " autocmd BufEnter * if s:should_show_cursorline() | setlocal cursorline | endif
+  autocmd InsertEnter * if &ft != 'dashboard' | setlocal nocursorline | endif
+  autocmd InsertLeave * if &ft != 'dashboard' | setlocal cursorline | endif
 augroup END
 
 augroup GoToLine

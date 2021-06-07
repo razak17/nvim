@@ -1,9 +1,9 @@
 local tools = {}
 local conf = require('modules.tools.config')
 
--- tools['mbbill/undotree'] = {cmd = "UndotreeToggle"}
-
 -- tools['tpope/vim-fugitive'] = {event = 'VimEnter'}
+
+-- tools['mbbill/undotree'] = {cmd = "UndotreeToggle"}
 
 tools['voldikss/vim-floaterm'] = {event = "VimEnter", config = conf.floaterm}
 
@@ -14,7 +14,9 @@ tools['MattesGroeger/vim-bookmarks'] = {
 
 tools['iamcco/markdown-preview.nvim'] = {
   ft = 'markdown',
-  config = function() vim.g.mkdp_auto_start = 0 end
+  config = function()
+    vim.g.mkdp_auto_start = 0
+  end
 }
 
 tools['brooth/far.vim'] = {
