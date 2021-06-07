@@ -1,12 +1,16 @@
 local load_niceties = function()
   vim.defer_fn(vim.schedule_wrap(function()
-    vim.cmd [[syntax on]]
-    vim.cmd [[filetype plugin indent  on]]
-    vim.cmd [[verbose set formatoptions-=cro]]
+    require('core.autocommands')
+    require('keymap')
+    vim.defer_fn(function()
+      vim.cmd [[syntax on]]
+      vim.cmd [[filetype plugin indent  on]]
+      vim.cmd [[verbose set formatoptions-=cro]]
+    end, 250)
   end), 0)
 end
 
-local load_core = function ()
+local load_core = function()
   require'internal.startup'.init()
 
   local plug = require('core.plug')
@@ -15,12 +19,9 @@ local load_core = function ()
   require('core.binds')
   require('core.globals')
 
+  load_niceties()
   plug.ensure_plugins()
   plug.load_compile()
-
-  load_niceties()
-  require('keymap')
-  require('core.autocommands')
 end
 
 load_core()

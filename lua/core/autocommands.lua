@@ -1,6 +1,5 @@
 local fn = vim.fn
 local api = vim.api
-local fmt = string.format
 local contains = vim.tbl_contains
 
 local column_exclude = {"gitcommit"}
