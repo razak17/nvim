@@ -38,32 +38,6 @@ local function check_color_column(leaving)
   end
 end
 
-r17.augroup("VimrcIncSearchHighlight", {
-  {
-    -- automatically clear search highlight once leaving the commandline
-    events = {"CmdlineEnter"},
-    targets = {"[/\\?]"},
-    command = ":set hlsearch  | redrawstatus"
-  },
-  {
-    events = {"CmdlineLeave"},
-    targets = {"[/\\?]"},
-    command = ":set nohlsearch | redrawstatus"
-  }
-})
-
-r17.augroup("ExternalCommands", {
-  {
-    -- Open images in an image viewer (probably Preview)
-    events = {"BufEnter"},
-    targets = {"*.png,*.jpg,*.gif"},
-    command = function()
-      vim.cmd(fmt('silent! "%s | :bw"',
-                  vim.g.open_command .. " " .. fn.expand("%")))
-    end
-  }
-})
-
 r17.augroup("CheckOutsideTime", {
   {
     -- automatically check for changed files outside vim
