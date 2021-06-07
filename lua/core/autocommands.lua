@@ -165,6 +165,11 @@ r17.augroup("CustomColorColumn", {
 
 r17.augroup("WinUtils", {
   {
+    events = {"Syntax"},
+    targets = {"*"},
+    command = [[if line('$') > 5000 | syntax sync minlines=300 | endif]]
+  },
+  {
     -- Equalize window dimensions when resizing vim window
     events = {"VimResized"},
     targets = {"*"},
@@ -179,7 +184,7 @@ r17.augroup("WinUtils", {
 })
 
 r17.augroup("AutoSaveOnFocusLost", {
-  {events = {"FocusLost"}, targets = {"*"}, command = "silent! wall"},
+  {events = {"FocusLost"}, targets = {"*"}, command = "silent! wall"}
 })
 
 r17.augroup("TerminalMode", {
