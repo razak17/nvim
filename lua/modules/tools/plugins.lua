@@ -12,12 +12,12 @@ tools['MattesGroeger/vim-bookmarks'] = {
   config = conf.bookmarks
 }
 
-tools['iamcco/markdown-preview.nvim'] = {
-  ft = 'markdown',
-  config = function()
-    vim.g.mkdp_auto_start = 0
-  end
-}
+-- tools['iamcco/markdown-preview.nvim'] = {
+--   ft = 'markdown',
+--   config = function()
+--     vim.g.mkdp_auto_start = 0
+--   end
+-- }
 
 tools['brooth/far.vim'] = {
   event = {'BufReadPre', 'BufNewFile'},
