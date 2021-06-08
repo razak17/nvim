@@ -53,14 +53,15 @@ r17.augroup("TelescopeSession", {
 })
 
 r17.augroup("DashBoardMode", {
+  {events = {"FileType"}, targets = {"dashboard"}, command = "set laststatus=0"},
   {
     events = {"FocusLost", "WinLeave", "BufLeave"},
     targets = {"dashboard"},
-    command = "set colorcolumn=+1 showtabline=2"
+    command = "set colorcolumn=0 showtabline=2"
   },
   {
     events = {"FocusGained", "WinEnter", "BufEnter"},
     targets = {"dashboard"},
-    command = "setlocal nocursorline showtabline=0"
+    command = "setlocal nocursorline showtabline=0 laststatus=0"
   }
 })
