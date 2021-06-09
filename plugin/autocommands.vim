@@ -72,7 +72,6 @@ augroup Cursorline
   " autocmd BufEnter * if s:should_show_cursorline() | setlocal cursorline | endif
   autocmd InsertEnter * if &ft != 'dashboard' | setlocal nocursorline | endif
   autocmd InsertLeave * if &ft != 'dashboard' | setlocal cursorline | endif
-  autocmd VimEnter,BufEnter * if &ft != 'dashboard' && &ft != '' | set laststatus=2 | endif
 augroup END
 
 augroup GoToLine

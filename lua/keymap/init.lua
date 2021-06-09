@@ -1,10 +1,13 @@
+local map = r17.map
 local nmap = r17.nmap
+local omap = r17.omap
 local imap = r17.imap
 local smap = r17.smap
 local xmap = r17.xmap
 local vmap = r17.vmap
 local nnoremap = r17.nnoremap
 local inoremap = r17.inoremap
+local tnoremap = r17.tnoremap
 
 local opts = {expr = true}
 
@@ -24,25 +27,34 @@ vim.cmd([[
 -- vim-fold-cycle
 nmap("<BS>", "<Plug>(fold-cycle-close)")
 
--- vsnip
-xmap("<C-l>", "<Plug>(vsnip-select-text)")
-xmap("<C-x>", "<Plug>(vsnip-cut-text)")
-imap("<Tab>", "v:lua.tab()", opts)
-imap("<S-Tab>", "v:lua.s_tab()", opts)
-nnoremap('<Leader>cs', ':VsnipOpen<CR> 1<CR><CR>')
-imap("<C-l>", "vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'",
-     opts)
-smap("<C-l>", "vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'",
-     opts)
-
 -- Compe
-imap("<CR>", [[compe#confirm({ 'keys': "\<Plug>delimitMateCR", 'mode': '' })]],
-     {noremap = true, expr = true})
 inoremap("<C-Space>", "compe#complete()", opts)
 inoremap("<C-e>", "compe#close('<C-e>')", opts)
+inoremap("<C-f>", "compe#scroll({ 'delta': +4 })", opts)
+inoremap("<C-d>", "compe#scroll({ 'delta': -4 })", opts)
+imap("<CR>", [[compe#confirm({ 'keys': "\<Plug>delimitMateCR", 'mode': '' })]],
+     {noremap = true, expr = true})
+-- vsnip
+xmap("<C-x>", "<Plug>(vsnip-cut-text)")
+xmap("<C-l>", "<Plug>(vsnip-select-text)")
+imap("<Tab>", "v:lua.__tab__complete()", opts)
+imap("<S-Tab>", "v:lua.__s_tab__complete()", opts)
+nnoremap('<Leader>cs', ':VsnipOpen<CR> 1<CR><CR>')
+imap("<C-l>", "vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'", opts)
+smap("<C-l>", "vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'", opts)
 
--- Undo tree
-nnoremap("<Leader>au", ":UndotreeToggle<CR>")
+-- accelerated jk
+nmap("n", 'v:lua.__enhance_jk_move("n")', {silent = true, expr = true})
+nmap("k", 'v:lua.__enhance_jk_move("k")', {silent = true, expr = true})
+-- vim-eft
+nmap(";", "v:lua.__enhance_ft_move(';')", {expr = true})
+xmap(";", "v:lua.__enhance_ft_move(';')", {expr = true})
+nmap("f", "v:lua.__enhance_ft_move('f')", {expr = true})
+xmap("f", "v:lua.__enhance_ft_move('f')", {expr = true})
+omap("f", "v:lua.__enhance_ft_move('f')", {expr = true})
+nmap("F", "v:lua.__enhance_ft_move('F')", {expr = true})
+xmap("F", "v:lua.__enhance_ft_move('F')", {expr = true})
+omap("F", "v:lua.__enhance_ft_move('F')", {expr = true})
 
 -- TS
 nnoremap('<Leader>Ie', ':TSInstallInfo<CR>')
@@ -63,20 +75,6 @@ nnoremap('<Leader>vxw', ':TroubleToggle lsp_workspace_diagnostics<CR>')
 nnoremap('<Leader>me', ':BookmarkToggle<CR>')
 nnoremap('<Leader>mb', ':BookmarkPrev<CR>')
 nnoremap('<Leader>mk', ':BookmarkNext<CR>')
-
--- accelerated jk
-nmap("n", 'v:lua.enhance_jk_move("n")', {silent = true, expr = true})
-nmap("k", 'v:lua.enhance_jk_move("k")', {silent = true, expr = true})
-
--- vim-eft
-nmap(";", "v:lua.enhance_ft_move(';')", {expr = true})
-xmap(";", "v:lua.enhance_ft_move(';')", {expr = true})
-nmap("f", "v:lua.enhance_ft_move('f')", {expr = true})
-nmap("f", "v:lua.enhance_ft_move('f')", {expr = true})
-nmap("f", "v:lua.enhance_ft_move('f')", {expr = true})
-nmap("F", "v:lua.enhance_ft_move('F')", {expr = true})
-nmap("F", "v:lu.enhance_ft_move('F')", {expr = true})
-nmap("F", "v:lua.enhance_ft_move('F')", {expr = true})
 
 -- markdown preview
 nnoremap('<Leader>om', ':MarkdownPreview<CR>')
@@ -115,24 +113,20 @@ nnoremap('<Leader>Ps', ':PlugSync<CR>')
 nnoremap('<Leader>PS', ':PlugStatus<CR>')
 nnoremap('<Leader>PU', ':PlugUpdate<CR>')
 
--- Fugitive
--- nnoremap("<Leader>ga", ":Git fetch --all<CR>")
--- nnoremap("<Leader>gA", ":Git blame<CR>")
--- nnoremap("<Leader>gb", ":GBranches<CR>")
--- nnoremap("<Leader>gcm", ":Git commit<CR>")
--- nnoremap("<Leader>gca", ":Git commit --amend -m ")
--- nnoremap("<Leader>gC", ":Git checkout -b ")
--- nnoremap("<Leader>gd", ":Git diff<CR>")
--- nnoremap("<Leader>gD", ":Gdiffsplit<CR>")
--- nnoremap("<Leader>gh", ":diffget //3<CR>")
--- nnoremap("<Leader>gi", ":Git init<CR>")
--- nnoremap("<Leader>gk", ":diffget //2<CR>")
--- nnoremap("<Leader>gl", ":Git log<CR>")
--- nnoremap("<Leader>ge", ":Git push<CR>")
--- nnoremap("<Leader>gp", ":Git poosh<CR>")
--- nnoremap("<Leader>gP", ":Git pull<CR>")
--- nnoremap("<Leader>gr", ":GRemove<CR>")
--- nnoremap("<Leader>gs", ":G<CR>")
+-- FTerm
+nnoremap('<A-i>', '<CMD>lua require("FTerm").toggle()<CR>')
+tnoremap('<A-i>', '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>')
+nnoremap('<leader>eN', '<CMD>lua require("FTerm").open()<CR>')
+map('<leader>en', function() __fterm_cmd("node") end)
+map('<leader>eg', function() __fterm_cmd("gitui") end)
+map('<leader>ep', function() __fterm_cmd("python") end)
+map('<leader>er', function() __fterm_cmd("ranger") end)
+map('<leader>el', function() __fterm_cmd("lazygit") end)
+
+-- Kommentary
+nmap("<leader>/", "<Plug>kommentary_line_default")
+nmap("<leader>a/", "<Plug>kommentary_motion_default")
+vmap("<leader>/", "<Plug>kommentary_visual_default")
 
 -- dap
 nnoremap('<leader>dc', '<cmd>lua require"dap".continue()<CR>')
@@ -146,23 +140,6 @@ nnoremap('<leader>dbl',
          '<cmd>lua require"dap".set_breakpoint(nil, nil, vim.fn.input("Log point message: "))<CR>')
 nnoremap('<leader>dbs',
          '<cmd>lua require"dap".set_breakpoint(vim.fn.input("Breakpoint condition: "))<CR>')
-
--- Floaterm
-nnoremap("<F6>", ":FloatermKill<CR>")
-nnoremap("<F7>", ":FloatermNew<CR>")
-nnoremap("<F8>", ":FloatermPrev<CR>")
-nnoremap("<F9>", ":FloatermNext<CR>")
-nnoremap("<F12>", ":FloatermToggle<CR>")
-nnoremap("<Leader>eN", ":FloatermNew<CR>")
-nnoremap("<Leader>el", ":FloatermNew lazygit<CR>")
-nnoremap("<Leader>en", ":FloatermNew node<CR>")
-nnoremap("<Leader>ep", ":FloatermNew python<CR>")
-nnoremap("<Leader>er", ":FloatermNew ranger<CR>")
-
--- Kommentary
-nmap("<leader>/", "<Plug>kommentary_line_default")
-nmap("<leader>a/", "<Plug>kommentary_motion_default")
-vmap("<leader>/", "<Plug>kommentary_visual_default")
 
 -- Telescope
 nnoremap('<Leader>ff', ':Telescope find_files<CR>')

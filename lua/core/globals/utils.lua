@@ -145,7 +145,7 @@ local function make_mapper(mode, o)
       -- Remove the buffer from the args sent to the key map function
       local bufnr = _opts.buffer
       _opts.buffer = nil
-      _opts = vim.tbl_extend("keep", _opts, parent_opts)
+      _opts = vim.tbl_extend("force", _opts, parent_opts)
       api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, _opts)
     else
       api.nvim_set_keymap(mode, lhs, rhs,
@@ -155,6 +155,7 @@ local function make_mapper(mode, o)
 end
 
 local map_opts = {noremap = false, silent = true}
+r17.map = make_mapper("", map_opts)
 r17.nmap = make_mapper("n", map_opts)
 r17.xmap = make_mapper("x", map_opts)
 r17.imap = make_mapper("i", map_opts)

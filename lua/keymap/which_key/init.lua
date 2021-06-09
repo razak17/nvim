@@ -47,7 +47,6 @@ g.which_key_map = {
     r = 'rename buffer',
     R = 'empty registers',
     S = 'Toggle Shade',
-    u = 'undotreeToggle',
     v = 'vertical split',
     V = 'select all',
     x = 'save and exit',
@@ -77,19 +76,17 @@ g.which_key_map = {
     c = 'continue',
     r = {name = '+Repl', o = 'open', l = 'run last'},
     s = {name = '+Step', i = 'into', o = 'out', v = 'over'},
-    b = {
-      name = '+Breakpoints',
-      l = 'set log point',
-      s = 'set condition',
-      t = 'toggle'
-    }
+    b = {name = '+Breakpoints', l = 'set log point', s = 'set condition', t = 'toggle'}
   },
   e = {
-    name = '+Floaterm',
+    name = '+Fterm',
+    g = 'gitui',
     l = 'lazygit',
     n = 'node',
+    N = 'new',
     p = 'python',
-    r = 'ranger'
+    r = 'ranger',
+    v = 'open vimrc in vertical split'
   },
   E = 'Inspect token',
   f = {
@@ -121,12 +118,7 @@ g.which_key_map = {
       r = 'recent files',
       s = 'status'
     },
-    e = {
-      name = '+Extensions',
-      m = 'media files',
-      b = 'change background',
-      p = 'project'
-    },
+    e = {name = '+Extensions', m = 'media files', b = 'change background', p = 'project'},
     f = 'find files',
     l = {name = '+Live', g = 'grep', w = 'current word', e = 'prompt'},
     r = {
@@ -145,14 +137,7 @@ g.which_key_map = {
       r = 'references',
       s = {name = '+Symbols', d = 'document', w = 'workspace'}
     },
-    g = {
-      name = '+Git',
-      b = 'branches',
-      c = 'commits',
-      C = 'bcommits',
-      f = 'files',
-      s = 'status'
-    }
+    g = {name = '+Git', b = 'branches', c = 'commits', C = 'bcommits', f = 'files', s = 'status'}
   },
   F = {
     name = '+Far',
@@ -193,23 +178,10 @@ g.which_key_map = {
   I = {name = '+Info', c = 'check health', e = 'ts info', u = 'ts update'},
   l = {name = "+LocList", i = 'empty', s = 'toggle'},
   L = {name = '+Lsp_utils', i = 'info', l = 'log', r = 'restart'},
-  m = {
-    name = '+Mark',
-    e = 'toggle',
-    b = 'previous mark',
-    k = 'next mark',
-    w = 'where_am_i'
-  },
+  m = {name = '+Mark', e = 'toggle', b = 'previous mark', k = 'next mark', w = 'where_am_i'},
   n = {name = "+New", f = "open in same dir", s = "create in same dir"},
   o = {name = '+Toggle'},
-  P = {
-    name = '+Plug',
-    c = 'compile',
-    C = 'clean',
-    i = 'install',
-    s = 'sync',
-    U = 'update'
-  },
+  P = {name = '+Plug', c = 'compile', C = 'clean', i = 'install', s = 'sync', U = 'update'},
   s = {
     name = '+Tab',
     b = 'previous',
@@ -226,12 +198,7 @@ g.which_key_map = {
     name = '+Code',
     a = 'code action',
     A = 'range code action',
-    d = {
-      name = '+Diagnostics',
-      b = 'goto previous',
-      l = 'current line',
-      n = 'goto next'
-    },
+    d = {name = '+Diagnostics', b = 'goto previous', l = 'current line', n = 'goto next'},
     D = "DOGe",
     f = 'format',
     l = 'set loc list',
@@ -248,18 +215,13 @@ g.which_key_map = {
       w = 'workspace'
     }
   },
-  w = {
-    name = "+Orientation",
-    h = "change to horizontal",
-    v = "change to vertical"
-  }
+  w = {name = "+Orientation", h = "change to horizontal", v = "change to vertical"}
 }
 
 r17.augroup("WhichKeyMode", {
   {
-    events = {"BufLeave"},
+    events = {"FileType"},
     targets = {"which_key"},
-    command = "if &ft != 'dashboard' && &ft != '' | set laststatus=2 | endif"
-    -- command = "set laststatus=0 noshowmode | autocmd BufLeave <buffer> if &ft != 'dashboard' && &ft != '' | set laststatus=2 | endif"
+    command = "set laststatus=0 noshowmode | autocmd BufLeave <buffer> set laststatus=2"
   }
 })

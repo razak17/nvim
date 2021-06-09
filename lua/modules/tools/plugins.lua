@@ -5,7 +5,7 @@ local conf = require('modules.tools.config')
 
 -- tools['mbbill/undotree'] = {cmd = "UndotreeToggle"}
 
-tools['voldikss/vim-floaterm'] = {event = "VimEnter", config = conf.floaterm}
+tools['numToStr/FTerm.nvim'] = {event = "VimEnter", config = conf.fterm}
 
 tools['MattesGroeger/vim-bookmarks'] = {
   event = {'BufReadPre', 'BufNewFile'},
