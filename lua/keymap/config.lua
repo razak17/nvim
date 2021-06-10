@@ -1,5 +1,4 @@
 local fn = vim.fn
-local term = require("FTerm.terminal")
 
 local t = function(str)
   return vim.api.nvim_replace_termcodes(str, true, true, true)
@@ -53,6 +52,7 @@ function _G.__enhance_ft_move(key)
 end
 
 function _G.__fterm_cmd(key)
+  local term = require("FTerm.terminal")
   local cmd = term:new():setup({cmd = "gitui"})
   if key == 'node' then
     cmd = term:new():setup({cmd = "node"})
