@@ -7,26 +7,6 @@ Keymap, Execute, G = Api.nvim_set_keymap, Api.nvim_command, vim.g
 
 gl.short_line_list = {'NvimTree', 'packer', 'minimap', 'Outline'}
 
-local function hide_in_width()
-  local tbl = {['dashboard'] = true, [''] = true}
-  local squeeze_width = vim.fn.winwidth(0) / 2
-  if tbl[vim.bo.filetype] or squeeze_width < 50 then
-    return false
-  end
-  return true
-
-end
-
-local function hide_in_width_wide()
-  local tbl = {['dashboard'] = true, [''] = true}
-  local squeeze_width = vim.fn.winwidth(0) / 2
-  if tbl[vim.bo.filetype] or squeeze_width < 55 then
-    return false
-  end
-  return true
-
-end
-
 local colors = {
   bg = '#373d48',
   section_bg = '#2f333b',
@@ -122,7 +102,7 @@ gls.left[7] = {
 gls.left[8] = {
   DiffAdd = {
     provider = 'DiffAdd',
-    condition = hide_in_width_wide,
+    condition = condition.hide_in_width,
     icon = ' ',
     highlight = {colors.green, colors.bg}
   }
@@ -130,7 +110,7 @@ gls.left[8] = {
 gls.left[9] = {
   DiffModified = {
     provider = 'DiffModified',
-    condition = hide_in_width_wide,
+    condition = condition.hide_in_width,
     icon = ' ',
     highlight = {colors.orange, colors.bg}
   }
@@ -138,13 +118,13 @@ gls.left[9] = {
 gls.left[10] = {
   DiffRemove = {
     provider = 'DiffRemove',
-    condition = hide_in_width_wide,
+    condition = condition.hide_in_width,
     icon = ' ',
     highlight = {colors.red, colors.bg}
   }
 }
 gls.left[11] = {
-  Space = {provider = function() return '| ' end, highlight = {colors.section_bg, colors.bg}}
+  Space = {provider = function() return ' ' end, highlight = {colors.section_bg, colors.bg}}
 }
 gls.left[12] = {
   DiagnosticError = {
@@ -187,7 +167,7 @@ gls.right[1] = {
 gls.right[2] = {
   ShowLspClient = {
     provider = 'GetLspClient',
-    condition = hide_in_width,
+    condition = condition.hide_in_width,
     icon = 'LSP: ',
     highlight = {colors.fg, colors.bg},
     separator = ' | ',
@@ -197,7 +177,7 @@ gls.right[2] = {
 gls.right[3] = {
   FileEncode = {
     provider = 'FileEncode',
-    condition = hide_in_width_wide,
+    condition = condition.hide_in_width,
     highlight = {colors.fg, colors.bg},
     separator = ' |',
     separator_highlight = {colors.section_bg, colors.bg}
@@ -207,7 +187,7 @@ gls.right[3] = {
 gls.right[4] = {
   FileFormat = {
     provider = 'FileFormat',
-    condition = hide_in_width_wide,
+    condition = condition.hide_in_width,
     highlight = {colors.fg, colors.bg},
     separator = ' | ',
     separator_highlight = {colors.section_bg, colors.bg}
