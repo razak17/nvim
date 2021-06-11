@@ -162,8 +162,7 @@ vnoremap("<leader>[", [["zy:%s/<C-r><C-o>"/]], noisy)
 -- open a new file in the same directory
 nnoremap("<leader>nf", [[:e <C-R>=expand("%:p:h") . "/" <CR>]], {silent = false})
 -- create a new file in the same directory
-nnoremap("<leader>ns", [[:vsp <C-R>=expand("%:p:h") . "/" <CR>]],
-         {silent = false})
+nnoremap("<leader>ns", [[:vsp <C-R>=expand("%:p:h") . "/" <CR>]], {silent = false})
 
 -- Arrows
 nnoremap("<down>", "<nop>")
@@ -219,11 +218,9 @@ nnoremap("gf", function() utils.open_file_or_create_new() end)
 -- smooth searching, allow tabbing between search results similar to using <c-g>
 -- or <c-t> the main difference being tab is easier to hit and remapping those keys
 -- to these would swallow up a tab mapping
-cnoremap("<Tab>",
-         [[getcmdtype() == "/" || getcmdtype() == "?" ? "<CR>/<C-r>/" : "<C-z>"]],
+cnoremap("<Tab>", [[getcmdtype() == "/" || getcmdtype() == "?" ? "<CR>/<C-r>/" : "<C-z>"]],
          {expr = true})
-cnoremap("<S-Tab>",
-         [[getcmdtype() == "/" || getcmdtype() == "?" ? "<CR>?<C-r>/" : "<S-Tab>"]],
+cnoremap("<S-Tab>", [[getcmdtype() == "/" || getcmdtype() == "?" ? "<CR>?<C-r>/" : "<S-Tab>"]],
          {expr = true})
 -- Smart mappings on the command line
 cnoremap("w!!", [[w !sudo tee % >/dev/null]])
@@ -242,16 +239,13 @@ nnoremap("<leader>li", function() utils.toggle_list("l") end)
 -- Commands
 -----------------------------------------------------------------------------//
 
-r17.command {
-  "Todo", [[noautocmd silent! grep! 'TODO\|FIXME\|BUG\|HACK' | copen]]
-}
+r17.command {"Todo", [[noautocmd silent! grep! 'TODO\|FIXME\|BUG\|HACK' | copen]]}
 
 -- Other remaps
 nnoremap('<Leader>,', ':e ~/.config/nvim/lua/core/init.lua<CR>')
 nnoremap('<Leader>.', ':e $MYVIMRC<CR>')
 nnoremap('<Leader>Ic', ':checkhealth<CR>')
-nnoremap('<Leader>vwm',
-         function() require"modules.aesth.config".ColorMyPencils() end)
+nnoremap('<Leader>vwm', function() require"modules.aesth.config".ColorMyPencils() end)
 nnoremap('<leader>ar', function() utils.rename() end)
 nnoremap('<leader>aR', function() utils.EmptyRegisters() end)
 nnoremap('<Leader>;', function() utils.OpenTerminal() end)

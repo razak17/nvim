@@ -15,9 +15,9 @@ local load_core = function()
   local plug = require('core.plug')
   require'internal.startup'.init()
   require('core.opts')
-  load_niceties()
   plug.ensure_plugins()
   plug.load_compile()
 end
 
+load_niceties()
 load_core()
