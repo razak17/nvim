@@ -29,7 +29,7 @@ end
 
 local colors = {
   bg = '#373d48',
-  section_bg = '#2d3139',
+  section_bg = '#2f333b',
   fg = '#c8ccd4',
   yellow = '#e5c07b',
   cyan = '#56b6c2',
@@ -73,7 +73,7 @@ gls.left[2] = {
       Execute('hi GalaxyViMode guifg=' .. mode_color[Fn.mode()])
       return ' '
     end,
-    highlight = {colors.red, colors.bg, 'bold'},
+    highlight = {colors.red, colors.bg, 'bold'}
   }
 }
 
@@ -82,8 +82,8 @@ gls.left[3] = {
     provider = 'FileSize',
     condition = condition.buffer_not_empty,
     highlight = {colors.fg, colors.bg},
-    separator = ' ',
-    separator_highlight = {colors.bg, colors.section_bg}
+    separator = '| ',
+    separator_highlight = {colors.section_bg, colors.bg}
   }
 }
 
@@ -91,21 +91,21 @@ gls.left[4] = {
   FileIcon = {
     provider = 'FileIcon',
     condition = condition.buffer_not_empty,
-    highlight = {require('galaxyline.provider_fileinfo').get_file_icon_color, colors.section_bg}
+    highlight = {require('galaxyline.provider_fileinfo').get_file_icon_color, colors.bg}
   }
 }
 gls.left[5] = {
   FileName = {
     provider = 'FileName',
     condition = condition.buffer_not_empty,
-    highlight = {colors.fg, colors.section_bg},
-    separator = '',
+    highlight = {colors.fg, colors.bg},
+    separator = '| ',
     separator_highlight = {colors.section_bg, colors.bg}
   }
 }
 gls.left[6] = {
   GitIcon = {
-    provider = function() return '  ' end,
+    provider = function() return ' ' end,
     condition = condition.check_git_workspace,
     highlight = {colors.red, colors.bg}
   }
@@ -116,7 +116,7 @@ gls.left[7] = {
     condition = condition.check_git_workspace,
     highlight = {colors.fg, colors.bg},
     separator = ' ',
-    separator_highlight = {colors.bg, colors.bg}
+    separator_highlight = {colors.section_bg, colors.bg}
   }
 }
 gls.left[8] = {
@@ -144,27 +144,27 @@ gls.left[10] = {
   }
 }
 gls.left[11] = {
-  LeftEnd = {provider = function() return '' end, highlight = {colors.section_bg, colors.bg}}
+  Space = {provider = function() return '| ' end, highlight = {colors.section_bg, colors.bg}}
 }
 gls.left[12] = {
   DiagnosticError = {
     provider = 'DiagnosticError',
     icon = '  ',
-    highlight = {colors.red, colors.section_bg}
+    highlight = {colors.red, colors.bg}
   }
 }
 gls.left[13] = {
   DiagnosticWarn = {
     provider = 'DiagnosticWarn',
     icon = '  ',
-    highlight = {colors.orange, colors.section_bg}
+    highlight = {colors.orange, colors.bg}
   }
 }
 gls.left[14] = {
   DiagnosticInfo = {
     provider = 'DiagnosticInfo',
     icon = '  ',
-    highlight = {colors.blue, colors.section_bg}
+    highlight = {colors.blue, colors.bg}
   }
 }
 
@@ -172,9 +172,7 @@ gls.left[15] = {
   DiagnosticHint = {
     provider = 'DiagnosticHint',
     icon = '  ',
-    highlight = {colors.blue, colors.section_bg},
-    separator = ' ',
-    separator_highlight = {colors.section_bg, colors.bg}
+    highlight = {colors.blue, colors.bg}
   }
 }
 
@@ -183,9 +181,7 @@ gls.right[1] = {
   FileType = {
     provider = function() return bo.filetype end,
     icon = ' ', -- add extra space between separator and text
-    highlight = {colors.fg, colors.section_bg},
-    separator = '',
-    separator_highlight = {colors.section_bg, colors.bg}
+    highlight = {colors.fg, colors.bg}
   }
 }
 gls.right[2] = {
@@ -193,18 +189,18 @@ gls.right[2] = {
     provider = 'GetLspClient',
     condition = hide_in_width,
     icon = 'LSP: ',
-    highlight = {colors.fg, colors.section_bg},
+    highlight = {colors.fg, colors.bg},
     separator = ' | ',
-    separator_highlight = {colors.bg, colors.section_bg}
+    separator_highlight = {colors.section_bg, colors.bg}
   }
 }
 gls.right[3] = {
   FileEncode = {
     provider = 'FileEncode',
     condition = hide_in_width_wide,
-    highlight = {colors.fg, colors.section_bg},
+    highlight = {colors.fg, colors.bg},
     separator = ' |',
-    separator_highlight = {colors.bg, colors.section_bg}
+    separator_highlight = {colors.section_bg, colors.bg}
   }
 }
 
@@ -212,18 +208,18 @@ gls.right[4] = {
   FileFormat = {
     provider = 'FileFormat',
     condition = hide_in_width_wide,
-    highlight = {colors.fg, colors.section_bg},
+    highlight = {colors.fg, colors.bg},
     separator = ' | ',
-    separator_highlight = {colors.bg, colors.section_bg}
+    separator_highlight = {colors.section_bg, colors.bg}
   }
 }
 gls.right[5] = {
   LineInfo = {
     provider = 'LineColumn',
     condition = function() return vim.bo.filetype ~= 'dashboard' end,
-    highlight = {colors.fg, colors.section_bg},
+    highlight = {colors.fg, colors.bg},
     separator = ' |',
-    separator_highlight = {colors.bg, colors.section_bg}
+    separator_highlight = {colors.section_bg, colors.bg}
   }
 }
 gls.right[6] = {
@@ -231,17 +227,15 @@ gls.right[6] = {
     provider = 'LinePercent',
     condition = function() return vim.bo.filetype ~= 'dashboard' end,
     separator = '|',
-    separator_highlight = {colors.bg, colors.section_bg},
-    highlight = {colors.fg, colors.section_bg}
+    separator_highlight = {colors.section_bg, colors.bg},
+    highlight = {colors.fg, colors.bg}
   }
 }
 
 gls.right[7] = {
   RainbowBlue = {
-    provider = function()
-      return vim.bo.filetype ~= 'dashboard' and ' ▊' or '  ▊'
-    end,
-    highlight = {colors.blue, colors.section_bg}
+    provider = function() return vim.bo.filetype ~= 'dashboard' and ' ▊' or '  ▊' end,
+    highlight = {colors.blue, colors.bg}
   }
 }
 
@@ -249,18 +243,18 @@ gls.right[7] = {
 gls.short_line_left[1] = {
   BufferType = {
     provider = 'FileTypeName',
-    highlight = {colors.fg, colors.bg},
+    highlight = {colors.fg, colors.section_bg},
     separator = ' ',
-    separator_highlight = {colors.bg, colors.bg}
+    separator_highlight = {colors.section_bg, colors.section_bg}
   }
 }
 
 gls.short_line_right[1] = {
   BufferIcon = {
     provider = 'BufferIcon',
-    highlight = {colors.yellow, colors.bg},
+    highlight = {colors.yellow, colors.section_bg},
     separator = ' ',
-    separator_highlight = {colors.bg, colors.bg}
+    separator_highlight = {colors.section_bg, colors.section_bg}
   }
 }
 
