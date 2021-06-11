@@ -10,9 +10,7 @@ function r17._create(f)
   return #r17._store
 end
 
-function r17._execute(id, args)
-  r17._store[id](args)
-end
+function r17._execute(id, args) r17._store[id](args) end
 
 function r17.echomsg(msg, hl)
   hl = hl or "Title"
@@ -42,13 +40,11 @@ function r17.command(args)
   local nargs = args.nargs or 0
   local name = args[1]
   local rhs = args[2]
-  local types = (args.types and type(args.types) == "table") and
-                    table.concat(args.types, " ") or ""
+  local types = (args.types and type(args.types) == "table") and table.concat(args.types, " ") or ""
 
   if type(rhs) == "function" then
     local fn_id = r17._create(rhs)
-    rhs = string.format("lua r17._execute(%d%s)", fn_id,
-                        nargs > 0 and ", <f-args>" or "")
+    rhs = string.format("lua r17._execute(%d%s)", fn_id, nargs > 0 and ", <f-args>" or "")
   end
 
   vim.cmd(string.format("command! -nargs=%s %s %s %s", nargs, types, name, rhs))
@@ -64,8 +60,8 @@ function r17.augroup(name, commands)
       command = fmt("lua r17._execute(%s)", fn_id)
     end
     vim.cmd(string.format("autocmd %s %s %s %s", table.concat(c.events, ","),
-                          table.concat(c.targets or {}, ","),
-                          table.concat(c.modifiers or {}, " "), command))
+                          table.concat(c.targets or {}, ","), table.concat(c.modifiers or {}, " "),
+                          command))
   end
   vim.cmd("augroup END")
 end
@@ -115,7 +111,7 @@ end
 ---@param o table
 ---@return function
 local function make_mapper(mode, o)
-  -- copy the opts table as extends will mutate the opts table passed in otherwise
+  -- copy the opts table r17 extends will mutate the opts table passed in otherwise
   local parent_opts = vim.deepcopy(o)
   ---Create a mapping
   ---@param lhs string
@@ -123,7 +119,7 @@ local function make_mapper(mode, o)
   ---@param opts table
   return function(lhs, rhs, opts)
     -- assert(lhs ~= mode,
-    --        fmt("The lhs should not be the same as mode for %s", lhs))
+    --        fmt("The lhs should not be the same r17 mode for %s", lhs))
     local _opts = opts and vim.deepcopy(opts) or {}
 
     validate_mappings(lhs, rhs, _opts)
@@ -148,8 +144,7 @@ local function make_mapper(mode, o)
       _opts = vim.tbl_extend("force", _opts, parent_opts)
       api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, _opts)
     else
-      api.nvim_set_keymap(mode, lhs, rhs,
-                          vim.tbl_extend("keep", _opts, parent_opts))
+      api.nvim_set_keymap(mode, lhs, rhs, vim.tbl_extend("keep", _opts, parent_opts))
     end
   end
 end
@@ -174,3 +169,84 @@ r17.onoremap = make_mapper("o", noremap_opts)
 r17.tnoremap = make_mapper("t", noremap_opts)
 r17.snoremap = make_mapper("s", noremap_opts)
 r17.cnoremap = make_mapper("c", {noremap = true, silent = false})
+
+function r17.invalidate(path, recursive)
+  if recursive then
+    for key, value in pairs(package.loaded) do
+      if key ~= "_G" and value and vim.fn.match(key, path) ~= -1 then
+        package.loaded[key] = nil
+        require(key)
+      end
+    end
+  else
+    package.loaded[path] = nil
+    require(path)
+  end
+end
+
+local function get_last_notification()
+  for _, win in ipairs(api.nvim_list_wins()) do
+    local buf = api.nvim_win_get_buf(win)
+    if vim.bo[buf].filetype == "vim-notify" and api.nvim_win_is_valid(win) then
+      return api.nvim_win_get_config(win)
+    end
+  end
+end
+
+local notification_hl = setmetatable({
+  [2] = {"FloatBorder:NvimNotificationError", "NormalFloat:NvimNotificationError"},
+  [1] = {"FloatBorder:NvimNotificationInfo", "NormalFloat:NvimNotificationInfo"}
+}, {__index = function(t, _) return t[1] end})
+
+---Utility function to create a notification message
+---@param lines string[] | string
+---@param opts table
+function r17.notify(lines, opts)
+  lines = type(lines) == "string" and {lines} or lines
+  opts = opts or {}
+  local highlights = {"NormalFloat:Normal"}
+  local level = opts.log_level or 1
+  local timeout = opts.timeout or 5000
+
+  local width
+  for i, line in ipairs(lines) do
+    line = "  " .. line .. "  "
+    lines[i] = line
+    local length = #line
+    if not width or width < length then
+      width = length
+    end
+  end
+  local buf = api.nvim_create_buf(false, true)
+  api.nvim_buf_set_lines(buf, 0, -1, false, lines)
+  local height = #lines
+  local prev = get_last_notification()
+  local row = prev and prev.row[false] - prev.height - 2 or vim.o.lines - vim.o.cmdheight - 3
+  local win = api.nvim_open_win(buf, false, {
+    relative = "editor",
+    width = width + 2,
+    height = height,
+    col = vim.o.columns - 2,
+    row = row,
+    anchor = "SE",
+    style = "minimal",
+    focusable = false,
+    border = {"┌", "─", "┐", "│", "┘", "─", "└", "│"}
+  })
+
+  local level_hl = notification_hl[level]
+
+  vim.list_extend(highlights, level_hl)
+  vim.wo[win].winhighlight = table.concat(highlights, ",")
+
+  vim.bo[buf].filetype = "vim-notify"
+  vim.wo[win].wrap = true
+  if timeout then
+    vim.defer_fn(function()
+      if api.nvim_win_is_valid(win) then
+        api.nvim_win_close(win, true)
+      end
+    end, timeout)
+  end
+end
+

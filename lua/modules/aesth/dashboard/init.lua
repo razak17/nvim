@@ -1,7 +1,5 @@
 r17.dashboard = {}
-local join = function(k, v, c)
-  return {k .. string.rep(" ", c) .. v}
-end
+local join = function(k, v, c) return {k .. string.rep(" ", c) .. v} end
 vim.g.dashboard_custom_header = {
   "                                                       ",
   "                                                       ",
@@ -17,8 +15,7 @@ vim.g.dashboard_custom_header = {
 
 vim.g.dashboard_default_executive = 'telescope'
 vim.g.dashboard_disable_statusline = 1
-vim.g.dashboard_session_directory = vim.fn.stdpath("data") ..
-                                        'session/dashboard'
+vim.g.dashboard_session_directory = vim.fn.stdpath("data") .. 'session/dashboard'
 vim.g.dashboard_custom_section = {
   all_sessions = {
     description = join("  Last session", "<leader>Sl", 11),
@@ -42,15 +39,10 @@ vim.g.dashboard_custom_section = {
   }
 }
 
-function r17.dashboard.save_session()
-  vim.cmd("SessionSave")
-end
+function r17.dashboard.save_session() vim.cmd("SessionSave") end
 
-r17.augroup("TelescopeSession", {
-  events = {"VimLeavePre"},
-  targets = "*",
-  command = "lua r17.dashboard.save_session()"
-})
+r17.augroup("TelescopeSession",
+            {events = {"VimLeavePre"}, targets = "*", command = "lua r17.dashboard.save_session()"})
 
 r17.augroup("DashBoardMode", {
   {events = {"FileType"}, targets = {"dashboard"}, command = "set laststatus=0"},

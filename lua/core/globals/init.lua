@@ -28,42 +28,6 @@ function G:load_variables()
   self.elixirls_binary = G.elixirls_root_path .. '/.bin/language_server.sh'
 end
 
---- Check if a file or directory exists in this path
-function G.exists(file)
-  if file == '' or file == nil then
-    return false
-  end
-  local ok, err, code = os.rename(file, file)
-  if not ok then
-    if code == 13 then
-      -- Permission denied, but it exists
-      return true
-    end
-  end
-  return ok, err
-end
-
-function G.is_empty(item)
-  if not item then
-    return true
-  end
-  local item_type = type(item)
-  if item_type == "string" then
-    return item == ""
-  elseif item_type == "table" then
-    return vim.tbl_isempty(item)
-  end
-end
-
---- Check if a directory exists in this path
-function G.isdir(path)
-  if path == '' or path == nil then
-    return false
-  end
-  -- "/" works on both Unix and Windows
-  return G.exists(path .. "/")
-end
-
 G:load_variables()
 
 return G

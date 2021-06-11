@@ -61,7 +61,11 @@ nnoremap('<Leader>sH', ':-tabmove<CR>')
 nnoremap('<Leader>sL', ':+tabmove<CR>')
 
 -- Alternate way to save
-nnoremap('<C-s>', ':w<CR>')
+-- nnoremap('<C-s>', ':w<CR>')
+nnoremap("<c-s>", function()
+  vim.cmd("silent write")
+  r17.notify("Saved " .. vim.fn.expand("%:t"), {timeout = 1000})
+end)
 
 -- Alternate way to quit
 nnoremap("<Leader>ax", ":wq!<CR>")
