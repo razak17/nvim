@@ -25,8 +25,7 @@ end
 
 function M.token_inspect()
   if not ts_playground_loaded then
-    ts_playground_loaded, ts_hl_info = pcall(require,
-                                             "nvim-treesitter-playground.hl-info")
+    ts_playground_loaded, ts_hl_info = pcall(require, "nvim-treesitter-playground.hl-info")
   end
   if vim.tbl_contains(r17.ts.get_filetypes(), vim.bo.filetype) then
     ts_hl_info.show_hl_captures()
@@ -55,7 +54,9 @@ function M.toggle_list(prefix)
 
   local winnr = fn.winnr()
   fn.execute(prefix .. "open")
-  if fn.winnr() ~= winnr then vim.cmd [[wincmd p]] end
+  if fn.winnr() ~= winnr then
+    vim.cmd [[wincmd p]]
+  end
 end
 
 function M.open_link()
@@ -69,19 +70,27 @@ end
 
 function M.open_file_or_create_new()
   local path = fn.expand("<cfile>")
-  if not path or path == "" then return false end
+  if not path or path == "" then
+    return false
+  end
 
   -- TODO handle terminal buffers
 
-  if pcall(vim.cmd, "norm!gf") then return true end
+  if pcall(vim.cmd, "norm!gf") then
+    return true
+  end
 
   local answer = fn.input("Create a new file, (Y)es or (N)o? ")
-  if not answer or string.lower(answer) ~= "y" then return vim.cmd "redraw" end
+  if not answer or string.lower(answer) ~= "y" then
+    return vim.cmd "redraw"
+  end
   vim.cmd "redraw"
   local new_path = fn.fnamemodify(fn.expand("%:p:h") .. "/" .. path, ":p")
   local ext = fn.fnamemodify(new_path, ":e")
 
-  if ext and ext ~= "" then return vim.cmd("edit " .. new_path) end
+  if ext and ext ~= "" then
+    return vim.cmd("edit " .. new_path)
+  end
 
   local suffixes = fn.split(vim.bo.suffixesadd, ",")
 
@@ -101,9 +110,7 @@ function M.tmux_on_enter()
   fn.jobstart(fmt("tmux rename-window '%s'", window_title))
 end
 
-function M.tmux_on_leave()
-  fn.jobstart("tmux set-window-option automatic-rename on")
-end
+function M.tmux_on_leave() fn.jobstart("tmux set-window-option automatic-rename on") end
 
 -- https://github.com/CalinLeafshade/dots/blob/master/nvim/.config/nvim/lua/leafshade/rename.lua
 function M.rename(name)
@@ -111,6 +118,8 @@ function M.rename(name)
   local newname = curfilepath .. "/" .. name
   vim.api.nvim_command(" saveas " .. newname)
 end
+vim.api
+    .nvim_command [[command! -nargs=1 Rename :call v:lua.require('internal.utils').rename(<f-args>) ]]
 
 function M.TrimWhitespace()
   vim.api.nvim_exec([[

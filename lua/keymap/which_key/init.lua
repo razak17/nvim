@@ -179,7 +179,7 @@ g.which_key_map = {
   l = {name = "+LocList", i = 'empty', s = 'toggle'},
   L = {name = '+Lsp_utils', i = 'info', l = 'log', r = 'restart'},
   m = {name = '+Mark', e = 'toggle', b = 'previous mark', k = 'next mark', w = 'where_am_i'},
-  n = {name = "+New", f = "open in same dir", s = "create in same dir"},
+  n = {name = "+New", f = "open file in same dir", s = "create new file in same dir"},
   o = {name = '+Toggle'},
   P = {name = '+Plug', c = 'compile', C = 'clean', i = 'install', s = 'sync', U = 'update'},
   s = {

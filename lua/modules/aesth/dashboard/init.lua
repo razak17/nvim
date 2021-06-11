@@ -44,16 +44,10 @@ function r17.dashboard.save_session() vim.cmd("SessionSave") end
 r17.augroup("TelescopeSession",
             {events = {"VimLeavePre"}, targets = "*", command = "lua r17.dashboard.save_session()"})
 
-r17.augroup("DashBoardMode", {
-  {events = {"FileType"}, targets = {"dashboard"}, command = "set laststatus=0"},
+r17.augroup("WhichKeyMode", {
   {
-    events = {"FocusLost", "WinLeave", "BufLeave"},
+    events = {"FileType"},
     targets = {"dashboard"},
-    command = "set colorcolumn=0 showtabline=2"
-  },
-  {
-    events = {"FocusGained", "WinEnter", "BufEnter"},
-    targets = {"dashboard"},
-    command = "setlocal nocursorline showtabline=0 laststatus=0"
+    command = "set laststatus=0 | autocmd BufLeave <buffer> set laststatus=2"
   }
 })
