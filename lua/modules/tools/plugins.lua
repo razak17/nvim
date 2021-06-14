@@ -12,6 +12,8 @@ tools['MattesGroeger/vim-bookmarks'] = {
   config = conf.bookmarks
 }
 
+tools['npxbr/glow.nvim'] = {run = ":GlowInstall"}
+
 -- tools['iamcco/markdown-preview.nvim'] = {
 --   ft = 'markdown',
 --   config = function()

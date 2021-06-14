@@ -33,7 +33,7 @@ inoremap("<C-e>", "compe#close('<C-e>')", opts)
 inoremap("<C-f>", "compe#scroll({ 'delta': +4 })", opts)
 inoremap("<C-d>", "compe#scroll({ 'delta': -4 })", opts)
 imap("<CR>", [[compe#confirm({ 'keys': "\<Plug>delimitMateCR", 'mode': '' })]],
-     {noremap = true, expr = true})
+     {noremap = true; expr = true})
 -- vsnip
 xmap("<C-x>", "<Plug>(vsnip-cut-text)")
 xmap("<C-l>", "<Plug>(vsnip-select-text)")
@@ -44,8 +44,8 @@ imap("<C-l>", "vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'", o
 smap("<C-l>", "vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'", opts)
 
 -- accelerated jk
-nmap("n", 'v:lua.__enhance_jk_move("n")', {silent = true, expr = true})
-nmap("k", 'v:lua.__enhance_jk_move("k")', {silent = true, expr = true})
+nmap("n", 'v:lua.__enhance_jk_move("n")', {silent = true; expr = true})
+nmap("k", 'v:lua.__enhance_jk_move("k")', {silent = true; expr = true})
 -- vim-eft
 nmap(";", "v:lua.__enhance_ft_move(';')", {expr = true})
 xmap(";", "v:lua.__enhance_ft_move(';')", {expr = true})
@@ -78,6 +78,9 @@ nnoremap('<Leader>mk', ':BookmarkNext<CR>')
 
 -- markdown preview
 nnoremap('<Leader>om', ':MarkdownPreview<CR>')
+
+-- Glow
+nnoremap('<Leader>og', ':Glow<CR>')
 
 -- dadbob
 nnoremap('<Leader>od', ':DBUIToggle<CR>')
