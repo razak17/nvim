@@ -1,7 +1,3 @@
-_GlobalCallbacks = _GlobalCallbacks or {}
-
-_G.r17 = {_store = _GlobalCallbacks}
-
 local api = vim.api
 local fmt = string.format
 
@@ -243,5 +239,18 @@ function r17.notify(lines, opts)
       if api.nvim_win_is_valid(win) then api.nvim_win_close(win, true) end
     end, timeout)
   end
+end
+
+--- Check if a file or directory exists in this path
+function r17._exists(file)
+  if file == '' or file == nil then return false end
+  local ok, err, code = os.rename(file, file)
+  if not ok then
+    if code == 13 then
+      -- Permission denied, but it exists
+      return true
+    end
+  end
+  return ok, err
 end
 

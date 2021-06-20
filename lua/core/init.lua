@@ -12,6 +12,7 @@ local load_niceties = function()
 end
 
 local load_core = function()
+  require('core.globals')
   local plug = require('core.plug')
   require'internal.startup'.init()
   require('core.opts')

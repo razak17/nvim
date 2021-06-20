@@ -1,10 +1,7 @@
 local fn, uv, api = vim.fn, vim.loop, vim.api
-local G = require 'core.globals'
-local vim_path = G.vim_path
-local data_dir = G.data_dir
-local modules_dir = vim_path .. '/lua/modules'
-local packer_compiled = data_dir .. 'packer_compiled.vim'
-local compile_to_lua = data_dir .. 'lua/_compiled.lua'
+local modules_dir = vim.fn.stdpath('config') .. '/lua/modules'
+local packer_compiled = vim.fn.stdpath('data') .. '/site/packer_compiled.vim'
+local compile_to_lua = vim.fn.stdpath('data') .. '/site/lua/_compiled.lua'
 local packer = nil
 
 local Plug = {}
@@ -52,13 +49,13 @@ function Plug:load_packer()
 end
 
 function Plug:init_ensure_plugins()
-  local packer_dir = data_dir .. 'pack/packer/opt/packer.nvim'
+  local packer_dir = r17.__data_dir .. 'pack/packer/opt/packer.nvim'
   local state = uv.fs_stat(packer_dir)
   if not state then
     local cmd = "!git clone https://github.com/wbthomason/packer.nvim " ..
                   packer_dir
     api.nvim_command(cmd)
-    uv.fs_mkdir(data_dir .. 'lua', 511,
+    uv.fs_mkdir(r17.__data_dir .. 'lua', 511,
       function() assert("make compile path dir faield") end)
     self:load_packer()
     packer.install()
@@ -88,8 +85,8 @@ function plugins.convert_compile_file()
   end
   table.remove(lines, #lines)
 
-  if vim.fn.isdirectory(data_dir .. 'lua') ~= 1 then
-    os.execute('mkdir -p ' .. data_dir .. 'lua')
+  if vim.fn.isdirectory(r17.__data_dir .. 'lua') ~= 1 then
+    os.execute('mkdir -p ' .. r17.__data_dir .. 'lua')
   end
 
   if vim.fn.filereadable(compile_to_lua) == 1 then os.remove(compile_to_lua) end

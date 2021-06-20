@@ -1,5 +1,4 @@
 local g = vim.g
-local G = require 'core.globals'
 local M = {}
 
 local disable_builtin_plugins = function()
@@ -33,8 +32,8 @@ local disable_providers = function()
 end
 
 local set_host_prog = function()
-  g["python3_host_prog"] = G.python3 .. "bin" .. G.path_sep .. "python"
-  g["node_host_prog"] = G.node
+  g["python3_host_prog"] = r17._python3 .. "bin" .. r17.__path_sep .. "python"
+  g["node_host_prog"] = r17._node
 end
 
 local global_utils = function()

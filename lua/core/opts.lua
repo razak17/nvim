@@ -1,11 +1,8 @@
 local vim = vim
-local G = require 'core.globals'
 
 require('internal.folds')
 
-local function set(key, value)
-  vim.opt[key] = value
-end
+local function set(key, value) vim.opt[key] = value end
 
 vim.cmd [[
   syntax off
@@ -19,12 +16,12 @@ vim.go.t_Co = "256"
 vim.g.vimsyn_embed = "lPr" -- allow embedded syntax highlighting for lua,python and ruby
 
 -- Neovim Directories
-set('udir', G.cache_dir .. 'undodir')
-set('directory', G.cache_dir .. 'swap')
-set('backupdir', G.cache_dir .. 'backup')
-set('viewdir', G.cache_dir .. 'view')
+set('udir', r17.__cache_dir .. 'undodir')
+set('directory', r17.__cache_dir .. 'swap')
+set('backupdir', r17.__cache_dir .. 'backup')
+set('viewdir', r17.__cache_dir .. 'view')
 set('backupskip',
-    '/tmp/*,$TMPDIR/*,$TMP/*,$TEMP/*,*/shm/*,/private/var/*,.vault.vim')
+  '/tmp/*,$TMPDIR/*,$TMP/*,$TEMP/*,*/shm/*,/private/var/*,.vault.vim')
 
 -- Timing
 set('timeout', true)
@@ -97,9 +94,9 @@ set('signcolumn', 'yes')
 set('relativenumber', true)
 set('listchars', 'tab:»•,nbsp:+,trail:·,precedes:,extends:')
 set('diffopt',
-    'vertical,iwhite,hiddenoff,foldcolumn:0,context:4,algorithm:histogram,indent-heuristic')
+  'vertical,iwhite,hiddenoff,foldcolumn:0,context:4,algorithm:histogram,indent-heuristic')
 set('fillchars',
-    'vert:▕,fold: ,eob: ,diff:─,msgsep: ,foldopen:▾,foldsep:│,foldclose:▸,eob: ')
+  'vert:▕,fold: ,eob: ,diff:─,msgsep: ,foldopen:▾,foldsep:│,foldclose:▸,eob: ')
 
 -- Behavior
 set('eadirection', 'hor')
@@ -137,7 +134,7 @@ set('magic', true) -- list of words that change the behavior of the jumplist
 
 -- Searching
 set('grepprg',
-    [[rg --hidden --glob "!.git" --no-heading --smart-case --vimgrep --follow $*]])
+  [[rg --hidden --glob "!.git" --no-heading --smart-case --vimgrep --follow $*]])
 set('grepformat', '%f:%l:%c:%m')
 set('smartcase', true)
 set('ignorecase', true)
@@ -151,7 +148,7 @@ set('matchtime', 1)
 
 -- Wildmenu
 set('wildignore',
-    '*.so,.git,.hg,.svn,.stversions,*.pyc,*.spl,*.o,*.out,*~,%*,*.jpg,*.jpeg,*.png,*.gif,*.zip,**/tmp/**,*.DS_Store,**/node_modules/**,**/bower_modules/**,*/.sass-cache/*,application/vendor/**,**/vendor/ckeditor/**,media/vendor/**,__pycache__,*.egg-info')
+  '*.so,.git,.hg,.svn,.stversions,*.pyc,*.spl,*.o,*.out,*~,%*,*.jpg,*.jpeg,*.png,*.gif,*.zip,**/tmp/**,*.DS_Store,**/node_modules/**,**/bower_modules/**,*/.sass-cache/*,application/vendor/**,**/vendor/ckeditor/**,media/vendor/**,__pycache__,*.egg-info')
 set('wildmode', 'longest,full')
 set('wildoptions', 'pum')
 set('wildignorecase', true)
