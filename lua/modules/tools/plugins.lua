@@ -14,7 +14,7 @@ tools['MattesGroeger/vim-bookmarks'] = {
   config = conf.bookmarks
 }
 
-tools['diepm/vim-rest-console'] = {}
+-- tools['diepm/vim-rest-console'] = {}
 
 -- tools['iamcco/markdown-preview.nvim'] = {
 --   ft = 'markdown',

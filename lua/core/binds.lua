@@ -5,8 +5,156 @@ local vnoremap = r17.vnoremap
 local inoremap = r17.inoremap
 local tnoremap = r17.tnoremap
 local cnoremap = r17.cnoremap
-local utils = require 'internal.utils'
 
+local fn = vim.fn
+local api = vim.api
+local fmt = string.format
+
+-----------------------------------------------------------------------------//
+-- Functions
+-----------------------------------------------------------------------------//
+
+local ts_playground_loaded, ts_hl_info
+
+-----------------------------------------------------------------------------//
+-- CREDIT: @Cocophon
+-- This function allows you to see the syntax highlight token of the cursor word and that token's links
+---> https://github.com/cocopon/pgmnt.vim/blob/master/autoload/pgmnt/dev.vim
+-----------------------------------------------------------------------------//
+local function hi_chain(syn_id)
+  local name = fn.synIDattr(syn_id, "name")
+  local names = {}
+  table.insert(names, name)
+  local original = fn.synIDtrans(syn_id)
+  if syn_id ~= original then
+    table.insert(names, fn.synIDattr(original, "name"))
+  end
+
+  return names
+end
+
+local function inspect_token()
+  if not ts_playground_loaded then
+    ts_playground_loaded, ts_hl_info = pcall(require,
+      "nvim-treesitter-playground.hl-info")
+  end
+  if vim.tbl_contains(r17.ts.get_filetypes(), vim.bo.filetype) then
+    ts_hl_info.show_hl_captures()
+  else
+    local syn_id = fn.synID(fn.line("."), fn.col("."), 1)
+    local names = hi_chain(syn_id)
+    r17.echomsg(fn.join(names, " -> "))
+  end
+end
+
+local function save_and_notify()
+  vim.cmd("silent write")
+  r17.notify("Saved " .. vim.fn.expand("%:t"), {timeout = 1000})
+end
+
+local function open_file_or_create_new()
+  local path = fn.expand("<cfile>")
+  if not path or path == "" then return false end
+
+  -- TODO handle terminal buffers
+
+  if pcall(vim.cmd, "norm!gf") then return true end
+
+  local answer = fn.input("Create a new file, (Y)es or (N)o? ")
+  if not answer or string.lower(answer) ~= "y" then return vim.cmd "redraw" end
+  vim.cmd "redraw"
+  local new_path = fn.fnamemodify(fn.expand("%:p:h") .. "/" .. path, ":p")
+  local ext = fn.fnamemodify(new_path, ":e")
+
+  if ext and ext ~= "" then return vim.cmd("edit " .. new_path) end
+
+  local suffixes = fn.split(vim.bo.suffixesadd, ",")
+
+  for _, suffix in ipairs(suffixes) do
+    if fn.filereadable(new_path .. suffix) then
+      return vim.cmd("edit " .. new_path .. suffix)
+    end
+  end
+
+  return vim.cmd("edit " .. new_path .. suffixes[1])
+end
+
+local function open_link()
+  local file = fn.expand("<cfile>")
+  if fn.isdirectory(file) > 0 then
+    vim.cmd("edit " .. file)
+  else
+    fn.jobstart({vim.g.open_command, file}, {detach = true})
+  end
+end
+
+local function toggle_list(prefix)
+  for _, win in ipairs(api.nvim_list_wins()) do
+    local buf = api.nvim_win_get_buf(win)
+    local location_list = fn.getloclist(0, {filewinid = 0})
+    local is_loc_list = location_list.filewinid > 0
+    if vim.bo[buf].filetype == "qf" or is_loc_list then
+      fn.execute(prefix .. "close")
+      return
+    end
+  end
+  if prefix == "l" and vim.tbl_isempty(fn.getloclist(0)) then
+    fn["utils#message"]("Location List is Empty.", "Title")
+    return
+  end
+
+  local winnr = fn.winnr()
+  fn.execute(prefix .. "open")
+  if fn.winnr() ~= winnr then vim.cmd [[wincmd p]] end
+end
+
+local function ColorMyPencils()
+  vim.cmd [[ hi ColorColumn guibg=#aeacec ]]
+  vim.cmd [[ hi Normal guibg=none ]]
+  vim.cmd [[ hi LineNr guifg=#4dd2dc ]]
+  vim.cmd [[ hi TelescopeBorder guifg=#aeacec ]]
+  vim.cmd [[ hi FloatermBorder guifg= #aeacec ]]
+  vim.cmd [[ hi WhichKeyGroup guifg=#4dd2dc ]]
+  vim.cmd [[ hi WhichKeyDesc guifg=#4dd2dc  ]]
+end
+
+local function EmptyRegisters()
+  vim.api.nvim_exec([[
+    let regs=split('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/-"', '\zs')
+    for r in regs
+        call setreg(r, [])
+    endfor
+  ]], false)
+end
+
+local function OpenTerminal()
+  vim.cmd("split term://zsh")
+  vim.cmd("resize 10")
+end
+
+local function TurnOnGuides()
+  vim.wo.number = true
+  vim.wo.relativenumber = true
+  vim.wo.cursorline = false
+  vim.wo.signcolumn = "yes"
+  vim.wo.colorcolumn = "+1"
+  vim.o.laststatus = 2
+  vim.o.showtabline = 2
+end
+
+local function TurnOffGuides()
+  vim.wo.number = false
+  vim.wo.relativenumber = false
+  vim.wo.cursorline = true
+  vim.wo.signcolumn = "no"
+  vim.wo.colorcolumn = ""
+  vim.o.laststatus = 0
+  vim.o.showtabline = 0
+end
+
+-----------------------------------------------------------------------------//
+-- Mappings
+-----------------------------------------------------------------------------//
 -- Yank from cursor position to end-of-line
 nnoremap('Y', 'y$')
 
@@ -17,6 +165,9 @@ nnoremap('Y', 'y$')
 -- Move selected line / block of text in visual mode
 xnoremap('K', ":m '<-2<CR>gv=gv")
 xnoremap('N', ":m '>+1<CR>gv=gv")
+
+-- Alternate way to save
+nnoremap("<c-s>", function() save_and_notify() end)
 
 -- Open url
 nnoremap('gx', ":sil !xdg-open <c-r><c-a><cr>")
@@ -30,7 +181,7 @@ nnoremap('<C-l>', '<C-w>l')
 -- Start new line from any cursor position
 inoremap("<S-Return>", "<C-o>o")
 
-nnoremap("<leader>E", function() utils.token_inspect() end, {silent = false})
+nnoremap("<leader>E", function() inspect_token() end, {silent = false})
 
 -- Use alt + hjkl to resize windows
 nnoremap('<M-n>', ':resize -2<CR>')
@@ -59,13 +210,6 @@ nnoremap('<Leader>sN', ':tabnew<CR>')
 nnoremap('<Leader>sd', ':tabclose<CR>')
 nnoremap('<Leader>sH', ':-tabmove<CR>')
 nnoremap('<Leader>sL', ':+tabmove<CR>')
-
--- Alternate way to save
--- nnoremap('<C-s>', ':w<CR>')
-nnoremap("<c-s>", function()
-  vim.cmd("silent write")
-  r17.notify("Saved " .. vim.fn.expand("%:t"), {timeout = 1000})
-end)
 
 -- Alternate way to quit
 nnoremap("<Leader>ax", ":wq!<CR>")
@@ -131,8 +275,8 @@ r17.augroup("AddTerminalMappings", {
         tnoremap("<S-Tab>", [[<C-\><C-n>:bprev<CR>]])
         tnoremap("<leader><Tab>", [[<C-\><C-n>:close \| :bnext<cr>]])
       end
-    end
-  }
+    end,
+  },
 })
 
 -- Add Empty space above and below
@@ -166,7 +310,8 @@ vnoremap("<leader>[", [["zy:%s/<C-r><C-o>"/]], noisy)
 -- open a new file in the same directory
 nnoremap("<leader>nf", [[:e <C-R>=expand("%:p:h") . "/" <CR>]], {silent = false})
 -- create a new file in the same directory
-nnoremap("<leader>ns", [[:vsp <C-R>=expand("%:p:h") . "/" <CR>]], {silent = false})
+nnoremap("<leader>ns", [[:vsp <C-R>=expand("%:p:h") . "/" <CR>]],
+  {silent = false})
 
 -- Arrows
 nnoremap("<down>", "<nop>")
@@ -214,7 +359,7 @@ nnoremap("Q", "@q")
 -- If you select require('buffers/file') in lua for example
 -- this makes the cfile -> buffers/file rather than my_dir/buffer/file.lua
 -- Credit: 1,2
-nnoremap("gf", function() utils.open_file_or_create_new() end)
+nnoremap("gf", function() open_file_or_create_new() end)
 
 -----------------------------------------------------------------------------//
 -- Command mode related
@@ -222,10 +367,12 @@ nnoremap("gf", function() utils.open_file_or_create_new() end)
 -- smooth searching, allow tabbing between search results similar to using <c-g>
 -- or <c-t> the main difference being tab is easier to hit and remapping those keys
 -- to these would swallow up a tab mapping
-cnoremap("<Tab>", [[getcmdtype() == "/" || getcmdtype() == "?" ? "<CR>/<C-r>/" : "<C-z>"]],
-         {expr = true})
-cnoremap("<S-Tab>", [[getcmdtype() == "/" || getcmdtype() == "?" ? "<CR>?<C-r>/" : "<S-Tab>"]],
-         {expr = true})
+cnoremap("<Tab>",
+  [[getcmdtype() == "/" || getcmdtype() == "?" ? "<CR>/<C-r>/" : "<C-z>"]],
+  {expr = true})
+cnoremap("<S-Tab>",
+  [[getcmdtype() == "/" || getcmdtype() == "?" ? "<CR>?<C-r>/" : "<S-Tab>"]],
+  {expr = true})
 -- Smart mappings on the command line
 cnoremap("w!!", [[w !sudo tee % >/dev/null]])
 -- insert path of current file into a command
@@ -233,25 +380,35 @@ cnoremap("%%", "<C-r>=fnameescape(expand('%'))<cr>")
 cnoremap("::", "<C-r>=fnameescape(expand('%:p:h'))<cr>/")
 
 -- GX - replicate netrw functionality
-nnoremap("gX", function() utils.open_link() end)
+nnoremap("gX", function() open_link() end)
 
 -- toggle_list
-nnoremap("<leader>ls", function() utils.toggle_list("c") end)
-nnoremap("<leader>li", function() utils.toggle_list("l") end)
-
------------------------------------------------------------------------------//
--- Commands
------------------------------------------------------------------------------//
-
-r17.command {"Todo", [[noautocmd silent! grep! 'TODO\|FIXME\|BUG\|HACK' | copen]]}
+nnoremap("<leader>ls", function() toggle_list("c") end)
+nnoremap("<leader>li", function() toggle_list("l") end)
 
 -- Other remaps
 nnoremap('<Leader>,', ':e ~/.config/nvim/lua/core/init.lua<CR>')
 nnoremap('<Leader>.', ':e $MYVIMRC<CR>')
 nnoremap('<Leader>Ic', ':checkhealth<CR>')
-nnoremap('<Leader>vwm', function() require"modules.aesth.config".ColorMyPencils() end)
-nnoremap('<leader>ar', function() utils.rename() end)
-nnoremap('<leader>aR', function() utils.EmptyRegisters() end)
-nnoremap('<Leader>;', function() utils.OpenTerminal() end)
-nnoremap('<leader>ao', function() utils.TurnOnGuides() end)
-nnoremap('<leader>ae', function() utils.TurnOffGuides() end)
+nnoremap('<Leader>vwm', function() ColorMyPencils() end)
+nnoremap('<leader>aR', function() EmptyRegisters() end)
+nnoremap('<Leader>;', function() OpenTerminal() end)
+nnoremap('<leader>ao', function() TurnOnGuides() end)
+nnoremap('<leader>ae', function() TurnOffGuides() end)
+
+-----------------------------------------------------------------------------//
+-- Commands
+-----------------------------------------------------------------------------//
+-- https://github.com/CalinLeafshade/dots/blob/master/nvim/.config/nvim/lua/leafshade/rename.lua
+function _G.__Rename(name)
+  local curfilepath = vim.fn.expand("%:p:h")
+  local newname = curfilepath .. "/" .. name
+  vim.api.nvim_command(" saveas " .. newname)
+end
+
+r17.command {
+  "Todo",
+  [[noautocmd silent! grep! 'TODO\|FIXME\|BUG\|HACK' | copen]],
+}
+
+r17.command {nargs = 1,"Rename", [[call v:lua.__Rename(<f-args>)]]}

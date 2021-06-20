@@ -2,16 +2,12 @@ r17.lsp = {}
 
 local command = r17.command
 
-local get_cursor_pos = function()
-  return {vim.fn.line('.'), vim.fn.col('.')}
-end
+local get_cursor_pos = function() return {vim.fn.line('.'), vim.fn.col('.')} end
 
 local debounce = function(func, timeout)
   local timer_id = nil
   return function(...)
-    if timer_id ~= nil then
-      vim.fn.timer_stop(timer_id)
-    end
+    if timer_id ~= nil then vim.fn.timer_stop(timer_id) end
     local args = {...}
 
     timer_id = vim.fn.timer_start(timeout, function()
@@ -26,47 +22,47 @@ function r17.lsp.autocmds(client, _)
     {
       events = {"InsertLeave", "BufWrite", "BufEnter"},
       targets = {"<buffer>"},
-      command = [[lua vim.lsp.diagnostic.set_loclist({open_loclist = false})]]
-    }
+      command = [[lua vim.lsp.diagnostic.set_loclist({open_loclist = false})]],
+    },
   })
-  r17.augroup("HoverDiagnostics", {
-    {
-      events = {"CursorHold"},
-      targets = {"<buffer>"},
-      command = (function()
-        vim.cmd [[packadd lspsaga.nvim]]
-        local debounced = debounce(
-                              require'lspsaga.diagnostic'.show_cursor_diagnostics,
-                              30)
-        local cursorpos = get_cursor_pos()
-        return function()
-          local new_cursor = get_cursor_pos()
-          if (new_cursor[1] ~= 1 and new_cursor[2] ~= 1) and
-              (new_cursor[1] ~= cursorpos[1] or new_cursor[2] ~= cursorpos[2]) then
-            cursorpos = new_cursor
-            debounced()
-          end
-        end
-      end)()
-    }
-  })
+  -- r17.augroup("HoverDiagnostics", {
+  --   {
+  --     events = {"CursorHold"},
+  --     targets = {"<buffer>"},
+  --     command = (function()
+  --       vim.cmd [[packadd lspsaga.nvim]]
+  --       local debounced = debounce(
+  --                             require'lspsaga.diagnostic'.show_cursor_diagnostics,
+  --                             30)
+  --       local cursorpos = get_cursor_pos()
+  --       return function()
+  --         local new_cursor = get_cursor_pos()
+  --         if (new_cursor[1] ~= 1 and new_cursor[2] ~= 1) and
+  --             (new_cursor[1] ~= cursorpos[1] or new_cursor[2] ~= cursorpos[2]) then
+  --           cursorpos = new_cursor
+  --           debounced()
+  --         end
+  --       end
+  --     end)()
+  --   }
+  -- })
   if client and client.resolved_capabilities.document_highlight then
     r17.augroup("LspCursorCommands", {
       {
         events = {"CursorHold"},
         targets = {"<buffer>"},
-        command = "lua vim.lsp.buf.document_highlight()"
+        command = "lua vim.lsp.buf.document_highlight()",
       },
       {
         events = {"CursorHoldI"},
         targets = {"<buffer>"},
-        command = "lua vim.lsp.buf.document_highlight()"
+        command = "lua vim.lsp.buf.document_highlight()",
       },
       {
         events = {"CursorMoved"},
         targets = {"<buffer>"},
-        command = "lua vim.lsp.buf.clear_references()"
-      }
+        command = "lua vim.lsp.buf.clear_references()",
+      },
     })
   end
   r17.augroup("NvimLightbulb", {
@@ -76,10 +72,10 @@ function r17.lsp.autocmds(client, _)
       command = function()
         require("nvim-lightbulb").update_lightbulb {
           sign = {enabled = false},
-          virtual_text = {enabled = true}
+          virtual_text = {enabled = true},
         }
-      end
-    }
+      end,
+    },
   })
   if client and client.resolved_capabilities.document_formatting then
     -- format on save
@@ -87,12 +83,12 @@ function r17.lsp.autocmds(client, _)
       {
         events = {"BufWritePre"},
         targets = {"<buffer>"},
-        command = "lua vim.lsp.buf.formatting_sync(nil, 2000)"
+        command = "lua vim.lsp.buf.formatting_sync(nil, 2000)",
         -- command = function()
         --   vim.lsp.buf.formatting(vim.g[string.format("format_options_%s",
         --                                              vim.bo.filetype)] or {})
         -- end
-      }
+      },
     })
   end
 end
@@ -103,10 +99,10 @@ function r17.lsp.saga(bufnr)
   saga.init_lsp_saga {
     use_saga_diagnostic_sign = false,
     code_action_icon = '💡',
-    code_action_prompt = {enable = false, sign = false, virtual_text = false}
+    code_action_prompt = {enable = false, sign = false, virtual_text = false},
   }
   local nnoremap, vnoremap, opts = r17.nnoremap, r17.vnoremap,
-                                   {buffer = bufnr, check_existing = true}
+    {buffer = bufnr, check_existing = true}
   nnoremap("gd", ":Lspsaga lsp_finder<CR>", opts)
   nnoremap("gsh", ":Lspsaga signature_help<CR>", opts)
   nnoremap("gh", ":Lspsaga preview_definition<CR>", opts)
@@ -121,7 +117,7 @@ end
 
 function r17.lsp.mappings(bufnr, client)
   local nnoremap, vnoremap, opts = r17.nnoremap, r17.vnoremap,
-                                   {buffer = bufnr, check_existing = true}
+    {buffer = bufnr, check_existing = true}
   if client.resolved_capabilities.implementation then
     nnoremap("gi", vim.lsp.buf.implementation, opts)
   end
@@ -167,7 +163,7 @@ vim.lsp.protocol.CompletionItemKind = {
   " ﳤ  (Struct)",
   " 鬒 (Event)",
   "   (Operator)",
-  "   (TypeParameter)"
+  "   (TypeParameter)",
 }
 
 command {
@@ -175,15 +171,15 @@ command {
   function()
     local path = vim.lsp.get_log_path()
     vim.cmd("edit " .. path)
-  end
+  end,
 }
 
 command {
   "LspFormat",
   function()
     vim.lsp.buf.formatting(vim.g[string.format("format_options_%s",
-                                               vim.bo.filetype)] or {})
-  end
+      vim.bo.filetype)] or {})
+  end,
 }
 
 command {
@@ -191,7 +187,7 @@ command {
   function()
     vim.lsp.stop_client(vim.lsp.get_active_clients())
     vim.cmd [[edit]]
-  end
+  end,
 }
 
 command {
@@ -201,31 +197,31 @@ command {
     virtual_text.show = true
     virtual_text.show = not virtual_text.show
     vim.lsp.diagnostic.display(vim.lsp.diagnostic.get(0, 1), 0, 1,
-                               {virtual_text = virtual_text.show})
-  end
+      {virtual_text = virtual_text.show})
+  end,
 }
 
 vim.fn.sign_define({
   {
     name = "LspDiagnosticsSignError",
     text = "",
-    texthl = "LspDiagnosticsSignError"
+    texthl = "LspDiagnosticsSignError",
   },
   {
     name = "LspDiagnosticsSignWarning",
     text = "",
-    texthl = "LspDiagnosticsSignWarning"
+    texthl = "LspDiagnosticsSignWarning",
   },
   {
     name = "LspDiagnosticsSignHint",
     text = "",
-    texthl = "LspDiagnosticsSignHint"
+    texthl = "LspDiagnosticsSignHint",
   },
   {
     name = "LspDiagnosticsSignInformation",
     text = "",
-    texthl = "LspDiagnosticsSignInformation"
-  }
+    texthl = "LspDiagnosticsSignInformation",
+  },
 })
 
 require'modules.lang.lsp.servers'.setup()

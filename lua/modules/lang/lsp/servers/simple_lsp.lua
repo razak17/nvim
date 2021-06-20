@@ -6,7 +6,6 @@ local simple_lsp = {
   html = "vscode-html-language-server",
   dockerls = "docker-langserver",
   graphql = "graphql-lsp",
-  svelte = "svelteserver",
   vimls = "vim-language-server",
   yamlls = "yaml-language-server",
 }

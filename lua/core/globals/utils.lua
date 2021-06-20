@@ -15,12 +15,8 @@ function r17._execute(id, args) r17._store[id](args) end
 function r17.echomsg(msg, hl)
   hl = hl or "Title"
   local msg_type = type(msg)
-  if msg_type ~= "string" or "table" then
-    return
-  end
-  if msg_type == "string" then
-    msg = {{msg, hl}}
-  end
+  if msg_type ~= "string" or "table" then return end
+  if msg_type == "string" then msg = {{msg, hl}} end
   vim.api.nvim_echo(msg, true, {})
 end
 
@@ -40,11 +36,13 @@ function r17.command(args)
   local nargs = args.nargs or 0
   local name = args[1]
   local rhs = args[2]
-  local types = (args.types and type(args.types) == "table") and table.concat(args.types, " ") or ""
+  local types = (args.types and type(args.types) == "table") and
+                  table.concat(args.types, " ") or ""
 
   if type(rhs) == "function" then
     local fn_id = r17._create(rhs)
-    rhs = string.format("lua r17._execute(%d%s)", fn_id, nargs > 0 and ", <f-args>" or "")
+    rhs = string.format("lua r17._execute(%d%s)", fn_id,
+      nargs > 0 and ", <f-args>" or "")
   end
 
   vim.cmd(string.format("command! -nargs=%s %s %s %s", nargs, types, name, rhs))
@@ -60,8 +58,8 @@ function r17.augroup(name, commands)
       command = fmt("lua r17._execute(%s)", fn_id)
     end
     vim.cmd(string.format("autocmd %s %s %s %s", table.concat(c.events, ","),
-                          table.concat(c.targets or {}, ","), table.concat(c.modifiers or {}, " "),
-                          command))
+      table.concat(c.targets or {}, ","), table.concat(c.modifiers or {}, " "),
+      command))
   end
   vim.cmd("augroup END")
 end
@@ -76,13 +74,9 @@ local function has_map(lhs, mode)
 end
 
 local function validate_opts(opts)
-  if not opts then
-    return true
-  end
+  if not opts then return true end
 
-  if type(opts) ~= "table" then
-    return false, "opts should be a table"
-  end
+  if type(opts) ~= "table" then return false, "opts should be a table" end
 
   if opts.buffer and type(opts.buffer) ~= "number" then
     return false, "The buffer key should be a number"
@@ -100,9 +94,9 @@ local function validate_mappings(lhs, rhs, opts)
         local arg_type = type(a)
         return arg_type == "string" or arg_type == "function"
       end,
-      "right hand side"
+      "right hand side",
     },
-    opts = {opts, validate_opts, "mapping options are incorrect"}
+    opts = {opts, validate_opts, "mapping options are incorrect"},
   }
 end
 
@@ -144,7 +138,8 @@ local function make_mapper(mode, o)
       _opts = vim.tbl_extend("force", _opts, parent_opts)
       api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, _opts)
     else
-      api.nvim_set_keymap(mode, lhs, rhs, vim.tbl_extend("keep", _opts, parent_opts))
+      api.nvim_set_keymap(mode, lhs, rhs,
+        vim.tbl_extend("keep", _opts, parent_opts))
     end
   end
 end
@@ -194,8 +189,11 @@ local function get_last_notification()
 end
 
 local notification_hl = setmetatable({
-  [2] = {"FloatBorder:NvimNotificationError", "NormalFloat:NvimNotificationError"},
-  [1] = {"FloatBorder:NvimNotificationInfo", "NormalFloat:NvimNotificationInfo"}
+  [2] = {
+    "FloatBorder:NvimNotificationError",
+    "NormalFloat:NvimNotificationError",
+  },
+  [1] = {"FloatBorder:NvimNotificationInfo", "NormalFloat:NvimNotificationInfo"},
 }, {__index = function(t, _) return t[1] end})
 
 ---Utility function to create a notification message
@@ -213,15 +211,14 @@ function r17.notify(lines, opts)
     line = "  " .. line .. "  "
     lines[i] = line
     local length = #line
-    if not width or width < length then
-      width = length
-    end
+    if not width or width < length then width = length end
   end
   local buf = api.nvim_create_buf(false, true)
   api.nvim_buf_set_lines(buf, 0, -1, false, lines)
   local height = #lines
   local prev = get_last_notification()
-  local row = prev and prev.row[false] - prev.height - 2 or vim.o.lines - vim.o.cmdheight - 3
+  local row = prev and prev.row[false] - prev.height - 2 or vim.o.lines -
+                vim.o.cmdheight - 3
   local win = api.nvim_open_win(buf, false, {
     relative = "editor",
     width = width + 2,
@@ -231,7 +228,7 @@ function r17.notify(lines, opts)
     anchor = "SE",
     style = "minimal",
     focusable = false,
-    border = {"┌", "─", "┐", "│", "┘", "─", "└", "│"}
+    border = {"┌", "─", "┐", "│", "┘", "─", "└", "│"},
   })
 
   local level_hl = notification_hl[level]
@@ -243,9 +240,7 @@ function r17.notify(lines, opts)
   vim.wo[win].wrap = true
   if timeout then
     vim.defer_fn(function()
-      if api.nvim_win_is_valid(win) then
-        api.nvim_win_close(win, true)
-      end
+      if api.nvim_win_is_valid(win) then api.nvim_win_close(win, true) end
     end, timeout)
   end
 end
