@@ -15,13 +15,13 @@ lang['neovim/nvim-lspconfig'] = {
   }
 }
 
-lang['simrat39/symbols-outline.nvim'] = {
-  event = 'BufReadPre',
-  cmd = 'SymbolsOutline',
-  config = function()
-    require("symbols-outline").setup {show_guides = true}
-  end
-}
+-- lang['simrat39/symbols-outline.nvim'] = {
+--   event = 'BufReadPre',
+--   cmd = 'SymbolsOutline',
+--   config = function()
+--     require("symbols-outline").setup {show_guides = true}
+--   end
+-- }
 
 lang['folke/trouble.nvim'] = {
   event = 'BufReadPre',

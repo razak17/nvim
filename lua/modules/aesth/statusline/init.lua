@@ -51,7 +51,7 @@ gls.left[2] = {
         t = colors.red
       }
       Execute('hi GalaxyViMode guifg=' .. mode_color[Fn.mode()])
-      return ' '
+      return '  '
     end,
     highlight = {colors.red, colors.bg, 'bold'}
   }
@@ -198,7 +198,7 @@ gls.right[5] = {
     provider = 'LineColumn',
     condition = function() return vim.bo.filetype ~= 'dashboard' end,
     highlight = {colors.fg, colors.bg},
-    separator = ' |',
+    separator = ' | ',
     separator_highlight = {colors.section_bg, colors.bg}
   }
 }
@@ -206,9 +206,9 @@ gls.right[6] = {
   PerCent = {
     provider = 'LinePercent',
     condition = function() return vim.bo.filetype ~= 'dashboard' end,
-    separator = '|',
+    highlight = {colors.fg, colors.bg},
+    separator = ' |',
     separator_highlight = {colors.section_bg, colors.bg},
-    highlight = {colors.fg, colors.bg}
   }
 }
 

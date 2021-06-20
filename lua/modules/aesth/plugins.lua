@@ -2,7 +2,6 @@ local conf = require('modules.aesth.config')
 local aesth = {}
 
 aesth['razak17/zephyr-nvim'] = {
-  event = {'BufRead', 'BufNewFile'},
   config = [[vim.cmd('colo zephyr')]]
 }
 

@@ -1,15 +1,20 @@
 local completion = {}
 local conf = require 'modules.completion.config'
 
+completion['rafamadriz/friendly-snippets'] = {event = 'InsertEnter'}
+
+completion['liuchengxu/vim-which-key'] = {event = 'VimEnter', config = conf.which_key}
+
 completion['hrsh7th/nvim-compe'] = {
   event = 'InsertEnter',
   config = conf.nvim_compe
 }
 
-completion['liuchengxu/vim-which-key'] =
-    {event = 'VimEnter', config = conf.which_key}
-
-completion['rafamadriz/friendly-snippets'] = {event = 'InsertEnter'}
+completion['mattn/emmet-vim'] = {
+  event = 'InsertEnter',
+  ft = {'html', 'css'},
+  config = conf.emmet
+}
 
 completion['hrsh7th/vim-vsnip'] = {
   event = 'InsertCharPre',
@@ -17,12 +22,6 @@ completion['hrsh7th/vim-vsnip'] = {
     local G = require 'core.globals'
     vim.g.vsnip_snippet_dir = G.vim_path .. "/snippets"
   end
-}
-
-completion['mattn/emmet-vim'] = {
-  event = 'InsertEnter',
-  ft = {'html', 'css'},
-  config = conf.emmet
 }
 
 completion['nvim-telescope/telescope.nvim'] =

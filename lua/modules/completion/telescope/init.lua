@@ -19,7 +19,9 @@ require('telescope').setup({
       "node_modules/*",
       "dist/*",
       ".git/*",
-      ".venv/*"
+      "venv/*",
+      ".venv/*",
+      "__pycache__/*",
     },
     borderchars = {'─', '│', '─', '│', '┌', '┐', '┘', '└'},
     file_sorter = require'telescope.sorters'.get_fzy_sorter,
@@ -31,14 +33,14 @@ require('telescope').setup({
     extensions = {
       fzy_native = {
         override_generic_sorter = false,
-        override_file_sorter = true
+        override_file_sorter = true,
       },
       media_files = {
         filetypes = {"png", "webp", "jpg", "jpeg"},
-        find_cmd = "rg"
-      }
-    }
-  }
+        find_cmd = "rg",
+      },
+    },
+  },
 })
 
 require'telescope'.load_extension('media_files')
