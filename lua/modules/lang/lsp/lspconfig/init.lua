@@ -25,27 +25,27 @@ function r17.lsp.autocmds(client, _)
       command = [[lua vim.lsp.diagnostic.set_loclist({open_loclist = false})]],
     },
   })
-  -- r17.augroup("HoverDiagnostics", {
-  --   {
-  --     events = {"CursorHold"},
-  --     targets = {"<buffer>"},
-  --     command = (function()
-  --       vim.cmd [[packadd lspsaga.nvim]]
-  --       local debounced = debounce(
-  --                             require'lspsaga.diagnostic'.show_cursor_diagnostics,
-  --                             30)
-  --       local cursorpos = get_cursor_pos()
-  --       return function()
-  --         local new_cursor = get_cursor_pos()
-  --         if (new_cursor[1] ~= 1 and new_cursor[2] ~= 1) and
-  --             (new_cursor[1] ~= cursorpos[1] or new_cursor[2] ~= cursorpos[2]) then
-  --           cursorpos = new_cursor
-  --           debounced()
-  --         end
-  --       end
-  --     end)()
-  --   }
-  -- })
+  r17.augroup("HoverDiagnostics", {
+    {
+      events = {"CursorHold"},
+      targets = {"<buffer>"},
+      command = (function()
+        vim.cmd [[packadd lspsaga.nvim]]
+        local debounced = debounce(
+                              require'lspsaga.diagnostic'.show_cursor_diagnostics,
+                              30)
+        local cursorpos = get_cursor_pos()
+        return function()
+          local new_cursor = get_cursor_pos()
+          if (new_cursor[1] ~= 1 and new_cursor[2] ~= 1) and
+              (new_cursor[1] ~= cursorpos[1] or new_cursor[2] ~= cursorpos[2]) then
+            cursorpos = new_cursor
+            debounced()
+          end
+        end
+      end)()
+    }
+  })
   if client and client.resolved_capabilities.document_highlight then
     r17.augroup("LspCursorCommands", {
       {
@@ -82,12 +82,8 @@ function r17.lsp.autocmds(client, _)
     r17.augroup("Format", {
       {
         events = {"BufWritePre"},
-        targets = {"<buffer>"},
-        command = "lua vim.lsp.buf.formatting_sync(nil, 2000)",
-        -- command = function()
-        --   vim.lsp.buf.formatting(vim.g[string.format("format_options_%s",
-        --                                              vim.bo.filetype)] or {})
-        -- end
+        targets = {"*." .. vim.fn.expand('%:e')},
+        command = "lua vim.lsp.buf.formatting_sync(nil, 1000)",
       },
     })
   end

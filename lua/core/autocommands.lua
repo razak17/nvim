@@ -112,6 +112,10 @@ r17.augroup("TextYankHighlight", {
   },
 })
 
+r17.augroup("FormatOptions", {
+  {events = {"BufEnter"}, targets = {"*"}, command = "set formatoptions-=cro"},
+})
+
 r17.augroup("CustomColorColumn", {
   {
     events = {"FileType"},

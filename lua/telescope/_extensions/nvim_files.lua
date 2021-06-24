@@ -15,16 +15,22 @@ nvim_config.commits = function()
 end
 
 nvim_config.bcommits = function()
-  builtin.git_bcommits({prompt_title = 'Git bcommits for nvim config', cwd = cwd})
+  builtin.git_bcommits({
+    prompt_title = 'Git bcommits for nvim config',
+    cwd = cwd,
+  })
 end
 
 nvim_config.branches = function()
-  builtin.git_branches({prompt_title = 'Git branches for nvim config', cwd = cwd})
+  builtin.git_branches({
+    prompt_title = 'Git branches for nvim config',
+    cwd = cwd,
+  })
 end
 
 nvim_config.status = function()
   builtin.git_status({prompt_title = 'Git status for nvim config', cwd = cwd})
 end
 
-return require'telescope'.register_extension {exports = nvim_config}
+-- return require'telescope'.register_extension {exports = nvim_config}
 

@@ -22,5 +22,5 @@ dots_config.status = function()
   builtin.git_status({prompt_title = 'Git status for dotfiles', cwd = cwd})
 end
 
-return require'telescope'.register_extension {exports = dots_config}
+-- return require'telescope'.register_extension {exports = dots_config}
 

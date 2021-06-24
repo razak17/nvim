@@ -2,7 +2,7 @@ local conf = require('modules.editor.config')
 
 local editor = {}
 
-editor['rhysd/accelerated-jk'] = {opt = true}
+editor['rhysd/accelerated-jk'] = {opt = true, event = {'VimEnter'}}
 
 editor['monaqa/dial.nvim'] = {event = 'BufReadPre'}
 
@@ -30,7 +30,7 @@ editor['norcalli/nvim-colorizer.lua'] = {
 }
 
 editor['Raimondi/delimitMate'] = {
-  event = 'InsertEnter',
+  event = {'BufReadPre', 'BufNewFile'},
   config = conf.delimimate,
 }
 
@@ -56,10 +56,15 @@ editor['arecarn/vim-fold-cycle'] = {
 }
 
 editor['b3nj5m1n/kommentary'] = {
-  event = {'BufReadPre', 'BufNewFile'},
   config = function()
     require('kommentary.config').configure_language('default', {
       prefer_single_line_comments = true,
+    })
+    require('kommentary.config').configure_language('zsh', {
+      single_line_comment_string = "#",
+    })
+    require('kommentary.config').configure_language('sh', {
+      single_line_comment_string = "#",
     })
   end,
 }

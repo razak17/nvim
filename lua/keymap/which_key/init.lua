@@ -6,9 +6,9 @@ g.which_key_use_floating_win = 0
 g.which_key_display_names = {['<CR>'] = '↵', ['<TAB>'] = '⇆'}
 
 api.nvim_set_keymap('n', '<leader>', ':<c-u> :WhichKey "<space>"<CR>',
-                    {noremap = true, silent = true})
+  {noremap = true, silent = true})
 api.nvim_set_keymap('v', '<leader>', ':<c-u> :WhichKeyVisual "<space>"<CR>',
-                    {noremap = true, silent = true})
+  {noremap = true, silent = true})
 fn['which_key#register']('<space>', 'g:which_key_map')
 
 g.which_key_map = {
@@ -38,7 +38,7 @@ g.which_key_map = {
       l = 'under curosr',
       r = 'recursive cursor',
       o = 'open all',
-      x = 'close all'
+      x = 'close all',
     },
     F = 'resize 90%',
     h = 'horizontal split',
@@ -51,7 +51,7 @@ g.which_key_map = {
     V = 'select all',
     x = 'save and exit',
     Y = 'yank all',
-    z = 'force exit'
+    z = 'force exit',
   },
   b = {
     name = '+Buffer',
@@ -59,7 +59,7 @@ g.which_key_map = {
     b = 'move previous',
     d = {name = '+Delete', A = 'all', h = 'to left', x = 'all except current'},
 
-    s = 'word'
+    s = 'word',
   },
   c = {
     name = '+Command',
@@ -69,14 +69,19 @@ g.which_key_map = {
     f = 'nvim-tree find',
     r = 'nvim-tree refresh',
     s = 'edit snippet',
-    v = 'nvim-tree toggle'
+    v = 'nvim-tree toggle',
   },
   d = {
     name = '+Debug',
     c = 'continue',
     r = {name = '+Repl', o = 'open', l = 'run last'},
     s = {name = '+Step', i = 'into', o = 'out', v = 'over'},
-    b = {name = '+Breakpoints', l = 'set log point', s = 'set condition', t = 'toggle'}
+    b = {
+      name = '+Breakpoints',
+      l = 'set log point',
+      s = 'set condition',
+      t = 'toggle',
+    },
   },
   e = {
     name = '+Fterm',
@@ -86,7 +91,7 @@ g.which_key_map = {
     N = 'new',
     p = 'python',
     r = 'ranger',
-    v = 'open vimrc in vertical split'
+    v = 'open vimrc in vertical split',
   },
   E = 'Inspect token',
   f = {
@@ -107,37 +112,49 @@ g.which_key_map = {
       r = 'registers',
       T = 'treesitter',
       v = 'vim options',
-      z = 'current file fuzzy find'
+      z = 'current file fuzzy find',
     },
-    d = {
-      name = '+Dotfiles',
-      b = 'branches',
-      B = 'bcommits',
-      c = 'commits',
-      f = 'git files',
-      r = 'recent files',
-      s = 'status'
+    -- d = {
+    --   name = '+Dotfiles',
+    --   b = 'branches',
+    --   B = 'bcommits',
+    --   c = 'commits',
+    --   f = 'git files',
+    --   r = 'recent files',
+    --   s = 'status'
+    -- },
+    e = {
+      name = '+Extensions',
+      m = 'media files',
+      b = 'change background',
+      p = 'project',
     },
-    e = {name = '+Extensions', m = 'media files', b = 'change background', p = 'project'},
     f = 'find files',
     l = {name = '+Live', g = 'grep', w = 'current word', e = 'prompt'},
-    r = {
-      name = '+Config',
-      b = 'branches',
-      B = 'bcommits',
-      c = 'commits',
-      f = 'nvim files',
-      r = 'recent files',
-      s = 'status'
-    },
+    -- r = {
+    --   name = '+Config',
+    --   b = 'branches',
+    --   B = 'bcommits',
+    --   c = 'commits',
+    --   f = 'nvim files',
+    --   r = 'recent files',
+    --   s = 'status'
+    -- },
     v = {
       name = '+Lsp',
       a = 'code action',
       A = 'range code action',
       r = 'references',
-      s = {name = '+Symbols', d = 'document', w = 'workspace'}
+      s = {name = '+Symbols', d = 'document', w = 'workspace'},
     },
-    g = {name = '+Git', b = 'branches', c = 'commits', C = 'bcommits', f = 'files', s = 'status'}
+    g = {
+      name = '+Git',
+      b = 'branches',
+      c = 'commits',
+      C = 'bcommits',
+      f = 'files',
+      s = 'status',
+    },
   },
   F = {
     name = '+Far',
@@ -145,7 +162,7 @@ g.which_key_map = {
     d = 'do',
     i = 'search iteratively',
     r = 'replace in Project',
-    z = 'undo'
+    z = 'undo',
   },
   -- g = {
   --   name = '+Git',
@@ -173,15 +190,32 @@ g.which_key_map = {
     r = 'reset hunk',
     s = 'stage hunk',
     t = 'toggle line blame',
-    u = 'undo stage hunk'
+    u = 'undo stage hunk',
   },
   I = {name = '+Info', c = 'check health', e = 'ts info', u = 'ts update'},
   l = {name = "+LocList", i = 'empty', s = 'toggle'},
-  L = {name = '+Lsp_utils', i = 'info', l = 'log', r = 'restart'},
-  m = {name = '+Mark', e = 'toggle', b = 'previous mark', k = 'next mark', w = 'where_am_i'},
-  n = {name = "+New", f = "open file in same dir", s = "create new file in same dir"},
+  L = {name = '+LspUtils', i = 'info', l = 'log', r = 'restart'},
+  m = {
+    name = '+Mark',
+    e = 'toggle',
+    b = 'previous mark',
+    k = 'next mark',
+    w = 'where_am_i',
+  },
+  n = {
+    name = "+New",
+    f = "open file in same dir",
+    s = "create new file in same dir",
+  },
   o = {name = '+Toggle'},
-  P = {name = '+Plug', c = 'compile', C = 'clean', i = 'install', s = 'sync', U = 'update'},
+  P = {
+    name = '+Plug',
+    c = 'compile',
+    C = 'clean',
+    i = 'install',
+    s = 'sync',
+    U = 'update',
+  },
   s = {
     name = '+Tab',
     b = 'previous',
@@ -191,14 +225,19 @@ g.which_key_map = {
     K = 'last',
     n = 'next',
     L = 'move right',
-    N = 'new'
+    N = 'new',
   },
   S = {name = '+Session', l = 'load Session', s = 'save Session'},
   v = {
     name = '+Code',
     a = 'code action',
     A = 'range code action',
-    d = {name = '+Diagnostics', b = 'goto previous', l = 'current line', n = 'goto next'},
+    d = {
+      name = '+Diagnostics',
+      b = 'goto previous',
+      l = 'current line',
+      n = 'goto next',
+    },
     D = "DOGe",
     f = 'format',
     l = 'set loc list',
@@ -212,16 +251,20 @@ g.which_key_map = {
       e = 'quickfix',
       l = 'loclist',
       r = 'references',
-      w = 'workspace'
-    }
+      w = 'workspace',
+    },
   },
-  w = {name = "+Orientation", h = "change to horizontal", v = "change to vertical"}
+  w = {
+    name = "+Orientation",
+    h = "change to horizontal",
+    v = "change to vertical",
+  },
 }
 
 r17.augroup("WhichKeyMode", {
   {
     events = {"FileType"},
     targets = {"which_key"},
-    command = "set laststatus=0 noshowmode | autocmd BufLeave <buffer> set laststatus=2"
-  }
+    command = "set laststatus=0 noshowmode | autocmd BufLeave <buffer> set laststatus=2",
+  },
 })

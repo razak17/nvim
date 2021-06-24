@@ -20,7 +20,6 @@ function M.setup()
   require'lspconfig'.efm.setup {
     capabilities = require'modules.lang.lsp.servers'.capabilities,
     on_attach = require'modules.lang.lsp.servers'.enhance_attach,
-    root_dir = require'lspconfig.util'.root_pattern(vim.fn.getcwd()),
     init_options = {documentFormatting = true, codeAction = false},
     filetypes = {
       "lua",

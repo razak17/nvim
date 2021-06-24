@@ -33,19 +33,21 @@ inoremap("<C-e>", "compe#close('<C-e>')", opts)
 inoremap("<C-f>", "compe#scroll({ 'delta': +4 })", opts)
 inoremap("<C-d>", "compe#scroll({ 'delta': -4 })", opts)
 imap("<CR>", [[compe#confirm({ 'keys': "\<Plug>delimitMateCR", 'mode': '' })]],
-     {noremap = true; expr = true})
+  {noremap = true, expr = true})
 -- vsnip
 xmap("<C-x>", "<Plug>(vsnip-cut-text)")
 xmap("<C-l>", "<Plug>(vsnip-select-text)")
 imap("<Tab>", "v:lua.__tab__complete()", opts)
 imap("<S-Tab>", "v:lua.__s_tab__complete()", opts)
 nnoremap('<Leader>cs', ':VsnipOpen<CR> 1<CR><CR>')
-imap("<C-l>", "vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'", opts)
-smap("<C-l>", "vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'", opts)
+imap("<C-l>", "vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'",
+  opts)
+smap("<C-l>", "vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'",
+  opts)
 
 -- accelerated jk
-nmap("n", 'v:lua.__enhance_jk_move("n")', {silent = true; expr = true})
-nmap("k", 'v:lua.__enhance_jk_move("k")', {silent = true; expr = true})
+nmap("n", 'v:lua.__enhance_jk_move("n")', {silent = true, expr = true})
+nmap("k", 'v:lua.__enhance_jk_move("k")', {silent = true, expr = true})
 -- vim-eft
 nmap(";", "v:lua.__enhance_ft_move(';')", {expr = true})
 xmap(";", "v:lua.__enhance_ft_move(';')", {expr = true})
@@ -117,8 +119,8 @@ nnoremap('<Leader>PS', ':PlugStatus<CR>')
 nnoremap('<Leader>PU', ':PlugUpdate<CR>')
 
 -- FTerm
-nnoremap('<A-i>', '<CMD>lua require("FTerm").toggle()<CR>')
-tnoremap('<A-i>', '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>')
+nnoremap('<F12>', '<CMD>lua require("FTerm").toggle()<CR>')
+tnoremap('<F12>', '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>')
 nnoremap('<leader>eN', '<CMD>lua require("FTerm").open()<CR>')
 map('<leader>en', function() __fterm_cmd("node") end)
 map('<leader>eg', function() __fterm_cmd("gitui") end)
@@ -140,9 +142,9 @@ nnoremap('<leader>dro', '<cmd>lua require"dap".repl.open()<CR>')
 nnoremap('<leader>drl', '<cmd>lua require"dap".repl.run_last()<CR>')
 nnoremap('<leader>dbt', '<cmd>lua require"dap".toggle_breakpoint()<CR>')
 nnoremap('<leader>dbl',
-         '<cmd>lua require"dap".set_breakpoint(nil, nil, vim.fn.input("Log point message: "))<CR>')
+  '<cmd>lua require"dap".set_breakpoint(nil, nil, vim.fn.input("Log point message: "))<CR>')
 nnoremap('<leader>dbs',
-         '<cmd>lua require"dap".set_breakpoint(vim.fn.input("Breakpoint condition: "))<CR>')
+  '<cmd>lua require"dap".set_breakpoint(vim.fn.input("Breakpoint condition: "))<CR>')
 
 -- Telescope
 nnoremap('<Leader>ff', ':Telescope find_files<CR>')
@@ -178,18 +180,18 @@ nnoremap('<Leader>fgf', ':Telescope git_files<CR>')
 nnoremap('<Leader>fgs', ':Telescope git_status<CR>')
 
 -- Telescope extensions
-nnoremap('<Leader>frf', ':Telescope nvim_files files<CR>')
-nnoremap('<Leader>frg', ':Telescope nvim_files git_files<CR>')
-nnoremap('<Leader>frB', ':Telescope nvim_files bcommits<CR>')
-nnoremap('<Leader>frc', ':Telescope nvim_files commits<CR>')
-nnoremap('<Leader>frb', ':Telescope nvim_files branches<CR>')
-nnoremap('<Leader>frs', ':Telescope nvim_files status<CR>')
+-- nnoremap('<Leader>frf', ':Telescope nvim_files files<CR>')
+-- nnoremap('<Leader>frg', ':Telescope nvim_files git_files<CR>')
+-- nnoremap('<Leader>frB', ':Telescope nvim_files bcommits<CR>')
+-- nnoremap('<Leader>frc', ':Telescope nvim_files commits<CR>')
+-- nnoremap('<Leader>frb', ':Telescope nvim_files branches<CR>')
+-- nnoremap('<Leader>frs', ':Telescope nvim_files status<CR>')
 
-nnoremap('<Leader>fdf', ':Telescope dotfiles git_files<CR>')
-nnoremap('<Leader>fdB', ':Telescope dotfiles bcommits<CR>')
-nnoremap('<Leader>fdc', ':Telescope dotfiles commits<CR>')
-nnoremap('<Leader>fdb', ':Telescope dotfiles branches<CR>')
-nnoremap('<Leader>fds', ':Telescope dotfiles status<CR>')
+-- nnoremap('<Leader>fdf', ':Telescope dotfiles git_files<CR>')
+-- nnoremap('<Leader>fdB', ':Telescope dotfiles bcommits<CR>')
+-- nnoremap('<Leader>fdc', ':Telescope dotfiles commits<CR>')
+-- nnoremap('<Leader>fdb', ':Telescope dotfiles branches<CR>')
+-- nnoremap('<Leader>fds', ':Telescope dotfiles status<CR>')
 
 nnoremap('<Leader>fem', ':Telescope media_files<CR>')
 nnoremap('<leader>fep', ':Telescope project<CR>')

@@ -11,8 +11,8 @@ lang['neovim/nvim-lspconfig'] = {
   config = conf.nvim_lsp,
   requires = {
     {'kosayoda/nvim-lightbulb', event = "BufReadPre"},
-    {'glepnir/lspsaga.nvim', opt = true}
-  }
+    {'glepnir/lspsaga.nvim', opt = true},
+  },
 }
 
 -- lang['simrat39/symbols-outline.nvim'] = {
@@ -28,7 +28,7 @@ lang['folke/trouble.nvim'] = {
   requires = {{"kyazdani42/nvim-web-devicons", opt = true}},
   config = function()
     require("trouble").setup {use_lsp_diagnostic_signs = true}
-  end
+  end,
 }
 
 lang['kevinhwang91/nvim-bqf'] = {
@@ -46,33 +46,32 @@ lang['kevinhwang91/nvim-bqf'] = {
           '┐',
           '└',
           '┘',
-          '█'
-        }
-      }
+          '█',
+        },
+      },
     })
-  end
+  end,
 }
 
-lang['nvim-treesitter/nvim-treesitter'] =
+lang['nvim-treesitter/nvim-treesitter'] = {
+  event = 'BufRead',
+  after = 'telescope.nvim',
+  config = conf.nvim_treesitter,
+  requires = {
     {
-      event = 'BufRead',
-      after = 'telescope.nvim',
-      config = conf.nvim_treesitter,
-      requires = {
-        {
-          "nvim-treesitter/playground",
-          cmd = "TSPlaygroundToggle",
-          module = "nvim-treesitter-playground"
-        },
-        {'p00f/nvim-ts-rainbow', after = 'nvim-treesitter'},
-        {'andymass/vim-matchup', after = 'nvim-treesitter'},
-        {
-          'windwp/nvim-ts-autotag',
-          opt = true,
-          after = 'nvim-treesitter',
-          event = "InsertLeavePre"
-        }
-      }
-    }
+      "nvim-treesitter/playground",
+      cmd = "TSPlaygroundToggle",
+      module = "nvim-treesitter-playground",
+    },
+    {'p00f/nvim-ts-rainbow', after = 'nvim-treesitter'},
+    {'andymass/vim-matchup', after = 'nvim-treesitter'},
+    {
+      'windwp/nvim-ts-autotag',
+      opt = true,
+      after = 'nvim-treesitter',
+      event = "InsertLeavePre",
+    },
+  },
+}
 
 return lang

@@ -1,22 +1,19 @@
 local completion = {}
 local conf = require 'modules.completion.config'
 
+completion['liuchengxu/vim-which-key'] = {config = conf.which_key}
+
 completion['rafamadriz/friendly-snippets'] = {event = 'InsertEnter'}
-
-completion['liuchengxu/vim-which-key'] = {
-  event = 'VimEnter',
-  config = conf.which_key,
-}
-
-completion['hrsh7th/nvim-compe'] = {
-  event = 'InsertEnter',
-  config = conf.nvim_compe,
-}
 
 completion['mattn/emmet-vim'] = {event = 'InsertEnter', config = conf.emmet}
 
+completion['hrsh7th/nvim-compe'] = {
+  event = {'BufRead', 'BufNewFile'},
+  config = conf.nvim_compe,
+}
+
 completion['hrsh7th/vim-vsnip'] = {
-  event = 'InsertCharPre',
+  event = {'BufRead', 'BufNewFile'},
   config = function() vim.g.vsnip_snippet_dir = r17.__vim_path .. "/snippets" end,
 }
 
