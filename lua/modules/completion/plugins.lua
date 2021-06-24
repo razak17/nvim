@@ -1,7 +1,10 @@
 local completion = {}
 local conf = require 'modules.completion.config'
 
-completion['liuchengxu/vim-which-key'] = {config = conf.which_key}
+completion['liuchengxu/vim-which-key'] = {
+  event = 'VimEnter',
+  config = conf.which_key,
+}
 
 completion['rafamadriz/friendly-snippets'] = {event = 'InsertEnter'}
 
