@@ -13,17 +13,6 @@ local opts = {expr = true}
 
 require('keymap.config')
 
--- Dial
--- Making command here to reduce starrtup time
-vim.cmd([[
-  nmap <C-a> <Plug>(dial-increment)
-  nmap <C-x> <Plug>(dial-decrement)
-  vmap <C-a> <Plug>(dial-increment)
-  vmap <C-x> <Plug>(dial-decrement)
-  vmap g<C-a> <Plug>(dial-increment-additional)
-  vmap g<C-x> <Plug>(dial-decrement-additional)
-]])
-
 -- vim-fold-cycle
 nmap("<BS>", "<Plug>(fold-cycle-close)")
 
@@ -48,6 +37,7 @@ smap("<C-l>", "vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'",
 -- accelerated jk
 nmap("n", 'v:lua.__enhance_jk_move("n")', {silent = true, expr = true})
 nmap("k", 'v:lua.__enhance_jk_move("k")', {silent = true, expr = true})
+
 -- vim-eft
 nmap(";", "v:lua.__enhance_ft_move(';')", {expr = true})
 xmap(";", "v:lua.__enhance_ft_move(';')", {expr = true})

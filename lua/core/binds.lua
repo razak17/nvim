@@ -8,13 +8,10 @@ local cnoremap = r17.cnoremap
 
 local fn = vim.fn
 local api = vim.api
-local fmt = string.format
 
 -----------------------------------------------------------------------------//
 -- Functions
 -----------------------------------------------------------------------------//
-
-local ts_playground_loaded, ts_hl_info
 
 -----------------------------------------------------------------------------//
 -- CREDIT: @Cocophon
@@ -33,6 +30,7 @@ local function hi_chain(syn_id)
   return names
 end
 
+local ts_playground_loaded, ts_hl_info
 local function inspect_token()
   if not ts_playground_loaded then
     ts_playground_loaded, ts_hl_info = pcall(require,
@@ -412,4 +410,4 @@ r17.command {
   [[noautocmd silent! grep! 'TODO\|FIXME\|BUG\|HACK' | copen]],
 }
 
-r17.command {nargs = 1,"Rename", [[call v:lua.__Rename(<f-args>)]]}
+r17.command {nargs = 1, "Rename", [[call v:lua.__Rename(<f-args>)]]}
