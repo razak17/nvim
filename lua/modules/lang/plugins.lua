@@ -2,9 +2,9 @@ local conf = require('modules.lang.config')
 
 local lang = {}
 
-lang['mfussenegger/nvim-dap'] = {config = conf.dap}
+-- lang['mfussenegger/nvim-dap'] = {config = conf.dap}
 
-lang['rcarriga/nvim-dap-ui'] = {config = conf.dap_ui}
+-- lang['rcarriga/nvim-dap-ui'] = {config = conf.dap_ui}
 
 lang['neovim/nvim-lspconfig'] = {
   event = 'BufReadPre',

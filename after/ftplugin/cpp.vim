@@ -1,3 +1,3 @@
-noremap <F10> :lua require 'internal.quickrun'.RunC()<CR>
+noremap <F10> :lua require 'internal.quickrun'.RunCPP()<CR>
 
 

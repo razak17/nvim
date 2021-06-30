@@ -5,13 +5,13 @@ local conf = require('modules.tools.config')
 
 -- tools['mbbill/undotree'] = {cmd = "UndotreeToggle"}
 
-tools['npxbr/glow.nvim'] = {run = ":GlowInstall", branch = "main"}
+-- tools['npxbr/glow.nvim'] = {run = ":GlowInstall", branch = "main"}
 
 tools['numToStr/FTerm.nvim'] = {event = "VimEnter", config = conf.fterm}
 
 tools['MattesGroeger/vim-bookmarks'] = {
   event = {'BufReadPre', 'BufNewFile'},
-  config = conf.bookmarks
+  config = conf.bookmarks,
 }
 
 -- tools['diepm/vim-rest-console'] = {}

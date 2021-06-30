@@ -1,4 +1,4 @@
 # Nvim
 My personal nvim configuration
 
-![2021-04-26_002803_534018596](https://user-images.githubusercontent.com/52210954/116014770-73ff2080-a626-11eb-8def-67d157567dc7.png)
+![2021-06-30_151958_650211957](https://user-images.githubusercontent.com/52210954/123987706-f1446a00-d9b6-11eb-8dbb-5a00f72f639f.png)
