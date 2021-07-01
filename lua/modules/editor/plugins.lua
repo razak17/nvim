@@ -69,17 +69,7 @@ editor['arecarn/vim-fold-cycle'] = {
 
 editor['b3nj5m1n/kommentary'] = {
   event = {'BufReadPre', 'BufNewFile'},
-  config = function()
-    require('kommentary.config').configure_language('default', {
-      prefer_single_line_comments = true,
-    })
-    require('kommentary.config').configure_language('zsh', {
-      single_line_comment_string = "#",
-    })
-    require('kommentary.config').configure_language('sh', {
-      single_line_comment_string = "#",
-    })
-  end,
+  config = conf.kommentary,
 }
 
 editor['windwp/nvim-autopairs'] = {
