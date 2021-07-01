@@ -13,6 +13,11 @@ set('directory', G.cache_dir .. 'swap')
 set('backupdir', G.cache_dir .. 'backup')
 set('viewdir', G.cache_dir .. 'view')
 
+-- Folds
+set('foldmethod', 'expr')
+set('foldenable', true)
+set('foldlevelstart', 10)
+
 -- Timing
 set('timeout', true)
 set('ttimeout', true)
@@ -58,7 +63,7 @@ set('fileencoding', 'utf-8')
 set('list', true)
 set('number', false)
 set('signcolumn', 'yes')
--- opt('w', 'relativenumber', true)
+set('relativenumber', false)
 -- opt('w', 'listchars', 'tab:»•,nbsp:+,trail:·,precedes:,extends:')
 set('diffopt',
     'vertical,iwhite,hiddenoff,foldcolumn:0,context:4,algorithm:histogram,indent-heuristic')
@@ -143,4 +148,3 @@ set('autowrite', true)
 set('shada', "!,'300,<50,@100,s10,h")
 set('viewoptions', 'cursor,folds')
 set('sessionoptions', 'curdir,help,tabpages,winsize')
-vim.g.vimsyn_embed = "lPr" -- allow embedded syntax highlighting for lua,python and ruby
