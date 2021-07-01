@@ -3,15 +3,8 @@ local G = require 'core.global'
 
 local function set(key, value) vim.opt[key] = value end
 
-vim.cmd [[
-  syntax off
-  filetype plugin indent off
-  filetype off
-  set nospell
-]]
-
 vim.cmd('set iskeyword+=-')
-vim.go.t_Co = "256"
+-- vim.go.t_Co = "256"
 vim.g.vimsyn_embed = "lPr" -- allow embedded syntax highlighting for lua,python and ruby
 
 -- Neovim Directories
@@ -19,8 +12,6 @@ set('udir', G.cache_dir .. 'undodir')
 set('directory', G.cache_dir .. 'swap')
 set('backupdir', G.cache_dir .. 'backup')
 set('viewdir', G.cache_dir .. 'view')
-set('backupskip',
-  '/tmp/*,$TMPDIR/*,$TMP/*,$TEMP/*,*/shm/*,/private/var/*,.vault.vim')
 
 -- Timing
 set('timeout', true)
@@ -30,45 +21,24 @@ set('ttimeoutlen', 10)
 set('updatetime', 100)
 set('redrawtime', 1500)
 
--- Folds
-set('foldenable', true)
-set('foldlevelstart', 10)
-
--- Tabs and Indents
-set('breakindentopt', 'shift:2,min:20')
-set('cindent', true) -- Increase indent on line after opening brace
-set('smarttab', true) -- Tab insert blanks according to 'shiftwidth'
-set('autoindent', true) -- Use same indenting on new lines
-set('shiftround', true) -- Round indent to multiple of 'shiftwidth'
-set('tabstop', 2)
-set('shiftwidth', 2)
-set('textwidth', 80)
-set('softtabstop', -1)
-set('expandtab', true)
-set('smartindent', true)
-
 -- Editor UI Appearance
 set('ruler', true)
 set('laststatus', 0)
-set('showcmd', false)
+set('colorcolumn', '+1')
 set('showtabline', 0)
+set('cursorline', false)
+set('showcmd', false)
 set('showmode', false)
 set('showbreak', [[↪ ]])
+-- set('syntax', 'enable')
 set('encoding', 'utf-8')
 set('background', 'dark')
-set('colorcolumn', '+1')
-set('cursorline', true)
 set('cursorcolumn', false)
 set('termguicolors', true)
 set('shortmess', 'aoOTIcF')
 set('guicursor', 'n-v-c-sm:block,i-ci-ve:block,r-cr-o:block')
 set('sidescrolloff', 5)
 set('scrolloff', 2)
-set('more', false)
-set('title', true)
-set('titlelen', 70)
-set('titlestring', ' 🐬 %t %r %m')
-set('titleold', '%{fnamemodify(getcwd(), ":t")}')
 set('pumheight', 15)
 set('pumblend', 10)
 set('cmdheight', 2)
@@ -86,29 +56,32 @@ set('equalalways', false)
 set('numberwidth', 4)
 set('fileencoding', 'utf-8')
 set('list', true)
-set('number', true)
+set('number', false)
 set('signcolumn', 'yes')
-set('relativenumber', true)
-set('listchars', 'tab:»•,nbsp:+,trail:·,precedes:,extends:')
+-- opt('w', 'relativenumber', true)
+-- opt('w', 'listchars', 'tab:»•,nbsp:+,trail:·,precedes:,extends:')
 set('diffopt',
-  'vertical,iwhite,hiddenoff,foldcolumn:0,context:4,algorithm:histogram,indent-heuristic')
+    'vertical,iwhite,hiddenoff,foldcolumn:0,context:4,algorithm:histogram,indent-heuristic')
 set('fillchars',
-  'vert:▕,fold: ,eob: ,diff:─,msgsep: ,foldopen:▾,foldsep:│,foldclose:▸,eob: ')
+    'vert:▕,fold: ,eob: ,diff:─,msgsep: ,foldopen:▾,foldsep:│,foldclose:▸,eob: ')
 
 -- Behavior
-set('eadirection', 'hor')
 set('swapfile', false)
+set('backup', false)
 set('undofile', true)
+set('wrap', false)
+set('errorbells', false)
+set('writebackup', false)
+set('title', true)
+-- vim.o.titlestring = "%(%F%)%a\ -\ VIM%(\ %M%)"
+
+set('eadirection', 'hor')
 set('concealcursor', 'niv')
 set('conceallevel', 0)
-set('wrap', false)
 set('report', 2)
-set('backup', false)
 set('history', 2000)
-set('writebackup', false)
 set('undolevels', 1000)
 set('shell', '/bin/zsh')
-set('errorbells', false)
 set('splitbelow', true)
 set('splitright', true)
 set('mouse', 'a')
@@ -129,9 +102,22 @@ set('jumpoptions', 'stack') -- list of words that change the behavior of the jum
 set('virtualedit', 'block') -- list of words that change the behavior of the jumplist
 set('magic', true) -- list of words that change the behavior of the jumplist
 
+-- Tabs and Indents
+set('breakindentopt', 'shift:2,min:20')
+-- opt('o', 'cindent', true) -- Increase indent on line after opening brace
+set('smarttab', true) -- Tab insert blanks according to 'shiftwidth'
+set('autoindent', true) -- Use same indenting on new lines
+-- opt('o', 'shiftround', true) -- Round indent to multiple of 'shiftwidth'
+set('tabstop', 2) -- The number of spaces a tab is
+set('shiftwidth', 2) -- Number of spaces to use in auto(indent)
+set('textwidth', 104) -- Text width maximum chars before wrapping
+set('softtabstop', -1) -- Number of spaces to use in auto(indent)
+set('expandtab', true) -- Expand tabs to spaces.
+set('smartindent', true) -- Insert indents automatically
+
 -- Searching
 set('grepprg',
-  [[rg --hidden --glob "!.git" --no-heading --smart-case --vimgrep --follow $*]])
+    [[rg --hidden --glob "!.git" --no-heading --smart-case --vimgrep --follow $*]])
 set('grepformat', '%f:%l:%c:%m')
 set('smartcase', true)
 set('ignorecase', true)
@@ -145,13 +131,16 @@ set('matchtime', 1)
 
 -- Wildmenu
 set('wildignore',
-  '*.so,.git,.hg,.svn,.stversions,*.pyc,*.spl,*.o,*.out,*~,%*,*.jpg,*.jpeg,*.png,*.gif,*.zip,**/tmp/**,*.DS_Store,**/node_modules/**,**/bower_modules/**,*/.sass-cache/*,application/vendor/**,**/vendor/ckeditor/**,media/vendor/**,__pycache__,*.egg-info')
+    '*.so,.git,.hg,.svn,.stversions,*.pyc,*.spl,*.o,*.out,*~,%*,*.jpg,*.jpeg,*.png,*.gif,*.zip,**/tmp/**,*.DS_Store,**/node_modules/**,**/bower_modules/**,*/.sass-cache/*,application/vendor/**,**/vendor/ckeditor/**,media/vendor/**,__pycache__,*.egg-info')
 set('wildmode', 'longest,full')
 set('wildoptions', 'pum')
 set('wildignorecase', true)
 
 -- What to save for views and sessions:
 set('clipboard', 'unnamedplus')
+set('autoread', true)
+set('autowrite', true)
 set('shada', "!,'300,<50,@100,s10,h")
 set('viewoptions', 'cursor,folds')
 set('sessionoptions', 'curdir,help,tabpages,winsize')
+vim.g.vimsyn_embed = "lPr" -- allow embedded syntax highlighting for lua,python and ruby
