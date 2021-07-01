@@ -16,7 +16,6 @@ local load_core = function()
   plug.load_compile()
 
   require('keymap')
-  require('core.autocmd')
 end
 
 load_core()

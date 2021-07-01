@@ -1,7 +1,7 @@
 local completion = {}
 local conf = require 'modules.completion.config'
 
-completion['liuchengxu/vim-which-key'] = {event = 'VimEnter', config = conf.which_key}
+-- completion['liuchengxu/vim-which-key'] = {event = 'VimEnter', config = conf.which_key}
 
 completion['hrsh7th/nvim-compe'] = {
   event = 'InsertEnter',
