@@ -100,9 +100,9 @@ nmap <leader>bl :ls<CR>
 " toggles the paste mode
 " nmap <C-p> :set paste!<CR>
 " toggles word wrap
-nmap <C-w> :set wrap! linebreak<CR>
+nmap <leader>aW :set wrap! linebreak<CR>
 " toggles spell checking
-nmap <C-]> :set spell! spelllang=en_us<CR>
+nmap <leader>aL :set spell! spelllang=en_us<CR>
 " opens the last buffer
 " nnoremap Al <C-^>
 " adds a line of <
