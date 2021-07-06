@@ -74,11 +74,16 @@ set('fillchars',
 set('swapfile', false)
 set('backup', false)
 set('undofile', true)
-set('wrap', false)
 set('errorbells', false)
 set('writebackup', false)
 set('title', true)
 -- vim.o.titlestring = "%(%F%)%a\ -\ VIM%(\ %M%)"
+
+-- Text
+set('breakat', [[\ \	;:,!?]]) -- Long lines break chars
+set('linebreak', true)
+set('textwidth', 104) -- Text width maximum chars before wrapping
+set('wrap', true)
 
 set('eadirection', 'hor')
 set('concealcursor', 'niv')
@@ -90,14 +95,12 @@ set('shell', '/bin/zsh')
 set('splitbelow', true)
 set('splitright', true)
 set('mouse', 'a')
-set('linebreak', true)
 set('maxmempattern', 1300)
 set('inccommand', 'nosplit')
 set('switchbuf', 'useopen,usetab,vsplit')
 set('complete', '.,w,b,k') -- No wins, buffs, tags, include scanning
 set('completeopt', 'menu,menuone,noselect,noinsert')
 set('iskeyword', '@,48-57,_,192-255,-,#') -- Treat dash separated words as a word text object'
-set('breakat', [[\ \	;:,!?]]) -- Long lines break chars
 set('startofline', false) -- Cursor in same column for few commands
 set('whichwrap', 'h,l,<,>,[,],~') -- Move to following line on certain keys
 set('backspace', 'indent,eol,start') -- Intuitive backspacing in insert mode
@@ -115,7 +118,6 @@ set('autoindent', true) -- Use same indenting on new lines
 -- opt('o', 'shiftround', true) -- Round indent to multiple of 'shiftwidth'
 set('tabstop', 2) -- The number of spaces a tab is
 set('shiftwidth', 2) -- Number of spaces to use in auto(indent)
-set('textwidth', 104) -- Text width maximum chars before wrapping
 set('softtabstop', -1) -- Number of spaces to use in auto(indent)
 set('expandtab', true) -- Expand tabs to spaces.
 set('smartindent', true) -- Insert indents automatically
