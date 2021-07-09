@@ -2,6 +2,8 @@ _GlobalCallbacks = _GlobalCallbacks or {}
 
 _G.core = {_store = _GlobalCallbacks}
 
+require 'core.globals.config'
+
 local api = vim.api
 local fmt = string.format
 

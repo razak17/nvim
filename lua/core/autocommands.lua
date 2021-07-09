@@ -113,7 +113,7 @@ core.augroup("TextYankHighlight", {
 })
 
 core.augroup("FormatOptions", {
-  {events = {"BufEnter"}, targets = {"*"}, command = "set formatoptions-=cro"},
+  {events = {"BufWinEnter"}, targets = {"*"}, command = "set formatoptions-=cro"},
 })
 
 core.augroup("CustomColorColumn", {

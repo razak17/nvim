@@ -4,21 +4,9 @@ local editor = {}
 
 editor['rhysd/accelerated-jk'] = {opt = true, event = {'VimEnter'}}
 
-editor['monaqa/dial.nvim'] = {
-  event = 'BufReadPre',
-  config = function()
-    vim.cmd([[
-    nmap <C-a> <Plug>(dial-increment)
-    nmap <C-x> <Plug>(dial-decrement)
-    vmap <C-a> <Plug>(dial-increment)
-    vmap <C-x> <Plug>(dial-decrement)
-    vmap g<C-a> <Plug>(dial-increment-additional)
-    vmap g<C-x> <Plug>(dial-decrement-additional)
-  ]])
-  end,
-}
-
 editor['tpope/vim-surround'] = {event = {'BufReadPre', 'BufNewFile'}}
+
+editor['monaqa/dial.nvim'] = {event = 'BufReadPre', config = conf.dial}
 
 editor['junegunn/vim-easy-align'] = {event = {'BufReadPre', 'BufNewFile'}}
 
@@ -31,13 +19,6 @@ editor['hrsh7th/vim-eft'] = {
   opt = true,
   config = function() vim.g.eft_ignorecase = true end,
 }
-
--- editor['winston0410/range-highlight.nvim'] =  {
---   requires = {'winston0410/cmd-parser.nvim'},
---   config = function()
---     require'range-highlight'.setup{}
---   end
--- }
 
 editor['norcalli/nvim-colorizer.lua'] = {
   event = {'BufReadPre', 'BufNewFile'},

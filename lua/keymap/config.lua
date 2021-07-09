@@ -36,18 +36,19 @@ function _G.__s_tab__complete()
 end
 
 function _G.__enhance_jk_move(key)
-  if not packer_plugins['accelerated-jk'].loaded then
-    vim.cmd [[packadd accelerated-jk]]
-  end
-  local map = key == 'n' and '<Plug>(accelerated_jk_j)' or '<Plug>(accelerated_jk_gk)'
+  vim.cmd [[packadd accelerated-jk]]
+  local map = key == 'n' and '<Plug>(accelerated_jk_j)' or
+                '<Plug>(accelerated_jk_gk)'
   return t(map)
 end
 
 function _G.__enhance_ft_move(key)
-  if not packer_plugins['vim-eft'].loaded then
-    vim.cmd [[packadd vim-eft]]
-  end
-  local map = {f = '<Plug>(eft-f)', F = '<Plug>(eft-F)', [';'] = '<Plug>(eft-repeat)'}
+  if not packer_plugins['vim-eft'].loaded then vim.cmd [[packadd vim-eft]] end
+  local map = {
+    f = '<Plug>(eft-f)',
+    F = '<Plug>(eft-F)',
+    [';'] = '<Plug>(eft-repeat)',
+  }
   return t(map[key])
 end
 

@@ -35,6 +35,9 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] =
 vim.lsp.handlers["textDocument/hover"] =
   vim.lsp.with(vim.lsp.handlers.hover, {border = "single"})
 
+vim.lsp.handlers["textDocument/signatureHelp"] =
+  vim.lsp.with(vim.lsp.handlers.signature_help, {border = "single"})
+
 local enhance_attach = function(client, bufnr)
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 

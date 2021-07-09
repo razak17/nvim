@@ -1,17 +1,5 @@
-core.dashboard = {}
 local join = function(k, v, c) return {k .. string.rep(" ", c) .. v} end
-vim.g.dashboard_custom_header = {
-  "                                                       ",
-  "                                                       ",
-  " ███╗   ██╗ ███████╗ ██████╗  ██╗   ██╗ ██╗ ███╗   ███╗",
-  " ████╗  ██║ ██╔════╝██╔═══██╗ ██║   ██║ ██║ ████╗ ████║",
-  " ██╔██╗ ██║ █████╗  ██║   ██║ ██║   ██║ ██║ ██╔████╔██║",
-  " ██║╚██╗██║ ██╔══╝  ██║   ██║ ╚██╗ ██╔╝ ██║ ██║╚██╔╝██║",
-  " ██║ ╚████║ ███████╗╚██████╔╝  ╚████╔╝  ██║ ██║ ╚═╝ ██║",
-  " ╚═╝  ╚═══╝ ╚══════╝ ╚═════╝    ╚═══╝   ╚═╝ ╚═╝     ╚═╝",
-  "                                                       ",
-  "                                                       ",
-}
+vim.g.dashboard_custom_header = core.dashboard.custom_header
 
 vim.g.dashboard_default_executive = 'telescope'
 -- vim.g.dashboard_disable_statusline = 1
@@ -39,8 +27,6 @@ vim.g.dashboard_custom_section = {
   --   command = 'Telescope nvim_files files'
   -- }
 }
-
-function core.dashboard.save_session() vim.cmd("SessionSave") end
 
 core.augroup("TelescopeSession", {
   events = {"VimLeavePre"},

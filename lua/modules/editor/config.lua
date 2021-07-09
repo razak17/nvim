@@ -9,6 +9,17 @@ function config.delimimate()
     'au FileType markdown let b:delimitMate_nesting_quotes = ["`"]')
 end
 
+function config.dial()
+  vim.cmd([[
+    nmap <C-a> <Plug>(dial-increment)
+    nmap <C-x> <Plug>(dial-decrement)
+    vmap <C-a> <Plug>(dial-increment)
+    vmap <C-x> <Plug>(dial-decrement)
+    vmap g<C-a> <Plug>(dial-increment-additional)
+    vmap g<C-x> <Plug>(dial-decrement-additional)
+  ]])
+end
+
 function config.nvim_colorizer()
   require'colorizer'.setup({
     '*',

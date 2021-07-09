@@ -23,13 +23,13 @@ tools['MattesGroeger/vim-bookmarks'] = {
 --   end
 -- }
 
--- tools['brooth/far.vim'] = {
---   event = {'BufReadPre', 'BufNewFile'},
---   config = function()
---     vim.g['far#source'] = 'rg'
---     vim.g['far#enable_undo'] = 1
---   end
--- }
+tools['brooth/far.vim'] = {
+  event = {'BufReadPre', 'BufNewFile'},
+  config = function()
+    vim.g['far#source'] = 'rg'
+    vim.g['far#enable_undo'] = 1
+  end,
+}
 
 -- tools['kristijanhusak/vim-dadbod-ui'] = {
 --   cmd = {

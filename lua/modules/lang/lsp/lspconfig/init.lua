@@ -32,19 +32,18 @@ function core.lsp.autocmds(client, _)
       command = (function()
         vim.cmd [[packadd lspsaga.nvim]]
         local debounced = debounce(
-                              require'lspsaga.diagnostic'.show_cursor_diagnostics,
-                              30)
+          require'lspsaga.diagnostic'.show_cursor_diagnostics, 30)
         local cursorpos = get_cursor_pos()
         return function()
           local new_cursor = get_cursor_pos()
           if (new_cursor[1] ~= 1 and new_cursor[2] ~= 1) and
-              (new_cursor[1] ~= cursorpos[1] or new_cursor[2] ~= cursorpos[2]) then
+            (new_cursor[1] ~= cursorpos[1] or new_cursor[2] ~= cursorpos[2]) then
             cursorpos = new_cursor
             debounced()
           end
         end
-      end)()
-    }
+      end)(),
+    },
   })
   if client and client.resolved_capabilities.document_highlight then
     core.augroup("LspCursorCommands", {
@@ -197,27 +196,25 @@ command {
   end,
 }
 
-vim.fn.sign_define({
-  {
-    name = "LspDiagnosticsSignError",
-    text = "",
-    texthl = "LspDiagnosticsSignError",
-  },
-  {
-    name = "LspDiagnosticsSignWarning",
-    text = "",
-    texthl = "LspDiagnosticsSignWarning",
-  },
-  {
-    name = "LspDiagnosticsSignHint",
-    text = "",
-    texthl = "LspDiagnosticsSignHint",
-  },
-  {
-    name = "LspDiagnosticsSignInformation",
-    text = "",
-    texthl = "LspDiagnosticsSignInformation",
-  },
+vim.fn.sign_define("LspDiagnosticsSignError", {
+  texthl = "LspDiagnosticsSignError",
+  text = "",
+  numhl = "LspDiagnosticsSignError",
+})
+vim.fn.sign_define("LspDiagnosticsSignWarning", {
+  texthl = "LspDiagnosticsSignWarning",
+  text = "",
+  numhl = "LspDiagnosticsSignWarning",
+})
+vim.fn.sign_define("LspDiagnosticsSignHint", {
+  texthl = "LspDiagnosticsSignHint",
+  text = "",
+  numhl = "LspDiagnosticsSignHint",
+})
+vim.fn.sign_define("LspDiagnosticsSignInformation", {
+  texthl = "LspDiagnosticsSignInformation",
+  text = "",
+  numhl = "LspDiagnosticsSignInformation",
 })
 
 require'modules.lang.lsp.servers'.setup()
