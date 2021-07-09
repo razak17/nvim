@@ -17,7 +17,7 @@ completion['hrsh7th/nvim-compe'] = {
 
 completion['hrsh7th/vim-vsnip'] = {
   event = {'BufRead', 'BufNewFile'},
-  config = function() vim.g.vsnip_snippet_dir = r17.__vim_path .. "/snippets" end,
+  config = function() vim.g.vsnip_snippet_dir = core.__vim_path .. "/snippets" end,
 }
 
 completion['nvim-telescope/telescope.nvim'] = {

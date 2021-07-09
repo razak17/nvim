@@ -1,5 +1,5 @@
 --- Global treesitter object containing treesitter related utilities
-r17.ts = {}
+core.ts = {}
 
 local fts = {
   "html",
@@ -18,18 +18,17 @@ local fts = {
   "rust",
   "python",
   "bash",
-  "lua"
+  "lua",
 }
 
 ---Get all filetypes for which we have a treesitter parser installed
 ---@return string[]
-function r17.ts.get_filetypes()
+function core.ts.get_filetypes()
   vim.cmd [[packadd nvim-treesitter]]
   local parsers = require("nvim-treesitter.parsers")
   local configs = parsers.get_parser_configs()
-  return vim.tbl_map(function(ft)
-    return configs[ft].filetype or ft
-  end, parsers.available_parsers())
+  return vim.tbl_map(function(ft) return configs[ft].filetype or ft end,
+    parsers.available_parsers())
 end
 
 require'nvim-treesitter.configs'.setup {
@@ -46,25 +45,25 @@ require'nvim-treesitter.configs'.setup {
       "darkorange3",
       "seagreen3",
       "firebrick",
-      "darkorchid3"
-    }
+      "darkorchid3",
+    },
   },
   query_linter = {
     enable = true,
     use_virtual_text = true,
-    lint_events = {"BufWrite", "CursorHold"}
+    lint_events = {"BufWrite", "CursorHold"},
   },
   -- matchup = {enable = true, disable = {"c", "python"}},
-  ensure_installed = fts
+  ensure_installed = fts,
 }
 
 vim.api.nvim_set_keymap('n', 'R', ':edit | TSBufEnable highlight<CR>', {});
 
 -- Only apply folding to supported files:
-r17.augroup("TreesitterFolds", {
+core.augroup("TreesitterFolds", {
   {
     events = {"FileType"},
-    targets = r17.ts.get_filetypes(),
-    command = "setlocal foldtext=v:lua.folds() foldmethod=expr foldexpr=nvim_treesitter#foldexpr()"
-  }
+    targets = core.ts.get_filetypes(),
+    command = "setlocal foldtext=v:lua.folds() foldmethod=expr foldexpr=nvim_treesitter#foldexpr()",
+  },
 })

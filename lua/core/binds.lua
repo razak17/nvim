@@ -1,10 +1,10 @@
-local nmap = r17.nmap
-local nnoremap = r17.nnoremap
-local xnoremap = r17.xnoremap
-local vnoremap = r17.vnoremap
-local inoremap = r17.inoremap
-local tnoremap = r17.tnoremap
-local cnoremap = r17.cnoremap
+local nmap = core.nmap
+local nnoremap = core.nnoremap
+local xnoremap = core.xnoremap
+local vnoremap = core.vnoremap
+local inoremap = core.inoremap
+local tnoremap = core.tnoremap
+local cnoremap = core.cnoremap
 
 local fn = vim.fn
 local api = vim.api
@@ -36,18 +36,18 @@ local function inspect_token()
     ts_playground_loaded, ts_hl_info = pcall(require,
       "nvim-treesitter-playground.hl-info")
   end
-  if vim.tbl_contains(r17.ts.get_filetypes(), vim.bo.filetype) then
+  if vim.tbl_contains(core.ts.get_filetypes(), vim.bo.filetype) then
     ts_hl_info.show_hl_captures()
   else
     local syn_id = fn.synID(fn.line("."), fn.col("."), 1)
     local names = hi_chain(syn_id)
-    r17.echomsg(fn.join(names, " -> "))
+    core.echomsg(fn.join(names, " -> "))
   end
 end
 
 local function save_and_notify()
   vim.cmd("silent write")
-  r17.notify("Saved " .. vim.fn.expand("%:t"), {timeout = 1000})
+  core.notify("Saved " .. vim.fn.expand("%:t"), {timeout = 1000})
 end
 
 local function open_file_or_create_new()
@@ -255,7 +255,7 @@ nnoremap("<Leader>aO", ":set fo-=cro<CR>") -- Close all folds
 nnoremap("<Leader>vo", ":copen<CR>")
 
 -- Terminal {{{
-r17.augroup("AddTerminalMappings", {
+core.augroup("AddTerminalMappings", {
   {
     events = {"TermOpen"},
     targets = {"term://*"},
@@ -405,9 +405,9 @@ function _G.__Rename(name)
   vim.api.nvim_command(" saveas " .. newname)
 end
 
-r17.command {
+core.command {
   "Todo",
   [[noautocmd silent! grep! 'TODO\|FIXME\|BUG\|HACK' | copen]],
 }
 
-r17.command {nargs = 1, "Rename", [[call v:lua.__Rename(<f-args>)]]}
+core.command {nargs = 1, "Rename", [[call v:lua.__Rename(<f-args>)]]}

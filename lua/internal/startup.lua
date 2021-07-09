@@ -32,8 +32,8 @@ local disable_providers = function()
 end
 
 local set_host_prog = function()
-  g["python3_host_prog"] = r17._python3 .. "bin" .. r17.__path_sep .. "python"
-  g["node_host_prog"] = r17._node
+  g["python3_host_prog"] = core._python3 .. "bin" .. core.__path_sep .. "python"
+  g["node_host_prog"] = core._node
 end
 
 local global_utils = function()

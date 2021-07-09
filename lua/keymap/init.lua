@@ -1,13 +1,13 @@
-local map = r17.map
-local nmap = r17.nmap
-local omap = r17.omap
-local imap = r17.imap
-local smap = r17.smap
-local xmap = r17.xmap
-local vmap = r17.vmap
-local nnoremap = r17.nnoremap
-local inoremap = r17.inoremap
-local tnoremap = r17.tnoremap
+local map = core.map
+local nmap = core.nmap
+local omap = core.omap
+local imap = core.imap
+local smap = core.smap
+local xmap = core.xmap
+local vmap = core.vmap
+local nnoremap = core.nnoremap
+local inoremap = core.inoremap
+local tnoremap = core.tnoremap
 
 local opts = {expr = true}
 

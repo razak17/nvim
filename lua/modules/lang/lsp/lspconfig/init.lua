@@ -1,6 +1,6 @@
-r17.lsp = {}
+core.lsp = {}
 
-local command = r17.command
+local command = core.command
 
 local get_cursor_pos = function() return {vim.fn.line('.'), vim.fn.col('.')} end
 
@@ -17,15 +17,15 @@ local debounce = function(func, timeout)
   end
 end
 
-function r17.lsp.autocmds(client, _)
-  r17.augroup("LspLocationList", {
+function core.lsp.autocmds(client, _)
+  core.augroup("LspLocationList", {
     {
       events = {"InsertLeave", "BufWrite", "BufEnter"},
       targets = {"<buffer>"},
       command = [[lua vim.lsp.diagnostic.set_loclist({open_loclist = false})]],
     },
   })
-  r17.augroup("HoverDiagnostics", {
+  core.augroup("HoverDiagnostics", {
     {
       events = {"CursorHold"},
       targets = {"<buffer>"},
@@ -47,7 +47,7 @@ function r17.lsp.autocmds(client, _)
     }
   })
   if client and client.resolved_capabilities.document_highlight then
-    r17.augroup("LspCursorCommands", {
+    core.augroup("LspCursorCommands", {
       {
         events = {"CursorHold"},
         targets = {"<buffer>"},
@@ -65,7 +65,7 @@ function r17.lsp.autocmds(client, _)
       },
     })
   end
-  r17.augroup("NvimLightbulb", {
+  core.augroup("NvimLightbulb", {
     {
       events = {"CursorHold", "CursorHoldI"},
       targets = {"*"},
@@ -79,7 +79,7 @@ function r17.lsp.autocmds(client, _)
   })
   if client and client.resolved_capabilities.document_formatting then
     -- format on save
-    r17.augroup("Format", {
+    core.augroup("Format", {
       {
         events = {"BufWritePre"},
         targets = {"*." .. vim.fn.expand('%:e')},
@@ -89,7 +89,7 @@ function r17.lsp.autocmds(client, _)
   end
 end
 
-function r17.lsp.saga(bufnr)
+function core.lsp.saga(bufnr)
   vim.cmd [[packadd lspsaga.nvim]]
   local saga = require 'lspsaga'
   saga.init_lsp_saga {
@@ -97,7 +97,7 @@ function r17.lsp.saga(bufnr)
     code_action_icon = '💡',
     code_action_prompt = {enable = false, sign = false, virtual_text = false},
   }
-  local nnoremap, vnoremap, opts = r17.nnoremap, r17.vnoremap,
+  local nnoremap, vnoremap, opts = core.nnoremap, core.vnoremap,
     {buffer = bufnr, check_existing = true}
   nnoremap("gd", ":Lspsaga lsp_finder<CR>", opts)
   nnoremap("gsh", ":Lspsaga signature_help<CR>", opts)
@@ -111,8 +111,8 @@ function r17.lsp.saga(bufnr)
   nnoremap("<Leader>vdl", ":Lspsaga show_line_diagnostics<CR>", opts)
 end
 
-function r17.lsp.mappings(bufnr, client)
-  local nnoremap, vnoremap, opts = r17.nnoremap, r17.vnoremap,
+function core.lsp.mappings(bufnr, client)
+  local nnoremap, vnoremap, opts = core.nnoremap, core.vnoremap,
     {buffer = bufnr, check_existing = true}
   if client.resolved_capabilities.implementation then
     nnoremap("gi", vim.lsp.buf.implementation, opts)

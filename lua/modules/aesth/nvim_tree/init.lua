@@ -11,7 +11,7 @@ end)
 g.nvim_tree_side = 'right'
 g.nvim_tree_ignore = {'.git', 'node_modules', '.cache'}
 g.nvim_tree_auto_ignore_ft = {'startify', 'dashboard'}
-g.nvim_tree_auto_open = 1
+-- g.nvim_tree_auto_open = 1
 g.nvim_tree_follow = 1
 g.nvim_tree_width = 35
 g.nvim_tree_indent_markers = 1

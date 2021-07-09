@@ -16,10 +16,10 @@ vim.go.t_Co = "256"
 vim.g.vimsyn_embed = "lPr" -- allow embedded syntax highlighting for lua,python and ruby
 
 -- Neovim Directories
-set('udir', r17.__cache_dir .. 'undodir')
-set('directory', r17.__cache_dir .. 'swap')
-set('backupdir', r17.__cache_dir .. 'backup')
-set('viewdir', r17.__cache_dir .. 'view')
+set('udir', core.__cache_dir .. 'undodir')
+set('directory', core.__cache_dir .. 'swap')
+set('backupdir', core.__cache_dir .. 'backup')
+set('viewdir', core.__cache_dir .. 'view')
 set('backupskip',
   '/tmp/*,$TMPDIR/*,$TMP/*,$TEMP/*,*/shm/*,/private/var/*,.vault.vim')
 

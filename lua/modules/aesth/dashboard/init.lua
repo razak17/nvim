@@ -1,4 +1,4 @@
-r17.dashboard = {}
+core.dashboard = {}
 local join = function(k, v, c) return {k .. string.rep(" ", c) .. v} end
 vim.g.dashboard_custom_header = {
   "                                                       ",
@@ -40,15 +40,15 @@ vim.g.dashboard_custom_section = {
   -- }
 }
 
-function r17.dashboard.save_session() vim.cmd("SessionSave") end
+function core.dashboard.save_session() vim.cmd("SessionSave") end
 
-r17.augroup("TelescopeSession", {
+core.augroup("TelescopeSession", {
   events = {"VimLeavePre"},
   targets = "*",
-  command = "lua r17.dashboard.save_session()",
+  command = "lua core.dashboard.save_session()",
 })
 
-r17.augroup("DashboardMode", {
+core.augroup("DashboardMode", {
   {
     events = {"FileType"},
     targets = {"dashboard"},

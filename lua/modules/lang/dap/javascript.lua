@@ -3,7 +3,7 @@ local dap = require 'dap'
 dap.adapters.node2 = {
   type = 'executable',
   command = 'node',
-  args = {r17.__cache_dir .. 'dap/vscode-node-debug2/out/src/nodeDebug.js'},
+  args = {core.__cache_dir .. 'dap/vscode-node-debug2/out/src/nodeDebug.js'},
 }
 
 dap.configurations.javascript = {

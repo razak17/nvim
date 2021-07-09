@@ -49,13 +49,13 @@ function Plug:load_packer()
 end
 
 function Plug:init_ensure_plugins()
-  local packer_dir = r17.__data_dir .. 'pack/packer/opt/packer.nvim'
+  local packer_dir = core.__data_dir .. 'pack/packer/opt/packer.nvim'
   local state = uv.fs_stat(packer_dir)
   if not state then
     local cmd = "!git clone https://github.com/wbthomason/packer.nvim " ..
                   packer_dir
     api.nvim_command(cmd)
-    uv.fs_mkdir(r17.__data_dir .. 'lua', 511,
+    uv.fs_mkdir(core.__data_dir .. 'lua', 511,
       function() assert("make compile path dir faield") end)
     self:load_packer()
     packer.install()
@@ -85,8 +85,8 @@ function plugins.convert_compile_file()
   end
   table.remove(lines, #lines)
 
-  if vim.fn.isdirectory(r17.__data_dir .. 'lua') ~= 1 then
-    os.execute('mkdir -p ' .. r17.__data_dir .. 'lua')
+  if vim.fn.isdirectory(core.__data_dir .. 'lua') ~= 1 then
+    os.execute('mkdir -p ' .. core.__data_dir .. 'lua')
   end
 
   if vim.fn.filereadable(compile_to_lua) == 1 then os.remove(compile_to_lua) end
@@ -120,16 +120,16 @@ function plugins.load_compile()
       'Missing packer compile file Run PackerCompile Or PackerInstall to fix')
     plugins.magic_compile()
   end
-  r17.command {
+  core.command {
     "PlugCompile",
     [[call v:lua.require('core.plug').magic_compile()]],
   }
-  r17.command {"PlugInstall", [[lua require('core.plug').install()]]}
-  r17.command {"PlugSync", [[lua require('core.plug').sync()]]}
-  r17.command {"PlugClean", [[lua require('core.plug').clean()]]}
-  r17.command {"PlugUpdate", [[lua require('core.plug').update()]]}
-  r17.command {"PlugStatus", [[lua require('core.plug').status()]]}
-  r17.augroup("PackerComplete", {
+  core.command {"PlugInstall", [[lua require('core.plug').install()]]}
+  core.command {"PlugSync", [[lua require('core.plug').sync()]]}
+  core.command {"PlugClean", [[lua require('core.plug').clean()]]}
+  core.command {"PlugUpdate", [[lua require('core.plug').update()]]}
+  core.command {"PlugStatus", [[lua require('core.plug').status()]]}
+  core.augroup("PackerComplete", {
     {
       events = {"User"},
       targets = {"lua"},

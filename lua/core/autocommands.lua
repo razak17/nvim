@@ -36,7 +36,7 @@ local function check_color_column(leaving)
   end
 end
 
-r17.augroup("CheckOutsideTime", {
+core.augroup("CheckOutsideTime", {
   {
     -- automatically check for changed files outside vim
     events = {
@@ -53,7 +53,7 @@ r17.augroup("CheckOutsideTime", {
   {events = {"BufLeave"}, targets = {"*"}, command = "silent! update"},
 })
 
-r17.augroup("TrimWhitespace", {
+core.augroup("TrimWhitespace", {
   {
     events = {"BufWritePre"},
     targets = {"*"},
@@ -68,7 +68,7 @@ r17.augroup("TrimWhitespace", {
 })
 
 -- See :h skeleton
-r17.augroup("Templates", {
+core.augroup("Templates", {
   {
     events = {"BufNewFile"},
     targets = {"*.sh"},
@@ -84,7 +84,7 @@ r17.augroup("Templates", {
 --- automatically clear commandline messages after a few seconds delay
 --- source: http//unix.stackexchange.com/a/613645
 local id
-r17.augroup("ClearCommandMessages", {
+core.augroup("ClearCommandMessages", {
   {
     events = {"CmdlineLeave", "CmdlineChanged"},
     targets = {":"},
@@ -97,7 +97,7 @@ r17.augroup("ClearCommandMessages", {
   },
 })
 
-r17.augroup("TextYankHighlight", {
+core.augroup("TextYankHighlight", {
   {
     -- don't execute silently in case of errors
     events = {"TextYankPost"},
@@ -112,11 +112,11 @@ r17.augroup("TextYankHighlight", {
   },
 })
 
-r17.augroup("FormatOptions", {
+core.augroup("FormatOptions", {
   {events = {"BufEnter"}, targets = {"*"}, command = "set formatoptions-=cro"},
 })
 
-r17.augroup("CustomColorColumn", {
+core.augroup("CustomColorColumn", {
   {
     events = {"FileType"},
     targets = column_clear,
@@ -135,7 +135,7 @@ r17.augroup("CustomColorColumn", {
   },
 })
 
-r17.augroup("WinUtils", {
+core.augroup("WinUtils", {
   {
     events = {"Syntax"},
     targets = {"*"},
@@ -155,11 +155,11 @@ r17.augroup("WinUtils", {
   },
 })
 
-r17.augroup("AutoSaveOnFocusLost", {
+core.augroup("AutoSaveOnFocusLost", {
   {events = {"FocusLost"}, targets = {"*"}, command = "silent! wall"},
 })
 
-r17.augroup("TerminalMode", {
+core.augroup("TerminalMode", {
   {events = {"TermOpen"}, targets = {"*:zsh"}, command = "startinsert"},
   {
     events = {"TermOpen"},
@@ -170,7 +170,7 @@ r17.augroup("TerminalMode", {
 
 -- Plugins
 if vim.env.TMUX ~= nil then
-  r17.augroup("TmuxConfig", {
+  core.augroup("TmuxConfig", {
     {
       events = {
         "FocusGained",
@@ -197,7 +197,7 @@ if vim.env.TMUX ~= nil then
   })
 end
 
-r17.augroup("PackerMagic", {
+core.augroup("PackerMagic", {
   {
     events = {"VimEnter"},
     targets = {"*"},

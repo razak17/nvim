@@ -33,7 +33,7 @@ function config.kommentary()
 end
 
 function config.vim_cursorword()
-  r17.augroup("CursorWordMode", {
+  core.augroup("CursorWordMode", {
     {
       events = {"FileType"},
       targets = {

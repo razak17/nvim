@@ -260,7 +260,7 @@ g.which_key_map = {
   },
 }
 
-r17.augroup("WhichKeyMode", {
+core.augroup("WhichKeyMode", {
   {
     events = {"FileType"},
     targets = {"which_key"},
