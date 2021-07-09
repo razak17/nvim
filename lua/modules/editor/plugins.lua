@@ -20,6 +20,8 @@ editor['monaqa/dial.nvim'] = {
 
 editor['tpope/vim-surround'] = {event = {'BufReadPre', 'BufNewFile'}}
 
+editor['junegunn/vim-easy-align'] = {event = {'BufReadPre', 'BufNewFile'}}
+
 editor['razak17/vim-cursorword'] = {
   event = {'BufReadPre', 'BufNewFile'},
   config = conf.cursorword,

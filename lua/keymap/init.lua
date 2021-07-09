@@ -34,6 +34,10 @@ imap("<C-l>", "vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'",
 smap("<C-l>", "vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'",
   opts)
 
+-- Easy-align
+nmap('ga', '<Plug>(EasyAlign)')
+xmap('ga', '<Plug>(EasyAlign)')
+
 -- accelerated jk
 nmap("n", 'v:lua.__enhance_jk_move("n")', {silent = true, expr = true})
 nmap("k", 'v:lua.__enhance_jk_move("k")', {silent = true, expr = true})
