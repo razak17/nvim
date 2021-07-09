@@ -8,7 +8,6 @@ vim.cmd [[
   syntax off
   filetype plugin indent off
   filetype off
-  set nospell
 ]]
 
 vim.cmd('set iskeyword+=-')
@@ -16,26 +15,25 @@ vim.go.t_Co = "256"
 vim.g.vimsyn_embed = "lPr" -- allow embedded syntax highlighting for lua,python and ruby
 
 -- Neovim Directories
-set('udir', core.__cache_dir .. 'undodir')
-set('directory', core.__cache_dir .. 'swap')
-set('backupdir', core.__cache_dir .. 'backup')
-set('viewdir', core.__cache_dir .. 'view')
+-- set('udir', core.sets.udir)
+-- set('directory', core.sets.swap)
+-- set('viewdir', core.sets.viewdir)
 set('backupskip',
   '/tmp/*,$TMPDIR/*,$TMP/*,$TEMP/*,*/shm/*,/private/var/*,.vault.vim')
 
 -- Timing
 set('timeout', true)
 set('ttimeout', true)
-set('timeoutlen', 500)
+set('timeoutlen', core.sets.timeoutlen)
 set('ttimeoutlen', 10)
 set('updatetime', 100)
 set('redrawtime', 1500)
 
 -- Folds
 set('foldmethod', 'expr')
-set('foldenable', true)
+set('foldenable', core.sets.foldenable)
 set('foldlevelstart', 10)
-set('foldtext', "v:lua.folds()")
+set('foldtext', core.sets.foldtext)
 
 -- Tabs and Indents
 set('breakindentopt', 'shift:2,min:20')
@@ -43,30 +41,30 @@ set('cindent', true) -- Increase indent on line after opening brace
 set('smarttab', true) -- Tab insert blanks according to 'shiftwidth'
 set('autoindent', true) -- Use same indenting on new lines
 set('shiftround', true) -- Round indent to multiple of 'shiftwidth'
-set('tabstop', 2)
-set('shiftwidth', 2)
-set('textwidth', 80)
+set('tabstop', core.sets.tabstop)
+set('shiftwidth', core.sets.shiftwidth)
+set('textwidth', core.sets.textwidth)
 set('softtabstop', -1)
 set('expandtab', true)
 set('smartindent', true)
 
 -- Editor UI Appearance
 set('ruler', true)
-set('laststatus', 2)
+set('laststatus', core.sets.laststatus)
 set('showcmd', false)
-set('showtabline', 2)
+set('showtabline', core.sets.showtabline)
 set('showmode', false)
 set('showbreak', [[↪ ]])
 set('encoding', 'utf-8')
 set('background', 'dark')
-set('colorcolumn', '+1')
-set('cursorline', true)
+set('colorcolumn', core.sets.colorcolumn)
+set('cursorline', core.sets.cursorline)
 set('cursorcolumn', false)
 set('termguicolors', true)
 set('shortmess', 'aoOTIcF')
 set('guicursor', 'n-v-c-sm:block,i-ci-ve:block,r-cr-o:block')
 set('sidescrolloff', 5)
-set('scrolloff', 2)
+set('scrolloff', core.sets.scrolloff)
 set('more', false)
 set('title', true)
 set('titlelen', 70)
@@ -74,7 +72,7 @@ set('titlestring', ' 🐬 %t %r %m')
 set('titleold', '%{fnamemodify(getcwd(), ":t")}')
 set('pumheight', 15)
 set('pumblend', 10)
-set('cmdheight', 2)
+set('cmdheight', core.sets.cmdheight)
 set('cmdwinheight', 5)
 set('winblend', 10)
 set('winwidth', 30)
@@ -86,12 +84,12 @@ set('synmaxcol', 2500)
 set('display', 'lastline')
 set('lazyredraw', true)
 set('equalalways', false)
-set('numberwidth', 4)
+set('numberwidth', core.sets.numberwidth)
 set('fileencoding', 'utf-8')
 set('list', true)
-set('number', true)
+set('number', core.sets.number)
 set('signcolumn', 'yes')
-set('relativenumber', true)
+set('relativenumber', core.sets.relative_number)
 set('listchars', 'tab:»•,nbsp:+,trail:·,precedes:,extends:')
 set('diffopt',
   'vertical,iwhite,hiddenoff,foldcolumn:0,context:4,algorithm:histogram,indent-heuristic')
@@ -99,18 +97,21 @@ set('fillchars',
   'vert:▕,fold: ,eob: ,diff:─,msgsep: ,foldopen:▾,foldsep:│,foldclose:▸,eob: ')
 
 -- Behavior
+set('hidden', core.sets.hidden)
+set('wrap', core.sets.wrap)
+set('spell', core.sets.spell)
+set('spelllang', core.sets.spelllang)
 set('eadirection', 'hor')
 set('swapfile', false)
 set('undofile', true)
 set('concealcursor', 'niv')
 set('conceallevel', 0)
-set('wrap', false)
 set('report', 2)
 set('backup', false)
 set('history', 2000)
 set('writebackup', false)
 set('undolevels', 1000)
-set('shell', '/bin/zsh')
+set('shell', core.sets.shell)
 set('errorbells', false)
 set('splitbelow', true)
 set('splitright', true)
@@ -154,7 +155,7 @@ set('wildoptions', 'pum')
 set('wildignorecase', true)
 
 -- What to save for views and sessions:
-set('clipboard', 'unnamedplus')
+set('clipboard', core.sets.clipboard)
 set('shada', "!,'300,<50,@100,s10,h")
 set('viewoptions', 'cursor,folds')
 set('sessionoptions', 'curdir,help,tabpages,winsize')

@@ -8,7 +8,7 @@ require("nvim-tree.events").on_nvim_tree_ready(function()
   vim.cmd("NvimTreeRefresh")
 end)
 
-g.nvim_tree_side = 'right'
+g.nvim_tree_side = core.nvim_tree.side
 g.nvim_tree_ignore = {'.git', 'node_modules', '.cache'}
 g.nvim_tree_auto_ignore_ft = {'startify', 'dashboard'}
 g.nvim_tree_auto_open = core.nvim_tree.auto_open
