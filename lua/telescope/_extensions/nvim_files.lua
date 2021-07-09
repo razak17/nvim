@@ -32,5 +32,5 @@ nvim_config.status = function()
   builtin.git_status({prompt_title = 'Git status for nvim config', cwd = cwd})
 end
 
--- return require'telescope'.register_extension {exports = nvim_config}
+return require'telescope'.register_extension {exports = nvim_config}
 

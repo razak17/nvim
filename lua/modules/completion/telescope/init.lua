@@ -23,6 +23,7 @@ require('telescope').setup({
       ".venv/*",
       "__pycache__/*",
     },
+    layout_config = {height = 0.9, width = 0.9},
     borderchars = {'─', '│', '─', '│', '┌', '┐', '┘', '└'},
     file_sorter = require'telescope.sorters'.get_fzy_sorter,
     file_previewer = require'telescope.previewers'.vim_buffer_cat.new,
@@ -48,5 +49,5 @@ require'telescope'.load_extension('fzy_native')
 require'telescope'.load_extension('project')
 require'telescope'.load_extension('grep_string_prompt')
 require'telescope'.load_extension('bg_selector')
--- require'telescope'.load_extension('nvim_files')
--- require'telescope'.load_extension('dotfiles')
+require'telescope'.load_extension('nvim_files')
+require'telescope'.load_extension('dotfiles')
