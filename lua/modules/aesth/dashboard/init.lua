@@ -1,10 +1,9 @@
 local join = function(k, v, c) return {k .. string.rep(" ", c) .. v} end
-vim.g.dashboard_custom_header = core.dashboard.custom_header
 
-vim.g.dashboard_default_executive = 'telescope'
--- vim.g.dashboard_disable_statusline = 1
-vim.g.dashboard_session_directory = vim.fn.stdpath("data") ..
-                                      'session/dashboard'
+vim.g.dashboard_custom_header = core.dashboard.custom_header
+vim.g.dashboard_default_executive = core.dashboard.default_executive
+vim.g.dashboard_disable_statusline = core.dashboard.disable_statusline
+vim.g.dashboard_session_directory = core.dashboard.session_directory
 vim.g.dashboard_custom_section = {
   all_sessions = {
     description = join("  Last session", "<leader>Sl", 11),
@@ -22,10 +21,10 @@ vim.g.dashboard_custom_section = {
     description = join('  Find word', '<leader>flg', 14),
     command = 'Telescope live_grep',
   },
-  -- find_dotfiles = {
-  --   description = join('  Nvim config files', '<leader>frc', 6),
-  --   command = 'Telescope nvim_files files'
-  -- }
+  find_dotfiles = {
+    description = join('  Nvim files', '<leader>frc', 13),
+    command = 'Telescope nvim_files files',
+  },
 }
 
 core.augroup("TelescopeSession", {
