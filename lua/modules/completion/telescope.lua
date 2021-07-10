@@ -58,3 +58,4 @@ require'telescope'.load_extension('grep_string_prompt')
 require'telescope'.load_extension('bg_selector')
 require'telescope'.load_extension('nvim_files')
 require'telescope'.load_extension('dotfiles')
+

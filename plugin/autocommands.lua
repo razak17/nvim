@@ -137,40 +137,21 @@ core.augroup("CustomColorColumn", {
 })
 
 core.augroup("UpdateVim", {
-  -- {
-  --   -- TODO: not clear what effect this has in the post vimscript world
-  --   -- it correctly sources $MYVIMRC but all the other files that it
-  --   -- requires will need to be resourced or reloaded themselves
-  --   events = {"BufWritePost"},
-  --   targets = {
-  --     "$MYVIMRC",
-  --     core.__modules_dir .. "/**/*.lua",
-  --     core.__vim_path .. '/lua/core/globals/*.lua',
-  --   },
-  --   modifiers = {"++nested"},
-  --   command = function()
-  --     local ok, msg = pcall(vim.cmd,
-  --       "source $MYVIMRC | redraw | silent doautocmd ColorScheme")
-  --     msg = ok and "sourced " .. vim.fn.fnamemodify(vim.env.MYVIMRC, ":t") or
-  --             msg
-  --     vim.notify(msg)
-  --   end,
-  -- },
   {
     events = {"BufWritePost"},
     targets = {
       "$MYVIMRC",
       core.__modules_dir .. "/**/*.lua",
-      core.__vim_path .. '/lua/core/globals/*.lua',
+      core.__vim_path .. '/lua/core/*.lua',
     },
     command = function()
-      vim.cmd "source ~/.config/nvim/lua/core/globals/config.lua"
-      vim.cmd "source ~/.config/nvim/lua/modules/completion/telescope/init.lua"
+      vim.cmd "source ~/.config/nvim/lua/core/defaults.lua"
+      vim.cmd "source ~/.config/nvim/lua/modules/completion/telescope.lua"
       vim.cmd "source ~/.config/nvim/lua/modules/lang/lsp/lspconfig/init.lua"
       vim.cmd [[source $MYVIMRC]]
       require'core.plug'.ensure_plugins()
       vim.cmd ":PlugCompile"
-      -- vim.cmd ":PlugInstall"
+      vim.cmd ":PlugInstall"
     end,
   },
   {events = {"FocusLost"}, targets = {"*"}, command = "silent! wall"},

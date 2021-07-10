@@ -40,3 +40,4 @@ core.augroup("DashboardMode", {
     command = "set laststatus=0 | autocmd BufLeave <buffer> set laststatus=2",
   },
 })
+

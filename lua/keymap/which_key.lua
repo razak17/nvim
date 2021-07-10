@@ -292,3 +292,4 @@ core.augroup("WhichKeyMode", {
     command = "set laststatus=0 noshowmode | autocmd BufLeave <buffer> set laststatus=2",
   },
 })
+

@@ -264,3 +264,4 @@ gls.short_line_right[1] = {
     separator_highlight = {colors.section_bg, colors.section_bg},
   },
 }
+

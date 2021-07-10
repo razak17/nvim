@@ -5,7 +5,37 @@ _G.core = {_store = _GlobalCallbacks}
 local api = vim.api
 local fmt = string.format
 
-require 'core.globals.config'
+local home = os.getenv("HOME")
+local os_name = vim.loop.os_uname().sysname
+local path_sep = core.__is_windows and '\\' or '/'
+
+core._home = home .. path_sep
+core.__path_sep = path_sep
+core.__is_mac = os_name == 'OSX'
+core.__is_linux = os_name == 'Linux'
+core.__is_windows = os_name == 'Windows'
+core.__cache_dir = core._home .. '.cache' .. path_sep .. 'nvim' .. path_sep
+core.__vim_path = vim.fn.stdpath('config')
+core.__data_dir = string.format('%s/site/', vim.fn.stdpath('data')) .. path_sep
+core._asdf = core._home .. '.asdf' .. path_sep .. 'installs' .. path_sep
+core._fnm = core._home .. '.fnm' .. path_sep .. 'node-versions' .. path_sep
+core._dap = core.__cache_dir .. 'venv' .. path_sep .. 'dap' .. path_sep
+core._golang = core._asdf .. "golang/1.16.2/go/bin/go"
+core._node = core._fnm .. "v16.3.0/installation/bin/neovim-node-host"
+core._python3 = core.__cache_dir .. 'venv' .. path_sep .. 'neovim' .. path_sep
+core.__plugins = core.__data_dir .. 'pack' .. path_sep
+core.__nvim_lsp = core.__cache_dir .. 'nvim_lsp' .. path_sep
+core.__dapinstall_dir = core.__cache_dir .. path_sep .. 'dap/'
+core.__vsnip_dir = core.__vim_path .. path_sep .. 'snippets'
+core.__session_dir = core.__data_dir .. path_sep .. 'session/dashboard'
+core.__modules_dir = core.__vim_path .. path_sep .. 'lua/modules'
+core.__sumneko_root_path = core.__nvim_lsp .. 'lua-language-server' .. path_sep
+core.__elixirls_root_path = core.__nvim_lsp .. 'elixir-ls' .. path_sep
+core.__sumneko_binary = core.__sumneko_root_path ..
+                          '/bin/Linux/lua-language-server'
+core.__elixirls_binary = core.__elixirls_root_path .. '/.bin/language_server.sh'
+
+require 'core.defaults'
 
 function core._create(f)
   table.insert(core._store, f)
