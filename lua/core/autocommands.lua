@@ -201,15 +201,26 @@ if vim.env.TMUX ~= nil then
   })
 end
 
--- core.augroup("PackerMagic", {
---   {
---     events = {"VimLeavePre"},
---     targets = {"*.lua"},
---     command = function() require'core.plug'.magic_compile() end,
---   },
---   {
---     events = {"BufWritePost"},
---     targets = {"config.lua"},
---     command = function() require'core.plug'.magic_compile() end,
---   },
--- })
+core.augroup("PackerMagic", {
+  {
+    events = {"BufWritePost"},
+    targets = {"config.lua"},
+    command = function()
+      local plug = require 'core.plug'
+      plug.ensure_plugins()
+      plug.load_compile()
+      vim.cmd ":PlugCompile"
+      vim.cmd ":PlugInstall"
+    end,
+  },
+  -- {
+  --   events = {"VimLeavePre"},
+  --   targets = {"*.lua"},
+  --   command = function() require'core.plug'.magic_compile() end,
+  -- },
+  -- {
+  --   events = {"BufWritePost"},
+  --   targets = {"config.lua"},
+  --   command = function() require'core.plug'.magic_compile() end,
+  -- },
+})

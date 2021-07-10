@@ -25,18 +25,19 @@ capabilities.textDocument.codeAction = {
 
 vim.lsp.handlers["textDocument/publishDiagnostics"] =
   vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-    underline = true,
+    underline = core.lsp.diagnostics.underline,
     update_in_insert = false,
-    virtual_text = {spacing = 0, prefix = ''},
-    signs = true,
+    virtual_text = core.lsp.diagnostics.virtual_text,
+    signs = core.lsp.diagnostics.signs,
   })
 
--- NOTE: the hover handler returns the bufnr,winnr so can be use for mappings
 vim.lsp.handlers["textDocument/hover"] =
-  vim.lsp.with(vim.lsp.handlers.hover, {border = "single"})
+  vim.lsp.with(vim.lsp.handlers.hover,
+    {border = core.lsp.diagnostics.popup_border})
 
 vim.lsp.handlers["textDocument/signatureHelp"] =
-  vim.lsp.with(vim.lsp.handlers.signature_help, {border = "single"})
+  vim.lsp.with(vim.lsp.handlers.signature_help,
+    {border = core.lsp.diagnostics.popup_border})
 
 local enhance_attach = function(client, bufnr)
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')

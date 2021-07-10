@@ -135,4 +135,14 @@ core.utils = {
   transparent_window = false,
 }
 
-core.lsp = {}
+core.lsp = {
+  hoverdiagnostics = true,
+  format_on_save = true,
+  document_highlight = true,
+  popup_border = "single",
+  diagnostics = {
+    signs = true,
+    underline = true,
+    virtual_text = {spacing = 0, prefix = ""},
+  },
+}

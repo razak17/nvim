@@ -201,7 +201,6 @@ g.which_key_map = {
       l = 'current line',
       n = 'goto next',
     },
-    D = "DOGe",
     f = 'format',
     l = 'set loc list',
     o = 'open qflist',
@@ -266,6 +265,8 @@ if core.plugin.bookmarks.active then
     k = 'next mark',
   }
 end
+
+if core.plugin.doge.active then g.which_key_map.v.D = "DOGe" end
 
 if core.plugin.trouble.active then
   g.which_key_map.v.x = {

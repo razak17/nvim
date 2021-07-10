@@ -32,7 +32,7 @@ function M.setup()
       "css",
       "json",
       "yaml",
-      "sh"
+      "sh",
     },
     settings = {
       rootMarkers = {
@@ -40,7 +40,7 @@ function M.setup()
         "tsconfig.json",
         "requirements.txt",
         ".gitignore",
-        ".git/"
+        ".git/",
       },
       languages = {
         lua = {luaFormat},
@@ -53,9 +53,9 @@ function M.setup()
         css = {prettier},
         json = {prettier},
         yaml = {prettier_yaml},
-        sh = {shellcheck, shfmt}
-      }
-    }
+        sh = {shellcheck, shfmt},
+      },
+    },
   }
 end
 

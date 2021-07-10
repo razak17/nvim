@@ -15,14 +15,42 @@ local debounce = function(func, timeout)
   end
 end
 
-function core.lsp.autocmds(client, _)
-  core.augroup("LspLocationList", {
-    {
-      events = {"InsertLeave", "BufWrite", "BufEnter"},
-      targets = {"<buffer>"},
-      command = [[lua vim.lsp.diagnostic.set_loclist({open_loclist = false})]],
-    },
-  })
+local function documentFormatting(client, bufnr)
+  if client and client.resolved_capabilities.document_formatting then
+    -- format on save
+    core.augroup("Format", {
+      {
+        events = {"BufWritePre"},
+        targets = {"*." .. vim.fn.expand('%:e')},
+        command = "lua vim.lsp.buf.formatting_sync(nil, 1000)",
+      },
+    })
+  end
+end
+
+local function documentHighlight(client, bufnr)
+  if client and client.resolved_capabilities.document_highlight then
+    core.augroup("LspCursorCommands", {
+      {
+        events = {"CursorHold"},
+        targets = {"<buffer>"},
+        command = "lua vim.lsp.buf.document_highlight()",
+      },
+      {
+        events = {"CursorHoldI"},
+        targets = {"<buffer>"},
+        command = "lua vim.lsp.buf.document_highlight()",
+      },
+      {
+        events = {"CursorMoved"},
+        targets = {"<buffer>"},
+        command = "lua vim.lsp.buf.clear_references()",
+      },
+    })
+  end
+end
+
+local function hoverDiagnostics(client, bufnr)
   core.augroup("HoverDiagnostics", {
     {
       events = {"CursorHold"},
@@ -43,25 +71,16 @@ function core.lsp.autocmds(client, _)
       end)(),
     },
   })
-  if client and client.resolved_capabilities.document_highlight then
-    core.augroup("LspCursorCommands", {
-      {
-        events = {"CursorHold"},
-        targets = {"<buffer>"},
-        command = "lua vim.lsp.buf.document_highlight()",
-      },
-      {
-        events = {"CursorHoldI"},
-        targets = {"<buffer>"},
-        command = "lua vim.lsp.buf.document_highlight()",
-      },
-      {
-        events = {"CursorMoved"},
-        targets = {"<buffer>"},
-        command = "lua vim.lsp.buf.clear_references()",
-      },
-    })
-  end
+end
+
+function core.lsp.autocmds(client, bufnr)
+  core.augroup("LspLocationList", {
+    {
+      events = {"InsertLeave", "BufWrite", "BufEnter"},
+      targets = {"<buffer>"},
+      command = [[lua vim.lsp.diagnostic.set_loclist({open_loclist = false})]],
+    },
+  })
   core.augroup("NvimLightbulb", {
     {
       events = {"CursorHold", "CursorHoldI"},
@@ -74,16 +93,9 @@ function core.lsp.autocmds(client, _)
       end,
     },
   })
-  if client and client.resolved_capabilities.document_formatting then
-    -- format on save
-    core.augroup("Format", {
-      {
-        events = {"BufWritePre"},
-        targets = {"*." .. vim.fn.expand('%:e')},
-        command = "lua vim.lsp.buf.formatting_sync(nil, 1000)",
-      },
-    })
-  end
+  if core.lsp.hoverdiagnostics then hoverDiagnostics(client, bufnr) end
+  if core.lsp.format_on_save then documentFormatting(client, bufnr) end
+  if core.lsp.document_highlight then documentHighlight(client, bufnr) end
 end
 
 function core.lsp.saga(bufnr)
