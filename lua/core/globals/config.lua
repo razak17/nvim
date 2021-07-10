@@ -21,6 +21,7 @@ core.__nvim_lsp = core.__cache_dir .. 'nvim_lsp' .. path_sep
 core.__dapinstall_dir = core.__cache_dir .. path_sep .. 'dap/'
 core.__vsnip_dir = core.__vim_path .. path_sep .. 'snippets'
 core.__session_dir = core.__data_dir .. path_sep .. 'session/dashboard'
+core.__modules_dir = core.__vim_path .. path_sep .. 'lua/modules'
 core.__sumneko_root_path = core.__nvim_lsp .. 'lua-language-server' .. path_sep
 core.__elixirls_root_path = core.__nvim_lsp .. 'elixir-ls' .. path_sep
 core.__sumneko_binary = core.__sumneko_root_path ..
@@ -70,13 +71,13 @@ core.plugin = {
   fold_cycle = {active = false},
   accelerated_jk = {active = true},
   easy_align = {active = false},
-  fterm = {active = false},
+  fterm = {active = true},
   emmet = {active = false},
   dial = {active = false},
   far = {active = false},
   cool = {active = true},
   bookmarks = {active = false},
-  colorizer = {active = false},
+  colorizer = {active = true},
   delimitmate = {active = false},
   dashboard = {active = true},
   eft = {active = false},

@@ -50,7 +50,6 @@ core.augroup("CheckOutsideTime", {
     targets = {"*"},
     command = "silent! checktime",
   },
-  {events = {"BufLeave"}, targets = {"*"}, command = "silent! update"},
 })
 
 core.augroup("TrimWhitespace", {
@@ -137,17 +136,53 @@ core.augroup("CustomColorColumn", {
   },
 })
 
+core.augroup("UpdateVim", {
+  -- {
+  --   -- TODO: not clear what effect this has in the post vimscript world
+  --   -- it correctly sources $MYVIMRC but all the other files that it
+  --   -- requires will need to be resourced or reloaded themselves
+  --   events = {"BufWritePost"},
+  --   targets = {
+  --     "$MYVIMRC",
+  --     core.__modules_dir .. "/**/*.lua",
+  --     core.__vim_path .. '/lua/core/globals/*.lua',
+  --   },
+  --   modifiers = {"++nested"},
+  --   command = function()
+  --     local ok, msg = pcall(vim.cmd,
+  --       "source $MYVIMRC | redraw | silent doautocmd ColorScheme")
+  --     msg = ok and "sourced " .. vim.fn.fnamemodify(vim.env.MYVIMRC, ":t") or
+  --             msg
+  --     vim.notify(msg)
+  --   end,
+  -- },
+  {
+    events = {"BufWritePost"},
+    targets = {
+      "$MYVIMRC",
+      core.__modules_dir .. "/**/*.lua",
+      core.__vim_path .. '/lua/core/globals/*.lua',
+    },
+    command = function()
+      vim.cmd "source ~/.config/nvim/lua/core/globals/config.lua"
+      vim.cmd "source ~/.config/nvim/lua/modules/completion/telescope/init.lua"
+      vim.cmd "source ~/.config/nvim/lua/modules/lang/lsp/lspconfig/init.lua"
+      vim.cmd [[source $MYVIMRC]]
+      require'core.plug'.ensure_plugins()
+      vim.cmd ":PlugCompile"
+      -- vim.cmd ":PlugInstall"
+    end,
+  },
+  {events = {"FocusLost"}, targets = {"*"}, command = "silent! wall"},
+  -- Make windows equal size when vim resizes
+  {events = {"VimResized"}, targets = {"*"}, command = "wincmd ="},
+})
+
 core.augroup("WinBehavior", {
   {
     events = {"Syntax"},
     targets = {"*"},
     command = [[if line('$') > 5000 | syntax sync minlines=300 | endif]],
-  },
-  {
-    -- Equalize window dimensions when resizing vim window
-    events = {"VimResized"},
-    targets = {"*"},
-    command = [[tabdo wincmd =]],
   },
   {
     -- Force write shada on leaving nvim
@@ -193,30 +228,6 @@ if vim.env.TMUX ~= nil then
     },
   })
 end
-
-core.augroup("PackerMagic", {
-  {
-    events = {"BufWritePost"},
-    targets = {"config.lua"},
-    command = function()
-      local plug = require 'core.plug'
-      plug.ensure_plugins()
-      plug.load_compile()
-      vim.cmd ":PlugCompile"
-      vim.cmd ":PlugInstall"
-    end,
-  },
-  -- {
-  --   events = {"VimLeavePre"},
-  --   targets = {"*.lua"},
-  --   command = function() require'core.plug'.magic_compile() end,
-  -- },
-  -- {
-  --   events = {"BufWritePost"},
-  --   targets = {"config.lua"},
-  --   command = function() require'core.plug'.magic_compile() end,
-  -- },
-})
 
 local save_excluded = {"lua.luapad"}
 local function can_save()

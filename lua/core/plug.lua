@@ -1,5 +1,5 @@
 local fn, uv, api = vim.fn, vim.loop, vim.api
-local modules_dir = vim.fn.stdpath('config') .. '/lua/modules'
+local modules_dir = core.__modules_dir
 local packer_compiled = vim.fn.stdpath('data') .. '/site/packer_compiled.vim'
 local compile_to_lua = vim.fn.stdpath('data') .. '/site/lua/_compiled.lua'
 local packer = nil
@@ -124,6 +124,7 @@ function plugins.load_compile()
     "PlugCompile",
     [[call v:lua.require('core.plug').magic_compile()]],
   }
+  core.command {"PackerCompile", [[lua require('core.plug').compile()]]}
   core.command {"PlugInstall", [[lua require('core.plug').install()]]}
   core.command {"PlugSync", [[lua require('core.plug').sync()]]}
   core.command {"PlugClean", [[lua require('core.plug').clean()]]}

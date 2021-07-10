@@ -1,9 +1,7 @@
 local actions = require('telescope.actions')
 
-if not packer_plugins['popup.nvim'].loaded then
-  vim.cmd [[packadd popup.nvim]]
-  vim.cmd [[packadd plenary.nvim]]
-end
+vim.cmd [[packadd popup.nvim]]
+vim.cmd [[packadd plenary.nvim]]
 
 require('telescope').setup({
   defaults = {
