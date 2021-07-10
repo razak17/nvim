@@ -41,17 +41,17 @@ require('telescope').setup({
   },
 })
 
-if core.active.telescope_fzy then
+if core.plugin.telescope_fzy.active then
   vim.cmd [[packadd telescope-fzy-native.nvim]]
   require'telescope'.load_extension('fzy_native')
 end
 
-if core.active.telescope_project then
+if core.plugin.telescope_project.active then
   vim.cmd [[packadd telescope-project.nvim]]
   require'telescope'.load_extension('project')
 end
 
-if core.active.telescope_media_files then
+if core.plugin.telescope_media_files.active then
   vim.cmd [[packadd telescope-media-files.nvim]]
   require'telescope'.load_extension('media_files')
 end

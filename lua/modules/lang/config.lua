@@ -9,7 +9,7 @@ function config.nvim_lsp() require('modules.lang.lsp.lspconfig') end
 function config.dapinstall()
   vim.cmd [[packadd DAPInstall.nvim]]
   local dI = require("dap-install")
-  dI.setup({installation_path = core.utils.dapinstall_dir})
+  dI.setup({installation_path = core.__dapinstall_dir})
   dI.config("python_dbg", {})
 end
 

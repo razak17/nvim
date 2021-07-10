@@ -6,13 +6,14 @@ aesth['razak17/zephyr-nvim'] = {config = [[vim.cmd('colo zephyr')]]}
 aesth['glepnir/dashboard-nvim'] = {
   event = {'BufRead', 'BufNewFile'},
   config = conf.dashboard,
+  disable = not core.plugin.dashboard.active,
 }
 
 aesth['lukas-reineke/indent-blankline.nvim'] = {
   event = 'BufRead',
   branch = 'lua',
   config = conf.indent_blankline,
-  disable = not core.active.indent_line,
+  disable = not core.plugin.indent_line.active,
 }
 
 aesth['akinsho/nvim-bufferline.lua'] = {
@@ -25,7 +26,7 @@ aesth['kyazdani42/nvim-tree.lua'] = {
   event = {'BufRead', 'BufNewFile'},
   config = conf.nvim_tree,
   requires = {{"kyazdani42/nvim-web-devicons", opt = true}},
-  disable = not core.active.tree,
+  disable = not core.plugin.tree.active,
 }
 
 aesth['glepnir/galaxyline.nvim'] = {

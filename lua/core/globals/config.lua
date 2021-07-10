@@ -18,6 +18,9 @@ core._node = core._fnm .. "v16.3.0/installation/bin/neovim-node-host"
 core._python3 = core.__cache_dir .. 'venv' .. path_sep .. 'neovim' .. path_sep
 core.__plugins = core.__data_dir .. 'pack' .. path_sep
 core.__nvim_lsp = core.__cache_dir .. 'nvim_lsp' .. path_sep
+core.__dapinstall_dir = core.__cache_dir .. path_sep .. 'dap/'
+core.__vsnip_dir = core.__vim_path .. path_sep .. 'snippets'
+core.__session_dir = core.__data_dir .. path_sep .. 'session/dashboard'
 core.__sumneko_root_path = core.__nvim_lsp .. 'lua-language-server' .. path_sep
 core.__elixirls_root_path = core.__nvim_lsp .. 'elixir-ls' .. path_sep
 core.__sumneko_binary = core.__sumneko_root_path ..
@@ -40,7 +43,7 @@ core.sets = {
   cmdheight = 2,
   cursorline = true,
   shell = "/bin/zsh",
-  scrolloff = 2,
+  scrolloff = 7,
   laststatus = 2,
   showtabline = 2,
   ignorecase = true,
@@ -52,6 +55,59 @@ core.sets = {
   udir = core.__cache_dir .. 'undodir',
   directory = core.__cache_dir .. 'swap',
   viewdir = core.__cache_dir .. 'view',
+}
+
+core.plugin = {
+  debug = {active = false},
+  doge = {active = false},
+  dapinstall = {active = false},
+  symbols_outline = {active = false},
+  trouble = {active = false},
+  bfq = {active = true},
+  rainbow = {active = false},
+  matchup = {active = false},
+  autotag = {active = false},
+  fold_cycle = {active = false},
+  accelerated_jk = {active = true},
+  easy_align = {active = false},
+  fterm = {active = false},
+  emmet = {active = false},
+  dial = {active = false},
+  far = {active = false},
+  cool = {active = true},
+  bookmarks = {active = false},
+  colorizer = {active = false},
+  delimitmate = {active = false},
+  dashboard = {active = true},
+  eft = {active = false},
+  cursorword = {active = false},
+  indent_line = {active = false},
+  tree = {active = true},
+  telescope_fzy = {active = true},
+  telescope_project = {active = false},
+  telescope_media_files = {active = false},
+  fugitive = {active = false},
+  undotree = {active = false},
+  glow = {active = false},
+  restconsole = {active = false},
+  markdownpreview = {active = false},
+  dadbod = {active = false},
+  surround = {active = true},
+}
+
+core.telescope = {
+  prompt_prefix = " ❯ ",
+  layout_config = {height = 0.9, width = 0.9},
+  borderchars = {'─', '│', '─', '│', '┌', '┐', '┘', '└'},
+}
+
+core.nvim_tree = {
+  side = 'right',
+  auto_open = 0,
+  width = 35,
+  indent_markers = 1,
+  lsp_diagnostics = 0,
+  special_files = {'README.md', 'Makefile', 'MAKEFILE'},
 }
 
 core.dashboard = {
@@ -70,50 +126,11 @@ core.dashboard = {
   default_executive = 'telescope',
   disable_statusline = 0,
   save_session = function() vim.cmd("SessionSave") end,
-  session_directory = vim.fn.stdpath("data") .. 'session/dashboard',
-}
-
-core.nvim_tree = {
-  side = 'right',
-  auto_open = 0,
-  width = 35,
-  indent_markers = 1,
-  lsp_diagnostics = 0,
-  special_files = {'README.md', 'Makefile', 'MAKEFILE'},
-}
-
-core.telescope = {
-  prompt_prefix = " ❯ ",
-  layout_config = {height = 0.9, width = 0.9},
-  borderchars = {'─', '│', '─', '│', '┌', '┐', '┘', '└'},
-}
-
-core.active = {
-  debug = false,
-  dapinstall = false,
-  symbols_outline = false,
-  trouble = false,
-  bfq = true,
-  rainbow = false,
-  matchup = false,
-  autotag = true,
-  fold_cycle = false,
-  accelerated_jk = true,
-  easy_align = false,
-  fterm = false,
-  colorizer = false,
-  eft = false,
-  cursorword = false,
-  indent_line = false,
-  tree = false,
-  telescope_fzy = true,
-  telescope_project = false,
-  telescope_media_files = false,
+  session_directory = core.__session_dir,
 }
 
 core.utils = {
   leader_key = " ",
-  vnsip_dir = vim.fn.stdpath "config" .. "/snippets",
-  dapinstall_dir = vim.fn.stdpath "cache" .. "/dap/",
+  dapinstall_dir = core.__data_dir,
   transparent_window = false,
 }

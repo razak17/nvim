@@ -1,31 +1,44 @@
 local tools = {}
 local conf = require('modules.tools.config')
 
--- tools['tpope/vim-fugitive'] = {event = 'VimEnter'}
+tools['tpope/vim-fugitive'] = {
+  event = 'VimEnter',
+  disable = not core.plugin.fugitive.active,
+}
 
--- tools['mbbill/undotree'] = {cmd = "UndotreeToggle"}
+tools['mbbill/undotree'] = {
+  cmd = "UndotreeToggle",
+  disable = not core.plugin.undotree.active,
+}
 
--- tools['npxbr/glow.nvim'] = {run = ":GlowInstall", branch = "main"}
+tools['npxbr/glow.nvim'] = {
+  run = ":GlowInstall",
+  branch = "main",
+  disable = not core.plugin.glow.active,
+}
 
 tools['numToStr/FTerm.nvim'] = {
   event = "VimEnter",
   config = conf.fterm,
-  disable = not core.active.fterm,
+  disable = not core.plugin.fterm.active,
 }
 
 tools['MattesGroeger/vim-bookmarks'] = {
   event = {'BufReadPre', 'BufNewFile'},
   config = conf.bookmarks,
+  disable = not core.plugin.bookmarks.active,
 }
 
--- tools['diepm/vim-rest-console'] = {}
+tools['diepm/vim-rest-console'] = {
+  event = 'VimEnter',
+  disable = not core.plugin.restconsole.active,
+}
 
--- tools['iamcco/markdown-preview.nvim'] = {
---   ft = 'markdown',
---   config = function()
---     vim.g.mkdp_auto_start = 0
---   end
--- }
+tools['iamcco/markdown-preview.nvim'] = {
+  ft = 'markdown',
+  config = function() vim.g.mkdp_auto_start = 0 end,
+  disable = not core.plugin.markdownpreview.active,
+}
 
 tools['brooth/far.vim'] = {
   event = {'BufReadPre', 'BufNewFile'},
@@ -33,21 +46,23 @@ tools['brooth/far.vim'] = {
     vim.g['far#source'] = 'rg'
     vim.g['far#enable_undo'] = 1
   end,
+  disable = not core.plugin.far.active,
 }
 
--- tools['kristijanhusak/vim-dadbod-ui'] = {
---   cmd = {
---     'DBUIToggle',
---     'DBUIAddConnection',
---     'DBUI',
---     'DBUIFindBuffer',
---     'DBUIRenameBuffer'
---   },
---   config = conf.vim_dadbod_ui,
---   requires = {
---     {'tpope/vim-dadbod', opt = true},
---     {'kristijanhusak/vim-dadbod-completion', opt = true}
---   }
--- }
+tools['kristijanhusak/vim-dadbod-ui'] = {
+  cmd = {
+    'DBUIToggle',
+    'DBUIAddConnection',
+    'DBUI',
+    'DBUIFindBuffer',
+    'DBUIRenameBuffer',
+  },
+  config = conf.vim_dadbod_ui,
+  requires = {
+    {'tpope/vim-dadbod', opt = true},
+    {'kristijanhusak/vim-dadbod-completion', opt = true},
+  },
+  disable = not core.plugin.dadbod.active,
+}
 
 return tools

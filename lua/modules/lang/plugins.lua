@@ -3,21 +3,21 @@ local conf = require('modules.lang.config')
 local lang = {}
 
 lang['mfussenegger/nvim-dap'] = {
-  event = 'BufReadPre',
+  event = "BufWinEnter",
   config = conf.dap,
-  disable = not core.active.debug,
+  disable = not core.plugin.debug.active,
 }
 
 lang['rcarriga/nvim-dap-ui'] = {
-  event = 'BufReadPre',
+  event = "BufWinEnter",
   config = conf.dap_ui,
-  disable = not core.active.debug,
+  disable = not core.plugin.debug.active,
 }
 
 lang['Pocco81/DAPInstall.nvim'] = {
-  event = 'BufReadPre',
+  event = "BufWinEnter",
   config = conf.dapinstall,
-  disable = not core.active.dapinstall,
+  disable = not core.plugin.dapinstall.active,
 }
 
 lang['neovim/nvim-lspconfig'] = {
@@ -33,7 +33,7 @@ lang['simrat39/symbols-outline.nvim'] = {
   event = 'BufReadPre',
   cmd = 'SymbolsOutline',
   config = function() require("symbols-outline").setup {show_guides = true} end,
-  disable = not core.active.symbols_outline,
+  disable = not core.plugin.symbols_outline.active,
 }
 
 lang['folke/trouble.nvim'] = {
@@ -42,7 +42,7 @@ lang['folke/trouble.nvim'] = {
   config = function()
     require("trouble").setup {use_lsp_diagnostic_signs = true}
   end,
-  disable = not core.active.trouble,
+  disable = not core.plugin.trouble.active,
 }
 
 lang['kevinhwang91/nvim-bqf'] = {
@@ -65,7 +65,7 @@ lang['kevinhwang91/nvim-bqf'] = {
       },
     })
   end,
-  disable = not core.active.bfq,
+  disable = not core.plugin.bfq.active,
 }
 
 lang['nvim-treesitter/nvim-treesitter'] = {
@@ -81,19 +81,19 @@ lang['nvim-treesitter/playground'] = {
 
 lang['p00f/nvim-ts-rainbow'] = {
   after = 'nvim-treesitter',
-  disable = not core.active.rainbow,
+  disable = not core.plugin.rainbow.active,
 }
 
 lang['andymass/vim-matchup'] = {
   after = 'nvim-treesitter',
-  disable = not core.active.matchup,
+  disable = not core.plugin.matchup.active,
 }
 
 lang['windwp/nvim-ts-autotag'] = {
   opt = true,
   after = 'nvim-treesitter',
   event = "InsertLeavePre",
-  disable = not core.active.autotag,
+  disable = not core.plugin.autotag.active,
 }
 
 return lang

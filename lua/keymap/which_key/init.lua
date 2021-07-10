@@ -49,6 +49,7 @@ g.which_key_map = {
     S = 'Toggle Shade',
     v = 'vertical split',
     V = 'select all',
+    w = 'where_am_i',
     x = 'save and exit',
     Y = 'yank all',
     z = 'force exit',
@@ -70,31 +71,6 @@ g.which_key_map = {
     r = 'nvim-tree refresh',
     s = 'edit snippet',
     v = 'nvim-tree toggle',
-  },
-  d = {
-    name = '+Debug',
-    b = {
-      name = '+Breakpoints',
-      l = 'set log point',
-      s = 'set condition',
-      t = 'toggle',
-    },
-    B = 'set breakpoint',
-    c = 'continue',
-    i = 'step into',
-    o = 'step out',
-    r = {name = '+Repl', o = 'open', l = 'run last'},
-    v = 'step over',
-  },
-  e = {
-    name = '+Fterm',
-    g = 'gitui',
-    l = 'lazygit',
-    n = 'node',
-    N = 'new',
-    p = 'python',
-    r = 'ranger',
-    v = 'open vimrc in vertical split',
   },
   E = 'Inspect token',
   f = {
@@ -158,14 +134,6 @@ g.which_key_map = {
       s = 'status',
     },
   },
-  F = {
-    name = '+Far',
-    f = 'replace in File',
-    d = 'do',
-    i = 'search iteratively',
-    r = 'replace in Project',
-    z = 'undo',
-  },
   -- g = {
   --   name = '+Git',
   --   a = 'fetch all',
@@ -197,13 +165,6 @@ g.which_key_map = {
   I = {name = '+Info', c = 'check health', e = 'ts info', u = 'ts update'},
   l = {name = "+LocList", i = 'empty', s = 'toggle'},
   L = {name = '+LspUtils', i = 'info', l = 'log', r = 'restart'},
-  m = {
-    name = '+Mark',
-    e = 'toggle',
-    b = 'previous mark',
-    k = 'next mark',
-    w = 'where_am_i',
-  },
   n = {
     name = "+New",
     f = "open file in same dir",
@@ -247,14 +208,6 @@ g.which_key_map = {
     s = 'Symbols outline',
     v = 'toggle virtual text',
     w = {name = '+Color', m = 'pencils'},
-    x = {
-      name = '+Trouble',
-      d = 'document',
-      e = 'quickfix',
-      l = 'loclist',
-      r = 'references',
-      w = 'workspace',
-    },
   },
   w = {
     name = "+Orientation",
@@ -262,6 +215,68 @@ g.which_key_map = {
     v = "change to vertical",
   },
 }
+
+if core.plugin.debug.active then
+  g.which_key_map.d = {
+    name = '+Debug',
+    b = {
+      name = '+Breakpoints',
+      l = 'set log point',
+      s = 'set condition',
+      t = 'toggle',
+    },
+    B = 'set breakpoint',
+    c = 'continue',
+    i = 'step into',
+    o = 'step out',
+    r = {name = '+Repl', o = 'open', l = 'run last'},
+    v = 'step over',
+  }
+end
+
+if core.plugin.fterm.active then
+  g.which_key_map.e = {
+    name = '+Fterm',
+    g = 'gitui',
+    l = 'lazygit',
+    n = 'node',
+    N = 'new',
+    p = 'python',
+    r = 'ranger',
+    v = 'open vimrc in vertical split',
+  }
+end
+
+if core.plugin.far.active then
+  g.which_key_map.F = {
+    name = '+Far',
+    f = 'replace in File',
+    d = 'do',
+    i = 'search iteratively',
+    r = 'replace in Project',
+    z = 'undo',
+  }
+end
+
+if core.plugin.bookmarks.active then
+  g.which_key_map.m = {
+    name = '+Mark',
+    e = 'toggle',
+    b = 'previous mark',
+    k = 'next mark',
+  }
+end
+
+if core.plugin.trouble.active then
+  g.which_key_map.v.x = {
+    name = '+Trouble',
+    d = 'document',
+    e = 'quickfix',
+    l = 'loclist',
+    r = 'references',
+    w = 'workspace',
+  }
+end
 
 core.augroup("WhichKeyMode", {
   {

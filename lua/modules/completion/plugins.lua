@@ -8,7 +8,11 @@ completion['liuchengxu/vim-which-key'] = {
 
 completion['rafamadriz/friendly-snippets'] = {event = 'InsertEnter'}
 
-completion['mattn/emmet-vim'] = {event = 'InsertEnter', config = conf.emmet}
+completion['mattn/emmet-vim'] = {
+  event = 'InsertEnter',
+  config = conf.emmet,
+  disable = not core.plugin.emmet.active,
+}
 
 completion['hrsh7th/nvim-compe'] = {
   event = {'BufRead', 'BufNewFile'},
@@ -17,12 +21,13 @@ completion['hrsh7th/nvim-compe'] = {
 
 completion['hrsh7th/vim-vsnip'] = {
   event = {'BufRead', 'BufNewFile'},
-  config = function() vim.g.vsnip_snippet_dir = core.utils.vsnip_dir end,
+  config = function() vim.g.vsnip_snippet_dir = core.__vsnip_dir end,
 }
 
 completion['nvim-telescope/telescope.nvim'] = {
   cmd = 'Telescope',
-  event = "BufWinEnter",
+  -- event = "BufWinEnter",
+  event = {'BufRead', 'BufNewFile'},
   config = conf.telescope,
   requires = {
     {'nvim-lua/popup.nvim', opt = true},
@@ -32,17 +37,17 @@ completion['nvim-telescope/telescope.nvim'] = {
 
 completion['nvim-telescope/telescope-fzy-native.nvim'] = {
   opt = true,
-  disable = not core.active.telescope_fzy,
+  disable = not core.plugin.telescope_fzy.active,
 }
 
 completion['nvim-telescope/telescope-media-files.nvim'] = {
   opt = true,
-  disable = not core.active.telescope_media_files,
+  disable = not core.plugin.telescope_media_files.active,
 }
 
 completion['nvim-telescope/telescope-project.nvim'] = {
   opt = true,
-  disable = not core.active.telescope_project,
+  disable = not core.plugin.telescope_project.active,
 }
 
 return completion

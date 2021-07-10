@@ -113,7 +113,11 @@ core.augroup("TextYankHighlight", {
 })
 
 core.augroup("FormatOptions", {
-  {events = {"BufWinEnter"}, targets = {"*"}, command = "set formatoptions-=cro"},
+  {
+    events = {"BufWinEnter"},
+    targets = {"*"},
+    command = "set formatoptions-=cro",
+  },
 })
 
 core.augroup("CustomColorColumn", {
@@ -197,10 +201,15 @@ if vim.env.TMUX ~= nil then
   })
 end
 
-core.augroup("PackerMagic", {
-  {
-    events = {"VimEnter"},
-    targets = {"*"},
-    command = function() require'core.plug'.magic_compile() end,
-  },
-})
+-- core.augroup("PackerMagic", {
+--   {
+--     events = {"VimLeavePre"},
+--     targets = {"*.lua"},
+--     command = function() require'core.plug'.magic_compile() end,
+--   },
+--   {
+--     events = {"BufWritePost"},
+--     targets = {"config.lua"},
+--     command = function() require'core.plug'.magic_compile() end,
+--   },
+-- })

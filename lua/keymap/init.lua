@@ -21,8 +21,7 @@ inoremap("<C-Space>", "compe#complete()", opts)
 inoremap("<C-e>", "compe#close('<C-e>')", opts)
 inoremap("<C-f>", "compe#scroll({ 'delta': +4 })", opts)
 inoremap("<C-d>", "compe#scroll({ 'delta': -4 })", opts)
-imap("<CR>", [[compe#confirm({ 'keys': "\<Plug>delimitMateCR", 'mode': '' })]],
-  {noremap = true, expr = true})
+imap("<CR>", [[compe#confirm('<CR>')]], {noremap = true, expr = true})
 
 -- vsnip
 xmap("<C-x>", "<Plug>(vsnip-cut-text)")
@@ -40,38 +39,45 @@ nmap('ga', '<Plug>(EasyAlign)')
 xmap('ga', '<Plug>(EasyAlign)')
 
 -- accelerated jk
-nmap("n", 'v:lua.__enhance_jk_move("n")', {silent = true, expr = true})
-nmap("k", 'v:lua.__enhance_jk_move("k")', {silent = true, expr = true})
-
+if core.plugin.accelerated_jk.active then
+  nmap("n", 'v:lua.__enhance_jk_move("n")', {silent = true, expr = true})
+  nmap("k", 'v:lua.__enhance_jk_move("k")', {silent = true, expr = true})
+end
 -- vim-eft
-nmap(";", "v:lua.__enhance_ft_move(';')", {expr = true})
-xmap(";", "v:lua.__enhance_ft_move(';')", {expr = true})
-nmap("f", "v:lua.__enhance_ft_move('f')", {expr = true})
-xmap("f", "v:lua.__enhance_ft_move('f')", {expr = true})
-omap("f", "v:lua.__enhance_ft_move('f')", {expr = true})
-nmap("F", "v:lua.__enhance_ft_move('F')", {expr = true})
-xmap("F", "v:lua.__enhance_ft_move('F')", {expr = true})
-omap("F", "v:lua.__enhance_ft_move('F')", {expr = true})
+if core.plugin.eft.active then
+  nmap(";", "v:lua.__enhance_ft_move(';')", {expr = true})
+  xmap(";", "v:lua.__enhance_ft_move(';')", {expr = true})
+  nmap("f", "v:lua.__enhance_ft_move('f')", {expr = true})
+  xmap("f", "v:lua.__enhance_ft_move('f')", {expr = true})
+  omap("f", "v:lua.__enhance_ft_move('f')", {expr = true})
+  nmap("F", "v:lua.__enhance_ft_move('F')", {expr = true})
+  xmap("F", "v:lua.__enhance_ft_move('F')", {expr = true})
+  omap("F", "v:lua.__enhance_ft_move('F')", {expr = true})
+end
 
 -- TS
 nnoremap('<Leader>Ie', ':TSInstallInfo<CR>')
 nnoremap('<Leader>Iu', ':TSUpdate<CR>')
-nnoremap('<Leader>mw', ':<c-u>MatchupWhereAmI?<CR>')
+nnoremap('<Leader>aw', ':<c-u>MatchupWhereAmI?<CR>')
 
 -- Symbols Outline
 nnoremap('<Leader>vs', ':SymbolsOutline<CR>')
 
 -- trouble
-nnoremap('<Leader>vxd', ':TroubleToggle lsp_document_diagnostics<CR>')
-nnoremap('<Leader>vxe', ':TroubleToggle quickfix<CR>')
-nnoremap('<Leader>vxl', ':TroubleToggle loclist<CR>')
-nnoremap('<Leader>vxr', ':TroubleToggle lsp_references<CR>')
-nnoremap('<Leader>vxw', ':TroubleToggle lsp_workspace_diagnostics<CR>')
+if core.plugin.trouble.active then
+  nnoremap('<Leader>vxd', ':TroubleToggle lsp_document_diagnostics<CR>')
+  nnoremap('<Leader>vxe', ':TroubleToggle quickfix<CR>')
+  nnoremap('<Leader>vxl', ':TroubleToggle loclist<CR>')
+  nnoremap('<Leader>vxr', ':TroubleToggle lsp_references<CR>')
+  nnoremap('<Leader>vxw', ':TroubleToggle lsp_workspace_diagnostics<CR>')
+end
 
 -- Bookmark
-nnoremap('<Leader>me', ':BookmarkToggle<CR>')
-nnoremap('<Leader>mb', ':BookmarkPrev<CR>')
-nnoremap('<Leader>mk', ':BookmarkNext<CR>')
+if core.plugin.bookmarks.active then
+  nnoremap('<Leader>me', ':BookmarkToggle<CR>')
+  nnoremap('<Leader>mb', ':BookmarkPrev<CR>')
+  nnoremap('<Leader>mk', ':BookmarkNext<CR>')
+end
 
 -- markdown preview
 nnoremap('<Leader>om', ':MarkdownPreview<CR>')
@@ -89,16 +95,20 @@ nnoremap('<Leader>Lr', ':LspRestart<CR>')
 nnoremap('<Leader>vv', ':LspToggleVirtualText<CR>')
 
 -- Tree
-nnoremap('<Leader>cv', ':NvimTreeToggle<CR>')
-nnoremap('<Leader>cr', ':NvimTreeRefresh<CR>')
-nnoremap('<Leader>cf', ':NvimTreeFindFile<CR>')
+if core.plugin.tree.active then
+  nnoremap('<Leader>cv', ':NvimTreeToggle<CR>')
+  nnoremap('<Leader>cr', ':NvimTreeRefresh<CR>')
+  nnoremap('<Leader>cf', ':NvimTreeFindFile<CR>')
+end
 
 -- Far
-nnoremap("<Leader>Ff", ":Farr --source=vimgrep<CR>")
-nnoremap("<Leader>Fd", ":Fardo<CR>")
-nnoremap("<Leader>Fi", ":Farf<CR>")
-nnoremap("<Leader>Fr", ":Farr --source=rgnvim<CR>")
-nnoremap("<Leader>Fz", ":Farundo<CR>")
+if core.plugin.far.active then
+  nnoremap("<Leader>Ff", ":Farr --source=vimgrep<CR>")
+  nnoremap("<Leader>Fd", ":Fardo<CR>")
+  nnoremap("<Leader>Fi", ":Farf<CR>")
+  nnoremap("<Leader>Fr", ":Farr --source=rgnvim<CR>")
+  nnoremap("<Leader>Fz", ":Farundo<CR>")
+end
 
 -- Bufferline
 nnoremap('<Leader>bb', ':BufferLineMovePrev<CR>')
@@ -114,14 +124,16 @@ nnoremap('<Leader>PS', ':PlugStatus<CR>')
 nnoremap('<Leader>PU', ':PlugUpdate<CR>')
 
 -- FTerm
-nnoremap('<F12>', '<CMD>lua require("FTerm").toggle()<CR>')
-tnoremap('<F12>', '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>')
-nnoremap('<leader>eN', '<CMD>lua require("FTerm").open()<CR>')
-map('<leader>en', function() __fterm_cmd("node") end)
-map('<leader>eg', function() __fterm_cmd("gitui") end)
-map('<leader>ep', function() __fterm_cmd("python") end)
-map('<leader>er', function() __fterm_cmd("ranger") end)
-map('<leader>el', function() __fterm_cmd("lazygit") end)
+if core.plugin.fterm.active then
+  nnoremap('<F12>', '<CMD>lua require("FTerm").toggle()<CR>')
+  tnoremap('<F12>', '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>')
+  nnoremap('<leader>eN', '<CMD>lua require("FTerm").open()<CR>')
+  map('<leader>en', function() __fterm_cmd("node") end)
+  map('<leader>eg', function() __fterm_cmd("gitui") end)
+  map('<leader>ep', function() __fterm_cmd("python") end)
+  map('<leader>er', function() __fterm_cmd("ranger") end)
+  map('<leader>el', function() __fterm_cmd("lazygit") end)
+end
 
 -- Kommentary
 nmap("<leader>/", "<Plug>kommentary_line_default")
@@ -129,17 +141,19 @@ nmap("<leader>a/", "<Plug>kommentary_motion_default")
 vmap("<leader>/", "<Plug>kommentary_visual_default")
 
 -- dap
-nnoremap('<leader>dc', '<cmd>lua require"dap".continue()<CR>')
-nnoremap('<leader>du', '<cmd>lua require"dap".step_out()<CR>')
-nnoremap('<leader>do', '<cmd>lua require"dap".step_over()<CR>')
-nnoremap('<leader>di', '<cmd>lua require"dap".step_into()<CR>')
-nnoremap('<leader>dro', '<cmd>lua require"dap".repl.open()<CR>')
-nnoremap('<leader>drl', '<cmd>lua require"dap".repl.run_last()<CR>')
-nnoremap('<leader>dbt', '<cmd>lua require"dap".toggle_breakpoint()<CR>')
-nnoremap('<leader>dbl',
-  '<cmd>lua require"dap".set_breakpoint(nil, nil, vim.fn.input("Log point message: "))<CR>')
-nnoremap('<leader>dbs',
-  '<cmd>lua require"dap".set_breakpoint(vim.fn.input("Breakpoint condition: "))<CR>')
+if core.plugin.debug.active then
+  nnoremap('<leader>dc', '<cmd>lua require"dap".continue()<CR>')
+  nnoremap('<leader>du', '<cmd>lua require"dap".step_out()<CR>')
+  nnoremap('<leader>do', '<cmd>lua require"dap".step_over()<CR>')
+  nnoremap('<leader>di', '<cmd>lua require"dap".step_into()<CR>')
+  nnoremap('<leader>dro', '<cmd>lua require"dap".repl.open()<CR>')
+  nnoremap('<leader>drl', '<cmd>lua require"dap".repl.run_last()<CR>')
+  nnoremap('<leader>dbt', '<cmd>lua require"dap".toggle_breakpoint()<CR>')
+  nnoremap('<leader>dbl',
+    '<cmd>lua require"dap".set_breakpoint(nil, nil, vim.fn.input("Log point message: "))<CR>')
+  nnoremap('<leader>dbs',
+    '<cmd>lua require"dap".set_breakpoint(vim.fn.input("Breakpoint condition: "))<CR>')
+end
 
 -- Telescope
 nnoremap('<Leader>ff', ':Telescope find_files<CR>')
