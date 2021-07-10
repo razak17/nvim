@@ -26,18 +26,16 @@ capabilities.textDocument.codeAction = {
 vim.lsp.handlers["textDocument/publishDiagnostics"] =
   vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
     underline = core.lsp.diagnostics.underline,
-    update_in_insert = false,
+    update_in_insert = core.lsp.diagnostics.update_in_insert,
     virtual_text = core.lsp.diagnostics.virtual_text,
     signs = core.lsp.diagnostics.signs,
   })
 
 vim.lsp.handlers["textDocument/hover"] =
-  vim.lsp.with(vim.lsp.handlers.hover,
-    {border = core.lsp.diagnostics.popup_border})
+  vim.lsp.with(vim.lsp.handlers.hover, {border = core.lsp.popup_border})
 
 vim.lsp.handlers["textDocument/signatureHelp"] =
-  vim.lsp.with(vim.lsp.handlers.signature_help,
-    {border = core.lsp.diagnostics.popup_border})
+  vim.lsp.with(vim.lsp.handlers.signature_help, {border = core.lsp.popup_border})
 
 local enhance_attach = function(client, bufnr)
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
@@ -46,9 +44,9 @@ local enhance_attach = function(client, bufnr)
     vim.bo[bufnr].tagfunc = "v:lua.as.lsp.tagfunc"
   end
 
-  core.lsp.saga(bufnr)
+  if core.plugin.saga.active then core.lsp.saga(bufnr) end
   core.lsp.mappings(bufnr, client)
-  core.lsp.autocmds(client, bufnr)
+  core.lsp.autocmds(client)
 end
 
 local function setup_servers()

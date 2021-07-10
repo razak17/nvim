@@ -83,16 +83,14 @@ core.augroup("Templates", {
 
 --- automatically clear commandline messages after a few seconds delay
 --- source: http//unix.stackexchange.com/a/613645
-local id
 core.augroup("ClearCommandMessages", {
   {
     events = {"CmdlineLeave", "CmdlineChanged"},
     targets = {":"},
     command = function()
-      if id then fn.timer_stop(id) end
-      id = fn.timer_start(2000, function()
+      vim.defer_fn(function()
         if fn.mode() == "n" then vim.cmd [[echon '']] end
-      end)
+      end, 10000)
     end,
   },
 })

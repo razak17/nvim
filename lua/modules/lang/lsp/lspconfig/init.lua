@@ -15,7 +15,7 @@ local debounce = function(func, timeout)
   end
 end
 
-local function documentFormatting(client, bufnr)
+local function documentFormatting(client)
   if client and client.resolved_capabilities.document_formatting then
     -- format on save
     core.augroup("Format", {
@@ -28,7 +28,7 @@ local function documentFormatting(client, bufnr)
   end
 end
 
-local function documentHighlight(client, bufnr)
+local function documentHighlight(client)
   if client and client.resolved_capabilities.document_highlight then
     core.augroup("LspCursorCommands", {
       {
@@ -50,22 +50,24 @@ local function documentHighlight(client, bufnr)
   end
 end
 
-local function hoverDiagnostics(client, bufnr)
+local function hoverDiagnostics()
   core.augroup("HoverDiagnostics", {
     {
       events = {"CursorHold"},
       targets = {"<buffer>"},
       command = (function()
-        vim.cmd [[packadd lspsaga.nvim]]
-        local debounced = debounce(
-          require'lspsaga.diagnostic'.show_cursor_diagnostics, 30)
         local cursorpos = get_cursor_pos()
         return function()
           local new_cursor = get_cursor_pos()
           if (new_cursor[1] ~= 1 and new_cursor[2] ~= 1) and
             (new_cursor[1] ~= cursorpos[1] or new_cursor[2] ~= cursorpos[2]) then
             cursorpos = new_cursor
-            debounced()
+            if core.plugin.saga.active then
+              vim.cmd [[packadd lspsaga.nvim]]
+              debounce(require'lspsaga.diagnostic'.show_cursor_diagnostics, 30)
+            else
+              vim.lsp.diagnostic.show_line_diagnostics()
+            end
           end
         end
       end)(),
@@ -73,12 +75,18 @@ local function hoverDiagnostics(client, bufnr)
   })
 end
 
-function core.lsp.autocmds(client, bufnr)
+function core.lsp.autocmds(client)
   core.augroup("LspLocationList", {
     {
       events = {"InsertLeave", "BufWrite", "BufEnter"},
       targets = {"<buffer>"},
-      command = [[lua vim.lsp.diagnostic.set_loclist({open_loclist = false})]],
+      command = function()
+        vim.lsp.diagnostic.set_loclist {
+          workspace = true,
+          severity_limit = "Warning",
+          open_loclist = false,
+        }
+      end,
     },
   })
   core.augroup("NvimLightbulb", {
@@ -93,9 +101,9 @@ function core.lsp.autocmds(client, bufnr)
       end,
     },
   })
-  if core.lsp.hoverdiagnostics then hoverDiagnostics(client, bufnr) end
-  if core.lsp.format_on_save then documentFormatting(client, bufnr) end
-  if core.lsp.document_highlight then documentHighlight(client, bufnr) end
+  if core.lsp.hoverdiagnostics then hoverDiagnostics() end
+  if core.lsp.format_on_save then documentFormatting(client) end
+  if core.lsp.document_highlight then documentHighlight(client) end
 end
 
 function core.lsp.saga(bufnr)
@@ -130,13 +138,23 @@ function core.lsp.mappings(bufnr, client)
   if client.resolved_capabilities.type_definition then
     nnoremap("<leader>ge", vim.lsp.buf.type_definition, opts)
   end
+  if not core.plugin.saga.active then
+    nnoremap("gd", vim.lsp.buf.definition, opts)
+    nnoremap("gD", vim.lsp.buf.declaration, opts)
+    nnoremap("gr", vim.lsp.buf.references, opts)
+    nnoremap("gi", vim.lsp.buf.implementation, opts)
+    nnoremap("grn", vim.lsp.buf.rename, opts)
+    nnoremap("K", vim.lsp.buf.hover, opts)
+    nnoremap("<leader>vdb", vim.lsp.diagnostic.goto_prev, opts)
+    nnoremap("<leader>vdn", vim.lsp.diagnostic.goto_next, opts)
+    nnoremap("<leader>vdl", vim.lsp.diagnostic.show_line_diagnostics, opts)
+  end
   nnoremap("gsd", vim.lsp.buf.document_symbol, opts)
   nnoremap("gsw", vim.lsp.buf.workspace_symbol, opts)
   nnoremap("gI", vim.lsp.buf.incoming_calls, opts)
   nnoremap("gR", vim.lsp.buf.references, opts)
   nnoremap("gD", vim.lsp.buf.definition, opts)
-  nnoremap("grn", vim.lsp.buf.rename, opts)
-  vnoremap("<leader>va", vim.lsp.buf.code_action, opts)
+  nnoremap("<leader>va", vim.lsp.buf.code_action, opts)
   vnoremap("<leader>vA", vim.lsp.buf.range_code_action, opts)
   nnoremap("<leader>vf", vim.lsp.buf.formatting, opts)
   nnoremap("<leader>vl", vim.lsp.diagnostic.set_loclist, opts)

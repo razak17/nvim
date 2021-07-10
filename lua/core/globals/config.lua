@@ -93,6 +93,7 @@ core.plugin = {
   markdownpreview = {active = false},
   dadbod = {active = false},
   surround = {active = true},
+  saga = {active = false},
 }
 
 core.telescope = {
@@ -143,6 +144,7 @@ core.lsp = {
   diagnostics = {
     signs = true,
     underline = true,
+    update_in_insert = false,
     virtual_text = {spacing = 0, prefix = ""},
   },
 }
