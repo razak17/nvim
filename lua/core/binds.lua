@@ -186,8 +186,8 @@ nnoremap("<leader>E", function() inspect_token() end, {silent = false})
 -- Use alt + hjkl to resize windows
 nnoremap('<M-n>', ':resize -2<CR>')
 nnoremap('<M-k>', ':resize +2<CR>')
-nnoremap('<M-h>', ':vertical resize -2<CR>')
-nnoremap('<M-l>', ':vertical resize +2<CR>')
+nnoremap('<M-h>', ':vertical resize +2<CR>')
+nnoremap('<M-l>', ':vertical resize -2<CR>')
 
 -- Window Resize
 nnoremap('<Leader>ca', ':vertical resize 40<CR>')
