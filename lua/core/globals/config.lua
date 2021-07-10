@@ -116,8 +116,4 @@ core.utils = {
   vnsip_dir = vim.fn.stdpath "config" .. "/snippets",
   dapinstall_dir = vim.fn.stdpath "cache" .. "/dap/",
   transparent_window = false,
-  auto_complete = true,
-  format_on_save = true,
-  document_highlight = true,
-  lsp = {popup_border = "single"},
 }

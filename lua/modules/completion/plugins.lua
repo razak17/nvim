@@ -22,6 +22,7 @@ completion['hrsh7th/vim-vsnip'] = {
 
 completion['nvim-telescope/telescope.nvim'] = {
   cmd = 'Telescope',
+  event = "BufWinEnter",
   config = conf.telescope,
   requires = {
     {'nvim-lua/popup.nvim', opt = true},
