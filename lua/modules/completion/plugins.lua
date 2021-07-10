@@ -15,12 +15,12 @@ completion['mattn/emmet-vim'] = {
 }
 
 completion['hrsh7th/nvim-compe'] = {
-  event = {'BufRead', 'BufNewFile'},
+  event = "InsertEnter",
   config = conf.nvim_compe,
 }
 
 completion['hrsh7th/vim-vsnip'] = {
-  event = {'BufRead', 'BufNewFile'},
+  event = "InsertEnter",
   config = function() vim.g.vsnip_snippet_dir = core.__vsnip_dir end,
 }
 

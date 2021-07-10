@@ -9,7 +9,14 @@ if vim.fn.executable(core.__sumneko_binary) then
       Lua = {
         runtime = {version = "LuaJIT", path = vim.split(package.path, ';')},
         diagnostics = {enable = true, globals = {"vim", "packer_plugins"}},
-        workspace = {library = {[vim.fn.expand('$VIMRUNTIME/lua')] = true}},
+        workspace = {
+          library = {
+            [vim.fn.expand('$VIMRUNTIME/lua')] = true,
+            [vim.fn.expand "$VIMRUNTIME/lua/vim/lsp"] = true,
+          },
+          maxPreload = 100000,
+          preloadFileSize = 1000,
+        },
       },
     },
   }

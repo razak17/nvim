@@ -69,7 +69,7 @@ lang['kevinhwang91/nvim-bqf'] = {
 }
 
 lang['nvim-treesitter/nvim-treesitter'] = {
-  event = 'BufRead',
+  event = 'BufWinEnter',
   after = 'telescope.nvim',
   config = conf.nvim_treesitter,
 }

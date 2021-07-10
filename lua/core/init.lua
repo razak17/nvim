@@ -1,8 +1,8 @@
 local defer = function()
   vim.defer_fn(vim.schedule_wrap(function()
-    require('keymap')
-    require('core.binds')
-    require('core.autocommands')
+    require 'keymap'
+    require 'core.binds'
+    require 'core.autocommands'
     vim.defer_fn(function()
       vim.cmd [[syntax on]]
       vim.cmd [[filetype plugin indent on]]
@@ -11,10 +11,10 @@ local defer = function()
 end
 
 local load_core = function()
-  require('core.globals')
-  local plug = require('core.plug')
+  require 'core.globals'
+  local plug = require 'core.plug'
   require'internal.startup'.init()
-  require('core.opts')
+  require 'core.opts'
   plug.ensure_plugins()
   plug.load_compile()
 end

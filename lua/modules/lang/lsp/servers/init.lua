@@ -28,7 +28,7 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] =
     underline = true,
     update_in_insert = false,
     virtual_text = {spacing = 0, prefix = ''},
-    signs = {enable = true, priority = 20},
+    signs = true,
   })
 
 -- NOTE: the hover handler returns the bufnr,winnr so can be use for mappings

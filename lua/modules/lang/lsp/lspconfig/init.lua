@@ -1,5 +1,3 @@
-core.lsp = {}
-
 local command = core.command
 
 local get_cursor_pos = function() return {vim.fn.line('.'), vim.fn.col('.')} end

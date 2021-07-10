@@ -134,3 +134,5 @@ core.utils = {
   dapinstall_dir = core.__data_dir,
   transparent_window = false,
 }
+
+core.lsp = {}

@@ -14,11 +14,6 @@ vim.cmd('set iskeyword+=-')
 vim.go.t_Co = "256"
 vim.g.vimsyn_embed = "lPr" -- allow embedded syntax highlighting for lua,python and ruby
 
-if core.utils.transparent_window then
-  vim.cmd "au ColorScheme * hi Normal ctermbg=none guibg=none"
-  vim.cmd "au ColorScheme * hi SignColumn ctermbg=none guibg=none"
-end
-
 -- Neovim Directories
 set('udir', core.sets.udir)
 set('directory', core.sets.directory)
@@ -165,3 +160,8 @@ set('clipboard', core.sets.clipboard)
 set('shada', "!,'300,<50,@100,s10,h")
 set('viewoptions', 'cursor,folds')
 set('sessionoptions', 'curdir,help,tabpages,winsize')
+
+if core.utils.transparent_window then
+  vim.cmd "au ColorScheme * hi Normal ctermbg=none guibg=none"
+  vim.cmd "au ColorScheme * hi SignColumn ctermbg=none guibg=none"
+end

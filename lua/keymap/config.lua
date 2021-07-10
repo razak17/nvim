@@ -43,7 +43,7 @@ function _G.__enhance_jk_move(key)
 end
 
 function _G.__enhance_ft_move(key)
-  if not packer_plugins['vim-eft'].loaded then vim.cmd [[packadd vim-eft]] end
+  if not packer_plugins['vim-eft'] then vim.cmd [[packadd vim-eft]] end
   local map = {
     f = '<Plug>(eft-f)',
     F = '<Plug>(eft-F)',

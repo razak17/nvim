@@ -10,7 +10,7 @@ function config.gitsigns() require('modules.aesth.git_signs') end
 
 function config.nvim_tree() require('modules.aesth.nvim_tree') end
 
-function config.indent_blankline() require('modules.aesth.indent_blankline') end
+function config.indent_blankline() require('modules.aesth.indent_line') end
 
 return config
 
