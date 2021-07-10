@@ -1,7 +1,5 @@
 local vim = vim
 
-require('internal.folds')
-
 local function set(key, value) vim.opt[key] = value end
 
 vim.cmd [[

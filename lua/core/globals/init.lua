@@ -34,6 +34,19 @@ function core.deep_merge(t1, t2)
   return t1
 end
 
+---Determine if a value of any type is empty
+---@param item any
+---@return boolean
+function core.empty(item)
+  if not item then return true end
+  local item_type = type(item)
+  if item_type == "string" then
+    return item == ""
+  elseif item_type == "table" then
+    return vim.tbl_isempty(item)
+  end
+end
+
 function core.command(args)
   local nargs = args.nargs or 0
   local name = args[1]

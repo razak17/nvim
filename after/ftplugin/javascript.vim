@@ -1,2 +1,2 @@
-noremap <F10> :lua require 'internal.quickrun'.RunJS()<CR>
+noremap <F10> :call v:lua.RunJS()<CR>
 

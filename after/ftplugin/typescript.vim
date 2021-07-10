@@ -1,2 +1,3 @@
-noremap <F10> :lua require 'internal.quickrun'.RunTS()<CR>
+noremap <F10> :call v:lua.RunTS()<CR>
+
 

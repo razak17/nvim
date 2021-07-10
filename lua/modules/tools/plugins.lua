@@ -1,6 +1,8 @@
 local tools = {}
 local conf = require('modules.tools.config')
 
+-- tools['tjdevries/astronauta.nvim'] = {}
+
 tools['tpope/vim-fugitive'] = {
   event = 'VimEnter',
   disable = not core.plugin.fugitive.active,

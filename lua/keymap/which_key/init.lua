@@ -58,7 +58,7 @@ g.which_key_map = {
     name = '+Buffer',
     n = 'move next',
     b = 'move previous',
-    d = {name = '+Delete', A = 'all', h = 'to left', x = 'all except current'},
+    d = {name = '+Delete', a = 'all', h = 'to left', x = 'all except current'},
 
     s = 'word',
   },
@@ -162,7 +162,13 @@ g.which_key_map = {
     t = 'toggle line blame',
     u = 'undo stage hunk',
   },
-  I = {name = '+Info', c = 'check health', e = 'ts info', u = 'ts update'},
+  I = {
+    name = '+Info',
+    c = 'check health',
+    e = 'ts info',
+    m = 'messages',
+    u = 'ts update',
+  },
   l = {name = "+LocList", i = 'empty', s = 'toggle'},
   L = {name = '+LspUtils', i = 'info', l = 'log', r = 'restart'},
   n = {

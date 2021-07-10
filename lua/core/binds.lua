@@ -391,11 +391,19 @@ nnoremap('<Leader>,', ':e ~/.config/nvim/lua/core/init.lua<CR>')
 nnoremap('<Leader>.', ':e $MYVIMRC<CR>')
 nnoremap('<leader>aR', ':source $MYVIMRC')
 nnoremap('<Leader>Ic', ':checkhealth<CR>')
+nnoremap('<Leader>Im', ':messages<CR>')
 nnoremap('<Leader>vwm', function() ColorMyPencils() end)
 nnoremap('<leader>ar', function() EmptyRegisters() end)
 nnoremap('<Leader>;', function() OpenTerminal() end)
 nnoremap('<leader>ao', function() TurnOnGuides() end)
 nnoremap('<leader>ae', function() TurnOffGuides() end)
+
+-- Buffers
+nnoremap('<Leader><Leader>', ':call v:lua.DelThisBuffer()<CR>')
+nnoremap('<Leader>bdh', ':call v:lua.DelToLeft()<CR>')
+nnoremap('<Leader>bda', ':call v:lua.DelAllBuffers()<CR>')
+nnoremap('<Leader>bdx', ':call v:lua.DelAllExceptCurrent()<CR>')
+vim.cmd [[vnoremap <Leader>rev :s/\%V.\+\%V./\=utils#RevStr(submatch(0))<CR>gv]]
 
 -----------------------------------------------------------------------------//
 -- Commands
