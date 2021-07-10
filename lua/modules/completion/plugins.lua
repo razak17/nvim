@@ -17,7 +17,7 @@ completion['hrsh7th/nvim-compe'] = {
 
 completion['hrsh7th/vim-vsnip'] = {
   event = {'BufRead', 'BufNewFile'},
-  config = function() vim.g.vsnip_snippet_dir = core.__vim_path .. "/snippets" end,
+  config = function() vim.g.vsnip_snippet_dir = core.utils.vsnip_dir end,
 }
 
 completion['nvim-telescope/telescope.nvim'] = {
@@ -26,10 +26,22 @@ completion['nvim-telescope/telescope.nvim'] = {
   requires = {
     {'nvim-lua/popup.nvim', opt = true},
     {'nvim-lua/plenary.nvim', opt = true},
-    {'nvim-telescope/telescope-fzy-native.nvim', opt = true},
-    {'nvim-telescope/telescope-media-files.nvim', opt = true},
-    {'nvim-telescope/telescope-project.nvim', opt = true},
   },
+}
+
+completion['nvim-telescope/telescope-fzy-native.nvim'] = {
+  opt = true,
+  disable = not core.active.telescope_fzy,
+}
+
+completion['nvim-telescope/telescope-media-files.nvim'] = {
+  opt = true,
+  disable = not core.active.telescope_media_files,
+}
+
+completion['nvim-telescope/telescope-project.nvim'] = {
+  opt = true,
+  disable = not core.active.telescope_project,
 }
 
 return completion

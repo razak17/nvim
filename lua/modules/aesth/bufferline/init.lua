@@ -9,17 +9,16 @@ local options = {
   enforce_regular_tabs = false,
   diagnostics = "nvim_lsp",
   separator_style = {'', ''},
-  diagnostics_indicator = function()
-    return ''
-  end,
+  diagnostics_indicator = function() return '' end,
   numbers = "none",
   number_style = "superscript",
   show_buffer_close_icons = false,
   persist_buffer_sort = true,
-  always_show_bufferline = true
+  always_show_bufferline = true,
 }
 
-local bg = '#282a36'
+-- local bg = '#282a36'
+local bg = core.utils.transparent_window == true and 'none' or '#282a36'
 local bg_sel = '#4E525C'
 local base7 = '#9ca0a4'
 local fg_def = '#7e7e7e'
@@ -58,7 +57,7 @@ local highlights = {
   pick = {guifg = pick_fg, guibg = bg},
   pick_visible = {guifg = pick_fg, guibg = bg},
   pick_selected = {guifg = fg_info, guibg = bg},
-  indicator_selected = {guifg = bg, guibg = bg}
+  indicator_selected = {guifg = bg, guibg = bg},
 }
 
 require'bufferline'.setup {options = options, highlights = highlights}

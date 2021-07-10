@@ -2,9 +2,23 @@ local conf = require('modules.lang.config')
 
 local lang = {}
 
--- lang['mfussenegger/nvim-dap'] = {config = conf.dap}
+lang['mfussenegger/nvim-dap'] = {
+  event = 'BufReadPre',
+  config = conf.dap,
+  disable = not core.active.debug,
+}
 
--- lang['rcarriga/nvim-dap-ui'] = {config = conf.dap_ui}
+lang['rcarriga/nvim-dap-ui'] = {
+  event = 'BufReadPre',
+  config = conf.dap_ui,
+  disable = not core.active.debug,
+}
+
+lang['Pocco81/DAPInstall.nvim'] = {
+  event = 'BufReadPre',
+  config = conf.dapinstall,
+  disable = not core.active.dapinstall,
+}
 
 lang['neovim/nvim-lspconfig'] = {
   event = 'BufReadPre',
@@ -15,13 +29,12 @@ lang['neovim/nvim-lspconfig'] = {
   },
 }
 
--- lang['simrat39/symbols-outline.nvim'] = {
---   event = 'BufReadPre',
---   cmd = 'SymbolsOutline',
---   config = function()
---     require("symbols-outline").setup {show_guides = true}
---   end
--- }
+lang['simrat39/symbols-outline.nvim'] = {
+  event = 'BufReadPre',
+  cmd = 'SymbolsOutline',
+  config = function() require("symbols-outline").setup {show_guides = true} end,
+  disable = not core.active.symbols_outline,
+}
 
 lang['folke/trouble.nvim'] = {
   event = 'BufReadPre',
@@ -29,6 +42,7 @@ lang['folke/trouble.nvim'] = {
   config = function()
     require("trouble").setup {use_lsp_diagnostic_signs = true}
   end,
+  disable = not core.active.trouble,
 }
 
 lang['kevinhwang91/nvim-bqf'] = {
@@ -51,27 +65,35 @@ lang['kevinhwang91/nvim-bqf'] = {
       },
     })
   end,
+  disable = not core.active.bfq,
 }
 
 lang['nvim-treesitter/nvim-treesitter'] = {
   event = 'BufRead',
   after = 'telescope.nvim',
   config = conf.nvim_treesitter,
-  requires = {
-    {
-      "nvim-treesitter/playground",
-      cmd = "TSPlaygroundToggle",
-      module = "nvim-treesitter-playground",
-    },
-    {'p00f/nvim-ts-rainbow', after = 'nvim-treesitter'},
-    {'andymass/vim-matchup', after = 'nvim-treesitter'},
-    {
-      'windwp/nvim-ts-autotag',
-      opt = true,
-      after = 'nvim-treesitter',
-      event = "InsertLeavePre",
-    },
-  },
+}
+
+lang['nvim-treesitter/playground'] = {
+  cmd = "TSPlaygroundToggle",
+  module = "nvim-treesitter-playground",
+}
+
+lang['p00f/nvim-ts-rainbow'] = {
+  after = 'nvim-treesitter',
+  disable = not core.active.rainbow,
+}
+
+lang['andymass/vim-matchup'] = {
+  after = 'nvim-treesitter',
+  disable = not core.active.matchup,
+}
+
+lang['windwp/nvim-ts-autotag'] = {
+  opt = true,
+  after = 'nvim-treesitter',
+  event = "InsertLeavePre",
+  disable = not core.active.autotag,
 }
 
 return lang

@@ -7,7 +7,11 @@ local conf = require('modules.tools.config')
 
 -- tools['npxbr/glow.nvim'] = {run = ":GlowInstall", branch = "main"}
 
-tools['numToStr/FTerm.nvim'] = {event = "VimEnter", config = conf.fterm}
+tools['numToStr/FTerm.nvim'] = {
+  event = "VimEnter",
+  config = conf.fterm,
+  disable = not core.active.fterm,
+}
 
 tools['MattesGroeger/vim-bookmarks'] = {
   event = {'BufReadPre', 'BufNewFile'},

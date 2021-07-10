@@ -23,6 +23,7 @@ inoremap("<C-f>", "compe#scroll({ 'delta': +4 })", opts)
 inoremap("<C-d>", "compe#scroll({ 'delta': -4 })", opts)
 imap("<CR>", [[compe#confirm({ 'keys': "\<Plug>delimitMateCR", 'mode': '' })]],
   {noremap = true, expr = true})
+
 -- vsnip
 xmap("<C-x>", "<Plug>(vsnip-cut-text)")
 xmap("<C-l>", "<Plug>(vsnip-select-text)")
@@ -129,9 +130,9 @@ vmap("<leader>/", "<Plug>kommentary_visual_default")
 
 -- dap
 nnoremap('<leader>dc', '<cmd>lua require"dap".continue()<CR>')
-nnoremap('<leader>dso', '<cmd>lua require"dap".step_out()<CR>')
-nnoremap('<leader>dsv', '<cmd>lua require"dap".step_over()<CR>')
-nnoremap('<leader>dsi', '<cmd>lua require"dap".step_into()<CR>')
+nnoremap('<leader>du', '<cmd>lua require"dap".step_out()<CR>')
+nnoremap('<leader>do', '<cmd>lua require"dap".step_over()<CR>')
+nnoremap('<leader>di', '<cmd>lua require"dap".step_into()<CR>')
 nnoremap('<leader>dro', '<cmd>lua require"dap".repl.open()<CR>')
 nnoremap('<leader>drl', '<cmd>lua require"dap".repl.run_last()<CR>')
 nnoremap('<leader>dbt', '<cmd>lua require"dap".toggle_breakpoint()<CR>')

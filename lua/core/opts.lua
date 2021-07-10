@@ -14,10 +14,15 @@ vim.cmd('set iskeyword+=-')
 vim.go.t_Co = "256"
 vim.g.vimsyn_embed = "lPr" -- allow embedded syntax highlighting for lua,python and ruby
 
+if core.utils.transparent_window then
+  vim.cmd "au ColorScheme * hi Normal ctermbg=none guibg=none"
+  vim.cmd "au ColorScheme * hi SignColumn ctermbg=none guibg=none"
+end
+
 -- Neovim Directories
--- set('udir', core.sets.udir)
--- set('directory', core.sets.swap)
--- set('viewdir', core.sets.viewdir)
+set('udir', core.sets.udir)
+set('directory', core.sets.directory)
+set('viewdir', core.sets.viewdir)
 set('backupskip',
   '/tmp/*,$TMPDIR/*,$TMP/*,$TEMP/*,*/shm/*,/private/var/*,.vault.vim')
 
@@ -68,7 +73,8 @@ set('scrolloff', core.sets.scrolloff)
 set('more', false)
 set('title', true)
 set('titlelen', 70)
-set('titlestring', ' 🐬 %t %r %m')
+-- set('titlestring', ' 🐬 %t %r %m')
+set('titlestring', "%<%F%=%l/%L - nvim")
 set('titleold', '%{fnamemodify(getcwd(), ":t")}')
 set('pumheight', 15)
 set('pumblend', 10)
@@ -137,11 +143,11 @@ set('magic', true) -- list of words that change the behavior of the jumplist
 set('grepprg',
   [[rg --hidden --glob "!.git" --no-heading --smart-case --vimgrep --follow $*]])
 set('grepformat', '%f:%l:%c:%m')
-set('smartcase', true)
-set('ignorecase', true)
+set('smartcase', core.sets.smartcase)
+set('ignorecase', core.sets.ignorecase)
 set('infercase', true)
 set('incsearch', true)
-set('hlsearch', true)
+set('hlsearch', core.sets.hlsearch)
 set('wrapscan', true)
 set('showmatch', true)
 set('matchpairs', '(:),{:},[:]')

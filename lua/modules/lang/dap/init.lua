@@ -4,7 +4,9 @@ local vnoremap, nnoremap = core.vnoremap, core.nnoremap
 require('modules.lang.dap.javascript')
 require('modules.lang.dap.python')
 require('modules.lang.dap.go')
-require('modules.lang.dap.lua')
+require('modules.lang.dap.lua]]')
+
+vim.cmd [[packadd nvim-dap]]
 
 vim.fn.sign_define("DapBreakpoint",
   {text = "🛑", texthl = "", linehl = "", numhl = ""})

@@ -3,14 +3,11 @@ local actions = require('telescope.actions')
 if not packer_plugins['popup.nvim'].loaded then
   vim.cmd [[packadd popup.nvim]]
   vim.cmd [[packadd plenary.nvim]]
-  vim.cmd [[packadd telescope-fzy-native.nvim]]
-  vim.cmd [[packadd telescope-media-files.nvim]]
-  vim.cmd [[packadd telescope-project.nvim]]
 end
 
 require('telescope').setup({
   defaults = {
-    prompt_prefix = " ❯ ",
+    prompt_prefix = core.telescope.prompt_prefix,
     selection_caret = " ",
     sorting_strategy = "ascending",
     file_ignore_patterns = {
@@ -23,8 +20,8 @@ require('telescope').setup({
       ".venv/*",
       "__pycache__/*",
     },
-    layout_config = {height = 0.9, width = 0.9},
-    borderchars = {'─', '│', '─', '│', '┌', '┐', '┘', '└'},
+    layout_config = core.telescope.layout_config,
+    borderchars = core.telescope.borderchars,
     file_sorter = require'telescope.sorters'.get_fzy_sorter,
     file_previewer = require'telescope.previewers'.vim_buffer_cat.new,
     grep_previewer = require'telescope.previewers'.vim_buffer_vimgrep.new,
@@ -44,9 +41,21 @@ require('telescope').setup({
   },
 })
 
-require'telescope'.load_extension('media_files')
-require'telescope'.load_extension('fzy_native')
-require'telescope'.load_extension('project')
+if core.active.telescope_fzy then
+  vim.cmd [[packadd telescope-fzy-native.nvim]]
+  require'telescope'.load_extension('fzy_native')
+end
+
+if core.active.telescope_project then
+  vim.cmd [[packadd telescope-project.nvim]]
+  require'telescope'.load_extension('project')
+end
+
+if core.active.telescope_media_files then
+  vim.cmd [[packadd telescope-media-files.nvim]]
+  require'telescope'.load_extension('media_files')
+end
+
 require'telescope'.load_extension('grep_string_prompt')
 require'telescope'.load_extension('bg_selector')
 require'telescope'.load_extension('nvim_files')

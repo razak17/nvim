@@ -73,15 +73,18 @@ g.which_key_map = {
   },
   d = {
     name = '+Debug',
-    c = 'continue',
-    r = {name = '+Repl', o = 'open', l = 'run last'},
-    s = {name = '+Step', i = 'into', o = 'out', v = 'over'},
     b = {
       name = '+Breakpoints',
       l = 'set log point',
       s = 'set condition',
       t = 'toggle',
     },
+    B = 'set breakpoint',
+    c = 'continue',
+    i = 'step into',
+    o = 'step out',
+    r = {name = '+Repl', o = 'open', l = 'run last'},
+    v = 'step over',
   },
   e = {
     name = '+Fterm',

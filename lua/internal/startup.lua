@@ -44,9 +44,8 @@ local global_utils = function()
 end
 
 local map_leader = function()
-  g["mapleader"] = " "
-  g["maplocalleader"] = " "
-  g["completion_confirm_key"] = ""
+  g["mapleader"] = core.utils.leader_key
+  g["maplocalleader"] = core.utils.leader_key
 end
 
 M.init = function()

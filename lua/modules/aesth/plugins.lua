@@ -12,6 +12,7 @@ aesth['lukas-reineke/indent-blankline.nvim'] = {
   event = 'BufRead',
   branch = 'lua',
   config = conf.indent_blankline,
+  disable = not core.active.indent_line,
 }
 
 aesth['akinsho/nvim-bufferline.lua'] = {
@@ -24,6 +25,7 @@ aesth['kyazdani42/nvim-tree.lua'] = {
   event = {'BufRead', 'BufNewFile'},
   config = conf.nvim_tree,
   requires = {{"kyazdani42/nvim-web-devicons", opt = true}},
+  disable = not core.active.tree,
 }
 
 aesth['glepnir/galaxyline.nvim'] = {
