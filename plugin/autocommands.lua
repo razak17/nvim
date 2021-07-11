@@ -210,6 +210,19 @@ if vim.env.TMUX ~= nil then
   })
 end
 
+core.augroup("DapBehavior", {
+  {
+    events = {"FileType"},
+    targets = {
+      "dapui_scopes",
+      "dapui_breakpoints",
+      "dapui_stacks",
+      "dapui_watches",
+    },
+    command = "set laststatus=0",
+  },
+})
+
 local save_excluded = {"lua.luapad"}
 local function can_save()
   return core.empty(vim.bo.buftype) and not core.empty(vim.bo.filetype) and

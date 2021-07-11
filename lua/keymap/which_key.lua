@@ -206,15 +206,23 @@ g.which_key_map = {
 if core.plugin.debug.active then
   g.which_key_map.d = {
     name = '+Debug',
+    ['?'] = 'centered float ui',
+    a = 'attach',
+    A = 'attach remote',
     b = 'toggle breakpoint',
     B = 'set breakpoint',
     c = 'continue',
-    e = 'toggle repl',
-    i = 'step into',
+    e = 'toggle ui',
+    E = 'toggle repl',
+    i = "inspect",
+    k = 'up',
     l = 'osv launch',
-    L = 'run last repl',
-    o = 'step out',
-    v = 'step over',
+    L = 'run last',
+    n = 'down',
+    r = 'open repl in vsplit',
+    s = {name = "+Step", i = 'step into', o = 'step out', v = 'step over'},
+    S = 'stop',
+    x = 'disconnect',
   }
 end
 

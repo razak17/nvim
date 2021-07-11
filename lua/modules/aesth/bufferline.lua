@@ -56,7 +56,7 @@ local highlights = {
   separator_selected = {guifg = fg_warn, guibg = bg},
   pick = {guifg = pick_fg, guibg = bg},
   pick_visible = {guifg = pick_fg, guibg = bg},
-  pick_selected = {guifg = fg_info, guibg = bg},
+  pick_selected = {guifg = fg_info, guibg = bg_sel},
   indicator_selected = {guifg = bg, guibg = bg},
 }
 

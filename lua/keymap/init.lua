@@ -8,6 +8,7 @@ local vmap = core.vmap
 local nnoremap = core.nnoremap
 local inoremap = core.inoremap
 local tnoremap = core.tnoremap
+local vnoremap = core.vnoremap
 
 local opts = {expr = true}
 
@@ -164,16 +165,33 @@ end
 
 -- dap
 if core.plugin.debug.active then
+  nnoremap('<S-k>', ':lua require"dap".step_out()<CR>')
+  nnoremap('<S-v>', ':lua require"dap".step_over()<CR>')
+  nnoremap('<S-l>', ':lua require"dap".step_into()<CR>')
+  nnoremap('<leader>da', ':lua require"debug.helper".attach()<CR>')
+  nnoremap('<leader>dA', ':lua require"debug.helper".attachToRemote()<CR>')
   nnoremap('<leader>dc', ':lua require"dap".continue()<CR>')
-  nnoremap('<leader>du', ':lua require"dap".step_out()<CR>')
-  nnoremap('<leader>do', ':lua require"dap".step_over()<CR>')
-  nnoremap('<leader>di', ':lua require"dap".step_into()<CR>')
-  nnoremap('<leader>de', ':lua require"dap".repl.toggle()<CR>')
+  nnoremap('<leader>dk', ':lua require"dap".up()<CR>')
+  nnoremap('<leader>dn', ':lua require"dap".down()<CR>')
+  nnoremap('<leader>dE', ':lua require"dap".repl.toggle()<CR>')
   nnoremap('<leader>dl', ':lua require"osv".launch()<CR>')
-  nnoremap('<leader>dL', ':lua require"dap".repl.run_last()<CR>')
+  nnoremap('<leader>dx', ':lua require"dap".disconnect()<CR>')
+  nnoremap('<leader>dS', ':lua require"dap".stop()<CR>')
+  nnoremap('<leader>dL', ':lua require"dap".run_last()<CR>')
+  nnoremap('<leader>dr', ':lua require"dap".repl.open({}, "vsplit")<CR><C-w>l')
   nnoremap('<leader>db', ':lua require"dap".toggle_breakpoint()<CR>')
   nnoremap('<leader>dB',
     ':lua require"dap".set_breakpoint(vim.fn.input("Breakpoint condition: "))<CR>')
+end
+
+-- dapui
+if core.plugin.debug_ui.active then
+  nnoremap('<leader>de', ':lua require"dapui".toggle()<CR>')
+  nnoremap('<leader>di', ':lua require"dap.ui.variables".hover()<CR>')
+  -- nnoremap('<leader>di', ':lua require"dap.ui.widgets".hover()<CR>')
+  vnoremap('<leader>di', ':lua require"dap.ui.variables".visual_hover()<CR>')
+  vnoremap('<leader>d?',
+    ':lua local widgets=require"dap.ui.widgets";widgets.centered_float(widgets.scopes)<CR>')
 end
 
 -- Telescope

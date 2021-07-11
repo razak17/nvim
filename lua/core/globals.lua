@@ -26,6 +26,7 @@ core._python3 = core.__cache_dir .. 'venv' .. path_sep .. 'neovim' .. path_sep
 core.__plugins = core.__data_dir .. 'pack' .. path_sep
 core.__nvim_lsp = core.__cache_dir .. 'nvim_lsp' .. path_sep
 core.__dap_install_dir = core.__cache_dir .. path_sep .. 'dap/'
+core.__dap_python = core.__dap_install_dir .. 'python_dbg/bin/python'
 core.__dap_node = core.__dap_install_dir ..
                     'jsnode_dbg/vscode-node-debug2/out/src/nodeDebug.js'
 core.__vsnip_dir = core.__vim_path .. path_sep .. 'snippets'
