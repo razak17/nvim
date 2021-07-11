@@ -13,7 +13,6 @@ core.sets = {
   tabstop = 2,
   cmdheight = 2,
   cursorline = true,
-  shell = "/bin/zsh",
   scrolloff = 7,
   laststatus = 2,
   showtabline = 2,

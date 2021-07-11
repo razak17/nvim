@@ -109,14 +109,6 @@ core.augroup("TextYankHighlight", {
   },
 })
 
-core.augroup("FormatOptions", {
-  {
-    events = {"BufWinEnter"},
-    targets = {"*"},
-    command = "set formatoptions-=cro",
-  },
-})
-
 core.augroup("CustomColorColumn", {
   {
     events = {"FileType"},
@@ -146,12 +138,11 @@ core.augroup("PackerSetupInit", {
     },
     command = function()
       vim.cmd "source ~/.config/nvim/lua/core/defaults.lua"
-      -- vim.cmd "source ~/.config/nvim/lua/modules/completion/telescope.lua"
+      vim.cmd "source ~/.config/nvim/lua/modules/completion/telescope.lua"
       vim.cmd "source ~/.config/nvim/lua/modules/lang/lsp/lspconfig/init.lua"
       vim.cmd [[source $MYVIMRC]]
-      require'core.plug'.ensure_plugins()
-      vim.cmd ":PlugCompile"
-      vim.cmd ":PlugInstall"
+      -- vim.cmd ":PlugCompile"
+      -- vim.cmd ":PlugInstall"
       vim.notify "packer compiled..."
     end,
   },

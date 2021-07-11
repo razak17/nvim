@@ -77,6 +77,7 @@ editor['b3nj5m1n/kommentary'] = {
 
 editor['windwp/nvim-autopairs'] = {
   event = 'InsertEnter',
+  after = {"telescope.nvim"},
   config = function()
     require('nvim-autopairs').setup({
       disable_filetype = {'TelescopePrompt', 'vim'},

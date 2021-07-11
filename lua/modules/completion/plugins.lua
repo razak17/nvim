@@ -29,8 +29,8 @@ completion['nvim-lua/plenary.nvim'] = {opt = true}
 completion['nvim-lua/popup.nvim'] = {opt = true}
 
 completion['nvim-telescope/telescope.nvim'] = {
-  -- cmd = 'Telescope',
-  event = "BufRead",
+  cmd = 'Telescope',
+  event = "BufWinEnter",
   config = conf.telescope,
   requires = {},
 }

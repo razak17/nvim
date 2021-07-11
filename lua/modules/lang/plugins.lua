@@ -4,24 +4,28 @@ local lang = {}
 
 lang['mfussenegger/nvim-dap'] = {
   event = 'BufReadPre',
+  after = {"telescope.nvim"},
   config = conf.dap,
   disable = not core.plugin.debug.active,
 }
 
 lang['rcarriga/nvim-dap-ui'] = {
   event = 'BufReadPre',
+  after = {"telescope.nvim"},
   config = conf.dap_ui,
   disable = not core.plugin.debug_ui.active,
 }
 
 lang['Pocco81/DAPInstall.nvim'] = {
   event = 'BufReadPre',
+  after = {"telescope.nvim"},
   config = conf.dap_install,
   disable = not core.plugin.dap_install.active,
 }
 
 lang['jbyuki/one-small-step-for-vimkind'] = {
   event = 'BufReadPre',
+  after = {"telescope.nvim"},
   disable = not core.plugin.osv.active,
 }
 

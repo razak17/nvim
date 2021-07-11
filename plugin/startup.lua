@@ -1,5 +1,4 @@
 local g = vim.g
-local M = {}
 
 local disable_builtin_plugins = function()
   g["loaded_gzip"] = 1
