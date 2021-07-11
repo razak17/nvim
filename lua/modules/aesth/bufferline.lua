@@ -61,4 +61,3 @@ local highlights = {
 }
 
 require'bufferline'.setup {options = options, highlights = highlights}
-
