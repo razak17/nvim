@@ -33,12 +33,12 @@ aesth['glepnir/galaxyline.nvim'] = {
   branch = 'main',
   config = conf.galaxyline,
   requires = {{"kyazdani42/nvim-web-devicons", opt = true}},
+  disable = not core.plugin.statusline.active,
 }
 
 aesth['lewis6991/gitsigns.nvim'] = {
   event = {'BufRead', 'BufNewFile'},
   config = conf.gitsigns,
-  requires = {{'nvim-lua/plenary.nvim', opt = true}},
 }
 
 return aesth

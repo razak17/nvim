@@ -165,9 +165,9 @@ end
 
 -- dap
 if core.plugin.debug.active then
-  nnoremap('<S-k>', ':lua require"dap".step_out()<CR>')
-  nnoremap('<S-v>', ':lua require"dap".step_over()<CR>')
-  nnoremap('<S-l>', ':lua require"dap".step_into()<CR>')
+  -- nnoremap('<S-k>', ':lua require"dap".step_out()<CR>')
+  -- nnoremap('<S-v>', ':lua require"dap".step_over()<CR>')
+  -- nnoremap('<S-l>', ':lua require"dap".step_into()<CR>')
   nnoremap('<leader>da', ':lua require"debug.helper".attach()<CR>')
   nnoremap('<leader>dA', ':lua require"debug.helper".attachToRemote()<CR>')
   nnoremap('<leader>dc', ':lua require"dap".continue()<CR>')

@@ -136,12 +136,12 @@ core.augroup("CustomColorColumn", {
   },
 })
 
-core.augroup("UpdateVim", {
+core.augroup("PackerSetupInit", {
   {
     events = {"BufWritePost"},
     targets = {
       "$MYVIMRC",
-      core.__modules_dir .. "/**/*.lua",
+      core.__modules_dir .. "/*/*.lua",
       core.__vim_path .. '/lua/core/*.lua',
     },
     command = function()
@@ -152,8 +152,12 @@ core.augroup("UpdateVim", {
       require'core.plug'.ensure_plugins()
       vim.cmd ":PlugCompile"
       vim.cmd ":PlugInstall"
+      vim.notify "packer compiled..."
     end,
   },
+})
+
+core.augroup("UpdateVim", {
   {events = {"FocusLost"}, targets = {"*"}, command = "silent! wall"},
   -- Make windows equal size when vim resizes
   {events = {"VimResized"}, targets = {"*"}, command = "wincmd ="},
@@ -209,19 +213,6 @@ if vim.env.TMUX ~= nil then
     },
   })
 end
-
-core.augroup("DapBehavior", {
-  {
-    events = {"FileType"},
-    targets = {
-      "dapui_scopes",
-      "dapui_breakpoints",
-      "dapui_stacks",
-      "dapui_watches",
-    },
-    command = "set laststatus=0",
-  },
-})
 
 local save_excluded = {"lua.luapad"}
 local function can_save()

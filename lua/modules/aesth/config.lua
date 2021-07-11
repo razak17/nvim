@@ -29,7 +29,6 @@ function config.gitsigns()
         expr = true,
         "&diff ? '[g' : '<cmd>lua require\"gitsigns\".prev_hunk()<CR>'",
       },
-
       ['n <leader>hs'] = '<cmd>lua require"gitsigns".stage_hunk()<CR>',
       ['n <leader>hu'] = '<cmd>lua require"gitsigns".undo_stage_hunk()<CR>',
       ['n <leader>hr'] = '<cmd>lua require"gitsigns".reset_hunk()<CR>',
@@ -82,26 +81,20 @@ function config.indent_blankline()
   vim.g.indent_blankline_char = "│"
   vim.g.indent_blankline_show_first_indent_level = true
   vim.g.indent_blankline_filetype_exclude = {
-    "startify",
     "dashboard",
-    "dotooagenda",
     "log",
     "fugitive",
     "gitcommit",
     "packer",
-    "vimwiki",
     "markdown",
     "json",
     "txt",
     "outline",
     "help",
-    "todoist",
     "NvimTree",
-    "peekaboo",
     "git",
     "TelescopePrompt",
     "undotree",
-    "flutterToolsOutline",
     "", -- for all buffers without a file type
   }
   vim.g.indent_blankline_buftype_exclude = {"terminal", "nofile"}
@@ -120,7 +113,7 @@ function config.indent_blankline()
     "while",
     "for",
   }
-  -- because lazy load indent-blankline so need readd this autocmd
+  -- because lazy load indent-blankline so need read this autocmd
   vim.cmd('autocmd CursorMoved * IndentBlanklineRefresh')
 end
 

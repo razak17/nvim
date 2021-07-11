@@ -29,10 +29,10 @@ core.sets = {
 }
 
 core.plugin = {
-  debug = {active = true},
-  debug_ui = {active = true},
-  dap_install = {active = true},
-  osv = {active = true},
+  debug = {active = false},
+  debug_ui = {active = false},
+  dap_install = {active = false},
+  osv = {active = false},
   doge = {active = false},
   symbols_outline = {active = false},
   trouble = {active = false},
@@ -67,6 +67,8 @@ core.plugin = {
   dadbod = {active = false},
   surround = {active = true},
   saga = {active = false},
+  treesitter = {active = true},
+  statusline = {active = true},
 }
 
 core.telescope = {

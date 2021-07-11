@@ -11,11 +11,11 @@ end
 
 local load_core = function()
   require 'core.globals'
-  local plug = require 'core.plug'
   require 'core.opts'
+  local plug = require 'core.plug'
   plug.ensure_plugins()
   plug.load_compile()
 end
 
-defer()
 load_core()
+defer()

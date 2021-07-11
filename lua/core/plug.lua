@@ -124,7 +124,6 @@ function plugins.load_compile()
     "PlugCompile",
     [[call v:lua.require('core.plug').magic_compile()]],
   }
-  core.command {"PackerCompile", [[lua require('core.plug').compile()]]}
   core.command {"PlugInstall", [[lua require('core.plug').install()]]}
   core.command {"PlugSync", [[lua require('core.plug').sync()]]}
   core.command {"PlugClean", [[lua require('core.plug').clean()]]}
