@@ -164,16 +164,16 @@ end
 
 -- dap
 if core.plugin.debug.active then
-  nnoremap('<leader>dc', '<cmd>lua require"dap".continue()<CR>')
-  nnoremap('<leader>du', '<cmd>lua require"dap".step_out()<CR>')
-  nnoremap('<leader>do', '<cmd>lua require"dap".step_over()<CR>')
-  nnoremap('<leader>di', '<cmd>lua require"dap".step_into()<CR>')
-  nnoremap('<leader>de', '<cmd>lua require"dap".repl.toggle()<CR>')
-  nnoremap('<leader>dl', '<cmd>lua require"osv".launch()<CR>')
-  nnoremap('<leader>dL', '<cmd>lua require"dap".repl.run_last()<CR>')
-  nnoremap('<leader>db', '<cmd>lua require"dap".toggle_breakpoint()<CR>')
+  nnoremap('<leader>dc', ':lua require"dap".continue()<CR>')
+  nnoremap('<leader>du', ':lua require"dap".step_out()<CR>')
+  nnoremap('<leader>do', ':lua require"dap".step_over()<CR>')
+  nnoremap('<leader>di', ':lua require"dap".step_into()<CR>')
+  nnoremap('<leader>de', ':lua require"dap".repl.toggle()<CR>')
+  nnoremap('<leader>dl', ':lua require"osv".launch()<CR>')
+  nnoremap('<leader>dL', ':lua require"dap".repl.run_last()<CR>')
+  nnoremap('<leader>db', ':lua require"dap".toggle_breakpoint()<CR>')
   nnoremap('<leader>dB',
-    '<cmd>lua require"dap".set_breakpoint(vim.fn.input("Breakpoint condition: "))<CR>')
+    ':lua require"dap".set_breakpoint(vim.fn.input("Breakpoint condition: "))<CR>')
 end
 
 -- Telescope

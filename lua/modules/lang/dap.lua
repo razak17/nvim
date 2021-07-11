@@ -25,3 +25,21 @@ dap.configurations.lua = {
 dap.adapters.nlua = function(callback, config)
   callback {type = "server", host = config.host, port = config.port}
 end
+
+dap.configurations.javascript = {
+  {
+    type = 'node2',
+    request = 'launch',
+    program = '${workspaceFolder}/${file}',
+    cwd = vim.fn.getcwd(),
+    sourceMaps = true,
+    protocol = 'inspector',
+    console = 'integratedTerminal',
+  },
+}
+
+dap.adapters.node2 = {
+  type = 'executable',
+  command = 'node',
+  args = {core.__dap_node},
+}

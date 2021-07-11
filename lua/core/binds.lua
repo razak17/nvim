@@ -217,6 +217,8 @@ nnoremap("<Leader>az", ":q!<CR>")
 nmap('W', 'q')
 nnoremap('<Leader>x', ':q<CR>')
 nnoremap('<C-z>', ':undo<CR>')
+vnoremap('<C-z>', ':undo<CR>')
+inoremap('<C-z>', ':undo<CR>')
 
 -- Use control-c instead of escape
 nnoremap('<C-c>', '<Esc>')
