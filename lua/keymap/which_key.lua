@@ -134,25 +134,6 @@ g.which_key_map = {
       s = 'status',
     },
   },
-  -- g = {
-  --   name = '+Git',
-  --   a = 'fetch all',
-  --   b = 'branches',
-  --   A = 'blame',
-  --   c = {name = '+Commit', a = 'amend', m = 'message'},
-  --   C = 'checkout',
-  --   d = 'diff',
-  --   D = 'diff split',
-  --   h = 'diffget',
-  --   i = 'init',
-  --   k = 'diffget',
-  --   l = 'log',
-  --   e = 'push',
-  --   p = 'poosh',
-  --   P = 'pull',
-  --   r = 'remove',
-  --   s = 'status'
-  -- },
   h = {
     name = '+Gitsigns',
     b = 'blame line',
@@ -168,6 +149,7 @@ g.which_key_map = {
     e = 'ts info',
     m = 'messages',
     u = 'ts update',
+    v = 'vsplit vimrc',
   },
   l = {name = "+LocList", i = 'empty', s = 'toggle'},
   L = {name = '+LspUtils', i = 'info', l = 'log', r = 'restart'},
@@ -224,17 +206,14 @@ g.which_key_map = {
 if core.plugin.debug.active then
   g.which_key_map.d = {
     name = '+Debug',
-    b = {
-      name = '+Breakpoints',
-      l = 'set log point',
-      s = 'set condition',
-      t = 'toggle',
-    },
+    b = 'toggle breakpoint',
     B = 'set breakpoint',
     c = 'continue',
+    e = 'toggle repl',
     i = 'step into',
+    l = 'osv launch',
+    L = 'run last repl',
     o = 'step out',
-    r = {name = '+Repl', o = 'open', l = 'run last'},
     v = 'step over',
   }
 end
@@ -260,6 +239,28 @@ if core.plugin.far.active then
     i = 'search iteratively',
     r = 'replace in Project',
     z = 'undo',
+  }
+end
+
+if core.plugin.fugitive then
+  g.which_key_map.g = {
+    name = '+Git',
+    a = 'fetch all',
+    b = 'branches',
+    A = 'blame',
+    c = {name = '+Commit', a = 'amend', m = 'message'},
+    C = 'checkout',
+    d = 'diff',
+    D = 'diff split',
+    h = 'diffget',
+    i = 'init',
+    k = 'diffget',
+    l = 'log',
+    e = 'push',
+    p = 'poosh',
+    P = 'pull',
+    r = 'remove',
+    s = 'status',
   }
 end
 

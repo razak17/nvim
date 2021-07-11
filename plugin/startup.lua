@@ -48,12 +48,8 @@ local map_leader = function()
   g["maplocalleader"] = core.utils.leader_key
 end
 
-M.init = function()
-  disable_builtin_plugins()
-  disable_providers()
-  set_host_prog()
-  global_utils()
-  map_leader()
-end
-
-return M
+disable_builtin_plugins()
+disable_providers()
+set_host_prog()
+global_utils()
+map_leader()

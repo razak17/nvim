@@ -146,7 +146,7 @@ core.augroup("UpdateVim", {
     },
     command = function()
       vim.cmd "source ~/.config/nvim/lua/core/defaults.lua"
-      vim.cmd "source ~/.config/nvim/lua/modules/completion/telescope.lua"
+      -- vim.cmd "source ~/.config/nvim/lua/modules/completion/telescope.lua"
       vim.cmd "source ~/.config/nvim/lua/modules/lang/lsp/lspconfig/init.lua"
       vim.cmd [[source $MYVIMRC]]
       require'core.plug'.ensure_plugins()
@@ -175,7 +175,7 @@ core.augroup("WinBehavior", {
   {events = {"TermOpen"}, targets = {"*:zsh"}, command = "startinsert"},
   {
     events = {"TermOpen"},
-    targets = {"*:zsh"},
+    targets = {"*"},
     command = "set laststatus=0 nocursorline nonumber norelativenumber | autocmd BufLeave <buffer> set laststatus=2",
   },
   {events = {"InsertEnter"}, targets = {"*"}, command = "setlocal nocursorline"},

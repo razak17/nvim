@@ -342,7 +342,7 @@ nnoremap("0", "^")
 vnoremap("$", "g_")
 
 -- This line opens the vimrc in a vertical split
-nnoremap("<leader>ev", [[:vsplit $MYVIMRC<cr>]])
+nnoremap("<leader>Iv", [[:vsplit $MYVIMRC<cr>]])
 
 -- Quotes
 nnoremap([[<leader>"]], [[ciw"<c-r>""<esc>]])

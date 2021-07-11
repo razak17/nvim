@@ -67,3 +67,4 @@ core.augroup("TreesitterFolds", {
     command = "setlocal foldtext=v:lua.folds() foldmethod=expr foldexpr=nvim_treesitter#foldexpr()",
   },
 })
+

@@ -3,21 +3,22 @@ local conf = require('modules.lang.config')
 local lang = {}
 
 lang['mfussenegger/nvim-dap'] = {
-  event = "BufWinEnter",
   config = conf.dap,
   disable = not core.plugin.debug.active,
 }
 
 lang['rcarriga/nvim-dap-ui'] = {
-  event = "BufWinEnter",
   config = conf.dap_ui,
-  disable = not core.plugin.debug.active,
+  disable = not core.plugin.debug_ui.active,
 }
 
 lang['Pocco81/DAPInstall.nvim'] = {
-  event = "BufWinEnter",
-  config = conf.dapinstall,
-  disable = not core.plugin.dapinstall.active,
+  config = conf.dap_install,
+  disable = not core.plugin.dap_install.active,
+}
+
+lang['jbyuki/one-small-step-for-vimkind'] = {
+  disable = not core.plugin.osv.active,
 }
 
 lang['neovim/nvim-lspconfig'] = {

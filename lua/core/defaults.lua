@@ -29,9 +29,11 @@ core.sets = {
 }
 
 core.plugin = {
-  debug = {active = false},
+  debug = {active = true},
+  debug_ui = {active = true},
+  dap_install = {active = true},
+  osv = {active = true},
   doge = {active = false},
-  dapinstall = {active = false},
   symbols_outline = {active = false},
   trouble = {active = false},
   bfq = {active = true},

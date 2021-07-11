@@ -43,6 +43,7 @@ if core.plugin.accelerated_jk.active then
   nmap("n", 'v:lua.__enhance_jk_move("n")', {silent = true, expr = true})
   nmap("k", 'v:lua.__enhance_jk_move("k")', {silent = true, expr = true})
 end
+
 -- vim-eft
 if core.plugin.eft.active then
   nmap(";", "v:lua.__enhance_ft_move(';')", {expr = true})
@@ -140,18 +141,38 @@ nmap("<leader>/", "<Plug>kommentary_line_default")
 nmap("<leader>a/", "<Plug>kommentary_motion_default")
 vmap("<leader>/", "<Plug>kommentary_visual_default")
 
+-- Fugitive
+if core.plugin.fugitive.active then
+  nnoremap("<Leader>ga", ":Git fetch --all<CR>")
+  nnoremap("<Leader>gA", ":Git blame<CR>")
+  nnoremap("<Leader>gb", ":GBranches<CR>")
+  nnoremap("<Leader>gcm", ":Git commit<CR>")
+  nnoremap("<Leader>gca", ":Git commit --amend -m ")
+  nnoremap("<Leader>gC", ":Git checkout -b ")
+  nnoremap("<Leader>gd", ":Git diff<CR>")
+  nnoremap("<Leader>gD", ":Gdiffsplit<CR>")
+  nnoremap("<Leader>gh", ":diffget //3<CR>")
+  nnoremap("<Leader>gi", ":Git init<CR>")
+  nnoremap("<Leader>gk", ":diffget //2<CR>")
+  nnoremap("<Leader>gl", ":Git log<CR>")
+  nnoremap("<Leader>ge", ":Git push<CR>")
+  nnoremap("<Leader>gp", ":Git poosh<CR>")
+  nnoremap("<Leader>gP", ":Git pull<CR>")
+  nnoremap("<Leader>gr", ":GRemove<CR>")
+  nnoremap("<Leader>gs", ":G<CR>")
+end
+
 -- dap
 if core.plugin.debug.active then
   nnoremap('<leader>dc', '<cmd>lua require"dap".continue()<CR>')
   nnoremap('<leader>du', '<cmd>lua require"dap".step_out()<CR>')
   nnoremap('<leader>do', '<cmd>lua require"dap".step_over()<CR>')
   nnoremap('<leader>di', '<cmd>lua require"dap".step_into()<CR>')
-  nnoremap('<leader>dro', '<cmd>lua require"dap".repl.open()<CR>')
-  nnoremap('<leader>drl', '<cmd>lua require"dap".repl.run_last()<CR>')
-  nnoremap('<leader>dbt', '<cmd>lua require"dap".toggle_breakpoint()<CR>')
-  nnoremap('<leader>dbl',
-    '<cmd>lua require"dap".set_breakpoint(nil, nil, vim.fn.input("Log point message: "))<CR>')
-  nnoremap('<leader>dbs',
+  nnoremap('<leader>de', '<cmd>lua require"dap".repl.toggle()<CR>')
+  nnoremap('<leader>dl', '<cmd>lua require"osv".launch()<CR>')
+  nnoremap('<leader>dL', '<cmd>lua require"dap".repl.run_last()<CR>')
+  nnoremap('<leader>db', '<cmd>lua require"dap".toggle_breakpoint()<CR>')
+  nnoremap('<leader>dB',
     '<cmd>lua require"dap".set_breakpoint(vim.fn.input("Breakpoint condition: "))<CR>')
 end
 
