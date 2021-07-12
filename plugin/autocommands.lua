@@ -141,9 +141,9 @@ core.augroup("PackerSetupInit", {
       vim.cmd "source ~/.config/nvim/lua/modules/completion/telescope.lua"
       vim.cmd "source ~/.config/nvim/lua/modules/lang/lsp/lspconfig/init.lua"
       vim.cmd [[source $MYVIMRC]]
-      -- vim.cmd ":PlugCompile"
-      -- vim.cmd ":PlugInstall"
-      vim.notify "packer compiled..."
+      vim.cmd ":PlugCompile"
+      vim.cmd ":PlugInstall"
+      core.notify("packer compiled...", {timeout = 1000})
     end,
   },
 })

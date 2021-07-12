@@ -24,15 +24,11 @@ completion['hrsh7th/vim-vsnip'] = {
   config = function() vim.g.vsnip_snippet_dir = core.__vsnip_dir end,
 }
 
-completion['nvim-lua/plenary.nvim'] = {opt = true}
-
-completion['nvim-lua/popup.nvim'] = {opt = true}
-
 completion['nvim-telescope/telescope.nvim'] = {
-  cmd = 'Telescope',
   config = conf.telescope,
-  requires = {},
+  requires = {{'nvim-lua/plenary.nvim'}, {'nvim-lua/popup.nvim'}},
 }
+
 completion['nvim-telescope/telescope-fzy-native.nvim'] = {
   opt = true,
   disable = not core.plugin.telescope_fzy.active,

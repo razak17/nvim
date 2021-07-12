@@ -1,5 +1,4 @@
-local fn, uv, api = vim.fn, vim.loop, vim.api
-local modules_dir = core.__modules_dir
+local uv, api = vim.loop, vim.api
 local packer_compiled = vim.fn.stdpath('data') .. '/site/packer_compiled.vim'
 local compile_to_lua = vim.fn.stdpath('data') .. '/site/lua/_compiled.lua'
 local packer = nil
@@ -10,14 +9,7 @@ Plug.__index = Plug
 function Plug:load_plugins()
   self.repos = {}
 
-  local get_plugins_list = function()
-    local list = {}
-    local tmp = vim.split(fn.globpath(modules_dir, '*/plugins.lua'), '\n')
-    for _, f in ipairs(tmp) do list[#list + 1] = f:sub(#modules_dir - 6, -1) end
-    return list
-  end
-
-  local plugins_file = get_plugins_list()
+  local plugins_file = core.get_plugins_list()
   for _, m in ipairs(plugins_file) do
     local repos = require(m:sub(0, #m - 4))
     for repo, conf in pairs(repos) do
@@ -33,19 +25,22 @@ function Plug:load_packer()
   end
   packer.init({
     compile_path = packer_compiled,
+    auto_reload_compiled = true,
     git = {clone_timeout = 700},
+    disable_commands = true,
     display = {
       open_fn = function()
         return require('packer.util').float({border = 'single'})
       end,
     },
-    disable_commands = true,
   })
   packer.reset()
-  local use = packer.use
+  -- local use = packer.use
   self:load_plugins()
-  use {"wbthomason/packer.nvim", opt = true}
-  for _, repo in ipairs(self.repos) do use(repo) end
+  require("packer").startup(function(use)
+    use {"wbthomason/packer.nvim", opt = true}
+    for _, repo in ipairs(self.repos) do use(repo) end
+  end)
 end
 
 function Plug:init_ensure_plugins()
@@ -105,7 +100,7 @@ end
 
 function plugins.auto_compile()
   local file = vim.fn.expand('%:p')
-  if file:match(modules_dir) then
+  if file:match(core.__modules_dir) then
     plugins.clean()
     plugins.compile()
     plugins.convert_compile_file()

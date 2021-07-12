@@ -1,8 +1,5 @@
 local actions = require('telescope.actions')
 
-vim.cmd [[packadd plenary.nvim]]
-vim.cmd [[packadd popup.nvim]]
-
 require('telescope').setup({
   defaults = {
     prompt_prefix = core.telescope.prompt_prefix,

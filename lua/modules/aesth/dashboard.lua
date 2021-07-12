@@ -10,20 +10,24 @@ vim.g.dashboard_custom_section = {
     command = "SessionLoad",
   },
   find_history = {
-    description = join('  Recent files', '<leader>frr', 11),
+    description = join('  Recent files', '<leader>frr', 11),
     command = 'Telescope oldfiles',
   },
   find_file = {
-    description = join('  Find Files', '<leader>ff', 13),
+    description = join('  Find Files', '<leader>ff', 13),
     command = 'Telescope find_files',
   },
   find_word = {
-    description = join('  Find word', '<leader>flg', 14),
+    description = join('  Find word', '<leader>flg', 14),
     command = 'Telescope live_grep',
   },
   find_dotfiles = {
-    description = join('  Nvim files', '<leader>frc', 13),
+    description = join('  Nvim files', '<leader>frc', 13),
     command = 'Telescope nvim_files files',
+  },
+  global_config = {
+    description = join('  Global config', '<leader>fC', 10),
+    command = ":e " .. core.__vim_path .. "/lua/core/defaults.lua",
   },
 }
 

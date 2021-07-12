@@ -2,7 +2,7 @@ _GlobalCallbacks = _GlobalCallbacks or {}
 
 _G.core = {_store = _GlobalCallbacks}
 
-local api = vim.api
+local api, fn = vim.api, vim.fn
 local fmt = string.format
 
 local home = os.getenv("HOME")
@@ -192,6 +192,41 @@ local function make_mapper(mode, o)
   end
 end
 
+--- Check if a file or directory exists in this path
+function core._exists(file)
+  if file == '' or file == nil then return false end
+  local ok, err, code = os.rename(file, file)
+  if not ok then
+    if code == 13 then
+      -- Permission denied, but it exists
+      return true
+    end
+  end
+  return ok, err
+end
+
+function core.invalidate(path, recursive)
+  if recursive then
+    for key, value in pairs(package.loaded) do
+      if key ~= "_G" and value and vim.fn.match(key, path) ~= -1 then
+        package.loaded[key] = nil
+        require(key)
+      end
+    end
+  else
+    package.loaded[path] = nil
+    require(path)
+  end
+end
+
+function core.get_plugins_list()
+  local modules_dir = core.__modules_dir
+  local list = {}
+  local tmp = vim.split(fn.globpath(modules_dir, '*/plugins.lua'), '\n')
+  for _, f in ipairs(tmp) do list[#list + 1] = f:sub(#modules_dir - 6, -1) end
+  return list
+end
+
 local map_opts = {noremap = false, silent = true}
 core.map = make_mapper("", map_opts)
 core.nmap = make_mapper("n", map_opts)
@@ -212,20 +247,6 @@ core.onoremap = make_mapper("o", noremap_opts)
 core.tnoremap = make_mapper("t", noremap_opts)
 core.snoremap = make_mapper("s", noremap_opts)
 core.cnoremap = make_mapper("c", {noremap = true, silent = false})
-
-function core.invalidate(path, recursive)
-  if recursive then
-    for key, value in pairs(package.loaded) do
-      if key ~= "_G" and value and vim.fn.match(key, path) ~= -1 then
-        package.loaded[key] = nil
-        require(key)
-      end
-    end
-  else
-    package.loaded[path] = nil
-    require(path)
-  end
-end
 
 local function get_last_notification()
   for _, win in ipairs(api.nvim_list_wins()) do
@@ -269,7 +290,7 @@ function core.notify(lines, opts)
                 vim.o.cmdheight - 3
   local win = api.nvim_open_win(buf, false, {
     relative = "editor",
-    width = width + 2,
+    width = width,
     height = height,
     col = vim.o.columns - 2,
     row = row,
@@ -291,17 +312,4 @@ function core.notify(lines, opts)
       if api.nvim_win_is_valid(win) then api.nvim_win_close(win, true) end
     end, timeout)
   end
-end
-
---- Check if a file or directory exists in this path
-function core._exists(file)
-  if file == '' or file == nil then return false end
-  local ok, err, code = os.rename(file, file)
-  if not ok then
-    if code == 13 then
-      -- Permission denied, but it exists
-      return true
-    end
-  end
-  return ok, err
 end
