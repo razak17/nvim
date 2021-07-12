@@ -6,8 +6,8 @@ core.sets = {
   spell = false,
   spelllang = "en",
   textwidth = 80,
-  number = false,
-  relative_number = false,
+  number = true,
+  relative_number = true,
   numberwidth = 4,
   shiftwidth = 2,
   tabstop = 2,
@@ -29,6 +29,8 @@ core.sets = {
 }
 
 core.plugin = {
+  ALL = {disabled = true},
+  SANE = {active = false},
   debug = {active = false},
   debug_ui = {active = false},
   dap_install = {active = false},
@@ -47,7 +49,7 @@ core.plugin = {
   emmet = {active = false},
   dial = {active = false},
   far = {active = false},
-  cool = {active = true},
+  cool = {active = false},
   bookmarks = {active = false},
   colorizer = {active = false},
   delimitmate = {active = false},

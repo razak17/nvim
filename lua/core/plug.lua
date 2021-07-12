@@ -1,6 +1,6 @@
 local uv, api = vim.loop, vim.api
 local packer_compiled = vim.fn.stdpath('data') .. '/site/packer_compiled.vim'
-local compile_to_lua = vim.fn.stdpath('data') .. '/site/lua/_pcompiled.lua'
+local compile_to_lua = vim.fn.stdpath('data') .. '/site/lua/_tcompiled.lua'
 local packer = nil
 
 local Plug = {}

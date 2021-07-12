@@ -26,23 +26,13 @@ completion['hrsh7th/nvim-compe'] = {
 completion['hrsh7th/vim-vsnip'] = {
   event = "InsertEnter",
   config = function() vim.g.vsnip_snippet_dir = core.__vsnip_dir end,
+  disable = not core.plugin.compe.active,
 }
-
-completion['nvim-telescope/telescope.nvim'] =
-    {
-      cmd = 'Telescope',
-      config = conf.telescope,
-      requires = {
-        {'nvim-lua/popup.nvim', opt = true},
-        {'nvim-lua/plenary.nvim', opt = true},
-        {'nvim-telescope/telescope-fzy-native.nvim', opt = true},
-        {'nvim-telescope/telescope-media-files.nvim', opt = true},
-      }
-    }
 
 completion['nvim-telescope/telescope.nvim'] = {
   config = conf.telescope,
   requires = {{'nvim-lua/plenary.nvim'}, {'nvim-lua/popup.nvim'}},
+  disable = core.plugin.ALL.disabled,
 }
 
 completion['nvim-telescope/telescope-fzy-native.nvim'] = {

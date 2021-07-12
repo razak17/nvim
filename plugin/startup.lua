@@ -30,9 +30,15 @@ local disable_providers = function()
   g["loaded_perl_provider"] = 0
 end
 
+
 local set_host_prog = function()
-  g["python3_host_prog"] = core._python3 .. "bin" .. core.__path_sep .. "python"
-  g["node_host_prog"] = core._node
+  if vim.fn.has('nvim') then
+    g["python3_host_prog"] = core._python3 .. "bin" .. core.__path_sep .. "python"
+    g["node_host_prog"] = core._node
+  else
+    g["python3_host_prog"] = os.getenv("HOME") .. './.fnm/node-versions/v16.3.0/installation/bin/neovim-node-host'
+    g["node_host_prog"] = vim.fn.stdpath('cache') ..  '/venv/neovim/bin/python'
+  end
 end
 
 local global_utils = function()
@@ -49,6 +55,6 @@ end
 
 disable_builtin_plugins()
 disable_providers()
-set_host_prog()
+-- set_host_prog()
 global_utils()
 map_leader()

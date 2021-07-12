@@ -10,7 +10,7 @@ editor['rhysd/accelerated-jk'] = {
 
 editor['tpope/vim-surround'] = {
   event = {'BufReadPre', 'BufNewFile'},
-  disable = not core.plugin.surround.active,
+  disable = not core.plugin.surround.active or core.plugin.ALL.disabled,
 }
 
 editor['monaqa/dial.nvim'] = {
@@ -52,7 +52,7 @@ editor['Raimondi/delimitMate'] = {
 editor['romainl/vim-cool'] = {
   event = {'BufReadPre', 'BufNewFile'},
   config = function() vim.g.CoolTotalMatches = 1 end,
-  disable = not core.plugin.cool.active,
+  disable = not core.plugin.cool.active or core.plugin.ALL.disabled,
 }
 
 editor['kkoomen/vim-doge'] = {
@@ -74,6 +74,7 @@ editor['arecarn/vim-fold-cycle'] = {
 editor['b3nj5m1n/kommentary'] = {
   event = {'BufReadPre', 'BufNewFile'},
   config = conf.kommentary,
+  disable = core.plugin.ALL.disabled,
 }
 
 editor['windwp/nvim-autopairs'] = {

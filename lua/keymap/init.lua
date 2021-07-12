@@ -18,22 +18,26 @@ require('keymap.config')
 nmap("<BS>", "<Plug>(fold-cycle-close)")
 
 -- Compe
-inoremap("<C-Space>", "compe#complete()", opts)
-inoremap("<C-e>", "compe#close('<C-e>')", opts)
-inoremap("<C-f>", "compe#scroll({ 'delta': +4 })", opts)
-inoremap("<C-d>", "compe#scroll({ 'delta': -4 })", opts)
-imap("<CR>", [[compe#confirm('<CR>')]], {noremap = true, expr = true})
+if core.plugin.compe.active then
+  inoremap("<C-Space>", "compe#complete()", opts)
+  inoremap("<C-e>", "compe#close('<C-e>')", opts)
+  inoremap("<C-f>", "compe#scroll({ 'delta': +4 })", opts)
+  inoremap("<C-d>", "compe#scroll({ 'delta': -4 })", opts)
+  imap("<CR>", [[compe#confirm('<CR>')]], {noremap = true, expr = true})
+end
 
 -- vsnip
-xmap("<C-x>", "<Plug>(vsnip-cut-text)")
-xmap("<C-l>", "<Plug>(vsnip-select-text)")
-imap("<Tab>", "v:lua.__tab__complete()", opts)
-imap("<S-Tab>", "v:lua.__s_tab__complete()", opts)
-nnoremap('<Leader>cs', ':VsnipOpen<CR> 1<CR><CR>')
-imap("<C-l>", "vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'",
-  opts)
-smap("<C-l>", "vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'",
-  opts)
+if core.plugin.compe.active then
+  xmap("<C-x>", "<Plug>(vsnip-cut-text)")
+  xmap("<C-l>", "<Plug>(vsnip-select-text)")
+  imap("<Tab>", "v:lua.__tab__complete()", opts)
+  imap("<S-Tab>", "v:lua.__s_tab__complete()", opts)
+  nnoremap('<Leader>cs', ':VsnipOpen<CR> 1<CR><CR>')
+  imap("<C-l>", "vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'",
+    opts)
+  smap("<C-l>", "vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'",
+    opts)
+end
 
 -- Easy-align
 nmap('ga', '<Plug>(EasyAlign)')
