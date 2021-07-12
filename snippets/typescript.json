@@ -1,0 +1,21 @@
+{
+  "Log to the console with cl": {
+    "prefix": "cl",
+    "body": ["console.log($0);"],
+    "description": "Log to the console"
+  },
+  "log": {
+    "prefix": ["logg"],
+    "body": "console.log(${1:$TM_SELECTED_TEXT});"
+  },
+  "Normal Import": {
+    "prefix": "imm",
+    "body": ["import $0 from \"${1:module}\";"],
+    "description": "Imports normal package"
+  },
+  "Destructured Import": {
+    "prefix": "imd",
+    "body": ["import { $0 } from \"${1:module}\";"],
+    "description": "Imports destructured package"
+  }
+}

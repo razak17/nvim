@@ -1,21 +1,21 @@
-local startup = require 'internal.startup'
+local defer = function()
+  vim.defer_fn(vim.schedule_wrap(function()
+    require 'keymap'
+    require 'core.binds'
+    vim.defer_fn(function()
+      vim.cmd [[syntax on]]
+      vim.cmd [[filetype plugin indent on]]
+    end, 250)
+  end), 0)
+end
 
 local load_core = function()
-  startup.disable_builtin_plugins()
-  startup.disable_providers()
-  startup.set_host_prog()
-  startup.global_utils()
-  startup.map_leader()
-
-  local plug = require('core.plug')
-
-  require('core.opts')
-  require('core.binds')
-
+  require 'core.globals'
+  require 'core.opts'
+  local plug = require 'core.plug'
   plug.ensure_plugins()
   plug.load_compile()
-
-  require('keymap')
 end
 
 load_core()
+defer()
