@@ -15,7 +15,7 @@ local opts = {expr = true}
 require('keymap.config')
 
 -- vim-fold-cycle
-nmap("<BS>", "<Plug>(fold-cycle-close)")
+if core.plugin.fold_cycle.active then nmap("<BS>", "<Plug>(fold-cycle-close)") end
 
 -- Compe
 inoremap("<C-Space>", "compe#complete()", opts)
@@ -36,8 +36,10 @@ smap("<C-l>", "vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'",
   opts)
 
 -- Easy-align
-nmap('ga', '<Plug>(EasyAlign)')
-xmap('ga', '<Plug>(EasyAlign)')
+if core.plugin.easy_align.active then
+  nmap('ga', '<Plug>(EasyAlign)')
+  xmap('ga', '<Plug>(EasyAlign)')
+end
 
 -- accelerated jk
 if core.plugin.accelerated_jk.active then
@@ -82,13 +84,15 @@ if core.plugin.bookmarks.active then
 end
 
 -- markdown preview
-nnoremap('<Leader>om', ':MarkdownPreview<CR>')
+if core.plugin.markdown_preview.active then
+  nnoremap('<Leader>om', ':MarkdownPreview<CR>')
+end
 
 -- Glow
-nnoremap('<Leader>og', ':Glow<CR>')
+if core.plugin.glow.active then nnoremap('<Leader>og', ':Glow<CR>') end
 
 -- dadbob
-nnoremap('<Leader>od', ':DBUIToggle<CR>')
+if core.plugin.dadbod.active then nnoremap('<Leader>od', ':DBUIToggle<CR>') end
 
 -- Lsp
 nnoremap('<Leader>Li', ':LspInfo<CR>')

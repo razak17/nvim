@@ -1,7 +1,5 @@
 core.sets = {
   colorcolumn = "+1",
-  clipboard = "unnamedplus",
-  hidden = true,
   wrap = false,
   spell = false,
   spelllang = "en",
@@ -63,7 +61,7 @@ core.plugin = {
   undotree = {active = false},
   glow = {active = false},
   restconsole = {active = false},
-  markdownpreview = {active = false},
+  markdown_preview = {active = false},
   dadbod = {active = false},
   surround = {active = true},
   saga = {active = false},

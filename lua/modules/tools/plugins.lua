@@ -39,7 +39,7 @@ tools['diepm/vim-rest-console'] = {
 tools['iamcco/markdown-preview.nvim'] = {
   ft = 'markdown',
   config = function() vim.g.mkdp_auto_start = 0 end,
-  disable = not core.plugin.markdownpreview.active,
+  disable = not core.plugin.markdown_preview.active,
 }
 
 tools['brooth/far.vim'] = {

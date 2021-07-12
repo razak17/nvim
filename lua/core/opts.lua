@@ -39,13 +39,10 @@ set('expandtab', true)
 set('smartindent', true)
 
 -- Editor UI Appearance
-set('ruler', true)
 set('laststatus', core.sets.laststatus)
-set('showcmd', false)
 set('showtabline', core.sets.showtabline)
 set('showmode', false)
 set('showbreak', [[↪ ]])
-set('encoding', 'utf-8')
 set('background', 'dark')
 set('colorcolumn', core.sets.colorcolumn)
 set('cursorline', core.sets.cursorline)
@@ -57,7 +54,6 @@ set('scrolloff', core.sets.scrolloff)
 set('more', false)
 set('title', true)
 set('titlelen', 70)
--- set('titlestring', ' 🐬 %t %r %m')
 set('titlestring', "%<%F%=%l/%L - nvim")
 set('titleold', '%{fnamemodify(getcwd(), ":t")}')
 set('pumheight', 15)
@@ -67,7 +63,6 @@ set('cmdwinheight', 5)
 set('winblend', 10)
 set('winwidth', 30)
 set('winminwidth', 10)
-set('hidden', true)
 set('helpheight', 12)
 set('previewheight', 12)
 set('synmaxcol', 2500)
@@ -75,7 +70,6 @@ set('display', 'lastline')
 set('lazyredraw', true)
 set('equalalways', false)
 set('numberwidth', core.sets.numberwidth)
-set('fileencoding', 'utf-8')
 set('list', true)
 set('number', core.sets.number)
 set('signcolumn', 'yes')
@@ -87,13 +81,10 @@ set('fillchars',
   'vert:▕,fold: ,eob: ,diff:─,msgsep: ,foldopen:▾,foldsep:│,foldclose:▸,eob: ')
 
 -- Behavior
-set('hidden', core.sets.hidden)
 set('wrap', core.sets.wrap)
 set('spell', core.sets.spell)
 set('spelllang', core.sets.spelllang)
 set('eadirection', 'hor')
-set('swapfile', false)
-set('undofile', true)
 set('concealcursor', 'niv')
 set('conceallevel', 0)
 set('report', 2)
@@ -104,7 +95,6 @@ set('undolevels', 1000)
 set('shell', core.sets.shell)
 set('splitbelow', true)
 set('splitright', true)
-set('mouse', 'a')
 set('linebreak', true)
 set('maxmempattern', 1300)
 set('inccommand', 'nosplit')
@@ -120,7 +110,6 @@ set('showfulltag', true) -- Show tag and tidy search in completion
 set('joinspaces', false) -- Insert only one space when joining lines that contain sentence-terminating punctuation like `.`.
 set('jumpoptions', 'stack') -- list of words that change the behavior of the jumplist
 set('virtualedit', 'block') -- list of words that change the behavior of the jumplist
-set('magic', true) -- list of words that change the behavior of the jumplist
 
 -- Searching
 set('grepprg',
@@ -144,8 +133,6 @@ set('wildoptions', 'pum')
 set('wildignorecase', true)
 
 -- What to save for views and sessions:
-set('clipboard', core.sets.clipboard)
 set('shada', "!,'300,<50,@100,s10,h")
--- set('shada', "")
 set('viewoptions', 'cursor,folds')
 set('sessionoptions', 'curdir,help,tabpages,winsize')
