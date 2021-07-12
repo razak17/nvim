@@ -109,7 +109,7 @@ end
 
 function plugins.load_compile()
   if vim.fn.filereadable(compile_to_lua) == 1 then
-    require('_pcompiled')
+    require('_tcompiled')
   else
     assert(
       'Missing packer compile file Run PackerCompile Or PackerInstall to fix')

@@ -148,11 +148,11 @@ core.augroup("PackerSetupInit", {
   },
 })
 
--- core.augroup("UpdateVim", {
---   {events = {"FocusLost"}, targets = {"*"}, command = "silent! wall"},
---   -- Make windows equal size when vim resizes
---   {events = {"VimResized"}, targets = {"*"}, command = "wincmd ="},
--- })
+core.augroup("UpdateVim", {
+  {events = {"FocusLost"}, targets = {"*"}, command = "silent! wall"},
+  -- Make windows equal size when vim resizes
+  {events = {"VimResized"}, targets = {"*"}, command = "wincmd ="},
+})
 
 -- core.augroup("WinBehavior", {
 --   {

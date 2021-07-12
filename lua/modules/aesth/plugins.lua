@@ -26,7 +26,7 @@ aesth['akinsho/nvim-bufferline.lua'] = {
 aesth['kyazdani42/nvim-tree.lua'] = {
   event = {'BufRead', 'BufNewFile'},
   config = conf.nvim_tree,
-  disable = not core.plugin.tree.active or core.plugin.ALL.disabled,
+  disable = not core.plugin.SANE.active,
 }
 
 aesth['glepnir/galaxyline.nvim'] = {

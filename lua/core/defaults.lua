@@ -29,7 +29,6 @@ core.sets = {
 }
 
 core.plugin = {
-  ALL = {disabled = true},
   SANE = {active = false},
   debug = {active = false},
   debug_ui = {active = false},

@@ -32,7 +32,7 @@ completion['hrsh7th/vim-vsnip'] = {
 completion['nvim-telescope/telescope.nvim'] = {
   config = conf.telescope,
   requires = {{'nvim-lua/plenary.nvim'}, {'nvim-lua/popup.nvim'}},
-  disable = core.plugin.ALL.disabled,
+  disable = not core.plugin.SANE.active,
 }
 
 completion['nvim-telescope/telescope-fzy-native.nvim'] = {
