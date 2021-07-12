@@ -325,7 +325,7 @@ core.augroup("WhichKeyMode", {
   {
     events = {"FileType"},
     targets = {"which_key"},
-    command = "set laststatus=0 noshowmode | autocmd BufLeave <buffer> set laststatus=2",
+    command = "set laststatus=0",
   },
 })
 

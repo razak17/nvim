@@ -36,14 +36,14 @@ core.plugin = {
   doge = {active = false},
   symbols_outline = {active = false},
   trouble = {active = false},
-  bfq = {active = true},
+  bfq = {active = false},
   rainbow = {active = false},
   matchup = {active = false},
   autotag = {active = false},
   fold_cycle = {active = false},
   accelerated_jk = {active = true},
   easy_align = {active = false},
-  fterm = {active = true},
+  fterm = {active = false},
   emmet = {active = false},
   dial = {active = false},
   far = {active = false},
@@ -67,8 +67,12 @@ core.plugin = {
   dadbod = {active = false},
   surround = {active = true},
   saga = {active = false},
-  treesitter = {active = true},
-  statusline = {active = true},
+  treesitter = {active = false},
+  tabline = {active = false},
+  statusline = {active = false},
+  compe = {active = false},
+  git = {active = false},
+  autopairs = {active = false},
 }
 
 core.telescope = {
@@ -112,6 +116,7 @@ core.utils = {
 }
 
 core.lsp = {
+  active = false,
   hoverdiagnostics = true,
   format_on_save = true,
   document_highlight = true,

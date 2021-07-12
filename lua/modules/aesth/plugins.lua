@@ -4,7 +4,6 @@ local aesth = {}
 aesth['razak17/zephyr-nvim'] = {config = [[vim.cmd('colo zephyr')]]}
 
 aesth['glepnir/dashboard-nvim'] = {
-  -- event = {'BufRead', 'BufNewFile'},
   event = "BufWinEnter",
   config = conf.dashboard,
   disable = not core.plugin.dashboard.active,
@@ -21,6 +20,7 @@ aesth['akinsho/nvim-bufferline.lua'] = {
   event = {'BufRead'},
   config = conf.nvim_bufferline,
   requires = {{"kyazdani42/nvim-web-devicons"}},
+  disable = not core.plugin.tabline.active,
 }
 
 aesth['kyazdani42/nvim-tree.lua'] = {
@@ -35,6 +35,10 @@ aesth['glepnir/galaxyline.nvim'] = {
   disable = not core.plugin.statusline.active,
 }
 
-aesth['lewis6991/gitsigns.nvim'] = {event = {'BufRead'}, config = conf.gitsigns}
+aesth['lewis6991/gitsigns.nvim'] = {
+  event = {'BufRead'},
+  config = conf.gitsigns,
+  disable = not core.plugin.git.active,
+}
 
 return aesth

@@ -36,6 +36,7 @@ lang['neovim/nvim-lspconfig'] = {
     {'kosayoda/nvim-lightbulb', event = "BufReadPre"},
     {'glepnir/lspsaga.nvim', opt = true},
   },
+  disable = not core.lsp.active,
 }
 
 lang['simrat39/symbols-outline.nvim'] = {
@@ -87,6 +88,7 @@ lang['nvim-treesitter/nvim-treesitter'] = {
 lang['nvim-treesitter/playground'] = {
   cmd = "TSPlaygroundToggle",
   module = "nvim-treesitter-playground",
+  disable = not core.plugin.treesitter.active,
 }
 
 lang['p00f/nvim-ts-rainbow'] = {

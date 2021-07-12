@@ -19,7 +19,6 @@ editor['monaqa/dial.nvim'] = {
   disable = not core.plugin.dial.active,
 }
 
--- editor['itchyny/vim-cursorword'] = {event = 'BufRead'}
 editor['junegunn/vim-easy-align'] = {
   event = {'BufReadPre', 'BufNewFile'},
   disable = not core.plugin.easy_align.active,
@@ -85,6 +84,7 @@ editor['windwp/nvim-autopairs'] = {
       disable_filetype = {'TelescopePrompt', 'vim'},
     })
   end,
+  disable = not core.plugin.autopairs.active,
 }
 
 return editor

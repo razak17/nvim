@@ -1,29 +1,26 @@
 local completion = {}
 local conf = require 'modules.completion.config'
 
-completion['liuchengxu/vim-which-key'] = {event = 'VimEnter', config = conf.which_key}
-
-completion['hrsh7th/nvim-compe'] = {
-  event = 'InsertEnter',
-  config = conf.nvim_compe
-}
-
 completion['liuchengxu/vim-which-key'] = {
   event = 'VimEnter',
   config = conf.which_key,
 }
 
-completion['rafamadriz/friendly-snippets'] = {event = 'InsertEnter'}
+completion['rafamadriz/friendly-snippets'] = {
+  event = 'InsertEnter',
+  disable = not core.plugin.compe.active,
+}
 
 completion['mattn/emmet-vim'] = {
   event = 'InsertEnter',
   config = conf.emmet,
-  disable = not core.plugin.emmet.active,
+  disable = not core.plugin.emmet.active and not core.plugin.compe.active,
 }
 
 completion['hrsh7th/nvim-compe'] = {
   event = "InsertEnter",
   config = conf.nvim_compe,
+  disable = not core.plugin.compe.active,
 }
 
 completion['hrsh7th/vim-vsnip'] = {
