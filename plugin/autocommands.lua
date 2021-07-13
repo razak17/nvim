@@ -3,38 +3,90 @@ local api = vim.api
 local fmt = string.format
 local contains = vim.tbl_contains
 
-local column_exclude = {"gitcommit"}
-local column_clear = {
-  "dashboard",
-  "Packer",
-  "qf",
+local not_eligible = not vim.bo.modifiable or not vim.bo.buflisted or
+                       vim.bo.buftype ~= "" and vim.bo.buftype ~= "terminal" and
+                       vim.wo.previewwindow
+
+vim.api.nvim_exec([[
+   augroup vimrc -- Ensure all autocommands are cleared
+   autocmd!
+   augroup END
+  ]], "")
+
+local smart_close_filetypes = {
   "help",
-  "text",
-  "Trouble",
+  "git-status",
+  "git-log",
+  "gitcommit",
+  "dbui",
   "fugitive",
+  "fugitiveblame",
+  "LuaTree",
   "log",
+  "tsplayground",
+  "qf",
 }
 
---- Set or unset the color column depending on the filetype of the buffer and its eligibility
----@param leaving boolean?
-local function check_color_column(leaving)
-  if contains(column_exclude, vim.bo.filetype) then return end
-
-  local not_eligible = not vim.bo.modifiable or not vim.bo.buflisted or
-                         vim.bo.buftype ~= ""
-  if contains(column_clear, vim.bo.filetype) or not_eligible then
-    vim.cmd("setlocal colorcolumn=0")
-    return
-  end
-  if api.nvim_win_get_width(0) <= 85 and leaving then
-    -- only reset this value when it doesn't already exist
-    vim.cmd("setlocal nocursorline colorcolumn=0")
-  elseif leaving then
-    vim.cmd("setlocal nocursorline")
-  else
-    vim.cmd("setlocal cursorline")
-  end
+local function smart_close()
+  if fn.winnr "$" ~= 1 then api.nvim_win_close(0, true) end
 end
+
+core.augroup("SmartClose", {
+  {
+    -- Auto open grep quickfix window
+    events = {"QuickFixCmdPost"},
+    targets = {"*grep*"},
+    command = "cwindow",
+  },
+  {
+    -- Close certain filetypes by pressing q.
+    events = {"FileType"},
+    targets = {"*"},
+    command = function()
+      local is_readonly = (vim.bo.readonly or not vim.bo.modifiable) and
+                            fn.hasmapto("q", "n") == 0
+
+      local is_eligible = vim.bo.buftype ~= "" or is_readonly or
+                            vim.wo.previewwindow or
+                            contains(smart_close_filetypes, vim.bo.filetype)
+
+      if is_eligible then
+        core.nnoremap("q", smart_close, {buffer = 0, nowait = true})
+      end
+    end,
+  },
+  {
+    -- Close quick fix window if the file containing it was closed
+    events = {"BufEnter"},
+    targets = {"*"},
+    command = function()
+      if fn.winnr "$" == 1 and vim.bo.buftype == "quickfix" then
+        api.nvim_buf_delete(0, {force = true})
+      end
+    end,
+  },
+  {
+    -- automatically close corresponding loclist when quitting a window
+    events = {"QuitPre"},
+    targets = {"*"},
+    modifiers = {"nested"},
+    command = function()
+      if vim.bo.filetype ~= "qf" then vim.cmd "silent! lclose" end
+    end,
+  },
+})
+
+core.augroup("ExternalCommands", {
+  {
+    -- Open images in an image viewer (probably Preview)
+    events = {"BufEnter"},
+    targets = {"*.png,*.jpg,*.gif"},
+    command = function()
+      vim.cmd(fmt('silent! "%s | :bw"',
+        vim.g.open_command .. " " .. fn.expand "%"))
+    end,
+  },
+})
 
 core.augroup("CheckOutsideTime", {
   {
@@ -109,14 +161,34 @@ core.augroup("TextYankHighlight", {
   },
 })
 
+local column_exclude = {"gitcommit"}
+local column_clear = {
+  "dashboard",
+  "Packer",
+  "qf",
+  "help",
+  "text",
+  "Trouble",
+  "fugitive",
+  "log",
+}
+
+--- Set or unset the color column depending on the filetype of the buffer and its eligibility
+---@param leaving boolean?
+local function check_color_column(leaving)
+  if contains(column_exclude, vim.bo.filetype) then return end
+  local small_window = api.nvim_win_get_width(0) <= vim.bo.textwidth + 1
+  local is_last_win = #api.nvim_list_wins() == 1
+  if contains(column_clear, vim.bo.filetype) or not_eligible or
+    (leaving and not is_last_win) or small_window then
+    vim.wo.colorcolumn = ""
+    return
+  end
+  if vim.wo.colorcolumn == "" then vim.wo.colorcolumn = "+1" end
+end
+
 core.augroup("CustomColorColumn", {
   {
-    events = {"FileType"},
-    targets = column_clear,
-    command = "setlocal nocursorline colorcolumn=0",
-  },
-  {
-    -- Update the cursor column to match current window size
     events = {"VimResized", "FocusGained", "WinEnter", "BufEnter"},
     targets = {"*"},
     command = function() check_color_column() end,
@@ -128,21 +200,49 @@ core.augroup("CustomColorColumn", {
   },
 })
 
+--- Set or unset the cursor line depending on the filetype of the buffer and its eligibility
+---@param leaving boolean?
+local function check_cursor_line(leaving)
+  if contains(column_exclude, vim.bo.filetype) then return end
+  if contains(column_clear, vim.bo.filetype) or not_eligible or leaving then
+    vim.wo.cursorline = false
+    return
+  end
+  if vim.wo.cursorline == false then vim.wo.cursorline = true end
+end
+
+core.augroup("CursorLineBehaviour", {
+  {
+    events = {"VimResized", "FocusGained", "WinEnter", "BufEnter"},
+    targets = {"*"},
+    command = function() check_cursor_line() end,
+  },
+  {
+    events = {"FocusLost", "WinLeave"},
+    targets = {"*"},
+    command = function() check_cursor_line(true) end,
+  },
+})
+
 core.augroup("PackerSetupInit", {
   {
     events = {"BufWritePost"},
-    targets = {
-      "$MYVIMRC",
-      core.__modules_dir .. "/*/*.lua",
-      core.__vim_path .. '/lua/core/*.lua',
-    },
+    targets = {"$MYVIMRC", core.__vim_path .. '/lua/core/*.lua'},
     command = function()
       vim.cmd "source ~/.config/nvim/lua/core/defaults.lua"
-      vim.cmd "source ~/.config/nvim/lua/modules/completion/telescope.lua"
+      vim.cmd "source ~/.config/nvim/lua/core/opts.lua"
+      vim.cmd "source ~/.config/nvim/lua/core/binds.lua"
+      vim.cmd "source ~/.config/nvim/lua/keymap/init.lua"
+      core.notify("packer compiled...", {timeout = 1000})
+    end,
+  },
+  {
+    events = {"BufWritePost"},
+    targets = {"$MYVIMRC", core.__modules_dir .. "/*/*.lua"},
+    command = function()
       vim.cmd "source ~/.config/nvim/lua/modules/lang/lsp/lspconfig/init.lua"
+      -- vim.cmd ":PlugInstall"
       vim.cmd [[source $MYVIMRC]]
-      vim.cmd ":PlugCompile"
-      vim.cmd ":PlugInstall"
       core.notify("packer compiled...", {timeout = 1000})
     end,
   },

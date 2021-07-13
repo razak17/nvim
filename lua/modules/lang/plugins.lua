@@ -36,6 +36,7 @@ lang['neovim/nvim-lspconfig'] = {
     {'kosayoda/nvim-lightbulb', event = "BufReadPre"},
     {'glepnir/lspsaga.nvim', opt = true},
   },
+  disable = not core.plugin.SANE.active,
 }
 
 lang['simrat39/symbols-outline.nvim'] = {
@@ -74,36 +75,38 @@ lang['kevinhwang91/nvim-bqf'] = {
       },
     })
   end,
-  disable = not core.plugin.bfq.active,
+  disable = not core.plugin.bfq.active or not core.plugin.SANE.active,
+
 }
 
 lang['nvim-treesitter/nvim-treesitter'] = {
   event = 'BufWinEnter',
   after = 'telescope.nvim',
   config = conf.nvim_treesitter,
-  disable = not core.plugin.treesitter.active,
+  disable = not core.plugin.treesitter.active or not core.plugin.SANE.active,
 }
 
 lang['nvim-treesitter/playground'] = {
   cmd = "TSPlaygroundToggle",
   module = "nvim-treesitter-playground",
+  disable = not core.plugin.SANE.active,
 }
 
 lang['p00f/nvim-ts-rainbow'] = {
   after = 'nvim-treesitter',
-  disable = not core.plugin.rainbow.active,
+  disable = not core.plugin.rainbow.active or not core.plugin.SANE.active,
 }
 
 lang['andymass/vim-matchup'] = {
   after = 'nvim-treesitter',
-  disable = not core.plugin.matchup.active,
+  disable = not core.plugin.matchup.active or not core.plugin.SANE.active,
 }
 
 lang['windwp/nvim-ts-autotag'] = {
   opt = true,
   after = 'nvim-treesitter',
   event = "InsertLeavePre",
-  disable = not core.plugin.autotag.active,
+  disable = not core.plugin.autotag.active or not core.plugin.SANE.active,
 }
 
 return lang

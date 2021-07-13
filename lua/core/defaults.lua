@@ -1,3 +1,4 @@
+-- opts
 core.sets = {
   colorcolumn = "+1",
   wrap = false,
@@ -27,46 +28,55 @@ core.sets = {
 }
 
 core.plugin = {
+  SANE = {active = true},
+  -- debug
   debug = {active = false},
   debug_ui = {active = false},
   dap_install = {active = false},
   osv = {active = false},
-  doge = {active = false},
+  -- lsp
+  saga = {active = false},
   symbols_outline = {active = false},
-  trouble = {active = false},
   bfq = {active = true},
+  trouble = {active = false},
+  -- treesitter
+  treesitter = {active = true},
   rainbow = {active = false},
   matchup = {active = false},
   autotag = {active = false},
+  -- editor
+  doge = {active = false},
   fold_cycle = {active = false},
   accelerated_jk = {active = true},
   easy_align = {active = false},
-  fterm = {active = true},
-  emmet = {active = false},
-  dial = {active = false},
-  far = {active = false},
   cool = {active = true},
-  bookmarks = {active = false},
-  colorizer = {active = false},
   delimitmate = {active = false},
-  dashboard = {active = true},
   eft = {active = false},
   cursorword = {active = false},
-  indent_line = {active = false},
-  tree = {active = true},
-  telescope_fzy = {active = true},
-  telescope_project = {active = false},
-  telescope_media_files = {active = false},
-  fugitive = {active = false},
+  surround = {active = true},
+  dial = {active = false},
+  -- tools
+  fterm = {active = true},
+  far = {active = false},
+  bookmarks = {active = false},
+  colorizer = {active = false},
   undotree = {active = false},
+  fugitive = {active = false},
   glow = {active = false},
   restconsole = {active = false},
   markdown_preview = {active = false},
   dadbod = {active = false},
-  surround = {active = true},
-  saga = {active = false},
-  treesitter = {active = true},
+  -- aesth
+  indent_line = {active = false},
+  tree = {active = true},
   statusline = {active = true},
+  git_signs = {active = false},
+  dashboard = {active = true},
+  -- completion
+  emmet = {active = false},
+  telescope_fzy = {active = true},
+  telescope_project = {active = false},
+  telescope_media_files = {active = false},
 }
 
 core.telescope = {

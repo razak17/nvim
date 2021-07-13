@@ -113,6 +113,7 @@ function plugins.load_compile()
   else
     assert(
       'Missing packer compile file Run PackerCompile Or PackerInstall to fix')
+    plugins.install()
     plugins.magic_compile()
   end
   core.command {
