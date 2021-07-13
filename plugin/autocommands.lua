@@ -213,6 +213,11 @@ end
 
 core.augroup("CursorLineBehaviour", {
   {
+    events = {"InsertEnter"},
+    targets = {"*"},
+    command = "setlocal nocursorline | autocmd InsertLeave <buffer> set cursorline",
+  },
+  {
     events = {"VimResized", "FocusGained", "WinEnter", "BufEnter"},
     targets = {"*"},
     command = function() check_cursor_line() end,
@@ -275,7 +280,6 @@ core.augroup("WinBehavior", {
     targets = {"*"},
     command = "set laststatus=0 nocursorline nonumber norelativenumber | autocmd BufLeave <buffer> set laststatus=2",
   },
-  {events = {"InsertEnter"}, targets = {"*"}, command = "setlocal nocursorline"},
 })
 
 -- Plugins

@@ -122,12 +122,12 @@ nnoremap('<Leader>bn', ':BufferLineMoveNext<CR>')
 nnoremap('gb', ':BufferLinePick<CR>')
 
 -- Packer
-nnoremap('<Leader>Pc', ':PlugCompile<CR>')
-nnoremap('<Leader>PC', ':PlugClean<CR>')
-nnoremap('<Leader>Pi', ':PlugInstall<CR>')
-nnoremap('<Leader>Ps', ':PlugSync<CR>')
-nnoremap('<Leader>PS', ':PlugStatus<CR>')
-nnoremap('<Leader>PU', ':PlugUpdate<CR>')
+nnoremap('<Leader>Ec', ':PlugCompile<CR>')
+nnoremap('<Leader>EC', ':PlugClean<CR>')
+nnoremap('<Leader>Ei', ':PlugInstall<CR>')
+nnoremap('<Leader>Es', ':PlugSync<CR>')
+nnoremap('<Leader>ES', ':PlugStatus<CR>')
+nnoremap('<Leader>Ee', ':PlugUpdate<CR>')
 
 -- FTerm
 if core.plugin.fterm.active then

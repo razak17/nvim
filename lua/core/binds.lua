@@ -181,7 +181,7 @@ nnoremap('<C-l>', '<C-w>l')
 -- Start new line from any cursor position
 inoremap("<S-Return>", "<C-o>o")
 
-nnoremap("<leader>E", function() inspect_token() end, {silent = false})
+nnoremap("<leader>aE", function() inspect_token() end, {silent = false})
 
 -- Use alt + hjkl to resize windows
 nnoremap('<M-n>', ':resize -2<CR>')
@@ -293,11 +293,13 @@ vnoremap("//", [[y/<C-R>"<CR>]])
 
 -- Windows
 -- Change two horizontally split windows to vertical splits
-nnoremap("<localleader>wh", "<C-W>t <C-W>K")
+nnoremap("<localleader>wv", "<C-W>t <C-W>H<C-W>=")
 -- Change two vertically split windows to horizontal splits
-nnoremap("<localleader>wv", "<C-W>t <C-W>H")
+nnoremap("<localleader>wh", "<C-W>t <C-W>K<C-W>=")
+-- opens a vertical split
+nnoremap("<Leader>av", "<C-W>vgf")
 -- opens a horizontal split
-nnoremap("<C-w>f", "<C-w>vgf")
+nnoremap("<Leader>ah", "<C-W>s")
 -- find visually selected text
 vnoremap("*", [[y/<C-R>"<CR>]])
 -- make . work with visually selected lines
@@ -391,11 +393,11 @@ nnoremap("<leader>li", function() toggle_list("l") end)
 -- Other remaps
 nnoremap('<Leader>,', ':e ~/.config/nvim/lua/core/init.lua<CR>')
 nnoremap('<Leader>.', ':e $MYVIMRC<CR>')
-nnoremap('<leader>aR', ':source $MYVIMRC')
+nnoremap('<leader><CR>', ':source $MYVIMRC<CR>')
 nnoremap('<Leader>Ic', ':checkhealth<CR>')
 nnoremap('<Leader>Im', ':messages<CR>')
 nnoremap('<Leader>vwm', function() ColorMyPencils() end)
-nnoremap('<leader>ar', function() EmptyRegisters() end)
+nnoremap('<leader>aR', function() EmptyRegisters() end)
 nnoremap('<Leader>;', function() OpenTerminal() end)
 nnoremap('<leader>ao', function() TurnOnGuides() end)
 nnoremap('<leader>ae', function() TurnOffGuides() end)
