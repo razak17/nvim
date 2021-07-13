@@ -1,6 +1,5 @@
 -- opts
 core.sets = {
-  colorcolumn = "+1",
   wrap = false,
   spell = false,
   spelllang = "en",
@@ -11,7 +10,6 @@ core.sets = {
   shiftwidth = 2,
   tabstop = 2,
   cmdheight = 2,
-  cursorline = true,
   shell = "/bin/zsh",
   scrolloff = 7,
   laststatus = 2,
