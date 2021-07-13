@@ -233,6 +233,7 @@ core.augroup("PackerSetupInit", {
       vim.cmd "source ~/.config/nvim/lua/core/opts.lua"
       vim.cmd "source ~/.config/nvim/lua/core/binds.lua"
       vim.cmd "source ~/.config/nvim/lua/keymap/init.lua"
+      vim.cmd "source ~/.config/nvim/lua/modules/lang/lsp/lspconfig/init.lua"
       core.notify("packer compiled...", {timeout = 1000})
     end,
   },

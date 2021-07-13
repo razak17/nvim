@@ -65,7 +65,7 @@ set('winwidth', 30)
 set('winminwidth', 10)
 set('helpheight', 12)
 set('previewheight', 12)
-set('synmaxcol', 2500)
+set('synmaxcol', 1024)
 set('display', 'lastline')
 set('lazyredraw', true)
 set('equalalways', false)
@@ -80,17 +80,21 @@ set('diffopt',
 set('fillchars',
   'vert:▕,fold: ,eob: ,diff:─,msgsep: ,foldopen:▾,foldsep:│,foldclose:▸,eob: ')
 
+-- Spelling
+set('spelllang', core.sets.spelllang)
+vim.opt.spellsuggest:prepend{12}
+set('spell', core.sets.spell)
+set('spelloptions', 'camel')
+set('spellcapcheck', '') -- don't check for capital letters at start of sentence
+set('fileformats', {"unix", "mac", "dos"}) -- don't check for capital letters at start of sentence
+
 -- Behavior
 set('wrap', core.sets.wrap)
-set('spell', core.sets.spell)
-set('spelllang', core.sets.spelllang)
 set('eadirection', 'hor')
 set('concealcursor', 'niv')
 set('conceallevel', 0)
 set('report', 2)
-set('backup', false)
 set('history', 2000)
-set('writebackup', false)
 set('undolevels', 1000)
 set('shell', core.sets.shell)
 set('splitbelow', true)
@@ -126,6 +130,8 @@ set('matchpairs', '(:),{:},[:]')
 set('matchtime', 1)
 
 -- Wildmenu
+set('wildcharm',
+  vim.fn.char2nr(vim.api.nvim_replace_termcodes([[<C-Z>]], true, true, true)))
 set('wildignore',
   '*.so,.git,.hg,.svn,.stversions,*.pyc,*.spl,*.o,*.out,*~,%*,*.jpg,*.jpeg,*.png,*.gif,*.zip,**/tmp/**,*.DS_Store,**/node_modules/**,**/bower_modules/**,*/.sass-cache/*,application/vendor/**,**/vendor/ckeditor/**,media/vendor/**,__pycache__,*.egg-info')
 set('wildmode', 'longest,full')
