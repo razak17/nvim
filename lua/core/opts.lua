@@ -4,6 +4,8 @@ local function set(key, value) vim.opt[key] = value end
 
 vim.g.vimsyn_embed = "lPr" -- allow embedded syntax highlighting for lua,python and ruby
 
+-- vim.o.quickfixtextfunc = "{i -> v:lua.core.qftf(i)}"
+
 -- Neovim Directories
 set('udir', core.sets.udir)
 set('directory', core.sets.directory)

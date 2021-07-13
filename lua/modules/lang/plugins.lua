@@ -75,7 +75,7 @@ lang['kevinhwang91/nvim-bqf'] = {
       },
     })
   end,
-  disable = not core.plugin.bfq.active or not core.plugin.SANE.active,
+  disable = not core.plugin.bqf.active,
 
 }
 

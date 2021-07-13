@@ -35,7 +35,7 @@ core.plugin = {
   -- lsp
   saga = {active = false},
   symbols_outline = {active = false},
-  bfq = {active = true},
+  bqf = {active = false},
   trouble = {active = false},
   -- treesitter
   treesitter = {active = true},
