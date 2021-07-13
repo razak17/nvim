@@ -109,13 +109,14 @@ local function toggle_list(prefix)
 end
 
 local function ColorMyPencils()
-  vim.cmd [[ hi ColorColumn guibg=#aeacec ]]
-  vim.cmd [[ hi Normal guibg=none ]]
-  vim.cmd [[ hi LineNr guifg=#4dd2dc ]]
-  vim.cmd [[ hi TelescopeBorder guifg=#aeacec ]]
-  vim.cmd [[ hi FloatermBorder guifg= #aeacec ]]
-  vim.cmd [[ hi WhichKeyGroup guifg=#4dd2dc ]]
-  vim.cmd [[ hi WhichKeyDesc guifg=#4dd2dc  ]]
+  vim.cmd [[ hi! ColorColumn guibg=#aeacec ]]
+  vim.cmd [[ hi! Normal ctermbg=none guibg=none ]]
+  vim.cmd [[ hi! SignColumn ctermbg=none guibg=none ]]
+  vim.cmd [[ hi! LineNr guifg=#4dd2dc ]]
+  vim.cmd [[ hi! CursorLineNr guifg=#f0c674 ]]
+  vim.cmd [[ hi! TelescopeBorder guifg=#ffff00 guibg=#ff0000 ]]
+  vim.cmd [[ hi! WhichKeyGroup guifg=#4dd2dc ]]
+  vim.cmd [[ hi! WhichKeyDesc guifg=#4dd2dc  ]]
 end
 
 local function EmptyRegisters()
