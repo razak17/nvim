@@ -22,7 +22,7 @@ tools['npxbr/glow.nvim'] = {
 tools['numToStr/FTerm.nvim'] = {
   event = "VimEnter",
   config = conf.fterm,
-  disable = not core.plugin.fterm.active or not core.plugin.SANE.active,
+  disable = not core.plugin.fterm.active and not core.plugin.SANE.active,
 }
 
 tools['MattesGroeger/vim-bookmarks'] = {

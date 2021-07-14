@@ -5,12 +5,13 @@ local editor = {}
 editor['rhysd/accelerated-jk'] = {
   opt = true,
   event = {'VimEnter'},
-  disable = not core.plugin.accelerated_jk.active or not core.plugin.SANE.active,
+  disable = not core.plugin.accelerated_jk.active and
+    not core.plugin.SANE.active,
 }
 
 editor['tpope/vim-surround'] = {
   event = {'BufReadPre', 'BufNewFile'},
-  disable = not core.plugin.surround.active or not core.plugin.SANE.active,
+  disable = not core.plugin.surround.active and not core.plugin.SANE.active,
 }
 
 editor['monaqa/dial.nvim'] = {
@@ -51,7 +52,7 @@ editor['Raimondi/delimitMate'] = {
 editor['romainl/vim-cool'] = {
   event = {'BufReadPre', 'BufNewFile'},
   config = function() vim.g.CoolTotalMatches = 1 end,
-  disable = not core.plugin.cool.active or not core.plugin.SANE.active,
+  disable = not core.plugin.cool.active and not core.plugin.SANE.active,
 }
 
 editor['kkoomen/vim-doge'] = {

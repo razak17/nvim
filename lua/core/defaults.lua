@@ -10,19 +10,18 @@ core.sets = {
   shiftwidth = 2,
   tabstop = 2,
   cmdheight = 2,
-  shell = "/bin/zsh",
   scrolloff = 7,
   laststatus = 2,
   showtabline = 2,
-  ignorecase = true,
   smartcase = true,
+  ignorecase = true,
   hlsearch = true,
   timeoutlen = 500,
   foldenable = true,
   foldtext = 'v:lua.folds()',
   udir = core.__cache_dir .. 'undodir',
-  directory = core.__cache_dir .. 'swap',
   viewdir = core.__cache_dir .. 'view',
+  directory = core.__cache_dir .. 'swap',
 }
 
 core.plugin = {
@@ -72,7 +71,7 @@ core.plugin = {
   dashboard = {active = true},
   -- completion
   emmet = {active = false},
-  telescope_fzy = {active = true},
+  telescope_fzy = {active = false},
   telescope_project = {active = false},
   telescope_media_files = {active = false},
 }

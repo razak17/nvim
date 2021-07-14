@@ -83,7 +83,7 @@ lang['nvim-treesitter/nvim-treesitter'] = {
   event = 'BufWinEnter',
   after = 'telescope.nvim',
   config = conf.nvim_treesitter,
-  disable = not core.plugin.treesitter.active or not core.plugin.SANE.active,
+  disable = not core.plugin.treesitter.active and not core.plugin.SANE.active,
 }
 
 lang['nvim-treesitter/playground'] = {
@@ -94,19 +94,19 @@ lang['nvim-treesitter/playground'] = {
 
 lang['p00f/nvim-ts-rainbow'] = {
   after = 'nvim-treesitter',
-  disable = not core.plugin.rainbow.active or not core.plugin.SANE.active,
+  disable = not core.plugin.rainbow.active and not core.plugin.SANE.active,
 }
 
 lang['andymass/vim-matchup'] = {
   after = 'nvim-treesitter',
-  disable = not core.plugin.matchup.active or not core.plugin.SANE.active,
+  disable = not core.plugin.matchup.active and not core.plugin.SANE.active,
 }
 
 lang['windwp/nvim-ts-autotag'] = {
   opt = true,
   after = 'nvim-treesitter',
   event = "InsertLeavePre",
-  disable = not core.plugin.autotag.active or not core.plugin.SANE.active,
+  disable = not core.plugin.autotag.active and not core.plugin.SANE.active,
 }
 
 return lang
