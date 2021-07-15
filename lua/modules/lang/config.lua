@@ -11,6 +11,25 @@ function config.dap_install()
   dI.setup({installation_path = core.__dap_install_dir})
 end
 
+function config.bqf()
+  require('bqf').setup({
+    preview = {
+      border_chars = {
+        '│',
+        '│',
+        '─',
+        '─',
+        '┌',
+        '┐',
+        '└',
+        '┘',
+        '█',
+      },
+    },
+  })
+
+end
+
 function config.dap_ui()
   require("dapui").setup({
     mappings = {expand = "<CR>", open = "o", remove = "d"},

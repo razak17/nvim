@@ -2,7 +2,8 @@ local completion = {}
 local conf = require 'modules.completion.config'
 
 completion['liuchengxu/vim-which-key'] = {
-  event = {"BufWinEnter"},
+  -- event = {"BufWinEnter"},
+  -- event = 'VimEnter',
   config = conf.which_key,
   disable = not core.plugin.SANE.active,
 }
@@ -31,9 +32,13 @@ completion['hrsh7th/vim-vsnip'] = {
   disable = not core.plugin.SANE.active,
 }
 
+completion['nvim-lua/plenary.nvim'] = {disable = not core.plugin.SANE.active}
+
+completion['nvim-lua/popup.nvim'] = {disable = not core.plugin.SANE.active}
+
 completion['nvim-telescope/telescope.nvim'] = {
+  -- event = 'BufWinEnter',
   config = conf.telescope,
-  requires = {{'nvim-lua/plenary.nvim'}, {'nvim-lua/popup.nvim'}},
   disable = not core.plugin.SANE.active,
 }
 

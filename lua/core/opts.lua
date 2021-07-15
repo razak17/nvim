@@ -130,7 +130,9 @@ set('diffopt', {
 
 -- Behavior
 vim.g.vimsyn_embed = "lPr" -- allow embedded syntax highlighting for lua,python and ruby
+set('clipboard', {'unnamedplus'})
 set('more', false)
+set('gdefault', false)
 set('wrap', core.sets.wrap)
 set('eadirection', 'hor')
 set('report', 2)

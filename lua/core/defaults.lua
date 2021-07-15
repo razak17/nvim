@@ -67,8 +67,8 @@ core.plugin = {
   restconsole = {active = false},
   markdown_preview = {active = false},
   -- aesth
-  tree = {active = true},
-  dashboard = {active = true},
+  tree = {active = false},
+  dashboard = {active = false},
   statusline = {active = true},
   git_signs = {active = false},
   indent_line = {active = false},

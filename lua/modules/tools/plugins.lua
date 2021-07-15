@@ -20,7 +20,7 @@ tools['npxbr/glow.nvim'] = {
 }
 
 tools['numToStr/FTerm.nvim'] = {
-  event = {"BufWinEnter"},
+  -- event = {"BufWinEnter"},
   config = conf.fterm,
   disable = not core.plugin.fterm.active or not core.plugin.SANE.active,
 }

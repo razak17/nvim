@@ -41,7 +41,7 @@ lang['glepnir/lspsaga.nvim'] = {
 
 lang['neovim/nvim-lspconfig'] = {
   -- event = 'BufReadPre',
-  event = {'BufRead', 'BufNewFile'},
+  -- event = {'BufRead', 'BufNewFile'},
   config = conf.nvim_lsp,
   requires = {},
   disable = not core.plugin.SANE.active,
@@ -66,36 +66,20 @@ lang['folke/trouble.nvim'] = {
 lang['kevinhwang91/nvim-bqf'] = {
   event = 'BufRead',
   after = 'telescope.nvim',
-  config = function()
-    require('bqf').setup({
-      preview = {
-        border_chars = {
-          '│',
-          '│',
-          '─',
-          '─',
-          '┌',
-          '┐',
-          '└',
-          '┘',
-          '█',
-        },
-      },
-    })
-  end,
+  config = conf.bqf,
   disable = not core.plugin.bqf.active,
 
 }
 
 lang['nvim-treesitter/nvim-treesitter'] = {
-  event = 'BufWinEnter',
-  after = 'telescope.nvim',
+  -- event = 'BufWinEnter',
+  -- after = 'telescope.nvim',
   config = conf.nvim_treesitter,
   disable = not core.plugin.treesitter.active or not core.plugin.SANE.active,
 }
 
 lang['nvim-treesitter/playground'] = {
-  cmd = "TSPlaygroundToggle",
+  -- cmd = "TSPlaygroundToggle",
   module = "nvim-treesitter-playground",
   disable = not core.plugin.SANE.active,
 }

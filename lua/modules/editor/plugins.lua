@@ -9,7 +9,6 @@ editor['rhysd/accelerated-jk'] = {
 }
 
 editor['tpope/vim-surround'] = {
-  event = {"BufWinEnter"},
   disable = not core.plugin.surround.active or not core.plugin.SANE.active,
 }
 
@@ -49,7 +48,6 @@ editor['Raimondi/delimitMate'] = {
 }
 
 editor['romainl/vim-cool'] = {
-  event = {"BufWinEnter"},
   config = function() vim.g.CoolTotalMatches = 1 end,
   disable = not core.plugin.cool.active or not core.plugin.SANE.active,
 }

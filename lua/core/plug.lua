@@ -26,7 +26,7 @@ function Plug:load_packer()
   packer.init({
     compile_path = packer_compiled,
     auto_reload_compiled = true,
-    git = {clone_timeout = 700},
+    git = {clone_timeout = 7000},
     disable_commands = true,
     display = {
       open_fn = function()
