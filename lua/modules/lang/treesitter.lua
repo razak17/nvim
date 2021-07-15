@@ -1,29 +1,6 @@
---- Global treesitter object containing treesitter related utilities
-core.ts = {}
-
-local fts = {
-  "html",
-  "css",
-  "javascript",
-  "typescript",
-  "tsx",
-  "graphql",
-  "jsdoc",
-  "json",
-  "yaml",
-  "go",
-  "c",
-  "dart",
-  "cpp",
-  "rust",
-  "python",
-  "bash",
-  "lua",
-}
-
 ---Get all filetypes for which we have a treesitter parser installed
 ---@return string[]
-function core.ts.get_filetypes()
+function core.treesitter.get_filetypes()
   vim.cmd [[packadd nvim-treesitter]]
   local parsers = require("nvim-treesitter.parsers")
   local configs = parsers.get_parser_configs()
@@ -32,12 +9,12 @@ function core.ts.get_filetypes()
 end
 
 require'nvim-treesitter.configs'.setup {
-  highlight = {enable = true},
-  indent = {enable = true},
-  autotag = {enable = true},
-  autopairs = {enable = true},
+  highlight = {enable = core.treesitter.highlight.enabled},
+  indent = {enable = {"javascriptreact"}},
+  autotag = {enable = core.plugin.autotag.active},
+  autopairs = {enable = core.plugin.autopairs.active},
   rainbow = {
-    enable = true,
+    enable = core.plugin.rainbow.active,
     extended_mode = true,
     disable = {"lua", "json", "c", "cpp"},
     colors = {
@@ -54,7 +31,7 @@ require'nvim-treesitter.configs'.setup {
     lint_events = {"BufWrite", "CursorHold"},
   },
   -- matchup = {enable = true, disable = {"c", "python"}},
-  ensure_installed = fts,
+  ensure_installed = core.treesitter.ensure_installed,
 }
 
 vim.api.nvim_set_keymap('n', 'R', ':edit | TSBufEnable highlight<CR>', {});
@@ -63,7 +40,7 @@ vim.api.nvim_set_keymap('n', 'R', ':edit | TSBufEnable highlight<CR>', {});
 core.augroup("TreesitterFolds", {
   {
     events = {"FileType"},
-    targets = core.ts.get_filetypes(),
+    targets = core.treesitter.get_filetypes(),
     command = "setlocal foldtext=v:lua.folds() foldmethod=expr foldexpr=nvim_treesitter#foldexpr()",
   },
 })

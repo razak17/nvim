@@ -232,23 +232,23 @@ core.augroup("CursorLineBehaviour", {
 core.augroup("PackerSetupInit", {
   {
     events = {"BufWritePost"},
-    targets = {"$MYVIMRC", core.__vim_path .. '/lua/core/*.lua'},
+    targets = {
+      "$MYVIMRC",
+      core.__vim_path .. '/lua/core/defaults.lua',
+      core.__modules_dir .. "/*/*.lua",
+    },
     command = function()
       vim.cmd "source ~/.config/nvim/lua/core/defaults.lua"
       vim.cmd "source ~/.config/nvim/lua/core/opts.lua"
-      vim.cmd "source ~/.config/nvim/lua/core/binds.lua"
-      vim.cmd "source ~/.config/nvim/lua/keymap/init.lua"
+      require'core.plug'.ensure_plugins()
+      require'core.plug'.install()
+      require'core.plug'.magic_compile()
+      -- vim.cmd [[call v:lua.require('core.plug').magic_compile()]]
+      -- if core.plugin.SANE.active then
+      vim.cmd "source ~/.config/nvim/lua/modules/lang/lsp/servers/init.lua"
       vim.cmd "source ~/.config/nvim/lua/modules/lang/lsp/lspconfig/init.lua"
-      vim.cmd [[source $MYVIMRC]]
-      core.notify("packer compiled...", {timeout = 1000})
-    end,
-  },
-  {
-    events = {"BufWritePost"},
-    targets = {"$MYVIMRC", core.__modules_dir .. "/*/*.lua"},
-    command = function()
-      vim.cmd "source ~/.config/nvim/lua/modules/lang/lsp/lspconfig/init.lua"
-      -- vim.cmd ":PlugInstall"
+      -- end
+      require'core.plug'.load_compile()
       vim.cmd [[source $MYVIMRC]]
       core.notify("packer compiled...", {timeout = 1000})
     end,

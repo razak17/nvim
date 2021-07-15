@@ -42,7 +42,7 @@ if core.plugin.easy_align.active then
 end
 
 -- accelerated jk
-if core.plugin.accelerated_jk.active then
+if core.plugin.accelerated_jk.active or core.plugin.SANE.active then
   nmap("n", 'v:lua.__enhance_jk_move("n")', {silent = true, expr = true})
   nmap("k", 'v:lua.__enhance_jk_move("k")', {silent = true, expr = true})
 end

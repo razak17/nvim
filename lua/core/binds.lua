@@ -38,7 +38,7 @@ local function inspect_token()
     ts_playground_loaded, ts_hl_info = pcall(require,
       "nvim-treesitter-playground.hl-info")
   end
-  if vim.tbl_contains(core.ts.get_filetypes(), vim.bo.filetype) then
+  if vim.tbl_contains(core.treesitter.get_filetypes(), vim.bo.filetype) then
     ts_hl_info.show_hl_captures()
   else
     local syn_id = fn.synID(fn.line("."), fn.col("."), 1)

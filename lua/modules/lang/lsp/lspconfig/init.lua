@@ -89,18 +89,20 @@ function core.lsp.autocmds(client)
       end,
     },
   })
-  core.augroup("NvimLightbulb", {
-    {
-      events = {"CursorHold", "CursorHoldI"},
-      targets = {"*"},
-      command = function()
-        require("nvim-lightbulb").update_lightbulb {
-          sign = {enabled = false},
-          virtual_text = {enabled = true},
-        }
-      end,
-    },
-  })
+  if core.plugin.lightbulb.active then
+    core.augroup("NvimLightbulb", {
+      {
+        events = {"CursorHold", "CursorHoldI"},
+        targets = {"*"},
+        command = function()
+          require("nvim-lightbulb").update_lightbulb {
+            sign = {enabled = false},
+            virtual_text = {enabled = true},
+          }
+        end,
+      },
+    })
+  end
   if core.lsp.hoverdiagnostics then hoverDiagnostics() end
   if core.lsp.format_on_save then documentFormatting(client) end
   if core.lsp.document_highlight then documentHighlight(client) end

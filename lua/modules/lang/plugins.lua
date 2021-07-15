@@ -29,13 +29,21 @@ lang['jbyuki/one-small-step-for-vimkind'] = {
   disable = not core.plugin.osv.active,
 }
 
+lang['kosayoda/nvim-lightbulb'] = {
+  event = "BufReadPre",
+  disable = not core.plugin.lightbulb.active,
+}
+
+lang['glepnir/lspsaga.nvim'] = {
+  opt = true,
+  disable = not core.plugin.saga.active,
+}
+
 lang['neovim/nvim-lspconfig'] = {
-  event = 'BufReadPre',
+  -- event = 'BufReadPre',
+  event = {'BufRead', 'BufNewFile'},
   config = conf.nvim_lsp,
-  requires = {
-    {'kosayoda/nvim-lightbulb', event = "BufReadPre"},
-    {'glepnir/lspsaga.nvim', opt = true},
-  },
+  requires = {},
   disable = not core.plugin.SANE.active,
 }
 
@@ -83,7 +91,7 @@ lang['nvim-treesitter/nvim-treesitter'] = {
   event = 'BufWinEnter',
   after = 'telescope.nvim',
   config = conf.nvim_treesitter,
-  disable = not core.plugin.treesitter.active and not core.plugin.SANE.active,
+  disable = not core.plugin.treesitter.active or not core.plugin.SANE.active,
 }
 
 lang['nvim-treesitter/playground'] = {
@@ -93,20 +101,20 @@ lang['nvim-treesitter/playground'] = {
 }
 
 lang['p00f/nvim-ts-rainbow'] = {
-  after = 'nvim-treesitter',
-  disable = not core.plugin.rainbow.active and not core.plugin.SANE.active,
+  -- after = 'nvim-treesitter',
+  disable = not core.plugin.rainbow.active,
 }
 
 lang['andymass/vim-matchup'] = {
-  after = 'nvim-treesitter',
-  disable = not core.plugin.matchup.active and not core.plugin.SANE.active,
+  -- after = 'nvim-treesitter',
+  disable = not core.plugin.matchup.active,
 }
 
 lang['windwp/nvim-ts-autotag'] = {
   opt = true,
-  after = 'nvim-treesitter',
+  -- after = 'nvim-treesitter',
   event = "InsertLeavePre",
-  disable = not core.plugin.autotag.active and not core.plugin.SANE.active,
+  disable = not core.plugin.autotag.active,
 }
 
 return lang

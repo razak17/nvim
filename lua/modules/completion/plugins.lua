@@ -2,7 +2,7 @@ local completion = {}
 local conf = require 'modules.completion.config'
 
 completion['liuchengxu/vim-which-key'] = {
-  event = 'VimEnter',
+  event = {"BufWinEnter"},
   config = conf.which_key,
   disable = not core.plugin.SANE.active,
 }
@@ -39,18 +39,18 @@ completion['nvim-telescope/telescope.nvim'] = {
 
 completion['nvim-telescope/telescope-fzy-native.nvim'] = {
   opt = true,
-  disable = not core.plugin.telescope_fzy.active and not core.plugin.SANE.active,
+  disable = not core.plugin.telescope_fzy.active or not core.plugin.SANE.active,
 }
 
 completion['nvim-telescope/telescope-media-files.nvim'] = {
   opt = true,
-  disable = not core.plugin.telescope_media_files.active and
+  disable = not core.plugin.telescope_media_files.active or
     not core.plugin.SANE.active,
 }
 
 completion['nvim-telescope/telescope-project.nvim'] = {
   opt = true,
-  disable = not core.plugin.telescope_project.active and
+  disable = not core.plugin.telescope_project.active or
     not core.plugin.SANE.active,
 }
 

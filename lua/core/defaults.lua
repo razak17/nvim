@@ -25,6 +25,7 @@ core.sets = {
 }
 
 core.plugin = {
+  -- SANE defaults
   SANE = {active = true},
   -- debug
   debug = {active = false},
@@ -33,6 +34,7 @@ core.plugin = {
   osv = {active = false},
   -- lsp
   saga = {active = false},
+  lightbulb = {active = false},
   symbols_outline = {active = false},
   bqf = {active = false},
   trouble = {active = false},
@@ -41,6 +43,7 @@ core.plugin = {
   rainbow = {active = false},
   matchup = {active = false},
   autotag = {active = false},
+  autopairs = {active = false},
   -- editor
   doge = {active = false},
   fold_cycle = {active = false},
@@ -60,15 +63,15 @@ core.plugin = {
   undotree = {active = false},
   fugitive = {active = false},
   glow = {active = false},
+  dadbod = {active = false},
   restconsole = {active = false},
   markdown_preview = {active = false},
-  dadbod = {active = false},
   -- aesth
-  indent_line = {active = false},
   tree = {active = true},
+  dashboard = {active = true},
   statusline = {active = true},
   git_signs = {active = false},
-  dashboard = {active = true},
+  indent_line = {active = false},
   -- completion
   emmet = {active = false},
   telescope_fzy = {active = false},
@@ -90,6 +93,31 @@ core.nvim_tree = {
   lsp_diagnostics = 0,
   special_files = {'README.md', 'Makefile', 'MAKEFILE'},
 }
+
+core.treesitter = {
+  ensure_installed = {
+    "html",
+    "css",
+    "javascript",
+    "typescript",
+    "tsx",
+    "graphql",
+    "jsdoc",
+    "json",
+    "yaml",
+    "go",
+    "c",
+    "dart",
+    "cpp",
+    "rust",
+    "python",
+    "bash",
+    "lua",
+  },
+  highlight = {enabled = true},
+}
+
+core.which_key = {separator = ''}
 
 core.dashboard = {
   custom_header = {
