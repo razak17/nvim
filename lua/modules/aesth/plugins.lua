@@ -15,19 +15,19 @@ aesth['lukas-reineke/indent-blankline.nvim'] = {
   config = conf.indent_blankline,
   disable = not core.plugin.indent_line.active,
 }
+aesth['kyazdani42/nvim-web-devicons'] = {disable = not core.plugin.SANE.active}
 
--- aesth['akinsho/nvim-bufferline.lua'] = {
---   -- event = {'BufRead'},
---   config = conf.nvim_bufferline,
---   requires = {{"kyazdani42/nvim-web-devicons"}},
---   disable = not core.plugin.SANE.active,
--- }
+aesth['akinsho/nvim-bufferline.lua'] = {
+  -- event = {'BufRead'},
+  config = conf.nvim_bufferline,
+  disable = not core.plugin.SANE.active,
+}
 
--- aesth['kyazdani42/nvim-tree.lua'] = {
---   -- event = "BufWinEnter",
---   config = conf.nvim_tree,
---   disable = not core.plugin.tree.active or not core.plugin.SANE.active,
--- }
+aesth['kyazdani42/nvim-tree.lua'] = {
+  -- event = "BufWinEnter",
+  config = conf.nvim_tree,
+  disable = not core.plugin.tree.active or not core.plugin.SANE.active,
+}
 
 aesth['glepnir/galaxyline.nvim'] = {
   branch = 'main',

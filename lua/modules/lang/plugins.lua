@@ -4,28 +4,24 @@ local lang = {}
 
 lang['mfussenegger/nvim-dap'] = {
   event = 'BufReadPre',
-  after = {"telescope.nvim"},
   config = conf.dap,
   disable = not core.plugin.debug.active,
 }
 
 lang['rcarriga/nvim-dap-ui'] = {
   event = 'BufReadPre',
-  after = {"telescope.nvim"},
   config = conf.dap_ui,
   disable = not core.plugin.debug_ui.active,
 }
 
 lang['Pocco81/DAPInstall.nvim'] = {
   event = 'BufReadPre',
-  after = {"telescope.nvim"},
   config = conf.dap_install,
   disable = not core.plugin.dap_install.active,
 }
 
 lang['jbyuki/one-small-step-for-vimkind'] = {
   event = 'BufReadPre',
-  after = {"telescope.nvim"},
   disable = not core.plugin.osv.active,
 }
 
@@ -40,7 +36,8 @@ lang['glepnir/lspsaga.nvim'] = {
 }
 
 lang['neovim/nvim-lspconfig'] = {
-  -- event = 'BufReadPre',
+  event = 'BufReadPre',
+  -- event = 'BufWinEnter',
   -- event = {'BufRead', 'BufNewFile'},
   config = conf.nvim_lsp,
   requires = {},
@@ -72,8 +69,8 @@ lang['kevinhwang91/nvim-bqf'] = {
 }
 
 lang['nvim-treesitter/nvim-treesitter'] = {
-  -- event = 'BufWinEnter',
-  -- after = 'telescope.nvim',
+  event = 'BufWinEnter',
+  after = 'telescope.nvim',
   config = conf.nvim_treesitter,
   disable = not core.plugin.treesitter.active or not core.plugin.SANE.active,
 }

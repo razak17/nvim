@@ -169,9 +169,9 @@ end
 
 -- dap
 if core.plugin.debug.active then
-  -- nnoremap('<S-k>', ':lua require"dap".step_out()<CR>')
-  -- nnoremap('<S-v>', ':lua require"dap".step_over()<CR>')
-  -- nnoremap('<S-l>', ':lua require"dap".step_into()<CR>')
+  nnoremap('<Leader>dso', ':lua require"dap".step_out()<CR>')
+  nnoremap('<Leader>dsv', ':lua require"dap".step_over()<CR>')
+  nnoremap('<Leader>dsi', ':lua require"dap".step_into()<CR>')
   nnoremap('<leader>da', ':lua require"debug.helper".attach()<CR>')
   nnoremap('<leader>dA', ':lua require"debug.helper".attachToRemote()<CR>')
   nnoremap('<leader>dc', ':lua require"dap".continue()<CR>')
@@ -238,7 +238,7 @@ nnoremap('<Leader>frf', ':Telescope nvim_files files<CR>')
 nnoremap('<Leader>frg', ':Telescope nvim_files git_files<CR>')
 nnoremap('<Leader>frB', ':Telescope nvim_files bcommits<CR>')
 nnoremap('<Leader>frc', ':Telescope nvim_files commits<CR>')
-nnoremap('<Leader>fC', ':e ' .. core.__vim_path .. '/lua/core/defaults.lua')
+nnoremap('<Leader>fC', ':e ' .. core.__vim_path .. '/lua/core/defaults.lua<CR>')
 nnoremap('<Leader>frb', ':Telescope nvim_files branches<CR>')
 nnoremap('<Leader>frs', ':Telescope nvim_files status<CR>')
 

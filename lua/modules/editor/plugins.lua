@@ -69,7 +69,7 @@ editor['arecarn/vim-fold-cycle'] = {
 }
 
 editor['b3nj5m1n/kommentary'] = {
-  event = {"BufWinEnter"},
+  -- event = {"BufWinEnter"},
   config = conf.kommentary,
   disable = not core.plugin.SANE.active,
 }
