@@ -26,8 +26,6 @@ vim.o.switchbuf = "useopen,uselast"
 set('splitbelow', true)
 set('splitright', true)
 set('eadirection', 'hor')
-set('fillchars',
-  'vert:▕,fold: ,eob: ,diff:─,msgsep: ,foldopen:▾,foldsep:│,foldclose:▸,eob: ')
 
 -- Display
 set('conceallevel', 0)
@@ -102,9 +100,33 @@ set('numberwidth', core.sets.numberwidth)
 set('number', core.sets.number)
 set('relativenumber', core.sets.relative_number)
 set('list', true)
-set('listchars', 'tab:»•,nbsp:+,trail:·,precedes:,extends:')
-set('diffopt',
-  'vertical,iwhite,hiddenoff,foldcolumn:0,context:4,algorithm:histogram,indent-heuristic')
+set('fillchars', {
+  vert = "▕", -- alternatives │
+  fold = " ",
+  eob = " ", -- suppress ~ at EndOfBuffer
+  diff = "╱", -- alternatives = ⣿ ░ ─
+  msgsep = "‾",
+  foldopen = "▾",
+  foldsep = "│",
+  foldclose = "▸",
+})
+set('listchars', {
+  eol = " ",
+  nbsp = "+",
+  tab = "»• ", -- Alternatives: │
+  extends = "", -- Alternatives: … » ›
+  precedes = "", -- Alternatives: … « ‹
+  trail = "•", -- BULLET (U+2022, UTF-8: E2 80 A2) ·
+})
+set('diffopt', {
+  "vertical",
+  "iwhite",
+  "hiddenoff",
+  "foldcolumn:0",
+  "context:4",
+  "algorithm:histogram",
+  "indent-heuristic",
+})
 
 -- Behavior
 vim.g.vimsyn_embed = "lPr" -- allow embedded syntax highlighting for lua,python and ruby
@@ -122,6 +144,21 @@ set('joinspaces', false) -- Insert only one space when joining lines that contai
 set('jumpoptions', 'stack') -- list of words that change the behavior of the jumplist
 set('virtualedit', 'block')
 set('emoji', false) -- emoji is true by default but makes (n)vim treat all emoji as double width
+vim.opt.formatoptions = {
+  ["1"] = true,
+  ["2"] = true, -- Use indent from 2nd line of a paragraph
+  q = true, -- continue comments with gq"
+  c = true, -- Auto-wrap comments using textwidth
+  r = true, -- Continue comments when pressing Enter
+  n = true, -- Recognize numbered lists
+  t = false, -- autowrap lines using text width value
+  j = true, -- remove a comment leader when joining lines.
+  -- Only break if the line was not longer than 'textwidth' when the insert
+  -- started and only at a white character that has been entered during the
+  -- current insert command.
+  l = true,
+  v = true,
+}
 
 -- Wildmenu
 set('wildignore',
