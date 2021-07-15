@@ -25,9 +25,12 @@ lang['jbyuki/one-small-step-for-vimkind'] = {
   disable = not core.plugin.osv.active,
 }
 
-lang['kosayoda/nvim-lightbulb'] = {
-  event = "BufReadPre",
-  disable = not core.plugin.lightbulb.active,
+lang['neovim/nvim-lspconfig'] = {
+  event = 'BufReadPre',
+  -- event = 'BufWinEnter',
+  -- event = {'BufRead', 'BufNewFile'},
+  config = conf.nvim_lsp,
+  disable = not core.plugin.SANE.active,
 }
 
 lang['glepnir/lspsaga.nvim'] = {
@@ -35,13 +38,9 @@ lang['glepnir/lspsaga.nvim'] = {
   disable = not core.plugin.saga.active,
 }
 
-lang['neovim/nvim-lspconfig'] = {
-  event = 'BufReadPre',
-  -- event = 'BufWinEnter',
-  -- event = {'BufRead', 'BufNewFile'},
-  config = conf.nvim_lsp,
-  requires = {},
-  disable = not core.plugin.SANE.active,
+lang['kosayoda/nvim-lightbulb'] = {
+  event = "BufReadPre",
+  disable = not core.plugin.lightbulb.active,
 }
 
 lang['simrat39/symbols-outline.nvim'] = {
