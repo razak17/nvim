@@ -31,24 +31,24 @@ lang['neovim/nvim-lspconfig'] = {
 }
 
 lang['glepnir/lspsaga.nvim'] = {
-  opt = true,
+  after = 'nvim-lspconfig',
   disable = not core.plugin.saga.active,
 }
 
 lang['kosayoda/nvim-lightbulb'] = {
-  event = "BufReadPre",
+  after = 'nvim-lspconfig',
   disable = not core.plugin.lightbulb.active,
 }
 
 lang['simrat39/symbols-outline.nvim'] = {
-  event = 'BufReadPre',
+  after = 'nvim-lspconfig',
   cmd = 'SymbolsOutline',
   config = function() require("symbols-outline").setup {show_guides = true} end,
   disable = not core.plugin.symbols_outline.active,
 }
 
 lang['folke/trouble.nvim'] = {
-  event = 'BufReadPre',
+  after = 'nvim-lspconfig',
   requires = {{"kyazdani42/nvim-web-devicons", opt = true}},
   config = function()
     require("trouble").setup {use_lsp_diagnostic_signs = true}
@@ -57,14 +57,12 @@ lang['folke/trouble.nvim'] = {
 }
 
 lang['kevinhwang91/nvim-bqf'] = {
-  event = 'BufRead',
   after = 'telescope.nvim',
   config = conf.bqf,
   disable = not core.plugin.bqf.active,
 }
 
 lang['nvim-treesitter/nvim-treesitter'] = {
-  event = 'BufWinEnter',
   after = 'telescope.nvim',
   config = conf.nvim_treesitter,
   disable = not core.plugin.treesitter.active and not core.plugin.SANE.active,
@@ -77,7 +75,6 @@ lang['nvim-treesitter/playground'] = {
 }
 
 lang['p00f/nvim-ts-rainbow'] = {
-  event = 'VimEnter',
   after = 'nvim-treesitter',
   disable = not core.plugin.rainbow.active,
 }
@@ -89,7 +86,6 @@ lang['andymass/vim-matchup'] = {
 }
 
 lang['windwp/nvim-ts-autotag'] = {
-  opt = true,
   after = 'nvim-treesitter',
   event = "InsertLeavePre",
   disable = not core.plugin.autotag.active,

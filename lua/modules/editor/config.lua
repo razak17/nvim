@@ -35,11 +35,17 @@ function config.kommentary()
   require('kommentary.config').configure_language('default', {
     prefer_single_line_comments = true,
   })
-  local fts = {'zsh', 'sh', 'yaml'}
+  local fts = {'zsh', 'sh', 'yaml', "vim"}
   for _, f in pairs(fts) do
-    require('kommentary.config').configure_language(f, {
-      single_line_comment_string = "#",
-    })
+    if f == "vim" then
+      require('kommentary.config').configure_language(f, {
+        single_line_comment_string = '"',
+      })
+    else
+      require('kommentary.config').configure_language(f, {
+        single_line_comment_string = "#",
+      })
+    end
   end
 end
 
@@ -53,6 +59,11 @@ function config.vim_cursorword()
         "dashboard",
         "outline",
         "telescope",
+        "lspinfo",
+        "help",
+        "fTerm",
+        "TelescopePrompt",
+
       },
       command = "let b:cursorword = 0",
     },

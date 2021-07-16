@@ -1,3 +1,4 @@
 -- Load Modules:
-require('core')
-
+require 'globals'
+require 'defaults'
+require 'core'

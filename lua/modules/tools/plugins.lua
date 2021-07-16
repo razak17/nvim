@@ -1,8 +1,6 @@
 local tools = {}
 local conf = require('modules.tools.config')
 
--- tools['tjdevries/astronauta.nvim'] = {}
-
 tools['tpope/vim-fugitive'] = {
   event = 'VimEnter',
   disable = not core.plugin.fugitive.active,
@@ -17,7 +15,7 @@ tools['airblade/vim-rooter'] = {
   event = {"BufWinEnter"},
   config = function()
     vim.g.rooter_silent_chdir = 1
-    vim.g.rooter_patterns = {'=nvim', '.git', '.gitignore'}
+    vim.g.rooter_patterns = {'=nvim', '.git', '.gitignore', 'lua'}
   end,
   disable = not core.plugin.rooter.active and not core.plugin.SANE.active,
 }

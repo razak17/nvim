@@ -54,7 +54,7 @@ core.plugin = {
   eft = {active = false},
   cursorword = {active = false},
   surround = {active = true},
-  dial = {active = false},
+  dial = {active = true},
   -- tools
   fterm = {active = false},
   far = {active = false},

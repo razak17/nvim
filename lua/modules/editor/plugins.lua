@@ -4,7 +4,7 @@ local editor = {}
 
 editor['rhysd/accelerated-jk'] = {
   opt = true,
-  event = {'VimEnter'},
+  event = {"BufWinEnter"},
   disable = not core.plugin.accelerated_jk.active and
     not core.plugin.SANE.active,
 }
@@ -14,7 +14,7 @@ editor['tpope/vim-surround'] = {
 }
 
 editor['monaqa/dial.nvim'] = {
-  event = 'BufReadPre',
+  event = {"BufWinEnter"},
   config = conf.dial,
   disable = not core.plugin.dial.active,
 }

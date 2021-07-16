@@ -25,6 +25,7 @@ local smart_close_filetypes = {
   "log",
   "tsplayground",
   "qf",
+  "lspinfo",
 }
 
 local function smart_close()
@@ -153,7 +154,7 @@ core.augroup("TextYankHighlight", {
     targets = {"*"},
     command = function()
       require("vim.highlight").on_yank({
-        timeout = 77,
+        timeout = 477,
         on_visual = false,
         higroup = "Visual",
       })
@@ -171,6 +172,8 @@ local column_clear = {
   "Trouble",
   "fugitive",
   "log",
+  "fTerm",
+  "TelescopePrompt",
 }
 
 --- Set or unset the color column depending on the filetype of the buffer and its eligibility
@@ -184,7 +187,9 @@ local function check_color_column(leaving)
     vim.wo.colorcolumn = ""
     return
   end
-  if vim.wo.colorcolumn == "" then vim.wo.colorcolumn = "+1" end
+  if contains(column_clear, vim.bo.filetype) and vim.wo.colorcolumn == "" then
+    vim.wo.colorcolumn = "+1"
+  end
 end
 
 core.augroup("CustomColorColumn", {
@@ -208,7 +213,9 @@ local function check_cursor_line(leaving)
     vim.wo.cursorline = false
     return
   end
-  if vim.wo.cursorline == false then vim.wo.cursorline = true end
+  if contains(column_clear, vim.bo.filetype) and vim.wo.cursorline == false then
+    vim.wo.cursorline = true
+  end
 end
 
 core.augroup("CursorLineBehaviour", {
@@ -226,6 +233,14 @@ core.augroup("CursorLineBehaviour", {
     events = {"FocusLost", "WinLeave"},
     targets = {"*"},
     command = function() check_cursor_line(true) end,
+  },
+})
+
+core.augroup("FormatOptions", {
+  {
+    events = {"BufWinEnter", "BufRead", "BufNewFile"},
+    targets = {"*"},
+    command = "setlocal formatoptions-=c formatoptions-=r formatoptions-=o",
   },
 })
 
@@ -280,7 +295,6 @@ core.augroup("WinBehavior", {
   },
 })
 
--- Plugins
 if vim.env.TMUX ~= nil then
   core.augroup("TmuxConfig", {
     {
