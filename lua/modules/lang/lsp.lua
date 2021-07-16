@@ -1,5 +1,61 @@
 local command = core.command
 
+vim.fn.sign_define("LspDiagnosticsSignError", {
+  texthl = "LspDiagnosticsSignError",
+  text = "",
+  numhl = "LspDiagnosticsSignError",
+})
+vim.fn.sign_define("LspDiagnosticsSignWarning", {
+  texthl = "LspDiagnosticsSignWarning",
+  text = "",
+  numhl = "LspDiagnosticsSignWarning",
+})
+vim.fn.sign_define("LspDiagnosticsSignHint", {
+  texthl = "LspDiagnosticsSignHint",
+  text = "",
+  numhl = "LspDiagnosticsSignHint",
+})
+vim.fn.sign_define("LspDiagnosticsSignInformation", {
+  texthl = "LspDiagnosticsSignInformation",
+  text = "",
+  numhl = "LspDiagnosticsSignInformation",
+})
+
+command {
+  "LspLog",
+  function()
+    local path = vim.lsp.get_log_path()
+    vim.cmd("edit " .. path)
+  end,
+}
+
+command {
+  "LspFormat",
+  function()
+    vim.lsp.buf.formatting(vim.g[string.format("format_options_%s",
+      vim.bo.filetype)] or {})
+  end,
+}
+
+command {
+  "LspRestart",
+  function()
+    vim.lsp.stop_client(vim.lsp.get_active_clients())
+    vim.cmd [[edit]]
+  end,
+}
+
+command {
+  "LspToggleVirtualText",
+  function()
+    local virtual_text = {}
+    virtual_text.show = true
+    virtual_text.show = not virtual_text.show
+    vim.lsp.diagnostic.display(vim.lsp.diagnostic.get(0, 1), 0, 1,
+      {virtual_text = virtual_text.show})
+  end,
+}
+
 local get_cursor_pos = function() return {vim.fn.line('.'), vim.fn.col('.')} end
 
 local debounce = function(func, timeout)
@@ -15,9 +71,39 @@ local debounce = function(func, timeout)
   end
 end
 
+local function nvimLightbulb()
+  core.augroup("NvimLightbulb", {
+    {
+      events = {"CursorHold", "CursorHoldI"},
+      targets = {"*"},
+      command = function()
+        require("nvim-lightbulb").update_lightbulb {
+          sign = {enabled = false},
+          virtual_text = {enabled = true},
+        }
+      end,
+    },
+  })
+end
+
+local function lspLocList()
+  core.augroup("LspLocationList", {
+    {
+      events = {"InsertLeave", "BufWrite", "BufEnter"},
+      targets = {"<buffer>"},
+      command = function()
+        vim.lsp.diagnostic.set_loclist {
+          workspace = true,
+          severity_limit = "Warning",
+          open_loclist = false,
+        }
+      end,
+    },
+  })
+end
+
 local function documentFormatting(client)
   if client and client.resolved_capabilities.document_formatting then
-    -- format on save
     core.augroup("Format", {
       {
         events = {"BufWritePre"},
@@ -64,9 +150,12 @@ local function hoverDiagnostics()
             cursorpos = new_cursor
             if core.plugin.saga.active then
               vim.cmd [[packadd lspsaga.nvim]]
-              debounce(require'lspsaga.diagnostic'.show_cursor_diagnostics, 30)
+              debounce(require'lspsaga.diagnostic'.show_cursor_diagnostics(), 30)
             else
-              vim.lsp.diagnostic.show_line_diagnostics()
+              vim.lsp.diagnostic.show_line_diagnostics({
+                show_header = false,
+                border = "single",
+              })
             end
           end
         end
@@ -76,36 +165,11 @@ local function hoverDiagnostics()
 end
 
 function core.lsp.autocmds(client)
-  core.augroup("LspLocationList", {
-    {
-      events = {"InsertLeave", "BufWrite", "BufEnter"},
-      targets = {"<buffer>"},
-      command = function()
-        vim.lsp.diagnostic.set_loclist {
-          workspace = true,
-          severity_limit = "Warning",
-          open_loclist = false,
-        }
-      end,
-    },
-  })
-  if core.plugin.lightbulb.active then
-    core.augroup("NvimLightbulb", {
-      {
-        events = {"CursorHold", "CursorHoldI"},
-        targets = {"*"},
-        command = function()
-          require("nvim-lightbulb").update_lightbulb {
-            sign = {enabled = false},
-            virtual_text = {enabled = true},
-          }
-        end,
-      },
-    })
-  end
-  if core.lsp.hoverdiagnostics then hoverDiagnostics() end
+  lspLocList()
+  if core.plugin.lightbulb.active then nvimLightbulb() end
   if core.lsp.format_on_save then documentFormatting(client) end
   if core.lsp.document_highlight then documentHighlight(client) end
+  if core.lsp.hoverdiagnostics then hoverDiagnostics() end
 end
 
 function core.lsp.saga(bufnr)
@@ -145,14 +209,18 @@ function core.lsp.mappings(bufnr, client)
     nnoremap("gD", vim.lsp.buf.declaration, opts)
     nnoremap("gr", vim.lsp.buf.references, opts)
     nnoremap("gi", vim.lsp.buf.implementation, opts)
+    nnoremap("ge", function() require'lsp'.PeekDefinition() end, opts)
     nnoremap("grn", vim.lsp.buf.rename, opts)
     nnoremap("K", vim.lsp.buf.hover, opts)
-    nnoremap("<leader>vdb", vim.lsp.diagnostic.goto_prev, opts)
-    nnoremap("<leader>vdn", vim.lsp.diagnostic.goto_next, opts)
-    nnoremap("<leader>vdl", vim.lsp.diagnostic.show_line_diagnostics, opts)
-    vim.api.nvim_set_keymap("n", "gl",
-      '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics({ show_header = false, border = "single" })<CR>',
-      {noremap = true, silent = true})
+    nnoremap("<Leader>vdb", function()
+      vim.lsp.diagnostic.goto_prev({popup_opts = {border = "single"}})
+    end, opts)
+    nnoremap("<Leader>vdn", function()
+      vim.lsp.diagnostic.goto_next({popup_opts = {border = "single"}})
+    end, opts)
+    nnoremap("<Leader>vdl", function()
+      vim.lsp.diagnostic.show_line_diagnostics({border = "single"})
+    end, opts)
   end
   nnoremap("gsd", vim.lsp.buf.document_symbol, opts)
   nnoremap("gsw", vim.lsp.buf.workspace_symbol, opts)
@@ -193,61 +261,5 @@ vim.lsp.protocol.CompletionItemKind = {
   "   (Operator)",
   "   (TypeParameter)",
 }
-
-command {
-  "LspLog",
-  function()
-    local path = vim.lsp.get_log_path()
-    vim.cmd("edit " .. path)
-  end,
-}
-
-command {
-  "LspFormat",
-  function()
-    vim.lsp.buf.formatting(vim.g[string.format("format_options_%s",
-      vim.bo.filetype)] or {})
-  end,
-}
-
-command {
-  "LspRestart",
-  function()
-    vim.lsp.stop_client(vim.lsp.get_active_clients())
-    vim.cmd [[edit]]
-  end,
-}
-
-command {
-  "LspToggleVirtualText",
-  function()
-    local virtual_text = {}
-    virtual_text.show = true
-    virtual_text.show = not virtual_text.show
-    vim.lsp.diagnostic.display(vim.lsp.diagnostic.get(0, 1), 0, 1,
-      {virtual_text = virtual_text.show})
-  end,
-}
-
-vim.fn.sign_define("LspDiagnosticsSignError", {
-  texthl = "LspDiagnosticsSignError",
-  text = "",
-  numhl = "LspDiagnosticsSignError",
-})
-vim.fn.sign_define("LspDiagnosticsSignWarning", {
-  texthl = "LspDiagnosticsSignWarning",
-  text = "",
-  numhl = "LspDiagnosticsSignWarning",
-})
-vim.fn.sign_define("LspDiagnosticsSignHint", {
-  texthl = "LspDiagnosticsSignHint",
-  text = "",
-  numhl = "LspDiagnosticsSignHint",
-})
-vim.fn.sign_define("LspDiagnosticsSignInformation", {
-  texthl = "LspDiagnosticsSignInformation",
-  text = "",
-  numhl = "LspDiagnosticsSignInformation",
-})
 
 require'lsp'.setup()

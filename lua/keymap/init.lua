@@ -246,7 +246,7 @@ nnoremap('<Leader>frf', ':Telescope nvim_files files<CR>')
 nnoremap('<Leader>frg', ':Telescope nvim_files git_files<CR>')
 nnoremap('<Leader>frB', ':Telescope nvim_files bcommits<CR>')
 nnoremap('<Leader>frc', ':Telescope nvim_files commits<CR>')
-nnoremap('<Leader>fC', ':e ' .. core.__vim_path .. '/lua/globals/config.lua<CR>')
+nnoremap('<Leader>fC', ':e ' .. core.__vim_path .. '/lua/defaults/init.lua<CR>')
 nnoremap('<Leader>frb', ':Telescope nvim_files branches<CR>')
 nnoremap('<Leader>frs', ':Telescope nvim_files status<CR>')
 

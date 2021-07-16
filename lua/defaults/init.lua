@@ -34,7 +34,7 @@ core.plugin = {
   osv = {active = false},
   -- lsp
   saga = {active = false},
-  lightbulb = {active = false},
+  lightbulb = {active = true},
   symbols_outline = {active = false},
   bqf = {active = false},
   trouble = {active = false},
@@ -44,7 +44,7 @@ core.plugin = {
   rainbow = {active = false},
   matchup = {active = false},
   autotag = {active = false},
-  autopairs = {active = false},
+  autopairs = {active = true},
   -- editor
   fold_cycle = {active = false},
   accelerated_jk = {active = false},
@@ -53,13 +53,13 @@ core.plugin = {
   delimitmate = {active = false},
   eft = {active = false},
   cursorword = {active = false},
-  surround = {active = false},
+  surround = {active = true},
   dial = {active = false},
   -- tools
   fterm = {active = false},
   far = {active = false},
   bookmarks = {active = false},
-  colorizer = {active = false},
+  colorizer = {active = true},
   undotree = {active = false},
   fugitive = {active = false},
   rooter = {active = false},
