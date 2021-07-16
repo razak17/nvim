@@ -13,6 +13,14 @@ tools['mbbill/undotree'] = {
   disable = not core.plugin.undotree.active,
 }
 
+tools['airblade/vim-rooter'] = {
+  event = {"BufWinEnter"},
+  config = function()
+    vim.g.rooter_silent_chdir = 1
+    vim.g.rooter_patterns = {'^.config', '.git', '.gitignore'}
+  end,
+}
+
 tools['npxbr/glow.nvim'] = {
   run = ":GlowInstall",
   branch = "main",
