@@ -64,7 +64,6 @@ lang['kevinhwang91/nvim-bqf'] = {
   after = 'telescope.nvim',
   config = conf.bqf,
   disable = not core.plugin.bqf.active,
-
 }
 
 lang['nvim-treesitter/nvim-treesitter'] = {
@@ -75,26 +74,35 @@ lang['nvim-treesitter/nvim-treesitter'] = {
 }
 
 lang['nvim-treesitter/playground'] = {
-  -- cmd = "TSPlaygroundToggle",
+  cmd = "TSPlaygroundToggle",
   module = "nvim-treesitter-playground",
   disable = not core.plugin.SANE.active,
 }
 
 lang['p00f/nvim-ts-rainbow'] = {
-  -- after = 'nvim-treesitter',
+  event = 'VimEnter',
+  after = 'nvim-treesitter',
   disable = not core.plugin.rainbow.active,
 }
 
 lang['andymass/vim-matchup'] = {
-  -- after = 'nvim-treesitter',
+  event = 'VimEnter',
+  after = 'nvim-treesitter',
   disable = not core.plugin.matchup.active,
 }
 
 lang['windwp/nvim-ts-autotag'] = {
   opt = true,
-  -- after = 'nvim-treesitter',
+  after = 'nvim-treesitter',
   event = "InsertLeavePre",
   disable = not core.plugin.autotag.active,
+}
+
+lang['windwp/nvim-autopairs'] = {
+  event = 'InsertEnter',
+  after = {"telescope.nvim"},
+  config = conf.autopairs,
+  disable = not core.plugin.autopairs.active,
 }
 
 return lang

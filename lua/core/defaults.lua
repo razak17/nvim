@@ -97,9 +97,9 @@ core.nvim_tree = {
 core.treesitter = {
   ensure_installed = {
     "html",
-    -- "css",
-    -- "javascript",
-    -- "typescript",
+    "css",
+    "javascript",
+    "typescript",
     -- "tsx",
     -- "graphql",
     -- "jsdoc",

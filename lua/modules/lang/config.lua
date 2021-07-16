@@ -50,5 +50,34 @@ function config.bqf()
   })
 end
 
+function config.autopairs()
+  local status_ok, _ = pcall(require, "nvim-autopairs")
+  if not status_ok then return end
+  local ts_conds = require "nvim-autopairs.ts-conds"
+  local npairs = require "nvim-autopairs"
+  local Rule = require "nvim-autopairs.rule"
+  require('nvim-autopairs').setup({
+    disable_filetype = {'TelescopePrompt', 'vim'},
+  })
+  vim.cmd [[packadd nvim-compe]]
+  require("nvim-autopairs.completion.compe").setup {
+    map_cr = true, --  map <CR> on insert mode
+    map_complete = true, -- it will auto insert `(` after select function or method item
+  }
+  npairs.setup {
+    check_ts = true,
+    ts_config = {
+      lua = {"string"}, -- it will not add pair on that treesitter node
+      javascript = {"template_string"},
+      java = false, -- don't check treesitter on java
+    },
+  }
+  -- press % => %% is only inside comment or string
+  npairs.add_rules {
+    Rule("%", "%", "lua"):with_pair(ts_conds.is_ts_node {"string", "comment"}),
+    Rule("$", "$", "lua"):with_pair(ts_conds.is_not_ts_node {"function"}),
+  }
+end
+
 return config
 

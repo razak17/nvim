@@ -3,6 +3,7 @@ vim.fn.sign_define("DapBreakpoint",
   {text = "🛑", texthl = "", linehl = "", numhl = ""})
 vim.fn.sign_define("DapStopped",
   {text = "🟢", texthl = "", linehl = "", numhl = ""})
+dap.defaults.fallback.terminal_win_cmd = "50vsplit new"
 
 dap.configurations.lua = {
   {

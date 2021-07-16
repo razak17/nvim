@@ -16,7 +16,8 @@ require'nvim-treesitter.configs'.setup {
   rainbow = {
     enable = core.plugin.rainbow.active,
     extended_mode = true,
-    disable = {"lua", "json", "c", "cpp"},
+    max_file_lines = 1000,
+    disable = {"lua", "json", "c", "cpp", "html"},
     colors = {
       "royalblue3",
       "darkorange3",
@@ -30,7 +31,7 @@ require'nvim-treesitter.configs'.setup {
     use_virtual_text = true,
     lint_events = {"BufWrite", "CursorHold"},
   },
-  -- matchup = {enable = true, disable = {"c", "python"}},
+  matchup = {enable = true, disable = {"c", "python"}},
   ensure_installed = core.treesitter.ensure_installed,
 }
 

@@ -74,15 +74,4 @@ editor['b3nj5m1n/kommentary'] = {
   disable = not core.plugin.SANE.active,
 }
 
-editor['windwp/nvim-autopairs'] = {
-  event = 'InsertEnter',
-  -- after = {"telescope.nvim"},
-  config = function()
-    require('nvim-autopairs').setup({
-      disable_filetype = {'TelescopePrompt', 'vim'},
-    })
-  end,
-  disable = not core.plugin.autopairs.active,
-}
-
 return editor

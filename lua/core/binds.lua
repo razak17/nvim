@@ -182,7 +182,7 @@ nnoremap('<C-l>', '<C-w>l')
 -- Start new line from any cursor position
 inoremap("<S-Return>", "<C-o>o")
 
-nnoremap("<leader>aE", function() inspect_token() end, {silent = false})
+nnoremap("<leader>aE", function() inspect_token() end)
 
 -- Use alt + hjkl to resize windows
 nnoremap('<M-n>', ':resize -2<CR>')
