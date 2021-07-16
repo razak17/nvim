@@ -3,7 +3,6 @@ local conf = require('modules.editor.config')
 local editor = {}
 
 editor['rhysd/accelerated-jk'] = {
-  opt = true,
   event = {"BufWinEnter"},
   disable = not core.plugin.accelerated_jk.active and
     not core.plugin.SANE.active,
@@ -25,9 +24,7 @@ editor['junegunn/vim-easy-align'] = {
 }
 
 editor['razak17/vim-cursorword'] = {
-  -- event = {'BufReadPre', 'BufNewFile'},
-  -- event = {"BufWinEnter"},
-  config = conf.cursorword,
+  config = conf.vim_cursorword,
   disable = not core.plugin.cursorword.active and not core.plugin.SANE.active,
 }
 
@@ -64,7 +61,7 @@ editor['arecarn/vim-fold-cycle'] = {
 }
 
 editor['b3nj5m1n/kommentary'] = {
-  -- event = {"BufWinEnter"},
+  event = {"BufWinEnter"},
   config = conf.kommentary,
   disable = not core.plugin.SANE.active,
 }

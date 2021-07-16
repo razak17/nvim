@@ -44,7 +44,7 @@ function config.kommentary()
 end
 
 function config.vim_cursorword()
-  core.augroup("CursorWordMode", {
+  core.augroup("user_plugin_cursorword", {
     {
       events = {"FileType"},
       targets = {
@@ -58,17 +58,17 @@ function config.vim_cursorword()
     },
     {
       events = {"WinEnter"},
-      targets = {"which_key"},
+      targets = {"*"},
       command = [[if &diff || &pvw | let b:cursorword = 0  | endif]],
     },
     {
       events = {"InsertEnter"},
-      targets = {"which_key"},
+      targets = {"*"},
       command = "let b:cursorword = 0",
     },
     {
       events = {"InsertLeave"},
-      targets = {"which_key"},
+      targets = {"*"},
       command = "let b:cursorword = 1",
     },
   })
