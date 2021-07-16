@@ -62,6 +62,7 @@ core.plugin = {
   colorizer = {active = false},
   undotree = {active = false},
   fugitive = {active = false},
+  rooter = {active = false},
   -- TODO: handle these later
   glow = {active = false},
   doge = {active = false},
@@ -157,4 +158,17 @@ core.lsp = {
     update_in_insert = false,
     virtual_text = {spacing = 0, prefix = ""},
   },
+}
+
+O = {
+  number = true,
+  relative_number = true,
+  leader_key = "space",
+  colorscheme = "spacegray",
+  line_wrap_cursor_movement = true,
+  transparent_window = false,
+  format_on_save = true,
+  vsnip_dir = vim.fn.stdpath "config" .. "/snippets",
+  settings = {wrap = false},
+  plugin = {SANE = {active = true}},
 }

@@ -9,7 +9,9 @@ local cnoremap = core.cnoremap
 local fn = vim.fn
 local api = vim.api
 
-if not core.plugin.accelerated_jk.active then nmap('n', 'j') end
+if not core.plugin.accelerated_jk.active and not core.plugin.SANE.active then
+  nmap('n', 'j')
+end
 
 -----------------------------------------------------------------------------//
 -- Functions

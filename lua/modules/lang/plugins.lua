@@ -26,9 +26,6 @@ lang['jbyuki/one-small-step-for-vimkind'] = {
 }
 
 lang['neovim/nvim-lspconfig'] = {
-  -- event = 'BufReadPre',
-  -- event = 'BufWinEnter',
-  -- event = {'BufRead', 'BufNewFile'},
   config = conf.nvim_lsp,
   disable = not core.plugin.SANE.active,
 }

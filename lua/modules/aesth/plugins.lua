@@ -3,9 +3,9 @@ local aesth = {}
 
 aesth['razak17/zephyr-nvim'] = {disable = not core.plugin.SANE.active}
 
-aesth['ChristianChiarulli/dashboard-nvim'] = {
+aesth['glepnir/dashboard-nvim'] = {
   event = "BufWinEnter",
-  config = function() require 'modules.aesth.dashboard' end,
+  config = conf.dashboard,
   disable = not core.plugin.dashboard.active and not core.plugin.SANE.active,
 }
 

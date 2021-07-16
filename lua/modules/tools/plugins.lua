@@ -17,8 +17,9 @@ tools['airblade/vim-rooter'] = {
   event = {"BufWinEnter"},
   config = function()
     vim.g.rooter_silent_chdir = 1
-    vim.g.rooter_patterns = {'^.config', '.git', '.gitignore'}
+    vim.g.rooter_patterns = {'=nvim', '.git', '.gitignore'}
   end,
+  disable = not core.plugin.rooter.active and not core.plugin.SANE.active,
 }
 
 tools['npxbr/glow.nvim'] = {

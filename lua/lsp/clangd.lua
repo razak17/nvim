@@ -1,4 +1,4 @@
-local lsp_servers = require 'modules.lang.lsp.servers'
+local lsp = require 'lsp'
 
 if vim.fn.executable("clangd") then
   require'lspconfig'.clangd.setup {
@@ -9,16 +9,16 @@ if vim.fn.executable("clangd") then
       '--completion-style=bundled',
       '--header-insertion=iwyu',
       '--suggest-missing-includes',
-      '--cross-file-rename'
+      '--cross-file-rename',
     },
     init_options = {
       clangdFileStatus = true,
       usePlaceholders = true,
       completeUnimported = true,
-      semanticHighlighting = true
+      semanticHighlighting = true,
     },
-    capabilities = lsp_servers.capabilities,
-    on_attach = lsp_servers.enhance_attach
+    capabilities = lsp.capabilities,
+    on_attach = lsp.enhance_attach,
   }
 end
 

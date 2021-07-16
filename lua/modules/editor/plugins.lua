@@ -3,7 +3,8 @@ local conf = require('modules.editor.config')
 local editor = {}
 
 editor['rhysd/accelerated-jk'] = {
-  event = {"BufWinEnter"},
+  opt = true,
+  event = {'VimEnter'},
   disable = not core.plugin.accelerated_jk.active and
     not core.plugin.SANE.active,
 }

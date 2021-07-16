@@ -4,7 +4,7 @@ function config.dap() require 'debug.config' end
 
 function config.nvim_treesitter() require('modules.lang.treesitter') end
 
-function config.nvim_lsp() require('modules.lang.lsp.lspconfig') end
+function config.nvim_lsp() require('modules.lang.lsp') end
 
 function config.dap_install()
   vim.cmd [[packadd nvim-dap]]

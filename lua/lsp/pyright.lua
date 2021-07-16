@@ -1,9 +1,9 @@
-local lsp_servers = require 'modules.lang.lsp.servers'
+local lsp = require 'lsp'
 
 if vim.fn.executable("pyright-langserver") then
   require'lspconfig'.pyright.setup {
-    capabilities = lsp_servers.capabilities,
-    on_attach = lsp_servers.enhance_attach,
+    capabilities = lsp.capabilities,
+    on_attach = lsp.enhance_attach,
     settings = {python = {analysis = {typeCheckingMode = "off"}}},
   }
 end

@@ -98,7 +98,7 @@ set('lazyredraw', true)
 set('equalalways', false)
 set('numberwidth', core.sets.numberwidth)
 set('number', core.sets.number)
-set('relativenumber', core.sets.relative_number)
+set('relativenumber', O.relative_number)
 set('list', true)
 set('fillchars', {
   vert = "▕", -- alternatives │

@@ -50,14 +50,14 @@ local enhance_attach = function(client, bufnr)
 end
 
 local function setup_servers()
-  require 'modules.lang.lsp.servers.bash'
-  require 'modules.lang.lsp.servers.clangd'
-  require 'modules.lang.lsp.servers.gopls'
-  require 'modules.lang.lsp.servers.pyright'
-  require 'modules.lang.lsp.servers.tsserver'
-  require 'modules.lang.lsp.servers.sumneko_lua'
-  require 'modules.lang.lsp.servers.simple_lsp'
-  require 'modules.lang.lsp.servers.efm'
+  require 'lsp.bash'
+  require 'lsp.clangd'
+  require 'lsp.gopls'
+  require 'lsp.pyright'
+  require 'lsp.tsserver'
+  require 'lsp.sumneko_lua'
+  require 'lsp.simple_lsp'
+  require 'lsp.efm'
 end
 
 M.enhance_attach = enhance_attach

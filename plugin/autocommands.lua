@@ -245,7 +245,7 @@ core.augroup("PackerSetupInit", {
       require'core.plug'.magic_compile()
       -- if core.plugin.SANE.active then
       vim.cmd "source ~/.config/nvim/lua/keymap/which_key.lua"
-      vim.cmd "source ~/.config/nvim/lua/modules/lang/lsp/servers/init.lua"
+      vim.cmd "source ~/.config/nvim/lua/lsp/init.lua"
       vim.cmd "source ~/.config/nvim/lua/modules/lang/lsp/lspconfig/init.lua"
       -- end
       require'core.plug'.load_compile()

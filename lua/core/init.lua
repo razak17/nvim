@@ -1,7 +1,8 @@
-require 'core.globals'
-require 'core.opts'
+require 'globals'
+require 'defaults'
 
 local function load_core()
+  require 'core.opts'
   local plug = require 'core.plug'
   plug.ensure_plugins()
   plug.load_compile()
@@ -9,8 +10,8 @@ end
 
 local defer = function()
   vim.defer_fn(vim.schedule_wrap(function()
-    require 'keymap'
     require 'core.binds'
+    require 'keymap'
     vim.defer_fn(function()
       vim.cmd('colo zephyr')
       vim.cmd [[syntax on]]
@@ -19,5 +20,5 @@ local defer = function()
   end), 0)
 end
 
-load_core()
 defer()
+load_core()

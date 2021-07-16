@@ -150,6 +150,9 @@ function core.lsp.mappings(bufnr, client)
     nnoremap("<leader>vdb", vim.lsp.diagnostic.goto_prev, opts)
     nnoremap("<leader>vdn", vim.lsp.diagnostic.goto_next, opts)
     nnoremap("<leader>vdl", vim.lsp.diagnostic.show_line_diagnostics, opts)
+    vim.api.nvim_set_keymap("n", "gl",
+      '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics({ show_header = false, border = "single" })<CR>',
+      {noremap = true, silent = true})
   end
   nnoremap("gsd", vim.lsp.buf.document_symbol, opts)
   nnoremap("gsw", vim.lsp.buf.workspace_symbol, opts)
@@ -247,4 +250,4 @@ vim.fn.sign_define("LspDiagnosticsSignInformation", {
   numhl = "LspDiagnosticsSignInformation",
 })
 
-require'modules.lang.lsp.servers'.setup()
+require'lsp'.setup()

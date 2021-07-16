@@ -38,8 +38,6 @@ core.__sumneko_binary = core.__sumneko_root_path ..
                           '/bin/Linux/lua-language-server'
 core.__elixirls_binary = core.__elixirls_root_path .. '/.bin/language_server.sh'
 
-require 'core.defaults'
-
 function core._create(f)
   table.insert(core._store, f)
   return #core._store
@@ -313,3 +311,4 @@ function core.notify(lines, opts)
     end, timeout)
   end
 end
+
