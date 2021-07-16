@@ -103,6 +103,8 @@ core.which_key.SetKeyOnFT = function()
   -- Add keys to Which-Key keymap
   -- matchup
   if core.plugin.matchup.active then key_maps.a.w = 'where_am_i' end
+  -- undotree
+  if core.plugin.undotree.active then key_maps.a.u = 'toggle undotree' end
   -- tree
   if core.plugin.tree.active then
     key_maps.c.f = 'nvim-tree find'

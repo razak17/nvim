@@ -6,7 +6,7 @@ aesth['razak17/zephyr-nvim'] = {disable = not core.plugin.SANE.active}
 aesth['glepnir/dashboard-nvim'] = {
   event = "BufWinEnter",
   config = conf.dashboard,
-  disable = not core.plugin.dashboard.active or not core.plugin.SANE.active,
+  disable = not core.plugin.dashboard.active and not core.plugin.SANE.active,
 }
 
 aesth['lukas-reineke/indent-blankline.nvim'] = {
@@ -26,13 +26,13 @@ aesth['akinsho/nvim-bufferline.lua'] = {
 aesth['kyazdani42/nvim-tree.lua'] = {
   -- event = "BufWinEnter",
   config = conf.nvim_tree,
-  disable = not core.plugin.tree.active or not core.plugin.SANE.active,
+  disable = not core.plugin.tree.active and not core.plugin.SANE.active,
 }
 
 aesth['glepnir/galaxyline.nvim'] = {
   branch = 'main',
   config = conf.galaxyline,
-  disable = not core.plugin.statusline.active or not core.plugin.SANE.active,
+  disable = not core.plugin.statusline.active and not core.plugin.SANE.active,
 }
 
 aesth['lewis6991/gitsigns.nvim'] = {

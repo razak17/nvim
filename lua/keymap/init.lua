@@ -37,6 +37,7 @@ smap("<C-l>", "vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'",
 
 -- Easy-align
 if core.plugin.easy_align.active then
+  vmap('<Enter>', '<Plug>(EasyAlign)')
   nmap('ga', '<Plug>(EasyAlign)')
   xmap('ga', '<Plug>(EasyAlign)')
 end
@@ -99,6 +100,9 @@ nnoremap('<Leader>Li', ':LspInfo<CR>')
 nnoremap('<Leader>Ll', ':LspLog<CR>')
 nnoremap('<Leader>Lr', ':LspRestart<CR>')
 nnoremap('<Leader>vv', ':LspToggleVirtualText<CR>')
+
+-- UndoTree
+if core.plugin.undotree.active then nnoremap('<Leader>au', ':UndotreeToggle<CR>') end
 
 -- Tree
 if core.plugin.tree.active then

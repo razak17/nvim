@@ -5,11 +5,12 @@ local editor = {}
 editor['rhysd/accelerated-jk'] = {
   opt = true,
   event = {"BufWinEnter"},
-  disable = not core.plugin.accelerated_jk.active or not core.plugin.SANE.active,
+  disable = not core.plugin.accelerated_jk.active and
+    not core.plugin.SANE.active,
 }
 
 editor['tpope/vim-surround'] = {
-  disable = not core.plugin.surround.active or not core.plugin.SANE.active,
+  disable = not core.plugin.surround.active and not core.plugin.SANE.active,
 }
 
 editor['monaqa/dial.nvim'] = {
@@ -26,11 +27,10 @@ editor['junegunn/vim-easy-align'] = {
 editor['razak17/vim-cursorword'] = {
   event = {'BufReadPre', 'BufNewFile'},
   config = conf.cursorword,
-  disable = not core.plugin.cursorword.active,
+  disable = not core.plugin.cursorword.active and not core.plugin.SANE.active,
 }
 
 editor['hrsh7th/vim-eft'] = {
-  opt = true,
   config = function() vim.g.eft_ignorecase = true end,
   disable = not core.plugin.eft.active,
 }
@@ -49,13 +49,7 @@ editor['Raimondi/delimitMate'] = {
 
 editor['romainl/vim-cool'] = {
   config = function() vim.g.CoolTotalMatches = 1 end,
-  disable = not core.plugin.cool.active or not core.plugin.SANE.active,
-}
-
-editor['kkoomen/vim-doge'] = {
-  run = ':call doge#install()',
-  config = function() vim.g.doge_mapping = '<Leader>vD' end,
-  disable = not core.plugin.doge.active,
+  disable = not core.plugin.cool.active and not core.plugin.SANE.active,
 }
 
 editor['arecarn/vim-fold-cycle'] = {

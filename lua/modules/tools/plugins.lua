@@ -19,10 +19,16 @@ tools['npxbr/glow.nvim'] = {
   disable = not core.plugin.glow.active,
 }
 
+tools['kkoomen/vim-doge'] = {
+  run = ':call doge#install()',
+  config = function() vim.g.doge_mapping = '<Leader>vD' end,
+  disable = not core.plugin.doge.active,
+}
+
 tools['numToStr/FTerm.nvim'] = {
   -- event = {"BufWinEnter"},
   config = conf.fterm,
-  disable = not core.plugin.fterm.active or not core.plugin.SANE.active,
+  disable = not core.plugin.fterm.active and not core.plugin.SANE.active,
 }
 
 tools['MattesGroeger/vim-bookmarks'] = {

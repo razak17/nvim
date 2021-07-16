@@ -116,7 +116,7 @@ set('listchars', {
   tab = "»• ", -- Alternatives: │
   extends = "", -- Alternatives: … » ›
   precedes = "", -- Alternatives: … « ‹
-  trail = "•", -- BULLET (U+2022, UTF-8: E2 80 A2) ·
+  trail = "·", -- BULLET (U+2022, UTF-8: E2 80 A2) •
 })
 set('diffopt', {
   "vertical",

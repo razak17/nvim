@@ -70,7 +70,7 @@ lang['nvim-treesitter/nvim-treesitter'] = {
   event = 'BufWinEnter',
   after = 'telescope.nvim',
   config = conf.nvim_treesitter,
-  disable = not core.plugin.treesitter.active or not core.plugin.SANE.active,
+  disable = not core.plugin.treesitter.active and not core.plugin.SANE.active,
 }
 
 lang['nvim-treesitter/playground'] = {
