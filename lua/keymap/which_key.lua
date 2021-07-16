@@ -96,8 +96,10 @@ g.which_key_map = {
   },
 }
 
+_G.WhichKey = {}
+
 -- Conditional keymaps
-core.which_key.SetKeyOnFT = function()
+WhichKey.SetKeyOnFT = function()
   -- Get Which-Key keymap
   local key_maps = vim.g.which_key_map
   -- Add keys to Which-Key keymap
@@ -144,7 +146,7 @@ core.which_key.SetKeyOnFT = function()
     }
   end
   -- fterm
-  if core.plugin.fterm.active then
+  if core.plugin.fterm.active or core.plugin.SANE.active then
     key_maps.e = {
       name = '+Fterm',
       g = 'gitui',
@@ -329,7 +331,7 @@ core.augroup("WhichKeySetKeyOnFT", {
   {
     events = {"BufEnter"},
     targets = {"*"},
-    command = function() core.which_key.SetKeyOnFT() end,
+    command = "call v:lua.WhichKey.SetKeyOnFT()",
   },
 })
 

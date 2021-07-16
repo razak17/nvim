@@ -26,7 +26,7 @@ lang['jbyuki/one-small-step-for-vimkind'] = {
 }
 
 lang['neovim/nvim-lspconfig'] = {
-  event = 'BufReadPre',
+  -- event = 'BufReadPre',
   -- event = 'BufWinEnter',
   -- event = {'BufRead', 'BufNewFile'},
   config = conf.nvim_lsp,
@@ -76,7 +76,7 @@ lang['nvim-treesitter/nvim-treesitter'] = {
 lang['nvim-treesitter/playground'] = {
   cmd = "TSPlaygroundToggle",
   module = "nvim-treesitter-playground",
-  disable = not core.plugin.SANE.active,
+  disable = not core.plugin.playground.active,
 }
 
 lang['p00f/nvim-ts-rainbow'] = {

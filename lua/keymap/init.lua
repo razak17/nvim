@@ -105,7 +105,7 @@ nnoremap('<Leader>vv', ':LspToggleVirtualText<CR>')
 if core.plugin.undotree.active then nnoremap('<Leader>au', ':UndotreeToggle<CR>') end
 
 -- Tree
-if core.plugin.tree.active then
+if core.plugin.tree.active or core.plugin.SANE.active then
   nnoremap('<Leader>cv', ':NvimTreeToggle<CR>')
   nnoremap('<Leader>cr', ':NvimTreeRefresh<CR>')
   nnoremap('<Leader>cf', ':NvimTreeFindFile<CR>')
@@ -134,7 +134,7 @@ nnoremap('<Leader>ES', ':PlugStatus<CR>')
 nnoremap('<Leader>Ee', ':PlugUpdate<CR>')
 
 -- FTerm
-if core.plugin.fterm.active then
+if core.plugin.fterm.active or core.plugin.SANE.active then
   nnoremap('<F12>', '<CMD>lua require("FTerm").toggle()<CR>')
   tnoremap('<F12>', '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>')
   nnoremap('<leader>eN', '<CMD>lua require("FTerm").open()<CR>')

@@ -10,7 +10,6 @@ completion['liuchengxu/vim-which-key'] = {
 completion['rafamadriz/friendly-snippets'] = {
   event = 'InsertEnter',
   disable = not core.plugin.SANE.active,
-
 }
 
 completion['mattn/emmet-vim'] = {
@@ -42,19 +41,17 @@ completion['nvim-telescope/telescope.nvim'] = {
 
 completion['nvim-telescope/telescope-fzy-native.nvim'] = {
   opt = true,
-  disable = not core.plugin.telescope_fzy.active and not core.plugin.SANE.active,
+  disable = not core.plugin.telescope_fzy.active,
 }
 
 completion['nvim-telescope/telescope-media-files.nvim'] = {
   opt = true,
-  disable = not core.plugin.telescope_media_files.active and
-    not core.plugin.SANE.active,
+  disable = not core.plugin.telescope_media_files.active,
 }
 
 completion['nvim-telescope/telescope-project.nvim'] = {
   opt = true,
-  disable = not core.plugin.telescope_project.active and
-    not core.plugin.SANE.active,
+  disable = not core.plugin.telescope_project.active,
 }
 
 return completion

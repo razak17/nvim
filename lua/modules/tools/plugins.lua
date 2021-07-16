@@ -26,7 +26,7 @@ tools['kkoomen/vim-doge'] = {
 }
 
 tools['numToStr/FTerm.nvim'] = {
-  -- event = {"BufWinEnter"},
+  event = {"BufWinEnter"},
   config = conf.fterm,
   disable = not core.plugin.fterm.active and not core.plugin.SANE.active,
 }
