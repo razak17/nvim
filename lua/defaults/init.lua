@@ -49,7 +49,7 @@ core.plugin = {
   fold_cycle = {active = false},
   accelerated_jk = {active = false},
   easy_align = {active = false},
-  cool = {active = false},
+  cool = {active = true},
   delimitmate = {active = false},
   eft = {active = false},
   cursorword = {active = true},

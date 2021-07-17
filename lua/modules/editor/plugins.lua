@@ -51,7 +51,7 @@ editor['Raimondi/delimitMate'] = {
 
 editor['romainl/vim-cool'] = {
   config = function() vim.g.CoolTotalMatches = 1 end,
-  disable = not core.plugin.cool.active and not core.plugin.SANE.active,
+  disable = not core.plugin.cool.active,
 }
 
 editor['arecarn/vim-fold-cycle'] = {
