@@ -174,6 +174,7 @@ local column_clear = {
   "log",
   "fTerm",
   "TelescopePrompt",
+  "lspinfo",
 }
 
 --- Set or unset the color column depending on the filetype of the buffer and its eligibility
@@ -187,7 +188,7 @@ local function check_color_column(leaving)
     vim.wo.colorcolumn = ""
     return
   end
-  if contains(column_clear, vim.bo.filetype) and vim.wo.colorcolumn == "" then
+  if not contains(column_clear, vim.bo.filetype) and vim.wo.colorcolumn == "" then
     vim.wo.colorcolumn = "+1"
   end
 end
@@ -213,7 +214,7 @@ local function check_cursor_line(leaving)
     vim.wo.cursorline = false
     return
   end
-  if contains(column_clear, vim.bo.filetype) and vim.wo.cursorline == false then
+  if not contains(column_clear, vim.bo.filetype) and vim.wo.cursorline == false then
     vim.wo.cursorline = true
   end
 end

@@ -63,7 +63,8 @@ function config.vim_cursorword()
         "help",
         "fTerm",
         "TelescopePrompt",
-
+        "qf",
+        "", -- for all buffers without a file type
       },
       command = "let b:cursorword = 0",
     },

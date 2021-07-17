@@ -78,6 +78,9 @@ au BufNewFile,BufRead *.toml,Gopkg.lock,Cargo.lock,*/.cargo/config,*/.cargo/cred
 " Cargo Make
 au BufRead,BufNewFile Makefile.toml set ft=cargo-make
 
+" Cargo Make
+au BufRead,BufNewFile .vimrc.local set ft=vim
+
 " tmp, bak
 au BufWritePre *.bak,*.tmp,COMMIT_EDITMSG,MERGE_MSG setlocal noundofile
 au BufNewFile,BufReadPre /tmp/*,$TMPDIR/*,$TMP/*,$TEMP/*,*/shm/*,/private/var/*,.vault.vim, setlocal noswapfile noundofile nobackup nowritebackup viminfo= shada="

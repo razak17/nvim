@@ -6,5 +6,4 @@
 " resize 9
 setlocal winfixheight nobuflisted buftype=nofile
 " Add autocompletion
-lua require('dap.ext.autocompl').attach()
-
+"lua require('dap.ext.autocompl').attach()
