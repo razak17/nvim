@@ -58,26 +58,11 @@ g.which_key_map = {
     d = {name = '+Delete', a = 'all', h = 'to left', x = 'all except current'},
     s = 'highlight cursor word',
   },
-  c = {
-    name = '+Command',
-    a = 'vertical resize 30',
-    h = {name = '+Help', w = 'word'},
-  },
-  E = {
-    name = '+Plug',
-    c = 'compile',
-    C = 'clean',
-    i = 'install',
-    s = 'sync',
-    e = 'update',
-  },
+  c = {name = '+Command', a = 'vertical resize 30', h = {name = '+Help', w = 'word'}},
+  E = {name = '+Plug', c = 'compile', C = 'clean', i = 'install', s = 'sync', e = 'update'},
   I = {name = '+Info', c = 'check health', m = 'messages', v = 'vsplit vimrc'},
   l = {name = "+LocList", i = 'empty', s = 'toggle'},
-  n = {
-    name = "+New",
-    f = "open file in same dir",
-    s = "create new file in same dir",
-  },
+  n = {name = "+New", f = "open file in same dir", s = "create new file in same dir"},
   s = {
     name = '+Tab',
     b = 'previous',
@@ -89,11 +74,7 @@ g.which_key_map = {
     L = 'move right',
     N = 'new',
   },
-  w = {
-    name = "+Orientation",
-    h = "change to horizontal",
-    v = "change to vertical",
-  },
+  w = {name = "+Orientation", h = "change to horizontal", v = "change to vertical"},
 }
 
 _G.WhichKey = {}
@@ -134,13 +115,7 @@ WhichKey.SetKeyOnFT = function()
       n = 'down',
       p = 'pause',
       r = 'open repl in vsplit',
-      s = {
-        name = "+Step",
-        b = 'back',
-        i = 'step into',
-        o = 'step out',
-        v = 'step over',
-      },
+      s = {name = "+Step", b = 'back', i = 'step into', o = 'step out', v = 'step over'},
       S = 'stop',
       x = 'disconnect',
     }
@@ -205,19 +180,12 @@ WhichKey.SetKeyOnFT = function()
   end
   -- bookmarks
   if core.plugin.bookmarks.active then
-    key_maps.m = {
-      name = '+Mark',
-      e = 'toggle',
-      b = 'previous mark',
-      k = 'next mark',
-    }
+    key_maps.m = {name = '+Mark', e = 'toggle', b = 'previous mark', k = 'next mark'}
   end
   -- markdown
   if core.plugin.markdown_preview.active or core.plugin.glow.active then
     key_maps.o = {name = '+Toggle'}
-    if core.plugin.markdown_preview.active then
-      key_maps.o.m = 'markdown preview'
-    end
+    if core.plugin.markdown_preview.active then key_maps.o.m = 'markdown preview' end
     if core.plugin.glow.active then key_maps.o.g = 'glow preview' end
   end
   -- dashboard
@@ -249,7 +217,7 @@ WhichKey.SetKeyOnFT = function()
         v = 'vim options',
         z = 'current file fuzzy find',
       },
-      C = 'Open lua/core/defaults.lua',
+      C = 'Open lua/core/defaults/init.lua',
       d = {
         name = '+Dotfiles',
         b = 'branches',
@@ -259,12 +227,7 @@ WhichKey.SetKeyOnFT = function()
         r = 'recent files',
         s = 'status',
       },
-      e = {
-        name = '+Extensions',
-        m = 'media files',
-        b = 'change background',
-        p = 'project',
-      },
+      e = {name = '+Extensions', m = 'media files', b = 'change background', p = 'project'},
       f = 'find files',
       l = {name = '+Live', g = 'grep', w = 'current word', e = 'prompt'},
       r = {
@@ -284,25 +247,13 @@ WhichKey.SetKeyOnFT = function()
         d = 'document_symbol',
         w = 'workspace_symbol',
       },
-      g = {
-        name = '+Git',
-        b = 'branches',
-        c = 'commits',
-        C = 'bcommits',
-        f = 'files',
-        s = 'status',
-      },
+      g = {name = '+Git', b = 'branches', c = 'commits', C = 'bcommits', f = 'files', s = 'status'},
     }
     key_maps.v = {
       name = '+Code',
       a = 'code action',
       A = 'range code action',
-      d = {
-        name = '+Diagnostics',
-        b = 'goto previous',
-        l = 'current line',
-        n = 'goto next',
-      },
+      d = {name = '+Diagnostics', b = 'goto previous', l = 'current line', n = 'goto next'},
       f = 'format',
       l = 'set loc list',
       o = 'open qflist',
@@ -328,11 +279,7 @@ WhichKey.SetKeyOnFT = function()
 end
 
 core.augroup("WhichKeySetKeyOnFT", {
-  {
-    events = {"BufEnter"},
-    targets = {"*"},
-    command = "call v:lua.WhichKey.SetKeyOnFT()",
-  },
+  {events = {"BufEnter"}, targets = {"*"}, command = "call v:lua.WhichKey.SetKeyOnFT()"},
 })
 
 core.augroup("WhichKeyMode", {
