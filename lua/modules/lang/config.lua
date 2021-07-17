@@ -4,6 +4,21 @@ function config.dap() require 'debug.config' end
 
 function config.nvim_lsp() require 'lsp' end
 
+function config.nvim_lint()
+  core.augroup("AutoLint", {
+    {
+      events = {"BufWritePost"},
+      targets = {"<buffer>"},
+      command = ":silent lua require('lint').try_lint()",
+    },
+    {
+      events = {"BufEnter"},
+      targets = {"<buffer>"},
+      command = ":silent lua require('lint').try_lint()",
+    },
+  })
+end
+
 function config.nvim_treesitter() require 'modules.lang.treesitter' end
 
 function config.dap_install()

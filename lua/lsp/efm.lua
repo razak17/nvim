@@ -13,11 +13,20 @@ local formatters = {
 
 local linters = {
   eslint = {
-    lintCommand = "./node_modules/.bin/eslint -f unix --stdin --stdin-filename ${INPUT}",
-    lintIgnoreExitCode = true,
+    -- lintCommand = "./node_modules/.bin/eslint -f unix --stdin --stdin-filename ${INPUT}",
+    -- lintIgnoreExitCode = true,
+    -- lintStdin = true,
+    -- lintFormats = {"%f:%l:%c: %m"},
+    -- formatCommand = "./node_modules/.bin/eslint --fix-to-stdout --stdin --stdin-filename=${INPUT}",
+    -- formatStdin = true,
+    lintCommand = "./node_modules/.bin/eslint" ..
+      "-f visualstudio --stdin --stdin-filename ${INPUT}",
     lintStdin = true,
-    lintFormats = {"%f:%l:%c: %m"},
-    formatCommand = "./node_modules/.bin/eslint --fix-to-stdout --stdin --stdin-filename=${INPUT}",
+    lintFormats = {"%f(%l,%c): %tarning %m", "%f(%l,%c): %rror %m"},
+    lintSource = "./node_modules/.bin/eslint",
+    lintIgnoreExitCode = true,
+    formatCommand = "./node_modules/.bin/eslint" ..
+      " --fix-to-stdout --stdin  --stdin-filename=${INPUT}",
     formatStdin = true,
   },
   flake8 = {
@@ -47,42 +56,44 @@ local shfmt = formatters.shfmt
 
 local M = {}
 function M.setup(capabilities)
-  if vim.fn.executable("efm-langserver") then
-    require'lspconfig'.efm.setup {
-      capabilities = capabilities,
-      on_attach = core.lsp.on_attach,
-      init_options = {documentFormatting = true, codeAction = false},
-      filetypes = {
-        "lua",
-        "javascript",
-        "javascriptreact",
-        "typescript",
-        "typescriptreact",
-        "python",
-        "html",
-        "css",
-        "json",
-        "yaml",
-        "sh",
+  require'lspconfig'.efm.setup {
+    capabilities = capabilities,
+    on_attach = core.lsp.on_attach,
+    init_options = {documentFormatting = true, codeAction = false},
+    filetypes = {
+      "lua",
+      "javascript",
+      "javascriptreact",
+      "javascript.jsx",
+      "typescript",
+      "typescriptreact",
+      "typescript.tsx",
+      "python",
+      "html",
+      "css",
+      "json",
+      "yaml",
+      "sh",
+    },
+    settings = {
+      rootMarkers = {"package.json", "tsconfig.json", "requirements.txt", ".gitignore", ".git/"},
+      languages = {
+        lua = {luaFormat},
+        python = {isort, black, yapf, flake8},
+        javascript = {prettier, eslint},
+        javascriptreact = {prettier, eslint},
+        ["javascriptreact.jsx"] = {prettier, eslint},
+        typescript = {prettier, eslint},
+        typescriptreact = {prettier, eslint},
+        ["typescriptreact.tsx"] = {prettier, eslint},
+        html = {prettier},
+        css = {prettier},
+        json = {prettier},
+        yaml = {prettier_yaml},
+        sh = {shellcheck, shfmt},
       },
-      settings = {
-        rootMarkers = {"package.json", "tsconfig.json", "requirements.txt", ".gitignore", ".git/"},
-        languages = {
-          lua = {luaFormat},
-          python = {isort, black, yapf, flake8},
-          javascript = {prettier, eslint},
-          javascriptreact = {prettier, eslint},
-          typescript = {prettier, eslint},
-          typescriptreact = {prettier, eslint},
-          html = {prettier},
-          css = {prettier},
-          json = {prettier},
-          yaml = {prettier_yaml},
-          sh = {shellcheck, shfmt},
-        },
-      },
-    }
-  end
+    },
+  }
 end
 
 return M

@@ -38,9 +38,11 @@ core.plugin = {
   symbols_outline = {active = false},
   bqf = {active = false},
   trouble = {active = false},
+  nvim_lint = {active = true},
+  lsp_ts_utils = {active = true},
   -- treesitter
   treesitter = {active = false},
-  playground = {active = false},
+  playground = {active = true},
   rainbow = {active = false},
   matchup = {active = false},
   autotag = {active = false},
@@ -57,7 +59,7 @@ core.plugin = {
   dial = {active = true},
   -- tools
   fterm = {active = true},
-  far = {active = false},
+  far = {active = true},
   bookmarks = {active = false},
   colorizer = {active = true},
   undotree = {active = false},
@@ -139,7 +141,9 @@ core.dashboard = {
   },
   default_executive = 'telescope',
   disable_statusline = 0,
-  save_session = function() vim.cmd("SessionSave") end,
+  save_session = function()
+    vim.cmd("SessionSave")
+  end,
   session_directory = core.__session_dir,
 }
 
@@ -148,14 +152,9 @@ core.utils = {leader_key = " ", dapinstall_dir = core.__data_dir, transparent_wi
 core.lsp = {
   hoverdiagnostics = true,
   format_on_save = true,
+  lint_on_save = true,
   document_highlight = true,
   popup_border = "single",
-  diagnostics = {
-    signs = true,
-    underline = true,
-    update_in_insert = false,
-    virtual_text = {spacing = 0, prefix = ""},
-  },
 }
 
 O = {

@@ -134,7 +134,7 @@ core.augroup("TextYankHighlight", {
     events = {"TextYankPost"},
     targets = {"*"},
     command = function()
-      require("vim.highlight").on_yank({timeout = 477, on_visual = false, higroup = "Visual"})
+      require("vim.highlight").on_yank({timeout = 77, on_visual = false, higroup = "Visual"})
     end,
   },
 })
@@ -153,7 +153,7 @@ local column_clear = {
   "TelescopePrompt",
   "lspinfo",
   "lspinfo",
-  "which_key"
+  "which_key",
 }
 
 --- Set or unset the color column depending on the filetype of the buffer and its eligibility

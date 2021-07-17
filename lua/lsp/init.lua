@@ -1,11 +1,16 @@
 local command = core.command
+local augroup = core.augroup
 
-local get_cursor_pos = function() return {vim.fn.line('.'), vim.fn.col('.')} end
+local get_cursor_pos = function()
+  return {vim.fn.line('.'), vim.fn.col('.')}
+end
 
 local debounce = function(func, timeout)
   local timer_id = nil
   return function(...)
-    if timer_id ~= nil then vim.fn.timer_stop(timer_id) end
+    if timer_id ~= nil then
+      vim.fn.timer_stop(timer_id)
+    end
     local args = {...}
 
     timer_id = vim.fn.timer_start(timeout, function()
@@ -16,7 +21,7 @@ local debounce = function(func, timeout)
 end
 
 local function lspLocList()
-  core.augroup("LspLocationList", {
+  augroup("LspLocationList", {
     {
       events = {"User LspDiagnosticsChanged"},
       command = function()
@@ -32,7 +37,7 @@ end
 
 local function documentFormatting(client)
   if client and client.resolved_capabilities.document_formatting then
-    core.augroup("LspFormat", {
+    augroup("LspFormat", {
       {
         events = {"BufWritePre"},
         targets = {"<buffer>"},
@@ -44,7 +49,7 @@ end
 
 local function documentHighlight(client)
   if client and client.resolved_capabilities.document_highlight then
-    core.augroup("LspCursorCommands", {
+    augroup("LspCursorCommands", {
       {
         events = {"CursorHold"},
         targets = {"<buffer>"},
@@ -65,7 +70,7 @@ local function documentHighlight(client)
 end
 
 local function hoverDiagnostics()
-  core.augroup("HoverDiagnostics", {
+  augroup("HoverDiagnostics", {
     {
       events = {"CursorHold"},
       targets = {"<buffer>"},
@@ -91,80 +96,14 @@ end
 
 local function lsp_autocmds(client)
   lspLocList()
-  if client and client.resolved_capabilities.code_lens then
-    core.augroup("LspCodeLens", {
-      {
-        events = {"BufEnter", "CursorHold", "InsertLeave"},
-        targets = {"<buffer>"},
-        command = vim.lsp.codelens.refresh,
-      },
-    })
+  if core.lsp.format_on_save then
+    documentFormatting(client)
   end
-  if core.lsp.format_on_save then documentFormatting(client) end
-  if core.lsp.document_highlight then documentHighlight(client) end
-  if core.lsp.hoverdiagnostics then hoverDiagnostics() end
-end
-
-local lsp_config = {}
-
--- Taken from https://www.reddit.com/r/neovim/comments/gyb077/nvimlsp_peek_defination_javascript_ttserver/
-function lsp_config.preview_location(location, context, before_context)
-  -- location may be LocationLink or Location (more useful for the former)
-  context = context or 15
-  before_context = before_context or 0
-  local uri = location.targetUri or location.uri
-  if uri == nil then return end
-  local bufnr = vim.uri_to_bufnr(uri)
-  if not vim.api.nvim_buf_is_loaded(bufnr) then vim.fn.bufload(bufnr) end
-
-  local range = location.targetRange or location.range
-  local contents = vim.api.nvim_buf_get_lines(bufnr, range.start.line - before_context,
-    range["end"].line + 1 + context, false)
-  local filetype = vim.api.nvim_buf_get_option(bufnr, "filetype")
-  return vim.lsp.util.open_floating_preview(contents, filetype, {border = core.lsp.popup_border})
-end
-
-function lsp_config.preview_location_callback(_, method, result)
-  local context = 15
-  if result == nil or vim.tbl_isempty(result) then
-    print("No location found: " .. method)
-    return nil
+  if core.lsp.document_highlight then
+    documentHighlight(client)
   end
-  if vim.tbl_islist(result) then
-    lsp_config.floating_buf, lsp_config.floating_win =
-      lsp_config.preview_location(result[1], context)
-  else
-    lsp_config.floating_buf, lsp_config.floating_win = lsp_config.preview_location(result, context)
-  end
-end
-
-function lsp_config.PeekDefinition()
-  if vim.tbl_contains(vim.api.nvim_list_wins(), lsp_config.floating_win) then
-    vim.api.nvim_set_current_win(lsp_config.floating_win)
-  else
-    local params = vim.lsp.util.make_position_params()
-    return vim.lsp.buf_request(0, "textDocument/definition", params,
-      lsp_config.preview_location_callback)
-  end
-end
-
-function lsp_config.PeekTypeDefinition()
-  if vim.tbl_contains(vim.api.nvim_list_wins(), lsp_config.floating_win) then
-    vim.api.nvim_set_current_win(lsp_config.floating_win)
-  else
-    local params = vim.lsp.util.make_position_params()
-    return vim.lsp.buf_request(0, "textDocument/typeDefinition", params,
-      lsp_config.preview_location_callback)
-  end
-end
-
-function lsp_config.PeekImplementation()
-  if vim.tbl_contains(vim.api.nvim_list_wins(), lsp_config.floating_win) then
-    vim.api.nvim_set_current_win(lsp_config.floating_win)
-  else
-    local params = vim.lsp.util.make_position_params()
-    return vim.lsp.buf_request(0, "textDocument/implementation", params,
-      lsp_config.preview_location_callback)
+  if core.lsp.hoverdiagnostics then
+    hoverDiagnostics()
   end
 end
 
@@ -172,24 +111,36 @@ local function lsp_mappings(client, bufnr)
   local nnoremap, vnoremap = core.nnoremap, core.vnoremap
   local lsp_popup = {{popup_opts = {border = "single", focusable = false}}}
 
-  if client.resolved_capabilities.implementation then nnoremap("gi", vim.lsp.buf.implementation) end
+  if client.resolved_capabilities.implementation then
+    nnoremap("gi", vim.lsp.buf.implementation)
+  end
 
   if client.resolved_capabilities.type_definition then
     nnoremap("<leader>ge", vim.lsp.buf.type_definition)
   end
 
-  if client.supports_method "textDocument/rename" then nnoremap("grn", vim.lsp.buf.rename) end
+  if client.supports_method "textDocument/rename" then
+    nnoremap("grn", vim.lsp.buf.rename)
+  end
 
   if not core.plugin.saga.active then
     nnoremap("gd", vim.lsp.buf.definition)
     nnoremap("gD", vim.lsp.buf.declaration)
     nnoremap("gr", vim.lsp.buf.references)
     nnoremap("gi", vim.lsp.buf.implementation)
-    nnoremap("ge", function() lsp_config.PeekDefinition() end)
+    nnoremap("ge", function()
+      require'lsp.utils'.PeekDefinition()
+    end)
     nnoremap("K", vim.lsp.buf.hover)
-    nnoremap("<Leader>vdb", function() vim.lsp.diagnostic.goto_prev({lsp_popup}) end)
-    nnoremap("<Leader>vdn", function() vim.lsp.diagnostic.goto_next({lsp_popup}) end)
-    nnoremap("<Leader>vdl", function() vim.lsp.diagnostic.show_line_diagnostics({lsp_popup}) end)
+    nnoremap("<Leader>vdb", function()
+      vim.lsp.diagnostic.goto_prev({lsp_popup})
+    end)
+    nnoremap("<Leader>vdn", function()
+      vim.lsp.diagnostic.goto_next({lsp_popup})
+    end)
+    nnoremap("<Leader>vdl", function()
+      vim.lsp.diagnostic.show_line_diagnostics({lsp_popup})
+    end)
   end
   nnoremap("gsd", vim.lsp.buf.document_symbol)
   nnoremap("gsw", vim.lsp.buf.workspace_symbol)
@@ -203,7 +154,9 @@ local function lsp_mappings(client, bufnr)
 end
 
 function core.lsp.tagfunc(pattern, flags)
-  if flags ~= "c" then return vim.NIL end
+  if flags ~= "c" then
+    return vim.NIL
+  end
   local params = vim.lsp.util.make_position_params()
   local client_id_to_results, err = vim.lsp.buf_request_sync(0, "textDocument/definition", params,
     500)
@@ -300,7 +253,9 @@ command {
 function core.lsp.setup_servers()
   local on_init = function(client)
     client.config.flags = {}
-    if client.config.flags then client.config.flags.allow_incremental_sync = true end
+    if client.config.flags then
+      client.config.flags.allow_incremental_sync = true
+    end
   end
   local capabilities = vim.lsp.protocol.make_client_capabilities()
   capabilities.textDocument.completion.completionItem.snippetSupport = true
@@ -319,19 +274,49 @@ function core.lsp.setup_servers()
       },
     },
   }
-  require'lsp.bash'.setup(capabilities)
-  require'lsp.clang'.setup(capabilities)
-  require'lsp.go'.setup(capabilities)
-  require'lsp.lua'.setup(capabilities)
-  require'lsp.python'.setup(capabilities)
+
+  local exec = core.executable
+
+  if exec("bash-language-server") then
+    require'lsp.bash'.setup(capabilities)
+  end
+
+  if exec("clangd") then
+    require'lsp.clang'.setup(capabilities)
+  end
+
+  if exec("gopls") then
+    require'lsp.go'.setup(capabilities)
+  end
+
+  if exec(core.__sumneko_binary) then
+    require'lsp.lua'.setup(capabilities)
+    require'lsp.lua'.lint()
+  end
+
+  if exec("pyright-langserver") then
+    require'lsp.python'.setup(capabilities)
+    require'lsp.python'.lint()
+  end
+
   require'lsp.simple'.setup(capabilities, on_init)
-  require'lsp.tsserver'.setup(capabilities)
-  require'lsp.efm'.setup(capabilities)
+
+  if exec("typescript-language-server") then
+    require'lsp.tsserver'.setup(capabilities)
+    require'lsp.tsserver'.lint(capabilities)
+  end
+
+  -- if exec("efm-langserver") then
+  --   require'lsp.efm'.setup(capabilities)
+  -- end
+
   vim.cmd "doautocmd User LspServersStarted"
 end
 
 local function lsp_setup()
-  if vim.g.lspconfig_has_setup then return end
+  if vim.g.lspconfig_has_setup then
+    return
+  end
   vim.g.lspconfig_has_setup = true
 
   vim.fn.sign_define {
@@ -343,10 +328,10 @@ local function lsp_setup()
 
   vim.lsp.handlers["textDocument/publishDiagnostics"] =
     vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-      underline = core.lsp.diagnostics.underline,
-      update_in_insert = core.lsp.diagnostics.update_in_insert,
-      virtual_text = core.lsp.diagnostics.virtual_text,
-      signs = core.lsp.diagnostics.signs,
+      underline = true,
+      update_in_insert = false,
+      virtual_text = {spacing = 0, prefix = ""},
+      signs = true,
     })
 
   vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
@@ -361,4 +346,3 @@ local function lsp_setup()
 end
 
 lsp_setup()
-

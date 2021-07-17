@@ -31,6 +31,23 @@ lang['neovim/nvim-lspconfig'] = {config = conf.nvim_lsp, disable = not core.plug
 
 lang['glepnir/lspsaga.nvim'] = {after = 'nvim-lspconfig', disable = not core.plugin.saga.active}
 
+lang['jose-elias-alvarez/nvim-lsp-ts-utils'] = {
+  ft = {
+    "javascript",
+    "javascriptreact",
+    "javascript.jsx",
+    "typescript",
+    "typescriptreact",
+    "typescript.tsx",
+  },
+  disable = not core.plugin.lsp_ts_utils.active
+}
+
+lang['mfussenegger/nvim-lint'] = {
+  config = conf.nvim_lint,
+  disable = not core.plugin.nvim_lint.active,
+}
+
 lang['kosayoda/nvim-lightbulb'] = {
   after = 'nvim-lspconfig',
   config = conf.lightbulb,
@@ -40,14 +57,18 @@ lang['kosayoda/nvim-lightbulb'] = {
 lang['simrat39/symbols-outline.nvim'] = {
   after = 'nvim-lspconfig',
   cmd = 'SymbolsOutline',
-  config = function() require("symbols-outline").setup {show_guides = true} end,
+  config = function()
+    require("symbols-outline").setup {show_guides = true}
+  end,
   disable = not core.plugin.symbols_outline.active,
 }
 
 lang['folke/trouble.nvim'] = {
   after = 'nvim-lspconfig',
   requires = {{"kyazdani42/nvim-web-devicons", opt = true}},
-  config = function() require("trouble").setup {use_lsp_diagnostic_signs = true} end,
+  config = function()
+    require("trouble").setup {use_lsp_diagnostic_signs = true}
+  end,
   disable = not core.plugin.trouble.active,
 }
 
