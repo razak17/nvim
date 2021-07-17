@@ -11,7 +11,7 @@ local defer = function()
     vim.defer_fn(function()
       require 'core.binds'
       vim.cmd [[colo zephyr]]
-      vim.cmd [[syntax on]]
+      vim.cmd [[syntax enable]]
       vim.cmd [[filetype plugin indent on]]
     end, 0)
   end), 0)

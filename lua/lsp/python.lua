@@ -1,10 +1,13 @@
-local lsp = require 'lsp'
-
-if vim.fn.executable("pyright-langserver") then
-  require'lspconfig'.pyright.setup {
-    capabilities = lsp.capabilities,
-    on_attach = lsp.enhance_attach,
-    settings = {python = {analysis = {typeCheckingMode = "off"}}},
-  }
+local M = {}
+function M.setup(capabilities)
+  if vim.fn.executable("pyright-langserver") then
+    require'lspconfig'.pyright.setup {
+      capabilities = capabilities,
+      on_attach = core.lsp.on_attach,
+      settings = {python = {analysis = {typeCheckingMode = "off"}}},
+    }
+  end
 end
+
+return M
 

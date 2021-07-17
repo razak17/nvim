@@ -2,6 +2,7 @@ local conf = require('modules.lang.config')
 
 local lang = {}
 
+-- Debug
 lang['mfussenegger/nvim-dap'] = {
   event = 'BufReadPre',
   config = conf.dap,
@@ -25,18 +26,14 @@ lang['jbyuki/one-small-step-for-vimkind'] = {
   disable = not core.plugin.osv.active,
 }
 
-lang['neovim/nvim-lspconfig'] = {
-  config = conf.nvim_lsp,
-  disable = not core.plugin.SANE.active,
-}
+-- Lsp
+lang['neovim/nvim-lspconfig'] = {config = conf.nvim_lsp, disable = not core.plugin.SANE.active}
 
-lang['glepnir/lspsaga.nvim'] = {
-  after = 'nvim-lspconfig',
-  disable = not core.plugin.saga.active,
-}
+lang['glepnir/lspsaga.nvim'] = {after = 'nvim-lspconfig', disable = not core.plugin.saga.active}
 
 lang['kosayoda/nvim-lightbulb'] = {
   after = 'nvim-lspconfig',
+  config = conf.lightbulb,
   disable = not core.plugin.lightbulb.active,
 }
 
@@ -50,9 +47,7 @@ lang['simrat39/symbols-outline.nvim'] = {
 lang['folke/trouble.nvim'] = {
   after = 'nvim-lspconfig',
   requires = {{"kyazdani42/nvim-web-devicons", opt = true}},
-  config = function()
-    require("trouble").setup {use_lsp_diagnostic_signs = true}
-  end,
+  config = function() require("trouble").setup {use_lsp_diagnostic_signs = true} end,
   disable = not core.plugin.trouble.active,
 }
 
@@ -62,7 +57,9 @@ lang['kevinhwang91/nvim-bqf'] = {
   disable = not core.plugin.bqf.active,
 }
 
+-- Treesitter
 lang['nvim-treesitter/nvim-treesitter'] = {
+  event = 'BufWinEnter',
   after = 'telescope.nvim',
   config = conf.nvim_treesitter,
   disable = not core.plugin.treesitter.active and not core.plugin.SANE.active,
@@ -74,10 +71,7 @@ lang['nvim-treesitter/playground'] = {
   disable = not core.plugin.playground.active,
 }
 
-lang['p00f/nvim-ts-rainbow'] = {
-  after = 'nvim-treesitter',
-  disable = not core.plugin.rainbow.active,
-}
+lang['p00f/nvim-ts-rainbow'] = {after = 'nvim-treesitter', disable = not core.plugin.rainbow.active}
 
 lang['andymass/vim-matchup'] = {
   event = 'VimEnter',
