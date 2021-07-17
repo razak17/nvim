@@ -8,16 +8,7 @@ aesth['glepnir/dashboard-nvim'] = {
   config = conf.dashboard,
   disable = not core.plugin.dashboard.active and not core.plugin.SANE.active,
 }
-
-aesth['lukas-reineke/indent-blankline.nvim'] = {
-  event = {'BufRead'},
-  config = conf.indent_blankline,
-  disable = not core.plugin.indent_line.active,
-}
-aesth['kyazdani42/nvim-web-devicons'] = {
-  opt = true,
-  disable = not core.plugin.SANE.active,
-}
+aesth['kyazdani42/nvim-web-devicons'] = {opt = true, disable = not core.plugin.SANE.active}
 
 aesth['akinsho/nvim-bufferline.lua'] = {
   event = {'BufRead'},
@@ -28,7 +19,7 @@ aesth['akinsho/nvim-bufferline.lua'] = {
 aesth['kyazdani42/nvim-tree.lua'] = {
   event = "BufWinEnter",
   config = conf.nvim_tree,
-  disable = not core.plugin.tree.active and not core.plugin.SANE.active,
+  disable = not core.plugin.tree.active,
 }
 
 aesth['glepnir/galaxyline.nvim'] = {
@@ -36,6 +27,13 @@ aesth['glepnir/galaxyline.nvim'] = {
   config = conf.galaxyline,
   disable = not core.plugin.statusline.active and not core.plugin.SANE.active,
 }
+
+aesth['lukas-reineke/indent-blankline.nvim'] = {
+  event = {'BufRead'},
+  config = conf.indent_blankline,
+  disable = not core.plugin.indent_line.active,
+}
+
 
 aesth['lewis6991/gitsigns.nvim'] = {
   event = "BufWinEnter",

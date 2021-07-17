@@ -11,8 +11,8 @@ editor['rhysd/accelerated-jk'] = {
 
 editor['tpope/vim-surround'] = {
   config = function()
-    core.xmap("s", "<Plug>VSurround")
-    core.xmap("s", "<Plug>VSurround")
+    core.xmap("S", "<Plug>VSurround")
+    core.xmap("S", "<Plug>VSurround")
   end,
   disable = not core.plugin.surround.active and not core.plugin.SANE.active,
 }

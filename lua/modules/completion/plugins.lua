@@ -7,11 +7,6 @@ completion['liuchengxu/vim-which-key'] = {
   disable = not core.plugin.SANE.active,
 }
 
-completion['rafamadriz/friendly-snippets'] = {
-  event = 'InsertEnter',
-  disable = not core.plugin.SANE.active,
-}
-
 completion['mattn/emmet-vim'] = {
   event = 'InsertEnter',
   config = conf.emmet,
@@ -24,10 +19,15 @@ completion['hrsh7th/nvim-compe'] = {
   disable = not core.plugin.SANE.active,
 }
 
+completion['rafamadriz/friendly-snippets'] = {
+  event = 'InsertEnter',
+  disable = not core.plugin.friendly_snippets.active,
+}
+
 completion['hrsh7th/vim-vsnip'] = {
   event = "InsertEnter",
   config = function() vim.g.vsnip_snippet_dir = core.__vsnip_dir end,
-  disable = not core.plugin.SANE.active,
+  disable = not core.plugin.vsnip.active,
 }
 
 completion['nvim-lua/plenary.nvim'] = {disable = not core.plugin.SANE.active}

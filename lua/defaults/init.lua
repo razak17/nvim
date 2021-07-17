@@ -56,13 +56,13 @@ core.plugin = {
   surround = {active = true},
   dial = {active = true},
   -- tools
-  fterm = {active = false},
+  fterm = {active = true},
   far = {active = false},
   bookmarks = {active = false},
   colorizer = {active = true},
   undotree = {active = false},
   fugitive = {active = false},
-  rooter = {active = false},
+  rooter = {active = true},
   -- TODO: handle these later
   glow = {active = false},
   doge = {active = false},
@@ -70,13 +70,15 @@ core.plugin = {
   restconsole = {active = false},
   markdown_preview = {active = false},
   -- aesth
-  tree = {active = false},
+  tree = {active = true},
   dashboard = {active = false},
   statusline = {active = false},
   git_signs = {active = false},
   indent_line = {active = false},
   -- completion
   emmet = {active = false},
+  friendly_snippets = {active = true},
+  vsnip = {active = true},
   telescope_fzy = {active = false},
   telescope_project = {active = false},
   telescope_media_files = {active = false},

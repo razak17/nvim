@@ -1,15 +1,9 @@
 local tools = {}
 local conf = require('modules.tools.config')
 
-tools['tpope/vim-fugitive'] = {
-  event = 'VimEnter',
-  disable = not core.plugin.fugitive.active,
-}
+tools['tpope/vim-fugitive'] = {event = 'VimEnter', disable = not core.plugin.fugitive.active}
 
-tools['mbbill/undotree'] = {
-  cmd = "UndotreeToggle",
-  disable = not core.plugin.undotree.active,
-}
+tools['mbbill/undotree'] = {cmd = "UndotreeToggle", disable = not core.plugin.undotree.active}
 
 tools['airblade/vim-rooter'] = {
   event = {"BufWinEnter"},
@@ -17,7 +11,7 @@ tools['airblade/vim-rooter'] = {
     vim.g.rooter_silent_chdir = 1
     vim.g.rooter_patterns = {'=nvim', '.git', '.gitignore', 'lua'}
   end,
-  disable = not core.plugin.rooter.active and not core.plugin.SANE.active,
+  disable = not core.plugin.rooter.active,
 }
 
 tools['npxbr/glow.nvim'] = {
@@ -35,7 +29,7 @@ tools['kkoomen/vim-doge'] = {
 tools['numToStr/FTerm.nvim'] = {
   event = {"BufWinEnter"},
   config = conf.fterm,
-  disable = not core.plugin.fterm.active and not core.plugin.SANE.active,
+  disable = not core.plugin.fterm.active,
 }
 
 tools['MattesGroeger/vim-bookmarks'] = {
@@ -44,10 +38,7 @@ tools['MattesGroeger/vim-bookmarks'] = {
   disable = not core.plugin.bookmarks.active,
 }
 
-tools['diepm/vim-rest-console'] = {
-  event = 'VimEnter',
-  disable = not core.plugin.restconsole.active,
-}
+tools['diepm/vim-rest-console'] = {event = 'VimEnter', disable = not core.plugin.restconsole.active}
 
 tools['iamcco/markdown-preview.nvim'] = {
   ft = 'markdown',
@@ -65,13 +56,7 @@ tools['brooth/far.vim'] = {
 }
 
 tools['kristijanhusak/vim-dadbod-ui'] = {
-  cmd = {
-    'DBUIToggle',
-    'DBUIAddConnection',
-    'DBUI',
-    'DBUIFindBuffer',
-    'DBUIRenameBuffer',
-  },
+  cmd = {'DBUIToggle', 'DBUIAddConnection', 'DBUI', 'DBUIFindBuffer', 'DBUIRenameBuffer'},
   config = conf.vim_dadbod_ui,
   requires = {
     {'tpope/vim-dadbod', opt = true},
