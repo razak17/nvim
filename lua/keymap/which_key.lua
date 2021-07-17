@@ -1,6 +1,9 @@
 local g, api, fn = vim.g, vim.api, vim.fn
 
 g.which_key_sep = core.which_key.separator
+g.which_key_hspace = 1
+g.which_key_centered = 1
+g.which_key_vertical = 0
 g.which_key_timeout = 100
 g.which_key_use_floating_win = 0
 g.which_key_display_names = {['<CR>'] = '↵ ', ['<TAB>'] = '⇆ '}
@@ -44,6 +47,7 @@ g.which_key_map = {
     h = 'horizontal split',
     n = 'no highlight',
     o = 'turn on guides',
+    O = 'open old commands',
     R = 'empty registers',
     v = 'vertical split',
     V = 'select all',

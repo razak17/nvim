@@ -152,6 +152,8 @@ local column_clear = {
   "fTerm",
   "TelescopePrompt",
   "lspinfo",
+  "lspinfo",
+  "which_key"
 }
 
 --- Set or unset the color column depending on the filetype of the buffer and its eligibility

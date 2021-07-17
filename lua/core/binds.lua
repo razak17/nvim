@@ -9,9 +9,7 @@ local cnoremap = core.cnoremap
 local fn = vim.fn
 local api = vim.api
 
-if not core.plugin.accelerated_jk.active and not core.plugin.SANE.active then
-  nmap('n', 'j')
-end
+if not core.plugin.accelerated_jk.active and not core.plugin.SANE.active then nmap('n', 'j') end
 
 -----------------------------------------------------------------------------//
 -- Functions
@@ -27,9 +25,7 @@ local function hi_chain(syn_id)
   local names = {}
   table.insert(names, name)
   local original = fn.synIDtrans(syn_id)
-  if syn_id ~= original then
-    table.insert(names, fn.synIDattr(original, "name"))
-  end
+  if syn_id ~= original then table.insert(names, fn.synIDattr(original, "name")) end
 
   return names
 end
@@ -37,8 +33,7 @@ end
 local ts_playground_loaded, ts_hl_info
 local function inspect_token()
   if not ts_playground_loaded then
-    ts_playground_loaded, ts_hl_info = pcall(require,
-      "nvim-treesitter-playground.hl-info")
+    ts_playground_loaded, ts_hl_info = pcall(require, "nvim-treesitter-playground.hl-info")
   end
   if vim.tbl_contains(core.treesitter.get_filetypes(), vim.bo.filetype) then
     ts_hl_info.show_hl_captures()
@@ -73,9 +68,7 @@ local function open_file_or_create_new()
   local suffixes = fn.split(vim.bo.suffixesadd, ",")
 
   for _, suffix in ipairs(suffixes) do
-    if fn.filereadable(new_path .. suffix) then
-      return vim.cmd("edit " .. new_path .. suffix)
-    end
+    if fn.filereadable(new_path .. suffix) then return vim.cmd("edit " .. new_path .. suffix) end
   end
 
   return vim.cmd("edit " .. new_path .. suffixes[1])
@@ -184,9 +177,7 @@ nnoremap('<C-l>', '<C-w>l')
 -- Start new line from any cursor position
 inoremap("<S-Return>", "<C-o>o")
 
-if core.plugin.playground.active then
-  nnoremap("<leader>aE", function() inspect_token() end)
-end
+if core.plugin.playground.active then nnoremap("<leader>aE", function() inspect_token() end) end
 
 -- Use alt + hjkl to resize windows
 nnoremap('<M-n>', ':resize -2<CR>')
@@ -258,7 +249,7 @@ nnoremap("<Leader>afr", "zA") -- Recursively toggle
 nnoremap("<Leader>afl", "za") -- Toggle fold under the cursor
 nnoremap("<Leader>afo", "zR") -- Open all folds
 nnoremap("<Leader>afx", "zM") -- Close all folds
-nnoremap("<Leader>aO", ":set fo-=cro<CR>") -- Close all folds
+nnoremap("<Leader>aO", ":<C-f>") -- Close all folds
 
 -- qflist
 nnoremap("<Leader>vo", ":copen<CR>")
@@ -319,8 +310,7 @@ vnoremap("<leader>[", [["zy:%s/<C-r><C-o>"/]], noisy)
 -- open a new file in the same directory
 nnoremap("<leader>nf", [[:e <C-R>=expand("%:p:h") . "/" <CR>]], {silent = false})
 -- create a new file in the same directory
-nnoremap("<leader>ns", [[:vsp <C-R>=expand("%:p:h") . "/" <CR>]],
-  {silent = false})
+nnoremap("<leader>ns", [[:vsp <C-R>=expand("%:p:h") . "/" <CR>]], {silent = false})
 
 -- Arrows
 nnoremap("<down>", "<nop>")
@@ -376,11 +366,9 @@ nnoremap("gf", function() open_file_or_create_new() end)
 -- smooth searching, allow tabbing between search results similar to using <c-g>
 -- or <c-t> the main difference being tab is easier to hit and remapping those keys
 -- to these would swallow up a tab mapping
-cnoremap("<Tab>",
-  [[getcmdtype() == "/" || getcmdtype() == "?" ? "<CR>/<C-r>/" : "<C-z>"]],
+cnoremap("<Tab>", [[getcmdtype() == "/" || getcmdtype() == "?" ? "<CR>/<C-r>/" : "<C-z>"]],
   {expr = true})
-cnoremap("<S-Tab>",
-  [[getcmdtype() == "/" || getcmdtype() == "?" ? "<CR>?<C-r>/" : "<S-Tab>"]],
+cnoremap("<S-Tab>", [[getcmdtype() == "/" || getcmdtype() == "?" ? "<CR>?<C-r>/" : "<S-Tab>"]],
   {expr = true})
 -- Smart mappings on the command line
 cnoremap("w!!", [[w !sudo tee % >/dev/null]])
@@ -424,9 +412,6 @@ function _G.__Rename(name)
   vim.api.nvim_command(" saveas " .. newname)
 end
 
-core.command {
-  "Todo",
-  [[noautocmd silent! grep! 'TODO\|FIXME\|BUG\|HACK' | copen]],
-}
+core.command {"Todo", [[noautocmd silent! grep! 'TODO\|FIXME\|BUG\|HACK' | copen]]}
 
 core.command {nargs = 1, "Rename", [[call v:lua.__Rename(<f-args>)]]}
