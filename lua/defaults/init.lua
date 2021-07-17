@@ -52,8 +52,8 @@ core.plugin = {
   cool = {active = false},
   delimitmate = {active = false},
   eft = {active = false},
-  cursorword = {active = false},
-  surround = {active = true},
+  cursorword = {active = true},
+  surround = {active = false},
   dial = {active = true},
   -- tools
   fterm = {active = true},
@@ -143,11 +143,7 @@ core.dashboard = {
   session_directory = core.__session_dir,
 }
 
-core.utils = {
-  leader_key = " ",
-  dapinstall_dir = core.__data_dir,
-  transparent_window = false,
-}
+core.utils = {leader_key = " ", dapinstall_dir = core.__data_dir, transparent_window = false}
 
 core.lsp = {
   hoverdiagnostics = true,

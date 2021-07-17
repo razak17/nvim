@@ -5,8 +5,7 @@ local editor = {}
 editor['rhysd/accelerated-jk'] = {
   opt = true,
   event = {"BufWinEnter"},
-  disable = not core.plugin.accelerated_jk.active and
-    not core.plugin.SANE.active,
+  disable = not core.plugin.accelerated_jk.active and not core.plugin.SANE.active,
 }
 
 editor['tpope/vim-surround'] = {
@@ -14,7 +13,7 @@ editor['tpope/vim-surround'] = {
     core.xmap("S", "<Plug>VSurround")
     core.xmap("S", "<Plug>VSurround")
   end,
-  disable = not core.plugin.surround.active and not core.plugin.SANE.active,
+  disable = not core.plugin.surround.active,
 }
 
 editor['monaqa/dial.nvim'] = {
@@ -30,7 +29,7 @@ editor['junegunn/vim-easy-align'] = {
 
 editor['razak17/vim-cursorword'] = {
   config = conf.vim_cursorword,
-  disable = not core.plugin.cursorword.active and not core.plugin.SANE.active,
+  disable = not core.plugin.cursorword.active,
 }
 
 editor['hrsh7th/vim-eft'] = {
