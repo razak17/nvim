@@ -92,7 +92,7 @@ end
 local function lsp_autocmds(client)
   lspLocList()
   if client and client.resolved_capabilities.code_lens then
-    as.augroup("LspCodeLens", {
+    core.augroup("LspCodeLens", {
       {
         events = {"BufEnter", "CursorHold", "InsertLeave"},
         targets = {"<buffer>"},
@@ -319,14 +319,14 @@ function core.lsp.setup_servers()
       },
     },
   }
-  require 'lsp.bash'.setup(capabilities)
-  require 'lsp.clang'.setup(capabilities)
-  require 'lsp.go'.setup(capabilities)
+  require'lsp.bash'.setup(capabilities)
+  require'lsp.clang'.setup(capabilities)
+  require'lsp.go'.setup(capabilities)
   require'lsp.lua'.setup(capabilities)
-  require 'lsp.python'.setup(capabilities)
-  require 'lsp.simple'.setup(capabilities, on_init)
-  require 'lsp.tsserver'.setup(capabilities)
-  require 'lsp.efm'.setup(capabilities)
+  require'lsp.python'.setup(capabilities)
+  require'lsp.simple'.setup(capabilities, on_init)
+  require'lsp.tsserver'.setup(capabilities)
+  require'lsp.efm'.setup(capabilities)
   vim.cmd "doautocmd User LspServersStarted"
 end
 

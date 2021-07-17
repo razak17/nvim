@@ -28,6 +28,7 @@ editor['junegunn/vim-easy-align'] = {
 }
 
 editor['razak17/vim-cursorword'] = {
+  event = {'BufReadPre', 'BufNewFile'},
   config = conf.vim_cursorword,
   disable = not core.plugin.cursorword.active,
 }

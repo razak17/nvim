@@ -53,7 +53,7 @@ core.plugin = {
   delimitmate = {active = false},
   eft = {active = false},
   cursorword = {active = true},
-  surround = {active = false},
+  surround = {active = true},
   dial = {active = true},
   -- tools
   fterm = {active = true},
