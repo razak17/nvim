@@ -15,4 +15,3 @@ function! s:create_go_doc_comment()
   execute ":norm I// \<Esc>$"
 endfunction
 nnoremap <leader>cf :<C-u>call <SID>create_go_doc_comment()<CR>
-noremap <F10> :call v:lua.RunGo()<CR>

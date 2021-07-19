@@ -7,11 +7,11 @@ end
 
 local defer = function()
   vim.defer_fn(vim.schedule_wrap(function()
+    require 'core.binds'
     require 'keymap'
     vim.defer_fn(function()
-      require 'core.binds'
       vim.cmd [[colo zephyr]]
-      vim.cmd [[syntax enable]]
+      vim.cmd [[syntax on]]
       vim.cmd [[filetype plugin indent on]]
     end, 0)
   end), 0)

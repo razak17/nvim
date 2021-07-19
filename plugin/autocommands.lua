@@ -27,7 +27,11 @@ local smart_close_filetypes = {
   "lspinfo",
 }
 
-local function smart_close() if fn.winnr "$" ~= 1 then api.nvim_win_close(0, true) end end
+local function smart_close()
+  if fn.winnr "$" ~= 1 then
+    api.nvim_win_close(0, true)
+  end
+end
 
 core.augroup("SmartClose", {
   {
@@ -46,7 +50,9 @@ core.augroup("SmartClose", {
       local is_eligible = vim.bo.buftype ~= "" or is_readonly or vim.wo.previewwindow or
                             contains(smart_close_filetypes, vim.bo.filetype)
 
-      if is_eligible then core.nnoremap("q", smart_close, {buffer = 0, nowait = true}) end
+      if is_eligible then
+        core.nnoremap("q", smart_close, {buffer = 0, nowait = true})
+      end
     end,
   },
   {
@@ -64,7 +70,11 @@ core.augroup("SmartClose", {
     events = {"QuitPre"},
     targets = {"*"},
     modifiers = {"nested"},
-    command = function() if vim.bo.filetype ~= "qf" then vim.cmd "silent! lclose" end end,
+    command = function()
+      if vim.bo.filetype ~= "qf" then
+        vim.cmd "silent! lclose"
+      end
+    end,
   },
 })
 
@@ -123,7 +133,11 @@ core.augroup("ClearCommandMessages", {
     events = {"CmdlineLeave", "CmdlineChanged"},
     targets = {":"},
     command = function()
-      vim.defer_fn(function() if fn.mode() == "n" then vim.cmd [[echon '']] end end, 10000)
+      vim.defer_fn(function()
+        if fn.mode() == "n" then
+          vim.cmd [[echon '']]
+        end
+      end, 10000)
     end,
   },
 })
@@ -159,7 +173,9 @@ local column_clear = {
 --- Set or unset the color column depending on the filetype of the buffer and its eligibility
 ---@param leaving boolean?
 local function check_color_column(leaving)
-  if contains(column_exclude, vim.bo.filetype) then return end
+  if contains(column_exclude, vim.bo.filetype) then
+    return
+  end
   local small_window = api.nvim_win_get_width(0) <= vim.bo.textwidth + 1
   local is_last_win = #api.nvim_list_wins() == 1
   if contains(column_clear, vim.bo.filetype) or not_eligible or (leaving and not is_last_win) or
@@ -176,19 +192,25 @@ core.augroup("CustomColorColumn", {
   {
     events = {"VimResized", "FocusGained", "WinEnter", "BufEnter"},
     targets = {"*"},
-    command = function() check_color_column() end,
+    command = function()
+      check_color_column()
+    end,
   },
   {
     events = {"FocusLost", "WinLeave"},
     targets = {"*"},
-    command = function() check_color_column(true) end,
+    command = function()
+      check_color_column(true)
+    end,
   },
 })
 
 --- Set or unset the cursor line depending on the filetype of the buffer and its eligibility
 ---@param leaving boolean?
 local function check_cursor_line(leaving)
-  if contains(column_exclude, vim.bo.filetype) then return end
+  if contains(column_exclude, vim.bo.filetype) then
+    return
+  end
   if contains(column_clear, vim.bo.filetype) or not_eligible or leaving then
     vim.wo.cursorline = false
     return
@@ -207,12 +229,16 @@ core.augroup("CursorLineBehaviour", {
   {
     events = {"VimResized", "FocusGained", "WinEnter", "BufEnter"},
     targets = {"*"},
-    command = function() check_cursor_line() end,
+    command = function()
+      check_cursor_line()
+    end,
   },
   {
     events = {"FocusLost", "WinLeave"},
     targets = {"*"},
-    command = function() check_cursor_line(true) end,
+    command = function()
+      check_cursor_line(true)
+    end,
   },
 })
 
@@ -239,7 +265,7 @@ core.augroup("PackerSetupInit", {
       require'core.plug'.install()
       require'core.plug'.magic_compile()
       vim.cmd "source ~/.config/nvim/lua/keymap/which_key.lua"
-      vim.cmd "source ~/.config/nvim/lua/lsp/init.lua"
+      vim.cmd "source ~/.config/nvim/lua/modules/lang/lspconfig.lua"
       require'core.plug'.load_compile()
       vim.cmd [[source $MYVIMRC]]
       core.notify("packer compiled...", {timeout = 1000})
@@ -289,7 +315,9 @@ if vim.env.TMUX ~= nil then
     {
       events = {"VimLeave"},
       targets = {"*"},
-      command = function() fn.jobstart("tmux set-window-option automatic-rename on") end,
+      command = function()
+        fn.jobstart("tmux set-window-option automatic-rename on")
+      end,
     },
   })
 end
@@ -305,7 +333,9 @@ core.augroup("Utilities", {
     -- @source: https://vim.fandom.com/wiki/Use_gf_to_open_a_file_via_its_URL
     events = {"BufReadCmd"},
     targets = {"file:///*"},
-    command = function() vim.cmd(fmt("bd!|edit %s", vim.uri_from_fname "<afile>")) end,
+    command = function()
+      vim.cmd(fmt("bd!|edit %s", vim.uri_from_fname "<afile>"))
+    end,
   },
   {
     -- When editing a file, always jump to the last known cursor position.
@@ -329,7 +359,11 @@ core.augroup("Utilities", {
   {
     events = {"BufLeave"},
     targets = {"*"},
-    command = function() if can_save() then vim.cmd "silent! update" end end,
+    command = function()
+      if can_save() then
+        vim.cmd "silent! update"
+      end
+    end,
   },
   {
     events = {"BufWritePost"},

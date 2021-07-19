@@ -43,6 +43,11 @@ lang['jose-elias-alvarez/nvim-lsp-ts-utils'] = {
   disable = not core.plugin.lsp_ts_utils.active
 }
 
+lang['mhartington/formatter.nvim'] = {
+  config = conf.formatter,
+  disable = not core.plugin.formatter.active,
+}
+
 lang['mfussenegger/nvim-lint'] = {
   config = conf.nvim_lint,
   disable = not core.plugin.nvim_lint.active,

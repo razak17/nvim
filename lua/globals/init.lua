@@ -33,21 +33,23 @@ core.__session_dir = core.__data_dir .. path_sep .. 'session/dashboard'
 core.__modules_dir = core.__vim_path .. path_sep .. 'lua/modules'
 core.__sumneko_root_path = core.__nvim_lsp .. 'lua-language-server' .. path_sep
 core.__elixirls_root_path = core.__nvim_lsp .. 'elixir-ls' .. path_sep
-core.__sumneko_binary = core.__sumneko_root_path .. '/bin/Linux/lua-language-server'
-core.__elixirls_binary = core.__elixirls_root_path .. '/.bin/language_server.sh'
 
 function core._create(f)
   table.insert(core._store, f)
   return #core._store
 end
 
-function core._execute(id, args) core._store[id](args) end
+function core._execute(id, args)
+  core._store[id](args)
+end
 
 ---Determine if a value of any type is empty
 ---@param item any
 ---@return boolean
 function core.empty(item)
-  if not item then return true end
+  if not item then
+    return true
+  end
   local item_type = type(item)
   if item_type == "string" then
     return item == ""
@@ -88,13 +90,19 @@ end
 ---Check if a cmd is executable
 ---@param e string
 ---@return boolean
-function core.executable(e) return fn.executable(e) > 0 end
+function core.executable(e)
+  return fn.executable(e) > 0
+end
 
 function core.echomsg(msg, hl)
   hl = hl or "Title"
   local msg_type = type(msg)
-  if msg_type ~= "string" or "table" then return end
-  if msg_type == "string" then msg = {{msg, hl}} end
+  if msg_type ~= "string" or "table" then
+    return
+  end
+  if msg_type == "string" then
+    msg = {{msg, hl}}
+  end
   vim.api.nvim_echo(msg, true, {})
 end
 
@@ -120,9 +128,13 @@ local function has_map(lhs, mode)
 end
 
 local function validate_opts(opts)
-  if not opts then return true end
+  if not opts then
+    return true
+  end
 
-  if type(opts) ~= "table" then return false, "opts should be a table" end
+  if type(opts) ~= "table" then
+    return false, "opts should be a table"
+  end
 
   if opts.buffer and type(opts.buffer) ~= "number" then
     return false, "The buffer key should be a number"
@@ -191,7 +203,9 @@ end
 
 --- Check if a file or directory exists in this path
 function core._exists(file)
-  if file == '' or file == nil then return false end
+  if file == '' or file == nil then
+    return false
+  end
   local ok, err, code = os.rename(file, file)
   if not ok then
     if code == 13 then
@@ -214,14 +228,6 @@ function core.invalidate(path, recursive)
     package.loaded[path] = nil
     require(path)
   end
-end
-
-function core.get_plugins_list()
-  local modules_dir = core.__modules_dir
-  local list = {}
-  local tmp = vim.split(fn.globpath(modules_dir, '*/plugins.lua'), '\n')
-  for _, f in ipairs(tmp) do list[#list + 1] = f:sub(#modules_dir - 6, -1) end
-  return list
 end
 
 local map_opts = {noremap = false, silent = true}
@@ -257,7 +263,11 @@ end
 local notification_hl = setmetatable({
   [2] = {"FloatBorder:NvimNotificationError", "NormalFloat:NvimNotificationError"},
   [1] = {"FloatBorder:NvimNotificationInfo", "NormalFloat:NvimNotificationInfo"},
-}, {__index = function(t, _) return t[1] end})
+}, {
+  __index = function(t, _)
+    return t[1]
+  end,
+})
 
 ---Utility function to create a notification message
 ---@param lines string[] | string
@@ -274,7 +284,9 @@ function core.notify(lines, opts)
     line = "  " .. line .. "  "
     lines[i] = line
     local length = #line
-    if not width or width < length then width = length end
+    if not width or width < length then
+      width = length
+    end
   end
   local buf = api.nvim_create_buf(false, true)
   api.nvim_buf_set_lines(buf, 0, -1, false, lines)
@@ -301,8 +313,10 @@ function core.notify(lines, opts)
   vim.bo[buf].filetype = "vim-notify"
   vim.wo[win].wrap = true
   if timeout then
-    vim.defer_fn(
-      function() if api.nvim_win_is_valid(win) then api.nvim_win_close(win, true) end end, timeout)
+    vim.defer_fn(function()
+      if api.nvim_win_is_valid(win) then
+        api.nvim_win_close(win, true)
+      end
+    end, timeout)
   end
 end
-

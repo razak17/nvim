@@ -1,12 +1,27 @@
 local M = {}
-M.setup = function(capabilities)
+
+M.init = function()
   require'lspconfig'.gopls.setup {
-    cmd = {"gopls", "--remote=auto"},
-    capabilities = capabilities,
+    cmd = {core.lsp.binary.go, "--remote=auto"},
+    capabilities = core.lsp.capabilities,
     on_attach = core.lsp.on_attach,
     init_options = {usePlaceholders = true, completeUnimported = true},
     root_dir = require'lspconfig.util'.root_pattern('main.go', '.gitignore', '.git', vim.fn.getcwd()),
   }
+end
+
+M.format = function()
+  local filetype = {}
+  filetype["go"] = {
+    function()
+      return {exe = "gofmt", args = {}, stdin = true}
+    end,
+  }
+  require("formatter.config").set_defaults {logging = false, filetype = filetype}
+end
+
+M.lint = function()
+  require("lint").linters_by_ft = {go = {"golangcilint", "revive"}}
 end
 
 return M

@@ -1,5 +1,4 @@
 local command = core.command
-local augroup = core.augroup
 
 local get_cursor_pos = function()
   return {vim.fn.line('.'), vim.fn.col('.')}
@@ -21,7 +20,7 @@ local debounce = function(func, timeout)
 end
 
 local function lspLocList()
-  augroup("LspLocationList", {
+  core.augroup("LspLocationList", {
     {
       events = {"User LspDiagnosticsChanged"},
       command = function()
@@ -37,7 +36,7 @@ end
 
 local function documentFormatting(client)
   if client and client.resolved_capabilities.document_formatting then
-    augroup("LspFormat", {
+    core.augroup("LspFormat", {
       {
         events = {"BufWritePre"},
         targets = {"<buffer>"},
@@ -49,7 +48,7 @@ end
 
 local function documentHighlight(client)
   if client and client.resolved_capabilities.document_highlight then
-    augroup("LspCursorCommands", {
+    core.augroup("LspCursorCommands", {
       {
         events = {"CursorHold"},
         targets = {"<buffer>"},
@@ -70,7 +69,7 @@ local function documentHighlight(client)
 end
 
 local function hoverDiagnostics()
-  augroup("HoverDiagnostics", {
+  core.augroup("HoverDiagnostics", {
     {
       events = {"CursorHold"},
       targets = {"<buffer>"},
@@ -102,7 +101,7 @@ local function lsp_autocmds(client)
   if core.lsp.document_highlight then
     documentHighlight(client)
   end
-  if core.lsp.hoverdiagnostics then
+  if core.lsp.hover_diagnostics then
     hoverDiagnostics()
   end
 end
@@ -111,26 +110,10 @@ local function lsp_mappings(client, bufnr)
   local nnoremap, vnoremap = core.nnoremap, core.vnoremap
   local lsp_popup = {{popup_opts = {border = "single", focusable = false}}}
 
-  if client.resolved_capabilities.implementation then
-    nnoremap("gi", vim.lsp.buf.implementation)
-  end
-
-  if client.resolved_capabilities.type_definition then
-    nnoremap("<leader>ge", vim.lsp.buf.type_definition)
-  end
-
-  if client.supports_method "textDocument/rename" then
-    nnoremap("grn", vim.lsp.buf.rename)
-  end
-
   if not core.plugin.saga.active then
     nnoremap("gd", vim.lsp.buf.definition)
     nnoremap("gD", vim.lsp.buf.declaration)
     nnoremap("gr", vim.lsp.buf.references)
-    nnoremap("gi", vim.lsp.buf.implementation)
-    nnoremap("ge", function()
-      require'lsp.utils'.PeekDefinition()
-    end)
     nnoremap("K", vim.lsp.buf.hover)
     nnoremap("<Leader>vdb", function()
       vim.lsp.diagnostic.goto_prev({lsp_popup})
@@ -141,15 +124,34 @@ local function lsp_mappings(client, bufnr)
     nnoremap("<Leader>vdl", function()
       vim.lsp.diagnostic.show_line_diagnostics({lsp_popup})
     end)
+
+    if client.resolved_capabilities.implementation then
+      nnoremap("gi", vim.lsp.buf.implementation)
+    end
+    if client.supports_method "textDocument/definition" then
+      nnoremap("ge", function()
+        require'lsp.utils'.PeekDefinition()
+      end)
+    end
+    if client.resolved_capabilities.type_definition then
+      nnoremap("<leader>ge", vim.lsp.buf.type_definition)
+    end
+    if client.supports_method "textDocument/rename" then
+      nnoremap("grn", vim.lsp.buf.rename)
+    end
+    if client.supports_method "textDocument/prepareCallHierarchy" then
+      nnoremap("gI", vim.lsp.buf.incoming_calls)
+    end
+    if client.supports_method "textDocument/codeAction" then
+      nnoremap("<leader>va", vim.lsp.buf.code_action)
+      vnoremap("<leader>vA", vim.lsp.buf.range_code_action)
+    end
   end
+
   nnoremap("gsd", vim.lsp.buf.document_symbol)
   nnoremap("gsw", vim.lsp.buf.workspace_symbol)
-  nnoremap("gI", vim.lsp.buf.incoming_calls)
-  nnoremap("gR", vim.lsp.buf.references)
-  nnoremap("gD", vim.lsp.buf.definition)
-  nnoremap("<leader>va", vim.lsp.buf.code_action)
-  vnoremap("<leader>vA", vim.lsp.buf.range_code_action)
-  nnoremap("<leader>vf", vim.lsp.buf.formatting)
+  nnoremap("<leader>vF", vim.lsp.buf.formatting)
+  nnoremap("<leader>vf", ":Format<CR>")
   nnoremap("<leader>vl", vim.lsp.diagnostic.set_loclist)
 end
 
@@ -205,17 +207,6 @@ vim.lsp.protocol.CompletionItemKind = {
   "   (TypeParameter)",
 }
 
-function core.lsp.on_attach(client, bufnr)
-  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-
-  lsp_autocmds(client)
-  lsp_mappings(client, bufnr)
-
-  if client.resolved_capabilities.goto_definition then
-    vim.bo[bufnr].tagfunc = "v:lua.core.lsp.tagfunc"
-  end
-end
-
 command {
   "LspLog",
   function()
@@ -225,7 +216,7 @@ command {
 }
 
 command {
-  "Format",
+  "LspFormat",
   function()
     vim.lsp.buf.formatting(vim.g[string.format("format_options_%s", vim.bo.filetype)] or {})
   end,
@@ -250,65 +241,61 @@ command {
   end,
 }
 
-function core.lsp.setup_servers()
-  local on_init = function(client)
-    client.config.flags = {}
-    if client.config.flags then
-      client.config.flags.allow_incremental_sync = true
-    end
+function core.lsp.on_attach(client, bufnr)
+  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+  lsp_autocmds(client)
+  lsp_mappings(client, bufnr)
+
+  if client.resolved_capabilities.goto_definition then
+    vim.bo[bufnr].tagfunc = "v:lua.core.lsp.tagfunc"
   end
-  local capabilities = vim.lsp.protocol.make_client_capabilities()
-  capabilities.textDocument.completion.completionItem.snippetSupport = true
-  capabilities.textDocument.completion.completionItem.resolveSupport = {
-    properties = {'documentation', 'detail', 'additionalTextEdits'},
-  }
-  capabilities.textDocument.codeAction = {
-    dynamicRegistration = false,
-    codeActionLiteralSupport = {
-      codeActionKind = {
-        valueSet = (function()
-          local res = vim.tbl_values(vim.lsp.protocol.CodeActionKind)
-          table.sort(res)
-          return res
-        end)(),
-      },
+
+  -- on init
+  client.config.flags = {}
+  if client.config.flags then
+    client.config.flags.allow_incremental_sync = true
+  end
+end
+
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+capabilities.textDocument.completion.completionItem.resolveSupport = {
+  properties = {'documentation', 'detail', 'additionalTextEdits'},
+}
+capabilities.textDocument.codeAction = {
+  dynamicRegistration = false,
+  codeActionLiteralSupport = {
+    codeActionKind = {
+      valueSet = (function()
+        local res = vim.tbl_values(vim.lsp.protocol.CodeActionKind)
+        table.sort(res)
+        return res
+      end)(),
     },
-  }
+  },
+}
 
-  local exec = core.executable
+core.lsp.capabilities = capabilities
 
-  if exec("bash-language-server") then
-    require'lsp.bash'.setup(capabilities)
-  end
-
-  if exec("clangd") then
-    require'lsp.clang'.setup(capabilities)
-  end
-
-  if exec("gopls") then
-    require'lsp.go'.setup(capabilities)
-  end
-
-  if exec(core.__sumneko_binary) then
-    require'lsp.lua'.setup(capabilities)
-    require'lsp.lua'.lint()
-  end
-
-  if exec("pyright-langserver") then
-    require'lsp.python'.setup(capabilities)
-    require'lsp.python'.lint()
-  end
-
-  require'lsp.simple'.setup(capabilities, on_init)
-
-  if exec("typescript-language-server") then
-    require'lsp.tsserver'.setup(capabilities)
-    require'lsp.tsserver'.lint(capabilities)
-  end
-
-  -- if exec("efm-langserver") then
-  --   require'lsp.efm'.setup(capabilities)
-  -- end
+function core.lsp.setup_servers()
+  require'lsp.clang'.init()
+  require'lsp.cmake'.init()
+  require'lsp.dockerfile'.init()
+  require'lsp.elixir'.init()
+  require'lsp.go'.init()
+  require'lsp.graphql'.init()
+  require'lsp.html'.init()
+  require'lsp.json'.init()
+  require'lsp.lua'.init(capabilities)
+  require'lsp.python'.init()
+  require'lsp.rust'.init()
+  require'lsp.sh'.init()
+  require'lsp.vim'.init()
+  require'lsp.yaml'.init()
+  require'lsp.tsserver'.init()
+  require'lsp.tsserver.lint'.init()
+  -- require'lsp.efm'.setup(capabilities)
 
   vim.cmd "doautocmd User LspServersStarted"
 end
@@ -346,3 +333,4 @@ local function lsp_setup()
 end
 
 lsp_setup()
+

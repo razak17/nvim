@@ -1,19 +1,19 @@
 local M = {}
 
 M.init = function()
-  require'lspconfig'.elixirls.setup {
-    cmd = {core.lsp.binary.elixir},
-    elixirls = {dialyzerEnabled = false},
+  require'lspconfig'.jsonls.setup {
+    cmd = {"node", core.lsp.binary.json, "--stdio"},
     capabilities = core.lsp.capabilities,
     on_attach = core.lsp.on_attach,
+    root_dir = require'lspconfig.util'.root_pattern('.gitignore', '.git', vim.fn.getcwd()),
   }
 end
 
 M.format = function()
   local filetype = {}
-  filetype["elixir"] = {
+  filetype["json"] = {
     function()
-      return {exe = "mix", args = {"format"}, stdin = true}
+      return {exe = "python", args = {"-m", "json.tool"}, stdin = true}
     end,
   }
 

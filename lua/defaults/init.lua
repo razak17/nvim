@@ -39,6 +39,7 @@ core.plugin = {
   bqf = {active = false},
   trouble = {active = false},
   nvim_lint = {active = true},
+  formatter = {active = true},
   lsp_ts_utils = {active = true},
   -- treesitter
   treesitter = {active = false},
@@ -150,22 +151,29 @@ core.dashboard = {
 core.utils = {leader_key = " ", dapinstall_dir = core.__data_dir, transparent_window = false}
 
 core.lsp = {
-  hoverdiagnostics = true,
+  hover_diagnostics = true,
   format_on_save = true,
   lint_on_save = true,
   document_highlight = true,
   popup_border = "single",
-}
-
-O = {
-  number = true,
-  relative_number = true,
-  leader_key = "space",
-  colorscheme = "spacegray",
-  line_wrap_cursor_movement = true,
-  transparent_window = false,
-  format_on_save = true,
-  vsnip_dir = vim.fn.stdpath "config" .. "/snippets",
-  settings = {wrap = false},
-  plugin = {SANE = {active = true}},
+  rust_tools = false,
+  binary = {
+    clangd = "clangd",
+    cmake = "cmake-language-server",
+    css = "vscode-css-language-server",
+    docker = "docker-langserver",
+    efm = "efm-langserver",
+    elixir = core.__elixirls_root_path .. '/.bin/language_server.sh',
+    graphql = "graphql-lsp",
+    lua = core.__sumneko_root_path .. '/bin/Linux/lua-language-server',
+    go = "gopls",
+    html = "vscode-html-language-server",
+    json = "vscode-json-language-server",
+    python = "pyright-langserver",
+    rust = "rust-analyzer",
+    sh = "bash-language-server",
+    tsserver = "typescript-language-server",
+    vim = "vim-language-server",
+    yaml = "yaml-language-server",
+  },
 }

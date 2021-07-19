@@ -1,9 +1,9 @@
 local M = {}
 
-M.setup = function(capabilities)
+M.init = function()
   require'lspconfig'.sumneko_lua.setup {
-    cmd = {core.__sumneko_binary, "-E", core.__sumneko_root_path .. "/main.lua"},
-    capabilities = capabilities,
+    cmd = {core.lsp.binary.lua, "-E", core.__sumneko_root_path .. "/main.lua"},
+    capabilities = core.lsp.capabilities,
     on_attach = core.lsp.on_attach,
     settings = {
       Lua = {
@@ -21,6 +21,23 @@ M.setup = function(capabilities)
       },
     },
   }
+end
+
+M.format = function()
+  local filetype = {}
+  filetype["lua"] = {
+    function()
+      -- return {exe = "stylua", args = {}, stdin = false, tempfile_prefix = ".formatter"}
+      return {
+        exe = "lua-format",
+        args = {"lua-format -i -c" .. vim.fn.stdpath('config') .. "/.lua-format"},
+        stdin = false,
+        tempfile_prefix = ".formatter",
+      }
+
+    end,
+  }
+  require("formatter.config").set_defaults {logging = false, filetype = filetype}
 end
 
 M.lint = function()
