@@ -11,8 +11,6 @@ local ts_lint = function()
     formatStdin = true,
   }
   require'lspconfig'.efm.setup {
-    capabilities = core.lsp.capabilities,
-    on_attach = core.lsp.on_attach,
     init_options = {documentFormatting = true, codeAction = false},
     filetypes = {
       "javascript",

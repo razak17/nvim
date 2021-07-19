@@ -7,8 +7,8 @@ end
 
 local defer = function()
   vim.defer_fn(vim.schedule_wrap(function()
-    require 'core.binds'
     require 'keymap'
+    require 'core.binds'
     vim.defer_fn(function()
       vim.cmd [[colo zephyr]]
       vim.cmd [[syntax on]]
