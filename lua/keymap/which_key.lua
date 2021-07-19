@@ -1,6 +1,6 @@
 local g, api, fn = vim.g, vim.api, vim.fn
 
-g.which_key_sep = core.which_key.separator
+g.which_key_sep = ''
 g.which_key_hspace = 2
 g.which_key_centered = 1
 g.which_key_vertical = 0

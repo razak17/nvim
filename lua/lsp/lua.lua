@@ -8,7 +8,7 @@ M.init = function()
     settings = {
       Lua = {
         runtime = {version = "LuaJIT", path = vim.split(package.path, ';')},
-        diagnostics = {globals = {"vim", "packer_plugins"}},
+        diagnostics = {globals = {"vim", "packer_plugins", "core"}},
         workspace = {
           -- Make the server aware of Neovim runtime files
           library = {

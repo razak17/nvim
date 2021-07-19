@@ -34,40 +34,6 @@ local function lspLocList()
   })
 end
 
-local function documentFormatting(client)
-  if client and client.resolved_capabilities.document_formatting then
-    core.augroup("LspFormat", {
-      {
-        events = {"BufWritePre"},
-        targets = {"<buffer>"},
-        command = "lua vim.lsp.buf.formatting_sync(nil, 1000)",
-      },
-    })
-  end
-end
-
-local function documentHighlight(client)
-  if client and client.resolved_capabilities.document_highlight then
-    core.augroup("LspCursorCommands", {
-      {
-        events = {"CursorHold"},
-        targets = {"<buffer>"},
-        command = "lua vim.lsp.buf.document_highlight()",
-      },
-      {
-        events = {"CursorHoldI"},
-        targets = {"<buffer>"},
-        command = "lua vim.lsp.buf.document_highlight()",
-      },
-      {
-        events = {"CursorMoved"},
-        targets = {"<buffer>"},
-        command = "lua vim.lsp.buf.clear_references()",
-      },
-    })
-  end
-end
-
 local function hoverDiagnostics()
   core.augroup("HoverDiagnostics", {
     {
@@ -93,16 +59,77 @@ local function hoverDiagnostics()
   })
 end
 
-local function lsp_autocmds(client)
+local function lsp_autocmds()
   lspLocList()
-  if core.lsp.format_on_save then
-    documentFormatting(client)
-  end
-  if core.lsp.document_highlight then
-    documentHighlight(client)
-  end
   if core.lsp.hover_diagnostics then
     hoverDiagnostics()
+  end
+end
+
+local lsp_config = {}
+
+-- Taken from https://www.reddit.com/r/neovim/comments/gyb077/nvimlsp_peek_defination_javascript_ttserver/
+function lsp_config.preview_location(location, context, before_context)
+  -- location may be LocationLink or Location (more useful for the former)
+  context = context or 15
+  before_context = before_context or 0
+  local uri = location.targetUri or location.uri
+  if uri == nil then
+    return
+  end
+  local bufnr = vim.uri_to_bufnr(uri)
+  if not vim.api.nvim_buf_is_loaded(bufnr) then
+    vim.fn.bufload(bufnr)
+  end
+
+  local range = location.targetRange or location.range
+  local contents = vim.api.nvim_buf_get_lines(bufnr, range.start.line - before_context,
+    range["end"].line + 1 + context, false)
+  local filetype = vim.api.nvim_buf_get_option(bufnr, "filetype")
+  return vim.lsp.util.open_floating_preview(contents, filetype, {border = core.lsp.popup_border})
+end
+
+function lsp_config.preview_location_callback(_, method, result)
+  local context = 15
+  if result == nil or vim.tbl_isempty(result) then
+    print("No location found: " .. method)
+    return nil
+  end
+  if vim.tbl_islist(result) then
+    lsp_config.floating_buf, lsp_config.floating_win =
+      lsp_config.preview_location(result[1], context)
+  else
+    lsp_config.floating_buf, lsp_config.floating_win = lsp_config.preview_location(result, context)
+  end
+end
+
+function lsp_config.PeekDefinition()
+  if vim.tbl_contains(vim.api.nvim_list_wins(), lsp_config.floating_win) then
+    vim.api.nvim_set_current_win(lsp_config.floating_win)
+  else
+    local params = vim.lsp.util.make_position_params()
+    return vim.lsp.buf_request(0, "textDocument/definition", params,
+      lsp_config.preview_location_callback)
+  end
+end
+
+function lsp_config.PeekTypeDefinition()
+  if vim.tbl_contains(vim.api.nvim_list_wins(), lsp_config.floating_win) then
+    vim.api.nvim_set_current_win(lsp_config.floating_win)
+  else
+    local params = vim.lsp.util.make_position_params()
+    return vim.lsp.buf_request(0, "textDocument/typeDefinition", params,
+      lsp_config.preview_location_callback)
+  end
+end
+
+function lsp_config.PeekImplementation()
+  if vim.tbl_contains(vim.api.nvim_list_wins(), lsp_config.floating_win) then
+    vim.api.nvim_set_current_win(lsp_config.floating_win)
+  else
+    local params = vim.lsp.util.make_position_params()
+    return vim.lsp.buf_request(0, "textDocument/implementation", params,
+      lsp_config.preview_location_callback)
   end
 end
 
@@ -130,7 +157,7 @@ local function lsp_mappings(client, bufnr)
     end
     if client.supports_method "textDocument/definition" then
       nnoremap("ge", function()
-        require'lsp.utils'.PeekDefinition()
+        lsp_config.PeekDefinition()
       end)
     end
     if client.resolved_capabilities.type_definition then
@@ -150,7 +177,6 @@ local function lsp_mappings(client, bufnr)
 
   nnoremap("gsd", vim.lsp.buf.document_symbol)
   nnoremap("gsw", vim.lsp.buf.workspace_symbol)
-  nnoremap("<leader>vF", vim.lsp.buf.formatting)
   nnoremap("<leader>vf", ":Format<CR>")
   nnoremap("<leader>vl", vim.lsp.diagnostic.set_loclist)
 end
@@ -223,14 +249,6 @@ command {
 }
 
 command {
-  "LspRestart",
-  function()
-    vim.lsp.stop_client(vim.lsp.get_active_clients())
-    vim.cmd [[edit]]
-  end,
-}
-
-command {
   "LspToggleVirtualText",
   function()
     local virtual_text = {}
@@ -242,19 +260,11 @@ command {
 }
 
 function core.lsp.on_attach(client, bufnr)
-  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-
-  lsp_autocmds(client)
+  lsp_autocmds()
   lsp_mappings(client, bufnr)
 
   if client.resolved_capabilities.goto_definition then
     vim.bo[bufnr].tagfunc = "v:lua.core.lsp.tagfunc"
-  end
-
-  -- on init
-  client.config.flags = {}
-  if client.config.flags then
-    client.config.flags.allow_incremental_sync = true
   end
 end
 
@@ -287,7 +297,7 @@ function core.lsp.setup_servers()
   require'lsp.graphql'.init()
   require'lsp.html'.init()
   require'lsp.json'.init()
-  require'lsp.lua'.init(capabilities)
+  require'lsp.lua'.init()
   require'lsp.python'.init()
   require'lsp.rust'.init()
   require'lsp.sh'.init()
@@ -301,11 +311,6 @@ function core.lsp.setup_servers()
 end
 
 local function lsp_setup()
-  if vim.g.lspconfig_has_setup then
-    return
-  end
-  vim.g.lspconfig_has_setup = true
-
   vim.fn.sign_define {
     {name = "LspDiagnosticsSignError", text = "", texthl = "LspDiagnosticsSignError"},
     {name = "LspDiagnosticsSignHint", text = "", texthl = "LspDiagnosticsSignHint"},
@@ -333,4 +338,3 @@ local function lsp_setup()
 end
 
 lsp_setup()
-

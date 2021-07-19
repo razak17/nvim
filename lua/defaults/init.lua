@@ -125,8 +125,6 @@ core.treesitter = {
   highlight = {enabled = true},
 }
 
-core.which_key = {separator = ''}
-
 core.dashboard = {
   custom_header = {
     "                                                       ",
@@ -154,8 +152,6 @@ core.lsp = {
   hover_diagnostics = true,
   format_on_save = true,
   lint_on_save = true,
-  document_highlight = true,
-  popup_border = "single",
   rust_tools = false,
   binary = {
     clangd = "clangd",
