@@ -14,7 +14,7 @@ api.nvim_set_keymap('v', '<leader>', ':<c-u> :WhichKeyVisual "<space>"<CR>',
   {noremap = true, silent = true})
 fn['which_key#register']('<space>', 'g:which_key_map')
 
-g.which_key_map = {
+local default_keymaps = {
   ['='] = 'Balance window',
   [';'] = 'terminal',
   ['.'] = 'Open init.vim',
@@ -83,15 +83,167 @@ g.which_key_map = {
 
 _G.WhichKey = {}
 
--- Conditional keymaps
+local debug_keymaps = {
+  name = '+Debug',
+  ['?'] = 'centered float ui',
+  a = 'attach',
+  A = 'attach remote',
+  b = 'toggle breakpoint',
+  B = 'set breakpoint',
+  c = 'continue',
+  C = 'run to cursor',
+  E = 'toggle repl',
+  g = 'get session',
+  k = 'up',
+  L = 'run last',
+  n = 'down',
+  p = 'pause',
+  r = 'open repl in vsplit',
+  s = {name = "+Step", b = 'back', i = 'step into', o = 'step out', v = 'step over'},
+  S = 'stop',
+  x = 'disconnect',
+}
+
+local fterm_keymaps = {
+  name = '+Fterm',
+  g = 'gitui',
+  l = 'lazygit',
+  n = 'node',
+  N = 'new',
+  p = 'python',
+  r = 'ranger',
+  v = 'open vimrc in vertical split',
+}
+
+local far_keymaps = {
+  name = '+Far',
+  f = 'replace in File',
+  d = 'do',
+  i = 'search iteratively',
+  r = 'replace in Project',
+  z = 'undo',
+}
+
+local git_signs_keymaps = {
+  name = '+Gitsigns',
+  b = 'blame line',
+  e = 'preview hunk',
+  r = 'reset hunk',
+  s = 'stage hunk',
+  t = 'toggle line blame',
+  u = 'undo stage hunk',
+}
+
+local fugitive_keymaps = {
+  name = '+Git',
+  a = 'fetch all',
+  b = 'branches',
+  A = 'blame',
+  c = {name = '+Commit', a = 'amend', m = 'message'},
+  C = 'checkout',
+  d = 'diff',
+  D = 'diff split',
+  h = 'diffget',
+  i = 'init',
+  k = 'diffget',
+  l = 'log',
+  e = 'push',
+  p = 'poosh',
+  P = 'pull',
+  r = 'remove',
+  s = 'status',
+}
+
+local telescope_keymaps = {
+  name = '+Telescope',
+  b = "file browser",
+  c = {
+    name = '+Builtin',
+    a = 'autocmds',
+    c = 'commands',
+    b = 'buffers',
+    f = 'builtin',
+    h = 'help',
+    H = 'history',
+    k = 'keymaps',
+    l = 'loclist',
+    r = 'registers',
+    T = 'treesitter',
+    v = 'vim options',
+    z = 'current file fuzzy find',
+  },
+  C = 'Open lua/core/defaults/init.lua',
+  d = {
+    name = '+Dotfiles',
+    b = 'branches',
+    B = 'bcommits',
+    c = 'commits',
+    f = 'git files',
+    r = 'recent files',
+    s = 'status',
+  },
+  e = {name = '+Extensions', b = 'change background'},
+  f = 'find files',
+  l = {name = '+Live', g = 'grep', w = 'current word', e = 'prompt'},
+  r = {
+    name = '+Config',
+    b = 'branches',
+    B = 'bcommits',
+    c = 'commits',
+    f = 'nvim files',
+    r = 'recent files',
+    s = 'status',
+  },
+  v = {
+    name = '+Lsp',
+    a = 'code action',
+    A = 'range code action',
+    r = 'references',
+    d = 'document_symbol',
+    w = 'workspace_symbol',
+  },
+  g = {name = '+Git', b = 'branches', c = 'commits', C = 'bcommits', f = 'files', s = 'status'},
+}
+
+local lsp_keymaps = {
+  name = '+Code',
+  a = 'code action',
+  A = 'range code action',
+  d = {name = '+Diagnostics', b = 'goto previous', l = 'current line', n = 'goto next'},
+  f = 'format',
+  l = 'set loc list',
+  o = 'open qflist',
+  s = 'Symbols outline',
+  v = 'toggle virtual text',
+  w = {name = '+Color', m = 'pencils'},
+}
+
+local trouble_keymaps = {
+  name = '+Trouble',
+  d = 'document',
+  e = 'quickfix',
+  l = 'loclist',
+  r = 'references',
+  w = 'workspace',
+}
+
+-- Set default keymaps
+g.which_key_map = default_keymaps
+
+-- Plugin keymaps
 WhichKey.SetKeyOnFT = function()
   -- Get Which-Key keymap
   local key_maps = vim.g.which_key_map
   -- Add keys to Which-Key keymap
+
   -- matchup
-  if core.plugin.matchup.active then key_maps.a.w = 'where_am_i' end
+  if core.plugin.matchup.active then
+    key_maps.a.w = 'where_am_i'
+  end
   -- undotree
-  if core.plugin.undotree.active then key_maps.a.u = 'toggle undotree' end
+  if core.plugin.undotree.active then
+    key_maps.a.u = 'toggle undotree'
+  end
   -- tree
   if core.plugin.tree.active then
     key_maps.c.f = 'nvim-tree find'
@@ -100,87 +252,32 @@ WhichKey.SetKeyOnFT = function()
   end
   -- dap
   if core.plugin.debug.active then
-    key_maps.d = {
-      name = '+Debug',
-      ['?'] = 'centered float ui',
-      a = 'attach',
-      A = 'attach remote',
-      b = 'toggle breakpoint',
-      B = 'set breakpoint',
-      c = 'continue',
-      C = 'run to cursor',
-      e = 'toggle ui',
-      E = 'toggle repl',
-      g = 'get session',
-      i = "inspect",
-      k = 'up',
-      l = 'osv launch',
-      L = 'run last',
-      n = 'down',
-      p = 'pause',
-      r = 'open repl in vsplit',
-      s = {name = "+Step", b = 'back', i = 'step into', o = 'step out', v = 'step over'},
-      S = 'stop',
-      x = 'disconnect',
-    }
+    key_maps.d = debug_keymaps
+  end
+  -- osv
+  if core.plugin.osv.active then
+    key_maps.d.l = 'osv launch'
+  end
+  -- debug ui
+  if core.plugin.debug_ui.active then
+    key_maps.d.e = 'toggle ui'
+    key_maps.d.i = "inspect"
   end
   -- fterm
   if core.plugin.fterm.active or core.plugin.SANE.active then
-    key_maps.e = {
-      name = '+Fterm',
-      g = 'gitui',
-      l = 'lazygit',
-      n = 'node',
-      N = 'new',
-      p = 'python',
-      r = 'ranger',
-      v = 'open vimrc in vertical split',
-    }
+    key_maps.e = fterm_keymaps
   end
   -- far
   if core.plugin.far.active then
-    key_maps.F = {
-      name = '+Far',
-      f = 'replace in File',
-      d = 'do',
-      i = 'search iteratively',
-      r = 'replace in Project',
-      z = 'undo',
-    }
+    key_maps.F = far_keymaps
   end
   -- git_signs
   if core.plugin.git_signs.active then
-    key_maps.h = {
-      name = '+Gitsigns',
-      b = 'blame line',
-      e = 'preview hunk',
-      r = 'reset hunk',
-      s = 'stage hunk',
-      t = 'toggle line blame',
-      u = 'undo stage hunk',
-    }
+    key_maps.h = git_signs_keymaps
   end
   -- fugitive
   if core.plugin.fugitive.active then
-    key_maps.g = {
-      name = '+Git',
-      a = 'fetch all',
-      b = 'branches',
-      A = 'blame',
-      c = {name = '+Commit', a = 'amend', m = 'message'},
-      C = 'checkout',
-      d = 'diff',
-      D = 'diff split',
-      h = 'diffget',
-      i = 'init',
-      k = 'diffget',
-      l = 'log',
-      e = 'push',
-      p = 'poosh',
-      P = 'pull',
-      r = 'remove',
-      s = 'status',
-    }
+    key_maps.g = fugitive_keymaps
   end
   -- bookmarks
   if core.plugin.bookmarks.active then
@@ -189,94 +286,40 @@ WhichKey.SetKeyOnFT = function()
   -- markdown
   if core.plugin.markdown_preview.active or core.plugin.glow.active then
     key_maps.o = {name = '+Toggle'}
-    if core.plugin.markdown_preview.active then key_maps.o.m = 'markdown preview' end
-    if core.plugin.glow.active then key_maps.o.g = 'glow preview' end
+    if core.plugin.markdown_preview.active then
+      key_maps.o.m = 'markdown preview'
+    end
+    if core.plugin.glow.active then
+      key_maps.o.g = 'glow preview'
+    end
   end
   -- dashboard
   if core.plugin.dashboard.active then
     key_maps.S = {name = '+Session', l = 'load Session', s = 'save Session'}
   end
   -- SANE
-  if core.plugin.playground.active then key_maps.a.E = 'Inspect token' end
-  if core.plugin.SANE.active then
+  if core.plugin.playground.active then
     key_maps.a.E = 'Inspect token'
+  end
+  if core.plugin.SANE.active then
     key_maps.c.s = 'edit snippet'
     key_maps.I.e = 'ts info'
     key_maps.I.u = 'ts update'
     key_maps.L = {name = '+LspUtils', i = 'info', l = 'log', r = 'restart'}
-    key_maps.f = {
-      name = '+Telescope',
-      b = "file browser",
-      c = {
-        name = '+Builtin',
-        a = 'autocmds',
-        c = 'commands',
-        b = 'buffers',
-        f = 'builtin',
-        h = 'help',
-        H = 'history',
-        k = 'keymaps',
-        l = 'loclist',
-        r = 'registers',
-        T = 'treesitter',
-        v = 'vim options',
-        z = 'current file fuzzy find',
-      },
-      C = 'Open lua/core/defaults/init.lua',
-      d = {
-        name = '+Dotfiles',
-        b = 'branches',
-        B = 'bcommits',
-        c = 'commits',
-        f = 'git files',
-        r = 'recent files',
-        s = 'status',
-      },
-      e = {name = '+Extensions', m = 'media files', b = 'change background', p = 'project'},
-      f = 'find files',
-      l = {name = '+Live', g = 'grep', w = 'current word', e = 'prompt'},
-      r = {
-        name = '+Config',
-        b = 'branches',
-        B = 'bcommits',
-        c = 'commits',
-        f = 'nvim files',
-        r = 'recent files',
-        s = 'status',
-      },
-      v = {
-        name = '+Lsp',
-        a = 'code action',
-        A = 'range code action',
-        r = 'references',
-        d = 'document_symbol',
-        w = 'workspace_symbol',
-      },
-      g = {name = '+Git', b = 'branches', c = 'commits', C = 'bcommits', f = 'files', s = 'status'},
-    }
-    key_maps.v = {
-      name = '+Code',
-      a = 'code action',
-      A = 'range code action',
-      d = {name = '+Diagnostics', b = 'goto previous', l = 'current line', n = 'goto next'},
-      f = 'format',
-      l = 'set loc list',
-      o = 'open qflist',
-      s = 'Symbols outline',
-      v = 'toggle virtual text',
-      w = {name = '+Color', m = 'pencils'},
-    }
-    if core.plugin.doge.active then key_maps.v.D = "DOGe" end
-    if core.plugin.trouble.active then
-      key_maps.v.x = {
-        name = '+Trouble',
-        d = 'document',
-        e = 'quickfix',
-        l = 'loclist',
-        r = 'references',
-        w = 'workspace',
-      }
+    key_maps.f = telescope_keymaps
+    key_maps.v = lsp_keymaps
+    if core.plugin.doge.active then
+      key_maps.v.D = "DOGe"
     end
+    if core.plugin.trouble.active then
+      key_maps.v.x = trouble_keymaps
+    end
+  end
+  if core.plugin.telescope_media_files.active then
+    key_maps.f.e.m = 'project'
+  end
+  if core.plugin.telescope_project.active then
+    key_maps.f.e.p = 'project'
   end
 
   -- Update Which-Key keymap
@@ -294,4 +337,3 @@ core.augroup("WhichKeyMode", {
     command = "set laststatus=0 noshowmode | autocmd BufLeave <buffer> set laststatus=2",
   },
 })
-

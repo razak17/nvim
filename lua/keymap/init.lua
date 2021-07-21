@@ -14,26 +14,116 @@ local opts = {expr = true}
 
 require('keymap.config')
 
+if core.plugin.SANE.active then
+  -- Packer
+  nnoremap('<Leader>Ec', ':PlugCompile<CR>')
+  nnoremap('<Leader>EC', ':PlugClean<CR>')
+  nnoremap('<Leader>Ei', ':PlugInstall<CR>')
+  nnoremap('<Leader>Es', ':PlugSync<CR>')
+  nnoremap('<Leader>ES', ':PlugStatus<CR>')
+  nnoremap('<Leader>Ee', ':PlugUpdate<CR>')
+
+  -- Bufferline
+  nnoremap('<Leader>bb', ':BufferLineMovePrev<CR>')
+  nnoremap('<Leader>bn', ':BufferLineMoveNext<CR>')
+  nnoremap('gb', ':BufferLinePick<CR>')
+
+  -- Compe
+  inoremap("<C-Space>", "compe#complete()", opts)
+  inoremap("<C-e>", "compe#close('<C-e>')", opts)
+  inoremap("<C-f>", "compe#scroll({ 'delta': +4 })", opts)
+  inoremap("<C-d>", "compe#scroll({ 'delta': -4 })", opts)
+  imap("<CR>", [[compe#confirm('<CR>')]], {noremap = true, expr = true})
+
+  -- vsnip
+  xmap("<C-x>", "<Plug>(vsnip-cut-text)")
+  xmap("<C-l>", "<Plug>(vsnip-select-text)")
+  imap("<Tab>", "v:lua.__tab__complete()", opts)
+  imap("<S-Tab>", "v:lua.__s_tab__complete()", opts)
+  nnoremap('<Leader>cs', ':VsnipOpen<CR> 1<CR><CR>')
+  imap("<C-l>", "vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'", opts)
+  smap("<C-l>", "vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'", opts)
+
+  -- Kommentary
+  nmap("<leader>/", "<Plug>kommentary_line_default")
+  nmap("<leader>a/", "<Plug>kommentary_motion_default")
+  vmap("<leader>/", "<Plug>kommentary_visual_default")
+
+  -- TS
+  nnoremap('<Leader>Ie', ':TSInstallInfo<CR>')
+  nnoremap('<Leader>Iu', ':TSUpdate<CR>')
+  nnoremap('<Leader>aw', ':<c-u>MatchupWhereAmI?<CR>')
+
+  -- Lsp
+  nnoremap('<Leader>Li', ':LspInfo<CR>')
+  nnoremap('<Leader>Ll', ':LspLog<CR>')
+  nnoremap('<Leader>Lr', ':LspRestart<CR>')
+  nnoremap('<Leader>vv', ':LspToggleVirtualText<CR>')
+
+  -- Telescope
+  nnoremap('<Leader>ff', ':Telescope find_files<CR>')
+  nnoremap('<Leader>fb', ':Telescope file_browser<CR>')
+  nnoremap('<Leader>frr', ':Telescope oldfiles<CR>')
+  nnoremap('<Leader>fca', ':Telescope autocommands<CR>')
+  nnoremap('<Leader>fcb', ':Telescope buffers<CR>')
+  nnoremap('<Leader>fcc', ':Telescope commands<CR>')
+  nnoremap('<Leader>fcf', ':Telescope builtin<CR>')
+  nnoremap('<Leader>fch', ':Telescope help_tags<CR>')
+  nnoremap('<Leader>fcH', ':Telescope command_history<CR>')
+  nnoremap('<Leader>fck', ':Telescope keymaps<CR>')
+  nnoremap('<Leader>fcl', ':Telescope loclist<CR>')
+  nnoremap('<Leader>fcr', ':Telescope registers<CR>')
+  nnoremap('<Leader>fcT', ':Telescope treesitter<CR>')
+  nnoremap('<Leader>fcv', ':Telescope vim_options<CR>')
+  nnoremap('<Leader>fcz', ':Telescope current_buffer_fuzzy_find<CR>')
+  nnoremap('<Leader>fC', ':e ' .. core.__vim_path .. '/lua/defaults/init.lua<CR>')
+
+  -- Telescope lsp
+  nnoremap('<Leader>fva', ':Telescope lsp_range_code_actions<CR>')
+  nnoremap('<Leader>fvr', ':Telescope lsp_references<CR>')
+  nnoremap('<Leader>fvd', ':Telescope lsp_document_symbols<CR>')
+  nnoremap('<Leader>fvw', ':Telescope lsp_workspace_symbols<CR>')
+
+  -- Telescope grep
+  nnoremap('<Leader>fle', ':Telescope grep_string_prompt<CR>')
+  nnoremap('<Leader>flg', ':Telescope live_grep<CR>')
+  nnoremap('<Leader>flw', ':Telescope grep_string<CR>')
+
+  -- Telescope git
+  nnoremap('<Leader>fgb', ':Telescope git_branches<CR>')
+  nnoremap('<Leader>fgc', ':Telescope git_commits<CR>')
+  nnoremap('<Leader>fgC', ':Telescope git_bcommits<CR>')
+  nnoremap('<Leader>fgf', ':Telescope git_files<CR>')
+  nnoremap('<Leader>fgs', ':Telescope git_status<CR>')
+
+  -- Telescope extensions
+  nnoremap('<Leader>frf', ':Telescope nvim_files files<CR>')
+  nnoremap('<Leader>frg', ':Telescope nvim_files git_files<CR>')
+  nnoremap('<Leader>frB', ':Telescope nvim_files bcommits<CR>')
+  nnoremap('<Leader>frc', ':Telescope nvim_files commits<CR>')
+  nnoremap('<Leader>frb', ':Telescope nvim_files branches<CR>')
+  nnoremap('<Leader>frs', ':Telescope nvim_files status<CR>')
+
+  nnoremap('<Leader>fdf', ':Telescope dotfiles git_files<CR>')
+  nnoremap('<Leader>fdB', ':Telescope dotfiles bcommits<CR>')
+  nnoremap('<Leader>fdc', ':Telescope dotfiles commits<CR>')
+  nnoremap('<Leader>fdb', ':Telescope dotfiles branches<CR>')
+  nnoremap('<Leader>fds', ':Telescope dotfiles status<CR>')
+
+  nnoremap('<Leader>feb', ':Telescope bg_selector<CR>')
+
+  if core.plugin.telescope_media_files.active then
+    nnoremap('<leader>fep', ':Telescope project<CR>')
+  end
+  if core.plugin.telescope_project.active then
+    nnoremap('<Leader>fem', ':Telescope media_files<CR>')
+  end
+end
+
 -- vim-fold-cycle
-if core.plugin.fold_cycle.active then nmap("<BS>", "<Plug>(fold-cycle-close)") end
-
--- Compe
-inoremap("<C-Space>", "compe#complete()", opts)
-inoremap("<C-e>", "compe#close('<C-e>')", opts)
-inoremap("<C-f>", "compe#scroll({ 'delta': +4 })", opts)
-inoremap("<C-d>", "compe#scroll({ 'delta': -4 })", opts)
-imap("<CR>", [[compe#confirm('<CR>')]], {noremap = true, expr = true})
-
--- vsnip
-xmap("<C-x>", "<Plug>(vsnip-cut-text)")
-xmap("<C-l>", "<Plug>(vsnip-select-text)")
-imap("<Tab>", "v:lua.__tab__complete()", opts)
-imap("<S-Tab>", "v:lua.__s_tab__complete()", opts)
-nnoremap('<Leader>cs', ':VsnipOpen<CR> 1<CR><CR>')
-imap("<C-l>", "vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'",
-  opts)
-smap("<C-l>", "vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'",
-  opts)
+if core.plugin.fold_cycle.active then
+  nmap("<BS>", "<Plug>(fold-cycle-close)")
+end
 
 -- Easy-align
 if core.plugin.easy_align.active then
@@ -60,13 +150,10 @@ if core.plugin.eft.active then
   omap("F", "v:lua.__enhance_ft_move('F')", {expr = true})
 end
 
--- TS
-nnoremap('<Leader>Ie', ':TSInstallInfo<CR>')
-nnoremap('<Leader>Iu', ':TSUpdate<CR>')
-nnoremap('<Leader>aw', ':<c-u>MatchupWhereAmI?<CR>')
-
 -- Symbols Outline
-nnoremap('<Leader>vs', ':SymbolsOutline<CR>')
+if core.plugin.symbols_outline.active then
+  nnoremap('<Leader>vs', ':SymbolsOutline<CR>')
+end
 
 -- trouble
 if core.plugin.trouble.active then
@@ -90,19 +177,19 @@ if core.plugin.markdown_preview.active then
 end
 
 -- Glow
-if core.plugin.glow.active then nnoremap('<Leader>og', ':Glow<CR>') end
+if core.plugin.glow.active then
+  nnoremap('<Leader>og', ':Glow<CR>')
+end
 
 -- dadbob
-if core.plugin.dadbod.active then nnoremap('<Leader>od', ':DBUIToggle<CR>') end
-
--- Lsp
-nnoremap('<Leader>Li', ':LspInfo<CR>')
-nnoremap('<Leader>Ll', ':LspLog<CR>')
-nnoremap('<Leader>Lr', ':LspRestart<CR>')
-nnoremap('<Leader>vv', ':LspToggleVirtualText<CR>')
+if core.plugin.dadbod.active then
+  nnoremap('<Leader>od', ':DBUIToggle<CR>')
+end
 
 -- UndoTree
-if core.plugin.undotree.active then nnoremap('<Leader>au', ':UndotreeToggle<CR>') end
+if core.plugin.undotree.active then
+  nnoremap('<Leader>au', ':UndotreeToggle<CR>')
+end
 
 -- Tree
 if core.plugin.tree.active or core.plugin.SANE.active then
@@ -120,35 +207,27 @@ if core.plugin.far.active then
   nnoremap("<Leader>Fz", ":Farundo<CR>")
 end
 
--- Bufferline
-nnoremap('<Leader>bb', ':BufferLineMovePrev<CR>')
-nnoremap('<Leader>bn', ':BufferLineMoveNext<CR>')
-nnoremap('gb', ':BufferLinePick<CR>')
-
--- Packer
-nnoremap('<Leader>Ec', ':PlugCompile<CR>')
-nnoremap('<Leader>EC', ':PlugClean<CR>')
-nnoremap('<Leader>Ei', ':PlugInstall<CR>')
-nnoremap('<Leader>Es', ':PlugSync<CR>')
-nnoremap('<Leader>ES', ':PlugStatus<CR>')
-nnoremap('<Leader>Ee', ':PlugUpdate<CR>')
-
 -- FTerm
 if core.plugin.fterm.active or core.plugin.SANE.active then
   nnoremap('<F12>', '<CMD>lua require("FTerm").toggle()<CR>')
   tnoremap('<F12>', '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>')
   nnoremap('<leader>eN', '<CMD>lua require("FTerm").open()<CR>')
-  map('<leader>en', function() __fterm_cmd("node") end)
-  map('<leader>eg', function() __fterm_cmd("gitui") end)
-  map('<leader>ep', function() __fterm_cmd("python") end)
-  map('<leader>er', function() __fterm_cmd("ranger") end)
-  map('<leader>el', function() __fterm_cmd("lazygit") end)
+  map('<leader>en', function()
+    __fterm_cmd("node")
+  end)
+  map('<leader>eg', function()
+    __fterm_cmd("gitui")
+  end)
+  map('<leader>ep', function()
+    __fterm_cmd("python")
+  end)
+  map('<leader>er', function()
+    __fterm_cmd("ranger")
+  end)
+  map('<leader>el', function()
+    __fterm_cmd("lazygit")
+  end)
 end
-
--- Kommentary
-nmap("<leader>/", "<Plug>kommentary_line_default")
-nmap("<leader>a/", "<Plug>kommentary_motion_default")
-vmap("<leader>/", "<Plug>kommentary_visual_default")
 
 -- Fugitive
 if core.plugin.fugitive.active then
@@ -187,13 +266,17 @@ if core.plugin.debug.active then
   nnoremap('<leader>dE', ':lua require"dap".repl.toggle()<CR>')
   nnoremap('<leader>dg', ':lua require"dap".session()<CR>')
   nnoremap('<leader>dk', ':lua require"dap".up()<CR>')
-  nnoremap('<leader>dl', ':lua require"osv".launch()<CR>')
   nnoremap('<leader>dL', ':lua require"dap".run_last()<CR>')
   nnoremap('<leader>dn', ':lua require"dap".down()<CR>')
   nnoremap('<leader>dp', ':lua require"dap".pause.toggle()<CR>')
   nnoremap('<leader>dr', ':lua require"dap".repl.open({}, "vsplit")<CR><C-w>l')
   nnoremap('<leader>dS', ':lua require"dap".stop()<CR>')
   nnoremap('<leader>dx', ':lua require"dap".disconnect()<CR>')
+end
+
+-- osv
+if core.plugin.osv.active then
+  nnoremap('<leader>dl', ':lua require"osv".launch()<CR>')
 end
 
 -- dapui
@@ -205,57 +288,3 @@ if core.plugin.debug_ui.active then
   vnoremap('<leader>d?',
     ':lua local widgets=require"dap.ui.widgets";widgets.centered_float(widgets.scopes)<CR>')
 end
-
--- Telescope
-nnoremap('<Leader>ff', ':Telescope find_files<CR>')
-nnoremap('<Leader>fb', ':Telescope file_browser<CR>')
-nnoremap('<Leader>frr', ':Telescope oldfiles<CR>')
-nnoremap('<Leader>fca', ':Telescope autocommands<CR>')
-nnoremap('<Leader>fcb', ':Telescope buffers<CR>')
-nnoremap('<Leader>fcc', ':Telescope commands<CR>')
-nnoremap('<Leader>fcf', ':Telescope builtin<CR>')
-nnoremap('<Leader>fch', ':Telescope help_tags<CR>')
-nnoremap('<Leader>fcH', ':Telescope command_history<CR>')
-nnoremap('<Leader>fck', ':Telescope keymaps<CR>')
-nnoremap('<Leader>fcl', ':Telescope loclist<CR>')
-nnoremap('<Leader>fcr', ':Telescope registers<CR>')
-nnoremap('<Leader>fcT', ':Telescope treesitter<CR>')
-nnoremap('<Leader>fcv', ':Telescope vim_options<CR>')
-nnoremap('<Leader>fcz', ':Telescope current_buffer_fuzzy_find<CR>')
-
--- Telescope lsp
-nnoremap('<Leader>fva', ':Telescope lsp_range_code_actions<CR>')
-nnoremap('<Leader>fvr', ':Telescope lsp_references<CR>')
-nnoremap('<Leader>fvd', ':Telescope lsp_document_symbols<CR>')
-nnoremap('<Leader>fvw', ':Telescope lsp_workspace_symbols<CR>')
-
--- Telescope grep
-nnoremap('<Leader>fle', ':Telescope grep_string_prompt<CR>')
-nnoremap('<Leader>flg', ':Telescope live_grep<CR>')
-nnoremap('<Leader>flw', ':Telescope grep_string<CR>')
-
--- Telescope git
-nnoremap('<Leader>fgb', ':Telescope git_branches<CR>')
-nnoremap('<Leader>fgc', ':Telescope git_commits<CR>')
-nnoremap('<Leader>fgC', ':Telescope git_bcommits<CR>')
-nnoremap('<Leader>fgf', ':Telescope git_files<CR>')
-nnoremap('<Leader>fgs', ':Telescope git_status<CR>')
-
--- Telescope extensions
-nnoremap('<Leader>frf', ':Telescope nvim_files files<CR>')
-nnoremap('<Leader>frg', ':Telescope nvim_files git_files<CR>')
-nnoremap('<Leader>frB', ':Telescope nvim_files bcommits<CR>')
-nnoremap('<Leader>frc', ':Telescope nvim_files commits<CR>')
-nnoremap('<Leader>fC', ':e ' .. core.__vim_path .. '/lua/defaults/init.lua<CR>')
-nnoremap('<Leader>frb', ':Telescope nvim_files branches<CR>')
-nnoremap('<Leader>frs', ':Telescope nvim_files status<CR>')
-
-nnoremap('<Leader>fdf', ':Telescope dotfiles git_files<CR>')
-nnoremap('<Leader>fdB', ':Telescope dotfiles bcommits<CR>')
-nnoremap('<Leader>fdc', ':Telescope dotfiles commits<CR>')
-nnoremap('<Leader>fdb', ':Telescope dotfiles branches<CR>')
-nnoremap('<Leader>fds', ':Telescope dotfiles status<CR>')
-
-nnoremap('<Leader>fem', ':Telescope media_files<CR>')
-nnoremap('<leader>fep', ':Telescope project<CR>')
-nnoremap('<Leader>feb', ':Telescope bg_selector<CR>')

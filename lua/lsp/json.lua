@@ -2,7 +2,7 @@ local M = {}
 
 M.init = function()
   require'lspconfig'.jsonls.setup {
-    cmd = {"node", core.lsp.binary.json, "--stdio"},
+    cmd = {core.lsp.binary.json, "--stdio"},
     capabilities = core.lsp.capabilities,
     on_attach = core.lsp.on_attach,
     root_dir = require'lspconfig.util'.root_pattern('.gitignore', '.git', vim.fn.getcwd()),

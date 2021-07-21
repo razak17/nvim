@@ -291,6 +291,7 @@ core.lsp.capabilities = capabilities
 function core.lsp.setup_servers()
   require'lsp.clang'.init()
   require'lsp.cmake'.init()
+  require'lsp.css'.init()
   require'lsp.dockerfile'.init()
   require'lsp.elixir'.init()
   require'lsp.go'.init()

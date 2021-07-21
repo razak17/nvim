@@ -52,7 +52,7 @@ M.init = function()
     capabilities = core.lsp.capabilities,
     on_attach = function(client, bufnr)
       client.resolved_capabilities.document_formatting = false
-      tsserver_on_attach(client, bufnr)
+      -- tsserver_on_attach(client, bufnr)
       core.lsp.on_attach(client, bufnr)
     end,
     settings = {documentFormatting = false},

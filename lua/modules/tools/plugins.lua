@@ -6,7 +6,6 @@ tools['tpope/vim-fugitive'] = {event = 'VimEnter', disable = not core.plugin.fug
 tools['mbbill/undotree'] = {cmd = "UndotreeToggle", disable = not core.plugin.undotree.active}
 
 tools['airblade/vim-rooter'] = {
-  event = {"BufWinEnter"},
   config = function()
     vim.g.rooter_silent_chdir = 1
     vim.g.rooter_patterns = {'=nvim', '.git', '.gitignore', 'lua'}
@@ -22,7 +21,9 @@ tools['npxbr/glow.nvim'] = {
 
 tools['kkoomen/vim-doge'] = {
   run = ':call doge#install()',
-  config = function() vim.g.doge_mapping = '<Leader>vD' end,
+  config = function()
+    vim.g.doge_mapping = '<Leader>vD'
+  end,
   disable = not core.plugin.doge.active,
 }
 
@@ -42,7 +43,9 @@ tools['diepm/vim-rest-console'] = {event = 'VimEnter', disable = not core.plugin
 
 tools['iamcco/markdown-preview.nvim'] = {
   ft = 'markdown',
-  config = function() vim.g.mkdp_auto_start = 0 end,
+  config = function()
+    vim.g.mkdp_auto_start = 0
+  end,
   disable = not core.plugin.markdown_preview.active,
 }
 
