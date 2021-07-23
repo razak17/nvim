@@ -25,6 +25,7 @@ local smart_close_filetypes = {
   "tsplayground",
   "qf",
   "lspinfo",
+  "packer",
 }
 
 local function smart_close()
@@ -168,6 +169,7 @@ local column_clear = {
   "lspinfo",
   "lspinfo",
   "which_key",
+  "packer",
 }
 
 --- Set or unset the color column depending on the filetype of the buffer and its eligibility

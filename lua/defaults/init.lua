@@ -71,7 +71,7 @@ core.plugin = {
   doge = {active = false},
   dadbod = {active = false},
   restconsole = {active = false},
-  markdown_preview = {active = false},
+  markdown_preview = {active = true},
   -- aesth
   tree = {active = true},
   dashboard = {active = false},

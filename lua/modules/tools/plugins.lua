@@ -8,7 +8,7 @@ tools['mbbill/undotree'] = {cmd = "UndotreeToggle", disable = not core.plugin.un
 tools['airblade/vim-rooter'] = {
   config = function()
     vim.g.rooter_silent_chdir = 1
-    vim.g.rooter_patterns = {'=nvim', '.git', '.gitignore', 'lua'}
+    -- vim.g.rooter_patterns = {'=nvim', '.git', '.gitignore', 'lua'}
   end,
   disable = not core.plugin.rooter.active,
 }
@@ -42,10 +42,12 @@ tools['MattesGroeger/vim-bookmarks'] = {
 tools['diepm/vim-rest-console'] = {event = 'VimEnter', disable = not core.plugin.restconsole.active}
 
 tools['iamcco/markdown-preview.nvim'] = {
-  ft = 'markdown',
   config = function()
     vim.g.mkdp_auto_start = 0
   end,
+  run = 'cd app && yarn install',
+  cmd = 'MarkdownPreview',
+  ft = 'markdown',
   disable = not core.plugin.markdown_preview.active,
 }
 
