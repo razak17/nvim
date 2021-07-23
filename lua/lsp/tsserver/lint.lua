@@ -1,20 +1,21 @@
 local M = {}
 
+-- local linter = 'eslint'
 local linter = './node_modules/.bin/eslint'
 
-local lint = function()
+local get_linter_instance = function()
+  -- vim.cmd "let proj = FindRootDirectory()"
   -- local root_dir = vim.api.nvim_get_var "proj"
-  -- vim.cmd "let proj = utils#FindRootDirectory()"
 
-  local get_linter_instance = function()
-    -- prioritize local instance over global
-    -- local local_instance = root_dir .. "/node_modules/.bin/" .. linter
-    -- if vim.fn.executable(local_instance) == 1 then
-    --   return local_instance
-    -- end
-    return linter
-  end
+  -- -- prioritize local instance over global
+  -- local local_instance = root_dir .. "/node_modules/.bin/" .. linter
+  -- if vim.fn.executable(local_instance) == 1 then
+  --   return local_instance
+  -- end
+  return linter
+end
 
+local lint = function()
   local tsserver_args = {}
   local formattingSupported = false
 

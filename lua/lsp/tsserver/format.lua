@@ -2,19 +2,19 @@ local M = {}
 
 local formatter = 'prettier'
 
-local format = function()
-  local get_formatter_instance = function()
-    -- local root_dir = vim.api.nvim_get_var "proj"
-    -- vim.cmd "let proj = utils#FindRootDirectory()"
+local get_formatter_instance = function()
+  vim.cmd "let proj = FindRootDirectory()"
+  local root_dir = vim.api.nvim_get_var "proj"
 
-    -- prioritize local instance over global
-    -- local local_instance = root_dir .. "/node_modules/.bin/" .. formatter
-    -- if vim.fn.executable(local_instance) == 1 then
-    --   return local_instance
-    -- end
-    return formatter
+  -- prioritize local instance over global
+  local local_instance = root_dir .. "/node_modules/.bin/" .. formatter
+  if vim.fn.executable(local_instance) == 1 then
+    return local_instance
   end
+  return formatter
+end
 
+local format = function()
   local filetype = {}
   filetype["javascript"] = {
     function()
