@@ -9,7 +9,9 @@ local cnoremap = core.cnoremap
 local fn = vim.fn
 local api = vim.api
 
-if not core.plugin.accelerated_jk.active and not core.plugin.SANE.active then nmap('n', 'j') end
+if not core.plugin.accelerated_jk.active and not core.plugin.SANE.active then
+  nmap('n', 'j')
+end
 
 -----------------------------------------------------------------------------//
 -- Functions
@@ -25,7 +27,9 @@ local function hi_chain(syn_id)
   local names = {}
   table.insert(names, name)
   local original = fn.synIDtrans(syn_id)
-  if syn_id ~= original then table.insert(names, fn.synIDattr(original, "name")) end
+  if syn_id ~= original then
+    table.insert(names, fn.synIDattr(original, "name"))
+  end
 
   return names
 end
@@ -51,24 +55,34 @@ end
 
 local function open_file_or_create_new()
   local path = fn.expand("<cfile>")
-  if not path or path == "" then return false end
+  if not path or path == "" then
+    return false
+  end
 
   -- TODO handle terminal buffers
 
-  if pcall(vim.cmd, "norm!gf") then return true end
+  if pcall(vim.cmd, "norm!gf") then
+    return true
+  end
 
   local answer = fn.input("Create a new file, (Y)es or (N)o? ")
-  if not answer or string.lower(answer) ~= "y" then return vim.cmd "redraw" end
+  if not answer or string.lower(answer) ~= "y" then
+    return vim.cmd "redraw"
+  end
   vim.cmd "redraw"
   local new_path = fn.fnamemodify(fn.expand("%:p:h") .. "/" .. path, ":p")
   local ext = fn.fnamemodify(new_path, ":e")
 
-  if ext and ext ~= "" then return vim.cmd("edit " .. new_path) end
+  if ext and ext ~= "" then
+    return vim.cmd("edit " .. new_path)
+  end
 
   local suffixes = fn.split(vim.bo.suffixesadd, ",")
 
   for _, suffix in ipairs(suffixes) do
-    if fn.filereadable(new_path .. suffix) then return vim.cmd("edit " .. new_path .. suffix) end
+    if fn.filereadable(new_path .. suffix) then
+      return vim.cmd("edit " .. new_path .. suffix)
+    end
   end
 
   return vim.cmd("edit " .. new_path .. suffixes[1])
@@ -100,7 +114,9 @@ local function toggle_list(prefix)
 
   local winnr = fn.winnr()
   fn.execute(prefix .. "open")
-  if fn.winnr() ~= winnr then vim.cmd [[wincmd p]] end
+  if fn.winnr() ~= winnr then
+    vim.cmd [[wincmd p]]
+  end
 end
 
 local function ColorMyPencils()
@@ -163,7 +179,9 @@ xnoremap('K', ":m '<-2<CR>gv=gv")
 xnoremap('N', ":m '>+1<CR>gv=gv")
 
 -- Alternate way to save
-nnoremap("<c-s>", function() save_and_notify() end)
+nnoremap("<c-s>", function()
+  save_and_notify()
+end)
 
 -- Open url
 nnoremap('gx', ":sil !xdg-open <c-r><c-a><cr>")
@@ -177,7 +195,11 @@ nnoremap('<C-l>', '<C-w>l')
 -- Start new line from any cursor position
 inoremap("<S-Return>", "<C-o>o")
 
-if core.plugin.playground.active then nnoremap("<leader>aE", function() inspect_token() end) end
+if core.plugin.playground.active then
+  nnoremap("<leader>aE", function()
+    inspect_token()
+  end)
+end
 
 -- Use alt + hjkl to resize windows
 nnoremap('<M-n>', ':resize -2<CR>')
@@ -358,7 +380,9 @@ nnoremap("Q", "@q")
 -- If you select require('buffers/file') in lua for example
 -- this makes the cfile -> buffers/file rather than my_dir/buffer/file.lua
 -- Credit: 1,2
-nnoremap("gf", function() open_file_or_create_new() end)
+nnoremap("gf", function()
+  open_file_or_create_new()
+end)
 
 -----------------------------------------------------------------------------//
 -- Command mode related
@@ -377,23 +401,40 @@ cnoremap("%%", "<C-r>=fnameescape(expand('%'))<cr>")
 cnoremap("::", "<C-r>=fnameescape(expand('%:p:h'))<cr>/")
 
 -- GX - replicate netrw functionality
-nnoremap("gX", function() open_link() end)
+nnoremap("gX", function()
+  open_link()
+end)
 
 -- toggle_list
-nnoremap("<leader>ls", function() toggle_list("c") end)
-nnoremap("<leader>li", function() toggle_list("l") end)
+nnoremap("<leader>ls", function()
+  toggle_list("c")
+end)
+nnoremap("<leader>li", function()
+  toggle_list("l")
+end)
 
 -- Other remaps
 nnoremap('<Leader>,', ':e ~/.config/nvim/lua/core/init.lua<CR>')
 nnoremap('<Leader>.', ':e $MYVIMRC<CR>')
 nnoremap('<leader><CR>', ':source $MYVIMRC<CR>')
 nnoremap('<Leader>Ic', ':checkhealth<CR>')
+nnoremap('<Leader>vr', ':QuickRun<CR>')
 nnoremap('<Leader>Im', ':messages<CR>')
-nnoremap('<Leader>vwm', function() ColorMyPencils() end)
-nnoremap('<leader>aR', function() EmptyRegisters() end)
-nnoremap('<Leader>;', function() OpenTerminal() end)
-nnoremap('<leader>ao', function() TurnOnGuides() end)
-nnoremap('<leader>ae', function() TurnOffGuides() end)
+nnoremap('<Leader>vwm', function()
+  ColorMyPencils()
+end)
+nnoremap('<leader>aR', function()
+  EmptyRegisters()
+end)
+nnoremap('<Leader>;', function()
+  OpenTerminal()
+end)
+nnoremap('<leader>ao', function()
+  TurnOnGuides()
+end)
+nnoremap('<leader>ae', function()
+  TurnOffGuides()
+end)
 
 -- Buffers
 nnoremap('<Leader><Leader>', ':call v:lua.DelThisBuffer()<CR>')

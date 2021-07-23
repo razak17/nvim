@@ -53,3 +53,22 @@ function _G.RunPython()
     setlocal nobuflisted
   ]], true)
 end
+
+core.command {
+  "QuickRun",
+  function()
+    if vim.bo.filetype == 'c' then
+      vim.cmd [[call v:lua.RunC()]]
+    elseif vim.bo.filetype == 'cpp' then
+      vim.cmd [[call v:lua.RunCPP()]]
+    elseif vim.bo.filetype == 'typescript' then
+      vim.cmd [[call v:lua.RunTS()]]
+    elseif vim.bo.filetype == 'javascript' then
+      vim.cmd [[call v:lua.RunJS()]]
+    elseif vim.bo.filetype == 'go' then
+      vim.cmd [[call v:lua.RunGo()]]
+    elseif vim.bo.filetype == 'python' then
+      vim.cmd [[call v:lua.RunPython()]]
+    end
+  end,
+}
