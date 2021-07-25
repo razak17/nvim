@@ -1,6 +1,9 @@
 local M = {}
 
 M.init = function()
+  if core.check_lsp_client_active "html" then
+    return
+  end
   require'lspconfig'.html.setup {
     cmd = {core.lsp.binary.html, "--stdio"},
     capabilities = core.lsp.capabilities,

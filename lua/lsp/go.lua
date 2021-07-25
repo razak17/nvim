@@ -1,6 +1,9 @@
 local M = {}
 
 M.init = function()
+  if core.check_lsp_client_active "gopls" then
+    return
+  end
   require'lspconfig'.gopls.setup {
     cmd = {core.lsp.binary.go, "--remote=auto"},
     capabilities = core.lsp.capabilities,

@@ -1,6 +1,9 @@
 local M = {}
 
 M.init = function()
+  if core.check_lsp_client_active "cssls" then
+    return
+  end
   require'lspconfig'.cssls.setup {
     cmd = {core.lsp.binary.css, "--stdio"},
     capabilities = core.lsp.capabilities,

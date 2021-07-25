@@ -5,18 +5,18 @@ vim.g.dashboard_default_executive = core.dashboard.default_executive
 vim.g.dashboard_disable_statusline = core.dashboard.disable_statusline
 vim.g.dashboard_session_directory = core.dashboard.session_directory
 vim.g.dashboard_custom_section = {
-  a = {description = join('  Find word', '<leader>flg', 14), command = 'Telescope live_grep'},
-  b = {description = join('  Find Files', '<leader>ff', 13), command = 'Telescope find_files'},
+  a = {description = join('  Find Files', '<leader>ff', 13), command = 'Telescope find_files'},
+  b = {description = join("  Last session", "<leader>Sl", 11), command = "SessionLoad"},
   c = {
+  description = join('  Default config', '<leader>fC', 9),
+  command = ":e " .. core.__vim_path .. "/lua/core/defaults.lua",
+  },
+  d = {description = join('  Find word', '<leader>flg', 14), command = 'Telescope live_grep'},
+  e = {
     description = join('  Nvim files', '<leader>frc', 13),
     command = 'Telescope nvim_files files',
   },
-  d = {description = join('  Recent files', '<leader>frr', 11), command = 'Telescope oldfiles'},
-  e = {description = join("  Last session", "<leader>Sl", 11), command = "SessionLoad"},
-  f = {
-    description = join('  Default config', '<leader>fC', 9),
-    command = ":e " .. core.__vim_path .. "/lua/core/defaults.lua",
-  },
+  f = {description = join('  Recent files', '<leader>frr', 11), command = 'Telescope oldfiles'},
 }
 
 core.augroup("TelescopeSession", {

@@ -39,6 +39,9 @@ local function tsserver_on_attach(client, bufnr)
 end
 
 M.init = function()
+  if core.check_lsp_client_active "tsserver" then
+    return
+  end
   require'lspconfig'.tsserver.setup {
     cmd = {core.lsp.binary.tsserver, "--stdio"},
     filetypes = {

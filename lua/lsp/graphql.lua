@@ -1,6 +1,9 @@
 local M = {}
 
 M.init = function()
+  if core.check_lsp_client_active "graphql" then
+    return
+  end
   require'lspconfig'.graphql.setup {
     cmd = {core.lsp.binary.graphql, "server", "-m", "stream"},
     capabilities = core.lsp.capabilities,

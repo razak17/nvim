@@ -22,7 +22,7 @@ aesth['kyazdani42/nvim-tree.lua'] = {
   disable = not core.plugin.tree.active,
 }
 
-aesth['glepnir/galaxyline.nvim'] = {
+aesth['razak17/galaxyline.nvim'] = {
   branch = 'main',
   config = conf.galaxyline,
   disable = not core.plugin.statusline.active and not core.plugin.SANE.active,

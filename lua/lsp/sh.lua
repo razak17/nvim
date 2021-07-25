@@ -1,6 +1,9 @@
 local M = {}
 
 M.init = function()
+  if core.check_lsp_client_active "bashls" then
+    return
+  end
   require'lspconfig'.bashls.setup {
     cmd = {core.lsp.binary.sh, "start"},
     cmd_env = {GLOB_PATTERN = "*@(.sh|.zsh|.inc|.bash|.command)"},

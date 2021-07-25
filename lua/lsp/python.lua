@@ -1,6 +1,9 @@
 local M = {}
 
 M.init = function()
+  if core.check_lsp_client_active "pyright" then
+    return
+  end
   require'lspconfig'.pyright.setup {
     cmd = {core.lsp.binary.python, "--stdio"},
     capabilities = core.lsp.capabilities,

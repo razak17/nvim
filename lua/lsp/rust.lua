@@ -1,6 +1,9 @@
 local M = {}
 
 M.init = function()
+  if core.check_lsp_client_active "rust_analyzer" then
+    return
+  end
   if core.lsp.rust_tools then
     require("rust-tools").setup({
       tools = {

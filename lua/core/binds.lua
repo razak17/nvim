@@ -147,7 +147,7 @@ end
 local function TurnOnGuides()
   vim.wo.number = true
   vim.wo.relativenumber = true
-  vim.wo.cursorline = false
+  vim.wo.cursorline = true
   vim.wo.signcolumn = "yes"
   vim.wo.colorcolumn = "+1"
   vim.o.laststatus = 2
@@ -157,7 +157,7 @@ end
 local function TurnOffGuides()
   vim.wo.number = false
   vim.wo.relativenumber = false
-  vim.wo.cursorline = true
+  vim.wo.cursorline = false
   vim.wo.signcolumn = "no"
   vim.wo.colorcolumn = ""
   vim.o.laststatus = 0
@@ -271,7 +271,7 @@ nnoremap("<Leader>afr", "zA") -- Recursively toggle
 nnoremap("<Leader>afl", "za") -- Toggle fold under the cursor
 nnoremap("<Leader>afo", "zR") -- Open all folds
 nnoremap("<Leader>afx", "zM") -- Close all folds
-nnoremap("<Leader>aO", ":<C-f>") -- Close all folds
+nnoremap("<Leader>aO", ":<C-f>:resize 10<CR>") -- Close all folds
 
 -- qflist
 nnoremap("<Leader>vo", ":copen<CR>")
@@ -280,11 +280,11 @@ nnoremap("<Leader>vo", ":copen<CR>")
 core.augroup("AddTerminalMappings", {
   {
     events = {"TermOpen"},
-    targets = {"term://*"},
+    targets = {"*:zsh"},
     command = function()
       if vim.bo.filetype == "" or vim.bo.filetype == "toggleterm" then
         local opts = {silent = false, buffer = 0}
-        tnoremap("<esc>", [[<C-\><C-n>]], opts)
+        tnoremap("<esc>", [[<C-\><C-n>:bdelete!<CR>]], opts)
         tnoremap("jk", [[<C-\><C-n>]], opts)
         tnoremap("<C-h>", [[<C-\><C-n><C-W>h]], opts)
         tnoremap("<C-j>", [[<C-\><C-n><C-W>j]], opts)
@@ -418,7 +418,7 @@ nnoremap('<Leader>,', ':e ~/.config/nvim/lua/core/init.lua<CR>')
 nnoremap('<Leader>.', ':e $MYVIMRC<CR>')
 nnoremap('<leader><CR>', ':source $MYVIMRC<CR>')
 nnoremap('<Leader>Ic', ':checkhealth<CR>')
-nnoremap('<Leader>vr', ':QuickRun<CR>')
+nnoremap('<C-b>', ':QuickRun<CR>')
 nnoremap('<Leader>Im', ':messages<CR>')
 nnoremap('<Leader>vwm', function()
   ColorMyPencils()

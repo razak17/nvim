@@ -1,6 +1,9 @@
 local M = {}
 
 M.init = function()
+  if core.check_lsp_client_active "jsonls" then
+    return
+  end
   require'lspconfig'.jsonls.setup {
     cmd = {core.lsp.binary.json, "--stdio"},
     capabilities = core.lsp.capabilities,

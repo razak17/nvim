@@ -27,6 +27,9 @@ local prettier_yaml = formatters.prettier_yaml
 
 local M = {}
 function M.setup(capabilities)
+  if core.check_lsp_client_active "efm" then
+    return
+  end
   require'lspconfig'.efm.setup {
     capabilities = capabilities,
     on_attach = core.lsp.on_attach,

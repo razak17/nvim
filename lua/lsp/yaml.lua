@@ -1,6 +1,9 @@
 local M = {}
 
 M.init = function()
+  if core.check_lsp_client_active "yamlls" then
+    return
+  end
   require'lspconfig'.yamlls.setup {
     cmd = {core.lsp.binary.yaml, "--stdio"},
     capabilities = core.lsp.capabilities,

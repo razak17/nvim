@@ -177,8 +177,13 @@ gls.right[1] = {
   },
 }
 gls.right[2] = {
-  FileType = {
-    provider = function() return bo.filetype end,
+  TreesitterIcon = {
+    provider = function()
+      if next(vim.treesitter.highlighter.active) ~= nil then
+        return "  " .. vim.bo.filetype
+      end
+      return vim.bo.filetype
+    end,
     highlight = {colors.fg, colors.bg},
     separator = ' | ',
     separator_highlight = {colors.section_bg, colors.bg},

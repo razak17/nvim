@@ -1,16 +1,18 @@
 local M = {}
 
 M.init = function()
+  if core.check_lsp_client_active "clangd" then
+    return
+  end
+  local clangd_flags = {
+    "--background-index",
+    -- '--clang-tidy',
+    '--completion-style=bundled',
+    '--header-insertion=iwyu',
+    '--cross-file-rename',
+  }
   require'lspconfig'.clangd.setup {
-    cmd = {
-      core.lsp.binary.clangd,
-      "--background-index",
-      '--clang-tidy',
-      '--completion-style=bundled',
-      '--header-insertion=iwyu',
-      '--suggest-missing-includes',
-      '--cross-file-rename',
-    },
+    cmd = {core.lsp.binary.clangd, unpack(clangd_flags)},
     init_options = {
       clangdFileStatus = true,
       usePlaceholders = true,

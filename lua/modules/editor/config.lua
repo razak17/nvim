@@ -5,8 +5,7 @@ function config.delimitmate()
   vim.g.delimitMate_expand_space = 1
   vim.g.delimitMate_smart_quotes = 1
   vim.g.delimitMate_expand_inside_quotes = 0
-  vim.api.nvim_command(
-    'au FileType markdown let b:delimitMate_nesting_quotes = ["`"]')
+  vim.api.nvim_command('au FileType markdown let b:delimitMate_nesting_quotes = ["`"]')
 end
 
 function config.dial()
@@ -32,19 +31,13 @@ function config.nvim_colorizer()
 end
 
 function config.kommentary()
-  require('kommentary.config').configure_language('default', {
-    prefer_single_line_comments = true,
-  })
+  require('kommentary.config').configure_language('default', {prefer_single_line_comments = true})
   local fts = {'zsh', 'sh', 'yaml', "vim"}
   for _, f in pairs(fts) do
     if f == "vim" then
-      require('kommentary.config').configure_language(f, {
-        single_line_comment_string = '"',
-      })
+      require('kommentary.config').configure_language(f, {single_line_comment_string = '"'})
     else
-      require('kommentary.config').configure_language(f, {
-        single_line_comment_string = "#",
-      })
+      require('kommentary.config').configure_language(f, {single_line_comment_string = "#"})
     end
   end
 end
@@ -64,25 +57,19 @@ function config.vim_cursorword()
         "fTerm",
         "TelescopePrompt",
         "qf",
+        "packer",
         "", -- for all buffers without a file type
       },
       command = "let b:cursorword = 0",
     },
+    {events = {"TermOpen"}, targets = {"*:zsh"}, command = "let b:cursorword = 0"},
     {
       events = {"WinEnter"},
       targets = {"*"},
       command = [[if &diff || &pvw | let b:cursorword = 0  | endif]],
     },
-    {
-      events = {"InsertEnter"},
-      targets = {"*"},
-      command = "let b:cursorword = 0",
-    },
-    {
-      events = {"InsertLeave"},
-      targets = {"*"},
-      command = "let b:cursorword = 1",
-    },
+    {events = {"InsertEnter"}, targets = {"*"}, command = "let b:cursorword = 0"},
+    {events = {"InsertLeave"}, targets = {"*"}, command = "let b:cursorword = 1"},
   })
 end
 

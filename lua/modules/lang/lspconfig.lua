@@ -306,7 +306,7 @@ function core.lsp.setup_servers()
   require'lsp.yaml'.init()
   require'lsp.tsserver'.init()
   require'lsp.tsserver.lint'.init()
-  -- require'lsp.efm'.setup(capabilities)
+  -- require'lsp.efm'.init()
 
   vim.cmd "doautocmd User LspServersStarted"
 end

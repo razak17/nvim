@@ -1,6 +1,9 @@
 local M = {}
 
 M.init = function()
+  if core.check_lsp_client_active "elixirls" then
+    return
+  end
   require'lspconfig'.elixirls.setup {
     cmd = {core.lsp.binary.elixir},
     elixirls = {dialyzerEnabled = false},

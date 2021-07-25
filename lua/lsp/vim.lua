@@ -1,6 +1,9 @@
 local M = {}
 
 M.init = function()
+  if core.check_lsp_client_active "vimls" then
+    return
+  end
   require'lspconfig'.vimls.setup {
     cmd = {core.lsp.binary.vim, "--stdio"},
     capabilities = core.lsp.capabilities,

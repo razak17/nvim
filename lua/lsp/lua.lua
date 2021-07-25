@@ -1,6 +1,9 @@
 local M = {}
 
 M.init = function()
+  if core.check_lsp_client_active "sumneko_lua" then
+    return
+  end
   require'lspconfig'.sumneko_lua.setup {
     cmd = {core.lsp.binary.lua, "-E", core.__sumneko_root_path .. "/main.lua"},
     capabilities = core.lsp.capabilities,

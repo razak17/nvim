@@ -1,6 +1,9 @@
 local M = {}
 
 M.init = function()
+  if core.check_lsp_client_active "dockerls" then
+    return
+  end
   require'lspconfig'.dockerls.setup {
     cmd = {core.lsp.binary.docker, "--stdio"},
     capabilities = core.lsp.capabilities,
