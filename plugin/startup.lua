@@ -31,7 +31,7 @@ local disable_providers = function()
 end
 
 local set_host_prog = function()
-  g["python3_host_prog"] = rvim._python3 .. "bin" .. rvim.__path_sep .. "python"
+  g["python3_host_prog"] = rvim._python3 .. "bin/python"
   g["node_host_prog"] = rvim._node
 end
 

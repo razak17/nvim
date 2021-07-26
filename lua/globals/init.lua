@@ -4,35 +4,31 @@ _G.rvim = {_store = _GlobalCallbacks}
 
 local api, fn = vim.api, vim.fn
 local fmt = string.format
-
-local home = os.getenv("HOME")
 local os_name = vim.loop.os_uname().sysname
-local path_sep = rvim.__is_windows and '\\' or '/'
 
-rvim._home = home .. path_sep
-rvim.__path_sep = path_sep
+rvim._home = os.getenv("HOME")
 rvim.__is_mac = os_name == 'OSX'
 rvim.__is_linux = os_name == 'Linux'
 rvim.__is_windows = os_name == 'Windows'
-rvim.__cache_dir = rvim._home .. '.cache' .. path_sep .. 'nvim' .. path_sep
+rvim.__cache_dir = rvim._home .. '/.cache/nvim/'
 rvim.__vim_path = vim.fn.stdpath('config')
-rvim.__data_dir = string.format('%s/site/', vim.fn.stdpath('data')) .. path_sep
-rvim._asdf = rvim._home .. '.asdf' .. path_sep .. 'installs' .. path_sep
-rvim._fnm = rvim._home .. '.fnm' .. path_sep .. 'node-versions' .. path_sep
-rvim._dap = rvim.__cache_dir .. 'venv' .. path_sep .. 'dap' .. path_sep
+rvim.__data_dir = string.format('%s/site/', vim.fn.stdpath('data')) .. '/'
+rvim._asdf = rvim._home .. '/.asdf/installs/'
+rvim._fnm = rvim._home .. '/.fnm/node-versions/'
+rvim._dap = rvim.__cache_dir .. 'venv/dap/'
 rvim._golang = rvim._asdf .. "golang/1.16.2/go/bin/go"
 rvim._node = rvim._fnm .. "v16.3.0/installation/bin/neovim-node-host"
-rvim._python3 = rvim.__cache_dir .. 'venv' .. path_sep .. 'neovim' .. path_sep
-rvim.__plugins = rvim.__data_dir .. 'pack' .. path_sep
-rvim.__nvim_lsp = rvim.__cache_dir .. 'nvim_lsp' .. path_sep
-rvim.__dap_install_dir = rvim.__cache_dir .. path_sep .. 'dap/'
+rvim._python3 = rvim.__cache_dir .. 'venv/neovim/'
+rvim.__plugins = rvim.__data_dir .. 'pack/'
+rvim.__nvim_lsp = rvim.__cache_dir .. 'nvim_lsp/'
+rvim.__dap_install_dir = rvim.__cache_dir .. '/dap/'
 rvim.__dap_python = rvim.__dap_install_dir .. 'python_dbg/bin/python'
 rvim.__dap_node = rvim.__dap_install_dir .. 'jsnode_dbg/vscode-node-debug2/out/src/nodeDebug.js'
-rvim.__vsnip_dir = rvim.__vim_path .. path_sep .. 'snippets'
-rvim.__session_dir = rvim.__data_dir .. path_sep .. 'session/dashboard'
-rvim.__modules_dir = rvim.__vim_path .. path_sep .. 'lua/modules'
-rvim.__sumneko_root_path = rvim.__nvim_lsp .. 'lua-language-server' .. path_sep
-rvim.__elixirls_root_path = rvim.__nvim_lsp .. 'elixir-ls' .. path_sep
+rvim.__vsnip_dir = rvim.__vim_path .. '/snippets'
+rvim.__session_dir = rvim.__data_dir .. '/session/dashboard'
+rvim.__modules_dir = rvim.__vim_path .. '/lua/modules'
+rvim.__sumneko_root_path = rvim.__nvim_lsp .. 'lua-language-server/'
+rvim.__elixirls_root_path = rvim.__nvim_lsp .. 'elixir-ls/'
 
 function rvim._create(f)
   table.insert(rvim._store, f)
@@ -41,6 +37,24 @@ end
 
 function rvim._execute(id, args)
   rvim._store[id](args)
+end
+
+function rvim.is_table(t)
+  return type(t) == "table"
+end
+
+function rvim.is_string(t)
+  return type(t) == "string"
+end
+
+function rvim.has_value(tab, val)
+  for _, value in ipairs(tab) do
+    if value == val then
+      return true
+    end
+  end
+
+  return false
 end
 
 ---Determine if a value of any type is empty
