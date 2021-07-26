@@ -1,13 +1,13 @@
 local M = {}
 
 M.init = function()
-  if core.check_lsp_client_active "graphql" then
+  if rvim.check_lsp_client_active "graphql" then
     return
   end
   require'lspconfig'.graphql.setup {
-    cmd = {core.lsp.binary.graphql, "server", "-m", "stream"},
-    capabilities = core.lsp.capabilities,
-    on_attach = core.lsp.on_attach,
+    cmd = {rvim.lsp.binary.graphql, "server", "-m", "stream"},
+    capabilities = rvim.lsp.capabilities,
+    on_attach = rvim.lsp.on_attach,
     root_dir = require'lspconfig.util'.root_pattern('.graphqlrc', '.gitignore', '.git',
       vim.fn.getcwd()),
   }

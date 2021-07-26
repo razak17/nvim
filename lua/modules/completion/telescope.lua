@@ -2,7 +2,7 @@ local actions = require('telescope.actions')
 
 require('telescope').setup({
   defaults = {
-    prompt_prefix = core.telescope.prompt_prefix,
+    prompt_prefix = rvim.telescope.prompt_prefix,
     selection_caret = " ",
     sorting_strategy = "ascending",
     file_ignore_patterns = {
@@ -15,8 +15,8 @@ require('telescope').setup({
       ".venv/*",
       "__pycache__/*",
     },
-    layout_config = core.telescope.layout_config,
-    borderchars = core.telescope.borderchars,
+    layout_config = rvim.telescope.layout_config,
+    borderchars = rvim.telescope.borderchars,
     file_sorter = require'telescope.sorters'.get_fzy_sorter,
     file_previewer = require'telescope.previewers'.vim_buffer_cat.new,
     grep_previewer = require'telescope.previewers'.vim_buffer_vimgrep.new,
@@ -36,17 +36,17 @@ require('telescope').setup({
   },
 })
 
-if core.plugin.telescope_fzy.active then
+if rvim.plugin.telescope_fzy.active then
   vim.cmd [[packadd telescope-fzy-native.nvim]]
   require'telescope'.load_extension('fzy_native')
 end
 
-if core.plugin.telescope_project.active then
+if rvim.plugin.telescope_project.active then
   vim.cmd [[packadd telescope-project.nvim]]
   require'telescope'.load_extension('project')
 end
 
-if core.plugin.telescope_media_files.active then
+if rvim.plugin.telescope_media_files.active then
   vim.cmd [[packadd telescope-media-files.nvim]]
   require'telescope'.load_extension('media_files')
 end

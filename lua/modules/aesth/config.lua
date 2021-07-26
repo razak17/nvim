@@ -51,17 +51,17 @@ function config.nvim_tree()
   require("nvim-tree.events").on_nvim_tree_ready(function()
     vim.cmd("NvimTreeRefresh")
   end)
-  g.nvim_tree_side = core.nvim_tree.side
+  g.nvim_tree_side = rvim.nvim_tree.side
   g.nvim_tree_ignore = {'.git', 'node_modules', '.cache'}
   g.nvim_tree_auto_ignore_ft = {'startify', 'dashboard'}
-  g.nvim_tree_auto_open = core.nvim_tree.auto_open
+  g.nvim_tree_auto_open = rvim.nvim_tree.auto_open
   g.nvim_tree_follow = 1
-  g.nvim_tree_width = core.nvim_tree.width
-  g.nvim_tree_indent_markers = core.nvim_tree.indent_markers
+  g.nvim_tree_width = rvim.nvim_tree.width
+  g.nvim_tree_indent_markers = rvim.nvim_tree.indent_markers
   g.nvim_tree_width_allow_resize = 1
-  g.nvim_tree_lsp_diagnostics = core.nvim_tree.lsp_diagnostics
+  g.nvim_tree_lsp_diagnostics = rvim.nvim_tree.lsp_diagnostics
   g.nvim_tree_disable_window_picker = 1
-  g.nvim_tree_special_files = core.nvim_tree.special_files
+  g.nvim_tree_special_files = rvim.nvim_tree.special_files
   g.nvim_tree_hijack_cursor = 0
   g.nvim_tree_update_cwd = 1
   g.nvim_tree_bindings = {

@@ -62,7 +62,7 @@ local lint = function()
 end
 
 M.init = function()
-  if core.executable("efm-langserver") then
+  if rvim.executable("efm-langserver") then
     lint()
   end
 end

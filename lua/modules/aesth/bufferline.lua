@@ -20,7 +20,7 @@ local options = {
 }
 
 -- local bg = '#282a36'
-local bg = core.utils.transparent_window == true and 'none' or '#282a36'
+local bg = rvim.utils.transparent_window == true and 'none' or '#282a36'
 local bg_sel = '#4f5b66'
 local base7 = '#9ca0a4'
 local fg_def = '#7e7e7e'

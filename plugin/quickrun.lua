@@ -54,7 +54,7 @@ function _G.RunPython()
   ]], true)
 end
 
-core.command {
+rvim.command {
   "QuickRun",
   function()
     if vim.bo.filetype == 'c' then

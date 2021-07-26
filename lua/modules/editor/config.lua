@@ -43,7 +43,7 @@ function config.kommentary()
 end
 
 function config.vim_cursorword()
-  core.augroup("user_plugin_cursorword", {
+  rvim.augroup("user_plugin_cursorword", {
     {
       events = {"FileType"},
       targets = {
@@ -58,6 +58,7 @@ function config.vim_cursorword()
         "TelescopePrompt",
         "qf",
         "packer",
+        "log",
         "", -- for all buffers without a file type
       },
       command = "let b:cursorword = 0",

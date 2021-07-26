@@ -31,8 +31,8 @@ local disable_providers = function()
 end
 
 local set_host_prog = function()
-  g["python3_host_prog"] = core._python3 .. "bin" .. core.__path_sep .. "python"
-  g["node_host_prog"] = core._node
+  g["python3_host_prog"] = rvim._python3 .. "bin" .. rvim.__path_sep .. "python"
+  g["node_host_prog"] = rvim._node
 end
 
 local global_utils = function()
@@ -43,8 +43,8 @@ local global_utils = function()
 end
 
 local map_leader = function()
-  g["mapleader"] = core.utils.leader_key
-  g["maplocalleader"] = core.utils.leader_key
+  g["mapleader"] = rvim.utils.leader_key
+  g["maplocalleader"] = rvim.utils.leader_key
 end
 
 disable_builtin_plugins()

@@ -1,14 +1,14 @@
 local M = {}
 
 M.init = function()
-  if core.check_lsp_client_active "cmake" then
+  if rvim.check_lsp_client_active "cmake" then
     return
   end
   require("lspconfig").cmake.setup {
-    cmd = {core.lsp.binary.cmake},
+    cmd = {rvim.lsp.binary.cmake},
     filetypes = {"cmake"},
-    capabilities = core.lsp.capabilities,
-    on_attach = core.lsp.on_attach,
+    capabilities = rvim.lsp.capabilities,
+    on_attach = rvim.lsp.on_attach,
     root_dir = require'lspconfig.util'.root_pattern('.gitignore', '.git', vim.fn.getcwd()),
   }
 end

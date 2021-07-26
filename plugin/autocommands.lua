@@ -34,7 +34,7 @@ local function smart_close()
   end
 end
 
-core.augroup("SmartClose", {
+rvim.augroup("SmartClose", {
   {
     -- Auto open grep quickfix window
     events = {"QuickFixCmdPost"},
@@ -52,7 +52,7 @@ core.augroup("SmartClose", {
                             contains(smart_close_filetypes, vim.bo.filetype)
 
       if is_eligible then
-        core.nnoremap("q", smart_close, {buffer = 0, nowait = true})
+        rvim.nnoremap("q", smart_close, {buffer = 0, nowait = true})
       end
     end,
   },
@@ -79,7 +79,7 @@ core.augroup("SmartClose", {
   },
 })
 
-core.augroup("ExternalCommands", {
+rvim.augroup("ExternalCommands", {
   {
     -- Open images in an image viewer (probably Preview)
     events = {"BufEnter"},
@@ -90,7 +90,7 @@ core.augroup("ExternalCommands", {
   },
 })
 
-core.augroup("CheckOutsideTime", {
+rvim.augroup("CheckOutsideTime", {
   {
     -- automatically check for changed files outside vim
     events = {"WinEnter", "BufWinEnter", "BufWinLeave", "BufRead", "BufEnter", "FocusGained"},
@@ -99,7 +99,7 @@ core.augroup("CheckOutsideTime", {
   },
 })
 
-core.augroup("TrimWhitespace", {
+rvim.augroup("TrimWhitespace", {
   {
     events = {"BufWritePre"},
     targets = {"*"},
@@ -114,7 +114,7 @@ core.augroup("TrimWhitespace", {
 })
 
 -- See :h skeleton
-core.augroup("Templates", {
+rvim.augroup("Templates", {
   {
     events = {"BufNewFile"},
     targets = {"*.sh"},
@@ -129,7 +129,7 @@ core.augroup("Templates", {
 
 --- automatically clear commandline messages after a few seconds delay
 --- source: http//unix.stackexchange.com/a/613645
-core.augroup("ClearCommandMessages", {
+rvim.augroup("ClearCommandMessages", {
   {
     events = {"CmdlineLeave", "CmdlineChanged"},
     targets = {":"},
@@ -143,7 +143,7 @@ core.augroup("ClearCommandMessages", {
   },
 })
 
-core.augroup("TextYankHighlight", {
+rvim.augroup("TextYankHighlight", {
   {
     -- don't execute silently in case of errors
     events = {"TextYankPost"},
@@ -190,7 +190,7 @@ local function check_color_column(leaving)
   end
 end
 
-core.augroup("CustomColorColumn", {
+rvim.augroup("CustomColorColumn", {
   {
     events = {"VimResized", "FocusGained", "WinEnter", "BufEnter"},
     targets = {"*"},
@@ -222,7 +222,7 @@ local function check_cursor_line(leaving)
   end
 end
 
-core.augroup("CursorLineBehaviour", {
+rvim.augroup("CursorLineBehaviour", {
   {
     events = {"InsertEnter"},
     targets = {"*"},
@@ -244,7 +244,7 @@ core.augroup("CursorLineBehaviour", {
   },
 })
 
-core.augroup("FormatOptions", {
+rvim.augroup("FormatOptions", {
   {
     events = {"BufWinEnter", "BufRead", "BufNewFile"},
     targets = {"*"},
@@ -252,36 +252,36 @@ core.augroup("FormatOptions", {
   },
 })
 
-core.augroup("PackerSetupInit", {
+rvim.augroup("PackerSetupInit", {
   {
     events = {"BufWritePost"},
     targets = {
       "$MYVIMRC",
-      core.__vim_path .. '/lua/defaults/init.lua',
-      core.__modules_dir .. "/*/*.lua",
+      rvim.__vim_path .. '/lua/defaults/init.lua',
+      rvim.__modules_dir .. "/*/*.lua",
     },
     command = function()
       vim.cmd "source ~/.config/nvim/lua/defaults/init.lua"
-      vim.cmd "source ~/.config/nvim/lua/core/opts.lua"
-      require'core.plug'.ensure_plugins()
-      require'core.plug'.install()
-      require'core.plug'.magic_compile()
+      vim.cmd "source ~/.config/nvim/lua/rvim/opts.lua"
+      require'rvim.plug'.ensure_plugins()
+      require'rvim.plug'.install()
+      require'rvim.plug'.magic_compile()
       vim.cmd "source ~/.config/nvim/lua/keymap/which_key.lua"
       vim.cmd "source ~/.config/nvim/lua/modules/lang/lspconfig.lua"
-      require'core.plug'.load_compile()
+      require'rvim.plug'.load_compile()
       vim.cmd [[source $MYVIMRC]]
-      core.notify("packer compiled...", {timeout = 1000})
+      rvim.notify("packer compiled...", {timeout = 1000})
     end,
   },
 })
 
-core.augroup("UpdateVim", {
+rvim.augroup("UpdateVim", {
   {events = {"FocusLost"}, targets = {"*"}, command = "silent! wall"},
   -- Make windows equal size when vim resizes
   {events = {"VimResized"}, targets = {"*"}, command = "wincmd ="},
 })
 
-core.augroup("WinBehavior", {
+rvim.augroup("WinBehavior", {
   {
     events = {"Syntax"},
     targets = {"*"},
@@ -303,7 +303,7 @@ core.augroup("WinBehavior", {
 })
 
 if vim.env.TMUX ~= nil then
-  core.augroup("TmuxConfig", {
+  rvim.augroup("TmuxConfig", {
     {
       events = {"FocusGained", "BufReadPost", "BufReadPost", "BufReadPost", "BufEnter"},
       targets = {"*"},
@@ -326,11 +326,11 @@ end
 
 local save_excluded = {"lua.luapad"}
 local function can_save()
-  return core.empty(vim.bo.buftype) and not core.empty(vim.bo.filetype) and vim.bo.modifiable and
+  return rvim.empty(vim.bo.buftype) and not rvim.empty(vim.bo.filetype) and vim.bo.modifiable and
            not vim.tbl_contains(save_excluded, vim.bo.filetype)
 end
 
-core.augroup("Utilities", {
+rvim.augroup("Utilities", {
   {
     -- @source: https://vim.fandom.com/wiki/Use_gf_to_open_a_file_via_its_URL
     events = {"BufReadCmd"},
@@ -372,7 +372,7 @@ core.augroup("Utilities", {
     targets = {"*"},
     modifiers = {"nested"},
     command = function()
-      if core.empty(vim.bo.filetype) or fn.exists "b:ftdetect" == 1 then
+      if rvim.empty(vim.bo.filetype) or fn.exists "b:ftdetect" == 1 then
         vim.cmd [[
             unlet! b:ftdetect
             filetype detect

@@ -1,22 +1,22 @@
 local tools = {}
 local conf = require('modules.tools.config')
 
-tools['tpope/vim-fugitive'] = {event = 'VimEnter', disable = not core.plugin.fugitive.active}
+tools['tpope/vim-fugitive'] = {event = 'VimEnter', disable = not rvim.plugin.fugitive.active}
 
-tools['mbbill/undotree'] = {cmd = "UndotreeToggle", disable = not core.plugin.undotree.active}
+tools['mbbill/undotree'] = {cmd = "UndotreeToggle", disable = not rvim.plugin.undotree.active}
 
 tools['airblade/vim-rooter'] = {
   config = function()
     vim.g.rooter_silent_chdir = 1
-    -- vim.g.rooter_patterns = {'=nvim', '.git', '.gitignore', 'lua'}
+    vim.g.rooter_patterns = {'=nvim', '.git', '.gitignore', 'lua'}
   end,
-  disable = not core.plugin.rooter.active,
+  disable = not rvim.plugin.rooter.active,
 }
 
 tools['npxbr/glow.nvim'] = {
   run = ":GlowInstall",
   branch = "main",
-  disable = not core.plugin.glow.active,
+  disable = not rvim.plugin.glow.active,
 }
 
 tools['kkoomen/vim-doge'] = {
@@ -24,22 +24,22 @@ tools['kkoomen/vim-doge'] = {
   config = function()
     vim.g.doge_mapping = '<Leader>vD'
   end,
-  disable = not core.plugin.doge.active,
+  disable = not rvim.plugin.doge.active,
 }
 
 tools['numToStr/FTerm.nvim'] = {
   event = {"BufWinEnter"},
   config = conf.fterm,
-  disable = not core.plugin.fterm.active,
+  disable = not rvim.plugin.fterm.active,
 }
 
 tools['MattesGroeger/vim-bookmarks'] = {
   event = {'BufReadPre', 'BufNewFile'},
   config = conf.bookmarks,
-  disable = not core.plugin.bookmarks.active,
+  disable = not rvim.plugin.bookmarks.active,
 }
 
-tools['diepm/vim-rest-console'] = {event = 'VimEnter', disable = not core.plugin.restconsole.active}
+tools['diepm/vim-rest-console'] = {event = 'VimEnter', disable = not rvim.plugin.restconsole.active}
 
 tools['iamcco/markdown-preview.nvim'] = {
   config = function()
@@ -48,7 +48,7 @@ tools['iamcco/markdown-preview.nvim'] = {
   run = 'cd app && yarn install',
   cmd = 'MarkdownPreview',
   ft = 'markdown',
-  disable = not core.plugin.markdown_preview.active,
+  disable = not rvim.plugin.markdown_preview.active,
 }
 
 tools['brooth/far.vim'] = {
@@ -57,7 +57,7 @@ tools['brooth/far.vim'] = {
     vim.g['far#source'] = 'rg'
     vim.g['far#enable_undo'] = 1
   end,
-  disable = not core.plugin.far.active,
+  disable = not rvim.plugin.far.active,
 }
 
 tools['kristijanhusak/vim-dadbod-ui'] = {
@@ -67,7 +67,7 @@ tools['kristijanhusak/vim-dadbod-ui'] = {
     {'tpope/vim-dadbod', opt = true},
     {'kristijanhusak/vim-dadbod-completion', opt = true},
   },
-  disable = not core.plugin.dadbod.active,
+  disable = not rvim.plugin.dadbod.active,
 }
 
 return tools

@@ -23,7 +23,7 @@ end
 function config.dap_install()
   vim.cmd [[packadd nvim-dap]]
   local dI = require("dap-install")
-  dI.setup({installation_path = core.__dap_install_dir})
+  dI.setup({installation_path = rvim.__dap_install_dir})
 end
 
 -- Lsp
@@ -32,12 +32,12 @@ function config.nvim_lsp()
 end
 
 function config.formatter()
-  core.augroup("AutoFormat",
+  rvim.augroup("AutoFormat",
     {{events = {"BufWritePost"}, targets = {"*"}, command = ":silent FormatWrite"}})
 end
 
 function config.nvim_lint()
-  core.augroup("AutoLint", {
+  rvim.augroup("AutoLint", {
     {
       events = {"BufWritePost"},
       targets = {"<buffer>"},
@@ -58,7 +58,7 @@ function config.bqf()
 end
 
 function config.lightbulb()
-  core.augroup("NvimLightbulb", {
+  rvim.augroup("NvimLightbulb", {
     {
       events = {"CursorHold", "CursorHoldI"},
       targets = {"*"},
@@ -80,7 +80,7 @@ function config.lspsaga()
     code_action_icon = '💡',
     code_action_prompt = {enable = false, sign = false, virtual_text = false},
   }
-  local nnoremap, vnoremap = core.nnoremap, core.vnoremap
+  local nnoremap, vnoremap = rvim.nnoremap, rvim.vnoremap
   nnoremap("gd", ":Lspsaga lsp_finder<CR>")
   nnoremap("gsh", ":Lspsaga signature_help<CR>")
   nnoremap("gh", ":Lspsaga preview_definition<CR>")

@@ -1,13 +1,13 @@
 local M = {}
 
 M.init = function()
-  if core.check_lsp_client_active "cssls" then
+  if rvim.check_lsp_client_active "cssls" then
     return
   end
   require'lspconfig'.cssls.setup {
-    cmd = {core.lsp.binary.css, "--stdio"},
-    capabilities = core.lsp.capabilities,
-    on_attach = core.lsp.on_attach,
+    cmd = {rvim.lsp.binary.css, "--stdio"},
+    capabilities = rvim.lsp.capabilities,
+    on_attach = rvim.lsp.on_attach,
     root_dir = require'lspconfig.util'.root_pattern('.gitignore', '.git', vim.fn.getcwd()),
   }
 end

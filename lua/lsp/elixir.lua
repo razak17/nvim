@@ -1,14 +1,14 @@
 local M = {}
 
 M.init = function()
-  if core.check_lsp_client_active "elixirls" then
+  if rvim.check_lsp_client_active "elixirls" then
     return
   end
   require'lspconfig'.elixirls.setup {
-    cmd = {core.lsp.binary.elixir},
+    cmd = {rvim.lsp.binary.elixir},
     elixirls = {dialyzerEnabled = false},
-    capabilities = core.lsp.capabilities,
-    on_attach = core.lsp.on_attach,
+    capabilities = rvim.lsp.capabilities,
+    on_attach = rvim.lsp.on_attach,
   }
 end
 

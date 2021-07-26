@@ -1,13 +1,13 @@
 local M = {}
 
 M.init = function()
-  if core.check_lsp_client_active "gopls" then
+  if rvim.check_lsp_client_active "gopls" then
     return
   end
   require'lspconfig'.gopls.setup {
-    cmd = {core.lsp.binary.go, "--remote=auto"},
-    capabilities = core.lsp.capabilities,
-    on_attach = core.lsp.on_attach,
+    cmd = {rvim.lsp.binary.go, "--remote=auto"},
+    capabilities = rvim.lsp.capabilities,
+    on_attach = rvim.lsp.on_attach,
     init_options = {usePlaceholders = true, completeUnimported = true},
     root_dir = require'lspconfig.util'.root_pattern('main.go', '.gitignore', '.git', vim.fn.getcwd()),
   }

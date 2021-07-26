@@ -1,8 +1,6 @@
 local dap = require "dap"
-vim.fn.sign_define("DapBreakpoint",
-  {text = "🛑", texthl = "", linehl = "", numhl = ""})
-vim.fn.sign_define("DapStopped",
-  {text = "🟢", texthl = "", linehl = "", numhl = ""})
+vim.fn.sign_define("DapBreakpoint", {text = "🛑", texthl = "", linehl = "", numhl = ""})
+vim.fn.sign_define("DapStopped", {text = "🟢", texthl = "", linehl = "", numhl = ""})
 dap.defaults.fallback.terminal_win_cmd = "50vsplit new"
 
 dap.configurations.lua = {
@@ -12,7 +10,9 @@ dap.configurations.lua = {
     name = "Attach to running Neovim instance",
     host = function()
       local value = vim.fn.input "Host [127.0.0.1]: "
-      if value ~= "" then return value end
+      if value ~= "" then
+        return value
+      end
       return "127.0.0.1"
     end,
     port = function()
@@ -39,11 +39,7 @@ dap.configurations.javascript = {
   },
 }
 
-dap.adapters.node2 = {
-  type = 'executable',
-  command = 'node',
-  args = {core.__dap_node},
-}
+dap.adapters.node2 = {type = 'executable', command = 'node', args = {rvim.__dap_node}}
 
 dap.configurations.python = {
   {
@@ -53,12 +49,12 @@ dap.configurations.python = {
     program = "${file}",
     pythonPath = function()
       local cwd = vim.fn.getcwd()
-      if core._exists(cwd .. '/venv/bin/python') then
+      if rvim._exists(cwd .. '/venv/bin/python') then
         return cwd .. '/venv/bin/python'
-      elseif core._exists(cwd .. '/.venv/bin/python') then
+      elseif rvim._exists(cwd .. '/.venv/bin/python') then
         return cwd .. '/.venv/bin/python'
       else
-        return core.__dap_python
+        return rvim.__dap_python
       end
     end,
   },
@@ -66,7 +62,7 @@ dap.configurations.python = {
 
 dap.adapters.python = {
   type = 'executable',
-  command = core.__dap_python,
+  command = rvim.__dap_python,
   args = {'-m', 'debugpy.adapter'},
 }
 
@@ -76,8 +72,7 @@ dap.configurations.cpp = {
     type = "lldb",
     request = "launch",
     program = function()
-      return vim.fn
-               .input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+      return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
     end,
     cwd = '${workspaceFolder}',
     stopOnEntry = false,
@@ -100,21 +95,12 @@ dap.configurations.cpp = {
 dap.configurations.c = dap.configurations.cpp
 dap.configurations.rust = dap.configurations.cpp
 
-dap.adapters.lldb = {
-  type = 'executable',
-  command = '/usr/bin/lldb-vscode',
-  name = "lldb",
-}
+dap.adapters.lldb = {type = 'executable', command = '/usr/bin/lldb-vscode', name = "lldb"}
 
-core.augroup("DapBehavior", {
+rvim.augroup("DapBehavior", {
   {
     events = {"FileType"},
-    targets = {
-      "dapui_scopes",
-      "dapui_breakpoints",
-      "dapui_stacks",
-      "dapui_watches",
-    },
+    targets = {"dapui_scopes", "dapui_breakpoints", "dapui_stacks", "dapui_watches"},
     command = "set laststatus=0",
   },
 })

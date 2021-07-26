@@ -1,15 +1,15 @@
 local M = {}
 
 M.init = function()
-  if core.check_lsp_client_active "bashls" then
+  if rvim.check_lsp_client_active "bashls" then
     return
   end
   require'lspconfig'.bashls.setup {
-    cmd = {core.lsp.binary.sh, "start"},
+    cmd = {rvim.lsp.binary.sh, "start"},
     cmd_env = {GLOB_PATTERN = "*@(.sh|.zsh|.inc|.bash|.command)"},
     filetypes = {"sh", "zsh"},
-    capabilities = core.lsp.capabilities,
-    on_attach = core.lsp.on_attach,
+    capabilities = rvim.lsp.capabilities,
+    on_attach = rvim.lsp.on_attach,
   }
 end
 

@@ -3,23 +3,23 @@ local vim = vim
 local function set(key, value) vim.opt[key] = value end
 
 -- Neovim Directories
-set('udir', core.sets.udir)
-set('directory', core.sets.directory)
-set('viewdir', core.sets.viewdir)
+set('udir', rvim.sets.udir)
+set('directory', rvim.sets.directory)
+set('viewdir', rvim.sets.viewdir)
 set('backupskip',
   '/tmp/*,$TMPDIR/*,$TMP/*,$TEMP/*,*/shm/*,/private/var/*,.vault.vim')
 
 -- Timing
 set('timeout', true)
-set('timeoutlen', core.sets.timeoutlen)
+set('timeoutlen', rvim.sets.timeoutlen)
 set('ttimeoutlen', 10)
 set('updatetime', 100)
 
 -- Folds
 set('foldmethod', 'expr')
-set('foldenable', core.sets.foldenable)
+set('foldenable', rvim.sets.foldenable)
 set('foldlevelstart', 10)
-set('foldtext', core.sets.foldtext)
+set('foldtext', rvim.sets.foldtext)
 
 -- Splits and buffers
 vim.o.switchbuf = "useopen,uselast"
@@ -34,16 +34,16 @@ set('linebreak', true)
 set('synmaxcol', 1024)
 set('signcolumn', 'yes:2')
 set('ruler', false)
-set('cmdheight', core.sets.cmdheight)
+set('cmdheight', rvim.sets.cmdheight)
 set('cmdwinheight', 5)
 set('background', 'dark')
 
 -- Tabs and Indents
 set('breakindentopt', 'shift:2,min:20')
 set('smarttab', true) -- Tab insert blanks according to 'shiftwidth'
-set('tabstop', core.sets.tabstop)
-set('shiftwidth', core.sets.shiftwidth)
-set('textwidth', core.sets.textwidth)
+set('tabstop', rvim.sets.tabstop)
+set('shiftwidth', rvim.sets.shiftwidth)
+set('textwidth', rvim.sets.textwidth)
 set('softtabstop', -1)
 set('expandtab', true)
 set('cindent', true) -- Increase indent on line after opening brace
@@ -61,11 +61,11 @@ set('titleold', '%{fnamemodify(getcwd(), ":t")}')
 set('grepprg',
   [[rg --hidden --glob "!.git" --no-heading --smart-case --vimgrep --follow $*]])
 set('grepformat', '%f:%l:%c:%m')
-set('smartcase', core.sets.smartcase)
-set('ignorecase', core.sets.ignorecase)
+set('smartcase', rvim.sets.smartcase)
+set('ignorecase', rvim.sets.ignorecase)
 set('infercase', true)
 set('incsearch', true)
-set('hlsearch', core.sets.hlsearch)
+set('hlsearch', rvim.sets.hlsearch)
 set('wrapscan', true)
 set('showmatch', true)
 set('matchpairs', '(:),{:},[:]')
@@ -73,21 +73,21 @@ set('matchtime', 1)
 
 -- Spelling
 vim.opt.spellsuggest:prepend{12}
-set('spelllang', core.sets.spelllang)
-set('spell', core.sets.spell)
+set('spelllang', rvim.sets.spelllang)
+set('spell', rvim.sets.spell)
 set('spelloptions', 'camel')
 set('spellcapcheck', '') -- don't check for capital letters at start of sentence
 set('fileformats', {"unix", "mac", "dos"}) -- don't check for capital letters at start of sentence
 
 -- Editor UI Appearance
-set('laststatus', core.sets.laststatus)
-set('showtabline', core.sets.showtabline)
+set('laststatus', rvim.sets.laststatus)
+set('showtabline', rvim.sets.showtabline)
 set('showmode', false)
 set('cursorcolumn', false)
 set('termguicolors', true)
 set('guicursor', 'n-v-c-sm:block,i-ci-ve:block,r-cr-o:block')
 set('sidescrolloff', 5)
-set('scrolloff', core.sets.scrolloff)
+set('scrolloff', rvim.sets.scrolloff)
 set('winblend', 10)
 set('winwidth', 30)
 set('winminwidth', 10)
@@ -96,9 +96,9 @@ set('previewheight', 12)
 set('display', 'lastline')
 set('lazyredraw', true)
 set('equalalways', false)
-set('numberwidth', core.sets.numberwidth)
-set('number', core.sets.number)
-set('relativenumber', core.sets.relative_number)
+set('numberwidth', rvim.sets.numberwidth)
+set('number', rvim.sets.number)
+set('relativenumber', rvim.sets.relative_number)
 set('list', true)
 set('fillchars', {
   vert = "▕", -- alternatives │
@@ -133,7 +133,7 @@ vim.g.vimsyn_embed = "lPr" -- allow embedded syntax highlighting for lua,python 
 set('clipboard', {'unnamedplus'})
 set('more', false)
 set('gdefault', false)
-set('wrap', core.sets.wrap)
+set('wrap', rvim.sets.wrap)
 set('eadirection', 'hor')
 set('report', 2)
 set('inccommand', 'nosplit')

@@ -1,10 +1,10 @@
 local M = {}
 
 M.init = function()
-  if core.check_lsp_client_active "rust_analyzer" then
+  if rvim.check_lsp_client_active "rust_analyzer" then
     return
   end
-  if core.lsp.rust_tools then
+  if rvim.lsp.rust_tools then
     require("rust-tools").setup({
       tools = {
         autoSetHints = true,
@@ -33,17 +33,17 @@ M.init = function()
         },
       },
       server = {
-        cmd = {core.lsp.binary.rust},
-        capabilities = core.lsp.capabilities,
-        on_attach = core.lsp.on_attach,
+        cmd = {rvim.lsp.binary.rust},
+        capabilities = rvim.lsp.capabilities,
+        on_attach = rvim.lsp.on_attach,
       },
     })
   else
     require'lspconfig'.rust_analyzer.setup {
-      cmd = {core.lsp.binary.rust},
+      cmd = {rvim.lsp.binary.rust},
       -- checkOnSave = {command = "clippy"},
-      capabilities = core.lsp.capabilities,
-      on_attach = core.lsp.on_attach,
+      capabilities = rvim.lsp.capabilities,
+      on_attach = rvim.lsp.on_attach,
       filetypes = {"rust"},
       root_dir = require("lspconfig.util").root_pattern("Cargo.toml", "rust-project.json"),
     }

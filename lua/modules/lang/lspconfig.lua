@@ -1,4 +1,4 @@
-local command = core.command
+local command = rvim.command
 
 local get_cursor_pos = function()
   return {vim.fn.line('.'), vim.fn.col('.')}
@@ -20,7 +20,7 @@ local debounce = function(func, timeout)
 end
 
 local function lspLocList()
-  core.augroup("LspLocationList", {
+  rvim.augroup("LspLocationList", {
     {
       events = {"User LspDiagnosticsChanged"},
       command = function()
@@ -35,7 +35,7 @@ local function lspLocList()
 end
 
 local function hoverDiagnostics()
-  core.augroup("HoverDiagnostics", {
+  rvim.augroup("HoverDiagnostics", {
     {
       events = {"CursorHold"},
       targets = {"<buffer>"},
@@ -46,7 +46,7 @@ local function hoverDiagnostics()
           if (new_cursor[1] ~= 1 and new_cursor[2] ~= 1) and
             (new_cursor[1] ~= cursorpos[1] or new_cursor[2] ~= cursorpos[2]) then
             cursorpos = new_cursor
-            if core.plugin.saga.active then
+            if rvim.plugin.saga.active then
               vim.cmd [[packadd lspsaga.nvim]]
               debounce(require'lspsaga.diagnostic'.show_cursor_diagnostics(), 30)
             else
@@ -61,7 +61,7 @@ end
 
 local function lsp_autocmds()
   lspLocList()
-  if core.lsp.hover_diagnostics then
+  if rvim.lsp.hover_diagnostics then
     hoverDiagnostics()
   end
 end
@@ -86,7 +86,7 @@ function lsp_config.preview_location(location, context, before_context)
   local contents = vim.api.nvim_buf_get_lines(bufnr, range.start.line - before_context,
     range["end"].line + 1 + context, false)
   local filetype = vim.api.nvim_buf_get_option(bufnr, "filetype")
-  return vim.lsp.util.open_floating_preview(contents, filetype, {border = core.lsp.popup_border})
+  return vim.lsp.util.open_floating_preview(contents, filetype, {border = rvim.lsp.popup_border})
 end
 
 function lsp_config.preview_location_callback(_, method, result)
@@ -134,10 +134,10 @@ function lsp_config.PeekImplementation()
 end
 
 local function lsp_mappings(client, bufnr)
-  local nnoremap, vnoremap = core.nnoremap, core.vnoremap
+  local nnoremap, vnoremap = rvim.nnoremap, rvim.vnoremap
   local lsp_popup = {{popup_opts = {border = "single", focusable = false}}}
 
-  if not core.plugin.saga.active then
+  if not rvim.plugin.saga.active then
     nnoremap("gd", vim.lsp.buf.definition)
     nnoremap("gD", vim.lsp.buf.declaration)
     nnoremap("gr", vim.lsp.buf.references)
@@ -181,7 +181,7 @@ local function lsp_mappings(client, bufnr)
   nnoremap("<leader>vl", vim.lsp.diagnostic.set_loclist)
 end
 
-function core.lsp.tagfunc(pattern, flags)
+function rvim.lsp.tagfunc(pattern, flags)
   if flags ~= "c" then
     return vim.NIL
   end
@@ -259,12 +259,12 @@ command {
   end,
 }
 
-function core.lsp.on_attach(client, bufnr)
+function rvim.lsp.on_attach(client, bufnr)
   lsp_autocmds()
   lsp_mappings(client, bufnr)
 
   if client.resolved_capabilities.goto_definition then
-    vim.bo[bufnr].tagfunc = "v:lua.core.lsp.tagfunc"
+    vim.bo[bufnr].tagfunc = "v:lua.rvim.lsp.tagfunc"
   end
 end
 
@@ -286,9 +286,9 @@ capabilities.textDocument.codeAction = {
   },
 }
 
-core.lsp.capabilities = capabilities
+rvim.lsp.capabilities = capabilities
 
-function core.lsp.setup_servers()
+function rvim.lsp.setup_servers()
   require'lsp.clang'.init()
   require'lsp.cmake'.init()
   require'lsp.css'.init()
@@ -329,13 +329,13 @@ local function lsp_setup()
 
   vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
     show_header = false,
-    border = core.lsp.popup_border,
+    border = rvim.lsp.popup_border,
   })
 
   vim.lsp.handlers["textDocument/signatureHelp"] =
-    vim.lsp.with(vim.lsp.handlers.signature_help, {border = core.lsp.popup_border})
+    vim.lsp.with(vim.lsp.handlers.signature_help, {border = rvim.lsp.popup_border})
 
-  core.lsp.setup_servers()
+  rvim.lsp.setup_servers()
 end
 
 lsp_setup()

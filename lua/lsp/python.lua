@@ -1,13 +1,13 @@
 local M = {}
 
 M.init = function()
-  if core.check_lsp_client_active "pyright" then
+  if rvim.check_lsp_client_active "pyright" then
     return
   end
   require'lspconfig'.pyright.setup {
-    cmd = {core.lsp.binary.python, "--stdio"},
-    capabilities = core.lsp.capabilities,
-    on_attach = core.lsp.on_attach,
+    cmd = {rvim.lsp.binary.python, "--stdio"},
+    capabilities = rvim.lsp.capabilities,
+    on_attach = rvim.lsp.on_attach,
     settings = {
       python = {
         analysis = {typeCheckingMode = "off", autoSearchPaths = true, useLibraryCodeForTypes = true},

@@ -39,11 +39,11 @@ local function tsserver_on_attach(client, bufnr)
 end
 
 M.init = function()
-  if core.check_lsp_client_active "tsserver" then
+  if rvim.check_lsp_client_active "tsserver" then
     return
   end
   require'lspconfig'.tsserver.setup {
-    cmd = {core.lsp.binary.tsserver, "--stdio"},
+    cmd = {rvim.lsp.binary.tsserver, "--stdio"},
     filetypes = {
       "javascript",
       "javascriptreact",
@@ -52,11 +52,11 @@ M.init = function()
       "typescriptreact",
       "typescript.tsx",
     },
-    capabilities = core.lsp.capabilities,
+    capabilities = rvim.lsp.capabilities,
     on_attach = function(client, bufnr)
       client.resolved_capabilities.document_formatting = false
       -- tsserver_on_attach(client, bufnr)
-      core.lsp.on_attach(client, bufnr)
+      rvim.lsp.on_attach(client, bufnr)
     end,
     settings = {documentFormatting = false},
     root_dir = require'lspconfig.util'.root_pattern('tsconfig.json', 'package.json', '.git',

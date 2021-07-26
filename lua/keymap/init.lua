@@ -1,20 +1,20 @@
-local map = core.map
-local nmap = core.nmap
-local omap = core.omap
-local imap = core.imap
-local smap = core.smap
-local xmap = core.xmap
-local vmap = core.vmap
-local nnoremap = core.nnoremap
-local inoremap = core.inoremap
-local tnoremap = core.tnoremap
-local vnoremap = core.vnoremap
+local map = rvim.map
+local nmap = rvim.nmap
+local omap = rvim.omap
+local imap = rvim.imap
+local smap = rvim.smap
+local xmap = rvim.xmap
+local vmap = rvim.vmap
+local nnoremap = rvim.nnoremap
+local inoremap = rvim.inoremap
+local tnoremap = rvim.tnoremap
+local vnoremap = rvim.vnoremap
 
 local opts = {expr = true}
 
 require('keymap.config')
 
-if core.plugin.SANE.active then
+if rvim.plugin.SANE.active then
   -- Packer
   nnoremap('<Leader>Ec', ':PlugCompile<CR>')
   nnoremap('<Leader>EC', ':PlugClean<CR>')
@@ -76,7 +76,7 @@ if core.plugin.SANE.active then
   nnoremap('<Leader>fcT', ':Telescope treesitter<CR>')
   nnoremap('<Leader>fcv', ':Telescope vim_options<CR>')
   nnoremap('<Leader>fcz', ':Telescope current_buffer_fuzzy_find<CR>')
-  nnoremap('<Leader>fC', ':e ' .. core.__vim_path .. '/lua/defaults/init.lua<CR>')
+  nnoremap('<Leader>fC', ':e ' .. rvim.__vim_path .. '/lua/defaults/init.lua<CR>')
 
   -- Telescope lsp
   nnoremap('<Leader>fva', ':Telescope lsp_range_code_actions<CR>')
@@ -112,34 +112,34 @@ if core.plugin.SANE.active then
 
   nnoremap('<Leader>feb', ':Telescope bg_selector<CR>')
 
-  if core.plugin.telescope_media_files.active then
+  if rvim.plugin.telescope_media_files.active then
     nnoremap('<leader>fep', ':Telescope project<CR>')
   end
-  if core.plugin.telescope_project.active then
+  if rvim.plugin.telescope_project.active then
     nnoremap('<Leader>fem', ':Telescope media_files<CR>')
   end
 end
 
 -- vim-fold-cycle
-if core.plugin.fold_cycle.active then
+if rvim.plugin.fold_cycle.active then
   nmap("<BS>", "<Plug>(fold-cycle-close)")
 end
 
 -- Easy-align
-if core.plugin.easy_align.active then
+if rvim.plugin.easy_align.active then
   vmap('<Enter>', '<Plug>(EasyAlign)')
   nmap('ga', '<Plug>(EasyAlign)')
   xmap('ga', '<Plug>(EasyAlign)')
 end
 
 -- accelerated jk
-if core.plugin.accelerated_jk.active or core.plugin.SANE.active then
+if rvim.plugin.accelerated_jk.active or rvim.plugin.SANE.active then
   nmap("n", 'v:lua.__enhance_jk_move("n")', {silent = true, expr = true})
   nmap("k", 'v:lua.__enhance_jk_move("k")', {silent = true, expr = true})
 end
 
 -- vim-eft
-if core.plugin.eft.active then
+if rvim.plugin.eft.active then
   nmap(";", "v:lua.__enhance_ft_move(';')", {expr = true})
   xmap(";", "v:lua.__enhance_ft_move(';')", {expr = true})
   nmap("f", "v:lua.__enhance_ft_move('f')", {expr = true})
@@ -151,12 +151,12 @@ if core.plugin.eft.active then
 end
 
 -- Symbols Outline
-if core.plugin.symbols_outline.active then
+if rvim.plugin.symbols_outline.active then
   nnoremap('<Leader>vs', ':SymbolsOutline<CR>')
 end
 
 -- trouble
-if core.plugin.trouble.active then
+if rvim.plugin.trouble.active then
   nnoremap('<Leader>vxd', ':TroubleToggle lsp_document_diagnostics<CR>')
   nnoremap('<Leader>vxe', ':TroubleToggle quickfix<CR>')
   nnoremap('<Leader>vxl', ':TroubleToggle loclist<CR>')
@@ -165,41 +165,41 @@ if core.plugin.trouble.active then
 end
 
 -- Bookmark
-if core.plugin.bookmarks.active then
+if rvim.plugin.bookmarks.active then
   nnoremap('<Leader>me', ':BookmarkToggle<CR>')
   nnoremap('<Leader>mb', ':BookmarkPrev<CR>')
   nnoremap('<Leader>mk', ':BookmarkNext<CR>')
 end
 
 -- markdown preview
-if core.plugin.markdown_preview.active then
+if rvim.plugin.markdown_preview.active then
   nnoremap('<Leader>om', ':MarkdownPreview<CR>')
 end
 
 -- Glow
-if core.plugin.glow.active then
+if rvim.plugin.glow.active then
   nnoremap('<Leader>og', ':Glow<CR>')
 end
 
 -- dadbob
-if core.plugin.dadbod.active then
+if rvim.plugin.dadbod.active then
   nnoremap('<Leader>od', ':DBUIToggle<CR>')
 end
 
 -- UndoTree
-if core.plugin.undotree.active then
+if rvim.plugin.undotree.active then
   nnoremap('<Leader>au', ':UndotreeToggle<CR>')
 end
 
 -- Tree
-if core.plugin.tree.active or core.plugin.SANE.active then
+if rvim.plugin.tree.active or rvim.plugin.SANE.active then
   nnoremap('<Leader>cv', ':NvimTreeToggle<CR>')
   nnoremap('<Leader>cr', ':NvimTreeRefresh<CR>')
   nnoremap('<Leader>cf', ':NvimTreeFindFile<CR>')
 end
 
 -- Far
-if core.plugin.far.active then
+if rvim.plugin.far.active then
   nnoremap("<Leader>Ff", ":Farr --source=vimgrep<CR>")
   nnoremap("<Leader>Fd", ":Fardo<CR>")
   nnoremap("<Leader>Fi", ":Farf<CR>")
@@ -208,7 +208,7 @@ if core.plugin.far.active then
 end
 
 -- FTerm
-if core.plugin.fterm.active or core.plugin.SANE.active then
+if rvim.plugin.fterm.active or rvim.plugin.SANE.active then
   nnoremap('<F12>', '<CMD>lua require("FTerm").toggle()<CR>')
   tnoremap('<F12>', '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>')
   nnoremap('<leader>eN', '<CMD>lua require("FTerm").open()<CR>')
@@ -230,7 +230,7 @@ if core.plugin.fterm.active or core.plugin.SANE.active then
 end
 
 -- Fugitive
-if core.plugin.fugitive.active then
+if rvim.plugin.fugitive.active then
   nnoremap("<Leader>ga", ":Git fetch --all<CR>")
   nnoremap("<Leader>gA", ":Git blame<CR>")
   nnoremap("<Leader>gb", ":GBranches<CR>")
@@ -251,7 +251,7 @@ if core.plugin.fugitive.active then
 end
 
 -- dap
-if core.plugin.debug.active then
+if rvim.plugin.debug.active then
   nnoremap('<Leader>dso', ':lua require"dap".step_out()<CR>')
   nnoremap('<Leader>dsv', ':lua require"dap".step_over()<CR>')
   nnoremap('<Leader>dsi', ':lua require"dap".step_into()<CR>')
@@ -275,12 +275,12 @@ if core.plugin.debug.active then
 end
 
 -- osv
-if core.plugin.osv.active then
+if rvim.plugin.osv.active then
   nnoremap('<leader>dl', ':lua require"osv".launch()<CR>')
 end
 
 -- dapui
-if core.plugin.debug_ui.active then
+if rvim.plugin.debug_ui.active then
   nnoremap('<leader>de', ':lua require"dapui".toggle()<CR>')
   nnoremap('<leader>di', ':lua require"dap.ui.variables".hover()<CR>')
   -- nnoremap('<leader>di', ':lua require"dap.ui.widgets".hover()<CR>')

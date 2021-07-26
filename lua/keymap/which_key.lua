@@ -18,7 +18,7 @@ local default_keymaps = {
   ['='] = 'Balance window',
   [';'] = 'terminal',
   ['.'] = 'Open init.vim',
-  [','] = 'Open lua/core/init.lua',
+  [','] = 'Open lua/rvim/init.lua',
   ['/'] = 'Comment',
   ['['] = 'Find and Replace all',
   [']'] = 'Find and Replace one',
@@ -172,7 +172,7 @@ local telescope_keymaps = {
     v = 'vim options',
     z = 'current file fuzzy find',
   },
-  C = 'Open lua/core/defaults/init.lua',
+  C = 'Open lua/rvim/defaults/init.lua',
   d = {
     name = '+Dotfiles',
     b = 'branches',
@@ -237,88 +237,88 @@ WhichKey.SetKeyOnFT = function()
   -- Add keys to Which-Key keymap
 
   -- matchup
-  if core.plugin.matchup.active then
+  if rvim.plugin.matchup.active then
     key_maps.a.w = 'where_am_i'
   end
   -- undotree
-  if core.plugin.undotree.active then
+  if rvim.plugin.undotree.active then
     key_maps.a.u = 'toggle undotree'
   end
   -- tree
-  if core.plugin.tree.active then
+  if rvim.plugin.tree.active then
     key_maps.c.f = 'nvim-tree find'
     key_maps.c.r = 'nvim-tree refresh'
     key_maps.c.v = 'nvim-tree toggle'
   end
   -- dap
-  if core.plugin.debug.active then
+  if rvim.plugin.debug.active then
     key_maps.d = debug_keymaps
   end
   -- osv
-  if core.plugin.osv.active then
+  if rvim.plugin.osv.active then
     key_maps.d.l = 'osv launch'
   end
   -- debug ui
-  if core.plugin.debug_ui.active then
+  if rvim.plugin.debug_ui.active then
     key_maps.d.e = 'toggle ui'
     key_maps.d.i = "inspect"
   end
   -- fterm
-  if core.plugin.fterm.active or core.plugin.SANE.active then
+  if rvim.plugin.fterm.active or rvim.plugin.SANE.active then
     key_maps.e = fterm_keymaps
   end
   -- far
-  if core.plugin.far.active then
+  if rvim.plugin.far.active then
     key_maps.F = far_keymaps
   end
   -- git_signs
-  if core.plugin.git_signs.active then
+  if rvim.plugin.git_signs.active then
     key_maps.h = git_signs_keymaps
   end
   -- fugitive
-  if core.plugin.fugitive.active then
+  if rvim.plugin.fugitive.active then
     key_maps.g = fugitive_keymaps
   end
   -- bookmarks
-  if core.plugin.bookmarks.active then
+  if rvim.plugin.bookmarks.active then
     key_maps.m = {name = '+Mark', e = 'toggle', b = 'previous mark', k = 'next mark'}
   end
   -- markdown
-  if core.plugin.markdown_preview.active or core.plugin.glow.active then
+  if rvim.plugin.markdown_preview.active or rvim.plugin.glow.active then
     key_maps.o = {name = '+Toggle'}
-    if core.plugin.markdown_preview.active then
+    if rvim.plugin.markdown_preview.active then
       key_maps.o.m = 'markdown preview'
     end
-    if core.plugin.glow.active then
+    if rvim.plugin.glow.active then
       key_maps.o.g = 'glow preview'
     end
   end
   -- dashboard
-  if core.plugin.dashboard.active then
+  if rvim.plugin.dashboard.active then
     key_maps.S = {name = '+Session', l = 'load Session', s = 'save Session'}
   end
   -- SANE
-  if core.plugin.playground.active then
+  if rvim.plugin.playground.active then
     key_maps.a.E = 'Inspect token'
   end
-  if core.plugin.SANE.active then
+  if rvim.plugin.SANE.active then
     key_maps.c.s = 'edit snippet'
     key_maps.I.e = 'ts info'
     key_maps.I.u = 'ts update'
     key_maps.L = {name = '+LspUtils', i = 'info', l = 'log', r = 'restart'}
     key_maps.f = telescope_keymaps
     key_maps.v = lsp_keymaps
-    if core.plugin.doge.active then
+    if rvim.plugin.doge.active then
       key_maps.v.D = "DOGe"
     end
-    if core.plugin.trouble.active then
+    if rvim.plugin.trouble.active then
       key_maps.v.x = trouble_keymaps
     end
   end
-  if core.plugin.telescope_media_files.active then
+  if rvim.plugin.telescope_media_files.active then
     key_maps.f.e.m = 'project'
   end
-  if core.plugin.telescope_project.active then
+  if rvim.plugin.telescope_project.active then
     key_maps.f.e.p = 'project'
   end
 
@@ -326,11 +326,11 @@ WhichKey.SetKeyOnFT = function()
   vim.g.which_key_map = key_maps
 end
 
-core.augroup("WhichKeySetKeyOnFT", {
+rvim.augroup("WhichKeySetKeyOnFT", {
   {events = {"BufEnter"}, targets = {"*"}, command = "call v:lua.WhichKey.SetKeyOnFT()"},
 })
 
-core.augroup("WhichKeyMode", {
+rvim.augroup("WhichKeyMode", {
   {
     events = {"FileType"},
     targets = {"which_key"},

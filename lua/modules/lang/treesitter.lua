@@ -1,6 +1,6 @@
 ---Get all filetypes for which we have a treesitter parser installed
 ---@return string[]
-function core.treesitter.get_filetypes()
+function rvim.treesitter.get_filetypes()
   vim.cmd [[packadd nvim-treesitter]]
   local parsers = require("nvim-treesitter.parsers")
   local configs = parsers.get_parser_configs()
@@ -9,12 +9,12 @@ function core.treesitter.get_filetypes()
 end
 
 require'nvim-treesitter.configs'.setup {
-  highlight = {enable = core.treesitter.highlight.enabled},
+  highlight = {enable = rvim.treesitter.highlight.enabled},
   indent = {enable = {"javascriptreact"}},
-  autotag = {enable = core.plugin.autotag.active},
-  autopairs = {enable = core.plugin.autopairs.active},
+  autotag = {enable = rvim.plugin.autotag.active},
+  autopairs = {enable = rvim.plugin.autopairs.active},
   rainbow = {
-    enable = core.plugin.rainbow.active,
+    enable = rvim.plugin.rainbow.active,
     extended_mode = true,
     max_file_lines = 1000,
     disable = {"lua", "json", "c", "cpp", "html"},
@@ -32,16 +32,16 @@ require'nvim-treesitter.configs'.setup {
     lint_events = {"BufWrite", "CursorHold"},
   },
   matchup = {enable = true, disable = {"c", "python"}},
-  ensure_installed = core.treesitter.ensure_installed,
+  ensure_installed = rvim.treesitter.ensure_installed,
 }
 
 vim.api.nvim_set_keymap('n', 'R', ':edit | TSBufEnable highlight<CR>', {});
 
 -- Only apply folding to supported files:
-core.augroup("TreesitterFolds", {
+rvim.augroup("TreesitterFolds", {
   {
     events = {"FileType"},
-    targets = core.treesitter.get_filetypes(),
+    targets = rvim.treesitter.get_filetypes(),
     command = "setlocal foldtext=v:lua.folds() foldmethod=expr foldexpr=nvim_treesitter#foldexpr()",
   },
 })

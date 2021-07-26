@@ -1,52 +1,52 @@
 _GlobalCallbacks = _GlobalCallbacks or {}
 
-_G.core = {_store = _GlobalCallbacks}
+_G.rvim = {_store = _GlobalCallbacks}
 
 local api, fn = vim.api, vim.fn
 local fmt = string.format
 
 local home = os.getenv("HOME")
 local os_name = vim.loop.os_uname().sysname
-local path_sep = core.__is_windows and '\\' or '/'
+local path_sep = rvim.__is_windows and '\\' or '/'
 
-core._home = home .. path_sep
-core.__path_sep = path_sep
-core.__is_mac = os_name == 'OSX'
-core.__is_linux = os_name == 'Linux'
-core.__is_windows = os_name == 'Windows'
-core.__cache_dir = core._home .. '.cache' .. path_sep .. 'nvim' .. path_sep
-core.__vim_path = vim.fn.stdpath('config')
-core.__data_dir = string.format('%s/site/', vim.fn.stdpath('data')) .. path_sep
-core._asdf = core._home .. '.asdf' .. path_sep .. 'installs' .. path_sep
-core._fnm = core._home .. '.fnm' .. path_sep .. 'node-versions' .. path_sep
-core._dap = core.__cache_dir .. 'venv' .. path_sep .. 'dap' .. path_sep
-core._golang = core._asdf .. "golang/1.16.2/go/bin/go"
-core._node = core._fnm .. "v16.3.0/installation/bin/neovim-node-host"
-core._python3 = core.__cache_dir .. 'venv' .. path_sep .. 'neovim' .. path_sep
-core.__plugins = core.__data_dir .. 'pack' .. path_sep
-core.__nvim_lsp = core.__cache_dir .. 'nvim_lsp' .. path_sep
-core.__dap_install_dir = core.__cache_dir .. path_sep .. 'dap/'
-core.__dap_python = core.__dap_install_dir .. 'python_dbg/bin/python'
-core.__dap_node = core.__dap_install_dir .. 'jsnode_dbg/vscode-node-debug2/out/src/nodeDebug.js'
-core.__vsnip_dir = core.__vim_path .. path_sep .. 'snippets'
-core.__session_dir = core.__data_dir .. path_sep .. 'session/dashboard'
-core.__modules_dir = core.__vim_path .. path_sep .. 'lua/modules'
-core.__sumneko_root_path = core.__nvim_lsp .. 'lua-language-server' .. path_sep
-core.__elixirls_root_path = core.__nvim_lsp .. 'elixir-ls' .. path_sep
+rvim._home = home .. path_sep
+rvim.__path_sep = path_sep
+rvim.__is_mac = os_name == 'OSX'
+rvim.__is_linux = os_name == 'Linux'
+rvim.__is_windows = os_name == 'Windows'
+rvim.__cache_dir = rvim._home .. '.cache' .. path_sep .. 'nvim' .. path_sep
+rvim.__vim_path = vim.fn.stdpath('config')
+rvim.__data_dir = string.format('%s/site/', vim.fn.stdpath('data')) .. path_sep
+rvim._asdf = rvim._home .. '.asdf' .. path_sep .. 'installs' .. path_sep
+rvim._fnm = rvim._home .. '.fnm' .. path_sep .. 'node-versions' .. path_sep
+rvim._dap = rvim.__cache_dir .. 'venv' .. path_sep .. 'dap' .. path_sep
+rvim._golang = rvim._asdf .. "golang/1.16.2/go/bin/go"
+rvim._node = rvim._fnm .. "v16.3.0/installation/bin/neovim-node-host"
+rvim._python3 = rvim.__cache_dir .. 'venv' .. path_sep .. 'neovim' .. path_sep
+rvim.__plugins = rvim.__data_dir .. 'pack' .. path_sep
+rvim.__nvim_lsp = rvim.__cache_dir .. 'nvim_lsp' .. path_sep
+rvim.__dap_install_dir = rvim.__cache_dir .. path_sep .. 'dap/'
+rvim.__dap_python = rvim.__dap_install_dir .. 'python_dbg/bin/python'
+rvim.__dap_node = rvim.__dap_install_dir .. 'jsnode_dbg/vscode-node-debug2/out/src/nodeDebug.js'
+rvim.__vsnip_dir = rvim.__vim_path .. path_sep .. 'snippets'
+rvim.__session_dir = rvim.__data_dir .. path_sep .. 'session/dashboard'
+rvim.__modules_dir = rvim.__vim_path .. path_sep .. 'lua/modules'
+rvim.__sumneko_root_path = rvim.__nvim_lsp .. 'lua-language-server' .. path_sep
+rvim.__elixirls_root_path = rvim.__nvim_lsp .. 'elixir-ls' .. path_sep
 
-function core._create(f)
-  table.insert(core._store, f)
-  return #core._store
+function rvim._create(f)
+  table.insert(rvim._store, f)
+  return #rvim._store
 end
 
-function core._execute(id, args)
-  core._store[id](args)
+function rvim._execute(id, args)
+  rvim._store[id](args)
 end
 
 ---Determine if a value of any type is empty
 ---@param item any
 ---@return boolean
-function core.empty(item)
+function rvim.empty(item)
   if not item then
     return true
   end
@@ -58,28 +58,28 @@ function core.empty(item)
   end
 end
 
-function core.command(args)
+function rvim.command(args)
   local nargs = args.nargs or 0
   local name = args[1]
   local rhs = args[2]
   local types = (args.types and type(args.types) == "table") and table.concat(args.types, " ") or ""
 
   if type(rhs) == "function" then
-    local fn_id = core._create(rhs)
-    rhs = string.format("lua core._execute(%d%s)", fn_id, nargs > 0 and ", <f-args>" or "")
+    local fn_id = rvim._create(rhs)
+    rhs = string.format("lua rvim._execute(%d%s)", fn_id, nargs > 0 and ", <f-args>" or "")
   end
 
   vim.cmd(string.format("command! -nargs=%s %s %s %s", nargs, types, name, rhs))
 end
 
-function core.augroup(name, commands)
+function rvim.augroup(name, commands)
   vim.cmd("augroup " .. name)
   vim.cmd("autocmd!")
   for _, c in ipairs(commands) do
     local command = c.command
     if type(command) == "function" then
-      local fn_id = core._create(command)
-      command = fmt("lua core._execute(%s)", fn_id)
+      local fn_id = rvim._create(command)
+      command = fmt("lua rvim._execute(%s)", fn_id)
     end
     vim.cmd(string.format("autocmd %s %s %s %s", table.concat(c.events, ","),
       table.concat(c.targets or {}, ","), table.concat(c.modifiers or {}, " "), command))
@@ -90,11 +90,11 @@ end
 ---Check if a cmd is executable
 ---@param e string
 ---@return boolean
-function core.executable(e)
+function rvim.executable(e)
   return fn.executable(e) > 0
 end
 
-function core.echomsg(msg, hl)
+function rvim.echomsg(msg, hl)
   hl = hl or "Title"
   local msg_type = type(msg)
   if msg_type ~= "string" or "table" then
@@ -107,10 +107,10 @@ function core.echomsg(msg, hl)
 end
 
 -- https://stackoverflow.com/questions/1283388/lua-merge-tables
-function core.deep_merge(t1, t2)
+function rvim.deep_merge(t1, t2)
   for k, v in pairs(t2) do
     if (type(v) == "table") and (type(t1[k] or false) == "table") then
-      core.deep_merge(t1[k], t2[k])
+      rvim.deep_merge(t1[k], t2[k])
     else
       t1[k] = v
     end
@@ -163,7 +163,7 @@ end
 ---@param o table
 ---@return function
 local function make_mapper(mode, o)
-  -- copy the opts table core extends will mutate the opts table passed in otherwise
+  -- copy the opts table rvim extends will mutate the opts table passed in otherwise
   local parent_opts = vim.deepcopy(o)
   ---Create a mapping
   ---@param lhs string
@@ -171,7 +171,7 @@ local function make_mapper(mode, o)
   ---@param opts table
   return function(lhs, rhs, opts)
     -- assert(lhs ~= mode,
-    --        fmt("The lhs should not be the same core mode for %s", lhs))
+    --        fmt("The lhs should not be the same rvim mode for %s", lhs))
     local _opts = opts and vim.deepcopy(opts) or {}
 
     validate_mappings(lhs, rhs, _opts)
@@ -185,8 +185,8 @@ local function make_mapper(mode, o)
 
     -- add functions to a global table keyed by their index
     if type(rhs) == "function" then
-      local fn_id = core._create(rhs)
-      rhs = string.format("<cmd>lua core._execute(%s)<CR>", fn_id)
+      local fn_id = rvim._create(rhs)
+      rhs = string.format("<cmd>lua rvim._execute(%s)<CR>", fn_id)
     end
 
     if _opts.buffer then
@@ -202,7 +202,7 @@ local function make_mapper(mode, o)
 end
 
 --- Check if a file or directory exists in this path
-function core._exists(file)
+function rvim._exists(file)
   if file == '' or file == nil then
     return false
   end
@@ -216,7 +216,7 @@ function core._exists(file)
   return ok, err
 end
 
-function core.check_lsp_client_active(name)
+function rvim.check_lsp_client_active(name)
   local clients = vim.lsp.get_active_clients()
   for _, client in pairs(clients) do
     if client.name == name then
@@ -226,7 +226,7 @@ function core.check_lsp_client_active(name)
   return false
 end
 
-function core.invalidate(path, recursive)
+function rvim.invalidate(path, recursive)
   if recursive then
     for key, value in pairs(package.loaded) do
       if key ~= "_G" and value and vim.fn.match(key, path) ~= -1 then
@@ -241,25 +241,25 @@ function core.invalidate(path, recursive)
 end
 
 local map_opts = {noremap = false, silent = true}
-core.map = make_mapper("", map_opts)
-core.nmap = make_mapper("n", map_opts)
-core.xmap = make_mapper("x", map_opts)
-core.imap = make_mapper("i", map_opts)
-core.vmap = make_mapper("v", map_opts)
-core.omap = make_mapper("o", map_opts)
-core.tmap = make_mapper("t", map_opts)
-core.smap = make_mapper("s", map_opts)
-core.cmap = make_mapper("c", {noremap = false, silent = false})
+rvim.map = make_mapper("", map_opts)
+rvim.nmap = make_mapper("n", map_opts)
+rvim.xmap = make_mapper("x", map_opts)
+rvim.imap = make_mapper("i", map_opts)
+rvim.vmap = make_mapper("v", map_opts)
+rvim.omap = make_mapper("o", map_opts)
+rvim.tmap = make_mapper("t", map_opts)
+rvim.smap = make_mapper("s", map_opts)
+rvim.cmap = make_mapper("c", {noremap = false, silent = false})
 
 local noremap_opts = {noremap = true, silent = true}
-core.nnoremap = make_mapper("n", noremap_opts)
-core.xnoremap = make_mapper("x", noremap_opts)
-core.vnoremap = make_mapper("v", noremap_opts)
-core.inoremap = make_mapper("i", noremap_opts)
-core.onoremap = make_mapper("o", noremap_opts)
-core.tnoremap = make_mapper("t", noremap_opts)
-core.snoremap = make_mapper("s", noremap_opts)
-core.cnoremap = make_mapper("c", {noremap = true, silent = false})
+rvim.nnoremap = make_mapper("n", noremap_opts)
+rvim.xnoremap = make_mapper("x", noremap_opts)
+rvim.vnoremap = make_mapper("v", noremap_opts)
+rvim.inoremap = make_mapper("i", noremap_opts)
+rvim.onoremap = make_mapper("o", noremap_opts)
+rvim.tnoremap = make_mapper("t", noremap_opts)
+rvim.snoremap = make_mapper("s", noremap_opts)
+rvim.cnoremap = make_mapper("c", {noremap = true, silent = false})
 
 local function get_last_notification()
   for _, win in ipairs(api.nvim_list_wins()) do
@@ -282,7 +282,7 @@ local notification_hl = setmetatable({
 ---Utility function to create a notification message
 ---@param lines string[] | string
 ---@param opts table
-function core.notify(lines, opts)
+function rvim.notify(lines, opts)
   lines = type(lines) == "string" and {lines} or lines
   opts = opts or {}
   local highlights = {"NormalFloat:Normal"}

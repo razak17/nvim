@@ -1,15 +1,15 @@
-local nmap = core.nmap
-local nnoremap = core.nnoremap
-local xnoremap = core.xnoremap
-local vnoremap = core.vnoremap
-local inoremap = core.inoremap
-local tnoremap = core.tnoremap
-local cnoremap = core.cnoremap
+local nmap = rvim.nmap
+local nnoremap = rvim.nnoremap
+local xnoremap = rvim.xnoremap
+local vnoremap = rvim.vnoremap
+local inoremap = rvim.inoremap
+local tnoremap = rvim.tnoremap
+local cnoremap = rvim.cnoremap
 
 local fn = vim.fn
 local api = vim.api
 
-if not core.plugin.accelerated_jk.active and not core.plugin.SANE.active then
+if not rvim.plugin.accelerated_jk.active and not rvim.plugin.SANE.active then
   nmap('n', 'j')
 end
 
@@ -39,18 +39,18 @@ local function inspect_token()
   if not ts_playground_loaded then
     ts_playground_loaded, ts_hl_info = pcall(require, "nvim-treesitter-playground.hl-info")
   end
-  if vim.tbl_contains(core.treesitter.get_filetypes(), vim.bo.filetype) then
+  if vim.tbl_contains(rvim.treesitter.get_filetypes(), vim.bo.filetype) then
     ts_hl_info.show_hl_captures()
   else
     local syn_id = fn.synID(fn.line("."), fn.col("."), 1)
     local names = hi_chain(syn_id)
-    core.echomsg(fn.join(names, " -> "))
+    rvim.echomsg(fn.join(names, " -> "))
   end
 end
 
 local function save_and_notify()
   vim.cmd("silent write")
-  core.notify("Saved " .. vim.fn.expand("%:t"), {timeout = 1000})
+  rvim.notify("Saved " .. vim.fn.expand("%:t"), {timeout = 1000})
 end
 
 local function open_file_or_create_new()
@@ -195,7 +195,7 @@ nnoremap('<C-l>', '<C-w>l')
 -- Start new line from any cursor position
 inoremap("<S-Return>", "<C-o>o")
 
-if core.plugin.playground.active then
+if rvim.plugin.playground.active then
   nnoremap("<leader>aE", function()
     inspect_token()
   end)
@@ -277,7 +277,7 @@ nnoremap("<Leader>aO", ":<C-f>:resize 10<CR>") -- Close all folds
 nnoremap("<Leader>vo", ":copen<CR>")
 
 -- Terminal {{{
-core.augroup("AddTerminalMappings", {
+rvim.augroup("AddTerminalMappings", {
   {
     events = {"TermOpen"},
     targets = {"*:zsh"},
@@ -414,7 +414,7 @@ nnoremap("<leader>li", function()
 end)
 
 -- Other remaps
-nnoremap('<Leader>,', ':e ~/.config/nvim/lua/core/init.lua<CR>')
+nnoremap('<Leader>,', ':e ~/.config/nvim/lua/rvim/init.lua<CR>')
 nnoremap('<Leader>.', ':e $MYVIMRC<CR>')
 nnoremap('<leader><CR>', ':source $MYVIMRC<CR>')
 nnoremap('<Leader>Ic', ':checkhealth<CR>')
@@ -453,6 +453,6 @@ function _G.__Rename(name)
   vim.api.nvim_command(" saveas " .. newname)
 end
 
-core.command {"Todo", [[noautocmd silent! grep! 'TODO\|FIXME\|BUG\|HACK' | copen]]}
+rvim.command {"Todo", [[noautocmd silent! grep! 'TODO\|FIXME\|BUG\|HACK' | copen]]}
 
-core.command {nargs = 1, "Rename", [[call v:lua.__Rename(<f-args>)]]}
+rvim.command {nargs = 1, "Rename", [[call v:lua.__Rename(<f-args>)]]}

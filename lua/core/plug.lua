@@ -2,12 +2,13 @@ local uv, api, fn = vim.loop, vim.api, vim.fn
 local packer_compiled = vim.fn.stdpath('data') .. '/site/packer_compiled.vim'
 local compile_to_lua = vim.fn.stdpath('data') .. '/site/lua/_compiled.lua'
 local packer = nil
+local command = rvim.command
 
 local Plug = {}
 Plug.__index = Plug
 
 function Plug:get_plugins_list()
-  local modules_dir = core.__modules_dir
+  local modules_dir = rvim.__modules_dir
   local list = {}
   local tmp = vim.split(fn.globpath(modules_dir, '*/plugins.lua'), '\n')
   for _, f in ipairs(tmp) do
@@ -55,12 +56,12 @@ function Plug:load_packer()
 end
 
 function Plug:init_ensure_plugins()
-  local packer_dir = core.__data_dir .. 'pack/packer/opt/packer.nvim'
+  local packer_dir = rvim.__data_dir .. 'pack/packer/opt/packer.nvim'
   local state = uv.fs_stat(packer_dir)
   if not state then
     local cmd = "!git clone https://github.com/wbthomason/packer.nvim " .. packer_dir
     api.nvim_command(cmd)
-    uv.fs_mkdir(core.__data_dir .. 'lua', 511, function()
+    uv.fs_mkdir(rvim.__data_dir .. 'lua', 511, function()
       assert("make compile path dir faield")
     end)
     self:load_packer()
@@ -97,8 +98,8 @@ function plugins.convert_compile_file()
   end
   table.remove(lines, #lines)
 
-  if vim.fn.isdirectory(core.__data_dir .. 'lua') ~= 1 then
-    os.execute('mkdir -p ' .. core.__data_dir .. 'lua')
+  if vim.fn.isdirectory(rvim.__data_dir .. 'lua') ~= 1 then
+    os.execute('mkdir -p ' .. rvim.__data_dir .. 'lua')
   end
 
   if vim.fn.filereadable(compile_to_lua) == 1 then
@@ -121,7 +122,7 @@ end
 
 function plugins.auto_compile()
   local file = vim.fn.expand('%:p')
-  if file:match(core.__modules_dir) then
+  if file:match(rvim.__modules_dir) then
     plugins.clean()
     plugins.compile()
     plugins.convert_compile_file()
@@ -136,14 +137,14 @@ function plugins.load_compile()
     plugins.install()
     plugins.magic_compile()
   end
-  core.command {"PlugCompile", [[call v:lua.require('core.plug').magic_compile()]]}
-  core.command {"PlugInstall", [[lua require('core.plug').install()]]}
-  core.command {"PlugSync", [[lua require('core.plug').sync()]]}
-  core.command {"PlugClean", [[lua require('core.plug').clean()]]}
-  core.command {"PlugUpdate", [[lua require('core.plug').update()]]}
-  core.command {"PlugStatus", [[lua require('core.plug').status()]]}
-  core.augroup("PackerComplete", {
-    {events = {"User"}, targets = {"lua"}, command = "lua require('core.plug').magic_compile()"},
+  command {"PlugCompile", [[call v:lua.require('rvim.plug').magic_compile()]]}
+  command {"PlugInstall", [[lua require('rvim.plug').install()]]}
+  command {"PlugSync", [[lua require('rvim.plug').sync()]]}
+  command {"PlugClean", [[lua require('rvim.plug').clean()]]}
+  command {"PlugUpdate", [[lua require('rvim.plug').update()]]}
+  command {"PlugStatus", [[lua require('rvim.plug').status()]]}
+  rvim.augroup("PackerComplete", {
+    {events = {"User"}, targets = {"lua"}, command = "lua require('rvim.plug').magic_compile()"},
   })
 end
 

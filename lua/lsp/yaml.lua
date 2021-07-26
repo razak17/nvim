@@ -1,13 +1,13 @@
 local M = {}
 
 M.init = function()
-  if core.check_lsp_client_active "yamlls" then
+  if rvim.check_lsp_client_active "yamlls" then
     return
   end
   require'lspconfig'.yamlls.setup {
-    cmd = {core.lsp.binary.yaml, "--stdio"},
-    capabilities = core.lsp.capabilities,
-    on_attach = core.lsp.on_attach,
+    cmd = {rvim.lsp.binary.yaml, "--stdio"},
+    capabilities = rvim.lsp.capabilities,
+    on_attach = rvim.lsp.on_attach,
     root_dir = require'lspconfig.util'.root_pattern('.gitignore', '.git', vim.fn.getcwd()),
   }
 end

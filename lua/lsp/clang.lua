@@ -1,7 +1,7 @@
 local M = {}
 
 M.init = function()
-  if core.check_lsp_client_active "clangd" then
+  if rvim.check_lsp_client_active "clangd" then
     return
   end
   local clangd_flags = {
@@ -12,15 +12,15 @@ M.init = function()
     '--cross-file-rename',
   }
   require'lspconfig'.clangd.setup {
-    cmd = {core.lsp.binary.clangd, unpack(clangd_flags)},
+    cmd = {rvim.lsp.binary.clangd, unpack(clangd_flags)},
     init_options = {
       clangdFileStatus = true,
       usePlaceholders = true,
       completeUnimported = true,
       semanticHighlighting = true,
     },
-    capabilities = core.lsp.capabilities,
-    on_attach = core.lsp.on_attach,
+    capabilities = rvim.lsp.capabilities,
+    on_attach = rvim.lsp.on_attach,
   }
 end
 

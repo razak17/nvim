@@ -1,5 +1,5 @@
 -- opts
-core.sets = {
+rvim.sets = {
   wrap = false,
   spell = false,
   spelllang = "en",
@@ -19,12 +19,12 @@ core.sets = {
   timeoutlen = 500,
   foldenable = true,
   foldtext = 'v:lua.folds()',
-  udir = core.__cache_dir .. 'undodir',
-  viewdir = core.__cache_dir .. 'view',
-  directory = core.__cache_dir .. 'swap',
+  udir = rvim.__cache_dir .. 'undodir',
+  viewdir = rvim.__cache_dir .. 'view',
+  directory = rvim.__cache_dir .. 'swap',
 }
 
-core.plugin = {
+rvim.plugin = {
   -- SANE defaults
   SANE = {active = true},
   -- debug
@@ -87,13 +87,13 @@ core.plugin = {
   telescope_media_files = {active = false},
 }
 
-core.telescope = {
+rvim.telescope = {
   prompt_prefix = " ❯ ",
   layout_config = {height = 0.9, width = 0.9},
   borderchars = {'─', '│', '─', '│', '┌', '┐', '┘', '└'},
 }
 
-core.nvim_tree = {
+rvim.nvim_tree = {
   side = 'right',
   auto_open = 0,
   width = 35,
@@ -102,7 +102,7 @@ core.nvim_tree = {
   special_files = {'README.md', 'Makefile', 'MAKEFILE'},
 }
 
-core.treesitter = {
+rvim.treesitter = {
   ensure_installed = {
     "html",
     "css",
@@ -125,7 +125,7 @@ core.treesitter = {
   highlight = {enabled = true},
 }
 
-core.dashboard = {
+rvim.dashboard = {
   custom_header = {
     "                                                       ",
     "                                                       ",
@@ -143,12 +143,12 @@ core.dashboard = {
   save_session = function()
     vim.cmd("SessionSave")
   end,
-  session_directory = core.__session_dir,
+  session_directory = rvim.__session_dir,
 }
 
-core.utils = {leader_key = " ", dapinstall_dir = core.__data_dir, transparent_window = false}
+rvim.utils = {leader_key = " ", dapinstall_dir = rvim.__data_dir, transparent_window = false}
 
-core.lsp = {
+rvim.lsp = {
   hover_diagnostics = true,
   format_on_save = true,
   lint_on_save = true,
@@ -159,9 +159,9 @@ core.lsp = {
     css = "vscode-css-language-server",
     docker = "docker-langserver",
     efm = "efm-langserver",
-    elixir = core.__elixirls_root_path .. '/.bin/language_server.sh',
+    elixir = rvim.__elixirls_root_path .. '/.bin/language_server.sh',
     graphql = "graphql-lsp",
-    lua = core.__sumneko_root_path .. '/bin/Linux/lua-language-server',
+    lua = rvim.__sumneko_root_path .. '/bin/Linux/lua-language-server',
     go = "gopls",
     html = "vscode-html-language-server",
     json = "vscode-json-language-server",
