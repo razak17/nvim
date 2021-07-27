@@ -18,88 +18,88 @@ rvim.sets = {
   hlsearch = true,
   timeoutlen = 500,
   foldenable = true,
-  foldtext = 'v:lua.folds()',
-  udir = rvim.__cache_dir .. '/undodir',
-  viewdir = rvim.__cache_dir .. '/view',
-  directory = rvim.__cache_dir .. '/swap',
+  foldtext = "v:lua.folds()",
+  udir = rvim.__cache_dir .. "/undodir",
+  viewdir = rvim.__cache_dir .. "/view",
+  directory = rvim.__cache_dir .. "/swap",
 }
 
 rvim.plugin = {
   -- SANE defaults
-  SANE = {active = true},
+  SANE = { active = true },
   -- debug
-  debug = {active = false},
-  debug_ui = {active = false},
-  dap_install = {active = false},
-  osv = {active = false},
+  debug = { active = false },
+  debug_ui = { active = false },
+  dap_install = { active = false },
+  osv = { active = false },
   -- lsp
-  saga = {active = false},
-  lightbulb = {active = true},
-  symbols_outline = {active = false},
-  bqf = {active = false},
-  trouble = {active = false},
-  nvim_lint = {active = false},
-  formatter = {active = false},
-  lsp_ts_utils = {active = true},
+  saga = { active = false },
+  lightbulb = { active = true },
+  symbols_outline = { active = false },
+  bqf = { active = false },
+  trouble = { active = false },
+  nvim_lint = { active = false },
+  formatter = { active = false },
+  lsp_ts_utils = { active = true },
   -- treesitter
-  treesitter = {active = false},
-  playground = {active = true},
-  rainbow = {active = false},
-  matchup = {active = false},
-  autotag = {active = false},
-  autopairs = {active = true},
+  treesitter = { active = false },
+  playground = { active = true },
+  rainbow = { active = false },
+  matchup = { active = false },
+  autotag = { active = false },
+  autopairs = { active = true },
   -- editor
-  fold_cycle = {active = false},
-  accelerated_jk = {active = false},
-  easy_align = {active = false},
-  cool = {active = true},
-  delimitmate = {active = false},
-  eft = {active = false},
-  cursorword = {active = true},
-  surround = {active = true},
-  dial = {active = true},
+  fold_cycle = { active = false },
+  accelerated_jk = { active = false },
+  easy_align = { active = false },
+  cool = { active = true },
+  delimitmate = { active = false },
+  eft = { active = false },
+  cursorword = { active = true },
+  surround = { active = true },
+  dial = { active = true },
   -- tools
-  fterm = {active = true},
-  far = {active = true},
-  bookmarks = {active = false},
-  colorizer = {active = true},
-  undotree = {active = false},
-  fugitive = {active = false},
-  rooter = {active = true},
+  fterm = { active = true },
+  far = { active = true },
+  bookmarks = { active = false },
+  colorizer = { active = true },
+  undotree = { active = false },
+  fugitive = { active = false },
+  rooter = { active = true },
   -- TODO: handle these later
-  glow = {active = false},
-  doge = {active = false},
-  dadbod = {active = false},
-  restconsole = {active = false},
-  markdown_preview = {active = true},
+  glow = { active = false },
+  doge = { active = false },
+  dadbod = { active = false },
+  restconsole = { active = false },
+  markdown_preview = { active = true },
   -- aesth
-  tree = {active = true},
-  dashboard = {active = false},
-  statusline = {active = false},
-  git_signs = {active = false},
-  indent_line = {active = false},
+  tree = { active = true },
+  dashboard = { active = false },
+  statusline = { active = false },
+  git_signs = { active = false },
+  indent_line = { active = false },
   -- completion
-  emmet = {active = false},
-  friendly_snippets = {active = true},
-  vsnip = {active = true},
-  telescope_fzy = {active = false},
-  telescope_project = {active = false},
-  telescope_media_files = {active = false},
+  emmet = { active = false },
+  friendly_snippets = { active = true },
+  vsnip = { active = true },
+  telescope_fzy = { active = false },
+  telescope_project = { active = false },
+  telescope_media_files = { active = false },
 }
 
 rvim.telescope = {
   prompt_prefix = " ❯ ",
-  layout_config = {height = 0.9, width = 0.9},
-  borderchars = {'─', '│', '─', '│', '┌', '┐', '┘', '└'},
+  layout_config = { height = 0.9, width = 0.9 },
+  borderchars = { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
 }
 
 rvim.nvim_tree = {
-  side = 'right',
+  side = "right",
   auto_open = 0,
   width = 35,
   indent_markers = 1,
   lsp_diagnostics = 0,
-  special_files = {'README.md', 'Makefile', 'MAKEFILE'},
+  special_files = { "README.md", "Makefile", "MAKEFILE" },
 }
 
 rvim.treesitter = {
@@ -122,7 +122,7 @@ rvim.treesitter = {
     "bash",
     "lua",
   },
-  highlight = {enabled = true},
+  highlight = { enabled = true },
 }
 
 rvim.dashboard = {
@@ -138,17 +138,18 @@ rvim.dashboard = {
     "                                                       ",
     "                                                       ",
   },
-  default_executive = 'telescope',
+  default_executive = "telescope",
   disable_statusline = 0,
   save_session = function()
-    vim.cmd("SessionSave")
+    vim.cmd "SessionSave"
   end,
   session_directory = rvim.__session_dir,
 }
 
-rvim.utils = {leader_key = " ", dapinstall_dir = rvim.__data_dir, transparent_window = false}
+rvim.utils = { leader_key = " ", dapinstall_dir = rvim.__data_dir, transparent_window = false }
 
 rvim.lsp = {
+  override = {},
   document_highlight = true,
   hover_diagnostics = true,
   format_on_save = true,
@@ -161,9 +162,9 @@ rvim.lsp = {
     css = "vscode-css-language-server",
     docker = "docker-langserver",
     efm = "efm-langserver",
-    elixir = rvim.__elixirls_root_path .. '/.bin/language_server.sh',
+    elixir = rvim.__elixirls_root_path .. "/.bin/language_server.sh",
     graphql = "graphql-lsp",
-    lua = rvim.__sumneko_root_path .. '/bin/Linux/lua-language-server',
+    lua = rvim.__sumneko_root_path .. "/bin/Linux/lua-language-server",
     go = "gopls",
     html = "vscode-html-language-server",
     json = "vscode-json-language-server",
@@ -176,24 +177,28 @@ rvim.lsp = {
   },
 }
 
-local on_attach = require'lsp'.on_attach
-local capabilities = require'lsp'.capabilities
-local lsp_utils = require 'lsp.utils'
 local schemas = nil
+local on_attach = require("lsp").on_attach
+local capabilities = require("lsp").capabilities
+local lsp_utils = require "lsp.utils"
+local status_ok, jsonls_settings = pcall(require, "nlspsettings.jsonls")
+if status_ok then
+  schemas = jsonls_settings.get_default_schemas()
+end
 
 rvim.lang = {
   c = {
-    formatter = {exe = "clang_format", args = {}, stdin = true},
-    linters = {"clangtidy"},
+    formatter = { exe = "clang_format", args = {}, stdin = true },
+    linters = { "clangtidy" },
     lsp = {
       provider = "clangd",
       setup = {
         cmd = {
           rvim.lsp.binary.clangd,
           "--background-index",
-          '--header-insertion=never',
-          '--cross-file-rename',
-          '--clang-tidy',
+          "--header-insertion=never",
+          "--cross-file-rename",
+          "--clang-tidy",
           "--clang-tidy-checks=-*,llvm-*,clang-analyzer-*",
         },
         init_options = {
@@ -202,37 +207,37 @@ rvim.lang = {
           completeUnimported = true,
           semanticHighlighting = true,
         },
-        capabilities = capabilities,
         on_attach = on_attach,
+        capabilities = capabilities,
       },
     },
   },
   cmake = {
-    formatter = {exe = "clang_format", args = {}},
+    formatter = { exe = "clang_format", args = {} },
     linters = {},
     lsp = {
       provider = "cmake",
       setup = {
-        cmd = {rvim.lsp.binary.cmake, "--stdio"},
+        cmd = { rvim.lsp.binary.cmake, "--stdio" },
         on_attach = on_attach,
         capabilities = capabilities,
-        -- root_dir = lsp_utils.root_dir,
+        root_dir = lsp_utils.root_dir(),
       },
     },
   },
   cpp = {
-    formatter = {exe = "clang_format", args = {}, stdin = true},
-    linters = {"cppcheck", "clangtidy"},
+    formatter = { exe = "clang_format", args = {}, stdin = true },
+    linters = { "cppcheck", "clangtidy" },
     lsp = {
       provider = "clangd",
       setup = {
         cmd = {
           rvim.lsp.binary.clangd,
           "--background-index",
-          '--header-insertion=never',
-          '--cross-file-rename',
-          '--completion-style=bundled',
-          '--clang-tidy',
+          "--header-insertion=never",
+          "--cross-file-rename",
+          "--completion-style=bundled",
+          "--clang-tidy",
           "--clang-tidy-checks=-*,llvm-*,clang-analyzer-*",
         },
         init_options = {
@@ -247,67 +252,66 @@ rvim.lang = {
     },
   },
   css = {
-    formatter = {exe = "prettier", args = {}},
+    formatter = { exe = "prettier", args = {} },
     linters = {},
     lsp = {
       provider = "cssls",
       setup = {
-        cmd = {rvim.lsp.binary.css, "--stdio"},
-        capabilities = capabilities,
+        cmd = { rvim.lsp.binary.css, "--stdio" },
         on_attach = on_attach,
-        -- root_dir = lsp_utils.root_dir,
+        capabilities = capabilities,
+        root_dir = lsp_utils.root_dir(),
       },
     },
   },
   docker = {
-    formatter = {exe = "", args = {}},
+    formatter = { exe = "", args = {} },
     linters = {},
     lsp = {
       provider = "dockerls",
       setup = {
-        cmd = {rvim.lsp.binary.docker, "--stdio"},
-        capabilities = capabilities,
+        cmd = { rvim.lsp.binary.docker, "--stdio" },
         on_attach = on_attach,
-        -- root_dir = lsp_utils.root_dir,
+        capabilities = capabilities,
+        root_dir = lsp_utils.root_dir(),
       },
     },
   },
   elixir = {
-    formatter = {exe = "mix", args = {"format"}, stdin = true},
+    formatter = { exe = "mix", args = { "format" }, stdin = true },
     linters = {},
     lsp = {
       provider = "elixirls",
-      setup = {cmd = {rvim.lsp.binary.elixir}, capabilities = capabilities, on_attach = on_attach},
+      setup = { cmd = { rvim.lsp.binary.elixir }, capabilities = capabilities, on_attach = on_attach },
     },
   },
   go = {
-    formatter = {exe = "gofmt", args = {}, stdin = true},
-    linters = {"golangcilint", "revive"},
+    formatter = { exe = "gofmt", args = {}, stdin = true },
+    linters = { "golangcilint", "revive" },
     lsp = {
       provider = "gopls",
       setup = {
-        cmd = {rvim.lsp.binary.go, "--remote=auto"},
-        capabilities = capabilities,
+        cmd = { rvim.lsp.binary.go },
         on_attach = on_attach,
-        -- root_dir = lsp_utils.root_dir("go"),
+        capabilities = capabilities,
       },
     },
   },
   graphql = {
-    formatter = {exe = "", args = {}},
+    formatter = { exe = "", args = {} },
     linters = {},
     lsp = {
       provider = "graphql",
       setup = {
-        cmd = {rvim.lsp.binary.graphql, "server", "-m", "stream"},
-        capabilities = capabilities,
+        cmd = { rvim.lsp.binary.graphql, "server", "-m", "stream" },
         on_attach = on_attach,
-        -- root_dir = lsp_utils.root_dir("graphql"),
+        capabilities = capabilities,
+        root_dir = lsp_utils.root_dir(),
       },
     },
   },
   html = {
-    formatter = {exe = "prettier", args = {}},
+    formatter = { exe = "prettier", args = {} },
     linters = {
       "tidy",
       -- https://docs.errata.ai/vale/scoping#html
@@ -316,66 +320,59 @@ rvim.lang = {
     lsp = {
       provider = "html",
       setup = {
-        cmd = {rvim.lsp.binary.html, "--stdio"},
-        capabilities = capabilities,
+        cmd = { rvim.lsp.binary.html, "--stdio" },
         on_attach = on_attach,
-        -- root_dir = lsp_utils.root_dir,
+        capabilities = capabilities,
+        root_dir = lsp_utils.root_dir(),
       },
     },
   },
   javascript = {
-    -- @usage can be prettier or eslint
-    formatter = {exe = "prettier", args = {}},
-    linters = {"eslint"},
+    formatter = { exe = "prettier", args = {} },
+    linters = { "eslint" },
     lsp = {
       provider = "tsserver",
       setup = {
         -- TODO:
-        cmd = {rvim.lsp.binary.tsserver, "--stdio"},
-        capabilities = capabilities,
+        cmd = { rvim.lsp.binary.tsserver, "--stdio" },
         on_attach = on_attach,
+        capabilities = capabilities,
       },
     },
   },
   javascriptreact = {
     -- @usage can be prettier or eslint
-    formatter = {exe = "prettier", args = {}},
-    linters = {"eslint"},
+    formatter = { exe = "prettier", args = {}, stdin = true },
+    linters = { "eslint" },
     lsp = {
       provider = "tsserver",
       setup = {
         -- TODO:
-        cmd = {rvim.lsp.binary.tsserver, "--stdio"},
-        capabilities = capabilities,
+        cmd = { rvim.lsp.binary.tsserver, "--stdio" },
         on_attach = on_attach,
+        capabilities = capabilities,
       },
     },
   },
   json = {
-    formatter = {exe = "python", args = {"-m", "json.tool"}, stdin = true},
+    formatter = { exe = "python", args = { "-m", "json.tool" }, stdin = true },
     linters = {},
     lsp = {
       provider = "jsonls",
       setup = {
-        cmd = {rvim.lsp.binary.json, "--stdio"},
-        capabilities = capabilities,
+        cmd = { rvim.lsp.binary.json, "--stdio" },
         on_attach = on_attach,
-        -- root_dir = lsp_utils.root_dir,
+        capabilities = capabilities,
+        root_dir = lsp_utils.root_dir(),
         settings = {
           json = {
             schemas = schemas,
-            --   = {
-            --   {
-            --     fileMatch = { "package.json" },
-            --     url = "https://json.schemastore.org/package.json",
-            --   },
-            -- },
           },
         },
         commands = {
           Format = {
             function()
-              vim.lsp.buf.range_formatting({}, {0, 0}, {vim.fn.line "$", 0})
+              vim.lsp.buf.range_formatting({}, { 0, 0 }, { vim.fn.line "$", 0 })
             end,
           },
         },
@@ -384,33 +381,27 @@ rvim.lang = {
   },
   lua = {
     formatter = {
-      exe = "lua-format",
-      args = {"lua-format -i -c" .. rvim.__vim_path .. "/.lua-format"},
-      -- stdin = false,
-      -- tempfile_prefix = ".formatter",
+      exe = "stylua",
+      args = {},
     },
-    linters = {"luacheck"},
+    linters = { "luacheck" },
     lsp = {
       provider = "sumneko_lua",
       setup = {
-        cmd = {rvim.lsp.binary.lua, "-E", rvim.__sumneko_root_path .. "/main.lua"},
+        cmd = { rvim.lsp.binary.lua, "-E", rvim.__sumneko_root_path .. "/main.lua" },
         on_attach = on_attach,
+        capabilities = capabilities,
         settings = {
           Lua = {
             runtime = {
-              -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
               version = "LuaJIT",
-              -- Setup your lua path
               path = vim.split(package.path, ";"),
             },
             diagnostics = {
-              -- Get the language server to recognize the `vim` global
-              globals = {"vim", "packer_plugins", "rvim"},
+              globals = { "vim", "packer_plugins", "rvim" },
             },
             workspace = {
-              -- Make the server aware of Neovim runtime files
               library = {
-                [vim.fn.expand "~/.local/share/lunarvim/lvim/lua"] = true,
                 [vim.fn.expand "$VIMRUNTIME/lua"] = true,
                 [vim.fn.expand "$VIMRUNTIME/lua/vim/lsp"] = true,
               },
@@ -423,87 +414,91 @@ rvim.lang = {
     },
   },
   python = {
-    -- @usage can be flake8 or yapf
-    formatter = {exe = "black", args = {}},
-    linters = {"flake8", "pylint", "mypy"},
+    formatter = { exe = "yapf", args = {}, stdin = true },
+    linters = { "flake8", "pylint", "mypy" },
     lsp = {
       provider = "pyright",
       setup = {
-        cmd = {rvim.lsp.binary.python, "--stdio"},
-        capabilities = capabilities,
+        cmd = { rvim.lsp.binary.python, "--stdio" },
         on_attach = on_attach,
+        capabilities = capabilities,
       },
     },
   },
   rust = {
-    formatter = {exe = "", args = {}},
+    formatter = { exe = "rustfmt", args = { "--emit=stdout", "--edition=2018" }, stdin = true },
     linters = {},
     lsp = {
       provider = "rust_analyzer",
-      setup = {cmd = {rvim.lsp.binary.rust}, on_attach = on_attach, capabilities = capabilities},
+      setup = { cmd = { rvim.lsp.binary.rust }, on_attach = on_attach, capabilities = capabilities },
     },
   },
   sh = {
-    -- @usage can be 'shfmt'
-    formatter = {exe = "shfmt", args = {}},
-    -- @usage can be 'shellcheck'
-    linters = {"shellcheck"},
+    formatter = {
+      exe = "shfmt",
+      args = {},
+    },
+    linters = { "shellcheck" },
     lsp = {
       provider = "bashls",
       setup = {
-        cmd = {rvim.lsp.binary.sh, "start"},
+        cmd = { rvim.lsp.binary.sh, "start" },
+        cmd_env = { GLOB_PATTERN = "*@(.sh|.zsh|.inc|.bash|.command)" },
+        filetypes = { "sh", "zsh" },
         on_attach = on_attach,
         capabilities = capabilities,
       },
     },
   },
   typescript = {
-    -- @usage can be prettier or eslint
-    formatter = {exe = "prettier", args = {}},
-    linters = {"eslint"},
+    formatter = { exe = "prettier", args = {} },
+    linters = { "eslint" },
     lsp = {
       provider = "tsserver",
       setup = {
         -- TODO:
-        cmd = {rvim.lsp.binary.tsserver, "--stdio"},
-        capabilities = capabilities,
+        cmd = { rvim.lsp.binary.tsserver, "--stdio" },
         on_attach = on_attach,
+        capabilities = capabilities,
       },
     },
   },
   typescriptreact = {
-    -- @usage can be prettier or eslint
-    formatter = {exe = "prettier", args = {}},
-    linters = {"eslint"},
+    formatter = { exe = "prettier", args = {}, stdin = true },
+    linters = { "eslint" },
     lsp = {
       provider = "tsserver",
       setup = {
         -- TODO:
-        cmd = {rvim.lsp.binary.tsserver, "--stdio"},
-        capabilities = capabilities,
+        cmd = { rvim.lsp.binary.tsserver, "--stdio" },
         on_attach = on_attach,
+        capabilities = capabilities,
       },
     },
   },
   vim = {
-    formatter = {exe = "", args = {}},
-    linters = {""},
+    formatter = { exe = "", args = {} },
+    linters = { "vint" },
     lsp = {
       provider = "vimls",
       setup = {
-        cmd = {rvim.lsp.binary.vim, "--stdio"},
+        cmd = { rvim.lsp.binary.vim, "--stdio" },
         on_attach = on_attach,
         capabilities = capabilities,
       },
     },
   },
   yaml = {
-    formatter = {exe = "prettier", args = {}},
+    formatter = {
+      exe = "prettier",
+      args = { "--stdin-filepath", vim.api.nvim_buf_get_name(0), "--single-quote", stdin = true },
+      stdin = true,
+    },
     linters = {},
     lsp = {
       provider = "yamlls",
       setup = {
-        cmd = {rvim.lsp.binary.yaml, "--stdio"},
+        cmd = { rvim.lsp.binary.yaml, "--stdio" },
         on_attach = on_attach,
         capabilities = capabilities,
       },

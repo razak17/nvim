@@ -1,1 +1,1 @@
-sh.lua
+require("lsp").setup "sh"

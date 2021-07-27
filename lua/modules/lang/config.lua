@@ -28,12 +28,24 @@ end
 
 -- Lsp
 function config.nvim_lsp()
-  -- require'modules.lang.lspconfig'.lsp_setup()
   require'lsp'.setup_handlers()
 end
 
 function config.nvim_lsp_settings()
-  require'nlspsettings'.setup {config_home = rvim.__vim_path .. '/lspsettings'}
+  local lsp_settings_status_ok, lsp_settings = pcall(require, "nlspsettings")
+  if lsp_settings_status_ok then
+    lsp_settings.setup {
+      config_home = rvim.__vim_path .. '/lspsettings'
+    }
+  end
+end
+
+function config.null_ls()
+  local null_status_ok, null_ls = pcall(require, "null-ls")
+  if null_status_ok then
+    null_ls.config {}
+    require("lspconfig")["null-ls"].setup {}
+  end
 end
 
 function config.formatter()

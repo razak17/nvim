@@ -15,10 +15,14 @@ function lsp_utils.preview_location(location, context, before_context)
   end
 
   local range = location.targetRange or location.range
-  local contents = vim.api.nvim_buf_get_lines(bufnr, range.start.line - before_context,
-    range["end"].line + 1 + context, false)
+  local contents = vim.api.nvim_buf_get_lines(
+    bufnr,
+    range.start.line - before_context,
+    range["end"].line + 1 + context,
+    false
+  )
   local filetype = vim.api.nvim_buf_get_option(bufnr, "filetype")
-  return vim.lsp.util.open_floating_preview(contents, filetype, {border = rvim.lsp.popup_border})
+  return vim.lsp.util.open_floating_preview(contents, filetype, { border = rvim.lsp.popup_border })
 end
 
 function lsp_utils.preview_location_callback(_, method, result)
@@ -39,8 +43,12 @@ function lsp_utils.PeekDefinition()
     vim.api.nvim_set_current_win(lsp_utils.floating_win)
   else
     local params = vim.lsp.util.make_position_params()
-    return vim.lsp.buf_request(0, "textDocument/definition", params,
-      lsp_utils.preview_location_callback)
+    return vim.lsp.buf_request(
+      0,
+      "textDocument/definition",
+      params,
+      lsp_utils.preview_location_callback
+    )
   end
 end
 
@@ -49,8 +57,12 @@ function lsp_utils.PeekTypeDefinition()
     vim.api.nvim_set_current_win(lsp_utils.floating_win)
   else
     local params = vim.lsp.util.make_position_params()
-    return vim.lsp.buf_request(0, "textDocument/typeDefinition", params,
-      lsp_utils.preview_location_callback)
+    return vim.lsp.buf_request(
+      0,
+      "textDocument/typeDefinition",
+      params,
+      lsp_utils.preview_location_callback
+    )
   end
 end
 
@@ -59,8 +71,12 @@ function lsp_utils.PeekImplementation()
     vim.api.nvim_set_current_win(lsp_utils.floating_win)
   else
     local params = vim.lsp.util.make_position_params()
-    return vim.lsp.buf_request(0, "textDocument/implementation", params,
-      lsp_utils.preview_location_callback)
+    return vim.lsp.buf_request(
+      0,
+      "textDocument/implementation",
+      params,
+      lsp_utils.preview_location_callback
+    )
   end
 end
 
@@ -77,7 +93,7 @@ end
 function lsp_utils.lspLocList()
   rvim.augroup("LspLocationList", {
     {
-      events = {"User LspDiagnosticsChanged"},
+      events = { "User LspDiagnosticsChanged" },
       command = function()
         vim.lsp.diagnostic.set_loclist {
           workspace = true,
@@ -91,10 +107,10 @@ end
 
 function lsp_utils.toggle_autoformat()
   if rvim.lsp.format_on_save then
-    rvim.augroup("UpdateVim", {
+    rvim.augroup("AutoFormatOnSaVE", {
       {
-        events = {"BufWritePre"},
-        targets = {"*"},
+        events = { "BufWritePre" },
+        targets = { "*" },
         command = ":silent lua vim.lsp.buf.formatting_sync()",
       },
     })
@@ -109,18 +125,55 @@ function lsp_utils.toggle_autoformat()
   end
 end
 
-function lsp_utils.root_dir(ft)
-  if not ft then
-    require'lspconfig.util'.root_pattern('.gitignore', '.git', vim.fn.getcwd())
-  end
-  if ft then
-    if ft == "graphql" then
-      require'lspconfig.util'.root_pattern('.graphqlrc', '.gitignore', '.git', vim.fn.getcwd())
+function lsp_utils.root_dir()
+  local util = require "lspconfig.util"
+  return util.root_pattern(".gitignore", ".git", vim.fn.getcwd())
+end
+
+lsp_utils.get_cursor_pos = function()
+  return { vim.fn.line ".", vim.fn.col "." }
+end
+
+lsp_utils.debounce = function(func, timeout)
+  local timer_id = nil
+  return function(...)
+    if timer_id ~= nil then
+      vim.fn.timer_stop(timer_id)
     end
-    if ft == "go" then
-      require'lspconfig.util'.root_pattern('main.go', '.gitignore', '.git', vim.fn.getcwd())
-    end
+    local args = { ... }
+
+    timer_id = vim.fn.timer_start(timeout, function()
+      func(args)
+      timer_id = nil
+    end)
   end
+end
+
+function lsp_utils.hover_diagnostics()
+  rvim.augroup("HoverDiagnostics", {
+    {
+      events = { "CursorHold" },
+      targets = { "<buffer>" },
+      command = (function()
+        local cursorpos = lsp_utils.get_cursor_pos()
+        return function()
+          local new_cursor = lsp_utils.get_cursor_pos()
+          if
+            (new_cursor[1] ~= 1 and new_cursor[2] ~= 1)
+            and (new_cursor[1] ~= cursorpos[1] or new_cursor[2] ~= cursorpos[2])
+          then
+            cursorpos = new_cursor
+            if rvim.plugin.saga.active then
+              vim.cmd [[packadd lspsaga.nvim]]
+              lsp_utils.debounce(require("lspsaga.diagnostic").show_cursor_diagnostics(), 30)
+            else
+              vim.lsp.diagnostic.show_line_diagnostics { show_header = false, border = "single" }
+            end
+          end
+        end
+      end)(),
+    },
+  })
 end
 
 return lsp_utils

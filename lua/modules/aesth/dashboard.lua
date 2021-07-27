@@ -23,7 +23,7 @@ vim.cmd "let packages = len(globpath('~/.local/share/rvim/site/pack/packer/*', '
 
 vim.api.nvim_exec(
   [[
-    let g:dashboard_custom_footer = ['Neovim loaded '..packages..' plugins ']
+    let g:dashboard_custom_footer = ['  Neovim loaded '..packages..' plugins']
   ]],
   false
 )

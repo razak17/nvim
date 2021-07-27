@@ -1,0 +1,9 @@
+{
+  "go.buildOnSave": "off",
+  "gopls": {
+    "ui.diagnostic.analyses": {
+      "unusedparams": true,
+      "loopclosure": true
+    }
+  }
+}

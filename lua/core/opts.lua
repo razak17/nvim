@@ -2,12 +2,6 @@ local vim = vim
 
 local function set(key, value) vim.opt[key] = value end
 
--- vim.cmd [[
---   syntax off
---   " filetype indent off
---   filetype off
--- ]]
-
 -- Neovim Directories
 set('udir', rvim.sets.udir)
 set('directory', rvim.sets.directory)

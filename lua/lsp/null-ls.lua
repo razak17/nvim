@@ -1,27 +1,13 @@
+local is_table = rvim.is_table
+local is_string = rvim.is_string
+local has_value = rvim.has_value
+
 local M = {}
 
 local null_ls = require "null-ls"
 local sources = {}
 
 local local_executables = {"prettier", "prettierd", "prettier_d_slim", "eslint_d", "eslint"}
-
-local function is_table(t)
-  return type(t) == "table"
-end
-
-local function is_string(t)
-  return type(t) == "string"
-end
-
-local function has_value(tab, val)
-  for _, value in ipairs(tab) do
-    if value == val then
-      return true
-    end
-  end
-
-  return false
-end
 
 local find_local_exe = function(exe)
   -- vim.cmd "let root_dir = FindRootDirectory()"

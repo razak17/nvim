@@ -261,16 +261,14 @@ rvim.augroup("PackerSetupInit", {
       rvim.__modules_dir .. "/*/*.lua",
     },
     command = function()
-      vim.cmd "source ~/.config/rvim/lua/defaults/init.lua"
-      vim.cmd "source ~/.config/rvim/lua/core/opts.lua"
-      require'core.plug'.ensure_plugins()
-      require'core.plug'.install()
-      require'core.plug'.magic_compile()
-      vim.cmd "source ~/.config/rvim/lua/keymap/which_key.lua"
-      vim.cmd "source ~/.config/rvim/lua/core/init.lua"
-      require'core.plug'.load_compile()
+      vim.cmd [[source ~/.config/rvim/lua/core/opts.lua]]
+      vim.cmd [[source ~/.config/rvim/lua/defaults/init.lua]]
+      local plug = require'core.plug'
+      plug.ensure_plugins()
       require 'lsp.utils'.toggle_autoformat()
-      vim.cmd "source ~/.config/rvim/init.lua"
+      plug.install()
+      plug.magic_compile()
+      plug.load_compile()
       rvim.notify("packer compiled...", {timeout = 1000})
     end,
   },

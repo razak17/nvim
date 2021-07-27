@@ -4,7 +4,7 @@ if fn.filereadable(fn.fnamemodify("~/.vimrc.local", ":p")) > 0 then
   cmd [[source ~/.vimrc.local]]
 end
 
--- Load Modules:
+-- Load Modules
 require 'globals'
 require 'defaults'
 require 'core'
