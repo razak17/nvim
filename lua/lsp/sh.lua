@@ -5,11 +5,11 @@ M.init = function()
     return
   end
   require'lspconfig'.bashls.setup {
-    cmd = {rvim.lsp.binary.sh, "start"},
+    cmd = {rvim.lang.lsp.binary.sh, "start"},
     cmd_env = {GLOB_PATTERN = "*@(.sh|.zsh|.inc|.bash|.command)"},
     filetypes = {"sh", "zsh"},
-    capabilities = rvim.lsp.capabilities,
-    on_attach = rvim.lsp.on_attach,
+    capabilities = rvim.lang.lsp.capabilities,
+    on_attach = rvim.lang.lsp.on_attach,
   }
 end
 

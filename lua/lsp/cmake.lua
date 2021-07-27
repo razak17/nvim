@@ -5,10 +5,10 @@ M.init = function()
     return
   end
   require("lspconfig").cmake.setup {
-    cmd = {rvim.lsp.binary.cmake},
+    cmd = {rvim.lang.lsp.binary.cmake},
     filetypes = {"cmake"},
-    capabilities = rvim.lsp.capabilities,
-    on_attach = rvim.lsp.on_attach,
+    capabilities = rvim.lang.lsp.capabilities,
+    on_attach = rvim.lang.lsp.on_attach,
     root_dir = require'lspconfig.util'.root_pattern('.gitignore', '.git', vim.fn.getcwd()),
   }
 end

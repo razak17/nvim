@@ -12,15 +12,15 @@ M.init = function()
     '--cross-file-rename',
   }
   require'lspconfig'.clangd.setup {
-    cmd = {rvim.lsp.binary.clangd, unpack(clangd_flags)},
+    cmd = {rvim.lang.lsp.binary.clangd, unpack(clangd_flags)},
     init_options = {
       clangdFileStatus = true,
       usePlaceholders = true,
       completeUnimported = true,
       semanticHighlighting = true,
     },
-    capabilities = rvim.lsp.capabilities,
-    on_attach = rvim.lsp.on_attach,
+    capabilities = rvim.lang.lsp.capabilities,
+    on_attach = rvim.lang.lsp.on_attach,
   }
 end
 

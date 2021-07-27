@@ -5,10 +5,10 @@ M.init = function()
     return
   end
   require'lspconfig'.elixirls.setup {
-    cmd = {rvim.lsp.binary.elixir},
+    cmd = {rvim.lang.lsp.binary.elixir},
     elixirls = {dialyzerEnabled = false},
-    capabilities = rvim.lsp.capabilities,
-    on_attach = rvim.lsp.on_attach,
+    capabilities = rvim.lang.lsp.capabilities,
+    on_attach = rvim.lang.lsp.on_attach,
   }
 end
 

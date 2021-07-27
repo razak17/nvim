@@ -43,7 +43,7 @@ M.init = function()
     return
   end
   require'lspconfig'.tsserver.setup {
-    cmd = {rvim.lsp.binary.tsserver, "--stdio"},
+    cmd = {rvim.lang.lsp.binary.tsserver, "--stdio"},
     filetypes = {
       "javascript",
       "javascriptreact",
@@ -52,11 +52,11 @@ M.init = function()
       "typescriptreact",
       "typescript.tsx",
     },
-    capabilities = rvim.lsp.capabilities,
+    capabilities = rvim.lang.lsp.capabilities,
     on_attach = function(client, bufnr)
       client.resolved_capabilities.document_formatting = false
       -- tsserver_on_attach(client, bufnr)
-      rvim.lsp.on_attach(client, bufnr)
+      rvim.lang.lsp.on_attach(client, bufnr)
     end,
     settings = {documentFormatting = false},
     root_dir = require'lspconfig.util'.root_pattern('tsconfig.json', 'package.json', '.git',

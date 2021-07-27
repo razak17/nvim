@@ -5,9 +5,9 @@ M.init = function()
     return
   end
   require'lspconfig'.gopls.setup {
-    cmd = {rvim.lsp.binary.go, "--remote=auto"},
-    capabilities = rvim.lsp.capabilities,
-    on_attach = rvim.lsp.on_attach,
+    cmd = {rvim.lang.lsp.binary.go, "--remote=auto"},
+    capabilities = rvim.lang.lsp.capabilities,
+    on_attach = rvim.lang.lsp.on_attach,
     init_options = {usePlaceholders = true, completeUnimported = true},
     root_dir = require'lspconfig.util'.root_pattern('main.go', '.gitignore', '.git', vim.fn.getcwd()),
   }
