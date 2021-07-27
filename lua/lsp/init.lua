@@ -8,15 +8,14 @@ local lsp_config = {}
 
 local function lsp_highlight_document(client)
   if rvim.lsp.document_highlight == false then
-    return -- we don't need further
+    return
   end
-  -- Set autocommands conditional on server_capabilities
   if client.resolved_capabilities.document_highlight then
     vim.api.nvim_exec(
       [[
-      hi LspReferenceRead cterm=bold ctermbg=red guibg=#464646
-      hi LspReferenceText cterm=bold ctermbg=red guibg=#464646
-      hi LspReferenceWrite cterm=bold ctermbg=red guibg=#464646
+      hi LspReferenceRead cterm=bold ctermbg=red guibg=NONE
+      hi LspReferenceText cterm=bold ctermbg=red guibg=#4E525C
+      hi LspReferenceWrite cterm=bold ctermbg=red guibg=#4E525C
       augroup lsp_document_highlight
         autocmd! * <buffer>
         autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
@@ -180,7 +179,6 @@ function lsp_config.setup_handlers()
     { name = "LspDiagnosticsSignInformation", text = "", texthl = "LspDiagnosticsSignInformation" },
   }
 
-  -- symbols for autocomplete
   vim.lsp.protocol.CompletionItemKind = {
     "   (Text) ",
     "   (Method)",
