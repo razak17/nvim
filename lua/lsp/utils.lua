@@ -109,8 +109,18 @@ function lsp_utils.toggle_autoformat()
   end
 end
 
-function lsp_utils.root_dir()
-  require'lspconfig.util'.root_pattern('.gitignore', '.git', vim.fn.getcwd())
+function lsp_utils.root_dir(ft)
+  if not ft then
+    require'lspconfig.util'.root_pattern('.gitignore', '.git', vim.fn.getcwd())
+  end
+  if ft then
+    if ft == "graphql" then
+      require'lspconfig.util'.root_pattern('.graphqlrc', '.gitignore', '.git', vim.fn.getcwd())
+    end
+    if ft == "go" then
+      require'lspconfig.util'.root_pattern('main.go', '.gitignore', '.git', vim.fn.getcwd())
+    end
+  end
 end
 
 return lsp_utils

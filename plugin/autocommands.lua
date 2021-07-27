@@ -118,12 +118,12 @@ rvim.augroup("Templates", {
   {
     events = {"BufNewFile"},
     targets = {"*.sh"},
-    command = "0r $HOME/.config/nvim/templates/skeleton.sh",
+    command = "0r $HOME/.config/rvim/templates/skeleton.sh",
   },
   {
     events = {"BufNewFile"},
     targets = {"*.lua"},
-    command = "0r $HOME/.config/nvim/templates/skeleton.lua",
+    command = "0r $HOME/.config/rvim/templates/skeleton.lua",
   },
 })
 
@@ -256,21 +256,21 @@ rvim.augroup("PackerSetupInit", {
   {
     events = {"BufWritePost"},
     targets = {
-      "$MYVIMRC",
+      rvim.__vim_path .. '/init.lua',
       rvim.__vim_path .. '/lua/defaults/init.lua',
       rvim.__modules_dir .. "/*/*.lua",
     },
     command = function()
-      vim.cmd "source ~/.config/nvim/lua/defaults/init.lua"
-      vim.cmd "source ~/.config/nvim/lua/core/opts.lua"
+      vim.cmd "source ~/.config/rvim/lua/defaults/init.lua"
+      vim.cmd "source ~/.config/rvim/lua/core/opts.lua"
       require'core.plug'.ensure_plugins()
       require'core.plug'.install()
       require'core.plug'.magic_compile()
-      vim.cmd "source ~/.config/nvim/lua/keymap/which_key.lua"
-      vim.cmd "source ~/.config/nvim/lua/init.lua"
+      vim.cmd "source ~/.config/rvim/lua/keymap/which_key.lua"
+      vim.cmd "source ~/.config/rvim/lua/core/init.lua"
       require'core.plug'.load_compile()
       require 'lsp.utils'.toggle_autoformat()
-      vim.cmd [[source $MYVIMRC]]
+      vim.cmd "source ~/.config/rvim/init.lua"
       rvim.notify("packer compiled...", {timeout = 1000})
     end,
   },

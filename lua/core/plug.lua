@@ -1,7 +1,9 @@
 local uv, api, fn = vim.loop, vim.api, vim.fn
-local packer_compiled = vim.fn.stdpath('data') .. '/site/packer_compiled.vim'
-local compile_to_lua = vim.fn.stdpath('data') .. '/site/lua/_compiled.lua'
+local packer_compiled = rvim.__data_dir .. '/site/packer_compiled.vim'
+local install_path = rvim.__data_dir .. '/site/pack/'
+local compile_to_lua = rvim.__data_dir .. '/site/lua/_compiled.lua'
 local packer = nil
+local packer_ok = nil
 local command = rvim.command
 
 local Plug = {}
@@ -29,19 +31,27 @@ function Plug:load_plugins()
   end
 end
 
+
 function Plug:load_packer()
   if not packer then
     api.nvim_command('packadd packer.nvim')
     packer = require('packer')
   end
+
+  packer_ok, packer = pcall(require, "packer")
+  if not packer_ok then
+    return
+  end
+
   packer.init({
+    package_root = install_path,
     compile_path = packer_compiled,
     auto_reload_compiled = true,
     git = {clone_timeout = 7000},
     disable_commands = true,
     display = {
       open_fn = function()
-        return require('packer.util').float {border = 'single'}
+        return require'packer.util'.float {border = 'single'}
       end,
     },
   })
@@ -56,12 +66,12 @@ function Plug:load_packer()
 end
 
 function Plug:init_ensure_plugins()
-  local packer_dir = rvim.__data_dir .. 'pack/packer/opt/packer.nvim'
+  local packer_dir = rvim.__data_dir .. '/site/pack/packer/opt/packer.nvim'
   local state = uv.fs_stat(packer_dir)
   if not state then
     local cmd = "!git clone https://github.com/wbthomason/packer.nvim " .. packer_dir
     api.nvim_command(cmd)
-    uv.fs_mkdir(rvim.__data_dir .. 'lua', 511, function()
+    uv.fs_mkdir(rvim.__data_dir .. '/site/lua', 511, function()
       assert("make compile path dir faield")
     end)
     self:load_packer()
@@ -98,8 +108,8 @@ function plugins.convert_compile_file()
   end
   table.remove(lines, #lines)
 
-  if vim.fn.isdirectory(rvim.__data_dir .. 'lua') ~= 1 then
-    os.execute('mkdir -p ' .. rvim.__data_dir .. 'lua')
+  if vim.fn.isdirectory(rvim.__data_dir .. '/site/lua') ~= 1 then
+    os.execute('mkdir -p ' .. rvim.__data_dir .. '/site/lua')
   end
 
   if vim.fn.filereadable(compile_to_lua) == 1 then

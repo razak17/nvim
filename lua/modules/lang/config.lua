@@ -33,7 +33,7 @@ function config.nvim_lsp()
 end
 
 function config.nvim_lsp_settings()
-  require'nlspsettings'.setup {config_home = vim.fn.stdpath('config') .. '/lspsettings'}
+  require'nlspsettings'.setup {config_home = rvim.__vim_path .. '/lspsettings'}
 end
 
 function config.formatter()

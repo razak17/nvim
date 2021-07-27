@@ -18,7 +18,7 @@ local default_keymaps = {
   ['='] = 'Balance window',
   [';'] = 'terminal',
   ['.'] = 'Open init.vim',
-  [','] = 'Open lua/rvim/init.lua',
+  [','] = 'Open lua/core/init.lua',
   ['/'] = 'Comment',
   ['['] = 'Find and Replace all',
   [']'] = 'Find and Replace one',

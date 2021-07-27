@@ -89,7 +89,7 @@ lang['kevinhwang91/nvim-bqf'] = {
 
 -- Treesitter
 lang['nvim-treesitter/nvim-treesitter'] = {
-  event = 'BufWinEnter',
+  branch = "0.5-compat",
   after = 'telescope.nvim',
   config = conf.nvim_treesitter,
   disable = not rvim.plugin.treesitter.active and not rvim.plugin.SANE.active,

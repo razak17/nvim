@@ -414,9 +414,8 @@ nnoremap("<leader>li", function()
 end)
 
 -- Other remaps
-nnoremap('<Leader>,', ':e ~/.config/nvim/lua/rvim/init.lua<CR>')
-nnoremap('<Leader>.', ':e $MYVIMRC<CR>')
-nnoremap('<leader><CR>', ':source $MYVIMRC<CR>')
+nnoremap('<Leader>,', ':e ~/.config/rvim/lua/core/init.lua<CR>')
+nnoremap('<Leader>.', ':e ~/.config/rvim/init.lua<CR>')
 nnoremap('<Leader>Ic', ':checkhealth<CR>')
 nnoremap('<C-b>', ':QuickRun<CR>')
 nnoremap('<Leader>Im', ':messages<CR>')
