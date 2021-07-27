@@ -1,5 +1,0 @@
-{
-  "css.validate": true,
-  "css.lint.float": "ignore",
-  "css.lint.unknownAtRules": "ignore"
-}

@@ -1,7 +1,0 @@
-{
-  "cout": {
-    "prefix": "cout",
-    "body": ["std::cout << \"${1:/* message */}\" << std::endl;"],
-    "description": "Code snippet for printing to std::cout, provided the header is set"
-  }
-}
