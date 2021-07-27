@@ -5,6 +5,6 @@ if fn.filereadable(fn.fnamemodify("~/.vimrc.local", ":p")) > 0 then
 end
 
 -- Load Modules
-require 'globals'
-require 'defaults'
-require 'core'
+require "globals"
+require "defaults"
+require "core"

@@ -8,7 +8,7 @@ tools['mbbill/undotree'] = {cmd = "UndotreeToggle", disable = not rvim.plugin.un
 tools['airblade/vim-rooter'] = {
   config = function()
     vim.g.rooter_silent_chdir = 1
-    -- vim.g.rooter_patterns = {'=nvim', '.git', '.gitignore', 'lua'}
+    vim.g.rooter_patterns = {'=nvim', '.git', '.gitignore', 'lua'}
   end,
   disable = not rvim.plugin.rooter.active,
 }

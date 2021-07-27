@@ -1,2 +1,1 @@
 require("lsp").setup "html"
-

@@ -188,8 +188,8 @@ end
 
 rvim.lang = {
   c = {
-    formatter = { exe = "clang_format", args = {}, stdin = true },
-    linters = { "clangtidy" },
+    formatter = {exe = "clang_format", args = {}, stdin = true},
+    linters = {"clangtidy"},
     lsp = {
       provider = "clangd",
       setup = {
@@ -199,6 +199,9 @@ rvim.lang = {
           "--header-insertion=never",
           "--cross-file-rename",
           "--clang-tidy",
+          '--header-insertion=never',
+          '--cross-file-rename',
+          '--clang-tidy',
           "--clang-tidy-checks=-*,llvm-*,clang-analyzer-*",
         },
         init_options = {
@@ -294,8 +297,8 @@ rvim.lang = {
         cmd = { rvim.lsp.binary.go },
         on_attach = on_attach,
         capabilities = capabilities,
-      },
-    },
+      }
+    }
   },
   graphql = {
     formatter = { exe = "", args = {} },

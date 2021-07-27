@@ -7,7 +7,7 @@ local M = {}
 local null_ls = require "null-ls"
 local sources = {}
 
-local local_executables = {"prettier", "prettierd", "prettier_d_slim", "eslint_d", "eslint"}
+local local_executables = { "prettier", "prettierd", "prettier_d_slim", "eslint_d", "eslint" }
 
 local find_local_exe = function(exe)
   -- vim.cmd "let root_dir = FindRootDirectory()"
@@ -34,7 +34,7 @@ local function setup_ls(exe, type)
       table.insert(sources, null_ls.builtins[type][exe])
     end
   end
-  null_ls.register {sources = sources}
+  null_ls.register { sources = sources }
 end
 
 -- TODO: for linters and formatters with spaces and '-' replace with '_'
