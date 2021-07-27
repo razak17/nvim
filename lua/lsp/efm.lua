@@ -24,15 +24,17 @@ local linters = {
 local eslint = linters.eslint
 local prettier = formatters.prettier
 local prettier_yaml = formatters.prettier_yaml
+local on_attach = require'lsp'.on_attach
+local capabilities = require'lsp'.capabilities
 
 local M = {}
-function M.setup(capabilities)
+function M.setup()
   if rvim.check_lsp_client_active "efm" then
     return
   end
   require'lspconfig'.efm.setup {
     capabilities = capabilities,
-    on_attach = rvim.lsp.on_attach,
+    on_attach = on_attach,
     init_options = {documentFormatting = true, codeAction = false},
     filetypes = {
       "javascript",

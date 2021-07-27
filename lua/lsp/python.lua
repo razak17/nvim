@@ -5,9 +5,9 @@ M.init = function()
     return
   end
   require'lspconfig'.pyright.setup {
-    cmd = {rvim.lsp.binary.python, "--stdio"},
-    capabilities = rvim.lsp.capabilities,
-    on_attach = rvim.lsp.on_attach,
+    cmd = {rvim.lang.lsp.binary.python, "--stdio"},
+    capabilities = rvim.lang.lsp.capabilities,
+    on_attach = rvim.lang.lsp.on_attach,
     settings = {
       python = {
         analysis = {typeCheckingMode = "off", autoSearchPaths = true, useLibraryCodeForTypes = true},

@@ -38,8 +38,8 @@ rvim.plugin = {
   symbols_outline = {active = false},
   bqf = {active = false},
   trouble = {active = false},
-  nvim_lint = {active = true},
-  formatter = {active = true},
+  nvim_lint = {active = false},
+  formatter = {active = false},
   lsp_ts_utils = {active = true},
   -- treesitter
   treesitter = {active = false},
@@ -149,10 +149,12 @@ rvim.dashboard = {
 rvim.utils = {leader_key = " ", dapinstall_dir = rvim.__data_dir, transparent_window = false}
 
 rvim.lsp = {
+  document_highlight = true,
   hover_diagnostics = true,
   format_on_save = true,
   lint_on_save = true,
   rust_tools = false,
+  on_attach_callback = nil,
   binary = {
     clangd = "clangd",
     cmake = "cmake-language-server",
@@ -171,5 +173,342 @@ rvim.lsp = {
     tsserver = "typescript-language-server",
     vim = "vim-language-server",
     yaml = "yaml-language-server",
+  },
+}
+
+local on_attach = require'lsp'.on_attach
+local capabilities = require'lsp'.capabilities
+local lsp_utils = require 'lsp.utils'
+local schemas = nil
+
+rvim.lang = {
+  c = {
+    formatter = {exe = "clang_format", args = {}, stdin = true},
+    linters = {"clangtidy"},
+    lsp = {
+      provider = "clangd",
+      setup = {
+        cmd = {
+          rvim.lsp.binary.clangd,
+          "--background-index",
+          '--header-insertion=never',
+          '--cross-file-rename',
+          '--clang-tidy',
+          "--clang-tidy-checks=-*,llvm-*,clang-analyzer-*",
+        },
+        init_options = {
+          clangdFileStatus = true,
+          usePlaceholders = true,
+          completeUnimported = true,
+          semanticHighlighting = true,
+        },
+        capabilities = capabilities,
+        on_attach = on_attach,
+      },
+    },
+  },
+  cmake = {
+    formatter = {exe = "clang_format", args = {}},
+    linters = {},
+    lsp = {
+      provider = "cmake",
+      setup = {
+        cmd = {rvim.lsp.binary.cmake, "--stdio"},
+        on_attach = on_attach,
+        capabilities = capabilities,
+        root_dir = lsp_utils.root_dir,
+      },
+    },
+  },
+  cpp = {
+    formatter = {exe = "clang_format", args = {}, stdin = true},
+    linters = {"cppcheck", "clangtidy"},
+    lsp = {
+      provider = "clangd",
+      setup = {
+        cmd = {
+          rvim.lsp.binary.clangd,
+          "--background-index",
+          '--header-insertion=never',
+          '--cross-file-rename',
+          '--completion-style=bundled',
+          '--clang-tidy',
+          "--clang-tidy-checks=-*,llvm-*,clang-analyzer-*",
+        },
+        init_options = {
+          clangdFileStatus = true,
+          usePlaceholders = true,
+          completeUnimported = true,
+          semanticHighlighting = true,
+        },
+        capabilities = capabilities,
+        on_attach = on_attach,
+      },
+    },
+  },
+  css = {
+    formatter = {exe = "prettier", args = {}},
+    linters = {},
+    lsp = {
+      provider = "cssls",
+      setup = {
+        cmd = {rvim.lsp.binary.css, "--stdio"},
+        capabilities = capabilities,
+        on_attach = on_attach,
+        root_dir = lsp_utils.root_dir,
+      },
+    },
+  },
+  docker = {
+    formatter = {exe = "", args = {}},
+    linters = {},
+    lsp = {
+      provider = "dockerls",
+      setup = {
+        cmd = {rvim.lsp.binary.docker, "--stdio"},
+        capabilities = capabilities,
+        on_attach = on_attach,
+        root_dir = lsp_utils.root_dir,
+      },
+    },
+  },
+  elixir = {
+    formatter = {exe = "mix", args = {"format"}, stdin = true},
+    linters = {},
+    lsp = {
+      provider = "elixirls",
+      setup = {cmd = {rvim.lsp.binary.elixir}, capabilities = capabilities, on_attach = on_attach},
+    },
+  },
+  go = {
+    formatter = {exe = "gofmt", args = {}, stdin = true},
+    linters = {"golangcilint", "revive"},
+    lsp = {
+      provider = "gopls",
+      setup = {
+        cmd = {rvim.lsp.binary.go, "--remote=auto"},
+        capabilities = capabilities,
+        on_attach = on_attach,
+        root_dir = require'lspconfig.util'.root_pattern('main.go', '.gitignore', '.git',
+          vim.fn.getcwd()),
+      },
+    },
+  },
+  graphql = {
+    formatter = {exe = "", args = {}},
+    linters = {},
+    lsp = {
+      provider = "graphql",
+      setup = {
+        cmd = {rvim.lsp.binary.graphql, "server", "-m", "stream"},
+        capabilities = capabilities,
+        on_attach = on_attach,
+        root_dir = require'lspconfig.util'.root_pattern('.graphqlrc', '.gitignore', '.git',
+          vim.fn.getcwd()),
+      },
+    },
+  },
+  html = {
+    formatter = {exe = "prettier", args = {}},
+    linters = {
+      "tidy",
+      -- https://docs.errata.ai/vale/scoping#html
+      "vale",
+    },
+    lsp = {
+      provider = "html",
+      setup = {
+        cmd = {rvim.lsp.binary.html, "--stdio"},
+        capabilities = capabilities,
+        on_attach = on_attach,
+        root_dir = lsp_utils.root_dir,
+      },
+    },
+  },
+  javascript = {
+    -- @usage can be prettier or eslint
+    formatter = {exe = "prettier", args = {}},
+    linters = {"eslint"},
+    lsp = {
+      provider = "tsserver",
+      setup = {
+        -- TODO:
+        cmd = {rvim.lsp.binary.tsserver, "--stdio"},
+        capabilities = capabilities,
+        on_attach = on_attach,
+      },
+    },
+  },
+  javascriptreact = {
+    -- @usage can be prettier or eslint
+    formatter = {exe = "prettier", args = {}},
+    linters = {"eslint"},
+    lsp = {
+      provider = "tsserver",
+      setup = {
+        -- TODO:
+        cmd = {rvim.lsp.binary.tsserver, "--stdio"},
+        capabilities = capabilities,
+        on_attach = on_attach,
+      },
+    },
+  },
+  json = {
+    formatter = {exe = "python", args = {"-m", "json.tool"}, stdin = true},
+    linters = {},
+    lsp = {
+      provider = "jsonls",
+      setup = {
+        cmd = {rvim.lsp.binary.json, "--stdio"},
+        capabilities = capabilities,
+        on_attach = on_attach,
+        root_dir = lsp_utils.root_dir,
+        settings = {
+          json = {
+            schemas = schemas,
+            --   = {
+            --   {
+            --     fileMatch = { "package.json" },
+            --     url = "https://json.schemastore.org/package.json",
+            --   },
+            -- },
+          },
+        },
+        commands = {
+          Format = {
+            function()
+              vim.lsp.buf.range_formatting({}, {0, 0}, {vim.fn.line "$", 0})
+            end,
+          },
+        },
+      },
+    },
+  },
+  lua = {
+    formatter = {
+      exe = "lua-format",
+      args = {"lua-format -i -c" .. vim.fn.stdpath('config') .. "/.lua-format"},
+      -- stdin = false,
+      -- tempfile_prefix = ".formatter",
+    },
+    linters = {"luacheck"},
+    lsp = {
+      provider = "sumneko_lua",
+      setup = {
+        cmd = {rvim.lsp.binary.lua, "-E", rvim.__sumneko_root_path .. "/main.lua"},
+        on_attach = on_attach,
+        settings = {
+          Lua = {
+            runtime = {
+              -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+              version = "LuaJIT",
+              -- Setup your lua path
+              path = vim.split(package.path, ";"),
+            },
+            diagnostics = {
+              -- Get the language server to recognize the `vim` global
+              globals = {"vim", "packer_plugins", "rvim"},
+            },
+            workspace = {
+              -- Make the server aware of Neovim runtime files
+              library = {
+                [vim.fn.expand "~/.local/share/lunarvim/lvim/lua"] = true,
+                [vim.fn.expand "$VIMRUNTIME/lua"] = true,
+                [vim.fn.expand "$VIMRUNTIME/lua/vim/lsp"] = true,
+              },
+              maxPreload = 100000,
+              preloadFileSize = 1000,
+            },
+          },
+        },
+      },
+    },
+  },
+  python = {
+    -- @usage can be flake8 or yapf
+    formatter = {exe = "black", args = {}},
+    linters = {"flake8", "pylint", "mypy"},
+    lsp = {
+      provider = "pyright",
+      setup = {
+        cmd = {rvim.lsp.binary.python, "--stdio"},
+        capabilities = capabilities,
+        on_attach = on_attach,
+      },
+    },
+  },
+  rust = {
+    formatter = {exe = "", args = {}},
+    linters = {},
+    lsp = {
+      provider = "rust_analyzer",
+      setup = {cmd = {rvim.lsp.binary.rust}, on_attach = on_attach, capabilities = capabilities},
+    },
+  },
+  sh = {
+    -- @usage can be 'shfmt'
+    formatter = {exe = "shfmt", args = {}},
+    -- @usage can be 'shellcheck'
+    linters = {"shellcheck"},
+    lsp = {
+      provider = "bashls",
+      setup = {
+        cmd = {rvim.lsp.binary.sh, "start"},
+        on_attach = on_attach,
+        capabilities = capabilities,
+      },
+    },
+  },
+  typescript = {
+    -- @usage can be prettier or eslint
+    formatter = {exe = "prettier", args = {}},
+    linters = {"eslint"},
+    lsp = {
+      provider = "tsserver",
+      setup = {
+        -- TODO:
+        cmd = {rvim.lsp.binary.tsserver, "--stdio"},
+        capabilities = capabilities,
+        on_attach = on_attach,
+      },
+    },
+  },
+  typescriptreact = {
+    -- @usage can be prettier or eslint
+    formatter = {exe = "prettier", args = {}},
+    linters = {"eslint"},
+    lsp = {
+      provider = "tsserver",
+      setup = {
+        -- TODO:
+        cmd = {rvim.lsp.binary.tsserver, "--stdio"},
+        capabilities = capabilities,
+        on_attach = on_attach,
+      },
+    },
+  },
+  vim = {
+    formatter = {exe = "", args = {}},
+    linters = {""},
+    lsp = {
+      provider = "vimls",
+      setup = {
+        cmd = {rvim.lsp.binary.vim, "--stdio"},
+        on_attach = on_attach,
+        capabilities = capabilities,
+      },
+    },
+  },
+  yaml = {
+    formatter = {exe = "prettier", args = {}},
+    linters = {},
+    lsp = {
+      provider = "yamlls",
+      setup = {
+        cmd = {rvim.lsp.binary.yaml, "--stdio"},
+        on_attach = on_attach,
+        capabilities = capabilities,
+      },
+    },
   },
 }

@@ -2,7 +2,7 @@ local config = {}
 
 -- Debug
 function config.dap()
-  require 'debug.config'
+  require 'debug'
 end
 
 function config.dap_ui()
@@ -28,7 +28,12 @@ end
 
 -- Lsp
 function config.nvim_lsp()
-  require 'modules.lang.lspconfig'
+  -- require'modules.lang.lspconfig'.lsp_setup()
+  require'lsp'.setup_handlers()
+end
+
+function config.nvim_lsp_settings()
+  require'nlspsettings'.setup {config_home = vim.fn.stdpath('config') .. '/lspsettings'}
 end
 
 function config.formatter()

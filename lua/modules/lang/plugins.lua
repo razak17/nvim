@@ -29,6 +29,10 @@ lang['jbyuki/one-small-step-for-vimkind'] = {
 -- Lsp
 lang['neovim/nvim-lspconfig'] = {config = conf.nvim_lsp, disable = not rvim.plugin.SANE.active}
 
+lang['tamago324/nlsp-settings.nvim'] = {disable = not rvim.plugin.SANE.active}
+
+lang['jose-elias-alvarez/null-ls.nvim'] = {disable = not rvim.plugin.SANE.active}
+
 lang['glepnir/lspsaga.nvim'] = {after = 'nvim-lspconfig', disable = not rvim.plugin.saga.active}
 
 lang['jose-elias-alvarez/nvim-lsp-ts-utils'] = {
@@ -40,7 +44,7 @@ lang['jose-elias-alvarez/nvim-lsp-ts-utils'] = {
     "typescriptreact",
     "typescript.tsx",
   },
-  disable = not rvim.plugin.lsp_ts_utils.active
+  disable = not rvim.plugin.lsp_ts_utils.active,
 }
 
 lang['mhartington/formatter.nvim'] = {

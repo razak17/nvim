@@ -5,9 +5,9 @@ M.init = function()
     return
   end
   require'lspconfig'.graphql.setup {
-    cmd = {rvim.lsp.binary.graphql, "server", "-m", "stream"},
-    capabilities = rvim.lsp.capabilities,
-    on_attach = rvim.lsp.on_attach,
+    cmd = {rvim.lang.lsp.binary.graphql, "server", "-m", "stream"},
+    capabilities = rvim.lang.lsp.capabilities,
+    on_attach = rvim.lang.lsp.on_attach,
     root_dir = require'lspconfig.util'.root_pattern('.graphqlrc', '.gitignore', '.git',
       vim.fn.getcwd()),
   }

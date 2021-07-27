@@ -5,9 +5,9 @@ M.init = function()
     return
   end
   require'lspconfig'.sumneko_lua.setup {
-    cmd = {rvim.lsp.binary.lua, "-E", rvim.__sumneko_root_path .. "/main.lua"},
-    capabilities = rvim.lsp.capabilities,
-    on_attach = rvim.lsp.on_attach,
+    cmd = {rvim.lang.lsp.binary.lua, "-E", rvim.__sumneko_root_path .. "/main.lua"},
+    capabilities = rvim.lang.lsp.capabilities,
+    on_attach = rvim.lang.lsp.on_attach,
     settings = {
       Lua = {
         runtime = {version = "LuaJIT", path = vim.split(package.path, ';')},

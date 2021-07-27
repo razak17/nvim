@@ -1,7 +1,7 @@
 -- vim: ft=lua tw=80
 stds.nvim = {
   globals = {
-    "core",
+    "rvim",
     vim = {fields = {"g"}},
     "CONFIG_PATH",
     "CACHE_PATH",

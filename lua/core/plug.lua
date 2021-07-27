@@ -137,14 +137,14 @@ function plugins.load_compile()
     plugins.install()
     plugins.magic_compile()
   end
-  command {"PlugCompile", [[call v:lua.require('rvim.plug').magic_compile()]]}
-  command {"PlugInstall", [[lua require('rvim.plug').install()]]}
-  command {"PlugSync", [[lua require('rvim.plug').sync()]]}
-  command {"PlugClean", [[lua require('rvim.plug').clean()]]}
-  command {"PlugUpdate", [[lua require('rvim.plug').update()]]}
-  command {"PlugStatus", [[lua require('rvim.plug').status()]]}
+  command {"PlugCompile", [[call v:lua.require('core.plug').magic_compile()]]}
+  command {"PlugInstall", [[lua require('core.plug').install()]]}
+  command {"PlugSync", [[lua require('core.plug').sync()]]}
+  command {"PlugClean", [[lua require('core.plug').clean()]]}
+  command {"PlugUpdate", [[lua require('core.plug').update()]]}
+  command {"PlugStatus", [[lua require('core.plug').status()]]}
   rvim.augroup("PackerComplete", {
-    {events = {"User"}, targets = {"lua"}, command = "lua require('rvim.plug').magic_compile()"},
+    {events = {"User"}, targets = {"lua"}, command = "lua require('core.plug').magic_compile()"},
   })
 end
 
