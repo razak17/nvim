@@ -1,13 +1,11 @@
-setlocal synmaxcol=0
-setlocal nofoldenable
-setlocal shiftwidth=4
-setlocal softtabstop=4
-setlocal tabstop=4
-setlocal conceallevel=0
-setlocal spell spelllang=en_gb
-setlocal nonumber norelativenumber
 
-onoremap <buffer>ih :<c-u>execute "normal! ?^==\\+$\r:nohlsearch\rkvg_"<cr>
-onoremap <buffer>ah :<c-u>execute "normal! ?^==\\+$\r:nohlsearch\rg_vk0"<cr>
-onoremap <buffer>aa :<c-u>execute "normal! ?^--\\+$\r:nohlsearch\rg_vk0"<cr>
-onoremap <buffer>ia :<c-u>execute "normal! ?^--\\+$\r:nohlsearch\rkvg_"<cr>
+" Custom conceal (does not work with existing syntax highlight plugin)
+syntax match todoCheckbox "\v.*\[\ \]"hs=e-2 conceal cchar=
+syntax match todoCheckbox "\v.*\[x\]"hs=e-2 conceal cchar=
+setlocal conceallevel=2
+setlocal spell spelllang=en_gb
+
+highlight Conceal guibg=NONE
+
+"https://vi.stackexchange.com/a/4003/16249
+syntax match NoSpellAcronym '\<\(\u\|\d\)\{3,}s\?\>' contains=@NoSpell
