@@ -1,7 +1,6 @@
-require "core.globals"
-require "core.defaults"
-
 local function load_core()
+  require "core.globals"
+  require "core.defaults"
   require "core.opts"
   local plug = require "core.plug"
   plug.ensure_plugins()
@@ -23,5 +22,5 @@ local defer = function()
   )
 end
 
-defer()
 load_core()
+defer()

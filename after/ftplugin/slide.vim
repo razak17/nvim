@@ -1,54 +1,3 @@
-function! ListFolds()
-  let thisline = getline(v:lnum)
-  if match(thisline, '^- ') >= 0
-    return ">1"
-  elseif match(thisline, '^  - ') >= 0
-    return ">2"
-  elseif match(thisline, '^    - ') >= 0
-    return ">3"
-  elseif match(thisline, '^      - ') >= 0
-    return ">4"
-  elseif match(thisline, '^        - ') >= 0
-    return ">5"
-  endif
-  return "0"
-endfunction
-
-let g:presentationBoundsDisplayed = 0
-function! DisplayPresentationBoundaries()
-  if g:presentationBoundsDisplayed
-    match
-    set colorcolumn=0
-    let g:presentationBoundsDisplayed = 0
-  else
-    highlight lastoflines ctermbg=darkred guibg=darkred
-    match lastoflines /\%23l/
-    set colorcolumn=105
-    let g:presentationBoundsDisplayed = 1
-  endif
-endfunction
-
-function! FindExecuteCommand()
-  let line = search('\S*!'.'!:.*')
-  if line > 0
-    let command = substitute(getline(line), "\S*!"."!:*", "", "")
-    execute "silent !". command
-    execute "normal gg0"
-    redraw
-  endif
-endfunction
-
-function! Buffers()
-  let l:buffers = filter(range(1, bufnr('$')), 'bufexists(v:val)')
-  return l:buffers
-endfunction
-
-function SimpleFoldText()
-  let line = getline(v:foldstart)
-  let sub = substitute(line, '/\*\|\*/\|{{{\d\=', '', 'g')
-  return sub . ' >>>>>>'
-endfunction
-
 set nonumber
 set norelativenumber
 set noruler
@@ -61,8 +10,8 @@ set colorcolumn=""
 set noshowmode
 set foldlevelstart=20
 set foldmethod=expr
-set foldexpr=ListFolds()
-set foldtext=SimpleFoldText()
+set foldexpr=utils#list_folds()
+set foldtext=utils#simple_fold_text()
 set fillchars=fold:\
 set sidescrolloff=8
 set scrolloff=8
@@ -84,8 +33,8 @@ noremap <Down> <NOP>
 noremap <Left> :silent bp<CR> :redraw!<CR>
 noremap <Right> :silent bn<CR> :redraw!<CR>
 nmap <F5> :set relativenumber! number! nocursorline ruler!<CR>
-nmap <F2> :call DisplayPresentationBoundaries()<CR>
-nmap <F3> :call FindExecuteCommand()<CR>
+nmap <F2> :call utils#display_presentation_boundaries()<CR>
+nmap <F3> :call utils#find_execute_command()<CR>
 
 " background
 nnoremap <leader>Bl :highlight Normal guibg=#c3eeff guifg=#030303<CR>
