@@ -179,6 +179,7 @@ local column_clear = {
 	"lspinfo",
 	"which_key",
 	"packer",
+	"slide",
 }
 
 --- Set or unset the color column depending on the filetype of the buffer and its eligibility
