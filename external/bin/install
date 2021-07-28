@@ -73,7 +73,7 @@ rconf() {
 }
 
 importRvim() {
-	git clone --bare https://github.com/razak17/nvim "$RVIM_GIT_PATH"
+	git clone --branch "$BRANCH" --bare https://github.com/razak17/nvim "$RVIM_GIT_PATH"
 	mkdir -p "$RVIM_CONFIG_PATH"
 	cd "$RVIM_CONFIG_PATH" || exit
 	rconf checkout
