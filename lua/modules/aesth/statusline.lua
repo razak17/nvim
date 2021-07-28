@@ -188,7 +188,7 @@ local function get_attached_provider_name(msg)
       table.insert(buf_client_names, client.name)
     end
   end
-  return table.concat(buf_client_names, ", ")
+  return table.concat(buf_client_names, " • ")
 end
 
 -- Right side
