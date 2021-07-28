@@ -181,7 +181,7 @@ local function get_attached_provider_name(msg)
   end
   local buf_client_names = {}
   for _, client in pairs(buf_clients) do
-    if client.name == "null-ls" then
+    if client.name == "null-ls" and rvim.lang[buf_ft] then
       table.insert(buf_client_names, rvim.lang[buf_ft].linters[1])
       table.insert(buf_client_names, rvim.lang[buf_ft].formatter.exe)
     else
