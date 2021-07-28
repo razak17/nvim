@@ -34,6 +34,10 @@ removeoldconfig() {
 	rm -rf "$HOME/.config/rvim"
 }
 
+installpacker() {
+	git clone https://github.com/wbthomason/packer.nvim ~/.local/share/rvim/site/pack/packer/opt/packer.nvim
+}
+
 createDirs() {
 	mkdir -p "$HOME/.dots"
 	mkdir -p "$HOME/.cache/rvim"
@@ -62,6 +66,7 @@ nodeHostInit() {
 golangInit() {
 	go get github.com/mattn/efm-langserver
 	go get golang.org/x/tools/gopls@latest
+	go get github.com/golangci/golangci-lint/cmd/golangci-lint@v1.41.1
 }
 
 installextra() {
@@ -111,12 +116,29 @@ cloneconfig() {
 	echo "Installing rvim"
 	importRvim
 
-	echo "Installing dependencies..."
-	pythonVenvInit
-	nodeHostInit
-	golangInit
-	installextra
-	sudo cp "$HOME/.config/nvim/external/bin/rvim" "/usr/local/bin"
+	if [ -e "$HOME/.local/share/rvim/site/pack/packer/opt/packer.nvim" ]; then
+		echo 'packer already installed'
+	else
+		installpacker
+	fi
+
+	printf "Would you like to install npm packages now (y/n)? "
+	read -r answer
+	[ "$answer" != "${answer#[Yy]}" ] && nodeHostInit
+
+	printf "Would you like to install pip packages now (y/n)? "
+	read -r answer
+	[ "$answer" != "${answer#[Yy]}" ] && pythonVenvInit
+
+	printf "Would you like to install go packages now (y/n)? "
+	read -r answer
+	[ "$answer" != "${answer#[Yy]}" ] && golangInit
+
+	printf "Would you like to install extra packages now (y/n)? "
+	read -r answer
+	[ "$answer" != "${answer#[Yy]}" ] && installextra
+
+	sudo cp --force "$HOME/.config/nvim/external/bin/rvim" "/usr/local/bin"
 }
 
 while [ "$#" -gt 0 ]; do
