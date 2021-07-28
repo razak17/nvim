@@ -1,6 +1,4 @@
 local nmap = rvim.nmap
-local imap = rvim.imap
-local vmap = rvim.vmap
 local nnoremap = rvim.nnoremap
 local xnoremap = rvim.xnoremap
 local vnoremap = rvim.vnoremap
@@ -240,8 +238,6 @@ nnoremap("<Leader>az", ":q!<CR>")
 nmap("W", "q")
 nnoremap("<Leader>x", ":q<CR>")
 nnoremap("<C-z>", ":undo<CR>")
-vmap("<C-z>", "u")
-imap("<C-z>", "u")
 
 -- Use control-c instead of escape
 nnoremap("<C-c>", "<Esc>")
