@@ -78,7 +78,7 @@ au BufNewFile,BufRead *.toml,Gopkg.lock,Cargo.lock,*/.cargo/config,*/.cargo/cred
 " Cargo Make
 au BufRead,BufNewFile Makefile.toml set ft=cargo-make
 
-" Cargo Make
+" Vim
 au BufRead,BufNewFile .vimrc.local set ft=vim
 
 " tmp, bak
