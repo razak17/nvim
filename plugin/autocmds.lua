@@ -266,12 +266,12 @@ rvim.augroup("PackerSetupInit", {
     events = { "BufWritePost" },
     targets = {
       rvim.__vim_path .. "/init.lua",
-      rvim.__vim_path .. "/lua/defaults/init.lua",
+      rvim.__vim_path .. "/lua/core/defaults.lua",
       rvim.__modules_dir .. "/*/*.lua",
     },
     command = function()
       vim.cmd [[source ~/.config/rvim/lua/core/opts.lua]]
-      vim.cmd [[source ~/.config/rvim/lua/defaults/init.lua]]
+      vim.cmd [[source ~/.config/rvim/lua/core/defaults.lua]]
       local plug = require "core.plug"
       plug.ensure_plugins()
       require("lsp.utils").toggle_autoformat()

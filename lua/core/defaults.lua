@@ -217,7 +217,7 @@ rvim.lang = {
     },
   },
   cmake = {
-    formatter = { exe = "clang_format", args = {} },
+    formatter = { exe = "cmake_format", args = {} },
     linters = {},
     lsp = {
       provider = "cmake",
@@ -282,7 +282,7 @@ rvim.lang = {
     },
   },
   elixir = {
-    formatter = { exe = "mix", args = { "format" }, stdin = true },
+    formatter = { exe = "mix", args = {}, stdin = true },
     linters = {},
     lsp = {
       provider = "elixirls",
@@ -359,7 +359,7 @@ rvim.lang = {
     },
   },
   json = {
-    formatter = { exe = "python", args = { "-m", "json.tool" }, stdin = true },
+    formatter = { exe = "json_tool", args = {}, stdin = true },
     linters = {},
     lsp = {
       provider = "jsonls",
@@ -417,6 +417,17 @@ rvim.lang = {
       },
     },
   },
+  nginx = {
+    formatter = {
+      exe = "nginx_beautifier",
+      args = {
+        provider = "",
+        setup = {},
+      },
+    },
+    linters = {},
+    lsp = {},
+  },
   python = {
     formatter = { exe = "yapf", args = {}, stdin = true },
     linters = { "flake8", "pylint", "mypy" },
@@ -428,6 +439,13 @@ rvim.lang = {
         capabilities = capabilities,
       },
     },
+  },
+  r = {
+    formatter = {
+      exe = "format_r",
+      args = {},
+    },
+    linters = {},
   },
   rust = {
     formatter = { exe = "rustfmt", args = { "--emit=stdout", "--edition=2018" }, stdin = true },

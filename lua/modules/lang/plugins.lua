@@ -41,18 +41,6 @@ lang["jose-elias-alvarez/null-ls.nvim"] = {
 
 lang["glepnir/lspsaga.nvim"] = { after = "nvim-lspconfig", disable = not rvim.plugin.saga.active }
 
-lang["jose-elias-alvarez/nvim-lsp-ts-utils"] = {
-  ft = {
-    "javascript",
-    "javascriptreact",
-    "javascript.jsx",
-    "typescript",
-    "typescriptreact",
-    "typescript.tsx",
-  },
-  disable = not rvim.plugin.lsp_ts_utils.active,
-}
-
 lang["mhartington/formatter.nvim"] = {
   config = conf.formatter,
   disable = not rvim.plugin.formatter.active,
@@ -107,8 +95,7 @@ lang["nvim-treesitter/playground"] = {
   disable = not rvim.plugin.playground.active,
 }
 
-lang["p00f/nvim-ts-rainbow"] =
-  { after = "nvim-treesitter", disable = not rvim.plugin.rainbow.active }
+lang["p00f/nvim-ts-rainbow"] = { after = "nvim-treesitter", disable = not rvim.plugin.rainbow.active }
 
 lang["andymass/vim-matchup"] = {
   event = "VimEnter",
