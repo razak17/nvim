@@ -3,6 +3,7 @@
   "Lua.diagnostics.enable": true,
   "Lua.diagnostics.globals": [
     "vim",
+    "rvim",
     "describe",
     "it",
     "before_each",
