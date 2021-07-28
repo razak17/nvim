@@ -9,7 +9,7 @@ My personal nvim configuration
 To install the main branch (stable).
 
 ```bash
-bash <(curl -s https://raw.githubusercontent.com/razak17/nvim/main/external/bin/install) --al
+bash <(curl -s https://raw.githubusercontent.com/razak17/nvim/main/external/bin/install) --all
 ```
 
 To install the rolling branch (bleeding) for latest changes. Change BRANCH to rolling.
@@ -17,4 +17,3 @@ To install the rolling branch (bleeding) for latest changes. Change BRANCH to ro
 ```bash
 BRANCH=rolling bash <(curl -s https://raw.githubusercontent.com/razak17/nvim/rolling/external/bin/install) --all
 ```
-/
