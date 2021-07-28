@@ -1,5 +1,23 @@
 local lsp_utils = {}
 
+function lsp_utils.is_table(t)
+  return type(t) == "table"
+end
+
+function lsp_utils.is_string(t)
+  return type(t) == "string"
+end
+
+function lsp_utils.has_value(tab, val)
+  for _, value in ipairs(tab) do
+    if value == val then
+      return true
+    end
+  end
+
+  return false
+end
+
 -- Taken from https://www.reddit.com/r/neovim/comments/gyb077/nvimlsp_peek_defination_javascript_ttserver/
 function lsp_utils.preview_location(location, context, before_context)
   -- location may be LocationLink or Location (more useful for the former)
@@ -43,12 +61,7 @@ function lsp_utils.PeekDefinition()
     vim.api.nvim_set_current_win(lsp_utils.floating_win)
   else
     local params = vim.lsp.util.make_position_params()
-    return vim.lsp.buf_request(
-      0,
-      "textDocument/definition",
-      params,
-      lsp_utils.preview_location_callback
-    )
+    return vim.lsp.buf_request(0, "textDocument/definition", params, lsp_utils.preview_location_callback)
   end
 end
 
@@ -57,12 +70,7 @@ function lsp_utils.PeekTypeDefinition()
     vim.api.nvim_set_current_win(lsp_utils.floating_win)
   else
     local params = vim.lsp.util.make_position_params()
-    return vim.lsp.buf_request(
-      0,
-      "textDocument/typeDefinition",
-      params,
-      lsp_utils.preview_location_callback
-    )
+    return vim.lsp.buf_request(0, "textDocument/typeDefinition", params, lsp_utils.preview_location_callback)
   end
 end
 
@@ -71,12 +79,7 @@ function lsp_utils.PeekImplementation()
     vim.api.nvim_set_current_win(lsp_utils.floating_win)
   else
     local params = vim.lsp.util.make_position_params()
-    return vim.lsp.buf_request(
-      0,
-      "textDocument/implementation",
-      params,
-      lsp_utils.preview_location_callback
-    )
+    return vim.lsp.buf_request(0, "textDocument/implementation", params, lsp_utils.preview_location_callback)
   end
 end
 

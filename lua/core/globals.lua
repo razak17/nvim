@@ -31,6 +31,18 @@ rvim.__modules_dir = rvim.__vim_path .. "/lua/modules"
 rvim.__sumneko_root_path = rvim.__nvim_lsp .. "/lua-language-server"
 rvim.__elixirls_root_path = rvim.__nvim_lsp .. "/elixir-ls"
 
+-- Messaging
+if vim.notify then
+  ---Override of vim.notify to open floating window
+  --@param message of the notification to show to the user
+  --@param log_level Optional log level
+  --@param opts Dictionary with optional options (timeout, etc)
+  vim.notify = function(message, log_level, _)
+    assert(message, "The message key of vim.notify should be a string")
+    rvim.notify(message, { timeout = 5000, log_level = log_level })
+  end
+end
+
 function rvim._create(f)
   table.insert(rvim._store, f)
   return #rvim._store
@@ -40,22 +52,34 @@ function rvim._execute(id, args)
   rvim._store[id](args)
 end
 
-function rvim.is_table(t)
-  return type(t) == "table"
+---Check if directory exists using vim's isdirectory function
+---@param path string
+---@return boolean
+function rvim.is_dir(path)
+  return fn.isdirectory(path) > 0
 end
 
-function rvim.is_string(t)
-  return type(t) == "string"
+---Check if a vim variable usually a number is truthy or not
+---@param value integer
+function rvim.truthy(value)
+  assert(type(value) == "number", fmt("Value should be a number but you passed %s", value))
+  return value > 0
 end
 
-function rvim.has_value(tab, val)
-  for _, value in ipairs(tab) do
-    if value == val then
-      return true
+---Find an item in a list
+---@generic T
+---@param haystack T[]
+---@param matcher fun(arg: T):boolean
+---@return T
+function rvim.find(haystack, matcher)
+  local found
+  for _, needle in ipairs(haystack) do
+    if matcher(needle) then
+      found = needle
+      break
     end
   end
-
-  return false
+  return found
 end
 
 ---Determine if a value of any type is empty
@@ -71,6 +95,15 @@ function rvim.empty(item)
   elseif item_type == "table" then
     return vim.tbl_isempty(item)
   end
+end
+
+---check if a mapping already exists
+---@param lhs string
+---@param mode string
+---@return boolean
+local function has_map(lhs, mode)
+  mode = mode or "n"
+  return vim.fn.maparg(lhs, mode) ~= ""
 end
 
 function rvim.command(args)
@@ -138,15 +171,6 @@ function rvim.deep_merge(t1, t2)
     end
   end
   return t1
-end
-
----check if a mapping already exists
----@param lhs string
----@param mode string
----@return boolean
-local function has_map(lhs, mode)
-  mode = mode or "n"
-  return vim.fn.maparg(lhs, mode) ~= ""
 end
 
 local function validate_opts(opts)

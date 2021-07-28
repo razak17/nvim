@@ -12,8 +12,8 @@ local defer = function()
     vim.schedule_wrap(function()
       require "keymap"
       require "core.binds"
+      require "core.highlights"
       vim.defer_fn(function()
-        vim.cmd [[colo zephyr]]
         vim.cmd [[syntax on]]
         vim.cmd [[filetype plugin indent on]]
       end, 0)
@@ -22,5 +22,5 @@ local defer = function()
   )
 end
 
-load_core()
 defer()
+load_core()

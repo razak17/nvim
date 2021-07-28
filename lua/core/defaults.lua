@@ -24,6 +24,34 @@ rvim.sets = {
   directory = rvim.__cache_dir .. "/swap",
 }
 
+-- Consistent store of various UI items to reuse throughout my config
+rvim.style = {
+  icons = {
+    error = "",
+    warning = "",
+    info = "",
+    hint = "",
+  },
+  palette = {
+    pale_red = "#E06C75",
+    dark_red = "#be5046",
+    light_red = "#c43e1f",
+    dark_orange = "#FF922B",
+    green = "#98c379",
+    bright_yellow = "#FAB005",
+    light_yellow = "#e5c07b",
+    dark_blue = "#4e88ff",
+    magenta = "#c678dd",
+    comment_grey = "#5c6370",
+    grey = "#3E4556",
+    whitesmoke = "#626262",
+    bright_blue = "#51afef",
+    teal = "#15AABF",
+    highlight_bg = "#4E525C",
+  },
+}
+
+-- toogle plugins easily
 rvim.plugin = {
   -- SANE defaults
   SANE = { active = true },
@@ -38,8 +66,8 @@ rvim.plugin = {
   symbols_outline = { active = false },
   bqf = { active = false },
   trouble = { active = false },
-  nvim_lint = { active = true },
-  formatter = { active = true },
+  nvim_lint = { active = false },
+  formatter = { active = false },
   lsp_ts_utils = { active = true },
   -- treesitter
   treesitter = { active = false },
@@ -55,7 +83,7 @@ rvim.plugin = {
   cool = { active = true },
   delimitmate = { active = false },
   eft = { active = false },
-  cursorword = { active = true },
+  cursorword = { active = false },
   surround = { active = true },
   dial = { active = true },
   -- tools
@@ -156,6 +184,7 @@ rvim.lsp = {
   format_on_save = true,
   lint_on_save = true,
   rust_tools = false,
+  popup_border = 'single',
   on_attach_callback = nil,
   binary = {
     clangd = "clangd",

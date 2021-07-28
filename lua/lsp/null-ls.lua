@@ -1,11 +1,12 @@
-local is_table = rvim.is_table
-local is_string = rvim.is_string
-local has_value = rvim.has_value
-
 local M = {}
 
+local lsp_utils = require "lsp.utils"
 local null_ls = require "null-ls"
 local sources = {}
+
+local is_table = lsp_utils.is_table
+local is_string = lsp_utils.is_string
+local has_value = lsp_utils.has_value
 
 local local_executables = { "prettier", "prettierd", "prettier_d_slim", "eslint_d", "eslint" }
 

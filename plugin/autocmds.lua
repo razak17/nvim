@@ -25,6 +25,7 @@ local smart_close_filetypes = {
   "fugitive",
   "fugitiveblame",
   "LuaTree",
+  "NvimTree",
   "log",
   "tsplayground",
   "qf",
@@ -172,6 +173,7 @@ local column_clear = {
   "text",
   "Trouble",
   "fugitive",
+  "NvimTree",
   "log",
   "fTerm",
   "TelescopePrompt",
@@ -272,6 +274,11 @@ rvim.augroup("PackerSetupInit", {
     command = function()
       vim.cmd [[source ~/.config/rvim/lua/core/opts.lua]]
       vim.cmd [[source ~/.config/rvim/lua/core/defaults.lua]]
+      vim.cmd [[source ~/.config/rvim/lua/modules/aesth/plugins.lua]]
+      vim.cmd [[source ~/.config/rvim/lua/modules/completion/plugins.lua]]
+      vim.cmd [[source ~/.config/rvim/lua/modules/editor/plugins.lua]]
+      vim.cmd [[source ~/.config/rvim/lua/modules/lang/plugins.lua]]
+      vim.cmd [[source ~/.config/rvim/lua/modules/tools/plugins.lua]]
       local plug = require "core.plug"
       plug.ensure_plugins()
       require("lsp.utils").toggle_autoformat()

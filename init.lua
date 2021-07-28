@@ -4,5 +4,6 @@ if fn.filereadable(fn.fnamemodify("~/.config/rvim/external/utils/.vimrc.local", 
   cmd [[source ~/.config/rvim/external/utils/.vimrc.local]]
 end
 
+vim.g.open_command = vim.g.os == "Darwin" and "open" or "xdg-open"
 -- Load Modules
 require "core"
