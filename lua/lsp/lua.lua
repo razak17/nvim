@@ -33,7 +33,7 @@ M.format = function()
       -- return {exe = "stylua", args = {}, stdin = false, tempfile_prefix = ".formatter"}
       return {
         exe = "lua-format",
-        args = {"lua-format -i -c" .. vim.fn.stdpath('config') .. "/.lua-format"},
+        args = {"lua-format -i -c" .. rvim.__vim_path .. "/.lua-format"},
         stdin = false,
         tempfile_prefix = ".formatter",
       }

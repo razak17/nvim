@@ -256,8 +256,8 @@ if rvim.plugin.debug.active then
   nnoremap('<Leader>dsv', ':lua require"dap".step_over()<CR>')
   nnoremap('<Leader>dsi', ':lua require"dap".step_into()<CR>')
   nnoremap('<Leader>dsb', ':lua require"dap".step_back()<CR>')
-  nnoremap('<leader>da', ':lua require"debug.helper".attach()<CR>')
-  nnoremap('<leader>dA', ':lua require"debug.helper".attachToRemote()<CR>')
+  nnoremap('<leader>da', ':lua require"debug.utils".attach()<CR>')
+  nnoremap('<leader>dA', ':lua require"debug.utils".attachToRemote()<CR>')
   nnoremap('<leader>db', ':lua require"dap".toggle_breakpoint()<CR>')
   nnoremap('<leader>dB',
     ':lua require"dap".set_breakpoint(vim.fn.input("Breakpoint condition: "))<CR>')
@@ -288,3 +288,4 @@ if rvim.plugin.debug_ui.active then
   vnoremap('<leader>d?',
     ':lua local widgets=require"dap.ui.widgets";widgets.centered_float(widgets.scopes)<CR>')
 end
+
