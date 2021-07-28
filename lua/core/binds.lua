@@ -262,6 +262,9 @@ nnoremap("<Leader>ah", "<C-W>s")
 nnoremap("<Leader>av", "<C-W>v")
 nnoremap("<Leader>ad", ":bdelete!<CR>")
 
+-- opens the last buffer
+nnoremap("<leader>al", "<C-^>")
+
 -- Session
 nnoremap("<Leader>Sl", ":SessionLoad<CR>")
 nnoremap("<Leader>Ss", ":SessionSave<CR>")
