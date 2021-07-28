@@ -238,28 +238,6 @@ local function general_overrides()
     { "commentTSWarning", { guifg = "Red", gui = "bold" } },
     { "commentTSDanger", { guifg = "#FBBF24", gui = "bold" } },
     -----------------------------------------------------------------------------//
-    -- LSP
-    -----------------------------------------------------------------------------//
-    { "LspReferenceRead", { guibg = P.highlight_bg } },
-    { "LspReferenceText", { guibg = P.highlight_bg } },
-    { "LspReferenceWrite", { guibg = P.highlight_bg } },
-    { "LspDiagnosticsSignHint", { guifg = P.bright_blue } },
-    { "LspDiagnosticsDefaultHint", { guifg = P.bright_blue } },
-    { "LspDiagnosticsDefaultError", { guifg = P.pale_red } },
-    { "LspDiagnosticsDefaultWarning", { guifg = P.dark_orange } },
-    { "LspDiagnosticsDefaultInformation", { guifg = P.teal } },
-    { "LspDiagnosticsVirtualTextHint ", { guifg = P.bright_blue, guibg = "#42424c" } },
-    { "LspDiagnosticsVirtualTextError ", { guifg = P.pale_red, guibg = "#3d3c3c" } },
-    { "LspDiagnosticsVirtualTextWarning", { guifg = P.dark_orange, guibg = "#3d3d3c" } },
-    { "LspDiagnosticsVirtualTextInformation", { guifg = P.teal, guibg = "#3b3d3b" } },
-    { "LspDiagnosticsUnderlineError", { gui = "undercurl", guisp = P.pale_red, guifg = "none" } },
-    {
-      "LspDiagnosticsUnderlineHint",
-      { gui = "undercurl", guisp = P.bright_yellow, guifg = "none" },
-    },
-    { "LspDiagnosticsUnderlineWarning", { gui = "undercurl", guisp = "orange", guifg = "none" } },
-    { "LspDiagnosticsUnderlineInformation", { gui = "undercurl", guisp = P.teal, guifg = "none" } },
-    -----------------------------------------------------------------------------//
     -- Notifications
     -----------------------------------------------------------------------------//
     { "NvimNotificationError", { link = "ErrorMsg" } },
@@ -269,7 +247,7 @@ end
 
 ---NOTE: apply overrides when nvim first starts
 --- then whenever the colorscheme changes
--- general_overrides()
+general_overrides()
 
 rvim.augroup("UserHighlights", {
   {
