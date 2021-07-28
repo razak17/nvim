@@ -5,6 +5,4 @@ if fn.filereadable(fn.fnamemodify("~/.config/rvim/external/utils/.vimrc.local", 
 end
 
 -- Load Modules
-require "globals"
-require "defaults"
 require "core"
