@@ -274,7 +274,11 @@ rvim.augroup("PackerSetupInit", {
     },
     command = function()
       local files = vim.api.nvim_eval [[sort(glob(g:modules_dir .. '/*/*.lua', '', v:true))]]
+      local lsp_files = vim.api.nvim_eval [[sort(glob(g:lsp_dir .. '/*.lua', '', v:true))]]
       for _, file in ipairs(files) do
+        vim.cmd("source " .. file)
+      end
+      for _, file in ipairs(lsp_files) do
         vim.cmd("source " .. file)
       end
       vim.cmd [[source ~/.config/rvim/lua/core/opts.lua]]

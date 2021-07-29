@@ -2,6 +2,10 @@ local function load_core()
   require "core.globals"
   require "core.defaults"
   require "core.opts"
+  require "core.highlights"
+end
+
+local function load_plugins()
   local plug = require "core.plug"
   plug.ensure_plugins()
   plug.load_compile()
@@ -12,7 +16,6 @@ local defer = function()
     vim.schedule_wrap(function()
       require "keymap"
       require "core.binds"
-      require "core.highlights"
       vim.defer_fn(function()
         vim.cmd [[syntax on]]
         vim.cmd [[filetype plugin indent on]]
@@ -22,5 +25,6 @@ local defer = function()
   )
 end
 
-defer()
 load_core()
+load_plugins()
+defer()

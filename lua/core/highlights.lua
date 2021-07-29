@@ -228,6 +228,8 @@ local function general_overrides()
     { "Type", { gui = "italic,bold" } },
     { "Include", { gui = "italic" } },
     { "Folded", { gui = "bold,italic" } },
+    { "MatchWord", { gui = "underline" } },
+    { "MatchParenCur", { guifg = P.pale_red, guibg = "NONE" } },
     -----------------------------------------------------------------------------//
     -- Treesitter
     -----------------------------------------------------------------------------//
@@ -245,15 +247,47 @@ local function general_overrides()
   }
 end
 
+local function set_sidebar_highlight()
+  local normal_bg = M.get_hl("Normal", "bg")
+  local split_color = M.get_hl("VertSplit", "fg")
+  local bg_color = M.darken_color(normal_bg, -8)
+  local st_color = M.darken_color(M.get_hl("Visual", "bg"), -20)
+  local hls = {
+    { "PanelBackground", { guibg = bg_color } },
+    { "PanelHeading", { guibg = bg_color, gui = "bold" } },
+    { "PanelVertSplit", { guifg = split_color, guibg = bg_color } },
+    { "PanelStNC", { guibg = st_color, cterm = "italic" } },
+    { "PanelSt", { guibg = st_color } },
+  }
+  for _, grp in ipairs(hls) do
+    M.set_hl(unpack(grp))
+  end
+end
+
+local function colorscheme_overrides()
+  M.all {
+    { "LspDiagnosticsFloatingWarning", { guibg = "NONE" } },
+    { "LspDiagnosticsFloatingError", { guibg = "NONE" } },
+    { "LspDiagnosticsFloatingHint", { guibg = "NONE" } },
+    { "LspDiagnosticsFloatingInformation", { guibg = "NONE" } },
+  }
+end
+
+local function user_highlights()
+  general_overrides()
+  colorscheme_overrides()
+  set_sidebar_highlight()
+end
+
 ---NOTE: apply overrides when nvim first starts
 --- then whenever the colorscheme changes
-general_overrides()
+user_highlights()
 
 rvim.augroup("UserHighlights", {
   {
     events = { "ColorScheme" },
     targets = { "*" },
-    command = general_overrides,
+    command = user_highlights,
   },
 })
 
