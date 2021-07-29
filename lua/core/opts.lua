@@ -1,7 +1,7 @@
 local vim = vim
 
 local function set(key, value)
-	vim.opt[key] = value
+  vim.opt[key] = value
 end
 
 -- Neovim Directories
@@ -72,7 +72,7 @@ set("matchpairs", "(:),{:},[:]")
 set("matchtime", 1)
 
 -- Spelling
-vim.opt.spellsuggest:prepend({ 12 })
+vim.opt.spellsuggest:prepend { 12 }
 set("spelllang", rvim.sets.spelllang)
 set("spell", rvim.sets.spell)
 set("spelloptions", "camel")
@@ -101,31 +101,31 @@ set("number", rvim.sets.number)
 set("relativenumber", rvim.sets.relative_number)
 set("list", true)
 set("fillchars", {
-	vert = "▕", -- alternatives │
-	fold = " ",
-	eob = " ", -- suppress ~ at EndOfBuffer
-	diff = "╱", -- alternatives = ⣿ ░ ─
-	msgsep = "‾",
-	foldopen = "▾",
-	foldsep = "│",
-	foldclose = "▸",
+  vert = "▕", -- alternatives │
+  fold = " ",
+  eob = " ", -- suppress ~ at EndOfBuffer
+  diff = "╱", -- alternatives = ⣿ ░ ─
+  msgsep = "‾",
+  foldopen = "▾",
+  foldsep = "│",
+  foldclose = "▸",
 })
 set("listchars", {
-	eol = " ",
-	nbsp = "+",
-	tab = "»• ", -- Alternatives: │
-	extends = "", -- Alternatives: … » ›
-	precedes = "", -- Alternatives: … « ‹
-	trail = "·", -- BULLET (U+2022, UTF-8: E2 80 A2) •
+  eol = " ",
+  nbsp = "+",
+  tab = "»• ", -- Alternatives: │
+  extends = "", -- Alternatives: … » ›
+  precedes = "", -- Alternatives: … « ‹
+  trail = "·", -- BULLET (U+2022, UTF-8: E2 80 A2) •
 })
 set("diffopt", {
-	"vertical",
-	"iwhite",
-	"hiddenoff",
-	"foldcolumn:0",
-	"context:4",
-	"algorithm:histogram",
-	"indent-heuristic",
+  "vertical",
+  "iwhite",
+  "hiddenoff",
+  "foldcolumn:0",
+  "context:4",
+  "algorithm:histogram",
+  "indent-heuristic",
 })
 
 -- Behavior
@@ -140,32 +140,34 @@ set("inccommand", "nosplit")
 set("complete", ".,w,b,k") -- No wins, buffs, tags, included in scanning
 set("completeopt", "menu,menuone,noselect,noinsert")
 set("breakat", [[\ \	;:,!?]]) -- Long lines break chars
-set("whichwrap", "h,l,<,>,[,],~") -- Move to following line on certain keys
+if rvim.common.line_wrap_cursor_movement then
+  vim.cmd "set whichwrap+=<,>,[,],h,l,~"
+end
 set("showfulltag", true) -- Show tag and tidy search in completion
 set("joinspaces", false) -- Insert only one space when joining lines that contain sentence-terminating punctuation like `.`.
 set("jumpoptions", "stack") -- list of words that change the behavior of the jumplist
 set("virtualedit", "block")
 set("emoji", false) -- emoji is true by default but makes (n)vim treat all emoji as double width
 vim.opt.formatoptions = {
-	["1"] = true,
-	["2"] = true, -- Use indent from 2nd line of a paragraph
-	q = true, -- continue comments with gq"
-	c = true, -- Auto-wrap comments using textwidth
-	r = true, -- Continue comments when pressing Enter
-	n = true, -- Recognize numbered lists
-	t = false, -- autowrap lines using text width value
-	j = true, -- remove a comment leader when joining lines.
-	-- Only break if the line was not longer than 'textwidth' when the insert
-	-- started and only at a white character that has been entered during the
-	-- current insert command.
-	l = true,
-	v = true,
+  ["1"] = true,
+  ["2"] = true, -- Use indent from 2nd line of a paragraph
+  q = true, -- continue comments with gq"
+  c = true, -- Auto-wrap comments using textwidth
+  r = true, -- Continue comments when pressing Enter
+  n = true, -- Recognize numbered lists
+  t = false, -- autowrap lines using text width value
+  j = true, -- remove a comment leader when joining lines.
+  -- Only break if the line was not longer than 'textwidth' when the insert
+  -- started and only at a white character that has been entered during the
+  -- current insert command.
+  l = true,
+  v = true,
 }
 
 -- Wildmenu
 set(
-	"wildignore",
-	"*.so,.git,.hg,.svn,.stversions,*.pyc,*.spl,*.o,*.out,*~,%*,*.jpg,*.jpeg,*.png,*.gif,*.zip,**/tmp/**,*.DS_Store,**/node_modules/**,**/bower_modules/**,*/.sass-cache/*,application/vendor/**,**/vendor/ckeditor/**,media/vendor/**,__pycache__,*.egg-info"
+  "wildignore",
+  "*.so,.git,.hg,.svn,.stversions,*.pyc,*.spl,*.o,*.out,*~,%*,*.jpg,*.jpeg,*.png,*.gif,*.zip,**/tmp/**,*.DS_Store,**/node_modules/**,**/bower_modules/**,*/.sass-cache/*,application/vendor/**,**/vendor/ckeditor/**,media/vendor/**,__pycache__,*.egg-info"
 )
 set("wildcharm", vim.fn.char2nr(vim.api.nvim_replace_termcodes([[<C-Z>]], true, true, true)))
 set("wildmode", "longest,full")

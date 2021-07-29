@@ -1,5 +1,13 @@
 local g = vim.g
 
+-- common
+rvim.common = {
+  leader_key = " ",
+  transparent_window = false,
+  line_wrap_cursor_movement = true,
+  format_on_save = true,
+}
+
 -- opts
 rvim.sets = {
   wrap = false,
@@ -177,13 +185,10 @@ rvim.dashboard = {
   session_directory = g.session_dir,
 }
 
-rvim.utils = { leader_key = " ", dapinstall_dir = g.data_dir, transparent_window = false }
-
 rvim.lsp = {
   override = {},
   document_highlight = true,
   hover_diagnostics = true,
-  format_on_save = true,
   lint_on_save = true,
   rust_tools = false,
   popup_border = "single",

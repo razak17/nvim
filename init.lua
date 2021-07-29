@@ -35,6 +35,6 @@ g.node_host_prog = g.node_dir
 -- Load Modules
 require "core"
 
--- override leader key
-g.mapleader = rvim.utils.leader_key
-g.maplocalleader = rvim.utils.leader_key
+-- Override leader key
+g.mapleader = rvim.common.leader_key
+g.maplocalleader = rvim.common.leader_key

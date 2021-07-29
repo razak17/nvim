@@ -44,7 +44,7 @@ function M.lspLocList()
 end
 
 function M.toggle_autoformat()
-  if rvim.lsp.format_on_save then
+  if rvim.common.format_on_save then
     rvim.augroup("AutoFormatOnSaVE", {
       {
         events = { "BufWritePre" },
@@ -54,7 +54,7 @@ function M.toggle_autoformat()
     })
   end
 
-  if not rvim.format_on_save then
+  if not rvim.common.format_on_save then
     vim.cmd [[
       if exists('#autoformat#BufWritePre')
         :autocmd! autoformat

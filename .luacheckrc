@@ -2,18 +2,8 @@
 stds.nvim = {
   globals = {
     "rvim",
-    vim = {fields = {"g"}},
-    "CONFIG_PATH",
-    "CACHE_PATH",
-    "DATA_PATH",
-    "TERMINAL",
-    "USER",
-    "C",
-    "Config",
-    "WORKSPACE_PATH",
-    "JAVA_LS_EXECUTABLE",
-    "MUtils",
-    os = {fields = {"capture"}},
+    vim = { fields = { "g" } },
+    os = { fields = { "capture" } },
   },
   read_globals = {
     "jit",
@@ -34,4 +24,3 @@ ignore = {
   "631", -- max_line_length
   "212/_.*", -- unused argument, for vars with "_" prefix
 }
-
