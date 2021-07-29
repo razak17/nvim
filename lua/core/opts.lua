@@ -97,8 +97,6 @@ set("display", "lastline")
 set("lazyredraw", true)
 set("equalalways", false)
 set("numberwidth", rvim.sets.numberwidth)
-set("number", rvim.sets.number)
-set("relativenumber", rvim.sets.relative_number)
 set("list", true)
 set("fillchars", {
   vert = "▕", -- alternatives │

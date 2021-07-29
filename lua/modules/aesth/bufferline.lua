@@ -56,7 +56,7 @@ local options = {
 
 -- local bg = '#282a36'
 local bg = rvim.common.transparent_window == true and "none" or "#282a36"
-local bg_sel = "#4f5b66"
+local bg_sel = "#3f444a"
 local base7 = "#9ca0a4"
 local fg_def = "#7e7e7e"
 local fg_sel = "#dedede"

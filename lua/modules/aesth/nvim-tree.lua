@@ -2,7 +2,8 @@ local g = vim.g
 
 rvim.nvim_tree = {
   side = "right",
-  auto_open = 0,
+  auto_open = 1,
+  auto_close = 1,
   width = 35,
   indent_markers = 1,
   lsp_diagnostics = 0,
@@ -30,32 +31,25 @@ g.nvim_tree_icons = {
   },
 }
 
-function rvim.nvim_tree_os_open()
-  local lib = require "nvim-tree.lib"
-  local node = lib.get_node_at_cursor()
-  if node then
-    vim.fn.jobstart("open '" .. node.absolute_path .. "' &", { detach = true })
-  end
-end
-
-g.nvim_tree_side = rvim.nvim_tree.side
-g.nvim_tree_ignore = { ".git", "node_modules", ".cache", ".DS_Store", "fugitive:" }
-g.nvim_tree_auto_ignore_ft = { "startify", "dashboard" }
-g.nvim_tree_auto_open = rvim.nvim_tree.auto_open
 g.nvim_tree_follow = 1
+g.nvim_tree_update_cwd = 1
+g.nvim_tree_hijack_cursor = 0
+g.nvim_tree_width_allow_resize = 1
+g.nvim_tree_disable_window_picker = 1
+g.nvim_tree_auto_ignore_ft = { "startify", "dashboard" }
+g.nvim_tree_ignore = { ".git", "node_modules", ".cache", ".DS_Store", "fugitive:" }
+g.root_folder_modifier = ":t"
+g.nvim_tree_side = rvim.nvim_tree.side
+g.nvim_tree_auto_open = rvim.nvim_tree.auto_open
+g.nvim_tree_auto_close = rvim.nvim_tree.auto_close
 g.nvim_tree_width = rvim.nvim_tree.width
 g.nvim_tree_indent_markers = rvim.nvim_tree.indent_markers
-g.nvim_tree_width_allow_resize = 1
 g.nvim_tree_lsp_diagnostics = rvim.nvim_tree.lsp_diagnostics
-g.nvim_tree_disable_window_picker = 1
 g.nvim_tree_special_files = rvim.nvim_tree.special_files
-g.nvim_tree_hijack_cursor = 0
-g.nvim_tree_update_cwd = 1
 
 local action = require("nvim-tree.config").nvim_tree_callback
 g.nvim_tree_bindings = {
   { key = { "<CR>", "o", "<2-LeftMouse>" }, cb = action "edit" },
-  { key = "<c-o>", cb = "<Cmd>lua rvim.nvim_tree_os_open()<CR>" },
   { key = "l", cb = action "edit" },
   { key = "h", cb = action "close_node" },
   { key = "V", cb = action "vsplit" },
@@ -76,6 +70,27 @@ local function set_highlights()
     { "NvimTreeRootFolder", { gui = "bold,italic", guifg = "LightMagenta" } },
   }
 end
+local toggle_tree = function()
+  local view_status_ok, view = pcall(require, "nvim-tree.view")
+  if not view_status_ok then
+    return
+  end
+  if view.win_open() then
+    require("nvim-tree").close()
+    if package.loaded["bufferline.state"] then
+      require("bufferline.state").set_offset(0)
+    end
+  else
+    if package.loaded["bufferline.state"] and rvim.nvim_tree.side == "right" then
+      require("bufferline.state").set_offset(31, "")
+    end
+    require("nvim-tree").toggle()
+  end
+end
+
+rvim.nnoremap("<leader>cv", function()
+  toggle_tree()
+end)
 
 rvim.augroup("NvimTreeOverrides", {
   {

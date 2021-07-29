@@ -196,7 +196,6 @@ end
 
 -- Tree
 if rvim.plugin.tree.active or rvim.plugin.SANE.active then
-  nnoremap("<Leader>cv", ":NvimTreeToggle<CR>")
   nnoremap("<Leader>cr", ":NvimTreeRefresh<CR>")
   nnoremap("<Leader>cf", ":NvimTreeFindFile<CR>")
 end

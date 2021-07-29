@@ -1,5 +1,4 @@
 set packpath=$XDG_DATA_HOME/rvim/site
-
 set runtimepath=$XDG_CONFIG_HOME/rvim
 set runtimepath^=$XDG_CONFIG_HOME/rvim/after
 set runtimepath^=$XDG_DATA_HOME/rvim/site
@@ -7,7 +6,6 @@ set runtimepath^=/usr/local/share/nvim/runtime
 
 syntax off
 filetype off
-
 let g:loaded_matchit= 1 "$VIMRUNTIME/plugin/matchit.vim
 let g:loaded_tutor_mode_plugin= 1 "$VIMRUNTIME/tutor/tutor.tutor
 let g:loaded_logipat           = 1 "$VIMRUNTIME/plugin/logiPat.vim
