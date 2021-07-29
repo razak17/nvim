@@ -24,8 +24,10 @@ if rvim.plugin.SANE.active then
   nnoremap("<Leader>Ee", ":PlugUpdate<CR>")
 
   -- Bufferline
-  nnoremap("<Leader>bb", ":BufferLineMovePrev<CR>")
+  nnoremap("<tab>", ":BufferLineCycleNext<CR>")
+  nnoremap("<s-tab>", ":BufferLineCyclePrev<CR>")
   nnoremap("<Leader>bn", ":BufferLineMoveNext<CR>")
+  nnoremap("<Leader>bb", ":BufferLineMovePrev<CR>")
   nnoremap("gb", ":BufferLinePick<CR>")
 
   -- Compe

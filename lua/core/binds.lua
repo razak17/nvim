@@ -218,9 +218,11 @@ nnoremap("<Leader>aF", ":vertical resize 90<CR>")
 nnoremap("<Leader>chw", ':h <C-R>=expand("<cword>")<CR><CR>')
 nnoremap("<Leader>bs", '/<C-R>=escape(expand("<cWORD>"), "/")<CR><CR>')
 
--- TAB in general mode will move to text buffer, SHIFT-TAB will go back
-nnoremap("<TAB>", ":bnext<CR>")
-nnoremap("<S-TAB>", ":bprevious<CR>")
+if not rvim.plugin.SANE.active then
+  -- TAB in general mode will move to text buffer, SHIFT-TAB will go back
+  nnoremap("<TAB>", ":bnext<CR>")
+  nnoremap("<S-TAB>", ":bprevious<CR>")
+end
 
 -- Tab navigation
 nnoremap("<Leader>sb", ":tabprevious<CR>")

@@ -285,7 +285,6 @@ rvim.augroup("PackerSetupInit", {
       vim.cmd [[source ~/.config/rvim/lua/core/defaults.lua]]
       local plug = require "core.plug"
       plug.ensure_plugins()
-      require("lsp.utils").toggle_autoformat()
       plug.install()
       plug.magic_compile()
       plug.load_compile()
