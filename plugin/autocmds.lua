@@ -307,11 +307,6 @@ rvim.augroup("WinBehavior", {
   },
   { events = { "FocusLost" }, targets = { "*" }, command = "silent! wall" },
   { events = { "TermOpen" }, targets = { "*:zsh" }, command = "startinsert" },
-  {
-    events = { "TermOpen" },
-    targets = { "*" },
-    command = "set laststatus=0 nocursorline nonumber norelativenumber | autocmd BufLeave <buffer> set laststatus=2",
-  },
 })
 
 if vim.env.TMUX ~= nil then

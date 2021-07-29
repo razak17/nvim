@@ -302,7 +302,7 @@ rvim.augroup("AddTerminalMappings", {
     command = function()
       if vim.bo.filetype == "" or vim.bo.filetype == "toggleterm" then
         local opts = { silent = false, buffer = 0 }
-        tnoremap("<esc>", [[<C-\><C-n>:bdelete!<CR>]], opts)
+        tnoremap("<esc>", [[<C-\><C-n>:q!<CR>]], opts)
         tnoremap("jk", [[<C-\><C-n>]], opts)
         tnoremap("<C-h>", [[<C-\><C-n><C-W>h]], opts)
         tnoremap("<C-j>", [[<C-\><C-n><C-W>j]], opts)
