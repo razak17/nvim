@@ -184,7 +184,7 @@ rvim.lsp = {
   format_on_save = true,
   lint_on_save = true,
   rust_tools = false,
-  popup_border = 'single',
+  popup_border = "single",
   on_attach_callback = nil,
   binary = {
     clangd = "clangd",
@@ -208,9 +208,11 @@ rvim.lsp = {
 }
 
 local schemas = nil
-local on_attach = require("lsp").on_attach
-local capabilities = require("lsp").capabilities
+local on_attach = require("lsp.service").on_attach
+local capabilities = require("lsp.service").capabilities
 local lsp_utils = require "lsp.utils"
+local root_dir = lsp_utils.root_dir
+
 local status_ok, jsonls_settings = pcall(require, "nlspsettings.jsonls")
 if status_ok then
   schemas = jsonls_settings.get_default_schemas()
@@ -254,7 +256,7 @@ rvim.lang = {
         cmd = { rvim.lsp.binary.cmake, "--stdio" },
         on_attach = on_attach,
         capabilities = capabilities,
-        root_dir = lsp_utils.root_dir(),
+        root_dir = root_dir,
       },
     },
   },
@@ -293,7 +295,7 @@ rvim.lang = {
         cmd = { rvim.lsp.binary.css, "--stdio" },
         on_attach = on_attach,
         capabilities = capabilities,
-        root_dir = lsp_utils.root_dir(),
+        root_dir = root_dir,
       },
     },
   },
@@ -306,7 +308,7 @@ rvim.lang = {
         cmd = { rvim.lsp.binary.docker, "--stdio" },
         on_attach = on_attach,
         capabilities = capabilities,
-        root_dir = lsp_utils.root_dir(),
+        root_dir = root_dir,
       },
     },
   },
@@ -339,7 +341,7 @@ rvim.lang = {
         cmd = { rvim.lsp.binary.graphql, "server", "-m", "stream" },
         on_attach = on_attach,
         capabilities = capabilities,
-        root_dir = lsp_utils.root_dir(),
+        root_dir = root_dir,
       },
     },
   },
@@ -356,7 +358,7 @@ rvim.lang = {
         cmd = { rvim.lsp.binary.html, "--stdio" },
         on_attach = on_attach,
         capabilities = capabilities,
-        root_dir = lsp_utils.root_dir(),
+        root_dir = root_dir,
       },
     },
   },
@@ -396,7 +398,7 @@ rvim.lang = {
         cmd = { rvim.lsp.binary.json, "--stdio" },
         on_attach = on_attach,
         capabilities = capabilities,
-        root_dir = lsp_utils.root_dir(),
+        root_dir = root_dir,
         settings = {
           json = {
             schemas = schemas,

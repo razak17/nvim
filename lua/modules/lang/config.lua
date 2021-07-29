@@ -28,7 +28,7 @@ end
 
 -- Lsp
 function config.nvim_lsp()
-  require("lsp").setup_handlers()
+  require("lsp").init()
 end
 
 function config.nvim_lsp_settings()
