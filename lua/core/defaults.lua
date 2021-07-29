@@ -209,7 +209,6 @@ rvim.lsp = {
 
 local schemas = nil
 local on_attach = require("lsp.service").on_attach
-local capabilities = require("lsp.service").capabilities
 local lsp_utils = require "lsp.utils"
 local root_dir = lsp_utils.root_dir
 
@@ -243,7 +242,6 @@ rvim.lang = {
           semanticHighlighting = true,
         },
         on_attach = on_attach,
-        capabilities = capabilities,
       },
     },
   },
@@ -255,7 +253,6 @@ rvim.lang = {
       setup = {
         cmd = { rvim.lsp.binary.cmake, "--stdio" },
         on_attach = on_attach,
-        capabilities = capabilities,
         root_dir = root_dir,
       },
     },
@@ -281,7 +278,6 @@ rvim.lang = {
           completeUnimported = true,
           semanticHighlighting = true,
         },
-        capabilities = capabilities,
         on_attach = on_attach,
       },
     },
@@ -294,7 +290,6 @@ rvim.lang = {
       setup = {
         cmd = { rvim.lsp.binary.css, "--stdio" },
         on_attach = on_attach,
-        capabilities = capabilities,
         root_dir = root_dir,
       },
     },
@@ -307,7 +302,6 @@ rvim.lang = {
       setup = {
         cmd = { rvim.lsp.binary.docker, "--stdio" },
         on_attach = on_attach,
-        capabilities = capabilities,
         root_dir = root_dir,
       },
     },
@@ -317,7 +311,7 @@ rvim.lang = {
     linters = {},
     lsp = {
       provider = "elixirls",
-      setup = { cmd = { rvim.lsp.binary.elixir }, capabilities = capabilities, on_attach = on_attach },
+      setup = { cmd = { rvim.lsp.binary.elixir }, on_attach = on_attach },
     },
   },
   go = {
@@ -328,7 +322,6 @@ rvim.lang = {
       setup = {
         cmd = { rvim.lsp.binary.go },
         on_attach = on_attach,
-        capabilities = capabilities,
       },
     },
   },
@@ -340,7 +333,6 @@ rvim.lang = {
       setup = {
         cmd = { rvim.lsp.binary.graphql, "server", "-m", "stream" },
         on_attach = on_attach,
-        capabilities = capabilities,
         root_dir = root_dir,
       },
     },
@@ -357,7 +349,6 @@ rvim.lang = {
       setup = {
         cmd = { rvim.lsp.binary.html, "--stdio" },
         on_attach = on_attach,
-        capabilities = capabilities,
         root_dir = root_dir,
       },
     },
@@ -371,7 +362,6 @@ rvim.lang = {
         -- TODO:
         cmd = { rvim.lsp.binary.tsserver, "--stdio" },
         on_attach = on_attach,
-        capabilities = capabilities,
       },
     },
   },
@@ -385,7 +375,6 @@ rvim.lang = {
         -- TODO:
         cmd = { rvim.lsp.binary.tsserver, "--stdio" },
         on_attach = on_attach,
-        capabilities = capabilities,
       },
     },
   },
@@ -397,7 +386,6 @@ rvim.lang = {
       setup = {
         cmd = { rvim.lsp.binary.json, "--stdio" },
         on_attach = on_attach,
-        capabilities = capabilities,
         root_dir = root_dir,
         settings = {
           json = {
@@ -425,7 +413,6 @@ rvim.lang = {
       setup = {
         cmd = { rvim.lsp.binary.lua, "-E", rvim.__sumneko_root_path .. "/main.lua" },
         on_attach = on_attach,
-        capabilities = capabilities,
         settings = {
           Lua = {
             runtime = {
@@ -467,7 +454,6 @@ rvim.lang = {
       setup = {
         cmd = { rvim.lsp.binary.python, "--stdio" },
         on_attach = on_attach,
-        capabilities = capabilities,
       },
     },
   },
@@ -483,7 +469,7 @@ rvim.lang = {
     linters = {},
     lsp = {
       provider = "rust_analyzer",
-      setup = { cmd = { rvim.lsp.binary.rust }, on_attach = on_attach, capabilities = capabilities },
+      setup = { cmd = { rvim.lsp.binary.rust }, on_attach = on_attach },
     },
   },
   sh = {
@@ -499,7 +485,6 @@ rvim.lang = {
         cmd_env = { GLOB_PATTERN = "*@(.sh|.zsh|.inc|.bash|.command)" },
         filetypes = { "sh", "zsh" },
         on_attach = on_attach,
-        capabilities = capabilities,
       },
     },
   },
@@ -512,7 +497,6 @@ rvim.lang = {
         -- TODO:
         cmd = { rvim.lsp.binary.tsserver, "--stdio" },
         on_attach = on_attach,
-        capabilities = capabilities,
       },
     },
   },
@@ -525,7 +509,6 @@ rvim.lang = {
         -- TODO:
         cmd = { rvim.lsp.binary.tsserver, "--stdio" },
         on_attach = on_attach,
-        capabilities = capabilities,
       },
     },
   },
@@ -537,7 +520,6 @@ rvim.lang = {
       setup = {
         cmd = { rvim.lsp.binary.vim, "--stdio" },
         on_attach = on_attach,
-        capabilities = capabilities,
       },
     },
   },
@@ -553,7 +535,6 @@ rvim.lang = {
       setup = {
         cmd = { rvim.lsp.binary.yaml, "--stdio" },
         on_attach = on_attach,
-        capabilities = capabilities,
       },
     },
   },

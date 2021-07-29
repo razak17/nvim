@@ -49,7 +49,7 @@ function M.toggle_autoformat()
       {
         events = { "BufWritePre" },
         targets = { "*" },
-        command = ":silent lua vim.lsp.buf.formatting_sync({2000})",
+        command = ":silent lua vim.lsp.buf.formatting_sync(nil, 1000)",
       },
     })
   end

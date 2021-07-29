@@ -272,13 +272,12 @@ rvim.augroup("PackerSetupInit", {
       rvim.__modules_dir .. "/*/*.lua",
     },
     command = function()
+      local files = vim.api.nvim_eval [[sort(glob(g:plugin_config_dir .. '/*/*.lua', '', v:true))]]
+      for _, file in ipairs(files) do
+        vim.cmd("source " .. file)
+      end
       vim.cmd [[source ~/.config/rvim/lua/core/opts.lua]]
       vim.cmd [[source ~/.config/rvim/lua/core/defaults.lua]]
-      vim.cmd [[source ~/.config/rvim/lua/modules/aesth/plugins.lua]]
-      vim.cmd [[source ~/.config/rvim/lua/modules/completion/plugins.lua]]
-      vim.cmd [[source ~/.config/rvim/lua/modules/editor/plugins.lua]]
-      vim.cmd [[source ~/.config/rvim/lua/modules/lang/plugins.lua]]
-      vim.cmd [[source ~/.config/rvim/lua/modules/tools/plugins.lua]]
       local plug = require "core.plug"
       plug.ensure_plugins()
       require("lsp.utils").toggle_autoformat()

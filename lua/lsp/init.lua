@@ -1,4 +1,4 @@
-local command = rvim.command
+local lspconfig = require "lspconfig"
 local lsp_utils = require "lsp.utils"
 local service = require "lsp.service"
 
@@ -7,38 +7,38 @@ local is_table = lsp_utils.is_table
 local is_string = lsp_utils.is_string
 local has_value = lsp_utils.has_value
 
-command {
-  "LspLog",
-  function()
-    local path = vim.lsp.get_log_path()
-    vim.cmd("edit " .. path)
-  end,
+local global_capabilities = vim.lsp.protocol.make_client_capabilities()
+global_capabilities.textDocument.completion.completionItem.snippetSupport = true
+global_capabilities.textDocument.completion.completionItem.resolveSupport = {
+  properties = { "documentation", "detail", "additionalTextEdits" },
+}
+global_capabilities.textDocument.codeAction = {
+  dynamicRegistration = false,
+  codeActionLiteralSupport = {
+    codeActionKind = {
+      valueSet = (function()
+        local res = vim.tbl_values(vim.lsp.protocol.CodeActionKind)
+        table.sort(res)
+        return res
+      end)(),
+    },
+  },
 }
 
-command {
-  "LspFormat",
-  function()
-    vim.lsp.buf.formatting(vim.g[string.format("format_options_%s", vim.bo.filetype)] or {})
-  end,
-}
-
-command {
-  "LspToggleVirtualText",
-  function()
-    local virtual_text = {}
-    virtual_text.show = true
-    virtual_text.show = not virtual_text.show
-    vim.lsp.diagnostic.display(vim.lsp.diagnostic.get(0, 1), 0, 1, { virtual_text = virtual_text.show })
-  end,
-}
+lspconfig.util.default_config = vim.tbl_extend(
+  "force",
+  lspconfig.util.default_config,
+  { capabilities = global_capabilities }
+)
 
 function M.init()
   require("lsp.kind").init()
-  require("lsp.handlers").init()
   require("lsp.signs").init()
   require("lsp.hover").init()
-  require("lsp.servers").init()
   require("lsp.binds").init()
+  require("lsp.handlers").init()
+  require("lsp.commands").init()
+  require("lsp.servers").init()
   lsp_utils.toggle_autoformat()
   lsp_utils.lspLocList()
 end

@@ -56,7 +56,7 @@ if rvim.plugin.SANE.active then
   -- Lsp
   nnoremap("<Leader>Li", ":LspInfo<CR>")
   nnoremap("<Leader>Ll", ":LspLog<CR>")
-  nnoremap("<Leader>Lr", ":LspRestart<CR>")
+  nnoremap("<Leader>Lr", ":LspReload<CR>")
   nnoremap("<Leader>vv", ":LspToggleVirtualText<CR>")
 
   -- Telescope
