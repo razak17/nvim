@@ -1,3 +1,5 @@
+vim.cmd [[packadd nvim-web-devicons]]
+
 local function is_ft(b, ft)
   return vim.bo[b].filetype == ft
 end

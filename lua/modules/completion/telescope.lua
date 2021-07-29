@@ -61,7 +61,16 @@ if rvim.plugin.telescope_media_files.active then
   require("telescope").load_extension "media_files"
 end
 
-require("telescope").load_extension "grep_string_prompt"
-require("telescope").load_extension "bg_selector"
-require("telescope").load_extension "nvim_files"
-require("telescope").load_extension "dotfiles"
+local extensions = {
+  "grep_string_prompt",
+  "bg_selector",
+  "nvim_files",
+  "dotfiles",
+}
+
+local function load_extensions(exps)
+  for _, ext in ipairs(exps) do
+    require("telescope").load_extension(ext)
+  end
+end
+load_extensions(extensions)

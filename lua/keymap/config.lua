@@ -13,7 +13,7 @@ local function check_back_space()
   end
 end
 
-function _G.__tab__complete()
+function _G.tab_complete()
   if fn.pumvisible() == 1 then
     return t "<C-n>"
   elseif fn.call("vsnip#available", {1}) == 1 then
@@ -25,7 +25,7 @@ function _G.__tab__complete()
   end
 end
 
-function _G.__s_tab__complete()
+function _G.s_tab_complete()
   if fn.pumvisible() == 1 then
     return t "<C-p>"
   elseif fn.call("vsnip#jumpable", {-1}) == 1 then
@@ -35,14 +35,14 @@ function _G.__s_tab__complete()
   end
 end
 
-function _G.__enhance_jk_move(key)
+function _G.enhance_jk_move(key)
   vim.cmd [[packadd accelerated-jk]]
   local map = key == 'n' and '<Plug>(accelerated_jk_j)' or
                 '<Plug>(accelerated_jk_gk)'
   return t(map)
 end
 
-function _G.__enhance_ft_move(key)
+function _G.enhance_ft_move(key)
   if not packer_plugins['vim-eft'] then vim.cmd [[packadd vim-eft]] end
   local map = {
     f = '<Plug>(eft-f)',
@@ -52,7 +52,7 @@ function _G.__enhance_ft_move(key)
   return t(map[key])
 end
 
-function _G.__fterm_cmd(key)
+function _G.fterm_cmd(key)
   local term = require("FTerm.terminal")
   local cmd = term:new():setup({cmd = "gitui"})
   if key == 'node' then
