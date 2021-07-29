@@ -8,6 +8,7 @@ local cnoremap = rvim.cnoremap
 
 local fn = vim.fn
 local api = vim.api
+local command = rvim.command
 
 if not rvim.plugin.accelerated_jk.active and not rvim.plugin.SANE.active then
   nmap("n", "j")
@@ -167,6 +168,13 @@ local function TurnOffGuides()
   vim.o.showtabline = 0
 end
 
+-- https://github.com/CalinLeafshade/dots/blob/master/nvim/.config/nvim/lua/leafshade/rename.lua
+function _G.Rename(name)
+  local curfilepath = vim.fn.expand "%:p:h"
+  local newname = curfilepath .. "/" .. name
+  vim.api.nvim_command(" saveas " .. newname)
+end
+
 -----------------------------------------------------------------------------//
 -- Mappings
 -----------------------------------------------------------------------------//
@@ -278,6 +286,10 @@ nnoremap("<Leader>afl", "za") -- Toggle fold under the cursor
 nnoremap("<Leader>afo", "zR") -- Open all folds
 nnoremap("<Leader>afx", "zM") -- Close all folds
 nnoremap("<Leader>aO", ":<C-f>:resize 10<CR>") -- Close all folds
+
+-- Conditionally modify character at end of line
+nnoremap("<localleader>,", "<cmd>call utils#modify_line_end_delimiter(',')<cr>")
+nnoremap("<localleader>;", "<cmd>call utils#modify_line_end_delimiter(';')<cr>")
 
 -- qflist
 nnoremap("<Leader>vo", ":copen<CR>")
@@ -418,8 +430,8 @@ nnoremap("<leader>li", function()
 end)
 
 -- Other remaps
-nnoremap("<Leader>,", ":e ~/.config/rvim/lua/core/init.lua<CR>")
-nnoremap("<Leader>.", ":e ~/.config/rvim/init.lua<CR>")
+nnoremap("<Leader>a,", ":e ~/.config/rvim/lua/core/init.lua<CR>")
+nnoremap("<Leader>a.", ":e ~/.config/rvim/init.lua<CR>")
 nnoremap("<Leader>Ic", ":checkhealth<CR>")
 nnoremap("<C-b>", ":QuickRun<CR>")
 nnoremap("<Leader>Im", ":messages<CR>")
@@ -429,7 +441,7 @@ end)
 nnoremap("<leader>aR", function()
   EmptyRegisters()
 end)
-nnoremap("<Leader>;", function()
+nnoremap("<Leader>a;", function()
   OpenTerminal()
 end)
 nnoremap("<leader>ao", function()
@@ -449,13 +461,12 @@ vim.cmd [[vnoremap <Leader>rev :s/\%V.\+\%V./\=utils#rev_str(submatch(0))<CR>gv]
 -----------------------------------------------------------------------------//
 -- Commands
 -----------------------------------------------------------------------------//
--- https://github.com/CalinLeafshade/dots/blob/master/nvim/.config/nvim/lua/leafshade/rename.lua
-function _G.__Rename(name)
-  local curfilepath = vim.fn.expand "%:p:h"
-  local newname = curfilepath .. "/" .. name
-  vim.api.nvim_command(" saveas " .. newname)
-end
-
-rvim.command { "Todo", [[noautocmd silent! grep! 'TODO\|FIXME\|BUG\|HACK' | copen]] }
-
-rvim.command { nargs = 1, "Rename", [[call v:lua.__Rename(<f-args>)]] }
+command { nargs = 1, "Rename", [[call v:lua.Rename(<f-args>)]] }
+command {
+  "ToggleBackground",
+  function()
+    vim.o.background = vim.o.background == "dark" and "light" or "dark"
+  end,
+}
+command { "Todo", [[noautocmd silent! grep! 'TODO\|FIXME\|BUG\|HACK' | copen]] }
+command { "AutoResize", [[call utils#auto_resize(<args>)]], { "-nargs=?" } }

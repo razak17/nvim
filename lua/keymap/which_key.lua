@@ -15,8 +15,8 @@ fn["which_key#register"]("<space>", "g:which_key_map")
 local default_keymaps = {
   ["="] = "Balance window",
   [";"] = "terminal",
-  ["."] = "Open init.vim",
-  [","] = "Open lua/core/init.lua",
+  ["."] = "append period to line end",
+  [","] = "append comma to line end",
   ["/"] = "Comment",
   ["["] = "Find and Replace all",
   ["]"] = "Find and Replace one",
@@ -31,6 +31,8 @@ local default_keymaps = {
   a = {
     name = "+Actions",
     ["/"] = "comment motion default",
+    ["."] = "Open init.vim",
+    [","] = "Open lua/core/init.lua",
     d = "force delete buffer",
     D = "delete all",
     e = "turn off guides",

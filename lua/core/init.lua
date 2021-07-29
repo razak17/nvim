@@ -25,6 +25,6 @@ local defer = function()
   )
 end
 
+defer()
 load_core()
 load_plugins()
-defer()
