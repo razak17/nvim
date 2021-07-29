@@ -268,26 +268,20 @@ rvim.augroup("PackerSetupInit", {
   {
     events = { "BufWritePost" },
     targets = {
-      vim.g.vim_path .. "/init.lua",
       vim.g.vim_path .. "/lua/core/defaults.lua",
-      vim.g.modules_dir .. "/*/*.lua",
     },
     command = function()
+      vim.cmd [[source ~/.config/rvim/lua/core/opts.lua]]
+      vim.cmd [[source ~/.config/rvim/lua/core/defaults.lua]]
       local files = vim.api.nvim_eval [[sort(glob(g:modules_dir .. '/*/*.lua', '', v:true))]]
-      local lsp_files = vim.api.nvim_eval [[sort(glob(g:lsp_dir .. '/*.lua', '', v:true))]]
       for _, file in ipairs(files) do
         vim.cmd("source " .. file)
       end
-      for _, file in ipairs(lsp_files) do
-        vim.cmd("source " .. file)
-      end
-      vim.cmd [[source ~/.config/rvim/lua/core/opts.lua]]
-      vim.cmd [[source ~/.config/rvim/lua/core/defaults.lua]]
       local plug = require "core.plug"
       plug.ensure_plugins()
-      plug.install()
       plug.magic_compile()
       plug.load_compile()
+      plug.install()
       rvim.notify("packer compiled...", { timeout = 1000 })
     end,
   },

@@ -194,7 +194,13 @@ end
 -- Right side
 gls.right[1] = {
   ShowLspClient = {
-    provider = get_attached_provider_name,
+    provider = function ()
+      local squeeze_width  = vim.fn.winwidth(0) / 2
+      if squeeze_width > 50 then
+        return get_attached_provider_name()
+      end
+      return ''
+    end,
     condition = function()
       local tbl = { ["dashboard"] = true, [" "] = true }
       if tbl[vim.bo.filetype] then
