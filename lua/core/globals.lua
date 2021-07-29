@@ -4,32 +4,6 @@ _G.rvim = { _store = _GlobalCallbacks }
 
 local api, fn = vim.api, vim.fn
 local fmt = string.format
-local os_name = vim.loop.os_uname().sysname
-
-rvim._home = os.getenv "HOME"
-rvim.__is_mac = os_name == "OSX"
-rvim.__is_linux = os_name == "Linux"
-rvim.__is_windows = os_name == "Windows"
-rvim.__cache_dir = rvim._home .. "/.cache/rvim"
-rvim.__vim_path = rvim._home .. "/.config/rvim"
-rvim.__data_dir = rvim._home .. "/.local/share/rvim"
-rvim._asdf = rvim._home .. "/.asdf/installs"
-rvim._fnm = rvim._home .. "/.fnm/node-versions"
-rvim._dap = rvim.__cache_dir .. "/venv/dap/"
-rvim._golang = rvim._asdf .. "/golang/1.16.2/go/bin/go"
-rvim._node = rvim._fnm .. "/v16.3.0/installation/bin/neovim-node-host"
-rvim._python3 = rvim.__cache_dir .. "/venv/neovim/"
-rvim.__plugins = rvim.__data_dir .. "/pack/"
-rvim.__nvim_lsp = rvim.__cache_dir .. "/nvim_lsp"
-rvim.__dap_install_dir = rvim.__cache_dir .. "/dap"
-rvim.__dap_python = rvim.__dap_install_dir .. "/python_dbg/bin/python"
-rvim.__dap_node = rvim.__dap_install_dir .. "/jsnode_dbg/vscode-node-debug2/out/src/nodeDebug.js"
-rvim.__vsnip_dir = rvim.__vim_path .. "/external/snippets"
-rvim.__templates_dir = rvim.__vim_path .. "/external/templates"
-rvim.__session_dir = rvim.__cache_dir .. "/session/dashboard"
-rvim.__modules_dir = rvim.__vim_path .. "/lua/modules"
-rvim.__sumneko_root_path = rvim.__nvim_lsp .. "/lua-language-server"
-rvim.__elixirls_root_path = rvim.__nvim_lsp .. "/elixir-ls"
 
 -- Messaging
 if vim.notify then

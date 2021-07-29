@@ -1,3 +1,4 @@
+local g = vim.g
 local fn = vim.fn
 local api = vim.api
 local fmt = string.format
@@ -128,12 +129,12 @@ rvim.augroup("Templates", {
   {
     events = { "BufNewFile" },
     targets = { "*.sh" },
-    command = "0r" .. rvim.__templates_dir .. "/skeleton.sh",
+    command = "0r" .. g.templates_dir .. "/skeleton.sh",
   },
   {
     events = { "BufNewFile" },
     targets = { "*.lua" },
-    command = "0r" .. rvim.__templates_dir .. "/skeleton.lua",
+    command = "0r" .. g.templates_dir .. "/skeleton.lua",
   },
 })
 
@@ -267,12 +268,12 @@ rvim.augroup("PackerSetupInit", {
   {
     events = { "BufWritePost" },
     targets = {
-      rvim.__vim_path .. "/init.lua",
-      rvim.__vim_path .. "/lua/core/defaults.lua",
-      rvim.__modules_dir .. "/*/*.lua",
+      vim.g.vim_path .. "/init.lua",
+      vim.g.vim_path .. "/lua/core/defaults.lua",
+      vim.g.modules_dir .. "/*/*.lua",
     },
     command = function()
-      local files = vim.api.nvim_eval [[sort(glob(g:plugin_config_dir .. '/*/*.lua', '', v:true))]]
+      local files = vim.api.nvim_eval [[sort(glob(g:modules_dir .. '/*/*.lua', '', v:true))]]
       for _, file in ipairs(files) do
         vim.cmd("source " .. file)
       end

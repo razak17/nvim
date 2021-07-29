@@ -1,3 +1,5 @@
+local g = vim.g
+
 -- opts
 rvim.sets = {
   wrap = false,
@@ -19,9 +21,9 @@ rvim.sets = {
   timeoutlen = 500,
   foldenable = true,
   foldtext = "v:lua.folds()",
-  udir = rvim.__cache_dir .. "/undodir",
-  viewdir = rvim.__cache_dir .. "/view",
-  directory = rvim.__cache_dir .. "/swap",
+  udir = vim.g.cache_dir .. "/undodir",
+  viewdir = vim.g.cache_dir .. "view",
+  directory = vim.g.cache_dir .. "/swap",
 }
 
 -- Consistent store of various UI items to reuse throughout my config
@@ -172,10 +174,10 @@ rvim.dashboard = {
   save_session = function()
     vim.cmd "SessionSave"
   end,
-  session_directory = rvim.__session_dir,
+  session_directory = g.session_dir,
 }
 
-rvim.utils = { leader_key = " ", dapinstall_dir = rvim.__data_dir, transparent_window = false }
+rvim.utils = { leader_key = " ", dapinstall_dir = g.data_dir, transparent_window = false }
 
 rvim.lsp = {
   override = {},
@@ -192,9 +194,9 @@ rvim.lsp = {
     css = "vscode-css-language-server",
     docker = "docker-langserver",
     efm = "efm-langserver",
-    elixir = rvim.__elixirls_root_path .. "/.bin/language_server.sh",
+    elixir = g.elixirls_root_path .. "/.bin/language_server.sh",
     graphql = "graphql-lsp",
-    lua = rvim.__sumneko_root_path .. "/bin/Linux/lua-language-server",
+    lua = g.sumneko_root_path .. "/bin/Linux/lua-language-server",
     go = "gopls",
     html = "vscode-html-language-server",
     json = "vscode-json-language-server",
@@ -411,7 +413,7 @@ rvim.lang = {
     lsp = {
       provider = "sumneko_lua",
       setup = {
-        cmd = { rvim.lsp.binary.lua, "-E", rvim.__sumneko_root_path .. "/main.lua" },
+        cmd = { rvim.lsp.binary.lua, "-E", g.sumneko_root_path .. "/main.lua" },
         on_attach = on_attach,
         settings = {
           Lua = {

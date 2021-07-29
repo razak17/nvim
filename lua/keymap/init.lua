@@ -75,7 +75,7 @@ if rvim.plugin.SANE.active then
   nnoremap("<Leader>fcT", ":Telescope treesitter<CR>")
   nnoremap("<Leader>fcv", ":Telescope vim_options<CR>")
   nnoremap("<Leader>fcz", ":Telescope current_buffer_fuzzy_find<CR>")
-  nnoremap("<Leader>fC", ":e " .. rvim.__vim_path .. "/lua/core/defaults.lua<CR>")
+  nnoremap("<Leader>fC", ":e " .. vim.g.vim_path .. "/lua/core/defaults.lua<CR>")
 
   -- Telescope lsp
   nnoremap("<Leader>fva", ":Telescope lsp_range_code_actions<CR>")

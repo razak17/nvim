@@ -10,7 +10,7 @@ vim.g.dashboard_custom_section = {
   b = { description = join("  Last session", "<leader>Sl", 11), command = "SessionLoad" },
   c = {
     description = join("  Default config", "<leader>fC", 9),
-    command = ":e " .. rvim.__vim_path .. "/lua/rvim/defaults.lua",
+    command = ":e " .. vim.g.vim_path .. "/lua/rvim/defaults.lua",
   },
   d = { description = join("  Find word", "<leader>flg", 14), command = "Telescope live_grep" },
   e = {

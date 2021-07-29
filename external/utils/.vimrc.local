@@ -32,6 +32,10 @@ let g:vimsyn_embed             = 1 "$VIMRUNTIME/syntax/vim.vim
 let g:loaded_python_provider = 0
 let g:loaded_ruby_provider = 0
 let g:loaded_perl_provider = 0
+let g:floating_window_winblend = 0
+let g:floating_window_scaling_factor = 0
+let g:neovim_remote = 1
+"let g:rg_derive_root = true
 
 set exrc
 set secure

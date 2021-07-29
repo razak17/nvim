@@ -23,7 +23,7 @@ end
 function config.dap_install()
   vim.cmd [[packadd nvim-dap]]
   local dI = require "dap-install"
-  dI.setup { installation_path = rvim.__dap_install_dir }
+  dI.setup { installation_path = vim.g.dap_install_dir }
 end
 
 -- Lsp
@@ -35,7 +35,7 @@ function config.nvim_lsp_settings()
   local lsp_settings_status_ok, lsp_settings = pcall(require, "nlspsettings")
   if lsp_settings_status_ok then
     lsp_settings.setup {
-      config_home = rvim.__vim_path .. "/external/nlsp-settings",
+      config_home = vim.g.vim_path .. "/external/nlsp-settings",
     }
   end
 end
