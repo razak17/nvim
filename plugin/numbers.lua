@@ -7,6 +7,7 @@ local M = {}
 
 vim.g.number_filetype_exclusions = {
   "undotree",
+  "dashboard",
   "log",
   "man",
   "dap-repl",
