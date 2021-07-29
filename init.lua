@@ -1,15 +1,16 @@
 local g, fn, cmd = vim.g, vim.fn, vim.cmd
-local os_name = vim.loop.os_uname().sysname
 
+-- Load base config
 if fn.filereadable(fn.fnamemodify("~/.config/rvim/external/utils/.vimrc.local", ":p")) > 0 then
   cmd [[source ~/.config/rvim/external/utils/.vimrc.local]]
 end
 
 -- GLobal directories
+g.os = vim.loop.os_uname().sysname
 g.home = os.getenv "HOME"
-g.is_mac = os_name == "OSX"
-g.is_linux = os_name == "Linux"
-g.is_windows = os_name == "Windows"
+g.is_mac = g.os == "OSX"
+g.is_linux = g.os == "Linux"
+g.is_windows = g.os == "Windows"
 g.vim_path = g.home .. "/.config/rvim"
 g.cache_dir = g.home .. "/.cache/rvim"
 g.data_dir = g.home .. "/.local/share/rvim"
