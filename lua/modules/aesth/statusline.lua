@@ -194,12 +194,12 @@ end
 -- Right side
 gls.right[1] = {
   ShowLspClient = {
-    provider = function ()
-      local squeeze_width  = vim.fn.winwidth(0) / 2
-      if squeeze_width > 50 then
+    provider = function()
+      local squeeze_width = vim.fn.winwidth(0) / 2
+      if squeeze_width > 55 then
         return get_attached_provider_name()
       end
-      return ''
+      return ""
     end,
     condition = function()
       local tbl = { ["dashboard"] = true, [" "] = true }
@@ -208,7 +208,7 @@ gls.right[1] = {
       end
       return true
     end,
-    icon = " ",
+    icon = "• ",
     highlight = { colors.fg, colors.bg },
     separator = " ",
     separator_highlight = { colors.section_bg, colors.bg },

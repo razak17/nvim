@@ -2,6 +2,27 @@ local join = function(k, v, c)
   return { k .. string.rep(" ", c) .. v }
 end
 
+rvim.dashboard = {
+  custom_header = {
+    "                                                       ",
+    "                                                       ",
+    " ███╗   ██╗ ███████╗ ██████╗  ██╗   ██╗ ██╗ ███╗   ███╗",
+    " ████╗  ██║ ██╔════╝██╔═══██╗ ██║   ██║ ██║ ████╗ ████║",
+    " ██╔██╗ ██║ █████╗  ██║   ██║ ██║   ██║ ██║ ██╔████╔██║",
+    " ██║╚██╗██║ ██╔══╝  ██║   ██║ ╚██╗ ██╔╝ ██║ ██║╚██╔╝██║",
+    " ██║ ╚████║ ███████╗╚██████╔╝  ╚████╔╝  ██║ ██║ ╚═╝ ██║",
+    " ╚═╝  ╚═══╝ ╚══════╝ ╚═════╝    ╚═══╝   ╚═╝ ╚═╝     ╚═╝",
+    "                                                       ",
+    "                                                       ",
+  },
+  default_executive = "telescope",
+  disable_statusline = 0,
+  save_session = function()
+    vim.cmd "SessionSave"
+  end,
+  session_directory = vim.g.session_dir,
+}
+
 vim.g.dashboard_custom_header = rvim.dashboard.custom_header
 vim.g.dashboard_default_executive = rvim.dashboard.default_executive
 vim.g.dashboard_disable_statusline = rvim.dashboard.disable_statusline

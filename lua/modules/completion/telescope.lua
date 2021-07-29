@@ -1,5 +1,11 @@
 local actions = require "telescope.actions"
 
+rvim.telescope = {
+  prompt_prefix = " ❯ ",
+  layout_config = { height = 0.9, width = 0.9 },
+  borderchars = { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
+}
+
 require("telescope").setup {
   defaults = {
     prompt_prefix = rvim.telescope.prompt_prefix,

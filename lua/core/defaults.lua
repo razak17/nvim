@@ -8,32 +8,6 @@ rvim.common = {
   format_on_save = true,
 }
 
--- opts
-rvim.sets = {
-  wrap = false,
-  spell = false,
-  spelllang = "en",
-  textwidth = 80,
-  number = true,
-  relative_number = true,
-  numberwidth = 4,
-  shiftwidth = 2,
-  tabstop = 2,
-  cmdheight = 2,
-  scrolloff = 7,
-  laststatus = 2,
-  showtabline = 2,
-  smartcase = true,
-  ignorecase = true,
-  hlsearch = true,
-  timeoutlen = 500,
-  foldenable = true,
-  foldtext = "v:lua.folds()",
-  udir = vim.g.cache_dir .. "/undodir",
-  viewdir = vim.g.cache_dir .. "view",
-  directory = vim.g.cache_dir .. "/swap",
-}
-
 -- Consistent store of various UI items to reuse throughout my config
 rvim.style = {
   icons = {
@@ -59,6 +33,32 @@ rvim.style = {
     teal = "#15AABF",
     highlight_bg = "#4E525C",
   },
+}
+
+-- opts
+rvim.sets = {
+  wrap = false,
+  spell = false,
+  spelllang = "en",
+  textwidth = 100,
+  number = true,
+  relative_number = true,
+  numberwidth = 4,
+  shiftwidth = 2,
+  tabstop = 2,
+  cmdheight = 2,
+  scrolloff = 7,
+  laststatus = 2,
+  showtabline = 2,
+  smartcase = true,
+  ignorecase = true,
+  hlsearch = true,
+  timeoutlen = 500,
+  foldenable = true,
+  foldtext = "v:lua.folds()",
+  udir = vim.g.cache_dir .. "/undodir",
+  viewdir = vim.g.cache_dir .. "view",
+  directory = vim.g.cache_dir .. "/swap",
 }
 
 -- toogle plugins easily
@@ -124,65 +124,6 @@ rvim.plugin = {
   telescope_fzy = { active = false },
   telescope_project = { active = false },
   telescope_media_files = { active = false },
-}
-
-rvim.telescope = {
-  prompt_prefix = " ❯ ",
-  layout_config = { height = 0.9, width = 0.9 },
-  borderchars = { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
-}
-
-rvim.nvim_tree = {
-  side = "right",
-  auto_open = 0,
-  width = 35,
-  indent_markers = 1,
-  lsp_diagnostics = 0,
-  special_files = { "README.md", "Makefile", "MAKEFILE" },
-}
-
-rvim.treesitter = {
-  ensure_installed = {
-    "html",
-    "css",
-    "javascript",
-    "typescript",
-    "tsx",
-    "graphql",
-    "jsdoc",
-    "json",
-    "yaml",
-    "go",
-    "c",
-    "dart",
-    "cpp",
-    "rust",
-    "python",
-    "bash",
-    "lua",
-  },
-  highlight = { enabled = true },
-}
-
-rvim.dashboard = {
-  custom_header = {
-    "                                                       ",
-    "                                                       ",
-    " ███╗   ██╗ ███████╗ ██████╗  ██╗   ██╗ ██╗ ███╗   ███╗",
-    " ████╗  ██║ ██╔════╝██╔═══██╗ ██║   ██║ ██║ ████╗ ████║",
-    " ██╔██╗ ██║ █████╗  ██║   ██║ ██║   ██║ ██║ ██╔████╔██║",
-    " ██║╚██╗██║ ██╔══╝  ██║   ██║ ╚██╗ ██╔╝ ██║ ██║╚██╔╝██║",
-    " ██║ ╚████║ ███████╗╚██████╔╝  ╚████╔╝  ██║ ██║ ╚═╝ ██║",
-    " ╚═╝  ╚═══╝ ╚══════╝ ╚═════╝    ╚═══╝   ╚═╝ ╚═╝     ╚═╝",
-    "                                                       ",
-    "                                                       ",
-  },
-  default_executive = "telescope",
-  disable_statusline = 0,
-  save_session = function()
-    vim.cmd "SessionSave"
-  end,
-  session_directory = g.session_dir,
 }
 
 rvim.lsp = {

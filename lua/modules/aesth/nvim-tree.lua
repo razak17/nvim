@@ -1,5 +1,14 @@
 local g = vim.g
 
+rvim.nvim_tree = {
+  side = "right",
+  auto_open = 0,
+  width = 35,
+  indent_markers = 1,
+  lsp_diagnostics = 0,
+  special_files = { "README.md", "Makefile", "MAKEFILE" },
+}
+
 g.nvim_tree_icons = {
   default = "",
   symlink = "",
