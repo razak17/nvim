@@ -72,6 +72,7 @@ if rvim.plugin.SANE.active then
   nnoremap("<Leader>fcH", ":Telescope command_history<CR>")
   nnoremap("<Leader>fck", ":Telescope keymaps<CR>")
   nnoremap("<Leader>fcl", ":Telescope loclist<CR>")
+  nnoremap("<Leader>fce", ":Telescope quickfix<CR>")
   nnoremap("<Leader>fcr", ":Telescope registers<CR>")
   nnoremap("<Leader>fcT", ":Telescope treesitter<CR>")
   nnoremap("<Leader>fcv", ":Telescope vim_options<CR>")

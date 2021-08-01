@@ -163,6 +163,7 @@ local telescope_keymaps = {
     a = "autocmds",
     c = "commands",
     b = "buffers",
+    e = "quickfix",
     f = "builtin",
     h = "help",
     H = "history",

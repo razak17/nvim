@@ -19,13 +19,13 @@ function M.init()
     vim.lsp.diagnostic.show_line_diagnostics { popup_opts = lsp_popup }
   end)
   nnoremap("ge", function()
-    require("lsp.peek").PeekDefinition()
+    require("lsp.peek").Peek "definition"
   end)
   nnoremap("gl", function()
-    require("lsp.peek").PeekImplementation()
+    require("lsp.peek").Peek "implementation"
   end)
   nnoremap("gL", function()
-    require("lsp.peek").PeekTypeDefinition()
+    require("lsp.peek").Peek "typeDefinition"
   end)
   nnoremap("gE", vim.lsp.buf.type_definition)
   nnoremap("grn", vim.lsp.buf.rename)
