@@ -28,7 +28,15 @@ end
 
 -- Lsp
 function config.nvim_lsp()
-  require("lsp").init()
+  local lsp_utils = require "lsp.utils"
+  require("lsp.signs").init()
+  require("lsp.hover").init()
+  require("lsp.binds").init()
+  require("lsp.handlers").init()
+  require("lsp.commands").init()
+  require("lsp.servers").init()
+  lsp_utils.toggle_autoformat()
+  lsp_utils.lspLocList()
 end
 
 function config.nvim_lsp_settings()

@@ -6,13 +6,14 @@ rvim.common = {
   transparent_window = false,
   line_wrap_cursor_movement = true,
   format_on_save = true,
+  debug = false,
 }
 
 -- Consistent store of various UI items to reuse throughout my config
 rvim.style = {
   icons = {
     error = "",
-    warning = "",
+    warn = "",
     info = "",
     hint = "",
   },
@@ -127,11 +128,27 @@ rvim.plugin = {
 rvim.lsp = {
   override = {},
   document_highlight = true,
+  diagnostics = {
+    signs = {
+      active = true,
+      values = {
+        { name = "LspDiagnosticsSignError", text = rvim.style.icons.error },
+        { name = "LspDiagnosticsSignWarning", text = rvim.style.icons.warn},
+        { name = "LspDiagnosticsSignHint", text = rvim.style.icons.hint },
+        { name = "LspDiagnosticsSignInformation", text = rvim.style.icons.info},
+      },
+    },
+    virtual_text = {
+      prefix = "",
+      spacing = 0,
+    },
+    underline = true,
+    severity_sort = true,
+  },
   hover_diagnostics = true,
   lint_on_save = true,
   rust_tools = false,
   popup_border = "single",
-  on_attach_callback = nil,
   binary = {
     clangd = "clangd",
     cmake = "cmake-language-server",
@@ -154,7 +171,7 @@ rvim.lsp = {
 }
 
 local schemas = nil
-local on_attach = require("lsp.service").on_attach
+local on_attach = require("lsp").on_attach
 local lsp_utils = require "lsp.utils"
 local root_dir = lsp_utils.root_dir
 
@@ -165,7 +182,7 @@ end
 
 rvim.lang = {
   c = {
-    formatter = { exe = "clang_format", args = {}, stdin = true },
+    formatters = { { exe = "clang_format", args = {}, stdin = true } },
     linters = { "clangtidy" },
     lsp = {
       provider = "clangd",
@@ -192,7 +209,7 @@ rvim.lang = {
     },
   },
   cmake = {
-    formatter = { exe = "cmake_format", args = {} },
+    formatters = { { exe = "cmake_format", args = {} } },
     linters = {},
     lsp = {
       provider = "cmake",
@@ -204,7 +221,7 @@ rvim.lang = {
     },
   },
   cpp = {
-    formatter = { exe = "clang_format", args = {}, stdin = true },
+    formatters = { { exe = "clang_format", args = {}, stdin = true } },
     linters = { "cppcheck", "clangtidy" },
     lsp = {
       provider = "clangd",
@@ -229,7 +246,7 @@ rvim.lang = {
     },
   },
   css = {
-    formatter = { exe = "prettier", args = {} },
+    formatters = { { exe = "prettier", args = {} } },
     linters = {},
     lsp = {
       provider = "cssls",
@@ -241,7 +258,7 @@ rvim.lang = {
     },
   },
   docker = {
-    formatter = { exe = "", args = {} },
+    formatters = { { exe = "", args = {} } },
     linters = {},
     lsp = {
       provider = "dockerls",
@@ -253,7 +270,7 @@ rvim.lang = {
     },
   },
   elixir = {
-    formatter = { exe = "mix", args = {}, stdin = true },
+    formatters = { { exe = "mix", args = {}, stdin = true } },
     linters = {},
     lsp = {
       provider = "elixirls",
@@ -261,7 +278,7 @@ rvim.lang = {
     },
   },
   go = {
-    formatter = { exe = "gofmt", args = {}, stdin = true },
+    formatters = { { exe = "gofmt", args = {}, stdin = true } },
     linters = { "golangcilint", "revive" },
     lsp = {
       provider = "gopls",
@@ -272,7 +289,7 @@ rvim.lang = {
     },
   },
   graphql = {
-    formatter = { exe = "", args = {} },
+    formatters = { { exe = "", args = {} } },
     linters = {},
     lsp = {
       provider = "graphql",
@@ -284,7 +301,7 @@ rvim.lang = {
     },
   },
   html = {
-    formatter = { exe = "prettier", args = {} },
+    formatters = { { exe = "prettier", args = {} } },
     linters = {
       "tidy",
       -- https://docs.errata.ai/vale/scoping#html
@@ -300,7 +317,7 @@ rvim.lang = {
     },
   },
   javascript = {
-    formatter = { exe = "prettier", args = {} },
+    formatters = { { exe = "prettier", args = {} } },
     linters = { "eslint" },
     lsp = {
       provider = "tsserver",
@@ -313,7 +330,7 @@ rvim.lang = {
   },
   javascriptreact = {
     -- @usage can be prettier or eslint
-    formatter = { exe = "prettier", args = {}, stdin = true },
+    formatters = { { exe = "prettier", args = {}, stdin = true } },
     linters = { "eslint" },
     lsp = {
       provider = "tsserver",
@@ -325,7 +342,7 @@ rvim.lang = {
     },
   },
   json = {
-    formatter = { exe = "json_tool", args = {}, stdin = true },
+    formatters = { { exe = "json_tool", args = {}, stdin = true } },
     linters = {},
     lsp = {
       provider = "jsonls",
@@ -349,10 +366,10 @@ rvim.lang = {
     },
   },
   lua = {
-    formatter = {
+    formatters = { {
       exe = "stylua",
       args = {},
-    },
+    } },
     linters = { "luacheck" },
     lsp = {
       provider = "sumneko_lua",
@@ -382,18 +399,20 @@ rvim.lang = {
     },
   },
   nginx = {
-    formatter = {
-      exe = "nginx_beautifier",
-      args = {
-        provider = "",
-        setup = {},
+    formatters = {
+      {
+        exe = "nginx_beautifier",
+        args = {
+          provider = "",
+          setup = {},
+        },
       },
     },
     linters = {},
     lsp = {},
   },
   python = {
-    formatter = { exe = "yapf", args = {}, stdin = true },
+    formatters = { { exe = "yapf", args = {}, stdin = true } },
     linters = { "flake8", "pylint", "mypy" },
     lsp = {
       provider = "pyright",
@@ -404,14 +423,14 @@ rvim.lang = {
     },
   },
   r = {
-    formatter = {
+    formatters = { {
       exe = "format_r",
       args = {},
-    },
+    } },
     linters = {},
   },
   rust = {
-    formatter = { exe = "rustfmt", args = { "--emit=stdout", "--edition=2018" }, stdin = true },
+    formatters = { { exe = "rustfmt", args = { "--emit=stdout", "--edition=2018" }, stdin = true } },
     linters = {},
     lsp = {
       provider = "rust_analyzer",
@@ -419,10 +438,10 @@ rvim.lang = {
     },
   },
   sh = {
-    formatter = {
+    formatters = { {
       exe = "shfmt",
       args = {},
-    },
+    } },
     linters = { "shellcheck" },
     lsp = {
       provider = "bashls",
@@ -435,7 +454,7 @@ rvim.lang = {
     },
   },
   typescript = {
-    formatter = { exe = "prettier", args = {} },
+    formatters = { { exe = "prettier", args = {} } },
     linters = { "eslint" },
     lsp = {
       provider = "tsserver",
@@ -447,7 +466,7 @@ rvim.lang = {
     },
   },
   typescriptreact = {
-    formatter = { exe = "prettier", args = {}, stdin = true },
+    formatters = { { exe = "prettier", args = {}, stdin = true } },
     linters = { "eslint" },
     lsp = {
       provider = "tsserver",
@@ -459,7 +478,7 @@ rvim.lang = {
     },
   },
   vim = {
-    formatter = { exe = "", args = {} },
+    formatters = { exe = "", args = {} },
     linters = { "vint" },
     lsp = {
       provider = "vimls",
@@ -470,10 +489,12 @@ rvim.lang = {
     },
   },
   yaml = {
-    formatter = {
-      exe = "prettier",
-      args = { "--stdin-filepath", vim.api.nvim_buf_get_name(0), "--single-quote", stdin = true },
-      stdin = true,
+    formatters = {
+      {
+        exe = "prettier",
+        args = { "--stdin-filepath", vim.api.nvim_buf_get_name(0), "--single-quote", stdin = true },
+        stdin = true,
+      },
     },
     linters = {},
     lsp = {

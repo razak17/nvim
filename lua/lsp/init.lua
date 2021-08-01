@@ -1,11 +1,29 @@
 local lspconfig = require "lspconfig"
-local lsp_utils = require "lsp.utils"
-local service = require "lsp.service"
+local u = require "lsp.utils"
 
 local M = {}
-local is_table = lsp_utils.is_table
-local is_string = lsp_utils.is_string
-local has_value = lsp_utils.has_value
+
+local function lsp_highlight_document(client)
+  if client and client.resolved_capabilities.document_highlight then
+    rvim.augroup("LspCursorCommands", {
+      {
+        events = { "CursorHold" },
+        targets = { "<buffer>" },
+        command = "lua vim.lsp.buf.document_highlight()",
+      },
+      {
+        events = { "CursorHoldI" },
+        targets = { "<buffer>" },
+        command = "lua vim.lsp.buf.document_highlight()",
+      },
+      {
+        events = { "CursorMoved" },
+        targets = { "<buffer>" },
+        command = "lua vim.lsp.buf.clear_references()",
+      },
+    })
+  end
+end
 
 local global_capabilities = vim.lsp.protocol.make_client_capabilities()
 global_capabilities.textDocument.completion.completionItem.snippetSupport = true
@@ -25,68 +43,37 @@ global_capabilities.textDocument.codeAction = {
   },
 }
 
+local function global_on_init(client, bufnr)
+  if rvim.lsp.on_init_callback then
+    rvim.lsp.on_init_callback(client, bufnr)
+  end
+
+  local formatters = rvim.lang[vim.bo.filetype].formatters
+  if not vim.tbl_isempty(formatters) then
+    client.resolved_capabilities.document_formatting = false
+    u.lvim_log(string.format("Overriding [%s] formatter with [%s]", client.name, formatters[1].exe))
+  end
+end
+
 lspconfig.util.default_config = vim.tbl_extend(
   "force",
   lspconfig.util.default_config,
-  { capabilities = global_capabilities }
+  { capabilities = global_capabilities, on_init = global_on_init }
 )
 
-function M.init()
-  require("lsp.kind").init()
-  require("lsp.signs").init()
-  require("lsp.hover").init()
-  require("lsp.binds").init()
-  require("lsp.handlers").init()
-  require("lsp.commands").init()
-  require("lsp.servers").init()
-  lsp_utils.toggle_autoformat()
-  lsp_utils.lspLocList()
+function M.on_attach(client, bufnr)
+  vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
+  lsp_highlight_document(client)
+  require("lsp.null-ls").setup(vim.bo.filetype)
 end
 
 function M.setup(lang)
-  local lang_server = rvim.lang[lang].lsp
-  local provider = lang_server.provider
-  if lsp_utils.check_lsp_client_active(provider) then
+  local lsp = rvim.lang[lang].lsp
+  if require("lsp.utils").check_lsp_client_active(lsp.provider) then
     return
   end
 
-  local overrides = rvim.lsp.override
-
-  if is_table(overrides) then
-    if has_value(overrides, lang) then
-      return
-    end
-  end
-
-  if is_string(overrides) then
-    if overrides == lang then
-      return
-    end
-  end
-  local sources = require("lsp.null-ls").setup(lang)
-
-  for _, source in pairs(sources) do
-    local method = source.method
-    local format_method = "NULL_LS_FORMATTING"
-
-    if is_table(method) then
-      if has_value(method, format_method) then
-        lang_server.setup.on_attach = service.no_formatter_on_attach
-      end
-    end
-
-    if is_string(method) then
-      if method == format_method then
-        lang_server.setup.on_attach = service.no_formatter_on_attach
-      end
-    end
-  end
-
-  if provider == "" or provider == nil then
-    return
-  end
-
-  require("lspconfig")[provider].setup(lang_server.setup)
+  lspconfig[lsp.provider].setup(lsp.setup)
 end
 
 return M

@@ -1,11 +1,36 @@
 local M = {}
 
 function M.init()
-  vim.fn.sign_define {
-    { name = "LspDiagnosticsSignError", text = rvim.style.icons.error, texthl = "LspDiagnosticsSignError" },
-    { name = "LspDiagnosticsSignHint", text = rvim.style.icons.hint, texthl = "LspDiagnosticsSignHint" },
-    { name = "LspDiagnosticsSignWarning", text = rvim.style.icons.warning, texthl = "LspDiagnosticsSignWarning" },
-    { name = "LspDiagnosticsSignInformation", text = rvim.style.icons.info, texthl = "LspDiagnosticsSignInformation" },
+  for _, sign in ipairs(rvim.lsp.diagnostics.signs.values) do
+    vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = sign.name })
+  end
+
+  vim.lsp.protocol.CompletionItemKind = {
+    "   (Text) ",
+    "   (Method)",
+    " ƒ  (Function)",
+    "   (Constructor)",
+    " ﴲ  (Field)",
+    "   (Variable)",
+    "   (Class)",
+    " ﰮ  (Interface)",
+    "   (Module)",
+    " 襁 (Property)",
+    "   (Unit)",
+    "   (Value)",
+    " 了 (Enum)",
+    "   (Keyword)",
+    "   (Snippet)",
+    "   (Color)",
+    "   (File)",
+    "   (Reference)",
+    "   (Folder)",
+    "   (EnumMember)",
+    "   (Constant)",
+    " ﳤ  (Struct)",
+    " 鬒 (Event)",
+    "   (Operator)",
+    "   (TypeParameter)",
   }
 end
 

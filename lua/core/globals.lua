@@ -246,6 +246,32 @@ function rvim.check_lsp_client_active(name)
   return false
 end
 
+--- Extends a list-like table with the unique values of another list-like table.
+---
+--- NOTE: This mutates dst!
+---
+--@see |vim.tbl_extend()|
+---
+--@param dst list which will be modified and appended to.
+--@param src list from which values will be inserted.
+--@param start Start index on src. defaults to 1
+--@param finish Final index on src. defaults to #src
+--@returns dst
+function rvim.list_extend_unique(dst, src, start, finish)
+  vim.validate {
+    dst = { dst, "t" },
+    src = { src, "t" },
+    start = { start, "n", true },
+    finish = { finish, "n", true },
+  }
+  for i = start or 1, finish or #src do
+    if not vim.tbl_contains(dst, src[i]) then
+      table.insert(dst, src[i])
+    end
+  end
+  return dst
+end
+
 function rvim.invalidate(path, recursive)
   if recursive then
     for key, value in pairs(package.loaded) do
