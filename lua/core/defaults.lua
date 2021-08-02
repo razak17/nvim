@@ -133,9 +133,9 @@ rvim.lsp = {
       active = true,
       values = {
         { name = "LspDiagnosticsSignError", text = rvim.style.icons.error },
-        { name = "LspDiagnosticsSignWarning", text = rvim.style.icons.warn},
+        { name = "LspDiagnosticsSignWarning", text = rvim.style.icons.warn },
         { name = "LspDiagnosticsSignHint", text = rvim.style.icons.hint },
-        { name = "LspDiagnosticsSignInformation", text = rvim.style.icons.info},
+        { name = "LspDiagnosticsSignInformation", text = rvim.style.icons.info },
       },
     },
     virtual_text = {
@@ -143,11 +143,11 @@ rvim.lsp = {
       spacing = 0,
     },
     underline = true,
+    update_in_insert = false,
     severity_sort = true,
   },
   hover_diagnostics = true,
   lint_on_save = true,
-  rust_tools = false,
   popup_border = "single",
   binary = {
     clangd = "clangd",
