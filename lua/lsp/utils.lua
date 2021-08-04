@@ -1,23 +1,5 @@
 local M = {}
 
-function M.is_table(t)
-  return type(t) == "table"
-end
-
-function M.is_string(t)
-  return type(t) == "string"
-end
-
-function M.has_value(tab, val)
-  for _, value in ipairs(tab) do
-    if value == val then
-      return true
-    end
-  end
-
-  return false
-end
-
 function M.check_lsp_client_active(name)
   local clients = vim.lsp.get_active_clients()
   for _, client in pairs(clients) do

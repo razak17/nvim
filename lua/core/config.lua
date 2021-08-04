@@ -88,7 +88,7 @@ rvim.plugin = {
   -- editor
   fold_cycle = { active = false },
   accelerated_jk = { active = false },
-  easy_align = { active = false },
+  easy_align = { active = true },
   cool = { active = true },
   delimitmate = { active = false },
   eft = { active = false },
@@ -128,6 +128,9 @@ rvim.plugin = {
 rvim.lsp = {
   override = {},
   document_highlight = true,
+  hover_diagnostics = true,
+  lint_on_save = true,
+  popup_border = "single",
   diagnostics = {
     signs = {
       active = true,
@@ -146,9 +149,6 @@ rvim.lsp = {
     update_in_insert = false,
     severity_sort = true,
   },
-  hover_diagnostics = true,
-  lint_on_save = true,
-  popup_border = "single",
   binary = {
     clangd = "clangd",
     cmake = "cmake-language-server",

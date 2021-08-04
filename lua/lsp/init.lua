@@ -55,12 +55,6 @@ local function global_on_init(client, bufnr)
   end
 end
 
-lspconfig.util.default_config = vim.tbl_extend(
-  "force",
-  lspconfig.util.default_config,
-  { capabilities = global_capabilities, on_init = global_on_init }
-)
-
 function M.on_attach(client, bufnr)
   vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
   lsp_highlight_document(client)
@@ -68,6 +62,11 @@ function M.on_attach(client, bufnr)
 end
 
 function M.setup(lang)
+  lspconfig.util.default_config = vim.tbl_extend(
+    "force",
+    lspconfig.util.default_config,
+    { capabilities = global_capabilities, on_init = global_on_init }
+  )
   local lsp = rvim.lang[lang].lsp
   if require("lsp.utils").check_lsp_client_active(lsp.provider) then
     return

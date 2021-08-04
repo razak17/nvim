@@ -268,11 +268,11 @@ rvim.augroup("PackerSetupInit", {
   {
     events = { "BufWritePost" },
     targets = {
-      vim.g.vim_path .. "/lua/core/defaults.lua",
+      vim.g.vim_path .. "/lua/core/config.lua",
     },
     command = function()
       vim.cmd [[source ~/.config/rvim/lua/core/opts.lua]]
-      vim.cmd [[source ~/.config/rvim/lua/core/defaults.lua]]
+      vim.cmd [[source ~/.config/rvim/lua/core/config.lua]]
       local files = vim.api.nvim_eval [[sort(glob(g:modules_dir .. '/*/*.lua', '', v:true))]]
       for _, file in ipairs(files) do
         vim.cmd("source " .. file)

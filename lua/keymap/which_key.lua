@@ -174,7 +174,7 @@ local telescope_keymaps = {
     v = "vim options",
     z = "current file fuzzy find",
   },
-  C = "Open lua/rvim/defaults/init.lua",
+  C = "Open lua/rvim/core/config.lua",
   d = {
     name = "+Dotfiles",
     b = "branches",

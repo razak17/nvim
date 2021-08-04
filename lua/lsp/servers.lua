@@ -2,7 +2,7 @@ local M = {}
 
 function M.init()
   require("lsp").setup "c"
-  require("lsp").setup "cmake"
+  -- require("lsp").setup "cmake"
   require("lsp").setup "cpp"
   require("lsp").setup "css"
   require("lsp").setup "docker"
@@ -13,7 +13,7 @@ function M.init()
   require("lsp").setup "json"
   require("lsp").setup "lua"
   require("lsp").setup "python"
-  require("lsp").setup "rust"
+  -- require("lsp").setup "rust"
   require("lsp").setup "sh"
   require("lsp").setup "vim"
   require("lsp").setup "yaml"
