@@ -73,7 +73,7 @@ local function lsp_mappings()
   nnoremap("<leader>vl", vim.lsp.diagnostic.set_loclist)
 end
 
-function M.init()
+function M.setup()
   lsp_commands()
   lsp_mappings()
 end

@@ -1,3 +1,4 @@
+local g = vim.g
 local nmap = rvim.nmap
 local nnoremap = rvim.nnoremap
 local xnoremap = rvim.xnoremap
@@ -13,6 +14,10 @@ local command = rvim.command
 if not rvim.plugin.accelerated_jk.active and not rvim.plugin.SANE.active then
   nmap("n", "j")
 end
+
+-- set leader key
+g.mapleader = (rvim.common.leader == "space" and " ") or rvim.common.leader
+g.maplocalleader = (rvim.common.leader == "space" and " ") or rvim.common.leader
 
 -----------------------------------------------------------------------------//
 -- Functions

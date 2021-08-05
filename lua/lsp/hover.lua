@@ -46,7 +46,7 @@ function M.hover_diagnostics()
   })
 end
 
-function M.init()
+function M.setup()
   if rvim.lsp.hover_diagnostics then
     M.hover_diagnostics()
   end

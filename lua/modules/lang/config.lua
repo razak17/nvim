@@ -29,13 +29,11 @@ end
 -- Lsp
 function config.nvim_lsp()
   local lsp_utils = require "lsp.utils"
-  require("lsp.signs").init()
-  require("lsp.servers").init()
-  require("lsp.handlers").init()
-  if rvim.lsp.hover_diagnostics then
-    require("lsp.hover").init()
-  end
-  require("lsp.binds").init()
+  require("lsp.signs").setup()
+  require("lsp.servers").setup()
+  require("lsp.handlers").setup()
+  require("lsp.hover").setup()
+  require("lsp.binds").setup()
   lsp_utils.toggle_autoformat()
   lsp_utils.lspLocList()
 end

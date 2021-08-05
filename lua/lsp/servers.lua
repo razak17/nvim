@@ -1,6 +1,6 @@
 local M = {}
 
-function M.init()
+function M.setup()
   require("lsp").setup "c"
   -- require("lsp").setup "cmake"
   require("lsp").setup "cpp"

@@ -2,7 +2,7 @@ local g = vim.g
 
 -- common
 rvim.common = {
-  leader_key = " ",
+  leader = "space",
   transparent_window = false,
   line_wrap_cursor_movement = true,
   format_on_save = true,
