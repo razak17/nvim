@@ -2,16 +2,20 @@ local conf = require "modules.lang.config"
 
 local lang = {}
 
+local function load_conf(name)
+  return require(string.format("modules.lang.%s", name))
+end
+
 -- Debug
 lang["mfussenegger/nvim-dap"] = {
   event = "BufReadPre",
-  config = conf.dap,
+  config = load_conf "dap",
   disable = not rvim.plugin.debug.active,
 }
 
 lang["rcarriga/nvim-dap-ui"] = {
   event = "BufReadPre",
-  config = conf.dap_ui,
+  config = load_conf "dap_ui",
   disable = not rvim.plugin.debug_ui.active,
 }
 
@@ -27,7 +31,7 @@ lang["jbyuki/one-small-step-for-vimkind"] = {
 }
 
 -- Lsp
-lang["neovim/nvim-lspconfig"] = { config = conf.nvim_lsp, disable = not rvim.plugin.SANE.active }
+lang["neovim/nvim-lspconfig"] = { config = load_conf "lspconfig", disable = not rvim.plugin.SANE.active }
 
 lang["tamago324/nlsp-settings.nvim"] = {
   config = conf.nvim_lsp_settings,
@@ -84,8 +88,8 @@ lang["kevinhwang91/nvim-bqf"] = {
 -- Treesitter
 lang["nvim-treesitter/nvim-treesitter"] = {
   branch = "0.5-compat",
-  -- after = 'telescope.nvim',
-  config = conf.nvim_treesitter,
+  -- after = "telescope.nvim",
+  config = load_conf "treesitter",
   disable = not rvim.plugin.treesitter.active and not rvim.plugin.SANE.active,
 }
 
@@ -111,8 +115,8 @@ lang["windwp/nvim-ts-autotag"] = {
 
 lang["windwp/nvim-autopairs"] = {
   event = "InsertEnter",
-  after = { "telescope.nvim" },
-  config = conf.autopairs,
+  after = { "telescope.nvim", "nvim-compe" },
+  config = load_conf "autopairs",
   disable = not rvim.plugin.autopairs.active,
 }
 

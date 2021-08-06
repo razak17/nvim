@@ -1,9 +1,14 @@
 local completion = {}
+
 local conf = require "modules.completion.config"
+
+local function load_conf(name)
+  return require(string.format("modules.completion.%s", name))
+end
 
 completion["liuchengxu/vim-which-key"] = {
   event = { "BufWinEnter" },
-  config = conf.which_key,
+  config = load_conf "which_key",
   disable = not rvim.plugin.SANE.active,
 }
 
@@ -36,8 +41,9 @@ completion["nvim-lua/plenary.nvim"] = { disable = not rvim.plugin.SANE.active }
 
 completion["nvim-lua/popup.nvim"] = { disable = not rvim.plugin.SANE.active }
 
+-- Telescope
 completion["nvim-telescope/telescope.nvim"] = {
-  config = conf.telescope,
+  config = load_conf "telescope",
   disable = not rvim.plugin.SANE.active,
 }
 

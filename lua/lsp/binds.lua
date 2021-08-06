@@ -78,7 +78,7 @@ function M.setup()
   lsp_mappings()
 end
 
--- function M.init(client)
+-- function M.setup(client)
 --   -- Definition
 --   if client and client.supports_method "textDocument/definition" then
 --     nnoremap("gd", vim.lsp.buf.definition)
