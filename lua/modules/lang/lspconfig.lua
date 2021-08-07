@@ -34,7 +34,6 @@ return function()
   require("lsp.handlers").setup()
   require("lsp.hover").setup()
   require("lsp.signs").setup()
-  require("lsp.binds").setup()
   lsp_utils.toggle_autoformat()
   lsp_utils.lspLocList()
 end

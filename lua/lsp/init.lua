@@ -58,6 +58,11 @@ end
 function M.on_attach(client, bufnr)
   vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
   lsp_highlight_document(client)
+  require("lsp.binds").setup(client)
+  if rvim.lsp.smart_cwd then
+    vim.api.nvim_set_current_dir(client.config.root_dir)
+    _G.change_tree_dir(client.config.root_dir)
+  end
   require("lsp.null-ls").setup(vim.bo.filetype)
 end
 

@@ -126,7 +126,6 @@ rvim.plugin = {
 }
 
 rvim.lsp = {
-  override = {},
   document_highlight = true,
   hover_diagnostics = true,
   lint_on_save = true,
@@ -148,6 +147,7 @@ rvim.lsp = {
     underline = true,
     update_in_insert = false,
     severity_sort = true,
+    smart_cwd = true,
   },
   binary = {
     clangd = "clangd",

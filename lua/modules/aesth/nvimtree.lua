@@ -76,16 +76,33 @@ return function()
     if not view_status_ok then
       return
     end
+
+    local a = vim.api
+
+    local curwin = a.nvim_get_current_win()
+    local curbuf = a.nvim_win_get_buf(curwin)
+    local bufnr = view.View.bufnr
+    local winnr = view.get_winnr()
     if view.win_open() then
-      require("nvim-tree").close()
-      if package.loaded["bufferline.state"] then
-        require("bufferline.state").set_offset(0)
+      if curwin == winnr and curbuf == bufnr then
+        view.close()
+        if package.loaded["bufferline.state"] then
+          require("bufferline.state").set_offset(0)
+        end
+      else
+        view.focus()
       end
     else
       if package.loaded["bufferline.state"] and rvim.nvim_tree.side == "right" then
-        require("bufferline.state").set_offset(31, "")
+        require("bufferline.state").set_offset(rvim.nvim_tree.width + 1, "")
       end
       require("nvim-tree").toggle()
+    end
+  end
+
+  function _G.change_tree_dir(dir)
+    if vim.g.loaded_tree then
+      require("nvim-tree.lib").change_dir(dir)
     end
   end
 

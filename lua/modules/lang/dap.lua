@@ -21,6 +21,6 @@ return function()
   nnoremap("<leader>dn", ':lua require"dap".down()<CR>')
   nnoremap("<leader>dp", ':lua require"dap".pause.toggle()<CR>')
   nnoremap("<leader>dr", ':lua require"dap".repl.open({}, "vsplit")<CR><C-w>l')
-  nnoremap("<leader>dS", ':lua require"dap".stop()<CR>')
+  nnoremap("<leader>dS", ':lua require"dap".close()<CR>')
   nnoremap("<leader>dx", ':lua require"dap".disconnect()<CR>')
 end
