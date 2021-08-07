@@ -50,7 +50,7 @@ function M.root_dir()
   return util.root_pattern(".gitignore", ".git", vim.fn.getcwd())
 end
 
-function M.lvim_log(msg)
+function M.rvim_log(msg)
   if rvim.common.debug then
     vim.notify(msg, vim.log.levels.DEBUG)
   end

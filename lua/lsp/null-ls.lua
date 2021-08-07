@@ -47,7 +47,7 @@ end
 local function validate_nodejs_provider(provider)
   local command_path
   local root_dir
-  if rvim.builtin.rooter.active then
+  if rvim.plugin.rooter.active then
     --- use vim-rooter to set root_dir
     vim.cmd "let root_dir = FindRootDirectory()"
     root_dir = vim.api.nvim_get_var "root_dir"
@@ -55,20 +55,20 @@ local function validate_nodejs_provider(provider)
     --- use LSP to set root_dir
     local ts_client = require("utils").get_active_client_by_ft "typescript"
     if ts_client == nil then
-      u.lvim_log "Unable to determine root directory since tsserver didn't start correctly"
+      u.rvim_log "Unable to determine root directory since tsserver didn't start correctly"
       return
     end
     root_dir = ts_client.config.root_dir
   end
   local local_nodejs_command = root_dir .. "/node_modules/.bin/" .. provider._opts.command
-  u.lvim_log(string.format("checking [%s] for local node module: [%s]", local_nodejs_command, vim.inspect(provider)))
+  u.rvim_log(string.format("checking [%s] for local node module: [%s]", local_nodejs_command, vim.inspect(provider)))
   if vim.fn.executable(local_nodejs_command) == 1 then
     command_path = local_nodejs_command
   elseif vim.fn.executable(provider._opts.command) == 1 then
-    u.lvim_log(string.format("checking in global path instead for node module: [%s]", provider._opts.command))
+    u.rvim_log(string.format("checking in global path instead for node module: [%s]", provider._opts.command))
     command_path = provider._opts.command
   else
-    u.lvim_log(string.format("Unable to find node module: [%s]", provider._opts.command))
+    u.rvim_log(string.format("Unable to find node module: [%s]", provider._opts.command))
   end
   return command_path
 end
@@ -82,7 +82,7 @@ local function validate_provider_request(provider)
     return validate_nodejs_provider(provider)
   end
   if vim.fn.executable(provider._opts.command) ~= 1 then
-    u.lvim_log(string.format("Unable to find the path for: [%s]", vim.inspect(provider)))
+    u.rvim_log(string.format("Unable to find the path for: [%s]", vim.inspect(provider)))
     return
   end
   return provider._opts.command
@@ -100,7 +100,7 @@ function M.setup(filetype)
       if resolved_path then
         builtin_formatter._opts.command = resolved_path
         table.insert(M.requested_providers, builtin_formatter)
-        u.lvim_log(string.format("Using format provider: [%s]", builtin_formatter.name))
+        u.rvim_log(string.format("Using format provider: [%s]", builtin_formatter.name))
       else
         -- mark it here to avoid re-doing the lookup again
         register_failed_request(filetype, formatter.exe, "formatters")
@@ -124,7 +124,7 @@ function M.setup(filetype)
       if resolved_path then
         builtin_diagnoser._opts.command = resolved_path
         table.insert(M.requested_providers, builtin_diagnoser)
-        u.lvim_log(string.format("Using linter provider: [%s]", builtin_diagnoser.name))
+        u.rvim_log(string.format("Using linter provider: [%s]", builtin_diagnoser.name))
       else
         -- mark it here to avoid re-doing the lookup again
         register_failed_request(filetype, linter.exe, "linters")
