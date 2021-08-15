@@ -1,8 +1,9 @@
+require "core.globals"
+require "core.config"
+
 local function load_core()
-  require "core.globals"
-  require "core.config"
   require "core.opts"
-  -- require "core.highlights"
+  require "core.highlights"
 end
 
 local function load_plugins()
@@ -25,6 +26,6 @@ local defer = function()
   )
 end
 
-defer()
-load_core()
 load_plugins()
+load_core()
+defer()

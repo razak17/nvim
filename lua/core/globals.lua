@@ -236,16 +236,6 @@ function rvim._exists(file)
   return ok, err
 end
 
-function rvim.check_lsp_client_active(name)
-  local clients = vim.lsp.get_active_clients()
-  for _, client in pairs(clients) do
-    if client.name == name then
-      return true
-    end
-  end
-  return false
-end
-
 --- Extends a list-like table with the unique values of another list-like table.
 ---
 --- NOTE: This mutates dst!

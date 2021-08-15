@@ -1,6 +1,6 @@
 local M = {}
 
-function M.check_lsp_client_active(name)
+function M.is_client_active(name)
   local clients = vim.lsp.get_active_clients()
   for _, client in pairs(clients) do
     if client.name == name then
@@ -8,6 +8,20 @@ function M.check_lsp_client_active(name)
     end
   end
   return false
+end
+
+function M.get_active_client_by_ft(filetype)
+  if not rvim.lang[filetype] or not rvim.lang[filetype].lsp then
+    return nil
+  end
+
+  local clients = vim.lsp.get_active_clients()
+  for _, client in pairs(clients) do
+    if client.name == rvim.lang[filetype].lsp.provider then
+      return client
+    end
+  end
+  return nil
 end
 
 function M.lspLocList()
@@ -48,12 +62,6 @@ end
 function M.root_dir()
   local util = require "lspconfig.util"
   return util.root_pattern(".gitignore", ".git", vim.fn.getcwd())
-end
-
-function M.rvim_log(msg)
-  if rvim.common.debug then
-    vim.notify(msg, vim.log.levels.DEBUG)
-  end
 end
 
 return M
