@@ -3,6 +3,7 @@
 BRANCH="${BRANCH:-main}"
 set -o nounset # error when referencing undefined variable
 set -o errexit # exit when command fails
+
 RVIM_GIT_PATH="$HOME/.dots/rvim/"
 RVIM_CONFIG_PATH="$HOME/.config/rvim/"
 
@@ -27,13 +28,6 @@ moveoldlvim() {
 	exit
 }
 
-removeoldconfig() {
-	echo '!!Warning!! -> Removing all lunarvim related config because of the --overwrite flag'
-	rm -rf "$HOME/.local/share/rvim"
-	rm -rf "$HOME/.cache/rvim"
-	rm -rf "$HOME/.config/rvim"
-}
-
 installpacker() {
 	git clone https://github.com/wbthomason/packer.nvim ~/.local/share/rvim/site/pack/packer/opt/packer.nvim
 }
@@ -53,14 +47,6 @@ pythonVenvInit() {
 	mkdir -p ~/$neovim_py
 	python3 -m venv ~/$neovim_py
 	~/$neovim_py/bin/pip install -U setuptools pynvim jedi neovim-remote ueberzug
-	pip install ueberzug pynvim neovim-remote isort yapf black flake8 pylint mypy
-}
-
-nodeHostInit() {
-	npm i -g sql-language-server typescript-language-server typescript pyright
-	npm i -g neovim prettier eslint bash-language-server tree-sitter-cli
-	npm i -g svelte-language-server vim-language-server yaml-language-server
-	npm i -g vscode-langservers-extracted dockerfile-language-server-nodejs graphql-language-service-cli
 }
 
 golangInit() {
@@ -70,7 +56,9 @@ golangInit() {
 }
 
 installextra() {
-	sudo pacman -S ripgrep fzf
+	sudo pacman -S ripgrep fzf cppcheck
+	yay -S clang-tidy
+	npm install -g tree-sitter-cli
 }
 
 rconf() {
@@ -122,10 +110,6 @@ cloneconfig() {
 		installpacker
 	fi
 
-	printf "Would you like to install npm packages now (y/n)? "
-	read -r answer
-	[ "$answer" != "${answer#[Yy]}" ] && nodeHostInit
-
 	printf "Would you like to install pip packages now (y/n)? "
 	read -r answer
 	[ "$answer" != "${answer#[Yy]}" ] && pythonVenvInit
@@ -154,9 +138,6 @@ while [ "$#" -gt 0 ]; do
 		;;
 	-go)
 		golangInit
-		;;
-	*--overwrite*)
-		removeoldconfig
 		;;
 	*--all*)
 		cloneconfig

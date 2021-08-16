@@ -437,6 +437,7 @@ end)
 -- Other remaps
 nnoremap("<Leader>a,", ":e ~/.config/rvim/lua/core/init.lua<CR>")
 nnoremap("<Leader>a.", ":e ~/.config/rvim/init.lua<CR>")
+nnoremap("<Leader>aL", ":e ~/.config/rvim/external/utils/.vimrc.local<CR>")
 nnoremap("<Leader>Ic", ":checkhealth<CR>")
 nnoremap("<C-b>", ":QuickRun<CR>")
 nnoremap("<Leader>Im", ":messages<CR>")

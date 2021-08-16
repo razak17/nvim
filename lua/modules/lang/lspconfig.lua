@@ -3,7 +3,6 @@ return function()
   local schemas = nil
   local on_attach = require("lsp").on_attach
   local lsp_utils = require "lsp.utils"
-  local root_dir = lsp_utils.root_dir
   local status_ok, jsonls_settings = pcall(require, "nlspsettings.jsonls")
 
   if status_ok then
@@ -13,7 +12,8 @@ return function()
   rvim.lang = {
     c = {
       formatters = { { exe = "clang_format", args = {}, stdin = true } },
-      linters = {{exe =  "clangtidy"  }},
+      -- linters = { { exe = "clangtidy" } },
+      linters = {},
       lsp = {
         provider = "clangd",
         setup = {
@@ -46,13 +46,13 @@ return function()
         setup = {
           cmd = { rvim.lsp.binary.cmake, "--stdio" },
           on_attach = on_attach,
-          root_dir = root_dir,
         },
       },
     },
     cpp = {
       formatters = { { exe = "clang_format", args = {}, stdin = true } },
-      linters = {{exe=  "cppcheck", "clangtidy"  }},
+      -- linters = { { exe = "clangtidy" } },
+      linters = {},
       lsp = {
         provider = "clangd",
         setup = {
@@ -76,14 +76,23 @@ return function()
       },
     },
     css = {
-      formatters = { { exe = "prettier", args = {} } },
+      formatters = {
+        -- {
+        --   exe = "prettier",
+        --   args = {},
+        -- },
+        -- {
+        --   exe = "prettierd",
+        --   args = {},
+        -- },
+      },
       linters = {},
       lsp = {
         provider = "cssls",
+        filetypes = { "scss", "css", "less" },
         setup = {
-          cmd = { rvim.lsp.binary.css, "--stdio" },
+          cmd = { "node", rvim.lsp.binary.css, "--stdio" },
           on_attach = on_attach,
-          root_dir = root_dir,
         },
       },
     },
@@ -95,7 +104,6 @@ return function()
         setup = {
           cmd = { rvim.lsp.binary.docker, "--stdio" },
           on_attach = on_attach,
-          root_dir = root_dir,
         },
       },
     },
@@ -103,13 +111,16 @@ return function()
       formatters = { { exe = "mix", args = {}, stdin = true } },
       linters = {},
       lsp = {
+        filetypes = { "elixir", "eelixir" },
         provider = "elixirls",
         setup = { cmd = { rvim.lsp.binary.elixir }, on_attach = on_attach },
       },
     },
     go = {
       formatters = { { exe = "gofmt", args = {}, stdin = true } },
-      linters = {{exe=  "golangcilint", "revive"  }},
+      linters = {
+        -- { exe = "golangcilint", "revive" }
+      },
       lsp = {
         provider = "gopls",
         setup = {
@@ -126,29 +137,29 @@ return function()
         setup = {
           cmd = { rvim.lsp.binary.graphql, "server", "-m", "stream" },
           on_attach = on_attach,
-          root_dir = root_dir,
         },
       },
     },
     html = {
       formatters = { { exe = "prettier", args = {} } },
       linters = {
-        {exe=         "tidy",
-        -- https://docs.errata.ai/vale/scoping#html
-        "vale",
-        }      },
+        -- {
+        --   exe = "tidy",
+        --   -- https://docs.errata.ai/vale/scoping#html
+        --   "vale",
+        -- },
+      },
       lsp = {
         provider = "html",
         setup = {
-          cmd = { rvim.lsp.binary.html, "--stdio" },
+          cmd = { "node", rvim.lsp.binary.html, "--stdio" },
           on_attach = on_attach,
-          root_dir = root_dir,
         },
       },
     },
     javascript = {
-      formatters = { { exe = "prettier", args = {}, stdin = true  } },
-      linters = {{exe=  "eslint"  }},
+      formatters = { { exe = "prettier", args = {}, stdin = true } },
+      linters = { { exe = "eslint" } },
       lsp = {
         provider = "tsserver",
         setup = {
@@ -161,7 +172,7 @@ return function()
     javascriptreact = {
       -- @usage can be prettier or eslint
       formatters = { { exe = "prettier", args = {}, stdin = true } },
-      linters = {{exe=  "eslint"  }},
+      linters = { { exe = "eslint" } },
       lsp = {
         provider = "tsserver",
         setup = {
@@ -177,9 +188,8 @@ return function()
       lsp = {
         provider = "jsonls",
         setup = {
-          cmd = { rvim.lsp.binary.json, "--stdio" },
+          cmd = { "node", rvim.lsp.binary.json, "--stdio" },
           on_attach = on_attach,
-          root_dir = root_dir,
           settings = {
             json = {
               schemas = schemas,
@@ -199,7 +209,7 @@ return function()
       formatters = { {
         exe = "stylua",
         args = {},
-        stdin = true
+        stdin = true,
       } },
       linters = { { exe = "luacheck" } },
       lsp = {
@@ -244,7 +254,7 @@ return function()
     },
     python = {
       formatters = { { exe = "yapf", args = {}, stdin = true } },
-      linters = {{exe=  "flake8", "pylint", "mypy"  }},
+      linters = { { exe = "flake8", "pylint", "mypy" } },
       lsp = {
         provider = "pyright",
         setup = {
@@ -266,6 +276,7 @@ return function()
       lsp = {
         provider = "rust_analyzer",
         setup = { cmd = { rvim.lsp.binary.rust }, on_attach = on_attach },
+        on_attach = on_attach,
       },
     },
     sh = {
@@ -273,7 +284,7 @@ return function()
         exe = "shfmt",
         args = {},
       } },
-      linters = {{exe=  "shellcheck"  }},
+      linters = { { exe = "shellcheck" } },
       lsp = {
         provider = "bashls",
         setup = {
@@ -286,7 +297,7 @@ return function()
     },
     typescript = {
       formatters = { { exe = "prettier", args = {} } },
-      linters = {{exe=  "eslint"  }},
+      linters = { { exe = "eslint" } },
       lsp = {
         provider = "tsserver",
         setup = {
@@ -298,7 +309,7 @@ return function()
     },
     typescriptreact = {
       formatters = { { exe = "prettier", args = {}, stdin = true } },
-      linters = {{exe=  "eslint"  }},
+      linters = { { exe = "eslint" } },
       lsp = {
         provider = "tsserver",
         setup = {
@@ -310,9 +321,11 @@ return function()
     },
     vim = {
       formatters = { exe = "", args = {} },
-      linters = {{exe=  "vint"  }},
+      -- linters = { { exe = "vint" } },
+      linters = {},
       lsp = {
         provider = "vimls",
+        filetypes = { "vim" },
         setup = {
           cmd = { rvim.lsp.binary.vim, "--stdio" },
           on_attach = on_attach,
@@ -338,10 +351,9 @@ return function()
     },
   }
 
-  local lsp = require "lsp"
-
   local langs = {
     "c",
+    "css",
     "cmake",
     "cpp",
     "docker",
@@ -363,7 +375,7 @@ return function()
 
   local function setup_servers()
     for _, server in ipairs(langs) do
-      lsp.setup(server)
+      require("lsp").setup(server)
     end
     vim.cmd "doautocmd User LspServersStarted"
   end

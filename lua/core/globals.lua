@@ -5,17 +5,17 @@ _G.rvim = { _store = _GlobalCallbacks }
 local api, fn = vim.api, vim.fn
 local fmt = string.format
 
--- Messaging
-if vim.notify then
-  ---Override of vim.notify to open floating window
-  --@param message of the notification to show to the user
-  --@param log_level Optional log level
-  --@param opts Dictionary with optional options (timeout, etc)
-  vim.notify = function(message, log_level, _)
-    assert(message, "The message key of vim.notify should be a string")
-    rvim.notify(message, { timeout = 5000, log_level = log_level })
-  end
-end
+-- -- Messaging
+-- if vim.notify then
+--   ---Override of vim.notify to open floating window
+--   --@param message of the notification to show to the user
+--   --@param log_level Optional log level
+--   --@param opts Dictionary with optional options (timeout, etc)
+--   vim.notify = function(message, log_level, _)
+--     assert(message, "The message key of vim.notify should be a string")
+--     rvim.notify(message, { timeout = 5000, log_level = log_level })
+--   end
+-- end
 
 function rvim._create(f)
   table.insert(rvim._store, f)

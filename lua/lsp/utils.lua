@@ -59,9 +59,4 @@ function M.toggle_autoformat()
   end
 end
 
-function M.root_dir()
-  local util = require "lspconfig.util"
-  return util.root_pattern(".gitignore", ".git", vim.fn.getcwd())
-end
-
 return M
