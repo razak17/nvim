@@ -3,6 +3,8 @@ stds.nvim = {
   globals = {
     "rvim",
     vim = { fields = { "g" } },
+    "MUtils",
+    "fterm_cmd",
     os = { fields = { "capture" } },
   },
   read_globals = {

@@ -89,7 +89,6 @@ return function()
       linters = {},
       lsp = {
         provider = "cssls",
-        filetypes = { "scss", "css", "less" },
         setup = {
           cmd = { "node", rvim.lsp.binary.css, "--stdio" },
           on_attach = on_attach,
@@ -111,9 +110,11 @@ return function()
       formatters = { { exe = "mix", args = {}, stdin = true } },
       linters = {},
       lsp = {
-        filetypes = { "elixir", "eelixir" },
         provider = "elixirls",
-        setup = { cmd = { rvim.lsp.binary.elixir }, on_attach = on_attach },
+        setup = {
+          cmd = { rvim.lsp.binary.elixir },
+          on_attach = on_attach,
+        },
       },
     },
     go = {
@@ -219,6 +220,9 @@ return function()
           on_attach = on_attach,
           settings = {
             Lua = {
+              telemetry = {
+                enable = false,
+              },
               runtime = {
                 version = "LuaJIT",
                 path = vim.split(package.path, ";"),
@@ -290,7 +294,6 @@ return function()
         setup = {
           cmd = { rvim.lsp.binary.sh, "start" },
           cmd_env = { GLOB_PATTERN = "*@(.sh|.zsh|.inc|.bash|.command)" },
-          filetypes = { "sh", "zsh" },
           on_attach = on_attach,
         },
       },
@@ -325,7 +328,6 @@ return function()
       linters = {},
       lsp = {
         provider = "vimls",
-        filetypes = { "vim" },
         setup = {
           cmd = { rvim.lsp.binary.vim, "--stdio" },
           on_attach = on_attach,

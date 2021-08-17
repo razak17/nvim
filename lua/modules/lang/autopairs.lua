@@ -3,12 +3,10 @@ return function()
   if not status_ok then
     return
   end
-  local npairs = require "nvim-autopairs"
-  local Rule = require "nvim-autopairs.rule"
-  local ts_conds = require "nvim-autopairs.ts-conds"
-
   -- skip it, if you use another global object
   _G.MUtils = {}
+  local npairs = require "nvim-autopairs"
+  local Rule = require "nvim-autopairs.rule"
 
   vim.g.completion_confirm_key = ""
   MUtils.completion_confirm = function()
@@ -37,6 +35,9 @@ return function()
       java = false, -- don't check treesitter on java
     },
   }
+
+  local ts_conds = require "nvim-autopairs.ts-conds"
+
   -- press % => %% is only inside comment or string
   npairs.add_rules {
     Rule("%", "%", "lua"):with_pair(ts_conds.is_ts_node { "string", "comment" }),

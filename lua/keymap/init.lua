@@ -8,7 +8,6 @@ local vmap = rvim.vmap
 local nnoremap = rvim.nnoremap
 local inoremap = rvim.inoremap
 local tnoremap = rvim.tnoremap
-local vnoremap = rvim.vnoremap
 
 local opts = { expr = true }
 
@@ -40,7 +39,9 @@ if rvim.plugin.SANE.active then
   xmap("<C-x>", "<Plug>(vsnip-cut-text)")
   xmap("<C-l>", "<Plug>(vsnip-select-text)")
   imap("<Tab>", "v:lua.tab_complete()", opts)
+  smap("<Tab>", "v:lua.tab_complete()", opts)
   imap("<S-Tab>", "v:lua.s_tab_complete()", opts)
+  smap("<S-Tab>", "v:lua.s_tab_complete()", opts)
   nnoremap("<Leader>cs", ":VsnipOpen<CR> 1<CR><CR>")
   imap("<C-l>", "vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'", opts)
   smap("<C-l>", "vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'", opts)

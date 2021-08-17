@@ -17,6 +17,7 @@ return function()
       "                                                       ",
     },
     default_executive = "telescope",
+    disable_at_vim_enter = 0,
     disable_statusline = 0,
     save_session = function()
       vim.cmd "SessionSave"
@@ -24,6 +25,7 @@ return function()
     session_directory = vim.g.session_dir,
   }
 
+  vim.g.dashboard_disable_at_vimenter = rvim.dashboard.disable_at_vim_enter
   vim.g.dashboard_custom_header = rvim.dashboard.custom_header
   vim.g.dashboard_default_executive = rvim.dashboard.default_executive
   vim.g.dashboard_disable_statusline = rvim.dashboard.disable_statusline
