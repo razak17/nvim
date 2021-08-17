@@ -22,12 +22,10 @@ return function()
   end
 
   vim.cmd [[packadd nvim-compe]]
-  if package.loaded["compe"] then
-    require("nvim-autopairs.completion.compe").setup {
-      map_cr = true, --  map <CR> on insert mode
-      map_complete = true, -- it will auto insert `(` after select function or method item
-    }
-  end
+  require("nvim-autopairs.completion.compe").setup {
+    map_cr = true, --  map <CR> on insert mode
+    map_complete = true, -- it will auto insert `(` after select function or method item
+  }
 
   npairs.setup {
     check_ts = true,

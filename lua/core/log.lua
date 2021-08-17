@@ -23,7 +23,7 @@ end
 --- based on Plenary.log
 ---@return log handle
 function Log:get_default()
-  return Log:new { plugin = "lunarvim", level = rvim.log.level }
+  return Log:new { plugin = "rvim", level = rvim.log.level }
 end
 
 return Log

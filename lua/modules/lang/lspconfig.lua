@@ -228,7 +228,7 @@ return function()
                 path = vim.split(package.path, ";"),
               },
               diagnostics = {
-                globals = { "vim", "packer_plugins" },
+                globals = { "vim", "packer_plugins", "rvim" },
               },
               workspace = {
                 library = {

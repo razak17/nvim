@@ -9,7 +9,7 @@ local function load_core()
 end
 
 local function load_plugins()
-  local plug = require "core.plug"
+  local plug = require "core.plugins"
   plug.ensure_plugins()
   plug.load_compile()
 end
