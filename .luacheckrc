@@ -2,7 +2,9 @@
 stds.nvim = {
   globals = {
     "rvim",
+    "packer_plugins",
     vim = { fields = { "g" } },
+    "_GlobalCallbacks",
     "MUtils",
     "fterm_cmd",
     os = { fields = { "capture" } },
@@ -11,7 +13,7 @@ stds.nvim = {
     "jit",
     "os",
     "vim",
-    -- vim = { fields = { "cmd", "api", "fn", "o" } },
+    vim = { fields = { "cmd", "api", "fn", "o", "wo", "bo" } },
   },
 }
 std = "lua51+nvim"

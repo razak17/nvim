@@ -122,8 +122,8 @@ lang["windwp/nvim-ts-autotag"] = {
 }
 
 lang["windwp/nvim-autopairs"] = {
-  event = "InsertEnter",
-  after = { "telescope.nvim", "nvim-compe" },
+  -- event = "InsertEnter",
+  -- after = { "telescope.nvim", "nvim-compe" },
   config = load_conf "autopairs",
   disable = not rvim.plugin.autopairs.active,
 }
