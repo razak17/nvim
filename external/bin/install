@@ -11,8 +11,8 @@ lsp_path='.cache/rvim/nvim_lsp'
 neovim_py='.cache/rvim/venv/neovim'
 
 asktoinstallgit() {
-  echo "git not found, please install git"
-  exit
+	echo "git not found, please install git"
+	exit
 }
 
 asktoinstallgo() {
@@ -117,8 +117,8 @@ cloneconfig() {
 	echo "Installing core python packages"
 	pythonVenvInit
 
-  # install node and neovim support
-  (command -v git >/dev/null && echo "git installed, moving on...") || asktoinstallgit
+	# install node and neovim support
+	(command -v git >/dev/null && echo "git installed, moving on...") || asktoinstallgit
 
 	if [ -e "$HOME/.local/share/rvim/site/pack/packer/opt/packer.nvim" ]; then
 		echo 'packer already installed'
@@ -138,7 +138,7 @@ cloneconfig() {
 	read -r answer
 	[ "$answer" != "${answer#[Yy]}" ] && installextra
 
-	sudo cp --force "$HOME/.config/nvim/external/bin/rvim" "/usr/local/bin"
+	sudo cp --force "$HOME/.config/rvim/external/bin/rvim" "$HOME/.local/bin"
 }
 
 while [ "$#" -gt 0 ]; do
