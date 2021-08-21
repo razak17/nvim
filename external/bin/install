@@ -10,6 +10,11 @@ RVIM_CONFIG_PATH="$HOME/.config/rvim/"
 lsp_path='.cache/rvim/nvim_lsp'
 neovim_py='.cache/rvim/venv/neovim'
 
+asktoinstallgit() {
+  echo "git not found, please install git"
+  exit
+}
+
 asktoinstallgo() {
 	echo "Please install go before continuing with install" && exit
 }
@@ -22,7 +27,7 @@ asktoinstallpip() {
 	echo "Please install pip3 before continuing with install" && exit
 }
 
-moveoldlvim() {
+moveoldrvim() {
 	echo "Not installing rvim"
 	echo "Please remove $RVIM_CONFIG_PATH and $RVIM_GIT_PATH paths before installing"
 	exit
@@ -46,7 +51,11 @@ createDirs() {
 pythonVenvInit() {
 	mkdir -p ~/$neovim_py
 	python3 -m venv ~/$neovim_py
-	~/$neovim_py/bin/pip install -U setuptools pynvim jedi neovim-remote ueberzug
+	~/$neovim_py/bin/pip3 install -U setuptools pynvim jedi neovim-remote
+}
+
+pythonExtra() {
+	pip3 install ueberzug isort yapf black flake8 pylint mypy
 }
 
 golangInit() {
@@ -58,7 +67,7 @@ golangInit() {
 installextra() {
 	sudo pacman -S ripgrep fzf cppcheck
 	yay -S clang-tidy
-	npm install -g tree-sitter-cli
+	npm install -g tree-sitter-cli eslint prettier
 }
 
 rconf() {
@@ -85,7 +94,7 @@ importRvim() {
 
 cloneconfig() {
 	# check existing config
-	[ -d "$RVIM_CONFIG_PATH" ] || [ -d "$RVIM_GIT_PATH" ] && moveoldlvim
+	[ -d "$RVIM_CONFIG_PATH" ] || [ -d "$RVIM_GIT_PATH" ] && moveoldrvim
 
 	# install go
 	(command -v go >/dev/null && echo "go installed, moving on...") || asktoinstallgo
@@ -104,6 +113,13 @@ cloneconfig() {
 	echo "Installing rvim"
 	importRvim
 
+	# Install core python packages
+	echo "Installing core python packages"
+	pythonVenvInit
+
+  # install node and neovim support
+  (command -v git >/dev/null && echo "git installed, moving on...") || asktoinstallgit
+
 	if [ -e "$HOME/.local/share/rvim/site/pack/packer/opt/packer.nvim" ]; then
 		echo 'packer already installed'
 	else
@@ -112,7 +128,7 @@ cloneconfig() {
 
 	printf "Would you like to install pip packages now (y/n)? "
 	read -r answer
-	[ "$answer" != "${answer#[Yy]}" ] && pythonVenvInit
+	[ "$answer" != "${answer#[Yy]}" ] && pythonExtra
 
 	printf "Would you like to install go packages now (y/n)? "
 	read -r answer

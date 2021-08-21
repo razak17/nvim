@@ -200,6 +200,7 @@ end
 if rvim.plugin.tree.active or rvim.plugin.SANE.active then
   nnoremap("<Leader>cr", ":NvimTreeRefresh<CR>")
   nnoremap("<Leader>cf", ":NvimTreeFindFile<CR>")
+  nnoremap("<Leader>cc", ":NvimTreeClose<CR>")
 end
 
 -- Far

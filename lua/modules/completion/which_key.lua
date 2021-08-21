@@ -263,6 +263,7 @@ return function()
     end
     -- tree
     if rvim.plugin.tree.active then
+      key_maps.c.c = "nvim-tree close"
       key_maps.c.f = "nvim-tree find"
       key_maps.c.r = "nvim-tree refresh"
       key_maps.c.v = "nvim-tree toggle"
