@@ -6,6 +6,7 @@ removeRvim() {
 	rm "$HOME/.local/bin/rvim"
 	rm -rf "$HOME/.cache/rvim"
 	rm -rf "$HOME/.config/rvim"
+	rm -rf "$HOME/.dots/rvim"
 }
 
 printf "Are you sure you want to uninstall rvim (y/n)? "
