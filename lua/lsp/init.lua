@@ -25,6 +25,27 @@ local function lsp_highlight_document(client)
   end
 end
 
+function M.common_capabilities()
+  local capabilities = vim.lsp.protocol.make_client_capabilities()
+  capabilities.textDocument.completion.completionItem.snippetSupport = true
+  capabilities.textDocument.completion.completionItem.resolveSupport = {
+    properties = { "documentation", "detail", "additionalTextEdits" },
+  }
+  capabilities.textDocument.codeAction = {
+    dynamicRegistration = false,
+    codeActionLiteralSupport = {
+      codeActionKind = {
+        valueSet = (function()
+          local res = vim.tbl_values(vim.lsp.protocol.CodeActionKind)
+          table.sort(res)
+          return res
+        end)(),
+      },
+    },
+  }
+  return capabilities
+end
+
 local global_capabilities = vim.lsp.protocol.make_client_capabilities()
 global_capabilities.textDocument.completion.completionItem.snippetSupport = true
 global_capabilities.textDocument.completion.completionItem.resolveSupport = {
@@ -43,7 +64,7 @@ global_capabilities.textDocument.codeAction = {
   },
 }
 
-local function global_on_init(client, bufnr)
+function M.global_on_init(client, bufnr)
   local formatters = rvim.lang[vim.bo.filetype].formatters
   if not vim.tbl_isempty(formatters) and formatters[1]["exe"] ~= nil and formatters[1].exe ~= "" then
     client.resolved_capabilities.document_formatting = false
@@ -53,7 +74,7 @@ local function global_on_init(client, bufnr)
   end
 end
 
-function M.on_attach(client, bufnr)
+function M.global_on_attach(client, bufnr)
   vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
   lsp_highlight_document(client)
   require("lsp.binds").setup(client)
@@ -61,11 +82,11 @@ function M.on_attach(client, bufnr)
 end
 
 function M.setup(lang)
-  lspconfig.util.default_config = vim.tbl_extend(
-    "force",
-    lspconfig.util.default_config,
-    { capabilities = global_capabilities, on_init = global_on_init }
-  )
+  -- lspconfig.util.default_config = vim.tbl_extend(
+  --   "force",
+  --   lspconfig.util.default_config,
+  --   { capabilities = global_capabilities, on_init = global_on_init }
+  -- )
 
   local lsp_utils = require "lsp.utils"
   local lsp = rvim.lang[lang].lsp
@@ -73,7 +94,18 @@ function M.setup(lang)
     return
   end
 
-  lspconfig[lsp.provider].setup(lsp.setup)
+  if lsp.provider ~= nil and lsp.provider ~= "" then
+    if not lsp.setup.on_attach then
+      lsp.setup.on_attach = M.global_on_attach
+    end
+    if not lsp.setup.on_init then
+      lsp.setup.on_init = M.global_on_init
+    end
+    if not lsp.setup.capabilities then
+      lsp.setup.capabilities = global_capabilities
+    end
+    lspconfig[lsp.provider].setup(lsp.setup)
+  end
 end
 
 return M

@@ -1,7 +1,6 @@
 return function()
   local g = vim.g
   local schemas = nil
-  local on_attach = require("lsp").on_attach
   local lsp_utils = require "lsp.utils"
   local status_ok, jsonls_settings = pcall(require, "nlspsettings.jsonls")
 
@@ -34,7 +33,6 @@ return function()
             completeUnimported = true,
             semanticHighlighting = true,
           },
-          on_attach = on_attach,
         },
       },
     },
@@ -45,7 +43,6 @@ return function()
         provider = "cmake",
         setup = {
           cmd = { rvim.lsp.binary.cmake, "--stdio" },
-          on_attach = on_attach,
         },
       },
     },
@@ -71,16 +68,15 @@ return function()
             completeUnimported = true,
             semanticHighlighting = true,
           },
-          on_attach = on_attach,
         },
       },
     },
     css = {
       formatters = {
-        -- {
-        --   exe = "prettier",
-        --   args = {},
-        -- },
+        {
+          exe = "prettier",
+          args = {},
+        },
         -- {
         --   exe = "prettierd",
         --   args = {},
@@ -91,7 +87,6 @@ return function()
         provider = "cssls",
         setup = {
           cmd = { "node", rvim.lsp.binary.css, "--stdio" },
-          on_attach = on_attach,
         },
       },
     },
@@ -102,7 +97,6 @@ return function()
         provider = "dockerls",
         setup = {
           cmd = { rvim.lsp.binary.docker, "--stdio" },
-          on_attach = on_attach,
         },
       },
     },
@@ -113,7 +107,6 @@ return function()
         provider = "elixirls",
         setup = {
           cmd = { rvim.lsp.binary.elixir },
-          on_attach = on_attach,
         },
       },
     },
@@ -126,7 +119,6 @@ return function()
         provider = "gopls",
         setup = {
           cmd = { rvim.lsp.binary.go },
-          on_attach = on_attach,
         },
       },
     },
@@ -137,7 +129,6 @@ return function()
         provider = "graphql",
         setup = {
           cmd = { rvim.lsp.binary.graphql, "server", "-m", "stream" },
-          on_attach = on_attach,
         },
       },
     },
@@ -154,7 +145,6 @@ return function()
         provider = "html",
         setup = {
           cmd = { "node", rvim.lsp.binary.html, "--stdio" },
-          on_attach = on_attach,
         },
       },
     },
@@ -165,8 +155,7 @@ return function()
         provider = "tsserver",
         setup = {
           -- TODO:
-          cmd = { rvim.lsp.binary.tsserver, "--stdio" },
-          on_attach = on_attach,
+          cmd = { "node", rvim.lsp.binary.tsserver, "--stdio" },
         },
       },
     },
@@ -179,21 +168,38 @@ return function()
         setup = {
           -- TODO:
           cmd = { rvim.lsp.binary.tsserver, "--stdio" },
-          on_attach = on_attach,
         },
       },
     },
     json = {
-      formatters = { { exe = "json_tool", args = {}, stdin = true } },
+      formatters = {
+        -- {
+        --   exe = "json_tool",
+        --   args = {},
+        -- },
+        -- {
+        --   exe = "prettier",
+        --   args = {},
+        -- },
+      },
       linters = {},
       lsp = {
         provider = "jsonls",
         setup = {
-          cmd = { "node", rvim.lsp.binary.json, "--stdio" },
-          on_attach = on_attach,
+          cmd = {
+            "node",
+            rvim.lsp.binary.json,
+            "--stdio",
+          },
           settings = {
             json = {
               schemas = schemas,
+              --   = {
+              --   {
+              --     fileMatch = { "package.json" },
+              --     url = "https://json.schemastore.org/package.json",
+              --   },
+              -- },
             },
           },
           commands = {
@@ -217,7 +223,6 @@ return function()
         provider = "sumneko_lua",
         setup = {
           cmd = { rvim.lsp.binary.lua, "-E", g.sumneko_root_path .. "/main.lua" },
-          on_attach = on_attach,
           settings = {
             Lua = {
               telemetry = {
@@ -263,7 +268,6 @@ return function()
         provider = "pyright",
         setup = {
           cmd = { rvim.lsp.binary.python, "--stdio" },
-          on_attach = on_attach,
         },
       },
     },
@@ -279,8 +283,7 @@ return function()
       linters = {},
       lsp = {
         provider = "rust_analyzer",
-        setup = { cmd = { rvim.lsp.binary.rust }, on_attach = on_attach },
-        on_attach = on_attach,
+        setup = { cmd = { rvim.lsp.binary.rust } },
       },
     },
     sh = {
@@ -294,7 +297,6 @@ return function()
         setup = {
           cmd = { rvim.lsp.binary.sh, "start" },
           cmd_env = { GLOB_PATTERN = "*@(.sh|.zsh|.inc|.bash|.command)" },
-          on_attach = on_attach,
         },
       },
     },
@@ -306,7 +308,6 @@ return function()
         setup = {
           -- TODO:
           cmd = { rvim.lsp.binary.tsserver, "--stdio" },
-          on_attach = on_attach,
         },
       },
     },
@@ -318,7 +319,6 @@ return function()
         setup = {
           -- TODO:
           cmd = { rvim.lsp.binary.tsserver, "--stdio" },
-          on_attach = on_attach,
         },
       },
     },
@@ -330,7 +330,6 @@ return function()
         provider = "vimls",
         setup = {
           cmd = { rvim.lsp.binary.vim, "--stdio" },
-          on_attach = on_attach,
         },
       },
     },
@@ -347,7 +346,6 @@ return function()
         provider = "yamlls",
         setup = {
           cmd = { rvim.lsp.binary.yaml, "--stdio" },
-          on_attach = on_attach,
         },
       },
     },
@@ -371,8 +369,8 @@ return function()
     "vim",
     "yaml",
     "javascript",
-    "javascriptreact",
-    "typescript",
+    -- "javascriptreact",
+    -- "typescript",
   }
 
   local function setup_servers()

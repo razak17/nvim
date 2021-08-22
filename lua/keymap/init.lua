@@ -201,7 +201,8 @@ if rvim.plugin.undotree.active then
 end
 
 -- Tree
-if rvim.plugin.tree.active or rvim.plugin.SANE.active then
+-- if rvim.plugin.tree.active or rvim.plugin.SANE.active then
+if rvim.plugin_loaded "nvim-treesitter" then
   nnoremap("<Leader>cr", ":NvimTreeRefresh<CR>")
   nnoremap("<Leader>cv", ":NvimTreeToggle<CR>")
   nnoremap("<Leader>cf", ":NvimTreeFindFile<CR>")
@@ -237,6 +238,12 @@ if rvim.plugin.fterm.active or rvim.plugin.SANE.active then
   map("<leader>el", function()
     fterm_cmd "lazygit"
   end)
+end
+
+-- Session
+if rvim.plugin.dashboard.active then
+  nnoremap("<Leader>Sl", ":SessionLoad<CR>")
+  nnoremap("<Leader>Ss", ":SessionSave<CR>")
 end
 
 -- Fugitive

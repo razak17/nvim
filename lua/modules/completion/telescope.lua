@@ -53,22 +53,22 @@ return function()
     },
   }
 
-  if rvim.plugin.telescope_fzy.active then
+  if rvim.plugin_loaded "telescope-fzy-native.nvim" then
     vim.cmd [[packadd telescope-fzy-native.nvim]]
     require("telescope").load_extension "fzy_native"
   end
 
-  if rvim.plugin.telescope_project.active then
+  if rvim.plugin_loaded "telescope-project.nvim" then
     vim.cmd [[packadd telescope-project.nvim]]
     require("telescope").load_extension "project"
   end
 
-  if rvim.plugin.telescope_media_files.active then
+  if rvim.plugin_loaded "telescope-media-files.nvim" then
     vim.cmd [[packadd telescope-media-files.nvim]]
     require("telescope").load_extension "media_files"
   end
 
-  if rvim.plugin.project.active then
+  if rvim.plugin_loaded "project.nvim" then
     vim.cmd [[packadd project.nvim]]
     require("telescope").load_extension "projects"
   end

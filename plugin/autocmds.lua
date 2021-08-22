@@ -281,28 +281,28 @@ rvim.augroup("PackerSetupInit", {
       vim.notify("packer compiled...", { timeout = 1000 })
     end,
   },
-  {
-    events = { "BufWritePost" },
-    targets = {
-      vim.g.vim_path .. "/lua/core/plugins.lua",
-      vim.g.vim_path .. "/lua/modules/**/*.lua",
-    },
-    command = function()
-      local plug = require "core.plugins"
-      local files = vim.api.nvim_eval [[sort(glob(g:modules_dir .. '/*/*.lua', '', v:true))]]
-      vim.cmd [[source ~/.config/rvim/lua/core/plugins.lua]]
-      for _, file in ipairs(files) do
-        vim.cmd("source " .. file)
-      end
-      plug.ensure_plugins()
-      plug.magic_compile()
-      plug.load_compile()
-      plug.install()
-      local null_ls = require "lsp.null-ls"
-      null_ls.setup(vim.bo.filetype, { force_reload = true })
-      vim.notify("Reload plugins...", { timeout = 1000 })
-    end,
-  },
+  -- {
+  --   events = { "BufWritePost" },
+  --   targets = {
+  --     vim.g.vim_path .. "/lua/core/plugins.lua",
+  --     vim.g.vim_path .. "/lua/modules/**/*.lua",
+  --   },
+  --   command = function()
+  --     local plug = require "core.plugins"
+  --     local files = vim.api.nvim_eval [[sort(glob(g:modules_dir .. '/*/*.lua', '', v:true))]]
+  --     vim.cmd [[source ~/.config/rvim/lua/core/plugins.lua]]
+  --     for _, file in ipairs(files) do
+  --       vim.cmd("source " .. file)
+  --     end
+  --     plug.ensure_plugins()
+  --     plug.magic_compile()
+  --     plug.load_compile()
+  --     plug.install()
+  --     local null_ls = require "lsp.null-ls"
+  --     null_ls.setup(vim.bo.filetype, { force_reload = true })
+  --     vim.notify("Reload plugins...", { timeout = 1000 })
+  --   end,
+  -- },
 })
 
 rvim.augroup("UpdateVim", {

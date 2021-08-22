@@ -1,14 +1,9 @@
-require "core.globals"
-require "core.config"
-
 local function load_core()
   require "core.opts"
-  local zephyr_ok, _ = pcall(require, "zephyr")
-  if zephyr_ok then
+  if rvim.plugin_loaded "zephyr-nvim" then
     require "core.highlights"
     require "core.whitespace"
   end
-  require "keymap"
   require "core.binds"
 end
 
@@ -31,6 +26,10 @@ local defer = function()
   )
 end
 
+require "core.globals"
+require "core.config"
+
 defer()
 load_plugins()
 load_core()
+require "keymap"

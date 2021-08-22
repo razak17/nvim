@@ -2,8 +2,8 @@
 stds.nvim = {
   globals = {
     "rvim",
-    vim = { fields = { "g" } },
     "packer_plugins",
+    vim = { fields = { "g" } },
     "_GlobalCallbacks",
     "WhichKey",
     "MUtils",

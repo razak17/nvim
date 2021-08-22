@@ -56,7 +56,7 @@ end
 
 local function save_and_notify()
   vim.cmd "silent write"
-  rvim.notify("Saved " .. vim.fn.expand "%:t", { timeout = 1000 })
+  vim.notify("Saved " .. vim.fn.expand "%:t", { timeout = 1000 })
 end
 
 local function open_file_or_create_new()
@@ -279,10 +279,6 @@ nnoremap("<Leader>ad", ":bdelete!<CR>")
 
 -- opens the last buffer
 nnoremap("<leader>al", "<C-^>")
-
--- Session
-nnoremap("<Leader>Sl", ":SessionLoad<CR>")
-nnoremap("<Leader>Ss", ":SessionSave<CR>")
 
 -- Folds
 nnoremap("<S-Return>", "zMzvzt")
