@@ -65,6 +65,7 @@ if rvim.plugin.SANE.active then
   nnoremap("<Leader>ff", ":Telescope find_files<CR>")
   nnoremap("<Leader>fb", ":Telescope file_browser<CR>")
   nnoremap("<Leader>frr", ":Telescope oldfiles<CR>")
+  nnoremap("<Leader>fre", ":Telescope projects<CR>")
   nnoremap("<Leader>fca", ":Telescope autocommands<CR>")
   nnoremap("<Leader>fcb", ":Telescope buffers<CR>")
   nnoremap("<Leader>fcc", ":Telescope commands<CR>")
@@ -115,13 +116,16 @@ if rvim.plugin.SANE.active then
   nnoremap("<Leader>feb", ":Telescope bg_selector<CR>")
 
   if rvim.plugin.telescope_media_files.active then
-    nnoremap("<leader>fep", ":Telescope project<CR>")
+    nnoremap("<Leader>fem", ":Telescope media_files<CR>")
   end
   if rvim.plugin.telescope_project.active then
-    nnoremap("<Leader>fem", ":Telescope media_files<CR>")
+    nnoremap("<leader>fep", ":Telescope project<CR>")
   end
   if rvim.plugin.matchup.active then
     nnoremap("<Leader>vW", ":<c-u>MatchupWhereAmI?<CR>")
+  end
+  if rvim.plugin.project.active then
+    nnoremap("<Leader>fee", ":Telescope projects<CR>")
   end
 end
 

@@ -5,6 +5,7 @@ stds.nvim = {
     vim = { fields = { "g" } },
     "packer_plugins",
     "_GlobalCallbacks",
+    "WhichKey",
     "MUtils",
     "fterm_cmd",
     os = { fields = { "capture" } },

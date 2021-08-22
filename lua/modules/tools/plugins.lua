@@ -1,22 +1,23 @@
 local tools = {}
 local conf = require "modules.tools.config"
 
+local function load_conf(name)
+  return require(string.format("modules.tools.%s", name))
+end
+
 tools["tpope/vim-fugitive"] = { event = "VimEnter", disable = not rvim.plugin.fugitive.active }
 
 tools["sindrets/diffview.nvim"] = {
   event = "BufReadPre",
-  config = conf.diff_view,
+  config = load_conf "diff_view",
   disable = not rvim.plugin.diffview.active,
 }
 
 tools["mbbill/undotree"] = { cmd = "UndotreeToggle", disable = not rvim.plugin.undotree.active }
 
-tools["airblade/vim-rooter"] = {
-  config = function()
-    vim.g.rooter_silent_chdir = 1
-    -- vim.g.rooter_patterns = { "=nvim", ".git", ".gitignore", "lua" }
-  end,
-  disable = not rvim.plugin.rooter.active,
+tools["ahmedkhalf/project.nvim"] = {
+  config = load_conf "project",
+  disable = not rvim.plugin.project.active,
 }
 
 tools["npxbr/glow.nvim"] = {

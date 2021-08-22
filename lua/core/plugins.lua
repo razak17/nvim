@@ -6,71 +6,6 @@ local packer = nil
 local packer_ok = nil
 local command = rvim.command
 
--- toogle plugins easily
-rvim.plugin = {
-  -- SANE defaults
-  SANE = { active = true },
-  -- debug
-  debug = { active = false },
-  debug_ui = { active = false },
-  dap_install = { active = false },
-  osv = { active = false },
-  -- lsp
-  saga = { active = false },
-  lightbulb = { active = true },
-  symbols_outline = { active = false },
-  bqf = { active = false },
-  trouble = { active = false },
-  nvim_lint = { active = false },
-  formatter = { active = false },
-  lsp_ts_utils = { active = true },
-  -- treesitter
-  treesitter = { active = false },
-  playground = { active = true },
-  rainbow = { active = false },
-  matchup = { active = false },
-  autotag = { active = false },
-  autopairs = { active = true },
-  -- editor
-  fold_cycle = { active = false },
-  accelerated_jk = { active = false },
-  easy_align = { active = true },
-  cool = { active = true },
-  delimitmate = { active = false },
-  eft = { active = false },
-  cursorword = { active = false },
-  surround = { active = true },
-  dial = { active = true },
-  -- tools
-  fterm = { active = true },
-  far = { active = true },
-  bookmarks = { active = true },
-  colorizer = { active = true },
-  undotree = { active = false },
-  fugitive = { active = false },
-  rooter = { active = true },
-  diffview = { active = true },
-  -- TODO: handle these later
-  glow = { active = false },
-  doge = { active = false },
-  dadbod = { active = false },
-  restconsole = { active = false },
-  markdown_preview = { active = true },
-  -- aesth
-  tree = { active = true },
-  dashboard = { active = false },
-  statusline = { active = false },
-  git_signs = { active = false },
-  indent_line = { active = false },
-  -- completion
-  emmet = { active = false },
-  friendly_snippets = { active = true },
-  vsnip = { active = true },
-  telescope_fzy = { active = false },
-  telescope_project = { active = false },
-  telescope_media_files = { active = false },
-}
-
 local Plug = {}
 Plug.__index = Plug
 
@@ -203,14 +138,7 @@ function plugins.auto_compile()
   end
 end
 
-function plugins.load_compile()
-  if vim.fn.filereadable(compile_to_lua) == 1 then
-    require "_compiled_rolling"
-  else
-    assert "Missing packer compile file Run PackerCompile Or PackerInstall to fix"
-    plugins.install()
-    plugins.magic_compile()
-  end
+function plugins.commands()
   command { "PlugCompile", [[call v:lua.require('core.plugins').magic_compile()]] }
   command { "PlugInstall", [[lua require('core.plugins').install()]] }
   command { "PlugSync", [[lua require('core.plugins').sync()]] }
@@ -220,6 +148,16 @@ function plugins.load_compile()
   rvim.augroup("PackerComplete", {
     { events = { "User" }, targets = { "lua" }, command = "lua require('core.plugins').magic_compile()" },
   })
+end
+
+function plugins.load_compile()
+  if vim.fn.filereadable(compile_to_lua) == 1 then
+    require "_compiled_rolling"
+  else
+    assert "Missing packer compile file Run PackerCompile Or PackerInstall to fix"
+    plugins.install()
+    plugins.magic_compile()
+  end
 end
 
 return plugins

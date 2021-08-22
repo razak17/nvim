@@ -34,6 +34,7 @@ return function()
 
   g.nvim_tree_follow = 1
   g.nvim_tree_update_cwd = 1
+  g.nvim_tree_respect_buf_cwd = 1
   g.nvim_tree_hijack_cursor = 0
   g.nvim_tree_width_allow_resize = 1
   g.nvim_tree_disable_window_picker = 1

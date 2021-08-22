@@ -3,7 +3,11 @@ require "core.config"
 
 local function load_core()
   require "core.opts"
-  require "core.highlights"
+  local zephyr_ok, _ = pcall(require, "zephyr")
+  if zephyr_ok then
+    require "core.highlights"
+    require "core.whitespace"
+  end
   require "keymap"
   require "core.binds"
 end
@@ -11,6 +15,7 @@ end
 local function load_plugins()
   local plug = require "core.plugins"
   plug.ensure_plugins()
+  plug.commands()
   plug.load_compile()
 end
 

@@ -53,20 +53,10 @@ local function global_on_init(client, bufnr)
   end
 end
 
-
-local function set_smart_cwd(client)
-  local proj_dir = client.config.root_dir
-  if rvim.lsp.smart_cwd and proj_dir ~= "/" then
-    vim.api.nvim_set_current_dir(proj_dir)
-    _G.change_tree_dir(proj_dir)
-  end
-end
-
 function M.on_attach(client, bufnr)
   vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
   lsp_highlight_document(client)
   require("lsp.binds").setup(client)
-  set_smart_cwd(client)
   require("lsp.null-ls").setup(vim.bo.filetype)
 end
 

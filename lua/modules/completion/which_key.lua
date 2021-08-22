@@ -341,6 +341,9 @@ return function()
         key_maps.v.W = "where am i"
       end
     end
+    if rvim.plugin.project.active then
+      key_maps.f.e.e = "projects"
+    end
     if rvim.plugin.telescope_media_files.active then
       key_maps.f.e.m = "project"
     end

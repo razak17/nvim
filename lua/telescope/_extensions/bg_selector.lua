@@ -1,10 +1,10 @@
-local telescope = require('telescope')
-local builtin = require('telescope.builtin')
-local actions = require('telescope.actions')
-local state = require('telescope.actions.state')
+local telescope = require "telescope"
+local builtin = require "telescope.builtin"
+local actions = require "telescope.actions"
+local state = require "telescope.actions.state"
 
 local function set_background(content)
-  os.execute("feh --bg-scale " .. content)
+  os.execute("xwallpaper --zoom " .. content)
 end
 
 local function select_background(prompt_bufnr, map)
@@ -16,29 +16,29 @@ local function select_background(prompt_bufnr, map)
     end
   end
 
-  map('i', '<C-y>', function()
+  map("i", "<C-y>", function()
     set_the_background()
   end)
 
-  map('i', '<CR>', function()
+  map("i", "<CR>", function()
     set_the_background(true)
   end)
 end
 
 local image_selector = function(prompt, cwd)
   return function()
-    builtin.find_files({
+    builtin.find_files {
       prompt_title = prompt,
       cwd = cwd,
 
       attach_mappings = function(prompt_bufnr, map)
         select_background(prompt_bufnr, map)
         return true
-      end
-    })
+      end,
+    }
   end
 end
 
-local bg_selector = image_selector("Choose Wallpaper", "~/pics")
+local bg_selector = image_selector("Choose Wallpaper", "$HOME/pics/distro")
 
-return telescope.register_extension {exports = {bg_selector = bg_selector}}
+return telescope.register_extension { exports = { bg_selector = bg_selector } }

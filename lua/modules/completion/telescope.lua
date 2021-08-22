@@ -68,6 +68,11 @@ return function()
     require("telescope").load_extension "media_files"
   end
 
+  if rvim.plugin.project.active then
+    vim.cmd [[packadd project.nvim]]
+    require("telescope").load_extension "projects"
+  end
+
   local extensions = {
     "grep_string_prompt",
     "bg_selector",
