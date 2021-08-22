@@ -72,46 +72,36 @@ return function()
       { "NvimTreeRootFolder", { gui = "bold,italic", guifg = "LightMagenta" } },
     }
   end
-  local toggle_tree = function()
-    local view_status_ok, view = pcall(require, "nvim-tree.view")
-    if not view_status_ok then
-      return
-    end
 
-    local a = vim.api
-
-    local curwin = a.nvim_get_current_win()
-    local curbuf = a.nvim_win_get_buf(curwin)
-    local bufnr = view.View.bufnr
-    local winnr = view.get_winnr()
-    if view.win_open() then
-      if curwin == winnr and curbuf == bufnr then
-        view.close()
-        if package.loaded["bufferline.state"] then
-          require("bufferline.state").set_offset(0)
-        end
-      else
-        view.focus()
-      end
-    else
-      if package.loaded["bufferline.state"] and rvim.nvim_tree.side == "right" then
-        require("bufferline.state").set_offset(rvim.nvim_tree.width + 1, "")
-      end
-      require("nvim-tree").toggle()
+  local on_open = function()
+    if package.loaded["bufferline.state"] and rvim.nvimtree.side == "right" then
+      require("bufferline.state").set_offset(rvim.nvimtree.width + 1, "")
     end
   end
 
-  function _G.change_tree_dir(dir)
-    if vim.g.loaded_tree then
-      require("nvim-tree.lib").change_dir(dir)
+  local on_close = function()
+    local buf = tonumber(vim.fn.expand "<abuf>")
+    local ft = vim.api.nvim_buf_get_option(buf, "filetype")
+    if ft == "NvimTree" and package.loaded["bufferline.state"] then
+      require("bufferline.state").set_offset(0)
     end
   end
 
-  rvim.nnoremap("<leader>cv", function()
-    toggle_tree()
-  end)
+  local tree_view = require "nvim-tree.view"
+
+  -- Add nvim_tree open callback
+  local open = tree_view.open
+  tree_view.open = function()
+    on_open()
+    open()
+  end
 
   rvim.augroup("NvimTreeOverrides", {
+    {
+      events = { "WinClosed" },
+      targets = { "*" },
+      command = on_close,
+    },
     {
       events = { "ColorScheme" },
       targets = { "*" },
