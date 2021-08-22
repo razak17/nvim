@@ -178,3 +178,14 @@ set("pumblend", 10)
 set("shada", "!,'300,<50,@100,s10,h")
 set("viewoptions", "cursor,folds")
 set("sessionoptions", "curdir,help,tabpages,winsize")
+
+local cmd = vim.cmd
+if rvim.common.transparent_window then
+  cmd "au ColorScheme * hi Normal ctermbg=none guibg=none"
+  cmd "au ColorScheme * hi SignColumn ctermbg=none guibg=none"
+  cmd "au ColorScheme * hi NormalNC ctermbg=none guibg=none"
+  cmd "au ColorScheme * hi MsgArea ctermbg=none guibg=none"
+  cmd "au ColorScheme * hi TelescopeBorder ctermbg=none guibg=none"
+  cmd "au ColorScheme * hi NvimTreeNormal ctermbg=none guibg=none"
+  cmd "let &fcs='eob: '"
+end
