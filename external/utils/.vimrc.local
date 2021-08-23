@@ -1,11 +1,12 @@
-set packpath=$XDG_DATA_HOME/rvim/site
-set runtimepath=$XDG_CONFIG_HOME/rvim
-set runtimepath^=$XDG_CONFIG_HOME/rvim/after
-set runtimepath^=$XDG_DATA_HOME/rvim/site
-set runtimepath^=/usr/local/share/nvim/runtime
+" set packpath=$XDG_DATA_HOME/rvim/site
+" set runtimepath=$XDG_CONFIG_HOME/rvim
+" set runtimepath^=$XDG_CONFIG_HOME/rvim/after
+" set runtimepath^=$XDG_DATA_HOME/rvim/site
+" set runtimepath^=/usr/local/share/nvim/runtime
 
 syntax off
 filetype off
+
 let g:loaded_matchit= 1 "$VIMRUNTIME/plugin/matchit.vim
 let g:loaded_tutor_mode_plugin= 1 "$VIMRUNTIME/tutor/tutor.tutor
 let g:loaded_logipat           = 1 "$VIMRUNTIME/plugin/logiPat.vim
@@ -64,28 +65,28 @@ set colorcolumn=""
 set nocursorline
 set noshowmode
 
-highlight! link SignColumn Normal
-highlight StatusLine guifg=NONE guibg=NONE guisp=NONE gui=NONE blend=NONE
-highlight TabLineFill guifg=NONE guibg=NONE guisp=NONE gui=NONE blend=NONE
-highlight Todo guifg=#AF4B57 guibg=NONE guisp=NONE gui=bold blend=NONE
-highlight COlorColumn guibg=#4E525C
-highlight CursorLine guibg=#4E525C
-highlight LineNr guifg=#5B6268
+" highlight! link SignColumn Normal
+" highlight StatusLine guifg=NONE guibg=NONE guisp=NONE gui=NONE blend=NONE
+" highlight TabLineFill guifg=NONE guibg=NONE guisp=NONE gui=NONE blend=NONE
+" highlight Todo guifg=#AF4B57 guibg=NONE guisp=NONE gui=bold blend=NONE
+" highlight COlorColumn guibg=#4E525C
+" highlight CursorLine guibg=#4E525C
+" highlight LineNr guifg=#5B6268
 
-let mapleader=" "
-nnoremap n j
-nnoremap z u
-nnoremap W q
-nnoremap <TAB> :bnext<CR>
-nnoremap <S-TAB> :bprevious<CR>
-nnoremap <C-z>    :undo<CR>
-xnoremap K :move '<-2<CR>gv-gv
-xnoremap J :move '>+0<CR>gv-gv
-xnoremap N :move '>+0<CR>gv-gv
-nnoremap <Leader>x :q<CR>
-nnoremap <Leader>y "+y
-vnoremap <Leader>y' "+y
-nnoremap <Leader>aY gg"+yG
-nnoremap <Leader>aV gg"+VG
-nnoremap <Leader>aD gg"+VG
-nnoremap <Leader>chw :h <C-R>=expand("<cword>")<CR><CR>
+" let mapleader=" "
+" nnoremap n j
+" nnoremap z u
+" nnoremap W q
+" nnoremap <TAB> :bnext<CR>
+" nnoremap <S-TAB> :bprevious<CR>
+" nnoremap <C-z>    :undo<CR>
+" xnoremap K :move '<-2<CR>gv-gv
+" xnoremap J :move '>+0<CR>gv-gv
+" xnoremap N :move '>+0<CR>gv-gv
+" nnoremap <Leader>x :q<CR>
+" nnoremap <Leader>y "+y
+" vnoremap <Leader>y' "+y
+" nnoremap <Leader>aY gg"+yG
+" nnoremap <Leader>aV gg"+VG
+" nnoremap <Leader>aD gg"+VG
+" nnoremap <Leader>chw :h <C-R>=expand("<cword>")<CR><CR>

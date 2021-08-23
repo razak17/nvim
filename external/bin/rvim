@@ -1,3 +1,3 @@
 #!/bin/sh
 
-nvim -u ~/.config/rvim/init.lua "$@"
+nvim -u "$HOME/.config/rvim/init.lua" "$@"

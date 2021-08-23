@@ -25,30 +25,6 @@ rvim.log = {
   },
 }
 
--- opts
-rvim.sets = {
-  wrap = false,
-  spell = false,
-  spelllang = "en",
-  textwidth = 100,
-  tabstop = 2,
-  cmdheight = 2,
-  shiftwidth = 2,
-  numberwidth = 4,
-  scrolloff = 7,
-  laststatus = 2,
-  showtabline = 2,
-  smartcase = true,
-  ignorecase = true,
-  hlsearch = true,
-  timeoutlen = 500,
-  foldenable = true,
-  foldtext = "v:lua.folds()",
-  udir = vim.g.cache_dir .. "/undodir",
-  viewdir = vim.g.cache_dir .. "view",
-  directory = vim.g.cache_dir .. "/swap",
-}
-
 -- toogle plugins easily
 rvim.plugin = {
   -- SANE defaults
