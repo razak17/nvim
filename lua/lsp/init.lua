@@ -3,6 +3,17 @@ local Log = require "core.log"
 
 local M = {}
 
+function M.config()
+  vim.lsp.protocol.CompletionItemKind = rvim.lsp.completion.item_kind
+
+  for _, sign in ipairs(rvim.lsp.diagnostics.signs.values) do
+    vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = sign.name })
+  end
+
+  require("lsp.hover").setup()
+  require("lsp.handlers").setup()
+end
+
 local function lsp_highlight_document(client)
   if client and client.resolved_capabilities.document_highlight then
     rvim.augroup("LspCursorCommands", {

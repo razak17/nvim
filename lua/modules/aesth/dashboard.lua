@@ -3,6 +3,8 @@ return function()
     return { k .. string.rep(" ", c) .. v }
   end
 
+  local nnoremap = rvim.nnoremap
+
   rvim.dashboard = {
     custom_header = {
       "                                                       ",
@@ -49,6 +51,9 @@ return function()
   ]],
     false
   )
+
+  nnoremap("<Leader>Sl", ":SessionLoad<CR>")
+  nnoremap("<Leader>Ss", ":SessionSave<CR>")
 
   rvim.augroup("TelescopeSession", {
     events = { "VimLeavePre" },

@@ -1,5 +1,6 @@
 return function()
   local g = vim.g
+  local nnoremap = rvim.nnoremap
 
   rvim.nvim_tree = {
     side = "right",
@@ -95,6 +96,12 @@ return function()
     on_open()
     open()
   end
+
+  -- Mappings
+  nnoremap("<Leader>cr", ":NvimTreeRefresh<CR>")
+  nnoremap("<Leader>cv", ":NvimTreeToggle<CR>")
+  nnoremap("<Leader>cf", ":NvimTreeFindFile<CR>")
+  nnoremap("<Leader>cc", ":NvimTreeClose<CR>")
 
   rvim.augroup("NvimTreeOverrides", {
     {

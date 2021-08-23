@@ -369,8 +369,8 @@ return function()
     "vim",
     "yaml",
     "javascript",
-    -- "javascriptreact",
-    -- "typescript",
+    "javascriptreact",
+    "typescript",
   }
 
   local function setup_servers()
@@ -381,9 +381,14 @@ return function()
   end
 
   setup_servers()
-  require("lsp.handlers").setup()
-  require("lsp.hover").setup()
-  require("lsp.signs").setup()
+  require("lsp").config()
   lsp_utils.toggle_autoformat()
   lsp_utils.lspLocList()
+
+  -- Mappings
+  local nnoremap = rvim.nnoremap
+  nnoremap("<Leader>Li", ":LspInfo<CR>")
+  nnoremap("<Leader>Ll", ":LspLog<CR>")
+  nnoremap("<Leader>Lr", ":LspReload<CR>")
+  nnoremap("<Leader>vv", ":LspToggleVirtualText<CR>")
 end

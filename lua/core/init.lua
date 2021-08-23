@@ -1,19 +1,3 @@
-local function load_core()
-  require "core.opts"
-  if rvim.plugin_loaded "zephyr-nvim" then
-    require "core.highlights"
-    require "core.whitespace"
-  end
-  require "core.binds"
-end
-
-local function load_plugins()
-  local plug = require "core.plugins"
-  plug.ensure_plugins()
-  plug.commands()
-  plug.load_compile()
-end
-
 local defer = function()
   vim.defer_fn(
     vim.schedule_wrap(function()
@@ -26,10 +10,26 @@ local defer = function()
   )
 end
 
+local function load_plugins()
+  local plug = require "core.plugins"
+  plug.ensure_plugins()
+  plug.commands()
+  plug.load_compile()
+end
+
+local load_core = function()
+  require "core.opts"
+  if rvim.plugin_loaded "zephyr-nvim" then
+    require "core.highlights"
+    require "core.whitespace"
+  end
+  require("core.binds").setup()
+  require("core.commands").setup()
+end
+
 require "core.globals"
 require "core.config"
 
 defer()
 load_plugins()
 load_core()
-require "keymap"

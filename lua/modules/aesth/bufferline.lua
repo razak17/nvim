@@ -1,6 +1,8 @@
 return function()
   vim.cmd [[packadd nvim-web-devicons]]
 
+  local nnoremap = rvim.nnoremap
+
   local function is_ft(b, ft)
     return vim.bo[b].filetype == ft
   end
@@ -111,4 +113,13 @@ return function()
   }
 
   require("bufferline").setup { options = options, highlights = highlights }
+
+  -- Mappings
+
+  -- Bufferline
+  nnoremap("<tab>", ":BufferLineCycleNext<CR>")
+  nnoremap("<s-tab>", ":BufferLineCyclePrev<CR>")
+  nnoremap("<Leader>bn", ":BufferLineMoveNext<CR>")
+  nnoremap("<Leader>bb", ":BufferLineMovePrev<CR>")
+  nnoremap("gb", ":BufferLinePick<CR>")
 end

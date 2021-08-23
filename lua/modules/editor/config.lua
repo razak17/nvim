@@ -43,6 +43,12 @@ function config.kommentary()
       require("kommentary.config").configure_language(f, { single_line_comment_string = "#" })
     end
   end
+  -- Mappings
+  local nmap = rvim.nmap
+  local vmap = rvim.vmap
+  nmap("<leader>/", "<Plug>kommentary_line_default")
+  nmap("<leader>a/", "<Plug>kommentary_motion_default")
+  vmap("<leader>/", "<Plug>kommentary_visual_default")
 end
 
 function config.vim_cursorword()

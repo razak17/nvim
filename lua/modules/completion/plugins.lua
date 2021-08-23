@@ -20,7 +20,7 @@ completion["mattn/emmet-vim"] = {
 
 completion["hrsh7th/nvim-compe"] = {
   event = "InsertEnter",
-  config = conf.nvim_compe,
+  config = load_conf "compe",
   disable = not rvim.plugin.SANE.active,
 }
 
@@ -31,9 +31,7 @@ completion["rafamadriz/friendly-snippets"] = {
 
 completion["hrsh7th/vim-vsnip"] = {
   event = "InsertEnter",
-  config = function()
-    vim.g.vsnip_snippet_dir = vim.g.vsnip_dir
-  end,
+  config = load_conf "vsnip",
   disable = not rvim.plugin.vsnip.active,
 }
 

@@ -17,6 +17,10 @@ local fmt = string.format
 --   end
 -- end
 
+rvim.t = function(str)
+  return vim.api.nvim_replace_termcodes(str, true, true, true)
+end
+
 function rvim._create(f)
   table.insert(rvim._store, f)
   return #rvim._store
@@ -207,6 +211,8 @@ local function make_mapper(mode, o)
     end
   end
 end
+
+rvim.make_mapper = make_mapper
 
 local map_opts = { noremap = false, silent = true }
 local noremap_opts = { noremap = true, silent = true }

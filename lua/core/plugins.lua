@@ -148,6 +148,15 @@ function plugins.commands()
   rvim.augroup("PackerComplete", {
     { events = { "User" }, targets = { "lua" }, command = "lua require('core.plugins').magic_compile()" },
   })
+
+  local nnoremap = rvim.nnoremap
+  -- Packer
+  nnoremap("<Leader>Ec", ":PlugCompile<CR>")
+  nnoremap("<Leader>EC", ":PlugClean<CR>")
+  nnoremap("<Leader>Ei", ":PlugInstall<CR>")
+  nnoremap("<Leader>Es", ":PlugSync<CR>")
+  nnoremap("<Leader>ES", ":PlugStatus<CR>")
+  nnoremap("<Leader>Ee", ":PlugUpdate<CR>")
 end
 
 function plugins.load_compile()
