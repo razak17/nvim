@@ -15,20 +15,20 @@ return function()
 
   rvim.keymaps = {
     defaults = {
-      ["="] = "Balance window",
+      ["="] = "balance window",
       ["."] = "append period",
       [","] = "append comma",
       [";"] = "append semi-colon",
-      ["/"] = "Comment",
-      ["["] = "Find and Replace all",
-      ["]"] = "Find and Replace one",
-      ["`"] = "Wrap backticks",
-      ["'"] = "Wrap single quotes",
-      ['"'] = "Wrap double quotes",
-      [")"] = "Wrap parenthesis",
-      ["}"] = "Wrap curly braces",
+      ["/"] = "comment",
+      ["["] = "find and replace all",
+      ["]"] = "find and replace one",
+      ["`"] = "wrap backticks",
+      ["'"] = "wrap single quotes",
+      ['"'] = "wrap double quotes",
+      [")"] = "wrap parenthesis",
+      ["}"] = "wrap curly braces",
       ["_"] = "Delete current buffer",
-      x = "Quit",
+      x = { ":q<cr>", "Quit" },
       y = "Yank",
       a = {
         name = "+Actions",
@@ -243,7 +243,6 @@ return function()
   WhichKey.SetKeyOnFT = function()
     -- Get Which-Key keymap
     local key_maps = vim.g.which_key_map
-    -- Add keys to Which-Key keymap
     -- dap
     if rvim.plugin_loaded "nvim-dap" then
       key_maps.d = rvim.keymaps.debug

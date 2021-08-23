@@ -46,7 +46,7 @@ function config.kommentary()
   -- Mappings
   local nmap = rvim.nmap
   local vmap = rvim.vmap
-  nmap("<leader>/", "<Plug>kommentary_line_default")
+  -- nmap("<leader>/", "<Plug>kommentary_line_default")
   nmap("<leader>a/", "<Plug>kommentary_motion_default")
   vmap("<leader>/", "<Plug>kommentary_visual_default")
 end

@@ -32,14 +32,56 @@ rvim.keys = {
 
     -- QuickRun
     ["<C-b>"] = ":QuickRun<CR>",
+
+    -- Better window movement
+    ["<C-h>"] = "<C-w>h",
+    ["<C-n>"] = "<C-w>j",
+    ["<C-k>"] = "<C-w>k",
+    ["<C-l>"] = "<C-w>l",
+
+    -- Move current line / block with Alt-j/k a la vscode.
+    ["<A-j>"] = ":m .+1<CR>==",
+    ["<A-k>"] = ":m .-2<CR>==",
+
+    -- Use alt + hjkl to resize windows
+    ["<M-n>"] = ":resize -2<CR>",
+    ["<M-k>"] = ":resize +2<CR>",
+    ["<M-h>"] = ":vertical resize +2<CR>",
+    ["<M-l>"] = ":vertical resize -2<CR>",
+
+    -- Add Empty space above and below
+    ["[<space>"] = [[<cmd>put! =repeat(nr2char(10), v:count1)<cr>'[]],
+    ["]<space>"] = [[<cmd>put =repeat(nr2char(10), v:count1)<cr>]],
+
+    -- Disable arrows in normal mode
+    ["<down>"] = "<nop>",
+    ["<up>"] = "<nop>",
+    ["<left>"] = "<nop>",
+    ["<right>"] = "<nop>",
   },
   ---@usage change or add keymappings for insert mode
   insert_mode = {
     -- Start new line from any cursor position
     ["<S-Return>"] = "<C-o>o",
+
+    -- Disable arrows in insert mode
+    ["<down>"] = "<nop>",
+    ["<up>"] = "<nop>",
+    ["<left>"] = "<nop>",
+    ["<right>"] = "<nop>",
   },
   ---@usage change or add keymappings for terminal mode
-  term_mode = {},
+  term_mode = {
+    ["<esc>"] = "<C-\\><C-n>:q!<CR>",
+    ["jk"] = "<C-\\><C-n>",
+    ["<C-h>"] = "<C-\\><C-n><C-W>h",
+    ["<C-j>"] = "<C-\\><C-n><C-W>j",
+    ["<C-k>"] = "<C-\\><C-n><C-W>k",
+    ["<C-l>"] = "<C-\\><C-n><C-W>l",
+    ["]t"] = "<C-\\><C-n>:tablast<CR>",
+    ["[t"] = "<C-\\><C-n>:tabnext<CR>",
+    ["<S-Tab>"] = "<C-\\><C-n>:bprev<CR>",
+  },
   ---@usage change or add keymappings for visual mode
   visual_mode = {
     -- Better indenting
@@ -72,54 +114,46 @@ rvim.keys = {
   },
   ---@usage change or add keymappings for command mode
   command_mode = {
-    -- Smart mappings on the command line
-    ["w!!"] = [[w !sudo tee % >/dev/null]],
-
-    -- insert path of current file into a command
-    ["%%"] = "<C-r>=fnameescape(expand('%'))<cr>",
-    ["::"] = "<C-r>=fnameescape(expand('%:p:h'))<cr>/",
+    -- smooth searching, allow tabbing between search results similar to using <c-g>
+    -- or <c-t> the main difference being tab is easier to hit and remapping those keys
+    -- to these would swallow up a tab mapping
+    ["<Tab>"] = { [[getcmdtype() == "/" || getcmdtype() == "?" ? "<CR>/<C-r>/" : "<C-z>"]], { expr = true } },
+    ["<S-Tab>"] = { [[getcmdtype() == "/" || getcmdtype() == "?" ? "<CR>?<C-r>/" : "<S-Tab>"]], { expr = true } },
   },
+}
+
+local generic_opts_any = { noremap = true, silent = true }
+
+local generic_opts = {
+  insert_mode = generic_opts_any,
+  normal_mode = generic_opts_any,
+  term_mode = { silent = true },
+  command_mode = { noremap = true, silent = false },
+  visual_mode = generic_opts_any,
+  visual_block_mode = generic_opts_any,
 }
 
 local mode_adapters = {
   insert_mode = "i",
   normal_mode = "n",
   term_mode = "t",
+  command_mode = "c",
   visual_mode = "v",
   visual_block_mode = "x",
-  command_mode = "c",
 }
 -- Set key mappings individually
 -- @param mode The keymap mode, can be one of the keys of mode_adapters
 -- @param key The key of keymap
 -- @param val Can be form as a mapping or tuple of mapping and user defined opt
 function M.set_keymaps(mode, key, val)
-  local nnoremap = rvim.nnoremap
-  local xnoremap = rvim.xnoremap
-  local vnoremap = rvim.vnoremap
-  local inoremap = rvim.inoremap
-  local tnoremap = rvim.tnoremap
-  local cnoremap = rvim.cnoremap
+  local opt = generic_opts[mode] and generic_opts[mode] or generic_opts_any
   if type(val) == "table" then
-    local opt = val[2]
+    opt = val[2]
     val = val[1]
-    local custom_map = rvim.make_mapper(mode, opt)
-    custom_map(key, val)
-    return
   end
-  if mode == "i" then
-    inoremap(key, val)
-  elseif mode == "n" then
-    nnoremap(key, val)
-  elseif mode == "t" then
-    tnoremap(key, val)
-  elseif mode == "v" then
-    vnoremap(key, val)
-  elseif mode == "x" then
-    xnoremap(key, val)
-  elseif mode == "c" then
-    cnoremap(key, val)
-  end
+
+  local custom_map = rvim.make_mapper(mode, opt)
+  custom_map(key, val)
 end
 
 -- Load key mappings for a given mode
@@ -146,26 +180,13 @@ function M.setup()
   M.load(rvim.keys)
 end
 
-local normal_mode, command_mode, insert_mode, visual_mode, term_mode =
-  rvim.keys.normal_mode, rvim.keys.command_mode, rvim.keys.insert_mode, rvim.keys.visual_mode, rvim.keys.term_mode
+local normal_mode, term_mode, visual_mode = rvim.keys.normal_mode, rvim.keys.term_mode, rvim.keys.visual_mode
 
 -- TAB in general mode will move to text buffer, SHIFT-TAB will go back
 if not rvim.plugin.SANE.active then
   normal_mode["<TAB>"] = ":bnext<CR>"
   normal_mode["<S-TAB>"] = ":bprevious<CR>"
 end
-
--- Better Navigation
-normal_mode["<C-h>"] = "<C-w>h"
-normal_mode["<C-n>"] = "<C-w>j"
-normal_mode["<C-k>"] = "<C-w>k"
-normal_mode["<C-l>"] = "<C-w>l"
-
--- Use alt + hjkl to resize windows
-normal_mode["<M-n>"] = ":resize -2<CR>"
-normal_mode["<M-k>"] = ":resize +2<CR>"
-normal_mode["<M-h>"] = ":vertical resize +2<CR>"
-normal_mode["<M-l>"] = ":vertical resize -2<CR>"
 
 -- Window Resize
 normal_mode["<Leader>ca"] = ":vertical resize 40<CR>"
@@ -174,10 +195,6 @@ normal_mode["<Leader>aF"] = ":vertical resize 90<CR>"
 -- Search Files
 normal_mode["<Leader>chw"] = ':h <C-R>=expand("<cword>")<CR><CR>'
 normal_mode["<Leader>bs"] = '/<C-R>=escape(expand("<cWORD>"), "/")<CR><CR>'
-
--- Add Empty space above and below
-normal_mode["[<space>"] = [[<cmd>put! =repeat(nr2char(10), v:count1)<cr>'[]]
-normal_mode["]<space>"] = [[<cmd>put =repeat(nr2char(10), v:count1)<cr>]]
 
 -- Tab navigation
 normal_mode["<Leader>sb"] = ":tabprevious<CR>"
@@ -194,18 +211,12 @@ normal_mode["<Leader>ax"] = ":wq!<CR>"
 normal_mode["<Leader>az"] = ":q!<CR>"
 normal_mode["<Leader>x"] = ":q<CR>"
 
--- Disable arrows in normal mode
-normal_mode["<down>"] = "<nop>"
-normal_mode["<up>"] = "<nop>"
-normal_mode["<left>"] = "<nop>"
-normal_mode["<right>"] = "<nop>"
-
 -- Greatest remap ever
 visual_mode["<Leader>p"] = '"_dP'
 
 -- Next greatest remap ever : asbjornHaland
-visual_mode["<Leader>y"] = '"+y'
 normal_mode["<Leader>y"] = '"+y'
+visual_mode["<Leader>y"] = '"+y'
 
 -- Whole file delete yank, paste
 normal_mode["<Leader>aY"] = 'gg"+yG'
@@ -247,15 +258,22 @@ normal_mode["<Leader>av"] = "<C-W>vgf"
 normal_mode["<Leader>ah"] = "<C-W>s"
 
 -- Quick find/replace
+local nnoremap, vnoremap, cnoremap = rvim.nnoremap, rvim.vnoremap, rvim.cnoremap
 local noisy = { silent = false }
-normal_mode["<leader>["] = { [[:%s/\<<C-r>=expand("<cword>")<CR>\>/]], noisy }
-normal_mode["<leader>]"] = { [[:s/\<<C-r>=expand("<cword>")<CR>\>/]], noisy }
-normal_mode["<leader>["] = { [["zy:%s/<C-r><C-o>"/]], noisy }
+nnoremap("<leader>[", [[:%s/\<<C-r>=expand("<cword>")<CR>\>/]], noisy)
+nnoremap("<leader>]", [[:s/\<<C-r>=expand("<cword>")<CR>\>/]], noisy)
+vnoremap("<leader>[", [["zy:%s/<C-r><C-o>"/]], noisy)
+
+-- Smart mappings on the command line
+cnoremap("w!!", [[w !sudo tee % >/dev/null]])
+-- insert path of current file into a command
+cnoremap("%%", "<C-r>=fnameescape(expand('%'))<cr>")
+cnoremap("::", "<C-r>=fnameescape(expand('%:p:h'))<cr>/")
 
 -- open a new file in the same directory
-normal_mode["<leader>nf"] = { [[:e <C-R>=expand("%:p:h") . "/" <CR>]], { silent = false } }
+normal_mode["<leader>nf"] = { [[:e <C-R>=expand("%:p:h") . "/" <CR>]], noisy }
 -- create a new file in the same directory
-normal_mode["<leader>ns"] = { [[:vsp <C-R>=expand("%:p:h") . "/" <CR>]], { silent = false } }
+normal_mode["<leader>ns"] = { [[:vsp <C-R>=expand("%:p:h") . "/" <CR>]], noisy }
 
 -- This line opens the vimrc in a vertical split
 normal_mode["<leader>Iv"] = ":e ~/.config/rvim/init.lua<CR>"
@@ -283,29 +301,26 @@ normal_mode["<Leader>bdh"] = ":call v:lua.DelToLeft()<CR>"
 normal_mode["<Leader>bda"] = ":call v:lua.DelAllBuffers()<CR>"
 normal_mode["<Leader>bdx"] = ":call v:lua.DelAllExceptCurrent()<CR>"
 
--- Disable arrows in insert mode
-insert_mode["<down>"] = "<nop>"
-insert_mode["<up>"] = "<nop>"
-insert_mode["<left>"] = "<nop>"
-insert_mode["<right>"] = "<nop>"
-
--- https://github.com/tpope/vim-rsi/blob/master/plugin/rsi.vim
--- c-a / c-e everywhere - RSI.vim provides these
-command_mode["<C-j>"] = "<Down>"
-command_mode["<C-p>"] = "<Up>"
-
--- smooth searching, allow tabbing between search results similar to using <c-g>
--- or <c-t> the main difference being tab is easier to hit and remapping those keys
--- to these would swallow up a tab mapping
-command_mode["<Tab>"] = { [[getcmdtype() == "/" || getcmdtype() == "?" ? "<CR>/<C-r>/" : "<C-z>"]], { expr = true } }
-command_mode["<S-Tab>"] = {
-  [[getcmdtype() == "/" || getcmdtype() == "?" ? "<CR>?<C-r>/" : "<S-Tab>"]],
-  { expr = true },
-}
+-- Terminal mode
+term_mode["<leader><Tab>"] = [[<C-\><C-n>:close \| :bnext<cr>]]
 
 -- Alternate way to save
 normal_mode["<C-s>"] = function()
   u.save_and_notify()
+end
+
+-- if the file under the cursor doesn't exist create it
+-- see :h gf a simpler solution of :edit <cfile> is recommended but doesn't work.
+-- If you select require('buffers/file') in lua for example
+-- this makes the cfile -> buffers/file rather than my_dir/buffer/file.lua
+-- Credit: 1,2
+normal_mode["gf"] = function()
+  u.open_file_or_create_new()
+end
+
+-- GX - replicate netrw functionality
+normal_mode["gX"] = function()
+  u.open_link()
 end
 
 -- toggle_list
@@ -336,43 +351,6 @@ end
 normal_mode["<leader>ae"] = function()
   u.TurnOffGuides()
 end
-
--- if the file under the cursor doesn't exist create it
--- see :h gf a simpler solution of :edit <cfile> is recommended but doesn't work.
--- If you select require('buffers/file') in lua for example
--- this makes the cfile -> buffers/file rather than my_dir/buffer/file.lua
--- Credit: 1,2
-normal_mode["gf"] = function()
-  u.open_file_or_create_new()
-end
-
--- GX - replicate netrw functionality
-normal_mode["gX"] = function()
-  u.open_link()
-end
-
--- Terminal {{{
-rvim.augroup("AddTerminalMappings", {
-  {
-    events = { "TermOpen" },
-    targets = { "*:zsh" },
-    command = function()
-      if vim.bo.filetype == "" or vim.bo.filetype == "toggleterm" then
-        local opts = { silent = false, buffer = 0 }
-        term_mode["<esc>"] = { [[<C-\><C-n>:q!<CR>]], opts }
-        term_mode["jk"] = { [[<C-\><C-n>]], opts }
-        term_mode["<C-h>"] = { [[<C-\><C-n><C-W>h]], opts }
-        term_mode["<C-j>"] = { [[<C-\><C-n><C-W>j]], opts }
-        term_mode["<C-k>"] = { [[<C-\><C-n><C-W>k]], opts }
-        term_mode["<C-l>"] = { [[<C-\><C-n><C-W>l]], opts }
-        term_mode["]t"] = { [[<C-\><C-n>:tablast<CR>]] }
-        term_mode["[t"] = { [[<C-\><C-n>:tabnext<CR>]] }
-        term_mode["<S-Tab>"] = { [[<C-\><C-n>:bprev<CR>]] }
-        term_mode["<leader><Tab>"] = { [[<C-\><C-n>:close \| :bnext<cr>]] }
-      end
-    end,
-  },
-})
 
 if not rvim.plugin.accelerated_jk.active and not rvim.plugin.SANE.active then
   local nmap = rvim.nmap
