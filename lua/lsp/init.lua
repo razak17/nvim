@@ -108,11 +108,11 @@ function M.global_on_attach(client, bufnr)
 end
 
 function M.setup(lang)
-  lspconfig.util.default_config = vim.tbl_extend(
-    "force",
-    lspconfig.util.default_config,
-    { capabilities = M.global_capabilities(), on_init = M.global_on_init() }
-  )
+  -- lspconfig.util.default_config = vim.tbl_extend(
+  --   "force",
+  --   lspconfig.util.default_config,
+  --   { capabilities = M.global_capabilities, on_init = M.global_on_init }
+  -- )
 
   local lsp_utils = require "lsp.utils"
   local lsp = rvim.lang[lang].lsp
@@ -128,7 +128,7 @@ function M.setup(lang)
       lsp.setup.on_init = M.global_on_init
     end
     if not lsp.setup.capabilities then
-      lsp.setup.capabilities = M.common_capabilities()
+      lsp.setup.capabilities = M.global_capabilities()
     end
     lspconfig[lsp.provider].setup(lsp.setup)
   end
