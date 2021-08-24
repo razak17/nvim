@@ -1,5 +1,3 @@
-local conf = require "modules.aesth.config"
-
 local aesth = {}
 
 local function load_conf(name)
@@ -13,6 +11,7 @@ aesth["glepnir/dashboard-nvim"] = {
   config = load_conf "dashboard",
   disable = not rvim.plugin.dashboard.active and not rvim.plugin.SANE.active,
 }
+
 aesth["kyazdani42/nvim-web-devicons"] = { opt = true, disable = not rvim.plugin.SANE.active }
 
 aesth["akinsho/nvim-bufferline.lua"] = {

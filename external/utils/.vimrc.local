@@ -61,7 +61,7 @@ set laststatus=0
 set showtabline=0
 set nowrap
 set shell=/bin/zsh
-set colorcolumn=""
+" set colorcolumn=""
 set nocursorline
 set noshowmode
 

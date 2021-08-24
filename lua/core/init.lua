@@ -18,7 +18,7 @@ local function load_plugins()
 end
 
 local load_core = function()
-  require "core.opts"
+  require("core.opts").setup()
   if rvim.plugin_loaded "zephyr-nvim" then
     require "core.highlights"
     require "core.whitespace"

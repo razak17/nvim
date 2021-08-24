@@ -72,7 +72,7 @@ rvim.keys = {
   },
   ---@usage change or add keymappings for terminal mode
   term_mode = {
-    ["<esc>"] = "<C-\\><C-n>:q!<CR>",
+    -- ["<esc>"] = "<C-\\><C-n>:q!<CR>",
     ["jk"] = "<C-\\><C-n>",
     ["<C-h>"] = "<C-\\><C-n><C-W>h",
     ["<C-j>"] = "<C-\\><C-n><C-W>j",

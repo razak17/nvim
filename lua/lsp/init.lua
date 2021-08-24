@@ -1,4 +1,5 @@
 local lspconfig = require "lspconfig"
+local command = rvim.command
 local Log = require "core.log"
 
 local M = {}
@@ -9,6 +10,38 @@ function M.config()
   for _, sign in ipairs(rvim.lsp.diagnostics.signs.values) do
     vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = sign.name })
   end
+
+  command {
+    "LspLog",
+    function()
+      local path = vim.lsp.get_log_path()
+      vim.cmd("edit " .. path)
+    end,
+  }
+  command {
+    "LspFormat",
+    function()
+      vim.lsp.buf.formatting(vim.g[string.format("format_options_%s", vim.bo.filetype)] or {})
+    end,
+  }
+  command {
+    "LspToggleVirtualText",
+    function()
+      local virtual_text = {}
+      virtual_text.show = true
+      virtual_text.show = not virtual_text.show
+      vim.lsp.diagnostic.display(vim.lsp.diagnostic.get(0, 1), 0, 1, { virtual_text = virtual_text.show })
+    end,
+  }
+  command {
+    "LspReload",
+    function()
+      vim.cmd [[
+      :lua vim.lsp.stop_client(vim.lsp.get_active_clients())
+      :edit
+    ]]
+    end,
+  }
 
   require("lsp.hover").setup()
   require("lsp.handlers").setup()
@@ -36,7 +69,7 @@ local function lsp_highlight_document(client)
   end
 end
 
-function M.common_capabilities()
+function M.global_capabilities()
   local capabilities = vim.lsp.protocol.make_client_capabilities()
   capabilities.textDocument.completion.completionItem.snippetSupport = true
   capabilities.textDocument.completion.completionItem.resolveSupport = {
@@ -57,24 +90,6 @@ function M.common_capabilities()
   return capabilities
 end
 
-local global_capabilities = vim.lsp.protocol.make_client_capabilities()
-global_capabilities.textDocument.completion.completionItem.snippetSupport = true
-global_capabilities.textDocument.completion.completionItem.resolveSupport = {
-  properties = { "documentation", "detail", "additionalTextEdits" },
-}
-global_capabilities.textDocument.codeAction = {
-  dynamicRegistration = false,
-  codeActionLiteralSupport = {
-    codeActionKind = {
-      valueSet = (function()
-        local res = vim.tbl_values(vim.lsp.protocol.CodeActionKind)
-        table.sort(res)
-        return res
-      end)(),
-    },
-  },
-}
-
 function M.global_on_init(client, bufnr)
   local formatters = rvim.lang[vim.bo.filetype].formatters
   if not vim.tbl_isempty(formatters) and formatters[1]["exe"] ~= nil and formatters[1].exe ~= "" then
@@ -93,11 +108,11 @@ function M.global_on_attach(client, bufnr)
 end
 
 function M.setup(lang)
-  -- lspconfig.util.default_config = vim.tbl_extend(
-  --   "force",
-  --   lspconfig.util.default_config,
-  --   { capabilities = global_capabilities, on_init = global_on_init }
-  -- )
+  lspconfig.util.default_config = vim.tbl_extend(
+    "force",
+    lspconfig.util.default_config,
+    { capabilities = M.global_capabilities(), on_init = M.global_on_init() }
+  )
 
   local lsp_utils = require "lsp.utils"
   local lsp = rvim.lang[lang].lsp
@@ -113,7 +128,7 @@ function M.setup(lang)
       lsp.setup.on_init = M.global_on_init
     end
     if not lsp.setup.capabilities then
-      lsp.setup.capabilities = global_capabilities
+      lsp.setup.capabilities = M.common_capabilities()
     end
     lspconfig[lsp.provider].setup(lsp.setup)
   end

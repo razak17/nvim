@@ -32,6 +32,9 @@ g.sumneko_root_path = g.lspinstall_dir .. "/lua"
 g.open_command = g.os == "Darwin" and "open" or "xdg-open"
 g.python3_host_prog = g.python_dir .. "/bin/python"
 g.node_host_prog = g.node_dir
+g.udir = vim.g.cache_dir .. "/undodir"
+g.viewdir = vim.g.cache_dir .. "view"
+g.directory = vim.g.cache_dir .. "/swap"
 
 -- -- Messaging
 -- if vim.notify then

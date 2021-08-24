@@ -1,42 +1,7 @@
 local M = {}
 
-local command = rvim.command
 local nnoremap, vnoremap = rvim.nnoremap, rvim.vnoremap
 local lsp_popup = { show_header = false, border = "single", focusable = false }
-
-local function lsp_commands()
-  command {
-    "LspLog",
-    function()
-      local path = vim.lsp.get_log_path()
-      vim.cmd("edit " .. path)
-    end,
-  }
-  command {
-    "LspFormat",
-    function()
-      vim.lsp.buf.formatting(vim.g[string.format("format_options_%s", vim.bo.filetype)] or {})
-    end,
-  }
-  command {
-    "LspToggleVirtualText",
-    function()
-      local virtual_text = {}
-      virtual_text.show = true
-      virtual_text.show = not virtual_text.show
-      vim.lsp.diagnostic.display(vim.lsp.diagnostic.get(0, 1), 0, 1, { virtual_text = virtual_text.show })
-    end,
-  }
-  command {
-    "LspReload",
-    function()
-      vim.cmd [[
-      :lua vim.lsp.stop_client(vim.lsp.get_active_clients())
-      :edit
-    ]]
-    end,
-  }
-end
 
 local function lsp_mappings(client)
   -- Definition
@@ -80,6 +45,14 @@ local function lsp_mappings(client)
   if client and client.supports_method "textDocument/prepareCallHierarchy" then
     nnoremap("gI", vim.lsp.buf.incoming_calls)
   end
+  -- Symbols
+  if client and client.supports_method "workspace/symbol" then
+    nnoremap("gsd", vim.lsp.buf.document_symbol)
+    nnoremap("gsw", vim.lsp.buf.workspace_symbol)
+  end
+end
+
+local function lsp_leader_keymaps(client)
   -- Formatting
   if client and client.supports_method "textDocument/formatting" then
     nnoremap("<leader>vf", ":LspFormat<CR>")
@@ -102,16 +75,11 @@ local function lsp_mappings(client)
     nnoremap("<leader>va", vim.lsp.buf.code_action)
     vnoremap("<leader>vA", vim.lsp.buf.range_code_action)
   end
-  -- Symbols
-  if client and client.supports_method "workspace/symbol" then
-    nnoremap("gsd", vim.lsp.buf.document_symbol)
-    nnoremap("gsw", vim.lsp.buf.workspace_symbol)
-  end
 end
 
 function M.setup(client)
-  lsp_commands()
   lsp_mappings(client)
+  lsp_leader_keymaps(client)
 end
 
 return M

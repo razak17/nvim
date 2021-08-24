@@ -52,9 +52,6 @@ return function()
     false
   )
 
-  nnoremap("<Leader>Sl", ":SessionLoad<CR>")
-  nnoremap("<Leader>Ss", ":SessionSave<CR>")
-
   rvim.augroup("TelescopeSession", {
     events = { "VimLeavePre" },
     targets = "*",

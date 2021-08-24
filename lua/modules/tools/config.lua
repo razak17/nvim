@@ -15,10 +15,6 @@ end
 function config.bookmarks()
   vim.g.bookmark_no_default_key_mappings = 1
   vim.g.bookmark_sign = ""
-  local nnoremap = rvim.nnoremap
-  nnoremap("<Leader>me", ":BookmarkToggle<CR>")
-  nnoremap("<Leader>mb", ":BookmarkPrev<CR>")
-  nnoremap("<Leader>mk", ":BookmarkNext<CR>")
 end
 
 return config

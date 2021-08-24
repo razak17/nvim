@@ -27,10 +27,6 @@ lang["Pocco81/DAPInstall.nvim"] = {
 
 lang["jbyuki/one-small-step-for-vimkind"] = {
   event = "BufReadPre",
-  config = function()
-    local nnoremap = rvim.nnoremap
-    nnoremap("<leader>dl", ':lua require"osv".launch()<CR>')
-  end,
   disable = not rvim.plugin.osv.active,
 }
 
@@ -43,6 +39,7 @@ lang["kabouzeid/nvim-lspinstall"] = {
   end,
   disable = not rvim.plugin.SANE.active,
 }
+
 lang["neovim/nvim-lspconfig"] = { config = load_conf "lspconfig", disable = not rvim.plugin.SANE.active }
 
 lang["tamago324/nlsp-settings.nvim"] = {
@@ -77,8 +74,6 @@ lang["simrat39/symbols-outline.nvim"] = {
   after = "nvim-lspconfig",
   cmd = "SymbolsOutline",
   config = function()
-    local nnoremap = rvim.nnoremap
-    nnoremap("<Leader>vs", ":SymbolsOutline<CR>")
     require("symbols-outline").setup { show_guides = true }
   end,
   disable = not rvim.plugin.symbols_outline.active,
@@ -88,12 +83,6 @@ lang["folke/trouble.nvim"] = {
   after = "nvim-lspconfig",
   requires = { { "kyazdani42/nvim-web-devicons", opt = true } },
   config = function()
-    local nnoremap = rvim.nnoremap
-    nnoremap("<Leader>vxd", ":TroubleToggle lsp_document_diagnostics<CR>")
-    nnoremap("<Leader>vxe", ":TroubleToggle quickfix<CR>")
-    nnoremap("<Leader>vxl", ":TroubleToggle loclist<CR>")
-    nnoremap("<Leader>vxr", ":TroubleToggle lsp_references<CR>")
-    nnoremap("<Leader>vxw", ":TroubleToggle lsp_workspace_diagnostics<CR>")
     require("trouble").setup { use_lsp_diagnostic_signs = true }
   end,
   disable = not rvim.plugin.trouble.active,

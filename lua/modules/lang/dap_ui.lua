@@ -1,9 +1,6 @@
 return function()
   vim.cmd [[packadd nvim-dap]]
-  local nnoremap = rvim.nnoremap
   local vnoremap = rvim.vnoremap
-  nnoremap("<leader>de", ':lua require"dapui".toggle()<CR>')
-  nnoremap("<leader>di", ':lua require"dap.ui.variables".hover()<CR>')
   -- nnoremap('<leader>di', ':lua require"dap.ui.widgets".hover()<CR>')
   vnoremap("<leader>di", ':lua require"dap.ui.variables".visual_hover()<CR>')
   vnoremap("<leader>d?", ':lua local widgets=require"dap.ui.widgets";widgets.centered_float(widgets.scopes)<CR>')

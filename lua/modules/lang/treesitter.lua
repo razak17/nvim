@@ -62,11 +62,6 @@ return function()
 
   vim.api.nvim_set_keymap("n", "R", ":edit | TSBufEnable highlight<CR>", {})
 
-  -- Mappings
-  local nnoremap = rvim.nnoremap
-  nnoremap("<Leader>Ie", ":TSInstallInfo<CR>")
-  nnoremap("<Leader>Iu", ":TSUpdate<CR>")
-
   -- Only apply folding to supported files:
   rvim.augroup("TreesitterFolds", {
     {

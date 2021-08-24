@@ -7,7 +7,6 @@ end
 
 tools["tpope/vim-fugitive"] = {
   event = "VimEnter",
-  config = load_conf "fugitive",
   disable = not rvim.plugin.fugitive.active,
 }
 
@@ -19,10 +18,6 @@ tools["sindrets/diffview.nvim"] = {
 
 tools["mbbill/undotree"] = {
   cmd = "UndotreeToggle",
-  config = function()
-    local nnoremap = rvim.nnoremap
-    nnoremap("<Leader>au", ":UndotreeToggle<CR>")
-  end,
   disable = not rvim.plugin.undotree.active,
 }
 
@@ -34,10 +29,6 @@ tools["ahmedkhalf/project.nvim"] = {
 tools["npxbr/glow.nvim"] = {
   run = ":GlowInstall",
   branch = "main",
-  config = function()
-    local nnoremap = rvim.nnoremap
-    nnoremap("<Leader>og", ":Glow<CR>")
-  end,
   disable = not rvim.plugin.glow.active,
 }
 
@@ -66,8 +57,6 @@ tools["diepm/vim-rest-console"] = { event = "VimEnter", disable = not rvim.plugi
 tools["iamcco/markdown-preview.nvim"] = {
   config = function()
     vim.g.mkdp_auto_start = 0
-    local nnoremap = rvim.nnoremap
-    nnoremap("<Leader>om", ":MarkdownPreview<CR>")
   end,
   run = "cd app && yarn install",
   cmd = "MarkdownPreview",
@@ -80,13 +69,6 @@ tools["brooth/far.vim"] = {
   config = function()
     vim.g["far#source"] = "rg"
     vim.g["far#enable_undo"] = 1
-    -- Mappings
-    local nnoremap = rvim.nnoremap
-    nnoremap("<Leader>Ff", ":Farr --source=vimgrep<CR>")
-    nnoremap("<Leader>Fd", ":Fardo<CR>")
-    nnoremap("<Leader>Fi", ":Farf<CR>")
-    nnoremap("<Leader>Fr", ":Farr --source=rgnvim<CR>")
-    nnoremap("<Leader>Fz", ":Farundo<CR>")
   end,
   disable = not rvim.plugin.far.active,
 }

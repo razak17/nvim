@@ -384,11 +384,4 @@ return function()
   require("lsp").config()
   lsp_utils.toggle_autoformat()
   lsp_utils.lspLocList()
-
-  -- Mappings
-  local nnoremap = rvim.nnoremap
-  nnoremap("<Leader>Li", ":LspInfo<CR>")
-  nnoremap("<Leader>Ll", ":LspLog<CR>")
-  nnoremap("<Leader>Lr", ":LspReload<CR>")
-  nnoremap("<Leader>vv", ":LspToggleVirtualText<CR>")
 end

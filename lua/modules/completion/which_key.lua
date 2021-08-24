@@ -84,41 +84,46 @@ return function()
     debug = {
       name = "+Debug",
       ["?"] = "centered float ui",
-      a = "attach",
-      A = "attach remote",
-      b = "toggle breakpoint",
-      B = "set breakpoint",
-      c = "continue",
-      C = "run to cursor",
-      E = "toggle repl",
-      g = "get session",
-      k = "up",
-      L = "run last",
-      n = "down",
-      p = "pause",
-      r = "open repl in vsplit",
-      s = { name = "+Step", b = "back", i = "step into", o = "step out", v = "step over" },
-      S = "stop",
-      x = "disconnect",
+      a = { ':lua require"debug.utils".attach()', "attach" },
+      A = { ':lua require"debug.utils".attachToRemote()', "attach remote" },
+      b = { ':lua require"dap".toggle_breakpoint()', "toggle breakpoint" },
+      B = { ':lua require"dap".set_breakpoint(vim.fn.input("Breakpoint condition: "))', "set breakpoint" },
+      c = { ':lua require"dap".continue()', "continue" },
+      C = { ':lua require"dap".run_to_cursor()', "run to cursor" },
+      E = { ':lua require"dap".repl.toggle()', "toggle repl" },
+      g = { ':lua require"dap".session()', "get session" },
+      k = { ':lua require"dap".up()', "up" },
+      L = { ':lua require"dap".run_last()', "run last" },
+      n = { ':lua require"dap".down()', "down" },
+      p = { ':lua require"dap".pause.toggle()', "pause" },
+      r = { ':lua require"dap".repl.open({}, "vsplit")<CR><C-w>l', "open repl in vsplit" },
+      s = {
+        name = "+Step",
+        b = { ':lua require"dap".step_back()', "back" },
+        i = { ':lua require"dap".step_into()', "step into" },
+        o = { ':lua require"dap".step_out()', "step out" },
+        v = { ':lua require"dap".step_over()', "step over" },
+      },
+      S = { ':lua require"dap".close()', "stop" },
+      x = { ':lua require"dap".disconnect()', "disconnect" },
     },
-
     fterm = {
       name = "+Fterm",
-      g = "gitui",
-      l = "lazygit",
-      n = "node",
-      N = "new",
-      p = "python",
-      r = "ranger",
+      g = { [[v:lua.fterm_cmd("gitui")]], "gitui" },
+      l = { [[v:lua.fterm_cmd("lazygit")]], "lazygit" },
+      N = { [[v:lua.fterm_cmd("node")]], "node" },
+      n = "new",
+      p = { [[v:lua.fterm_cmd("python")]], "python" },
+      r = { [[v:lua.fterm_cmd("ranger")]], "ranger" },
       v = "open vimrc in vertical split",
     },
     far = {
       name = "+Far",
-      f = "replace in File",
-      d = "do",
-      i = "search iteratively",
-      r = "replace in Project",
-      z = "undo",
+      f = { ":Farr --source=vimgrep", "replace in File" },
+      d = { ":Fardo", "do" },
+      i = { ":Farf", "search iteratively" },
+      r = { ":Farr --source=rgnvim", "replace in Project" },
+      z = { ":Farundo", "undo" },
     },
     git_signs = {
       name = "+Gitsigns",
@@ -131,73 +136,84 @@ return function()
     },
     fugitive = {
       name = "+Git",
-      a = "fetch all",
-      b = "branches",
-      A = "blame",
-      c = { name = "+Commit", a = "amend", m = "message" },
-      C = "checkout",
-      d = "diff",
-      D = "diff split",
-      h = "diffget",
-      i = "init",
-      k = "diffget",
-      l = "log",
-      e = "push",
-      p = "poosh",
-      P = "pull",
-      r = "remove",
-      s = "status",
+      a = { ":Git fetch --all", "fetch all" },
+      A = { ":Git blame", "blame" },
+      b = { ":GBranches", "branches" },
+      c = { name = "+Commit", a = { ":Git commit --amend -m ", "amend" }, m = { ":Git commit<CR>", "message" } },
+      C = { ":Git checkout -b ", "checkout" },
+      d = { ":Git diff", "diff" },
+      D = { ":Gdiffsplit", "diff split" },
+      h = { ":diffget //3", "diffget" },
+      i = { ":Git init", "init" },
+      k = { ":diffget //2", "diffget" },
+      l = { ":Git log", "log" },
+      e = { ":Git push", "push" },
+      p = { ":Git poosh", "poosh" },
+      P = { ":Git pull", "pull" },
+      r = { ":GRemove", "remove" },
+      s = { ":G", "status" },
     },
     telescope = {
       name = "+Telescope",
-      b = "file browser",
+      b = { ":Telescope file_browser", "file browser" },
       c = {
         name = "+Builtin",
-        a = "autocmds",
-        c = "commands",
-        b = "buffers",
-        e = "quickfix",
-        f = "builtin",
-        h = "help",
-        H = "history",
-        k = "keymaps",
-        l = "loclist",
-        r = "registers",
-        T = "treesitter",
-        v = "vim options",
-        z = "current file fuzzy find",
+        a = { ":Telescope autocommands", "autocmds" },
+        b = { ":Telescope buffers", "buffers" },
+        c = { ":Telescope commands", "commands" },
+        e = { ":Telescope quickfix", "quickfix" },
+        f = { ":Telescope builtin", "builtin" },
+        h = { ":Telescope help_tags", "help" },
+        H = { ":Telescope command_history", "history" },
+        k = { ":Telescope keymaps", "keymaps" },
+        l = { ":Telescope loclist", "loclist" },
+        r = { ":Telescope registers<CR>", "registers" },
+        T = { ":Telescope treesitter", "treesitter" },
+        v = { ":Telescope vim_options", "vim options" },
+        z = { ":Telescope current_buffer_fuzzy_find", "current file fuzzy find" },
       },
-      C = "Open lua/rvim/core/config.lua",
+      C = { ":e " .. vim.g.vim_path .. "/lua/core/config.lua", "Open lua/rvim/core/config.lua" },
       d = {
         name = "+Dotfiles",
-        b = "branches",
-        B = "bcommits",
-        c = "commits",
-        f = "git files",
-        r = "recent files",
-        s = "status",
+        b = { ":Telescope dotfiles branches", "branches" },
+        B = { ":Telescope dotfiles bcommits", "bcommits" },
+        c = { ":Telescope dotfiles commits", "commits" },
+        f = { ":Telescope dotfiles git_files", "git files" },
+        s = { ":Telescope dotfiles status", "status" },
       },
-      e = { name = "+Extensions", b = "change background" },
-      f = "find files",
-      l = { name = "+Live", g = "grep", w = "current word", e = "prompt" },
+      e = { name = "+Extensions", b = { ":Telescope bg_selector", "change background" } },
+      f = { ":Telescope find_files", "find files" },
+      l = {
+        name = "+Live",
+        g = { ":Telescope live_grep", "grep" },
+        w = { ":Telescope grep_string", "current word" },
+        e = { ":Telescope grep_string_prompt", "prompt" },
+      },
       r = {
         name = "+Config",
-        b = "branches",
-        B = "bcommits",
-        c = "commits",
-        f = "nvim files",
-        r = "recent files",
-        s = "status",
+        b = { ":Telescope nvim_files branches", "branches" },
+        B = { ":Telescope nvim_files bcommits", "bcommits" },
+        c = { ":Telescope nvim_files commits", "commits" },
+        f = { ":Telescope nvim_files files", "nvim files" },
+        r = { ":Telescope oldfiles", "recent files" },
+        s = { ":Telescope nvim_files status", "status" },
       },
       v = {
         name = "+Lsp",
-        a = "code action",
-        A = "range code action",
-        r = "references",
-        d = "document_symbol",
-        w = "workspace_symbol",
+        a = { ":Telescope lsp_code_actions", "code action" },
+        A = { ":Telescope lsp_range_code_actions", "range code action" },
+        r = { ":Telescope lsp_references", "references" },
+        d = { ":Telescope lsp_document_symbols", "document_symbol" },
+        w = { ":Telescope lsp_workspace_symbols", "workspace_symbol" },
       },
-      g = { name = "+Git", b = "branches", c = "commits", C = "bcommits", f = "files", s = "status" },
+      g = {
+        name = "+Git",
+        b = { ":Telescope git_branches", "branches" },
+        c = { ":Telescope git_commits", "commits" },
+        C = { ":Telescope git_bcommits", "bcommits" },
+        f = { ":Telescope git_files", "files" },
+        s = { ":Telescope git_status", "status" },
+      },
     },
     lsp = {
       name = "+Code",
@@ -207,8 +223,8 @@ return function()
       f = "format",
       l = "set loc list",
       o = "open qflist",
-      s = "Symbols outline",
-      v = "toggle virtual text",
+      s = { ":SymbolsOutline", "Symbols outline" },
+      v = { ":LspToggleVirtualText", "toggle virtual text" },
       w = { name = "+Color", m = "pencils" },
     },
     slide = {
@@ -226,11 +242,11 @@ return function()
     },
     trouble = {
       name = "+Trouble",
-      d = "document",
-      e = "quickfix",
-      l = "loclist",
-      r = "references",
-      w = "workspace",
+      d = { ":TroubleToggle lsp_document_diagnostics", "document" },
+      e = { ":TroubleToggle quickfix", "quickfix" },
+      l = { ":TroubleToggle loclist", "loclist" },
+      r = { ":TroubleToggle lsp_references", "references" },
+      w = { ":TroubleToggle lsp_workspace_diagnostics", "workspace" },
     },
   }
 
@@ -266,8 +282,14 @@ return function()
     -- lsp
     if rvim.plugin_loaded "nvim-lspconfig" then
       key_maps.v = rvim.keymaps.lsp
-      key_maps.L = { name = "+LspUtils", i = "info", l = "log", r = "restart" }
+      key_maps.L = {
+        name = "+LspUtils",
+        i = { ":LspInfo", "info" },
+        l = { ":LspLog", "log" },
+        r = { ":LspReload", "restart" },
+      }
     end
+    -- end
     --trouble
     if rvim.plugin_loaded "trouble.nvim" then
       key_maps.v.x = rvim.keymaps.trouble
@@ -293,41 +315,46 @@ return function()
     end
     -- undotree
     if rvim.plugin_loaded "undotree" then
-      key_maps.a.u = "toggle undotree"
+      key_maps.a.u = { ":UndotreeToggle", "toggle undotree" }
     end
     -- tree
     if rvim.plugin_loaded "nvim-tree.lua" then
-      key_maps.c.c = "nvim-tree close"
-      key_maps.c.f = "nvim-tree find"
-      key_maps.c.r = "nvim-tree refresh"
-      key_maps.c.v = "nvim-tree toggle"
+      key_maps.c.c = { ":NvimTreeClose", "nvim-tree close" }
+      key_maps.c.f = { ":NvimTreeFindFile", "nvim-tree find" }
+      key_maps.c.r = { ":NvimTreeRefresh", "nvim-tree refresh" }
+      key_maps.c.v = { ":NvimTreeToggle", "nvim-tree toggle" }
     end
     -- osv
     if rvim.plugin_loaded "one-small-step-for-vimkind" then
-      key_maps.d.l = "osv launch"
+      key_maps.d.l = { ':lua require"osv".launch()', "osv launch" }
     end
     -- debug ui
     if rvim.plugin_loaded "nvim-dap-ui" then
-      key_maps.d.e = "toggle ui"
-      key_maps.d.i = "inspect"
+      key_maps.d.e = { ':lua require"dapui".toggle()', "toggle ui" }
+      key_maps.d.i = { ':lua require"dap.ui.variables".hover()', "inspect" }
     end
     -- bookmarks
     if rvim.plugin_loaded "vim-bookmarks" then
-      key_maps.m = { name = "+Mark", e = "toggle", b = "previous mark", k = "next mark" }
+      key_maps.m = {
+        name = "+Mark",
+        e = { ":BookmarkToggle", "toggle" },
+        b = { ":BookmarkPrev", "previous mark" },
+        k = { ":BookmarkNext", "next mark" },
+      }
     end
     -- markdown
     if rvim.plugin_loaded "markdown-preview.nvim" or rvim.plugin_loaded "glow.nvim" then
       key_maps.o = { name = "+Toggle", z = "test" }
       if rvim.plugin_loaded "markdown-preview.nvim" then
-        key_maps.o.m = "markdown preview"
+        key_maps.o.m = { ":MarkdownPreview", "markdown preview" }
       end
       if rvim.plugin_loaded "glow.nvim" then
-        key_maps.o.g = "glow preview"
+        key_maps.o.g = { ":Glow", "glow preview" }
       end
     end
     -- dashboard
     if rvim.plugin_loaded "dashboard-nvim" then
-      key_maps.S = { name = "+Session", l = "load Session", s = "save Session" }
+      key_maps.S = { name = "+Session", l = { ":SessionLoad", "load Session" }, s = { ":SessionSave", "save Session" } }
     end
     -- playground
     if rvim.plugin_loaded "playground" then
@@ -335,8 +362,8 @@ return function()
     end
     -- treesitter
     if rvim.plugin_loaded "nvim-treesitter" then
-      key_maps.I.e = "ts info"
-      key_maps.I.u = "ts update"
+      key_maps.I.e = { ":TSInstallInfo", "ts info" }
+      key_maps.I.u = { ":TSUpdate", "ts update" }
     end
     -- dashboard
     if rvim.plugin_loaded "dashboard-nvim" then
@@ -359,13 +386,13 @@ return function()
       key_maps.v.W = "where am i"
     end
     if rvim.plugin_loaded "project.nvim" then
-      key_maps.f.e.e = "projects"
+      key_maps.f.e.e = { ":Telescope projects", "projects" }
     end
     if rvim.plugin_loaded "telescope-media-files.nvim" then
-      key_maps.f.e.m = "project"
+      key_maps.f.e.m = { ":Telescope media_files", "media files" }
     end
     if rvim.plugin_loaded "telescope-project.nvim" then
-      key_maps.f.e.p = "project"
+      key_maps.f.e.p = { ":Telescope project", "project" }
     end
 
     -- Update Which-Key keymap

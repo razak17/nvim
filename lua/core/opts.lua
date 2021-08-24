@@ -1,215 +1,209 @@
 local vim = vim
 
-local function set(key, value)
-  vim.opt[key] = value
+local M = {}
+
+M.load_options = function()
+  local opt = vim.opt
+  local default_options = {
+    -- Neovim Directories
+    udir = vim.g.udir,
+    directory = vim.g.directory,
+    viewdir = vim.g.viewdir,
+
+    -- Timing
+    timeout = true,
+    timeoutlen = 500,
+    ttimeoutlen = 10,
+    updatetime = 100,
+
+    -- Folds
+    foldmethod = "expr",
+    foldenable = true,
+    foldlevelstart = 10,
+    foldtext = "v:lua.folds()",
+
+    -- Splits and buffers
+    splitbelow = true,
+    splitright = true,
+    eadirection = "hor",
+
+    -- Display
+    conceallevel = 0,
+    concealcursor = "niv",
+    linebreak = true,
+    synmaxcol = 1024,
+    signcolumn = "yes:2",
+    ruler = false,
+    cmdwinheight = 5,
+    background = "dark",
+
+    -- Tabs and Indents
+    breakindentopt = "shift:2,min:20",
+    smarttab = true, -- Tab insert blanks according to 'shiftwidth'
+    tabstop = 2,
+    shiftwidth = 2,
+    textwidth = 100,
+    softtabstop = -1,
+    expandtab = true,
+    cindent = true, -- Increase indent on line after opening brace
+    autoindent = true, -- Use same indenting on new lines
+    shiftround = true, -- Round indent to multiple of 'shiftwidth'
+    smartindent = true,
+
+    -- Title
+    title = true,
+    titlelen = 70,
+    titlestring = "%<%F%=%l/%L - nvim",
+    titleold = '%{fnamemodify(getcwd(), ":t")}',
+
+    -- Searching
+    grepprg = [[rg --hidden --glob "!.git" --no-heading --smart-case --vimgrep --follow $*]],
+    grepformat = "%f:%l:%c:%m",
+    smartcase = true,
+    ignorecase = true,
+    infercase = true,
+    incsearch = true,
+    hlsearch = true,
+    wrapscan = true,
+    showmatch = true,
+    matchpairs = "(:),{:},[:]",
+    matchtime = 1,
+
+    -- Spelling
+    spelllang = "en",
+    spell = false,
+    spelloptions = "camel",
+    spellcapcheck = "", -- don't check for capital letters at start of sentence
+    fileformats = { "unix", "mac", "dos" }, -- don't check for capital letters at start of sentence
+
+    -- Editor UI Appearance
+    cmdheight = 2,
+    -- colorcolumn = ""
+    laststatus = 2,
+    showtabline = 2,
+    showmode = false,
+    cursorcolumn = false,
+    termguicolors = true,
+    guicursor = "n-v-c-sm:block,i-ci-ve:block,r-cr-o:block",
+    sidescrolloff = 5,
+    scrolloff = 7,
+    winblend = 10,
+    winwidth = 30,
+    winminwidth = 10,
+    helpheight = 12,
+    previewheight = 12,
+    display = "lastline",
+    lazyredraw = true,
+    equalalways = false,
+    numberwidth = 4,
+    list = true,
+    fillchars = {
+      vert = "▕", -- alternatives │
+      fold = " ",
+      eob = " ", -- suppress ~ at EndOfBuffer
+      diff = "╱", -- alternatives = ⣿ ░ ─
+      msgsep = "‾",
+      foldopen = "▾",
+      foldsep = "│",
+      foldclose = "▸",
+    },
+    listchars = {
+      eol = " ",
+      nbsp = "+",
+      tab = "»• ", -- Alternatives: │
+      extends = "", -- Alternatives: … » ›
+      precedes = "", -- Alternatives: … « ‹
+      trail = "·", -- BULLET (U+2022, UTF-8: E2 80 A2) •
+    },
+    diffopt = {
+      "vertical",
+      "iwhite",
+      "hiddenoff",
+      "foldcolumn:0",
+      "context:4",
+      "algorithm:histogram",
+      "indent-heuristic",
+    },
+
+    -- Behavior
+    backup = false,
+    completeopt = { "menu", "menuone", "noselect", "noinsert" },
+    more = false,
+    gdefault = false,
+    wrap = false,
+    report = 2,
+    inccommand = "nosplit",
+    complete = ".,w,b,k", -- No wins, buffs, tags, included in scanning
+    breakat = [[\ \	;:,!?]], -- Long lines break chars
+    showfulltag = true, -- Show tag and tidy search in completion
+    joinspaces = false, -- Insert only one space when joining lines that contain sentence-terminating punctuation like `.`.
+    jumpoptions = "stack", -- list of words that change the behavior of the jumplist
+    virtualedit = "block",
+    emoji = false, -- emoji is true by default but makes (n)vim treat all emoji as double width
+    formatoptions = {
+      ["1"] = true,
+      ["2"] = true, -- Use indent from 2nd line of a paragraph
+      q = true, -- continue comments with gq"
+      c = true, -- Auto-wrap comments using textwidth
+      r = true, -- Continue comments when pressing Enter
+      n = true, -- Recognize numbered lists
+      t = false, -- autowrap lines using text width value
+      j = true, -- remove a comment leader when joining lines.
+      -- Only break if the line was not longer than 'textwidth' when the insert
+      -- started and only at a white character that has been entered during the
+      -- current insert command.
+      l = true,
+      v = true,
+    },
+
+    -- Wildmenu
+    wildignore = "*.so,.git,.hg,.svn,.stversions,*.pyc,*.spl,*.o,*.out,*~,%*,*.jpg,*.jpeg,*.png,*.gif,*.zip,**/tmp/**,*.DS_Store,**/node_modules/**,**/bower_modules/**,*/.sass-cache/*,application/vendor/**,**/vendor/ckeditor/**,media/vendor/**,__pycache__,*.egg-info",
+    wildcharm = vim.fn.char2nr(vim.api.nvim_replace_termcodes([[<C-Z>]], true, true, true)),
+    wildmode = "longest,full",
+    wildoptions = "pum",
+    wildignorecase = true,
+    pumheight = 15,
+    pumblend = 10,
+
+    -- What to save for views and sessions:
+    clipboard = "unnamedplus",
+    shada = "!,'300,<50,@100,s10,h",
+    viewoptions = "cursor,folds",
+    sessionoptions = "curdir,help,tabpages,winsize",
+  }
+
+  ---  SETTINGS  ---
+  opt.shortmess:append "c"
+
+  for k, v in pairs(default_options) do
+    vim.opt[k] = v
+  end
 end
 
--- opts
-rvim.sets = {
-  wrap = false,
-  spell = false,
-  spelllang = "en",
-  textwidth = 100,
-  tabstop = 2,
-  cmdheight = 2,
-  shiftwidth = 2,
-  numberwidth = 4,
-  scrolloff = 7,
-  laststatus = 2,
-  showtabline = 2,
-  smartcase = true,
-  ignorecase = true,
-  hlsearch = true,
-  timeoutlen = 500,
-  foldenable = true,
-  foldtext = "v:lua.folds()",
-  udir = vim.g.cache_dir .. "/undodir",
-  viewdir = vim.g.cache_dir .. "view",
-  directory = vim.g.cache_dir .. "/swap",
-}
+M.load_commands = function()
+  local cmd = vim.cmd
+  if rvim.common.line_wrap_cursor_movement then
+    vim.cmd "set whichwrap+=<,>,[,],h,l,~"
+  end
 
--- Neovim Directories
-set("udir", rvim.sets.udir)
-set("directory", rvim.sets.directory)
-set("viewdir", rvim.sets.viewdir)
-set("backupskip", "/tmp/*,$TMPDIR/*,$TMP/*,$TEMP/*,*/shm/*,/private/var/*,.vault.vim")
+  vim.g.vimsyn_embed = "lPr" -- allow embedded syntax highlighting for lua,python and ruby
+  vim.o.switchbuf = "useopen,uselast"
+  vim.opt.spellsuggest:prepend { 12 }
 
--- Timing
-set("timeout", true)
-set("timeoutlen", rvim.sets.timeoutlen)
-set("ttimeoutlen", 10)
-set("updatetime", 100)
-
--- Folds
-set("foldmethod", "expr")
-set("foldenable", rvim.sets.foldenable)
-set("foldlevelstart", 10)
-set("foldtext", rvim.sets.foldtext)
-
--- Splits and buffers
-vim.o.switchbuf = "useopen,uselast"
-set("splitbelow", true)
-set("splitright", true)
-set("eadirection", "hor")
-
--- Display
-set("conceallevel", 0)
-set("concealcursor", "niv")
-set("linebreak", true)
-set("synmaxcol", 1024)
-set("signcolumn", "yes:2")
-set("ruler", false)
-set("cmdheight", rvim.sets.cmdheight)
-set("cmdwinheight", 5)
-set("background", "dark")
-
--- Tabs and Indents
-set("breakindentopt", "shift:2,min:20")
-set("smarttab", true) -- Tab insert blanks according to 'shiftwidth'
-set("tabstop", rvim.sets.tabstop)
-set("shiftwidth", rvim.sets.shiftwidth)
-set("textwidth", rvim.sets.textwidth)
-set("softtabstop", -1)
-set("expandtab", true)
-set("cindent", true) -- Increase indent on line after opening brace
-set("autoindent", true) -- Use same indenting on new lines
-set("shiftround", true) -- Round indent to multiple of 'shiftwidth'
-set("smartindent", true)
-
--- Title
-set("title", true)
-set("titlelen", 70)
-set("titlestring", "%<%F%=%l/%L - nvim")
-set("titleold", '%{fnamemodify(getcwd(), ":t")}')
-
--- Searching
-set("grepprg", [[rg --hidden --glob "!.git" --no-heading --smart-case --vimgrep --follow $*]])
-set("grepformat", "%f:%l:%c:%m")
-set("smartcase", rvim.sets.smartcase)
-set("ignorecase", rvim.sets.ignorecase)
-set("infercase", true)
-set("incsearch", true)
-set("hlsearch", rvim.sets.hlsearch)
-set("wrapscan", true)
-set("showmatch", true)
-set("matchpairs", "(:),{:},[:]")
-set("matchtime", 1)
-
--- Spelling
-vim.opt.spellsuggest:prepend { 12 }
-set("spelllang", rvim.sets.spelllang)
-set("spell", rvim.sets.spell)
-set("spelloptions", "camel")
-set("spellcapcheck", "") -- don't check for capital letters at start of sentence
-set("fileformats", { "unix", "mac", "dos" }) -- don't check for capital letters at start of sentence
-
--- Editor UI Appearance
-set("laststatus", rvim.sets.laststatus)
-set("showtabline", rvim.sets.showtabline)
-set("showmode", false)
-set("cursorcolumn", false)
-set("termguicolors", true)
-set("guicursor", "n-v-c-sm:block,i-ci-ve:block,r-cr-o:block")
-set("sidescrolloff", 5)
-set("scrolloff", rvim.sets.scrolloff)
-set("winblend", 10)
-set("winwidth", 30)
-set("winminwidth", 10)
-set("helpheight", 12)
-set("previewheight", 12)
-set("display", "lastline")
-set("lazyredraw", true)
-set("equalalways", false)
-set("numberwidth", rvim.sets.numberwidth)
-set("list", true)
-set("fillchars", {
-  vert = "▕", -- alternatives │
-  fold = " ",
-  eob = " ", -- suppress ~ at EndOfBuffer
-  diff = "╱", -- alternatives = ⣿ ░ ─
-  msgsep = "‾",
-  foldopen = "▾",
-  foldsep = "│",
-  foldclose = "▸",
-})
-set("listchars", {
-  eol = " ",
-  nbsp = "+",
-  tab = "»• ", -- Alternatives: │
-  extends = "", -- Alternatives: … » ›
-  precedes = "", -- Alternatives: … « ‹
-  trail = "·", -- BULLET (U+2022, UTF-8: E2 80 A2) •
-})
-set("diffopt", {
-  "vertical",
-  "iwhite",
-  "hiddenoff",
-  "foldcolumn:0",
-  "context:4",
-  "algorithm:histogram",
-  "indent-heuristic",
-})
-
--- Behavior
-vim.g.vimsyn_embed = "lPr" -- allow embedded syntax highlighting for lua,python and ruby
-set("clipboard", { "unnamedplus" })
-set("more", false)
-set("gdefault", false)
-set("wrap", rvim.sets.wrap)
-set("eadirection", "hor")
-set("report", 2)
-set("inccommand", "nosplit")
-set("complete", ".,w,b,k") -- No wins, buffs, tags, included in scanning
-set("completeopt", "menu,menuone,noselect,noinsert")
-set("breakat", [[\ \	;:,!?]]) -- Long lines break chars
-if rvim.common.line_wrap_cursor_movement then
-  vim.cmd "set whichwrap+=<,>,[,],h,l,~"
+  if rvim.common.transparent_window then
+    cmd "au ColorScheme * hi Normal ctermbg=none guibg=none"
+    cmd "au ColorScheme * hi SignColumn ctermbg=none guibg=none"
+    cmd "au ColorScheme * hi NormalNC ctermbg=none guibg=none"
+    cmd "au ColorScheme * hi MsgArea ctermbg=none guibg=none"
+    cmd "au ColorScheme * hi TelescopeBorder ctermbg=none guibg=none"
+    cmd "au ColorScheme * hi NvimTreeNormal ctermbg=none guibg=none"
+    cmd "let &fcs='eob: '"
+  end
 end
-set("showfulltag", true) -- Show tag and tidy search in completion
-set("joinspaces", false) -- Insert only one space when joining lines that contain sentence-terminating punctuation like `.`.
-set("jumpoptions", "stack") -- list of words that change the behavior of the jumplist
-set("virtualedit", "block")
-set("emoji", false) -- emoji is true by default but makes (n)vim treat all emoji as double width
-vim.opt.formatoptions = {
-  ["1"] = true,
-  ["2"] = true, -- Use indent from 2nd line of a paragraph
-  q = true, -- continue comments with gq"
-  c = true, -- Auto-wrap comments using textwidth
-  r = true, -- Continue comments when pressing Enter
-  n = true, -- Recognize numbered lists
-  t = false, -- autowrap lines using text width value
-  j = true, -- remove a comment leader when joining lines.
-  -- Only break if the line was not longer than 'textwidth' when the insert
-  -- started and only at a white character that has been entered during the
-  -- current insert command.
-  l = true,
-  v = true,
-}
 
--- Wildmenu
-set(
-  "wildignore",
-  "*.so,.git,.hg,.svn,.stversions,*.pyc,*.spl,*.o,*.out,*~,%*,*.jpg,*.jpeg,*.png,*.gif,*.zip,**/tmp/**,*.DS_Store,**/node_modules/**,**/bower_modules/**,*/.sass-cache/*,application/vendor/**,**/vendor/ckeditor/**,media/vendor/**,__pycache__,*.egg-info"
-)
-set("wildcharm", vim.fn.char2nr(vim.api.nvim_replace_termcodes([[<C-Z>]], true, true, true)))
-set("wildmode", "longest,full")
-set("wildoptions", "pum")
-set("wildignorecase", true)
-set("pumheight", 15)
-set("pumblend", 10)
-
--- What to save for views and sessions:
-set("shada", "!,'300,<50,@100,s10,h")
-set("viewoptions", "cursor,folds")
-set("sessionoptions", "curdir,help,tabpages,winsize")
-
-local cmd = vim.cmd
-if rvim.common.transparent_window then
-  cmd "au ColorScheme * hi Normal ctermbg=none guibg=none"
-  cmd "au ColorScheme * hi SignColumn ctermbg=none guibg=none"
-  cmd "au ColorScheme * hi NormalNC ctermbg=none guibg=none"
-  cmd "au ColorScheme * hi MsgArea ctermbg=none guibg=none"
-  cmd "au ColorScheme * hi TelescopeBorder ctermbg=none guibg=none"
-  cmd "au ColorScheme * hi NvimTreeNormal ctermbg=none guibg=none"
-  cmd "let &fcs='eob: '"
+M.setup = function()
+  M.load_options()
+  M.load_commands()
 end
+
+return M
