@@ -4,7 +4,13 @@ local M = {}
 
 M.load_options = function()
   local opt = vim.opt
+
   local default_options = {
+    encoding = "utf-8",
+    fileencoding = "utf-8",
+    swapfile = false,
+    undofile = true,
+
     -- Neovim Directories
     udir = vim.g.udir,
     directory = vim.g.directory,
@@ -27,35 +33,6 @@ M.load_options = function()
     splitright = true,
     eadirection = "hor",
 
-    -- Display
-    conceallevel = 0,
-    concealcursor = "niv",
-    linebreak = true,
-    synmaxcol = 1024,
-    signcolumn = "yes:2",
-    ruler = false,
-    cmdwinheight = 5,
-    background = "dark",
-
-    -- Tabs and Indents
-    breakindentopt = "shift:2,min:20",
-    smarttab = true, -- Tab insert blanks according to 'shiftwidth'
-    tabstop = 2,
-    shiftwidth = 2,
-    textwidth = 100,
-    softtabstop = -1,
-    expandtab = true,
-    cindent = true, -- Increase indent on line after opening brace
-    autoindent = true, -- Use same indenting on new lines
-    shiftround = true, -- Round indent to multiple of 'shiftwidth'
-    smartindent = true,
-
-    -- Title
-    title = true,
-    titlelen = 70,
-    titlestring = "%<%F%=%l/%L - nvim",
-    titleold = '%{fnamemodify(getcwd(), ":t")}',
-
     -- Searching
     grepprg = [[rg --hidden --glob "!.git" --no-heading --smart-case --vimgrep --follow $*]],
     grepformat = "%f:%l:%c:%m",
@@ -76,13 +53,37 @@ M.load_options = function()
     spellcapcheck = "", -- don't check for capital letters at start of sentence
     fileformats = { "unix", "mac", "dos" }, -- don't check for capital letters at start of sentence
 
-    -- Editor UI Appearance
+    -- Display
+    conceallevel = 0,
+    concealcursor = "niv",
+    linebreak = true,
+    synmaxcol = 1024,
+    signcolumn = "yes:2",
+    ruler = false,
     cmdheight = 2,
-    -- colorcolumn = ""
+    cmdwinheight = 5,
+    background = "dark",
+
+    -- Tabs and Indents
+    breakindentopt = "shift:2,min:20",
+    smarttab = true, -- Tab insert blanks according to 'shiftwidth'
+    tabstop = 2,
+    shiftwidth = 2,
+    textwidth = 100,
+    softtabstop = -1,
+    expandtab = true,
+    cindent = true, -- Increase indent on line after opening brace
+    autoindent = true, -- Use same indenting on new lines
+    shiftround = true, -- Round indent to multiple of 'shiftwidth'
+    smartindent = true,
+
+    -- Editor UI Appearance
+    colorcolumn = "",
+    cursorcolumn = false,
+    cursorline = false,
     laststatus = 2,
     showtabline = 2,
     showmode = false,
-    cursorcolumn = false,
     termguicolors = true,
     guicursor = "n-v-c-sm:block,i-ci-ve:block,r-cr-o:block",
     sidescrolloff = 5,
@@ -127,12 +128,16 @@ M.load_options = function()
 
     -- Behavior
     backup = false,
+    writebackup = false,
+    mouse = "a",
+    mousefocus = true,
+    hidden = true,
+    showcmd = false,
     completeopt = { "menu", "menuone", "noselect", "noinsert" },
     more = false,
     gdefault = false,
     wrap = false,
     report = 2,
-    inccommand = "nosplit",
     complete = ".,w,b,k", -- No wins, buffs, tags, included in scanning
     breakat = [[\ \	;:,!?]], -- Long lines break chars
     showfulltag = true, -- Show tag and tidy search in completion
@@ -157,7 +162,7 @@ M.load_options = function()
     },
 
     -- Wildmenu
-    wildignore = "*.so,.git,.hg,.svn,.stversions,*.pyc,*.spl,*.o,*.out,*~,%*,*.jpg,*.jpeg,*.png,*.gif,*.zip,**/tmp/**,*.DS_Store,**/node_modules/**,**/bower_modules/**,*/.sass-cache/*,application/vendor/**,**/vendor/ckeditor/**,media/vendor/**,__pycache__,*.egg-info",
+    wildignore = "*.so,.git,.hg,.svn,*.pyc,*.spl,*.o,*.out,*.jpg,*.jpeg,*.png,*.gif,*.zip,**/tmp/**,*.DS_Store,**/node_modules/**,__pycache__",
     wildcharm = vim.fn.char2nr(vim.api.nvim_replace_termcodes([[<C-Z>]], true, true, true)),
     wildmode = "longest,full",
     wildoptions = "pum",
@@ -174,6 +179,8 @@ M.load_options = function()
 
   ---  SETTINGS  ---
   opt.shortmess:append "c"
+  opt.iskeyword:append "-"
+  opt.spellsuggest:prepend { 12 }
 
   for k, v in pairs(default_options) do
     vim.opt[k] = v
@@ -182,13 +189,37 @@ end
 
 M.load_commands = function()
   local cmd = vim.cmd
+  local o = vim.o
+
+  local command_options = {
+    exrc = true,
+    secure = true,
+    title = true,
+    titlelen = 70,
+    magic = true,
+    noerrorbells = true,
+    t_Co = 256,
+    shell = "/bin/zsh",
+    inccommand = "nosplit",
+  }
+
   if rvim.common.line_wrap_cursor_movement then
-    vim.cmd "set whichwrap+=<,>,[,],h,l,~"
+    cmd "set whichwrap+=<,>,[,],h,l,~"
   end
 
+  for k, v in pairs(command_options) do
+    if v == true or v == false then
+      cmd("set " .. k)
+    else
+      cmd("set " .. k .. "=" .. v)
+    end
+  end
+
+  o.switchbuf = "useopen,uselast"
+  o.titlestring = " 🐬 %t %r %m"
+  -- vim.o.titlestring = "%<%F%=%l/%L - nvim"
+  o.titleold = '%{fnamemodify(getcwd(), ":t")}'
   vim.g.vimsyn_embed = "lPr" -- allow embedded syntax highlighting for lua,python and ruby
-  vim.o.switchbuf = "useopen,uselast"
-  vim.opt.spellsuggest:prepend { 12 }
 
   if rvim.common.transparent_window then
     cmd "au ColorScheme * hi Normal ctermbg=none guibg=none"
@@ -202,8 +233,8 @@ M.load_commands = function()
 end
 
 M.setup = function()
-  M.load_options()
   M.load_commands()
+  M.load_options()
 end
 
 return M

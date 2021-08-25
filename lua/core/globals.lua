@@ -30,11 +30,15 @@ g.session_dir = g.cache_dir .. "/session/dashboard"
 g.modules_dir = g.vim_path .. "/lua/modules"
 g.sumneko_root_path = g.lspinstall_dir .. "/lua"
 g.open_command = g.os == "Darwin" and "open" or "xdg-open"
-g.python3_host_prog = g.python_dir .. "/bin/python"
+g.python3_host_prog = g.python_dir .. "/bin/python3"
 g.node_host_prog = g.node_dir
 g.udir = vim.g.cache_dir .. "/undodir"
 g.viewdir = vim.g.cache_dir .. "view"
 g.directory = vim.g.cache_dir .. "/swap"
+
+g["loaded_python_provider"] = 0
+g["loaded_ruby_provider"] = 0
+g["loaded_perl_provider"] = 0
 
 -- -- Messaging
 -- if vim.notify then
