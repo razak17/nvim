@@ -274,7 +274,6 @@ rvim.augroup("PackerSetupInit", {
       vim.cmd [[source ~/.config/rvim/lua/core/config.lua]]
       vim.cmd [[source ~/.config/rvim/lua/core/opts.lua]]
       vim.cmd [[source ~/.config/rvim/lua/core/binds.lua]]
-      vim.cmd [[source ~/.config/rvim/lua/keymap/init.lua]]
       local plug = require "core.plugins"
       plug.magic_compile()
       plug.load_compile()
