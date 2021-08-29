@@ -72,6 +72,9 @@ rvim.keys = {
   },
   ---@usage change or add keymappings for terminal mode
   term_mode = {
+    -- Easy way to close popups windows
+    ["W"] = "q",
+
     -- ["<esc>"] = "<C-\\><C-n>:q!<CR>",
     ["jk"] = "<C-\\><C-n>",
     ["<C-h>"] = "<C-\\><C-n><C-W>h",

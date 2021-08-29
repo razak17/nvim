@@ -64,7 +64,7 @@ return function()
         s = "highlight cursor word",
       },
       c = { name = "+Command", a = "vertical resize 30", h = { name = "+Help", w = "word" } },
-      E = { name = "+Plug", c = "compile", C = "clean", i = "install", s = "sync", e = "update" },
+      E = { name = "+Plug", c = "compile", C = "clean", i = "install", s = "sync", S = "Status", e = "update" },
       I = { name = "+Info", c = "open core/init.lua", C = "check health", m = "messages", v = "open vimrc" },
       l = { name = "+LocList", i = "empty", s = "toggle" },
       n = { name = "+New", f = "open file in same dir", s = "create new file in same dir" },
