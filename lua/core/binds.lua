@@ -10,7 +10,7 @@ rvim.keys = {
     ["Y"] = "y$",
 
     -- Easy way to close popups windows
-    ["W"] = "q",
+    ["W"] = { "q", { noremap = false, silent = true } },
 
     -- Open url
     ["gx"] = ":sil !xdg-open <c-r><c-a><cr>",
@@ -72,9 +72,6 @@ rvim.keys = {
   },
   ---@usage change or add keymappings for terminal mode
   term_mode = {
-    -- Easy way to close popups windows
-    ["W"] = "q",
-
     -- ["<esc>"] = "<C-\\><C-n>:q!<CR>",
     ["jk"] = "<C-\\><C-n>",
     ["<C-h>"] = "<C-\\><C-n><C-W>h",
@@ -227,9 +224,16 @@ normal_mode["<Leader>aV"] = 'gg"+VG'
 normal_mode["<Leader>aD"] = 'gg"+VGd'
 
 -- actions
-normal_mode["<Leader>="] = "<C-W>="
-normal_mode["<Leader>ah"] = "<C-W>s"
-normal_mode["<Leader>av"] = "<C-W>v"
+-- normal_mode["<Leader>="] = "<C-W>="
+-- opens a horizontal split
+-- normal_mode["<Leader>ah"] = "<C-W>s"
+-- opens a vertical split
+normal_mode["<Leader>av"] = "<C-W>vgf"
+-- Change two horizontally split windows to vertical splits
+normal_mode["<localleader>wv"] = "<C-W>t <C-W>H<C-W>="
+-- Change two vertically split windows to horizontal splits
+normal_mode["<localleader>wh"] = "<C-W>t <C-W>K<C-W>="
+-- delete buffer
 normal_mode["<Leader>ad"] = ":bdelete!<CR>"
 
 -- opens the last buffer
@@ -249,16 +253,7 @@ normal_mode["<localleader>;"] = "<cmd>call utils#modify_line_end_delimiter(';')<
 normal_mode["<localleader>."] = "<cmd>call utils#modify_line_end_delimiter('.')<cr>"
 
 -- qflist
-normal_mode["<Leader>vo"] = ":copen<CR>"
-
--- Change two horizontally split windows to vertical splits
-normal_mode["<localleader>wv"] = "<C-W>t <C-W>H<C-W>="
--- Change two vertically split windows to horizontal splits
-normal_mode["<localleader>wh"] = "<C-W>t <C-W>K<C-W>="
--- opens a vertical split
-normal_mode["<Leader>av"] = "<C-W>vgf"
--- opens a horizontal split
-normal_mode["<Leader>ah"] = "<C-W>s"
+normal_mode["<Leader>oe"] = ":copen<CR>"
 
 -- Quick find/replace
 local nnoremap, vnoremap, cnoremap = rvim.nnoremap, rvim.vnoremap, rvim.cnoremap

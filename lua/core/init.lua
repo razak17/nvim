@@ -31,5 +31,5 @@ require "core.globals"
 require "core.config"
 
 defer()
-load_plugins()
 load_core()
+load_plugins()
