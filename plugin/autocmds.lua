@@ -221,40 +221,40 @@ rvim.augroup("CustomColorColumn", {
 
 --- Set or unset the cursor line depending on the filetype of the buffer and its eligibility
 ---@param leaving boolean?
-local function check_cursor_line(leaving)
-  if contains(column_exclude, vim.bo.filetype) then
-    return
-  end
-  if contains(column_clear, vim.bo.filetype) or not_eligible or leaving then
-    vim.wo.cursorline = false
-    return
-  end
-  if not contains(column_clear, vim.bo.filetype) and vim.wo.cursorline == false then
-    vim.wo.cursorline = true
-  end
-end
+-- local function check_cursor_line(leaving)
+--   if contains(column_exclude, vim.bo.filetype) then
+--     return
+--   end
+--   if contains(column_clear, vim.bo.filetype) or not_eligible or leaving then
+--     vim.wo.cursorline = false
+--     return
+--   end
+--   if not contains(column_clear, vim.bo.filetype) and vim.wo.cursorline == false then
+--     vim.wo.cursorline = true
+--   end
+-- end
 
-rvim.augroup("CustomCursorLine", {
-  {
-    events = { "InsertEnter" },
-    targets = { "*" },
-    command = "setlocal nocursorline | autocmd InsertLeave <buffer> set cursorline",
-  },
-  {
-    events = { "VimResized", "FocusGained", "WinEnter", "BufEnter" },
-    targets = { "*" },
-    command = function()
-      check_cursor_line()
-    end,
-  },
-  {
-    events = { "FocusLost", "WinLeave" },
-    targets = { "*" },
-    command = function()
-      check_cursor_line(true)
-    end,
-  },
-})
+-- rvim.augroup("CustomCursorLine", {
+--   {
+--     events = { "InsertEnter" },
+--     targets = { "*" },
+--     command = "setlocal nocursorline | autocmd InsertLeave <buffer> set cursorline",
+--   },
+--   {
+--     events = { "VimResized", "FocusGained", "WinEnter", "BufEnter" },
+--     targets = { "*" },
+--     command = function()
+--       check_cursor_line()
+--     end,
+--   },
+--   {
+--     events = { "FocusLost", "WinLeave" },
+--     targets = { "*" },
+--     command = function()
+--       check_cursor_line(true)
+--     end,
+--   },
+-- })
 
 rvim.augroup("CustomFormatOptions", {
   {

@@ -102,7 +102,7 @@ end
 
 function M.global_on_attach(client, bufnr)
   vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
-  lsp_highlight_document(client)
+  -- lsp_highlight_document(client)
   require("lsp.binds").setup(client)
   require("lsp.null-ls").setup(vim.bo.filetype)
 end
