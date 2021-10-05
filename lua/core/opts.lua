@@ -170,8 +170,10 @@ M.load_options = function()
     pumheight = 15,
     pumblend = 10,
 
-    -- What to save for views and sessions:
+    -- clipboard
     clipboard = "unnamedplus",
+
+    -- What to save for views and sessions:
     shada = "!,'300,<50,@100,s10,h",
     viewoptions = "cursor,folds",
     sessionoptions = "curdir,help,tabpages,winsize",
