@@ -1,6 +1,6 @@
 local function load_core()
-  require "core.globals"
-  require "core.config"
+  require "globals"
+  require "defaults"
   require "core.opts"
   -- require "core.highlights"
 end
