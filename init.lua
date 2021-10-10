@@ -26,6 +26,4 @@ vim.opt.rtp:append(home_dir .. "/.local/share/rvim/site/after")
 vim.cmd [[let &packpath = &runtimepath]]
 
 -- Load Modules
--- require "globals"
--- require "defaults"
 require "core"
