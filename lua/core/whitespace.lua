@@ -4,7 +4,13 @@
 --@source: https://vim.fandom.com/wiki/Highlight_unwanted_spaces (comment at the bottom)
 --@implementation: https://github.com/inkarkat/vim-ShowTrailingWhitespace
 
-local H = require "core.highlights"
+local Log = require "core.log"
+
+local status_ok, H = pcall(require, "core.highlights")
+if not status_ok then
+  Log:debug "Could not load highlights"
+  return
+end
 
 local fn = vim.fn
 

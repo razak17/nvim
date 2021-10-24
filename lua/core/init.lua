@@ -1,4 +1,6 @@
-local defer = function()
+local M = {}
+
+function M:defer()
   vim.defer_fn(
     vim.schedule_wrap(function()
       vim.defer_fn(function()
@@ -10,26 +12,20 @@ local defer = function()
   )
 end
 
-local function load_plugins()
-  local plug = require "core.plugins"
-  plug.ensure_plugins()
-  plug.commands()
-  plug.load_compile()
-end
+function M:init()
+  require "core.globals"
+  require "core.config"
 
-local load_core = function()
   require("core.opts").setup()
-  if rvim.plugin_loaded "zephyr-nvim" then
-    require "core.highlights"
-    require "core.whitespace"
-  end
+  require "core.highlights"
+  require "core.whitespace"
+
+  local plug = require("core.plugins")
+  plug.ensure_plugins()
+  plug.load_compile()
+
   require("core.binds").setup()
   require("core.commands").setup()
 end
 
-require "core.globals"
-require "core.config"
-
-defer()
-load_core()
-load_plugins()
+return M

@@ -1,15 +1,25 @@
 return function()
-  local g = vim.g
-
-  rvim.nvim_tree = {
+  rvim.nvimtree = {
     side = "right",
-    auto_open = 1,
-    auto_close = 1,
     width = 35,
     indent_markers = 1,
-    lsp_diagnostics = 0,
     special_files = { "README.md", "Makefile", "MAKEFILE" },
+    ignore = { ".git", "node_modules", ".cache", ".DS_Store", "fugitive:" },
+    respect_buf_cwd = 1,
+    width_allow_resize = 1,
+    disable_window_picker = 1,
+    auto_ignore_ft = { "startify", "dashboard" },
+    setup = {
+      auto_open = false,
+      auto_close = true,
+    }
   }
+
+  local status_ok, nvim_tree_config = pcall(require, "nvim-tree.config")
+  if not status_ok then
+    return
+  end
+  local g = vim.g
 
   g.nvim_tree_icons = {
     default = "",
@@ -32,33 +42,38 @@ return function()
     },
   }
 
-  g.nvim_tree_follow = 1
-  g.nvim_tree_update_cwd = 1
-  g.nvim_tree_respect_buf_cwd = 1
-  g.nvim_tree_hijack_cursor = 0
-  g.nvim_tree_width_allow_resize = 1
-  g.nvim_tree_disable_window_picker = 1
-  g.nvim_tree_auto_ignore_ft = { "startify", "dashboard" }
-  g.nvim_tree_ignore = { ".git", "node_modules", ".cache", ".DS_Store", "fugitive:" }
-  g.root_folder_modifier = ":t"
-  g.nvim_tree_side = rvim.nvim_tree.side
-  g.nvim_tree_auto_open = rvim.nvim_tree.auto_open
-  g.nvim_tree_auto_close = rvim.nvim_tree.auto_close
-  g.nvim_tree_width = rvim.nvim_tree.width
-  g.nvim_tree_indent_markers = rvim.nvim_tree.indent_markers
-  g.nvim_tree_lsp_diagnostics = rvim.nvim_tree.lsp_diagnostics
-  g.nvim_tree_special_files = rvim.nvim_tree.special_files
+  for opt, val in pairs(rvim.nvimtree) do
+    g["nvim_tree_" .. opt] = val
+  end
+  g["root_folder_modifier"] = ":t"
 
-  local action = require("nvim-tree.config").nvim_tree_callback
-  g.nvim_tree_bindings = {
-    { key = { "<CR>", "o", "<2-LeftMouse>" }, cb = action "edit" },
-    { key = "l", cb = action "edit" },
-    { key = "h", cb = action "close_node" },
-    { key = "V", cb = action "vsplit" },
-    { key = "N", cb = action "last_sibling" },
-    { key = "I", cb = action "toggle_dotfiles" },
-    { key = "D", cb = action "dir_up" },
-    { key = "gh", cb = action "toggle_help" },
+  local tree_cb = nvim_tree_config.nvim_tree_callback
+
+  require 'nvim-tree'.setup {
+    auto_close = rvim.nvimtree.setup.auto_close,
+    update_cwd = true,
+    hijack_cursor = false,
+    tree_follow = true,
+    update_to_buf_dir   = {
+      enable = false,
+      auto_open = false,
+    },
+    view = {
+      side = rvim.nvimtree.side,
+      mappings = {
+      custom_only = false,
+      list = {
+        { key = { "<CR>", "o", "<2-LeftMouse>" }, cb = tree_cb "edit" },
+        -- { key = "l", cb = tree_cb "edit" },
+        { key = "h", cb = tree_cb "close_node" },
+        { key = "V", cb = tree_cb "vsplit" },
+        { key = "N", cb = tree_cb "last_sibling" },
+        { key = "I", cb = tree_cb "toggle_dotfiles" },
+        { key = "D", cb = tree_cb "dir_up" },
+        { key = "gh", cb = tree_cb "toggle_help" },
+        }
+      }
+    },
   }
 
   local function set_highlights()
@@ -73,10 +88,19 @@ return function()
     }
   end
 
+  local tree_view = require "nvim-tree.view"
+
   local on_open = function()
     if package.loaded["bufferline.state"] and rvim.nvimtree.side == "right" then
       require("bufferline.state").set_offset(rvim.nvimtree.width + 1, "")
     end
+  end
+
+  -- Add nvim_tree open callback
+  local open = tree_view.open
+  tree_view.open = function()
+    on_open()
+    open()
   end
 
   local on_close = function()
@@ -87,30 +111,27 @@ return function()
     end
   end
 
-  local tree_view = require "nvim-tree.view"
-
-  -- Add nvim_tree open callback
-  local open = tree_view.open
-  tree_view.open = function()
-    on_open()
-    open()
-  end
-
   rvim.augroup("NvimTreeOverrides", {
     {
       events = { "WinClosed" },
       targets = { "*" },
-      command = on_close,
+      command = function()
+        on_close()
+      end,
     },
     {
       events = { "ColorScheme" },
       targets = { "*" },
-      command = set_highlights,
+      command = function()
+        set_highlights()
+      end,
     },
     {
       events = { "FileType" },
       targets = { "NvimTree" },
-      command = set_highlights,
+      command = function()
+        set_highlights()
+      end,
     },
   })
 end

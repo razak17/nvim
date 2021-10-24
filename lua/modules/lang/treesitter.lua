@@ -33,7 +33,14 @@ return function()
     end, parsers.available_parsers())
   end
 
-  require("nvim-treesitter.configs").setup {
+  local Log = require "core.log"
+  local status_ok, treesitter_configs = pcall(require, "nvim-treesitter.configs")
+  if not status_ok then
+    Log:debug "Failed to load nvim-treesitter.configs"
+    return
+  end
+
+  treesitter_configs.setup {
     highlight = { enable = rvim.treesitter.highlight.enabled },
     indent = { enable = { "javascriptreact" } },
     autotag = { enable = rvim.plugin.autotag.active },

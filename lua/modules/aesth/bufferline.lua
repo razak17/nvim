@@ -38,8 +38,10 @@ return function()
       return ""
     end,
     custom_filter = custom_filter,
-    numbers = "none",
-    number_style = "superscript",
+    -- numbers = "none",
+    numbers = function(opts)
+      return string.format("%s|%s.)", opts.id, opts.raise(opts.ordinal))
+    end,
     offsets = {
       {
         filetype = "NvimTree",

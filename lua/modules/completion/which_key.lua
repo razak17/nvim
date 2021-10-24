@@ -116,8 +116,16 @@ return function()
         s = "highlight cursor word",
       },
       c = { name = "+Command", a = "vertical resize 30", h = { name = "+Help", w = "word" } },
-      E = { name = "+Plug", c = "compile", C = "clean", i = "install", s = "sync", S = "Status", e = "update" },
-      I = { name = "+Info", c = "open core/init.lua", C = "check health", m = "messages", v = "open vimrc" },
+      E = {
+        name = "+Plug",
+        c = { ":PlugCompile",  "compile" },
+        C = { ":PlugClean", "clean" },
+        i = { ":PlugInstall", "install" },
+        s = { "PlugSync", "sync" },
+        S = { "PlugStatus", "Status" },
+        e = { ":PlugUpdate", "update" }
+      },
+      I = { name = "+Info", c = "open core/init.lua", C = "check health", m = "messages", M = "vim with me", v = "open vimrc" },
       l = { name = "+LocList", i = "empty", s = "toggle" },
       n = { name = "+New", f = "open file in same dir", s = "create new file in same dir" },
       o = { name = "+Toggle", e = "quickfix" },
@@ -257,7 +265,6 @@ return function()
       o = "open qflist",
       s = { ":SymbolsOutline", "Symbols outline" },
       v = { ":LspToggleVirtualText", "toggle virtual text" },
-      w = { name = "+Color", m = "pencils" },
     }
     if rvim.plugin_loaded "nvim-lspconfig" then
       key_maps.v = rvim.keymaps.lsp
@@ -301,8 +308,9 @@ return function()
       v = telescope_lsp_keymaps,
       g = telescope_git_keymaps,
     }
+
+    key_maps.f = rvim.keymaps.telescope
     if rvim.plugin_loaded "telescope.nvim" then
-      key_maps.f = rvim.keymaps.telescope
     end
 
     -- Slide

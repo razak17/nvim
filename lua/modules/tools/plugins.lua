@@ -1,9 +1,6 @@
 local tools = {}
-local conf = require "modules.tools.config"
 
-local function load_conf(name)
-  return require(string.format("modules.tools.%s", name))
-end
+local utils = require "utils"
 
 tools["tpope/vim-fugitive"] = {
   event = "VimEnter",
@@ -12,7 +9,7 @@ tools["tpope/vim-fugitive"] = {
 
 tools["sindrets/diffview.nvim"] = {
   event = "BufReadPre",
-  config = load_conf "diff_view",
+  config = utils.load_conf("tools", "diff_view"),
   disable = not rvim.plugin.diffview.active,
 }
 
@@ -22,7 +19,7 @@ tools["mbbill/undotree"] = {
 }
 
 tools["ahmedkhalf/project.nvim"] = {
-  config = load_conf "project",
+  config = utils.load_conf("tools", "project"),
   disable = not rvim.plugin.project.active,
 }
 
@@ -42,13 +39,16 @@ tools["kkoomen/vim-doge"] = {
 
 tools["numToStr/FTerm.nvim"] = {
   event = { "BufWinEnter" },
-  config = load_conf "fterm",
+  config = utils.load_conf("tools", "fterm"),
   disable = not rvim.plugin.fterm.active,
 }
 
 tools["MattesGroeger/vim-bookmarks"] = {
   event = { "BufReadPre", "BufNewFile" },
-  config = conf.bookmarks,
+  config = function()
+    vim.g.bookmark_no_default_key_mappings = 1
+    vim.g.bookmark_sign = ""
+  end,
   disable = not rvim.plugin.bookmarks.active,
 }
 
@@ -75,7 +75,17 @@ tools["brooth/far.vim"] = {
 
 tools["kristijanhusak/vim-dadbod-ui"] = {
   cmd = { "DBUIToggle", "DBUIAddConnection", "DBUI", "DBUIFindBuffer", "DBUIRenameBuffer" },
-  config = conf.vim_dadbod_ui,
+  config = function()
+    vim.cmd [[packadd vim-dadbod]]
+    vim.g.db_ui_show_help = 0
+    vim.g.db_ui_win_position = "left"
+    vim.g.db_ui_use_nerd_fonts = 1
+    vim.g.db_ui_winwidth = 35
+    vim.g.db_ui_save_location = os.getenv "HOME" .. "/.cache/vim/db_ui_queries"
+    -- vim.g.dbs = load_dbs()
+    local nnoremap = rvim.nnoremap
+    nnoremap("<Leader>od", ":DBUIToggle<CR>")
+  end,
   requires = {
     { "tpope/vim-dadbod", opt = true },
     { "kristijanhusak/vim-dadbod-completion", opt = true },

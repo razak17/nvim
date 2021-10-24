@@ -1,16 +1,12 @@
-local conf = require "modules.editor.config"
-
 local editor = {}
 
-local function load_conf(name)
-  return require(string.format("modules.editor.%s", name))
-end
+local utils = require "utils"
 
 editor["rhysd/accelerated-jk"] = {
   opt = true,
   event = { "BufWinEnter" },
-  config = load_conf "ajk",
-  disable = not rvim.plugin.accelerated_jk.active and not rvim.plugin.SANE.active,
+  config = utils.load_conf("editor", "ajk"),
+  disable = not rvim.plugin.ajk.active,
 }
 
 editor["tpope/vim-surround"] = {
@@ -24,7 +20,16 @@ editor["tpope/vim-surround"] = {
 
 editor["monaqa/dial.nvim"] = {
   event = { "BufWinEnter" },
-  config = conf.dial,
+  config = function()
+    vim.cmd [[
+      nmap <C-a> <Plug>(dial-increment)
+      nmap <C-x> <Plug>(dial-decrement)
+      vmap <C-a> <Plug>(dial-increment)
+      vmap <C-x> <Plug>(dial-decrement)
+      vmap g<C-a> <Plug>(dial-increment-additional)
+      vmap g<C-x> <Plug>(dial-decrement-additional)
+    ]]
+  end,
   disable = not rvim.plugin.dial.active,
 }
 
@@ -43,24 +48,42 @@ editor["junegunn/vim-easy-align"] = {
 
 editor["razak17/vim-cursorword"] = {
   event = { "BufReadPre", "BufNewFile" },
-  config = conf.vim_cursorword,
+  config = utils.load_conf("editor", "cursor_word"),
   disable = not rvim.plugin.cursorword.active,
 }
 
 editor["hrsh7th/vim-eft"] = {
-  config = load_conf "eft",
+  config = utils.load_conf("editor", "eft"),
   disable = not rvim.plugin.eft.active,
 }
 
 editor["norcalli/nvim-colorizer.lua"] = {
   event = { "BufReadPre", "BufNewFile" },
-  config = conf.nvim_colorizer,
+  config = function()
+    require("colorizer").setup({
+      "*",
+      css = { rgb_fn = true, hsl_fn = true, names = true },
+      scss = { rgb_fn = true, hsl_fn = true, names = true },
+      sass = { rgb_fn = true, names = true },
+      vim = { names = true },
+      html = { mode = "foreground" },
+    }, {
+      names = false,
+      mode = "background",
+    })
+  end,
   disable = not rvim.plugin.colorizer.active,
 }
 
 editor["Raimondi/delimitMate"] = {
   event = { "BufReadPre", "BufNewFile" },
-  config = conf.delimitmate,
+  config = function()
+    vim.g.delimitMate_expand_cr = 0
+    vim.g.delimitMate_expand_space = 1
+    vim.g.delimitMate_smart_quotes = 1
+    vim.g.delimitMate_expand_inside_quotes = 0
+    vim.api.nvim_command 'au FileType markdown let b:delimitMate_nesting_quotes = ["`"]'
+  end,
   disable = not rvim.plugin.delimitmate.active,
 }
 
@@ -85,8 +108,8 @@ editor["arecarn/vim-fold-cycle"] = {
 
 editor["b3nj5m1n/kommentary"] = {
   event = { "BufWinEnter" },
-  config = conf.kommentary,
-  disable = not rvim.plugin.SANE.active,
+  config = utils.load_conf("editor", "kommentary"),
+  disable = not rvim.plugin.kommentary.active,
 }
 
 return editor

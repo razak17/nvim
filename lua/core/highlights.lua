@@ -19,9 +19,10 @@ rvim.style = {
   },
 }
 
-local api = vim.api
+local api, cmd = vim.api, vim.cmd
 local fmt = string.format
 local P = rvim.style.palette
+local Log = require "core.log"
 
 local M = {}
 
@@ -172,7 +173,8 @@ end
 -----------------------------------------------------------------------------//
 -- Color Scheme {{{1
 -----------------------------------------------------------------------------//
-vim.cmd [[colo zephyr]]
+vim.g.colors_name = "onedarker"
+vim.cmd [[colo onedarker]]
 
 ---------------------------------------------------------------------------------
 -- Plugin highlights

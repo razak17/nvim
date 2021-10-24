@@ -1,10 +1,18 @@
 return function()
-  local bo = vim.bo
-  local gl = require "galaxyline"
-  local condition = require "galaxyline.condition"
-  local gls = gl.section
+  -- local bo = vim.bo
+  -- local gl = require "galaxyline"
   Api, Cmd, Fn = vim.api, vim.cmd, vim.fn
   Keymap, Execute, G = Api.nvim_set_keymap, Api.nvim_command, vim.g
+
+  local Log = require "core.log"
+  local status_ok, gl = pcall(require, "galaxyline")
+  local status_okc, condition = pcall(require, "galaxyline.condition")
+  if not status_ok and not status_okc then
+    Log:debug "Failed to galaxyline"
+    return
+  end
+
+  local gls = gl.section
 
   gl.short_line_list = { "NvimTree", "packer", "minimap", "Outline" }
 

@@ -14,9 +14,6 @@ return function()
     cmd:toggle()
   end
 
-  -- config
-  require("FTerm").setup()
-
   -- Mappings
   local nnoremap = rvim.nnoremap
   local tnoremap = rvim.tnoremap

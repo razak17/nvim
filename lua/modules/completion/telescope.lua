@@ -1,11 +1,14 @@
 return function()
-  local actions = require "telescope.actions"
-
   rvim.telescope = {
     prompt_prefix = " ❯ ",
     layout_config = { height = 0.9, width = 0.9 },
     borderchars = { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
   }
+
+  local status_ok, actions = pcall(require, "telescope.actions")
+  if not status_ok then
+    return
+  end
 
   require("telescope").setup {
     defaults = {

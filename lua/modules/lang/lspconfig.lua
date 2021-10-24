@@ -10,7 +10,7 @@ return function()
 
   rvim.lang = {
     c = {
-      formatters = { { exe = "clang_format", args = {}, stdin = true } },
+      -- formatters = { { exe = "clang_format", args = {}, stdin = true } },
       -- linters = { { exe = "clangtidy" } },
       linters = {},
       lsp = {

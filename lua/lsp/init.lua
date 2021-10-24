@@ -1,4 +1,3 @@
-local lspconfig = require "lspconfig"
 local command = rvim.command
 local Log = require "core.log"
 
@@ -102,7 +101,7 @@ end
 
 function M.global_on_attach(client, bufnr)
   vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
-  -- lsp_highlight_document(client)
+  lsp_highlight_document(client)
   require("lsp.binds").setup(client)
   require("lsp.null-ls").setup(vim.bo.filetype)
 end
@@ -113,6 +112,12 @@ function M.setup(lang)
   --   lspconfig.util.default_config,
   --   { capabilities = M.global_capabilities, on_init = M.global_on_init }
   -- )
+
+  Log:debug "Setting up LSP support"
+  local lsp_status_ok, lspconfig = pcall(require, "lspconfig")
+  if not lsp_status_ok then
+    return
+  end
 
   local lsp_utils = require "lsp.utils"
   local lsp = rvim.lang[lang].lsp

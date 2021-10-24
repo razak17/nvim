@@ -1,27 +1,27 @@
-local conf = require "modules.lang.config"
-
 local lang = {}
 
-local function load_conf(name)
-  return require(string.format("modules.lang.%s", name))
-end
+local utils = require "utils"
 
 -- Debug
 lang["mfussenegger/nvim-dap"] = {
   event = "BufReadPre",
-  config = load_conf "dap",
+  config = utils.load_conf("lang", "dap"),
   disable = not rvim.plugin.debug.active,
 }
 
 lang["rcarriga/nvim-dap-ui"] = {
   event = "BufReadPre",
-  config = load_conf "dap_ui",
+  config = utils.load_conf("lang", "dap_ui"),
   disable = not rvim.plugin.debug_ui.active,
 }
 
 lang["Pocco81/DAPInstall.nvim"] = {
   event = "BufReadPre",
-  config = conf.dap_install,
+  config = function()
+    vim.cmd [[packadd nvim-dap]]
+    local dI = require "dap-install"
+    dI.setup { installation_path = vim.g.dap_install_dir }
+  end,
   disable = not rvim.plugin.dap_install.active,
 }
 
@@ -37,36 +37,72 @@ lang["kabouzeid/nvim-lspinstall"] = {
     local lspinstall = require "lspinstall"
     lspinstall.setup()
   end,
-  disable = not rvim.plugin.SANE.active,
+  disable = not rvim.plugin.lspinstall.active,
 }
 
-lang["neovim/nvim-lspconfig"] = { config = load_conf "lspconfig", disable = not rvim.plugin.SANE.active }
+lang["neovim/nvim-lspconfig"] = {
+  -- event = "VimEnter",
+  config = utils.load_conf("lang", "lspconfig"),
+  disable = not rvim.plugin.lspconfig.active
+}
 
 lang["tamago324/nlsp-settings.nvim"] = {
-  config = conf.nvim_lsp_settings,
-  disable = not rvim.plugin.SANE.active,
+  config = function()
+    local lsp_settings_status_ok, lsp_settings = pcall(require, "nlspsettings")
+    if lsp_settings_status_ok then
+      lsp_settings.setup {
+        config_home = vim.g.vim_path .. "/external/nlsp-settings",
+      }
+    end
+  end,
+  disable = not rvim.plugin.nlsp.active,
 }
 
 lang["jose-elias-alvarez/null-ls.nvim"] = {
-  config = conf.null_ls,
-  disable = not rvim.plugin.SANE.active,
+  config = function()
+    local null_status_ok, null_ls = pcall(require, "null-ls")
+    if null_status_ok then
+      null_ls.config {}
+      require("lspconfig")["null-ls"].setup {}
+    end
+  end,
+  disable = not rvim.plugin.null_ls.active,
 }
 
-lang["glepnir/lspsaga.nvim"] = { after = "nvim-lspconfig", disable = not rvim.plugin.saga.active }
+lang["glepnir/lspsaga.nvim"] = {
+  after = "nvim-lspconfig",
+  config = utils.load_conf("lang", "saga"),
+  disable = not rvim.plugin.saga.active
+}
 
 lang["mhartington/formatter.nvim"] = {
-  config = conf.formatter,
+  config = function()
+    rvim.augroup("AutoFormat", { { events = { "BufWritePost" }, targets = { "*" }, command = ":silent FormatWrite" } })
+  end,
   disable = not rvim.plugin.formatter.active,
 }
 
 lang["mfussenegger/nvim-lint"] = {
-  config = conf.nvim_lint,
+  config = utils.load_conf("lang", "nvim_lint"),
   disable = not rvim.plugin.nvim_lint.active,
 }
 
 lang["kosayoda/nvim-lightbulb"] = {
   after = "nvim-lspconfig",
-  config = conf.lightbulb,
+  config = function()
+    rvim.augroup("NvimLightbulb", {
+      {
+        events = { "CursorHold", "CursorHoldI" },
+        targets = { "*" },
+        command = function()
+          require("nvim-lightbulb").update_lightbulb {
+            sign = { enabled = false },
+            virtual_text = { enabled = true },
+          }
+        end,
+      },
+    })
+  end,
   disable = not rvim.plugin.lightbulb.active,
 }
 
@@ -90,16 +126,20 @@ lang["folke/trouble.nvim"] = {
 
 lang["kevinhwang91/nvim-bqf"] = {
   after = "telescope.nvim",
-  config = conf.bqf,
+  config = function()
+    require("bqf").setup {
+      preview = { border_chars = { "│", "│", "─", "─", "┌", "┐", "└", "┘", "█" } },
+    }
+  end,
   disable = not rvim.plugin.bqf.active,
 }
 
 -- Treesitter
 lang["nvim-treesitter/nvim-treesitter"] = {
   branch = "0.5-compat",
-  -- after = "telescope.nvim",
-  config = load_conf "treesitter",
-  disable = not rvim.plugin.treesitter.active and not rvim.plugin.SANE.active,
+  after = "telescope.nvim",
+  config = utils.load_conf("lang", "treesitter"),
+  disable = not rvim.plugin.treesitter.active
 }
 
 lang["nvim-treesitter/playground"] = {
@@ -135,7 +175,7 @@ lang["windwp/nvim-ts-autotag"] = {
 lang["windwp/nvim-autopairs"] = {
   -- event = "InsertEnter",
   -- after = { "telescope.nvim", "nvim-compe" },
-  config = load_conf "autopairs",
+  config = utils.load_conf("lang", "autopairs"),
   disable = not rvim.plugin.autopairs.active,
 }
 

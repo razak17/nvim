@@ -183,7 +183,7 @@ end
 local normal_mode, term_mode, visual_mode = rvim.keys.normal_mode, rvim.keys.term_mode, rvim.keys.visual_mode
 
 -- TAB in general mode will move to text buffer, SHIFT-TAB will go back
-if not rvim.plugin.SANE.active then
+if rvim.plugin.ajk.active == false then
   normal_mode["<TAB>"] = ":bnext<CR>"
   normal_mode["<S-TAB>"] = ":bprevious<CR>"
 end
@@ -254,6 +254,7 @@ normal_mode["<localleader>."] = "<cmd>call utils#modify_line_end_delimiter('.')<
 
 -- qflist
 normal_mode["<Leader>oe"] = ":copen<CR>"
+normal_mode["<Leader>vo"] = ":copen<CR>"
 
 -- Quick find/replace
 local nnoremap, vnoremap, cnoremap = rvim.nnoremap, rvim.vnoremap, rvim.cnoremap
@@ -330,7 +331,7 @@ normal_mode["<leader>li"] = function()
   u.toggle_list "l"
 end
 
-normal_mode["<Leader>vwm"] = function()
+normal_mode["<Leader>IM"] = function()
   u.ColorMyPencils()
 end
 
@@ -350,7 +351,7 @@ normal_mode["<leader>ae"] = function()
   u.TurnOffGuides()
 end
 
-if not rvim.plugin.accelerated_jk.active and not rvim.plugin.SANE.active then
+if not rvim.plugin.ajk.active then
   local nmap = rvim.nmap
   nmap("n", "j")
 end

@@ -160,4 +160,17 @@ function M.rename(name)
   vim.api.nvim_command(" saveas " .. newname)
 end
 
+function M.load_conf(dir, name)
+  local module_dir = string.format("modules.%s", dir)
+  return require(string.format(module_dir .. ".%s", name))
+end
+
+--- Checks whether a given path exists and is a file.
+--@param path (string) path to check
+--@returns (bool)
+function M.is_file(path)
+  local stat = uv.fs_stat(path)
+  return stat and stat.type == "file" or false
+end
+
 return M
