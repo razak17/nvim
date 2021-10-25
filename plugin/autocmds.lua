@@ -275,7 +275,8 @@ rvim.augroup("PackerSetupInit", {
       vim.cmd [[source ~/.config/rvim/lua/core/opts.lua]]
       vim.cmd [[source ~/.config/rvim/lua/core/binds.lua]]
       local plug = require "core.plugins"
-      plug.recompile()
+      plug.ensure_plugins()
+      plug.load_compile()
       vim.notify("packer compiled...", { timeout = 1000 })
     end,
   },

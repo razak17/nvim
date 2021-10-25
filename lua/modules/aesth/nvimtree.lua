@@ -63,8 +63,8 @@ return function()
       mappings = {
       custom_only = false,
       list = {
-        { key = { "<CR>", "o", "<2-LeftMouse>" }, cb = tree_cb "edit" },
-        -- { key = "l", cb = tree_cb "edit" },
+        -- { key = { "<CR>", "o", "<2-LeftMouse>" }, cb = tree_cb "edit" },
+        { key = "l", cb = tree_cb "edit" },
         { key = "h", cb = tree_cb "close_node" },
         { key = "V", cb = tree_cb "vsplit" },
         { key = "N", cb = tree_cb "last_sibling" },

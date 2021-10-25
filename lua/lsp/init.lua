@@ -1,52 +1,12 @@
 local command = rvim.command
-local Log = require "core.log"
 
 local M = {}
 
-function M.config()
-  vim.lsp.protocol.CompletionItemKind = rvim.lsp.completion.item_kind
-
-  for _, sign in ipairs(rvim.lsp.diagnostics.signs.values) do
-    vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = sign.name })
-  end
-
-  command {
-    "LspLog",
-    function()
-      local path = vim.lsp.get_log_path()
-      vim.cmd("edit " .. path)
-    end,
-  }
-  command {
-    "LspFormat",
-    function()
-      vim.lsp.buf.formatting(vim.g[string.format("format_options_%s", vim.bo.filetype)] or {})
-    end,
-  }
-  command {
-    "LspToggleVirtualText",
-    function()
-      local virtual_text = {}
-      virtual_text.show = true
-      virtual_text.show = not virtual_text.show
-      vim.lsp.diagnostic.display(vim.lsp.diagnostic.get(0, 1), 0, 1, { virtual_text = virtual_text.show })
-    end,
-  }
-  command {
-    "LspReload",
-    function()
-      vim.cmd [[
-      :lua vim.lsp.stop_client(vim.lsp.get_active_clients())
-      :edit
-    ]]
-    end,
-  }
-
-  require("lsp.hover").setup()
-  require("lsp.handlers").setup()
-end
-
 local function lsp_highlight_document(client)
+  if rvim.lsp.document_highlight == false then
+    return -- we don't need further
+  end
+  -- Set autocommands conditional on server_capabilities
   if client and client.resolved_capabilities.document_highlight then
     rvim.augroup("LspCursorCommands", {
       {
@@ -65,6 +25,25 @@ local function lsp_highlight_document(client)
         command = "lua vim.lsp.buf.clear_references()",
       },
     })
+  end
+end
+
+local function lsp_code_lens_refresh(client)
+  if rvim.lsp.code_lens_refresh == false then
+    return
+  end
+
+  if client.resolved_capabilities.code_lens then
+    vim.api.nvim_exec(
+      [[
+      augroup lsp_code_lens_refresh
+        autocmd! * <buffer>
+        autocmd InsertLeave <buffer> lua vim.lsp.codelens.refresh()
+        autocmd InsertLeave <buffer> lua vim.lsp.codelens.display()
+      augroup END
+    ]],
+      false
+    )
   end
 end
 
@@ -93,27 +72,18 @@ function M.global_on_init(client, bufnr)
   local formatters = rvim.lang[vim.bo.filetype].formatters
   if not vim.tbl_isempty(formatters) and formatters[1]["exe"] ~= nil and formatters[1].exe ~= "" then
     client.resolved_capabilities.document_formatting = false
-    Log:get_default().info(
-      string.format("Overriding language server [%s] with format provider [%s]", client.name, formatters[1].exe)
-    )
   end
 end
 
 function M.global_on_attach(client, bufnr)
   vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
   lsp_highlight_document(client)
+  lsp_code_lens_refresh(client)
   require("lsp.binds").setup(client)
   require("lsp.null-ls").setup(vim.bo.filetype)
 end
 
 function M.setup(lang)
-  -- lspconfig.util.default_config = vim.tbl_extend(
-  --   "force",
-  --   lspconfig.util.default_config,
-  --   { capabilities = M.global_capabilities, on_init = M.global_on_init }
-  -- )
-
-  Log:debug "Setting up LSP support"
   local lsp_status_ok, lspconfig = pcall(require, "lspconfig")
   if not lsp_status_ok then
     return

@@ -12,6 +12,7 @@ return function()
     c = {
       -- formatters = { { exe = "clang_format", args = {}, stdin = true } },
       -- linters = { { exe = "clangtidy" } },
+      formatters = {},
       linters = {},
       lsp = {
         provider = "clangd",
@@ -351,7 +352,7 @@ return function()
     },
   }
 
-  local langs = {
+  local supported_languages = {
     "c",
     "css",
     "cmake",
@@ -373,15 +374,40 @@ return function()
     "typescript",
   }
 
-  local function setup_servers()
-    for _, server in ipairs(langs) do
-      require("lsp").setup(server)
+  for _, server in ipairs(supported_languages) do
+    require("lsp").setup(server)
+  end
+  vim.cmd "doautocmd User LspServersStarted"
+
+  -- require("lsp.config").setup()
+  require("lsp.hover").setup()
+  require("lsp.handlers").setup()
+
+  lsp_utils.toggle_autoformat()
+
+
+  local function bootstrap_nlsp(opts)
+    opts = opts or {}
+    local lsp_settings_status_ok, lsp_settings = pcall(require, "nlspsettings")
+    if lsp_settings_status_ok then
+      lsp_settings.setup(opts)
     end
-    vim.cmd "doautocmd User LspServersStarted"
   end
 
-  setup_servers()
-  require("lsp").config()
-  lsp_utils.toggle_autoformat()
-  lsp_utils.lspLocList()
+  bootstrap_nlsp {
+    config_home = vim.g.vim_path .. "/external/nlsp-settings",
+  }
+
+  rvim.augroup("LspLocationList", {
+    {
+      events = { "User LspDiagnosticsChanged" },
+      command = function()
+        vim.lsp.diagnostic.set_loclist {
+          workspace = true,
+          severity_limit = "Warning",
+          open_loclist = false,
+        }
+      end,
+    },
+  })
 end

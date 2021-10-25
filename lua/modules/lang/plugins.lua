@@ -40,32 +40,25 @@ lang["kabouzeid/nvim-lspinstall"] = {
   disable = not rvim.plugin.lspinstall.active,
 }
 
+lang["williamboman/nvim-lsp-installer"] = {
+  disable = not rvim.plugin.lsp_installer.active
+}
+
+lang["antoinemadec/FixCursorHold.nvim"] = {
+  disable = not rvim.plugin.fix_cursorhold.active
+}
+
 lang["neovim/nvim-lspconfig"] = {
-  -- event = "VimEnter",
+  event = "BufReadPre",
   config = utils.load_conf("lang", "lspconfig"),
   disable = not rvim.plugin.lspconfig.active
 }
 
 lang["tamago324/nlsp-settings.nvim"] = {
-  config = function()
-    local lsp_settings_status_ok, lsp_settings = pcall(require, "nlspsettings")
-    if lsp_settings_status_ok then
-      lsp_settings.setup {
-        config_home = vim.g.vim_path .. "/external/nlsp-settings",
-      }
-    end
-  end,
   disable = not rvim.plugin.nlsp.active,
 }
 
 lang["jose-elias-alvarez/null-ls.nvim"] = {
-  config = function()
-    local null_status_ok, null_ls = pcall(require, "null-ls")
-    if null_status_ok then
-      null_ls.config {}
-      require("lspconfig")["null-ls"].setup {}
-    end
-  end,
   disable = not rvim.plugin.null_ls.active,
 }
 

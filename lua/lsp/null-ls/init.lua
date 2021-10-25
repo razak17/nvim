@@ -28,11 +28,16 @@ end
 function M.setup(filetype, options)
   options = options or {}
 
-  local ok, _ = pcall(require, "null-ls")
+  local ok, null_ls = pcall(require, "null-ls")
   if not ok then
     require("core.log"):get_default().error "Missing null-ls dependency"
     return
   end
+
+  null_ls.config {}
+  require("lspconfig")["null-ls"].setup({
+    root_dir = require("lspconfig").util.root_pattern("Makefile", ".git", "node_modules"),
+  })
 
   local formatters = require "lsp.null-ls.formatters"
   local linters = require "lsp.null-ls.linters"

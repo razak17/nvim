@@ -40,18 +40,6 @@ g["loaded_python_provider"] = 0
 g["loaded_ruby_provider"] = 0
 g["loaded_perl_provider"] = 0
 
--- -- Messaging
--- if vim.notify then
---   ---Override of vim.notify to open floating window
---   --@param message of the notification to show to the user
---   --@param log_level Optional log level
---   --@param opts Dictionary with optional options (timeout, etc)
---   vim.notify = function(message, log_level, _)
---     assert(message, "The message key of vim.notify should be a string")
---     rvim.notify(message, { timeout = 5000, log_level = log_level })
---   end
--- end
-
 rvim.t = function(str)
   return vim.api.nvim_replace_termcodes(str, true, true, true)
 end

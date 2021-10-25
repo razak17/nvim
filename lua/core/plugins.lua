@@ -114,12 +114,12 @@ function plugins.recompile()
 end
 
 function plugins.load_compile()
-  if vim.fn.filereadable(compile_path) == 1 then
-    require "_compiled_rolling"
-  else
-    assert "Missing packer compile file Run PackerCompile Or PackerInstall to fix"
+  if vim.fn.filereadable(compile_path) ~= 1 then
     plugins.install()
     plugins.compile()
+    -- vim.notify("Packer config file not found. Run 'PlugCompile', then restart.", { timeout = 1000 })
+  else
+    require "_compiled_rolling"
   end
 end
 
