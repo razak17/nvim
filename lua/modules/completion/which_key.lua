@@ -81,7 +81,7 @@ return function()
       [")"] = "wrap parenthesis",
       ["}"] = "wrap curly braces",
       ["_"] = "Delete current buffer",
-      x = { ":q<cr>", "Quit" },
+      x = { ":q", "Quit" },
       y = "Yank",
       a = {
         name = "+Actions",
@@ -309,8 +309,8 @@ return function()
       g = telescope_git_keymaps,
     }
 
-    key_maps.f = rvim.keymaps.telescope
     if rvim.plugin_loaded "telescope.nvim" then
+      key_maps.f = rvim.keymaps.telescope
     end
 
     -- Slide

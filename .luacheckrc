@@ -17,6 +17,7 @@ stds.nvim = {
   read_globals = {
     "jit",
     "os",
+    "uv",
     "vim",
     vim = { fields = { "cmd", "api", "fn", "o", "wo", "bo" } },
   },

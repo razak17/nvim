@@ -52,18 +52,23 @@ return function()
   require 'nvim-tree'.setup {
     auto_close = rvim.nvimtree.setup.auto_close,
     update_cwd = true,
-    hijack_cursor = false,
+    hijack_cursor = true,
+    update_focused_file = {
+      enable = true,
+      update_cwd = true,
+    },
     tree_follow = true,
     update_to_buf_dir   = {
       enable = false,
       auto_open = false,
+      ignore_list = {}
     },
     view = {
       side = rvim.nvimtree.side,
       mappings = {
       custom_only = false,
       list = {
-        -- { key = { "<CR>", "o", "<2-LeftMouse>" }, cb = tree_cb "edit" },
+        { key = { "<CR>", "o", "<2-LeftMouse>" }, cb = tree_cb "edit" },
         { key = "l", cb = tree_cb "edit" },
         { key = "h", cb = tree_cb "close_node" },
         { key = "V", cb = tree_cb "vsplit" },
@@ -76,17 +81,18 @@ return function()
     },
   }
 
-  local function set_highlights()
-    require("core.highlights").all {
-      { "NvimTreeIndentMarker", { link = "Comment" } },
-      { "NvimTreeNormal", { link = "PanelBackground" } },
-      { "NvimTreeEndOfBuffer", { link = "PanelBackground" } },
-      { "NvimTreeVertSplit", { link = "PanelVertSplit" } },
-      { "NvimTreeStatusLine", { link = "PanelSt" } },
-      { "NvimTreeStatusLineNC", { link = "PanelStNC" } },
-      { "NvimTreeRootFolder", { gui = "bold,italic", guifg = "LightMagenta" } },
-    }
-  end
+  require('core.highlights').plugin(
+    'NvimTree',
+    { 'NvimTreeIndentMarker', { link = 'Comment' } },
+    { 'NvimTreeNormal', { link = 'PanelBackground' } },
+    { 'NvimTreeNormalNC', { link = 'PanelBackground' } },
+    { 'NvimTreeSignColumn', { link = 'PanelBackground' } },
+    { 'NvimTreeEndOfBuffer', { link = 'PanelBackground' } },
+    { 'NvimTreeVertSplit', { link = 'PanelVertSplit' } },
+    { 'NvimTreeStatusLine', { link = 'PanelSt' } },
+    { 'NvimTreeStatusLineNC', { link = 'PanelStNC' } },
+    { 'NvimTreeRootFolder', { gui = 'bold,italic', guifg = 'LightMagenta' } }
+  )
 
   local tree_view = require "nvim-tree.view"
 
@@ -115,23 +121,7 @@ return function()
     {
       events = { "WinClosed" },
       targets = { "*" },
-      command = function()
-        on_close()
-      end,
-    },
-    {
-      events = { "ColorScheme" },
-      targets = { "*" },
-      command = function()
-        set_highlights()
-      end,
-    },
-    {
-      events = { "FileType" },
-      targets = { "NvimTree" },
-      command = function()
-        set_highlights()
-      end,
+      command = on_close
     },
   })
 end

@@ -8,7 +8,7 @@ local function lsp_mappings(client)
   if client and client.supports_method "textDocument/definition" then
     nnoremap("gd", vim.lsp.buf.definition)
     nnoremap("ge", function()
-      require("lsp.peek").Peek "definition"
+      require("lsp.peek").Peek("definition")
     end)
   end
   -- Declaration
@@ -23,7 +23,7 @@ local function lsp_mappings(client)
   if client and client.supports_method "textDocument/implementation" then
     nnoremap("gi", vim.lsp.buf.implementation)
     nnoremap("gl", function()
-      require("lsp.peek").Peek "implementation"
+      require("lsp.peek").Peek("implementation")
     end)
   end
   -- Hover
@@ -34,7 +34,7 @@ local function lsp_mappings(client)
   if client and client.supports_method "textDocument/type_definition" then
     nnoremap("gE", vim.lsp.buf.type_definition)
     nnoremap("gL", function()
-      require("lsp.peek").Peek "typeDefinition"
+      require("lsp.peek").Peek("typeDefinition")
     end)
   end
   -- Rename

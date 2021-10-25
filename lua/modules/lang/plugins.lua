@@ -31,15 +31,6 @@ lang["jbyuki/one-small-step-for-vimkind"] = {
 }
 
 -- Lsp
-lang["kabouzeid/nvim-lspinstall"] = {
-  event = "VimEnter",
-  config = function()
-    local lspinstall = require "lspinstall"
-    lspinstall.setup()
-  end,
-  disable = not rvim.plugin.lspinstall.active,
-}
-
 lang["williamboman/nvim-lsp-installer"] = {
   disable = not rvim.plugin.lsp_installer.active
 }

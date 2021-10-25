@@ -27,6 +27,7 @@ M.load_options = function()
     foldenable = true,
     foldlevelstart = 10,
     foldtext = "v:lua.folds()",
+    foldopen = vim.opt.foldopen + 'search',
 
     -- Splits and buffers
     splitbelow = true,

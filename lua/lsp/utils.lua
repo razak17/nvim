@@ -13,7 +13,7 @@ end
 
 function M.toggle_autoformat()
   if rvim.common.format_on_save then
-    rvim.augroup("AutoFormatOnSaVE", {
+    rvim.augroup("AutoFormatOnSaVe", {
       {
         events = { "BufWritePre" },
         targets = { "*" },

@@ -1,7 +1,6 @@
 return function()
   local g = vim.g
   local schemas = nil
-  local lsp_utils = require "lsp.utils"
   local status_ok, jsonls_settings = pcall(require, "nlspsettings.jsonls")
 
   if status_ok then
@@ -379,11 +378,10 @@ return function()
   end
   vim.cmd "doautocmd User LspServersStarted"
 
-  -- require("lsp.config").setup()
+  require("lsp.config").setup()
   require("lsp.hover").setup()
   require("lsp.handlers").setup()
-
-  lsp_utils.toggle_autoformat()
+  require "lsp.utils".toggle_autoformat()
 
 
   local function bootstrap_nlsp(opts)

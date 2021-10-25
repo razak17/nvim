@@ -1,6 +1,6 @@
 local M = {}
 
-function M:defer()
+local function defer()
   vim.defer_fn(
     vim.schedule_wrap(function()
       vim.defer_fn(function()
@@ -13,9 +13,11 @@ function M:defer()
 end
 
 function M:init()
+  require("core.bootstrap"):init()
   require "core.globals"
   require "core.config"
 
+  defer()
   require("core.opts").setup()
   require "core.highlights"
   require "core.whitespace"

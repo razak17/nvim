@@ -34,16 +34,18 @@ local function lsp_code_lens_refresh(client)
   end
 
   if client.resolved_capabilities.code_lens then
-    vim.api.nvim_exec(
-      [[
-      augroup lsp_code_lens_refresh
-        autocmd! * <buffer>
-        autocmd InsertLeave <buffer> lua vim.lsp.codelens.refresh()
-        autocmd InsertLeave <buffer> lua vim.lsp.codelens.display()
-      augroup END
-    ]],
-      false
-    )
+    rvim.augroup("LspCodeLensRefresh", {
+      {
+        events = { "InsertLeave" },
+        targets = { "<buffer>" },
+        command = "lua vim.lsp.codelens.refresh()",
+      },
+      {
+        events = { "InsertLeave" },
+        targets = { "<buffer>" },
+        command = "lua vim.lsp.codelens.display()",
+      },
+    })
   end
 end
 
@@ -85,13 +87,10 @@ end
 
 function M.setup(lang)
   local lsp_status_ok, lspconfig = pcall(require, "lspconfig")
-  if not lsp_status_ok then
-    return
-  end
-
   local lsp_utils = require "lsp.utils"
   local lsp = rvim.lang[lang].lsp
-  if lsp_utils.is_client_active(lsp.provider) then
+
+  if not lsp_status_ok or lsp_utils.is_client_active(lsp.provider) then
     return
   end
 

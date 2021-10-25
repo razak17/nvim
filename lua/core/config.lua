@@ -5,7 +5,7 @@ rvim.common = {
   leader = "space",
   transparent_window = false,
   line_wrap_cursor_movement = false,
-  format_on_save = false,
+  format_on_save = true,
   debug = false,
 }
 
@@ -36,7 +36,6 @@ rvim.plugin = {
   osv = { active = false },
   -- lsp
   lspconfig = { active = true },
-  lspinstall = { active = false },
   lsp_installer = { active = true },
   fix_cursorhold = { active = true },
   nlsp= { active = true },
@@ -104,6 +103,28 @@ rvim.plugin = {
   telescope_media_files = { active = false },
 }
 
+-- Consistent store of various UI items to reuse throughout my config
+rvim.style = {
+  palette = {
+    pale_red = "#E06C75",
+    dark_red = "#be5046",
+    light_red = "#c43e1f",
+    dark_orange = "#FF922B",
+    green = "#98c379",
+    bright_yellow = "#FAB005",
+    light_yellow = "#e5c07b",
+    dark_blue = "#4e88ff",
+    magenta = "#c678dd",
+    comment_grey = "#5c6370",
+    grey = "#3E4556",
+    whitesmoke = "#626262",
+    bright_blue = "#51afef",
+    teal = "#15AABF",
+    highlight_bg = "#4E525C",
+  },
+}
+
+
 rvim.lsp = {
   binary = {
     clangd = g.lspinstall_dir .. "/cpp/clangd/bin/clangd",
@@ -122,6 +143,12 @@ rvim.lsp = {
     tsserver = g.lspinstall_dir .. "/typescript/node_modules/.bin/typescript-language-server",
     vim = g.lspinstall_dir .. "/vim/node_modules/.bin/vim-language-server",
     yaml = g.lspinstall_dir .. "/yaml/node_modules/.bin/yaml-language-server",
+  },
+  colors = {
+    error =rvim.style.palette.pale_red,
+    warn = rvim.style.palette.dark_orange,
+    hint = rvim.style.palette.bright_yellow,
+    info = rvim.style.palette.teal,
   },
   completion = {
     item_kind = {
