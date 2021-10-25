@@ -52,8 +52,8 @@ rvim.plugin = {
   treesitter = { active = true },
   playground = { active = true },
   rainbow = { active = true },
-  matchup = { active = true },
   autotag = { active = true },
+  matchup = { active = false },
   autopairs = { active = true },
   -- editor
   fold_cycle = { active = true },
@@ -73,7 +73,7 @@ rvim.plugin = {
   bookmarks = { active = true },
   undotree = { active = true },
   fugitive = { active = false },
-  project = { active = true },
+  project = { active = false },
   diffview = { active = false },
   -- TODO: handle these later
   glow = { active = false },
@@ -140,7 +140,8 @@ rvim.lsp = {
     python = g.lspinstall_dir .. "/python/node_modules/.bin/pyright-langserver",
     rust = g.lspinstall_dir .. "/rust/rust-analyzer",
     sh = g.lspinstall_dir .. "/bash/node_modules/.bin/bash-language-server",
-    tsserver = g.lspinstall_dir .. "/typescript/node_modules/.bin/typescript-language-server",
+    -- tsserver = g.lspinstall_dir .. "/typescript/node_modules/.bin/typescript-language-server",
+    tsserver = g.lspinstaller_dir .. "/tsserver/node_modules/.bin/typescript-language-server",
     vim = g.lspinstall_dir .. "/vim/node_modules/.bin/vim-language-server",
     yaml = g.lspinstall_dir .. "/yaml/node_modules/.bin/yaml-language-server",
   },

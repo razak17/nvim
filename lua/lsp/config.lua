@@ -19,7 +19,10 @@ function M.setup()
   command {
     "LspFormat",
     function()
-      vim.lsp.buf.formatting(vim.g[string.format("format_options_%s", vim.bo.filetype)] or {})
+      -- vim.lsp.buf.formatting(vim.g[string.format("format_options_%s", vim.bo.filetype)] or {})
+      vim.cmd [[
+        :silent lua vim.lsp.buf.formatting_sync()
+      ]]
     end,
   }
   command {
