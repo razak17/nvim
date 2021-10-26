@@ -1,5 +1,6 @@
 local fn = vim.fn
 local api = vim.api
+local uv = vim.loop
 
 local M = {}
 
@@ -172,5 +173,7 @@ function M.is_file(path)
   local stat = uv.fs_stat(path)
   return stat and stat.type == "file" or false
 end
+
+M.join_paths = _G.join_paths
 
 return M

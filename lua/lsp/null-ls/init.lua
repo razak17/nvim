@@ -1,49 +1,36 @@
 local M = {}
 
-function M.list_supported_provider_names(filetype)
-  local names = {}
+local formatters = require "lsp.null-ls.formatters"
+local linters = require "lsp.null-ls.linters"
 
-  local formatters = require "lsp.null-ls.formatters"
-  local linters = require "lsp.null-ls.linters"
-
-  vim.list_extend(names, formatters.list_supported_names(filetype))
-  vim.list_extend(names, linters.list_supported_names(filetype))
-
-  return names
-end
-
-function M.list_unsupported_provider_names(filetype)
-  local names = {}
-
-  local formatters = require "lsp.null-ls.formatters"
-  local linters = require "lsp.null-ls.linters"
-
-  vim.list_extend(names, formatters.list_unsupported_names(filetype))
-  vim.list_extend(names, linters.list_unsupported_names(filetype))
-
-  return names
-end
-
--- TODO: for linters and formatters with spaces and '-' replace with '_'
-function M.setup(filetype, options)
-  options = options or {}
-
-  local ok, null_ls = pcall(require, "null-ls")
-  if not ok then
-    require("core.log"):get_default().error "Missing null-ls dependency"
+function M:setup()
+  local status_ok, null_ls = pcall(require, "null-ls")
+  if not status_ok then
     return
   end
 
-  null_ls.config {}
-  require("lspconfig")["null-ls"].setup({
-    root_dir = require("lspconfig").util.root_pattern("Makefile", ".git", "node_modules"),
-  })
+  null_ls.config()
+  local default_opts = require("lsp").get_global_opts()
 
-  local formatters = require "lsp.null-ls.formatters"
-  local linters = require "lsp.null-ls.linters"
+  if vim.tbl_isempty(rvim.lsp.null_ls.setup or {}) then
+    rvim.lsp.null_ls.setup = default_opts
+  end
 
-  formatters.setup(filetype, options)
-  linters.setup(filetype, options)
+  require("lspconfig")["null-ls"].setup(rvim.lsp.null_ls.setup)
+  for filetype, config in pairs(rvim.lang) do
+    if not vim.tbl_isempty(config.formatters) then
+      vim.tbl_map(function(c)
+        c.filetypes = { filetype }
+      end, config.formatters)
+      formatters.setup(config.formatters)
+    end
+    if not vim.tbl_isempty(config.linters) then
+      vim.tbl_map(function(c)
+        c.filetypes = { filetype }
+      end, config.formatters)
+      linters.setup(config.linters)
+    end
+  end
 end
 
 return M

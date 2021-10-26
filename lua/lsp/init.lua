@@ -1,6 +1,71 @@
-local command = rvim.command
-
 local M = {}
+
+local Log = require "core.log"
+
+local function lsp_commands()
+  local command = rvim.command
+
+  command {
+    "LspLog",
+    function()
+      local path = vim.lsp.get_log_path()
+      vim.cmd("edit " .. path)
+    end,
+  }
+  command {
+    "LspFormat",
+    function()
+      vim.lsp.buf.formatting(vim.g[string.format("format_options_%s", vim.bo.filetype)] or {})
+    end,
+  }
+  command {
+    "LspToggleVirtualText",
+    function()
+      local virtual_text = {}
+      virtual_text.show = true
+      virtual_text.show = not virtual_text.show
+      vim.lsp.diagnostic.display(vim.lsp.diagnostic.get(0, 1), 0, 1, { virtual_text = virtual_text.show })
+    end,
+  }
+  command {
+    "LspReload",
+    function()
+      vim.cmd [[
+      :lua vim.lsp.stop_client(vim.lsp.get_active_clients())
+      :edit
+    ]]
+    end,
+  }
+end
+
+local get_cursor_pos = function()
+  return { vim.fn.line ".", vim.fn.col "." }
+end
+
+local function hover_diagnostics()
+  if not rvim.lsp.hover_diagnostics then
+    return
+  end
+  rvim.augroup("HoverDiagnostics", {
+    {
+      events = { "CursorHold" },
+      targets = { "<buffer>" },
+      command = (function()
+        local cursorpos = get_cursor_pos()
+        return function()
+          local new_cursor = get_cursor_pos()
+          if
+            (new_cursor[1] ~= 1 and new_cursor[2] ~= 1)
+            and (new_cursor[1] ~= cursorpos[1] or new_cursor[2] ~= cursorpos[2])
+          then
+            cursorpos = new_cursor
+            vim.lsp.diagnostic.show_line_diagnostics { show_header = false, border = "single" }
+          end
+        end
+      end)(),
+    },
+  })
+end
 
 local function lsp_highlight_document(client)
   if rvim.lsp.document_highlight == false then
@@ -70,42 +135,93 @@ function M.global_capabilities()
   return capabilities
 end
 
-function M.global_on_init(client, bufnr)
-  local formatters = rvim.lang[vim.bo.filetype].formatters
-  if not vim.tbl_isempty(formatters) and formatters[1]["exe"] ~= nil and formatters[1].exe ~= "" then
-    client.resolved_capabilities.document_formatting = false
+local function select_default_formater(client)
+  if client.name == "null-ls" or not client.resolved_capabilities.document_formatting then
+    return
   end
+  Log:debug("Checking for formatter overriding for " .. client.name)
+  local formatters = require "lsp.null-ls.formatters"
+  local client_filetypes = client.config.filetypes or {}
+  for _, filetype in ipairs(client_filetypes) do
+    if #vim.tbl_keys(formatters.list_registered_providers(filetype)) > 0 then
+      Log:debug("Formatter overriding detected. Disabling formatting capabilities for " .. client.name)
+      client.resolved_capabilities.document_formatting = false
+      client.resolved_capabilities.document_range_formatting = false
+    end
+  end
+end
+
+function M.global_on_init(client, bufnr)
+  if rvim.lsp.on_init_callback then
+    rvim.lsp.on_init_callback(client, bufnr)
+    Log:debug "Called lsp.on_init_callback"
+    return
+  end
+  select_default_formater(client)
 end
 
 function M.global_on_attach(client, bufnr)
-  vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
+  if rvim.lsp.on_attach_callback then
+    rvim.lsp.on_attach_callback(client, bufnr)
+    Log:debug "Called lsp.on_attach_callback"
+  end
   lsp_highlight_document(client)
   lsp_code_lens_refresh(client)
+  lsp_commands()
+  hover_diagnostics()
   require("lsp.binds").setup(client)
-  require("lsp.null-ls").setup(vim.bo.filetype)
 end
 
-function M.setup(lang)
-  local lsp_status_ok, lspconfig = pcall(require, "lspconfig")
-  local lsp_utils = require "lsp.utils"
-  local lsp = rvim.lang[lang].lsp
+local function bootstrap_nlsp(opts)
+  opts = opts or {}
+  local lsp_settings_status_ok, lsp_settings = pcall(require, "nlspsettings")
+  if lsp_settings_status_ok then
+    lsp_settings.setup(opts)
+  end
+end
 
-  if not lsp_status_ok or lsp_utils.is_client_active(lsp.provider) then
+function M.get_global_opts()
+  return {
+    on_attach = M.global_on_attach,
+    on_init = M.global_on_init,
+    capabilities = M.global_capabilities(),
+  }
+end
+
+function M.setup()
+  local lsp_status_ok, _ = pcall(require, "lspconfig")
+  if not lsp_status_ok then
     return
   end
 
-  if lsp.provider ~= nil and lsp.provider ~= "" then
-    if not lsp.setup.on_attach then
-      lsp.setup.on_attach = M.global_on_attach
-    end
-    if not lsp.setup.on_init then
-      lsp.setup.on_init = M.global_on_init
-    end
-    if not lsp.setup.capabilities then
-      lsp.setup.capabilities = M.global_capabilities()
-    end
-    lspconfig[lsp.provider].setup(lsp.setup)
+  vim.lsp.protocol.CompletionItemKind = rvim.lsp.completion.item_kind
+
+  for _, sign in ipairs(rvim.lsp.diagnostics.signs.values) do
+    vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = sign.name })
   end
+
+  require("lsp.handlers").setup()
+
+  bootstrap_nlsp {
+    config_home = vim.g.vim_path .. "/external/nlsp-settings",
+  }
+
+  require("lsp.null-ls").setup(vim.bo.filetype)
+
+  require("lsp.utils").toggle_autoformat()
+
+  rvim.augroup("LspLocationList", {
+    {
+      events = { "User LspDiagnosticsChanged" },
+      command = function()
+        vim.lsp.diagnostic.set_loclist {
+          workspace = true,
+          severity_limit = "Warning",
+          open_loclist = false,
+        }
+      end,
+    },
+  })
 end
 
 return M

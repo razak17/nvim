@@ -1,26 +1,7 @@
 local M = {}
 
-local function defer()
-  vim.defer_fn(
-    vim.schedule_wrap(function()
-      vim.defer_fn(function()
-        vim.cmd [[syntax on]]
-        vim.cmd [[filetype plugin indent on]]
-      end, 0)
-    end),
-    0
-  )
-end
-
 function M:init()
-  require("core.bootstrap"):init()
-  require "core.globals"
-  require "core.config"
-
-  defer()
-  require("core.opts").setup()
-  require "core.highlights"
-  require "core.whitespace"
+  require("config"):load()
 
   local plug = require("core.plugins")
   plug.ensure_plugins()

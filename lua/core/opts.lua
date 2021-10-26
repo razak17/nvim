@@ -218,9 +218,10 @@ M.load_commands = function()
   end
 
   o.switchbuf = "useopen,uselast"
-  o.titlestring = " 🐬 %t %r %m"
+  -- o.titlestring = " 🐬 %t %r %m"
+  o.titlestring = "%<%F%=%l/%L - nvim"
   -- vim.o.titlestring = "%<%F%=%l/%L - nvim"
-  o.titleold = '%{fnamemodify(getcwd(), ":t")}'
+  -- o.titleold = '%{fnamemodify(getcwd(), ":t")}'
   vim.g.vimsyn_embed = "lPr" -- allow embedded syntax highlighting for lua,python and ruby
 
   if rvim.common.transparent_window then

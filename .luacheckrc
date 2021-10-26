@@ -17,8 +17,11 @@ stds.nvim = {
   read_globals = {
     "jit",
     "os",
-    "uv",
     "vim",
+    "join_paths",
+    "get_runtime_dir",
+    "get_config_dir",
+    "get_cache_dir",
     vim = { fields = { "cmd", "api", "fn", "o", "wo", "bo" } },
   },
 }

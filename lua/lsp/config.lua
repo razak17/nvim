@@ -1,48 +1,121 @@
-local M = {}
-
-function M.setup()
-  local command = rvim.command
-
-  vim.lsp.protocol.CompletionItemKind = rvim.lsp.completion.item_kind
-
-  for _, sign in ipairs(rvim.lsp.diagnostics.signs.values) do
-    vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = sign.name })
-  end
-
-  command {
-    "LspLog",
-    function()
-      local path = vim.lsp.get_log_path()
-      vim.cmd("edit " .. path)
-    end,
-  }
-  command {
-    "LspFormat",
-    function()
-      -- vim.lsp.buf.formatting(vim.g[string.format("format_options_%s", vim.bo.filetype)] or {})
-      vim.cmd [[
-        :silent lua vim.lsp.buf.formatting_sync()
-      ]]
-    end,
-  }
-  command {
-    "LspToggleVirtualText",
-    function()
-      local virtual_text = {}
-      virtual_text.show = true
-      virtual_text.show = not virtual_text.show
-      vim.lsp.diagnostic.display(vim.lsp.diagnostic.get(0, 1), 0, 1, { virtual_text = virtual_text.show })
-    end,
-  }
-  command {
-    "LspReload",
-    function()
-      vim.cmd [[
-      :lua vim.lsp.stop_client(vim.lsp.get_active_clients())
-      :edit
-    ]]
-    end,
-  }
-end
-
-return M
+return {
+  binary = {
+    clangd = vim.g.lspinstall_dir .. "/cpp/clangd/bin/clangd",
+    cmake = vim.g.lspinstall_dir .. "/cmake/venv/bin/cmake-language-server",
+    css = vim.g.lspinstall_dir .. "/css/vscode-css/css-language-features/server/dist/node/cssServerMain.js",
+    docker = vim.g.lspinstall_dir .. "/dockerfile/node_modules/.bin/docker-langserver",
+    elixir = vim.g.lspinstall_dir .. "/elixir/elixir-ls/language_server.sh",
+    go = vim.g.lspinstall_dir .. "/go/gopls",
+    graphql = "graphql-lsp",
+    lua = vim.g.sumneko_root_path .. "/sumneko-lua-language-server",
+    html = vim.g.lspinstall_dir .. "/html/vscode-html/html-language-features/server/dist/node/htmlServerMain.js",
+    json = vim.g.lspinstall_dir .. "/json/vscode-json/json-language-features/server/dist/node/jsonServerMain.js",
+    python = vim.g.lspinstall_dir .. "/python/node_modules/.bin/pyright-langserver",
+    rust = vim.g.lspinstall_dir .. "/rust/rust-analyzer",
+    sh = vim.g.lspinstall_dir .. "/bash/node_modules/.bin/bash-language-server",
+    -- tsserver = g.lspinstall_dir .. "/typescript/node_modules/.bin/typescript-language-server",
+    tsserver = vim.g.lspinstaller_dir .. "/tsserver/node_modules/.bin/typescript-language-server",
+    vim = vim.g.lspinstall_dir .. "/vim/node_modules/.bin/vim-language-server",
+    yaml = vim.g.lspinstall_dir .. "/yaml/node_modules/.bin/yaml-language-server",
+  },
+  servers = {
+    'clangd',
+    'cssls',
+    'cmake',
+    'dockerls',
+    'elixirls',
+    'emmet_ls',
+    'gopls',
+    'graphql',
+    'html',
+    'jsonls',
+    'sumneko_lua',
+    'pyright',
+    'rust_analyzer',
+    'bashls',
+    'vimls',
+    'yamlls',
+    'tsserver',
+    'eslint',
+  },
+  colors = {
+    error =rvim.style.palette.pale_red,
+    warn = rvim.style.palette.dark_orange,
+    hint = rvim.style.palette.bright_yellow,
+    info = rvim.style.palette.teal,
+  },
+  completion = {
+    item_kind = {
+      "   (Text) ",
+      "   (Method)",
+      " ƒ  (Function)",
+      "   (Constructor)",
+      " ﴲ  (Field)",
+      "   (Variable)",
+      "   (Class)",
+      " ﰮ  (Interface)",
+      "   (Module)",
+      " 襁 (Property)",
+      "   (Unit)",
+      "   (Value)",
+      " 了 (Enum)",
+      "   (Keyword)",
+      "   (Snippet)",
+      "   (Color)",
+      "   (File)",
+      "   (Reference)",
+      "   (Folder)",
+      "   (EnumMember)",
+      "   (Constant)",
+      " ﳤ  (Struct)",
+      " 鬒 (Event)",
+      "   (Operator)",
+      "   (TypeParameter)",
+    },
+  },
+  diagnostics = {
+    signs = {
+      active = false,
+      values = {
+        { name = "LspDiagnosticsSignError", text = "" },
+        { name = "LspDiagnosticsSignWarning", text = "" },
+        { name = "LspDiagnosticsSignHint", text = "" },
+        { name = "LspDiagnosticsSignInformation", text = "" },
+      },
+    },
+    virtual_text = {
+      prefix = "",
+      spacing = 2,
+    },
+    underline = true,
+    update_in_insert = false,
+    severity_sort = false,
+  },
+  null_ls = {
+    setup = {
+      -- root_dir = require("lspconfig").util.root_pattern("Makefile", ".git", "node_modules"),
+    },
+  },
+  override = {
+    "angularls",
+    "ansiblels",
+    "denols",
+    "ember",
+    "jedi_language_server",
+    "pylsp",
+    "rome",
+    "sqlls",
+    "sqls",
+    "stylelint_lsp",
+    "tailwindcss",
+    "volar",
+  },
+  automatic_servers_installation = true,
+  on_attach_callback = nil,
+  on_init_callback = nil,
+  document_highlight = true,
+  code_lens_refresh = true,
+  hover_diagnostics = true,
+  lint_on_save = false,
+  popup_border = "single",
+}
