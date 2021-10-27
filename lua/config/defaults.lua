@@ -249,7 +249,7 @@ return {
     rainbow = { active = false },
     autotag = { active = true },
     matchup = { active = false },
-    autopairs = { active = false },
+    autopairs = { active = true },
     -- editor
     ajk = { active = true },
     easy_align = { active = true },
