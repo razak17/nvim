@@ -41,7 +41,7 @@ g["loaded_python_provider"] = 0
 g["loaded_ruby_provider"] = 0
 g["loaded_perl_provider"] = 0
 
-rvim.t = function(str)
+rvim.T = function(str)
   return vim.api.nvim_replace_termcodes(str, true, true, true)
 end
 

@@ -5,7 +5,7 @@ local utils = require "utils"
 completion["liuchengxu/vim-which-key"] = {
   event = { "BufWinEnter" },
   config = utils.load_conf("completion", "which_key"),
-  disable = not rvim.plugin.which_key.active
+  disable = not rvim.plugin.which_key.active,
 }
 
 completion["mattn/emmet-vim"] = {
@@ -19,21 +19,28 @@ completion["mattn/emmet-vim"] = {
   disable = not rvim.plugin.emmet.active,
 }
 
-completion["hrsh7th/nvim-compe"] = {
-  event = "InsertEnter",
-  config = utils.load_conf("completion", "compe"),
-  disable = not rvim.plugin.compe.active
-}
-
-completion["rafamadriz/friendly-snippets"] = {
-  event = "InsertEnter",
-  disable = not rvim.plugin.friendly_snippets.active,
+completion["hrsh7th/nvim-cmp"] = {
+  config = utils.load_conf("completion", "cmp"),
+  requires = {
+    "hrsh7th/cmp-vsnip",
+    "hrsh7th/vim-vsnip",
+    "hrsh7th/cmp-buffer",
+    "hrsh7th/cmp-nvim-lsp",
+    "hrsh7th/cmp-path",
+    "hrsh7th/cmp-nvim-lua",
+  },
+  disable = not rvim.plugin.cmp.active,
 }
 
 completion["hrsh7th/vim-vsnip"] = {
   event = "InsertEnter",
   config = utils.load_conf("completion", "vsnip"),
   disable = not rvim.plugin.vsnip.active,
+}
+
+completion["rafamadriz/friendly-snippets"] = {
+  event = "InsertEnter",
+  disable = not rvim.plugin.friendly_snippets.active,
 }
 
 completion["nvim-lua/plenary.nvim"] = { disable = not rvim.plugin.plenary.active }
@@ -43,7 +50,7 @@ completion["nvim-lua/popup.nvim"] = { disable = not rvim.plugin.popup.active }
 -- Telescope
 completion["nvim-telescope/telescope.nvim"] = {
   event = "BufReadPre",
-  cmd = 'Telescope',
+  cmd = "Telescope",
   config = utils.load_conf("completion", "telescope"),
   disable = not rvim.plugin.telescope.active,
 }

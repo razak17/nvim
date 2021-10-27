@@ -5,7 +5,7 @@
     "description": "Example for selected text"
   },
   "fun": {
-    "body": "function ${1:function_name}( ${2:...} )\n\t${0:-- body}\nend",
+    "body": "function ${1:function_name}(${2:...})\n\t${0:-- body}\nend",
     "description": "function",
     "prefix": "fun",
     "scope": "source.lua"

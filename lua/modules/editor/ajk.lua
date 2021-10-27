@@ -1,5 +1,5 @@
 return function()
-  local t = rvim.t
+  local t = rvim.T
 
   function _G.enhance_jk_move(key)
     vim.cmd [[packadd accelerated-jk]]
