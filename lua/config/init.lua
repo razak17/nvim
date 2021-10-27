@@ -19,9 +19,7 @@ function M:init()
   rvim.style = vim.deepcopy(default_config.style)
   rvim.log = vim.deepcopy(default_config.log)
   rvim.lang = vim.deepcopy(default_config.lang)
-
-  local plugin_config = require "config.plugin"
-  rvim.plugin = vim.deepcopy(plugin_config)
+  rvim.plugin = vim.deepcopy(default_config.plugin)
 
   local lsp_config = require "lsp.config"
   rvim.lsp = vim.deepcopy(lsp_config)
@@ -32,13 +30,20 @@ end
 
 function M:load()
   require("core.bootstrap"):init()
-  require("core.globals")
+  require "core.globals"
   M:init()
 
   defer()
   require("core.opts").setup()
-  require("core.highlights")
-  require("core.whitespace")
+  require "core.highlights"
+  require "core.whitespace"
+
+  local plug = require "core.plugins"
+  plug.ensure_plugins()
+  plug.load_compile()
+
+  require("core.binds").setup()
+  require("core.commands").setup()
 end
 
 return M

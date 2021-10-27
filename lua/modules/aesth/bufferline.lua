@@ -1,7 +1,6 @@
 return function()
-  vim.cmd [[packadd nvim-web-devicons]]
-
   local nnoremap = rvim.nnoremap
+  local groups = require "bufferline.groups"
 
   local function is_ft(b, ft)
     return vim.bo[b].filetype == ft
@@ -44,6 +43,12 @@ return function()
     -- end,
     offsets = {
       {
+        filetype = "undotree",
+        text = "Undotree",
+        highlight = "PanelHeading",
+        padding = 1,
+      },
+      {
         filetype = "NvimTree",
         text = "Explorer",
         highlight = "PanelHeading",
@@ -55,7 +60,12 @@ return function()
         highlight = "PanelHeading",
         padding = 1,
       },
-      { filetype = "flutterToolsOutline" },
+      {
+        filetype = "packer",
+        text = "Packer",
+        highlight = "PanelHeading",
+        padding = 1,
+      },
     },
   }
 
@@ -119,8 +129,8 @@ return function()
   -- Mappings
 
   -- Bufferline
-  nnoremap("<tab>", ":BufferLineCycleNext<CR>")
-  nnoremap("<s-tab>", ":BufferLineCyclePrev<CR>")
+  nnoremap("<TAB>", ":BufferLineCycleNext<CR>")
+  nnoremap("<S-TAB>", ":BufferLineCyclePrev<CR>")
   nnoremap("<Leader>bn", ":BufferLineMoveNext<CR>")
   nnoremap("<Leader>bb", ":BufferLineMovePrev<CR>")
   nnoremap("gb", ":BufferLinePick<CR>")

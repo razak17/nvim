@@ -1,5 +1,6 @@
 return function()
   local g, api, fn = vim.g, vim.api, vim.fn
+  local utils = require "utils"
 
   g.which_key_sep = ""
   g.which_key_hspace = 2
@@ -118,17 +119,30 @@ return function()
       c = { name = "+Command", a = "vertical resize 30", h = { name = "+Help", w = "word" } },
       E = {
         name = "+Plug",
-        c = { ":PlugCompile",  "compile" },
+        c = { ":PlugCompile", "compile" },
         C = { ":PlugClean", "clean" },
         i = { ":PlugInstall", "install" },
         s = { "PlugSync", "sync" },
         S = { "PlugStatus", "Status" },
-        e = { ":PlugUpdate", "update" }
+        e = { ":PlugUpdate", "update" },
       },
-      I = { name = "+Info", c = "open core/init.lua", C = "check health", m = "messages", M = "vim with me", v = "open vimrc" },
+      I = {
+        name = "+Info",
+        c = {
+          ":e " .. utils.join_paths(get_config_dir(), "/lua/config/init.lua"),
+          "open config/init.lua",
+        },
+        C = "check health",
+        m = "messages",
+        M = "vim with me",
+        v = {
+          ":e " .. utils.join_paths(get_config_dir(), "/init.lua"),
+          "open vimrc",
+        },
+      },
       l = { name = "+LocList", i = "empty", s = "toggle" },
       n = { name = "+New", f = "open file in same dir", s = "create new file in same dir" },
-      o = { name = "+Toggle", e = "quickfix" },
+      -- o = { name = "+Toggle", e = "quickfix" },
       s = {
         name = "+Tab",
         b = "previous",
@@ -137,6 +151,7 @@ return function()
         k = "delete Session",
         K = "last",
         n = "next",
+        o = "source current file",
         L = "move right",
         N = "new",
       },
@@ -294,7 +309,6 @@ return function()
       name = "+Telescope",
       b = { ":Telescope file_browser", "file browser" },
       c = telescope_builtin_keymaps,
-      C = { ":e " .. vim.g.vim_path .. "/lua/core/config.lua", "Open lua/rvim/core/config.lua" },
       d = telescope_dotfiles_keymaps,
       e = { name = "+Extensions", b = { ":Telescope bg_selector", "change background" } },
       f = { ":Telescope find_files", "find files" },
@@ -393,8 +407,11 @@ return function()
     end
 
     -- playground
-    if rvim.plugin_loaded "playground" then
-      key_maps.a.E = "Inspect token"
+    if rvim.plugin.playground.active then
+      key_maps.a.I = { ":TSPlaygroundToggle", "toggle ts playground" }
+      if rvim.plugin_loaded "playground" then
+        key_maps.a.E = "Inspect token"
+      end
     end
 
     -- treesitter

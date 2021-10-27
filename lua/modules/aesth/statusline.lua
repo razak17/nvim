@@ -16,18 +16,7 @@ return function()
 
   gl.short_line_list = { "NvimTree", "packer", "minimap", "Outline" }
 
-  local colors = {
-    bg = "#373d48",
-    section_bg = "#2f333b",
-    fg = "#c8ccd4",
-    yellow = "#e5c07b",
-    cyan = "#56b6c2",
-    green = "#98c379",
-    orange = "#ffb86c",
-    magenta = "#c678dd",
-    blue = "#61afef",
-    red = "#e06c75",
-  }
+  local colors = rvim.style.palette
 
   -- Left side
   gls.left[1] = {
@@ -35,7 +24,7 @@ return function()
       provider = function()
         return "▊ "
       end,
-      highlight = { colors.blue, colors.bg },
+      highlight = { colors.bright_blue, colors.statusline_bg },
     },
   }
   gls.left[2] = {
@@ -43,31 +32,31 @@ return function()
       provider = function()
         -- auto change color according the vim mode
         local mode_color = {
-          n = colors.red,
+          n = colors.pale_red,
           i = colors.green,
-          v = colors.blue,
-          [""] = colors.blue,
-          V = colors.blue,
+          v = colors.bright_blue,
+          [""] = colors.bright_blue,
+          V = colors.bright_blue,
           c = colors.magenta,
-          no = colors.red,
+          no = colors.pale_red,
           s = colors.orange,
           S = colors.orange,
           [""] = colors.orange,
-          ic = colors.yellow,
+          ic = colors.light_yellow,
           R = colors.magenta,
           Rv = colors.magenta,
-          cv = colors.red,
-          ce = colors.red,
+          cv = colors.pale_red,
+          ce = colors.pale_red,
           r = colors.cyan,
           rm = colors.cyan,
           ["r?"] = colors.cyan,
-          ["!"] = colors.red,
-          t = colors.red,
+          ["!"] = colors.pale_red,
+          t = colors.pale_red,
         }
         Execute("hi GalaxyViMode guifg=" .. mode_color[Fn.mode()])
         return "  "
       end,
-      highlight = { colors.red, colors.bg, "bold" },
+      highlight = { colors.pale_red, colors.statusline_bg, "bold" },
     },
   }
 
@@ -75,9 +64,9 @@ return function()
     FileSize = {
       provider = "FileSize",
       condition = condition.buffer_not_empty,
-      highlight = { colors.fg, colors.bg },
+      highlight = { colors.statusline_fg, colors.statusline_bg },
       separator = "| ",
-      separator_highlight = { colors.section_bg, colors.bg },
+      separator_highlight = { colors.statusline_section_bg, colors.statusline_bg },
     },
   }
 
@@ -87,7 +76,7 @@ return function()
       condition = condition.buffer_not_empty,
       highlight = {
         require("galaxyline.provider_fileinfo").get_file_icon_color,
-        colors.bg,
+        colors.statusline_bg,
       },
     },
   }
@@ -95,9 +84,9 @@ return function()
     FileName = {
       provider = "FileName",
       condition = condition.buffer_not_empty,
-      highlight = { colors.fg, colors.bg },
+      highlight = { colors.statusline_fg, colors.statusline_bg },
       separator = "| ",
-      separator_highlight = { colors.section_bg, colors.bg },
+      separator_highlight = { colors.statusline_section_bg, colors.statusline_bg },
     },
   }
   gls.left[6] = {
@@ -106,16 +95,16 @@ return function()
         return " "
       end,
       condition = condition.check_git_workspace,
-      highlight = { colors.red, colors.bg },
+      highlight = { colors.pale_red, colors.statusline_bg },
     },
   }
   gls.left[7] = {
     GitBranch = {
       provider = "GitBranch",
       condition = condition.check_git_workspace,
-      highlight = { colors.fg, colors.bg },
+      highlight = { colors.statusline_fg, colors.statusline_bg },
       separator = " ",
-      separator_highlight = { colors.section_bg, colors.bg },
+      separator_highlight = { colors.statusline_section_bg, colors.statusline_bg },
     },
   }
   gls.left[8] = {
@@ -123,7 +112,7 @@ return function()
       provider = "DiffAdd",
       condition = condition.hide_in_width,
       icon = " ",
-      highlight = { colors.green, colors.bg },
+      highlight = { colors.green, colors.statusline_bg },
     },
   }
   gls.left[9] = {
@@ -131,7 +120,7 @@ return function()
       provider = "DiffModified",
       condition = condition.hide_in_width,
       icon = " ",
-      highlight = { colors.orange, colors.bg },
+      highlight = { colors.orange, colors.statusline_bg },
     },
   }
   gls.left[10] = {
@@ -139,7 +128,7 @@ return function()
       provider = "DiffRemove",
       condition = condition.hide_in_width,
       icon = " ",
-      highlight = { colors.red, colors.bg },
+      highlight = { colors.pale_pale_red, colors.statusline_bg },
     },
   }
   gls.left[11] = {
@@ -147,28 +136,28 @@ return function()
       provider = function()
         return " "
       end,
-      highlight = { colors.section_bg, colors.bg },
+      highlight = { colors.statusline_section_bg, colors.statusline_bg },
     },
   }
   gls.left[12] = {
     DiagnosticError = {
       provider = "DiagnosticError",
       icon = "  ",
-      highlight = { colors.red, colors.bg },
+      highlight = { colors.pale_red, colors.statusline_bg },
     },
   }
   gls.left[13] = {
     DiagnosticWarn = {
       provider = "DiagnosticWarn",
       icon = "  ",
-      highlight = { colors.orange, colors.bg },
+      highlight = { colors.orange, colors.statusline_bg },
     },
   }
   gls.left[14] = {
     DiagnosticInfo = {
       provider = "DiagnosticInfo",
       icon = "  ",
-      highlight = { colors.blue, colors.bg },
+      highlight = { colors.bright_blue, colors.statusline_bg },
     },
   }
 
@@ -176,7 +165,7 @@ return function()
     DiagnosticHint = {
       provider = "DiagnosticHint",
       icon = "  ",
-      highlight = { colors.blue, colors.bg },
+      highlight = { colors.bright_blue, colors.statusline_bg },
     },
   }
 
@@ -231,9 +220,9 @@ return function()
         return true
       end,
       icon = "• ",
-      highlight = { colors.fg, colors.bg },
+      highlight = { colors.statusline_fg, colors.statusline_bg },
       separator = " ",
-      separator_highlight = { colors.section_bg, colors.bg },
+      separator_highlight = { colors.statusline_section_bg, colors.statusline_bg },
     },
   }
 
@@ -245,9 +234,9 @@ return function()
         end
         return vim.bo.filetype
       end,
-      highlight = { colors.fg, colors.bg },
+      highlight = { colors.statusline_fg, colors.statusline_bg },
       separator = " | ",
-      separator_highlight = { colors.section_bg, colors.bg },
+      separator_highlight = { colors.statusline_section_bg, colors.statusline_bg },
     },
   }
 
@@ -257,9 +246,9 @@ return function()
         return "Spaces: " .. vim.api.nvim_buf_get_option(0, "shiftwidth")
       end,
       condition = condition.hide_in_width,
-      highlight = { colors.grey, colors.bg },
+      highlight = { colors.statusline_fg, colors.statusline_bg },
       separator = " | ",
-      separator_highlight = { colors.section_bg, colors.bg },
+      separator_highlight = { colors.statusline_section_bg, colors.statusline_bg },
     },
   }
 
@@ -269,9 +258,9 @@ return function()
       condition = function()
         return vim.bo.filetype ~= "dashboard"
       end,
-      highlight = { colors.fg, colors.bg },
+      highlight = { colors.statusline_fg, colors.statusline_bg },
       separator = " | ",
-      separator_highlight = { colors.section_bg, colors.bg },
+      separator_highlight = { colors.statusline_section_bg, colors.statusline_bg },
     },
   }
 
@@ -279,9 +268,9 @@ return function()
     FileFormat = {
       provider = "FileFormat",
       condition = condition.hide_in_width,
-      highlight = { colors.fg, colors.bg },
+      highlight = { colors.statusline_fg, colors.statusline_bg },
       separator = " | ",
-      separator_highlight = { colors.section_bg, colors.bg },
+      separator_highlight = { colors.statusline_section_bg, colors.statusline_bg },
     },
   }
 
@@ -289,9 +278,9 @@ return function()
     FileEncode = {
       provider = "FileEncode",
       condition = condition.hide_in_width,
-      highlight = { colors.fg, colors.bg },
+      highlight = { colors.statusline_fg, colors.statusline_bg },
       separator = " |",
-      separator_highlight = { colors.section_bg, colors.bg },
+      separator_highlight = { colors.statusline_section_bg, colors.statusline_bg },
     },
   }
 
@@ -301,9 +290,9 @@ return function()
       condition = function()
         return vim.bo.filetype ~= "dashboard"
       end,
-      highlight = { colors.fg, colors.bg },
+      highlight = { colors.statusline_fg, colors.statusline_bg },
       separator = " | ",
-      separator_highlight = { colors.section_bg, colors.bg },
+      separator_highlight = { colors.statusline_section_bg, colors.statusline_bg },
     },
   }
 
@@ -313,8 +302,8 @@ return function()
         return "▊"
       end,
       separator = " ",
-      separator_highlight = { colors.section_bg, colors.bg },
-      highlight = { colors.blue, colors.bg },
+      separator_highlight = { colors.statusline_section_bg, colors.statusline_bg },
+      highlight = { colors.bright_blue, colors.statusline_bg },
     },
   }
 
@@ -322,18 +311,18 @@ return function()
   gls.short_line_left[1] = {
     BufferType = {
       provider = "FileTypeName",
-      highlight = { colors.fg, colors.section_bg },
+      highlight = { colors.statusline_fg, colors.statusline_section_bg },
       separator = " ",
-      separator_highlight = { colors.section_bg, colors.section_bg },
+      separator_highlight = { colors.statusline_section_bg, colors.statusline_section_bg },
     },
   }
 
   gls.short_line_right[1] = {
     BufferIcon = {
       provider = "BufferIcon",
-      highlight = { colors.yellow, colors.section_bg },
+      highlight = { colors.light_yellow, colors.statusline_section_bg },
       separator = " ",
-      separator_highlight = { colors.section_bg, colors.section_bg },
+      separator_highlight = { colors.statusline_section_bg, colors.statusline_section_bg },
     },
   }
 end

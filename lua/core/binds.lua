@@ -183,9 +183,13 @@ end
 local normal_mode, term_mode, visual_mode = rvim.keys.normal_mode, rvim.keys.term_mode, rvim.keys.visual_mode
 
 -- TAB in general mode will move to text buffer, SHIFT-TAB will go back
-if rvim.plugin.ajk.active == false then
+if not rvim.plugin.bufferline.active then
   normal_mode["<TAB>"] = ":bnext<CR>"
   normal_mode["<S-TAB>"] = ":bprevious<CR>"
+end
+
+if not rvim.plugin.ajk.active then
+  normal_mode["n"] = "j"
 end
 
 -- Window Resize
@@ -253,7 +257,6 @@ normal_mode["<localleader>;"] = "<cmd>call utils#modify_line_end_delimiter(';')<
 normal_mode["<localleader>."] = "<cmd>call utils#modify_line_end_delimiter('.')<cr>"
 
 -- qflist
-normal_mode["<Leader>oe"] = ":copen<CR>"
 normal_mode["<Leader>vo"] = ":copen<CR>"
 
 -- Quick find/replace
@@ -273,12 +276,6 @@ cnoremap("::", "<C-r>=fnameescape(expand('%:p:h'))<cr>/")
 normal_mode["<leader>nf"] = { [[:e <C-R>=expand("%:p:h") . "/" <CR>]], noisy }
 -- create a new file in the same directory
 normal_mode["<leader>ns"] = { [[:vsp <C-R>=expand("%:p:h") . "/" <CR>]], noisy }
-
--- This line opens the vimrc in a vertical split
-normal_mode["<leader>Iv"] = ":e ~/.config/rvim/init.lua<CR>"
-
--- This line opens the core/init.lua file
-normal_mode["<leader>Ic"] = ":e ~/.config/rvim/lua/core/init.lua<CR>"
 
 -- Quotes
 normal_mode['<leader>"'] = [[ciw"<c-r>""<esc>]]
@@ -349,11 +346,6 @@ end
 
 normal_mode["<leader>ae"] = function()
   u.TurnOffGuides()
-end
-
-if not rvim.plugin.ajk.active then
-  local nmap = rvim.nmap
-  nmap("n", "j")
 end
 
 vim.cmd [[vnoremap <Leader>rev :s/\%V.\+\%V./\=utils#rev_str(submatch(0))<CR>gv]]

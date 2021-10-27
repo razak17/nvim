@@ -101,6 +101,7 @@ function plugins.ensure_plugins()
   command { "PlugClean", [[lua require('core.plugins').clean()]] }
   command { "PlugUpdate", [[lua require('core.plugins').update()]] }
   command { "PlugStatus", [[lua require('core.plugins').status()]] }
+  command { "PlugRecompile", [[lua require('core.plugins').recompile()]] }
   rvim.augroup("PackerComplete", {
     { events = { "User" }, targets = { "lua" }, command = "lua require('core.plugins').compile()" },
   })

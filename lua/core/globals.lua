@@ -92,6 +92,7 @@ function rvim._execute(id, args)
   rvim._store[id](args)
 end
 
+local L = vim.log.levels
 ---Create an autocommand
 ---@param name string
 ---@param commands Autocommand[]
@@ -115,6 +116,20 @@ function rvim.augroup(name, commands)
     )
   end
   vim.cmd "augroup END"
+end
+
+
+---Require a module using [pcall] and report any errors
+---@param module string
+---@param opts table?
+---@return boolean, any
+function rvim.safe_require(module, opts)
+  opts = opts or { silent = false }
+  local ok, result = pcall(require, module)
+  if not ok and not opts.silent then
+    vim.notify(result, L.ERROR, { title = fmt('Error requiring: %s', module) })
+  end
+  return ok, result
 end
 
 ---Check if a cmd is executable

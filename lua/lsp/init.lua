@@ -1,6 +1,7 @@
 local M = {}
 
 local Log = require "core.log"
+local utils = require "utils"
 
 local function lsp_commands()
   local command = rvim.command
@@ -189,39 +190,20 @@ function M.get_global_opts()
 end
 
 function M.setup()
+  Log:debug "Setting up LSP support"
+
   local lsp_status_ok, _ = pcall(require, "lspconfig")
   if not lsp_status_ok then
     return
   end
 
-  vim.lsp.protocol.CompletionItemKind = rvim.lsp.completion.item_kind
-
-  for _, sign in ipairs(rvim.lsp.diagnostics.signs.values) do
-    vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = sign.name })
-  end
-
   require("lsp.handlers").setup()
 
-  bootstrap_nlsp {
-    config_home = vim.g.vim_path .. "/external/nlsp-settings",
-  }
+  bootstrap_nlsp { config_home = utils.join_paths(get_config_dir(), "/external/nlsp-settings") }
 
   require("lsp.null-ls").setup(vim.bo.filetype)
 
   require("lsp.utils").toggle_autoformat()
-
-  rvim.augroup("LspLocationList", {
-    {
-      events = { "User LspDiagnosticsChanged" },
-      command = function()
-        vim.lsp.diagnostic.set_loclist {
-          workspace = true,
-          severity_limit = "Warning",
-          open_loclist = false,
-        }
-      end,
-    },
-  })
 end
 
 return M

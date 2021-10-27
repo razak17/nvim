@@ -15,9 +15,11 @@ stds.nvim = {
     os = { fields = { "capture" } },
   },
   read_globals = {
+    "bit",
     "jit",
     "os",
     "vim",
+    "packer_plugins",
     "join_paths",
     "get_runtime_dir",
     "get_config_dir",

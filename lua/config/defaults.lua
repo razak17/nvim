@@ -1,8 +1,12 @@
 return {
   style = {
     palette = {
+      statusline_bg = "#373d48",
+      statusline_section_bg = "#2f333b",
+      statusline_fg = "#c8ccd4",
+      highlight_bg = "#4E525C",
       pale_red = "#E06C75",
-      dark_red = "#be5046",
+      red = "#be5046",
       light_red = "#c43e1f",
       dark_orange = "#FF922B",
       green = "#98c379",
@@ -15,7 +19,8 @@ return {
       whitesmoke = "#626262",
       bright_blue = "#51afef",
       teal = "#15AABF",
-      highlight_bg = "#4E525C",
+      cyan = "#56b6c2",
+      orange = "#ffb86c",
     },
   },
   common = {
@@ -37,8 +42,6 @@ return {
     -- c = {
     --   -- formatters = { { exe = "clang_format", args = {}, stdin = true } },
     --   -- linters = { { exe = "clangtidy" } },
-    --   formatters = {},
-    --   linters = {},
     -- },
     -- cmake = {
     --   formatters = { { exe = "cmake_format", args = {} } },
@@ -47,7 +50,6 @@ return {
     -- cpp = {
     --   formatters = { { exe = "clang_format", args = {}, stdin = true } },
     --   -- linters = { { exe = "clangtidy" } },
-    --   linters = {},
     -- },
     -- css = {
     --   formatters = {
@@ -111,34 +113,6 @@ return {
     --     -- },
     --   },
     --   linters = {},
-    --   lsp = {
-    --     provider = "jsonls",
-    --     setup = {
-    --       cmd = {
-    --         "node",
-    --         rvim.lsp.binary.json,
-    --         "--stdio",
-    --       },
-    --       settings = {
-    --         json = {
-    --           schemas = schemas,
-    --           --   = {
-    --           --   {
-    --           --     fileMatch = { "package.json" },
-    --           --     url = "https://json.schemastore.org/package.json",
-    --           --   },
-    --           -- },
-    --         },
-    --       },
-    --       commands = {
-    --         Format = {
-    --           function()
-    --             vim.lsp.buf.range_formatting({}, { 0, 0 }, { vim.fn.line "$", 0 })
-    --           end,
-    --         },
-    --       },
-    --     },
-    --   },
     -- },
     lua = {
       formatters = { {
@@ -146,7 +120,9 @@ return {
         args = {},
         stdin = true,
       } },
-      linters = { { exe = "luacheck" } },
+      linters = {
+        -- { exe = "luacheck" }
+      },
     },
     -- nginx = {
     --   formatters = {
@@ -220,5 +196,78 @@ return {
         float_opts = {},
       },
     },
+  },
+  plugin = {
+    -- SANE defaults
+    SANE = { active = false },
+    -- debug
+    debug = { active = false },
+    debug_ui = { active = false },
+    dap_install = { active = false },
+    osv = { active = false },
+    -- lsp
+    lspconfig = { active = true },
+    lsp_installer = { active = true },
+    fix_cursorhold = { active = true },
+    nlsp = { active = true },
+    null_ls = { active = true },
+    saga = { active = false },
+    lightbulb = { active = true },
+    symbols_outline = { active = false },
+    bqf = { active = false },
+    trouble = { active = false },
+    -- treesitter
+    treesitter = { active = true },
+    playground = { active = true },
+    rainbow = { active = false },
+    autotag = { active = true },
+    matchup = { active = false },
+    autopairs = { active = true },
+    -- editor
+    ajk = { active = true },
+    easy_align = { active = true },
+    cool = { active = true },
+    surround = { active = true },
+    colorizer = { active = true },
+    kommentary = { active = true },
+    dial = { active = true },
+    fold_cycle = { active = false },
+    delimitmate = { active = false },
+    eft = { active = false },
+    cursorword = { active = false },
+    -- tools
+    fterm = { active = true },
+    far = { active = true },
+    bookmarks = { active = true },
+    undotree = { active = true },
+    fugitive = { active = false },
+    project = { active = false },
+    diffview = { active = false },
+    -- TODO: handle these later
+    glow = { active = false },
+    doge = { active = false },
+    dadbod = { active = false },
+    restconsole = { active = false },
+    markdown_preview = { active = false },
+    -- aesth
+    tree = { active = true },
+    dashboard = { active = true },
+    statusline = { active = true },
+    bufferline = { active = true },
+    devicons = { active = true },
+    git_signs = { active = true },
+    indent_line = { active = true },
+    -- completion
+    which_key = { active = true },
+    plenary = { active = true },
+    popup = { active = true },
+    telescope = { active = true },
+    compe = { active = true },
+    vsnip = { active = true },
+    emmet = { active = false },
+    friendly_snippets = { active = true },
+    telescope_fzy = { active = false },
+    telescope_project = { active = false },
+    telescope_media_files = { active = false },
   },
 }

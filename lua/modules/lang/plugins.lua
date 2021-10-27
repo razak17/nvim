@@ -32,17 +32,17 @@ lang["jbyuki/one-small-step-for-vimkind"] = {
 
 -- Lsp
 lang["williamboman/nvim-lsp-installer"] = {
-  disable = not rvim.plugin.lsp_installer.active
+  disable = not rvim.plugin.lsp_installer.active,
 }
 
 lang["antoinemadec/FixCursorHold.nvim"] = {
-  disable = not rvim.plugin.fix_cursorhold.active
+  disable = not rvim.plugin.fix_cursorhold.active,
 }
 
 lang["neovim/nvim-lspconfig"] = {
   event = "BufReadPre",
   config = utils.load_conf("lang", "lspconfig"),
-  disable = not rvim.plugin.lspconfig.active
+  disable = not rvim.plugin.lspconfig.active,
 }
 
 lang["tamago324/nlsp-settings.nvim"] = {
@@ -56,19 +56,7 @@ lang["jose-elias-alvarez/null-ls.nvim"] = {
 lang["glepnir/lspsaga.nvim"] = {
   after = "nvim-lspconfig",
   config = utils.load_conf("lang", "saga"),
-  disable = not rvim.plugin.saga.active
-}
-
-lang["mhartington/formatter.nvim"] = {
-  config = function()
-    rvim.augroup("AutoFormat", { { events = { "BufWritePost" }, targets = { "*" }, command = ":silent FormatWrite" } })
-  end,
-  disable = not rvim.plugin.formatter.active,
-}
-
-lang["mfussenegger/nvim-lint"] = {
-  config = utils.load_conf("lang", "nvim_lint"),
-  disable = not rvim.plugin.nvim_lint.active,
+  disable = not rvim.plugin.saga.active,
 }
 
 lang["kosayoda/nvim-lightbulb"] = {
@@ -123,7 +111,7 @@ lang["nvim-treesitter/nvim-treesitter"] = {
   branch = "0.5-compat",
   after = "telescope.nvim",
   config = utils.load_conf("lang", "treesitter"),
-  disable = not rvim.plugin.treesitter.active
+  disable = not rvim.plugin.treesitter.active,
 }
 
 lang["nvim-treesitter/playground"] = {
