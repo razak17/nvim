@@ -258,7 +258,6 @@ return {
     kommentary = { active = true },
     dial = { active = true },
     fold_cycle = { active = false },
-    delimitmate = { active = false },
     eft = { active = false },
     cursorword = { active = false },
     -- tools

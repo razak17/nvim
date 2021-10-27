@@ -75,18 +75,6 @@ editor["norcalli/nvim-colorizer.lua"] = {
   disable = not rvim.plugin.colorizer.active,
 }
 
-editor["Raimondi/delimitMate"] = {
-  event = { "BufReadPre", "BufNewFile" },
-  config = function()
-    vim.g.delimitMate_expand_cr = 0
-    vim.g.delimitMate_expand_space = 1
-    vim.g.delimitMate_smart_quotes = 1
-    vim.g.delimitMate_expand_inside_quotes = 0
-    vim.api.nvim_command 'au FileType markdown let b:delimitMate_nesting_quotes = ["`"]'
-  end,
-  disable = not rvim.plugin.delimitmate.active,
-}
-
 editor["romainl/vim-cool"] = {
   config = function()
     vim.g.CoolTotalMatches = 1
