@@ -9,8 +9,7 @@ local function lsp_commands()
   command {
     "LspLog",
     function()
-      local path = vim.lsp.get_log_path()
-      vim.cmd("edit " .. path)
+      vim.cmd("edit " .. vim.lsp.get_log_path())
     end,
   }
   command {
