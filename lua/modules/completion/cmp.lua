@@ -7,6 +7,15 @@ return function()
   local fn = vim.fn
   local T = rvim.T
 
+  require("core.highlights").plugin(
+    "Cmp",
+    { "CmpItemAbbr", { inherit = "Pmenu", gui = "NONE" } },
+    { "CmpItemMenu", { inherit = "Pmenu", gui = "NONE" } },
+    { "CmpItemAbbrMatch", { inherit = "qfFileName", gui = "NONE" } },
+    { "CmpItemAbbrDeprecated", { gui = "strikethrough", inherit = "Comment" } },
+    { "CmpItemAbbrMatchFuzzy", { gui = "italic", guifg = "fg" } }
+  )
+
   local check_backspace = function()
     local col = vim.fn.col "." - 1
     return col == 0 or vim.fn.getline("."):sub(col, col):match "%s"
