@@ -219,6 +219,9 @@ normal_mode["<Leader>x"] = ":q<CR>"
 -- Greatest remap ever
 visual_mode["<Leader>p"] = '"_dP'
 
+-- Greatest remap ever
+visual_mode["<Leader>rev"] = [[:s/\%V.\+\%V./\=utils#rev_str(submatch(0))<CR>gv]]
+
 -- Next greatest remap ever : asbjornHaland
 normal_mode["<Leader>y"] = '"+y'
 visual_mode["<Leader>y"] = '"+y'
@@ -348,7 +351,5 @@ end
 normal_mode["<leader>ae"] = function()
   u.TurnOffGuides()
 end
-
-vim.cmd [[vnoremap <Leader>rev :s/\%V.\+\%V./\=utils#rev_str(submatch(0))<CR>gv]]
 
 return M
