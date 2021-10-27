@@ -238,7 +238,6 @@ return {
     fix_cursorhold = { active = true },
     nlsp = { active = true },
     null_ls = { active = true },
-    saga = { active = false },
     lightbulb = { active = true },
     symbols_outline = { active = false },
     bqf = { active = false },

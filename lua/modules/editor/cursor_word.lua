@@ -4,7 +4,6 @@ return function()
       events = { "FileType" },
       targets = {
         "NvimTree",
-        "lspsagafinder",
         "dashboard",
         "outline",
         "telescope",

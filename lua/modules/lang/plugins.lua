@@ -53,12 +53,6 @@ lang["jose-elias-alvarez/null-ls.nvim"] = {
   disable = not rvim.plugin.null_ls.active,
 }
 
-lang["glepnir/lspsaga.nvim"] = {
-  after = "nvim-lspconfig",
-  config = utils.load_conf("lang", "saga"),
-  disable = not rvim.plugin.saga.active,
-}
-
 lang["kosayoda/nvim-lightbulb"] = {
   after = "nvim-lspconfig",
   config = function()
