@@ -180,7 +180,8 @@ function M.setup()
   M.load(rvim.keys)
 end
 
-local normal_mode, term_mode, visual_mode = rvim.keys.normal_mode, rvim.keys.term_mode, rvim.keys.visual_mode
+local normal_mode, command_mode, term_mode, visual_mode =
+  rvim.keys.normal_mode, rvim.keys.command_mode, rvim.keys.term_mode, rvim.keys.visual_mode
 
 -- TAB in general mode will move to text buffer, SHIFT-TAB will go back
 if not rvim.plugin.bufferline.active then
@@ -260,17 +261,17 @@ normal_mode["<localleader>."] = "<cmd>call utils#modify_line_end_delimiter('.')<
 normal_mode["<Leader>vo"] = ":copen<CR>"
 
 -- Quick find/replace
-local nnoremap, vnoremap, cnoremap = rvim.nnoremap, rvim.vnoremap, rvim.cnoremap
 local noisy = { silent = false }
-nnoremap("<leader>[", [[:%s/\<<C-r>=expand("<cword>")<CR>\>/]], noisy)
-nnoremap("<leader>]", [[:s/\<<C-r>=expand("<cword>")<CR>\>/]], noisy)
-vnoremap("<leader>[", [["zy:%s/<C-r><C-o>"/]], noisy)
+normal_mode["<leader>["] = { [[:%s/\<<C-r>=expand("<cword>")<CR>\>/]], noisy }
+normal_mode["<leader>]"] = { [[:s/\<<C-r>=expand("<cword>")<CR>\>/]], noisy }
+visual_mode["<leader>["] = { [["zy:%s/<C-r><C-o>"/]], noisy }
 
 -- Smart mappings on the command line
-cnoremap("w!!", [[w !sudo tee % >/dev/null]])
+command_mode["w!!"] = [[w !sudo tee % >/dev/null]]
+
 -- insert path of current file into a command
-cnoremap("%%", "<C-r>=fnameescape(expand('%'))<cr>")
-cnoremap("::", "<C-r>=fnameescape(expand('%:p:h'))<cr>/")
+command_mode["%%"] = "<C-r>=fnameescape(expand('%'))<cr>"
+command_mode["::"] = "<C-r>=fnameescape(expand('%:p:h'))<cr>/"
 
 -- open a new file in the same directory
 normal_mode["<leader>nf"] = { [[:e <C-R>=expand("%:p:h") . "/" <CR>]], noisy }
