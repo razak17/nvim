@@ -26,6 +26,8 @@ function M:init()
 
   local supported_languages = require "config.supported_languages"
   require("lsp.manager").init_defaults(supported_languages)
+
+  require "config.mappings"
 end
 
 function M:load()
