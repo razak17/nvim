@@ -69,6 +69,7 @@ rvim.keys = {
     ["<up>"] = "<nop>",
     ["<left>"] = "<nop>",
     ["<right>"] = "<nop>",
+
     -- undo command in insert mode
     ["<c-z>"] = function()
       vim.cmd [[:undo]]

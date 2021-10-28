@@ -42,7 +42,7 @@ local get_cursor_pos = function()
   return { vim.fn.line ".", vim.fn.col "." }
 end
 
-local function hover_diagnostics()
+local function lsp_hover_diagnostics()
   if not rvim.lsp.hover_diagnostics then
     return
   end
@@ -69,9 +69,9 @@ end
 
 local function lsp_highlight_document(client)
   if rvim.lsp.document_highlight == false then
-    return -- we don't need further
+    return
   end
-  -- Set autocommands conditional on server_capabilities
+
   if client and client.resolved_capabilities.document_highlight then
     rvim.augroup("LspCursorCommands", {
       {
@@ -98,7 +98,7 @@ local function lsp_code_lens_refresh(client)
     return
   end
 
-  if client.resolved_capabilities.code_lens then
+  if client and client.resolved_capabilities.code_lens then
     rvim.augroup("LspCodeLensRefresh", {
       {
         events = { "InsertLeave" },
@@ -174,7 +174,7 @@ function M.global_on_attach(client, bufnr)
   lsp_highlight_document(client)
   lsp_code_lens_refresh(client)
   lsp_commands()
-  hover_diagnostics()
+  lsp_hover_diagnostics()
   require("lsp.binds"):init(client)
 end
 
