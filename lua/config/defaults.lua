@@ -1,6 +1,7 @@
 return {
   style = {
     palette = {
+      bg = "#282a36",
       statusline_bg = "#373d48",
       statusline_section_bg = "#2f333b",
       statusline_fg = "#c8ccd4",

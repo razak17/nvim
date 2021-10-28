@@ -431,4 +431,14 @@ if rvim.plugin.fterm.active then
   nnoremap("<leader>en", '<CMD>lua require("FTerm").open()<CR>')
 end
 
+if rvim.plugin.bufferline.active then
+  local nnoremap = rvim.nnoremap
+  -- Bufferline
+  nnoremap("<TAB>", ":BufferLineCycleNext<CR>")
+  nnoremap("<S-TAB>", ":BufferLineCyclePrev<CR>")
+  nnoremap("<Leader>bn", ":BufferLineMoveNext<CR>")
+  nnoremap("<Leader>bb", ":BufferLineMovePrev<CR>")
+  nnoremap("gb", ":BufferLinePick<CR>")
+end
+
 return M
