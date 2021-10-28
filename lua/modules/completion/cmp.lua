@@ -4,8 +4,6 @@ return function()
     return
   end
 
-  local fn = vim.fn
-
   local function T(str)
     return vim.api.nvim_replace_termcodes(str, true, true, true)
   end
@@ -19,8 +17,10 @@ return function()
     { "CmpItemAbbrMatchFuzzy", { gui = "italic", guifg = "fg" } }
   )
 
+  local fn = vim.fn
+
   local check_backspace = function()
-    local col = vim.fn.col "." - 1
+    local col = fn.col "." - 1
     return col == 0 or vim.fn.getline("."):sub(col, col):match "%s"
   end
 

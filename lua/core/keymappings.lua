@@ -189,7 +189,7 @@ if not rvim.plugin.bufferline.active then
   normal_mode["<S-TAB>"] = ":bprevious<CR>"
 end
 
-if not rvim.plugin.ajk.active then
+if not rvim.plugin_loaded "accelerated-jk.nvim" then
   normal_mode["n"] = "j"
 end
 

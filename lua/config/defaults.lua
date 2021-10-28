@@ -264,7 +264,7 @@ return {
     cursorword = { active = false },
     -- tools
     fterm = { active = true },
-    far = { active = false },
+    far = { active = true },
     bookmarks = { active = false },
     undotree = { active = true },
     fugitive = { active = false },
