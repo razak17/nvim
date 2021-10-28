@@ -1,110 +1,132 @@
 return function()
-  local g, api, fn = vim.g, vim.api, vim.fn
   local utils = require "utils"
 
-  g.which_key_sep = ""
-  g.which_key_hspace = 2
-  g.which_key_centered = 1
-  g.which_key_vertical = 0
-  g.which_key_timeout = 100
-  g.which_key_use_floating_win = 0
-  g.which_key_display_names = { ["<CR>"] = "↵ ", ["<TAB>"] = "⇆ " }
-
-  api.nvim_set_keymap("n", "<leader>", ':<c-u> :WhichKey "<space>"<CR>', { noremap = true, silent = true })
-  api.nvim_set_keymap("n", "<localleader>", ':<c-u> :WhichKey "<space>"<CR>', { noremap = true, silent = true })
-  api.nvim_set_keymap("v", "<leader>", ':<c-u> :WhichKeyVisual "<space>"<CR>', { noremap = true, silent = true })
-  fn["which_key#register"]("<space>", "g:which_key_map")
-
-  rvim.keymaps = {
+  rvim.which_key = {
     defaults = {
-      ["="] = "balance window",
-      ["."] = "append period",
-      [","] = "append comma",
-      [";"] = "append semi-colon",
-      ["["] = "find and replace all",
-      ["]"] = "find and replace one",
-      ["`"] = "wrap backticks",
-      ["'"] = "wrap single quotes",
-      ['"'] = "wrap double quotes",
-      [")"] = "wrap parenthesis",
-      ["}"] = "wrap curly braces",
-      ["_"] = "Delete current buffer",
-      x = { ":q", "Quit" },
-      y = "Yank",
-      a = {
-        name = "+Actions",
-        d = "force delete buffer",
-        D = "delete all",
-        e = "turn off guides",
-        f = {
-          name = "+Fold",
-          l = "under curosr",
-          r = "recursive cursor",
-          o = "open all",
-          x = "close all",
+      sep = "",
+      hspace = 2,
+      centered = 1,
+      vertical = 0,
+      timeout = 100,
+      use_floating_win = 0,
+      display_names = { ["<CR>"] = "↵ ", ["<TAB>"] = "⇆ " },
+    },
+    keymaps = {
+      defaults = {
+        ["="] = "balance window",
+        ["."] = "append period",
+        [","] = "append comma",
+        [";"] = "append semi-colon",
+        ["["] = "find and replace all",
+        ["]"] = "find and replace one",
+        ["`"] = "wrap backticks",
+        ["'"] = "wrap single quotes",
+        ['"'] = "wrap double quotes",
+        [")"] = "wrap parenthesis",
+        ["}"] = "wrap curly braces",
+        ["_"] = "Delete current buffer",
+        x = { ":q", "Quit" },
+        y = "Yank",
+        a = {
+          name = "+Actions",
+          d = "force delete buffer",
+          D = "delete all",
+          e = "turn off guides",
+          f = {
+            name = "+Fold",
+            l = "under curosr",
+            r = "recursive cursor",
+            o = "open all",
+            x = "close all",
+          },
+          F = "resize 90%",
+          h = "horizontal split",
+          l = "open last buffer",
+          n = "no highlight",
+          o = "turn on guides",
+          O = "open old commands",
+          R = "empty registers",
+          v = "vertical split",
+          V = "select all",
+          x = "save and exit",
+          Y = "yank all",
+          z = "force exit",
         },
-        F = "resize 90%",
-        h = "horizontal split",
-        l = "open last buffer",
-        n = "no highlight",
-        o = "turn on guides",
-        O = "open old commands",
-        R = "empty registers",
-        v = "vertical split",
-        V = "select all",
-        x = "save and exit",
-        Y = "yank all",
-        z = "force exit",
-      },
-      b = {
-        name = "+Buffer",
-        n = "move next",
-        b = "move previous",
-        d = { name = "+Delete", a = "all", h = "to left", x = "all except current" },
-        s = "highlight cursor word",
-      },
-      c = { name = "+Command", a = "vertical resize 30", h = { name = "+Help", w = "word" } },
-      I = {
-        name = "+Info",
+        b = {
+          name = "+Buffer",
+          n = "move next",
+          b = "move previous",
+          d = {
+            name = "+Delete",
+            a = "all",
+            h = "to left",
+            x = "all except current",
+          },
+          s = "highlight cursor word",
+        },
         c = {
-          ":e " .. utils.join_paths(get_config_dir(), "lua/config/init.lua"),
-          "open config/init.lua",
+          name = "+Command",
+          a = "vertical resize 30",
+          h = {
+            name = "+Help",
+            w = "word",
+          },
         },
-        C = "check health",
-        m = "messages",
-        M = "vim with me",
-        v = {
-          ":e " .. utils.join_paths(get_config_dir(), "init.lua"),
-          "open vimrc",
+        I = {
+          name = "+Info",
+          c = {
+            ":e " .. utils.join_paths(get_config_dir(), "lua/config/init.lua"),
+            "open config/init.lua",
+          },
+          C = "check health",
+          m = "messages",
+          M = "vim with me",
+          v = {
+            ":e " .. utils.join_paths(get_config_dir(), "init.lua"),
+            "open vimrc",
+          },
         },
-      },
-      l = { name = "+LocList", i = "empty", s = "toggle" },
-      n = { name = "+New", f = "open file in same dir", s = "create new file in same dir" },
-      -- o = { name = "+Toggle", e = "quickfix" },
-      s = {
-        name = "+Tab",
-        b = "previous",
-        d = "close",
-        H = "move left",
-        k = "delete Session",
-        K = "last",
-        n = "next",
-        o = "source current file",
-        L = "move right",
-        N = "new",
-      },
-      w = {
-        name = "+Orientation",
-        h = "change to horizontal",
-        v = "change to vertical",
+        l = { name = "+LocList", i = "empty", s = "toggle" },
+        n = {
+          name = "+New",
+          f = "open file in same dir",
+          s = "create new file in same dir",
+        },
+        s = {
+          name = "+Tab",
+          b = "previous",
+          d = "close",
+          H = "move left",
+          k = "delete Session",
+          K = "last",
+          n = "next",
+          o = "source current file",
+          L = "move right",
+          N = "new",
+        },
+        w = {
+          name = "+Orientation",
+          h = "change to horizontal",
+          v = "change to vertical",
+        },
       },
     },
   }
 
+  for opt, val in pairs(rvim.which_key.defaults) do
+    vim.g["which_key_" .. opt] = val
+  end
+
+  rvim.nnoremap("<leader>", ':<c-u> :WhichKey "<space>"<CR>')
+  rvim.nnoremap("<localleader>", ':<c-u> :WhichKey "<space>"<CR>')
+  rvim.vnoremap("<leader>", ':<c-u> :WhichKeyVisual "<space>"<CR>')
+
+  vim.fn["which_key#register"]("<space>", "g:which_key_map")
+
   _G.WhichKey = {}
 
   -- Set default keymaps
-  g.which_key_map = rvim.keymaps.defaults
+  vim.g.which_key_map = rvim.which_key.keymaps.defaults
 
   -- Plugin keymaps
   WhichKey.SetKeyOnFT = function()
@@ -165,12 +187,42 @@ return function()
       w = { ":Telescope lsp_workspace_symbols", "workspace_symbol" },
     }
 
+    -- telescope
+    rvim.which_key.keymaps.telescope = {
+      name = "+Telescope",
+      b = { ":Telescope file_browser", "file browser" },
+      c = telescope_builtin_keymaps,
+      d = telescope_dotfiles_keymaps,
+      e = { name = "+Extensions", b = { ":Telescope bg_selector", "change background" } },
+      f = { ":Telescope find_files", "find files" },
+      l = {
+        name = "+Live",
+        g = { ":Telescope live_grep", "grep" },
+        w = { ":Telescope grep_string", "current word" },
+        e = { ":Telescope grep_string_prompt", "prompt" },
+      },
+      r = telescope_config_keymaps,
+      v = telescope_lsp_keymaps,
+      g = telescope_git_keymaps,
+    }
+
+    -- Telescope Extensions
+    if rvim.plugin_loaded "project.nvim" then
+      key_maps.f.e.e = { ":Telescope projects", "projects" }
+    end
+    if rvim.plugin_loaded "telescope-media-files.nvim" then
+      key_maps.f.e.m = { ":Telescope media_files", "media files" }
+    end
+    if rvim.plugin_loaded "telescope-project.nvim" then
+      key_maps.f.e.p = { ":Telescope project", "project" }
+    end
+
     -- kommentary
     key_maps["/"] = { "<Plug>kommentary_line_default", "comment" }
     key_maps.a["/"] = { "<Plug>kommentary_motion_default", "comment motion default" }
 
     -- dap
-    rvim.keymaps.debug = {
+    rvim.which_key.keymaps.debug = {
       name = "+Debug",
       ["?"] = "centered float ui",
       a = { ':lua require"debug.utils".attach()', "attach" },
@@ -197,10 +249,10 @@ return function()
       x = { ':lua require"dap".disconnect()', "disconnect" },
     }
     if rvim.plugin_loaded "nvim-dap" then
-      key_maps.d = rvim.keymaps.debug
+      key_maps.d = rvim.which_key.keymaps.debug
     end
 
-    rvim.keymaps.packer = {
+    rvim.which_key.keymaps.packer = {
       name = "+Plug",
       c = { ":PlugCompile", "compile" },
       C = { ":PlugClean", "clean" },
@@ -212,11 +264,11 @@ return function()
     }
 
     if rvim.plugin.packer.active then
-      key_maps.E = rvim.keymaps.packer
+      key_maps.E = rvim.which_key.keymaps.packer
     end
 
     -- fterm
-    rvim.keymaps.fterm = {
+    rvim.which_key.keymaps.fterm = {
       name = "+Fterm",
       g = { [[v:lua.fterm_cmd("gitui")]], "gitui" },
       l = { [[v:lua.fterm_cmd("lazygit")]], "lazygit" },
@@ -227,11 +279,11 @@ return function()
       v = "open vimrc in vertical split",
     }
     if rvim.plugin_loaded "FTerm.nvim" then
-      key_maps.e = rvim.keymaps.fterm
+      key_maps.e = rvim.which_key.keymaps.fterm
     end
 
     -- far
-    rvim.keymaps.far = {
+    rvim.which_key.keymaps.far = {
       name = "+Far",
       f = { ":Farr --source=vimgrep", "replace in File" },
       d = { ":Fardo", "do" },
@@ -240,10 +292,10 @@ return function()
       z = { ":Farundo", "undo" },
     }
     if rvim.plugin_loaded "far.vim" then
-      key_maps.F = rvim.keymaps.far
+      key_maps.F = rvim.which_key.keymaps.far
     end
     -- git_signs
-    rvim.keymaps.git_signs = {
+    rvim.which_key.keymaps.git_signs = {
       name = "+Gitsigns",
       b = "blame line",
       e = "preview hunk",
@@ -253,11 +305,11 @@ return function()
       u = "undo stage hunk",
     }
     if rvim.plugin_loaded "gitsigns.nvim" then
-      key_maps.h = rvim.keymaps.git_signs
+      key_maps.h = rvim.which_key.keymaps.git_signs
     end
 
     -- fugitive
-    rvim.keymaps.fugitive = {
+    rvim.which_key.keymaps.fugitive = {
       name = "+Git",
       a = { ":Git fetch --all", "fetch all" },
       A = { ":Git blame", "blame" },
@@ -277,11 +329,11 @@ return function()
       s = { ":G", "status" },
     }
     if rvim.plugin_loaded "vim-fugitive" then
-      key_maps.g = rvim.keymaps.fugitive
+      key_maps.g = rvim.which_key.keymaps.fugitive
     end
 
     -- lsp
-    rvim.keymaps.lsp = {
+    rvim.which_key.keymaps.lsp = {
       name = "+Code",
       a = "code action",
       A = "range code action",
@@ -293,7 +345,7 @@ return function()
       v = { ":LspToggleVirtualText", "toggle virtual text" },
     }
     if rvim.plugin_loaded "nvim-lspconfig" then
-      key_maps.v = rvim.keymaps.lsp
+      key_maps.v = rvim.which_key.keymaps.lsp
       key_maps.L = {
         name = "+LspUtils",
         i = { ":LspInfo", "info" },
@@ -303,7 +355,7 @@ return function()
     end
 
     --trouble
-    rvim.keymaps.trouble = {
+    rvim.which_key.keymaps.trouble = {
       name = "+Trouble",
       d = { ":TroubleToggle lsp_document_diagnostics", "document" },
       e = { ":TroubleToggle quickfix", "quickfix" },
@@ -312,34 +364,15 @@ return function()
       w = { ":TroubleToggle lsp_workspace_diagnostics", "workspace" },
     }
     if rvim.plugin_loaded "trouble.nvim" then
-      key_maps.v.x = rvim.keymaps.trouble
+      key_maps.v.x = rvim.which_key.keymaps.trouble
     end
 
-    -- telescope
-    rvim.keymaps.telescope = {
-      name = "+Telescope",
-      b = { ":Telescope file_browser", "file browser" },
-      c = telescope_builtin_keymaps,
-      d = telescope_dotfiles_keymaps,
-      e = { name = "+Extensions", b = { ":Telescope bg_selector", "change background" } },
-      f = { ":Telescope find_files", "find files" },
-      l = {
-        name = "+Live",
-        g = { ":Telescope live_grep", "grep" },
-        w = { ":Telescope grep_string", "current word" },
-        e = { ":Telescope grep_string_prompt", "prompt" },
-      },
-      r = telescope_config_keymaps,
-      v = telescope_lsp_keymaps,
-      g = telescope_git_keymaps,
-    }
-
     if rvim.plugin_loaded "telescope.nvim" then
-      key_maps.f = rvim.keymaps.telescope
+      key_maps.f = rvim.which_key.keymaps.telescope
     end
 
     -- Slide
-    rvim.keymaps.slide = {
+    rvim.which_key.keymaps.slide = {
       name = "+ASCII",
       A = "add 20 less than signs",
       b = "term",
@@ -354,7 +387,7 @@ return function()
     }
     if vim.bo.ft == "slide" then
       key_maps["↵"] = "execute commnd"
-      key_maps.A = rvim.keymaps.slide
+      key_maps.A = rvim.which_key.keymaps.slide
       key_maps.b.l = "show all open buffers"
       key_maps.B = {
         name = "+Background",
@@ -453,15 +486,6 @@ return function()
     -- matchup
     if rvim.plugin_loaded "vim-matchup" then
       key_maps.v.W = "where am i"
-    end
-    if rvim.plugin_loaded "project.nvim" then
-      key_maps.f.e.e = { ":Telescope projects", "projects" }
-    end
-    if rvim.plugin_loaded "telescope-media-files.nvim" then
-      key_maps.f.e.m = { ":Telescope media_files", "media files" }
-    end
-    if rvim.plugin_loaded "telescope-project.nvim" then
-      key_maps.f.e.p = { ":Telescope project", "project" }
     end
 
     -- Update Which-Key keymap
