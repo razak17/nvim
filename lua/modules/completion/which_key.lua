@@ -67,14 +67,14 @@ return function()
       I = {
         name = "+Info",
         c = {
-          ":e " .. utils.join_paths(get_config_dir(), "/lua/config/init.lua"),
+          ":e " .. utils.join_paths(get_config_dir(), "lua/config/init.lua"),
           "open config/init.lua",
         },
         C = "check health",
         m = "messages",
         M = "vim with me",
         v = {
-          ":e " .. utils.join_paths(get_config_dir(), "/init.lua"),
+          ":e " .. utils.join_paths(get_config_dir(), "init.lua"),
           "open vimrc",
         },
       },

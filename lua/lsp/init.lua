@@ -204,7 +204,7 @@ function M.setup()
 
   require("lsp.handlers").setup()
 
-  bootstrap_nlsp { config_home = utils.join_paths(get_config_dir(), "/external/nlsp-settings") }
+  bootstrap_nlsp { config_home = utils.join_paths(get_config_dir(), "external/nlsp-settings") }
 
   require("lsp.null-ls").setup(vim.bo.filetype)
 
