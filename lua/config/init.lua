@@ -45,6 +45,7 @@ function M:load()
   plug.load_compile()
 
   require("core.keymappings").setup()
+
   require("core.commands").setup()
 end
 
