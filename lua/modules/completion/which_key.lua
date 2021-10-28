@@ -15,60 +15,6 @@ return function()
   api.nvim_set_keymap("v", "<leader>", ':<c-u> :WhichKeyVisual "<space>"<CR>', { noremap = true, silent = true })
   fn["which_key#register"]("<space>", "g:which_key_map")
 
-  local telescope_builtin_keymaps = {
-    name = "+Builtin",
-    a = { ":Telescope autocommands", "autocmds" },
-    b = { ":Telescope buffers", "buffers" },
-    c = { ":Telescope commands", "commands" },
-    e = { ":Telescope quickfix", "quickfix" },
-    f = { ":Telescope builtin", "builtin" },
-    h = { ":Telescope help_tags", "help" },
-    H = { ":Telescope command_history", "history" },
-    k = { ":Telescope keymaps", "keymaps" },
-    l = { ":Telescope loclist", "loclist" },
-    r = { ":Telescope registers<CR>", "registers" },
-    T = { ":Telescope treesitter", "treesitter" },
-    v = { ":Telescope vim_options", "vim options" },
-    z = { ":Telescope current_buffer_fuzzy_find", "current file fuzzy find" },
-  }
-
-  local telescope_dotfiles_keymaps = {
-    name = "+Dotfiles",
-    b = { ":Telescope dotfiles branches", "branches" },
-    B = { ":Telescope dotfiles bcommits", "bcommits" },
-    c = { ":Telescope dotfiles commits", "commits" },
-    f = { ":Telescope dotfiles git_files", "git files" },
-    s = { ":Telescope dotfiles status", "status" },
-  }
-
-  local telescope_config_keymaps = {
-    name = "+Config",
-    b = { ":Telescope nvim_files branches", "branches" },
-    B = { ":Telescope nvim_files bcommits", "bcommits" },
-    c = { ":Telescope nvim_files commits", "commits" },
-    f = { ":Telescope nvim_files files", "nvim files" },
-    r = { ":Telescope oldfiles", "recent files" },
-    s = { ":Telescope nvim_files status", "status" },
-  }
-
-  local telescope_git_keymaps = {
-    name = "+Git",
-    b = { ":Telescope git_branches", "branches" },
-    c = { ":Telescope git_commits", "commits" },
-    C = { ":Telescope git_bcommits", "bcommits" },
-    f = { ":Telescope git_files", "files" },
-    s = { ":Telescope git_status", "status" },
-  }
-
-  local telescope_lsp_keymaps = {
-    name = "+Lsp",
-    a = { ":Telescope lsp_code_actions", "code action" },
-    A = { ":Telescope lsp_range_code_actions", "range code action" },
-    r = { ":Telescope lsp_references", "references" },
-    d = { ":Telescope lsp_document_symbols", "document_symbol" },
-    w = { ":Telescope lsp_workspace_symbols", "workspace_symbol" },
-  }
-
   rvim.keymaps = {
     defaults = {
       ["="] = "balance window",
@@ -164,6 +110,60 @@ return function()
   WhichKey.SetKeyOnFT = function()
     -- Get Which-Key keymap
     local key_maps = vim.g.which_key_map
+
+    local telescope_builtin_keymaps = {
+      name = "+Builtin",
+      a = { ":Telescope autocommands", "autocmds" },
+      b = { ":Telescope buffers", "buffers" },
+      c = { ":Telescope commands", "commands" },
+      e = { ":Telescope quickfix", "quickfix" },
+      f = { ":Telescope builtin", "builtin" },
+      h = { ":Telescope help_tags", "help" },
+      H = { ":Telescope command_history", "history" },
+      k = { ":Telescope keymaps", "keymaps" },
+      l = { ":Telescope loclist", "loclist" },
+      r = { ":Telescope registers<CR>", "registers" },
+      T = { ":Telescope treesitter", "treesitter" },
+      v = { ":Telescope vim_options", "vim options" },
+      z = { ":Telescope current_buffer_fuzzy_find", "current file fuzzy find" },
+    }
+
+    local telescope_dotfiles_keymaps = {
+      name = "+Dotfiles",
+      b = { ":Telescope dotfiles branches", "branches" },
+      B = { ":Telescope dotfiles bcommits", "bcommits" },
+      c = { ":Telescope dotfiles commits", "commits" },
+      f = { ":Telescope dotfiles git_files", "git files" },
+      s = { ":Telescope dotfiles status", "status" },
+    }
+
+    local telescope_config_keymaps = {
+      name = "+Config",
+      b = { ":Telescope nvim_files branches", "branches" },
+      B = { ":Telescope nvim_files bcommits", "bcommits" },
+      c = { ":Telescope nvim_files commits", "commits" },
+      f = { ":Telescope nvim_files files", "nvim files" },
+      r = { ":Telescope oldfiles", "recent files" },
+      s = { ":Telescope nvim_files status", "status" },
+    }
+
+    local telescope_git_keymaps = {
+      name = "+Git",
+      b = { ":Telescope git_branches", "branches" },
+      c = { ":Telescope git_commits", "commits" },
+      C = { ":Telescope git_bcommits", "bcommits" },
+      f = { ":Telescope git_files", "files" },
+      s = { ":Telescope git_status", "status" },
+    }
+
+    local telescope_lsp_keymaps = {
+      name = "+Lsp",
+      a = { ":Telescope lsp_code_actions", "code action" },
+      A = { ":Telescope lsp_range_code_actions", "range code action" },
+      r = { ":Telescope lsp_references", "references" },
+      d = { ":Telescope lsp_document_symbols", "document_symbol" },
+      w = { ":Telescope lsp_workspace_symbols", "workspace_symbol" },
+    }
 
     -- kommentary
     key_maps["/"] = { "<Plug>kommentary_line_default", "comment" }
