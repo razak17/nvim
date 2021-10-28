@@ -32,7 +32,7 @@ end
 
 function M:load()
   require("core.bootstrap"):init()
-  require "core.globals"
+  require "config.globals"
   M:init()
 
   defer()

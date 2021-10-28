@@ -1,4 +1,3 @@
--- -- TODO: handle this better
 if os.getenv "RVIM_CONFIG_DIR" then
   vim.opt.rtp:append(os.getenv "RVIM_CONFIG_DIR")
 else
