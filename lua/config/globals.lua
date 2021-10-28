@@ -9,10 +9,6 @@ local os = vim.loop.os_uname().sysname
 rvim.templates_dir = get_config_dir() .. "/external/templates"
 rvim.open_command = os == "Darwin" and "open" or "xdg-open"
 
-rvim.T = function(str)
-  return vim.api.nvim_replace_termcodes(str, true, true, true)
-end
-
 function rvim._create(f)
   table.insert(rvim._store, f)
   return #rvim._store
