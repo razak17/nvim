@@ -258,6 +258,7 @@ local function general_overrides()
     -- { "Include", { gui = "italic" } },
     -- { "Folded", { gui = "bold,italic" } },
     { "QuickFixLine", { guibg = search_bg } },
+    { "Visual", { guifg = "NONE", guibg = M.alter_color(P.bright_blue, -50) } },
     -----------------------------------------------------------------------------//
     -- Treesitter
     -----------------------------------------------------------------------------//
