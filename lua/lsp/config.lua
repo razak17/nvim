@@ -96,7 +96,7 @@ return {
   on_init_callback = nil,
   document_highlight = true,
   code_lens_refresh = true,
-  hover_diagnostics = true,
+  hover_diagnostics = false,
   lint_on_save = false,
   popup_border = "single",
 }

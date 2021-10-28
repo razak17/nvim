@@ -38,11 +38,11 @@ local function lsp_commands()
   }
 end
 
-local get_cursor_pos = function()
-  return { vim.fn.line ".", vim.fn.col "." }
-end
-
 local function lsp_hover_diagnostics()
+  local get_cursor_pos = function()
+    return { vim.fn.line ".", vim.fn.col "." }
+  end
+
   if not rvim.lsp.hover_diagnostics then
     return
   end
