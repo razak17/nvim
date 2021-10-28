@@ -2,44 +2,12 @@ _GlobalCallbacks = _GlobalCallbacks or {}
 
 _G.rvim = { _store = _GlobalCallbacks }
 
-local g, api, fn = vim.g, vim.api, vim.fn
+local fn = vim.fn
 local fmt = string.format
 
--- Global directories
-g.os = vim.loop.os_uname().sysname
-g.home = os.getenv "HOME"
-g.is_mac = g.os == "OSX"
-g.is_linux = g.os == "Linux"
-g.is_windows = g.os == "Windows"
-g.vim_path = g.home .. "/.config/rvim"
-g.cache_dir = g.home .. "/.cache/rvim"
-g.data_dir = g.home .. "/.local/share/rvim"
-g.data_path = vim.fn.stdpath "data"
-g.fnm_dir = g.home .. "/.fnm/node-versions"
-g.node_dir = g.fnm_dir .. "/v16.3.0/installation/bin/neovim-node-host"
-g.python_dir = g.cache_dir .. "/venv/neovim"
-g.plugins_dir = g.data_dir .. "/pack"
-g.lsp_dir = g.vim_path .. "/lua/lsp"
-g.lspinstall_dir = g.data_path .. "/lspinstall"
-g.lspinstaller_dir = g.data_path .. "/lsp_servers"
-g.dap_install_dir = g.cache_dir .. "/dap"
-g.dap_python = g.dap_install_dir .. "/python_dbg/bin/python"
-g.dap_node = g.dap_install_dir .. "/jsnode_dbg/vscode-node-debug2/out/src/nodeDebug.js"
-g.vsnip_dir = g.vim_path .. "/external/snippets"
-g.templates_dir = g.vim_path .. "/external/templates"
-g.session_dir = g.cache_dir .. "/session/dashboard"
-g.modules_dir = g.vim_path .. "/lua/modules"
-g.sumneko_root_path = g.lspinstall_dir .. "/lua"
-g.open_command = g.os == "Darwin" and "open" or "xdg-open"
-g.python3_host_prog = g.python_dir .. "/bin/python3"
-g.node_host_prog = g.node_dir
-g.udir = vim.g.cache_dir .. "/undodir"
-g.viewdir = vim.g.cache_dir .. "view"
-g.directory = vim.g.cache_dir .. "/swap"
-
-g["loaded_python_provider"] = 0
-g["loaded_ruby_provider"] = 0
-g["loaded_perl_provider"] = 0
+local os = vim.loop.os_uname().sysname
+rvim.templates_dir = get_config_dir() .. "/external/templates"
+rvim.open_command = os == "Darwin" and "open" or "xdg-open"
 
 rvim.T = function(str)
   return vim.api.nvim_replace_termcodes(str, true, true, true)
@@ -118,7 +86,6 @@ function rvim.augroup(name, commands)
   vim.cmd "augroup END"
 end
 
-
 ---Require a module using [pcall] and report any errors
 ---@param module string
 ---@param opts table?
@@ -127,7 +94,7 @@ function rvim.safe_require(module, opts)
   opts = opts or { silent = false }
   local ok, result = pcall(require, module)
   if not ok and not opts.silent then
-    vim.notify(result, L.ERROR, { title = fmt('Error requiring: %s', module) })
+    vim.notify(result, L.ERROR, { title = fmt("Error requiring: %s", module) })
   end
   return ok, result
 end

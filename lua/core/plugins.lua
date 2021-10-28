@@ -1,12 +1,12 @@
-local g, uv, api, fn = vim.g, vim.loop, vim.api, vim.fn
-local compile_path = g.data_dir .. "/site/lua/_compiled_rolling.lua"
+local uv, api, fn = vim.loop, vim.api, vim.fn
+local compile_path = get_runtime_dir() .. "/site/lua/_compiled_rolling.lua"
 local packer = nil
 
 local Plug = {}
 Plug.__index = Plug
 
 function Plug:get_plugins_list()
-  local modules_dir = g.modules_dir
+  local modules_dir = get_config_dir() .. "/lua/modules"
   local list = {}
   local tmp = vim.split(fn.globpath(modules_dir, "*/plugins.lua"), "\n")
   for _, f in ipairs(tmp) do
@@ -29,7 +29,7 @@ end
 
 function Plug:load_packer()
   local packer_ok = nil
-  local package_root = g.data_dir .. "/site/pack/"
+  local package_root = get_runtime_dir() .. "/site/pack/"
 
   if not packer then
     api.nvim_command "packadd packer.nvim"
@@ -41,8 +41,8 @@ function Plug:load_packer()
     return
   end
 
-  if vim.fn.isdirectory(g.data_dir .. "/site/lua") ~= 1 then
-    os.execute("mkdir -p " .. g.data_dir .. "/site/lua")
+  if vim.fn.isdirectory(get_runtime_dir() .. "/site/lua") ~= 1 then
+    os.execute("mkdir -p " .. get_runtime_dir() .. "/site/lua")
   end
 
   packer.init {
@@ -68,12 +68,12 @@ function Plug:load_packer()
 end
 
 function Plug:init_ensure_plugins()
-  local packer_dir = g.data_dir .. "/site/pack/packer/opt/packer.nvim"
+  local packer_dir = get_runtime_dir() .. "/site/pack/packer/opt/packer.nvim"
   local state = uv.fs_stat(packer_dir)
   if not state then
     local cmd = "!git clone https://github.com/wbthomason/packer.nvim " .. packer_dir
     api.nvim_command(cmd)
-    uv.fs_mkdir(g.data_dir .. "/site/lua", 511, function()
+    uv.fs_mkdir(get_runtime_dir() .. "/site/lua", 511, function()
       assert "make compile path dir failed"
     end)
     self:load_packer()

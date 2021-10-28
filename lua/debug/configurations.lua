@@ -47,7 +47,7 @@ M.python = {
       elseif rvim._exists(cwd .. "/.venv/bin/python") then
         return cwd .. "/.venv/bin/python"
       else
-        return vim.g.dap_python
+        return rvim.dap.python_dir
       end
     end,
   },

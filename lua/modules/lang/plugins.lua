@@ -20,7 +20,7 @@ lang["Pocco81/DAPInstall.nvim"] = {
   config = function()
     vim.cmd [[packadd nvim-dap]]
     local dI = require "dap-install"
-    dI.setup { installation_path = vim.g.dap_install_dir }
+    dI.setup { installation_path = rvim.dap.install_dir }
   end,
   disable = not rvim.plugin.dap_install.active,
 }

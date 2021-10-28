@@ -12,9 +12,9 @@ M.load_options = function()
     undofile = true,
 
     -- Neovim Directories
-    udir = vim.g.udir,
-    directory = vim.g.directory,
-    viewdir = vim.g.viewdir,
+    udir = get_cache_dir() .. "/undodir",
+    directory = get_cache_dir() .. "/swap",
+    viewdir = get_cache_dir() .. "/view",
 
     -- Timing
     timeout = true,

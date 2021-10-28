@@ -1,6 +1,6 @@
 return function()
   -- config
-  vim.g.vsnip_snippet_dir = vim.g.vsnip_dir
+  vim.g.vsnip_snippet_dir = get_config_dir() .. "/external/snippets"
 
   -- Mappings
   local xmap = rvim.xmap

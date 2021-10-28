@@ -80,7 +80,7 @@ function M.open_link()
   if fn.isdirectory(file) > 0 then
     vim.cmd("edit " .. file)
   else
-    fn.jobstart({ vim.g.open_command, file }, { detach = true })
+    fn.jobstart({ rvim.open_command, file }, { detach = true })
   end
 end
 

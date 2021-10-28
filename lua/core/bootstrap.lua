@@ -31,21 +31,44 @@ function _G.get_config_dir()
   return rvim_config_dir
 end
 
+---Get the full path to `$LUNARVIM_CACHE_DIR`
+---@return string
+function _G.get_cache_dir()
+  local rvim_cache_dir = os.getenv "RVIM_CACHE_DIR"
+  if not rvim_cache_dir then
+    return vim.fn.stdpath "cache"
+  end
+  return rvim_cache_dir
+end
+
 function M:init()
-  local home_dir = vim.loop.os_homedir()
+  local H = os.getenv "HOME"
+  local g, cmd = vim.g, vim.cmd
 
-  vim.opt.rtp:append(home_dir .. "/.local/share/rvim/site")
+  g.python3_host_prog = get_cache_dir() .. "/venv/neovim/bin/python3"
+  g.node_host_prog = H .. "/.fnm/node-versions/v16.3.0/installation/bin/neovim-node-host"
 
-  vim.opt.rtp:remove(home_dir .. "/.config/nvim")
-  vim.opt.rtp:remove(home_dir .. "/.config/rvim/plugin")
-  vim.opt.rtp:remove(home_dir .. "/.config/nvim/after")
-  vim.opt.rtp:append(home_dir .. "/.config/rvim")
-  vim.opt.rtp:append(home_dir .. "/.config/rvim/after")
+  g["loaded_python_provider"] = 0
+  g["loaded_ruby_provider"] = 0
+  g["loaded_perl_provider"] = 0
 
-  vim.opt.rtp:remove(home_dir .. "/.local/share/nvim/site")
-  vim.opt.rtp:remove(home_dir .. "/.local/share/nvim/site/after")
-  vim.opt.rtp:append(home_dir .. "/.local/share/rvim/site")
-  vim.opt.rtp:append(home_dir .. "/.local/share/rvim/site/after")
+  self.runtime_dir = get_runtime_dir()
+  self.config_dir = get_config_dir()
+  self.cache_path = get_cache_dir()
+
+  vim.opt.rtp:remove(join_paths(vim.fn.stdpath "data", "site"))
+  vim.opt.rtp:remove(join_paths(vim.fn.stdpath "data", "site", "after"))
+  vim.opt.rtp:prepend(join_paths(self.runtime_dir, "site"))
+  vim.opt.rtp:append(join_paths(self.runtime_dir, "site", "after"))
+
+  vim.opt.rtp:remove(vim.fn.stdpath "config")
+  vim.opt.rtp:remove(join_paths(vim.fn.stdpath "config", "after"))
+  vim.opt.rtp:prepend(self.config_dir)
+  vim.opt.rtp:append(join_paths(self.config_dir, "after"))
+
+  cmd [[let &packpath = &runtimepath]]
+  cmd [[syntax off]]
+  cmd [[filetype off]]
 end
 
 return M

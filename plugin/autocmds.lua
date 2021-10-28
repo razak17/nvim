@@ -3,6 +3,7 @@ local fn = vim.fn
 local api = vim.api
 local fmt = string.format
 local contains = vim.tbl_contains
+local utils = require "utils"
 
 local not_eligible = not vim.bo.modifiable
   or not vim.bo.buflisted
@@ -93,7 +94,7 @@ rvim.augroup("ExternalCommands", {
     events = { "BufEnter" },
     targets = { "*.png,*.jpg,*.gif" },
     command = function()
-      vim.cmd(fmt('silent! "%s | :bw"', vim.g.open_command .. " " .. fn.expand "%"))
+      vim.cmd(fmt('silent! "%s | :bw"', rvim.open_command .. " " .. fn.expand "%"))
     end,
   },
 })
@@ -129,12 +130,12 @@ rvim.augroup("Templates", {
   {
     events = { "BufNewFile" },
     targets = { "*.sh" },
-    command = "0r" .. g.templates_dir .. "/skeleton.sh",
+    command = "0r" .. rvim.templates_dir .. "/skeleton.sh",
   },
   {
     events = { "BufNewFile" },
     targets = { "*.lua" },
-    command = "0r" .. g.templates_dir .. "/skeleton.lua",
+    command = "0r" .. rvim.templates_dir .. "/skeleton.lua",
   },
 })
 
@@ -268,10 +269,10 @@ rvim.augroup("PackerSetupInit", {
   {
     events = { "BufWritePost" },
     targets = {
-      vim.g.vim_path .. "/lua/core/config.lua",
+      utils.join_paths(get_config_dir(), "/lua/core/config/init.lua"),
     },
     command = function()
-      vim.cmd [[source ~/.config/rvim/lua/core/config.lua]]
+      vim.cmd [[source ~/.config/rvim/lua/core/config/init.lua]]
       vim.cmd [[source ~/.config/rvim/lua/core/opts.lua]]
       vim.cmd [[source ~/.config/rvim/lua/core/binds.lua]]
       local plug = require "core.plugins"

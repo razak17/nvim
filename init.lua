@@ -1,16 +1,16 @@
-local cmd = vim.cmd
-
--- TODO: handle this better
-if os.getenv "RVIM_CONFIG_DIR" and os.getenv "RVIM_RUNTIME_DIR" then
-  local path_sep = vim.loop.os_uname().version:match "Windows" and "\\" or "/"
+-- -- TODO: handle this better
+if os.getenv "RVIM_CONFIG_DIR" then
   vim.opt.rtp:append(os.getenv "RVIM_CONFIG_DIR")
-  vim.opt.rtp:append(os.getenv "RVIM_RUNTIME_DIR" .. path_sep .. "site")
+else
+  vim.opt.rtp:append(get_config_dir())
 end
 
--- TODO: Whatever this is
-cmd [[let &packpath = &runtimepath]]
-cmd [[syntax off]]
-cmd [[filetype off]]
+local init_path = debug.getinfo(1, "S").source:sub(2)
+local base_dir = init_path:match("(.*[/\\])"):sub(1, -2)
+
+if not vim.tbl_contains(vim.opt.rtp:get(), base_dir) then
+  vim.opt.rtp:append(base_dir)
+end
 
 -- Load Modules
 require("config"):load()

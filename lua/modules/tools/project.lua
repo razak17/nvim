@@ -34,7 +34,7 @@ return function()
 
   -- Path where project.nvim will store the project history for use in
   -- telescope
-  settings["datapath"] = vim.g.cache_dir
+  settings["datapath"] = get_cache_dir()
 
   local status_ok, project = pcall(require, "project_nvim")
   if not status_ok then

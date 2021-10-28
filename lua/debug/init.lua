@@ -4,6 +4,12 @@ local configurations = require "dap.configurations"
 
 local M = {}
 
+rvim.dap = {
+  install_dir = get_cache_dir() .. "/dap",
+  python_dir = rvim.dap.install_dir .. "/python_dbg/bin/python",
+  node_dir = rvim.dap.install_dir .. "/jsnode_dbg/vscode-node-debug2/out/src/nodeDebug.js",
+}
+
 vim.fn.sign_define("DapBreakpoint", { text = "🛑", texthl = "", linehl = "", numhl = "" })
 vim.fn.sign_define("DapStopped", { text = "🟢", texthl = "", linehl = "", numhl = "" })
 
@@ -18,13 +24,13 @@ M.setup = function()
 
   -- JavaScript / Node
   dap.configurations.javascript = configurations.javascript
-  dap.adapters.node2 = { type = "executable", command = "node", args = { g.dap_node } }
+  dap.adapters.node2 = { type = "executable", command = "node", args = { rvim.dap.node_dir } }
 
   -- Python
   dap.configurations.python = configurations.python
   dap.adapters.python = {
     type = "executable",
-    command = g.dap_python,
+    command = rvim.dap.python_dir,
     args = { "-m", "debugpy.adapter" },
   }
 

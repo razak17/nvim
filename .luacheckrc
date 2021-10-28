@@ -1,4 +1,5 @@
 -- vim: ft=lua tw=80
+
 stds.nvim = {
   globals = {
     "rvim",
