@@ -176,7 +176,7 @@ end
 
 function M.setup()
   g.mapleader = (rvim.common.leader == "space" and " ") or rvim.common.leader
-  g.maplocalleader = (rvim.common.leader == "space" and " ") or rvim.common.leader
+  g.maplocalleader = (rvim.common.localleader == "space" and " ") or rvim.common.localleader
   M.load(rvim.keys)
 end
 
@@ -232,11 +232,11 @@ normal_mode["<Leader>aV"] = 'gg"+VG'
 normal_mode["<Leader>aD"] = 'gg"+VGd'
 
 -- actions
--- normal_mode["<Leader>="] = "<C-W>="
+normal_mode["<Leader>="] = "<C-W>="
 -- opens a horizontal split
--- normal_mode["<Leader>ah"] = "<C-W>s"
+normal_mode["<Leader>ah"] = "<C-W>s"
 -- opens a vertical split
-normal_mode["<Leader>av"] = "<C-W>vgf"
+normal_mode["<Leader>av"] = "<C-W>v"
 -- Change two horizontally split windows to vertical splits
 normal_mode["<localleader>wv"] = "<C-W>t <C-W>H<C-W>="
 -- Change two vertically split windows to horizontal splits

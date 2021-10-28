@@ -52,6 +52,7 @@ return {
   },
   common = {
     leader = "space",
+    localleader = "space",
     transparent_window = false,
     line_wrap_cursor_movement = false,
     format_on_save = true,
@@ -227,6 +228,7 @@ return {
   plugin = {
     -- SANE defaults
     SANE = { active = false },
+    packer = { active = true },
     -- debug
     debug = { active = false },
     debug_ui = { active = false },

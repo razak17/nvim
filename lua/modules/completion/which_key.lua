@@ -11,6 +11,7 @@ return function()
   g.which_key_display_names = { ["<CR>"] = "↵ ", ["<TAB>"] = "⇆ " }
 
   api.nvim_set_keymap("n", "<leader>", ':<c-u> :WhichKey "<space>"<CR>', { noremap = true, silent = true })
+  api.nvim_set_keymap("n", "<localleader>", ':<c-u> :WhichKey "<space>"<CR>', { noremap = true, silent = true })
   api.nvim_set_keymap("v", "<leader>", ':<c-u> :WhichKeyVisual "<space>"<CR>', { noremap = true, silent = true })
   fn["which_key#register"]("<space>", "g:which_key_map")
 
@@ -70,7 +71,7 @@ return function()
 
   rvim.keymaps = {
     defaults = {
-      ["="] = { "<C-W>=", "balance window" },
+      ["="] = "balance window",
       ["."] = "append period",
       [","] = "append comma",
       [";"] = "append semi-colon",
@@ -97,7 +98,7 @@ return function()
           x = "close all",
         },
         F = "resize 90%",
-        h = { "<C-W>s", "horizontal split" },
+        h = "horizontal split",
         l = "open last buffer",
         n = "no highlight",
         o = "turn on guides",
@@ -117,16 +118,6 @@ return function()
         s = "highlight cursor word",
       },
       c = { name = "+Command", a = "vertical resize 30", h = { name = "+Help", w = "word" } },
-      E = {
-        name = "+Plug",
-        c = { ":PlugCompile", "compile" },
-        C = { ":PlugClean", "clean" },
-        i = { ":PlugInstall", "install" },
-        R = { ":PlugRecompile", "recompile" },
-        s = { ":PlugSync", "sync" },
-        S = { "PlugStatus", "Status" },
-        e = { ":PlugUpdate", "update" },
-      },
       I = {
         name = "+Info",
         c = {
@@ -156,7 +147,11 @@ return function()
         L = "move right",
         N = "new",
       },
-      w = { name = "+Orientation", h = "change to horizontal", v = "change to vertical" },
+      w = {
+        name = "+Orientation",
+        h = "change to horizontal",
+        v = "change to vertical",
+      },
     },
   }
 
@@ -203,6 +198,21 @@ return function()
     }
     if rvim.plugin_loaded "nvim-dap" then
       key_maps.d = rvim.keymaps.debug
+    end
+
+    rvim.keymaps.packer = {
+      name = "+Plug",
+      c = { ":PlugCompile", "compile" },
+      C = { ":PlugClean", "clean" },
+      i = { ":PlugInstall", "install" },
+      R = { ":PlugRecompile", "recompile" },
+      s = { ":PlugSync", "sync" },
+      S = { ":PlugStatus", "Status" },
+      e = { ":PlugUpdate", "update" },
+    }
+
+    if rvim.plugin.packer.active then
+      key_maps.E = rvim.keymaps.packer
     end
 
     -- fterm
