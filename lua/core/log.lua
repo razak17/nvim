@@ -24,7 +24,7 @@ end
 --- based on Plenary.log
 ---@return log handle
 function Log:get_default()
-  return Log:new { plugin = "rvim", level = rvim.log.level }
+  return Log:new { plugin = "rvim_log", level = rvim.log.level }
 end
 
 --- Creates a log handle based on Plenary.log
@@ -49,7 +49,7 @@ end
 ---Retrieves the path of the logfile
 ---@return string path of the logfile
 function Log:get_path()
-  return string.format("%s/%s.log", vim.fn.stdpath "cache", "lunarvim")
+  return string.format("%s/%s.log", vim.fn.stdpath "cache", "rvim")
 end
 
 ---Add a log entry at TRACE level
