@@ -3,8 +3,6 @@ local vim = vim
 local M = {}
 
 M.load_options = function()
-  local opt = vim.opt
-
   local default_options = {
     encoding = "utf-8",
     fileencoding = "utf-8",
@@ -27,7 +25,7 @@ M.load_options = function()
     foldenable = true,
     foldlevelstart = 10,
     foldtext = "v:lua.folds()",
-    foldopen = vim.opt.foldopen + 'search',
+    foldopen = vim.opt.foldopen + "search",
 
     -- Splits and buffers
     splitbelow = true,
@@ -179,9 +177,8 @@ M.load_options = function()
   }
 
   ---  SETTINGS  ---
-  opt.shortmess:append "c"
-  opt.iskeyword:append "-"
-  opt.spellsuggest:prepend { 12 }
+  vim.opt.shortmess:append "c"
+  vim.opt.iskeyword:append "-"
 
   for k, v in pairs(default_options) do
     vim.opt[k] = v
@@ -218,11 +215,7 @@ M.load_commands = function()
   end
 
   o.switchbuf = "useopen,uselast"
-  -- o.titlestring = " 🐬 %t %r %m"
   o.titlestring = "%<%F%=%l/%L - nvim"
-  -- vim.o.titlestring = "%<%F%=%l/%L - nvim"
-  -- o.titleold = '%{fnamemodify(getcwd(), ":t")}'
-  vim.g.vimsyn_embed = "lPr" -- allow embedded syntax highlighting for lua,python and ruby
 
   if rvim.common.transparent_window then
     cmd "au ColorScheme * hi Normal ctermbg=none guibg=none"

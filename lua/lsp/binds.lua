@@ -1,14 +1,13 @@
 local M = {}
 
 local nnoremap, vnoremap = rvim.nnoremap, rvim.vnoremap
-local lsp_popup = { show_header = false, border = "single", focusable = false }
 
 local function lsp_mappings(client)
   -- Definition
   if client and client.supports_method "textDocument/definition" then
     nnoremap("gd", vim.lsp.buf.definition)
     nnoremap("ge", function()
-      require("lsp.peek").Peek("definition")
+      require("lsp.peek").Peek "definition"
     end)
   end
   -- Declaration
@@ -23,7 +22,7 @@ local function lsp_mappings(client)
   if client and client.supports_method "textDocument/implementation" then
     nnoremap("gi", vim.lsp.buf.implementation)
     nnoremap("gl", function()
-      require("lsp.peek").Peek("implementation")
+      require("lsp.peek").Peek "implementation"
     end)
   end
   -- Hover
@@ -34,7 +33,7 @@ local function lsp_mappings(client)
   if client and client.supports_method "textDocument/type_definition" then
     nnoremap("gE", vim.lsp.buf.type_definition)
     nnoremap("gL", function()
-      require("lsp.peek").Peek("typeDefinition")
+      require("lsp.peek").Peek "typeDefinition"
     end)
   end
   -- Rename
@@ -53,6 +52,8 @@ local function lsp_mappings(client)
 end
 
 local function lsp_leader_keymaps(client)
+  local lsp_popup = { show_header = false, border = "single", focusable = false }
+
   -- Formatting
   if client and client.supports_method "textDocument/formatting" then
     nnoremap("<leader>vf", ":LspFormat<CR>")
@@ -77,7 +78,7 @@ local function lsp_leader_keymaps(client)
   end
 end
 
-function M.setup(client)
+function M:init(client)
   lsp_mappings(client)
   lsp_leader_keymaps(client)
 end
