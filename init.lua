@@ -1,9 +1,3 @@
-if os.getenv "RVIM_CONFIG_DIR" then
-  vim.opt.rtp:append(os.getenv "RVIM_CONFIG_DIR")
-else
-  vim.opt.rtp:append(get_config_dir())
-end
-
 local init_path = debug.getinfo(1, "S").source:sub(2)
 local base_dir = init_path:match("(.*[/\\])"):sub(1, -2)
 
