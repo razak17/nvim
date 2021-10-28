@@ -1,5 +1,5 @@
 return function()
-  local telescope_ok, telescope = pcall(require, "telescope")
+  local telescope_ok, telescope = rvim.safe_require "telescope"
   if not telescope_ok then
     return
   end

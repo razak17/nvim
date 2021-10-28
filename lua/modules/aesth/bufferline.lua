@@ -1,5 +1,5 @@
 return function()
-  local bufferline_ok, bufferline = pcall(require, "bufferline")
+  local bufferline_ok, bufferline = rvim.safe_require "bufferline"
   if not bufferline_ok then
     return
   end
