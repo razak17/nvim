@@ -252,7 +252,7 @@ return {
     autotag = { active = true },
     matchup = { active = false },
     -- editor
-    ajk = { active = false },
+    ajk = { active = true },
     easy_align = { active = false },
     cool = { active = true },
     surround = { active = true },

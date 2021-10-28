@@ -2,7 +2,7 @@ local editor = {}
 
 local utils = require "utils"
 
-editor["rhysd/accelerated-jk"] = {
+editor["xiyaowong/accelerated-jk.nvim"] = {
   opt = true,
   event = { "BufWinEnter" },
   config = utils.load_conf("editor", "ajk"),
