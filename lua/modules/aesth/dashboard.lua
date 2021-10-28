@@ -1,7 +1,5 @@
 return function()
-  local join = function(k, v, c)
-    return { k .. string.rep(" ", c) .. v }
-  end
+  local utils = require "utils"
 
   rvim.dashboard = {
     custom_header = {
@@ -22,13 +20,19 @@ return function()
     save_session = function()
       vim.cmd "SessionSave"
     end,
-    session_directory = get_cache_dir() .. "/session/dashboard",
+    session_directory = utils.join_paths(get_cache_dir(), "sessions", "dashboard"),
   }
 
   vim.g.dashboard_disable_at_vimenter = rvim.dashboard.disable_at_vim_enter
   vim.g.dashboard_custom_header = rvim.dashboard.custom_header
   vim.g.dashboard_default_executive = rvim.dashboard.default_executive
   vim.g.dashboard_disable_statusline = rvim.dashboard.disable_statusline
+  vim.g.dashboard_session_directory = rvim.dashboard.session_directory
+
+  local join = function(k, v, c)
+    return { k .. string.rep(" ", c) .. v }
+  end
+
   vim.g.dashboard_custom_section = {
     a = { description = join("  Find Files", "<leader>ff", 13), command = "Telescope find_files" },
     b = {
@@ -40,15 +44,8 @@ return function()
     e = { description = join("  Recent Projects", "<leader>fee", 8), command = "Telescope projects" },
   }
 
-  vim.cmd 'let g:dashboard_session_directory = "~/.cache/rvim/session/dashboard"'
-  vim.cmd "let packages = len(globpath('~/.local/share/rvim/site/pack/packer/*', '*', 0, 1))"
-
-  vim.api.nvim_exec(
-    [[
-    let g:dashboard_custom_footer = ['  Neovim loaded '..packages..' plugins']
-  ]],
-    false
-  )
+  local num_plugins_loaded = #vim.fn.globpath(get_runtime_dir() .. "/site/pack/packer/*", "*", 0, 1)
+  vim.g.dashboard_custom_footer = { "  Neovim loaded " .. num_plugins_loaded .. " plugins" }
 
   rvim.augroup("TelescopeSession", {
     events = { "VimLeavePre" },
