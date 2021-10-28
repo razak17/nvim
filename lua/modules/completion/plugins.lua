@@ -34,7 +34,9 @@ completion["hrsh7th/nvim-cmp"] = {
 
 completion["hrsh7th/vim-vsnip"] = {
   event = "InsertEnter",
-  config = utils.load_conf("completion", "vsnip"),
+  config = function()
+    vim.g.vsnip_snippet_dir = get_config_dir() .. "/external/snippets"
+  end,
   disable = not rvim.plugin.vsnip.active,
 }
 

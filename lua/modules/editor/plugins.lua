@@ -10,39 +10,16 @@ editor["xiyaowong/accelerated-jk.nvim"] = {
 }
 
 editor["tpope/vim-surround"] = {
-  config = function()
-    local xmap = rvim.xmap
-    xmap("S", "<Plug>VSurround")
-    xmap("S", "<Plug>VSurround")
-  end,
   disable = not rvim.plugin.surround.active,
 }
 
 editor["monaqa/dial.nvim"] = {
   event = { "BufWinEnter" },
-  config = function()
-    vim.cmd [[
-      nmap <C-a> <Plug>(dial-increment)
-      nmap <C-x> <Plug>(dial-decrement)
-      vmap <C-a> <Plug>(dial-increment)
-      vmap <C-x> <Plug>(dial-decrement)
-      vmap g<C-a> <Plug>(dial-increment-additional)
-      vmap g<C-x> <Plug>(dial-decrement-additional)
-    ]]
-  end,
   disable = not rvim.plugin.dial.active,
 }
 
 editor["junegunn/vim-easy-align"] = {
   event = { "BufReadPre", "BufNewFile" },
-  config = function()
-    local nmap = rvim.nmap
-    local xmap = rvim.xmap
-    local vmap = rvim.vmap
-    vmap("<Enter>", "<Plug>(EasyAlign)")
-    nmap("ga", "<Plug>(EasyAlign)")
-    xmap("ga", "<Plug>(EasyAlign)")
-  end,
   disable = not rvim.plugin.easy_align.active,
 }
 

@@ -1,5 +1,5 @@
 local g = vim.g
-local u = require "utils"
+local utils = require "utils"
 
 local M = {}
 
@@ -120,6 +120,7 @@ rvim.keys = {
     ["<Tab>"] = { [[getcmdtype() == "/" || getcmdtype() == "?" ? "<CR>/<C-r>/" : "<C-z>"]], { expr = true } },
     ["<S-Tab>"] = { [[getcmdtype() == "/" || getcmdtype() == "?" ? "<CR>?<C-r>/" : "<S-Tab>"]], { expr = true } },
   },
+  select_mode = {},
 }
 
 local generic_opts_any = { noremap = true, silent = true }
@@ -131,6 +132,7 @@ local generic_opts = {
   command_mode = { noremap = true, silent = false },
   visual_mode = generic_opts_any,
   visual_block_mode = generic_opts_any,
+  select_mode = generic_opts_any,
 }
 
 local mode_adapters = {
@@ -139,7 +141,9 @@ local mode_adapters = {
   term_mode = "t",
   command_mode = "c",
   visual_mode = "v",
+  _mode = "v",
   visual_block_mode = "x",
+  select_mode = "s",
 }
 -- Set key mappings individually
 -- @param mode The keymap mode, can be one of the keys of mode_adapters
@@ -281,7 +285,7 @@ normal_mode["<leader>nf"] = { [[:e <C-R>=expand("%:p:h") . "/" <CR>]], noisy }
 -- create a new file in the same directory
 normal_mode["<leader>ns"] = { [[:vsp <C-R>=expand("%:p:h") . "/" <CR>]], noisy }
 
--- Quotes
+-- Wrap
 normal_mode['<leader>"'] = [[ciw"<c-r>""<esc>]]
 normal_mode["<leader>`"] = [[ciw`<c-r>"`<esc>]]
 normal_mode["<leader>'"] = [[ciw'<c-r>"'<esc>]]
@@ -306,7 +310,7 @@ term_mode["<leader><Tab>"] = [[<C-\><C-n>:close \| :bnext<cr>]]
 
 -- Alternate way to save
 normal_mode["<C-s>"] = function()
-  u.save_and_notify()
+  utils.save_and_notify()
 end
 
 -- if the file under the cursor doesn't exist create it
@@ -315,41 +319,111 @@ end
 -- this makes the cfile -> buffers/file rather than my_dir/buffer/file.lua
 -- Credit: 1,2
 normal_mode["gf"] = function()
-  u.open_file_or_create_new()
+  utils.open_file_or_create_new()
 end
 
 -- GX - replicate netrw functionality
 normal_mode["gX"] = function()
-  u.open_link()
+  utils.open_link()
 end
 
 -- toggle_list
 normal_mode["<leader>ls"] = function()
-  u.toggle_list "c"
+  utils.toggle_list "c"
 end
 
 normal_mode["<leader>li"] = function()
-  u.toggle_list "l"
+  utils.toggle_list "l"
 end
 
 normal_mode["<Leader>IM"] = function()
-  u.ColorMyPencils()
+  utils.ColorMyPencils()
 end
 
 normal_mode["<leader>aR"] = function()
-  u.EmptyRegisters()
+  utils.EmptyRegisters()
 end
 
 normal_mode["<Leader>a;"] = function()
-  u.OpenTerminal()
+  utils.OpenTerminal()
 end
 
 normal_mode["<leader>ao"] = function()
-  u.TurnOnGuides()
+  utils.TurnOnGuides()
 end
 
 normal_mode["<leader>ae"] = function()
-  u.TurnOffGuides()
+  utils.TurnOffGuides()
+end
+
+-----------------------------------------------------------------------------//
+-- Plugins
+-----------------------------------------------------------------------------//
+local visual_block_mode = rvim.keys.visual_block_mode
+
+-- Vsnip
+if rvim.plugin.vsnip.active then
+  visual_block_mode["<C-x>"] = { "<Plug>(vsnip-cut-text)", { noremap = false, silent = true } }
+  visual_block_mode["<C-l>"] = { "<Plug>(vsnip-select-text)", { noremap = false, silent = true } }
+  normal_mode["<leader>cs"] = ":VsnipOpen<CR> 1<CR><CR>"
+  rvim.keys.insert_mode["<C-l>"] = {
+    "vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'",
+    { noremap = false, silent = true, expr = true },
+  }
+  rvim.keys.select_mode["<C-l>"] = {
+    "vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'",
+    { noremap = false, silent = true, expr = true },
+  }
+end
+
+if rvim.plugin.dial.active then
+  normal_mode["<C-a>"] = { "<Plug>(dial-increment)", { noremap = false, silent = true } }
+  normal_mode["<C-x>"] = { "<Plug>(dial-decrement)", { noremap = false, silent = true } }
+  visual_mode["<C-a>"] = { "<Plug>(dial-increment)", { noremap = false, silent = true } }
+  visual_mode["<C-x>"] = { "<Plug>(dial-decrement)", { noremap = false, silent = true } }
+  visual_mode["g<C-a>"] = { "<Plug>(dial-increment-additional)", { noremap = false, silent = true } }
+  visual_mode["g<C-x>"] = { "<Plug>(dial-decrement-additional)", { noremap = false, silent = true } }
+end
+
+if rvim.plugin.surround.active then
+  visual_block_mode["S"] = { "<Plug>VSurround", { noremap = false, silent = true } }
+  visual_block_mode["S"] = { "<Plug>VSurround", { noremap = false, silent = true } }
+end
+
+if rvim.plugin.easy_align.active then
+  local nmap = rvim.nmap
+  local xmap = rvim.xmap
+  local vmap = rvim.vmap
+  vmap("<Enter>", "<Plug>(EasyAlign)")
+  nmap("ga", "<Plug>(EasyAlign)")
+  xmap("ga", "<Plug>(EasyAlign)")
+end
+
+if rvim.plugin.kommentary.active then
+  visual_block_mode["<leader>/"] = { "<Plug>kommentary_visual_default", { noremap = false, silent = true } }
+end
+
+if rvim.plugin.eft.active then
+  local xmap = rvim.xmap
+  local nmap = rvim.nmap
+  local omap = rvim.omap
+  local opts = { expr = true }
+  nmap(";", "v:lua.enhance_ft_move(';')", opts)
+  xmap(";", "v:lua.enhance_ft_move(';')", opts)
+  nmap("f", "v:lua.enhance_ft_move('f')", opts)
+  xmap("f", "v:lua.enhance_ft_move('f')", opts)
+  omap("f", "v:lua.enhance_ft_move('f')", opts)
+  nmap("F", "v:lua.enhance_ft_move('F')", opts)
+  xmap("F", "v:lua.enhance_ft_move('F')", opts)
+  omap("F", "v:lua.enhance_ft_move('F')", opts)
+end
+
+if rvim.plugin.fterm.active then
+  local nnoremap = rvim.nnoremap
+  local tnoremap = rvim.tnoremap
+  nnoremap("<F12>", '<CMD>lua require("FTerm").toggle()<CR>')
+  tnoremap("<F12>", '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>')
+  nnoremap("<leader>en", '<CMD>lua require("FTerm").open()<CR>')
 end
 
 return M

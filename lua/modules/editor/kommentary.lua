@@ -8,8 +8,6 @@ return function()
       require("kommentary.config").configure_language(f, { single_line_comment_string = "#" })
     end
   end
-  -- Mappings
-  rvim.vmap("<leader>/", "<Plug>kommentary_visual_default")
 end
 
 

@@ -258,7 +258,7 @@ return {
     surround = { active = true },
     colorizer = { active = false },
     kommentary = { active = true },
-    dial = { active = false },
+    dial = { active = true },
     fold_cycle = { active = false },
     eft = { active = false },
     cursorword = { active = false },

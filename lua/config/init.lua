@@ -44,9 +44,9 @@ function M:load()
   plug.ensure_plugins()
   plug.load_compile()
 
-  require("core.keymappings").setup()
-
   require("core.commands").setup()
+
+  require("core.keymappings").setup()
 end
 
 return M
