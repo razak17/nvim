@@ -32,6 +32,9 @@ lang["jbyuki/one-small-step-for-vimkind"] = {
 
 -- Lsp
 lang["williamboman/nvim-lsp-installer"] = {
+  requires = {
+    "neovim/nvim-lspconfig",
+  },
   disable = not rvim.plugin.lsp_installer.active,
 }
 
@@ -40,7 +43,6 @@ lang["antoinemadec/FixCursorHold.nvim"] = {
 }
 
 lang["neovim/nvim-lspconfig"] = {
-  event = "BufReadPre",
   config = utils.load_conf("lang", "lspconfig"),
   disable = not rvim.plugin.lspconfig.active,
 }
@@ -103,7 +105,7 @@ lang["kevinhwang91/nvim-bqf"] = {
 -- Treesitter
 lang["nvim-treesitter/nvim-treesitter"] = {
   branch = "0.5-compat",
-  after = "telescope.nvim",
+  -- after = "telescope.nvim",
   config = utils.load_conf("lang", "treesitter"),
   disable = not rvim.plugin.treesitter.active,
 }
