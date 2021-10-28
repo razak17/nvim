@@ -10,7 +10,7 @@ function Log:add_entry(msg, level)
     self.__handle[level:lower()](msg)
     return
   end
-  local status_ok, plenary = pcall(require, "plenary")
+  local status_ok, plenary = rvim.safe_require "plenary"
   if status_ok then
     local default_opts = { plugin = "rvim", level = rvim.log.level }
     local handle = plenary.log.new(default_opts)
@@ -31,7 +31,7 @@ end
 ---@param opts these are passed verbatim to Plenary.log
 ---@return log handle
 function Log:new(opts)
-  local status_ok, _ = pcall(require, "plenary.log")
+  local status_ok, _ = rvim.safe_require "plenary.log"
   if not status_ok then
     return nil
   end

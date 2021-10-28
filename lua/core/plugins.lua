@@ -36,7 +36,7 @@ function Plug:load_packer()
     packer = require "packer"
   end
 
-  packer_ok, packer = pcall(require, "packer")
+  packer_ok, packer = rvim.safe_require "packer"
   if not packer_ok then
     return
   end

@@ -5,8 +5,8 @@ return function()
   Keymap, Execute, G = Api.nvim_set_keymap, Api.nvim_command, vim.g
 
   local Log = require "core.log"
-  local status_ok, gl = pcall(require, "galaxyline")
-  local status_okc, condition = pcall(require, "galaxyline.condition")
+  local status_ok, gl = rvim.safe_require "galaxyline"
+  local status_okc, condition = rvim.safe_require "galaxyline.condition"
   if not status_ok and not status_okc then
     Log:debug "Failed to galaxyline"
     return

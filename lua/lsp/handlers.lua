@@ -19,7 +19,7 @@ function M.setup()
       end
 
       local diagnostics = result.diagnostics
-      local ok, vim_diag = pcall(require, "vim.diagnostic")
+      local ok, vim_diag = rvim.safe_require "vim.diagnostic"
       if ok then
         -- FIX: why can't we just use vim.diagnostic.get(buf_id)?
         config.signs = true
@@ -98,7 +98,7 @@ function M.show_line_diagnostics()
     "LspDiagnosticsFloatingInformation",
     "LspDiagnosticsFloatingHint",
   }
-  local ok, vim_diag = pcall(require, "vim.diagnostic")
+  local ok, vim_diag = rvim.safe_require "vim.diagnostic"
   if ok then
     local buf_id = vim.api.nvim_win_get_buf(0)
     local win_id = vim.api.nvim_get_current_win()

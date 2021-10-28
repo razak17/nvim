@@ -36,7 +36,7 @@ return function()
   -- telescope
   settings["datapath"] = get_cache_dir()
 
-  local status_ok, project = pcall(require, "project_nvim")
+  local status_ok, project = rvim.safe_require "project_nvim"
   if not status_ok then
     return
   end

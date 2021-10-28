@@ -33,7 +33,7 @@ return function()
     },
   }
 
-  local status_ok, nvim_tree_config = pcall(require, "nvim-tree.config")
+  local status_ok, nvim_tree_config = rvim.safe_require "nvim-tree.config"
   if not status_ok then
     return
   end

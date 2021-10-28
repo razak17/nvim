@@ -5,7 +5,7 @@ return function()
     borderchars = { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
   }
 
-  local status_ok, actions = pcall(require, "telescope.actions")
+  local status_ok, actions = rvim.safe_require "telescope.actions"
   if not status_ok then
     return
   end

@@ -24,7 +24,7 @@ end
 local ts_playground_loaded, ts_hl_info
 function M.inspect_token()
   if not ts_playground_loaded then
-    ts_playground_loaded, ts_hl_info = pcall(require, "nvim-treesitter-playground.hl-info")
+    ts_playground_loaded, ts_hl_info = rvim.safe_require "nvim-treesitter-playground.hl-info"
   end
   if vim.tbl_contains(rvim.treesitter.get_filetypes(), vim.bo.filetype) then
     ts_hl_info.show_hl_captures()

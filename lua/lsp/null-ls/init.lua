@@ -4,7 +4,7 @@ local formatters = require "lsp.null-ls.formatters"
 local linters = require "lsp.null-ls.linters"
 
 function M:setup()
-  local status_ok, null_ls = pcall(require, "null-ls")
+  local status_ok, null_ls = rvim.safe_require "null-ls"
   if not status_ok then
     return
   end
@@ -34,4 +34,3 @@ function M:setup()
 end
 
 return M
-

@@ -133,7 +133,7 @@ function M.global_capabilities()
     },
   }
 
-  local status_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
+  local status_ok, cmp_nvim_lsp = rvim.safe_require "cmp_nvim_lsp"
   if status_ok then
     capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
   end
@@ -180,7 +180,7 @@ end
 
 local function bootstrap_nlsp(opts)
   opts = opts or {}
-  local lsp_settings_status_ok, lsp_settings = pcall(require, "nlspsettings")
+  local lsp_settings_status_ok, lsp_settings = rvim.safe_require "nlspsettings"
   if lsp_settings_status_ok then
     lsp_settings.setup(opts)
   end
@@ -197,7 +197,7 @@ end
 function M.setup()
   Log:debug "Setting up LSP support"
 
-  local lsp_status_ok, _ = pcall(require, "lspconfig")
+  local lsp_status_ok, _ = rvim.safe_require "lspconfig"
   if not lsp_status_ok then
     return
   end

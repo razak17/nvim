@@ -1,5 +1,5 @@
 return function()
-  local status_ajk_ok, ajk = pcall(require, "accelerated-jk")
+  local status_ajk_ok, ajk = rvim.safe_require "accelerated-jk"
   if not status_ajk_ok then
     return
   end
