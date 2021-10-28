@@ -175,7 +175,7 @@ function M.global_on_attach(client, bufnr)
   lsp_code_lens_refresh(client)
   lsp_commands()
   hover_diagnostics()
-  require("lsp.binds").init(client)
+  require("lsp.binds"):init(client)
 end
 
 local function bootstrap_nlsp(opts)
