@@ -414,21 +414,6 @@ if rvim.plugin.easy_align.active then
   vmap["<Enter>"] = "<Plug>(EasyAlign)"
 end
 
-if rvim.plugin.eft.active then
-  local xmap = rvim.xmap
-  local nmap = rvim.nmap
-  local omap = rvim.omap
-  local opts = { expr = true }
-  nmap(";", "v:lua.enhance_ft_move(';')", opts)
-  xmap(";", "v:lua.enhance_ft_move(';')", opts)
-  nmap("f", "v:lua.enhance_ft_move('f')", opts)
-  xmap("f", "v:lua.enhance_ft_move('f')", opts)
-  omap("f", "v:lua.enhance_ft_move('f')", opts)
-  nmap("F", "v:lua.enhance_ft_move('F')", opts)
-  xmap("F", "v:lua.enhance_ft_move('F')", opts)
-  omap("F", "v:lua.enhance_ft_move('F')", opts)
-end
-
 if rvim.plugin.playground.active then
   rvim.nnoremap("<leader>aE", function()
     require("utils").inspect_token()

@@ -4,8 +4,6 @@ return function()
     return
   end
 
-  local T = rvim.T
-
   require("core.highlights").plugin(
     "Cmp",
     { "CmpItemAbbr", { inherit = "Pmenu", gui = "NONE" } },
@@ -32,6 +30,8 @@ return function()
     end
     return false
   end
+
+  local T = rvim.T
 
   rvim.cmp = {
     setup = {

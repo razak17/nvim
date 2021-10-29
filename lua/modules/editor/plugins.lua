@@ -29,11 +29,6 @@ editor["razak17/vim-cursorword"] = {
   disable = not rvim.plugin.cursorword.active,
 }
 
-editor["hrsh7th/vim-eft"] = {
-  config = utils.load_conf("editor", "eft"),
-  disable = not rvim.plugin.eft.active,
-}
-
 editor["norcalli/nvim-colorizer.lua"] = {
   event = { "BufReadPre", "BufNewFile" },
   config = function()
