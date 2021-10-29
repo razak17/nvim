@@ -406,12 +406,12 @@ end
 
 -- TODO: COnvert mappings below to use new format
 if rvim.plugin.easy_align.active then
-  local nmap = rvim.nmap
-  local xmap = rvim.xmap
-  local vmap = rvim.vmap
-  vmap("<Enter>", "<Plug>(EasyAlign)")
-  nmap("ga", "<Plug>(EasyAlign)")
-  xmap("ga", "<Plug>(EasyAlign)")
+  local nmap = rvim.keys.nmap
+  local xmap = rvim.keys.xmap
+  local vmap = rvim.keys.vmap
+  nmap["ga"] = "<Plug>(EasyAlign)"
+  xmap["ga"] = "<Plug>(EasyAlign)"
+  vmap["<Enter>"] = "<Plug>(EasyAlign)"
 end
 
 if rvim.plugin.eft.active then

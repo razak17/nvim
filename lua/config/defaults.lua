@@ -254,7 +254,7 @@ return {
     matchup = { active = false },
     -- editor
     ajk = { active = true },
-    easy_align = { active = false },
+    easy_align = { active = true },
     cool = { active = true },
     surround = { active = true },
     colorizer = { active = false },
