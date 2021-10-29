@@ -112,12 +112,6 @@ lang["nvim-treesitter/nvim-treesitter"] = {
 
 lang["nvim-treesitter/playground"] = {
   cmd = "TSPlaygroundToggle",
-  config = function()
-    local nnoremap = rvim.nnoremap
-    nnoremap("<leader>aE", function()
-      require("utils").inspect_token()
-    end)
-  end,
   module = "nvim-treesitter-playground",
   disable = not rvim.plugin.playground.active,
 }
@@ -126,10 +120,6 @@ lang["p00f/nvim-ts-rainbow"] = { after = "nvim-treesitter", disable = not rvim.p
 
 lang["andymass/vim-matchup"] = {
   event = "VimEnter",
-  config = function()
-    local nnoremap = rvim.nnoremap
-    nnoremap("<Leader>vW", ":<c-u>MatchupWhereAmI?<CR>")
-  end,
   after = "nvim-treesitter",
   disable = not rvim.plugin.matchup.active,
 }

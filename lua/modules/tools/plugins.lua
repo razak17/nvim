@@ -82,9 +82,6 @@ tools["kristijanhusak/vim-dadbod-ui"] = {
     vim.g.db_ui_use_nerd_fonts = 1
     vim.g.db_ui_winwidth = 35
     vim.g.db_ui_save_location = os.getenv "HOME" .. "/.cache/vim/db_ui_queries"
-    -- vim.g.dbs = load_dbs()
-    local nnoremap = rvim.nnoremap
-    nnoremap("<Leader>od", ":DBUIToggle<CR>")
   end,
   requires = {
     { "tpope/vim-dadbod", opt = true },

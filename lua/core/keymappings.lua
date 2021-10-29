@@ -1,3 +1,133 @@
+-----------------------------------------------------------------------------//
+-- Defaults
+-----------------------------------------------------------------------------//
+rvim.keys = {
+  ---@usage change or add keymappings for normal mode
+  nmap = {},
+
+  ---@usage change or add keymappings for visual block mode
+  xmap = {},
+
+  ---@usage change or add keymappings for insert mode
+  imap = {},
+
+  ---@usage change or add keymappings for visual mode
+  vmap = {},
+
+  ---@usage change or add keymappings for operator mode
+  omap = {},
+
+  ---@usage change or add keymappings for terminal mode
+  tmap = {},
+
+  ---@usage change or add keymappings for select mode
+  smap = {},
+
+  ---@usage change or add keymappings for command mode
+  cmap = {},
+
+  ---@usage change or add keymappings for recursive normal mode
+  nnoremap = {
+    -- Undo
+    ["<C-z>"] = ":undo<CR>",
+
+    -- remap esc to use cc
+    ["<C-c>"] = "<Esc>",
+
+    -- Better window movement
+    ["<C-h>"] = "<C-w>h",
+    ["<C-n>"] = "<C-w>j",
+    ["<C-k>"] = "<C-w>k",
+    ["<C-l>"] = "<C-w>l",
+
+    -- Move current line / block with Alt-j/k a la vscode.
+    ["<A-j>"] = ":m .+1<CR>==",
+    ["<A-k>"] = ":m .-2<CR>==",
+
+    -- Disable arrows in normal mode
+    ["<down>"] = "<nop>",
+    ["<up>"] = "<nop>",
+    ["<left>"] = "<nop>",
+    ["<right>"] = "<nop>",
+  },
+
+  ---@usage change or add keymappings for recursive visual block mode
+  xnoremap = {
+    -- Move selected line / block of text in visual mode
+    ["K"] = ":m '<-2<CR>gv=gv",
+    ["N"] = ":m '>+1<CR>gv=gv",
+
+    -- Paste in visual mode multiple times
+    ["p"] = "pgvy",
+
+    -- Repeat last substitute with flags
+    ["&"] = "<cmd>&&<CR>",
+  },
+
+  ---@usage change or add keymappings for recursive insert mode
+  inoremap = {
+    -- Start new line from any cursor position
+    ["<S-Return>"] = "<C-o>o",
+
+    -- Disable arrows in insert mode
+    ["<down>"] = "<nop>",
+    ["<up>"] = "<nop>",
+    ["<left>"] = "<nop>",
+    ["<right>"] = "<nop>",
+  },
+
+  ---@usage change or add keymappings for recursive visual mode
+  vnoremap = {
+    -- Better indenting
+    ["<"] = "<gv",
+    [">"] = ">gv",
+
+    -- search visual selection
+    ["//"] = [[y/<C-R>"<CR>]],
+
+    -- find visually selected text
+    ["*"] = [[y/<C-R>"<CR>]],
+
+    -- make . work with visually selected lines
+    ["."] = ":norm.<CR>",
+
+    -- when going to the end of the line in visual mode ignore whitespace characters
+    ["$"] = "g_",
+  },
+
+  ---@usage change or add keymappings for recursive operator mode
+  onoremap = {},
+
+  ---@usage change or add keymappings for recursive terminal mode
+  tnoremap = {
+    ["<esc>"] = "<C-\\><C-n>:q!<CR>",
+    ["jk"] = "<C-\\><C-n>",
+    ["<C-h>"] = "<C\\><C-n><C-W>h",
+    ["<C-j>"] = "<C-\\><C-n><C-W>j",
+    ["<C-k>"] = "<C-\\><C-n><C-W>k",
+    ["<C-l>"] = "<C-\\><C-n><C-W>l",
+    ["]t"] = "<C-\\><C-n>:tablast<CR>",
+    ["[t"] = "<C-\\><C-n>:tabnext<CR>",
+    ["<S-Tab>"] = "<C-\\><C-n>:bprev<CR>",
+  },
+
+  ---@usage change or add keymappings for recursive select mode
+  snoremap = {},
+
+  ---@usage change or add keymappings for recursive command mode
+  cnoremap = {
+    -- smooth searching, allow tabbing between search results similar to using <c-g>
+    -- or <c-t> the main difference being tab is easier to hit and remapping those keys
+    -- to these would swallow up a tab mapping
+    ["<Tab>"] = { [[getcmdtype() == "/" || getcmdtype() == "?" ? "<CR>/<C-r>/" : "<C-z>"]], { expr = true } },
+    ["<S-Tab>"] = { [[getcmdtype() == "/" || getcmdtype() == "?" ? "<CR>?<C-r>/" : "<S-Tab>"]], { expr = true } },
+  },
+}
+
+-----------------------------------------------------------------------------//
+-- Appended
+-----------------------------------------------------------------------------//
+
 local nnoremap, cnoremap, tnoremap, vnoremap, xnoremap, inoremap =
   rvim.keys.nnoremap, rvim.keys.cnoremap, rvim.keys.tnoremap, rvim.keys.vnoremap, rvim.keys.xnoremap, rvim.keys.inoremap
 
@@ -215,6 +345,14 @@ if not rvim.plugin_loaded "accelerated-jk.nvim" then
   nnoremap["n"] = "j"
 end
 
+if rvim.plugin.bufferline.active then
+  nnoremap["<Leader>bn"] = ":BufferLineMoveNext<CR>"
+  nnoremap["<Leader>bb"] = ":BufferLineMovePrev<CR>"
+  nnoremap["<TAB>"] = ":BufferLineCycleNext<CR>"
+  nnoremap["<S-TAB>"] = ":BufferLineCyclePrev<CR>"
+  nnoremap["gb"] = ":BufferLinePick<CR>"
+end
+
 -- Vsnip
 if rvim.plugin.vsnip.active then
   xnoremap["<C-x>"] = { "<Plug>(vsnip-cut-text)", { noremap = false, silent = true } }
@@ -248,14 +386,6 @@ if rvim.plugin.kommentary.active then
   xnoremap["<leader>/"] = { "<Plug>kommentary_visual_default", { noremap = false, silent = true } }
 end
 
-if rvim.plugin.bufferline.active then
-  nnoremap["<Leader>bn"] = ":BufferLineMoveNext<CR>"
-  nnoremap["<Leader>bb"] = ":BufferLineMovePrev<CR>"
-  nnoremap["<TAB>"] = ":BufferLineCycleNext<CR>"
-  nnoremap["<S-TAB>"] = ":BufferLineCyclePrev<CR>"
-  nnoremap["gb"] = ":BufferLinePick<CR>"
-end
-
 if rvim.plugin.fterm.active then
   nnoremap["<F12>"] = '<cmd>lua require("FTerm").toggle()<CR>'
   tnoremap["<F12>"] = '<C-\\><C-n><cmd>lua require("FTerm").toggle()<CR>'
@@ -285,4 +415,14 @@ if rvim.plugin.eft.active then
   nmap("F", "v:lua.enhance_ft_move('F')", opts)
   xmap("F", "v:lua.enhance_ft_move('F')", opts)
   omap("F", "v:lua.enhance_ft_move('F')", opts)
+end
+
+if rvim.plugin.playground.active then
+  rvim.nnoremap("<leader>aE", function()
+    require("utils").inspect_token()
+  end)
+end
+
+if rvim.plugin.matchup.active then
+  rvim.nnoremap("<Leader>vW", ":<c-u>MatchupWhereAmI?<CR>")
 end
