@@ -404,7 +404,7 @@ if rvim.plugin.which_key.active then
   vnoremap["<leader>"] = ':<c-u> :WhichKeyVisual "<space>"<CR>'
 end
 
--- TODO: COnvert mappings below to use new format
+-- easy_align
 if rvim.plugin.easy_align.active then
   local nmap = rvim.keys.nmap
   local xmap = rvim.keys.xmap
@@ -414,12 +414,14 @@ if rvim.plugin.easy_align.active then
   vmap["<Enter>"] = "<Plug>(EasyAlign)"
 end
 
+-- ts playground
 if rvim.plugin.playground.active then
   nnoremap["<leader>aE"] = function()
     require("utils").inspect_token()
   end
 end
 
+-- vim-matchup
 if rvim.plugin.matchup.active then
-  rvim.nnoremap("<Leader>vW", ":<c-u>MatchupWhereAmI?<CR>")
+  nnoremap["<Leader>vW"] = ":<c-u>MatchupWhereAmI?<CR>"
 end

@@ -251,7 +251,7 @@ return {
     autopairs = { active = true },
     rainbow = { active = false },
     autotag = { active = true },
-    matchup = { active = false },
+    matchup = { active = true },
     -- editor
     ajk = { active = true },
     easy_align = { active = true },

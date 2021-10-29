@@ -480,7 +480,7 @@ return function()
     end
 
     -- matchup
-    if rvim.plugin_loaded "vim-matchup" then
+    if rvim.plugin.matchup.active then
       key_maps.v.W = "where am i"
     end
 
