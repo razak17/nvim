@@ -41,6 +41,16 @@ local mode_adapters = {
   cnoremap = "c",
 }
 
+-- Append key mappings to lunarvim's defaults for a given mode
+-- @param keymaps The table of key mappings containing a list per mode (normal_mode, insert_mode, ..)
+function M.append_to_defaults(keymaps)
+  for mode, mappings in pairs(keymaps) do
+    for k, v in ipairs(mappings) do
+      rvim.keys[mode][k] = v
+    end
+  end
+end
+
 -- Set key mappings individually
 -- @param mode The keymap mode, can be one of the keys of mode_adapters
 -- @param key The key of keymap

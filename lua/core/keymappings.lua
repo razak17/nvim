@@ -345,6 +345,7 @@ if not rvim.plugin_loaded "accelerated-jk.nvim" then
   nnoremap["n"] = "j"
 end
 
+-- Bufferlline
 if rvim.plugin.bufferline.active then
   nnoremap["<Leader>bn"] = ":BufferLineMoveNext<CR>"
   nnoremap["<Leader>bb"] = ":BufferLineMovePrev<CR>"
@@ -368,6 +369,7 @@ if rvim.plugin.vsnip.active then
   }
 end
 
+-- Dial
 if rvim.plugin.dial.active then
   nnoremap["<C-a>"] = { "<Plug>(dial-increment)", { noremap = false, silent = true } }
   nnoremap["<C-x>"] = { "<Plug>(dial-decrement)", { noremap = false, silent = true } }
@@ -377,19 +379,29 @@ if rvim.plugin.dial.active then
   vnoremap["g<C-x>"] = { "<Plug>(dial-decrement-additional)", { noremap = false, silent = true } }
 end
 
+-- surround
 if rvim.plugin.surround.active then
   xnoremap["S"] = { "<Plug>VSurround", { noremap = false, silent = true } }
   xnoremap["S"] = { "<Plug>VSurround", { noremap = false, silent = true } }
 end
 
+-- Kommentary
 if rvim.plugin.kommentary.active then
   xnoremap["<leader>/"] = { "<Plug>kommentary_visual_default", { noremap = false, silent = true } }
 end
 
+-- FTerm
 if rvim.plugin.fterm.active then
   nnoremap["<F12>"] = '<cmd>lua require("FTerm").toggle()<CR>'
   tnoremap["<F12>"] = '<C-\\><C-n><cmd>lua require("FTerm").toggle()<CR>'
   nnoremap["<leader>en"] = '<cmd>lua require("FTerm").open()<CR>'
+end
+
+-- WhichKey
+if rvim.plugin.which_key.active then
+  nnoremap["<leader>"] = ':<c-u> :WhichKey "<space>"<CR>'
+  nnoremap["<localleader>"] = ':<c-u> :WhichKey "<space>"<CR>'
+  vnoremap["<leader>"] = ':<c-u> :WhichKeyVisual "<space>"<CR>'
 end
 
 -- TODO: COnvert mappings below to use new format

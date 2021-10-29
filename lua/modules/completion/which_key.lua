@@ -117,10 +117,6 @@ return function()
     vim.g["which_key_" .. opt] = val
   end
 
-  rvim.nnoremap("<leader>", ':<c-u> :WhichKey "<space>"<CR>')
-  rvim.nnoremap("<localleader>", ':<c-u> :WhichKey "<space>"<CR>')
-  rvim.vnoremap("<leader>", ':<c-u> :WhichKeyVisual "<space>"<CR>')
-
   vim.fn["which_key#register"]("<space>", "g:which_key_map")
 
   _G.WhichKey = {}
