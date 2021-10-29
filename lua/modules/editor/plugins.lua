@@ -3,7 +3,6 @@ local editor = {}
 local utils = require "utils"
 
 editor["xiyaowong/accelerated-jk.nvim"] = {
-  opt = true,
   event = { "BufWinEnter" },
   config = utils.load_conf("editor", "ajk"),
   disable = not rvim.plugin.ajk.active,
@@ -23,9 +22,11 @@ editor["junegunn/vim-easy-align"] = {
   disable = not rvim.plugin.easy_align.active,
 }
 
-editor["razak17/vim-cursorword"] = {
-  event = { "BufReadPre", "BufNewFile" },
-  config = utils.load_conf("editor", "cursor_word"),
+editor["xiyaowong/nvim-cursorword"] = {
+  event = { "InsertEnter" },
+  config = function()
+    vim.cmd [[hi! CursorWord cterm=NONE gui=NONE guibg=#3f444a]]
+  end,
   disable = not rvim.plugin.cursorword.active,
 }
 
