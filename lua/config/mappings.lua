@@ -52,23 +52,23 @@ local noremap_opts = { noremap = true, silent = true }
 rvim.nmap = make_mapper('n', map_opts)
 -- A recursive select mapping
 rvim.xmap = make_mapper('x', map_opts)
--- A recursive terminal mapping
-rvim.imap = make_mapper('i', map_opts)
--- A recursive operator mapping
-rvim.vmap = make_mapper('v', map_opts)
--- A recursive insert mapping
-rvim.omap = make_mapper('o', map_opts)
 -- A recursive visual & select mapping
-rvim.tmap = make_mapper('t', map_opts)
+rvim.imap = make_mapper('i', map_opts)
+-- A recursive insert mapping
+rvim.vmap = make_mapper('v', map_opts)
 -- A recursive visual mapping
+rvim.omap = make_mapper('o', map_opts)
+-- A recursive operator mapping
+rvim.tmap = make_mapper('t', map_opts)
+-- A recursive terminal mapping
 rvim.smap = make_mapper('s', map_opts)
 -- A recursive normal mapping
 rvim.cmap = make_mapper('c', { noremap = false, silent = false })
 -- A non recursive normal mapping
 rvim.nnoremap = make_mapper('n', noremap_opts)
--- A non recursive visual mapping
-rvim.xnoremap = make_mapper('x', noremap_opts)
 -- A non recursive visual & select mapping
+rvim.xnoremap = make_mapper('x', noremap_opts)
+-- A non recursive visual mapping
 rvim.vnoremap = make_mapper('v', noremap_opts)
 -- A non recursive insert mapping
 rvim.inoremap = make_mapper('i', noremap_opts)

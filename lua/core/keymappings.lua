@@ -1,320 +1,160 @@
-local g = vim.g
-local utils = require "utils"
+local nnoremap, cnoremap, tnoremap, vnoremap, xnoremap, inoremap =
+  rvim.keys.nnoremap, rvim.keys.cnoremap, rvim.keys.tnoremap, rvim.keys.vnoremap, rvim.keys.xnoremap, rvim.keys.inoremap
 
-local M = {}
+-- Use alt + hjkl to resize windows
+nnoremap["<M-n>"] = ":resize -2<CR>"
+nnoremap["<M-k>"] = ":resize +2<CR>"
+nnoremap["<M-h>"] = ":vertical resize +2<CR>"
+nnoremap["<M-l>"] = ":vertical resize -2<CR>"
 
-rvim.keys = {
-  ---@usage change or add keymappings for normal mode
-  normal_mode = {
-    -- Yank from cursor position to end-of-line
-    ["Y"] = "y$",
+-- Yank from cursor position to end-of-line
+nnoremap["Y"] = "y$"
 
-    -- Easy way to close popups windows
-    ["W"] = { "q", { noremap = false, silent = true } },
+-- Easy way to close popups windows
+nnoremap["W"] = { "q", { noremap = false, silent = true } }
 
-    -- Open url
-    ["gx"] = ":sil !xdg-open <c-r><c-a><cr>",
+-- Open url
+nnoremap["gx"] = ":sil !xdg-open <c-r><c-a><cr>"
 
-    -- Repeat last substitute with flags
-    ["&"] = "<cmd>&&<CR>",
+-- Repeat last substitute with flags
+nnoremap["&"] = "<cmd>&&<CR>"
 
-    -- Zero should go to the first non-blank character not to the first column (which could be blank)
-    ["0"] = "^",
+-- Zero should go to the first non-blank character not to the first column (which could be blank)
+nnoremap["0"] = "^"
 
-    -- Map Q to replay q register
-    ["Q"] = "@q",
+-- Map Q to replay q register
+nnoremap["Q"] = "@q"
 
-    -- Undo
-    ["<C-z>"] = ":undo<CR>",
-
-    -- remap esc to use cc
-    ["<C-c>"] = "<Esc>",
-
-    -- QuickRun
-    ["<C-b>"] = ":QuickRun<CR>",
-
-    -- Better window movement
-    ["<C-h>"] = "<C-w>h",
-    ["<C-n>"] = "<C-w>j",
-    ["<C-k>"] = "<C-w>k",
-    ["<C-l>"] = "<C-w>l",
-
-    -- Move current line / block with Alt-j/k a la vscode.
-    ["<A-j>"] = ":m .+1<CR>==",
-    ["<A-k>"] = ":m .-2<CR>==",
-
-    -- Use alt + hjkl to resize windows
-    ["<M-n>"] = ":resize -2<CR>",
-    ["<M-k>"] = ":resize +2<CR>",
-    ["<M-h>"] = ":vertical resize +2<CR>",
-    ["<M-l>"] = ":vertical resize -2<CR>",
-
-    -- Add Empty space above and below
-    ["[<space>"] = [[<cmd>put! =repeat(nr2char(10), v:count1)<cr>'[]],
-    ["]<space>"] = [[<cmd>put =repeat(nr2char(10), v:count1)<cr>]],
-
-    -- Disable arrows in normal mode
-    ["<down>"] = "<nop>",
-    ["<up>"] = "<nop>",
-    ["<left>"] = "<nop>",
-    ["<right>"] = "<nop>",
-  },
-  ---@usage change or add keymappings for insert mode
-  insert_mode = {
-    -- Start new line from any cursor position
-    ["<S-Return>"] = "<C-o>o",
-
-    -- Disable arrows in insert mode
-    ["<down>"] = "<nop>",
-    ["<up>"] = "<nop>",
-    ["<left>"] = "<nop>",
-    ["<right>"] = "<nop>",
-
-    -- undo command in insert mode
-    ["<c-z>"] = function()
-      vim.cmd [[:undo]]
-    end,
-  },
-  ---@usage change or add keymappings for terminal mode
-  term_mode = {
-    -- ["<esc>"] = "<C-\\><C-n>:q!<CR>",
-    ["jk"] = "<C-\\><C-n>",
-    ["<C-h>"] = "<C-\\><C-n><C-W>h",
-    ["<C-j>"] = "<C-\\><C-n><C-W>j",
-    ["<C-k>"] = "<C-\\><C-n><C-W>k",
-    ["<C-l>"] = "<C-\\><C-n><C-W>l",
-    ["]t"] = "<C-\\><C-n>:tablast<CR>",
-    ["[t"] = "<C-\\><C-n>:tabnext<CR>",
-    ["<S-Tab>"] = "<C-\\><C-n>:bprev<CR>",
-  },
-  ---@usage change or add keymappings for visual mode
-  visual_mode = {
-    -- Better indenting
-    ["<"] = "<gv",
-    [">"] = ">gv",
-
-    -- search visual selection
-    ["//"] = [[y/<C-R>"<CR>]],
-
-    -- find visually selected text
-    ["*"] = [[y/<C-R>"<CR>]],
-
-    -- make . work with visually selected lines
-    ["."] = ":norm.<CR>",
-
-    -- when going to the end of the line in visual mode ignore whitespace characters
-    ["$"] = "g_",
-  },
-  ---@usage change or add keymappings for visual block mode
-  visual_block_mode = {
-    -- Move selected line / block of text in visual mode
-    ["K"] = ":m '<-2<CR>gv=gv",
-    ["N"] = ":m '>+1<CR>gv=gv",
-
-    -- Paste in visual mode multiple times
-    ["p"] = "pgvy",
-
-    -- Repeat last substitute with flags
-    ["&"] = "<cmd>&&<CR>",
-  },
-  ---@usage change or add keymappings for command mode
-  command_mode = {
-    -- smooth searching, allow tabbing between search results similar to using <c-g>
-    -- or <c-t> the main difference being tab is easier to hit and remapping those keys
-    -- to these would swallow up a tab mapping
-    ["<Tab>"] = { [[getcmdtype() == "/" || getcmdtype() == "?" ? "<CR>/<C-r>/" : "<C-z>"]], { expr = true } },
-    ["<S-Tab>"] = { [[getcmdtype() == "/" || getcmdtype() == "?" ? "<CR>?<C-r>/" : "<S-Tab>"]], { expr = true } },
-  },
-  select_mode = {},
-}
-
-local generic_opts_any = { noremap = true, silent = true }
-
-local generic_opts = {
-  insert_mode = generic_opts_any,
-  normal_mode = generic_opts_any,
-  term_mode = { silent = true },
-  command_mode = { noremap = true, silent = false },
-  visual_mode = generic_opts_any,
-  visual_block_mode = generic_opts_any,
-  select_mode = generic_opts_any,
-}
-
-local mode_adapters = {
-  insert_mode = "i",
-  normal_mode = "n",
-  term_mode = "t",
-  command_mode = "c",
-  visual_mode = "v",
-  _mode = "v",
-  visual_block_mode = "x",
-  select_mode = "s",
-}
--- Set key mappings individually
--- @param mode The keymap mode, can be one of the keys of mode_adapters
--- @param key The key of keymap
--- @param val Can be form as a mapping or tuple of mapping and user defined opt
-function M.set_keymaps(mode, key, val)
-  local opt = generic_opts[mode] and generic_opts[mode] or generic_opts_any
-  if type(val) == "table" then
-    opt = val[2]
-    val = val[1]
-  end
-
-  local custom_map = rvim.make_mapper(mode, opt)
-  custom_map(key, val)
-end
-
--- Load key mappings for a given mode
--- @param mode The keymap mode, can be one of the keys of mode_adapters
--- @param keymaps The list of key mappings
-function M.load_mode(mode, keymaps)
-  mode = mode_adapters[mode] and mode_adapters[mode] or mode
-  for k, v in pairs(keymaps) do
-    M.set_keymaps(mode, k, v)
-  end
-end
-
--- Load key mappings for all provided modes
--- @param keymaps A list of key mappings for each mode
-function M.load(keymaps)
-  for mode, mapping in pairs(keymaps) do
-    M.load_mode(mode, mapping)
-  end
-end
-
-function M.setup()
-  g.mapleader = (rvim.common.leader == "space" and " ") or rvim.common.leader
-  g.maplocalleader = (rvim.common.localleader == "space" and " ") or rvim.common.localleader
-  M.load(rvim.keys)
-end
-
-local normal_mode, command_mode, term_mode, visual_mode =
-  rvim.keys.normal_mode, rvim.keys.command_mode, rvim.keys.term_mode, rvim.keys.visual_mode
-
--- TAB in general mode will move to text buffer, SHIFT-TAB will go back
-if not rvim.plugin.bufferline.active then
-  normal_mode["<TAB>"] = ":bnext<CR>"
-  normal_mode["<S-TAB>"] = ":bprevious<CR>"
-end
-
-if not rvim.plugin_loaded "accelerated-jk.nvim" then
-  normal_mode["n"] = "j"
-end
+-- Add Empty space above and below
+nnoremap["[<space>"] = [[<cmd>put! =repeat(nr2char(10), v:count1)<cr>'[]]
+nnoremap["]<space>"] = [[<cmd>put =repeat(nr2char(10), v:count1)<cr>]]
 
 -- Window Resize
-normal_mode["<Leader>ca"] = ":vertical resize 40<CR>"
-normal_mode["<Leader>aF"] = ":vertical resize 90<CR>"
+nnoremap["<Leader>ca"] = ":vertical resize 40<CR>"
+nnoremap["<Leader>aF"] = ":vertical resize 90<CR>"
 
 -- Search Files
-normal_mode["<Leader>chw"] = ':h <C-R>=expand("<cword>")<CR><CR>'
-normal_mode["<Leader>bs"] = '/<C-R>=escape(expand("<cWORD>"), "/")<CR><CR>'
+nnoremap["<Leader>chw"] = ':h <C-R>=expand("<cword>")<CR><CR>'
+nnoremap["<Leader>bs"] = '/<C-R>=escape(expand("<cWORD>"), "/")<CR><CR>'
 
 -- Tab navigation
-normal_mode["<Leader>sb"] = ":tabprevious<CR>"
-normal_mode["<Leader>sK"] = ":tablast<CR>"
-normal_mode["<Leader>sk"] = ":tabfirst<CR>"
-normal_mode["<Leader>sn"] = ":tabnext<CR>"
-normal_mode["<Leader>sN"] = ":tabnew<CR>"
-normal_mode["<Leader>sd"] = ":tabclose<CR>"
-normal_mode["<Leader>sH"] = ":-tabmove<CR>"
-normal_mode["<Leader>sL"] = ":+tabmove<CR>"
+nnoremap["<Leader>sb"] = ":tabprevious<CR>"
+nnoremap["<Leader>sK"] = ":tablast<CR>"
+nnoremap["<Leader>sk"] = ":tabfirst<CR>"
+nnoremap["<Leader>sn"] = ":tabnext<CR>"
+nnoremap["<Leader>sN"] = ":tabnew<CR>"
+nnoremap["<Leader>sd"] = ":tabclose<CR>"
+nnoremap["<Leader>sH"] = ":-tabmove<CR>"
+nnoremap["<Leader>sL"] = ":+tabmove<CR>"
 
 -- Alternate way to quit
-normal_mode["<Leader>ax"] = ":wq!<CR>"
-normal_mode["<Leader>az"] = ":q!<CR>"
-normal_mode["<Leader>x"] = ":q<CR>"
+nnoremap["<Leader>ax"] = ":wq!<CR>"
+nnoremap["<Leader>az"] = ":q!<CR>"
+nnoremap["<Leader>x"] = ":q<CR>"
 
 -- Greatest remap ever
-visual_mode["<Leader>p"] = '"_dP'
+vnoremap["<Leader>p"] = '"_dP'
 
 -- Greatest remap ever
-visual_mode["<Leader>rev"] = [[:s/\%V.\+\%V./\=utils#rev_str(submatch(0))<CR>gv]]
+vnoremap["<Leader>rev"] = [[:s/\%V.\+\%V./\=utils#rev_str(submatch(0))<CR>gv]]
 
 -- Next greatest remap ever : asbjornHaland
-normal_mode["<Leader>y"] = '"+y'
-visual_mode["<Leader>y"] = '"+y'
+nnoremap["<Leader>y"] = '"+y'
+vnoremap["<Leader>y"] = '"+y'
 
 -- Whole file delete yank, paste
-normal_mode["<Leader>aY"] = 'gg"+yG'
-normal_mode["<Leader>aV"] = 'gg"+VG'
-normal_mode["<Leader>aD"] = 'gg"+VGd'
+nnoremap["<Leader>aY"] = 'gg"+yG'
+nnoremap["<Leader>aV"] = 'gg"+VG'
+nnoremap["<Leader>aD"] = 'gg"+VGd'
 
 -- actions
-normal_mode["<Leader>="] = "<C-W>="
+nnoremap["<Leader>="] = "<C-W>="
 -- opens a horizontal split
-normal_mode["<Leader>ah"] = "<C-W>s"
+nnoremap["<Leader>ah"] = "<C-W>s"
 -- opens a vertical split
-normal_mode["<Leader>av"] = "<C-W>v"
+nnoremap["<Leader>av"] = "<C-W>v"
 -- Change two horizontally split windows to vertical splits
-normal_mode["<localleader>wv"] = "<C-W>t <C-W>H<C-W>="
+nnoremap["<localleader>wv"] = "<C-W>t <C-W>H<C-W>="
 -- Change two vertically split windows to horizontal splits
-normal_mode["<localleader>wh"] = "<C-W>t <C-W>K<C-W>="
+nnoremap["<localleader>wh"] = "<C-W>t <C-W>K<C-W>="
 -- delete buffer
-normal_mode["<Leader>ad"] = ":bdelete!<CR>"
+nnoremap["<Leader>ad"] = ":bdelete!<CR>"
 
 -- opens the last buffer
-normal_mode["<leader>al"] = "<C-^>"
+nnoremap["<leader>al"] = "<C-^>"
 
 -- Folds
-normal_mode["<S-Return>"] = "zMzvzt"
-normal_mode["<Leader>afr"] = "zA" -- Recursively toggle
-normal_mode["<Leader>afl"] = "za" -- Toggle fold under the cursor
-normal_mode["<Leader>afo"] = "zR" -- Open all folds
-normal_mode["<Leader>afx"] = "zM" -- Close all folds
-normal_mode["<Leader>aO"] = ":<C-f>:resize 10<CR>" -- Close all folds
+nnoremap["<S-Return>"] = "zMzvzt"
+nnoremap["<Leader>afr"] = "zA" -- Recursively toggle
+nnoremap["<Leader>afl"] = "za" -- Toggle fold under the cursor
+nnoremap["<Leader>afo"] = "zR" -- Open all folds
+nnoremap["<Leader>afx"] = "zM" -- Close all folds
+nnoremap["<Leader>aO"] = ":<C-f>:resize 10<CR>" -- Close all folds
 
 -- Conditionally modify character at end of line
-normal_mode["<localleader>,"] = "<cmd>call utils#modify_line_end_delimiter(',')<cr>"
-normal_mode["<localleader>;"] = "<cmd>call utils#modify_line_end_delimiter(';')<cr>"
-normal_mode["<localleader>."] = "<cmd>call utils#modify_line_end_delimiter('.')<cr>"
+nnoremap["<localleader>,"] = "<cmd>call utils#modify_line_end_delimiter(',')<cr>"
+nnoremap["<localleader>;"] = "<cmd>call utils#modify_line_end_delimiter(';')<cr>"
+nnoremap["<localleader>."] = "<cmd>call utils#modify_line_end_delimiter('.')<cr>"
 
 -- qflist
-normal_mode["<Leader>vo"] = ":copen<CR>"
+nnoremap["<Leader>vo"] = ":copen<CR>"
 
 -- Quick find/replace
 local noisy = { silent = false }
-normal_mode["<leader>["] = { [[:%s/\<<C-r>=expand("<cword>")<CR>\>/]], noisy }
-normal_mode["<leader>]"] = { [[:s/\<<C-r>=expand("<cword>")<CR>\>/]], noisy }
-visual_mode["<leader>["] = { [["zy:%s/<C-r><C-o>"/]], noisy }
+nnoremap["<leader>["] = { [[:%s/\<<C-r>=expand("<cword>")<CR>\>/]], noisy }
+nnoremap["<leader>]"] = { [[:s/\<<C-r>=expand("<cword>")<CR>\>/]], noisy }
+vnoremap["<leader>["] = { [["zy:%s/<C-r><C-o>"/]], noisy }
 
 -- Smart mappings on the command line
-command_mode["w!!"] = [[w !sudo tee % >/dev/null]]
+cnoremap["w!!"] = [[w !sudo tee % >/dev/null]]
 
 -- insert path of current file into a command
-command_mode["%%"] = "<C-r>=fnameescape(expand('%'))<cr>"
-command_mode["::"] = "<C-r>=fnameescape(expand('%:p:h'))<cr>/"
+cnoremap["%%"] = "<C-r>=fnameescape(expand('%'))<cr>"
+cnoremap["::"] = "<C-r>=fnameescape(expand('%:p:h'))<cr>/"
 
 -- open a new file in the same directory
-normal_mode["<leader>nf"] = { [[:e <C-R>=expand("%:p:h") . "/" <CR>]], noisy }
+nnoremap["<leader>nf"] = { [[:e <C-R>=expand("%:p:h") . "/" <CR>]], noisy }
 -- create a new file in the same directory
-normal_mode["<leader>ns"] = { [[:vsp <C-R>=expand("%:p:h") . "/" <CR>]], noisy }
+nnoremap["<leader>ns"] = { [[:vsp <C-R>=expand("%:p:h") . "/" <CR>]], noisy }
 
 -- Wrap
-normal_mode['<leader>"'] = [[ciw"<c-r>""<esc>]]
-normal_mode["<leader>`"] = [[ciw`<c-r>"`<esc>]]
-normal_mode["<leader>'"] = [[ciw'<c-r>"'<esc>]]
-normal_mode["<leader>)"] = [[ciw(<c-r>")<esc>]]
-normal_mode["<leader>}"] = [[ciw{<c-r>"}<esc>]]
+nnoremap['<leader>"'] = [[ciw"<c-r>""<esc>]]
+nnoremap["<leader>`"] = [[ciw`<c-r>"`<esc>]]
+nnoremap["<leader>'"] = [[ciw'<c-r>"'<esc>]]
+nnoremap["<leader>)"] = [[ciw(<c-r>")<esc>]]
+nnoremap["<leader>}"] = [[ciw{<c-r>"}<esc>]]
 
 -- Other remaps
-normal_mode["<Leader>aL"] = ":e ~/.config/rvim/external/utils/.vimrc.local<CR>"
+nnoremap["<Leader>aL"] = ":e ~/.config/rvim/external/utils/.vimrc.local<CR>"
 
 -- Neovim Health check
-normal_mode["<Leader>IC"] = ":checkhealth<CR>"
-normal_mode["<Leader>Im"] = ":messages<CR>"
+nnoremap["<Leader>IC"] = ":checkhealth<CR>"
+nnoremap["<Leader>Im"] = ":messages<CR>"
 
 -- Buffers
-normal_mode["<Leader><Leader>"] = ":call v:lua.DelThisBuffer()<CR>"
-normal_mode["<Leader>bdh"] = ":call v:lua.DelToLeft()<CR>"
-normal_mode["<Leader>bda"] = ":call v:lua.DelAllBuffers()<CR>"
-normal_mode["<Leader>bdx"] = ":call v:lua.DelAllExceptCurrent()<CR>"
+nnoremap["<Leader><Leader>"] = ":call v:lua.DelThisBuffer()<CR>"
+nnoremap["<Leader>bdh"] = ":call v:lua.DelToLeft()<CR>"
+nnoremap["<Leader>bda"] = ":call v:lua.DelAllBuffers()<CR>"
+nnoremap["<Leader>bdx"] = ":call v:lua.DelAllExceptCurrent()<CR>"
 
 -- Terminal mode
-term_mode["<leader><Tab>"] = [[<C-\><C-n>:close \| :bnext<cr>]]
+tnoremap["<leader><Tab>"] = [[<C-\><C-n>:close \| :bnext<cr>]]
+
+-- QuickRun
+nnoremap["<C-b>"] = ":QuickRun<CR>"
+
+-----------------------------------------------------------------------------//
+-- Functions
+-----------------------------------------------------------------------------//
+local utils = require "utils"
+
+-- undo command in insert mode
+inoremap["<c-z>"] = function()
+  vim.cmd [[:undo]]
+end
 
 -- Alternate way to save
-normal_mode["<C-s>"] = function()
+nnoremap["<C-s>"] = function()
   utils.save_and_notify()
 end
 
@@ -323,78 +163,106 @@ end
 -- If you select require('buffers/file') in lua for example
 -- this makes the cfile -> buffers/file rather than my_dir/buffer/file.lua
 -- Credit: 1,2
-normal_mode["gf"] = function()
+nnoremap["gf"] = function()
   utils.open_file_or_create_new()
 end
 
 -- GX - replicate netrw functionality
-normal_mode["gX"] = function()
+nnoremap["gX"] = function()
   utils.open_link()
 end
 
 -- toggle_list
-normal_mode["<leader>ls"] = function()
+nnoremap["<leader>ls"] = function()
   utils.toggle_list "c"
 end
 
-normal_mode["<leader>li"] = function()
+nnoremap["<leader>li"] = function()
   utils.toggle_list "l"
 end
 
-normal_mode["<Leader>IM"] = function()
+nnoremap["<Leader>IM"] = function()
   utils.ColorMyPencils()
 end
 
-normal_mode["<leader>aR"] = function()
+nnoremap["<leader>aR"] = function()
   utils.EmptyRegisters()
 end
 
-normal_mode["<Leader>a;"] = function()
+nnoremap["<Leader>a;"] = function()
   utils.OpenTerminal()
 end
 
-normal_mode["<leader>ao"] = function()
+nnoremap["<leader>ao"] = function()
   utils.TurnOnGuides()
 end
 
-normal_mode["<leader>ae"] = function()
+nnoremap["<leader>ae"] = function()
   utils.TurnOffGuides()
 end
 
 -----------------------------------------------------------------------------//
 -- Plugins
 -----------------------------------------------------------------------------//
-local visual_block_mode = rvim.keys.visual_block_mode
+
+-- TAB in general mode will move to next buffer, SHIFT-TAB will go back
+if not rvim.plugin.bufferline.active then
+  nnoremap["<TAB>"] = ":bnext<CR>"
+  nnoremap["<S-TAB>"] = ":bprevious<CR>"
+end
+
+if not rvim.plugin_loaded "accelerated-jk.nvim" then
+  nnoremap["n"] = "j"
+end
 
 -- Vsnip
 if rvim.plugin.vsnip.active then
-  visual_block_mode["<C-x>"] = { "<Plug>(vsnip-cut-text)", { noremap = false, silent = true } }
-  visual_block_mode["<C-l>"] = { "<Plug>(vsnip-select-text)", { noremap = false, silent = true } }
-  normal_mode["<leader>cs"] = ":VsnipOpen<CR> 1<CR><CR>"
-  rvim.keys.insert_mode["<C-l>"] = {
+  xnoremap["<C-x>"] = { "<Plug>(vsnip-cut-text)", { noremap = false, silent = true } }
+  xnoremap["<C-l>"] = { "<Plug>(vsnip-select-text)", { noremap = false, silent = true } }
+  nnoremap["<leader>cs"] = ":VsnipOpen<CR> 1<CR><CR>"
+  rvim.keys.inoremap["<C-l>"] = {
     "vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'",
     { noremap = false, silent = true, expr = true },
   }
-  rvim.keys.select_mode["<C-l>"] = {
+  rvim.keys.snoremap["<C-l>"] = {
     "vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'",
     { noremap = false, silent = true, expr = true },
   }
 end
 
 if rvim.plugin.dial.active then
-  normal_mode["<C-a>"] = { "<Plug>(dial-increment)", { noremap = false, silent = true } }
-  normal_mode["<C-x>"] = { "<Plug>(dial-decrement)", { noremap = false, silent = true } }
-  visual_mode["<C-a>"] = { "<Plug>(dial-increment)", { noremap = false, silent = true } }
-  visual_mode["<C-x>"] = { "<Plug>(dial-decrement)", { noremap = false, silent = true } }
-  visual_mode["g<C-a>"] = { "<Plug>(dial-increment-additional)", { noremap = false, silent = true } }
-  visual_mode["g<C-x>"] = { "<Plug>(dial-decrement-additional)", { noremap = false, silent = true } }
+  nnoremap["<C-a>"] = { "<Plug>(dial-increment)", { noremap = false, silent = true } }
+  nnoremap["<C-x>"] = { "<Plug>(dial-decrement)", { noremap = false, silent = true } }
+  vnoremap["<C-a>"] = { "<Plug>(dial-increment)", { noremap = false, silent = true } }
+  vnoremap["<C-x>"] = { "<Plug>(dial-decrement)", { noremap = false, silent = true } }
+  vnoremap["g<C-a>"] = { "<Plug>(dial-increment-additional)", { noremap = false, silent = true } }
+  vnoremap["g<C-x>"] = { "<Plug>(dial-decrement-additional)", { noremap = false, silent = true } }
 end
 
 if rvim.plugin.surround.active then
-  visual_block_mode["S"] = { "<Plug>VSurround", { noremap = false, silent = true } }
-  visual_block_mode["S"] = { "<Plug>VSurround", { noremap = false, silent = true } }
+  xnoremap["S"] = { "<Plug>VSurround", { noremap = false, silent = true } }
+  xnoremap["S"] = { "<Plug>VSurround", { noremap = false, silent = true } }
 end
 
+if rvim.plugin.kommentary.active then
+  xnoremap["<leader>/"] = { "<Plug>kommentary_visual_default", { noremap = false, silent = true } }
+end
+
+if rvim.plugin.bufferline.active then
+  nnoremap["<Leader>bn"] = ":BufferLineMoveNext<CR>"
+  nnoremap["<Leader>bb"] = ":BufferLineMovePrev<CR>"
+  nnoremap["<TAB>"] = ":BufferLineCycleNext<CR>"
+  nnoremap["<S-TAB>"] = ":BufferLineCyclePrev<CR>"
+  nnoremap["gb"] = ":BufferLinePick<CR>"
+end
+
+if rvim.plugin.fterm.active then
+  nnoremap["<F12>"] = '<cmd>lua require("FTerm").toggle()<CR>'
+  tnoremap["<F12>"] = '<C-\\><C-n><cmd>lua require("FTerm").toggle()<CR>'
+  nnoremap["<leader>en"] = '<cmd>lua require("FTerm").open()<CR>'
+end
+
+-- TODO: COnvert mappings below to use new format
 if rvim.plugin.easy_align.active then
   local nmap = rvim.nmap
   local xmap = rvim.xmap
@@ -402,10 +270,6 @@ if rvim.plugin.easy_align.active then
   vmap("<Enter>", "<Plug>(EasyAlign)")
   nmap("ga", "<Plug>(EasyAlign)")
   xmap("ga", "<Plug>(EasyAlign)")
-end
-
-if rvim.plugin.kommentary.active then
-  visual_block_mode["<leader>/"] = { "<Plug>kommentary_visual_default", { noremap = false, silent = true } }
 end
 
 if rvim.plugin.eft.active then
@@ -422,23 +286,3 @@ if rvim.plugin.eft.active then
   xmap("F", "v:lua.enhance_ft_move('F')", opts)
   omap("F", "v:lua.enhance_ft_move('F')", opts)
 end
-
-if rvim.plugin.fterm.active then
-  local nnoremap = rvim.nnoremap
-  local tnoremap = rvim.tnoremap
-  nnoremap("<F12>", '<CMD>lua require("FTerm").toggle()<CR>')
-  tnoremap("<F12>", '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>')
-  nnoremap("<leader>en", '<CMD>lua require("FTerm").open()<CR>')
-end
-
-if rvim.plugin.bufferline.active then
-  local nnoremap = rvim.nnoremap
-  -- Bufferline
-  nnoremap("<TAB>", ":BufferLineCycleNext<CR>")
-  nnoremap("<S-TAB>", ":BufferLineCyclePrev<CR>")
-  nnoremap("<Leader>bn", ":BufferLineMoveNext<CR>")
-  nnoremap("<Leader>bb", ":BufferLineMovePrev<CR>")
-  nnoremap("gb", ":BufferLinePick<CR>")
-end
-
-return M

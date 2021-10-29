@@ -46,7 +46,7 @@ function M:load()
 
   require("core.commands").setup()
 
-  require("core.keymappings").setup()
+  require("config.keymaps").setup()
 end
 
 return M
