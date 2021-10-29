@@ -4,9 +4,7 @@ return function()
     return
   end
 
-  local function T(str)
-    return vim.api.nvim_replace_termcodes(str, true, true, true)
-  end
+  local T = rvim.T
 
   require("core.highlights").plugin(
     "Cmp",

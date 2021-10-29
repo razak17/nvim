@@ -27,6 +27,10 @@ function rvim._execute(id, args)
   rvim._store[id](args)
 end
 
+function rvim.T(str)
+  return vim.api.nvim_replace_termcodes(str, true, true, true)
+end
+
 ---Determine if a value of any type is empty
 ---@param item any
 ---@return boolean
