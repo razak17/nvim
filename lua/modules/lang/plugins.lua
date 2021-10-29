@@ -105,7 +105,6 @@ lang["kevinhwang91/nvim-bqf"] = {
 -- Treesitter
 lang["nvim-treesitter/nvim-treesitter"] = {
   branch = "0.5-compat",
-  -- after = "telescope.nvim",
   config = utils.load_conf("lang", "treesitter"),
   disable = not rvim.plugin.treesitter.active,
 }
