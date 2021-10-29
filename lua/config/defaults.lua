@@ -261,8 +261,7 @@ return {
     kommentary = { active = true },
     dial = { active = true },
     fold_cycle = { active = false },
-    eft = { active = true },
-    cursorword = { active = true },
+    cursorword = { active = false },
     -- tools
     fterm = { active = true },
     far = { active = true },
