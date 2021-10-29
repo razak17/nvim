@@ -415,9 +415,9 @@ if rvim.plugin.easy_align.active then
 end
 
 if rvim.plugin.playground.active then
-  rvim.nnoremap("<leader>aE", function()
+  nnoremap["<leader>aE"] = function()
     require("utils").inspect_token()
-  end)
+  end
 end
 
 if rvim.plugin.matchup.active then
