@@ -363,7 +363,7 @@ return function()
       key_maps.v.x = rvim.which_key.keymaps.trouble
     end
 
-    if rvim.plugin_loaded "telescope.nvim" then
+    if rvim.plugin.telescope.active then
       key_maps.f = rvim.which_key.keymaps.telescope
     end
 

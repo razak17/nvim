@@ -57,19 +57,17 @@ completion["razak17/telescope.nvim"] = {
   disable = not rvim.plugin.telescope.active,
 }
 
-completion["nvim-telescope/telescope-fzy-native.nvim"] = {
-  opt = true,
-  disable = not rvim.plugin.telescope_fzy.active,
+completion["nvim-telescope/telescope-fzf-native.nvim"] = {
+  run = "make",
+  disable = not rvim.plugin.telescope_fzf.active,
 }
 
-completion["nvim-telescope/telescope-media-files.nvim"] = {
-  opt = true,
-  disable = not rvim.plugin.telescope_media_files.active,
-}
+-- completion["nvim-telescope/telescope-media-files.nvim"] = {
+--   disable = not rvim.plugin.telescope_media_files.active,
+-- }
 
-completion["nvim-telescope/telescope-project.nvim"] = {
-  opt = true,
-  disable = not rvim.plugin.telescope_project.active,
-}
+-- completion["nvim-telescope/telescope-project.nvim"] = {
+--   disable = not rvim.plugin.telescope_project.active,
+-- }
 
 return completion

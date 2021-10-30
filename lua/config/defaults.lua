@@ -293,8 +293,8 @@ return {
     vsnip = { active = true },
     emmet = { active = false },
     friendly_snippets = { active = true },
-    telescope_fzy = { active = false },
-    telescope_project = { active = false },
-    telescope_media_files = { active = false },
+    telescope_fzf = { active = true },
+    telescope_project = { active = true },
+    telescope_media_files = { active = true },
   },
 }
