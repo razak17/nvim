@@ -7,7 +7,7 @@ nvim_config.git_files = function()
 end
 
 nvim_config.files = function()
-  builtin.find_files { prompt_title = "< VimRC >", cwd = get_config_dir() }
+  builtin.find_files { prompt_title = "VimRC", cwd = get_config_dir() }
 end
 
 nvim_config.commits = function()
