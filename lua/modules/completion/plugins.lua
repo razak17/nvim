@@ -52,7 +52,6 @@ completion["nvim-lua/popup.nvim"] = { disable = not rvim.plugin.popup.active }
 -- Telescope
 completion["razak17/telescope.nvim"] = {
   event = "VimEnter",
-  cmd = "Telescope",
   config = utils.load_conf("completion", "telescope"),
   disable = not rvim.plugin.telescope.active,
 }
@@ -61,10 +60,6 @@ completion["nvim-telescope/telescope-fzf-native.nvim"] = {
   run = "make",
   disable = not rvim.plugin.telescope_fzf.active,
 }
-
--- completion["nvim-telescope/telescope-media-files.nvim"] = {
---   disable = not rvim.plugin.telescope_media_files.active,
--- }
 
 -- completion["nvim-telescope/telescope-project.nvim"] = {
 --   disable = not rvim.plugin.telescope_project.active,

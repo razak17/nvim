@@ -202,12 +202,13 @@ return function()
       g = telescope_git_keymaps,
     }
 
-    -- Telescope Extensions
-    if rvim.plugin_loaded "project.nvim" then
-      key_maps.f.e.e = { ":Telescope projects", "projects" }
+    if rvim.plugin.telescope.active then
+      key_maps.f = rvim.which_key.keymaps.telescope
     end
-    if rvim.plugin_loaded "telescope-media-files.nvim" then
-      key_maps.f.e.m = { ":Telescope media_files", "media files" }
+
+    -- Telescope Extensions
+    if rvim.plugin.telescope_project.active then
+      key_maps.f.e.e = { ":Telescope projects", "projects" }
     end
     if rvim.plugin_loaded "telescope-project.nvim" then
       key_maps.f.e.p = { ":Telescope project", "project" }
@@ -361,10 +362,6 @@ return function()
     }
     if rvim.plugin_loaded "trouble.nvim" then
       key_maps.v.x = rvim.which_key.keymaps.trouble
-    end
-
-    if rvim.plugin.telescope.active then
-      key_maps.f = rvim.which_key.keymaps.telescope
     end
 
     -- Slide

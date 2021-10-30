@@ -295,6 +295,5 @@ return {
     friendly_snippets = { active = true },
     telescope_fzf = { active = true },
     telescope_project = { active = true },
-    telescope_media_files = { active = true },
   },
 }

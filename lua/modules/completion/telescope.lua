@@ -70,10 +70,6 @@ return function()
             override_file_sorter = true, -- override the file sorter
             case_mode = "smart_case", -- or "ignore_case" or "respect_case"
           },
-          -- media_files = {
-          --   filetypes = { "png", "webp", "jpg", "jpeg" },
-          --   find_cmd = "rg",
-          -- },
         },
         file_sorter = sorters.get_fzy_sorter,
         file_previewer = previewers.vim_buffer_cat.new,
@@ -89,19 +85,13 @@ return function()
     require("telescope").load_extension "fzf"
   end
 
-  -- if rvim.plugin_loaded "telescope-fzy-native.nvim" then
-  --   vim.cmd [[packadd telescope-fzy-native.nvim]]
-  --   require("telescope").load_extension "fzy_native"
+  -- if rvim.plugin.telescope_project.active then
+  --   require("telescope").load_extension "project"
   -- end
 
   -- if rvim.plugin_loaded "telescope-project.nvim" then
   --   vim.cmd [[packadd telescope-project.nvim]]
   --   require("telescope").load_extension "project"
-  -- end
-
-  -- if rvim.plugin_loaded "telescope-media-files.nvim" then
-  --   vim.cmd [[packadd telescope-media-files.nvim]]
-  --   require("telescope").load_extension "media_files"
   -- end
 
   -- if rvim.plugin_loaded "project.nvim" then
