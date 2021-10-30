@@ -294,6 +294,5 @@ return {
     emmet = { active = false },
     friendly_snippets = { active = true },
     telescope_fzf = { active = true },
-    telescope_project = { active = true },
   },
 }
