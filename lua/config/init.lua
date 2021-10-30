@@ -15,11 +15,9 @@ end
 function M:init()
   local default_config = require "config.defaults"
 
-  rvim.common = vim.deepcopy(default_config.common)
-  rvim.style = vim.deepcopy(default_config.style)
-  rvim.log = vim.deepcopy(default_config.log)
-  rvim.lang = vim.deepcopy(default_config.lang)
-  rvim.plugin = vim.deepcopy(default_config.plugin)
+  for k, v in pairs(default_config) do
+    rvim[k] = vim.deepcopy(v)
+  end
 
   local lsp_config = require "lsp.config"
   rvim.lsp = vim.deepcopy(lsp_config)
