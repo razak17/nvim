@@ -206,14 +206,6 @@ return function()
       key_maps.f = rvim.which_key.keymaps.telescope
     end
 
-    -- Telescope Extensions
-    if rvim.plugin.telescope_project.active then
-      key_maps.f.e.e = { ":Telescope projects", "projects" }
-    end
-    if rvim.plugin_loaded "telescope-project.nvim" then
-      key_maps.f.e.p = { ":Telescope project", "project" }
-    end
-
     -- kommentary
     key_maps["/"] = { "<Plug>kommentary_line_default", "comment" }
     key_maps.a["/"] = { "<Plug>kommentary_motion_default", "comment motion default" }
