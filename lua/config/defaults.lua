@@ -268,7 +268,7 @@ return {
     bookmarks = { active = false },
     undotree = { active = true },
     fugitive = { active = false },
-    project = { active = false },
+    project = { active = true },
     diffview = { active = false },
     -- TODO: handle these later
     glow = { active = false },
