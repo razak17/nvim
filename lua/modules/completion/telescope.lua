@@ -88,7 +88,6 @@ return function()
   local extensions = {
     "grep_string_prompt",
     "bg_selector",
-    -- TODO: Fix not a git directory error for the two below.
     "nvim_files",
     "dotfiles",
   }
