@@ -110,7 +110,7 @@ lang["nvim-treesitter/nvim-treesitter"] = {
 }
 
 lang["nvim-treesitter/playground"] = {
-  cmd = "TSPlaygroundToggle",
+  event = "VimEnter",
   module = "nvim-treesitter-playground",
   disable = not rvim.plugin.playground.active,
 }

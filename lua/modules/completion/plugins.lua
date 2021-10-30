@@ -51,7 +51,7 @@ completion["nvim-lua/popup.nvim"] = { disable = not rvim.plugin.popup.active }
 
 -- Telescope
 completion["razak17/telescope.nvim"] = {
-  event = "BufReadPre",
+  event = "VimEnter",
   cmd = "Telescope",
   config = utils.load_conf("completion", "telescope"),
   disable = not rvim.plugin.telescope.active,

@@ -254,9 +254,6 @@ nnoremap["<leader>'"] = [[ciw'<c-r>"'<esc>]]
 nnoremap["<leader>)"] = [[ciw(<c-r>")<esc>]]
 nnoremap["<leader>}"] = [[ciw{<c-r>"}<esc>]]
 
--- Other remaps
-nnoremap["<Leader>aL"] = ":e ~/.config/rvim/external/utils/.vimrc.local<CR>"
-
 -- Neovim Health check
 nnoremap["<Leader>IC"] = ":checkhealth<CR>"
 nnoremap["<Leader>Im"] = ":messages<CR>"

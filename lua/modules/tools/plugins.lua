@@ -14,7 +14,6 @@ tools["sindrets/diffview.nvim"] = {
 }
 
 tools["mbbill/undotree"] = {
-  cmd = "UndotreeToggle",
   disable = not rvim.plugin.undotree.active,
 }
 
@@ -65,7 +64,7 @@ tools["iamcco/markdown-preview.nvim"] = {
 }
 
 tools["brooth/far.vim"] = {
-  event = { "BufReadPre", "BufNewFile" },
+  event = { "BufRead" },
   config = function()
     vim.g["far#source"] = "rg"
     vim.g["far#enable_undo"] = 1
