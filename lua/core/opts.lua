@@ -228,7 +228,7 @@ M.load_commands = function()
   end
 end
 
-M.setup = function()
+function M.setup()
   M.load_commands()
   M.load_options()
 end
