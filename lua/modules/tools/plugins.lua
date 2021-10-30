@@ -73,21 +73,4 @@ tools["brooth/far.vim"] = {
   disable = not rvim.plugin.far.active,
 }
 
-tools["kristijanhusak/vim-dadbod-ui"] = {
-  cmd = { "DBUIToggle", "DBUIAddConnection", "DBUI", "DBUIFindBuffer", "DBUIRenameBuffer" },
-  config = function()
-    vim.cmd [[packadd vim-dadbod]]
-    vim.g.db_ui_show_help = 0
-    vim.g.db_ui_win_position = "left"
-    vim.g.db_ui_use_nerd_fonts = 1
-    vim.g.db_ui_winwidth = 35
-    vim.g.db_ui_save_location = os.getenv "HOME" .. "/.cache/vim/db_ui_queries"
-  end,
-  requires = {
-    { "tpope/vim-dadbod", opt = true },
-    { "kristijanhusak/vim-dadbod-completion", opt = true },
-  },
-  disable = not rvim.plugin.dadbod.active,
-}
-
 return tools
