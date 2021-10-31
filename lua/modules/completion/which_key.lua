@@ -211,34 +211,34 @@ return function()
     key_maps.a["/"] = { "<Plug>kommentary_motion_default", "comment motion default" }
 
     -- dap
-    rvim.which_key.keymaps.debug = {
+    rvim.which_key.keymaps.debugging = {
       name = "+Debug",
       ["?"] = "centered float ui",
-      a = { ':lua require"debug.utils".attach()', "attach" },
-      A = { ':lua require"debug.utils".attachToRemote()', "attach remote" },
-      b = { ':lua require"dap".toggle_breakpoint()', "toggle breakpoint" },
-      B = { ':lua require"dap".set_breakpoint(vim.fn.input("Breakpoint condition: "))', "set breakpoint" },
-      c = { ':lua require"dap".continue()', "continue" },
-      C = { ':lua require"dap".run_to_cursor()', "run to cursor" },
-      E = { ':lua require"dap".repl.toggle()', "toggle repl" },
-      g = { ':lua require"dap".session()', "get session" },
-      k = { ':lua require"dap".up()', "up" },
-      L = { ':lua require"dap".run_last()', "run last" },
-      n = { ':lua require"dap".down()', "down" },
-      p = { ':lua require"dap".pause.toggle()', "pause" },
-      r = { ':lua require"dap".repl.open({}, "vsplit")<CR><C-w>l', "open repl in vsplit" },
+      a = "attach",
+      A = "attach remote",
+      b = "toggle breakpoint",
+      B = "set breakpoint",
+      c = "continue",
+      C = "run to cursor",
+      g = "get session",
+      k = "up",
+      L = "run last",
+      n = "down",
+      p = "pause",
+      r = "toggle repl",
+      R = "open repl in vsplit",
       s = {
         name = "+Step",
-        b = { ':lua require"dap".step_back()', "back" },
-        i = { ':lua require"dap".step_into()', "step into" },
-        o = { ':lua require"dap".step_out()', "step out" },
-        v = { ':lua require"dap".step_over()', "step over" },
+        b = "back",
+        i = "step into",
+        o = "step out",
+        v = "step over",
       },
       S = { ':lua require"dap".close()', "stop" },
       x = { ':lua require"dap".disconnect()', "disconnect" },
     }
     if rvim.plugin_loaded "nvim-dap" then
-      key_maps.d = rvim.which_key.keymaps.debug
+      key_maps.d = rvim.which_key.keymaps.debugging
     end
 
     rvim.which_key.keymaps.packer = {
@@ -401,7 +401,7 @@ return function()
 
     -- osv
     if rvim.plugin_loaded "one-small-step-for-vimkind" then
-      key_maps.d.l = { ':lua require"osv".launch()', "osv launch" }
+      key_maps.d.l = { 'lua require"osv".launch()', "osv launch" }
     end
 
     -- debug ui

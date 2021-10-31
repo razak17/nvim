@@ -1,21 +1,43 @@
-local g = vim.g
-local dap = require "dap"
-local configurations = require "dap.configurations"
-
 local M = {}
 
+local dap = require "dap"
+
 rvim.dap = {
-  install_dir = get_cache_dir() .. "/dap",
-  python_dir = rvim.dap.install_dir .. "/python_dbg/bin/python",
-  node_dir = rvim.dap.install_dir .. "/jsnode_dbg/vscode-node-debug2/out/src/nodeDebug.js",
+  install_dir = get_cache_dir() .. "dap",
+  python_dir = get_cache_dir() .. "dap/python_dbg/bin/python",
+  node_dir = get_cache_dir() .. "dap/jsnode_dbg/vscode-node-debug2/out/src/nodeDebug.js",
+  breakpoint = {
+    text = "",
+    texthl = "LspDiagnosticsSignError",
+    linehl = "",
+    numhl = "",
+  },
+  breakpoint_rejected = {
+    text = "",
+    texthl = "LspDiagnosticsSignHint",
+    linehl = "",
+    numhl = "",
+  },
+  stopped = {
+    text = "",
+    texthl = "LspDiagnosticsSignInformation",
+    linehl = "DiagnosticUnderlineInfo",
+    numhl = "LspDiagnosticsSignInformation",
+  },
 }
 
-vim.fn.sign_define("DapBreakpoint", { text = "🛑", texthl = "", linehl = "", numhl = "" })
-vim.fn.sign_define("DapStopped", { text = "🟢", texthl = "", linehl = "", numhl = "" })
+-- vim.fn.sign_define("DapBreakpoint", { text = "🛑", texthl = "", linehl = "", numhl = "" })
+-- vim.fn.sign_define("DapStopped", { text = "🟢", texthl = "", linehl = "", numhl = "" })
+
+vim.fn.sign_define("DapBreakpoint", rvim.dap.breakpoint)
+vim.fn.sign_define("DapBreakpointRejected", rvim.dap.breakpoint_rejected)
+vim.fn.sign_define("DapStopped", rvim.dap.stopped)
 
 dap.defaults.fallback.terminal_win_cmd = "50vsplit new"
 
-M.setup = function()
+function M.setup()
+  local configurations = require "debugging.configurations"
+
   -- Lua
   dap.configurations.lua = configurations.lua
   dap.adapters.nlua = function(callback, config)

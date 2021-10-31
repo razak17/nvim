@@ -2,31 +2,26 @@ local lang = {}
 
 local utils = require "utils"
 
--- Debug
+-- Debugging
 lang["mfussenegger/nvim-dap"] = {
   event = "BufReadPre",
   config = utils.load_conf("lang", "dap"),
-  disable = not rvim.plugin.debug.active,
+  disable = not rvim.plugin.dap.active,
 }
 
 lang["rcarriga/nvim-dap-ui"] = {
   event = "BufReadPre",
   config = utils.load_conf("lang", "dap_ui"),
-  disable = not rvim.plugin.debug_ui.active,
+  disable = not rvim.plugin.dap_ui.active,
 }
 
 lang["Pocco81/DAPInstall.nvim"] = {
   event = "BufReadPre",
-  config = function()
-    vim.cmd [[packadd nvim-dap]]
-    local dI = require "dap-install"
-    dI.setup { installation_path = rvim.dap.install_dir }
-  end,
   disable = not rvim.plugin.dap_install.active,
 }
 
 lang["jbyuki/one-small-step-for-vimkind"] = {
-  event = "BufReadPre",
+  requires = "nvim-dap",
   disable = not rvim.plugin.osv.active,
 }
 
