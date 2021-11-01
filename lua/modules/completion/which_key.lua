@@ -401,7 +401,8 @@ return function()
 
     -- osv
     if rvim.plugin_loaded "one-small-step-for-vimkind" then
-      key_maps.d.l = { 'lua require"osv".launch()', "osv launch" }
+      key_maps.d.E = "osv run this"
+      key_maps.d.l = "osv launch"
     end
 
     -- debug ui

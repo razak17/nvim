@@ -22,6 +22,11 @@ lang["Pocco81/DAPInstall.nvim"] = {
 
 lang["jbyuki/one-small-step-for-vimkind"] = {
   requires = "nvim-dap",
+  config = function()
+    local nnoremap = rvim.nnoremap
+    nnoremap("<Leader>dE", ':lua require"osv".run_this()<CR>')
+    nnoremap("<Leader>dl", ':lua require"osv".launch()<CR>')
+  end,
   disable = not rvim.plugin.osv.active,
 }
 
