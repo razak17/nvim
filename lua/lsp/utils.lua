@@ -20,6 +20,12 @@ function M.is_client_active(name)
   end)
 end
 
+function M.remove_augroup(name)
+  if vim.fn.exists("#" .. name) == 1 then
+    vim.cmd("au! " .. name)
+  end
+end
+
 function M.define_augroups(definitions) -- {{{1
   -- Create autocommand groups based on the passed definitions
   --
@@ -43,7 +49,7 @@ function M.define_augroups(definitions) -- {{{1
 end
 
 local get_format_on_save_opts = function()
-  local defaults = require("config.defaults").common["format_on_save"]
+  local defaults = rvim.common.format_on_save
   -- accept a basic boolean `lvim.format_on_save=true`
   if type(rvim.common.format_on_save) ~= "table" then
     return defaults
