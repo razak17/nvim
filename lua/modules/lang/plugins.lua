@@ -45,6 +45,7 @@ lang["antoinemadec/FixCursorHold.nvim"] = {
 lang["neovim/nvim-lspconfig"] = {
   config = utils.load_conf("lang", "lspconfig"),
   disable = not rvim.plugin.lspconfig.active,
+  commit = rvim.plugin.commits.lsp_config,
 }
 
 lang["tamago324/nlsp-settings.nvim"] = {
@@ -53,6 +54,7 @@ lang["tamago324/nlsp-settings.nvim"] = {
 
 lang["jose-elias-alvarez/null-ls.nvim"] = {
   disable = not rvim.plugin.null_ls.active,
+  commit = rvim.plugin.commits.null_ls,
 }
 
 lang["kosayoda/nvim-lightbulb"] = {

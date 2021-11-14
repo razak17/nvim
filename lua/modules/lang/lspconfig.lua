@@ -4,4 +4,16 @@ return function()
   end
 
   require("lsp").setup()
+
+  local formatters = require "lsp.null-ls.formatters"
+  local linters = require "lsp.null-ls.linters"
+
+  formatters.setup {
+    {
+      exe = "stylua",
+      args = {},
+      stdin = true,
+      filetypes = { "lua" },
+    },
+  }
 end
