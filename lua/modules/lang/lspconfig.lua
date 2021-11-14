@@ -15,6 +15,16 @@ return function()
       stdin = true,
       filetypes = { "lua" },
     },
+    {
+      exe = "yapf",
+      args = {},
+      stdin = true,
+      filetypes = { "python" },
+    },
+    {
+      exe = "isort",
+      filetypes = { "python" },
+    },
   }
 
   linters.setup {
@@ -22,5 +32,6 @@ return function()
       exe = "luacheck",
       filetypes = { "lua" },
     },
+    { exe = "flake8", filetypes = { "python" } },
   }
 end
