@@ -22,6 +22,8 @@ function M.list_available(filetype)
     end
   end
 
+  table.sort(formatters)
+
   return formatters
 end
 
