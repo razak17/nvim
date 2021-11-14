@@ -225,7 +225,7 @@ function M.setup()
 
   require("lsp.null-ls").setup(vim.bo.filetype)
 
-  require("lsp.utils").toggle_autoformat()
+  require("lsp.utils").configure_format_on_save()
 end
 
 return M

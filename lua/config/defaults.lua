@@ -56,7 +56,13 @@ return {
     localleader = "space",
     transparent_window = false,
     line_wrap_cursor_movement = false,
-    format_on_save = true,
+    format_on_save = {
+      ---@usage pattern string pattern used for the autocommand (Default: '*')
+      pattern = "*",
+      ---@usage timeout number timeout in ms for the format request (Default: 1000)
+      timeout = 1000,
+    },
+
     debug = false,
   },
   lang = {
