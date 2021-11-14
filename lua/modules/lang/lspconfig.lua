@@ -11,13 +11,11 @@ return function()
   formatters.setup {
     {
       exe = "stylua",
-      args = {},
       stdin = true,
       filetypes = { "lua" },
     },
     {
       exe = "yapf",
-      args = {},
       stdin = true,
       filetypes = { "python" },
     },
@@ -25,6 +23,7 @@ return function()
       exe = "isort",
       filetypes = { "python" },
     },
+    -- { exe = "prettier", filetypes = { "typescript" } },
   }
 
   linters.setup {
@@ -33,5 +32,6 @@ return function()
       filetypes = { "lua" },
     },
     { exe = "flake8", filetypes = { "python" } },
+    -- { exe = "eslint", filetypes = { "typescript" } },
   }
 end
