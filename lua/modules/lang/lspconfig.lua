@@ -16,4 +16,11 @@ return function()
       filetypes = { "lua" },
     },
   }
+
+  linters.setup {
+    {
+      exe = "luacheck",
+      filetypes = { "lua" },
+    },
+  }
 end
