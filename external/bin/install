@@ -66,7 +66,6 @@ golangInit() {
 
 installextra() {
 	sudo pacman -S ripgrep fzf cppcheck
-	yay -S clang-tidy
 	npm install -g tree-sitter-cli eslint prettier
 }
 
