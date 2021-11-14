@@ -66,14 +66,6 @@ return {
     debug = false,
   },
   lang = {
-    -- local g = vim.g
-    -- local schemas = nil
-    -- local status_ok, jsonls_settings = pcall(require, "nlspsettings.jsonls")
-
-    -- if status_ok then
-    --   schemas = jsonls_settings.get_default_schemas()
-    -- end
-
     -- c = {
     --   -- formatters = { { exe = "clang_format", args = {}, stdin = true } },
     --   -- linters = { { exe = "clangtidy" } },
