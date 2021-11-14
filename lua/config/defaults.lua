@@ -231,10 +231,10 @@ return {
     SANE = { active = false },
     packer = { active = true },
     -- debug
-    dap = { active = true },
+    dap = { active = false },
     dap_ui = { active = false },
-    dap_install = { active = true },
-    osv = { active = true },
+    dap_install = { active = false },
+    osv = { active = false },
     -- lsp
     lspconfig = { active = true },
     lsp_installer = { active = true },
