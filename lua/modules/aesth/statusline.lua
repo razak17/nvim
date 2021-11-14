@@ -199,10 +199,6 @@ return function()
     local supported_linters = linters.list_registered_providers(buf_ft)
     vim.list_extend(buf_client_names, supported_linters)
 
-    -- local null_ls = require "lsp.null-ls"
-    -- local null_ls_providers = null_ls.list_supported_provider_names(vim.bo.filetype)
-    -- vim.list_extend(buf_client_names, null_ls_providers)
-
     return table.concat(buf_client_names, " • ")
   end
 
