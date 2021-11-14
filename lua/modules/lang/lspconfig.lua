@@ -23,7 +23,7 @@ return function()
       exe = "isort",
       filetypes = { "python" },
     },
-    -- { exe = "prettier", filetypes = { "typescript" } },
+    -- { exe = "prettier", filetypes = { "typescript", "typescriptreact" } },
   }
 
   linters.setup {
@@ -32,6 +32,6 @@ return function()
       filetypes = { "lua" },
     },
     { exe = "flake8", filetypes = { "python" } },
-    -- { exe = "eslint", filetypes = { "typescript" } },
+    -- { exe = "eslint", filetypes = { "typescript", "typescriptreact" } },
   }
 end
