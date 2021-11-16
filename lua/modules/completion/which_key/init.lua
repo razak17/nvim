@@ -15,26 +15,9 @@ return function()
     -- Get Which-Key keymap
     local key_maps = vim.g.which_key_map
 
-    -- telescope
-    if rvim.plugin.telescope.active then
-      key_maps.f = {
-        name = "+Telescope",
-        b = rvim.wk.telescope.browser,
-        c = rvim.wk.telescope.builtin,
-        d = rvim.wk.telescope.dotfiles,
-        e = rvim.wk.telescope.extensions,
-        f = rvim.wk.telescope.files,
-        l = rvim.wk.telescope.live,
-        r = rvim.wk.telescope.config,
-        v = rvim.wk.telescope.lsp,
-        g = rvim.wk.telescope.git,
-      }
-    end
-
-    -- kommentary
-    if rvim.plugin.kommentary.active then
-      key_maps["/"] = rvim.wk.kommentary["/"]
-      key_maps.a["/"] = rvim.wk.kommentary.a["/"]
+    -- bookmarks
+    if rvim.plugin_loaded "vim-bookmarks" then
+      key_maps.m = rvim.wk.bookmarks
     end
 
     -- dap
@@ -48,9 +31,14 @@ return function()
       key_maps.d.i = rvim.wk.dap_ui.inspect
     end
 
-    -- packer
-    if rvim.plugin.packer.active then
-      key_maps.E = rvim.wk.packer
+    -- dashboard
+    -- if rvim.plugin_loaded "dashboard-nvim" then
+    --   key_maps.S = rvim.wk.dashboard
+    -- end
+
+    -- DOGE
+    if rvim.plugin_loaded "vim-doge" then
+      key_maps.v.D = "DOGe"
     end
 
     -- fterm
@@ -73,82 +61,16 @@ return function()
       key_maps.g = rvim.wk.fugitive
     end
 
+    -- kommentary
+    if rvim.plugin.kommentary.active then
+      key_maps["/"] = rvim.wk.kommentary["/"]
+      key_maps.a["/"] = rvim.wk.kommentary.a["/"]
+    end
+
     -- lsp
     if rvim.plugin_loaded "nvim-lspconfig" then
       key_maps.v = rvim.wk.lsp
       key_maps.L = rvim.wk.lsp_utils
-    end
-
-    --trouble
-    rvim.which_key.keymaps.trouble = {
-      name = "+Trouble",
-      d = { ":TroubleToggle lsp_document_diagnostics", "document" },
-      e = { ":TroubleToggle quickfix", "quickfix" },
-      l = { ":TroubleToggle loclist", "loclist" },
-      r = { ":TroubleToggle lsp_references", "references" },
-      w = { ":TroubleToggle lsp_workspace_diagnostics", "workspace" },
-    }
-    if rvim.plugin_loaded "trouble.nvim" then
-      key_maps.v.x = rvim.which_key.keymaps.trouble
-    end
-
-    -- Slide
-    rvim.which_key.keymaps.slide = {
-      name = "+ASCII",
-      A = "add 20 less than signs",
-      b = "term",
-      B = "bfraktur",
-      e = "emboss",
-      E = "emboss2",
-      f = "bigascii12",
-      F = "letter",
-      m = "bigmono12",
-      v = "asciidoc-view",
-      w = "wideterm",
-    }
-    if vim.bo.ft == "slide" then
-      key_maps["↵"] = "execute commnd"
-      key_maps.A = rvim.which_key.keymaps.slide
-      key_maps.b.l = "show all open buffers"
-      key_maps.B = {
-        name = "+Background",
-        d = "dark",
-        l = "light",
-      }
-    end
-
-    -- matchup
-    if rvim.plugin_loaded "vim-matchup" then
-      key_maps.a.w = "where_am_i"
-    end
-
-    -- undotree
-    if rvim.plugin_loaded "undotree" then
-      key_maps.a.u = { ":UndotreeToggle", "toggle undotree" }
-    end
-
-    -- tree
-    if rvim.plugin_loaded "nvim-tree.lua" then
-      key_maps.c.c = { ":NvimTreeClose", "nvim-tree close" }
-      key_maps.c.f = { ":NvimTreeFindFile", "nvim-tree find" }
-      key_maps.c.r = { ":NvimTreeRefresh", "nvim-tree refresh" }
-      key_maps.c.v = { ":NvimTreeToggle", "nvim-tree toggle" }
-    end
-
-    -- osv
-    if rvim.plugin_loaded "one-small-step-for-vimkind" then
-      key_maps.d.E = "osv run this"
-      key_maps.d.l = "osv launch"
-    end
-
-    -- bookmarks
-    if rvim.plugin_loaded "vim-bookmarks" then
-      key_maps.m = {
-        name = "+Mark",
-        e = { ":BookmarkToggle", "toggle" },
-        b = { ":BookmarkPrev", "previous mark" },
-        k = { ":BookmarkNext", "next mark" },
-      }
     end
 
     -- markdown
@@ -161,9 +83,20 @@ return function()
       end
     end
 
-    -- dashboard
-    if rvim.plugin_loaded "dashboard-nvim" then
-      key_maps.S = { name = "+Session", l = { ":SessionLoad", "load Session" }, s = { ":SessionSave", "save Session" } }
+    -- matchup
+    if rvim.plugin.matchup.active then
+      key_maps.v.W = "where am i"
+    end
+
+    -- osv
+    if rvim.plugin_loaded "one-small-step-for-vimkind" then
+      key_maps.d.E = "osv run this"
+      key_maps.d.l = "osv launch"
+    end
+
+    -- packer
+    if rvim.plugin.packer.active then
+      key_maps.E = rvim.wk.packer
     end
 
     -- playground
@@ -174,18 +107,15 @@ return function()
       end
     end
 
-    -- treesitter
-    if rvim.plugin_loaded "nvim-treesitter" then
-      key_maps.I.e = { ":TSInstallInfo", "ts info" }
-      key_maps.I.u = { ":TSUpdate", "ts update" }
-    end
-
-    -- dashboard
-    if rvim.plugin_loaded "dashboard-nvim" then
-      key_maps.S = {
-        name = "+Session",
-        l = "load",
-        s = "save",
+    -- slide
+    if vim.bo.ft == "slide" then
+      key_maps["↵"] = "execute commnd"
+      key_maps.A = rvim.wk.slide
+      key_maps.b.l = "show all open buffers"
+      key_maps.B = {
+        name = "+Background",
+        d = "dark",
+        l = "light",
       }
     end
 
@@ -194,14 +124,44 @@ return function()
       key_maps.c.s = "edit snippet"
     end
 
-    -- DOGE
-    if rvim.plugin_loaded "vim-doge" then
-      key_maps.v.D = "DOGe"
+    -- telescope
+    if rvim.plugin.telescope.active then
+      key_maps.f = {
+        name = "+Telescope",
+        b = rvim.wk.telescope.browser,
+        c = rvim.wk.telescope.builtin,
+        d = rvim.wk.telescope.dotfiles,
+        e = rvim.wk.telescope.extensions,
+        f = rvim.wk.telescope.files,
+        l = rvim.wk.telescope.live,
+        r = rvim.wk.telescope.config,
+        v = rvim.wk.telescope.lsp,
+        g = rvim.wk.telescope.git,
+      }
     end
 
-    -- matchup
-    if rvim.plugin.matchup.active then
-      key_maps.v.W = "where am i"
+    -- tree
+    if rvim.plugin_loaded "nvim-tree.lua" then
+      key_maps.c.c = { ":NvimTreeClose", "nvim-tree close" }
+      key_maps.c.f = { ":NvimTreeFindFile", "nvim-tree find" }
+      key_maps.c.r = { ":NvimTreeRefresh", "nvim-tree refresh" }
+      key_maps.c.v = { ":NvimTreeToggle", "nvim-tree toggle" }
+    end
+
+    -- treesitter
+    if rvim.plugin_loaded "nvim-treesitter" then
+      key_maps.I.e = { ":TSInstallInfo", "ts info" }
+      key_maps.I.u = { ":TSUpdate", "ts update" }
+    end
+
+    -- trouble
+    if rvim.plugin_loaded "trouble.nvim" then
+      key_maps.v.x = rvim.wk.trouble
+    end
+
+    -- undotree
+    if rvim.plugin_loaded "undotree" then
+      key_maps.a.u = { ":UndotreeToggle", "toggle undotree" }
     end
 
     -- Update Which-Key keymap
