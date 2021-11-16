@@ -6,7 +6,7 @@ function M:setup()
     return
   end
 
-  null_ls.config()
+  null_ls.config(rvim.lsp.null_ls.config)
   local default_opts = require("lsp").get_global_opts()
 
   if vim.tbl_isempty(rvim.lsp.null_ls.setup or {}) then

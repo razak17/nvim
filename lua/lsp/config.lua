@@ -76,6 +76,7 @@ return {
     setup = {
       -- root_dir = require("lspconfig").util.root_pattern("Makefile", ".git", "node_modules"),
     },
+    config = {},
   },
   override = {
     "angularls",
