@@ -69,27 +69,8 @@ return function()
     end
 
     -- fugitive
-    rvim.which_key.keymaps.fugitive = {
-      name = "+Git",
-      a = { ":Git fetch --all", "fetch all" },
-      A = { ":Git blame", "blame" },
-      b = { ":GBranches", "branches" },
-      c = { name = "+Commit", a = { ":Git commit --amend -m ", "amend" }, m = { ":Git commit<CR>", "message" } },
-      C = { ":Git checkout -b ", "checkout" },
-      d = { ":Git diff", "diff" },
-      D = { ":Gdiffsplit", "diff split" },
-      h = { ":diffget //3", "diffget" },
-      i = { ":Git init", "init" },
-      k = { ":diffget //2", "diffget" },
-      l = { ":Git log", "log" },
-      e = { ":Git push", "push" },
-      p = { ":Git poosh", "poosh" },
-      P = { ":Git pull", "pull" },
-      r = { ":GRemove", "remove" },
-      s = { ":G", "status" },
-    }
     if rvim.plugin_loaded "vim-fugitive" then
-      key_maps.g = rvim.which_key.keymaps.fugitive
+      key_maps.g = rvim.wk.fugitive
     end
 
     -- lsp
