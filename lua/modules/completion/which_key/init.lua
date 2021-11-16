@@ -38,34 +38,14 @@ return function()
     end
 
     -- dap
-    rvim.which_key.keymaps.debugging = {
-      name = "+Debug",
-      ["?"] = "centered float ui",
-      a = "attach",
-      A = "attach remote",
-      b = "toggle breakpoint",
-      B = "set breakpoint",
-      c = "continue",
-      C = "run to cursor",
-      g = "get session",
-      k = "up",
-      L = "run last",
-      n = "down",
-      p = "pause",
-      r = "toggle repl",
-      R = "open repl in vsplit",
-      s = {
-        name = "+Step",
-        b = "back",
-        i = "step into",
-        o = "step out",
-        v = "step over",
-      },
-      S = { ':lua require"dap".close()', "stop" },
-      x = { ':lua require"dap".disconnect()', "disconnect" },
-    }
     if rvim.plugin_loaded "nvim-dap" then
-      key_maps.d = rvim.which_key.keymaps.debugging
+      key_maps.d = rvim.wk.dap
+    end
+
+    -- dap ui
+    if rvim.plugin_loaded "nvim-dap-ui" then
+      key_maps.d.e = rvim.wk.dap_ui.toggle
+      key_maps.d.i = rvim.wk.dap_ui.inspect
     end
 
     rvim.which_key.keymaps.packer = {
@@ -232,12 +212,6 @@ return function()
     if rvim.plugin_loaded "one-small-step-for-vimkind" then
       key_maps.d.E = "osv run this"
       key_maps.d.l = "osv launch"
-    end
-
-    -- debug ui
-    if rvim.plugin_loaded "nvim-dap-ui" then
-      key_maps.d.e = { ':lua require"dapui".toggle()', "toggle ui" }
-      key_maps.d.i = { ':lua require"dap.ui.variables".hover()', "inspect" }
     end
 
     -- bookmarks
