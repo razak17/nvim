@@ -49,6 +49,7 @@ function Plug:load_packer()
     package_root = package_root,
     compile_path = compile_path,
     auto_reload_compiled = true,
+    max_jobs = 50,
     git = { clone_timeout = 7000 },
     disable_commands = true,
     display = {
