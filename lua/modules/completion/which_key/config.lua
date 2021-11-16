@@ -226,4 +226,32 @@ return {
     s = { ":PlugSync", "sync" },
     S = { ":PlugStatus", "Status" },
   },
+  fterm = {
+    name = "+Fterm",
+    g = { [[v:lua.fterm_cmd("gitui")]], "gitui" },
+    l = { [[v:lua.fterm_cmd("lazygit")]], "lazygit" },
+    N = { [[v:lua.fterm_cmd("node")]], "node" },
+    n = "new",
+    p = { [[v:lua.fterm_cmd("python")]], "python" },
+    r = { [[v:lua.fterm_cmd("ranger")]], "ranger" },
+    v = "open vimrc in vertical split",
+  },
+  far = {
+    name = "+Far",
+    f = { ":Farr --source=vimgrep", "replace in File" },
+    d = { ":Fardo", "do" },
+    i = { ":Farf", "search iteratively" },
+    r = { ":Farr --source=rgnvim", "replace in Project" },
+    z = { ":Farundo", "undo" },
+  },
+  gitsigns = {
+      name = "+Gitsigns",
+      b = "blame line",
+      e = "preview hunk",
+      r = "reset hunk",
+      s = "stage hunk",
+      t = "toggle line blame",
+      u = "undo stage hunk",
+
+  },
 }

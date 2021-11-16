@@ -54,44 +54,18 @@ return function()
     end
 
     -- fterm
-    rvim.which_key.keymaps.fterm = {
-      name = "+Fterm",
-      g = { [[v:lua.fterm_cmd("gitui")]], "gitui" },
-      l = { [[v:lua.fterm_cmd("lazygit")]], "lazygit" },
-      N = { [[v:lua.fterm_cmd("node")]], "node" },
-      n = "new",
-      p = { [[v:lua.fterm_cmd("python")]], "python" },
-      r = { [[v:lua.fterm_cmd("ranger")]], "ranger" },
-      v = "open vimrc in vertical split",
-    }
     if rvim.plugin_loaded "FTerm.nvim" then
-      key_maps.e = rvim.which_key.keymaps.fterm
+      key_maps.e = rvim.wk.fterm
     end
 
     -- far
-    rvim.which_key.keymaps.far = {
-      name = "+Far",
-      f = { ":Farr --source=vimgrep", "replace in File" },
-      d = { ":Fardo", "do" },
-      i = { ":Farf", "search iteratively" },
-      r = { ":Farr --source=rgnvim", "replace in Project" },
-      z = { ":Farundo", "undo" },
-    }
     if rvim.plugin_loaded "far.vim" then
-      key_maps.F = rvim.which_key.keymaps.far
+      key_maps.F = rvim.wk.far
     end
+
     -- git_signs
-    rvim.which_key.keymaps.git_signs = {
-      name = "+Gitsigns",
-      b = "blame line",
-      e = "preview hunk",
-      r = "reset hunk",
-      s = "stage hunk",
-      t = "toggle line blame",
-      u = "undo stage hunk",
-    }
     if rvim.plugin_loaded "gitsigns.nvim" then
-      key_maps.h = rvim.which_key.keymaps.git_signs
+      key_maps.h = rvim.wk.gitsigns
     end
 
     -- fugitive
