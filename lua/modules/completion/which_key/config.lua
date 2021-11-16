@@ -174,4 +174,8 @@ return {
     },
     browser = { ":Telescope file_browser", "file browser" },
   },
+  kommentary = {
+    ["/"] = { "<Plug>kommentary_line_default", "comment" },
+    a = { ["/"] = { "<Plug>kommentary_motion_default", "comment motion default" } },
+  },
 }

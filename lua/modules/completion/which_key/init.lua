@@ -32,8 +32,10 @@ return function()
     end
 
     -- kommentary
-    key_maps["/"] = { "<Plug>kommentary_line_default", "comment" }
-    key_maps.a["/"] = { "<Plug>kommentary_motion_default", "comment motion default" }
+    if rvim.plugin.kommentary.active then
+      key_maps["/"] = rvim.wk.kommentary["/"]
+      key_maps.a["/"] = rvim.wk.kommentary.a["/"]
+    end
 
     -- dap
     rvim.which_key.keymaps.debugging = {
