@@ -275,8 +275,7 @@ if vim.env.TMUX ~= nil then
       targets = { "*" },
       command = function()
         local session = fn.fnamemodify(vim.loop.cwd(), ":t") or "Neovim"
-        local window_title = session
-        window_title = fmt("%s", session)
+        local window_title = fmt("%s", session)
         fn.jobstart(fmt("tmux rename-window '%s'", window_title))
       end,
     },
