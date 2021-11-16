@@ -47,7 +47,7 @@ return function()
     end),
   }
 
-  local cmp_status_ok, cmp = rvim.safe_require(require, "cmp")
+  local cmp_status_ok, cmp = rvim.safe_require "cmp"
   if cmp_status_ok then
     -- If you want insert `(` after select function or method item
     local cmp_autopairs = require "nvim-autopairs.completion.cmp"
