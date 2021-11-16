@@ -16,21 +16,19 @@ return function()
     local key_maps = vim.g.which_key_map
 
     -- telescope
-    rvim.which_key.keymaps.telescope = {
-      name = "+Telescope",
-      b = rvim.wk.telescope.browser,
-      c = rvim.wk.telescope.builtin,
-      d = rvim.wk.telescope.dotfiles,
-      e = rvim.wk.telescope.extensions,
-      f = rvim.wk.telescope.files,
-      l = rvim.wk.telescope.live,
-      r = rvim.wk.telescope.config,
-      v = rvim.wk.telescope.lsp,
-      g = rvim.wk.telescope.git,
-    }
-
     if rvim.plugin.telescope.active then
-      key_maps.f = rvim.which_key.keymaps.telescope
+      key_maps.f = {
+        name = "+Telescope",
+        b = rvim.wk.telescope.browser,
+        c = rvim.wk.telescope.builtin,
+        d = rvim.wk.telescope.dotfiles,
+        e = rvim.wk.telescope.extensions,
+        f = rvim.wk.telescope.files,
+        l = rvim.wk.telescope.live,
+        r = rvim.wk.telescope.config,
+        v = rvim.wk.telescope.lsp,
+        g = rvim.wk.telescope.git,
+      }
     end
 
     -- kommentary
