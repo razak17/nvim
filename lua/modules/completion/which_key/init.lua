@@ -48,21 +48,9 @@ return function()
       key_maps.d.i = rvim.wk.dap_ui.inspect
     end
 
-    rvim.which_key.keymaps.packer = {
-      name = "+Plug",
-      c = { ":PlugCompile", "compile" },
-      C = { ":PlugClean", "clean" },
-      D = { ":PackerCompiledDelete", "delete packer_compiled" },
-      e = { ":PlugUpdate", "update" },
-      E = { ":PackerCompiledEdit", "edit packer_compiled" },
-      i = { ":PlugInstall", "install" },
-      R = { ":PlugRecompile", "recompile" },
-      s = { ":PlugSync", "sync" },
-      S = { ":PlugStatus", "Status" },
-    }
-
+    -- packer
     if rvim.plugin.packer.active then
-      key_maps.E = rvim.which_key.keymaps.packer
+      key_maps.E = rvim.wk.packer
     end
 
     -- fterm
