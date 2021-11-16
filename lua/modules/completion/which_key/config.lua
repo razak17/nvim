@@ -274,4 +274,21 @@ return {
       s = { ":G", "status" },
     },
   },
+  lsp = {
+    name = "+Code",
+    a = "code action",
+    A = "range code action",
+    d = { name = "+Diagnostics", b = "goto previous", l = "current line", n = "goto next" },
+    f = "format",
+    l = "set loc list",
+    o = "open qflist",
+    s = { ":SymbolsOutline", "Symbols outline" },
+    v = { ":LspToggleVirtualText", "toggle virtual text" },
+  },
+  lsp_utils = {
+    name = "+LspUtils",
+    i = { ":LspInfo", "info" },
+    l = { ":LspLog", "log" },
+    r = { ":LspReload", "restart" },
+  },
 }

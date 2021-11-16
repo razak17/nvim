@@ -74,25 +74,9 @@ return function()
     end
 
     -- lsp
-    rvim.which_key.keymaps.lsp = {
-      name = "+Code",
-      a = "code action",
-      A = "range code action",
-      d = { name = "+Diagnostics", b = "goto previous", l = "current line", n = "goto next" },
-      f = "format",
-      l = "set loc list",
-      o = "open qflist",
-      s = { ":SymbolsOutline", "Symbols outline" },
-      v = { ":LspToggleVirtualText", "toggle virtual text" },
-    }
     if rvim.plugin_loaded "nvim-lspconfig" then
-      key_maps.v = rvim.which_key.keymaps.lsp
-      key_maps.L = {
-        name = "+LspUtils",
-        i = { ":LspInfo", "info" },
-        l = { ":LspLog", "log" },
-        r = { ":LspReload", "restart" },
-      }
+      key_maps.v = rvim.wk.lsp
+      key_maps.L = rvim.wk.lsp_utils
     end
 
     --trouble
