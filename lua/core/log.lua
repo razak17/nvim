@@ -1,5 +1,17 @@
 local Log = {}
 
+local logfile = string.format("%s/%s.log", get_cache_dir(), "rvim")
+
+Log.levels = {
+  TRACE = 1,
+  DEBUG = 2,
+  INFO = 3,
+  WARN = 4,
+  ERROR = 5,
+}
+
+vim.tbl_add_reverse_lookup(Log.levels)
+
 --- Adds a log entry using Plenary.log
 ---@param msg any
 ---@param level string [same as vim.log.log_levels]
@@ -49,7 +61,7 @@ end
 ---Retrieves the path of the logfile
 ---@return string path of the logfile
 function Log:get_path()
-  return string.format("%s/%s.log", vim.fn.stdpath "cache", "rvim")
+  return logfile
 end
 
 ---Add a log entry at TRACE level
