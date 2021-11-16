@@ -124,6 +124,14 @@ function plugins.ensure_plugins()
     end,
   }
 
+  command {
+    "PackerRecompile",
+    function()
+      vim.fn.delete(compile_path)
+      vim.cmd [[:PlugCompile]]
+    end,
+  }
+
   if not vim.g.packer_compiled_loaded and vim.loop.fs_stat(compile_path) then
     vim.cmd(fmt("source %s", compile_path))
     vim.g.packer_compiled_loaded = true
