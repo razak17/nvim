@@ -106,6 +106,28 @@ function plugins.ensure_plugins()
   rvim.augroup("PackerComplete", {
     { events = { "User" }, targets = { "lua" }, command = "lua require('core.plugins').compile()" },
   })
+
+  local fmt = string.format
+
+  command {
+    "PackerCompiledEdit",
+    function()
+      vim.cmd(fmt("edit %s", compile_path))
+    end,
+  }
+
+  command {
+    "PackerCompiledDelete",
+    function()
+      vim.fn.delete(compile_path)
+      vim.notify(fmt("Deleted %s", compile_path))
+    end,
+  }
+
+  if not vim.g.packer_compiled_loaded and vim.loop.fs_stat(compile_path) then
+    vim.cmd(fmt("source %s", compile_path))
+    vim.g.packer_compiled_loaded = true
+  end
 end
 
 function plugins.recompile()
@@ -119,7 +141,6 @@ function plugins.load_compile()
   if vim.fn.filereadable(compile_path) ~= 1 then
     plugins.install()
     plugins.compile()
-    -- vim.notify("Packer config file not found. Run 'PlugCompile', then restart.", { timeout = 1000 })
   else
     require "_compiled_rolling"
   end

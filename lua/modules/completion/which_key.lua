@@ -245,11 +245,13 @@ return function()
       name = "+Plug",
       c = { ":PlugCompile", "compile" },
       C = { ":PlugClean", "clean" },
+      D = { ":PackerCompiledDelete", "delete packer_compiled" },
+      e = { ":PlugUpdate", "update" },
+      E = { ":PackerCompiledEdit", "edit packer_compiled" },
       i = { ":PlugInstall", "install" },
       R = { ":PlugRecompile", "recompile" },
       s = { ":PlugSync", "sync" },
       S = { ":PlugStatus", "Status" },
-      e = { ":PlugUpdate", "update" },
     }
 
     if rvim.plugin.packer.active then
