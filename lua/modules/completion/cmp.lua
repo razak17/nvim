@@ -39,12 +39,43 @@ return function()
         behavior = cmp.ConfirmBehavior.Replace,
         select = false,
       },
+      completion = {
+        ---@usage The minimum length of a word to complete on.
+        keyword_length = 1,
+      },
       experimental = {
         ghost_text = true,
         native_menu = false,
       },
       formatting = {
-        kind_icons = rvim.style.kinds,
+        fields = { "kind", "abbr", "menu" },
+        kind_icons = {
+          Class = " ",
+          Color = " ",
+          Constant = "ﲀ ",
+          Constructor = " ",
+          Enum = "練",
+          EnumMember = " ",
+          Event = " ",
+          Field = " ",
+          File = "",
+          Folder = " ",
+          Function = " ",
+          Interface = "ﰮ ",
+          Keyword = " ",
+          Method = " ",
+          Module = " ",
+          Operator = "",
+          Property = " ",
+          Reference = " ",
+          Snippet = " ",
+          Struct = " ",
+          Text = " ",
+          TypeParameter = " ",
+          Unit = "塞",
+          Value = " ",
+          Variable = " ",
+        },
         source_names = {
           nvim_lsp = "(LSP)",
           emoji = "(Emoji)",
@@ -59,7 +90,7 @@ return function()
           buffer = 1,
           path = 1,
           nvim_lsp = 0,
-          vsnip = 1,
+          luasnip = 1,
         },
         duplicates_default = 0,
         format = function(entry, vim_item)
@@ -96,7 +127,7 @@ return function()
         ["<C-d>"] = cmp.mapping.scroll_docs(-4),
         ["<C-f>"] = cmp.mapping.scroll_docs(4),
         -- TODO: potentially fix emmet nonsense
-        ["<Tab>"] = cmp.mapping(function()
+        ["<Tab>"] = cmp.mapping(function(fallback)
           if cmp.visible() then
             cmp.select_next_item()
           elseif fn.call("vsnip#available", { 1 }) == 1 then
@@ -108,7 +139,7 @@ return function()
           elseif is_emmet_active() then
             return fn["cmp#complete"]()
           else
-            vim.fn.feedkeys(T "<Tab>", "n")
+            fallback()
           end
         end, {
           "i",
@@ -142,23 +173,19 @@ return function()
 
   require("cmp").setup(rvim.cmp.setup)
 
-  -- Use buffer source for `/`.
-  cmp.setup.cmdline("/", {
-    sources = {
-      { name = "buffer" },
-    },
-  })
+  local search_sources = {
+    sources = cmp.config.sources({
+      { name = "nvim_lsp_document_symbol" },
+    }, {
+      { name = "fuzzy_buffer" },
+    }),
+  }
 
-  cmp.setup.cmdline("?", {
-    sources = {
-      { name = "buffer" },
-    },
-  })
-
-  -- Use cmdline & path source for ':'.
+  cmp.setup.cmdline("/", search_sources)
+  cmp.setup.cmdline("?", search_sources)
   cmp.setup.cmdline(":", {
     sources = cmp.config.sources({
-      { name = "path" },
+      { name = "fuzzy_path" },
     }, {
       { name = "cmdline" },
     }),
