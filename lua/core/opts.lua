@@ -1,4 +1,5 @@
 local vim = vim
+local utils = require "utils"
 
 local M = {}
 
@@ -179,6 +180,7 @@ M.load_options = function()
   ---  SETTINGS  ---
   vim.opt.shortmess:append "c"
   vim.opt.iskeyword:append "-"
+  vim.opt.shadafile = utils.join_paths(get_cache_dir(), "shada", "rvim.shada")
 
   for k, v in pairs(default_options) do
     vim.opt[k] = v
@@ -186,8 +188,9 @@ M.load_options = function()
 end
 
 M.load_commands = function()
-  local cmd = vim.cmd
   local o = vim.o
+  o.switchbuf = "useopen,uselast"
+  o.titlestring = "%<%F%=%l/%L - nvim"
 
   local command_options = {
     exrc = true,
@@ -201,10 +204,7 @@ M.load_commands = function()
     shell = "/bin/zsh",
     inccommand = "nosplit",
   }
-
-  if rvim.common.line_wrap_cursor_movement then
-    cmd "set whichwrap+=<,>,[,],h,l,~"
-  end
+  local cmd = vim.cmd
 
   for k, v in pairs(command_options) do
     if v == true or v == false then
@@ -214,8 +214,9 @@ M.load_commands = function()
     end
   end
 
-  o.switchbuf = "useopen,uselast"
-  o.titlestring = "%<%F%=%l/%L - nvim"
+  if rvim.common.line_wrap_cursor_movement then
+    cmd "set whichwrap+=<,>,[,],h,l,~"
+  end
 
   if rvim.common.transparent_window then
     cmd "au ColorScheme * hi Normal ctermbg=none guibg=none"
