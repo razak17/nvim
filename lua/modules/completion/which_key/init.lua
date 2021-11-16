@@ -10,7 +10,7 @@ return function()
   -- Set default keymaps
   vim.g.which_key_map = rvim.which_key.keymaps.defaults
 
-  -- Plugin keymaps
+  -- plugin keymaps
   WhichKey.SetKeyOnFT = function()
     -- Get Which-Key keymap
     local key_maps = vim.g.which_key_map
@@ -124,6 +124,14 @@ return function()
       key_maps.c.s = "edit snippet"
     end
 
+    -- tree
+    if rvim.plugin_loaded "nvim-tree.lua" then
+      key_maps.c.c = { ":NvimTreeClose", "nvim-tree close" }
+      key_maps.c.f = { ":NvimTreeFindFile", "nvim-tree find" }
+      key_maps.c.r = { ":NvimTreeRefresh", "nvim-tree refresh" }
+      key_maps.c.v = { ":NvimTreeToggle", "nvim-tree toggle" }
+    end
+
     -- telescope
     if rvim.plugin.telescope.active then
       key_maps.f = {
@@ -138,14 +146,6 @@ return function()
         v = rvim.wk.telescope.lsp,
         g = rvim.wk.telescope.git,
       }
-    end
-
-    -- tree
-    if rvim.plugin_loaded "nvim-tree.lua" then
-      key_maps.c.c = { ":NvimTreeClose", "nvim-tree close" }
-      key_maps.c.f = { ":NvimTreeFindFile", "nvim-tree find" }
-      key_maps.c.r = { ":NvimTreeRefresh", "nvim-tree refresh" }
-      key_maps.c.v = { ":NvimTreeToggle", "nvim-tree toggle" }
     end
 
     -- treesitter
