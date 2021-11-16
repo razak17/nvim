@@ -44,8 +44,8 @@ lang["antoinemadec/FixCursorHold.nvim"] = {
 
 lang["neovim/nvim-lspconfig"] = {
   config = utils.load_conf("lang", "lspconfig"),
-  disable = not rvim.plugin.lspconfig.active,
   commit = rvim.plugin.commits.lsp_config,
+  disable = not rvim.plugin.lspconfig.active,
 }
 
 lang["tamago324/nlsp-settings.nvim"] = {
@@ -53,8 +53,8 @@ lang["tamago324/nlsp-settings.nvim"] = {
 }
 
 lang["jose-elias-alvarez/null-ls.nvim"] = {
-  disable = not rvim.plugin.null_ls.active,
   commit = rvim.plugin.commits.null_ls,
+  disable = not rvim.plugin.null_ls.active,
 }
 
 lang["kosayoda/nvim-lightbulb"] = {
@@ -135,6 +135,7 @@ lang["windwp/nvim-autopairs"] = {
   event = "InsertEnter",
   after = { "telescope.nvim", "nvim-treesitter" },
   config = utils.load_conf("lang", "autopairs"),
+  commit = rvim.plugin.commits.autopairs,
   disable = not rvim.plugin.autopairs.active,
 }
 

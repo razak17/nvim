@@ -226,6 +226,7 @@ return {
   },
   plugin = {
     commits = {
+      autopairs = "f858ab38b532715dbaf7b2773727f8622ba04322",
       null_ls = "64b269b51c7490660dcb2008f59ae260f2cdbbe4",
       lsp_config = "6224c54a9945a52bf43a8bc1a42a112084590c0b",
     },

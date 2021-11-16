@@ -47,14 +47,12 @@ return function()
     end),
   }
 
-  if package.loaded["cmp"] then
-    require("nvim-autopairs.completion.cmp").setup {
-      map_cr = false,
-      map_complete = rvim.autopairs.setup.map_complete,
-      map_char = rvim.autopairs.setup.map_char,
-    }
-    -- we map CR explicitly in cmp.lua but we still need to setup the autopairs CR keymap
-    vim.api.nvim_set_keymap("i", "<CR>", "v:lua.MPairs.autopairs_cr()", { expr = true, noremap = true })
+  local cmp_status_ok, cmp = pcall(require, "cmp")
+  if cmp_status_ok then
+    -- If you want insert `(` after select function or method item
+    local cmp_autopairs = require "nvim-autopairs.completion.cmp"
+    local map_char = rvim.autopairs.map_char
+    cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done { map_char = map_char })
   end
 
   require("nvim-treesitter.configs").setup { autopairs = { enable = true } }
