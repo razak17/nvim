@@ -1,135 +1,86 @@
+local nnoremap, cnoremap, tnoremap, vnoremap, xnoremap, inoremap =
+  rvim.keys.nnoremap, rvim.keys.cnoremap, rvim.keys.tnoremap, rvim.keys.vnoremap, rvim.keys.xnoremap, rvim.keys.inoremap
+
 -----------------------------------------------------------------------------//
 -- Defaults
 -----------------------------------------------------------------------------//
-rvim.keys = {
-  ---@usage change or add keymappings for normal mode
-  nmap = {},
 
-  ---@usage change or add keymappings for visual block mode
-  xmap = {},
+-- Undo
+nnoremap["<C-z>"] = ":undo<CR>"
 
-  ---@usage change or add keymappings for insert mode
-  imap = {},
+-- remap esc to use cc
+nnoremap["<C-c>"] = "<Esc>"
 
-  ---@usage change or add keymappings for visual mode
-  vmap = {},
+-- Better window movement
+nnoremap["<C-h>"] = "<C-w>h"
+nnoremap["<C-n>"] = "<C-w>j"
+nnoremap["<C-k>"] = "<C-w>k"
+nnoremap["<C-l>"] = "<C-w>l"
 
-  ---@usage change or add keymappings for operator mode
-  omap = {},
+-- Move current line / block with Alt-j/k a la vscode.
+nnoremap["<A-j>"] = ":m .+1<CR>=="
+nnoremap["<A-k>"] = ":m .-2<CR>=="
 
-  ---@usage change or add keymappings for terminal mode
-  tmap = {},
+-- Disable arrows in normal mode
+nnoremap["<down>"] = "<nop>"
+nnoremap["<up>"] = "<nop>"
+nnoremap["<left>"] = "<nop>"
+nnoremap["<right>"] = "<nop>"
 
-  ---@usage change or add keymappings for select mode
-  smap = {},
+-- Move selected line / block of text in visual mode
+xnoremap["K"] = ":m '<-2<CR>gv=gv"
+xnoremap["N"] = ":m '>+1<CR>gv=gv"
 
-  ---@usage change or add keymappings for command mode
-  cmap = {},
+-- Paste in visual mode multiple times
+xnoremap["p"] = "pgvy"
 
-  ---@usage change or add keymappings for recursive normal mode
-  nnoremap = {
-    -- Undo
-    ["<C-z>"] = ":undo<CR>",
+-- Repeat last substitute with flags
+xnoremap["&"] = "<cmd>&&<CR>"
 
-    -- remap esc to use cc
-    ["<C-c>"] = "<Esc>",
+-- Start new line from any cursor position
+inoremap["<S-Return>"] = "<C-o>o"
 
-    -- Better window movement
-    ["<C-h>"] = "<C-w>h",
-    ["<C-n>"] = "<C-w>j",
-    ["<C-k>"] = "<C-w>k",
-    ["<C-l>"] = "<C-w>l",
+-- Disable arrows in insert mode
+inoremap["<down>"] = "<nop>"
+inoremap["<up>"] = "<nop>"
+inoremap["<left>"] = "<nop>"
+inoremap["<right>"] = "<nop>"
 
-    -- Move current line / block with Alt-j/k a la vscode.
-    ["<A-j>"] = ":m .+1<CR>==",
-    ["<A-k>"] = ":m .-2<CR>==",
+-- Better indenting
+vnoremap["<"] = "<gv"
+vnoremap[">"] = ">gv"
 
-    -- Disable arrows in normal mode
-    ["<down>"] = "<nop>",
-    ["<up>"] = "<nop>",
-    ["<left>"] = "<nop>",
-    ["<right>"] = "<nop>",
-  },
+-- search visual selection
+vnoremap["//"] = [[y/<C-R>"<CR>]]
 
-  ---@usage change or add keymappings for recursive visual block mode
-  xnoremap = {
-    -- Move selected line / block of text in visual mode
-    ["K"] = ":m '<-2<CR>gv=gv",
-    ["N"] = ":m '>+1<CR>gv=gv",
+-- find visually selected text
+vnoremap["*"] = [[y/<C-R>"<CR>]]
 
-    -- Paste in visual mode multiple times
-    ["p"] = "pgvy",
+-- make . work with visually selected lines
+vnoremap["."] = ":norm.<CR>"
 
-    -- Repeat last substitute with flags
-    ["&"] = "<cmd>&&<CR>",
-  },
+-- when going to the end of the line in visual mode ignore whitespace characters
+vnoremap["$"] = "g_"
 
-  ---@usage change or add keymappings for recursive insert mode
-  inoremap = {
-    -- Start new line from any cursor position
-    ["<S-Return>"] = "<C-o>o",
+tnoremap["<esc>"] = "<C-\\><C-n>:q!<CR>"
+tnoremap["jk"] = "<C-\\><C-n>"
+tnoremap["<C-h>"] = "<C\\><C-n><C-W>h"
+tnoremap["<C-j>"] = "<C-\\><C-n><C-W>j"
+tnoremap["<C-k>"] = "<C-\\><C-n><C-W>k"
+tnoremap["<C-l>"] = "<C-\\><C-n><C-W>l"
+tnoremap["]t"] = "<C-\\><C-n>:tablast<CR>"
+tnoremap["[t"] = "<C-\\><C-n>:tabnext<CR>"
+tnoremap["<S-Tab>"] = "<C-\\><C-n>:bprev<CR>"
 
-    -- Disable arrows in insert mode
-    ["<down>"] = "<nop>",
-    ["<up>"] = "<nop>",
-    ["<left>"] = "<nop>",
-    ["<right>"] = "<nop>",
-  },
-
-  ---@usage change or add keymappings for recursive visual mode
-  vnoremap = {
-    -- Better indenting
-    ["<"] = "<gv",
-    [">"] = ">gv",
-
-    -- search visual selection
-    ["//"] = [[y/<C-R>"<CR>]],
-
-    -- find visually selected text
-    ["*"] = [[y/<C-R>"<CR>]],
-
-    -- make . work with visually selected lines
-    ["."] = ":norm.<CR>",
-
-    -- when going to the end of the line in visual mode ignore whitespace characters
-    ["$"] = "g_",
-  },
-
-  ---@usage change or add keymappings for recursive operator mode
-  onoremap = {},
-
-  ---@usage change or add keymappings for recursive terminal mode
-  tnoremap = {
-    ["<esc>"] = "<C-\\><C-n>:q!<CR>",
-    ["jk"] = "<C-\\><C-n>",
-    ["<C-h>"] = "<C\\><C-n><C-W>h",
-    ["<C-j>"] = "<C-\\><C-n><C-W>j",
-    ["<C-k>"] = "<C-\\><C-n><C-W>k",
-    ["<C-l>"] = "<C-\\><C-n><C-W>l",
-    ["]t"] = "<C-\\><C-n>:tablast<CR>",
-    ["[t"] = "<C-\\><C-n>:tabnext<CR>",
-    ["<S-Tab>"] = "<C-\\><C-n>:bprev<CR>",
-  },
-
-  ---@usage change or add keymappings for recursive select mode
-  snoremap = {},
-
-  ---@usage change or add keymappings for recursive command mode
-  cnoremap = {
-    -- smooth searching, allow tabbing between search results similar to using <c-g>
-    -- or <c-t> the main difference being tab is easier to hit and remapping those keys
-    -- to these would swallow up a tab mapping
-    ["<Tab>"] = { [[getcmdtype() == "/" || getcmdtype() == "?" ? "<CR>/<C-r>/" : "<C-z>"]], { expr = true } },
-    ["<S-Tab>"] = { [[getcmdtype() == "/" || getcmdtype() == "?" ? "<CR>?<C-r>/" : "<S-Tab>"]], { expr = true } },
-  },
-}
+-- smooth searching, allow tabbing between search results similar to using <c-g>
+-- or <c-t> the main difference being tab is easier to hit and remapping those keys
+-- to these would swallow up a tab mapping
+cnoremap["<Tab>"] = { [[getcmdtype() == "/" || getcmdtype() == "?" ? "<CR>/<C-r>/" : "<C-z>"]], { expr = true } }
+cnoremap["<S-Tab>"] = { [[getcmdtype() == "/" || getcmdtype() == "?" ? "<CR>?<C-r>/" : "<S-Tab>"]], { expr = true } }
 
 -----------------------------------------------------------------------------//
 -- Appended
 -----------------------------------------------------------------------------//
-
-local nnoremap, cnoremap, tnoremap, vnoremap, xnoremap, inoremap =
-  rvim.keys.nnoremap, rvim.keys.cnoremap, rvim.keys.tnoremap, rvim.keys.vnoremap, rvim.keys.xnoremap, rvim.keys.inoremap
 
 -- Use alt + hjkl to resize windows
 nnoremap["<M-n>"] = ":resize -2<CR>"

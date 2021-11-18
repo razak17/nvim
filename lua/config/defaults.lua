@@ -1,4 +1,67 @@
 return {
+  common = {
+    leader = "space",
+    localleader = "space",
+    transparent_window = false,
+    line_wrap_cursor_movement = false,
+    format_on_save = {
+      ---@usage pattern string pattern used for the autocommand (Default: '*')
+      pattern = "*",
+      ---@usage timeout number timeout in ms for the format request (Default: 1000)
+      timeout = 1000,
+    },
+
+    debug = false,
+  },
+  keys = {
+    ---@usage change or add keymappings for normal mode
+    nmap = {},
+
+    ---@usage change or add keymappings for visual block mode
+    xmap = {},
+
+    ---@usage change or add keymappings for insert mode
+    imap = {},
+
+    ---@usage change or add keymappings for visual mode
+    vmap = {},
+
+    ---@usage change or add keymappings for operator mode
+    omap = {},
+
+    ---@usage change or add keymappings for terminal mode
+    tmap = {},
+
+    ---@usage change or add keymappings for select mode
+    smap = {},
+
+    ---@usage change or add keymappings for command mode
+    cmap = {},
+
+    ---@usage change or add keymappings for recursive normal mode
+    nnoremap = {},
+
+    ---@usage change or add keymappings for recursive visual block mode
+    xnoremap = {},
+
+    ---@usage change or add keymappings for recursive insert mode
+    inoremap = {},
+
+    ---@usage change or add keymappings for recursive visual mode
+    vnoremap = {},
+
+    ---@usage change or add keymappings for recursive operator mode
+    onoremap = {},
+
+    ---@usage change or add keymappings for recursive terminal mode
+    tnoremap = {},
+
+    ---@usage change or add keymappings for recursive select mode
+    snoremap = {},
+
+    ---@usage change or add keymappings for recursive command mode
+    cnoremap = {},
+  },
   which_key = {
     defaults = {
       sep = "",
@@ -62,19 +125,94 @@ return {
       Variable = " ",
     },
   },
-  common = {
-    leader = "space",
-    localleader = "space",
-    transparent_window = false,
-    line_wrap_cursor_movement = false,
-    format_on_save = {
-      ---@usage pattern string pattern used for the autocommand (Default: '*')
-      pattern = "*",
-      ---@usage timeout number timeout in ms for the format request (Default: 1000)
-      timeout = 1000,
+  log = {
+    ---@usage can be { "trace", "debug", "info", "warn", "error", "fatal" },
+    level = "warn",
+    viewer = {
+      ---@usage this will fallback on "less +F" if not found
+      cmd = "lnav",
+      layout_config = {
+        ---@usage direction = 'vertical' | 'horizontal' | 'window' | 'float',
+        direction = "horizontal",
+        open_mapping = "",
+        size = 40,
+        float_opts = {},
+      },
     },
-
-    debug = false,
+  },
+  plugin = {
+    commits = {
+      autopairs = "f858ab38b532715dbaf7b2773727f8622ba04322",
+      null_ls = "cf2bc3185af066cb25f1bf6faa99727e2c47ef77",
+      lsp_config = "6224c54a9945a52bf43a8bc1a42a112084590c0b",
+    },
+    -- SANE defaults
+    SANE = { active = false },
+    packer = { active = true },
+    -- debug
+    dap = { active = false },
+    dap_ui = { active = false },
+    dap_install = { active = false },
+    osv = { active = false },
+    -- lsp
+    lspconfig = { active = true },
+    lsp_installer = { active = true },
+    fix_cursorhold = { active = false },
+    nlsp = { active = true },
+    null_ls = { active = true },
+    lightbulb = { active = false },
+    symbols_outline = { active = false },
+    bqf = { active = false },
+    trouble = { active = false },
+    -- treesitter
+    treesitter = { active = true },
+    playground = { active = true },
+    autopairs = { active = true },
+    rainbow = { active = false },
+    autotag = { active = true },
+    matchup = { active = true },
+    -- editor
+    ajk = { active = true },
+    easy_align = { active = true },
+    cool = { active = true },
+    surround = { active = true },
+    colorizer = { active = false },
+    kommentary = { active = true },
+    dial = { active = true },
+    fold_cycle = { active = false },
+    cursorword = { active = false },
+    -- tools
+    fterm = { active = true },
+    far = { active = true },
+    bookmarks = { active = false },
+    undotree = { active = true },
+    fugitive = { active = false },
+    project = { active = true },
+    diffview = { active = false },
+    -- TODO: handle these later
+    glow = { active = false },
+    doge = { active = false },
+    dadbod = { active = false },
+    restconsole = { active = false },
+    markdown_preview = { active = false },
+    -- aesth
+    tree = { active = true },
+    dashboard = { active = true },
+    statusline = { active = true },
+    bufferline = { active = true },
+    devicons = { active = true },
+    git_signs = { active = true },
+    indent_line = { active = true },
+    -- completion
+    which_key = { active = true },
+    plenary = { active = true },
+    popup = { active = true },
+    telescope = { active = true },
+    cmp = { active = true },
+    vsnip = { active = true },
+    emmet = { active = false },
+    friendly_snippets = { active = true },
+    telescope_fzf = { active = true },
   },
   lang = {
     -- c = {
@@ -219,94 +357,5 @@ return {
     --   },
     --   linters = {},
     -- },
-  },
-  log = {
-    ---@usage can be { "trace", "debug", "info", "warn", "error", "fatal" },
-    level = "warn",
-    viewer = {
-      ---@usage this will fallback on "less +F" if not found
-      cmd = "lnav",
-      layout_config = {
-        ---@usage direction = 'vertical' | 'horizontal' | 'window' | 'float',
-        direction = "horizontal",
-        open_mapping = "",
-        size = 40,
-        float_opts = {},
-      },
-    },
-  },
-  plugin = {
-    commits = {
-      autopairs = "f858ab38b532715dbaf7b2773727f8622ba04322",
-      null_ls = "cf2bc3185af066cb25f1bf6faa99727e2c47ef77",
-      lsp_config = "6224c54a9945a52bf43a8bc1a42a112084590c0b",
-    },
-    -- SANE defaults
-    SANE = { active = false },
-    packer = { active = true },
-    -- debug
-    dap = { active = false },
-    dap_ui = { active = false },
-    dap_install = { active = false },
-    osv = { active = false },
-    -- lsp
-    lspconfig = { active = true },
-    lsp_installer = { active = true },
-    fix_cursorhold = { active = false },
-    nlsp = { active = true },
-    null_ls = { active = true },
-    lightbulb = { active = false },
-    symbols_outline = { active = false },
-    bqf = { active = false },
-    trouble = { active = false },
-    -- treesitter
-    treesitter = { active = true },
-    playground = { active = true },
-    autopairs = { active = true },
-    rainbow = { active = false },
-    autotag = { active = true },
-    matchup = { active = true },
-    -- editor
-    ajk = { active = true },
-    easy_align = { active = true },
-    cool = { active = true },
-    surround = { active = true },
-    colorizer = { active = false },
-    kommentary = { active = true },
-    dial = { active = true },
-    fold_cycle = { active = false },
-    cursorword = { active = false },
-    -- tools
-    fterm = { active = true },
-    far = { active = true },
-    bookmarks = { active = false },
-    undotree = { active = true },
-    fugitive = { active = false },
-    project = { active = true },
-    diffview = { active = false },
-    -- TODO: handle these later
-    glow = { active = false },
-    doge = { active = false },
-    dadbod = { active = false },
-    restconsole = { active = false },
-    markdown_preview = { active = false },
-    -- aesth
-    tree = { active = true },
-    dashboard = { active = true },
-    statusline = { active = true },
-    bufferline = { active = true },
-    devicons = { active = true },
-    git_signs = { active = true },
-    indent_line = { active = true },
-    -- completion
-    which_key = { active = true },
-    plenary = { active = true },
-    popup = { active = true },
-    telescope = { active = true },
-    cmp = { active = true },
-    vsnip = { active = true },
-    emmet = { active = false },
-    friendly_snippets = { active = true },
-    telescope_fzf = { active = true },
   },
 }
