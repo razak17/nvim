@@ -121,6 +121,7 @@ return {
       k = { ":Telescope keymaps", "keymaps" },
       l = { ":Telescope loclist", "loclist" },
       r = { ":Telescope registers<CR>", "registers" },
+      R = { ":Telescope oldfiles", "recent files" },
       T = { ":Telescope treesitter", "treesitter" },
       v = { ":Telescope vim_options", "vim options" },
       z = { ":Telescope current_buffer_fuzzy_find", "current file fuzzy find" },
@@ -139,7 +140,8 @@ return {
       B = { ":Telescope nvim_files bcommits", "bcommits" },
       c = { ":Telescope nvim_files commits", "commits" },
       f = { ":Telescope nvim_files files", "nvim files" },
-      r = { ":Telescope oldfiles", "recent files" },
+      g = { ":Telescope nvim_files grep_files", "grep files" },
+      I = { ":Telescope nvim_files view_changelog", "view changelog" },
       s = { ":Telescope nvim_files status", "status" },
     },
     git = {
