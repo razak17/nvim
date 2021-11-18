@@ -62,17 +62,6 @@ return {
     ---@usage change or add keymappings for recursive command mode
     cnoremap = {},
   },
-  which_key = {
-    defaults = {
-      sep = "",
-      hspace = 2,
-      centered = 1,
-      vertical = 0,
-      timeout = 100,
-      use_floating_win = 0,
-      display_names = { ["<CR>"] = "↵ ", ["<TAB>"] = "⇆ " },
-    },
-  },
   style = {
     palette = {
       bg = "#282a36",
