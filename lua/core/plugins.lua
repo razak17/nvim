@@ -1,6 +1,7 @@
 local uv, api, fn = vim.loop, vim.api, vim.fn
 local compile_path = get_runtime_dir() .. "/site/lua/_compiled_rolling.lua"
 local packer = nil
+local packer_ok = nil
 
 local Plug = {}
 Plug.__index = Plug
@@ -28,7 +29,6 @@ function Plug:load_plugins()
 end
 
 function Plug:load_packer()
-  local packer_ok = nil
   local package_root = get_runtime_dir() .. "/site/pack/"
 
   if not packer then
