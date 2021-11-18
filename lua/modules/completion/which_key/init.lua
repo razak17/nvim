@@ -1,5 +1,5 @@
 return function()
-  for opt, val in pairs(rvim.which_key.defaults) do
+  for opt, val in pairs(rvim.wk.defaults) do
     vim.g["which_key_" .. opt] = val
   end
 
@@ -8,7 +8,7 @@ return function()
   _G.WhichKey = {}
 
   -- Set default keymaps
-  vim.g.which_key_map = rvim.which_key.keymaps.defaults
+  vim.g.which_key_map = rvim.wk.keymaps.defaults
 
   -- plugin keymaps
   WhichKey.SetKeyOnFT = function()
