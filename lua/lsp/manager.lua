@@ -5,8 +5,8 @@ local lsp_utils = require "lsp.utils"
 
 function M.init_defaults(languages)
   for _, entry in ipairs(languages) do
-    if not rvim.lang[entry] then
-      rvim.lang[entry] = {
+    if not rvim.lsp.lang[entry] then
+      rvim.lsp.lang[entry] = {
         formatters = {},
         linters = {},
         lsp = {},
