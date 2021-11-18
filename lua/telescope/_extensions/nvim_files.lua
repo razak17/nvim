@@ -57,7 +57,7 @@ nvim_config.view_changelog = function()
   opts.entry_maker = make_entry.gen_from_git_commits(opts)
 
   pickers.new(opts, {
-    prompt_title = "LunarVim changelog",
+    prompt_title = "RVim changelog",
 
     finder = finders.new_oneshot_job(
       vim.tbl_flatten {
