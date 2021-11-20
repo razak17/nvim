@@ -65,8 +65,11 @@ golangInit() {
 	go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.43.0
 }
 
-installextra() {
+installExtra() {
 	sudo pacman -S ripgrep fzf cppcheck
+}
+
+nodeExtra() {
 	npm install -g tree-sitter-cli eslint prettier
 }
 
@@ -126,6 +129,10 @@ cloneconfig() {
 		installpacker
 	fi
 
+	printf "Would you like to install node packages now (y/n)? "
+	read -r answer
+	[ "$answer" != "${answer#[Yy]}" ] && nodeExtra
+
 	printf "Would you like to install pip packages now (y/n)? "
 	read -r answer
 	[ "$answer" != "${answer#[Yy]}" ] && pythonExtra
@@ -136,7 +143,7 @@ cloneconfig() {
 
 	printf "Would you like to install extra packages now (y/n)? "
 	read -r answer
-	[ "$answer" != "${answer#[Yy]}" ] && installextra
+	[ "$answer" != "${answer#[Yy]}" ] && installExtra
 
 	sudo cp --force "$HOME/.config/rvim/external/bin/rvim" "$HOME/.local/bin"
 }
