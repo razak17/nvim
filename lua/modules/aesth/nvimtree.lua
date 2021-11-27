@@ -92,8 +92,6 @@ return function()
     vim.g["nvim_tree_" .. opt] = val
   end
 
-  nvim_tree.setup(rvim.nvimtree.setup)
-
   require("core.highlights").plugin(
     "NvimTree",
     { "NvimTreeIndentMarker", { link = "Comment" } },
@@ -106,4 +104,6 @@ return function()
     { "NvimTreeStatusLineNC", { link = "PanelStNC" } },
     { "NvimTreeRootFolder", { gui = "bold,italic", guifg = "LightMagenta" } }
   )
+
+  nvim_tree.setup(rvim.nvimtree.setup)
 end

@@ -204,7 +204,7 @@ local function general_overrides()
   local comment_fg = M.get_hl("Comment", "fg")
   local keyword_fg = M.get_hl("Keyword", "fg")
   local search_bg = M.get_hl("Search", "bg")
-  local msg_area_bg = rvim.common.transparent_window and "NONE" or M.alter_color(M.get_hl("Normal", "bg"), -10)
+  local msg_area_bg = rvim.common.transparent_window and "NONE" or M.alter_color(M.get_hl("Normal", "bg"), -20)
   M.all {
     { "mkdLineBreak", { link = "NONE", force = true } },
     -----------------------------------------------------------------------------//
@@ -281,7 +281,7 @@ end
 local function set_sidebar_highlight()
   local normal_bg = rvim.common.transparent_window and "NONE" or M.get_hl("Normal", "bg")
   local split_color = M.get_hl("VertSplit", "fg")
-  local bg_color = M.alter_color(normal_bg, -8)
+  local bg_color = M.alter_color(normal_bg, -20)
   local st_color = M.alter_color(M.get_hl("Visual", "bg"), -20)
   local hls = {
     { "PanelBackground", { guibg = bg_color } },

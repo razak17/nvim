@@ -103,7 +103,8 @@ return function()
           {
             filetype = "NvimTree",
             text = "Explorer",
-            padding = 1,
+            highlight = "PanelHeading",
+            padding = 0,
           },
           {
             filetype = "DiffviewFiles",
