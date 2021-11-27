@@ -61,4 +61,8 @@ completion["nvim-telescope/telescope-fzf-native.nvim"] = {
   disable = not rvim.plugin.telescope_fzf.active,
 }
 
+completion["nvim-telescope/telescope-ui-select.nvim"] = {
+  disable = not rvim.plugin.telescope_ui_select.active,
+}
+
 return completion

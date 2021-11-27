@@ -8,6 +8,17 @@ return function()
   local sorters = require "telescope.sorters"
   local actions = require "telescope.actions"
 
+  local function get_border(opts)
+    return vim.tbl_deep_extend("force", opts or {}, {
+      borderchars = {
+        { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
+        prompt = { "─", "│", " ", "│", "┌", "┐", "│", "│" },
+        results = { "─", "│", "─", "│", "├", "┤", "┘", "└" },
+        preview = { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
+      },
+    })
+  end
+
   rvim.telescope = {
     setup = {
       defaults = {
@@ -15,6 +26,7 @@ return function()
         selection_caret = " ",
         sorting_strategy = "ascending",
         layout_strategy = "horizontal",
+        set_env = { ["TERM"] = vim.env.TERM },
         borderchars = { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
         file_browser = { hidden = true },
         layout_config = {
@@ -23,6 +35,10 @@ return function()
           preview_cutoff = 120,
           horizontal = { mirror = false },
           vertical = { mirror = false },
+        },
+        winblend = 3,
+        history = {
+          path = vim.fn.stdpath "data" .. "/telescope_history.sqlite3",
         },
         file_ignore_patterns = {
           "yarn.lock",
@@ -34,6 +50,7 @@ return function()
           ".venv/*",
           "__pycache__/*",
         },
+        path_display = { "smart", "absolute", "truncate" },
         mappings = {
           i = {
             ["<c-c>"] = function()
@@ -61,6 +78,7 @@ return function()
           live_grep = {
             --@usage don't include the filename in the search results
             only_sort_text = true,
+            file_ignore_patterns = { ".git/" },
           },
         },
         extensions = {
@@ -69,6 +87,9 @@ return function()
             override_generic_sorter = true, -- override the generic sorter
             override_file_sorter = true, -- override the file sorter
             case_mode = "smart_case", -- or "ignore_case" or "respect_case"
+          },
+          ["ui-select"] = {
+            require("telescope.themes").get_cursor(get_border()),
           },
         },
         file_sorter = sorters.get_fzy_sorter,
@@ -83,6 +104,10 @@ return function()
 
   if rvim.plugin.telescope_fzf.active then
     require("telescope").load_extension "fzf"
+  end
+
+  if rvim.plugin.telescope_ui_select.active then
+    require("telescope").load_extension "ui-select"
   end
 
   local extensions = {

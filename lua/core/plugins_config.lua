@@ -71,4 +71,5 @@ return {
   emmet = { active = false },
   friendly_snippets = { active = true },
   telescope_fzf = { active = true },
+  telescope_ui_select = { active = true },
 }
