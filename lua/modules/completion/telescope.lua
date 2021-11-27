@@ -7,6 +7,7 @@ return function()
   local previewers = require "telescope.previewers"
   local sorters = require "telescope.sorters"
   local actions = require "telescope.actions"
+  local themes = require "telescope.themes"
 
   local function get_border(opts)
     return vim.tbl_deep_extend("force", opts or {}, {
@@ -17,6 +18,12 @@ return function()
         preview = { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
       },
     })
+  end
+
+  ---@param opts table
+  ---@return table
+  local function dropdown(opts)
+    return themes.get_dropdown(get_border(opts))
   end
 
   rvim.telescope = {
@@ -38,7 +45,7 @@ return function()
         },
         winblend = 3,
         history = {
-          path = vim.fn.stdpath "data" .. "/telescope_history.sqlite3",
+          path = get_runtime_dir() .. "/telescope_history.sqlite3",
         },
         file_ignore_patterns = {
           "yarn.lock",
@@ -51,8 +58,13 @@ return function()
           "__pycache__/*",
         },
         path_display = { "smart", "absolute", "truncate" },
+        file_sorter = sorters.get_fzy_sorter,
+        file_previewer = previewers.vim_buffer_cat.new,
+        grep_previewer = previewers.vim_buffer_vimgrep.new,
+        qflist_previewer = previewers.vim_buffer_qflist.new,
         mappings = {
           i = {
+            ["<C-w>"] = actions.send_selected_to_qflist,
             ["<c-c>"] = function()
               vim.cmd "stopinsert!"
             end,
@@ -71,16 +83,6 @@ return function()
             ["<C-e>"] = actions.smart_send_to_qflist + actions.open_qflist,
           },
         },
-        pickers = {
-          find_files = {
-            find_command = { "fd", "--type=file", "--hidden", "--smart-case" },
-          },
-          live_grep = {
-            --@usage don't include the filename in the search results
-            only_sort_text = true,
-            file_ignore_patterns = { ".git/" },
-          },
-        },
         extensions = {
           fzf = {
             fuzzy = true, -- false will only do exact matching
@@ -92,22 +94,71 @@ return function()
             require("telescope.themes").get_cursor(get_border()),
           },
         },
-        file_sorter = sorters.get_fzy_sorter,
-        file_previewer = previewers.vim_buffer_cat.new,
-        grep_previewer = previewers.vim_buffer_vimgrep.new,
-        qflist_previewer = previewers.vim_buffer_qflist.new,
+        pickers = {
+          buffers = dropdown {
+            sort_mru = true,
+            sort_lastused = true,
+            show_all_buffers = true,
+            ignore_current_buffer = true,
+            previewer = false,
+            theme = "dropdown",
+            mappings = {
+              i = { ["<c-x>"] = "delete_buffer" },
+              n = { ["<c-x>"] = "delete_buffer" },
+            },
+          },
+          find_files = {
+            find_command = { "fd", "--type=file", "--hidden", "--smart-case" },
+            hidden = true,
+          },
+          live_grep = {
+            --@usage don't include the filename in the search results
+            only_sort_text = true,
+            file_ignore_patterns = { ".git/" },
+          },
+          oldfiles = dropdown(),
+          current_buffer_fuzzy_find = dropdown {
+            previewer = false,
+            shorten_path = false,
+          },
+          lsp_code_actions = {
+            theme = "cursor",
+          },
+          colorscheme = {
+            enable_preview = true,
+          },
+          git_branches = dropdown(),
+          git_bcommits = {
+            layout_config = {
+              horizontal = {
+                preview_width = 0.55,
+              },
+            },
+          },
+          git_commits = {
+            layout_config = {
+              horizontal = {
+                preview_width = 0.55,
+              },
+            },
+          },
+          reloader = dropdown(),
+        },
       },
     },
   }
 
   telescope.setup(rvim.telescope.setup)
 
-  if rvim.plugin.telescope_fzf.active then
-    require("telescope").load_extension "fzf"
-  end
+  local plugins = {
+    telescope_fzf = "fzf",
+    telescope_ui_select = "ui-select",
+  }
 
-  if rvim.plugin.telescope_ui_select.active then
-    require("telescope").load_extension "ui-select"
+  for config, plug in pairs(plugins) do
+    if rvim.plugin[config].active then
+      require("telescope").load_extension(plug)
+    end
   end
 
   local extensions = {
