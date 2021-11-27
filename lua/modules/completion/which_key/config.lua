@@ -175,6 +175,12 @@ return {
       "find files",
     },
     browser = { ":Telescope file_browser", "file browser" },
+    tmux = {
+      name = "+Tmux",
+      s = { ":Telescope tmux sessions", "sessions" },
+      w = { ":Telescope tmux windows", "windows" },
+      e = { ":Telescope tmux pane_contents", "pane contents" },
+    },
   },
   kommentary = {
     ["/"] = { "<Plug>kommentary_line_default", "comment" },

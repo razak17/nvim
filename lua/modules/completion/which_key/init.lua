@@ -139,12 +139,13 @@ return function()
         b = rvim.wk.telescope.browser,
         c = rvim.wk.telescope.builtin,
         d = rvim.wk.telescope.dotfiles,
-        e = rvim.wk.telescope.extensions,
         f = rvim.wk.telescope.files,
+        g = rvim.wk.telescope.git,
         l = rvim.wk.telescope.live,
         r = rvim.wk.telescope.config,
         v = rvim.wk.telescope.lsp,
-        g = rvim.wk.telescope.git,
+        e = rvim.wk.telescope.tmux,
+        x = rvim.wk.telescope.extensions,
       }
     end
 
