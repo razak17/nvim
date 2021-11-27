@@ -224,7 +224,7 @@ local function general_overrides()
     { "FoldColumn", { guibg = "background" } },
     { "Folded", { guifg = comment_fg, guibg = "NONE", gui = "italic" } },
     { "TermCursor", { ctermfg = "green", guifg = "royalblue" } },
-    -- { "IncSearch", { guibg = "NONE", guifg = "LightGreen", gui = "italic,bold,underline" } },
+    { "IncSearch", { guibg = "NONE", guifg = "LightGreen", gui = "bold,underline" } },
     -- Add undercurl to existing spellbad highlight
     {
       "SpellBad",
@@ -253,18 +253,18 @@ local function general_overrides()
     -----------------------------------------------------------------------------//
     -- colorscheme overrides
     -----------------------------------------------------------------------------//
-    -- { "Comment", { gui = "italic" } },
+    { "Comment", { gui = "italic" } },
+    { "Include", { gui = "italic" } },
     -- { "Type", { gui = "italic,bold" } },
-    -- { "Include", { gui = "italic" } },
     -- { "Folded", { gui = "bold,italic" } },
     { "QuickFixLine", { guibg = search_bg } },
     { "Visual", { guifg = "NONE", guibg = M.alter_color(P.bright_blue, -50) } },
     -----------------------------------------------------------------------------//
     -- Treesitter
     -----------------------------------------------------------------------------//
-    -- { "TSKeywordReturn", { gui = "italic", guifg = keyword_fg } },
-    -- { "TSParameter", { gui = "italic,bold" } },
+    { "TSKeywordReturn", { gui = "italic", guifg = keyword_fg } },
     { "TSError", { link = "LspDiagnosticsUnderlineError", force = true } },
+    -- { "TSParameter", { gui = "italic,bold" } },
     -- highlight FIXME comments
     { "commentTSWarning", { guifg = "Red", gui = "bold" } },
     { "commentTSDanger", { guifg = "#FBBF24", gui = "bold" } },
