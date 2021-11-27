@@ -1,8 +1,12 @@
 return {
   commits = {
-    autopairs = "f858ab38b532715dbaf7b2773727f8622ba04322",
-    null_ls = "cf2bc3185af066cb25f1bf6faa99727e2c47ef77",
-    lsp_config = "6224c54a9945a52bf43a8bc1a42a112084590c0b",
+    -- autopairs = "f858ab38b532715dbaf7b2773727f8622ba04322",
+    -- null_ls = "cf2bc3185af066cb25f1bf6faa99727e2c47ef77",
+    -- lsp_config = "6224c54a9945a52bf43a8bc1a42a112084590c0b",
+
+    null_ls = "b07ce47f02c7b12ad65bfb4da215c6380228a959",
+    autopairs = "fba2503bd8cd0d8861054523aae39c4ac0680c07",
+    lsp_config = "b53f89c16bcc8052aa56d3a903fcad3aaa774041"
   },
   -- SANE defaults
   SANE = { active = false },
