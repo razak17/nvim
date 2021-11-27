@@ -91,7 +91,13 @@ return function()
             case_mode = "smart_case", -- or "ignore_case" or "respect_case"
           },
           ["ui-select"] = {
-            require("telescope.themes").get_cursor(get_border()),
+            themes.get_cursor(get_border {
+              layout_config = {
+                cursor = {
+                  width = 25,
+                },
+              },
+            }),
           },
         },
         pickers = {
