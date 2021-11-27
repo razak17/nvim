@@ -6,7 +6,7 @@ return {
 
     null_ls = "b07ce47f02c7b12ad65bfb4da215c6380228a959",
     autopairs = "fba2503bd8cd0d8861054523aae39c4ac0680c07",
-    lsp_config = "b53f89c16bcc8052aa56d3a903fcad3aaa774041"
+    lsp_config = "b53f89c16bcc8052aa56d3a903fcad3aaa774041",
   },
   -- SANE defaults
   SANE = { active = false },
@@ -76,4 +76,5 @@ return {
   friendly_snippets = { active = true },
   telescope_fzf = { active = true },
   telescope_ui_select = { active = true },
+  telescope_tmux = { active = true },
 }

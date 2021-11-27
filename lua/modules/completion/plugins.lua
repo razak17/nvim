@@ -65,4 +65,8 @@ completion["nvim-telescope/telescope-ui-select.nvim"] = {
   disable = not rvim.plugin.telescope_ui_select.active,
 }
 
+completion["camgraff/telescope-tmux.nvim"] = {
+  disable = not rvim.plugin.telescope_ui_select.active,
+}
+
 return completion

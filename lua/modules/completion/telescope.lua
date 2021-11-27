@@ -159,6 +159,7 @@ return function()
   local plugins = {
     telescope_fzf = "fzf",
     telescope_ui_select = "ui-select",
+    telescope_tmux = "tmux",
   }
 
   for config, plug in pairs(plugins) do
