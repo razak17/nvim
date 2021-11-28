@@ -17,6 +17,9 @@ return function()
   gl.short_line_list = { "NvimTree", "packer", "minimap", "Outline" }
 
   local colors = rvim.palette
+  -- local H = require "core.highlights"
+
+  -- local bg_color = H.alter_color(colors.bg, -20)
 
   -- Left side
   gls.left[1] = {
@@ -24,7 +27,7 @@ return function()
       provider = function()
         return "▊ "
       end,
-      highlight = { colors.bright_blue, colors.statusline_bg },
+      highlight = { colors.bright_blue, colors.dark_alt },
     },
   }
   gls.left[2] = {
@@ -56,7 +59,7 @@ return function()
         Execute("hi GalaxyViMode guifg=" .. mode_color[Fn.mode()])
         return "  "
       end,
-      highlight = { colors.pale_red, colors.statusline_bg, "bold" },
+      highlight = { colors.pale_red, colors.dark_alt, "bold" },
     },
   }
 
@@ -64,9 +67,9 @@ return function()
     FileSize = {
       provider = "FileSize",
       condition = condition.buffer_not_empty,
-      highlight = { colors.statusline_fg, colors.statusline_bg },
+      highlight = { colors.statusline_fg, colors.dark_alt },
       separator = "| ",
-      separator_highlight = { colors.statusline_section_bg, colors.statusline_bg },
+      separator_highlight = { colors.statusline_section_bg, colors.dark_alt },
     },
   }
 
@@ -75,18 +78,19 @@ return function()
       provider = "FileIcon",
       condition = condition.buffer_not_empty,
       highlight = {
-        require("galaxyline.provider_fileinfo").get_file_icon_color,
-        colors.statusline_bg,
+        require("galaxyline.providers.fileinfo").get_file_icon_color,
+        colors.dark_alt,
       },
     },
   }
   gls.left[5] = {
     FileName = {
       provider = "FileName",
+      -- provider = require("galaxyline.providers.fileinfo").get_current_file_path,
       condition = condition.buffer_not_empty,
-      highlight = { colors.statusline_fg, colors.statusline_bg },
+      highlight = { colors.statusline_fg, colors.dark_alt },
       separator = "| ",
-      separator_highlight = { colors.statusline_section_bg, colors.statusline_bg },
+      separator_highlight = { colors.statusline_section_bg, colors.dark_alt },
     },
   }
   gls.left[6] = {
@@ -95,16 +99,16 @@ return function()
         return " "
       end,
       condition = condition.check_git_workspace,
-      highlight = { colors.pale_red, colors.statusline_bg },
+      highlight = { colors.pale_red, colors.dark_alt },
     },
   }
   gls.left[7] = {
     GitBranch = {
       provider = "GitBranch",
       condition = condition.check_git_workspace,
-      highlight = { colors.statusline_fg, colors.statusline_bg },
+      highlight = { colors.statusline_fg, colors.dark_alt },
       separator = " ",
-      separator_highlight = { colors.statusline_section_bg, colors.statusline_bg },
+      separator_highlight = { colors.statusline_section_bg, colors.dark_alt },
     },
   }
   gls.left[8] = {
@@ -112,7 +116,7 @@ return function()
       provider = "DiffAdd",
       condition = condition.hide_in_width,
       icon = " ",
-      highlight = { colors.green, colors.statusline_bg },
+      highlight = { colors.green, colors.dark_alt },
     },
   }
   gls.left[9] = {
@@ -120,7 +124,7 @@ return function()
       provider = "DiffModified",
       condition = condition.hide_in_width,
       icon = " ",
-      highlight = { colors.orange, colors.statusline_bg },
+      highlight = { colors.orange, colors.dark_alt },
     },
   }
   gls.left[10] = {
@@ -128,7 +132,7 @@ return function()
       provider = "DiffRemove",
       condition = condition.hide_in_width,
       icon = " ",
-      highlight = { colors.pale_pale_red, colors.statusline_bg },
+      highlight = { colors.pale_pale_red, colors.dark_alt },
     },
   }
   gls.left[11] = {
@@ -136,28 +140,28 @@ return function()
       provider = function()
         return " "
       end,
-      highlight = { colors.statusline_section_bg, colors.statusline_bg },
+      highlight = { colors.statusline_section_bg, colors.dark_alt },
     },
   }
   gls.left[12] = {
     DiagnosticError = {
       provider = "DiagnosticError",
       icon = "  ",
-      highlight = { colors.pale_red, colors.statusline_bg },
+      highlight = { colors.pale_red, colors.dark_alt },
     },
   }
   gls.left[13] = {
     DiagnosticWarn = {
       provider = "DiagnosticWarn",
       icon = "  ",
-      highlight = { colors.orange, colors.statusline_bg },
+      highlight = { colors.orange, colors.dark_alt },
     },
   }
   gls.left[14] = {
     DiagnosticInfo = {
       provider = "DiagnosticInfo",
       icon = "  ",
-      highlight = { colors.bright_blue, colors.statusline_bg },
+      highlight = { colors.bright_blue, colors.dark_alt },
     },
   }
 
@@ -165,7 +169,7 @@ return function()
     DiagnosticHint = {
       provider = "DiagnosticHint",
       icon = "  ",
-      highlight = { colors.bright_blue, colors.statusline_bg },
+      highlight = { colors.bright_blue, colors.dark_alt },
     },
   }
 
@@ -220,9 +224,9 @@ return function()
         return true
       end,
       icon = "• ",
-      highlight = { colors.statusline_fg, colors.statusline_bg },
+      highlight = { colors.statusline_fg, colors.dark_alt },
       separator = " ",
-      separator_highlight = { colors.statusline_section_bg, colors.statusline_bg },
+      separator_highlight = { colors.statusline_section_bg, colors.dark_alt },
     },
   }
 
@@ -234,9 +238,9 @@ return function()
         end
         return vim.bo.filetype
       end,
-      highlight = { colors.statusline_fg, colors.statusline_bg },
+      highlight = { colors.statusline_fg, colors.dark_alt },
       separator = " | ",
-      separator_highlight = { colors.statusline_section_bg, colors.statusline_bg },
+      separator_highlight = { colors.statusline_section_bg, colors.dark_alt },
     },
   }
 
@@ -246,9 +250,9 @@ return function()
         return "Spaces: " .. vim.api.nvim_buf_get_option(0, "shiftwidth")
       end,
       condition = condition.hide_in_width,
-      highlight = { colors.statusline_fg, colors.statusline_bg },
+      highlight = { colors.statusline_fg, colors.dark_alt },
       separator = " | ",
-      separator_highlight = { colors.statusline_section_bg, colors.statusline_bg },
+      separator_highlight = { colors.statusline_section_bg, colors.dark_alt },
     },
   }
 
@@ -258,9 +262,9 @@ return function()
       condition = function()
         return vim.bo.filetype ~= "dashboard"
       end,
-      highlight = { colors.statusline_fg, colors.statusline_bg },
+      highlight = { colors.statusline_fg, colors.dark_alt },
       separator = " | ",
-      separator_highlight = { colors.statusline_section_bg, colors.statusline_bg },
+      separator_highlight = { colors.statusline_section_bg, colors.dark_alt },
     },
   }
 
@@ -268,9 +272,9 @@ return function()
     FileFormat = {
       provider = "FileFormat",
       condition = condition.hide_in_width,
-      highlight = { colors.statusline_fg, colors.statusline_bg },
+      highlight = { colors.statusline_fg, colors.dark_alt },
       separator = " | ",
-      separator_highlight = { colors.statusline_section_bg, colors.statusline_bg },
+      separator_highlight = { colors.statusline_section_bg, colors.dark_alt },
     },
   }
 
@@ -278,9 +282,9 @@ return function()
     FileEncode = {
       provider = "FileEncode",
       condition = condition.hide_in_width,
-      highlight = { colors.statusline_fg, colors.statusline_bg },
+      highlight = { colors.statusline_fg, colors.dark_alt },
       separator = " |",
-      separator_highlight = { colors.statusline_section_bg, colors.statusline_bg },
+      separator_highlight = { colors.statusline_section_bg, colors.dark_alt },
     },
   }
 
@@ -290,9 +294,9 @@ return function()
       condition = function()
         return vim.bo.filetype ~= "dashboard"
       end,
-      highlight = { colors.statusline_fg, colors.statusline_bg },
+      highlight = { colors.statusline_fg, colors.dark_alt },
       separator = " | ",
-      separator_highlight = { colors.statusline_section_bg, colors.statusline_bg },
+      separator_highlight = { colors.statusline_section_bg, colors.dark_alt },
     },
   }
 
@@ -302,27 +306,27 @@ return function()
         return "▊"
       end,
       separator = " ",
-      separator_highlight = { colors.statusline_section_bg, colors.statusline_bg },
-      highlight = { colors.bright_blue, colors.statusline_bg },
+      separator_highlight = { colors.statusline_section_bg, colors.dark_alt },
+      highlight = { colors.bright_blue, colors.dark_alt },
     },
   }
 
   -- Short status line
   gls.short_line_left[1] = {
     BufferType = {
-      provider = "FileTypeName",
-      highlight = { colors.statusline_fg, colors.statusline_section_bg },
+      provider = "FileName",
+      highlight = { colors.statusline_fg, colors.dark_alt },
       separator = " ",
-      separator_highlight = { colors.statusline_section_bg, colors.statusline_section_bg },
+      separator_highlight = { colors.statusline_section_bg, colors.dark_alt },
     },
   }
 
   gls.short_line_right[1] = {
     BufferIcon = {
       provider = "BufferIcon",
-      highlight = { colors.light_yellow, colors.statusline_section_bg },
+      highlight = { colors.light_yellow, colors.dark_alt },
       separator = " ",
-      separator_highlight = { colors.statusline_section_bg, colors.statusline_section_bg },
+      separator_highlight = { colors.statusline_section_bg, colors.dark_alt },
     },
   }
 end

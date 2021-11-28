@@ -14,7 +14,7 @@ aesth["akinsho/nvim-bufferline.lua"] = {
   disable = not rvim.plugin.bufferline.active and not rvim.plugin.SANE.active,
 }
 
-aesth["razak17/galaxyline.nvim"] = {
+aesth["NTBBloodbath/galaxyline.nvim"] = {
   branch = "main",
   event = "VimEnter",
   config = utils.load_conf("aesth", "statusline"),

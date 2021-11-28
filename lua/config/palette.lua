@@ -14,10 +14,9 @@ return {
   -- bg = "#504945",
   alt_bg = "#282c34",
   dark = "#5c6370",
-  dark2 = "#373d48",
+  dark_alt = "#373d48",
   bg_popup = "#3e4556",
   bg_highlight = "#2E323C",
-  bg_highlight2 = "#4E525C",
   bg_visual = "#b3deef",
 
   -- gray = "#5c6370",
@@ -64,7 +63,6 @@ return {
   cursor_bg = "#4f5b66",
   none = "NONE",
 
-  statusline_bg = "#373d48",
   statusline_section_bg = "#2f333b",
   statusline_fg = "#c8ccd4",
   highlight_bg = "#4E525C",
@@ -74,7 +72,7 @@ return {
   bright_yellow = "#FAB005",
   light_yellow = "#e5c07b",
   dark_blue = "#4e88ff",
-  comment_grey = "#5c6370",
+  -- comment_grey = "#5c6370",
   -- grey = "#3E4556",
   whitesmoke = "#626262",
   bright_blue = "#51afef",

@@ -37,7 +37,7 @@ return function()
     a = { description = join("  Find Files", "<leader>ff", 13), command = "Telescope find_files" },
     b = {
       description = join("  Default config", "<leader>fC", 9),
-      command = ":e " .. get_config_dir() .. "/lua/core/config.lua",
+      command = ":e " .. get_config_dir() .. "/lua/config/init.lua",
     },
     c = { description = join("  Recent files", "<leader>frr", 11), command = "Telescope oldfiles" },
     d = { description = join("  Find word", "<leader>flg", 14), command = "Telescope live_grep" },
