@@ -63,11 +63,9 @@ return function()
       },
       indent_markers = 1,
       quit_on_open = 0,
-      special_files = { "README.md", "Makefile", "MAKEFILE" },
-      disable_window_picker = 0,
+      disable_window_picker = 1,
       root_folder_modifier = ":t",
       git_hl = 1,
-      highlight_opened_files = 2,
       icons = {
         default = "",
         symlink = "",
@@ -128,9 +126,8 @@ return function()
     { "NvimTreeSignColumn", { link = "PanelBackground" } },
     { "NvimTreeEndOfBuffer", { link = "PanelBackground" } },
     { "NvimTreeVertSplit", { link = "PanelVertSplit" } },
-    { "NvimTreeStatusLine", { link = "PanelSt" } },
-    { "NvimTreeStatusLineNC", { link = "PanelStNC" } },
-    { "NvimTreeRootFolder", { gui = "bold,italic", guifg = "LightMagenta" } }
+    { "NvimTreeStatusLine", { link = "PanelBackground" } },
+    { "NvimTreeStatusLineNC", { link = "PanelStNC" } }
   )
 
   nvim_tree.setup(rvim.nvimtree.setup)

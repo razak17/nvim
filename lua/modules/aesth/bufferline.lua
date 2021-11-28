@@ -103,7 +103,7 @@ return function()
           {
             filetype = "NvimTree",
             text = "Explorer",
-            highlight = "PanelHeading",
+            highlight = "PanelBackground",
             padding = 0,
           },
           {
