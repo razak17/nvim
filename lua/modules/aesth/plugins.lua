@@ -28,6 +28,7 @@ aesth["kyazdani42/nvim-web-devicons"] = {
 aesth["kyazdani42/nvim-tree.lua"] = {
   event = "BufWinEnter",
   config = utils.load_conf("aesth", "nvimtree"),
+  commit = rvim.plugin.commits.nvimtree,
   disable = not rvim.plugin.tree.active,
 }
 
