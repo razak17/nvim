@@ -1,6 +1,4 @@
-local M = {}
-
-rvim.keys = {
+local defaults = {
   ---@usage change or add keymappings for normal mode
   nmap = {},
 
@@ -50,6 +48,8 @@ rvim.keys = {
   cnoremap = {},
 }
 
+local M = {}
+
 local map_opts = { noremap = false, silent = true }
 local noremap_opts = { noremap = true, silent = true }
 
@@ -96,7 +96,7 @@ local mode_adapters = {
 function M.append_to_defaults(keymaps)
   for mode, mappings in pairs(keymaps) do
     for k, v in ipairs(mappings) do
-      rvim.keys[mode][k] = v
+      defaults[mode][k] = v
     end
   end
 end
@@ -141,11 +141,20 @@ function M.setup()
   local g = vim.g
   g.mapleader = (rvim.common.leader == "space" and " ") or rvim.common.leader
   g.maplocalleader = (rvim.common.localleader == "space" and " ") or rvim.common.localleader
-  M.load(rvim.keys)
+  M.load(defaults)
 end
 
-local nnoremap, cnoremap, tnoremap, vnoremap, xnoremap, inoremap =
-  rvim.keys.nnoremap, rvim.keys.cnoremap, rvim.keys.tnoremap, rvim.keys.vnoremap, rvim.keys.xnoremap, rvim.keys.inoremap
+local nmap, vmap, xmap, nnoremap, cnoremap, tnoremap, vnoremap, xnoremap, inoremap, snoremap =
+  defaults.nmap,
+  defaults.vmap,
+  defaults.xmap,
+  defaults.nnoremap,
+  defaults.cnoremap,
+  defaults.tnoremap,
+  defaults.vnoremap,
+  defaults.xnoremap,
+  defaults.inoremap,
+  defaults.snoremap
 
 -----------------------------------------------------------------------------//
 -- Defaults
@@ -453,11 +462,11 @@ if rvim.plugin.vsnip.active then
   xnoremap["<C-x>"] = { "<Plug>(vsnip-cut-text)", { noremap = false, silent = true } }
   xnoremap["<C-l>"] = { "<Plug>(vsnip-select-text)", { noremap = false, silent = true } }
   nnoremap["<leader>cs"] = ":VsnipOpen<CR> 1<CR><CR>"
-  rvim.keys.inoremap["<C-l>"] = {
+  inoremap["<C-l>"] = {
     "vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'",
     { noremap = false, silent = true, expr = true },
   }
-  rvim.keys.snoremap["<C-l>"] = {
+  snoremap["<C-l>"] = {
     "vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'",
     { noremap = false, silent = true, expr = true },
   }
@@ -500,9 +509,6 @@ end
 
 -- easy_align
 if rvim.plugin.easy_align.active then
-  local nmap = rvim.keys.nmap
-  local xmap = rvim.keys.xmap
-  local vmap = rvim.keys.vmap
   nmap["ga"] = "<Plug>(EasyAlign)"
   xmap["ga"] = "<Plug>(EasyAlign)"
   vmap["<Enter>"] = "<Plug>(EasyAlign)"
