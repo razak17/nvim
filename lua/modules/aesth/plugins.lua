@@ -22,7 +22,7 @@ aesth["razak17/galaxyline.nvim"] = {
 }
 
 aesth["kyazdani42/nvim-web-devicons"] = {
-  disable = not rvim.plugin.devicons.active and not rvim.plugin.SANE.active
+  disable = not rvim.plugin.devicons.active and not rvim.plugin.SANE.active,
 }
 
 aesth["kyazdani42/nvim-tree.lua"] = {

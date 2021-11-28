@@ -44,7 +44,7 @@ lang["antoinemadec/FixCursorHold.nvim"] = {
 
 lang["neovim/nvim-lspconfig"] = {
   config = utils.load_conf("lang", "lspconfig"),
-  commit = rvim.plugin.commits.lsp_config,
+  commit = rvim.plugin.commits.lspconfig,
   disable = not rvim.plugin.lspconfig.active,
 }
 
