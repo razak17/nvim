@@ -92,6 +92,17 @@ return function()
           },
           frecency = {
             db_root = get_cache_dir() .. "/telescope",
+            show_scores = true,
+            show_unindexed = true,
+            ignore_patterns = { "*.git/*", "*/tmp/*" },
+            disable_devicons = false,
+            workspaces = {
+              ["conf"] = "/home/razak/.config",
+              ["rvim"] = "/home/razak/.config/rvim",
+              ["data"] = "/home/razak/.local/share",
+              ["project"] = "/home/razak/personal/workspace/coding",
+              ["notes"] = "/home/razak/notes/src",
+            },
           },
           ["ui-select"] = {
             themes.get_cursor(get_border {
