@@ -43,7 +43,7 @@ return function()
           horizontal = { mirror = false },
           vertical = { mirror = false },
         },
-        winblend = 3,
+        winblend = 0,
         history = {
           path = get_cache_dir() .. "/telescope/history.sqlite3",
         },
