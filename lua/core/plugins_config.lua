@@ -74,4 +74,5 @@ return {
   telescope_fzf = { active = true },
   telescope_ui_select = { active = true },
   telescope_tmux = { active = true },
+  telescope_frecency = { active = true },
 }

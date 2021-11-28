@@ -69,4 +69,9 @@ completion["camgraff/telescope-tmux.nvim"] = {
   disable = not rvim.plugin.telescope_ui_select.active,
 }
 
+completion["nvim-telescope/telescope-frecency.nvim"] = {
+  requires = { "tami5/sqlite.lua" },
+  disable = not rvim.plugin.telescope_frecency,
+}
+
 return completion

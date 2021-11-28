@@ -121,7 +121,6 @@ return {
       k = { ":Telescope keymaps", "keymaps" },
       l = { ":Telescope loclist", "loclist" },
       r = { ":Telescope registers<CR>", "registers" },
-      R = { ":Telescope oldfiles", "recent files" },
       T = { ":Telescope treesitter", "treesitter" },
       v = { ":Telescope vim_options", "vim options" },
       z = { ":Telescope current_buffer_fuzzy_find", "current file fuzzy find" },
@@ -174,6 +173,8 @@ return {
       ":Telescope find_files",
       "find files",
     },
+    oldfiles = { ":Telescope oldfiles", "recent files" },
+    frecency = { ":Telescope frecency", "history" },
     browser = { ":Telescope file_browser", "file browser" },
     tmux = {
       name = "+Tmux",

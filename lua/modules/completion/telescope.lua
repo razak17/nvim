@@ -45,7 +45,7 @@ return function()
         },
         winblend = 3,
         history = {
-          path = get_runtime_dir() .. "/telescope_history.sqlite3",
+          path = get_cache_dir() .. "/telescope/history.sqlite3",
         },
         file_ignore_patterns = {
           "yarn.lock",
@@ -89,6 +89,9 @@ return function()
             override_generic_sorter = true, -- override the generic sorter
             override_file_sorter = true, -- override the file sorter
             case_mode = "smart_case", -- or "ignore_case" or "respect_case"
+          },
+          frecency = {
+            db_root = get_cache_dir() .. "/telescope",
           },
           ["ui-select"] = {
             themes.get_cursor(get_border {
@@ -160,6 +163,7 @@ return function()
     telescope_fzf = "fzf",
     telescope_ui_select = "ui-select",
     telescope_tmux = "tmux",
+    telescope_frecency = "frecency",
   }
 
   for config, plug in pairs(plugins) do
