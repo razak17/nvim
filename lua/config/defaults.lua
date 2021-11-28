@@ -13,55 +13,6 @@ return {
 
     debug = false,
   },
-  keys = {
-    ---@usage change or add keymappings for normal mode
-    nmap = {},
-
-    ---@usage change or add keymappings for visual block mode
-    xmap = {},
-
-    ---@usage change or add keymappings for insert mode
-    imap = {},
-
-    ---@usage change or add keymappings for visual mode
-    vmap = {},
-
-    ---@usage change or add keymappings for operator mode
-    omap = {},
-
-    ---@usage change or add keymappings for terminal mode
-    tmap = {},
-
-    ---@usage change or add keymappings for select mode
-    smap = {},
-
-    ---@usage change or add keymappings for command mode
-    cmap = {},
-
-    ---@usage change or add keymappings for recursive normal mode
-    nnoremap = {},
-
-    ---@usage change or add keymappings for recursive visual block mode
-    xnoremap = {},
-
-    ---@usage change or add keymappings for recursive insert mode
-    inoremap = {},
-
-    ---@usage change or add keymappings for recursive visual mode
-    vnoremap = {},
-
-    ---@usage change or add keymappings for recursive operator mode
-    onoremap = {},
-
-    ---@usage change or add keymappings for recursive terminal mode
-    tnoremap = {},
-
-    ---@usage change or add keymappings for recursive select mode
-    snoremap = {},
-
-    ---@usage change or add keymappings for recursive command mode
-    cnoremap = {},
-  },
   style = {
     kinds = {
       Class = " ",
