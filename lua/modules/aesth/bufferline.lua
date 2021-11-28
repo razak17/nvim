@@ -25,12 +25,11 @@ return function()
     return (tab_num == last_tab and is_log) or (tab_num ~= last_tab and not is_log)
   end
 
-  local P = rvim.style.palette
+  local P = rvim.palette
   local bg = rvim.common.transparent_window == true and "none" or P.bg
-  local bg_sel = "#3f444a"
-  local base7 = "#9ca0a4"
-  local fg_def = "#7e7e7e"
-  local fg_sel = "#dedede"
+  local bg_sel = P.bufferline_bg_sel
+  local fg_def = P.bufferline_fg_def
+  local fg_sel = P.bufferline_fg_sel
 
   local highlights = {
     fill = { guifg = fg_def, guibg = bg },
@@ -40,7 +39,7 @@ return function()
     tab_close = { guifg = fg_def, guibg = bg },
     duplicate = { guifg = fg_def, guibg = bg },
     duplicate_visible = { guifg = fg_def, guibg = bg },
-    duplicate_selected = { guifg = base7, guibg = bg_sel, gui = "italic" },
+    duplicate_selected = { guifg = P.base7, guibg = bg_sel, gui = "italic" },
     buffer_visible = { guifg = fg_def, guibg = bg },
     buffer_selected = { guifg = fg_sel, guibg = bg_sel, gui = "NONE" },
     diagnostic = { guifg = P.pale_red, guibg = bg },

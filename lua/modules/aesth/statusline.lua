@@ -16,7 +16,7 @@ return function()
 
   gl.short_line_list = { "NvimTree", "packer", "minimap", "Outline" }
 
-  local colors = rvim.style.palette
+  local colors = rvim.palette
 
   -- Left side
   gls.left[1] = {

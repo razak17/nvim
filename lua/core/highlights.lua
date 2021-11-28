@@ -1,6 +1,6 @@
 local fmt = string.format
 local api = vim.api
-local P = rvim.style.palette
+local P = rvim.palette
 local L = rvim.lsp.colors
 local levels = vim.log.levels
 

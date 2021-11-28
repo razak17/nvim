@@ -19,6 +19,9 @@ function M:init()
     rvim[k] = vim.deepcopy(v)
   end
 
+  local palette = require "config.palette"
+  rvim.palette = vim.deepcopy(palette)
+
   local lsp_config = require "lsp.config"
   rvim.lsp = vim.deepcopy(lsp_config)
 

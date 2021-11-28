@@ -20,10 +20,10 @@ return {
     "eslint",
   },
   colors = {
-    error = rvim.style.palette.pale_red,
-    warn = rvim.style.palette.dark_orange,
-    info = rvim.style.palette.bright_blue,
-    hint = rvim.style.palette.teal,
+    error = rvim.palette.pale_red,
+    warn = rvim.palette.dark_orange,
+    info = rvim.palette.bright_blue,
+    hint = rvim.palette.teal,
   },
   completion = {
     item_kind = {
