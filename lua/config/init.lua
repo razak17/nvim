@@ -31,8 +31,8 @@ function M:init()
   local which_key_config = require "modules.completion.which_key.config"
   rvim.wk = vim.deepcopy(which_key_config)
 
-  local supported_languages = require "config.supported_languages"
-  require("lsp.manager").init_defaults(supported_languages)
+  -- local supported_languages = require "config.supported_languages"
+  require("lsp.manager").init_defaults(rvim.supported_languages)
 
   require "config.mappings"
 end
