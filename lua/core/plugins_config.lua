@@ -35,7 +35,7 @@ return {
   easy_align = { active = true },
   cool = { active = true },
   surround = { active = true },
-  colorizer = { active = false },
+  colorizer = { active = true },
   kommentary = { active = true },
   dial = { active = true },
   fold_cycle = { active = false },

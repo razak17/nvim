@@ -20,12 +20,13 @@ return {
   bg_highlight2 = "#4E525C",
   bg_visual = "#b3deef",
 
-  gray = "#5c6370",
+  -- gray = "#5c6370",
   light_gray = "#abb2bf",
   purple = "#C678DD",
   sign_add = "#587c0c",
   sign_change = "#0c7d9d",
   sign_delete = "#94151b",
+  danger = "#FBBF24",
 
   fg = "#bbc2cf",
   fg_alt = "#5B6268",
@@ -82,6 +83,10 @@ return {
 
   bufferline_bg_sel = "#3f444a",
   bufferline_fg_def = "#7e7e7e",
-  bufferline_fg_sel = "#dedede"
+  bufferline_fg_sel = "#dedede",
 
+  diff_add = "#26332c",
+  diff_delete = "#572E33",
+  diff_change = "#273842",
+  dif_text = "#314753",
 }

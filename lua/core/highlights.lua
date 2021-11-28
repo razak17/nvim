@@ -206,6 +206,7 @@ local function general_overrides()
   local search_bg = M.get_hl("Search", "bg")
   local msg_area_bg = rvim.common.transparent_window and "NONE" or M.alter_color(M.get_hl("Normal", "bg"), -20)
   M.all {
+    { "VertSplit", { guifg = M.alter_color(P.bg, -20), guibg = M.alter_color(P.bg, -20) } },
     { "mkdLineBreak", { link = "NONE", force = true } },
     -----------------------------------------------------------------------------//
     -- Commandline
@@ -234,10 +235,10 @@ local function general_overrides()
     -----------------------------------------------------------------------------//
     -- Diff
     -----------------------------------------------------------------------------//
-    { "DiffAdd", { guibg = "#26332c", guifg = "NONE" } },
-    { "DiffDelete", { guibg = "#572E33", guifg = "#5c6370", gui = "NONE" } },
-    { "DiffChange", { guibg = "#273842", guifg = "NONE" } },
-    { "DiffText", { guibg = "#314753", guifg = "NONE" } },
+    { "DiffAdd", { guibg = P.diff_add, guifg = "NONE" } },
+    { "DiffDelete", { guibg = P.diff_delete, guifg = P.dark, gui = "NONE" } },
+    { "DiffChange", { guibg = P.diff_change, guifg = "NONE" } },
+    { "DiffText", { guibg = P.diff_text, guifg = "NONE" } },
     { "diffAdded", { link = "DiffAdd", force = true } },
     { "diffChanged", { link = "DiffChange", force = true } },
     { "diffRemoved", { link = "DiffDelete", force = true } },
@@ -267,7 +268,7 @@ local function general_overrides()
     -- { "TSParameter", { gui = "italic,bold" } },
     -- highlight FIXME comments
     { "commentTSWarning", { guifg = "Red", gui = "bold" } },
-    { "commentTSDanger", { guifg = "#FBBF24", gui = "bold" } },
+    { "commentTSDanger", { guifg = P.danger, gui = "bold" } },
     -----------------------------------------------------------------------------//
     -- LSP
     -----------------------------------------------------------------------------//
@@ -287,6 +288,7 @@ local function set_sidebar_highlight()
     { "PanelBackground", { guibg = bg_color } },
     { "PanelHeading", { guibg = bg_color, gui = "bold" } },
     { "PanelVertSplit", { guifg = split_color, guibg = bg_color } },
+    { "PanelVertSplitAlt", { guifg = bg_color, guibg = bg_color } },
     { "PanelStNC", { guibg = st_color, cterm = "italic" } },
     { "PanelSt", { guibg = st_color } },
   }
@@ -300,7 +302,7 @@ local sidebar_fts = {
   "dap-repl",
   "flutterToolsOutline",
   "undotree",
-  "NvimTree",
+  -- "NvimTree",
 }
 
 local function on_sidebar_enter()
@@ -310,7 +312,7 @@ local function on_sidebar_enter()
     "StatusLine:PanelSt",
     "StatusLineNC:PanelStNC",
     "SignColumn:PanelBackground",
-    "VertSplit:PanelVertSplit",
+    "VertSplit:PanelBackground",
   }, ",")
 end
 

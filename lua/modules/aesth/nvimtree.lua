@@ -126,8 +126,9 @@ return function()
     { "NvimTreeSignColumn", { link = "PanelBackground" } },
     { "NvimTreeEndOfBuffer", { link = "PanelBackground" } },
     { "NvimTreeVertSplit", { link = "PanelVertSplit" } },
-    { "NvimTreeStatusLine", { link = "PanelBackground" } },
-    { "NvimTreeStatusLineNC", { link = "PanelStNC" } }
+    { "NvimTreeStatusLine", { link = "PanelSt" } },
+    { "NvimTreeStatusLineNC", { link = "PanelStNC" } },
+    { "NvimTreeRootFolder", { gui = "bold,italic", guifg = "LightMagenta" } }
   )
 
   nvim_tree.setup(rvim.nvimtree.setup)
