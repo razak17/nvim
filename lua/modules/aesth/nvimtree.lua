@@ -11,7 +11,7 @@ return function()
     setup = {
       open_on_setup = false,
       auto_close = true,
-      open_on_tab = false,
+      open_on_tab = true,
       tree_follow = true,
       hijack_cursor = true,
       ignore_ft_on_setup = {
@@ -23,8 +23,8 @@ return function()
         update_cwd = true,
       },
       update_to_buf_dir = {
-        enable = false,
-        auto_open = false,
+        enable = true,
+        auto_open = true,
         ignore_list = {},
       },
       diagnostics = {
@@ -38,12 +38,24 @@ return function()
       },
       view = {
         width = 30,
+        height = 30,
         side = "right",
         auto_resize = true,
         hide_root_folder = false,
+        number = false,
+        relativenumber = false,
         mappings = {
           custom_only = false,
+          list = {},
         },
+      },
+      filters = {
+        dotfiles = false,
+        custom = { ".git", "node_modules", ".cache" },
+      },
+      system_open = {
+        cmd = nil,
+        args = {},
       },
       git = {
         enable = false,
@@ -99,8 +111,8 @@ return function()
   if rvim.plugin.project.active then
     rvim.nvimtree.defaults.respect_buf_cwd = 1
     rvim.nvimtree.setup.update_cwd = true
-    rvim.nvimtree.setup.disable_netrw = false
-    rvim.nvimtree.setup.hijack_netrw = false
+    rvim.nvimtree.setup.disable_netrw = true
+    rvim.nvimtree.setup.hijack_netrw = true
     vim.g.netrw_banner = false
   end
 
