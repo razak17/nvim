@@ -10,6 +10,7 @@ return function()
         all = "(",
         tex = "{",
       },
+      enable_check_bracket_line = false,
       ---@usage check treesitter
       check_ts = true,
       ts_config = {
@@ -25,6 +26,7 @@ return function()
 
   autopairs.setup {
     check_ts = rvim.autopairs.setup.check_ts,
+    enable_check_bracket_line = rvim.autopairs.setup.enable_check_bracket_line,
     ts_config = rvim.autopairs.setup.ts_config,
   }
 
