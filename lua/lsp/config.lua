@@ -56,7 +56,7 @@ return {
   },
   diagnostics = {
     signs = {
-      active = false,
+      active = true,
       values = {
         { name = "LspDiagnosticsSignError", text = "" },
         { name = "LspDiagnosticsSignWarning", text = "" },
@@ -70,7 +70,7 @@ return {
     },
     underline = true,
     update_in_insert = false,
-    severity_sort = false,
+    severity_sort = true,
   },
   null_ls = {
     setup = {
