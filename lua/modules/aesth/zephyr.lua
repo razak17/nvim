@@ -208,20 +208,10 @@ function zephyr.load_plugin_syntax()
     DiagnosticsSignInfoLine = { fg = P.blue },
     DiagnosticsSignHintLine = { fg = P.teal },
 
-    LspDiagnosticsSignErrorLine = { fg = P.pale_red },
-    LspDiagnosticsSignWarningLine = { fg = P.dark_orange },
-    LspDiagnosticsSignInformationLine = { fg = P.blue },
-    LspDiagnosticsSignHintLine = { fg = P.teal },
-
     DiagnosticSignError = { fg = P.pale_red },
     DiagnosticSignWarn = { fg = P.dark_orange },
     DiagnosticSignInfo = { fg = P.blue },
     DiagnosticSignHint = { fg = P.teal },
-
-    LspDiagnosticsSignError = { fg = P.pale_red },
-    LspDiagnosticsSignWarning = { fg = P.dark_orange },
-    LspDiagnosticsSignInformation = { fg = P.blue },
-    LspDiagnosticsSignHint = { fg = P.teal },
 
     DiagnosticFloatingError = { fg = P.pale_red },
     DiagnosticFloatingWarn = { fg = P.dark_orange },
@@ -238,20 +228,10 @@ function zephyr.load_plugin_syntax()
     DiagnosticUnderlineInfo = { style = "undercurl", sp = P.blue },
     DiagnosticUnderlineHint = { style = "undercurl", sp = P.teal },
 
-    LspDiagnosticsUnderlineError = { style = "undercurl", sp = P.pale_red },
-    LspDiagnosticsUnderlineWarning = { style = "undercurl", sp = P.dark_orange },
-    LspDiagnosticsUnderlineInformation = { style = "undercurl", sp = P.blue },
-    LspDiagnosticsUnderlineHint = { style = "undercurl", sp = P.teal },
-
     LspDiagnosticsVirtualTextError = { fg = P.pale_red },
     LspDiagnosticsVirtualTextWarning = { fg = P.dark_orange },
     LspDiagnosticsVirtualTextInformation = { fg = P.blue },
     LspDiagnosticsVirtualTextHint = { fg = P.teal },
-
-    LspDiagnosticsDefaultError = { fg = P.pale_red },
-    LspDiagnosticsDefaultWarning = { fg = P.dark_orange },
-    LspDiagnosticsDefaultInformation = { fg = P.blue },
-    LspDiagnosticsDefaultHint = { fg = P.teal },
 
     LspReferenceRead = { bg = P.base4 },
     LspReferenceText = { bg = P.base4 },
