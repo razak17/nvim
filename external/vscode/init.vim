@@ -1,6 +1,6 @@
 " packadd vim-surround
 
-execute 'luafile ' . '~/.config/rvim' . '/lua/core/opts.lua'
+" execute 'luafile ' . '~/.config/rvim' . '/lua/core/opts.lua'
 
 function! s:manageEditorSize(...)
     let count = a:1
