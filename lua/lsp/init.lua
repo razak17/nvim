@@ -3,9 +3,37 @@ local M = {}
 local Log = require "core.log"
 local utils = require "utils"
 
+local function set_diagnostics()
+  return vim.diagnostic.setqflist { open = false }
+end
+
 local function lsp_commands()
   local command = rvim.command
 
+  command {
+    "LspDiagnostics",
+    function()
+      set_diagnostics()
+      rvim.toggle_list "quickfix"
+      if rvim.is_vim_list_open() then
+        rvim.augroup("LspDiagnosticUpdate", {
+          {
+            events = { "DiagnosticChanged" },
+            targets = { "*" },
+            command = function()
+              set_diagnostics()
+              if rvim.is_vim_list_open() then
+                rvim.toggle_list "quickfix"
+              end
+            end,
+          },
+        })
+      elseif vim.fn.exists "#LspDiagnosticUpdate" > 0 then
+        vim.cmd "autocmd! LspDiagnosticUpdate"
+      end
+      vim.cmd "copen"
+    end,
+  }
   command {
     "LspLog",
     function()

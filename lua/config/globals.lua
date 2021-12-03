@@ -4,6 +4,7 @@ _G.rvim = { _store = _GlobalCallbacks }
 
 local fn = vim.fn
 local fmt = string.format
+local api = vim.api
 
 local os = vim.loop.os_uname().sysname
 rvim.templates_dir = get_config_dir() .. "/external/templates"
@@ -70,6 +71,20 @@ end
 function rvim.plugin_loaded(plugin_name)
   local plugins = packer_plugins or {}
   return plugins[plugin_name] and plugins[plugin_name].loaded
+end
+
+---Check whether or not the location or quickfix list is open
+---@return boolean
+function rvim.is_vim_list_open()
+  for _, win in ipairs(api.nvim_list_wins()) do
+    local buf = api.nvim_win_get_buf(win)
+    local location_list = fn.getloclist(0, { filewinid = 0 })
+    local is_loc_list = location_list.filewinid > 0
+    if vim.bo[buf].filetype == "qf" or is_loc_list then
+      return true
+    end
+  end
+  return false
 end
 
 ---@class Autocommand
@@ -161,5 +176,40 @@ function rvim.profile(filename)
     vim.defer_fn(function()
       vim.cmd("tabedit " .. logfile)
     end, 1000)
+  end
+end
+
+---check if a certain feature/version/commit exists in nvim
+---@param feature string
+---@return boolean
+function rvim.has(feature)
+  return vim.fn.has(feature) > 0
+end
+
+rvim.nightly = rvim.has "nvim-0.7"
+
+---------------------------------------------------------------------------------
+-- Toggle list
+---------------------------------------------------------------------------------
+--- Utility function to toggle the location or the quickfix list
+---@param list_type '"quickfix"' | '"location"'
+---@return nil
+function rvim.toggle_list(list_type)
+  local is_location_target = list_type == "location"
+  local prefix = is_location_target and "l" or "c"
+  local is_open = rvim.is_vim_list_open()
+  if is_open then
+    return fn.execute(prefix .. "close")
+  end
+  local list = is_location_target and fn.getloclist(0) or fn.getqflist()
+  if vim.tbl_isempty(list) then
+    local msg_prefix = (is_location_target and "Location" or "QuickFix")
+    return vim.notify(msg_prefix .. " List is Empty.", L.WARN)
+  end
+
+  local winnr = fn.winnr()
+  fn.execute(prefix .. "open")
+  if fn.winnr() ~= winnr then
+    vim.cmd "wincmd p"
   end
 end

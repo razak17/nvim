@@ -69,10 +69,12 @@ local function lsp_leader_keymaps(client)
   -- Diagnostics
   if client.supports_method "textDocument/publishDiagnostics" then
     nnoremap("<Leader>vdb", function()
-      vim.lsp.diagnostic.goto_prev { popup_opts = lsp_popup }
+      vim.diagnostic.goto_prev {
+        popup_opts = lsp_popup,
+      }
     end)
     nnoremap("<Leader>vdn", function()
-      vim.lsp.diagnostic.goto_next { popup_opts = lsp_popup }
+      vim.diagnostic.goto_next { popup_opts = lsp_popup }
     end)
     nnoremap("<Leader>vdl", function()
       vim.lsp.diagnostic.show_line_diagnostics { popup_opts = lsp_popup }
