@@ -13,7 +13,7 @@ return function()
       auto_close = true,
       open_on_tab = true,
       tree_follow = true,
-      hijack_cursor = true,
+      hijack_cursor = false,
       ignore_ft_on_setup = {
         "startify",
         "dashboard",
@@ -46,7 +46,6 @@ return function()
         relativenumber = false,
         mappings = {
           custom_only = false,
-          list = {},
         },
       },
       filters = {
