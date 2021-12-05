@@ -206,7 +206,7 @@ local function general_overrides()
   local search_bg = M.get_hl("Search", "bg")
   local msg_area_bg = rvim.common.transparent_window and "NONE" or M.alter_color(M.get_hl("Normal", "bg"), -20)
   M.all {
-    { "VertSplit", { guifg = M.alter_color(P.bg, -20), guibg = M.alter_color(P.bg, -20) } },
+    -- { "VertSplit", { guifg = M.alter_color(P.bg, -20), guibg = M.alter_color(P.bg, -20) } },
     { "mkdLineBreak", { link = "NONE", force = true } },
     -----------------------------------------------------------------------------//
     -- Commandline

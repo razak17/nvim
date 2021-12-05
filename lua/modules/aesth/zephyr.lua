@@ -40,7 +40,7 @@ function zephyr.load_syntax()
     Terminal = { fg = P.fg, bg = P.bg },
     SignColumn = { fg = P.fg, bg = P.bg },
     FoldColumn = { fg = P.fg_alt, bg = P.black },
-    VertSplit = { fg = P.bg, bg = P.bg },
+    VertSplit = { fg = P.black, bg = P.bg },
     Folded = { fg = P.grey, bg = P.highlight_bg },
     EndOfBuffer = { fg = P.bg, bg = P.none },
     IncSearch = { fg = P.bg, bg = P.orange, style = zephyr.none },
