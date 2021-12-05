@@ -276,9 +276,9 @@ function zephyr.load_plugin_syntax()
     NvimTreeOpenedFolderName = { fg = P.base5 },
 
     TelescopeNormal = { fg = P.fg },
-    TelescopeBorder = { fg = P.blue2, bg = P.bg },
-    TelescopeResultsBorder = { fg = P.blue2, bg = P.bg },
-    TelescopePromptBorder = { fg = P.blue2, bg = P.bg },
+    TelescopeBorder = { fg = P.blue, bg = P.bg },
+    TelescopeResultsBorder = { fg = P.blue, bg = P.bg },
+    TelescopePromptBorder = { fg = P.blue, bg = P.bg },
     TelescopePreviewBorder = { fg = P.magenta, bg = P.bg },
     TelescopeMatching = { fg = P.yellowgreen, style = "bold" },
     TelescopeSelection = { fg = P.cyan, style = "bold" },
@@ -286,20 +286,20 @@ function zephyr.load_plugin_syntax()
     TelescopeMultiSelection = { fg = P.light_green },
     TelescopePromptPrefix = { fg = P.yellow },
 
-    FloatermBorder = { fg = P.blue2, bg = P.bg },
+    FloatermBorder = { fg = P.blue, bg = P.bg },
 
-    DashboardShortCut = { fg = P.blue4 },
-    DashboardHeader = { fg = P.blue2 },
-    DashboardCenter = { fg = P.blue2 },
-    DashboardFooter = { fg = P.cyan2, style = "bold" },
+    DashboardShortCut = { fg = P.darker_blue },
+    DashboardHeader = { fg = P.blue },
+    DashboardCenter = { fg = P.blue },
+    DashboardFooter = { fg = P.dark_cyan, style = "bold" },
 
-    WhichKey = { fg = P.blue2 },
-    WhichKeyName = { fg = P.pink },
+    WhichKey = { fg = P.pink },
+    WhichKeyName = { fg = P.yellow },
     WhichKeyTrigger = { fg = P.black },
     WhichKeyFloating = { fg = P.red },
-    WhichKeySeperator = { fg = P.blue3 },
-    WhichKeyGroup = { fg = P.blue2 },
-    WhichKeyDesc = { fg = P.blue3 },
+    WhichKeySeperator = { fg = P.yellowgreen },
+    WhichKeyGroup = { fg = P.pale_blue },
+    WhichKeyDesc = { fg = P.dark_cyan },
   }
   return plugin_syntax
 end

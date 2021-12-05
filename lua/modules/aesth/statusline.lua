@@ -27,7 +27,7 @@ return function()
       provider = function()
         return "▊ "
       end,
-      highlight = { colors.bright_blue, colors.dark_alt },
+      highlight = { colors.pale_blue, colors.dark_alt },
     },
   }
   gls.left[2] = {
@@ -37,9 +37,9 @@ return function()
         local mode_color = {
           n = colors.pale_red,
           i = colors.green,
-          v = colors.bright_blue,
-          [""] = colors.bright_blue,
-          V = colors.bright_blue,
+          v = colors.pale_blue,
+          [""] = colors.pale_blue,
+          V = colors.pale_blue,
           c = colors.magenta,
           no = colors.pale_red,
           s = colors.orange,
@@ -161,7 +161,7 @@ return function()
     DiagnosticInfo = {
       provider = "DiagnosticInfo",
       icon = "  ",
-      highlight = { colors.bright_blue, colors.dark_alt },
+      highlight = { colors.pale_blue, colors.dark_alt },
     },
   }
 
@@ -169,7 +169,7 @@ return function()
     DiagnosticHint = {
       provider = "DiagnosticHint",
       icon = "  ",
-      highlight = { colors.bright_blue, colors.dark_alt },
+      highlight = { colors.pale_blue, colors.dark_alt },
     },
   }
 
@@ -307,7 +307,7 @@ return function()
       end,
       separator = " ",
       separator_highlight = { colors.statusline_section_bg, colors.dark_alt },
-      highlight = { colors.bright_blue, colors.dark_alt },
+      highlight = { colors.pale_blue, colors.dark_alt },
     },
   }
 

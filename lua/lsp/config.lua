@@ -22,7 +22,7 @@ return {
   colors = {
     error = rvim.palette.pale_red,
     warn = rvim.palette.dark_orange,
-    info = rvim.palette.bright_blue,
+    info = rvim.palette.pale_blue,
     hint = rvim.palette.teal,
   },
   completion = {
