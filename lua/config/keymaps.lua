@@ -156,6 +156,8 @@ local nmap, vmap, xmap, nnoremap, cnoremap, tnoremap, vnoremap, xnoremap, inorem
   defaults.inoremap,
   defaults.snoremap
 
+local utils = require "utils"
+
 -----------------------------------------------------------------------------//
 -- Defaults
 -----------------------------------------------------------------------------//
@@ -233,10 +235,6 @@ tnoremap["<S-Tab>"] = "<C-\\><C-n>:bprev<CR>"
 cnoremap["<Tab>"] = { [[getcmdtype() == "/" || getcmdtype() == "?" ? "<CR>/<C-r>/" : "<C-z>"]], { expr = true } }
 cnoremap["<S-Tab>"] = { [[getcmdtype() == "/" || getcmdtype() == "?" ? "<CR>?<C-r>/" : "<S-Tab>"]], { expr = true } }
 
------------------------------------------------------------------------------//
--- Appended
------------------------------------------------------------------------------//
-
 -- Use alt + hjkl to resize windows
 nnoremap["<M-n>"] = ":resize -2<CR>"
 nnoremap["<M-k>"] = ":resize +2<CR>"
@@ -265,13 +263,80 @@ nnoremap["Q"] = "@q"
 nnoremap["[<space>"] = [[<cmd>put! =repeat(nr2char(10), v:count1)<cr>'[]]
 nnoremap["]<space>"] = [[<cmd>put =repeat(nr2char(10), v:count1)<cr>]]
 
+-- Smart mappings on the command line
+cnoremap["w!!"] = [[w !sudo tee % >/dev/null]]
+
+-- insert path of current file into a command
+cnoremap["%%"] = "<C-r>=fnameescape(expand('%'))<cr>"
+cnoremap["::"] = "<C-r>=fnameescape(expand('%:p:h'))<cr>/"
+
+-- QuickRun
+nnoremap["<C-b>"] = ":QuickRun<CR>"
+
+-- undo command in insert mode
+inoremap["<c-z>"] = function()
+  vim.cmd [[:undo]]
+end
+
+-- Alternate way to save
+nnoremap["<C-s>"] = function()
+  utils.save_and_notify()
+end
+
+-- if the file under the cursor doesn't exist create it
+-- see :h gf a simpler solution of :edit <cfile> is recommended but doesn't work.
+-- If you select require('buffers/file') in lua for example
+-- this makes the cfile -> buffers/file rather than my_dir/buffer/file.lua
+-- Credit: 1,2
+nnoremap["gf"] = function()
+  utils.open_file_or_create_new()
+end
+
+-- GX - replicate netrw functionality
+nnoremap["gX"] = function()
+  utils.open_link()
+end
+
+-----------------------------------------------------------------------------//
+-- Leader keymap
+-----------------------------------------------------------------------------//
+
+-- toggle_list
+nnoremap["<leader>ls"] = function()
+  utils.toggle_list "c"
+end
+
+nnoremap["<leader>li"] = function()
+  utils.toggle_list "l"
+end
+
+nnoremap["<Leader>IM"] = function()
+  utils.ColorMyPencils()
+end
+
+nnoremap["<leader>aR"] = function()
+  utils.EmptyRegisters()
+end
+
+nnoremap["<Leader>a;"] = function()
+  utils.OpenTerminal()
+end
+
+nnoremap["<leader>ao"] = function()
+  utils.TurnOnGuides()
+end
+
+nnoremap["<leader>ae"] = function()
+  utils.TurnOffGuides()
+end
+
 -- Window Resize
-nnoremap["<Leader>ca"] = ":vertical resize 40<CR>"
 nnoremap["<Leader>aF"] = ":vertical resize 90<CR>"
+nnoremap["<Leader>aL"] = ":vertical resize 40<CR>"
 
 -- Search Files
-nnoremap["<Leader>chw"] = ':h <C-R>=expand("<cword>")<CR><CR>'
-nnoremap["<Leader>bs"] = '/<C-R>=escape(expand("<cWORD>"), "/")<CR><CR>'
+nnoremap["<Leader>cw"] = ':h <C-R>=expand("<cword>")<CR><CR>'
+nnoremap["<Leader>bs"] = '/<C-R>=escape(expand("<cword>"), "/")<CR><CR>'
 
 -- Tab navigation
 nnoremap["<Leader>sb"] = ":tabprevious<CR>"
@@ -341,13 +406,6 @@ nnoremap["<leader>["] = { [[:%s/\<<C-r>=expand("<cword>")<CR>\>/]], noisy }
 nnoremap["<leader>]"] = { [[:s/\<<C-r>=expand("<cword>")<CR>\>/]], noisy }
 vnoremap["<leader>["] = { [["zy:%s/<C-r><C-o>"/]], noisy }
 
--- Smart mappings on the command line
-cnoremap["w!!"] = [[w !sudo tee % >/dev/null]]
-
--- insert path of current file into a command
-cnoremap["%%"] = "<C-r>=fnameescape(expand('%'))<cr>"
-cnoremap["::"] = "<C-r>=fnameescape(expand('%:p:h'))<cr>/"
-
 -- open a new file in the same directory
 nnoremap["<leader>nf"] = { [[:e <C-R>=expand("%:p:h") . "/" <CR>]], noisy }
 -- create a new file in the same directory
@@ -372,67 +430,6 @@ nnoremap["<Leader>bdx"] = ":call v:lua.DelAllExceptCurrent()<CR>"
 
 -- Terminal mode
 tnoremap["<leader><Tab>"] = [[<C-\><C-n>:close \| :bnext<cr>]]
-
--- QuickRun
-nnoremap["<C-b>"] = ":QuickRun<CR>"
-
------------------------------------------------------------------------------//
--- Functions
------------------------------------------------------------------------------//
-local utils = require "utils"
-
--- undo command in insert mode
-inoremap["<c-z>"] = function()
-  vim.cmd [[:undo]]
-end
-
--- Alternate way to save
-nnoremap["<C-s>"] = function()
-  utils.save_and_notify()
-end
-
--- if the file under the cursor doesn't exist create it
--- see :h gf a simpler solution of :edit <cfile> is recommended but doesn't work.
--- If you select require('buffers/file') in lua for example
--- this makes the cfile -> buffers/file rather than my_dir/buffer/file.lua
--- Credit: 1,2
-nnoremap["gf"] = function()
-  utils.open_file_or_create_new()
-end
-
--- GX - replicate netrw functionality
-nnoremap["gX"] = function()
-  utils.open_link()
-end
-
--- toggle_list
-nnoremap["<leader>ls"] = function()
-  utils.toggle_list "c"
-end
-
-nnoremap["<leader>li"] = function()
-  utils.toggle_list "l"
-end
-
-nnoremap["<Leader>IM"] = function()
-  utils.ColorMyPencils()
-end
-
-nnoremap["<leader>aR"] = function()
-  utils.EmptyRegisters()
-end
-
-nnoremap["<Leader>a;"] = function()
-  utils.OpenTerminal()
-end
-
-nnoremap["<leader>ao"] = function()
-  utils.TurnOnGuides()
-end
-
-nnoremap["<leader>ae"] = function()
-  utils.TurnOffGuides()
-end
 
 -----------------------------------------------------------------------------//
 -- Plugins

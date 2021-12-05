@@ -36,12 +36,14 @@ return {
           o = "open all",
           x = "close all",
         },
-        F = "resize 90%",
+        F = "vertical resize 90",
         h = "horizontal split",
         l = "open last buffer",
+        L = "vertical resize 30%%",
         n = "no highlight",
         o = "turn on guides",
         O = "open old commands",
+        p = "greatest remap ever",
         R = "empty registers",
         v = "vertical split",
         V = "select all",
@@ -63,11 +65,7 @@ return {
       },
       c = {
         name = "+Command",
-        a = "vertical resize 30",
-        h = {
-          name = "+Help",
-          w = "word",
-        },
+        w = "help cword",
       },
       I = {
         name = "+Info",
