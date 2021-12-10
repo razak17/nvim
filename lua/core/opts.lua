@@ -48,8 +48,9 @@ M.load_options = function()
 
     -- Spelling
     spelllang = "en",
-    spell = false,
+    -- spell = false,
     spelloptions = "camel",
+    spellfile = utils.join_paths(get_config_dir(), "spell", "en.utf-8.add"),
     spellcapcheck = "", -- don't check for capital letters at start of sentence
     fileformats = { "unix", "mac", "dos" }, -- don't check for capital letters at start of sentence
 
@@ -182,6 +183,9 @@ M.load_options = function()
   vim.opt.iskeyword:append "-"
   vim.opt.shadafile = utils.join_paths(get_cache_dir(), "shada", "rvim.shada")
   vim.opt.cursorlineopt = "screenline,number"
+  vim.opt.spellsuggest:prepend { 12 }
+  vim.opt.spellcapcheck = "" -- don't check for capital letters at start of sentence
+  vim.opt.fileformats = { "unix", "mac", "dos" }
 
   for k, v in pairs(default_options) do
     vim.opt[k] = v

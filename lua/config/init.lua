@@ -41,7 +41,7 @@ function M:load()
   require "config.globals"
   M:init()
 
-  defer()
+  -- defer()
   require("core.opts").setup()
   require "core.highlights"
   require "core.whitespace"
