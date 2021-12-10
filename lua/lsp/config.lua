@@ -58,10 +58,10 @@ return {
     signs = {
       active = true,
       values = {
-        { name = "LspDiagnosticsSignError", text = "" },
-        { name = "LspDiagnosticsSignWarning", text = "" },
-        { name = "LspDiagnosticsSignInformation", text = "" },
-        { name = "LspDiagnosticsSignHint", text = "" },
+        { name = "DiagnosticSignError", text = "" },
+        { name = "DiagnosticSignWarn", text = "" },
+        { name = "DiagnosticSignInfo", text = "" },
+        { name = "DiagnosticSignHint", text = "" },
       },
     },
     virtual_text = {
@@ -85,6 +85,21 @@ return {
     "ember",
     "jedi_language_server",
     "pylsp",
+    float = {
+      focusable = false,
+      style = "minimal",
+      border = "rounded",
+      source = "always",
+      header = "",
+      prefix = "",
+      format = function(d)
+        local t = vim.deepcopy(d)
+        if d.code then
+          t.message = string.format("%s [%s]", t.message, t.code):gsub("1. ", "")
+        end
+        return t.message
+      end,
+    },
     "rome",
     "sqlls",
     "sqls",

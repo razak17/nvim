@@ -106,7 +106,7 @@ lang["kevinhwang91/nvim-bqf"] = {
 
 -- Treesitter
 lang["nvim-treesitter/nvim-treesitter"] = {
-  branch = "0.5-compat",
+  branch = vim.fn.has "nvim-0.6" == 1 and "master" or "0.5-compat",
   config = utils.load_conf("lang", "treesitter"),
   disable = not rvim.plugin.treesitter.active,
 }
