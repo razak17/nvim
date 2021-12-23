@@ -115,4 +115,9 @@ return {
   hover_diagnostics = false,
   lint_on_save = false,
   popup_border = "single",
+  float = {
+    focusable = false,
+    style = "minimal",
+    border = "single",
+  },
 }

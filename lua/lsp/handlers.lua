@@ -9,43 +9,8 @@ function M.setup()
     underline = rvim.lsp.diagnostics.underline,
     update_in_insert = rvim.lsp.diagnostics.update_in_insert,
     severity_sort = rvim.lsp.diagnostics.severity_sort,
-    float = rvim.lsp.diagnostics.float
+    float = rvim.lsp.diagnostics.float,
   }
-  -- if vim.fn.has "nvim-0.5.1" > 0 then
-  --   vim.lsp.handlers["textDocument/publishDiagnostics"] = function(_, result, ctx, _)
-  --     local uri = result.uri
-  --     local bufnr = vim.uri_to_bufnr(uri)
-  --     if not bufnr then
-  --       return
-  --     end
-
-  --     local diagnostics = result.diagnostics
-  --     local ok, vim_diag = rvim.safe_require "vim.diagnostic"
-  --     if ok then
-  --       -- FIX: why can't we just use vim.diagnostic.get(buf_id)?
-  --       config.signs = true
-  --       for i, diagnostic in ipairs(diagnostics) do
-  --         local rng = diagnostic.range
-  --         diagnostics[i].lnum = rng["start"].line
-  --         diagnostics[i].end_lnum = rng["end"].line
-  --         diagnostics[i].col = rng["start"].character
-  --         diagnostics[i].end_col = rng["end"].character
-  --       end
-  --       local namespace = vim.lsp.diagnostic.get_namespace(ctx.client_id)
-
-  --       vim_diag.set(namespace, bufnr, diagnostics, config)
-  --       if not vim.api.nvim_buf_is_loaded(bufnr) then
-  --         return
-  --       end
-  --       vim_diag.show(namespace, bufnr, diagnostics, config)
-  --     else
-  --       vim.lsp.diagnostic.save(diagnostics, bufnr, ctx.client_id)
-  --       if not vim.api.nvim_buf_is_loaded(bufnr) then
-  --         return
-  --       end
-  --       vim.lsp.diagnostic.display(diagnostics, bufnr, ctx.client_id, config)
-  --     end
-  --   end
   if vim.fn.has "nvim-0.6" == 1 then
     vim.diagnostic.config(config)
   else
@@ -65,21 +30,9 @@ function M.setup()
     end
   end
 
-  -- vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-  --   border = rvim.lsp.popup_border,
-  -- })
+  vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, rvim.lsp.float)
 
-  -- vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
-  --   border = rvim.lsp.popup_border,
-  -- })
-
-  vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-      border = rvim.lsp.popup_border,
-    })
-
-  vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
-    border = rvim.lsp.popup_border,
-  })
+  vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, rvim.lsp.float)
 end
 
 local function split_by_chunk(text, chunkSize)
@@ -135,7 +88,6 @@ function M.show_line_diagnostics()
       hash[v["message"]] = true
     end
   end
-  -- print(vim.inspect(diagnostics_no_dupes))
 
   for i, diagnostic in ipairs(diagnostics_no_dupes) do
     local source = diagnostic.source
