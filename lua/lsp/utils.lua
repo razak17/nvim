@@ -96,4 +96,14 @@ function M.toggle_format_on_save()
   end
 end
 
+---Get all supported filetypes by nvim-lsp-installer
+---@return table supported filestypes as a list of strings
+function M.get_all_supported_filetypes()
+  local status_ok, lsp_installer_filetypes = pcall(require, "nvim-lsp-installer._generated.filetype_map")
+  if not status_ok then
+    return {}
+  end
+  return vim.tbl_keys(lsp_installer_filetypes or {})
+end
+
 return M

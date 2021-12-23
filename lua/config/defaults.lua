@@ -10,9 +10,9 @@ return {
       ---@usage timeout number timeout in ms for the format request (Default: 1000)
       timeout = 1000,
     },
-
     debug = false,
   },
+  lang = {},
   style = {
     kinds = {
       Class = " ",
@@ -56,26 +56,5 @@ return {
         float_opts = {},
       },
     },
-  },
-  supported_languages = {
-    "c",
-    "css",
-    "cmake",
-    "cpp",
-    "docker",
-    "elixir",
-    "go",
-    "graphql",
-    "html",
-    "json",
-    "lua",
-    "python",
-    "rust",
-    "sh",
-    "vim",
-    "yaml",
-    "javascript",
-    "javascriptreact",
-    "typescript",
   },
 }

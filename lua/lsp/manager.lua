@@ -4,9 +4,10 @@ local Log = require "core.log"
 local lsp_utils = require "lsp.utils"
 
 function M.init_defaults(languages)
+  languages = languages or lsp_utils.get_all_supported_filetypes()
   for _, entry in ipairs(languages) do
-    if not rvim.lsp.lang[entry] then
-      rvim.lsp.lang[entry] = {
+    if not rvim.lang[entry] then
+      rvim.lang[entry] = {
         formatters = {},
         linters = {},
         lsp = {},
