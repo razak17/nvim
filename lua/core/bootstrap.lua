@@ -67,8 +67,6 @@ function M:init()
   vim.opt.rtp:append(join_paths(self.config_dir, "after"))
 
   cmd [[let &packpath = &runtimepath]]
-  -- cmd [[syntax off]]
-  -- cmd [[filetype off]]
 end
 
 return M

@@ -41,7 +41,12 @@ function M:load()
   require "config.globals"
   M:init()
 
-  -- defer()
+  if rvim.common.defer then
+    vim.cmd [[syntax off]]
+    vim.cmd [[filetype off]]
+    defer()
+  end
+
   require("core.opts").setup()
   require "core.highlights"
   require "core.whitespace"
