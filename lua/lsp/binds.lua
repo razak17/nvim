@@ -60,8 +60,6 @@ local function lsp_leader_keymaps(client)
     return
   end
 
-  local lsp_popup = { show_header = false, border = "single", focusable = false }
-
   -- Formatting
   if client.supports_method "textDocument/formatting" then
     nnoremap("<leader>vf", ":LspFormat<CR>")
@@ -69,17 +67,17 @@ local function lsp_leader_keymaps(client)
   -- Diagnostics
   if client.supports_method "textDocument/publishDiagnostics" then
     nnoremap("<Leader>vdb", function()
-      vim.diagnostic.goto_prev {
-        popup_opts = lsp_popup,
-      }
+      vim.diagnostic.goto_prev()
     end)
     nnoremap("<Leader>vdn", function()
-      vim.diagnostic.goto_next { popup_opts = lsp_popup }
+      vim.diagnostic.goto_next()
     end)
     nnoremap("<Leader>vdl", function()
-      vim.lsp.diagnostic.show_line_diagnostics { popup_opts = lsp_popup }
+      vim.lsp.diagnostic.show_line_diagnostics()
     end)
-    nnoremap("<leader>vl", vim.lsp.diagnostic.set_loclist)
+    nnoremap("<leader>vl", function()
+      vim.diagnostic.setloclist()
+    end)
   end
   -- Code Action
   if client.supports_method "textDocument/codeAction" then
