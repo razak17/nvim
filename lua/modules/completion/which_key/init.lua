@@ -126,9 +126,6 @@ return function()
 
     -- tree
     if rvim.plugin_loaded "nvim-tree.lua" then
-      key_maps.c.c = { ":NvimTreeClose", "nvim-tree close" }
-      key_maps.c.f = { ":NvimTreeFindFile", "nvim-tree find" }
-      key_maps.c.r = { ":NvimTreeRefresh", "nvim-tree refresh" }
       key_maps.c.v = { ":NvimTreeToggle", "nvim-tree toggle" }
     end
 
