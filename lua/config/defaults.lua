@@ -11,7 +11,7 @@ return {
       timeout = 1000,
     },
     debug = false,
-    defer = true,
+    defer = false,
   },
   lang = {},
   style = {

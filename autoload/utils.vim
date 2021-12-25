@@ -150,3 +150,10 @@ function! utils#auto_resize(...)
     echom 'Auto resize OFF'
   endif
 endfunction
+
+" create a go doc comment based on the word under the cursor
+function! utils#create_go_doc_comment()
+  norm "zyiw
+  execute ":put! z"
+  execute ":norm I// \<Esc>$"
+endfunction

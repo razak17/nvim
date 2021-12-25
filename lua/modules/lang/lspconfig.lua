@@ -1,8 +1,4 @@
 return function()
-  for _, server in ipairs(rvim.lsp.servers) do
-    require("lsp.manager").setup(server)
-  end
-
   require("lsp").setup()
 
   local formatters = require "lsp.null-ls.formatters"
@@ -23,14 +19,15 @@ return function()
       exe = "isort",
       filetypes = { "python" },
     },
-    -- { exe = "prettier", filetypes = { "typescript", "typescriptreact" } },
+    -- { exe = "prettier", filetypes = { "typescript", "typescriptreact", "css", "html" } },
+    { exe = "prettier", filetypes = { "css", "html" } },
   }
 
   linters.setup {
-    {
-      exe = "luacheck",
-      filetypes = { "lua" },
-    },
+    -- {
+    --   exe = "luacheck",
+    --   filetypes = { "lua" },
+    -- },
     { exe = "flake8", filetypes = { "python" } },
     -- { exe = "eslint", filetypes = { "typescript", "typescriptreact" } },
   }

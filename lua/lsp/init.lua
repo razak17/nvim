@@ -251,7 +251,7 @@ function M.setup()
 
   bootstrap_nlsp { config_home = utils.join_paths(get_config_dir(), "external/nlsp-settings") }
 
-  require("lsp.null-ls").setup(vim.bo.filetype)
+  require("lsp.null-ls").setup()
 
   require("lsp.utils").configure_format_on_save()
 end
