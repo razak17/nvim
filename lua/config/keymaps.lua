@@ -384,6 +384,9 @@ nnoremap["<Leader>ad"] = ":bdelete!<CR>"
 -- opens the last buffer
 nnoremap["<leader>al"] = "<C-^>"
 
+-- force save
+nnoremap["<leader>aS"] = ":w!<CR>"
+
 -- Folds
 nnoremap["<S-Return>"] = "zMzvzt"
 nnoremap["<Leader>afr"] = "zA" -- Recursively toggle
@@ -519,6 +522,11 @@ end
 -- vim-matchup
 if rvim.plugin.matchup.active then
   nnoremap["<Leader>vW"] = ":<c-u>MatchupWhereAmI?<CR>"
+end
+
+-- lsp-installer
+if rvim.plugin.lsp_installer.active then
+  nnoremap["<Leader>LI"] = ":LspInstall "
 end
 
 return M
