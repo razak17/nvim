@@ -13,7 +13,7 @@ return function()
       auto_close = true,
       open_on_tab = true,
       tree_follow = true,
-      hijack_cursor = false,
+      hijack_cursor = true,
       ignore_ft_on_setup = {
         "startify",
         "dashboard",
