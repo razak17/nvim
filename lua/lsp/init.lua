@@ -52,7 +52,12 @@ local function lsp_commands()
       local virtual_text = {}
       virtual_text.show = true
       virtual_text.show = not virtual_text.show
-      vim.lsp.diagnostic.display(vim.lsp.diagnostic.get(0, 1), 0, 1, { virtual_text = virtual_text.show })
+      vim.lsp.diagnostic.display(
+        vim.lsp.diagnostic.get(0, 1),
+        0,
+        1,
+        { virtual_text = virtual_text.show }
+      )
     end,
   }
   command {
@@ -67,13 +72,14 @@ local function lsp_commands()
 end
 
 local function lsp_hover_diagnostics()
+  if not rvim.lsp.hover_diagnostics then
+    return
+  end
+
   local get_cursor_pos = function()
     return { vim.fn.line ".", vim.fn.col "." }
   end
 
-  if not rvim.lsp.hover_diagnostics then
-    return
-  end
   rvim.augroup("HoverDiagnostics", {
     {
       events = { "CursorHold" },
@@ -173,12 +179,15 @@ local function select_default_formater(client)
   if client.name == "null-ls" or not client.resolved_capabilities.document_formatting then
     return
   end
+
   Log:debug("Checking for formatter overriding for " .. client.name)
   local formatters = require "lsp.null-ls.formatters"
   local client_filetypes = client.config.filetypes or {}
   for _, filetype in ipairs(client_filetypes) do
     if #vim.tbl_keys(formatters.list_registered_providers(filetype)) > 0 then
-      Log:debug("Formatter overriding detected. Disabling formatting capabilities for " .. client.name)
+      Log:debug(
+        "Formatter overriding detected. Disabling formatting capabilities for " .. client.name
+      )
       client.resolved_capabilities.document_formatting = false
       client.resolved_capabilities.document_range_formatting = false
     end
@@ -242,7 +251,10 @@ function M.setup()
   for _, sign in ipairs(rvim.lsp.diagnostics.signs.values) do
     local lsp_sign_name = LSP_DEPRECATED_SIGN_MAP[sign.name]
     if is_neovim_nightly and lsp_sign_name then
-      vim.fn.sign_define(lsp_sign_name, { texthl = lsp_sign_name, text = sign.text, numhl = lsp_sign_name })
+      vim.fn.sign_define(
+        lsp_sign_name,
+        { texthl = lsp_sign_name, text = sign.text, numhl = lsp_sign_name }
+      )
     end
     vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = sign.name })
   end

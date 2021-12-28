@@ -69,6 +69,7 @@ return {
       spacing = 2,
     },
     underline = true,
+    border = "single",
     update_in_insert = false,
     severity_sort = true,
   },
@@ -88,7 +89,7 @@ return {
     float = {
       focusable = false,
       style = "minimal",
-      border = "rounded",
+      border = "single",
       source = "always",
       header = "",
       prefix = "",

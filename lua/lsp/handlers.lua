@@ -32,7 +32,10 @@ function M.setup()
 
   vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, rvim.lsp.float)
 
-  vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, rvim.lsp.float)
+  vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
+    vim.lsp.handlers.signature_help,
+    rvim.lsp.float
+  )
 end
 
 local function split_by_chunk(text, chunkSize)
@@ -112,7 +115,7 @@ function M.show_line_diagnostics()
   height = #lines
   opts = vim.lsp.util.make_floating_popup_options(width, height, opts)
   opts["style"] = "minimal"
-  opts["border"] = "rounded"
+  opts["border"] = rvim.lsp.diagnostics.border
   opts["focusable"] = true
 
   vim.api.nvim_buf_set_option(bufnr, "bufhidden", "wipe")
@@ -121,11 +124,20 @@ function M.show_line_diagnostics()
   vim.api.nvim_buf_set_var(bufnr, "lsp_floating_window", winnr)
   for i, diag in ipairs(lines) do
     vim.api.nvim_buf_set_lines(bufnr, i - 1, i - 1, 0, { diag.message })
-    vim.api.nvim_buf_add_highlight(bufnr, -1, severity_highlight[diag.severity], i - 1, 0, diag.message:len())
+    vim.api.nvim_buf_add_highlight(
+      bufnr,
+      -1,
+      severity_highlight[diag.severity],
+      i - 1,
+      0,
+      diag.message:len()
+    )
   end
 
   vim.api.nvim_command(
-    "autocmd QuitPre <buffer> ++nested ++once lua pcall(vim.api.nvim_win_close, " .. winnr .. ", true)"
+    "autocmd QuitPre <buffer> ++nested ++once lua pcall(vim.api.nvim_win_close, "
+      .. winnr
+      .. ", true)"
   )
   vim.lsp.util.close_preview_autocmd(close_events, winnr)
 end
