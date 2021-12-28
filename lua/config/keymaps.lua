@@ -232,8 +232,14 @@ tnoremap["<S-Tab>"] = "<C-\\><C-n>:bprev<CR>"
 -- smooth searching, allow tabbing between search results similar to using <c-g>
 -- or <c-t> the main difference being tab is easier to hit and remapping those keys
 -- to these would swallow up a tab mapping
-cnoremap["<Tab>"] = { [[getcmdtype() == "/" || getcmdtype() == "?" ? "<CR>/<C-r>/" : "<C-z>"]], { expr = true } }
-cnoremap["<S-Tab>"] = { [[getcmdtype() == "/" || getcmdtype() == "?" ? "<CR>?<C-r>/" : "<S-Tab>"]], { expr = true } }
+cnoremap["<Tab>"] = {
+  [[getcmdtype() == "/" || getcmdtype() == "?" ? "<CR>/<C-r>/" : "<C-z>"]],
+  { expr = true },
+}
+cnoremap["<S-Tab>"] = {
+  [[getcmdtype() == "/" || getcmdtype() == "?" ? "<CR>?<C-r>/" : "<S-Tab>"]],
+  { expr = true },
+}
 
 -- Use alt + hjkl to resize windows
 nnoremap["<M-n>"] = ":resize -2<CR>"
@@ -495,7 +501,7 @@ end
 if rvim.plugin.fterm.active then
   nnoremap["<F12>"] = '<cmd>lua require("FTerm").toggle()<CR>'
   tnoremap["<F12>"] = '<C-\\><C-n><cmd>lua require("FTerm").toggle()<CR>'
-  nnoremap["<leader>en"] = '<cmd>lua require("FTerm").open()<CR>'
+  nnoremap["<leader>e;"] = '<cmd>lua require("FTerm").open()<CR>'
 end
 
 -- WhichKey
