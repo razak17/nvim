@@ -32,12 +32,18 @@ return function()
   vim.g.dashboard_custom_section = {
     a = { description = join("  Find Files", "<leader>ff", 13), command = "Telescope find_files" },
     b = {
-      description = join("  Default config", "<leader>fC", 9),
+      description = join("  Default config", "<leader>Ic", 9),
       command = ":e " .. get_config_dir() .. "/lua/config/init.lua",
     },
-    c = { description = join("  Recent files", "<leader>frr", 11), command = "Telescope oldfiles" },
-    d = { description = join("  Find word", "<leader>flg", 14), command = "Telescope live_grep" },
-    e = { description = join("  Recent Projects", "<leader>fee", 8), command = "Telescope projects" },
+    c = { description = join("  Recent files", "<leader>fR", 11), command = "Telescope oldfiles" },
+    d = {
+      description = join("  Find in project", "<leader>flg", 8),
+      command = "Telescope live_grep",
+    },
+    e = {
+      description = join("  File Browser", "<leader>fb", 11),
+      command = "Telescope file_browser",
+    },
   }
 
   local num_plugins_loaded = #vim.fn.globpath(get_runtime_dir() .. "/site/pack/packer/*", "*", 0, 1)
