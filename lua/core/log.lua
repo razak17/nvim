@@ -12,50 +12,74 @@ Log.levels = {
 
 vim.tbl_add_reverse_lookup(Log.levels)
 
---- Adds a log entry using Plenary.log
----@param msg any
----@param level string [same as vim.log.log_levels]
-function Log:add_entry(msg, level)
-  assert(type(level) == "string")
-  if self.__handle then
-    -- plenary uses lower-case log levels
-    self.__handle[level:lower()](msg)
-    return
-  end
-  local status_ok, plenary = rvim.safe_require "plenary"
-  if status_ok then
-    local default_opts = { plugin = "rvim", level = rvim.log.level }
-    local handle = plenary.log.new(default_opts)
-    handle[level:lower()](msg)
-    self.__handle = handle
-  end
-  -- don't do anything if plenary is not available
-end
-
---- Creates or retrieves a log handle for the default logfile
---- based on Plenary.log
----@return log handle
-function Log:get_default()
-  return Log:new { plugin = "rvim_log", level = rvim.log.level }
-end
-
---- Creates a log handle based on Plenary.log
----@param opts these are passed verbatim to Plenary.log
----@return log handle
-function Log:new(opts)
-  local status_ok, _ = rvim.safe_require "plenary.log"
+function Log:init()
+  local status_ok, structlog = pcall(require, "structlog")
+  -- local status_ok, structlog = rvim.safe_require "structlog"
   if not status_ok then
     return nil
   end
 
-  local obj = require("plenary.log").new(opts)
-  local path = string.format("%s/%s.log", vim.api.nvim_call_function("stdpath", { "cache" }), opts.plugin)
+  local log_level = Log.levels[(rvim.log.level):upper() or "WARN"]
+  local rvim_log = {
+    rvim = {
+      sinks = {
+        structlog.sinks.Console(log_level, {
+          async = false,
+          processors = {
+            structlog.processors.Namer(),
+            structlog.processors.StackWriter(
+              { "line", "file" },
+              { max_parents = 0, stack_level = 2 }
+            ),
+            structlog.processors.Timestamper "%H:%M:%S",
+          },
+          formatter = structlog.formatters.FormatColorizer( --
+            "%s [%-5s] %s: %-30s",
+            { "timestamp", "level", "logger_name", "msg" },
+            { level = structlog.formatters.FormatColorizer.color_level() }
+          ),
+        }),
+        structlog.sinks.File(Log.levels.TRACE, logfile, {
+          processors = {
+            structlog.processors.Namer(),
+            structlog.processors.StackWriter(
+              { "line", "file" },
+              { max_parents = 3, stack_level = 2 }
+            ),
+            structlog.processors.Timestamper "%H:%M:%S",
+          },
+          formatter = structlog.formatters.Format( --
+            "%s [%-5s] %s: %-30s",
+            { "timestamp", "level", "logger_name", "msg" }
+          ),
+        }),
+      },
+    },
+  }
 
-  obj.get_path = function()
-    return path
+  structlog.configure(rvim_log)
+
+  local logger = structlog.get_logger "rvim"
+
+  return logger
+end
+
+--- Adds a log entry using Plenary.log
+---@fparam msg any
+---@param level string [same as vim.log.log_levels]
+function Log:add_entry(level, msg, event)
+  if self.__handle then
+    self.__handle:log(level, vim.inspect(msg), event)
+    return
   end
 
-  return obj
+  local logger = self:init()
+  if not logger then
+    return
+  end
+
+  self.__handle = logger
+  self.__handle:log(level, vim.inspect(msg), event)
 end
 
 ---Retrieves the path of the logfile
@@ -66,32 +90,37 @@ end
 
 ---Add a log entry at TRACE level
 ---@param msg any
-function Log:trace(msg)
-  self:add_entry(msg, "TRACE")
+---@param event any
+function Log:trace(msg, event)
+  self:add_entry(self.levels.TRACE, msg, event)
 end
 
 ---Add a log entry at DEBUG level
 ---@param msg any
-function Log:debug(msg)
-  self:add_entry(msg, "DEBUG")
+---@param event any
+function Log:debug(msg, event)
+  self:add_entry(self.levels.DEBUG, msg, event)
 end
 
 ---Add a log entry at INFO level
 ---@param msg any
-function Log:info(msg)
-  self:add_entry(msg, "INFO")
+---@param event any
+function Log:info(msg, event)
+  self:add_entry(self.levels.INFO, msg, event)
 end
 
 ---Add a log entry at WARN level
 ---@param msg any
-function Log:warn(msg)
-  self:add_entry(msg, "WARN")
+---@param event any
+function Log:warn(msg, event)
+  self:add_entry(self.levels.WARN, msg, event)
 end
 
 ---Add a log entry at ERROR level
 ---@param msg any
-function Log:error(msg)
-  self:add_entry(msg, "ERROR")
+---@param event any
+function Log:error(msg, event)
+  self:add_entry(self.levels.ERROR, msg, event)
 end
 
 setmetatable({}, Log)

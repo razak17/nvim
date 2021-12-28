@@ -51,7 +51,11 @@ tools["MattesGroeger/vim-bookmarks"] = {
   disable = not rvim.plugin.bookmarks.active,
 }
 
-tools["diepm/vim-rest-console"] = { event = "VimEnter", disable = not rvim.plugin.restconsole.active }
+tools["diepm/vim-rest-console"] =
+  {
+    event = "VimEnter",
+    disable = not rvim.plugin.restconsole.active,
+  }
 
 tools["iamcco/markdown-preview.nvim"] = {
   config = function()
@@ -70,6 +74,10 @@ tools["brooth/far.vim"] = {
     vim.g["far#enable_undo"] = 1
   end,
   disable = not rvim.plugin.far.active,
+}
+
+tools["Tastyep/structlog.nvim"] = {
+  commit = rvim.plugin.commits.structlog,
 }
 
 return tools
