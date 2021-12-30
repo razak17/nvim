@@ -3,5 +3,7 @@
 " License: MIT
 " Source: http://github.com/glepnir/zephyr-nvim
 
-lua require('modules.aesth.zephyr')
+lua << EOF
+require('zephyr')
+EOF
 

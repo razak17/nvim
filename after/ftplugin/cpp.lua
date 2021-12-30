@@ -1,2 +1,2 @@
-require("lsp.manager").setup "clangd"
+require("user.lsp.manager").setup "clangd"
 

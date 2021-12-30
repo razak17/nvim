@@ -1,1 +1,1 @@
-require("lsp.manager").setup "cmake"
+require("user.lsp.manager").setup "cmake"

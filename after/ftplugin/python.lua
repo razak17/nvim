@@ -1,4 +1,4 @@
-require("lsp.manager").setup "pyright"
+require("user.lsp.manager").setup "pyright"
 
 vim.cmd [[setlocal iskeyword+="]]
 vim.cmd [[setlocal shiftwidth=4]]

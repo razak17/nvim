@@ -1,4 +1,4 @@
-require("lsp.manager").setup "sumneko_lua"
+require("user.lsp.manager").setup "sumneko_lua"
 
 vim.cmd [[setlocal iskeyword+="]]
 vim.cmd [[setlocal textwidth=100]]

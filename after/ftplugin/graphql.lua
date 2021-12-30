@@ -1,4 +1,4 @@
-require("lsp.manager").setup "graphql"
+require("user.lsp.manager").setup "graphql"
 
 vim.cmd [[setlocal comments=:#]]
 vim.cmd [[setlocal commentstring=#\ %s]]

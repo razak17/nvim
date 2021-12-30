@@ -1,1 +1,1 @@
-require("lsp.manager").setup "gopls"
+require("user.lsp.manager").setup "gopls"

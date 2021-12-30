@@ -1,4 +1,4 @@
-require("lsp.manager").setup "vimls"
+require("user.lsp.manager").setup "vimls"
 
 vim.cmd [[setlocal colorcolumn=120]]
 vim.cmd [[setlocal iskeyword+=:,#]]

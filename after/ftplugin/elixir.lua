@@ -1,1 +1,1 @@
-require("lsp.manager").setup "elixirls"
+require("user.lsp.manager").setup "elixirls"

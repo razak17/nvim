@@ -1,1 +1,1 @@
-require("lsp.manager").setup "bashls"
+require("user.lsp.manager").setup "bashls"

@@ -1,1 +1,1 @@
-require("lsp.manager").setup "dockerls"
+require("user.lsp.manager").setup "dockerls"

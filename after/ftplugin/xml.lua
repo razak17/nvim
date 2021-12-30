@@ -1,1 +1,1 @@
-require("lsp.manager").setup "lemminx"
+require("user.lsp.manager").setup "lemminx"

@@ -1,1 +1,1 @@
-require("lsp.manager").setup "cssls"
+require("user.lsp.manager").setup "cssls"

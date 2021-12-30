@@ -6,4 +6,4 @@ if not vim.tbl_contains(vim.opt.rtp:get(), base_dir) then
 end
 
 -- Load Modules
-require("config"):load()
+require("user.config"):load()

@@ -31,6 +31,7 @@ stds.nvim = {
     "get_runtime_dir",
     "get_config_dir",
     "get_cache_dir",
+    "get_user_dir",
     vim = { fields = { "cmd", "api", "fn", "o", "wo", "bo" } },
   },
 }

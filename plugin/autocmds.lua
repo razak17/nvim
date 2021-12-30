@@ -2,7 +2,7 @@ local fn = vim.fn
 local api = vim.api
 local fmt = string.format
 local contains = vim.tbl_contains
-local utils = require "utils"
+local utils = require "user.utils"
 
 local not_eligible = not vim.bo.modifiable
   or not vim.bo.buflisted
@@ -193,7 +193,12 @@ local function check_color_column(leaving)
   end
   local small_window = api.nvim_win_get_width(0) <= vim.bo.textwidth + 1
   local is_last_win = #api.nvim_list_wins() == 1
-  if contains(column_clear, vim.bo.filetype) or not_eligible or (leaving and not is_last_win) or small_window then
+  if
+    contains(column_clear, vim.bo.filetype)
+    or not_eligible
+    or (leaving and not is_last_win)
+    or small_window
+  then
     vim.wo.colorcolumn = ""
     return
   end
@@ -237,7 +242,7 @@ rvim.augroup("PackerSetupInit", {
       vim.cmd [[source ~/.config/rvim/lua/core/config/init.lua]]
       vim.cmd [[source ~/.config/rvim/lua/core/opts.lua]]
       vim.cmd [[source ~/.config/rvim/lua/core/binds.lua]]
-      local plug = require "core.plugins"
+      local plug = require "user.core.plugins"
       plug.ensure_plugins()
       plug.install()
       plug.load_compile()
@@ -319,7 +324,11 @@ rvim.augroup("Utilities", {
       end
     end,
   },
-  { events = { "FileType" }, targets = { "gitcommit", "gitrebase" }, command = "set bufhidden=delete" },
+  {
+    events = { "FileType" },
+    targets = { "gitcommit", "gitrebase" },
+    command = "set bufhidden=delete",
+  },
   {
     events = { "BufWritePre", "FileWritePre" },
     targets = { "*" },

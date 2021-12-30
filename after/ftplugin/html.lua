@@ -1,5 +1,5 @@
-require("lsp.manager").setup "html"
-require("lsp.manager").setup "emmet_ls"
+require("user.lsp.manager").setup "html"
+require("user.lsp.manager").setup "emmet_ls"
 
 -- Set indent width to two spaces
 vim.cmd [[setlocal ts=2 sw=2 sts=2]]

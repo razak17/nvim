@@ -1,2 +1,2 @@
-require("lsp.manager").setup "vuels"
-require("lsp.manager").setup "eslint"
+require("user.lsp.manager").setup "vuels"
+require("user.lsp.manager").setup "eslint"

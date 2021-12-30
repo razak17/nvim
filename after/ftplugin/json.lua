@@ -1,4 +1,4 @@
-require("lsp.manager").setup "jsonls"
+require("user.lsp.manager").setup "jsonls"
 
 vim.cmd [[setlocal autoindent]]
 vim.cmd [[setlocal conceallevel=0]]
