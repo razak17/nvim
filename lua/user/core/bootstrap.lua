@@ -55,9 +55,10 @@ end
 function M:init()
   local H = os.getenv "HOME"
   local g, cmd = vim.g, vim.cmd
+  local node_version = "17.3.0"
 
   g.python3_host_prog = get_cache_dir() .. "/venv/neovim/bin/python3"
-  g.node_host_prog = H .. "/.fnm/node-versions/v16.3.0/installation/bin/neovim-node-host"
+  g.node_host_prog = H .. "/.fnm/node-versions/v" .. "17.3.0/installation/bin/neovim-node-host"
 
   g["loaded_python_provider"] = 0
   g["loaded_ruby_provider"] = 0
@@ -65,7 +66,8 @@ function M:init()
 
   self.runtime_dir = get_runtime_dir()
   self.config_dir = get_config_dir()
-  self.cache_path = get_cache_dir()
+  self.cache_dir = get_cache_dir()
+  self.user_dir = get_user_dir()
 
   vim.opt.rtp:remove(join_paths(vim.fn.stdpath "data", "site"))
   vim.opt.rtp:remove(join_paths(vim.fn.stdpath "data", "site", "after"))
