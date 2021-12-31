@@ -58,7 +58,7 @@ function M:init()
   local node_version = "17.3.0"
 
   g.python3_host_prog = get_cache_dir() .. "/venv/neovim/bin/python3"
-  g.node_host_prog = H .. "/.fnm/node-versions/v" .. "17.3.0/installation/bin/neovim-node-host"
+  g.node_host_prog = H .. "/.fnm/node-versions/v" .. node_version .. "/installation/bin/neovim-node-host"
 
   g["loaded_python_provider"] = 0
   g["loaded_ruby_provider"] = 0
