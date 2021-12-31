@@ -74,6 +74,7 @@ return {
           "open config/init.lua",
         },
         C = "check health",
+        L = "cache profile",
         m = "messages",
         M = "vim with me",
         v = {

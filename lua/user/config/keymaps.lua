@@ -427,9 +427,12 @@ nnoremap["<leader>'"] = [[ciw'<c-r>"'<esc>]]
 nnoremap["<leader>)"] = [[ciw(<c-r>")<esc>]]
 nnoremap["<leader>}"] = [[ciw{<c-r>"}<esc>]]
 
--- Neovim Health check
+-- Health check
 nnoremap["<Leader>IC"] = ":checkhealth<CR>"
 nnoremap["<Leader>Im"] = ":messages<CR>"
+
+-- Cache profile
+nnoremap["<Leader>IL"] = ":LuaCacheProfile<CR>"
 
 -- Buffers
 nnoremap["<Leader><Leader>"] = ":call v:lua.DelThisBuffer()<CR>"
