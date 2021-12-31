@@ -31,7 +31,7 @@ function _G.get_config_dir()
   return rvim_config_dir
 end
 
----Get the full path to `$LUNARVIM_CACHE_DIR`
+---Get the full path to `$RVIM_CACHE_DIR`
 ---@return string
 function _G.get_cache_dir()
   local rvim_cache_dir = os.getenv "RVIM_CACHE_DIR"

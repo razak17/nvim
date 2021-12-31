@@ -2,5 +2,6 @@
 
 export RVIM_RUNTIME_DIR="${RVIM_RUNTIME_DIR:-$HOME/.local/share/rvim}"
 export RVIM_CONFIG_DIR="${RVIM_CONFIG_DIR:-$HOME/.config/rvim}"
+export RVIM_CACHE_DIR="${RVIM_CONFIG_DIR:-$HOME/.cache/rvim}"
 
 exec nvim -u "$RVIM_CONFIG_DIR/init.lua" "$@"
