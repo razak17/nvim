@@ -9,12 +9,12 @@ return function()
 
   rvim.dashboard = {
     custom_header = {
-      [[                               __                ]],
-      [[  ___     ___    ___   __  __ /\_\    ___ ___    ]],
-      [[ / _ `\  / __`\ / __`\/\ \/\ \\/\ \  / __` __`\  ]],
-      [[/\ \/\ \/\  __//\ \_\ \ \ \_/ |\ \ \/\ \/\ \/\ \ ]],
-      [[\ \_\ \_\ \____\ \____/\ \___/  \ \_\ \_\ \_\ \_\]],
-      [[ \/_/\/_/\/____/\/___/  \/__/    \/_/\/_/\/_/\/_/]],
+      [[ _______             ____   ____.__         ]],
+      [[ \      \   ____  ___\   \ /   /|__| _____  ]],
+      [[ /   |   \_/ __ \/  _ \   Y   / |  |/     \ ]],
+      [[/    |    \  ___(  <_> )     /  |  |  Y Y  \]],
+      [[\____|__  /\___  >____/ \___/   |__|__|_|  /]],
+      [[        \/     \/                        \/ ]],
     },
     default_executive = "telescope",
     disable_at_vimenter = 0,
@@ -27,7 +27,7 @@ return function()
       },
       b = {
         description = join("  Default config", "<leader>Ic", 9),
-        command = ":e " .. get_config_dir() .. "/lua/config/init.lua",
+        command = ":e " .. get_user_dir() .. "/config/init.lua",
       },
       c = {
         description = join("  Recent files", "<leader>fR", 11),
