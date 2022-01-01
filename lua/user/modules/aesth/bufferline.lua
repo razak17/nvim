@@ -26,8 +26,10 @@ return function()
   end
 
   local P = rvim.palette
+  local H = require "user.core.highlights"
+  local normal_bg = H.get_hl("Normal", "bg")
+  local darker_bg = H.alter_color(normal_bg, -1)
   local bg = rvim.common.transparent_window == true and "none" or P.bg
-  local bg_sel = P.bufferline_bg_sel
   local fg_def = P.bufferline_fg_def
   local fg_sel = P.bufferline_fg_sel
 
@@ -35,44 +37,44 @@ return function()
     fill = { guifg = fg_def, guibg = bg },
     background = { guifg = fg_def, guibg = bg },
     tab = { guifg = fg_def, guibg = bg },
-    tab_selected = { guifg = fg_sel, guibg = bg },
+    tab_selected = { guifg = fg_sel, guibg = darker_bg },
     tab_close = { guifg = fg_def, guibg = bg },
     duplicate = { guifg = fg_def, guibg = bg },
     duplicate_visible = { guifg = fg_def, guibg = bg },
-    duplicate_selected = { guifg = P.base7, guibg = bg_sel, gui = "italic" },
+    duplicate_selected = { guifg = P.base7, guibg = darker_bg, gui = "italic" },
     buffer_visible = { guifg = fg_def, guibg = bg },
-    buffer_selected = { guifg = fg_sel, guibg = bg_sel, gui = "NONE" },
+    buffer_selected = { guifg = fg_sel, guibg = darker_bg, gui = "NONE" },
     diagnostic = { guifg = P.pale_red, guibg = bg },
     diagnostic_visible = { guifg = P.pale_red, guibg = bg },
-    diagnostic_selected = { guifg = P.pale_red, guibg = bg_sel, gui = "NONE" },
+    diagnostic_selected = { guifg = P.pale_red, guibg = darker_bg, gui = "NONE" },
     error = { guifg = P.pale_red, guibg = bg },
     error_visible = { guifg = P.pale_red, guibg = bg },
-    error_selected = { guifg = P.pale_red, guibg = bg_sel, gui = "NONE" },
+    error_selected = { guifg = P.pale_red, guibg = darker_bg, gui = "NONE" },
     error_diagnostic = { guifg = P.pale_red, guibg = bg },
     error_diagnostic_visible = { guifg = P.pale_red, guibg = bg },
-    error_diagnostic_selected = { guifg = P.pale_red, guibg = bg_sel, gui = "NONE" },
+    error_diagnostic_selected = { guifg = P.pale_red, guibg = darker_bg, gui = "NONE" },
     info = { guifg = P.pale_blue, guibg = bg },
     info_visible = { guifg = P.pale_blue, guibg = bg },
-    info_selected = { guifg = P.pale_blue, guibg = bg_sel, gui = "NONE" },
+    info_selected = { guifg = P.pale_blue, guibg = darker_bg, gui = "NONE" },
     info_diagnostic = { guifg = P.pale_blue, guibg = bg },
     info_diagnostic_visible = { guifg = P.pale_blue, guibg = bg },
-    info_diagnostic_selected = { guifg = P.pale_blue, guibg = bg_sel, gui = "NONE" },
+    info_diagnostic_selected = { guifg = P.pale_blue, guibg = darker_bg, gui = "NONE" },
     warning = { guifg = P.dark_orange, guibg = bg },
     warning_visible = { guifg = P.dark_orange, guibg = bg },
-    warning_selected = { guifg = P.dark_orange, guibg = bg_sel, gui = "NONE" },
+    warning_selected = { guifg = P.dark_orange, guibg = darker_bg, gui = "NONE" },
     warning_diagnostic = { guifg = P.dark_orange, guibg = bg },
     warning_diagnostic_visible = { guifg = P.dark_orange, guibg = bg },
-    warning_diagnostic_selected = { guifg = P.dark_orange, guibg = bg_sel, gui = "NONE" },
+    warning_diagnostic_selected = { guifg = P.dark_orange, guibg = darker_bg, gui = "NONE" },
     modified = { guibg = bg },
     modified_visible = { guibg = bg },
-    modified_selected = { guibg = bg_sel },
+    modified_selected = { guibg = darker_bg },
     separator = { guifg = P.dark_orange, guibg = bg },
     separator_visible = { guifg = P.dark_orange, guibg = bg },
     separator_selected = { guifg = P.dark_orange, guibg = bg },
     pick = { guifg = P.magenta, guibg = bg },
     pick_visible = { guifg = P.magenta, guibg = bg },
-    pick_selected = { guifg = P.pale_blue, guibg = bg_sel },
-    indicator_selected = { guifg = bg, guibg = bg },
+    pick_selected = { guifg = P.pale_blue, guibg = darker_bg },
+    indicator_selected = { guifg = bg, guibg = darker_bg },
   }
 
   rvim.bufferline = {
