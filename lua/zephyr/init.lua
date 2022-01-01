@@ -30,7 +30,7 @@ function zephyr.highlight(group, color)
   local fg = color.fg and "guifg=" .. color.fg or "guifg=NONE"
   local bg = color.bg and "guibg=" .. color.bg or "guibg=NONE"
   local sp = color.sp and "guisp=" .. color.sp or ""
-  vim.api.nvim_command("highlight " .. group .. " " .. style .. " " .. fg .. " " .. bg .. " " .. sp)
+  vim.cmd("highlight " .. group .. " " .. style .. " " .. fg .. " " .. bg .. " " .. sp)
 end
 
 function zephyr.load_syntax()
@@ -316,9 +316,9 @@ async_load_plugin = vim.loop.new_async(vim.schedule_wrap(function()
 end))
 
 function zephyr.colorscheme()
-  vim.api.nvim_command "hi clear"
+  vim.cmd "hi clear"
   if vim.fn.exists "syntax_on" then
-    vim.api.nvim_command "syntax reset"
+    vim.cmd "syntax reset"
   end
   vim.o.background = "dark"
   vim.o.termguicolors = true

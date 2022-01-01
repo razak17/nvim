@@ -52,7 +52,7 @@ function _G.get_user_dir()
   return rvim_config_dir
 end
 
-function M:init()
+function M:init(base_dir)
   local H = os.getenv "HOME"
   local g, cmd = vim.g, vim.cmd
   local node_version = "17.3.0"
@@ -72,15 +72,23 @@ function M:init()
   self.cache_dir = get_cache_dir()
   self.user_dir = get_user_dir()
 
-  vim.opt.rtp:remove(join_paths(vim.fn.stdpath "data", "site"))
-  vim.opt.rtp:remove(join_paths(vim.fn.stdpath "data", "site", "after"))
-  vim.opt.rtp:prepend(join_paths(self.runtime_dir, "site"))
-  vim.opt.rtp:append(join_paths(self.runtime_dir, "site", "after"))
+  ---Get the full path to LunarVim's base directory
+  ---@return string
+  function _G.get_lvim_base_dir()
+    return base_dir
+  end
 
-  vim.opt.rtp:remove(vim.fn.stdpath "config")
-  vim.opt.rtp:remove(join_paths(vim.fn.stdpath "config", "after"))
-  vim.opt.rtp:prepend(self.config_dir)
-  vim.opt.rtp:append(join_paths(self.config_dir, "after"))
+  if os.getenv "RVIM_RUNTIME_DIR" then
+    vim.opt.rtp:remove(join_paths(vim.fn.stdpath "data", "site"))
+    vim.opt.rtp:remove(join_paths(vim.fn.stdpath "data", "site", "after"))
+    vim.opt.rtp:prepend(join_paths(self.runtime_dir, "site"))
+    vim.opt.rtp:append(join_paths(self.runtime_dir, "site", "after"))
+
+    vim.opt.rtp:remove(vim.fn.stdpath "config")
+    vim.opt.rtp:remove(join_paths(vim.fn.stdpath "config", "after"))
+    vim.opt.rtp:prepend(self.config_dir)
+    vim.opt.rtp:append(join_paths(self.config_dir, "after"))
+  end
 
   cmd [[let &packpath = &runtimepath]]
 
@@ -88,6 +96,12 @@ function M:init()
     path = join_paths(self.cache_dir, "rvim_cache"),
     enable_profiling = true,
   }
+
+  require("user.config"):init()
+
+  local plug = require "user.core.plugins"
+  plug.ensure_plugins()
+  plug.load_compile()
 end
 
 return M

@@ -37,10 +37,6 @@ function M:init()
 end
 
 function M:load()
-  require("user.core.bootstrap"):init()
-  require "user.config.globals"
-  M:init()
-
   if rvim.common.defer then
     vim.cmd [[syntax off]]
     vim.cmd [[filetype off]]
@@ -53,10 +49,6 @@ function M:load()
   require("user.core.opts"):init()
   require "user.core.highlights"
   require "user.core.whitespace"
-
-  local plug = require "user.core.plugins"
-  plug.ensure_plugins()
-  plug.load_compile()
 
   require("user.core.commands"):init()
 

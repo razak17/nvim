@@ -33,7 +33,7 @@ function Plug:load_packer()
   local package_root = utils.join_paths(get_runtime_dir(), "/site/pack/")
 
   if not packer then
-    api.nvim_command "packadd packer.nvim"
+    vim.cmd "packadd packer.nvim"
     packer = require "packer"
   end
 
