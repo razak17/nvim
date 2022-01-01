@@ -40,7 +40,7 @@ end
 
 local get_format_on_save_opts = function()
   local defaults = rvim.common.format_on_save
-  -- accept a basic boolean `lvim.format_on_save=true`
+  -- accept a basic boolean `rvim.format_on_save=true`
   if type(rvim.common.format_on_save) ~= "table" then
     return defaults
   end

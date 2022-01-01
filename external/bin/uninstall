@@ -1,7 +1,7 @@
 #!/bin/sh
 
 removeRvim() {
-	echo '!!Warning!! -> Removing all lunarvim related config because of the --overwrite flag'
+	echo '!!Warning!! -> Removing all rvim related config because of the --overwrite flag'
 	rm -rf "$HOME/.local/share/rvim"
 	rm "$HOME/.local/bin/rvim"
 	rm -rf "$HOME/.cache/rvim"

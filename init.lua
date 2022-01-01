@@ -7,5 +7,9 @@ end
 
 -- Load Modules
 require "user.config.globals"
-require("user.core.bootstrap"):init(base_dir)
+require("user.config.bootstrap"):init(base_dir)
+
+local Log = require "user.core.log"
+Log:debug "Starting Rvim"
+
 require("user.config"):load()

@@ -72,9 +72,9 @@ function M:init(base_dir)
   self.cache_dir = get_cache_dir()
   self.user_dir = get_user_dir()
 
-  ---Get the full path to LunarVim's base directory
+  ---Get the full path to rVim's base directory
   ---@return string
-  function _G.get_lvim_base_dir()
+  function _G.get_rvim_base_dir()
     return base_dir
   end
 

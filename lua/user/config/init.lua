@@ -43,9 +43,6 @@ function M:load()
     defer()
   end
 
-  local Log = require "user.core.log"
-  Log:debug "Starting Rvim"
-
   require("user.core.opts"):init()
   require "user.core.highlights"
   require "user.core.whitespace"
