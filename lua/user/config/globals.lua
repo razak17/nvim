@@ -7,7 +7,6 @@ local fmt = string.format
 local api = vim.api
 
 local os = vim.loop.os_uname().sysname
-rvim.templates_dir = get_config_dir() .. "/external/templates"
 rvim.open_command = os == "Darwin" and "open" or "xdg-open"
 
 function rvim._create(f)

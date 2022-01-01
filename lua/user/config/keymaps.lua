@@ -137,7 +137,7 @@ function M.load(keymaps)
   end
 end
 
-function M.setup()
+function M:init()
   local g = vim.g
   g.mapleader = (rvim.common.leader == "space" and " ") or rvim.common.leader
   g.maplocalleader = (rvim.common.localleader == "space" and " ") or rvim.common.localleader

@@ -5,7 +5,7 @@ local commands = {
   { "Todo", [[noautocmd silent! grep! 'TODO\|FIXME\|BUG\|HACK' | copen]] },
 }
 
-function M.setup()
+function M:init()
   for _, command in ipairs(commands) do
     rvim.command(command)
   end

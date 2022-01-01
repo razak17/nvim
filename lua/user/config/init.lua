@@ -28,8 +28,8 @@ function M:init()
   local plugins_config = require "user.core.plugins_config"
   rvim.plugin = vim.deepcopy(plugins_config)
 
-  local which_key_config = require "user.modules.completion.which_key.config"
-  rvim.wk = vim.deepcopy(which_key_config)
+  local whichkey_config = require "user.modules.completion.which_key.config"
+  rvim.wk = vim.deepcopy(whichkey_config)
 
   require("user.lsp.manager").init_defaults()
 
@@ -50,7 +50,7 @@ function M:load()
   local Log = require "user.core.log"
   Log:debug "Starting Rvim"
 
-  require("user.core.opts").setup()
+  require("user.core.opts"):init()
   require "user.core.highlights"
   require "user.core.whitespace"
 
@@ -58,9 +58,9 @@ function M:load()
   plug.ensure_plugins()
   plug.load_compile()
 
-  require("user.core.commands").setup()
+  require("user.core.commands"):init()
 
-  require("user.config.keymaps").setup()
+  require("user.config.keymaps"):init()
 end
 
 return M

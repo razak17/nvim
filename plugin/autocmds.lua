@@ -125,16 +125,17 @@ rvim.augroup("TrimWhitespace", {
 })
 
 -- See :h skeleton
+local templates_dir = get_config_dir() .. "/external/templates"
 rvim.augroup("Templates", {
   {
     events = { "BufNewFile" },
     targets = { "*.sh" },
-    command = "0r" .. rvim.templates_dir .. "/skeleton.sh",
+    command = "0r" .. templates_dir .. "/skeleton.sh",
   },
   {
     events = { "BufNewFile" },
     targets = { "*.lua" },
-    command = "0r" .. rvim.templates_dir .. "/skeleton.lua",
+    command = "0r" .. templates_dir .. "/skeleton.lua",
   },
 })
 
