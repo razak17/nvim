@@ -129,7 +129,7 @@ return function()
     }
   end
 
-  require("user.core.highlights").plugin(
+  require("zephyr.util").plugin(
     "NvimTree",
     { "NvimTreeIndentMarker", { link = "Comment" } },
     { "NvimTreeNormal", { link = "PanelBackground" } },

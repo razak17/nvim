@@ -4,11 +4,10 @@ return function()
     return
   end
 
-  require("user.core.highlights").plugin(
+  require("zephyr.util").plugin(
     "Cmp",
     { "CmpItemAbbr", { inherit = "Pmenu", gui = "NONE" } },
     { "CmpItemMenu", { inherit = "Pmenu", gui = "NONE" } },
-    { "CmpItemAbbrMatch", { inherit = "qfFileName", gui = "NONE" } },
     { "CmpItemAbbrDeprecated", { gui = "strikethrough", inherit = "Comment" } },
     { "CmpItemAbbrMatchFuzzy", { gui = "italic", guifg = "fg" } }
   )

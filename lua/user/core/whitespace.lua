@@ -6,11 +6,7 @@
 
 local Log = require "user.core.log"
 
-local status_ok, H = pcall(require, "user.core.highlights")
-if not status_ok then
-  Log:debug "Could not load highlights"
-  return
-end
+local util = require "zephyr.util"
 
 local fn = vim.fn
 
@@ -39,14 +35,14 @@ local function toggle_trailing(mode)
   end
 end
 
-H.set_hl("ExtraWhitespace", { guifg = "red" })
+util.set_hl("ExtraWhitespace", { guifg = "red" })
 
 rvim.augroup("WhitespaceMatch", {
   {
     events = { "ColorScheme" },
     targets = { "*" },
     command = function()
-      H.set_hl("ExtraWhitespace", { guifg = "red" })
+      util.set_hl("ExtraWhitespace", { guifg = "red" })
     end,
   },
   {

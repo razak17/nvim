@@ -19,12 +19,6 @@ return {
     "tsserver",
     "eslint",
   },
-  colors = {
-    error = rvim.palette.pale_red,
-    warn = rvim.palette.dark_orange,
-    info = rvim.palette.pale_blue,
-    hint = rvim.palette.teal,
-  },
   completion = {
     item_kind = {
       "   (Text) ",

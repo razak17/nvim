@@ -12,6 +12,7 @@ return {
     },
     debug = false,
     defer = false,
+    colorscheme = "zephyr",
   },
   lang = {},
   style = {

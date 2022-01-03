@@ -43,8 +43,11 @@ function M:load()
     defer()
   end
 
+  vim.g.colors_name = rvim.common.colorscheme
+  vim.cmd("colorscheme " .. rvim.common.colorscheme)
+
   require("user.core.opts"):init()
-  require "user.core.highlights"
+
   require "user.core.whitespace"
 
   require("user.core.commands"):init()
