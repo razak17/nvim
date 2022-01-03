@@ -49,6 +49,7 @@ return {
   fugitive = { active = false },
   project = { active = true },
   diffview = { active = false },
+  structlog = { active = false },
   -- TODO: handle these later
   glow = { active = false },
   doge = { active = false },

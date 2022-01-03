@@ -77,6 +77,7 @@ tools["brooth/far.vim"] = {
 
 tools["Tastyep/structlog.nvim"] = {
   commit = rvim.plugin.commits.structlog,
+  disable = not rvim.plugin.structlog.active,
 }
 
 return tools
