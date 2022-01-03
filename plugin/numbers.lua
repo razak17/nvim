@@ -10,6 +10,7 @@ vim.g.number_filetype_exclusions = {
   "dashboard",
   "log",
   "man",
+  "netrw",
   "dap-repl",
   "markdown",
   "vimwiki",

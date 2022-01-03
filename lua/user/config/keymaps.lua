@@ -538,4 +538,11 @@ if rvim.plugin.lsp_installer.active then
   nnoremap["<Leader>LI"] = ":LspInstall "
 end
 
+-- nvim-tree
+if rvim.plugin.nvimtree.active then
+  nnoremap["<Leader>cv"] = ":NvimTreeToggle"
+else
+  nnoremap["<Leader>cv"] = ":Sex!<CR> :vertical resize 30<CR>"
+end
+
 return M

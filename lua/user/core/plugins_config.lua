@@ -57,7 +57,7 @@ return {
   restconsole = { active = false },
   markdown_preview = { active = false },
   -- aesth
-  tree = { active = true },
+  nvimtree = { active = true },
   dashboard = { active = true },
   statusline = { active = true },
   bufferline = { active = true },

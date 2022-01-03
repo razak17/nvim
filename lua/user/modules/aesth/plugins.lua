@@ -29,7 +29,7 @@ aesth["kyazdani42/nvim-tree.lua"] = {
   event = "BufWinEnter",
   config = utils.load_conf("aesth", "nvimtree"),
   commit = rvim.plugin.commits.nvimtree,
-  disable = not rvim.plugin.tree.active,
+  disable = not rvim.plugin.nvimtree.active,
 }
 
 aesth["lukas-reineke/indent-blankline.nvim"] = {
