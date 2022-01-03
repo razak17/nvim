@@ -540,7 +540,7 @@ end
 
 -- nvim-tree
 if rvim.plugin.nvimtree.active then
-  nnoremap["<Leader>cv"] = ":NvimTreeToggle"
+  nnoremap["<Leader>cv"] = ":NvimTreeToggle<CR>"
 else
   nnoremap["<Leader>cv"] = ":Sex!<CR> :vertical resize 30<CR>"
 end
