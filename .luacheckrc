@@ -22,17 +22,16 @@ stds.nvim = {
     os = { fields = { "capture" } },
   },
   read_globals = {
-    "bit",
     "jit",
     "os",
     "vim",
-    "packer_plugins",
+    "join_paths",
     "join_paths",
     "get_runtime_dir",
     "get_config_dir",
     "get_cache_dir",
     "get_user_dir",
-    vim = { fields = { "cmd", "api", "fn", "o", "wo", "bo" } },
+    -- vim = { fields = { "cmd", "api", "fn", "o", "wo", "bo" } },
   },
 }
 std = "lua51+nvim"
