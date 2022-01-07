@@ -466,38 +466,38 @@ end
 
 -- Vsnip
 if rvim.plugin.vsnip.active then
-  xnoremap["<C-x>"] = { "<Plug>(vsnip-cut-text)", { noremap = false, silent = true } }
-  xnoremap["<C-l>"] = { "<Plug>(vsnip-select-text)", { noremap = false, silent = true } }
+  xmap["<C-x>"] = "<Plug>(vsnip-cut-text)"
+  xmap["<C-l>"] = "<Plug>(vsnip-select-text)"
   nnoremap["<leader>cs"] = ":VsnipOpen<CR> 1<CR><CR>"
-  inoremap["<C-l>"] = {
+  defaults.imap["<C-l>"] = {
     "vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'",
-    { noremap = false, silent = true, expr = true },
+    { expr = true },
   }
-  snoremap["<C-l>"] = {
+  defaults.smap["<C-l>"] = {
     "vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'",
-    { noremap = false, silent = true, expr = true },
+    { expr = true },
   }
 end
 
 -- Dial
 if rvim.plugin.dial.active then
-  nnoremap["<C-a>"] = { "<Plug>(dial-increment)", { noremap = false, silent = true } }
-  nnoremap["<C-x>"] = { "<Plug>(dial-decrement)", { noremap = false, silent = true } }
-  vnoremap["<C-a>"] = { "<Plug>(dial-increment)", { noremap = false, silent = true } }
-  vnoremap["<C-x>"] = { "<Plug>(dial-decrement)", { noremap = false, silent = true } }
-  vnoremap["g<C-a>"] = { "<Plug>(dial-increment-additional)", { noremap = false, silent = true } }
-  vnoremap["g<C-x>"] = { "<Plug>(dial-decrement-additional)", { noremap = false, silent = true } }
+  nmap["<C-a>"] = "<Plug>(dial-increment)"
+  nmap["<C-x>"] = "<Plug>(dial-decrement)"
+  vmap["<C-a>"] = "<Plug>(dial-increment)"
+  vmap["<C-x>"] = "<Plug>(dial-decrement)"
+  vmap["g<C-a>"] = "<Plug>(dial-increment-additional)"
+  vmap["g<C-x>"] = "<Plug>(dial-decrement-additional)"
 end
 
 -- surround
 if rvim.plugin.surround.active then
-  xnoremap["S"] = { "<Plug>VSurround", { noremap = false, silent = true } }
-  xnoremap["S"] = { "<Plug>VSurround", { noremap = false, silent = true } }
+  xmap["S"] = "<Plug>VSurround"
+  xmap["S"] = "<Plug>VSurround"
 end
 
 -- Kommentary
 if rvim.plugin.kommentary.active then
-  xnoremap["<leader>/"] = { "<Plug>kommentary_visual_default", { noremap = false, silent = true } }
+  xmap["<leader>/"] = "<Plug>kommentary_visual_default"
 end
 
 -- FTerm
