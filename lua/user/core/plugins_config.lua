@@ -4,8 +4,7 @@ return {
     nvim_lspconfig = "c0310ab4c7ac864031bbf82b07809b36df54a9d2",
     nvim_lsp_installer = "3805f06d3e5b25996563fd9740a90014948bc31a",
     autopairs = "fba2503bd8cd0d8861054523aae39c4ac0680c07",
-    nvimtree = "5d8453dfbd34ab00cb3e8ce39660f9a54cdd35f3",
-    -- nvimtree = "e842f088847c98da59e14eb543bde11c45c87ef7",
+    nvim_tree = "0aec64d56c9448a039408228d410a01c41125d48",
   },
   -- SANE defaults
   SANE = { active = false },
