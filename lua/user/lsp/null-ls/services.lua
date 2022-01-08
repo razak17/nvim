@@ -21,7 +21,6 @@ local function from_node_modules(command)
     return nil
   end
 
-  -- return root_dir .. "/node_modules/.bin/" .. command
   local join_paths = require("user.utils").join_paths
   return join_paths(root_dir, "node_modules", ".bin", command)
 end
@@ -38,7 +37,6 @@ local local_providers = {
 function M.find_command(command)
   if local_providers[command] then
     local local_command = local_providers[command].find(command)
-    -- if local_command and vim.fn.executable(local_command) == 1 then
     if command and vim.fn.executable(command) == 1 then
       return local_command
     end
