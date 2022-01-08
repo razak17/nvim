@@ -35,6 +35,7 @@ lang["williamboman/nvim-lsp-installer"] = {
   requires = {
     "neovim/nvim-lspconfig",
   },
+  commit = rvim.plugin.commits.nvim_lsp_installer,
   disable = not rvim.plugin.lsp_installer.active,
 }
 
@@ -44,7 +45,7 @@ lang["antoinemadec/FixCursorHold.nvim"] = {
 
 lang["neovim/nvim-lspconfig"] = {
   config = utils.load_conf("lang", "lspconfig"),
-  commit = rvim.plugin.commits.lspconfig,
+  commit = rvim.plugin.commits.nvim_lspconfig,
   disable = not rvim.plugin.lspconfig.active,
 }
 

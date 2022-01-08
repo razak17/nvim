@@ -1,8 +1,9 @@
 return {
   commits = {
-    null_ls = "b7de45a0e62bf93f19db2b43ecded48c5763248d",
+    null_ls = "b75effe6cb304e97901289f3f2e8d2ba77c7b752",
+    nvim_lspconfig = "c0310ab4c7ac864031bbf82b07809b36df54a9d2",
+    nvim_lsp_installer = "3805f06d3e5b25996563fd9740a90014948bc31a",
     autopairs = "fba2503bd8cd0d8861054523aae39c4ac0680c07",
-    lspconfig = "b53f89c16bcc8052aa56d3a903fcad3aaa774041",
     nvimtree = "5d8453dfbd34ab00cb3e8ce39660f9a54cdd35f3",
     -- nvimtree = "e842f088847c98da59e14eb543bde11c45c87ef7",
   },
@@ -49,7 +50,7 @@ return {
   fugitive = { active = false },
   project = { active = true },
   diffview = { active = false },
-  structlog = { active = false },
+  structlog = { active = true },
   -- TODO: handle these later
   glow = { active = false },
   doge = { active = false },
