@@ -188,7 +188,7 @@ local function select_default_formater(client)
   local formatters = require "lsp.null-ls.formatters"
   local client_filetypes = client.config.filetypes or {}
   for _, filetype in ipairs(client_filetypes) do
-    if #vim.tbl_keys(formatters.list_registered_providers(filetype)) > 0 then
+    if #vim.tbl_keys(formatters.list_registered(filetype)) > 0 then
       Log:debug(
         "Formatter overriding detected. Disabling formatting capabilities for " .. client.name
       )
