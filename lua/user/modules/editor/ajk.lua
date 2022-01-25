@@ -8,7 +8,7 @@ return function()
     -- equal to
     -- nmap <silent> j <cmd>lua require'accelerated-jk'.command('gj')<cr>
     -- nmap <silent> k <cmd>lua require'accelerated-jk'.command('gk')<cr>
-    mappings = { n = "gj", k = "gk" },
+    mappings = { j = "gj", k = "gk" },
     -- If the interval of key-repeat takes more than `acceleration_limit` ms, the step is reset
     acceleration_limit = 150,
     -- acceleration steps

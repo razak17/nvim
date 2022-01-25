@@ -447,10 +447,6 @@ tnoremap["<leader><Tab>"] = [[<C-\><C-n>:close \| :bnext<cr>]]
 -- Plugins
 -----------------------------------------------------------------------------//
 
-if not rvim.plugin_loaded "accelerated-jk.nvim" then
-  nnoremap["n"] = "j"
-end
-
 -- Bufferlline
 if rvim.plugin.bufferline.active then
   nnoremap["<Leader>bn"] = ":BufferLineMoveNext<CR>"
