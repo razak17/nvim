@@ -43,7 +43,6 @@ return {
         n = "no highlight",
         o = "turn on guides",
         O = "open old commands",
-        p = "greatest remap ever",
         R = "empty registers",
         v = "vertical split",
         V = "select all",
