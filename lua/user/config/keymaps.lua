@@ -497,7 +497,7 @@ end
 if rvim.plugin.fterm.active then
   nnoremap["<F12>"] = '<cmd>lua require("FTerm").toggle()<CR>'
   tnoremap["<F12>"] = '<C-\\><C-n><cmd>lua require("FTerm").toggle()<CR>'
-  nnoremap["<leader>e;"] = '<cmd>lua require("FTerm").open()<CR>'
+  nnoremap["<leader>t;"] = '<cmd>lua require("FTerm").open()<CR>'
 end
 
 -- WhichKey

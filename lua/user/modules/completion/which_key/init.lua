@@ -43,7 +43,7 @@ return function()
 
     -- fterm
     if rvim.plugin_loaded "FTerm.nvim" then
-      key_maps.e = rvim.wk.fterm
+      key_maps.t = rvim.wk.fterm
     end
 
     -- far
