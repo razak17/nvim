@@ -96,7 +96,7 @@ return function()
 
     -- packer
     if rvim.plugin.packer.active then
-      key_maps.E = rvim.wk.packer
+      key_maps.P = rvim.wk.packer
     end
 
     -- playground

@@ -227,7 +227,7 @@ return {
     c = { ":PlugCompile", "compile" },
     C = { ":PlugClean", "clean" },
     D = { ":PackerCompiledDelete", "delete packer_compiled" },
-    e = { ":PlugUpdate", "update" },
+    u = { ":PlugUpdate", "update" },
     E = { ":PackerCompiledEdit", "edit packer_compiled" },
     i = { ":PlugInstall", "install" },
     R = { ":PlugRecompile", "recompile" },
