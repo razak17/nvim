@@ -6,6 +6,7 @@ if not vim.tbl_contains(vim.opt.rtp:get(), base_dir) then
 end
 
 -- Load Modules
+require "user.config.globals"
 require("user.config.bootstrap"):init(base_dir)
 
 local Log = require "user.core.log"
