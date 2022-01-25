@@ -35,7 +35,7 @@ local function lsp_mappings(client)
   end
   -- Type Definition
   if client.supports_method "textDocument/type_definition" then
-    nnoremap("gE", vim.lsp.buf.type_definition)
+    nnoremap("gT", vim.lsp.buf.type_definition)
     nnoremap("gL", function()
       require("user.lsp.peek").Peek "typeDefinition"
     end)
@@ -66,7 +66,7 @@ local function lsp_leader_keymaps(client)
   end
   -- Diagnostics
   if client.supports_method "textDocument/publishDiagnostics" then
-    nnoremap("<Leader>vdb", function()
+    nnoremap("<Leader>vdp", function()
       vim.diagnostic.goto_prev()
     end)
     nnoremap("<Leader>vdn", function()
