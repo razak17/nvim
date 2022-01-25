@@ -250,9 +250,6 @@ nnoremap["<M-l>"] = ":vertical resize -2<CR>"
 -- Yank from cursor position to end-of-line
 nnoremap["Y"] = "y$"
 
--- Easy way to close popups windows
-nnoremap["W"] = { "q", { noremap = false, silent = true } }
-
 -- Repeat last substitute with flags
 nnoremap["&"] = "<cmd>&&<CR>"
 
