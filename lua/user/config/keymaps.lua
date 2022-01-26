@@ -186,7 +186,7 @@ nnoremap["<right>"] = "<nop>"
 
 -- Move selected line / block of text in visual mode
 xnoremap["K"] = ":m '<-2<CR>gv=gv"
-xnoremap["N"] = ":m '>+1<CR>gv=gv"
+xnoremap["J"] = ":m '>+1<CR>gv=gv"
 
 -- Paste in visual mode multiple times
 xnoremap["p"] = "pgvy"
