@@ -70,10 +70,10 @@ return function()
             ["<c-c>"] = function()
               vim.cmd "stopinsert!"
             end,
+            ["<esc>"] = actions.close,
             ["<C-n>"] = actions.move_selection_next,
             ["<C-p>"] = actions.move_selection_previous,
-            ["<esc>"] = actions.close,
-            ["<C-'>"] = actions.cycle_history_next,
+            ["<C-j>"] = actions.cycle_history_next,
             ["<C-k>"] = actions.cycle_history_prev,
             ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
             ["<c-s>"] = actions.select_horizontal,
