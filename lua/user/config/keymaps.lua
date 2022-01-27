@@ -164,6 +164,13 @@ local utils = require "user.utils"
 
 -- Undo
 nnoremap["<C-z>"] = ":undo<CR>"
+vnoremap["<C-z>"] = ":undo<CR><Esc>"
+xnoremap["<C-z>"] = ":undo<CR><Esc>"
+
+-- undo command in insert mode
+inoremap["<c-z>"] = function()
+  vim.cmd [[:undo]]
+end
 
 -- remap esc to use cc
 nnoremap["<C-c>"] = "<Esc>"
@@ -196,12 +203,6 @@ xnoremap["&"] = "<cmd>&&<CR>"
 
 -- Start new line from any cursor position
 inoremap["<S-Return>"] = "<C-o>o"
-
--- Disable arrows in insert mode
-inoremap["<down>"] = "<nop>"
-inoremap["<up>"] = "<nop>"
-inoremap["<left>"] = "<nop>"
-inoremap["<right>"] = "<nop>"
 
 -- Better indenting
 vnoremap["<"] = "<gv"
@@ -273,11 +274,6 @@ cnoremap["::"] = "<C-r>=fnameescape(expand('%:p:h'))<cr>/"
 -- QuickRun
 nnoremap["<C-b>"] = ":QuickRun<CR>"
 
--- undo command in insert mode
-inoremap["<c-z>"] = function()
-  vim.cmd [[:undo]]
-end
-
 -- Alternate way to save
 nnoremap["<C-s>"] = function()
   utils.save_and_notify()
@@ -332,10 +328,6 @@ end
 nnoremap["<leader>ae"] = function()
   utils.TurnOffGuides()
 end
-
--- Window Resize
-nnoremap["<Leader>aF"] = ":vertical resize 90<CR>"
-nnoremap["<Leader>aL"] = ":vertical resize 40<CR>"
 
 -- Search Files
 nnoremap["<Leader>cw"] = ':h <C-R>=expand("<cword>")<CR><CR>'
@@ -397,6 +389,10 @@ nnoremap["<Leader>afl"] = "za" -- Toggle fold under the cursor
 nnoremap["<Leader>afo"] = "zR" -- Open all folds
 nnoremap["<Leader>afx"] = "zM" -- Close all folds
 nnoremap["<Leader>aO"] = ":<C-f>:resize 10<CR>" -- Close all folds
+
+-- Window Resize
+nnoremap["<Leader>aF"] = ":vertical resize 90<CR>"
+nnoremap["<Leader>aL"] = ":vertical resize 40<CR>"
 
 -- Conditionally modify character at end of line
 nnoremap["<localleader>,"] = "<cmd>call utils#modify_line_end_delimiter(',')<cr>"
