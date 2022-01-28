@@ -22,11 +22,10 @@ completion["mattn/emmet-vim"] = {
 completion["hrsh7th/nvim-cmp"] = {
   config = utils.load_conf("completion", "cmp"),
   requires = {
+    "hrsh7th/cmp-nvim-lsp",
     "hrsh7th/cmp-vsnip",
     "hrsh7th/cmp-buffer",
-    "hrsh7th/cmp-nvim-lsp",
     "hrsh7th/cmp-path",
-    "hrsh7th/cmp-nvim-lua",
   },
   commit = rvim.plugin.commits.nvim_cmp,
   disable = not rvim.plugin.cmp.active,
