@@ -19,7 +19,7 @@ return {
   dap_install = { active = false },
   osv = { active = false },
   -- lsp
-  lspconfig = { active = false },
+  lspconfig = { active = true },
   lsp_installer = { active = true },
   fix_cursorhold = { active = false },
   nlsp = { active = true },

@@ -115,14 +115,14 @@ function plugins.ensure_plugins()
   local fmt = string.format
 
   command {
-    "PackerCompiledEdit",
+    "PlugCompiledEdit",
     function()
       vim.cmd(fmt("edit %s", compile_path))
     end,
   }
 
   command {
-    "PackerCompiledDelete",
+    "PlugCompiledDelete",
     function()
       vim.fn.delete(compile_path)
       vim.notify(fmt("Deleted %s", compile_path))
@@ -130,7 +130,7 @@ function plugins.ensure_plugins()
   }
 
   command {
-    "PackerRecompile",
+    "PlugRecompile",
     function()
       vim.fn.delete(compile_path)
       vim.cmd [[:PlugCompile]]
