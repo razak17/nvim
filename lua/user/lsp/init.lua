@@ -1,74 +1,10 @@
 local M = {}
-
 local Log = require "user.core.log"
 local utils = require "user.utils"
-
-local function set_diagnostics()
-  return vim.diagnostic.setqflist { open = false }
-end
+local autocmds = require "user.lsp.autocmds"
 
 local function lsp_commands()
-  local command = rvim.command
-
-  command {
-    "LspDiagnostics",
-    function()
-      set_diagnostics()
-      rvim.toggle_list "quickfix"
-      if rvim.is_vim_list_open() then
-        rvim.augroup("LspDiagnosticUpdate", {
-          {
-            events = { "DiagnosticChanged" },
-            targets = { "*" },
-            command = function()
-              set_diagnostics()
-              if rvim.is_vim_list_open() then
-                rvim.toggle_list "quickfix"
-              end
-            end,
-          },
-        })
-      elseif vim.fn.exists "#LspDiagnosticUpdate" > 0 then
-        vim.cmd "autocmd! LspDiagnosticUpdate"
-      end
-      vim.cmd "copen"
-    end,
-  }
-  command {
-    "LspLog",
-    function()
-      vim.cmd("edit " .. vim.lsp.get_log_path())
-    end,
-  }
-  command {
-    "LspFormat",
-    function()
-      vim.lsp.buf.formatting(vim.g[string.format("format_options_%s", vim.bo.filetype)] or {})
-    end,
-  }
-  command {
-    "LspToggleVirtualText",
-    function()
-      local virtual_text = {}
-      virtual_text.show = true
-      virtual_text.show = not virtual_text.show
-      vim.lsp.diagnostic.display(
-        vim.lsp.diagnostic.get(0, 1),
-        0,
-        1,
-        { virtual_text = virtual_text.show }
-      )
-    end,
-  }
-  command {
-    "LspReload",
-    function()
-      vim.cmd [[
-      :lua vim.lsp.stop_client(vim.lsp.get_active_clients())
-      :edit
-    ]]
-    end,
-  }
+  autocmds.enable_lsp_commands()
 end
 
 local function lsp_hover_diagnostics()
@@ -76,29 +12,7 @@ local function lsp_hover_diagnostics()
     return
   end
 
-  local get_cursor_pos = function()
-    return { vim.fn.line ".", vim.fn.col "." }
-  end
-
-  rvim.augroup("HoverDiagnostics", {
-    {
-      events = { "CursorHold" },
-      targets = { "<buffer>" },
-      command = (function()
-        local cursorpos = get_cursor_pos()
-        return function()
-          local new_cursor = get_cursor_pos()
-          if
-            (new_cursor[1] ~= 1 and new_cursor[2] ~= 1)
-            and (new_cursor[1] ~= cursorpos[1] or new_cursor[2] ~= cursorpos[2])
-          then
-            cursorpos = new_cursor
-            vim.lsp.diagnostic.show_line_diagnostics { show_header = false, border = "single" }
-          end
-        end
-      end)(),
-    },
-  })
+  autocmds.enable_lsp_hover_diagnostics()
 end
 
 local function lsp_highlight_document(client)
@@ -107,23 +21,7 @@ local function lsp_highlight_document(client)
   end
 
   if client and client.resolved_capabilities.document_highlight then
-    rvim.augroup("LspCursorCommands", {
-      {
-        events = { "CursorHold" },
-        targets = { "<buffer>" },
-        command = "lua vim.lsp.buf.document_highlight()",
-      },
-      {
-        events = { "CursorHoldI" },
-        targets = { "<buffer>" },
-        command = "lua vim.lsp.buf.document_highlight()",
-      },
-      {
-        events = { "CursorMoved" },
-        targets = { "<buffer>" },
-        command = "lua vim.lsp.buf.clear_references()",
-      },
-    })
+    autocmds.enable_lsp_document_highlight(client.id)
   end
 end
 
@@ -133,18 +31,7 @@ local function lsp_code_lens_refresh(client)
   end
 
   if client and client.resolved_capabilities.code_lens then
-    rvim.augroup("LspCodeLensRefresh", {
-      {
-        events = { "InsertLeave" },
-        targets = { "<buffer>" },
-        command = "lua vim.lsp.codelens.refresh()",
-      },
-      {
-        events = { "InsertLeave" },
-        targets = { "<buffer>" },
-        command = "lua vim.lsp.codelens.display()",
-      },
-    })
+    autocmds.enable_code_lens_refresh()
   end
 end
 
@@ -195,6 +82,16 @@ local function select_default_formater(client)
       client.resolved_capabilities.document_formatting = false
       client.resolved_capabilities.document_range_formatting = false
     end
+  end
+end
+
+function M.global_on_exit(_, _)
+  if rvim.lsp.document_highlight then
+    autocmds.disable_lsp_document_highlight()
+  end
+
+  if rvim.lsp.code_lens_refresh then
+    autocmds.disable_code_lens_refresh()
   end
 end
 
@@ -269,7 +166,7 @@ function M.setup()
 
   require("user.lsp.null-ls").setup()
 
-  require("user.lsp.utils").configure_format_on_save()
+  autocmds.configure_format_on_save()
 end
 
 return M

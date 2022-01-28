@@ -123,10 +123,27 @@ function rvim.augroup(name, commands)
         )
       )
     else
-      vim.notify(fmt("An autocommand in %s is specified incorrectly: %s", name, vim.inspect(name)), L.ERROR)
+      vim.notify(
+        fmt("An autocommand in %s is specified incorrectly: %s", name, vim.inspect(name)),
+        L.ERROR
+      )
     end
   end
   vim.cmd "augroup END"
+end
+
+--- Disable autocommand groups if it exists
+--- This is more reliable than trying to delete the augroup itself
+---@param name string the augroup name
+function rvim.disable_augroup(name)
+  -- defer the function in case the autocommand is still in-use
+  vim.schedule(function()
+    if vim.fn.exists("#" .. name) == 1 then
+      vim.cmd("augroup " .. name)
+      vim.cmd "autocmd!"
+      vim.cmd "augroup END"
+    end
+  end)
 end
 
 ---Require a module using [pcall] and report any errors

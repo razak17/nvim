@@ -24,6 +24,7 @@ local function resolve_config(name, user_config)
   local config = {
     on_attach = require("user.lsp").global_on_attach,
     on_init = require("user.lsp").global_on_init,
+    on_exit = require("user.lsp").global_on_exit,
     capabilities = require("user.lsp").global_capabilities(),
   }
 

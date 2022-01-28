@@ -11,7 +11,7 @@ return function()
       -- these cannot contain whitespaces, options such as `--line-width 80` become either `{'--line-width', '80'}` or `{'--line-width=80'}`
       args = { "--no-semi", "--single-quote", "--jsx-single-quote", "--print-with", "100" },
       -- @usage specify which filetypes to enable. By default a providers will attach to all the filetypes it supports.
-      filetypes = { "typescript", "typescriptreact" },
+      filetypes = { "typescript", "typescriptreact", "html", "json", "yaml", "graphql", "markdown" },
     },
     {
       exe = "stylua",

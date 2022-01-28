@@ -73,36 +73,6 @@ return {
     },
     config = {},
   },
-  override = {
-    "angularls",
-    "ansiblels",
-    "denols",
-    "ember",
-    "jedi_language_server",
-    "pylsp",
-    float = {
-      focusable = false,
-      style = "minimal",
-      border = "single",
-      source = "always",
-      header = "",
-      prefix = "",
-      format = function(d)
-        local t = vim.deepcopy(d)
-        local code = d.code or (d.user_data and d.user_data.lsp.code)
-        if code then
-          t.message = string.format("%s [%s]", t.message, code):gsub("1. ", "")
-        end
-        return t.message
-      end,
-    },
-    "rome",
-    "sqlls",
-    "sqls",
-    "stylelint_lsp",
-    "tailwindcss",
-    "volar",
-  },
   automatic_servers_installation = true,
   on_attach_callback = nil,
   on_init_callback = nil,
@@ -115,5 +85,51 @@ return {
     focusable = false,
     style = "minimal",
     border = "single",
+    source = "always",
+    header = "",
+    prefix = "",
+    format = function(d)
+      local t = vim.deepcopy(d)
+      local code = d.code or (d.user_data and d.user_data.lsp.code)
+      if code then
+        t.message = string.format("%s [%s]", t.message, code):gsub("1. ", "")
+      end
+      return t.message
+    end,
+  },
+  override = {
+    "angularls",
+    "ansiblels",
+    "ccls",
+    "csharp_ls",
+    "cssmodules_ls",
+    "denols",
+    "ember",
+    "emmet_ls",
+    "eslint",
+    "eslintls",
+    "golangci_lint_ls",
+    "grammarly",
+    "graphql",
+    "jedi_language_server",
+    "ltex",
+    "phpactor",
+    "psalm",
+    "pylsp",
+    "quick_lint_js",
+    "remark_ls",
+    "rome",
+    "solang",
+    "solidity_ls",
+    "sorbet",
+    "sourcekit",
+    "spectral",
+    "sqlls",
+    "sqls",
+    "stylelint_lsp",
+    "tailwindcss",
+    "tflint",
+    "volar",
+    "zk",
   },
 }
