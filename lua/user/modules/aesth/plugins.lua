@@ -41,6 +41,7 @@ aesth["lukas-reineke/indent-blankline.nvim"] = {
 aesth["lewis6991/gitsigns.nvim"] = {
   event = "BufRead",
   config = utils.load_conf("aesth", "gitsigns"),
+  commit = rvim.plugin.commits.gitsigns,
   disable = not rvim.plugin.git_signs.active,
 }
 
