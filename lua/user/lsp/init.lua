@@ -132,13 +132,6 @@ function M.get_global_opts()
   }
 end
 
-local LSP_DEPRECATED_SIGN_MAP = {
-  ["LspDiagnosticsSignError"] = "DiagnosticSignError",
-  ["LspDiagnosticsSignWarning"] = "DiagnosticSignWarn",
-  ["LspDiagnosticsSignHint"] = "DiagnosticSignHint",
-  ["LspDiagnosticsSignInformation"] = "DiagnosticSignInfo",
-}
-
 function M.setup()
   Log:debug "Setting up LSP support"
 
