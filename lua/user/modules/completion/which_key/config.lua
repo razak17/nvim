@@ -27,7 +27,6 @@ return {
       a = {
         name = "+Actions",
         d = "force delete buffer",
-        D = "delete all",
         e = "turn off guides",
         f = {
           name = "+Fold",
@@ -45,9 +44,7 @@ return {
         O = "open old commands",
         R = "empty registers",
         v = "vertical split",
-        V = "select all",
         x = "save and exit",
-        Y = "yank all",
         z = "force exit",
       },
       b = {

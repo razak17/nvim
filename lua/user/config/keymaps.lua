@@ -358,11 +358,6 @@ vnoremap["<Leader>rev"] = [[:s/\%V.\+\%V./\=utils#rev_str(submatch(0))<CR>gv]]
 nnoremap["<Leader>y"] = '"+y'
 vnoremap["<Leader>y"] = '"+y'
 
--- Whole file delete yank, paste
-nnoremap["<Leader>aY"] = 'gg"+yG'
-nnoremap["<Leader>aV"] = 'gg"+VG'
-nnoremap["<Leader>aD"] = 'gg"+VGd'
-
 -- actions
 nnoremap["<Leader>="] = "<C-W>="
 -- opens a horizontal split
