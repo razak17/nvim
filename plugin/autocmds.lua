@@ -127,7 +127,7 @@ rvim.augroup("TrimWhitespace", {
 })
 
 -- See :h skeleton
-local templates_dir = get_config_dir() .. "/external/templates"
+local templates_dir = rvim.get_config_dir() .. "/external/templates"
 rvim.augroup("Templates", {
   {
     events = { "BufNewFile" },
@@ -241,7 +241,7 @@ rvim.augroup("PackerSetupInit", {
   {
     events = { "BufWritePost" },
     targets = {
-      utils.join_paths(get_config_dir(), "lua/core/config/init.lua"),
+      utils.join_paths(rvim.get_config_dir(), "lua/core/config/init.lua"),
     },
     command = function()
       vim.cmd [[source ~/.config/rvim/lua/core/config/init.lua]]

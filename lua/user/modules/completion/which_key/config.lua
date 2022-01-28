@@ -69,7 +69,7 @@ return {
       I = {
         name = "+Info",
         c = {
-          ":e " .. require("user.utils").join_paths(get_user_dir(), "config/init.lua"),
+          ":e " .. require("user.utils").join_paths(rvim.get_user_dir(), "config/init.lua"),
           "open config/init.lua",
         },
         C = "check health",
@@ -77,7 +77,7 @@ return {
         m = "messages",
         M = "vim with me",
         v = {
-          ":e " .. require("user.utils").join_paths(get_config_dir(), "init.lua"),
+          ":e " .. require("user.utils").join_paths(rvim.get_config_dir(), "init.lua"),
           "open vimrc",
         },
       },

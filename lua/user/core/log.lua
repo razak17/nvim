@@ -1,6 +1,6 @@
 local Log = {}
 
-local logfile = string.format("%s/%s.log", get_cache_dir(), "rvim")
+local logfile = string.format("%s/%s.log", rvim.get_cache_dir(), "rvim")
 
 Log.levels = {
   TRACE = 1,

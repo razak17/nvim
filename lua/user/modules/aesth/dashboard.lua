@@ -5,7 +5,7 @@ return function()
     return { k .. string.rep(" ", c) .. v }
   end
 
-  local num_plugins_loaded = #vim.fn.globpath(get_runtime_dir() .. "/site/pack/packer/*", "*", 0, 1)
+  local num_plugins_loaded = #vim.fn.globpath(rvim.get_runtime_dir() .. "/site/pack/packer/*", "*", 0, 1)
 
   rvim.dashboard = {
     custom_header = {
@@ -19,7 +19,7 @@ return function()
     default_executive = "telescope",
     disable_at_vimenter = 0,
     disable_statusline = 0,
-    session_directory = utils.join_paths(get_cache_dir(), "sessions", "dashboard"),
+    session_directory = utils.join_paths(rvim.get_cache_dir(), "sessions", "dashboard"),
     custom_section = {
       a = {
         description = join("  Find Files", "<leader>ff", 13),
@@ -27,7 +27,7 @@ return function()
       },
       b = {
         description = join("  Default config", "<leader>Ic", 9),
-        command = ":e " .. get_user_dir() .. "/config/init.lua",
+        command = ":e " .. rvim.get_user_dir() .. "/config/init.lua",
       },
       c = {
         description = join("  Recent files", "<leader>fR", 11),

@@ -6,8 +6,8 @@ local fn = vim.fn
 local fmt = string.format
 local api = vim.api
 
-local os = vim.loop.os_uname().sysname
-rvim.open_command = os == "Darwin" and "open" or "xdg-open"
+local oss = vim.loop.os_uname().sysname
+rvim.open_command = oss == "Darwin" and "open" or "xdg-open"
 
 function rvim._create(f)
   table.insert(rvim._store, f)
@@ -52,8 +52,8 @@ local installed
 ---@return boolean
 function rvim.plugin_installed(plugin_name)
   if not installed then
-    local dirs = fn.expand(get_runtime_dir() .. "/site/pack/packer/start/*", true, true)
-    local opt = fn.expand(get_runtime_dir() .. "/site/pack/packer/opt/*", true, true)
+    local dirs = fn.expand(rvim.get_runtime_dir() .. "/site/pack/packer/start/*", true, true)
+    local opt = fn.expand(rvim.get_runtime_dir() .. "/site/pack/packer/opt/*", true, true)
     vim.list_extend(dirs, opt)
     installed = vim.tbl_map(function(path)
       return fn.fnamemodify(path, ":t")
@@ -228,4 +228,46 @@ function rvim.toggle_list(list_type)
   if fn.winnr() ~= winnr then
     vim.cmd "wincmd p"
   end
+end
+
+---Get the full path to `$RVIM_RUNTIME_DIR`
+---@return string
+function rvim.get_runtime_dir()
+  local rvim_runtime_dir = os.getenv "RVIM_RUNTIME_DIR"
+  if not rvim_runtime_dir then
+    -- when nvim is used directly
+    return vim.fn.stdpath "data"
+  end
+  return rvim_runtime_dir
+end
+
+---Get the full path to `$RVIM_CONFIG_DIR`
+---@return string
+function rvim.get_config_dir()
+  local rvim_config_dir = os.getenv "RVIM_CONFIG_DIR"
+  if not rvim_config_dir then
+    return vim.fn.stdpath "config"
+  end
+  return rvim_config_dir
+end
+
+---Get the full path to `$RVIM_CACHE_DIR`
+---@return string
+function rvim.get_cache_dir()
+  local rvim_cache_dir = os.getenv "RVIM_CACHE_DIR"
+  if not rvim_cache_dir then
+    return vim.fn.stdpath "cache"
+  end
+  return rvim_cache_dir
+end
+
+---Get the full path to `$RVIM_CONFIG_DIR/user`
+---@return string
+function rvim.get_user_dir()
+  local config_dir = os.getenv "RVIM_CONFIG_DIR"
+  if not config_dir then
+    config_dir = vim.fn.stdpath "config"
+  end
+  local rvim_config_dir = require("user.utils").join_paths(config_dir, "lua/user/")
+  return rvim_config_dir
 end

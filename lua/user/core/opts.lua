@@ -11,9 +11,9 @@ M.load_options = function()
     undofile = true,
 
     -- Neovim Directories
-    udir = get_cache_dir() .. "/undodir",
-    directory = get_cache_dir() .. "/swap",
-    viewdir = get_cache_dir() .. "/view",
+    udir = rvim.get_cache_dir() .. "/undodir",
+    directory = rvim.get_cache_dir() .. "/swap",
+    viewdir = rvim.get_cache_dir() .. "/view",
 
     -- Timing
     timeout = true,
@@ -50,7 +50,7 @@ M.load_options = function()
     spelllang = "en",
     -- spell = false,
     spelloptions = "camel",
-    spellfile = utils.join_paths(get_config_dir(), "spell", "en.utf-8.add"),
+    spellfile = utils.join_paths(rvim.get_config_dir(), "spell", "en.utf-8.add"),
     spellcapcheck = "", -- don't check for capital letters at start of sentence
     fileformats = { "unix", "mac", "dos" }, -- don't check for capital letters at start of sentence
 
@@ -181,7 +181,7 @@ M.load_options = function()
   ---  SETTINGS  ---
   vim.opt.shortmess:append "c"
   vim.opt.iskeyword:append "-"
-  vim.opt.shadafile = utils.join_paths(get_cache_dir(), "shada", "rvim.shada")
+  vim.opt.shadafile = utils.join_paths(rvim.get_cache_dir(), "shada", "rvim.shada")
   vim.opt.cursorlineopt = "screenline,number"
   vim.opt.spellsuggest:prepend { 12 }
   vim.opt.spellcapcheck = "" -- don't check for capital letters at start of sentence

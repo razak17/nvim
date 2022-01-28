@@ -47,7 +47,7 @@ return function()
         },
         winblend = 0,
         history = {
-          path = get_cache_dir() .. "/telescope/history.sqlite3",
+          path = rvim.get_cache_dir() .. "/telescope/history.sqlite3",
         },
         file_ignore_patterns = {
           "yarn.lock",
@@ -93,7 +93,7 @@ return function()
             case_mode = "smart_case", -- or "ignore_case" or "respect_case"
           },
           frecency = {
-            db_root = utils.join_paths(get_cache_dir(), "/telescope"),
+            db_root = utils.join_paths(rvim.get_cache_dir(), "/telescope"),
             show_scores = true,
             show_unindexed = true,
             ignore_patterns = { "*.git/*", "*/tmp/*" },

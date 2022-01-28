@@ -3,9 +3,9 @@ local M = {}
 local dap = require "dap"
 
 rvim.dap = {
-  install_dir = get_cache_dir() .. "dap",
-  python_dir = get_cache_dir() .. "dap/python_dbg/bin/python",
-  node_dir = get_cache_dir() .. "dap/jsnode_dbg/vscode-node-debug2/out/src/nodeDebug.js",
+  install_dir = rvim.get_cache_dir() .. "dap",
+  python_dir = rvim.get_cache_dir() .. "dap/python_dbg/bin/python",
+  node_dir = rvim.get_cache_dir() .. "dap/jsnode_dbg/vscode-node-debug2/out/src/nodeDebug.js",
   breakpoint = {
     text = "",
     texthl = "LspDiagnosticsSignError",

@@ -31,7 +31,7 @@ return function()
 
       ---@type string
       ---@usage path to store the project history for use in telescope
-      datapath = get_cache_dir(),
+      datapath = rvim.get_cache_dir(),
     },
   }
 

@@ -25,7 +25,7 @@ nvim_config.files = function(opts)
       vertical = { mirror = false },
     },
     prompt_title = "~ Rvim files ~",
-    cwd = get_config_dir(),
+    cwd = rvim.get_config_dir(),
   }
   opts = vim.tbl_deep_extend("force", theme_opts, opts)
   builtin.find_files(opts)
@@ -46,14 +46,14 @@ nvim_config.grep_files = function(opts)
       vertical = { mirror = false },
     },
     prompt_title = "~ Search Rvim ~",
-    cwd = get_config_dir(),
+    cwd = rvim.get_config_dir(),
   }
   opts = vim.tbl_deep_extend("force", theme_opts, opts)
   builtin.live_grep(opts)
 end
 
 nvim_config.view_changelog = function()
-  local opts = { cwd = get_config_dir() }
+  local opts = { cwd = rvim.get_config_dir() }
   opts.entry_maker = make_entry.gen_from_git_commits(opts)
 
   pickers.new(opts, {
