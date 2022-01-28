@@ -85,10 +85,6 @@ nmap gc  <Plug>VSCodeCommentary
 omap gc  <Plug>VSCodeCommentary
 nmap gcc <Plug>VSCodeCommentaryLine
 
-nmap W q
-nnoremap n j
-vnoremap n j
-nnoremap z u
 nnoremap 0 ^
 nnoremap $ g_
 nnoremap Y y$
@@ -115,5 +111,3 @@ vnoremap * y/<C-R>"<CR>
 
 " make . work with visually selected lines
 vnoremap . :norm.<CR>
-
-
