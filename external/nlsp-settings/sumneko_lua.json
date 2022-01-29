@@ -4,17 +4,15 @@
   "Lua.diagnostics.globals": [
     "vim",
     "rvim",
+    "packer_plugins",
+    "stds",
     "describe",
     "it",
     "before_each",
-    "after_each"
+    "after_each",
+    "fterm_cmd"
   ],
-  "Lua.diagnostics.disable": [
-    "unused-local",
-    "unused-vararg",
-    "lowercase-global",
-    "undefined-field"
-  ],
-  "Lua.completion.callSnippet": "Disable",
-  "Lua.completion.keywordSnippet": "Replace"
+  "Lua.diagnostics.disable": [],
+  "Lua.completion.callSnippet": "Both",
+  "Lua.completion.keywordSnippet": "Both"
 }

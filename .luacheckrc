@@ -8,17 +8,9 @@ stds.nvim = {
     "TERMINAL",
     "USER",
     "C",
-    "Config",
-    "Api",
-    "Cmd",
-    "Fn",
-    "Keymap",
-    "Execute",
-    "G",
     "_GlobalCallbacks",
     "WhichKey",
     "MUtils",
-    "fterm_cmd",
     os = { fields = { "capture" } },
   },
   read_globals = {
@@ -26,14 +18,9 @@ stds.nvim = {
     "os",
     "vim",
     "join_paths",
-    "join_paths",
-    "get_runtime_dir",
-    "get_config_dir",
-    "get_cache_dir",
-    "get_user_dir",
-    -- vim = { fields = { "cmd", "api", "fn", "o", "wo", "bo" } },
   },
 }
+
 std = "lua51+nvim"
 
 -- Don't report unused self arguments of methods.

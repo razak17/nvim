@@ -1,6 +1,6 @@
 return function()
-  Api, Cmd, Fn = vim.api, vim.cmd, vim.fn
-  Keymap, Execute, G = Api.nvim_set_keymap, Api.nvim_command, vim.g
+  local api, fn = vim.api, vim.fn
+  local execute = api.nvim_command
 
   local Log = require "user.core.log"
   local status_ok, gl = rvim.safe_require "galaxyline"
@@ -51,7 +51,7 @@ return function()
           ["!"] = colors.pale_red,
           t = colors.pale_red,
         }
-        Execute("hi GalaxyViMode guifg=" .. mode_color[Fn.mode()])
+        execute("hi GalaxyViMode guifg=" .. mode_color[fn.mode()])
         return "  "
       end,
       highlight = { colors.pale_red, colors.bg, "bold" },
