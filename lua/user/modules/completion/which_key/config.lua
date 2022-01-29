@@ -195,6 +195,8 @@ return {
     r = { ":LspReload", "restart" },
     l = "set loclist",
     L = "toggle locflist",
+    s = { ":Telescope lsp_document_symbols", "document symbols" },
+    S = { ":Telescope lsp_dynamic_workspace_symbols", "workspace symbols" },
     w = "set qflist",
     W = "toggle qflist",
     x = "empty qflist",

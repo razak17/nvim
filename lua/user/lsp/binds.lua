@@ -48,11 +48,6 @@ local function lsp_mappings(client)
   if client.supports_method "textDocument/prepareCallHierarchy" then
     nnoremap("gI", vim.lsp.buf.incoming_calls)
   end
-  -- Symbols
-  if client.supports_method "workspace/symbol" then
-    nnoremap("gsd", vim.lsp.buf.document_symbol)
-    nnoremap("gsw", vim.lsp.buf.workspace_symbol)
-  end
 end
 
 local function lsp_leader_keymaps(client)
