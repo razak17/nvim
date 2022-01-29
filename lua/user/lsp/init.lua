@@ -139,8 +139,6 @@ function M.setup()
     vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = sign.name })
   end
 
-  -- require("user.lsp.handlers").setup()
-
   bootstrap_nlsp { config_home = utils.join_paths(rvim.get_config_dir(), "external/nlsp-settings") }
 
   require("user.lsp.null-ls").setup()
