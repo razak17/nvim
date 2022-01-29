@@ -67,7 +67,7 @@ end
 function M.setup(server_name, user_config)
   vim.validate { name = { server_name, "string" } }
 
-  if lsp_utils.is_client_active(server_name) or client_is_configured(server_name) then
+  if lsp_utils.is_client_active(server_name) and client_is_configured(server_name) then
     Log:debug(string.format("[%q] is already configured. Ignoring repeated setup call.", server_name))
     return
   end

@@ -83,22 +83,20 @@ return {
       end,
     },
   },
+  document_highlight = true,
+  code_lens_refresh = true,
+  float = {
+    focusable = false,
+    style = "minimal",
+    border = "rounded",
+  },
+  automatic_servers_installation = true,
+  hover_diagnostics = false,
   null_ls = {
     setup = {
       -- root_dir = require("lspconfig").util.root_pattern("Makefile", ".git", "node_modules"),
     },
     config = {},
-  },
-  automatic_servers_installation = true,
-  document_highlight = true,
-  code_lens_refresh = true,
-  hover_diagnostics = false,
-  lint_on_save = false,
-  popup_border = "single",
-  float = {
-    focusable = false,
-    style = "minimal",
-    border = "rounded",
   },
   override = {
     "angularls",
