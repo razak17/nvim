@@ -24,8 +24,8 @@ return {
       ["_"] = "Delete current buffer",
       x = { ":q", "Quit" },
       y = "Yank",
+      A = "select all",
       D = "delete all",
-      V = "select all",
       Y = "yank all",
       a = {
         name = "+Actions",

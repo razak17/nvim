@@ -358,9 +358,9 @@ nnoremap["<Leader>y"] = '"+y'
 vnoremap["<Leader>y"] = '"+y'
 
 -- Whole file delete yank, paste
-nnoremap["<Leader>Y"] = 'gg"+yG'
-nnoremap["<Leader>V"] = 'gg"+VG'
+nnoremap["<Leader>A"] = 'gg"+VG'
 nnoremap["<Leader>D"] = 'gg"+VGd'
+nnoremap["<Leader>Y"] = 'gg"+yG'
 
 -- actions
 nnoremap["<Leader>="] = "<C-W>="
