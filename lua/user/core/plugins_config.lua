@@ -21,7 +21,7 @@ return {
   -- lsp
   lspconfig = { active = true },
   lsp_installer = { active = true },
-  fix_cursorhold = { active = false },
+  fix_cursorhold = { active = true },
   nlsp = { active = true },
   null_ls = { active = true },
   lightbulb = { active = false },

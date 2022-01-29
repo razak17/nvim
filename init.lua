@@ -13,3 +13,5 @@ local Log = require "user.core.log"
 Log:debug "Starting Rvim"
 
 require("user.config"):load()
+
+require("user.lsp").setup()

@@ -45,6 +45,7 @@ return {
   hover_diagnostics = false,
   null_ls = {
     setup = {
+      debug = true,
       -- root_dir = require("lspconfig").util.root_pattern("Makefile", ".git", "node_modules"),
     },
     config = {},
