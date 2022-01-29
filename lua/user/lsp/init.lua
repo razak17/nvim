@@ -63,10 +63,6 @@ local function select_default_formater(client)
     return
   end
 
-  if client.name == "tsserver" then
-    client.resolved_capabilities.document_formatting = false
-  end
-
   Log:debug("Checking for formatter overriding for " .. client.name)
   local formatters = require "lsp.null-ls.formatters"
   local client_filetypes = client.config.filetypes or {}
