@@ -300,7 +300,7 @@ return {
   lsp_utils = {
     name = "+LspUtils",
     i = { ":LspInfo", "info" },
-    I = { ":LspInstallerInfo", "installer info" },
+    I = { ":LspInstallInfo", "installer info" },
     l = { ":LspLog", "log" },
     r = { ":LspReload", "restart" },
   },
