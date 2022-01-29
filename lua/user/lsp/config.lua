@@ -1,24 +1,4 @@
 return {
-  servers = {
-    "clangd",
-    "cssls",
-    "cmake",
-    "dockerls",
-    "elixirls",
-    "emmet_ls",
-    "gopls",
-    "graphql",
-    "html",
-    "jsonls",
-    "sumneko_lua",
-    "pyright",
-    "rust_analyzer",
-    "bashls",
-    "vimls",
-    "yamlls",
-    "tsserver",
-    "eslint",
-  },
   completion = {
     item_kind = {
       "   (Text) ",
