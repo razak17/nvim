@@ -192,6 +192,12 @@ return {
     I = { ":LspInstallInfo", "installer info" },
     n = { ":NullLsInfo", "null-ls info" },
     N = { ":NlspBufConfig", "nlsp config" },
+    p = {
+      name = "+Peek",
+      d = "definition",
+      i = "implementation",
+      t = "type defintion",
+    },
     r = { ":LspReload", "restart" },
     l = "set loclist",
     L = "toggle locflist",

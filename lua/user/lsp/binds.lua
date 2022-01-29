@@ -10,13 +10,10 @@ local function lsp_mappings(client)
   -- Definition
   if client.supports_method "textDocument/definition" then
     nnoremap("gd", vim.lsp.buf.definition)
-    nnoremap("ge", function()
-      require("user.lsp.peek").Peek "definition"
-    end)
   end
   -- Declaration
   if client.supports_method "textDocument/declaration" then
-    nnoremap("gD", vim.lsp.buf.declaration)
+    nnoremap("ge", vim.lsp.buf.declaration)
   end
   -- References
   if client.supports_method "textDocument/references" then
@@ -25,9 +22,6 @@ local function lsp_mappings(client)
   -- Implementation
   if client.supports_method "textDocument/implementation" then
     nnoremap("gi", vim.lsp.buf.implementation)
-    nnoremap("gl", function()
-      require("user.lsp.peek").Peek "implementation"
-    end)
   end
   -- Hover
   if client.supports_method "textDocument/hover" then
@@ -35,14 +29,12 @@ local function lsp_mappings(client)
   end
   -- Type Definition
   if client.supports_method "textDocument/type_definition" then
-    nnoremap("gT", vim.lsp.buf.type_definition)
-    nnoremap("gL", function()
-      require("user.lsp.peek").Peek "typeDefinition"
-    end)
+    nnoremap("gt", vim.lsp.buf.type_definition)
   end
+
   -- Rename
   if client.supports_method "textDocument/rename" then
-    nnoremap("grn", vim.lsp.buf.rename)
+    nnoremap("gn", vim.lsp.buf.rename)
   end
   -- Call Hierarchy
   if client.supports_method "textDocument/prepareCallHierarchy" then
@@ -54,6 +46,19 @@ local function lsp_leader_keymaps(client)
   if client == nil then
     return
   end
+
+  -- Peek
+  nnoremap("<Leader>lpd", function()
+    require("user.lsp.peek").Peek "definition"
+  end)
+
+  nnoremap("<Leader>lpi", function()
+    require("user.lsp.peek").Peek "implementation"
+  end)
+
+  nnoremap("<Leader>lpt", function()
+    require("user.lsp.peek").Peek "typeDefinition"
+  end)
 
   -- Formatting
   if client.supports_method "textDocument/formatting" then
