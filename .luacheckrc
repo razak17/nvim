@@ -3,7 +3,7 @@
 stds.nvim = {
   globals = {
     "rvim",
-    "packer_plugins",
+    "user",
     vim = { fields = { "g" } },
     "TERMINAL",
     "USER",
