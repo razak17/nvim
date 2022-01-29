@@ -92,19 +92,10 @@ function M.global_on_exit(_, _)
 end
 
 function M.global_on_init(client, bufnr)
-  if rvim.lsp.on_init_callback then
-    rvim.lsp.on_init_callback(client, bufnr)
-    Log:debug "Called lsp.on_init_callback"
-    return
-  end
   select_default_formater(client)
 end
 
 function M.global_on_attach(client, bufnr)
-  if rvim.lsp.on_attach_callback then
-    rvim.lsp.on_attach_callback(client, bufnr)
-    Log:debug "Called lsp.on_attach_callback"
-  end
   lsp_highlight_document(client)
   lsp_code_lens_refresh(client)
   lsp_hover_diagnostics()

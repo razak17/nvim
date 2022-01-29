@@ -90,8 +90,6 @@ return {
     config = {},
   },
   automatic_servers_installation = true,
-  on_attach_callback = nil,
-  on_init_callback = nil,
   document_highlight = true,
   code_lens_refresh = true,
   hover_diagnostics = false,

@@ -40,7 +40,7 @@ return {
   easy_align = { active = false },
   cool = { active = false },
   surround = { active = true },
-  colorizer = { active = false },
+  colorizer = { active = true },
   kommentary = { active = true },
   dial = { active = false },
   fold_cycle = { active = false },
