@@ -3,10 +3,6 @@ local Log = require "user.core.log"
 local utils = require "user.utils"
 local autocmds = require "user.lsp.autocmds"
 
-local function lsp_commands()
-  autocmds.enable_lsp_commands()
-end
-
 local function lsp_hover_diagnostics()
   if not rvim.lsp.hover_diagnostics then
     return
@@ -111,7 +107,6 @@ function M.global_on_attach(client, bufnr)
   end
   lsp_highlight_document(client)
   lsp_code_lens_refresh(client)
-  lsp_commands()
   lsp_hover_diagnostics()
   require("user.lsp.binds"):init(client)
 end

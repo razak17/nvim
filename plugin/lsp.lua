@@ -60,6 +60,31 @@ command {
   end,
 }
 
+command {
+  "LspToggleVirtualText",
+  function()
+    local virtual_text = {}
+    virtual_text.show = true
+    virtual_text.show = not virtual_text.show
+    vim.lsp.diagnostic.display(
+      vim.lsp.diagnostic.get(0, 1),
+      0,
+      1,
+      { virtual_text = virtual_text.show }
+    )
+  end,
+}
+
+command {
+  "LspReload",
+  function()
+    vim.cmd [[
+      :lua vim.lsp.stop_client(vim.lsp.get_active_clients())
+      :edit
+    ]]
+  end,
+}
+
 rvim.nnoremap("<leader>ll", "<Cmd>LspDiagnostics<CR>", "toggle quickfix diagnostics")
 
 -----------------------------------------------------------------------------//
