@@ -8,7 +8,7 @@ return {
   Terminal = { fg = P.fg, bg = P.bg },
   SignColumn = { fg = P.fg, bg = darker_bg },
   FoldColumn = { fg = P.fg_alt, bg = P.black },
-  VertSplit = { fg = P.bg, bg = P.bg },
+  VertSplit = { fg = P.dull_blue, bg = darker_bg },
   MsgArea = { bg = darker_bg },
   MsgSeparator = { guifg = P.base6, guibg = darker_bg },
   Folded = { fg = P.grey, bg = P.highlight_bg },

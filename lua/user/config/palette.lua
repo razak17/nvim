@@ -51,6 +51,7 @@ return {
   dark_blue = "#4e88ff",
   darker_blue = "#7685b1",
   light_blue = "#5486c0",
+  dull_blue = "#556B70",
   violet = "#b294bb",
   magenta = "#c678dd",
   teal = "#15aabf",
