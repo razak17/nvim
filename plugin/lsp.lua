@@ -162,7 +162,7 @@ end
 -----------------------------------------------------------------------------//
 -- Handler overrides
 -----------------------------------------------------------------------------//
-local config = { -- your config
+vim.diagnostic.config = { -- your config
   virtual_text = rvim.lsp.diagnostics.virtual_text,
   signs = rvim.lsp.diagnostics.signs,
   underline = rvim.lsp.diagnostics.underline,
@@ -170,9 +170,18 @@ local config = { -- your config
   severity_sort = rvim.lsp.diagnostics.severity_sort,
   float = rvim.lsp.diagnostics.float,
 }
-vim.diagnostic.config(config)
+
+local max_width = math.max(math.floor(vim.o.columns * 0.7), 100)
+local max_height = math.max(math.floor(vim.o.lines * 0.3), 30)
 
 -- NOTE: the hover handler returns the bufnr,winnr so can be used for mappings
-vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, rvim.lsp.float)
+lsp.handlers["textDocument/hover"] = lsp.with(
+  lsp.handlers.hover,
+  { border = "rounded", max_width = max_width, max_height = max_height }
+)
 
-lsp.handlers["textDocument/signatureHelp"] = lsp.with(lsp.handlers.signature_help, rvim.lsp.float)
+lsp.handlers["textDocument/signatureHelp"] = lsp.with(lsp.handlers.signature_help, {
+  border = "rounded",
+  max_width = max_width,
+  max_height = max_height,
+})
