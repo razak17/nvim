@@ -12,10 +12,10 @@ return function()
   local function get_border(opts)
     return vim.tbl_deep_extend("force", opts or {}, {
       borderchars = {
-        { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
-        prompt = { "─", "│", " ", "│", "┌", "┐", "│", "│" },
-        results = { "─", "│", "─", "│", "├", "┤", "┘", "└" },
-        preview = { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
+        { "─", "│", " ", "│", "╭", "╮", "│", "│" },
+        prompt = { "─", "│", " ", "│", "╭", "╮", "│", "│" },
+        results = { "─", "│", "─", "│", "├", "┤", "╯", "╰" },
+        preview = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
       },
     })
   end
@@ -36,7 +36,7 @@ return function()
         sorting_strategy = "ascending",
         layout_strategy = "horizontal",
         set_env = { ["TERM"] = vim.env.TERM },
-        borderchars = { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
+        borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
         file_browser = { hidden = true },
         layout_config = {
           height = 0.9,
