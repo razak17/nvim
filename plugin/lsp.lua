@@ -150,7 +150,7 @@ local function display_signs(bufnr)
   show(ns, bufnr, filtered, {
     virtual_text = false,
     underline = false,
-    signs = true,
+    signs = false,
   })
 end
 
