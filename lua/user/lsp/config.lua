@@ -52,10 +52,10 @@ return {
     signs = {
       active = true,
       values = {
-        { name = "DiagnosticSignError", text = "" },
-        { name = "DiagnosticSignWarn", text = "" },
-        { name = "DiagnosticSignInfo", text = "" },
-        { name = "DiagnosticSignHint", text = "" },
+        error = "",
+        warn = "",
+        info = "",
+        hint = "",
       },
     },
     virtual_text = {

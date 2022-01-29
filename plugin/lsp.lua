@@ -92,10 +92,10 @@ rvim.nnoremap("<leader>ll", "<Cmd>LspDiagnostics<CR>", "toggle quickfix diagnost
 -----------------------------------------------------------------------------//
 
 local diagnostic_types = {
-  { "Hint", icon = "" },
-  { "Error", icon = "" },
-  { "Warn", icon = "" },
-  { "Info", icon = "" },
+  { "Error", icon = rvim.lsp.diagnostics.signs.values.error },
+  { "Warn", icon = rvim.lsp.diagnostics.signs.values.warn },
+  { "Info", icon = rvim.lsp.diagnostics.signs.values.info },
+  { "Hint", icon = rvim.lsp.diagnostics.signs.values.hint },
 }
 
 fn.sign_define(vim.tbl_map(function(t)
