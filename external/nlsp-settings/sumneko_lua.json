@@ -10,7 +10,9 @@
     "it",
     "before_each",
     "after_each",
-    "fterm_cmd"
+    "fterm_cmd",
+    "pairs",
+    "_G"
   ],
   "Lua.diagnostics.disable": [],
   "Lua.completion.callSnippet": "Both",
