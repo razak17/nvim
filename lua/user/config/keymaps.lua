@@ -300,12 +300,12 @@ end
 -----------------------------------------------------------------------------//
 
 -- toggle_list
-nnoremap["<leader>ls"] = function()
-  rvim.toggle_list "c"
+nnoremap["<leader>lW"] = function()
+  rvim.toggle_list "quickfix"
 end
 
-nnoremap["<leader>lx"] = function()
-  rvim.toggle_list "l"
+nnoremap["<leader>lL"] = function()
+  rvim.toggle_list "location"
 end
 
 nnoremap["<Leader>IM"] = function()

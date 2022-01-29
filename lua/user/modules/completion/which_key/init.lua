@@ -69,8 +69,7 @@ return function()
 
     -- lsp
     if rvim.plugin_loaded "nvim-lspconfig" then
-      key_maps.v = rvim.wk.lsp
-      key_maps.L = rvim.wk.lsp_utils
+      key_maps.l = rvim.wk.lsp
     end
 
     -- markdown

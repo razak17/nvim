@@ -85,7 +85,7 @@ command {
   end,
 }
 
-rvim.nnoremap("<leader>ll", "<Cmd>LspDiagnostics<CR>", "toggle quickfix diagnostics")
+rvim.nnoremap("<leader>lw", "<Cmd>LspDiagnostics<CR>", "toggle quickfix diagnostics")
 
 -----------------------------------------------------------------------------//
 -- Signs

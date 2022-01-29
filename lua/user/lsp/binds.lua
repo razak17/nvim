@@ -62,27 +62,24 @@ local function lsp_leader_keymaps(client)
 
   -- Formatting
   if client.supports_method "textDocument/formatting" then
-    nnoremap("<leader>vf", ":LspFormat<CR>")
+    nnoremap("<leader>lf", ":LspFormat<CR>")
   end
   -- Diagnostics
   if client.supports_method "textDocument/publishDiagnostics" then
-    nnoremap("<Leader>vdp", function()
+    nnoremap("<Leader>lk", function()
       vim.diagnostic.goto_prev()
     end)
-    nnoremap("<Leader>vdn", function()
+    nnoremap("<Leader>lj", function()
       vim.diagnostic.goto_next()
     end)
-    nnoremap("<Leader>vdl", function()
-      vim.lsp.diagnostic.show_line_diagnostics { border = rvim.lsp.diagnostics.border }
-    end)
-    nnoremap("<leader>vl", function()
+    nnoremap("<leader>ll", function()
       vim.diagnostic.setloclist()
     end)
   end
   -- Code Action
   if client.supports_method "textDocument/codeAction" then
-    nnoremap("<leader>va", vim.lsp.buf.code_action)
-    vnoremap("<leader>vA", vim.lsp.buf.range_code_action)
+    nnoremap("<leader>la", vim.lsp.buf.code_action)
+    vnoremap("<leader>lA", vim.lsp.buf.range_code_action)
   end
 end
 
