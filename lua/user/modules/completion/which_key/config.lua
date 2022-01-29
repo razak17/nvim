@@ -296,7 +296,7 @@ return {
     },
     f = "format",
     l = "set loc list",
-    o = { ":copeN", "open qflist" },
+    o = { ":copen", "open qflist" },
     s = { ":SymbolsOutline", "Symbols outline" },
     v = { ":LspToggleVirtualText", "toggle virtual text" },
   },
