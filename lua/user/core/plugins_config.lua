@@ -2,13 +2,12 @@ return {
   commits = {
     autopairs = "fba2503bd8cd0d8861054523aae39c4ac0680c07",
     gitsigns = "4a2d30f5fb77750c7a42be9bb58a9cc2c6c7f31d",
-    null_ls = "59067dae4bf2367eb06326e419c23353722ecbec",
+    null_ls = "2ae4a5e2e2b35716c44c104ef1afa35ecb40c444",
     nvim_cmp = "d93104244c3834fbd8f3dd01da9729920e0b5fe7",
     nvim_lsp_installer = "88e44bbbe2e03523e08f2bd3c9a954675bc438f4",
     nvim_lspconfig = "c51096481dc13193991571b7132740d762902355",
     nvim_tree = "2dfed89af7724f9e71d2fdbe3cde791a93e9b9e0",
     nvim_treesitter = "56634f49ab3d8122153c8c5582c581fb6a6af075",
-    -- nvim_treesitter = "620cc936ad6b26c59bb2d888b3890bb8d06c50c7",
   },
   -- SANE defaults
   SANE = { active = false },

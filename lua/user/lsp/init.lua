@@ -63,7 +63,7 @@ local function select_default_formater(client)
     return
   end
 
-  if client.name == "tsserver" then
+  if client.name == "tsserver" or client.name == "html" or client.name == "jsonls" then
     client.resolved_capabilities.document_formatting = false
   end
 

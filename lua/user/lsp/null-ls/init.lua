@@ -14,37 +14,32 @@ function M:setup()
 
   formatters.setup {
     {
-      exe = "prettier",
+      exe = "prettier_d_slim",
       stdin = true,
       -- @usage arguments to pass to the formatter
       -- these cannot contain whitespaces, options such as `--line-width 80` become either `{'--line-width', '80'}` or `{'--line-width=80'}`
-      -- "arrowParens": "always",
-      -- "bracketSpacing": true,
-      -- "endOfLine": "lf",
-      -- "htmlWhitespaceSensitivity": "css",
-      -- "insertPragma": false,
-      -- "jsxBracketSameLine": false,
-      -- "jsxSingleQuote": false,
-      -- "printWidth": 80,
-      -- "proseWrap": "preserve",
-      -- "quoteProps": "as-needed",
-      -- "requirePragma": false,
-      -- "semi": true,
-      -- "singleQuote": false,
-      -- "tabWidth": 2,
-      -- "trailingComma": "es5",
-      -- "useTabs": false,
-      -- "vueIndentScriptAndStyle": false,
-      -- "filepath": "/home/razak/docs/index.html",
-      -- "parser": "html"
-      -- args = {
-      --   "--no-semi",
-      --   "--single-quote",
-      --   "--jsx-single-quote",
-      -- },
+      args = {
+        "--no-semi",
+        "--tab-width=2",
+        "--single-quote",
+        "--print-width=80",
+        "--jsx-single-quote",
+        "--bracket-same-line",
+        "--arrow-parens=avoid",
+        "--trailing-comma=all",
+      },
       -- @usage specify which filetypes to enable. By default a providers will attach to all the filetypes it supports.
-      filetypes = { "typescript", "typescriptreact", "javascript" },
-      -- filetypes = { "typescript", "typescriptreact", "html", "json", "yaml", "graphql", "markdown" },
+      filetypes = {
+        "typescript",
+        "typescriptreact",
+        "javascript",
+        "html",
+        "json",
+        "yaml",
+        "graphql",
+        "markdown",
+        "css",
+      },
     },
     {
       exe = "stylua",
