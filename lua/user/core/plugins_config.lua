@@ -59,7 +59,7 @@ return {
   dadbod = { active = false },
   restconsole = { active = false },
   markdown_preview = { active = false },
-  -- aesth
+  -- ui
   nvimtree = { active = true },
   dashboard = { active = true },
   statusline = { active = true },
