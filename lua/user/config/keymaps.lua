@@ -144,7 +144,7 @@ function M:init()
   M.load(defaults)
 end
 
-local nmap, vmap, xmap, nnoremap, cnoremap, tnoremap, vnoremap, xnoremap, inoremap, snoremap =
+local nmap, vmap, xmap, nnoremap, cnoremap, tnoremap, vnoremap, xnoremap, inoremap =
   defaults.nmap,
   defaults.vmap,
   defaults.xmap,
@@ -153,8 +153,7 @@ local nmap, vmap, xmap, nnoremap, cnoremap, tnoremap, vnoremap, xnoremap, inorem
   defaults.tnoremap,
   defaults.vnoremap,
   defaults.xnoremap,
-  defaults.inoremap,
-  defaults.snoremap
+  defaults.inoremap
 
 local utils = require "user.utils"
 
@@ -394,9 +393,6 @@ nnoremap["<localleader>,"] = "<cmd>call utils#modify_line_end_delimiter(',')<cr>
 nnoremap["<localleader>;"] = "<cmd>call utils#modify_line_end_delimiter(';')<cr>"
 nnoremap["<localleader>."] = "<cmd>call utils#modify_line_end_delimiter('.')<cr>"
 
--- qflist
-nnoremap["<Leader>vo"] = ":copen<CR>"
-
 -- Quick find/replace
 local noisy = { silent = false }
 nnoremap["<leader>["] = { [[:%s/\<<C-r>=expand("<cword>")<CR>\>/]], noisy }
@@ -515,11 +511,6 @@ end
 -- vim-matchup
 if rvim.plugin.matchup.active then
   nnoremap["<Leader>vW"] = ":<c-u>MatchupWhereAmI?<CR>"
-end
-
--- lsp-installer
-if rvim.plugin.lsp_installer.active then
-  nnoremap["<Leader>LI"] = ":LspInstall "
 end
 
 -- nvim-tree
