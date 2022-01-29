@@ -162,7 +162,7 @@ end
 -----------------------------------------------------------------------------//
 -- Handler overrides
 -----------------------------------------------------------------------------//
-vim.diagnostic.config = { -- your config
+vim.diagnostic.config { -- your config
   virtual_text = rvim.lsp.diagnostics.virtual_text,
   signs = rvim.lsp.diagnostics.signs,
   underline = rvim.lsp.diagnostics.underline,
