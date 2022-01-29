@@ -67,8 +67,13 @@ end
 function M.setup(server_name, user_config)
   vim.validate { name = { server_name, "string" } }
 
-  if lsp_utils.is_client_active(server_name) and client_is_configured(server_name) then
-    Log:debug(string.format("[%q] is already configured. Ignoring repeated setup call.", server_name))
+  local already_configured = lsp_utils.is_client_active(server_name)
+    or client_is_configured(server_name)
+
+  if server_name ~= "html" and already_configured then
+    Log:debug(
+      string.format("[%q] is already configured. Ignoring repeated setup call.", server_name)
+    )
     return
   end
 
@@ -101,7 +106,10 @@ function M.setup(server_name, user_config)
 
   requested_server:on_ready(function()
     if install_notification then
-      vim.notify(string.format("Installation complete for [%s] server", requested_server.name), vim.log.levels.INFO)
+      vim.notify(
+        string.format("Installation complete for [%s] server", requested_server.name),
+        vim.log.levels.INFO
+      )
     end
     install_notification = false
     requested_server:setup(config)
