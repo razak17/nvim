@@ -301,11 +301,11 @@ end
 
 -- toggle_list
 nnoremap["<leader>ls"] = function()
-  utils.toggle_list "c"
+  rvim.toggle_list "c"
 end
 
-nnoremap["<leader>li"] = function()
-  utils.toggle_list "l"
+nnoremap["<leader>lx"] = function()
+  rvim.toggle_list "l"
 end
 
 nnoremap["<Leader>IM"] = function()

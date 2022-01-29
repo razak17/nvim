@@ -84,28 +84,6 @@ function M.open_link()
   end
 end
 
-function M.toggle_list(prefix)
-  for _, win in ipairs(api.nvim_list_wins()) do
-    local buf = api.nvim_win_get_buf(win)
-    local location_list = fn.getloclist(0, { filewinid = 0 })
-    local is_loc_list = location_list.filewinid > 0
-    if vim.bo[buf].filetype == "qf" or is_loc_list then
-      fn.execute(prefix .. "close")
-      return
-    end
-  end
-  if prefix == "l" and vim.tbl_isempty(fn.getloclist(0)) then
-    fn["utils#message"]("Location List is Empty.", "Title")
-    return
-  end
-
-  local winnr = fn.winnr()
-  fn.execute(prefix .. "open")
-  if fn.winnr() ~= winnr then
-    vim.cmd [[wincmd p]]
-  end
-end
-
 function M.ColorMyPencils()
   vim.cmd [[ hi! ColorColumn guibg=#aeacec ]]
   vim.cmd [[ hi! Normal ctermbg=none guibg=none ]]

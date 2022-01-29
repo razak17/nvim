@@ -1,50 +1,25 @@
-_GlobalCallbacks = _GlobalCallbacks or {}
-
-_G.rvim = { _store = _GlobalCallbacks }
-
 local fn = vim.fn
 local fmt = string.format
 local api = vim.api
 
-local oss = vim.loop.os_uname().sysname
-rvim.open_command = oss == "Darwin" and "open" or "xdg-open"
+-----------------------------------------------------------------------------//
+-- Global namespace
+-----------------------------------------------------------------------------//
+--- Inspired by @tjdevries' astraunauta.nvim/ @TimUntersberger's config
+--- store all callbacks in one global table so they are able to survive re-requiring this file
 
-function rvim._create(f)
-  table.insert(rvim._store, f)
-  return #rvim._store
-end
+_G.__rvim_global_callbacks = __rvim_global_callbacks or {}
 
-function rvim._execute(id, args)
-  rvim._store[id](args)
-end
+_G.rvim = {
+  _store = __rvim_global_callbacks,
+  --- work around to place functions in the global scope but namespaced within a table.
+  --- TODO: refactor this once nvim allows passing lua functions to mappings
+  mappings = {},
+}
 
-function rvim._create(f)
-  table.insert(rvim._store, f)
-  return #rvim._store
-end
-
-function rvim._execute(id, args)
-  rvim._store[id](args)
-end
-
-function rvim.T(str)
-  return vim.api.nvim_replace_termcodes(str, true, true, true)
-end
-
----Determine if a value of any type is empty
----@param item any
----@return boolean
-function rvim.empty(item)
-  if not item then
-    return true
-  end
-  local item_type = type(item)
-  if item_type == "string" then
-    return item == ""
-  elseif item_type == "table" then
-    return vim.tbl_isempty(item)
-  end
-end
+-----------------------------------------------------------------------------//
+-- Debugging
+-----------------------------------------------------------------------------//
 
 local installed
 ---Check if a plugin is on the system not whether or not it is loaded
@@ -72,6 +47,52 @@ function rvim.plugin_loaded(plugin_name)
   return plugins[plugin_name] and plugins[plugin_name].loaded
 end
 
+---Get the full path to `$RVIM_RUNTIME_DIR`
+---@return string
+function rvim.get_runtime_dir()
+  local rvim_runtime_dir = os.getenv "RVIM_RUNTIME_DIR"
+  if not rvim_runtime_dir then
+    -- when nvim is used directly
+    return vim.fn.stdpath "data"
+  end
+  return rvim_runtime_dir
+end
+
+---Get the full path to `$RVIM_CONFIG_DIR`
+---@return string
+function rvim.get_config_dir()
+  local rvim_config_dir = os.getenv "RVIM_CONFIG_DIR"
+  if not rvim_config_dir then
+    return vim.fn.stdpath "config"
+  end
+  return rvim_config_dir
+end
+
+---Get the full path to `$RVIM_CACHE_DIR`
+---@return string
+function rvim.get_cache_dir()
+  local rvim_cache_dir = os.getenv "RVIM_CACHE_DIR"
+  if not rvim_cache_dir then
+    return vim.fn.stdpath "cache"
+  end
+  return rvim_cache_dir
+end
+
+---Get the full path to `$RVIM_CONFIG_DIR/user`
+---@return string
+function rvim.get_user_dir()
+  local config_dir = os.getenv "RVIM_CONFIG_DIR"
+  if not config_dir then
+    config_dir = vim.fn.stdpath "config"
+  end
+  local rvim_config_dir = require("user.utils").join_paths(config_dir, "lua/user/")
+  return rvim_config_dir
+end
+
+-----------------------------------------------------------------------------//
+-- Utils
+-----------------------------------------------------------------------------//
+
 ---Check whether or not the location or quickfix list is open
 ---@return boolean
 function rvim.is_vim_list_open()
@@ -84,6 +105,15 @@ function rvim.is_vim_list_open()
     end
   end
   return false
+end
+
+function rvim._create(f)
+  table.insert(rvim._store, f)
+  return #rvim._store
+end
+
+function rvim._execute(id, args)
+  rvim._store[id](args)
 end
 
 ---@class Autocommand
@@ -159,6 +189,23 @@ function rvim.safe_require(module, opts)
   return ok, result
 end
 
+---Determine if a value of any type is empty
+---@param item any
+---@return boolean
+function rvim.empty(item)
+  if not item then
+    return true
+  end
+  local item_type = type(item)
+  if item_type == "string" then
+    return item == ""
+  elseif item_type == "table" then
+    return vim.tbl_isempty(item)
+  end
+end
+
+---Create an nvim command
+---@param args table
 function rvim.command(args)
   local nargs = args.nargs or 0
   local name = args[1]
@@ -202,11 +249,13 @@ function rvim.has(feature)
   return vim.fn.has(feature) > 0
 end
 
-rvim.nightly = rvim.has "nvim-0.7"
+local oss = vim.loop.os_uname().sysname
+rvim.open_command = oss == "Darwin" and "open" or "xdg-open"
 
----------------------------------------------------------------------------------
--- Toggle list
----------------------------------------------------------------------------------
+function rvim.T(str)
+  return vim.api.nvim_replace_termcodes(str, true, true, true)
+end
+
 --- Utility function to toggle the location or the quickfix list
 ---@param list_type '"quickfix"' | '"location"'
 ---@return nil
@@ -228,46 +277,4 @@ function rvim.toggle_list(list_type)
   if fn.winnr() ~= winnr then
     vim.cmd "wincmd p"
   end
-end
-
----Get the full path to `$RVIM_RUNTIME_DIR`
----@return string
-function rvim.get_runtime_dir()
-  local rvim_runtime_dir = os.getenv "RVIM_RUNTIME_DIR"
-  if not rvim_runtime_dir then
-    -- when nvim is used directly
-    return vim.fn.stdpath "data"
-  end
-  return rvim_runtime_dir
-end
-
----Get the full path to `$RVIM_CONFIG_DIR`
----@return string
-function rvim.get_config_dir()
-  local rvim_config_dir = os.getenv "RVIM_CONFIG_DIR"
-  if not rvim_config_dir then
-    return vim.fn.stdpath "config"
-  end
-  return rvim_config_dir
-end
-
----Get the full path to `$RVIM_CACHE_DIR`
----@return string
-function rvim.get_cache_dir()
-  local rvim_cache_dir = os.getenv "RVIM_CACHE_DIR"
-  if not rvim_cache_dir then
-    return vim.fn.stdpath "cache"
-  end
-  return rvim_cache_dir
-end
-
----Get the full path to `$RVIM_CONFIG_DIR/user`
----@return string
-function rvim.get_user_dir()
-  local config_dir = os.getenv "RVIM_CONFIG_DIR"
-  if not config_dir then
-    config_dir = vim.fn.stdpath "config"
-  end
-  local rvim_config_dir = require("user.utils").join_paths(config_dir, "lua/user/")
-  return rvim_config_dir
 end

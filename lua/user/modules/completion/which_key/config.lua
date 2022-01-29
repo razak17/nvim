@@ -81,7 +81,16 @@ return {
           "open vimrc",
         },
       },
-      l = { name = "+LocList", i = "empty", s = "toggle" },
+      l = {
+        name = "+Lsp",
+        d = { ":LspLog", "log" },
+        i = { ":LspInfo", "info" },
+        I = { ":LspInstallInfo", "installer info" },
+        r = { ":LspReload", "restart" },
+        l = "diagnostics",
+        s = "toggle",
+        x = "empty",
+      },
       n = {
         name = "+New",
         f = "open file in same dir",
@@ -299,13 +308,6 @@ return {
     o = { ":copen", "open qflist" },
     s = { ":SymbolsOutline", "Symbols outline" },
     v = { ":LspToggleVirtualText", "toggle virtual text" },
-  },
-  lsp_utils = {
-    name = "+LspUtils",
-    i = { ":LspInfo", "info" },
-    I = { ":LspInstallInfo", "installer info" },
-    l = { ":LspLog", "log" },
-    r = { ":LspReload", "restart" },
   },
   trouble = {
     name = "+Trouble",
