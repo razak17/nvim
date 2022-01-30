@@ -351,7 +351,7 @@ nnoremap["<Leader>x"] = ":q<CR>"
 vnoremap["<Leader>p"] = '"_dP'
 
 -- Reverse Line
-vnoremap["<Leader>rev"] = [[:s/\%V.\+\%V./\=utils#rev_str(submatch(0))<CR>gv]]
+vnoremap["<Leader>rv"] = [[:s/\%V.\+\%V./\=utils#rev_str(submatch(0))<CR>gv]]
 
 -- Next greatest remap ever : asbjornHaland
 nnoremap["<Leader>y"] = '"+y'
