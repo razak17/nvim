@@ -332,16 +332,6 @@ end
 nnoremap["<Leader>cw"] = ':h <C-R>=expand("<cword>")<CR><CR>'
 nnoremap["<Leader>bs"] = '/<C-R>=escape(expand("<cword>"), "/")<CR><CR>'
 
--- Tab navigation
-nnoremap["<Leader>sb"] = ":tabprevious<CR>"
-nnoremap["<Leader>sK"] = ":tablast<CR>"
-nnoremap["<Leader>sk"] = ":tabfirst<CR>"
-nnoremap["<Leader>sn"] = ":tabnext<CR>"
-nnoremap["<Leader>sN"] = ":tabnew<CR>"
-nnoremap["<Leader>sd"] = ":tabclose<CR>"
-nnoremap["<Leader>sH"] = ":-tabmove<CR>"
-nnoremap["<Leader>sL"] = ":+tabmove<CR>"
-
 -- Alternate way to quit
 nnoremap["<Leader>ax"] = ":wq!<CR>"
 nnoremap["<Leader>az"] = ":q!<CR>"
