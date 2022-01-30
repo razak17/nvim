@@ -369,7 +369,7 @@ nnoremap["<Leader>ad"] = ":bdelete!<CR>"
 nnoremap["<leader>al"] = "<C-^>"
 
 -- force save
-nnoremap["<leader>aS"] = ":w!<CR>"
+nnoremap["<leader>as"] = ":w!<CR>"
 
 -- Folds
 nnoremap["<S-Return>"] = "zMzvzt"

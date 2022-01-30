@@ -100,10 +100,8 @@ return function()
 
     -- playground
     if rvim.plugin.playground.active then
-      key_maps.a.I = { ":TSPlaygroundToggle", "toggle ts playground" }
-      if rvim.plugin_loaded "playground" then
-        key_maps.a.E = "Inspect token"
-      end
+      key_maps.a.I = { ":TSPlaygroundToggle", "toggle playground" }
+      key_maps.a.E = "Inspect token"
     end
 
     -- slide

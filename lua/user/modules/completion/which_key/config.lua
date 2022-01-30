@@ -29,6 +29,7 @@ return {
       Y = "yank all",
       a = {
         name = "+Actions",
+        [";"] = "open terminal",
         d = "force delete buffer",
         e = "turn off guides",
         f = {
@@ -48,6 +49,7 @@ return {
         R = "empty registers",
         v = "vertical split",
         x = "save and exit",
+        s = "force save",
         z = "force exit",
       },
       b = {
