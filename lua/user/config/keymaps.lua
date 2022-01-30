@@ -425,9 +425,9 @@ nnoremap["<Leader>IL"] = ":LuaCacheProfile<CR>"
 
 -- Buffers
 nnoremap["<Leader><Leader>"] = ":call v:lua.DelThisBuffer()<CR>"
-nnoremap["<Leader>bdh"] = ":call v:lua.DelToLeft()<CR>"
-nnoremap["<Leader>bda"] = ":call v:lua.DelAllBuffers()<CR>"
-nnoremap["<Leader>bdx"] = ":call v:lua.DelAllExceptCurrent()<CR>"
+nnoremap["<Leader>bH"] = ":call v:lua.DelToLeft()<CR>"
+nnoremap["<Leader>bx"] = ":call v:lua.DelAllBuffers()<CR>"
+nnoremap["<Leader>bc"] = ":call v:lua.DelAllExceptCurrent()<CR>"
 
 -----------------------------------------------------------------------------//
 -- Plugins
@@ -435,8 +435,8 @@ nnoremap["<Leader>bdx"] = ":call v:lua.DelAllExceptCurrent()<CR>"
 
 -- Bufferlline
 if rvim.plugin.bufferline.active then
-  nnoremap["<Leader>bn"] = ":BufferLineMoveNext<CR>"
-  nnoremap["<Leader>bb"] = ":BufferLineMovePrev<CR>"
+  nnoremap["<Leader>bl"] = ":BufferLineMoveNext<CR>"
+  nnoremap["<Leader>bh"] = ":BufferLineMovePrev<CR>"
   nnoremap["<S-l>"] = ":BufferLineCycleNext<CR>"
   nnoremap["<S-h>"] = ":BufferLineCyclePrev<CR>"
   nnoremap["gb"] = ":BufferLinePick<CR>"

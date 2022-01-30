@@ -52,15 +52,12 @@ return {
       },
       b = {
         name = "+Buffer",
-        n = "move next",
-        b = "move previous",
-        d = {
-          name = "+Delete",
-          a = "all",
-          h = "to left",
-          x = "all except current",
-        },
+        c = "delete all except current",
+        h = "move left",
+        H = "delete to left",
+        l = "move right",
         s = "highlight cursor word",
+        x = "delete all",
       },
       c = {
         name = "+Command",
