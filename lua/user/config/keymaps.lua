@@ -348,7 +348,7 @@ nnoremap["<Leader>az"] = ":q!<CR>"
 nnoremap["<Leader>x"] = ":q<CR>"
 
 -- Greatest remap ever
-vnoremap["<Leader>ap"] = '"_dP'
+vnoremap["<Leader>p"] = '"_dP'
 
 -- Reverse Line
 vnoremap["<Leader>rev"] = [[:s/\%V.\+\%V./\=utils#rev_str(submatch(0))<CR>gv]]
