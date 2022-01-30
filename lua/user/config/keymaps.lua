@@ -440,13 +440,13 @@ tnoremap["<leader><Tab>"] = [[<C-\><C-n>:close \| :bnext<cr>]]
 if rvim.plugin.bufferline.active then
   nnoremap["<Leader>bn"] = ":BufferLineMoveNext<CR>"
   nnoremap["<Leader>bb"] = ":BufferLineMovePrev<CR>"
-  nnoremap["<TAB>"] = ":BufferLineCycleNext<CR>"
-  nnoremap["<S-TAB>"] = ":BufferLineCyclePrev<CR>"
+  nnoremap["<S-l>"] = ":BufferLineCycleNext<CR>"
+  nnoremap["<S-h>"] = ":BufferLineCyclePrev<CR>"
   nnoremap["gb"] = ":BufferLinePick<CR>"
   -- TAB in general mode will move to next buffer, SHIFT-TAB will go back
 elseif not rvim.plugin.bufferline.active then
-  nnoremap["<TAB>"] = ":bnext<CR>"
-  nnoremap["<S-TAB>"] = ":bprevious<CR>"
+  nnoremap["<S-l>"] = ":bnext<CR>"
+  nnoremap["<S-h>"] = ":bprevious<CR>"
 end
 
 -- Vsnip
