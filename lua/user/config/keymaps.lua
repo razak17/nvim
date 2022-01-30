@@ -329,8 +329,8 @@ nnoremap["<leader>ae"] = function()
 end
 
 -- Search Files
-nnoremap["<Leader>cw"] = ':h <C-R>=expand("<cword>")<CR><CR>'
-nnoremap["<Leader>bs"] = '/<C-R>=escape(expand("<cword>"), "/")<CR><CR>'
+nnoremap["<Leader>H"] = ':h <C-R>=expand("<cword>")<CR><CR>'
+nnoremap["<Leader>B"] = '/<C-R>=escape(expand("<cword>"), "/")<CR><CR>'
 
 -- Alternate way to quit
 nnoremap["<Leader>ax"] = ":wq!<CR>"
@@ -414,7 +414,7 @@ nnoremap["<Leader>Im"] = ":messages<CR>"
 nnoremap["<Leader>IL"] = ":LuaCacheProfile<CR>"
 
 -- Buffers
-nnoremap["<Leader><Leader>"] = ":call v:lua.DelThisBuffer()<CR>"
+nnoremap["<Leader>c"] = ":call v:lua.DelThisBuffer()<CR>"
 nnoremap["<Leader>bH"] = ":call v:lua.DelToLeft()<CR>"
 nnoremap["<Leader>bx"] = ":call v:lua.DelAllBuffers()<CR>"
 nnoremap["<Leader>bc"] = ":call v:lua.DelAllExceptCurrent()<CR>"
@@ -440,7 +440,7 @@ end
 if rvim.plugin.vsnip.active then
   xmap["<C-x>"] = "<Plug>(vsnip-cut-text)"
   xmap["<C-l>"] = "<Plug>(vsnip-select-text)"
-  nnoremap["<leader>cs"] = ":VsnipOpen<CR> 1<CR><CR>"
+  nnoremap["<leader>S"] = ":VsnipOpen<CR> 1<CR><CR>"
   defaults.imap["<C-l>"] = {
     "vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'",
     { expr = true },
@@ -507,9 +507,9 @@ end
 
 -- nvim-tree
 if rvim.plugin.nvimtree.active then
-  nnoremap["<Leader>cv"] = ":NvimTreeToggle<CR>"
+  nnoremap["<Leader>e"] = ":NvimTreeToggle<CR>"
 else
-  nnoremap["<Leader>cv"] = ":Sex!<CR> :vertical resize 30<CR>"
+  nnoremap["<Leader>e"] = ":Sex!<CR> :vertical resize 30<CR>"
 end
 
 return M

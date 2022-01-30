@@ -118,14 +118,14 @@ return function()
 
     -- snippets
     if rvim.plugin_loaded "vim-vsnip" then
-      key_maps.c.s = "edit snippet"
+      key_maps.S = "edit snippet"
     end
 
     -- tree
     if rvim.plugin_loaded "nvim-tree.lua" then
-      key_maps.c.v = "nvim-tree toggle"
+      key_maps.e = "nvim-tree toggle"
     else
-      key_maps.c.v = "toggle netrw"
+      key_maps.e = "toggle netrw"
     end
 
     -- telescope

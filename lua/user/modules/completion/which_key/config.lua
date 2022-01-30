@@ -21,7 +21,9 @@ return {
       ['"'] = "wrap double quotes",
       [")"] = "wrap parenthesis",
       ["}"] = "wrap curly braces",
-      ["_"] = "delete buffer",
+      B = "highlight cursor word",
+      c = "delete buffer",
+      H = "help cword",
       x = { ":q", "Quit" },
       y = "Yank",
       A = "select all",
@@ -58,12 +60,7 @@ return {
         h = "move left",
         H = "delete to left",
         l = "move right",
-        s = "highlight cursor word",
         x = "delete all",
-      },
-      c = {
-        name = "+Command",
-        w = "help cword",
       },
       I = {
         name = "+Info",
