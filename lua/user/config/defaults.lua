@@ -10,6 +10,7 @@ return {
       ---@usage timeout number timeout in ms for the format request (Default: 1000)
       timeout = 1000,
     },
+    save_on_focus_lost = true,
     debug = false,
     defer = false,
     colorscheme = "zephyr",

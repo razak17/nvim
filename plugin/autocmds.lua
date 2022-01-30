@@ -257,7 +257,6 @@ rvim.augroup("PackerSetupInit", {
 })
 
 rvim.augroup("UpdateVim", {
-  { events = { "FocusLost" }, targets = { "*" }, command = "silent! wall" },
   -- Make windows equal size when vim resizes
   { events = { "VimResized" }, targets = { "*" }, command = "wincmd =" },
 })
@@ -274,7 +273,11 @@ rvim.augroup("WinBehavior", {
     targets = { "*" },
     command = [[if has('nvim') | wshada! | else | wviminfo! | endif]],
   },
-  { events = { "FocusLost" }, targets = { "*" }, command = "silent! wall" },
+  {
+    events = { "FocusLost" },
+    targets = { "*" },
+    command = rvim.common.save_on_focus_lost and "silent! wall",
+  },
   { events = { "TermOpen" }, targets = { "*:zsh" }, command = "startinsert" },
 })
 
