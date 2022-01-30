@@ -429,9 +429,6 @@ nnoremap["<Leader>bdh"] = ":call v:lua.DelToLeft()<CR>"
 nnoremap["<Leader>bda"] = ":call v:lua.DelAllBuffers()<CR>"
 nnoremap["<Leader>bdx"] = ":call v:lua.DelAllExceptCurrent()<CR>"
 
--- Terminal mode
-tnoremap["<leader><Tab>"] = [[<C-\><C-n>:close \| :bnext<cr>]]
-
 -----------------------------------------------------------------------------//
 -- Plugins
 -----------------------------------------------------------------------------//
