@@ -88,7 +88,7 @@ end
 
 function M.enable_format_on_save(opts)
   local fmd_cmd = string.format(":silent lua vim.lsp.buf.formatting_sync({}, %s)", opts.timeout_ms)
-  rvim.augroup("FormatOnSave", {
+  rvim.augroup("FormatOnFocusLost", {
     {
       events = { "BufWritePre" },
       targets = { opts.pattern },
@@ -96,6 +96,18 @@ function M.enable_format_on_save(opts)
     },
   })
   Log:debug "enabled format-on-save"
+end
+
+function M.enable_format_on_focus_lost(opts)
+  local fmd_cmd = string.format(":silent lua vim.lsp.buf.formatting_sync({}, %s)", opts.timeout_ms)
+  rvim.augroup("FormatOnFocusLost", {
+    {
+      events = { "FocusLost" },
+      targets = { opts.pattern },
+      command = fmd_cmd,
+    },
+  })
+  Log:debug "enabled format-on-focus-lost"
 end
 
 function M.disable_format_on_save()
@@ -113,6 +125,24 @@ function M.configure_format_on_save()
     M.enable_format_on_save(opts)
   else
     M.disable_format_on_save()
+  end
+end
+
+function M.disable_format_on_focus_lost()
+  rvim.remove_augroup "format_on_focus_lost"
+  Log:debug "disabled format-on-focus-lost"
+end
+
+function M.configure_format_on_focus_lost()
+  if rvim.common.format_on_focus_lost then
+    if vim.fn.exists "#format_on_focus_lost#FocusLost" == 1 then
+      rvim.remove_augroup "format_on_focus_lost"
+      Log:debug "reloading format-on-focus-lost configuration"
+    end
+    local opts = get_format_on_save_opts()
+    M.enable_format_on_focus_lost(opts)
+  else
+    M.disable_format_on_focus_lost()
   end
 end
 

@@ -11,6 +11,7 @@ return {
       timeout = 1000,
     },
     save_on_focus_lost = true,
+    format_on_focus_lost = true,
     debug = false,
     defer = false,
     colorscheme = "zephyr",

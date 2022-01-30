@@ -132,6 +132,8 @@ function M.setup()
   require("user.lsp.null-ls").setup()
 
   autocmds.configure_format_on_save()
+
+  autocmds.configure_format_on_focus_lost()
 end
 
 return M

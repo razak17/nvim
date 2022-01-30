@@ -276,7 +276,11 @@ rvim.augroup("WinBehavior", {
   {
     events = { "FocusLost" },
     targets = { "*" },
-    command = rvim.common.save_on_focus_lost and "silent! wall",
+    command = function()
+      if rvim.common.save_on_focus_lost then
+        vim.cmd "silent! wall"
+      end
+    end,
   },
   { events = { "TermOpen" }, targets = { "*:zsh" }, command = "startinsert" },
 })
