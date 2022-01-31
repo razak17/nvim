@@ -17,7 +17,7 @@ return {
       x = { ":q<CR>", "Quit" },
       y = "yank",
       A = "select all",
-      H = "help cword",
+      H = {':h <C-R>=expand("<cword>")<CR><CR>', "help cword"},
       D = "close all",
       S = "edit snippet",
       Y = "yank all",

@@ -329,7 +329,6 @@ nnoremap["<leader>ae"] = function()
 end
 
 -- Search Files
-nnoremap["<Leader>H"] = ':h <C-R>=expand("<cword>")<CR><CR>'
 nnoremap["<Leader>B"] = '/<C-R>=escape(expand("<cword>"), "/")<CR><CR>'
 
 -- Greatest remap ever
