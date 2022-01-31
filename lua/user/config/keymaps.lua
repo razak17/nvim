@@ -333,8 +333,8 @@ nnoremap["<Leader>H"] = ':h <C-R>=expand("<cword>")<CR><CR>'
 nnoremap["<Leader>B"] = '/<C-R>=escape(expand("<cword>"), "/")<CR><CR>'
 
 -- Alternate way to quit
-nnoremap["<Leader>ax"] = ":wq!<CR>"
-nnoremap["<Leader>az"] = ":q!<CR>"
+-- nnoremap["<Leader>ax"] = ":wq!<CR>"
+-- nnoremap["<Leader>az"] = ":q!<CR>"
 nnoremap["<Leader>x"] = ":q<CR>"
 
 -- Greatest remap ever
@@ -363,13 +363,13 @@ nnoremap["<localleader>wv"] = "<C-W>t <C-W>H<C-W>="
 -- Change two vertically split windows to horizontal splits
 nnoremap["<localleader>wh"] = "<C-W>t <C-W>K<C-W>="
 -- delete buffer
-nnoremap["<Leader>ad"] = ":bdelete!<CR>"
+-- nnoremap["<Leader>ad"] = ":bdelete!<CR>"
 
 -- opens the last buffer
 nnoremap["<leader>al"] = "<C-^>"
 
 -- force save
-nnoremap["<leader>as"] = ":w!<CR>"
+-- nnoremap["<leader>as"] = ":w!<CR>"
 
 -- Folds
 nnoremap["<S-Return>"] = "zMzvzt"
@@ -377,11 +377,11 @@ nnoremap["<Leader>afr"] = "zA" -- Recursively toggle
 nnoremap["<Leader>afl"] = "za" -- Toggle fold under the cursor
 nnoremap["<Leader>afo"] = "zR" -- Open all folds
 nnoremap["<Leader>afx"] = "zM" -- Close all folds
-nnoremap["<Leader>aO"] = ":<C-f>:resize 10<CR>" -- Close all folds
+-- nnoremap["<Leader>aO"] = ":<C-f>:resize 10<CR>" -- Close all folds
 
 -- Window Resize
-nnoremap["<Leader>aF"] = ":vertical resize 90<CR>"
-nnoremap["<Leader>aL"] = ":vertical resize 40<CR>"
+-- nnoremap["<Leader>aF"] = ":vertical resize 90<CR>"
+-- nnoremap["<Leader>aL"] = ":vertical resize 40<CR>"
 
 -- Conditionally modify character at end of line
 nnoremap["<localleader>,"] = "<cmd>call utils#modify_line_end_delimiter(',')<cr>"
@@ -407,11 +407,11 @@ nnoremap["<leader>)"] = [[ciw(<c-r>")<esc>]]
 nnoremap["<leader>}"] = [[ciw{<c-r>"}<esc>]]
 
 -- Health check
-nnoremap["<Leader>IC"] = ":checkhealth<CR>"
-nnoremap["<Leader>Im"] = ":messages<CR>"
+-- nnoremap["<Leader>IC"] = ":checkhealth<CR>"
+-- nnoremap["<Leader>Im"] = ":messages<CR>"
 
 -- Cache profile
-nnoremap["<Leader>IL"] = ":LuaCacheProfile<CR>"
+-- nnoremap["<Leader>IL"] = ":LuaCacheProfile<CR>"
 
 -- Buffers
 -- nnoremap["<Leader>c"] = ":call v:lua.DelThisBuffer()<CR>"
