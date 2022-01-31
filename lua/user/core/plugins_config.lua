@@ -7,7 +7,7 @@ return {
     nvim_lsp_installer = "88e44bbbe2e03523e08f2bd3c9a954675bc438f4",
     nvim_lspconfig = "c51096481dc13193991571b7132740d762902355",
     nvim_tree = "2dfed89af7724f9e71d2fdbe3cde791a93e9b9e0",
-    nvim_treesitter = "5e3a93f365094eb7c6ed2a9ef0a6277da3b53201"
+    nvim_treesitter = "5e3a93f365094eb7c6ed2a9ef0a6277da3b53201",
   },
   -- SANE defaults
   SANE = { active = false },
@@ -69,6 +69,7 @@ return {
   indent_line = { active = true },
   -- completion
   which_key = { active = true },
+  vim_which_key = { active = false },
   plenary = { active = true },
   popup = { active = true },
   cmp = { active = true },

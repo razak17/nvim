@@ -1,83 +1,19 @@
 return function()
-  rvim.which_key = {
-    setup = {
-      plugins = {
-        marks = true, -- shows a list of your marks on ' and `
-        registers = true, -- shows your registers on " in NORMAL or <C-r> in INSERT mode
-        -- the presets plugin, adds help for a bunch of default keybindings in Neovim
-        -- No actual key bindings are created
-        presets = {
-          operators = false, -- adds help for operators like d, y, ...
-          motions = false, -- adds help for motions
-          text_objects = false, -- help for text objects triggered after entering an operator
-          windows = true, -- default bindings on <c-w>
-          nav = true, -- misc bindings to work with windows
-          z = true, -- bindings for folds, spelling and others prefixed with z
-          g = true, -- bindings for prefixed with g
-        },
-        spelling = { enabled = true, suggestions = 20 }, -- use which-key for spelling hints
-      },
-      icons = {
-        breadcrumb = "»", -- symbol used in the command line area that shows your active key combo
-        separator = "", -- symbol used between a key and it's label
-        group = "+", -- symbol prepended to a group
-      },
-      window = {
-        border = "single", -- none, single, double, shadow
-        position = "bottom", -- bottom, top
-        margin = { 1, 0, 1, 0 }, -- extra window margin [top, right, bottom, left]
-        padding = { 2, 2, 2, 2 }, -- extra window padding [top, right, bottom, left]
-      },
-      layout = {
-        height = { min = 4, max = 25 }, -- min and max height of the columns
-        width = { min = 20, max = 50 }, -- min and max width of the columns
-        spacing = 3, -- spacing between columns
-      },
-      hidden = { "<silent>", "<cmd>", "<Cmd>", "<CR>", "call", "lua", "^:", "^ " }, -- hide mapping boilerplate
-      show_help = true, -- show help message on the command line when the popup is visible
-    },
+  for opt, val in pairs(rvim.wk.defaults) do
+    vim.g["which_key_" .. opt] = val
+  end
 
-    opts = {
-      mode = "n", -- NORMAL mode
-      prefix = "<leader>",
-      buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
-      silent = true, -- use `silent` when creating keymaps
-      noremap = true, -- use `noremap` when creating keymaps
-      nowait = true, -- use `nowait` when creating keymaps
-    },
-    vopts = {
-      mode = "v", -- VISUAL mode
-      prefix = "<leader>",
-      buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
-      silent = true, -- use `silent` when creating keymaps
-      noremap = true, -- use `noremap` when creating keymaps
-      nowait = true, -- use `nowait` when creating keymaps
-    },
-    -- NOTE: Prefer using : over <cmd> as the latter avoids going back in normal-mode.
-    -- see https://neovim.io/doc/user/map.html#:map-cmd
-    vmappings = {},
-    mappings = {},
-  }
+  vim.fn["which_key#register"]("<space>", "g:which_key_map")
 
-  local which_key = require "which-key"
-
-  which_key.setup(rvim.which_key.setup)
-
-  _G.WhichKey = {}
+  _G.VimWhichKey = {}
 
   -- Set default keymaps
-  vim.g.which_key_map = rvim.wk.keymaps.defaults
+  vim.g.vim_which_key_map = rvim.wk.keymaps.defaults
 
   -- plugin keymaps
-  WhichKey.SetKeyOnFT = function()
+  VimWhichKey.SetKeyOnFT = function()
     -- Get Which-Key keymap
-    local key_maps = vim.g.which_key_map
-
-    -- bookmarks
-    if rvim.plugin.bufferline.active then
-      key_maps.b.h = "move left"
-      key_maps.b.l = "move right"
-    end
+    local key_maps = vim.g.vim_which_key_map
 
     -- bookmarks
     if rvim.plugin_loaded "vim-bookmarks" then
@@ -94,6 +30,11 @@ return function()
       key_maps.d.e = rvim.wk.dap_ui.toggle
       key_maps.d.i = rvim.wk.dap_ui.inspect
     end
+
+    -- dashboard
+    -- if rvim.plugin_loaded "dashboard-nvim" then
+    --   key_maps.S = rvim.wk.dashboard
+    -- end
 
     -- DOGE
     if rvim.plugin_loaded "vim-doge" then
@@ -222,18 +163,12 @@ return function()
       key_maps.a.u = { ":UndotreeToggle", "toggle undotree" }
     end
 
-    -- Register keymaps
-    local opts = rvim.which_key.opts
-    local vopts = rvim.which_key.vopts
-
-    -- local vmappings = rvim.which_key.vmappings
-
-    which_key.register(key_maps, opts)
-    -- which_key.register(vmappings, vopts)
+    -- Update Which-Key keymap
+    vim.g.which_key_map = key_maps
   end
 
   rvim.augroup("WhichKeySetKeyOnFT", {
-    { events = { "BufEnter" }, targets = { "*" }, command = "call v:lua.WhichKey.SetKeyOnFT()" },
+    { events = { "BufEnter" }, targets = { "*" }, command = "call v:lua.VimWhichKey.SetKeyOnFT()" },
   })
 
   rvim.augroup("WhichKeyMode", {

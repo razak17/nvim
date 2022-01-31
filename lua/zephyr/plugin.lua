@@ -176,7 +176,7 @@ return {
   WhichKey = { fg = P.pink },
   WhichKeyName = { fg = P.yellow },
   WhichKeyTrigger = { fg = P.black },
-  WhichKeyFloating = { fg = P.red },
+  WhichKeyFloat = { fg = P.red },
   WhichKeySeperator = { fg = P.yellowgreen },
   WhichKeyGroup = { fg = P.pale_blue },
   WhichKeyDesc = { fg = P.dark_cyan },

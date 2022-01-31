@@ -3,7 +3,11 @@ local completion = {}
 local utils = require "user.utils"
 
 completion["liuchengxu/vim-which-key"] = {
-  event = { "BufWinEnter" },
+  config = utils.load_conf("completion", "vim_which_key"),
+  disable = not rvim.plugin.vim_which_key.active,
+}
+
+completion["folke/which-key.nvim"] = {
   config = utils.load_conf("completion", "which_key"),
   disable = not rvim.plugin.which_key.active,
 }

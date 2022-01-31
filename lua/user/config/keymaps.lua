@@ -414,7 +414,7 @@ nnoremap["<Leader>Im"] = ":messages<CR>"
 nnoremap["<Leader>IL"] = ":LuaCacheProfile<CR>"
 
 -- Buffers
-nnoremap["<Leader>c"] = ":call v:lua.DelThisBuffer()<CR>"
+-- nnoremap["<Leader>c"] = ":call v:lua.DelThisBuffer()<CR>"
 nnoremap["<Leader>bH"] = ":call v:lua.DelToLeft()<CR>"
 nnoremap["<Leader>bx"] = ":call v:lua.DelAllBuffers()<CR>"
 nnoremap["<Leader>bc"] = ":call v:lua.DelAllExceptCurrent()<CR>"
@@ -480,7 +480,7 @@ if rvim.plugin.fterm.active then
 end
 
 -- WhichKey
-if rvim.plugin.which_key.active then
+if rvim.plugin.vim_which_key.active then
   nnoremap["<leader>"] = ':<c-u> :WhichKey "<space>"<CR>'
   nnoremap["<localleader>"] = ':<c-u> :WhichKey "<space>"<CR>'
   vnoremap["<leader>"] = ':<c-u> :WhichKeyVisual "<space>"<CR>'

@@ -28,8 +28,8 @@ function M:init()
   local plugins_config = require "user.core.plugins_config"
   rvim.plugin = vim.deepcopy(plugins_config)
 
-  local whichkey_config = require "user.modules.completion.which_key.config"
-  rvim.wk = vim.deepcopy(whichkey_config)
+  local which_key_config = require "user.modules.completion.which_key.config"
+  rvim.wk = vim.deepcopy(which_key_config)
 
   require("user.lsp.manager").init_defaults()
 
