@@ -183,8 +183,6 @@ return function()
     -- tree
     if rvim.plugin_loaded "nvim-tree.lua" then
       key_maps.e = "nvim-tree toggle"
-    else
-      key_maps.e = "toggle netrw"
     end
 
     -- telescope
