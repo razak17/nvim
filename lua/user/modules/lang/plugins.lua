@@ -157,4 +157,8 @@ lang["windwp/nvim-autopairs"] = {
   disable = not rvim.plugin.autopairs.active,
 }
 
+lang["simrat39/rust-tools.nvim"] = {
+  disable = not rvim.plugin.rust_tools.active,
+}
+
 return lang

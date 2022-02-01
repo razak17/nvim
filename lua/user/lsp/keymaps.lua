@@ -97,6 +97,10 @@ function M.setup_keymaps(client, bufnr)
     }
   end
 
+  if client.supports_method "textDocument/codeLens" then
+    maps.n["<leader>lc"] = { "<cmd>lua vim.lsp.codelens.run()<cr>", "codelens action" }
+  end
+
   for mode, value in pairs(maps) do
     wk.register(value, { buffer = bufnr, mode = mode })
   end

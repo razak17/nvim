@@ -71,6 +71,7 @@ return {
     "pylsp",
     "quick_lint_js",
     "remark_ls",
+    "rust_analyzer",
     "rome",
     "solang",
     "solidity_ls",

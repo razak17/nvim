@@ -28,6 +28,7 @@ return {
   bqf = { active = false },
   trouble = { active = false },
   renamer = { active = false },
+  rust_tools = { active = true },
   -- treesitter
   treesitter = { active = true },
   playground = { active = true },
