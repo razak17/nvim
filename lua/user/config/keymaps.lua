@@ -219,7 +219,7 @@ nnoremap["<leader>U"] = "gUiw`]"
 inoremap["<C-u>"] = "<cmd>norm!gUiw`]a<CR>"
 
 -- Switch between the last two files
-nnoremap["<leader><leader>"] = [[<c-^>]]
+-- nnoremap["<leader><leader>"] = [[<c-^>]]
 
 -- Credit: Justinmk
 nnoremap["g>"] = [[<cmd>set nomore<bar>40messages<bar>set more<CR>]]
