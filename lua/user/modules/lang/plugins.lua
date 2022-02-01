@@ -57,7 +57,7 @@ lang["jose-elias-alvarez/null-ls.nvim"] = {
   disable = not rvim.plugin.null_ls.active,
 }
 
-lang["filipdutescu/renamer.nvim"] = {
+lang["razak17/renamer.nvim"] = {
   config = function()
     local ok, renamer = rvim.safe_require "renamer"
     if not ok then
@@ -67,7 +67,7 @@ lang["filipdutescu/renamer.nvim"] = {
       title = "Rename",
     }
   end,
-  branch = "master",
+  branch = "develop",
   disable = not rvim.plugin.renamer.active,
 }
 

@@ -11,7 +11,6 @@ function M.setup_keymaps(client, bufnr)
     n = {
       ["K"] = { vim.lsp.buf.hover, "lsp: hover" },
       ["gd"] = { vim.lsp.buf.definition, "lsp: definition" },
-      ["ge"] = { vim.lsp.buf.declaration, "lsp: declaration" },
       ["gr"] = { vim.lsp.buf.references, "lsp: references" },
       ["gl"] = {
         "<cmd>lua require'user.lsp.utils'.show_line_diagnostics()<CR>",
@@ -20,6 +19,10 @@ function M.setup_keymaps(client, bufnr)
     },
     x = {},
   }
+
+  if client.resolved_capabilities.declaration then
+    maps.n["ge"] = { vim.lsp.buf.declaration, "lsp: declaration" }
+  end
 
   if client.resolved_capabilities.implementation then
     maps.n["gi"] = { vim.lsp.buf.implementation, "lsp: impementation" }

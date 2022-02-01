@@ -27,7 +27,7 @@ return {
   symbols_outline = { active = false },
   bqf = { active = false },
   trouble = { active = false },
-  renamer = { active = false },
+  renamer = { active = true },
   rust_tools = { active = true },
   -- treesitter
   treesitter = { active = true },
