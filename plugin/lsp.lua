@@ -75,16 +75,6 @@ command {
   end,
 }
 
-command {
-  "LspReload",
-  function()
-    vim.cmd [[
-      :lua vim.lsp.stop_client(vim.lsp.get_active_clients())
-      :edit
-    ]]
-  end,
-}
-
 rvim.nnoremap("<leader>lw", "<Cmd>LspDiagnostics<CR>", "toggle quickfix diagnostics")
 
 -----------------------------------------------------------------------------//

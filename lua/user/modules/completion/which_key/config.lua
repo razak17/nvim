@@ -165,11 +165,10 @@ return {
     p = {
       name = "+Peek",
     },
-    -- r = { ":LspReload<CR>", "restart" },
     L = "toggle locflist",
     s = { ":Telescope lsp_document_symbols<CR>", "document symbols" },
     S = { ":Telescope lsp_dynamic_workspace_symbols<CR>", "workspace symbols" },
-    w = "set qflist",
+    w = { ":LspDiagnostics<CR>", "set qflist" },
     W = "toggle qflist",
     x = "empty qflist",
   },
