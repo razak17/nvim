@@ -27,22 +27,22 @@ function M.setup_keymaps(client, bufnr)
 
   if client.resolved_capabilities.type_definition then
     maps.n["gt"] = { vim.lsp.buf.type_definition, "lsp: go to type definition" }
-
-    if client.supports_method "textDocument/rename" then
-      maps.n["gn"] = { vim.lsp.buf.rename, "lsp: go to type definition" }
-    end
   end
-
-  -- if client.supports_method "textDocument/rename" then
-  --   local renamer = require("renamer").rename or vim.lsp.buf.rename
-  --   maps.n["<leader>rn"] = { renamer, "lsp: rename" }
-  -- end
 
   if client.supports_method "textDocument/prepareCallHierarchy" then
     maps.n["gI"] = { vim.lsp.buf.incoming_calls, "lsp: incoming calls" }
   end
 
   -- leader keymaps
+
+  if client.supports_method "textDocument/rename" then
+    local ok, renamer = rvim.safe_require "renamer"
+    local active = ok and rvim.plugin.renamer.active
+
+    local rename = active and renamer.rename or vim.lsp.buf.rename
+    maps.n["<leader>lr"] = { rename, "lsp: rename" }
+  end
+
   maps.n["<leader>lpd"] = {
     "<cmd>lua require('user.lsp.peek').Peek('definition')<cr>",
     "peek definition",
