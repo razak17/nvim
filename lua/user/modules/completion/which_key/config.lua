@@ -13,7 +13,7 @@ return {
       [")"] = "wrap parenthesis",
       ["}"] = "wrap curly braces",
       B = "highlight word",
-      c = { ":bdelete!<CR>", "close buffer" },
+      c = { ":bdelete<CR>", "close buffer" },
       x = { ":q<CR>", "Quit" },
       y = "yank",
       A = "select all",
