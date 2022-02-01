@@ -250,7 +250,6 @@ return function()
       ["gd"] = "lsp: go to type definition",
       ["gr"] = "lsp: go to refernces",
       ["gt"] = "lsp: go to type definition",
-      [""] = "",
     }
 
     which_key.register(key_maps, opts)
