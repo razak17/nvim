@@ -64,13 +64,13 @@ return {
         l = { "<cmd>lua vim.fn.execute('edit ' .. vim.lsp.get_log_path())<cr>", "lsp: open logfile" },
         i = { ":LuaCacheProfile<cr>", "impatient: cache profile" },
         m = { ":messages<cr>", "messages" },
+        M = "vim with me",
         p = { "<cmd>exe 'edit '.stdpath('cache').'/packer.nvim.log'<cr>", "packer: open logfile" },
-        P = {
+        s = {
           "<cmd>lua vim.fn.execute('edit ' .. require('user.utils').join_paths(rvim.get_cache_dir(), 'prof.log'))<cr>",
-          "open profiling logs",
+          "open startuptime logs",
         },
         u = { ":UpdateRemotePlugins<cr>", "far: update remote" },
-        M = "vim with me",
         v = {
           ":e " .. require("user.utils").join_paths(rvim.get_config_dir(), "init.lua"),
           "open vimrc",
