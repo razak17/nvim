@@ -8,7 +8,7 @@ ui["glepnir/dashboard-nvim"] = {
   disable = not rvim.plugin.dashboard.active and not rvim.plugin.SANE.active,
 }
 
-ui["akinsho/nvim-bufferline.lua"] = {
+ui["akinsho/bufferline.nvim"] = {
   event = { "BufRead" },
   config = utils.load_conf("ui", "bufferline"),
   disable = not rvim.plugin.bufferline.active and not rvim.plugin.SANE.active,
