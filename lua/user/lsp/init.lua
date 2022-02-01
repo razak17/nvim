@@ -39,6 +39,13 @@ local function lsp_setup_keymaps(client, bufnr)
   require("user.lsp.keymaps").setup_keymaps(client, bufnr)
 end
 
+local function lsp_setup_tagfunc(client, bufnr)
+  if not client.resolved_capabilities.goto_definition then
+    return
+  end
+  vim.bo[bufnr].tagfunc = "v:lua.rvim.lsp_tagfunc"
+end
+
 function M.global_capabilities()
   local capabilities = vim.lsp.protocol.make_client_capabilities()
   capabilities.textDocument.completion.completionItem.snippetSupport = true
@@ -109,6 +116,7 @@ function M.global_on_attach(client, bufnr)
   lsp_code_lens_refresh(client)
   lsp_hover_diagnostics()
   lsp_setup_keymaps(client, bufnr)
+  lsp_setup_tagfunc(client, bufnr)
 end
 
 local function bootstrap_nlsp(opts)

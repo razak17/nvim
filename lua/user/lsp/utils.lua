@@ -33,4 +33,31 @@ function M.conditional_document_highlight(id)
   vim.lsp.buf.document_highlight()
 end
 
+function rvim.lsp_tagfunc(pattern, flags)
+  if flags ~= "c" then
+    return vim.NIL
+  end
+  local params = vim.lsp.util.make_position_params()
+  local client_id_to_results, err = vim.lsp.buf_request_sync(
+    0,
+    "textDocument/definition",
+    params,
+    500
+  )
+  assert(not err, vim.inspect(err))
+
+  local results = {}
+  for _, lsp_results in ipairs(client_id_to_results) do
+    for _, location in ipairs(lsp_results.result or {}) do
+      local start = location.range.start
+      table.insert(results, {
+        name = pattern,
+        filename = vim.uri_to_fname(location.uri),
+        cmd = string.format("call cursor(%d, %d)", start.line + 1, start.character + 1),
+      })
+    end
+  end
+  return results
+end
+
 return M
