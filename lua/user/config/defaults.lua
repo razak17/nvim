@@ -4,6 +4,7 @@ return {
     localleader = "space",
     transparent_window = false,
     line_wrap_cursor_movement = false,
+    snippets_dir = rvim.get_config_dir() .. "/external/snippets",
     format_on_save = {
       ---@usage pattern string pattern used for the autocommand (Default: '*')
       pattern = "*",
