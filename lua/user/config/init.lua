@@ -48,7 +48,7 @@ function M:load()
 
   require("user.core.commands"):init()
 
-  require "user.config.keymaps"
+  require "user.core.keymaps"
 
   require("user.utils.keymaps"):init(rvim.keymaps)
 end
