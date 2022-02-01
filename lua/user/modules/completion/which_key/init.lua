@@ -160,7 +160,7 @@ return function()
     -- playground
     if rvim.plugin.playground.active then
       key_maps.a.I = { ":TSPlaygroundToggle", "toggle playground" }
-      key_maps.a.E = "Inspect token"
+      key_maps.E = "Inspect token"
     end
 
     -- slide
@@ -236,8 +236,26 @@ return function()
       },
     }
 
+    local no_leader = {
+      ["]"] = {
+        name = "+next",
+        ["<space>"] = "add space below",
+      },
+      ["["] = {
+        name = "+prev",
+        ["<space>"] = "add space above",
+      },
+      ["g>"] = "show message history",
+      ["gb"] = "lsp: go to buffer",
+      ["gd"] = "lsp: go to type definition",
+      ["gr"] = "lsp: go to refernces",
+      ["gt"] = "lsp: go to type definition",
+      [""] = "",
+    }
+
     which_key.register(key_maps, opts)
     which_key.register(vmappings, vopts)
+    which_key.register(no_leader)
   end
 
   rvim.augroup("WhichKeySetKeyOnFT", {

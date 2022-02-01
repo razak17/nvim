@@ -194,6 +194,10 @@ nnoremap["<right>"] = "<nop>"
 xnoremap["K"] = ":m '<-2<CR>gv=gv"
 xnoremap["J"] = ":m '>+1<CR>gv=gv"
 
+-- Add Empty space above and below
+nnoremap["[<space>"] = [[<cmd>put! =repeat(nr2char(10), v:count1)<cr>'[]]
+nnoremap["]<space>"] = [[<cmd>put =repeat(nr2char(10), v:count1)<cr>]]
+
 -- Paste in visual mode multiple times
 xnoremap["p"] = "pgvy"
 
@@ -209,6 +213,16 @@ vnoremap[">"] = ">gv"
 
 -- search visual selection
 vnoremap["//"] = [[y/<C-R>"<CR>]]
+
+-- Capitalize
+nnoremap["<leader>U"] = "gUiw`]"
+inoremap["<C-u>"] = "<cmd>norm!gUiw`]a<CR>"
+
+-- Switch between the last two files
+nnoremap["<leader><leader>"] = [[<c-^>]]
+
+-- Credit: Justinmk
+nnoremap["g>"] = [[<cmd>set nomore<bar>40messages<bar>set more<CR>]]
 
 -- find visually selected text
 vnoremap["*"] = [[y/<C-R>"<CR>]]
@@ -472,7 +486,7 @@ end
 
 -- ts playground
 if rvim.plugin.playground.active then
-  nnoremap["<leader>aE"] = function()
+  nnoremap["<leader>E"] = function()
     utils.inspect_token()
   end
 end

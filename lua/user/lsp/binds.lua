@@ -31,7 +31,6 @@ local function lsp_mappings(client)
   if client.supports_method "textDocument/type_definition" then
     nnoremap("gt", vim.lsp.buf.type_definition)
   end
-
   -- Rename
   if client.supports_method "textDocument/rename" then
     nnoremap("gn", vim.lsp.buf.rename)
