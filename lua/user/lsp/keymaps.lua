@@ -13,6 +13,10 @@ function M.setup_keymaps(client, bufnr)
       ["gd"] = { vim.lsp.buf.definition, "lsp: definition" },
       ["ge"] = { vim.lsp.buf.declaration, "lsp: declaration" },
       ["gr"] = { vim.lsp.buf.references, "lsp: references" },
+      ["gl"] = {
+        "<cmd>lua require'user.lsp.utils'.show_line_diagnostics()<CR>",
+        "lsp: line diagnostics",
+      },
     },
     x = {},
   }

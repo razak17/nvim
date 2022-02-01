@@ -118,11 +118,10 @@ lang["nvim-treesitter/playground"] = {
   disable = not rvim.plugin.playground.active,
 }
 
-lang["p00f/nvim-ts-rainbow"] =
-  {
-    after = "nvim-treesitter",
-    disable = not rvim.plugin.rainbow.active,
-  }
+lang["p00f/nvim-ts-rainbow"] = {
+  after = "nvim-treesitter",
+  disable = not rvim.plugin.rainbow.active,
+}
 
 lang["andymass/vim-matchup"] = {
   event = "VimEnter",
