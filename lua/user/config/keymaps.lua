@@ -173,7 +173,7 @@ nnoremap["<leader>lL"] = function()
   rvim.toggle_list "location"
 end
 
-nnoremap["<Leader>IM"] = function()
+nnoremap["<Leader>LM"] = function()
   utils.ColorMyPencils()
 end
 

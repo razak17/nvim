@@ -18,13 +18,6 @@ end
 local command = rvim.command
 
 command {
-  "LspLog",
-  function()
-    vim.cmd("edit " .. vim.lsp.get_log_path())
-  end,
-}
-
-command {
   "LspFormat",
   function()
     vim.lsp.buf.formatting_sync(nil, 1000)

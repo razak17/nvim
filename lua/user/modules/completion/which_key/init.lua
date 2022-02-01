@@ -130,8 +130,8 @@ return function()
 
     -- kommentary
     if rvim.plugin.kommentary.active then
-      key_maps["/"] = rvim.wk.kommentary["/"]
-      key_maps.a["/"] = rvim.wk.kommentary.a["/"]
+      key_maps["/"] = { "<Plug>kommentary_line_default", "comment" }
+      key_maps.a["/"] = { "<Plug>kommentary_motion_default", "comment motion default" }
     end
 
     -- lsp
@@ -214,8 +214,8 @@ return function()
 
     -- treesitter
     if rvim.plugin_loaded "nvim-treesitter" then
-      key_maps.I.e = { ":TSInstallInfo", "ts info" }
-      key_maps.I.u = { ":TSUpdate", "ts update" }
+      key_maps.L.e = { ":TSInstallInfo<cr>", "treesitter: info" }
+      key_maps.L.u = { ":TSUpdate<cr>", "treesitter: update" }
     end
 
     -- trouble

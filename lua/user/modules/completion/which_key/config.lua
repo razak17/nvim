@@ -50,15 +50,22 @@ return {
         name = "+Bufferline",
         c = "close all others",
       },
-      I = {
-        name = "+Info",
+      L = {
+        name = "+Rvim",
         c = {
-          ":e " .. require("user.utils").join_paths(rvim.get_user_dir(), "config/init.lua<cr>"),
-          "open config/init.lua",
+          "<cmd>lua vim.fn.execute('edit ' .. require('user.utils').join_paths(rvim.get_user_dir(), 'config/init.lua'))<cr>",
+          "open config file",
         },
         C = { ":checkhealth<cr>", "check health" },
-        L = { ":LuaCacheProfile<cr>", "cache profile" },
+        d = {
+          "<cmd>lua vim.fn.execute('edit ' .. require('user.core.log').get_path())<cr>",
+          "Open rvim logfile",
+        },
+        l = { "<cmd>lua vim.fn.execute('edit ' .. vim.lsp.get_log_path())<cr>", "lsp: open logfile" },
+        i = { ":LuaCacheProfile<cr>", "impatient: cache profile" },
         m = { ":messages<cr>", "messages" },
+        p = { "<cmd>exe 'edit '.stdpath('cache').'/packer.nvim.log'<cr>", "packer: open logfile" },
+        u = { ":UpdateRemotePlugins<cr>", "far: update remote" },
         M = "vim with me",
         v = {
           ":e " .. require("user.utils").join_paths(rvim.get_config_dir(), "init.lua"),
@@ -154,7 +161,6 @@ return {
   },
   lsp = {
     name = "+Lsp",
-    d = { ":LspLog<cr>", "log" },
     i = { ":LspInfo<cr>", "info" },
     I = { ":LspInstallInfo<cr>", "installer info" },
     n = { ":NullLsInfo<cr>", "null-ls info" },
@@ -162,16 +168,12 @@ return {
     p = {
       name = "+Peek",
     },
-    L = "toggle locflist",
+    L = "toggle loclist",
     s = { ":Telescope lsp_document_symbols<cr>", "document symbols" },
     S = { ":Telescope lsp_dynamic_workspace_symbols<cr>", "workspace symbols" },
     W = { ":LspDiagnostics<cr>", "set qflist" },
     w = "toggle qflist",
     x = "empty qflist",
-  },
-  kommentary = {
-    ["/"] = { "<Plug>kommentary_line_default", "comment" },
-    a = { ["/"] = { "<Plug>kommentary_motion_default", "comment motion default" } },
   },
   dap = {
     name = "+Debug",
