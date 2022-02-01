@@ -46,8 +46,6 @@ function M:load()
 
   require("user.core.opts"):init()
 
-  require "user.core.whitespace"
-
   require("user.core.commands"):init()
 
   require "user.config.keymaps"
