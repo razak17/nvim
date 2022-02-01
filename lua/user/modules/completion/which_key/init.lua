@@ -232,7 +232,6 @@ return function()
       y = "next greatest",
       l = {
         name = "+Lsp",
-        a = "range code actions",
       },
     }
 
@@ -247,9 +246,7 @@ return function()
       },
       ["g>"] = "show message history",
       ["gb"] = "lsp: go to buffer",
-      ["gd"] = "lsp: go to type definition",
-      ["gr"] = "lsp: go to refernces",
-      ["gt"] = "lsp: go to type definition",
+      ["ds"] = "surround: delete",
     }
 
     which_key.register(key_maps, opts)

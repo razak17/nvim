@@ -31,6 +31,14 @@ local function lsp_code_lens_refresh(client)
   end
 end
 
+local function lsp_setup_keymaps(client, bufnr)
+  if client == nil then
+    return
+  end
+
+  require("user.lsp.keymaps").setup_keymaps(client, bufnr)
+end
+
 function M.global_capabilities()
   local capabilities = vim.lsp.protocol.make_client_capabilities()
   capabilities.textDocument.completion.completionItem.snippetSupport = true
@@ -100,7 +108,7 @@ function M.global_on_attach(client, bufnr)
   lsp_highlight_document(client)
   lsp_code_lens_refresh(client)
   lsp_hover_diagnostics()
-  require("user.lsp.binds"):init(client)
+  lsp_setup_keymaps(client, bufnr)
 end
 
 local function bootstrap_nlsp(opts)

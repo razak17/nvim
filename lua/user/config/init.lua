@@ -32,8 +32,6 @@ function M:init()
   rvim.wk = vim.deepcopy(which_key_config)
 
   require("user.lsp.manager").init_defaults()
-
-  require "user.config.mappings"
 end
 
 function M:load()
