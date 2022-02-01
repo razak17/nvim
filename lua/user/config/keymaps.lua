@@ -1,5 +1,5 @@
 local defaults = rvim.keymaps
-l:LspDiagnostics<CR>ocal utils = require "user.utils"
+local utils = require "user.utils"
 
 local nmap = defaults.nmap
 local vmap = defaults.vmap
