@@ -12,7 +12,6 @@ return {
       ['"'] = "wrap double quotes",
       [")"] = "wrap parenthesis",
       ["}"] = "wrap curly braces",
-      -- ["<space>"] = "Switch to prev files",
       B = "highlight word",
       c = { ":bdelete<CR>", "close buffer" },
       x = { ":q<CR>", "Quit" },
