@@ -9,6 +9,7 @@ local function general_overrides()
   local darker_bg = util.alter_color(normal_bg, -10)
   local msg_area_bg = rvim.common.transparent_window and "NONE" or darker_bg
   util.all {
+    { "MsgArea", { guibg = msg_area_bg } },
     { "mkdLineBreak", { link = "NONE", force = true } },
     -----------------------------------------------------------------------------//
     -- Floats
