@@ -131,9 +131,11 @@ function M.setup()
 
   require("user.lsp.null-ls").setup()
 
-  autocmds.configure_format_on_save()
+  local formatting = require "user.lsp.formatting"
 
-  autocmds.configure_format_on_focus_lost()
+  formatting.configure_format_on_save()
+
+  formatting.configure_format_on_focus_lost()
 end
 
 return M

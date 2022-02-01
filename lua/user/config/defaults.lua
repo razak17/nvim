@@ -11,7 +11,12 @@ return {
       timeout = 1000,
     },
     save_on_focus_lost = true,
-    format_on_focus_lost = true,
+    format_on_focus_lost = {
+      ---@usage pattern string pattern used for the autocommand (Default: '*')
+      pattern = "*",
+      ---@usage timeout number timeout in ms for the format request (Default: 1000)
+      timeout = 1000,
+    },
     debug = false,
     defer = false,
     colorscheme = "zephyr",
