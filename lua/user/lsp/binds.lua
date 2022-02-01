@@ -79,7 +79,7 @@ local function lsp_leader_keymaps(client)
   -- Code Action
   if client.supports_method "textDocument/codeAction" then
     nnoremap("<leader>la", vim.lsp.buf.code_action)
-    vnoremap("<leader>lA", vim.lsp.buf.range_code_action)
+    vnoremap("<leader>la", vim.lsp.buf.range_code_action)
   end
 end
 

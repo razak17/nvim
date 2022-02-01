@@ -335,7 +335,7 @@ nnoremap["<Leader>B"] = '/<C-R>=escape(expand("<cword>"), "/")<CR><CR>'
 vnoremap["<Leader>p"] = '"_dP'
 
 -- Reverse Line
-vnoremap["<Leader>rv"] = [[:s/\%V.\+\%V./\=utils#rev_str(submatch(0))<CR>gv]]
+vnoremap["<Leader>r"] = [[:s/\%V.\+\%V./\=utils#rev_str(submatch(0))<CR>gv]]
 
 -- Next greatest remap ever : asbjornHaland
 nnoremap["<Leader>y"] = '"+y'

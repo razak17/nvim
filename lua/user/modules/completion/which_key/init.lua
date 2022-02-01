@@ -224,10 +224,20 @@ return function()
     local opts = rvim.which_key.opts
     local vopts = rvim.which_key.vopts
 
-    -- local vmappings = rvim.which_key.vmappings
+    local vmappings = {
+      ["/"] = "comment",
+      ["["] = "replace all",
+      p = "greatest remap",
+      r = "reverse line",
+      y = "next greatest",
+      l = {
+        name = "+Lsp",
+        a = "range code actions",
+      },
+    }
 
     which_key.register(key_maps, opts)
-    -- which_key.register(vmappings, vopts)
+    which_key.register(vmappings, vopts)
   end
 
   rvim.augroup("WhichKeySetKeyOnFT", {
