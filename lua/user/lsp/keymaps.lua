@@ -36,10 +36,19 @@ function M.setup_keymaps(client, bufnr)
   -- leader keymaps
 
   if client.supports_method "textDocument/rename" then
-    local ok, renamer = rvim.safe_require "renamer"
-    local active = ok and rvim.plugin.renamer.active
+    local renamer = nil
+    local renamer_ok = nil
 
+    if rvim.plugin.renamer.active then
+      renamer_ok, renamer = rvim.safe_require "renamer"
+      if not renamer_ok then
+        return
+      end
+    end
+
+    local active = renamer_ok and rvim.plugin.renamer.active
     local rename = active and renamer.rename or vim.lsp.buf.rename
+
     maps.n["<leader>lr"] = { rename, "lsp: rename" }
   end
 
