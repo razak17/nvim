@@ -156,7 +156,7 @@ return function()
     DiagnosticInfo = {
       provider = "DiagnosticInfo",
       icon = "  ",
-      highlight = { colors.pale_blue, colors.bg },
+      highlight = { colors.dark_green, colors.bg },
     },
   }
 
