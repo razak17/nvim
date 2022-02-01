@@ -168,8 +168,8 @@ return {
     L = "toggle locflist",
     s = { ":Telescope lsp_document_symbols<cr>", "document symbols" },
     S = { ":Telescope lsp_dynamic_workspace_symbols<cr>", "workspace symbols" },
-    w = { ":LspDiagnostics<cr>", "set qflist" },
-    W = "toggle qflist",
+    W = { ":LspDiagnostics<cr>", "set qflist" },
+    w = "toggle qflist",
     x = "empty qflist",
   },
   kommentary = {
