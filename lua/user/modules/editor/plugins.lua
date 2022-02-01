@@ -12,6 +12,10 @@ editor["tpope/vim-surround"] = {
   disable = not rvim.plugin.surround.active,
 }
 
+editor["moll/vim-bbye"] = {
+  disable = not rvim.plugin.bbye.active,
+}
+
 editor["monaqa/dial.nvim"] = {
   event = { "BufWinEnter" },
   disable = not rvim.plugin.dial.active,

@@ -54,6 +54,7 @@ return {
   project = { active = true },
   diffview = { active = false },
   structlog = { active = true },
+  bbye = { active = true },
   -- TODO: handle these later
   glow = { active = false },
   doge = { active = false },

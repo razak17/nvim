@@ -256,9 +256,6 @@ nnoremap["<leader>)"] = [[ciw(<c-r>")<esc>]]
 nnoremap["<leader>}"] = [[ciw{<c-r>"}<esc>]]
 
 -- Buffers
--- nnoremap["<Leader>c"] = ":call v:lua.DelThisBuffer()<CR>"
-nnoremap["<Leader>bH"] = ":call v:lua.DelToLeft()<CR>"
-nnoremap["<Leader>bx"] = ":call v:lua.DelAllBuffers()<CR>"
 nnoremap["<Leader>bc"] = ":call v:lua.DelAllExceptCurrent()<CR>"
 
 -----------------------------------------------------------------------------//
@@ -267,13 +264,10 @@ nnoremap["<Leader>bc"] = ":call v:lua.DelAllExceptCurrent()<CR>"
 
 -- Bufferlline
 if rvim.plugin.bufferline.active then
-  nnoremap["<Leader>bl"] = ":BufferLineMoveNext<CR>"
-  nnoremap["<Leader>bh"] = ":BufferLineMovePrev<CR>"
   nnoremap["<S-l>"] = ":BufferLineCycleNext<CR>"
   nnoremap["<S-h>"] = ":BufferLineCyclePrev<CR>"
   nnoremap["gb"] = ":BufferLinePick<CR>"
-  -- TAB in general mode will move to next buffer, SHIFT-TAB will go back
-elseif not rvim.plugin.bufferline.active then
+else
   nnoremap["<S-l>"] = ":bnext<CR>"
   nnoremap["<S-h>"] = ":bprevious<CR>"
 end

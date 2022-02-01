@@ -75,8 +75,16 @@ return function()
 
     -- bookmarks
     if rvim.plugin.bufferline.active then
-      key_maps.b.h = "move left"
-      key_maps.b.l = "move right"
+      key_maps.b.h = { ":BufferLineMovePrev<CR>", "move left" }
+      key_maps.b.l = { ":BufferLineMoveNext<CR>", "move right" }
+      key_maps.b.H = { ":BufferLineCloseLeft<CR>", "close left" }
+      key_maps.b.L = { ":BufferLineCloseRight<CR>", "close right" }
+    end
+
+    -- bbye
+    if rvim.plugin.bbye.active then
+      key_maps.c = { ":Bdelete<cr>", "close buffer" }
+      key_maps.b.x = { ":bufdo :Bdelete<cr>", "close all buffers" }
     end
 
     -- bookmarks
