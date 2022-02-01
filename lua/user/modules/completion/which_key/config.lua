@@ -82,9 +82,9 @@ return {
         s = "create new file in same dir",
       },
       w = {
-        name = "+Orientation",
-        h = "change to horizontal",
-        v = "change to vertical",
+        name = "+window",
+        h = "change two horizontally split windows to vertical splits",
+        v = "change two vertically split windows to horizontal splits",
       },
     },
   },
