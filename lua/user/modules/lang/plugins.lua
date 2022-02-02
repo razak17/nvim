@@ -138,7 +138,6 @@ lang["p00f/nvim-ts-rainbow"] = {
 }
 
 lang["andymass/vim-matchup"] = {
-  event = "VimEnter",
   after = "nvim-treesitter",
   disable = not rvim.plugin.matchup.active,
 }

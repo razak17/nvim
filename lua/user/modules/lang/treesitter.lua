@@ -44,6 +44,7 @@ return function()
     highlight = { enable = rvim.treesitter.highlight.enabled },
     indent = { enable = { "javascriptreact" } },
     autotag = { enable = rvim.plugin.autotag.active, filetypes = { "html", "xml" } },
+    matchup = { enable = rvim.plugin.matchup.active, disable = { "c", "python" } },
     autopairs = { enable = rvim.plugin.autopairs.active },
     rainbow = {
       enable = rvim.plugin.rainbow.active,
@@ -63,7 +64,6 @@ return function()
       use_virtual_text = true,
       lint_events = { "BufWrite", "CursorHold" },
     },
-    matchup = { enable = true, disable = { "c", "python" } },
     ensure_installed = rvim.treesitter.ensure_installed,
   }
 
