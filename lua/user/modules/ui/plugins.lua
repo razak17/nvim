@@ -14,7 +14,7 @@ ui["akinsho/bufferline.nvim"] = {
   disable = not rvim.plugin.bufferline.active and not rvim.plugin.SANE.active,
 }
 
-ui["NTBBloodbath/galaxyline.nvim"] = {
+ui["razak17/galaxyline.nvim"] = {
   branch = "main",
   event = "VimEnter",
   config = utils.load_conf("ui", "statusline"),
