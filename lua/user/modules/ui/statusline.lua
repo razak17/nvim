@@ -91,7 +91,7 @@ return function()
   gls.left[6] = {
     GitIcon = {
       provider = function()
-        return " "
+        return " "
       end,
       condition = condition.check_git_workspace,
       highlight = { colors.pale_red, colors.bg },
@@ -102,7 +102,7 @@ return function()
       provider = "GitBranch",
       condition = condition.check_git_workspace,
       highlight = { colors.statusline_fg, colors.bg },
-      separator = " ",
+      separator = "  ",
       separator_highlight = { colors.statusline_section_bg, colors.bg },
     },
   }
