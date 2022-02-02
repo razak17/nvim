@@ -29,7 +29,7 @@ function M.setup_keymaps(client, bufnr)
   end
 
   if client.resolved_capabilities.type_definition then
-    maps.n["gt"] = { vim.lsp.buf.type_definition, "lsp: go to type definition" }
+    maps.n["gT"] = { vim.lsp.buf.type_definition, "lsp: go to type definition" }
   end
 
   if client.supports_method "textDocument/prepareCallHierarchy" then
