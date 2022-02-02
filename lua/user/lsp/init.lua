@@ -143,7 +143,7 @@ function M.setup()
     return
   end
 
-  bootstrap_nlsp { config_home = utils.join_paths(rvim.get_config_dir(), "external/nlsp-settings") }
+  bootstrap_nlsp { config_home = utils.join_paths(rvim.get_config_dir(), "lsp-settings") }
 
   require("user.lsp.null-ls").setup()
 
