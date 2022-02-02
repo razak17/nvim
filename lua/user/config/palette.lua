@@ -18,7 +18,7 @@ return {
   bg_highlight = "#2E323C",
   bg_visual = "#b3deef",
 
-  -- gray = "#5c6370",
+  gray = "#5c6370",
   light_gray = "#abb2bf",
   purple = "#C678DD",
   sign_add = "#587c0c",
