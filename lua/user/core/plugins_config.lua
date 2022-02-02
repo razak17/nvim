@@ -70,6 +70,7 @@ return {
   devicons = { active = true },
   git_signs = { active = true },
   indent_line = { active = true },
+  fidget = { active = true },
   -- completion
   which_key = { active = true },
   vim_which_key = { active = false },

@@ -45,4 +45,9 @@ ui["lewis6991/gitsigns.nvim"] = {
   disable = not rvim.plugin.git_signs.active,
 }
 
+ui["j-hui/fidget.nvim"] = {
+  config = utils.load_conf("ui", "fidget"),
+  disable = not rvim.plugin.fidget.active,
+}
+
 return ui
