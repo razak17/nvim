@@ -13,12 +13,12 @@ completion["folke/which-key.nvim"] = {
 }
 
 completion["mattn/emmet-vim"] = {
-  event = "InsertEnter",
   config = function()
     vim.g.user_emmet_complete_tag = 0
     vim.g.user_emmet_install_global = 0
     vim.g.user_emmet_install_command = 0
     vim.g.user_emmet_mode = "i"
+    vim.cmd "autocmd FileType html,css EmmetInstall"
   end,
   disable = not rvim.plugin.emmet.active,
 }
