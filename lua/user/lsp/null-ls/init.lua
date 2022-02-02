@@ -30,9 +30,10 @@ function M:setup()
       },
       -- @usage specify which filetypes to enable. By default a providers will attach to all the filetypes it supports.
       filetypes = {
+        "javascript",
+        "javascriptreact",
         "typescript",
         "typescriptreact",
-        "javascript",
         "html",
         "json",
         "yaml",
@@ -60,7 +61,10 @@ function M:setup()
       args = { "--severity", "warning" },
     },
     { exe = "flake8", filetypes = { "python" } },
-    { exe = "eslint", filetypes = { "javascript" } },
+    {
+      exe = "eslint_d",
+      filetypes = { "javascript", "javascriptreact", "typescriptreact", "typescript" },
+    },
   }
 
   local default_opts = require("user.lsp").get_global_opts()
