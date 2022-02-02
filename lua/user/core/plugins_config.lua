@@ -34,7 +34,7 @@ return {
   playground = { active = true },
   autopairs = { active = true },
   rainbow = { active = false },
-  autotag = { active = false },
+  autotag = { active = true },
   matchup = { active = false },
   -- editor
   ajk = { active = true },

@@ -43,7 +43,7 @@ return function()
   treesitter_configs.setup {
     highlight = { enable = rvim.treesitter.highlight.enabled },
     indent = { enable = { "javascriptreact" } },
-    autotag = { enable = rvim.plugin.autotag.active },
+    autotag = { enable = rvim.plugin.autotag.active, filetypes = { "html", "xml" } },
     autopairs = { enable = rvim.plugin.autopairs.active },
     rainbow = {
       enable = rvim.plugin.rainbow.active,

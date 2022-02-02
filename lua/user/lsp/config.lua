@@ -15,7 +15,7 @@ return {
     },
     underline = true,
     border = "rounded",
-    update_in_insert = false,
+    update_in_insert = true,
     severity_sort = true,
     float = {
       focusable = false,
