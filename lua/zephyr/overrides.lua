@@ -56,7 +56,7 @@ local function set_sidebar_highlight()
   local bg_color = P.bg
   local st_color = util.alter_color(util.get_hl("Visual", "bg"), -10)
   local hls = {
-    { "PanelBackground", { guibg = bg_color } },
+    { "PanelBackground", { link = "Normal" } },
     { "PanelHeading", { guibg = bg_color, gui = "bold" } },
     { "PanelVertSplit", { guifg = split_color, guibg = bg_color } },
     { "PanelVertSplitAlt", { guifg = bg_color, guibg = bg_color } },

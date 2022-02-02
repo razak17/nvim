@@ -152,7 +152,7 @@ return {
   NvimTreeExecFile = { fg = P.green },
   NvimTreeFolderName = { fg = P.blue },
   NvimTreeEmptyFolderName = { fg = P.base5 },
-  NvimTreeRootFolder = { fg = P.base5, style = "bold" },
+  NvimTreeRootFolder = { fg = P.fg, style = "bold" },
   NvimTreeOpenedFolderName = { fg = P.base5 },
 
   TelescopeNormal = { fg = P.fg },
@@ -176,7 +176,7 @@ return {
   WhichKey = { fg = P.pink },
   WhichKeyName = { fg = P.yellow },
   WhichKeyTrigger = { fg = P.black },
-  WhichKeyFloat = { fg = P.red },
+  WhichKeyFloat = { fg = P.red, bg = darker_bg },
   WhichKeySeperator = { fg = P.yellowgreen },
   WhichKeyGroup = { fg = P.pale_blue },
   WhichKeyDesc = { fg = P.dark_cyan },
