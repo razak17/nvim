@@ -41,7 +41,7 @@ nnoremap <leader>Bl :highlight Normal guibg=#c3eeff guifg=#030303<CR>
 nnoremap <leader>Bd :highlight Normal guibg=#282a36 guifg=default<CR>
 
 " shows all open buffers and their status
-nmap <leader>bl :ls<CR>
+nmap <leader>ba :ls<CR>
 
 " toggles the paste mode
 " nmap <C-p> :set paste!<CR>
