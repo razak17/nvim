@@ -66,12 +66,13 @@ return function()
   _G.WhichKey = {}
 
   -- Set default keymaps
-  vim.g.which_key_map = rvim.wk.keymaps.defaults
+  vim.g.which_key_map = rvim.wk.normal_mode
 
   -- plugin keymaps
   WhichKey.SetKeyOnFT = function()
     -- Get Which-Key keymap
     local key_maps = vim.g.which_key_map
+    local plugin_keymaps = rvim.wk.plugin
 
     -- bookmarks
     if rvim.plugin.bufferline.active then
@@ -89,18 +90,18 @@ return function()
 
     -- bookmarks
     if rvim.plugin_loaded "vim-bookmarks" then
-      key_maps.m = rvim.wk.bookmarks
+      key_maps.m = plugin_keymaps.bookmarks
     end
 
     -- dap
     if rvim.plugin_loaded "nvim-dap" then
-      key_maps.d = rvim.wk.dap
+      key_maps.d = plugin_keymaps.dap
     end
 
     -- dap ui
     if rvim.plugin_loaded "nvim-dap-ui" then
-      key_maps.d.e = rvim.wk.dap_ui.toggle
-      key_maps.d.i = rvim.wk.dap_ui.inspect
+      key_maps.d.e = plugin_keymaps.dap_ui.toggle
+      key_maps.d.i = plugin_keymaps.dap_ui.inspect
     end
 
     -- DOGE
@@ -110,22 +111,22 @@ return function()
 
     -- fterm
     if rvim.plugin_loaded "FTerm.nvim" then
-      key_maps.t = rvim.wk.fterm
+      key_maps.t = plugin_keymaps.fterm
     end
 
     -- far
     if rvim.plugin_loaded "far.vim" then
-      key_maps.F = rvim.wk.far
+      key_maps.F = plugin_keymaps.far
     end
 
     -- git_signs
     if rvim.plugin_loaded "gitsigns.nvim" then
-      key_maps.h = rvim.wk.gitsigns
+      key_maps.h = plugin_keymaps.gitsigns
     end
 
     -- fugitive
     if rvim.plugin_loaded "vim-fugitive" then
-      key_maps.g = rvim.wk.fugitive
+      key_maps.g = plugin_keymaps.fugitive
     end
 
     -- kommentary
@@ -136,7 +137,7 @@ return function()
 
     -- lsp
     if rvim.plugin_loaded "nvim-lspconfig" then
-      key_maps.l = rvim.wk.lsp
+      key_maps.l = plugin_keymaps.lsp
     end
 
     -- markdown
@@ -162,7 +163,7 @@ return function()
 
     -- packer
     if rvim.plugin.packer.active then
-      key_maps.p = rvim.wk.packer
+      key_maps.p = plugin_keymaps.packer
     end
 
     -- playground
@@ -174,7 +175,7 @@ return function()
     -- slide
     if vim.bo.ft == "slide" then
       key_maps["↵"] = "execute commnd"
-      key_maps.A = rvim.wk.slide
+      key_maps.A = plugin_keymaps.slide
       key_maps.b.l = "show all open buffers"
       key_maps.B = {
         name = "+Background",
@@ -197,18 +198,18 @@ return function()
     if rvim.plugin.telescope.active then
       key_maps.f = {
         name = "+Telescope",
-        b = rvim.wk.telescope.browser,
-        c = rvim.wk.telescope.builtin,
-        d = rvim.wk.telescope.dotfiles,
-        f = rvim.wk.telescope.files,
-        g = rvim.wk.telescope.git,
-        h = rvim.wk.telescope.frecency,
-        l = rvim.wk.telescope.live,
-        r = rvim.wk.telescope.config,
-        R = rvim.wk.telescope.oldfiles,
-        v = rvim.wk.telescope.lsp,
-        e = rvim.wk.telescope.tmux,
-        x = rvim.wk.telescope.extensions,
+        b = plugin_keymaps.telescope.browser,
+        c = plugin_keymaps.telescope.builtin,
+        d = plugin_keymaps.telescope.dotfiles,
+        f = plugin_keymaps.telescope.files,
+        g = plugin_keymaps.telescope.git,
+        h = plugin_keymaps.telescope.frecency,
+        l = plugin_keymaps.telescope.live,
+        r = plugin_keymaps.telescope.config,
+        R = plugin_keymaps.telescope.oldfiles,
+        v = plugin_keymaps.telescope.lsp,
+        e = plugin_keymaps.telescope.tmux,
+        x = plugin_keymaps.telescope.extensions,
       }
     end
 
@@ -220,7 +221,7 @@ return function()
 
     -- trouble
     if rvim.plugin_loaded "trouble.nvim" then
-      key_maps.v.x = rvim.wk.trouble
+      key_maps.v.x = plugin_keymaps.trouble
     end
 
     -- undotree
@@ -232,34 +233,9 @@ return function()
     local opts = rvim.which_key.opts
     local vopts = rvim.which_key.vopts
 
-    local vmappings = {
-      ["/"] = "comment",
-      ["["] = "replace all",
-      p = "greatest remap",
-      r = "reverse line",
-      y = "next greatest",
-      l = {
-        name = "+Lsp",
-      },
-    }
-
-    local no_leader = {
-      ["]"] = {
-        name = "+next",
-        ["<space>"] = "add space below",
-      },
-      ["["] = {
-        name = "+prev",
-        ["<space>"] = "add space above",
-      },
-      ["g>"] = "show message history",
-      ["gb"] = "lsp: go to buffer",
-      ["ds"] = "surround: delete",
-    }
-
     which_key.register(key_maps, opts)
-    which_key.register(vmappings, vopts)
-    which_key.register(no_leader)
+    which_key.register(rvim.wk.visual_mode, vopts)
+    which_key.register(rvim.wk.no_leader)
   end
 
   rvim.augroup("WhichKeySetKeyOnFT", {
