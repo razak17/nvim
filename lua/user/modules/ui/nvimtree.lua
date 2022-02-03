@@ -62,7 +62,7 @@ return function()
         timeout = 500,
       },
       hide_dotfiles = false,
-      ignore = { ".git", "node_modules", ".cache", ".DS_Store", "fugitive:" },
+      ignore = { ".git", "node_modules", ".cache", ".DS_Store" },
     },
     defaults = {
       show_icons = {

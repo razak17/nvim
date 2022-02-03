@@ -51,7 +51,6 @@ return {
   far = { active = true },
   bookmarks = { active = false },
   undotree = { active = true },
-  fugitive = { active = false },
   project = { active = true },
   diffview = { active = false },
   structlog = { active = true },

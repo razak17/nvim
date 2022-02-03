@@ -17,7 +17,6 @@ vim.g.number_filetype_exclusions = {
   "vim-plug",
   "gitcommit",
   "toggleterm",
-  "fugitive",
   "coc-explorer",
   "coc-list",
   "list",

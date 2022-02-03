@@ -4,7 +4,6 @@ return function()
   vim.g.indent_blankline_filetype_exclude = {
     "dashboard",
     "log",
-    "fugitive",
     "gitcommit",
     "packer",
     "markdown",

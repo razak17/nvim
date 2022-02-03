@@ -124,11 +124,6 @@ return function()
       key_maps.h = plugin_keymaps.gitsigns
     end
 
-    -- fugitive
-    if rvim.plugin_loaded "vim-fugitive" then
-      key_maps.g = plugin_keymaps.fugitive
-    end
-
     -- kommentary
     if rvim.plugin.kommentary.active then
       key_maps["/"] = { "<Plug>kommentary_line_default", "comment" }
