@@ -194,25 +194,6 @@ return function()
       key_maps.e = "nvim-tree toggle"
     end
 
-    -- telescope
-    if rvim.plugin.telescope.active then
-      key_maps.f = {
-        name = "+Telescope",
-        b = plugin_keymaps.telescope.browser,
-        c = plugin_keymaps.telescope.builtin,
-        d = plugin_keymaps.telescope.dotfiles,
-        f = plugin_keymaps.telescope.files,
-        g = plugin_keymaps.telescope.git,
-        h = plugin_keymaps.telescope.frecency,
-        l = plugin_keymaps.telescope.live,
-        r = plugin_keymaps.telescope.config,
-        R = plugin_keymaps.telescope.oldfiles,
-        v = plugin_keymaps.telescope.lsp,
-        e = plugin_keymaps.telescope.tmux,
-        x = plugin_keymaps.telescope.extensions,
-      }
-    end
-
     -- treesitter
     if rvim.plugin_loaded "nvim-treesitter" then
       key_maps.L.e = { ":TSInstallInfo<cr>", "treesitter: info" }

@@ -195,4 +195,82 @@ return function()
   for _, ext in ipairs(extensions) do
     require("telescope").load_extension(ext)
   end
+
+  require("which-key").register {
+    ["<leader>f"] = {
+      name = "+Telescope",
+      b = { ":Telescope file_browser<cr>", "file browser" },
+      f = {
+        ":Telescope find_files<cr>",
+        "find files",
+      },
+      c = {
+        name = "+Builtin",
+        a = { ":Telescope autocommands<cr>", "autocmds" },
+        b = { ":Telescope buffers<cr>", "buffers" },
+        c = { ":Telescope commands<cr>", "commands" },
+        e = { ":Telescope quickfix<cr>", "quickfix" },
+        f = { ":Telescope builtin<cr>", "builtin" },
+        h = { ":Telescope help_tags<cr>", "help" },
+        H = { ":Telescope command_history<cr>", "history" },
+        k = { ":Telescope keymaps<cr>", "keymaps" },
+        l = { ":Telescope loclist<cr>", "loclist" },
+        r = { ":Telescope registers<cr><CR>", "registers" },
+        T = { ":Telescope treesitter", "treesitter" },
+        v = { ":Telescope vim_options<cr>", "vim options" },
+        z = { ":Telescope current_buffer_fuzzy_find<cr>", "current file fuzzy find" },
+      },
+      d = {
+        name = "+Dotfiles",
+        b = { ":Telescope dotfiles branches<cr>", "branches" },
+        B = { ":Telescope dotfiles bcommits<cr>", "bcommits" },
+        c = { ":Telescope dotfiles commits<cr>", "commits" },
+        f = { ":Telescope dotfiles git_files<cr>", "git files" },
+        s = { ":Telescope dotfiles status<cr>", "status" },
+      },
+      g = {
+        name = "+Git",
+        b = { ":Telescope git_branches<cr>", "branches" },
+        c = { ":Telescope git_commits<cr>", "commits" },
+        C = { ":Telescope git_bcommits<cr>", "bcommits" },
+        f = { ":Telescope git_files<cr>", "files" },
+        s = { ":Telescope git_status<cr>", "status" },
+      },
+      h = { ":Telescope frecency<cr>", "history" },
+      l = {
+        name = "+Live",
+        g = { ":Telescope live_grep<cr>", "grep" },
+        w = { ":Telescope grep_string<cr>", "current word" },
+        e = { ":Telescope grep_string_prompt<cr>", "prompt" },
+      },
+      r = {
+        name = "+Config",
+        b = { ":Telescope nvim_files branches<cr>", "branches" },
+        B = { ":Telescope nvim_files bcommits<cr>", "bcommits" },
+        c = { ":Telescope nvim_files commits<cr>", "commits" },
+        f = { ":Telescope nvim_files files<cr>", "nvim files" },
+        g = { ":Telescope nvim_files grep_files<cr>", "grep files" },
+        I = { ":Telescope nvim_files view_changelog<cr>", "view changelog" },
+        s = { ":Telescope nvim_files status<cr>", "status" },
+      },
+      t = {
+        name = "+Tmux",
+        s = { ":Telescope tmux sessions<cr>", "sessions" },
+        w = { ":Telescope tmux windows<cr>", "windows" },
+        e = { ":Telescope tmux pane_contents<cr>", "pane contents" },
+      },
+      v = {
+        name = "+Lsp",
+        a = { ":Telescope lsp_code_actions<cr>", "code action" },
+        A = { ":Telescope lsp_range_code_actions<cr>", "range code action" },
+        r = { ":Telescope lsp_references<cr>", "references" },
+        d = { ":Telescope lsp_document_symbols<cr>", "document_symbol" },
+        w = { ":Telescope lsp_workspace_symbols<cr>", "workspace_symbol" },
+      },
+      x = {
+        name = "+Extensions",
+        b = { ":Telescope bg_selector<cr>", "change background" },
+      },
+    },
+  }
 end
