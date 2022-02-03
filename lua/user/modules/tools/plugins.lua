@@ -2,11 +2,6 @@ local tools = {}
 
 local utils = require "user.utils"
 
-tools["tpope/vim-fugitive"] = {
-  event = "VimEnter",
-  disable = not rvim.plugin.fugitive.active,
-}
-
 tools["sindrets/diffview.nvim"] = {
   event = "BufReadPre",
   config = utils.load_conf("tools", "diff_view"),
