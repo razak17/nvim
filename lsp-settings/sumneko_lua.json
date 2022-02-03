@@ -1,0 +1,20 @@
+{
+  "Lua.runtime.version": "LuaJIT",
+  "Lua.diagnostics.enable": true,
+  "Lua.diagnostics.globals": [
+    "vim",
+    "rvim",
+    "packer_plugins",
+    "stds",
+    "describe",
+    "it",
+    "before_each",
+    "after_each",
+    "fterm_cmd",
+    "pairs",
+    "_G"
+  ],
+  "Lua.diagnostics.disable": [],
+  "Lua.completion.callSnippet": "Both",
+  "Lua.completion.keywordSnippet": "Both"
+}
