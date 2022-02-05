@@ -68,47 +68,47 @@ return {
 
   dbui_tables = { fg = P.blue },
 
-  DiagnosticError = { fg = P.pale_red },
+  DiagnosticError = { fg = P.error_red },
   DiagnosticWarning = { fg = P.dark_orange },
   DiagnosticInfo = { fg = P.blue },
   DiagnosticHint = { fg = P.teal },
 
-  LspDiagnosticsError = { fg = P.pale_red },
+  LspDiagnosticsError = { fg = P.error_red },
   LspDiagnosticsWarning = { fg = P.dark_orange },
   LspDiagnosticsInformation = { fg = P.blue },
   LspDiagnosticsHint = { fg = P.dark_green },
 
-  DiagnosticsSignErrorLine = { fg = P.pale_red },
+  DiagnosticsSignErrorLine = { fg = P.error_red },
   DiagnosticsSignWarnLine = { fg = P.dark_orange },
   DiagnosticsSignInfoLine = { fg = P.blue },
   DiagnosticsSignHintLine = { fg = P.dark_green },
 
-  DiagnosticSignError = { fg = P.pale_red },
+  DiagnosticSignError = { fg = P.error_red },
   DiagnosticSignWarn = { fg = P.dark_orange },
   DiagnosticSignInfo = { fg = P.blue },
   DiagnosticSignHint = { fg = P.dark_green },
 
-  DiagnosticFloatingError = { fg = P.pale_red },
+  DiagnosticFloatingError = { fg = P.error_red },
   DiagnosticFloatingWarn = { fg = P.dark_orange },
   DiagnosticFloatingInfo = { fg = P.blue },
   DiagnosticFloatingHint = { fg = P.dark_green },
 
-  LspDiagnosticsFloatingError = { fg = P.pale_red },
+  LspDiagnosticsFloatingError = { fg = P.error_red },
   LspDiagnosticsFloatingWarning = { fg = P.dark_orange },
   LspDiagnosticsFloatingInformation = { fg = P.blue },
   LspDiagnosticsFloatingHint = { fg = P.dark_green },
 
-  DiagnosticUnderlineError = { style = "undercurl", sp = P.pale_red },
+  DiagnosticUnderlineError = { style = "undercurl", sp = P.error_red },
   DiagnosticUnderlineWarn = { style = "undercurl", sp = P.dark_orange },
   DiagnosticUnderlineInfo = { style = "undercurl", sp = P.blue },
   DiagnosticUnderlineHint = { style = "undercurl", sp = P.dark_green },
 
-  LspDiagnosticsVirtualTextError = { fg = P.pale_red },
+  LspDiagnosticsVirtualTextError = { fg = P.error_red },
   LspDiagnosticsVirtualTextWarning = { fg = P.dark_orange },
   LspDiagnosticsVirtualTextInformation = { fg = P.blue },
   LspDiagnosticsVirtualTextHint = { fg = P.dark_green },
 
-  DiagnosticVirtualTextError = { fg = P.pale_red, bg = util.alter_color(P.pale_red, -80) },
+  DiagnosticVirtualTextError = { fg = P.error_red, bg = util.alter_color(P.pale_red, -80) },
   DiagnosticVirtualTextWarn = { fg = P.dark_orange, bg = util.alter_color(P.dark_orange, -80) },
   DiagnosticVirtualTextInfo = { fg = P.pale_blue, bg = util.alter_color(P.pale_blue, -80) },
   DiagnosticVirtualTextHint = { fg = P.dark_green, bg = util.alter_color(P.dark_green, -80) },
