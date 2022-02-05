@@ -53,21 +53,6 @@ command {
   end,
 }
 
-command {
-  "LspToggleVirtualText",
-  function()
-    local virtual_text = {}
-    virtual_text.show = true
-    virtual_text.show = not virtual_text.show
-    vim.lsp.diagnostic.display(
-      vim.lsp.diagnostic.get(0, 1),
-      0,
-      1,
-      { virtual_text = virtual_text.show }
-    )
-  end,
-}
-
 rvim.command { nargs = 1, "Rename", [[call v:lua.require('user.utils').rename(<f-args>) ]] }
 rvim.command { "Todo", [[noautocmd silent! grep! 'TODO\|FIXME\|BUG\|HACK' | copen]] }
 -----------------------------------------------------------------------------//
