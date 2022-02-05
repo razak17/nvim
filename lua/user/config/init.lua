@@ -46,8 +46,6 @@ function M:load()
 
   require("user.core.opts"):init()
 
-  require("user.core.commands"):init()
-
   require "user.core.keymaps"
 
   require("user.utils.keymaps"):init(rvim.keymaps)
