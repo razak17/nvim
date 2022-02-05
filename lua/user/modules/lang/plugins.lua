@@ -159,4 +159,9 @@ lang["razak17/rust-tools.nvim"] = {
   disable = not rvim.plugin.rust_tools.active,
 }
 
+lang["b0o/schemastore.nvim"] = {
+  commit = rvim.plugin.commits.schemastore,
+  disable = not rvim.plugin.schemastore.active,
+}
+
 return lang

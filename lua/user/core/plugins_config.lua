@@ -8,6 +8,7 @@ return {
     nvim_lspconfig = "c51096481dc13193991571b7132740d762902355",
     nvim_tree = "2dfed89af7724f9e71d2fdbe3cde791a93e9b9e0",
     nvim_treesitter = "5e3a93f365094eb7c6ed2a9ef0a6277da3b53201",
+    schemastore = "058575f0bd94b115604bef9c4c48c5d02e21ffef",
   },
   -- SANE defaults
   SANE = { active = false },
@@ -29,6 +30,7 @@ return {
   trouble = { active = false },
   renamer = { active = true },
   rust_tools = { active = true },
+  schemastore = { active = true },
   -- treesitter
   treesitter = { active = true },
   playground = { active = true },
