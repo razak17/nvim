@@ -28,7 +28,7 @@ local function resolve_config(name, user_config)
     capabilities = require("user.lsp").global_capabilities(),
   }
 
-  local has_custom_provider, custom_config = pcall(require, "lsp/providers/" .. name)
+  local has_custom_provider, custom_config = pcall(require, "user/lsp/providers/" .. name)
   if has_custom_provider then
     Log:debug("Using custom configuration for requested server: " .. name)
     config = vim.tbl_deep_extend("force", config, custom_config)

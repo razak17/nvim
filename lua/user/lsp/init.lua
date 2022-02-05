@@ -78,13 +78,16 @@ local function select_default_formater(client)
     return
   end
 
-  -- local ignore_list = 0
-  if client.name == "tsserver" or client.name == "html" or client.name == "jsonls" then
-    client.resolved_capabilities.document_formatting = false
+  local format_ignore_list = { "tsserver", "html", "jsonls" }
+  for _, server in ipairs(format_ignore_list) do
+    if client.name == server then
+      client.resolved_capabilities.document_formatting = false
+      client.resolved_capabilities.document_range_formatting = false
+    end
   end
 
   Log:debug("Checking for formatter overriding for " .. client.name)
-  local formatters = require "lsp.null-ls.formatters"
+  local formatters = require "user.lsp.null-ls.formatters"
   local client_filetypes = client.config.filetypes or {}
   for _, filetype in ipairs(client_filetypes) do
     if #vim.tbl_keys(formatters.list_registered(filetype)) > 0 then
@@ -112,6 +115,11 @@ function M.global_on_init(client, bufnr)
 end
 
 function M.global_on_attach(client, bufnr)
+  local function buf_set_option(...)
+    vim.api.nvim_buf_set_option(bufnr, ...)
+  end
+  buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
+
   lsp_highlight_document(client)
   lsp_code_lens_refresh(client)
   lsp_hover_diagnostics()
