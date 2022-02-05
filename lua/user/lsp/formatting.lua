@@ -52,14 +52,14 @@ function M.enable_format_on_focus_lost(opts)
 end
 
 function M.disable_format_on_save()
-  rvim.remove_augroup "format_on_save"
+  rvim.disable_augroup "format_on_save"
   Log:debug "disabled format-on-save"
 end
 
 function M.configure_format_on_save()
   if rvim.common.format_on_save then
     if vim.fn.exists "#format_on_save#BufWritePre" == 1 then
-      rvim.remove_augroup "format_on_save"
+      rvim.disable_augroup "format_on_save"
       Log:debug "reloading format-on-save configuration"
     end
     local opts = get_format_on_save_opts()
@@ -70,14 +70,14 @@ function M.configure_format_on_save()
 end
 
 function M.disable_format_on_focus_lost()
-  rvim.remove_augroup "format_on_focus_lost"
+  rvim.disable_augroup "format_on_focus_lost"
   Log:debug "disabled format-on-focus-lost"
 end
 
 function M.configure_format_on_focus_lost()
   if rvim.common.format_on_focus_lost then
     if vim.fn.exists "#format_on_focus_lost#FocusLost" == 1 then
-      rvim.remove_augroup "format_on_focus_lost"
+      rvim.disable_augroup "format_on_focus_lost"
       Log:debug "reloading format-on-focus-lost configuration"
     end
     local opts = get_format_on_focus_lost_opts()
