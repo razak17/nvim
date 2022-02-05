@@ -34,6 +34,7 @@ return {
   light_green = "#abcf84",
 
   red = "#e95678",
+  error_red = "#F44747",
   redwine = "#d16d9e",
   orange = "#D98E48",
   yellow = "#f0c674",

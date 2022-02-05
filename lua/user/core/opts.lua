@@ -48,7 +48,7 @@ M.load_options = function()
 
     -- Spelling
     spelllang = "en",
-    -- spell = false,
+    spell = false,
     spelloptions = "camel",
     spellfile = utils.join_paths(rvim.get_config_dir(), "spell", "en.utf-8.add"),
     spellcapcheck = "", -- don't check for capital letters at start of sentence

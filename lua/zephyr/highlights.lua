@@ -53,7 +53,7 @@ return {
   TabLineSel = { bg = P.dark_alt },
   StatusLine = { fg = P.base8, bg = P.base2, style = P.none },
   StatusLineNC = { fg = P.grey, bg = P.base2, style = P.none },
-  SpellBad = { fg = P.red, bg = P.none, style = "undercurl" },
+  SpellBad = { fg = P.error_red, bg = P.none, style = "undercurl" },
   SpellCap = { fg = P.blue, bg = P.none, style = "undercurl" },
   SpellLocal = { fg = P.cyan, bg = P.none, style = "undercurl" },
   SpellRare = { fg = P.violet, bg = P.none, style = "undercurl" },

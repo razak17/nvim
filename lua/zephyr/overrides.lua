@@ -25,10 +25,10 @@ local function general_overrides()
     { "TermCursor", { ctermfg = "green", guifg = "royalblue" } },
     { "IncSearch", { guibg = "NONE", guifg = "LightGreen", gui = "bold,underline" } },
     -- Add undercurl to existing spellbad highlight
-    {
-      "SpellBad",
-      { gui = "undercurl", guibg = "transparent", guifg = "transparent", guisp = "green" },
-    },
+    -- {
+    --   "SpellBad",
+    --   { gui = "undercurl", guibg = "transparent", guifg = "transparent", guisp = "green" },
+    -- },
     -----------------------------------------------------------------------------//
     -- colorscheme overrides
     -----------------------------------------------------------------------------//
