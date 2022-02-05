@@ -253,6 +253,7 @@ return function()
         I = { ":Telescope nvim_files view_changelog<cr>", "view changelog" },
         s = { ":Telescope nvim_files status<cr>", "status" },
       },
+      R = { ":Telescope oldfiles<cr>", "history" },
       t = {
         name = "+Tmux",
         s = { ":Telescope tmux sessions<cr>", "sessions" },
