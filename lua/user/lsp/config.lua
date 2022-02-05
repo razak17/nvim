@@ -50,6 +50,7 @@ return {
     },
     config = {},
   },
+  formatting_ignore_list = { "tsserver", "html", "jsonls" },
   override = {
     "angularls",
     "ansiblels",

@@ -78,8 +78,7 @@ local function select_default_formater(client)
     return
   end
 
-  local format_ignore_list = { "tsserver", "html", "jsonls" }
-  for _, server in ipairs(format_ignore_list) do
+  for _, server in ipairs(rvim.lsp.formatting_ignore_list) do
     if client.name == server then
       client.resolved_capabilities.document_formatting = false
       client.resolved_capabilities.document_range_formatting = false
