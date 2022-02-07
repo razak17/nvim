@@ -124,6 +124,13 @@ nnoremap["0"] = "^"
 -- Map Q to replay q register
 nnoremap["Q"] = "@q"
 
+-----------------------------------------------------------------------------//
+-- Multiple Cursor Replacement
+-- http://www.kevinli.co/posts/2017-01-19-multiple-cursors-in-500-bytes-of-vimscript/
+-----------------------------------------------------------------------------//
+nnoremap["cn"] = "*``cgn"
+nnoremap["cN"] = "*``cgN"
+
 -- Add Empty space above and below
 nnoremap["[<space>"] = [[<cmd>put! =repeat(nr2char(10), v:count1)<cr>'[]]
 nnoremap["]<space>"] = [[<cmd>put =repeat(nr2char(10), v:count1)<cr>]]
