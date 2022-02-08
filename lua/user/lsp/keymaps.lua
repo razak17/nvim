@@ -55,19 +55,20 @@ function M.setup_keymaps(client, bufnr)
     maps.n["<leader>lr"] = { rename, "lsp: rename" }
   end
 
-  maps.n["<leader>lpd"] = {
-    "<cmd>lua require('user.lsp.peek').Peek('definition')<cr>",
-    "peek definition",
-  }
-
-  maps.n["<leader>lpt"] = {
-    "<cmd>lua require('user.lsp.peek').Peek('typeDefinition')<cr>",
-    "peek type definition",
-  }
-
-  maps.n["<leader>lpi"] = {
-    "<cmd>lua require('user.lsp.peek').Peek('implementation')<cr>",
-    "peek implementation",
+  maps.n["<leader>lp"] = {
+    name = "+Peek",
+    d = {
+      "<cmd>lua require('user.lsp.peek').Peek('definition')<cr>",
+      "peek definition",
+    },
+    i = {
+      "<cmd>lua require('user.lsp.peek').Peek('implementation')<cr>",
+      "peek implementation",
+    },
+    t = {
+      "<cmd>lua require('user.lsp.peek').Peek('typeDefinition')<cr>",
+      "peek type definition",
+    },
   }
 
   if client.supports_method "textDocument/formatting" then
