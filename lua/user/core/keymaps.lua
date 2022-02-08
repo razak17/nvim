@@ -119,7 +119,10 @@ nnoremap["Y"] = "y$"
 nnoremap["&"] = "<cmd>&&<CR>"
 
 -- Zero should go to the first non-blank character not to the first column (which could be blank)
-nnoremap["0"] = "^"
+-- Zero should go to the first non-blank character not to the first column (which could be blank)
+-- but if already at the first character then jump to the beginning
+--@see: https://github.com/yuki-yano/zero.nvim/blob/main/lua/zero.lua
+nnoremap["0"] = { "getline('.')[0 : col('.') - 2] =~# '^\\s\\+$' ? '0' : '^'", { expr = true } }
 
 -- Map Q to replay q register
 nnoremap["Q"] = "@q"
