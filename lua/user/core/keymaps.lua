@@ -134,6 +134,33 @@ nnoremap["Q"] = "@q"
 nnoremap["cn"] = "*``cgn"
 nnoremap["cN"] = "*``cgN"
 
+-- 1. Position the cursor over a word; alternatively, make a selection.
+-- 2. Hit cq to start recording the macro.
+-- 3. Once you are done with the macro, go back to normal mode.
+-- 4. Hit Enter to repeat the macro over search matches.
+function rvim.mappings.setup_CR()
+  rvim.nmap(
+    "<Enter>",
+    [[:nnoremap <lt>Enter> n@z<CR>q:<C-u>let @z=strpart(@z,0,strlen(@z)-1)<CR>n@z]]
+  )
+end
+
+vim.g.mc = [[y/\\V\<C-r>=escape(@\", '/')\<CR>\<CR>]]
+rvim.xnoremap("cn", [[g:mc . "``cgn"]], { expr = true, silent = true })
+rvim.xnoremap("cN", [[g:mc . "``cgN"]], { expr = true, silent = true })
+rvim.nnoremap("cq", [[:lua rvim.mappings.setup_CR()<CR>*``qz]])
+rvim.nnoremap("cQ", [[:lua rvim.mappings.setup_CR()<CR>#``qz]])
+rvim.xnoremap(
+  "cq",
+  [[":\<C-u>lua as.mappings.setup_CR()\<CR>" . "gv" . g:mc . "``qz"]],
+  { expr = true }
+)
+rvim.xnoremap(
+  "cQ",
+  [[":\<C-u>lua rvim.mappings.setup_CR()\<CR>" . "gv" . substitute(g:mc, '/', '?', 'g') . "``qz"]],
+  { expr = true }
+)
+
 -- Add Empty space above and below
 nnoremap["[<space>"] = [[<cmd>put! =repeat(nr2char(10), v:count1)<cr>'[]]
 nnoremap["]<space>"] = [[<cmd>put =repeat(nr2char(10), v:count1)<cr>]]
