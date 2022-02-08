@@ -246,12 +246,6 @@ return function()
         s = { ":Telescope nvim_files status<cr>", "status" },
       },
       R = { ":Telescope oldfiles<cr>", "history" },
-      t = {
-        name = "+Tmux",
-        s = { ":Telescope tmux sessions<cr>", "sessions" },
-        w = { ":Telescope tmux windows<cr>", "windows" },
-        e = { ":Telescope tmux pane_contents<cr>", "pane contents" },
-      },
       v = {
         name = "+Lsp",
         a = { ":Telescope lsp_code_actions<cr>", "code action" },

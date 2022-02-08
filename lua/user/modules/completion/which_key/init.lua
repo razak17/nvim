@@ -189,6 +189,11 @@ return function()
       key_maps.S = "edit snippet"
     end
 
+    -- telescope_tmux
+    if rvim.plugin.telescope_tmux.active then
+      key_maps.T = plugin_keymaps.telescope_tmux
+    end
+
     -- tree
     if rvim.plugin_loaded "nvim-tree.lua" then
       key_maps.e = "nvim-tree toggle"
