@@ -218,7 +218,6 @@ return function()
         r = { ":Telescope registers<cr><CR>", "registers" },
         T = { ":Telescope treesitter", "treesitter" },
         v = { ":Telescope vim_options<cr>", "vim options" },
-        z = { ":Telescope current_buffer_fuzzy_find<cr>", "current file fuzzy find" },
       },
       d = {
         name = "+Dotfiles",
@@ -234,6 +233,7 @@ return function()
         g = { ":Telescope live_grep<cr>", "grep" },
         w = { ":Telescope grep_string<cr>", "current word" },
         e = { ":Telescope grep_string_prompt<cr>", "prompt" },
+        f = { ":Telescope current_buffer_fuzzy_find<cr>", "current file fuzzy find" },
       },
       r = {
         name = "+Config",

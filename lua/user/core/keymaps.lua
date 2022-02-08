@@ -194,7 +194,7 @@ end
 -----------------------------------------------------------------------------//
 
 -- toggle_list
-nnoremap["<leader>lw"] = function()
+nnoremap["<leader>lW"] = function()
   rvim.toggle_list "quickfix"
 end
 

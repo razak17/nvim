@@ -24,30 +24,6 @@ command {
   end,
 }
 
-command {
-  "LspDiagnostics",
-  function()
-    vim.diagnostic.setqflist { open = false }
-    rvim.toggle_list "quickfix"
-    if rvim.is_vim_list_open() then
-      rvim.augroup("LspDiagnosticUpdate", {
-        {
-          events = { "DiagnosticChanged" },
-          targets = { "*" },
-          command = function()
-            if rvim.is_vim_list_open() then
-              rvim.toggle_list "quickfix"
-            end
-          end,
-        },
-      })
-    elseif vim.fn.exists "#LspDiagnosticUpdate" > 0 then
-      vim.cmd "autocmd! LspDiagnosticUpdate"
-    end
-    vim.cmd "copen"
-  end,
-}
-
 rvim.command { nargs = 1, "Rename", [[call v:lua.require('user.utils').rename(<f-args>) ]] }
 rvim.command { "Todo", [[noautocmd silent! grep! 'TODO\|FIXME\|BUG\|HACK' | copen]] }
 -----------------------------------------------------------------------------//

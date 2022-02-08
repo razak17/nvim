@@ -119,19 +119,19 @@ return {
   plugin = {
     lsp = {
       name = "+Lsp",
+      d = { ":Telescope diagnostics bufnr=0 theme=get_ivy<cr>", "buffer diagnostics" },
       i = { ":LspInfo<cr>", "info" },
       I = { ":LspInstallInfo<cr>", "installer info" },
       n = { ":NullLsInfo<cr>", "null-ls info" },
-      N = { ":NlspBufConfig<cr>", "nlsp config" },
+      N = { ":NlspBufConfig<cr>", "nlsp buffer config" },
       p = {
         name = "+Peek",
       },
       L = "toggle loclist",
       s = { ":Telescope lsp_document_symbols<cr>", "document symbols" },
       S = { ":Telescope lsp_dynamic_workspace_symbols<cr>", "workspace symbols" },
-      W = { ":LspDiagnostics<cr>", "set qflist" },
-      w = "toggle qflist",
-      x = "empty qflist",
+      w = { ":Telescope diagnostics<cr>", "workspace diagnostics" },
+      W = "toggle qflist",
     },
     dap = {
       name = "+Debug",
