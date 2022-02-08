@@ -13,30 +13,23 @@ return function()
         topdelete = { hl = "GitGutterDeleteChange", text = "▔" },
         changedelete = { hl = "GitGutterChange", text = "▎" },
       },
-      keymaps = {
-        -- Default keymap options
-        noremap = true,
-        buffer = true,
-
-        ["n ]g"] = {
-          expr = true,
-          "&diff ? ']g' : '<cmd>lua require\"gitsigns\".next_hunk()<CR>'",
-        },
-        ["n [g"] = {
-          expr = true,
-          "&diff ? '[g' : '<cmd>lua require\"gitsigns\".prev_hunk()<CR>'",
-        },
-        ["n <leader>hs"] = '<cmd>lua require"gitsigns".stage_hunk()<CR>',
-        ["n <leader>hu"] = '<cmd>lua require"gitsigns".undo_stage_hunk()<CR>',
-        ["n <leader>hr"] = '<cmd>lua require"gitsigns".reset_hunk()<CR>',
-        ["n <leader>he"] = '<cmd>lua require"gitsigns".preview_hunk()<CR>',
-        ["n <leader>hb"] = '<cmd>lua require"gitsigns".blame_line()<CR>',
-        ["n <leader>ht"] = '<cmd>lua require"gitsigns".toggle_current_line_blame()<CR>',
-
-        -- Text objects
-        ["o ih"] = ':<C-U>lua require"gitsigns".text_object()<CR>',
-        ["x ih"] = ':<C-U>lua require"gitsigns".text_object()<CR>',
-      },
+      on_attach = function()
+        require("which-key").register {
+          ["<leader>h"] = {
+            name = "+Gitsins",
+            j = { gitsigns.next_hunk(), "Next Hunk" },
+            k = { gitsigns.prev_hunk(), "Prev Hunk" },
+            s = { gitsigns.stage_hunk, "stage" },
+            u = { gitsigns.undo_stage_hunk, "undo stage" },
+            r = { gitsigns.reset_hunk, "reset hunk" },
+            p = { gitsigns.preview_hunk, "preview hunk" },
+            l = { gitsigns.blame_line, "blame line" },
+            R = { gitsigns.reset_buffer, "reset buffer" },
+            d = { gitsigns.toggle_word_diff, "toggle word diff" },
+            w = { gitsigns.stage_buffer, "stage entire buffer" },
+          },
+        }
+      end,
       watch_gitdir = {
         interval = 1000,
         follow_files = true,
