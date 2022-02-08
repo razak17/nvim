@@ -94,7 +94,7 @@ return function()
         return " "
       end,
       condition = condition.check_git_workspace,
-      highlight = { colors.pale_red, colors.bg },
+      highlight = { colors.dark_green, colors.bg },
     },
   }
   gls.left[7] = {
@@ -102,11 +102,45 @@ return function()
       provider = "GitBranch",
       condition = condition.check_git_workspace,
       highlight = { colors.statusline_fg, colors.bg },
-      separator = "  ",
+      separator = " | ",
       separator_highlight = { colors.statusline_section_bg, colors.bg },
     },
   }
+
+  local function env_cleanup(venv)
+    if string.find(venv, "/") then
+      local final_venv = venv
+      for w in venv:gmatch "([^/]+)" do
+        final_venv = w
+      end
+      venv = final_venv
+    end
+    return venv
+  end
+
   gls.left[8] = {
+    ShowPythonEnv = {
+      provider = function()
+        if vim.bo.filetype == "python" then
+          local venv = os.getenv "CONDA_DEFAULT_ENV"
+          if venv then
+            return string.format(" (%s)", env_cleanup(venv))
+          end
+          venv = os.getenv "VIRTUAL_ENV"
+          if venv then
+            return string.format(" (%s)", env_cleanup(venv))
+          end
+          return ""
+        end
+        return ""
+      end,
+      condition = condition.hide_in_width,
+      highlight = { colors.dark_green, colors.bg },
+      separator = " | ",
+      separator_highlight = { colors.statusline_section_bg, colors.bg },
+    },
+  }
+  gls.left[9] = {
     DiffAdd = {
       provider = "DiffAdd",
       condition = condition.hide_in_width,
@@ -114,7 +148,7 @@ return function()
       highlight = { colors.green, colors.bg },
     },
   }
-  gls.left[9] = {
+  gls.left[10] = {
     DiffModified = {
       provider = "DiffModified",
       condition = condition.hide_in_width,
@@ -122,7 +156,7 @@ return function()
       highlight = { colors.orange, colors.bg },
     },
   }
-  gls.left[10] = {
+  gls.left[11] = {
     DiffRemove = {
       provider = "DiffRemove",
       condition = condition.hide_in_width,
@@ -130,7 +164,7 @@ return function()
       highlight = { colors.pale_pale_red, colors.bg },
     },
   }
-  gls.left[11] = {
+  gls.left[12] = {
     Space = {
       provider = function()
         return " "
@@ -138,21 +172,21 @@ return function()
       highlight = { colors.statusline_section_bg, colors.bg },
     },
   }
-  gls.left[12] = {
+  gls.left[13] = {
     DiagnosticError = {
       provider = "DiagnosticError",
       icon = "  ",
       highlight = { colors.pale_red, colors.bg },
     },
   }
-  gls.left[13] = {
+  gls.left[14] = {
     DiagnosticWarn = {
       provider = "DiagnosticWarn",
       icon = "  ",
       highlight = { colors.orange, colors.bg },
     },
   }
-  gls.left[14] = {
+  gls.left[15] = {
     DiagnosticInfo = {
       provider = "DiagnosticInfo",
       icon = "  ",
@@ -160,7 +194,7 @@ return function()
     },
   }
 
-  gls.left[15] = {
+  gls.left[16] = {
     DiagnosticHint = {
       provider = "DiagnosticHint",
       icon = "  ",
