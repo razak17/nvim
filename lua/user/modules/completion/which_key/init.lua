@@ -119,6 +119,11 @@ return function()
       key_maps.F = plugin_keymaps.far
     end
 
+    -- git
+    if rvim.plugin.telescope.active and rvim.plugin.git_signs.active then
+      key_maps.g = plugin_keymaps.git
+    end
+
     -- git_signs
     if rvim.plugin_loaded "gitsigns.nvim" then
       key_maps.h = plugin_keymaps.gitsigns
@@ -182,11 +187,6 @@ return function()
     -- snippets
     if rvim.plugin_loaded "vim-vsnip" then
       key_maps.S = "edit snippet"
-    end
-
-    -- git
-    if rvim.plugin.telescope.active and rvim.plugin.gitsigns.active then
-      key_maps.g = plugin_keymaps.git
     end
 
     -- tree
