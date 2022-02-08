@@ -149,23 +149,43 @@ cnoremap["::"] = "<C-r>=fnameescape(expand('%:p:h'))<cr>/"
 -- Credit: June Gunn <Leader>?/! | Google it / Feeling lucky
 ------------------------------------------------------------------------------
 local fn = vim.fn
-function rvim.mappings.google(pat, lucky)
+function rvim.mappings.google(pat, lucky, gh)
   local query = '"' .. fn.substitute(pat, '["\n]', " ", "g") .. '"'
   query = fn.substitute(query, "[[:punct:] ]", [[\=printf("%%%02X", char2nr(submatch(0)))]], "g")
-  fn.system(
-    fn.printf(
-      rvim.open_command .. ' "https://html.duckduckgo.com/html?%sq=%s"',
-      lucky and "btnI&" or "",
-      query
+  if gh then
+    fn.system(
+      fn.printf(
+        rvim.open_command .. ' "https://github.com/search?%sq=%s"',
+        lucky and "btnI&" or "",
+        query
+      )
     )
-  )
-  vim.notify(query, 10000)
+  else
+    fn.system(
+      fn.printf(
+        rvim.open_command .. ' "https://html.duckduckgo.com/html?%sq=%s"',
+        lucky and "btnI&" or "",
+        query
+      )
+    )
+  end
 end
 
-nnoremap["<leader>?"] = [[:lua rvim.mappings.google(vim.fn.expand("<cword>"), false)<cr>]]
-nnoremap["<leader>!"] = [[:lua rvim.mappings.google(vim.fn.expand("<cword>"), true)<cr>]]
-xnoremap["<leader>?"] = [["gy:lua rvim.mappings.google(vim.api.nvim_eval("@g"), false)<cr>gv]]
-xnoremap["<leader>!"] = [["gy:lua rvim.mappings.google(vim.api.nvim_eval("@g"), false, true)<cr>gv]]
+-- Searcg DuckDuckGo
+nnoremap["<leader>?"] = [[:lua rvim.mappings.google(vim.fn.expand("<cword>"), false, false)<cr>]]
+nnoremap["<leader>!"] = [[:lua rvim.mappings.google(vim.fn.expand("<cword>"), true, false)<cr>]]
+xnoremap["<leader>?"] =
+  [["gy:lua rvim.mappings.google(vim.api.nvim_eval("@g"), false, false)<cr>gv]]
+xnoremap["<leader>!"] =
+  [["gy:lua rvim.mappings.google(vim.api.nvim_eval("@g"), false, false)<cr>gv]]
+
+-- Search Github
+nnoremap["<leader>L?"] = [[:lua rvim.mappings.google(vim.fn.expand("<cword>"), false, true)<cr>]]
+nnoremap["<leader>L!"] = [[:lua rvim.mappings.google(vim.fn.expand("<cword>"), false, true)<cr>]]
+xnoremap["<leader>L?"] =
+  [["gy:lua rvim.mappings.google(vim.api.nvim_eval("@g"), false, true)<cr>gv]]
+xnoremap["<leader>L!"] =
+  [["gy:lua rvim.mappings.google(vim.api.nvim_eval("@g"), false, true, true)<cr>gv]]
 
 -- QuickRun
 nnoremap["<C-b>"] = ":QuickRun<CR>"

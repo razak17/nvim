@@ -53,6 +53,8 @@ return {
     },
     L = {
       name = "+Rvim",
+      ["?"] = "search cursor word",
+      ["!"] = "search cursor word",
       c = {
         "<cmd>lua vim.fn.execute('edit ' .. require('user.utils').join_paths(rvim.get_user_dir(), 'config/init.lua'))<cr>",
         "open config file",
@@ -96,6 +98,11 @@ return {
     ["["] = "replace all",
     ["?"] = "google visual selection",
     ["!"] = "google visual selection",
+    L = {
+      name = "+Rvim",
+      ["?"] = "search visual selection",
+      ["!"] = "search visual selection",
+    },
     p = "greatest remap",
     r = "reverse line",
     y = "next greatest",
