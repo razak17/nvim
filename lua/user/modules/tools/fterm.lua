@@ -1,15 +1,15 @@
 return function()
-  function _G.fterm_cmd(key)
-    local term = require "FTerm.terminal"
-    local cmd = term:new():setup { cmd = "gitui" }
+  function _G.__fterm_cmd(key)
+    local term = require "FTerm"
+    local cmd = term:new { cmd = "gitui" }
     if key == "node" then
-      cmd = term:new():setup { cmd = "node" }
+      cmd = term:new { cmd = "node" }
     elseif key == "python" then
-      cmd = term:new():setup { cmd = "python" }
+      cmd = term:new { cmd = "python" }
     elseif key == "lazygit" then
-      cmd = term:new():setup { cmd = "lazygit" }
+      cmd = term:new { cmd = "lazygit" }
     elseif key == "ranger" then
-      cmd = term:new():setup { cmd = "ranger" }
+      cmd = term:new { cmd = "ranger" }
     end
     cmd:toggle()
   end

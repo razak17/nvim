@@ -183,13 +183,11 @@ return {
     },
     fterm = {
       name = "+Fterm",
-      g = { [[v:lua.fterm_cmd("gitui")]], "gitui" },
-      l = { [[v:lua.fterm_cmd("lazygit")]], "lazygit" },
-      N = { [[v:lua.fterm_cmd("node")]], "node" },
-      [";"] = "new",
-      p = { [[v:lua.fterm_cmd("python")]], "python" },
-      r = { [[v:lua.fterm_cmd("ranger")]], "ranger" },
-      v = "open vimrc in vertical split",
+      [";"] = { '<cmd>lua require("FTerm").open()<cr>', "new" },
+      l = { ':lua _G.__fterm_cmd("lazygit")<cr>', "lazygit" },
+      n = { ':lua _G.__fterm_cmd("node")<cr>', "node" },
+      p = { ':lua _G.__fterm_cmd("python")<cr>', "python" },
+      r = { ":lua _G.__fterm_cmd(ranger)<cr>", "ranger" },
     },
     far = {
       name = "+Far",
