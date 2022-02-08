@@ -357,13 +357,6 @@ if rvim.plugin.easy_align.active then
   vmap["<Enter>"] = "<Plug>(EasyAlign)"
 end
 
--- ts playground
-if rvim.plugin.playground.active then
-  nnoremap["<leader>E"] = function()
-    utils.inspect_token()
-  end
-end
-
 -- vim-matchup
 if rvim.plugin.matchup.active then
   nnoremap["<Leader>vW"] = ":<c-u>MatchupWhereAmI?<CR>"

@@ -4,37 +4,6 @@ local uv = vim.loop
 
 local M = {}
 
------------------------------------------------------------------------------//
--- CREDIT: @Cocophon
--- This function allows you to see the syntax highlight token of the cursor word and that token's links
----> https://github.com/cocopon/pgmnt.vim/blob/master/autoload/pgmnt/dev.vim
------------------------------------------------------------------------------//
-local function hi_chain(syn_id)
-  local name = fn.synIDattr(syn_id, "name")
-  local names = {}
-  table.insert(names, name)
-  local original = fn.synIDtrans(syn_id)
-  if syn_id ~= original then
-    table.insert(names, fn.synIDattr(original, "name"))
-  end
-
-  return names
-end
-
-local ts_playground_loaded, ts_hl_info
-function M.inspect_token()
-  if not ts_playground_loaded then
-    ts_playground_loaded, ts_hl_info = rvim.safe_require "nvim-treesitter-playground.hl-info"
-  end
-  if vim.tbl_contains(rvim.treesitter.get_filetypes(), vim.bo.filetype) then
-    ts_hl_info.show_hl_captures()
-  else
-    local syn_id = fn.synID(fn.line ".", fn.col ".", 1)
-    local names = hi_chain(syn_id)
-    rvim.echomsg(fn.join(names, " -> "))
-  end
-end
-
 function M.save_and_notify()
   vim.cmd "silent write"
   vim.notify("Saved " .. vim.fn.expand "%:t", { timeout = 1000 })

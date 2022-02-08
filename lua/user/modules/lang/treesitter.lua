@@ -67,7 +67,7 @@ return function()
     ensure_installed = rvim.treesitter.ensure_installed,
   }
 
-  vim.api.nvim_set_keymap("n", "R", ":edit | TSBufEnable highlight<CR>", {})
+  rvim.nnoremap("R", ":edit | TSBufEnable highlight<CR>", {})
 
   -- Only apply folding to supported files:
   rvim.augroup("TreesitterFolds", {
