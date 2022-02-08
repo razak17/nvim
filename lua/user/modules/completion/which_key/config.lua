@@ -4,6 +4,8 @@ return {
     ["."] = "append period",
     [","] = "append comma",
     [";"] = "append semi-colon",
+    ["?"] = "search for word under cursor in google",
+    ["!"] = "search for word under cursor in google",
     ["["] = "replace in file",
     ["]"] = "replace in line",
     ["`"] = "wrap backticks",

@@ -142,6 +142,28 @@ cnoremap["w!!"] = [[w !sudo tee % >/dev/null]]
 cnoremap["%%"] = "<C-r>=fnameescape(expand('%'))<cr>"
 cnoremap["::"] = "<C-r>=fnameescape(expand('%:p:h'))<cr>/"
 
+------------------------------------------------------------------------------
+-- Credit: June Gunn <Leader>?/! | Google it / Feeling lucky
+------------------------------------------------------------------------------
+local fn = vim.fn
+function rvim.mappings.google(pat, lucky)
+  local query = '"' .. fn.substitute(pat, '["\n]', " ", "g") .. '"'
+  query = fn.substitute(query, "[[:punct:] ]", [[\=printf("%%%02X", char2nr(submatch(0)))]], "g")
+  fn.system(
+    fn.printf(
+      rvim.open_command .. ' "https://html.duckduckgo.com/html?%sq=%s"',
+      lucky and "btnI&" or "",
+      query
+    )
+  )
+  vim.notify(query, 10000)
+end
+
+nnoremap["<leader>?"] = [[:lua rvim.mappings.google(vim.fn.expand("<cword>"), false)<cr>]]
+nnoremap["<leader>!"] = [[:lua rvim.mappings.google(vim.fn.expand("<cword>"), true)<cr>]]
+xnoremap["<leader>?"] = [["gy:lua rvim.mappings.google(vim.api.nvim_eval("@g"), false)<cr>gv]]
+xnoremap["<leader>!"] = [["gy:lua rvim.mappings.google(vim.api.nvim_eval("@g"), false, true)<cr>gv]]
+
 -- QuickRun
 nnoremap["<C-b>"] = ":QuickRun<CR>"
 
