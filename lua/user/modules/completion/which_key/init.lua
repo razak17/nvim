@@ -212,7 +212,7 @@ return function()
 
     -- undotree
     if rvim.plugin_loaded "undotree" then
-      key_maps.a.u = { ":UndotreeToggle", "toggle undotree" }
+      key_maps.u = { ":UndotreeToggle<cr>", "toggle undotree" }
     end
 
     -- Register keymaps
