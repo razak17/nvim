@@ -228,14 +228,6 @@ return function()
         f = { ":Telescope dotfiles git_files<cr>", "git files" },
         s = { ":Telescope dotfiles status<cr>", "status" },
       },
-      g = {
-        name = "+Git",
-        b = { ":Telescope git_branches<cr>", "branches" },
-        c = { ":Telescope git_commits<cr>", "commits" },
-        C = { ":Telescope git_bcommits<cr>", "bcommits" },
-        f = { ":Telescope git_files<cr>", "files" },
-        s = { ":Telescope git_status<cr>", "status" },
-      },
       h = { ":Telescope frecency<cr>", "history" },
       l = {
         name = "+Live",
@@ -265,8 +257,6 @@ return function()
         a = { ":Telescope lsp_code_actions<cr>", "code action" },
         A = { ":Telescope lsp_range_code_actions<cr>", "range code action" },
         r = { ":Telescope lsp_references<cr>", "references" },
-        d = { ":Telescope lsp_document_symbols<cr>", "document_symbol" },
-        w = { ":Telescope lsp_workspace_symbols<cr>", "workspace_symbol" },
       },
       x = {
         name = "+Extensions",

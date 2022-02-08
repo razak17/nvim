@@ -199,6 +199,21 @@ return {
       r = { ":Farr --source=rgnvim<cr>", "replace in Project" },
       z = { ":Farundo<cr>", "undo" },
     },
+    git = {
+      name = "+Git",
+      b = { ":Telescope git_branches<cr>", "checkout branch" },
+      c = { ":Telescope git_commits<cr>", "checkout commit" },
+      C = {
+        ":Telescope git_bcommits<cr>",
+        "Checkout buffer commit",
+      },
+      d = {
+        "<cmd>Gitsigns diffthis HEAD<cr>",
+        "view diff",
+      },
+      f = { ":Telescope git_files<cr>", "files" },
+      o = { ":Telescope git_status<cr>", "open changed file" },
+    },
     gitsigns = {
       name = "+Gitsigns",
       b = "blame line",

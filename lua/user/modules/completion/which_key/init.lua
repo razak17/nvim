@@ -184,6 +184,11 @@ return function()
       key_maps.S = "edit snippet"
     end
 
+    -- git
+    if rvim.plugin.telescope.active and rvim.plugin.gitsigns.active then
+      key_maps.g = plugin_keymaps.git
+    end
+
     -- tree
     if rvim.plugin_loaded "nvim-tree.lua" then
       key_maps.e = "nvim-tree toggle"
