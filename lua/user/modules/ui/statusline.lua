@@ -10,6 +10,14 @@ return function()
     return
   end
 
+  local hide_in_width = function()
+    local squeeze_width = vim.api.nvim_win_get_width(0) / 2
+    if squeeze_width >= 75 then
+      return true
+    end
+    return false
+  end
+
   local gls = gl.section
 
   gl.short_line_list = { "NvimTree", "packer", "minimap", "Outline" }
@@ -84,25 +92,6 @@ return function()
       -- provider = require("galaxyline.providers.fileinfo").get_current_file_path,
       condition = condition.buffer_not_empty,
       highlight = { colors.statusline_fg, colors.bg },
-      separator = "| ",
-      separator_highlight = { colors.statusline_section_bg, colors.bg },
-    },
-  }
-  gls.left[6] = {
-    GitIcon = {
-      provider = function()
-        return " "
-      end,
-      condition = condition.check_git_workspace,
-      highlight = { colors.dark_green, colors.bg },
-    },
-  }
-  gls.left[7] = {
-    GitBranch = {
-      provider = "GitBranch",
-      condition = condition.check_git_workspace,
-      highlight = { colors.statusline_fg, colors.bg },
-      separator = " | ",
       separator_highlight = { colors.statusline_section_bg, colors.bg },
     },
   }
@@ -118,53 +107,77 @@ return function()
     return venv
   end
 
-  gls.left[8] = {
+  gls.left[6] = {
     ShowPythonEnv = {
       provider = function()
         if vim.bo.filetype == "python" then
           local venv = os.getenv "CONDA_DEFAULT_ENV"
           if venv then
-            return string.format(" (%s)", env_cleanup(venv))
+            return string.format(" (%s) ", env_cleanup(venv))
           end
           venv = os.getenv "VIRTUAL_ENV"
           if venv then
-            return string.format(" (%s)", env_cleanup(venv))
+            return string.format(" (%s) ", env_cleanup(venv))
           end
           return ""
         end
         return ""
       end,
-      condition = condition.hide_in_width,
+      condition = hide_in_width,
       highlight = { colors.dark_green, colors.bg },
-      separator = " | ",
+      separator_highlight = { colors.statusline_section_bg, colors.bg },
+    },
+  }
+  gls.left[7] = {
+    GitIcon = {
+      provider = function()
+        return "    "
+      end,
+      condition = condition.check_git_workspace,
+      highlight = { colors.dark_green, colors.bg },
+    },
+  }
+  gls.left[8] = {
+    GitBranch = {
+      provider = "GitBranch",
+      condition = condition.check_git_workspace,
+      highlight = { colors.statusline_fg, colors.bg },
       separator_highlight = { colors.statusline_section_bg, colors.bg },
     },
   }
   gls.left[9] = {
+    Space = {
+      provider = function()
+        return "      "
+      end,
+      highlight = { colors.statusline_section_bg, colors.bg },
+    },
+  }
+  gls.left[10] = {
     DiffAdd = {
       provider = "DiffAdd",
       condition = condition.hide_in_width,
       icon = " ",
-      highlight = { colors.green, colors.bg },
+      highlight = { colors.yellowgreen, colors.bg },
     },
   }
-  gls.left[10] = {
+  gls.left[11] = {
     DiffModified = {
       provider = "DiffModified",
       condition = condition.hide_in_width,
       icon = " ",
-      highlight = { colors.orange, colors.bg },
+      highlight = { colors.dark_orange, colors.bg },
     },
   }
-  gls.left[11] = {
+  gls.left[12] = {
     DiffRemove = {
       provider = "DiffRemove",
       condition = condition.hide_in_width,
       icon = " ",
-      highlight = { colors.pale_pale_red, colors.bg },
+      highlight = { colors.error_red, colors.bg },
     },
   }
-  gls.left[12] = {
+  gls.left[13] = {
     Space = {
       provider = function()
         return " "
@@ -172,21 +185,21 @@ return function()
       highlight = { colors.statusline_section_bg, colors.bg },
     },
   }
-  gls.left[13] = {
+  gls.left[14] = {
     DiagnosticError = {
       provider = "DiagnosticError",
       icon = "  ",
       highlight = { colors.pale_red, colors.bg },
     },
   }
-  gls.left[14] = {
+  gls.left[15] = {
     DiagnosticWarn = {
       provider = "DiagnosticWarn",
       icon = "  ",
       highlight = { colors.orange, colors.bg },
     },
   }
-  gls.left[15] = {
+  gls.left[16] = {
     DiagnosticInfo = {
       provider = "DiagnosticInfo",
       icon = "  ",
@@ -194,7 +207,7 @@ return function()
     },
   }
 
-  gls.left[16] = {
+  gls.left[17] = {
     DiagnosticHint = {
       provider = "DiagnosticHint",
       icon = "  ",
@@ -267,6 +280,7 @@ return function()
         end
         return vim.bo.filetype
       end,
+      condition = hide_in_width,
       highlight = { colors.statusline_fg, colors.bg },
       separator = " | ",
       separator_highlight = { colors.statusline_section_bg, colors.bg },
@@ -278,7 +292,7 @@ return function()
       provider = function()
         return "Spaces: " .. vim.api.nvim_buf_get_option(0, "shiftwidth")
       end,
-      condition = condition.hide_in_width,
+      condition = hide_in_width,
       highlight = { colors.statusline_fg, colors.bg },
       separator = " | ",
       separator_highlight = { colors.statusline_section_bg, colors.bg },
@@ -300,7 +314,7 @@ return function()
   gls.right[5] = {
     FileFormat = {
       provider = "FileFormat",
-      condition = condition.hide_in_width,
+      condition = hide_in_width,
       highlight = { colors.statusline_fg, colors.bg },
       separator = " | ",
       separator_highlight = { colors.statusline_section_bg, colors.bg },
@@ -310,7 +324,7 @@ return function()
   gls.right[6] = {
     FileEncode = {
       provider = "FileEncode",
-      condition = condition.hide_in_width,
+      condition = hide_in_width,
       highlight = { colors.statusline_fg, colors.bg },
       separator = " |",
       separator_highlight = { colors.statusline_section_bg, colors.bg },
