@@ -24,14 +24,10 @@ command {
   end,
 }
 
-local function set_diagnostics()
-  return vim.diagnostic.setqflist { open = false }
-end
-
 command {
   "LspDiagnostics",
   function()
-    set_diagnostics()
+    vim.diagnostic.setqflist { open = false }
     rvim.toggle_list "quickfix"
     if rvim.is_vim_list_open() then
       rvim.augroup("LspDiagnosticUpdate", {
@@ -39,7 +35,6 @@ command {
           events = { "DiagnosticChanged" },
           targets = { "*" },
           command = function()
-            set_diagnostics()
             if rvim.is_vim_list_open() then
               rvim.toggle_list "quickfix"
             end
