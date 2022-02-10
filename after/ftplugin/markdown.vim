@@ -3,7 +3,11 @@
 syntax match todoCheckbox "\v.*\[\ \]"hs=e-2 conceal cchar=
 syntax match todoCheckbox "\v.*\[x\]"hs=e-2 conceal cchar=
 setlocal conceallevel=2
-setlocal spell spelllang=en_US
+setlocal spell spelllang=en
+setlocal spelloptions=camel
+
+"don't check for capital letters at start of sentence
+setlocal spellcapcheck=
 
 highlight Conceal guibg=NONE
 

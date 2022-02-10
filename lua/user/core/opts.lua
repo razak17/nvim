@@ -47,11 +47,9 @@ M.load_options = function()
     matchtime = 1,
 
     -- Spelling
-    spelllang = { "en_US" },
+    spelllang = { "en" },
     spell = true,
-    spelloptions = "camel",
     spellfile = utils.join_paths(rvim.get_config_dir(), "spell", "en.utf-8.add"),
-    spellcapcheck = "", -- don't check for capital letters at start of sentence
     fileformats = { "unix", "mac", "dos" }, -- don't check for capital letters at start of sentence
 
     -- Display
@@ -184,7 +182,6 @@ M.load_options = function()
   vim.opt.shadafile = utils.join_paths(rvim.get_cache_dir(), "shada", "rvim.shada")
   vim.opt.cursorlineopt = "screenline,number"
   vim.opt.spellsuggest:prepend { 12 }
-  vim.opt.spellcapcheck = "" -- don't check for capital letters at start of sentence
   vim.opt.fileformats = { "unix", "mac", "dos" }
 
   for k, v in pairs(default_options) do
