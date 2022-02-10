@@ -73,7 +73,20 @@ editor["arecarn/vim-fold-cycle"] = {
 
 editor["b3nj5m1n/kommentary"] = {
   event = { "BufWinEnter" },
-  config = utils.load_conf("editor", "kommentary"),
+  config = function()
+    require("kommentary.config").configure_language(
+      "default",
+      { prefer_single_line_comments = true }
+    )
+    local fts = { "zsh", "sh", "yaml", "vim" }
+    for _, f in pairs(fts) do
+      if f == "vim" then
+        require("kommentary.config").configure_language(f, { single_line_comment_string = '"' })
+      else
+        require("kommentary.config").configure_language(f, { single_line_comment_string = "#" })
+      end
+    end
+  end,
   disable = not rvim.plugin.kommentary.active,
 }
 

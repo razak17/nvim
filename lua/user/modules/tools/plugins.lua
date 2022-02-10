@@ -33,7 +33,22 @@ tools["kkoomen/vim-doge"] = {
 
 tools["numToStr/FTerm.nvim"] = {
   event = { "BufWinEnter" },
-  config = utils.load_conf("tools", "fterm"),
+  config = function()
+    function _G.__fterm_cmd(key)
+      local term = require "FTerm"
+      local cmd = term:new { cmd = "gitui" }
+      if key == "node" then
+        cmd = term:new { cmd = "node" }
+      elseif key == "python" then
+        cmd = term:new { cmd = "python" }
+      elseif key == "lazygit" then
+        cmd = term:new { cmd = "lazygit" }
+      elseif key == "ranger" then
+        cmd = term:new { cmd = "ranger" }
+      end
+      cmd:toggle()
+    end
+  end,
   disable = not rvim.plugin.fterm.active,
 }
 
