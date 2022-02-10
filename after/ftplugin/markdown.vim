@@ -3,7 +3,7 @@
 syntax match todoCheckbox "\v.*\[\ \]"hs=e-2 conceal cchar=
 syntax match todoCheckbox "\v.*\[x\]"hs=e-2 conceal cchar=
 setlocal conceallevel=2
-setlocal spell spelllang=en_gb
+setlocal spell spelllang=en_US
 
 highlight Conceal guibg=NONE
 

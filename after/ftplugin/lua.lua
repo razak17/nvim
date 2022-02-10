@@ -3,6 +3,7 @@ require("user.lsp.manager").setup "sumneko_lua"
 vim.cmd [[setlocal iskeyword+="]]
 vim.cmd [[setlocal textwidth=100]]
 vim.cmd [[setlocal formatoptions-=o]]
+vim.cmd [[setlocal nospell]]
 
 vim.cmd [[
   let b:surround_{char2nr('F')} = "function \1function: \1() \r end"

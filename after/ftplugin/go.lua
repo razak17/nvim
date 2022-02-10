@@ -9,5 +9,6 @@ vim.cmd [[setlocal tabstop=4]]
 vim.cmd [[setlocal noexpandtab]]
 vim.cmd [[setlocal textwidth=100]]
 vim.cmd [[setlocal iskeyword+="]]
+vim.cmd [[setlocal nospell]]
 
 rvim.nnoremap("<leader>cf", ":<cmd>call utils#create_go_doc_comment()<CR><CR>")
