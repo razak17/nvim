@@ -200,11 +200,14 @@ return function()
   require("which-key").register {
     ["<leader>f"] = {
       name = "+Telescope",
-      b = { ":Telescope file_browser<cr>", "file browser" },
-      f = {
-        ":Telescope find_files<cr>",
-        "find files",
-      },
+      b = { ":Telescope current_buffer_fuzzy_find<cr>", "find in current buffer" },
+      f = { ":Telescope find_files<cr>", "find files" },
+      g = { ":Telescope live_grep<cr>", "find word" },
+      h = { ":Telescope frecency<cr>", "history" },
+      p = { ":Telescope projects<cr>", "recent projects" },
+      r = { ":Telescope oldfiles<cr>", "history" },
+      w = { ":Telescope grep_string<cr>", "find current word" },
+      W = { ":Telescope bg_selector<cr>", "change background" },
       c = {
         name = "+Builtin",
         a = { ":Telescope autocommands<cr>", "autocmds" },
@@ -228,13 +231,9 @@ return function()
         f = { ":Telescope dotfiles git_files<cr>", "git files" },
         s = { ":Telescope dotfiles status<cr>", "status" },
       },
-      g = { ":Telescope live_grep<cr>", "grep" },
-      h = { ":Telescope frecency<cr>", "history" },
       l = {
         name = "+Live",
-        w = { ":Telescope grep_string<cr>", "current word" },
         e = { ":Telescope grep_string_prompt<cr>", "prompt" },
-        f = { ":Telescope current_buffer_fuzzy_find<cr>", "current file fuzzy find" },
       },
       L = {
         name = "+Config",
@@ -246,17 +245,11 @@ return function()
         I = { ":Telescope nvim_files view_changelog<cr>", "view changelog" },
         s = { ":Telescope nvim_files status<cr>", "status" },
       },
-      p = { ":Telescope projects<cr>", "recent projects" },
-      r = { ":Telescope oldfiles<cr>", "history" },
       v = {
         name = "+Lsp",
         a = { ":Telescope lsp_code_actions<cr>", "code action" },
         A = { ":Telescope lsp_range_code_actions<cr>", "range code action" },
         r = { ":Telescope lsp_references<cr>", "references" },
-      },
-      x = {
-        name = "+Extensions",
-        b = { ":Telescope bg_selector<cr>", "change background" },
       },
     },
   }
