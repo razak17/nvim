@@ -90,4 +90,25 @@ tools["Tastyep/structlog.nvim"] = {
   disable = not rvim.plugin.structlog.active,
 }
 
+tools["AckslD/nvim-neoclip.lua"] = {
+  config = function()
+    require("neoclip").setup {
+      enable_persistent_history = true,
+      keys = {
+        telescope = {
+          i = { select = "<c-p>", paste = "<CR>", paste_behind = "<c-k>" },
+          n = { select = "p", paste = "<CR>", paste_behind = "P" },
+        },
+      },
+    }
+    local function clip()
+      require("telescope").extensions.neoclip.default(require("telescope.themes").get_dropdown())
+    end
+    require("which-key").register {
+      ["<localleader>p"] = { clip, "neoclip: open yank history" },
+    }
+  end,
+  disable = not rvim.plugin.neoclip.active,
+}
+
 return tools
