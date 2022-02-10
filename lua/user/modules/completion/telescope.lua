@@ -202,6 +202,7 @@ return function()
       name = "+Telescope",
       b = { ":Telescope current_buffer_fuzzy_find<cr>", "find in current buffer" },
       f = { ":Telescope find_files<cr>", "find files" },
+      e = { ":Telescope grep_string_prompt<cr>", "find in prompt" },
       g = { ":Telescope live_grep<cr>", "find word" },
       h = { ":Telescope frecency<cr>", "history" },
       p = { ":Telescope projects<cr>", "recent projects" },
@@ -230,10 +231,6 @@ return function()
         c = { ":Telescope dotfiles commits<cr>", "commits" },
         f = { ":Telescope dotfiles git_files<cr>", "git files" },
         s = { ":Telescope dotfiles status<cr>", "status" },
-      },
-      l = {
-        name = "+Live",
-        e = { ":Telescope grep_string_prompt<cr>", "prompt" },
       },
       L = {
         name = "+Config",
