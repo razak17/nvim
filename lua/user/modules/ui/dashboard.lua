@@ -5,7 +5,12 @@ return function()
     return { k .. string.rep(" ", c) .. v }
   end
 
-  local num_plugins_loaded = #vim.fn.globpath(rvim.get_runtime_dir() .. "/site/pack/packer/*", "*", 0, 1)
+  local num_plugins_loaded = #vim.fn.globpath(
+    rvim.get_runtime_dir() .. "/site/pack/packer/*",
+    "*",
+    0,
+    1
+  )
 
   rvim.dashboard = {
     custom_header = {
@@ -22,24 +27,28 @@ return function()
     session_directory = utils.join_paths(rvim.get_cache_dir(), "sessions", "dashboard"),
     custom_section = {
       a = {
-        description = join("  Find Files", "<leader>ff", 13),
+        description = join("  Find File", "<leader>ff", 14),
         command = "Telescope find_files",
       },
       b = {
-        description = join("  Default config", "<leader>Ic", 9),
-        command = ":e " .. rvim.get_user_dir() .. "/config/init.lua",
+        description = join("  New File", "<leader>nf", 15),
+        command = ":ene!",
       },
       c = {
+        description = join("  Recent projects", "<leader>fp", 8),
+        command = "Telescope projects",
+      },
+      d = {
         description = join("  Recent files", "<leader>fR", 11),
         command = "Telescope oldfiles",
       },
-      d = {
-        description = join("  Find in project", "<leader>flg", 8),
+      e = {
+        description = join("  Find word", "<leader>flg", 14),
         command = "Telescope live_grep",
       },
-      e = {
-        description = join("  File Browser", "<leader>fb", 11),
-        command = "Telescope file_browser",
+      f = {
+        description = join("  Config file", "<leader>Lc", 12),
+        command = ":e " .. rvim.get_user_dir() .. "/config/init.lua",
       },
     },
     custom_footer = { "  Neovim loaded " .. num_plugins_loaded .. " plugins" },
