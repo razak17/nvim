@@ -182,7 +182,7 @@ lang["ray-x/lsp_signature.nvim"] = {
 lang["lewis6991/spellsitter.nvim"] = {
   config = function()
     require("spellsitter").setup {
-      enable = { "python", "lua", "markdown" },
+      enable = { "markdown" },
     }
   end,
   disable = not rvim.plugin.spellsitter.active,
