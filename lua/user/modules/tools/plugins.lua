@@ -105,7 +105,7 @@ tools["AckslD/nvim-neoclip.lua"] = {
       require("telescope").extensions.neoclip.default(require("telescope.themes").get_dropdown())
     end
     require("which-key").register {
-      ["<localleader>p"] = { clip, "neoclip: open yank history" },
+      ["<leader>fn"] = { clip, "neoclip: open yank history" },
     }
   end,
   disable = not rvim.plugin.neoclip.active,
