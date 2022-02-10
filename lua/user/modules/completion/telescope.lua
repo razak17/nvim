@@ -173,6 +173,7 @@ return function()
   telescope.setup(rvim.telescope.setup)
 
   local plugins = {
+    project = "projects",
     telescope_fzf = "fzf",
     telescope_ui_select = "ui-select",
     telescope_tmux = "tmux",
