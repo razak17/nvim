@@ -236,6 +236,7 @@ return function()
         e = { ":Telescope grep_string_prompt<cr>", "prompt" },
         f = { ":Telescope current_buffer_fuzzy_find<cr>", "current file fuzzy find" },
       },
+      p = { ":Telescope projects<cr>", "recent projects" },
       r = {
         name = "+Config",
         b = { ":Telescope nvim_files branches<cr>", "branches" },
