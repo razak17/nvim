@@ -19,14 +19,17 @@ completion["mattn/emmet-vim"] = {
 }
 
 completion["hrsh7th/nvim-cmp"] = {
-  config = utils.load_conf("completion", "cmp"),
+  module = "cmp",
+  event = "InsertEnter",
   requires = {
-    "hrsh7th/cmp-nvim-lsp",
-    "hrsh7th/cmp-vsnip",
-    "hrsh7th/cmp-buffer",
-    "hrsh7th/cmp-path",
+    { "hrsh7th/cmp-nvim-lsp", after = "nvim-cmp" },
+    { "hrsh7th/cmp-vsnip", after = "nvim-cmp" },
+    { "hrsh7th/cmp-buffer", after = "nvim-cmp" },
+    { "hrsh7th/cmp-path", after = "nvim-cmp" },
+    { "f3fora/cmp-spell", after = "nvim-cmp" },
   },
   commit = rvim.plugin.commits.nvim_cmp,
+  config = utils.load_conf("completion", "cmp"),
   disable = not rvim.plugin.cmp.active,
 }
 

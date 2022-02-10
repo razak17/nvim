@@ -82,8 +82,8 @@ return function()
           calc = "(Calc)",
           cmp_tabnine = "(Tabnine)",
           vsnip = "(Snippet)",
-          luasnip = "(Snippet)",
           buffer = "(Buffer)",
+          spell = "(Spell)",
         },
         duplicates = {
           buffer = 1,
@@ -119,6 +119,7 @@ return function()
         { name = "emoji" },
         { name = "treesitter" },
         { name = "crates" },
+        { name = "spell" },
       },
       mapping = {
         ["<C-k>"] = cmp.mapping.select_prev_item(),
