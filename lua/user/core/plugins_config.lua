@@ -31,6 +31,7 @@ return {
   renamer = { active = true },
   rust_tools = { active = true },
   schemastore = { active = true },
+  lsp_signature = { active = true },
   -- treesitter
   treesitter = { active = true },
   playground = { active = true },

@@ -164,4 +164,19 @@ lang["b0o/schemastore.nvim"] = {
   disable = not rvim.plugin.schemastore.active,
 }
 
+lang["ray-x/lsp_signature.nvim"] = {
+  config = function()
+    require("lsp_signature").setup {
+      debug = false,
+      log_path = rvim.get_cache_dir() .. "/lsp_signature.log", -- log dir when debug is on
+      bind = true,
+      fix_pos = false,
+      auto_close_after = 15, -- close after 15 seconds
+      hint_enable = false,
+      handler_opts = { border = "rounded" },
+    }
+  end,
+  disable = not rvim.plugin.lsp_signature.active,
+}
+
 return lang
