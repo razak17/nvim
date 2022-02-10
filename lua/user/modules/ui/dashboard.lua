@@ -39,11 +39,11 @@ return function()
         command = "Telescope projects",
       },
       d = {
-        description = join("  Recent files", "<leader>fR", 11),
+        description = join("  Recent files", "<leader>fr", 11),
         command = "Telescope oldfiles",
       },
       e = {
-        description = join("  Find word", "<leader>flg", 14),
+        description = join("  Find word", "<leader>fg", 14),
         command = "Telescope live_grep",
       },
       f = {

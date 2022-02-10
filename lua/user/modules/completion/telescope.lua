@@ -228,16 +228,15 @@ return function()
         f = { ":Telescope dotfiles git_files<cr>", "git files" },
         s = { ":Telescope dotfiles status<cr>", "status" },
       },
+      g = { ":Telescope live_grep<cr>", "grep" },
       h = { ":Telescope frecency<cr>", "history" },
       l = {
         name = "+Live",
-        g = { ":Telescope live_grep<cr>", "grep" },
         w = { ":Telescope grep_string<cr>", "current word" },
         e = { ":Telescope grep_string_prompt<cr>", "prompt" },
         f = { ":Telescope current_buffer_fuzzy_find<cr>", "current file fuzzy find" },
       },
-      p = { ":Telescope projects<cr>", "recent projects" },
-      r = {
+      L = {
         name = "+Config",
         b = { ":Telescope nvim_files branches<cr>", "branches" },
         B = { ":Telescope nvim_files bcommits<cr>", "bcommits" },
@@ -247,7 +246,8 @@ return function()
         I = { ":Telescope nvim_files view_changelog<cr>", "view changelog" },
         s = { ":Telescope nvim_files status<cr>", "status" },
       },
-      R = { ":Telescope oldfiles<cr>", "history" },
+      p = { ":Telescope projects<cr>", "recent projects" },
+      r = { ":Telescope oldfiles<cr>", "history" },
       v = {
         name = "+Lsp",
         a = { ":Telescope lsp_code_actions<cr>", "code action" },
