@@ -53,6 +53,7 @@ return {
     },
     L = {
       name = "+Rvim",
+      [";"] = { ":Dashboard<cr>", "dashboard" },
       ["?"] = "search cursor word",
       ["!"] = "search cursor word",
       c = {
