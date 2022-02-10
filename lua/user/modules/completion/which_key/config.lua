@@ -45,7 +45,7 @@ return {
       v = "vertical split",
       x = { ":wq!<cr>", "save and exit" },
       s = { ":w!<cr>", "force save" },
-      z = { ":q<cr>", "force exit" },
+      z = { ":q!<cr>", "force exit" },
     },
     b = {
       name = "+Bufferline",
