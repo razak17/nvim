@@ -115,6 +115,17 @@ return function()
               },
             }),
           },
+          file_browser = {
+            theme = "ivy",
+            mappings = {
+              ["i"] = {
+                i = { ["<c-x>"] = "delete_buffer" },
+              },
+              ["n"] = {
+                n = { ["<c-x>"] = "delete_buffer" },
+              },
+            },
+          },
         },
         pickers = {
           buffers = dropdown {
@@ -179,6 +190,7 @@ return function()
     telescope_ui_select = "ui-select",
     telescope_tmux = "tmux",
     telescope_frecency = "frecency",
+    telescope_file_browser = "file_browser",
   }
 
   for config, plug in pairs(plugins) do
@@ -201,7 +213,8 @@ return function()
   require("which-key").register {
     ["<leader>f"] = {
       name = "+Telescope",
-      b = { ":Telescope current_buffer_fuzzy_find<cr>", "find in current buffer" },
+      b = { ":Telescope file_browser<cr>", "find browser" },
+      B = { ":Telescope current_buffer_fuzzy_find<cr>", "find in current buffer" },
       f = { ":Telescope find_files<cr>", "find files" },
       e = { ":Telescope grep_string_prompt<cr>", "find in prompt" },
       g = { ":Telescope live_grep<cr>", "find word" },
