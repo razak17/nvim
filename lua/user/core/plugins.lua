@@ -124,8 +124,12 @@ function plugins.ensure_plugins()
   command {
     "PlugCompiledDelete",
     function()
-      vim.fn.delete(compile_path)
-      vim.notify(fmt("Deleted %s", compile_path))
+      if vim.fn.filereadable(compile_path) ~= 1 then
+        vim.notify "packer_compiled file does not exist"
+      else
+        vim.fn.delete(compile_path)
+        vim.notify(fmt("Deleted %s", compile_path))
+      end
     end,
   }
 
