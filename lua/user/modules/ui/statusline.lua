@@ -203,7 +203,7 @@ return function()
     DiagnosticInfo = {
       provider = "DiagnosticInfo",
       icon = "  ",
-      highlight = { colors.dark_green, colors.bg },
+      highlight = { colors.blue, colors.bg },
     },
   }
 
@@ -211,7 +211,7 @@ return function()
     DiagnosticHint = {
       provider = "DiagnosticHint",
       icon = "  ",
-      highlight = { colors.pale_blue, colors.bg },
+      highlight = { colors.dark_green, colors.bg },
     },
   }
 
