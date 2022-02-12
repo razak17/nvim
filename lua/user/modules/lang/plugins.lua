@@ -4,19 +4,16 @@ local utils = require "user.utils"
 
 -- Debugging
 lang["mfussenegger/nvim-dap"] = {
-  event = "BufReadPre",
-  config = utils.load_conf("lang", "dap"),
+  config = utils.load_conf("user", "dap"),
   disable = not rvim.plugin.dap.active,
 }
 
 lang["rcarriga/nvim-dap-ui"] = {
-  event = "BufReadPre",
   config = utils.load_conf("lang", "dap_ui"),
   disable = not rvim.plugin.dap_ui.active,
 }
 
 lang["Pocco81/DAPInstall.nvim"] = {
-  event = "BufReadPre",
   disable = not rvim.plugin.dap_install.active,
 }
 

@@ -110,6 +110,10 @@ end
 
 function M.load_conf(dir, name)
   local module_dir = string.format("user.modules.%s", dir)
+  if dir == "user" then
+    return require(string.format(dir .. ".%s", name))
+  end
+
   return require(string.format(module_dir .. ".%s", name))
 end
 
