@@ -11,3 +11,8 @@ vim.cmd [[highlight Conceal guibg=NONE]]
 
 -- https://vi.stackexchange.com/a/4003/16249
 vim.cmd [[syntax match NoSpellAcronym '\<\(\u\|\d\)\{3,}s\?\>' contains=@NoSpell]]
+
+vim.cmd [[iabbrev :tup: 👍]]
+vim.cmd [[iabbrev :tdo: 👎]]
+vim.cmd [[iabbrev :smi: 😊]]
+vim.cmd [[iabbrev :sad: 😔]]
