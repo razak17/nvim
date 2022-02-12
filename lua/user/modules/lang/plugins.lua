@@ -8,11 +8,6 @@ lang["mfussenegger/nvim-dap"] = {
   disable = not rvim.plugin.dap.active,
 }
 
-lang["rcarriga/nvim-dap-ui"] = {
-  config = utils.load_conf("lang", "dap_ui"),
-  disable = not rvim.plugin.dap_ui.active,
-}
-
 lang["Pocco81/DAPInstall.nvim"] = {
   disable = not rvim.plugin.dap_install.active,
 }

@@ -15,7 +15,7 @@ return {
   packer = { active = true },
   -- debug
   dap = { active = true },
-  dap_ui = { active = false },
+  dap_ui = { active = true },
   dap_install = { active = true },
   osv = { active = false },
   nvim_dap_virtual_text = { active = true },

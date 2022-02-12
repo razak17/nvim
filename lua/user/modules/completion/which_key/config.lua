@@ -79,7 +79,7 @@ return {
       },
       u = { ":UpdateRemotePlugins<cr>", "far: update remote" },
       v = {
-        ":e " .. require("user.utils").join_paths(rvim.get_config_dir(), "init.lua"),
+        ":e " .. require("user.utils").join_paths(rvim.get_config_dir(), "init.lua<cr>"),
         "open vimrc",
       },
     },
