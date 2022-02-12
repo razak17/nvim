@@ -111,4 +111,30 @@ tools["AckslD/nvim-neoclip.lua"] = {
   disable = not rvim.plugin.neoclip.active,
 }
 
+-- Telescope
+tools["razak17/telescope.nvim"] = {
+  event = "VimEnter",
+  config = utils.load_conf("tools", "telescope"),
+  disable = not rvim.plugin.telescope.active,
+}
+
+tools["nvim-telescope/telescope-fzf-native.nvim"] = {
+  run = "make",
+  disable = not rvim.plugin.telescope_fzf.active,
+}
+
+tools["nvim-telescope/telescope-ui-select.nvim"] = {
+  disable = not rvim.plugin.telescope_ui_select.active,
+}
+
+tools["camgraff/telescope-tmux.nvim"] = {
+  disable = not rvim.plugin.telescope_ui_select.active,
+}
+
+tools["tami5/sqlite.lua"] = { disable = not rvim.plugin.telescope_frecency.active }
+
+tools["nvim-telescope/telescope-frecency.nvim"] = {
+  disable = not rvim.plugin.telescope_frecency.active,
+}
+
 return tools

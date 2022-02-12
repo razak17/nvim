@@ -49,30 +49,4 @@ completion["nvim-lua/plenary.nvim"] = { disable = not rvim.plugin.plenary.active
 
 completion["nvim-lua/popup.nvim"] = { disable = not rvim.plugin.popup.active }
 
--- Telescope
-completion["razak17/telescope.nvim"] = {
-  event = "VimEnter",
-  config = utils.load_conf("completion", "telescope"),
-  disable = not rvim.plugin.telescope.active,
-}
-
-completion["nvim-telescope/telescope-fzf-native.nvim"] = {
-  run = "make",
-  disable = not rvim.plugin.telescope_fzf.active,
-}
-
-completion["nvim-telescope/telescope-ui-select.nvim"] = {
-  disable = not rvim.plugin.telescope_ui_select.active,
-}
-
-completion["camgraff/telescope-tmux.nvim"] = {
-  disable = not rvim.plugin.telescope_ui_select.active,
-}
-
-completion["tami5/sqlite.lua"] = { disable = not rvim.plugin.telescope_frecency.active }
-
-completion["nvim-telescope/telescope-frecency.nvim"] = {
-  disable = not rvim.plugin.telescope_frecency.active,
-}
-
 return completion
