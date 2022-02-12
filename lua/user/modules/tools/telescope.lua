@@ -119,10 +119,14 @@ return function()
             theme = "ivy",
             mappings = {
               ["i"] = {
-                i = { ["<c-x>"] = "delete_buffer" },
+                i = {
+                  ["<C-h>"] = fb_actions.goto_home_dir,
+                },
               },
               ["n"] = {
-                n = { ["<c-x>"] = "delete_buffer" },
+                n = {
+                  f = false,
+                },
               },
             },
           },
