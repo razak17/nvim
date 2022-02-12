@@ -71,7 +71,7 @@ return function()
       n = { ":lua require'dap'.run_to_cursor()<cr>", "run to cursor" },
       K = { ":lua require'dap.ui.widgets'.hover()<cr>", "hover" },
 
-      r = { ":lua require'dap'.repl.toggle()<cr>", "toggle repl" },
+      [";"] = { ":lua require'dap'.repl.toggle()<cr>", "toggle repl" },
       R = { ':lua require"dap".repl.open({}, "vsplit")<cr><C-w>l<cr>', "open repl in vsplit" },
 
       x = { ":lua require'dap'.disconnect()<cr>", "disconnect" },
