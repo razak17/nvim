@@ -120,7 +120,7 @@ return function()
             mappings = {
               ["i"] = {
                 i = {
-                  ["<C-h>"] = fb_actions.goto_home_dir,
+                  ["<C-h>"] = require("telescope").extensions.file_browser.actions.goto_home_dir,
                 },
               },
               ["n"] = {
