@@ -89,4 +89,5 @@ return {
   telescope_ui_select = { active = true },
   telescope_tmux = { active = true },
   telescope_frecency = { active = true },
+  telescope_dap = { active = true },
 }

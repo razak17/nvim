@@ -54,13 +54,13 @@ return function()
       a = { ':lua require"user.dap.utils".attach()<cr>', "attach" },
       A = { ':lua require"user.dap.utils".attachToRemote()<cr>', "attach remote" },
 
-      b = { ":lua require'dap'.step_back()<cr>", "step back" },
+      h = { ":lua require'dap'.step_back()<cr>", "step back" },
       i = { ":lua require'dap'.step_into()<cr>", "step into" },
       u = { ":lua require'dap'.step_out()<cr>", "step out" },
       o = { ":lua require'dap'.step_over()<cr>", "step over" },
 
       t = { ":lua require'dap'.toggle_breakpoint()<cr>", "toggle breakpoint" },
-      B = {
+      T = {
         ':lua require"dap".set_breakpoint(vim.fn.input("Breakpoint condition: "))<cr>',
         "set breakpoint",
       },
@@ -69,10 +69,10 @@ return function()
       C = { ":lua require'dap'.clear_breakpoints()<cr>", "clear breakpoints" },
       e = { ":lua require'dap'.set_exception_breakpoints({'all'})<cr>", "breakpoint exception" },
       n = { ":lua require'dap'.run_to_cursor()<cr>", "run to cursor" },
-      h = { ":lua require'dap.ui.widgets'.hover()<cr>", "hover" },
+      K = { ":lua require'dap.ui.widgets'.hover()<cr>", "hover" },
 
       r = { ":lua require'dap'.repl.toggle()<cr>", "toggle repl" },
-      v = { ':lua require"dap".repl.open({}, "vsplit")<cr><C-w>l<cr>', "open repl in vsplit" },
+      R = { ':lua require"dap".repl.open({}, "vsplit")<cr><C-w>l<cr>', "open repl in vsplit" },
 
       x = { ":lua require'dap'.disconnect()<cr>", "disconnect" },
       z = { ":lua require'dap'.terminate()<cr>", "terminate" },
@@ -83,6 +83,10 @@ return function()
       j = { ":lua require'dap'.down()<cr>", "down" },
       l = { ":lua require'dap'.run_last()<cr>", "run last" },
       p = { ":lua require'dap'.pause.toggle()<cr>", "pause" },
+
+      f = { ":Telescope dap frames<cr>", "frames" },
+      v = { ":Telescope dap variables<cr>", "variables" },
+      b = { ":Telescope dap list_breakpoints<cr>", "list breakpoints" },
     },
   }
 

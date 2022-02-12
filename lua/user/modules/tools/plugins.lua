@@ -137,4 +137,8 @@ tools["nvim-telescope/telescope-frecency.nvim"] = {
   disable = not rvim.plugin.telescope_frecency.active,
 }
 
+tools['nvim-telescope/telescope-dap.nvim'] = {
+  disable = not rvim.plugin.telescope_dap.active,
+}
+
 return tools

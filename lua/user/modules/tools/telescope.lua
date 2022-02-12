@@ -174,6 +174,7 @@ return function()
 
   local plugins = {
     project = "projects",
+    telescope_dap = "dap",
     telescope_fzf = "fzf",
     telescope_ui_select = "ui-select",
     telescope_tmux = "tmux",
