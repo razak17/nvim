@@ -24,7 +24,7 @@ nvim_config.files = function(opts)
       horizontal = { mirror = false },
       vertical = { mirror = false },
     },
-    prompt_title = "~ Rvim files ~",
+    prompt_title = "Rvim files",
     cwd = rvim.get_config_dir(),
   }
   opts = vim.tbl_deep_extend("force", theme_opts, opts)
@@ -45,7 +45,7 @@ nvim_config.grep_files = function(opts)
       horizontal = { mirror = false },
       vertical = { mirror = false },
     },
-    prompt_title = "~ Search Rvim ~",
+    prompt_title = "Search Rvim",
     cwd = rvim.get_config_dir(),
   }
   opts = vim.tbl_deep_extend("force", theme_opts, opts)
@@ -57,7 +57,7 @@ nvim_config.view_changelog = function()
   opts.entry_maker = make_entry.gen_from_git_commits(opts)
 
   pickers.new(opts, {
-    prompt_title = "RVim changelog",
+    prompt_title = "Rvim changelog",
 
     finder = finders.new_oneshot_job(
       vim.tbl_flatten {

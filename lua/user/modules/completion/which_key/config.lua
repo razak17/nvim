@@ -236,11 +236,5 @@ return {
       l = { ":SessionLoad<cr>", "load Session" },
       s = { ":SessionSave<cr>", "save Session" },
     },
-    telescope_tmux = {
-      name = "+Tmux",
-      s = { ":Telescope tmux sessions<cr>", "sessions" },
-      w = { ":Telescope tmux windows<cr>", "windows" },
-      e = { ":Telescope tmux pane_contents<cr>", "pane contents" },
-    },
   },
 }

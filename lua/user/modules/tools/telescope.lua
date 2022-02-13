@@ -246,33 +246,73 @@ return function()
     require("telescope").load_extension(ext)
   end
 
+  --- NOTE: this must be required after setting up telescope
+  --- otherwise the result will be cached without the updates
+  --- from the setup call
+  local builtins = require "telescope.builtin"
+
+  local function note_files()
+    builtins.find_files {
+      prompt_title = "Notes",
+      cwd = vim.fn.expand "~/notes/src/",
+    }
+  end
+
+  local function installed_plugins()
+    require("telescope.builtin").find_files {
+      prompt_title = "Plugins",
+      cwd = vim.fn.stdpath "data" .. "/site/pack/packer",
+    }
+  end
+
+  local function tmux_sessions()
+    telescope.extensions.tmux.sessions {}
+  end
+
+  local function tmux_windows()
+    telescope.extensions.tmux.windows {
+      entry_format = "#S: #T",
+    }
+  end
+
+  local function project_files(opts)
+    if not pcall(builtins.git_files, opts) then
+      builtins.find_files(opts)
+    end
+  end
+
   require("which-key").register {
-    ["<c-p>"] = { ":Telescope find_files<cr>", "find files" },
+    -- ["<c-p>"] = { ":Telescope find_files<cr>", "find files" },
+    ["<c-p>"] = { project_files, "telescope: find files" },
+    ["<c-n>"] = { note_files, "note files" },
     ["<leader>f"] = {
       name = "+Telescope",
-      b = { ":Telescope file_browser<cr>", "find browser" },
-      B = { ":Telescope current_buffer_fuzzy_find<cr>", "find in current buffer" },
+      a = { builtins.builtin, "builtins" },
+      b = { builtins.current_buffer_fuzzy_find, "find in current buffer" },
+      g = { builtins.live_grep, "find word" },
+      R = { builtins.reloader, "module reloader" },
+      r = { builtins.oldfiles, "history" },
+      w = { builtins.grep_string, "find current word" },
+      P = { installed_plugins, "plugins" },
+      B = { ":Telescope file_browser<cr>", "find browser" },
       e = { ":Telescope grep_string_prompt<cr>", "find in prompt" },
-      g = { ":Telescope live_grep<cr>", "find word" },
       h = { ":Telescope frecency<cr>", "history" },
       p = { ":Telescope projects<cr>", "recent projects" },
-      r = { ":Telescope oldfiles<cr>", "history" },
-      w = { ":Telescope grep_string<cr>", "find current word" },
       W = { ":Telescope bg_selector<cr>", "change background" },
       c = {
         name = "+Builtin",
-        a = { ":Telescope autocommands<cr>", "autocmds" },
-        b = { ":Telescope buffers<cr>", "buffers" },
-        c = { ":Telescope commands<cr>", "commands" },
-        e = { ":Telescope quickfix<cr>", "quickfix" },
-        f = { ":Telescope builtin<cr>", "builtin" },
-        h = { ":Telescope help_tags<cr>", "help" },
-        H = { ":Telescope command_history<cr>", "history" },
-        k = { ":Telescope keymaps<cr>", "keymaps" },
-        l = { ":Telescope loclist<cr>", "loclist" },
-        r = { ":Telescope registers<cr><CR>", "registers" },
-        T = { ":Telescope treesitter", "treesitter" },
-        v = { ":Telescope vim_options<cr>", "vim options" },
+        a = { builtins.autocommands, "autocmds" },
+        b = { builtins.buffers, "buffers" },
+        c = { builtins.commands, "commands" },
+        e = { builtins.quickfix, "quickfix" },
+        f = { builtins.builtin, "builtin" },
+        h = { builtins.help_tags, "help" },
+        H = { builtins.command_history, "history" },
+        k = { builtins.keymaps, "keymaps" },
+        l = { builtins.loclist, "loclist" },
+        r = { builtins.registers, "registers" },
+        T = { builtins.treesitter, "treesitter" },
+        v = { builtins.vim_options, "vim options" },
       },
       d = {
         name = "+Dotfiles",
@@ -292,11 +332,16 @@ return function()
         I = { ":Telescope nvim_files view_changelog<cr>", "view changelog" },
         s = { ":Telescope nvim_files status<cr>", "status" },
       },
-      v = {
+      t = {
+        name = "+tmux",
+        s = { tmux_sessions, "sessions" },
+        w = { tmux_windows, "windows" },
+      },
+      l = {
         name = "+Lsp",
-        a = { ":Telescope lsp_code_actions<cr>", "code action" },
-        A = { ":Telescope lsp_range_code_actions<cr>", "range code action" },
-        r = { ":Telescope lsp_references<cr>", "references" },
+        a = { builtins.lsp_code_actions, "code action" },
+        A = { builtins.lsp_range_code_actions, "range code action" },
+        r = { builtins.lsp_references, "references" },
       },
     },
   }
