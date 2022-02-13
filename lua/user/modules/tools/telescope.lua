@@ -314,14 +314,6 @@ return function()
         T = { builtins.treesitter, "treesitter" },
         v = { builtins.vim_options, "vim options" },
       },
-      d = {
-        name = "+Dotfiles",
-        b = { ":Telescope dotfiles branches<cr>", "branches" },
-        B = { ":Telescope dotfiles bcommits<cr>", "bcommits" },
-        c = { ":Telescope dotfiles commits<cr>", "commits" },
-        f = { ":Telescope dotfiles git_files<cr>", "git files" },
-        s = { ":Telescope dotfiles status<cr>", "status" },
-      },
       L = {
         name = "+Config",
         b = { ":Telescope nvim_files branches<cr>", "branches" },
