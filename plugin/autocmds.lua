@@ -240,7 +240,7 @@ end
 
 rvim.augroup("CustomSpell", {
   {
-    events = { "VimResized", "FocusGained", "WinEnter", "BufEnter" },
+    events = { "VimEnter", "VimResized", "FocusGained", "WinEnter", "BufEnter" },
     targets = { "*" },
     command = function()
       check_spell()
