@@ -1,6 +1,5 @@
 require("user.lsp.manager").setup "vimls"
 
-vim.cmd [[setlocal nospell]]
 vim.cmd [[setlocal colorcolumn=120]]
 vim.cmd [[setlocal iskeyword+=:,#]]
 vim.cmd [[setlocal tags+=$DATA_PATH/tags]]

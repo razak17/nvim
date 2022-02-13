@@ -42,5 +42,3 @@ lsp_installer.on_server_ready(function(server)
     end
   end
 end)
-
-vim.cmd [[setlocal nospell]]

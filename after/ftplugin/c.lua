@@ -1,6 +1,5 @@
 require("user.lsp.manager").setup "clangd"
 
-vim.cmd [[setlocal nospell]]
 vim.cmd [[iabbrev cc /*<CR><CR>/<Up>]]
 vim.cmd [[iabbrev #i #include]]
 vim.cmd [[iabbrev #d #define]]

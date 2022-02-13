@@ -3,4 +3,3 @@ require("user.lsp.manager").setup "eslint"
 
 vim.cmd [[setlocal textwidth=100]]
 vim.cmd [[setlocal commentstring={/*%s*/}]]
-vim.cmd [[setlocal nospell]]

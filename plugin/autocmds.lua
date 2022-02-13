@@ -202,6 +202,7 @@ local function check_color_column(leaving)
     or small_window
   then
     vim.wo.colorcolumn = ""
+    vim.opt.spell = false
     return
   end
   if not contains(column_clear, vim.bo.filetype) and vim.wo.colorcolumn == "" then
@@ -222,6 +223,27 @@ rvim.augroup("CustomColorColumn", {
     targets = { "*" },
     command = function()
       check_color_column(true)
+    end,
+  },
+})
+
+-- Disable Spell
+local function check_spell()
+  if contains(column_clear, vim.bo.filetype) or not_eligible then
+    vim.opt.spell = false
+    return
+  end
+  if not contains(column_clear, vim.bo.filetype) and vim.opt.spell == false then
+    vim.opt.spell = true
+  end
+end
+
+rvim.augroup("CustomSpell", {
+  {
+    events = { "VimResized", "FocusGained", "WinEnter", "BufEnter" },
+    targets = { "*" },
+    command = function()
+      check_spell()
     end,
   },
 })

@@ -8,7 +8,6 @@
 vim.cmd [[resize 9]]
 
 vim.cmd [[setlocal winfixheight nobuflisted buftype=nofile]]
-vim.cmd [[setlocal nospell]]
 
 -- Add autocompletion
 require("dap.ext.autocompl").attach()
