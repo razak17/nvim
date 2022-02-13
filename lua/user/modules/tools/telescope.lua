@@ -60,7 +60,6 @@ return function()
         color_devicons = true,
         dynamic_preview_title = true,
         layout_config = {
-          prompt_position = "bottom",
           height = 0.9,
           width = 0.9,
           preview_cutoff = 120,
@@ -71,7 +70,7 @@ return function()
           },
           vertical = {
             width_padding = 0.05,
-            height_padding = 1,
+            height_padding = 0.1,
             preview_height = 0.5,
           },
         },
@@ -157,6 +156,7 @@ return function()
               },
               ["n"] = {
                 n = {
+                  ["<C-h>"] = require("telescope").extensions.file_browser.actions.goto_home_dir,
                   f = false,
                 },
               },
@@ -239,7 +239,6 @@ return function()
     "grep_string_prompt",
     "bg_selector",
     "nvim_files",
-    "dotfiles",
   }
 
   for _, ext in ipairs(extensions) do
@@ -251,7 +250,7 @@ return function()
   --- from the setup call
   local builtins = require "telescope.builtin"
 
-  local function note_files()
+  local function notes()
     builtins.find_files {
       prompt_title = "Notes",
       cwd = vim.fn.expand "~/notes/src/",
@@ -281,10 +280,40 @@ return function()
     end
   end
 
+  -- extensions
+  local function file_browser()
+    telescope.extensions.file_browser.file_browser {}
+  end
+
+  local function grep_string_prompt()
+    telescope.extensions.grep_string_prompt.grep_string_prompt {}
+  end
+
+  local function frecency2()
+    telescope.extensions.frecency.frecency {}
+  end
+
+  local function frecency()
+    telescope.extensions.frecency.frecency(dropdown {
+      -- NOTE: remove default text as it's slow
+      -- default_text = ':CWD:',
+      winblend = 10,
+      border = true,
+      previewer = false,
+      shorten_path = false,
+    })
+  end
+
+  local function projects()
+    telescope.extensions.projects.projects {}
+  end
+
+  local function change_bg()
+    telescope.extensions.bg_selector.bg_selector {}
+  end
+
   require("which-key").register {
-    -- ["<c-p>"] = { ":Telescope find_files<cr>", "find files" },
     ["<c-p>"] = { project_files, "telescope: find files" },
-    ["<c-n>"] = { note_files, "note files" },
     ["<leader>f"] = {
       name = "+Telescope",
       a = { builtins.builtin, "builtins" },
@@ -294,24 +323,22 @@ return function()
       r = { builtins.oldfiles, "history" },
       w = { builtins.grep_string, "find current word" },
       P = { installed_plugins, "plugins" },
-      B = { ":Telescope file_browser<cr>", "find browser" },
-      e = { ":Telescope grep_string_prompt<cr>", "find in prompt" },
-      h = { ":Telescope frecency<cr>", "history" },
-      p = { ":Telescope projects<cr>", "recent projects" },
-      W = { ":Telescope bg_selector<cr>", "change background" },
+      B = { file_browser, "find browser" },
+      e = { grep_string_prompt, "find in prompt" },
+      h = { frecency, "history" },
+      n = { notes, "notes" },
+      p = { projects, "recent projects" },
+      W = { change_bg, "change background" },
       c = {
         name = "+Builtin",
         a = { builtins.autocommands, "autocmds" },
         b = { builtins.buffers, "buffers" },
         c = { builtins.commands, "commands" },
-        e = { builtins.quickfix, "quickfix" },
-        f = { builtins.builtin, "builtin" },
         h = { builtins.help_tags, "help" },
         H = { builtins.command_history, "history" },
-        k = { builtins.keymaps, "keymaps" },
         l = { builtins.loclist, "loclist" },
+        q = { builtins.quickfix, "quickfix" },
         r = { builtins.registers, "registers" },
-        T = { builtins.treesitter, "treesitter" },
         v = { builtins.vim_options, "vim options" },
       },
       L = {
