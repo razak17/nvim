@@ -277,6 +277,8 @@ return function()
   local function project_files(opts)
     if not pcall(builtins.git_files, opts) then
       builtins.find_files(opts)
+    else
+      builtins.find_files()
     end
   end
 
@@ -287,10 +289,6 @@ return function()
 
   local function grep_string_prompt()
     telescope.extensions.grep_string_prompt.grep_string_prompt {}
-  end
-
-  local function frecency2()
-    telescope.extensions.frecency.frecency {}
   end
 
   local function frecency()
@@ -314,6 +312,9 @@ return function()
 
   require("which-key").register {
     ["<c-p>"] = { project_files, "telescope: find files" },
+    ["<leader>la"] = { builtins.lsp_code_actions, "code action" },
+    ["<leader>lA"] = { builtins.lsp_range_code_actions, "range code action" },
+    ["<leader>lR"] = { builtins.lsp_references, "references" },
     ["<leader>f"] = {
       name = "+Telescope",
       a = { builtins.builtin, "builtins" },
@@ -355,12 +356,6 @@ return function()
         name = "+tmux",
         s = { tmux_sessions, "sessions" },
         w = { tmux_windows, "windows" },
-      },
-      l = {
-        name = "+Lsp",
-        a = { builtins.lsp_code_actions, "code action" },
-        A = { builtins.lsp_range_code_actions, "range code action" },
-        r = { builtins.lsp_references, "references" },
       },
     },
   }

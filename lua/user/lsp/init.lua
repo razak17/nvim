@@ -128,14 +128,6 @@ local function lsp_setup_keymaps(client, bufnr)
     }
   end
 
-  if client.supports_method "textDocument/codeAction" then
-    maps.n["<leader>la"] = { "<cmd>lua vim.lsp.buf.code_action<cr>", "code action" }
-    maps.x["<leader>la"] = {
-      "<esc><Cmd>lua vim.lsp.buf.range_code_action()<CR>",
-      "range code action",
-    }
-  end
-
   if client.supports_method "textDocument/codeLens" then
     maps.n["<leader>lc"] = { "<cmd>lua vim.lsp.codelens.run()<cr>", "codelens action" }
   end

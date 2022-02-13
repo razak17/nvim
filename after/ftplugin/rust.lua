@@ -10,7 +10,13 @@ end
 local tools = {
   autoSetHints = true,
   runnables = { use_telescope = true },
-  inlay_hints = { show_parameter_hints = true },
+  inlay_hints = {
+    show_parameter_hints = true,
+    -- prefix for parameter hints
+    parameter_hints_prefix = " ",
+    -- prefix for all the other hints (type, chaining)
+    other_hints_prefix = " ",
+  },
   hover_actions = { auto_focus = true },
 }
 
@@ -27,7 +33,10 @@ lsp_installer.on_server_ready(function(server)
     local server_available, _ = servers.get_server(server)
 
     if not server_available then
-      -- Initialize the LSP via rust-tools instead
+      -- Initialize rust_analyzer
+      server:setup(opts)
+
+      -- Initialize the LSP via rust-tools
       rust_tools.setup {
         tools = tools,
         -- The "server" property provided in rust-tools setup function are the
@@ -37,8 +46,6 @@ lsp_installer.on_server_ready(function(server)
         server = vim.tbl_deep_extend("force", server:get_default_options(), opts),
       }
       server:attach_buffers()
-    else
-      server:setup(opts)
     end
   end
 end)

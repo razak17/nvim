@@ -229,6 +229,8 @@ rvim.augroup("CustomColorColumn", {
 
 local disable_spell = {
   "lua",
+  "sh",
+  "sh",
 }
 
 -- Disable Spell

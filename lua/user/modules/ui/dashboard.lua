@@ -27,7 +27,7 @@ return function()
     session_directory = utils.join_paths(rvim.get_cache_dir(), "sessions", "dashboard"),
     custom_section = {
       a = {
-        description = join("  Find File", "<leader>ff", 14),
+        description = join("  Find File", "<c-p>      ", 14),
         command = "Telescope find_files",
       },
       b = {
