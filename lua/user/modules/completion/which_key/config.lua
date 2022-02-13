@@ -70,8 +70,7 @@ return {
         "lsp: open logfile",
       },
       i = { ":LuaCacheProfile<cr>", "impatient: cache profile" },
-      m = { ":messages<cr>", "messages" },
-      M = "vim with me",
+      M = { ":messages<cr>", "messages" },
       p = { "<cmd>exe 'edit '.stdpath('cache').'/packer.nvim.log'<cr>", "packer: open logfile" },
       s = {
         "<cmd>lua vim.fn.execute('edit ' .. require('user.utils').join_paths(rvim.get_cache_dir(), 'prof.log'))<cr>",
@@ -82,6 +81,7 @@ return {
         ":e " .. require("user.utils").join_paths(rvim.get_config_dir(), "init.lua<cr>"),
         "open vimrc",
       },
+      V = "vim with me",
     },
     n = {
       name = "+New",

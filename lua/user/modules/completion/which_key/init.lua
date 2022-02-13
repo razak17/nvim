@@ -202,6 +202,7 @@ return function()
     -- treesitter
     if rvim.plugin_loaded "nvim-treesitter" then
       key_maps.L.e = { ":TSInstallInfo<cr>", "treesitter: info" }
+      key_maps.L.m = { ":TSModuleInfo<cr>", "treesitter: module info" }
       key_maps.L.u = { ":TSUpdate<cr>", "treesitter: update" }
     end
 
