@@ -7,7 +7,26 @@ return function()
   local previewers = require "telescope.previewers"
   local sorters = require "telescope.sorters"
   local actions = require "telescope.actions"
+  local action_state = require "telescope.actions.state"
   local themes = require "telescope.themes"
+
+  -- https://github.com/nvim-telescope/telescope.nvim/issues/1048
+  -- Ref: https://github.com/whatsthatsmell/dots/blob/master/public%20dots/vim-nvim/lua/joel/telescope/init.lua
+  local telescope_custom_actions = {}
+
+  function telescope_custom_actions._multiopen(prompt_bufnr, open_cmd)
+    local picker = action_state.get_current_picker(prompt_bufnr)
+    local num_selections = #picker:get_multi_selection()
+    if not num_selections or num_selections <= 1 then
+      actions.add_selection(prompt_bufnr)
+    end
+    actions.send_selected_to_qflist(prompt_bufnr)
+    vim.cmd("cfdo " .. open_cmd)
+  end
+
+  function telescope_custom_actions.multi_selection_open(prompt_bufnr)
+    telescope_custom_actions._multiopen(prompt_bufnr, "edit")
+  end
 
   local function get_border(opts)
     return vim.tbl_deep_extend("force", opts or {}, {
@@ -39,6 +58,7 @@ return function()
         borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
         file_browser = { hidden = true },
         color_devicons = true,
+        dynamic_preview_title = true,
         layout_config = {
           prompt_position = "bottom",
           height = 0.9,
@@ -88,11 +108,13 @@ return function()
             ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
             ["<c-s>"] = actions.select_horizontal,
             ["<CR>"] = actions.select_default + actions.center,
+            ["<C-A>"] = telescope_custom_actions.multi_selection_open,
           },
           n = {
             ["<C-n>"] = actions.move_selection_next,
             ["<C-p>"] = actions.move_selection_previous,
             ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
+            ["<C-A>"] = telescope_custom_actions.multi_selection_open,
           },
         },
         extensions = {
