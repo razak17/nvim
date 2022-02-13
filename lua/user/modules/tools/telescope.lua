@@ -38,12 +38,22 @@ return function()
         set_env = { ["TERM"] = vim.env.TERM },
         borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
         file_browser = { hidden = true },
+        color_devicons = true,
         layout_config = {
+          prompt_position = "bottom",
           height = 0.9,
           width = 0.9,
           preview_cutoff = 120,
-          horizontal = { mirror = false },
-          vertical = { mirror = false },
+          horizontal = {
+            width_padding = 0.04,
+            height_padding = 0.1,
+            preview_width = 0.6,
+          },
+          vertical = {
+            width_padding = 0.05,
+            height_padding = 1,
+            preview_height = 0.5,
+          },
         },
         winblend = 0,
         history = {
