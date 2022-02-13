@@ -227,13 +227,25 @@ rvim.augroup("CustomColorColumn", {
   },
 })
 
+local disable_spell = {
+  "lua",
+}
+
 -- Disable Spell
 local function check_spell()
-  if contains(column_clear, vim.bo.filetype) or not_eligible then
+  if
+    contains(disable_spell, vim.bo.filetype)
+    or contains(column_clear, vim.bo.filetype)
+    or not_eligible
+  then
     vim.opt.spell = false
     return
   end
-  if not contains(column_clear, vim.bo.filetype) and vim.opt.spell == false then
+  if
+    not contains(column_clear, vim.bo.filetype)
+    and contains(disable_spell, vim.bo.filetype)
+    and vim.opt.spell == false
+  then
     vim.opt.spell = true
   end
 end
