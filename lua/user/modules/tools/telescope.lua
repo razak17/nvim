@@ -247,11 +247,11 @@ return function()
   end
 
   require("which-key").register {
+    ["<c-p>"] = { ":Telescope find_files<cr>", "find files" },
     ["<leader>f"] = {
       name = "+Telescope",
       b = { ":Telescope file_browser<cr>", "find browser" },
       B = { ":Telescope current_buffer_fuzzy_find<cr>", "find in current buffer" },
-      f = { ":Telescope find_files<cr>", "find files" },
       e = { ":Telescope grep_string_prompt<cr>", "find in prompt" },
       g = { ":Telescope live_grep<cr>", "find word" },
       h = { ":Telescope frecency<cr>", "history" },
