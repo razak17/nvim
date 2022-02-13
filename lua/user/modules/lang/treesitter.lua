@@ -41,7 +41,19 @@ return function()
   end
 
   treesitter_configs.setup {
-    highlight = { enable = rvim.treesitter.highlight.enabled },
+    highlight = {
+      enable = rvim.treesitter.highlight.enabled,
+      additional_vim_regex_highlighting = true,
+    },
+    incremental_selection = {
+      enable = true,
+      keymaps = {
+        init_selection = "<CR>",
+        scope_incremental = "<CR>",
+        node_incremental = "<TAB>",
+        node_decremental = "<S-TAB>",
+      },
+    },
     indent = { enable = { "javascriptreact" } },
     autotag = { enable = rvim.plugin.autotag.active, filetypes = { "html", "xml" } },
     matchup = { enable = rvim.plugin.matchup.active, disable = { "c", "python" } },
