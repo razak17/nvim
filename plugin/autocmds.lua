@@ -228,9 +228,10 @@ rvim.augroup("CustomColorColumn", {
 })
 
 local disable_spell = {
+  "json",
   "lua",
   "sh",
-  "sh",
+  "zsh",
 }
 
 -- Disable Spell
@@ -254,7 +255,15 @@ end
 
 rvim.augroup("CustomSpell", {
   {
-    events = { "VimEnter", "VimResized", "FocusGained", "WinEnter", "BufEnter" },
+    events = {
+      "VimEnter",
+      "VimResized",
+      "FocusGained",
+      "WinEnter",
+      "BufEnter",
+      "FocusLost",
+      "WinLeave",
+    },
     targets = { "*" },
     command = function()
       check_spell()
