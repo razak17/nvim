@@ -50,6 +50,7 @@ function M:setup()
     -- { exe = "yapf", stdin = true, filetypes = { "python" } },
     { exe = "black", args = { "--fast" }, filetypes = { "python" } },
     { exe = "isort", filetypes = { "python" } },
+    { exe = "shfmt", filetypes = { "sh" } },
   }
 
   -- set additional linters
