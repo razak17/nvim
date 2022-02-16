@@ -14,7 +14,7 @@ return {
     [")"] = "wrap parenthesis",
     ["}"] = "wrap curly braces",
     B = "highlight word",
-    x = { ":q<cr>", "Quit" },
+    x = { "<cmd>q!<cr>", "Quit" },
     y = "yank",
     A = "select all",
     H = { ':h <C-R>=expand("<cword>")<cr><CR>', "help cword" },

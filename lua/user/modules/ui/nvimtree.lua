@@ -10,10 +10,12 @@ return function()
   rvim.nvimtree = {
     setup = {
       open_on_setup = false,
-      auto_close = true,
+      auto_close = false,
       open_on_tab = true,
       tree_follow = true,
       hijack_cursor = true,
+      disable_netrw = true,
+      hijack_netrw = true,
       ignore_ft_on_setup = {
         "startify",
         "dashboard",
@@ -110,8 +112,8 @@ return function()
   if rvim.plugin.project.active then
     rvim.nvimtree.defaults.respect_buf_cwd = 1
     rvim.nvimtree.setup.update_cwd = true
-    rvim.nvimtree.setup.disable_netrw = true
-    rvim.nvimtree.setup.hijack_netrw = true
+    rvim.nvimtree.setup.disable_netrw = false
+    rvim.nvimtree.setup.hijack_netrw = false
     vim.g.netrw_banner = false
   end
 
