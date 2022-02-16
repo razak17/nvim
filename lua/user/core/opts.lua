@@ -17,7 +17,7 @@ M.load_options = function()
 
     -- Timing
     timeout = true,
-    timeoutlen = 500,
+    timeoutlen = 250,
     ttimeoutlen = 10,
     updatetime = 100,
 
