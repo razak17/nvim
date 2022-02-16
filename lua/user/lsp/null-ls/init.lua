@@ -14,21 +14,20 @@ function M:setup()
 
   formatters.setup {
     {
-      -- exe = "prettier_d_slim",
-      exe = "eslint_d",
+      exe = "prettier_d_slim",
       stdin = true,
       -- @usage arguments to pass to the formatter
       -- these cannot contain whitespaces, options such as `--line-width 80` become either `{'--line-width', '80'}` or `{'--line-width=80'}`
-      -- args = {
-      --   "--no-semi",
-      --   "--tab-width=2",
-      --   "--single-quote",
-      --   "--print-width=80",
-      --   "--jsx-single-quote",
-      --   "--bracket-same-line",
-      --   "--arrow-parens=avoid",
-      --   "--trailing-comma=all",
-      -- },
+      args = {
+        "--no-semi",
+        "--tab-width=2",
+        "--single-quote",
+        "--print-width=80",
+        "--jsx-single-quote",
+        "--bracket-same-line",
+        "--arrow-parens=avoid",
+        "--trailing-comma=all",
+      },
       -- @usage specify which filetypes to enable. By default a providers will attach to all the filetypes it supports.
       filetypes = {
         "javascript",
@@ -41,8 +40,13 @@ function M:setup()
         "graphql",
         "markdown",
         "css",
-        "vue",
       },
+    },
+    {
+      exe = "eslint_d",
+      stdin = true,
+      args = { "--fix" },
+      filetypes = { "vue" },
     },
     {
       exe = "stylua",
