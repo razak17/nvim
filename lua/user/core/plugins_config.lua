@@ -66,7 +66,7 @@ return {
   doge = { active = false },
   dadbod = { active = false },
   restconsole = { active = false },
-  markdown_preview = { active = false },
+  markdown_preview = { active = true },
   -- ui
   nvimtree = { active = true },
   dashboard = { active = true },

@@ -232,6 +232,7 @@ local disable_spell = {
   "lua",
   "sh",
   "zsh",
+  "css",
 }
 
 -- Disable Spell

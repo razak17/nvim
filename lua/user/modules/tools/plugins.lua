@@ -67,12 +67,14 @@ tools["diepm/vim-rest-console"] = {
 }
 
 tools["iamcco/markdown-preview.nvim"] = {
+  run = function()
+    vim.fn["mkdp#util#install"]()
+  end,
+  ft = { "markdown" },
   config = function()
     vim.g.mkdp_auto_start = 0
+    vim.g.mkdp_auto_close = 1
   end,
-  run = "cd app && yarn install",
-  cmd = "MarkdownPreview",
-  ft = "markdown",
   disable = not rvim.plugin.markdown_preview.active,
 }
 
