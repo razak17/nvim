@@ -8,6 +8,7 @@ return function()
   local sorters = require "telescope.sorters"
   local actions = require "telescope.actions"
   local action_state = require "telescope.actions.state"
+  local layout_actions = require "telescope.actions.layout"
   local themes = require "telescope.themes"
 
   -- https://github.com/nvim-telescope/telescope.nvim/issues/1048
@@ -107,6 +108,8 @@ return function()
             ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
             ["<c-s>"] = actions.select_horizontal,
             ["<CR>"] = actions.select_default + actions.center,
+            ["<c-e>"] = layout_actions.toggle_preview,
+            ["<c-l>"] = layout_actions.cycle_layout_next,
             ["<C-A>"] = telescope_custom_actions.multi_selection_open,
           },
           n = {
