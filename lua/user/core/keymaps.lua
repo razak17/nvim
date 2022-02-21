@@ -218,9 +218,7 @@ xnoremap["<leader>L!"] =
 nnoremap["<C-b>"] = ":QuickRun<CR>"
 
 -- Alternate way to save
-nnoremap["<C-s>"] = function()
-  utils.save_and_notify()
-end
+nnoremap["<C-s>"] = ":silent! write<CR>"
 
 -- if the file under the cursor doesn't exist create it
 -- see :h gf a simpler solution of :edit <cfile> is recommended but doesn't work.

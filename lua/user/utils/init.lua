@@ -4,11 +4,6 @@ local uv = vim.loop
 
 local M = {}
 
-function M.save_and_notify()
-  vim.cmd "silent write"
-  vim.notify("Saved " .. vim.fn.expand "%:t", { timeout = 1000 })
-end
-
 function M.open_file_or_create_new()
   local path = fn.expand "<cfile>"
   if not path or path == "" then
