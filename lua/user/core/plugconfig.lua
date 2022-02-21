@@ -1,14 +1,14 @@
 return {
   commits = {
-    autopairs = "fba2503bd8cd0d8861054523aae39c4ac0680c07",
-    gitsigns = "4a2d30f5fb77750c7a42be9bb58a9cc2c6c7f31d",
-    null_ls = "2ae4a5e2e2b35716c44c104ef1afa35ecb40c444",
-    nvim_cmp = "d93104244c3834fbd8f3dd01da9729920e0b5fe7",
-    nvim_lsp_installer = "88e44bbbe2e03523e08f2bd3c9a954675bc438f4",
-    nvim_lspconfig = "c51096481dc13193991571b7132740d762902355",
-    nvim_tree = "2dfed89af7724f9e71d2fdbe3cde791a93e9b9e0",
-    nvim_treesitter = "5e3a93f365094eb7c6ed2a9ef0a6277da3b53201",
-    schemastore = "058575f0bd94b115604bef9c4c48c5d02e21ffef",
+    autopairs = "784398a8f184431fd4329f20b0e4f52e87707bbd",
+    gitsigns = "1d1f043acf025f919b8dd12bb672569109c7f099",
+    null_ls = "3059dc761b27c4c836f88879c460cd7a989caa47",
+    nvim_cmp = "13d64460cba64950aff41e230cc801225bd9a3e2",
+    nvim_lsp_installer = "c95ffd31428da0abaffa2459c0231fa9971fcbaa",
+    nvim_lspconfig = "19a21d5a8681f721c584125a920d4cbeda1c80cc",
+    nvim_tree = "2e1f82d8c0c57cbc2bfdc041a3aff26947559a1e",
+    nvim_treesitter = "2298a7584414af40a6a09cbe72a81175382992c7",
+    schemastore = "c0c11c832fa812174cd196c723b97c493f528b5c",
   },
   -- SANE defaults
   SANE = { active = false },
