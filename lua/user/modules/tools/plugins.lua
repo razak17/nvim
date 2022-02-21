@@ -146,4 +146,20 @@ tools["nvim-telescope/telescope-file-browser.nvim"] = {
   disable = not rvim.plugin.telescope_file_browser.active,
 }
 
+tools["stevearc/dressing.nvim"] = {
+  config = function()
+    require("dressing").setup {
+      input = {
+        insert_only = false,
+      },
+      select = {
+        telescope = {
+          theme = "dropdown",
+        },
+      },
+    }
+  end,
+  disable = not rvim.plugin.dressing.active,
+}
+
 return tools

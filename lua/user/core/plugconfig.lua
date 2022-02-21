@@ -29,7 +29,6 @@ return {
   symbols_outline = { active = false },
   bqf = { active = false },
   trouble = { active = false },
-  renamer = { active = true },
   rust_tools = { active = true },
   schemastore = { active = true },
   lsp_signature = { active = true },
@@ -61,6 +60,7 @@ return {
   structlog = { active = true },
   bbye = { active = true },
   neoclip = { active = true },
+  dressing = { active = true },
   -- TODO: handle these later
   glow = { active = false },
   doge = { active = false },

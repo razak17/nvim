@@ -61,20 +61,6 @@ lang["jose-elias-alvarez/null-ls.nvim"] = {
   disable = not rvim.plugin.null_ls.active,
 }
 
-lang["razak17/renamer.nvim"] = {
-  config = function()
-    local ok, renamer = rvim.safe_require "renamer"
-    if not ok then
-      return
-    end
-    renamer.setup {
-      title = "Rename",
-    }
-  end,
-  branch = "develop",
-  disable = not rvim.plugin.renamer.active,
-}
-
 lang["kosayoda/nvim-lightbulb"] = {
   after = "nvim-lspconfig",
   config = function()
