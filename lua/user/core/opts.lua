@@ -200,7 +200,6 @@ M.load_commands = function()
     title = true,
     titlelen = 70,
     magic = true,
-    termguicolors = true,
     noerrorbells = true,
     t_Co = 256,
     shell = "/bin/zsh",
