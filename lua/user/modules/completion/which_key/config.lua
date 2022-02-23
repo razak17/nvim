@@ -4,8 +4,7 @@ return {
     ["."] = "append period",
     [","] = "append comma",
     [";"] = "append semi-colon",
-    ["?"] = "google cursor word",
-    ["!"] = "google cursor word",
+    ["?"] = "search word",
     ["["] = "replace in file",
     ["]"] = "replace in line",
     ["`"] = "wrap backticks",
@@ -54,8 +53,7 @@ return {
     L = {
       name = "+Rvim",
       [";"] = { ":Dashboard<cr>", "dashboard" },
-      ["?"] = "search cursor word",
-      ["!"] = "search cursor word",
+      ["?"] = "search github",
       c = {
         "<cmd>lua vim.fn.execute('edit ' .. require('user.utils').join_paths(rvim.get_user_dir(), 'config/init.lua'))<cr>",
         "open config file",
@@ -97,12 +95,10 @@ return {
   visual_mode = {
     ["/"] = "comment",
     ["["] = "replace all",
-    ["?"] = "google visual selection",
-    ["!"] = "google visual selection",
+    ["?"] = "search selection",
     L = {
       name = "+Rvim",
-      ["?"] = "search visual selection",
-      ["!"] = "search visual selection",
+      ["?"] = "search github",
     },
     p = "greatest remap",
     r = "reverse line",
