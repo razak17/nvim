@@ -281,3 +281,17 @@ function rvim.toggle_list(list_type)
     vim.cmd "wincmd p"
   end
 end
+
+function rvim.invalidate(path, recursive)
+  if recursive then
+    for key, value in pairs(package.loaded) do
+      if key ~= "_G" and value and vim.fn.match(key, path) ~= -1 then
+        package.loaded[key] = nil
+        require(key)
+      end
+    end
+  else
+    package.loaded[path] = nil
+    require(path)
+  end
+end

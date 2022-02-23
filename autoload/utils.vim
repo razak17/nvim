@@ -133,7 +133,9 @@ endfunction
 ""---------------------------------------------------------------------------//
 " Auto resize Vim splits to active split to 70% -
 " https://stackoverflow.com/questions/11634804/vim-auto-resize-focused-window
+
 let s:auto_resize_on = 0
+
 function! utils#auto_resize(...)
   if s:auto_resize_on == 0
     let factor = get(a:, '1', 70)
@@ -156,4 +158,18 @@ function! utils#create_go_doc_comment()
   norm "zyiw
   execute ":put! z"
   execute ":norm I// \<Esc>$"
+endfunction
+
+function! utils#tab_message(cmd)
+  redir => message
+  silent execute a:cmd
+  redir END
+  if empty(message)
+    echoerr "no output"
+  else
+    " use "tabnew" instead of "new" below if you prefer tabs instead of split windows
+    vnew
+    setlocal buftype=nofile bufhidden=wipe noswapfile nobuflisted nomodified
+    silent put=message
+  endif
 endfunction

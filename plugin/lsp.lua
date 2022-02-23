@@ -13,20 +13,6 @@ if vim.env.DEVELOPING then
 end
 
 -----------------------------------------------------------------------------//
--- Commands
------------------------------------------------------------------------------//
-local command = rvim.command
-
-command {
-  "LspFormat",
-  function()
-    vim.lsp.buf.formatting_sync(nil, 1000)
-  end,
-}
-
-rvim.command { nargs = 1, "Rename", [[call v:lua.require('user.utils').rename(<f-args>) ]] }
-rvim.command { "Todo", [[noautocmd silent! grep! 'TODO\|FIXME\|BUG\|HACK' | copen]] }
------------------------------------------------------------------------------//
 -- Signs
 -----------------------------------------------------------------------------//
 
