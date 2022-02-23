@@ -19,7 +19,7 @@ function M:init()
     rvim[k] = vim.deepcopy(v)
   end
 
-  local palette = require "user.config.palette"
+  local palette = require "zephyr.palette"
   rvim.palette = vim.deepcopy(palette)
 
   local lsp_config = require "user.lsp.config"
