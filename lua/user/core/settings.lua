@@ -3,7 +3,7 @@ local utils = require "user.utils"
 
 local M = {}
 
-M.load_options = function()
+M.load_default_options = function()
   local default_options = {
     encoding = "utf-8",
     fileencoding = "utf-8",
@@ -206,6 +206,7 @@ M.load_commands = function()
     shell = "/bin/zsh",
     inccommand = "nosplit",
   }
+
   local cmd = vim.cmd
 
   for k, v in pairs(command_options) do
@@ -221,14 +222,24 @@ M.load_commands = function()
   end
 
   if rvim.common.transparent_window then
-    cmd "au ColorScheme * hi Normal ctermbg=none guibg=none"
-    cmd "au ColorScheme * hi SignColumn ctermbg=none guibg=none"
-    cmd "au ColorScheme * hi NormalNC ctermbg=none guibg=none"
-    cmd "au ColorScheme * hi MsgArea ctermbg=none guibg=none"
-    cmd "au ColorScheme * hi TelescopeBorder ctermbg=none guibg=none"
-    cmd "au ColorScheme * hi NvimTreeNormal ctermbg=none guibg=none"
-    cmd "let &fcs='eob: '"
+    require("user.utils").enable_transparent_mode()
   end
+end
+
+M.load_headless_options = function()
+  vim.opt.shortmess = "" -- try to prevent echom from cutting messages off or prompting
+  vim.opt.more = false -- don't pause listing when screen is filled
+  vim.opt.cmdheight = 9999 -- helps avoiding |hit-enter| prompts.
+  vim.opt.columns = 9999 -- set the widest screen possible
+  vim.opt.swapfile = false -- don't use a swap file
+end
+
+M.load_options = function()
+  if #vim.api.nvim_list_uis() == 0 then
+    M.load_headless_options()
+    return
+  end
+  M.load_default_options()
 end
 
 function M:init()
