@@ -44,7 +44,7 @@ function M:load()
   vim.g.colors_name = rvim.common.colorscheme
   vim.cmd("colorscheme " .. rvim.common.colorscheme)
 
-  require("user.core.opts"):init()
+  require("user.core.settings"):init()
 
   require "user.core.keymaps"
 
