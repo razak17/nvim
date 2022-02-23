@@ -374,13 +374,6 @@ if rvim.plugin.fterm.active then
   tnoremap["<F12>"] = '<C-\\><C-n><cmd>lua require("FTerm").toggle()<CR>'
 end
 
--- WhichKey
-if rvim.plugin.vim_which_key.active then
-  nnoremap["<leader>"] = ':<c-u> :WhichKey "<space>"<CR>'
-  nnoremap["<localleader>"] = ':<c-u> :WhichKey "<space>"<CR>'
-  vnoremap["<leader>"] = ':<c-u> :WhichKeyVisual "<space>"<CR>'
-end
-
 -- easy_align
 if rvim.plugin.easy_align.active then
   nmap["ga"] = "<Plug>(EasyAlign)"
