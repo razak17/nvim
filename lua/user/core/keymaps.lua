@@ -203,14 +203,7 @@ nnoremap["<C-b>"] = ":QuickRun<CR>"
 -- Alternate way to save
 nnoremap["<C-s>"] = ":silent! write<CR>"
 
--- if the file under the cursor doesn't exist create it
--- see :h gf a simpler solution of :edit <cfile> is recommended but doesn't work.
--- If you select require('buffers/file') in lua for example
--- this makes the cfile -> buffers/file rather than my_dir/buffer/file.lua
--- Credit: 1,2
-nnoremap["gf"] = function()
-  utils.open_file_or_create_new()
-end
+nnoremap["gf"] = "<Cmd>e <cfile><CR>"
 
 -- Open url
 -- nnoremap["gx"] = ":sil !xdg-open <c-r><c-a><cr>"
@@ -234,23 +227,23 @@ nnoremap["<leader>lL"] = function()
 end
 
 nnoremap["<Leader>LM"] = function()
-  utils.ColorMyPencils()
+  utils.color_my_pencils()
 end
 
 nnoremap["<leader>aR"] = function()
-  utils.EmptyRegisters()
+  utils.empty_registers()
 end
 
 nnoremap["<Leader>a;"] = function()
-  utils.OpenTerminal()
+  utils.open_terminal()
 end
 
 nnoremap["<leader>ao"] = function()
-  utils.TurnOnGuides()
+  utils.turn_on_guides()
 end
 
 nnoremap["<leader>ae"] = function()
-  utils.TurnOffGuides()
+  utils.turn_off_guides()
 end
 
 -- Search Files
@@ -316,7 +309,15 @@ nnoremap["<leader>)"] = [[ciw(<c-r>")<esc>]]
 nnoremap["<leader>}"] = [[ciw{<c-r>"}<esc>]]
 
 -- Buffers
-nnoremap["<Leader>bc"] = ":call v:lua.DelAllExceptCurrent()<CR>"
+nnoremap["<Leader>bc"] = function()
+  vim.api.nvim_exec(
+    [[
+      wall
+      silent execute 'bdelete ' . join(utils#buf_filt(1))
+    ]],
+    false
+  )
+end
 
 -----------------------------------------------------------------------------//
 -- Plugins

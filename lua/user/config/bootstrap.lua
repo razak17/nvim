@@ -1,14 +1,6 @@
 local M = {}
 
-local uv = vim.loop
-local path_sep = uv.os_uname().version:match "Windows" and "\\" or "/"
-
----Join path segments that were passed as input
----@return string
-function _G.join_paths(...)
-  local result = table.concat({ ... }, path_sep)
-  return result
-end
+local utils = require "user.utils"
 
 function M:init(base_dir)
   local H = os.getenv "HOME"
@@ -37,21 +29,21 @@ function M:init(base_dir)
   end
 
   if os.getenv "RVIM_RUNTIME_DIR" then
-    vim.opt.rtp:remove(join_paths(vim.fn.stdpath "data", "site"))
-    vim.opt.rtp:remove(join_paths(vim.fn.stdpath "data", "site", "after"))
-    vim.opt.rtp:prepend(join_paths(self.runtime_dir, "site"))
-    vim.opt.rtp:append(join_paths(self.runtime_dir, "site", "after"))
+    vim.opt.rtp:remove(utils.join_paths(vim.fn.stdpath "data", "site"))
+    vim.opt.rtp:remove(utils.join_paths(vim.fn.stdpath "data", "site", "after"))
+    vim.opt.rtp:prepend(utils.join_paths(self.runtime_dir, "site"))
+    vim.opt.rtp:append(utils.join_paths(self.runtime_dir, "site", "after"))
 
     vim.opt.rtp:remove(vim.fn.stdpath "config")
-    vim.opt.rtp:remove(join_paths(vim.fn.stdpath "config", "after"))
+    vim.opt.rtp:remove(utils.join_paths(vim.fn.stdpath "config", "after"))
     vim.opt.rtp:prepend(self.config_dir)
-    vim.opt.rtp:append(join_paths(self.config_dir, "after"))
+    vim.opt.rtp:append(utils.join_paths(self.config_dir, "after"))
   end
 
   cmd [[let &packpath = &runtimepath]]
 
   require("user.core.impatient").setup {
-    path = join_paths(self.cache_dir, "rvim_cache"),
+    path = utils.join_paths(self.cache_dir, "rvim_cache"),
     enable_profiling = true,
   }
 

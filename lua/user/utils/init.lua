@@ -1,43 +1,7 @@
 local fn = vim.fn
-local api = vim.api
 local uv = vim.loop
 
 local M = {}
-
-function M.open_file_or_create_new()
-  local path = fn.expand "<cfile>"
-  if not path or path == "" then
-    return false
-  end
-
-  -- TODO handle terminal buffers
-
-  if pcall(vim.cmd, "norm!gf") then
-    return true
-  end
-
-  local answer = fn.input "Create a new file, (Y)es or (N)o? "
-  if not answer or string.lower(answer) ~= "y" then
-    return vim.cmd "redraw"
-  end
-  vim.cmd "redraw"
-  local new_path = fn.fnamemodify(fn.expand "%:p:h" .. "/" .. path, ":p")
-  local ext = fn.fnamemodify(new_path, ":e")
-
-  if ext and ext ~= "" then
-    return vim.cmd("edit " .. new_path)
-  end
-
-  local suffixes = fn.split(vim.bo.suffixesadd, ",")
-
-  for _, suffix in ipairs(suffixes) do
-    if fn.filereadable(new_path .. suffix) then
-      return vim.cmd("edit " .. new_path .. suffix)
-    end
-  end
-
-  return vim.cmd("edit " .. new_path .. suffixes[1])
-end
 
 function M.open_link()
   local file = fn.expand "<cfile>"
@@ -48,7 +12,7 @@ function M.open_link()
   end
 end
 
-function M.ColorMyPencils()
+function M.color_my_pencils()
   vim.cmd [[ hi! ColorColumn guibg=#aeacec ]]
   vim.cmd [[ hi! Normal ctermbg=none guibg=none ]]
   vim.cmd [[ hi! SignColumn ctermbg=none guibg=none ]]
@@ -59,7 +23,7 @@ function M.ColorMyPencils()
   vim.cmd [[ hi! WhichKeyDesc guifg=#4dd2dc  ]]
 end
 
-function M.EmptyRegisters()
+function M.empty_registers()
   vim.api.nvim_exec(
     [[
     let regs=split('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/-"', '\zs')
@@ -71,12 +35,12 @@ function M.EmptyRegisters()
   )
 end
 
-function M.OpenTerminal()
+function M.open_terminal()
   vim.cmd "split term://zsh"
   vim.cmd "resize 10"
 end
 
-function M.TurnOnGuides()
+function M.turn_on_guides()
   vim.wo.number = true
   vim.wo.relativenumber = true
   vim.wo.cursorline = true
@@ -86,7 +50,7 @@ function M.TurnOnGuides()
   vim.o.showtabline = 2
 end
 
-function M.TurnOffGuides()
+function M.turn_off_guides()
   vim.wo.number = false
   vim.wo.relativenumber = false
   vim.wo.cursorline = false
@@ -112,14 +76,12 @@ function M.load_conf(dir, name)
   return require(string.format(module_dir .. ".%s", name))
 end
 
---- Checks whether a given path exists and is a file.
---@param path (string) path to check
---@returns (bool)
-function M.is_file(path)
-  local stat = uv.fs_stat(path)
-  return stat and stat.type == "file" or false
+---Join path segments that were passed as input
+---@return string
+function M.join_paths(...)
+  local path_sep = uv.os_uname().version:match "Windows" and "\\" or "/"
+  local result = table.concat({ ... }, path_sep)
+  return result
 end
-
-M.join_paths = _G.join_paths
 
 return M

@@ -82,12 +82,4 @@ return {
   diff_delete = "#572E33",
   diff_change = "#273842",
   dif_text = "#314753",
-
-  -- teal = "#1abc9c",
-  -- red = "#be5046",
-  -- green = "#98c379",
-  -- comment_grey = "#5c6370",
-  -- grey = "#3E4556",
-  -- cyan = "#56b6c2",
-  -- orange = "#ffb86c",
 }
