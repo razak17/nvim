@@ -57,8 +57,8 @@ function M.set_keymaps(mode, key, val)
     val = string.format("<cmd>lua rvim._execute(%s)<CR>", fn_id)
   end
 
-  -- vim.api.nvim_set_keymap(mode_adapters[mode], key, val, opt)
-    vim.keymap.set(mode_adapters[mode], key, val, opt)
+  vim.api.nvim_set_keymap(mode_adapters[mode], key, val, opt)
+  -- vim.keymap.set(mode_adapters[mode], key, val, opt)
 end
 
 -- Load key mappings for a given mode
