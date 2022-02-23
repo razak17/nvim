@@ -81,6 +81,12 @@ return function()
 
   rvim.nnoremap("R", ":edit | TSBufEnable highlight<CR>", {})
 
+  require("which-key").register {
+    ["<leader>Le"] = { ":TSInstallInfo<cr>", "treesitter: info" },
+    ["<leader>Lm"] = { ":TSModuleInfo<cr>", "treesitter: module info" },
+    ["<leader>Lu"] = { ":TSUpdate<cr>", "treesitter: update" },
+  }
+
   -- Only apply folding to supported files:
   rvim.augroup("TreesitterFolds", {
     {

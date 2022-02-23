@@ -145,4 +145,8 @@ return function()
   )
 
   nvim_tree.setup(rvim.nvimtree.setup)
+
+  require("which-key").register {
+    ["<leader>e"] = { ":NvimTreeToggle<CR>", "nvim-tree toggle" },
+  }
 end

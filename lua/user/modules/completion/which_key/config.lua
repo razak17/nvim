@@ -1,5 +1,5 @@
 return {
-  normal_mode = {
+  leader_mode = {
     ["="] = "balance window",
     ["."] = "append period",
     [","] = "append comma",
@@ -107,7 +107,7 @@ return {
       name = "+Lsp",
     },
   },
-  no_leader = {
+  normal_mode = {
     ["]"] = {
       name = "+next",
       ["<space>"] = "add space below",
@@ -160,22 +160,6 @@ return {
       s = { ":PlugSync<cr>", "sync" },
       S = { ":PlugStatus<cr>", "Status" },
     },
-    fterm = {
-      name = "+Fterm",
-      [";"] = { '<cmd>lua require("FTerm").open()<cr>', "new" },
-      l = { ':lua _G.__fterm_cmd("lazygit")<cr>', "lazygit" },
-      n = { ':lua _G.__fterm_cmd("node")<cr>', "node" },
-      p = { ':lua _G.__fterm_cmd("python")<cr>', "python" },
-      r = { ":lua _G.__fterm_cmd(ranger)<cr>", "ranger" },
-    },
-    far = {
-      name = "+Far",
-      f = { ":Farr --source=vimgrep<cr>", "replace in File" },
-      d = { ":Fardo<cr>", "do" },
-      i = { ":Farf<cr>", "search iteratively" },
-      r = { ":Farr --source=rgnvim<cr>", "replace in Project" },
-      z = { ":Farundo<cr>", "undo" },
-    },
     git = {
       name = "+Git",
       b = { ":Telescope git_branches<cr>", "checkout branch" },
@@ -191,23 +175,6 @@ return {
       f = { ":Telescope git_files<cr>", "files" },
       o = { ":Telescope git_status<cr>", "open changed file" },
     },
-    gitsigns = {
-      name = "+Gitsigns",
-      b = "blame line",
-      e = "preview hunk",
-      r = "reset hunk",
-      s = "stage hunk",
-      t = "toggle line blame",
-      u = "undo stage hunk",
-    },
-    trouble = {
-      name = "+Trouble",
-      d = { ":TroubleToggle lsp_document_diagnostics<cr>", "document" },
-      e = { ":TroubleToggle quickfix<cr>", "quickfix" },
-      l = { ":TroubleToggle loclist<cr>", "loclist" },
-      r = { ":TroubleToggle lsp_references<cr>", "references" },
-      w = { ":TroubleToggle lsp_workspace_diagnostics<cr>", "workspace" },
-    },
     slide = {
       name = "+ASCII",
       A = "add 20 less than signs",
@@ -220,17 +187,6 @@ return {
       m = "bigmono12",
       v = "asciidoc-view",
       w = "wideterm",
-    },
-    bookmarks = {
-      name = "+Mark",
-      e = { ":BookmarkToggle<cr>", "toggle" },
-      b = { ":BookmarkPrev<cr>", "previous mark" },
-      k = { ":BookmarkNext<cr>", "next mark" },
-    },
-    dashboard = {
-      name = "+Session",
-      l = { ":SessionLoad<cr>", "load Session" },
-      s = { ":SessionSave<cr>", "save Session" },
     },
   },
 }

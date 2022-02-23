@@ -41,4 +41,16 @@ return function()
   }
 
   gitsigns.setup(rvim.gitsigns.setup)
+
+  require("which-key").register {
+    ["<leader>h"] = {
+      name = "+Gitsigns",
+      b = "blame line",
+      e = "preview hunk",
+      r = "reset hunk",
+      s = "stage hunk",
+      t = "toggle line blame",
+      u = "undo stage hunk",
+    },
+  }
 end

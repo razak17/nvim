@@ -1,18 +1,19 @@
-local defaults = rvim.keymaps
+local keymaps = rvim.keymaps
 local utils = require "user.utils"
 
-local nmap = defaults.nmap
-local vmap = defaults.vmap
-local xmap = defaults.xmap
-local nnoremap = defaults.nnoremap
-local cnoremap = defaults.cnoremap
-local tnoremap = defaults.tnoremap
-local vnoremap = defaults.vnoremap
-local xnoremap = defaults.xnoremap
-local inoremap = defaults.inoremap
+local nmap, imap, smap, vmap, xmap =
+  keymaps.nmap, keymaps.imap, keymaps.smap, keymaps.vmap, keymaps.xmap
+
+local nnoremap, cnoremap, tnoremap, vnoremap, xnoremap, inoremap =
+  keymaps.nnoremap,
+  keymaps.cnoremap,
+  keymaps.tnoremap,
+  keymaps.vnoremap,
+  keymaps.xnoremap,
+  keymaps.inoremap
 
 -----------------------------------------------------------------------------//
--- Defaults
+-- keymaps
 -----------------------------------------------------------------------------//
 
 -- Undo
@@ -336,11 +337,11 @@ if rvim.plugin.vsnip.active then
   xmap["<C-x>"] = "<Plug>(vsnip-cut-text)"
   xmap["<C-l>"] = "<Plug>(vsnip-select-text)"
   nnoremap["<leader>S"] = ":VsnipOpen<CR> 1<CR><CR>"
-  defaults.imap["<C-l>"] = {
+  imap["<C-l>"] = {
     "vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'",
     { expr = true },
   }
-  defaults.smap["<C-l>"] = {
+  smap["<C-l>"] = {
     "vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'",
     { expr = true },
   }
@@ -390,9 +391,4 @@ end
 -- vim-matchup
 if rvim.plugin.matchup.active then
   nnoremap["<Leader>vW"] = ":<c-u>MatchupWhereAmI?<CR>"
-end
-
--- nvim-tree
-if rvim.plugin.nvimtree.active then
-  nnoremap["<Leader>e"] = ":NvimTreeToggle<CR>"
 end

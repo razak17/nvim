@@ -126,4 +126,11 @@ return function()
   }
 
   bufferline.setup(rvim.bufferline.setup)
+
+  require("which-key").register {
+    ["<leader>bh"] = { ":BufferLineMovePrev<CR>", "move left" },
+    ["<leader>bl"] = { ":BufferLineMoveNext<CR>", "move right" },
+    ["<leader>bH"] = { ":BufferLineCloseLeft<CR>", "close left" },
+    ["<leader>bL"] = { ":BufferLineCloseRight<CR>", "close right" },
+  }
 end

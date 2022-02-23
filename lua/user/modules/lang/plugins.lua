@@ -94,6 +94,16 @@ lang["folke/trouble.nvim"] = {
   requires = { { "kyazdani42/nvim-web-devicons", opt = true } },
   config = function()
     require("trouble").setup { use_lsp_diagnostic_signs = true }
+    require("which-key").register {
+      ["<leader>vx"] = {
+        name = "+Trouble",
+        d = { ":TroubleToggle lsp_document_diagnostics<cr>", "document" },
+        q = { ":TroubleToggle quickfix<cr>", "quickfix" },
+        l = { ":TroubleToggle loclist<cr>", "loclist" },
+        r = { ":TroubleToggle lsp_references<cr>", "references" },
+        w = { ":TroubleToggle lsp_workspace_diagnostics<cr>", "workspace" },
+      },
+    }
   end,
   disable = not rvim.plugin.trouble.active,
 }

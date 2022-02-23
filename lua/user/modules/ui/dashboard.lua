@@ -59,6 +59,14 @@ return function()
     vim.g["dashboard_" .. opt] = val
   end
 
+  require("which-key").register {
+    ["<leader>s"] = {
+      name = "+Session",
+      l = { ":SessionLoad<cr>", "load Session" },
+      s = { ":SessionSave<cr>", "save Session" },
+    },
+  }
+
   rvim.augroup("DashboardSession", {
     events = { "VimLeavePre" },
     targets = "*",

@@ -48,6 +48,17 @@ tools["numToStr/FTerm.nvim"] = {
       end
       cmd:toggle()
     end
+
+    require("which-key").register {
+      ["<leader>t"] = {
+        name = "+Fterm",
+        [";"] = { '<cmd>lua require("FTerm").open()<cr>', "new" },
+        l = { ':lua _G.__fterm_cmd("lazygit")<cr>', "lazygit" },
+        n = { ':lua _G.__fterm_cmd("node")<cr>', "node" },
+        p = { ':lua _G.__fterm_cmd("python")<cr>', "python" },
+        r = { ":lua _G.__fterm_cmd(ranger)<cr>", "ranger" },
+      },
+    }
   end,
   disable = not rvim.plugin.fterm.active,
 }
@@ -57,6 +68,14 @@ tools["MattesGroeger/vim-bookmarks"] = {
   config = function()
     vim.g.bookmark_no_default_key_mappings = 1
     vim.g.bookmark_sign = ""
+    require("which-key").register {
+      ["<leader>m"] = {
+        name = "+Mark",
+        t = { ":BookmarkToggle<cr>", "toggle" },
+        p = { ":BookmarkPrev<cr>", "previous mark" },
+        n = { ":BookmarkNext<cr>", "next mark" },
+      },
+    }
   end,
   disable = not rvim.plugin.bookmarks.active,
 }
@@ -83,6 +102,16 @@ tools["brooth/far.vim"] = {
   config = function()
     vim.g["far#source"] = "rg"
     vim.g["far#enable_undo"] = 1
+    require("which-key").register {
+      ["<leader>F"] = {
+        name = "+Far",
+        f = { ":Farr --source=vimgrep<cr>", "replace in File" },
+        d = { ":Fardo<cr>", "do" },
+        i = { ":Farf<cr>", "search iteratively" },
+        r = { ":Farr --source=rgnvim<cr>", "replace in Project" },
+        z = { ":Farundo<cr>", "undo" },
+      },
+    }
   end,
   disable = not rvim.plugin.far.active,
 }

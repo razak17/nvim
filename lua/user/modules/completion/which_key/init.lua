@@ -66,7 +66,7 @@ return function()
   _G.WhichKey = {}
 
   -- Set default keymaps
-  vim.g.which_key_map = rvim.wk.normal_mode
+  vim.g.which_key_map = rvim.wk.leader_mode
 
   -- plugin keymaps
   WhichKey.SetKeyOnFT = function()
@@ -74,23 +74,10 @@ return function()
     local key_maps = vim.g.which_key_map
     local plugin_keymaps = rvim.wk.plugin
 
-    -- bookmarks
-    if rvim.plugin.bufferline.active then
-      key_maps.b.h = { ":BufferLineMovePrev<CR>", "move left" }
-      key_maps.b.l = { ":BufferLineMoveNext<CR>", "move right" }
-      key_maps.b.H = { ":BufferLineCloseLeft<CR>", "close left" }
-      key_maps.b.L = { ":BufferLineCloseRight<CR>", "close right" }
-    end
-
     -- bbye
     if rvim.plugin.bbye.active then
       key_maps.c = { ":Bdelete<cr>", "close buffer" }
       key_maps.b.x = { ":bufdo :Bdelete<cr>", "close all buffers" }
-    end
-
-    -- bookmarks
-    if rvim.plugin_loaded "vim-bookmarks" then
-      key_maps.m = plugin_keymaps.bookmarks
     end
 
     -- dap
@@ -109,24 +96,9 @@ return function()
       key_maps.v.D = "DOGe"
     end
 
-    -- fterm
-    if rvim.plugin_loaded "FTerm.nvim" then
-      key_maps.t = plugin_keymaps.fterm
-    end
-
-    -- far
-    if rvim.plugin_loaded "far.vim" then
-      key_maps.F = plugin_keymaps.far
-    end
-
     -- git
     if rvim.plugin.telescope.active and rvim.plugin.git_signs.active then
       key_maps.g = plugin_keymaps.git
-    end
-
-    -- git_signs
-    if rvim.plugin_loaded "gitsigns.nvim" then
-      key_maps.h = plugin_keymaps.gitsigns
     end
 
     -- kommentary
@@ -166,12 +138,6 @@ return function()
       key_maps.p = plugin_keymaps.packer
     end
 
-    -- playground
-    if rvim.plugin.playground.active then
-      key_maps.I = { ":TSPlaygroundToggle", "toggle playground" }
-      key_maps.E = { ":TSHighlightCapturesUnderCursor<cr>", "Inspect token" }
-    end
-
     -- slide
     if vim.bo.ft == "slide" then
       key_maps["↵"] = "execute commnd"
@@ -194,23 +160,6 @@ return function()
       key_maps.T = plugin_keymaps.telescope_tmux
     end
 
-    -- tree
-    if rvim.plugin_loaded "nvim-tree.lua" then
-      key_maps.e = "nvim-tree toggle"
-    end
-
-    -- treesitter
-    if rvim.plugin_loaded "nvim-treesitter" then
-      key_maps.L.e = { ":TSInstallInfo<cr>", "treesitter: info" }
-      key_maps.L.m = { ":TSModuleInfo<cr>", "treesitter: module info" }
-      key_maps.L.u = { ":TSUpdate<cr>", "treesitter: update" }
-    end
-
-    -- trouble
-    if rvim.plugin_loaded "trouble.nvim" then
-      key_maps.v.x = plugin_keymaps.trouble
-    end
-
     -- undotree
     if rvim.plugin_loaded "undotree" then
       key_maps.u = { ":UndotreeToggle<cr>", "toggle undotree" }
@@ -222,7 +171,7 @@ return function()
 
     which_key.register(key_maps, opts)
     which_key.register(rvim.wk.visual_mode, vopts)
-    which_key.register(rvim.wk.no_leader)
+    which_key.register(rvim.wk.normal_mode)
   end
 
   rvim.augroup("WhichKeySetKeyOnFT", {
