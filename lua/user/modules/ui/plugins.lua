@@ -48,28 +48,20 @@ ui["rcarriga/nvim-notify"] = {
   cond = utils.not_headless, -- TODO: causes blocking output in headless mode
   config = function()
     local notify = require "notify"
+    local renderer = require "notify.render"
     vim.o.termguicolors = true
     notify.setup {
-      stages = "fade_in_slide_out", -- fade
+      stages = "fade_in_slide_out",
       timeout = 3000,
+      render = function(bufnr, notif, highlights)
+        if notif.title[1] == "" then
+          return renderer.minimal(bufnr, notif, highlights)
+        end
+        return renderer.default(bufnr, notif, highlights)
+      end,
     }
-    ---Send a notification
-    --@param msg of the notification to show to the user
-    --@param level Optional log level
-    --@param opts Dictionary with optional options (timeout, etc)
-    vim.notify = function(msg, level, opts)
-      local l = vim.log.levels
-      opts = opts or {}
-      level = level or l.INFO
-      local levels = {
-        [l.DEBUG] = "Debug",
-        [l.INFO] = "Information",
-        [l.WARN] = "Warning",
-        [l.ERROR] = "Error",
-      }
-      opts.title = opts.title or type(level) == "string" and level or levels[level]
-      notify(msg, level, opts)
-    end
+    vim.notify = notify
+    require("telescope").load_extension "notify"
   end,
   disable = not rvim.plugin.nvim_notify.active,
 }
