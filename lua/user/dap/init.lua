@@ -34,6 +34,9 @@ return function()
 
   dap.defaults.fallback.terminal_win_cmd = "50vsplit new"
 
+  -- DON'T automatically stop at exceptions
+  dap.defaults.fallback.exception_breakpoints = {}
+
   -- COnfiguration
   require("user.dap.lua").setup()
 
