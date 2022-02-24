@@ -48,6 +48,7 @@ ui["rcarriga/nvim-notify"] = {
   cond = utils.not_headless, -- TODO: causes blocking output in headless mode
   config = function()
     local notify = require "notify"
+    ---@type table<string, fun(bufnr: number, notif: table, highlights: table)>
     local renderer = require "notify.render"
     vim.o.termguicolors = true
     notify.setup {
