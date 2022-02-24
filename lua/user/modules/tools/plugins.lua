@@ -179,9 +179,11 @@ tools["stevearc/dressing.nvim"] = {
   config = function()
     require("dressing").setup {
       input = {
+        winblend = 2,
         insert_only = false,
       },
       select = {
+        winblend = 2,
         telescope = {
           theme = "dropdown",
         },
