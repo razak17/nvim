@@ -10,7 +10,9 @@ return {
       },
     },
     virtual_text = {
-      prefix = "",
+      -- severity = vim.diagnostic.severity.ERROR,
+      source = "if_many",
+      prefix = "",
       spacing = 2,
     },
     underline = true,
