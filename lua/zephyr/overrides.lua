@@ -74,6 +74,7 @@ local sidebar_fts = {
   "flutterToolsOutline",
   "undotree",
   "NvimTree",
+  "dapui_*",
 }
 
 local function on_sidebar_enter()
