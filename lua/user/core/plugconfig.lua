@@ -61,6 +61,7 @@ return {
   bbye = { active = true },
   neoclip = { active = true },
   dressing = { active = true },
+  auto_session = { active = true },
   -- TODO: handle these later
   glow = { active = false },
   doge = { active = false },

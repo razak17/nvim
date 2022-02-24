@@ -193,4 +193,25 @@ tools["stevearc/dressing.nvim"] = {
   disable = not rvim.plugin.dressing.active,
 }
 
+tools["rmagatti/auto-session"] = {
+  config = function()
+    require("auto-session").setup {
+      log_level = "error",
+      auto_session_root_dir = require("user.utils").join_paths(
+        rvim.get_cache_dir(),
+        "session/auto/"
+      ),
+    }
+
+    require("which-key").register {
+      ["<leader>s"] = {
+        name = "+Session",
+        l = { ":RestoreSession<cr>", "restore" },
+        s = { ":SaveSession<cr>", "save" },
+      },
+    }
+  end,
+  disable = not rvim.plugin.dressing.active,
+}
+
 return tools

@@ -1,6 +1,4 @@
 return function()
-  local utils = require "user.utils"
-
   local join = function(k, v, c)
     return { k .. string.rep(" ", c) .. v }
   end
@@ -24,7 +22,6 @@ return function()
     default_executive = "telescope",
     disable_at_vimenter = 0,
     disable_statusline = 0,
-    session_directory = utils.join_paths(rvim.get_cache_dir(), "sessions", "dashboard"),
     custom_section = {
       a = {
         description = join("  Find File", "<c-p>      ", 14),
@@ -58,14 +55,6 @@ return function()
   for opt, val in pairs(rvim.dashboard) do
     vim.g["dashboard_" .. opt] = val
   end
-
-  require("which-key").register {
-    ["<leader>s"] = {
-      name = "+Session",
-      l = { ":SessionLoad<cr>", "load Session" },
-      s = { ":SessionSave<cr>", "save Session" },
-    },
-  }
 
   rvim.augroup("DashboardSession", {
     events = { "VimLeavePre" },
