@@ -13,6 +13,20 @@ return function()
     { "CmpItemAbbrMatchFuzzy", { italic = true, foreground = "fg" } }
   )
 
+  local lsp_hls = rvim.lsp.kind_highlights
+  local fmt = string.format
+
+  local kind_hls = vim.tbl_map(function(key)
+    return {
+      fmt("CmpItemKind%s", key),
+      { inherit = lsp_hls[key], italic = false, bold = false, underline = false },
+    }
+  end, vim.tbl_keys(
+    lsp_hls
+  ))
+
+  require("zephyr.util").plugin("CmpKinds", unpack(kind_hls))
+
   -- FIXME: this hould not be required if we were using a prompt buffer in telescope i.e. prompt prefix
   -- Deactivate cmp in telescope prompt buffer
   rvim.augroup("CmpConfig", {
@@ -126,13 +140,14 @@ return function()
         { name = "vsnip" },
         { name = "path" },
         { name = "buffer" },
+        { name = "treesitter" },
+        { name = "spell" },
+        { name = "cmp_git" },
         { name = "cmp_tabnine" },
         { name = "nvim_lua" },
         { name = "calc" },
         { name = "emoji" },
-        { name = "treesitter" },
         { name = "crates" },
-        { name = "spell" },
       },
       mapping = {
         ["<C-k>"] = cmp.mapping.select_prev_item(),
