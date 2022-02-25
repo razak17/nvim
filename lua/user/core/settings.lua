@@ -128,7 +128,6 @@ M.load_default_options = function()
     writebackup = false,
     mouse = "a",
     mousefocus = true,
-    hidden = true,
     showcmd = false,
     completeopt = { "menu", "menuone", "noselect", "noinsert" },
     more = false,
@@ -204,7 +203,6 @@ M.load_commands = function()
     noerrorbells = true,
     t_Co = 256,
     shell = "/bin/zsh",
-    inccommand = "nosplit",
   }
 
   local cmd = vim.cmd
