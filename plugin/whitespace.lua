@@ -35,14 +35,14 @@ local function toggle_trailing(mode)
   end
 end
 
-util.set_hl("ExtraWhitespace", { guifg = "red" })
+util.set_hl("ExtraWhitespace", { foreground = "red" })
 
 rvim.augroup("WhitespaceMatch", {
   {
     events = { "ColorScheme" },
     targets = { "*" },
     command = function()
-      util.set_hl("ExtraWhitespace", { guifg = "red" })
+      util.set_hl("ExtraWhitespace", { foreground = "red" })
     end,
   },
   {

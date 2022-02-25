@@ -6,10 +6,11 @@ return function()
 
   require("zephyr.util").plugin(
     "Cmp",
-    { "CmpItemAbbr", { inherit = "Pmenu", gui = "NONE" } },
-    { "CmpItemMenu", { inherit = "Pmenu", gui = "NONE" } },
-    { "CmpItemAbbrDeprecated", { gui = "strikethrough", inherit = "Comment" } },
-    { "CmpItemAbbrMatchFuzzy", { gui = "italic", guifg = "fg" } }
+    { "CmpItemAbbr", { inherit = "Comment", italic = false, bold = false } },
+    { "CmpItemMenu", { inherit = "NonText", italic = false, bold = false } },
+    { "CmpItemAbbrMatch", { inherit = "Pmenu", bold = true } },
+    { "CmpItemAbbrDeprecated", { strikethrough = true, inherit = "Comment" } },
+    { "CmpItemAbbrMatchFuzzy", { italic = true, foreground = "fg" } }
   )
 
   -- FIXME: this hould not be required if we were using a prompt buffer in telescope i.e. prompt prefix
@@ -124,7 +125,7 @@ return function()
         { name = "nvim_lsp" },
         { name = "vsnip" },
         { name = "path" },
-      { name = "buffer" },
+        { name = "buffer" },
         { name = "cmp_tabnine" },
         { name = "nvim_lua" },
         { name = "calc" },

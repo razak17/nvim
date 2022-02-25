@@ -9,44 +9,63 @@ local function general_overrides()
   local darker_bg = util.alter_color(normal_bg, -10)
   local msg_area_bg = rvim.common.transparent_window and "NONE" or darker_bg
   util.all {
-    { "MsgArea", { guibg = msg_area_bg } },
-    { "mkdLineBreak", { link = "NONE", force = true } },
+    { "MsgArea", { background = msg_area_bg } },
+    { "mkdLineBreak", { link = "NONE" } },
     -----------------------------------------------------------------------------//
     -- Floats
     -----------------------------------------------------------------------------//
     { "NormalFloat", { link = "Normal" } },
     --- Highlight group for light coloured floats
-    { "GreyFloat", { guibg = P.grey } },
-    { "GreyFloatBorder", { guifg = P.grey } },
+    { "GreyFloat", { background = P.grey } },
+    { "GreyFloatBorder", { foreground = P.grey } },
     -----------------------------------------------------------------------------//
-    { "CursorLineNr", { gui = "bold" } },
-    { "FoldColumn", { guibg = "background" } },
-    { "Folded", { guifg = comment_fg, guibg = "NONE", gui = "italic" } },
-    { "TermCursor", { ctermfg = "green", guifg = "royalblue" } },
-    { "IncSearch", { guibg = "NONE", guifg = "LightGreen", gui = "bold,underline" } },
+    { "CursorLineNr", { bold = true } },
+    { "FoldColumn", { background = "background" } },
+    { "TermCursor", { ctermfg = "green", foreground = "royalblue" } },
+    {
+      "IncSearch",
+      {
+        -- background = "NONE",
+        foreground = "LightGreen",
+        italic = true,
+        bold = true,
+        underline = true,
+      },
+    },
     -- Add undercurl to existing spellbad highlight
-    -- {
-    --   "SpellBad",
-    --   { gui = "undercurl", guibg = "transparent", guifg = "transparent", guisp = "green" },
-    -- },
+    -- { 'SpellBad', { undercurl = true, background = 'NONE', foreground = 'NONE', sp = 'green' } },
     -----------------------------------------------------------------------------//
     -- colorscheme overrides
     -----------------------------------------------------------------------------//
-    { "Comment", { gui = "italic" } },
-    { "Include", { gui = "italic" } },
-    -- { "Type", { gui = "italic,bold" } },
-    -- { "Folded", { gui = "bold,italic" } },
-    { "QuickFixLine", { guibg = search_bg } },
-    { "Visual", { guifg = "NONE", guibg = util.alter_color(P.pale_blue, -50) } },
+    { "Comment", { italic = true } },
+    { "Include", { italic = true } },
+    -- { "Type", { italic = true, bold = true } },
+    -- { "Folded", { italic = true, bold = true } },
+    {
+      "Folded",
+      {
+        foreground = comment_fg,
+        -- background = "NONE",
+        italic = true,
+      },
+    },
+    { "QuickFixLine", { background = search_bg } },
+    {
+      "Visual",
+      {
+        -- foreground = "NONE",
+        background = util.alter_color(P.pale_blue, -50),
+      },
+    },
     -----------------------------------------------------------------------------//
     -- Treesitter
     -----------------------------------------------------------------------------//
-    { "TSKeywordReturn", { gui = "italic", guifg = keyword_fg } },
-    { "TSError", { link = "LspDiagnosticsUnderlineError", force = true } },
-    -- { "TSParameter", { gui = "italic,bold" } },
+    { "TSKeywordReturn", { italic = true, foreground = keyword_fg } },
+    { "TSError", { link = "LspDiagnosticsUnderlineError" } },
+    -- { "TSParameter", { italic = true, bold = true } },
     -- highlight FIXME comments
-    { "commentTSWarning", { guifg = "Red", gui = "bold" } },
-    { "commentTSDanger", { guifg = P.danger, gui = "bold" } },
+    { "commentTSWarning", { foreground = "Red", bold = true } },
+    { "commentTSDanger", { foreground = P.danger, bold = true } },
   }
 end
 
@@ -57,11 +76,11 @@ local function set_sidebar_highlight()
   local st_color = util.alter_color(util.get_hl("Visual", "bg"), -10)
   local hls = {
     { "PanelBackground", { link = "Normal" } },
-    { "PanelHeading", { guibg = bg_color, gui = "bold" } },
-    { "PanelVertSplit", { guifg = split_color, guibg = bg_color } },
-    { "PanelVertSplitAlt", { guifg = bg_color, guibg = bg_color } },
-    { "PanelStNC", { guibg = st_color, cterm = "italic" } },
-    { "PanelSt", { guibg = st_color } },
+    { "PanelHeading", { background = bg_color, bold = true } },
+    { "PanelVertSplit", { foreground = split_color, background = bg_color } },
+    { "PanelVertSplitAlt", { foreground = bg_color, background = bg_color } },
+    { "PanelStNC", { background = st_color, cterm = { italic = true } } },
+    { "PanelSt", { background = st_color } },
   }
   for _, grp in ipairs(hls) do
     util.set_hl(unpack(grp))
