@@ -27,6 +27,15 @@ completion["hrsh7th/nvim-cmp"] = {
     { "hrsh7th/cmp-buffer", after = "nvim-cmp" },
     { "hrsh7th/cmp-path", after = "nvim-cmp" },
     { "f3fora/cmp-spell", after = "nvim-cmp" },
+    {
+      "petertriho/cmp-git",
+      after = "nvim-cmp",
+      config = function()
+        require("cmp_git").setup {
+          filetypes = { "gitcommit", "NeogitCommitMessage" },
+        }
+      end,
+    },
   },
   commit = rvim.plugin.commits.nvim_cmp,
   config = utils.load_conf("completion", "cmp"),
