@@ -56,6 +56,9 @@ nnoremap["]<space>"] = [[<cmd>put =repeat(nr2char(10), v:count1)<cr>]]
 -- Paste in visual mode multiple times
 xnoremap["p"] = "pgvy"
 
+-- leave extra space when deleting word
+nnoremap["dw"] = "cw<ESC>"
+
 -- Repeat last substitute with flags
 xnoremap["&"] = "<cmd>&&<CR>"
 
