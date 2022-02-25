@@ -418,3 +418,16 @@ rvim.augroup("Utilities", {
     command = "if 5000 < line('$') | syntax sync minlines=200 | endif",
   },
 })
+
+rvim.augroup("TerminalAutocommands", {
+  {
+    events = { "TermClose" },
+    targets = { "*" },
+    command = function()
+      --- automatically close a terminal if the job was successful
+      if not vim.v.event.status == 0 then
+        vim.cmd("bdelete! " .. fn.expand "<abuf>")
+      end
+    end,
+  },
+})
