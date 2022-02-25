@@ -74,12 +74,6 @@ return function()
     local key_maps = vim.g.which_key_map
     local plugin_keymaps = rvim.wk.plugin
 
-    -- bbye
-    if rvim.plugin.bbye.active then
-      key_maps.c = { ":Bdelete<cr>", "close buffer" }
-      key_maps.b.x = { ":bufdo :Bdelete<cr>", "close all buffers" }
-    end
-
     -- dap
     if rvim.plugin_loaded "nvim-dap" then
       key_maps.d = plugin_keymaps.dap
