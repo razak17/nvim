@@ -403,6 +403,7 @@ rvim.augroup("Utilities", {
     targets = { "*" },
     modifiers = { "nested" },
     command = function()
+      -- detect filetype onsave
       if rvim.empty(vim.bo.filetype) or fn.exists "b:ftdetect" == 1 then
         vim.cmd [[
             unlet! b:ftdetect
