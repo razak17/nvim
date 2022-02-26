@@ -48,10 +48,6 @@ function M:init(base_dir)
   }
 
   require("user.config"):init()
-
-  local plug = require "user.core.plugins"
-  plug.ensure_plugins()
-  plug.load_compile()
 end
 
 return M
