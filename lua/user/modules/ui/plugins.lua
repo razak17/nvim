@@ -53,7 +53,7 @@ ui["rcarriga/nvim-notify"] = {
     vim.o.termguicolors = true
     notify.setup {
       stages = "fade_in_slide_out",
-      timeout = 3000,
+      timeout = 5000,
       render = function(bufnr, notif, highlights)
         if notif.title[1] == "" then
           return renderer.minimal(bufnr, notif, highlights)
@@ -62,6 +62,8 @@ ui["rcarriga/nvim-notify"] = {
       end,
     }
     vim.notify = notify
+    local Log = require "lvim.core.log"
+    Log:configure_notifications(notify)
     require("telescope").load_extension "notify"
   end,
   disable = not rvim.plugin.nvim_notify.active,

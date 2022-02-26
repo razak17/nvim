@@ -81,5 +81,7 @@ return {
         float_opts = {},
       },
     },
+    -- currently disabled due to instabilities
+    override_notify = false,
   },
 }

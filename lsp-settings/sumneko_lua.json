@@ -5,6 +5,7 @@
     "vim",
     "rvim",
     "packer_plugins",
+    "notify_opts",
     "stds",
     "describe",
     "it",
