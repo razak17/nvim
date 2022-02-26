@@ -9,6 +9,13 @@ tools["sindrets/diffview.nvim"] = {
 }
 
 tools["mbbill/undotree"] = {
+  config = function()
+    vim.g.undotree_TreeNodeShape = "◦" -- Alternative: '◉'
+    vim.g.undotree_SetFocusWhenToggle = 1
+    require("which-key").register {
+      ["<leader>u"] = { ":UndotreeToggle<cr>", "toggle undotree" },
+    }
+  end,
   disable = not rvim.plugin.undotree.active,
 }
 
