@@ -134,7 +134,7 @@ function plugins.ensure_plugins()
         vim.notify "packer_compiled file does not exist"
       else
         vim.fn.delete(compile_path)
-        vim.notify(fmt("%s was delete successfully", compile_path))
+        vim.notify "packer_compiled was deleted successfully"
       end
     end,
   }
