@@ -6,6 +6,7 @@ local function general_overrides()
   local keyword_fg = util.get_hl("Keyword", "fg")
   local search_bg = util.get_hl("Search", "bg")
   local normal_bg = util.get_hl("Normal", "bg")
+  local error_line = util.alter_color(P.error_red, -80)
   local darker_bg = util.alter_color(normal_bg, -10)
   local msg_area_bg = rvim.common.transparent_window and "NONE" or darker_bg
   util.all {
@@ -61,7 +62,7 @@ local function general_overrides()
     -- Treesitter
     -----------------------------------------------------------------------------//
     { "TSKeywordReturn", { italic = true, foreground = keyword_fg } },
-    { "TSError", { link = "LspDiagnosticsUnderlineError" } },
+    { "TSError", { undercurl = true, sp = error_line, foreground = "NONE" } },
     -- { "TSParameter", { italic = true, bold = true } },
     -- highlight FIXME comments
     { "commentTSWarning", { foreground = "Red", bold = true } },
