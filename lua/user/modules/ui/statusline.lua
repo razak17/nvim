@@ -69,7 +69,7 @@ return function()
   gls.left[3] = {
     FileSize = {
       provider = "FileSize",
-      condition = condition.buffer_not_empty,
+      condition = condition.buffer_not_empty or hide_in_width,
       highlight = { colors.statusline_fg, colors.bg },
       separator = "| ",
       separator_highlight = { colors.statusline_section_bg, colors.bg },
