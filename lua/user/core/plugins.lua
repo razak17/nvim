@@ -97,7 +97,13 @@ function plugins.ensure_plugins()
   Plug:init_ensure_plugins()
 
   local command = rvim.command
-  command { "PlugCompile", [[lua require('user.core.plugins').compile()]] }
+  command {
+    "PlugCompile",
+    function()
+      require("user.core.plugins").compile()
+      vim.notify "packer was compiled successfully"
+    end,
+  }
   command { "PlugInstall", [[lua require('user.core.plugins').install()]] }
   command { "PlugSync", [[lua require('user.core.plugins').sync()]] }
   command { "PlugClean", [[lua require('user.core.plugins').clean()]] }
@@ -128,7 +134,7 @@ function plugins.ensure_plugins()
         vim.notify "packer_compiled file does not exist"
       else
         vim.fn.delete(compile_path)
-        vim.notify(fmt("Deleted %s", compile_path))
+        vim.notify(fmt("%s was delete successfully", compile_path))
       end
     end,
   }
@@ -152,14 +158,17 @@ function plugins.recompile()
   Plug:init_ensure_plugins()
   os.remove(compile_path)
   plugins.compile()
+  vim.notify "packer_compiled recompiled successfully"
 end
 
 function plugins.load_compile()
   if vim.fn.filereadable(compile_path) ~= 1 then
     plugins.install()
     plugins.compile()
+    vim.notify "packer_compiled was created successfully"
   else
     require "_compiled_rolling"
+    vim.notify "packer_compiled was loaded successfully"
   end
 end
 
