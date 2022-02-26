@@ -38,7 +38,6 @@ return function()
   }
 
   ---@type table<string, fun(bufnr: number, notif: table, highlights: table)>
-  -- vim.o.termguicolors = true
   local notify = require "notify"
   notify.setup(rvim.nvim_notify.setup)
 

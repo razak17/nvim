@@ -75,7 +75,7 @@ function Plug:load_packer()
   end)
 end
 
-function Plug:init_ensure_plugins()
+function Plug:init_ensure_installed()
   local packer_dir = rvim.get_runtime_dir() .. "/site/pack/packer/opt/packer.nvim"
   local state = uv.fs_stat(packer_dir)
   if not state then
@@ -98,9 +98,9 @@ local plugins = setmetatable({}, {
   end,
 })
 
-function plugins.ensure_plugins()
+function plugins.ensure_installed()
   Plug:load_packer()
-  Plug:init_ensure_plugins()
+  Plug:init_ensure_installed()
 
   local command = rvim.command
   command {
@@ -161,7 +161,7 @@ end
 
 function plugins.recompile()
   Plug:load_packer()
-  Plug:init_ensure_plugins()
+  Plug:init_ensure_installed()
   os.remove(compile_path)
   plugins.compile()
   vim.notify "packer_compiled recompiled successfully"

@@ -53,7 +53,7 @@ function M:load()
   require "user.core.commands"
 
   local plug = require "user.core.plugins"
-  plug.ensure_plugins()
+  plug.ensure_installed()
   plug.load_compile()
 end
 
