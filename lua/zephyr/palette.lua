@@ -30,11 +30,12 @@ return {
   fg_alt = "#5B6268",
 
   pale_red = "#e06c75",
-  dark_orange = "#ff922b",
+  dark_orange = "#ff8800",
   light_green = "#abcf84",
 
   red = "#e95678",
   error_red = "#F44747",
+  purple_test = "#ff007c",
   redwine = "#d16d9e",
   orange = "#D98E48",
   yellow = "#f0c674",
