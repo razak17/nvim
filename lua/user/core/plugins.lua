@@ -51,7 +51,13 @@ function Plug:load_packer()
     compile_path = compile_path,
     auto_reload_compiled = true,
     max_jobs = 50,
-    git = { clone_timeout = 7000 },
+    git = {
+      clone_timeout = 7000,
+      subcommands = {
+        -- this is more efficient than what Packer is using
+        fetch = "fetch --no-tags --no-recurse-submodules --update-shallow --progress",
+      },
+    },
     disable_commands = true,
     display = {
       open_fn = function()
