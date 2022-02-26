@@ -18,6 +18,11 @@ lang["jbyuki/one-small-step-for-vimkind"] = {
     local nnoremap = rvim.nnoremap
     nnoremap("<Leader>dE", ':lua require"osv".run_this()<CR>')
     nnoremap("<Leader>dl", ':lua require"osv".launch()<CR>')
+
+    require("which-key").register {
+      ["<leader>dE"] = "osv run this",
+      ["<leader>dL"] = "osv launch",
+    }
   end,
   disable = not rvim.plugin.osv.active,
 }
@@ -139,6 +144,11 @@ lang["p00f/nvim-ts-rainbow"] = {
 
 lang["andymass/vim-matchup"] = {
   after = "nvim-treesitter",
+  config = function()
+    require("which-key").register {
+      ["<leader>l?"] = "where am i",
+    }
+  end,
   disable = not rvim.plugin.matchup.active,
 }
 
@@ -183,6 +193,10 @@ lang["lewis6991/spellsitter.nvim"] = {
   config = function()
     require("spellsitter").setup {
       enable = { "markdown" },
+    }
+
+    require("which-key").register {
+      ["<leader>om"] = { ":UndotreeToggle<cr>", "toggle undotree" },
     }
   end,
   disable = not rvim.plugin.spellsitter.active,

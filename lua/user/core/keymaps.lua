@@ -340,7 +340,6 @@ end
 if rvim.plugin.vsnip.active then
   xmap["<C-x>"] = "<Plug>(vsnip-cut-text)"
   xmap["<C-l>"] = "<Plug>(vsnip-select-text)"
-  nnoremap["<leader>S"] = ":VsnipOpen<CR> 1<CR><CR>"
   imap["<C-l>"] = {
     "vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'",
     { expr = true },

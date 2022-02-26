@@ -93,6 +93,11 @@ editor["b3nj5m1n/kommentary"] = {
         require("kommentary.config").configure_language(f, { single_line_comment_string = "#" })
       end
     end
+
+    require("which-key").register {
+      ["<leader>/"] = { "<Plug>kommentary_line_default", "comment" },
+      ["<leader>a/"] = { "<Plug>kommentary_motion_default", "comment motion default" },
+    }
   end,
   disable = not rvim.plugin.kommentary.active,
 }

@@ -85,46 +85,14 @@ return function()
       key_maps.d.i = plugin_keymaps.dap_ui.inspect
     end
 
-    -- DOGE
-    if rvim.plugin_loaded "vim-doge" then
-      key_maps.v.D = "DOGe"
-    end
-
     -- git
     if rvim.plugin.telescope.active and rvim.plugin.git_signs.active then
       key_maps.g = plugin_keymaps.git
     end
 
-    -- kommentary
-    if rvim.plugin.kommentary.active then
-      key_maps["/"] = { "<Plug>kommentary_line_default", "comment" }
-      key_maps.a["/"] = { "<Plug>kommentary_motion_default", "comment motion default" }
-    end
-
     -- lsp
     if rvim.plugin_loaded "nvim-lspconfig" then
       key_maps.l = plugin_keymaps.lsp
-    end
-
-    -- markdown
-    if rvim.plugin_loaded "markdown-preview.nvim" or rvim.plugin_loaded "glow.nvim" then
-      if rvim.plugin_loaded "markdown-preview.nvim" then
-        key_maps.o.m = { ":MarkdownPreview", "markdown preview" }
-      end
-      if rvim.plugin_loaded "glow.nvim" then
-        key_maps.o.g = { ":Glow", "glow preview" }
-      end
-    end
-
-    -- matchup
-    if rvim.plugin.matchup.active then
-      key_maps.v.W = "where am i"
-    end
-
-    -- osv
-    if rvim.plugin_loaded "one-small-step-for-vimkind" then
-      key_maps.d.E = "osv run this"
-      key_maps.d.l = "osv launch"
     end
 
     -- packer
@@ -142,21 +110,6 @@ return function()
         d = "dark",
         l = "light",
       }
-    end
-
-    -- snippets
-    if rvim.plugin_loaded "vim-vsnip" then
-      key_maps.S = "edit snippet"
-    end
-
-    -- telescope_tmux
-    if rvim.plugin.telescope_tmux.active then
-      key_maps.T = plugin_keymaps.telescope_tmux
-    end
-
-    -- undotree
-    if rvim.plugin_loaded "undotree" then
-      key_maps.u = { ":UndotreeToggle<cr>", "toggle undotree" }
     end
 
     -- Register keymaps

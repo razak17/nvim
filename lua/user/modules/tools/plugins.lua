@@ -33,7 +33,12 @@ tools["npxbr/glow.nvim"] = {
 tools["kkoomen/vim-doge"] = {
   run = ":call doge#install()",
   config = function()
-    vim.g.doge_mapping = "<Leader>vD"
+    vim.g.doge_mapping = "<Leader>lD"
+
+    require("which-key").register {
+      ["<leader>lD"] = "DOGe",
+    }
+
   end,
   disable = not rvim.plugin.doge.active,
 }

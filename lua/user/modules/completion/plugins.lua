@@ -45,6 +45,10 @@ completion["hrsh7th/nvim-cmp"] = {
 completion["hrsh7th/vim-vsnip"] = {
   config = function()
     vim.g.vsnip_snippet_dir = rvim.common.snippets_dir
+
+    require("which-key").register {
+      ["<leader>S"] = { ":VsnipOpen<CR> 1<CR><CR>", "edit snippet" },
+    }
   end,
   disable = not rvim.plugin.vsnip.active,
 }
