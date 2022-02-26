@@ -69,6 +69,7 @@ return {
       },
       i = { ":LuaCacheProfile<cr>", "impatient: cache profile" },
       M = { ":messages<cr>", "messages" },
+      N = { ":Notifications<cr>", "notifications" },
       p = { "<cmd>exe 'edit '.stdpath('cache').'/packer.nvim.log'<cr>", "packer: open logfile" },
       s = {
         "<cmd>lua vim.fn.execute('edit ' .. require('user.utils').join_paths(rvim.get_cache_dir(), 'prof.log'))<cr>",
