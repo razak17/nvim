@@ -4,7 +4,13 @@ local utils = require "user.utils"
 
 editor["xiyaowong/accelerated-jk.nvim"] = {
   event = { "BufWinEnter" },
-  config = utils.load_conf("editor", "ajk"),
+  config = function()
+    require("accelerated-jk").setup {
+      mappings = { j = "gj", k = "gk" },
+      -- If the interval of key-repeat takes more than `acceleration_limit` ms, the step is reset
+      acceleration_limit = 150,
+    }
+  end,
   disable = not rvim.plugin.ajk.active,
 }
 
