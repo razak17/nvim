@@ -1,9 +1,6 @@
 local P = rvim.palette
-local util = require "zephyr.util"
 
 local zephyr = {}
-
-local darker_bg = util.alter_color(P.bg, -20)
 
 function zephyr.terminal_color()
   vim.g.terminal_color_0 = P.bg

@@ -14,7 +14,7 @@ local function general_overrides()
     -----------------------------------------------------------------------------//
     -- Floats
     -----------------------------------------------------------------------------//
-    { "NormalFloat", { link = "Normal" } },
+    { "NormalFloat", { background = P.bg } },
     --- Highlight group for light coloured floats
     { "GreyFloat", { background = P.grey } },
     { "GreyFloatBorder", { foreground = P.grey } },
@@ -25,7 +25,7 @@ local function general_overrides()
     {
       "IncSearch",
       {
-        -- background = "NONE",
+        background = "NONE",
         foreground = "LightGreen",
         italic = true,
         bold = true,
@@ -44,8 +44,8 @@ local function general_overrides()
     {
       "Folded",
       {
+        background = "NONE",
         foreground = comment_fg,
-        -- background = "NONE",
         italic = true,
       },
     },
@@ -53,7 +53,7 @@ local function general_overrides()
     {
       "Visual",
       {
-        -- foreground = "NONE",
+        foreground = "NONE",
         background = util.alter_color(P.pale_blue, -50),
       },
     },
