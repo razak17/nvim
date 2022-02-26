@@ -1,7 +1,5 @@
 local editor = {}
 
-local utils = require "user.utils"
-
 editor["xiyaowong/accelerated-jk.nvim"] = {
   event = { "BufWinEnter" },
   config = function()
