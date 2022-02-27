@@ -346,8 +346,7 @@ return function()
         c = { ":Telescope nvim_files commits<cr>", "commits" },
         f = { ":Telescope nvim_files files<cr>", "nvim files" },
         g = { ":Telescope nvim_files grep_files<cr>", "grep files" },
-        I = { ":Telescope nvim_files view_changelog<cr>", "view changelog" },
-        s = { ":Telescope nvim_files status<cr>", "status" },
+        i = { ":Telescope nvim_files view_changelog<cr>", "view changelog" },
       },
       t = {
         name = "+tmux",

@@ -15,16 +15,8 @@ nvim_config.files = function(opts)
   local theme_opts = themes.get_ivy {
     sorting_strategy = "ascending",
     layout_strategy = "bottom_pane",
-    prompt_prefix = " ❯ ",
-    borderchars = rvim.telescope_borderchars,
-    layout_config = {
-      height = 0.9,
-      width = 0.9,
-      preview_cutoff = 120,
-      horizontal = { mirror = false },
-      vertical = { mirror = false },
-    },
-    prompt_title = "Rvim files",
+    prompt_prefix = " >> ",
+    prompt_title = "rVim files",
     cwd = rvim.get_config_dir(),
   }
   opts = vim.tbl_deep_extend("force", theme_opts, opts)
@@ -36,16 +28,8 @@ nvim_config.grep_files = function(opts)
   local theme_opts = themes.get_ivy {
     sorting_strategy = "ascending",
     layout_strategy = "bottom_pane",
-    prompt_prefix = " ❯ ",
-    borderchars = rvim.telescope_borderchars,
-    layout_config = {
-      height = 0.9,
-      width = 0.9,
-      preview_cutoff = 120,
-      horizontal = { mirror = false },
-      vertical = { mirror = false },
-    },
-    prompt_title = "Search Rvim",
+    prompt_prefix = " >> ",
+    prompt_title = "Search rVim",
     cwd = rvim.get_config_dir(),
   }
   opts = vim.tbl_deep_extend("force", theme_opts, opts)
@@ -57,7 +41,7 @@ nvim_config.view_changelog = function()
   opts.entry_maker = make_entry.gen_from_git_commits(opts)
 
   pickers.new(opts, {
-    prompt_title = "Rvim changelog",
+    prompt_title = "rVim changelog",
 
     finder = finders.new_oneshot_job(
       vim.tbl_flatten {
@@ -89,25 +73,14 @@ nvim_config.view_changelog = function()
 end
 
 nvim_config.commits = function()
-  builtin.git_commits { prompt_title = "Git commits for nvim config", cwd = cwd_git }
-end
-
-nvim_config.bcommits = function()
-  builtin.git_bcommits {
-    prompt_title = "Git bcommits for nvim config",
-    cwd = cwd_git,
-  }
+  builtin.git_commits { prompt_title = "rVim commits", cwd = cwd_git }
 end
 
 nvim_config.branches = function()
   builtin.git_branches {
-    prompt_title = "Git branches for nvim config",
+    prompt_title = "rVim branches",
     cwd = cwd_git,
   }
-end
-
-nvim_config.status = function()
-  builtin.git_status { prompt_title = "Git status for nvim config", cwd = cwd_git }
 end
 
 return require("telescope").register_extension { exports = nvim_config }
