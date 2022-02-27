@@ -329,21 +329,46 @@ rvim.augroup("WinBehavior", {
 })
 
 if vim.env.TMUX ~= nil then
-  rvim.augroup("TmuxConfig", {
+  local external = require "user.utils.external"
+  rvim.augroup("ExternalConfig", {
     {
-      events = { "FocusGained", "BufReadPost", "BufReadPost", "BufReadPost", "BufEnter" },
+      events = { "BufEnter" },
       targets = { "*" },
       command = function()
-        local session = fn.fnamemodify(vim.loop.cwd(), ":t") or "Neovim"
-        local window_title = fmt("%s", session)
-        fn.jobstart(fmt("tmux rename-window '%s'", window_title))
+        vim.o.titlestring = external.title_string()
+      end,
+    },
+    {
+      events = { "FocusGained", "BufReadPost", "BufEnter" },
+      targets = { "*" },
+      command = function()
+        external.tmux.set_window_title()
       end,
     },
     {
       events = { "VimLeave" },
       targets = { "*" },
       command = function()
-        fn.jobstart "tmux set-window-option automatic-rename on"
+        external.tmux.clear_pane_title()
+      end,
+    },
+    {
+      events = { "VimLeavePre" },
+      targets = { "*" },
+      command = function()
+        external.tmux.set_statusline(true)
+      end,
+    },
+    {
+      events = { "ColorScheme", "FocusGained" },
+      targets = { "*" },
+      command = function()
+        -- NOTE: there is a race condition here as the colors
+        -- for kitty to re-use need to be set AFTER the rest of the colorscheme
+        -- overrides
+        vim.defer_fn(function()
+          external.tmux.set_statusline()
+        end, 1)
       end,
     },
   })

@@ -141,6 +141,7 @@ M.load_default_options = function()
     jumpoptions = "stack", -- list of words that change the behavior of the jumplist
     virtualedit = "block",
     emoji = false, -- emoji is true by default but makes (n)vim treat all emoji as double width
+    switchbuf = "useopen,uselast",
     formatoptions = {
       ["1"] = true,
       ["2"] = true, -- Use indent from 2nd line of a paragraph
@@ -174,6 +175,11 @@ M.load_default_options = function()
     viewoptions = "cursor,folds",
     sessionoptions = "curdir,help,tabpages,winsize",
     autowriteall = true, -- automatically :write before running commands and changing files
+
+    title = true,
+    titlelen = 70,
+    -- titlestring = " ❐ %t %r %m",
+    titlestring = "%<%F%=%l/%L - nvim",
   }
 
   ---  SETTINGS  ---
@@ -190,15 +196,9 @@ M.load_default_options = function()
 end
 
 M.load_commands = function()
-  local o = vim.o
-  o.switchbuf = "useopen,uselast"
-  o.titlestring = "%<%F%=%l/%L - nvim"
-
   local command_options = {
     exrc = true,
     secure = true,
-    title = true,
-    titlelen = 70,
     magic = true,
     noerrorbells = true,
     t_Co = 256,
