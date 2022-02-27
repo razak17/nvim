@@ -30,9 +30,10 @@ function M.title_string()
   if not hl then
     return (icon or "") .. " "
   end
-  -- return fmt('%s #[fg=%s]%s ', dir, u.get_hl(hl, 'fg'), icon)
+  local title_string = fmt("%s #[fg=%s]%s ", dir, u.get_hl(hl, "fg"), icon)
   local has_tmux = os.getenv "TMUX"
-  return has_tmux and fmt("%s #[fg=%s]%s ", dir, u.get_hl(hl, "fg"), icon) or dir .. " " .. icon
+  -- fn.jobstart(fmt("tmux set-titles-string '%s'", title_string))
+  return has_tmux and title_string or dir .. " " .. icon
 end
 
 function M.tmux.clear_pane_title()

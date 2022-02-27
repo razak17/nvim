@@ -176,6 +176,7 @@ M.load_default_options = function()
     sessionoptions = "curdir,help,tabpages,winsize",
     autowriteall = true, -- automatically :write before running commands and changing files
 
+    -- title
     title = true,
     titlelen = 70,
     -- titlestring = " ❐ %t %r %m",

@@ -353,7 +353,7 @@ if vim.env.TMUX ~= nil then
       end,
     },
     {
-      events = { "VimLeavePre" },
+      events = { "VimLeavePre", "FocusLost" },
       targets = { "*" },
       command = function()
         external.tmux.set_statusline(true)
