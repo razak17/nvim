@@ -145,6 +145,7 @@ lang["p00f/nvim-ts-rainbow"] = {
 lang["andymass/vim-matchup"] = {
   after = "nvim-treesitter",
   config = function()
+    rvim.nnoremap["<Leader>l?"] = ":<c-u>MatchupWhereAmI?<CR>"
     require("which-key").register {
       ["<leader>l?"] = "where am i",
     }

@@ -1,9 +1,6 @@
 local keymaps = rvim.keymaps
 local utils = require "user.utils"
 
-local nmap, imap, smap, vmap, xmap =
-  keymaps.nmap, keymaps.imap, keymaps.smap, keymaps.vmap, keymaps.xmap
-
 local nnoremap, cnoremap, tnoremap, vnoremap, xnoremap, inoremap =
   keymaps.nnoremap,
   keymaps.cnoremap,
@@ -311,7 +308,7 @@ nnoremap["<leader>'"] = [[ciw'<c-r>"'<esc>]]
 nnoremap["<leader>)"] = [[ciw(<c-r>")<esc>]]
 nnoremap["<leader>}"] = [[ciw{<c-r>"}<esc>]]
 
--- Buffers
+-- Buffers - Del All Others
 nnoremap["<Leader>bc"] = function()
   vim.api.nvim_exec(
     [[
@@ -322,69 +319,8 @@ nnoremap["<Leader>bc"] = function()
   )
 end
 
------------------------------------------------------------------------------//
--- Plugins
------------------------------------------------------------------------------//
-
 -- Bufferlline
-if rvim.plugin.bufferline.active then
-  nnoremap["<S-l>"] = ":BufferLineCycleNext<CR>"
-  nnoremap["<S-h>"] = ":BufferLineCyclePrev<CR>"
-  nnoremap["gb"] = ":BufferLinePick<CR>"
-else
+if not rvim.plugin.bufferline.active then
   nnoremap["<S-l>"] = ":bnext<CR>"
   nnoremap["<S-h>"] = ":bprevious<CR>"
-end
-
--- Vsnip
-if rvim.plugin.vsnip.active then
-  xmap["<C-x>"] = "<Plug>(vsnip-cut-text)"
-  xmap["<C-l>"] = "<Plug>(vsnip-select-text)"
-  imap["<C-l>"] = {
-    "vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'",
-    { expr = true },
-  }
-  smap["<C-l>"] = {
-    "vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'",
-    { expr = true },
-  }
-end
-
--- Dial
-if rvim.plugin.dial.active then
-  nmap["<C-a>"] = "<Plug>(dial-increment)"
-  nmap["<C-x>"] = "<Plug>(dial-decrement)"
-  vmap["<C-a>"] = "<Plug>(dial-increment)"
-  vmap["<C-x>"] = "<Plug>(dial-decrement)"
-  vmap["g<C-a>"] = "<Plug>(dial-increment-additional)"
-  vmap["g<C-x>"] = "<Plug>(dial-decrement-additional)"
-end
-
--- surround
-if rvim.plugin.surround.active then
-  xmap["S"] = "<Plug>VSurround"
-  xmap["S"] = "<Plug>VSurround"
-end
-
--- Kommentary
-if rvim.plugin.kommentary.active then
-  xmap["<leader>/"] = "<Plug>kommentary_visual_default"
-end
-
--- FTerm
-if rvim.plugin.fterm.active then
-  nnoremap["<F12>"] = '<cmd>lua require("FTerm").toggle()<CR>'
-  tnoremap["<F12>"] = '<C-\\><C-n><cmd>lua require("FTerm").toggle()<CR>'
-end
-
--- easy_align
-if rvim.plugin.easy_align.active then
-  nmap["ga"] = "<Plug>(EasyAlign)"
-  xmap["ga"] = "<Plug>(EasyAlign)"
-  vmap["<Enter>"] = "<Plug>(EasyAlign)"
-end
-
--- vim-matchup
-if rvim.plugin.matchup.active then
-  nnoremap["<Leader>vW"] = ":<c-u>MatchupWhereAmI?<CR>"
 end

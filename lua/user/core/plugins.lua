@@ -174,7 +174,7 @@ function plugins.load_compile()
     vim.notify "packer_compiled was created successfully"
   else
     require "_compiled_rolling"
-    vim.notify "packer_compiled was loaded successfully"
+    -- vim.notify "packer_compiled was loaded successfully"
   end
 end
 

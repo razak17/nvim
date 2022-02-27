@@ -13,6 +13,10 @@ editor["xiyaowong/accelerated-jk.nvim"] = {
 }
 
 editor["tpope/vim-surround"] = {
+  config = function()
+    rvim.xmap("S", "<Plug>VSurround")
+    rvim.xmap("S", "<Plug>VSurround")
+  end,
   disable = not rvim.plugin.surround.active,
 }
 
@@ -29,10 +33,26 @@ editor["moll/vim-bbye"] = {
 
 editor["monaqa/dial.nvim"] = {
   event = { "BufWinEnter" },
+  config = function()
+    local nmap = rvim.nmap
+    local vmap = rvim.nmap
+
+    nmap("<C-a>", "<Plug>(dial-increment)")
+    nmap("<C-x>", "<Plug>(dial-decrement)")
+    vmap("<C-a>", "<Plug>(dial-increment)")
+    vmap("<C-x>", "<Plug>(dial-decrement)")
+    vmap("g<C-a>", "<Plug>(dial-increment-additional)")
+    vmap("g<C-x>", "<Plug>(dial-decrement-additional)")
+  end,
   disable = not rvim.plugin.dial.active,
 }
 
 editor["junegunn/vim-easy-align"] = {
+  config = function()
+    rvim.nmap("ga", "<Plug>(EasyAlign)")
+    rvim.xmap("ga", "<Plug>(EasyAlign)")
+    rvim.vmap("<Enter>", "<Plug>(EasyAlign)")
+  end,
   event = { "BufReadPre", "BufNewFile" },
   disable = not rvim.plugin.easy_align.active,
 }
@@ -97,6 +117,8 @@ editor["b3nj5m1n/kommentary"] = {
         require("kommentary.config").configure_language(f, { single_line_comment_string = "#" })
       end
     end
+
+    rvim.xmap("<leader>/", "<Plug>kommentary_visual_default")
 
     require("which-key").register {
       ["<leader>/"] = { "<Plug>kommentary_line_default", "comment" },

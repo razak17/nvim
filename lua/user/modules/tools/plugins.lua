@@ -38,7 +38,6 @@ tools["kkoomen/vim-doge"] = {
     require("which-key").register {
       ["<leader>lD"] = "DOGe",
     }
-
   end,
   disable = not rvim.plugin.doge.active,
 }
@@ -59,6 +58,9 @@ tools["numToStr/FTerm.nvim"] = {
         cmd = term:new { cmd = "ranger" }
       end
       cmd:toggle()
+
+      rvim.nnoremap("<F12>", '<cmd>lua require("FTerm").toggle()<CR>')
+      rvim.tnoremap("<F12>", '<C-\\><C-n><cmd>lua require("FTerm").toggle()<CR>')
     end
 
     require("which-key").register {

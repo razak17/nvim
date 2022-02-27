@@ -46,9 +46,21 @@ completion["hrsh7th/vim-vsnip"] = {
   config = function()
     vim.g.vsnip_snippet_dir = rvim.common.snippets_dir
 
-    require("which-key").register {
-      ["<leader>S"] = { ":VsnipOpen<CR> 1<CR><CR>", "edit snippet" },
-    }
+    local xmap = rvim.nmap
+    xmap("<C-x>", "<Plug>(vsnip-cut-text)")
+    xmap("<C-l>", "<Plug>(vsnip-select-text)")
+    rvim.imap(
+      "<C-l>",
+      "vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'",
+      { expr = true }
+    )
+    rvim.smap(
+      "<C-l>",
+      "vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'",
+      { expr = true }
+    )
+
+    require("which-key").register { ["<leader>S"] = { ":VsnipOpen<CR> 1<CR><CR>", "edit snippet" } }
   end,
   disable = not rvim.plugin.vsnip.active,
 }
