@@ -53,7 +53,7 @@ nvim_config.grep_files = function(opts)
 end
 
 nvim_config.view_changelog = function()
-  local opts = { cwd = rvim.get_config_dir() }
+  local opts = { cwd = cwd_git }
   opts.entry_maker = make_entry.gen_from_git_commits(opts)
 
   pickers.new(opts, {
