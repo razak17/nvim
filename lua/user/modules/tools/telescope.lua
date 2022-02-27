@@ -239,7 +239,6 @@ return function()
   end
 
   local extensions = {
-    "grep_string_prompt",
     "bg_selector",
     "nvim_files",
   }
@@ -290,10 +289,6 @@ return function()
     telescope.extensions.file_browser.file_browser {}
   end
 
-  local function grep_string_prompt()
-    telescope.extensions.grep_string_prompt.grep_string_prompt {}
-  end
-
   local function frecency()
     telescope.extensions.frecency.frecency(dropdown {
       -- NOTE: remove default text as it's slow
@@ -328,7 +323,6 @@ return function()
       w = { builtins.grep_string, "find current word" },
       P = { installed_plugins, "plugins" },
       B = { file_browser, "find browser" },
-      e = { grep_string_prompt, "find in prompt" },
       h = { frecency, "history" },
       n = { notes, "notes" },
       p = { projects, "recent projects" },
