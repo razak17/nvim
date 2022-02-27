@@ -56,7 +56,7 @@ return function()
         sorting_strategy = "ascending",
         layout_strategy = "horizontal",
         set_env = { ["TERM"] = vim.env.TERM },
-        borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
+        borderchars = rvim.telescope_borderchars,
         file_browser = { hidden = true },
         color_devicons = true,
         dynamic_preview_title = true,

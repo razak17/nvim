@@ -19,6 +19,7 @@ return {
     node_path = os.getenv "HOME" .. "/.fnm/node-versions/v17.3.0/installation/bin/neovim-node-host",
     python_path = rvim.get_cache_dir() .. "/venv/neovim/bin/python3",
   },
+  telescope_borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
   lang = {},
   keymaps = {
     ---@usage change or add keymappings for normal mode
