@@ -98,18 +98,16 @@ local plugins = setmetatable({}, {
   end,
 })
 
+local function plug_notify(msg)
+  vim.notify(msg, nil, { title = "Packer" })
+end
+
 function plugins.ensure_installed()
   Plug:load_packer()
   Plug:init_ensure_installed()
 
   local command = rvim.command
-  command {
-    "PlugCompile",
-    function()
-      require("user.core.plugins").compile()
-      vim.notify "packer was compiled successfully"
-    end,
-  }
+  command { "PlugCompile", [[lua require('user.core.plugins').compile()]] }
   command { "PlugInstall", [[lua require('user.core.plugins').install()]] }
   command { "PlugSync", [[lua require('user.core.plugins').sync()]] }
   command { "PlugClean", [[lua require('user.core.plugins').clean()]] }
@@ -118,9 +116,10 @@ function plugins.ensure_installed()
   command { "PlugRecompile", [[lua require('user.core.plugins').recompile()]] }
   rvim.augroup("PackerComplete", {
     {
-      events = { "User" },
-      targets = { "lua" },
-      command = "lua require('user.core.plugins').compile()",
+      events = { "User PackerCompileDone" },
+      command = function()
+        plug_notify "Packer compile complete"
+      end,
     },
   })
 
@@ -137,10 +136,10 @@ function plugins.ensure_installed()
     "PlugCompiledDelete",
     function()
       if vim.fn.filereadable(compile_path) ~= 1 then
-        vim.notify "packer_compiled file does not exist"
+        plug_notify "packer_compiled file does not exist"
       else
         vim.fn.delete(compile_path)
-        vim.notify "packer_compiled was deleted successfully"
+        plug_notify "packer_compiled was deleted"
       end
     end,
   }
@@ -150,6 +149,7 @@ function plugins.ensure_installed()
     function()
       vim.fn.delete(compile_path)
       vim.cmd [[:PlugCompile]]
+      plug_notify "packer was recompiled"
     end,
   }
 
@@ -164,17 +164,16 @@ function plugins.recompile()
   Plug:init_ensure_installed()
   os.remove(compile_path)
   plugins.compile()
-  vim.notify "packer_compiled recompiled successfully"
 end
 
 function plugins.load_compile()
   if vim.fn.filereadable(compile_path) ~= 1 then
     plugins.install()
     plugins.compile()
-    vim.notify "packer_compiled was created successfully"
+    plug_notify "packer_compiled was created"
   else
     require "_compiled_rolling"
-    -- vim.notify "packer_compiled was loaded successfully"
+    plug_notify "packer_compiled was loaded"
   end
 end
 
