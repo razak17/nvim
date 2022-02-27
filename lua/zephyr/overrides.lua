@@ -41,7 +41,7 @@ local function general_overrides()
     { "Comment", { italic = true } },
     { "Include", { italic = true } },
     -- { "Type", { italic = true, bold = true } },
-    -- { "Folded", { italic = true, bold = true } },
+    { "Folded", { italic = true, bold = true } },
     {
       "Folded",
       {

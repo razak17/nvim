@@ -133,7 +133,15 @@ lang["nvim-treesitter/nvim-treesitter"] = {
 
 lang["nvim-treesitter/playground"] = {
   event = "VimEnter",
+  keys = "<leader>E",
   module = "nvim-treesitter-playground",
+  cmd = { "TSPlaygroundToggle", "TSHighlightCapturesUnderCursor" },
+  setup = function()
+    require("which-key").register { ["<leader>E"] = "treesitter: highlight cursor group" }
+  end,
+  config = function()
+    rvim.nnoremap("<leader>E", "<Cmd>TSHighlightCapturesUnderCursor<CR>")
+  end,
   disable = not rvim.plugin.playground.active,
 }
 
@@ -194,10 +202,6 @@ lang["lewis6991/spellsitter.nvim"] = {
   config = function()
     require("spellsitter").setup {
       enable = { "markdown" },
-    }
-
-    require("which-key").register {
-      ["<leader>om"] = { ":UndotreeToggle<cr>", "toggle undotree" },
     }
   end,
   disable = not rvim.plugin.spellsitter.active,
