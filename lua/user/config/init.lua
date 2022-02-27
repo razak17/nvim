@@ -35,6 +35,15 @@ function M:init()
 end
 
 function M:load()
+  local g = vim.g
+
+  g.python3_host_prog = rvim.common.python_path
+  g.node_host_prog = rvim.common.node_path
+
+  g["loaded_python_provider"] = 0
+  g["loaded_ruby_provider"] = 0
+  g["loaded_perl_provider"] = 0
+
   if rvim.common.defer then
     vim.cmd [[syntax off]]
     vim.cmd [[filetype off]]

@@ -16,6 +16,8 @@ return {
     debug = false,
     defer = false,
     colorscheme = "zephyr",
+    node_path = os.getenv "HOME" .. "/.fnm/node-versions/v17.3.0/installation/bin/neovim-node-host",
+    python_path = rvim.get_cache_dir() .. "/venv/neovim/bin/python3",
   },
   lang = {},
   keymaps = {
