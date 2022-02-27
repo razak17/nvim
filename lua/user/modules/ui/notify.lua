@@ -13,7 +13,7 @@ return function()
       stages = "fade_in_slide_out",
 
       ---@usage timeout for notifications in ms, default 5000
-      timeout = 5000,
+      timeout = 500,
 
       -- Render function for notifications. See notify-render()
       render = function(bufnr, notif, highlights)
