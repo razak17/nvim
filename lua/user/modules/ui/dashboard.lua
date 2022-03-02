@@ -75,5 +75,16 @@ return function()
       targets = { "dashboard" },
       command = "set laststatus=0 | autocmd BufLeave <buffer> set laststatus=2",
     },
+    {
+      events = { "FileType" },
+      targets = { "dashboard" },
+      command = "set showtabline=0 | autocmd BufLeave <buffer> set showtabline="
+        .. vim.opt.showtabline._value,
+    },
+    {
+      events = { "FileType" },
+      targets = { "dashboard" },
+      command = "nnoremap <silent> <buffer> q :q<CR>",
+    },
   })
 end
