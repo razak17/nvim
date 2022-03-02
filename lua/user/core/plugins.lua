@@ -198,7 +198,6 @@ rvim.augroup("PackerSetupInit", {
   },
   {
     events = { "BufEnter" },
-    -- targets = { "<buffer>" },
     targets = {
       rvim.get_user_dir() .. "modules/**/plugins.lua",
     },
