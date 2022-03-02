@@ -81,7 +81,7 @@ function rvim.get_cache_dir()
   return rvim_cache_dir
 end
 
----Get the full path to `$RVIM_CONFIG_DIR/user`
+---Get the full path to `$RVIM_CONFIG_DIR/lua/user`
 ---@return string
 function rvim.get_user_dir()
   local config_dir = os.getenv "RVIM_CONFIG_DIR"

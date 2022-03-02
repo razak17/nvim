@@ -198,7 +198,10 @@ rvim.augroup("PackerSetupInit", {
   },
   {
     events = { "BufEnter" },
-    targets = { "<buffer>" },
+    -- targets = { "<buffer>" },
+    targets = {
+      rvim.get_user_dir() .. "modules/lang/plugins.lua",
+    },
     --- Open a repository from an authorname/repository string
     --- e.g. 'akinso/example-repo'
     command = function()
@@ -208,7 +211,7 @@ rvim.augroup("PackerSetupInit", {
           return vim.cmd "norm! gf"
         end
         local url = fmt("https://www.github.com/%s", repo)
-        fn.jobstart("open " .. url)
+        fn.system(fn.printf(rvim.open_command .. ' "https://github.com/%s"', repo))
         vim.notify(fmt("Opening %s at %s", repo, url))
       end)
     end,
