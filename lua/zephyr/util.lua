@@ -74,25 +74,6 @@ function M.adopt_winhighlight(win_id, target, name, default)
   return name
 end
 
----get a highlight groups details from the nvim API and format the result
----to match the attributes seen when using `:highlight GroupName`
---- `nvim_get_hl_by_name` e.g.
----```json
----{
---- foreground: 123456
---- background: 123456
---- italic: true
---- bold: true
---}
----```
---- is converted to
----```json
----{
---- gui: {"italic", "bold"}
---- guifg: #FFXXXX
---- guibg: #FFXXXX
---}
----```
 ---@param group_name string A highlight group name
 local function get_hl(group_name)
   local ok, hl = pcall(api.nvim_get_hl_by_name, group_name, true)
@@ -106,7 +87,6 @@ local function get_hl(group_name)
   return {}
 end
 
---- NOTE: vim.highlight's link and create are private, so eventually move to using `nvim_set_hl`
 ---@param name string
 ---@param opts table
 function M.set_hl(name, opts)
