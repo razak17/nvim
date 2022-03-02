@@ -65,8 +65,9 @@ local function general_overrides()
     { "TSError", { undercurl = true, sp = error_line, foreground = "NONE" } },
     -- { "TSParameter", { italic = true, bold = true } },
     -- highlight FIXME comments
-    { "commentTSWarning", { foreground = "Red", bold = true } },
-    { "commentTSDanger", { foreground = P.danger, bold = true } },
+     { 'commentTSWarning', { background = P.error_red, foreground = 'fg', bold = true } },
+    { 'commentTSDanger', { background = P.dark_green, foreground = '#1B2229', bold = true } },
+    { 'commentTSNote', { background = P.bluee, foreground = '#1B2229', bold = true } },
   }
 end
 

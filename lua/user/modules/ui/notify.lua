@@ -48,6 +48,6 @@ return function()
   rvim.nnoremap("<leader>nd", notify.dismiss, { label = "dismiss notifications" })
   require("which-key").register {
     ["<leader>nn"] = { ":Notifications<cr>", "notifications" },
-    ["<leader>nx"] = { notify.dismiss, " dismissnotifications" },
+    ["<leader>nx"] = { notify.dismiss, " dismiss notifications" },
   }
 end
