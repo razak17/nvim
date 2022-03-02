@@ -1,14 +1,6 @@
 -----------------------------------------------------------------------------//
 -- MAPPINGS
 -----------------------------------------------------------------------------//
--- A very over-engineered mapping mini-module. Yes, I know I could have used one
--- a number of plugins and be done with it.
--- e.g
--- - https://github.com/b0o/mapx.nvim [The Best Option]
--- - https://github.com/svermeulen/vimpeccable [The Original]
---
--- But frankly I like to be in control of my mappings and I honestly think that very soon this
--- won't be needed rvim mappings are likely to become simpler once the native api is improved
 
 ---create a mapping function factory
 ---@param mode string
@@ -31,8 +23,7 @@ local function make_mapper(mode, o)
       end
       opts.label = nil
     end
-    opts = vim.tbl_extend("keep", opts, parent_opts)
-    vim.keymap.set(mode, lhs, rhs, opts)
+    vim.keymap.set(mode, lhs, rhs, vim.tbl_extend("keep", opts, parent_opts))
   end
 end
 
@@ -53,7 +44,7 @@ rvim.omap = make_mapper("o", map_opts)
 rvim.tmap = make_mapper("t", map_opts)
 -- A recursive visual mapping
 rvim.smap = make_mapper("s", map_opts) -- A recursive normal mapping
-rvim.cmap = make_mapper("c", { noremap = false, silent = false })
+rvim.cmap = make_mapper("c", { remap = false, silent = false })
 -- A non recursive normal mapping
 rvim.nnoremap = make_mapper("n", noremap_opts)
 -- A non recursive visual mapping
@@ -69,4 +60,4 @@ rvim.tnoremap = make_mapper("t", noremap_opts)
 -- A non recursive select mapping
 rvim.snoremap = make_mapper("s", noremap_opts)
 -- A non recursive commandline mapping
-rvim.cnoremap = make_mapper("c", { noremap = true, silent = false })
+rvim.cnoremap = make_mapper("c", { silent = false })
