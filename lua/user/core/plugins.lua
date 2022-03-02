@@ -200,7 +200,7 @@ rvim.augroup("PackerSetupInit", {
     events = { "BufEnter" },
     -- targets = { "<buffer>" },
     targets = {
-      rvim.get_user_dir() .. "modules/lang/plugins.lua",
+      rvim.get_user_dir() .. "modules/**/plugins.lua",
     },
     --- Open a repository from an authorname/repository string
     --- e.g. 'akinso/example-repo'
