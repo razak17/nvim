@@ -65,6 +65,24 @@ return function()
       },
       hide_dotfiles = false,
       ignore = { ".git", "node_modules", ".cache", ".DS_Store" },
+      actions = {
+        change_dir = {
+          enable = true,
+          global = false,
+        },
+        open_file = {
+          quit_on_open = false,
+          resize_window = false,
+          window_picker = {
+            enable = true,
+            chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
+            exclude = {
+              filetype = { "notify", "packer", "qf", "diff", "fugitive", "fugitiveblame" },
+              buftype = { "nofile", "terminal", "help" },
+            },
+          },
+        },
+      },
     },
     defaults = {
       show_icons = {
@@ -75,8 +93,6 @@ return function()
         tree_width = 30,
       },
       indent_markers = 1,
-      quit_on_open = 0,
-      disable_window_picker = 1,
       root_folder_modifier = ":t",
       git_hl = 1,
       icons = {
