@@ -34,7 +34,7 @@ ui["kyazdani42/nvim-tree.lua"] = {
 
 ui["lukas-reineke/indent-blankline.nvim"] = {
   event = { "BufRead" },
-  config = utils.load_conf("ui", "indent_blankline"),
+  config = utils.load_conf("ui", "indentline"),
   disable = not rvim.plugin.indent_line.active,
 }
 
