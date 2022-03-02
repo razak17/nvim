@@ -44,4 +44,10 @@ return function()
   vim.notify = notify
   Log:configure_notifications(notify)
   require("telescope").load_extension "notify"
+
+  rvim.nnoremap("<leader>nd", notify.dismiss, { label = "dismiss notifications" })
+  require("which-key").register {
+    ["<leader>nn"] = { ":Notifications<cr>", "notifications" },
+    ["<leader>nx"] = { notify.dismiss, " dismissnotifications" },
+  }
 end
