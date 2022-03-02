@@ -2,7 +2,6 @@ local fn = vim.fn
 local api = vim.api
 local fmt = string.format
 local contains = vim.tbl_contains
-local utils = require "user.utils"
 
 local not_eligible = not vim.bo.modifiable
   or not vim.bo.buflisted
@@ -277,25 +276,6 @@ rvim.augroup("CustomFormatOptions", {
     events = { "VimEnter", "BufWinEnter", "BufRead", "BufNewFile" },
     targets = { "*" },
     command = "setlocal formatoptions-=c formatoptions-=r formatoptions-=o",
-  },
-})
-
-rvim.augroup("PackerSetupInit", {
-  {
-    events = { "BufWritePost" },
-    targets = {
-      utils.join_paths(rvim.get_config_dir(), "lua/core/config/init.lua"),
-    },
-    command = function()
-      vim.cmd [[source ~/.config/rvim/lua/core/config/init.lua]]
-      vim.cmd [[source ~/.config/rvim/lua/core/opts.lua]]
-      vim.cmd [[source ~/.config/rvim/lua/core/binds.lua]]
-      local plug = require "user.core.plugins"
-      plug.ensure_plugins()
-      plug.install()
-      plug.load_compile()
-      vim.notify("packer compiled...", { timeout = 1000 })
-    end,
   },
 })
 

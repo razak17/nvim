@@ -177,4 +177,42 @@ function plugins.load_compile()
   end
 end
 
+local fmt = string.format
+
+rvim.augroup("PackerSetupInit", {
+  {
+    events = { "BufWritePost" },
+    targets = {
+      utils.join_paths(rvim.get_config_dir(), "lua/core/config/init.lua"),
+    },
+    command = function()
+      vim.cmd [[source ~/.config/rvim/lua/core/config/init.lua]]
+      vim.cmd [[source ~/.config/rvim/lua/core/opts.lua]]
+      vim.cmd [[source ~/.config/rvim/lua/core/binds.lua]]
+      local plug = require "user.core.plugins"
+      plug.ensure_plugins()
+      plug.install()
+      plug.load_compile()
+      vim.notify("packer compiled...", { timeout = 1000 })
+    end,
+  },
+  {
+    events = { "BufEnter" },
+    targets = { "<buffer>" },
+    --- Open a repository from an authorname/repository string
+    --- e.g. 'akinso/example-repo'
+    command = function()
+      rvim.nnoremap("gf", function()
+        local repo = fn.expand "<cfile>"
+        if not repo or #vim.split(repo, "/") ~= 2 then
+          return vim.cmd "norm! gf"
+        end
+        local url = fmt("https://www.github.com/%s", repo)
+        fn.jobstart("open " .. url)
+        vim.notify(fmt("Opening %s at %s", repo, url))
+      end)
+    end,
+  },
+})
+
 return plugins
