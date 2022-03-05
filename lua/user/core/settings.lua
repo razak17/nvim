@@ -112,7 +112,7 @@ M.load_default_options = function()
       precedes = "", -- Alternatives: … « ‹
       trail = "·", -- BULLET (U+2022, UTF-8: E2 80 A2) •
     },
-    diffopt = {
+    diffopt = vim.opt.diffopt + {
       "vertical",
       "iwhite",
       "hiddenoff",

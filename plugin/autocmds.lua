@@ -426,14 +426,24 @@ rvim.augroup("Utilities", {
 })
 
 rvim.augroup("RememberFolds", {
-  events = { "BufWinEnter", "BufWinLeave" },
-  targets = { "*" },
-  command = function()
-    if can_save() then
-      vim.cmd "mkview"
-      vim.cmd "silent! loadview"
-    end
-  end,
+  {
+    events = { "BufWinLeave" },
+    targets = { "*" },
+    command = function()
+      if can_save() then
+        vim.cmd "mkview"
+      end
+    end,
+  },
+  {
+    events = { "BufWinEnter" },
+    targets = { "*" },
+    command = function()
+      if can_save() then
+        vim.cmd "silent! loadview"
+      end
+    end,
+  },
 })
 
 rvim.augroup("TerminalAutocommands", {
