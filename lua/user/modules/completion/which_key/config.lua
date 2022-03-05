@@ -26,13 +26,6 @@ return {
       [";"] = "open terminal",
       d = { ":bdelete!<cr>", "force delete buffer" },
       e = "turn off guides",
-      f = {
-        name = "+Fold",
-        l = "under curosr",
-        r = "recursive cursor",
-        o = "open all",
-        x = "close all",
-      },
       F = { ":vertical resize 90<cr>", "vertical resize 90" },
       h = "horizontal split",
       l = "open last buffer",
@@ -49,6 +42,15 @@ return {
     b = {
       name = "+Bufferline",
       c = "close all others",
+    },
+    F = {
+      name = "+Fold",
+      l = "under curosr",
+      r = "recursive cursor",
+      o = "open all",
+      O = "open top level",
+      x = "close all",
+      z = "refocus ",
     },
     L = {
       name = "+Rvim",
@@ -91,6 +93,10 @@ return {
       h = "change two horizontally split windows to vertical splits",
       v = "change two vertically split windows to horizontal splits",
     },
+    z = {
+      name = "+Utils",
+      z = "refocus folds"
+    }
   },
   visual_mode = {
     ["/"] = "comment",

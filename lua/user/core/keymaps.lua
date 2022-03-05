@@ -279,11 +279,15 @@ nnoremap["<localleader>wh"] = "<C-W>t <C-W>K<C-W>="
 nnoremap["<leader>al"] = "<C-^>"
 
 -- Folds
-nnoremap["<S-Return>"] = "zMzvzt"
-nnoremap["<Leader>afr"] = "zA" -- Recursively toggle
-nnoremap["<Leader>afl"] = "za" -- Toggle fold under the cursor
-nnoremap["<Leader>afo"] = "zR" -- Open all folds
-nnoremap["<Leader>afx"] = "zM" -- Close all folds
+nnoremap["<Leader>FR"] = "zA" -- Recursively toggle
+nnoremap["<Leader>Fl"] = "za" -- Toggle fold under the cursor
+nnoremap["<Leader>Fo"] = "zR" -- Open all folds
+nnoremap["<Leader>Fx"] = "zM" -- Close all folds
+nnoremap["<leader>Fz"] = [[zMzvzz]] -- Refocus folds
+
+-- Make zO recursively open whatever top level fold we're in, no matter where the
+-- cursor happens to be.
+nnoremap["FO"] = [[zCzO]]
 
 -- Conditionally modify character at end of line
 nnoremap["<localleader>,"] = "<cmd>call utils#modify_line_end_delimiter(',')<cr>"

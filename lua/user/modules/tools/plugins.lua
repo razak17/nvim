@@ -115,14 +115,11 @@ tools["brooth/far.vim"] = {
     vim.g["far#source"] = "rg"
     vim.g["far#enable_undo"] = 1
     require("which-key").register {
-      ["<leader>F"] = {
-        name = "+Far",
-        f = { ":Farr --source=vimgrep<cr>", "replace in File" },
-        d = { ":Fardo<cr>", "do" },
-        i = { ":Farf<cr>", "search iteratively" },
-        r = { ":Farr --source=rgnvim<cr>", "replace in Project" },
-        z = { ":Farundo<cr>", "undo" },
-      },
+      ["<leader>Ff"] = { ":Farr --source=vimgrep<cr>", "far: replace in File" },
+      ["<leader>Fd"] = { ":Fardo<cr>", "far: do" },
+      ["<leader>Fi"] = { ":Farf<cr>", "far: search iteratively" },
+      ["<leader>Fr"] = { ":Farr --source=rgnvim<cr>", "far: replace in project" },
+      ["<leader>Fu"] = { ":Farundo<cr>", "far: undo" },
     }
   end,
   disable = not rvim.plugin.far.active,
