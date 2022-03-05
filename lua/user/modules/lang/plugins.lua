@@ -137,7 +137,7 @@ lang["nvim-treesitter/playground"] = {
   module = "nvim-treesitter-playground",
   cmd = { "TSPlaygroundToggle", "TSHighlightCapturesUnderCursor" },
   setup = function()
-    require("which-key").register { ["<leader>E"] = "treesitter: highlight cursor group" }
+    require("which-key").register { ["<leader>E"] = "treesitter: inspect token" }
   end,
   config = function()
     rvim.nnoremap("<leader>E", "<Cmd>TSHighlightCapturesUnderCursor<CR>")
