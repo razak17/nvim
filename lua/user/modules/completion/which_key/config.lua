@@ -95,8 +95,8 @@ return {
     },
     z = {
       name = "+Utils",
-      z = "refocus folds"
-    }
+      z = "refocus folds",
+    },
   },
   visual_mode = {
     ["/"] = "comment",
@@ -179,6 +179,7 @@ return {
         "view diff",
       },
       f = { ":Telescope git_files<cr>", "files" },
+      s = { ":Telescope git_status<cr>", "status" },
       o = { ":Telescope git_status<cr>", "open changed file" },
     },
     slide = {
