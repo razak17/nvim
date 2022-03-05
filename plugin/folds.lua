@@ -1,12 +1,11 @@
 -----------------------------------------------------------------------------//
 -- Fold Text
 -----------------------------------------------------------------------------//
--- Ref: https://github.com/akinsho/dotfiles/blob/main/.config/nvim/lua/as/folds.lua
 local fn = vim.fn
 local api = vim.api
 
 -- List of file types to use default fold text for
-local fold_exclusions = {"vim"}
+local fold_exclusions = { "vim" }
 
 local function contains(str, pattern)
   assert(str)
@@ -72,8 +71,7 @@ local function handle_fold_start(start_text, end_text, foldsymbol)
     --- This regex matches anything after an import followed by a space
     --- this might not hold true for all languages but think it does
     --- for all the ones I use
-    return fn.substitute(start_text, [[^import .\+]], "import " .. foldsymbol,
-                         "")
+    return fn.substitute(start_text, [[^import .\+]], "import " .. foldsymbol, "")
   end
   return prepare_fold_section(start_text) .. foldsymbol
 end
@@ -103,12 +101,8 @@ function _G.folds()
   -- so we split off the auto portion so we can still get the line count
   local parts = vim.split(vim.wo.foldcolumn, ":")
   local column_size = parts[#parts]
-  local text_length = #fn.substitute(fold_start .. fold_end, ".", "x", "g") +
-                          column_size
-  return fold_start ..
-             string.rep(" ", api.nvim_win_get_width(0) - text_length - 7) ..
-             fold_end
+  local text_length = #fn.substitute(fold_start .. fold_end, ".", "x", "g") + column_size
+  return fold_start .. string.rep(" ", api.nvim_win_get_width(0) - text_length - 7) .. fold_end
 end
 
 -- CREDIT: https://coderwall.com/p/usd_cw/a-pretty-vim-foldtext-function
-

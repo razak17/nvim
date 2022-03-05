@@ -2,6 +2,7 @@ local uv, api, fn = vim.loop, vim.api, vim.fn
 local compile_path = rvim.get_runtime_dir() .. "/site/lua/_compiled_rolling.lua"
 local packer = nil
 local packer_ok = nil
+local fmt = string.format
 local utils = require "user.utils"
 
 local Plug = {}
@@ -103,8 +104,8 @@ local function plug_notify(msg)
 end
 
 function plugins.ensure_installed()
-  Plug:load_packer()
   Plug:init_ensure_installed()
+  Plug:load_packer()
 
   local command = rvim.command
   command { "PlugCompile", [[lua require('user.core.plugins').compile()]] }
@@ -114,16 +115,6 @@ function plugins.ensure_installed()
   command { "PlugUpdate", [[lua require('user.core.plugins').update()]] }
   command { "PlugStatus", [[lua require('user.core.plugins').status()]] }
   command { "PlugRecompile", [[lua require('user.core.plugins').recompile()]] }
-  rvim.augroup("PackerComplete", {
-    {
-      events = { "User PackerCompileDone" },
-      command = function()
-        plug_notify "Packer compile complete"
-      end,
-    },
-  })
-
-  local fmt = string.format
 
   command {
     "PlugCompiledEdit",
@@ -177,8 +168,6 @@ function plugins.load_compile()
   end
 end
 
-local fmt = string.format
-
 rvim.augroup("PackerSetupInit", {
   {
     events = { "BufWritePost" },
@@ -213,6 +202,15 @@ rvim.augroup("PackerSetupInit", {
         fn.system(fn.printf(rvim.open_command .. ' "https://github.com/%s"', repo))
         vim.notify(fmt("Opening %s at %s", repo, url))
       end)
+    end,
+  },
+})
+
+rvim.augroup("PackerComplete", {
+  {
+    events = { "User PackerCompileDone" },
+    command = function()
+      plug_notify "Packer compile complete"
     end,
   },
 })
