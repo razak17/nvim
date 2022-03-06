@@ -235,7 +235,10 @@ function M.setup()
     return
   end
 
-  bootstrap_nlsp { config_home = utils.join_paths(rvim.get_config_dir(), "lsp-settings") }
+  bootstrap_nlsp {
+    config_home = utils.join_paths(rvim.get_config_dir(), "lsp-settings"),
+    append_default_schemas = true,
+  }
 
   require("user.lsp.null-ls").setup()
 
