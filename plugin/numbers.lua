@@ -20,7 +20,6 @@ vim.g.number_filetype_exclusions = {
   "coc-explorer",
   "coc-list",
   "list",
-  "slide",
   "NvimTree",
   "startify",
   "help",

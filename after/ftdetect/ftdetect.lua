@@ -64,9 +64,6 @@ au BufNewFile,BufRead */nginx/*.conf set ft=nginx
 " PostgreSQL
 au BufNewFile,BufRead *.pgsql let b:sql_type_override='pgsql' | set ft=sql
 
-" slide
-au BufRead,BufNewFile *.sld setlocal ft=slide
-
 " solidity
 au BufNewFile,BufRead *.sol set ft=solidity
 

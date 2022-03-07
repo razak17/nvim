@@ -100,18 +100,6 @@ return function()
       key_maps.p = plugin_keymaps.packer
     end
 
-    -- slide
-    if vim.bo.ft == "slide" then
-      key_maps["↵"] = "execute commnd"
-      key_maps.A = plugin_keymaps.slide
-      key_maps.b.a = "show all open buffers"
-      key_maps.B = {
-        name = "+Background",
-        d = "dark",
-        l = "light",
-      }
-    end
-
     -- Register keymaps
     local opts = rvim.which_key.opts
     local vopts = rvim.which_key.vopts

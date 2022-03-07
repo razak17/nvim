@@ -182,18 +182,5 @@ return {
       s = { ":Telescope git_status<cr>", "status" },
       o = { ":Telescope git_status<cr>", "open changed file" },
     },
-    slide = {
-      name = "+ASCII",
-      A = "add 20 less than signs",
-      b = "term",
-      B = "bfraktur",
-      e = "emboss",
-      E = "emboss2",
-      f = "bigascii12",
-      F = "letter",
-      m = "bigmono12",
-      v = "asciidoc-view",
-      w = "wideterm",
-    },
   },
 }
