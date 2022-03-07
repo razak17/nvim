@@ -79,7 +79,6 @@ return {
   nvim_notify = { active = true },
   -- completion
   which_key = { active = true },
-  vim_which_key = { active = false },
   plenary = { active = true },
   popup = { active = true },
   cmp = { active = true },
