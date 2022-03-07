@@ -152,11 +152,8 @@ return function()
         { name = "treesitter" },
         { name = "spell" },
         { name = "cmp_git" },
-        { name = "cmp_tabnine" },
         { name = "nvim_lua" },
         { name = "calc" },
-        { name = "emoji" },
-        { name = "crates" },
       },
       mapping = {
         ["<C-k>"] = cmp.mapping.select_prev_item(),
