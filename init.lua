@@ -6,7 +6,7 @@ if not vim.tbl_contains(vim.opt.rtp:get(), base_dir) then
 end
 
 -- deactivate vim based filetype detection
--- vim.g.did_load_filetypes = 0
+vim.g.did_load_filetypes = 0
 
 -- Load Modules
 require "user.config.globals"
