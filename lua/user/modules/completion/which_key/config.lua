@@ -168,11 +168,11 @@ return {
     },
     git = {
       name = "+Git",
-      b = { ":Telescope git_branches<cr>", "checkout branch" },
-      c = { ":Telescope git_commits<cr>", "checkout commit" },
+      b = { ":Telescope git_branches<cr>", "branch" },
+      c = { ":Telescope git_commits<cr>", "commits" },
       C = {
         ":Telescope git_bcommits<cr>",
-        "Checkout buffer commit",
+        "buffer commits",
       },
       d = {
         "<cmd>Gitsigns diffthis HEAD<cr>",
