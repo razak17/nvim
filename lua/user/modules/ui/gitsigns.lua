@@ -16,7 +16,7 @@ return function()
       on_attach = function()
         require("which-key").register {
           ["<leader>h"] = {
-            name = "+Gitsins",
+            name = "+Gitsigns",
             j = { gitsigns.next_hunk(), "Next Hunk" },
             k = { gitsigns.prev_hunk(), "Prev Hunk" },
             s = { gitsigns.stage_hunk, "stage" },
