@@ -1,6 +1,5 @@
 local P = rvim.palette
 local util = require "zephyr.util"
-local darker_bg = util.alter_color(P.bg, -20)
 
 return {
   TSFunction = { fg = P.cyan },
@@ -132,34 +131,37 @@ return {
   CursorWord1 = { bg = P.none },
   CursorWord = { bg = P.none },
 
-  -- NvimTreeNormal = { bg = P.alt_bg },
-  -- NvimTreeNormalNC = { bg = P.alt_bg },
-  -- NvimTreeSignColumn = { bg = P.alt_bg },
-  -- NvimTreeEndOfBuffer = { bg = P.alt_bg },
   NvimTreeFolderIcon = { fg = P.blue },
   NvimTreeIndentMarker = { fg = P.base6 },
-  NvimTreeVertSplit = { fg = P.blue, bg = P.yellow },
+  -- NvimTreeVertSplit = { fg = P.blue, bg = P.red },
+  -- NvimTreeNormal = { bg = P.alt_bg },
+  NvimTreeFolderName = { fg = P.blue },
+  NvimTreeOpenedFolderName = { fg = P.base5 },
   NvimTreeImageFile = { fg = P.purple },
   NvimTreeSpecialFile = { fg = P.orange },
+
   NvimTreeGitStaged = { fg = P.dark_green },
   NvimTreeCursorLine = { bg = P.red },
-  NvimTreeGitNew = { fg = P.dark_green },
+  NvimTreeGitNew = { fg = P.sign_add },
   NvimTreeGitDirty = { fg = P.dark_green },
   NvimTreeGitDeleted = { fg = P.sign_delete },
   NvimTreeGitMerge = { fg = P.sign_change },
   NvimTreeGitRenamed = { fg = P.sign_change },
+
   NvimTreeSymlink = { fg = P.cyan },
+  -- NvimTreeRootFolder = { fg = P.fg, style = "bold" },
   NvimTreeExecFile = { fg = P.green },
-  NvimTreeFolderName = { fg = P.blue },
-  NvimTreeEmptyFolderName = { fg = P.base5 },
-  NvimTreeRootFolder = { fg = P.fg, style = "bold" },
-  NvimTreeOpenedFolderName = { fg = P.base5 },
+
+  -- NvimTreeNormalNC = { bg = P.alt_bg },
+  -- NvimTreeSignColumn = { bg = P.alt_bg },
+  -- NvimTreeEndOfBuffer = { bg = P.alt_bg },
+  -- NvimTreeEmptyFolderName = { fg = P.base5 },
 
   TelescopeNormal = { fg = P.fg },
-  TelescopeBorder = { fg = P.blue, bg = darker_bg },
-  TelescopeResultsBorder = { fg = P.blue, bg = darker_bg },
-  TelescopePromptBorder = { fg = P.blue, bg = darker_bg },
-  TelescopePreviewBorder = { fg = P.magenta, bg = darker_bg },
+  TelescopeBorder = { fg = P.blue, bg = P.darker_bg },
+  TelescopeResultsBorder = { fg = P.blue, bg = P.darker_bg },
+  TelescopePromptBorder = { fg = P.blue, bg = P.darker_bg },
+  TelescopePreviewBorder = { fg = P.magenta, bg = P.darker_bg },
   TelescopeMatching = { fg = P.yellowgreen, style = "bold" },
   TelescopeSelection = { fg = P.cyan, style = "bold" },
   TelescopeSelectionCaret = { fg = P.yellow },
@@ -176,7 +178,7 @@ return {
   WhichKey = { fg = P.pink },
   WhichKeyName = { fg = P.yellow },
   WhichKeyTrigger = { fg = P.black },
-  WhichKeyFloat = { fg = P.red, bg = darker_bg },
+  WhichKeyFloat = { fg = P.red, bg = P.darker_bg },
   WhichKeySeperator = { fg = P.yellowgreen },
   WhichKeyGroup = { fg = P.pale_blue },
   WhichKeyDesc = { fg = P.dark_cyan },

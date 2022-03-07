@@ -26,9 +26,7 @@ ui["kyazdani42/nvim-web-devicons"] = {
 }
 
 ui["kyazdani42/nvim-tree.lua"] = {
-  event = "BufWinEnter",
   config = utils.load_conf("ui", "nvimtree"),
-  commit = rvim.plugin.commits.nvimtree,
   disable = not rvim.plugin.nvimtree.active,
 }
 

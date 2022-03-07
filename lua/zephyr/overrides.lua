@@ -41,13 +41,13 @@ local function general_overrides()
     { "Comment", { italic = true } },
     { "Include", { italic = true } },
     -- { "Type", { italic = true, bold = true } },
-    { "Folded", { italic = true, bold = true } },
     {
       "Folded",
       {
         background = "NONE",
         foreground = comment_fg,
-        italic = true,
+        bold = true,
+        -- italic = true,
       },
     },
     { "QuickFixLine", { background = search_bg } },
@@ -65,16 +65,16 @@ local function general_overrides()
     { "TSError", { undercurl = true, sp = error_line, foreground = "NONE" } },
     -- { "TSParameter", { italic = true, bold = true } },
     -- highlight FIXME comments
-     { 'commentTSWarning', { background = P.error_red, foreground = 'fg', bold = true } },
-    { 'commentTSDanger', { background = P.dark_green, foreground = '#1B2229', bold = true } },
-    { 'commentTSNote', { background = P.bluee, foreground = '#1B2229', bold = true } },
+    { "commentTSWarning", { background = P.error_red, foreground = "fg", bold = true } },
+    { "commentTSDanger", { background = P.dark_green, foreground = "#1B2229", bold = true } },
+    { "commentTSNote", { background = P.bluee, foreground = "#1B2229", bold = true } },
   }
 end
 
 local function set_sidebar_highlight()
   -- local normal_bg = rvim.common.transparent_window and "NONE" or M.get_hl("Normal", "bg")..
   local split_color = util.get_hl("VertSplit", "fg")
-  local bg_color = P.bg
+  local bg_color = util.alter_color(P.bg, -20)
   local st_color = util.alter_color(util.get_hl("Visual", "bg"), -10)
   local hls = {
     { "PanelBackground", { link = "Normal" } },

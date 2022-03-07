@@ -1,16 +1,17 @@
 local P = rvim.palette
 local util = require "zephyr.util"
 local darker_bg = util.alter_color(P.bg, -20)
+rvim.palette.darker_bg = darker_bg
 
 return {
-  Normal = { fg = P.fg, bg = darker_bg },
+  Normal = { fg = P.fg, bg = P.darker_bg },
   NormalNC = { fg = P.fg, bg = P.none },
   Terminal = { fg = P.fg, bg = P.bg },
-  SignColumn = { fg = P.fg, bg = darker_bg },
+  SignColumn = { fg = P.fg, bg = P.darker_bg },
   FoldColumn = { fg = P.fg_alt, bg = P.black },
-  VertSplit = { fg = P.darker_blue, bg = darker_bg },
-  MsgArea = { bg = darker_bg },
-  MsgSeparator = { guifg = P.base6, guibg = darker_bg },
+  VertSplit = { fg = P.darker_blue, bg = P.darker_bg },
+  MsgArea = { bg = P.darker_bg },
+  MsgSeparator = { guifg = P.base6, guibg = P.darker_bg },
   Folded = { fg = P.grey, bg = P.highlight_bg },
   EndOfBuffer = { fg = P.bg, bg = P.none },
   IncSearch = { fg = P.bg, bg = P.orange, style = P.none },

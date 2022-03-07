@@ -6,7 +6,6 @@ return {
     nvim_cmp = "13d64460cba64950aff41e230cc801225bd9a3e2",
     nvim_lsp_installer = "c95ffd31428da0abaffa2459c0231fa9971fcbaa",
     nvim_lspconfig = "19a21d5a8681f721c584125a920d4cbeda1c80cc",
-    nvim_tree = "2e1f82d8c0c57cbc2bfdc041a3aff26947559a1e",
     nvim_treesitter = "2298a7584414af40a6a09cbe72a81175382992c7",
     schemastore = "c0c11c832fa812174cd196c723b97c493f528b5c",
   },
