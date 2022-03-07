@@ -41,7 +41,7 @@ return function()
       view = {
         width = 30,
         height = 30,
-        side = "left",
+        side = "right",
         auto_resize = true,
         hide_root_folder = false,
         number = false,
