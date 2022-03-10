@@ -122,7 +122,7 @@ return function()
         local new_notif = notify(
           val.message and format_message(val.message) or "Complete",
           "info",
-          { icon = "", replace = notif_data.notification, timeout = 3000 }
+          { icon = "", replace = notif_data.notification, timeout = 1000 }
         )
         client_notifs[client_id][result.token] = {
           notification = new_notif,
