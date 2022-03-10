@@ -80,7 +80,7 @@ return function()
   rvim.bufferline = {
     setup = {
       options = {
-        mode = "tabs",
+        mode = "buffers", -- tabs
         view = "default",
         close_icon = "",
         buffer_close_icon = "",
