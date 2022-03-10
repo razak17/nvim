@@ -18,7 +18,9 @@ function M.enable_lsp_document_highlight(client_id)
     {
       events = { "CursorMoved" },
       targets = { "<buffer>" },
-      command = "lua vim.lsp.buf.clear_references()",
+      command = function()
+        vim.lsp.buf.clear_references()
+      end,
     },
   })
 end
