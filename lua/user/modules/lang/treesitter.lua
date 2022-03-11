@@ -90,8 +90,8 @@ return function()
   -- Only apply folding to supported files:
   rvim.augroup("TreesitterFolds", {
     {
-      events = { "FileType" },
-      targets = rvim.treesitter.get_filetypes(),
+      event = { "FileType" },
+      pattern = rvim.treesitter.get_filetypes(),
       command = "setlocal foldtext=v:lua.folds() foldmethod=expr foldexpr=nvim_treesitter#foldexpr()",
     },
   })

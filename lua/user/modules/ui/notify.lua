@@ -41,7 +41,7 @@ return function()
   local notify = require "notify"
   notify.setup(rvim.nvim_notify.setup)
 
-  rvim.notify = notify
+  vim.notify = notify
   Log:configure_notifications(notify)
 
   require("telescope").load_extension "notify"

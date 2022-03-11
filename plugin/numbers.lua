@@ -115,14 +115,18 @@ end
 
 rvim.augroup("ToggleRelativeLineNumbers", {
   {
-    events = { "BufEnter", "FileType", "FocusGained", "InsertLeave" },
-    targets = { "*" },
-    command = enable_relative_number,
+    event = { "BufEnter", "FileType", "FocusGained", "InsertLeave" },
+    pattern = { "*" },
+    command = function()
+      enable_relative_number()
+    end,
   },
   {
-    events = { "FocusLost", "BufLeave", "InsertEnter", "TermOpen" },
-    targets = { "*" },
-    command = disable_relative_number,
+    event = { "FocusLost", "BufLeave", "InsertEnter", "TermOpen" },
+    pattern = { "*" },
+    command = function()
+      disable_relative_number()
+    end,
   },
 })
 

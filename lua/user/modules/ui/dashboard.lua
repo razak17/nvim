@@ -57,8 +57,8 @@ return function()
   end
 
   rvim.augroup("DashboardSession", {
-    events = { "VimLeavePre" },
-    targets = "*",
+    event = { "VimLeavePre" },
+    pattern = "*",
     command = function()
       vim.cmd "SessionSave"
     end,
@@ -66,24 +66,24 @@ return function()
 
   rvim.augroup("DashboardReady", {
     {
-      events = { "FileType" },
-      targets = { "dashboard" },
+      event = { "FileType" },
+      pattern = { "dashboard" },
       command = "setlocal nocursorline noswapfile synmaxcol& signcolumn=no norelativenumber nocursorcolumn nospell nolist nonumber bufhidden=wipe colorcolumn= foldcolumn=0 matchpairs= ",
     },
     {
-      events = { "FileType" },
-      targets = { "dashboard" },
+      event = { "FileType" },
+      pattern = { "dashboard" },
       command = "set laststatus=0 | autocmd BufLeave <buffer> set laststatus=2",
     },
     {
-      events = { "FileType" },
-      targets = { "dashboard" },
+      event = { "FileType" },
+      pattern = { "dashboard" },
       command = "set showtabline=0 | autocmd BufLeave <buffer> set showtabline="
         .. vim.opt.showtabline._value,
     },
     {
-      events = { "FileType" },
-      targets = { "dashboard" },
+      event = { "FileType" },
+      pattern = { "dashboard" },
       command = "nnoremap <silent> <buffer> q :q<CR>",
     },
   })

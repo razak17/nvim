@@ -96,8 +96,8 @@ return function()
   -- Autocommands
   rvim.augroup("DapBehavior", {
     {
-      events = { "FileType" },
-      targets = { "dapui_scopes", "dapui_breakpoints", "dapui_stacks", "dapui_watches" },
+      event = { "FileType" },
+      pattern = { "dapui_scopes", "dapui_breakpoints", "dapui_stacks", "dapui_watches" },
       command = "set laststatus=0",
     },
   })

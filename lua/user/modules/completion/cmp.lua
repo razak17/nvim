@@ -31,8 +31,8 @@ return function()
   -- Deactivate cmp in telescope prompt buffer
   rvim.augroup("CmpConfig", {
     {
-      events = { "FileType" },
-      targets = { "TelescopePrompt" },
+      event = { "FileType" },
+      pattern = { "TelescopePrompt" },
       command = function()
         cmp.setup.buffer { completion = { autocomplete = false } }
       end,

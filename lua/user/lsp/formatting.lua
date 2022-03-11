@@ -31,8 +31,8 @@ function M.enable_format_on_save(opts)
   local fmd_cmd = string.format(":silent lua vim.lsp.buf.formatting_sync({}, %s)", opts.timeout_ms)
   rvim.augroup("FormatOnSave", {
     {
-      events = { "BufWritePre" },
-      targets = { opts.pattern },
+      event = { "BufWritePre" },
+      pattern = { opts.pattern },
       command = fmd_cmd,
     },
   })
@@ -43,8 +43,8 @@ function M.enable_format_on_focus_lost(opts)
   local fmd_cmd = string.format(":silent lua vim.lsp.buf.formatting_sync({}, %s)", opts.timeout_ms)
   rvim.augroup("FormatOnFocusLost", {
     {
-      events = { "FocusLost" },
-      targets = { opts.pattern },
+      event = { "FocusLost" },
+      pattern = { opts.pattern },
       command = fmd_cmd,
     },
   })

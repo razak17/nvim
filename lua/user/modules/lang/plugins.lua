@@ -71,8 +71,8 @@ lang["kosayoda/nvim-lightbulb"] = {
   config = function()
     rvim.augroup("NvimLightbulb", {
       {
-        events = { "CursorHold", "CursorHoldI" },
-        targets = { "*" },
+        event = { "CursorHold", "CursorHoldI" },
+        pattern = { "*" },
         command = function()
           require("nvim-lightbulb").update_lightbulb {
             sign = { enabled = false },

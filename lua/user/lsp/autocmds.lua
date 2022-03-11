@@ -3,21 +3,21 @@ local M = {}
 function M.enable_lsp_document_highlight(client_id)
   rvim.augroup("LspCursorCommands", {
     {
-      events = { "CursorHold" },
-      targets = { "<buffer>" },
+      event = { "CursorHold" },
+      buffer = 0,
       command = string.format(
         "lua require('user.lsp.utils').conditional_document_highlight(%d)",
         client_id
       ),
     },
     {
-      events = { "CursorHoldI" },
-      targets = { "<buffer>" },
+      event = { "CursorHoldI" },
+      buffer = 0,
       command = "lua vim.lsp.buf.document_highlight()",
     },
     {
-      events = { "CursorMoved" },
-      targets = { "<buffer>" },
+      event = { "CursorMoved" },
+      buffer = 0,
       command = function()
         vim.lsp.buf.clear_references()
       end,
@@ -32,13 +32,13 @@ end
 function M.enable_code_lens_refresh()
   rvim.augroup("LspCodeLensRefresh", {
     {
-      events = { "InsertLeave" },
-      targets = { "<buffer>" },
+      event = { "InsertLeave" },
+      buffer = 0,
       command = "lua vim.lsp.codelens.refresh()",
     },
     {
-      events = { "InsertLeave" },
-      targets = { "<buffer>" },
+      event = { "InsertLeave" },
+      buffer = 0,
       command = "lua vim.lsp.codelens.display()",
     },
   })
@@ -55,8 +55,8 @@ function M.enable_lsp_hover_diagnostics()
 
   rvim.augroup("HoverDiagnostics", {
     {
-      events = { "CursorHold" },
-      targets = { "<buffer>" },
+      event = { "CursorHold" },
+      buffer = 0,
       command = (function()
         local cursorpos = get_cursor_pos()
         return function()

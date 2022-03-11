@@ -42,14 +42,14 @@ end
 rvim.augroup("SmartClose", {
   {
     -- Auto open grep quickfix window
-    events = { "QuickFixCmdPost" },
-    targets = { "*grep*" },
+    event = { 'QuickFixCmdPost' },
+    pattern = { '*grep*' },
     command = "cwindow",
   },
   {
     -- Close certain filetypes by pressing q.
-    events = { "FileType" },
-    targets = { "*" },
+    event = { "FileType" },
+    pattern = { "*" },
     command = function()
       local is_readonly = (vim.bo.readonly or not vim.bo.modifiable) and fn.hasmapto("q", "n") == 0
 
@@ -65,8 +65,8 @@ rvim.augroup("SmartClose", {
   },
   {
     -- Close quick fix window if the file containing it was closed
-    events = { "BufEnter" },
-    targets = { "*" },
+    event = { "BufEnter" },
+    pattern = { "*" },
     command = function()
       if fn.winnr "$" == 1 and vim.bo.buftype == "quickfix" then
         api.nvim_buf_delete(0, { force = true })
@@ -75,8 +75,8 @@ rvim.augroup("SmartClose", {
   },
   {
     -- automatically close corresponding loclist when quitting a window
-    events = { "QuitPre" },
-    targets = { "*" },
+    event = { "QuitPre" },
+    pattern = { "*" },
     modifiers = { "nested" },
     command = function()
       if vim.bo.filetype ~= "qf" then
@@ -89,8 +89,8 @@ rvim.augroup("SmartClose", {
 rvim.augroup("ExternalCommands", {
   {
     -- Open images in an image viewer (probably Preview)
-    events = { "BufEnter" },
-    targets = { "*.png,*.jpg,*.gif" },
+    event = { "BufEnter" },
+    pattern = { "*.png,*.jpg,*.gif" },
     command = function()
       vim.cmd(fmt('silent! "%s | :bw"', rvim.open_command .. " " .. fn.expand "%"))
     end,
@@ -100,16 +100,16 @@ rvim.augroup("ExternalCommands", {
 rvim.augroup("CheckOutsideTime", {
   {
     -- automatically check for changed files outside vim
-    events = { "WinEnter", "BufWinEnter", "BufWinLeave", "BufRead", "BufEnter", "FocusGained" },
-    targets = { "*" },
+    event = { "WinEnter", "BufWinEnter", "BufWinLeave", "BufRead", "BufEnter", "FocusGained" },
+    pattern = { "*" },
     command = "silent! checktime",
   },
 })
 
 rvim.augroup("TrimWhitespace", {
   {
-    events = { "BufWritePre" },
-    targets = { "*" },
+    event = { "BufWritePre" },
+    pattern = { "*" },
     command = function()
       vim.api.nvim_exec(
         [[
@@ -127,13 +127,13 @@ rvim.augroup("TrimWhitespace", {
 local templates_dir = rvim.get_config_dir() .. "/templates"
 rvim.augroup("Templates", {
   {
-    events = { "BufNewFile" },
-    targets = { "*.sh" },
+    event = { "BufNewFile" },
+    pattern = { "*.sh" },
     command = "0r" .. templates_dir .. "/skeleton.sh",
   },
   {
-    events = { "BufNewFile" },
-    targets = { "*.lua" },
+    event = { "BufNewFile" },
+    pattern = { "*.lua" },
     command = "0r" .. templates_dir .. "/skeleton.lua",
   },
 })
@@ -142,8 +142,8 @@ rvim.augroup("Templates", {
 --- source: http//unix.stackexchange.com/a/613645
 rvim.augroup("ClearCommandMessages", {
   {
-    events = { "CmdlineLeave", "CmdlineChanged" },
-    targets = { ":" },
+    event = { "CmdlineLeave", "CmdlineChanged" },
+    pattern = { ":" },
     command = function()
       vim.defer_fn(function()
         if fn.mode() == "n" then
@@ -157,8 +157,8 @@ rvim.augroup("ClearCommandMessages", {
 rvim.augroup("TextYankHighlight", {
   {
     -- don't execute silently in case of errors
-    events = { "TextYankPost" },
-    targets = { "*" },
+    event = { "TextYankPost" },
+    pattern = { "*" },
     command = function()
       require("vim.highlight").on_yank { timeout = 77, on_visual = false, higroup = "Visual" }
     end,
@@ -210,15 +210,15 @@ end
 
 rvim.augroup("CustomColorColumn", {
   {
-    events = { "VimResized", "FocusGained", "WinEnter", "BufEnter" },
-    targets = { "*" },
+    event = { "VimResized", "FocusGained", "WinEnter", "BufEnter" },
+    pattern = { "*" },
     command = function()
       check_color_column()
     end,
   },
   {
-    events = { "FocusLost", "WinLeave" },
-    targets = { "*" },
+    event = { "FocusLost", "WinLeave" },
+    pattern = { "*" },
     command = function()
       check_color_column(true)
     end,
@@ -255,7 +255,7 @@ end
 
 rvim.augroup("CustomSpell", {
   {
-    events = {
+    event = {
       "VimEnter",
       "VimResized",
       "FocusGained",
@@ -264,7 +264,7 @@ rvim.augroup("CustomSpell", {
       "FocusLost",
       "WinLeave",
     },
-    targets = { "*" },
+    pattern = { "*" },
     command = function()
       check_spell()
     end,
@@ -273,75 +273,75 @@ rvim.augroup("CustomSpell", {
 
 rvim.augroup("CustomFormatOptions", {
   {
-    events = { "VimEnter", "BufWinEnter", "BufRead", "BufNewFile" },
-    targets = { "*" },
+    event = { "VimEnter", "BufWinEnter", "BufRead", "BufNewFile" },
+    pattern = { "*" },
     command = "setlocal formatoptions-=c formatoptions-=r formatoptions-=o",
   },
 })
 
 rvim.augroup("UpdateVim", {
   -- Make windows equal size when vim resizes
-  { events = { "VimResized" }, targets = { "*" }, command = "wincmd =" },
+  { event = { "VimResized" }, pattern = { "*" }, command = "wincmd =" },
 })
 
 rvim.augroup("WinBehavior", {
   {
-    events = { "Syntax" },
-    targets = { "*" },
+    event = { "Syntax" },
+    pattern = { "*" },
     command = [[if line('$') > 5000 | syntax sync minlines=300 | endif]],
   },
   {
     -- Force write shada on leaving nvim
-    events = { "VimLeave" },
-    targets = { "*" },
+    event = { "VimLeave" },
+    pattern = { "*" },
     command = [[if has('nvim') | wshada! | else | wviminfo! | endif]],
   },
   {
-    events = { "FocusLost" },
-    targets = { "*" },
+    event = { "FocusLost" },
+    pattern = { "*" },
     command = function()
       if rvim.common.save_on_focus_lost then
         vim.cmd "silent! wall"
       end
     end,
   },
-  { events = { "TermOpen" }, targets = { "*:zsh" }, command = "startinsert" },
+  { event = { "TermOpen" }, pattern = { "*:zsh" }, command = "startinsert" },
 })
 
 if vim.env.TMUX ~= nil then
   local external = require "user.utils.external"
   rvim.augroup("ExternalConfig", {
     {
-      events = { "BufEnter" },
-      targets = { "*" },
+      event = { "BufEnter" },
+      pattern = { "*" },
       command = function()
         vim.o.titlestring = external.title_string()
       end,
     },
     {
-      events = { "FocusGained", "BufReadPost", "BufEnter" },
-      targets = { "*" },
+      event = { "FocusGained", "BufReadPost", "BufEnter" },
+      pattern = { "*" },
       command = function()
         external.tmux.set_window_title()
       end,
     },
     {
-      events = { "VimLeave" },
-      targets = { "*" },
+      event = { "VimLeave" },
+      pattern = { "*" },
       command = function()
         external.tmux.clear_pane_title()
       end,
     },
     {
-      events = { "VimLeavePre", "FocusLost" },
-      targets = { "*" },
+      event = { "VimLeavePre", "FocusLost" },
+      pattern = { "*" },
       command = function()
         external.tmux.set_statusline(true)
       end,
     },
     {
-      events = { "ColorScheme", "FocusGained" },
-      targets = { "*" },
+      event = { "ColorScheme", "FocusGained" },
+      pattern = { "*" },
       command = function()
         -- NOTE: there is a race condition here as the colors
         -- for kitty to re-use need to be set AFTER the rest of the colorscheme
@@ -365,8 +365,8 @@ end
 rvim.augroup("Utilities", {
   {
     -- @source: https://vim.fandom.com/wiki/Use_gf_to_open_a_file_via_its_URL
-    events = { "BufReadCmd" },
-    targets = { "file:///*" },
+    event = { "BufReadCmd" },
+    pattern = { "file:///*" },
     command = function()
       vim.cmd(fmt("bd!|edit %s", vim.uri_from_fname "<afile>"))
     end,
@@ -375,8 +375,8 @@ rvim.augroup("Utilities", {
     -- When editing a file, always jump to the last known cursor position.
     -- Don't do it for commit messages, when the position is invalid, or when
     -- inside an event handler (happens when dropping a file on gvim).
-    events = { "BufReadPost" },
-    targets = { "*" },
+    event = { "BufReadPost" },
+    pattern = { "*" },
     command = function()
       local pos = fn.line "'\""
       if vim.bo.ft ~= "gitcommit" and pos > 0 and pos <= fn.line "$" then
@@ -385,18 +385,18 @@ rvim.augroup("Utilities", {
     end,
   },
   {
-    events = { "FileType" },
-    targets = { "gitcommit", "gitrebase" },
+    event = { "FileType" },
+    pattern = { "gitcommit", "gitrebase" },
     command = "set bufhidden=delete",
   },
   {
-    events = { "BufWritePre", "FileWritePre" },
-    targets = { "*" },
+    event = { "BufWritePre", "FileWritePre" },
+    pattern = { "*" },
     command = "silent! call mkdir(expand('<afile>:p:h'), 'p')",
   },
   {
-    events = { "BufLeave" },
-    targets = { "*" },
+    event = { "BufLeave" },
+    pattern = { "*" },
     command = function()
       if can_save() then
         vim.cmd "silent! update"
@@ -404,8 +404,8 @@ rvim.augroup("Utilities", {
     end,
   },
   {
-    events = { "BufWritePost" },
-    targets = { "*" },
+    event = { "BufWritePost" },
+    pattern = { "*" },
     modifiers = { "nested" },
     command = function()
       -- detect filetype onsave
@@ -419,16 +419,16 @@ rvim.augroup("Utilities", {
     end,
   },
   {
-    events = { "Syntax" },
-    targets = { "*" },
+    event = { "Syntax" },
+    pattern = { "*" },
     command = "if 5000 < line('$') | syntax sync minlines=200 | endif",
   },
 })
 
 rvim.augroup("RememberFolds", {
   {
-    events = { "BufWinLeave" },
-    targets = { "*" },
+    event = { "BufWinLeave" },
+    pattern = { "*" },
     command = function()
       if can_save() then
         vim.cmd "mkview"
@@ -436,8 +436,8 @@ rvim.augroup("RememberFolds", {
     end,
   },
   {
-    events = { "BufWinEnter" },
-    targets = { "*" },
+    event = { "BufWinEnter" },
+    pattern = { "*" },
     command = function()
       if can_save() then
         vim.cmd "silent! loadview"
@@ -448,8 +448,8 @@ rvim.augroup("RememberFolds", {
 
 rvim.augroup("TerminalAutocommands", {
   {
-    events = { "TermClose" },
-    targets = { "*" },
+    event = { "TermClose" },
+    pattern = { "*" },
     command = function()
       --- automatically close a terminal if the job was successful
       if not vim.v.event.status == 0 then

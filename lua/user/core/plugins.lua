@@ -170,8 +170,9 @@ end
 
 rvim.augroup("PackerSetupInit", {
   {
-    events = { "BufWritePost" },
-    targets = {
+    event = { "BufWritePost" },
+    description = 'Packer setup and reload',
+    pattern = {
       utils.join_paths(rvim.get_config_dir(), "lua/core/config/init.lua"),
     },
     command = function()
@@ -186,8 +187,8 @@ rvim.augroup("PackerSetupInit", {
     end,
   },
   {
-    events = { "BufEnter" },
-    targets = {
+    event = { "BufEnter" },
+    pattern = {
       rvim.get_user_dir() .. "modules/**/plugins.lua",
     },
     --- Open a repository from an authorname/repository string
@@ -208,7 +209,7 @@ rvim.augroup("PackerSetupInit", {
 
 rvim.augroup("PackerComplete", {
   {
-    events = { "User PackerCompileDone" },
+    event = { "User PackerCompileDone" },
     command = function()
       plug_notify "Packer compile complete"
     end,

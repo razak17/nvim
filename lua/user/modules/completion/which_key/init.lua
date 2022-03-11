@@ -110,13 +110,13 @@ return function()
   end
 
   rvim.augroup("WhichKeySetKeyOnFT", {
-    { events = { "BufEnter" }, targets = { "*" }, command = "call v:lua.WhichKey.SetKeyOnFT()" },
+    { event = { "BufEnter" }, pattern = { "*" }, command = "call v:lua.WhichKey.SetKeyOnFT()" },
   })
 
   rvim.augroup("WhichKeyMode", {
     {
-      events = { "FileType" },
-      targets = { "which_key" },
+      event = { "FileType" },
+      pattern = { "which_key" },
       command = "set laststatus=0 noshowmode | autocmd BufLeave <buffer> set laststatus=2",
     },
   })
