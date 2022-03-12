@@ -112,9 +112,6 @@ function plugins.load_compile()
   if vim.fn.filereadable(rvim.packer_compile_path) ~= 1 then
     plugins.install()
     plugins.compile()
-  else
-    require "_compiled_rolling"
-    utils.plug_notify "packer_compiled was loaded"
   end
 end
 
@@ -126,17 +123,19 @@ function plugins.recompile()
 end
 
 rvim.augroup("PackerSetupInit", {
-  -- FIX ME: Does not work correctly
-  -- {
-  --   event = { "BufWritePost" },
-  --   description = "Packer setup and reload",
-  --   pattern = {
-  --     utils.join_paths(rvim.get_config_dir(), "lua/core/config/init.lua"),
-  --   },
-  --   command = function()
-  --     vim.cmd(fmt("source %s", "~/.config/rvim/lua/core/config/init.lua"))
-  --   end,
-  -- },
+  {
+    event = { "BufWritePost" },
+    description = "Packer setup and reload",
+    pattern = { "*/user/modules/**/*.lua", "*/user/config/init.lua", "*/user/modules/config.lua" },
+    command = function()
+      for _, m in ipairs { "ui", "editor", "tools", "lang", "completion" } do
+        rvim.invalidate(fmt("user.modules.%s", m), true)
+      end
+      plugins.ensure_installed()
+      plugins.compile()
+      require "_compiled_rolling"
+    end,
+  },
   {
     event = { "BufEnter" },
     pattern = {

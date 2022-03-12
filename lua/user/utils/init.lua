@@ -68,12 +68,13 @@ function M.rename(name)
 end
 
 function M.load_conf(dir, name)
-  local module_dir = string.format("user.modules.%s", dir)
+  local fmt = string.format
+  local module_dir = fmt("user.modules.%s", dir)
   if dir == "user" then
     return require(string.format(dir .. ".%s", name))
   end
 
-  return require(string.format(module_dir .. ".%s", name))
+  return require(fmt(module_dir .. ".%s", name))
 end
 
 ---Join path segments that were passed as input
