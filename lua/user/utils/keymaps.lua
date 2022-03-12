@@ -1,55 +1,5 @@
 local M = {}
 
-rvim.keymaps = {
-  ---@usage change or add keymappings for normal mode
-  nmap = {},
-
-  ---@usage change or add keymappings for visual block mode
-  xmap = {},
-
-  ---@usage change or add keymappings for insert mode
-  imap = {},
-
-  ---@usage change or add keymappings for visual mode
-  vmap = {},
-
-  ---@usage change or add keymappings for operator mode
-  omap = {},
-
-  ---@usage change or add keymappings for terminal mode
-  tmap = {},
-
-  ---@usage change or add keymappings for select mode
-  smap = {},
-
-  ---@usage change or add keymappings for command mode
-  cmap = {},
-
-  ---@usage change or add keymappings for recursive normal mode
-  nnoremap = {},
-
-  ---@usage change or add keymappings for recursive visual block mode
-  xnoremap = {},
-
-  ---@usage change or add keymappings for recursive insert mode
-  inoremap = {},
-
-  ---@usage change or add keymappings for recursive visual mode
-  vnoremap = {},
-
-  ---@usage change or add keymappings for recursive operator mode
-  onoremap = {},
-
-  ---@usage change or add keymappings for recursive terminal mode
-  tnoremap = {},
-
-  ---@usage change or add keymappings for recursive select mode
-  snoremap = {},
-
-  ---@usage change or add keymappings for recursive command mode
-  cnoremap = {},
-}
-
 local map_opts = { noremap = false, silent = true }
 local noremap_opts = { noremap = true, silent = true }
 
@@ -128,11 +78,11 @@ function M.load(keymaps)
   end
 end
 
-function M:init()
+function M:init(keymaps)
   local g = vim.g
   g.mapleader = (rvim.leader == "space" and " ") or rvim.leader
   g.maplocalleader = (rvim.localleader == "space" and " ") or rvim.localleader
-  M.load(rvim.keymaps)
+  M.load(keymaps)
 end
 
 return M
