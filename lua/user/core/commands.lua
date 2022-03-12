@@ -35,6 +35,7 @@ command {
   types = { "-bang", "-range", "-complete=file" },
   nargs = 1,
 }
+
 command {
   "MoveAppend",
   [[<line1>,<line2>write<bang> >> <args> | <line1>,<line2>delete _]],

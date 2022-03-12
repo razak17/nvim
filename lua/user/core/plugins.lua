@@ -11,7 +11,7 @@ Plug.__index = Plug
 function Plug:get_plugins_list()
   local modules_dir = utils.join_paths(rvim.get_user_dir(), "modules")
   local list = {}
-  local tmp = vim.split(fn.globpath(modules_dir, "*/plugins.lua"), "\n")
+  local tmp = vim.split(fn.globpath(modules_dir, "*/init.lua"), "\n")
   for _, f in ipairs(tmp) do
     list[#list + 1] = f:sub(#modules_dir - 6, -1)
   end
