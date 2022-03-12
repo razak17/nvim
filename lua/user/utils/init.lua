@@ -95,4 +95,8 @@ function M.enable_transparent_mode()
   vim.cmd "let &fcs='eob: '"
 end
 
+function M.plug_notify(msg)
+  vim.notify(msg, nil, { title = "Packer" })
+end
+
 return M

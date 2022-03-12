@@ -21,9 +21,9 @@ vnoremap["<C-z>"] = ":undo<CR><Esc>"
 xnoremap["<C-z>"] = ":undo<CR><Esc>"
 
 -- undo command in insert mode
-inoremap["<c-z>"] = function()
-  vim.cmd [[:undo]]
-end
+-- inoremap["<c-z>"] = function()
+--   vim.cmd [[:undo]]
+-- end
 
 -- remap esc to use cc
 nnoremap["<C-c>"] = "<Esc>"

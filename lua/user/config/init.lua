@@ -31,6 +31,8 @@ function M:init()
   local which_key_config = require "user.modules.completion.which_key.config"
   rvim.wk = vim.deepcopy(which_key_config)
 
+  rvim.packer_compile_path = rvim.get_runtime_dir() .. "/site/lua/_compiled_rolling.lua"
+
   require("user.lsp.manager").init_defaults()
 end
 
@@ -58,7 +60,6 @@ function M:load()
   require "user.core.keymaps"
 
   require "user.core.commands"
-
   local plug = require "user.core.plugins"
   plug.ensure_installed()
   plug.load_compile()

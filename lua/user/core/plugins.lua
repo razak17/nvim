@@ -1,5 +1,4 @@
 local uv, api, fn = vim.loop, vim.api, vim.fn
-local compile_path = rvim.get_runtime_dir() .. "/site/lua/_compiled_rolling.lua"
 local packer = nil
 local packer_ok = nil
 local fmt = string.format
@@ -49,7 +48,7 @@ function Plug:load_packer()
 
   packer.init {
     package_root = package_root,
-    compile_path = compile_path,
+    compile_path = rvim.packer_compile_path,
     auto_reload_compiled = true,
     max_jobs = 50,
     git = {
@@ -99,92 +98,45 @@ local plugins = setmetatable({}, {
   end,
 })
 
-local function plug_notify(msg)
-  vim.notify(msg, nil, { title = "Packer" })
-end
-
 function plugins.ensure_installed()
   Plug:init_ensure_installed()
   Plug:load_packer()
 
-  local command = rvim.command
-  command { "PlugCompile", [[lua require('user.core.plugins').compile()]] }
-  command { "PlugInstall", [[lua require('user.core.plugins').install()]] }
-  command { "PlugSync", [[lua require('user.core.plugins').sync()]] }
-  command { "PlugClean", [[lua require('user.core.plugins').clean()]] }
-  command { "PlugUpdate", [[lua require('user.core.plugins').update()]] }
-  command { "PlugStatus", [[lua require('user.core.plugins').status()]] }
-  command { "PlugRecompile", [[lua require('user.core.plugins').recompile()]] }
-
-  command {
-    "PlugCompiledEdit",
-    function()
-      vim.cmd(fmt("edit %s", compile_path))
-    end,
-  }
-
-  command {
-    "PlugCompiledDelete",
-    function()
-      if vim.fn.filereadable(compile_path) ~= 1 then
-        plug_notify "packer_compiled file does not exist"
-      else
-        vim.fn.delete(compile_path)
-        plug_notify "packer_compiled was deleted"
-      end
-    end,
-  }
-
-  command {
-    "PlugRecompile",
-    function()
-      vim.fn.delete(compile_path)
-      vim.cmd [[:PlugCompile]]
-      plug_notify "packer was recompiled"
-    end,
-  }
-
-  if not vim.g.packer_compiled_loaded and vim.loop.fs_stat(compile_path) then
-    vim.cmd(fmt("source %s", compile_path))
+  if not vim.g.packer_compiled_loaded and vim.loop.fs_stat(rvim.packer_compile_path) then
+    vim.cmd(fmt("source %s", rvim.packer_compile_path))
     vim.g.packer_compiled_loaded = true
   end
 end
 
 function plugins.load_compile()
-  if vim.fn.filereadable(compile_path) ~= 1 then
+  if vim.fn.filereadable(rvim.packer_compile_path) ~= 1 then
     plugins.install()
     plugins.compile()
   else
     require "_compiled_rolling"
-    plug_notify "packer_compiled was loaded"
+    utils.plug_notify "packer_compiled was loaded"
   end
 end
 
 function plugins.recompile()
   Plug:load_packer()
   Plug:init_ensure_installed()
-  os.remove(compile_path)
+  os.remove(rvim.packer_compile_path)
   plugins.compile()
 end
 
 rvim.augroup("PackerSetupInit", {
-  {
-    event = { "BufWritePost" },
-    description = "Packer setup and reload",
-    pattern = {
-      utils.join_paths(rvim.get_config_dir(), "lua/core/config/init.lua"),
-    },
-    command = function()
-      vim.cmd [[source ~/.config/rvim/lua/core/config/init.lua]]
-      vim.cmd [[source ~/.config/rvim/lua/core/opts.lua]]
-      vim.cmd [[source ~/.config/rvim/lua/core/binds.lua]]
-      local plug = require "user.core.plugins"
-      plug.ensure_plugins()
-      plug.install()
-      plug.load_compile()
-      vim.notify("packer compiled...", { timeout = 1000 })
-    end,
-  },
+  -- FIX ME: Does not work correctly
+  -- {
+  --   event = { "BufWritePost" },
+  --   description = "Packer setup and reload",
+  --   pattern = {
+  --     utils.join_paths(rvim.get_config_dir(), "lua/core/config/init.lua"),
+  --   },
+  --   command = function()
+  --     vim.cmd(fmt("source %s", "~/.config/rvim/lua/core/config/init.lua"))
+  --   end,
+  -- },
   {
     event = { "BufEnter" },
     pattern = {
