@@ -207,4 +207,13 @@ rvim.augroup("PackerSetupInit", {
   },
 })
 
+rvim.augroup("PackerComplete", {
+  {
+    event = { "User PackerCompileDone" },
+    command = function()
+      plug_notify "Packer compile complete"
+    end,
+  },
+})
+
 return plugins
