@@ -83,4 +83,4 @@ nvim_config.branches = function()
   }
 end
 
-return require("telescope").register_extension { exports = nvim_config }
+return nvim_config

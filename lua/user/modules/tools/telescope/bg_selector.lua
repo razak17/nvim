@@ -1,7 +1,8 @@
-local telescope = require "telescope"
-local builtin = require "telescope.builtin"
-local actions = require "telescope.actions"
-local state = require "telescope.actions.state"
+local _, actions = pcall(require, "telescope.actions")
+local _, builtin = pcall(require, "telescope.builtin")
+local _, state = pcall(require, "telescope.actions.state")
+
+local bg_selector = {}
 
 local function set_background(content)
   os.execute("xwallpaper --zoom " .. content)
@@ -39,6 +40,6 @@ local image_selector = function(prompt, cwd)
   end
 end
 
-local bg_selector = image_selector("Choose Wallpaper", "$HOME/pics/distro")
+bg_selector.set_bg_image = image_selector("Choose Wallpaper", "$HOME/pics/distro")
 
-return telescope.register_extension { exports = { bg_selector = bg_selector } }
+return bg_selector

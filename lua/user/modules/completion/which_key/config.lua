@@ -63,7 +63,7 @@ return {
       C = { ":checkhealth<cr>", "check health" },
       d = {
         "<cmd>lua vim.fn.execute('edit ' .. require('user.core.log').get_path())<cr>",
-        "Open rvim logfile",
+        "open rvim logfile",
       },
       l = {
         "<cmd>lua vim.fn.execute('edit ' .. vim.lsp.get_log_path())<cr>",
@@ -89,7 +89,7 @@ return {
       s = "create new file in same dir",
     },
     w = {
-      name = "+window",
+      name = "+Window",
       h = "change two horizontally split windows to vertical splits",
       v = "change two vertically split windows to horizontal splits",
     },
