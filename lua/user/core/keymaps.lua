@@ -1,3 +1,5 @@
+require("user.utils.keymaps"):init()
+
 local keymaps = rvim.keymaps
 local utils = require "user.utils"
 

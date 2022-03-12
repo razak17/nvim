@@ -57,8 +57,6 @@ function M:load()
 
   require "user.core.keymaps"
 
-  require("user.utils.keymaps"):init(rvim.keymaps)
-
   require "user.core.commands"
 
   local plug = require "user.core.plugins"
