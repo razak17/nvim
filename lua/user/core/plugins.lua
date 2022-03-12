@@ -150,6 +150,16 @@ function plugins.ensure_installed()
   end
 end
 
+function plugins.load_compile()
+  if vim.fn.filereadable(compile_path) ~= 1 then
+    plugins.install()
+    plugins.compile()
+  else
+    require "_compiled_rolling"
+    plug_notify "packer_compiled was loaded"
+  end
+end
+
 function plugins.recompile()
   Plug:load_packer()
   Plug:init_ensure_installed()
@@ -157,21 +167,10 @@ function plugins.recompile()
   plugins.compile()
 end
 
-function plugins.load_compile()
-  if vim.fn.filereadable(compile_path) ~= 1 then
-    plugins.install()
-    plugins.compile()
-    plug_notify "packer_compiled was created"
-  else
-    require "_compiled_rolling"
-    plug_notify "packer_compiled was loaded"
-  end
-end
-
 rvim.augroup("PackerSetupInit", {
   {
     event = { "BufWritePost" },
-    description = 'Packer setup and reload',
+    description = "Packer setup and reload",
     pattern = {
       utils.join_paths(rvim.get_config_dir(), "lua/core/config/init.lua"),
     },
@@ -207,13 +206,14 @@ rvim.augroup("PackerSetupInit", {
   },
 })
 
-rvim.augroup("PackerComplete", {
-  {
-    event = { "User PackerCompileDone" },
-    command = function()
-      plug_notify "Packer compile complete"
-    end,
-  },
-})
+-- FIXME: user autocommands are triggered multiple times
+-- rvim.augroup("PackerComplete", {
+--   {
+--     event = { "User PackerCompileDone" },
+--     command = function()
+--       plug_notify "Packer compile complete"
+--     end,
+--   },
+-- })
 
 return plugins
