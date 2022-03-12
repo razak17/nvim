@@ -215,11 +215,11 @@ M.load_commands = function()
     end
   end
 
-  if rvim.common.line_wrap_cursor_movement then
+  if rvim.line_wrap_cursor_movement then
     cmd "set whichwrap+=<,>,[,],h,l,~"
   end
 
-  if rvim.common.transparent_window then
+  if rvim.transparent_window then
     require("user.utils").enable_transparent_mode()
   end
 end

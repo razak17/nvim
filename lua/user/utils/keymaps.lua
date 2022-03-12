@@ -130,8 +130,8 @@ end
 
 function M:init()
   local g = vim.g
-  g.mapleader = (rvim.common.leader == "space" and " ") or rvim.common.leader
-  g.maplocalleader = (rvim.common.localleader == "space" and " ") or rvim.common.localleader
+  g.mapleader = (rvim.leader == "space" and " ") or rvim.leader
+  g.maplocalleader = (rvim.localleader == "space" and " ") or rvim.localleader
   M.load(rvim.keymaps)
 end
 

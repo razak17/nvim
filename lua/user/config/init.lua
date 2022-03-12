@@ -37,21 +37,21 @@ end
 function M:load()
   local g = vim.g
 
-  g.python3_host_prog = rvim.common.python_path
-  g.node_host_prog = rvim.common.node_path
+  g.python3_host_prog = rvim.python_path
+  g.node_host_prog = rvim.node_path
 
   g["loaded_python_provider"] = 0
   g["loaded_ruby_provider"] = 0
   g["loaded_perl_provider"] = 0
 
-  if rvim.common.defer then
+  if rvim.defer then
     vim.cmd [[syntax off]]
     vim.cmd [[filetype off]]
     defer()
   end
 
-  vim.g.colors_name = rvim.common.colorscheme
-  vim.cmd("colorscheme " .. rvim.common.colorscheme)
+  vim.g.colors_name = rvim.colorscheme
+  vim.cmd("colorscheme " .. rvim.colorscheme)
 
   require("user.core.settings"):init()
 

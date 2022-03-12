@@ -1,24 +1,22 @@
 return {
-  common = {
-    leader = "space",
-    localleader = "space",
-    transparent_window = false,
-    line_wrap_cursor_movement = false,
-    snippets_dir = rvim.get_config_dir() .. "/snippets",
-    format_on_save = {
-      ---@usage pattern string pattern used for the autocommand (Default: '*')
-      pattern = "*",
-      ---@usage timeout number timeout in ms for the format request (Default: 1000)
-      timeout = 1000,
-    },
-    save_on_focus_lost = true,
-    format_on_focus_lost = false,
-    debug = false,
-    defer = false,
-    colorscheme = "zephyr",
-    node_path = os.getenv "HOME" .. "/.fnm/node-versions/v17.3.0/installation/bin/neovim-node-host",
-    python_path = rvim.get_cache_dir() .. "/venv/neovim/bin/python3",
+  leader = "space",
+  localleader = "space",
+  transparent_window = false,
+  line_wrap_cursor_movement = false,
+  snippets_dir = rvim.get_config_dir() .. "/snippets",
+  format_on_save = {
+    ---@usage pattern string pattern used for the autocommand (Default: '*')
+    pattern = "*",
+    ---@usage timeout number timeout in ms for the format request (Default: 1000)
+    timeout = 1000,
   },
+  save_on_focus_lost = true,
+  format_on_focus_lost = false,
+  debug = false,
+  defer = false,
+  colorscheme = "zephyr",
+  node_path = os.getenv "HOME" .. "/.fnm/node-versions/v17.3.0/installation/bin/neovim-node-host",
+  python_path = rvim.get_cache_dir() .. "/venv/neovim/bin/python3",
   telescope_borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
   lang = {},
   log = {

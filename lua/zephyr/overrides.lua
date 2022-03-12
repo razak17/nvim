@@ -8,7 +8,7 @@ local function general_overrides()
   local normal_bg = util.get_hl("Normal", "bg")
   local error_line = util.alter_color(P.error_red, -80)
   local darker_bg = util.alter_color(normal_bg, -10)
-  local msg_area_bg = rvim.common.transparent_window and "NONE" or darker_bg
+  local msg_area_bg = rvim.transparent_window and "NONE" or darker_bg
   util.all {
     { "MsgArea", { background = msg_area_bg } },
     { "mkdLineBreak", { link = "NONE" } },
@@ -72,7 +72,7 @@ local function general_overrides()
 end
 
 local function set_sidebar_highlight()
-  -- local normal_bg = rvim.common.transparent_window and "NONE" or M.get_hl("Normal", "bg")..
+  -- local normal_bg = rvim.transparent_window and "NONE" or M.get_hl("Normal", "bg")..
   local split_color = util.get_hl("VertSplit", "fg")
   local bg_color = util.alter_color(P.bg, -20)
   local st_color = util.alter_color(util.get_hl("Visual", "bg"), -10)
