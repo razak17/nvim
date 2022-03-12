@@ -37,7 +37,6 @@ completion["hrsh7th/nvim-cmp"] = {
       end,
     },
   },
-  commit = rvim.plugin.commits.nvim_cmp,
   config = utils.load_conf("completion", "cmp"),
   disable = not rvim.plugin.cmp.active,
 }

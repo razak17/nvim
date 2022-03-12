@@ -44,7 +44,6 @@ lang["williamboman/nvim-lsp-installer"] = {
   requires = {
     "neovim/nvim-lspconfig",
   },
-  commit = rvim.plugin.commits.nvim_lsp_installer,
   disable = not rvim.plugin.lsp_installer.active,
 }
 
@@ -53,7 +52,6 @@ lang["antoinemadec/FixCursorHold.nvim"] = {
 }
 
 lang["neovim/nvim-lspconfig"] = {
-  commit = rvim.plugin.commits.nvim_lspconfig,
   disable = not rvim.plugin.lspconfig.active,
 }
 
@@ -62,7 +60,6 @@ lang["tamago324/nlsp-settings.nvim"] = {
 }
 
 lang["jose-elias-alvarez/null-ls.nvim"] = {
-  commit = rvim.plugin.commits.null_ls,
   disable = not rvim.plugin.null_ls.active,
 }
 
@@ -127,7 +124,6 @@ lang["kevinhwang91/nvim-bqf"] = {
 lang["nvim-treesitter/nvim-treesitter"] = {
   branch = vim.fn.has "nvim-0.6" == 1 and "master" or "0.5-compat",
   config = utils.load_conf("lang", "treesitter"),
-  commit = rvim.plugin.commits.nvim_treesitter,
   disable = not rvim.plugin.treesitter.active,
 }
 
@@ -170,7 +166,6 @@ lang["windwp/nvim-autopairs"] = {
   event = "InsertEnter",
   after = { "telescope.nvim", "nvim-treesitter" },
   config = utils.load_conf("lang", "autopairs"),
-  commit = rvim.plugin.commits.autopairs,
   disable = not rvim.plugin.autopairs.active,
 }
 
@@ -179,7 +174,6 @@ lang["razak17/rust-tools.nvim"] = {
 }
 
 lang["b0o/schemastore.nvim"] = {
-  commit = rvim.plugin.commits.schemastore,
   disable = not rvim.plugin.schemastore.active,
 }
 

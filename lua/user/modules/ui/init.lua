@@ -38,7 +38,6 @@ ui["lukas-reineke/indent-blankline.nvim"] = {
 
 ui["lewis6991/gitsigns.nvim"] = {
   config = utils.load_conf("ui", "gitsigns"),
-  commit = rvim.plugin.commits.gitsigns,
   disable = not rvim.plugin.git_signs.active,
 }
 
