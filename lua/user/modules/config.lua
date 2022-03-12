@@ -1,6 +1,4 @@
 return {
-  -- SANE defaults
-  SANE = { active = false },
   packer = { active = true },
   -- debug
   dap = { active = true },

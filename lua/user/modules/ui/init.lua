@@ -5,24 +5,24 @@ local utils = require "user.utils"
 ui["glepnir/dashboard-nvim"] = {
   event = "BufWinEnter",
   config = utils.load_conf("ui", "dashboard"),
-  disable = not rvim.plugin.dashboard.active and not rvim.plugin.SANE.active,
+  disable = not rvim.plugin.dashboard.active,
 }
 
 ui["akinsho/bufferline.nvim"] = {
   event = { "BufRead" },
   config = utils.load_conf("ui", "bufferline"),
-  disable = not rvim.plugin.bufferline.active and not rvim.plugin.SANE.active,
+  disable = not rvim.plugin.bufferline.active,
 }
 
 ui["razak17/galaxyline.nvim"] = {
   branch = "main",
   event = "VimEnter",
   config = utils.load_conf("ui", "statusline"),
-  disable = not rvim.plugin.statusline.active and not rvim.plugin.SANE.active,
+  disable = not rvim.plugin.statusline.active,
 }
 
 ui["kyazdani42/nvim-web-devicons"] = {
-  disable = not rvim.plugin.devicons.active and not rvim.plugin.SANE.active,
+  disable = not rvim.plugin.devicons.active,
 }
 
 ui["kyazdani42/nvim-tree.lua"] = {
