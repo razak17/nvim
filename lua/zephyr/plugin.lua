@@ -154,13 +154,8 @@ return {
   NvimTreeLspDiagnosticsHint = { fg = P.dark_green },
 
   NvimTreeSymlink = { fg = P.cyan },
-  -- NvimTreeRootFolder = { fg = P.fg, style = "bold" },
   NvimTreeExecFile = { fg = P.green },
-
-  -- NvimTreeNormalNC = { bg = P.alt_bg },
-  -- NvimTreeSignColumn = { bg = P.alt_bg },
-  -- NvimTreeEndOfBuffer = { bg = P.alt_bg },
-  -- NvimTreeEmptyFolderName = { fg = P.base5 },
+  NvimTreeEmptyFolderName = { fg = P.base5 },
 
   TelescopeNormal = { fg = P.fg },
   TelescopeBorder = { fg = P.blue, bg = P.darker_bg },

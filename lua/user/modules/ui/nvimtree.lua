@@ -161,7 +161,7 @@ return function()
     { "NvimTreeVertSplit", { link = "PanelVertSplit" } },
     { "NvimTreeStatusLine", { link = "PanelSt" } },
     { "NvimTreeStatusLineNC", { link = "PanelStNC" } },
-    { "NvimTreeRootFolder", { bold = true, italic = true, foreground = "LightMagenta" } }
+    { "NvimTreeRootFolder", { bold = true, foreground = "LightMagenta" } }
   )
 
   nvim_tree.setup(rvim.nvimtree.setup)
