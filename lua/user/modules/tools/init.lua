@@ -58,12 +58,15 @@ tools["numToStr/FTerm.nvim"] = {
         cmd = term:new { cmd = "ranger" }
       end
       cmd:toggle()
-
-      rvim.nnoremap("<F12>", '<cmd>lua require("FTerm").toggle()<CR>')
-      rvim.tnoremap("<F12>", '<C-\\><C-n><cmd>lua require("FTerm").toggle()<CR>')
     end
+    -- rvim.nnoremap("<F12>", '<cmd>lua require("FTerm").toggle()<CR>')
+    rvim.tnoremap("<F12>", '<C-\\><C-n><cmd>lua require("FTerm").toggle()<CR>')
 
     require("which-key").register {
+      ["<F12>"] = {
+        '<cmd>lua require("FTerm").toggle()<CR>',
+        "toggle term",
+      },
       ["<leader>t"] = {
         name = "+Fterm",
         [";"] = { '<cmd>lua require("FTerm").open()<cr>', "new" },

@@ -47,11 +47,7 @@ return function()
   require("telescope").load_extension "notify"
 
   rvim.nnoremap("<leader>nd", notify.dismiss, { label = "dismiss notifications" })
-
-  require("which-key").register {
-    ["<leader>nn"] = { ":Notifications<cr>", "notifications" },
-    ["<leader>nx"] = { notify.dismiss, " dismiss notifications" },
-  }
+  rvim.nnoremap("<leader>nn", ":Notifications<CR>", { label = "notifications" })
 
   -----------------------------------------------------------------------------//
   -- LSP Progress notification

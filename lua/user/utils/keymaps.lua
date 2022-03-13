@@ -1,88 +1,63 @@
-local M = {}
+-----------------------------------------------------------------------------//
+-- MAPPINGS
+-----------------------------------------------------------------------------//
 
-local map_opts = { noremap = false, silent = true }
-local noremap_opts = { noremap = true, silent = true }
-
-local generic_opts = {
-  nmap = map_opts,
-  xmap = map_opts,
-  imap = map_opts,
-  vmap = map_opts,
-  omap = map_opts,
-  tmap = map_opts,
-  smap = map_opts,
-  cmap = { noremap = false, silent = false },
-  nnoremap = noremap_opts,
-  xnoremap = noremap_opts,
-  inoremap = noremap_opts,
-  vnoremap = noremap_opts,
-  onoremap = noremap_opts,
-  tnoremap = noremap_opts,
-  snoremap = noremap_opts,
-  cnoremap = { noremap = true, silent = false },
-}
-
-local mode_adapters = {
-  nmap = "n",
-  xmap = "x",
-  imap = "i",
-  vmap = "v",
-  omap = "o",
-  tmap = "t",
-  smap = "s",
-  cmap = "c",
-  nnoremap = "n",
-  xnoremap = "x",
-  inoremap = "i",
-  vnoremap = "v",
-  onoremap = "o",
-  tnoremap = "t",
-  snoremap = "s",
-  cnoremap = "c",
-}
-
--- Set key mappings individually
--- @param mode The keymap mode, can be one of the keys of mode_adapters
--- @param key The key of keymap
--- @param val Can be form as a mapping or tuple of mapping and user defined opt
-function M.set_keymaps(mode, key, val)
-  local opt = generic_opts[mode]
-  if type(val) == "table" then
-    opt = val[2]
-    val = val[1]
-  end
-
-  if type(val) == "function" then
-    local fn_id = rvim._create(val)
-    val = string.format("<cmd>lua rvim._execute(%s)<CR>", fn_id)
-  end
-
-  vim.api.nvim_set_keymap(mode_adapters[mode], key, val, opt)
-  -- vim.keymap.set(mode_adapters[mode], key, val, opt)
-end
-
--- Load key mappings for a given mode
--- @param mode The keymap mode, can be one of the keys of mode_adapters
--- @param keymaps The list of key mappings
-function M.load_mode(mode, keymaps)
-  for k, v in pairs(keymaps) do
-    M.set_keymaps(mode, k, v)
+---create a mapping function factory
+---@param mode string
+---@param o table
+---@return fun(lhs: string, rhs: string, opts: table|nil) 'create a mapping'
+local function make_mapper(mode, o)
+  -- copy the opts table rvim extends will mutate the opts table passed in otherwise
+  local parent_opts = vim.deepcopy(o)
+  ---Create a mapping
+  ---@param lhs string
+  ---@param rhs string|function
+  ---@param opts table
+  return function(lhs, rhs, opts)
+    -- If the label is all that was passed in, set the opts automagically
+    opts = type(opts) == "string" and { label = opts } or opts and vim.deepcopy(opts) or {}
+    if opts.label then
+      local ok, wk = rvim.safe_require("which-key", { silent = true })
+      if ok then
+        wk.register({ [lhs] = opts.label }, { mode = mode })
+      end
+      opts.label = nil
+    end
+    vim.keymap.set(mode, lhs, rhs, vim.tbl_extend("keep", opts, parent_opts))
   end
 end
 
--- Load key mappings for all provided modes
--- @param keymaps A list of key mappings for each mode
-function M.load(keymaps)
-  for mode, mapping in pairs(keymaps) do
-    M.load_mode(mode, mapping)
-  end
-end
+local map_opts = { remap = true, silent = true }
+local noremap_opts = { silent = true }
 
-function M:init(keymaps)
-  local g = vim.g
-  g.mapleader = (rvim.leader == "space" and " ") or rvim.leader
-  g.maplocalleader = (rvim.localleader == "space" and " ") or rvim.localleader
-  M.load(keymaps)
-end
-
-return M
+-- A recursive commandline mapping
+rvim.nmap = make_mapper("n", map_opts)
+-- A recursive select mapping
+rvim.xmap = make_mapper("x", map_opts)
+-- A recursive terminal mapping
+rvim.imap = make_mapper("i", map_opts)
+-- A recursive operator mapping
+rvim.vmap = make_mapper("v", map_opts)
+-- A recursive insert mapping
+rvim.omap = make_mapper("o", map_opts)
+-- A recursive visual & select mapping
+rvim.tmap = make_mapper("t", map_opts)
+-- A recursive visual mapping
+rvim.smap = make_mapper("s", map_opts) -- A recursive normal mapping
+rvim.cmap = make_mapper("c", { remap = false, silent = false })
+-- A non recursive normal mapping
+rvim.nnoremap = make_mapper("n", noremap_opts)
+-- A non recursive visual mapping
+rvim.xnoremap = make_mapper("x", noremap_opts)
+-- A non recursive visual & select mapping
+rvim.vnoremap = make_mapper("v", noremap_opts)
+-- A non recursive insert mapping
+rvim.inoremap = make_mapper("i", noremap_opts)
+-- A non recursive operator mapping
+rvim.onoremap = make_mapper("o", noremap_opts)
+-- A non recursive terminal mapping
+rvim.tnoremap = make_mapper("t", noremap_opts)
+-- A non recursive select mapping
+rvim.snoremap = make_mapper("s", noremap_opts)
+-- A non recursive commandline mapping
+rvim.cnoremap = make_mapper("c", { silent = false })

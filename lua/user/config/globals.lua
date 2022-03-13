@@ -17,8 +17,8 @@ _G.rvim = {
   mappings = {},
 }
 
--- inject mapping helpers into the global namespace
-require "user.utils.mappings"
+-- inject keymaps helpers into the global namespace
+require "user.utils.keymaps"
 
 -----------------------------------------------------------------------------//
 -- Debugging
