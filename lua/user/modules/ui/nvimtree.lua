@@ -55,7 +55,7 @@ return function()
         custom = { ".git", "node_modules", ".cache" },
       },
       hijack_unnamed_buffer_when_opening = true,
-      sort_by = "modification_time",
+      sort_by = "name", -- modification_time
       hijack_directories = {
         enable = true,
         auto_open = true,
