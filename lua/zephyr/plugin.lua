@@ -148,6 +148,11 @@ return {
   NvimTreeGitMerge = { fg = P.sign_change },
   NvimTreeGitRenamed = { fg = P.sign_change },
 
+  NvimTreeLspDiagnosticsError = { fg = P.error_red },
+  NvimTreeLspDiagnosticsWarning = { fg = P.dark_orange },
+  NvimTreeLspDiagnosticsInformati = { fg = P.blue },
+  NvimTreeLspDiagnosticsHint = { fg = P.dark_green },
+
   NvimTreeSymlink = { fg = P.cyan },
   -- NvimTreeRootFolder = { fg = P.fg, style = "bold" },
   NvimTreeExecFile = { fg = P.green },
