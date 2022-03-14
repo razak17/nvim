@@ -23,13 +23,12 @@ local smart_close_filetypes = {
   "gitcommit",
   "dbui",
   "LuaTree",
-  "NvimTree",
-  "lsp-installer",
-  "null-ls-info",
   "log",
   "tsplayground",
   "qf",
-  "lspinfo",
+  "NvimTree",
+  "lsp-installer",
+  "null-ls-info",
   "packer",
 }
 
@@ -39,11 +38,12 @@ local function smart_close()
   end
 end
 
+-- FIXME: Causing problems telescope mappings keymap
 rvim.augroup("SmartClose", {
   {
     -- Auto open grep quickfix window
-    event = { 'QuickFixCmdPost' },
-    pattern = { '*grep*' },
+    event = { "QuickFixCmdPost" },
+    pattern = { "*grep*" },
     command = "cwindow",
   },
   {

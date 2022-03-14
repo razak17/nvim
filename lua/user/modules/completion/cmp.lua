@@ -27,7 +27,7 @@ return function()
 
   require("zephyr.util").plugin("CmpKinds", unpack(kind_hls))
 
-  -- FIXME: this hould not be required if we were using a prompt buffer in telescope i.e. prompt prefix
+  -- FIXME: this should not be required if we were using a prompt buffer in telescope i.e. prompt prefix
   -- Deactivate cmp in telescope prompt buffer
   rvim.augroup("CmpConfig", {
     {
