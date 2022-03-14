@@ -15,7 +15,7 @@ return {
   lightbulb = { active = false },
   symbols_outline = { active = false },
   bqf = { active = false },
-  trouble = { active = false },
+  trouble = { active = true },
   rust_tools = { active = true },
   schemastore = { active = true },
   lsp_signature = { active = true },

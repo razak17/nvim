@@ -93,19 +93,35 @@ lang["simrat39/symbols-outline.nvim"] = {
 
 lang["folke/trouble.nvim"] = {
   after = "nvim-lspconfig",
-  requires = { { "kyazdani42/nvim-web-devicons", opt = true } },
+  requires = "nvim-web-devicons",
   config = function()
-    require("trouble").setup { use_lsp_diagnostic_signs = true }
     require("which-key").register {
       ["<leader>vx"] = {
         name = "+Trouble",
-        d = { ":TroubleToggle lsp_document_diagnostics<cr>", "document" },
+        d = { ":TroubleToggle document_diagnostics<cr>", "document" },
         q = { ":TroubleToggle quickfix<cr>", "quickfix" },
         l = { ":TroubleToggle loclist<cr>", "loclist" },
         r = { ":TroubleToggle lsp_references<cr>", "references" },
-        w = { ":TroubleToggle lsp_workspace_diagnostics<cr>", "workspace" },
+        w = { ":TroubleToggle workspace_diagnostics<cr>", "workspace" },
       },
     }
+    local u = require "zephyr.util"
+    u.plugin(
+      "trouble",
+      { "TroubleNormal", { link = "PanelBackground" } },
+      { "TroubleText", { link = "PanelBackground" } },
+      { "TroubleIndent", { link = "PanelVertSplit" } },
+      { "TroubleFoldIcon", { foreground = "yellow", bold = true } },
+      { "TroubleLocation", { foreground = u.get_hl("Comment", "fg") } }
+    )
+    local trouble = require "trouble"
+    rvim.nnoremap("]d", function()
+      trouble.previous { skip_groups = true, jump = true }
+    end)
+    rvim.nnoremap("[d", function()
+      trouble.next { skip_groups = true, jump = true }
+    end)
+    trouble.setup { auto_close = true, auto_preview = false, use_diagnostic_signs = true }
   end,
   disable = not rvim.plugin.trouble.active,
 }
@@ -129,11 +145,11 @@ lang["nvim-treesitter/nvim-treesitter"] = {
 
 lang["nvim-treesitter/playground"] = {
   event = "VimEnter",
-  keys = "<leader>E",
+  keys = "<leader>LE",
   module = "nvim-treesitter-playground",
   cmd = { "TSPlaygroundToggle", "TSHighlightCapturesUnderCursor" },
   setup = function()
-    require("which-key").register { ["<leader>E"] = "treesitter: inspect token" }
+    require("which-key").register { ["<leader>LE"] = "treesitter: inspect token" }
   end,
   config = function()
     rvim.nnoremap("<leader>E", "<Cmd>TSHighlightCapturesUnderCursor<CR>")
