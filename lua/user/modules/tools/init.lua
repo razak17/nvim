@@ -154,7 +154,8 @@ tools["AckslD/nvim-neoclip.lua"] = {
 }
 
 -- Telescope
-tools["razak17/telescope.nvim"] = {
+-- tools["razak17/telescope.nvim"] = {
+tools["nvim-telescope/telescope.nvim"] = {
   config = utils.load_conf("tools", "telescope"),
   disable = not rvim.plugin.telescope.active,
 }

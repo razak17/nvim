@@ -148,6 +148,14 @@ return function()
       { key = "D", cb = tree_cb "dir_up" },
       { key = "gh", cb = tree_cb "toggle_help" },
       { key = "cd", cb = tree_cb "cd" },
+      {
+        key = "gtf",
+        cb = "<cmd>lua require'user.modules.tools.telescope.utils'.start_telescope('find_files')<cr>",
+      },
+      {
+        key = "gtg",
+        cb = "<cmd>lua require'user.modules.tools.telescope.utils'.start_telescope('live_grep')<cr>",
+      },
     }
   end
 
