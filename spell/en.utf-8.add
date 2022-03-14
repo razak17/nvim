@@ -31,3 +31,16 @@ whichkey
 keymaps
 autocommand
 pcall
+augroup
+autocmd
+neovim
+tmp
+nargs
+args
+arg
+quickfix
+https
+github
+Autosize
+setlocal
+iabbrev
