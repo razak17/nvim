@@ -81,42 +81,42 @@ local function lsp_setup_keymaps(client, bufnr)
     name = "+Peek",
     d = {
       "<cmd>lua require('user.lsp.peek').Peek('definition')<cr>",
-      "peek definition",
+      "peek: definition",
     },
     i = {
       "<cmd>lua require('user.lsp.peek').Peek('implementation')<cr>",
-      "peek implementation",
+      "peek: implementation",
     },
     t = {
       "<cmd>lua require('user.lsp.peek').Peek('typeDefinition')<cr>",
-      "peek type definition",
+      "peek: type definition",
     },
   }
 
   if client.supports_method "textDocument/formatting" then
     maps.n["<leader>lf"] = {
       "<cmd>LspFormat<cr>",
-      "format",
+      "lsp: format",
     }
   end
 
   if client.supports_method "textDocument/publishDiagnostics" then
     maps.n["<leader>lj"] = {
       "<cmd>lua vim.diagnostic.goto_next()<cr>",
-      "next diagnostic",
+      "lsp: next diagnostic",
     }
     maps.n["<leader>lk"] = {
       "<cmd>lua vim.diagnostic.goto_prev()<cr>",
-      "prev diagnostic",
+      "lsp: prev diagnostic",
     }
-    maps.n["<leader>ll"] = {
+    maps.n["<leader>lL"] = {
       "<cmd>lua vim.diagnostic.setloclist()<cr>",
-      "set loclist",
+      "lsp: set loclist",
     }
   end
 
   if client.supports_method "textDocument/codeLens" then
-    maps.n["<leader>lc"] = { "<cmd>lua vim.lsp.codelens.run()<cr>", "codelens action" }
+    maps.n["<leader>lc"] = { "<cmd>lua vim.lsp.codelens.run()<cr>", "lsp: codelens action" }
   end
 
   for mode, value in pairs(maps) do

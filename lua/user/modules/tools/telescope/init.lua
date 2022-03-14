@@ -298,9 +298,6 @@ return function()
 
   require("which-key").register {
     ["<c-p>"] = { project_files, "telescope: find files" },
-    ["<leader>la"] = { builtins.lsp_code_actions, "code action" },
-    ["<leader>lA"] = { builtins.lsp_range_code_actions, "range code action" },
-    ["<leader>lR"] = { builtins.lsp_references, "references" },
     ["<leader>f"] = {
       name = "+Telescope",
       a = { builtins.builtin, "builtins" },

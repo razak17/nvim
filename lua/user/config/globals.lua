@@ -178,14 +178,12 @@ function rvim.safe_require(module, opts)
   return ok, result
 end
 
-
 ---A terser proxy for `nvim_replace_termcodes`
 ---@param str string
 ---@return any
 function rvim.replace_termcodes(str)
   return api.nvim_replace_termcodes(str, true, true, true)
 end
-
 
 ---Determine if a value of any type is empty
 ---@param item any
@@ -249,29 +247,6 @@ end
 
 local oss = vim.loop.os_uname().sysname
 rvim.open_command = oss == "Darwin" and "open" or "xdg-open"
-
---- Utility function to toggle the location or the quickfix list
----@param list_type '"quickfix"' | '"location"'
----@return nil
-function rvim.toggle_list(list_type)
-  local is_location_target = list_type == "location"
-  local prefix = is_location_target and "l" or "c"
-  local is_open = rvim.is_vim_list_open()
-  if is_open then
-    return fn.execute(prefix .. "close")
-  end
-  local list = is_location_target and fn.getloclist(0) or fn.getqflist()
-  if vim.tbl_isempty(list) then
-    local msg_prefix = (is_location_target and "Location" or "QuickFix")
-    return vim.notify(msg_prefix .. " List is Empty.", L.WARN)
-  end
-
-  local winnr = fn.winnr()
-  fn.execute(prefix .. "open")
-  if fn.winnr() ~= winnr then
-    vim.cmd "wincmd p"
-  end
-end
 
 ---Reload lua modules
 ---@param path string

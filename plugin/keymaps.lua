@@ -216,15 +216,6 @@ end)
 -- Leader keymap
 -----------------------------------------------------------------------------//
 
--- toggle_list
-nnoremap("<leader>lW", function()
-  rvim.toggle_list "quickfix"
-end)
-
-nnoremap("<leader>lL", function()
-  rvim.toggle_list "location"
-end)
-
 nnoremap("<Leader>LM", function()
   utils.color_my_pencils()
 end)

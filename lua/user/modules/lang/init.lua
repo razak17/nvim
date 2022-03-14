@@ -96,14 +96,8 @@ lang["folke/trouble.nvim"] = {
   requires = "nvim-web-devicons",
   config = function()
     require("which-key").register {
-      ["<leader>vx"] = {
-        name = "+Trouble",
-        d = { ":TroubleToggle document_diagnostics<cr>", "document" },
-        q = { ":TroubleToggle quickfix<cr>", "quickfix" },
-        l = { ":TroubleToggle loclist<cr>", "loclist" },
-        r = { ":TroubleToggle lsp_references<cr>", "references" },
-        w = { ":TroubleToggle workspace_diagnostics<cr>", "workspace" },
-      },
+      ["<leader>lq"] = { ":TroubleToggle quickfix<cr>", "trouble: toggle quickfix" },
+      ["<leader>ll"] = { ":TroubleToggle loclist<cr>", "trouble: toggle loclist" },
     }
     local u = require "zephyr.util"
     u.plugin(
