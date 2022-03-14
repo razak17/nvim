@@ -24,3 +24,10 @@ LspFormat
 goto
 codeLens
 lspconfig
+param
+utils
+highlights
+whichkey
+keymaps
+autocommand
+pcall
