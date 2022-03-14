@@ -31,56 +31,34 @@ fn.sign_define(vim.tbl_map(function(t)
   }
 end, diagnostic_types))
 
----Override diagnostics signs helper to only show the single most relevant sign
----@see: http://reddit.com/r/neovim/comments/mvhfw7/can_built_in_lsp_diagnostics_be_limited_to_show_a
----@param diagnostics table[]
----@param bufnr number
----@return table[]
-local function filter_diagnostics(diagnostics, bufnr)
-  if not diagnostics then
-    return {}
-  end
-  -- Work out max severity diagnostic per line
-  local max_severity_per_line = {}
-  for _, d in pairs(diagnostics) do
-    local lnum = d.lnum
-    if max_severity_per_line[lnum] then
-      local current_d = max_severity_per_line[lnum]
-      if d.severity < current_d.severity then
-        max_severity_per_line[lnum] = d
+--- Restricts nvim's diagnostic signs to only the single most severe one per line
+--- @see `:help vim.diagnostic`
+ local ns = api.nvim_create_namespace 'severe-diagnostics'
+
+--- Get a reference to the original signs handler
+local signs_handler = vim.diagnostic.handlers.signs
+--- Override the built-in signs handler
+vim.diagnostic.handlers.signs = {
+  show = function(_, bufnr, _, opts)
+    -- Get all diagnostics from the whole buffer rather than just the
+    -- diagnostics passed to the handler
+    local diagnostics = vim.diagnostic.get(bufnr)
+    -- Find the "worst" diagnostic per line
+    local max_severity_per_line = {}
+    for _, d in pairs(diagnostics) do
+      local m = max_severity_per_line[d.lnum]
+      if not m or d.severity < m.severity then
+        max_severity_per_line[d.lnum] = d
       end
-    else
-      max_severity_per_line[lnum] = d
     end
-  end
-
-  -- map to list
-  local filtered_diagnostics = {}
-  for _, v in pairs(max_severity_per_line) do
-    table.insert(filtered_diagnostics, v)
-  end
-  return filtered_diagnostics
-end
-
---- This overwrites the diagnostic show/set_signs function to replace it with a custom function
---- that restricts nvim's diagnostic signs to only the single most severe one per line
-local ns = api.nvim_create_namespace "severe-diagnostics"
-local show = vim.diagnostic.show
-local function display_signs(bufnr)
-  -- Get all diagnostics from the current buffer
-  local diagnostics = vim.diagnostic.get(bufnr)
-  local filtered = filter_diagnostics(diagnostics, bufnr)
-  show(ns, bufnr, filtered, {
-    virtual_text = false,
-    underline = false,
-    signs = false,
-  })
-end
-
-function vim.diagnostic.show(namespace, bufnr, ...)
-  show(namespace, bufnr, ...)
-  display_signs(bufnr)
-end
+    -- Pass the filtered diagnostics (with our custom namespace) to
+    -- the original handler
+    signs_handler.show(ns, bufnr, vim.tbl_values(max_severity_per_line), opts)
+  end,
+  hide = function(_, bufnr)
+    signs_handler.hide(ns, bufnr)
+  end,
+}
 
 -----------------------------------------------------------------------------//
 -- Handler overrides
