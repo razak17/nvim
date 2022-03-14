@@ -81,6 +81,11 @@ return function()
 
   rvim.nnoremap("R", ":edit | TSBufEnable highlight<CR>", {})
 
+  -- TODO: figure why this does not work
+  -- rvim.nnoremap("<leader>Le", ":TSInstallInfo<cr>", {label = 'treesitter: info'})
+  -- rvim.nnoremap("<leader>Lm", ":TSModuleInfo<cr>", {label = 'treesitter: module info'})
+  -- rvim.nnoremap("<leader>Lu", ":TSUpdate<cr>", {label = 'treesitter: update'})
+
   require("which-key").register {
     ["<leader>Le"] = { ":TSInstallInfo<cr>", "treesitter: info" },
     ["<leader>Lm"] = { ":TSModuleInfo<cr>", "treesitter: module info" },

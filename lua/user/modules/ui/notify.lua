@@ -46,8 +46,10 @@ return function()
 
   require("telescope").load_extension "notify"
 
-  rvim.nnoremap("<leader>nd", notify.dismiss, { label = "dismiss notifications" })
-  rvim.nnoremap("<leader>nn", ":Notifications<CR>", { label = "notifications" })
+  require("which-key").register {
+    ["<leader>nn"] = { ":Notifications<cr>", "notifications" },
+    ["<leader>nx"] = { notify.dismiss, " dismiss notifications" },
+  }
 
   -----------------------------------------------------------------------------//
   -- LSP Progress notification
@@ -118,7 +120,7 @@ return function()
         local new_notif = notify(
           val.message and format_message(val.message) or "Complete",
           "info",
-          { icon = "", replace = notif_data.notification, timeout = 500 }
+          { icon = "", replace = notif_data.notification, timeout = 1000 }
         )
         client_notifs[client_id][result.token] = {
           notification = new_notif,

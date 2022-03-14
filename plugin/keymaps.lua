@@ -8,6 +8,10 @@ local inoremap = rvim.inoremap
 local cnoremap = rvim.cnoremap
 local tnoremap = rvim.tnoremap
 
+local g = vim.g
+g.mapleader = (rvim.leader == "space" and " ") or rvim.leader
+g.maplocalleader = (rvim.localleader == "space" and " ") or rvim.localleader
+
 -----------------------------------------------------------------------------//
 -- keymaps
 -----------------------------------------------------------------------------//
@@ -323,7 +327,3 @@ if not rvim.plugin.bufferline.active then
   nnoremap("<S-l>", ":bnext<CR>")
   nnoremap("<S-h>", ":bprevious<CR>")
 end
-
-local g = vim.g
-g.mapleader = (rvim.leader == "space" and " ") or rvim.leader
-g.maplocalleader = (rvim.localleader == "space" and " ") or rvim.localleader

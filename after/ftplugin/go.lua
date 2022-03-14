@@ -10,4 +10,8 @@ vim.cmd [[setlocal noexpandtab]]
 vim.cmd [[setlocal textwidth=100]]
 vim.cmd [[setlocal iskeyword+="]]
 
-rvim.nnoremap("<leader>cf", ":<cmd>call utils#create_go_doc_comment()<CR><CR>")
+rvim.nnoremap(
+  "<leader>cf",
+  ":<cmd>call utils#create_go_doc_comment()<CR><CR>",
+  { label = "go: create go_doc" }
+)
