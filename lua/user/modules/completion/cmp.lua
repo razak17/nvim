@@ -57,7 +57,7 @@ return function()
     return false
   end
 
-  local T = rvim.T
+  local T = rvim.replace_termcodes
 
   rvim.cmp = {
     setup = {

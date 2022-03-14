@@ -178,6 +178,15 @@ function rvim.safe_require(module, opts)
   return ok, result
 end
 
+
+---A terser proxy for `nvim_replace_termcodes`
+---@param str string
+---@return any
+function rvim.replace_termcodes(str)
+  return api.nvim_replace_termcodes(str, true, true, true)
+end
+
+
 ---Determine if a value of any type is empty
 ---@param item any
 ---@return boolean
@@ -240,10 +249,6 @@ end
 
 local oss = vim.loop.os_uname().sysname
 rvim.open_command = oss == "Darwin" and "open" or "xdg-open"
-
-function rvim.T(str)
-  return vim.api.nvim_replace_termcodes(str, true, true, true)
-end
 
 --- Utility function to toggle the location or the quickfix list
 ---@param list_type '"quickfix"' | '"location"'

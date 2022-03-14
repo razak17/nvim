@@ -141,7 +141,7 @@ function rvim.mappings.setup_CR()
   nmap("<Enter>", [[:nnoremap <lt>Enter> n@z<CR>q:<C-u>let @z=strpart(@z,0,strlen(@z)-1)<CR>n@z]])
 end
 
-vim.g.mc = [[y/\\V\<C-r>=escape(@\", '/')\<CR>\<CR>]]
+vim.g.mc = rvim.replace_termcodes [[y/\V<C-r>=escape(@", '/')<CR><CR>]]
 xnoremap("cn", [[g:mc . "``cgn"]], { expr = true, silent = true })
 xnoremap("cN", [[g:mc . "``cgN"]], { expr = true, silent = true })
 nnoremap("cq", [[:\<C-u>call v:lua.rvim.mappings.setup_CR()<CR>*``qz]])
