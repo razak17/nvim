@@ -67,7 +67,7 @@ function Plug:load_packer()
   }
   packer.reset()
   self:load_plugins()
-  require("packer").startup(function(use)
+  packer.startup(function(use)
     use { "wbthomason/packer.nvim", opt = true }
     for _, repo in ipairs(self.repos) do
       use(repo)
@@ -136,13 +136,13 @@ rvim.augroup("PackerSetupInit", {
       require "_compiled_rolling"
     end,
   },
+  --- Open a repository from an authorname/repository string
+  --- e.g. 'akinso/example-repo'
   {
     event = { "BufEnter" },
     pattern = {
       rvim.get_user_dir() .. "modules/**/plugins.lua",
     },
-    --- Open a repository from an authorname/repository string
-    --- e.g. 'akinso/example-repo'
     command = function()
       rvim.nnoremap("gf", function()
         local repo = fn.expand "<cfile>"
@@ -158,13 +158,14 @@ rvim.augroup("PackerSetupInit", {
 })
 
 -- FIXME: user autocommands are triggered multiple times
--- rvim.augroup("PackerComplete", {
---   {
---     event = { "User PackerCompileDone" },
---     command = function()
---       plug_notify "Packer compile complete"
---     end,
---   },
--- })
+rvim.augroup("PackerComplete", {
+  {
+    event = { "User PackerCompileDone" },
+    description = "Inform me that packer has finished compiling",
+    command = function()
+      utils.plug_notify "Packer compile complete"
+    end,
+  },
+})
 
 return plugins
