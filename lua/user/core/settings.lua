@@ -47,7 +47,7 @@ M.load_default_options = function()
 
     -- Spelling
     spelllang = { "en" },
-    spell = true,
+    -- spell = true,
     spellfile = utils.join_paths(rvim.get_config_dir(), "spell", "en.utf-8.add"),
     fileformats = { "unix", "mac", "dos" }, -- don't check for capital letters at start of sentence
 

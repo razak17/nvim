@@ -48,7 +48,7 @@ local function lsp_setup_keymaps(client, bufnr)
       ["gd"] = { vim.lsp.buf.definition, "lsp: definition" },
       ["gr"] = { vim.lsp.buf.references, "lsp: references" },
       ["gl"] = {
-        "<cmd>lua require'user.lsp.utils'.show_line_diagnostics()<CR>",
+        "<cmd>lua require 'user.lsp.utils'.show_line_diagnostics()<CR>",
         "lsp: line diagnostics",
       },
     },
@@ -60,7 +60,7 @@ local function lsp_setup_keymaps(client, bufnr)
   end
 
   if client.resolved_capabilities.implementation then
-    maps.n["gi"] = { vim.lsp.buf.implementation, "lsp: impementation" }
+    maps.n["gi"] = { vim.lsp.buf.implementation, "lsp: implementation" }
   end
 
   if client.resolved_capabilities.type_definition then

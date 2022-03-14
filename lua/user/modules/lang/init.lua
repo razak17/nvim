@@ -146,7 +146,7 @@ lang["nvim-treesitter/playground"] = {
     require("which-key").register { ["<leader>LE"] = "treesitter: inspect token" }
   end,
   config = function()
-    rvim.nnoremap("<leader>E", "<Cmd>TSHighlightCapturesUnderCursor<CR>")
+    rvim.nnoremap("<leader>LE", "<Cmd>TSHighlightCapturesUnderCursor<CR>")
   end,
   disable = not rvim.plugin.playground.active,
 }

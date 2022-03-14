@@ -200,7 +200,6 @@ local function check_color_column(leaving)
     or small_window
   then
     vim.wo.colorcolumn = ""
-    vim.opt.spell = false
     return
   end
   if not contains(column_clear, vim.bo.filetype) and vim.wo.colorcolumn == "" then
@@ -221,52 +220,6 @@ rvim.augroup("CustomColorColumn", {
     pattern = { "*" },
     command = function()
       check_color_column(true)
-    end,
-  },
-})
-
-local disable_spell = {
-  "json",
-  "lua",
-  "sh",
-  "zsh",
-  "py",
-  "css",
-}
-
--- Disable Spell
-local function check_spell()
-  if
-    contains(disable_spell, vim.bo.filetype)
-    or contains(column_clear, vim.bo.filetype)
-    or not_eligible
-  then
-    vim.opt.spell = false
-    return
-  end
-  if
-    not contains(column_clear, vim.bo.filetype)
-    and contains(disable_spell, vim.bo.filetype)
-    and vim.opt.spell == false
-  then
-    vim.opt.spell = true
-  end
-end
-
-rvim.augroup("CustomSpell", {
-  {
-    event = {
-      "VimEnter",
-      "VimResized",
-      "FocusGained",
-      "WinEnter",
-      "BufEnter",
-      "FocusLost",
-      "WinLeave",
-    },
-    pattern = { "*" },
-    command = function()
-      check_spell()
     end,
   },
 })
@@ -388,6 +341,11 @@ rvim.augroup("Utilities", {
     event = { "FileType" },
     pattern = { "gitcommit", "gitrebase" },
     command = "set bufhidden=delete",
+  },
+  { -- TODO: should this be done in ftplugin files
+    event = { "FileType" },
+    pattern = { "lua", "vim", "go", "dart", "python", "javascript", "typescript", "rust" },
+    command = "setlocal spell",
   },
   {
     event = { "BufWritePre", "FileWritePre" },

@@ -13,7 +13,7 @@ require "user.config.globals"
 require("user.config.bootstrap"):init(base_dir)
 
 local Log = require "user.core.log"
-Log:debug "Starting Rvim"
+Log:debug "Starting rVim"
 
 require("user.config"):load()
 
