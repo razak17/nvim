@@ -62,11 +62,14 @@ editor["monaqa/dial.nvim"] = {
       },
     }
 
-    vim.api.nvim_create_autocmd("FileType", {
-      pattern = { "yaml", "toml" },
-      callback = function()
-        map("n", "<C-a>", require("dial.map").inc_normal "dep_files", { remap = true })
-      end,
+    rvim.augroup("DialMaps", {
+      {
+        event = "FileType",
+        pattern = { "yaml", "toml" },
+        command = function()
+          map("n", "<C-a>", require("dial.map").inc_normal "dep_files", { remap = true })
+        end,
+      },
     })
   end,
   disable = not rvim.plugin.dial.active,
