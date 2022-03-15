@@ -8,7 +8,7 @@ local Plug = {}
 Plug.__index = Plug
 
 function Plug:get_plugins_list()
-  local modules_dir = utils.join_paths(rvim.get_user_dir(), "modules")
+  local modules_dir = join_paths(rvim.get_user_dir(), "modules")
   local list = {}
   local tmp = vim.split(fn.globpath(modules_dir, "*/init.lua"), "\n")
   for _, f in ipairs(tmp) do
@@ -22,7 +22,7 @@ function Plug:load_plugins()
 
   local plugins_file = Plug:get_plugins_list()
   for _, m in ipairs(plugins_file) do
-    local repos = require(utils.join_paths("user", m:sub(0, #m - 4)))
+    local repos = require(join_paths("user", m:sub(0, #m - 4)))
     for repo, conf in pairs(repos) do
       self.repos[#self.repos + 1] = vim.tbl_extend("force", { repo }, conf)
     end
@@ -30,7 +30,7 @@ function Plug:load_plugins()
 end
 
 function Plug:load_packer()
-  local package_root = utils.join_paths(rvim.get_runtime_dir(), "/site/pack/")
+  local package_root = join_paths(rvim.get_runtime_dir(), "/site/pack/")
 
   if not packer then
     vim.cmd "packadd packer.nvim"

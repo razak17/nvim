@@ -13,7 +13,8 @@
     "after_each",
     "fterm_cmd",
     "pairs",
-    "_G"
+    "_G",
+    "join_paths"
   ],
   "Lua.diagnostics.disable": [],
   "Lua.completion.callSnippet": "Both",

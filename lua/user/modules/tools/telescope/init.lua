@@ -125,7 +125,7 @@ return function()
             case_mode = "smart_case", -- or "ignore_case" or "respect_case"
           },
           frecency = {
-            db_root = utils.join_paths(rvim.get_cache_dir(), "/telescope"),
+            db_root = join_paths(rvim.get_cache_dir(), "/telescope"),
             show_scores = true,
             show_unindexed = true,
             ignore_patterns = { "*.git/*", "*/tmp/*" },

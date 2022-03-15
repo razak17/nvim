@@ -28,7 +28,7 @@ function M.generate_ftplugin(server_name, dir)
   end
 
   for _, filetype in ipairs(filetypes) do
-    local filename = utils.join_paths(dir, filetype .. ".lua")
+    local filename = join_paths(dir, filetype .. ".lua")
     local setup_cmd = string.format([[require("user.lsp.manager").setup(%q)]], server_name)
     -- print("using setup_cmd: " .. setup_cmd)
     -- overwrite the file completely

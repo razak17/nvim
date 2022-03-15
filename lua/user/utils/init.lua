@@ -77,14 +77,6 @@ function M.load_conf(dir, name)
   return require(fmt(module_dir .. ".%s", name))
 end
 
----Join path segments that were passed as input
----@return string
-function M.join_paths(...)
-  local path_sep = uv.os_uname().version:match "Windows" and "\\" or "/"
-  local result = table.concat({ ... }, path_sep)
-  return result
-end
-
 function M.enable_transparent_mode()
   vim.cmd "au ColorScheme * hi Normal ctermbg=none guibg=none"
   vim.cmd "au ColorScheme * hi SignColumn ctermbg=none guibg=none"

@@ -57,7 +57,7 @@ return {
       [";"] = { ":Dashboard<cr>", "dashboard" },
       ["?"] = "search github",
       c = {
-        "<cmd>lua vim.fn.execute('edit ' .. require('user.utils').join_paths(rvim.get_user_dir(), 'config/init.lua'))<cr>",
+        "<cmd>lua vim.fn.execute('edit ' .. join_paths(rvim.get_user_dir(), 'config/init.lua'))<cr>",
         "open config file",
       },
       C = { ":checkhealth<cr>", "check health" },
@@ -73,12 +73,12 @@ return {
       M = { ":messages<cr>", "messages" },
       p = { "<cmd>exe 'edit '.stdpath('cache').'/packer.nvim.log'<cr>", "packer: open logfile" },
       s = {
-        "<cmd>lua vim.fn.execute('edit ' .. require('user.utils').join_paths(rvim.get_cache_dir(), 'prof.log'))<cr>",
+        "<cmd>lua vim.fn.execute('edit ' .. join_paths(rvim.get_cache_dir(), 'prof.log'))<cr>",
         "open startuptime logs",
       },
       u = { ":UpdateRemotePlugins<cr>", "far: update remote" },
       v = {
-        ":e " .. require("user.utils").join_paths(rvim.get_config_dir(), "init.lua<cr>"),
+        ":e " .. join_paths(rvim.get_config_dir(), "init.lua<cr>"),
         "open vimrc",
       },
       V = "vim with me",

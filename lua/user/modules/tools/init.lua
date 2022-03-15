@@ -209,7 +209,7 @@ tools["rmagatti/auto-session"] = {
   config = function()
     require("auto-session").setup {
       log_level = "error",
-      auto_session_root_dir = require("user.utils").join_paths(
+      auto_session_root_dir = join_paths(
         rvim.get_cache_dir(),
         "session/auto/"
       ),

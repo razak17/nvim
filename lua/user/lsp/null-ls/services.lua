@@ -21,7 +21,6 @@ local function from_node_modules(command)
     return nil
   end
 
-  local join_paths = require("user.utils").join_paths
   return join_paths(root_dir, "node_modules", ".bin", command)
 end
 

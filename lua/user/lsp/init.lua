@@ -236,7 +236,7 @@ function M.setup()
   end
 
   bootstrap_nlsp {
-    config_home = utils.join_paths(rvim.get_config_dir(), "lsp-settings"),
+    config_home = join_paths(rvim.get_config_dir(), "lsp-settings"),
     append_default_schemas = true,
   }
 

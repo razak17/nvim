@@ -1,7 +1,5 @@
 local M = {}
 
-local u = require "user.utils"
-
 function M:init(base_dir)
   local cmd = vim.cmd
 
@@ -17,21 +15,21 @@ function M:init(base_dir)
   end
 
   if os.getenv "RVIM_RUNTIME_DIR" then
-    vim.opt.rtp:remove(u.join_paths(vim.fn.stdpath "data", "site"))
-    vim.opt.rtp:remove(u.join_paths(vim.fn.stdpath "data", "site", "after"))
-    vim.opt.rtp:prepend(u.join_paths(self.runtime_dir, "site"))
-    vim.opt.rtp:append(u.join_paths(self.runtime_dir, "site", "after"))
+    vim.opt.rtp:remove(join_paths(vim.fn.stdpath "data", "site"))
+    vim.opt.rtp:remove(join_paths(vim.fn.stdpath "data", "site", "after"))
+    vim.opt.rtp:prepend(join_paths(self.runtime_dir, "site"))
+    vim.opt.rtp:append(join_paths(self.runtime_dir, "site", "after"))
 
     vim.opt.rtp:remove(vim.fn.stdpath "config")
-    vim.opt.rtp:remove(u.join_paths(vim.fn.stdpath "config", "after"))
+    vim.opt.rtp:remove(join_paths(vim.fn.stdpath "config", "after"))
     vim.opt.rtp:prepend(self.config_dir)
-    vim.opt.rtp:append(u.join_paths(self.config_dir, "after"))
+    vim.opt.rtp:append(join_paths(self.config_dir, "after"))
   end
 
   cmd [[let &packpath = &runtimepath]]
 
   require("user.core.impatient").setup {
-    path = u.join_paths(self.cache_dir, "rvim_cache"),
+    path = join_paths(self.cache_dir, "rvim_cache"),
     enable_profiling = true,
   }
 

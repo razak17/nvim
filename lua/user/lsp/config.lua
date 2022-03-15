@@ -1,5 +1,5 @@
 return {
-  templates_dir = rvim.get_config_dir() .. "/after/ftplugin",
+  templates_dir = join_paths(rvim.get_config_dir(), "after", "ftplugin"),
   diagnostics = {
     signs = {
       active = true,

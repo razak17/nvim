@@ -48,7 +48,7 @@ M.load_default_options = function()
     -- Spelling
     spelllang = { "en" },
     -- spell = true,
-    spellfile = utils.join_paths(rvim.get_config_dir(), "spell", "en.utf-8.add"),
+    spellfile = join_paths(rvim.get_config_dir(), "spell", "en.utf-8.add"),
     fileformats = { "unix", "mac", "dos" }, -- don't check for capital letters at start of sentence
 
     -- Display
@@ -185,7 +185,7 @@ M.load_default_options = function()
   ---  SETTINGS  ---
   vim.opt.shortmess:append "c"
   vim.opt.iskeyword:append "-"
-  vim.opt.shadafile = utils.join_paths(rvim.get_cache_dir(), "shada", "rvim.shada")
+  vim.opt.shadafile = join_paths(rvim.get_cache_dir(), "shada", "rvim.shada")
   vim.opt.cursorlineopt = "screenline,number"
   vim.opt.spellsuggest:prepend { 12 }
   vim.opt.fileformats = { "unix", "mac", "dos" }

@@ -49,3 +49,4 @@ ftplugin
 local
 setup
 autocmds
+join_paths

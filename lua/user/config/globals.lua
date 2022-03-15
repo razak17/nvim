@@ -1,6 +1,7 @@
 local fn = vim.fn
 local fmt = string.format
 local api = vim.api
+local uv = vim.loop
 
 -----------------------------------------------------------------------------//
 -- Global namespace
@@ -19,6 +20,16 @@ _G.rvim = {
 
 -- inject keymaps helpers into the global namespace
 require "user.utils.keymaps"
+
+---Join path segments that were passed as input
+---@return string
+function _G.join_paths(...)
+  local path_sep = uv.os_uname().version:match "Windows" and "\\" or "/"
+  local result = table.concat({ ... }, path_sep)
+  return result
+end
+
+join_paths = _G.join_paths
 
 -----------------------------------------------------------------------------//
 -- Debugging
@@ -88,7 +99,7 @@ function rvim.get_user_dir()
   if not config_dir then
     config_dir = vim.fn.stdpath "config"
   end
-  local rvim_config_dir = require("user.utils").join_paths(config_dir, "lua/user/")
+  local rvim_config_dir = join_paths(config_dir, "lua/user/")
   return rvim_config_dir
 end
 
