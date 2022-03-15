@@ -141,7 +141,7 @@ rvim.augroup("PackerSetupInit", {
   {
     event = { "BufEnter" },
     pattern = {
-      rvim.get_user_dir() .. "modules/**/plugins.lua",
+      rvim.get_user_dir() .. "modules/**/init.lua",
     },
     command = function()
       rvim.nnoremap("gf", function()
