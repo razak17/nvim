@@ -50,3 +50,10 @@ local
 setup
 autocmds
 join_paths
+javascript
+FileType
+BufWritePre
+FileWritePre
+BufLeave
+BufWritePost
+update

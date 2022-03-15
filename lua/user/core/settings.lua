@@ -1,5 +1,4 @@
 local vim = vim
-local utils = require "user.utils"
 
 local M = {}
 
