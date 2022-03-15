@@ -1,45 +1,15 @@
-local uv, api, fn = vim.loop, vim.api, vim.fn
+local fn = vim.fn
 local packer = nil
-local packer_ok = nil
 local fmt = string.format
-local utils = require "user.utils"
+local plug_utils = require "user.utils.plugins"
 
 local Plug = {}
 Plug.__index = Plug
 
-function Plug:get_plugins_list()
-  local modules_dir = join_paths(rvim.get_user_dir(), "modules")
-  local list = {}
-  local tmp = vim.split(fn.globpath(modules_dir, "*/init.lua"), "\n")
-  for _, f in ipairs(tmp) do
-    list[#list + 1] = f:sub(#modules_dir - 6, -1)
-  end
-  return list
-end
-
-function Plug:load_plugins()
-  self.repos = {}
-
-  local plugins_file = Plug:get_plugins_list()
-  for _, m in ipairs(plugins_file) do
-    local repos = require(join_paths("user", m:sub(0, #m - 4)))
-    for repo, conf in pairs(repos) do
-      self.repos[#self.repos + 1] = vim.tbl_extend("force", { repo }, conf)
-    end
-  end
-end
-
 function Plug:load_packer()
-  local package_root = join_paths(rvim.get_runtime_dir(), "/site/pack/")
-
   if not packer then
-    vim.cmd "packadd packer.nvim"
+    vim.cmd "packadd! packer.nvim"
     packer = require "packer"
-  end
-
-  packer_ok, packer = rvim.safe_require "packer"
-  if not packer_ok then
-    return
   end
 
   if vim.fn.isdirectory(rvim.get_runtime_dir() .. "/site/lua") ~= 1 then
@@ -47,9 +17,8 @@ function Plug:load_packer()
   end
 
   packer.init {
-    package_root = package_root,
+    package_root = join_paths(rvim.get_runtime_dir(), "/site/pack/"),
     compile_path = rvim.packer_compile_path,
-    auto_reload_compiled = true,
     max_jobs = 50,
     git = {
       clone_timeout = 7000,
@@ -66,28 +35,14 @@ function Plug:load_packer()
     },
   }
   packer.reset()
-  self:load_plugins()
   rvim.safe_require "impatient"
+  plug_utils:load_plugins()
   packer.startup(function(use)
     use { "wbthomason/packer.nvim", opt = true }
-    for _, repo in ipairs(self.repos) do
+    for _, repo in ipairs(plug_utils.repos) do
       use(repo)
     end
   end)
-end
-
-function Plug:init_ensure_installed()
-  local packer_dir = rvim.get_runtime_dir() .. "/site/pack/packer/opt/packer.nvim"
-  local state = uv.fs_stat(packer_dir)
-  if not state then
-    local cmd = "!git clone https://github.com/wbthomason/packer.nvim " .. packer_dir
-    api.nvim_command(cmd)
-    uv.fs_mkdir(rvim.get_runtime_dir() .. "/site/lua", 511, function()
-      assert "make compile path dir failed"
-    end)
-    self:load_packer()
-    packer.install()
-  end
 end
 
 local plugins = setmetatable({}, {
@@ -100,11 +55,11 @@ local plugins = setmetatable({}, {
 })
 
 function plugins.ensure_installed()
-  Plug:init_ensure_installed()
+  plug_utils:init_ensure_installed()
   Plug:load_packer()
 
   if not vim.g.packer_compiled_loaded and vim.loop.fs_stat(rvim.packer_compile_path) then
-    vim.cmd(fmt("source %s", rvim.packer_compile_path))
+    rvim.source(rvim.packer_compile_path)
     vim.g.packer_compiled_loaded = true
   end
 end
@@ -118,7 +73,6 @@ end
 
 function plugins.recompile()
   Plug:load_packer()
-  Plug:init_ensure_installed()
   os.remove(rvim.packer_compile_path)
   plugins.compile()
 end
@@ -156,17 +110,15 @@ rvim.augroup("PackerSetupInit", {
       end)
     end,
   },
+  -- FIXME: user autocommands are triggered multiple times
+  {
+    event = { "User" },
+    patteern = "PackerCompileDone",
+    description = "Inform me that packer has finished compiling",
+    command = function()
+      plug_utils:plug_notify "Packer compile complete"
+    end,
+  },
 })
-
--- FIXME: user autocommands are triggered multiple times
--- rvim.augroup("PackerComplete", {
---   {
---     event = { "User PackerCompileDone" },
---     description = "Inform me that packer has finished compiling",
---     command = function()
---       utils.plug_notify "Packer compile complete"
---     end,
---   },
--- })
 
 return plugins

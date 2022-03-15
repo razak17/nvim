@@ -62,7 +62,7 @@ command {
 }
 
 -- Packer
-local utils = require "user.utils"
+local utils = require "user.utils.plugins"
 local fmt = string.format
 
 command { "PlugCompile", [[lua require('user.core.plugins').compile()]] }
@@ -84,10 +84,10 @@ command {
   "PlugCompiledDelete",
   function()
     if vim.fn.filereadable(rvim.packer_compile_path) ~= 1 then
-      utils.plug_notify "packer_compiled file does not exist"
+      utils:plug_notify("packer_compiled file does not exist")
     else
       vim.fn.delete(rvim.packer_compile_path)
-      utils.plug_notify "packer_compiled was deleted"
+      utils:plug_notify("packer_compiled was deleted")
     end
   end,
 }
@@ -97,6 +97,6 @@ command {
   function()
     vim.fn.delete(rvim.packer_compile_path)
     vim.cmd [[:PlugCompile]]
-    utils.plug_notify "packer was recompiled"
+    utils:plug_notify("packer was recompiled")
   end,
 }

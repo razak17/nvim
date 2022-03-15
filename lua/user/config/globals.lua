@@ -146,6 +146,17 @@ function rvim.disable_augroup(name)
   end)
 end
 
+---Source a lua or vimscript file
+---@param path string path relative to the nvim directory
+---@param prefix boolean?
+function rvim.source(path, prefix)
+  if not prefix then
+    vim.cmd(fmt('source %s', path))
+  else
+    vim.cmd(fmt('source %s/%s', vim.g.vim_dir, path))
+  end
+end
+
 ---Require a module using [pcall] and report any errors
 ---@param module string
 ---@param opts table?
