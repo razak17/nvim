@@ -29,6 +29,7 @@ command {
 -- source https://superuser.com/a/540519
 -- write the visual selection to the filename passed in as a command argument then delete the
 -- selection placing into the black hole register
+-- TODO: test out commands below
 command {
   "MoveWrite",
   [[<line1>,<line2>write<bang> <args> | <line1>,<line2>delete _]],

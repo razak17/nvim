@@ -69,7 +69,6 @@ return {
         "<cmd>lua vim.fn.execute('edit ' .. vim.lsp.get_log_path())<cr>",
         "lsp: open logfile",
       },
-      i = { ":LuaCacheProfile<cr>", "impatient: cache profile" },
       M = { ":messages<cr>", "messages" },
       p = { "<cmd>exe 'edit '.stdpath('cache').'/packer.nvim.log'<cr>", "packer: open logfile" },
       s = {

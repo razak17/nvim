@@ -28,11 +28,6 @@ function M:init(base_dir)
 
   cmd [[let &packpath = &runtimepath]]
 
-  require("user.core.impatient").setup {
-    path = join_paths(self.cache_dir, "rvim_cache"),
-    enable_profiling = true,
-  }
-
   require("user.config"):init()
 end
 

@@ -49,6 +49,7 @@ return {
   neoclip = { active = true },
   dressing = { active = true },
   auto_session = { active = true },
+  impatient = { active = true },
   hop = { active = true },
   -- TODO: handle these later
   glow = { active = false },

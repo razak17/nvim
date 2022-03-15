@@ -209,10 +209,7 @@ tools["rmagatti/auto-session"] = {
   config = function()
     require("auto-session").setup {
       log_level = "error",
-      auto_session_root_dir = join_paths(
-        rvim.get_cache_dir(),
-        "session/auto/"
-      ),
+      auto_session_root_dir = join_paths(rvim.get_cache_dir(), "session/auto/"),
     }
 
     require("which-key").register {
@@ -267,6 +264,10 @@ tools["phaazon/hop.nvim"] = {
     end)
   end,
   disable = not rvim.plugin.hop.active,
+}
+
+tools["lewis6991/impatient.nvim"] = {
+  disable = not rvim.plugin.impatient.active,
 }
 
 return tools
