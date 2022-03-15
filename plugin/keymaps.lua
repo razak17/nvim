@@ -318,3 +318,15 @@ if not rvim.plugin.bufferline.active then
   nnoremap("<S-l>", ":bnext<CR>")
   nnoremap("<S-h>", ":bprevious<CR>")
 end
+
+nnoremap("<leader>lG", function()
+  require("user.lsp.templates").generate_templates()
+end, {
+  label = "lsp: generate templates",
+})
+
+nnoremap("<leader>lD", function()
+  require("user.lsp.templates").remove_template_files()
+end, {
+  label = "lsp: delete templates",
+})

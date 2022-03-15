@@ -235,6 +235,8 @@ function M.setup()
     return
   end
 
+  require("user.lsp.templates").generate_templates()
+
   bootstrap_nlsp {
     config_home = utils.join_paths(rvim.get_config_dir(), "lsp-settings"),
     append_default_schemas = true,

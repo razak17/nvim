@@ -44,3 +44,8 @@ github
 Autosize
 setlocal
 iabbrev
+guibg
+ftplugin
+local
+setup
+autocmds

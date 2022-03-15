@@ -66,4 +66,21 @@ function M.show_line_diagnostics()
   return vim.diagnostic.open_float(0, config)
 end
 
+---Get supported filetypes per server
+---@param server_name string can be any server supported by nvim-lsp-installer
+---@return table supported filestypes as a list of strings
+function M.get_supported_filetypes(server_name)
+  local status_ok, lsp_installer_servers = pcall(require, "nvim-lsp-installer.servers")
+  if not status_ok then
+    return {}
+  end
+
+  local server_available, requested_server = lsp_installer_servers.get_server(server_name)
+  if not server_available then
+    return {}
+  end
+
+  return requested_server:get_supported_filetypes()
+end
+
 return M
