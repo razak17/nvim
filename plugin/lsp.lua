@@ -33,7 +33,7 @@ end, diagnostic_types))
 
 --- Restricts nvim's diagnostic signs to only the single most severe one per line
 --- @see `:help vim.diagnostic`
- local ns = api.nvim_create_namespace 'severe-diagnostics'
+local ns = api.nvim_create_namespace "severe-diagnostics"
 
 --- Get a reference to the original signs handler
 local signs_handler = vim.diagnostic.handlers.signs
@@ -99,4 +99,5 @@ lsp.handlers["window/showMessage"] = function(_, result, ctx)
   })
 end
 
-lsp.handlers["$/progress"] = rvim.lsp_progress_notification
+local lsp_progress_notification = require("user.lsp.progress").lsp_progress_notification
+lsp.handlers["$/progress"] = lsp_progress_notification
