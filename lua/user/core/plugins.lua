@@ -67,6 +67,7 @@ function Plug:load_packer()
   }
   packer.reset()
   self:load_plugins()
+  rvim.safe_require "impatient"
   packer.startup(function(use)
     use { "wbthomason/packer.nvim", opt = true }
     for _, repo in ipairs(self.repos) do
