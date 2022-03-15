@@ -112,8 +112,8 @@ rvim.augroup("PackerSetupInit", {
   },
   -- FIXME: user autocommands are triggered multiple times
   {
-    event = { "User" },
-    patteern = "PackerCompileDone",
+    event = "User",
+    pattern = "PackerCompileDone",
     description = "Inform me that packer has finished compiling",
     command = function()
       plug_utils:plug_notify "Packer compile complete"
