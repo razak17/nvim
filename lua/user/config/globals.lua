@@ -35,22 +35,6 @@ join_paths = _G.join_paths
 -- Debugging
 -----------------------------------------------------------------------------//
 
-local installed
----Check if a plugin is on the system not whether or not it is loaded
----@param plugin_name string
----@return boolean
-function rvim.plugin_installed(plugin_name)
-  if not installed then
-    local dirs = fn.expand(rvim.get_runtime_dir() .. "/site/pack/packer/start/*", true, true)
-    local opt = fn.expand(rvim.get_runtime_dir() .. "/site/pack/packer/opt/*", true, true)
-    vim.list_extend(dirs, opt)
-    installed = vim.tbl_map(function(path)
-      return fn.fnamemodify(path, ":t")
-    end, dirs)
-  end
-  return vim.tbl_contains(installed, plugin_name)
-end
-
 ---NOTE: this plugin returns the currently loaded state of a plugin given
 ---given certain assumptions i.e. it will only be true if the plugin has been
 ---loaded e.g. lazy loading will return false
@@ -106,20 +90,6 @@ end
 -----------------------------------------------------------------------------//
 -- Utils
 -----------------------------------------------------------------------------//
-
----Check whether or not the location or quickfix list is open
----@return boolean
-function rvim.is_vim_list_open()
-  for _, win in ipairs(api.nvim_list_wins()) do
-    local buf = api.nvim_win_get_buf(win)
-    local location_list = fn.getloclist(0, { filewinid = 0 })
-    local is_loc_list = location_list.filewinid > 0
-    if vim.bo[buf].filetype == "qf" or is_loc_list then
-      return true
-    end
-  end
-  return false
-end
 
 function rvim._create(f)
   table.insert(rvim._store, f)
