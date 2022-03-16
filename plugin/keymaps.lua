@@ -69,8 +69,11 @@ vnoremap(">", ">gv")
 vnoremap("//", [[y/<C-R>"<CR>]])
 
 -- Capitalize
-nnoremap("<leader>U", "gUiw`]")
+nnoremap("<leader>U", "gUiw`]", { label = "capitalize word" })
 inoremap("C-u>", "<cmd>norm!gUiw`]a<CR>")
+
+-- Help
+nnoremap("<leader>H", ':h <C-R>=expand("<cword>")<cr><CR>', { label = "help" })
 
 -- Credit: Justinmk
 nnoremap("g>", [[<cmd>set nomore<bar>40messages<bar>set more<CR>]])
@@ -166,14 +169,14 @@ nnoremap("[<space>", [[<cmd>put! =repeat(nr2char(10), v:count1)<cr>'[]])
 nnoremap("]<space>", [[<cmd>put =repeat(nr2char(10), v:count1)<cr>]])
 
 -- Smart mappings on the command line
-cnoremap("w!!", [[w !sudo tee % >/dev/null]])
+-- cnoremap("w!!", [[w !sudo tee % >/dev/null]])
 
 -- insert path of current file into a command
 cnoremap("%%", "<C-r>=fnameescape(expand('%'))<cr>")
 cnoremap("::", "<C-r>=fnameescape(expand('%:p:h'))<cr>/")
 
 ------------------------------------------------------------------------------
--- Credit: June Gunn <Leader>?/! | Google it / Feeling lucky
+-- Credit: June Gunn <leader>?/! | Google it / Feeling lucky
 ------------------------------------------------------------------------------
 local fn = vim.fn
 function rvim.mappings.google(pat, gh)
@@ -189,20 +192,39 @@ function rvim.mappings.google(pat, gh)
 end
 
 -- Searcg DuckDuckGo
-nnoremap("<leader>?", [[:lua rvim.mappings.google(vim.fn.expand("<cword>"), false)<cr>]])
-xnoremap("<leader>?", [["gy:lua rvim.mappings.google(vim.api.nvim_eval("@g"), false)<cr>gv]])
+nnoremap(
+  "<leader>?",
+  [[:lua rvim.mappings.google(vim.fn.expand("<cword>"), false)<cr>]],
+  { label = "search word" }
+)
+xnoremap(
+  "<leader>?",
+  [["gy:lua rvim.mappings.google(vim.api.nvim_eval("@g"), false)<cr>gv]],
+  { label = "search selection" }
+)
 
 -- Search Github
-nnoremap("<leader>L?", [[:lua rvim.mappings.google(vim.fn.expand("<cword>"), true)<cr>]])
-xnoremap("<leader>L?", [["gy:lua rvim.mappings.google(vim.api.nvim_eval("@g"), true)<cr>gv]])
+nnoremap(
+  "<leader>L?",
+  [[:lua rvim.mappings.google(vim.fn.expand("<cword>"), true)<cr>]],
+  { label = "github search word" }
+)
+xnoremap(
+  "<leader>L?",
+  [["gy:lua rvim.mappings.google(vim.api.nvim_eval("@g"), true)<cr>gv]],
+  { label = "github search selection" }
+)
 
 -- QuickRun
 nnoremap("<C-b>", ":QuickRun<CR>")
 
+-- Quit
+nnoremap("x", ":q!<cr>", { label = "quit" })
+
 -- Alternate way to save
 nnoremap("<C-s>", ":silent! write<CR>")
 
-nnoremap("gf", "<Cmd>e <cfile><CR>")
+nnoremap("gf", "<cmd>e <cfile><CR>")
 
 -- Open url
 -- nnoremap["gx"] = ":sil !xdg-open <c-r><c-a><cr>"
@@ -213,18 +235,18 @@ nnoremap("gx", function()
 end)
 
 -----------------------------------------------------------------------------//
--- Leader keymap
+-- leader keymap
 -----------------------------------------------------------------------------//
 
-nnoremap("<Leader>LM", function()
+nnoremap("<leader>LV", function()
   utils.color_my_pencils()
-end)
+end, { label = "vim with me" })
 
 nnoremap("<leader>aR", function()
   utils.empty_registers()
 end)
 
-nnoremap("<Leader>a;", function()
+nnoremap("<leader>a;", function()
   utils.open_terminal()
 end)
 
@@ -237,42 +259,54 @@ nnoremap("<leader>ae", function()
 end)
 
 -- Search Files
-nnoremap("<Leader>B", '/<C-R>=escape(expand("<cword>"), "/")<CR><CR>')
+nnoremap("<leader>B", '/<C-R>=escape(expand("<cword>"), "/")<CR><CR>', { label = "find cword" })
 
 -- Greatest remap ever
-vnoremap("<Leader>p", '"_dP')
+vnoremap("<leader>p", '"_dP', { label = "greatest remap" })
 
 -- Reverse Line
-vnoremap("<Leader>r", [[:s/\%V.\+\%V./\=utils#rev_str(submatch(0))<CR>gv]])
+vnoremap(
+  "<leader>r",
+  [[:s/\%V.\+\%V./\=utils#rev_str(submatch(0))<CR>gv]],
+  { label = "reverse line" }
+)
 
 -- Next greatest remap ever : asbjornHaland
-nnoremap("<Leader>y", '"+y')
-vnoremap("<Leader>y", '"+y')
+nnoremap("<leader>y", '"+y', { label = "yank" })
+vnoremap("<leader>y", '"+y', { label = "yank" })
 
 -- Whole file delete yank, paste
-nnoremap("<Leader>A", 'gg"+VG')
-nnoremap("<Leader>D", 'gg"+VGd')
-nnoremap("<Leader>Y", 'gg"+yG')
+nnoremap("<leader>A", 'gg"+VG', { label = "select all" })
+-- nnoremap("<leader>D", 'gg"+VGd', {label="delete all"})
+nnoremap("<leader>Y", 'gg"+yG', { label = "yank all" })
 
 -- actions
-nnoremap("<Leader>=", "<C-W>=")
+nnoremap("<leader>=", "<C-W>=", { label = "balance window" })
 -- opens a horizontal split
-nnoremap("<Leader>ah", "<C-W>s")
+nnoremap("<leader>ah", "<C-W>s", { label = "horizontal split" })
 -- opens a vertical split
-nnoremap("<Leader>av", "<C-W>v")
+nnoremap("<leader>V", "<C-W>v", { label = "vertical split" })
 -- Change two horizontally split windows to vertical splits
-nnoremap("<localleader>wv", "<C-W>t <C-W>H<C-W>=")
+nnoremap(
+  "<localleader>wv",
+  "<C-W>t <C-W>H<C-W>=",
+  { label = "change two vertically split windows to horizontal splits" }
+)
 -- Change two vertically split windows to horizontal splits
-nnoremap("<localleader>wh", "<C-W>t <C-W>K<C-W>=")
+nnoremap(
+  "<localleader>wh",
+  "<C-W>t <C-W>K<C-W>=",
+  { label = "change two horizontally split windows to vertical splits" }
+)
 
 -- opens the last buffer
 nnoremap("<leader>al", "<C-^>")
 
 -- Folds
-nnoremap("<Leader>FR", "zA") -- Recursively toggle
-nnoremap("<Leader>Fl", "za") -- Toggle fold under the cursor
-nnoremap("<Leader>Fo", "zR") -- Open all folds
-nnoremap("<Leader>Fx", "zM") -- Close all folds
+nnoremap("<leader>FR", "zA") -- Recursively toggle
+nnoremap("<leader>Fl", "za") -- Toggle fold under the cursor
+nnoremap("<leader>Fo", "zR") -- Open all folds
+nnoremap("<leader>Fx", "zM") -- Close all folds
 nnoremap("<leader>Fz", [[zMzvzz]]) -- Refocus folds
 
 -- Make zO recursively open whatever top level fold we're in, no matter where the
@@ -280,20 +314,47 @@ nnoremap("<leader>Fz", [[zMzvzz]]) -- Refocus folds
 nnoremap("FO", [[zCzO]])
 
 -- Conditionally modify character at end of line
-nnoremap("<localleader>,", "<cmd>call utils#modify_line_end_delimiter(',')<cr>")
-nnoremap("<localleader>;", "<cmd>call utils#modify_line_end_delimiter(';')<cr>")
-nnoremap("<localleader>.", "<cmd>call utils#modify_line_end_delimiter('.')<cr>")
+nnoremap(
+  "<localleader>,",
+  "<cmd>call utils#modify_line_end_delimiter(',')<cr>",
+  { label = "append comma" }
+)
+nnoremap(
+  "<localleader>;",
+  "<cmd>call utils#modify_line_end_delimiter(';')<cr>",
+  { label = "append semi colon" }
+)
+nnoremap(
+  "<localleader>.",
+  "<cmd>call utils#modify_line_end_delimiter('.')<cr>",
+  { label = "append period" }
+)
 
 -- Quick find/replace
-local noisy = { silent = false }
-nnoremap("<leader>[", [[:%s/\<<C-r>=expand("<cword>")<CR>\>/]], noisy)
-nnoremap("<leader>,", [[:s/\<<C-r>=expand("<cword>")<CR>\>/]], noisy)
-vnoremap("<leader>[", [["zy:%s/<C-r><C-o>"/]], noisy)
+nnoremap(
+  "<leader>[",
+  [[:%s/\<<C-r>=expand("<cword>")<CR>\>/]],
+  { silent = false, label = "replace all" }
+)
+nnoremap(
+  "<leader>]",
+  [[:s/\<<C-r>=expand("<cword>")<CR>\>/]],
+  { silent = false, label = "replace in line" }
+)
+vnoremap("<leader>[", [["zy:%s/<C-r><C-o>"/]], { silent = false, label = "replace all" })
 
 -- open a new file in the same directory
-nnoremap("<leader>nf", [[:e <C-R>=expand("%:p:h") . "/" <CR>]], noisy)
+nnoremap(
+  "<leader>nf",
+  [[:e <C-R>=expand("%:p:h") . "/" <CR>]],
+  { silent = false, label = "open file in same dir" }
+)
 -- create a new file in the same directory
-nnoremap("<leader>ns", [[:vsp <C-R>=expand("%:p:h") . "/" <CR>]], noisy)
+nnoremap(
+  "<leader>ns",
+  [[:vsp <C-R>=expand("%:p:h") . "/" <CR>]],
+  { silent = false, label = "create new file in same dir" }
+)
 
 -- Wrap
 nnoremap('<leader>"', [[ciw"<c-r>""<esc>]], { label = "wrap double quotes" })
@@ -303,7 +364,7 @@ nnoremap("<leader>)", [[ciw(<c-r>")<esc>]], { label = "wrap parenthesis" })
 nnoremap("<leader>}", [[ciw{<c-r>"}<esc>]], { label = "wrap curly bracket" })
 
 -- Buffers - Del All Others
-nnoremap("<Leader>bc", function()
+nnoremap("<leader>bc", function()
   vim.api.nvim_exec(
     [[
       wall
@@ -311,7 +372,9 @@ nnoremap("<Leader>bc", function()
     ]],
     false
   )
-end)
+end, {
+  label = "close all others",
+})
 
 -- Bufferlline
 if not rvim.plugin.bufferline.active then

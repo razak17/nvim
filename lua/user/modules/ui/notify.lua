@@ -46,6 +46,6 @@ return function()
 
   require("which-key").register {
     ["<leader>nn"] = { ":Notifications<cr>", "notifications" },
-    ["<leader>nx"] = { notify.dismiss, " dismiss notifications" },
+    ["<leader>nx"] = { notify.dismiss, "dismiss notifications" },
   }
 end
