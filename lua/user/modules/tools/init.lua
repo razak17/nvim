@@ -153,8 +153,6 @@ tools["AckslD/nvim-neoclip.lua"] = {
   disable = not rvim.plugin.neoclip.active,
 }
 
--- Telescope
--- tools["razak17/telescope.nvim"] = {
 tools["nvim-telescope/telescope.nvim"] = {
   config = utils.load_conf("tools", "telescope"),
   disable = not rvim.plugin.telescope.active,
@@ -185,24 +183,6 @@ tools["nvim-telescope/telescope-dap.nvim"] = {
 
 tools["nvim-telescope/telescope-file-browser.nvim"] = {
   disable = not rvim.plugin.telescope_file_browser.active,
-}
-
-tools["stevearc/dressing.nvim"] = {
-  config = function()
-    require("dressing").setup {
-      input = {
-        winblend = 2,
-        insert_only = false,
-      },
-      select = {
-        winblend = 2,
-        telescope = {
-          theme = "dropdown",
-        },
-      },
-    }
-  end,
-  disable = not rvim.plugin.dressing.active,
 }
 
 tools["rmagatti/auto-session"] = {
