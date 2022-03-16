@@ -48,7 +48,7 @@ return function()
 
   -- Keymaps
   require("which-key").register {
-    ["<leader>d"] = {
+    ["<leader>D"] = {
       name = "+Debug",
       ["?"] = {
         ':lua local widgets=require"dap.ui.widgets";widgets.centered_float(widgets.scopes)<CR>',

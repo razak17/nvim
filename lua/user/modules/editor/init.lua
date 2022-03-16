@@ -156,4 +156,27 @@ editor["b3nj5m1n/kommentary"] = {
   disable = not rvim.plugin.kommentary.active,
 }
 
+editor["Matt-A-Bennett/vim-surround-funk"] = {
+  config = function()
+    vim.g.surround_funk_create_mappings = 0
+    require("which-key").register {
+      ["<leader>d"] = {
+        name = "+dsf: function text object",
+        s = {
+          F = { "<Plug>(DeleteSurroundingFunction)", "delete surrounding function" },
+          f = { "<Plug>(DeleteSurroundingFUNCTION)", "delete surrounding outer function" },
+        },
+      },
+      ["<leader>C"] = {
+        name = "+dsf: function text object",
+        s = {
+          F = { "<Plug>(ChangeSurroundingFunction)", "change surrounding function" },
+          f = { "<Plug>(ChangeSurroundingFUNCTION)", "change outer surrounding function" },
+        },
+      },
+    }
+  end,
+  disable = not rvim.plugin.surround_funk.active,
+}
+
 return editor

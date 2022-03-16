@@ -37,6 +37,7 @@ return {
   dial = { active = true },
   fold_cycle = { active = false },
   cursorword = { active = false },
+  surround_funk = { active = true },
   -- tools
   fterm = { active = true },
   far = { active = true },
