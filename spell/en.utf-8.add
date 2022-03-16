@@ -57,3 +57,7 @@ FileWritePre
 BufLeave
 BufWritePost
 update
+png
+uint
+str
+ord
