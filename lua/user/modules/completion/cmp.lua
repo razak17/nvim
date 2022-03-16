@@ -194,13 +194,10 @@ return function()
 
         ["<C-Space>"] = cmp.mapping.complete(),
         ["<C-e>"] = cmp.mapping.close(),
-        ["<CR>"] = cmp.mapping(function(fallback)
-          if cmp.visible() and cmp.confirm(rvim.cmp.setup.confirm_opts) then
-            return
-          else
-            fallback()
-          end
-        end),
+        ["<CR>"] = cmp.mapping.confirm {
+          behavior = cmp.ConfirmBehavior.Replace,
+          select = true,
+        },
       },
     },
   }
