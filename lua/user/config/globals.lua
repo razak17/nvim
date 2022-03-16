@@ -83,8 +83,7 @@ function rvim.get_user_dir()
   if not config_dir then
     config_dir = vim.fn.stdpath "config"
   end
-  local rvim_config_dir = join_paths(config_dir, "lua/user/")
-  return rvim_config_dir
+  return join_paths(config_dir, "lua/user/")
 end
 
 -----------------------------------------------------------------------------//
@@ -151,9 +150,9 @@ end
 ---@param prefix boolean?
 function rvim.source(path, prefix)
   if not prefix then
-    vim.cmd(fmt('source %s', path))
+    vim.cmd(fmt("source %s", path))
   else
-    vim.cmd(fmt('source %s/%s', vim.g.vim_dir, path))
+    vim.cmd(fmt("source %s/%s", vim.g.vim_dir, path))
   end
 end
 
