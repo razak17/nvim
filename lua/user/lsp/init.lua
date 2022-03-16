@@ -1,14 +1,13 @@
 local M = {}
 local Log = require "user.core.log"
-local utils = require "user.utils"
-local autocmds = require "user.lsp.autocmds"
+local lsp_utils = require "user.lsp.utils"
 
 local function lsp_hover_diagnostics()
   if not rvim.lsp.hover_diagnostics then
     return
   end
 
-  autocmds.enable_lsp_hover_diagnostics()
+  lsp_utils.enable_lsp_hover_diagnostics()
 end
 
 local function lsp_highlight_document(client)
@@ -17,7 +16,7 @@ local function lsp_highlight_document(client)
   end
 
   if client and client.resolved_capabilities.document_highlight then
-    autocmds.enable_lsp_document_highlight(client.id)
+    lsp_utils.enable_lsp_document_highlight(client.id)
   end
 end
 
@@ -27,7 +26,7 @@ local function lsp_code_lens_refresh(client)
   end
 
   if client and client.resolved_capabilities.code_lens then
-    autocmds.enable_code_lens_refresh()
+    lsp_utils.enable_code_lens_refresh()
   end
 end
 
@@ -186,11 +185,11 @@ end
 
 function M.global_on_exit(_, _)
   if rvim.lsp.document_highlight then
-    autocmds.disable_lsp_document_highlight()
+    lsp_utils.disable_lsp_document_highlight()
   end
 
   if rvim.lsp.code_lens_refresh then
-    autocmds.disable_code_lens_refresh()
+    lsp_utils.disable_code_lens_refresh()
   end
 end
 
