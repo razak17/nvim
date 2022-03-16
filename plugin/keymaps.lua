@@ -299,9 +299,6 @@ nnoremap(
   { label = "change two horizontally split windows to vertical splits" }
 )
 
--- opens the last buffer
-nnoremap("<leader>al", "<C-^>")
-
 -- Folds
 nnoremap("<leader>FR", "zA") -- Recursively toggle
 nnoremap("<leader>Fl", "za") -- Toggle fold under the cursor

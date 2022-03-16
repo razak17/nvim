@@ -9,7 +9,6 @@ return {
       e = "turn off guides",
       F = { ":vertical resize 90<cr>", "vertical resize 90" },
       L = { ":vertical resize 40<cr>", "vertical resize 30%%" },
-      l = "open last buffer",
       o = "turn on guides",
       O = { ":<C-f>:resize 10<cr>", "open old commands" },
       R = "empty registers",
