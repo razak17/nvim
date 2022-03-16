@@ -1,5 +1,19 @@
 local editor = {}
 
+rvim.plugins.editor = {
+  ajk = { active = true },
+  easy_align = { active = true },
+  cool = { active = true },
+  surround = { active = true },
+  colorizer = { active = true },
+  kommentary = { active = true },
+  dial = { active = true },
+  fold_cycle = { active = false },
+  cursorword = { active = false },
+  surround_funk = { active = true },
+  better_diagraphs = { active = false },
+}
+
 editor["xiyaowong/accelerated-jk.nvim"] = {
   event = { "BufWinEnter" },
   config = function()
@@ -9,7 +23,7 @@ editor["xiyaowong/accelerated-jk.nvim"] = {
       acceleration_limit = 150,
     }
   end,
-  disable = not rvim.plugin.ajk.active,
+  disable = not rvim.plugins.editor.ajk.active,
 }
 
 editor["tpope/vim-surround"] = {
@@ -17,18 +31,7 @@ editor["tpope/vim-surround"] = {
     rvim.xmap("S", "<Plug>VSurround")
     rvim.xmap("S", "<Plug>VSurround")
   end,
-  disable = not rvim.plugin.surround.active,
-}
-
-editor["moll/vim-bbye"] = {
-  config = function()
-    require("which-key").register {
-      ["<leader>c"] = { ":Bdelete<cr>", "close buffer" },
-      ["<leader>bx"] = { ":bufdo :Bdelete<cr>", "close all buffers" },
-      ["<leader>q"] = { "<Cmd>Bwipeout<CR>", "wipe buffer" },
-    }
-  end,
-  disable = not rvim.plugin.bbye.active,
+  disable = not rvim.plugins.editor.surround.active,
 }
 
 editor["monaqa/dial.nvim"] = {
@@ -72,7 +75,7 @@ editor["monaqa/dial.nvim"] = {
       },
     })
   end,
-  disable = not rvim.plugin.dial.active,
+  disable = not rvim.plugins.editor.dial.active,
 }
 
 editor["junegunn/vim-easy-align"] = {
@@ -82,7 +85,7 @@ editor["junegunn/vim-easy-align"] = {
     rvim.vmap("<Enter>", "<Plug>(EasyAlign)")
   end,
   event = { "BufReadPre", "BufNewFile" },
-  disable = not rvim.plugin.easy_align.active,
+  disable = not rvim.plugins.editor.easy_align.active,
 }
 
 editor["xiyaowong/nvim-cursorword"] = {
@@ -90,7 +93,7 @@ editor["xiyaowong/nvim-cursorword"] = {
   config = function()
     vim.cmd [[hi! CursorWord cterm=NONE gui=NONE guibg=#3f444a]]
   end,
-  disable = not rvim.plugin.cursorword.active,
+  disable = not rvim.plugins.editor.cursorword.active,
 }
 
 editor["norcalli/nvim-colorizer.lua"] = {
@@ -108,14 +111,14 @@ editor["norcalli/nvim-colorizer.lua"] = {
       mode = "background",
     })
   end,
-  disable = not rvim.plugin.colorizer.active,
+  disable = not rvim.plugins.editor.colorizer.active,
 }
 
 editor["romainl/vim-cool"] = {
   config = function()
     vim.g.CoolTotalMatches = 1
   end,
-  disable = not rvim.plugin.cool.active,
+  disable = not rvim.plugins.editor.cool.active,
 }
 
 editor["arecarn/vim-fold-cycle"] = {
@@ -127,7 +130,7 @@ editor["arecarn/vim-fold-cycle"] = {
     local nmap = rvim.nmap
     nmap("<BS>", "<Plug>(fold-cycle-close)")
   end,
-  disable = not rvim.plugin.fold_cycle.active,
+  disable = not rvim.plugins.editor.fold_cycle.active,
 }
 
 editor["b3nj5m1n/kommentary"] = {
@@ -153,7 +156,7 @@ editor["b3nj5m1n/kommentary"] = {
       ["<leader>a/"] = { "<Plug>kommentary_motion_default", "comment motion default" },
     }
   end,
-  disable = not rvim.plugin.kommentary.active,
+  disable = not rvim.plugins.editor.kommentary.active,
 }
 
 editor["Matt-A-Bennett/vim-surround-funk"] = {
@@ -161,14 +164,14 @@ editor["Matt-A-Bennett/vim-surround-funk"] = {
     vim.g.surround_funk_create_mappings = 0
     require("which-key").register {
       ["<leader>d"] = {
-        name = "+dsf: function text object",
+        name = "+dsf: delete",
         s = {
           F = { "<Plug>(DeleteSurroundingFunction)", "delete surrounding function" },
           f = { "<Plug>(DeleteSurroundingFUNCTION)", "delete surrounding outer function" },
         },
       },
       ["<leader>C"] = {
-        name = "+dsf: function text object",
+        name = "+dsf: change",
         s = {
           F = { "<Plug>(ChangeSurroundingFunction)", "change surrounding function" },
           f = { "<Plug>(ChangeSurroundingFUNCTION)", "change outer surrounding function" },
@@ -176,7 +179,7 @@ editor["Matt-A-Bennett/vim-surround-funk"] = {
       },
     }
   end,
-  disable = not rvim.plugin.surround_funk.active,
+  disable = not rvim.plugins.editor.surround_funk.active,
 }
 
 -- CR not working properly
@@ -193,7 +196,7 @@ editor["protex/better-digraphs.nvim"] = {
       require("betterdigraphs").digraphs "gvr"
     end)
   end,
-  disable = not rvim.plugin.better_diagraphs.active,
+  disable = not rvim.plugins.editor.better_diagraphs.active,
 }
 
 return editor

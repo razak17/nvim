@@ -231,7 +231,7 @@ return function()
   }
 
   for config, plug in pairs(plugins) do
-    if rvim.plugin[config].active then
+    if rvim.plugins.tools[config].active then
       require("telescope").load_extension(plug)
     end
   end

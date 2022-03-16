@@ -25,9 +25,6 @@ function M:init()
   local lsp_config = require "user.lsp.config"
   rvim.lsp = vim.deepcopy(lsp_config)
 
-  local plugconfig = require "user.modules.config"
-  rvim.plugin = vim.deepcopy(plugconfig)
-
   local which_key_config = require "user.modules.completion.which_key.config"
   rvim.wk = vim.deepcopy(which_key_config)
 

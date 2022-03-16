@@ -1,11 +1,39 @@
 local tools = {}
 
+rvim.plugins.tools = {
+  fterm = { active = true },
+  far = { active = true },
+  bookmarks = { active = false },
+  undotree = { active = true },
+  project = { active = true },
+  diffview = { active = false },
+  structlog = { active = true },
+  bbye = { active = true },
+  neoclip = { active = true },
+  auto_session = { active = true },
+  impatient = { active = true },
+  hop = { active = true },
+  telescope = { active = true },
+  telescope_fzf = { active = true },
+  telescope_ui_select = { active = true },
+  telescope_tmux = { active = true },
+  telescope_frecency = { active = true },
+  telescope_dap = { active = true },
+  telescope_file_browser = { active = true },
+  -- TODO: handle these later
+  glow = { active = false },
+  doge = { active = false },
+  dadbod = { active = false },
+  restconsole = { active = false },
+  markdown_preview = { active = true },
+}
+
 local utils = require "user.utils"
 
 tools["sindrets/diffview.nvim"] = {
   event = "BufReadPre",
   config = utils.load_conf("tools", "diff_view"),
-  disable = not rvim.plugin.diffview.active,
+  disable = not rvim.plugins.tools.diffview.active,
 }
 
 tools["mbbill/undotree"] = {
@@ -16,18 +44,18 @@ tools["mbbill/undotree"] = {
       ["<leader>u"] = { ":UndotreeToggle<cr>", "toggle undotree" },
     }
   end,
-  disable = not rvim.plugin.undotree.active,
+  disable = not rvim.plugins.tools.undotree.active,
 }
 
 tools["ahmedkhalf/project.nvim"] = {
   config = utils.load_conf("tools", "project"),
-  disable = not rvim.plugin.project.active,
+  disable = not rvim.plugins.tools.project.active,
 }
 
 tools["npxbr/glow.nvim"] = {
   run = ":GlowInstall",
   branch = "main",
-  disable = not rvim.plugin.glow.active,
+  disable = not rvim.plugins.tools.glow.active,
 }
 
 tools["kkoomen/vim-doge"] = {
@@ -39,7 +67,7 @@ tools["kkoomen/vim-doge"] = {
       ["<leader>lD"] = "DOGe",
     }
   end,
-  disable = not rvim.plugin.doge.active,
+  disable = not rvim.plugins.tools.doge.active,
 }
 
 tools["numToStr/FTerm.nvim"] = {
@@ -77,7 +105,7 @@ tools["numToStr/FTerm.nvim"] = {
       },
     }
   end,
-  disable = not rvim.plugin.fterm.active,
+  disable = not rvim.plugins.tools.fterm.active,
 }
 
 tools["MattesGroeger/vim-bookmarks"] = {
@@ -94,12 +122,12 @@ tools["MattesGroeger/vim-bookmarks"] = {
       },
     }
   end,
-  disable = not rvim.plugin.bookmarks.active,
+  disable = not rvim.plugins.tools.bookmarks.active,
 }
 
 tools["diepm/vim-rest-console"] = {
   event = "VimEnter",
-  disable = not rvim.plugin.restconsole.active,
+  disable = not rvim.plugins.tools.restconsole.active,
 }
 
 tools["iamcco/markdown-preview.nvim"] = {
@@ -109,7 +137,7 @@ tools["iamcco/markdown-preview.nvim"] = {
     vim.g.mkdp_auto_start = 0
     vim.g.mkdp_auto_close = 1
   end,
-  disable = not rvim.plugin.markdown_preview.active,
+  disable = not rvim.plugins.tools.markdown_preview.active,
 }
 
 tools["brooth/far.vim"] = {
@@ -125,11 +153,11 @@ tools["brooth/far.vim"] = {
       ["<leader>Fu"] = { ":Farundo<cr>", "far: undo" },
     }
   end,
-  disable = not rvim.plugin.far.active,
+  disable = not rvim.plugins.tools.far.active,
 }
 
 tools["Tastyep/structlog.nvim"] = {
-  disable = not rvim.plugin.structlog.active,
+  disable = not rvim.plugins.tools.structlog.active,
 }
 
 tools["AckslD/nvim-neoclip.lua"] = {
@@ -150,39 +178,39 @@ tools["AckslD/nvim-neoclip.lua"] = {
       ["<leader>fN"] = { clip, "neoclip: open yank history" },
     }
   end,
-  disable = not rvim.plugin.neoclip.active,
+  disable = not rvim.plugins.tools.neoclip.active,
 }
 
 tools["nvim-telescope/telescope.nvim"] = {
   config = utils.load_conf("tools", "telescope"),
-  disable = not rvim.plugin.telescope.active,
+  disable = not rvim.plugins.tools.telescope.active,
 }
 
 tools["nvim-telescope/telescope-fzf-native.nvim"] = {
   run = "make",
-  disable = not rvim.plugin.telescope_fzf.active,
+  disable = not rvim.plugins.tools.telescope_fzf.active,
 }
 
 tools["nvim-telescope/telescope-ui-select.nvim"] = {
-  disable = not rvim.plugin.telescope_ui_select.active,
+  disable = not rvim.plugins.tools.telescope_ui_select.active,
 }
 
 tools["camgraff/telescope-tmux.nvim"] = {
-  disable = not rvim.plugin.telescope_ui_select.active,
+  disable = not rvim.plugins.tools.telescope_ui_select.active,
 }
 
-tools["tami5/sqlite.lua"] = { disable = not rvim.plugin.telescope_frecency.active }
+tools["tami5/sqlite.lua"] = { disable = not rvim.plugins.tools.telescope_frecency.active }
 
 tools["nvim-telescope/telescope-frecency.nvim"] = {
-  disable = not rvim.plugin.telescope_frecency.active,
+  disable = not rvim.plugins.tools.telescope_frecency.active,
 }
 
 tools["nvim-telescope/telescope-dap.nvim"] = {
-  disable = not rvim.plugin.telescope_dap.active,
+  disable = not rvim.plugins.tools.telescope_dap.active,
 }
 
 tools["nvim-telescope/telescope-file-browser.nvim"] = {
-  disable = not rvim.plugin.telescope_file_browser.active,
+  disable = not rvim.plugins.tools.telescope_file_browser.active,
 }
 
 tools["rmagatti/auto-session"] = {
@@ -200,7 +228,7 @@ tools["rmagatti/auto-session"] = {
       },
     }
   end,
-  disable = not rvim.plugin.dressing.active,
+  disable = not rvim.plugins.tools.auto_session.active,
 }
 
 tools["phaazon/hop.nvim"] = {
@@ -243,11 +271,22 @@ tools["phaazon/hop.nvim"] = {
       }
     end)
   end,
-  disable = not rvim.plugin.hop.active,
+  disable = not rvim.plugins.tools.hop.active,
 }
 
 tools["lewis6991/impatient.nvim"] = {
-  disable = not rvim.plugin.impatient.active,
+  disable = not rvim.plugins.tools.impatient.active,
+}
+
+tools["moll/vim-bbye"] = {
+  config = function()
+    require("which-key").register {
+      ["<leader>c"] = { ":Bdelete<cr>", "close buffer" },
+      ["<leader>bx"] = { ":bufdo :Bdelete<cr>", "close all buffers" },
+      ["<leader>q"] = { "<Cmd>Bwipeout<CR>", "wipe buffer" },
+    }
+  end,
+  disable = not rvim.plugins.tools.bbye.active,
 }
 
 return tools

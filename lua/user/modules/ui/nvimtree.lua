@@ -129,7 +129,7 @@ return function()
   end
 
   -- Implicitly update nvim-tree when project module is active
-  if rvim.plugin.project.active then
+  if rvim.plugins.tools.project.active then
     rvim.nvimtree.respect_buf_cwd = 1
     rvim.nvimtree.setup.update_cwd = true
     rvim.nvimtree.setup.disable_netrw = false

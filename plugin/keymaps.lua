@@ -374,7 +374,7 @@ end, {
 })
 
 -- Bufferlline
-if not rvim.plugin.bufferline.active then
+if not rvim.plugins.ui.bufferline.active then
   nnoremap("<S-l>", ":bnext<CR>")
   nnoremap("<S-h>", ":bprevious<CR>")
 end

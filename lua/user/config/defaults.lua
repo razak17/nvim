@@ -1,6 +1,10 @@
 return {
   leader = "space",
   localleader = "space",
+  plugins = {
+    SANE = true,
+    packer = { active = true },
+  },
   transparent_window = false,
   line_wrap_cursor_movement = false,
   snippets_dir = join_paths(rvim.get_config_dir(), "snippets"),

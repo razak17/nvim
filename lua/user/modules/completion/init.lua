@@ -1,10 +1,20 @@
 local completion = {}
 
+rvim.plugins.completion = {
+  which_key = { active = true },
+  plenary = { active = true },
+  popup = { active = true },
+  cmp = { active = true },
+  vsnip = { active = true },
+  emmet = { active = true },
+  friendly_snippets = { active = true },
+}
+
 local utils = require "user.utils"
 
 completion["folke/which-key.nvim"] = {
   config = utils.load_conf("completion", "which_key"),
-  disable = not rvim.plugin.which_key.active,
+  disable = not rvim.plugins.completion.which_key.active,
 }
 
 completion["mattn/emmet-vim"] = {
@@ -15,7 +25,7 @@ completion["mattn/emmet-vim"] = {
     vim.g.user_emmet_mode = "i"
     vim.cmd "autocmd FileType html,css EmmetInstall"
   end,
-  disable = not rvim.plugin.emmet.active,
+  disable = not rvim.plugins.completion.emmet.active,
 }
 
 completion["hrsh7th/nvim-cmp"] = {
@@ -38,7 +48,7 @@ completion["hrsh7th/nvim-cmp"] = {
     },
   },
   config = utils.load_conf("completion", "cmp"),
-  disable = not rvim.plugin.cmp.active,
+  disable = not rvim.plugins.completion.cmp.active,
 }
 
 completion["hrsh7th/vim-vsnip"] = {
@@ -61,16 +71,16 @@ completion["hrsh7th/vim-vsnip"] = {
 
     require("which-key").register { ["<leader>S"] = { ":VsnipOpen<CR> 1<CR><CR>", "edit snippet" } }
   end,
-  disable = not rvim.plugin.vsnip.active,
+  disable = not rvim.plugins.completion.vsnip.active,
 }
 
 completion["rafamadriz/friendly-snippets"] = {
   event = "InsertEnter",
-  disable = not rvim.plugin.friendly_snippets.active,
+  disable = not rvim.plugins.completion.friendly_snippets.active,
 }
 
-completion["nvim-lua/plenary.nvim"] = { disable = not rvim.plugin.plenary.active }
+completion["nvim-lua/plenary.nvim"] = { disable = not rvim.plugins.completion.plenary.active }
 
-completion["nvim-lua/popup.nvim"] = { disable = not rvim.plugin.popup.active }
+completion["nvim-lua/popup.nvim"] = { disable = not rvim.plugins.completion.popup.active }
 
 return completion

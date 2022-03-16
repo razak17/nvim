@@ -1,15 +1,46 @@
 local lang = {}
 
+rvim.plugins.lang = {
+  -- debug
+  dap = { active = true },
+  dap_ui = { active = true },
+  dap_install = { active = true },
+  osv = { active = false },
+  nvim_dap_virtual_text = { active = true },
+  -- lsp
+  lspconfig = { active = true },
+  lsp_installer = { active = true },
+  fix_cursorhold = { active = true },
+  nlsp = { active = true },
+  null_ls = { active = true },
+  lightbulb = { active = false },
+  symbols_outline = { active = false },
+  bqf = { active = false },
+  trouble = { active = true },
+  rust_tools = { active = true },
+  schemastore = { active = true },
+  lsp_signature = { active = true },
+  spellsitter = { active = true },
+  -- treesitter
+  treesitter = { active = true },
+  playground = { active = true },
+  autopairs = { active = true },
+  rainbow = { active = false },
+  autotag = { active = true },
+  matchup = { active = false },
+}
+
 local utils = require "user.utils"
 
 -- Debugging
 lang["mfussenegger/nvim-dap"] = {
   config = utils.load_conf("user", "dap"),
-  disable = not rvim.plugin.dap.active,
+  disable = not rvim.plugins.lang.dap.active,
 }
 
+-- Dap
 lang["Pocco81/DAPInstall.nvim"] = {
-  disable = not rvim.plugin.dap_install.active,
+  disable = not rvim.plugins.lang.dap_install.active,
 }
 
 lang["jbyuki/one-small-step-for-vimkind"] = {
@@ -24,7 +55,7 @@ lang["jbyuki/one-small-step-for-vimkind"] = {
       ["<leader>dL"] = "osv launch",
     }
   end,
-  disable = not rvim.plugin.osv.active,
+  disable = not rvim.plugins.lang.osv.active,
 }
 
 lang["theHamsta/nvim-dap-virtual-text"] = {
@@ -36,7 +67,7 @@ lang["theHamsta/nvim-dap-virtual-text"] = {
       all_frames = true, -- show virtual text for all stack frames not only current. Only works for debugpy on my machine.
     }
   end,
-  disable = not rvim.plugin.nvim_dap_virtual_text.active,
+  disable = not rvim.plugins.lang.nvim_dap_virtual_text.active,
 }
 
 -- Lsp
@@ -44,23 +75,23 @@ lang["williamboman/nvim-lsp-installer"] = {
   requires = {
     "neovim/nvim-lspconfig",
   },
-  disable = not rvim.plugin.lsp_installer.active,
+  disable = not rvim.plugins.lang.lsp_installer.active,
 }
 
 lang["antoinemadec/FixCursorHold.nvim"] = {
-  disable = not rvim.plugin.fix_cursorhold.active,
+  disable = not rvim.plugins.lang.fix_cursorhold.active,
 }
 
 lang["neovim/nvim-lspconfig"] = {
-  disable = not rvim.plugin.lspconfig.active,
+  disable = not rvim.plugins.lang.lspconfig.active,
 }
 
 lang["tamago324/nlsp-settings.nvim"] = {
-  disable = not rvim.plugin.nlsp.active,
+  disable = not rvim.plugins.lang.nlsp.active,
 }
 
 lang["jose-elias-alvarez/null-ls.nvim"] = {
-  disable = not rvim.plugin.null_ls.active,
+  disable = not rvim.plugins.lang.null_ls.active,
 }
 
 lang["kosayoda/nvim-lightbulb"] = {
@@ -79,7 +110,7 @@ lang["kosayoda/nvim-lightbulb"] = {
       },
     })
   end,
-  disable = not rvim.plugin.lightbulb.active,
+  disable = not rvim.plugins.lang.lightbulb.active,
 }
 
 lang["simrat39/symbols-outline.nvim"] = {
@@ -88,7 +119,7 @@ lang["simrat39/symbols-outline.nvim"] = {
   config = function()
     require("symbols-outline").setup { show_guides = true }
   end,
-  disable = not rvim.plugin.symbols_outline.active,
+  disable = not rvim.plugins.lang.symbols_outline.active,
 }
 
 lang["folke/trouble.nvim"] = {
@@ -117,7 +148,7 @@ lang["folke/trouble.nvim"] = {
     end)
     trouble.setup { auto_close = true, auto_preview = false, use_diagnostic_signs = true }
   end,
-  disable = not rvim.plugin.trouble.active,
+  disable = not rvim.plugins.lang.trouble.active,
 }
 
 lang["kevinhwang91/nvim-bqf"] = {
@@ -127,14 +158,14 @@ lang["kevinhwang91/nvim-bqf"] = {
       preview = { border_chars = { "│", "│", "─", "─", "┌", "┐", "└", "┘", "█" } },
     }
   end,
-  disable = not rvim.plugin.bqf.active,
+  disable = not rvim.plugins.lang.bqf.active,
 }
 
 -- Treesitter
 lang["nvim-treesitter/nvim-treesitter"] = {
   branch = vim.fn.has "nvim-0.6" == 1 and "master" or "0.5-compat",
   config = utils.load_conf("lang", "treesitter"),
-  disable = not rvim.plugin.treesitter.active,
+  disable = not rvim.plugins.lang.treesitter.active,
 }
 
 lang["nvim-treesitter/playground"] = {
@@ -148,12 +179,12 @@ lang["nvim-treesitter/playground"] = {
   config = function()
     rvim.nnoremap("<leader>LE", "<Cmd>TSHighlightCapturesUnderCursor<CR>")
   end,
-  disable = not rvim.plugin.playground.active,
+  disable = not rvim.plugins.lang.playground.active,
 }
 
 lang["p00f/nvim-ts-rainbow"] = {
   after = "nvim-treesitter",
-  disable = not rvim.plugin.rainbow.active,
+  disable = not rvim.plugins.lang.rainbow.active,
 }
 
 lang["andymass/vim-matchup"] = {
@@ -164,27 +195,27 @@ lang["andymass/vim-matchup"] = {
       ["<leader>l?"] = "where am i",
     }
   end,
-  disable = not rvim.plugin.matchup.active,
+  disable = not rvim.plugins.lang.matchup.active,
 }
 
 lang["windwp/nvim-ts-autotag"] = {
   after = "nvim-treesitter",
-  disable = not rvim.plugin.autotag.active,
+  disable = not rvim.plugins.lang.autotag.active,
 }
 
 lang["windwp/nvim-autopairs"] = {
   event = "InsertEnter",
   after = { "telescope.nvim", "nvim-treesitter" },
   config = utils.load_conf("lang", "autopairs"),
-  disable = not rvim.plugin.autopairs.active,
+  disable = not rvim.plugins.lang.autopairs.active,
 }
 
 lang["razak17/rust-tools.nvim"] = {
-  disable = not rvim.plugin.rust_tools.active,
+  disable = not rvim.plugins.lang.rust_tools.active,
 }
 
 lang["b0o/schemastore.nvim"] = {
-  disable = not rvim.plugin.schemastore.active,
+  disable = not rvim.plugins.lang.schemastore.active,
 }
 
 lang["ray-x/lsp_signature.nvim"] = {
@@ -199,7 +230,7 @@ lang["ray-x/lsp_signature.nvim"] = {
       handler_opts = { border = "rounded" },
     }
   end,
-  disable = not rvim.plugin.lsp_signature.active,
+  disable = not rvim.plugins.lang.lsp_signature.active,
 }
 
 lang["lewis6991/spellsitter.nvim"] = {
@@ -208,7 +239,7 @@ lang["lewis6991/spellsitter.nvim"] = {
       enable = true,
     }
   end,
-  disable = not rvim.plugin.spellsitter.active,
+  disable = not rvim.plugins.lang.spellsitter.active,
 }
 
 return lang

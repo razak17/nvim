@@ -86,7 +86,7 @@ return function()
     end
 
     -- git
-    if rvim.plugin.telescope.active and rvim.plugin.git_signs.active then
+    if rvim.plugins.tools.telescope.active and rvim.plugins.ui.git_signs.active then
       key_maps.g = plugin_keymaps.git
     end
 
@@ -96,7 +96,7 @@ return function()
     end
 
     -- packer
-    if rvim.plugin.packer.active then
+    if rvim.plugins.packer.active then
       key_maps.p = plugin_keymaps.packer
     end
 
