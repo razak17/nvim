@@ -38,6 +38,7 @@ return {
   fold_cycle = { active = false },
   cursorword = { active = false },
   surround_funk = { active = true },
+  better_diagraphs = { active = true },
   -- tools
   fterm = { active = true },
   far = { active = true },
@@ -52,6 +53,13 @@ return {
   auto_session = { active = true },
   impatient = { active = true },
   hop = { active = true },
+  telescope = { active = true },
+  telescope_fzf = { active = true },
+  telescope_ui_select = { active = true },
+  telescope_tmux = { active = true },
+  telescope_frecency = { active = true },
+  telescope_dap = { active = true },
+  telescope_file_browser = { active = true },
   -- TODO: handle these later
   glow = { active = false },
   doge = { active = false },
@@ -75,11 +83,4 @@ return {
   vsnip = { active = true },
   emmet = { active = true },
   friendly_snippets = { active = true },
-  telescope = { active = true },
-  telescope_fzf = { active = true },
-  telescope_ui_select = { active = true },
-  telescope_tmux = { active = true },
-  telescope_frecency = { active = true },
-  telescope_dap = { active = true },
-  telescope_file_browser = { active = true },
 }

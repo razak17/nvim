@@ -179,4 +179,20 @@ editor["Matt-A-Bennett/vim-surround-funk"] = {
   disable = not rvim.plugin.surround_funk.active,
 }
 
+editor["protex/better-digraphs.nvim"] = {
+  keys = { { "i", "<C-k><C-k>" } },
+  config = function()
+    rvim.inoremap("<C-k><C-k>", function()
+      require("betterdigraphs").digraphs "i"
+    end)
+    rvim.nnoremap("r<C-k><C-k>", function()
+      require("betterdigraphs").digraphs "r"
+    end)
+    rvim.vnoremap("r<C-k><C-k>", function()
+      require("betterdigraphs").digraphs "gvr"
+    end)
+  end,
+  disable = not rvim.plugin.better_diagraphs.active,
+}
+
 return editor
