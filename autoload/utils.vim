@@ -153,13 +153,6 @@ function! utils#auto_resize(...)
   endif
 endfunction
 
-" create a go doc comment based on the word under the cursor
-function! utils#create_go_doc_comment()
-  norm "zyiw
-  execute ":put! z"
-  execute ":norm I// \<Esc>$"
-endfunction
-
 function! utils#tab_message(cmd)
   redir => message
   silent execute a:cmd
