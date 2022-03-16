@@ -179,6 +179,7 @@ editor["Matt-A-Bennett/vim-surround-funk"] = {
   disable = not rvim.plugin.surround_funk.active,
 }
 
+-- CR not working properly
 editor["protex/better-digraphs.nvim"] = {
   keys = { { "i", "<C-k><C-k>" } },
   config = function()

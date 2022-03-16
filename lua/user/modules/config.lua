@@ -38,7 +38,7 @@ return {
   fold_cycle = { active = false },
   cursorword = { active = false },
   surround_funk = { active = true },
-  better_diagraphs = { active = true },
+  better_diagraphs = { active = false },
   -- tools
   fterm = { active = true },
   far = { active = true },
