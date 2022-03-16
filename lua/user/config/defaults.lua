@@ -10,55 +10,6 @@ return {
     ---@usage timeout number timeout in ms for the format request (Default: 1000)
     timeout = 1000,
   },
-  keymaps = {
-    ---@usage change or add keymappings for normal mode
-    nmap = {},
-
-    ---@usage change or add keymappings for visual block mode
-    xmap = {},
-
-    ---@usage change or add keymappings for insert mode
-    imap = {},
-
-    ---@usage change or add keymappings for visual mode
-    vmap = {},
-
-    ---@usage change or add keymappings for operator mode
-    omap = {},
-
-    ---@usage change or add keymappings for terminal mode
-    tmap = {},
-
-    ---@usage change or add keymappings for select mode
-    smap = {},
-
-    ---@usage change or add keymappings for command mode
-    cmap = {},
-
-    ---@usage change or add keymappings for recursive normal mode
-    nnoremap = {},
-
-    ---@usage change or add keymappings for recursive visual block mode
-    xnoremap = {},
-
-    ---@usage change or add keymappings for recursive insert mode
-    inoremap = {},
-
-    ---@usage change or add keymappings for recursive visual mode
-    vnoremap = {},
-
-    ---@usage change or add keymappings for recursive operator mode
-    onoremap = {},
-
-    ---@usage change or add keymappings for recursive terminal mode
-    tnoremap = {},
-
-    ---@usage change or add keymappings for recursive select mode
-    snoremap = {},
-
-    ---@usage change or add keymappings for recursive command mode
-    cnoremap = {},
-  },
   save_on_focus_lost = true,
   format_on_focus_lost = false,
   debug = false,
