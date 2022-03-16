@@ -65,9 +65,7 @@ return {
   },
   visual_mode = {
     ["/"] = "comment",
-    l = {
-      name = "+Lsp",
-    },
+    l = { name = "+Lsp" },
   },
   normal_mode = {
     ["]"] = {
