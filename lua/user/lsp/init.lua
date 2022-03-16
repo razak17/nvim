@@ -127,7 +127,7 @@ local function lsp_setup_tagfunc(client, bufnr)
   if not client.resolved_capabilities.goto_definition then
     return
   end
-  vim.bo[bufnr].tagfunc = "v:lua.rvim.lsp_tagfunc"
+  vim.bo[bufnr].tagfunc = "v:lua.rvim.lsp.tagfunc"
 end
 
 function M.global_capabilities()

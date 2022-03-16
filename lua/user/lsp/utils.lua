@@ -32,7 +32,7 @@ function M.conditional_document_highlight(id)
   vim.lsp.buf.document_highlight()
 end
 
-function rvim.lsp_tagfunc(pattern, flags)
+function rvim.lsp.tagfunc(pattern, flags)
   if flags ~= "c" then
     return vim.NIL
   end
