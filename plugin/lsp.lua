@@ -98,6 +98,3 @@ lsp.handlers["window/showMessage"] = function(_, result, ctx)
     end,
   })
 end
-
-local lsp_progress_notification = require("user.lsp.progress").lsp_progress_notification
-lsp.handlers["$/progress"] = lsp_progress_notification
