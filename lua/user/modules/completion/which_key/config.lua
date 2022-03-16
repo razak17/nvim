@@ -17,9 +17,9 @@ return {
     y = "yank",
     A = "select all",
     H = { ':h <C-R>=expand("<cword>")<cr><CR>', "help cword" },
-    D = "close all",
     S = "edit snippet",
     U = "capitalize word",
+    X = "close all",
     Y = "yank all",
     a = {
       name = "+Actions",
