@@ -81,7 +81,7 @@ rvim.augroup("PackerSetupInit", {
   {
     event = { "BufWritePost" },
     description = "Packer setup and reload",
-    pattern = { "*/user/modules/**/*.lua", "*/user/config/init.lua", "*/user/modules/config.lua" },
+    pattern = { "*/user/modules/**/*.lua", "*/user/config/init.lua" },
     command = function()
       for _, m in ipairs { "ui", "editor", "tools", "lang", "completion" } do
         rvim.invalidate(fmt("user.modules.%s", m), true)
