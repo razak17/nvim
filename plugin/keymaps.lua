@@ -296,11 +296,11 @@ nnoremap("<leader>nf", [[:e <C-R>=expand("%:p:h") . "/" <CR>]], noisy)
 nnoremap("<leader>ns", [[:vsp <C-R>=expand("%:p:h") . "/" <CR>]], noisy)
 
 -- Wrap
-nnoremap('<leader>"', [[ciw"<c-r>""<esc>]])
-nnoremap("<leader>`", [[ciw`<c-r>"`<esc>]])
-nnoremap("<leader>'", [[ciw'<c-r>"'<esc>]])
-nnoremap("<leader>)", [[ciw(<c-r>")<esc>]])
-nnoremap("<leader>}", [[ciw{<c-r>"}<esc>]])
+nnoremap('<leader>"', [[ciw"<c-r>""<esc>]], { label = "wrap double quotes" })
+nnoremap("<leader>`", [[ciw`<c-r>"`<esc>]], { label = "wrap backticks" })
+nnoremap("<leader>'", [[ciw'<c-r>"'<esc>]], { label = "wrap single quotes" })
+nnoremap("<leader>)", [[ciw(<c-r>")<esc>]], { label = "wrap parenthesis" })
+nnoremap("<leader>}", [[ciw{<c-r>"}<esc>]], { label = "wrap curly bracket" })
 
 -- Buffers - Del All Others
 nnoremap("<Leader>bc", function()
