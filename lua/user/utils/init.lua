@@ -43,8 +43,7 @@ end
 function M.turn_on_guides()
   vim.wo.number = true
   vim.wo.relativenumber = true
-  vim.wo.cursorline = true
-  vim.wo.signcolumn = "yes"
+  vim.wo.signcolumn = "auto:2-4"
   vim.wo.colorcolumn = "+1"
   vim.o.laststatus = 2
   vim.o.showtabline = 2
@@ -53,7 +52,6 @@ end
 function M.turn_off_guides()
   vim.wo.number = false
   vim.wo.relativenumber = false
-  vim.wo.cursorline = false
   vim.wo.signcolumn = "no"
   vim.wo.colorcolumn = ""
   vim.o.laststatus = 0
