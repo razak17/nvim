@@ -62,6 +62,7 @@ ui["rcarriga/nvim-notify"] = {
 
 ui["stevearc/dressing.nvim"] = {
   config = function()
+    require("zephyr.util").plugin("dressing", { "FloatTitle", { inherit = "Normal", bold = true } })
     require("dressing").setup {
       input = {
         winblend = 2,
@@ -69,8 +70,13 @@ ui["stevearc/dressing.nvim"] = {
       },
       select = {
         winblend = 2,
-        telescope = {
-          theme = "dropdown",
+        telescope = require("telescope.themes").get_cursor {
+          layout_config = {
+            height = function(self, _, max_lines)
+              local results = #self.finder.results
+              return (results <= max_lines and results or max_lines - 10) + 4 -- 4 is the size of the window
+            end,
+          },
         },
       },
     }
