@@ -162,6 +162,11 @@ editor["b3nj5m1n/kommentary"] = {
 editor["Matt-A-Bennett/vim-surround-funk"] = {
   config = function()
     vim.g.surround_funk_create_mappings = 0
+    local map = vim.keymap.set
+    -- operator pending mode: grip surround
+    map({ "n", "v" }, "gs", "<Plug>(GripSurroundObject)")
+    map({ "n", "v" }, "gS", "<Plug>(GripSurroundObjectNoPaste)")
+    map({ "o", "x" }, "sF", "<Plug>(SelectWholeFUNCTION)")
     require("which-key").register {
       ["<leader>d"] = {
         name = "+dsf: delete",
