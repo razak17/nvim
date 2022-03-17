@@ -63,3 +63,7 @@ str
 ord
 json
 dir
+lang
+init
+www
+BufEnter
