@@ -87,6 +87,7 @@ rvim.augroup("PackerSetupInit", {
         rvim.invalidate(fmt("user.modules.%s", m), true)
       end
       plugins.ensure_installed()
+      plugins.install()
       plugins.compile()
       require "_compiled_rolling"
     end,
