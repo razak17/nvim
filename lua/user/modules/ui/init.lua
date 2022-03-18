@@ -71,7 +71,6 @@ ui["stevearc/dressing.nvim"] = {
         insert_only = false,
       },
       select = {
-        winblend = 2,
         telescope = require("telescope.themes").get_cursor {
           layout_config = {
             height = function(self, _, max_lines)

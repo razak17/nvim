@@ -168,7 +168,7 @@ editor["Matt-A-Bennett/vim-surround-funk"] = {
     map({ "n", "v" }, "gS", "<Plug>(GripSurroundObjectNoPaste)")
     map({ "o", "x" }, "sF", "<Plug>(SelectWholeFUNCTION)")
     require("which-key").register {
-      ["<leader>d"] = {
+      ["<leader>r"] = {
         name = "+dsf: delete",
         s = {
           F = { "<Plug>(DeleteSurroundingFunction)", "delete surrounding function" },
