@@ -11,6 +11,8 @@ rvim.plugins.ui = {
   nvim_notify = { active = true },
   dressing = { active = true },
   headlines = { active = true },
+  specs = { active = true },
+  dim = { active = true },
 }
 
 local utils = require "user.utils"
@@ -125,6 +127,7 @@ ui["edluffy/specs.nvim"] = {
       },
     }
   end,
+  disable = not rvim.plugins.ui.specs.active,
 }
 
 ui["narutoxy/dim.lua"] = {
@@ -134,6 +137,7 @@ ui["narutoxy/dim.lua"] = {
       disable_lsp_decorations = true,
     }
   end,
+  disable = not rvim.plugins.ui.dim.active,
 }
 
 return ui
