@@ -57,6 +57,7 @@ return {
   magenta = "#c678dd",
   teal = "#15aabf",
   grey = "#928374",
+  dark_grey = "#3E4556",
   brown = "#c78665",
   black = "#000000",
 
