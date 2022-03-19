@@ -218,6 +218,9 @@ xnoremap(
 -- QuickRun
 nnoremap("<C-b>", ":QuickRun<CR>")
 
+-- Quit
+nnoremap("<leader>x", ":q!<cr>", { label = "quit" })
+
 -- Alternate way to save
 nnoremap("<C-s>", ":silent! write<CR>")
 
