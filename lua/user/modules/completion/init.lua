@@ -39,6 +39,7 @@ completion["hrsh7th/nvim-cmp"] = {
     { "f3fora/cmp-spell", after = "nvim-cmp" },
     { "hrsh7th/cmp-emoji", after = "nvim-cmp" },
     { "octaltree/cmp-look", after = "nvim-cmp" },
+    { "tzachar/cmp-tabnine", run = "./install.sh", after = "nvim-cmp" },
     {
       "petertriho/cmp-git",
       after = "nvim-cmp",

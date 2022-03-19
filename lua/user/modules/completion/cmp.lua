@@ -91,6 +91,7 @@ return function()
           vsnip = "(Snippet)",
           path = "(Path)",
           buffer = "(Buffer)",
+          cmp_tabnine = "(TN)",
           spell = "(Spell)",
           cmp_git = "(Git)",
           calc = "(Calc)",
@@ -106,7 +107,16 @@ return function()
         duplicates_default = 0,
         format = function(entry, vim_item)
           vim_item.kind = rvim.kind_icons[vim_item.kind]
-          vim_item.menu = rvim.cmp.setup.formatting.source_names[entry.source.name]
+          local name = entry.source.name
+          local completion = entry.completion_item.data
+          local menu = rvim.cmp.setup.formatting.source_names[entry.source.name]
+          if name == "cmp_tabnine" then
+            if completion and completion.detail then
+              menu = completion.detail .. " " .. menu
+            end
+            vim_item.kind = ""
+          end
+          vim_item.menu = menu
           vim_item.dup = rvim.cmp.setup.formatting.duplicates[entry.source.name]
             or rvim.cmp.setup.formatting.duplicates_default
           return vim_item
@@ -126,6 +136,7 @@ return function()
         { name = "vsnip" },
         { name = "path" },
         { name = "buffer" },
+        { name = "cmp_tabnine" },
         { name = "spell" },
         { name = "cmp_git" },
         { name = "calc" },
