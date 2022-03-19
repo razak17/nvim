@@ -105,6 +105,7 @@ ui["lukas-reineke/headlines.nvim"] = {
       yaml = {
         dash_pattern = "^---+$",
         dash_highlight = "Dash",
+        dash_string = "-",
       },
     }
   end,
