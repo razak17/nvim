@@ -93,7 +93,7 @@ return function()
           buffer = "(Buffer)",
           cmp_tabnine = "(TN)",
           spell = "(Spell)",
-          cmdline = '(Command)',
+          cmdline = "(Command)",
           cmp_git = "(Git)",
           calc = "(Calc)",
           emoji = "(Emoji)",
@@ -143,7 +143,7 @@ return function()
         { name = "calc" },
         { name = "emoji" },
         { name = "look" },
-        { name = 'nvim_lsp_document_symbol' }
+        { name = "nvim_lsp_document_symbol" },
       },
       mapping = {
         ["<C-k>"] = cmp.mapping.select_prev_item(),
@@ -208,7 +208,7 @@ return function()
     sources = cmp.config.sources({
       { name = "fuzzy_path" },
     }, {
-      { name = "cmdline" },
+      { name = "cmdline", keyword_pattern = [=[[^[:blank:]\!]*]=] },
     }),
   })
 end
