@@ -154,6 +154,7 @@ return function()
         { name = "cmp_git" },
         { name = "nvim_lua" },
         { name = "calc" },
+        { name = "emoji" },
       },
       mapping = {
         ["<C-k>"] = cmp.mapping.select_prev_item(),
