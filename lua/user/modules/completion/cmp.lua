@@ -83,6 +83,7 @@ return function()
         native_menu = false,
       },
       formatting = {
+        deprecated = true,
         fields = { "kind", "abbr", "menu" },
         kind_icons = {
           Class = " ",
@@ -113,13 +114,15 @@ return function()
         },
         source_names = {
           nvim_lsp = "(LSP)",
-          emoji = "(Emoji)",
-          path = "(Path)",
-          calc = "(Calc)",
-          cmp_tabnine = "(Tabnine)",
+          nvim_lua = "(Lua)",
           vsnip = "(Snippet)",
+          path = "(Path)",
           buffer = "(Buffer)",
           spell = "(Spell)",
+          cmp_git = "(Git)",
+          calc = "(Calc)",
+          emoji = "(Emoji)",
+          look = "(Look)",
         },
         duplicates = {
           buffer = 1,
@@ -146,15 +149,15 @@ return function()
       },
       sources = {
         { name = "nvim_lsp" },
+        { name = "nvim_lua" },
         { name = "vsnip" },
         { name = "path" },
         { name = "buffer" },
-        { name = "treesitter" },
         { name = "spell" },
         { name = "cmp_git" },
-        { name = "nvim_lua" },
         { name = "calc" },
         { name = "emoji" },
+        { name = "look" },
       },
       mapping = {
         ["<C-k>"] = cmp.mapping.select_prev_item(),
