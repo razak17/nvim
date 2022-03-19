@@ -199,7 +199,9 @@ tools["camgraff/telescope-tmux.nvim"] = {
   disable = not rvim.plugins.tools.telescope_ui_select.active,
 }
 
-tools["tami5/sqlite.lua"] = { disable = not rvim.plugins.tools.telescope_frecency.active }
+tools["tami5/sqlite.lua"] = {
+  disable = not rvim.plugins.tools.telescope_frecency.active,
+}
 
 tools["nvim-telescope/telescope-frecency.nvim"] = {
   disable = not rvim.plugins.tools.telescope_frecency.active,
@@ -287,6 +289,31 @@ tools["moll/vim-bbye"] = {
     }
   end,
   disable = not rvim.plugins.tools.bbye.active,
+}
+
+tools["folke/todo-comments.nvim"] = {
+  requires = "nvim-lua/plenary.nvim",
+  config = function()
+    -- this plugin is not safe to reload
+    if vim.g.packer_compiled_loaded then
+      return
+    end
+    require("todo-comments").setup {
+      highlight = {
+        exclude = { "org", "orgagenda", "vimwiki", "markdown" },
+      },
+    }
+    require("which-key").register {
+      ["<leader>tt"] = {
+        "<Cmd>TodoTrouble<CR>",
+        "trouble: todos",
+      },
+      ["<leader>tf"] = {
+        "<Cmd>TodoTelescope<CR>",
+        "telescope: todos",
+      },
+    }
+  end,
 }
 
 return tools
