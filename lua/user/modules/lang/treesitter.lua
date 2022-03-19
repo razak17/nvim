@@ -54,6 +54,49 @@ return function()
         node_decremental = "<S-TAB>",
       },
     },
+    textobjects = {
+      lookahead = true,
+      select = {
+        enable = true,
+        keymaps = {
+          ["af"] = "@function.outer",
+          ["if"] = "@function.inner",
+          ["ac"] = "@class.outer",
+          ["ic"] = "@class.inner",
+          ["aC"] = "@conditional.outer",
+          ["iC"] = "@conditional.inner",
+        },
+      },
+      swap = {
+        enable = true,
+        swap_next = {
+          ["[w"] = "@parameter.inner",
+        },
+        swap_previous = {
+          ["]w"] = "@parameter.inner",
+        },
+      },
+      move = {
+        enable = true,
+        set_jumps = true, -- whether to set jumps in the jumplist
+        goto_next_start = {
+          ["]m"] = "@function.outer",
+          ["]]"] = "@class.outer",
+        },
+        goto_previous_start = {
+          ["[m"] = "@function.outer",
+          ["[["] = "@class.outer",
+        },
+      },
+      lsp_interop = {
+        enable = true,
+        border = "rounded",
+        peek_definition_code = {
+          ["<leader>df"] = "@function.outer",
+          ["<leader>dF"] = "@class.outer",
+        },
+      },
+    },
     indent = { enable = { "javascriptreact" } },
     autotag = { enable = rvim.plugins.lang.autotag.active, filetypes = { "html", "xml" } },
     matchup = { enable = rvim.plugins.lang.matchup.active, disable = { "c", "python" } },

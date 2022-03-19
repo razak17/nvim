@@ -28,6 +28,7 @@ rvim.plugins.lang = {
   rainbow = { active = false },
   autotag = { active = true },
   matchup = { active = false },
+  textobjects = { active = true },
 }
 
 local utils = require "user.utils"
@@ -202,6 +203,11 @@ lang["nvim-treesitter/playground"] = {
     rvim.nnoremap("<leader>LE", "<Cmd>TSHighlightCapturesUnderCursor<CR>")
   end,
   disable = not rvim.plugins.lang.playground.active,
+}
+
+lang["nvim-treesitter/nvim-treesitter-textobjects"] = {
+  after = "nvim-treesitter",
+  disable = not rvim.plugins.lang.textobjects.active,
 }
 
 lang["p00f/nvim-ts-rainbow"] = {
