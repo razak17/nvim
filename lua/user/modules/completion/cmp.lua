@@ -85,33 +85,6 @@ return function()
       formatting = {
         deprecated = true,
         fields = { "kind", "abbr", "menu" },
-        kind_icons = {
-          Class = " ",
-          Color = " ",
-          Constant = "ﲀ ",
-          Constructor = " ",
-          Enum = "練",
-          EnumMember = " ",
-          Event = " ",
-          Field = " ",
-          File = "",
-          Folder = " ",
-          Function = " ",
-          Interface = "ﰮ ",
-          Keyword = " ",
-          Method = " ",
-          Module = " ",
-          Operator = "",
-          Property = " ",
-          Reference = " ",
-          Snippet = " ",
-          Struct = " ",
-          Text = " ",
-          TypeParameter = " ",
-          Unit = "塞",
-          Value = " ",
-          Variable = " ",
-        },
         source_names = {
           nvim_lsp = "(LSP)",
           nvim_lua = "(Lua)",
@@ -132,7 +105,7 @@ return function()
         },
         duplicates_default = 0,
         format = function(entry, vim_item)
-          vim_item.kind = rvim.cmp.setup.formatting.kind_icons[vim_item.kind]
+          vim_item.kind = rvim.kind_icons[vim_item.kind]
           vim_item.menu = rvim.cmp.setup.formatting.source_names[entry.source.name]
           vim_item.dup = rvim.cmp.setup.formatting.duplicates[entry.source.name]
             or rvim.cmp.setup.formatting.duplicates_default
