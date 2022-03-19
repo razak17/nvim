@@ -38,7 +38,28 @@ lang["mfussenegger/nvim-dap"] = {
   disable = not rvim.plugins.lang.dap.active,
 }
 
--- Dap
+lang["rcarriga/nvim-dap-ui"] = {
+  after = "nvim-dap",
+  config = function()
+    local dapui = require "dapui"
+    dapui.setup()
+    rvim.nnoremap("<localleader>dX", dapui.close, "dap-ui: close")
+    rvim.nnoremap("<localleader>dO", dapui.toggle, "dap-ui: toggle")
+    local dap = require "dap"
+    -- NOTE: this opens dap UI automatically when dap starts
+    -- dap.listeners.after.event_initialized['dapui_config'] = function()
+    --   dapui.open()
+    -- end
+    dap.listeners.before.event_terminated["dapui_config"] = function()
+      dapui.close()
+    end
+    dap.listeners.before.event_exited["dapui_config"] = function()
+      dapui.close()
+    end
+  end,
+  disable = not rvim.plugins.lang.dap_ui.active,
+}
+
 lang["Pocco81/DAPInstall.nvim"] = {
   disable = not rvim.plugins.lang.dap_install.active,
 }
@@ -52,6 +73,7 @@ lang["jbyuki/one-small-step-for-vimkind"] = {
 
     require("which-key").register {
       ["<leader>dE"] = "osv run this",
+      disable = not rvim.plugins.lang.dap.active,
       ["<leader>dL"] = "osv launch",
     }
   end,

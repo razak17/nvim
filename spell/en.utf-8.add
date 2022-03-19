@@ -68,3 +68,4 @@ init
 www
 BufEnter
 ui
+app

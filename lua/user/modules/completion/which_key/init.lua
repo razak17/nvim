@@ -80,10 +80,10 @@ return function()
     end
 
     -- dap ui
-    if rvim.plugin_loaded "nvim-dap-ui" then
-      key_maps.d.e = plugin_keymaps.dap_ui.toggle
-      key_maps.d.i = plugin_keymaps.dap_ui.inspect
-    end
+    -- if rvim.plugin_loaded "nvim-dap-ui" then
+    --   key_maps.d.e = plugin_keymaps.dap_ui.toggle
+    --   key_maps.d.i = plugin_keymaps.dap_ui.inspect
+    -- end
 
     -- git
     if rvim.plugins.tools.telescope.active and rvim.plugins.ui.git_signs.active then

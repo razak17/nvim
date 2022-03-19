@@ -99,6 +99,21 @@ function rvim._execute(id, args)
   rvim._store[id](args)
 end
 
+--- Check if a file or directory exists in this path
+function rvim._exists(file)
+  if file == "" or file == nil then
+    return false
+  end
+  local ok, err, code = os.rename(file, file)
+  if not ok then
+    if code == 13 then
+      -- Permission denied, but it exists
+      return true
+    end
+  end
+  return ok, err
+end
+
 ---@class Autocommand
 ---@field description string
 ---@field event  string[] list of autocommand events
