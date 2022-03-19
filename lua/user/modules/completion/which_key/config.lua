@@ -2,7 +2,6 @@ return {
   leader_mode = {
     ["?"] = "search word",
     S = "edit snippet",
-    X = "close all",
     a = {
       name = "+Actions",
       [";"] = "open terminal",
