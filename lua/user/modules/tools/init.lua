@@ -218,8 +218,8 @@ tools["rmagatti/auto-session"] = {
     require("auto-session").setup {
       log_level = "error",
       auto_session_root_dir = join_paths(rvim.get_cache_dir(), "session/auto/"),
+      auto_restore_enabled = false,
     }
-
     require("which-key").register {
       ["<leader>s"] = {
         name = "+Session",
