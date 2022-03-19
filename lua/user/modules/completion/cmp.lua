@@ -93,6 +93,7 @@ return function()
           buffer = "(Buffer)",
           cmp_tabnine = "(TN)",
           spell = "(Spell)",
+          cmdline = '(Command)',
           cmp_git = "(Git)",
           calc = "(Calc)",
           emoji = "(Emoji)",
@@ -142,6 +143,7 @@ return function()
         { name = "calc" },
         { name = "emoji" },
         { name = "look" },
+        { name = 'nvim_lsp_document_symbol' }
       },
       mapping = {
         ["<C-k>"] = cmp.mapping.select_prev_item(),
