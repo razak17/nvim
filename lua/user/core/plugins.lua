@@ -100,7 +100,7 @@ rvim.augroup("PackerSetupInit", {
     end,
   },
   --- Open a repository from an authorname/repository string
-  --- e.g. 'akinso/example-repo'
+  --- e.g. 'akinsho/example-repo'
   {
     event = { "BufEnter" },
     pattern = {
