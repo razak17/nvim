@@ -71,9 +71,11 @@ function plugins.load_compile()
 end
 
 function plugins.recompile()
+  for _, m in ipairs { "ui", "editor", "tools", "lang", "completion" } do
+    rvim.invalidate(fmt("user.modules.%s", m), true)
+  end
   Plug:load_packer()
   plugins.ensure_installed()
-  vim.cmd ":PlugCompiledDelete"
   plugins.install()
   plugins.compile()
   require "_compiled_rolling"
@@ -85,9 +87,6 @@ rvim.augroup("PackerSetupInit", {
     description = "Packer setup and reload",
     pattern = { "*/user/modules/**/*.lua", "*/user/config/init.lua" },
     command = function()
-      for _, m in ipairs { "ui", "editor", "tools", "lang", "completion" } do
-        rvim.invalidate(fmt("user.modules.%s", m), true)
-      end
       plugins.recompile()
     end,
   },

@@ -1,5 +1,6 @@
 local fn = vim.fn
 local uv = vim.loop
+local fmt = string.format
 
 local M = {}
 
@@ -66,7 +67,6 @@ function M.rename(name)
 end
 
 function M.load_conf(dir, name)
-  local fmt = string.format
   local module_dir = fmt("user.modules.%s", dir)
   if dir == "user" then
     return require(string.format(dir .. ".%s", name))
