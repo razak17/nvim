@@ -3,25 +3,18 @@ local fmt = string.format
 local api = vim.api
 local uv = vim.loop
 
------------------------------------------------------------------------------//
+----------------------------------------------------------------------------------------------------
 -- Global namespace
------------------------------------------------------------------------------//
---- Inspired by @tjdevries' astraunauta.nvim/ @TimUntersberger's config
---- store all callbacks in one global table so they are able to survive re-requiring this file
-
+----------------------------------------------------------------------------------------------------
 _G.__rvim_global_callbacks = __rvim_global_callbacks or {}
-
 _G.rvim = {
   _store = __rvim_global_callbacks,
-  --- work around to place functions in the global scope but namespaced within a table.
-  --- TODO: refactor this once nvim allows passing lua functions to mappings
+  -- some vim mappings require a mixture of commandline commands and function calls
+  -- this table is place to store lua functions to be called in those mappings
   mappings = {},
 }
 
--- inject keymaps helpers into the global namespace
-require "user.utils.keymaps"
-
----Join path segments that were passed as input
+---Join path segments that were passed rvim input
 ---@return string
 function _G.join_paths(...)
   local path_sep = uv.os_uname().version:match "Windows" and "\\" or "/"
@@ -31,18 +24,38 @@ end
 
 join_paths = _G.join_paths
 
------------------------------------------------------------------------------//
+----------------------------------------------------------------------------------------------------
 -- Debugging
------------------------------------------------------------------------------//
+----------------------------------------------------------------------------------------------------
+-- inspect the contents of an object very quickly
+-- in your code or from the command-line:
+-- @see: https://www.reddit.com/r/neovim/comments/p84iu2/useful_functions_to_explore_lua_objects/
+-- USAGE:
+-- in lua: `P({1, 2, 3})`
+-- in commandline: `:lua P(vim.loop)`
+---@vararg any
+function P(...)
+  local objects, v = {}, nil
+  for i = 1, select("#", ...) do
+    v = select(i, ...)
+    table.insert(objects, vim.inspect(v))
+  end
 
----NOTE: this plugin returns the currently loaded state of a plugin given
----given certain assumptions i.e. it will only be true if the plugin has been
----loaded e.g. lazy loading will return false
----@param plugin_name string
----@return boolean?
-function rvim.plugin_loaded(plugin_name)
-  local plugins = packer_plugins or {}
-  return plugins[plugin_name] and plugins[plugin_name].loaded
+  print(table.concat(objects, "\n"))
+  return ...
+end
+
+function _G.dump_text(...)
+  local objects, v = {}, nil
+  for i = 1, select("#", ...) do
+    v = select(i, ...)
+    table.insert(objects, vim.inspect(v))
+  end
+
+  local lines = vim.split(table.concat(objects, "\n"), "\n")
+  local lnum = vim.api.nvim_win_get_cursor(0)[1]
+  vim.fn.append(lnum, lines)
+  return ...
 end
 
 ---Get the full path to `$RVIM_RUNTIME_DIR`
@@ -90,6 +103,22 @@ end
 -- Utils
 -----------------------------------------------------------------------------//
 
+---Find an item in a list
+---@generic T
+---@param haystack T[]
+---@param matcher fun(arg: T):boolean
+---@return T
+function rvim.find(haystack, matcher)
+  local found
+  for _, needle in ipairs(haystack) do
+    if matcher(needle) then
+      found = needle
+      break
+    end
+  end
+  return found
+end
+
 function rvim._create(f)
   table.insert(rvim._store, f)
   return #rvim._store
@@ -113,6 +142,104 @@ function rvim._exists(file)
   end
   return ok, err
 end
+
+---NOTE: this plugin returns the currently loaded state of a plugin given
+---given certain assumptions i.e. it will only be true if the plugin has been
+---loaded e.g. lazy loading will return false
+---@param plugin_name string
+---@return boolean?
+function rvim.plugin_loaded(plugin_name)
+  local plugins = packer_plugins or {}
+  return plugins[plugin_name] and plugins[plugin_name].loaded
+end
+
+--- Disable autocommand groups if it exists
+--- This is more reliable than trying to delete the augroup itself
+---@param name string the augroup name
+function rvim.disable_augroup(name)
+  -- defer the function in case the autocommand is still in-use
+  vim.schedule(function()
+    if vim.fn.exists("#" .. name) == 1 then
+      vim.cmd("augroup " .. name)
+      vim.cmd "autocmd!"
+      vim.cmd "augroup END"
+    end
+  end)
+end
+
+---Require a module using [pcall] and report any errors
+---@param module string
+---@param opts table?
+---@return boolean, any
+function rvim.safe_require(module, opts)
+  opts = opts or { silent = false }
+  local ok, result = pcall(require, module)
+  if not ok and not opts.silent then
+    vim.notify(result, vim.log.levels.ERROR, { title = fmt("Error requiring: %s", module) })
+  end
+  return ok, result
+end
+
+---Determine if a value of any type is empty
+---@param item any
+---@return boolean
+function rvim.empty(item)
+  if not item then
+    return true
+  end
+  local item_type = type(item)
+  if item_type == "string" then
+    return item == ""
+  elseif item_type == "table" then
+    return vim.tbl_isempty(item)
+  end
+end
+
+--- Usage:
+--- 1. Call `local stop = utils.profile('my-log')` at the top of the file
+--- 2. At the bottom of the file call `stop()`
+--- 3. Restart neovim, the newly created log file should open
+function rvim.profile(filename)
+  local base = "/tmp/config/profile/"
+  fn.mkdir(base, "p")
+  local success, profile = pcall(require, "plenary.profile.lua_profiler")
+  if not success then
+    vim.api.nvim_echo({ "Plenary is not installed.", "Title" }, true, {})
+  end
+  profile.start()
+  return function()
+    profile.stop()
+    local logfile = base .. filename .. ".log"
+    profile.report(logfile)
+    vim.defer_fn(function()
+      vim.cmd("tabedit " .. logfile)
+    end, 1000)
+  end
+end
+
+local oss = vim.loop.os_uname().sysname
+rvim.open_command = oss == "Darwin" and "open" or "xdg-open"
+
+---Reload lua modules
+---@param path string
+---@param recursive string
+function rvim.invalidate(path, recursive)
+  if recursive then
+    for key, value in pairs(package.loaded) do
+      if key ~= "_G" and value and fn.match(key, path) ~= -1 then
+        package.loaded[key] = nil
+        require(key)
+      end
+    end
+  else
+    package.loaded[path] = nil
+    require(path)
+  end
+end
+
+----------------------------------------------------------------------------------------------------
+-- API Wrappers
+----------------------------------------------------------------------------------------------------
 
 ---@class Autocommand
 ---@field description string
@@ -146,66 +273,6 @@ function rvim.augroup(name, commands)
   return id
 end
 
---- Disable autocommand groups if it exists
---- This is more reliable than trying to delete the augroup itself
----@param name string the augroup name
-function rvim.disable_augroup(name)
-  -- defer the function in case the autocommand is still in-use
-  vim.schedule(function()
-    if vim.fn.exists("#" .. name) == 1 then
-      vim.cmd("augroup " .. name)
-      vim.cmd "autocmd!"
-      vim.cmd "augroup END"
-    end
-  end)
-end
-
----Source a lua or vimscript file
----@param path string path relative to the nvim directory
----@param prefix boolean?
-function rvim.source(path, prefix)
-  if not prefix then
-    vim.cmd(fmt("source %s", path))
-  else
-    vim.cmd(fmt("source %s/%s", vim.g.vim_dir, path))
-  end
-end
-
----Require a module using [pcall] and report any errors
----@param module string
----@param opts table?
----@return boolean, any
-function rvim.safe_require(module, opts)
-  opts = opts or { silent = false }
-  local ok, result = pcall(require, module)
-  if not ok and not opts.silent then
-    vim.notify(result, vim.log.levels.ERROR, { title = fmt("Error requiring: %s", module) })
-  end
-  return ok, result
-end
-
----A terser proxy for `nvim_replace_termcodes`
----@param str string
----@return any
-function rvim.replace_termcodes(str)
-  return api.nvim_replace_termcodes(str, true, true, true)
-end
-
----Determine if a value of any type is empty
----@param item any
----@return boolean
-function rvim.empty(item)
-  if not item then
-    return true
-  end
-  local item_type = type(item)
-  if item_type == "string" then
-    return item == ""
-  elseif item_type == "table" then
-    return vim.tbl_isempty(item)
-  end
-end
-
 ---Create an nvim command
 ---@param args table
 function rvim.command(args)
@@ -222,26 +289,22 @@ function rvim.command(args)
   vim.cmd(fmt("command! -nargs=%s %s %s %s", nargs, types, name, rhs))
 end
 
---- Usage:
---- 1. Call `local stop = utils.profile('my-log')` at the top of the file
---- 2. At the bottom of the file call `stop()`
---- 3. Restart neovim, the newly created log file should open
-function rvim.profile(filename)
-  local base = "/tmp/config/profile/"
-  fn.mkdir(base, "p")
-  local success, profile = pcall(require, "plenary.profile.lua_profiler")
-  if not success then
-    vim.api.nvim_echo({ "Plenary is not installed.", "Title" }, true, {})
+---Source a lua or vimscript file
+---@param path string path relative to the nvim directory
+---@param prefix boolean?
+function rvim.source(path, prefix)
+  if not prefix then
+    vim.cmd(fmt("source %s", path))
+  else
+    vim.cmd(fmt("source %s/%s", vim.g.vim_dir, path))
   end
-  profile.start()
-  return function()
-    profile.stop()
-    local logfile = base .. filename .. ".log"
-    profile.report(logfile)
-    vim.defer_fn(function()
-      vim.cmd("tabedit " .. logfile)
-    end, 1000)
-  end
+end
+
+---A terser proxy for `nvim_replace_termcodes`
+---@param str string
+---@return any
+function rvim.replace_termcodes(str)
+  return api.nvim_replace_termcodes(str, true, true, true)
 end
 
 ---check if a certain feature/version/commit exists in nvim
@@ -251,38 +314,68 @@ function rvim.has(feature)
   return vim.fn.has(feature) > 0
 end
 
-local oss = vim.loop.os_uname().sysname
-rvim.open_command = oss == "Darwin" and "open" or "xdg-open"
+rvim.nightly = rvim.has "nvim-0.7"
 
----Reload lua modules
----@param path string
----@param recursive string
-function rvim.invalidate(path, recursive)
-  if recursive then
-    for key, value in pairs(package.loaded) do
-      if key ~= "_G" and value and fn.match(key, path) ~= -1 then
-        package.loaded[key] = nil
-        require(key)
+----------------------------------------------------------------------------------------------------
+-- Keymaps
+----------------------------------------------------------------------------------------------------
+
+---create a mapping function factory
+---@param mode string
+---@param o table
+---@return fun(lhs: string, rhs: string, opts: table|nil) 'create a mapping'
+local function make_mapper(mode, o)
+  -- copy the opts table rvim extends will mutate the opts table passed in otherwise
+  local parent_opts = vim.deepcopy(o)
+  ---Create a mapping
+  ---@param lhs string
+  ---@param rhs string|function
+  ---@param opts table
+  return function(lhs, rhs, opts)
+    -- If the label is all that was passed in, set the opts automagically
+    opts = type(opts) == "string" and { label = opts } or opts and vim.deepcopy(opts) or {}
+    if opts.label then
+      local ok, wk = rvim.safe_require("which-key", { silent = true })
+      if ok then
+        wk.register({ [lhs] = opts.label }, { mode = mode })
       end
+      opts.label = nil
     end
-  else
-    package.loaded[path] = nil
-    require(path)
+    vim.keymap.set(mode, lhs, rhs, vim.tbl_extend("keep", opts, parent_opts))
   end
 end
 
----Find an item in a list
----@generic T
----@param haystack T[]
----@param matcher fun(arg: T):boolean
----@return T
-function rvim.find(haystack, matcher)
-  local found
-  for _, needle in ipairs(haystack) do
-    if matcher(needle) then
-      found = needle
-      break
-    end
-  end
-  return found
-end
+local map_opts = { remap = true, silent = true }
+local noremap_opts = { silent = true }
+
+-- A recursive commandline mapping
+rvim.nmap = make_mapper("n", map_opts)
+-- A recursive select mapping
+rvim.xmap = make_mapper("x", map_opts)
+-- A recursive terminal mapping
+rvim.imap = make_mapper("i", map_opts)
+-- A recursive operator mapping
+rvim.vmap = make_mapper("v", map_opts)
+-- A recursive insert mapping
+rvim.omap = make_mapper("o", map_opts)
+-- A recursive visual & select mapping
+rvim.tmap = make_mapper("t", map_opts)
+-- A recursive visual mapping
+rvim.smap = make_mapper("s", map_opts) -- A recursive normal mapping
+rvim.cmap = make_mapper("c", { remap = false, silent = false })
+-- A non recursive normal mapping
+rvim.nnoremap = make_mapper("n", noremap_opts)
+-- A non recursive visual mapping
+rvim.xnoremap = make_mapper("x", noremap_opts)
+-- A non recursive visual & select mapping
+rvim.vnoremap = make_mapper("v", noremap_opts)
+-- A non recursive insert mapping
+rvim.inoremap = make_mapper("i", noremap_opts)
+-- A non recursive operator mapping
+rvim.onoremap = make_mapper("o", noremap_opts)
+-- A non recursive terminal mapping
+rvim.tnoremap = make_mapper("t", noremap_opts)
+-- A non recursive select mapping
+rvim.snoremap = make_mapper("s", noremap_opts)
+-- A non recursive commandline mapping
+rvim.cnoremap = make_mapper("c", { silent = false })
