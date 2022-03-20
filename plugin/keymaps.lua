@@ -1,82 +1,179 @@
 local utils = require "user.utils"
 
 local nmap = rvim.nmap
+local imap = rvim.imap
 local nnoremap = rvim.nnoremap
 local xnoremap = rvim.xnoremap
 local vnoremap = rvim.vnoremap
 local inoremap = rvim.inoremap
 local cnoremap = rvim.cnoremap
 local tnoremap = rvim.tnoremap
+local onoremap = rvim.onoremap
 
 local g = vim.g
 g.mapleader = (rvim.leader == "space" and " ") or rvim.leader
 g.maplocalleader = (rvim.localleader == "space" and " ") or rvim.localleader
 
 -----------------------------------------------------------------------------//
--- keymaps
+-- Terminal {{{
+------------------------------------------------------------------------------//
+rvim.augroup("AddTerminalMappings", {
+  {
+    event = { "TermOpen" },
+    pattern = { "term://*" },
+    command = function()
+      if vim.bo.filetype == "" or vim.bo.filetype == "toggleterm" then
+        local opts = { silent = false, buffer = 0 }
+        tnoremap("<esc>", [[<C-\><C-n>]], opts)
+        tnoremap("jk", [[<C-\><C-n>]], opts)
+        tnoremap("<C-h>", [[<C-\><C-n><C-W>h]], opts)
+        tnoremap("<C-j>", [[<C-\><C-n><C-W>j]], opts)
+        tnoremap("<C-k>", [[<C-\><C-n><C-W>k]], opts)
+        tnoremap("<C-l>", [[<C-\><C-n><C-W>l]], opts)
+        tnoremap("]t", [[<C-\><C-n>:tablast<CR>]])
+        tnoremap("[t", [[<C-\><C-n>:tabnext<CR>]])
+        tnoremap("<S-Tab>", [[<C-\><C-n>:bprev<CR>]])
+        tnoremap("<leader><Tab>", [[<C-\><C-n>:close \| :bnext<cr>]])
+      end
+    end,
+  },
+})
+--}}}
 -----------------------------------------------------------------------------//
+-- MACROS {{{
+-----------------------------------------------------------------------------//
+-- Absolutely fantastic function from stoeffel/.dotfiles which allows you to
+-- repeat macros across a visual range
+------------------------------------------------------------------------------
+-- TODO: converting this to lua does not work for some obscure reason.
+vim.cmd [[
+  function! ExecuteMacroOverVisualRange()
+    echo "@".getcmdline()
+    execute ":'<,'>normal @".nr2char(getchar())
+  endfunction
+]]
 
--- Undo
-nnoremap("<C-z>", ":undo<CR>")
-vnoremap("<C-z>", ":undo<CR><Esc>")
-xnoremap("<C-z>", ":undo<CR><Esc>")
-inoremap("<c-z>", [[<Esc>:undo<CR>]])
-
--- remap esc to use cc
-nnoremap("<C-c>", "<Esc>")
-
--- Better window movement
-nnoremap("<C-h>", "<C-w>h")
-nnoremap("<C-j>", "<C-w>j")
-nnoremap("<C-k>", "<C-w>k")
-nnoremap("<C-l>", "<C-w>l")
-
--- Move current line / block with Alt-j/k a la vscode.
-nnoremap("<A-j>", ":m .+1<CR>==")
-nnoremap("<A-k>", ":m .-2<CR>==")
-
--- Disable arrows in normal mode
+xnoremap("@", ":<C-u>call ExecuteMacroOverVisualRange()<CR>", { silent = false })
+--}}}
+------------------------------------------------------------------------------
+-- Arrows
+------------------------------------------------------------------------------
 nnoremap("<down>", "<nop>")
 nnoremap("<up>", "<nop>")
 nnoremap("<left>", "<nop>")
 nnoremap("<right>", "<nop>")
-
+inoremap("<up>", "<nop>")
+inoremap("<down>", "<nop>")
+inoremap("<left>", "<nop>")
+inoremap("<right>", "<nop>")
+-- Repeat last substitute with flags
+nnoremap("&", "<cmd>&&<CR>")
+xnoremap("&", "<cmd>&&<CR>")
+----------------------------------------------------------------------------------
+-- Commandline mappings
+----------------------------------------------------------------------------------
+-- https://github.com/tpope/vim-rsi/blob/master/plugin/rsi.vim
+-- c-a / c-e everywhere - RSI.vim provides these
+cnoremap("<C-n>", "<Down>")
+cnoremap("<C-p>", "<Up>")
+-- <C-A> allows you to insert all matches on the command line e.g. bd *.js <c-a>
+-- will insert all matching files e.g. :bd a.js b.js c.js
+cnoremap("<c-x><c-a>", "<c-a>")
+cnoremap("<C-a>", "<Home>")
+cnoremap("<C-e>", "<End>")
+cnoremap("<C-b>", "<Left>")
+cnoremap("<C-d>", "<Del>")
+cnoremap("<C-k>", [[<C-\>e getcmdpos() == 1 ? '' : getcmdline()[:getcmdpos() - 2]<CR>]])
+-- move cursor one character backwards unless at the end of the command line
+cnoremap("<C-f>", [[getcmdpos() > strlen(getcmdline())? &cedit: "\<Lt>Right>"]], { expr = true })
+-- see :h cmdline-editing
+cnoremap("<Esc>b", [[<S-Left>]])
+cnoremap("<Esc>f", [[<S-Right>]])
+-- Insert escaped '/' while inputting a search pattern
+cnoremap("/", [[getcmdtype() == "/" ? "\/" : "/"]], { expr = true })
+-----------------------------------------------------------------------------//
+-- Save
+-----------------------------------------------------------------------------//
+-- Alternate way to save
+nnoremap("<C-s>", ":silent! write<CR>")
+-- Quit
+nnoremap("<leader>x", ":q!<cr>", { label = "quit" })
+-- Write and quit all files, ZZ is NOT equivalent to this
+nnoremap("qa", "<cmd>qa<CR>")
+------------------------------------------------------------------------------
+-- Quickfix
+------------------------------------------------------------------------------
+nnoremap("]q", "<cmd>cnext<CR>zz")
+nnoremap("[q", "<cmd>cprev<CR>zz")
+nnoremap("]l", "<cmd>lnext<cr>zz")
+nnoremap("[l", "<cmd>lprev<cr>zz")
+-------------------------------------------------------------------------------
+-- ?ie | entire object
+-------------------------------------------------------------------------------
+xnoremap("ie", [[gg0oG$]])
+onoremap("ie", [[<cmd>execute "normal! m`"<Bar>keepjumps normal! ggVG<CR>]])
+----------------------------------------------------------------------------//
+-- Core navigation
+----------------------------------------------------------------------------//
+-- Store relative line number jumps in the jumplist.
+nnoremap("j", [[(v:count > 1 ? 'm`' . v:count : '') . 'gj']], { expr = true, silent = true })
+nnoremap("k", [[(v:count > 1 ? 'm`' . v:count : '') . 'gk']], { expr = true, silent = true })
+-- Zero should go to the first non-blank character not to the first column (which could be blank)
+-- but if already at the first character then jump to the beginning
+--@see: https://github.com/yuki-yano/zero.nvim/blob/main/lua/zero.lua
+nnoremap("0", "getline('.')[0 : col('.') - 2] =~# '^\\s\\+$' ? '0' : '^'", { expr = true })
+-- when going to the end of the line in visual mode ignore whitespace characters
+vnoremap("$", "g_")
+-- jk is escape, THEN move to the right to preserve the cursor position, unless
+-- at the first column.  <esc> will continue to work the default way.
+-- NOTE: this is a recursive mapping so anything bound (by a plugin) to <esc> still works
+imap("jk", [[col('.') == 1 ? '<esc>' : '<esc>l']], { expr = true })
+-- Toggle top/center/bottom
+nmap(
+  "zz",
+  [[(winline() == (winheight (0) + 1)/ 2) ?  'zt' : (winline() == 1)? 'zb' : 'zz']],
+  { expr = true }
+)
 -- Move selected line / block of text in visual mode
 xnoremap("K", ":m '<-2<CR>gv=gv")
 xnoremap("J", ":m '>+1<CR>gv=gv")
-
+------------------------------------------------------------------------------
+-- Credit: JGunn Choi ?il | inner line
+------------------------------------------------------------------------------
+-- includes newline
+xnoremap("al", "$o0")
+onoremap("al", "<cmd>normal val<CR>")
+--No Spaces or CR
+xnoremap("il", [[<Esc>^vg_]])
+onoremap("il", [[<cmd>normal! ^vg_<CR>]])
+------------------------------------------------------------------------------
 -- Add Empty space above and below
+------------------------------------------------------------------------------
 nnoremap("[<space>", [[<cmd>put! =repeat(nr2char(10), v:count1)<cr>'[]])
 nnoremap("]<space>", [[<cmd>put =repeat(nr2char(10), v:count1)<cr>]])
-
 -- Paste in visual mode multiple times
 xnoremap("p", "pgvy")
-
--- leave extra space when deleting word
-nnoremap("dw", "cw<ESC>")
-
--- Repeat last substitute with flags
-xnoremap("&", "<cmd>&&<CR>")
-
--- Start new line from any cursor position
-inoremap("<S-Return>", "<C-o>o")
-
--- Better indenting
-vnoremap("<", "<gv")
-vnoremap(">", ">gv")
-
 -- search visual selection
 vnoremap("//", [[y/<C-R>"<CR>]])
 
+-- Credit: Justinmk
+nnoremap("g>", [[<cmd>set nomore<bar>40messages<bar>set more<CR>]])
+-- Start new line from any cursor position
+inoremap("<S-Return>", "<C-o>o")
+------------------------------------------------------------------------------
+-- Indent
+------------------------------------------------------------------------------
+vnoremap("<", "<gv")
+vnoremap(">", ">gv")
+
+-----------------------------------------------------------------------------//
 -- Capitalize
+-----------------------------------------------------------------------------//
 nnoremap("<leader>U", "gUiw`]", { label = "capitalize word" })
 inoremap("C-u>", "<cmd>norm!gUiw`]a<CR>")
 
 -- Help
 nnoremap("<leader>H", ':h <C-R>=expand("<cword>")<cr><CR>', { label = "help" })
-
--- Credit: Justinmk
-nnoremap("g>", [[<cmd>set nomore<bar>40messages<bar>set more<CR>]])
 
 -- find visually selected text
 vnoremap("*", [[y/<C-R>"<CR>]])
@@ -87,31 +184,6 @@ vnoremap(".", ":norm.<CR>")
 -- when going to the end of the line in visual mode ignore whitespace characters
 vnoremap("$", "g_")
 
-tnoremap("<esc>", "<C-\\><C-n>:q!<CR>")
-tnoremap("jk", "<C-\\><C-n>")
-tnoremap("<C-h>", "<C\\><C-n><C-W>h")
-tnoremap("<C-j>", "<C-\\><C-n><C-W>j")
-tnoremap("<C-k>", "<C-\\><C-n><C-W>k")
-tnoremap("<C-l>", "<C-\\><C-n><C-W>l")
-tnoremap("]t", "C-\\><C-n>:tablast<CR>")
-tnoremap("[t", "C-\\><C-n>:tabnext<CR>")
-tnoremap("S-Tab>", "C-\\><C-n>:bprev<CR>")
-
--- smooth searching, allow tabbing between search results similar to using <c-g>
--- or <c-t> the main difference being tab is easier to hit and remapping those keys
--- to these would swallow up a tab mapping
-cnoremap(
-  "<Tab>",
-  [[getcmdtype() == "/" || getcmdtype() == "?" ? "<CR>/<C-r>/" : "<C-z>"]],
-  { expr = true }
-)
-
-cnoremap(
-  "<S-Tab>",
-  [[getcmdtype() == "/" || getcmdtype() == "?" ? "<CR>?<C-r>/" : "<S-Tab>"]],
-  { expr = true }
-)
-
 -- Use alt + hjkl to resize windows
 nnoremap("<M-j>", ":resize -2<CR>")
 nnoremap("<M-k>", ":resize +2<CR>")
@@ -121,14 +193,145 @@ nnoremap("<M-h>", ":vertical resize +2<CR>")
 -- Yank from cursor position to end-of-line
 nnoremap("Y", "y$")
 
--- Repeat last substitute with flags
-nnoremap("&", "<cmd>&&<CR>")
-
 -- Zero should go to the first non-blank character not to the first column (which could be blank)
 -- Zero should go to the first non-blank character not to the first column (which could be blank)
 -- but if already at the first character then jump to the beginning
 --@see: https://github.com/yuki-yano/zero.nvim/blob/main/lua/zero.lua
 nnoremap("0", "getline('.')[0 : col('.') - 2] =~# '^\\s\\+$' ? '0' : '^'", { expr = true })
+
+-- Add Empty space above and below
+nnoremap("[<space>", [[<cmd>put! =repeat(nr2char(10), v:count1)<cr>'[]])
+nnoremap("]<space>", [[<cmd>put =repeat(nr2char(10), v:count1)<cr>]])
+
+-- QuickRun
+nnoremap("<C-b>", ":QuickRun<CR>")
+
+-- Open url
+-- nnoremap["gx"] = ":sil !xdg-open <c-r><c-a><cr>"
+
+-- replicate netrw functionality
+nnoremap("gx", function()
+  utils.open_link()
+end)
+
+-----------------------------------------------------------------------------//
+-- Utils
+-----------------------------------------------------------------------------//
+nnoremap("<leader>LV", function()
+  utils.color_my_pencils()
+end, { label = "vim with me" })
+
+nnoremap("<leader>aR", function()
+  utils.empty_registers()
+end)
+
+nnoremap("<leader>a;", function()
+  utils.open_terminal()
+end)
+
+nnoremap("<leader>ao", function()
+  utils.turn_on_guides()
+end)
+
+nnoremap("<leader>ae", function()
+  utils.turn_off_guides()
+end)
+
+-- Search Files
+nnoremap("<leader>B", '/<C-R>=escape(expand("<cword>"), "/")<CR><CR>', { label = "find cword" })
+
+-- Greatest remap ever
+vnoremap("<leader>p", '"_dP', { label = "greatest remap" })
+
+-- Reverse Line
+vnoremap(
+  "<leader>r",
+  [[:s/\%V.\+\%V./\=utils#rev_str(submatch(0))<CR>gv]],
+  { label = "reverse line" }
+)
+----------------------------------------------------------------------------------
+-- Windows
+----------------------------------------------------------------------------------
+nnoremap(
+  "<localleader>wv",
+  "<C-W>t <C-W>H<C-W>=",
+  { label = "change two vertically split windows to horizontal splits" }
+)
+-- Change two vertically split windows to horizontal splits
+nnoremap(
+  "<localleader>wh",
+  "<C-W>t <C-W>K<C-W>=",
+  { label = "change two horizontally split windows to vertical splits" }
+)
+
+----------------------------------------------------------------------------------
+-- Folds
+----------------------------------------------------------------------------------
+nnoremap("<leader>FR", "zA") -- Recursively toggle
+nnoremap("<leader>Fl", "za") -- Toggle fold under the cursor
+nnoremap("<leader>Fo", "zR") -- Open all folds
+nnoremap("<leader>Fx", "zM") -- Close all folds
+nnoremap("<leader>Fz", [[zMzvzz]]) -- Refocus folds
+
+-- Make zO recursively open whatever top level fold we're in, no matter where the
+-- cursor happens to be.
+nnoremap("zO", [[zCzO]])
+
+------------------------------------------------------------------------------
+-- Delimiters
+------------------------------------------------------------------------------
+-- Conditionally modify character at end of line
+nnoremap(
+  "<localleader>,",
+  "<cmd>call utils#modify_line_end_delimiter(',')<cr>",
+  { label = "append comma" }
+)
+nnoremap(
+  "<localleader>;",
+  "<cmd>call utils#modify_line_end_delimiter(';')<cr>",
+  { label = "append semi colon" }
+)
+nnoremap(
+  "<localleader>.",
+  "<cmd>call utils#modify_line_end_delimiter('.')<cr>",
+  { label = "append period" }
+)
+
+-----------------------------------------------------------------------------//
+-- Quick find/replace
+-----------------------------------------------------------------------------//
+nnoremap(
+  "<leader>[",
+  [[:%s/\<<C-r>=expand("<cword>")<CR>\>/]],
+  { silent = false, label = "replace all" }
+)
+nnoremap(
+  "<leader>]",
+  [[:s/\<<C-r>=expand("<cword>")<CR>\>/]],
+  { silent = false, label = "replace in line" }
+)
+vnoremap("<leader>[", [["zy:%s/<C-r><C-o>"/]], { silent = false, label = "replace all" })
+-----------------------------------------------------------------------------//
+-- open a new file in the same directory
+nnoremap(
+  "<leader>nf",
+  [[:e <C-R>=expand("%:p:h") . "/" <CR>]],
+  { silent = false, label = "open file in same dir" }
+)
+-- create a new file in the same directory
+nnoremap(
+  "<leader>ns",
+  [[:vsp <C-R>=expand("%:p:h") . "/" <CR>]],
+  { silent = false, label = "create new file in same dir" }
+)
+-----------------------------------------------------------------------------//
+-- Quotes
+-----------------------------------------------------------------------------//
+nnoremap([[<leader>"]], [[ciw"<c-r>""<esc>]], { label = "wrap double quotes" })
+nnoremap("<leader>`", [[ciw`<c-r>"`<esc>]], { label = "wrap backticks" })
+nnoremap("<leader>'", [[ciw'<c-r>"'<esc>]], { label = "wrap single quotes" })
+nnoremap("<leader>)", [[ciw(<c-r>")<esc>]], { label = "wrap parenthesis" })
+nnoremap("<leader>}", [[ciw{<c-r>"}<esc>]], { label = "wrap curly bracket" })
 
 -- Map Q to replay q register
 nnoremap("Q", "@q")
@@ -164,17 +367,31 @@ xnoremap(
   { expr = true }
 )
 
--- Add Empty space above and below
-nnoremap("[<space>", [[<cmd>put! =repeat(nr2char(10), v:count1)<cr>'[]])
-nnoremap("]<space>", [[<cmd>put =repeat(nr2char(10), v:count1)<cr>]])
+nnoremap("gf", "<cmd>e <cfile><CR>")
 
+-----------------------------------------------------------------------------//
+-- Command mode related
+-----------------------------------------------------------------------------//
+-- smooth searching, allow tabbing between search results similar to using <c-g>
+-- or <c-t> the main difference being tab is easier to hit and remapping those keys
+-- to these would swallow up a tab mapping
+cnoremap(
+  "<Tab>",
+  [[getcmdtype() == "/" || getcmdtype() == "?" ? "<CR>/<C-r>/" : "<C-z>"]],
+  { expr = true }
+)
+
+cnoremap(
+  "<S-Tab>",
+  [[getcmdtype() == "/" || getcmdtype() == "?" ? "<CR>?<C-r>/" : "<S-Tab>"]],
+  { expr = true }
+)
 -- Smart mappings on the command line
 -- cnoremap("w!!", [[w !sudo tee % >/dev/null]])
 
 -- insert path of current file into a command
 cnoremap("%%", "<C-r>=fnameescape(expand('%'))<cr>")
 cnoremap("::", "<C-r>=fnameescape(expand('%:p:h'))<cr>/")
-
 ------------------------------------------------------------------------------
 -- Credit: June Gunn <leader>?/! | Google it / Feeling lucky
 ------------------------------------------------------------------------------
@@ -190,8 +407,7 @@ function rvim.mappings.google(pat, gh)
     )
   end
 end
-
--- Searcg DuckDuckGo
+-- Search DuckDuckGo
 nnoremap(
   "<leader>?",
   [[:lua rvim.mappings.google(vim.fn.expand("<cword>"), false)<cr>]],
@@ -215,151 +431,6 @@ xnoremap(
   { label = "github search selection" }
 )
 
--- QuickRun
-nnoremap("<C-b>", ":QuickRun<CR>")
-
--- Quit
-nnoremap("<leader>x", ":q!<cr>", { label = "quit" })
-
--- Alternate way to save
-nnoremap("<C-s>", ":silent! write<CR>")
-
-nnoremap("gf", "<cmd>e <cfile><CR>")
-
--- Open url
--- nnoremap["gx"] = ":sil !xdg-open <c-r><c-a><cr>"
-
--- replicate netrw functionality
-nnoremap("gx", function()
-  utils.open_link()
-end)
-
------------------------------------------------------------------------------//
--- leader keymap
------------------------------------------------------------------------------//
-
-nnoremap("<leader>LV", function()
-  utils.color_my_pencils()
-end, { label = "vim with me" })
-
-nnoremap("<leader>aR", function()
-  utils.empty_registers()
-end)
-
-nnoremap("<leader>a;", function()
-  utils.open_terminal()
-end)
-
-nnoremap("<leader>ao", function()
-  utils.turn_on_guides()
-end)
-
-nnoremap("<leader>ae", function()
-  utils.turn_off_guides()
-end)
-
--- Search Files
-nnoremap("<leader>B", '/<C-R>=escape(expand("<cword>"), "/")<CR><CR>', { label = "find cword" })
-
--- Greatest remap ever
-vnoremap("<leader>p", '"_dP', { label = "greatest remap" })
-
--- Reverse Line
-vnoremap(
-  "<leader>r",
-  [[:s/\%V.\+\%V./\=utils#rev_str(submatch(0))<CR>gv]],
-  { label = "reverse line" }
-)
-
--- Next greatest remap ever : asbjornHaland
-nnoremap("<leader>y", '"+y', { label = "yank" })
-vnoremap("<leader>y", '"+y', { label = "yank" })
-
--- Whole file delete yank, paste
-nnoremap("<leader>A", 'gg"+VG', { label = "select all" })
--- nnoremap("<leader>D", 'gg"+VGd', {label="delete all"})
-nnoremap("<leader>Y", 'gg"+yG', { label = "yank all" })
-
--- actions
-nnoremap("<leader>=", "<C-W>=", { label = "balance window" })
--- opens a horizontal split
-nnoremap("<leader>ah", "<C-W>s", { label = "horizontal split" })
--- opens a vertical split
-nnoremap("<leader>V", "<C-W>v", { label = "vertical split" })
--- Change two horizontally split windows to vertical splits
-nnoremap(
-  "<localleader>wv",
-  "<C-W>t <C-W>H<C-W>=",
-  { label = "change two vertically split windows to horizontal splits" }
-)
--- Change two vertically split windows to horizontal splits
-nnoremap(
-  "<localleader>wh",
-  "<C-W>t <C-W>K<C-W>=",
-  { label = "change two horizontally split windows to vertical splits" }
-)
-
--- Folds
-nnoremap("<leader>FR", "zA") -- Recursively toggle
-nnoremap("<leader>Fl", "za") -- Toggle fold under the cursor
-nnoremap("<leader>Fo", "zR") -- Open all folds
-nnoremap("<leader>Fx", "zM") -- Close all folds
-nnoremap("<leader>Fz", [[zMzvzz]]) -- Refocus folds
-
--- Make zO recursively open whatever top level fold we're in, no matter where the
--- cursor happens to be.
-nnoremap("FO", [[zCzO]])
-
--- Conditionally modify character at end of line
-nnoremap(
-  "<localleader>,",
-  "<cmd>call utils#modify_line_end_delimiter(',')<cr>",
-  { label = "append comma" }
-)
-nnoremap(
-  "<localleader>;",
-  "<cmd>call utils#modify_line_end_delimiter(';')<cr>",
-  { label = "append semi colon" }
-)
-nnoremap(
-  "<localleader>.",
-  "<cmd>call utils#modify_line_end_delimiter('.')<cr>",
-  { label = "append period" }
-)
-
--- Quick find/replace
-nnoremap(
-  "<leader>[",
-  [[:%s/\<<C-r>=expand("<cword>")<CR>\>/]],
-  { silent = false, label = "replace all" }
-)
-nnoremap(
-  "<leader>]",
-  [[:s/\<<C-r>=expand("<cword>")<CR>\>/]],
-  { silent = false, label = "replace in line" }
-)
-vnoremap("<leader>[", [["zy:%s/<C-r><C-o>"/]], { silent = false, label = "replace all" })
-
--- open a new file in the same directory
-nnoremap(
-  "<leader>nf",
-  [[:e <C-R>=expand("%:p:h") . "/" <CR>]],
-  { silent = false, label = "open file in same dir" }
-)
--- create a new file in the same directory
-nnoremap(
-  "<leader>ns",
-  [[:vsp <C-R>=expand("%:p:h") . "/" <CR>]],
-  { silent = false, label = "create new file in same dir" }
-)
-
--- Wrap
-nnoremap('<leader>"', [[ciw"<c-r>""<esc>]], { label = "wrap double quotes" })
-nnoremap("<leader>`", [[ciw`<c-r>"`<esc>]], { label = "wrap backticks" })
-nnoremap("<leader>'", [[ciw'<c-r>"'<esc>]], { label = "wrap single quotes" })
-nnoremap("<leader>)", [[ciw(<c-r>")<esc>]], { label = "wrap parenthesis" })
-nnoremap("<leader>}", [[ciw{<c-r>"}<esc>]], { label = "wrap curly bracket" })
-
 -- Buffers - Del All Others
 nnoremap("<leader>bc", function()
   vim.api.nvim_exec(
@@ -372,7 +443,24 @@ nnoremap("<leader>bc", function()
 end, {
   label = "close all others",
 })
-
+------------------------------------------------------------------------------
+-- Personal
+------------------------------------------------------------------------------
+-- leave extra space when deleting word
+nnoremap("dw", "cw<ESC>")
+-- Next greatest remap ever : asbjornHaland
+nnoremap("<leader>y", '"+y', { label = "yank" })
+vnoremap("<leader>y", '"+y', { label = "yank" })
+-- Whole file delete yank, paste
+nnoremap("<leader>A", 'gg"+VG', { label = "select all" })
+-- nnoremap("<leader>D", 'gg"+VGd', {label="delete all"})
+nnoremap("<leader>Y", 'gg"+yG', { label = "yank all" })
+-- actions
+nnoremap("<leader>=", "<C-W>=", { label = "balance window" })
+-- opens a horizontal split
+nnoremap("<leader>ah", "<C-W>s", { label = "horizontal split" })
+-- opens a vertical split
+nnoremap("<leader>V", "<C-W>v", { label = "vertical split" })
 -- Bufferlline
 if not rvim.plugins.ui.bufferline.active then
   nnoremap("<S-l>", ":bnext<CR>")
@@ -390,3 +478,26 @@ nnoremap("<leader>lD", function()
 end, {
   label = "lsp: delete templates",
 })
+------------------------------------------------------------------------------
+-- Undo
+------------------------------------------------------------------------------
+nnoremap("<C-z>", ":undo<CR>")
+vnoremap("<C-z>", ":undo<CR><Esc>")
+xnoremap("<C-z>", ":undo<CR><Esc>")
+inoremap("<c-z>", [[<Esc>:undo<CR>]])
+------------------------------------------------------------------------------
+-- Escape
+------------------------------------------------------------------------------
+nnoremap("<C-c>", "<Esc>")
+------------------------------------------------------------------------------
+-- Window Movement
+------------------------------------------------------------------------------
+nnoremap("<C-h>", "<C-w>h")
+nnoremap("<C-j>", "<C-w>j")
+nnoremap("<C-k>", "<C-w>k")
+nnoremap("<C-l>", "<C-w>l")
+------------------------------------------------------------------------------
+-- Line Movement
+------------------------------------------------------------------------------
+nnoremap("<A-j>", ":m .+1<CR>==")
+nnoremap("<A-k>", ":m .-2<CR>==")
