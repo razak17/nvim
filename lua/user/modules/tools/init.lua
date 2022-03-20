@@ -22,6 +22,7 @@ rvim.plugins.tools = {
   telescope_file_browser = { active = true },
   telescope_media_files = { active = true },
   telescope_zoxide = { active = true },
+  tabout = { active = true },
   -- TODO: handle these later
   glow = { active = false },
   doge = { active = false },
@@ -362,6 +363,18 @@ tools["tpope/vim-apathy"] = {
 tools["tpope/vim-projectionist"] = {
   config = utils.load_conf("tools", "vim-projectionist"),
   disable = not rvim.plugins.tools.projectionist.active,
+}
+
+tools["abecodes/tabout.nvim"] = {
+  wants = { "nvim-treesitter" },
+  after = { "nvim-cmp" },
+  config = function()
+    require("tabout").setup {
+      completion = false,
+      ignore_beginning = false,
+    }
+  end,
+  disable = not rvim.plugins.tools.tabout.active,
 }
 
 return tools
