@@ -6,11 +6,7 @@ local uv = vim.loop
 ----------------------------------------------------------------------------------------------------
 -- Global namespace
 ----------------------------------------------------------------------------------------------------
-_G.__rvim_global_callbacks = __rvim_global_callbacks or {}
 _G.rvim = {
-  _store = __rvim_global_callbacks,
-  -- some vim mappings require a mixture of commandline commands and function calls
-  -- this table is place to store lua functions to be called in those mappings
   mappings = {},
 }
 
