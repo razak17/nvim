@@ -10,8 +10,8 @@ local function general_overrides()
   local darker_bg = util.alter_color(normal_bg, -10)
   local msg_area_bg = rvim.transparent_window and "NONE" or darker_bg
   util.all {
-    { "VertSplit", { background = "NONE", foreground = util.get_hl("NonText", "fg") } },
-    { "WinSeparator", { background = "NONE", foreground = util.get_hl("NonText", "fg") } },
+    -- { "VertSplit", { background = "NONE", foreground = util.get_hl("NonText", "fg") } },
+    -- { "WinSeparator", { background = "NONE", foreground = util.get_hl("NonText", "fg") } },
     { "MsgArea", { background = msg_area_bg } },
     { "mkdLineBreak", { link = "NONE" } },
     -----------------------------------------------------------------------------//
