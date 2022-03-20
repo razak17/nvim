@@ -111,7 +111,6 @@ rvim.augroup("PackerSetupInit", {
       end)
     end,
   },
-  -- FIXME: user autocommands are triggered multiple times
   {
     event = "User",
     pattern = "PackerCompileDone",
