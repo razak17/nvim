@@ -56,7 +56,7 @@ command("PlugCompiledEdit", function()
 end)
 
 command("PlugCompiledDelete", function()
-  require("user.core.plugins").del_compile()
+  require("user.core.plugins").del_compiled()
 end)
 
 command("PlugRecompile", function()
