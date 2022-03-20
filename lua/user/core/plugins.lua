@@ -12,14 +12,9 @@ function Plug:load_packer()
     packer = require "packer"
   end
 
-  if vim.fn.isdirectory(rvim.get_runtime_dir() .. "/site/lua") ~= 1 then
-    os.execute("mkdir -p " .. rvim.get_runtime_dir() .. "/site/lua")
-  end
-
   packer.init {
     package_root = join_paths(rvim.get_runtime_dir(), "/site/pack/"),
     compile_path = rvim.packer_compile_path,
-    max_jobs = 50,
     git = {
       clone_timeout = 7000,
       subcommands = {
@@ -39,8 +34,10 @@ function Plug:load_packer()
   plug_utils:load_plugins()
   packer.startup(function(use)
     use { "wbthomason/packer.nvim", opt = true }
-    for _, repo in ipairs(plug_utils.repos) do
-      use(repo)
+    if rvim.plugins.SANE then
+      for _, repo in ipairs(plug_utils.repos) do
+        use(repo)
+      end
     end
   end)
 end
@@ -58,6 +55,8 @@ function plugins.ensure_installed()
   plug_utils:init_ensure_installed()
   Plug:load_packer()
 
+  plugins.load_compile()
+
   if not vim.g.packer_compiled_loaded and vim.loop.fs_stat(rvim.packer_compile_path) then
     rvim.source(rvim.packer_compile_path)
     vim.g.packer_compiled_loaded = true
@@ -73,8 +72,11 @@ end
 
 function plugins.recompile()
   Plug:load_packer()
-  os.remove(rvim.packer_compile_path)
+  plugins.ensure_installed()
+  vim.cmd ":PlugCompiledDelete"
+  plugins.install()
   plugins.compile()
+  require "_compiled_rolling"
 end
 
 rvim.augroup("PackerSetupInit", {
@@ -86,10 +88,7 @@ rvim.augroup("PackerSetupInit", {
       for _, m in ipairs { "ui", "editor", "tools", "lang", "completion" } do
         rvim.invalidate(fmt("user.modules.%s", m), true)
       end
-      plugins.ensure_installed()
-      plugins.install()
-      plugins.compile()
-      require "_compiled_rolling"
+      plugins.recompile()
     end,
   },
   --- Open a repository from an authorname/repository string

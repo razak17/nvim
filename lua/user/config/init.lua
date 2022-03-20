@@ -56,9 +56,7 @@ function M:load()
 
   require "user.core.commands"
 
-  local plug = require "user.core.plugins"
-  plug.ensure_installed()
-  plug.load_compile()
+  require("user.core.plugins").ensure_installed()
 end
 
 return M

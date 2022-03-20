@@ -69,3 +69,4 @@ www
 BufEnter
 ui
 app
+nvim
