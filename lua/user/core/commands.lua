@@ -12,10 +12,6 @@ command("ReloadModule", function(args)
   require("plenary.reload").reload_module(args)
 end)
 
-command("TabMessage", [[call utils#tab_message(<q-args>)]], {
-  nargs = "+",
-  -- types = { "-complete=command" },
-})
 -- source https://superuser.com/a/540519
 -- write the visual selection to the filename passed in as a command argument then delete the
 -- selection placing into the black hole register

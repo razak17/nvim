@@ -152,17 +152,3 @@ function! utils#auto_resize(...)
     echom 'Auto resize OFF'
   endif
 endfunction
-
-function! utils#tab_message(cmd)
-  redir => message
-  silent execute a:cmd
-  redir END
-  if empty(message)
-    echoerr "no output"
-  else
-    " use "tabnew" instead of "new" below if you prefer tabs instead of split windows
-    vnew
-    setlocal buftype=nofile bufhidden=wipe noswapfile nobuflisted nomodified
-    silent put=message
-  endif
-endfunction
