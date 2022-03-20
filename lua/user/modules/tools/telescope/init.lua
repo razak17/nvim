@@ -228,6 +228,7 @@ return function()
     telescope_tmux = "tmux",
     telescope_frecency = "frecency",
     telescope_file_browser = "file_browser",
+    telescope_media_files = "media_files",
   }
 
   for config, plug in pairs(plugins) do

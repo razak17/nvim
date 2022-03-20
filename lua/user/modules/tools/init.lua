@@ -27,6 +27,9 @@ rvim.plugins.tools = {
   dadbod = { active = false },
   restconsole = { active = false },
   markdown_preview = { active = true },
+  marks = { active = true },
+  apathy = { active = true },
+  todo_comments = { active = true },
 }
 
 local utils = require "user.utils"
@@ -319,6 +322,7 @@ tools["folke/todo-comments.nvim"] = {
       },
     }
   end,
+  disable = not rvim.plugins.tools.todo_comments.active,
 }
 
 tools["chentau/marks.nvim"] = {
@@ -342,6 +346,11 @@ tools["chentau/marks.nvim"] = {
       },
     }
   end,
+  disable = not rvim.plugins.tools.marks.active,
+}
+
+tools["tpope/vim-apathy"] = {
+  disable = not rvim.plugins.tools.apathy.active,
 }
 
 return tools
