@@ -24,14 +24,12 @@ ui["glepnir/dashboard-nvim"] = {
 }
 
 ui["akinsho/bufferline.nvim"] = {
-  event = { "BufRead" },
   config = utils.load_conf("ui", "bufferline"),
   disable = not rvim.plugins.ui.bufferline.active,
 }
 
 ui["razak17/galaxyline.nvim"] = {
   branch = "main",
-  event = "VimEnter",
   config = utils.load_conf("ui", "statusline"),
   disable = not rvim.plugins.ui.statusline.active,
 }
