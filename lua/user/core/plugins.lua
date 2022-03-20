@@ -70,6 +70,15 @@ function plugins.load_compile()
   end
 end
 
+function plugins.del_compiled()
+  if vim.fn.filereadable(rvim.packer_compile_path) ~= 1 then
+    plug_utils:plug_notify "packer_compiled file does not exist"
+  else
+    vim.fn.delete(rvim.packer_compile_path)
+    plug_utils:plug_notify "packer_compiled was deleted"
+  end
+end
+
 function plugins.recompile()
   for _, m in ipairs { "ui", "editor", "tools", "lang", "completion" } do
     rvim.invalidate(fmt("user.modules.%s", m), true)

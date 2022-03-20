@@ -43,8 +43,6 @@ command("LspFormat", function()
 end)
 
 -- Packer
-local utils = require "user.utils.plugins"
-
 command("PlugCompile", [[lua require('user.core.plugins').compile()]])
 command("PlugInstall", [[lua require('user.core.plugins').install()]])
 command("PlugSync", [[lua require('user.core.plugins').sync()]])
@@ -58,16 +56,9 @@ command("PlugCompiledEdit", function()
 end)
 
 command("PlugCompiledDelete", function()
-  if vim.fn.filereadable(rvim.packer_compile_path) ~= 1 then
-    utils:plug_notify "packer_compiled file does not exist"
-  else
-    vim.fn.delete(rvim.packer_compile_path)
-    utils:plug_notify "packer_compiled was deleted"
-  end
+  require("user.core.plugins").del_compile()
 end)
 
 command("PlugRecompile", function()
-  vim.fn.delete(rvim.packer_compile_path)
-  vim.cmd [[:PlugCompile]]
-  utils:plug_notify "packer was recompiled"
+  require("user.core.plugins").recompile()
 end)
