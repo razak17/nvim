@@ -118,6 +118,12 @@ return function()
           },
         },
         extensions = {
+          media_files = {
+            -- filetypes whitelist
+            -- defaults to {"png", "jpg", "mp4", "webm", "pdf"}
+            filetypes = { "png", "webp", "jpg", "jpeg" },
+            find_cmd = "rg", -- find command (defaults to `fd`)
+          },
           fzf = {
             fuzzy = true, -- false will only do exact matching
             override_generic_sorter = true, -- override the generic sorter
@@ -283,6 +289,14 @@ return function()
     telescope.extensions.file_browser.file_browser {}
   end
 
+  local function media_files()
+    telescope.extensions.media_files.media_files {}
+  end
+
+  local function zoxide_list()
+    telescope.extensions.zoxide.list {}
+  end
+
   local function frecency()
     telescope.extensions.frecency.frecency(dropdown {
       -- NOTE: remove default text as it's slow
@@ -311,6 +325,8 @@ return function()
       P = { installed_plugins, "plugins" },
       B = { file_browser, "find browser" },
       h = { frecency, "history" },
+      m = { media_files, "media files" },
+      z = { zoxide_list, "zoxide list" },
       n = { notes, "notes" },
       p = { projects, "recent projects" },
       W = { bg_selector.set_bg_image, "change background" },
