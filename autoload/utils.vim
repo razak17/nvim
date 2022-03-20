@@ -127,28 +127,3 @@ function! utils#modify_line_end_delimiter(character)
   call setline('.', newline)
 endfunction
 "}}}
-
-""---------------------------------------------------------------------------//
-" Windows
-""---------------------------------------------------------------------------//
-" Auto resize Vim splits to active split to 70% -
-" https://stackoverflow.com/questions/11634804/vim-auto-resize-focused-window
-
-let s:auto_resize_on = 0
-
-function! utils#auto_resize(...)
-  if s:auto_resize_on == 0
-    let factor = get(a:, '1', 70)
-    let fraction = factor / 10
-    let &winheight = &lines * fraction / 10
-    let &winwidth = &columns * fraction / 10
-    let s:auto_resize_on = 1
-    echom 'Auto resize ON'
-  else
-    let &winheight = 30
-    let &winwidth = 30
-    wincmd =
-    let s:auto_resize_on = 0
-    echom 'Auto resize OFF'
-  endif
-endfunction

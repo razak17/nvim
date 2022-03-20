@@ -1,4 +1,5 @@
 local command = rvim.command
+local fmt = string.format
 
 command("Rename", [[call v:lua.require('user.utils').rename(<f-args>) ]], { nargs = 1 })
 
@@ -29,7 +30,9 @@ command("MoveAppend", [[<line1>,<line2>write<bang> >> <args> | <line1>,<line2>de
   complete = "file",
 })
 
--- command("AutoResize", [[call utils#auto_resize(<args>)]], { "-nargs=?" })
+command("AutoResize", function()
+  require("user.utils").auto_resize()
+end, { nargs = "?" })
 
 command("LuaInvalidate", function(pattern)
   rvim.invalidate(pattern, true)
@@ -41,7 +44,6 @@ end)
 
 -- Packer
 local utils = require "user.utils.plugins"
-local fmt = string.format
 
 command("PlugCompile", [[lua require('user.core.plugins').compile()]])
 command("PlugInstall", [[lua require('user.core.plugins').install()]])
