@@ -20,6 +20,7 @@ rvim.plugins.tools = {
   telescope_frecency = { active = true },
   telescope_dap = { active = true },
   telescope_file_browser = { active = true },
+  telescope_media_files = { active = true },
   -- TODO: handle these later
   glow = { active = false },
   doge = { active = false },
@@ -213,6 +214,10 @@ tools["nvim-telescope/telescope-dap.nvim"] = {
 
 tools["nvim-telescope/telescope-file-browser.nvim"] = {
   disable = not rvim.plugins.tools.telescope_file_browser.active,
+}
+
+tools["nvim-telescope/telescope-media-files.nvim"] = {
+  disable = not rvim.plugins.tools.telescope_media_files.active,
 }
 
 tools["rmagatti/auto-session"] = {
