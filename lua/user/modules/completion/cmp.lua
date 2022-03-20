@@ -98,6 +98,7 @@ return function()
           calc = "(Calc)",
           emoji = "(Emoji)",
           look = "(Look)",
+          npm = "(NPM)",
         },
         duplicates = {
           buffer = 1,
@@ -144,6 +145,7 @@ return function()
         { name = "emoji" },
         { name = "look" },
         { name = "nvim_lsp_document_symbol" },
+        { name = "npm", keyword_length = 4 },
       },
       mapping = {
         ["<C-k>"] = cmp.mapping.select_prev_item(),

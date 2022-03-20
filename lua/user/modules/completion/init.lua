@@ -52,6 +52,15 @@ completion["hrsh7th/nvim-cmp"] = {
         }
       end,
     },
+    {
+      "David-Kunz/cmp-npm",
+      requires = {
+        "nvim-lua/plenary.nvim",
+      },
+      config = function()
+        require("cmp-npm").setup {}
+      end,
+    },
   },
   config = utils.load_conf("completion", "cmp"),
   disable = not rvim.plugins.completion.cmp.active,
