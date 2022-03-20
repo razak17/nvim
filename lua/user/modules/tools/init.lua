@@ -21,6 +21,7 @@ rvim.plugins.tools = {
   telescope_dap = { active = true },
   telescope_file_browser = { active = true },
   telescope_media_files = { active = true },
+  telescope_zoxide = { active = true },
   -- TODO: handle these later
   glow = { active = false },
   doge = { active = false },
@@ -30,6 +31,7 @@ rvim.plugins.tools = {
   marks = { active = true },
   apathy = { active = true },
   todo_comments = { active = true },
+  projectionist = { active = true },
 }
 
 local utils = require "user.utils"
@@ -223,6 +225,10 @@ tools["nvim-telescope/telescope-media-files.nvim"] = {
   disable = not rvim.plugins.tools.telescope_media_files.active,
 }
 
+tools["jvgrootveld/telescope-zoxide"] = {
+  disable = not rvim.plugins.tools.telescope_zoxide.active,
+}
+
 tools["rmagatti/auto-session"] = {
   config = function()
     require("auto-session").setup {
@@ -351,6 +357,11 @@ tools["chentau/marks.nvim"] = {
 
 tools["tpope/vim-apathy"] = {
   disable = not rvim.plugins.tools.apathy.active,
+}
+
+tools["tpope/vim-projectionist"] = {
+  config = utils.load_conf("tools", "vim-projectionist"),
+  disable = not rvim.plugins.tools.projectionist.active,
 }
 
 return tools

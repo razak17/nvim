@@ -229,6 +229,7 @@ return function()
     telescope_frecency = "frecency",
     telescope_file_browser = "file_browser",
     telescope_media_files = "media_files",
+    telescope_zoxide = "zoxide",
   }
 
   for config, plug in pairs(plugins) do
