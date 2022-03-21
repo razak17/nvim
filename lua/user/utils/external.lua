@@ -31,7 +31,7 @@ function M.title_string()
     return (icon or "") .. " "
   end
   local title_string = fmt("%s #[fg=%s]%s ", dir, u.get_hl(hl, "fg"), icon)
-  local has_tmux = os.getenv "TMUX"
+  local has_tmux = vim.env.TMUX ~= nil
   -- fn.jobstart(fmt("tmux set-titles-string '%s'", title_string))
   return has_tmux and title_string or dir .. " " .. icon
 end
