@@ -1,4 +1,5 @@
 local uv, api, fn = vim.loop, vim.api, vim.fn
+local fmt = string.format
 
 local M = {}
 M.__index = M
@@ -41,6 +42,46 @@ function M:init_ensure_installed()
     self:load_packer()
     require("packer").sync()
   end
+end
+
+function M:bootstrap_packer(packer)
+  packer.init {
+    package_root = join_paths(rvim.get_runtime_dir(), "/site/pack/"),
+    compile_path = rvim.packer_compile_path,
+    git = {
+      clone_timeout = 7000,
+      subcommands = {
+        -- this is more efficient than what Packer is using
+        fetch = "fetch --no-tags --no-recurse-submodules --update-shallow --progress",
+      },
+    },
+    disable_commands = true,
+    display = {
+      open_fn = function()
+        return require("packer.util").float { border = "rounded" }
+      end,
+    },
+  }
+  packer.reset()
+  M:load_plugins()
+  packer.startup(function(use)
+    use { "wbthomason/packer.nvim", opt = true }
+    if rvim.plugins.SANE then
+      for _, repo in ipairs(M.repos) do
+        use(repo)
+      end
+    end
+  end)
+end
+
+function M:goto_repo()
+  local repo = fn.expand "<cfile>"
+  if not repo or #vim.split(repo, "/") ~= 2 then
+    return vim.cmd "norm! gf"
+  end
+  local url = fmt("https://www.github.com/%s", repo)
+  fn.system(fn.printf(rvim.open_command .. ' "https://github.com/%s"', repo))
+  vim.notify(fmt("Opening %s at %s", repo, url))
 end
 
 return M

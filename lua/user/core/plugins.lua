@@ -11,35 +11,8 @@ function Plug:load_packer()
     vim.cmd "packadd! packer.nvim"
     packer = require "packer"
   end
-
-  packer.init {
-    package_root = join_paths(rvim.get_runtime_dir(), "/site/pack/"),
-    compile_path = rvim.packer_compile_path,
-    git = {
-      clone_timeout = 7000,
-      subcommands = {
-        -- this is more efficient than what Packer is using
-        fetch = "fetch --no-tags --no-recurse-submodules --update-shallow --progress",
-      },
-    },
-    disable_commands = true,
-    display = {
-      open_fn = function()
-        return require("packer.util").float { border = "rounded" }
-      end,
-    },
-  }
-  packer.reset()
   rvim.safe_require "impatient"
-  plug_utils:load_plugins()
-  packer.startup(function(use)
-    use { "wbthomason/packer.nvim", opt = true }
-    if rvim.plugins.SANE then
-      for _, repo in ipairs(plug_utils.repos) do
-        use(repo)
-      end
-    end
-  end)
+  plug_utils:bootstrap_packer(packer)
 end
 
 local plugins = setmetatable({}, {
@@ -108,13 +81,7 @@ rvim.augroup("PackerSetupInit", {
     },
     command = function()
       rvim.nnoremap("gf", function()
-        local repo = fn.expand "<cfile>"
-        if not repo or #vim.split(repo, "/") ~= 2 then
-          return vim.cmd "norm! gf"
-        end
-        local url = fmt("https://www.github.com/%s", repo)
-        fn.system(fn.printf(rvim.open_command .. ' "https://github.com/%s"', repo))
-        vim.notify(fmt("Opening %s at %s", repo, url))
+        plug_utils:goto_repo()
       end)
     end,
   },
