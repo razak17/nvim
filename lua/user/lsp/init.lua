@@ -43,10 +43,10 @@ local function lsp_setup_keymaps(client, bufnr)
 
   local maps = {
     n = {
-      ["K"] = { vim.lsp.buf.hover, "lsp: hover" },
-      ["gd"] = { vim.lsp.buf.definition, "lsp: definition" },
-      ["gr"] = { vim.lsp.buf.references, "lsp: references" },
-      ["gl"] = {
+      K = { vim.lsp.buf.hover, "lsp: hover" },
+      gd = { vim.lsp.buf.definition, "lsp: definition" },
+      gr = { vim.lsp.buf.references, "lsp: references" },
+      gl = {
         "<cmd>lua require 'user.lsp.utils'.show_line_diagnostics()<CR>",
         "lsp: line diagnostics",
       },
