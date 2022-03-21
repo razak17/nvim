@@ -1,4 +1,3 @@
-local fn = vim.fn
 local packer = nil
 local fmt = string.format
 local plug_utils = require "user.utils.plugins"
