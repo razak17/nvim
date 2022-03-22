@@ -1,14 +1,7 @@
 setlocal shiftwidth=4
-setlocal softtabstop=4
+setlocal softtabstop=0
 setlocal tabstop=4
 setlocal noexpandtab
 setlocal textwidth=100
 setlocal iskeyword+="
-
-" create a go doc comment based on the word under the cursor
-function! s:create_go_doc_comment()
-  norm "zyiw
-  execute ":put! z"
-  execute ":norm I// \<Esc>$"
-endfunction
-nnoremap <leader>cf :<C-u>call <SID>create_go_doc_comment()<CR>
+setlocal shiftwidth=4
