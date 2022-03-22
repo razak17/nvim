@@ -177,8 +177,8 @@ M.load_default_options = function()
     -- title
     title = true,
     titlelen = 70,
-    -- titlestring = " ❐ %t %r %m",
-    titlestring = "%<%F%=%l/%L - nvim",
+    -- titlestring = ' ❐ %{fnamemodify(getcwd(), ":t")} %m'
+    titlestring = "%<%F%=%l/%L - nvim";
   }
 
   ---  SETTINGS  ---
