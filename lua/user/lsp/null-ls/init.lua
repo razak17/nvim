@@ -37,7 +37,7 @@ function M:setup()
       exe = "eslint_d",
       stdin = true,
       args = { "--fix" },
-      filetypes = { "vue", "typescriptreact" },
+      filetypes = { "vue", "typescriptreact", "typescript" },
     },
     {
       exe = "stylua",
@@ -61,7 +61,7 @@ function M:setup()
     { exe = "flake8", filetypes = { "python" } },
     {
       exe = "eslint_d",
-      filetypes = { "javascript", "javascriptreact", "typescript" },
+      filetypes = { "javascript", "javascriptreact" },
     },
   }
 
