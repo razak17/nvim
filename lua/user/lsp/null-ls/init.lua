@@ -19,14 +19,14 @@ function M:setup()
       -- @usage arguments to pass to the formatter
       -- these cannot contain whitespaces, options such as `--line-width 80` become either `{'--line-width', '80'}` or `{'--line-width=80'}`
       -- args = {
-        -- "--no-semi",
-        -- "--tab-width=2",
-        -- "--single-quote",
-        -- "--print-width=80",
-        -- "--jsx-single-quote",
-        -- "--bracket-same-line",
-        -- "--arrow-parens=avoid",
-        -- "--trailing-comma=all",
+      -- "--no-semi",
+      -- "--tab-width=2",
+      -- "--single-quote",
+      -- "--print-width=80",
+      -- "--jsx-single-quote",
+      -- "--bracket-same-line",
+      -- "--arrow-parens=avoid",
+      -- "--trailing-comma=all",
       -- },
       -- @usage specify which filetypes to enable. By default a providers will attach to all the filetypes it supports.
       filetypes = {
@@ -46,7 +46,7 @@ function M:setup()
       exe = "eslint_d",
       stdin = true,
       args = { "--fix" },
-      filetypes = { "vue" },
+      filetypes = { "vue", "typescriptreact" },
     },
     {
       exe = "stylua",
@@ -70,7 +70,7 @@ function M:setup()
     { exe = "flake8", filetypes = { "python" } },
     {
       exe = "eslint_d",
-      filetypes = { "javascript", "javascriptreact", "typescriptreact", "typescript" },
+      filetypes = { "javascript", "javascriptreact", "typescript" },
     },
   }
 
