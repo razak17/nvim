@@ -1,4 +1,9 @@
 {
+  "Export default": {
+    "prefix": "exd",
+    "body": ["export default $0"],
+    "description": "Export default"
+  },
   "Log to the console with cl": {
     "prefix": "cl",
     "body": ["console.log($0);"],
