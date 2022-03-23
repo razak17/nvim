@@ -46,7 +46,7 @@ M.load_default_options = function()
 
     -- Spelling
     spelllang = { "en" },
-    -- spell = true,
+    spell = true,
     spellfile = join_paths(rvim.get_config_dir(), "spell", "en.utf-8.add"),
     fileformats = { "unix", "mac", "dos" }, -- don't check for capital letters at start of sentence
 
@@ -178,7 +178,7 @@ M.load_default_options = function()
     title = true,
     titlelen = 70,
     -- titlestring = ' ❐ %{fnamemodify(getcwd(), ":t")} %m'
-    titlestring = "%<%F%=%l/%L - nvim";
+    titlestring = "%<%F%=%l/%L - nvim",
   }
 
   ---  SETTINGS  ---
