@@ -65,8 +65,8 @@ local function general_overrides()
     -- Treesitter
     -----------------------------------------------------------------------------//
     { "TSKeywordReturn", { italic = true, foreground = keyword_fg } },
-    { "TSError", { undercurl = true, sp = error_line, foreground = "NONE" } },
-    -- { "TSParameter", { italic = true, bold = true } },
+    -- { "TSError", { undercurl = true, sp = error_line, foreground = "NONE" } },
+    { 'TSParameter', { italic = true, bold = true, foreground = 'NONE' } },
     -- highlight FIXME comments
     { "commentTSWarning", { background = P.error_red, foreground = "fg", bold = true } },
     { "commentTSDanger", { background = P.dark_green, foreground = "#1B2229", bold = true } },
