@@ -61,7 +61,7 @@ function M:setup()
     { exe = "flake8", filetypes = { "python" } },
     {
       exe = "eslint_d",
-      filetypes = { "javascript", "javascriptreact" },
+      filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact", "vue" },
     },
   }
 
