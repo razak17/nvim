@@ -121,14 +121,13 @@ editor["romainl/vim-cool"] = {
   disable = not rvim.plugins.editor.cool.active,
 }
 
-editor["arecarn/vim-fold-cycle"] = {
+editor["jghauser/fold-cycle.nvim"] = {
   event = { "BufReadPre", "BufNewFile" },
   config = function()
-    vim.g.fold_cycle_default_mapping = 0
-    vim.g.fold_cycle_toggle_max_open = 0
-    vim.g.fold_cycle_toggle_max_close = 0
-    local nmap = rvim.nmap
-    nmap("<BS>", "<Plug>(fold-cycle-close)")
+    require("fold-cycle").setup()
+    rvim.nnoremap("<BS>", function()
+      require("fold-cycle").open()
+    end)
   end,
   disable = not rvim.plugins.editor.fold_cycle.active,
 }
