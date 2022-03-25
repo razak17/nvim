@@ -61,26 +61,6 @@ return function()
     },
   })
 
-  local fn = vim.fn
-
-  local check_backspace = function()
-    local col = fn.col "." - 1
-    return col == 0 or vim.fn.getline("."):sub(col, col):match "%s"
-  end
-
-  local is_emmet_active = function()
-    local clients = vim.lsp.buf_get_clients()
-
-    for _, client in pairs(clients) do
-      if client.name == "emmet_ls" then
-        return true
-      end
-    end
-    return false
-  end
-
-  local T = rvim.replace_termcodes
-
   rvim.cmp = {
     setup = {
       window = {
