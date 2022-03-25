@@ -204,4 +204,18 @@ editor["protex/better-digraphs.nvim"] = {
   disable = not rvim.plugins.editor.better_diagraphs.active,
 }
 
+editor["danymat/neogen"] = {
+  setup = function()
+    require("which-key").register {
+      ["<localleader>nc"] = "comment: generate",
+    }
+  end,
+  keys = { "<localleader>nc" },
+  requires = "nvim-treesitter/nvim-treesitter",
+  config = function()
+    require("neogen").setup { snippet_engine = "luasnip" }
+    rvim.nnoremap("<localleader>nc", require("neogen").generate, "comment: generate")
+  end,
+}
+
 return editor
