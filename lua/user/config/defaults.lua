@@ -14,6 +14,20 @@ return {
     ---@usage timeout number timeout in ms for the format request (Default: 1000)
     timeout = 1000,
   },
+  style = {
+    border = {
+      line = {
+        { "🭽", "FloatBorder" },
+        { "▔", "FloatBorder" },
+        { "🭾", "FloatBorder" },
+        { "▕", "FloatBorder" },
+        { "🭿", "FloatBorder" },
+        { "▁", "FloatBorder" },
+        { "🭼", "FloatBorder" },
+        { "▏", "FloatBorder" },
+      },
+    },
+  },
   kind_icons = {
     Class = " ",
     Color = " ",

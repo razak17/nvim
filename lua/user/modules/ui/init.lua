@@ -62,11 +62,12 @@ ui["rcarriga/nvim-notify"] = {
 
 ui["stevearc/dressing.nvim"] = {
   config = function()
-    require("zephyr.util").plugin("dressing", { "FloatTitle", { inherit = "Normal", bold = true } })
+    require("zephyr.util").plugin("dressing", { "FloatTitle", { inherit = "Visual", bold = true } })
     require("dressing").setup {
       input = {
         winblend = 2,
         insert_only = false,
+        border = rvim.style.border.line,
       },
       select = {
         telescope = require("telescope.themes").get_cursor {
