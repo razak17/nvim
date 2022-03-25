@@ -22,8 +22,6 @@ function M:setup()
       -- @usage specify which filetypes to enable. By default a providers will attach to all the filetypes it supports.
       filetypes = {
         "javascript",
-        "javascriptreact",
-        "typescript",
         "typescriptreact",
         "html",
         "json",

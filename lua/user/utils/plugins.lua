@@ -18,11 +18,10 @@ function M:get_plugins_list()
   return list
 end
 
-function M:load_plugins()
+function M:load_plugins(plugins)
   self.repos = {}
 
-  local plugins_file = M:get_plugins_list()
-  for _, m in ipairs(plugins_file) do
+  for _, m in ipairs(plugins) do
     local repos = require(join_paths("user", m:sub(0, #m - 4)))
     for repo, conf in pairs(repos) do
       self.repos[#self.repos + 1] = vim.tbl_extend("force", { repo }, conf)
@@ -44,7 +43,7 @@ function M:init_ensure_installed()
   end
 end
 
-function M:bootstrap_packer(packer)
+function M:bootstrap_packer(packer, plugins)
   packer.init {
     package_root = join_paths(rvim.get_runtime_dir(), "/site/pack/"),
     compile_path = rvim.packer_compile_path,
@@ -63,7 +62,7 @@ function M:bootstrap_packer(packer)
     },
   }
   packer.reset()
-  M:load_plugins()
+  M:load_plugins(plugins)
   packer.startup(function(use)
     use { "wbthomason/packer.nvim", opt = true }
     if rvim.plugins.SANE then

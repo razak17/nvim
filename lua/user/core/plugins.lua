@@ -11,7 +11,9 @@ function Plug:load_packer()
     packer = require "packer"
   end
   rvim.safe_require "impatient"
-  plug_utils:bootstrap_packer(packer)
+
+  local plugins = plug_utils:get_plugins_list()
+  plug_utils:bootstrap_packer(packer, plugins)
 end
 
 local plugins = setmetatable({}, {

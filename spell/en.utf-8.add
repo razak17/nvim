@@ -70,3 +70,6 @@ BufEnter
 ui
 app
 nvim
+localhost
+morgan
+dotenv
