@@ -4,15 +4,6 @@ return function()
     return
   end
 
-  require("zephyr.util").plugin(
-    "Cmp",
-    { "CmpItemAbbr", { inherit = "Comment", italic = false, bold = false } },
-    { "CmpItemMenu", { inherit = "NonText", italic = false, bold = false } },
-    { "CmpItemAbbrMatch", { bold = true } },
-    { "CmpItemAbbrDeprecated", { strikethrough = true, inherit = "Comment" } },
-    { "CmpItemAbbrMatchFuzzy", { italic = true, foreground = "fg" } }
-  )
-
   local lsp_hls = rvim.lsp.kind_highlights
   local fmt = string.format
 
@@ -24,6 +15,37 @@ return function()
   end, vim.tbl_keys(
     lsp_hls
   ))
+
+  require("zephyr.util").plugin(
+    "Cmp",
+    { "CmpItemAbbr", { inherit = "Comment", italic = false, bold = false } },
+    { "CmpItemMenu", { inherit = "NonText", italic = false, bold = false } },
+    { "CmpItemAbbrMatch", { bold = true } },
+    { "CmpItemAbbrDeprecated", { strikethrough = true, inherit = "Comment" } },
+    { "CmpItemAbbrMatchFuzzy", { italic = true, foreground = "fg" } }
+  )
+
+  local function tab(fallback)
+    local ok, luasnip = rvim.safe_require('luasnip', { silent = true })
+    if cmp.visible() then
+      cmp.select_next_item()
+    elseif ok and luasnip.expand_or_locally_jumpable() then
+      luasnip.expand_or_jump()
+    else
+      fallback()
+    end
+  end
+
+  local function shift_tab(fallback)
+    local ok, luasnip = rvim.safe_require('luasnip', { silent = true })
+    if cmp.visible() then
+      cmp.select_prev_item()
+    elseif ok and luasnip.jumpable(-1) then
+      luasnip.jump(-1)
+    else
+      fallback()
+    end
+  end
 
   require("zephyr.util").plugin("CmpKinds", unpack(kind_hls))
 
@@ -79,7 +101,7 @@ return function()
         keyword_length = 1,
       },
       experimental = {
-        ghost_text = true,
+        ghost_text = true;
         native_menu = false,
       },
       formatting = {
@@ -88,7 +110,7 @@ return function()
         source_names = {
           nvim_lsp = "(LSP)",
           nvim_lua = "(Lua)",
-          vsnip = "(Snippet)",
+          luasnip = "(Luasnip)",
           path = "(Path)",
           buffer = "(Buffer)",
           cmp_tabnine = "(TN)",
@@ -126,7 +148,7 @@ return function()
       },
       snippet = {
         expand = function(args)
-          vim.fn["vsnip#anonymous"](args.body)
+          require("luasnip").lsp_expand(args.body)
         end,
       },
       documentation = {
@@ -135,8 +157,8 @@ return function()
       sources = {
         { name = "nvim_lsp" },
         { name = "nvim_lua" },
-        { name = "vsnip" },
-        { name = "path" },
+        { name = "luasnip" },
+        { name = "path" };
         { name = "buffer" },
         { name = "cmp_tabnine" },
         { name = "spell" },
@@ -152,40 +174,9 @@ return function()
         ["<C-j>"] = cmp.mapping.select_next_item(),
         ["<C-d>"] = cmp.mapping.scroll_docs(-4),
         ["<C-f>"] = cmp.mapping.scroll_docs(4),
-        -- TODO: potentially fix emmet nonsense
-        ["<Tab>"] = cmp.mapping(function(fallback)
-          if cmp.visible() then
-            cmp.select_next_item()
-          elseif fn.call("vsnip#available", { 1 }) == 1 then
-            return T "<Plug>(vsnip-expand-or-jump)"
-          elseif fn.call("vsnip#jumpable", { 1 }) == 1 then
-            return T "<Plug>(vsnip-jump-next)"
-          elseif check_backspace() then
-            fn.feedkeys(T "<Tab>", "n")
-          elseif is_emmet_active() then
-            return fn["cmp#complete"]()
-          else
-            fallback()
-          end
-        end, {
-          "i",
-          "s",
-        }),
-        ["<S-Tab>"] = cmp.mapping(function(fallback)
-          if cmp.visible() then
-            cmp.select_prev_item()
-          elseif fn.call("vsnip#jumpable", { -1 }) == 1 then
-            return T "<Plug>(vsnip-jump-prev)"
-          else
-            fallback()
-          end
-        end, {
-          "i",
-          "s",
-        }),
-
-        ["<C-Space>"] = cmp.mapping.complete(),
-        ["<C-e>"] = cmp.mapping.close(),
+        ['<Tab>'] = cmp.mapping(tab, { 'i', 'c' }),
+        ['<S-Tab>'] = cmp.mapping(shift_tab, { 'i', 'c' }),
+        ["<C-q>"] = cmp.mapping.complete(),
         ["<CR>"] = cmp.mapping.confirm {
           behavior = cmp.ConfirmBehavior.Replace,
           select = true,

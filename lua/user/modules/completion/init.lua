@@ -5,7 +5,7 @@ rvim.plugins.completion = {
   plenary = { active = true },
   popup = { active = true },
   cmp = { active = true },
-  vsnip = { active = true },
+  luasnip = { active = true },
   emmet = { active = true },
   friendly_snippets = { active = true },
 }
@@ -35,7 +35,7 @@ completion["hrsh7th/nvim-cmp"] = {
     { "hrsh7th/cmp-nvim-lsp", after = "nvim-cmp" },
     { "hrsh7th/cmp-nvim-lua", after = "nvim-cmp" },
     { "hrsh7th/cmp-nvim-lsp-document-symbol", after = "nvim-cmp" },
-    { "hrsh7th/cmp-vsnip", after = "nvim-cmp" },
+    { "saadparwaiz1/cmp_luasnip", after = "nvim-cmp" },
     { "hrsh7th/cmp-buffer", after = "nvim-cmp" },
     { "hrsh7th/cmp-path", after = "nvim-cmp" },
     { "hrsh7th/cmp-cmdline", after = "nvim-cmp" },
@@ -66,27 +66,12 @@ completion["hrsh7th/nvim-cmp"] = {
   disable = not rvim.plugins.completion.cmp.active,
 }
 
-completion["hrsh7th/vim-vsnip"] = {
-  config = function()
-    vim.g.vsnip_snippet_dir = rvim.snippets_dir
-
-    local xmap = rvim.xmap
-    xmap("<C-x>", "<Plug>(vsnip-cut-text)")
-    xmap("<C-l>", "<Plug>(vsnip-select-text)")
-    rvim.imap(
-      "<C-l>",
-      "vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'",
-      { expr = true }
-    )
-    rvim.smap(
-      "<C-l>",
-      "vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'",
-      { expr = true }
-    )
-
-    require("which-key").register { ["<leader>S"] = { ":VsnipOpen<CR> 1<CR><CR>", "edit snippet" } }
-  end,
-  disable = not rvim.plugins.completion.vsnip.active,
+completion["L3MON4D3/LuaSnip"] = {
+  event = "InsertEnter",
+  module = "luasnip",
+  requires = "rafamadriz/friendly-snippets",
+  config = utils.load_conf("completion", "luasnip"),
+  disable = not rvim.plugins.completion.luasnip.active,
 }
 
 completion["rafamadriz/friendly-snippets"] = {

@@ -23,16 +23,16 @@ rvim.plugins.tools = {
   telescope_media_files = { active = false },
   telescope_zoxide = { active = true },
   tabout = { active = true },
-  -- TODO: handle these later
-  glow = { active = false }, --j
-  doge = { active = false }, --j
-  dadbod = { active = false }, --j
-  restconsole = { active = false }, --j
   markdown_preview = { active = true },
   marks = { active = true },
   apathy = { active = true },
   todo_comments = { active = true },
   projectionist = { active = true },
+  -- TODO: handle these later
+  glow = { active = false }, --j
+  doge = { active = false }, --j
+  dadbod = { active = false }, --j
+  restconsole = { active = false }, --j
 }
 
 local utils = require "user.utils"
