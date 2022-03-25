@@ -11,9 +11,10 @@ rvim.plugins.completion = {
 }
 
 local utils = require "user.utils"
+local load_conf = utils.load_conf
 
 completion["folke/which-key.nvim"] = {
-  config = utils.load_conf("completion", "which_key"),
+  config = load_conf("completion", "which_key"),
   disable = not rvim.plugins.completion.which_key.active,
 }
 
@@ -62,15 +63,12 @@ completion["hrsh7th/nvim-cmp"] = {
       end,
     },
   },
-  config = utils.load_conf("completion", "cmp"),
+  config = load_conf("completion", "cmp"),
   disable = not rvim.plugins.completion.cmp.active,
 }
 
 completion["L3MON4D3/LuaSnip"] = {
-  event = "InsertEnter",
-  module = "luasnip",
-  requires = "rafamadriz/friendly-snippets",
-  config = utils.load_conf("completion", "luasnip"),
+  config = load_conf("completion", "luasnip"),
   disable = not rvim.plugins.completion.luasnip.active,
 }
 

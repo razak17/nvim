@@ -40,6 +40,7 @@ return function()
     require("luasnip.loaders.from_lua").edit_snippet_files()
   end)
 
+  -- FIXME: Doesn't work
   require("which-key").register { ["<leader>S"] = { ":LuaSnipEdit<CR> 1<CR><CR>", "edit snippet" } }
 
   -- <c-l> is selecting within a list of options.
@@ -64,5 +65,7 @@ return function()
 
   require("luasnip").config.setup { store_selection_keys = "<C-l>" }
   require("luasnip.loaders.from_lua").lazy_load()
-  require("luasnip.loaders.from_vscode").lazy_load { paths = "./snippets/textmate" }
+  require("luasnip.loaders.from_vscode").lazy_load {
+    paths = rvim.get_config_dir() .. "/snippets/textmate",
+  }
 end

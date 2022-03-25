@@ -1,7 +1,7 @@
 local editor = {}
 
 rvim.plugins.editor = {
-  ajk = { active = true },
+  ajk = { active = false },
   easy_align = { active = true },
   cool = { active = true },
   surround = { active = true },

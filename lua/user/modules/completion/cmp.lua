@@ -26,7 +26,7 @@ return function()
   )
 
   local function tab(fallback)
-    local ok, luasnip = rvim.safe_require('luasnip', { silent = true })
+    local ok, luasnip = rvim.safe_require("luasnip", { silent = true })
     if cmp.visible() then
       cmp.select_next_item()
     elseif ok and luasnip.expand_or_locally_jumpable() then
@@ -37,7 +37,7 @@ return function()
   end
 
   local function shift_tab(fallback)
-    local ok, luasnip = rvim.safe_require('luasnip', { silent = true })
+    local ok, luasnip = rvim.safe_require("luasnip", { silent = true })
     if cmp.visible() then
       cmp.select_prev_item()
     elseif ok and luasnip.jumpable(-1) then
@@ -101,7 +101,7 @@ return function()
         keyword_length = 1,
       },
       experimental = {
-        ghost_text = true;
+        ghost_text = true,
         native_menu = false,
       },
       formatting = {
@@ -152,13 +152,13 @@ return function()
         end,
       },
       documentation = {
-        border = { "┌", "─", "┐", "│", "┘", "─", "└", "│" },
+        border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
       },
       sources = {
         { name = "nvim_lsp" },
         { name = "nvim_lua" },
         { name = "luasnip" },
-        { name = "path" };
+        { name = "path" },
         { name = "buffer" },
         { name = "cmp_tabnine" },
         { name = "spell" },
@@ -174,8 +174,8 @@ return function()
         ["<C-j>"] = cmp.mapping.select_next_item(),
         ["<C-d>"] = cmp.mapping.scroll_docs(-4),
         ["<C-f>"] = cmp.mapping.scroll_docs(4),
-        ['<Tab>'] = cmp.mapping(tab, { 'i', 'c' }),
-        ['<S-Tab>'] = cmp.mapping(shift_tab, { 'i', 'c' }),
+        ["<Tab>"] = cmp.mapping(tab, { "i", "c" }),
+        ["<S-Tab>"] = cmp.mapping(shift_tab, { "i", "c" }),
         ["<C-q>"] = cmp.mapping.complete(),
         ["<CR>"] = cmp.mapping.confirm {
           behavior = cmp.ConfirmBehavior.Replace,
