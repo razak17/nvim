@@ -122,7 +122,6 @@ editor["romainl/vim-cool"] = {
 }
 
 editor["jghauser/fold-cycle.nvim"] = {
-  event = { "BufReadPre", "BufNewFile" },
   config = function()
     require("fold-cycle").setup()
     rvim.nnoremap("<BS>", function()
