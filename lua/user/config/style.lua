@@ -60,6 +60,7 @@ return {
       pencil = "",
       chevron_right = "",
       chevron_right_alt = "❯",
+      double_chevron_right = "»",
       table = "",
       calendar = "",
     },
