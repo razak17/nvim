@@ -11,7 +11,7 @@ rvim.plugins.ui = {
   nvim_notify = { active = true },
   dressing = { active = true },
   headlines = { active = true },
-  specs = { active = true },
+  specs = { active = false },
   dim = { active = true },
 }
 
