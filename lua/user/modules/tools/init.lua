@@ -3,12 +3,12 @@ local tools = {}
 rvim.plugins.tools = {
   fterm = { active = true },
   far = { active = true },
-  bookmarks = { active = false },
+  bookmarks = { active = false }, --j
   undotree = { active = true },
   project = { active = true },
-  diffview = { active = false },
-  structlog = { active = true },
+  diffview = { active = false }, --j
   bbye = { active = true },
+  structlog = { active = true },
   neoclip = { active = true },
   auto_session = { active = true },
   impatient = { active = true },
@@ -16,18 +16,18 @@ rvim.plugins.tools = {
   telescope = { active = true },
   telescope_fzf = { active = true },
   telescope_ui_select = { active = true },
-  telescope_tmux = { active = true },
-  telescope_frecency = { active = true },
-  telescope_dap = { active = true },
-  telescope_file_browser = { active = true },
-  telescope_media_files = { active = true },
+  telescope_tmux = { active = false },
+  telescope_frecency = { active = false },
+  telescope_dap = { active = false },
+  telescope_file_browser = { active = false },
+  telescope_media_files = { active = false },
   telescope_zoxide = { active = true },
   tabout = { active = true },
   -- TODO: handle these later
-  glow = { active = false },
-  doge = { active = false },
-  dadbod = { active = false },
-  restconsole = { active = false },
+  glow = { active = false }, --j
+  doge = { active = false }, --j
+  dadbod = { active = false }, --j
+  restconsole = { active = false }, --j
   markdown_preview = { active = true },
   marks = { active = true },
   apathy = { active = true },
@@ -170,7 +170,7 @@ tools["Tastyep/structlog.nvim"] = {
 tools["AckslD/nvim-neoclip.lua"] = {
   config = function()
     require("neoclip").setup {
-      enable_persistent_history = true,
+      enable_persistent_history = false,
       keys = {
         telescope = {
           i = { select = "<c-p>", paste = "<CR>", paste_behind = "<c-k>" },
@@ -256,35 +256,35 @@ tools["phaazon/hop.nvim"] = {
     hop.setup { keys = "etovxqpdygfbzcisuran" }
     rvim.nnoremap("s", hop.hint_char1)
     rvim.nnoremap("s", function()
-      hop.hint_char1 { multi_windows = true }
+      hop.hint_char1 { multi_windows = false }
     end)
     -- NOTE: override F/f using hop motions
     vim.keymap.set({ "x", "n" }, "F", function()
       hop.hint_char1 {
         direction = require("hop.hint").HintDirection.BEFORE_CURSOR,
-        current_line_only = true,
+        current_line_only = false,
         inclusive_jump = false,
       }
     end)
     vim.keymap.set({ "x", "n" }, "f", function()
       hop.hint_char1 {
         direction = require("hop.hint").HintDirection.AFTER_CURSOR,
-        current_line_only = true,
+        current_line_only = false,
         inclusive_jump = false,
       }
     end)
     rvim.onoremap("F", function()
       hop.hint_char1 {
         direction = require("hop.hint").HintDirection.BEFORE_CURSOR,
-        current_line_only = true,
-        inclusive_jump = true,
+        current_line_only = false,
+        inclusive_jump = false,
       }
     end)
     rvim.onoremap("f", function()
       hop.hint_char1 {
         direction = require("hop.hint").HintDirection.AFTER_CURSOR,
-        current_line_only = true,
-        inclusive_jump = true,
+        current_line_only = false,
+        inclusive_jump = false,
       }
     end)
   end,
