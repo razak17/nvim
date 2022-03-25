@@ -8,8 +8,6 @@ return {
         warn = "",
         info = "",
         hint = "",
-        bug = "",
-        question = "",
       },
     },
     virtual_text = {

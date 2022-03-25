@@ -10,6 +10,7 @@ return function()
   local action_state = require "telescope.actions.state"
   local layout_actions = require "telescope.actions.layout"
   local themes = require "telescope.themes"
+  local icons = rvim.style.icons
 
   -- https://github.com/nvim-telescope/telescope.nvim/issues/1048
   -- Ref: https://github.com/whatsthatsmell/dots/blob/master/public%20dots/vim-nvim/lua/joel/telescope/init.lua
@@ -46,12 +47,10 @@ return function()
     return themes.get_dropdown(get_border(opts))
   end
 
-  local utils = require "user.utils"
-
   rvim.telescope = {
     setup = {
       defaults = {
-        prompt_prefix = " ❯ ",
+        prompt_prefix = " " .. icons.misc.chevron_right_alt .. " ",
         selection_caret = " ",
         sorting_strategy = "ascending",
         layout_strategy = "horizontal",

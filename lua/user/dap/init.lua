@@ -1,24 +1,25 @@
 return function()
   local dap = require "dap"
+  local icons = rvim.style.icons
 
   rvim.dap = {
     install_dir = rvim.get_cache_dir() .. "/dap",
     python_dir = rvim.get_cache_dir() .. "/dap/python_dbg/bin/python",
     node_dir = rvim.get_cache_dir() .. "/dap/jsnode_dbg/vscode-node-debug2/out/src/nodeDebug.js",
     breakpoint = {
-      text = "", -- 🛑
+      text = icons.misc.bug_alt,
       texthl = "LspDiagnosticsSignError",
       linehl = "",
       numhl = "",
     },
     breakpoint_rejected = {
-      text = "",
+      text = icons.misc.bug_alt,
       texthl = "LspDiagnosticsSignHint",
       linehl = "",
       numhl = "",
     },
     stopped = {
-      text = "🟢", --''
+      text = icons.misc.dap_hollow,
       texthl = "LspDiagnosticsSignInformation",
       linehl = "DiagnosticUnderlineInfo",
       numhl = "LspDiagnosticsSignInformation",

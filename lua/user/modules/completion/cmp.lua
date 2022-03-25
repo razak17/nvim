@@ -130,7 +130,7 @@ return function()
         },
         duplicates_default = 0,
         format = function(entry, vim_item)
-          vim_item.kind = rvim.kind_icons[vim_item.kind]
+          vim_item.kind = rvim.style.icons.kind[vim_item.kind]
           local name = entry.source.name
           local completion = entry.completion_item.data
           local menu = rvim.cmp.setup.formatting.source_names[entry.source.name]
