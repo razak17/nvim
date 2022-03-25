@@ -6,7 +6,7 @@ return function()
     python_dir = rvim.get_cache_dir() .. "/dap/python_dbg/bin/python",
     node_dir = rvim.get_cache_dir() .. "/dap/jsnode_dbg/vscode-node-debug2/out/src/nodeDebug.js",
     breakpoint = {
-      text = "",
+      text = "", -- 🛑
       texthl = "LspDiagnosticsSignError",
       linehl = "",
       numhl = "",
@@ -18,15 +18,12 @@ return function()
       numhl = "",
     },
     stopped = {
-      text = "",
+      text = "🟢", --''
       texthl = "LspDiagnosticsSignInformation",
       linehl = "DiagnosticUnderlineInfo",
       numhl = "LspDiagnosticsSignInformation",
     },
   }
-
-  -- vim.fn.sign_define("DapBreakpoint", { text = "🛑", texthl = "", linehl = "", numhl = "" })
-  -- vim.fn.sign_define("DapStopped", { text = "🟢", texthl = "", linehl = "", numhl = "" })
 
   vim.fn.sign_define("DapBreakpoint", rvim.dap.breakpoint)
   vim.fn.sign_define("DapBreakpointRejected", rvim.dap.breakpoint_rejected)
