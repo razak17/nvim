@@ -203,9 +203,6 @@ nnoremap("0", "getline('.')[0 : col('.') - 2] =~# '^\\s\\+$' ? '0' : '^'", { exp
 nnoremap("[<space>", [[<cmd>put! =repeat(nr2char(10), v:count1)<cr>'[]])
 nnoremap("]<space>", [[<cmd>put =repeat(nr2char(10), v:count1)<cr>]])
 
--- QuickRun
-nnoremap("<C-b>", ":QuickRun<CR>")
-
 -- Open url
 -- nnoremap["gx"] = ":sil !xdg-open <c-r><c-a><cr>"
 
