@@ -314,6 +314,7 @@ tools["moll/vim-bbye"] = {
 
 tools["folke/todo-comments.nvim"] = {
   requires = "nvim-lua/plenary.nvim",
+  -- FIXME: errors out when c-f s hit in cmdlne
   config = function()
     -- this plugin is not safe to reload
     if vim.g.packer_compiled_loaded then

@@ -36,6 +36,10 @@ local function create_floating_file(location, opts)
     ), -- Don't let the window be more that 15 lines long(height)
     false
   )
+  if next(contents) == nil then
+    vim.notify("peek: Unable to get contents of the file!", vim.log.levels.WARN)
+    return
+  end
   local width, height = vim.lsp.util._make_floating_popup_size(contents, opts)
   local if_nil = vim.F.if_nil
   opts = vim.lsp.util.make_floating_popup_options(if_nil(width, 30), if_nil(height, 10), opts)
@@ -90,7 +94,7 @@ function M.open_file()
   local filepath = vim.fn.expand "%:."
 
   if not filepath then
-    print "peek: Unable to open the file!"
+    vim.notify("peek: Unable to open the file!", vim.log.levels.ERROR)
     return
   end
 
@@ -123,7 +127,7 @@ function M.Peek(what)
   if vim.tbl_contains(vim.api.nvim_list_wins(), M.floating_win) then
     local success_1, _ = pcall(vim.api.nvim_set_current_win, M.floating_win)
     if not success_1 then
-      print "peek: You cannot edit the current file in a preview!"
+             vim.notify("peek: You cannot edit the current file in a preview!", vim.log.levels.ERROR)
       return
     end
 
@@ -149,10 +153,9 @@ function M.Peek(what)
       preview_callback
     )
     if not success then
-      print(
-        'peek: Error calling LSP method "textDocument/'
-          .. what
-          .. '". The current language lsp might not support it.'
+       vim.notify(
+        'peek: Error calling LSP method "textDocument/' .. what .. '". The current language lsp might not support it.',
+        vim.log.levels.ERROR
       )
     end
   end
