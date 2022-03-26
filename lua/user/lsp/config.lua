@@ -1,21 +1,8 @@
 return {
   templates_dir = join_paths(rvim.get_config_dir(), "after", "ftplugin"),
   diagnostics = {
-    signs = {
-      active = true,
-      values = {
-        error = "",
-        warn = "",
-        info = "",
-        hint = "",
-      },
-    },
-    virtual_text = {
-      -- severity = vim.diagnostic.severity.ERROR,
-      source = "if_many",
-      prefix = "",
-      spacing = 2,
-    },
+    signs = { active = true },
+    virtual_text_spacing = 2,
     underline = true,
     border = "rounded",
     update_in_insert = false,

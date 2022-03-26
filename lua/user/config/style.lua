@@ -12,7 +12,18 @@ return {
     },
   },
   icons = {
+    lsp = {
+      error = "",
+      warn = "",
+      info = "",
+      hint = "",
+    },
+    statusline = {
+      bar = "▊",
+      mode = "",
+    },
     git = {
+      branch = "",
       add = "",
       mod = "",
       remove = "",
@@ -40,6 +51,7 @@ return {
       question = "",
       lock = "",
       circle = "",
+      dot = "•",
       project = "",
       dashboard = "",
       history = "",
@@ -63,6 +75,7 @@ return {
       double_chevron_right = "»",
       table = "",
       calendar = "",
+      tree = ''
     },
     kind = {
       Class = "", -- '',

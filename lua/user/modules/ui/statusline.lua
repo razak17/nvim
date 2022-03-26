@@ -23,12 +23,13 @@ return function()
   gl.short_line_list = { "NvimTree", "packer", "minimap", "Outline" }
 
   local colors = rvim.palette
+  local icons = rvim.style.icons
 
   -- Left side
   gls.left[1] = {
     RainbowRed = {
       provider = function()
-        return "▊ "
+        return icons.statusline.bar .. " "
       end,
       highlight = { colors.pale_blue, colors.bg },
     },
@@ -60,7 +61,7 @@ return function()
           t = colors.pale_red,
         }
         execute("hi GalaxyViMode guifg=" .. mode_color[fn.mode()])
-        return "  "
+        return icons.statusline.mode .. " "
       end,
       highlight = { colors.pale_red, colors.bg, "bold" },
     },
@@ -131,7 +132,7 @@ return function()
   gls.left[7] = {
     GitIcon = {
       provider = function()
-        return "    "
+        return "   " .. icons.git.branch .. " "
       end,
       condition = condition.check_git_workspace,
       highlight = { colors.dark_green, colors.bg },
@@ -157,7 +158,7 @@ return function()
     DiffAdd = {
       provider = "DiffAdd",
       condition = condition.hide_in_width,
-      icon = " ",
+      icon = icons.git.add .. " ",
       highlight = { colors.yellowgreen, colors.bg },
     },
   }
@@ -165,7 +166,7 @@ return function()
     DiffModified = {
       provider = "DiffModified",
       condition = condition.hide_in_width,
-      icon = " ",
+      icon = icons.git.mod .. " ",
       highlight = { colors.dark_orange, colors.bg },
     },
   }
@@ -173,7 +174,7 @@ return function()
     DiffRemove = {
       provider = "DiffRemove",
       condition = condition.hide_in_width,
-      icon = " ",
+      icon = icons.git.remove .. " ",
       highlight = { colors.error_red, colors.bg },
     },
   }
@@ -188,21 +189,21 @@ return function()
   gls.left[14] = {
     DiagnosticError = {
       provider = "DiagnosticError",
-      icon = "  ",
+      icon = " " .. icons.lsp.error .. " ",
       highlight = { colors.pale_red, colors.bg },
     },
   }
   gls.left[15] = {
     DiagnosticWarn = {
       provider = "DiagnosticWarn",
-      icon = "  ",
+      icon = " " .. icons.lsp.warn .. " ",
       highlight = { colors.orange, colors.bg },
     },
   }
   gls.left[16] = {
     DiagnosticInfo = {
       provider = "DiagnosticInfo",
-      icon = "  ",
+      icon = " " .. icons.lsp.info .. " ",
       highlight = { colors.blue, colors.bg },
     },
   }
@@ -210,7 +211,7 @@ return function()
   gls.left[17] = {
     DiagnosticHint = {
       provider = "DiagnosticHint",
-      icon = "  ",
+      icon = " " .. icons.lsp.hint .. " ",
       highlight = { colors.dark_green, colors.bg },
     },
   }
@@ -265,7 +266,7 @@ return function()
         end
         return true
       end,
-      icon = "• ",
+      icon = icons.misc.dot .. " ",
       highlight = { colors.statusline_fg, colors.bg },
       separator = " ",
       separator_highlight = { colors.statusline_section_bg, colors.bg },
@@ -276,7 +277,7 @@ return function()
     TreesitterIcon = {
       provider = function()
         if next(vim.treesitter.highlighter.active) ~= nil then
-          return "  " .. vim.bo.filetype
+          return icons.misc.tree .. "  " .. vim.bo.filetype
         end
         return vim.bo.filetype
       end,
@@ -346,7 +347,7 @@ return function()
   gls.right[8] = {
     RainbowBlue = {
       provider = function()
-        return "▊"
+        return icons.statusline.bar
       end,
       separator = "",
       separator_highlight = { colors.statusline_section_bg, colors.bg },

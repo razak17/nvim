@@ -5,6 +5,7 @@ local fn = vim.fn
 local api = vim.api
 local fmt = string.format
 local L = vim.lsp.log_levels
+local icons = rvim.style.icons
 
 if vim.env.DEVELOPING then
   vim.lsp.set_log_level(L.DEBUG)
@@ -13,12 +14,11 @@ end
 -----------------------------------------------------------------------------//
 -- Signs
 -----------------------------------------------------------------------------//
-
 local diagnostic_types = {
-  { "Error", icon = rvim.lsp.diagnostics.signs.values.error },
-  { "Warn", icon = rvim.lsp.diagnostics.signs.values.warn },
-  { "Info", icon = rvim.lsp.diagnostics.signs.values.info },
-  { "Hint", icon = rvim.lsp.diagnostics.signs.values.hint },
+  { "Error", icon = icons.lsp.error },
+  { "Warn", icon = icons.lsp.warn },
+  { "Info", icon = icons.lsp.info },
+  { "Hint", icon = icons.lsp.hint },
 }
 
 fn.sign_define(vim.tbl_map(function(t)
@@ -63,13 +63,18 @@ vim.diagnostic.handlers.signs = {
 -----------------------------------------------------------------------------//
 -- Handler overrides
 -----------------------------------------------------------------------------//
+local diagnostics = rvim.lsp.diagnostics
 vim.diagnostic.config { -- your config
-  virtual_text = rvim.lsp.diagnostics.virtual_text,
-  signs = rvim.lsp.diagnostics.signs,
-  underline = rvim.lsp.diagnostics.underline,
-  update_in_insert = rvim.lsp.diagnostics.update_in_insert,
-  severity_sort = rvim.lsp.diagnostics.severity_sort,
-  float = rvim.lsp.diagnostics.float,
+  virtual_text = {
+    source = "if_many",
+    prefix = icons.misc.bug,
+    spacing = diagnostics.virtual_text_spacing,
+  },
+  signs = { active = diagnostics.signs.active, values = icons.lsp },
+  underline = diagnostics.underline,
+  update_in_insert = diagnostics.update_in_insert,
+  severity_sort = diagnostics.severity_sort,
+  float = diagnostics.float,
 }
 
 local max_width = math.max(math.floor(vim.o.columns * 0.7), 100)
