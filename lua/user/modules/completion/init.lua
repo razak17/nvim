@@ -43,7 +43,6 @@ completion["hrsh7th/nvim-cmp"] = {
     { "f3fora/cmp-spell", after = "nvim-cmp" },
     { "hrsh7th/cmp-emoji", after = "nvim-cmp" },
     { "octaltree/cmp-look", after = "nvim-cmp" },
-    { "tzachar/cmp-tabnine", run = "./install.sh", after = "nvim-cmp" },
     {
       "petertriho/cmp-git",
       opt = true,
@@ -56,9 +55,6 @@ completion["hrsh7th/nvim-cmp"] = {
     },
     {
       "David-Kunz/cmp-npm",
-      requires = {
-        "nvim-lua/plenary.nvim",
-      },
       config = function()
         require("cmp-npm").setup {}
       end,
@@ -66,6 +62,22 @@ completion["hrsh7th/nvim-cmp"] = {
   },
   config = load_conf("completion", "cmp"),
   disable = not rvim.plugins.completion.cmp.active,
+}
+
+completion["github/copilot.vim"] = {
+  "github/copilot.vim",
+  config = function()
+    vim.g.copilot_no_tab_map = true
+    vim.cmd [[imap <expr> <Plug>(vimrc:copilot-dummy-map) copilot#Accept("\<Tab>")]]
+    vim.g.copilot_filetypes = {
+      ["*"] = false,
+      gitcommit = false,
+      NeogitCommitMessage = false,
+      dart = true,
+      lua = true,
+    }
+    require("zephyr.util").plugin("copilot", { "CopilotSuggestion", { link = "Comment" } })
+  end,
 }
 
 completion["L3MON4D3/LuaSnip"] = {
