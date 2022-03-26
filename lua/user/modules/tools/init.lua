@@ -26,7 +26,7 @@ rvim.plugins.tools = {
   markdown_preview = { active = true },
   marks = { active = true },
   apathy = { active = true },
-  todo_comments = { active = true },
+  todo_comments = { active = false },
   projectionist = { active = true },
   -- TODO: handle these later
   glow = { active = false }, --j
