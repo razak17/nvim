@@ -91,6 +91,8 @@ tools["numToStr/FTerm.nvim"] = {
         cmd = term:new { cmd = "lazygit" }
       elseif key == "ranger" then
         cmd = term:new { cmd = "ranger" }
+      elseif key == "rvim" then
+        cmd = term:new { cmd = "iconf -rcma" }
       end
       cmd:toggle()
     end
@@ -108,7 +110,8 @@ tools["numToStr/FTerm.nvim"] = {
         l = { ':lua _G.__fterm_cmd("lazygit")<cr>', "lazygit" },
         n = { ':lua _G.__fterm_cmd("node")<cr>', "node" },
         p = { ':lua _G.__fterm_cmd("python")<cr>', "python" },
-        r = { ":lua _G.__fterm_cmd(ranger)<cr>", "ranger" },
+        R = { ':lua _G.__fterm_cmd("ranger")<cr>', "ranger" },
+        r = { ':lua _G.__fterm_cmd("rvim")<cr>', "rvim" },
       },
     }
   end,

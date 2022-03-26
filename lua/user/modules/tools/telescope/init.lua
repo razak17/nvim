@@ -51,7 +51,7 @@ return function()
     setup = {
       defaults = {
         prompt_prefix = " " .. icons.misc.chevron_right_alt .. " ",
-        selection_caret = " " .. icons.misc.double_chevron_right, --  ,
+        selection_caret = " " .. icons.misc.double_chevron_right .. " ", --  ,
         sorting_strategy = "ascending",
         layout_strategy = "horizontal",
         set_env = { ["TERM"] = vim.env.TERM },
