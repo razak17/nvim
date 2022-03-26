@@ -1,3 +1,4 @@
+setlocal spell
 setlocal colorcolumn=120
 setlocal iskeyword+=:,#
 setlocal foldmethod=marker

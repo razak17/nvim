@@ -1,3 +1,5 @@
+setlocal spell
+
 lua << EOF
 local lsp_installer = require "nvim-lsp-installer"
 

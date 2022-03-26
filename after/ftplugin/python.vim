@@ -1,3 +1,5 @@
+setlocal spell
+setlocal spell
 setlocal iskeyword+="
 setlocal shiftwidth=4
 setlocal softtabstop=4

@@ -342,11 +342,6 @@ rvim.augroup("Utilities", {
     pattern = { "gitcommit", "gitrebase" },
     command = "set bufhidden=delete",
   },
-  { -- TODO: should this be done in ftplugin files
-    event = { "FileType" },
-    pattern = { "lua", "vim", "go", "dart", "python", "javascript", "typescript", "rust" },
-    command = "setlocal spell",
-  },
   {
     event = { "BufWritePre", "FileWritePre" },
     pattern = { "*" },
