@@ -29,39 +29,48 @@ completion["mattn/emmet-vim"] = {
   disable = not rvim.plugins.completion.emmet.active,
 }
 
+-- nvim-cmp
 completion["hrsh7th/nvim-cmp"] = {
   module = "cmp",
   event = "InsertEnter",
-  requires = {
-    { "hrsh7th/cmp-nvim-lsp", after = "nvim-cmp" },
-    { "hrsh7th/cmp-nvim-lua", after = "nvim-cmp" },
-    { "hrsh7th/cmp-nvim-lsp-document-symbol", after = "nvim-cmp" },
-    { "saadparwaiz1/cmp_luasnip", after = "nvim-cmp" },
-    { "hrsh7th/cmp-buffer", after = "nvim-cmp" },
-    { "hrsh7th/cmp-path", after = "nvim-cmp" },
-    { "hrsh7th/cmp-cmdline", after = "nvim-cmp" },
-    { "f3fora/cmp-spell", after = "nvim-cmp" },
-    { "hrsh7th/cmp-emoji", after = "nvim-cmp" },
-    { "octaltree/cmp-look", after = "nvim-cmp" },
-    {
-      "petertriho/cmp-git",
-      opt = true,
-      -- after = "nvim-cmp",
-      config = function()
-        require("cmp_git").setup {
-          filetypes = { "gitcommit", "NeogitCommitMessage" },
-        }
-      end,
-    },
-    {
-      "David-Kunz/cmp-npm",
-      config = function()
-        require("cmp-npm").setup {}
-      end,
-    },
-  },
   config = load_conf("completion", "cmp"),
   disable = not rvim.plugins.completion.cmp.active,
+}
+
+completion["hrsh7th/cmp-nvim-lsp"] = { after = "nvim-cmp" }
+
+completion["hrsh7th/cmp-nvim-lua"] = { after = "nvim-cmp" }
+
+completion["hrsh7th/cmp-nvim-lsp-document-symbol"] = { after = "nvim-cmp" }
+
+completion["saadparwaiz1/cmp_luasnip"] = { after = "nvim-cmp" }
+
+completion["hrsh7th/cmp-buffer"] = { after = "nvim-cmp" }
+
+completion["hrsh7th/cmp-path"] = { after = "nvim-cmp" }
+
+completion["hrsh7th/cmp-cmdline"] = { after = "nvim-cmp" }
+
+completion["f3fora/cmp-spell"] = { after = "nvim-cmp" }
+
+completion["hrsh7th/cmp-emoji"] = { after = "nvim-cmp" }
+
+completion["octaltree/cmp-look"] = { after = "nvim-cmp" }
+
+completion["petertriho/cmp-git"] = {
+  opt = true,
+  -- after = "nvim-cmp",
+  config = function()
+    require("cmp_git").setup {
+      filetypes = { "gitcommit", "NeogitCommitMessage" },
+    }
+  end,
+}
+
+completion["David-Kunz/cmp-npm"] = {
+  config = function()
+    require("cmp-npm").setup {}
+  end,
 }
 
 completion["github/copilot.vim"] = {
