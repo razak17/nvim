@@ -45,7 +45,7 @@ completion["hrsh7th/cmp-nvim-lsp-document-symbol"] = { after = "nvim-cmp" }
 
 completion["saadparwaiz1/cmp_luasnip"] = { after = "nvim-cmp" }
 
-completion["hrsh7th/cmp-buffer"] = { after = "nvim-cmp" };
+completion["hrsh7th/cmp-buffer"] = { after = "nvim-cmp" }
 
 completion["hrsh7th/cmp-path"] = { after = "nvim-cmp" }
 
@@ -77,13 +77,15 @@ completion["github/copilot.vim"] = {
   "github/copilot.vim",
   config = function()
     vim.g.copilot_no_tab_map = true
-    vim.cmd [[imap <expr> <Plug>(vimrc:copilot-dummy-map) copilot#Accept("\<Tab>")]]
+    vim.cmd [[imap <silent><script><expr> <C-l> copilot#Accept("\<CR>")]]
+    vim.cmd [[let g:copilot_no_tab_map = v:true]]
     vim.g.copilot_filetypes = {
       ["*"] = false,
       gitcommit = false,
       NeogitCommitMessage = false,
       dart = true,
       lua = true,
+      python = true,
     }
     require("zephyr.util").plugin("copilot", { "CopilotSuggestion", { link = "Comment" } })
   end,
