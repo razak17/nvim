@@ -25,16 +25,6 @@ local function general_overrides()
     { "CursorLineNr", { bold = true } },
     { "FoldColumn", { background = "background" } },
     { "TermCursor", { ctermfg = "green", foreground = "royalblue" } },
-    {
-      "IncSearch",
-      {
-        background = "NONE",
-        foreground = "LightGreen",
-        italic = true,
-        bold = true,
-        underline = true,
-      },
-    },
     -- Add undercurl to existing spellbad highlight
     { "SpellBad", { undercurl = true, background = "NONE", foreground = "NONE", sp = "green" } },
     { "SpellRare", { undercurl = true } },
