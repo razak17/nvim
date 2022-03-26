@@ -14,9 +14,9 @@ local g = vim.g
 g.mapleader = (rvim.leader == "space" and " ") or rvim.leader
 g.maplocalleader = (rvim.localleader == "space" and " ") or rvim.localleader
 
------------------------------------------------------------------------------//
+------------------------------------------------------------------------------
 -- Terminal {{{
-------------------------------------------------------------------------------//
+-------------------------------------------------------------------------------
 rvim.augroup("AddTerminalMappings", {
   {
     event = { "TermOpen" },
@@ -39,9 +39,9 @@ rvim.augroup("AddTerminalMappings", {
   },
 })
 --}}}
------------------------------------------------------------------------------//
+------------------------------------------------------------------------------
 -- MACROS {{{
------------------------------------------------------------------------------//
+------------------------------------------------------------------------------
 -- Absolutely fantastic function from stoeffel/.dotfiles which allows you to
 -- repeat macros across a visual range
 ------------------------------------------------------------------------------
@@ -91,9 +91,9 @@ cnoremap("<Esc>b", [[<S-Left>]])
 cnoremap("<Esc>f", [[<S-Right>]])
 -- Insert escaped '/' while inputting a search pattern
 cnoremap("/", [[getcmdtype() == "/" ? "\/" : "/"]], { expr = true })
------------------------------------------------------------------------------//
+------------------------------------------------------------------------------
 -- Save
------------------------------------------------------------------------------//
+------------------------------------------------------------------------------
 -- Alternate way to save
 nnoremap("<C-s>", ":silent! write<CR>")
 -- Quit
@@ -112,9 +112,9 @@ nnoremap("[l", "<cmd>lprev<cr>zz")
 -------------------------------------------------------------------------------
 xnoremap("ie", [[gg0oG$]])
 onoremap("ie", [[<cmd>execute "normal! m`"<Bar>keepjumps normal! ggVG<CR>]])
-----------------------------------------------------------------------------//
+-------------------------------------------------------------------------------
 -- Core navigation
-----------------------------------------------------------------------------//
+-------------------------------------------------------------------------------
 -- Store relative line number jumps in the jumplist.
 nnoremap("j", [[(v:count > 1 ? 'm`' . v:count : '') . 'gj']], { expr = true, silent = true })
 nnoremap("k", [[(v:count > 1 ? 'm`' . v:count : '') . 'gk']], { expr = true, silent = true })
@@ -166,9 +166,9 @@ inoremap("<S-Return>", "<C-o>o")
 vnoremap("<", "<gv")
 vnoremap(">", ">gv")
 
------------------------------------------------------------------------------//
+------------------------------------------------------------------------------
 -- Capitalize
------------------------------------------------------------------------------//
+------------------------------------------------------------------------------
 nnoremap("<leader>U", "gUiw`]", { label = "capitalize word" })
 inoremap("C-u>", "<cmd>norm!gUiw`]a<CR>")
 
@@ -211,9 +211,9 @@ nnoremap("gx", function()
   utils.open_link()
 end)
 
------------------------------------------------------------------------------//
+------------------------------------------------------------------------------
 -- Utils
------------------------------------------------------------------------------//
+------------------------------------------------------------------------------
 nnoremap("<leader>LV", function()
   utils.color_my_pencils()
 end, { label = "vim with me" })
@@ -309,9 +309,9 @@ nnoremap(
   [[:vsp <C-R>=expand("%:p:h") . "/" <CR>]],
   { silent = false, label = "create new file in same dir" }
 )
------------------------------------------------------------------------------//
+------------------------------------------------------------------------------
 -- Quotes
------------------------------------------------------------------------------//
+------------------------------------------------------------------------------
 nnoremap([[<leader>"]], [[ciw"<c-r>""<esc>]], { label = "wrap double quotes" })
 nnoremap("<leader>`", [[ciw`<c-r>"`<esc>]], { label = "wrap backticks" })
 nnoremap("<leader>'", [[ciw'<c-r>"'<esc>]], { label = "wrap single quotes" })
@@ -321,10 +321,10 @@ nnoremap("<leader>}", [[ciw{<c-r>"}<esc>]], { label = "wrap curly bracket" })
 -- Map Q to replay q register
 nnoremap("Q", "@q")
 
------------------------------------------------------------------------------//
+------------------------------------------------------------------------------
 -- Multiple Cursor Replacement
 -- http://www.kevinli.co/posts/2017-01-19-multiple-cursors-in-500-bytes-of-vimscript/
------------------------------------------------------------------------------//
+------------------------------------------------------------------------------
 nnoremap("cn", "*``cgn")
 nnoremap("cN", "*``cgN")
 
@@ -354,9 +354,9 @@ xnoremap(
 
 nnoremap("gf", "<cmd>e <cfile><CR>")
 
------------------------------------------------------------------------------//
+------------------------------------------------------------------------------
 -- Command mode related
------------------------------------------------------------------------------//
+------------------------------------------------------------------------------
 -- smooth searching, allow tabbing between search results similar to using <c-g>
 -- or <c-t> the main difference being tab is easier to hit and remapping those keys
 -- to these would swallow up a tab mapping
@@ -445,7 +445,7 @@ nnoremap("<leader>=", "<C-W>=", { label = "balance window" })
 -- opens a horizontal split
 nnoremap("<leader>ah", "<C-W>s", { label = "horizontal split" })
 -- opens a vertical split
-nnoremap("<leader>V", "<C-W>v", { label = "vertical split" })
+nnoremap("<leader>V", "<C-W>v", { label = "vsplit" })
 -- Bufferlline
 if not rvim.plugins.ui.bufferline.active then
   nnoremap("<S-l>", ":bnext<CR>")

@@ -1,7 +1,7 @@
 local editor = {}
 
 rvim.plugins.editor = {
-  ajk = { active = false },
+  ajk = { active = true },
   easy_align = { active = true },
   cool = { active = true },
   surround = { active = true },
@@ -20,7 +20,7 @@ editor["xiyaowong/accelerated-jk.nvim"] = {
     require("accelerated-jk").setup {
       mappings = { j = "gj", k = "gk" },
       -- If the interval of key-repeat takes more than `acceleration_limit` ms, the step is reset
-      acceleration_limit = 150,
+      -- acceleration_limit = 150,
     }
   end,
   disable = not rvim.plugins.editor.ajk.active,

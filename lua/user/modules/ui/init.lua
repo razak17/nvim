@@ -3,7 +3,7 @@ local ui = {}
 rvim.plugins.ui = {
   nvimtree = { active = true },
   dashboard = { active = true },
-  statusline = { active = true },
+  statusline = { active = false },
   bufferline = { active = true },
   devicons = { active = true },
   git_signs = { active = true },
