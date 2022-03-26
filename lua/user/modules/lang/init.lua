@@ -270,4 +270,15 @@ lang["lewis6991/spellsitter.nvim"] = {
   disable = not rvim.plugins.lang.spellsitter.active,
 }
 
+lang["ray-x/go.nvim"] = {
+  ft = "go",
+  config = function()
+    local path = require "nvim-lsp-installer.path"
+    local install_root_dir = path.concat { vim.fn.stdpath "data", "lsp_servers" }
+    require("go").setup {
+      gopls_cmd = { install_root_dir .. "/go/gopls" },
+    }
+  end,
+}
+
 return lang

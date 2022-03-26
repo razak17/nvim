@@ -45,7 +45,7 @@ completion["hrsh7th/cmp-nvim-lsp-document-symbol"] = { after = "nvim-cmp" }
 
 completion["saadparwaiz1/cmp_luasnip"] = { after = "nvim-cmp" }
 
-completion["hrsh7th/cmp-buffer"] = { after = "nvim-cmp" }
+completion["hrsh7th/cmp-buffer"] = { after = "nvim-cmp" };
 
 completion["hrsh7th/cmp-path"] = { after = "nvim-cmp" }
 
