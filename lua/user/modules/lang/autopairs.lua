@@ -13,11 +13,15 @@ return function()
       ---@usage check bracket in same line
       enable_check_bracket_line = false,
       ---@usage check treesitter
+      close_triple_quotes = true,
       check_ts = true,
       ts_config = {
         java = false,
         lua = { "string", "source" },
         javascript = { "string", "template_string" },
+        fast_wrap = {
+          map = "<c-e>",
+        },
       },
       disable_filetype = { "TelescopePrompt", "spectre_panel" },
       ignored_next_char = string.gsub([[ [%w%%%'%[%"%.] ]], "%s+", ""),
