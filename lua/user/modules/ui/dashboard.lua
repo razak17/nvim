@@ -24,30 +24,30 @@ return function()
     disable_statusline = 0,
     custom_section = {
       a = {
-        description = join("  New File", "<leader>nf", 15),
-        command = ":ene!",
-      },
-      b = {
-        description = join("  Find File", "<c-p>      ", 14),
+        description = join("  Find file", "<c-p>      ", 14),
         command = "Telescope find_files",
       },
-      c = {
+      b = {
         description = join("  Find text", "<leader>fg", 14),
         command = "Telescope live_grep",
       },
-      d = {
-        description = join("  Config file", "<leader>Lc", 12),
-        command = ":e " .. rvim.get_user_dir() .. "/config/init.lua",
-      },
-      e = {
+      c = {
         description = join("  Recent files", "<leader>fr", 11),
         command = "Telescope oldfiles",
       },
-      g = {
+      d = {
+        description = join("  Create New file", "<leader>nf", 8),
+        command = ":ene!",
+      },
+      -- d = {
+      --   description = join("  Config file", "<leader>Lc", 12),
+      --   command = ":e " .. rvim.get_user_dir() .. "/config/init.lua",
+      -- },
+      f = {
         description = join("  Recent projects", "<leader>fp", 8),
         command = "Telescope projects",
       },
-      h = {
+      g = {
         description = join("  Restore session", "<leader>sl", 8),
         command = function()
           vim.cmd ":RestoreSession"
