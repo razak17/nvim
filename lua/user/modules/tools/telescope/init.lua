@@ -104,7 +104,7 @@ return function()
             ["<C-k>"] = actions.move_selection_previous,
             ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
             ["<c-s>"] = actions.select_horizontal,
-            ["<CR>"] = actions.select_default + actions.center,
+            ["<CR>"] = actions.select_default,
             ["<c-e>"] = layout_actions.toggle_preview,
             ["<c-l>"] = layout_actions.cycle_layout_next,
             ["<C-A>"] = telescope_custom_actions.multi_selection_open,
