@@ -35,6 +35,7 @@ return {
         "<cmd>lua vim.fn.execute('edit ' .. require('user.core.log').get_path())<cr>",
         "open rvim logfile",
       },
+      k = { ":lua require('user.utils.cheatsheet').cheatsheet()<cr>", "cheatsheet" },
       l = {
         "<cmd>lua vim.fn.execute('edit ' .. vim.lsp.get_log_path())<cr>",
         "lsp: open logfile",

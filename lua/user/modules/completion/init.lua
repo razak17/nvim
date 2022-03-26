@@ -74,7 +74,6 @@ completion["David-Kunz/cmp-npm"] = {
 }
 
 completion["github/copilot.vim"] = {
-  "github/copilot.vim",
   config = function()
     vim.g.copilot_no_tab_map = true
     vim.cmd [[imap <silent><script><expr> <C-l> copilot#Accept("\<CR>")]]
