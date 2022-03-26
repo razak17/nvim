@@ -22,7 +22,7 @@ M.load_default_options = function()
 
     -- Folds
     foldenable = true,
-    foldlevelstart = -1,
+    foldlevelstart = 3,
     foldtext = "v:lua.folds()",
     foldopen = vim.opt.foldopen + "search",
 
