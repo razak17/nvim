@@ -352,10 +352,10 @@ tools["chentau/marks.nvim"] = {
       prefix = "<leader>",
     })
     require("marks").setup {
+      builtin_marks = { "." },
       bookmark_0 = {
         sign = "⚑",
         virt_text = "bookmarks",
-        builtin_marks = { "." },
       },
     }
   end,
