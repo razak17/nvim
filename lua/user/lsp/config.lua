@@ -40,7 +40,7 @@ return {
     },
     config = {},
   },
-  formatting_ignore_list = { "tsserver", "html", "jsonls", "go" },
+  formatting_ignore_list = { "tsserver", "html", "jsonls", "gopls" },
   override = {
     "angularls",
     "ansiblels",
