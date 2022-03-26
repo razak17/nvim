@@ -281,21 +281,9 @@ nnoremap("zO", [[zCzO]])
 -- Delimiters
 ------------------------------------------------------------------------------
 -- Conditionally modify character at end of line
-nnoremap(
-  "<localleader>,",
-  "<cmd>call utils#modify_line_end_delimiter(',')<cr>",
-  { label = "append comma" }
-)
-nnoremap(
-  "<localleader>;",
-  "<cmd>call utils#modify_line_end_delimiter(';')<cr>",
-  { label = "append semi colon" }
-)
-nnoremap(
-  "<localleader>.",
-  "<cmd>call utils#modify_line_end_delimiter('.')<cr>",
-  { label = "append period" }
-)
+nnoremap("<localleader>,", utils.modify_line_end_delimiter ",", { label = "append comma" })
+nnoremap("<localleader>;", utils.modify_line_end_delimiter ";", { label = "append semi colon" })
+nnoremap("<localleader>.", utils.modify_line_end_delimiter ".", { label = "append period" })
 
 -----------------------------------------------------------------------------//
 -- Quick find/replace

@@ -1,10 +1,11 @@
 local fn = vim.fn
 local uv = vim.loop
+local api = vim.api
 local fmt = string.format
 
-local M = {}
+local utils = {}
 
-function M.open_link()
+function utils.open_link()
   local file = fn.expand "<cfile>"
   if fn.isdirectory(file) > 0 then
     vim.cmd("edit " .. file)
@@ -13,7 +14,7 @@ function M.open_link()
   end
 end
 
-function M.color_my_pencils()
+function utils.color_my_pencils()
   vim.cmd [[ hi! ColorColumn guibg=#aeacec ]]
   vim.cmd [[ hi! Normal ctermbg=none guibg=none ]]
   vim.cmd [[ hi! SignColumn ctermbg=none guibg=none ]]
@@ -24,7 +25,7 @@ function M.color_my_pencils()
   vim.cmd [[ hi! WhichKeyDesc guifg=#4dd2dc  ]]
 end
 
-function M.empty_registers()
+function utils.empty_registers()
   vim.api.nvim_exec(
     [[
     let regs=split('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/-"', '\zs')
@@ -36,12 +37,12 @@ function M.empty_registers()
   )
 end
 
-function M.open_terminal()
+function utils.open_terminal()
   vim.cmd "split term://zsh"
   vim.cmd "resize 10"
 end
 
-function M.turn_on_guides()
+function utils.turn_on_guides()
   vim.wo.number = true
   vim.wo.relativenumber = true
   vim.wo.signcolumn = "auto:2-4"
@@ -50,7 +51,7 @@ function M.turn_on_guides()
   vim.o.showtabline = 2
 end
 
-function M.turn_off_guides()
+function utils.turn_off_guides()
   vim.wo.number = false
   vim.wo.relativenumber = false
   vim.wo.signcolumn = "no"
@@ -60,13 +61,13 @@ function M.turn_off_guides()
 end
 
 -- https://github.com/CalinLeafshade/dots/blob/master/nvim/.config/nvim/lua/leafshade/rename.lua
-function M.rename(name)
+function utils.rename(name)
   local curfilepath = vim.fn.expand "%:p:h"
   local newname = curfilepath .. "/" .. name
   vim.api.nvim_command(" saveas " .. newname)
 end
 
-function M.load_conf(dir, name)
+function utils.load_conf(dir, name)
   local module_dir = fmt("user.modules.%s", dir)
   if dir == "user" then
     return require(string.format(dir .. ".%s", name))
@@ -75,7 +76,7 @@ function M.load_conf(dir, name)
   return require(fmt(module_dir .. ".%s", name))
 end
 
-function M.enable_transparent_mode()
+function utils.enable_transparent_mode()
   vim.cmd "au ColorScheme * hi Normal ctermbg=none guibg=none"
   vim.cmd "au ColorScheme * hi SignColumn ctermbg=none guibg=none"
   vim.cmd "au ColorScheme * hi NormalNC ctermbg=none guibg=none"
@@ -89,7 +90,7 @@ end
 --- Checks whether a given path exists and is a directory
 --@param path (string) path to check
 --@returns (bool)
-function M.is_directory(path)
+function utils.is_directory(path)
   local stat = uv.fs_stat(path)
   return stat and stat.type == "directory" or false
 end
@@ -98,7 +99,7 @@ end
 ---@param path string can be full or relative to `cwd`
 ---@param txt string|table text to be written, uses `vim.inspect` internally for tables
 ---@param flag string used to determine access mode, common flags: "w" for `overwrite` or "a" for `append`
-function M.write_file(path, txt, flag)
+function utils.write_file(path, txt, flag)
   local data = type(txt) == "string" and txt or vim.inspect(txt)
   uv.fs_open(path, flag, 438, function(open_err, fd)
     assert(not open_err, open_err)
@@ -113,7 +114,7 @@ end
 
 -- Auto resize Vim splits to active split to 70% -
 -- https://stackoverflow.com/questions/11634804/vim-auto-resize-focused-window
-M.auto_resize = function()
+utils.auto_resize = function()
   local auto_resize_on = false
   return function(args)
     if not auto_resize_on then
@@ -135,5 +136,34 @@ M.auto_resize = function()
     end
   end
 end
+-- TLDR: Conditionally modify character at end of line
+-- Description:
+-- This function takes a delimiter character and:
+--   * removes that character from the end of the line if the character at the end
+--     of the line is that character
+--   * removes the character at the end of the line if that character is a
+--     delimiter that is not the input character and appends that character to
+--     the end of the line
+--   * adds that character to the end of the line if the line does not end with
+--     a delimiter
+-- Delimiters:
+-- - ","
+-- - ";"
+---@param character string
+---@return function
+function utils.modify_line_end_delimiter(character)
+  local delimiters = { ",", ";" }
+  return function()
+    local line = api.nvim_get_current_line()
+    local last_char = line:sub(-1)
+    if last_char == character then
+      api.nvim_set_current_line(line:sub(1, #line - 1))
+    elseif vim.tbl_contains(delimiters, last_char) then
+      api.nvim_set_current_line(line:sub(1, #line - 1) .. character)
+    else
+      api.nvim_set_current_line(line .. character)
+    end
+  end
+end
 
-return M
+return utils
