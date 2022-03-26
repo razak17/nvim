@@ -91,7 +91,7 @@ tools["numToStr/FTerm.nvim"] = {
         cmd = term:new { cmd = "lazygit" }
       elseif key == "ranger" then
         cmd = term:new { cmd = "ranger" }
-      elseif key == "rvim" then
+      elseif key == "rvim_commit" then
         cmd = term:new { cmd = "iconf -rcma" }
       end
       cmd:toggle()
@@ -105,13 +105,16 @@ tools["numToStr/FTerm.nvim"] = {
         "toggle term",
       },
       ["<leader>t"] = {
-        name = "+Fterm",
+        name = "Fterm",
         [";"] = { '<cmd>lua require("FTerm").open()<cr>', "new" },
         l = { ':lua _G.__fterm_cmd("lazygit")<cr>', "lazygit" },
         n = { ':lua _G.__fterm_cmd("node")<cr>', "node" },
         p = { ':lua _G.__fterm_cmd("python")<cr>', "python" },
         R = { ':lua _G.__fterm_cmd("ranger")<cr>', "ranger" },
-        r = { ':lua _G.__fterm_cmd("rvim")<cr>', "rvim" },
+        r = {
+          name = "rvim",
+          c = { ':lua _G.__fterm_cmd("rvim_commit")<cr>', "commit" },
+        },
       },
     }
   end,
@@ -125,7 +128,7 @@ tools["MattesGroeger/vim-bookmarks"] = {
     vim.g.bookmark_sign = ""
     require("which-key").register {
       ["<leader>m"] = {
-        name = "+Mark",
+        name = "Mark",
         t = { ":BookmarkToggle<cr>", "toggle" },
         p = { ":BookmarkPrev<cr>", "previous mark" },
         n = { ":BookmarkNext<cr>", "next mark" },
@@ -242,7 +245,7 @@ tools["rmagatti/auto-session"] = {
     }
     require("which-key").register {
       ["<leader>s"] = {
-        name = "+Session",
+        name = "Session",
         l = { ":RestoreSession<cr>", "restore" },
         s = { ":SaveSession<cr>", "save" },
       },
@@ -340,7 +343,7 @@ tools["chentau/marks.nvim"] = {
     require("zephyr.util").plugin("marks", { "MarkSignHL", { foreground = "Red" } })
     require("which-key").register({
       m = {
-        name = "+marks",
+        name = "marks",
         b = { "<Cmd>MarksListBuf<CR>", "list buffer" },
         g = { "<Cmd>MarksQFListGlobal<CR>", "list global" },
         ["0"] = { "<Cmd>BookmarksQFList 0<CR>", "list bookmark" },
