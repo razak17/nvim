@@ -19,8 +19,8 @@ setlocal winfixheight
 "--------------------------------------------------------------------------------
 " Helper functions
 "--------------------------------------------------------------------------------
-nnoremap <silent><buffer>dd :call utils#qf_delete(bufnr())<CR>
-vnoremap <silent><buffer>d  :call utils#qf_delete(bufnr())<CR>
+nnoremap <silent><buffer>dd :lua rvim.qf.delete()<CR>
+vnoremap <silent><buffer>d  :lua rvim.qf.delete()<CR>
 "--------------------------------------------------------------------------------
 " Mappings
 "--------------------------------------------------------------------------------
