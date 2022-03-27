@@ -22,12 +22,12 @@ rvim.plugins.tools = {
   telescope_file_browser = { active = true },
   telescope_frecency = { active = false },
   telescope_zoxide = { active = true },
-  tabout = { active = true },
   markdown_preview = { active = true },
-  marks = { active = true },
   apathy = { active = true },
   todo_comments = { active = false },
   projectionist = { active = true },
+  plenary = { active = true },
+  popup = { active = true },
   -- TODO: handle these later
   glow = { active = false }, --j
   doge = { active = false }, --j
@@ -339,30 +339,6 @@ tools["folke/todo-comments.nvim"] = {
   disable = not rvim.plugins.tools.todo_comments.active,
 }
 
-tools["chentau/marks.nvim"] = {
-  config = function()
-    require("zephyr.util").plugin("marks", { "MarkSignHL", { foreground = "Red" } })
-    require("which-key").register({
-      m = {
-        name = "marks",
-        b = { "<Cmd>MarksListBuf<CR>", "list buffer" },
-        g = { "<Cmd>MarksQFListGlobal<CR>", "list global" },
-        ["0"] = { "<Cmd>BookmarksQFList 0<CR>", "list bookmark" },
-      },
-    }, {
-      prefix = "<leader>",
-    })
-    require("marks").setup {
-      builtin_marks = { "." },
-      bookmark_0 = {
-        sign = "⚑",
-        virt_text = "bookmarks",
-      },
-    }
-  end,
-  disable = not rvim.plugins.tools.marks.active,
-}
-
 tools["tpope/vim-apathy"] = {
   disable = not rvim.plugins.tools.apathy.active,
 }
@@ -372,20 +348,8 @@ tools["tpope/vim-projectionist"] = {
   disable = not rvim.plugins.tools.projectionist.active,
 }
 
-tools["abecodes/tabout.nvim"] = {
-  wants = { "nvim-treesitter" },
-  after = { "nvim-cmp" },
-  config = function()
-    require("tabout").setup {
-      completion = false,
-      ignore_beginning = false,
-    }
-  end,
-  disable = not rvim.plugins.tools.tabout.active,
-}
+tools["nvim-lua/plenary.nvim"] = { disable = not rvim.plugins.tools.plenary.active }
 
-tools["nvim-lua/plenary.nvim"] = { disable = not rvim.plugins.completion.plenary.active }
-
-tools["nvim-lua/popup.nvim"] = { disable = not rvim.plugins.completion.popup.active }
+tools["nvim-lua/popup.nvim"] = { disable = not rvim.plugins.tools.popup.active }
 
 return tools

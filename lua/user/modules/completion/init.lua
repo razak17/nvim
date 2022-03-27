@@ -2,8 +2,6 @@ local completion = {}
 
 rvim.plugins.completion = {
   which_key = { active = true },
-  plenary = { active = true },
-  popup = { active = true },
   cmp = { active = true },
   luasnip = { active = true },
   emmet = { active = true },
@@ -37,25 +35,55 @@ completion["hrsh7th/nvim-cmp"] = {
   disable = not rvim.plugins.completion.cmp.active,
 }
 
-completion["hrsh7th/cmp-nvim-lsp"] = { after = "nvim-cmp" }
+completion["hrsh7th/cmp-nvim-lsp"] = {
+  after = "nvim-cmp",
+  disable = not rvim.plugins.completion.cmp.active,
+}
 
-completion["hrsh7th/cmp-nvim-lua"] = { after = "nvim-cmp" }
+completion["hrsh7th/cmp-nvim-lua"] = {
+  after = "nvim-cmp",
+  disable = not rvim.plugins.completion.cmp.active,
+}
 
-completion["hrsh7th/cmp-nvim-lsp-document-symbol"] = { after = "nvim-cmp" }
+completion["hrsh7th/cmp-nvim-lsp-document-symbol"] = {
+  after = "nvim-cmp",
+  disable = not rvim.plugins.completion.cmp.active,
+}
 
-completion["saadparwaiz1/cmp_luasnip"] = { after = "nvim-cmp" }
+completion["saadparwaiz1/cmp_luasnip"] = {
+  after = "nvim-cmp",
+  disable = not rvim.plugins.completion.cmp.active,
+}
 
-completion["hrsh7th/cmp-buffer"] = { after = "nvim-cmp" }
+completion["hrsh7th/cmp-buffer"] = {
+  after = "nvim-cmp",
+  disable = not rvim.plugins.completion.cmp.active,
+}
 
-completion["hrsh7th/cmp-path"] = { after = "nvim-cmp" }
+completion["hrsh7th/cmp-path"] = {
+  after = "nvim-cmp",
+  disable = not rvim.plugins.completion.cmp.active,
+}
 
-completion["hrsh7th/cmp-cmdline"] = { after = "nvim-cmp" }
+completion["hrsh7th/cmp-cmdline"] = {
+  after = "nvim-cmp",
+  disable = not rvim.plugins.completion.cmp.active,
+}
 
-completion["f3fora/cmp-spell"] = { after = "nvim-cmp" }
+completion["f3fora/cmp-spell"] = {
+  after = "nvim-cmp",
+  disable = not rvim.plugins.completion.cmp.active,
+}
 
-completion["hrsh7th/cmp-emoji"] = { after = "nvim-cmp" }
+completion["hrsh7th/cmp-emoji"] = {
+  after = "nvim-cmp",
+  disable = not rvim.plugins.completion.cmp.active,
+}
 
-completion["octaltree/cmp-look"] = { after = "nvim-cmp" }
+completion["octaltree/cmp-look"] = {
+  after = "nvim-cmp",
+  disable = not rvim.plugins.completion.cmp.active,
+}
 
 completion["petertriho/cmp-git"] = {
   opt = true,
@@ -65,12 +93,14 @@ completion["petertriho/cmp-git"] = {
       filetypes = { "gitcommit", "NeogitCommitMessage" },
     }
   end,
+  disable = not rvim.plugins.completion.cmp.active,
 }
 
 completion["David-Kunz/cmp-npm"] = {
   config = function()
     require("cmp-npm").setup {}
   end,
+  disable = not rvim.plugins.completion.cmp.active,
 }
 
 completion["github/copilot.vim"] = {

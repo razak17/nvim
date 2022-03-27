@@ -12,6 +12,8 @@ rvim.plugins.editor = {
   cursorword = { active = false },
   surround_funk = { active = true },
   better_diagraphs = { active = false },
+  tabout = { active = true },
+  marks = { active = true },
 }
 
 editor["xiyaowong/accelerated-jk.nvim"] = {
@@ -214,6 +216,42 @@ editor["danymat/neogen"] = {
     require("neogen").setup { snippet_engine = "luasnip" }
     rvim.nnoremap("<localleader>nc", require("neogen").generate, "comment: generate")
   end,
+}
+
+editor["abecodes/tabout.nvim"] = {
+  wants = { "nvim-treesitter" },
+  after = { "nvim-cmp" },
+  config = function()
+    require("tabout").setup {
+      completion = false,
+      ignore_beginning = false,
+    }
+  end,
+  disable = not rvim.plugins.editor.tabout.active,
+}
+
+editor["chentau/marks.nvim"] = {
+  config = function()
+    require("zephyr.util").plugin("marks", { "MarkSignHL", { foreground = "Red" } })
+    require("which-key").register({
+      m = {
+        name = "marks",
+        b = { "<Cmd>MarksListBuf<CR>", "list buffer" },
+        g = { "<Cmd>MarksQFListGlobal<CR>", "list global" },
+        ["0"] = { "<Cmd>BookmarksQFList 0<CR>", "list bookmark" },
+      },
+    }, {
+      prefix = "<leader>",
+    })
+    require("marks").setup {
+      builtin_marks = { "." },
+      bookmark_0 = {
+        sign = "⚑",
+        virt_text = "bookmarks",
+      },
+    }
+  end,
+  disable = not rvim.plugins.editor.marks.active,
 }
 
 return editor
