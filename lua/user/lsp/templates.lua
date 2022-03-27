@@ -33,6 +33,11 @@ function M.generate_ftplugin(server_name, dir)
     -- print("using setup_cmd: " .. setup_cmd)
     -- overwrite the file completely
     utils.write_file(filename, setup_cmd .. "\n", "a")
+
+    if filetype == "html" then
+      local emmet_cmd = [[require("user.lsp.manager").setup("emmet_ls")]]
+      utils.write_file(filename, emmet_cmd .. "\n", "a")
+    end
   end
 end
 
