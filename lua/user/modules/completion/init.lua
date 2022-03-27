@@ -100,8 +100,4 @@ completion["rafamadriz/friendly-snippets"] = {
   disable = not rvim.plugins.completion.friendly_snippets.active,
 }
 
-completion["nvim-lua/plenary.nvim"] = { disable = not rvim.plugins.completion.plenary.active }
-
-completion["nvim-lua/popup.nvim"] = { disable = not rvim.plugins.completion.popup.active }
-
 return completion

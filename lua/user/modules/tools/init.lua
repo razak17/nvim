@@ -384,4 +384,8 @@ tools["abecodes/tabout.nvim"] = {
   disable = not rvim.plugins.tools.tabout.active,
 }
 
+tools["nvim-lua/plenary.nvim"] = { disable = not rvim.plugins.completion.plenary.active }
+
+tools["nvim-lua/popup.nvim"] = { disable = not rvim.plugins.completion.popup.active }
+
 return tools
