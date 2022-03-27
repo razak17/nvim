@@ -269,9 +269,15 @@ function rvim.augroup(name, commands)
   return id
 end
 
+
+--- @class CommandArgs
+--- @field args string
+--- @field fargs table
+--- @field bang boolean,
+
 ---Create an nvim command
 ---@param name any
----@param rhs string|fun(args: string, fargs: table, bang: boolean)
+---@param rhs string|fun(args: CommandArgs)
 ---@param opts table
 function rvim.command(name, rhs, opts)
   opts = opts or {}
