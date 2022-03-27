@@ -454,12 +454,14 @@ end
 
 nnoremap("<leader>lG", function()
   require("user.lsp.templates").generate_templates()
+  vim.notify("Templates have been generated", nil, { title = "Lsp" })
 end, {
   label = "lsp: generate templates",
 })
 
 nnoremap("<leader>lD", function()
   require("user.lsp.templates").remove_template_files()
+  vim.notify("Templates have been removed", nil, { title = "Lsp" })
 end, {
   label = "lsp: delete templates",
 })
