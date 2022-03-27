@@ -20,7 +20,7 @@ end
 ---@param name string
 ---@param user_config table [optional]
 ---@return table
-local function resolve_config(name, user_config)
+ function M.resolve_config(name, user_config)
   local config = {
     on_attach = require("user.lsp").global_on_attach,
     on_init = require("user.lsp").global_on_init,
@@ -42,7 +42,7 @@ local function resolve_config(name, user_config)
 end
 
 -- manually start the server and don't wait for the usual filetype trigger from lspconfig
-local function buf_try_add(server_name, bufnr)
+function M.buf_try_add(server_name, bufnr)
   bufnr = bufnr or vim.api.nvim_get_current_buf()
   require("lspconfig")[server_name].manager.try_add_wrapper(bufnr)
 end
@@ -50,7 +50,7 @@ end
 -- check if the manager autocomd has already been configured since some servers can take a while to initialize
 -- this helps guarding against a data-race condition where a server can get configured twice
 -- which seems to occur only when attaching to single-files
-local function client_is_configured(server_name, ft)
+function M.client_is_configured(server_name, ft)
   ft = ft or vim.bo.filetype
   local active_autocmds = vim.split(vim.fn.execute("autocmd FileType " .. ft), "\n")
   for _, result in ipairs(active_autocmds) do
@@ -68,7 +68,7 @@ function M.setup(server_name, user_config)
   vim.validate { name = { server_name, "string" } }
 
   local already_configured = lsp_utils.is_client_active(server_name)
-    or client_is_configured(server_name)
+    or M.client_is_configured(server_name)
 
   if server_name ~= "html" and already_configured then
     Log:debug(
@@ -77,7 +77,7 @@ function M.setup(server_name, user_config)
     return
   end
 
-  local config = resolve_config(server_name, user_config)
+  local config = M.resolve_config(server_name, user_config)
 
   local servers = require "nvim-lsp-installer.servers"
   local server_available, requested_server = servers.get_server(server_name)
@@ -87,7 +87,7 @@ function M.setup(server_name, user_config)
   if not server_available or is_overridden then
     pcall(function()
       require("lspconfig")[server_name].setup(config)
-      buf_try_add(server_name)
+      M.buf_try_add(server_name)
     end)
     return
   end
@@ -114,6 +114,10 @@ function M.setup(server_name, user_config)
     install_notification = false
     requested_server:setup(config)
   end)
+end
+
+M.overrides_setup = function (server_name)
+  require("user.lsp.overrides").setup(server_name)
 end
 
 return M

@@ -5,6 +5,7 @@ rvim.plugins.completion = {
   cmp = { active = true },
   luasnip = { active = true },
   friendly_snippets = { active = true },
+  copilot = { active = true },
 }
 
 local utils = require "user.utils"
@@ -106,6 +107,7 @@ completion["github/copilot.vim"] = {
     }
     require("zephyr.util").plugin("copilot", { "CopilotSuggestion", { link = "Comment" } })
   end,
+  disable = not rvim.plugins.completion.copilot.active,
 }
 
 completion["L3MON4D3/LuaSnip"] = {
