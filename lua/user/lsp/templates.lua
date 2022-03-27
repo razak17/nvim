@@ -11,6 +11,7 @@ function M.remove_template_files()
   for _, file in ipairs(vim.fn.glob(ftplugin_dir .. "/*.lua", 1, 1)) do
     vim.fn.delete(file)
   end
+  vim.notify("Templates have been removed", nil, { title = "Lsp" })
 end
 
 ---Generates an ftplugin file based on the server_name in the selected directory
@@ -65,6 +66,7 @@ function M.generate_templates(servers_names)
     M.generate_ftplugin(server, ftplugin_dir)
   end
   Log:debug "Templates installation is complete"
+  vim.notify("Templates have been generated", nil, { title = "Lsp" })
 end
 
 return M

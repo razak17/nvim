@@ -79,45 +79,7 @@ tools["kkoomen/vim-doge"] = {
 
 tools["numToStr/FTerm.nvim"] = {
   event = { "BufWinEnter" },
-  config = function()
-    function _G.__fterm_cmd(key)
-      local term = require "FTerm"
-      local cmd = term:new { cmd = "gitui" }
-      if key == "node" then
-        cmd = term:new { cmd = "node" }
-      elseif key == "python" then
-        cmd = term:new { cmd = "python" }
-      elseif key == "lazygit" then
-        cmd = term:new { cmd = "lazygit" }
-      elseif key == "ranger" then
-        cmd = term:new { cmd = "ranger" }
-      elseif key == "rvim_commit" then
-        cmd = term:new { cmd = "iconf -rcma" }
-      end
-      cmd:toggle()
-    end
-    -- rvim.nnoremap("<F12>", '<cmd>lua require("FTerm").toggle()<CR>')
-    rvim.tnoremap("<F12>", '<C-\\><C-n><cmd>lua require("FTerm").toggle()<CR>')
-
-    require("which-key").register {
-      ["<F12>"] = {
-        '<cmd>lua require("FTerm").toggle()<CR>',
-        "toggle term",
-      },
-      ["<leader>t"] = {
-        name = "Fterm",
-        [";"] = { '<cmd>lua require("FTerm").open()<cr>', "new" },
-        l = { ':lua _G.__fterm_cmd("lazygit")<cr>', "lazygit" },
-        n = { ':lua _G.__fterm_cmd("node")<cr>', "node" },
-        p = { ':lua _G.__fterm_cmd("python")<cr>', "python" },
-        R = { ':lua _G.__fterm_cmd("ranger")<cr>', "ranger" },
-        r = {
-          name = "rvim",
-          c = { ':lua _G.__fterm_cmd("rvim_commit")<cr>', "commit" },
-        },
-      },
-    }
-  end,
+  config = utils.load_conf("tools", "fterm"),
   disable = not rvim.plugins.tools.fterm.active,
 }
 
@@ -256,44 +218,7 @@ tools["rmagatti/auto-session"] = {
 
 tools["phaazon/hop.nvim"] = {
   keys = { { "n", "s" }, "f", "F" },
-  config = function()
-    local hop = require "hop"
-    -- remove h,j,k,l from hops list of keys
-    hop.setup { keys = "etovxqpdygfbzcisuran" }
-    rvim.nnoremap("s", hop.hint_char1)
-    rvim.nnoremap("s", function()
-      hop.hint_char1 { multi_windows = false }
-    end)
-    -- NOTE: override F/f using hop motions
-    vim.keymap.set({ "x", "n" }, "F", function()
-      hop.hint_char1 {
-        direction = require("hop.hint").HintDirection.BEFORE_CURSOR,
-        current_line_only = false,
-        inclusive_jump = false,
-      }
-    end)
-    vim.keymap.set({ "x", "n" }, "f", function()
-      hop.hint_char1 {
-        direction = require("hop.hint").HintDirection.AFTER_CURSOR,
-        current_line_only = false,
-        inclusive_jump = false,
-      }
-    end)
-    rvim.onoremap("F", function()
-      hop.hint_char1 {
-        direction = require("hop.hint").HintDirection.BEFORE_CURSOR,
-        current_line_only = false,
-        inclusive_jump = false,
-      }
-    end)
-    rvim.onoremap("f", function()
-      hop.hint_char1 {
-        direction = require("hop.hint").HintDirection.AFTER_CURSOR,
-        current_line_only = false,
-        inclusive_jump = false,
-      }
-    end)
-  end,
+  config = utils.load_conf("tools", "hop"),
   disable = not rvim.plugins.tools.hop.active,
 }
 
