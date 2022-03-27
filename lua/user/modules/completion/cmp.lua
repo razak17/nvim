@@ -25,12 +25,27 @@ return function()
     { "CmpItemAbbrMatchFuzzy", { italic = true, foreground = "fg" } }
   )
 
+  ---checks if emmet_ls is available and active in the buffer
+  ---@return boolean true if available, false otherwise
+  local is_emmet_active = function()
+    local clients = vim.lsp.buf_get_clients()
+
+    for _, client in pairs(clients) do
+      if client.name == "emmet_ls" then
+        return true
+      end
+    end
+    return false
+  end
+
   local function tab(fallback)
     local ok, luasnip = rvim.safe_require("luasnip", { silent = true })
     if cmp.visible() then
       cmp.select_next_item()
     elseif ok and luasnip.expand_or_locally_jumpable() then
       luasnip.expand_or_jump()
+    elseif is_emmet_active() then
+      return vim.fn["cmp#complete"]()
     else
       fallback()
     end
