@@ -5,10 +5,8 @@ local function general_overrides()
   local comment_fg = util.get_hl("Comment", "fg")
   local keyword_fg = util.get_hl("Keyword", "fg")
   local search_bg = util.get_hl("Search", "bg")
-  local normal_bg = util.get_hl("Normal", "bg")
   local error_line = util.alter_color(P.error_red, -80)
-  local darker_bg = util.alter_color(normal_bg, -10)
-  local msg_area_bg = rvim.transparent_window and "NONE" or darker_bg
+  local msg_area_bg = rvim.transparent_window and "NONE" or P.darker_bg
   util.all {
     -- { "VertSplit", { background = "NONE", foreground = util.get_hl("NonText", "fg") } },
     -- { "WinSeparator", { background = "NONE", foreground = util.get_hl("NonText", "fg") } },
@@ -56,7 +54,7 @@ local function general_overrides()
     -----------------------------------------------------------------------------//
     { "TSKeywordReturn", { italic = true, foreground = keyword_fg } },
     { "TSError", { undercurl = true, sp = error_line, foreground = "NONE" } },
-    { 'TSParameter', { italic = true, bold = true, foreground = 'NONE' } },
+    { "TSParameter", { italic = true, bold = true, foreground = "NONE" } },
     -- highlight FIXME comments
     { "commentTSWarning", { background = P.error_red, foreground = "fg", bold = true } },
     { "commentTSDanger", { background = P.dark_green, foreground = "#1B2229", bold = true } },
