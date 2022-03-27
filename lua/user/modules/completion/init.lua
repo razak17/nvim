@@ -4,7 +4,6 @@ rvim.plugins.completion = {
   which_key = { active = true },
   cmp = { active = true },
   luasnip = { active = true },
-  emmet = { active = true },
   friendly_snippets = { active = true },
 }
 
@@ -14,17 +13,6 @@ local load_conf = utils.load_conf
 completion["folke/which-key.nvim"] = {
   config = load_conf("completion", "which_key"),
   disable = not rvim.plugins.completion.which_key.active,
-}
-
-completion["mattn/emmet-vim"] = {
-  config = function()
-    vim.g.user_emmet_complete_tag = 0
-    vim.g.user_emmet_install_global = 0
-    vim.g.user_emmet_install_command = 0
-    vim.g.user_emmet_mode = "i"
-    vim.cmd "autocmd FileType html,css EmmetInstall"
-  end,
-  disable = not rvim.plugins.completion.emmet.active,
 }
 
 -- nvim-cmp
