@@ -20,7 +20,7 @@ end
 ---@param name string
 ---@param user_config table [optional]
 ---@return table
- function M.resolve_config(name, user_config)
+function M.resolve_config(name, user_config)
   local config = {
     on_attach = require("user.lsp").global_on_attach,
     on_init = require("user.lsp").global_on_init,
@@ -116,7 +116,7 @@ function M.setup(server_name, user_config)
   end)
 end
 
-M.overrides_setup = function (server_name)
+M.override_setup = function(server_name)
   require("user.lsp.overrides").setup(server_name)
 end
 

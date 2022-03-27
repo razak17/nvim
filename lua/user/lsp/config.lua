@@ -41,6 +41,15 @@ return {
     config = {},
   },
   formatting_ignore_list = { "tsserver", "html", "jsonls", "gopls" },
+  override_ftplugin = {
+    "html",
+    "css",
+    "typescriptreact",
+    "typescript.tsx",
+    "javascriptreact",
+    "javascript.jsx",
+    "rust",
+  },
   override = {
     "angularls",
     "ansiblels",
@@ -62,7 +71,6 @@ return {
     "pylsp",
     "quick_lint_js",
     "remark_ls",
-    "rust_analyzer",
     "rome",
     "solang",
     "solidity_ls",

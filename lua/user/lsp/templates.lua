@@ -27,25 +27,28 @@ function M.generate_ftplugin(server_name, dir)
     return
   end
 
-  local emmet_filetypes = {
-    "html",
-    "css",
-    "typescriptreact",
-    "typescript.tsx",
-    "javascriptreact",
-    "javascript.jsx",
-  }
-
   for _, filetype in ipairs(filetypes) do
     local filename = join_paths(dir, filetype .. ".lua")
+    local override_server
+    if filetype == "rust" then
+      override_server = "rust_analyzer"
+    else
+      override_server = "emmet_ls"
+    end
+
     local setup_cmd = string.format([[require("user.lsp.manager").setup(%q)]], server_name)
     -- vim.notify("using setup_cmd: " .. setup_cmd)
-    utils.write_file(filename, setup_cmd .. "\n", "a")
+    if filetype ~= "rust" then
+      utils.write_file(filename, setup_cmd .. "\n", "a")
+    end
 
-    local emmet_cmd = [[require("user.lsp.manager").overrides_setup("emmet_ls")]]
-    for _, emmet_filetype in ipairs(emmet_filetypes) do
-      if filetype == emmet_filetype then
-        utils.write_file(filename, emmet_cmd .. "\n", "a")
+    local override_cmd = string.format(
+      [[require("user.lsp.manager").override_setup(%q)]],
+      override_server
+    )
+    for _, override_filetype in ipairs(rvim.lsp.override_ftplugin) do
+      if filetype == override_filetype then
+        utils.write_file(filename, override_cmd .. "\n", "a")
       end
     end
   end
