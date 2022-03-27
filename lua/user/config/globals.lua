@@ -81,15 +81,6 @@ function rvim.find(haystack, matcher)
   return found
 end
 
-function rvim._create(f)
-  table.insert(rvim._store, f)
-  return #rvim._store
-end
-
-function rvim._execute(id, args)
-  rvim._store[id](args)
-end
-
 --- Check if a file or directory exists in this path
 function rvim._exists(file)
   if file == "" or file == nil then
@@ -234,7 +225,6 @@ function rvim.augroup(name, commands)
   end
   return id
 end
-
 
 --- @class CommandArgs
 --- @field args string
