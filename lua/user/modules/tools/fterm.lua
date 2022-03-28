@@ -30,10 +30,6 @@ return function()
       n = { ':lua _G.__fterm_cmd("node")<cr>', "node" },
       p = { ':lua _G.__fterm_cmd("python")<cr>', "python" },
       R = { ':lua _G.__fterm_cmd("ranger")<cr>', "ranger" },
-      r = {
-        name = "rvim",
-        c = { ':lua _G.__fterm_cmd("rvim_commit")<cr>', "commit" },
-      },
     },
   }
 end

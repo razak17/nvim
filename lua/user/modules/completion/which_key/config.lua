@@ -35,6 +35,10 @@ return {
         "<cmd>lua vim.fn.execute('edit ' .. require('user.core.log').get_path())<cr>",
         "open rvim logfile",
       },
+      g = {
+        name = "git",
+        c = { ':lua _G.__fterm_cmd("rvim_commit")<cr>', "commit" },
+      },
       k = { ":lua require('user.utils.cheatsheet').cheatsheet()<cr>", "cheatsheet" },
       l = {
         "<cmd>lua vim.fn.execute('edit ' .. vim.lsp.get_log_path())<cr>",
