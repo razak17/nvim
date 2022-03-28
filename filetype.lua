@@ -22,7 +22,6 @@ vim.filetype.add {
     ["*.hsc"] = "haskell",
     ["*.bpk"] = "haskell",
     ["*.hsig"] = "haskell",
-    ["*.tmux.conf"] = "tmux",
     ["*.svelte"] = "svelte",
     ["*.sol"] = "solidity",
     ["*.gradle"] = "groovy",
