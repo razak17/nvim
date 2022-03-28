@@ -16,9 +16,6 @@ local function general_overrides()
     -- Floats
     -----------------------------------------------------------------------------//
     { "NormalFloat", { background = P.bg } },
-    --- Highlight group for light coloured floats
-    { "GreyFloat", { background = P.grey } },
-    { "GreyFloatBorder", { foreground = P.grey } },
     -----------------------------------------------------------------------------//
     { "CursorLineNr", { bold = true } },
     { "FoldColumn", { background = "background" } },
