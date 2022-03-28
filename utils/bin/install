@@ -146,7 +146,7 @@ cloneconfig() {
 	read -r answer
 	[ "$answer" != "${answer#[Yy]}" ] && installExtra
 
-	sudo cp --force "$HOME/.config/rvim/external/bin/rvim" "$HOME/.local/bin"
+	sudo cp --force "$HOME/.config/rvim/utils/bin/rvim" "$HOME/.local/bin"
 }
 
 while [ "$#" -gt 0 ]; do
