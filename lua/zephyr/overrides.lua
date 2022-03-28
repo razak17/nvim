@@ -83,6 +83,7 @@ local sidebar_fts = {
   "flutterToolsOutline",
   "undotree",
   "NvimTree",
+  "qf",
 }
 
 local function on_sidebar_enter()
@@ -92,7 +93,8 @@ local function on_sidebar_enter()
     "StatusLine:PanelSt",
     "StatusLineNC:PanelStNC",
     "SignColumn:PanelBackground",
-    "VertSplit:PanelBackground",
+    "VertSplit:PanelVertSplit",
+    "WinSeparator:PanelWinSeparator",
   }, ",")
 end
 
