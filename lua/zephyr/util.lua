@@ -40,7 +40,7 @@ end
 --- which includes the specific target highlight
 --- @param win_id integer
 --- @return boolean, string
-function M.has_win_highlight(win_id, ...)
+function M.winhighlight_exists(win_id, ...)
   local win_hl = vim.wo[win_id].winhighlight
   for _, target in ipairs { ... } do
     if win_hl:match(target) ~= nil then
@@ -58,7 +58,7 @@ end
 ---@param fallback string
 function M.adopt_winhighlight(win_id, target, name, fallback)
   local win_hl_name = name .. win_id
-  local _, win_hl = M.has_win_highlight(win_id, target)
+  local _, win_hl = M.winhighlight_exists(win_id, target)
   local hl_exists = fn.hlexists(win_hl_name) > 0
   if hl_exists then
     return win_hl_name
