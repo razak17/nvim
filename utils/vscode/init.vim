@@ -1,6 +1,7 @@
 " packadd vim-surround
 
 " execute 'luafile ' . '~/.config/rvim' . '/lua/core/opts.lua'
+set mouse+=a
 
 function! s:manageEditorSize(...)
     let count = a:1
@@ -90,6 +91,8 @@ nnoremap $ g_
 nnoremap Y y$
 nmap <Tab> :Tabnext<CR>
 nmap <S-Tab> :Tabprev<CR>
+nmap L :Tabnext<CR>
+nmap H :Tabprev<CR>
 nnoremap <C-z> :undo<CR>
 
 " Paste in visual mode multiple times
