@@ -74,3 +74,4 @@ localhost
 morgan
 dotenv
 css
+auth
