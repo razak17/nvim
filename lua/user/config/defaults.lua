@@ -5,9 +5,11 @@ return {
     SANE = true,
     packer = { active = true },
   },
+  providers_disabled = { "python", "ruby", "perl" },
   transparent_window = false,
   line_wrap_cursor_movement = false,
   snippets_dir = join_paths(rvim.get_config_dir(), "snippets"),
+  packer_compile_path = join_paths(rvim.get_runtime_dir(), "site", "lua", "_compiled_rolling.lua"),
   format_on_save = {
     ---@usage pattern string pattern used for the autocommand (Default: '*')
     pattern = "*",

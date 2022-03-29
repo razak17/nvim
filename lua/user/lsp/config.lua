@@ -1,6 +1,6 @@
 local border = rvim.style.border.current
 
-return {
+rvim.lsp = {
   templates_dir = join_paths(rvim.get_config_dir(), "after", "ftplugin"),
   diagnostics = {
     signs = { active = true },

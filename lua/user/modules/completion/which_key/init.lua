@@ -1,3 +1,5 @@
+R "user.modules.completion.which_key.config"
+
 return function()
   rvim.which_key = {
     setup = {

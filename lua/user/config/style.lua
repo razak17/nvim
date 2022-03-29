@@ -11,7 +11,7 @@ local borders = {
   },
 }
 
-return {
+rvim.style = {
   border = vim.tbl_extend("force", borders, { current = borders.line }),
   icons = {
     lsp = {
@@ -108,3 +108,10 @@ return {
     },
   },
 }
+
+----------------------------------------------------------------------------------------------------
+-- Global style settings
+----------------------------------------------------------------------------------------------------
+-- Some styles can be tweak here to apply globally i.e. by setting the current value for that style
+
+rvim.style.border.current = rvim.style.border.line

@@ -1,4 +1,4 @@
-return {
+rvim.wk = {
   leader_mode = {
     ["?"] = "search word",
     S = "edit snippet",

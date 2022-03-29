@@ -1,4 +1,4 @@
-return {
+rvim.palette = {
   base0 = "#1B2229",
   base1 = "#1c1f24",
   base2 = "#202328",
