@@ -81,6 +81,7 @@ return function()
     setup = {
       options = {
         mode = "buffers", -- tabs
+        sort_by = "insert_after_current",
         view = "default",
         close_icon = "",
         buffer_close_icon = "",
