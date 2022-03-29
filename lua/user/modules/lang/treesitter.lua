@@ -98,7 +98,10 @@ return function()
       },
     },
     indent = { enable = { "javascriptreact" } },
-    autotag = { enable = rvim.plugins.lang.autotag.active, filetypes = { "html", "xml" } },
+    autotag = {
+      enable = rvim.plugins.lang.autotag.active,
+      filetypes = { "html", "xml", "typescriptreact", "javascriptreact" },
+    },
     matchup = { enable = rvim.plugins.lang.matchup.active, disable = { "c", "python" } },
     autopairs = { enable = rvim.plugins.lang.autopairs.active },
     rainbow = {
