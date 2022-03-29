@@ -57,7 +57,9 @@ function M:bootstrap_packer(packer, plugins)
     disable_commands = true,
     display = {
       open_fn = function()
-        return require("packer.util").float { border = "rounded" }
+        return require("packer.util").float {
+          border = rvim.style.border.current,
+        }
       end,
     },
   }

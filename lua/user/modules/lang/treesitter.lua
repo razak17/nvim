@@ -90,7 +90,7 @@ return function()
       },
       lsp_interop = {
         enable = true,
-        border = "rounded",
+        border = rvim.style.border.current,
         peek_definition_code = {
           ["<leader>df"] = "@function.outer",
           ["<leader>dF"] = "@class.outer",

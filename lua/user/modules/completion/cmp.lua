@@ -4,6 +4,7 @@ return function()
     return
   end
 
+  local border = rvim.style.border.current
   local lsp_hls = rvim.lsp.kind_highlights
   local fmt = string.format
 
@@ -81,10 +82,10 @@ return function()
       window = {
         completion = {
           -- TODO: consider 'shadow', and tweak the winhighlight
-          border = "rounded",
+          border = border,
         },
         documentation = {
-          border = "rounded",
+          border = border,
         },
       },
       confirm_opts = {
@@ -147,7 +148,7 @@ return function()
         end,
       },
       documentation = {
-        border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+        border = border,
       },
       sources = {
         { name = "nvim_lsp" },

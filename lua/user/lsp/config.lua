@@ -1,16 +1,18 @@
+local border = rvim.style.border.current
+
 return {
   templates_dir = join_paths(rvim.get_config_dir(), "after", "ftplugin"),
   diagnostics = {
     signs = { active = true },
     virtual_text_spacing = 2,
     underline = true,
-    border = "rounded",
+    border = border,
     update_in_insert = false,
     severity_sort = true,
     float = {
       focusable = true,
       style = "minimal",
-      border = "rounded",
+      border = border,
       source = "always",
       header = "",
       prefix = "",
@@ -29,7 +31,7 @@ return {
   float = {
     focusable = false,
     style = "minimal",
-    border = "rounded",
+    border = border,
   },
   automatic_servers_installation = true,
   hover_diagnostics = false,

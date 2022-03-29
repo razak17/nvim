@@ -1,16 +1,18 @@
-return {
-  border = {
-    line = {
-      { "🭽", "FloatBorder" },
-      { "▔", "FloatBorder" },
-      { "🭾", "FloatBorder" },
-      { "▕", "FloatBorder" },
-      { "🭿", "FloatBorder" },
-      { "▁", "FloatBorder" },
-      { "🭼", "FloatBorder" },
-      { "▏", "FloatBorder" },
-    },
+local borders = {
+  line = {
+    { "🭽", "FloatBorder" },
+    { "▔", "FloatBorder" },
+    { "🭾", "FloatBorder" },
+    { "▕", "FloatBorder" },
+    { "🭿", "FloatBorder" },
+    { "▁", "FloatBorder" },
+    { "🭼", "FloatBorder" },
+    { "▏", "FloatBorder" },
   },
+}
+
+return {
+  border = vim.tbl_extend("force", borders, { current = borders.line }),
   icons = {
     lsp = {
       error = "",
@@ -75,7 +77,7 @@ return {
       double_chevron_right = "»",
       table = "",
       calendar = "",
-      tree = ''
+      tree = "",
     },
     kind = {
       Class = "", -- '',
