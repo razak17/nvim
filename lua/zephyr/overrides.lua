@@ -26,7 +26,7 @@ local function general_overrides()
     -----------------------------------------------------------------------------//
     -- colorscheme overrides
     -----------------------------------------------------------------------------//
-    { "Comment", { italic = true } },
+    -- { "Comment", { italic = true } },
     { "Include", { italic = true } },
     -- { "Type", { italic = true, bold = true } },
     {
