@@ -58,6 +58,7 @@ au BufNewFile,BufRead *.sol set ft=solidity
 au BufNewFile,BufRead *.svelte set ft=svelte
 " tmux
 au BufNewFile,BufRead *.tmux.conf set ft=tmux
+au BufNewFile,BufRead *.conf set ft=tmux
 " TOML
 au BufNewFile,BufRead *.toml,Gopkg.lock,Cargo.lock,*/.cargo/config,*/.cargo/credentials,Pipfile set ft=toml
 " Cargo Make
