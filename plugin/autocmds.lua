@@ -324,6 +324,20 @@ rvim.augroup("Utilities", {
       vim.cmd(fmt("bd!|edit %s", vim.uri_from_fname "<afile>"))
     end,
   },
+   {
+    -- When editing a file, always jump to the last known cursor position.
+    -- Don't do it for commit messages, when the position is invalid.
+    event = { 'BufWinEnter' },
+    pattern = { '*' },
+    command = function()
+      if vim.bo.ft ~= 'gitcommit' and vim.fn.win_gettype() ~= 'popup' then
+        local row, col = unpack(api.nvim_buf_get_mark(0, '"'))
+        if { row, col } ~= { 0, 0 } then
+          api.nvim_win_set_cursor(0, { row, 0 })
+        end
+      end
+    end,
+  },
   {
     -- When editing a file, always jump to the last known cursor position.
     -- Don't do it for commit messages, when the position is invalid, or when
