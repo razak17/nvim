@@ -23,7 +23,7 @@ join_paths = _G.join_paths
 ---Get the full path to `$RVIM_RUNTIME_DIR`
 ---@return string
 function rvim.get_runtime_dir()
-  local rvim_runtime_dir = os.getenv "RVIM_RUNTIME_DIR"
+  local rvim_runtime_dir = vim.env.RVIM_RUNTIME_DIR
   if not rvim_runtime_dir then
     -- when nvim is used directly
     return vim.fn.stdpath "data"
@@ -34,7 +34,7 @@ end
 ---Get the full path to `$RVIM_CONFIG_DIR`
 ---@return string
 function rvim.get_config_dir()
-  local rvim_config_dir = os.getenv "RVIM_CONFIG_DIR"
+  local rvim_config_dir = vim.env.RVIM_CONFIG_DIR
   if not rvim_config_dir then
     return vim.fn.stdpath "config"
   end
@@ -44,7 +44,7 @@ end
 ---Get the full path to `$RVIM_CACHE_DIR`
 ---@return string
 function rvim.get_cache_dir()
-  local rvim_cache_dir = os.getenv "RVIM_CACHE_DIR"
+  local rvim_cache_dir = vim.env.RVIM_CACHE_DIR
   if not rvim_cache_dir then
     return vim.fn.stdpath "cache"
   end
@@ -54,7 +54,7 @@ end
 ---Get the full path to `$RVIM_CONFIG_DIR/lua/user`
 ---@return string
 function rvim.get_user_dir()
-  local config_dir = os.getenv "RVIM_CONFIG_DIR"
+  local config_dir = vim.env.RVIM_CONFIG_DIR
   if not config_dir then
     config_dir = vim.fn.stdpath "config"
   end

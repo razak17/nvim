@@ -112,11 +112,11 @@ return function()
     ShowPythonEnv = {
       provider = function()
         if vim.bo.filetype == "python" then
-          local venv = os.getenv "CONDA_DEFAULT_ENV"
+          local venv = vim.env.CONDA_DEFAULT_ENV
           if venv then
             return string.format(" (%s) ", env_cleanup(venv))
           end
-          venv = os.getenv "VIRTUAL_ENV"
+          venv = vim.env.VIRTUAL_ENV
           if venv then
             return string.format(" (%s) ", env_cleanup(venv))
           end

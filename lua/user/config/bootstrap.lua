@@ -14,7 +14,7 @@ function M:init(base_dir)
     return base_dir
   end
 
-  if os.getenv "RVIM_RUNTIME_DIR" then
+  if vim.env.RVIM_RUNTIME_DIR then
     vim.opt.rtp:remove(join_paths(vim.fn.stdpath "data", "site"))
     vim.opt.rtp:remove(join_paths(vim.fn.stdpath "data", "site", "after"))
     vim.opt.rtp:prepend(join_paths(self.runtime_dir, "site"))
