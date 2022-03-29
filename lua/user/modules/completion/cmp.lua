@@ -26,6 +26,13 @@ return function()
     { "CmpItemAbbrMatchFuzzy", { italic = true, foreground = "fg" } }
   )
 
+  ---checks if the character preceding the cursor is a space character
+  ---@return boolean true if it is a space character, false otherwise
+  local check_backspace = function()
+    local col = vim.fn.col "." - 1
+    return col == 0 or vim.fn.getline("."):sub(col, col):match "%s"
+  end
+
   ---checks if emmet_ls is available and active in the buffer
   ---@return boolean true if available, false otherwise
   local is_emmet_active = function()
@@ -45,6 +52,8 @@ return function()
       cmp.select_next_item()
     elseif ok and luasnip.expand_or_locally_jumpable() then
       luasnip.expand_or_jump()
+    elseif check_backspace() then
+      fallback()
     elseif is_emmet_active() then
       return vim.fn["cmp#complete"]()
     else
@@ -170,8 +179,8 @@ return function()
         ["<C-j>"] = cmp.mapping.select_next_item(),
         ["<C-d>"] = cmp.mapping.scroll_docs(-4),
         ["<C-f>"] = cmp.mapping.scroll_docs(4),
-        ["<Tab>"] = cmp.mapping(tab, { "i", "c" }),
-        ["<S-Tab>"] = cmp.mapping(shift_tab, { "i", "c" }),
+        ["<Tab>"] = cmp.mapping(tab, { "i", "s" }),
+        ["<S-Tab>"] = cmp.mapping(shift_tab, { "i", "s" }),
         ["<C-q>"] = cmp.mapping.complete(),
         ["<CR>"] = cmp.mapping.confirm {
           behavior = cmp.ConfirmBehavior.Replace,
