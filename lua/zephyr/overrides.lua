@@ -83,7 +83,8 @@ local sidebar_fts = {
   "flutterToolsOutline",
   "undotree",
   "NvimTree",
-  "qf",
+  -- FIXME: causes error when adding to qflist from telescope
+  -- "qf",
 }
 
 local function on_sidebar_enter()
