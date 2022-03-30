@@ -9,7 +9,7 @@ local function general_overrides()
   local msg_area_bg = rvim.util.transparent_window and "NONE" or P.darker_bg
   util.all {
     -- { "VertSplit", { background = "NONE", foreground = util.get_hl("NonText", "fg") } },
-    -- { "WinSeparator", { background = "NONE", foreground = util.get_hl("NonText", "fg") } },
+    { "WinSeparator", { background = "NONE", foreground = util.get_hl("NonText", "fg") } },
     { "MsgArea", { background = msg_area_bg } },
     { "mkdLineBreak", { link = "NONE" } },
     -----------------------------------------------------------------------------//
@@ -83,8 +83,7 @@ local sidebar_fts = {
   "flutterToolsOutline",
   "undotree",
   "NvimTree",
-  -- FIXME: causes error when adding to qflist from telescope
-  -- "qf",
+  "qf",
 }
 
 local function on_sidebar_enter()
@@ -95,7 +94,6 @@ local function on_sidebar_enter()
     "StatusLineNC:PanelStNC",
     "SignColumn:PanelBackground",
     "VertSplit:PanelVertSplit",
-    "WinSeparator:PanelWinSeparator",
   }, ",")
 end
 
