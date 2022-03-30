@@ -50,7 +50,6 @@ rvim.wk = {
         "<cmd>lua vim.fn.execute('edit ' .. join_paths(rvim.get_cache_dir(), 'prof.log'))<cr>",
         "open startuptime logs",
       },
-      u = { ":UpdateRemotePlugins<cr>", "far: update remote" },
       v = {
         ":e " .. join_paths(rvim.get_config_dir(), "init.lua<cr>"),
         "open vimrc",

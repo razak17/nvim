@@ -57,9 +57,9 @@ return function()
   }
 
   require("which-key").register({
-    A = { "<cmd>A<CR>", "prjnst: edit alternate" },
-    a = {
+    A = {
       name = "+prjnst",
+      e = { "<cmd>A<CR>", "prjnst: edit alternate" },
       v = { "<cmd>AV<CR>", "prjnst: vsplit alternate" },
       t = { "<cmd>Vtest<CR>", "projectionist: vsplit test" },
     },

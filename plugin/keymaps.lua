@@ -435,7 +435,7 @@ nnoremap("dw", "cw<ESC>")
 nnoremap("<leader>y", '"+y', { label = "yank" })
 vnoremap("<leader>y", '"+y', { label = "yank" })
 -- Whole file delete yank, paste
-nnoremap("<leader>A", 'gg"+VG', { label = "select all" })
+nnoremap("<leader>aa", 'gg"+VG', { label = "select all" })
 -- nnoremap("<leader>D", 'gg"+VGd', {label="delete all"})
 nnoremap("<leader>Y", 'gg"+yG', { label = "yank all" })
 -- actions

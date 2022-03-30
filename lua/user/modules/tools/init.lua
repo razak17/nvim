@@ -126,6 +126,7 @@ tools["brooth/far.vim"] = {
       ["<leader>Fi"] = { ":Farf<cr>", "far: search iteratively" },
       ["<leader>Fr"] = { ":Farr --source=rgnvim<cr>", "far: replace in project" },
       ["<leader>Fu"] = { ":Farundo<cr>", "far: undo" },
+      ["<leader>FU"] = { ":UpdateRemotePlugins<cr>", "far: update remote" },
     }
   end,
   disable = not rvim.plugins.tools.far.active,
