@@ -12,13 +12,11 @@ _G.rvim = {
 
 ---Join path segments that were passed rvim input
 ---@return string
-function _G.join_paths(...)
+function join_paths(...)
   local path_sep = uv.os_uname().version:match "Windows" and "\\" or "/"
   local result = table.concat({ ... }, path_sep)
   return result
 end
-
-join_paths = _G.join_paths
 
 ---Get the full path to `$RVIM_RUNTIME_DIR`
 ---@return string
