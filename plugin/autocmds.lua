@@ -231,8 +231,26 @@ rvim.augroup("CustomFormatOptions", {
     command = "setlocal formatoptions-=c formatoptions-=r formatoptions-=o",
   },
 })
-
+local config_dir = rvim.get_config_dir
 rvim.augroup("UpdateVim", {
+  {
+    -- TODO: not clear what effect this has in the post vimscript world
+    -- it correctly sources $MYVIMRC but all the other files that it
+    -- requires will need to be resourced or reloaded themselves
+    event = "BufWritePost",
+    pattern = {
+      config_dir() .. "/plugin/*.{lua,vim}",
+      config_dir() .. "/init.{lua,vim}",
+      rvim.get_user_dir() .. "/config/*.{lua,vim}",
+      rvim.get_user_dir() .. "/core/*.{lua,vim}",
+    },
+    nested = true,
+    command = function()
+      rvim.source(config_dir() .. "/init.lua")
+      rvim.invalidate(config_dir() .. "/init.lua", true)
+      vim.notify("Config has been reloaded", nil, { title = "rVim" })
+    end,
+  },
   -- Make windows equal size when vim resizes
   { event = { "VimResized" }, pattern = { "*" }, command = "wincmd =" },
 })
@@ -324,13 +342,13 @@ rvim.augroup("Utilities", {
       vim.cmd(fmt("bd!|edit %s", vim.uri_from_fname "<afile>"))
     end,
   },
-   {
+  {
     -- When editing a file, always jump to the last known cursor position.
     -- Don't do it for commit messages, when the position is invalid.
-    event = { 'BufWinEnter' },
-    pattern = { '*' },
+    event = { "BufWinEnter" },
+    pattern = { "*" },
     command = function()
-      if vim.bo.ft ~= 'gitcommit' and vim.fn.win_gettype() ~= 'popup' then
+      if vim.bo.ft ~= "gitcommit" and vim.fn.win_gettype() ~= "popup" then
         local row, col = unpack(api.nvim_buf_get_mark(0, '"'))
         if { row, col } ~= { 0, 0 } then
           api.nvim_win_set_cursor(0, { row, 0 })
