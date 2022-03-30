@@ -13,20 +13,31 @@ return function()
         topdelete = { hl = "GitGutterDeleteChange", text = "▔" },
         changedelete = { hl = "GitGutterChange", text = "▎" },
       },
+      word_diff = false,
+      numhl = false,
+      preview_config = {
+        border = rvim.style.border.current,
+      },
       on_attach = function()
+        local gs = package.loaded.gitsigns
+
+        local function qf_list_modified()
+          gs.setqflist "all"
+        end
         require("which-key").register {
           ["<leader>h"] = {
             name = "+Gitsigns",
-            j = { gitsigns.next_hunk(), "Next Hunk" },
-            k = { gitsigns.prev_hunk(), "Prev Hunk" },
-            s = { gitsigns.stage_hunk, "stage" },
-            u = { gitsigns.undo_stage_hunk, "undo stage" },
-            r = { gitsigns.reset_hunk, "reset hunk" },
-            p = { gitsigns.preview_hunk, "preview hunk" },
-            l = { gitsigns.blame_line, "blame line" },
-            R = { gitsigns.reset_buffer, "reset buffer" },
-            d = { gitsigns.toggle_word_diff, "toggle word diff" },
-            w = { gitsigns.stage_buffer, "stage entire buffer" },
+            j = { gs.next_hunk, "Next Hunk" },
+            k = { gs.prev_hunk, "Prev Hunk" },
+            m = { qf_list_modified, "list modified in qf" },
+            s = { gs.stage_hunk, "stage" },
+            u = { gs.undo_stage_hunk, "undo stage" },
+            r = { gs.reset_hunk, "reset hunk" },
+            p = { gs.preview_hunk, "preview hunk" },
+            l = { gs.blame_line, "blame line" },
+            R = { gs.reset_buffer, "reset buffer" },
+            d = { gs.toggle_word_diff, "toggle word diff" },
+            w = { gs.stage_buffer, "stage entire buffer" },
           },
         }
       end,
