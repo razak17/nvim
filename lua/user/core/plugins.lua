@@ -1,6 +1,7 @@
 local packer = nil
 local fmt = string.format
 local plug_utils = require "user.utils.plugins"
+local packer_compiled = rvim.paths.packer_compiled
 
 local Plug = {}
 Plug.__index = Plug
@@ -31,24 +32,24 @@ function plugins.ensure_installed()
 
   plugins.load_compile()
 
-  if not vim.g.packer_compiled_loaded and vim.loop.fs_stat(rvim.packer_compile_path) then
-    rvim.source(rvim.packer_compile_path)
+  if not vim.g.packer_compiled_loaded and vim.loop.fs_stat(packer_compiled) then
+    rvim.source(packer_compiled)
     vim.g.packer_compiled_loaded = true
   end
 end
 
 function plugins.load_compile()
-  if vim.fn.filereadable(rvim.packer_compile_path) ~= 1 then
+  if vim.fn.filereadable(packer_compiled) ~= 1 then
     plugins.install()
     plugins.compile()
   end
 end
 
 function plugins.del_compiled()
-  if vim.fn.filereadable(rvim.packer_compile_path) ~= 1 then
+  if vim.fn.filereadable(packer_compiled) ~= 1 then
     plug_utils:plug_notify "packer_compiled file does not exist"
   else
-    vim.fn.delete(rvim.packer_compile_path)
+    vim.fn.delete(packer_compiled)
     plug_utils:plug_notify "packer_compiled was deleted"
   end
 end

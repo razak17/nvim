@@ -52,7 +52,7 @@ command("PlugStatus", [[lua require('user.core.plugins').status()]])
 command("PlugRecompile", [[lua require('user.core.plugins').recompile()]])
 
 command("PlugCompiledEdit", function()
-  vim.cmd(fmt("edit %s", rvim.packer_compile_path))
+  vim.cmd(fmt("edit %s", rvim.paths.packer_compiled))
 end)
 
 command("PlugCompiledDelete", function()

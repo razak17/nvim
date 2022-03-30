@@ -6,7 +6,7 @@ local function general_overrides()
   local keyword_fg = util.get_hl("Keyword", "fg")
   local search_bg = util.get_hl("Search", "bg")
   -- local error_line = util.alter_color(P.error_red, -80)
-  local msg_area_bg = rvim.transparent_window and "NONE" or P.darker_bg
+  local msg_area_bg = rvim.util.transparent_window and "NONE" or P.darker_bg
   util.all {
     -- { "VertSplit", { background = "NONE", foreground = util.get_hl("NonText", "fg") } },
     -- { "WinSeparator", { background = "NONE", foreground = util.get_hl("NonText", "fg") } },
@@ -60,7 +60,7 @@ local function general_overrides()
 end
 
 local function set_sidebar_highlight()
-  -- local normal_bg = rvim.transparent_window and "NONE" or M.get_hl("Normal", "bg")..
+  -- local normal_bg = rvim.util.transparent_window and "NONE" or M.get_hl("Normal", "bg")..
   local split_color = util.get_hl("VertSplit", "fg")
   local bg_color = util.alter_color(P.bg, -20)
   local st_color = util.alter_color(util.get_hl("Visual", "bg"), -10)

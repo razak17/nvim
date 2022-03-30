@@ -15,11 +15,7 @@ end
 
 vim.cmd [[let &packpath = &runtimepath]]
 
-local defaults = require "user.config.defaults"
-for k, v in pairs(defaults) do
-  rvim[k] = vim.deepcopy(v)
-end
-
+R "user.config.defaults"
 R "user.palette"
 R "user.config.style"
 R "user.lsp.config"

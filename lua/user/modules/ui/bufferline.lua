@@ -29,7 +29,7 @@ return function()
   local util = require "zephyr.util"
   local normal_bg = util.get_hl("Normal", "bg")
   local darker_bg = util.alter_color(normal_bg, -1)
-  local bg = rvim.transparent_window == true and "none" or P.statusline_section_bg
+  local bg = rvim.util.transparent_window == true and "none" or P.statusline_section_bg
   local fg_def = P.bufferline_fg_def
   local fg_sel = P.bufferline_fg_sel
 

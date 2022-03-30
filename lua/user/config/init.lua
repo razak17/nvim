@@ -1,13 +1,13 @@
 local Log = require "user.core.log"
 Log:debug "Starting rVim"
 
-vim.g.python3_host_prog = rvim.python_path
-vim.g.node_host_prog = rvim.node_path
-for _, v in pairs(rvim.providers_disabled) do
+vim.g.python3_host_prog = rvim.paths.python3
+vim.g.node_host_prog = rvim.paths.node
+for _, v in pairs(rvim.util.disabled_providers) do
   vim.g["loaded_" .. v .. "_provider"] = 0
 end
 
-if rvim.defer then
+if rvim.util.defer then
   vim.cmd [[syntax off]]
   vim.cmd [[filetype off]]
   vim.defer_fn(
@@ -21,8 +21,8 @@ if rvim.defer then
   )
 end
 
-vim.g.colors_name = rvim.colorscheme
-vim.cmd("colorscheme " .. rvim.colorscheme)
+vim.g.colors_name = rvim.util.colorscheme
+vim.cmd("colorscheme " .. rvim.util.colorscheme)
 R("user.config.settings"):init()
 R "user.core.commands"
 R("user.core.plugins").ensure_installed()

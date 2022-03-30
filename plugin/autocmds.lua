@@ -271,7 +271,7 @@ rvim.augroup("WinBehavior", {
     event = { "FocusLost" },
     pattern = { "*" },
     command = function()
-      if rvim.save_on_focus_lost then
+      if rvim.util.save_on_focus_lost then
         vim.cmd "silent! wall"
       end
     end,

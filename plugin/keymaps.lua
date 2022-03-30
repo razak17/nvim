@@ -11,8 +11,8 @@ local tnoremap = rvim.tnoremap
 local onoremap = rvim.onoremap
 
 local g = vim.g
-g.mapleader = (rvim.leader == "space" and " ") or rvim.leader
-g.maplocalleader = (rvim.localleader == "space" and " ") or rvim.localleader
+g.mapleader = (rvim.keys.leader == "space" and " ") or rvim.keymaps.leader
+g.maplocalleader = (rvim.keys.localleader == "space" and " ") or rvim.keymaps.localleader
 
 ------------------------------------------------------------------------------
 -- Terminal {{{

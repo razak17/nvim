@@ -66,6 +66,6 @@ return function()
   require("luasnip").config.setup { store_selection_keys = "<C-x>" }
   require("luasnip.loaders.from_lua").lazy_load()
   require("luasnip.loaders.from_vscode").lazy_load {
-    paths = rvim.get_config_dir() .. "/utils/snippets/textmate",
+    paths = rvim.paths.snippets,
   }
 end

@@ -8,6 +8,8 @@ local uv = vim.loop
 ----------------------------------------------------------------------------------------------------
 _G.rvim = {
   mappings = {},
+  lang = {},
+  util = {},
 }
 
 ---Join path segments that were passed rvim input
