@@ -23,7 +23,6 @@ return {
   colorscheme = "zephyr",
   node_path = vim.env.FNMPATH .. "/neovim-node-host",
   python_path = rvim.get_cache_dir() .. "/venv/neovim/bin/python3",
-  telescope_borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
   lang = {},
   log = {
     ---@usage can be { "trace", "debug", "info", "warn", "error", "fatal" },

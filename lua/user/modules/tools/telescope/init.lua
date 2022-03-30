@@ -11,6 +11,7 @@ return function()
   local layout_actions = require "telescope.actions.layout"
   local themes = require "telescope.themes"
   local icons = rvim.style.icons
+  local border = rvim.style.border
 
   -- https://github.com/nvim-telescope/telescope.nvim/issues/1048
   -- Ref: https://github.com/whatsthatsmell/dots/blob/master/public%20dots/vim-nvim/lua/joel/telescope/init.lua
@@ -32,12 +33,7 @@ return function()
 
   local function get_border(opts)
     return vim.tbl_deep_extend("force", opts or {}, {
-      borderchars = {
-        { "─", "│", " ", "│", "╭", "╮", "│", "│" },
-        prompt = { "─", "│", " ", "│", "╭", "╮", "│", "│" },
-        results = { "─", "│", "─", "│", "├", "┤", "╯", "╰" },
-        preview = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
-      },
+      borderchars = border.telescope.ui_select,
     })
   end
 
@@ -55,7 +51,7 @@ return function()
         sorting_strategy = "ascending",
         layout_strategy = "horizontal",
         set_env = { ["TERM"] = vim.env.TERM },
-        borderchars = rvim.telescope_borderchars,
+        borderchars = border.telescope.prompt,
         file_browser = { hidden = true },
         color_devicons = true,
         dynamic_preview_title = true,
