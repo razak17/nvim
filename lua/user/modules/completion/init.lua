@@ -18,9 +18,11 @@ completion["folke/which-key.nvim"] = {
 
 -- nvim-cmp
 completion["hrsh7th/nvim-cmp"] = {
-  module = "cmp",
-  event = "InsertEnter",
   config = load_conf("completion", "cmp"),
+  requires = {
+    "L3MON4D3/LuaSnip",
+    "rafamadriz/friendly-snippets",
+  },
   disable = not rvim.plugins.completion.cmp.active,
 }
 
@@ -116,7 +118,6 @@ completion["L3MON4D3/LuaSnip"] = {
 }
 
 completion["rafamadriz/friendly-snippets"] = {
-  event = "InsertEnter",
   disable = not rvim.plugins.completion.friendly_snippets.active,
 }
 
