@@ -26,7 +26,7 @@ rvim.plugins.lang = {
   treesitter = { active = true },
   playground = { active = true },
   autopairs = { active = true },
-  rainbow = { active = false },
+  rainbow = { active = true },
   autotag = { active = true },
   matchup = { active = false },
   textobjects = { active = true },
