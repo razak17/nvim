@@ -14,6 +14,7 @@ rvim.plugins.editor = {
   better_diagraphs = { active = false },
   tabout = { active = true },
   marks = { active = true },
+  vim_uppercase_sql = { active = true },
 }
 
 editor["xiyaowong/accelerated-jk.nvim"] = {
@@ -252,6 +253,10 @@ editor["chentau/marks.nvim"] = {
     }
   end,
   disable = not rvim.plugins.editor.marks.active,
+}
+
+editor["jsborjesson/vim-uppercase-sql"] = {
+  disable = not rvim.plugins.editor.vim_uppercase_sql.active,
 }
 
 return editor
