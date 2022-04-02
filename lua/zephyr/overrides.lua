@@ -46,6 +46,11 @@ local function general_overrides()
         background = util.alter_color(P.pale_blue, -50),
       },
     },
+    -- Neither the sign column or end of buffer highlights require an explicit background
+    -- they should both just use the background that is in the window they are in.
+    -- if either are specified this can lead to issues when a winhighlight is set
+    { "SignColumn", { background = "NONE" } },
+    { "EndOfBuffer", { background = "NONE" } },
     -----------------------------------------------------------------------------//
     -- Treesitter
     -----------------------------------------------------------------------------//
@@ -83,6 +88,7 @@ local sidebar_fts = {
   "flutterToolsOutline",
   "undotree",
   "NvimTree",
+  "neo-tree",
   "qf",
 }
 
