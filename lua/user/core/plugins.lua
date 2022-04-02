@@ -1,6 +1,6 @@
 local packer = nil
 local fmt = string.format
-local plug_utils = require "user.utils.plugins"
+local utils = require "user.utils.plugins"
 local packer_compiled = rvim.paths.packer_compiled
 
 local Plug = {}
@@ -13,8 +13,8 @@ function Plug:load_packer()
   end
   rvim.safe_require "impatient"
 
-  local plugins = plug_utils:get_plugins_list()
-  plug_utils:bootstrap_packer(packer, plugins)
+  local plugins = utils:get_plugins_list()
+  utils:bootstrap_packer(packer, plugins)
 end
 
 local plugins = setmetatable({}, {
@@ -27,7 +27,7 @@ local plugins = setmetatable({}, {
 })
 
 function plugins.ensure_installed()
-  plug_utils:init_ensure_installed()
+  utils:init_ensure_installed()
   Plug:load_packer()
 
   plugins.load_compile()
@@ -47,10 +47,10 @@ end
 
 function plugins.del_compiled()
   if vim.fn.filereadable(packer_compiled) ~= 1 then
-    plug_utils:plug_notify "packer_compiled file does not exist"
+    utils:plug_notify "packer_compiled file does not exist"
   else
     vim.fn.delete(packer_compiled)
-    plug_utils:plug_notify "packer_compiled was deleted"
+    utils:plug_notify "packer_compiled was deleted"
   end
 end
 
@@ -83,7 +83,7 @@ rvim.augroup("PackerSetupInit", {
     },
     command = function()
       rvim.nnoremap("gf", function()
-        plug_utils:goto_repo()
+        utils:goto_repo()
       end)
     end,
   },
@@ -92,7 +92,7 @@ rvim.augroup("PackerSetupInit", {
     pattern = "PackerCompileDone",
     description = "Inform me that packer has finished compiling",
     command = function()
-      plug_utils:plug_notify "Packer compile complete"
+      utils:plug_notify "Packer compile complete"
     end,
   },
 })

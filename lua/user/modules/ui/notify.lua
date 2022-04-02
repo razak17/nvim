@@ -1,4 +1,17 @@
 return function()
+  local api = vim.api
+  -- this plugin is not safe to reload
+  if vim.g.packer_compiled_loaded then
+    return
+  end
+  require("zephyr.util").plugin(
+    "notify",
+    { "NotifyERRORBody", { link = "NormalFloat" } },
+    { "NotifyWARNBody", { link = "NormalFloat" } },
+    { "NotifyINFOBody", { link = "NormalFloat" } },
+    { "NotifyDEBUGBody", { link = "NormalFloat" } },
+    { "NotifyTRACEBody", { link = "NormalFloat" } }
+  )
   if #vim.api.nvim_list_uis() == 0 then
     -- no need to configure notifications in headless
     return
@@ -9,6 +22,12 @@ return function()
 
   rvim.nvim_notify = {
     setup = {
+      background_colour = "NormalFloat",
+      on_open = function(win)
+        if api.nvim_win_is_valid(win) then
+          vim.api.nvim_win_set_config(win, { border = rvim.style.border.current })
+        end
+      end,
       ---@usage Animation style one of { "fade", "slide", "fade_in_slide_out", "static" }
       stages = "fade_in_slide_out",
 

@@ -278,4 +278,9 @@ tools["nvim-lua/plenary.nvim"] = { disable = not rvim.plugins.tools.plenary.acti
 
 tools["nvim-lua/popup.nvim"] = { disable = not rvim.plugins.tools.popup.active }
 
+-- tools["nvim-lua/popup.nvim"] = {
+--   local_path = 'cheatsheet',
+--   disable = not rvim.plugins.tools.popup.active
+-- }
+
 return tools
