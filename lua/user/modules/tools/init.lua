@@ -28,6 +28,7 @@ rvim.plugins.tools = {
   projectionist = { active = true },
   plenary = { active = true },
   popup = { active = true },
+  cheatsheet = { active = true },
   -- TODO: handle these later
   glow = { active = false }, --j
   doge = { active = false }, --j
@@ -277,10 +278,5 @@ tools["tpope/vim-projectionist"] = {
 tools["nvim-lua/plenary.nvim"] = { disable = not rvim.plugins.tools.plenary.active }
 
 tools["nvim-lua/popup.nvim"] = { disable = not rvim.plugins.tools.popup.active }
-
--- tools["nvim-lua/popup.nvim"] = {
---   local_path = 'cheatsheet',
---   disable = not rvim.plugins.tools.popup.active
--- }
 
 return tools

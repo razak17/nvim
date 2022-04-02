@@ -88,10 +88,10 @@ end
 ---@param spec table
 function M:with_local(spec)
   assert(type(spec) == "table", fmt("spec must be a table", spec[1]))
-  assert(spec.local_path, fmt("%s has no specified local path", spec[1]))
+  assert(spec.is_local, fmt("%s has no specified local path", spec[1]))
 
   local name = vim.split(spec[1], "/")[2]
-  local path = M:dev(fmt("%s/%s", spec.local_path, name))
+  local path = M:dev(name)
   if fn.isdirectory(fn.expand(path)) < 1 then
     return spec, nil
   end
@@ -115,9 +115,10 @@ end
 ---local variant of packer's use function that specifies both a local and
 ---upstream version of a plugin
 ---@param original table
+-- TODO: figure out how to use
 function M:use_local(original)
   local use = require("packer").use
-  local spec, local_spec = M.with_local(original)
+  local spec, local_spec = M:with_local(original)
   if local_spec then
     use(local_spec)
   end
