@@ -58,7 +58,7 @@ function rvim.get_user_dir()
   if not config_dir then
     config_dir = vim.fn.stdpath "config"
   end
-  return join_paths(config_dir, "lua/user/")
+  return join_paths(config_dir, "lua", "user")
 end
 
 -----------------------------------------------------------------------------//

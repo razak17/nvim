@@ -239,6 +239,7 @@ rvim.augroup("CustomFormatOptions", {
   },
 })
 local config_dir = rvim.get_config_dir
+local user_dir = rvim.get_user_dir
 rvim.augroup("UpdateVim", {
   {
     -- TODO: not clear what effect this has in the post vimscript world
@@ -248,13 +249,15 @@ rvim.augroup("UpdateVim", {
     pattern = {
       config_dir() .. "/plugin/*.{lua,vim}",
       config_dir() .. "/init.{lua,vim}",
-      rvim.get_user_dir() .. "/config/*.{lua,vim}",
-      rvim.get_user_dir() .. "/core/*.{lua,vim}",
+      user_dir() .. "/config/*.{lua,vim}",
+      user_dir() .. "/core/*.{lua,vim}",
     },
     nested = true,
     command = function()
       rvim.source(config_dir() .. "/init.lua")
       rvim.invalidate(config_dir() .. "/init.lua", true)
+      -- plugins
+      vim.cmd ":PlugRecompile"
       vim.notify("Config has been reloaded", nil, { title = "rVim" })
     end,
   },
