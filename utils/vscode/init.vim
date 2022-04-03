@@ -94,6 +94,9 @@ nmap <S-Tab> :Tabprev<CR>
 nmap L :Tabnext<CR>
 nmap H :Tabprev<CR>
 nnoremap <C-z> :undo<CR>
+xnoremap K :m '<-2<CR>gv=gv
+xnoremap J :m '>+1<CR>gv=gv
+imap <expr> jk col('.') == 1 ? '<esc>' : '<esc>l'
 
 " Paste in visual mode multiple times
 xnoremap p pgvy
