@@ -70,7 +70,7 @@ function plugins.invalidate()
 end
 
 function plugins.recompile()
-  local file_name = vim.fn.expand("%")
+  local file_name = vim.fn.expand "%"
   local file_dir = vim.split(file_name, "/")[5]
   rvim.invalidate(fmt("user.modules.%s", file_dir), true)
   plugins.reload()
@@ -82,7 +82,7 @@ rvim.augroup("PackerSetupInit", {
     description = "Packer setup and reload",
     pattern = { "*/user/modules/**/*.lua", "*/user/config/init.lua" },
     command = function()
-      plugins.recompile()
+      plugins.invalidate()
     end,
   },
   --- Open a repository from an authorname/repository string
