@@ -1,17 +1,10 @@
 return function()
-  -- Eviline config for lualine
-  -- Author: shadmansaleh
-  -- Credit: glepnir
-  local lualine = require "lualine"
-
-  local P = rvim.palette
-
   local conditions = {
     buffer_not_empty = function()
       return vim.fn.empty(vim.fn.expand "%:t") ~= 1
     end,
     hide_in_width = function()
-      return vim.fn.winwidth(0) > 80
+      return vim.fn.winwidth(0) > 70
     end,
     check_git_workspace = function()
       local filepath = vim.fn.expand "%:p:h"
@@ -20,6 +13,18 @@ return function()
     end,
   }
 
+  local function diff_source()
+    local gitsigns = vim.b.gitsigns_status_dict
+    if gitsigns then
+      return {
+        added = gitsigns.added,
+        modified = gitsigns.changed,
+        removed = gitsigns.removed,
+      }
+    end
+  end
+
+  local P = rvim.palette
   -- Config
   local config = {
     options = {
@@ -123,11 +128,12 @@ return function()
   ins_left {
     "branch",
     icon = "",
-    color = { fg = P.dark_green },
+    color = { fg = P.green },
   }
 
   ins_left {
     "diff",
+    source = diff_source,
     -- Is it me or the symbol for modified us really weird
     symbols = { added = " ", modified = "柳 ", removed = " " },
     diff_color = {
@@ -135,10 +141,10 @@ return function()
       modified = { fg = P.dark_orange },
       removed = { fg = P.error_red },
     },
-    cond = conditions.hide_in_width,
+    cond = nil,
   }
 
-  ins_left {
+  ins_right {
     "diagnostics",
     sources = { "nvim_diagnostic" },
     symbols = { error = " ", warn = " ", info = " ", hint = " " },
@@ -148,51 +154,6 @@ return function()
       color_info = { fg = P.blue },
       color_hint = { fg = P.dark_green },
     },
-  }
-
-  -- Insert mid section. You can make any number of sections in neovim :)
-  -- for lualine it's any number greater then 2
-  ins_left {
-    function()
-      return "%="
-    end,
-  }
-
-  ins_left {
-    -- Lsp server name .
-    function(msg)
-      msg = msg or "LS Inactive"
-      local buf_clients = vim.lsp.buf_get_clients()
-      if next(buf_clients) == nil then
-        -- TODO: clean up this if statement
-        if type(msg) == "boolean" or #msg == 0 then
-          return "LS Inactive"
-        end
-        return msg
-      end
-      local buf_ft = vim.bo.filetype
-      local buf_client_names = {}
-
-      -- add client
-      for _, client in pairs(buf_clients) do
-        if client.name ~= "null-ls" then
-          table.insert(buf_client_names, client.name)
-        end
-      end
-
-      -- add formatter
-      local formatters = require "user.lsp.null-ls.formatters"
-      local supported_formatters = formatters.list_registered(buf_ft)
-      vim.list_extend(buf_client_names, supported_formatters)
-
-      -- add linter
-      local linters = require "user.lsp.null-ls.linters"
-      local supported_linters = linters.list_registered(buf_ft)
-      vim.list_extend(buf_client_names, supported_linters)
-
-      return table.concat(buf_client_names, " • ")
-    end,
-    colors = { fg = P.statusline_fg },
   }
 
   ins_right {
@@ -207,13 +168,39 @@ return function()
   }
 
   ins_right {
-    function()
-      return "spaces: " .. vim.api.nvim_buf_get_option(0, "shiftwidth")
+    -- Lsp server name .
+    function(msg)
+      msg = msg or "LS Inactive"
+      local buf_clients = vim.lsp.buf_get_clients()
+      if next(buf_clients) == nil then
+        -- TODO: clean up this if statement
+        if type(msg) == "boolean" or #msg == 0 then
+          return "LS Inactive"
+        end
+        return msg
+      end
+      local buf_client_names = {}
+
+      -- add client
+      for _, client in pairs(buf_clients) do
+        if client.name ~= "null-ls" then
+          table.insert(buf_client_names, client.name)
+        end
+      end
+
+      return table.concat(buf_client_names, " • ")
     end,
-    color = { fg = P.statusline_fg },
+    colors = { fg = P.statusline_fg },
   }
 
-  ins_right { "location" }
+  -- ins_right {
+  --   function()
+  --     return "spaces: " .. vim.api.nvim_buf_get_option(0, "shiftwidth")
+  --   end,
+  --   color = { fg = P.statusline_fg },
+  -- }
+
+  ins_right { "filetype", cond = conditions.hide_in_width, color = {} }
 
   -- Add components to right sections
   ins_right {
@@ -230,6 +217,8 @@ return function()
     color = { fg = P.green },
   }
 
+  ins_right { "location" }
+
   ins_right { "progress", color = { fg = P.statusline_fg, gui = "bold" } }
 
   ins_right {
@@ -241,5 +230,6 @@ return function()
   }
 
   -- Now don't forget to initialize lualine
+  local lualine = require "lualine"
   lualine.setup(config)
 end
