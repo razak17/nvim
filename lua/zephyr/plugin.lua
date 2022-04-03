@@ -70,7 +70,7 @@ return {
   DiagnosticError = { fg = P.error_red },
   DiagnosticWarning = { fg = P.dark_orange },
   DiagnosticInfo = { fg = P.blue },
-  DiagnosticHint = { fg = P.teal },
+  DiagnosticHint = { fg = P.dark_green },
 
   DiagnosticSignError = { fg = P.error_red },
   DiagnosticSignWarn = { fg = P.dark_orange },

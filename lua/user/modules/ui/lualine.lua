@@ -173,12 +173,9 @@ return function()
       info = icons.lsp.info .. " ",
       hint = icons.lsp.hint .. " ",
     },
-    diagnostics_color = {
-      color_error = { fg = P.pale_red },
-      color_warn = { fg = P.dark_orange },
-      color_info = { fg = P.blue },
-      color_hint = { fg = P.dark_green },
+    color = {
     },
+    cond = conditions.hide_in_width,
   }
 
   ins_right {
