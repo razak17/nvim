@@ -4,7 +4,7 @@ return function()
       return vim.fn.empty(vim.fn.expand "%:t") ~= 1
     end,
     hide_in_width = function()
-      return vim.fn.winwidth(0) > 80
+      return vim.fn.winwidth(0) > 90
     end,
     check_git_workspace = function()
       local filepath = vim.fn.expand "%:p:h"

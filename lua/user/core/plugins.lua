@@ -54,15 +54,19 @@ function plugins.del_compiled()
   end
 end
 
-function plugins.recompile()
-  for _, m in ipairs { "ui", "editor", "tools", "lang", "completion" } do
-    rvim.invalidate(fmt("user.modules.%s", m), true)
-  end
+function plugins.reload()
   Plug:load_packer()
   plugins.ensure_installed()
   plugins.install()
   plugins.compile()
   require "_compiled_rolling"
+end
+
+function plugins.recompile()
+  local file_name = vim.fn.expand("%")
+  local file_dir = vim.split(file_name, "/")[5]
+  rvim.invalidate(fmt("user.modules.%s", file_dir), true)
+  plugins.reload()
 end
 
 rvim.augroup("PackerSetupInit", {
