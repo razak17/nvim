@@ -4,21 +4,7 @@ return function()
   -- Credit: glepnir
   local lualine = require "lualine"
 
--- Color table for highlights
--- stylua: ignore
-local colors = {
-  bg       = '#202328',
-  fg       = '#bbc2cf',
-  yellow   = '#ECBE7B',
-  cyan     = '#008080',
-  darkblue = '#081633',
-  green    = '#98be65',
-  orange   = '#FF8800',
-  violet   = '#a9a1e1',
-  magenta  = '#c678dd',
-  blue     = '#51afef',
-  red      = '#ec5f67',
-}
+  local P = rvim.palette
 
   local conditions = {
     buffer_not_empty = function()
@@ -44,8 +30,8 @@ local colors = {
         -- We are going to use lualine_c an lualine_x as left and
         -- right section. Both are highlighted by c theme .  So we
         -- are just setting default looks o statusline
-        normal = { c = { fg = colors.fg, bg = colors.bg } },
-        inactive = { c = { fg = colors.fg, bg = colors.bg } },
+        normal = { c = { fg = P.statusline_fg, bg = P.statusline_section_bg } },
+        inactive = { c = { fg = P.statusline_fg, bg = P.statusline_section_bg } },
       },
     },
     sections = {
@@ -83,7 +69,7 @@ local colors = {
     function()
       return "▊"
     end,
-    color = { fg = colors.blue }, -- Sets highlighting of component
+    color = { fg = P.pale_blue }, -- Sets highlighting of component
     padding = { left = 0, right = 1 }, -- We don't need space before this
   }
 
@@ -95,26 +81,26 @@ local colors = {
     color = function()
       -- auto change color according to neovims mode
       local mode_color = {
-        n = colors.red,
-        i = colors.green,
-        v = colors.blue,
-        [""] = colors.blue,
-        V = colors.blue,
-        c = colors.magenta,
-        no = colors.red,
-        s = colors.orange,
-        S = colors.orange,
-        [""] = colors.orange,
-        ic = colors.yellow,
-        R = colors.violet,
-        Rv = colors.violet,
-        cv = colors.red,
-        ce = colors.red,
-        r = colors.cyan,
-        rm = colors.cyan,
-        ["r?"] = colors.cyan,
-        ["!"] = colors.red,
-        t = colors.red,
+        n = P.red,
+        i = P.green,
+        v = P.blue,
+        [""] = P.pale_blue,
+        V = P.pale_blue,
+        c = P.magenta,
+        no = P.pale_red,
+        s = P.orange,
+        S = P.orange,
+        [""] = P.orange,
+        ic = P.yellow,
+        R = P.violet,
+        Rv = P.violet,
+        cv = P.pale_red,
+        ce = P.pale_red,
+        r = P.cyan,
+        rm = P.cyan,
+        ["r?"] = P.cyan,
+        ["!"] = P.pale_red,
+        t = P.red,
       }
       return { fg = mode_color[vim.fn.mode()] }
     end,
@@ -125,18 +111,19 @@ local colors = {
     -- filesize component
     "filesize",
     cond = conditions.buffer_not_empty,
+    color = { fg = P.statusline_fg },
   }
 
   ins_left {
     "filename",
     cond = conditions.buffer_not_empty,
-    color = { fg = colors.magenta },
+    color = { fg = P.statusline_fg },
   }
 
   ins_left {
     "branch",
-    icon = "",
-    color = { fg = colors.violet },
+    icon = "",
+    color = { fg = P.dark_green },
   }
 
   ins_left {
@@ -144,9 +131,9 @@ local colors = {
     -- Is it me or the symbol for modified us really weird
     symbols = { added = " ", modified = "柳 ", removed = " " },
     diff_color = {
-      added = { fg = colors.green },
-      modified = { fg = colors.orange },
-      removed = { fg = colors.red },
+      added = { fg = P.yellowgreen },
+      modified = { fg = P.dark_orange },
+      removed = { fg = P.error_red },
     },
     cond = conditions.hide_in_width,
   }
@@ -154,11 +141,12 @@ local colors = {
   ins_left {
     "diagnostics",
     sources = { "nvim_diagnostic" },
-    symbols = { error = " ", warn = " ", info = " " },
+    symbols = { error = " ", warn = " ", info = " ", hint = " " },
     diagnostics_color = {
-      color_error = { fg = colors.red },
-      color_warn = { fg = colors.yellow },
-      color_info = { fg = colors.cyan },
+      color_error = { fg = P.pale_red },
+      color_warn = { fg = P.dark_orange },
+      color_info = { fg = P.blue },
+      color_hint = { fg = P.dark_green },
     },
   }
 
@@ -204,6 +192,7 @@ local colors = {
 
       return table.concat(buf_client_names, " • ")
     end,
+    colors = { fg = P.statusline_fg },
   }
 
   ins_right {
@@ -214,12 +203,14 @@ local colors = {
       end
       return ""
     end,
+    color = { fg = P.green },
   }
 
   ins_right {
     function()
       return "spaces: " .. vim.api.nvim_buf_get_option(0, "shiftwidth")
     end,
+    color = { fg = P.statusline_fg },
   }
 
   ins_right { "location" }
@@ -229,27 +220,26 @@ local colors = {
     "o:encoding", -- option component same as &encoding in viml
     fmt = string.upper, -- I'm not sure why it's upper case either ;)
     cond = conditions.hide_in_width,
-    color = { fg = colors.green, gui = "bold" },
+    color = { fg = P.green },
   }
 
   ins_right {
     "fileformat",
     fmt = string.upper,
     icons_enabled = false, -- I think icons are cool but Eviline doesn't have them. sigh
-    color = { fg = colors.green, gui = "bold" },
+    color = { fg = P.green },
   }
 
-  ins_right { "progress", color = { fg = colors.fg, gui = "bold" } }
+  ins_right { "progress", color = { fg = P.statusline_fg, gui = "bold" } }
 
   ins_right {
     function()
       return "▊"
     end,
-    color = { fg = colors.blue },
+    color = { fg = P.pale_blue },
     padding = { left = 1 },
   }
 
   -- Now don't forget to initialize lualine
   lualine.setup(config)
 end
-
