@@ -51,6 +51,7 @@ return function()
         normal = { c = { fg = P.statusline_fg, bg = P.statusline_section_bg } },
         inactive = { c = { fg = P.statusline_fg, bg = P.statusline_section_bg } },
       },
+      disabled_filetypes = { "alpha", "NvimTree", "Outline", "neo-tree" },
     },
     sections = {
       -- these are to remove the defaults
