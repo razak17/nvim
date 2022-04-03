@@ -1,7 +1,7 @@
 local ui = {}
 
 rvim.plugins.ui = {
-  nvimtree = { active = true },
+  nvimtree = { active = false },
   dashboard = { active = true },
   lualine = { active = true },
   bufferline = { active = true },
@@ -13,6 +13,7 @@ rvim.plugins.ui = {
   headlines = { active = true },
   specs = { active = false },
   dim = { active = true },
+  neo_tree = { active = true },
 }
 
 local utils = require "user.utils"
@@ -141,6 +142,17 @@ ui["narutoxy/dim.lua"] = {
     }
   end,
   disable = not rvim.plugins.ui.dim.active,
+}
+
+ui["nvim-neo-tree/neo-tree.nvim"] = {
+  branch = "v2.x",
+  config = utils.load_conf("ui", "neo-tree"),
+  requires = {
+    "nvim-lua/plenary.nvim",
+    "MunifTanjim/nui.nvim",
+    "kyazdani42/nvim-web-devicons",
+  },
+  disable = not rvim.plugins.ui.neo_tree.active,
 }
 
 return ui
