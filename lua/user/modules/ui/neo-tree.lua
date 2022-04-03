@@ -4,7 +4,7 @@ return function()
     { "NeoTreeIndentMarker", { link = "Comment" } },
     { "NeoTreeNormal", { link = "PanelBackground" } },
     { "NeoTreeNormalNC", { link = "PanelBackground" } },
-    { "NeoTreeRootName", { bold = true, italic = true, foreground = "LightMagenta" } }
+    { "NeoTreeRootName", { bold = true, italic = false, foreground = rvim.palette.base6 } }
   )
   vim.g.neo_tree_remove_legacy_commands = 1
   local icons = rvim.style.icons
@@ -39,7 +39,7 @@ return function()
     },
     window = {
       position = "right",
-      width = 30,
+      width = 40,
       mappings = {
         o = "toggle_node",
       },

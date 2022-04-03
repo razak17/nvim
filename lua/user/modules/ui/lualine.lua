@@ -173,8 +173,7 @@ return function()
       info = icons.lsp.info .. " ",
       hint = icons.lsp.hint .. " ",
     },
-    color = {
-    },
+    color = {},
     cond = conditions.hide_in_width,
   }
 
