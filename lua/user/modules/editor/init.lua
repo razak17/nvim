@@ -17,6 +17,8 @@ rvim.plugins.editor = {
   vim_uppercase_sql = { active = true },
 }
 
+local utils = require "user.utils"
+
 editor["xiyaowong/accelerated-jk.nvim"] = {
   event = { "BufWinEnter" },
   config = function()
@@ -38,46 +40,8 @@ editor["tpope/vim-surround"] = {
 }
 
 editor["monaqa/dial.nvim"] = {
+  config = utils.load_conf("editor", "dial"),
   event = { "BufWinEnter" },
-  config = function()
-    local dial = require "dial.map"
-    local augend = require "dial.augend"
-    local map = vim.keymap.set
-    map("n", "<C-a>", dial.inc_normal(), { remap = false })
-    map("n", "<C-x>", dial.dec_normal(), { remap = false })
-    map("v", "<C-a>", dial.inc_visual(), { remap = false })
-    map("v", "<C-x>", dial.dec_visual(), { remap = false })
-    map("v", "g<C-a>", dial.inc_gvisual(), { remap = false })
-    map("v", "g<C-x>", dial.dec_gvisual(), { remap = false })
-
-    require("dial.config").augends:register_group {
-      -- default augends used when no group name is specified
-      default = {
-        augend.integer.alias.decimal,
-        augend.integer.alias.hex,
-        augend.date.alias["%Y/%m/%d"],
-        augend.constant.alias.bool,
-        augend.constant.new {
-          elements = { "&&", "||" },
-          word = false,
-          cyclic = true,
-        },
-      },
-      dep_files = {
-        augend.semver.alias.semver,
-      },
-    }
-
-    rvim.augroup("DialMaps", {
-      {
-        event = "FileType",
-        pattern = { "yaml", "toml" },
-        command = function()
-          map("n", "<C-a>", require("dial.map").inc_normal "dep_files", { remap = true })
-        end,
-      },
-    })
-  end,
   disable = not rvim.plugins.editor.dial.active,
 }
 
@@ -161,30 +125,7 @@ editor["b3nj5m1n/kommentary"] = {
 }
 
 editor["Matt-A-Bennett/vim-surround-funk"] = {
-  config = function()
-    vim.g.surround_funk_create_mappings = 0
-    local map = vim.keymap.set
-    -- operator pending mode: grip surround
-    map({ "n", "v" }, "gs", "<Plug>(GripSurroundObject)")
-    map({ "n", "v" }, "gS", "<Plug>(GripSurroundObjectNoPaste)")
-    map({ "o", "x" }, "sF", "<Plug>(SelectWholeFUNCTION)")
-    require("which-key").register {
-      ["<leader>r"] = {
-        name = "+dsf: delete",
-        s = {
-          F = { "<Plug>(DeleteSurroundingFunction)", "delete surrounding function" },
-          f = { "<Plug>(DeleteSurroundingFUNCTION)", "delete surrounding outer function" },
-        },
-      },
-      ["<leader>C"] = {
-        name = "+dsf: change",
-        s = {
-          F = { "<Plug>(ChangeSurroundingFunction)", "change surrounding function" },
-          f = { "<Plug>(ChangeSurroundingFUNCTION)", "change outer surrounding function" },
-        },
-      },
-    }
-  end,
+  config = utils.load_conf("editor", "vim-surround-funk"),
   disable = not rvim.plugins.editor.surround_funk.active,
 }
 
@@ -232,26 +173,7 @@ editor["abecodes/tabout.nvim"] = {
 }
 
 editor["chentau/marks.nvim"] = {
-  config = function()
-    require("zephyr.util").plugin("marks", { "MarkSignHL", { foreground = "Red" } })
-    require("which-key").register({
-      m = {
-        name = "marks",
-        b = { "<Cmd>MarksListBuf<CR>", "list buffer" },
-        g = { "<Cmd>MarksQFListGlobal<CR>", "list global" },
-        ["0"] = { "<Cmd>BookmarksQFList 0<CR>", "list bookmark" },
-      },
-    }, {
-      prefix = "<leader>",
-    })
-    require("marks").setup {
-      builtin_marks = { "." },
-      bookmark_0 = {
-        sign = "⚑",
-        virt_text = "bookmarks",
-      },
-    }
-  end,
+  config = utils.load_conf("editor", "marks"),
   disable = not rvim.plugins.editor.marks.active,
 }
 
