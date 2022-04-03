@@ -35,6 +35,15 @@ return function()
     return venv
   end
 
+  ---The currently focused function
+  ---@return string?
+  local function current_function()
+    local gps = require "nvim-gps"
+    if gps.is_available() then
+      return gps.get_location()
+    end
+  end
+
   local P = rvim.palette
   local icons = rvim.style.icons
 
@@ -164,6 +173,11 @@ return function()
     cond = conditions.hide_in_width,
   }
 
+  ins_left {
+    current_function,
+    cond = conditions.hide_in_width,
+  }
+
   ins_right {
     "diagnostics",
     sources = { "nvim_diagnostic" },
@@ -262,7 +276,7 @@ return function()
 
   ins_right { "location" }
 
-  ins_right { "progress", color = { fg = P.statusline_fg, gui = "bold" } }
+  ins_right { "progress", color = { fg = P.statusline_fg } }
 
   ins_right {
     function()

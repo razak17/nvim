@@ -28,7 +28,7 @@ rvim.plugins.tools = {
   projectionist = { active = true },
   plenary = { active = true },
   popup = { active = true },
-  cheatsheet = { active = true },
+  gps = { active = true },
   -- TODO: handle these later
   glow = { active = false }, --j
   doge = { active = false }, --j
@@ -279,4 +279,11 @@ tools["nvim-lua/plenary.nvim"] = { disable = not rvim.plugins.tools.plenary.acti
 
 tools["nvim-lua/popup.nvim"] = { disable = not rvim.plugins.tools.popup.active }
 
+tools["SmiteshP/nvim-gps"] = {
+  requires = "nvim-treesitter/nvim-treesitter",
+  config = function()
+    require("nvim-gps").setup {}
+  end,
+  disable = not rvim.plugins.tools.gps.active,
+}
 return tools
