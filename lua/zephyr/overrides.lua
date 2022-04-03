@@ -17,7 +17,7 @@ local function general_overrides()
     -----------------------------------------------------------------------------//
     { "NormalFloat", { background = P.bg } },
     -----------------------------------------------------------------------------//
-    { "CursorLineNr", { bold = true } },
+    -- { "CursorLineNr", { foreground = P.pink, bold = true } },
     { "FoldColumn", { background = "background" } },
     { "TermCursor", { ctermfg = "green", foreground = "royalblue" } },
     -- Add undercurl to existing spellbad highlight

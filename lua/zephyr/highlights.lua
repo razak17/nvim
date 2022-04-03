@@ -28,6 +28,7 @@ return {
   LineNr = { fg = P.base5, bg = P.none },
   qfLineNr = { fg = P.cyan },
   qfFileName = { fg = P.yellowgreen },
+  -- FIX: highlight not getting set
   CursorLineNr = { fg = P.pink, style = "bold" },
   netrwDir = { fg = P.pink },
   DiffAdd = { fg = P.black, bg = P.dark_green },
