@@ -129,23 +129,6 @@ editor["Matt-A-Bennett/vim-surround-funk"] = {
   disable = not rvim.plugins.editor.surround_funk.active,
 }
 
--- CR not working properly
-editor["protex/better-digraphs.nvim"] = {
-  keys = { { "i", "<C-k><C-k>" } },
-  config = function()
-    rvim.inoremap("<C-k><C-k>", function()
-      require("betterdigraphs").digraphs "i"
-    end)
-    rvim.nnoremap("r<C-k><C-k>", function()
-      require("betterdigraphs").digraphs "r"
-    end)
-    rvim.vnoremap("r<C-k><C-k>", function()
-      require("betterdigraphs").digraphs "gvr"
-    end)
-  end,
-  disable = not rvim.plugins.editor.better_diagraphs.active,
-}
-
 editor["danymat/neogen"] = {
   setup = function()
     require("which-key").register {
