@@ -35,9 +35,9 @@ rvim.style = {
     },
     git = {
       branch = "",
-      add = "",
+      added = "",
       mod = "",
-      remove = "",
+      removed = "",
       ignore = "",
       rename = "",
       diff = "",

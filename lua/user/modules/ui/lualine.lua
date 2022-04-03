@@ -36,6 +36,8 @@ return function()
   end
 
   local P = rvim.palette
+  local icons = rvim.style.icons
+
   -- Config
   local config = {
     options = {
@@ -83,7 +85,7 @@ return function()
 
   ins_left {
     function()
-      return "▊"
+      return icons.statusline.bar
     end,
     color = { fg = P.pale_blue }, -- Sets highlighting of component
     padding = { left = 0, right = 1 }, -- We don't need space before this
@@ -92,7 +94,7 @@ return function()
   ins_left {
     -- mode component
     function()
-      return ""
+      return icons.statusline.mode
     end,
     color = function()
       -- auto change color according to neovims mode
@@ -139,7 +141,7 @@ return function()
   ins_left {
     "branch",
     -- "b:gitsigns_head",
-    icon = "",
+    icon = icons.git.branch,
     color = { fg = P.dark_green },
     cond = conditions.hide_in_width,
   }
@@ -148,7 +150,11 @@ return function()
     "diff",
     source = diff_source,
     -- Is it me or the symbol for modified us really weird
-    symbols = { added = " ", modified = "柳 ", removed = " " },
+    symbols = {
+      added = icons.git.added .. " ",
+      modified = icons.git.mod .. " ",
+      removed = icons.git.removed .. " ",
+    },
     diff_color = {
       added = { fg = P.yellowgreen },
       modified = { fg = P.dark_orange },
@@ -160,7 +166,12 @@ return function()
   ins_right {
     "diagnostics",
     sources = { "nvim_diagnostic" },
-    symbols = { error = " ", warn = " ", info = " ", hint = " " },
+    symbols = {
+      error = icons.lsp.error .. " ",
+      warn = icons.lsp.warn .. " ",
+      info = icons.lsp.info .. " ",
+      hint = icons.lsp.hint .. " ",
+    },
     diagnostics_color = {
       color_error = { fg = P.pale_red },
       color_warn = { fg = P.dark_orange },
@@ -200,7 +211,7 @@ return function()
     function()
       local b = vim.api.nvim_get_current_buf()
       if next(vim.treesitter.highlighter.active[b]) then
-        return ""
+        return icons.misc.tree
       end
       return ""
     end,
@@ -258,7 +269,7 @@ return function()
 
   ins_right {
     function()
-      return "▊"
+      return icons.statusline.bar
     end,
     color = { fg = P.pale_blue },
     padding = { left = 1 },
