@@ -1,51 +1,8 @@
 return function()
-  local conditions = {
-    buffer_not_empty = function()
-      return vim.fn.empty(vim.fn.expand "%:t") ~= 1
-    end,
-    hide_in_width = function()
-      return vim.fn.winwidth(0) > 90
-    end,
-    check_git_workspace = function()
-      local filepath = vim.fn.expand "%:p:h"
-      local gitdir = vim.fn.finddir(".git", filepath .. ";")
-      return gitdir and #gitdir > 0 and #gitdir < #filepath
-    end,
-  }
-
-  local function diff_source()
-    local gitsigns = vim.b.gitsigns_status_dict
-    if gitsigns then
-      return {
-        added = gitsigns.added,
-        modified = gitsigns.changed,
-        removed = gitsigns.removed,
-      }
-    end
-  end
-
-  local function env_cleanup(venv)
-    if string.find(venv, "/") then
-      local final_venv = venv
-      for w in venv:gmatch "([^/]+)" do
-        final_venv = w
-      end
-      venv = final_venv
-    end
-    return venv
-  end
-
-  ---The currently focused function
-  ---@return string?
-  local function current_function()
-    local gps = require "nvim-gps"
-    if gps.is_available() then
-      return gps.get_location()
-    end
-  end
-
   local P = rvim.palette
   local icons = rvim.style.icons
+  local utils = require "user.utils.statusline"
+  local conditions = utils.conditions
 
   -- Config
   local config = {
@@ -158,7 +115,7 @@ return function()
 
   ins_left {
     "diff",
-    source = diff_source,
+    source = utils.diff_source,
     -- Is it me or the symbol for modified us really weird
     symbols = {
       added = icons.git.added .. " ",
@@ -174,7 +131,7 @@ return function()
   }
 
   ins_left {
-    current_function,
+    utils.current_function,
     cond = conditions.hide_in_width,
   }
 
@@ -236,20 +193,7 @@ return function()
   }
 
   ins_right {
-    function()
-      if vim.bo.filetype == "python" then
-        local venv = os.getenv "CONDA_DEFAULT_ENV"
-        if venv then
-          return string.format("(%s)", env_cleanup(venv))
-        end
-        venv = os.getenv "VIRTUAL_ENV"
-        if venv then
-          return string.format("(%s)", env_cleanup(venv))
-        end
-        return ""
-      end
-      return ""
-    end,
+    utils.python_env,
     cond = conditions.hide_in_width,
   }
 
