@@ -4,7 +4,7 @@ return function()
       return vim.fn.empty(vim.fn.expand "%:t") ~= 1
     end,
     hide_in_width = function()
-      return vim.fn.winwidth(0) > 70
+      return vim.fn.winwidth(0) > 80
     end,
     check_git_workspace = function()
       local filepath = vim.fn.expand "%:p:h"
@@ -138,26 +138,9 @@ return function()
 
   ins_left {
     "branch",
+    -- "b:gitsigns_head",
     icon = "",
-    color = { fg = P.green },
-  }
-
-  ins_left {
-    function()
-      if vim.bo.filetype == "python" then
-        local venv = os.getenv "CONDA_DEFAULT_ENV"
-        if venv then
-          return string.format("  (%s)", env_cleanup(venv))
-        end
-        venv = os.getenv "VIRTUAL_ENV"
-        if venv then
-          return string.format("  (%s)", env_cleanup(venv))
-        end
-        return ""
-      end
-      return ""
-    end,
-    color = { fg = P.green },
+    color = { fg = P.dark_green },
     cond = conditions.hide_in_width,
   }
 
@@ -171,7 +154,7 @@ return function()
       modified = { fg = P.dark_orange },
       removed = { fg = P.error_red },
     },
-    cond = nil,
+    cond = conditions.hide_in_width,
   }
 
   ins_right {
@@ -184,17 +167,6 @@ return function()
       color_info = { fg = P.blue },
       color_hint = { fg = P.dark_green },
     },
-  }
-
-  ins_right {
-    function()
-      local b = vim.api.nvim_get_current_buf()
-      if next(vim.treesitter.highlighter.active[b]) then
-        return ""
-      end
-      return ""
-    end,
-    color = { fg = P.green },
   }
 
   ins_right {
@@ -221,6 +193,42 @@ return function()
       return table.concat(buf_client_names, " • ")
     end,
     colors = { fg = P.statusline_fg },
+    cond = conditions.hide_in_width,
+  }
+
+  ins_right {
+    function()
+      local b = vim.api.nvim_get_current_buf()
+      if next(vim.treesitter.highlighter.active[b]) then
+        return ""
+      end
+      return ""
+    end,
+  }
+
+  ins_right {
+    "filetype",
+    icons_enabled = false, -- I think icons are cool but Eviline doesn't have them. sigh
+    cond = conditions.hide_in_width,
+    color = {},
+  }
+
+  ins_right {
+    function()
+      if vim.bo.filetype == "python" then
+        local venv = os.getenv "CONDA_DEFAULT_ENV"
+        if venv then
+          return string.format("(%s)", env_cleanup(venv))
+        end
+        venv = os.getenv "VIRTUAL_ENV"
+        if venv then
+          return string.format("(%s)", env_cleanup(venv))
+        end
+        return ""
+      end
+      return ""
+    end,
+    cond = conditions.hide_in_width,
   }
 
   -- ins_right {
@@ -230,21 +238,18 @@ return function()
   --   color = { fg = P.statusline_fg },
   -- }
 
-  ins_right { "filetype", cond = conditions.hide_in_width, color = {} }
-
   -- Add components to right sections
   ins_right {
     "o:encoding", -- option component same as &encoding in viml
     fmt = string.upper, -- I'm not sure why it's upper case either ;)
     cond = conditions.hide_in_width,
-    color = { fg = P.green },
   }
 
   ins_right {
     "fileformat",
     fmt = string.upper,
     icons_enabled = false, -- I think icons are cool but Eviline doesn't have them. sigh
-    color = { fg = P.green },
+    cond = conditions.hide_in_width,
   }
 
   ins_right { "location" }
