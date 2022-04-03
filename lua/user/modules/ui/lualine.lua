@@ -24,6 +24,17 @@ return function()
     end
   end
 
+  local function env_cleanup(venv)
+    if string.find(venv, "/") then
+      local final_venv = venv
+      for w in venv:gmatch "([^/]+)" do
+        final_venv = w
+      end
+      venv = final_venv
+    end
+    return venv
+  end
+
   local P = rvim.palette
   -- Config
   local config = {
@@ -129,6 +140,25 @@ return function()
     "branch",
     icon = "",
     color = { fg = P.green },
+  }
+
+  ins_left {
+    function()
+      if vim.bo.filetype == "python" then
+        local venv = os.getenv "CONDA_DEFAULT_ENV"
+        if venv then
+          return string.format("  (%s)", env_cleanup(venv))
+        end
+        venv = os.getenv "VIRTUAL_ENV"
+        if venv then
+          return string.format("  (%s)", env_cleanup(venv))
+        end
+        return ""
+      end
+      return ""
+    end,
+    color = { fg = P.green },
+    cond = conditions.hide_in_width,
   }
 
   ins_left {
