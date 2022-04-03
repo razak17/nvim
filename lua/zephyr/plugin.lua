@@ -130,7 +130,7 @@ return {
 
   NvimTreeLspDiagnosticsError = { fg = P.error_red },
   NvimTreeLspDiagnosticsWarning = { fg = P.dark_orange },
-  NvimTreeLspDiagnosticsInformati = { fg = P.blue },
+  NvimTreeLspDiagnosticsInformation = { fg = P.blue },
   NvimTreeLspDiagnosticsHint = { fg = P.dark_green },
 
   NvimTreeSymlink = { fg = P.cyan },
@@ -138,11 +138,11 @@ return {
   NvimTreeEmptyFolderName = { fg = P.base5 },
 
   NeoTreeGitAdded = { fg = P.sign_add },
-  NeoTreeGitConflict = { fg = P.red },
+  NeoTreeGitConflict = { fg = P.sign_delete },
   NeoTreeGitDeleted = { fg = P.sign_delete },
   NeoTreeGitIgnored = { fg = P.base5 },
   NeoTreeGitModified = { fg = P.sign_change },
-  NeoTreeGitUntracked = { fg = P.darker_green },
+  NeoTreeGitUntracked = { fg = P.sign_add },
   NeoTreeHiddenByName = { fg = P.base5 },
 
   TelescopeNormal = { fg = P.fg },
