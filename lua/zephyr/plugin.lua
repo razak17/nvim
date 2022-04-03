@@ -137,6 +137,14 @@ return {
   NvimTreeExecFile = { fg = P.green },
   NvimTreeEmptyFolderName = { fg = P.base5 },
 
+  NeoTreeGitAdded = { fg = P.sign_add },
+  NeoTreeGitConflict = { fg = P.red },
+  NeoTreeGitDeleted = { fg = P.sign_delete },
+  NeoTreeGitIgnored = { fg = P.base5 },
+  NeoTreeGitModified = { fg = P.sign_change },
+  NeoTreeGitUntracked = { fg = P.darker_green },
+  NeoTreeHiddenByName = { fg = P.base5 },
+
   TelescopeNormal = { fg = P.fg },
   TelescopeBorder = { fg = P.blue, bg = P.darker_bg },
   TelescopeResultsBorder = { fg = P.blue, bg = P.darker_bg },
