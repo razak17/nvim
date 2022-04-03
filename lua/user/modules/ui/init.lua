@@ -3,7 +3,6 @@ local ui = {}
 rvim.plugins.ui = {
   nvimtree = { active = true },
   dashboard = { active = true },
-  statusline = { active = false },
   lualine = { active = true },
   bufferline = { active = true },
   devicons = { active = true },
@@ -27,12 +26,6 @@ ui["glepnir/dashboard-nvim"] = {
 ui["akinsho/bufferline.nvim"] = {
   config = utils.load_conf("ui", "bufferline"),
   disable = not rvim.plugins.ui.bufferline.active,
-}
-
-ui["razak17/galaxyline.nvim"] = {
-  branch = "main",
-  config = utils.load_conf("ui", "statusline"),
-  disable = not rvim.plugins.ui.statusline.active,
 }
 
 ui["nvim-lualine/lualine.nvim"] = {
