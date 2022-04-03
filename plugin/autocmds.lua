@@ -257,7 +257,7 @@ rvim.augroup("UpdateVim", {
       rvim.source(config_dir() .. "/init.lua")
       rvim.invalidate(config_dir() .. "/init.lua", true)
       -- plugins
-      vim.cmd ":PlugRecompile"
+      vim.cmd ":PlugInvalidate"
       vim.notify("Config has been reloaded", nil, { title = "rVim" })
     end,
   },

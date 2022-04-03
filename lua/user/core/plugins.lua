@@ -62,6 +62,13 @@ function plugins.reload()
   require "_compiled_rolling"
 end
 
+function plugins.invalidate()
+  for _, m in ipairs { "ui", "editor", "tools", "lang", "completion" } do
+    rvim.invalidate(fmt("user.modules.%s", m), true)
+  end
+  plugins.reload()
+end
+
 function plugins.recompile()
   local file_name = vim.fn.expand("%")
   local file_dir = vim.split(file_name, "/")[5]

@@ -118,7 +118,7 @@ rvim.wk = {
       u = { ":PlugUpdate<cr>", "update" },
       e = { ":PlugCompiledEdit<cr>", "edit packer_compiled" },
       i = { ":PlugInstall<cr>", "install" },
-      r = { ":PlugRecompile<cr>", "recompile" },
+      I = { ":PlugInvalidate<cr>", "recompile" },
       s = { ":PlugSync<cr>", "sync" },
       S = { ":PlugStatus<cr>", "Status" },
     },

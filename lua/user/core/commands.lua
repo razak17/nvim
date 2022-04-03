@@ -49,7 +49,7 @@ command("PlugSync", [[lua require('user.core.plugins').sync()]])
 command("PlugClean", [[lua require('user.core.plugins').clean()]])
 command("PlugUpdate", [[lua require('user.core.plugins').update()]])
 command("PlugStatus", [[lua require('user.core.plugins').status()]])
-command("PlugRecompile", [[lua require('user.core.plugins').recompile()]])
+command("PlugInvalidate", [[lua require('user.core.plugins').invalidate()]])
 
 command("PlugCompiledEdit", function()
   vim.cmd(fmt("edit %s", rvim.paths.packer_compiled))
@@ -57,8 +57,4 @@ end)
 
 command("PlugCompiledDelete", function()
   require("user.core.plugins").del_compiled()
-end)
-
-command("PlugRecompile", function()
-  require("user.core.plugins").recompile()
 end)
