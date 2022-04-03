@@ -32,7 +32,7 @@ local smart_close_filetypes = {
   "packer",
 }
 
-local function smart_close()
+function rvim.smart_close()
   if fn.winnr "$" ~= 1 then
     api.nvim_win_close(0, true)
   end
@@ -59,7 +59,14 @@ rvim.augroup("SmartClose", {
         or contains(smart_close_filetypes, vim.bo.filetype)
 
       if is_eligible then
-        rvim.nnoremap("q", smart_close, { buffer = 0, nowait = true })
+        -- rvim.nnoremap("q", smart_close, { buffer = 0, nowait = true })
+        vim.api.nvim_buf_set_keymap(
+          0,
+          "n",
+          "q",
+          ":call v:lua.rvim.smart_close()<CR>",
+          { nowait = true }
+        )
       end
     end,
   },
