@@ -89,6 +89,7 @@ completion["David-Kunz/cmp-npm"] = {
 }
 
 completion["github/copilot.vim"] = {
+  opt = true,
   config = function()
     vim.g.copilot_no_tab_map = true
     vim.cmd [[imap <silent><script><expr> <C-l> copilot#Accept("\<CR>")]]
@@ -106,4 +107,16 @@ completion["github/copilot.vim"] = {
   disable = not rvim.plugins.completion.copilot.active,
 }
 
+completion["zbirenbaum/copilot.lua"] = {
+  event = "InsertEnter",
+  config = function()
+    vim.schedule(function()
+      require "copilot"
+    end)
+  end,
+}
+
+completion["zbirenbaum/copilot-cmp"] = {
+  after = { "copilot.lua", "nvim-cmp" },
+}
 return completion
