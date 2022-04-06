@@ -3,6 +3,7 @@ local M = {}
 local Log = require "user.core.log"
 local utils = require "user.utils"
 local ftplugin_dir = rvim.lsp.templates_dir
+local fmt = string.format
 
 function M.remove_template_files()
   -- remove any outdated files
@@ -27,32 +28,43 @@ function M.generate_ftplugin(server_name, dir)
 
   for _, filetype in ipairs(filetypes) do
     local filename = join_paths(dir, filetype .. ".lua")
-    local override_server
-    if filetype == "rust" then
-      override_server = "rust_analyzer"
-    else
-      override_server = "emmet_ls"
-    end
 
+    -- Default setup command
     local setup_cmd = string.format([[require("user.lsp.manager").setup(%q)]], server_name)
     -- vim.notify("using setup_cmd: " .. setup_cmd)
-    if filetype ~= "rust" then
+
+    -- lsp config for other servers
+    if server_name ~= "rust_analyzer" then
       utils.write_file(filename, setup_cmd .. "\n", "a")
     end
 
-    local override_cmd = string.format(
-      [[require("user.lsp.manager").override_setup(%q)]],
-      override_server
-    )
+    -- lsp config for rust_analyzer, emmet and eslint
+    local override_server = "rust_analyzer"
+    if server_name ~= "rust_analyzer" then
+      if server_name == "vuels" then
+        override_server = "eslint"
+      else
+        override_server = "emmet_ls"
+      end
+    end
 
-    local ft_cmd = string.format([[require("user.utils.after_ftplugin").setup(%q)]], filetype)
-    local ft_cmd_tsx = string.format(
-      [[require("user.utils.after_ftplugin").setup(%q)]],
-      "typescriptreact_tsx"
-    )
+    local override_cmd
+    if override_server == "eslint" then
+      override_cmd = fmt([[require("user.lsp.manager").setup(%q)]], override_server)
+    else
+      override_cmd = fmt([[require("user.lsp.manager").override_setup(%q)]], override_server)
+    end
+
     if rvim.find_string(rvim.lsp.override_ftplugin, filetype) then
       utils.write_file(filename, override_cmd .. "\n", "a")
     end
+
+    -- ftplugin settings
+    local ft_cmd = fmt([[require("user.utils.after_ftplugin").setup(%q)]], filetype)
+    local ft_cmd_tsx = fmt(
+      [[require("user.utils.after_ftplugin").setup(%q)]],
+      "typescriptreact_tsx"
+    )
 
     if rvim.find_string(rvim.ftplugin_filetypes, filetype) then
       if filetype == "typescriptreact.tsx" then

@@ -50,6 +50,7 @@ rvim.lsp = {
     "typescript.tsx",
     "javascriptreact",
     "javascript.jsx",
+    "vue",
     "rust",
   },
   override = {
