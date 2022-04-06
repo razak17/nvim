@@ -171,7 +171,7 @@ return function()
         { name = "buffer" },
         { name = "cmp_tabnine" },
         { name = "spell" },
-        { name = "cmp_git" },
+        -- { name = "cmp_git" },
         { name = "calc" },
         { name = "emoji" },
         { name = "look" },
