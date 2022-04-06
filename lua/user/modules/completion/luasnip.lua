@@ -65,7 +65,7 @@ return function()
 
   require("luasnip").config.setup { store_selection_keys = "<C-x>" }
   require("luasnip.loaders.from_lua").lazy_load()
-  -- TODO: Temp fix to load both friendly snippets and user-deefined snippets
+  -- TODO: Temp fix to load both friendly snippets and user-defined snippets
   require("luasnip.loaders.from_vscode").lazy_load()
   require("luasnip.loaders.from_vscode").lazy_load {
     paths = rvim.paths.snippets,
