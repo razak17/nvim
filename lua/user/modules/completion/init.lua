@@ -107,16 +107,4 @@ completion["github/copilot.vim"] = {
   disable = not rvim.plugins.completion.copilot.active,
 }
 
-completion["zbirenbaum/copilot.lua"] = {
-  event = "InsertEnter",
-  config = function()
-    vim.schedule(function()
-      require "copilot"
-    end)
-  end,
-}
-
-completion["zbirenbaum/copilot-cmp"] = {
-  after = { "copilot.lua", "nvim-cmp" },
-}
 return completion
