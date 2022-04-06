@@ -163,6 +163,8 @@ function M.lua()
     vim.notify("Sourced " .. fn.expand "%")
   end)
 
+  vim.opt_local.spell = true
+  vim.opt_local.iskeyword:append '"'
   vim.opt_local.textwidth = 100
   vim.opt_local.formatoptions:remove "o"
 end
