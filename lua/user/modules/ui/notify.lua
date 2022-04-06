@@ -6,11 +6,12 @@ return function()
   end
   require("zephyr.util").plugin(
     "notify",
-    { "NotifyERRORBody", { link = "NormalFloat" } },
-    { "NotifyWARNBody", { link = "NormalFloat" } },
-    { "NotifyINFOBody", { link = "NormalFloat" } },
-    { "NotifyDEBUGBody", { link = "NormalFloat" } },
-    { "NotifyTRACEBody", { link = "NormalFloat" } }
+  {
+    NotifyERRORBody = { link = "NormalFloat" } ,
+    NotifyWARNBody = { link = "NormalFloat" } ,
+    NotifyINFOBody = { link = "NormalFloat" } ,
+    NotifyDEBUGBody = { link = "NormalFloat" } ,
+    NotifyTRACEBody = { link = "NormalFloat" }}
   )
   if #vim.api.nvim_list_uis() == 0 then
     -- no need to configure notifications in headless

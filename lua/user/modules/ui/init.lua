@@ -62,7 +62,7 @@ ui["rcarriga/nvim-notify"] = {
 
 ui["stevearc/dressing.nvim"] = {
   config = function()
-    require("zephyr.util").plugin("dressing", { "FloatTitle", { inherit = "Visual", bold = true } })
+    require("zephyr.util").plugin("dressing", { FloatTitle = { inherit = "Visual", bold = true } })
     require("dressing").setup {
       input = {
         winblend = 2,
@@ -93,13 +93,12 @@ ui["lukas-reineke/headlines.nvim"] = {
   setup = function()
     -- https://observablehq.com/@d3/color-schemes?collection=@d3/d3-scale-chromatic
     -- NOTE: this must be set in the setup function or it will crash nvim...
-    require("zephyr.util").plugin(
-      "Headlines",
-      { "Headline1", { background = "#003c30", foreground = "White" } },
-      { "Headline2", { background = "#00441b", foreground = "White" } },
-      { "Headline3", { background = "#084081", foreground = "White" } },
-      { "Dash", { background = "#0b60a1", bold = true } }
-    )
+    require("zephyr.util").plugin("Headlines", {
+      Headline1 = { background = "#003c30", foreground = "White" },
+      Headline2 = { background = "#00441b", foreground = "White" },
+      Headline3 = { background = "#084081", foreground = "White" },
+      Dash = { background = "#0b60a1", bold = true },
+    })
   end,
   config = function()
     require("headlines").setup {

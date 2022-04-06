@@ -9,63 +9,58 @@ local function general_overrides()
   local msg_area_bg = rvim.util.transparent_window and "NONE" or P.darker_bg
   util.all {
     -- { "VertSplit", { background = "NONE", foreground = util.get_hl("NonText", "fg") } },
-    { "WinSeparator", { background = "NONE", foreground = util.get_hl("NonText", "fg") } },
-    { "MsgArea", { background = msg_area_bg } },
-    { "mkdLineBreak", { link = "NONE" } },
+    WinSeparator = { background = "NONE", foreground = util.get_hl("NonText", "fg") },
+    MsgArea = { background = msg_area_bg },
+    mkdLineBreak = { link = "NONE" },
     -----------------------------------------------------------------------------//
     -- Floats
     -----------------------------------------------------------------------------//
-    { "NormalFloat", { background = P.bg } },
+    NormalFloat = { background = P.bg },
     -----------------------------------------------------------------------------//
-    -- { "CursorLineNr", { foreground = P.pink, bold = true } },
-    { "FoldColumn", { background = "background" } },
-    { "TermCursor", { ctermfg = "green", foreground = "royalblue" } },
+    -- CursorLineNr = { foreground = P.pink, bold = true } ,
+    FoldColumn = { background = "background" },
+    TermCursor = { ctermfg = "green", foreground = "royalblue" },
     -- Add undercurl to existing spellbad highlight
-    { "SpellBad", { undercurl = true, background = "NONE", foreground = "NONE", sp = "green" } },
-    { "SpellRare", { undercurl = true } },
+    SpellBad = { undercurl = true, background = "NONE", foreground = "NONE", sp = "green" },
+    SpellRare = { undercurl = true },
     -----------------------------------------------------------------------------//
     -- colorscheme overrides
     -----------------------------------------------------------------------------//
-    -- { "Comment", { italic = true } },
-    { "Include", { italic = true } },
-    -- { "Type", { italic = true, bold = true } },
-    {
-      "Folded",
-      {
-        background = "NONE",
-        foreground = comment_fg,
-        bold = true,
-        -- italic = true,
-      },
+    -- Comment = { italic = true } ,
+    Include = { italic = true },
+    -- Type = { italic = true, bold = true } ,
+    Folded = {
+      background = "NONE",
+      foreground = comment_fg,
+      bold = true,
+      -- italic = true,
     },
-    { "QuickFixLine", { background = search_bg } },
-    {
-      "Visual",
+    QuickFixLine = { background = search_bg } ,
+      Visual =
       {
         foreground = "NONE",
         background = util.alter_color(P.pale_blue, -50),
-      },
     },
     -- Neither the sign column or end of buffer highlights require an explicit background
     -- they should both just use the background that is in the window they are in.
     -- if either are specified this can lead to issues when a winhighlight is set
-    { "SignColumn", { background = "NONE" } },
-    { "EndOfBuffer", { background = "NONE" } },
+    SignColumn = { background = "NONE" } ,
+    EndOfBuffer = { background = "NONE" } ,
     -----------------------------------------------------------------------------//
     -- Treesitter
     -----------------------------------------------------------------------------//
-    { "TSKeywordReturn", { italic = true, foreground = keyword_fg } },
-    -- { "TSError", { undercurl = true, sp = error_line, foreground = "NONE" } },
-    { "TSParameter", { italic = true, bold = true, foreground = "NONE" } },
+    TSKeywordReturn = { italic = true, foreground = keyword_fg } ,
+    -- TSError = { undercurl = true, sp = error_line, foreground = "NONE" } ,
+    TSParameter = { italic = true, bold = true, foreground = "NONE" } ,
     -- highlight FIXME comments
-    { "commentTSWarning", { background = P.error_red, foreground = "fg", bold = true } },
-    { "commentTSDanger", { background = P.dark_green, foreground = "#1B2229", bold = true } },
-    { "commentTSNote", { background = P.bluee, foreground = "#1B2229", bold = true } },
+    commentTSWarning = { background = P.error_red, foreground = "fg", bold = true } ,
+    commentTSDanger = { background = P.dark_green, foreground = "#1B2229", bold = true } ,
+    commentTSNote = { background = P.bluee, foreground = "#1B2229", bold = true } ,
 
-    { "DiagnosticErro", { fg = P.error_red } },
-    { "DiagnosticWarning", { fg = P.dark_orange } },
-    { "DiagnosticInfo", { fg = P.blue } },
-    { "DiagnosticHint", { fg = P.dark_green } },
+    DiagnosticError = { fg = P.error_red } ,
+    DiagnosticWarning = { fg = P.dark_orange } ,
+    DiagnosticInfo = { fg = P.blue } ,
+    DiagnosticHint = { fg = P.dark_green } ,
   }
 end
 
@@ -74,18 +69,15 @@ local function set_sidebar_highlight()
   local split_color = util.get_hl("VertSplit", "fg")
   local bg_color = util.alter_color(P.bg, -20)
   local st_color = util.alter_color(util.get_hl("Visual", "bg"), -10)
-  local hls = {
-    { "PanelBackground", { link = "Normal" } },
-    { "PanelHeading", { background = bg_color, bold = true } },
-    { "PanelVertSplit", { foreground = split_color, background = bg_color } },
-    { "PanelVertSplitAlt", { foreground = bg_color, background = bg_color } },
-    { "PanelWinSeparator", { foreground = split_color, background = bg_color } },
-    { "PanelStNC", { background = st_color, cterm = { italic = true } } },
-    { "PanelSt", { background = st_color } },
+  util.all {
+    PanelBackground = { link = "Normal" } ,
+    PanelHeading = { background = bg_color, bold = true } ,
+    PanelVertSplit = { foreground = split_color, background = bg_color } ,
+    PanelVertSplitAlt = { foreground = bg_color, background = bg_color } ,
+    PanelWinSeparator = { foreground = split_color, background = bg_color } ,
+    PanelStNC = { background = st_color, cterm = { italic = true } } ,
+    PanelSt = { background = st_color } ,
   }
-  for _, grp in ipairs(hls) do
-    util.set_hl(unpack(grp))
-  end
 end
 
 local sidebar_fts = {

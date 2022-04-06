@@ -131,10 +131,10 @@ function M.clear_hl(name)
 end
 
 ---Apply a list of highlights
----@param hls table[]
+---@param hls table<string, table<string, boolean|string>>[]
 function M.all(hls)
-  for _, hl in ipairs(hls) do
-    M.set_hl(unpack(hl))
+  for name, hl in pairs(hls) do
+    M.set_hl(name, hl)
   end
 end
 
@@ -144,9 +144,8 @@ end
 ---Apply highlights for a plugin and refresh on colorscheme change
 ---@param name string plugin name
 ---@vararg table list of highlights
-function M.plugin(name, ...)
+function M.plugin(name, hls)
   name = name:gsub("^%l", string.upper) -- capitalise the name for autocommand convention sake
-  local hls = { ... }
   M.all(hls)
   rvim.augroup(fmt("%sHighlightOverrides", name), {
     {

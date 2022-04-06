@@ -1,11 +1,10 @@
 return function()
-  require("zephyr.util").plugin(
-    "NeoTree",
-    { "NeoTreeIndentMarker", { link = "Comment" } },
-    { "NeoTreeNormal", { link = "PanelBackground" } },
-    { "NeoTreeNormalNC", { link = "PanelBackground" } },
-    { "NeoTreeRootName", { bold = true, italic = false, foreground = rvim.palette.base6 } }
-  )
+  require("zephyr.util").plugin("NeoTree", {
+    NeoTreeIndentMarker = { link = "Comment" },
+    NeoTreeNormal = { link = "PanelBackground" },
+    NeoTreeNormalNC = { link = "PanelBackground" },
+    NeoTreeRootName = { bold = true, italic = false, foreground = rvim.palette.base6 },
+  })
   vim.g.neo_tree_remove_legacy_commands = 1
   local icons = rvim.style.icons
   rvim.nnoremap("<c-n>", "<Cmd>Neotree toggle reveal<CR>")

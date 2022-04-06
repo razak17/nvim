@@ -159,18 +159,17 @@ return function()
     }
   end
 
-  require("zephyr.util").plugin(
-    "NvimTree",
-    { "NvimTreeIndentMarker", { link = "Comment" } },
-    { "NvimTreeNormal", { link = "PanelBackground" } },
-    { "NvimTreeNormalNC", { link = "PanelBackground" } },
-    { "NvimTreeSignColumn", { link = "PanelBackground" } },
-    { "NvimTreeEndOfBuffer", { link = "PanelBackground" } },
-    { "NvimTreeVertSplit", { link = "PanelVertSplit" } },
-    { "NvimTreeStatusLine", { link = "PanelSt" } },
-    { "NvimTreeStatusLineNC", { link = "PanelStNC" } },
-    { "NvimTreeRootFolder", { bold = true, foreground = "LightMagenta" } }
-  )
+  require("zephyr.util").plugin("NvimTree", {
+    NvimTreeIndentMarker = { link = "Comment" },
+    NvimTreeNormal = { link = "PanelBackground" },
+    NvimTreeNormalNC = { link = "PanelBackground" },
+    NvimTreeSignColumn = { link = "PanelBackground" },
+    NvimTreeEndOfBuffer = { link = "PanelBackground" },
+    NvimTreeVertSplit = { link = "PanelVertSplit" },
+    NvimTreeStatusLine = { link = "PanelSt" },
+    NvimTreeStatusLineNC = { link = "PanelStNC" },
+    NvimTreeRootFolder = { bold = true, foreground = "LightMagenta" },
+  })
 
   nvim_tree.setup(rvim.nvimtree.setup)
 

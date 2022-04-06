@@ -102,7 +102,7 @@ completion["github/copilot.vim"] = {
       lua = true,
       python = true,
     }
-    require("zephyr.util").plugin("copilot", { "CopilotSuggestion", { link = "Comment" } })
+    require("zephyr.util").plugin("copilot", { CopilotSuggestion = { link = "Comment" } })
   end,
   disable = not rvim.plugins.completion.copilot.active,
 }

@@ -6,24 +6,30 @@ return function()
 
   local border = rvim.style.border.current
   local lsp_hls = rvim.lsp.kind_highlights
-  local fmt = string.format
+  local util = require "zephyr.util"
 
-  local kind_hls = vim.tbl_map(function(key)
-    return {
-      fmt("CmpItemKind%s", key),
-      { inherit = lsp_hls[key], italic = false, bold = false, underline = false },
+  local kind_hls = {}
+  for key, _ in pairs(lsp_hls) do
+    kind_hls["CmpItemKind" .. key] = {
+      inherit = lsp_hls[key],
+      italic = false,
+      bold = false,
+      underline = false,
     }
-  end, vim.tbl_keys(
-    lsp_hls
-  ))
+  end
 
-  require("zephyr.util").plugin(
+  local keyword_fg = util.get_hl("Keyword", "fg")
+
+  util.plugin(
     "Cmp",
-    { "CmpItemAbbr", { inherit = "Comment", italic = false, bold = false } },
-    { "CmpItemMenu", { inherit = "NonText", italic = false, bold = false } },
-    { "CmpItemAbbrMatch", { bold = true } },
-    { "CmpItemAbbrDeprecated", { strikethrough = true, inherit = "Comment" } },
-    { "CmpItemAbbrMatchFuzzy", { italic = true, foreground = "fg" } }
+    vim.tbl_extend("force", {
+      CmpBorderedWindow_Normal = { link = "NormalFloat" },
+      CmpItemAbbr = { foreground = "fg", background = "NONE", italic = false, bold = false },
+      CmpItemMenu = { inherit = "NonText", italic = false, bold = false },
+      CmpItemAbbrMatch = { foreground = keyword_fg },
+      CmpItemAbbrDeprecated = { strikethrough = true, inherit = "Comment" },
+      CmpItemAbbrMatchFuzzy = { italic = true, foreground = keyword_fg },
+    }, kind_hls)
   )
 
   ---checks if the character preceding the cursor is a space character
@@ -72,8 +78,6 @@ return function()
     end
   end
 
-  require("zephyr.util").plugin("CmpKinds", unpack(kind_hls))
-
   -- FIXME: this should not be required if we were using a prompt buffer in telescope i.e. prompt prefix
   -- Deactivate cmp in telescope prompt buffer
   rvim.augroup("CmpConfig", {
@@ -119,6 +123,7 @@ return function()
           path = "(Path)",
           buffer = "(Buffer)",
           copilot = "(Copilot)",
+          cmp_tabnine = "(TN)",
           spell = "(Spell)",
           cmdline = "(Command)",
           cmp_git = "(Git)",
@@ -136,7 +141,16 @@ return function()
         duplicates_default = 0,
         format = function(entry, vim_item)
           vim_item.kind = rvim.style.icons.kind[vim_item.kind]
-          vim.item.menu = rvim.cmp.setup.formatting.source_names[entry.source.name]
+          local name = entry.source.name
+          local completion = entry.completion_item.data
+          local menu = rvim.cmp.setup.formatting.source_names[entry.source.name]
+          if name == "cmp_tabnine" then
+            if completion and completion.detail then
+              menu = completion.detail .. " " .. menu
+            end
+            vim_item.kind = ""
+          end
+          vim_item.menu = menu
           vim_item.dup = rvim.cmp.setup.formatting.duplicates[entry.source.name]
             or rvim.cmp.setup.formatting.duplicates_default
           return vim_item
@@ -157,6 +171,7 @@ return function()
         { name = "path" },
         { name = "buffer" },
         { name = "copilot" },
+        { name = "cmp_tabnine" },
         { name = "spell" },
         { name = "cmp_git" },
         { name = "calc" },

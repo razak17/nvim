@@ -155,14 +155,13 @@ lang["folke/trouble.nvim"] = {
       ["<leader>ll"] = { ":TroubleToggle loclist<cr>", "trouble: toggle loclist" },
     }
     local u = require "zephyr.util"
-    u.plugin(
-      "trouble",
-      { "TroubleNormal", { link = "PanelBackground" } },
-      { "TroubleText", { link = "PanelBackground" } },
-      { "TroubleIndent", { link = "PanelVertSplit" } },
-      { "TroubleFoldIcon", { foreground = "yellow", bold = true } },
-      { "TroubleLocation", { foreground = u.get_hl("Comment", "fg") } }
-    )
+    u.plugin("trouble", {
+      TroubleNormal = { link = "PanelBackground" },
+      TroubleText = { link = "PanelBackground" },
+      TroubleIndent = { link = "PanelVertSplit" },
+      TroubleFoldIcon = { foreground = "yellow", bold = true },
+      TroubleLocation = { foreground = u.get_hl("Comment", "fg") },
+    })
     local trouble = require "trouble"
     rvim.nnoremap("]d", function()
       trouble.previous { skip_groups = true, jump = true }
