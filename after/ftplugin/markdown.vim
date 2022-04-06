@@ -17,5 +17,5 @@ onoremap <buffer>aa :<c-u>execute "normal! ?^--\\+$\r:nohlsearch\rg_vk0"<cr>
 onoremap <buffer>ia :<c-u>execute "normal! ?^--\\+$\r:nohlsearch\rkvg_"<cr>
 
 if v:lua.rvim.plugin_loaded("markdown-preview.nvim")
-  nmap <buffer> <localleader>p <Plug>MarkdownPreviewToggle
+  nmap <buffer> <localleader>P <Plug>MarkdownPreviewToggle
 endif

@@ -81,6 +81,18 @@ function rvim.find(haystack, matcher)
   return found
 end
 
+--  find string in list
+function rvim.find_string(table, string)
+  local found = false
+  for _, v in pairs(table) do
+    if v == string then
+      found = true
+      break
+    end
+  end
+  return found
+end
+
 --- Check if a file or directory exists in this path
 function rvim._exists(file)
   if file == "" or file == nil then

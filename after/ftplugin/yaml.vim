@@ -1,3 +1,0 @@
-setlocal indentkeys-=<:>
-setlocal iskeyword+=-,$,#
-

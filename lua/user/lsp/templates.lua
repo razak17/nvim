@@ -2,8 +2,6 @@ local M = {}
 
 local Log = require "user.core.log"
 local utils = require "user.utils"
-local lsp_utils = require "user.utils.lsp"
-
 local ftplugin_dir = rvim.lsp.templates_dir
 
 function M.remove_template_files()
@@ -22,7 +20,7 @@ function M.generate_ftplugin(server_name, dir)
   end
 
   -- we need to go through lspconfig to get the corresponding filetypes currently
-  local filetypes = lsp_utils.get_supported_filetypes(server_name) or {}
+  local filetypes = require("user.utils.lsp").get_supported_filetypes(server_name) or {}
   if not filetypes then
     return
   end
@@ -46,9 +44,21 @@ function M.generate_ftplugin(server_name, dir)
       [[require("user.lsp.manager").override_setup(%q)]],
       override_server
     )
-    for _, override_filetype in ipairs(rvim.lsp.override_ftplugin) do
-      if filetype == override_filetype then
-        utils.write_file(filename, override_cmd .. "\n", "a")
+
+    local ft_cmd = string.format([[require("user.utils.after_ftplugin").setup(%q)]], filetype)
+    local ft_cmd_tsx = string.format(
+      [[require("user.utils.after_ftplugin").setup(%q)]],
+      "typescriptreact_tsx"
+    )
+    if rvim.find_string(rvim.lsp.override_ftplugin, filetype) then
+      utils.write_file(filename, override_cmd .. "\n", "a")
+    end
+
+    if rvim.find_string(rvim.ftplugin_filetypes, filetype) then
+      if filetype == "typescriptreact.tsx" then
+        utils.write_file(filename, ft_cmd_tsx .. "\n", "a")
+      else
+        utils.write_file(filename, ft_cmd .. "\n", "a")
       end
     end
   end

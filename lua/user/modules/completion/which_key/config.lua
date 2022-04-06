@@ -55,9 +55,9 @@ rvim.wk = {
         "open vimrc",
       },
     },
-    n = {
-      name = "+New",
-    },
+    -- n = {
+    --   name = "+New",
+    -- },
     w = {
       name = "+Window",
     },

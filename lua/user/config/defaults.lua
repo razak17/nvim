@@ -33,6 +33,24 @@ rvim.plugins = {
   packer = { active = true },
 }
 
+rvim.ftplugin_filetypes = {
+  "go",
+  "graphql",
+  "html",
+  "javascript",
+  "javascriptreact",
+  "json",
+  "jsonc",
+  "log",
+  "lua",
+  "python",
+  "rust",
+  "typescript",
+  "typescriptreact.tsx",
+  "typescriptreact",
+  "yaml",
+}
+
 rvim.util = {
   disabled_providers = { "python", "ruby", "perl" },
   transparent_window = false,
