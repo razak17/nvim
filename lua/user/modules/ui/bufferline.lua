@@ -80,6 +80,9 @@ return function()
   rvim.bufferline = {
     setup = {
       options = {
+        debug = {
+          logging = true,
+        },
         mode = "buffers", -- tabs
         sort_by = "insert_after_current",
         view = "default",
