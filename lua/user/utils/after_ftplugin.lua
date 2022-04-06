@@ -91,9 +91,6 @@ function M.graphql()
   vim.opt_local.formatoptions:remove "t"
 end
 
--- local function help_ftplugin()
--- end
-
 function M.html()
   -- Set indent width to two spaces
   vim.opt_local.tabstop = 2
@@ -169,9 +166,6 @@ function M.lua()
   vim.opt_local.formatoptions:remove "o"
 end
 
---  function M.markdown()
--- end
-
 function M.python()
   vim.opt_local.spell = true
   vim.opt_local.iskeyword:append '"'
@@ -179,9 +173,6 @@ function M.python()
   vim.opt_local.softtabstop = 4
   vim.opt_local.tabstop = 4
 end
-
---  function M.qf()
--- end
 
 function M.rust()
   vim.opt_local.spell = true
@@ -201,11 +192,23 @@ function M.typescriptreact()
   M.typescriptreact_tsx()
 end
 
---  function M.vim()
--- end
+function M.vim()
+  vim.opt_local.spell = true
+  vim.opt_local.colorcolumn = 120
+  vim.opt_local.iskeyword:append ":,#"
+  vim.opt_local.foldmethod = "marker"
 
---  function M.vue()
--- end
+  nnoremap("so", ":source % <bar> :lua vim.notify('Sourced ' .. vim.fn.expand('%'))<CR>")
+
+  -- add custom vim-surround mappings for vim
+  -- https://github.com/AndrewRadev/Vimfiles/blob/eada7a20dc705729f963348357d7754124d0b183/ftplugin/vim.vim#L3
+  vim.b[fmt("surround_%s", fn.char2nr "i")] = "if \1if: \1 then \r end"
+  vim.b[fmt("surround_%s", fn.char2nr "w")] = "while \1while: \1 \r endwhile"
+  vim.b[fmt("surround_%s", fn.char2nr "f")] = "for \1for: \1 {\r endfor"
+  vim.b[fmt("surround_%s", fn.char2nr "e")] = "foreach \1foreach: \1 \r enforeach"
+  vim.b[fmt("surround_%s", fn.char2nr "F")] = "function! \1function: \1() \r endfunction"
+  vim.b[fmt("surround_%s", fn.char2nr "T")] = "try \r endtry"
+end
 
 function M.yaml()
   vim.opt_local.indentkeys:remove "<:>"

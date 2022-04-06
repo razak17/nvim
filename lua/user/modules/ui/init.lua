@@ -105,11 +105,6 @@ ui["lukas-reineke/headlines.nvim"] = {
       markdown = {
         headline_highlights = { "Headline1", "Headline2", "Headline3" },
       },
-      yaml = {
-        dash_pattern = "^---+$",
-        dash_highlight = "Dash",
-        dash_string = "-",
-      },
     }
   end,
   disable = not rvim.plugins.ui.headlines.active,
