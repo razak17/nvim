@@ -2,7 +2,7 @@ local M = {}
 
 local Log = require "user.core.log"
 local utils = require "user.utils"
-local lsp_utils = require "user.lsp.utils"
+local lsp_utils = require "user.utils.lsp"
 
 local ftplugin_dir = rvim.lsp.templates_dir
 

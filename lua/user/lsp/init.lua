@@ -1,13 +1,13 @@
 local M = {}
 local Log = require "user.core.log"
-local lsp_utils = require "user.lsp.utils"
+local utils = require "user.utils.lsp"
 
 local function lsp_hover_diagnostics()
   if not rvim.lsp.hover_diagnostics then
     return
   end
 
-  lsp_utils.enable_lsp_hover_diagnostics()
+  utils.enable_lsp_hover_diagnostics()
 end
 
 local function lsp_highlight_document(client)
@@ -16,7 +16,7 @@ local function lsp_highlight_document(client)
   end
 
   if client and client.resolved_capabilities.document_highlight then
-    lsp_utils.enable_lsp_document_highlight(client.id)
+    utils.enable_lsp_document_highlight(client.id)
   end
 end
 
@@ -26,7 +26,7 @@ local function lsp_code_lens_refresh(client)
   end
 
   if client and client.resolved_capabilities.code_lens then
-    lsp_utils.enable_code_lens_refresh()
+    utils.enable_code_lens_refresh()
   end
 end
 
@@ -47,7 +47,7 @@ local function lsp_setup_keymaps(client, bufnr)
       gd = { vim.lsp.buf.definition, "lsp: definition" },
       gr = { vim.lsp.buf.references, "lsp: references" },
       gl = {
-        "<cmd>lua require 'user.lsp.utils'.show_line_diagnostics()<CR>",
+        "<cmd>lua require 'user.utils.lsp'.show_line_diagnostics()<CR>",
         "lsp: line diagnostics",
       },
     },
@@ -185,11 +185,11 @@ end
 
 function M.global_on_exit(_, _)
   if rvim.lsp.document_highlight then
-    lsp_utils.disable_lsp_document_highlight()
+    utils.disable_lsp_document_highlight()
   end
 
   if rvim.lsp.code_lens_refresh then
-    lsp_utils.disable_code_lens_refresh()
+    utils.disable_code_lens_refresh()
   end
 end
 

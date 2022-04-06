@@ -4,7 +4,7 @@ local Log = require "user.core.log"
 
 local function find_root_dir()
   local util = require "lspconfig/util"
-  local lsp_utils = require "user.lsp.utils"
+  local lsp_utils = require "user.utils.lsp"
 
   local ts_client = lsp_utils.is_client_active "typescript"
   if ts_client then

@@ -5,7 +5,7 @@ local lsp_manager = require "user.lsp.manager"
 local Log = require "user.core.log"
 
 function M.setup(server_name)
-  local already_configured = require("user.lsp.utils").is_client_active(server_name)
+  local already_configured = require("user.utils.lsp").is_client_active(server_name)
     or lsp_manager.client_is_configured(server_name)
   local config = lsp_manager.resolve_config(server_name)
 

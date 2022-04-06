@@ -1,7 +1,7 @@
 local M = {}
 
 local Log = require "user.core.log"
-local lsp_utils = require "user.lsp.utils"
+local lsp_utils = require "user.utils.lsp"
 
 function M.init(languages)
   languages = languages or lsp_utils.get_all_supported_filetypes()
