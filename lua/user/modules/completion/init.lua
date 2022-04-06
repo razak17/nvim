@@ -95,12 +95,9 @@ completion["github/copilot.vim"] = {
     vim.cmd [[imap <silent><script><expr> <C-l> copilot#Accept("\<CR>")]]
     vim.cmd [[let g:copilot_no_tab_map = v:true]]
     vim.g.copilot_filetypes = {
-      ["*"] = false,
+      ["*"] = true,
       gitcommit = false,
       NeogitCommitMessage = false,
-      dart = true,
-      lua = true,
-      python = true,
     }
     require("zephyr.util").plugin("copilot", { CopilotSuggestion = { link = "Comment" } })
   end,
