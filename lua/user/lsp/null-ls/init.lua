@@ -46,6 +46,7 @@ function M:setup()
     { exe = "black", args = { "--fast" }, filetypes = { "python" } },
     { exe = "isort", filetypes = { "python" } },
     { exe = "shfmt", filetypes = { "sh" } },
+    -- { exe = "gofmt", filetypes = { "go" } },
   }
 
   -- set additional linters
