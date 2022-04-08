@@ -61,6 +61,11 @@ local function general_overrides()
     DiagnosticInfo = { fg = P.blue },
     DiagnosticHint = { fg = P.darker_green },
     LspCodeLens = { link = "NonText" },
+    LspReferenceText = { underline = true, background = "NONE" },
+    LspReferenceRead = { underline = true, background = "NONE" },
+    -- This represents when a reference is assigned which is more interesting than regular
+    -- occurrences so should be highlighted more distinctly
+    LspReferenceWrite = { underline = true, bold = true, italic = true, background = "NONE" },
   }
 end
 
