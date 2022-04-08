@@ -18,56 +18,69 @@ completion["folke/which-key.nvim"] = {
 
 -- nvim-cmp
 completion["hrsh7th/nvim-cmp"] = {
+  event = "InsertEnter",
   config = load_conf("completion", "cmp"),
   disable = not rvim.plugins.completion.cmp.active,
 }
 
 completion["L3MON4D3/LuaSnip"] = {
+  event = "InsertEnter",
   config = load_conf("completion", "luasnip"),
   disable = not rvim.plugins.completion.luasnip.active,
 }
 
 completion["rafamadriz/friendly-snippets"] = {
+  event = "InsertEnter",
   disable = not rvim.plugins.completion.friendly_snippets.active,
 }
 
 completion["hrsh7th/cmp-nvim-lsp"] = {
+  event = "InsertEnter",
   disable = not rvim.plugins.completion.cmp.active,
 }
 
 completion["hrsh7th/cmp-nvim-lua"] = {
+  event = "InsertEnter",
   disable = not rvim.plugins.completion.cmp.active,
 }
 
 completion["hrsh7th/cmp-nvim-lsp-document-symbol"] = {
+  event = "InsertEnter",
   disable = not rvim.plugins.completion.cmp.active,
 }
 
 completion["saadparwaiz1/cmp_luasnip"] = {
+  event = "InsertEnter",
   disable = not rvim.plugins.completion.cmp.active,
 }
 
 completion["hrsh7th/cmp-buffer"] = {
+  event = "InsertEnter",
   disable = not rvim.plugins.completion.cmp.active,
 }
 
 completion["hrsh7th/cmp-path"] = {
+  event = "InsertEnter",
   disable = not rvim.plugins.completion.cmp.active,
 }
 
 completion["hrsh7th/cmp-cmdline"] = {
+  event = "InsertEnter",
   disable = not rvim.plugins.completion.cmp.active,
 }
 
 completion["f3fora/cmp-spell"] = {
+  event = "InsertEnter",
   disable = not rvim.plugins.completion.cmp.active,
 }
 
 completion["hrsh7th/cmp-emoji"] = {
+  event = "InsertEnter",
   disable = not rvim.plugins.completion.cmp.active,
 }
 
 completion["octaltree/cmp-look"] = {
+  event = "InsertEnter",
   disable = not rvim.plugins.completion.cmp.active,
 }
 
@@ -82,6 +95,7 @@ completion["petertriho/cmp-git"] = {
 }
 
 completion["David-Kunz/cmp-npm"] = {
+  opt = true,
   config = function()
     require("cmp-npm").setup {}
   end,
