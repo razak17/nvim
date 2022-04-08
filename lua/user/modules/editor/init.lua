@@ -40,8 +40,8 @@ editor["tpope/vim-surround"] = {
 }
 
 editor["monaqa/dial.nvim"] = {
-  config = utils.load_conf("editor", "dial"),
   event = { "BufWinEnter" },
+  config = utils.load_conf("editor", "dial"),
   disable = not rvim.plugins.editor.dial.active,
 }
 
@@ -82,6 +82,7 @@ editor["norcalli/nvim-colorizer.lua"] = {
 }
 
 editor["romainl/vim-cool"] = {
+  event = { "BufWinEnter" },
   config = function()
     vim.g.CoolTotalMatches = 1
   end,
@@ -156,6 +157,7 @@ editor["abecodes/tabout.nvim"] = {
 }
 
 editor["chentau/marks.nvim"] = {
+  event = { "BufWinEnter" },
   config = utils.load_conf("editor", "marks"),
   disable = not rvim.plugins.editor.marks.active,
 }
