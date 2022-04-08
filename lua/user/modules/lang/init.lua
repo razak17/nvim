@@ -21,7 +21,7 @@ rvim.plugins.lang = {
   schemastore = { active = true },
   lsp_signature = { active = true },
   spellsitter = { active = true },
-  go_nvim = { active = false },
+  go_nvim = { active = true },
   -- treesitter
   treesitter = { active = true },
   playground = { active = true },
@@ -273,13 +273,22 @@ lang["lewis6991/spellsitter.nvim"] = {
 lang["ray-x/go.nvim"] = {
   ft = "go",
   -- FIXME: errors out on vim enter
-  -- config = function()
-  --   local path = require "nvim-lsp-installer.path"
-  --   local install_root_dir = path.concat { vim.fn.stdpath "data", "lsp_servers" }
-  --   require("go").setup {
-  --     gopls_cmd = { install_root_dir .. "/go/gopls" },
-  -- }
-  -- end,
+  config = function()
+    local path = require "nvim-lsp-installer.path"
+    local install_root_dir = path.concat { vim.fn.stdpath "data", "lsp_servers" }
+    require("go").setup {
+      gopls_cmd = { install_root_dir .. "/go/gopls" },
+      max_line_len = 100,
+      goimport = "goimports",
+      lsp_cfg = true,
+      lsp_gofumpt = true,
+      lsp_on_attach = require("user.lsp").global_on_attach,
+      lsp_diag_virtual_text = {
+        space = 0,
+        prefix = rvim.style.icons.misc.bug,
+      },
+    }
+  end,
   disable = not rvim.plugins.lang.go_nvim.active,
 }
 

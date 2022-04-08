@@ -64,6 +64,7 @@ rvim.lsp = {
     "emmet_ls",
     "eslint",
     "eslintls",
+    "go",
     "golangci_lint_ls",
     "grammarly",
     "graphql",
