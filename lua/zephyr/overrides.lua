@@ -54,7 +54,7 @@ local function general_overrides()
     -- highlight FIXME comments
     commentTSWarning = { background = P.error_red, foreground = "fg", bold = true },
     commentTSDanger = { background = P.dark_green, foreground = "#1B2229", bold = true },
-    commentTSNote = { background = P.bluee, foreground = "#1B2229", bold = true },
+    commentTSNote = { background = P.blue, foreground = "#1B2229", bold = true },
 
     DiagnosticError = { fg = P.error_red },
     DiagnosticWarning = { fg = P.dark_orange },
