@@ -10,6 +10,7 @@ vim.filetype.add {
   },
   filename = {
     [".gitignore"] = "conf",
+    ['go.mod'] = 'gomod',
     ["Makefile.toml"] = "cargo-make",
     ["Podfile"] = "ruby",
     [".vimrc.local"] = "vim",
