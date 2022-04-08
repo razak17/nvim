@@ -2,31 +2,31 @@ local M = {}
 local Log = require "user.core.log"
 local utils = require "user.utils.lsp"
 
-local function lsp_hover_diagnostics()
+local function lsp_hover_diagnostics(bufnr)
   if not rvim.lsp.hover_diagnostics then
     return
   end
 
-  utils.enable_lsp_hover_diagnostics()
+  utils.enable_lsp_hover_diagnostics(bufnr)
 end
 
-local function lsp_highlight_document(client)
+local function lsp_highlight_document(client, bufnr)
   if rvim.lsp.document_highlight == false then
     return
   end
 
   if client and client.resolved_capabilities.document_highlight then
-    utils.enable_lsp_document_highlight(client.id)
+    utils.enable_lsp_document_highlight(client.id, bufnr)
   end
 end
 
-local function lsp_code_lens_refresh(client)
+local function lsp_code_lens_refresh(client, bufnr)
   if rvim.lsp.code_lens_refresh == false then
     return
   end
 
   if client and client.resolved_capabilities.code_lens then
-    utils.enable_code_lens_refresh()
+    utils.enable_code_lens_refresh(bufnr)
   end
 end
 
@@ -203,9 +203,9 @@ function M.global_on_attach(client, bufnr)
   end
   buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
 
-  lsp_highlight_document(client)
-  lsp_code_lens_refresh(client)
-  lsp_hover_diagnostics()
+  lsp_highlight_document(client, bufnr)
+  lsp_code_lens_refresh(client, bufnr)
+  lsp_hover_diagnostics(bufnr)
   lsp_setup_keymaps(client, bufnr)
   lsp_setup_tagfunc(client, bufnr)
 end
