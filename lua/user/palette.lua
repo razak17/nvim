@@ -44,6 +44,7 @@ rvim.palette = {
 
   green = "#afd700",
   dark_green = "#98be65",
+  darker_green = "#67b11d",
 
   cyan = "#14ffff",
   dark_cyan = "#65a7c5",

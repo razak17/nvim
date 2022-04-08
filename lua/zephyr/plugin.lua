@@ -70,27 +70,27 @@ return {
   DiagnosticError = { fg = P.error_red },
   DiagnosticWarning = { fg = P.dark_orange },
   DiagnosticInfo = { fg = P.blue },
-  DiagnosticHint = { fg = P.dark_green },
+  DiagnosticHint = { fg = P.darker_green },
 
   DiagnosticSignError = { fg = P.error_red },
   DiagnosticSignWarn = { fg = P.dark_orange },
   DiagnosticSignInfo = { fg = P.blue },
-  DiagnosticSignHint = { fg = P.dark_green },
+  DiagnosticSignHint = { fg = P.darker_green },
 
   DiagnosticFloatingError = { fg = P.error_red },
   DiagnosticFloatingWarn = { fg = P.dark_orange },
   DiagnosticFloatingInfo = { fg = P.blue },
-  DiagnosticFloatingHint = { fg = P.dark_green },
+  DiagnosticFloatingHint = { fg = P.darker_green },
 
   DiagnosticUnderlineError = { style = "undercurl", sp = P.error_red },
   DiagnosticUnderlineWarn = { style = "undercurl", sp = P.dark_orange },
   DiagnosticUnderlineInfo = { style = "undercurl", sp = P.blue },
-  DiagnosticUnderlineHint = { style = "undercurl", sp = P.dark_green },
+  DiagnosticUnderlineHint = { style = "undercurl", sp = P.darker_green },
 
   DiagnosticVirtualTextError = { fg = P.error_red, bg = util.alter_color(P.pale_red, -80) },
   DiagnosticVirtualTextWarn = { fg = P.dark_orange, bg = util.alter_color(P.dark_orange, -80) },
   DiagnosticVirtualTextInfo = { fg = P.pale_blue, bg = util.alter_color(P.pale_blue, -80) },
-  DiagnosticVirtualTextHint = { fg = P.dark_green, bg = util.alter_color(P.dark_green, -80) },
+  DiagnosticVirtualTextHint = { fg = P.dark_green, bg = util.alter_color(P.darker_green, -80) },
 
   LspReferenceRead = { bg = P.base4 },
   LspReferenceText = { bg = P.base4 },

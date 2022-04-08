@@ -59,7 +59,7 @@ local function general_overrides()
     DiagnosticError = { fg = P.error_red },
     DiagnosticWarning = { fg = P.dark_orange },
     DiagnosticInfo = { fg = P.blue },
-    DiagnosticHint = { fg = P.dark_green },
+    DiagnosticHint = { fg = P.darker_green },
     LspCodeLens = { link = "NonText" },
   }
 end
