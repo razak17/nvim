@@ -52,8 +52,8 @@ return function()
         ':lua local widgets=require"dap.ui.widgets";widgets.centered_float(widgets.scopes)<CR>',
         "scopes",
       },
-      a = { ':lua require"user.dap.utils".attach()<cr>', "attach" },
-      A = { ':lua require"user.dap.utils".attachToRemote()<cr>', "attach remote" },
+      a = { ':lua require"user.utils.dap".attach()<cr>', "attach" },
+      A = { ':lua require"user.utils.dap".attachToRemote()<cr>', "attach remote" },
 
       h = { ":lua require'dap'.step_back()<cr>", "step back" },
       i = { ":lua require'dap'.step_into()<cr>", "step into" },
