@@ -183,12 +183,12 @@ return function()
       end
       return ""
     end,
+    cond = conditions.hide_in_width,
   }
 
   ins_right {
     "filetype",
     icons_enabled = false, -- I think icons are cool but Eviline doesn't have them. sigh
-    cond = conditions.hide_in_width,
     color = {},
   }
 
