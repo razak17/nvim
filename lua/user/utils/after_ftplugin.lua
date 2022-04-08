@@ -60,7 +60,7 @@ function M.go()
   vim.opt_local.tabstop = 4
   vim.opt_local.shiftwidth = 4
   vim.opt_local.smarttab = true
-  vim.opt_local.iskeyword:append "-"
+  vim.cmd [[setlocal iskeyword+=-]]
 
   if not rvim then
     return
@@ -87,7 +87,7 @@ end
 function M.graphql()
   vim.opt_local.comment = ":#"
   vim.opt_local.commentstring = "\\ %s"
-  vim.opt_local.iskeyword:append "$,@-@"
+  vim.cmd [[setlocal iskeyword+=$,@-@]]
   vim.opt_local.formatoptions:remove "t"
 end
 
@@ -161,14 +161,14 @@ function M.lua()
   end)
 
   vim.opt_local.spell = true
-  vim.opt_local.iskeyword:append '"'
+  vim.cmd [[setlocal iskeyword+="]]
   vim.opt_local.textwidth = 100
   vim.opt_local.formatoptions:remove "o"
 end
 
 function M.python()
   vim.opt_local.spell = true
-  vim.opt_local.iskeyword:append '"'
+  vim.cmd [[setlocal iskeyword+="]]
   vim.opt_local.shiftwidth = 4
   vim.opt_local.softtabstop = 4
   vim.opt_local.tabstop = 4
@@ -195,7 +195,7 @@ end
 function M.vim()
   vim.opt_local.spell = true
   vim.opt_local.colorcolumn = 120
-  vim.opt_local.iskeyword:append ":,#"
+  vim.cmd [[setlocal iskeyword+=:,#]]
   vim.opt_local.foldmethod = "marker"
 
   nnoremap("so", ":source % <bar> :lua vim.notify('Sourced ' .. vim.fn.expand('%'))<CR>")
@@ -213,8 +213,7 @@ end
 function M.yaml()
   vim.opt_local.indentkeys:remove "<:>"
   -- setlocal indentkeys-=<:>
-  vim.opt_local.iskeyword:append "-,$,#$"
-  -- setlocal iskeyword+=-,$,#
+  vim.cmd [[setlocal iskeyword+=-,$,#]]
 end
 
 function M.setup(filetype)
