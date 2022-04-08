@@ -61,6 +61,7 @@ ui["rcarriga/nvim-notify"] = {
 }
 
 ui["stevearc/dressing.nvim"] = {
+  event = "BufWinEnter",
   config = function()
     require("zephyr.util").plugin("dressing", { FloatTitle = { inherit = "Visual", bold = true } })
     require("dressing").setup {
@@ -129,6 +130,7 @@ ui["edluffy/specs.nvim"] = {
 }
 
 ui["narutoxy/dim.lua"] = {
+  event = "BufWinEnter",
   requires = { "nvim-treesitter/nvim-treesitter", "neovim/nvim-lspconfig" },
   config = function()
     require("dim").setup {
