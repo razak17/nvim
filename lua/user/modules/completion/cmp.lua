@@ -188,7 +188,7 @@ return function()
         ["<C-q>"] = cmp.mapping.complete(),
         ["<CR>"] = cmp.mapping.confirm {
           behavior = cmp.ConfirmBehavior.Replace,
-          select = true,
+          select = false, -- If nothing is selected don't complete
         },
       },
     },
