@@ -24,7 +24,7 @@ rvim.plugins.tools = {
   telescope_zoxide = { active = true },
   markdown_preview = { active = true },
   apathy = { active = true },
-  todo_comments = { active = false },
+  todo_comments = { active = true },
   projectionist = { active = true },
   plenary = { active = true },
   popup = { active = true },
@@ -240,8 +240,8 @@ tools["moll/vim-bbye"] = {
 }
 
 tools["folke/todo-comments.nvim"] = {
+  event = { "BufWinEnter" },
   requires = "nvim-lua/plenary.nvim",
-  -- FIXME: errors out when c-f s hit in cmdlne
   config = function()
     -- this plugin is not safe to reload
     if vim.g.packer_compiled_loaded then
