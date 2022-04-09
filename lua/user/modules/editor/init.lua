@@ -166,6 +166,7 @@ editor["chentau/marks.nvim"] = {
 
 editor["jsborjesson/vim-uppercase-sql"] = {
   event = "InsertEnter",
+  ft = { "sql" },
   disable = not rvim.plugins.editor.vim_uppercase_sql.active,
 }
 
