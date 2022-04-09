@@ -103,10 +103,16 @@ completion["David-Kunz/cmp-npm"] = {
 }
 
 completion["github/copilot.vim"] = {
-  opt = true,
   config = function()
     vim.g.copilot_no_tab_map = true
     vim.cmd [[imap <silent><script><expr> <C-l> copilot#Accept("\<CR>")]]
+
+    -- https://github.com/akinsho/dotfiles/commit/4b0f52e24058ad8d22bcbf5ee64ebcb476a79536
+    -- rvim.imap("<Plug>(vimrc:copilot-dummy-map)", "copilot#Accept('<CR>')", { expr = true })
+    rvim.inoremap("<M-]>", "<Plug>(copilot-next)")
+    rvim.inoremap("<M-[>", "<Plug>(copilot-previous)")
+    rvim.inoremap("<C-\\>", "<Cmd>vertical Copilot panel<CR>")
+
     vim.g.copilot_filetypes = {
       ["*"] = true,
       gitcommit = false,
