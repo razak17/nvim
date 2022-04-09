@@ -45,6 +45,7 @@ tools["sindrets/diffview.nvim"] = {
 }
 
 tools["mbbill/undotree"] = {
+  event = "BufWinEnter",
   config = function()
     vim.g.undotree_TreeNodeShape = "◦" -- Alternative: '◉'
     vim.g.undotree_SetFocusWhenToggle = 1
@@ -229,6 +230,7 @@ tools["lewis6991/impatient.nvim"] = {
 }
 
 tools["moll/vim-bbye"] = {
+  event = "BufWinEnter",
   config = function()
     require("which-key").register {
       ["<leader>c"] = { ":Bdelete!<cr>", "close buffer" },

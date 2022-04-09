@@ -50,6 +50,7 @@ ui["lukas-reineke/indent-blankline.nvim"] = {
 }
 
 ui["lewis6991/gitsigns.nvim"] = {
+  event = "BufWinEnter",
   config = utils.load_conf("ui", "gitsigns"),
   disable = not rvim.plugins.ui.git_signs.active,
 }
@@ -91,6 +92,7 @@ ui["stevearc/dressing.nvim"] = {
 }
 
 ui["lukas-reineke/headlines.nvim"] = {
+  event = "BufWinEnter",
   setup = function()
     -- https://observablehq.com/@d3/color-schemes?collection=@d3/d3-scale-chromatic
     -- NOTE: this must be set in the setup function or it will crash nvim...
@@ -112,6 +114,7 @@ ui["lukas-reineke/headlines.nvim"] = {
 }
 
 ui["edluffy/specs.nvim"] = {
+  event = "BufWinEnter",
   config = function()
     -- NOTE: 'DanilaMihailov/beacon.nvim' is an alternative
     local specs = require "specs"

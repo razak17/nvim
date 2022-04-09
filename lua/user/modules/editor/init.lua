@@ -32,6 +32,7 @@ editor["xiyaowong/accelerated-jk.nvim"] = {
 }
 
 editor["tpope/vim-surround"] = {
+  event = "BufWinEnter",
   config = function()
     rvim.xmap("S", "<Plug>VSurround")
     rvim.xmap("S", "<Plug>VSurround")
@@ -126,6 +127,7 @@ editor["b3nj5m1n/kommentary"] = {
 }
 
 editor["Matt-A-Bennett/vim-surround-funk"] = {
+  event = "BufWinEnter",
   config = utils.load_conf("editor", "vim-surround-funk"),
   disable = not rvim.plugins.editor.surround_funk.active,
 }
@@ -163,6 +165,7 @@ editor["chentau/marks.nvim"] = {
 }
 
 editor["jsborjesson/vim-uppercase-sql"] = {
+  event = "InsertEnter",
   disable = not rvim.plugins.editor.vim_uppercase_sql.active,
 }
 
