@@ -35,19 +35,19 @@ return function()
         description = join("  Recent files", "<leader>fr", 11),
         command = "Telescope oldfiles",
       },
-      d = {
-        description = join("  Create New file", "<leader>nf", 8),
-        command = ":ene!",
-      },
+      -- d = {
+      --   description = join("  Create New file", "<leader>nf", 8),
+      --   command = ":ene!",
+      -- },
       -- d = {
       --   description = join("  Config file", "<leader>Lc", 12),
       --   command = ":e " .. rvim.get_user_dir() .. "/config/init.lua",
       -- },
-      f = {
+      d = {
         description = join("  Recent projects", "<leader>fp", 8),
         command = "Telescope projects",
       },
-      g = {
+      e = {
         description = join("  Restore session", "<leader>sl", 8),
         command = function()
           vim.cmd ":RestoreSession"
