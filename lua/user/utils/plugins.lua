@@ -45,7 +45,7 @@ end
 
 function M:bootstrap_packer(packer, plugins)
   packer.init {
-    package_root = join_paths(rvim.get_runtime_dir(), "/site/pack/"),
+    package_root = join_paths(rvim.get_runtime_dir(), "site/pack/"),
     compile_path = rvim.paths.packer_compiled,
     git = {
       clone_timeout = 7000,
@@ -137,6 +137,6 @@ end
 
 ---@param path string
 function M:dev(path)
-  return join_paths(vim.env.HOME, "/workspace/plugins/", path)
+  return join_paths(vim.env.HOME, "workspace/plugins/", path)
 end
 return M

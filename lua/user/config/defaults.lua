@@ -4,10 +4,10 @@ rvim.keys = {
 }
 
 rvim.paths = {
-  snippets = join_paths(rvim.get_config_dir(), "/utils/snippets/textmate"),
+  snippets = join_paths(rvim.get_config_dir(), "utils/snippets/textmate"),
   packer_compiled = join_paths(rvim.get_runtime_dir(), "site", "lua", "_compiled_rolling.lua"),
-  node = join_paths(vim.env.FNMPATH, "/neovim-node-host"),
-  python3 = join_paths(rvim.get_cache_dir(), "/venv/neovim/bin/python3"),
+  node = join_paths(vim.env.FNMPATH, "neovim-node-host"),
+  python3 = join_paths(rvim.get_cache_dir(), "venv/neovim/bin/python3"),
 }
 
 rvim.log = {
