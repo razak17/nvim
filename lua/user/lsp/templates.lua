@@ -66,7 +66,7 @@ function M.generate_ftplugin(server_name, dir)
       "typescriptreact_tsx"
     )
 
-    if rvim.find_string(rvim.ftplugin_filetypes, filetype) then
+    if rvim.find_string(rvim.util.ftplugin_filetypes, filetype) then
       if filetype == "typescriptreact.tsx" then
         utils.write_file(filename, ft_cmd_tsx .. "\n", "a")
       else

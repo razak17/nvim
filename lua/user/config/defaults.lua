@@ -6,8 +6,8 @@ rvim.keys = {
 rvim.paths = {
   snippets = join_paths(rvim.get_config_dir(), "/utils/snippets/textmate"),
   packer_compiled = join_paths(rvim.get_runtime_dir(), "site", "lua", "_compiled_rolling.lua"),
-  node = vim.env.FNMPATH .. "/neovim-node-host",
-  python3 = rvim.get_cache_dir() .. "/venv/neovim/bin/python3",
+  node = join_paths(vim.env.FNMPATH, "/neovim-node-host"),
+  python3 = join_paths(rvim.get_cache_dir(), "/venv/neovim/bin/python3"),
 }
 
 rvim.log = {
@@ -33,26 +33,26 @@ rvim.plugins = {
   packer = { active = true },
 }
 
-rvim.ftplugin_filetypes = {
-  "go",
-  "graphql",
-  "html",
-  "javascript",
-  "javascriptreact",
-  "json",
-  "jsonc",
-  "log",
-  "lua",
-  "python",
-  "rust",
-  "typescript",
-  "typescriptreact.tsx",
-  "typescriptreact",
-  "yaml",
-}
 
 rvim.util = {
   disabled_providers = { "python", "ruby", "perl" },
+  ftplugin_filetypes = {
+    "go",
+    "graphql",
+    "html",
+    "javascript",
+    "javascriptreact",
+    "json",
+    "jsonc",
+    "log",
+    "lua",
+    "python",
+    "rust",
+    "typescript",
+    "typescriptreact.tsx",
+    "typescriptreact",
+    "yaml",
+  },
   transparent_window = false,
   line_wrap_cursor_movement = false,
   format_on_save = {
