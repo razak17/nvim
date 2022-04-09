@@ -65,55 +65,35 @@ return function()
 
   which_key.setup(rvim.which_key.setup)
 
-  _G.WhichKey = {}
-
   -- Set default keymaps
   vim.g.which_key_map = rvim.wk.leader_mode
 
-  -- plugin keymaps
-  WhichKey.SetKeyOnFT = function()
-    -- Get Which-Key keymap
-    local key_maps = vim.g.which_key_map
-    local plugin_keymaps = rvim.wk.plugin
+  -- Get Which-Key keymap
+  local key_maps = vim.g.which_key_map
+  local plugin_keymaps = rvim.wk.plugin
 
-    -- dap
-    if rvim.plugin_loaded "nvim-dap" then
-      key_maps.d = plugin_keymaps.dap
-    end
-
-    -- dap ui
-    -- if rvim.plugin_loaded "nvim-dap-ui" then
-    --   key_maps.d.e = plugin_keymaps.dap_ui.toggle
-    --   key_maps.d.i = plugin_keymaps.dap_ui.inspect
-    -- end
-
-    -- git
-    if rvim.plugins.tools.telescope.active and rvim.plugins.ui.git_signs.active then
-      key_maps.g = plugin_keymaps.git
-    end
-
-    -- lsp
-    if rvim.plugin_loaded "nvim-lspconfig" then
-      key_maps.l = plugin_keymaps.lsp
-    end
-
-    -- packer
-    if rvim.plugins.packer.active then
-      key_maps.p = plugin_keymaps.packer
-    end
-
-    -- Register keymaps
-    local opts = rvim.which_key.opts
-    local vopts = rvim.which_key.vopts
-
-    which_key.register(key_maps, opts)
-    which_key.register(rvim.wk.visual_mode, vopts)
-    which_key.register(rvim.wk.normal_mode)
+  -- git
+  if rvim.plugins.tools.telescope.active and rvim.plugins.ui.git_signs.active then
+    key_maps.g = plugin_keymaps.git
   end
 
-  rvim.augroup("WhichKeySetKeyOnFT", {
-    { event = { "BufEnter" }, pattern = { "*" }, command = "call v:lua.WhichKey.SetKeyOnFT()" },
-  })
+  -- lsp
+  if rvim.plugin_loaded "nvim-lspconfig" then
+    key_maps.l = plugin_keymaps.lsp
+  end
+
+  -- packer
+  if rvim.plugins.packer.active then
+    key_maps.p = plugin_keymaps.packer
+  end
+
+  -- Register keymaps
+  local opts = rvim.which_key.opts
+  local vopts = rvim.which_key.vopts
+
+  which_key.register(key_maps, opts)
+  which_key.register(rvim.wk.visual_mode, vopts)
+  which_key.register(rvim.wk.normal_mode)
 
   rvim.augroup("WhichKeyMode", {
     {
