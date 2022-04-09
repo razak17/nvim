@@ -107,7 +107,6 @@ completion["github/copilot.vim"] = {
   config = function()
     vim.g.copilot_no_tab_map = true
     vim.cmd [[imap <silent><script><expr> <C-l> copilot#Accept("\<CR>")]]
-    vim.cmd [[let g:copilot_no_tab_map = v:true]]
     vim.g.copilot_filetypes = {
       ["*"] = true,
       gitcommit = false,
