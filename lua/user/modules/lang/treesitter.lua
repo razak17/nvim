@@ -18,6 +18,7 @@ return function()
       "python",
       "bash",
       "lua",
+      "http",
     },
     highlight = { enabled = true },
   }

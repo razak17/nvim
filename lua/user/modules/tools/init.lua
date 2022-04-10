@@ -288,4 +288,27 @@ tools["SmiteshP/nvim-gps"] = {
   end,
   disable = not rvim.plugins.tools.gps.active,
 }
+
+tools["NTBBloodbath/rest.nvim"] = {
+  requires = { "nvim-lua/plenary.nvim" },
+  ft = { "http", "json" },
+  config = function()
+    require("rest-nvim").setup {
+      -- Open request results in a horizontal split
+      result_split_horizontal = true,
+      -- Skip SSL verification, useful for unknown certificates
+      skip_ssl_verification = true,
+      -- Jump to request line on run
+      jump_to_request = false,
+      custom_dynamic_variables = {},
+    }
+
+    require("which-key").register {
+      ["<leader>rr"] = { "<Plug>RestNvim", "rest: run" },
+      ["<leader>rp"] = { "<Plug>RestNvimPreview", "rest: preview" },
+      ["<leader>rl"] = { "<Plug>RestNvimLast", "rest: run last" },
+    }
+  end,
+}
+
 return tools
