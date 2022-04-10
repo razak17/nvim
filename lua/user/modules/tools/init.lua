@@ -16,7 +16,7 @@ rvim.plugins.tools = {
   telescope = { active = true },
   telescope_fzf = { active = true },
   telescope_ui_select = { active = true },
-  telescope_tmux = { active = true },
+  telescope_tmux = { active = false },
   telescope_media_files = { active = true },
   telescope_dap = { active = true },
   telescope_file_browser = { active = true },

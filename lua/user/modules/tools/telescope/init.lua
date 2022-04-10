@@ -345,11 +345,11 @@ return function()
         g = { rvim_files.grep_files, "find in files" },
         i = { rvim_files.view_changelog, "view changelog" },
       },
-      t = {
-        name = "+tmux",
-        s = { tmux_sessions, "sessions" },
-        w = { tmux_windows, "windows" },
-      },
+      -- t = {
+      --   name = "+tmux",
+      --   s = { tmux_sessions, "sessions" },
+      --   w = { tmux_windows, "windows" },
+      -- },
     },
   }
 end
