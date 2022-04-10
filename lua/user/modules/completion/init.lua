@@ -117,6 +117,7 @@ completion["github/copilot.vim"] = {
       ["*"] = true,
       gitcommit = false,
       NeogitCommitMessage = false,
+      ["neo-tree-popup"] = false,
     }
     require("zephyr.util").plugin("copilot", { CopilotSuggestion = { link = "Comment" } })
   end,
