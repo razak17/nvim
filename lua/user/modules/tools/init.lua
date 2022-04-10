@@ -308,13 +308,8 @@ tools["NTBBloodbath/rest.nvim"] = {
 
 tools["michaelb/sniprun"] = {
   event = "BufWinEnter",
+  config = utils.load_conf("tools", "sniprun"),
   run = "bash ./install.sh",
-  config = function()
-    rvim.nnoremap("<leader>sr", ":SnipRun<cr>", { label = "sniprun: run" })
-    rvim.vnoremap("<leader>sr", ":SnipRun<cr>", { label = "sniprun: run" })
-    rvim.nnoremap("<leader>sc", ":SnipClose<cr>", { label = "sniprun: close" })
-    rvim.nnoremap("<leader>sx", ":SnipReset<cr>", { label = "sniprun: reset" })
-  end,
   disable = not rvim.plugins.tools.sniprun.active,
 }
 
