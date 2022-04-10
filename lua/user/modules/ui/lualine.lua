@@ -135,6 +135,16 @@ return function()
     cond = conditions.hide_in_width,
   }
 
+  ins_left {
+    function()
+      local package = require "package-info"
+      if package.get_status() then
+        return package.get_status()
+      end
+    end,
+    cond = conditions.hide_in_width,
+  }
+
   ins_right {
     "diagnostics",
     sources = { "nvim_diagnostic" },
