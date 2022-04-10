@@ -29,6 +29,8 @@ rvim.plugins.tools = {
   plenary = { active = true },
   popup = { active = true },
   gps = { active = true },
+  rest = { active = true },
+  sniprun = { active = true },
   -- TODO: handle these later
   glow = { active = false }, --j
   doge = { active = false }, --j
@@ -209,11 +211,8 @@ tools["rmagatti/auto-session"] = {
       auto_restore_enabled = false,
     }
     require("which-key").register {
-      ["<leader>s"] = {
-        name = "Session",
-        l = { ":RestoreSession<cr>", "restore" },
-        s = { ":SaveSession<cr>", "save" },
-      },
+      ["<leader>sl"] = { ":RestoreSession<cr>", "auto-session: restore" },
+      ["<leader>ss"] = { ":SaveSession<cr>", "auto-session: save" },
     }
   end,
   disable = not rvim.plugins.tools.auto_session.active,
@@ -309,6 +308,19 @@ tools["NTBBloodbath/rest.nvim"] = {
       ["<leader>rl"] = { "<Plug>RestNvimLast", "rest: run last" },
     }
   end,
+  disable = not rvim.plugins.tools.rest.active,
+}
+
+tools["michaelb/sniprun"] = {
+  event = "BufWinEnter",
+  run = "bash ./install.sh",
+  config = function()
+    rvim.nnoremap("<leader>sr", ":SnipRun<cr>",{label = "sniprun: run"})
+    rvim.vnoremap("<leader>sr", ":SnipRun<cr>",{label = "sniprun: run"})
+    rvim.nnoremap("<leader>sc", ":SnipClose<cr>",{label = "sniprun: close"})
+    rvim.nnoremap("<leader>sx", ":SnipReset<cr>",{label = "sniprun: reset"})
+  end,
+  disable = not rvim.plugins.tools.sniprun.active,
 }
 
 return tools
