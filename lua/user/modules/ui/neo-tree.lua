@@ -4,6 +4,7 @@ return function()
     NeoTreeNormal = { link = "PanelBackground" },
     NeoTreeNormalNC = { link = "PanelBackground" },
     NeoTreeRootName = { bold = true, italic = false, foreground = rvim.palette.base6 },
+    NeoTreeCursorLine = { link = "Visual" },
   })
   vim.g.neo_tree_remove_legacy_commands = 1
   local icons = rvim.style.icons
@@ -18,7 +19,14 @@ return function()
       {
         event = "neo_tree_buffer_enter",
         handler = function()
-          vim.wo.signcolumn = "no"
+          vim.cmd "setlocal signcolumn=no"
+          vim.cmd "highlight! Cursor blend=100"
+        end,
+      },
+      {
+        event = "neo_tree_buffer_leave",
+        handler = function()
+          vim.cmd "highlight! Cursor blend=0"
         end,
       },
     },
@@ -49,6 +57,8 @@ return function()
       width = 40,
       mappings = {
         o = "toggle_node",
+        ["<c-s>"] = "open_split",
+        ["<c-v>"] = "open_vsplit",
       },
     },
   }
