@@ -65,5 +65,6 @@ rvim.util = {
   format_on_focus_lost = false,
   debug = false,
   defer = false,
-  colorscheme = "zephyr",
 }
+
+rvim.colorscheme = "zephyr"

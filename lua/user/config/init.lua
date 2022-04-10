@@ -22,7 +22,7 @@ if rvim.util.defer then
 end
 
 vim.g.colors_name = rvim.util.colorscheme
-vim.cmd("colorscheme " .. rvim.util.colorscheme)
+vim.cmd("colorscheme " .. rvim.colorscheme)
 R("user.config.settings"):init()
 R "user.core.commands"
 R("user.core.plugins").ensure_installed()
