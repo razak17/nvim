@@ -1,4 +1,4 @@
-R "user.modules.completion.which_key.config"
+R "user.modules.completion.config.which_key.config"
 
 return function()
   rvim.which_key = {

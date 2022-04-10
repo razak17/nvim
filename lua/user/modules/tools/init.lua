@@ -43,7 +43,7 @@ local utils = require "user.utils"
 
 tools["sindrets/diffview.nvim"] = {
   event = "BufReadPre",
-  config = utils.load_conf("tools", "diff_view"),
+  config = utils.load_conf("tools", "diffview"),
   disable = not rvim.plugins.tools.diffview.active,
 }
 

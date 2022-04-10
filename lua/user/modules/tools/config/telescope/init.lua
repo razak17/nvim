@@ -244,8 +244,8 @@ return function()
   --- from the setup call
   local builtins = require "telescope.builtin"
 
-  local rvim_files = require "user.modules.tools.telescope.nvim_files"
-  local bg_selector = require "user.modules.tools.telescope.bg_selector"
+  local rvim_files = require "user.modules.tools.config.telescope.nvim_files"
+  local bg_selector = require "user.modules.tools.config.telescope.bg_selector"
 
   local function notes()
     builtins.find_files {

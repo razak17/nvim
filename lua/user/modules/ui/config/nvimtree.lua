@@ -150,11 +150,11 @@ return function()
       { key = "cd", cb = tree_cb "cd" },
       {
         key = "gtf",
-        cb = "<cmd>lua require'user.modules.tools.telescope.utils'.start_telescope('find_files')<cr>",
+        cb = "<cmd>lua require'user.modules.tools.config.telescope.utils'.start_telescope('find_files')<cr>",
       },
       {
         key = "gtg",
-        cb = "<cmd>lua require'user.modules.tools.telescope.utils'.start_telescope('live_grep')<cr>",
+        cb = "<cmd>lua require'user.modules.tools.config.telescope.utils'.start_telescope('live_grep')<cr>",
       },
     }
   end

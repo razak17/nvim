@@ -73,7 +73,7 @@ function utils.load_conf(dir, name)
     return require(string.format(dir .. ".%s", name))
   end
 
-  return require(fmt(module_dir .. ".%s", name))
+  return require(fmt(module_dir .. ".%s.%s", "config", name))
 end
 
 function utils.enable_transparent_mode()
