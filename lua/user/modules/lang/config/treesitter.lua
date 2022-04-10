@@ -1,26 +1,84 @@
 return function()
   rvim.treesitter = {
-    ensure_installed = {
-      "html",
-      "css",
-      "javascript",
-      "typescript",
-      "tsx",
-      "graphql",
-      "jsdoc",
-      "json",
-      "yaml",
-      "go",
-      "c",
-      "dart",
-      "cpp",
-      "rust",
-      "python",
-      "bash",
-      "lua",
-      "http",
+    setup = {
+      highlight = { enabled = true },
+      ensure_installed = vim.tbl_flatten {
+        { "c", "cpp", "hcl", "comment", "make", "query", "toml", "dart", "bash", "regex" },
+        { "ruby", "elm", "go", "gomod", "markdown", "help", "vim", "norg", "comment", "css" },
+        { "lua", "teal", "typescript", "tsx", "javascript", "jsdoc", "json", "jsonc", "http" },
+        { "dockerfile", "kotlin", "graphql", "html", "yaml", "make", "ocaml" },
+        { "java", "python", "rust" },
+      },
+      incremental_selection = {
+        enable = true,
+        keymaps = {
+          init_selection = "<CR>",
+          scope_incremental = "<CR>",
+          node_incremental = "<TAB>",
+          node_decremental = "<S-TAB>",
+        },
+      },
+      autotag = {
+        enable = rvim.plugins.lang.autotag.active,
+        filetypes = { "html", "xml", "typescriptreact", "javascriptreact" },
+      },
+      textobjects = {
+        lookahead = true,
+        select = {
+          enable = true,
+          keymaps = {
+            ["af"] = "@function.outer",
+            ["if"] = "@function.inner",
+            ["ac"] = "@class.outer",
+            ["ic"] = "@class.inner",
+            ["aC"] = "@conditional.outer",
+            ["iC"] = "@conditional.inner",
+          },
+        },
+        swap = {
+          enable = true,
+          swap_next = {
+            ["[w"] = "@parameter.inner",
+          },
+          swap_previous = {
+            ["]w"] = "@parameter.inner",
+          },
+        },
+        move = {
+          enable = true,
+          set_jumps = true, -- whether to set jumps in the jumplist
+          goto_next_start = {
+            ["]m"] = "@function.outer",
+            ["]]"] = "@class.outer",
+          },
+          goto_previous_start = {
+            ["[m"] = "@function.outer",
+            ["[["] = "@class.outer",
+          },
+        },
+        lsp_interop = {
+          enable = true,
+          border = rvim.style.border.current,
+          peek_definition_code = {
+            ["<leader>lu"] = "@function.outer",
+            ["<leader>lF"] = "@class.outer",
+          },
+        },
+      },
+      rainbow = {
+        enable = rvim.plugins.lang.rainbow.active,
+        extended_mode = true,
+        max_file_lines = 1000,
+        disable = { "lua", "json", "c", "cpp", "html" },
+        colors = {
+          "royalblue3",
+          "darkorange3",
+          "seagreen3",
+          "firebrick",
+          "darkorchid3",
+        },
+      },
     },
-    highlight = { enabled = true },
   }
 
   ---Get all filetypes for which we have a treesitter parser installed
@@ -43,87 +101,22 @@ return function()
 
   treesitter_configs.setup {
     highlight = {
-      enable = rvim.treesitter.highlight.enabled,
+      enable = rvim.treesitter.setup.highlight.enabled,
       additional_vim_regex_highlighting = true,
     },
-    incremental_selection = {
-      enable = true,
-      keymaps = {
-        init_selection = "<CR>",
-        scope_incremental = "<CR>",
-        node_incremental = "<TAB>",
-        node_decremental = "<S-TAB>",
-      },
-    },
-    textobjects = {
-      lookahead = true,
-      select = {
-        enable = true,
-        keymaps = {
-          ["af"] = "@function.outer",
-          ["if"] = "@function.inner",
-          ["ac"] = "@class.outer",
-          ["ic"] = "@class.inner",
-          ["aC"] = "@conditional.outer",
-          ["iC"] = "@conditional.inner",
-        },
-      },
-      swap = {
-        enable = true,
-        swap_next = {
-          ["[w"] = "@parameter.inner",
-        },
-        swap_previous = {
-          ["]w"] = "@parameter.inner",
-        },
-      },
-      move = {
-        enable = true,
-        set_jumps = true, -- whether to set jumps in the jumplist
-        goto_next_start = {
-          ["]m"] = "@function.outer",
-          ["]]"] = "@class.outer",
-        },
-        goto_previous_start = {
-          ["[m"] = "@function.outer",
-          ["[["] = "@class.outer",
-        },
-      },
-      lsp_interop = {
-        enable = true,
-        border = rvim.style.border.current,
-        peek_definition_code = {
-          ["<leader>lu"] = "@function.outer",
-          ["<leader>lF"] = "@class.outer",
-        },
-      },
-    },
+    incremental_selection = rvim.treesitter.setup.incremental_selection,
+    textobjects = rvim.treesitter.setup.textobjects,
     indent = { enable = { "javascriptreact" } },
-    autotag = {
-      enable = rvim.plugins.lang.autotag.active,
-      filetypes = { "html", "xml", "typescriptreact", "javascriptreact" },
-    },
+    autotag = rvim.treesitter.setup.autotag,
     matchup = { enable = rvim.plugins.lang.matchup.active, disable = { "c", "python" } },
     autopairs = { enable = rvim.plugins.lang.autopairs.active },
-    rainbow = {
-      enable = rvim.plugins.lang.rainbow.active,
-      extended_mode = true,
-      max_file_lines = 1000,
-      disable = { "lua", "json", "c", "cpp", "html" },
-      colors = {
-        "royalblue3",
-        "darkorange3",
-        "seagreen3",
-        "firebrick",
-        "darkorchid3",
-      },
-    },
+    rainbow = rvim.treesitter.setup.rainbow,
     query_linter = {
       enable = true,
       use_virtual_text = true,
       lint_events = { "BufWrite", "CursorHold" },
     },
-    ensure_installed = rvim.treesitter.ensure_installed,
+    ensure_installed = rvim.treesitter.setup.ensure_installed,
   }
 
   rvim.nnoremap("R", ":edit | TSBufEnable highlight<CR>", {})
