@@ -16,7 +16,7 @@ end
 vim.cmd [[let &packpath = &runtimepath]]
 
 R "user.config.defaults"
-R "user.palette"
+R "user.config.palette"
 R "user.config.style"
 R "user.lsp.config"
 R("user.lsp.manager").init()
