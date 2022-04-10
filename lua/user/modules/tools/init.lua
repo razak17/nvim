@@ -31,6 +31,7 @@ rvim.plugins.tools = {
   gps = { active = true },
   rest = { active = true },
   sniprun = { active = true },
+  package_info = { active = true },
   -- TODO: handle these later
   glow = { active = false }, --j
   doge = { active = false }, --j
@@ -315,6 +316,14 @@ tools["michaelb/sniprun"] = {
     rvim.nnoremap("<leader>sx", ":SnipReset<cr>", { label = "sniprun: reset" })
   end,
   disable = not rvim.plugins.tools.sniprun.active,
+}
+
+tools["vuki656/package-info.nvim"] = {
+  event = "BufWinEnter",
+  ft = { "json" },
+  config = utils.load_conf("tools", "package-info"),
+  requires = "MunifTanjim/nui.nvim",
+  disable = not rvim.plugins.tools.package_info.active,
 }
 
 return tools

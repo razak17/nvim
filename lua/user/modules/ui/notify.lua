@@ -4,15 +4,13 @@ return function()
   if vim.g.packer_compiled_loaded then
     return
   end
-  require("zephyr.util").plugin(
-    "notify",
-  {
-    NotifyERRORBody = { link = "NormalFloat" } ,
-    NotifyWARNBody = { link = "NormalFloat" } ,
-    NotifyINFOBody = { link = "NormalFloat" } ,
-    NotifyDEBUGBody = { link = "NormalFloat" } ,
-    NotifyTRACEBody = { link = "NormalFloat" }}
-  )
+  require("zephyr.util").plugin("notify", {
+    NotifyERRORBody = { link = "NormalFloat" },
+    NotifyWARNBody = { link = "NormalFloat" },
+    NotifyINFOBody = { link = "NormalFloat" },
+    NotifyDEBUGBody = { link = "NormalFloat" },
+    NotifyTRACEBody = { link = "NormalFloat" },
+  })
   if #vim.api.nvim_list_uis() == 0 then
     -- no need to configure notifications in headless
     return
@@ -65,7 +63,7 @@ return function()
   require("telescope").load_extension "notify"
 
   require("which-key").register {
-    ["<leader>nn"] = { ":Notifications<cr>", "notifications" },
-    ["<leader>nx"] = { notify.dismiss, "dismiss notifications" },
+    ["<leader>nn"] = { ":Notifications<cr>", "notify: show" },
+    ["<leader>nx"] = { notify.dismiss, "notify: dimiss" },
   }
 end

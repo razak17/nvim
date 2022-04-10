@@ -299,13 +299,13 @@ vnoremap("<leader>[", [["zy:%s/<C-r><C-o>"/]], { silent = false, label = "replac
 -----------------------------------------------------------------------------//
 -- open a new file in the same directory
 nnoremap(
-  "<leader>nf",
+  "<leader>no",
   [[:e <C-R>=expand("%:p:h") . "/" <CR>]],
   { silent = false, label = "open file in same dir" }
 )
 -- create a new file in the same directory
 nnoremap(
-  "<leader>ns",
+  "<leader>nf",
   [[:vsp <C-R>=expand("%:p:h") . "/" <CR>]],
   { silent = false, label = "create new file in same dir" }
 )
