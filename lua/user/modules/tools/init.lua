@@ -73,10 +73,6 @@ tools["kkoomen/vim-doge"] = {
   run = ":call doge#install()",
   config = function()
     vim.g.doge_mapping = "<Leader>lD"
-
-    require("which-key").register {
-      ["<leader>lD"] = "DOGe",
-    }
   end,
   disable = not rvim.plugins.tools.doge.active,
 }
@@ -302,11 +298,9 @@ tools["NTBBloodbath/rest.nvim"] = {
       custom_dynamic_variables = {},
     }
 
-    require("which-key").register {
-      ["<leader>rr"] = { "<Plug>RestNvim", "rest: run" },
-      ["<leader>rp"] = { "<Plug>RestNvimPreview", "rest: preview" },
-      ["<leader>rl"] = { "<Plug>RestNvimLast", "rest: run last" },
-    }
+    rvim.nnoremap("<leader>rr", "<Plug>RestNvim", { label = "rest: run" })
+    rvim.nnoremap("<leader>rp", "<Plug>RestNvimPreview", { label = "rest: run" })
+    rvim.nnoremap("<leader>rl", "<Plug>RestNvimLast", { label = "rest: run" })
   end,
   disable = not rvim.plugins.tools.rest.active,
 }
@@ -315,10 +309,10 @@ tools["michaelb/sniprun"] = {
   event = "BufWinEnter",
   run = "bash ./install.sh",
   config = function()
-    rvim.nnoremap("<leader>sr", ":SnipRun<cr>",{label = "sniprun: run"})
-    rvim.vnoremap("<leader>sr", ":SnipRun<cr>",{label = "sniprun: run"})
-    rvim.nnoremap("<leader>sc", ":SnipClose<cr>",{label = "sniprun: close"})
-    rvim.nnoremap("<leader>sx", ":SnipReset<cr>",{label = "sniprun: reset"})
+    rvim.nnoremap("<leader>sr", ":SnipRun<cr>", { label = "sniprun: run" })
+    rvim.vnoremap("<leader>sr", ":SnipRun<cr>", { label = "sniprun: run" })
+    rvim.nnoremap("<leader>sc", ":SnipClose<cr>", { label = "sniprun: close" })
+    rvim.nnoremap("<leader>sx", ":SnipReset<cr>", { label = "sniprun: reset" })
   end,
   disable = not rvim.plugins.tools.sniprun.active,
 }
