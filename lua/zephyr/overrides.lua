@@ -8,8 +8,7 @@ local function general_overrides()
   -- local error_line = util.alter_color(P.error_red, -80)
   local msg_area_bg = rvim.util.transparent_window and "NONE" or P.darker_bg
   util.all {
-    -- { "VertSplit", { background = "NONE", foreground = util.get_hl("NonText", "fg") } },
-    WinSeparator = { background = "NONE", foreground = util.get_hl("NonText", "fg") },
+    -- WinSeparator = { background = "NONE", foreground = util.get_hl("VertSplit", "fg") },
     MsgArea = { background = msg_area_bg },
     mkdLineBreak = { link = "NONE" },
     -----------------------------------------------------------------------------//
