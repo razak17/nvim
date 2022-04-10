@@ -32,11 +32,11 @@ rvim.plugins.lang = {
   textobjects = { active = true },
 }
 
-local utils = require "user.utils"
+local load_conf = require "user.utils".load_conf
 
 -- Debugging
 lang["mfussenegger/nvim-dap"] = {
-  config = utils.load_conf("user", "dap"),
+  config = load_conf("user", "dap"),
   disable = not rvim.plugins.lang.dap.active,
 }
 
@@ -187,7 +187,7 @@ lang["kevinhwang91/nvim-bqf"] = {
 -- Treesitter
 lang["nvim-treesitter/nvim-treesitter"] = {
   branch = vim.fn.has "nvim-0.6" == 1 and "master" or "0.5-compat",
-  config = utils.load_conf("lang", "treesitter"),
+  config = load_conf("lang", "treesitter"),
   disable = not rvim.plugins.lang.treesitter.active,
 }
 
@@ -234,7 +234,7 @@ lang["windwp/nvim-ts-autotag"] = {
 lang["windwp/nvim-autopairs"] = {
   event = "InsertEnter",
   after = { "telescope.nvim", "nvim-treesitter" },
-  config = utils.load_conf("lang", "autopairs"),
+  config = load_conf("lang", "autopairs"),
   disable = not rvim.plugins.lang.autopairs.active,
 }
 

@@ -39,11 +39,11 @@ rvim.plugins.tools = {
   restconsole = { active = false }, --j
 }
 
-local utils = require "user.utils"
+local load_conf = require "user.utils".load_conf
 
 tools["sindrets/diffview.nvim"] = {
   event = "BufReadPre",
-  config = utils.load_conf("tools", "diffview"),
+  config = load_conf("tools", "diffview"),
   disable = not rvim.plugins.tools.diffview.active,
 }
 
@@ -60,7 +60,7 @@ tools["mbbill/undotree"] = {
 }
 
 tools["ahmedkhalf/project.nvim"] = {
-  config = utils.load_conf("tools", "project"),
+  config = load_conf("tools", "project"),
   disable = not rvim.plugins.tools.project.active,
 }
 
@@ -80,7 +80,7 @@ tools["kkoomen/vim-doge"] = {
 
 tools["numToStr/FTerm.nvim"] = {
   event = { "BufWinEnter" },
-  config = utils.load_conf("tools", "fterm"),
+  config = load_conf("tools", "fterm"),
   disable = not rvim.plugins.tools.fterm.active,
 }
 
@@ -159,7 +159,7 @@ tools["AckslD/nvim-neoclip.lua"] = {
 }
 
 tools["nvim-telescope/telescope.nvim"] = {
-  config = utils.load_conf("tools", "telescope"),
+  config = load_conf("tools", "telescope"),
   disable = not rvim.plugins.tools.telescope.active,
 }
 
@@ -217,7 +217,7 @@ tools["rmagatti/auto-session"] = {
 
 tools["phaazon/hop.nvim"] = {
   keys = { { "n", "s" }, "f", "F" },
-  config = utils.load_conf("tools", "hop"),
+  config = load_conf("tools", "hop"),
   disable = not rvim.plugins.tools.hop.active,
 }
 
@@ -269,7 +269,7 @@ tools["tpope/vim-apathy"] = {
 }
 
 tools["tpope/vim-projectionist"] = {
-  config = utils.load_conf("tools", "vim-projectionist"),
+  config = load_conf("tools", "vim-projectionist"),
   disable = not rvim.plugins.tools.projectionist.active,
 }
 
@@ -308,7 +308,7 @@ tools["NTBBloodbath/rest.nvim"] = {
 
 tools["michaelb/sniprun"] = {
   event = "BufWinEnter",
-  config = utils.load_conf("tools", "sniprun"),
+  config = load_conf("tools", "sniprun"),
   run = "bash ./install.sh",
   disable = not rvim.plugins.tools.sniprun.active,
 }
@@ -316,7 +316,7 @@ tools["michaelb/sniprun"] = {
 tools["vuki656/package-info.nvim"] = {
   event = "BufWinEnter",
   ft = { "json" },
-  config = utils.load_conf("tools", "package-info"),
+  config = load_conf("tools", "package-info"),
   requires = "MunifTanjim/nui.nvim",
   disable = not rvim.plugins.tools.package_info.active,
 }

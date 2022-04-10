@@ -8,8 +8,7 @@ rvim.plugins.completion = {
   copilot = { active = true },
 }
 
-local utils = require "user.utils"
-local load_conf = utils.load_conf
+local load_conf = require "user.utils".load_conf
 
 completion["folke/which-key.nvim"] = {
   config = load_conf("completion", "which_key"),
