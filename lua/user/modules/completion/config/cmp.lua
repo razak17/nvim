@@ -37,13 +37,13 @@ return function()
       "Normal:NormalFloat",
       "FloatBorder:FloatBorder",
       "CursorLine:Visual",
-        completion = {
-          -- TODO: consider 'shadow', and tweak the winhighlight
-          border = border,
-        },
-        documentation = {
-          border = border,
-        },
+      completion = {
+        -- TODO: consider 'shadow', and tweak the winhighlight
+        border = border,
+      },
+      documentation = {
+        border = border,
+      },
       "Search:None",
     }, ","),
   }
@@ -170,9 +170,6 @@ return function()
         expand = function(args)
           require("luasnip").lsp_expand(args.body)
         end,
-      },
-      documentation = {
-        border = border,
       },
       sources = {
         { name = "nvim_lsp" },
