@@ -8,7 +8,7 @@ rvim.plugins.completion = {
   copilot = { active = true },
 }
 
-local load_conf = require "user.utils".load_conf
+local load_conf = require("user.utils").load_conf
 
 completion["folke/which-key.nvim"] = {
   config = load_conf("completion", "which_key"),
@@ -116,6 +116,7 @@ completion["github/copilot.vim"] = {
       ["*"] = true,
       gitcommit = false,
       NeogitCommitMessage = false,
+      DressingInput = false,
       ["neo-tree-popup"] = false,
     }
     require("zephyr.util").plugin("copilot", { CopilotSuggestion = { link = "Comment" } })
