@@ -445,10 +445,10 @@ nnoremap("<leader>ah", "<C-W>s", { label = "horizontal split" })
 -- opens a vertical split
 nnoremap("<leader>V", "<C-W>v", { label = "vsplit" })
 -- Bufferlline
-if not rvim.plugins.ui.bufferline.active then
-  nnoremap("<S-l>", ":bnext<CR>")
-  nnoremap("<S-h>", ":bprevious<CR>")
-end
+-- if not rvim.plugins.ui.bufferline.active then
+--   nnoremap("<S-l>", ":bnext<CR>")
+--   nnoremap("<S-h>", ":bprevious<CR>")
+-- end
 
 nnoremap("<leader>lG", function()
   require("user.lsp.templates").generate_templates()
