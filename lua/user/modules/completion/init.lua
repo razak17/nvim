@@ -17,7 +17,6 @@ completion["folke/which-key.nvim"] = {
 
 -- nvim-cmp
 completion["hrsh7th/nvim-cmp"] = {
-  event = "InsertEnter",
   config = load_conf("completion", "cmp"),
   disable = not rvim.plugins.completion.cmp.active,
 }
