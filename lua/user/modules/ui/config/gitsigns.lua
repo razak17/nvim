@@ -13,6 +13,7 @@ return function()
         topdelete = { hl = "GitGutterDeleteChange", text = "▔" },
         changedelete = { hl = "GitGutterChange", text = "▎" },
       },
+      _threaded_diff = true, -- NOTE: experimental but I'm curious
       word_diff = false,
       numhl = false,
       preview_config = {
