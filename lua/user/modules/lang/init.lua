@@ -32,7 +32,7 @@ rvim.plugins.lang = {
   textobjects = { active = true },
 }
 
-local load_conf = require "user.utils".load_conf
+local load_conf = require("user.utils").load_conf
 
 -- Debugging
 lang["mfussenegger/nvim-dap"] = {
@@ -83,6 +83,7 @@ lang["jbyuki/one-small-step-for-vimkind"] = {
 }
 
 lang["theHamsta/nvim-dap-virtual-text"] = {
+  after = "nvim-dap",
   config = function()
     require("nvim-dap-virtual-text").setup {
       enabled = true, -- enable this plugin (the default)
@@ -178,7 +179,9 @@ lang["kevinhwang91/nvim-bqf"] = {
   after = "telescope.nvim",
   config = function()
     require("bqf").setup {
-      preview = { border_chars = { "│", "│", "─", "─", "┌", "┐", "└", "┘", "█" } },
+      preview = {
+        border_chars = { "│", "│", "─", "─", "┌", "┐", "└", "┘", "█" },
+      },
     }
   end,
   disable = not rvim.plugins.lang.bqf.active,
