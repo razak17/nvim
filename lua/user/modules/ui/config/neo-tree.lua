@@ -32,6 +32,7 @@ return function()
     },
     filesystem = {
       netrw_hijack_behavior = "open_current",
+      use_libuv_file_watcher = true,
       filtered_items = {
         visible = true,
         hide_dotfiles = false,
@@ -54,6 +55,10 @@ return function()
       },
     },
     window = {
+      mapping_options = {
+        noremap = true,
+        nowait = true,
+      },
       position = "right",
       width = 40,
       mappings = {
