@@ -17,6 +17,7 @@ completion["folke/which-key.nvim"] = {
 
 -- nvim-cmp
 completion["hrsh7th/nvim-cmp"] = {
+  branch = dev,
   config = load_conf("completion", "cmp"),
   disable = not rvim.plugins.completion.cmp.active,
 }
