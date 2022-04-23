@@ -1,5 +1,4 @@
-local Log = require "user.core.log"
-Log:debug "Starting rVim"
+local Log = require "user.core.log" Log:debug "Starting rVim"
 
 vim.g.python3_host_prog = rvim.paths.python3
 vim.g.node_host_prog = rvim.paths.node

@@ -57,7 +57,7 @@ pythonVenvInit() {
 }
 
 pythonExtra() {
-	pip3 install ueberzug isort yapf black flake8 pylint mypy
+	pip3 install ueberzug isort yapf black flake8 pylint mypy black isort
 }
 
 golangInit() {
@@ -67,11 +67,11 @@ golangInit() {
 }
 
 installExtra() {
-	sudo pacman -S ripgrep fzf cppcheck
+	sudo pacman -S ripgrep fzf cppcheck stylua shfmt shellcheck
 }
 
 nodeExtra() {
-	npm install -g tree-sitter-cli eslint prettier_d_slim
+	npm install -g tree-sitter-cli eslint prettier_d_slim esint_d
 }
 
 rconf() {
