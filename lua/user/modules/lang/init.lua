@@ -254,10 +254,10 @@ lang["ray-x/lsp_signature.nvim"] = {
   config = function()
     require("lsp_signature").setup {
       debug = false,
-      log_path = rvim.get_cache_dir() .. "/lsp_signature.log", -- log dir when debug is on
+      log_path = rvim.get_cache_dir() .. "/lsp_signature.log",
       bind = true,
       fix_pos = false,
-      auto_close_after = 15, -- close after 15 seconds
+      auto_close_after = 15,
       hint_enable = false,
       handler_opts = { border = "rounded" },
     }
