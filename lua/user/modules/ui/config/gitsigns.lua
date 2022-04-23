@@ -31,9 +31,9 @@ return function()
             j = { gs.next_hunk, "Next Hunk" },
             k = { gs.prev_hunk, "Prev Hunk" },
             m = { qf_list_modified, "list modified in qf" },
-            s = { gs.stage_hunk, "stage" },
+            -- s = { gs.stage_hunk, "stage" },
             u = { gs.undo_stage_hunk, "undo stage" },
-            r = { gs.reset_hunk, "reset hunk" },
+            -- r = { gs.reset_hunk, "reset hunk" },
             p = { gs.preview_hunk, "preview hunk" },
             l = { gs.blame_line, "blame line" },
             R = { gs.reset_buffer, "reset buffer" },
@@ -53,6 +53,16 @@ return function()
   }
 
   gitsigns.setup(rvim.gitsigns.setup)
+
+  vim.keymap.set("v", "<leader>hs", function()
+    gitsigns.stage_hunk { vim.fn.line ".", vim.fn.line "v" }
+  end)
+  vim.keymap.set("v", "<leader>hr", function()
+    gitsigns.reset_hunk { vim.fn.line ".", vim.fn.line "v" }
+  end)
+
+  vim.keymap.set({ "n" }, "<leader>hs", "<cmd>Gitsigns stage_hunk<CR>")
+  vim.keymap.set({ "n" }, "<leader>hr", "<cmd>Gitsigns reset_hunk<CR>")
 
   require("which-key").register {
     ["<leader>h"] = {
