@@ -98,7 +98,7 @@ M.load_default_options = function()
       fold = " ",
       eob = " ", -- suppress ~ at EndOfBuffer
       diff = "╱", -- alternatives = ⣿ ░ ─
-      msgsep = "‾",
+      msgsep = " ", -- alternatives: ‾ ─
       foldopen = "▾",
       foldsep = "│",
       foldclose = "▸",
