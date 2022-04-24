@@ -292,6 +292,7 @@ lang["ray-x/go.nvim"] = {
         prefix = rvim.style.icons.misc.bug,
       },
       dap_debug_keymap = false,
+      textobjects = false,
     }
   end,
   disable = not rvim.plugins.lang.go_nvim.active,
