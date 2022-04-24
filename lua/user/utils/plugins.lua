@@ -126,7 +126,7 @@ function M:use_local(original)
   use(spec)
 end
 
-function M:goto_repo()
+function M.goto_repo()
   local repo = fn.expand "<cfile>"
   if repo:match "https://" then
     return vim.cmd "norm gx"

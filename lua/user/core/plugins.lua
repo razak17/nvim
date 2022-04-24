@@ -92,11 +92,7 @@ rvim.augroup("PackerSetupInit", {
     pattern = {
       rvim.get_user_dir() .. "modules/**/init.lua",
     },
-    command = function()
-      rvim.nnoremap("gf", function()
-        utils:goto_repo()
-      end)
-    end,
+    command = utils.goto_repo
   },
   {
     event = "User",
