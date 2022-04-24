@@ -57,7 +57,7 @@ pythonVenvInit() {
 }
 
 pythonExtra() {
-	pip3 install ueberzug isort yapf black flake8 pylint mypy black isort
+	pip3 install ueberzug yapf black flake8 pylint mypy black isort
 }
 
 golangInit() {
