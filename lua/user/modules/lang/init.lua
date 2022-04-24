@@ -286,6 +286,7 @@ lang["ray-x/go.nvim"] = {
       goimport = "goimports",
       lsp_cfg = true,
       lsp_gofumpt = true,
+      lsp_keymaps = false,
       lsp_on_attach = require("user.lsp").global_on_attach,
       lsp_diag_virtual_text = {
         space = 0,
