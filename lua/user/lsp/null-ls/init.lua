@@ -23,6 +23,7 @@ function M:setup()
       filetypes = {
         "javascript",
         "typescriptreact",
+        "javascriptreact",
         "html",
         "json",
         "yaml",
@@ -35,7 +36,7 @@ function M:setup()
       exe = "eslint_d",
       stdin = true,
       args = { "--fix" },
-      filetypes = { "vue", "typescriptreact", "typescript" },
+      filetypes = { "vue", "javascript", "javascriptreact", "typescriptreact", "typescript" },
     },
     {
       exe = "stylua",
