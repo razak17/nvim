@@ -127,7 +127,7 @@ function M.enable_lsp_hover_diagnostics(bufnr)
             and (new_cursor[1] ~= cursorpos[1] or new_cursor[2] ~= cursorpos[2])
           then
             cursorpos = new_cursor
-            vim.lsp.diagnostic.show_line_diagnostics { show_header = false, border = "single" }
+            vim.diagnostic.open_float({ scope = "line" }, { focus = false })
           end
         end
       end)(),
