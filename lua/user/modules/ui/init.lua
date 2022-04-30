@@ -14,6 +14,7 @@ rvim.plugins.ui = {
   specs = { active = false },
   dim = { active = true },
   neo_tree = { active = true },
+  vim_highlighturl = { active = true },
 }
 
 local utils = require "user.utils"
@@ -153,6 +154,13 @@ ui["nvim-neo-tree/neo-tree.nvim"] = {
     "kyazdani42/nvim-web-devicons",
   },
   disable = not rvim.plugins.ui.neo_tree.active,
+}
+
+ui["itchyny/vim-highlighturl"] = {
+  config = function()
+    vim.g.highlighturl_guifg = require("zephyr.util").get_hl("URL", "fg")
+  end,
+  disable = not rvim.plugins.ui.vim_highlighturl.active,
 }
 
 return ui
