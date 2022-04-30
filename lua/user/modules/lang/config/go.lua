@@ -5,9 +5,13 @@ return function()
     gopls_cmd = { install_root_dir .. "/go/gopls" },
     max_line_len = 100,
     goimport = "gopls", -- NOTE: using goimports comes with unintended formatting consequences
+    lsp_codelens = false,
     lsp_cfg = {
       codelenses = {
+        generate = true,
         gc_details = false,
+        test = true,
+        tidy = true,
       },
       analyses = {
         unusedparams = true,
