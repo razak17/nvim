@@ -13,7 +13,6 @@ return function()
   require("marks").setup {
     force_write_shada = true,
     excluded_filetypes = { "NeogitStatus", "NeogitCommitMessage", "toggleterm" },
-    builtin_marks = { "." },
     bookmark_0 = {
       sign = "⚑",
       virt_text = "bookmarks",
