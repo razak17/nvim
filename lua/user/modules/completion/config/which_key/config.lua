@@ -87,11 +87,14 @@ rvim.wk = {
   plugin = {
     lsp = {
       name = "+Lsp",
-      d = { ":Telescope diagnostics bufnr=0 theme=get_ivy<cr>", "telescope: document diagnostics" },
+      d = {
+        ":Telescope diagnostics bufnr=0 theme=get_ivy<cr>",
+        "telescope: document diagnostics",
+      },
       i = { ":LspInfo<cr>", "lsp: info" },
       I = { ":LspInstallInfo<cr>", "lspinstaller: info" },
       n = { ":NullLsInfo<cr>", "null-ls: info" },
-      N = { ":NlspBufConfig<cr>", "nlsp: buffer config" },
+      N = { ":LspSettings<cr>", "nlsp: buffer config" },
       p = { name = "+Peek" },
       a = { ":Telescope lsp_code_actions<cr>", "telescope: code action" },
       A = { ":Telescope lsp_range_code_actions<cr>", "telescope: range code action" },
