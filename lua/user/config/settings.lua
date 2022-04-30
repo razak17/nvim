@@ -187,6 +187,8 @@ M.load_default_options = function()
   vim.opt.shadafile = join_paths(rvim.get_cache_dir(), "shada", "rvim.shada")
   vim.opt.cursorlineopt = "screenline,number"
   vim.opt.spellsuggest:prepend { 12 }
+  vim.opt.spelloptions = "camel"
+  vim.opt.spelllang:append "programming"
   vim.opt.fileformats = { "unix", "mac", "dos" }
 
   for k, v in pairs(default_options) do

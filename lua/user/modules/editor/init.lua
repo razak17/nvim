@@ -15,9 +15,10 @@ rvim.plugins.editor = {
   tabout = { active = true },
   marks = { active = true },
   vim_uppercase_sql = { active = true },
+  vim_dirtytalk = { active = true },
 }
 
-local load_conf = require "user.utils".load_conf
+local load_conf = require("user.utils").load_conf
 
 editor["xiyaowong/accelerated-jk.nvim"] = {
   event = { "BufWinEnter" },
@@ -168,6 +169,11 @@ editor["jsborjesson/vim-uppercase-sql"] = {
   event = "InsertEnter",
   ft = { "sql" },
   disable = not rvim.plugins.editor.vim_uppercase_sql.active,
+}
+
+editor["psliwka/vim-dirtytalk"] = {
+  run = ":DirtytalkUpdate",
+  disable = not rvim.plugins.editor.vim_dirtytalk.active,
 }
 
 return editor
