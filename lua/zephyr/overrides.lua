@@ -11,6 +11,8 @@ local function general_overrides()
     -- WinSeparator = { background = "NONE", foreground = util.get_hl("VertSplit", "fg") },
     MsgArea = { background = msg_area_bg },
     mkdLineBreak = { link = "NONE" },
+    Directory = { inherit = "Keyword", bold = true },
+    URL = { inherit = "Keyword", underline = true },
     -----------------------------------------------------------------------------//
     -- Floats
     -----------------------------------------------------------------------------//
@@ -47,7 +49,7 @@ local function general_overrides()
     -----------------------------------------------------------------------------//
     -- Treesitter
     -----------------------------------------------------------------------------//
-    TSNamespace = { link = 'TypeBuiltin' },
+    TSNamespace = { link = "TypeBuiltin" },
     TSKeywordReturn = { italic = true, foreground = keyword_fg },
     -- TSError = { undercurl = true, sp = error_line, foreground = "NONE" } ,
     TSParameter = { italic = true, bold = true, foreground = "NONE" },
