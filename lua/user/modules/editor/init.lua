@@ -18,7 +18,7 @@ rvim.plugins.editor = {
   vim_dirtytalk = { active = true },
 }
 
-local load_conf = require("user.utils").load_conf
+local conf = require("user.utils").load_conf
 
 editor["xiyaowong/accelerated-jk.nvim"] = {
   event = { "BufWinEnter" },
@@ -43,7 +43,7 @@ editor["tpope/vim-surround"] = {
 
 editor["monaqa/dial.nvim"] = {
   event = { "BufWinEnter" },
-  config = load_conf("editor", "dial"),
+  config = conf("editor", "dial"),
   disable = not rvim.plugins.editor.dial.active,
 }
 
@@ -129,7 +129,7 @@ editor["b3nj5m1n/kommentary"] = {
 
 editor["Matt-A-Bennett/vim-surround-funk"] = {
   event = "BufWinEnter",
-  config = load_conf("editor", "vim-surround-funk"),
+  config = conf("editor", "vim-surround-funk"),
   disable = not rvim.plugins.editor.surround_funk.active,
 }
 
@@ -161,7 +161,7 @@ editor["abecodes/tabout.nvim"] = {
 
 editor["chentau/marks.nvim"] = {
   event = { "BufWinEnter" },
-  config = load_conf("editor", "marks"),
+  config = conf("editor", "marks"),
   disable = not rvim.plugins.editor.marks.active,
 }
 

@@ -8,23 +8,23 @@ rvim.plugins.completion = {
   copilot = { active = true },
 }
 
-local load_conf = require("user.utils").load_conf
+local conf = require("user.utils").load_conf
 
 completion["folke/which-key.nvim"] = {
-  config = load_conf("completion", "which_key"),
+  config = conf("completion", "which_key"),
   disable = not rvim.plugins.completion.which_key.active,
 }
 
 -- nvim-cmp
 completion["hrsh7th/nvim-cmp"] = {
   branch = "dev",
-  config = load_conf("completion", "cmp"),
+  config = conf("completion", "cmp"),
   disable = not rvim.plugins.completion.cmp.active,
 }
 
 completion["L3MON4D3/LuaSnip"] = {
   event = "InsertEnter",
-  config = load_conf("completion", "luasnip"),
+  config = conf("completion", "luasnip"),
   disable = not rvim.plugins.completion.luasnip.active,
 }
 
