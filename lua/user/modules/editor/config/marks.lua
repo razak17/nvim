@@ -11,6 +11,7 @@ return function()
     prefix = "<leader>",
   })
   require("marks").setup {
+    force_write_shada = true,
     builtin_marks = { "." },
     bookmark_0 = {
       sign = "⚑",
