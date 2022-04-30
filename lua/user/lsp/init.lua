@@ -32,10 +32,15 @@ local function lsp_code_lens_refresh(client, bufnr)
 end
 
 local function lsp_setup_tagfunc(client, bufnr)
-  if not client.resolved_capabilities.goto_definition then
+  if
+    not client.resolved_capabilities.goto_definition
+    or not client.resolved_capabilities.document_formatting
+  then
     return
   end
-  vim.bo[bufnr].tagfunc = "v:lua.rvim.lsp.tagfunc"
+
+  vim.bo[bufnr].tagfunc = "v:lua.vim.lsp.tagfunc"
+  vim.bo[bufnr].formatexpr = "v:lua.vim.lsp.formatexpr()"
 end
 
 function M.global_capabilities()
