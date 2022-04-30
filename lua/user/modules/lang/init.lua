@@ -101,11 +101,14 @@ lang["williamboman/nvim-lsp-installer"] = {
     "neovim/nvim-lspconfig",
   },
   config = function()
-    vim.api.nvim_create_autocmd("Filetype", {
-      pattern = "lsp-installer",
-      callback = function()
-        vim.api.nvim_win_set_config(0, { border = rvim.style.current.border })
-      end,
+    rvim.augroup("LspInstallerConfig", {
+      {
+        event = "Filetype",
+        pattern = "lsp-installer",
+        command = function()
+          vim.api.nvim_win_set_config(0, { border = rvim.style.current.border })
+        end,
+      },
     })
   end,
   disable = not rvim.plugins.lang.lsp_installer.active,
