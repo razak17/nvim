@@ -68,6 +68,10 @@ return function()
   -- TODO: Temp fix to load both friendly snippets and user-defined snippets
   require("luasnip.loaders.from_vscode").lazy_load()
   require("luasnip.loaders.from_vscode").lazy_load {
-    paths = rvim.paths.snippets,
+    paths = {
+      rvim.paths.snippets,
+      join_paths(rvim.get_runtime_dir(), "site", "pack", "packer", "start", "friendly-snippets"),
+    },
   }
+  require("luasnip.loaders.from_snipmate").lazy_load()
 end
