@@ -1,12 +1,20 @@
 return function()
   local path = require "nvim-lsp-installer.path"
   local install_root_dir = path.concat { vim.fn.stdpath "data", "lsp_servers" }
+
+  local capabilities = vim.lsp.protocol.make_client_capabilities()
+  local lsp_ok, cmp_nvim_lsp = rvim.safe_require "cmp_nvim_lsp"
+  if lsp_ok then
+    capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
+  end
+
   require("go").setup {
     gopls_cmd = { install_root_dir .. "/go/gopls" },
     max_line_len = 100,
-    goimport = "gopls", -- NOTE: using goimports comes with unintended formatting consequences
+    goimport = "gopls",
     lsp_codelens = false,
     lsp_cfg = {
+      capabilities = capabilities,
       codelenses = {
         generate = true,
         gc_details = false,
