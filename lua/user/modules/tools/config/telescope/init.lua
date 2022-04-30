@@ -186,6 +186,10 @@ return function()
             --@usage don't include the filename in the search results
             only_sort_text = true,
             file_ignore_patterns = { ".git/" },
+            on_input_filter_cb = function(prompt)
+              -- AND operator for live_grep like how fzf handles spaces with wildcards in rg
+              return { prompt = prompt:gsub("%s", ".*") }
+            end,
           },
           oldfiles = dropdown(),
           current_buffer_fuzzy_find = dropdown {
