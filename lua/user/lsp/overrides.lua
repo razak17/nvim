@@ -33,6 +33,26 @@ function M.setup(server_name)
     lsp_manager.buf_try_add(server_name)
   end
 
+  -- golangci-lint-ls
+  if server_name == "golangci_lint_ls" then
+    config = vim.tbl_deep_extend("force", config, {
+      init_options = {
+        command = {
+          "golangci-lint",
+          "run",
+          "--enable-all",
+          "--disable",
+          "lll",
+          "--out-format",
+          "json",
+        },
+      },
+    })
+
+    require("lspconfig")[server_name].setup(config)
+    lsp_manager.buf_try_add(server_name)
+  end
+
   -- rust_analyzer
   if server_name == "rust_analyzer" then
     local status_ok, rust_tools = rvim.safe_require "rust-tools"

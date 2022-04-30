@@ -52,6 +52,7 @@ rvim.lsp = {
     "javascript.jsx",
     "vue",
     "rust",
+    "go",
   },
   override = {
     "angularls",

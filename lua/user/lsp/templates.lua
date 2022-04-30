@@ -34,7 +34,7 @@ function M.generate_ftplugin(server_name, dir)
     -- vim.notify("using setup_cmd: " .. setup_cmd)
 
     -- lsp config for other servers
-    if server_name ~= "rust_analyzer" then
+    if server_name ~= "rust_analyzer" and server_name ~= "golangci_lint_ls" then
       utils.write_file(filename, setup_cmd .. "\n", "a")
     end
 
@@ -43,16 +43,16 @@ function M.generate_ftplugin(server_name, dir)
     if server_name ~= "rust_analyzer" then
       if server_name == "vuels" then
         override_server = "eslint"
+      elseif server_name == "golangci_lint_ls" then
+        override_server = "golangci_lint_ls"
       else
         override_server = "emmet_ls"
       end
     end
 
-    local override_cmd
+    local override_cmd = fmt([[require("user.lsp.manager").override_setup(%q)]], override_server)
     if override_server == "eslint" then
       override_cmd = fmt([[require("user.lsp.manager").setup(%q)]], override_server)
-    else
-      override_cmd = fmt([[require("user.lsp.manager").override_setup(%q)]], override_server)
     end
 
     if rvim.find_string(rvim.lsp.override_ftplugin, filetype) then
