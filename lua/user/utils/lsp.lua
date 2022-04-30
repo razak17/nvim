@@ -69,7 +69,9 @@ function M.enable_lsp_document_highlight(client_id, bufnr)
       event = { "CursorHoldI" },
       description = "LSP: Document Highlight (insert)",
       buffer = bufnr,
-      command = "lua vim.lsp.buf.document_highlight()",
+      command = function()
+        pcall(vim.lsp.buf.document_highlight)
+      end,
     },
     {
       event = { "CursorMoved" },
