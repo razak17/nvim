@@ -285,7 +285,12 @@ lang["ray-x/go.nvim"] = {
       max_line_len = 100,
       goimport = "goimports",
       lsp_cfg = {
-        analyses = { unusedparams = true },
+        codelenses = {
+          gc_details = false,
+        },
+        analyses = {
+          unusedparams = true,
+        },
       },
       lsp_gofumpt = true,
       lsp_keymaps = false,
