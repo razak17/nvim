@@ -100,6 +100,14 @@ lang["williamboman/nvim-lsp-installer"] = {
   requires = {
     "neovim/nvim-lspconfig",
   },
+  config = function()
+    vim.api.nvim_create_autocmd("Filetype", {
+      pattern = "lsp-installer",
+      callback = function()
+        vim.api.nvim_win_set_config(0, { border = rvim.style.current.border })
+      end,
+    })
+  end,
   disable = not rvim.plugins.lang.lsp_installer.active,
 }
 
@@ -276,7 +284,7 @@ lang["lewis6991/spellsitter.nvim"] = {
 
 lang["ray-x/go.nvim"] = {
   ft = "go",
-  config = conf ("lang", "go"),
+  config = conf("lang", "go"),
   disable = not rvim.plugins.lang.go_nvim.active,
 }
 
