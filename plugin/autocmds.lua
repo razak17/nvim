@@ -7,7 +7,7 @@ local not_eligible = not vim.bo.modifiable
   or not vim.bo.buflisted
   or vim.bo.buftype ~= "" and vim.bo.buftype ~= "terminal" and vim.wo.previewwindow
 
-vim.api.nvim_exec(
+vim.cmd
   [[
    augroup vimrc -- Ensure all autocommands are cleared
    autocmd!
