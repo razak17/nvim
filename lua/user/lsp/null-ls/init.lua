@@ -63,7 +63,6 @@ function M:setup()
       exe = "eslint_d",
       filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact", "vue" },
     },
-    { exe = "golangci_lint", filetypes = { "go" } },
   }
 
   local default_opts = require("user.lsp").get_global_opts()
