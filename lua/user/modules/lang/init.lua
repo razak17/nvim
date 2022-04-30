@@ -284,7 +284,9 @@ lang["ray-x/go.nvim"] = {
       gopls_cmd = { install_root_dir .. "/go/gopls" },
       max_line_len = 100,
       goimport = "goimports",
-      lsp_cfg = true,
+      lsp_cfg = {
+        analyses = { unusedparams = true },
+      },
       lsp_gofumpt = true,
       lsp_keymaps = false,
       lsp_on_attach = require("user.lsp").global_on_attach,
