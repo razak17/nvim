@@ -169,7 +169,6 @@ M.load_default_options = function()
     clipboard = "unnamedplus",
 
     -- What to save for views and sessions:
-    shada = "!,'300,<50,@100,s10,h",
     viewoptions = "cursor,folds",
     sessionoptions = "curdir,help,tabpages,winsize",
     autowriteall = true, -- automatically :write before running commands and changing files
