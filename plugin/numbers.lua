@@ -45,7 +45,7 @@ local function is_floating_win()
   return vim.fn.win_gettype() == "popup"
 end
 
-local is_enabled = false
+local is_enabled = true
 
 ---Determines whether or not a window should be ignored by this plugin
 ---@return boolean
