@@ -29,7 +29,7 @@ function M.conditional_document_highlight(id)
   if not client_ok or not method_supported then
     return
   end
-  vim.lsp.buf.document_highlight()
+  pcall(vim.lsp.buf.document_highlight)
 end
 
 function M.show_line_diagnostics()
@@ -57,21 +57,21 @@ end
 
 function M.enable_lsp_document_highlight(client_id, bufnr)
   rvim.augroup("LspCursorCommands", {
-    -- {
-    --   event = { "CursorHold" },
-    --   buffer = bufnr,
-    --   command = string.format(
-    --     "lua require('user.utils.lsp').conditional_document_highlight(%d)",
-    --     client_id
-    --   ),
-    -- },
     {
-      event = { "CursorHoldI" },
-      description = "LSP: Document Highlight (insert)",
+      event = { "CursorHold" },
       buffer = bufnr,
       command = function()
-        pcall(vim.lsp.buf.document_highlight)
+        vim.diagnostic.open_float({ scope = "line" }, { focus = false })
       end,
+    },
+    {
+      event = { "CursorHold", "CursorHoldI" },
+      buffer = bufnr,
+      description = "LSP: Document Highlight",
+      command = string.format(
+        "lua require('user.utils.lsp').conditional_document_highlight(%d)",
+        client_id
+      ),
     },
     {
       event = { "CursorMoved" },
