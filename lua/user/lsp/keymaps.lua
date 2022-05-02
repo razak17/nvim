@@ -1,7 +1,7 @@
 local M = {}
 
 function M.init(client, bufnr)
-  if not client then
+  if not client == nil then
     return
   end
 
@@ -13,9 +13,6 @@ function M.init(client, bufnr)
 
   local maps = {
     n = {
-      K = { vim.lsp.buf.hover, "lsp: hover" },
-      gd = { vim.lsp.buf.definition, "lsp: definition" },
-      gr = { vim.lsp.buf.references, "lsp: references" },
       gl = {
         "<cmd>lua require 'user.utils.lsp'.show_line_diagnostics()<CR>",
         "lsp: line diagnostics",
@@ -23,6 +20,18 @@ function M.init(client, bufnr)
     },
     x = {},
   }
+
+  if client.resolved_capabilities.declaration then
+    maps.n["K"] = { vim.lsp.buf.hover, "lsp: hover" }
+  end
+
+  if client.resolved_capabilities.definition then
+    maps.n["gd"] = { vim.lsp.buf.definition, "lsp: definition" }
+  end
+
+  if client.resolved_capabilities.references then
+    maps.n["gr"] = { vim.lsp.buf.references, "lsp: references" }
+  end
 
   if client.resolved_capabilities.declaration then
     maps.n["ge"] = { vim.lsp.buf.declaration, "lsp: declaration" }
@@ -78,10 +87,6 @@ function M.init(client, bufnr)
       "<cmd>LspFormat<cr>",
       "lsp: format",
     }
-  end
-
-  if client.resolved_capabilities.rename then
-    maps.n["<leader>lr"] = { vim.lsp.buf.rename, "lsp: rename" }
   end
 
   if client.resolved_capabilities.code_lens then
