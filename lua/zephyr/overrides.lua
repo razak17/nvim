@@ -11,8 +11,8 @@ local function general_overrides()
     -- WinSeparator = { background = "NONE", foreground = util.get_hl("VertSplit", "fg") },
     MsgArea = { background = msg_area_bg },
     mkdLineBreak = { link = "NONE" },
-    Directory = { inherit = "Keyword", bold = true },
-    URL = { inherit = "Keyword", underline = true },
+    -- Directory = { inherit = "Keyword", bold = true },
+    URL = { inherit = "Directory", underline = true },
     -----------------------------------------------------------------------------//
     -- Floats
     -----------------------------------------------------------------------------//
