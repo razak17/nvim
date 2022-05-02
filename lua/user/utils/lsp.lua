@@ -57,14 +57,14 @@ end
 
 function M.enable_lsp_document_highlight(client_id, bufnr)
   rvim.augroup("LspCursorCommands", {
-    {
-      event = { "CursorHold" },
-      buffer = bufnr,
-      command = string.format(
-        "lua require('user.utils.lsp').conditional_document_highlight(%d)",
-        client_id
-      ),
-    },
+    -- {
+    --   event = { "CursorHold" },
+    --   buffer = bufnr,
+    --   command = string.format(
+    --     "lua require('user.utils.lsp').conditional_document_highlight(%d)",
+    --     client_id
+    --   ),
+    -- },
     {
       event = { "CursorHoldI" },
       description = "LSP: Document Highlight (insert)",

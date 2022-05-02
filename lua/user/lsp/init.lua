@@ -154,6 +154,11 @@ function M.setup()
 
   require("user.lsp.null-ls").setup()
 
+  require("nvim-lsp-installer").setup {
+    -- use the default nvim_data_dir, since the server binaries are independent
+    install_root_dir = join_paths(vim.call("stdpath", "data"), "lsp_servers"),
+  }
+
   local formatting = require "user.lsp.formatting"
 
   formatting.configure_format_on_save()
