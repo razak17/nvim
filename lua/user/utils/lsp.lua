@@ -58,13 +58,6 @@ end
 function M.enable_lsp_document_highlight(client_id, bufnr)
   rvim.augroup("LspCursorCommands", {
     {
-      event = { "CursorHold" },
-      buffer = bufnr,
-      command = function()
-        vim.diagnostic.open_float({ scope = "line" }, { focus = false })
-      end,
-    },
-    {
       event = { "CursorHold", "CursorHoldI" },
       buffer = bufnr,
       description = "LSP: Document Highlight",
@@ -110,27 +103,13 @@ function M.disable_code_lens_refresh()
 end
 
 function M.enable_lsp_hover_diagnostics(bufnr)
-  local get_cursor_pos = function()
-    return { vim.fn.line ".", vim.fn.col "." }
-  end
-
   rvim.augroup("HoverDiagnostics", {
     {
       event = { "CursorHold" },
       buffer = bufnr,
-      command = (function()
-        local cursorpos = get_cursor_pos()
-        return function()
-          local new_cursor = get_cursor_pos()
-          if
-            (new_cursor[1] ~= 1 and new_cursor[2] ~= 1)
-            and (new_cursor[1] ~= cursorpos[1] or new_cursor[2] ~= cursorpos[2])
-          then
-            cursorpos = new_cursor
-            vim.diagnostic.open_float({ scope = "line" }, { focus = false })
-          end
-        end
-      end)(),
+      command = function()
+        vim.diagnostic.open_float({ scope = "line" }, { focus = false })
+      end,
     },
   })
 end

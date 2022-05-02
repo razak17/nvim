@@ -34,7 +34,7 @@ rvim.lsp = {
     border = border,
   },
   automatic_servers_installation = true,
-  hover_diagnostics = true,
+  hover_diagnostics = false,
   null_ls = {
     setup = {
       debug = true,
