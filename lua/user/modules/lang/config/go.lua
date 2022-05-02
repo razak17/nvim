@@ -1,6 +1,6 @@
 return function()
   local path = require "nvim-lsp-installer.path"
-  local install_root_dir = path.concat { vim.fn.stdpath "data", "lsp_servers" }
+  local install_root_dir = path.concat { vim.call("stdpath", "data"), "lsp_servers" }
 
   local capabilities = vim.lsp.protocol.make_client_capabilities()
   local lsp_ok, cmp_nvim_lsp = rvim.safe_require "cmp_nvim_lsp"

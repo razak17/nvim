@@ -26,7 +26,7 @@ function rvim.get_runtime_dir()
   local rvim_runtime_dir = vim.env.RVIM_RUNTIME_DIR
   if not rvim_runtime_dir then
     -- when nvim is used directly
-    return vim.fn.stdpath "data"
+    return vim.call("stdpath", "data")
   end
   return rvim_runtime_dir
 end
@@ -36,7 +36,7 @@ end
 function rvim.get_config_dir()
   local rvim_config_dir = vim.env.RVIM_CONFIG_DIR
   if not rvim_config_dir then
-    return vim.fn.stdpath "config"
+    return vim.call("stdpath", "config")
   end
   return rvim_config_dir
 end
@@ -46,7 +46,7 @@ end
 function rvim.get_cache_dir()
   local rvim_cache_dir = vim.env.RVIM_CACHE_DIR
   if not rvim_cache_dir then
-    return vim.fn.stdpath "cache"
+    return vim.call("stdpath", "cache")
   end
   return rvim_cache_dir
 end
@@ -56,7 +56,7 @@ end
 function rvim.get_user_dir()
   local config_dir = vim.env.RVIM_CONFIG_DIR
   if not config_dir then
-    config_dir = vim.fn.stdpath "config"
+    config_dir = vim.call("stdpath", "config")
   end
   return join_paths(config_dir, "lua", "user")
 end
