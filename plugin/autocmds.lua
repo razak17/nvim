@@ -372,19 +372,6 @@ rvim.augroup("Utilities", {
     end,
   },
   {
-    -- When editing a file, always jump to the last known cursor position.
-    -- Don't do it for commit messages, when the position is invalid, or when
-    -- inside an event handler (happens when dropping a file on gvim).
-    event = { "BufReadPost" },
-    pattern = { "*" },
-    command = function()
-      local pos = fn.line "'\""
-      if vim.bo.ft ~= "gitcommit" and pos > 0 and pos <= fn.line "$" then
-        vim.cmd 'keepjumps normal g`"'
-      end
-    end,
-  },
-  {
     event = { "FileType" },
     pattern = { "gitcommit", "gitrebase" },
     command = "set bufhidden=delete",
