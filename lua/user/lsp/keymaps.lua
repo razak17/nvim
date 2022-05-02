@@ -1,7 +1,7 @@
 local M = {}
 
 function M.init(client, bufnr)
-  if client == nil then
+  if not client then
     return
   end
 
@@ -36,17 +36,26 @@ function M.init(client, bufnr)
     maps.n["gT"] = { vim.lsp.buf.type_definition, "lsp: go to type definition" }
   end
 
-  -- if client.supports_method "textDocument/prepareCallHierarchy" then
-  --   maps.n["gI"] = { vim.lsp.buf.incoming_calls, "lsp: incoming calls" }
-  -- end
+  if client.resolved_capabilities.incoming_calls then
+    maps.n["gI"] = { vim.lsp.buf.incoming_calls, "lsp: incoming calls" }
+  end
 
   ------------------------------------------------------------------------------
   -- leader keymaps
   ------------------------------------------------------------------------------
 
-  -- if client.supports_method "textDocument/rename" then
-  --   maps.n["<leader>lr"] = { vim.lsp.buf.rename, "lsp: rename" }
-  -- end
+  maps.n["<leader>lj"] = {
+    "<cmd>lua vim.diagnostic.goto_next()<cr>",
+    "lsp: next diagnostic",
+  }
+  maps.n["<leader>lk"] = {
+    "<cmd>lua vim.diagnostic.goto_prev()<cr>",
+    "lsp: prev diagnostic",
+  }
+  maps.n["<leader>lL"] = {
+    "<cmd>lua vim.diagnostic.setloclist()<cr>",
+    "lsp: set loclist",
+  }
 
   maps.n["<leader>lp"] = {
     name = "+Peek",
@@ -64,31 +73,20 @@ function M.init(client, bufnr)
     },
   }
 
-  -- if client.supports_method "textDocument/formatting" then
-  --   maps.n["<leader>lf"] = {
-  --     "<cmd>LspFormat<cr>",
-  --     "lsp: format",
-  --   }
-  -- end
+  if client.resolved_capabilities.formatting then
+    maps.n["<leader>lf"] = {
+      "<cmd>LspFormat<cr>",
+      "lsp: format",
+    }
+  end
 
-  -- if client.supports_method "textDocument/publishDiagnostics" then
-  --   maps.n["<leader>lj"] = {
-  --     "<cmd>lua vim.diagnostic.goto_next()<cr>",
-  --     "lsp: next diagnostic",
-  --   }
-  --   maps.n["<leader>lk"] = {
-  --     "<cmd>lua vim.diagnostic.goto_prev()<cr>",
-  --     "lsp: prev diagnostic",
-  --   }
-  --   maps.n["<leader>lL"] = {
-  --     "<cmd>lua vim.diagnostic.setloclist()<cr>",
-  --     "lsp: set loclist",
-  --   }
-  -- end
+  if client.resolved_capabilities.rename then
+    maps.n["<leader>lr"] = { vim.lsp.buf.rename, "lsp: rename" }
+  end
 
-  -- if client.supports_method "textDocument/codeLens" then
-  --   maps.n["<leader>lc"] = { "<cmd>lua vim.lsp.codelens.run()<cr>", "lsp: codelens action" }
-  -- end
+  if client.resolved_capabilities.code_lens then
+    maps.n["<leader>lc"] = { "<cmd>lua vim.lsp.codelens.run()<cr>", "lsp: codelens action" }
+  end
 
   for mode, value in pairs(maps) do
     wk.register(value, { buffer = bufnr, mode = mode })
