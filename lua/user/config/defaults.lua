@@ -60,6 +60,8 @@ rvim.util = {
     pattern = "*",
     ---@usage timeout number timeout in ms for the format request (Default: 1000)
     timeout = 1000,
+     ---@usage filter func to select client
+    filter = require("user.utils.lsp").format_filter,
   },
   save_on_focus_lost = true,
   format_on_focus_lost = true,
