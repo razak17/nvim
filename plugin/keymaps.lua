@@ -170,7 +170,7 @@ vnoremap(">", ">gv")
 -- Capitalize
 ------------------------------------------------------------------------------
 nnoremap("<leader>U", "gUiw`]", { label = "capitalize word" })
-inoremap("C-u>", "<cmd>norm!gUiw`]a<CR>")
+inoremap("<C-u>", "<cmd>norm!gUiw`]a<CR>")
 
 -- Help
 nnoremap("<leader>H", ':h <C-R>=expand("<cword>")<cr><CR>', { label = "help" })
