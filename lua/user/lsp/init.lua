@@ -16,7 +16,7 @@ local function lsp_highlight_document(client, bufnr)
     return
   end
 
-  if client and client.resolved_capabilities.document_highlight then
+  if client and client.server_capabilities.document_highlight then
     utils.enable_lsp_document_highlight(client.id, bufnr)
   end
 end
@@ -26,15 +26,15 @@ local function lsp_code_lens_refresh(client, bufnr)
     return
   end
 
-  if client and client.resolved_capabilities.code_lens then
+  if client and client.server_capabilities.code_lens then
     utils.enable_code_lens_refresh(bufnr)
   end
 end
 
 local function lsp_setup_tagfunc(client, bufnr)
   if
-    not client.resolved_capabilities.goto_definition
-    or not client.resolved_capabilities.document_formatting
+    not client.server_capabilities.goto_definition
+    or not client.server_capabilities.document_formatting
   then
     return
   end
@@ -71,14 +71,14 @@ function M.global_capabilities()
 end
 
 local function select_default_formater(client)
-  if client.name == "null-ls" or not client.resolved_capabilities.document_formatting then
+  if client.name == "null-ls" or not client.server_capabilities.document_formatting then
     return
   end
 
   for _, server in ipairs(rvim.lsp.formatting_ignore_list) do
     if client.name == server then
-      client.resolved_capabilities.document_formatting = false
-      client.resolved_capabilities.document_range_formatting = false
+      client.server_capabilities.document_formatting = false
+      client.server_capabilities.document_range_formatting = false
     end
   end
 
@@ -90,8 +90,8 @@ local function select_default_formater(client)
       Log:debug(
         "Formatter overriding detected. Disabling formatting capabilities for " .. client.name
       )
-      client.resolved_capabilities.document_formatting = false
-      client.resolved_capabilities.document_range_formatting = false
+      client.server_capabilities.document_formatting = false
+      client.server_capabilities.document_range_formatting = false
     end
   end
 end

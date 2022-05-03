@@ -21,31 +21,31 @@ function M.init(client, bufnr)
     x = {},
   }
 
-  if client.resolved_capabilities.declaration then
+  if client.server_capabilities.declaration then
     maps.n["K"] = { vim.lsp.buf.hover, "lsp: hover" }
   end
 
-  if client.resolved_capabilities.definition then
+  if client.server_capabilities.definition then
     maps.n["gd"] = { vim.lsp.buf.definition, "lsp: definition" }
   end
 
-  if client.resolved_capabilities.references then
+  if client.server_capabilities.references then
     maps.n["gr"] = { vim.lsp.buf.references, "lsp: references" }
   end
 
-  if client.resolved_capabilities.declaration then
+  if client.server_capabilities.declaration then
     maps.n["ge"] = { vim.lsp.buf.declaration, "lsp: declaration" }
   end
 
-  if client.resolved_capabilities.implementation then
+  if client.server_capabilities.implementation then
     maps.n["gi"] = { vim.lsp.buf.implementation, "lsp: implementation" }
   end
 
-  if client.resolved_capabilities.type_definition then
+  if client.server_capabilities.type_definition then
     maps.n["gT"] = { vim.lsp.buf.type_definition, "lsp: go to type definition" }
   end
 
-  if client.resolved_capabilities.incoming_calls then
+  if client.server_capabilities.incoming_calls then
     maps.n["gI"] = { vim.lsp.buf.incoming_calls, "lsp: incoming calls" }
   end
 
@@ -82,14 +82,15 @@ function M.init(client, bufnr)
     },
   }
 
-  if client.resolved_capabilities.formatting then
+  -- if client.server_capabilities.formatting then
+  if client.supports_method "textDocument/formatting" then
     maps.n["<leader>lf"] = {
       "<cmd>LspFormat<cr>",
       "lsp: format",
     }
   end
 
-  if client.resolved_capabilities.code_lens then
+  if client.server_capabilities.code_lens then
     maps.n["<leader>lc"] = { "<cmd>lua vim.lsp.codelens.run()<cr>", "lsp: codelens action" }
   end
 
