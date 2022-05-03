@@ -1,5 +1,6 @@
 local fn = vim.fn
 local uv = vim.loop
+local cmd = vim.cmd
 local api = vim.api
 local fmt = string.format
 
@@ -8,21 +9,21 @@ local utils = {}
 function utils.open_link()
   local file = fn.expand "<cfile>"
   if fn.isdirectory(file) > 0 then
-    vim.cmd("edit " .. file)
+    cmd("edit " .. file)
   else
     fn.jobstart({ rvim.open_command, file }, { detach = true })
   end
 end
 
 function utils.color_my_pencils()
-  vim.cmd [[ hi! ColorColumn guibg=#aeacec ]]
-  vim.cmd [[ hi! Normal ctermbg=none guibg=none ]]
-  vim.cmd [[ hi! SignColumn ctermbg=none guibg=none ]]
-  vim.cmd [[ hi! LineNr guifg=#4dd2dc ]]
-  vim.cmd [[ hi! CursorLineNr guifg=#f0c674 ]]
-  vim.cmd [[ hi! TelescopeBorder guifg=#ffff00 guibg=#ff0000 ]]
-  vim.cmd [[ hi! WhichKeyGroup guifg=#4dd2dc ]]
-  vim.cmd [[ hi! WhichKeyDesc guifg=#4dd2dc  ]]
+  cmd [[ hi! ColorColumn guibg=#aeacec ]]
+  cmd [[ hi! Normal ctermbg=none guibg=none ]]
+  cmd [[ hi! SignColumn ctermbg=none guibg=none ]]
+  cmd [[ hi! LineNr guifg=#4dd2dc ]]
+  cmd [[ hi! CursorLineNr guifg=#f0c674 ]]
+  cmd [[ hi! TelescopeBorder guifg=#ffff00 guibg=#ff0000 ]]
+  cmd [[ hi! WhichKeyGroup guifg=#4dd2dc ]]
+  cmd [[ hi! WhichKeyDesc guifg=#4dd2dc  ]]
 end
 
 function utils.empty_registers()
@@ -38,8 +39,8 @@ function utils.empty_registers()
 end
 
 function utils.open_terminal()
-  vim.cmd "split term://zsh"
-  vim.cmd "resize 10"
+  cmd "split term://zsh"
+  cmd "resize 10"
 end
 
 function utils.turn_on_guides()
@@ -77,14 +78,14 @@ function utils.load_conf(dir, name)
 end
 
 function utils.enable_transparent_mode()
-  vim.cmd "au ColorScheme * hi Normal ctermbg=none guibg=none"
-  vim.cmd "au ColorScheme * hi SignColumn ctermbg=none guibg=none"
-  vim.cmd "au ColorScheme * hi NormalNC ctermbg=none guibg=none"
-  vim.cmd "au ColorScheme * hi MsgArea ctermbg=none guibg=none"
-  vim.cmd "au ColorScheme * hi TelescopeBorder ctermbg=none guibg=none"
-  vim.cmd "au ColorScheme * hi NvimTreeNormal ctermbg=none guibg=none"
-  vim.cmd "au ColorScheme * hi EndOfBuffer ctermbg=none guibg=none"
-  vim.cmd "let &fcs='eob: '"
+  cmd "au ColorScheme * hi Normal ctermbg=none guibg=none"
+  cmd "au ColorScheme * hi SignColumn ctermbg=none guibg=none"
+  cmd "au ColorScheme * hi NormalNC ctermbg=none guibg=none"
+  cmd "au ColorScheme * hi MsgArea ctermbg=none guibg=none"
+  cmd "au ColorScheme * hi TelescopeBorder ctermbg=none guibg=none"
+  cmd "au ColorScheme * hi NvimTreeNormal ctermbg=none guibg=none"
+  cmd "au ColorScheme * hi EndOfBuffer ctermbg=none guibg=none"
+  cmd "let &fcs='eob: '"
 end
 
 --- Checks whether a given path exists and is a directory
@@ -123,14 +124,14 @@ utils.auto_resize = function()
       -- NOTE: mutating &winheight/&winwidth are key to how
       -- this functionality works, the API fn equivalents do
       -- not work the same way
-      vim.cmd(fmt("let &winheight=&lines * %d / 10 ", fraction))
-      vim.cmd(fmt("let &winwidth=&columns * %d / 10 ", fraction))
+      cmd(fmt("let &winheight=&lines * %d / 10 ", fraction))
+      cmd(fmt("let &winwidth=&columns * %d / 10 ", fraction))
       auto_resize_on = true
       vim.notify "Auto resize ON"
     else
-      vim.cmd "let &winheight=30"
-      vim.cmd "let &winwidth=30"
-      vim.cmd "wincmd ="
+      cmd "let &winheight=30"
+      cmd "let &winwidth=30"
+      cmd "wincmd ="
       auto_resize_on = false
       vim.notify "Auto resize OFF"
     end
@@ -163,6 +164,22 @@ function utils.modify_line_end_delimiter(character)
     else
       api.nvim_set_current_line(line .. character)
     end
+  end
+end
+
+function utils.smart_quit()
+  local bufnr = api.nvim_get_current_buf()
+  local modified = api.nvim_buf_get_option(bufnr, "modified")
+  if modified then
+    vim.ui.input({
+      prompt = "You have unsaved changes. Quit anyway? (y/n) ",
+    }, function(input)
+      if input == "y" then
+        cmd "q!"
+      end
+    end)
+  else
+    cmd "q!"
   end
 end
 

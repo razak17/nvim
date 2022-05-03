@@ -97,7 +97,8 @@ cnoremap("/", [[getcmdtype() == "/" ? "\/" : "/"]], { expr = true })
 -- Alternate way to save
 nnoremap("<C-s>", ":silent! write<CR>")
 -- Quit
-nnoremap("<leader>x", ":q!<cr>", { label = "quit" })
+nnoremap("<leader>x", "<cmd>lua require('user.utils').smart_quit()<CR>", { label = "quit" })
+-- nnoremap("<leader>x", ":q!<cr>", { label = "quit" })
 -- Write and quit all files, ZZ is NOT equivalent to this
 nnoremap("qa", "<cmd>qa<CR>")
 ------------------------------------------------------------------------------
