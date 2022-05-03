@@ -24,7 +24,7 @@ rvim.wk = {
     },
     L = {
       name = "+Rvim",
-      [";"] = { ":Dashboard<cr>", "dashboard" },
+    [";"] = { ":Dashboard<cr>", "dashboard" },
       ["?"] = "search github",
       c = {
         "<cmd>lua vim.fn.execute('edit ' .. join_paths(rvim.get_user_dir(), 'config/init.lua'))<cr>",

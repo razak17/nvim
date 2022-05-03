@@ -27,25 +27,29 @@ local get_format_on_focus_lost_opts = function()
   }
 end
 
-function M.enable_format_on_save(opts)
-  local fmd_cmd = ":silent lua vim.lsp.buf.format(nil)"
+function M.enable_format_on_save()
+  local opts = get_format_on_save_opts()
   rvim.augroup("FormatOnSave", {
     {
       event = { "BufWritePre" },
       pattern = { opts.pattern },
-      command = fmd_cmd,
+      command = function()
+        require("user.utils.lsp").format { timeout_ms = opts.timeout, filter = opts.filter }
+      end,
     },
   })
   Log:debug "enabled format-on-save"
 end
 
-function M.enable_format_on_focus_lost(opts)
-  local fmd_cmd = ":silent lua vim.lsp.buf.format(nil)"
+function M.enable_format_on_focus_lost()
+  local opts = get_format_on_focus_lost_opts()
   rvim.augroup("FormatOnFocusLost", {
     {
       event = { "FocusLost" },
       pattern = { opts.pattern },
-      command = fmd_cmd,
+      command = function()
+        require("user.utils.lsp").format { timeout_ms = opts.timeout, filter = opts.filter }
+      end,
     },
   })
   Log:debug "enabled format-on-focus-lost"
@@ -59,11 +63,10 @@ end
 function M.configure_format_on_save()
   if rvim.util.format_on_save then
     if vim.fn.exists "#format_on_save#BufWritePre" == 1 then
-      rvim.disable_augroup "format_on_save"
+      rvim.disable_augroup "FormatOnSave"
       Log:debug "reloading format-on-save configuration"
     end
-    local opts = get_format_on_save_opts()
-    M.enable_format_on_save(opts)
+    M.enable_format_on_save()
   else
     M.disable_format_on_save()
   end
@@ -77,11 +80,10 @@ end
 function M.configure_format_on_focus_lost()
   if rvim.util.format_on_focus_lost then
     if vim.fn.exists "#format_on_focus_lost#FocusLost" == 1 then
-      rvim.disable_augroup "format_on_focus_lost"
+      rvim.disable_augroup "FormatOnFocusLost"
       Log:debug "reloading format-on-focus-lost configuration"
     end
-    local opts = get_format_on_focus_lost_opts()
-    M.enable_format_on_focus_lost(opts)
+    M.enable_format_on_focus_lost()
   else
     M.disable_format_on_focus_lost()
   end
@@ -89,8 +91,7 @@ end
 
 function M.toggle_format_on_save()
   if vim.fn.exists "#format_on_save#BufWritePre" == 0 then
-    local opts = get_format_on_save_opts()
-    M.enable_format_on_save(opts)
+    M.enable_format_on_save()
   else
     M.disable_format_on_save()
   end

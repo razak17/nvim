@@ -39,7 +39,7 @@ command("LuaInvalidate", function(pattern)
 end, { nargs = 1 })
 
 command("LspFormat", function()
-  vim.lsp.buf.format(nil)
+  require("user.utils.lsp").format()
 end)
 
 -- Packer
