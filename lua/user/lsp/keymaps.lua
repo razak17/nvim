@@ -20,32 +20,36 @@ function M.init(client, bufnr)
     },
     x = {},
   }
+  -- TODO: all references to `resolved_capabilities.capability_name` will need to be changed to
+  -- `server_capabilities.camelCaseCapabilityName`
+  -- use client.supports_method for now
+  -- https://github.com/neovim/neovim/issues/14090#issuecomment-1113956767
 
-  if client.server_capabilities.declaration then
+  if client.supports_method "textDocument/declaration" then
     maps.n["K"] = { vim.lsp.buf.hover, "lsp: hover" }
   end
 
-  if client.server_capabilities.definition then
+  if client.supports_method "textDocument/definition" then
     maps.n["gd"] = { vim.lsp.buf.definition, "lsp: definition" }
   end
 
-  if client.server_capabilities.references then
+  if client.supports_method "textDocument/references" then
     maps.n["gr"] = { vim.lsp.buf.references, "lsp: references" }
   end
 
-  if client.server_capabilities.declaration then
+  if client.supports_method "textDocument/declaration" then
     maps.n["ge"] = { vim.lsp.buf.declaration, "lsp: declaration" }
   end
 
-  if client.server_capabilities.implementation then
+  if client.supports_method "textDocument/implementation" then
     maps.n["gi"] = { vim.lsp.buf.implementation, "lsp: implementation" }
   end
 
-  if client.server_capabilities.type_definition then
+  if client.supports_method "textDocument/typeDefinition" then
     maps.n["gT"] = { vim.lsp.buf.type_definition, "lsp: go to type definition" }
   end
 
-  if client.server_capabilities.incoming_calls then
+  if client.supports_method "callHierarchy/incomingCalls" then
     maps.n["gI"] = { vim.lsp.buf.incoming_calls, "lsp: incoming calls" }
   end
 
@@ -82,7 +86,7 @@ function M.init(client, bufnr)
     },
   }
 
-  -- if client.server_capabilities.formatting then
+  -- if client.resolved_capabilities.formatting then
   if client.supports_method "textDocument/formatting" then
     maps.n["<leader>lf"] = {
       "<cmd>LspFormat<cr>",
@@ -90,7 +94,7 @@ function M.init(client, bufnr)
     }
   end
 
-  if client.server_capabilities.code_lens then
+  if client.supports_method "textDocument/codeLens" then
     maps.n["<leader>lc"] = { "<cmd>lua vim.lsp.codelens.run()<cr>", "lsp: codelens action" }
   end
 
