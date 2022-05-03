@@ -42,7 +42,7 @@ rvim.lsp = {
     },
     config = {},
   },
-  formatting_ignore_list = { "tsserver", "html", "jsonls", "gopls" },
+  formatting_ignore_list = { "sumneko_lua", "tsserver", "html", "jsonls", "gopls" },
   override_ftplugin = {
     "html",
     "css",
