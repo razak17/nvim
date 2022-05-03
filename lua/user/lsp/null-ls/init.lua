@@ -38,11 +38,11 @@ function M:setup()
       args = { "--fix" },
       filetypes = { "vue", "javascript", "javascriptreact", "typescriptreact", "typescript" },
     },
-    -- {
-    --   exe = "stylua",
-    --   stdin = true,
-    --   filetypes = { "lua" },
-    -- },
+    {
+      exe = "stylua",
+      stdin = true,
+      filetypes = { "lua" },
+    },
     -- { exe = "yapf", stdin = true, filetypes = { "python" } },
     { exe = "black", args = { "--fast" }, filetypes = { "python" } },
     { exe = "isort", filetypes = { "python" } },

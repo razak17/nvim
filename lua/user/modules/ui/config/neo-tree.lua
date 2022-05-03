@@ -59,9 +59,9 @@ return function()
       width = 40,
       mappings = {
         o = "toggle_node",
-        ['<CR>'] = 'open_with_window_picker',
-        ['<c-s>'] = 'split_with_window_picker',
-        ['<c-v>'] = 'vsplit_with_window_picker',
+        ["<CR>"] = "open_with_window_picker",
+        ["<c-s>"] = "split_with_window_picker",
+        ["<c-v>"] = "vsplit_with_window_picker",
       },
     },
   }
