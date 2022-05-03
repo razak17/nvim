@@ -152,6 +152,11 @@ ui["nvim-neo-tree/neo-tree.nvim"] = {
     "nvim-lua/plenary.nvim",
     "MunifTanjim/nui.nvim",
     "kyazdani42/nvim-web-devicons",
+    {
+      's1n7ax/nvim-window-picker',
+      tag = "1.*",
+      config = conf('ui', 'window-picker'),
+    }
   },
   disable = not rvim.plugins.ui.neo_tree.active,
 }
