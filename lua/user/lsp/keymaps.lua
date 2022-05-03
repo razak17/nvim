@@ -25,7 +25,7 @@ function M.init(client, bufnr)
   -- use client.supports_method for now
   -- https://github.com/neovim/neovim/issues/14090#issuecomment-1113956767
 
-  if client.supports_method "textDocument/declaration" then
+  if client.supports_method "textDocument/hover" then
     maps.n["K"] = { vim.lsp.buf.hover, "lsp: hover" }
   end
 
