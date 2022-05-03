@@ -12,7 +12,6 @@ return function()
     gopls_cmd = { install_root_dir .. "/go/gopls" },
     max_line_len = 100,
     goimport = "gopls",
-    lsp_codelens = true,
     lsp_cfg = {
       capabilities = capabilities,
       codelenses = {
