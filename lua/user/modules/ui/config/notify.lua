@@ -21,6 +21,12 @@ return function()
 
   rvim.nvim_notify = {
     setup = {
+      max_width = function()
+        return math.floor(vim.o.columns * 0.8)
+      end,
+      max_height = function()
+        return math.floor(vim.o.lines * 0.8)
+      end,
       background_colour = "NormalFloat",
       on_open = function(win)
         if api.nvim_win_is_valid(win) then
