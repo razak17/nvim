@@ -33,7 +33,7 @@ local function enable_format(name, defaults, event)
 end
 
 local function disable_format(name)
-  rvim.disable_augroup(name)
+  pcall(vim.api.nvim_del_augroup_by_name, name)
   Log:debug(fmt("disabled %s", name))
 end
 
@@ -43,7 +43,7 @@ end
 local function configure_format(cond, name, event)
   if cond then
     if vim.fn.exists(fmt("#%s#%s", name, event)) == 1 then
-      rvim.disable_augroup(name)
+      pcall(vim.api.nvim_del_augroup_by_name, name)
       Log:debug(fmt("reloading %s configuration", name))
     end
     if name == "FormatOnSave" then

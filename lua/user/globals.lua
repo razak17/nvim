@@ -118,20 +118,6 @@ function rvim.plugin_loaded(plugin_name)
   return plugins[plugin_name] and plugins[plugin_name].loaded
 end
 
---- Disable autocommand groups if it exists
---- This is more reliable than trying to delete the augroup itself
----@param name string the augroup name
-function rvim.disable_augroup(name)
-  -- defer the function in case the autocommand is still in-use
-  vim.schedule(function()
-    if vim.fn.exists("#" .. name) == 1 then
-      vim.cmd("augroup " .. name)
-      vim.cmd "autocmd!"
-      vim.cmd "augroup END"
-    end
-  end)
-end
-
 ---Require a module using [pcall] and report any errors
 ---@param module string
 ---@param opts table?

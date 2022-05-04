@@ -14,7 +14,11 @@ function M.init(client, bufnr)
   local maps = {
     n = {
       gl = {
-        "<cmd>lua require 'user.utils.lsp'.show_line_diagnostics()<CR>",
+        function()
+          local config = rvim.lsp.diagnostics.float
+          config.scope = "line"
+          return vim.diagnostic.open_float({ scope = "line" }, config)
+        end,
         "lsp: line diagnostics",
       },
     },
@@ -86,7 +90,6 @@ function M.init(client, bufnr)
     },
   }
 
-  -- if client.resolved_capabilities.formatting then
   if client.supports_method "textDocument/formatting" then
     maps.n["<leader>lf"] = {
       "<cmd>LspFormat<cr>",

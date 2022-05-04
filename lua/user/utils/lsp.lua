@@ -22,22 +22,6 @@ function M.get_all_supported_filetypes()
   return vim.tbl_keys(lsp_installer_filetypes or {})
 end
 
-function M.conditional_document_highlight(id)
-  local client_ok, method_supported = pcall(function()
-    return vim.lsp.get_client_by_id(id).resolved_capabilities.document_highlight
-  end)
-  if not client_ok or not method_supported then
-    return
-  end
-  pcall(vim.lsp.buf.document_highlight)
-end
-
-function M.show_line_diagnostics()
-  local config = rvim.lsp.diagnostics.float
-  config.scope = "line"
-  return vim.diagnostic.open_float({ scope = "line" }, config)
-end
-
 ---Get supported filetypes per server
 ---@param server_name string can be any server supported by nvim-lsp-installer
 ---@return table supported filestypes as a list of strings
@@ -55,16 +39,20 @@ function M.get_supported_filetypes(server_name)
   return requested_server:get_supported_filetypes()
 end
 
-function M.enable_lsp_document_highlight(client_id, bufnr)
+function M.enable_lsp_document_highlight(client, bufnr)
+  local status_ok, highlight_supported = pcall(function()
+    return client.supports_method "textDocument/documentHighlight"
+  end)
+  if not status_ok or not highlight_supported then
+    return
+  end
+
   rvim.augroup("LspCursorCommands", {
     {
       event = { "CursorHold", "CursorHoldI" },
       buffer = bufnr,
       description = "LSP: Document Highlight",
-      command = string.format(
-        "lua require('user.utils.lsp').conditional_document_highlight(%d)",
-        client_id
-      ),
+      command = vim.lsp.buf.document_highlight,
     },
     {
       event = { "CursorMoved" },
@@ -77,13 +65,16 @@ function M.enable_lsp_document_highlight(client_id, bufnr)
   })
 end
 
-function M.disable_lsp_document_highlight()
-  rvim.disable_augroup "lsp_document_highlight"
-end
-
 --- Add lsp autocommands
 ---@param bufnr number
-function M.enable_code_lens_refresh(bufnr)
+function M.enable_code_lens_refresh(client, bufnr)
+  local status_ok, codelens_supported = pcall(function()
+    return client.supports_method "textDocument/codeLens"
+  end)
+  if not status_ok or not codelens_supported then
+    return
+  end
+
   rvim.augroup("LspCodeLensRefresh", {
     {
       event = { "InsertLeave" },
@@ -98,11 +89,14 @@ function M.enable_code_lens_refresh(bufnr)
   })
 end
 
-function M.disable_code_lens_refresh()
-  rvim.disable_augroup "lsp_code_lens_refresh"
-end
+function M.enable_lsp_hover_diagnostics(client, bufnr)
+  local status_ok, highlight_supported = pcall(function()
+    return client.supports_method "textDocument/documentHighlight"
+  end)
+  if not status_ok or not highlight_supported then
+    return
+  end
 
-function M.enable_lsp_hover_diagnostics(bufnr)
   rvim.augroup("HoverDiagnostics", {
     {
       event = { "CursorHold" },
@@ -114,6 +108,19 @@ function M.enable_lsp_hover_diagnostics(bufnr)
   })
 end
 
+function M.enable_lsp_setup_tagfunc(client, bufnr)
+  local status_ok, highlight_supported = pcall(function()
+    return client.supports_method "textDocument/definition"
+      and client.supports_method "textDocument/formatting"
+  end)
+  if not status_ok or not highlight_supported then
+    return
+  end
+
+  vim.bo[bufnr].tagfunc = "v:lua.vim.lsp.tagfunc"
+  vim.bo[bufnr].formatexpr = "v:lua.vim.lsp.formatexpr()"
+end
+
 ---filter passed to vim.lsp.buf.format
 ---gives higher priority to null-ls
 ---@param clients table clients attached to a buffer
@@ -123,7 +130,16 @@ function M.format_filter(clients)
     local status_ok, formatting_supported = pcall(function()
       return client.supports_method "textDocument/formatting"
     end)
-    -- give higher prio to null-ls
+
+    -- TODO: handle this differently
+    -- for _, server in ipairs(rvim.lsp.formatting_ignore_list) do
+    --   if client.name == server then
+    --     client.resolved_capabilities.document_formatting = false
+    --     client.resolved_capabilities.document_range_formatting = false
+    --   end
+    -- end
+
+    -- give higher priority to null-ls
     if status_ok and formatting_supported and client.name == "null-ls" then
       return "null-ls"
     else
