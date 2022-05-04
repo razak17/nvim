@@ -33,7 +33,6 @@ rvim.plugins = {
   packer = { active = true },
 }
 
-
 rvim.util = {
   disabled_providers = { "python", "ruby", "perl" },
   ftplugin_filetypes = {
@@ -60,11 +59,11 @@ rvim.util = {
     pattern = "*",
     ---@usage timeout number timeout in ms for the format request (Default: 1000)
     timeout = 1000,
-     ---@usage filter func to select client
+    ---@usage filter func to select client
     filter = require("user.utils.lsp").format_filter,
   },
   save_on_focus_lost = true,
-  format_on_focus_lost = true,
+  format_on_focus_lost = false,
   debug = false,
   defer = false,
 }
