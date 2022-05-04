@@ -187,20 +187,20 @@ return function()
         { name = "nvim_lsp_document_symbol" },
         { name = "npm", keyword_length = 4 },
       },
-      mapping = {
-        ["<C-k>"] = cmp.mapping.select_prev_item(),
-        ["<C-j>"] = cmp.mapping.select_next_item(),
-        ["<C-d>"] = cmp.mapping.scroll_docs(-4),
-        ["<C-f>"] = cmp.mapping.scroll_docs(4),
-        ["<Tab>"] = cmp.mapping(tab, { "i", "s" }),
-        ["<S-Tab>"] = cmp.mapping(shift_tab, { "i", "s" }),
-        ["<C-q>"] = cmp.mapping.complete(),
-        ["<CR>"] = cmp.mapping.confirm {
-          behavior = cmp.ConfirmBehavior.Replace,
-          select = false, -- If nothing is selected don't complete
-        },
+      ["<Tab>"] = cmp.mapping(tab, { "i", "s" }),
+      ["<S-Tab>"] = cmp.mapping(shift_tab, { "i", "s" }),
+      ["<C-k>"] = cmp.mapping.select_prev_item(),
+      ["<C-d>"] = cmp.mapping.scroll_docs(-4),
+      ["<C-f>"] = cmp.mapping.scroll_docs(4),
+      ["<C-q>"] = cmp.mapping {
+        i = cmp.mapping.abort(),
+        c = cmp.mapping.close(),
       },
+      ["<C-space>"] = cmp.mapping.complete(),
+      ["<CR>"] = cmp.mapping.confirm { select = false }, -- If nothing is selected don't complete
     },
+    ["<C-j>"] = cmp.mapping.select_next_item(),
+    mapping = {},
   }
 
   require("cmp").setup(rvim.cmp.setup)
@@ -219,10 +219,9 @@ return function()
   cmp.setup.cmdline("/", search_sources)
   cmp.setup.cmdline("?", search_sources)
   cmp.setup.cmdline(":", {
-    sources = cmp.config.sources({
-      { name = "fuzzy_path" },
-    }, {
+    sources = cmp.config.sources {
       { name = "cmdline", keyword_pattern = [=[[^[:blank:]\!]*]=] },
-    }),
+      { name = "path" },
+    },
   })
 end
