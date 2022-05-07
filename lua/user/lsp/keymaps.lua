@@ -55,7 +55,8 @@ function M.init(client)
     )
   end
 
-  if client.supports_method("callHierarchy/incomingCalls") then
+  -- if client.supports_method("callHierarchy/incomingCalls") then
+  if client.supports_method("textDocument/prepareCallHierarchy") then
     rvim.nnoremap("gI", vim.lsp.buf.incoming_calls, with_desc("lsp: incoming calls"))
   end
 
