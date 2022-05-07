@@ -211,6 +211,7 @@ tools["rmagatti/auto-session"] = {
       log_level = "error",
       auto_session_root_dir = join_paths(rvim.get_cache_dir(), "session/auto/"),
       auto_restore_enabled = false,
+      auto_session_use_git_branch = true,
     })
     require("which-key").register({
       ["<leader>sl"] = { ":RestoreSession<cr>", "auto-session: restore" },
