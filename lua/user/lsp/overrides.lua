@@ -7,7 +7,7 @@ local Log = require "user.core.log"
 function M.setup(server_name)
   local already_configured = require("user.utils.lsp").is_client_active(server_name)
     or lsp_manager.client_is_configured(server_name)
-  local config = lsp_manager.resolve_config(server_name)
+  local config = lsp_manager.resolve_config(server_name, {})
 
   if already_configured then
     Log:debug(
