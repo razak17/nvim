@@ -25,6 +25,7 @@ return function()
         local function qf_list_modified()
           gs.setqflist "all"
         end
+
         require("which-key").register {
           ["<leader>h"] = {
             name = "+Gitsigns",
