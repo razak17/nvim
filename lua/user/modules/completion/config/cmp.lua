@@ -4,6 +4,8 @@ return function()
     return
   end
 
+  local api = vim.api
+  local t = rvim.replace_termcodes
   local border = rvim.style.border.current
   local lsp_hls = rvim.lsp.kind_highlights
   local util = require("zephyr.util")
@@ -137,7 +139,6 @@ return function()
           cmp_tabnine = "(TN)",
           spell = "(Spell)",
           cmdline = "(Command)",
-          rg = "[Rg]",
           git = "(Git)",
           calc = "(Calc)",
           emoji = "(Emoji)",
@@ -181,7 +182,6 @@ return function()
         { name = "buffer" },
         { name = "cmp_tabnine" },
         { name = "spell" },
-        { name = "rg" },
         { name = "git" },
         { name = "calc" },
         { name = "emoji" },
@@ -189,20 +189,27 @@ return function()
         { name = "nvim_lsp_document_symbol" },
         { name = "npm", keyword_length = 4 },
       },
-      ["<Tab>"] = cmp.mapping(tab, { "i", "s" }),
-      ["<S-Tab>"] = cmp.mapping(shift_tab, { "i", "s" }),
-      ["<C-k>"] = cmp.mapping.select_prev_item(),
-      ["<C-d>"] = cmp.mapping.scroll_docs(-4),
-      ["<C-f>"] = cmp.mapping.scroll_docs(4),
-      ["<C-q>"] = cmp.mapping({
-        i = cmp.mapping.abort(),
-        c = cmp.mapping.close(),
-      }),
-      ["<C-space>"] = cmp.mapping.complete(),
-      ["<CR>"] = cmp.mapping.confirm({ select = false }), -- If nothing is selected don't complete
+      mapping = {
+        ["<c-h>"] = cmp.mapping(function()
+          api.nvim_feedkeys(vim.fn["copilot#Accept"](t("<Tab>")), "n", true)
+        end),
+        ["<C-k>"] = cmp.mapping.select_prev_item(),
+        ["<C-j>"] = cmp.mapping.select_next_item(),
+        ["<C-d>"] = cmp.mapping.scroll_docs(-4),
+        ["<C-f>"] = cmp.mapping.scroll_docs(4),
+        ["<Tab>"] = cmp.mapping(tab, { "i", "s" }),
+        ["<S-Tab>"] = cmp.mapping(shift_tab, { "i", "s" }),
+        ["<C-q>"] = cmp.mapping({
+          i = cmp.mapping.abort(),
+          c = cmp.mapping.close(),
+        }),
+        ["<C-space>"] = cmp.mapping.complete(),
+        ["<CR>"] = cmp.mapping.confirm({
+          behavior = cmp.ConfirmBehavior.Replace,
+          select = false, -- If nothing is selected don't complete
+        }),
+      },
     },
-    ["<C-j>"] = cmp.mapping.select_next_item(),
-    mapping = {},
   }
 
   require("cmp").setup(rvim.cmp.setup)
