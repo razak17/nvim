@@ -1,12 +1,12 @@
 return function()
-  local status_cmp_ok, cmp = rvim.safe_require "cmp"
+  local status_cmp_ok, cmp = rvim.safe_require("cmp")
   if not status_cmp_ok then
     return
   end
 
   local border = rvim.style.border.current
   local lsp_hls = rvim.lsp.kind_highlights
-  local util = require "zephyr.util"
+  local util = require("zephyr.util")
 
   local kind_hls = {}
   for key, _ in pairs(lsp_hls) do
@@ -51,8 +51,8 @@ return function()
   ---checks if the character preceding the cursor is a space character
   ---@return boolean true if it is a space character, false otherwise
   local check_backspace = function()
-    local col = vim.fn.col "." - 1
-    return col == 0 or vim.fn.getline("."):sub(col, col):match "%s"
+    local col = vim.fn.col(".") - 1
+    return col == 0 or vim.fn.getline("."):sub(col, col):match("%s")
   end
 
   ---checks if emmet_ls is available and active in the buffer
@@ -101,7 +101,7 @@ return function()
       event = { "FileType" },
       pattern = { "TelescopePrompt" },
       command = function()
-        cmp.setup.buffer { completion = { autocomplete = false } }
+        cmp.setup.buffer({ completion = { autocomplete = false } })
       end,
     },
   })
@@ -137,6 +137,7 @@ return function()
           cmp_tabnine = "(TN)",
           spell = "(Spell)",
           cmdline = "(Command)",
+          rg = "[Rg]",
           git = "(Git)",
           calc = "(Calc)",
           emoji = "(Emoji)",
@@ -180,6 +181,7 @@ return function()
         { name = "buffer" },
         { name = "cmp_tabnine" },
         { name = "spell" },
+        { name = "rg" },
         { name = "git" },
         { name = "calc" },
         { name = "emoji" },
@@ -192,12 +194,12 @@ return function()
       ["<C-k>"] = cmp.mapping.select_prev_item(),
       ["<C-d>"] = cmp.mapping.scroll_docs(-4),
       ["<C-f>"] = cmp.mapping.scroll_docs(4),
-      ["<C-q>"] = cmp.mapping {
+      ["<C-q>"] = cmp.mapping({
         i = cmp.mapping.abort(),
         c = cmp.mapping.close(),
-      },
+      }),
       ["<C-space>"] = cmp.mapping.complete(),
-      ["<CR>"] = cmp.mapping.confirm { select = false }, -- If nothing is selected don't complete
+      ["<CR>"] = cmp.mapping.confirm({ select = false }), -- If nothing is selected don't complete
     },
     ["<C-j>"] = cmp.mapping.select_next_item(),
     mapping = {},
@@ -219,9 +221,9 @@ return function()
   cmp.setup.cmdline("/", search_sources)
   cmp.setup.cmdline("?", search_sources)
   cmp.setup.cmdline(":", {
-    sources = cmp.config.sources {
+    sources = cmp.config.sources({
       { name = "cmdline", keyword_pattern = [=[[^[:blank:]\!]*]=] },
       { name = "path" },
-    },
+    }),
   })
 end
