@@ -1,4 +1,4 @@
-local tbl = require "user.utils.table"
+local tbl = require("user.utils.table")
 
 local M = {}
 
@@ -39,10 +39,14 @@ function M.get_supported_filetypes(server_name)
   return requested_server:get_supported_filetypes()
 end
 
-function M.enable_lsp_document_highlight(client, bufnr)
-  local status_ok, highlight_supported = pcall(function()
-    return client.supports_method "textDocument/documentHighlight"
+local function check_hi(client)
+  pcall(function()
+    return client.server_capabilities.documentHighlightProvider
   end)
+end
+
+function M.enable_lsp_document_highlight(client, bufnr)
+  local status_ok, highlight_supported = check_hi(client)
   if not status_ok or not highlight_supported then
     return
   end
@@ -69,7 +73,7 @@ end
 ---@param bufnr number
 function M.enable_code_lens_refresh(client, bufnr)
   local status_ok, codelens_supported = pcall(function()
-    return client.supports_method "textDocument/codeLens"
+    return client.server_capabilities.codeLensProvider
   end)
   if not status_ok or not codelens_supported then
     return
@@ -90,9 +94,7 @@ function M.enable_code_lens_refresh(client, bufnr)
 end
 
 function M.enable_lsp_hover_diagnostics(client, bufnr)
-  local status_ok, highlight_supported = pcall(function()
-    return client.supports_method "textDocument/documentHighlight"
-  end)
+  local status_ok, highlight_supported = check_hi(client)
   if not status_ok or not highlight_supported then
     return
   end
@@ -110,8 +112,8 @@ end
 
 function M.enable_lsp_setup_tagfunc(client, bufnr)
   local status_ok, highlight_supported = pcall(function()
-    return client.supports_method "textDocument/definition"
-      and client.supports_method "textDocument/formatting"
+    return client.server_capabilities.definitionProvider
+      and client.server_capabilities.documentFormattingProvider
   end)
   if not status_ok or not highlight_supported then
     return
@@ -128,16 +130,14 @@ end
 function M.format_filter(clients)
   return vim.tbl_filter(function(client)
     local status_ok, formatting_supported = pcall(function()
-      return client.supports_method "textDocument/formatting"
+      return client.server_capabilities.documentFormattingProvider
     end)
 
-    -- TODO: handle this differently
-    -- for _, server in ipairs(rvim.lsp.formatting_ignore_list) do
-    --   if client.name == server then
-    --     client.resolved_capabilities.document_formatting = false
-    --     client.resolved_capabilities.document_range_formatting = false
-    --   end
-    -- end
+    for _, server in ipairs(rvim.lsp.formatting_ignore_list) do
+      if client.name == server then
+        client.server_capabilities.documentFormattingProvider = false
+      end
+    end
 
     -- give higher priority to null-ls
     if status_ok and formatting_supported and client.name == "null-ls" then
@@ -173,11 +173,11 @@ function M.format(opts)
   end
 
   clients = vim.tbl_filter(function(client)
-    return client.supports_method "textDocument/formatting"
+    return client.server_capabilities.documentFormattingProvider
   end, clients)
 
   if #clients == 0 then
-    vim.notify "[LSP] Format request failed, no matching language servers."
+    vim.notify("[LSP] Format request failed, no matching language servers.")
   end
 
   local timeout_ms = opts.timeout_ms or 1000
