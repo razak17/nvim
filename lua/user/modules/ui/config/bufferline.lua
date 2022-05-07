@@ -1,5 +1,5 @@
 return function()
-  local bufferline_ok, bufferline = rvim.safe_require "bufferline"
+  local bufferline_ok, bufferline = rvim.safe_require("bufferline")
   if not bufferline_ok then
     return
   end
@@ -16,7 +16,7 @@ return function()
       return true
     end
     local tab_num = vim.fn.tabpagenr()
-    local last_tab = vim.fn.tabpagenr "$"
+    local last_tab = vim.fn.tabpagenr("$")
     local is_log = is_ft(buf, "log")
     if last_tab == 1 then
       return true
@@ -26,7 +26,7 @@ return function()
   end
 
   local P = rvim.palette
-  local util = require "zephyr.util"
+  local util = require("zephyr.util")
   local normal_bg = util.get_hl("Normal", "bg")
   local darker_bg = util.alter_color(normal_bg, -1)
   local bg = rvim.util.transparent_window == true and "none" or P.statusline_section_bg
@@ -142,10 +142,10 @@ return function()
   rvim.nnoremap("<S-h>", ":BufferLineCyclePrev<CR>")
   rvim.nnoremap("gb", ":BufferLinePick<CR>")
 
-  require("which-key").register {
+  require("which-key").register({
     ["<leader>bh"] = { ":BufferLineMovePrev<CR>", "move left" },
     ["<leader>bl"] = { ":BufferLineMoveNext<CR>", "move right" },
     ["<leader>bH"] = { ":BufferLineCloseLeft<CR>", "close left" },
     ["<leader>bL"] = { ":BufferLineCloseRight<CR>", "close right" },
-  }
+  })
 end

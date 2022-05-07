@@ -67,7 +67,7 @@ function M.global_on_attach(client, bufnr)
     utils.enable_lsp_hover_diagnostics(bufnr)
   end
 
-  keymaps.init(client, bufnr)
+  keymaps.init(client)
   utils.enable_lsp_setup_tagfunc(client, bufnr)
 end
 

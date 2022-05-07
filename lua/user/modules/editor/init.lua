@@ -23,11 +23,11 @@ local conf = require("user.utils").load_conf
 editor["xiyaowong/accelerated-jk.nvim"] = {
   event = { "BufWinEnter" },
   config = function()
-    require("accelerated-jk").setup {
+    require("accelerated-jk").setup({
       mappings = { j = "gj", k = "gk" },
       -- If the interval of key-repeat takes more than `acceleration_limit` ms, the step is reset
       -- acceleration_limit = 150,
-    }
+    })
   end,
   disable = not rvim.plugins.editor.ajk.active,
 }
@@ -60,7 +60,7 @@ editor["junegunn/vim-easy-align"] = {
 editor["xiyaowong/nvim-cursorword"] = {
   event = { "InsertEnter" },
   config = function()
-    vim.cmd [[hi! CursorWord cterm=NONE gui=NONE guibg=#3f444a]]
+    vim.cmd([[hi! CursorWord cterm=NONE gui=NONE guibg=#3f444a]])
   end,
   disable = not rvim.plugins.editor.cursorword.active,
 }
@@ -119,10 +119,10 @@ editor["b3nj5m1n/kommentary"] = {
 
     rvim.xmap("<leader>/", "<Plug>kommentary_visual_default")
 
-    require("which-key").register {
+    require("which-key").register({
       ["<leader>/"] = { "<Plug>kommentary_line_default", "comment" },
       ["<leader>a/"] = { "<Plug>kommentary_motion_default", "comment motion default" },
-    }
+    })
   end,
   disable = not rvim.plugins.editor.kommentary.active,
 }
@@ -135,15 +135,13 @@ editor["Matt-A-Bennett/vim-surround-funk"] = {
 
 editor["danymat/neogen"] = {
   setup = function()
-    require("which-key").register {
-      ["<localleader>nc"] = "comment: generate",
-    }
+    rvim.nnoremap("<localleader>lC", require("neogen").generate, "comment: generate")
   end,
   keys = { "<localleader>nc" },
   requires = "nvim-treesitter/nvim-treesitter",
+  module = "neogen",
   config = function()
-    require("neogen").setup { snippet_engine = "luasnip" }
-    rvim.nnoremap("<localleader>nc", require("neogen").generate, "comment: generate")
+    require("neogen").setup({ snippet_engine = "luasnip" })
   end,
 }
 
@@ -151,10 +149,10 @@ editor["abecodes/tabout.nvim"] = {
   wants = { "nvim-treesitter" },
   after = { "nvim-cmp" },
   config = function()
-    require("tabout").setup {
+    require("tabout").setup({
       completion = false,
       ignore_beginning = false,
-    }
+    })
   end,
   disable = not rvim.plugins.editor.tabout.active,
 }

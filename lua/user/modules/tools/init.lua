@@ -39,22 +39,26 @@ rvim.plugins.tools = {
   restconsole = { active = false }, --j
 }
 
-local conf = require "user.utils".load_conf
+local conf = require("user.utils").load_conf
 
 tools["sindrets/diffview.nvim"] = {
   event = "BufReadPre",
+  setup = function()
+    rvim.nnoremap("<localleader>gd", "<Cmd>DiffviewOpen<CR>", "diffview: diff HEAD")
+  end,
   config = conf("tools", "diffview"),
   disable = not rvim.plugins.tools.diffview.active,
 }
 
 tools["mbbill/undotree"] = {
   event = "BufWinEnter",
+  cmd = "UndotreeToggle",
+  setup = function()
+    rvim.nnoremap("<leader>u", "<cmd>UndotreeToggle<CR>", "undotree: toggle")
+  end,
   config = function()
     vim.g.undotree_TreeNodeShape = "◦" -- Alternative: '◉'
     vim.g.undotree_SetFocusWhenToggle = 1
-    require("which-key").register {
-      ["<leader>u"] = { ":UndotreeToggle<cr>", "toggle undotree" },
-    }
   end,
   disable = not rvim.plugins.tools.undotree.active,
 }
@@ -89,14 +93,14 @@ tools["MattesGroeger/vim-bookmarks"] = {
   config = function()
     vim.g.bookmark_no_default_key_mappings = 1
     vim.g.bookmark_sign = ""
-    require("which-key").register {
+    require("which-key").register({
       ["<leader>m"] = {
         name = "Mark",
         t = { ":BookmarkToggle<cr>", "toggle" },
         p = { ":BookmarkPrev<cr>", "previous mark" },
         n = { ":BookmarkNext<cr>", "next mark" },
       },
-    }
+    })
   end,
   disable = not rvim.plugins.tools.bookmarks.active,
 }
@@ -121,14 +125,14 @@ tools["brooth/far.vim"] = {
   config = function()
     vim.g["far#source"] = "rg"
     vim.g["far#enable_undo"] = 1
-    require("which-key").register {
+    require("which-key").register({
       ["<leader>Ff"] = { ":Farr --source=vimgrep<cr>", "far: replace in File" },
       ["<leader>Fd"] = { ":Fardo<cr>", "far: do" },
       ["<leader>Fi"] = { ":Farf<cr>", "far: search iteratively" },
       ["<leader>Fr"] = { ":Farr --source=rgnvim<cr>", "far: replace in project" },
       ["<leader>Fu"] = { ":Farundo<cr>", "far: undo" },
       ["<leader>FU"] = { ":UpdateRemotePlugins<cr>", "far: update remote" },
-    }
+    })
   end,
   disable = not rvim.plugins.tools.far.active,
 }
@@ -139,7 +143,7 @@ tools["Tastyep/structlog.nvim"] = {
 
 tools["AckslD/nvim-neoclip.lua"] = {
   config = function()
-    require("neoclip").setup {
+    require("neoclip").setup({
       enable_persistent_history = false,
       keys = {
         telescope = {
@@ -147,13 +151,14 @@ tools["AckslD/nvim-neoclip.lua"] = {
           n = { select = "p", paste = "<CR>", paste_behind = "P" },
         },
       },
-    }
+    })
     local function clip()
       require("telescope").extensions.neoclip.default(require("telescope.themes").get_dropdown())
     end
-    require("which-key").register {
+
+    require("which-key").register({
       ["<leader>fN"] = { clip, "neoclip: open yank history" },
-    }
+    })
   end,
   disable = not rvim.plugins.tools.neoclip.active,
 }
@@ -202,15 +207,15 @@ tools["jvgrootveld/telescope-zoxide"] = {
 
 tools["rmagatti/auto-session"] = {
   config = function()
-    require("auto-session").setup {
+    require("auto-session").setup({
       log_level = "error",
       auto_session_root_dir = join_paths(rvim.get_cache_dir(), "session/auto/"),
       auto_restore_enabled = false,
-    }
-    require("which-key").register {
+    })
+    require("which-key").register({
       ["<leader>sl"] = { ":RestoreSession<cr>", "auto-session: restore" },
       ["<leader>ss"] = { ":SaveSession<cr>", "auto-session: save" },
-    }
+    })
   end,
   disable = not rvim.plugins.tools.auto_session.active,
 }
@@ -228,11 +233,11 @@ tools["lewis6991/impatient.nvim"] = {
 tools["moll/vim-bbye"] = {
   event = "BufWinEnter",
   config = function()
-    require("which-key").register {
+    require("which-key").register({
       ["<leader>c"] = { ":Bdelete!<cr>", "close buffer" },
       ["<leader>bx"] = { ":bufdo :Bdelete<cr>", "close all buffers" },
       ["<leader>q"] = { "<Cmd>Bwipeout<CR>", "wipe buffer" },
-    }
+    })
   end,
   disable = not rvim.plugins.tools.bbye.active,
 }
@@ -245,12 +250,12 @@ tools["folke/todo-comments.nvim"] = {
     if vim.g.packer_compiled_loaded then
       return
     end
-    require("todo-comments").setup {
+    require("todo-comments").setup({
       highlight = {
         exclude = { "org", "orgagenda", "vimwiki", "markdown" },
       },
-    }
-    require("which-key").register {
+    })
+    require("which-key").register({
       ["<leader>tt"] = {
         "<Cmd>TodoTrouble<CR>",
         "trouble: todos",
@@ -259,7 +264,7 @@ tools["folke/todo-comments.nvim"] = {
         "<Cmd>TodoTelescope<CR>",
         "telescope: todos",
       },
-    }
+    })
   end,
   disable = not rvim.plugins.tools.todo_comments.active,
 }
@@ -280,7 +285,7 @@ tools["nvim-lua/popup.nvim"] = { disable = not rvim.plugins.tools.popup.active }
 tools["SmiteshP/nvim-gps"] = {
   requires = "nvim-treesitter/nvim-treesitter",
   config = function()
-    require("nvim-gps").setup {}
+    require("nvim-gps").setup({})
   end,
   disable = not rvim.plugins.tools.gps.active,
 }
@@ -289,7 +294,7 @@ tools["NTBBloodbath/rest.nvim"] = {
   requires = { "nvim-lua/plenary.nvim" },
   ft = { "http", "json" },
   config = function()
-    require("rest-nvim").setup {
+    require("rest-nvim").setup({
       -- Open request results in a horizontal split
       result_split_horizontal = true,
       -- Skip SSL verification, useful for unknown certificates
@@ -297,11 +302,11 @@ tools["NTBBloodbath/rest.nvim"] = {
       -- Jump to request line on run
       jump_to_request = false,
       custom_dynamic_variables = {},
-    }
+    })
 
-    rvim.nnoremap("<leader>rr", "<Plug>RestNvim", { label = "rest: run" })
-    rvim.nnoremap("<leader>rp", "<Plug>RestNvimPreview", { label = "rest: run" })
-    rvim.nnoremap("<leader>rl", "<Plug>RestNvimLast", { label = "rest: run" })
+    rvim.nnoremap("<leader>rr", "<Plug>RestNvim", "rest: run")
+    rvim.nnoremap("<leader>rp", "<Plug>RestNvimPreview", "rest: run")
+    rvim.nnoremap("<leader>rl", "<Plug>RestNvimLast", "rest: run")
   end,
   disable = not rvim.plugins.tools.rest.active,
 }

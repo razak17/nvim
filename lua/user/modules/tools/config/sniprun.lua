@@ -13,8 +13,8 @@ return function()
     },
   }
 
-  rvim.nnoremap("<leader>sr", ":SnipRun<cr>", { label = "sniprun: run" })
-  rvim.vnoremap("<leader>sr", ":SnipRun<cr>", { label = "sniprun: run" })
-  rvim.nnoremap("<leader>sc", ":SnipClose<cr>", { label = "sniprun: close" })
-  rvim.nnoremap("<leader>sx", ":SnipReset<cr>", { label = "sniprun: reset" })
+  rvim.nnoremap("<leader>sr", ":SnipRun<cr>", "sniprun: run" )
+  rvim.vnoremap("<leader>sr", ":SnipRun<cr>", "sniprun: run" )
+  rvim.nnoremap("<leader>sc", ":SnipClose<cr>", "sniprun: close" )
+  rvim.nnoremap("<leader>sx", ":SnipReset<cr>", "sniprun: reset" )
 end

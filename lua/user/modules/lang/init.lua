@@ -43,11 +43,11 @@ lang["mfussenegger/nvim-dap"] = {
 lang["rcarriga/nvim-dap-ui"] = {
   after = "nvim-dap",
   config = function()
-    local dapui = require "dapui"
+    local dapui = require("dapui")
     dapui.setup()
     rvim.nnoremap("<localleader>dX", dapui.close, "dap-ui: close")
     rvim.nnoremap("<localleader>dO", dapui.toggle, "dap-ui: toggle")
-    local dap = require "dap"
+    local dap = require("dap")
     -- NOTE: this opens dap UI automatically when dap starts
     -- dap.listeners.after.event_initialized['dapui_config'] = function()
     --   dapui.open()
@@ -73,11 +73,11 @@ lang["jbyuki/one-small-step-for-vimkind"] = {
     nnoremap("<Leader>dE", ':lua require"osv".run_this()<CR>')
     nnoremap("<Leader>dl", ':lua require"osv".launch()<CR>')
 
-    require("which-key").register {
+    require("which-key").register({
       ["<leader>dE"] = "osv run this",
       disable = not rvim.plugins.lang.dap.active,
       ["<leader>dL"] = "osv launch",
-    }
+    })
   end,
   disable = not rvim.plugins.lang.osv.active,
 }
@@ -85,12 +85,12 @@ lang["jbyuki/one-small-step-for-vimkind"] = {
 lang["theHamsta/nvim-dap-virtual-text"] = {
   after = "nvim-dap",
   config = function()
-    require("nvim-dap-virtual-text").setup {
+    require("nvim-dap-virtual-text").setup({
       enabled = true, -- enable this plugin (the default)
       enabled_commands = true, -- create commands DapVirtualTextEnable, DapVirtualTextDisable, DapVirtualTextToggle, (DapVirtualTextForceRefresh for refreshing when debug adapter did not notify its termination)
       highlight_changed_variables = true, -- highlight changed values with NvimDapVirtualTextChanged, else always NvimDapVirtualText
       all_frames = true, -- show virtual text for all stack frames not only current. Only works for debugpy on my machine.
-    }
+    })
   end,
   disable = not rvim.plugins.lang.nvim_dap_virtual_text.active,
 }
@@ -138,10 +138,10 @@ lang["kosayoda/nvim-lightbulb"] = {
         event = { "CursorHold", "CursorHoldI" },
         pattern = { "*" },
         command = function()
-          require("nvim-lightbulb").update_lightbulb {
+          require("nvim-lightbulb").update_lightbulb({
             sign = { enabled = false },
             virtual_text = { enabled = true },
-          }
+          })
         end,
       },
     })
@@ -153,54 +153,34 @@ lang["simrat39/symbols-outline.nvim"] = {
   after = "nvim-lspconfig",
   cmd = "SymbolsOutline",
   config = function()
-    require("symbols-outline").setup { show_guides = true }
+    require("symbols-outline").setup({ show_guides = true })
   end,
   disable = not rvim.plugins.lang.symbols_outline.active,
 }
 
 lang["folke/trouble.nvim"] = {
-  after = "nvim-lspconfig",
+  cmd = { "TroubleToggle" },
   requires = "nvim-web-devicons",
-  config = function()
-    require("which-key").register {
-      ["<leader>lq"] = { ":TroubleToggle quickfix<cr>", "trouble: toggle quickfix" },
-      ["<leader>ll"] = { ":TroubleToggle loclist<cr>", "trouble: toggle loclist" },
-    }
-    local u = require "zephyr.util"
-    u.plugin("trouble", {
-      TroubleNormal = { link = "PanelBackground" },
-      TroubleText = { link = "PanelBackground" },
-      TroubleIndent = { link = "PanelVertSplit" },
-      TroubleFoldIcon = { foreground = "yellow", bold = true },
-      TroubleLocation = { foreground = u.get_hl("Comment", "fg") },
-    })
-    local trouble = require "trouble"
-    rvim.nnoremap("]d", function()
-      trouble.previous { skip_groups = true, jump = true }
-    end)
-    rvim.nnoremap("[d", function()
-      trouble.next { skip_groups = true, jump = true }
-    end)
-    trouble.setup { auto_close = true, auto_preview = false, use_diagnostic_signs = true }
-  end,
+  setup = conf("lang", "trouble").setup,
+  config = conf("lang", "trouble").config,
   disable = not rvim.plugins.lang.trouble.active,
 }
 
 lang["kevinhwang91/nvim-bqf"] = {
   after = "telescope.nvim",
   config = function()
-    require("bqf").setup {
+    require("bqf").setup({
       preview = {
         border_chars = { "│", "│", "─", "─", "┌", "┐", "└", "┘", "█" },
       },
-    }
+    })
   end,
   disable = not rvim.plugins.lang.bqf.active,
 }
 
 -- Treesitter
 lang["nvim-treesitter/nvim-treesitter"] = {
-  branch = vim.fn.has "nvim-0.6" == 1 and "master" or "0.5-compat",
+  branch = vim.fn.has("nvim-0.6") == 1 and "master" or "0.5-compat",
   config = conf("lang", "treesitter"),
   disable = not rvim.plugins.lang.treesitter.active,
 }
@@ -211,7 +191,7 @@ lang["nvim-treesitter/playground"] = {
   module = "nvim-treesitter-playground",
   cmd = { "TSPlaygroundToggle", "TSHighlightCapturesUnderCursor" },
   setup = function()
-    require("which-key").register { ["<leader>LE"] = "treesitter: inspect token" }
+    require("which-key").register({ ["<leader>LE"] = "treesitter: inspect token" })
   end,
   config = function()
     rvim.nnoremap("<leader>LE", "<Cmd>TSHighlightCapturesUnderCursor<CR>")
@@ -233,9 +213,9 @@ lang["andymass/vim-matchup"] = {
   after = "nvim-treesitter",
   config = function()
     rvim.nnoremap["<Leader>l?"] = ":<c-u>MatchupWhereAmI?<CR>"
-    require("which-key").register {
+    require("which-key").register({
       ["<leader>l?"] = "where am i",
-    }
+    })
   end,
   disable = not rvim.plugins.lang.matchup.active,
 }
@@ -263,7 +243,7 @@ lang["b0o/schemastore.nvim"] = {
 lang["ray-x/lsp_signature.nvim"] = {
   event = "InsertEnter",
   config = function()
-    require("lsp_signature").setup {
+    require("lsp_signature").setup({
       debug = false,
       log_path = rvim.get_cache_dir() .. "/lsp_signature.log",
       bind = true,
@@ -271,16 +251,16 @@ lang["ray-x/lsp_signature.nvim"] = {
       auto_close_after = 15,
       hint_enable = false,
       handler_opts = { border = "rounded" },
-    }
+    })
   end,
   disable = not rvim.plugins.lang.lsp_signature.active,
 }
 
 lang["lewis6991/spellsitter.nvim"] = {
   config = function()
-    require("spellsitter").setup {
+    require("spellsitter").setup({
       enable = true,
-    }
+    })
   end,
   disable = not rvim.plugins.lang.spellsitter.active,
 }

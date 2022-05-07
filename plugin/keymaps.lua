@@ -1,4 +1,4 @@
-local utils = require "user.utils"
+local utils = require("user.utils")
 
 local nmap = rvim.nmap
 local imap = rvim.imap
@@ -46,12 +46,12 @@ rvim.augroup("AddTerminalMappings", {
 -- repeat macros across a visual range
 ------------------------------------------------------------------------------
 -- TODO: converting this to lua does not work for some obscure reason.
-vim.cmd [[
+vim.cmd([[
   function! ExecuteMacroOverVisualRange()
     echo "@".getcmdline()
     execute ":'<,'>normal @".nr2char(getchar())
   endfunction
-]]
+]])
 
 xnoremap("@", ":<C-u>call ExecuteMacroOverVisualRange()<CR>", { silent = false })
 --}}}
@@ -97,8 +97,8 @@ cnoremap("/", [[getcmdtype() == "/" ? "\/" : "/"]], { expr = true })
 -- Alternate way to save
 nnoremap("<C-s>", ":silent! write<CR>")
 -- Quit
-nnoremap("<leader>x", "<cmd>lua require('user.utils').smart_quit()<CR>", { label = "quit" })
--- nnoremap("<leader>x", ":q!<cr>", { label = "quit" })
+nnoremap("<leader>x", "<cmd>lua require('user.utils').smart_quit()<CR>", "quit")
+-- nnoremap("<leader>x", ":q!<cr>",  "quit" )
 -- Write and quit all files, ZZ is NOT equivalent to this
 nnoremap("qa", "<cmd>qa<CR>")
 ------------------------------------------------------------------------------
@@ -170,11 +170,11 @@ vnoremap(">", ">gv")
 ------------------------------------------------------------------------------
 -- Capitalize
 ------------------------------------------------------------------------------
-nnoremap("<leader>U", "gUiw`]", { label = "capitalize word" })
+nnoremap("<leader>U", "gUiw`]", "capitalize word")
 inoremap("<C-u>", "<cmd>norm!gUiw`]a<CR>")
 
 -- Help
-nnoremap("<leader>H", ':h <C-R>=expand("<cword>")<cr><CR>', { label = "help" })
+nnoremap("<leader>H", ':h <C-R>=expand("<cword>")<cr><CR>', "help")
 
 -- find visually selected text
 vnoremap("*", [[y/<C-R>"<CR>]])
@@ -217,7 +217,7 @@ end)
 ------------------------------------------------------------------------------
 nnoremap("<leader>LV", function()
   utils.color_my_pencils()
-end, { label = "vim with me" })
+end, "vim with me")
 
 nnoremap("<leader>aR", function()
   utils.empty_registers()
@@ -236,30 +236,26 @@ nnoremap("<leader>ae", function()
 end)
 
 -- Search Files
-nnoremap("<leader>B", '/<C-R>=escape(expand("<cword>"), "/")<CR><CR>', { label = "find cword" })
+nnoremap("<leader>B", '/<C-R>=escape(expand("<cword>"), "/")<CR><CR>', "find cword")
 
 -- Greatest remap ever
-vnoremap("<leader>p", '"_dP', { label = "greatest remap" })
+vnoremap("<leader>p", '"_dP', "greatest remap")
 
 -- Reverse Line
-vnoremap(
-  "<leader>r",
-  [[:s/\%V.\+\%V./\=utils#rev_str(submatch(0))<CR>gv]],
-  { label = "reverse line" }
-)
+vnoremap("<leader>r", [[:s/\%V.\+\%V./\=utils#rev_str(submatch(0))<CR>gv]], "reverse line")
 ----------------------------------------------------------------------------------
 -- Windows
 ----------------------------------------------------------------------------------
 nnoremap(
   "<localleader>wv",
   "<C-W>t <C-W>H<C-W>=",
-  { label = "change two vertically split windows to horizontal splits" }
+  "change two vertically split windows to horizontal splits"
 )
 -- Change two vertically split windows to horizontal splits
 nnoremap(
   "<localleader>wh",
   "<C-W>t <C-W>K<C-W>=",
-  { label = "change two horizontally split windows to vertical splits" }
+  "change two horizontally split windows to vertical splits"
 )
 
 ----------------------------------------------------------------------------------
@@ -279,45 +275,29 @@ nnoremap("zO", [[zCzO]])
 -- Delimiters
 ------------------------------------------------------------------------------
 -- Conditionally modify character at end of line
-nnoremap("<localleader>,", utils.modify_line_end_delimiter ",", { label = "append comma" })
-nnoremap("<localleader>;", utils.modify_line_end_delimiter ";", { label = "append semi colon" })
-nnoremap("<localleader>.", utils.modify_line_end_delimiter ".", { label = "append period" })
+nnoremap("<localleader>,", utils.modify_line_end_delimiter(","), "append comma")
+nnoremap("<localleader>;", utils.modify_line_end_delimiter(";"), "append semi colon")
+nnoremap("<localleader>.", utils.modify_line_end_delimiter("."), "append period")
 
 -----------------------------------------------------------------------------//
 -- Quick find/replace
 -----------------------------------------------------------------------------//
-nnoremap(
-  "<leader>[",
-  [[:%s/\<<C-r>=expand("<cword>")<CR>\>/]],
-  { silent = false, label = "replace all" }
-)
-nnoremap(
-  "<leader>]",
-  [[:s/\<<C-r>=expand("<cword>")<CR>\>/]],
-  { silent = false, label = "replace in line" }
-)
-vnoremap("<leader>[", [["zy:%s/<C-r><C-o>"/]], { silent = false, label = "replace all" })
+nnoremap("<leader>[", [[:%s/\<<C-r>=expand("<cword>")<CR>\>/]], "replace all")
+nnoremap("<leader>]", [[:s/\<<C-r>=expand("<cword>")<CR>\>/]], "replace in line")
+vnoremap("<leader>[", [["zy:%s/<C-r><C-o>"/]], "replace all")
 -----------------------------------------------------------------------------//
 -- open a new file in the same directory
-nnoremap(
-  "<leader>no",
-  [[:e <C-R>=expand("%:p:h") . "/" <CR>]],
-  { silent = false, label = "open file in same dir" }
-)
+nnoremap("<leader>no", [[:e <C-R>=expand("%:p:h") . "/" <CR>]], "open file in same dir")
 -- create a new file in the same directory
-nnoremap(
-  "<leader>nf",
-  [[:vsp <C-R>=expand("%:p:h") . "/" <CR>]],
-  { silent = false, label = "create new file in same dir" }
-)
+nnoremap("<leader>nf", [[:vsp <C-R>=expand("%:p:h") . "/" <CR>]], "create new file in same dir")
 ------------------------------------------------------------------------------
 -- Quotes
 ------------------------------------------------------------------------------
-nnoremap([[<leader>"]], [[ciw"<c-r>""<esc>]], { label = "wrap double quotes" })
-nnoremap("<leader>`", [[ciw`<c-r>"`<esc>]], { label = "wrap backticks" })
-nnoremap("<leader>'", [[ciw'<c-r>"'<esc>]], { label = "wrap single quotes" })
-nnoremap("<leader>)", [[ciw(<c-r>")<esc>]], { label = "wrap parenthesis" })
-nnoremap("<leader>}", [[ciw{<c-r>"}<esc>]], { label = "wrap curly bracket" })
+nnoremap([[<leader>"]], [[ciw"<c-r>""<esc>]], "wrap double quotes")
+nnoremap("<leader>`", [[ciw`<c-r>"`<esc>]], "wrap backticks")
+nnoremap("<leader>'", [[ciw'<c-r>"'<esc>]], "wrap single quotes")
+nnoremap("<leader>)", [[ciw(<c-r>")<esc>]], "wrap parenthesis")
+nnoremap("<leader>}", [[ciw{<c-r>"}<esc>]], "wrap curly bracket")
 
 -- Map Q to replay q register
 nnoremap("Q", "@q")
@@ -337,7 +317,7 @@ function rvim.mappings.setup_CR()
   nmap("<Enter>", [[:nnoremap <lt>Enter> n@z<CR>q:<C-u>let @z=strpart(@z,0,strlen(@z)-1)<CR>n@z]])
 end
 
-vim.g.mc = rvim.replace_termcodes [[y/\V<C-r>=escape(@", '/')<CR><CR>]]
+vim.g.mc = rvim.replace_termcodes([[y/\V<C-r>=escape(@", '/')<CR><CR>]])
 xnoremap("cn", [[g:mc . "``cgn"]], { expr = true, silent = true })
 xnoremap("cN", [[g:mc . "``cgN"]], { expr = true, silent = true })
 nnoremap("cq", [[:\<C-u>call v:lua.rvim.mappings.setup_CR()<CR>*``qz]])
@@ -391,28 +371,29 @@ function rvim.mappings.google(pat, gh)
     )
   end
 end
+
 -- Search DuckDuckGo
 nnoremap(
   "<leader>?",
   [[:lua rvim.mappings.google(vim.fn.expand("<cword>"), false)<cr>]],
-  { label = "search word" }
+  "search word"
 )
 xnoremap(
   "<leader>?",
   [["gy:lua rvim.mappings.google(vim.api.nvim_eval("@g"), false)<cr>gv]],
-  { label = "search selection" }
+  "search selection"
 )
 
 -- Search Github
 nnoremap(
   "<leader>L?",
   [[:lua rvim.mappings.google(vim.fn.expand("<cword>"), true)<cr>]],
-  { label = "github search word" }
+  "github search word"
 )
 xnoremap(
   "<leader>L?",
   [["gy:lua rvim.mappings.google(vim.api.nvim_eval("@g"), true)<cr>gv]],
-  { label = "github search selection" }
+  "github search selection"
 )
 
 -- Buffers - Del All Others
@@ -424,27 +405,25 @@ nnoremap("<leader>bc", function()
     ]],
     false
   )
-end, {
-  label = "close all others",
-})
+end, "close all others")
 ------------------------------------------------------------------------------
 -- Personal
 ------------------------------------------------------------------------------
 -- leave extra space when deleting word
 nnoremap("dw", "cw<ESC>")
 -- Next greatest remap ever : asbjornHaland
-nnoremap("<leader>y", '"+y', { label = "yank" })
-vnoremap("<leader>y", '"+y', { label = "yank" })
+nnoremap("<leader>y", '"+y', "yank")
+vnoremap("<leader>y", '"+y', "yank")
 -- Whole file delete yank, paste
-nnoremap("<leader>aa", 'gg"+VG', { label = "select all" })
--- nnoremap("<leader>D", 'gg"+VGd', {label="delete all"})
-nnoremap("<leader>Y", 'gg"+yG', { label = "yank all" })
+nnoremap("<leader>aa", 'gg"+VG', "select all")
+-- nnoremap("<leader>D", 'gg"+VGd', "delete all")
+nnoremap("<leader>Y", 'gg"+yG', "yank all")
 -- actions
-nnoremap("<leader>=", "<C-W>=", { label = "balance window" })
+nnoremap("<leader>=", "<C-W>=", "balance window")
 -- opens a horizontal split
-nnoremap("<leader>ah", "<C-W>s", { label = "horizontal split" })
+nnoremap("<leader>ah", "<C-W>s", "horizontal split")
 -- opens a vertical split
-nnoremap("<leader>V", "<C-W>v", { label = "vsplit" })
+nnoremap("<leader>V", "<C-W>v", "vsplit")
 -- Bufferlline
 -- if not rvim.plugins.ui.bufferline.active then
 --   nnoremap("<S-l>", ":bnext<CR>")
@@ -454,16 +433,12 @@ nnoremap("<leader>V", "<C-W>v", { label = "vsplit" })
 nnoremap("<leader>lG", function()
   require("user.lsp.templates").generate_templates()
   vim.notify("Templates have been generated", nil, { title = "Lsp" })
-end, {
-  label = "lsp: generate templates",
-})
+end, "lsp: generate templates")
 
 nnoremap("<leader>lD", function()
   require("user.lsp.templates").remove_template_files()
   vim.notify("Templates have been removed", nil, { title = "Lsp" })
-end, {
-  label = "lsp: delete templates",
-})
+end, "lsp: delete templates")
 ------------------------------------------------------------------------------
 -- Undo
 ------------------------------------------------------------------------------
