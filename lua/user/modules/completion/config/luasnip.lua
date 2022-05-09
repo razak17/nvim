@@ -1,10 +1,11 @@
 return function()
-  local ls = require "luasnip"
-  local types = require "luasnip.util.types"
-  local extras = require "luasnip.extras"
+  local ls = require("luasnip")
+  local types = require("luasnip.util.types")
+  local extras = require("luasnip.extras")
   local fmt = require("luasnip.extras.fmt").fmt
+  local api = vim.api
 
-  ls.config.set_config {
+  ls.config.set_config({
     history = false,
     region_check_events = "CursorMoved,CursorHold,InsertEnter",
     delete_check_events = "InsertLeave",
@@ -34,14 +35,16 @@ return function()
       l = extras.lamda,
       snippet = ls.snippet,
     },
-  }
+  })
 
   rvim.command("LuaSnipEdit", function()
     require("luasnip.loaders.from_lua").edit_snippet_files()
   end)
 
   -- FIXME: Doesn't work
-  require("which-key").register { ["<leader>S"] = { ":LuaSnipEdit<CR> 1<CR><CR>", "edit snippet" } }
+  require("which-key").register({
+    ["<leader>S"] = { ":LuaSnipEdit<CR> 1<CR><CR>", "edit snippet" },
+  })
 
   -- <c-l> is selecting within a list of options.
   vim.keymap.set({ "s", "i" }, "<c-l>", function()
@@ -63,36 +66,36 @@ return function()
     end
   end)
 
-  rvim.augroup('LuasnipDiagnostics', {
+  rvim.augroup("LuasnipDiagnostics", {
     {
-      event = 'ModeChanged',
-      pattern = '[is]:n',
-      command = function()
+      event = "ModeChanged",
+      pattern = "[is]:n",
+      command = function(args)
         if ls.in_snippet() then
-          return vim.diagnostic.enable()
+          return pcall(vim.diagnostic.enable, args.buf)
         end
       end,
     },
     {
-      event = 'ModeChanged',
-      pattern = '*:s',
-      command = function()
+      event = "ModeChanged",
+      pattern = "*:s",
+      command = function(args)
         if ls.in_snippet() then
-          return vim.diagnostic.disable()
+          return pcall(vim.diagnostic.disable, args.buf)
         end
       end,
     },
   })
 
-  require("luasnip").config.setup { store_selection_keys = "<C-x>" }
+  require("luasnip").config.setup({ store_selection_keys = "<C-x>" })
   require("luasnip.loaders.from_lua").lazy_load()
   -- TODO: Temp fix to load both friendly snippets and user-defined snippets
   require("luasnip.loaders.from_vscode").lazy_load()
-  require("luasnip.loaders.from_vscode").lazy_load {
+  require("luasnip.loaders.from_vscode").lazy_load({
     paths = {
       rvim.paths.snippets,
       join_paths(rvim.get_runtime_dir(), "site", "pack", "packer", "start", "friendly-snippets"),
     },
-  }
+  })
   require("luasnip.loaders.from_snipmate").lazy_load()
 end
