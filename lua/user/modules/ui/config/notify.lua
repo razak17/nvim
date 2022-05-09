@@ -5,6 +5,11 @@ return function()
     return
   end
   require("zephyr.util").plugin("notify", {
+    NotifyERRORBorder = { bg = { from = "NormalFloat" } },
+    NotifyWARNBorder = { bg = { from = "NormalFloat" } },
+    NotifyINFOBorder = { bg = { from = "NormalFloat" } },
+    NotifyDEBUGBorder = { bg = { from = "NormalFloat" } },
+    NotifyTRACEBorder = { bg = { from = "NormalFloat" } },
     NotifyERRORBody = { link = "NormalFloat" },
     NotifyWARNBody = { link = "NormalFloat" },
     NotifyINFOBody = { link = "NormalFloat" },
@@ -16,8 +21,8 @@ return function()
     return
   end
 
-  local renderer = require "notify.render"
-  local Log = require "user.core.log"
+  local renderer = require("notify.render")
+  local Log = require("user.core.log")
 
   rvim.nvim_notify = {
     setup = {
@@ -60,16 +65,16 @@ return function()
   }
 
   ---@type table<string, fun(bufnr: number, notif: table, highlights: table)>
-  local notify = require "notify"
+  local notify = require("notify")
   notify.setup(rvim.nvim_notify.setup)
 
   vim.notify = notify
   Log:configure_notifications(notify)
 
-  require("telescope").load_extension "notify"
+  require("telescope").load_extension("notify")
 
-  require("which-key").register {
+  require("which-key").register({
     ["<leader>nn"] = { ":Notifications<cr>", "notify: show" },
     ["<leader>nx"] = { notify.dismiss, "notify: dimiss" },
-  }
+  })
 end
