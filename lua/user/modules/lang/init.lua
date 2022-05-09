@@ -13,7 +13,7 @@ rvim.plugins.lang = {
   fix_cursorhold = { active = true },
   nlsp = { active = true },
   null_ls = { active = true },
-  lightbulb = { active = false },
+  lightbulb = { active = true },
   symbols_outline = { active = false },
   bqf = { active = false },
   trouble = { active = true },
@@ -131,17 +131,21 @@ lang["jose-elias-alvarez/null-ls.nvim"] = {
 }
 
 lang["kosayoda/nvim-lightbulb"] = {
-  after = "nvim-lspconfig",
   config = function()
-    rvim.augroup("NvimLightbulb", {
+    require("zephyr.util").plugin("lightbulb", {
+      LightBulbFloatWin = { link = "Normal" },
+    })
+    local lightbulb = require("nvim-lightbulb")
+    lightbulb.setup({
+      ignore = { "null-ls" },
+      sign = { enabled = false },
+      float = { enabled = true, win_opts = { border = "none" } },
+    })
+    rvim.augroup("Lightbulb", {
       {
         event = { "CursorHold", "CursorHoldI" },
-        pattern = { "*" },
         command = function()
-          require("nvim-lightbulb").update_lightbulb({
-            sign = { enabled = false },
-            virtual_text = { enabled = true },
-          })
+          lightbulb.update_lightbulb()
         end,
       },
     })
