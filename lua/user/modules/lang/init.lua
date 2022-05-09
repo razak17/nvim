@@ -221,7 +221,6 @@ lang["andymass/vim-matchup"] = {
 }
 
 lang["windwp/nvim-ts-autotag"] = {
-  after = "nvim-treesitter",
   disable = not rvim.plugins.lang.autotag.active,
 }
 
