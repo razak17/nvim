@@ -7,11 +7,11 @@ local not_eligible = not vim.bo.modifiable
   or not vim.bo.buflisted
   or vim.bo.buftype ~= "" and vim.bo.buftype ~= "terminal" and vim.wo.previewwindow
 
-vim.cmd [[
+vim.cmd([[
    augroup vimrc -- Ensure all autocommands are cleared
    autocmd!
    augroup END
-  ]]
+  ]])
 
 local smart_close_filetypes = {
   "help",
@@ -30,7 +30,7 @@ local smart_close_filetypes = {
 }
 
 function rvim.smart_close()
-  if fn.winnr "$" ~= 1 then
+  if fn.winnr("$") ~= 1 then
     api.nvim_win_close(0, true)
   end
 end
@@ -48,10 +48,9 @@ rvim.augroup("SmartClose", {
     event = { "FileType" },
     pattern = { "*" },
     command = function()
-      local is_readonly = (vim.bo.readonly or not vim.bo.modifiable) and fn.hasmapto("q", "n") == 0
+      local is_unmapped = fn.hasmapto("q", "n") == 0
 
-      local is_eligible = vim.bo.buftype ~= ""
-        or is_readonly
+      local is_eligible = is_unmapped
         or vim.wo.previewwindow
         or contains(smart_close_filetypes, vim.bo.filetype)
 
@@ -72,7 +71,7 @@ rvim.augroup("SmartClose", {
     event = { "BufEnter" },
     pattern = { "*" },
     command = function()
-      if fn.winnr "$" == 1 and vim.bo.buftype == "quickfix" then
+      if fn.winnr("$") == 1 and vim.bo.buftype == "quickfix" then
         api.nvim_buf_delete(0, { force = true })
       end
     end,
@@ -84,7 +83,7 @@ rvim.augroup("SmartClose", {
     modifiers = { "nested" },
     command = function()
       if vim.bo.filetype ~= "qf" then
-        vim.cmd "silent! lclose"
+        vim.cmd("silent! lclose")
       end
     end,
   },
@@ -96,7 +95,7 @@ rvim.augroup("ExternalCommands", {
     event = { "BufEnter" },
     pattern = { "*.png,*.jpg,*.gif" },
     command = function()
-      vim.cmd(fmt('silent! "%s | :bw"', rvim.open_command .. " " .. fn.expand "%"))
+      vim.cmd(fmt('silent! "%s | :bw"', rvim.open_command .. " " .. fn.expand("%")))
     end,
   },
 })
@@ -151,7 +150,7 @@ rvim.augroup("ClearCommandMessages", {
     command = function()
       vim.defer_fn(function()
         if fn.mode() == "n" then
-          vim.cmd [[echon '']]
+          vim.cmd([[echon '']])
         end
       end, 10000)
     end,
@@ -164,7 +163,7 @@ rvim.augroup("TextYankHighlight", {
     event = { "TextYankPost" },
     pattern = { "*" },
     command = function()
-      require("vim.highlight").on_yank { timeout = 277, on_visual = false, higroup = "Visual" }
+      require("vim.highlight").on_yank({ timeout = 277, on_visual = false, higroup = "Visual" })
     end,
   },
 })
@@ -254,7 +253,7 @@ rvim.augroup("UpdateVim", {
       rvim.source(config_dir() .. "/init.lua")
       rvim.invalidate(config_dir() .. "/init.lua", true)
       -- plugins
-      vim.cmd ":PlugInvalidate"
+      vim.cmd(":PlugInvalidate")
       vim.notify("Config has been reloaded", nil, { title = "rVim" })
     end,
   },
@@ -279,7 +278,7 @@ rvim.augroup("WinBehavior", {
     pattern = { "*" },
     command = function()
       if rvim.util.save_on_focus_lost then
-        vim.cmd "silent! wall"
+        vim.cmd("silent! wall")
       end
     end,
   },
@@ -287,7 +286,7 @@ rvim.augroup("WinBehavior", {
 })
 
 if vim.env.TMUX ~= nil then
-  local external = require "user.utils.external"
+  local external = require("user.utils.external")
   rvim.augroup("ExternalConfig", {
     {
       event = { "BufEnter" },
@@ -346,7 +345,7 @@ rvim.augroup("Utilities", {
     event = { "BufReadCmd" },
     pattern = { "file:///*" },
     command = function()
-      vim.cmd(fmt("bd!|edit %s", vim.uri_from_fname "<afile>"))
+      vim.cmd(fmt("bd!|edit %s", vim.uri_from_fname("<afile>")))
     end,
   },
   {
@@ -356,16 +355,16 @@ rvim.augroup("Utilities", {
     pattern = { "*" },
     command = function()
       if vim.bo.ft ~= "gitcommit" and vim.fn.win_gettype() ~= "popup" then
-        if fn.line [['"]] > 0 and fn.line [['"]] <= fn.line "$" then
+        if fn.line([['"]]) > 0 and fn.line([['"]]) <= fn.line("$") then
           -- Check if the last line of the buffer is the same as the window
-          if fn.line "w$" == fn.line "$" then
+          if fn.line("w$") == fn.line("$") then
             -- Set line to last line edited
-            vim.cmd [[normal! g`"]]
+            vim.cmd([[normal! g`"]])
             -- Try to center
-          elseif fn.line "$" - fn.line [['"]] > ((fn.line "w$" - fn.line "w0") / 2) - 1 then
-            vim.cmd [[normal! g`"zz]]
+          elseif fn.line("$") - fn.line([['"]]) > ((fn.line("w$") - fn.line("w0")) / 2) - 1 then
+            vim.cmd([[normal! g`"zz]])
           else
-            vim.cmd [[normal! G'"<c-e>]]
+            vim.cmd([[normal! G'"<c-e>]])
           end
         end
       end
@@ -386,7 +385,7 @@ rvim.augroup("Utilities", {
     pattern = { "*" },
     command = function()
       if can_save() then
-        vim.cmd "silent! update"
+        vim.cmd("silent! update")
       end
     end,
   },
@@ -396,12 +395,12 @@ rvim.augroup("Utilities", {
     modifiers = { "nested" },
     command = function()
       -- detect filetype onsave
-      if rvim.empty(vim.bo.filetype) or fn.exists "b:ftdetect" == 1 then
-        vim.cmd [[
+      if rvim.empty(vim.bo.filetype) or fn.exists("b:ftdetect") == 1 then
+        vim.cmd([[
             unlet! b:ftdetect
             filetype detect
             echom 'Filetype set to ' . &ft
-          ]]
+          ]])
       end
     end,
   },
@@ -440,7 +439,7 @@ rvim.augroup("TerminalAutocommands", {
     command = function()
       --- automatically close a terminal if the job was successful
       if not vim.v.event.status == 0 then
-        vim.cmd("bdelete! " .. fn.expand "<abuf>")
+        vim.cmd("bdelete! " .. fn.expand("<abuf>"))
       end
     end,
   },
