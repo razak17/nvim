@@ -15,14 +15,14 @@ function M.init(client)
     return vim.diagnostic.open_float({ scope = "line" }, config)
   end, with_desc("lsp: line diagnostics"))
 
-  -- if client.server_capabilities.codeActionProvider then
-  -- rvim.nnoremap("<leader>ca", vim.lsp.buf.code_action, with_desc("lsp: code action"))
-  -- rvim.xnoremap(
-  --   "<leader>ca",
-  --   "<esc><Cmd>lua vim.lsp.buf.range_code_action()<CR>",
-  --   with_des("lsp: code action"))
-  -- )
-  -- end
+  if client.server_capabilities.codeActionProvider then
+    rvim.nnoremap("<leader>la", vim.lsp.buf.code_action, with_desc("lsp: code action"))
+    rvim.xnoremap(
+      "<leader>la",
+      "<esc><Cmd>lua vim.lsp.buf.range_code_action()<CR>",
+      with_desc("lsp: code action")
+    )
+  end
 
   if client.server_capabilities.hoverProvider then
     rvim.nnoremap("K", vim.lsp.buf.hover, with_desc("lsp: hover"))

@@ -130,7 +130,8 @@ end
 function M.format_filter(clients)
   return vim.tbl_filter(function(client)
     local status_ok, formatting_supported = pcall(function()
-      return client.server_capabilities.documentFormattingProvider
+      return client.supports_method "textDocument/formatting"
+      -- return client.server_capabilities.documentFormattingProvider
     end)
 
     for _, server in ipairs(rvim.lsp.formatting_ignore_list) do
@@ -173,7 +174,8 @@ function M.format(opts)
   end
 
   clients = vim.tbl_filter(function(client)
-    return client.server_capabilities.documentFormattingProvider
+    return client.supports_method "textDocument/formatting"
+    -- return client.server_capabilities.documentFormattingProvider
   end, clients)
 
   if #clients == 0 then

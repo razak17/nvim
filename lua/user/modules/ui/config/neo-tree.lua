@@ -56,7 +56,7 @@ return function()
     },
     window = {
       position = "right",
-      width = 40,
+      width = 30,
       mappings = {
         o = "toggle_node",
         ["<CR>"] = "open_with_window_picker",

@@ -96,8 +96,6 @@ rvim.wk = {
       n = { ":NullLsInfo<cr>", "null-ls: info" },
       N = { ":LspSettings buffer local<cr>", "nlsp: buffer config" },
       p = { name = "+Peek" },
-      a = { ":Telescope lsp_code_actions<cr>", "telescope: code action" },
-      A = { ":Telescope lsp_range_code_actions<cr>", "telescope: range code action" },
       R = { ":Telescope lsp_references<cr>", "telescope: references" },
       s = { ":Telescope lsp_document_symbols<cr>", "telescope: document symbols" },
       S = { ":Telescope lsp_dynamic_workspace_symbols<cr>", "telescope: workspace symbols" },

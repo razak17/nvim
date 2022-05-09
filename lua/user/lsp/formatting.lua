@@ -12,8 +12,8 @@ local function get_format(defaults)
 
   if defaults == true then
     return {
-      pattern = rvim.util.format_on_save.pattern,
-      timeout = rvim.util.format_on_save.timeout,
+      pattern = format_on_save.pattern,
+      timeout = format_on_save.timeout,
     }
   end
 end
