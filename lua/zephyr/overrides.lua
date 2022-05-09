@@ -1,5 +1,5 @@
 local P = rvim.palette
-local util = require "zephyr.util"
+local util = require("zephyr.util")
 
 local function general_overrides()
   local comment_fg = util.get_hl("Comment", "fg")
@@ -7,7 +7,7 @@ local function general_overrides()
   local search_bg = util.get_hl("Search", "bg")
   -- local error_line = util.alter_color(P.error_red, -80)
   local msg_area_bg = rvim.util.transparent_window and "NONE" or P.darker_bg
-  util.all {
+  util.all({
     -- WinSeparator = { background = "NONE", foreground = util.get_hl("VertSplit", "fg") },
     MsgArea = { background = msg_area_bg },
     mkdLineBreak = { link = "NONE" },
@@ -18,7 +18,8 @@ local function general_overrides()
     -----------------------------------------------------------------------------//
     NormalFloat = { background = P.bg },
     -----------------------------------------------------------------------------//
-    -- CursorLineNr = { foreground = P.pink, bold = true } ,
+    CursorLineNr = { foreground = P.pink, bold = true },
+    LineNr = { background = "NONE" },
     FoldColumn = { background = "background" },
     TermCursor = { ctermfg = "green", foreground = "royalblue" },
     -- Add undercurl to existing spellbad highlight
@@ -68,7 +69,7 @@ local function general_overrides()
     -- This represents when a reference is assigned which is more interesting than regular
     -- occurrences so should be highlighted more distinctly
     LspReferenceWrite = { underline = true, bold = true, italic = true, background = "NONE" },
-  }
+  })
 end
 
 local function set_sidebar_highlight()
@@ -76,7 +77,7 @@ local function set_sidebar_highlight()
   local split_color = util.get_hl("VertSplit", "fg")
   local bg_color = util.alter_color(P.bg, -20)
   local st_color = util.alter_color(util.get_hl("Visual", "bg"), -10)
-  util.all {
+  util.all({
     PanelBackground = { link = "Normal" },
     PanelHeading = { background = bg_color, bold = true },
     PanelVertSplit = { foreground = split_color, background = bg_color },
@@ -84,7 +85,7 @@ local function set_sidebar_highlight()
     PanelWinSeparator = { foreground = split_color, background = bg_color },
     PanelStNC = { background = st_color, cterm = { italic = true } },
     PanelSt = { background = st_color },
-  }
+  })
 end
 
 local sidebar_fts = {
@@ -131,4 +132,4 @@ rvim.augroup("UserHighlights", {
 -----------------------------------------------------------------------------//
 -- Color Scheme {{{1
 -----------------------------------------------------------------------------//
-vim.cmd "colorscheme zephyr"
+vim.cmd("colorscheme zephyr")
