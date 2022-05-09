@@ -27,6 +27,6 @@ end
 ------------------------------------------------------------------------
 -- Load Modules
 ------------------------------------------------------------------------
-R "user.globals"
-R "user.bootstrap"
-R "user.config"
+R("user.globals")
+R("user.bootstrap")
+R("user.config")
