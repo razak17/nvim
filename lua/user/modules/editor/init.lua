@@ -12,6 +12,7 @@ rvim.plugins.editor = {
   cursorword = { active = false },
   surround_funk = { active = true },
   better_diagraphs = { active = false },
+  neogen = { active = true },
   tabout = { active = true },
   marks = { active = true },
   vim_uppercase_sql = { active = true },
@@ -143,6 +144,7 @@ editor["danymat/neogen"] = {
   config = function()
     require("neogen").setup({ snippet_engine = "luasnip" })
   end,
+  disable = not rvim.plugins.editor.neogen.active,
 }
 
 editor["abecodes/tabout.nvim"] = {
