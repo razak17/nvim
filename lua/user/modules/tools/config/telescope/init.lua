@@ -265,8 +265,6 @@ return function()
   local function project_files(opts)
     if not pcall(builtins.git_files, opts) then
       builtins.find_files(opts)
-    else
-      builtins.find_files()
     end
   end
 
