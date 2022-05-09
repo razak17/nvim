@@ -4,6 +4,7 @@ return function()
     return
   end
 
+  local fn = vim.fn
   local api = vim.api
   local t = rvim.replace_termcodes
   local border = rvim.style.border.current
@@ -28,6 +29,11 @@ return function()
   end
 
   util.plugin("Cmp", kind_hls)
+
+  local has_words_before = function()
+    local col = api.nvim_win_get_cursor(0)[2]
+    return col ~= 0 and api.nvim_get_current_line():sub(col, col):match("%s") == nil
+  end
 
   local cmp_window = {
     border = border,
@@ -76,6 +82,8 @@ return function()
       fallback()
     elseif is_emmet_active() then
       return vim.fn["cmp#complete"]()
+    elseif has_words_before() then
+      cmp.complete()
     else
       fallback()
     end
@@ -87,6 +95,8 @@ return function()
       cmp.select_prev_item()
     elseif ok and luasnip.jumpable(-1) then
       luasnip.jump(-1)
+    elseif has_words_before() then
+      cmp.complete()
     else
       fallback()
     end
@@ -181,8 +191,8 @@ return function()
           options = {
             get_bufnrs = function()
               local bufs = {}
-              for _, win in ipairs(vim.api.nvim_list_wins()) do
-                bufs[vim.api.nvim_win_get_buf(win)] = true
+              for _, win in ipairs(api.nvim_list_wins()) do
+                bufs[api.nvim_win_get_buf(win)] = true
               end
               return vim.tbl_keys(bufs)
             end,
@@ -199,7 +209,7 @@ return function()
       },
       mapping = {
         ["<c-h>"] = cmp.mapping(function()
-          api.nvim_feedkeys(vim.fn["copilot#Accept"](t("<Tab>")), "n", true)
+          api.nvim_feedkeys(fn["copilot#Accept"](t("<Tab>")), "n", true)
         end),
         ["<C-k>"] = cmp.mapping.select_prev_item(),
         ["<C-j>"] = cmp.mapping.select_next_item(),
