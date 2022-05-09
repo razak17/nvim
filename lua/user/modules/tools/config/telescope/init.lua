@@ -4,7 +4,7 @@ return function()
     return
   end
 
-  local previewers
+  local previewers = require "telescope.previewers"
   local sorters = require "telescope.sorters"
   local actions = require "telescope.actions"
   local action_state = require "telescope.actions.state"
@@ -70,7 +70,7 @@ return function()
             preview_height = 0.5,
           },
         },
-        winblend = 0,
+        winblend = 5,
         history = {
           path = rvim.get_cache_dir() .. "/telescope/history.sqlite3",
         },
