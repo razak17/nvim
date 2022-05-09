@@ -268,17 +268,6 @@ return function()
     end
   end
 
-  -- extensions
-  local function tmux_sessions()
-    telescope.extensions.tmux.sessions {}
-  end
-
-  local function tmux_windows()
-    telescope.extensions.tmux.windows {
-      entry_format = "#S: #T",
-    }
-  end
-
   local function file_browser()
     telescope.extensions.file_browser.file_browser {}
   end
@@ -344,11 +333,6 @@ return function()
         g = { rvim_files.grep_files, "find in files" },
         i = { rvim_files.view_changelog, "view changelog" },
       },
-      -- t = {
-      --   name = "+tmux",
-      --   s = { tmux_sessions, "sessions" },
-      --   w = { tmux_windows, "windows" },
-      -- },
     },
   }
 end
