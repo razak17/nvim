@@ -6,6 +6,8 @@ return function()
 
   local fn = vim.fn
   local api = vim.api
+  local fmt = string.format
+
   local t = rvim.replace_termcodes
   local border = rvim.style.border.current
   local lsp_hls = rvim.lsp.kind_highlights
@@ -135,7 +137,7 @@ return function()
       },
       formatting = {
         deprecated = true,
-        fields = { "kind", "abbr", "menu" },
+        fields = { "abbr", "kind", "menu" },
         source_names = {
           nvim_lsp = "(LSP)",
           nvim_lua = "(Lua)",
@@ -160,7 +162,7 @@ return function()
         },
         duplicates_default = 0,
         format = function(entry, vim_item)
-          vim_item.kind = rvim.style.icons.kind[vim_item.kind]
+          vim_item.kind = fmt("%s %s", vim_item.kind, rvim.style.icons.kind[vim_item.kind])
           local name = entry.source.name
           local completion = entry.completion_item.data
           local menu = rvim.cmp.setup.formatting.source_names[entry.source.name]
