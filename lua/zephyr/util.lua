@@ -42,7 +42,7 @@ end
 --- @return boolean, string
 function M.winhighlight_exists(win_id, ...)
   local win_hl = vim.wo[win_id].winhighlight
-  for _, target in ipairs { ... } do
+  for _, target in ipairs({ ... }) do
     if win_hl:match(target) ~= nil then
       return true, win_hl
     end
@@ -89,11 +89,30 @@ local function get_hl(group_name)
   return {}
 end
 
+---This helper takes a table of highlights and converts any highlights
+---specified as `highlight_prop = { from = 'group'}` into the underlying colour
+---by querying the highlight property of the from group so it can be used when specifying highlights
+---as a shorthand to derive the right color.
+---For example:
+---```lua
+---  M.set_hl({ MatchParen = {foreground = {from = 'ErrorMsg'}}})
+---```
+---This will take the foreground colour from ErrorMsg and set it to the foreground of MatchParen.
+---@param opts table<string, string|boolean|table<string,string>>
+local function convert_hl_to_val(opts)
+  for name, value in pairs(opts) do
+    if type(value) == "table" and value.from then
+      opts[name] = M.get_hl(value.from, name)
+    end
+  end
+end
+
 ---@param name string
 ---@param opts table
 function M.set_hl(name, opts)
   assert(name and opts, "Both 'name' and 'opts' must be specified")
   local hl = get_hl(opts.inherit or name)
+  convert_hl_to_val(opts)
   opts.inherit = nil
   local ok, msg = pcall(api.nvim_set_hl, 0, name, vim.tbl_deep_extend("force", hl, opts))
   if not ok then
@@ -131,7 +150,7 @@ function M.clear_hl(name)
 end
 
 ---Apply a list of highlights
- ---@param hls table<string, table<string, boolean|string>>
+---@param hls table<string, table<string, boolean|string>>
 function M.all(hls)
   for name, hl in pairs(hls) do
     M.set_hl(name, hl)

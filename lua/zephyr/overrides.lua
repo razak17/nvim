@@ -18,7 +18,7 @@ local function general_overrides()
     -----------------------------------------------------------------------------//
     NormalFloat = { background = P.bg },
     -----------------------------------------------------------------------------//
-    CursorLineNr = { foreground = P.pink, bold = true },
+    CursorLineNr = { foreground = { from = 'Keyword' } },
     LineNr = { background = "NONE" },
     FoldColumn = { background = "background" },
     TermCursor = { ctermfg = "green", foreground = "royalblue" },

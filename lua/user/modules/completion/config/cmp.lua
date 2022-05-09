@@ -18,18 +18,17 @@ return function()
       bold = false,
       underline = false,
     }
+    -- kind_hls["CmpItemKind" .. key] = { foreground = { from = lsp_hls[key] } }
   end
-
-  local keyword_fg = util.get_hl("Keyword", "fg")
 
   util.plugin(
     "Cmp",
     vim.tbl_extend("force", {
       CmpItemAbbr = { foreground = "fg", background = "NONE", italic = false, bold = false },
       CmpItemMenu = { inherit = "NonText", italic = false, bold = false },
-      CmpItemAbbrMatch = { foreground = keyword_fg },
+      CmpItemAbbrMatch = { foreground = { from = "Keyword" } },
       CmpItemAbbrDeprecated = { strikethrough = true, inherit = "Comment" },
-      CmpItemAbbrMatchFuzzy = { italic = true, foreground = keyword_fg },
+      CmpItemAbbrMatchFuzzy = { italic = true, foreground = { from = "Keyword" } },
     }, kind_hls)
   )
 

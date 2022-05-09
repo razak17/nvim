@@ -4,7 +4,7 @@ return function()
     return
   end
 
-  local previewers = require "telescope.previewers"
+  local previewers
   local sorters = require "telescope.sorters"
   local actions = require "telescope.actions"
   local action_state = require "telescope.actions.state"
