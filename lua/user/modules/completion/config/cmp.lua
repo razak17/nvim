@@ -144,7 +144,6 @@ return function()
           luasnip = "(Luasnip)",
           path = "(Path)",
           buffer = "(Buffer)",
-          cmp_tabnine = "(TN)",
           spell = "(Spell)",
           cmdline = "(Command)",
           git = "(Git)",
@@ -163,16 +162,7 @@ return function()
         duplicates_default = 0,
         format = function(entry, vim_item)
           vim_item.kind = fmt("%s %s", vim_item.kind, rvim.style.icons.kind[vim_item.kind])
-          local name = entry.source.name
-          local completion = entry.completion_item.data
-          local menu = rvim.cmp.setup.formatting.source_names[entry.source.name]
-          if name == "cmp_tabnine" then
-            if completion and completion.detail then
-              menu = completion.detail .. " " .. menu
-            end
-            vim_item.kind = ""
-          end
-          vim_item.menu = menu
+          vim_item.menu = rvim.cmp.setup.formatting.source_names[entry.source.name]
           vim_item.dup = rvim.cmp.setup.formatting.duplicates[entry.source.name]
             or rvim.cmp.setup.formatting.duplicates_default
           return vim_item
