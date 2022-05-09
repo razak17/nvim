@@ -86,9 +86,9 @@ completion["octaltree/cmp-look"] = {
 completion["petertriho/cmp-git"] = {
   opt = true,
   config = function()
-    require("cmp_git").setup {
+    require("cmp_git").setup({
       filetypes = { "gitcommit", "NeogitCommitMessage" },
-    }
+    })
   end,
   disable = not rvim.plugins.completion.cmp.active,
 }
@@ -96,15 +96,20 @@ completion["petertriho/cmp-git"] = {
 completion["David-Kunz/cmp-npm"] = {
   opt = true,
   config = function()
-    require("cmp-npm").setup {}
+    require("cmp-npm").setup({})
   end,
+  disable = not rvim.plugins.completion.cmp.active,
+}
+
+completion["uga-rosa/cmp-dictionary"] = {
+  event = "InsertEnter",
   disable = not rvim.plugins.completion.cmp.active,
 }
 
 completion["github/copilot.vim"] = {
   config = function()
     vim.g.copilot_no_tab_map = true
-    vim.cmd [[imap <silent><script><expr> <C-l> copilot#Accept("\<CR>")]]
+    vim.cmd([[imap <silent><script><expr> <C-l> copilot#Accept("\<CR>")]])
 
     -- https://github.com/akinsho/dotfiles/commit/4b0f52e24058ad8d22bcbf5ee64ebcb476a79536
     -- rvim.imap("<Plug>(rvim:copilot-accept)", "copilot#Accept('<CR>')", { expr = true })

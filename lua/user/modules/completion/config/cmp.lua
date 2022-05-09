@@ -140,6 +140,7 @@ return function()
           emoji = "(Emoji)",
           look = "(Look)",
           npm = "(NPM)",
+          dictionary = "(Dictionary)",
         },
         duplicates = {
           buffer = 1,
