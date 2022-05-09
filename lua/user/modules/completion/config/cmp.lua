@@ -203,8 +203,8 @@ return function()
         end),
         ["<C-k>"] = cmp.mapping.select_prev_item(),
         ["<C-j>"] = cmp.mapping.select_next_item(),
-        ["<C-d>"] = cmp.mapping.scroll_docs(-4),
-        ["<C-f>"] = cmp.mapping.scroll_docs(4),
+        ["<C-d>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
+        ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
         ["<Tab>"] = cmp.mapping(tab, { "i", "s", "c" }),
         ["<S-Tab>"] = cmp.mapping(shift_tab, { "i", "s", "c" }),
         ["<C-q>"] = cmp.mapping({
