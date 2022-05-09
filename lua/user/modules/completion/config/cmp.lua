@@ -10,7 +10,13 @@ return function()
   local lsp_hls = rvim.lsp.kind_highlights
   local util = require("zephyr.util")
 
-  local kind_hls = {}
+  local kind_hls = {
+    CmpItemAbbr = { foreground = "fg", background = "NONE", italic = false, bold = false },
+    CmpItemMenu = { inherit = "NonText", italic = false, bold = false },
+    CmpItemAbbrMatch = { foreground = { from = "Keyword" } },
+    CmpItemAbbrDeprecated = { strikethrough = true, inherit = "Comment" },
+    CmpItemAbbrMatchFuzzy = { italic = true, foreground = { from = "Keyword" } },
+  }
   for key, _ in pairs(lsp_hls) do
     kind_hls["CmpItemKind" .. key] = {
       inherit = lsp_hls[key],
@@ -21,16 +27,7 @@ return function()
     -- kind_hls["CmpItemKind" .. key] = { foreground = { from = lsp_hls[key] } }
   end
 
-  util.plugin(
-    "Cmp",
-    vim.tbl_extend("force", {
-      CmpItemAbbr = { foreground = "fg", background = "NONE", italic = false, bold = false },
-      CmpItemMenu = { inherit = "NonText", italic = false, bold = false },
-      CmpItemAbbrMatch = { foreground = { from = "Keyword" } },
-      CmpItemAbbrDeprecated = { strikethrough = true, inherit = "Comment" },
-      CmpItemAbbrMatchFuzzy = { italic = true, foreground = { from = "Keyword" } },
-    }, kind_hls)
-  )
+  util.plugin("Cmp", kind_hls)
 
   local cmp_window = {
     border = border,
