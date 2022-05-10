@@ -1,15 +1,15 @@
 return function()
-  local telescope_ok, telescope = rvim.safe_require "telescope"
+  local telescope_ok, telescope = rvim.safe_require("telescope")
   if not telescope_ok then
     return
   end
 
-  local previewers = require "telescope.previewers"
-  local sorters = require "telescope.sorters"
-  local actions = require "telescope.actions"
-  local action_state = require "telescope.actions.state"
-  local layout_actions = require "telescope.actions.layout"
-  local themes = require "telescope.themes"
+  local previewers = require("telescope.previewers")
+  local sorters = require("telescope.sorters")
+  local actions = require("telescope.actions")
+  local action_state = require("telescope.actions.state")
+  local layout_actions = require("telescope.actions.layout")
+  local themes = require("telescope.themes")
   local icons = rvim.style.icons
   local border = rvim.style.border
 
@@ -93,7 +93,7 @@ return function()
           i = {
             ["<C-w>"] = actions.send_selected_to_qflist,
             ["<c-c>"] = function()
-              vim.cmd "stopinsert!"
+              vim.cmd("stopinsert!")
             end,
             ["<esc>"] = actions.close,
             ["<C-j>"] = actions.move_selection_next,
@@ -140,13 +140,13 @@ return function()
             },
           },
           ["ui-select"] = {
-            themes.get_cursor(get_border {
+            themes.get_cursor(get_border({
               layout_config = {
                 cursor = {
                   width = 25,
                 },
               },
-            }),
+            })),
           },
           file_browser = {
             theme = "ivy",
@@ -166,7 +166,7 @@ return function()
           },
         },
         pickers = {
-          buffers = dropdown {
+          buffers = dropdown({
             sort_mru = true,
             sort_lastused = true,
             show_all_buffers = true,
@@ -177,9 +177,8 @@ return function()
               i = { ["<c-x>"] = "delete_buffer" },
               n = { ["<c-x>"] = "delete_buffer" },
             },
-          },
+          }),
           find_files = {
-            find_command = { "fd", "--type=file", "--hidden", "--smart-case" },
             hidden = true,
           },
           live_grep = {
@@ -192,10 +191,10 @@ return function()
             end,
           },
           oldfiles = dropdown(),
-          current_buffer_fuzzy_find = dropdown {
+          current_buffer_fuzzy_find = dropdown({
             previewer = false,
             shorten_path = false,
-          },
+          }),
           colorscheme = {
             enable_preview = true,
           },
@@ -243,23 +242,23 @@ return function()
   --- NOTE: this must be required after setting up telescope
   --- otherwise the result will be cached without the updates
   --- from the setup call
-  local builtins = require "telescope.builtin"
+  local builtins = require("telescope.builtin")
 
-  local rvim_files = require "user.modules.tools.config.telescope.nvim_files"
-  local bg_selector = require "user.modules.tools.config.telescope.bg_selector"
+  local rvim_files = require("user.modules.tools.config.telescope.nvim_files")
+  local bg_selector = require("user.modules.tools.config.telescope.bg_selector")
 
   local function notes()
-    builtins.find_files {
+    builtins.find_files({
       prompt_title = "Notes",
-      cwd = vim.fn.expand "~/notes/src/",
-    }
+      cwd = vim.fn.expand("~/notes/src/"),
+    })
   end
 
   local function installed_plugins()
-    require("telescope.builtin").find_files {
+    require("telescope.builtin").find_files({
       prompt_title = "Plugins",
       cwd = vim.call("stdpath", "data") .. "/site/pack/packer",
-    }
+    })
   end
 
   local function project_files(opts)
@@ -269,33 +268,33 @@ return function()
   end
 
   local function file_browser()
-    telescope.extensions.file_browser.file_browser {}
+    telescope.extensions.file_browser.file_browser({})
   end
 
   local function media_files()
-    telescope.extensions.media_files.media_files {}
+    telescope.extensions.media_files.media_files({})
   end
 
   local function zoxide_list()
-    telescope.extensions.zoxide.list {}
+    telescope.extensions.zoxide.list({})
   end
 
   local function frecency()
-    telescope.extensions.frecency.frecency(dropdown {
+    telescope.extensions.frecency.frecency(dropdown({
       -- NOTE: remove default text as it's slow
       -- default_text = ':CWD:',
       winblend = 10,
       border = true,
       previewer = false,
       shorten_path = false,
-    })
+    }))
   end
 
   local function projects()
-    telescope.extensions.projects.projects {}
+    telescope.extensions.projects.projects({})
   end
 
-  require("which-key").register {
+  require("which-key").register({
     ["<c-p>"] = { project_files, "telescope: find files" },
     ["<leader>f"] = {
       name = "+Telescope",
@@ -334,5 +333,5 @@ return function()
         i = { rvim_files.view_changelog, "view changelog" },
       },
     },
-  }
+  })
 end
