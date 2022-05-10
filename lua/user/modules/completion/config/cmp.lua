@@ -32,11 +32,6 @@ return function()
 
   util.plugin("Cmp", kind_hls)
 
-  local has_words_before = function()
-    local col = api.nvim_win_get_cursor(0)[2]
-    return col ~= 0 and api.nvim_get_current_line():sub(col, col):match("%s") == nil
-  end
-
   local cmp_window = {
     border = border,
     winhighlight = table.concat({
@@ -84,8 +79,6 @@ return function()
       fallback()
     elseif is_emmet_active() then
       return vim.fn["cmp#complete"]()
-    elseif has_words_before() then
-      cmp.complete()
     else
       fallback()
     end
@@ -97,8 +90,6 @@ return function()
       cmp.select_prev_item()
     elseif ok and luasnip.jumpable(-1) then
       luasnip.jump(-1)
-    elseif has_words_before() then
-      cmp.complete()
     else
       fallback()
     end
