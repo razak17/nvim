@@ -132,9 +132,6 @@ lang["jose-elias-alvarez/null-ls.nvim"] = {
 
 lang["kosayoda/nvim-lightbulb"] = {
   config = function()
-    require("zephyr.util").plugin("lightbulb", {
-      LightBulbFloatWin = { link = "Normal" },
-    })
     local lightbulb = require("nvim-lightbulb")
     lightbulb.setup({
       ignore = { "null-ls" },
