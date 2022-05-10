@@ -8,16 +8,8 @@ local borders = {
       preview = { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
     },
   },
-  line = {
-    { "🭽", "FloatBorder" },
-    { "▔", "FloatBorder" },
-    { "🭾", "FloatBorder" },
-    { "▕", "FloatBorder" },
-    { "🭿", "FloatBorder" },
-    { "▁", "FloatBorder" },
-    { "🭼", "FloatBorder" },
-    { "▏", "FloatBorder" },
-  },
+  line = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
+  rectangle = { "┌", "─", "┐", "│", "┘", "─", "└", "│" },
 }
 
 rvim.style = {
