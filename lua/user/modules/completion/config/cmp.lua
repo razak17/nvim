@@ -13,9 +13,12 @@ return function()
   local lsp_hls = rvim.lsp.kind_highlights
   local util = require("zephyr.util")
 
+  -- Make the source information less prominent
+  local faded = util.alter_color(util.get_hl("Pmenu", "bg"), 30)
+
   local kind_hls = {
     CmpItemAbbr = { foreground = "fg", background = "NONE", italic = false, bold = false },
-    CmpItemMenu = { inherit = "NonText", italic = false, bold = false },
+    CmpItemMenu = { foreground = faded, italic = true, bold = false },
     CmpItemAbbrMatch = { foreground = { from = "Keyword" } },
     CmpItemAbbrDeprecated = { strikethrough = true, inherit = "Comment" },
     CmpItemAbbrMatchFuzzy = { italic = true, foreground = { from = "Keyword" } },
