@@ -81,14 +81,9 @@ function M.enable_code_lens_refresh(client, bufnr)
 
   rvim.augroup("LspCodeLensRefresh", {
     {
-      event = { "InsertLeave" },
+      event = { "BufEnter", "CursorHold", "InsertLeave" },
       buffer = bufnr,
       command = "lua vim.lsp.codelens.refresh()",
-    },
-    {
-      event = { "InsertLeave" },
-      buffer = 0,
-      command = "lua vim.lsp.codelens.display()",
     },
   })
 end
@@ -130,7 +125,7 @@ end
 function M.format_filter(clients)
   return vim.tbl_filter(function(client)
     local status_ok, formatting_supported = pcall(function()
-      return client.supports_method "textDocument/formatting"
+      return client.supports_method("textDocument/formatting")
       -- return client.server_capabilities.documentFormattingProvider
     end)
 
@@ -174,7 +169,7 @@ function M.format(opts)
   end
 
   clients = vim.tbl_filter(function(client)
-    return client.supports_method "textDocument/formatting"
+    return client.supports_method("textDocument/formatting")
     -- return client.server_capabilities.documentFormattingProvider
   end, clients)
 
