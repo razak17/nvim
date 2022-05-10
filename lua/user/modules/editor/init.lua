@@ -94,7 +94,9 @@ editor["romainl/vim-cool"] = {
 
 editor["jghauser/fold-cycle.nvim"] = {
   config = function()
-    require("fold-cycle").setup()
+    require("fold-cycle").setup({
+      softwrap_movement_fix = false,
+    })
     rvim.nnoremap("<BS>", function()
       require("fold-cycle").open()
     end)
