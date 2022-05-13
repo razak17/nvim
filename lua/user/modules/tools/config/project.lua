@@ -17,7 +17,15 @@ return function()
 
       -- All the patterns used to detect root dir, when **"pattern"** is in
       -- detection_methods
-      patterns = { ".git", ".hg", ".svn", "Makefile", "package.json", ".luacheckrc", ".stylua.toml" },
+      patterns = {
+        ".git",
+        ".hg",
+        ".svn",
+        "Makefile",
+        "package.json",
+        ".luacheckrc",
+        ".stylua.toml",
+      },
 
       -- Show hidden files in telescope
       show_hidden = false,
@@ -27,7 +35,7 @@ return function()
       silent_chdir = true,
 
       ---@usage list of lsp client names to ignore when using **lsp** detection. eg: { "efm", ... }
-      ignore_lsp = {},
+      ignore_lsp = { "null-ls" },
 
       ---@type string
       ---@usage path to store the project history for use in telescope
@@ -35,7 +43,7 @@ return function()
     },
   }
 
-  local status_ok, project_nvim = rvim.safe_require "project_nvim"
+  local status_ok, project_nvim = rvim.safe_require("project_nvim")
   if not status_ok then
     return
   end
