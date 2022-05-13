@@ -105,6 +105,11 @@ completion["uga-rosa/cmp-dictionary"] = {
   disable = not rvim.plugins.completion.cmp.active,
 }
 
+completion["dmitmel/cmp-cmdline-history"] = {
+  event = "InsertEnter",
+  disable = not rvim.plugins.completion.cmp.active,
+}
+
 completion["github/copilot.vim"] = {
   config = function()
     vim.g.copilot_no_tab_map = true

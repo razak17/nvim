@@ -146,6 +146,7 @@ return function()
           look = "(Look)",
           npm = "(NPM)",
           dictionary = "(D)",
+          cmdline_history = "(Hist)",
         },
         duplicates = {
           buffer = 1,
@@ -192,6 +193,7 @@ return function()
         { name = "look" },
         { name = "nvim_lsp_document_symbol" },
         { name = "npm", keyword_length = 4 },
+        { name = "cmdline_history" },
       },
       mapping = {
         ["<c-h>"] = cmp.mapping(function()
