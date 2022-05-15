@@ -170,7 +170,7 @@ M.load_default_options = function()
 
     -- What to save for views and sessions:
     viewoptions = "cursor,folds",
-    sessionoptions = "curdir,help,tabpages,winsize",
+    sessionoptions = "curdir,help,tabpages,winsize,winpos",
     autowriteall = true, -- automatically :write before running commands and changing files
 
     -- title
