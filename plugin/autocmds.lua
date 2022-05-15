@@ -23,7 +23,7 @@ local smart_close_filetypes = {
   "packer",
 }
 
-local smart_close_buftypes = { "nofile" }
+local smart_close_buftypes = {} -- Don't include no file buffers as diff buffers are nofile
 
 function rvim.smart_close()
   if fn.winnr("$") ~= 1 then
