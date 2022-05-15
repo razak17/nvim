@@ -17,6 +17,7 @@ rvim.plugins.editor = {
   marks = { active = true },
   vim_uppercase_sql = { active = true },
   vim_dirtytalk = { active = true },
+  refactoring_nvim = { active = true },
 }
 
 local conf = require("user.utils").load_conf
@@ -176,6 +177,34 @@ editor["jsborjesson/vim-uppercase-sql"] = {
 editor["psliwka/vim-dirtytalk"] = {
   run = ":DirtytalkUpdate",
   disable = not rvim.plugins.editor.vim_dirtytalk.active,
+}
+
+editor["ThePrimeagen/refactoring.nvim"] = {
+  config = function()
+    local refactoring = require("refactoring")
+    refactoring.setup({
+      prompt_func_return_type = {
+        go = true,
+      },
+      prompt_func_param_type = {
+        go = true,
+      },
+    })
+
+    rvim.vnoremap("<leader>rr", function()
+      refactoring.select_refactor()
+    end, "refactor: select")
+    rvim.nnoremap("<leader>rp", function()
+      refactoring.debug.printf()
+    end, "refactor: printf")
+    rvim.vnoremap("<leader>rv", function()
+      refactoring.debug.print_var()
+    end, "refactor: printf")
+    rvim.nnoremap("<leader>rc", function()
+      refactoring.debug.cleanup()
+    end)
+  end,
+  disable = not rvim.plugins.editor.refactoring_nvim.active,
 }
 
 return editor
