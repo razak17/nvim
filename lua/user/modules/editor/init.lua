@@ -161,7 +161,7 @@ editor["abecodes/tabout.nvim"] = {
   disable = not rvim.plugins.editor.tabout.active,
 }
 
-editor["chentau/marks.nvim"] = {
+editor["chentoast/marks.nvim"] = {
   event = { "BufWinEnter" },
   config = conf("editor", "marks"),
   disable = not rvim.plugins.editor.marks.active,
