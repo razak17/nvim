@@ -10,12 +10,12 @@ return function()
   }, {
     prefix = "<leader>",
   })
-  require("marks").setup {
-    force_write_shada = true,
+  require("marks").setup({
+    force_write_shada = false, -- This can cause data loss
     excluded_filetypes = { "NeogitStatus", "NeogitCommitMessage", "toggleterm" },
     bookmark_0 = {
       sign = "⚑",
       virt_text = "",
     },
-  }
+  })
 end
