@@ -188,7 +188,7 @@ lang["nvim-treesitter/nvim-treesitter"] = {
 
 lang["nvim-treesitter/nvim-treesitter-context"] = {
   config = function()
-    require("as.highlights").plugin("treesitter-context", {
+    require("zephyr.util").plugin("treesitter-context", {
       TreesitterContext = { inherit = "Normal" },
     })
     require("treesitter-context").setup()
