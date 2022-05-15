@@ -192,7 +192,7 @@ editor["ThePrimeagen/refactoring.nvim"] = {
     })
 
     rvim.vnoremap("<leader>rr", function()
-      refactoring.select_refactor()
+      require("telescope").extensions.refactoring.refactors()
     end, "refactor: select")
     rvim.nnoremap("<leader>rp", function()
       refactoring.debug.printf()
