@@ -32,15 +32,19 @@ fn.sign_define(vim.tbl_map(function(t)
   }
 end, diagnostic_types))
 
+-----------------------------------------------------------------------------//
+-- Handler Overrides
+-----------------------------------------------------------------------------//
+--[[
+This section overrides the default diagnostic handlers for signs and virtual text so that only
+the most severe diagnostic is shown per line
+--]]
+local ns = api.nvim_create_namespace("severe-diagnostics")
+
 --- Restricts nvim's diagnostic signs to only the single most severe one per line
 --- @see `:help vim.diagnostic`
-local ns = api.nvim_create_namespace "severe-diagnostics"
-
---- Get a reference to the original signs handler
-local signs_handler = vim.diagnostic.handlers.signs
---- Override the built-in signs handler
-vim.diagnostic.handlers.signs = {
-  show = function(_, bufnr, _, opts)
+local function max_diagnostic(callback)
+  return function(_, bufnr, _, opts)
     -- Get all diagnostics from the whole buffer rather than just the
     -- diagnostics passed to the handler
     local diagnostics = vim.diagnostic.get(bufnr)
@@ -54,10 +58,23 @@ vim.diagnostic.handlers.signs = {
     end
     -- Pass the filtered diagnostics (with our custom namespace) to
     -- the original handler
-    signs_handler.show(ns, bufnr, vim.tbl_values(max_severity_per_line), opts)
-  end,
+    callback(ns, bufnr, vim.tbl_values(max_severity_per_line), opts)
+  end
+end
+
+local signs_handler = vim.diagnostic.handlers.signs
+vim.diagnostic.handlers.signs = {
+  show = max_diagnostic(signs_handler.show),
   hide = function(_, bufnr)
     signs_handler.hide(ns, bufnr)
+  end,
+}
+
+local virt_text_handler = vim.diagnostic.handlers.virtual_text
+vim.diagnostic.handlers.virtual_text = {
+  show = max_diagnostic(virt_text_handler.show),
+  hide = function(_, bufnr)
+    virt_text_handler.hide(ns, bufnr)
   end,
 }
 
@@ -65,7 +82,7 @@ vim.diagnostic.handlers.signs = {
 -- Handler overrides
 -----------------------------------------------------------------------------//
 local diagnostics = rvim.lsp.diagnostics
-vim.diagnostic.config { -- your config
+vim.diagnostic.config({ -- your config
   virtual_text = {
     source = "if_many",
     prefix = icons.misc.bug,
@@ -76,7 +93,7 @@ vim.diagnostic.config { -- your config
   update_in_insert = diagnostics.update_in_insert,
   severity_sort = diagnostics.severity_sort,
   float = diagnostics.float,
-}
+})
 
 local max_width = math.min(math.floor(vim.o.columns * 0.7), 100)
 local max_height = math.min(math.floor(vim.o.lines * 0.3), 30)
