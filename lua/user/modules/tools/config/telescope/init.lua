@@ -184,7 +184,9 @@ return function()
           live_grep = {
             --@usage don't include the filename in the search results
             only_sort_text = true,
-            file_ignore_patterns = { ".git/" },
+            -- NOTE: previewing html seems to cause some stalling/blocking whilst live grepping
+            -- so filter out html.
+            file_ignore_patterns = { ".git/", "%.html" },
             on_input_filter_cb = function(prompt)
               -- AND operator for live_grep like how fzf handles spaces with wildcards in rg
               return { prompt = prompt:gsub("%s", ".*") }
