@@ -66,27 +66,6 @@ return function()
     end
   end)
 
-  rvim.augroup("LuasnipDiagnostics", {
-    {
-      event = "ModeChanged",
-      pattern = "[is]:n",
-      command = function(args)
-        if ls.in_snippet() then
-          return pcall(vim.diagnostic.enable, args.buf)
-        end
-      end,
-    },
-    {
-      event = "ModeChanged",
-      pattern = "*:s",
-      command = function(args)
-        if ls.in_snippet() then
-          return pcall(vim.diagnostic.disable, args.buf)
-        end
-      end,
-    },
-  })
-
   require("luasnip").config.setup({ store_selection_keys = "<C-x>" })
   require("luasnip.loaders.from_lua").lazy_load()
   -- TODO: Temp fix to load both friendly snippets and user-defined snippets
