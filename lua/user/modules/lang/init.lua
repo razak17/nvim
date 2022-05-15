@@ -181,8 +181,18 @@ lang["kevinhwang91/nvim-bqf"] = {
 
 -- Treesitter
 lang["nvim-treesitter/nvim-treesitter"] = {
-  branch = vim.fn.has("nvim-0.6") == 1 and "master" or "0.5-compat",
+  run = ":TSUpdate",
   config = conf("lang", "treesitter"),
+  disable = not rvim.plugins.lang.treesitter.active,
+}
+
+lang["nvim-treesitter/nvim-treesitter-context"] = {
+  config = function()
+    require("as.highlights").plugin("treesitter-context", {
+      TreesitterContext = { inherit = "Normal" },
+    })
+    require("treesitter-context").setup()
+  end,
   disable = not rvim.plugins.lang.treesitter.active,
 }
 
