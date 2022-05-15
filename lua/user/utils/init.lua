@@ -6,24 +6,38 @@ local fmt = string.format
 
 local utils = {}
 
+local function open(path)
+  fn.jobstart({ rvim.open_command, path }, { detach = true })
+  vim.notify(fmt("Opening %s", path))
+end
+
 function utils.open_link()
-  local file = fn.expand "<cfile>"
+  local file = fn.expand("<cfile>")
   if fn.isdirectory(file) > 0 then
-    cmd("edit " .. file)
-  else
-    fn.jobstart({ rvim.open_command, file }, { detach = true })
+    return cmd("edit " .. file)
+  end
+
+  if file:match("https://") then
+    return open(file)
+  end
+
+  -- consider anything that looks like string/string a github link
+  local plugin_url_regex = "[%a%d%-%.%_]*%/[%a%d%-%.%_]*"
+  local link = string.match(file, plugin_url_regex)
+  if link then
+    return open(fmt("https://www.github.com/%s", link))
   end
 end
 
 function utils.color_my_pencils()
-  cmd [[ hi! ColorColumn guibg=#aeacec ]]
-  cmd [[ hi! Normal ctermbg=none guibg=none ]]
-  cmd [[ hi! SignColumn ctermbg=none guibg=none ]]
-  cmd [[ hi! LineNr guifg=#4dd2dc ]]
-  cmd [[ hi! CursorLineNr guifg=#f0c674 ]]
-  cmd [[ hi! TelescopeBorder guifg=#ffff00 guibg=#ff0000 ]]
-  cmd [[ hi! WhichKeyGroup guifg=#4dd2dc ]]
-  cmd [[ hi! WhichKeyDesc guifg=#4dd2dc  ]]
+  cmd([[ hi! ColorColumn guibg=#aeacec ]])
+  cmd([[ hi! Normal ctermbg=none guibg=none ]])
+  cmd([[ hi! SignColumn ctermbg=none guibg=none ]])
+  cmd([[ hi! LineNr guifg=#4dd2dc ]])
+  cmd([[ hi! CursorLineNr guifg=#f0c674 ]])
+  cmd([[ hi! TelescopeBorder guifg=#ffff00 guibg=#ff0000 ]])
+  cmd([[ hi! WhichKeyGroup guifg=#4dd2dc ]])
+  cmd([[ hi! WhichKeyDesc guifg=#4dd2dc  ]])
 end
 
 function utils.empty_registers()
@@ -39,8 +53,8 @@ function utils.empty_registers()
 end
 
 function utils.open_terminal()
-  cmd "split term://zsh"
-  cmd "resize 10"
+  cmd("split term://zsh")
+  cmd("resize 10")
 end
 
 function utils.turn_on_guides()
@@ -63,7 +77,7 @@ end
 
 -- https://github.com/CalinLeafshade/dots/blob/master/nvim/.config/nvim/lua/leafshade/rename.lua
 function utils.rename(name)
-  local curfilepath = vim.fn.expand "%:p:h"
+  local curfilepath = vim.fn.expand("%:p:h")
   local newname = curfilepath .. "/" .. name
   vim.api.nvim_command(" saveas " .. newname)
 end
@@ -78,14 +92,14 @@ function utils.load_conf(dir, name)
 end
 
 function utils.enable_transparent_mode()
-  cmd "au ColorScheme * hi Normal ctermbg=none guibg=none"
-  cmd "au ColorScheme * hi SignColumn ctermbg=none guibg=none"
-  cmd "au ColorScheme * hi NormalNC ctermbg=none guibg=none"
-  cmd "au ColorScheme * hi MsgArea ctermbg=none guibg=none"
-  cmd "au ColorScheme * hi TelescopeBorder ctermbg=none guibg=none"
-  cmd "au ColorScheme * hi NvimTreeNormal ctermbg=none guibg=none"
-  cmd "au ColorScheme * hi EndOfBuffer ctermbg=none guibg=none"
-  cmd "let &fcs='eob: '"
+  cmd("au ColorScheme * hi Normal ctermbg=none guibg=none")
+  cmd("au ColorScheme * hi SignColumn ctermbg=none guibg=none")
+  cmd("au ColorScheme * hi NormalNC ctermbg=none guibg=none")
+  cmd("au ColorScheme * hi MsgArea ctermbg=none guibg=none")
+  cmd("au ColorScheme * hi TelescopeBorder ctermbg=none guibg=none")
+  cmd("au ColorScheme * hi NvimTreeNormal ctermbg=none guibg=none")
+  cmd("au ColorScheme * hi EndOfBuffer ctermbg=none guibg=none")
+  cmd("let &fcs='eob: '")
 end
 
 --- Checks whether a given path exists and is a directory
@@ -127,13 +141,13 @@ utils.auto_resize = function()
       cmd(fmt("let &winheight=&lines * %d / 10 ", fraction))
       cmd(fmt("let &winwidth=&columns * %d / 10 ", fraction))
       auto_resize_on = true
-      vim.notify "Auto resize ON"
+      vim.notify("Auto resize ON")
     else
-      cmd "let &winheight=30"
-      cmd "let &winwidth=30"
-      cmd "wincmd ="
+      cmd("let &winheight=30")
+      cmd("let &winwidth=30")
+      cmd("wincmd =")
       auto_resize_on = false
-      vim.notify "Auto resize OFF"
+      vim.notify("Auto resize OFF")
     end
   end
 end
@@ -175,11 +189,11 @@ function utils.smart_quit()
       prompt = "You have unsaved changes. Quit anyway? (y/n) ",
     }, function(input)
       if input == "y" then
-        cmd "q!"
+        cmd("q!")
       end
     end)
   else
-    cmd "q!"
+    cmd("q!")
   end
 end
 

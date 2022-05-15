@@ -208,9 +208,7 @@ nnoremap("]<space>", [[<cmd>put =repeat(nr2char(10), v:count1)<cr>]])
 -- nnoremap["gx"] = ":sil !xdg-open <c-r><c-a><cr>"
 
 -- replicate netrw functionality
-nnoremap("gx", function()
-  utils.open_link()
-end)
+nnoremap("gx", utils.open_link)
 
 ------------------------------------------------------------------------------
 -- Utils
