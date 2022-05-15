@@ -7,12 +7,6 @@ local not_eligible = not vim.bo.modifiable
   or not vim.bo.buflisted
   or vim.bo.buftype ~= "" and vim.bo.buftype ~= "terminal" and vim.wo.previewwindow
 
-vim.cmd([[
-   augroup vimrc -- Ensure all autocommands are cleared
-   autocmd!
-   augroup END
-  ]])
-
 local smart_close_filetypes = {
   "help",
   "git-status",
@@ -407,11 +401,6 @@ rvim.augroup("Utilities", {
           ]])
       end
     end,
-  },
-  {
-    event = { "Syntax" },
-    pattern = { "*" },
-    command = "if 5000 < line('$') | syntax sync minlines=200 | endif",
   },
 })
 

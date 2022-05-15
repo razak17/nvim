@@ -15,6 +15,8 @@ end
 
 vim.g.did_load_filetypes = 0 -- deactivate vim based filetype detection
 
+vim.api.nvim_create_augroup('vimrc', {}) -- Ensure all autocommands are cleared
+
 local ok, reload = pcall(require, "plenary.reload")
 RELOAD = ok and reload.reload_module or function(...)
   return ...
