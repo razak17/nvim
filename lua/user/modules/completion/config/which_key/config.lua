@@ -37,7 +37,8 @@ rvim.wk = {
       },
       g = {
         name = "git",
-        c = { ':lua _G.__fterm_cmd("rvim_commit")<cr>', "commit" },
+        c = { ':lua _G.__fterm_cmd("conf_commit")<cr>', "rconf commit" },
+        r = { ':lua _G.__fterm_cmd("rconf_commit")<cr>', "rconf commit" },
       },
       k = { ":lua require('user.utils.cheatsheet').cheatsheet()<cr>", "cheatsheet" },
       l = {

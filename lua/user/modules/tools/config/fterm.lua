@@ -10,7 +10,9 @@ return function()
       cmd = term:new { cmd = "lazygit" }
     elseif key == "ranger" then
       cmd = term:new { cmd = "ranger" }
-    elseif key == "rvim_commit" then
+    elseif key == "conf_commit" then
+      cmd = term:new { cmd = "conf -rcma" }
+    elseif key == "rconf_commit" then
       cmd = term:new { cmd = "iconf -rcma" }
     end
     cmd:toggle()
