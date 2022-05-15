@@ -213,25 +213,15 @@ nnoremap("gx", utils.open_link)
 ------------------------------------------------------------------------------
 -- Utils
 ------------------------------------------------------------------------------
-nnoremap("<leader>LV", function()
-  utils.color_my_pencils()
-end, "vim with me")
+nnoremap("<leader>LV", utils.color_my_pencils, "vim with me")
 
-nnoremap("<leader>aR", function()
-  utils.empty_registers()
-end)
+nnoremap("<leader>aR", utils.empty_registers)
 
-nnoremap("<leader>a;", function()
-  utils.open_terminal()
-end)
+nnoremap("<leader>a;", utils.open_terminal)
 
-nnoremap("<leader>ao", function()
-  utils.turn_on_guides()
-end)
+nnoremap("<leader>ao", utils.turn_on_guides)
 
-nnoremap("<leader>ae", function()
-  utils.turn_off_guides()
-end)
+nnoremap("<leader>ae", utils.turn_off_guides)
 
 -- Search Files
 nnoremap("<leader>B", '/<C-R>=escape(expand("<cword>"), "/")<CR><CR>', "find cword")
