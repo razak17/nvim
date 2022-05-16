@@ -11,7 +11,7 @@ return function()
     elseif key == "ranger" then
       cmd = term:new { cmd = "ranger" }
     elseif key == "conf_commit" then
-      cmd = term:new { cmd = "conf -rcma" }
+      cmd = term:new { cmd = "iconf -ccma" }
     elseif key == "rconf_commit" then
       cmd = term:new { cmd = "iconf -rcma" }
     end
