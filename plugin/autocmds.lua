@@ -329,7 +329,13 @@ if vim.env.TMUX ~= nil then
   })
 end
 
-local save_excluded = { "lua.luapad" }
+local save_excluded = {
+  'neo-tree',
+  'neo-tree-popup',
+  'lua.luapad',
+  'gitcommit',
+  'NeogitCommitMessage',
+}
 local function can_save()
   return rvim.empty(vim.bo.buftype)
     and not rvim.empty(vim.bo.filetype)
