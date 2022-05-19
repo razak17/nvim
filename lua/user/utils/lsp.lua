@@ -88,6 +88,16 @@ function M.enable_code_lens_refresh(client, bufnr)
   })
 end
 
+-- Show the popup diagnostics window, but only once for the current cursor location
+-- by checking whether the word under the cursor has changed.
+local function diagnostic_popup()
+  local cword = vim.fn.expand("<cword>")
+  if cword ~= vim.w.lsp_diagnostics_cword then
+    vim.w.lsp_diagnostics_cword = cword
+    vim.diagnostic.open_float(0, { scope = "cursor", focus = false })
+  end
+end
+
 function M.enable_lsp_hover_diagnostics(client, bufnr)
   local status_ok, highlight_supported = check_hi(client)
   if not status_ok or not highlight_supported then
@@ -99,7 +109,7 @@ function M.enable_lsp_hover_diagnostics(client, bufnr)
       event = { "CursorHold" },
       buffer = bufnr,
       command = function()
-        vim.diagnostic.open_float({ scope = "line" }, { focus = false })
+        diagnostic_popup()
       end,
     },
   })
