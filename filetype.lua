@@ -4,12 +4,13 @@ end
 
 vim.g.do_filetype_lua = 1
 
-vim.filetype.add {
+vim.filetype.add({
   extension = {
     lock = "yaml",
   },
   filename = {
     [".gitignore"] = "conf",
+    ["launch.json"] = "jsonc",
     ["Makefile.toml"] = "cargo-make",
     ["Podfile"] = "ruby",
     [".vimrc.local"] = "vim",
@@ -27,4 +28,4 @@ vim.filetype.add {
     ["*.gradle"] = "groovy",
     ["*.env.*"] = "env",
   },
-}
+})
