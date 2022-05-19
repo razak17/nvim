@@ -137,13 +137,8 @@ lang["kosayoda/nvim-lightbulb"] = {
       ignore = { "null-ls" },
       sign = { enabled = false },
       float = { enabled = true, win_opts = { border = "none" } },
-    })
-    rvim.augroup("Lightbulb", {
-      {
-        event = { "CursorHold", "CursorHoldI" },
-        command = function()
-          lightbulb.update_lightbulb()
-        end,
+      autocmd = {
+        enabled = true,
       },
     })
   end,
