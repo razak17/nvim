@@ -17,7 +17,7 @@ rvim.plugins.ui = {
   vim_highlighturl = { active = true },
 }
 
-local utils = require "user.utils"
+local utils = require("user.utils")
 local conf = utils.load_conf
 
 ui["glepnir/dashboard-nvim"] = {
@@ -67,14 +67,14 @@ ui["stevearc/dressing.nvim"] = {
   event = "BufWinEnter",
   config = function()
     require("zephyr.util").plugin("dressing", { FloatTitle = { inherit = "Visual", bold = true } })
-    require("dressing").setup {
+    require("dressing").setup({
       input = {
         winblend = 2,
         insert_only = false,
         border = rvim.style.border.line,
       },
       select = {
-        telescope = require("telescope.themes").get_cursor {
+        telescope = require("telescope.themes").get_cursor({
           layout_config = {
             -- NOTE: the limit is half the max lines because this is the cursor theme so
             -- unless the cursor is at the top or bottom it realistically most often will
@@ -86,26 +86,29 @@ ui["stevearc/dressing.nvim"] = {
               return (results <= (LIMIT - PADDING) and results + PADDING or LIMIT)
             end,
           },
-        },
+        }),
       },
-    }
+    })
   end,
   disable = not rvim.plugins.ui.dressing.active,
 }
 
 ui["lukas-reineke/headlines.nvim"] = {
   event = "BufWinEnter",
-  setup = conf('ui', 'headlines').setup,
-  config = conf('ui', 'headlines').config,
+  setup = conf("ui", "headlines").setup,
+  config = conf("ui", "headlines").config,
   disable = not rvim.plugins.ui.headlines.active,
 }
 
 ui["edluffy/specs.nvim"] = {
   event = "BufWinEnter",
   config = function()
+    require("zephyr.util").plugin("beacon", {
+      Beacon = { link = "Cursor" },
+    })
     -- NOTE: 'DanilaMihailov/beacon.nvim' is an alternative
-    local specs = require "specs"
-    specs.setup {
+    local specs = require("specs")
+    specs.setup({
       popup = {
         delay_ms = 10,
         inc_ms = 10,
@@ -114,7 +117,7 @@ ui["edluffy/specs.nvim"] = {
         winhl = "PmenuSbar",
         resizer = specs.slide_resizer,
       },
-    }
+    })
   end,
   disable = not rvim.plugins.ui.specs.active,
 }
@@ -123,9 +126,9 @@ ui["narutoxy/dim.lua"] = {
   event = "BufWinEnter",
   requires = { "nvim-treesitter/nvim-treesitter", "neovim/nvim-lspconfig" },
   config = function()
-    require("dim").setup {
+    require("dim").setup({
       disable_lsp_decorations = true,
-    }
+    })
   end,
   disable = not rvim.plugins.ui.dim.active,
 }
@@ -138,10 +141,10 @@ ui["nvim-neo-tree/neo-tree.nvim"] = {
     "MunifTanjim/nui.nvim",
     "kyazdani42/nvim-web-devicons",
     {
-      's1n7ax/nvim-window-picker',
+      "s1n7ax/nvim-window-picker",
       tag = "1.*",
-      config = conf('ui', 'window-picker'),
-    }
+      config = conf("ui", "window-picker"),
+    },
   },
   disable = not rvim.plugins.ui.neo_tree.active,
 }
