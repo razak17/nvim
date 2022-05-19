@@ -9,24 +9,24 @@ return function()
   vim.g.neo_tree_remove_legacy_commands = 1
   local icons = rvim.style.icons
   rvim.nnoremap("<c-n>", "<Cmd>Neotree toggle reveal<CR>")
-  require("which-key").register {
+  require("which-key").register({
     ["<leader>e"] = { "<Cmd>Neotree toggle reveal<CR>", "toggle tree" },
-  }
-  require("neo-tree").setup {
+  })
+  require("neo-tree").setup({
     enable_git_status = true,
     git_status_async = true,
     event_handlers = {
       {
         event = "neo_tree_buffer_enter",
         handler = function()
-          vim.cmd "setlocal signcolumn=no"
-          vim.cmd "highlight! Cursor blend=100"
+          vim.cmd("setlocal signcolumn=no")
+          vim.cmd("highlight! Cursor blend=100")
         end,
       },
       {
         event = "neo_tree_buffer_leave",
         handler = function()
-          vim.cmd "highlight! Cursor blend=0"
+          vim.cmd("highlight! Cursor blend=0")
         end,
       },
     },
@@ -37,6 +37,9 @@ return function()
         visible = true,
         hide_dotfiles = false,
         hide_gitignored = true,
+        never_show = {
+          ".DS_Store",
+        },
       },
     },
     default_component_configs = {
@@ -64,5 +67,5 @@ return function()
         ["<c-v>"] = "vsplit_with_window_picker",
       },
     },
-  }
+  })
 end
