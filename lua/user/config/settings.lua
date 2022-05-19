@@ -170,7 +170,13 @@ M.load_default_options = function()
 
     -- What to save for views and sessions:
     viewoptions = "cursor,folds",
-    sessionoptions = "curdir,tabpages,winsize,winpos",
+    sessionoptions = {
+      "globals",
+      "buffers",
+      "curdir",
+      "winpos",
+      "tabpages",
+    },
     autowriteall = true, -- automatically :write before running commands and changing files
 
     -- title
@@ -181,13 +187,13 @@ M.load_default_options = function()
   }
 
   ---  SETTINGS  ---
-  vim.opt.shortmess:append "c"
-  vim.opt.iskeyword:append "-"
+  vim.opt.shortmess:append("c")
+  vim.opt.iskeyword:append("-")
   vim.opt.shadafile = join_paths(rvim.get_cache_dir(), "shada", "rvim.shada")
   vim.opt.cursorlineopt = "screenline,number"
-  vim.opt.spellsuggest:prepend { 12 }
+  vim.opt.spellsuggest:prepend({ 12 })
   vim.opt.spelloptions = "camel"
-  vim.opt.spelllang:append "programming"
+  vim.opt.spelllang:append("programming")
   vim.opt.fileformats = { "unix", "mac", "dos" }
 
   for k, v in pairs(default_options) do
@@ -216,7 +222,7 @@ M.load_commands = function()
   end
 
   if rvim.util.line_wrap_cursor_movement then
-    cmd "set whichwrap+=<,>,[,],h,l,~"
+    cmd("set whichwrap+=<,>,[,],h,l,~")
   end
 
   if rvim.util.transparent_window then
