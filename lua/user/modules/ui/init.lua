@@ -52,7 +52,7 @@ ui["lukas-reineke/indent-blankline.nvim"] = {
 }
 
 ui["lewis6991/gitsigns.nvim"] = {
-  event = "BufWinEnter",
+  event = "CursorHold",
   config = conf("ui", "gitsigns"),
   disable = not rvim.plugins.ui.git_signs.active,
 }
