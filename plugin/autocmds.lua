@@ -21,6 +21,7 @@ local smart_close_filetypes = {
   "lsp-installer",
   "null-ls-info",
   "packer",
+  "lspinfo",
 }
 
 local smart_close_buftypes = {} -- Don't include no file buffers as diff buffers are nofile
