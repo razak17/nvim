@@ -70,8 +70,7 @@ editor["xiyaowong/nvim-cursorword"] = {
 editor["norcalli/nvim-colorizer.lua"] = {
   event = { "BufReadPre", "BufNewFile" },
   config = function()
-    require("colorizer").setup({
-      "*",
+    require("colorizer").setup({ "*", "!dart" }, {
       css = { rgb_fn = true, hsl_fn = true, names = true },
       scss = { rgb_fn = true, hsl_fn = true, names = true },
       sass = { rgb_fn = true, names = true },
