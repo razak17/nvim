@@ -53,14 +53,14 @@ function M.setup(server_name)
 
   -- rust_analyzer
   if server_name == "rust_analyzer" then
-    M.rust_tools_init(server)
+    M.rust_tools_init(server, config)
   end
 
   -- Initialize Server
   lsp_manager.launch_server(server_name, config)
 end
 
-function M.rust_tools_init(server)
+function M.rust_tools_init(server, config)
   local status_ok, rust_tools = rvim.safe_require("rust-tools")
   if not status_ok then
     Log:debug("Failed to load rust-tools")
@@ -92,7 +92,7 @@ function M.rust_tools_init(server)
     dap = dap,
     -- all the opts to send to nvim-lspconfig
     -- these override the defaults set by rust-tools.nvim
-    server = vim.tbl_deep_extend("force", server:get_default_options(), server),
+    server = vim.tbl_deep_extend("force", config, server),
   })
 end
 
