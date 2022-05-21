@@ -58,7 +58,6 @@ return function()
       },
     },
     window = {
-      position = "right",
       width = 30,
       mappings = {
         o = "toggle_node",
