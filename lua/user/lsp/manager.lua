@@ -59,7 +59,7 @@ function M.client_is_configured(server_name, ft)
   return false
 end
 
-local function launch_server(server_name, config)
+function M.launch_server(server_name, config)
   pcall(function()
     require("lspconfig")[server_name].setup(config)
     M.buf_try_add(server_name)
@@ -90,7 +90,7 @@ function M.setup(server_name, user_config)
 
   if not server_available or is_overridden then
     local config = M.resolve_config(server_name, user_config)
-    launch_server(server_name, config)
+    M.launch_server(server_name, config)
     return
   end
 
@@ -115,7 +115,7 @@ function M.setup(server_name, user_config)
     end
     install_in_progress = false
     local config = M.resolve_config(server_name, server:get_default_options(), user_config)
-    launch_server(server_name, config)
+    M.launch_server(server_name, config)
   end)
 end
 
