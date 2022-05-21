@@ -71,7 +71,7 @@ installExtra() {
 }
 
 nodeExtra() {
-	npm install -g tree-sitter-cli eslint prettier_d_slim esint_d
+	npm install -g tree-sitter-cli eslint prettier_d_slim esint_d neovim
 }
 
 rconf() {
