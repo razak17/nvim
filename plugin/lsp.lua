@@ -2,7 +2,6 @@
 
 local lsp = vim.lsp
 local fn = vim.fn
-local api = vim.api
 local fmt = string.format
 local L = vim.lsp.log_levels
 local icons = rvim.style.icons
@@ -31,52 +30,6 @@ fn.sign_define(vim.tbl_map(function(t)
     linehl = fmt("%sLine", hl),
   }
 end, diagnostic_types))
-
------------------------------------------------------------------------------//
--- Handler Overrides
------------------------------------------------------------------------------//
---[[
-This section overrides the default diagnostic handlers for signs and virtual text so that only
-the most severe diagnostic is shown per line
---]]
-local ns = api.nvim_create_namespace("severe-diagnostics")
-
---- Restricts nvim's diagnostic signs to only the single most severe one per line
---- @see `:help vim.diagnostic`
-local function max_diagnostic(callback)
-  return function(_, bufnr, _, opts)
-    -- Get all diagnostics from the whole buffer rather than just the
-    -- diagnostics passed to the handler
-    local diagnostics = vim.diagnostic.get(bufnr)
-    -- Find the "worst" diagnostic per line
-    local max_severity_per_line = {}
-    for _, d in pairs(diagnostics) do
-      local m = max_severity_per_line[d.lnum]
-      if not m or d.severity < m.severity then
-        max_severity_per_line[d.lnum] = d
-      end
-    end
-    -- Pass the filtered diagnostics (with our custom namespace) to
-    -- the original handler
-    callback(ns, bufnr, vim.tbl_values(max_severity_per_line), opts)
-  end
-end
-
-local signs_handler = vim.diagnostic.handlers.signs
-vim.diagnostic.handlers.signs = {
-  show = max_diagnostic(signs_handler.show),
-  hide = function(_, bufnr)
-    signs_handler.hide(ns, bufnr)
-  end,
-}
-
-local virt_text_handler = vim.diagnostic.handlers.virtual_text
-vim.diagnostic.handlers.virtual_text = {
-  show = max_diagnostic(virt_text_handler.show),
-  hide = function(_, bufnr)
-    virt_text_handler.hide(ns, bufnr)
-  end,
-}
 
 -----------------------------------------------------------------------------//
 -- Handler overrides
