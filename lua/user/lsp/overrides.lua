@@ -1,5 +1,6 @@
 local M = {}
 
+local utils = require("user.utils")
 local lsp_utils = require("user.utils.lsp")
 local lsp_manager = require("user.lsp.manager")
 local Log = require("user.core.log")
@@ -52,39 +53,46 @@ function M.setup(server_name)
 
   -- rust_analyzer
   if server_name == "rust_analyzer" then
-    M.rust_tools_init(server, config)
+    M.rust_tools_init(server)
   end
 
+  -- Initialize Server
   lsp_manager.launch_server(server_name, config)
 end
 
-function M.rust_tools_init(server, config)
+function M.rust_tools_init(server)
   local status_ok, rust_tools = rvim.safe_require("rust-tools")
   if not status_ok then
     Log:debug("Failed to load rust-tools")
     return
   end
 
+  local vscode_lldb = vim.env.HOME .. "/.vscode/extensions/vadimcn.vscode-lldb-1.6.7/"
+  local dap = nil
+
+  if utils.is_directory(vscode_lldb) then
+    local codelldb_path = vscode_lldb .. "adapter/codelldb"
+    local liblldb_path = vscode_lldb .. "lldb/lib/liblldb.so"
+    dap = {
+      adapter = require("rust-tools.dap").get_codelldb_adapter(codelldb_path, liblldb_path),
+    }
+  end
+
+  server = {
+    -- setting it to false may improve startup time
+    standalone = false,
+  }
   local tools = {
-    autoSetHints = true,
     runnables = { use_telescope = true },
-    inlay_hints = {
-      show_parameter_hints = true,
-      -- prefix for parameter hints
-      parameter_hints_prefix = " ",
-      -- prefix for all the other hints (type, chaining)
-      other_hints_prefix = " ",
-    },
-    hover_actions = { auto_focus = true },
+    hover_actions = { border = rvim.style.border.rectangle, auto_focus = true },
   }
   -- Initialize the LSP via rust-tools
   rust_tools.setup({
     tools = tools,
-    -- The "server" property provided in rust-tools setup function are the
-    -- settings rust-tools will provide to lspconfig during init.            --
-    -- We merge the necessary settings from nvim-lsp-installer (server:get_default_options())
-    -- with the user's own settings (opts).
-    server = vim.tbl_deep_extend("force", server:get_default_options(), config),
+    dap = dap,
+    -- all the opts to send to nvim-lspconfig
+    -- these override the defaults set by rust-tools.nvim
+    server = vim.tbl_deep_extend("force", server:get_default_options(), server),
   })
 end
 
