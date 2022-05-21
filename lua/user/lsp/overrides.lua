@@ -67,12 +67,13 @@ function M.rust_tools_init(server, config)
     return
   end
 
-  local vscode_lldb = vim.env.HOME .. "/.vscode/extensions/vadimcn.vscode-lldb-1.6.7/"
+  local vscode_lldb = rvim.paths.vscode_lldb
   local dap = nil
 
   if utils.is_directory(vscode_lldb) then
-    local codelldb_path = vscode_lldb .. "adapter/codelldb"
-    local liblldb_path = vscode_lldb .. "lldb/lib/liblldb.so"
+    local codelldb_path = vscode_lldb .. "/adapter/codelldb"
+    local liblldb_path = vscode_lldb .. "/lldb/lib/liblldb.so"
+    -- FIX: https://github.com/simrat39/rust-tools.nvim/issues/179
     dap = {
       adapter = require("rust-tools.dap").get_codelldb_adapter(codelldb_path, liblldb_path),
     }

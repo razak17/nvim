@@ -35,7 +35,7 @@ return function()
   -- DON'T automatically stop at exceptions
   dap.defaults.fallback.exception_breakpoints = {}
 
-  -- COnfiguration
+  -- Configuration
   require("user.dap.lua").setup()
 
   require("user.dap.node").setup()
