@@ -17,7 +17,7 @@ rvim.plugins.editor = {
   marks = { active = true },
   vim_uppercase_sql = { active = true },
   vim_dirtytalk = { active = true },
-  refactoring_nvim = { active = true },
+  refactoring_nvim = { active = false },
 }
 
 local conf = require("user.utils").load_conf
