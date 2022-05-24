@@ -10,6 +10,7 @@ return {
   TSType = { fg = P.teal },
   TSVariable = { fg = P.blue },
   TSPunctBracket = { fg = P.bracket },
+  TSConstructor = { fg = P.teal },
 
   vimCommentTitle = { fg = P.grey, style = "bold" },
   vimLet = { fg = P.orange },
