@@ -16,22 +16,30 @@ return function()
   -- Make the source information less prominent
   local faded = util.alter_color(util.get_hl("Pmenu", "bg"), 30)
 
-  local kind_hls = {
-    CmpItemAbbr = { foreground = "fg", background = "NONE", italic = false, bold = false },
-    CmpItemMenu = { foreground = faded, italic = true, bold = false },
-    CmpItemAbbrMatch = { foreground = { from = "Keyword" } },
-    CmpItemAbbrDeprecated = { strikethrough = true, inherit = "Comment" },
-    CmpItemAbbrMatchFuzzy = { italic = true, foreground = { from = "Keyword" } },
-  }
-  for key, _ in pairs(lsp_hls) do
-    kind_hls["CmpItemKind" .. key] = {
-      inherit = lsp_hls[key],
-      italic = false,
-      bold = false,
-      underline = false,
+  local kind_hls = rvim.fold(
+    function(accum, value, key)
+      accum["CmpItemKind" .. key] = { foreground = { from = value } }
+      return accum
+    end,
+    lsp_hls,
+    {
+      CmpItemAbbr = { foreground = "fg", background = "NONE", italic = false, bold = false },
+      CmpItemMenu = { foreground = faded, italic = true, bold = false },
+      CmpItemAbbrMatch = { foreground = { from = "Keyword" } },
+      CmpItemAbbrDeprecated = { strikethrough = true, inherit = "Comment" },
+      CmpItemAbbrMatchFuzzy = { italic = true, foreground = { from = "Keyword" } },
     }
-    -- kind_hls["CmpItemKind" .. key] = { foreground = { from = lsp_hls[key] } }
-  end
+  )
+
+  -- for key, _ in pairs(lsp_hls) do
+  --   kind_hls["CmpItemKind" .. key] = {
+  --     inherit = lsp_hls[key],
+  --     italic = false,
+  --     bold = false,
+  --     underline = false,
+  --   }
+  --   -- kind_hls["CmpItemKind" .. key] = { foreground = { from = lsp_hls[key] } }
+  -- end
 
   util.plugin("Cmp", kind_hls)
 
