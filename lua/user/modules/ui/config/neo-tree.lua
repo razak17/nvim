@@ -43,6 +43,9 @@ return function()
       },
     },
     default_component_configs = {
+      icon = {
+        folder_empty = rvim.style.icons.documents.open_folder,
+      },
       git_status = {
         symbols = {
           added = icons.git.add,
