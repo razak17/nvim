@@ -1,5 +1,5 @@
 local P = rvim.palette
-local util = require "zephyr.util"
+local util = require("zephyr.util")
 local darker_bg = util.alter_color(P.bg, -20)
 rvim.palette.darker_bg = darker_bg
 
@@ -106,4 +106,14 @@ return {
   Delimiter = { fg = P.fg },
   Ignore = { fg = P.grey },
   Underlined = { fg = P.none, style = "underline" },
+
+  TSFunction = { fg = P.cyan },
+  TSComment = { fg = P.dark },
+  TSMethod = { fg = P.cyan },
+  TSKeywordFunction = { fg = P.red },
+  TSProperty = { fg = P.yellow },
+  TSType = { fg = P.teal },
+  TSVariable = { fg = P.blue },
+  TSPunctBracket = { fg = P.bracket },
+  TSConstructor = { fg = P.teal },
 }

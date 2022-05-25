@@ -2,16 +2,6 @@ local P = rvim.palette
 local util = require "zephyr.util"
 
 return {
-  TSFunction = { fg = P.cyan },
-  TSComment = { fg = P.dark },
-  TSMethod = { fg = P.cyan },
-  TSKeywordFunction = { fg = P.red },
-  TSProperty = { fg = P.yellow },
-  TSType = { fg = P.teal },
-  TSVariable = { fg = P.blue },
-  TSPunctBracket = { fg = P.bracket },
-  TSConstructor = { fg = P.teal },
-
   vimCommentTitle = { fg = P.grey, style = "bold" },
   vimLet = { fg = P.orange },
   vimVar = { fg = P.cyan },
