@@ -76,3 +76,8 @@ dotenv
 css
 auth
 stdpath
+statusline
+vimrc
+dotfiles
+xdg
+autocommands
