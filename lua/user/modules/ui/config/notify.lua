@@ -4,18 +4,7 @@ return function()
   if vim.g.packer_compiled_loaded then
     return
   end
-  require("zephyr.util").plugin("notify", {
-    NotifyERRORBorder = { bg = { from = "NormalFloat" } },
-    NotifyWARNBorder = { bg = { from = "NormalFloat" } },
-    NotifyINFOBorder = { bg = { from = "NormalFloat" } },
-    NotifyDEBUGBorder = { bg = { from = "NormalFloat" } },
-    NotifyTRACEBorder = { bg = { from = "NormalFloat" } },
-    NotifyERRORBody = { link = "NormalFloat" },
-    NotifyWARNBody = { link = "NormalFloat" },
-    NotifyINFOBody = { link = "NormalFloat" },
-    NotifyDEBUGBody = { link = "NormalFloat" },
-    NotifyTRACEBody = { link = "NormalFloat" },
-  })
+
   if #vim.api.nvim_list_uis() == 0 then
     -- no need to configure notifications in headless
     return
@@ -76,5 +65,18 @@ return function()
   require("which-key").register({
     ["<leader>nn"] = { ":Notifications<cr>", "notify: show" },
     ["<leader>nx"] = { notify.dismiss, "notify: dimiss" },
+  })
+
+  require("zephyr.util").plugin("notify", {
+    NotifyERRORBorder = { bg = { from = "NormalFloat" } },
+    NotifyWARNBorder = { bg = { from = "NormalFloat" } },
+    NotifyINFOBorder = { bg = { from = "NormalFloat" } },
+    NotifyDEBUGBorder = { bg = { from = "NormalFloat" } },
+    NotifyTRACEBorder = { bg = { from = "NormalFloat" } },
+    NotifyERRORBody = { link = "NormalFloat" },
+    NotifyWARNBody = { link = "NormalFloat" },
+    NotifyINFOBody = { link = "NormalFloat" },
+    NotifyDEBUGBody = { link = "NormalFloat" },
+    NotifyTRACEBody = { link = "NormalFloat" },
   })
 end
