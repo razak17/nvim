@@ -281,6 +281,22 @@ rvim.augroup("WinBehavior", {
     end,
   },
   { event = { "TermOpen" }, pattern = { "*:zsh" }, command = "startinsert" },
+  {
+    event = { "WinEnter" },
+    command = function(args)
+      if vim.wo.diff then
+        vim.diagnostic.disable(args.buf)
+      end
+    end,
+  },
+  {
+    event = { "WinLeave" },
+    command = function(args)
+      if vim.wo.diff then
+        vim.diagnostic.enable(args.buf)
+      end
+    end,
+  },
 })
 
 if vim.env.TMUX ~= nil then
@@ -330,11 +346,11 @@ if vim.env.TMUX ~= nil then
 end
 
 local save_excluded = {
-  'neo-tree',
-  'neo-tree-popup',
-  'lua.luapad',
-  'gitcommit',
-  'NeogitCommitMessage',
+  "neo-tree",
+  "neo-tree-popup",
+  "lua.luapad",
+  "gitcommit",
+  "NeogitCommitMessage",
 }
 local function can_save()
   return rvim.empty(vim.bo.buftype)
