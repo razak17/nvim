@@ -1,7 +1,7 @@
 return function()
   local P = rvim.palette
   local icons = rvim.style.icons
-  local utils = require "user.utils.statusline"
+  local utils = require("user.utils.statusline")
   local conditions = utils.conditions
 
   -- Config
@@ -50,15 +50,15 @@ return function()
     table.insert(config.sections.lualine_x, component)
   end
 
-  ins_left {
+  ins_left({
     function()
       return icons.statusline.bar
     end,
     color = { fg = P.pale_blue }, -- Sets highlighting of component
     padding = { left = 0, right = 1 }, -- We don't need space before this
-  }
+  })
 
-  ins_left {
+  ins_left({
     -- mode component
     function()
       return icons.statusline.mode
@@ -90,30 +90,30 @@ return function()
       return { fg = mode_color[vim.fn.mode()] }
     end,
     padding = { right = 1 },
-  }
+  })
 
-  ins_left {
+  ins_left({
     -- filesize component
     "filesize",
     cond = conditions.buffer_not_empty,
     color = { fg = P.statusline_fg },
-  }
+  })
 
-  ins_left {
+  ins_left({
     "filename",
     cond = conditions.buffer_not_empty,
     color = { fg = P.statusline_fg },
-  }
+  })
 
-  ins_left {
+  ins_left({
     "branch",
     -- "b:gitsigns_head",
     icon = icons.git.branch,
     color = { fg = P.dark_green },
     cond = conditions.hide_in_width,
-  }
+  })
 
-  ins_left {
+  ins_left({
     "diff",
     source = utils.diff_source,
     -- Is it me or the symbol for modified us really weird
@@ -128,24 +128,24 @@ return function()
       removed = { fg = P.error_red },
     },
     cond = conditions.hide_in_width,
-  }
+  })
 
-  ins_left {
+  ins_left({
     utils.current_function,
     cond = conditions.hide_in_width,
-  }
+  })
 
-  ins_left {
+  ins_left({
     function()
-      local package = require "package-info"
+      local package = require("package-info")
       if package.get_status() then
         return package.get_status()
       end
     end,
     cond = conditions.hide_in_width,
-  }
+  })
 
-  ins_right {
+  ins_right({
     "diagnostics",
     sources = { "nvim_diagnostic" },
     symbols = {
@@ -156,9 +156,9 @@ return function()
     },
     color = {},
     cond = conditions.hide_in_width,
-  }
+  })
 
-  ins_right {
+  ins_right({
     -- Lsp server name .
     function(msg)
       msg = msg or "LS Inactive"
@@ -173,19 +173,22 @@ return function()
       local buf_client_names = {}
 
       -- add client
+      local has_null_ls = false
       for _, client in pairs(buf_clients) do
-        if client.name ~= "null-ls" then
+        local is_null = client.name:match("null")
+        has_null_ls = has_null_ls or is_null
+        if not is_null then
           table.insert(buf_client_names, client.name)
         end
       end
 
-      return table.concat(buf_client_names, " • ")
+      return (has_null_ls and " ﳠ " or "") .. table.concat(buf_client_names, " • ")
     end,
     colors = { fg = P.statusline_fg },
     cond = conditions.hide_in_width,
-  }
+  })
 
-  ins_right {
+  ins_right({
     function()
       local b = vim.api.nvim_get_current_buf()
       if next(vim.treesitter.highlighter.active[b]) then
@@ -194,18 +197,18 @@ return function()
       return ""
     end,
     cond = conditions.hide_in_width,
-  }
+  })
 
-  ins_right {
+  ins_right({
     "filetype",
     icons_enabled = false, -- I think icons are cool but Eviline doesn't have them. sigh
     color = {},
-  }
+  })
 
-  ins_right {
+  ins_right({
     utils.python_env,
     cond = conditions.hide_in_width,
-  }
+  })
 
   -- ins_right {
   --   function()
@@ -215,32 +218,32 @@ return function()
   -- }
 
   -- Add components to right sections
-  ins_right {
+  ins_right({
     "o:encoding", -- option component same as &encoding in viml
     fmt = string.upper, -- I'm not sure why it's upper case either ;)
     cond = conditions.hide_in_width,
-  }
+  })
 
-  ins_right {
+  ins_right({
     "fileformat",
     fmt = string.upper,
     icons_enabled = false, -- I think icons are cool but Eviline doesn't have them. sigh
     cond = conditions.hide_in_width,
-  }
+  })
 
-  ins_right { "location" }
+  ins_right({ "location" })
 
-  ins_right { "progress", color = { fg = P.statusline_fg } }
+  ins_right({ "progress", color = { fg = P.statusline_fg } })
 
-  ins_right {
+  ins_right({
     function()
       return icons.statusline.bar
     end,
     color = { fg = P.pale_blue },
     padding = { left = 1 },
-  }
+  })
 
   -- Now don't forget to initialize lualine
-  local lualine = require "lualine"
+  local lualine = require("lualine")
   lualine.setup(config)
 end
