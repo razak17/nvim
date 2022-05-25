@@ -15,6 +15,7 @@ rvim.plugins.ui = {
   dim = { active = true },
   neo_tree = { active = true },
   vim_highlighturl = { active = true },
+  nightfox = { active = true },
 }
 
 local utils = require("user.utils")
@@ -65,8 +66,7 @@ ui["rcarriga/nvim-notify"] = {
 
 ui["stevearc/dressing.nvim"] = {
   event = "BufWinEnter",
-  config = function()
-  end,
+  config = function() end,
   disable = not rvim.plugins.ui.dressing.active,
 }
 
@@ -131,6 +131,10 @@ ui["itchyny/vim-highlighturl"] = {
     vim.g.highlighturl_guifg = require("zephyr.util").get_hl("URL", "fg")
   end,
   disable = not rvim.plugins.ui.vim_highlighturl.active,
+}
+
+ui["EdenEast/nightfox.nvim"] = {
+  disable = not rvim.plugins.ui.nightfox.active,
 }
 
 return ui
