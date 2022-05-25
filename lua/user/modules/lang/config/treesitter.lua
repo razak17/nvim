@@ -1,14 +1,44 @@
+rvim.treesitter = rvim.treesitter or { ask_install = {} }
+
+-- When visiting a file with a type we don't have a parser for, ask me if I want to install it.
+function rvim.treesitter.ensure_parser_installed()
+  local parsers = require("nvim-treesitter.parsers")
+  local lang = parsers.get_buf_lang()
+  local fmt = string.format
+  if
+    parsers.get_parser_configs()[lang]
+    and not parsers.has_parser(lang)
+    and rvim.treesitter.ask_install[lang] ~= false
+  then
+    vim.defer_fn(function()
+      vim.ui.select(
+        { "yes", "no" },
+        { prompt = fmt("Install parser for %s? Y/n", lang) },
+        function(_, index)
+          if index == 1 then
+            vim.cmd("TSInstall " .. lang)
+          else
+            rvim.treesitter.ask_install[lang] = false
+          end
+        end
+      )
+    end, 500)
+  end
+end
+
 return function()
+  rvim.augroup("TSParserCheck", {
+    {
+      event = "FileType",
+      desc = "Treesitter: install missing parsers",
+      command = rvim.treesitter.ensure_parser_installed,
+    },
+  })
+
   rvim.treesitter = {
     setup = {
       highlight = { enabled = true },
-      ensure_installed = vim.tbl_flatten {
-        { "c", "cpp", "hcl", "comment", "make", "query", "toml", "dart", "bash", "regex" },
-        { "ruby", "elm", "go", "gomod", "markdown", "help", "vim", "norg", "comment", "css" },
-        { "lua", "teal", "typescript", "tsx", "javascript", "jsdoc", "json", "jsonc", "http" },
-        { "dockerfile", "kotlin", "graphql", "html", "yaml", "make", "ocaml" },
-        { "java", "python", "rust" },
-      },
+      ensure_installed = { "lua" },
       incremental_selection = {
         enable = true,
         keymaps = {
@@ -84,22 +114,22 @@ return function()
   ---Get all filetypes for which we have a treesitter parser installed
   ---@return string[]
   function rvim.treesitter.get_filetypes()
-    vim.cmd [[packadd nvim-treesitter]]
-    local parsers = require "nvim-treesitter.parsers"
+    vim.cmd([[packadd nvim-treesitter]])
+    local parsers = require("nvim-treesitter.parsers")
     local configs = parsers.get_parser_configs()
     return vim.tbl_map(function(ft)
       return configs[ft].filetype or ft
     end, parsers.available_parsers())
   end
 
-  local Log = require "user.core.log"
-  local status_ok, treesitter_configs = rvim.safe_require "nvim-treesitter.configs"
+  local Log = require("user.core.log")
+  local status_ok, treesitter_configs = rvim.safe_require("nvim-treesitter.configs")
   if not status_ok then
-    Log:debug "Failed to load nvim-treesitter.configs"
+    Log:debug("Failed to load nvim-treesitter.configs")
     return
   end
 
-  treesitter_configs.setup {
+  treesitter_configs.setup({
     highlight = {
       enable = rvim.treesitter.setup.highlight.enabled,
       additional_vim_regex_highlighting = true,
@@ -117,15 +147,15 @@ return function()
       lint_events = { "BufWrite", "CursorHold" },
     },
     ensure_installed = rvim.treesitter.setup.ensure_installed,
-  }
+  })
 
   rvim.nnoremap("R", ":edit | TSBufEnable highlight<CR>", {})
 
-  require("which-key").register {
+  require("which-key").register({
     ["<leader>Le"] = { ":TSInstallInfo<cr>", "treesitter: info" },
     ["<leader>Lm"] = { ":TSModuleInfo<cr>", "treesitter: module info" },
     ["<leader>Lu"] = { ":TSUpdate<cr>", "treesitter: update" },
-  }
+  })
 
   -- Only apply folding to supported files:
   rvim.augroup("TreesitterFolds", {
