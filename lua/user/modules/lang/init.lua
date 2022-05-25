@@ -31,6 +31,7 @@ rvim.plugins.lang = {
   matchup = { active = false },
   textobjects = { active = true },
   log_highlighting = { active = true },
+  vim_kitty = { active = true },
 }
 
 local conf = require("user.utils").load_conf
@@ -284,6 +285,10 @@ lang["ray-x/go.nvim"] = {
 
 lang["mtdl9/vim-log-highlighting"] = {
   disable = not rvim.plugins.lang.log_highlighting.active,
+}
+
+lang["fladson/vim-kitty"] = {
+  disable = not rvim.plugins.lang.vim_kitty.active,
 }
 
 return lang
