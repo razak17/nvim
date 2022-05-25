@@ -73,7 +73,6 @@ rvim.lsp = {
     "phpactor",
     "psalm",
     "pylsp",
-    "quick_lint_js",
     "remark_ls",
     "rome",
     "solang",

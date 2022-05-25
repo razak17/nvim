@@ -67,6 +67,9 @@ function M.generate_ftplugin(server_name, dir)
     )
 
     if rvim.find_string(rvim.util.ftplugin_filetypes, filetype) then
+      if server_name == 'quick_lint_js' then
+        return
+      end
       if filetype == "typescriptreact.tsx" then
         utils.write_file(filename, ft_cmd_tsx .. "\n", "a")
       else
