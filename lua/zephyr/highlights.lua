@@ -39,8 +39,9 @@ return {
   ErrorMsg = { fg = P.pale_red, bg = P.none, style = "bold" },
   WarningMsg = { fg = P.dark_orange, bg = P.none, style = "bold" },
   ModeMsg = { fg = P.fg, bg = P.none, style = "bold" },
+
   MatchParen = { fg = P.red, bg = P.none },
-  NonText = { fg = P.bg },
+  NonText = { fg = P.base6 },
   Whitespace = { fg = P.base4 },
   SpecialKey = { fg = P.bg },
   Pmenu = { fg = P.fg, bg = P.bg },
