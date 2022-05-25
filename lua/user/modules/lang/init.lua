@@ -30,6 +30,7 @@ rvim.plugins.lang = {
   autotag = { active = true },
   matchup = { active = false },
   textobjects = { active = true },
+  log_highlighting = { active = true },
 }
 
 local conf = require("user.utils").load_conf
@@ -279,6 +280,10 @@ lang["ray-x/go.nvim"] = {
   ft = "go",
   config = conf("lang", "go"),
   disable = not rvim.plugins.lang.go_nvim.active,
+}
+
+lang["mtdl9/vim-log-highlighting"] = {
+  disable = not rvim.plugins.lang.log_highlighting.active,
 }
 
 return lang
