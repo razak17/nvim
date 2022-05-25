@@ -10,7 +10,11 @@ function rvim.treesitter.ensure_parser_installed()
     parsers.get_parser_configs()[lang]
     and not parsers.has_parser(lang)
     and not rvim.treesitter.ask_install[lang]
+    and not rvim.treesitter.in_progress
   then
+    -- sometimes this function is called multiple times in a row, so we check there is not a
+    -- request already in progress
+    rvim.treesitter.in_progress = true
     vim.defer_fn(function()
       vim.ui.select(
         { "yes", "no" },
@@ -21,6 +25,7 @@ function rvim.treesitter.ensure_parser_installed()
             vim.cmd("TSInstall " .. lang)
           end
           rvim.treesitter.ask_install[lang] = should_install
+          rvim.treesitter.in_progress = false
         end
       )
     end, WAIT_TIME)
