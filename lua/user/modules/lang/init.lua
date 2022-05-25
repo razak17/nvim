@@ -106,7 +106,7 @@ lang["williamboman/nvim-lsp-installer"] = {
         event = "Filetype",
         pattern = "lsp-installer",
         command = function()
-          vim.api.nvim_win_set_config(0, { border = rvim.style.current.border })
+          vim.api.nvim_win_set_config(0, { border = rvim.style.border.current })
         end,
       },
     })
