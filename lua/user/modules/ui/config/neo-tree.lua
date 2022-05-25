@@ -65,7 +65,6 @@ return function()
       width = 30,
       mappings = {
         o = "toggle_node",
-        h = "open",
         l = "open",
         ["<CR>"] = "open_with_window_picker",
         ["<c-s>"] = "split_with_window_picker",
