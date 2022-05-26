@@ -1,5 +1,7 @@
 return function()
-  require("zephyr.util").plugin("marks", { MarkSignHL = { link = "Directory" } })
+  require("zephyr.util").plugin("marks", {
+    MarkSignHL = { link = "Directory", MarkSignNumHL = { link = "Directory" } },
+  })
   require("which-key").register({
     m = {
       name = "marks",
