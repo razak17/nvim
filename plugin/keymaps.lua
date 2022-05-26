@@ -1,4 +1,6 @@
-local utils = require("user.utils")
+local g = vim.g
+local fn = vim.fn
+local fmt = string.format
 
 local nmap = rvim.nmap
 local imap = rvim.imap
@@ -10,7 +12,8 @@ local cnoremap = rvim.cnoremap
 local tnoremap = rvim.tnoremap
 local onoremap = rvim.onoremap
 
-local g = vim.g
+local utils = require("user.utils")
+
 g.mapleader = (rvim.keys.leader == "space" and " ") or rvim.keymaps.leader
 g.maplocalleader = (rvim.keys.localleader == "space" and " ") or rvim.keymaps.localleader
 
@@ -135,6 +138,7 @@ nmap(
   [[(winline() == (winheight (0) + 1)/ 2) ?  'zt' : (winline() == 1)? 'zb' : 'zz']],
   { expr = true }
 )
+
 -- Move selected line / block of text in visual mode
 xnoremap("K", ":m '<-2<CR>gv=gv")
 xnoremap("J", ":m '>+1<CR>gv=gv")

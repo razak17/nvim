@@ -5,7 +5,7 @@ local fn = vim.fn
 local fmt = string.format
 
 local function find(word, ...)
-  for _, str in ipairs { ... } do
+  for _, str in ipairs({ ... }) do
     local match_start, match_end = string.find(word, str)
     if match_start then
       return str, match_start, match_end
@@ -22,7 +22,7 @@ local function keyword(word, callback)
   local original_iskeyword = vim.bo.iskeyword
 
   vim.bo.iskeyword = vim.bo.iskeyword .. ",."
-  word = word or fn.expand "<cword>"
+  word = word or fn.expand("<cword>")
 
   vim.bo.iskeyword = original_iskeyword
 
@@ -60,17 +60,17 @@ function M.go()
   vim.opt_local.tabstop = 4
   vim.opt_local.shiftwidth = 4
   vim.opt_local.smarttab = true
-  vim.cmd [[setlocal iskeyword+=-]]
+  vim.cmd([[setlocal iskeyword+=-]])
 
   if not rvim then
     return
   end
-  local ok, whichkey = rvim.safe_require "which-key"
+  local ok, whichkey = rvim.safe_require("which-key")
   if not ok then
     return
   end
 
-  whichkey.register {
+  whichkey.register({
     ["<leader>G"] = {
       name = "+Go",
       b = { "<Cmd>GoBuild<CR>", "build" },
@@ -81,14 +81,14 @@ function M.go()
       },
       ie = { "<Cmd>GoIfErr<CR>", "if err" },
     },
-  }
+  })
 end
 
 function M.graphql()
   vim.opt_local.comment = ":#"
   vim.opt_local.commentstring = "\\ %s"
-  vim.cmd [[setlocal iskeyword+=$,@-@]]
-  vim.opt_local.formatoptions:remove "t"
+  vim.cmd([[setlocal iskeyword+=$,@-@]])
+  vim.opt_local.formatoptions:remove("t")
 end
 
 function M.html()
@@ -98,14 +98,14 @@ function M.html()
   vim.opt_local.softtabstop = 2
 
   -- Fix quirkiness in indentation
-  vim.opt_local.indentkeys:remove "*<Return>"
+  vim.opt_local.indentkeys:remove("*<Return>")
   -- setlocal indentkeys-=*<Return>
 
   -- Make lines longer, and don't break them automatically
-  vim.cmd [[setlocal tw=120 linebreak textwidth=0]]
+  vim.cmd([[setlocal tw=120 linebreak textwidth=0]])
 
   vim.opt_local.wrap = false
-  vim.opt_local.matchpairs:append "<:>"
+  vim.opt_local.matchpairs:append("<:>")
   -- setlocal matchpairs+=<:>
 end
 
@@ -130,9 +130,9 @@ function M.json()
   vim.opt_local.tabstop = 4
 
   -- json 5 comment
-  vim.cmd [[syntax region Comment start="//" end="$" |]]
-  vim.cmd [[syntax region Comment start="/\*" end="\*/" |]]
-  vim.cmd [[setlocal commentstring=//\ %s]]
+  vim.cmd([[syntax region Comment start="//" end="$" |]])
+  vim.cmd([[syntax region Comment start="/\*" end="\*/" |]])
+  vim.cmd([[setlocal commentstring=//\ %s]])
 end
 
 function M.log()
@@ -151,24 +151,24 @@ function M.lua()
   end
 
   -- This allows tpope's vim.surround to surround a text object with a function or conditional
-  vim.b[fmt("surround_%s", fn.char2nr "F")] = "function \1function: \1() \r end"
-  vim.b[fmt("surround_%s", fn.char2nr "i")] = "if \1if: \1 then \r end"
+  vim.b[fmt("surround_%s", fn.char2nr("F"))] = "function \1function: \1() \r end"
+  vim.b[fmt("surround_%s", fn.char2nr("i"))] = "if \1if: \1 then \r end"
 
   nnoremap("gK", keyword, { buffer = 0 })
   nnoremap("<leader>so", function()
-    vim.cmd "luafile %"
-    vim.notify("Sourced " .. fn.expand "%")
-  end)
+    vim.cmd("luafile %")
+    vim.notify("Sourced " .. fn.expand("%"))
+  end, "source current file")
 
   vim.opt_local.spell = true
-  vim.cmd [[setlocal iskeyword+="]]
+  vim.cmd([[setlocal iskeyword+="]])
   vim.opt_local.textwidth = 100
-  vim.opt_local.formatoptions:remove "o"
+  vim.opt_local.formatoptions:remove("o")
 end
 
 function M.python()
   vim.opt_local.spell = true
-  vim.cmd [[setlocal iskeyword+="]]
+  vim.cmd([[setlocal iskeyword+="]])
   vim.opt_local.shiftwidth = 4
   vim.opt_local.softtabstop = 4
   vim.opt_local.tabstop = 4
@@ -185,7 +185,7 @@ end
 
 function M.typescriptreact_tsx()
   vim.opt_local.textwidth = 100
-  vim.cmd [[setlocal commentstring={/*%s*/}]]
+  vim.cmd([[setlocal commentstring={/*%s*/}]])
 end
 
 function M.typescriptreact()
@@ -195,25 +195,25 @@ end
 function M.vim()
   vim.opt_local.spell = true
   vim.opt_local.colorcolumn = 120
-  vim.cmd [[setlocal iskeyword+=:,#]]
+  vim.cmd([[setlocal iskeyword+=:,#]])
   vim.opt_local.foldmethod = "marker"
 
   nnoremap("so", ":source % <bar> :lua vim.notify('Sourced ' .. vim.fn.expand('%'))<CR>")
 
   -- add custom vim-surround mappings for vim
   -- https://github.com/AndrewRadev/Vimfiles/blob/eada7a20dc705729f963348357d7754124d0b183/ftplugin/vim.vim#L3
-  vim.b[fmt("surround_%s", fn.char2nr "i")] = "if \1if: \1 then \r end"
-  vim.b[fmt("surround_%s", fn.char2nr "w")] = "while \1while: \1 \r endwhile"
-  vim.b[fmt("surround_%s", fn.char2nr "f")] = "for \1for: \1 {\r endfor"
-  vim.b[fmt("surround_%s", fn.char2nr "e")] = "foreach \1foreach: \1 \r enforeach"
-  vim.b[fmt("surround_%s", fn.char2nr "F")] = "function! \1function: \1() \r endfunction"
-  vim.b[fmt("surround_%s", fn.char2nr "T")] = "try \r endtry"
+  vim.b[fmt("surround_%s", fn.char2nr("i"))] = "if \1if: \1 then \r end"
+  vim.b[fmt("surround_%s", fn.char2nr("w"))] = "while \1while: \1 \r endwhile"
+  vim.b[fmt("surround_%s", fn.char2nr("f"))] = "for \1for: \1 {\r endfor"
+  vim.b[fmt("surround_%s", fn.char2nr("e"))] = "foreach \1foreach: \1 \r enforeach"
+  vim.b[fmt("surround_%s", fn.char2nr("F"))] = "function! \1function: \1() \r endfunction"
+  vim.b[fmt("surround_%s", fn.char2nr("T"))] = "try \r endtry"
 end
 
 function M.yaml()
-  vim.opt_local.indentkeys:remove "<:>"
+  vim.opt_local.indentkeys:remove("<:>")
   -- setlocal indentkeys-=<:>
-  vim.cmd [[setlocal iskeyword+=-,$,#]]
+  vim.cmd([[setlocal iskeyword+=-,$,#]])
 end
 
 function M.setup(filetype)
