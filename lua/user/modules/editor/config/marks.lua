@@ -1,5 +1,5 @@
 return function()
-  require("zephyr.util").plugin("marks", { MarkSignHL = { foreground = "Red" } })
+  require("zephyr.util").plugin("marks", { MarkSignHL = { link = "Directory" } })
   require("which-key").register({
     m = {
       name = "marks",
@@ -16,6 +16,9 @@ return function()
     bookmark_0 = {
       sign = "⚑",
       virt_text = "",
+    },
+    mappings = {
+      annotate = "m?",
     },
   })
 end
