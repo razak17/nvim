@@ -1,18 +1,18 @@
 local M = {}
 
-local Log = require "user.core.log"
+local Log = require("user.core.log")
 
 function M:setup()
-  local status_ok, null_ls = rvim.safe_require "null-ls"
+  local status_ok, null_ls = rvim.safe_require("null-ls")
   if not status_ok then
-    Log:error "Missing null-ls dependency"
+    Log:error("Missing null-ls dependency")
     return
   end
 
   -- set a formatter, this will override the language server formatting capabilities (if it exists)
-  local formatters = require "user.lsp.null-ls.formatters"
+  local formatters = require("user.lsp.null-ls.formatters")
 
-  formatters.setup {
+  formatters.setup({
     {
       exe = "prettier_d_slim",
       stdin = true,
@@ -36,7 +36,14 @@ function M:setup()
       exe = "eslint_d",
       stdin = true,
       args = { "--fix" },
-      filetypes = { "vue", "javascript", "javascriptreact", "typescriptreact", "typescript" },
+      filetypes = {
+        "vue",
+        "json",
+        "javascript",
+        "javascriptreact",
+        "typescriptreact",
+        "typescript",
+      },
     },
     {
       exe = "stylua",
@@ -48,12 +55,12 @@ function M:setup()
     { exe = "isort", filetypes = { "python" } },
     { exe = "shfmt", filetypes = { "sh" } },
     -- { exe = "gofmt", filetypes = { "go" } },
-  }
+  })
 
   -- set additional linters
-  local linters = require "user.lsp.null-ls.linters"
+  local linters = require("user.lsp.null-ls.linters")
 
-  linters.setup {
+  linters.setup({
     {
       exe = "shellcheck",
       args = { "--severity", "warning" },
@@ -63,7 +70,7 @@ function M:setup()
       exe = "eslint_d",
       filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact", "vue" },
     },
-  }
+  })
 
   local default_opts = require("user.lsp").get_global_opts()
   null_ls.setup(vim.tbl_deep_extend("force", default_opts, rvim.lsp.null_ls.setup))
