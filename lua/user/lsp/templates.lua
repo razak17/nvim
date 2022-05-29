@@ -4,13 +4,20 @@ local Log = require("user.core.log")
 local utils = require("user.utils")
 local ftplugin_dir = rvim.lsp.templates_dir
 local fmt = string.format
+local find_string = rvim.find_string
 
-local function write_manager(server_name)
-  return fmt([[require("user.lsp.manager").setup(%q)]], server_name)
+local function write_manager(filename, server_name)
+  local cmd = fmt([[require("user.lsp.manager").setup(%q)]], server_name)
+  utils.write_file(filename, cmd .. "\n", "a")
 end
 
-local function write_override(server_name)
-  return fmt([[require("user.lsp.manager").override_setup(%q)]], server_name)
+local function write_override(filename, server_name)
+  local cmd = fmt([[require("user.lsp.manager").override_setup(%q)]], server_name)
+  utils.write_file(filename, cmd .. "\n", "a")
+end
+
+local function write_ft(filetype)
+  return fmt([[require("user.utils.after_ftplugin").setup(%q)]], filetype)
 end
 
 function M.remove_template_files()
@@ -37,42 +44,34 @@ function M.generate_ftplugin(server_name, dir)
   for _, filetype in ipairs(filetypes) do
     local filename = join_paths(dir, filetype .. ".lua")
 
-    -- Default setup command
-    local setup_cmd = write_manager(server_name)
-    local find_string = rvim.find_string
-
-    local is_override = find_string(rvim.lsp.override_ft, filetype)
-    local is_vue = server_name == "vuels"
-    local is_tsserver = server_name == "tsserver"
-    local is_emmet = find_string(rvim.lsp.emmet_ft, filetype)
-
     -- lsp config for other servers
-    if not is_override or is_vue or is_tsserver then
-      utils.write_file(filename, setup_cmd .. "\n", "a")
+    if not find_string(rvim.lsp.override_ft, filetype) then
+      write_manager(filename, server_name)
     end
 
-    if is_vue then
-      utils.write_file(filename, write_manager("eslint") .. "\n", "a")
+    if server_name == "vuels" then
+      write_manager(filename, "eslint")
     end
 
-    if is_emmet then
-      utils.write_file(filename, write_override("emmet_ls") .. "\n", "a")
+    if find_string(rvim.lsp.emmet_ft, filetype) then
+      write_override(filename, "emmet_ls")
     end
 
     for k, v in pairs(rvim.lsp.override_servers) do
       if server_name == k then
-        utils.write_file(filename, write_override(v) .. "\n", "a")
+        write_override(filename, v)
       end
     end
 
     -- ftplugin settings
-    local ft_cmd = fmt([[require("user.utils.after_ftplugin").setup(%q)]], filetype)
+    local ft_cmd = write_ft(filetype)
     local ft_cmd_tsx = fmt(
       [[require("user.utils.after_ftplugin").setup(%q)]],
       "typescriptreact_tsx"
     )
 
     if find_string(rvim.util.ftplugin_filetypes, filetype) then
+      -- TEMPFIX: Prevent after_ftplugin for js from generating twice
       if server_name == "quick_lint_js" then
         return
       end
