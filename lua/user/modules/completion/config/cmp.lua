@@ -31,16 +31,6 @@ return function()
     }
   )
 
-  -- for key, _ in pairs(lsp_hls) do
-  --   kind_hls["CmpItemKind" .. key] = {
-  --     inherit = lsp_hls[key],
-  --     italic = false,
-  --     bold = false,
-  --     underline = false,
-  --   }
-  --   -- kind_hls["CmpItemKind" .. key] = { foreground = { from = lsp_hls[key] } }
-  -- end
-
   util.plugin("Cmp", kind_hls)
 
   local cmp_window = {
