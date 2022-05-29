@@ -16,8 +16,8 @@ local function hex_to_rgb(color)
   return tonumber(hex:sub(1, 2), 16), tonumber(hex:sub(3, 4), 16), tonumber(hex:sub(5), 16)
 end
 
-local function alter(attr, percent)
-  return math.floor(attr * (100 + percent) / 100)
+local function alter(attribute, percent)
+  return math.floor(attribute * (100 + percent) / 100)
 end
 
 ---@source https://stackoverflow.com/q/5560248
@@ -102,7 +102,7 @@ end
 local function convert_hl_to_val(opts)
   for name, value in pairs(opts) do
     if type(value) == "table" and value.from then
-      opts[name] = M.get_hl(value.from, vim.F.if_nil(value.attr, name))
+      opts[name] = M.get_hl(value.from, vim.F.if_nil(value.attribute, name))
     end
   end
 end
@@ -122,21 +122,24 @@ end
 
 ---Get the value a highlight group whilst handling errors, fallbacks rvim well as returning a gui value
 ---in the right format
----@param grp string
----@param attr string
----@param fallback string
+---@param group string
+---@param attribute string?
+ ---@param fallback string?
 ---@return string
-function M.get_hl(grp, attr, fallback)
-  if not grp then
+function M.get_hl(group, attribute, fallback)
+  if not group then
     vim.notify("Cannot get a highlight without specifying a group", levels.ERROR)
     return "NONE"
   end
-  local hl = get_hl(grp)
-  attr = ({ fg = "foreground", bg = "background" })[attr] or attr
-  local color = hl[attr] or fallback
+  local hl = get_hl(group)
+   if not attribute then
+    return hl
+  end
+  attribute = ({ fg = "foreground", bg = "background" })[attribute] or attribute
+  local color = hl[attribute] or fallback
   if not color then
     vim.schedule(function()
-      vim.notify(fmt("%s %s does not exist", grp, attr), levels.INFO)
+      vim.notify(fmt("%s %s does not exist", group, attribute), levels.INFO)
     end)
     return "NONE"
   end
