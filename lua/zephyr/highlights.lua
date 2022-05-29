@@ -41,7 +41,7 @@ return {
   ModeMsg = { fg = P.fg, bg = P.none, style = "bold" },
 
   MatchParen = { fg = P.red, bg = P.none },
-  NonText = { fg = P.base6 },
+  NonText = { fg = P.dark },
   Whitespace = { fg = P.base4 },
   SpecialKey = { fg = P.bg },
   Pmenu = { fg = P.fg, bg = P.bg },
