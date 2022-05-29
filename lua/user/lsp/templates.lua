@@ -16,8 +16,9 @@ local function write_override(filename, server_name)
   utils.write_file(filename, cmd .. "\n", "a")
 end
 
-local function write_ft(filetype)
-  return fmt([[require("user.utils.after_ftplugin").setup(%q)]], filetype)
+local function write_ft(filename, filetype)
+  local cmd = fmt([[require("user.utils.after_ftplugin").setup(%q)]], filetype)
+  utils.write_file(filename, cmd .. "\n", "a")
 end
 
 function M.remove_template_files()
@@ -64,21 +65,18 @@ function M.generate_ftplugin(server_name, dir)
     end
 
     -- ftplugin settings
-    local ft_cmd = write_ft(filetype)
-    local ft_cmd_tsx = fmt(
-      [[require("user.utils.after_ftplugin").setup(%q)]],
-      "typescriptreact_tsx"
-    )
-
     if find_string(rvim.util.ftplugin_filetypes, filetype) then
       -- TEMPFIX: Prevent after_ftplugin for js from generating twice
       if server_name == "quick_lint_js" then
         return
       end
-      if filetype == "typescriptreact.tsx" then
-        utils.write_file(filename, ft_cmd_tsx .. "\n", "a")
+
+      if filetype == "typescript.tsx" then
+        write_ft(filename, "typescriptreact")
+      elseif filetype == "javascript.jsx" then
+        write_ft(filename, "javascriptreact")
       else
-        utils.write_file(filename, ft_cmd .. "\n", "a")
+        write_ft(filename, filetype)
       end
     end
   end
