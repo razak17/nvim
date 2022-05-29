@@ -32,6 +32,7 @@ rvim.plugins.lang = {
   textobjects = { active = true },
   log_highlighting = { active = true },
   vim_kitty = { active = true },
+  sqls_nvim = { active = true },
 }
 
 local conf = require("user.utils").load_conf
@@ -289,6 +290,10 @@ lang["mtdl9/vim-log-highlighting"] = {
 
 lang["fladson/vim-kitty"] = {
   disable = not rvim.plugins.lang.vim_kitty.active,
+}
+
+lang["nanotee/sqls.nvim"] = {
+  disable = not rvim.plugins.lang.sqls_nvim.active,
 }
 
 return lang

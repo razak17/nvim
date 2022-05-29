@@ -43,16 +43,24 @@ rvim.lsp = {
     config = {},
   },
   formatting_ignore_list = { "sumneko_lua", "tsserver", "html", "jsonls", "gopls" },
-  override_ftplugin = {
+  emmet_ft = {
     "html",
     "css",
-    "typescriptreact",
-    "typescript.tsx",
     "javascriptreact",
     "javascript.jsx",
-    "vue",
-    "rust",
+    "typescriptreact",
+    "typescript.tsx",
+  },
+  override_servers = {
+    rust_analyzer = "rust_analyzer",
+    golangci_lint_ls = "golangci_lint_ls",
+    sqlls = "sqlls",
+  },
+  override_ft = {
     "go",
+    "rust",
+    "mysql",
+    "sql",
   },
   override = {
     "angularls",
@@ -80,7 +88,6 @@ rvim.lsp = {
     "sorbet",
     "sourcekit",
     "spectral",
-    "sqlls",
     "sqls",
     "stylelint_lsp",
     "tailwindcss",

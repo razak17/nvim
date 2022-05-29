@@ -82,3 +82,8 @@ dotfiles
 xdg
 autocommands
 vimrc
+javascriptreact
+typescriptreact
+jsx
+tsx
+tsserver

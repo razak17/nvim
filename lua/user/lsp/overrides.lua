@@ -56,6 +56,15 @@ function M.setup(server_name)
     M.rust_tools_init(server, config)
   end
 
+  -- sqlls
+  if server_name == "sqlls" then
+    require('lspconfig').sqls.setup{
+    on_attach = function(client, bufnr)
+        require('sqlls').on_attach(client, bufnr)
+    end
+}
+  end
+
   -- Initialize Server
   lsp_manager.launch_server(server_name, config)
 end

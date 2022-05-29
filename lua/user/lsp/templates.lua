@@ -1,9 +1,17 @@
 local M = {}
 
-local Log = require "user.core.log"
-local utils = require "user.utils"
+local Log = require("user.core.log")
+local utils = require("user.utils")
 local ftplugin_dir = rvim.lsp.templates_dir
 local fmt = string.format
+
+local function write_manager(server_name)
+  return fmt([[require("user.lsp.manager").setup(%q)]], server_name)
+end
+
+local function write_override(server_name)
+  return fmt([[require("user.lsp.manager").override_setup(%q)]], server_name)
+end
 
 function M.remove_template_files()
   -- remove any outdated files
@@ -33,30 +41,28 @@ function M.generate_ftplugin(server_name, dir)
     local setup_cmd = string.format([[require("user.lsp.manager").setup(%q)]], server_name)
     -- vim.notify("using setup_cmd: " .. setup_cmd)
 
+    local is_override = rvim.find_string(rvim.lsp.override_ft, filetype)
+    local is_vue = server_name == "vuels"
+    local is_tsserver = server_name == "tsserver"
+    local is_emmet = rvim.find_string(rvim.lsp.emmet_ft, filetype)
+
     -- lsp config for other servers
-    if server_name ~= "rust_analyzer" and server_name ~= "golangci_lint_ls" then
+    if not is_override or is_vue or is_tsserver then
       utils.write_file(filename, setup_cmd .. "\n", "a")
     end
 
-    -- lsp config for rust_analyzer, emmet and eslint
-    local override_server = "rust_analyzer"
-    if server_name ~= "rust_analyzer" then
-      if server_name == "vuels" then
-        override_server = "eslint"
-      elseif server_name == "golangci_lint_ls" then
-        override_server = "golangci_lint_ls"
-      else
-        override_server = "emmet_ls"
+    if is_vue then
+      utils.write_file(filename, write_manager("eslint") .. "\n", "a")
+    end
+
+    if is_emmet then
+      utils.write_file(filename, write_override("emmet_ls") .. "\n", "a")
+    end
+
+    for k, v in pairs(rvim.lsp.override_servers) do
+      if server_name == k then
+        utils.write_file(filename, write_override(v) .. "\n", "a")
       end
-    end
-
-    local override_cmd = fmt([[require("user.lsp.manager").override_setup(%q)]], override_server)
-    if override_server == "eslint" then
-      override_cmd = fmt([[require("user.lsp.manager").setup(%q)]], override_server)
-    end
-
-    if rvim.find_string(rvim.lsp.override_ftplugin, filetype) then
-      utils.write_file(filename, override_cmd .. "\n", "a")
     end
 
     -- ftplugin settings
@@ -67,7 +73,7 @@ function M.generate_ftplugin(server_name, dir)
     )
 
     if rvim.find_string(rvim.util.ftplugin_filetypes, filetype) then
-      if server_name == 'quick_lint_js' then
+      if server_name == "quick_lint_js" then
         return
       end
       if filetype == "typescriptreact.tsx" then
@@ -85,7 +91,7 @@ end
 function M.generate_templates(servers_names)
   servers_names = servers_names or {}
 
-  Log:debug "Templates installation in progress"
+  Log:debug("Templates installation in progress")
 
   M.remove_template_files()
 
@@ -107,7 +113,7 @@ function M.generate_templates(servers_names)
   for _, server in ipairs(servers_names) do
     M.generate_ftplugin(server, ftplugin_dir)
   end
-  Log:debug "Templates installation is complete"
+  Log:debug("Templates installation is complete")
 end
 
 return M
