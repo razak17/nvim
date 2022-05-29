@@ -164,6 +164,8 @@ return function()
         },
         duplicates_default = 0,
         format = function(entry, vim_item)
+          -- truncate the width of the cmp menu
+          vim_item.abbr = string.sub(vim_item.abbr, 1, 20)
           vim_item.kind = fmt("%s %s", vim_item.kind, rvim.style.icons.kind[vim_item.kind])
           vim_item.menu = rvim.cmp.setup.formatting.source_names[entry.source.name]
           vim_item.dup = rvim.cmp.setup.formatting.duplicates[entry.source.name]
