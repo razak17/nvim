@@ -26,6 +26,7 @@ function M:setup()
         "javascriptreact",
         "html",
         "json",
+        "jsonc",
         "yaml",
         "graphql",
         "markdown",
@@ -39,6 +40,7 @@ function M:setup()
       filetypes = {
         "vue",
         "json",
+        "jsonc",
         "javascript",
         "javascriptreact",
         "typescriptreact",
