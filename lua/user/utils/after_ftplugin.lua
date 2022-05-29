@@ -86,7 +86,7 @@ end
 
 function M.graphql()
   vim.opt_local.comment = ":#"
-  vim.opt_local.commentstring = "\\ %s"
+  vim.cmd([[setlocal commentstring=//\ %s]])
   vim.cmd([[setlocal iskeyword+=$,@-@]])
   vim.opt_local.formatoptions:remove("t")
 end
@@ -115,8 +115,7 @@ end
 
 function M.javascriptreact()
   vim.opt_local.textwidth = 100
-  vim.opt_local.commentstring = [[/*%s*/]]
-  -- setlocal commentstring={/*%s*/}
+  vim.cmd([[setlocal commentstring={/*%s*/}]])
 end
 
 function M.json()
@@ -183,15 +182,6 @@ function M.typescript()
   vim.opt_local.textwidth = 100
 end
 
-function M.typescriptreact_tsx()
-  vim.opt_local.textwidth = 100
-  vim.cmd([[setlocal commentstring={/*%s*/}]])
-end
-
-function M.typescriptreact()
-  M.typescriptreact_tsx()
-end
-
 function M.vim()
   vim.opt_local.spell = true
   vim.opt_local.colorcolumn = 120
@@ -251,7 +241,7 @@ function M.setup(filetype)
     M.typescript()
   end
   if filetype == "typescriptreact" then
-    M.typescriptreact()
+    M.javascriptreact()
   end
   if filetype == "yaml" then
     M.yaml()
