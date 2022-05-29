@@ -38,13 +38,13 @@ function M.generate_ftplugin(server_name, dir)
     local filename = join_paths(dir, filetype .. ".lua")
 
     -- Default setup command
-    local setup_cmd = string.format([[require("user.lsp.manager").setup(%q)]], server_name)
-    -- vim.notify("using setup_cmd: " .. setup_cmd)
+    local setup_cmd = write_manager(server_name)
+    local find_string = rvim.find_string
 
-    local is_override = rvim.find_string(rvim.lsp.override_ft, filetype)
+    local is_override = find_string(rvim.lsp.override_ft, filetype)
     local is_vue = server_name == "vuels"
     local is_tsserver = server_name == "tsserver"
-    local is_emmet = rvim.find_string(rvim.lsp.emmet_ft, filetype)
+    local is_emmet = find_string(rvim.lsp.emmet_ft, filetype)
 
     -- lsp config for other servers
     if not is_override or is_vue or is_tsserver then
@@ -72,7 +72,7 @@ function M.generate_ftplugin(server_name, dir)
       "typescriptreact_tsx"
     )
 
-    if rvim.find_string(rvim.util.ftplugin_filetypes, filetype) then
+    if find_string(rvim.util.ftplugin_filetypes, filetype) then
       if server_name == "quick_lint_js" then
         return
       end
