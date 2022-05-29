@@ -47,6 +47,12 @@ rvim.style = {
       object = "",
     },
     misc = {
+      ellipsis = '…',
+      up = '⇡',
+      down = '⇣',
+      line = 'ℓ', -- ''
+      indent = 'Ξ',
+      tab = '⇥',
       dap_red = "🛑",
       dap_hollow = "🟢",
       bug = "",
