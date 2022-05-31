@@ -362,4 +362,6 @@ return function()
       },
     },
   })
+
+  vim.api.nvim_exec_autocmds("User", { pattern = "TelescopeConfigComplete", modeline = false })
 end
