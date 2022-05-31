@@ -58,11 +58,12 @@ function M.setup(server_name)
 
   -- sqlls
   if server_name == "sqlls" then
-    require('lspconfig').sqls.setup{
-    on_attach = function(client, bufnr)
-        require('sqlls').on_attach(client, bufnr)
-    end
-}
+    server_name = 'sqls'
+    config = {
+      on_attach = function(client, bufnr)
+        require("sqls").on_attach(client, bufnr)
+      end,
+    }
   end
 
   -- Initialize Server
