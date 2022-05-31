@@ -13,6 +13,14 @@ return function()
   local icons = rvim.style.icons
   local border = rvim.style.border
 
+  rvim.augroup("TelescopePreviews", {
+    {
+      event = "User",
+      pattern = "TelescopePreviewerLoaded",
+      command = "setlocal number",
+    },
+  })
+
   -- https://github.com/nvim-telescope/telescope.nvim/issues/1048
   -- Ref: https://github.com/whatsthatsmell/dots/blob/master/public%20dots/vim-nvim/lua/joel/telescope/init.lua
   local telescope_custom_actions = {}
@@ -285,7 +293,7 @@ return function()
 
   local function frecency()
     telescope.extensions.frecency.frecency(dropdown({
-      -- NOTE: remove default text as it's slow
+      -- NOTE: remove default text rvim it's slow
       -- default_text = ':CWD:',
       winblend = 10,
       border = true,
