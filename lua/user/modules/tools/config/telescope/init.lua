@@ -331,6 +331,7 @@ return function()
   end
 
   require("which-key").register({
+    ["<leader>gc"] = { delta_git_bcommits, "commits" },
     ["<c-p>"] = { project_files, "telescope: find files" },
     ["<leader>f"] = {
       name = "+Telescope",
