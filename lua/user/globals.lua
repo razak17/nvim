@@ -218,8 +218,31 @@ end
 -- Thin wrappers over API functions to make their usage easier/terser
 
 P = vim.pretty_print
+
+
+--- Validate the keys passed to rvim.augroup are valid
+---@param name string
+---@param cmd Autocommand
+local function validate_autocmd(name, cmd)
+  local keys = { 'event', 'buffer', 'pattern', 'desc', 'command', 'group', 'once', 'nested' }
+  local incorrect = rvim.fold(function(accum, _, key)
+    if not vim.tbl_contains(keys, key) then
+      table.insert(accum, key)
+    end
+    return accum
+  end, cmd, {})
+  if #incorrect == 0 then
+    return
+  end
+  vim.schedule(function()
+    vim.notify('Incorrect keys: ' .. table.concat(incorrect, ', '), 'error', {
+      title = fmt('Autocmd: %s', name),
+    })
+  end)
+end
+
 ---@class Autocommand
----@field description string
+---@field desc string
 ---@field event  string[] list of autocommand events
 ---@field pattern string[] list of autocommand patterns
 ---@field command string | function
@@ -235,11 +258,12 @@ P = vim.pretty_print
 function rvim.augroup(name, commands)
   local id = api.nvim_create_augroup(name, { clear = true })
   for _, autocmd in ipairs(commands) do
+    validate_autocmd(name, autocmd)
     local is_callback = type(autocmd.command) == "function"
     api.nvim_create_autocmd(autocmd.event, {
       group = name,
       pattern = autocmd.pattern,
-      desc = autocmd.description,
+      desc = autocmd.desc,
       callback = is_callback and autocmd.command or nil,
       command = not is_callback and autocmd.command or nil,
       once = autocmd.once,

@@ -68,6 +68,7 @@ rvim.augroup("SmartClose", {
     -- Close quick fix window if the file containing it was closed
     event = { "BufEnter" },
     pattern = { "*" },
+    nested = true,
     command = function()
       if fn.winnr("$") == 1 and vim.bo.buftype == "quickfix" then
         api.nvim_buf_delete(0, { force = true })
@@ -78,7 +79,7 @@ rvim.augroup("SmartClose", {
     -- automatically close corresponding loclist when quitting a window
     event = { "QuitPre" },
     pattern = { "*" },
-    modifiers = { "nested" },
+    nested = true,
     command = function()
       if vim.bo.filetype ~= "qf" then
         vim.cmd("silent! lclose")
@@ -408,7 +409,7 @@ rvim.augroup("Utilities", {
   {
     event = { "BufWritePost" },
     pattern = { "*" },
-    modifiers = { "nested" },
+    nested = true,
     command = function()
       -- detect filetype onsave
       if rvim.empty(vim.bo.filetype) or fn.exists("b:ftdetect") == 1 then

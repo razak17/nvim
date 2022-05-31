@@ -55,12 +55,12 @@ function M.enable_lsp_document_highlight(client, bufnr)
     {
       event = { "CursorHold", "CursorHoldI" },
       buffer = bufnr,
-      description = "LSP: Document Highlight",
+      desc = "LSP: Document Highlight",
       command = vim.lsp.buf.document_highlight,
     },
     {
       event = { "CursorMoved" },
-      description = "LSP: Document Highlight (Clear)",
+      desc = "LSP: Document Highlight (Clear)",
       buffer = bufnr,
       command = function()
         vim.lsp.buf.clear_references()

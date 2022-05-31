@@ -79,7 +79,7 @@ end
 rvim.augroup("PackerSetupInit", {
   {
     event = { "BufWritePost" },
-    description = "Packer setup and reload",
+    desc = "Packer setup and reload",
     pattern = { "*/user/modules/**/*.lua", "*/user/config/init.lua" },
     command = function()
       plugins.invalidate()
@@ -97,7 +97,7 @@ rvim.augroup("PackerSetupInit", {
   {
     event = "User",
     pattern = "PackerCompileDone",
-    description = "Inform me that packer has finished compiling",
+    desc = "Inform me that packer has finished compiling",
     command = function()
       utils:plug_notify "Packer compile complete"
     end,
