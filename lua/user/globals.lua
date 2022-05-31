@@ -75,7 +75,7 @@ end
 function rvim.fold(callback, list, accum)
   for k, v in pairs(list) do
     accum = callback(accum, v, k)
-    assert(accum, 'The accumulator must be return on each iteration')
+    assert(accum, 'The accumulator must be returned on each iteration')
   end
   return accum
 end
