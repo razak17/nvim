@@ -259,7 +259,7 @@ return function()
   local function installed_plugins()
     require("telescope.builtin").find_files({
       prompt_title = "Plugins",
-      cwd = vim.call("stdpath", "data") .. "/site/pack/packer",
+      cwd = join_paths(rvim.get_runtime_dir(), "/site/pack/packer")
     })
   end
 
