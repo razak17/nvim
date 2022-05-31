@@ -258,8 +258,8 @@ return function()
 
   local function installed_plugins()
     require("telescope.builtin").find_files({
-      prompt_title = "Plugins",
-      cwd = join_paths(rvim.get_runtime_dir(), "/site/pack/packer")
+      prompt_title = "Installed plugins",
+      cwd = join_paths(rvim.get_runtime_dir(), "/site/pack/packer"),
     })
   end
 
