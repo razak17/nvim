@@ -104,6 +104,7 @@ return function()
             ["<c-e>"] = layout_actions.toggle_preview,
             ["<c-l>"] = layout_actions.cycle_layout_next,
             ["<C-A>"] = telescope_custom_actions.multi_selection_open,
+            ["<Tab>"] = actions.toggle_selection,
           },
           n = {
             ["<C-j>"] = actions.move_selection_next,
