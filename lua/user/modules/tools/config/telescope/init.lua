@@ -296,10 +296,35 @@ return function()
     telescope.extensions.projects.projects({})
   end
 
+  local delta = previewers.new_termopen_previewer({
+    get_command = function(entry)
+      return {
+        "git",
+        "-c",
+        "core.pager=delta",
+        "-c",
+        "delta.side-by-side=false",
+        "diff",
+        entry.value .. "^!",
+      }
+    end,
+  })
+
+  local function delta_git_bcommits(opts)
+    opts = opts or {}
+    opts.previewer = {
+      delta,
+      previewers.git_commit_message.new(opts),
+    }
+
+    builtins.git_commits(opts)
+  end
+
   require("which-key").register({
     ["<c-p>"] = { project_files, "telescope: find files" },
     ["<leader>f"] = {
       name = "+Telescope",
+      C = { delta_git_bcommits, "commits" },
       a = { builtins.builtin, "builtins" },
       b = { builtins.current_buffer_fuzzy_find, "find in current buffer" },
       g = { builtins.live_grep, "find word" },
