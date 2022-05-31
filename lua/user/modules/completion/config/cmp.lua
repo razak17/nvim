@@ -12,6 +12,7 @@ return function()
   local border = rvim.style.border.current
   local lsp_hls = rvim.lsp.kind_highlights
   local util = require("zephyr.util")
+  local ellipsis = rvim.style.icons.misc.ellipsis
 
   -- Make the source information less prominent
   local faded = util.alter_color(util.get_hl("Pmenu", "bg"), 30)
@@ -155,7 +156,9 @@ return function()
         duplicates_default = 0,
         format = function(entry, vim_item)
           -- truncate the width of the cmp menu
-          vim_item.abbr = string.sub(vim_item.abbr, 1, 20)
+          local MAX = 20
+          vim_item.abbr = #vim_item.abbr >= MAX and string.sub(vim_item.abbr, 1, MAX) .. ellipsis
+            or vim_item.abbr
           vim_item.kind = fmt("%s %s", vim_item.kind, rvim.style.icons.kind[vim_item.kind])
           vim_item.menu = rvim.cmp.setup.formatting.source_names[entry.source.name]
           vim_item.dup = rvim.cmp.setup.formatting.duplicates[entry.source.name]
