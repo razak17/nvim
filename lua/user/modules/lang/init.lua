@@ -16,7 +16,7 @@ rvim.plugins.lang = {
   lightbulb = { active = true },
   symbols_outline = { active = false },
   bqf = { active = false },
-  trouble = { active = true },
+  trouble = { active = false },
   rust_tools = { active = true },
   schemastore = { active = true },
   lsp_signature = { active = true },
