@@ -58,11 +58,24 @@ function M.setup(server_name)
 
   -- sqlls
   if server_name == "sqlls" then
-    server_name = 'sqls'
+    server_name = "sqls"
     config = {
       on_attach = function(client, bufnr)
         require("sqls").on_attach(client, bufnr)
       end,
+    }
+  end
+
+  -- yamlls
+  if server == "yamlls" then
+    config = {
+      settings = {
+        yaml = {
+          customTags = {
+            "!reference sequence", -- necessary for gitlab-ci.yaml files
+          },
+        },
+      },
     }
   end
 

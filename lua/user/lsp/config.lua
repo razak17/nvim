@@ -56,12 +56,14 @@ rvim.lsp = {
     rust_analyzer = "rust_analyzer",
     golangci_lint_ls = "golangci_lint_ls",
     sqlls = "sqlls",
+    yamlls = "yamlls",
   },
   override_ft = {
     "go",
     "rust",
     "mysql",
     "sql",
+    "yaml",
   },
   override = {
     "angularls",
