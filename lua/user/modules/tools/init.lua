@@ -20,7 +20,7 @@ rvim.plugins.tools = {
   telescope_media_files = { active = true },
   telescope_dap = { active = true },
   telescope_file_browser = { active = true },
-  telescope_frecency = { active = false },
+  telescope_frecency = { active = true },
   telescope_zoxide = { active = true },
   markdown_preview = { active = true },
   apathy = { active = true },
