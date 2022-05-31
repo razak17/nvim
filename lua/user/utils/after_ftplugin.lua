@@ -204,6 +204,9 @@ function M.yaml()
   vim.opt_local.indentkeys:remove("<:>")
   -- setlocal indentkeys-=<:>
   vim.cmd([[setlocal iskeyword+=-,$,#]])
+
+  vim.opt_local.foldlevel = 99
+  vim.opt_local.foldlevelstart = 99
 end
 
 function M.setup(filetype)
