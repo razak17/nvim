@@ -4,7 +4,7 @@ rvim.treesitter = rvim.treesitter or {
 
 -- When visiting a file with a type we don't have a parser for, ask me if I want to install it.
 function rvim.treesitter.ensure_parser_installed()
-  local WAIT_TIME = 1500
+  local WAIT_TIME = 6000
   local parsers = require("nvim-treesitter.parsers")
   local lang = parsers.get_buf_lang()
   local fmt = string.format
