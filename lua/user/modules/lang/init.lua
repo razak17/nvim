@@ -149,12 +149,7 @@ lang["kosayoda/nvim-lightbulb"] = {
 }
 
 lang["simrat39/symbols-outline.nvim"] = {
-  config = function()
-    require("symbols-outline").setup({ show_guides = true })
-    require("which-key").register({
-      ["<leader>o"] = {":SymbolsOutline<CR>", "symbols outline"},
-    })
-  end,
+  config = conf("lang", "symbols-outline"),
   disable = not rvim.plugins.lang.symbols_outline.active,
 }
 
