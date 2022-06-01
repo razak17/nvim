@@ -14,7 +14,7 @@ rvim.plugins.lang = {
   nlsp = { active = true },
   null_ls = { active = true },
   lightbulb = { active = true },
-  symbols_outline = { active = false },
+  symbols_outline = { active = true },
   bqf = { active = false },
   trouble = { active = false },
   rust_tools = { active = true },

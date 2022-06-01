@@ -139,12 +139,6 @@ function M.format_filter(clients)
       -- return client.server_capabilities.documentFormattingProvider
     end)
 
-    for _, server in ipairs(rvim.lsp.formatting_ignore_list) do
-      if client.name == server then
-        client.server_capabilities.documentFormattingProvider = false
-      end
-    end
-
     -- give higher priority to null-ls
     if status_ok and formatting_supported and client.name == "null-ls" then
       return "null-ls"
@@ -176,6 +170,13 @@ function M.format(opts)
     clients = vim.tbl_filter(function(client)
       return client.name == opts.name
     end, clients)
+  end
+
+  for _, server in ipairs(rvim.lsp.formatting_ignore_list) do
+    if opts.name == server then
+      clients.resolved_capabilities.document_formatting = false
+      return
+    end
   end
 
   clients = vim.tbl_filter(function(client)
