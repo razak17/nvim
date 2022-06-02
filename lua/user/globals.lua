@@ -15,7 +15,7 @@ _G.rvim = {
 ---Join path segments that were passed rvim input
 ---@return string
 function join_paths(...)
-  local path_sep = uv.os_uname().version:match "Windows" and "\\" or "/"
+  local path_sep = uv.os_uname().version:match("Windows") and "\\" or "/"
   local result = table.concat({ ... }, path_sep)
   return result
 end
@@ -75,7 +75,7 @@ end
 function rvim.fold(callback, list, accum)
   for k, v in pairs(list) do
     accum = callback(accum, v, k)
-    assert(accum, 'The accumulator must be returned on each iteration')
+    assert(accum, "The accumulator must be returned on each iteration")
   end
   return accum
 end
@@ -165,6 +165,8 @@ function rvim.empty(item)
   local item_type = type(item)
   if item_type == "string" then
     return item == ""
+  elseif item_type == "number" then
+    return item <= 0
   elseif item_type == "table" then
     return vim.tbl_isempty(item)
   end
@@ -219,12 +221,11 @@ end
 
 P = vim.pretty_print
 
-
 --- Validate the keys passed to rvim.augroup are valid
 ---@param name string
 ---@param cmd Autocommand
 local function validate_autocmd(name, cmd)
-  local keys = { 'event', 'buffer', 'pattern', 'desc', 'command', 'group', 'once', 'nested' }
+  local keys = { "event", "buffer", "pattern", "desc", "command", "group", "once", "nested" }
   local incorrect = rvim.fold(function(accum, _, key)
     if not vim.tbl_contains(keys, key) then
       table.insert(accum, key)
@@ -235,8 +236,8 @@ local function validate_autocmd(name, cmd)
     return
   end
   vim.schedule(function()
-    vim.notify('Incorrect keys: ' .. table.concat(incorrect, ', '), 'error', {
-      title = fmt('Autocmd: %s', name),
+    vim.notify("Incorrect keys: " .. table.concat(incorrect, ", "), "error", {
+      title = fmt("Autocmd: %s", name),
     })
   end)
 end
@@ -330,7 +331,7 @@ local function make_mapper(mode, o)
   ---@param opts table
   return function(lhs, rhs, opts)
     -- If the label is all that was passed in, set the opts automagically
-    opts = type(opts) == 'string' and { desc = opts } or opts and vim.deepcopy(opts) or {}
+    opts = type(opts) == "string" and { desc = opts } or opts and vim.deepcopy(opts) or {}
     vim.keymap.set(mode, lhs, rhs, vim.tbl_extend("keep", opts, parent_opts))
   end
 end
