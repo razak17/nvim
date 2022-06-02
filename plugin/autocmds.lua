@@ -291,6 +291,19 @@ rvim.augroup("WinBehavior", {
       end
     end,
   },
+  -- Automatically jump into the quickfix window on open
+  {
+    event = { 'QuickFixCmdPost' },
+    pattern = { '[^l]*' },
+    nested = true,
+    command = 'cwindow',
+  },
+  {
+    event = { 'QuickFixCmdPost' },
+    pattern = { 'l*' },
+    nested = true,
+    command = 'lwindow',
+  },
   {
     event = { "WinLeave" },
     command = function(args)
