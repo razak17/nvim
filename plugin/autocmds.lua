@@ -283,14 +283,6 @@ rvim.augroup("WinBehavior", {
     end,
   },
   { event = { "TermOpen" }, pattern = { "*:zsh" }, command = "startinsert" },
-  {
-    event = { "WinEnter" },
-    command = function(args)
-      if vim.wo.diff then
-        vim.diagnostic.disable(args.buf)
-      end
-    end,
-  },
   -- Automatically jump into the quickfix window on open
   {
     event = { 'QuickFixCmdPost' },
@@ -305,7 +297,15 @@ rvim.augroup("WinBehavior", {
     command = 'lwindow',
   },
   {
-    event = { "WinLeave" },
+    event = { "BufWinEnter" },
+    command = function(args)
+      if vim.wo.diff then
+        vim.diagnostic.disable(args.buf)
+      end
+    end,
+  },
+  {
+    event = { "BufWinLeave" },
     command = function(args)
       if vim.wo.diff then
         vim.diagnostic.enable(args.buf)
