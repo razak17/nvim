@@ -11,6 +11,7 @@ rvim.palette = {
   base99 = "#293238",
 
   bg = "#282a36",
+  comment = "#738091",
   -- bg = "#504945",
   alt_bg = "#282c34",
   dark = "#5c6370",

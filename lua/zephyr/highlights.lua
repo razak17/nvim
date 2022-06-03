@@ -101,15 +101,15 @@ return {
   Macro = { fg = P.cyan },
   Identifier = { fg = P.blue },
 
-  Comment = { fg = P.base6 },
-  SpecialComment = { fg = P.grey },
+  Comment = { fg = P.comment },
+  SpecialComment = { fg = P.comment },
   Todo = { fg = P.orange, style = "italic" },
   Delimiter = { fg = P.fg },
   Ignore = { fg = P.grey },
   Underlined = { fg = P.none, style = "underline" },
 
   TSFunction = { fg = P.cyan },
-  TSComment = { fg = P.dark },
+  TSComment = { fg = P.comment },
   TSMethod = { fg = P.cyan },
   TSKeywordFunction = { fg = P.red },
   TSProperty = { fg = P.yellow },
