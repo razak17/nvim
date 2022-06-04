@@ -32,6 +32,7 @@ rvim.plugins.tools = {
   rest = { active = true },
   sniprun = { active = true },
   package_info = { active = true },
+  cybu = { active = false },
   -- TODO: handle these later
   glow = { active = false }, --j
   doge = { active = false }, --j
@@ -341,6 +342,37 @@ tools["vuki656/package-info.nvim"] = {
   config = conf("tools", "package-info"),
   requires = "MunifTanjim/nui.nvim",
   disable = not rvim.plugins.tools.package_info.active,
+}
+
+tools["ghillb/cybu.nvim"] = {
+  config = function()
+    local ok, cybu = rvim.safe_require("cybu")
+    if not ok then
+      return
+    end
+    cybu.setup({
+      position = {
+        relative_to = "win", -- win, editor, cursor
+        anchor = "topright", -- topleft, topcenter, topright,
+      },
+      display_time = 1750, -- time the cybu window is displayed
+      style = {
+        path = "relative", -- absolute, relative, tail (filename only)
+        border = "rounded", -- single, double, rounded, none
+        separator = " ", -- string used as separator
+        prefix = "…", -- string used as prefix for truncated paths
+        padding = 1, -- left & right padding in number of spaces
+        hide_buffer_id = true,
+        devicons = {
+          enabled = true, -- enable or disable web dev icons
+          colored = true, -- enable color for web dev icons
+        },
+      },
+    })
+    vim.keymap.set("n", "H", "<Plug>(CybuPrev)")
+    vim.keymap.set("n", "L", "<Plug>(CybuNext)")
+  end,
+  disable = not rvim.plugins.tools.cybu.active,
 }
 
 return tools
