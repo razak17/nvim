@@ -1,5 +1,5 @@
 local P = rvim.palette
-local util = require "zephyr.util"
+local util = require("zephyr.util")
 
 return {
   vimCommentTitle = { fg = P.grey, style = "bold" },
@@ -182,4 +182,8 @@ return {
   NotifyINFOBody = { fg = P.fg },
   NotifyDEBUGBody = { fg = P.fg },
   NotifyTRACEBody = { fg = P.fg },
+
+  Winbar = { fg = P.comment },
+  WinbarCrumb = { fg = P.comment },
+  WinbarCurrent = { fg = P.comment },
 }

@@ -288,26 +288,11 @@ tools["nvim-lua/popup.nvim"] = { disable = not rvim.plugins.tools.popup.active }
 tools["SmiteshP/nvim-gps"] = {
   requires = "nvim-treesitter/nvim-treesitter",
   config = function()
-    local icons = rvim.style.icons.codicons
-    local types = rvim.style.icons.type
     require("nvim-gps").setup({
-      icons = {
-        ["class-name"] = icons.Class,
-        ["function-name"] = icons.Function,
-        ["method-name"] = icons.Method,
-        ["container-name"] = icons.Module,
-        ["tag-name"] = icons.Field,
-        ["array-name"] = icons.Value,
-        ["object-name"] = icons.Value,
-        ["null-name"] = icons.Null,
-        ["boolean-name"] = icons.Keyword,
-        ["number-name"] = icons.Value,
-        ["string-name"] = icons.Text,
-        ["mapping-name"] = types.object,
-        ["sequence-name"] = types.array,
-        ["integer-name"] = types.number,
-        ["float-name"] = types.float,
-      },
+      separator = " " .. rvim.style.icons.misc.chevron_right .. " ",
+      depth = 0,
+      depth_limit_indicator = rvim.style.icons.misc.ellipsis,
+      text_hl = "LineNr",
     })
   end,
   disable = not rvim.plugins.tools.gps.active,
