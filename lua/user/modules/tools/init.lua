@@ -33,6 +33,7 @@ rvim.plugins.tools = {
   sniprun = { active = true },
   package_info = { active = true },
   cybu = { active = false },
+  git_blame = { active = true },
   -- TODO: handle these later
   glow = { active = false }, --j
   doge = { active = false }, --j
@@ -375,4 +376,12 @@ tools["ghillb/cybu.nvim"] = {
   disable = not rvim.plugins.tools.cybu.active,
 }
 
+tools["f-person/git-blame.nvim"] = {
+  config = function()
+    vim.g.gitblame_enabled = 0
+    vim.g.gitblame_message_template = "<summary> • <date> • <author>"
+    vim.g.gitblame_highlight_group = "LineNr"
+  end,
+  disable = not rvim.plugins.tools.git_blame.active,
+}
 return tools
