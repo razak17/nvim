@@ -69,6 +69,16 @@ function M.enable_lsp_document_highlight(client, bufnr)
   })
 end
 
+function M.lsp_document_highlight(client)
+  -- if client.server_capabilities.document_highlight then
+  local status_ok, illuminate = rvim.safe_require("illuminate")
+  if not status_ok then
+    return
+  end
+  illuminate.on_attach(client)
+  -- end
+end
+
 --- Add lsp autocommands
 ---@param bufnr number
 function M.enable_code_lens_refresh(client, bufnr)

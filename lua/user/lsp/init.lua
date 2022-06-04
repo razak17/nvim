@@ -57,6 +57,7 @@ function M.global_on_attach(client, bufnr)
 
   if rvim.lsp.document_highlight then
     utils.enable_lsp_document_highlight(client, bufnr)
+    utils.lsp_document_highlight(client)
   end
 
   if rvim.lsp.code_lens_refresh then

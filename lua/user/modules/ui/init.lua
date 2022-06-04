@@ -16,6 +16,7 @@ rvim.plugins.ui = {
   neo_tree = { active = true },
   vim_highlighturl = { active = true },
   nightfox = { active = true },
+  illuminate = { active = true },
 }
 
 local utils = require("user.utils")
@@ -136,6 +137,13 @@ ui["itchyny/vim-highlighturl"] = {
 
 ui["EdenEast/nightfox.nvim"] = {
   disable = not rvim.plugins.ui.nightfox.active,
+}
+
+ui["RRethy/vim-illuminate"] = {
+  config = function()
+    vim.g.Illuminate_ftblacklist = { "alpha", "NvimTree", "dashboard", "neo-tree" }
+  end,
+  disable = not rvim.plugins.ui.illuminate.active,
 }
 
 return ui
