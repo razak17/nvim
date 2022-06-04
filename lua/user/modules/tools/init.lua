@@ -297,7 +297,6 @@ tools["SmiteshP/nvim-gps"] = {
       icons = {
         ["class-name"] = icons.Class,
         ["function-name"] = icons.Function,
-        ["method-name"] = icons.Method,
         ["container-name"] = icons.Module,
         ["tag-name"] = icons.Field,
         ["array-name"] = icons.Value,
