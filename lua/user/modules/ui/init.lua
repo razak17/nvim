@@ -142,6 +142,8 @@ ui["EdenEast/nightfox.nvim"] = {
 ui["RRethy/vim-illuminate"] = {
   config = function()
     vim.g.Illuminate_ftblacklist = { "alpha", "NvimTree", "dashboard", "neo-tree" }
+    rvim.nnoremap("<a-n>", ':lua require"illuminate".next_reference{wrap=true}<cr>')
+    rvim.nnoremap("<a-p>", ':lua require"illuminate".next_reference{reverse=true,wrap=true}<cr>')
   end,
   disable = not rvim.plugins.ui.illuminate.active,
 }
