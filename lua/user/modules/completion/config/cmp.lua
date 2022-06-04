@@ -158,7 +158,7 @@ return function()
           local MAX = 20
           vim_item.abbr = #vim_item.abbr >= MAX and string.sub(vim_item.abbr, 1, MAX) .. ellipsis
             or vim_item.abbr
-          vim_item.kind = fmt("%s %s", vim_item.kind, rvim.style.icons.kind[vim_item.kind])
+          vim_item.kind = fmt("%s %s", vim_item.kind, rvim.style.icons.codicons[vim_item.kind])
           vim_item.menu = rvim.cmp.setup.formatting.source_names[entry.source.name]
           vim_item.dup = rvim.cmp.setup.formatting.duplicates[entry.source.name]
             or rvim.cmp.setup.formatting.duplicates_default
