@@ -85,15 +85,6 @@ rvim.augroup("PackerSetupInit", {
       plugins.invalidate()
     end,
   },
-  --- Open a repository from an authorname/repository string
-  --- e.g. 'akinsho/example-repo'
-  {
-    event = { "BufEnter" },
-    pattern = {
-      rvim.get_user_dir() .. "modules/**/init.lua",
-    },
-    command = utils.goto_repo
-  },
   {
     event = "User",
     pattern = "PackerCompileDone",
