@@ -143,6 +143,9 @@ local blocked = {
   "NeogitCommitMessage",
   "toggleterm",
   "DressingInput",
+  "dashboard",
+  "fTerm",
+  "TelescopePrompt",
 }
 local allowed = { "toggleterm" }
 
