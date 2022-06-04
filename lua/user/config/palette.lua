@@ -35,6 +35,7 @@ rvim.palette = {
   light_green = "#abcf84",
 
   red = "#e95678",
+  dark_red = "#e24329",
   error_red = "#F44747",
   purple_test = "#ff007c",
   redwine = "#d16d9e",
@@ -45,6 +46,7 @@ rvim.palette = {
 
   green = "#afd700",
   dark_green = "#98be65",
+  chartreuse = "#1DC123",
   darker_green = "#98c379",
 
   cyan = "#14ffff",

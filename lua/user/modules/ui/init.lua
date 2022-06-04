@@ -38,6 +38,7 @@ ui["nvim-lualine/lualine.nvim"] = {
 }
 
 ui["kyazdani42/nvim-web-devicons"] = {
+  config = conf("ui", "nvim-web-devicons"),
   disable = not rvim.plugins.ui.devicons.active,
 }
 
