@@ -1,6 +1,13 @@
 ---@diagnostic disable: duplicate-doc-param
 
-local gps = require("nvim-gps")
+local Log = require("user.core.log")
+
+local status_ok, gps = rvim.safe_require("nvim-gps")
+if not status_ok then
+  Log:debug("Failed to load nvim-gps")
+  return
+end
+
 local devicons = require("nvim-web-devicons")
 local highlights = require("zephyr.util")
 local utils = require("user.utils.statusline")
