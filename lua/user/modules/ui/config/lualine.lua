@@ -131,11 +131,6 @@ return function()
   })
 
   ins_left({
-    utils.current_function,
-    cond = conditions.hide_in_width,
-  })
-
-  ins_left({
     function()
       local package = require("package-info")
       if package.get_status() then
