@@ -351,40 +351,41 @@ cnoremap("::", "<C-r>=fnameescape(expand('%:p:h'))<cr>/")
 ------------------------------------------------------------------------------
 -- Credit: June Gunn <leader>?/! | Google it / Feeling lucky
 ------------------------------------------------------------------------------
-local fn = vim.fn
-function rvim.mappings.google(pat, gh)
+function rvim.mappings.google(pat)
   local query = '"' .. fn.substitute(pat, '["\n]', " ", "g") .. '"'
   query = fn.substitute(query, "[[:punct:] ]", [[\=printf("%%%02X", char2nr(submatch(0)))]], "g")
-  if gh then
-    fn.system(fn.printf(rvim.open_command .. ' "https://github.com/search?%sq=%s"', "", query))
-  else
     fn.system(
       fn.printf(rvim.open_command .. ' "https://html.duckduckgo.com/html?%sq=%s"', "", query)
     )
-  end
+end
+
+function rvim.mappings.gh(pat)
+  local query = '"' .. fn.substitute(pat, '["\n]', " ", "g") .. '"'
+  query = fn.substitute(query, "[[:punct:] ]", [[\=printf("%%%02X", char2nr(submatch(0)))]], "g")
+  fn.system(fn.printf(rvim.open_command .. ' "https://github.com/search?%sq=%s"', "", query))
 end
 
 -- Search DuckDuckGo
 nnoremap(
   "<leader>?",
-  [[:lua rvim.mappings.google(vim.fn.expand("<cword>"), false)<cr>]],
+  [[:lua rvim.mappings.google(vim.fn.expand("<cword>"))<cr>]],
   "search word"
 )
 xnoremap(
   "<leader>?",
-  [["gy:lua rvim.mappings.google(vim.api.nvim_eval("@g"), false)<cr>gv]],
+  [["gy:lua rvim.mappings.google(vim.api.nvim_eval("@g"))<cr>gv]],
   "search selection"
 )
 
 -- Search Github
 nnoremap(
   "<leader>L?",
-  [[:lua rvim.mappings.google(vim.fn.expand("<cword>"), true)<cr>]],
+  [[:lua rvim.mappings.gh(vim.fn.expand("<cword>"))<cr>]],
   "github search word"
 )
 xnoremap(
   "<leader>L?",
-  [["gy:lua rvim.mappings.google(vim.api.nvim_eval("@g"), true)<cr>gv]],
+  [["gy:lua rvim.mappings.gh(vim.api.nvim_eval("@g"))<cr>gv]],
   "github search selection"
 )
 
