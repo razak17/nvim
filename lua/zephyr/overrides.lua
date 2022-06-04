@@ -12,7 +12,7 @@ local function general_overrides()
     MsgArea = { background = msg_area_bg },
     mkdLineBreak = { link = "NONE" },
     -- Directory = { inherit = "Keyword", bold = true },
-    URL = { inherit = "TSComment", underline = true },
+    URL = { foreground = P.darker_blue, underline = true },
     -----------------------------------------------------------------------------//
     -- Floats
     -----------------------------------------------------------------------------//
