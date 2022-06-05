@@ -23,13 +23,10 @@ completion["hrsh7th/nvim-cmp"] = {
 
 completion["L3MON4D3/LuaSnip"] = {
   event = "InsertEnter",
+  module = "luasnip",
+  requires = "rafamadriz/friendly-snippets",
   config = conf("completion", "luasnip"),
   disable = not rvim.plugins.completion.luasnip.active,
-}
-
-completion["rafamadriz/friendly-snippets"] = {
-  event = "InsertEnter",
-  disable = not rvim.plugins.completion.friendly_snippets.active,
 }
 
 completion["hrsh7th/cmp-nvim-lsp"] = {

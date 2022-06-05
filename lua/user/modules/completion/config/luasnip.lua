@@ -66,15 +66,21 @@ return function()
   end)
 
   require("luasnip").config.setup({ store_selection_keys = "<C-x>" })
-  require("luasnip.loaders.from_lua").lazy_load()
+
   -- TODO: Temp fix to load defaults first then both friendly snippets and user-defined snippets
-  require("luasnip.loaders.from_vscode").lazy_load()
+  local utils = require("user.utils")
+  local paths = {
+    join_paths(rvim.get_runtime_dir(), "site", "pack", "packer", "start", "friendly-snippets"),
+  }
+  local user_snippets = rvim.paths.snippets
+  if utils.is_directory(user_snippets) then
+    paths[#paths + 1] = user_snippets
+  end
+  require("luasnip.loaders.from_lua").lazy_load()
   require("luasnip.loaders.from_vscode").lazy_load({
-    paths = {
-      rvim.paths.snippets,
-      join_paths(rvim.get_runtime_dir(), "site", "pack", "packer", "opts", "friendly-snippets"),
-    },
+    paths = paths,
   })
+  require("luasnip.loaders.from_snipmate").lazy_load()
 
   -- Enable react snippets in js and ts files
   require("luasnip").filetype_extend("javascript", { "javascriptreact" })

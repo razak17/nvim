@@ -1,4 +1,9 @@
 {
+  "exd": {
+    "prefix": "exd",
+    "body": "export default ${TM_FILENAME_BASE}",
+    "description": "Creates a React function component without PropTypes"
+  },
   "cw": {
     "prefix": "cw",
     "body": "$1);",
