@@ -169,7 +169,21 @@ inoremap("<S-Return>", "<C-o>o")
 ------------------------------------------------------------------------------
 vnoremap("<", "<gv")
 vnoremap(">", ">gv")
-
+------------------------------------------------------------------------------
+-- Buffers
+------------------------------------------------------------------------------
+-- Switch between the last two files
+nnoremap("<leader><leader>", [[<c-^>]])
+-- Del all other buffers
+nnoremap("<leader>bc", function()
+  vim.api.nvim_exec(
+    [[
+      wall
+      silent execute 'bdelete ' . join(utils#buf_filt(1))
+    ]],
+    false
+  )
+end, "close all others")
 ------------------------------------------------------------------------------
 -- Capitalize
 ------------------------------------------------------------------------------
@@ -217,21 +231,14 @@ nnoremap("gx", utils.open_link)
 -- Utils
 ------------------------------------------------------------------------------
 nnoremap("<leader>LV", utils.color_my_pencils, "vim with me")
-
 nnoremap("<leader>aR", utils.empty_registers)
-
 nnoremap("<leader>a;", utils.open_terminal)
-
 nnoremap("<leader>ao", utils.turn_on_guides)
-
 nnoremap("<leader>ae", utils.turn_off_guides)
-
--- Search Files
+-- Search word
 nnoremap("<leader>B", '/<C-R>=escape(expand("<cword>"), "/")<CR><CR>', "find cword")
-
 -- Greatest remap ever
 vnoremap("<leader>p", '"_dP', "greatest remap")
-
 -- Reverse Line
 vnoremap("<leader>r", [[:s/\%V.\+\%V./\=utils#rev_str(submatch(0))<CR>gv]], "reverse line")
 ----------------------------------------------------------------------------------
@@ -248,7 +255,6 @@ nnoremap(
   "<C-W>t <C-W>K<C-W>=",
   "change two horizontally split windows to vertical splits"
 )
-
 ----------------------------------------------------------------------------------
 -- Folds
 ----------------------------------------------------------------------------------
@@ -289,10 +295,8 @@ nnoremap("<leader>`", [[ciw`<c-r>"`<esc>]], "wrap backticks")
 nnoremap("<leader>'", [[ciw'<c-r>"'<esc>]], "wrap single quotes")
 nnoremap("<leader>)", [[ciw(<c-r>")<esc>]], "wrap parenthesis")
 nnoremap("<leader>}", [[ciw{<c-r>"}<esc>]], "wrap curly bracket")
-
 -- Map Q to replay q register
 nnoremap("Q", "@q")
-
 ------------------------------------------------------------------------------
 -- Multiple Cursor Replacement
 -- http://www.kevinli.co/posts/2017-01-19-multiple-cursors-in-500-bytes-of-vimscript/
@@ -350,12 +354,10 @@ cnoremap("::", "<C-r>=fnameescape(expand('%:p:h'))<cr>/")
 ------------------------------------------------------------------------------
 -- Credit: June Gunn <leader>?/! | Google it / Feeling lucky
 ------------------------------------------------------------------------------
-function rvim.mappings.google(pat)
+function rvim.mappings.ddg(pat)
   local query = '"' .. fn.substitute(pat, '["\n]', " ", "g") .. '"'
   query = fn.substitute(query, "[[:punct:] ]", [[\=printf("%%%02X", char2nr(submatch(0)))]], "g")
-    fn.system(
-      fn.printf(rvim.open_command .. ' "https://html.duckduckgo.com/html?%sq=%s"', "", query)
-    )
+  fn.system(fn.printf(rvim.open_command .. ' "https://html.duckduckgo.com/html?%sq=%s"', "", query))
 end
 
 function rvim.mappings.gh(pat)
@@ -364,40 +366,15 @@ function rvim.mappings.gh(pat)
   fn.system(fn.printf(rvim.open_command .. ' "https://github.com/search?%sq=%s"', "", query))
 end
 
+------------------------------------------------------------------------------
+-- Web Search
+------------------------------------------------------------------------------
 -- Search DuckDuckGo
-nnoremap(
-  "<leader>?",
-  [[:lua rvim.mappings.google(vim.fn.expand("<cword>"))<cr>]],
-  "search word"
-)
-xnoremap(
-  "<leader>?",
-  [["gy:lua rvim.mappings.google(vim.api.nvim_eval("@g"))<cr>gv]],
-  "search selection"
-)
-
+nnoremap("<localleader>?", [[:lua rvim.mappings.ddg(vim.fn.expand("<cword>"))<cr>]])
+xnoremap("<localleader>?", [["gy:lua rvim.mappings.ddg(vim.api.nvim_eval("@g"))<cr>gv]])
 -- Search Github
-nnoremap(
-  "<leader>L?",
-  [[:lua rvim.mappings.gh(vim.fn.expand("<cword>"))<cr>]],
-  "github search word"
-)
-xnoremap(
-  "<leader>L?",
-  [["gy:lua rvim.mappings.gh(vim.api.nvim_eval("@g"))<cr>gv]],
-  "github search selection"
-)
-
--- Buffers - Del All Others
-nnoremap("<leader>bc", function()
-  vim.api.nvim_exec(
-    [[
-      wall
-      silent execute 'bdelete ' . join(utils#buf_filt(1))
-    ]],
-    false
-  )
-end, "close all others")
+nnoremap("<localleader>L?", [[:lua rvim.mappings.gh(vim.fn.expand("<cword>"))<cr>]])
+xnoremap("<localleader>L?", [["gy:lua rvim.mappings.gh(vim.api.nvim_eval("@g"))<cr>gv]], "gh search")
 ------------------------------------------------------------------------------
 -- Personal
 ------------------------------------------------------------------------------
@@ -406,17 +383,19 @@ nnoremap("dw", "cw<ESC>")
 -- Next greatest remap ever : asbjornHaland
 nnoremap("<leader>y", '"+y', "yank")
 vnoremap("<leader>y", '"+y', "yank")
--- Whole file delete yank, paste
-nnoremap("<leader>aa", 'gg"+VG', "select all")
--- nnoremap("<leader>D", 'gg"+VGd', "delete all")
-nnoremap("<leader>Y", 'gg"+yG', "yank all")
+-- Select all
+nnoremap("<leader>A", 'gg"+VG', "select all")
+-- Delete all
+nnoremap("<leader>D", 'gg"+VGd', "delete all")
+-- Yank all
+nnoremap("<leader>Y", 'gg"+yG<C-o>', "yank all")
 -- actions
 nnoremap("<leader>=", "<C-W>=", "balance window")
 -- opens a horizontal split
 nnoremap("<leader>ah", "<C-W>s", "horizontal split")
 -- opens a vertical split
 nnoremap("<leader>V", "<C-W>v", "vsplit")
-
+-- Templates
 nnoremap("<leader>lG", function()
   require("user.lsp.templates").generate_templates()
   vim.notify("Templates have been generated", nil, { title = "Lsp" })
