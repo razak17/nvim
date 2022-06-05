@@ -1,6 +1,6 @@
 rvim.keys = {
   leader = "space",
-  localleader = "space",
+  localleader = ",",
 }
 
 rvim.paths = {

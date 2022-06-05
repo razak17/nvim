@@ -15,7 +15,7 @@ local onoremap = rvim.onoremap
 local utils = require("user.utils")
 
 g.mapleader = (rvim.keys.leader == "space" and " ") or rvim.keymaps.leader
-g.maplocalleader = (rvim.keys.localleader == "space" and " ") or rvim.keymaps.localleader
+g.maplocalleader = (rvim.keys.localleader == "space" and " ") or rvim.keys.localleader
 
 ------------------------------------------------------------------------------
 -- Terminal {{{
