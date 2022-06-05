@@ -115,17 +115,15 @@ ui["narutoxy/dim.lua"] = {
 ui["nvim-neo-tree/neo-tree.nvim"] = {
   branch = "v2.x",
   config = conf("ui", "neo-tree"),
-  requires = {
-    "nvim-lua/plenary.nvim",
-    "MunifTanjim/nui.nvim",
-    "kyazdani42/nvim-web-devicons",
-    {
-      "s1n7ax/nvim-window-picker",
-      tag = "1.*",
-      config = conf("ui", "window-picker"),
-    },
-  },
   disable = not rvim.plugins.ui.neo_tree.active,
+}
+
+ui["MunifTanjim/nui.nvim"] = { disable = not rvim.plugins.tools.plenary.active }
+
+ui["s1n7ax/nvim-window-picker"] = {
+  tag = "1.*",
+  config = conf("ui", "window-picker"),
+  disable = not rvim.plugins.tools.plenary.active,
 }
 
 ui["itchyny/vim-highlighturl"] = {
