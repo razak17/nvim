@@ -54,13 +54,6 @@ rvim.augroup("SmartClose", {
 
       if is_eligible then
         rvim.nnoremap("q", smart_close, { buffer = 0, nowait = true })
-        -- vim.api.nvim_buf_set_keymap(
-        --   0,
-        --   "n",
-        --   "q",
-        --   ":call v:lua.rvim.smart_close()<CR>",
-        --   { nowait = true }
-        -- )
       end
     end,
   },
