@@ -31,7 +31,7 @@ rvim.plugins.tools = {
   gps = { active = true },
   rest = { active = true },
   sniprun = { active = true },
-  package_info = { active = true },
+  package_info = { active = false },
   cybu = { active = false },
   git_blame = { active = true },
   -- TODO: handle these later
