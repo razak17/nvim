@@ -306,6 +306,31 @@ rvim.augroup("WinBehavior", {
   },
 })
 
+
+local function should_show_cursorline()
+  return vim.bo.buftype ~= 'terminal'
+    and not vim.wo.previewwindow
+    and vim.wo.winhighlight == ''
+    and vim.bo.filetype ~= ''
+end
+
+rvim.augroup('Cursorline', {
+  {
+    event = { 'BufEnter' },
+    pattern = { '*' },
+    command = function()
+      vim.wo.cursorline = should_show_cursorline()
+    end,
+  },
+  {
+    event = { 'BufLeave' },
+    pattern = { '*' },
+    command = function()
+      vim.wo.cursorline = false
+    end,
+  },
+})
+
 if vim.env.TMUX ~= nil then
   local external = require("user.utils.external")
   rvim.augroup("ExternalConfig", {

@@ -77,7 +77,6 @@ M.load_default_options = function()
     -- Editor UI Appearance
     colorcolumn = "",
     cursorcolumn = false,
-    cursorline = false,
     laststatus = 3,
     showtabline = 2,
     showmode = false,
