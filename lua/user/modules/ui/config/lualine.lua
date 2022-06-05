@@ -14,8 +14,8 @@ return function()
         -- We are going to use lualine_c an lualine_x as left and
         -- right section. Both are highlighted by c theme .  So we
         -- are just setting default looks o statusline
-        normal = { c = { fg = P.statusline_fg, bg = P.statusline_section_bg } },
-        inactive = { c = { fg = P.statusline_fg, bg = P.statusline_section_bg } },
+        normal = { c = { fg = P.base88, bg = P.dark } },
+        inactive = { c = { fg = P.base88, bg = P.dark } },
       },
       disabled_filetypes = { "alpha", "NvimTree", "Outline", "neo-tree" },
     },
@@ -71,7 +71,7 @@ return function()
         v = P.blue,
         [""] = P.pale_blue,
         V = P.pale_blue,
-        c = P.magenta,
+        c = P.pink,
         no = P.pale_red,
         s = P.orange,
         S = P.orange,
@@ -96,13 +96,13 @@ return function()
     -- filesize component
     "filesize",
     cond = conditions.buffer_not_empty,
-    color = { fg = P.statusline_fg },
+    color = { fg = P.base88 },
   })
 
   ins_left({
     "filename",
     cond = conditions.buffer_not_empty,
-    color = { fg = P.statusline_fg },
+    color = { fg = P.base88 },
   })
 
   ins_left({
@@ -179,7 +179,7 @@ return function()
 
       return (has_null_ls and " ﳠ " or "") .. table.concat(buf_client_names, " • ")
     end,
-    colors = { fg = P.statusline_fg },
+    colors = { fg = P.base88 },
     cond = conditions.hide_in_width,
   })
 
@@ -209,7 +209,7 @@ return function()
   --   function()
   --     return "spaces: " .. vim.api.nvim_buf_get_option(0, "shiftwidth")
   --   end,
-  --   color = { fg = P.statusline_fg },
+  --   color = { fg = P.base88 },
   -- }
 
   -- Add components to right sections
@@ -228,7 +228,7 @@ return function()
 
   ins_right({ "location" })
 
-  ins_right({ "progress", color = { fg = P.statusline_fg } })
+  ins_right({ "progress", color = { fg = P.base88 } })
 
   ins_right({
     function()

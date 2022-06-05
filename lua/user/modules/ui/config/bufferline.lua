@@ -29,9 +29,9 @@ return function()
   local util = require("zephyr.util")
   local normal_bg = util.get_hl("Normal", "bg")
   local darker_bg = util.alter_color(normal_bg, -1)
-  local bg = rvim.util.transparent_window == true and "none" or P.statusline_section_bg
-  local fg_def = P.bufferline_fg_def
-  local fg_sel = P.bufferline_fg_sel
+  local bg = rvim.util.transparent_window == true and "none" or P.dark
+  local fg_def = P.base88
+  local fg_sel = P.base00
 
   local highlights = {
     fill = { guifg = fg_def, guibg = darker_bg },
@@ -71,8 +71,8 @@ return function()
     separator = { guifg = P.dark_orange, guibg = darker_bg },
     separator_visible = { guifg = P.dark_orange, guibg = darker_bg },
     separator_selected = { guifg = P.dark_orange, guibg = darker_bg },
-    pick = { guifg = P.magenta, guibg = darker_bg },
-    pick_visible = { guifg = P.magenta, guibg = darker_bg },
+    pick = { guifg = P.pink, guibg = darker_bg },
+    pick_visible = { guifg = P.pink, guibg = darker_bg },
     pick_selected = { guifg = P.pale_blue, guibg = bg },
     indicator_selected = { guifg = darker_bg, guibg = bg },
   }
