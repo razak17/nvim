@@ -67,7 +67,6 @@ return function()
 
   require("luasnip").config.setup({ store_selection_keys = "<C-x>" })
 
-  -- TODO: Temp fix to load defaults first then both friendly snippets and user-defined snippets
   local utils = require("user.utils")
   local paths = {
     join_paths(rvim.get_runtime_dir(), "site", "pack", "packer", "start", "friendly-snippets"),
