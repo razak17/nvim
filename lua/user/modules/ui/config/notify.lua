@@ -34,9 +34,9 @@ return function()
       timeout = 500,
 
       -- Render function for notifications. See notify-render()
-      render = function(bufnr, notif, highlights)
+      render = function(bufnr, notif, highlights, config)
         local style = notif.title[1] == "" and "minimal" or "default"
-        renderer[style](bufnr, notif, highlights)
+        renderer[style](bufnr, notif, highlights, config)
       end,
 
       ---@usage minimum width for notification windows
