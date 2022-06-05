@@ -27,11 +27,10 @@ local smart_close_filetypes = {
 local smart_close_buftypes = {} -- Don't include no file buffers as diff buffers are nofile
 
 local function smart_close()
-  if fn.winnr('$') ~= 1 then
+  if fn.winnr("$") ~= 1 then
     api.nvim_win_close(0, true)
   end
 end
-
 
 -- FIXME: Causing problems telescope mappings keymap
 rvim.augroup("SmartClose", {
@@ -93,7 +92,7 @@ rvim.augroup("ExternalCommands", {
   {
     -- Open images in an image viewer (probably Preview)
     event = { "BufEnter" },
-    pattern = { "*.png,*.jpg,*.gif" },
+    pattern = { "*.png", "*.jpg", "*.gif" },
     command = function()
       vim.cmd(fmt('silent! "%s | :bw"', rvim.open_command .. " " .. fn.expand("%")))
     end,
@@ -285,16 +284,16 @@ rvim.augroup("WinBehavior", {
   { event = { "TermOpen" }, pattern = { "*:zsh" }, command = "startinsert" },
   -- Automatically jump into the quickfix window on open
   {
-    event = { 'QuickFixCmdPost' },
-    pattern = { '[^l]*' },
+    event = { "QuickFixCmdPost" },
+    pattern = { "[^l]*" },
     nested = true,
-    command = 'cwindow',
+    command = "cwindow",
   },
   {
-    event = { 'QuickFixCmdPost' },
-    pattern = { 'l*' },
+    event = { "QuickFixCmdPost" },
+    pattern = { "l*" },
     nested = true,
-    command = 'lwindow',
+    command = "lwindow",
   },
   {
     event = { "BufWinEnter" },
