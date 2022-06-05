@@ -10,6 +10,7 @@ _G.rvim = {
   mappings = {},
   lang = {},
   util = {},
+  ui = {},
 }
 
 ---Join path segments that were passed rvim input
