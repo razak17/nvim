@@ -47,10 +47,6 @@ return function()
           node_decremental = "<S-TAB>",
         },
       },
-      autotag = {
-        enable = rvim.plugins.lang.autotag.active,
-        filetypes = { "html", "xml", "typescriptreact", "javascriptreact" },
-      },
       textobjects = {
         lookahead = true,
         select = {
