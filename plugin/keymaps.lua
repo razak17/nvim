@@ -1,6 +1,5 @@
 local g = vim.g
 local fn = vim.fn
-local fmt = string.format
 
 local nmap = rvim.nmap
 local imap = rvim.imap
