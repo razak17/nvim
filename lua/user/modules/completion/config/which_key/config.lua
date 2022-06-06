@@ -35,11 +35,6 @@ rvim.wk = {
         "<cmd>lua vim.fn.execute('edit ' .. require('user.core.log').get_path())<cr>",
         "open rvim logfile",
       },
-      g = {
-        name = "git",
-        c = { ':lua _G.__fterm_cmd("conf_commit")<cr>', "conf commit" },
-        r = { ':lua _G.__fterm_cmd("rconf_commit")<cr>', "rconf commit" },
-      },
       k = { ":lua require('user.utils.cheatsheet').cheatsheet()<cr>", "cheatsheet" },
       l = {
         "<cmd>lua vim.fn.execute('edit ' .. vim.lsp.get_log_path())<cr>",
@@ -126,6 +121,11 @@ rvim.wk = {
     },
     git = {
       name = "+Git",
+      g = {
+        name = "rVim config",
+        c = { ':lua _G.__fterm_cmd("conf_commit")<cr>', "conf commit" },
+        r = { ':lua _G.__fterm_cmd("rconf_commit")<cr>', "rconf commit" },
+      },
       d = {
         "<cmd>Gitsigns diffthis HEAD<cr>",
         "view diff",

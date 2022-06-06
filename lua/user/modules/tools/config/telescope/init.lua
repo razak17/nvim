@@ -349,11 +349,12 @@ return function()
   require("which-key").register({
     ["<c-p>"] = { project_files, "telescope: find files" },
     ["<leader>f"] = {
-      name = "+Telescope",
+      name = "Telescope",
       a = { builtins, "builtins" },
       b = { builtin.current_buffer_fuzzy_find, "find in current buffer" },
       R = { builtin.reloader, "module reloader" },
       g = {
+        name = 'Git',
         b = { builtin.git_branches, "branch" },
         B = { delta_git_bcommits, "buffer commits" },
         c = { delta_git_commits, "commits" },
@@ -373,7 +374,7 @@ return function()
       p = { projects, "recent projects" },
       W = { bg_selector.set_bg_image, "change background" },
       c = {
-        name = "+rVim config",
+        name = "rVim config",
         b = { rvim_files.branches, "branches" },
         c = { rvim_files.commits, "commits" },
         f = { rvim_files.files, "nvim files" },
