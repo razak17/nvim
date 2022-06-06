@@ -192,6 +192,12 @@ return function()
           find_files = {
             hidden = true,
           },
+          keymaps = dropdown({
+            layout_config = {
+              height = 18,
+              width = 0.5,
+            },
+          }),
           live_grep = {
             --@usage don't include the filename in the search results
             only_sort_text = true,
@@ -354,7 +360,7 @@ return function()
       b = { builtin.current_buffer_fuzzy_find, "find in current buffer" },
       R = { builtin.reloader, "module reloader" },
       g = {
-        name = 'Git',
+        name = "Git",
         b = { builtin.git_branches, "branch" },
         B = { delta_git_bcommits, "buffer commits" },
         c = { delta_git_commits, "commits" },
