@@ -256,13 +256,13 @@ return function()
   --- NOTE: this must be required after setting up telescope
   --- otherwise the result will be cached without the updates
   --- from the setup call
-  local builtins = require("telescope.builtin")
+  local builtin = require("telescope.builtin")
 
   local rvim_files = require("user.modules.tools.config.telescope.nvim_files")
   local bg_selector = require("user.modules.tools.config.telescope.bg_selector")
 
   local function notes()
-    builtins.find_files({
+    builtin.find_files({
       prompt_title = "Notes",
       cwd = vim.fn.expand("~/notes/src/"),
     })
@@ -275,9 +275,13 @@ return function()
     })
   end
 
+  local function builtins()
+    require("telescope.builtin").builtin({ include_extensions = true })
+  end
+
   local function project_files(opts)
-    if not pcall(builtins.git_files, opts) then
-      builtins.find_files(opts)
+    if not pcall(builtin.git_files, opts) then
+      builtin.find_files(opts)
     end
   end
 
@@ -308,42 +312,58 @@ return function()
     telescope.extensions.projects.projects({})
   end
 
-  local delta = previewers.new_termopen_previewer({
-    get_command = function(entry)
-      return {
-        "git",
-        "-c",
-        "core.pager=delta",
-        "-c",
-        "delta.side-by-side=false",
-        "diff",
-        entry.value .. "^!",
-      }
-    end,
-  })
-
-  local function delta_git_bcommits(opts)
+  local function delta_opts(opts, is_buf)
+    local delta = previewers.new_termopen_previewer({
+      get_command = function(entry)
+        local args = {
+          "git",
+          "-c",
+          "core.pager=delta",
+          "-c",
+          "delta.side-by-side=false",
+          "diff",
+          entry.value .. "^!",
+        }
+        if is_buf then
+          vim.list_extend(args, { "--", entry.current_file })
+        end
+        return args
+      end,
+    })
     opts = opts or {}
     opts.previewer = {
       delta,
       previewers.git_commit_message.new(opts),
     }
+    return opts
+  end
 
-    builtins.git_commits(opts)
+  local function delta_git_commits(opts)
+    require("telescope.builtin").git_commits(delta_opts(opts))
+  end
+
+  local function delta_git_bcommits(opts)
+    require("telescope.builtin").git_bcommits(delta_opts(opts, true))
   end
 
   require("which-key").register({
-    ["<leader>gc"] = { delta_git_bcommits, "commits" },
     ["<c-p>"] = { project_files, "telescope: find files" },
     ["<leader>f"] = {
       name = "+Telescope",
-      C = { delta_git_bcommits, "commits" },
-      a = { builtins.builtin, "builtins" },
-      b = { builtins.current_buffer_fuzzy_find, "find in current buffer" },
-      g = { builtins.live_grep, "find word" },
-      R = { builtins.reloader, "module reloader" },
-      r = { builtins.oldfiles, "history" },
-      w = { builtins.grep_string, "find current word" },
+      a = { builtins, "builtins" },
+      b = { builtin.current_buffer_fuzzy_find, "find in current buffer" },
+      R = { builtin.reloader, "module reloader" },
+      g = {
+        b = { builtin.git_branches, "branch" },
+        B = { delta_git_bcommits, "buffer commits" },
+        c = { delta_git_commits, "commits" },
+        f = { builtin.git_files, "files" },
+        o = { builtin.git_status, "open changed file" },
+        s = { builtin.git_status, "status" },
+      },
+      s = { builtin.live_grep, "find word" },
+      r = { builtin.oldfiles, "history" },
+      w = { builtin.grep_string, "find current word" },
       P = { installed_plugins, "plugins" },
       B = { file_browser, "find browser" },
       h = { frecency, "history" },
@@ -353,19 +373,7 @@ return function()
       p = { projects, "recent projects" },
       W = { bg_selector.set_bg_image, "change background" },
       c = {
-        name = "+Builtin",
-        a = { builtins.autocommands, "autocmds" },
-        b = { builtins.buffers, "buffers" },
-        c = { builtins.commands, "commands" },
-        h = { builtins.help_tags, "help" },
-        H = { builtins.command_history, "history" },
-        l = { builtins.loclist, "loclist" },
-        q = { builtins.quickfix, "quickfix" },
-        r = { builtins.registers, "registers" },
-        v = { builtins.vim_options, "vim options" },
-      },
-      L = {
-        name = "+Config",
+        name = "+rVim config",
         b = { rvim_files.branches, "branches" },
         c = { rvim_files.commits, "commits" },
         f = { rvim_files.files, "nvim files" },

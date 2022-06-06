@@ -126,19 +126,10 @@ rvim.wk = {
     },
     git = {
       name = "+Git",
-      b = { ":Telescope git_branches<cr>", "branch" },
-      -- c = { ":Telescope git_commits<cr>", "commits" },
-      C = {
-        ":Telescope git_bcommits<cr>",
-        "buffer commits",
-      },
       d = {
         "<cmd>Gitsigns diffthis HEAD<cr>",
         "view diff",
       },
-      f = { ":Telescope git_files<cr>", "files" },
-      s = { ":Telescope git_status<cr>", "status" },
-      o = { ":Telescope git_status<cr>", "open changed file" },
     },
   },
 }
