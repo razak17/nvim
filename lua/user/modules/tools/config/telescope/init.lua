@@ -47,9 +47,11 @@ return function()
 
   ---@param opts table
   ---@return table
-  local function dropdown(opts)
+  function rvim.telescope_dropdown(opts)
     return themes.get_dropdown(get_border(opts))
   end
+
+  local dropdown = rvim.telescope_dropdown
 
   rvim.telescope = {
     setup = {
