@@ -121,7 +121,7 @@ rvim.wk = {
     },
     git = {
       name = "+Git",
-      g = {
+      c = {
         name = "rVim config",
         c = { ':lua _G.__fterm_cmd("conf_commit")<cr>', "conf commit" },
         r = { ':lua _G.__fterm_cmd("rconf_commit")<cr>', "rconf commit" },
