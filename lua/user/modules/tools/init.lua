@@ -35,6 +35,7 @@ rvim.plugins.tools = {
   cybu = { active = false },
   git_blame = { active = true },
   neotest = { active = true },
+  howdoi = { active = true },
   -- TODO: handle these later
   glow = { active = false }, --j
   doge = { active = false }, --j
@@ -394,6 +395,10 @@ tools["rcarriga/neotest"] = {
     "antoinemadec/FixCursorHold.nvim",
   },
   disable = not rvim.plugins.tools.neotest.active,
+}
+
+tools["Zane-/howdoi.nvim"] = {
+  disable = not rvim.plugins.tools.howdoi.active,
 }
 
 return tools

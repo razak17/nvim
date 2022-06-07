@@ -177,6 +177,11 @@ return function()
               },
             },
           },
+          howdoi = require("telescope.themes").get_ivy({
+            borderchars = {
+              preview = { "▔", "▕", "▁", "▏", "🭽", "🭾", "🭿", "🭼" },
+            },
+          }),
         },
         pickers = {
           buffers = dropdown({
@@ -258,6 +263,7 @@ return function()
     telescope_file_browser = "file_browser",
     telescope_media_files = "media_files",
     telescope_zoxide = "zoxide",
+    howdoi = "howdoi",
   }
 
   for config, plug in pairs(plugins) do
@@ -359,6 +365,10 @@ return function()
     require("telescope.builtin").git_bcommits(delta_opts(opts, true))
   end
 
+  local function howdoi()
+    telescope.extensions.howdoi.howdoi()
+  end
+
   require("which-key").register({
     ["<c-p>"] = { project_files, "telescope: find files" },
     ["<leader>f"] = {
@@ -381,6 +391,7 @@ return function()
       P = { installed_plugins, "plugins" },
       B = { file_browser, "find browser" },
       h = { frecency, "history" },
+      H = { howdoi, "howdoi" },
       m = { media_files, "media files" },
       z = { zoxide_list, "zoxide list" },
       n = { notes, "notes" },
