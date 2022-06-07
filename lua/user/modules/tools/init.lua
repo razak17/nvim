@@ -34,6 +34,7 @@ rvim.plugins.tools = {
   package_info = { active = false },
   cybu = { active = false },
   git_blame = { active = true },
+  neotest = { active = true },
   -- TODO: handle these later
   glow = { active = false }, --j
   doge = { active = false }, --j
@@ -382,4 +383,17 @@ tools["f-person/git-blame.nvim"] = {
   end,
   disable = not rvim.plugins.tools.git_blame.active,
 }
+
+tools["rcarriga/neotest"] = {
+  config = conf("tools", "neotest"),
+  requires = {
+    "rcarriga/neotest-plenary",
+    "rcarriga/neotest-vim-test",
+    "nvim-lua/plenary.nvim",
+    "nvim-treesitter/nvim-treesitter",
+    "antoinemadec/FixCursorHold.nvim",
+  },
+  disable = not rvim.plugins.tools.neotest.active,
+}
+
 return tools

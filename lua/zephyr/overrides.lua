@@ -18,7 +18,7 @@ local function general_overrides()
     -----------------------------------------------------------------------------//
     NormalFloat = { background = P.bg },
     -----------------------------------------------------------------------------//
-    CursorLineNr = { foreground = { from = 'Keyword' } },
+    CursorLineNr = { foreground = { from = "Keyword" } },
     LineNr = { background = "NONE" },
     FoldColumn = { background = "background" },
     TermCursor = { ctermfg = "green", foreground = "royalblue" },
@@ -48,11 +48,11 @@ local function general_overrides()
     SignColumn = { background = "NONE" },
     EndOfBuffer = { background = "NONE" },
     MatchParen = {
-      background = 'NONE',
-      foreground = 'NONE',
+      background = "NONE",
+      foreground = "NONE",
       bold = false,
       underlineline = true,
-      sp = 'white',
+      sp = "white",
     },
     -----------------------------------------------------------------------------//
     -- Treesitter
@@ -102,6 +102,7 @@ local sidebar_fts = {
   "NvimTree",
   "neo-tree",
   "qf",
+  "neotest-summary",
 }
 
 local function on_sidebar_enter()
