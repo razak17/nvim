@@ -86,14 +86,15 @@ return function()
           path = rvim.get_cache_dir() .. "/telescope/history.sqlite3",
         },
         file_ignore_patterns = {
-          "yarn.lock",
-          "target/",
-          "node_modules/",
-          "dist/",
-          ".git/",
-          "venv/",
-          ".venv/",
-          "__pycache__/",
+          "%.jpg",
+          "%.jpeg",
+          "%.png",
+          "%.otf",
+          "%.ttf",
+          "%.DS_Store",
+          "^.git/",
+          "^node_modules/",
+          "^site-packages/",
         },
         path_display = { "smart", "absolute", "truncate" },
         file_sorter = sorters.get_fzy_sorter,
@@ -204,7 +205,12 @@ return function()
             only_sort_text = true,
             -- NOTE: previewing html seems to cause some stalling/blocking whilst live grepping
             -- so filter out html.
-            file_ignore_patterns = { ".git/", "%.html" },
+            file_ignore_patterns = {
+              ".git/",
+              "%.html",
+              "dotbot/.*",
+              "zsh/plugins/.*",
+            },
             max_results = 2000,
             on_input_filter_cb = function(prompt)
               -- AND operator for live_grep like how fzf handles spaces with wildcards in rg
