@@ -182,12 +182,15 @@ lang["nvim-treesitter/nvim-treesitter"] = {
 
 lang["nvim-treesitter/nvim-treesitter-context"] = {
   config = function()
-    require("zephyr.util").plugin("treesitter-context", {
+    local hl = require("zephyr.util")
+    local dim = hl.alter_color(hl.get_hl("Normal", "bg"), -12)
+    hl.plugin("treesitter-context", {
+      ContextBorder = { foreground = dim },
       TreesitterContext = { inherit = "Normal" },
     })
     require("treesitter-context").setup({
       multiline_threshold = 4,
-      separator = { "─", "NonText" },
+      separator = { "─", "ContextBorder" },
     })
   end,
   disable = not rvim.plugins.lang.treesitter.active,
