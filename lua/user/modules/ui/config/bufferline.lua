@@ -43,28 +43,28 @@ return function()
     duplicate_visible = { guifg = fg_def, guibg = darker_bg },
     duplicate_selected = { guifg = P.base7, guibg = bg, gui = "italic" },
     buffer_visible = { guifg = fg_def, guibg = darker_bg },
-    buffer_selected = { guifg = fg_sel, guibg = bg, },
+    buffer_selected = { guifg = fg_sel, guibg = bg },
     diagnostic = { guifg = P.pale_red, guibg = darker_bg },
     diagnostic_visible = { guifg = P.pale_red, guibg = darker_bg },
-    diagnostic_selected = { guifg = P.pale_red, guibg = bg, },
+    diagnostic_selected = { guifg = P.pale_red, guibg = bg },
     error = { guifg = P.pale_red, guibg = darker_bg },
     error_visible = { guifg = P.pale_red, guibg = darker_bg },
-    error_selected = { guifg = P.pale_red, guibg = bg, },
+    error_selected = { guifg = P.pale_red, guibg = bg },
     error_diagnostic = { guifg = P.pale_red, guibg = darker_bg },
     error_diagnostic_visible = { guifg = P.pale_red, guibg = darker_bg },
-    error_diagnostic_selected = { guifg = P.pale_red, guibg = bg, },
+    error_diagnostic_selected = { guifg = P.pale_red, guibg = bg },
     info = { guifg = P.pale_blue, guibg = darker_bg },
     info_visible = { guifg = P.pale_blue, guibg = darker_bg },
-    info_selected = { guifg = P.pale_blue, guibg = bg, },
+    info_selected = { guifg = P.pale_blue, guibg = bg },
     info_diagnostic = { guifg = P.pale_blue, guibg = darker_bg },
     info_diagnostic_visible = { guifg = P.pale_blue, guibg = darker_bg },
-    info_diagnostic_selected = { guifg = P.pale_blue, guibg = bg, },
+    info_diagnostic_selected = { guifg = P.pale_blue, guibg = bg },
     warning = { guifg = P.dark_orange, guibg = darker_bg },
     warning_visible = { guifg = P.dark_orange, guibg = darker_bg },
-    warning_selected = { guifg = P.dark_orange, guibg = bg, },
+    warning_selected = { guifg = P.dark_orange, guibg = bg },
     warning_diagnostic = { guifg = P.dark_orange, guibg = darker_bg },
     warning_diagnostic_visible = { guifg = P.dark_orange, guibg = darker_bg },
-    warning_diagnostic_selected = { guifg = P.dark_orange, guibg = bg, },
+    warning_diagnostic_selected = { guifg = P.dark_orange, guibg = bg },
     modified = { guibg = darker_bg },
     modified_visible = { guibg = darker_bg },
     modified_selected = { guibg = bg },
@@ -140,12 +140,13 @@ return function()
 
   rvim.nnoremap("<S-l>", ":BufferLineCycleNext<CR>")
   rvim.nnoremap("<S-h>", ":BufferLineCyclePrev<CR>")
-  rvim.nnoremap("gb", ":BufferLinePick<CR>")
+  rvim.nnoremap("gb", ":BufferLinePick<CR>","bufferline: goto buffer" )
 
   require("which-key").register({
-    ["<leader>bh"] = { ":BufferLineMovePrev<CR>", "move left" },
-    ["<leader>bl"] = { ":BufferLineMoveNext<CR>", "move right" },
-    ["<leader>bH"] = { ":BufferLineCloseLeft<CR>", "close left" },
-    ["<leader>bL"] = { ":BufferLineCloseRight<CR>", "close right" },
+    ["<leader>bh"] = { ":BufferLineMovePrev<CR>", "bufferline: move left" },
+    ["<leader>bl"] = { ":BufferLineMoveNext<CR>", "bufferline: move right" },
+    ["<leader>bH"] = { ":BufferLineCloseLeft<CR>", "bufferline: close left" },
+    ["<leader>bL"] = { ":BufferLineCloseRight<CR>", "bufferline: close right" },
+    ["<leader>bp"] = { ":BufferLineTogglePin<CR>", "bufferline: toggle pin" },
   })
 end

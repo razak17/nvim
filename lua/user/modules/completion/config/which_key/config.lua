@@ -75,8 +75,6 @@ rvim.wk = {
       name = "+prev",
       ["<space>"] = "add space above",
     },
-    ["g>"] = "show message history",
-    ["gb"] = "lsp: go to buffer",
     ["ds"] = "surround: delete",
     ["z="] = "spell: correct an error",
   },

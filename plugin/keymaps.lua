@@ -161,7 +161,7 @@ xnoremap("p", "pgvy")
 vnoremap("//", [[y/<C-R>"<CR>]])
 
 -- Credit: Justinmk
-nnoremap("g>", [[<cmd>set nomore<bar>40messages<bar>set more<CR>]])
+nnoremap("g>", [[<cmd>set nomore<bar>40messages<bar>set more<CR>]], "show message history")
 -- Start new line from any cursor position
 inoremap("<S-Return>", "<C-o>o")
 ------------------------------------------------------------------------------
