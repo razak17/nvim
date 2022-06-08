@@ -49,6 +49,7 @@ tools["sindrets/diffview.nvim"] = {
   event = "BufReadPre",
   setup = function()
     rvim.nnoremap("<localleader>gd", "<Cmd>DiffviewOpen<CR>", "diffview: diff HEAD")
+    rvim.nnoremap("<localleader>gh", "<Cmd>DiffviewFileHistory<CR>", "diffview: file history")
   end,
   config = conf("tools", "diffview"),
   disable = not rvim.plugins.tools.diffview.active,
