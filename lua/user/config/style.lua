@@ -61,6 +61,7 @@ rvim.style = {
       bug = "",
       bug_alt = "",
       question = "",
+      clock = "",
       lock = "",
       circle = "",
       dot = "•",
