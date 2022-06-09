@@ -205,14 +205,14 @@ end
 
 rvim.augroup("CustomColorColumn", {
   {
-    event = { "VimResized", "FocusGained", "WinEnter", "BufEnter" },
+    event = { "VimResized", "FocusGained", "BufWinEnter", "BufEnter" },
     pattern = { "*" },
     command = function()
       check_color_column()
     end,
   },
   {
-    event = { "FocusLost", "WinLeave" },
+    event = { "FocusLost", "BufWinLeave" },
     pattern = { "*" },
     command = function()
       check_color_column(true)
