@@ -81,6 +81,7 @@ rvim.lsp = {
     "graphql",
     "jedi_language_server",
     "ltex",
+    "marksman",
     "phpactor",
     "psalm",
     "pylsp",
