@@ -15,6 +15,10 @@ local borders = {
 rvim.style = {
   border = vim.tbl_extend("force", borders, { current = borders.line }),
   icons = {
+    separators = {
+      vert_bottom_half_block = "▄",
+      vert_top_half_block = "▀",
+    },
     lsp = {
       error = "",
       warn = "",
