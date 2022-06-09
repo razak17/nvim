@@ -83,6 +83,7 @@ return function()
         debug = {
           logging = true,
         },
+        truncation_style = "uncentered",
         mode = "buffers", -- tabs
         sort_by = "insert_after_current",
         view = "default",
@@ -140,7 +141,7 @@ return function()
 
   rvim.nnoremap("<S-l>", ":BufferLineCycleNext<CR>")
   rvim.nnoremap("<S-h>", ":BufferLineCyclePrev<CR>")
-  rvim.nnoremap("gb", ":BufferLinePick<CR>","bufferline: goto buffer" )
+  rvim.nnoremap("gb", ":BufferLinePick<CR>", "bufferline: goto buffer")
 
   require("which-key").register({
     ["<leader>bh"] = { ":BufferLineMovePrev<CR>", "bufferline: move left" },
