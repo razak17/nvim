@@ -177,7 +177,7 @@ return function()
         end
       end
 
-      return (has_null_ls and " ﳠ " or "") .. table.concat(buf_client_names, " • ")
+      return (has_null_ls and " ﳠ " or "") .. table.concat(buf_client_names, "  ") -- alt: •
     end,
     colors = { fg = P.base88 },
     cond = conditions.hide_in_width,
