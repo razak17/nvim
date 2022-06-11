@@ -387,7 +387,7 @@ tools["f-person/git-blame.nvim"] = {
   disable = not rvim.plugins.tools.git_blame.active,
 }
 
-tools["rcarriga/neotest"] = {
+tools["nvim-neotest/neotest"] = {
   config = conf("tools", "neotest"),
   requires = {
     "rcarriga/neotest-plenary",
