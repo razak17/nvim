@@ -193,6 +193,7 @@ lang["nvim-treesitter/nvim-treesitter-context"] = {
     require("treesitter-context").setup({
       multiline_threshold = 4,
       separator = { "─", "ContextBorder" }, --[[alernatives: ▁ ─ ▄ ]]
+      mode = "topline",
     })
   end,
   disable = not rvim.plugins.lang.treesitter.active,
