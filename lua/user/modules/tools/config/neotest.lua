@@ -7,7 +7,6 @@ return function()
     },
     adapters = {
       require("neotest-plenary"),
-      -- require("neotest-vim-test")({ ignore_filetypes = { "python", "lua" } }),
     },
     floating = {
       border = rvim.style.border.current,
