@@ -36,6 +36,7 @@ rvim.plugins.tools = {
   git_blame = { active = true },
   neotest = { active = true },
   howdoi = { active = true },
+  inc_rename = { active = true },
   -- TODO: handle these later
   glow = { active = false }, --j
   doge = { active = false }, --j
@@ -361,8 +362,8 @@ tools["ghillb/cybu.nvim"] = {
       style = {
         path = "relative", -- absolute, relative, tail (filename only)
         border = "rounded", -- single, double, rounded, none
-        separator = " ", -- string used as separator
-        prefix = "…", -- string used as prefix for truncated paths
+        separator = " ", -- string used rvim separator
+        prefix = "…", -- string used rvim prefix for truncated paths
         padding = 1, -- left & right padding in number of spaces
         hide_buffer_id = true,
         devicons = {
@@ -400,6 +401,23 @@ tools["rcarriga/neotest"] = {
 
 tools["Zane-/howdoi.nvim"] = {
   disable = not rvim.plugins.tools.howdoi.active,
+}
+
+tools["smjonas/inc-rename.nvim"] = {
+  config = function()
+    require("inc_rename").setup({
+      hl_group = "Visual",
+      multifile_preview = true,
+    })
+    rvim.nnoremap("<localleader>ri", function()
+      return ":IncRename " .. vim.fn.expand("<cword>")
+    end, {
+      expr = true,
+      silent = false,
+      desc = "lsp: incremental rename",
+    })
+  end,
+  disable = not rvim.plugins.tools.inc_rename.active,
 }
 
 return tools
