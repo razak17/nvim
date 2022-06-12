@@ -407,7 +407,6 @@ tools["smjonas/inc-rename.nvim"] = {
   config = function()
     require("inc_rename").setup({
       hl_group = "Visual",
-      multifile_preview = true,
     })
     rvim.nnoremap("<localleader>ri", function()
       return ":IncRename " .. vim.fn.expand("<cword>")
