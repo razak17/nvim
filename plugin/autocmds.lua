@@ -1,11 +1,6 @@
 local fn = vim.fn
 local api = vim.api
 local fmt = string.format
-local contains = vim.tbl_contains
-
-local not_eligible = not vim.bo.modifiable
-  or not vim.bo.buflisted
-  or vim.bo.buftype ~= "" and vim.bo.buftype ~= "terminal" and vim.wo.previewwindow
 
 local smart_close_filetypes = {
   "help",
@@ -50,8 +45,8 @@ rvim.augroup("SmartClose", {
 
       local is_eligible = is_unmapped
         or vim.wo.previewwindow
-        or contains(smart_close_buftypes, vim.bo.buftype)
-        or contains(smart_close_filetypes, vim.bo.filetype)
+        or vim.tbl_contains(smart_close_buftypes, vim.bo.buftype)
+        or vim.tbl_contains(smart_close_filetypes, vim.bo.filetype)
 
       if is_eligible then
         rvim.nnoremap("q", smart_close, { buffer = 0, nowait = true })
@@ -162,7 +157,7 @@ rvim.augroup("TextYankHighlight", {
 })
 
 local column_exclude = { "gitcommit" }
-local column_clear = {
+local column_block_list = {
   "dashboard",
   "Packer",
   "qf",
@@ -180,43 +175,26 @@ local column_clear = {
   "which_key",
   "packer",
 }
-
---- Set or unset the color column depending on the filetype of the buffer and its eligibility
----@param leaving boolean?
-local function check_color_column(leaving)
-  if contains(column_exclude, vim.bo.filetype) then
-    return
-  end
-  local small_window = api.nvim_win_get_width(0) <= vim.bo.textwidth + 1
-  local is_last_win = #api.nvim_list_wins() == 1
-  if
-    contains(column_clear, vim.bo.filetype)
-    or not_eligible
-    or (leaving and not is_last_win)
-    or small_window
-  then
-    vim.wo.colorcolumn = ""
-    return
-  end
-  if not contains(column_clear, vim.bo.filetype) and vim.wo.colorcolumn == "" then
-    vim.wo.colorcolumn = "+1"
+local function check_color_column()
+  for _, win in ipairs(api.nvim_list_wins()) do
+    local buffer = vim.bo[api.nvim_win_get_buf(win)]
+    local window = vim.wo[win]
+    if fn.win_gettype() == "" and not vim.tbl_contains(column_exclude, buffer.filetype) then
+      local too_small = api.nvim_win_get_width(win) <= buffer.textwidth + 1
+      local is_excluded = vim.tbl_contains(column_block_list, buffer.filetype)
+      if is_excluded or too_small then
+        window.colorcolumn = ""
+      elseif window.colorcolumn == "" then
+        window.colorcolumn = "+1"
+      end
+    end
   end
 end
 
 rvim.augroup("CustomColorColumn", {
   {
-    event = { "VimResized", "FocusGained", "BufWinEnter", "BufEnter" },
-    pattern = { "*" },
-    command = function()
-      check_color_column()
-    end,
-  },
-  {
-    event = { "FocusLost", "BufWinLeave" },
-    pattern = { "*" },
-    command = function()
-      check_color_column(true)
-    end,
+    event = { "BufEnter", "WinNew", "WinClosed", "FileType", "VimResized" },
+    command = check_color_column,
   },
 })
 
