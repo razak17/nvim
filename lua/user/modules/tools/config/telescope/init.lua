@@ -397,6 +397,11 @@ return function()
       n = { notes, "notes" },
       p = { projects, "recent projects" },
       W = { bg_selector.set_bg_image, "change background" },
+      v = {
+        name = "vim",
+        h = { builtin.highlights, "highlights" },
+        o = { builtin.vim_options, "options" },
+      },
       c = {
         name = "rVim config",
         b = { rvim_files.branches, "branches" },
