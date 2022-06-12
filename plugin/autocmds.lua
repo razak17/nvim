@@ -20,7 +20,7 @@ local smart_close_filetypes = {
   "neotest-summary",
 }
 
-local smart_close_buftypes = {} -- Don't include no file buffers as diff buffers are nofile
+local smart_close_buftypes = {} -- Don't include no file buffers rvim diff buffers are nofile
 
 local function smart_close()
   if fn.winnr("$") ~= 1 then
@@ -285,6 +285,32 @@ rvim.augroup("WinBehavior", {
   },
 })
 
+
+local function should_show_cursorline()
+  return vim.bo.buftype ~= 'terminal'
+    and not vim.wo.previewwindow
+    and vim.wo.winhighlight == ''
+    and vim.bo.filetype ~= ''
+end
+
+rvim.augroup('Cursorline', {
+  {
+    event = { 'BufEnter' },
+    pattern = { '*' },
+    command = function()
+      vim.wo.cursorline = should_show_cursorline()
+    end,
+  },
+  {
+    event = { 'BufLeave' },
+    pattern = { '*' },
+    command = function()
+      vim.wo.cursorline = false
+    end,
+  },
+})
+
+
 local function should_show_cursorline()
   return vim.bo.buftype ~= "terminal"
     and not vim.wo.previewwindow
@@ -344,7 +370,7 @@ if vim.env.TMUX ~= nil then
       event = { "ColorScheme", "FocusGained" },
       pattern = { "*" },
       command = function()
-        -- NOTE: there is a race condition here as the colors
+        -- NOTE: there is a race condition here rvim the colors
         -- for kitty to re-use need to be set AFTER the rest of the colorscheme
         -- overrides
         vim.defer_fn(function()
