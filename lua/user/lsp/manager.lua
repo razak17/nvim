@@ -3,19 +3,6 @@ local M = {}
 local Log = require "user.core.log"
 local lsp_utils = require "user.utils.lsp"
 
-function M.init(languages)
-  languages = languages or lsp_utils.get_all_supported_filetypes()
-  for _, entry in ipairs(languages) do
-    if not rvim.lang[entry] then
-      rvim.lang[entry] = {
-        formatters = {},
-        linters = {},
-        lsp = {},
-      }
-    end
-  end
-end
-
 ---Resolve the configuration for a server by merging with the default config
 ---@param server_name string
 ---@vararg any config table [optional]

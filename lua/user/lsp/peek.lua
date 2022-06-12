@@ -5,10 +5,10 @@ local M = {
 }
 
 local function create_floating_file(location, opts)
-  vim.validate {
+  vim.validate({
     location = { location, "t" },
     opts = { opts, "t", true },
-  }
+  })
 
   -- Set some defaults
   opts = opts or {}
@@ -91,7 +91,7 @@ end
 
 function M.open_file()
   -- Get the file currently open in the floating window
-  local filepath = vim.fn.expand "%:."
+  local filepath = vim.fn.expand("%:.")
 
   if not filepath then
     vim.notify("peek: Unable to open the file!", vim.log.levels.ERROR)
@@ -127,7 +127,7 @@ function M.Peek(what)
   if vim.tbl_contains(vim.api.nvim_list_wins(), M.floating_win) then
     local success_1, _ = pcall(vim.api.nvim_set_current_win, M.floating_win)
     if not success_1 then
-             vim.notify("peek: You cannot edit the current file in a preview!", vim.log.levels.ERROR)
+      vim.notify("peek: You cannot edit the current file in a preview!", vim.log.levels.ERROR)
       return
     end
 
@@ -153,8 +153,10 @@ function M.Peek(what)
       preview_callback
     )
     if not success then
-       vim.notify(
-        'peek: Error calling LSP method "textDocument/' .. what .. '". The current language lsp might not support it.',
+      vim.notify(
+        'peek: Error calling LSP method "textDocument/'
+          .. what
+          .. '". The current language lsp might not support it.',
         vim.log.levels.ERROR
       )
     end

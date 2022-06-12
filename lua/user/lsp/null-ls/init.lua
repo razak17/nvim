@@ -2,7 +2,7 @@ local M = {}
 
 local Log = require("user.core.log")
 
-function M:setup()
+function M.setup()
   local status_ok, null_ls = rvim.safe_require("null-ls")
   if not status_ok then
     Log:error("Missing null-ls dependency")

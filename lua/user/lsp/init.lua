@@ -1,7 +1,7 @@
 local M = {}
-local Log = require "user.core.log"
-local utils = require "user.utils.lsp"
-local keymaps = require "user.lsp.keymaps"
+local Log = require("user.core.log")
+local utils = require("user.utils.lsp")
+local keymaps = require("user.lsp.keymaps")
 
 function M.global_capabilities()
   local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -43,7 +43,7 @@ end
 function M.global_on_init(client, bufnr)
   if rvim.lsp.on_init_callback then
     rvim.lsp.on_init_callback(client, bufnr)
-    Log:debug "Called lsp.on_init_callback"
+    Log:debug("Called lsp.on_init_callback")
     return
   end
 end
@@ -74,7 +74,7 @@ end
 
 local function bootstrap_nlsp(opts)
   opts = opts or {}
-  local lsp_settings_status_ok, lsp_settings = rvim.safe_require "nlspsettings"
+  local lsp_settings_status_ok, lsp_settings = rvim.safe_require("nlspsettings")
   if lsp_settings_status_ok then
     lsp_settings.setup(opts)
   end
@@ -89,26 +89,26 @@ function M.get_global_opts()
 end
 
 function M.setup()
-  Log:debug "Setting up LSP support"
+  Log:debug("Setting up LSP support")
 
-  local lsp_status_ok, _ = rvim.safe_require "lspconfig"
+  local lsp_status_ok, _ = rvim.safe_require("lspconfig")
   if not lsp_status_ok then
     return
   end
 
-  bootstrap_nlsp {
+  bootstrap_nlsp({
     config_home = join_paths(rvim.get_user_dir(), "lsp", "lsp-settings"),
     append_default_schemas = true,
-  }
+  })
 
-  require("nvim-lsp-installer").setup {
+  require("nvim-lsp-installer").setup({
     -- use the default nvim_data_dir, since the server binaries are independent
     install_root_dir = join_paths(vim.call("stdpath", "data"), "lsp_servers"),
-  }
+  })
 
   require("user.lsp.null-ls").setup()
 
-  local formatting = require "user.lsp.formatting"
+  local formatting = require("user.lsp.formatting")
 
   formatting.configure_format_on_save()
 
