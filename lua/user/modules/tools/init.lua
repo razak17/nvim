@@ -24,7 +24,7 @@ rvim.plugins.tools = {
   telescope_zoxide = { active = true },
   markdown_preview = { active = true },
   apathy = { active = true },
-  todo_comments = { active = true },
+  todo_comments = { active = false },
   projectionist = { active = true },
   plenary = { active = true },
   popup = { active = true },
