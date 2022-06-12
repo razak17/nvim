@@ -92,6 +92,7 @@ return function()
           "%.otf",
           "%.ttf",
           "%.DS_Store",
+          "%.lock",
           "^.git/",
           "^node_modules/",
           "^site-packages/",
