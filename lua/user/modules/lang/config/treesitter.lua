@@ -11,13 +11,13 @@ function rvim.treesitter.ensure_parser_installed()
   if
     parsers.get_parser_configs()[lang]
     and not parsers.has_parser(lang)
-         and not rvim.treesitter.install_attempted[lang]
+    and not rvim.treesitter.install_attempted[lang]
   then
     vim.schedule(function()
-      vim.cmd('TSInstall ' .. lang)
+      vim.cmd("TSInstall " .. lang)
       rvim.treesitter.install_attempted[lang] = true
-      vim.notify(fmt('Installing Treesitter parser for %s', lang), 'info', {
-        title = 'Nvim Treesitter',
+      vim.notify(fmt("Installing Treesitter parser for %s", lang), "info", {
+        title = "Nvim Treesitter",
         icon = rvim.style.icons.misc.down,
         timeout = WAIT_TIME,
       })
@@ -37,7 +37,7 @@ return function()
   rvim.treesitter = {
     setup = {
       highlight = { enabled = true },
-      ensure_installed = { "lua" },
+      ensure_installed = { "lua", "dart", "rust", "typescript", "javascript", "comment" },
       incremental_selection = {
         enable = true,
         keymaps = {
