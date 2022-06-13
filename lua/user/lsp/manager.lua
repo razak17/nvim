@@ -64,18 +64,13 @@ function M.setup(server_name, user_config)
     or M.client_is_configured(server_name)
 
   if server_name ~= "html" and already_configured then
-    Log:debug(
-      string.format("[%q] is already configured. Ignoring repeated setup call.", server_name)
-    )
     return
   end
 
   local servers = require "nvim-lsp-installer.servers"
   local server_available, server = servers.get_server(server_name)
 
-  local is_overridden = vim.tbl_contains(rvim.lsp.override, server_name)
-
-  if not server_available or is_overridden then
+  if not server_available then
     local config = M.resolve_config(server_name, user_config)
     M.launch_server(server_name, config)
     return

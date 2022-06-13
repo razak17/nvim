@@ -58,14 +58,8 @@ rvim.lsp = {
     "sqlls",
     "yamlls",
   },
-  override_ft = {
-    "go",
-    "rust",
-    "mysql",
-    "sql",
-    "yaml",
-  },
-  override = {
+  skipped_filetypes = { "edn", "dhall", "objcpp", "objc", "cuda", "rst", "plaintext" },
+  skipped_servers = {
     "angularls",
     "ansiblels",
     "ccls",

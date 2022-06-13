@@ -5,6 +5,7 @@ local utils = require("user.utils")
 local ftplugin_dir = rvim.lsp.templates_dir
 local fmt = string.format
 local find_string = rvim.find_string
+local lsp_utils = require("user.utils.lsp")
 
 local function write_manager(filename, server_name)
   local cmd = fmt([[require("user.lsp.manager").setup(%q)]], server_name)
@@ -32,12 +33,15 @@ end
 ---@param server_name string name of a valid language server, e.g. pyright, gopls, tsserver, etc.
 ---@param dir string the full path to the desired directory
 function M.generate_ftplugin(server_name, dir)
-  if vim.tbl_contains(rvim.lsp.override, server_name) then
+  if vim.tbl_contains(rvim.lsp.skipped_servers, server_name) then
     return
   end
 
-  -- we need to go through lspconfig to get the corresponding filetypes currently
-  local filetypes = require("user.utils.lsp").get_supported_filetypes(server_name) or {}
+  -- get the supported filetypes and remove any ignored ones
+  local filetypes = vim.tbl_filter(function(ft)
+    return not vim.tbl_contains(rvim.lsp.skipped_filetypes, ft)
+  end, lsp_utils.get_supported_filetypes(server_name) or {})
+
   if not filetypes then
     return
   end
@@ -45,8 +49,9 @@ function M.generate_ftplugin(server_name, dir)
   for _, filetype in ipairs(filetypes) do
     local filename = join_paths(dir, filetype .. ".lua")
 
-    -- lsp config for other servers
-    if not find_string(rvim.lsp.override_ft, filetype) then
+    if find_string(rvim.lsp.override_servers, server_name) then
+      write_override(filename, server_name)
+    else
       write_manager(filename, server_name)
     end
 
@@ -58,10 +63,6 @@ function M.generate_ftplugin(server_name, dir)
       write_override(filename, "emmet_ls")
     end
 
-    if find_string(rvim.lsp.override_servers, server_name) then
-      write_override(filename, server_name)
-    end
-
     -- ftplugin settings
     if find_string(rvim.util.ftplugin_filetypes, filetype) then
       -- TEMPFIX: Prevent after_ftplugin for js from generating twice
@@ -69,9 +70,10 @@ function M.generate_ftplugin(server_name, dir)
         return
       end
 
-      if filetype == "typescript.tsx" then
-        write_ft(filename, "typescriptreact")
-      elseif filetype == "javascript.jsx" then
+      local react_fts = { "typescript.tsx", "javascript.jsx" }
+
+      -- jsx/tsx in js/ts
+      if find_string(react_fts, filetype) then
         write_ft(filename, "javascriptreact")
       else
         write_ft(filename, filetype)
