@@ -8,7 +8,6 @@ if not status_ok then
   return
 end
 
-local devicons = require("nvim-web-devicons")
 local highlights = require("user.utils.highlights")
 local utils = require("user.utils.statusline")
 local component = utils.component
