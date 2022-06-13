@@ -82,9 +82,6 @@ ui["lukas-reineke/headlines.nvim"] = {
 ui["edluffy/specs.nvim"] = {
   event = "BufWinEnter",
   config = function()
-    require("user.utils.highlights").plugin("beacon", {
-      Beacon = { link = "Cursor" },
-    })
     -- NOTE: 'DanilaMihailov/beacon.nvim' is an alternative
     local specs = require("specs")
     specs.setup({
