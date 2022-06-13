@@ -40,12 +40,13 @@ function M.get_supported_filetypes(server_name)
 end
 
 local function check_hi(client)
-  pcall(function()
+  local status_ok, highlight_supported = pcall(function()
     return client.server_capabilities.documentHighlightProvider
   end)
+  return status_ok, highlight_supported
 end
 
-function M.enable_lsp_document_highlight(client, bufnr)
+function M.setup_document_highlight(client, bufnr)
   local status_ok, highlight_supported = check_hi(client)
   if not status_ok or not highlight_supported then
     return
@@ -69,18 +70,17 @@ function M.enable_lsp_document_highlight(client, bufnr)
   })
 end
 
-function M.lsp_document_highlight(client)
+function M.illuminate_highlight(client)
   local status_ok, illuminate = rvim.safe_require("illuminate")
   if not status_ok then
     return
   end
   illuminate.on_attach(client)
-  -- end
 end
 
 --- Add lsp autocommands
 ---@param bufnr number
-function M.enable_code_lens_refresh(client, bufnr)
+function M.setup_code_lens_refresh(client, bufnr)
   local status_ok, codelens_supported = pcall(function()
     return client.server_capabilities.codeLensProvider
   end)
@@ -107,7 +107,7 @@ local function diagnostic_popup()
   end
 end
 
-function M.enable_lsp_hover_diagnostics(client, bufnr)
+function M.setup_hover_diagnostics(client, bufnr)
   local status_ok, highlight_supported = check_hi(client)
   if not status_ok or not highlight_supported then
     return
@@ -124,17 +124,26 @@ function M.enable_lsp_hover_diagnostics(client, bufnr)
   })
 end
 
-function M.enable_lsp_setup_tagfunc(client, bufnr)
+function M.setup_setup_tagfunc(client, bufnr)
+  local status_ok, highlight_supported = pcall(function()
+    return client.server_capabilities.documentFormattingProvider
+  end)
+  if not status_ok or not highlight_supported then
+    return
+  end
+
+  vim.bo[bufnr].formatexpr = "v:lua.vim.lsp.formatexpr()"
+end
+
+function M.setup_format_expr(client, bufnr)
   local status_ok, highlight_supported = pcall(function()
     return client.server_capabilities.definitionProvider
-      and client.server_capabilities.documentFormattingProvider
   end)
   if not status_ok or not highlight_supported then
     return
   end
 
   vim.bo[bufnr].tagfunc = "v:lua.vim.lsp.tagfunc"
-  vim.bo[bufnr].formatexpr = "v:lua.vim.lsp.formatexpr()"
 end
 
 ---filter passed to vim.lsp.buf.format

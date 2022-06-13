@@ -56,20 +56,22 @@ function M.global_on_attach(client, bufnr)
   buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
 
   if rvim.lsp.document_highlight then
-    utils.enable_lsp_document_highlight(client, bufnr)
-    utils.lsp_document_highlight(client)
+    utils.setup_document_highlight(client, bufnr)
+    utils.illuminate_highlight(client)
   end
 
   if rvim.lsp.code_lens_refresh then
-    utils.enable_code_lens_refresh(client, bufnr)
+    utils.setup_code_lens_refresh(client, bufnr)
   end
 
   if rvim.lsp.hover_diagnostics then
-    utils.enable_lsp_hover_diagnostics(bufnr)
+    utils.setup_hover_diagnostics(bufnr)
   end
 
   keymaps.init(client)
-  utils.enable_lsp_setup_tagfunc(client, bufnr)
+
+  utils.setup_setup_tagfunc(client, bufnr)
+  utils.setup_format_expr(client, bufnr)
 end
 
 local function bootstrap_nlsp(opts)
