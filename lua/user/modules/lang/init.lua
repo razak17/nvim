@@ -182,7 +182,7 @@ lang["nvim-treesitter/nvim-treesitter"] = {
 
 lang["nvim-treesitter/nvim-treesitter-context"] = {
   config = function()
-    local hl = require("zephyr.util")
+    local hl = require("user.utils.highlights")
     local norm_bg = hl.get_hl("Normal", "bg")
     local dim = hl.alter_color(norm_bg, 25)
     hl.plugin("treesitter-context", {

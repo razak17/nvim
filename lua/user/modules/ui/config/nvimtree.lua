@@ -1,10 +1,10 @@
 return function()
-  local status_ok, nvim_tree = rvim.safe_require "nvim-tree"
+  local status_ok, nvim_tree = rvim.safe_require("nvim-tree")
   if not status_ok then
     return
   end
 
-  local nvim_tree_config = require "nvim-tree.config"
+  local nvim_tree_config = require("nvim-tree.config")
   local tree_cb = nvim_tree_config.nvim_tree_callback
 
   rvim.nvimtree = {
@@ -139,15 +139,15 @@ return function()
 
   if not rvim.nvimtree.setup.view.mappings.list then
     rvim.nvimtree.setup.view.mappings.list = {
-      { key = { "<CR>", "o", "<2-LeftMouse>" }, cb = tree_cb "edit" },
-      { key = "l", cb = tree_cb "edit" },
-      { key = "h", cb = tree_cb "close_node" },
-      { key = "V", cb = tree_cb "vsplit" },
-      { key = "N", cb = tree_cb "last_sibling" },
-      { key = "I", cb = tree_cb "toggle_dotfiles" },
-      { key = "D", cb = tree_cb "dir_up" },
-      { key = "gh", cb = tree_cb "toggle_help" },
-      { key = "cd", cb = tree_cb "cd" },
+      { key = { "<CR>", "o", "<2-LeftMouse>" }, cb = tree_cb("edit") },
+      { key = "l", cb = tree_cb("edit") },
+      { key = "h", cb = tree_cb("close_node") },
+      { key = "V", cb = tree_cb("vsplit") },
+      { key = "N", cb = tree_cb("last_sibling") },
+      { key = "I", cb = tree_cb("toggle_dotfiles") },
+      { key = "D", cb = tree_cb("dir_up") },
+      { key = "gh", cb = tree_cb("toggle_help") },
+      { key = "cd", cb = tree_cb("cd") },
       {
         key = "gtf",
         cb = "<cmd>lua require'user.modules.tools.config.telescope.utils'.start_telescope('find_files')<cr>",
@@ -159,7 +159,7 @@ return function()
     }
   end
 
-  require("zephyr.util").plugin("NvimTree", {
+  require("user.utils.highlights").plugin("NvimTree", {
     NvimTreeIndentMarker = { link = "Comment" },
     NvimTreeNormal = { link = "PanelBackground" },
     NvimTreeNormalNC = { link = "PanelBackground" },
@@ -173,7 +173,7 @@ return function()
 
   nvim_tree.setup(rvim.nvimtree.setup)
 
-  require("which-key").register {
+  require("which-key").register({
     ["<leader>e"] = { ":NvimTreeToggle<CR>", "toggle tree" },
-  }
+  })
 end

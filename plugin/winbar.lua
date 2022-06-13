@@ -9,7 +9,7 @@ if not status_ok then
 end
 
 local devicons = require("nvim-web-devicons")
-local highlights = require("zephyr.util")
+local highlights = require("user.utils.highlights")
 local utils = require("user.utils.statusline")
 local component = utils.component
 local empty = rvim.empty

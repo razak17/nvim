@@ -82,7 +82,7 @@ ui["lukas-reineke/headlines.nvim"] = {
 ui["edluffy/specs.nvim"] = {
   event = "BufWinEnter",
   config = function()
-    require("zephyr.util").plugin("beacon", {
+    require("user.utils.highlights").plugin("beacon", {
       Beacon = { link = "Cursor" },
     })
     -- NOTE: 'DanilaMihailov/beacon.nvim' is an alternative
@@ -128,7 +128,7 @@ ui["s1n7ax/nvim-window-picker"] = {
 
 ui["itchyny/vim-highlighturl"] = {
   config = function()
-    vim.g.highlighturl_guifg = require("zephyr.util").get_hl("URL", "fg")
+    vim.g.highlighturl_guifg = require("user.utils.highlights").get_hl("URL", "fg")
   end,
   disable = not rvim.plugins.ui.vim_highlighturl.active,
 }

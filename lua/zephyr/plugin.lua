@@ -1,5 +1,5 @@
 local P = rvim.palette
-local util = require("zephyr.util")
+local util = require("user.utils.highlights")
 
 return {
   vimCommentTitle = { fg = P.grey, bold = true },

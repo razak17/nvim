@@ -1,8 +1,8 @@
 return function()
-  require("zephyr.util").plugin("marks", {
-    MarkSignHL = { link = "Directory" },
-    MarkSignNumHL = { link = "Directory" },
-  })
+  require("user.utils.highlights").plugin(
+    "marks",
+    { MarkSignHL = { link = "Directory" }, MarkSignNumHL = { link = "Directory" } }
+  )
   require("which-key").register({
     m = {
       name = "marks",

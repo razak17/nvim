@@ -2,7 +2,7 @@ local M = {
   tmux = {},
 }
 
-local u = require "zephyr.util"
+local u = require("user.utils.highlights")
 local fn = vim.fn
 local fmt = string.format
 
@@ -17,7 +17,7 @@ end
 local function fileicon()
   local name = fn.bufname()
   local icon, hl
-  local loaded, devicons = rvim.safe_require "nvim-web-devicons"
+  local loaded, devicons = rvim.safe_require("nvim-web-devicons")
   if loaded then
     icon, hl = devicons.get_icon(name, fn.fnamemodify(name, ":e"), { default = true })
   end
@@ -37,7 +37,7 @@ function M.title_string()
 end
 
 function M.tmux.clear_pane_title()
-  fn.jobstart "tmux set-window-option automatic-rename on"
+  fn.jobstart("tmux set-window-option automatic-rename on")
 end
 
 function M.tmux.set_window_title()

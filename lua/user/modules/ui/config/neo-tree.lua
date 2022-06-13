@@ -1,5 +1,5 @@
 return function()
-  require("zephyr.util").plugin("NeoTree", {
+  require("user.utils.highlights").plugin("NeoTree", {
     NeoTreeIndentMarker = { link = "Comment" },
     NeoTreeNormal = { link = "PanelBackground" },
     NeoTreeNormalNC = { link = "PanelBackground" },

@@ -4,9 +4,7 @@
 --@source: https://vim.fandom.com/wiki/Highlight_unwanted_spaces (comment at the bottom)
 --@implementation: https://github.com/inkarkat/vim-ShowTrailingWhitespace
 
-local Log = require "user.core.log"
-
-local util = require "zephyr.util"
+local util = require("user.utils.highlights")
 
 local fn = vim.fn
 
@@ -40,7 +38,7 @@ util.set_hl("ExtraWhitespace", { foreground = "red" })
 rvim.augroup("WhitespaceMatch", {
   {
     event = { "ColorScheme" },
-    desc = 'Add extra whitespace highlight',
+    desc = "Add extra whitespace highlight",
     pattern = { "*" },
     command = function()
       util.set_hl("ExtraWhitespace", { foreground = "red" })
@@ -49,17 +47,17 @@ rvim.augroup("WhitespaceMatch", {
   {
     event = { "BufEnter", "FileType", "InsertLeave" },
     pattern = { "*" },
-    desc = 'Show extra whitespace on insert leave, buf enter or filetype',
+    desc = "Show extra whitespace on insert leave, buf enter or filetype",
     command = function()
-      toggle_trailing "n"
+      toggle_trailing("n")
     end,
   },
   {
     event = { "InsertEnter" },
-    desc = 'Show extra whitespace on insert enter',
+    desc = "Show extra whitespace on insert enter",
     pattern = { "*" },
     command = function()
-      toggle_trailing "i"
+      toggle_trailing("i")
     end,
   },
 })

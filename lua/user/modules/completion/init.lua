@@ -123,7 +123,7 @@ completion["github/copilot.vim"] = {
       TelescopePrompt = false,
       ["neo-tree-popup"] = false,
     }
-    require("zephyr.util").plugin("copilot", { CopilotSuggestion = { link = "Comment" } })
+    require("user.utils.highlights").plugin("copilot", { CopilotSuggestion = { link = "Comment" } })
   end,
   disable = not rvim.plugins.completion.copilot.active,
 }

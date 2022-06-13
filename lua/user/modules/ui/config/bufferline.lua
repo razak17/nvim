@@ -26,7 +26,7 @@ return function()
   end
 
   local P = rvim.palette
-  local util = require("zephyr.util")
+  local util = require("user.utils.highlights")
   local normal_bg = util.get_hl("Normal", "bg")
   local darker_bg = util.alter_color(normal_bg, -1)
   local bg = rvim.util.transparent_window == true and "none" or P.dark
@@ -83,7 +83,7 @@ return function()
         debug = {
           logging = true,
         },
-               navigation = { mode = 'uncentered' },
+        navigation = { mode = "uncentered" },
         mode = "buffers", -- tabs
         sort_by = "insert_after_current",
         view = "default",

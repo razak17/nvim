@@ -1,5 +1,5 @@
 local P = rvim.palette
-local util = require("zephyr.util")
+local util = require("user.utils.highlights")
 
 local function general_overrides()
   local comment_fg = util.get_hl("Comment", "fg")
