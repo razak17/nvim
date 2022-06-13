@@ -63,6 +63,7 @@ function M.setup(server_name, user_config)
   local already_configured = lsp_utils.is_client_active(server_name)
     or M.client_is_configured(server_name)
 
+  -- TODO: need to check  html here to get it to work. Find out why.
   if server_name ~= "html" and already_configured then
     return
   end
