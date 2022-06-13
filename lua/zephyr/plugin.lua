@@ -2,15 +2,15 @@ local P = rvim.palette
 local util = require("zephyr.util")
 
 return {
-  vimCommentTitle = { fg = P.grey, style = "bold" },
+  vimCommentTitle = { fg = P.grey, bold = true },
   vimLet = { fg = P.orange },
   vimVar = { fg = P.cyan },
   vimFunction = { fg = P.redwine },
   vimIsCommand = { fg = P.fg },
   vimCommand = { fg = P.blue },
-  vimNotFunc = { fg = P.violet, style = "bold" },
-  vimUserFunc = { fg = P.yellow, style = "bold" },
-  vimFuncName = { fg = P.yellow, style = "bold" },
+  vimNotFunc = { fg = P.violet, bold = true },
+  vimUserFunc = { fg = P.yellow, bold = true },
+  vimFuncName = { fg = P.yellow, bold = true },
 
   diffAdded = { fg = P.dark_green },
   diffRemoved = { fg = P.red },
@@ -20,13 +20,13 @@ return {
   diffFile = { fg = P.aqua },
   diffLine = { fg = P.grey },
   diffIndexLine = { fg = P.violet },
-  diffBDiffer = { link = "WarningMsg", force = true },
-  diffCommon = { link = "WarningMsg", force = true },
-  diffDiffer = { link = "WarningMsg", force = true },
-  diffIdentical = { link = "WarningMsg", force = true },
-  diffIsA = { link = "WarningMsg", force = true },
-  diffNoEOL = { link = "WarningMsg", force = true },
-  diffOnly = { link = "WarningMsg", force = true },
+  diffBDiffer = { link = "WarningMsg" },
+  diffCommon = { link = "WarningMsg" },
+  diffDiffer = { link = "WarningMsg" },
+  diffIdentical = { link = "WarningMsg" },
+  diffIsA = { link = "WarningMsg" },
+  diffNoEOL = { link = "WarningMsg" },
+  diffOnly = { link = "WarningMsg" },
 
   gitcommitSummary = { fg = P.red },
   gitcommitUntracked = { fg = P.grey },
@@ -73,10 +73,10 @@ return {
   DiagnosticFloatingInfo = { fg = P.blue },
   DiagnosticFloatingHint = { fg = P.darker_green },
 
-  DiagnosticUnderlineError = { style = "undercurl", sp = P.error_red },
-  DiagnosticUnderlineWarn = { style = "undercurl", sp = P.dark_orange },
-  DiagnosticUnderlineInfo = { style = "undercurl", sp = P.blue },
-  DiagnosticUnderlineHint = { style = "undercurl", sp = P.darker_green },
+  DiagnosticUnderlineError = { undercurl = true, sp = P.error_red },
+  DiagnosticUnderlineWarn = { undercurl = true, sp = P.dark_orange },
+  DiagnosticUnderlineInfo = { undercurl = true, sp = P.blue },
+  DiagnosticUnderlineHint = { undercurl = true, sp = P.darker_green },
 
   DiagnosticVirtualTextError = { fg = P.error_red, bg = util.alter_color(P.pale_red, -80) },
   DiagnosticVirtualTextWarn = { fg = P.dark_orange, bg = util.alter_color(P.dark_orange, -80) },
@@ -88,7 +88,7 @@ return {
   LspReferenceWrite = { bg = P.base4 },
 
   TroubleCount = { bg = P.dark_alt, fg = P.pink },
-  TroubleFile = { fg = P.blue, style = "bold" },
+  TroubleFile = { fg = P.blue, bold = true },
   TroubleTextError = { fg = P.red },
   TroubleTextWarning = { fg = P.yellow },
   TroubleTextInformation = { fg = P.blue },
@@ -96,7 +96,7 @@ return {
 
   BqfPreviewBorder = { fg = P.blue },
   BqfSign = { fg = P.red },
-  BqfPreviewRange = "fg = P.red",
+  BqfPreviewRange = { fg = P.red },
 
   CursorWord0 = { bg = P.cursor_bg },
   CursorWord1 = { bg = P.none },
@@ -104,8 +104,6 @@ return {
 
   NvimTreeFolderIcon = { fg = P.blue },
   NvimTreeIndentMarker = { fg = P.base6 },
-  -- NvimTreeVertSplit = { fg = P.blue, bg = P.red },
-  -- NvimTreeNormal = { bg = P.alt_bg },
   NvimTreeFolderName = { fg = P.blue },
   NvimTreeOpenedFolderName = { fg = P.base5 },
   NvimTreeImageFile = { fg = P.pink },
@@ -141,8 +139,8 @@ return {
   TelescopeResultsBorder = { fg = P.blue, bg = P.darker_bg },
   TelescopePromptBorder = { fg = P.blue, bg = P.darker_bg },
   TelescopePreviewBorder = { fg = P.pink, bg = P.darker_bg },
-  TelescopeMatching = { fg = P.yellowgreen, style = "bold" },
-  TelescopeSelection = { fg = P.cyan, style = "bold" },
+  TelescopeMatching = { fg = P.yellowgreen, bold = true },
+  TelescopeSelection = { fg = P.cyan, bold = true },
   TelescopeSelectionCaret = { fg = P.yellow },
   TelescopeMultiSelection = { fg = P.light_green },
   TelescopePromptPrefix = { fg = P.yellow },
@@ -152,7 +150,7 @@ return {
   DashboardShortCut = { fg = P.darker_blue },
   DashboardHeader = { fg = P.blue },
   DashboardCenter = { fg = P.blue },
-  DashboardFooter = { fg = P.dark_cyan, style = "bold" },
+  DashboardFooter = { fg = P.dark_cyan, bold = true },
 
   WhichKey = { fg = P.pink },
   WhichKeyName = { fg = P.yellow },

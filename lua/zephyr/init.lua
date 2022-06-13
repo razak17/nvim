@@ -31,34 +31,35 @@ end
 
 local async_load_plugin
 
+local set_hl = function(tbl)
+  for group, conf in pairs(tbl) do
+    vim.api.nvim_set_hl(0, group, conf)
+  end
+end
+
+local plugin_syntax = require("zephyr.plugin")
+
 async_load_plugin = vim.loop.new_async(vim.schedule_wrap(function()
   zephyr.terminal_color()
-  local syntax = require "zephyr.plugin"
-  for group, colors in pairs(syntax) do
-    zephyr.highlight(group, colors)
-  end
+  set_hl(plugin_syntax)
   async_load_plugin:close()
 end))
 
 function zephyr.colorscheme()
-  vim.cmd "hi clear"
-  if vim.fn.exists "syntax_on" then
-    vim.cmd "syntax reset"
+  vim.cmd("hi clear")
+  if vim.fn.exists("syntax_on") then
+    vim.cmd("syntax reset")
   end
-
   vim.o.background = "dark"
   vim.o.termguicolors = true
   vim.g.colors_name = "zephyr"
-
-  local syntax = require "zephyr.highlights"
-  for group, colors in pairs(syntax) do
-    zephyr.highlight(group, colors)
-  end
+  local syntax = require("zephyr.syntax")
+  set_hl(syntax)
   async_load_plugin:send()
 end
 
 zephyr.colorscheme()
 
-require "zephyr.overrides"
+require("user.highlights")
 
 return zephyr
