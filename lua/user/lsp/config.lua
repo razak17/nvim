@@ -43,7 +43,7 @@ rvim.lsp = {
     config = {},
   },
   no_format_on_save_ft = { "zsh", "tmux" },
-  formatting_ignore_list = { "sumneko_lua", "tsserver", "html", "jsonls", "gopls", "quick_lint_js" },
+  format_exclusions = { "sumneko_lua", "tsserver", "html", "jsonls", "gopls", "quick_lint_js" },
   emmet_ft = {
     "html",
     "css",

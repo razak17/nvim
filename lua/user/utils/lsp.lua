@@ -70,7 +70,6 @@ function M.enable_lsp_document_highlight(client, bufnr)
 end
 
 function M.lsp_document_highlight(client)
-  -- if client.server_capabilities.document_highlight then
   local status_ok, illuminate = rvim.safe_require("illuminate")
   if not status_ok then
     return
@@ -145,9 +144,13 @@ end
 function M.format_filter(clients)
   return vim.tbl_filter(function(client)
     local status_ok, formatting_supported = pcall(function()
-      return client.supports_method("textDocument/formatting")
-      -- return client.server_capabilities.documentFormattingProvider
+      return client.server_capabilities.documentFormattingProvider
     end)
+
+    if vim.tbl_contains(rvim.lsp.format_exclusions, clients.name) then
+      clients.server_capabilities.documentFormattingProvider = false
+      return
+    end
 
     -- give higher priority to null-ls
     if status_ok and formatting_supported and client.name == "null-ls" then
@@ -182,16 +185,8 @@ function M.format(opts)
     end, clients)
   end
 
-  for _, server in ipairs(rvim.lsp.formatting_ignore_list) do
-    if opts.name == server then
-      clients.resolved_capabilities.document_formatting = false
-      return
-    end
-  end
-
   clients = vim.tbl_filter(function(client)
     return client.supports_method("textDocument/formatting")
-    -- return client.server_capabilities.documentFormattingProvider
   end, clients)
 
   if #clients == 0 then
