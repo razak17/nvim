@@ -2,6 +2,8 @@ local M = {}
 local Log = require("user.core.log")
 local fmt = string.format
 
+local save_name = "FormatOnSave"
+local focus_name = "FormatOnFocusLost"
 local format_on_save = rvim.util.format_on_save
 local format_on_focus_lost = rvim.util.format_on_focus_lost
 
@@ -49,10 +51,10 @@ local function configure_format(cond, name, event)
       pcall(vim.api.nvim_del_augroup_by_name, name)
       Log:debug(fmt("reloading %s configuration", name))
     end
-    if name == "FormatOnSave" then
-      enable_format("FormatOnSave", format_on_save, event)
-    elseif name == "FormatOnFocusLost" then
-      enable_format("FormatOnFocusLost", format_on_focus_lost, event)
+    if name == save_name then
+      enable_format(save_name, format_on_save, event)
+    elseif name == focus_name then
+      enable_format(focus_name, format_on_focus_lost, event)
     end
   else
     disable_format(name)
@@ -60,13 +62,13 @@ local function configure_format(cond, name, event)
 end
 
 function M.configure_format_on_save()
-  local name = "FormatOnSave"
+  local name = save_name
   local event = "BufWritePre"
   configure_format(format_on_save, name, event)
 end
 
 function M.configure_format_on_focus_lost()
-  local name = "FormatOnFocusLost"
+  local name = focus_name
   local event = "FocusLost"
   configure_format(format_on_focus_lost, name, event)
 end
