@@ -37,6 +37,7 @@ rvim.plugins.tools = {
   neotest = { active = true },
   howdoi = { active = true },
   inc_rename = { active = true },
+  line_diff = { active = true },
   -- TODO: handle these later
   glow = { active = false }, --j
   doge = { active = false }, --j
@@ -419,6 +420,11 @@ tools["smjonas/inc-rename.nvim"] = {
     })
   end,
   disable = not rvim.plugins.tools.inc_rename.active,
+}
+
+tools["AndrewRadev/linediff.vim"] = {
+  cmd = "Linediff",
+  disable = not rvim.plugins.tools.line_diff.active,
 }
 
 return tools
