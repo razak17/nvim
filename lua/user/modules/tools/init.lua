@@ -20,8 +20,8 @@ rvim.plugins.tools = {
   telescope_media_files = { active = true },
   telescope_dap = { active = true },
   telescope_file_browser = { active = true },
-  telescope_frecency = { active = true },
   telescope_zoxide = { active = true },
+  mru = { active = true },
   markdown_preview = { active = true },
   apathy = { active = true },
   todo_comments = { active = false },
@@ -162,7 +162,7 @@ tools["AckslD/nvim-neoclip.lua"] = {
       },
     })
     local function clip()
-      require("telescope").extensions.neoclip.default(rvim.telescope.telescope_dropdown())
+      require("telescope").extensions.neoclip.default(rvim.telescope.dropdown())
     end
 
     require("which-key").register({
@@ -191,11 +191,12 @@ tools["camgraff/telescope-tmux.nvim"] = {
 }
 
 tools["tami5/sqlite.lua"] = {
-  disable = not rvim.plugins.tools.telescope_frecency.active,
+  disable = not rvim.plugins.tools.telescope.active,
 }
 
-tools["nvim-telescope/telescope-frecency.nvim"] = {
-  disable = not rvim.plugins.tools.telescope_frecency.active,
+tools["ilAYAli/scMRU.nvim"] = {
+  module = "mru",
+  disable = not rvim.plugins.tools.mru.active,
 }
 
 tools["nvim-telescope/telescope-dap.nvim"] = {

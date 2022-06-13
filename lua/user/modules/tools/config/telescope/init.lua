@@ -49,7 +49,7 @@ return function()
 
   ---@param opts table
   ---@return table
-  function rvim.telescope.telescope_dropdown(opts)
+  function rvim.telescope.dropdown(opts)
     return themes.get_dropdown(get_border(opts))
   end
 
@@ -61,7 +61,7 @@ return function()
     }))
   end
 
-  local dropdown = rvim.telescope.telescope_dropdown
+  local dropdown = rvim.telescope.dropdown
 
   rvim.telescope.setup = {
     defaults = {
@@ -147,20 +147,6 @@ return function()
           override_generic_sorter = true, -- override the generic sorter
           override_file_sorter = true, -- override the file sorter
           case_mode = "smart_case", -- or "ignore_case" or "respect_case"
-        },
-        frecency = {
-          db_root = join_paths(rvim.get_cache_dir(), "telescope"),
-          show_scores = true,
-          show_unindexed = true,
-          ignore_patterns = { "*.git/*", "*/tmp/*" },
-          disable_devicons = false,
-          workspaces = {
-            ["conf"] = "/home/razak/.config",
-            ["rvim"] = "/home/razak/.config/rvim",
-            ["data"] = "/home/razak/.local/share",
-            ["project"] = "/home/razak/personal/workspace/coding",
-            ["notes"] = "/home/razak/notes/src",
-          },
         },
         ["ui-select"] = {
           themes.get_cursor(get_border({
@@ -264,7 +250,6 @@ return function()
     telescope_fzf = "fzf",
     telescope_ui_select = "ui-select",
     telescope_tmux = "tmux",
-    telescope_frecency = "frecency",
     telescope_file_browser = "file_browser",
     telescope_media_files = "media_files",
     telescope_zoxide = "zoxide",
@@ -321,15 +306,16 @@ return function()
     telescope.extensions.zoxide.list({})
   end
 
-  local function frecency()
-    telescope.extensions.frecency.frecency(dropdown({
-      -- NOTE: remove default text rvim it's slow
-      -- default_text = ':CWD:',
-      winblend = 10,
-      border = true,
+  local function MRU()
+    require("mru").display_cache(rvim.telescope.dropdown({
       previewer = false,
-      shorten_path = false,
     }))
+  end
+
+  local function MFU()
+    require("mru").display_cache(
+      vim.tbl_extend("keep", { algorithm = "mfu" }, rvim.telescope.dropdown({ previewer = false }))
+    )
   end
 
   local function projects()
@@ -391,14 +377,15 @@ return function()
         s = { builtins.git_status, "status" },
       },
       s = { builtins.live_grep, "find word" },
-      r = { builtins.oldfiles, "history" },
+      o = { builtins.oldfiles, "old files" },
       w = { builtins.grep_string, "find current word" },
       P = { installed_plugins, "plugins" },
       B = { file_browser, "find browser" },
-      h = { frecency, "history" },
       H = { howdoi, "howdoi" },
       m = { media_files, "media files" },
       z = { zoxide_list, "zoxide list" },
+      r = { MRU, "most recently used files" },
+      h = { MFU, "most frequently used files" },
       n = { notes, "notes" },
       p = { projects, "recent projects" },
       W = { bg_selector.set_bg_image, "change background" },
@@ -407,6 +394,7 @@ return function()
         a = { builtins.autocommands, "autocommands" },
         h = { builtins.highlights, "highlights" },
         o = { builtins.vim_options, "options" },
+        r = { builtins.resume, "resume last picker" },
       },
       c = {
         name = "rVim config",
