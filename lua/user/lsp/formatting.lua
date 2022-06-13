@@ -26,7 +26,6 @@ local function enable_format(name, defaults, event)
       pattern = { opts.pattern },
       command = function()
         if rvim.find_string(rvim.lsp.no_format_on_save_ft, vim.bo.ft) then
-          -- vim.notify("Format on save is not configured", nil, { title = "Format On Save" })
           return
         end
         require("user.utils.lsp").format({ timeout_ms = opts.timeout, filter = opts.filter })
