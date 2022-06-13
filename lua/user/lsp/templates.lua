@@ -58,7 +58,7 @@ function M.generate_ftplugin(server_name, dir)
       write_override(filename, "emmet_ls")
     end
 
-    if vim.tbl_contains(rvim.lsp.override_servers, server_name) then
+    if find_string(rvim.lsp.override_servers, server_name) then
       write_override(filename, server_name)
     end
 
