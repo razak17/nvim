@@ -53,10 +53,10 @@ rvim.lsp = {
     "typescript.tsx",
   },
   override_servers = {
-    rust_analyzer = "rust_analyzer",
-    golangci_lint_ls = "golangci_lint_ls",
-    sqlls = "sqlls",
-    yamlls = "yamlls",
+    "rust_analyzer",
+    "golangci_lint_ls",
+    "sqlls",
+    "yamlls",
   },
   override_ft = {
     "go",

@@ -58,10 +58,8 @@ function M.generate_ftplugin(server_name, dir)
       write_override(filename, "emmet_ls")
     end
 
-    for k, v in pairs(rvim.lsp.override_servers) do
-      if server_name == k then
-        write_override(filename, v)
-      end
+    if vim.tbl_contains(rvim.lsp.override_servers, server_name) then
+      write_override(filename, server_name)
     end
 
     -- ftplugin settings
