@@ -140,4 +140,5 @@ rvim.augroup("UserHighlights", {
 -----------------------------------------------------------------------------//
 -- Color Scheme {{{1
 -----------------------------------------------------------------------------//
-vim.cmd("colorscheme zephyr")
+vim.g.colors_name = rvim.colorscheme
+vim.cmd("colorscheme " .. rvim.colorscheme)

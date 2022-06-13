@@ -60,6 +60,4 @@ end
 
 zephyr.colorscheme()
 
-require("user.highlights")
-
 return zephyr
