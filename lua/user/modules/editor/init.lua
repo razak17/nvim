@@ -1,26 +1,35 @@
 local editor = {}
 
-rvim.plugins.editor = {
-  ajk = { active = true },
-  easy_align = { active = true },
-  cool = { active = true },
-  surround = { active = true },
-  colorizer = { active = true },
-  kommentary = { active = true },
-  dial = { active = true },
-  fold_cycle = { active = false },
-  cursorword = { active = false },
-  surround_funk = { active = true },
-  better_diagraphs = { active = false },
-  neogen = { active = true },
-  tabout = { active = true },
-  marks = { active = true },
-  vim_uppercase_sql = { active = true },
-  vim_dirtytalk = { active = true },
-  refactoring_nvim = { active = false },
-}
+rvim.plugins.editor = {}
 
 local conf = require("user.utils").load_conf
+local plug_utils = require("user.utils.plugins")
+local module = "editor"
+
+local enabled = {
+  "ajk",
+  "easy_align",
+  "cool",
+  "surround",
+  "colorizer",
+  "kommentary",
+  "dial",
+  "surround_funk",
+  "neogen",
+  "tabout",
+  "marks",
+  "vim_uppercase_sql",
+  "vim_dirtytalk",
+}
+plug_utils.enable_plugins(module, enabled)
+
+local disabled = {
+  "fold_cycle",
+  "cursorword",
+  "better_diagraphs",
+  "refactoring_nvim",
+}
+plug_utils.disable_plugins(module, disabled)
 
 editor["xiyaowong/accelerated-jk.nvim"] = {
   event = { "BufWinEnter" },
@@ -45,7 +54,7 @@ editor["tpope/vim-surround"] = {
 
 editor["monaqa/dial.nvim"] = {
   event = { "BufWinEnter" },
-  config = conf("editor", "dial"),
+  config = conf(module, "dial"),
   disable = not rvim.plugins.editor.dial.active,
 }
 
@@ -132,7 +141,7 @@ editor["b3nj5m1n/kommentary"] = {
 
 editor["Matt-A-Bennett/vim-surround-funk"] = {
   event = "BufWinEnter",
-  config = conf("editor", "vim-surround-funk"),
+  config = conf(module, "vim-surround-funk"),
   disable = not rvim.plugins.editor.surround_funk.active,
 }
 
@@ -163,7 +172,7 @@ editor["abecodes/tabout.nvim"] = {
 
 editor["chentoast/marks.nvim"] = {
   event = { "BufWinEnter" },
-  config = conf("editor", "marks"),
+  config = conf(module, "marks"),
   disable = not rvim.plugins.editor.marks.active,
 }
 

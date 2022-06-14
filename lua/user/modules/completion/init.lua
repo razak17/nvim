@@ -1,23 +1,31 @@
 local completion = {}
 
-rvim.plugins.completion = {
-  which_key = { active = true },
-  cmp = { active = true },
-  luasnip = { active = true },
-  friendly_snippets = { active = true },
-  copilot = { active = true },
-}
+rvim.plugins.completion = {}
 
 local conf = require("user.utils").load_conf
+local plug_utils = require("user.utils.plugins")
+local module = "completion"
+
+local enabled = {
+  "which_key",
+  "cmp",
+  "luasnip",
+  "friendly_snippets",
+  "copilot",
+}
+plug_utils.enable_plugins(module, enabled)
+
+local disabled = {}
+plug_utils.disable_plugins(module, disabled)
 
 completion["folke/which-key.nvim"] = {
-  config = conf("completion", "which_key"),
+  config = conf(module, "which_key"),
   disable = not rvim.plugins.completion.which_key.active,
 }
 
 -- nvim-cmp
 completion["hrsh7th/nvim-cmp"] = {
-  config = conf("completion", "cmp"),
+  config = conf(module, "cmp"),
   disable = not rvim.plugins.completion.cmp.active,
 }
 
@@ -25,7 +33,7 @@ completion["L3MON4D3/LuaSnip"] = {
   event = "InsertEnter",
   module = "luasnip",
   requires = "rafamadriz/friendly-snippets",
-  config = conf("completion", "luasnip"),
+  config = conf(module, "luasnip"),
   disable = not rvim.plugins.completion.luasnip.active,
 }
 

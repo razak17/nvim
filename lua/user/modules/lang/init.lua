@@ -1,41 +1,51 @@
 local lang = {}
 
-rvim.plugins.lang = {
-  -- debug
-  dap = { active = true },
-  dap_ui = { active = true },
-  dap_install = { active = true },
-  osv = { active = false },
-  nvim_dap_virtual_text = { active = true },
-  -- lsp
-  lspconfig = { active = true },
-  lsp_installer = { active = true },
-  fix_cursorhold = { active = true },
-  nlsp = { active = true },
-  null_ls = { active = true },
-  lightbulb = { active = true },
-  symbols_outline = { active = true },
-  bqf = { active = false },
-  trouble = { active = false },
-  rust_tools = { active = true },
-  schemastore = { active = true },
-  lsp_signature = { active = true },
-  spellsitter = { active = true },
-  go_nvim = { active = true },
-  -- treesitter
-  treesitter = { active = true },
-  playground = { active = true },
-  autopairs = { active = true },
-  rainbow = { active = true },
-  autotag = { active = true },
-  matchup = { active = false },
-  textobjects = { active = true },
-  log_highlighting = { active = true },
-  vim_kitty = { active = true },
-  sqls_nvim = { active = true },
-}
+rvim.plugins.lang = {}
 
+local plug_utils = require("user.utils.plugins")
 local conf = require("user.utils").load_conf
+local module = "lang"
+
+local enabled = {
+  -- debug
+  "dap",
+  "dap_ui",
+  "dap_install",
+  "nvim_dap_virtual_text",
+  -- lsp
+  "lspconfig",
+  "lsp_installer",
+  "fix_cursorhold",
+  "nlsp",
+  "null_ls",
+  -- treesitter
+  "treesitter",
+  "playground",
+  "autopairs",
+  "rainbow",
+  "autotag",
+  -- Others
+  "lightbulb",
+  "symbols_outline",
+  "rust_tools",
+  "schemastore",
+  "lsp_signature",
+  "spellsitter",
+  "go_nvim",
+  "textobjects",
+  "log_highlighting",
+  "vim_kitty",
+  "sqls_nvim",
+}
+plug_utils.enable_plugins(module, enabled)
+
+local disabled = {
+  "osv",
+  "matchup",
+  "trouble",
+  "bqf",
+}
+plug_utils.disable_plugins(module, disabled)
 
 -- Debugging
 lang["mfussenegger/nvim-dap"] = {
@@ -149,15 +159,15 @@ lang["kosayoda/nvim-lightbulb"] = {
 }
 
 lang["simrat39/symbols-outline.nvim"] = {
-  config = conf("lang", "symbols-outline"),
+  config = conf(module, "symbols-outline"),
   disable = not rvim.plugins.lang.symbols_outline.active,
 }
 
 lang["folke/trouble.nvim"] = {
   cmd = { "TroubleToggle" },
   requires = "nvim-web-devicons",
-  setup = conf("lang", "trouble").setup,
-  config = conf("lang", "trouble").config,
+  setup = conf(module, "trouble").setup,
+  config = conf(module, "trouble").config,
   disable = not rvim.plugins.lang.trouble.active,
 }
 
@@ -176,7 +186,7 @@ lang["kevinhwang91/nvim-bqf"] = {
 -- Treesitter
 lang["nvim-treesitter/nvim-treesitter"] = {
   run = ":TSUpdate",
-  config = conf("lang", "treesitter"),
+  config = conf(module, "treesitter"),
   disable = not rvim.plugins.lang.treesitter.active,
 }
 
@@ -243,7 +253,7 @@ lang["windwp/nvim-ts-autotag"] = {
 lang["windwp/nvim-autopairs"] = {
   event = "InsertEnter",
   after = { "telescope.nvim", "nvim-treesitter" },
-  config = conf("lang", "autopairs"),
+  config = conf(module, "autopairs"),
   disable = not rvim.plugins.lang.autopairs.active,
 }
 
@@ -282,7 +292,7 @@ lang["lewis6991/spellsitter.nvim"] = {
 
 lang["ray-x/go.nvim"] = {
   ft = "go",
-  config = conf("lang", "go"),
+  config = conf(module, "go"),
   disable = not rvim.plugins.lang.go_nvim.active,
 }
 

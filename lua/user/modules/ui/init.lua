@@ -1,68 +1,77 @@
 local ui = {}
 
-rvim.plugins.ui = {
-  nvimtree = { active = false },
-  dashboard = { active = true },
-  lualine = { active = true },
-  bufferline = { active = true },
-  devicons = { active = true },
-  git_signs = { active = true },
-  indent_line = { active = true },
-  nvim_notify = { active = true },
-  dressing = { active = true },
-  headlines = { active = true },
-  specs = { active = false },
-  dim = { active = true },
-  neo_tree = { active = true },
-  vim_highlighturl = { active = true },
-  nightfox = { active = true },
-  illuminate = { active = true },
-}
+rvim.plugins.ui = {}
 
 local utils = require("user.utils")
+local plug_utils = require("user.utils.plugins")
 local conf = utils.load_conf
+local module = "ui"
+
+local enabled = {
+  "dashboard",
+  "lualine",
+  "bufferline",
+  "devicons",
+  "git_signs",
+  "indent_line",
+  "nvim_notify",
+  "dressing",
+  "headlines",
+  "dim",
+  "neo_tree",
+  "vim_highlighturl",
+  "nightfox",
+  "illuminate",
+}
+plug_utils.enable_plugins(module, enabled)
+
+local disabled = {
+  "nvimtree",
+  "specs",
+}
+plug_utils.disable_plugins(module, disabled)
 
 ui["glepnir/dashboard-nvim"] = {
   event = "BufWinEnter",
-  config = conf("ui", "dashboard"),
+  config = conf(module, "dashboard"),
   disable = not rvim.plugins.ui.dashboard.active,
 }
 
 ui["akinsho/bufferline.nvim"] = {
-  config = conf("ui", "bufferline"),
+  config = conf(module, "bufferline"),
   disable = not rvim.plugins.ui.bufferline.active,
 }
 
 ui["nvim-lualine/lualine.nvim"] = {
-  config = conf("ui", "lualine"),
+  config = conf(module, "lualine"),
   disable = not rvim.plugins.ui.lualine.active,
 }
 
 ui["kyazdani42/nvim-web-devicons"] = {
-  config = conf("ui", "nvim-web-devicons"),
+  config = conf(module, "nvim-web-devicons"),
   disable = not rvim.plugins.ui.devicons.active,
 }
 
 ui["kyazdani42/nvim-tree.lua"] = {
-  config = conf("ui", "nvimtree"),
+  config = conf(module, "nvimtree"),
   disable = not rvim.plugins.ui.nvimtree.active,
 }
 
 ui["lukas-reineke/indent-blankline.nvim"] = {
   event = { "BufRead" },
-  config = conf("ui", "indentline"),
+  config = conf(module, "indentline"),
   disable = not rvim.plugins.ui.indent_line.active,
 }
 
 ui["lewis6991/gitsigns.nvim"] = {
   event = "CursorHold",
-  config = conf("ui", "gitsigns"),
+  config = conf(module, "gitsigns"),
   disable = not rvim.plugins.ui.git_signs.active,
 }
 
 ui["rcarriga/nvim-notify"] = {
   cond = utils.not_headless, -- TODO: causes blocking output in headless mode
-  config = conf("ui", "notify"),
+  config = conf(module, "notify"),
   disable = not rvim.plugins.ui.nvim_notify.active,
 }
 
@@ -74,8 +83,8 @@ ui["stevearc/dressing.nvim"] = {
 
 ui["lukas-reineke/headlines.nvim"] = {
   event = "BufWinEnter",
-  setup = conf("ui", "headlines").setup,
-  config = conf("ui", "headlines").config,
+  setup = conf(module, "headlines").setup,
+  config = conf(module, "headlines").config,
   disable = not rvim.plugins.ui.headlines.active,
 }
 
@@ -111,7 +120,7 @@ ui["narutoxy/dim.lua"] = {
 
 ui["nvim-neo-tree/neo-tree.nvim"] = {
   branch = "v2.x",
-  config = conf("ui", "neo-tree"),
+  config = conf(module, "neo-tree"),
   disable = not rvim.plugins.ui.neo_tree.active,
 }
 
@@ -119,7 +128,7 @@ ui["MunifTanjim/nui.nvim"] = { disable = not rvim.plugins.tools.plenary.active }
 
 ui["s1n7ax/nvim-window-picker"] = {
   tag = "1.*",
-  config = conf("ui", "window-picker"),
+  config = conf(module, "window-picker"),
   disable = not rvim.plugins.tools.plenary.active,
 }
 

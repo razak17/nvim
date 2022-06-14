@@ -1,51 +1,59 @@
 local tools = {}
 
-rvim.plugins.tools = {
-  fterm = { active = true },
-  far = { active = true },
-  bookmarks = { active = false }, --j
-  undotree = { active = true },
-  project = { active = true },
-  diffview = { active = false }, --j
-  bbye = { active = true },
-  structlog = { active = true },
-  neoclip = { active = true },
-  auto_session = { active = true },
-  impatient = { active = true },
-  hop = { active = true },
-  telescope = { active = true },
-  telescope_fzf = { active = true },
-  telescope_ui_select = { active = true },
-  telescope_tmux = { active = false },
-  telescope_media_files = { active = true },
-  telescope_dap = { active = true },
-  telescope_file_browser = { active = true },
-  telescope_zoxide = { active = true },
-  mru = { active = true },
-  markdown_preview = { active = true },
-  apathy = { active = true },
-  todo_comments = { active = false },
-  projectionist = { active = true },
-  plenary = { active = true },
-  popup = { active = true },
-  gps = { active = true },
-  rest = { active = true },
-  sniprun = { active = true },
-  package_info = { active = false },
-  cybu = { active = false },
-  git_blame = { active = true },
-  neotest = { active = true },
-  howdoi = { active = true },
-  inc_rename = { active = true },
-  line_diff = { active = true },
-  -- TODO: handle these later
-  glow = { active = false }, --j
-  doge = { active = false }, --j
-  dadbod = { active = false }, --j
-  restconsole = { active = false }, --j
-}
+rvim.plugins.tools = {}
 
+local plug_utils = require("user.utils.plugins")
 local conf = require("user.utils").load_conf
+local module = "tools"
+
+local enabled = {
+  "fterm",
+  "far",
+  "undotree",
+  "project",
+  "bbye",
+  "structlog",
+  "neoclip",
+  "auto_session",
+  "impatient",
+  "hop",
+  "telescope",
+  "telescope_fzf",
+  "telescope_ui_select",
+  "telescope_media_files",
+  "telescope_dap",
+  "telescope_file_browser",
+  "telescope_zoxide",
+  "mru",
+  "markdown_preview",
+  "apathy",
+  "projectionist",
+  "plenary",
+  "popup",
+  "gps",
+  "rest",
+  "sniprun",
+  "git_blame",
+  "neotest",
+  "howdoi",
+  "inc_rename",
+  "line_diff",
+}
+plug_utils.enable_plugins(module, enabled)
+
+local disabled = { -- TODO: handle these later
+  "telescope_tmux",
+  "todo_comments",
+  "package_info",
+  "cybu",
+  "diffview",
+  "bookmarks",
+  "glow",
+  "doge",
+  "dadbod",
+  "restconsole",
+}
+plug_utils.disable_plugins(module, disabled)
 
 tools["sindrets/diffview.nvim"] = {
   event = "BufReadPre",
@@ -53,7 +61,7 @@ tools["sindrets/diffview.nvim"] = {
     rvim.nnoremap("<localleader>gd", "<Cmd>DiffviewOpen<CR>", "diffview: diff HEAD")
     rvim.nnoremap("<localleader>gh", "<Cmd>DiffviewFileHistory<CR>", "diffview: file history")
   end,
-  config = conf("tools", "diffview"),
+  config = conf(module, "diffview"),
   disable = not rvim.plugins.tools.diffview.active,
 }
 
@@ -71,7 +79,7 @@ tools["mbbill/undotree"] = {
 }
 
 tools["ahmedkhalf/project.nvim"] = {
-  config = conf("tools", "project"),
+  config = conf(module, "project"),
   disable = not rvim.plugins.tools.project.active,
 }
 
@@ -91,7 +99,7 @@ tools["kkoomen/vim-doge"] = {
 
 tools["numToStr/FTerm.nvim"] = {
   event = { "BufWinEnter" },
-  config = conf("tools", "fterm"),
+  config = conf(module, "fterm"),
   disable = not rvim.plugins.tools.fterm.active,
 }
 
@@ -173,7 +181,7 @@ tools["AckslD/nvim-neoclip.lua"] = {
 }
 
 tools["nvim-telescope/telescope.nvim"] = {
-  config = conf("tools", "telescope"),
+  config = conf(module, "telescope"),
   disable = not rvim.plugins.tools.telescope.active,
 }
 
@@ -195,7 +203,6 @@ tools["tami5/sqlite.lua"] = {
 }
 
 tools["ilAYAli/scMRU.nvim"] = {
-  module = "mru",
   disable = not rvim.plugins.tools.mru.active,
 }
 
@@ -233,7 +240,7 @@ tools["rmagatti/auto-session"] = {
 
 tools["phaazon/hop.nvim"] = {
   keys = { { "n", "s" }, "f", "F" },
-  config = conf("tools", "hop"),
+  config = conf(module, "hop"),
   disable = not rvim.plugins.tools.hop.active,
 }
 
@@ -285,7 +292,7 @@ tools["tpope/vim-apathy"] = {
 }
 
 tools["tpope/vim-projectionist"] = {
-  config = conf("tools", "vim-projectionist"),
+  config = conf(module, "vim-projectionist"),
   disable = not rvim.plugins.tools.projectionist.active,
 }
 
@@ -338,7 +345,7 @@ tools["NTBBloodbath/rest.nvim"] = {
 
 tools["michaelb/sniprun"] = {
   event = "BufWinEnter",
-  config = conf("tools", "sniprun"),
+  config = conf(module, "sniprun"),
   run = "bash ./install.sh",
   disable = not rvim.plugins.tools.sniprun.active,
 }
@@ -346,7 +353,7 @@ tools["michaelb/sniprun"] = {
 tools["vuki656/package-info.nvim"] = {
   event = "BufWinEnter",
   ft = { "json" },
-  config = conf("tools", "package-info"),
+  config = conf(module, "package-info"),
   requires = "MunifTanjim/nui.nvim",
   disable = not rvim.plugins.tools.package_info.active,
 }
@@ -392,7 +399,7 @@ tools["f-person/git-blame.nvim"] = {
 }
 
 tools["nvim-neotest/neotest"] = {
-  config = conf("tools", "neotest"),
+  config = conf(module, "neotest"),
   requires = {
     "rcarriga/neotest-plenary",
     "rcarriga/neotest-vim-test",
