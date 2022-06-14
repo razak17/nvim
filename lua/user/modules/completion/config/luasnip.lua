@@ -59,7 +59,7 @@ return function()
   end)
 
   -- <C-K> is easier to hit but swallows the digraph key
-  vim.keymap.set({ "s", "i" }, "<c-b>", function()
+  vim.keymap.set({ "s", "i" }, "<c-l>", function()
     if ls.jumpable(-1) then
       ls.jump(-1)
     end
