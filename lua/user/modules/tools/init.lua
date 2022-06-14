@@ -239,6 +239,7 @@ tools["rmagatti/auto-session"] = {
 }
 
 tools["phaazon/hop.nvim"] = {
+  branch = "v1",
   keys = { { "n", "s" }, "f", "F" },
   config = conf(module, "hop"),
   disable = not rvim.plugins.tools.hop.active,
