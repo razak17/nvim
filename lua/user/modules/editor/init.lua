@@ -147,7 +147,7 @@ editor["Matt-A-Bennett/vim-surround-funk"] = {
 
 editor["danymat/neogen"] = {
   setup = function()
-    rvim.nnoremap("<localleader>lC", require("neogen").generate, "comment: generate")
+    rvim.nnoremap("<localleader>lc", require("neogen").generate, "comment: generate")
   end,
   keys = { "<localleader>nc" },
   requires = "nvim-treesitter/nvim-treesitter",

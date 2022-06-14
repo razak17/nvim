@@ -22,7 +22,7 @@ rvim.wk = {
       z = "refocus ",
     },
     L = {
-      name = "+Rvim",
+      name = "rVim",
       [";"] = { ":Dashboard<cr>", "dashboard" },
       c = {
         "<cmd>lua vim.fn.execute('edit ' .. join_paths(rvim.get_user_dir(), 'config/init.lua'))<cr>",
@@ -33,7 +33,6 @@ rvim.wk = {
         "<cmd>lua vim.fn.execute('edit ' .. require('user.core.log').get_path())<cr>",
         "open rvim logfile",
       },
-      k = { ":lua require('user.utils.cheatsheet').cheatsheet()<cr>", "cheatsheet" },
       l = {
         "<cmd>lua vim.fn.execute('edit ' .. vim.lsp.get_log_path())<cr>",
         "lsp: open logfile",
@@ -62,7 +61,8 @@ rvim.wk = {
   },
   visual_mode = {
     ["/"] = "comment",
-    l = { name = "+Lsp" },
+    l = { name = "Lsp" },
+    L = { name = "rVim" },
   },
   normal_mode = {
     ["]"] = {

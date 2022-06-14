@@ -38,6 +38,7 @@ local enabled = {
   "howdoi",
   "inc_rename",
   "line_diff",
+  "cheat_sheet",
 }
 plug_utils.enable_plugins(module, enabled)
 
@@ -439,6 +440,24 @@ tools["smjonas/inc-rename.nvim"] = {
 tools["AndrewRadev/linediff.vim"] = {
   cmd = "Linediff",
   disable = not rvim.plugins.tools.line_diff.active,
+}
+
+tools["Djancyp/cheat-sheet"] = {
+  config = function()
+    require("cheat-sheet").setup({
+      auto_fill = {
+        current_word = false,
+      },
+      main_win = {
+        border = "single",
+      },
+      input_win = {
+        border = "single",
+      },
+    })
+    rvim.nnoremap("<localleader>s", ':CheatSH<CR>', "cheat-sheet: search")
+  end,
+  disable = not rvim.plugins.tools.cheat_sheet.active,
 }
 
 return tools
