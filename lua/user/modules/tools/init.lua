@@ -24,7 +24,6 @@ local enabled = {
   "telescope_dap",
   "telescope_file_browser",
   "telescope_zoxide",
-  "telescope_smart_history",
   "mru",
   "markdown_preview",
   "apathy",
@@ -53,6 +52,7 @@ local disabled = { -- TODO: handle these later
   "doge",
   "dadbod",
   "restconsole",
+  "telescope_smart_history",
 }
 plug_utils.disable_plugins(module, disabled)
 
