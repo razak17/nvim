@@ -27,7 +27,7 @@ local function enable_format(name, defaults, event)
       event = { event },
       pattern = { opts.pattern },
       command = function()
-        if rvim.find_string(rvim.lsp.no_format_on_save_ft, vim.bo.ft) then
+        if rvim.find_string(rvim.lsp.format_on_save_exclusions, vim.bo.ft) then
           return
         end
         require("user.utils.lsp").format({ timeout_ms = opts.timeout, filter = opts.filter })

@@ -42,7 +42,7 @@ rvim.lsp = {
     },
     config = {},
   },
-  no_format_on_save_ft = { "zsh", "tmux" },
+  format_on_save_exclusions = { "zsh", "tmux", "gitcommit" },
   format_exclusions = { "sumneko_lua", "tsserver", "html", "jsonls", "gopls", "quick_lint_js" },
   emmet_ft = {
     "html",
