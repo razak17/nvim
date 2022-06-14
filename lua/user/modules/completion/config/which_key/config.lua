@@ -1,6 +1,5 @@
 rvim.wk = {
   leader_mode = {
-    ["?"] = "search word",
     S = "edit snippet",
     a = {
       name = "+Actions",
@@ -25,7 +24,6 @@ rvim.wk = {
     L = {
       name = "+Rvim",
       [";"] = { ":Dashboard<cr>", "dashboard" },
-      ["?"] = "search github",
       c = {
         "<cmd>lua vim.fn.execute('edit ' .. join_paths(rvim.get_user_dir(), 'config/init.lua'))<cr>",
         "open config file",
