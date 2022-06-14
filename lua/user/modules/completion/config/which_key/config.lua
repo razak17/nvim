@@ -59,6 +59,13 @@ rvim.wk = {
       z = "refocus folds",
     },
   },
+  localleader = {
+    d = { name = "Dap" },
+    l = { name = "Lsp",  },
+    L = { name = "rVim" },
+    t = { name = "Neotest" },
+    w = { name = "Window" },
+  },
   visual_mode = {
     ["/"] = "comment",
     l = { name = "Lsp" },

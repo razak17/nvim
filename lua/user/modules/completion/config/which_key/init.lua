@@ -34,9 +34,17 @@ return function()
       show_help = true, -- show help message on the command line when the popup is visible
     },
 
-    opts = {
+    leader_opts = {
       mode = "n", -- NORMAL mode
       prefix = "<leader>",
+      buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
+      silent = true, -- use `silent` when creating keymaps
+      noremap = true, -- use `noremap` when creating keymaps
+      nowait = true, -- use `nowait` when creating keymaps
+    },
+    localleader_opts = {
+      mode = "n", -- NORMAL mode
+      prefix = "<localleader>",
       buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
       silent = true, -- use `silent` when creating keymaps
       noremap = true, -- use `noremap` when creating keymaps
@@ -83,12 +91,14 @@ return function()
   end
 
   -- Register keymaps
-  local opts = rvim.which_key.opts
+  local leader_opts = rvim.which_key.leader_opts
   local vopts = rvim.which_key.vopts
+  local localleader_opts = rvim.which_key.localleader_opts
 
-  which_key.register(key_maps, opts)
+  which_key.register(key_maps, leader_opts)
   which_key.register(rvim.wk.visual_mode, vopts)
   which_key.register(rvim.wk.normal_mode)
+  which_key.register(rvim.wk.localleader, localleader_opts)
 
   rvim.augroup("WhichKeyMode", {
     {

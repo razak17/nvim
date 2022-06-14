@@ -149,7 +149,7 @@ editor["danymat/neogen"] = {
   setup = function()
     rvim.nnoremap("<localleader>lc", require("neogen").generate, "comment: generate")
   end,
-  keys = { "<localleader>nc" },
+  keys = { "<localleader>lc" },
   requires = "nvim-treesitter/nvim-treesitter",
   module = "neogen",
   config = function()

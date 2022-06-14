@@ -426,7 +426,7 @@ tools["smjonas/inc-rename.nvim"] = {
     require("inc_rename").setup({
       hl_group = "Visual",
     })
-    rvim.nnoremap("<localleader>ri", function()
+    rvim.nnoremap("<localleader>lr", function()
       return ":IncRename " .. vim.fn.expand("<cword>")
     end, {
       expr = true,
@@ -455,7 +455,7 @@ tools["Djancyp/cheat-sheet"] = {
         border = "single",
       },
     })
-    rvim.nnoremap("<localleader>s", ':CheatSH<CR>', "cheat-sheet: search")
+    rvim.nnoremap("<localleader>s", ':CheatSH<CR>', "cheat-sheet")
   end,
   disable = not rvim.plugins.tools.cheat_sheet.active,
 }
