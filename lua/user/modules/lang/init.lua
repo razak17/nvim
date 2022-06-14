@@ -275,7 +275,7 @@ lang["ray-x/lsp_signature.nvim"] = {
       fix_pos = false,
       auto_close_after = 15,
       hint_enable = false,
-      handler_opts = { border = "rounded" },
+      handler_opts = { border = rvim.style.border.current },
       toggle_key = "<C-K>",
       select_signature_key = "<M-N>",
     })
