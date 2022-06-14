@@ -253,6 +253,7 @@ return function()
     telescope_file_browser = "file_browser",
     telescope_media_files = "media_files",
     telescope_zoxide = "zoxide",
+    telescope_smart_history = "smart_history",
     howdoi = "howdoi",
   }
 

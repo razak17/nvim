@@ -24,6 +24,7 @@ local enabled = {
   "telescope_dap",
   "telescope_file_browser",
   "telescope_zoxide",
+  "telescope_smart_history",
   "mru",
   "markdown_preview",
   "apathy",
@@ -190,20 +191,24 @@ tools["nvim-telescope/telescope-fzf-native.nvim"] = {
   disable = not rvim.plugins.tools.telescope_fzf.active,
 }
 
-tools["nvim-telescope/telescope-ui-select.nvim"] = {
-  disable = not rvim.plugins.tools.telescope_ui_select.active,
-}
-
-tools["camgraff/telescope-tmux.nvim"] = {
-  disable = not rvim.plugins.tools.telescope_ui_select.active,
-}
-
 tools["tami5/sqlite.lua"] = {
   disable = not rvim.plugins.tools.telescope.active,
 }
 
 tools["ilAYAli/scMRU.nvim"] = {
   disable = not rvim.plugins.tools.mru.active,
+}
+
+tools["nvim-telescope/telescope-smart-history.nvim"] = {
+  disable = not rvim.plugins.tools.telescope_smart_history.active,
+}
+
+tools["nvim-telescope/telescope-ui-select.nvim"] = {
+  disable = not rvim.plugins.tools.telescope_ui_select.active,
+}
+
+tools["camgraff/telescope-tmux.nvim"] = {
+  disable = not rvim.plugins.tools.telescope_tmux.active,
 }
 
 tools["nvim-telescope/telescope-dap.nvim"] = {
