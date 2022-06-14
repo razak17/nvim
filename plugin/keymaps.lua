@@ -370,10 +370,10 @@ end
 -- Web Search
 ------------------------------------------------------------------------------
 -- Search DuckDuckGo
-nnoremap("<localleader>?", [[:lua rvim.mappings.ddg(vim.fn.expand("<cword>"))<cr>]])
-xnoremap("<localleader>?", [["gy:lua rvim.mappings.ddg(vim.api.nvim_eval("@g"))<cr>gv]])
+nnoremap("<localleader>?", [[:lua rvim.mappings.ddg(vim.fn.expand("<cword>"))<cr>]], "search")
+xnoremap("<localleader>?", [["gy:lua rvim.mappings.ddg(vim.api.nvim_eval("@g"))<cr>gv]], "search")
 -- Search Github
-nnoremap("<localleader>L?", [[:lua rvim.mappings.gh(vim.fn.expand("<cword>"))<cr>]])
+nnoremap("<localleader>L?", [[:lua rvim.mappings.gh(vim.fn.expand("<cword>"))<cr>]], 'gh search')
 xnoremap("<localleader>L?", [["gy:lua rvim.mappings.gh(vim.api.nvim_eval("@g"))<cr>gv]], "gh search")
 ------------------------------------------------------------------------------
 -- Personal
