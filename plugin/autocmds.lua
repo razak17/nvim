@@ -285,37 +285,13 @@ rvim.augroup("WinBehavior", {
   },
 })
 
-
-local function should_show_cursorline()
-  return vim.bo.buftype ~= 'terminal'
-    and not vim.wo.previewwindow
-    and vim.wo.winhighlight == ''
-    and vim.bo.filetype ~= ''
-end
-
-rvim.augroup('Cursorline', {
-  {
-    event = { 'BufEnter' },
-    pattern = { '*' },
-    command = function()
-      vim.wo.cursorline = should_show_cursorline()
-    end,
-  },
-  {
-    event = { 'BufLeave' },
-    pattern = { '*' },
-    command = function()
-      vim.wo.cursorline = false
-    end,
-  },
-})
-
-
+local cursorline_exclusion = { "dashboard" }
 local function should_show_cursorline()
   return vim.bo.buftype ~= "terminal"
     and not vim.wo.previewwindow
     and vim.wo.winhighlight == ""
     and vim.bo.filetype ~= ""
+    and not vim.tbl_contains(cursorline_exclusion, vim.bo.filetype)
 end
 
 rvim.augroup("Cursorline", {
@@ -330,7 +306,7 @@ rvim.augroup("Cursorline", {
     event = { "BufLeave" },
     pattern = { "*" },
     command = function()
-      vim.wo.cursorline = false
+      vim.wo.cursorline = should_show_cursorline()
     end,
   },
 })
