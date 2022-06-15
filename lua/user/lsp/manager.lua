@@ -1,7 +1,7 @@
 local M = {}
 
-local Log = require "user.core.log"
-local lsp_utils = require "user.utils.lsp"
+local Log = require("user.core.log")
+local lsp_utils = require("user.utils.lsp")
 
 ---Resolve the configuration for a server by merging with the default config
 ---@param server_name string
@@ -39,7 +39,9 @@ function M.client_is_configured(server_name, ft)
   ft = ft or vim.bo.filetype
   local active_autocmds = vim.split(vim.fn.execute("autocmd FileType " .. ft), "\n")
   for _, result in ipairs(active_autocmds) do
-    if result:match(server_name) then
+    -- NOTE: make exception for html. Already have an autocomd in treesitter
+    if server_name ~= "html" and result:match(server_name) then
+      Log:debug(string.format("[%q] is already configured", server_name))
       return true
     end
   end
@@ -57,18 +59,14 @@ end
 ---@param server_name string name of the language server
 ---@param user_config table? when available it will take predence over any default configurations
 function M.setup(server_name, user_config)
-  vim.validate { name = { server_name, "string" } }
+  vim.validate({ name = { server_name, "string" } })
   user_config = user_config or {}
 
-  local already_configured = lsp_utils.is_client_active(server_name)
-    or M.client_is_configured(server_name)
-
-  -- TODO: need to check  html here to get it to work. Find out why.
-  if server_name ~= "html" and already_configured then
+  if lsp_utils.is_client_active(server_name) or M.client_is_configured(server_name) then
     return
   end
 
-  local servers = require "nvim-lsp-installer.servers"
+  local servers = require("nvim-lsp-installer.servers")
   local server_available, server = servers.get_server(server_name)
 
   if not server_available then
@@ -81,7 +79,7 @@ function M.setup(server_name, user_config)
 
   if not server:is_installed() then
     if rvim.lsp.automatic_servers_installation then
-      Log:debug "Automatic server installation detected"
+      Log:debug("Automatic server installation detected")
       server:install()
       install_in_progress = true
     else
