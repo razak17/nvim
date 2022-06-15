@@ -158,7 +158,6 @@ function M.format_filter(clients)
 
     if vim.tbl_contains(rvim.lsp.format_exclusions, clients.name) then
       clients.server_capabilities.documentFormattingProvider = false
-      return
     end
 
     -- give higher priority to null-ls

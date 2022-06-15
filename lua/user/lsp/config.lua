@@ -43,7 +43,7 @@ rvim.lsp = {
     config = {},
   },
   format_on_save_exclusions = { "zsh", "tmux", "gitcommit" },
-  format_exclusions = { "sumneko_lua", "tsserver", "html", "jsonls", "gopls", "quick_lint_js" },
+  format_exclusions = { "sumneko_lua", "html", "jsonls", "gopls", "quick_lint_js" },
   emmet_ft = {
     "html",
     "css",
