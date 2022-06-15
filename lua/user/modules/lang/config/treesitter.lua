@@ -141,6 +141,9 @@ return function()
       use_virtual_text = true,
       lint_events = { "BufWrite", "CursorHold" },
     },
+    playground = {
+      persist_queries = true,
+    },
     ensure_installed = rvim.treesitter.setup.ensure_installed,
   })
 
