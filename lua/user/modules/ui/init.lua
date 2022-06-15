@@ -22,6 +22,10 @@ local enabled = {
   "vim_highlighturl",
   "nightfox",
   "illuminate",
+  "nui",
+  "window_picker",
+  "hlargs",
+  "fidget",
 }
 plug_utils.enable_plugins(module, enabled)
 
@@ -124,12 +128,12 @@ ui["nvim-neo-tree/neo-tree.nvim"] = {
   disable = not rvim.plugins.ui.neo_tree.active,
 }
 
-ui["MunifTanjim/nui.nvim"] = { disable = not rvim.plugins.tools.plenary.active }
+ui["MunifTanjim/nui.nvim"] = { disable = not rvim.plugins.ui.nui.active }
 
 ui["s1n7ax/nvim-window-picker"] = {
   tag = "1.*",
   config = conf(module, "window-picker"),
-  disable = not rvim.plugins.tools.plenary.active,
+  disable = not rvim.plugins.ui.window_picker.active,
 }
 
 ui["itchyny/vim-highlighturl"] = {
@@ -150,6 +154,31 @@ ui["RRethy/vim-illuminate"] = {
     rvim.nnoremap("<a-p>", ':lua require"illuminate".next_reference{reverse=true,wrap=true}<cr>')
   end,
   disable = not rvim.plugins.ui.illuminate.active,
+}
+
+ui["m-demare/hlargs.nvim"] = {
+  config = function()
+    local highlights = require("user.utils.highlights")
+    highlights.plugin("hlargs", {
+      Hlargs = { italic = true, bold = false },
+    })
+    require("hlargs").setup({
+      excluded_argnames = {
+        declarations = { "use", "use_rocks", "_" },
+        usages = {
+          lua = { "self", "use", "use_rocks", "_" },
+        },
+      },
+    })
+  end,
+  disable = not rvim.plugins.ui.hlargs.active,
+}
+
+ui["j-hui/fidget.nvim"] = {
+  config = function()
+    require("fidget").setup()
+  end,
+  disable = not rvim.plugins.ui.fidget.active,
 }
 
 return ui
