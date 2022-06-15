@@ -36,12 +36,12 @@ local enabled = {
   "log_highlighting",
   "vim_kitty",
   "sqls_nvim",
+  "matchup",
 }
 plug_utils.enable_plugins(module, enabled)
 
 local disabled = {
   "osv",
-  "matchup",
   "trouble",
   "bqf",
 }
@@ -236,7 +236,7 @@ lang["p00f/nvim-ts-rainbow"] = {
 lang["andymass/vim-matchup"] = {
   after = "nvim-treesitter",
   config = function()
-    rvim.nnoremap("<Leader>l?", ":<c-u>MatchupWhereAmI?<CR>", "matchup: where am i")
+    rvim.nnoremap("<localleader>lm", ":<c-u>MatchupWhereAmI?<CR>", "matchup: where am i")
   end,
   disable = not rvim.plugins.lang.matchup.active,
 }
