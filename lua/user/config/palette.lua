@@ -37,6 +37,7 @@ rvim.palette = {
   error_red = "#F44747",
   purple_test = "#ff007c",
   pink = "#c678dd",
+  pale_pink = "#b490c0",
 
   light_green = "#abcf84",
   orange = "#D98E48",

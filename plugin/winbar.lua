@@ -3,6 +3,7 @@
 local Log = require("user.core.log")
 
 local status_ok, gps = rvim.safe_require("nvim-gps")
+print(status_ok)
 if not status_ok then
   Log:debug("Failed to load nvim-gps")
   return
