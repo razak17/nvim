@@ -37,16 +37,16 @@ function M.init(client)
   end
 
   if client.server_capabilities.declarationProvider then
-    rvim.nnoremap("<leader>ge", vim.lsp.buf.declaration, with_desc("lsp: go to declaration"))
+    rvim.nnoremap("gD", vim.lsp.buf.declaration, with_desc("lsp: go to declaration"))
   end
 
   if client.server_capabilities.implementationProvider then
-    rvim.nnoremap("<leader>gi", vim.lsp.buf.implementation, with_desc("lsp: go to implementation"))
+    rvim.nnoremap("gi", vim.lsp.buf.implementation, with_desc("lsp: go to implementation"))
   end
 
   if client.server_capabilities.typeDefinitionProvider then
     rvim.nnoremap(
-      "<leader>gT",
+      "gt",
       vim.lsp.buf.type_definition,
       with_desc("lsp: go to type definition")
     )

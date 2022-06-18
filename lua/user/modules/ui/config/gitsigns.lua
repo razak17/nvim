@@ -1,5 +1,5 @@
 return function()
-  local gitsigns_ok, gitsigns = rvim.safe_require "gitsigns"
+  local gitsigns_ok, gitsigns = rvim.safe_require("gitsigns")
   if not gitsigns_ok then
     return
   end
@@ -23,25 +23,35 @@ return function()
         local gs = package.loaded.gitsigns
 
         local function qf_list_modified()
-          gs.setqflist "all"
+          gs.setqflist("all")
         end
 
-        require("which-key").register {
+        require("which-key").register({
           ["<leader>h"] = {
             name = "+Gitsigns",
+            d = { gs.toggle_deleted, "show deleted lines" },
             j = { gs.next_hunk, "Next Hunk" },
             k = { gs.prev_hunk, "Prev Hunk" },
-            m = { qf_list_modified, "list modified in qf" },
-            -- s = { gs.stage_hunk, "stage" },
-            u = { gs.undo_stage_hunk, "undo stage" },
-            -- r = { gs.reset_hunk, "reset hunk" },
             p = { gs.preview_hunk, "preview hunk" },
-            l = { gs.blame_line, "blame line" },
-            R = { gs.reset_buffer, "reset buffer" },
-            d = { gs.toggle_word_diff, "toggle word diff" },
-            w = { gs.stage_buffer, "stage entire buffer" },
+            r = { gs.reset_hunk, "reset current hunk" },
+            s = { gs.stage_hunk, "stage current hunk" },
+            u = { gs.undo_stage_hunk, "undo stage" },
+            w = { gs.toggle_word_diff, "toggle word diff" },
           },
-        }
+          ["<leader>g"] = {
+            name = "+git",
+            b = {
+              name = "+blame",
+              l = { gs.blame_line, "gitsigns: blame current line" },
+            },
+            m = { qf_list_modified, "gitsigns: list modified in quickfix" },
+            r = {
+              name = "+reset",
+              e = { gs.reset_buffer, "gitsigns: reset entire buffer" },
+            },
+            w = { gs.stage_buffer, "gitsigns: stage entire buffer" },
+          },
+        })
       end,
       watch_gitdir = {
         interval = 1000,
@@ -56,24 +66,10 @@ return function()
   gitsigns.setup(rvim.gitsigns.setup)
 
   vim.keymap.set("v", "<leader>hs", function()
-    gitsigns.stage_hunk { vim.fn.line ".", vim.fn.line "v" }
+    gitsigns.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
   end)
   vim.keymap.set("v", "<leader>hr", function()
-    gitsigns.reset_hunk { vim.fn.line ".", vim.fn.line "v" }
+    gitsigns.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
   end)
-
-  vim.keymap.set({ "n" }, "<leader>hs", "<cmd>Gitsigns stage_hunk<CR>")
-  vim.keymap.set({ "n" }, "<leader>hr", "<cmd>Gitsigns reset_hunk<CR>")
-
-  require("which-key").register {
-    ["<leader>h"] = {
-      name = "+Gitsigns",
-      b = "blame line",
-      e = "preview hunk",
-      r = "reset hunk",
-      s = "stage hunk",
-      t = "toggle line blame",
-      u = "undo stage hunk",
-    },
-  }
+  vim.keymap.set({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>")
 end
