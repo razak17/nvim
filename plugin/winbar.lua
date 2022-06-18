@@ -8,7 +8,7 @@ if not status_ok then
   return
 end
 
-local devicons = require('nvim-web-devicons')
+local devicons = require("nvim-web-devicons")
 local highlights = require("user.utils.highlights")
 local utils = require("user.utils.statusline")
 local component = utils.component
@@ -82,8 +82,8 @@ local hls = rvim.fold(append_icon_hl, hl_map, {
 highlights.plugin("winbar", hls)
 
 local function breadcrumbs()
-  local ok, navic = pcall(require, 'nvim-navic')
-  local empty_state = { component(ellipsis, 'NonText', { priority = 0 }) }
+  local ok, navic = pcall(require, "nvim-navic")
+  local empty_state = { component(ellipsis, "NonText", { priority = 0 }) }
   if not ok or not navic.is_available() then
     return empty_state
   end
@@ -92,7 +92,7 @@ local function breadcrumbs()
     return empty_state
   end
   local win = api.nvim_get_current_win()
-  return { component_raw(location, { priority = 1, win_id = win, type = 'winbar' }) }
+  return { component_raw(location, { priority = 1, win_id = win, type = "winbar" }) }
 end
 
 ---@return string
@@ -107,7 +107,7 @@ function rvim.ui.winbar()
     return add(component("[No name]", "Winbar", { priority = 0 }))
   end
 
-  local parts = vim.split(fn.fnamemodify(bufname, ':.'), '/')
+  local parts = vim.split(fn.fnamemodify(bufname, ":."), "/")
   local icon, color = devicons.get_icon(bufname, nil, { default = true })
 
   rvim.foreach(function(part, index)
@@ -140,6 +140,7 @@ local blocked = {
   "dashboard",
   "fTerm",
   "TelescopePrompt",
+  "sql",
 }
 local allowed = { "toggleterm" }
 
