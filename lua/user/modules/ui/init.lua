@@ -17,7 +17,7 @@ local enabled = {
   "nvim_notify",
   "dressing",
   "headlines",
-  "dim",
+  "neodim",
   "neo_tree",
   "vim_highlighturl",
   "nightfox",
@@ -111,15 +111,11 @@ ui["edluffy/specs.nvim"] = {
   disable = not rvim.plugins.ui.specs.active,
 }
 
-ui["narutoxy/dim.lua"] = {
-  event = "BufWinEnter",
-  requires = { "nvim-treesitter/nvim-treesitter", "neovim/nvim-lspconfig" },
+ui["zbirenbaum/neodim"] = {
   config = function()
-    require("dim").setup({
-      disable_lsp_decorations = true,
-    })
+    require("neodim").setup()
   end,
-  disable = not rvim.plugins.ui.dim.active,
+  disable = not rvim.plugins.ui.neodim.active,
 }
 
 ui["nvim-neo-tree/neo-tree.nvim"] = {
