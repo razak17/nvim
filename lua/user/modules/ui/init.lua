@@ -158,14 +158,14 @@ ui["RRethy/vim-illuminate"] = {
 
 ui["m-demare/hlargs.nvim"] = {
   config = function()
-    local highlights = require("user.utils.highlights")
-    highlights.plugin("hlargs", {
-      Hlargs = { italic = true, bold = false },
+    require("user.utils.highlights").plugin("hlargs", {
+      Hlargs = { italic = true, bold = false, foreground = "#A5D6FF" },
     })
     require("hlargs").setup({
       excluded_argnames = {
         declarations = { "use", "use_rocks", "_" },
         usages = {
+          go = { "_" },
           lua = { "self", "use", "use_rocks", "_" },
         },
       },
