@@ -462,10 +462,9 @@ tools["Djancyp/cheat-sheet"] = {
 }
 
 tools["SmiteshP/nvim-navic"] = {
-
   requires = "neovim/nvim-lspconfig",
   config = function()
-    local highlights = require("as.highlights")
+    local highlights = require("user.utils.highlights")
     local s = rvim.style
     local misc = s.icons.misc
 

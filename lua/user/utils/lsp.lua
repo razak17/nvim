@@ -78,6 +78,13 @@ function M.illuminate_highlight(client)
   illuminate.on_attach(client)
 end
 
+function M.navic(client, bufnr)
+  local ok, navic = pcall(require, 'nvim-navic')
+  if ok and client.server_capabilities.documentSymbolProvider then
+    navic.attach(client, bufnr)
+  end
+end
+
 --- Add lsp autocommands
 ---@param bufnr number
 function M.setup_code_lens_refresh(client, bufnr)

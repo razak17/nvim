@@ -60,6 +60,8 @@ function M.global_on_attach(client, bufnr)
     utils.illuminate_highlight(client)
   end
 
+  utils.navic(client, bufnr)
+
   if rvim.lsp.code_lens_refresh then
     utils.setup_code_lens_refresh(client, bufnr)
   end
