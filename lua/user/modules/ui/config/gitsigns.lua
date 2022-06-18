@@ -65,10 +65,10 @@ return function()
 
   gitsigns.setup(rvim.gitsigns.setup)
 
-  vim.keymap.set("v", "<leader>hs", function()
+  rvim.vnoreamp("<leader>hs", function()
     gitsigns.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
   end)
-  vim.keymap.set("v", "<leader>hr", function()
+  rvim.vnoreamp("<leader>hr", function()
     gitsigns.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
   end)
   vim.keymap.set({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>")
