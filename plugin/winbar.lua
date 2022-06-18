@@ -8,6 +8,7 @@ if not status_ok then
   return
 end
 
+local devicons = require('nvim-web-devicons')
 local highlights = require("user.utils.highlights")
 local utils = require("user.utils.statusline")
 local component = utils.component
@@ -106,10 +107,12 @@ function rvim.ui.winbar()
     return add(component("[No name]", "Winbar", { priority = 0 }))
   end
 
-  local parts = vim.split(fn.fnamemodify(bufname, ":."), "/")
+  local parts = vim.split(fn.fnamemodify(bufname, ':.'), '/')
+  local icon, color = devicons.get_icon(bufname, nil, { default = true })
 
   rvim.foreach(function(part, index)
     local priority = (#parts - (index - 1)) * 2
+    local is_first = index == 1
     local is_last = index == #parts
     local sep = is_last and separator or dir_separator
     local hl = is_last and "Winbar" or "NonText"
@@ -121,6 +124,8 @@ function rvim.ui.winbar()
       click = "HandleWinbarClick",
       suffix = sep,
       suffix_color = suffix_hl,
+      prefix = is_first and icon or nil,
+      prefix_color = is_first and color or nil,
     }))
   end, parts)
   add(unpack(breadcrumbs()))
