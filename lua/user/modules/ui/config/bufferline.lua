@@ -4,28 +4,8 @@ return function()
     return
   end
 
-  local function is_ft(b, ft)
-    return vim.bo[b].filetype == ft
-  end
-
-  local function custom_filter(buf, buf_nums)
-    local logs = vim.tbl_filter(function(b)
-      return is_ft(b, "log")
-    end, buf_nums)
-    if vim.tbl_isempty(logs) then
-      return true
-    end
-    local tab_num = vim.fn.tabpagenr()
-    local last_tab = vim.fn.tabpagenr("$")
-    local is_log = is_ft(buf, "log")
-    if last_tab == 1 then
-      return true
-    end
-    -- only show log buffers in secondary tabs
-    return (tab_num == last_tab and is_log) or (tab_num ~= last_tab and not is_log)
-  end
-
   local P = rvim.palette
+  local groups = require('bufferline.groups')
   local util = require("user.utils.highlights")
   local normal_bg = util.get_hl("Normal", "bg")
   local darker_bg = util.alter_color(normal_bg, -1)
@@ -98,7 +78,6 @@ return function()
         diagnostics_indicator = function()
           return ""
         end,
-        custom_filter = custom_filter,
         numbers = "none",
         offsets = {
           {
@@ -130,6 +109,49 @@ return function()
             text = "Packer",
             highlight = "PanelHeading",
             padding = 1,
+          },
+        },
+      },
+      groups = {
+        options = {
+          toggle_hidden_on_enter = true,
+        },
+        items = {
+          groups.builtin.pinned:with({ icon = '' }),
+          groups.builtin.ungrouped,
+          {
+            name = 'Terraform',
+            matcher = function(buf)
+              return buf.name:match('%.tf') ~= nil
+            end,
+          },
+          {
+            name = 'SQL',
+            matcher = function(buf)
+              return buf.filename:match('%.sql$')
+            end,
+          },
+          {
+            name = 'tests',
+            icon = '',
+            matcher = function(buf)
+              local name = buf.filename
+              if name:match('%.sql$') == nil then
+                return false
+              end
+              return name:match('_spec') or name:match('_test')
+            end,
+          },
+          {
+            name = 'docs',
+            icon = '',
+            matcher = function(buf)
+              for _, ext in ipairs({ 'md', 'txt', 'org', 'norg', 'wiki' }) do
+                if ext == vim.fn.fnamemodify(buf.path, ':e') then
+                  return true
+                end
+              end
+            end,
           },
         },
       },
