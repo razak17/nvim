@@ -39,6 +39,7 @@ local enabled = {
   "inc_rename",
   "line_diff",
   "cheat_sheet",
+  "navic",
 }
 plug_utils.enable_plugins(module, enabled)
 
@@ -455,9 +456,34 @@ tools["Djancyp/cheat-sheet"] = {
         border = "single",
       },
     })
-    rvim.nnoremap("<localleader>s", ':CheatSH<CR>', "cheat-sheet")
+    rvim.nnoremap("<localleader>s", ":CheatSH<CR>", "cheat-sheet")
   end,
   disable = not rvim.plugins.tools.cheat_sheet.active,
+}
+
+tools["SmiteshP/nvim-navic"] = {
+
+  requires = "neovim/nvim-lspconfig",
+  config = function()
+    local highlights = require("as.highlights")
+    local s = rvim.style
+    local misc = s.icons.misc
+
+    highlights.set_hl("NavicText", { bold = true })
+    highlights.set_hl("NavicSeparator", { link = "Directory" })
+    local icons = rvim.map(function(icon, key)
+      highlights.set_hl(("NavicIcons%s"):format(key), { link = rvim.lsp.kind_highlights[key] })
+      return icon .. " "
+    end, s.icons.codicons.kind)
+
+    require("nvim-navic").setup({
+      icons = icons,
+      highlight = true,
+      depth_limit_indicator = misc.ellipsis,
+      separator = (" %s "):format(misc.arrow_right),
+    })
+  end,
+  disable = not rvim.plugins.tools.navic.active,
 }
 
 return tools
