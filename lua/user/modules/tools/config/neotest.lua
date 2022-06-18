@@ -1,15 +1,17 @@
 return function()
   local neotest = require("neotest")
   neotest.setup({
-
+    diagnostic = {
+      enabled = false,
+    },
     icons = {
       running = rvim.style.icons.misc.clock,
     },
-    adapters = {
-      require("neotest-plenary"),
-    },
     floating = {
       border = rvim.style.border.current,
+    },
+    adapters = {
+      require("neotest-plenary"),
     },
   })
   local function open()
