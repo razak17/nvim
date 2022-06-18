@@ -155,7 +155,7 @@ return function()
         },
         duplicates_default = 0,
         format = function(entry, vim_item)
-          local MAX = 20
+          local MAX = math.floor(vim.o.columns / 0.4)
           vim_item.abbr = #vim_item.abbr >= MAX and string.sub(vim_item.abbr, 1, MAX) .. ellipsis
             or vim_item.abbr
           vim_item.kind = fmt("%s %s", vim_item.kind, rvim.style.icons.kind[vim_item.kind])
