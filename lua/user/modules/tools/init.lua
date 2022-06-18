@@ -30,7 +30,6 @@ local enabled = {
   "projectionist",
   "plenary",
   "popup",
-  "gps",
   "rest",
   "sniprun",
   "git_blame",
@@ -307,28 +306,6 @@ tools["tpope/vim-projectionist"] = {
 tools["nvim-lua/plenary.nvim"] = { disable = not rvim.plugins.tools.plenary.active }
 
 tools["nvim-lua/popup.nvim"] = { disable = not rvim.plugins.tools.popup.active }
-
-tools["SmiteshP/nvim-gps"] = {
-  config = function()
-    local icons = rvim.style.icons.kind
-    require("nvim-gps").setup({
-      separator = " " .. rvim.style.icons.misc.chevron_right .. " ",
-      depth = 0,
-      depth_limit_indicator = rvim.style.icons.misc.ellipsis,
-      text_hl = "LineNr",
-      icons = {
-        ["class-name"] = icons.Class,
-        ["function-name"] = icons.Variable,
-        ["method-name"] = icons.Variable,
-        ["container-name"] = icons.Module,
-        ["tag-name"] = icons.Field,
-        ["array-name"] = icons.Value,
-        ["object-name"] = icons.Value,
-      },
-    })
-  end,
-  disable = not rvim.plugins.tools.gps.active,
-}
 
 tools["NTBBloodbath/rest.nvim"] = {
   requires = { "nvim-lua/plenary.nvim" },

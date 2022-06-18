@@ -1,10 +1,9 @@
 ---@diagnostic disable: duplicate-doc-param
 
 local Log = require("user.core.log")
-
-local status_ok, gps = rvim.safe_require("nvim-gps")
-if not status_ok then
-  Log:debug("Failed to load nvim-gps")
+local ok, navic = pcall(require, "nvim-navic")
+if not ok then
+  Log:debug("Failed to load nvim-navic")
   return
 end
 
@@ -17,34 +16,11 @@ local empty = rvim.empty
 
 local fn = vim.fn
 local api = vim.api
-local fmt = string.format
 local icons = rvim.style.icons.misc
 
 local dir_separator = "/"
 local separator = icons.arrow_right
 local ellipsis = icons.ellipsis
-
-local hl_map = {
-  ["class"] = "Class",
-  ["function"] = "Function",
-  ["method"] = "Method",
-  ["container"] = "Typedef",
-  ["tag"] = "Tag",
-  ["array"] = "Directory",
-  ["object"] = "Structure",
-  ["null"] = "Comment",
-  ["boolean"] = "Boolean",
-  ["number"] = "Number",
-  ["string"] = "String",
-}
-
-local function get_icon_hl(t)
-  if not t then
-    return "WinbarIcon"
-  end
-  local icon_type = vim.split(t, "-")[1]
-  return hl_map[icon_type] or "WinbarIcon"
-end
 
 vim.cmd([[
 function! HandleWinbarClick(minwid, clicks, btn, modifiers) abort
@@ -66,12 +42,7 @@ function rvim.winbar_click(id, _, _, _)
   end
 end
 
-local function append_icon_hl(accum, hl_name, name)
-  accum[fmt("Winbar%sIcon", name:gsub("^%l", string.upper))] = { foreground = { from = hl_name } }
-  return accum
-end
-
-local hls = rvim.fold(append_icon_hl, hl_map, {
+highlights.plugin("winbar", {
   Winbar = { bold = false },
   WinbarNC = { bold = false },
   WinbarCrumb = { bold = true },
@@ -79,10 +50,7 @@ local hls = rvim.fold(append_icon_hl, hl_map, {
   WinbarDirectory = { inherit = "Directory" },
 })
 
-highlights.plugin("winbar", hls)
-
 local function breadcrumbs()
-  local ok, navic = pcall(require, "nvim-navic")
   local empty_state = { component(ellipsis, "NonText", { priority = 0 }) }
   if not ok or not navic.is_available() then
     return empty_state
