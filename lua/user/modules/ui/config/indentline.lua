@@ -1,5 +1,5 @@
 return function()
-  require("indent_blankline").setup {
+  require("indent_blankline").setup({
     char = "│", -- ┆ ┊ 
     show_foldtext = false,
     context_char = "┃",
@@ -30,6 +30,7 @@ return function()
       "norg",
       "org",
       "orgagenda",
+      "dbout",
       "", -- for all buffers without a file type
     },
     buftype_exclude = { "terminal", "nofile" },
@@ -46,7 +47,7 @@ return function()
       "while",
       "for",
     },
-  }
+  })
   -- because lazy load indent-blankline so need read this autocmd
-  vim.cmd "autocmd CursorMoved * IndentBlanklineRefresh"
+  vim.cmd("autocmd CursorMoved * IndentBlanklineRefresh")
 end
