@@ -146,13 +146,12 @@ lang["jose-elias-alvarez/null-ls.nvim"] = {
 lang["kosayoda/nvim-lightbulb"] = {
   config = function()
     local lightbulb = require("nvim-lightbulb")
+    require("user.utils.highlights").plugin("Lightbulb", {
+      LightBulbFloatWin = { foreground = { from = "Type" } },
+    })
     lightbulb.setup({
-      ignore = { "null-ls" },
-      sign = { enabled = false },
-      float = { enabled = true, win_opts = { border = "none" } },
-      autocmd = {
-        enabled = true,
-      },
+      float = { text = "", enabled = true, win_opts = { border = "none" } }, -- 
+      autocmd = { enabled = true },
     })
   end,
   disable = not rvim.plugins.lang.lightbulb.active,
