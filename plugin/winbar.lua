@@ -11,6 +11,7 @@ end
 local highlights = require("user.utils.highlights")
 local utils = require("user.utils.statusline")
 local component = utils.component
+local component_raw = utils.component_raw
 local empty = rvim.empty
 
 local fn = vim.fn
@@ -80,24 +81,17 @@ local hls = rvim.fold(append_icon_hl, hl_map, {
 highlights.plugin("winbar", hls)
 
 local function breadcrumbs()
-  local data = gps.get_data()
-  if type(data) == "string" or not data or vim.tbl_isempty(data) then
-    return { component(ellipsis, "NonText", { priority = 0 }) }
+  local ok, navic = pcall(require, 'nvim-navic')
+  local empty_state = { component(ellipsis, 'NonText', { priority = 0 }) }
+  if not ok or not navic.is_available() then
+    return empty_state
   end
-  return rvim.fold(function(accum, item, index)
-    local has_next = index < #data
-    table.insert(
-      accum,
-      component(item.text, "WinbarCrumb", {
-        prefix = item.icon,
-        prefix_color = get_icon_hl(item.type),
-        suffix = has_next and separator or nil,
-        suffix_color = has_next and "WinbarDirectory" or nil,
-        priority = index,
-      })
-    )
-    return accum
-  end, data, {})
+  local location = navic.get_location()
+  if empty(location) then
+    return empty_state
+  end
+  local win = api.nvim_get_current_win()
+  return { component_raw(location, { priority = 1, win_id = win, type = 'winbar' }) }
 end
 
 ---@return string
