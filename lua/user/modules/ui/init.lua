@@ -113,7 +113,11 @@ ui["edluffy/specs.nvim"] = {
 
 ui["zbirenbaum/neodim"] = {
   config = function()
-    require("neodim").setup()
+    require("neodim").setup({
+      hide = {
+        underline = true,
+      },
+    })
   end,
   disable = not rvim.plugins.ui.neodim.active,
 }
