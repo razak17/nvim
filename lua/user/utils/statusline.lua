@@ -238,4 +238,26 @@ function M.winline(tbl)
   end
 end
 
+--- @class RawComponentOpts
+--- @field priority number
+--- @field win_id number
+--- @field type "statusline" | "tabline" | "winbar"
+
+---Render a component that already has statusline format items and highlights in place
+---@param item string
+---@param opts RawComponentOpts
+---@return table
+function M.component_raw(item, opts)
+  local priority = opts.priority or 0
+  local win_id = opts.win_id or 0
+  local container_type = opts.type or "statusline"
+  ---@type table
+  local data = api.nvim_eval_statusline(item, {
+    use_winbar = container_type == "winbar",
+    use_tabline = container_type == "tabline",
+    winid = win_id,
+  })
+  return { component = item, length = data.width, priority = priority }
+end
+
 return M

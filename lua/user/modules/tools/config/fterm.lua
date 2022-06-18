@@ -1,26 +1,26 @@
 return function()
   function _G.__fterm_cmd(key)
-    local term = require "FTerm"
-    local cmd = term:new { cmd = "gitui" }
+    local term = require("FTerm")
+    local cmd = term:new({ cmd = "gitui" })
     if key == "node" then
-      cmd = term:new { cmd = "node" }
+      cmd = term:new({ cmd = "node" })
     elseif key == "python" then
-      cmd = term:new { cmd = "python" }
+      cmd = term:new({ cmd = "python" })
     elseif key == "lazygit" then
-      cmd = term:new { cmd = "lazygit" }
+      cmd = term:new({ cmd = "lazygit" })
     elseif key == "ranger" then
-      cmd = term:new { cmd = "ranger" }
+      cmd = term:new({ cmd = "ranger" })
     elseif key == "conf_commit" then
-      cmd = term:new { cmd = "iconf -ccma" }
+      cmd = term:new({ cmd = "iconf -ccma" })
     elseif key == "rconf_commit" then
-      cmd = term:new { cmd = "iconf -rcma" }
+      cmd = term:new({ cmd = "iconf -rcma" })
     end
     cmd:toggle()
   end
   -- rvim.nnoremap("<F12>", '<cmd>lua require("FTerm").toggle()<CR>')
   rvim.tnoremap("<F12>", '<C-\\><C-n><cmd>lua require("FTerm").toggle()<CR>')
 
-  require("which-key").register {
+  require("which-key").register({
     ["<F12>"] = {
       '<cmd>lua require("FTerm").toggle()<CR>',
       "toggle term",
@@ -33,5 +33,5 @@ return function()
       p = { ':lua _G.__fterm_cmd("python")<cr>', "python" },
       R = { ':lua _G.__fterm_cmd("ranger")<cr>', "ranger" },
     },
-  }
+  })
 end

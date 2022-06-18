@@ -1,8 +1,10 @@
 local opts = {
   setup = {
     root_dir = function(fname)
-      local util = require "rvim.lspconfig/util"
-      return util.root_pattern "package.json"(fname) or util.root_pattern "vue.config.js"(fname) or vim.fn.getcwd()
+      local util = require("rvim.lspconfig/util")
+      return util.root_pattern("package.json")(fname)
+        or util.root_pattern("vue.config.js")(fname)
+        or vim.fn.getcwd()
     end,
     init_options = {
       config = {

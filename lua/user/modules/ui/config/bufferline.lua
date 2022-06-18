@@ -5,7 +5,7 @@ return function()
   end
 
   local P = rvim.palette
-  local groups = require('bufferline.groups')
+  local groups = require("bufferline.groups")
   local util = require("user.utils.highlights")
   local normal_bg = util.get_hl("Normal", "bg")
   local darker_bg = util.alter_color(normal_bg, -1)
@@ -117,37 +117,37 @@ return function()
           toggle_hidden_on_enter = true,
         },
         items = {
-          groups.builtin.pinned:with({ icon = '' }),
+          groups.builtin.pinned:with({ icon = "" }),
           groups.builtin.ungrouped,
           {
-            name = 'Terraform',
+            name = "Terraform",
             matcher = function(buf)
-              return buf.name:match('%.tf') ~= nil
+              return buf.name:match("%.tf") ~= nil
             end,
           },
           {
-            name = 'SQL',
+            name = "SQL",
             matcher = function(buf)
-              return buf.filename:match('%.sql$')
+              return buf.filename:match("%.sql$")
             end,
           },
           {
-            name = 'tests',
-            icon = '',
+            name = "tests",
+            icon = "",
             matcher = function(buf)
               local name = buf.filename
-              if name:match('%.sql$') == nil then
+              if name:match("%.sql$") == nil then
                 return false
               end
-              return name:match('_spec') or name:match('_test')
+              return name:match("_spec") or name:match("_test")
             end,
           },
           {
-            name = 'docs',
-            icon = '',
+            name = "docs",
+            icon = "",
             matcher = function(buf)
-              for _, ext in ipairs({ 'md', 'txt', 'org', 'norg', 'wiki' }) do
-                if ext == vim.fn.fnamemodify(buf.path, ':e') then
+              for _, ext in ipairs({ "md", "txt", "org", "norg", "wiki" }) do
+                if ext == vim.fn.fnamemodify(buf.path, ":e") then
                   return true
                 end
               end

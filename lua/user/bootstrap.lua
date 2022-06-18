@@ -13,9 +13,9 @@ if vim.env.RVIM_RUNTIME_DIR then
   vim.opt.rtp:append(join_paths(config_dir, "after"))
 end
 
-vim.cmd [[let &packpath = &runtimepath]]
+vim.cmd([[let &packpath = &runtimepath]])
 
-R "user.config.defaults"
-R "user.config.palette"
-R "user.config.style"
-R "user.lsp.config"
+R("user.config.defaults")
+R("user.config.palette")
+R("user.config.style")
+R("user.lsp.config")

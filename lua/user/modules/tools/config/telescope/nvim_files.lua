@@ -12,26 +12,26 @@ local cwd_git = "~/.dots/rvim"
 
 nvim_config.files = function(opts)
   opts = opts or {}
-  local theme_opts = themes.get_ivy {
+  local theme_opts = themes.get_ivy({
     sorting_strategy = "ascending",
     layout_strategy = "bottom_pane",
     prompt_prefix = " >> ",
     prompt_title = "rVim files",
     cwd = rvim.get_config_dir(),
-  }
+  })
   opts = vim.tbl_deep_extend("force", theme_opts, opts)
   builtin.find_files(opts)
 end
 
 nvim_config.grep_files = function(opts)
   opts = opts or {}
-  local theme_opts = themes.get_ivy {
+  local theme_opts = themes.get_ivy({
     sorting_strategy = "ascending",
     layout_strategy = "bottom_pane",
     prompt_prefix = " >> ",
     prompt_title = "Search rVim",
     cwd = rvim.get_config_dir(),
-  }
+  })
   opts = vim.tbl_deep_extend("force", theme_opts, opts)
   builtin.live_grep(opts)
 end
@@ -44,12 +44,12 @@ nvim_config.view_changelog = function()
     prompt_title = "rVim changelog",
 
     finder = finders.new_oneshot_job(
-      vim.tbl_flatten {
+      vim.tbl_flatten({
         "git",
         "log",
         "--pretty=oneline",
         "--abbrev-commit",
-      },
+      }),
       opts
     ),
     previewer = {
@@ -73,14 +73,14 @@ nvim_config.view_changelog = function()
 end
 
 nvim_config.commits = function()
-  builtin.git_commits { prompt_title = "rVim commits", cwd = cwd_git }
+  builtin.git_commits({ prompt_title = "rVim commits", cwd = cwd_git })
 end
 
 nvim_config.branches = function()
-  builtin.git_branches {
+  builtin.git_branches({
     prompt_title = "rVim branches",
     cwd = cwd_git,
-  }
+  })
 end
 
 return nvim_config

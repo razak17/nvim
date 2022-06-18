@@ -1,5 +1,5 @@
 return function()
-  local dap = require "dap"
+  local dap = require("dap")
   local icons = rvim.style.icons
 
   rvim.dap = {
@@ -45,7 +45,7 @@ return function()
   require("user.dap.lldb").setup()
 
   -- Keymaps
-  require("which-key").register {
+  require("which-key").register({
     ["<leader>d"] = {
       name = "+Debug",
       ["?"] = {
@@ -89,7 +89,7 @@ return function()
       v = { ":Telescope dap variables<cr>", "variables" },
       b = { ":Telescope dap list_breakpoints<cr>", "list breakpoints" },
     },
-  }
+  })
 
   -- Autocommands
   rvim.augroup("DapBehavior", {

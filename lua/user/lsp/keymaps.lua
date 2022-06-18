@@ -45,11 +45,7 @@ function M.init(client)
   end
 
   if client.server_capabilities.typeDefinitionProvider then
-    rvim.nnoremap(
-      "gt",
-      vim.lsp.buf.type_definition,
-      with_desc("lsp: go to type definition")
-    )
+    rvim.nnoremap("gt", vim.lsp.buf.type_definition, with_desc("lsp: go to type definition"))
   end
 
   if client.supports_method("textDocument/prepareCallHierarchy") then

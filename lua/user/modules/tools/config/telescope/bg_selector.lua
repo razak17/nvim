@@ -28,7 +28,7 @@ end
 
 local image_selector = function(prompt, cwd)
   return function()
-    builtin.find_files {
+    builtin.find_files({
       prompt_title = prompt,
       cwd = cwd,
 
@@ -36,7 +36,7 @@ local image_selector = function(prompt, cwd)
         select_background(prompt_bufnr, map)
         return true
       end,
-    }
+    })
   end
 end
 

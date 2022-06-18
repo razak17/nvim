@@ -79,7 +79,7 @@ function M.illuminate_highlight(client)
 end
 
 function M.navic(client, bufnr)
-  local ok, navic = pcall(require, 'nvim-navic')
+  local ok, navic = pcall(require, "nvim-navic")
   if ok and client.server_capabilities.documentSymbolProvider then
     navic.attach(client, bufnr)
   end

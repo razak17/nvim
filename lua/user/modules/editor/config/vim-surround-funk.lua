@@ -5,10 +5,16 @@ return function()
   map({ "n", "v" }, "gs", "<Plug>(GripSurroundObject)")
   map({ "o", "x" }, "sF", "<Plug>(SelectWholeFUNCTION)")
 
-  require("which-key").register {
+  require("which-key").register({
     ["<leader>rf"] = { "<Plug>(DeleteSurroundingFunction)", "dsf: delete surrounding function" },
-    ["<leader>rF"] = { "<Plug>(DeleteSurroundingFUNCTION)", "dsf: delete surrounding outer function" },
+    ["<leader>rF"] = {
+      "<Plug>(DeleteSurroundingFUNCTION)",
+      "dsf: delete surrounding outer function",
+    },
     ["<leader>Cf"] = { "<Plug>(ChangeSurroundingFunction)", "dsf: change surrounding function" },
-    ["<leader>CF"] = { "<Plug>(ChangeSurroundingFUNCTION)", "dsf: change outer surrounding function" },
-  }
+    ["<leader>CF"] = {
+      "<Plug>(ChangeSurroundingFUNCTION)",
+      "dsf: change outer surrounding function",
+    },
+  })
 end

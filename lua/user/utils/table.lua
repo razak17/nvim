@@ -22,4 +22,3 @@ function Table.contains(t, predicate)
 end
 
 return Table
-

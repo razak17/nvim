@@ -36,7 +36,7 @@ function M:init_ensure_installed()
     local cmd = "!git clone https://github.com/wbthomason/packer.nvim " .. packer_dir
     api.nvim_command(cmd)
     uv.fs_mkdir(rvim.get_runtime_dir() .. "/site/lua", 511, function()
-      assert "make compile path dir failed"
+      assert("make compile path dir failed")
     end)
     self:load_packer()
     require("packer").sync()
@@ -44,7 +44,7 @@ function M:init_ensure_installed()
 end
 
 function M:bootstrap_packer(packer, plugins)
-  packer.init {
+  packer.init({
     package_root = join_paths(rvim.get_runtime_dir(), "site/pack/"),
     compile_path = rvim.paths.packer_compiled,
     max_jobs = 50,
@@ -58,16 +58,16 @@ function M:bootstrap_packer(packer, plugins)
     disable_commands = true,
     display = {
       open_fn = function()
-        return require("packer.util").float {
+        return require("packer.util").float({
           border = rvim.style.border.current,
-        }
+        })
       end,
     },
-  }
+  })
   packer.reset()
   M:load_plugins(plugins)
   packer.startup(function(use)
-    use { "wbthomason/packer.nvim", opt = true }
+    use({ "wbthomason/packer.nvim", opt = true })
     if rvim.plugins.SANE then
       for _, repo in ipairs(M.repos) do
         local local_spec = repo.local_path
@@ -127,12 +127,12 @@ function M:use_local(original)
 end
 
 function M.goto_repo()
-  local repo = fn.expand "<cfile>"
-  if repo:match "https://" then
-    return vim.cmd "norm gx"
+  local repo = fn.expand("<cfile>")
+  if repo:match("https://") then
+    return vim.cmd("norm gx")
   end
   if not repo or #vim.split(repo, "/") ~= 2 then
-    return vim.cmd "norm! gf"
+    return vim.cmd("norm! gf")
   end
   local url = fmt("https://www.github.com/%s", repo)
   fn.system(fn.printf(rvim.open_command .. ' "https://github.com/%s"', repo))

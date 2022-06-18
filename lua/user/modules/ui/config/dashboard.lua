@@ -50,7 +50,7 @@ return function()
       e = {
         description = join("  Restore session", "<leader>sl", 8),
         command = function()
-          vim.cmd ":RestoreSession"
+          vim.cmd(":RestoreSession")
         end,
       },
     },
@@ -66,7 +66,7 @@ return function()
     event = { "VimLeavePre" },
     pattern = "*",
     command = function()
-      vim.cmd "SessionSave"
+      vim.cmd("SessionSave")
     end,
   })
 

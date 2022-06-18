@@ -31,7 +31,7 @@ function Log:init()
               { "line", "file" },
               { max_parents = 0, stack_level = 2 }
             ),
-            structlog.processors.Timestamper "%H:%M:%S",
+            structlog.processors.Timestamper("%H:%M:%S"),
           },
           formatter = structlog.formatters.FormatColorizer( --
             "%s [%-5s] %s: %-30s",
@@ -46,7 +46,7 @@ function Log:init()
               { "line", "file" },
               { max_parents = 3, stack_level = 2 }
             ),
-            structlog.processors.Timestamper "%H:%M:%S",
+            structlog.processors.Timestamper("%H:%M:%S"),
           },
           formatter = structlog.formatters.Format( --
             "%s [%-5s] %s: %-30s",
@@ -58,7 +58,7 @@ function Log:init()
   }
 
   structlog.configure(rvim_log)
-  local logger = structlog.get_logger "rvim"
+  local logger = structlog.get_logger("rvim")
 
   -- Overwrite `vim.notify` to use the logger
   if rvim.log.override_notify then
