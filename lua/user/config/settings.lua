@@ -57,7 +57,7 @@ M.load_default_options = function()
     synmaxcol = 1024,
     signcolumn = "auto:2-4",
     ruler = false,
-    cmdheight = 2,
+    cmdheight = 1,
     cmdwinheight = 5,
     background = "dark",
 
