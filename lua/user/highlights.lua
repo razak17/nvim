@@ -78,7 +78,7 @@ local function general_overrides()
     LspReferenceWrite = { underline = true, bold = true, italic = true, background = "NONE" },
 
     -- Matchup
-    MatchWord = { fg = P.red, bg = P.base4, underline = false, cterm = { underline = false } },
+    MatchWord = { fg = P.red, underline = false, cterm = { underline = false } },
   })
 end
 
