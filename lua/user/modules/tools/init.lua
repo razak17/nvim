@@ -445,7 +445,7 @@ tools["SmiteshP/nvim-navic"] = {
     local s = rvim.style
     local misc = s.icons.misc
 
-    highlights.set_hl("NavicText", { bold = true })
+    highlights.set_hl("NavicText", { bold = false })
     highlights.set_hl("NavicSeparator", { link = "Directory" })
     local icons = rvim.map(function(icon, key)
       highlights.set_hl(("NavicIcons%s"):format(key), { link = rvim.lsp.kind_highlights[key] })
