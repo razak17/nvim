@@ -48,6 +48,4 @@ return function()
       "for",
     },
   })
-  -- because lazy load indent-blankline so need read this autocmd
-  vim.cmd("autocmd CursorMoved * IndentBlanklineRefresh")
 end
