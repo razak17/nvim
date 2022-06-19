@@ -43,6 +43,7 @@ rvim.palette = {
   orange = "#D98E48",
   dark_orange = "#ff8800",
   yellow = "#f0c674",
+  straw = "#98C379",
   light_yellow = "#e5c07b",
   pale_yellow = "#c2c29f",
   bright_yellow = "#FAB005",
@@ -53,6 +54,8 @@ rvim.palette = {
   darker_green = "#98c379",
 
   cyan = "#14ffff",
+  dirty = "#ABB2BF",
+  red_alt = "#E06C75",
   dark_cyan = "#65a7c5",
   blue = "#51afef",
   light_blue = "#67c4ef",

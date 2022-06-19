@@ -75,7 +75,7 @@ return {
   Define = { fg = P.violet },
   Conditional = { fg = P.pink },
   Repeat = { fg = P.pink },
-  Keyword = { fg = P.green },
+  Keyword = { fg = P.pink },
   Class = { fg = P.blue },
   Variable = { fg = P.green },
   Property = { fg = P.green },
@@ -95,7 +95,7 @@ return {
   SpecialChar = { fg = P.yellow },
   Type = { fg = P.teal },
   Function = { fg = P.yellow },
-  String = { fg = P.light_green },
+  String = { fg = P.pale_yellow },
   Character = { fg = P.green },
   Constant = { fg = P.cyan },
   Macro = { fg = P.cyan },
@@ -110,13 +110,14 @@ return {
 
   JsonFold = { fg = P.comment },
 
-  TSFunction = { fg = P.cyan },
+  TSFunction = { fg = P.blue },
   TSComment = { fg = P.comment },
   TSMethod = { fg = P.cyan },
-  TSKeywordFunction = { fg = P.red },
   TSProperty = { fg = P.yellow },
   TSType = { fg = P.teal },
-  TSVariable = { fg = P.pale_yellow },
+  TSVariable = { fg = P.red_alt },
   TSPunctBracket = { fg = P.bracket },
   TSConstructor = { fg = P.teal },
+  TSFuncBuiltin = {fg = P.dark_cyan},
+  TSField = {fg = P.dirty}
 }
