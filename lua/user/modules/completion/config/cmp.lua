@@ -14,9 +14,6 @@ return function()
   local util = require("user.utils.highlights")
   local ellipsis = rvim.style.icons.misc.ellipsis
 
-  -- Make the source information less prominent
-  local faded = util.alter_color(util.get_hl("Pmenu", "bg"), 30)
-
   local kind_hls = rvim.fold(
     function(accum, value, key)
       accum["CmpItemKind" .. key] = { foreground = { from = value } }
@@ -25,8 +22,7 @@ return function()
     lsp_hls,
     {
       CmpItemAbbr = { foreground = "fg", background = "NONE", italic = false, bold = false },
-      CmpItemMenu = { foreground = faded, italic = true, bold = false },
-      CmpItemAbbrMatch = { foreground = { from = "Keyword" } },
+      -- CmpItemAbbrMatch = { foreground = { from = "Keyword" } },
       CmpItemAbbrDeprecated = { strikethrough = true, inherit = "Comment" },
       CmpItemAbbrMatchFuzzy = { italic = true, foreground = { from = "Keyword" } },
     }
@@ -130,7 +126,7 @@ return function()
       },
       formatting = {
         deprecated = true,
-        fields = { "abbr", "kind", "menu" },
+        fields = { "kind", "abbr", "menu" },
         source_names = {
           nvim_lsp = "(LSP)",
           nvim_lua = "(Lua)",
@@ -158,7 +154,7 @@ return function()
           local MAX = math.floor(vim.o.columns / 0.4)
           vim_item.abbr = #vim_item.abbr >= MAX and string.sub(vim_item.abbr, 1, MAX) .. ellipsis
             or vim_item.abbr
-          vim_item.kind = fmt("%s %s", vim_item.kind, rvim.style.icons.kind[vim_item.kind])
+          vim_item.kind = rvim.style.icons.codicons.kind[vim_item.kind]
           vim_item.menu = rvim.cmp.setup.formatting.source_names[entry.source.name]
           vim_item.dup = rvim.cmp.setup.formatting.duplicates[entry.source.name]
             or rvim.cmp.setup.formatting.duplicates_default

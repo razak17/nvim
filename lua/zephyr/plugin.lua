@@ -185,4 +185,7 @@ return {
   WinbarCrumb = { fg = P.comment },
   WinbarCurrent = { fg = P.comment },
   WinbarDirectory = { fg = P.comment },
+
+  CmpItemAbbrMatch = { fg = P.light_green },
+  CmpItemMenu = { fg = P.base5 },
 }
