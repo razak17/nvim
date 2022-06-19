@@ -139,11 +139,11 @@ return {
   TelescopeResultsBorder = { fg = P.blue, bg = P.darker_bg },
   TelescopePromptBorder = { fg = P.blue, bg = P.darker_bg },
   TelescopePreviewBorder = { fg = P.pink, bg = P.darker_bg },
-  TelescopeMatching = { fg = P.yellowgreen, bold = true },
-  TelescopeSelection = { fg = P.cyan, bold = true },
-  TelescopeSelectionCaret = { fg = P.yellow },
+  TelescopeMatching = { fg = P.light_green },
+  TelescopeSelection = { fg = P.blue },
+  TelescopeSelectionCaret = { fg = P.light_green },
   TelescopeMultiSelection = { fg = P.light_green },
-  TelescopePromptPrefix = { fg = P.yellow },
+  TelescopePromptPrefix = { fg = P.light_green },
 
   FloatermBorder = { fg = P.blue, bg = P.bg },
 
