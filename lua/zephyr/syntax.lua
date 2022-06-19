@@ -48,7 +48,7 @@ return {
   PmenuSel = { fg = P.base0, bg = P.blue },
   PmenuSelBold = { fg = P.base0, bg = P.blue },
   PmenuSbar = { fg = P.none, bg = P.dark_grey },
-  PmenuThumb = { bg = P.yellowgreen },
+  PmenuThumb = { bg = P.darker_blue },
   WildMenu = { fg = P.fg, bg = P.green },
   Question = { fg = P.yellow },
   NormalFloat = { fg = P.pale_blue, bg = P.bg },
