@@ -31,10 +31,7 @@ return function()
     lsp_gofumpt = true,
     lsp_keymaps = false,
     lsp_on_attach = require("user.lsp").global_on_attach,
-    lsp_diag_virtual_text = {
-      space = 0,
-      prefix = rvim.style.icons.misc.bug,
-    },
+    lsp_diag_virtual_text = true,
     dap_debug_keymap = false,
     textobjects = false,
   })

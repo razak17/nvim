@@ -159,7 +159,7 @@ return function()
     {
       event = { "FileType" },
       pattern = rvim.treesitter.get_filetypes(),
-      command = "setlocal foldtext=v:lua.folds() foldmethod=expr foldexpr=nvim_treesitter#foldexpr()",
+      command = "setlocal foldexpr=nvim_treesitter#foldexpr()",
     },
   })
 end
