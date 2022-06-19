@@ -132,7 +132,7 @@ return function()
     incremental_selection = rvim.treesitter.setup.incremental_selection,
     textobjects = rvim.treesitter.setup.textobjects,
     indent = { enable = { "javascriptreact" } },
-    matchup = { enable = rvim.plugins.lang.matchup.active, disable = { "c", "python" } },
+    matchup = { enable = true, disable = { "c", "python" } },
     autopairs = { enable = rvim.plugins.lang.autopairs.active },
     rainbow = rvim.treesitter.setup.rainbow,
     query_linter = {
