@@ -93,17 +93,6 @@ rvim.augroup("PackerSetupInit", {
       utils:plug_notify("Packer compile complete")
     end,
   },
-  {
-    event = "LspDetach",
-    desc = "detaching language server",
-    command = function(args)
-      local client = vim.lsp.get_client_by_id(args.data.client_id)
-      local name = client and client.name or "An Unknown LSP client"
-      vim.notify(fmt("%s has detached", name), "info", {
-        title = "LSP",
-      })
-    end,
-  },
 })
 
 return plugins
