@@ -113,7 +113,7 @@ ui["edluffy/specs.nvim"] = {
 ui["zbirenbaum/neodim"] = {
   config = function()
     require("neodim").setup({
-      blend_color = require("as.highlights").get_hl("Normal", "bg"),
+      blend_color = require("user.utils.highlights").get_hl("Normal", "bg"),
       alpha = 0.45,
       hide = {
         underline = false,
