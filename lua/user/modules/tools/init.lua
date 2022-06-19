@@ -462,4 +462,9 @@ tools["SmiteshP/nvim-navic"] = {
   disable = not rvim.plugins.tools.navic.active,
 }
 
+tools["vhyrro/neorg"] = {
+  requires = { "vhyrro/neorg-telescope" },
+  config = conf(module, "neorg"),
+}
+
 return tools
