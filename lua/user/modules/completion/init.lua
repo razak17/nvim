@@ -130,6 +130,7 @@ completion["github/copilot.vim"] = {
       DressingInput = false,
       TelescopePrompt = false,
       ["neo-tree-popup"] = false,
+      ["dap-repl"] = false,
     }
     require("user.utils.highlights").plugin("copilot", { CopilotSuggestion = { link = "Comment" } })
   end,

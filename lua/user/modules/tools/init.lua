@@ -32,7 +32,6 @@ local enabled = {
   "popup",
   "rest",
   "sniprun",
-  "git_blame",
   "neotest",
   "howdoi",
   "inc_rename",
@@ -54,6 +53,7 @@ local disabled = { -- TODO: handle these later
   "dadbod",
   "restconsole",
   "telescope_smart_history",
+  "git_blame",
 }
 plug_utils.disable_plugins(module, disabled)
 

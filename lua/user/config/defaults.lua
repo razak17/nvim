@@ -9,6 +9,7 @@ rvim.paths = {
   node = join_paths(vim.env.FNMPATH, "neovim-node-host"),
   python3 = join_paths(rvim.get_cache_dir(), "venv", "neovim", "bin", "python3"),
   vscode_lldb = join_paths(vim.env.HOME, ".vscode-oss", "extensions", "vadimcn.vscode-lldb-1.7.0"),
+  dap_install_dir = rvim.get_cache_dir() .. "/dap",
 }
 
 rvim.log = {

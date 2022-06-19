@@ -3,9 +3,8 @@ return function()
   local icons = rvim.style.icons
 
   rvim.dap = {
-    install_dir = rvim.get_cache_dir() .. "/dap",
-    python_dir = rvim.get_cache_dir() .. "/dap/python_dbg/bin/python",
-    node_dir = rvim.get_cache_dir() .. "/dap/jsnode_dbg/vscode-node-debug2/out/src/nodeDebug.js",
+    python_dir = rvim.get_cache_dir() .. "/dap/python/bin/python",
+    node_dir = rvim.get_cache_dir() .. "/dap/jsnode/vscode-node-debug2/out/src/nodeDebug.js",
     breakpoint = {
       text = icons.misc.bug_alt,
       texthl = "LspDiagnosticsSignError",

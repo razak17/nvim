@@ -54,28 +54,14 @@ lang["mfussenegger/nvim-dap"] = {
 }
 
 lang["rcarriga/nvim-dap-ui"] = {
-  after = "nvim-dap",
-  config = function()
-    local dapui = require("dapui")
-    dapui.setup()
-    rvim.nnoremap("<localleader>dX", dapui.close, "dap-ui: close")
-    rvim.nnoremap("<localleader>dO", dapui.toggle, "dap-ui: toggle")
-    local dap = require("dap")
-    -- NOTE: this opens dap UI automatically when dap starts
-    -- dap.listeners.after.event_initialized['dapui_config'] = function()
-    --   dapui.open()
-    -- end
-    dap.listeners.before.event_terminated["dapui_config"] = function()
-      dapui.close()
-    end
-    dap.listeners.before.event_exited["dapui_config"] = function()
-      dapui.close()
-    end
-  end,
+  config = conf("lang", "dap-ui"),
   disable = not rvim.plugins.lang.dap_ui.active,
 }
 
-lang["Pocco81/DAPInstall.nvim"] = {
+lang["ravenxrz/DAPInstall.nvim"] = {
+  config = require("dap-install").setup({
+    installation_path = rvim.paths.dap_install_dir,
+  }),
   disable = not rvim.plugins.lang.dap_install.active,
 }
 
