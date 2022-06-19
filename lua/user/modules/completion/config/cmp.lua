@@ -22,7 +22,6 @@ return function()
     lsp_hls,
     {
       CmpItemAbbr = { foreground = "fg", background = "NONE", italic = false, bold = false },
-      -- CmpItemAbbrMatch = { foreground = { from = "Keyword" } },
       CmpItemAbbrDeprecated = { strikethrough = true, inherit = "Comment" },
       CmpItemAbbrMatchFuzzy = { italic = true, foreground = { from = "Keyword" } },
     }
