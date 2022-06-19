@@ -51,13 +51,15 @@ return function()
         ':lua local widgets=require"dap.ui.widgets";widgets.centered_float(widgets.scopes)<CR>',
         "scopes",
       },
+
+      [";"] = { ":lua require'dap'.repl.toggle(nil, 'botright split')<cr>", "toggle repl" },
       a = { ':lua require"user.utils.dap".attach()<cr>', "attach" },
       A = { ':lua require"user.utils.dap".attachToRemote()<cr>', "attach remote" },
 
       h = { ":lua require'dap'.step_back()<cr>", "step back" },
       i = { ":lua require'dap'.step_into()<cr>", "step into" },
-      u = { ":lua require'dap'.step_out()<cr>", "step out" },
       o = { ":lua require'dap'.step_over()<cr>", "step over" },
+      u = { ":lua require'dap'.step_out()<cr>", "step out" },
 
       t = { ":lua require'dap'.toggle_breakpoint()<cr>", "toggle breakpoint" },
       T = {
@@ -70,8 +72,6 @@ return function()
       e = { ":lua require'dap'.set_exception_breakpoints({'all'})<cr>", "breakpoint exception" },
       n = { ":lua require'dap'.run_to_cursor()<cr>", "run to cursor" },
       K = { ":lua require'dap.ui.widgets'.hover()<cr>", "hover" },
-
-      [";"] = { ":lua require'dap'.repl.toggle(nil, 'botright split')<cr>", "toggle repl" },
       R = { ':lua require"dap".repl.open({}, "vsplit")<cr><C-w>l<cr>', "open repl in vsplit" },
 
       x = { ":lua require'dap'.disconnect()<cr>", "disconnect" },
@@ -87,15 +87,6 @@ return function()
       f = { ":Telescope dap frames<cr>", "frames" },
       v = { ":Telescope dap variables<cr>", "variables" },
       b = { ":Telescope dap list_breakpoints<cr>", "list breakpoints" },
-    },
-  })
-
-  -- Autocommands
-  rvim.augroup("DapBehavior", {
-    {
-      event = { "FileType" },
-      pattern = { "dapui_scopes", "dapui_breakpoints", "dapui_stacks", "dapui_watches" },
-      command = "set laststatus=0",
     },
   })
 end
