@@ -136,6 +136,11 @@ lang["kosayoda/nvim-lightbulb"] = {
       LightBulbFloatWin = { foreground = { from = "Type" } },
     })
     lightbulb.setup({
+      sign = {
+        enabled = false,
+        -- Priority of the gutter sign
+        priority = 10,
+      },
       float = { text = "", enabled = true, win_opts = { border = "none" } }, -- 
       autocmd = { enabled = true },
     })

@@ -95,7 +95,7 @@ return {
   SpecialChar = { fg = P.yellow },
   Type = { fg = P.teal },
   Function = { fg = P.yellow },
-  String = { fg = P.pale_yellow },
+  String = { fg = P.light_green },
   Character = { fg = P.green },
   Constant = { fg = P.cyan },
   Macro = { fg = P.cyan },
