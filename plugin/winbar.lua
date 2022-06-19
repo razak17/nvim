@@ -83,8 +83,8 @@ function rvim.ui.winbar()
     local is_first = index == 1
     local is_last = index == #parts
     local sep = is_last and separator or dir_separator
-    local hl = is_last and "Winbar" or "NonText"
-    local suffix_hl = is_last and "WinbarDirectory" or "NonText"
+    local hl = is_last and "Winbar" or "LineNr"
+    local suffix_hl = is_last and "WinbarDirectory" or "LineNr"
     rvim.winbar_state[priority] = table.concat(vim.list_slice(parts, 1, index), "/")
     add(component(part, hl, {
       id = priority,

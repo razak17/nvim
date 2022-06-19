@@ -181,7 +181,8 @@ return {
   NotifyDEBUGBody = { fg = P.fg },
   NotifyTRACEBody = { fg = P.fg },
 
-  Winbar = { fg = P.comment },
+  Winbar = { fg = P.base5 },
   WinbarCrumb = { fg = P.comment },
   WinbarCurrent = { fg = P.comment },
+  WinbarDirectory = { fg = P.comment },
 }
