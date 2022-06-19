@@ -137,8 +137,9 @@ nmap(
   [[(winline() == (winheight (0) + 1)/ 2) ?  'zt' : (winline() == 1)? 'zb' : 'zz']],
   { expr = true }
 )
-
+------------------------------------------------------------------------------
 -- Move selected line / block of text in visual mode
+------------------------------------------------------------------------------
 xnoremap("K", ":m '<-2<CR>gv=gv")
 xnoremap("J", ":m '>+1<CR>gv=gv")
 ------------------------------------------------------------------------------
@@ -159,7 +160,6 @@ nnoremap("]<space>", [[<cmd>put =repeat(nr2char(10), v:count1)<cr>]])
 xnoremap("p", "pgvy")
 -- search visual selection
 vnoremap("//", [[y/<C-R>"<CR>]])
-
 -- Credit: Justinmk
 nnoremap("g>", [[<cmd>set nomore<bar>40messages<bar>set more<CR>]], "show message history")
 -- Start new line from any cursor position
@@ -189,44 +189,41 @@ end, "close all others")
 ------------------------------------------------------------------------------
 nnoremap("<leader>U", "gUiw`]", "capitalize word")
 inoremap("<C-u>", "<cmd>norm!gUiw`]a<CR>")
-
 -- Help
 nnoremap("<leader>H", ':h <C-R>=expand("<cword>")<cr><CR>', "help")
-
 -- find visually selected text
 vnoremap("*", [[y/<C-R>"<CR>]])
-
 -- make . work with visually selected lines
 vnoremap(".", ":norm.<CR>")
-
 -- when going to the end of the line in visual mode ignore whitespace characters
 vnoremap("$", "g_")
-
+------------------------------------------------------------------------------
 -- Use alt + hjkl to resize windows
+------------------------------------------------------------------------------
 nnoremap("<M-j>", ":resize -2<CR>")
 nnoremap("<M-k>", ":resize +2<CR>")
 nnoremap("<M-l>", ":vertical resize -2<CR>")
 nnoremap("<M-h>", ":vertical resize +2<CR>")
-
+------------------------------------------------------------------------------
+-- Line Movement
+------------------------------------------------------------------------------
+-- nnoremap("<A-j>", ":m .+1<CR>==")
+-- nnoremap("<A-k>", ":m .-2<CR>==")
+------------------------------------------------------------------------------
 -- Yank from cursor position to end-of-line
 nnoremap("Y", "y$")
-
+------------------------------------------------------------------------------
 -- Zero should go to the first non-blank character not to the first column (which could be blank)
 -- Zero should go to the first non-blank character not to the first column (which could be blank)
 -- but if already at the first character then jump to the beginning
 --@see: https://github.com/yuki-yano/zero.nvim/blob/main/lua/zero.lua
 nnoremap("0", "getline('.')[0 : col('.') - 2] =~# '^\\s\\+$' ? '0' : '^'", { expr = true })
-
+------------------------------------------------------------------------------
 -- Add Empty space above and below
 nnoremap("[<space>", [[<cmd>put! =repeat(nr2char(10), v:count1)<cr>'[]])
 nnoremap("]<space>", [[<cmd>put =repeat(nr2char(10), v:count1)<cr>]])
-
--- Open url
--- nnoremap["gx"] = ":sil !xdg-open <c-r><c-a><cr>"
-
 -- replicate netrw functionality
 nnoremap("gx", utils.open_link)
-
 ------------------------------------------------------------------------------
 -- Utils
 ------------------------------------------------------------------------------
@@ -267,7 +264,6 @@ nnoremap("<leader>Fz", [[zMzvzz]]) -- Refocus folds
 -- Make zO recursively open whatever top level fold we're in, no matter where the
 -- cursor happens to be.
 nnoremap("zO", [[zCzO]])
-
 ------------------------------------------------------------------------------
 -- Delimiters
 ------------------------------------------------------------------------------
@@ -373,8 +369,12 @@ end
 nnoremap("<localleader>?", [[:lua rvim.mappings.ddg(vim.fn.expand("<cword>"))<cr>]], "search")
 xnoremap("<localleader>?", [["gy:lua rvim.mappings.ddg(vim.api.nvim_eval("@g"))<cr>gv]], "search")
 -- Search Github
-nnoremap("<localleader>L?", [[:lua rvim.mappings.gh(vim.fn.expand("<cword>"))<cr>]], 'gh search')
-xnoremap("<localleader>L?", [["gy:lua rvim.mappings.gh(vim.api.nvim_eval("@g"))<cr>gv]], "gh search")
+nnoremap("<localleader>L?", [[:lua rvim.mappings.gh(vim.fn.expand("<cword>"))<cr>]], "gh search")
+xnoremap(
+  "<localleader>L?",
+  [["gy:lua rvim.mappings.gh(vim.api.nvim_eval("@g"))<cr>gv]],
+  "gh search"
+)
 ------------------------------------------------------------------------------
 -- Personal
 ------------------------------------------------------------------------------
@@ -423,8 +423,3 @@ nnoremap("<C-h>", "<C-w>h")
 nnoremap("<C-j>", "<C-w>j")
 nnoremap("<C-k>", "<C-w>k")
 nnoremap("<C-l>", "<C-w>l")
-------------------------------------------------------------------------------
--- Line Movement
-------------------------------------------------------------------------------
-nnoremap("<A-j>", ":m .+1<CR>==")
-nnoremap("<A-k>", ":m .-2<CR>==")
