@@ -51,7 +51,7 @@ return {
   PmenuThumb = { bg = P.darker_blue },
   WildMenu = { fg = P.fg, bg = P.green },
   Question = { fg = P.yellow },
-  NormalFloat = { fg = P.pale_blue, bg = P.bg },
+  NormalFloat = { fg = P.pale_blue, bg = P.darker_bg },
   TabLineFill = { bg = P.bg },
   TabLineSel = { bg = P.dark_alt },
   StatusLine = { fg = P.base8, bg = P.base2 },
