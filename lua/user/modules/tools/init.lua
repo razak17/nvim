@@ -404,13 +404,9 @@ tools["smjonas/inc-rename.nvim"] = {
     require("inc_rename").setup({
       hl_group = "Visual",
     })
-    rvim.nnoremap("<localleader>lr", function()
+    vim.keymap.set("n", "<leader>rn", function()
       return ":IncRename " .. vim.fn.expand("<cword>")
-    end, {
-      expr = true,
-      silent = false,
-      desc = "lsp: incremental rename",
-    })
+    end, { expr = true, silent = false, desc = "lsp: incremental rename" })
   end,
   disable = not rvim.plugins.tools.inc_rename.active,
 }
