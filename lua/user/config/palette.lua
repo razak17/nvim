@@ -53,7 +53,7 @@ rvim.palette = {
   chartreuse = "#1DC123",
   darker_green = "#98c379",
 
-  cyan = "#14ffff",
+  cyan = "Cyan",
   dirty = "#ABB2BF",
   red_alt = "#E06C75",
   dark_cyan = "#65a7c5",

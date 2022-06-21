@@ -78,10 +78,10 @@ return {
   DiagnosticUnderlineInfo = { undercurl = true, sp = P.blue },
   DiagnosticUnderlineHint = { undercurl = true, sp = P.darker_green },
 
-  DiagnosticVirtualTextError = { fg = P.error_red, bg = util.alter_color(P.pale_red, -80) },
-  DiagnosticVirtualTextWarn = { fg = P.dark_orange, bg = util.alter_color(P.dark_orange, -80) },
-  DiagnosticVirtualTextInfo = { fg = P.pale_blue, bg = util.alter_color(P.pale_blue, -80) },
-  DiagnosticVirtualTextHint = { fg = P.dark_green, bg = util.alter_color(P.darker_green, -80) },
+  DiagnosticVirtualTextError = { fg = P.error_red, bg = P.pale_red },
+  DiagnosticVirtualTextWarn = { fg = P.dark_orange, bg = P.dark_orange },
+  DiagnosticVirtualTextInfo = { fg = P.pale_blue, bg = P.pale_blue },
+  DiagnosticVirtualTextHint = { fg = P.dark_green, bg = P.darker_green },
 
   LspReferenceRead = { bg = P.base4 },
   LspReferenceText = { bg = P.base4 },
@@ -150,7 +150,7 @@ return {
   DashboardShortCut = { fg = P.darker_blue },
   DashboardHeader = { fg = P.blue },
   DashboardCenter = { fg = P.blue },
-  DashboardFooter = { fg = P.dark_cyan, bold = true },
+  DashboardFooter = { fg = P.dark_cyan },
 
   WhichKey = { fg = P.pink },
   WhichKeyName = { fg = P.yellow },
