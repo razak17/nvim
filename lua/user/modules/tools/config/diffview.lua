@@ -1,8 +1,5 @@
 return function()
   require("diffview").setup({
-    default_args = {
-      DiffviewOpen = { "origin/HEAD" },
-    },
     hooks = {
       diff_buf_read = function()
         vim.opt_local.wrap = false
