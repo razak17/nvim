@@ -32,6 +32,7 @@ plug_utils.enable_plugins(module, enabled)
 local disabled = {
   "nvimtree",
   "specs",
+  "doom",
 }
 plug_utils.disable_plugins(module, disabled)
 
@@ -146,6 +147,18 @@ ui["itchyny/vim-highlighturl"] = {
 
 ui["EdenEast/nightfox.nvim"] = {
   disable = not rvim.plugins.ui.nightfox.active,
+}
+
+ui["NTBBloodbath/doom-one.nvim"] = {
+  config = function()
+    require("doom-one").setup({
+      pumblend = {
+        enable = true,
+        transparency_amount = 3,
+      },
+    })
+  end,
+  disable = not rvim.plugins.ui.doom.active,
 }
 
 ui["RRethy/vim-illuminate"] = {

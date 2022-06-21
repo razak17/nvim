@@ -118,6 +118,6 @@ return {
   TSVariable = { fg = P.red_alt },
   TSPunctBracket = { fg = P.bracket },
   TSConstructor = { fg = P.teal },
-  TSFuncBuiltin = {fg = P.dark_cyan},
+  TSFuncBuiltin = {fg = P.cyan},
   TSField = {fg = P.dirty}
 }
