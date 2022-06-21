@@ -62,20 +62,12 @@ local function general_overrides()
     commentTSDanger = { background = P.dark_green, foreground = P.base0, bold = true },
     commentTSNote = { background = P.blue, foreground = P.base0, bold = true },
 
-    DiagnosticError = { foreground = P.error_red },
-    DiagnosticWarning = { foreground = P.dark_orange },
-    DiagnosticInfo = { foreground = P.blue },
-    DiagnosticHint = { foreground = P.darker_green },
     LspCodeLens = { link = "NonText" },
     LspReferenceText = { underline = true, background = "NONE" },
     LspReferenceRead = { underline = true, background = "NONE" },
     -- This represents when a reference is assigned which is more interesting than regular
     -- occurrences so should be highlighted more distinctly
     LspReferenceWrite = { underline = true, bold = true, italic = true, background = "NONE" },
-    DiagnosticVirtualTextError = { background = util.alter_color(P.pale_red, -80) },
-    DiagnosticVirtualTextWarn = { background = util.alter_color(P.dark_orange, -80) },
-    DiagnosticVirtualTextInfo = { background = util.alter_color(P.pale_blue, -80) },
-    DiagnosticVirtualTextHint = { background = util.alter_color(P.darker_green, -80) },
 
     -- Matchup
     MatchWord = { fg = P.red, underline = false, cterm = { underline = false } },

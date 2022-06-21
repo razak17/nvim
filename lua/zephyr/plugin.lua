@@ -1,6 +1,10 @@
 local P = rvim.palette
 local util = require("user.utils.highlights")
 
+local function fade(color)
+  return util.alter_color(color, -80)
+end
+
 return {
   vimCommentTitle = { fg = P.grey, bold = true },
   vimLet = { fg = P.orange },
@@ -78,10 +82,10 @@ return {
   DiagnosticUnderlineInfo = { undercurl = true, sp = P.blue },
   DiagnosticUnderlineHint = { undercurl = true, sp = P.darker_green },
 
-  DiagnosticVirtualTextError = { fg = P.error_red, bg = P.pale_red },
-  DiagnosticVirtualTextWarn = { fg = P.dark_orange, bg = P.dark_orange },
-  DiagnosticVirtualTextInfo = { fg = P.pale_blue, bg = P.pale_blue },
-  DiagnosticVirtualTextHint = { fg = P.dark_green, bg = P.darker_green },
+  DiagnosticVirtualTextError = { fg = P.error_red, bg = fade(P.pale_red) },
+  DiagnosticVirtualTextWarn = { fg = P.dark_orange, bg = fade(P.dark_orange) },
+  DiagnosticVirtualTextInfo = { fg = P.pale_blue, bg = fade(P.pale_blue) },
+  DiagnosticVirtualTextHint = { fg = P.dark_green, bg = fade(P.darker_green) },
 
   LspReferenceRead = { bg = P.base4 },
   LspReferenceText = { bg = P.base4 },
