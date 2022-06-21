@@ -2,13 +2,13 @@ local P = rvim.palette
 local util = require("user.utils.highlights")
 
 local function general_overrides()
-  local comment_fg = util.get_hl("Comment", "fg")
-  local keyword_fg = util.get_hl("Keyword", "fg")
-  local search_bg = util.get_hl("Search", "bg")
+  local comment_fg = util.get("Comment", "fg")
+  local keyword_fg = util.get("Keyword", "fg")
+  local search_bg = util.get("Search", "bg")
   -- local error_line = util.alter_color(P.error_red, -80)
   local msg_area_bg = rvim.util.transparent_window and "NONE" or P.darker_bg
   util.all({
-    -- WinSeparator = { background = "NONE", foreground = util.get_hl("VertSplit", "fg") },
+    -- WinSeparator = { background = "NONE", foreground = util.get("VertSplit", "fg") },
     MsgArea = { background = msg_area_bg },
     mkdLineBreak = { link = "NONE" },
     -- Directory = { inherit = "Keyword", bold = true },
@@ -83,10 +83,10 @@ local function general_overrides()
 end
 
 local function set_sidebar_highlight()
-  -- local normal_bg = rvim.util.transparent_window and "NONE" or M.get_hl("Normal", "bg")..
-  local split_color = util.get_hl("VertSplit", "fg")
+  -- local normal_bg = rvim.util.transparent_window and "NONE" or M.get("Normal", "bg")..
+  local split_color = util.get("VertSplit", "fg")
   local bg_color = util.alter_color(P.bg, -20)
-  local st_color = util.alter_color(util.get_hl("Visual", "bg"), -10)
+  local st_color = util.alter_color(util.get("Visual", "bg"), -10)
   util.all({
     PanelBackground = { link = "Normal" },
     PanelHeading = { background = bg_color, bold = true },

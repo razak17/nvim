@@ -8,6 +8,6 @@ return function()
         buftype = { "terminal", "quickfix", "nofile" },
       },
     },
-    other_win_hl_color = require("user.utils.highlights").get_hl("Visual", "bg"),
+    other_win_hl_color = require("user.utils.highlights").get("Visual", "bg"),
   })
 end

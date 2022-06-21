@@ -10,7 +10,7 @@ local fmt = string.format
 ---@param reset boolean?
 function M.tmux.set_statusline(reset)
   -- TODO: we should correctly derive the previous bg value automatically
-  local bg = reset and "#373d48" or u.get_hl("Normal", "bg")
+  local bg = reset and "#373d48" or u.get("Normal", "bg")
   fn.jobstart(fmt("tmux set-option -g status-style bg=%s", bg))
 end
 
@@ -30,7 +30,7 @@ function M.title_string()
   if not hl then
     return (icon or "") .. " "
   end
-  local title_string = fmt("%s #[fg=%s]%s ", dir, u.get_hl(hl, "fg"), icon)
+  local title_string = fmt("%s #[fg=%s]%s ", dir, u.get(hl, "fg"), icon)
   local has_tmux = vim.env.TMUX ~= nil
   -- fn.jobstart(fmt("tmux set-titles-string '%s'", title_string))
   return has_tmux and title_string or dir .. " " .. icon

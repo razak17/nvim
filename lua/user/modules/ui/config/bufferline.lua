@@ -7,7 +7,7 @@ return function()
   local P = rvim.palette
   local groups = require("bufferline.groups")
   local util = require("user.utils.highlights")
-  local normal_bg = util.get_hl("Normal", "bg")
+  local normal_bg = util.get("Normal", "bg")
   local darker_bg = util.alter_color(normal_bg, -1)
   local bg = rvim.util.transparent_window == true and "none" or P.dark
   local fg_def = P.base88

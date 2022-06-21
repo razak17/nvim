@@ -113,7 +113,7 @@ ui["edluffy/specs.nvim"] = {
 ui["zbirenbaum/neodim"] = {
   config = function()
     require("neodim").setup({
-      blend_color = require("user.utils.highlights").get_hl("Normal", "bg"),
+      blend_color = require("user.utils.highlights").get("Normal", "bg"),
       alpha = 0.45,
       hide = {
         underline = false,
@@ -139,7 +139,7 @@ ui["s1n7ax/nvim-window-picker"] = {
 
 ui["itchyny/vim-highlighturl"] = {
   config = function()
-    vim.g.highlighturl_guifg = require("user.utils.highlights").get_hl("URL", "fg")
+    vim.g.highlighturl_guifg = require("user.utils.highlights").get("URL", "fg")
   end,
   disable = not rvim.plugins.ui.vim_highlighturl.active,
 }

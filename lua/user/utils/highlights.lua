@@ -71,13 +71,13 @@ function M.adopt_winhighlight(win_id, target, name, fallback)
     return fallback
   end
   local hl_group = vim.split(found, ":")[2]
-  local bg = M.get_hl(hl_group, "bg")
+  local bg = M.get(hl_group, "bg")
   M.set_hl(win_hl_name, { background = bg, inherit = fallback })
   return win_hl_name
 end
 
 ---@param group_name string A highlight group name
-local function get_hl(group_name)
+local function get(group_name)
   local ok, hl = pcall(api.nvim_get_hl_by_name, group_name, true)
   if ok then
     hl.foreground = hl.foreground and "#" .. bit.tohex(hl.foreground, 6)
@@ -102,7 +102,7 @@ end
 local function convert_hl_to_val(opts)
   for name, value in pairs(opts) do
     if type(value) == "table" and value.from then
-      opts[name] = M.get_hl(value.from, vim.F.if_nil(value.attribute, name))
+      opts[name] = M.get(value.from, vim.F.if_nil(value.attribute, name))
     end
   end
 end
@@ -111,7 +111,7 @@ end
 ---@param opts table
 function M.set_hl(name, opts)
   assert(name and opts, "Both 'name' and 'opts' must be specified")
-  local hl = get_hl(opts.inherit or name)
+  local hl = get(opts.inherit or name)
   convert_hl_to_val(opts)
   opts.inherit = nil
   local ok, msg = pcall(api.nvim_set_hl, 0, name, vim.tbl_deep_extend("force", hl, opts))
@@ -126,12 +126,12 @@ end
 ---@param attribute string?
 ---@param fallback string?
 ---@return string
-function M.get_hl(group, attribute, fallback)
+function M.get(group, attribute, fallback)
   if not group then
     vim.notify("Cannot get a highlight without specifying a group", levels.ERROR)
     return "NONE"
   end
-  local hl = get_hl(group)
+  local hl = get(group)
   if not attribute then
     return hl
   end
