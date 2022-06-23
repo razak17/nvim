@@ -66,10 +66,6 @@ function M.global_on_attach(client, bufnr)
     utils.setup_code_lens_refresh(client, bufnr)
   end
 
-  if rvim.lsp.hover_diagnostics then
-    utils.setup_hover_diagnostics(bufnr)
-  end
-
   keymaps.init(client)
 
   utils.setup_setup_tagfunc(client, bufnr)

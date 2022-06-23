@@ -46,10 +46,33 @@ local function check_hi(client)
   return status_ok, highlight_supported
 end
 
+-- Show the popup diagnostics window, but only once for the current cursor location
+-- by checking whether the word under the cursor has changed.
+local function diagnostic_popup()
+  local cword = vim.fn.expand("<cword>")
+  if cword ~= vim.w.lsp_diagnostics_cword then
+    vim.w.lsp_diagnostics_cword = cword
+    vim.diagnostic.open_float(0, { scope = "cursor", focus = false })
+  end
+end
+
 function M.setup_document_highlight(client, bufnr)
   local status_ok, highlight_supported = check_hi(client)
   if not status_ok or not highlight_supported then
     return
+  end
+
+  if rvim.lsp.hover_diagnostics then
+    rvim.augroup("HoverDiagnostics", {
+      {
+        event = { "CursorHold" },
+        buffer = bufnr,
+        desc = "Show diagnostics",
+        command = function()
+          diagnostic_popup()
+        end,
+      },
+    })
   end
 
   rvim.augroup("LspCursorCommands", {
@@ -57,7 +80,9 @@ function M.setup_document_highlight(client, bufnr)
       event = { "CursorHold", "CursorHoldI" },
       buffer = bufnr,
       desc = "LSP: Document Highlight",
-      command = vim.lsp.buf.document_highlight,
+      command = function()
+        vim.lsp.buf.document_highlight()
+      end,
     },
     {
       event = { "CursorMoved" },
@@ -99,33 +124,8 @@ function M.setup_code_lens_refresh(client, bufnr)
     {
       event = { "BufEnter", "CursorHold", "InsertLeave" },
       buffer = bufnr,
-      command = "lua vim.lsp.codelens.refresh()",
-    },
-  })
-end
-
--- Show the popup diagnostics window, but only once for the current cursor location
--- by checking whether the word under the cursor has changed.
-local function diagnostic_popup()
-  local cword = vim.fn.expand("<cword>")
-  if cword ~= vim.w.lsp_diagnostics_cword then
-    vim.w.lsp_diagnostics_cword = cword
-    vim.diagnostic.open_float(0, { scope = "cursor", focus = false })
-  end
-end
-
-function M.setup_hover_diagnostics(client, bufnr)
-  local status_ok, highlight_supported = check_hi(client)
-  if not status_ok or not highlight_supported then
-    return
-  end
-
-  rvim.augroup("HoverDiagnostics", {
-    {
-      event = { "CursorHold" },
-      buffer = bufnr,
       command = function()
-        diagnostic_popup()
+        vim.lsp.codelens.refresh()
       end,
     },
   })
