@@ -190,7 +190,6 @@ M.load_default_options = function()
   vim.opt.shortmess:append("c")
   vim.opt.iskeyword:append("-")
   vim.opt.shadafile = join_paths(rvim.get_cache_dir(), "shada", "rvim.shada")
-  vim.opt.cursorlineopt = "screenline,number"
   vim.opt.spellsuggest:prepend({ 12 })
   vim.opt.spelloptions = "camel"
   vim.opt.spelllang:append("programming")

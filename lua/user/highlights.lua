@@ -14,7 +14,7 @@ local function general_overrides()
     -- Directory = { inherit = "Keyword", bold = true },
     URL = { foreground = P.darker_blue, underline = true },
     -----------------------------------------------------------------------------//
-    CursorLineNr = { foreground = { from = "Keyword" } },
+    CursorLineSign = { link = "CursorLine" },
     LineNr = { background = "NONE" },
     FoldColumn = { background = "background" },
     TermCursor = { ctermfg = "green", foreground = "royalblue" },
