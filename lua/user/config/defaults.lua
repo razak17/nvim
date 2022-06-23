@@ -67,6 +67,7 @@ rvim.util = {
   },
   save_on_focus_lost = true,
   format_on_focus_lost = false,
+  autoinstall_ts_parsers = true,
   debug = false,
   defer = false,
 }

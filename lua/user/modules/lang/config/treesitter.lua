@@ -26,13 +26,15 @@ function rvim.treesitter.ensure_parser_installed()
 end
 
 return function()
-  rvim.augroup("TSParserCheck", {
-    {
-      event = "FileType",
-      desc = "Treesitter: install missing parsers",
-      command = rvim.treesitter.ensure_parser_installed,
-    },
-  })
+  if rvim.util.autoinstall_ts_parsers then
+    rvim.augroup("TSParserCheck", {
+      {
+        event = "FileType",
+        desc = "Treesitter: install missing parsers",
+        command = rvim.treesitter.ensure_parser_installed,
+      },
+    })
+  end
 
   rvim.treesitter = {
     setup = {
