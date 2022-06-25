@@ -91,18 +91,6 @@ return function()
     end
   end
 
-  -- FIXME: this should not be required if we were using a prompt buffer in telescope i.e. prompt prefix
-  -- Deactivate cmp in telescope prompt buffer
-  rvim.augroup("CmpConfig", {
-    {
-      event = { "FileType" },
-      pattern = { "TelescopePrompt" },
-      command = function()
-        cmp.setup.buffer({ completion = { autocomplete = false } })
-      end,
-    },
-  })
-
   rvim.cmp = {
     setup = {
       preselect = cmp.PreselectMode.None,
@@ -110,17 +98,27 @@ return function()
         completion = cmp.config.window.bordered(cmp_window),
         documentation = cmp.config.window.bordered(cmp_window),
       },
-      confirm_opts = {
-        behavior = cmp.ConfirmBehavior.Replace,
-        select = false,
+      snippet = {
+        expand = function(args)
+          require("luasnip").lsp_expand(args.body)
+        end,
       },
-      completion = {
-        ---@usage The minimum length of a word to complete on.
-        keyword_length = 1,
-      },
-      experimental = {
-        ghost_text = true,
-        native_menu = false,
+      mapping = {
+        ["<c-h>"] = cmp.mapping(function()
+          api.nvim_feedkeys(fn["copilot#Accept"](t("<Tab>")), "n", true)
+        end),
+        ["<C-k>"] = cmp.mapping.select_prev_item(),
+        ["<C-j>"] = cmp.mapping.select_next_item(),
+        ["<C-d>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
+        ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
+        ["<Tab>"] = cmp.mapping(tab, { "i", "s", "c" }),
+        ["<S-Tab>"] = cmp.mapping(shift_tab, { "i", "s", "c" }),
+        ["<C-q>"] = cmp.mapping({
+          i = cmp.mapping.abort(),
+          c = cmp.mapping.close(),
+        }),
+        ["<C-space>"] = cmp.mapping.complete(),
+        ["<CR>"] = cmp.mapping.confirm({ select = false }), -- If nothing is selected don't complete
       },
       formatting = {
         deprecated = true,
@@ -142,13 +140,6 @@ return function()
           dictionary = "(Dict)",
           cmdline_history = "(Hist)",
         },
-        duplicates = {
-          buffer = 1,
-          path = 1,
-          nvim_lsp = 0,
-          luasnip = 1,
-        },
-        duplicates_default = 0,
         format = function(entry, vim_item)
           local MAX = math.floor(vim.o.columns * 0.5)
           vim_item.abbr = #vim_item.abbr >= MAX and string.sub(vim_item.abbr, 1, MAX) .. ellipsis
@@ -159,14 +150,7 @@ return function()
             vim_item.kind = rvim.style.codicons.kind[vim_item.kind]
           end
           vim_item.menu = rvim.cmp.setup.formatting.source_names[entry.source.name]
-          vim_item.dup = rvim.cmp.setup.formatting.duplicates[entry.source.name]
-            or rvim.cmp.setup.formatting.duplicates_default
           return vim_item
-        end,
-      },
-      snippet = {
-        expand = function(args)
-          require("luasnip").lsp_expand(args.body)
         end,
       },
       sources = {
@@ -197,26 +181,6 @@ return function()
         { name = "npm", keyword_length = 4 },
         { name = "cmdline_history" },
       },
-      mapping = {
-        ["<c-h>"] = cmp.mapping(function()
-          api.nvim_feedkeys(fn["copilot#Accept"](t("<Tab>")), "n", true)
-        end),
-        ["<C-k>"] = cmp.mapping.select_prev_item(),
-        ["<C-j>"] = cmp.mapping.select_next_item(),
-        ["<C-d>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
-        ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
-        ["<Tab>"] = cmp.mapping(tab, { "i", "s", "c" }),
-        ["<S-Tab>"] = cmp.mapping(shift_tab, { "i", "s", "c" }),
-        ["<C-q>"] = cmp.mapping({
-          i = cmp.mapping.abort(),
-          c = cmp.mapping.close(),
-        }),
-        ["<C-space>"] = cmp.mapping.complete(),
-        ["<CR>"] = cmp.mapping.confirm({
-          behavior = cmp.ConfirmBehavior.Replace,
-          select = false, -- If nothing is selected don't complete
-        }),
-      },
     },
   }
 
@@ -228,7 +192,7 @@ return function()
     sources = cmp.config.sources({
       { name = "nvim_lsp_document_symbol" },
     }, {
-      { name = "fuzzy_buffer" },
+      { name = "buffer" },
     }),
   }
 
@@ -237,7 +201,20 @@ return function()
   cmp.setup.cmdline(":", {
     sources = cmp.config.sources({
       { name = "cmdline", keyword_pattern = [=[[^[:blank:]\!]*]=] },
+      { name = "cmdline_history" },
       { name = "path" },
     }),
+  })
+
+  -- FIXME: this should not be required if we were using a prompt buffer in telescope i.e. prompt prefix
+  -- Deactivate cmp in telescope prompt buffer
+  rvim.augroup("CmpConfig", {
+    {
+      event = { "FileType" },
+      pattern = { "TelescopePrompt" },
+      command = function()
+        cmp.setup.buffer({ completion = { autocomplete = false } })
+      end,
+    },
   })
 end

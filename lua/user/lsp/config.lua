@@ -112,6 +112,7 @@ rvim.lsp = {
     Reference = "PreProc",
     Constant = "Constant",
     Struct = "Type",
+    Snippet = "Label",
     Event = "Variable",
     Operator = "Operator",
     TypeParameter = "Type",
