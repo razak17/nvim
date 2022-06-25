@@ -46,8 +46,9 @@ M.load_default_options = function()
     matchtime = 1,
 
     -- Spelling
-    spelllang = { "en" },
-    spell = false,
+    -- spelllang = { "en" },
+    spell = true,
+    spelloptions = "camel",
     spellfile = join_paths(rvim.get_config_dir(), "spell", "en.utf-8.add"),
     fileformats = { "unix", "mac", "dos" }, -- don't check for capital letters at start of sentence
 
@@ -191,9 +192,7 @@ M.load_default_options = function()
   vim.opt.iskeyword:append("-")
   vim.opt.shadafile = join_paths(rvim.get_cache_dir(), "shada", "rvim.shada")
   vim.opt.spellsuggest:prepend({ 12 })
-  vim.opt.spelloptions = "camel"
   vim.opt.spelllang:append("programming")
-  vim.opt.fileformats = { "unix", "mac", "dos" }
 
   for k, v in pairs(default_options) do
     vim.opt[k] = v
