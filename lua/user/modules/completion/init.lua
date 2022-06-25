@@ -15,7 +15,9 @@ local enabled = {
 }
 plug_utils.enable_plugins(module, enabled)
 
-local disabled = {}
+local disabled = {
+  "vim_copilot",
+}
 plug_utils.disable_plugins(module, disabled)
 
 completion["folke/which-key.nvim"] = {
@@ -30,60 +32,53 @@ completion["hrsh7th/nvim-cmp"] = {
 }
 
 completion["L3MON4D3/LuaSnip"] = {
-  event = "InsertEnter",
   module = "luasnip",
   requires = "rafamadriz/friendly-snippets",
   config = conf(module, "luasnip"),
   disable = not rvim.plugins.completion.luasnip.active,
 }
 
+completion["zbirenbaum/copilot-cmp"] = {
+  module = "copilot_cmp",
+}
+
 completion["hrsh7th/cmp-nvim-lsp"] = {
-  event = "InsertEnter",
   disable = not rvim.plugins.completion.cmp.active,
 }
 
 completion["hrsh7th/cmp-nvim-lua"] = {
-  event = "InsertEnter",
   disable = not rvim.plugins.completion.cmp.active,
 }
 
 completion["hrsh7th/cmp-nvim-lsp-document-symbol"] = {
-  event = "InsertEnter",
   disable = not rvim.plugins.completion.cmp.active,
 }
 
 completion["saadparwaiz1/cmp_luasnip"] = {
-  event = "InsertEnter",
   disable = not rvim.plugins.completion.cmp.active,
 }
 
 completion["hrsh7th/cmp-buffer"] = {
-  event = "InsertEnter",
   disable = not rvim.plugins.completion.cmp.active,
 }
 
 completion["hrsh7th/cmp-path"] = {
-  event = "InsertEnter",
   disable = not rvim.plugins.completion.cmp.active,
 }
 
 completion["hrsh7th/cmp-cmdline"] = {
-  event = "InsertEnter",
   disable = not rvim.plugins.completion.cmp.active,
 }
 
 completion["f3fora/cmp-spell"] = {
-  event = "InsertEnter",
   disable = not rvim.plugins.completion.cmp.active,
 }
 
 completion["hrsh7th/cmp-emoji"] = {
-  event = "InsertEnter",
   disable = not rvim.plugins.completion.cmp.active,
 }
 
 completion["octaltree/cmp-look"] = {
-  event = "InsertEnter",
   disable = not rvim.plugins.completion.cmp.active,
 }
 
@@ -94,7 +89,6 @@ completion["petertriho/cmp-git"] = {
       filetypes = { "gitcommit", "NeogitCommitMessage" },
     })
   end,
-  disable = not rvim.plugins.completion.cmp.active,
 }
 
 completion["David-Kunz/cmp-npm"] = {
@@ -102,17 +96,14 @@ completion["David-Kunz/cmp-npm"] = {
   config = function()
     require("cmp-npm").setup({})
   end,
-  disable = not rvim.plugins.completion.cmp.active,
 }
 
 completion["uga-rosa/cmp-dictionary"] = {
   event = "InsertEnter",
-  disable = not rvim.plugins.completion.cmp.active,
 }
 
 completion["dmitmel/cmp-cmdline-history"] = {
   event = "InsertEnter",
-  disable = not rvim.plugins.completion.cmp.active,
 }
 
 completion["github/copilot.vim"] = {
@@ -133,6 +124,31 @@ completion["github/copilot.vim"] = {
       ["dap-repl"] = false,
     }
     require("user.utils.highlights").plugin("copilot", { CopilotSuggestion = { link = "Comment" } })
+  end,
+  disable = not rvim.plugins.completion.vim_copilot.active,
+}
+
+completion["zbirenbaum/copilot.lua"] = {
+  event = { "VimEnter" },
+  config = function()
+    require("copilot").setup({
+      cmp = {
+        enabled = true,
+        method = "getPanelCompletions",
+      },
+      panel = { -- no config options yet
+        enabled = true,
+      },
+      ft_disable = {
+        "markdown",
+        "gitcommit",
+        "NeogitCommitMessage",
+        "DressingInput",
+        "TelescopePrompt",
+        "neo-tree-popup",
+        "dap-repl",
+      },
+    })
   end,
   disable = not rvim.plugins.completion.copilot.active,
 }

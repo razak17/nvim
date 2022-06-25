@@ -446,7 +446,7 @@ tools["SmiteshP/nvim-navic"] = {
     local icons = rvim.map(function(icon, key)
       highlights.set_hl(("NavicIcons%s"):format(key), { link = rvim.lsp.kind_highlights[key] })
       return icon .. " "
-    end, s.icons.codicons.kind)
+    end, s.codicons.kind)
 
     require("nvim-navic").setup({
       icons = icons,

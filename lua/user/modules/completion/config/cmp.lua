@@ -6,7 +6,6 @@ return function()
 
   local fn = vim.fn
   local api = vim.api
-  local fmt = string.format
 
   local t = rvim.replace_termcodes
   local border = rvim.style.border.current
@@ -127,11 +126,12 @@ return function()
         deprecated = true,
         fields = { "kind", "abbr", "menu" },
         source_names = {
+          copilot = "(CP)",
           nvim_lsp = "(LSP)",
           nvim_lua = "(Lua)",
           luasnip = "(SN)",
           path = "(Path)",
-          buffer = "(B)",
+          buffer = "(Buf)",
           spell = "(SP)",
           cmdline = "(Cmd)",
           git = "(Git)",
@@ -139,7 +139,7 @@ return function()
           emoji = "(E)",
           look = "(Look)",
           npm = "(NPM)",
-          dictionary = "(D)",
+          dictionary = "(Dict)",
           cmdline_history = "(Hist)",
         },
         duplicates = {
@@ -153,7 +153,11 @@ return function()
           local MAX = math.floor(vim.o.columns * 0.5)
           vim_item.abbr = #vim_item.abbr >= MAX and string.sub(vim_item.abbr, 1, MAX) .. ellipsis
             or vim_item.abbr
-          vim_item.kind = rvim.style.icons.codicons.kind[vim_item.kind]
+          if entry.source.name == "copilot" then
+            vim_item.kind = rvim.style.icons.misc.octoface
+          else
+            vim_item.kind = rvim.style.codicons.kind[vim_item.kind]
+          end
           vim_item.menu = rvim.cmp.setup.formatting.source_names[entry.source.name]
           vim_item.dup = rvim.cmp.setup.formatting.duplicates[entry.source.name]
             or rvim.cmp.setup.formatting.duplicates_default
@@ -166,6 +170,7 @@ return function()
         end,
       },
       sources = {
+        { name = "copilot" },
         { name = "nvim_lsp" },
         { name = "nvim_lua" },
         { name = "luasnip" },
@@ -200,8 +205,8 @@ return function()
         ["<C-j>"] = cmp.mapping.select_next_item(),
         ["<C-d>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
         ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
-        ["<Tab>"] = cmp.mapping(tab, { "i", "s", "c" }),
-        ["<S-Tab>"] = cmp.mapping(shift_tab, { "i", "s", "c" }),
+        -- ["<Tab>"] = cmp.mapping(tab, { "i", "s", "c" }),
+        -- ["<S-Tab>"] = cmp.mapping(shift_tab, { "i", "s", "c" }),
         ["<C-q>"] = cmp.mapping({
           i = cmp.mapping.abort(),
           c = cmp.mapping.close(),
