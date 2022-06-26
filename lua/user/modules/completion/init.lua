@@ -12,12 +12,11 @@ local enabled = {
   "luasnip",
   "friendly_snippets",
   "copilot",
+  "vim_copilot",
 }
 plug_utils.enable_plugins(module, enabled)
 
-local disabled = {
-  "vim_copilot",
-}
+local disabled = {}
 plug_utils.disable_plugins(module, disabled)
 
 completion["folke/which-key.nvim"] = {
@@ -40,6 +39,7 @@ completion["L3MON4D3/LuaSnip"] = {
 
 completion["zbirenbaum/copilot-cmp"] = {
   module = "copilot_cmp",
+  disable = not rvim.plugins.completion.copilot.active,
 }
 
 completion["hrsh7th/cmp-nvim-lsp"] = {
