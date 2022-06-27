@@ -1,13 +1,11 @@
 local M = {}
 local Log = require("user.core.log")
 
-function M.global_capabilities()
-  local capabilities = vim.lsp.protocol.make_client_capabilities()
-  capabilities.textDocument.completion.completionItem.snippetSupport = true
-  capabilities.textDocument.completion.completionItem.resolveSupport = {
+local function setup_capabilities()
+  local snippet = {
     properties = { "documentation", "detail", "additionalTextEdits" },
   }
-  capabilities.textDocument.codeAction = {
+  local code_action = {
     dynamicRegistration = false,
     codeActionLiteralSupport = {
       codeActionKind = {
@@ -19,27 +17,26 @@ function M.global_capabilities()
       },
     },
   }
-  capabilities.textDocument.foldingRange = {
+  local fold = {
     dynamicRegistration = false,
     lineFoldingOnly = true,
   }
+  return snippet, code_action, fold
+end
 
+function M.global_capabilities()
+  local capabilities = vim.lsp.protocol.make_client_capabilities()
+  local snippet_support, code_action_support, folding_range_support = setup_capabilities()
+  capabilities.textDocument.completion.completionItem.snippetSupport = true
+  capabilities.textDocument.completion.completionItem.resolveSupport = snippet_support
+  capabilities.textDocument.codeAction = code_action_support
+  capabilities.textDocument.foldingRange = folding_range_support
   local ok, cmp_nvim_lsp = rvim.safe_require("cmp_nvim_lsp")
   if ok then
     cmp_nvim_lsp.update_capabilities(capabilities)
   end
 
   return capabilities
-end
-
-function M.global_on_exit(_, _)
-  if rvim.lsp.document_highlight then
-    pcall(vim.api.nvim_del_augroup_by_name, "LspCursorCommands")
-  end
-
-  if rvim.lsp.code_lens_refresh then
-    pcall(vim.api.nvim_del_augroup_by_name, "LspCodeLensRefresh")
-  end
 end
 
 function M.global_on_init(client, bufnr)
@@ -50,19 +47,10 @@ function M.global_on_init(client, bufnr)
   end
 end
 
-local function bootstrap_nlsp(opts)
-  opts = opts or {}
-  local lsp_settings_status_ok, lsp_settings = rvim.safe_require("nlspsettings")
-  if lsp_settings_status_ok then
-    lsp_settings.setup(opts)
-  end
-end
-
 function M.get_global_opts()
   return {
     on_attach = rvim.lsp.on_attach,
     on_init = M.global_on_init,
-    on_exit = M.common_on_exit,
     capabilities = M.global_capabilities(),
   }
 end
@@ -75,13 +63,15 @@ function M.setup()
     return
   end
 
-  bootstrap_nlsp({
-    config_home = join_paths(rvim.get_user_dir(), "lsp", "lsp-settings"),
-    append_default_schemas = true,
-  })
+  local nlsp_status_ok, lsp_settings = rvim.safe_require("nlspsettings")
+  if nlsp_status_ok then
+    lsp_settings.setup({
+      config_home = join_paths(rvim.get_user_dir(), "lsp", "lsp-settings"),
+      append_default_schemas = true,
+    })
+  end
 
   require("nvim-lsp-installer").setup(rvim.lsp.installer.setup)
-
   require("user.lsp.null-ls").setup()
 end
 

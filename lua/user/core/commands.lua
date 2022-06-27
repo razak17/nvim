@@ -38,10 +38,6 @@ command("LuaInvalidate", function(pattern)
   rvim.invalidate(pattern, true)
 end, { nargs = 1 })
 
-command("LspFormat", function()
-  require("user.utils.lsp").format()
-end)
-
 -- Packer
 command("PlugCompile", [[lua require('user.core.plugins').compile()]])
 command("PlugInstall", [[lua require('user.core.plugins').install()]])

@@ -161,6 +161,49 @@ rvim.augroup("LspSetupCommands", {
     end,
   },
 })
+-----------------------------------------------------------------------------//
+-- Commands
+-----------------------------------------------------------------------------//
+local command = rvim.command
+
+command("LspFormat", function()
+  require("user.utils.lsp").format()
+end)
+
+-- A helper function to auto-update the quickfix list when new diagnostics come
+-- in and close it once everything is resolved. This functionality only runs whilst
+-- the list is open.
+-- similar functionality is provided by: https://github.com/onsails/diaglist.nvim
+local function make_diagnostic_qf_updater()
+  local cmd_id = nil
+  return function()
+    if not api.nvim_buf_is_valid(0) then
+      return
+    end
+    vim.diagnostic.setqflist({ open = false })
+    rvim.toggle_list('quickfix')
+    if not rvim.is_vim_list_open() and cmd_id then
+      api.nvim_del_autocmd(cmd_id)
+      cmd_id = nil
+    end
+    if cmd_id then
+      return
+    end
+    cmd_id = api.nvim_create_autocmd('DiagnosticChanged', {
+      callback = function()
+        if rvim.is_vim_list_open() then
+          vim.diagnostic.setqflist({ open = false })
+          if #vim.fn.getqflist() == 0 then
+            rvim.toggle_list('quickfix')
+          end
+        end
+      end,
+    })
+  end
+end
+
+command('LspDiagnostics', make_diagnostic_qf_updater())
+rvim.nnoremap('<leader>ll', '<Cmd>LspDiagnostics<CR>', 'toggle quickfix diagnostics')
 
 -----------------------------------------------------------------------------//
 -- Signs
