@@ -26,12 +26,12 @@ local enabled = {
   "window_picker",
   "hlargs",
   "fidget",
+  "beacon",
 }
 plug_utils.enable_plugins(module, enabled)
 
 local disabled = {
   "nvimtree",
-  "specs",
   "doom",
 }
 plug_utils.disable_plugins(module, disabled)
@@ -92,23 +92,33 @@ ui["lukas-reineke/headlines.nvim"] = {
   disable = not rvim.plugins.ui.headlines.active,
 }
 
-ui["edluffy/specs.nvim"] = {
-  event = "BufWinEnter",
-  config = function()
-    -- NOTE: 'DanilaMihailov/beacon.nvim' is an alternative
-    local specs = require("specs")
-    specs.setup({
-      popup = {
-        delay_ms = 10,
-        inc_ms = 10,
-        blend = 10,
-        width = 50,
-        winhl = "PmenuSbar",
-        resizer = specs.slide_resizer,
-      },
-    })
-  end,
-  disable = not rvim.plugins.ui.specs.active,
+ui["rainbowhxch/beacon.nvim"] = {
+      config = function()
+        local beacon = require('beacon')
+        beacon.setup({
+          minimal_jump = 20,
+          ignore_buffers = { 'terminal', 'nofile', 'neorg://Quick Actions' },
+          ignore_filetypes = {
+            'neo-tree',
+            'qf',
+            'NeogitCommitMessage',
+            'NeogitPopup',
+            'NeogitStatus',
+            'packer',
+            'trouble',
+          },
+        })
+        rvim.augroup('BeaconCmds', {
+          {
+            event = 'BufReadPre',
+            pattern = '*.norg',
+            command = function()
+              beacon.beacon_off()
+            end,
+          },
+        })
+      end,
+  disable = not rvim.plugins.ui.beacon.active,
 }
 
 ui["zbirenbaum/neodim"] = {
