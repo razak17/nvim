@@ -1,33 +1,6 @@
-local editor = {}
-
-rvim.plugins.editor = {}
-
 local conf = require("user.utils").load_conf
-local plug_utils = require("user.utils.plugins")
-local module = "editor"
 
-local enabled = {
-  "ajk",
-  "easy_align",
-  "cool",
-  "surround",
-  "colorizer",
-  "kommentary",
-  "fold_cycle",
-  "dial",
-  "surround_funk",
-  "neogen",
-  "tabout",
-  "marks",
-  "vim_uppercase_sql",
-  "vim_dirtytalk",
-}
-plug_utils.enable_plugins(module, enabled)
-
-local disabled = {
-  "cursorword",
-}
-plug_utils.disable_plugins(module, disabled)
+local editor = {}
 
 editor["xiyaowong/accelerated-jk.nvim"] = {
   event = { "BufWinEnter" },
@@ -38,7 +11,6 @@ editor["xiyaowong/accelerated-jk.nvim"] = {
       -- acceleration_limit = 150,
     })
   end,
-  disable = not rvim.plugins.editor.ajk.active,
 }
 
 editor["tpope/vim-surround"] = {
@@ -47,13 +19,11 @@ editor["tpope/vim-surround"] = {
     rvim.xmap("S", "<Plug>VSurround")
     rvim.xmap("S", "<Plug>VSurround")
   end,
-  disable = not rvim.plugins.editor.surround.active,
 }
 
 editor["monaqa/dial.nvim"] = {
   event = { "BufWinEnter" },
-  config = conf(module, "dial"),
-  disable = not rvim.plugins.editor.dial.active,
+  config = conf("editor", "dial"),
 }
 
 editor["junegunn/vim-easy-align"] = {
@@ -63,7 +33,6 @@ editor["junegunn/vim-easy-align"] = {
     rvim.vmap("<Enter>", "<Plug>(EasyAlign)")
   end,
   event = { "BufReadPre", "BufNewFile" },
-  disable = not rvim.plugins.editor.easy_align.active,
 }
 
 editor["xiyaowong/nvim-cursorword"] = {
@@ -71,7 +40,7 @@ editor["xiyaowong/nvim-cursorword"] = {
   config = function()
     vim.cmd([[hi! CursorWord cterm=NONE gui=NONE guibg=#3f444a]])
   end,
-  disable = not rvim.plugins.editor.cursorword.active,
+  disable = true,
 }
 
 editor["norcalli/nvim-colorizer.lua"] = {
@@ -88,7 +57,6 @@ editor["norcalli/nvim-colorizer.lua"] = {
       mode = "background",
     })
   end,
-  disable = not rvim.plugins.editor.colorizer.active,
 }
 
 editor["romainl/vim-cool"] = {
@@ -96,7 +64,6 @@ editor["romainl/vim-cool"] = {
   config = function()
     vim.g.CoolTotalMatches = 1
   end,
-  disable = not rvim.plugins.editor.cool.active,
 }
 
 editor["jghauser/fold-cycle.nvim"] = {
@@ -106,7 +73,6 @@ editor["jghauser/fold-cycle.nvim"] = {
       require("fold-cycle").open()
     end)
   end,
-  disable = not rvim.plugins.editor.fold_cycle.active,
 }
 
 editor["b3nj5m1n/kommentary"] = {
@@ -132,13 +98,11 @@ editor["b3nj5m1n/kommentary"] = {
       ["<leader>a/"] = { "<Plug>kommentary_motion_default", "comment motion default" },
     })
   end,
-  disable = not rvim.plugins.editor.kommentary.active,
 }
 
 editor["Matt-A-Bennett/vim-surround-funk"] = {
   event = "BufWinEnter",
-  config = conf(module, "vim-surround-funk"),
-  disable = not rvim.plugins.editor.surround_funk.active,
+  config = conf("editor", "vim-surround-funk"),
 }
 
 editor["danymat/neogen"] = {
@@ -151,7 +115,6 @@ editor["danymat/neogen"] = {
   config = function()
     require("neogen").setup({ snippet_engine = "luasnip" })
   end,
-  disable = not rvim.plugins.editor.neogen.active,
 }
 
 editor["abecodes/tabout.nvim"] = {
@@ -163,24 +126,20 @@ editor["abecodes/tabout.nvim"] = {
       ignore_beginning = false,
     })
   end,
-  disable = not rvim.plugins.editor.tabout.active,
 }
 
 editor["chentoast/marks.nvim"] = {
   event = { "BufWinEnter" },
-  config = conf(module, "marks"),
-  disable = not rvim.plugins.editor.marks.active,
+  config = conf("editor", "marks"),
 }
 
 editor["jsborjesson/vim-uppercase-sql"] = {
   event = "InsertEnter",
   ft = { "sql" },
-  disable = not rvim.plugins.editor.vim_uppercase_sql.active,
 }
 
 editor["psliwka/vim-dirtytalk"] = {
   run = ":DirtytalkUpdate",
-  disable = not rvim.plugins.editor.vim_dirtytalk.active,
 }
 
 return editor

@@ -1,85 +1,45 @@
+local conf = require("user.utils").load_conf
+
 local completion = {}
 
-rvim.plugins.completion = {}
-
-local conf = require("user.utils").load_conf
-local plug_utils = require("user.utils.plugins")
-local module = "completion"
-
-local enabled = {
-  "which_key",
-  "cmp",
-  "luasnip",
-  "friendly_snippets",
-  "vim_copilot",
-}
-plug_utils.enable_plugins(module, enabled)
-
-local disabled = { "copilot" }
-plug_utils.disable_plugins(module, disabled)
-
 completion["folke/which-key.nvim"] = {
-  config = conf(module, "which_key"),
-  disable = not rvim.plugins.completion.which_key.active,
+  config = conf("completion", "which_key"),
 }
 
 -- nvim-cmp
 completion["hrsh7th/nvim-cmp"] = {
-  config = conf(module, "cmp"),
-  disable = not rvim.plugins.completion.cmp.active,
+  config = conf("completion", "cmp"),
 }
 
 completion["L3MON4D3/LuaSnip"] = {
   module = "luasnip",
   requires = "rafamadriz/friendly-snippets",
-  config = conf(module, "luasnip"),
-  disable = not rvim.plugins.completion.luasnip.active,
+  config = conf("completion", "luasnip"),
 }
 
 completion["zbirenbaum/copilot-cmp"] = {
   module = "copilot_cmp",
-  disable = not rvim.plugins.completion.copilot.active,
 }
 
-completion["hrsh7th/cmp-nvim-lsp"] = {
-  disable = not rvim.plugins.completion.cmp.active,
-}
+completion["hrsh7th/cmp-nvim-lsp"] = {}
 
-completion["hrsh7th/cmp-nvim-lua"] = {
-  disable = not rvim.plugins.completion.cmp.active,
-}
+completion["hrsh7th/cmp-nvim-lua"] = {}
 
-completion["hrsh7th/cmp-nvim-lsp-document-symbol"] = {
-  disable = not rvim.plugins.completion.cmp.active,
-}
+completion["hrsh7th/cmp-nvim-lsp-document-symbol"] = {}
 
-completion["saadparwaiz1/cmp_luasnip"] = {
-  disable = not rvim.plugins.completion.cmp.active,
-}
+completion["saadparwaiz1/cmp_luasnip"] = {}
 
-completion["hrsh7th/cmp-buffer"] = {
-  disable = not rvim.plugins.completion.cmp.active,
-}
+completion["hrsh7th/cmp-buffer"] = {}
 
-completion["hrsh7th/cmp-path"] = {
-  disable = not rvim.plugins.completion.cmp.active,
-}
+completion["hrsh7th/cmp-path"] = {}
 
-completion["hrsh7th/cmp-cmdline"] = {
-  disable = not rvim.plugins.completion.cmp.active,
-}
+completion["hrsh7th/cmp-cmdline"] = {}
 
-completion["f3fora/cmp-spell"] = {
-  disable = not rvim.plugins.completion.cmp.active,
-}
+completion["f3fora/cmp-spell"] = {}
 
-completion["hrsh7th/cmp-emoji"] = {
-  disable = not rvim.plugins.completion.cmp.active,
-}
+completion["hrsh7th/cmp-emoji"] = {}
 
-completion["octaltree/cmp-look"] = {
-  disable = not rvim.plugins.completion.cmp.active,
-}
+completion["octaltree/cmp-look"] = {}
 
 completion["petertriho/cmp-git"] = {
   opt = true,
@@ -124,7 +84,6 @@ completion["github/copilot.vim"] = {
     }
     require("user.utils.highlights").plugin("copilot", { CopilotSuggestion = { link = "Comment" } })
   end,
-  disable = not rvim.plugins.completion.vim_copilot.active,
 }
 
 completion["zbirenbaum/copilot.lua"] = {
@@ -149,7 +108,6 @@ completion["zbirenbaum/copilot.lua"] = {
       },
     })
   end,
-  disable = not rvim.plugins.completion.copilot.active,
 }
 
 return completion

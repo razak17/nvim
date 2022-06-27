@@ -76,9 +76,7 @@ return function()
   local plugin_keymaps = rvim.wk.plugin
 
   -- git
-  if rvim.plugins.tools.telescope.active and rvim.plugins.ui.git_signs.active then
-    key_maps.g = plugin_keymaps.git
-  end
+  key_maps.g = plugin_keymaps.git
 
   -- lsp
   if rvim.plugin_loaded("nvim-lspconfig") then
@@ -86,9 +84,7 @@ return function()
   end
 
   -- packer
-  if rvim.plugins.packer.active then
-    key_maps.p = plugin_keymaps.packer
-  end
+  key_maps.p = plugin_keymaps.packer
 
   -- Register keymaps
   local leader_opts = rvim.which_key.leader_opts

@@ -145,16 +145,4 @@ function M:dev(path)
   return join_paths(vim.env.HOME, "workspace/plugins/", path)
 end
 
-function M.enable_plugins(module, table)
-  for _, v in ipairs(table) do
-    rvim.plugins[module][v] = { active = true }
-  end
-end
-
-function M.disable_plugins(module, table)
-  for _, v in ipairs(table) do
-    rvim.plugins[module][v] = { active = false }
-  end
-end
-
 return M

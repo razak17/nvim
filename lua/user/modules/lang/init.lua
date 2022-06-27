@@ -1,67 +1,20 @@
-local lang = {}
-
-rvim.plugins.lang = {}
-
-local plug_utils = require("user.utils.plugins")
 local conf = require("user.utils").load_conf
-local module = "lang"
 
-local enabled = {
-  -- debug
-  "dap",
-  "dap_ui",
-  "dap_install",
-  "nvim_dap_virtual_text",
-  -- lsp
-  "lspconfig",
-  "lsp_installer",
-  "fix_cursorhold",
-  "nlsp",
-  "null_ls",
-  -- treesitter
-  "treesitter",
-  "playground",
-  "autopairs",
-  "rainbow",
-  "autotag",
-  -- Others
-  "lightbulb",
-  "symbols_outline",
-  "rust_tools",
-  "schemastore",
-  "lsp_signature",
-  "spellsitter",
-  "go_nvim",
-  "textobjects",
-  "log_highlighting",
-  "vim_kitty",
-  "sqls_nvim",
-  "matchup",
-  "gopher",
-}
-plug_utils.enable_plugins(module, enabled)
-
-local disabled = {
-  "osv",
-}
-plug_utils.disable_plugins(module, disabled)
+local lang = {}
 
 -- Debugging
 lang["mfussenegger/nvim-dap"] = {
   config = conf("user", "dap"),
-  disable = not rvim.plugins.lang.dap.active,
 }
 
 lang["rcarriga/nvim-dap-ui"] = {
   config = conf("lang", "dap-ui"),
-  disable = not rvim.plugins.lang.dap_ui.active,
 }
 
 lang["ravenxrz/DAPInstall.nvim"] = {
   config = require("dap-install").setup({
     installation_path = rvim.paths.dap_install_dir,
   }),
-  disable = not rvim.plugins.lang.dap_install.active,
 }
 
 lang["jbyuki/one-small-step-for-vimkind"] = {
@@ -73,11 +26,10 @@ lang["jbyuki/one-small-step-for-vimkind"] = {
 
     require("which-key").register({
       ["<leader>dE"] = "osv run this",
-      disable = not rvim.plugins.lang.dap.active,
       ["<leader>dL"] = "osv launch",
     })
   end,
-  disable = not rvim.plugins.lang.osv.active,
+  disable = true,
 }
 
 lang["theHamsta/nvim-dap-virtual-text"] = {
@@ -90,7 +42,6 @@ lang["theHamsta/nvim-dap-virtual-text"] = {
       all_frames = true, -- show virtual text for all stack frames not only current. Only works for debugpy on my machine.
     })
   end,
-  disable = not rvim.plugins.lang.nvim_dap_virtual_text.active,
 }
 
 -- Lsp
@@ -109,24 +60,15 @@ lang["williamboman/nvim-lsp-installer"] = {
       },
     })
   end,
-  disable = not rvim.plugins.lang.lsp_installer.active,
 }
 
-lang["antoinemadec/FixCursorHold.nvim"] = {
-  disable = not rvim.plugins.lang.fix_cursorhold.active,
-}
+lang["antoinemadec/FixCursorHold.nvim"] = {}
 
-lang["neovim/nvim-lspconfig"] = {
-  disable = not rvim.plugins.lang.lspconfig.active,
-}
+lang["neovim/nvim-lspconfig"] = {}
 
-lang["tamago324/nlsp-settings.nvim"] = {
-  disable = not rvim.plugins.lang.nlsp.active,
-}
+lang["tamago324/nlsp-settings.nvim"] = {}
 
-lang["jose-elias-alvarez/null-ls.nvim"] = {
-  disable = not rvim.plugins.lang.null_ls.active,
-}
+lang["jose-elias-alvarez/null-ls.nvim"] = {}
 
 lang["kosayoda/nvim-lightbulb"] = {
   config = function()
@@ -144,19 +86,16 @@ lang["kosayoda/nvim-lightbulb"] = {
       autocmd = { enabled = true },
     })
   end,
-  disable = not rvim.plugins.lang.lightbulb.active,
 }
 
 lang["simrat39/symbols-outline.nvim"] = {
-  config = conf(module, "symbols-outline"),
-  disable = not rvim.plugins.lang.symbols_outline.active,
+  config = conf("lang", "symbols-outline"),
 }
 
 -- Treesitter
 lang["nvim-treesitter/nvim-treesitter"] = {
   run = ":TSUpdate",
-  config = conf(module, "treesitter"),
-  disable = not rvim.plugins.lang.treesitter.active,
+  config = conf("lang", "treesitter"),
 }
 
 lang["nvim-treesitter/nvim-treesitter-context"] = {
@@ -175,7 +114,6 @@ lang["nvim-treesitter/nvim-treesitter-context"] = {
       mode = "topline",
     })
   end,
-  disable = not rvim.plugins.lang.treesitter.active,
 }
 
 lang["nvim-treesitter/playground"] = {
@@ -189,17 +127,14 @@ lang["nvim-treesitter/playground"] = {
   config = function()
     rvim.nnoremap("<leader>LE", "<Cmd>TSHighlightCapturesUnderCursor<CR>")
   end,
-  disable = not rvim.plugins.lang.playground.active,
 }
 
 lang["nvim-treesitter/nvim-treesitter-textobjects"] = {
   after = "nvim-treesitter",
-  disable = not rvim.plugins.lang.textobjects.active,
 }
 
 lang["p00f/nvim-ts-rainbow"] = {
   after = "nvim-treesitter",
-  disable = not rvim.plugins.lang.rainbow.active,
 }
 
 lang["andymass/vim-matchup"] = {
@@ -209,7 +144,6 @@ lang["andymass/vim-matchup"] = {
       ["<localleader>lm"] = { ":<c-u>MatchupWhereAmI?<CR>", "matchup: where am i" },
     })
   end,
-  disable = not rvim.plugins.lang.matchup.active,
 }
 
 lang["windwp/nvim-ts-autotag"] = {
@@ -218,23 +152,17 @@ lang["windwp/nvim-ts-autotag"] = {
       filetypes = { "html", "xml", "typescriptreact", "javascriptreact" },
     })
   end,
-  disable = not rvim.plugins.lang.autotag.active,
 }
 
 lang["windwp/nvim-autopairs"] = {
   event = "InsertEnter",
   after = { "telescope.nvim", "nvim-treesitter" },
-  config = conf(module, "autopairs"),
-  disable = not rvim.plugins.lang.autopairs.active,
+  config = conf("lang", "autopairs"),
 }
 
-lang["razak17/rust-tools.nvim"] = {
-  disable = not rvim.plugins.lang.rust_tools.active,
-}
+lang["razak17/rust-tools.nvim"] = {}
 
-lang["b0o/schemastore.nvim"] = {
-  disable = not rvim.plugins.lang.schemastore.active,
-}
+lang["b0o/schemastore.nvim"] = {}
 
 lang["ray-x/lsp_signature.nvim"] = {
   event = "InsertEnter",
@@ -251,7 +179,6 @@ lang["ray-x/lsp_signature.nvim"] = {
       select_signature_key = "<M-N>",
     })
   end,
-  disable = not rvim.plugins.lang.lsp_signature.active,
 }
 
 lang["lewis6991/spellsitter.nvim"] = {
@@ -260,7 +187,6 @@ lang["lewis6991/spellsitter.nvim"] = {
       enable = true,
     })
   end,
-  disable = not rvim.plugins.lang.spellsitter.active,
 }
 
 lang["olexsmir/gopher.nvim"] = {
@@ -269,19 +195,12 @@ lang["olexsmir/gopher.nvim"] = {
     "nvim-lua/plenary.nvim",
     "nvim-treesitter/nvim-treesitter",
   },
-  disable = not rvim.plugins.lang.spellsitter.active,
 }
 
-lang["mtdl9/vim-log-highlighting"] = {
-  disable = not rvim.plugins.lang.log_highlighting.active,
-}
+lang["mtdl9/vim-log-highlighting"] = {}
 
-lang["fladson/vim-kitty"] = {
-  disable = not rvim.plugins.lang.vim_kitty.active,
-}
+lang["fladson/vim-kitty"] = {}
 
-lang["nanotee/sqls.nvim"] = {
-  disable = not rvim.plugins.lang.sqls_nvim.active,
-}
+lang["nanotee/sqls.nvim"] = {}
 
 return lang

@@ -102,7 +102,7 @@ return function()
         },
       },
       rainbow = {
-        enable = rvim.plugins.lang.rainbow.active,
+        enable = true,
         extended_mode = true,
         max_file_lines = 1000,
         disable = { "lua", "json", "c", "cpp", "html" },
@@ -144,7 +144,7 @@ return function()
     textobjects = rvim.treesitter.setup.textobjects,
     indent = { enable = { "javascriptreact" } },
     matchup = { enable = true, disable = { "c", "python" } },
-    autopairs = { enable = rvim.plugins.lang.autopairs.active },
+    autopairs = { enable = true },
     rainbow = rvim.treesitter.setup.rainbow,
     query_linter = {
       enable = true,

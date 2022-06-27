@@ -256,10 +256,8 @@ return function()
     howdoi = "howdoi",
   }
 
-  for config, plug in pairs(plugins) do
-    if rvim.plugins.tools[config].active then
-      require("telescope").load_extension(plug)
-    end
+  for _, plug in pairs(plugins) do
+    require("telescope").load_extension(plug)
   end
 
   --- NOTE: this must be required after setting up telescope

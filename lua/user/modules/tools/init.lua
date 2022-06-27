@@ -1,57 +1,6 @@
-local tools = {}
-
-rvim.plugins.tools = {}
-
-local plug_utils = require("user.utils.plugins")
 local conf = require("user.utils").load_conf
-local module = "tools"
 
-local enabled = {
-  "fterm",
-  "far",
-  "undotree",
-  "project",
-  "bbye",
-  "structlog",
-  "neoclip",
-  "auto_session",
-  "impatient",
-  "hop",
-  "telescope",
-  "telescope_fzf",
-  "telescope_ui_select",
-  "telescope_media_files",
-  "telescope_dap",
-  "telescope_file_browser",
-  "telescope_zoxide",
-  "mru",
-  "markdown_preview",
-  "apathy",
-  "projectionist",
-  "plenary",
-  "popup",
-  "rest",
-  "sniprun",
-  "neotest",
-  "howdoi",
-  "inc_rename",
-  "line_diff",
-  "cheat_sheet",
-  "navic",
-  "diffview",
-  "neorg",
-}
-plug_utils.enable_plugins(module, enabled)
-
-local disabled = {
-  -- TODO: handle these later
-  "package_info",
-  "glow",
-  "doge",
-  "dadbod",
-  "restconsole",
-}
-plug_utils.disable_plugins(module, disabled)
+local tools = {}
 
 tools["sindrets/diffview.nvim"] = {
   event = "BufReadPre",
@@ -59,8 +8,7 @@ tools["sindrets/diffview.nvim"] = {
     rvim.nnoremap("<localleader>gd", "<Cmd>DiffviewOpen<CR>", "diffview: diff HEAD")
     rvim.nnoremap("<localleader>gh", "<Cmd>DiffviewFileHistory<CR>", "diffview: file history")
   end,
-  config = conf(module, "diffview"),
-  disable = not rvim.plugins.tools.diffview.active,
+  config = conf("tools", "diffview"),
 }
 
 tools["mbbill/undotree"] = {
@@ -73,18 +21,15 @@ tools["mbbill/undotree"] = {
     vim.g.undotree_TreeNodeShape = "◦" -- Alternative: '◉'
     vim.g.undotree_SetFocusWhenToggle = 1
   end,
-  disable = not rvim.plugins.tools.undotree.active,
 }
 
 tools["ahmedkhalf/project.nvim"] = {
-  config = conf(module, "project"),
-  disable = not rvim.plugins.tools.project.active,
+  config = conf("tools", "project"),
 }
 
 tools["npxbr/glow.nvim"] = {
   run = ":GlowInstall",
   branch = "main",
-  disable = not rvim.plugins.tools.glow.active,
 }
 
 tools["kkoomen/vim-doge"] = {
@@ -92,18 +37,17 @@ tools["kkoomen/vim-doge"] = {
   config = function()
     vim.g.doge_mapping = "<Leader>lD"
   end,
-  disable = not rvim.plugins.tools.doge.active,
+  disable = true,
 }
 
 tools["numToStr/FTerm.nvim"] = {
   event = { "BufWinEnter" },
-  config = conf(module, "fterm"),
-  disable = not rvim.plugins.tools.fterm.active,
+  config = conf("tools", "fterm"),
 }
 
 tools["diepm/vim-rest-console"] = {
   event = "VimEnter",
-  disable = not rvim.plugins.tools.restconsole.active,
+  disable = true,
 }
 
 tools["iamcco/markdown-preview.nvim"] = {
@@ -115,7 +59,6 @@ tools["iamcco/markdown-preview.nvim"] = {
     vim.g.mkdp_auto_start = 0
     vim.g.mkdp_auto_close = 1
   end,
-  disable = not rvim.plugins.tools.markdown_preview.active,
 }
 
 tools["brooth/far.vim"] = {
@@ -132,12 +75,9 @@ tools["brooth/far.vim"] = {
       ["<leader>FU"] = { ":UpdateRemotePlugins<cr>", "far: update remote" },
     })
   end,
-  disable = not rvim.plugins.tools.far.active,
 }
 
-tools["Tastyep/structlog.nvim"] = {
-  disable = not rvim.plugins.tools.structlog.active,
-}
+tools["Tastyep/structlog.nvim"] = {}
 
 tools["AckslD/nvim-neoclip.lua"] = {
   config = function()
@@ -158,46 +98,29 @@ tools["AckslD/nvim-neoclip.lua"] = {
       ["<leader>fN"] = { clip, "neoclip: open yank history" },
     })
   end,
-  disable = not rvim.plugins.tools.neoclip.active,
 }
 
 tools["nvim-telescope/telescope.nvim"] = {
-  config = conf(module, "telescope"),
-  disable = not rvim.plugins.tools.telescope.active,
+  config = conf("tools", "telescope"),
 }
 
 tools["nvim-telescope/telescope-fzf-native.nvim"] = {
   run = "make",
-  disable = not rvim.plugins.tools.telescope_fzf.active,
 }
 
-tools["tami5/sqlite.lua"] = {
-  disable = not rvim.plugins.tools.telescope.active,
-}
+tools["tami5/sqlite.lua"] = {}
 
-tools["ilAYAli/scMRU.nvim"] = {
-  disable = not rvim.plugins.tools.mru.active,
-}
+tools["ilAYAli/scMRU.nvim"] = {}
 
-tools["nvim-telescope/telescope-ui-select.nvim"] = {
-  disable = not rvim.plugins.tools.telescope_ui_select.active,
-}
+tools["nvim-telescope/telescope-ui-select.nvim"] = {}
 
-tools["nvim-telescope/telescope-dap.nvim"] = {
-  disable = not rvim.plugins.tools.telescope_dap.active,
-}
+tools["nvim-telescope/telescope-dap.nvim"] = {}
 
-tools["nvim-telescope/telescope-file-browser.nvim"] = {
-  disable = not rvim.plugins.tools.telescope_file_browser.active,
-}
+tools["nvim-telescope/telescope-file-browser.nvim"] = {}
 
-tools["nvim-telescope/telescope-media-files.nvim"] = {
-  disable = not rvim.plugins.tools.telescope_media_files.active,
-}
+tools["nvim-telescope/telescope-media-files.nvim"] = {}
 
-tools["jvgrootveld/telescope-zoxide"] = {
-  disable = not rvim.plugins.tools.telescope_zoxide.active,
-}
+tools["jvgrootveld/telescope-zoxide"] = {}
 
 tools["rmagatti/auto-session"] = {
   config = function()
@@ -212,19 +135,15 @@ tools["rmagatti/auto-session"] = {
       ["<leader>ss"] = { ":SaveSession<cr>", "auto-session: save" },
     })
   end,
-  disable = not rvim.plugins.tools.auto_session.active,
 }
 
 tools["phaazon/hop.nvim"] = {
   branch = "v1",
   keys = { { "n", "s" }, "f", "F" },
-  config = conf(module, "hop"),
-  disable = not rvim.plugins.tools.hop.active,
+  config = conf("tools", "hop"),
 }
 
-tools["lewis6991/impatient.nvim"] = {
-  disable = not rvim.plugins.tools.impatient.active,
-}
+tools["lewis6991/impatient.nvim"] = {}
 
 tools["moll/vim-bbye"] = {
   event = "BufWinEnter",
@@ -235,21 +154,17 @@ tools["moll/vim-bbye"] = {
       ["<leader>q"] = { "<Cmd>Bwipeout<CR>", "wipe buffer" },
     })
   end,
-  disable = not rvim.plugins.tools.bbye.active,
 }
 
-tools["tpope/vim-apathy"] = {
-  disable = not rvim.plugins.tools.apathy.active,
-}
+tools["tpope/vim-apathy"] = {}
 
 tools["tpope/vim-projectionist"] = {
-  config = conf(module, "vim-projectionist"),
-  disable = not rvim.plugins.tools.projectionist.active,
+  config = conf("tools", "vim-projectionist"),
 }
 
-tools["nvim-lua/plenary.nvim"] = { disable = not rvim.plugins.tools.plenary.active }
+tools["nvim-lua/plenary.nvim"] = {}
 
-tools["nvim-lua/popup.nvim"] = { disable = not rvim.plugins.tools.popup.active }
+tools["nvim-lua/popup.nvim"] = {}
 
 tools["NTBBloodbath/rest.nvim"] = {
   requires = { "nvim-lua/plenary.nvim" },
@@ -269,26 +184,24 @@ tools["NTBBloodbath/rest.nvim"] = {
     rvim.nnoremap("<leader>rp", "<Plug>RestNvimPreview", "rest: run")
     rvim.nnoremap("<leader>rl", "<Plug>RestNvimLast", "rest: run")
   end,
-  disable = not rvim.plugins.tools.rest.active,
 }
 
 tools["michaelb/sniprun"] = {
   event = "BufWinEnter",
-  config = conf(module, "sniprun"),
+  config = conf("tools", "sniprun"),
   run = "bash ./install.sh",
-  disable = not rvim.plugins.tools.sniprun.active,
 }
 
 tools["vuki656/package-info.nvim"] = {
   event = "BufWinEnter",
   ft = { "json" },
-  config = conf(module, "package-info"),
+  config = conf("tools", "package-info"),
   requires = "MunifTanjim/nui.nvim",
-  disable = not rvim.plugins.tools.package_info.active,
+  disable = true,
 }
 
 tools["nvim-neotest/neotest"] = {
-  config = conf(module, "neotest"),
+  config = conf("tools", "neotest"),
   requires = {
     "rcarriga/neotest-plenary",
     "rcarriga/neotest-vim-test",
@@ -296,12 +209,9 @@ tools["nvim-neotest/neotest"] = {
     "nvim-treesitter/nvim-treesitter",
     "antoinemadec/FixCursorHold.nvim",
   },
-  disable = not rvim.plugins.tools.neotest.active,
 }
 
-tools["Zane-/howdoi.nvim"] = {
-  disable = not rvim.plugins.tools.howdoi.active,
-}
+tools["Zane-/howdoi.nvim"] = {}
 
 tools["smjonas/inc-rename.nvim"] = {
   config = function()
@@ -312,12 +222,10 @@ tools["smjonas/inc-rename.nvim"] = {
       return ":IncRename " .. vim.fn.expand("<cword>")
     end, { expr = true, silent = false, desc = "lsp: incremental rename" })
   end,
-  disable = not rvim.plugins.tools.inc_rename.active,
 }
 
 tools["AndrewRadev/linediff.vim"] = {
   cmd = "Linediff",
-  disable = not rvim.plugins.tools.line_diff.active,
 }
 
 tools["Djancyp/cheat-sheet"] = {
@@ -335,7 +243,6 @@ tools["Djancyp/cheat-sheet"] = {
     })
     rvim.nnoremap("<localleader>s", ":CheatSH<CR>", "cheat-sheet")
   end,
-  disable = not rvim.plugins.tools.cheat_sheet.active,
 }
 
 tools["SmiteshP/nvim-navic"] = {
@@ -360,13 +267,11 @@ tools["SmiteshP/nvim-navic"] = {
       separator = (" %s "):format(misc.arrow_right),
     })
   end,
-  disable = not rvim.plugins.tools.navic.active,
 }
 
 tools["vhyrro/neorg"] = {
   requires = { "vhyrro/neorg-telescope" },
-  config = conf(module, "neorg"),
-  disable = not rvim.plugins.tools.neorg.active,
+  config = conf("tools", "neorg"),
 }
 
 return tools
