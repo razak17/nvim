@@ -178,15 +178,25 @@ sign({ highlight = 'DiagnosticSignError', icon = icons.lsp.error })
 sign({ highlight = 'DiagnosticSignWarn', icon = icons.lsp.warn })
 sign({ highlight = 'DiagnosticSignInfo', icon = icons.lsp.info })
 sign({ highlight = 'DiagnosticSignHint', icon = icons.lsp.hint })
+
 -----------------------------------------------------------------------------//
--- Handler overrides
+-- Diagnostic Configuration
 -----------------------------------------------------------------------------//
+local max_width = math.min(math.floor(vim.o.columns * 0.7), 100)
+local max_height = math.min(math.floor(vim.o.lines * 0.3), 30)
+
 local diagnostics = rvim.lsp.diagnostics
-vim.diagnostic.config({ -- your config
+local diagnostic = vim.diagnostic
+
+diagnostic.config({ -- your config
   virtual_text = {
     source = "if_many",
     prefix = icons.misc.bug,
     spacing = diagnostics.virtual_text_spacing,
+    format = function(d)
+      local level = diagnostic.severity[d.severity]
+      return fmt('%s %s', icons[level:lower()], d.message)
+    end,
   },
   signs = { active = diagnostics.signs.active, values = icons.lsp },
   underline = diagnostics.underline,
@@ -194,9 +204,6 @@ vim.diagnostic.config({ -- your config
   severity_sort = diagnostics.severity_sort,
   float = diagnostics.float,
 })
-
-local max_width = math.min(math.floor(vim.o.columns * 0.7), 100)
-local max_height = math.min(math.floor(vim.o.lines * 0.3), 30)
 
 -- NOTE: the hover handler returns the bufnr,winnr so can be used for mappings
 lsp.handlers["textDocument/hover"] = lsp.with(
