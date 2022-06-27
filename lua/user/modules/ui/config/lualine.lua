@@ -168,16 +168,11 @@ return function()
       local buf_client_names = {}
 
       -- add client
-      local has_null_ls = false
       for _, client in pairs(buf_clients) do
-        local is_null = client.name:match("null")
-        has_null_ls = has_null_ls or is_null
-        if not is_null then
           table.insert(buf_client_names, client.name)
-        end
       end
 
-      return (has_null_ls and " ﳠ " or "") .. table.concat(buf_client_names, "  ") -- alt: •
+      return table.concat(buf_client_names, "  ") -- alt: •
     end,
     colors = { fg = P.base88 },
     cond = conditions.hide_in_width,
@@ -191,6 +186,7 @@ return function()
       end
       return ""
     end,
+    color = { fg = P.dark_green },
     cond = conditions.hide_in_width,
   })
 
