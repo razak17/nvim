@@ -39,7 +39,16 @@ return function()
   rvim.treesitter = {
     setup = {
       highlight = { enabled = true },
-      ensure_installed = { "lua", "dart", "rust", "typescript", "javascript", "comment" },
+      ensure_installed = {
+        "lua",
+        "dart",
+        "rust",
+        "typescript",
+        "javascript",
+        "comment",
+        "markdown",
+        "markdown_inline",
+      },
       incremental_selection = {
         enable = true,
         keymaps = {
