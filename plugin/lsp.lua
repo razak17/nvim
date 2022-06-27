@@ -102,7 +102,7 @@ end
 -- LSP SETUP/TEARDOWN
 -----------------------------------------------------------------------------//
 
-function setup_plugins(client, bufnr)
+local function setup_plugins(client, bufnr)
   -- vim-illuminate
   if rvim.lsp.document_highlight then
     local status_ok, illuminate = rvim.safe_require("illuminate")
@@ -165,23 +165,19 @@ rvim.augroup("LspSetupCommands", {
 -----------------------------------------------------------------------------//
 -- Signs
 -----------------------------------------------------------------------------//
-local diagnostic_types = {
-  { "Error", icon = icons.lsp.error },
-  { "Warn", icon = icons.lsp.warn },
-  { "Info", icon = icons.lsp.info },
-  { "Hint", icon = icons.lsp.hint },
-}
+local function sign(opts)
+  fn.sign_define(opts.highlight, {
+    text = opts.icon,
+    texthl = opts.highlight,
+    linehl = fmt("%sLine", opts.highlight),
+    culhl = opts.highlight .. 'Line',
+  })
+end
 
-fn.sign_define(vim.tbl_map(function(t)
-  local hl = "DiagnosticSign" .. t[1]
-  return {
-    name = hl,
-    text = t.icon,
-    texthl = hl,
-    linehl = fmt("%sLine", hl),
-  }
-end, diagnostic_types))
-
+sign({ highlight = 'DiagnosticSignError', icon = icons.lsp.error })
+sign({ highlight = 'DiagnosticSignWarn', icon = icons.lsp.warn })
+sign({ highlight = 'DiagnosticSignInfo', icon = icons.lsp.info })
+sign({ highlight = 'DiagnosticSignHint', icon = icons.lsp.hint })
 -----------------------------------------------------------------------------//
 -- Handler overrides
 -----------------------------------------------------------------------------//
