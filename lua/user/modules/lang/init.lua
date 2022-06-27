@@ -37,6 +37,7 @@ local enabled = {
   "vim_kitty",
   "sqls_nvim",
   "matchup",
+  "gopher",
 }
 plug_utils.enable_plugins(module, enabled)
 
@@ -262,10 +263,13 @@ lang["lewis6991/spellsitter.nvim"] = {
   disable = not rvim.plugins.lang.spellsitter.active,
 }
 
-lang["ray-x/go.nvim"] = {
+lang["olexsmir/gopher.nvim"] = {
   ft = "go",
-  config = conf(module, "go"),
-  disable = not rvim.plugins.lang.go_nvim.active,
+  requires = { -- dependencies
+    "nvim-lua/plenary.nvim",
+    "nvim-treesitter/nvim-treesitter",
+  },
+  disable = not rvim.plugins.lang.spellsitter.active,
 }
 
 lang["mtdl9/vim-log-highlighting"] = {
