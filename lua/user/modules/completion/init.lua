@@ -11,12 +11,11 @@ local enabled = {
   "cmp",
   "luasnip",
   "friendly_snippets",
-  "copilot",
   "vim_copilot",
 }
 plug_utils.enable_plugins(module, enabled)
 
-local disabled = {}
+local disabled = { "copilot" }
 plug_utils.disable_plugins(module, disabled)
 
 completion["folke/which-key.nvim"] = {

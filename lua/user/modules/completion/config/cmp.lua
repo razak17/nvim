@@ -124,7 +124,7 @@ return function()
         deprecated = true,
         fields = { "kind", "abbr", "menu" },
         source_names = {
-          copilot = "(CP)",
+          -- copilot = "(CP)",
           nvim_lsp = "(LSP)",
           nvim_lua = "(Lua)",
           luasnip = "(SN)",
@@ -144,17 +144,17 @@ return function()
           local MAX = math.floor(vim.o.columns * 0.5)
           vim_item.abbr = #vim_item.abbr >= MAX and string.sub(vim_item.abbr, 1, MAX) .. ellipsis
             or vim_item.abbr
-          if entry.source.name == "copilot" then
-            vim_item.kind = rvim.style.icons.misc.octoface
-          else
-            vim_item.kind = rvim.style.codicons.kind[vim_item.kind]
-          end
+          -- if entry.source.name == "copilot" then
+          --   vim_item.kind = rvim.style.icons.misc.octoface
+          -- else
+          -- end
+          vim_item.kind = rvim.style.codicons.kind[vim_item.kind]
           vim_item.menu = rvim.cmp.setup.formatting.source_names[entry.source.name]
           return vim_item
         end,
       },
       sources = {
-        { name = "copilot" },
+        -- { name = "copilot" },
         { name = "nvim_lsp" },
         { name = "nvim_lua" },
         { name = "luasnip" },

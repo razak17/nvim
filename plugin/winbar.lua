@@ -127,7 +127,7 @@ rvim.augroup("AttachWinbar", {
         then
           vim.wo[win].winbar = "%{%v:lua.rvim.ui.winbar()%}"
         elseif not vim.tbl_contains(allowed, vim.bo[buf].filetype) then
-          vim.wo[win].winbar = ""
+          vim.wo[win].winbar = nil
         end
       end
     end,
