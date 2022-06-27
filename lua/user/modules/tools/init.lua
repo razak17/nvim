@@ -38,22 +38,18 @@ local enabled = {
   "line_diff",
   "cheat_sheet",
   "navic",
+  "diffview",
+  "neorg",
 }
 plug_utils.enable_plugins(module, enabled)
 
-local disabled = { -- TODO: handle these later
-  "telescope_tmux",
-  "todo_comments",
+local disabled = {
+  -- TODO: handle these later
   "package_info",
-  "cybu",
-  "diffview",
-  "bookmarks",
   "glow",
   "doge",
   "dadbod",
   "restconsole",
-  "telescope_smart_history",
-  "git_blame",
 }
 plug_utils.disable_plugins(module, disabled)
 
@@ -103,23 +99,6 @@ tools["numToStr/FTerm.nvim"] = {
   event = { "BufWinEnter" },
   config = conf(module, "fterm"),
   disable = not rvim.plugins.tools.fterm.active,
-}
-
-tools["MattesGroeger/vim-bookmarks"] = {
-  event = { "BufReadPre", "BufNewFile" },
-  config = function()
-    vim.g.bookmark_no_default_key_mappings = 1
-    vim.g.bookmark_sign = ""
-    require("which-key").register({
-      ["<leader>m"] = {
-        name = "Mark",
-        t = { ":BookmarkToggle<cr>", "toggle" },
-        p = { ":BookmarkPrev<cr>", "previous mark" },
-        n = { ":BookmarkNext<cr>", "next mark" },
-      },
-    })
-  end,
-  disable = not rvim.plugins.tools.bookmarks.active,
 }
 
 tools["diepm/vim-rest-console"] = {
@@ -200,16 +179,8 @@ tools["ilAYAli/scMRU.nvim"] = {
   disable = not rvim.plugins.tools.mru.active,
 }
 
-tools["nvim-telescope/telescope-smart-history.nvim"] = {
-  disable = not rvim.plugins.tools.telescope_smart_history.active,
-}
-
 tools["nvim-telescope/telescope-ui-select.nvim"] = {
   disable = not rvim.plugins.tools.telescope_ui_select.active,
-}
-
-tools["camgraff/telescope-tmux.nvim"] = {
-  disable = not rvim.plugins.tools.telescope_tmux.active,
 }
 
 tools["nvim-telescope/telescope-dap.nvim"] = {
@@ -267,33 +238,6 @@ tools["moll/vim-bbye"] = {
   disable = not rvim.plugins.tools.bbye.active,
 }
 
-tools["folke/todo-comments.nvim"] = {
-  event = { "BufWinEnter" },
-  requires = "nvim-lua/plenary.nvim",
-  config = function()
-    -- this plugin is not safe to reload
-    if vim.g.packer_compiled_loaded then
-      return
-    end
-    require("todo-comments").setup({
-      highlight = {
-        exclude = { "org", "orgagenda", "vimwiki", "markdown" },
-      },
-    })
-    require("which-key").register({
-      ["<leader>tt"] = {
-        "<Cmd>TodoTrouble<CR>",
-        "trouble: todos",
-      },
-      ["<leader>tf"] = {
-        "<Cmd>TodoTelescope<CR>",
-        "telescope: todos",
-      },
-    })
-  end,
-  disable = not rvim.plugins.tools.todo_comments.active,
-}
-
 tools["tpope/vim-apathy"] = {
   disable = not rvim.plugins.tools.apathy.active,
 }
@@ -341,46 +285,6 @@ tools["vuki656/package-info.nvim"] = {
   config = conf(module, "package-info"),
   requires = "MunifTanjim/nui.nvim",
   disable = not rvim.plugins.tools.package_info.active,
-}
-
-tools["ghillb/cybu.nvim"] = {
-  config = function()
-    local ok, cybu = rvim.safe_require("cybu")
-    if not ok then
-      return
-    end
-    cybu.setup({
-      position = {
-        relative_to = "win", -- win, editor, cursor
-        anchor = "topright", -- topleft, topcenter, topright,
-      },
-      display_time = 1750, -- time the cybu window is displayed
-      style = {
-        path = "relative", -- absolute, relative, tail (filename only)
-        border = "rounded", -- single, double, rounded, none
-        separator = " ", -- string used rvim separator
-        prefix = "…", -- string used rvim prefix for truncated paths
-        padding = 1, -- left & right padding in number of spaces
-        hide_buffer_id = true,
-        devicons = {
-          enabled = true, -- enable or disable web dev icons
-          colored = true, -- enable color for web dev icons
-        },
-      },
-    })
-    vim.keymap.set("n", "H", "<Plug>(CybuPrev)")
-    vim.keymap.set("n", "L", "<Plug>(CybuNext)")
-  end,
-  disable = not rvim.plugins.tools.cybu.active,
-}
-
-tools["f-person/git-blame.nvim"] = {
-  config = function()
-    vim.g.gitblame_enabled = 0
-    vim.g.gitblame_message_template = "<summary> • <date> • <author>"
-    vim.g.gitblame_highlight_group = "LineNr"
-  end,
-  disable = not rvim.plugins.tools.git_blame.active,
 }
 
 tools["nvim-neotest/neotest"] = {
@@ -461,6 +365,7 @@ tools["SmiteshP/nvim-navic"] = {
 tools["vhyrro/neorg"] = {
   requires = { "vhyrro/neorg-telescope" },
   config = conf(module, "neorg"),
+  disable = not rvim.plugins.tools.neorg.active,
 }
 
 return tools

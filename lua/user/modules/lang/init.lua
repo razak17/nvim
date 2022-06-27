@@ -42,8 +42,6 @@ plug_utils.enable_plugins(module, enabled)
 
 local disabled = {
   "osv",
-  "trouble",
-  "bqf",
 }
 plug_utils.disable_plugins(module, disabled)
 
@@ -151,26 +149,6 @@ lang["kosayoda/nvim-lightbulb"] = {
 lang["simrat39/symbols-outline.nvim"] = {
   config = conf(module, "symbols-outline"),
   disable = not rvim.plugins.lang.symbols_outline.active,
-}
-
-lang["folke/trouble.nvim"] = {
-  cmd = { "TroubleToggle" },
-  requires = "nvim-web-devicons",
-  setup = conf(module, "trouble").setup,
-  config = conf(module, "trouble").config,
-  disable = not rvim.plugins.lang.trouble.active,
-}
-
-lang["kevinhwang91/nvim-bqf"] = {
-  after = "telescope.nvim",
-  config = function()
-    require("bqf").setup({
-      preview = {
-        border_chars = { "│", "│", "─", "─", "┌", "┐", "└", "┘", "█" },
-      },
-    })
-  end,
-  disable = not rvim.plugins.lang.bqf.active,
 }
 
 -- Treesitter

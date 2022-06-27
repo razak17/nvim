@@ -86,6 +86,7 @@ rvim.style = {
       fire = "",
       note = "",
       bookmark = "",
+      bookmark_alt = "",
       pencil = "",
       chevron_right = "",
       chevron_right_alt = "❯",

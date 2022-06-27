@@ -250,11 +250,9 @@ return function()
     telescope_dap = "dap",
     telescope_fzf = "fzf",
     telescope_ui_select = "ui-select",
-    telescope_tmux = "tmux",
     telescope_file_browser = "file_browser",
     telescope_media_files = "media_files",
     telescope_zoxide = "zoxide",
-    telescope_smart_history = "smart_history",
     howdoi = "howdoi",
   }
 
