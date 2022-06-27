@@ -1,7 +1,5 @@
 local M = {}
 local Log = require("user.core.log")
-local utils = require("user.utils.lsp")
-local keymaps = require("user.lsp.keymaps")
 
 function M.global_capabilities()
   local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -48,30 +46,6 @@ function M.global_on_init(client, bufnr)
   end
 end
 
-function M.global_on_attach(client, bufnr)
-  local function buf_set_option(...)
-    vim.api.nvim_buf_set_option(bufnr, ...)
-  end
-
-  buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
-
-  if rvim.lsp.document_highlight then
-    utils.setup_document_highlight(client, bufnr)
-    utils.illuminate_highlight(client)
-  end
-
-  utils.navic(client, bufnr)
-
-  if rvim.lsp.code_lens_refresh then
-    utils.setup_code_lens_refresh(client, bufnr)
-  end
-
-  keymaps.init(client)
-
-  utils.setup_setup_tagfunc(client, bufnr)
-  utils.setup_format_expr(client, bufnr)
-end
-
 local function bootstrap_nlsp(opts)
   opts = opts or {}
   local lsp_settings_status_ok, lsp_settings = rvim.safe_require("nlspsettings")
@@ -82,8 +56,9 @@ end
 
 function M.get_global_opts()
   return {
-    on_attach = M.global_on_attach,
+    on_attach = rvim.lsp.on_attach,
     on_init = M.global_on_init,
+    on_exit = M.common_on_exit,
     capabilities = M.global_capabilities(),
   }
 end
@@ -104,12 +79,6 @@ function M.setup()
   require("nvim-lsp-installer").setup(rvim.lsp.installer.setup)
 
   require("user.lsp.null-ls").setup()
-
-  local formatting = require("user.lsp.formatting")
-
-  formatting.configure_format_on_save()
-
-  formatting.configure_format_on_focus_lost()
 end
 
 return M
