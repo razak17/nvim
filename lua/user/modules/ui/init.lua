@@ -27,6 +27,7 @@ local enabled = {
   "hlargs",
   "fidget",
   "beacon",
+  "ufo",
 }
 plug_utils.enable_plugins(module, enabled)
 
@@ -93,31 +94,31 @@ ui["lukas-reineke/headlines.nvim"] = {
 }
 
 ui["rainbowhxch/beacon.nvim"] = {
-      config = function()
-        local beacon = require('beacon')
-        beacon.setup({
-          minimal_jump = 20,
-          ignore_buffers = { 'terminal', 'nofile', 'neorg://Quick Actions' },
-          ignore_filetypes = {
-            'neo-tree',
-            'qf',
-            'NeogitCommitMessage',
-            'NeogitPopup',
-            'NeogitStatus',
-            'packer',
-            'trouble',
-          },
-        })
-        rvim.augroup('BeaconCmds', {
-          {
-            event = 'BufReadPre',
-            pattern = '*.norg',
-            command = function()
-              beacon.beacon_off()
-            end,
-          },
-        })
-      end,
+  config = function()
+    local beacon = require("beacon")
+    beacon.setup({
+      minimal_jump = 20,
+      ignore_buffers = { "terminal", "nofile", "neorg://Quick Actions" },
+      ignore_filetypes = {
+        "neo-tree",
+        "qf",
+        "NeogitCommitMessage",
+        "NeogitPopup",
+        "NeogitStatus",
+        "packer",
+        "trouble",
+      },
+    })
+    rvim.augroup("BeaconCmds", {
+      {
+        event = "BufReadPre",
+        pattern = "*.norg",
+        command = function()
+          beacon.beacon_off()
+        end,
+      },
+    })
+  end,
   disable = not rvim.plugins.ui.beacon.active,
 }
 
@@ -201,6 +202,23 @@ ui["m-demare/hlargs.nvim"] = {
 ui["j-hui/fidget.nvim"] = {
   config = function()
     require("fidget").setup()
+  end,
+  disable = not rvim.plugins.ui.fidget.active,
+}
+
+ui["kevinhwang91/nvim-ufo"] = {
+  requires = "kevinhwang91/promise-async",
+  config = function()
+    local hl = require("user.utils.highlights")
+    local bg = hl.alter_color(hl.get("Normal", "bg"), -7)
+    hl.plugin("ufo", { Folded = { bold = false, italic = false, bg = bg } })
+    vim.opt.foldlevelstart = 2
+    vim.opt.foldlevel = 2
+    vim.opt.sessionoptions:append("folds")
+    local ufo = require("ufo")
+    ufo.setup({ open_fold_hl_timeout = 0 })
+    rvim.nnoremap("zR", ufo.openAllFolds, "open all folds")
+    rvim.nnoremap("zM", ufo.closeAllFolds, "close all folds")
   end,
   disable = not rvim.plugins.ui.fidget.active,
 }
