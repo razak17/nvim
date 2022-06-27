@@ -19,10 +19,14 @@ function M.global_capabilities()
       },
     },
   }
+  capabilities.textDocument.foldingRange = {
+    dynamicRegistration = false,
+    lineFoldingOnly = true,
+  }
 
-  local status_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
-  if status_ok then
-    capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
+  local ok, cmp_nvim_lsp = rvim.safe_require("cmp_nvim_lsp")
+  if ok then
+    cmp_nvim_lsp.update_capabilities(capabilities)
   end
 
   return capabilities
