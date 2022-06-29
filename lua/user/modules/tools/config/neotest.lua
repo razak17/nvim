@@ -12,6 +12,11 @@ return function()
     },
     adapters = {
       require("neotest-plenary"),
+      require("neotest-go")({
+        experimental = {
+          test_table = true,
+        },
+      }),
     },
   })
   local function open()
