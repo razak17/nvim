@@ -98,7 +98,7 @@ return {
   TroubleTextInformation = { fg = P.blue },
   TroubleTextHint = { fg = P.teal },
 
-  BqfPreviewBorder = { fg = P.blue },
+  BqfPreviewBorder = { fg = P.darker_blue },
   BqfSign = { fg = P.red },
   BqfPreviewRange = { fg = P.red },
 
@@ -139,10 +139,10 @@ return {
   NeoTreeHiddenByName = { fg = P.base5 },
 
   TelescopeNormal = { fg = P.fg },
-  TelescopeBorder = { fg = P.blue, bg = P.darker_bg },
-  TelescopeResultsBorder = { fg = P.blue, bg = P.darker_bg },
-  TelescopePromptBorder = { fg = P.blue, bg = P.darker_bg },
-  TelescopePreviewBorder = { fg = P.pink, bg = P.darker_bg },
+  TelescopeBorder = { fg = P.darker_blue, bg = P.darker_bg },
+  TelescopeResultsBorder = { fg = P.darker_blue, bg = P.darker_bg },
+  TelescopePromptBorder = { fg = P.darker_blue, bg = P.darker_bg },
+  TelescopePreviewBorder = { fg = P.blue, bg = P.darker_bg },
   TelescopeMatching = { fg = P.cyan },
   TelescopeSelection = { fg = P.light_green },
   TelescopeSelectionCaret = { fg = P.light_green },

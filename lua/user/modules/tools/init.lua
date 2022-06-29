@@ -283,8 +283,5 @@ tools["kevinhwang91/nvim-bqf"] = {
     end,
   },
   ft = "qf",
-  config = function()
-    require("user.utils.highlights").plugin("bqf", { BqfPreviewBorder = { foreground = "Gray" } })
-  end,
 }
 return tools
