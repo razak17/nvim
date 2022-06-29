@@ -82,8 +82,10 @@ ui["zbirenbaum/neodim"] = {
   config = function()
     require("neodim").setup({
       blend_color = require("user.utils.highlights").get("Normal", "bg"),
-      alpha = 0.45,
+      alpha = 0.60,
       hide = {
+        virtual_text = false,
+        signs = false,
         underline = false,
       },
     })
