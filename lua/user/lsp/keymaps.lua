@@ -81,7 +81,7 @@ function M.init(client)
 
   rvim.nnoremap("<leader>lk", vim.diagnostic.goto_prev, with_desc("lsp: go to prev diagnostic"))
   rvim.nnoremap("<leader>lj", vim.diagnostic.goto_next, with_desc("lsp: go to next diagnostic"))
-  rvim.nnoremap("<leader>lL", vim.diagnostic.setloclist, with_desc("lsp: set loclist"))
+  rvim.nnoremap("<leader>lL", vim.diagnostic.setloclist, with_desc("lsp: toggle loclist diagnostics"))
 
   if client.server_capabilities.documentFormattingProvider then
     rvim.nnoremap("<leader>lf", "<cmd>LspFormat<cr>", with_desc("lsp: format buffer"))

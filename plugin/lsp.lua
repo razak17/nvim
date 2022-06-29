@@ -205,7 +205,7 @@ local function make_diagnostic_qf_updater()
 end
 
 command("LspDiagnostics", make_diagnostic_qf_updater())
-rvim.nnoremap("<leader>ll", "<Cmd>LspDiagnostics<CR>", "toggle quickfix diagnostics")
+rvim.nnoremap("<leader>ll", "<Cmd>LspDiagnostics<CR>", "lsp: toggle quickfix diagnostics")
 
 -----------------------------------------------------------------------------//
 -- Signs
