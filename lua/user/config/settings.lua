@@ -23,8 +23,7 @@ M.load_default_options = function()
     -- Folds
     foldenable = true,
     foldlevelstart = 3,
-    foldtext = "v:lua.folds()",
-    foldopen = vim.opt.foldopen + "search",
+    -- foldtext = "v:lua.folds()",
     foldmethod = "expr",
 
     -- Splits and buffers
@@ -193,6 +192,7 @@ M.load_default_options = function()
   vim.opt.shadafile = join_paths(rvim.get_cache_dir(), "shada", "rvim.shada")
   vim.opt.spellsuggest:prepend({ 12 })
   vim.opt.spelllang:append("programming")
+  vim.opt.foldopen:append("search")
 
   for k, v in pairs(default_options) do
     vim.opt[k] = v
