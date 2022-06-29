@@ -22,7 +22,7 @@ M.load_default_options = function()
 
     -- Folds
     foldenable = true,
-    foldlevelstart = 3,
+    foldlevelstart = 2,
     -- foldtext = "v:lua.folds()",
     foldmethod = "expr",
 

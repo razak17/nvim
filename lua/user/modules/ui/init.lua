@@ -159,7 +159,6 @@ ui["kevinhwang91/nvim-ufo"] = {
     local hl = require("user.utils.highlights")
     local bg = hl.alter_color(hl.get("Normal", "bg"), -7)
     hl.plugin("ufo", { Folded = { bold = false, italic = false, bg = bg } })
-    vim.opt.foldlevelstart = 2
     vim.opt.sessionoptions:append("folds")
     local ufo = require("ufo")
     ufo.setup({ open_fold_hl_timeout = 0 })
