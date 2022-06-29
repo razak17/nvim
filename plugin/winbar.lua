@@ -80,7 +80,10 @@ function rvim.ui.winbar()
 
   rvim.foreach(function(part, index)
     local priority = (#parts - (index - 1)) * 2
-    local is_first = index == 1
+    local is_first = nil
+    if rvim.ui.winbar_ft_icon then
+      is_first = index == 1
+    end
     local is_last = index == #parts
     local sep = is_last and separator or dir_separator
     local hl = is_last and "Winbar" or "LineNr"

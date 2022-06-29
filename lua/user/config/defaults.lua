@@ -39,6 +39,7 @@ rvim.ui = {
   line_wrap_cursor_movement = false,
   transparent_window = false,
   defer = false,
+  winbar_ft_icon = false
 }
 
 rvim.util = {
