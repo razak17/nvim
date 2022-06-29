@@ -64,7 +64,7 @@ rvim.lsp = {
       loader = "json",
     },
   },
-  format_on_save_exclusions = { "zsh", "tmux", "gitcommit" },
+  format_on_save_exclusions = { "zsh", "tmux", "gitcommit", "query" },
   format_exclusions = { "sumneko_lua", "html", "jsonls", "gopls", "quick_lint_js" },
   emmet_ft = {
     "html",
