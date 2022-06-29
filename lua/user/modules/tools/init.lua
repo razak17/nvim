@@ -274,4 +274,17 @@ tools["vhyrro/neorg"] = {
   config = conf("tools", "neorg"),
 }
 
+tools["kevinhwang91/nvim-bqf"] = {
+  -- optional
+  requires = {
+    "junegunn/fzf",
+    run = function()
+      vim.fn["fzf#install"]()
+    end,
+  },
+  ft = "qf",
+  config = function()
+    require("user.utils.highlights").plugin("bqf", { BqfPreviewBorder = { foreground = "Gray" } })
+  end,
+}
 return tools
