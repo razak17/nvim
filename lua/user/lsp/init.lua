@@ -43,7 +43,7 @@ end
 
 function rvim.lsp.on_init(client)
   local path = client.workspace_folders[1].name
-  local config_path = path .. '/.vim/settings.json'
+  local config_path = path .. "/.vim/settings.json"
   if fn.filereadable(config_path) == 0 then
     return true
   end
@@ -51,12 +51,12 @@ function rvim.lsp.on_init(client)
   if not ok then
     return
   end
-  local overrides = vim.json.decode(table.concat(json, '\n'))
+  local overrides = vim.json.decode(table.concat(json, "\n"))
   for name, config in pairs(overrides) do
     if name == client.name then
       local original = client.config
-      client.config = vim.tbl_deep_extend('force', original, config)
-      client.notify('workspace/didChangeConfiguration')
+      client.config = vim.tbl_deep_extend("force", original, config)
+      client.notify("workspace/didChangeConfiguration")
     end
   end
   return true
@@ -78,15 +78,14 @@ function M.setup()
     return
   end
 
-  local nlsp_status_ok, lsp_settings = rvim.safe_require("nlspsettings")
-  if nlsp_status_ok then
-    lsp_settings.setup({
-      config_home = join_paths(rvim.get_user_dir(), "lsp", "lsp-settings"),
-      append_default_schemas = true,
-    })
-  end
+  pcall(function()
+    require("nlspsettings").setup(rvim.lsp.nlsp_settings.setup)
+  end)
 
-  require("nvim-lsp-installer").setup(rvim.lsp.installer.setup)
+  pcall(function()
+    require("nvim-lsp-installer").setup(rvim.lsp.installer.setup)
+  end)
+
   require("user.lsp.null-ls").setup()
 end
 

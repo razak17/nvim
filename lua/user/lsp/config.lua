@@ -56,6 +56,15 @@ rvim.lsp = {
     },
     config = {},
   },
+  nlsp_settings = {
+    setup = {
+      config_home = join_paths(rvim.get_user_dir(), "lsp", "lsp-settings"),
+      -- set to false to overwrite schemastore.nvim
+      append_default_schemas = true,
+      ignored_servers = {},
+      loader = "json",
+    },
+  },
   format_on_save_exclusions = { "zsh", "tmux", "gitcommit" },
   format_exclusions = { "sumneko_lua", "html", "jsonls", "gopls", "quick_lint_js" },
   emmet_ft = {
