@@ -100,7 +100,8 @@ return {
 
   BqfPreviewBorder = { fg = P.darker_blue },
   BqfSign = { fg = P.red },
-  BqfPreviewRange = { fg = P.red },
+  BqfPreviewRange = { fg = P.cyan },
+  BqfPreviewCursor = { fg = P.yellowgreen },
 
   CursorWord0 = { bg = P.cursor_bg },
   CursorWord1 = { bg = P.none },
