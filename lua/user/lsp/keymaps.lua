@@ -59,21 +59,21 @@ function M.init(client)
   -- Peek
   if client.server_capabilities.definitionProvider then
     rvim.nnoremap(
-      "<leader>lpd",
+      "<leader>lp",
       "<cmd>lua require('user.lsp.peek').Peek('definition')<cr>",
       with_desc("peek: definition")
     )
   end
   if client.server_capabilities.implementationProvider then
     rvim.nnoremap(
-      "<leader>lpi",
+      "<leader>li",
       "<cmd>lua require('user.lsp.peek').Peek('implementation')<cr>",
       with_desc("peek: implementation")
     )
   end
   if client.server_capabilities.typeDefinitionProvider then
     rvim.nnoremap(
-      "<leader>lpt",
+      "<leader>lt",
       "<cmd>lua require('user.lsp.peek').Peek('typeDefinition')<cr>",
       with_desc("peek: type definition")
     )
