@@ -4,10 +4,12 @@ local lsp = vim.lsp
 local fn = vim.fn
 local api = vim.api
 local fmt = string.format
+local AUGROUP = "LspCommands"
 local L = vim.lsp.log_levels
+
 local icons = rvim.style.icons
 local border = rvim.style.border.current
-local AUGROUP = "LspCommands"
+local diagnostic = vim.diagnostic
 
 if vim.env.DEVELOPING then
   vim.lsp.set_log_level(L.DEBUG)
@@ -141,8 +143,8 @@ end
 
 rvim.augroup("LspSetupCommands", {
   {
-    event = 'LspAttach',
-    desc = 'setup the language server autocommands',
+    event = "LspAttach",
+    desc = "setup the language server autocommands",
     command = function(args)
       local bufnr = args.buf
       -- if the buffer is invalid we should not try and attach to it
@@ -181,7 +183,7 @@ local function make_diagnostic_qf_updater()
       return
     end
     vim.diagnostic.setqflist({ open = false })
-    rvim.toggle_list('quickfix')
+    rvim.toggle_list("quickfix")
     if not rvim.is_vim_list_open() and cmd_id then
       api.nvim_del_autocmd(cmd_id)
       cmd_id = nil
@@ -189,12 +191,12 @@ local function make_diagnostic_qf_updater()
     if cmd_id then
       return
     end
-    cmd_id = api.nvim_create_autocmd('DiagnosticChanged', {
+    cmd_id = api.nvim_create_autocmd("DiagnosticChanged", {
       callback = function()
         if rvim.is_vim_list_open() then
           vim.diagnostic.setqflist({ open = false })
           if #vim.fn.getqflist() == 0 then
-            rvim.toggle_list('quickfix')
+            rvim.toggle_list("quickfix")
           end
         end
       end,
@@ -202,8 +204,8 @@ local function make_diagnostic_qf_updater()
   end
 end
 
-command('LspDiagnostics', make_diagnostic_qf_updater())
-rvim.nnoremap('<leader>ll', '<Cmd>LspDiagnostics<CR>', 'toggle quickfix diagnostics')
+command("LspDiagnostics", make_diagnostic_qf_updater())
+rvim.nnoremap("<leader>ll", "<Cmd>LspDiagnostics<CR>", "toggle quickfix diagnostics")
 
 -----------------------------------------------------------------------------//
 -- Signs
@@ -213,14 +215,14 @@ local function sign(opts)
     text = opts.icon,
     texthl = opts.highlight,
     linehl = fmt("%sLine", opts.highlight),
-    culhl = opts.highlight .. 'Line',
+    culhl = opts.highlight .. "Line",
   })
 end
 
-sign({ highlight = 'DiagnosticSignError', icon = icons.lsp.error })
-sign({ highlight = 'DiagnosticSignWarn', icon = icons.lsp.warn })
-sign({ highlight = 'DiagnosticSignInfo', icon = icons.lsp.info })
-sign({ highlight = 'DiagnosticSignHint', icon = icons.lsp.hint })
+sign({ highlight = "DiagnosticSignError", icon = icons.lsp.error })
+sign({ highlight = "DiagnosticSignWarn", icon = icons.lsp.warn })
+sign({ highlight = "DiagnosticSignInfo", icon = icons.lsp.info })
+sign({ highlight = "DiagnosticSignHint", icon = icons.lsp.hint })
 
 -----------------------------------------------------------------------------//
 -- Diagnostic Configuration
@@ -229,23 +231,30 @@ local max_width = math.min(math.floor(vim.o.columns * 0.7), 100)
 local max_height = math.min(math.floor(vim.o.lines * 0.3), 30)
 
 local diagnostics = rvim.lsp.diagnostics
-local diagnostic = vim.diagnostic
+local float = rvim.lsp.diagnostics.float
 
-diagnostic.config({ -- your config
-  virtual_text = {
-    source = "if_many",
-    prefix = icons.misc.bug,
-    spacing = diagnostics.virtual_text_spacing,
-    format = function(d)
-      local level = diagnostic.severity[d.severity]
-      return fmt('%s %s', icons[level:lower()], d.message)
-    end,
-  },
+diagnostic.config({
   signs = { active = diagnostics.signs.active, values = icons.lsp },
   underline = diagnostics.underline,
   update_in_insert = diagnostics.update_in_insert,
   severity_sort = diagnostics.severity_sort,
-  float = diagnostics.float,
+  virtual_text = {
+    prefix = "",
+    spacing = diagnostics.virtual_text_spacing,
+    format = function(d)
+      local level = diagnostic.severity[d.severity]
+      return fmt("%s %s", icons.lsp[level:lower()], d.message)
+    end,
+  },
+  float = vim.tbl_deep_extend("keep", {
+    max_width = max_width,
+    max_height = max_height,
+    prefix = function(diag, i, _)
+      local level = diagnostic.severity[diag.severity]
+      local prefix = fmt("%d. %s ", i, icons.lsp[level:lower()])
+      return prefix, "Diagnostic" .. level:gsub("^%l", string.upper)
+    end,
+  }, float),
 })
 
 -- NOTE: the hover handler returns the bufnr,winnr so can be used for mappings
