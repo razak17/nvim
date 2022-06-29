@@ -67,7 +67,7 @@ function M.init(client)
   if client.server_capabilities.implementationProvider then
     rvim.nnoremap(
       "<leader>lpi",
-      "<cmd>lua require('user.lsp.peek').peek('implementation')<cr>",
+      "<cmd>lua require('user.lsp.peek').Peek('implementation')<cr>",
       with_desc("peek: implementation")
     )
   end
