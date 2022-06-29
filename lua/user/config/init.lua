@@ -7,7 +7,7 @@ for _, v in pairs(rvim.util.disabled_providers) do
   vim.g["loaded_" .. v .. "_provider"] = 0
 end
 
-if rvim.util.defer then
+if rvim.ui.defer then
   vim.cmd([[syntax off]])
   vim.cmd([[filetype off]])
   vim.defer_fn(

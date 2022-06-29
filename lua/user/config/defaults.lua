@@ -35,6 +35,12 @@ rvim.plugins = {
   packer = { active = true },
 }
 
+rvim.ui = {
+  line_wrap_cursor_movement = false,
+  transparent_window = false,
+  defer = false,
+}
+
 rvim.util = {
   disabled_providers = { "python", "ruby", "perl" },
   ftplugin_filetypes = {
@@ -55,8 +61,6 @@ rvim.util = {
     "typescriptreact",
     "yaml",
   },
-  transparent_window = false,
-  line_wrap_cursor_movement = false,
   format_on_save = {
     ---@usage pattern string pattern used for the autocommand (Default: '*')
     pattern = "*",
@@ -69,7 +73,6 @@ rvim.util = {
   format_on_focus_lost = false,
   autoinstall_ts_parsers = true,
   debug = false,
-  defer = false,
 }
 
 rvim.colorscheme = "zephyr"
