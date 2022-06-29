@@ -57,31 +57,29 @@ function M.init(client)
   ------------------------------------------------------------------------------
 
   -- Peek
-  if client.server_capabilities.definitionProvider then
-    rvim.nnoremap(
-      "<leader>lp",
-      "<cmd>lua require('user.lsp.peek').Peek('definition')<cr>",
-      with_desc("peek: definition")
-    )
-  end
-  if client.server_capabilities.implementationProvider then
-    rvim.nnoremap(
-      "<leader>li",
-      "<cmd>lua require('user.lsp.peek').Peek('implementation')<cr>",
-      with_desc("peek: implementation")
-    )
-  end
-  if client.server_capabilities.typeDefinitionProvider then
-    rvim.nnoremap(
-      "<leader>lt",
-      "<cmd>lua require('user.lsp.peek').Peek('typeDefinition')<cr>",
-      with_desc("peek: type definition")
-    )
-  end
+  rvim.nnoremap(
+    "<leader>lp",
+    "<cmd>lua require('user.lsp.peek').Peek('definition')<cr>",
+    with_desc("peek: definition")
+  )
+  rvim.nnoremap(
+    "<leader>li",
+    "<cmd>lua require('user.lsp.peek').Peek('implementation')<cr>",
+    with_desc("peek: implementation")
+  )
+  rvim.nnoremap(
+    "<leader>lt",
+    "<cmd>lua require('user.lsp.peek').Peek('typeDefinition')<cr>",
+    with_desc("peek: type definition")
+  )
 
   rvim.nnoremap("<leader>lk", vim.diagnostic.goto_prev, with_desc("lsp: go to prev diagnostic"))
   rvim.nnoremap("<leader>lj", vim.diagnostic.goto_next, with_desc("lsp: go to next diagnostic"))
-  rvim.nnoremap("<leader>lL", vim.diagnostic.setloclist, with_desc("lsp: toggle loclist diagnostics"))
+  rvim.nnoremap(
+    "<leader>lL",
+    vim.diagnostic.setloclist,
+    with_desc("lsp: toggle loclist diagnostics")
+  )
 
   if client.server_capabilities.documentFormattingProvider then
     rvim.nnoremap("<leader>lf", "<cmd>LspFormat<cr>", with_desc("lsp: format buffer"))
