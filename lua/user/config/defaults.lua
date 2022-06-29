@@ -69,7 +69,7 @@ rvim.util = {
   format_on_focus_lost = false,
   autoinstall_ts_parsers = true,
   debug = false,
-  defer = false,
+  defer = true,
 }
 
 rvim.colorscheme = "zephyr"

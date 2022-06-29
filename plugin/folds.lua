@@ -1,6 +1,8 @@
 -----------------------------------------------------------------------------//
 -- Fold Text
 -----------------------------------------------------------------------------//
+-- CREDIT: https://coderwall.com/p/usd_cw/a-pretty-vim-foldtext-function
+
 local fn = vim.fn
 local api = vim.api
 
@@ -105,4 +107,4 @@ function _G.folds()
   return fold_start .. string.rep(" ", api.nvim_win_get_width(0) - text_length - 7) .. fold_end
 end
 
--- CREDIT: https://coderwall.com/p/usd_cw/a-pretty-vim-foldtext-function
+vim.opt.foldtext = 'v:lua.as.folds()'
