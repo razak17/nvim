@@ -1,11 +1,11 @@
 #!/bin/sh
 #Set Variable to master is not set differently
-BRANCH="${BRANCH:-main}"
 set -o nounset # error when referencing undefined variable
 set -o errexit # exit when command fails
 
-RVIM_GIT_PATH="$HOME/.dots/rvim/"
-RVIM_CONFIG_PATH="$HOME/.config/rvim/"
+RVIM_CONFIG_PATH="${RVIM_CONFIG_PATH:-"$XDG_CONFIG_HOME/rvim"}"
+RV_BRANCH="${RV_BRANCH:-"main"}"
+RV_REMOTE="${RV_REMOTE:-razak17/nvim.git}"
 
 lsp_path='.cache/rvim/nvim_lsp'
 neovim_py='.cache/rvim/venv/neovim'
@@ -29,7 +29,7 @@ asktoinstallpip() {
 
 moveoldrvim() {
 	echo "Not installing rvim"
-	echo "Please remove $RVIM_CONFIG_PATH and $RVIM_GIT_PATH paths before installing"
+	echo "Please remove $RVIM_CONFIG_PATH path before installing"
 	exit
 }
 
@@ -74,26 +74,13 @@ nodeExtra() {
 	npm install -g tree-sitter-cli eslint prettier_d_slim esint_d neovim
 }
 
-rconf() {
-	/usr/bin/git --git-dir="$RVIM_GIT_PATH" --work-tree="$RVIM_CONFIG_PATH" "$@"
-}
-
 importRvim() {
-	git clone --branch "$BRANCH" --bare https://github.com/razak17/nvim "$RVIM_GIT_PATH"
-	mkdir -p "$RVIM_CONFIG_PATH"
-	cd "$RVIM_CONFIG_PATH" || exit
-	rconf checkout
-	if [ $? = 0 ]; then
-		echo "Checked out dotfiles..."
-	else
-		mkdir -p ~/.config-backup-rvim
-		echo "Backing up pre-existing dot files."
-		rconf checkout 2>&1 | grep -E "\s+\." | awk {'print $1'} | xargs -I{} mv {} ~/.config-backup-rvim/{}
-	fi
-	rconf checkout
-	rconf config --local status.showUntrackedFiles no
-	echo "Config clone done"
-	echo "Old files have been moved to ~/.config-backup-rvim"
+  msg "Cloning rVim configuration"
+  if ! git clone --branch "$RV_BRANCH" \
+    --depth 1 "https://github.com/${RV_REMOTE}" "$RVIM_CONFIG_PATH"; then
+    echo "Failed to clone repository. Installation failed."
+    exit 1
+  fi
 }
 
 cloneconfig() {
