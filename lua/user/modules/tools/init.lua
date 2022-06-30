@@ -284,4 +284,10 @@ tools["kevinhwang91/nvim-bqf"] = {
   },
   ft = "qf",
 }
+
+tools["anuvyklack/hydra.nvim"] = {
+  requires = "anuvyklack/keymap-layer.nvim",
+  config = conf("tools", "hydra"),
+}
+
 return tools
