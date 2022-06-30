@@ -1,0 +1,19 @@
+{
+  "go.buildOnSave": "off"
+  "gopls": {
+    "ui.codelenses": {
+      "enabled": true,
+      "generate": true
+      "gc_details": false,
+      "test": true,
+      "tidy": true,
+    },
+    "ui.diagnostic.analyses": {
+      "unusedparams": true,
+      "loopclosure": true
+    },
+    "ui.completion.usePlaceholders": true,
+    "ui.diagnostic.staticcheck": true,
+
+  }
+}
