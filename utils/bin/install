@@ -2,7 +2,7 @@
 #Set Variable to master is not set differently
 
 RVIM_CONFIG_PATH="${RVIM_CONFIG_PATH:-"$XDG_CONFIG_HOME/rvim"}"
-RV_BRANCH="${RV_BRANCH:-"main"}"
+RV_BRANCH="${RV_BRANCH:-"dual"}"
 RV_REMOTE="${RV_REMOTE:-razak17/nvim.git}"
 
 lsp_path='.cache/rvim/nvim_lsp'
