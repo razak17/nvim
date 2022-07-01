@@ -164,12 +164,4 @@ return function()
   rvim.nnoremap("<S-l>", ":BufferLineCycleNext<CR>")
   rvim.nnoremap("<S-h>", ":BufferLineCyclePrev<CR>")
   rvim.nnoremap("gb", ":BufferLinePick<CR>", "bufferline: goto buffer")
-
-  require("which-key").register({
-    ["<leader>bh"] = { ":BufferLineMovePrev<CR>", "bufferline: move left" },
-    ["<leader>bl"] = { ":BufferLineMoveNext<CR>", "bufferline: move right" },
-    ["<leader>bH"] = { ":BufferLineCloseLeft<CR>", "bufferline: close left" },
-    ["<leader>bL"] = { ":BufferLineCloseRight<CR>", "bufferline: close right" },
-    ["<leader>bp"] = { ":BufferLineTogglePin<CR>", "bufferline: toggle pin" },
-  })
 end

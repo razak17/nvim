@@ -3,6 +3,26 @@ return function()
   local border = rvim.style.border.current
 
   Hydra({
+    name = 'Buffer management',
+    mode = 'n',
+    body = '<leader>b',
+    invoke_on_body = true,
+    color = 'teal',
+    config = {
+      hint = { border = border },
+    },
+    heads = {
+      { 'l', '<Cmd>BufferLineMoveNext<CR>', { desc = 'Next buffer' } },
+      { 'h', '<Cmd>BufferLineMovePrev<CR>', { desc = 'Prev buffer' } },
+      { 'L', '<Cmd>BufferCloseRight<CR>', { desc = 'Close right' } },
+      { 'H', '<Cmd>BufferCloseLeft<CR>', { desc = 'Close left' } },
+      { 'p', '<Cmd>BufferLineTogglePin<CR>', { desc = 'Pin buffer' } },
+      { 'd', '<Cmd>BufferLinePickClose<CR>', { desc = 'Pick buffer to close', exit = true } },
+      { '<Esc>', nil, { exit = true, desc = 'Quit' } },
+    },
+  })
+
+  Hydra({
     name = 'Side scroll',
     mode = 'n',
     body = 'z',
