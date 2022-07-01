@@ -165,23 +165,7 @@ ui["j-hui/fidget.nvim"] = {
 
 ui["kevinhwang91/nvim-ufo"] = {
   requires = "kevinhwang91/promise-async",
-  config = function()
-    vim.opt.foldlevelstart = 99
-    vim.opt.sessionoptions:append("folds")
-    local hl = require("user.utils.highlights")
-    local bg = hl.alter_color(hl.get("Normal", "bg"), -7)
-    hl.plugin("ufo", { Folded = { bold = false, italic = false, bg = bg } })
-    local ufo = require("ufo")
-    local ft_map = {}
-    ufo.setup({
-      open_fold_hl_timeout = 0,
-      provider_selector = function(_, filetype)
-        return ft_map[filetype] or { "treesitter", "indent" }
-      end,
-    })
-    rvim.nnoremap("zR", ufo.openAllFolds, "open all folds")
-    rvim.nnoremap("zM", ufo.closeAllFolds, "close all folds")
-  end,
+  config = conf('ui', 'ufo')
 }
 
 return ui
