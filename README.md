@@ -6,14 +6,8 @@ My personal nvim configuration
 
 ### Install In One Command
 
-To install the main branch (stable).
+Command to install
 
 ```bash
-bash <(curl -s https://raw.githubusercontent.com/razak17/nvim/main/external/bin/install) --all
-```
-
-To install the rolling branch for latest changes. Change BRANCH to rolling.
-
-```bash
-BRANCH=rolling bash <(curl -s https://raw.githubusercontent.com/razak17/nvim/rolling/external/bin/install) --all
+bash <(curl -s https://raw.githubusercontent.com/razak17/nvim/dual/external/bin/install) --all
 ```
