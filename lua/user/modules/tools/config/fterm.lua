@@ -12,8 +12,6 @@ return function()
       cmd = term:new({ cmd = "ranger" })
     elseif key == "conf_commit" then
       cmd = term:new({ cmd = "iconf -ccma" })
-    elseif key == "rconf_commit" then
-      cmd = term:new({ cmd = "iconf -rcma" })
     end
     cmd:toggle()
   end
