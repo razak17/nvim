@@ -1,7 +1,7 @@
 #!/bin/sh
 #Set Variable to master is not set differently
 
-RVIM_CONFIG_PATH="${RVIM_CONFIG_PATH:-"$XDG_CONFIG_HOME/rvim"}"
+RVIM_CONFIG_DIR="${RVIM_CONFIG_DIR:-"$XDG_CONFIG_HOME/rvim"}"
 RV_BRANCH="${RV_BRANCH:-"dual"}"
 RV_REMOTE="${RV_REMOTE:-razak17/nvim.git}"
 
@@ -27,7 +27,7 @@ asktoinstallpip() {
 
 moveoldrvim() {
 	echo "Not installing rvim"
-	echo "Please remove $RVIM_CONFIG_PATH path before installing"
+	echo "Please remove $RVIM_CONFIG_DIR path before installing"
 	exit
 }
 
@@ -82,7 +82,7 @@ msg() {
 importRvim() {
   msg "Cloning rVim configuration"
   if ! git clone --branch "$RV_BRANCH" \
-    --depth 1 "https://github.com/${RV_REMOTE}" "$RVIM_CONFIG_PATH"; then
+    --depth 1 "https://github.com/${RV_REMOTE}" "$RVIM_CONFIG_DIR"; then
     echo "Failed to clone repository. Installation failed."
     exit 1
   fi
@@ -90,7 +90,7 @@ importRvim() {
 
 cloneconfig() {
 	# check existing config
-	[ -d "$RVIM_CONFIG_PATH" ] && moveoldrvim
+	[ -d "$RVIM_CONFIG_DIR" ] && moveoldrvim
 
 	# install go
 	(command -v go >/dev/null && echo "go installed, moving on...") || asktoinstallgo
