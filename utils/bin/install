@@ -1,7 +1,5 @@
 #!/bin/sh
 #Set Variable to master is not set differently
-set -o nounset # error when referencing undefined variable
-set -o errexit # exit when command fails
 
 RVIM_CONFIG_PATH="${RVIM_CONFIG_PATH:-"$XDG_CONFIG_HOME/rvim"}"
 RV_BRANCH="${RV_BRANCH:-"main"}"
@@ -72,6 +70,13 @@ installExtra() {
 
 nodeExtra() {
 	npm install -g tree-sitter-cli eslint prettier_d_slim esint_d neovim
+}
+
+msg() {
+  text="$1"
+  div_width="80"
+  printf "%${div_width}s\n" ' ' | tr ' ' -
+  printf "%s\n" "$text"
 }
 
 importRvim() {
