@@ -85,7 +85,7 @@ importRvim() {
 
 cloneconfig() {
 	# check existing config
-	[ -d "$RVIM_CONFIG_PATH" ] || [ -d "$RVIM_GIT_PATH" ] && moveoldrvim
+	[ -d "$RVIM_CONFIG_PATH" ] && moveoldrvim
 
 	# install go
 	(command -v go >/dev/null && echo "go installed, moving on...") || asktoinstallgo
@@ -105,8 +105,9 @@ cloneconfig() {
 	importRvim
 
 	# Install core python packages
-	echo "Installing core python packages"
-	pythonVenvInit
+	printf "Would you like to initialize python now (y/n)? "
+	read -r answer
+	[ "$answer" != "${answer#[Yy]}" ] && pythonVenvInit
 
 	# install node and neovim support
 	(command -v git >/dev/null && echo "git installed, moving on...") || asktoinstallgit
