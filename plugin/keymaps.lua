@@ -174,16 +174,6 @@ vnoremap(">", ">gv")
 ------------------------------------------------------------------------------
 -- Switch between the last two files
 nnoremap("<leader><leader>", [[<c-^>]])
--- Del all other buffers
-nnoremap("<leader>bc", function()
-  vim.api.nvim_exec(
-    [[
-      wall
-      silent execute 'bdelete ' . join(utils#buf_filt(1))
-    ]],
-    false
-  )
-end, "close all others")
 ------------------------------------------------------------------------------
 -- Capitalize
 ------------------------------------------------------------------------------

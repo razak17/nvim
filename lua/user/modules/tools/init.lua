@@ -150,7 +150,7 @@ tools["moll/vim-bbye"] = {
   config = function()
     require("which-key").register({
       ["<leader>c"] = { ":Bdelete!<cr>", "close buffer" },
-      ["<leader>bx"] = { ":bufdo :Bdelete<cr>", "close all buffers" },
+      ["<leader>bx"] = { ":bufdo :Bdelete<cr>", "close all" },
       ["<leader>q"] = { "<Cmd>Bwipeout<CR>", "wipe buffer" },
     })
   end,

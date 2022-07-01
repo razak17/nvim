@@ -38,6 +38,16 @@ command("LuaInvalidate", function(pattern)
   rvim.invalidate(pattern, true)
 end, { nargs = 1 })
 
+command("CloseOthers", function()
+  vim.api.nvim_exec(
+    [[
+      wall
+      silent execute 'bdelete ' . join(utils#buf_filt(1))
+    ]],
+    false
+  )
+end)
+
 -- Packer
 command("PlugCompile", [[lua require('user.core.plugins').compile()]])
 command("PlugInstall", [[lua require('user.core.plugins').install()]])
