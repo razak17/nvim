@@ -9,5 +9,5 @@ My personal nvim configuration
 Command to install
 
 ```bash
-bash <(curl -s https://raw.githubusercontent.com/razak17/nvim/dual/external/bin/install) --all
+bash <(curl -s https://raw.githubusercontent.com/razak17/nvim/dual/utils/bin/install) --all
 ```
