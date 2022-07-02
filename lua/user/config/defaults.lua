@@ -66,7 +66,7 @@ rvim.util = {
     ---@usage pattern string pattern used for the autocommand (Default: '*')
     pattern = "*",
     ---@usage timeout number timeout in ms for the format request (Default: 1000)
-    timeout = 1000,
+    timeout = 100,
     ---@usage filter func to select client
     filter = require("user.utils.lsp").format_filter,
   },
