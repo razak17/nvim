@@ -74,6 +74,7 @@ rvim.style = {
       history = "",
       comment = "",
       robot = "ﮧ",
+      smiley = "ﲃ",
       lightbulb = "",
       search = "",
       code = "",
@@ -182,7 +183,7 @@ rvim.style = {
     },
     documents = {
       File = " ",
-      Files = " ",
+     Files = " ",
       Folder = " ",
       OpenFolder = " ",
     },
@@ -241,6 +242,7 @@ rvim.style = {
       Squirrel = " ",
       Tag = " ",
       Watch = " ",
+      Smiley = " "
     },
   },
 }
