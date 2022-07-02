@@ -54,8 +54,12 @@ pythonVenvInit() {
 	~/$neovim_py/bin/pip3 install -U setuptools pynvim jedi neovim-remote
 }
 
+nodeExtra() {
+	npm install -g tree-sitter-cli eslint prettier_d_slim esint_d neovim prettier gofmt live-server picgo
+}
+
 pythonExtra() {
-	pip3 install ueberzug yapf black flake8 pylint mypy black isort
+	pip3 install ueberzug yapf black flake8 pylint mypy black isort pylint-django django-stubs sqlformat debugpy
 }
 
 golangInit() {
@@ -64,12 +68,23 @@ golangInit() {
 	go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.43.0
 }
 
-installExtra() {
-	sudo pacman -S ripgrep fzf cppcheck stylua shfmt shellcheck
-}
-
-nodeExtra() {
-	npm install -g tree-sitter-cli eslint prettier_d_slim esint_d neovim
+archExtra() {
+	sudo pacman -S \
+    ripgrep \
+    fzf \
+    cppcheck \
+    stylua \
+    shfmt \
+    shellcheck \
+    xsel \
+    treesitter \
+    fd \
+    delve \
+    lazygit \
+    unzip \
+    curl \
+    sqlite3 \
+    trash-cli
 }
 
 msg() {
@@ -137,7 +152,7 @@ cloneconfig() {
 
 	printf "Would you like to install extra packages now (y/n)? "
 	read -r answer
-	[ "$answer" != "${answer#[Yy]}" ] && installExtra
+	[ "$answer" != "${answer#[Yy]}" ] && archExtra
 
 	sudo cp --force "$HOME/.config/rvim/utils/bin/rvim" "$HOME/.local/bin"
 }
