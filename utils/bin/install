@@ -77,7 +77,6 @@ archExtra() {
     shfmt \
     shellcheck \
     xsel \
-    treesitter \
     fd \
     delve \
     lazygit \
@@ -87,20 +86,76 @@ archExtra() {
     trash-cli
 }
 
-msg() {
-  text="$1"
-  div_width="80"
-  printf "%${div_width}s\n" ' ' | tr ' ' -
-  printf "%s\n" "$text"
+yayExtra() {
+	yay -S stylua
 }
 
 importRvim() {
-  msg "Cloning rVim configuration"
+  echo "Cloning rVim configuration"
   if ! git clone --branch "$RV_BRANCH" \
     --depth 1 "https://github.com/${RV_REMOTE}" "$RVIM_CONFIG_DIR"; then
     echo "Failed to clone repository. Installation failed."
     exit 1
   fi
+}
+
+validate_node_installation() {
+  pkg_manager="$1"
+
+  if [ "$pkg_manager" = "npm" ]; then
+    manager_home="$(npm config get prefix 2>/dev/null)"
+  elif [ "$pkg_manager" = "pnpm" ]; then
+    manager_home="$(pnpm config get prefix 2>/dev/null)"
+  else
+    manager_home="$(yarn global bin 2>/dev/null)"
+  fi
+
+  if [ ! -d "$manager_home" ] || [ ! -w "$manager_home" ]; then
+    echo "[$pkg_manager] not found."
+    return 1
+  fi
+
+  return 0
+}
+
+install_nodejs_deps() {
+	printf "Which package manager would you like to use (pnpm, yarn, npm)? "
+  pkg_managers=("pnpm" "yarn" "npm")
+
+	read -r answer
+  for pkg_manager in "${pkg_managers[@]}"; do
+    if [ "$answer" = "$pkg_manager" ]; then
+      if validate_node_installation "$pkg_manager"; then
+        echo "Proceed to Install"
+        nodeExtra
+        return
+      fi
+      return
+    fi
+  done
+  echo "Unknown package manager"
+}
+
+install_deps() {
+	printf "Would you like to install node packages now (y/n)? "
+	read -r answer
+	[ "$answer" != "${answer#[Yy]}" ] && install_nodejs_deps
+
+	printf "Would you like to install pip packages now (y/n)? "
+	read -r answer
+	[ "$answer" != "${answer#[Yy]}" ] && pythonExtra
+
+	printf "Would you like to install go packages now (y/n)? "
+	read -r answer
+	[ "$answer" != "${answer#[Yy]}" ] && golangInit
+
+	printf "Would you like to install extra arch packages now (y/n)? "
+	read -r answer
+	[ "$answer" != "${answer#[Yy]}" ] && archExtra
+
+	printf "Would you like to install extra aur packages now (y/n)? "
+	read -r answer
+	[ "$answer" != "${answer#[Yy]}" ] && yayExtra
 }
 
 cloneconfig() {
@@ -109,9 +164,6 @@ cloneconfig() {
 
 	# install go
 	(command -v go >/dev/null && echo "go installed, moving on...") || asktoinstallgo
-
-	# install node and neovim support
-	(command -v node >/dev/null && echo "node installed, moving on...") || asktoinstallnode
 
 	# install pip
 	(command -v pip3 >/dev/null && echo "pip installed, moving on...") || asktoinstallpip
@@ -138,21 +190,7 @@ cloneconfig() {
 		installpacker
 	fi
 
-	printf "Would you like to install node packages now (y/n)? "
-	read -r answer
-	[ "$answer" != "${answer#[Yy]}" ] && nodeExtra
-
-	printf "Would you like to install pip packages now (y/n)? "
-	read -r answer
-	[ "$answer" != "${answer#[Yy]}" ] && pythonExtra
-
-	printf "Would you like to install go packages now (y/n)? "
-	read -r answer
-	[ "$answer" != "${answer#[Yy]}" ] && golangInit
-
-	printf "Would you like to install extra packages now (y/n)? "
-	read -r answer
-	[ "$answer" != "${answer#[Yy]}" ] && archExtra
+  install_deps
 
 	sudo cp --force "$HOME/.config/rvim/utils/bin/rvim" "$HOME/.local/bin"
 }
@@ -167,9 +205,15 @@ while [ "$#" -gt 0 ]; do
 		;;
 	-node)
 		nodeHostInit
+    ;;
+	-npm)
+    install_nodejs_deps
 		;;
 	-go)
 		golangInit
+		;;
+	-deps)
+    install_deps
 		;;
 	*--all*)
 		cloneconfig
