@@ -292,6 +292,10 @@ return function()
     end
   end
 
+  local function find_files(opts)
+    builtins.find_files(opts)
+  end
+
   local function file_browser()
     telescope.extensions.file_browser.file_browser({})
   end
@@ -373,6 +377,7 @@ return function()
         g = { rvim_files.grep_files, "find in files" },
         i = { rvim_files.view_changelog, "view changelog" },
       },
+      f = { find_files, "find files" },
       g = {
         name = "Git",
         b = { builtins.git_branches, "branch" },
