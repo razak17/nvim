@@ -16,7 +16,7 @@ _G.rvim = rvim or {
 ---Join path segments that were passed rvim input
 ---@return string
 function join_paths(...)
-  local path_sep = uv.os_uname().version:match("Windows") and "\\" or "/"
+  local path_sep = uv.os_uname().version:match('Windows') and '\\' or '/'
   local result = table.concat({ ... }, path_sep)
   return result
 end
@@ -27,7 +27,7 @@ function rvim.get_runtime_dir()
   local rvim_runtime_dir = vim.env.RVIM_RUNTIME_DIR
   if not rvim_runtime_dir then
     -- when nvim is used directly
-    return vim.call("stdpath", "data")
+    return vim.call('stdpath', 'data')
   end
   return rvim_runtime_dir
 end
@@ -37,7 +37,7 @@ end
 function rvim.get_config_dir()
   local rvim_config_dir = vim.env.RVIM_CONFIG_DIR
   if not rvim_config_dir then
-    return vim.call("stdpath", "config")
+    return vim.call('stdpath', 'config')
   end
   return rvim_config_dir
 end
@@ -47,7 +47,7 @@ end
 function rvim.get_cache_dir()
   local rvim_cache_dir = vim.env.RVIM_CACHE_DIR
   if not rvim_cache_dir then
-    return vim.call("stdpath", "cache")
+    return vim.call('stdpath', 'cache')
   end
   return rvim_cache_dir
 end
@@ -57,9 +57,9 @@ end
 function rvim.get_user_dir()
   local config_dir = vim.env.RVIM_CONFIG_DIR
   if not config_dir then
-    config_dir = vim.call("stdpath", "config")
+    config_dir = vim.call('stdpath', 'config')
   end
-  return join_paths(config_dir, "lua", "user")
+  return join_paths(config_dir, 'lua', 'user')
 end
 
 -----------------------------------------------------------------------------//
@@ -76,7 +76,7 @@ end
 function rvim.fold(callback, list, accum)
   for k, v in pairs(list) do
     accum = callback(accum, v, k)
-    assert(accum, "The accumulator must be returned on each iteration")
+    assert(accum, 'The accumulator must be returned on each iteration')
   end
   return accum
 end
@@ -131,7 +131,7 @@ end
 
 --- Check if a file or directory exists in this path
 function rvim._exists(file)
-  if file == "" or file == nil then
+  if file == '' or file == nil then
     return false
   end
   local ok, err, code = os.rename(file, file)
@@ -154,7 +154,6 @@ function rvim.plugin_loaded(plugin_name)
   return plugins[plugin_name] and plugins[plugin_name].loaded
 end
 
-
 ---Check whether or not the location or quickfix list is open
 ---@return boolean
 function rvim.is_vim_list_open()
@@ -169,7 +168,6 @@ function rvim.is_vim_list_open()
   return false
 end
 
-
 ---Require a module using [pcall] and report any errors
 ---@param module string
 ---@param opts table?
@@ -178,7 +176,7 @@ function rvim.safe_require(module, opts)
   opts = opts or { silent = false }
   local ok, result = pcall(require, module)
   if not ok and not opts.silent then
-    vim.notify(result, vim.log.levels.ERROR, { title = fmt("Error requiring: %s", module) })
+    vim.notify(result, vim.log.levels.ERROR, { title = fmt('Error requiring: %s', module) })
   end
   return ok, result
 end
@@ -191,11 +189,11 @@ function rvim.empty(item)
     return true
   end
   local item_type = type(item)
-  if item_type == "string" then
-    return item == ""
-  elseif item_type == "number" then
+  if item_type == 'string' then
+    return item == ''
+  elseif item_type == 'number' then
     return item <= 0
-  elseif item_type == "table" then
+  elseif item_type == 'table' then
     return vim.tbl_isempty(item)
   end
   return false
@@ -206,25 +204,25 @@ end
 --- 2. At the bottom of the file call `stop()`
 --- 3. Restart neovim, the newly created log file should open
 function rvim.profile(filename)
-  local base = "/tmp/config/profile/"
-  fn.mkdir(base, "p")
-  local success, profile = pcall(require, "plenary.profile.lua_profiler")
+  local base = '/tmp/config/profile/'
+  fn.mkdir(base, 'p')
+  local success, profile = pcall(require, 'plenary.profile.lua_profiler')
   if not success then
-    vim.api.nvim_echo({ "Plenary is not installed.", "Title" }, true, {})
+    vim.api.nvim_echo({ 'Plenary is not installed.', 'Title' }, true, {})
   end
   profile.start()
   return function()
     profile.stop()
-    local logfile = base .. filename .. ".log"
+    local logfile = base .. filename .. '.log'
     profile.report(logfile)
     vim.defer_fn(function()
-      vim.cmd("tabedit " .. logfile)
+      vim.cmd('tabedit ' .. logfile)
     end, 1000)
   end
 end
 
 local oss = vim.loop.os_uname().sysname
-rvim.open_command = oss == "Darwin" and "open" or "xdg-open"
+rvim.open_command = oss == 'Darwin' and 'open' or 'xdg-open'
 
 ---Reload lua modules
 ---@param path string
@@ -232,7 +230,7 @@ rvim.open_command = oss == "Darwin" and "open" or "xdg-open"
 function rvim.invalidate(path, recursive)
   if recursive then
     for key, value in pairs(package.loaded) do
-      if key ~= "_G" and value and fn.match(key, path) ~= -1 then
+      if key ~= '_G' and value and fn.match(key, path) ~= -1 then
         package.loaded[key] = nil
         require(key)
       end
@@ -254,7 +252,7 @@ P = vim.pretty_print
 ---@param name string
 ---@param cmd Autocommand
 local function validate_autocmd(name, cmd)
-  local keys = { "event", "buffer", "pattern", "desc", "command", "group", "once", "nested" }
+  local keys = { 'event', 'buffer', 'pattern', 'desc', 'command', 'group', 'once', 'nested' }
   local incorrect = rvim.fold(function(accum, _, key)
     if not vim.tbl_contains(keys, key) then
       table.insert(accum, key)
@@ -265,8 +263,8 @@ local function validate_autocmd(name, cmd)
     return
   end
   vim.schedule(function()
-    vim.notify("Incorrect keys: " .. table.concat(incorrect, ", "), "error", {
-      title = fmt("Autocmd: %s", name),
+    vim.notify('Incorrect keys: ' .. table.concat(incorrect, ', '), 'error', {
+      title = fmt('Autocmd: %s', name),
     })
   end)
 end
@@ -289,7 +287,7 @@ function rvim.augroup(name, commands)
   local id = api.nvim_create_augroup(name, { clear = true })
   for _, autocmd in ipairs(commands) do
     validate_autocmd(name, autocmd)
-    local is_callback = type(autocmd.command) == "function"
+    local is_callback = type(autocmd.command) == 'function'
     api.nvim_create_autocmd(autocmd.event, {
       group = name,
       pattern = autocmd.pattern,
@@ -323,9 +321,9 @@ end
 ---@param prefix boolean?
 function rvim.source(path, prefix)
   if not prefix then
-    vim.cmd(fmt("source %s", path))
+    vim.cmd(fmt('source %s', path))
   else
-    vim.cmd(fmt("source %s/%s", vim.g.vim_dir, path))
+    vim.cmd(fmt('source %s/%s', vim.g.vim_dir, path))
   end
 end
 
@@ -360,8 +358,8 @@ local function make_mapper(mode, o)
   ---@param opts table
   return function(lhs, rhs, opts)
     -- If the label is all that was passed in, set the opts automagically
-    opts = type(opts) == "string" and { desc = opts } or opts and vim.deepcopy(opts) or {}
-    vim.keymap.set(mode, lhs, rhs, vim.tbl_extend("keep", opts, parent_opts))
+    opts = type(opts) == 'string' and { desc = opts } or opts and vim.deepcopy(opts) or {}
+    vim.keymap.set(mode, lhs, rhs, vim.tbl_extend('keep', opts, parent_opts))
   end
 end
 
@@ -369,33 +367,33 @@ local map_opts = { remap = true, silent = true }
 local noremap_opts = { silent = true }
 
 -- A recursive commandline mapping
-rvim.nmap = make_mapper("n", map_opts)
+rvim.nmap = make_mapper('n', map_opts)
 -- A recursive select mapping
-rvim.xmap = make_mapper("x", map_opts)
+rvim.xmap = make_mapper('x', map_opts)
 -- A recursive terminal mapping
-rvim.imap = make_mapper("i", map_opts)
+rvim.imap = make_mapper('i', map_opts)
 -- A recursive operator mapping
-rvim.vmap = make_mapper("v", map_opts)
+rvim.vmap = make_mapper('v', map_opts)
 -- A recursive insert mapping
-rvim.omap = make_mapper("o", map_opts)
+rvim.omap = make_mapper('o', map_opts)
 -- A recursive visual & select mapping
-rvim.tmap = make_mapper("t", map_opts)
+rvim.tmap = make_mapper('t', map_opts)
 -- A recursive visual mapping
-rvim.smap = make_mapper("s", map_opts) -- A recursive normal mapping
-rvim.cmap = make_mapper("c", { remap = false, silent = false })
+rvim.smap = make_mapper('s', map_opts) -- A recursive normal mapping
+rvim.cmap = make_mapper('c', { remap = false, silent = false })
 -- A non recursive normal mapping
-rvim.nnoremap = make_mapper("n", noremap_opts)
+rvim.nnoremap = make_mapper('n', noremap_opts)
 -- A non recursive visual mapping
-rvim.xnoremap = make_mapper("x", noremap_opts)
+rvim.xnoremap = make_mapper('x', noremap_opts)
 -- A non recursive visual & select mapping
-rvim.vnoremap = make_mapper("v", noremap_opts)
+rvim.vnoremap = make_mapper('v', noremap_opts)
 -- A non recursive insert mapping
-rvim.inoremap = make_mapper("i", noremap_opts)
+rvim.inoremap = make_mapper('i', noremap_opts)
 -- A non recursive operator mapping
-rvim.onoremap = make_mapper("o", noremap_opts)
+rvim.onoremap = make_mapper('o', noremap_opts)
 -- A non recursive terminal mapping
-rvim.tnoremap = make_mapper("t", noremap_opts)
+rvim.tnoremap = make_mapper('t', noremap_opts)
 -- A non recursive select mapping
-rvim.snoremap = make_mapper("s", noremap_opts)
+rvim.snoremap = make_mapper('s', noremap_opts)
 -- A non recursive commandline mapping
-rvim.cnoremap = make_mapper("c", { silent = false })
+rvim.cnoremap = make_mapper('c', { silent = false })

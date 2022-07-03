@@ -1,4 +1,4 @@
-vim.cmd [[
+vim.cmd([[
 " csv
 au BufNewFile,BufRead *.csv,*.dat,*.tsv,*.tab set ft=csv
 " dockerfile
@@ -68,4 +68,4 @@ au BufRead,BufNewFile .vimrc.local set ft=vim
 " tmp, bak
 au BufWritePre *.bak,*.tmp,COMMIT_EDITMSG,MERGE_MSG setlocal noundofile
 au BufNewFile,BufReadPre /tmp/*,$TMPDIR/*,$TMP/*,$TEMP/*,*/shm/*,/private/var/*,.vault.vim, setlocal noswapfile noundofile nobackup nowritebackup viminfo= shada="
-]]
+]])

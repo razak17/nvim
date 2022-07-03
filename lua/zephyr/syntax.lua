@@ -1,5 +1,5 @@
 local P = rvim.palette
-local util = require("user.utils.highlights")
+local util = require('user.utils.highlights')
 local darker_bg = util.alter_color(P.bg, -20)
 rvim.palette.darker_bg = darker_bg
 

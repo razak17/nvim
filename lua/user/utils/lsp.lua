@@ -1,4 +1,4 @@
-local tbl = require("user.utils.table")
+local tbl = require('user.utils.table')
 
 local M = {}
 
@@ -14,7 +14,7 @@ end
 function M.get_all_supported_filetypes()
   local status_ok, lsp_installer_filetypes = pcall(
     require,
-    "nvim-lsp-installer._generated.filetype_map"
+    'nvim-lsp-installer._generated.filetype_map'
   )
   if not status_ok then
     return {}
@@ -26,7 +26,7 @@ end
 ---@param server_name string can be any server supported by nvim-lsp-installer
 ---@return table supported filestypes as a list of strings
 function M.get_supported_filetypes(server_name)
-  local status_ok, lsp_installer_servers = pcall(require, "nvim-lsp-installer.servers")
+  local status_ok, lsp_installer_servers = pcall(require, 'nvim-lsp-installer.servers')
   if not status_ok then
     return {}
   end
@@ -54,8 +54,8 @@ function M.format_filter(clients)
     end
 
     -- give higher priority to null-ls
-    if status_ok and formatting_supported and client.name == "null-ls" then
-      return "null-ls"
+    if status_ok and formatting_supported and client.name == 'null-ls' then
+      return 'null-ls'
     else
       return status_ok and formatting_supported and client.name
     end
@@ -87,21 +87,21 @@ function M.format(opts)
   end
 
   clients = vim.tbl_filter(function(client)
-    return client.supports_method("textDocument/formatting")
+    return client.supports_method('textDocument/formatting')
   end, clients)
 
   if #clients == 0 then
-    vim.notify_once("[LSP] Format request failed, no matching language servers.")
+    vim.notify_once('[LSP] Format request failed, no matching language servers.')
   end
 
   local timeout_ms = opts.timeout_ms or 1000
   for _, client in pairs(clients) do
     local params = vim.lsp.util.make_formatting_params(opts.formatting_options)
-    local result, err = client.request_sync("textDocument/formatting", params, timeout_ms, bufnr)
+    local result, err = client.request_sync('textDocument/formatting', params, timeout_ms, bufnr)
     if result and result.result then
       vim.lsp.util.apply_text_edits(result.result, bufnr, client.offset_encoding)
     elseif err then
-      vim.notify(string.format("[LSP][%s] %s", client.name, err), vim.log.levels.WARN)
+      vim.notify(string.format('[LSP][%s] %s', client.name, err), vim.log.levels.WARN)
     end
   end
 end

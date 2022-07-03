@@ -4,16 +4,16 @@
 --@source: https://vim.fandom.com/wiki/Highlight_unwanted_spaces (comment at the bottom)
 --@implementation: https://github.com/inkarkat/vim-ShowTrailingWhitespace
 
-local util = require("user.utils.highlights")
+local util = require('user.utils.highlights')
 
 local fn = vim.fn
 
 local function is_floating_win()
-  return vim.fn.win_gettype() == "popup"
+  return vim.fn.win_gettype() == 'popup'
 end
 
 local function is_invalid_buf()
-  return vim.bo.filetype == "" or vim.bo.buftype ~= "" or not vim.bo.modifiable
+  return vim.bo.filetype == '' or vim.bo.buftype ~= '' or not vim.bo.modifiable
 end
 
 local function toggle_trailing(mode)
@@ -24,40 +24,40 @@ local function toggle_trailing(mode)
   if not vim.wo.list then
     vim.wo.list = true
   end
-  local pattern = mode == "i" and [[\s\+\%#\@<!$]] or [[\s\+$]]
+  local pattern = mode == 'i' and [[\s\+\%#\@<!$]] or [[\s\+$]]
   if vim.w.whitespace_match_number then
     fn.matchdelete(vim.w.whitespace_match_number)
-    fn.matchadd("ExtraWhitespace", pattern, 10, vim.w.whitespace_match_number)
+    fn.matchadd('ExtraWhitespace', pattern, 10, vim.w.whitespace_match_number)
   else
-    vim.w.whitespace_match_number = fn.matchadd("ExtraWhitespace", pattern)
+    vim.w.whitespace_match_number = fn.matchadd('ExtraWhitespace', pattern)
   end
 end
 
-util.set_hl("ExtraWhitespace", { foreground = "red" })
+util.set_hl('ExtraWhitespace', { foreground = 'red' })
 
-rvim.augroup("WhitespaceMatch", {
+rvim.augroup('WhitespaceMatch', {
   {
-    event = { "ColorScheme" },
-    desc = "Add extra whitespace highlight",
-    pattern = { "*" },
+    event = { 'ColorScheme' },
+    desc = 'Add extra whitespace highlight',
+    pattern = { '*' },
     command = function()
-      util.set_hl("ExtraWhitespace", { foreground = "red" })
+      util.set_hl('ExtraWhitespace', { foreground = 'red' })
     end,
   },
   {
-    event = { "BufEnter", "FileType", "InsertLeave" },
-    pattern = { "*" },
-    desc = "Show extra whitespace on insert leave, buf enter or filetype",
+    event = { 'BufEnter', 'FileType', 'InsertLeave' },
+    pattern = { '*' },
+    desc = 'Show extra whitespace on insert leave, buf enter or filetype',
     command = function()
-      toggle_trailing("n")
+      toggle_trailing('n')
     end,
   },
   {
-    event = { "InsertEnter" },
-    desc = "Show extra whitespace on insert enter",
-    pattern = { "*" },
+    event = { 'InsertEnter' },
+    desc = 'Show extra whitespace on insert enter',
+    pattern = { '*' },
     command = function()
-      toggle_trailing("i")
+      toggle_trailing('i')
     end,
   },
 })

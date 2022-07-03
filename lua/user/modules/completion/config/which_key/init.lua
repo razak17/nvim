@@ -1,4 +1,4 @@
-R("user.modules.completion.config.which_key.config")
+R('user.modules.completion.config.which_key.config')
 
 return function()
   rvim.which_key = {
@@ -20,39 +20,39 @@ return function()
         spelling = { enabled = true, suggestions = 20 }, -- use which-key for spelling hints
       },
       icons = {
-        breadcrumb = "»", -- symbol used in the command line area that shows your active key combo
-        separator = "", -- symbol used between a key and it's label
-        group = "+", -- symbol prepended to a group
+        breadcrumb = '»', -- symbol used in the command line area that shows your active key combo
+        separator = '', -- symbol used between a key and it's label
+        group = '+', -- symbol prepended to a group
       },
       window = {
         border = rvim.style.border.current,
       },
       layout = {
-        align = "center",
+        align = 'center',
       },
-      hidden = { "<silent>", "<cmd>", "<Cmd>", "<CR>", "call", "lua", "^:", "^ " }, -- hide mapping boilerplate
+      hidden = { '<silent>', '<cmd>', '<Cmd>', '<CR>', 'call', 'lua', '^:', '^ ' }, -- hide mapping boilerplate
       show_help = true, -- show help message on the command line when the popup is visible
     },
 
     leader_opts = {
-      mode = "n", -- NORMAL mode
-      prefix = "<leader>",
+      mode = 'n', -- NORMAL mode
+      prefix = '<leader>',
       buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
       silent = true, -- use `silent` when creating keymaps
       noremap = true, -- use `noremap` when creating keymaps
       nowait = true, -- use `nowait` when creating keymaps
     },
     localleader_opts = {
-      mode = "n", -- NORMAL mode
-      prefix = "<localleader>",
+      mode = 'n', -- NORMAL mode
+      prefix = '<localleader>',
       buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
       silent = true, -- use `silent` when creating keymaps
       noremap = true, -- use `noremap` when creating keymaps
       nowait = true, -- use `nowait` when creating keymaps
     },
     vopts = {
-      mode = "v", -- VISUAL mode
-      prefix = "<leader>",
+      mode = 'v', -- VISUAL mode
+      prefix = '<leader>',
       buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
       silent = true, -- use `silent` when creating keymaps
       noremap = true, -- use `noremap` when creating keymaps
@@ -64,7 +64,7 @@ return function()
     mappings = {},
   }
 
-  local which_key = require("which-key")
+  local which_key = require('which-key')
 
   which_key.setup(rvim.which_key.setup)
 
@@ -79,7 +79,7 @@ return function()
   key_maps.g = plugin_keymaps.git
 
   -- lsp
-  if rvim.plugin_loaded("nvim-lspconfig") then
+  if rvim.plugin_loaded('nvim-lspconfig') then
     key_maps.l = plugin_keymaps.lsp
   end
 
@@ -96,11 +96,11 @@ return function()
   which_key.register(rvim.wk.normal_mode)
   which_key.register(rvim.wk.localleader, localleader_opts)
 
-  rvim.augroup("WhichKeyMode", {
+  rvim.augroup('WhichKeyMode', {
     {
-      event = { "FileType" },
-      pattern = { "which_key" },
-      command = "set laststatus=0 noshowmode | autocmd BufLeave <buffer> set laststatus=2",
+      event = { 'FileType' },
+      pattern = { 'which_key' },
+      command = 'set laststatus=0 noshowmode | autocmd BufLeave <buffer> set laststatus=2',
     },
   })
 end

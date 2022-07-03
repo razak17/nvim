@@ -1,6 +1,6 @@
 local Log = {}
 
-local logfile = string.format("%s/%s.log", rvim.get_cache_dir(), "rvim")
+local logfile = string.format('%s/%s.log', rvim.get_cache_dir(), 'rvim')
 
 Log.levels = {
   TRACE = 1,
@@ -13,13 +13,13 @@ Log.levels = {
 vim.tbl_add_reverse_lookup(Log.levels)
 
 function Log:init()
-  local status_ok, structlog = pcall(require, "structlog")
+  local status_ok, structlog = pcall(require, 'structlog')
   -- local status_ok, structlog = rvim.safe_require "structlog"
   if not status_ok then
     return nil
   end
 
-  local log_level = Log.levels[(rvim.log.level):upper() or "WARN"]
+  local log_level = Log.levels[(rvim.log.level):upper() or 'WARN']
   local rvim_log = {
     rvim = {
       sinks = {
@@ -28,14 +28,14 @@ function Log:init()
           processors = {
             structlog.processors.Namer(),
             structlog.processors.StackWriter(
-              { "line", "file" },
+              { 'line', 'file' },
               { max_parents = 0, stack_level = 2 }
             ),
-            structlog.processors.Timestamper("%H:%M:%S"),
+            structlog.processors.Timestamper('%H:%M:%S'),
           },
           formatter = structlog.formatters.FormatColorizer( --
-            "%s [%-5s] %s: %-30s",
-            { "timestamp", "level", "logger_name", "msg" },
+            '%s [%-5s] %s: %-30s',
+            { 'timestamp', 'level', 'logger_name', 'msg' },
             { level = structlog.formatters.FormatColorizer.color_level() }
           ),
         }),
@@ -43,14 +43,14 @@ function Log:init()
           processors = {
             structlog.processors.Namer(),
             structlog.processors.StackWriter(
-              { "line", "file" },
+              { 'line', 'file' },
               { max_parents = 3, stack_level = 2 }
             ),
-            structlog.processors.Timestamper("%H:%M:%S"),
+            structlog.processors.Timestamper('%H:%M:%S'),
           },
           formatter = structlog.formatters.Format( --
-            "%s [%-5s] %s: %-30s",
-            { "timestamp", "level", "logger_name", "msg" }
+            '%s [%-5s] %s: %-30s',
+            { 'timestamp', 'level', 'logger_name', 'msg' }
           ),
         }),
       },
@@ -58,7 +58,7 @@ function Log:init()
   }
 
   structlog.configure(rvim_log)
-  local logger = structlog.get_logger("rvim")
+  local logger = structlog.get_logger('rvim')
 
   -- Overwrite `vim.notify` to use the logger
   if rvim.log.override_notify then
@@ -67,9 +67,9 @@ function Log:init()
 
       -- vim_log_level can be omitted
       if vim_log_level == nil then
-        vim_log_level = Log.levels["INFO"]
-      elseif type(vim_log_level) == "string" then
-        vim_log_level = Log.levels[(vim_log_level):upper()] or Log.levels["INFO"]
+        vim_log_level = Log.levels['INFO']
+      elseif type(vim_log_level) == 'string' then
+        vim_log_level = Log.levels[(vim_log_level):upper()] or Log.levels['INFO']
       else
         -- https://github.com/neovim/neovim/blob/685cf398130c61c158401b992a1893c2405cd7d2/runtime/lua/vim/lsp/log.lua#L5
         vim_log_level = vim_log_level + 1
@@ -85,13 +85,13 @@ end
 --- Configure the sink in charge of logging notifications
 ---@param notif_handle table The implementation used by the sink for displaying the notifications
 function Log:configure_notifications(notif_handle)
-  local status_ok, structlog = pcall(require, "structlog")
+  local status_ok, structlog = pcall(require, 'structlog')
   if not status_ok then
     return
   end
 
   local default_namer = function(logger, entry)
-    entry["title"] = logger.name
+    entry['title'] = logger.name
     return entry
   end
 
@@ -109,18 +109,18 @@ function Log:configure_notifications(notif_handle)
       notify_opts_injecter,
     },
     formatter = structlog.formatters.Format( --
-      "%s",
-      { "msg" },
+      '%s',
+      { 'msg' },
       { blacklist_all = true }
     ),
     -- This should probably not be hard-coded
     params_map = {
-      icon = "icon",
-      keep = "keep",
-      on_open = "on_open",
-      on_close = "on_close",
-      timeout = "timeout",
-      title = "title",
+      icon = 'icon',
+      keep = 'keep',
+      on_open = 'on_open',
+      on_close = 'on_close',
+      timeout = 'timeout',
+      title = 'title',
     },
     impl = notif_handle,
   })

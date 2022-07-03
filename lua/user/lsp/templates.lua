@@ -1,30 +1,30 @@
 local M = {}
 
-local Log = require("user.core.log")
-local utils = require("user.utils")
+local Log = require('user.core.log')
+local utils = require('user.utils')
 local ftplugin_dir = rvim.lsp.templates_dir
 local fmt = string.format
 local find_string = rvim.find_string
-local lsp_utils = require("user.utils.lsp")
+local lsp_utils = require('user.utils.lsp')
 
 local function write_manager(filename, server_name)
   local cmd = fmt([[require("user.lsp.manager").setup(%q)]], server_name)
-  utils.write_file(filename, cmd .. "\n", "a")
+  utils.write_file(filename, cmd .. '\n', 'a')
 end
 
 local function write_override(filename, server_name)
   local cmd = fmt([[require("user.lsp.manager").override_setup(%q)]], server_name)
-  utils.write_file(filename, cmd .. "\n", "a")
+  utils.write_file(filename, cmd .. '\n', 'a')
 end
 
 local function write_ft(filename, filetype)
   local cmd = fmt([[require("user.utils.after_ftplugin").setup(%q)]], filetype)
-  utils.write_file(filename, cmd .. "\n", "a")
+  utils.write_file(filename, cmd .. '\n', 'a')
 end
 
 function M.remove_template_files()
   -- remove any outdated files
-  for _, file in ipairs(vim.fn.glob(ftplugin_dir .. "/*.lua", 1, 1)) do
+  for _, file in ipairs(vim.fn.glob(ftplugin_dir .. '/*.lua', 1, 1)) do
     vim.fn.delete(file)
   end
 end
@@ -59,7 +59,7 @@ function M.generate_ftplugin(server_name, dir)
   end
 
   for _, filetype in ipairs(filetypes) do
-    local filename = join_paths(dir, filetype .. ".lua")
+    local filename = join_paths(dir, filetype .. '.lua')
 
     if find_string(rvim.lsp.override_servers, server_name) then
       write_override(filename, server_name)
@@ -67,26 +67,26 @@ function M.generate_ftplugin(server_name, dir)
       write_manager(filename, server_name)
     end
 
-    if server_name == "vuels" then
-      write_manager(filename, "eslint")
+    if server_name == 'vuels' then
+      write_manager(filename, 'eslint')
     end
 
     if find_string(rvim.lsp.emmet_ft, filetype) then
-      write_override(filename, "emmet_ls")
+      write_override(filename, 'emmet_ls')
     end
 
     -- ftplugin settings
     if find_string(rvim.util.ftplugin_filetypes, filetype) then
       -- TEMPFIX: Prevent after_ftplugin for js from generating twice
-      if server_name == "quick_lint_js" then
+      if server_name == 'quick_lint_js' then
         return
       end
 
-      local react_fts = { "typescript.tsx", "javascript.jsx" }
+      local react_fts = { 'typescript.tsx', 'javascript.jsx' }
 
       -- jsx/tsx in js/ts
       if find_string(react_fts, filetype) then
-        write_ft(filename, "javascriptreact")
+        write_ft(filename, 'javascriptreact')
       else
         write_ft(filename, filetype)
       end
@@ -100,13 +100,13 @@ end
 function M.generate_templates(servers_names)
   servers_names = servers_names or {}
 
-  Log:debug("Templates installation in progress")
+  Log:debug('Templates installation in progress')
 
   M.remove_template_files()
 
   if vim.tbl_isempty(servers_names) then
     -- local available_servers = require("nvim-lsp-installer.servers").get_available_servers()
-    local available_servers = require("nvim-lsp-installer.servers").get_installed_servers()
+    local available_servers = require('nvim-lsp-installer.servers').get_installed_servers()
 
     for _, server in pairs(available_servers) do
       table.insert(servers_names, server.name)
@@ -116,7 +116,7 @@ function M.generate_templates(servers_names)
 
   -- create the directory if it didn't exist
   if not utils.is_directory(rvim.lsp.templates_dir) then
-    vim.fn.mkdir(ftplugin_dir, "p")
+    vim.fn.mkdir(ftplugin_dir, 'p')
   end
 
   for _, server in ipairs(servers_names) do
@@ -125,14 +125,14 @@ function M.generate_templates(servers_names)
 
   -- Custom lsp config
   local custom_lsp = {
-    markdown = "marksman",
+    markdown = 'marksman',
   }
 
   for ft, server in pairs(custom_lsp) do
-    local filename = join_paths(ftplugin_dir, ft .. ".lua")
+    local filename = join_paths(ftplugin_dir, ft .. '.lua')
     write_manager(filename, server)
   end
-  Log:debug("Templates installation is complete")
+  Log:debug('Templates installation is complete')
 end
 
 return M

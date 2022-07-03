@@ -1,5 +1,5 @@
 local P = rvim.palette
-local util = require("user.utils.highlights")
+local util = require('user.utils.highlights')
 
 local function fade(color)
   return util.alter_color(color, -80)
@@ -24,13 +24,13 @@ return {
   diffFile = { fg = P.aqua },
   diffLine = { fg = P.grey },
   diffIndexLine = { fg = P.violet },
-  diffBDiffer = { link = "WarningMsg" },
-  diffCommon = { link = "WarningMsg" },
-  diffDiffer = { link = "WarningMsg" },
-  diffIdentical = { link = "WarningMsg" },
-  diffIsA = { link = "WarningMsg" },
-  diffNoEOL = { link = "WarningMsg" },
-  diffOnly = { link = "WarningMsg" },
+  diffBDiffer = { link = 'WarningMsg' },
+  diffCommon = { link = 'WarningMsg' },
+  diffDiffer = { link = 'WarningMsg' },
+  diffIdentical = { link = 'WarningMsg' },
+  diffIsA = { link = 'WarningMsg' },
+  diffNoEOL = { link = 'WarningMsg' },
+  diffOnly = { link = 'WarningMsg' },
 
   gitcommitSummary = { fg = P.red },
   gitcommitUntracked = { fg = P.grey },

@@ -1,5 +1,5 @@
 return function()
-  local neotest = require("neotest")
+  local neotest = require('neotest')
   neotest.setup({
     diagnostic = {
       enabled = false,
@@ -11,7 +11,7 @@ return function()
       border = rvim.style.border.current,
     },
     adapters = {
-      require("neotest-plenary"),
+      require('neotest-plenary'),
     },
   })
   local function open()
@@ -19,11 +19,11 @@ return function()
   end
 
   local function run_file()
-    neotest.run.run(vim.fn.expand("%"))
+    neotest.run.run(vim.fn.expand('%'))
   end
 
-  rvim.nnoremap("<localleader>ts", neotest.summary.toggle, "neotest: run suite")
-  rvim.nnoremap("<localleader>to", open, "neotest: output")
-  rvim.nnoremap("<localleader>tn", neotest.run.run, "neotest: run")
-  rvim.nnoremap("<localleader>tf", run_file, "neotest: run file")
+  rvim.nnoremap('<localleader>ts', neotest.summary.toggle, 'neotest: run suite')
+  rvim.nnoremap('<localleader>to', open, 'neotest: output')
+  rvim.nnoremap('<localleader>tn', neotest.run.run, 'neotest: run')
+  rvim.nnoremap('<localleader>tf', run_file, 'neotest: run file')
 end

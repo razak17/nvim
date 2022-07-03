@@ -1,10 +1,10 @@
-local Log = require("user.core.log")
-Log:debug("Starting rVim")
+local Log = require('user.core.log')
+Log:debug('Starting rVim')
 
 vim.g.python3_host_prog = rvim.paths.python3
 vim.g.node_host_prog = rvim.paths.node
 for _, v in pairs(rvim.util.disabled_providers) do
-  vim.g["loaded_" .. v .. "_provider"] = 0
+  vim.g['loaded_' .. v .. '_provider'] = 0
 end
 
 if rvim.ui.defer then
@@ -21,8 +21,8 @@ if rvim.ui.defer then
   )
 end
 
-R("user.config.settings"):init()
-R("user.core.commands")
-R("user.highlights")
-R("user.core.plugins").ensure_installed()
-R("user.lsp").setup()
+R('user.config.settings'):init()
+R('user.core.commands')
+R('user.highlights')
+R('user.core.plugins').ensure_installed()
+R('user.lsp').setup()

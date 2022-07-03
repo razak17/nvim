@@ -9,11 +9,11 @@ return function()
     return (results <= (LIMIT - PADDING) and results + PADDING or LIMIT)
   end
 
-  require("user.utils.highlights").plugin(
-    "dressing",
-    { FloatTitle = { inherit = "Visual", bold = true } }
+  require('user.utils.highlights').plugin(
+    'dressing',
+    { FloatTitle = { inherit = 'Visual', bold = true } }
   )
-  require("dressing").setup({
+  require('dressing').setup({
     input = {
       winblend = 2,
       insert_only = false,
@@ -22,16 +22,16 @@ return function()
     select = {
       get_config = function(opts)
         -- center the picker for treesitter prompts
-        if opts.kind == "treesitter" then
+        if opts.kind == 'treesitter' then
           return {
-            backend = "telescope",
-            telescope = require("telescope.themes").get_dropdown({
+            backend = 'telescope',
+            telescope = require('telescope.themes').get_dropdown({
               layout_config = { height = get_height },
             }),
           }
         end
       end,
-      telescope = require("telescope.themes").get_cursor({
+      telescope = require('telescope.themes').get_cursor({
         layout_config = { height = get_height },
       }),
     },

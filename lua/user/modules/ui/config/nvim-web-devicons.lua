@@ -1,5 +1,5 @@
 return function()
-  local status_ok, nvim_web_devicons = rvim.safe_require("nvim-web-devicons")
+  local status_ok, nvim_web_devicons = rvim.safe_require('nvim-web-devicons')
   if not status_ok then
     return
   end
@@ -8,46 +8,46 @@ return function()
 
   nvim_web_devicons.set_icon({
     sh = {
-      ico = "",
+      ico = '',
       color = P.chartreuse,
-      cterm_color = "59",
-      name = "Sh",
+      cterm_color = '59',
+      name = 'Sh',
     },
-    [".gitattributes"] = {
-      icon = "",
+    ['.gitattributes'] = {
+      icon = '',
       color = P.dark_red,
-      cterm_color = "59",
-      name = "GitAttributes",
+      cterm_color = '59',
+      name = 'GitAttributes',
     },
-    [".gitconfig"] = {
-      icon = "",
+    ['.gitconfig'] = {
+      icon = '',
       color = P.dark_red,
-      cterm_color = "59",
-      name = "GitConfig",
+      cterm_color = '59',
+      name = 'GitConfig',
     },
-    [".gitignore"] = {
-      icon = "",
+    ['.gitignore'] = {
+      icon = '',
       color = P.dark_red,
-      cterm_color = "59",
-      name = "GitIgnore",
+      cterm_color = '59',
+      name = 'GitIgnore',
     },
-    [".gitlab-ci.yml"] = {
-      icon = "",
+    ['.gitlab-ci.yml'] = {
+      icon = '',
       color = P.dark_red,
-      cterm_color = "166",
-      name = "GitlabCI",
+      cterm_color = '166',
+      name = 'GitlabCI',
     },
-    [".gitmodules"] = {
-      icon = "",
+    ['.gitmodules'] = {
+      icon = '',
       color = P.dark_red,
-      cterm_color = "59",
-      name = "GitModules",
+      cterm_color = '59',
+      name = 'GitModules',
     },
-    ["diff"] = {
-      icon = "",
+    ['diff'] = {
+      icon = '',
       color = P.dark_red,
-      cterm_color = "59",
-      name = "Diff",
+      cterm_color = '59',
+      name = 'Diff',
     },
   })
 end

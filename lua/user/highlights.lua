@@ -1,25 +1,25 @@
 local P = rvim.palette
-local util = require("user.utils.highlights")
+local util = require('user.utils.highlights')
 
 local function general_overrides()
-  local comment_fg = util.get("Comment", "fg")
-  local keyword_fg = util.get("Keyword", "fg")
-  local search_bg = util.get("Search", "bg")
+  local comment_fg = util.get('Comment', 'fg')
+  local keyword_fg = util.get('Keyword', 'fg')
+  local search_bg = util.get('Search', 'bg')
   -- local error_line = util.alter_color(P.error_red, -80)
-  local msg_area_bg = rvim.ui.transparent_window and "NONE" or P.darker_bg
+  local msg_area_bg = rvim.ui.transparent_window and 'NONE' or P.darker_bg
   util.all({
     -- WinSeparator = { background = "NONE", foreground = util.get("VertSplit", "fg") },
     MsgArea = { background = msg_area_bg },
-    mkdLineBreak = { link = "NONE" },
+    mkdLineBreak = { link = 'NONE' },
     -- Directory = { inherit = "Keyword", bold = true },
     URL = { foreground = P.darker_blue, underline = true },
     -----------------------------------------------------------------------------//
-    CursorLineSign = { link = "CursorLine" },
-    LineNr = { background = "NONE" },
-    FoldColumn = { background = "background" },
-    TermCursor = { ctermfg = "green", foreground = "royalblue" },
+    CursorLineSign = { link = 'CursorLine' },
+    LineNr = { background = 'NONE' },
+    FoldColumn = { background = 'background' },
+    TermCursor = { ctermfg = 'green', foreground = 'royalblue' },
     -- Add undercurl to existing spellbad highlight
-    SpellBad = { undercurl = true, background = "NONE", foreground = "NONE", sp = "green" },
+    SpellBad = { undercurl = true, background = 'NONE', foreground = 'NONE', sp = 'green' },
     SpellRare = { undercurl = true },
     -----------------------------------------------------------------------------//
     -- colorscheme overrides
@@ -28,28 +28,28 @@ local function general_overrides()
     Include = { italic = true },
     -- Type = { italic = true, bold = true } ,
     Folded = {
-      background = "NONE",
+      background = 'NONE',
       foreground = comment_fg,
       bold = true,
       -- italic = true,
     },
     QuickFixLine = { background = search_bg },
     Visual = {
-      foreground = "NONE",
+      foreground = 'NONE',
       background = util.alter_color(P.pale_blue, -50),
     },
     -- Neither the sign column or end of buffer highlights require an explicit background
     -- they should both just use the background that is in the window they are in.
     -- if either are specified this can lead to issues when a winhighlight is set
-    SignColumn = { background = "NONE" },
-    EndOfBuffer = { background = "NONE" },
+    SignColumn = { background = 'NONE' },
+    EndOfBuffer = { background = 'NONE' },
     MatchParen = {
-      background = "NONE",
-      foreground = "NONE",
+      background = 'NONE',
+      foreground = 'NONE',
       bold = false,
       underlineline = true,
       -- underdouble = true,
-      sp = "white",
+      sp = 'white',
     },
     -----------------------------------------------------------------------------//
     -- Treesitter
@@ -57,32 +57,32 @@ local function general_overrides()
     TSNamespace = { foreground = P.pale_pink, italic = true, bold = true },
     TSKeywordReturn = { italic = true, foreground = keyword_fg },
     -- TSError = { undercurl = true, sp = error_line, foreground = "NONE" } ,
-    TSParameter = { italic = true, bold = true, foreground = "NONE" },
+    TSParameter = { italic = true, bold = true, foreground = 'NONE' },
     -- highlight FIXME comments
-    commentTSWarning = { background = P.error_red, foreground = "fg", bold = true },
+    commentTSWarning = { background = P.error_red, foreground = 'fg', bold = true },
     commentTSDanger = { background = P.dark_green, foreground = P.base0, bold = true },
     commentTSNote = { background = P.blue, foreground = P.base0, bold = true },
 
-    LspCodeLens = { link = "NonText" },
-    LspReferenceText = { underline = true, background = "NONE" },
-    LspReferenceRead = { underline = true, background = "NONE" },
+    LspCodeLens = { link = 'NonText' },
+    LspReferenceText = { underline = true, background = 'NONE' },
+    LspReferenceRead = { underline = true, background = 'NONE' },
     -- This represents when a reference is assigned which is more interesting than regular
     -- occurrences so should be highlighted more distinctly
-    LspReferenceWrite = { underline = true, bold = true, italic = true, background = "NONE" },
+    LspReferenceWrite = { underline = true, bold = true, italic = true, background = 'NONE' },
 
     -- Matchup
     MatchWord = { fg = P.red, underline = false, cterm = { underline = false } },
-    CmpItemKindCopilot = { fg = "#6CC644" },
+    CmpItemKindCopilot = { fg = '#6CC644' },
   })
 end
 
 local function set_sidebar_highlight()
   -- local normal_bg = rvim.ui.transparent_window and "NONE" or M.get("Normal", "bg")..
-  local split_color = util.get("VertSplit", "fg")
+  local split_color = util.get('VertSplit', 'fg')
   local bg_color = util.alter_color(P.bg, -20)
-  local st_color = util.alter_color(util.get("Visual", "bg"), -10)
+  local st_color = util.alter_color(util.get('Visual', 'bg'), -10)
   util.all({
-    PanelBackground = { link = "Normal" },
+    PanelBackground = { link = 'Normal' },
     PanelHeading = { background = bg_color, bold = true },
     PanelVertSplit = { foreground = split_color, background = bg_color },
     PanelVertSplitAlt = { foreground = bg_color, background = bg_color },
@@ -93,24 +93,24 @@ local function set_sidebar_highlight()
 end
 
 local sidebar_fts = {
-  "packer",
-  "flutterToolsOutline",
-  "undotree",
-  "NvimTree",
-  "neo-tree",
-  "qf",
-  "neotest-summary",
+  'packer',
+  'flutterToolsOutline',
+  'undotree',
+  'NvimTree',
+  'neo-tree',
+  'qf',
+  'neotest-summary',
 }
 
 local function on_sidebar_enter()
   vim.wo.winhighlight = table.concat({
-    "Normal:PanelBackground",
-    "EndOfBuffer:PanelBackground",
-    "StatusLine:PanelSt",
-    "StatusLineNC:PanelStNC",
-    "SignColumn:PanelBackground",
-    "VertSplit:PanelVertSplit",
-  }, ",")
+    'Normal:PanelBackground',
+    'EndOfBuffer:PanelBackground',
+    'StatusLine:PanelSt',
+    'StatusLineNC:PanelStNC',
+    'SignColumn:PanelBackground',
+    'VertSplit:PanelVertSplit',
+  }, ',')
 end
 
 local function user_highlights()
@@ -118,15 +118,15 @@ local function user_highlights()
   set_sidebar_highlight()
 end
 
-rvim.augroup("UserHighlights", {
+rvim.augroup('UserHighlights', {
   {
-    event = "ColorScheme",
+    event = 'ColorScheme',
     command = function()
       user_highlights()
     end,
   },
   {
-    event = "FileType",
+    event = 'FileType',
     pattern = sidebar_fts,
     command = function()
       on_sidebar_enter()
@@ -138,4 +138,4 @@ rvim.augroup("UserHighlights", {
 -- Color Scheme {{{1
 -----------------------------------------------------------------------------//
 vim.g.colors_name = rvim.colorscheme
-vim.cmd("colorscheme " .. rvim.colorscheme)
+vim.cmd('colorscheme ' .. rvim.colorscheme)

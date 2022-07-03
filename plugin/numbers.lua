@@ -6,43 +6,43 @@ local api = vim.api
 local M = {}
 
 vim.g.number_filetype_exclusions = {
-  "undotree",
-  "dashboard",
-  "log",
-  "man",
-  "netrw",
-  "dap-repl",
-  "markdown",
-  "vimwiki",
-  "vim-plug",
-  "gitcommit",
-  "toggleterm",
-  "coc-explorer",
-  "coc-list",
-  "list",
-  "NvimTree",
-  "startify",
-  "help",
-  "orgagenda",
-  "org",
-  "lsputil_locations_list",
-  "lsputil_symbols_list",
-  "himalaya",
-  "Trouble",
+  'undotree',
+  'dashboard',
+  'log',
+  'man',
+  'netrw',
+  'dap-repl',
+  'markdown',
+  'vimwiki',
+  'vim-plug',
+  'gitcommit',
+  'toggleterm',
+  'coc-explorer',
+  'coc-list',
+  'list',
+  'NvimTree',
+  'startify',
+  'help',
+  'orgagenda',
+  'org',
+  'lsputil_locations_list',
+  'lsputil_symbols_list',
+  'himalaya',
+  'Trouble',
 }
 
 vim.g.number_buftype_exclusions = {
-  "terminal",
-  "help",
-  "nofile",
-  "acwrite",
-  "quickfix",
+  'terminal',
+  'help',
+  'nofile',
+  'acwrite',
+  'quickfix',
 }
 
-vim.g.number_buftype_ignored = { "quickfix" }
+vim.g.number_buftype_ignored = { 'quickfix' }
 
 local function is_floating_win()
-  return vim.fn.win_gettype() == "popup"
+  return vim.fn.win_gettype() == 'popup'
 end
 
 local is_enabled = true
@@ -65,7 +65,7 @@ local function is_blocked()
     return true
   end
 
-  if win_type == "command" then
+  if win_type == 'command' then
     return true
   end
 
@@ -111,7 +111,7 @@ local function disable_relative_number()
   end
 end
 
-rvim.command("ToggleRelativeNumber", function()
+rvim.command('ToggleRelativeNumber', function()
   is_enabled = not is_enabled
   if is_enabled then
     enable_relative_number()
@@ -120,17 +120,17 @@ rvim.command("ToggleRelativeNumber", function()
   end
 end)
 
-rvim.augroup("ToggleRelativeLineNumbers", {
+rvim.augroup('ToggleRelativeLineNumbers', {
   {
-    event = { "BufEnter", "FileType", "FocusGained", "InsertLeave" },
-    pattern = { "*" },
+    event = { 'BufEnter', 'FileType', 'FocusGained', 'InsertLeave' },
+    pattern = { '*' },
     command = function()
       enable_relative_number()
     end,
   },
   {
-    event = { "FocusLost", "BufLeave", "InsertEnter", "TermOpen" },
-    pattern = { "*" },
+    event = { 'FocusLost', 'BufLeave', 'InsertEnter', 'TermOpen' },
+    pattern = { '*' },
     command = function()
       disable_relative_number()
     end,

@@ -1,45 +1,45 @@
 return function()
-  require("user.utils.highlights").plugin("NeoTree", {
-    NeoTreeIndentMarker = { link = "Comment" },
-    NeoTreeNormal = { link = "PanelBackground" },
-    NeoTreeNormalNC = { link = "PanelBackground" },
+  require('user.utils.highlights').plugin('NeoTree', {
+    NeoTreeIndentMarker = { link = 'Comment' },
+    NeoTreeNormal = { link = 'PanelBackground' },
+    NeoTreeNormalNC = { link = 'PanelBackground' },
     NeoTreeRootName = { bold = true, italic = false, foreground = rvim.palette.base6 },
-    NeoTreeCursorLine = { link = "Visual" },
-    NeoTreeStatusLine = { link = "PanelSt" },
+    NeoTreeCursorLine = { link = 'Visual' },
+    NeoTreeStatusLine = { link = 'PanelSt' },
   })
   vim.g.neo_tree_remove_legacy_commands = 1
   local icons = rvim.style.icons
-  rvim.nnoremap("<c-n>", "<Cmd>Neotree toggle reveal<CR>")
-  require("which-key").register({
-    ["<leader>e"] = { "<Cmd>Neotree toggle reveal<CR>", "toggle tree" },
+  rvim.nnoremap('<c-n>', '<Cmd>Neotree toggle reveal<CR>')
+  require('which-key').register({
+    ['<leader>e'] = { '<Cmd>Neotree toggle reveal<CR>', 'toggle tree' },
   })
-  require("neo-tree").setup({
+  require('neo-tree').setup({
     enable_git_status = true,
     git_status_async = true,
     event_handlers = {
       {
-        event = "neo_tree_buffer_enter",
+        event = 'neo_tree_buffer_enter',
         handler = function()
-          vim.opt_local.signcolumn = "no"
-          vim.cmd("highlight! Cursor blend=100")
+          vim.opt_local.signcolumn = 'no'
+          vim.cmd('highlight! Cursor blend=100')
         end,
       },
       {
-        event = "neo_tree_buffer_leave",
+        event = 'neo_tree_buffer_leave',
         handler = function()
-          vim.cmd("highlight! Cursor blend=0")
+          vim.cmd('highlight! Cursor blend=0')
         end,
       },
     },
     filesystem = {
-      hijack_netrw_behavior = "open_current",
+      hijack_netrw_behavior = 'open_current',
       use_libuv_file_watcher = true,
       filtered_items = {
         visible = true,
         hide_dotfiles = false,
         hide_gitignored = true,
         never_show = {
-          ".DS_Store",
+          '.DS_Store',
         },
       },
     },
@@ -53,23 +53,23 @@ return function()
           deleted = icons.git.remove,
           modified = icons.git.mod,
           renamed = icons.git.rename,
-          untracked = "",
-          ignored = "",
-          unstaged = "",
-          staged = "",
-          conflict = "",
+          untracked = '',
+          ignored = '',
+          unstaged = '',
+          staged = '',
+          conflict = '',
         },
       },
     },
     window = {
-      position = "right",
+      position = 'right',
       width = 30,
       mappings = {
-        o = "toggle_node",
-        l = "open",
-        ["<CR>"] = "open_with_window_picker",
-        ["<c-s>"] = "split_with_window_picker",
-        ["<c-v>"] = "vsplit_with_window_picker",
+        o = 'toggle_node',
+        l = 'open',
+        ['<CR>'] = 'open_with_window_picker',
+        ['<c-s>'] = 'split_with_window_picker',
+        ['<c-v>'] = 'vsplit_with_window_picker',
       },
     },
   })

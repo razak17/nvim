@@ -1,17 +1,17 @@
 local M = {}
 
-local Log = require("user.core.log")
+local Log = require('user.core.log')
 
 local function find_root_dir()
-  local util = require("lspconfig/util")
-  local lsp_utils = require("user.utils.lsp")
+  local util = require('lspconfig/util')
+  local lsp_utils = require('user.utils.lsp')
 
-  local ts_client = lsp_utils.is_client_active("typescript")
+  local ts_client = lsp_utils.is_client_active('typescript')
   if ts_client then
     return ts_client.config.root_dir
   end
-  local dirname = vim.fn.expand("%:p:h")
-  return util.root_pattern("package.json")(dirname)
+  local dirname = vim.fn.expand('%:p:h')
+  return util.root_pattern('package.json')(dirname)
 end
 
 local function from_node_modules(command)
@@ -21,7 +21,7 @@ local function from_node_modules(command)
     return nil
   end
 
-  return join_paths(root_dir, "node_modules", ".bin", command)
+  return join_paths(root_dir, 'node_modules', '.bin', command)
 end
 
 local local_providers = {
@@ -48,7 +48,7 @@ function M.find_command(command)
 end
 
 function M.list_registered_providers_names(filetype)
-  local s = require("null-ls.sources")
+  local s = require('null-ls.sources')
   local available_sources = s.get_available(filetype)
   local registered = {}
   for _, source in ipairs(available_sources) do
@@ -61,22 +61,22 @@ function M.list_registered_providers_names(filetype)
 end
 
 function M.register_sources(configs, method)
-  local null_ls = require("null-ls")
-  local is_registered = require("null-ls.sources").is_registered
+  local null_ls = require('null-ls')
+  local is_registered = require('null-ls.sources').is_registered
 
   local sources, registered_names = {}, {}
 
   for _, config in ipairs(configs) do
     local cmd = config.exe or config.command
-    local name = config.name or cmd:gsub("-", "_")
-    local type = method == null_ls.methods.CODE_ACTION and "code_actions"
+    local name = config.name or cmd:gsub('-', '_')
+    local type = method == null_ls.methods.CODE_ACTION and 'code_actions'
       or null_ls.methods[method]:lower()
     local source = type and null_ls.builtins[type][name]
-    Log:debug(string.format("Received request to register [%s] as a %s source", cmd, type))
+    Log:debug(string.format('Received request to register [%s] as a %s source', cmd, type))
     if not source then
-      Log:error("Not a valid source: " .. name)
+      Log:error('Not a valid source: ' .. name)
     elseif is_registered({ name = source.name or name, method = method }) then
-      Log:trace(string.format("Skipping registering [%s] more than once", name))
+      Log:trace(string.format('Skipping registering [%s] more than once', name))
     else
       local command = M.find_command(source._opts.command) or source._opts.command
 
@@ -87,8 +87,8 @@ function M.register_sources(configs, method)
         compat_opts.args = nil
       end
 
-      local opts = vim.tbl_deep_extend("keep", { command = command }, compat_opts)
-      Log:debug("Registering source " .. name)
+      local opts = vim.tbl_deep_extend('keep', { command = command }, compat_opts)
+      Log:debug('Registering source ' .. name)
       Log:trace(vim.inspect(opts))
       table.insert(sources, source.with(opts))
       vim.list_extend(registered_names, { source.name })

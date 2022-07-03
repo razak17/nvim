@@ -6,22 +6,22 @@ local strwidth = api.nvim_strwidth
 local M = {}
 
 local constants = {
-  HL_END = "%*",
-  ALIGN = "%=",
-  END = "%<",
-  CLICK_END = "%X",
+  HL_END = '%*',
+  ALIGN = '%=',
+  END = '%<',
+  CLICK_END = '%X',
 }
 
 M.conditions = {
   buffer_not_empty = function()
-    return vim.fn.empty(vim.fn.expand("%:t")) ~= 1
+    return vim.fn.empty(vim.fn.expand('%:t')) ~= 1
   end,
   hide_in_width = function()
     return vim.fn.winwidth(0) > 99
   end,
   check_git_workspace = function()
-    local filepath = vim.fn.expand("%:p:h")
-    local gitdir = vim.fn.finddir(".git", filepath .. ";")
+    local filepath = vim.fn.expand('%:p:h')
+    local gitdir = vim.fn.finddir('.git', filepath .. ';')
     return gitdir and #gitdir > 0 and #gitdir < #filepath
   end,
 }
@@ -38,9 +38,9 @@ function M.diff_source()
 end
 
 function M.env_cleanup(venv)
-  if string.find(venv, "/") then
+  if string.find(venv, '/') then
     local final_venv = venv
-    for w in venv:gmatch("([^/]+)") do
+    for w in venv:gmatch('([^/]+)') do
       final_venv = w
     end
     venv = final_venv
@@ -51,25 +51,25 @@ end
 ---The currently focused function
 ---@return string?
 function M.current_function()
-  local gps = require("nvim-gps")
+  local gps = require('nvim-gps')
   if gps.is_available() then
     return gps.get_location()
   end
 end
 
 function M.python_env()
-  if vim.bo.filetype == "python" then
-    local venv = os.getenv("CONDA_DEFAULT_ENV")
+  if vim.bo.filetype == 'python' then
+    local venv = os.getenv('CONDA_DEFAULT_ENV')
     if venv then
-      return string.format("(%s)", M.env_cleanup(venv))
+      return string.format('(%s)', M.env_cleanup(venv))
     end
-    venv = os.getenv("VIRTUAL_ENV")
+    venv = os.getenv('VIRTUAL_ENV')
     if venv then
-      return string.format("(%s)", M.env_cleanup(venv))
+      return string.format('(%s)', M.env_cleanup(venv))
     end
-    return ""
+    return ''
   end
-  return ""
+  return ''
 end
 
 local function sum_lengths(list)
@@ -125,8 +125,8 @@ end
 
 --- @param hl string
 local function wrap(hl)
-  assert(hl, "A highlight name must be specified")
-  return "%#" .. hl .. "#"
+  assert(hl, 'A highlight name must be specified')
+  return '%#' .. hl .. '#'
 end
 
 ----------------------------------------------------------------------------------------------------
@@ -137,7 +137,7 @@ end
 ---@param id string
 ---@return string
 local function get_click_start(func_name, id)
-  return "%" .. id .. "@" .. func_name .. "@"
+  return '%' .. id .. '@' .. func_name .. '@'
 end
 
 --- Creates a spacer statusline component i.e. for padding
@@ -146,13 +146,13 @@ end
 --- @param opts table<string, any>
 function M.spacer(size, opts)
   opts = opts or {}
-  local filler = opts.filler or " "
+  local filler = opts.filler or ' '
   local priority = opts.priority or 0
   if size and size >= 1 then
     local spacer = string.rep(filler, size)
     return { component = spacer, length = strwidth(spacer), priority = priority }
   else
-    return { component = "", length = 0, priority = priority }
+    return { component = '', length = 0, priority = priority }
   end
 end
 
@@ -162,7 +162,7 @@ end
 function M.component(component, hl, opts)
   -- do not allow empty values to be shown note 0 is considered empty
   -- since if there is nothing of something I don't need to see it
-  if not component or component == "" or component == 0 then
+  if not component or component == '' or component == 0 then
     return M.spacer()
   end
   assert(
@@ -170,26 +170,26 @@ function M.component(component, hl, opts)
     fmt("each item's priority is required: %s is missing one", component)
   )
   opts.padding = opts.padding or { suffix = true, prefix = true }
-  local padding = " "
-  local before, after = opts.before or "", opts.after or padding
-  local prefix = opts.prefix and opts.prefix .. (opts.padding.prefix and padding or "") or ""
-  local suffix = opts.suffix and (opts.padding.suffix and padding or "") .. opts.suffix or ""
+  local padding = ' '
+  local before, after = opts.before or '', opts.after or padding
+  local prefix = opts.prefix and opts.prefix .. (opts.padding.prefix and padding or '') or ''
+  local suffix = opts.suffix and (opts.padding.suffix and padding or '') .. opts.suffix or ''
   local prefix_color, suffix_color = opts.prefix_color or hl, opts.suffix_color or hl
-  local prefix_hl = not empty(prefix_color) and wrap(prefix_color) or ""
-  local suffix_hl = not empty(suffix_color) and wrap(suffix_color) or ""
-  local prefix_item = not empty(prefix) and prefix_hl .. prefix or ""
-  local suffix_item = not empty(suffix) and suffix_hl .. suffix or ""
+  local prefix_hl = not empty(prefix_color) and wrap(prefix_color) or ''
+  local suffix_hl = not empty(suffix_color) and wrap(suffix_color) or ''
+  local prefix_item = not empty(prefix) and prefix_hl .. prefix or ''
+  local suffix_item = not empty(suffix) and suffix_hl .. suffix or ''
 
-  local click_start = opts.click and get_click_start(opts.click, opts.id) or ""
-  local click_end = opts.click and constants.CLICK_END or ""
+  local click_start = opts.click and get_click_start(opts.click, opts.id) or ''
+  local click_end = opts.click and constants.CLICK_END or ''
 
   --- handle numeric inputs etc.
-  if type(component) ~= "string" then
+  if type(component) ~= 'string' then
     component = tostring(component)
   end
 
   if opts.max_size and component and #component >= opts.max_size then
-    component = component:sub(1, opts.max_size - 1) .. "…"
+    component = component:sub(1, opts.max_size - 1) .. '…'
   end
 
   return {
@@ -198,7 +198,7 @@ function M.component(component, hl, opts)
       before,
       prefix_item,
       constants.HL_END,
-      hl and wrap(hl) or "",
+      hl and wrap(hl) or '',
       component,
       constants.HL_END,
       suffix_item,
@@ -217,10 +217,10 @@ end
 --- @param statusline table
 --- @param available_space number
 function M.display(statusline, available_space)
-  local str = ""
+  local str = ''
   local items = prioritize(statusline, available_space)
   for _, item in ipairs(items) do
-    if type(item.component) == "string" and #item.component > 0 then
+    if type(item.component) == 'string' and #item.component > 0 then
       str = str .. item.component
     end
   end
@@ -232,7 +232,7 @@ end
 ---@return function
 function M.winline(tbl)
   return function(...)
-    for i = 1, select("#", ...) do
+    for i = 1, select('#', ...) do
       tbl[#tbl + 1] = select(i, ...)
     end
   end
@@ -250,11 +250,11 @@ end
 function M.component_raw(item, opts)
   local priority = opts.priority or 0
   local win_id = opts.win_id or 0
-  local container_type = opts.type or "statusline"
+  local container_type = opts.type or 'statusline'
   ---@type table
   local data = api.nvim_eval_statusline(item, {
-    use_winbar = container_type == "winbar",
-    use_tabline = container_type == "tabline",
+    use_winbar = container_type == 'winbar',
+    use_tabline = container_type == 'tabline',
     winid = win_id,
   })
   return { component = item, length = data.width, priority = priority }

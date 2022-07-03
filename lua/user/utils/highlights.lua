@@ -12,7 +12,7 @@ local levels = vim.log.levels
 ---@return number
 ---@return number
 local function hex_to_rgb(color)
-  local hex = color:gsub("#", "")
+  local hex = color:gsub('#', '')
   return tonumber(hex:sub(1, 2), 16), tonumber(hex:sub(3, 4), 16), tonumber(hex:sub(5), 16)
 end
 
@@ -29,11 +29,11 @@ end
 function M.alter_color(color, percent)
   local r, g, b = hex_to_rgb(color)
   if not r or not g or not b then
-    return "NONE"
+    return 'NONE'
   end
   r, g, b = alter(r, percent), alter(g, percent), alter(b, percent)
   r, g, b = math.min(r, 255), math.min(g, 255), math.min(b, 255)
-  return fmt("#%02x%02x%02x", r, g, b)
+  return fmt('#%02x%02x%02x', r, g, b)
 end
 
 --- Check if the current window has a winhighlight
@@ -63,15 +63,15 @@ function M.adopt_winhighlight(win_id, target, name, fallback)
   if hl_exists then
     return win_hl_name
   end
-  local parts = vim.split(win_hl, ",")
+  local parts = vim.split(win_hl, ',')
   local found = rvim.find(parts, function(part)
     return part:match(target)
   end)
   if not found then
     return fallback
   end
-  local hl_group = vim.split(found, ":")[2]
-  local bg = M.get(hl_group, "bg")
+  local hl_group = vim.split(found, ':')[2]
+  local bg = M.get(hl_group, 'bg')
   M.set_hl(win_hl_name, { background = bg, inherit = fallback })
   return win_hl_name
 end
@@ -80,8 +80,8 @@ end
 local function get(group_name)
   local ok, hl = pcall(api.nvim_get_hl_by_name, group_name, true)
   if ok then
-    hl.foreground = hl.foreground and "#" .. bit.tohex(hl.foreground, 6)
-    hl.background = hl.background and "#" .. bit.tohex(hl.background, 6)
+    hl.foreground = hl.foreground and '#' .. bit.tohex(hl.foreground, 6)
+    hl.background = hl.background and '#' .. bit.tohex(hl.background, 6)
     --- BUG: API returns a true key which errors during the merge
     hl[true] = nil
     return hl
@@ -101,7 +101,7 @@ end
 ---@param opts table<string, string|boolean|table<string,string>>
 local function convert_hl_to_val(opts)
   for name, value in pairs(opts) do
-    if type(value) == "table" and value.from then
+    if type(value) == 'table' and value.from then
       opts[name] = M.get(value.from, vim.F.if_nil(value.attribute, name))
     end
   end
@@ -114,9 +114,9 @@ function M.set_hl(name, opts)
   local hl = get(opts.inherit or name)
   convert_hl_to_val(opts)
   opts.inherit = nil
-  local ok, msg = pcall(api.nvim_set_hl, 0, name, vim.tbl_deep_extend("force", hl, opts))
+  local ok, msg = pcall(api.nvim_set_hl, 0, name, vim.tbl_deep_extend('force', hl, opts))
   if not ok then
-    vim.notify(fmt("Failed to set %s because: %s", name, msg))
+    vim.notify(fmt('Failed to set %s because: %s', name, msg))
   end
 end
 
@@ -128,27 +128,27 @@ end
 ---@return string
 function M.get(group, attribute, fallback)
   if not group then
-    vim.notify("Cannot get a highlight without specifying a group", levels.ERROR)
-    return "NONE"
+    vim.notify('Cannot get a highlight without specifying a group', levels.ERROR)
+    return 'NONE'
   end
   local hl = get(group)
   if not attribute then
     return hl
   end
-  attribute = ({ fg = "foreground", bg = "background" })[attribute] or attribute
+  attribute = ({ fg = 'foreground', bg = 'background' })[attribute] or attribute
   local color = hl[attribute] or fallback
   if not color then
     vim.schedule(function()
-      vim.notify(fmt("%s %s does not exist", group, attribute), levels.INFO)
+      vim.notify(fmt('%s %s does not exist', group, attribute), levels.INFO)
     end)
-    return "NONE"
+    return 'NONE'
   end
   -- convert the decimal RGBA value from the hl by name to a 6 character hex + padding if needed
   return color
 end
 
 function M.clear_hl(name)
-  assert(name, "name is required to clear a highlight")
+  assert(name, 'name is required to clear a highlight')
   api.nvim_set_hl(0, name, {})
 end
 
@@ -167,11 +167,11 @@ end
 ---@param name string plugin name
 ---@param hls table<string, table> map of highlights
 function M.plugin(name, hls)
-  name = name:gsub("^%l", string.upper) -- capitalise the name for autocommand convention sake
+  name = name:gsub('^%l', string.upper) -- capitalise the name for autocommand convention sake
   M.all(hls)
-  rvim.augroup(fmt("%sHighlightOverrides", name), {
+  rvim.augroup(fmt('%sHighlightOverrides', name), {
     {
-      event = "ColorScheme",
+      event = 'ColorScheme',
       command = function()
         M.all(hls)
       end,

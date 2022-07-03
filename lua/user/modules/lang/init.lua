@@ -1,42 +1,42 @@
-local conf = require("user.utils").load_conf
+local conf = require('user.utils').load_conf
 
 local lang = {}
 
 -- Debugging
-lang["mfussenegger/nvim-dap"] = {
-  config = conf("lang", "dap").config,
-  setup = conf("lang", "dap").setup,
+lang['mfussenegger/nvim-dap'] = {
+  config = conf('lang', 'dap').config,
+  setup = conf('lang', 'dap').setup,
 }
 
-lang["rcarriga/nvim-dap-ui"] = {
-  config = conf("lang", "dap-ui"),
+lang['rcarriga/nvim-dap-ui'] = {
+  config = conf('lang', 'dap-ui'),
 }
 
-lang["ravenxrz/DAPInstall.nvim"] = {
-  config = require("dap-install").setup({
+lang['ravenxrz/DAPInstall.nvim'] = {
+  config = require('dap-install').setup({
     installation_path = rvim.paths.dap_install_dir,
   }),
 }
 
-lang["jbyuki/one-small-step-for-vimkind"] = {
-  requires = "nvim-dap",
+lang['jbyuki/one-small-step-for-vimkind'] = {
+  requires = 'nvim-dap',
   config = function()
     local nnoremap = rvim.nnoremap
-    nnoremap("<Leader>dE", ':lua require"osv".run_this()<CR>')
-    nnoremap("<Leader>dl", ':lua require"osv".launch()<CR>')
+    nnoremap('<Leader>dE', ':lua require"osv".run_this()<CR>')
+    nnoremap('<Leader>dl', ':lua require"osv".launch()<CR>')
 
-    require("which-key").register({
-      ["<leader>dE"] = "osv run this",
-      ["<leader>dL"] = "osv launch",
+    require('which-key').register({
+      ['<leader>dE'] = 'osv run this',
+      ['<leader>dL'] = 'osv launch',
     })
   end,
   disable = true,
 }
 
-lang["theHamsta/nvim-dap-virtual-text"] = {
-  after = "nvim-dap",
+lang['theHamsta/nvim-dap-virtual-text'] = {
+  after = 'nvim-dap',
   config = function()
-    require("nvim-dap-virtual-text").setup({
+    require('nvim-dap-virtual-text').setup({
       enabled = true, -- enable this plugin (the default)
       enabled_commands = true, -- create commands DapVirtualTextEnable, DapVirtualTextDisable, DapVirtualTextToggle, (DapVirtualTextForceRefresh for refreshing when debug adapter did not notify its termination)
       highlight_changed_variables = true, -- highlight changed values with NvimDapVirtualTextChanged, else always NvimDapVirtualText
@@ -46,15 +46,15 @@ lang["theHamsta/nvim-dap-virtual-text"] = {
 }
 
 -- Lsp
-lang["williamboman/nvim-lsp-installer"] = {
+lang['williamboman/nvim-lsp-installer'] = {
   requires = {
-    "neovim/nvim-lspconfig",
+    'neovim/nvim-lspconfig',
   },
   config = function()
-    rvim.augroup("LspInstallerConfig", {
+    rvim.augroup('LspInstallerConfig', {
       {
-        event = "Filetype",
-        pattern = "lsp-installer",
+        event = 'Filetype',
+        pattern = 'lsp-installer',
         command = function()
           vim.api.nvim_win_set_config(0, { border = rvim.style.border.current })
         end,
@@ -63,19 +63,19 @@ lang["williamboman/nvim-lsp-installer"] = {
   end,
 }
 
-lang["antoinemadec/FixCursorHold.nvim"] = {}
+lang['antoinemadec/FixCursorHold.nvim'] = {}
 
-lang["neovim/nvim-lspconfig"] = {}
+lang['neovim/nvim-lspconfig'] = {}
 
-lang["tamago324/nlsp-settings.nvim"] = {}
+lang['tamago324/nlsp-settings.nvim'] = {}
 
-lang["jose-elias-alvarez/null-ls.nvim"] = {}
+lang['jose-elias-alvarez/null-ls.nvim'] = {}
 
-lang["kosayoda/nvim-lightbulb"] = {
+lang['kosayoda/nvim-lightbulb'] = {
   config = function()
-    local lightbulb = require("nvim-lightbulb")
-    require("user.utils.highlights").plugin("Lightbulb", {
-      LightBulbFloatWin = { foreground = { from = "Type" } },
+    local lightbulb = require('nvim-lightbulb')
+    require('user.utils.highlights').plugin('Lightbulb', {
+      LightBulbFloatWin = { foreground = { from = 'Type' } },
     })
     lightbulb.setup({
       sign = {
@@ -83,125 +83,125 @@ lang["kosayoda/nvim-lightbulb"] = {
         -- Priority of the gutter sign
         priority = 10,
       },
-      float = { text = "", enabled = true, win_opts = { border = "none" } }, -- 
+      float = { text = '', enabled = true, win_opts = { border = 'none' } }, -- 
       autocmd = { enabled = true },
     })
   end,
 }
 
-lang["simrat39/symbols-outline.nvim"] = {
-  config = conf("lang", "symbols-outline"),
+lang['simrat39/symbols-outline.nvim'] = {
+  config = conf('lang', 'symbols-outline'),
 }
 
 -- Treesitter
-lang["nvim-treesitter/nvim-treesitter"] = {
-  run = ":TSUpdate",
-  config = conf("lang", "treesitter"),
+lang['nvim-treesitter/nvim-treesitter'] = {
+  run = ':TSUpdate',
+  config = conf('lang', 'treesitter'),
 }
 
-lang["nvim-treesitter/nvim-treesitter-context"] = {
+lang['nvim-treesitter/nvim-treesitter-context'] = {
   config = function()
-    local hl = require("user.utils.highlights")
-    local norm_bg = hl.get("Normal", "bg")
+    local hl = require('user.utils.highlights')
+    local norm_bg = hl.get('Normal', 'bg')
     local dim = hl.alter_color(norm_bg, 25)
-    hl.plugin("treesitter-context", {
+    hl.plugin('treesitter-context', {
       ContextBorder = { foreground = dim },
-      TreesitterContext = { inherit = "Normal" },
-      TreesitterContextLineNumber = { inherit = "LineNr" },
+      TreesitterContext = { inherit = 'Normal' },
+      TreesitterContextLineNumber = { inherit = 'LineNr' },
     })
-    require("treesitter-context").setup({
+    require('treesitter-context').setup({
       multiline_threshold = 4,
-      separator = { "─", "ContextBorder" }, --[[alernatives: ▁ ─ ▄ ]]
-      mode = "topline",
+      separator = { '─', 'ContextBorder' }, --[[alernatives: ▁ ─ ▄ ]]
+      mode = 'topline',
     })
   end,
 }
 
-lang["nvim-treesitter/playground"] = {
-  event = "VimEnter",
-  keys = "<leader>LE",
-  module = "nvim-treesitter-playground",
-  cmd = { "TSPlaygroundToggle", "TSHighlightCapturesUnderCursor" },
+lang['nvim-treesitter/playground'] = {
+  event = 'VimEnter',
+  keys = '<leader>LE',
+  module = 'nvim-treesitter-playground',
+  cmd = { 'TSPlaygroundToggle', 'TSHighlightCapturesUnderCursor' },
   setup = function()
-    require("which-key").register({ ["<leader>LE"] = "treesitter: inspect token" })
+    require('which-key').register({ ['<leader>LE'] = 'treesitter: inspect token' })
   end,
   config = function()
-    rvim.nnoremap("<leader>LE", "<Cmd>TSHighlightCapturesUnderCursor<CR>")
+    rvim.nnoremap('<leader>LE', '<Cmd>TSHighlightCapturesUnderCursor<CR>')
   end,
 }
 
-lang["nvim-treesitter/nvim-treesitter-textobjects"] = {
-  after = "nvim-treesitter",
+lang['nvim-treesitter/nvim-treesitter-textobjects'] = {
+  after = 'nvim-treesitter',
 }
 
-lang["p00f/nvim-ts-rainbow"] = {
-  after = "nvim-treesitter",
+lang['p00f/nvim-ts-rainbow'] = {
+  after = 'nvim-treesitter',
 }
 
-lang["andymass/vim-matchup"] = {
-  after = "nvim-treesitter",
+lang['andymass/vim-matchup'] = {
+  after = 'nvim-treesitter',
   config = function()
-    require("which-key").register({
-      ["<localleader>lm"] = { ":<c-u>MatchupWhereAmI?<CR>", "matchup: where am i" },
+    require('which-key').register({
+      ['<localleader>lm'] = { ':<c-u>MatchupWhereAmI?<CR>', 'matchup: where am i' },
     })
   end,
 }
 
-lang["windwp/nvim-ts-autotag"] = {
+lang['windwp/nvim-ts-autotag'] = {
   config = function()
-    require("nvim-ts-autotag").setup({
-      filetypes = { "html", "xml", "typescriptreact", "javascriptreact" },
+    require('nvim-ts-autotag').setup({
+      filetypes = { 'html', 'xml', 'typescriptreact', 'javascriptreact' },
     })
   end,
 }
 
-lang["windwp/nvim-autopairs"] = {
-  event = "InsertEnter",
-  after = { "telescope.nvim", "nvim-treesitter" },
-  config = conf("lang", "autopairs"),
+lang['windwp/nvim-autopairs'] = {
+  event = 'InsertEnter',
+  after = { 'telescope.nvim', 'nvim-treesitter' },
+  config = conf('lang', 'autopairs'),
 }
 
-lang["razak17/rust-tools.nvim"] = {}
+lang['razak17/rust-tools.nvim'] = {}
 
-lang["b0o/schemastore.nvim"] = {}
+lang['b0o/schemastore.nvim'] = {}
 
-lang["ray-x/lsp_signature.nvim"] = {
-  event = "InsertEnter",
+lang['ray-x/lsp_signature.nvim'] = {
+  event = 'InsertEnter',
   config = function()
-    require("lsp_signature").setup({
+    require('lsp_signature').setup({
       debug = false,
-      log_path = rvim.get_cache_dir() .. "/lsp_signature.log",
+      log_path = rvim.get_cache_dir() .. '/lsp_signature.log',
       bind = true,
       fix_pos = false,
       auto_close_after = 15,
       hint_enable = false,
       handler_opts = { border = rvim.style.border.current },
-      toggle_key = "<C-K>",
-      select_signature_key = "<M-N>",
+      toggle_key = '<C-K>',
+      select_signature_key = '<M-N>',
     })
   end,
 }
 
-lang["lewis6991/spellsitter.nvim"] = {
+lang['lewis6991/spellsitter.nvim'] = {
   config = function()
-    require("spellsitter").setup({
+    require('spellsitter').setup({
       enable = true,
     })
   end,
 }
 
-lang["olexsmir/gopher.nvim"] = {
-  ft = "go",
+lang['olexsmir/gopher.nvim'] = {
+  ft = 'go',
   requires = { -- dependencies
-    "nvim-lua/plenary.nvim",
-    "nvim-treesitter/nvim-treesitter",
+    'nvim-lua/plenary.nvim',
+    'nvim-treesitter/nvim-treesitter',
   },
 }
 
-lang["mtdl9/vim-log-highlighting"] = {}
+lang['mtdl9/vim-log-highlighting'] = {}
 
-lang["fladson/vim-kitty"] = {}
+lang['fladson/vim-kitty'] = {}
 
-lang["nanotee/sqls.nvim"] = {}
+lang['nanotee/sqls.nvim'] = {}
 
 return lang

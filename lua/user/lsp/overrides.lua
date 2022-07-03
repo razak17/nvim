@@ -1,9 +1,9 @@
 local M = {}
 
-local utils = require("user.utils")
-local lsp_utils = require("user.utils.lsp")
-local lsp_manager = require("user.lsp.manager")
-local Log = require("user.core.log")
+local utils = require('user.utils')
+local lsp_utils = require('user.utils.lsp')
+local lsp_manager = require('user.lsp.manager')
+local Log = require('user.core.log')
 
 function M.setup(server_name)
   local already_configured = lsp_utils.is_client_active(server_name)
@@ -12,67 +12,67 @@ function M.setup(server_name)
 
   if already_configured then
     Log:debug(
-      string.format("[%q] is already configured. Ignoring repeated setup call.", server_name)
+      string.format('[%q] is already configured. Ignoring repeated setup call.', server_name)
     )
     return
   end
 
-  local servers = require("nvim-lsp-installer.servers")
+  local servers = require('nvim-lsp-installer.servers')
   local _, server = servers.get_server(server_name)
 
   -- emmet-ls
-  if server_name == "emmet_ls" then
-    config = vim.tbl_deep_extend("force", config, {
+  if server_name == 'emmet_ls' then
+    config = vim.tbl_deep_extend('force', config, {
       filetypes = {
-        "html",
-        "css",
-        "typescriptreact",
-        "typescript.tsx",
-        "javascriptreact",
-        "javascript.jsx",
+        'html',
+        'css',
+        'typescriptreact',
+        'typescript.tsx',
+        'javascriptreact',
+        'javascript.jsx',
       },
     })
   end
 
   -- golangci-lint-ls
-  if server_name == "golangci_lint_ls" then
-    config = vim.tbl_deep_extend("force", config, {
+  if server_name == 'golangci_lint_ls' then
+    config = vim.tbl_deep_extend('force', config, {
       init_options = {
         command = {
-          "golangci-lint",
-          "run",
-          "--enable-all",
-          "--disable",
-          "lll",
-          "--out-format",
-          "json",
+          'golangci-lint',
+          'run',
+          '--enable-all',
+          '--disable',
+          'lll',
+          '--out-format',
+          'json',
         },
       },
     })
   end
 
   -- rust_analyzer
-  if server_name == "rust_analyzer" then
+  if server_name == 'rust_analyzer' then
     M.rust_tools_init(server, config)
   end
 
   -- sqlls
-  if server_name == "sqlls" then
-    server_name = "sqls"
+  if server_name == 'sqlls' then
+    server_name = 'sqls'
     config = {
       on_attach = function(client, bufnr)
-        require("sqls").on_attach(client, bufnr)
+        require('sqls').on_attach(client, bufnr)
       end,
     }
   end
 
   -- yamlls
-  if server == "yamlls" then
+  if server == 'yamlls' then
     config = {
       settings = {
         yaml = {
           customTags = {
-            "!reference sequence", -- necessary for gitlab-ci.yaml files
+            '!reference sequence', -- necessary for gitlab-ci.yaml files
           },
         },
       },
@@ -84,9 +84,9 @@ function M.setup(server_name)
 end
 
 function M.rust_tools_init(server, config)
-  local status_ok, rust_tools = rvim.safe_require("rust-tools")
+  local status_ok, rust_tools = rvim.safe_require('rust-tools')
   if not status_ok then
-    Log:debug("Failed to load rust-tools")
+    Log:debug('Failed to load rust-tools')
     return
   end
 
@@ -94,11 +94,11 @@ function M.rust_tools_init(server, config)
   local dap = nil
 
   if utils.is_directory(vscode_lldb) then
-    local codelldb_path = vscode_lldb .. "/adapter/codelldb"
-    local liblldb_path = vscode_lldb .. "/lldb/lib/liblldb.so"
+    local codelldb_path = vscode_lldb .. '/adapter/codelldb'
+    local liblldb_path = vscode_lldb .. '/lldb/lib/liblldb.so'
     -- FIX: https://github.com/simrat39/rust-tools.nvim/issues/179
     dap = {
-      adapter = require("rust-tools.dap").get_codelldb_adapter(codelldb_path, liblldb_path),
+      adapter = require('rust-tools.dap').get_codelldb_adapter(codelldb_path, liblldb_path),
     }
   end
 
@@ -116,7 +116,7 @@ function M.rust_tools_init(server, config)
     dap = dap,
     -- all the opts to send to nvim-lspconfig
     -- these override the defaults set by rust-tools.nvim
-    server = vim.tbl_deep_extend("force", config, server),
+    server = vim.tbl_deep_extend('force', config, server),
   })
 end
 

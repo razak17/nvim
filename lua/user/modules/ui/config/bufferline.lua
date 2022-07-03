@@ -1,15 +1,15 @@
 return function()
-  local bufferline_ok, bufferline = rvim.safe_require("bufferline")
+  local bufferline_ok, bufferline = rvim.safe_require('bufferline')
   if not bufferline_ok then
     return
   end
 
   local P = rvim.palette
-  local groups = require("bufferline.groups")
-  local util = require("user.utils.highlights")
-  local normal_bg = util.get("Normal", "bg")
+  local groups = require('bufferline.groups')
+  local util = require('user.utils.highlights')
+  local normal_bg = util.get('Normal', 'bg')
   local darker_bg = util.alter_color(normal_bg, -1)
-  local bg = rvim.ui.transparent_window == true and "none" or P.dark
+  local bg = rvim.ui.transparent_window == true and 'none' or P.dark
   local fg_def = P.base88
   local fg_sel = P.base00
 
@@ -21,7 +21,7 @@ return function()
     tab_close = { guifg = fg_def, guibg = darker_bg },
     duplicate = { guifg = fg_def, guibg = darker_bg },
     duplicate_visible = { guifg = fg_def, guibg = darker_bg },
-    duplicate_selected = { guifg = P.base7, guibg = bg, gui = "italic" },
+    duplicate_selected = { guifg = P.base7, guibg = bg, gui = 'italic' },
     buffer_visible = { guifg = fg_def, guibg = darker_bg },
     buffer_selected = { guifg = fg_sel, guibg = bg },
     diagnostic = { guifg = P.pale_red, guibg = darker_bg },
@@ -63,51 +63,51 @@ return function()
         debug = {
           logging = true,
         },
-        navigation = { mode = "uncentered" },
-        mode = "buffers", -- tabs
-        sort_by = "insert_after_current",
-        view = "default",
-        close_icon = "",
-        buffer_close_icon = "",
-        right_mouse_command = "vert sbuffer %d",
+        navigation = { mode = 'uncentered' },
+        mode = 'buffers', -- tabs
+        sort_by = 'insert_after_current',
+        view = 'default',
+        close_icon = '',
+        buffer_close_icon = '',
+        right_mouse_command = 'vert sbuffer %d',
         show_buffer_close_icons = false,
         tab_size = 0,
         enforce_regular_tabs = false,
-        diagnostics = "nvim_lsp",
-        separator_style = { "", "" },
+        diagnostics = 'nvim_lsp',
+        separator_style = { '', '' },
         diagnostics_indicator = function()
-          return ""
+          return ''
         end,
-        numbers = "none",
+        numbers = 'none',
         offsets = {
           {
-            filetype = "undotree",
-            text = "Undotree",
-            highlight = "PanelHeading",
+            filetype = 'undotree',
+            text = 'Undotree',
+            highlight = 'PanelHeading',
             padding = 1,
           },
           {
-            filetype = "NvimTree",
-            text = "Explorer",
-            highlight = "PanelBackground",
+            filetype = 'NvimTree',
+            text = 'Explorer',
+            highlight = 'PanelBackground',
             padding = 1,
           },
           {
-            filetype = "neo-tree",
-            text = "Explorer",
-            highlight = "PanelHeading",
+            filetype = 'neo-tree',
+            text = 'Explorer',
+            highlight = 'PanelHeading',
             padding = 1,
           },
           {
-            filetype = "DiffviewFiles",
-            text = "Diff View",
-            highlight = "PanelHeading",
+            filetype = 'DiffviewFiles',
+            text = 'Diff View',
+            highlight = 'PanelHeading',
             padding = 1,
           },
           {
-            filetype = "packer",
-            text = "Packer",
-            highlight = "PanelHeading",
+            filetype = 'packer',
+            text = 'Packer',
+            highlight = 'PanelHeading',
             padding = 1,
           },
         },
@@ -117,37 +117,37 @@ return function()
           toggle_hidden_on_enter = true,
         },
         items = {
-          groups.builtin.pinned:with({ icon = "" }),
+          groups.builtin.pinned:with({ icon = '' }),
           groups.builtin.ungrouped,
           {
-            name = "Terraform",
+            name = 'Terraform',
             matcher = function(buf)
-              return buf.name:match("%.tf") ~= nil
+              return buf.name:match('%.tf') ~= nil
             end,
           },
           {
-            name = "SQL",
+            name = 'SQL',
             matcher = function(buf)
-              return buf.filename:match("%.sql$")
+              return buf.filename:match('%.sql$')
             end,
           },
           {
-            name = "tests",
-            icon = "",
+            name = 'tests',
+            icon = '',
             matcher = function(buf)
               local name = buf.filename
-              if name:match("%.sql$") == nil then
+              if name:match('%.sql$') == nil then
                 return false
               end
-              return name:match("_spec") or name:match("_test")
+              return name:match('_spec') or name:match('_test')
             end,
           },
           {
-            name = "docs",
-            icon = "",
+            name = 'docs',
+            icon = '',
             matcher = function(buf)
-              for _, ext in ipairs({ "md", "txt", "org", "norg", "wiki" }) do
-                if ext == vim.fn.fnamemodify(buf.path, ":e") then
+              for _, ext in ipairs({ 'md', 'txt', 'org', 'norg', 'wiki' }) do
+                if ext == vim.fn.fnamemodify(buf.path, ':e') then
                   return true
                 end
               end
@@ -161,16 +161,16 @@ return function()
 
   bufferline.setup(rvim.bufferline.setup)
 
-  rvim.nnoremap("<S-l>", ":BufferLineCycleNext<CR>")
-  rvim.nnoremap("<S-h>", ":BufferLineCyclePrev<CR>")
-  rvim.nnoremap("gb", ":BufferLinePick<CR>", "bufferline: goto buffer")
+  rvim.nnoremap('<S-l>', ':BufferLineCycleNext<CR>')
+  rvim.nnoremap('<S-h>', ':BufferLineCyclePrev<CR>')
+  rvim.nnoremap('gb', ':BufferLinePick<CR>', 'bufferline: goto buffer')
 
-  require("which-key").register({
-    ["<leader>bc"] = { ":CloseOthers<CR>", "close others" },
-    ["<leader>bh"] = { ":BufferLineMovePrev<CR>", "move left" },
-    ["<leader>bl"] = { ":BufferLineMoveNext<CR>", "move right" },
-    ["<leader>bH"] = { ":BufferLineCloseLeft<CR>", "close left" },
-    ["<leader>bL"] = { ":BufferLineCloseRight<CR>", "close right" },
-    ["<leader>bp"] = { ":BufferLineTogglePin<CR>", "toggle pin" },
+  require('which-key').register({
+    ['<leader>bc'] = { ':CloseOthers<CR>', 'close others' },
+    ['<leader>bh'] = { ':BufferLineMovePrev<CR>', 'move left' },
+    ['<leader>bl'] = { ':BufferLineMoveNext<CR>', 'move right' },
+    ['<leader>bH'] = { ':BufferLineCloseLeft<CR>', 'close left' },
+    ['<leader>bL'] = { ':BufferLineCloseRight<CR>', 'close right' },
+    ['<leader>bp'] = { ':BufferLineTogglePin<CR>', 'toggle pin' },
   })
 end

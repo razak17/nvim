@@ -22,11 +22,11 @@ function zephyr.terminal_color()
 end
 
 function zephyr.highlight(group, color)
-  local style = color.style and "gui=" .. color.style or "gui=NONE"
-  local fg = color.fg and "guifg=" .. color.fg or "guifg=NONE"
-  local bg = color.bg and "guibg=" .. color.bg or "guibg=NONE"
-  local sp = color.sp and "guisp=" .. color.sp or ""
-  vim.cmd("highlight " .. group .. " " .. style .. " " .. fg .. " " .. bg .. " " .. sp)
+  local style = color.style and 'gui=' .. color.style or 'gui=NONE'
+  local fg = color.fg and 'guifg=' .. color.fg or 'guifg=NONE'
+  local bg = color.bg and 'guibg=' .. color.bg or 'guibg=NONE'
+  local sp = color.sp and 'guisp=' .. color.sp or ''
+  vim.cmd('highlight ' .. group .. ' ' .. style .. ' ' .. fg .. ' ' .. bg .. ' ' .. sp)
 end
 
 local async_load_plugin
@@ -37,7 +37,7 @@ local set_hl = function(tbl)
   end
 end
 
-local plugin_syntax = require("zephyr.plugin")
+local plugin_syntax = require('zephyr.plugin')
 
 async_load_plugin = vim.loop.new_async(vim.schedule_wrap(function()
   zephyr.terminal_color()
@@ -46,14 +46,14 @@ async_load_plugin = vim.loop.new_async(vim.schedule_wrap(function()
 end))
 
 function zephyr.colorscheme()
-  vim.cmd("hi clear")
-  if vim.fn.exists("syntax_on") then
-    vim.cmd("syntax reset")
+  vim.cmd('hi clear')
+  if vim.fn.exists('syntax_on') then
+    vim.cmd('syntax reset')
   end
-  vim.o.background = "dark"
+  vim.o.background = 'dark'
   vim.o.termguicolors = true
-  vim.g.colors_name = "zephyr"
-  local syntax = require("zephyr.syntax")
+  vim.g.colors_name = 'zephyr'
+  local syntax = require('zephyr.syntax')
   set_hl(syntax)
   async_load_plugin:send()
 end

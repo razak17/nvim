@@ -1,6 +1,6 @@
 return function()
-  local ufo = require("ufo")
-  local hl = require("user.utils.highlights")
+  local ufo = require('ufo')
+  local hl = require('user.utils.highlights')
   local opt, fn, api = vim.opt, vim.fn, vim.api
 
   local function handler(virt_text, lnum, end_lnum, width, truncate)
@@ -23,31 +23,31 @@ return function()
         chunk_width = fn.strdisplaywidth(chunk_text)
         -- str width returned from truncate() may less than 2nd argument, need padding
         if cur_width + chunk_width < target_width then
-          suffix = suffix .. (" "):rep(target_width - cur_width - chunk_width)
+          suffix = suffix .. (' '):rep(target_width - cur_width - chunk_width)
         end
         break
       end
       cur_width = cur_width + chunk_width
     end
-    table.insert(result, { " ⋯ ", "NonText" })
-    table.insert(result, { suffix, "TSPunctBracket" })
+    table.insert(result, { ' ⋯ ', 'NonText' })
+    table.insert(result, { suffix, 'TSPunctBracket' })
     return result
   end
 
   opt.foldlevelstart = 99
-  opt.sessionoptions:append("folds")
+  opt.sessionoptions:append('folds')
 
-  local bg = hl.alter_color(hl.get("Normal", "bg"), -7)
-  hl.plugin("ufo", { Folded = { bold = false, italic = false, bg = bg } })
+  local bg = hl.alter_color(hl.get('Normal', 'bg'), -7)
+  hl.plugin('ufo', { Folded = { bold = false, italic = false, bg = bg } })
 
   local ft_map = {}
   ufo.setup({
     open_fold_hl_timeout = 0,
     fold_virt_text_handler = handler,
     provider_selector = function(_, filetype)
-      return ft_map[filetype] or { "treesitter", "indent" }
+      return ft_map[filetype] or { 'treesitter', 'indent' }
     end,
   })
-  rvim.nnoremap("zR", ufo.openAllFolds, "open all folds")
-  rvim.nnoremap("zM", ufo.closeAllFolds, "close all folds")
+  rvim.nnoremap('zR', ufo.openAllFolds, 'open all folds')
+  rvim.nnoremap('zM', ufo.closeAllFolds, 'close all folds')
 end

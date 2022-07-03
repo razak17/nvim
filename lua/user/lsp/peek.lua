@@ -6,14 +6,14 @@ local M = {
 
 local function create_floating_file(location, opts)
   vim.validate({
-    location = { location, "t" },
-    opts = { opts, "t", true },
+    location = { location, 't' },
+    opts = { opts, 't', true },
   })
 
   -- Set some defaults
   opts = opts or {}
   local close_events = opts.close_events
-    or { "CursorMoved", "CursorMovedI", "BufHidden", "InsertCharPre" }
+    or { 'CursorMoved', 'CursorMovedI', 'BufHidden', 'InsertCharPre' }
 
   -- location may be LocationLink or Location
   local uri = location.targetUri or location.uri
@@ -31,33 +31,33 @@ local function create_floating_file(location, opts)
     bufnr,
     range.start.line,
     math.min(
-      range["end"].line + 1 + (opts.context or 10),
+      range['end'].line + 1 + (opts.context or 10),
       range.start.line + (opts.max_height or 15)
     ), -- Don't let the window be more that 15 lines long(height)
     false
   )
   if next(contents) == nil then
-    vim.notify("peek: Unable to get contents of the file!", vim.log.levels.WARN)
+    vim.notify('peek: Unable to get contents of the file!', vim.log.levels.WARN)
     return
   end
   local width, height = vim.lsp.util._make_floating_popup_size(contents, opts)
   local if_nil = vim.F.if_nil
   opts = vim.lsp.util.make_floating_popup_options(if_nil(width, 30), if_nil(height, 10), opts)
   -- Don't make it minimal as it is meant to be fully featured
-  opts["style"] = nil
+  opts['style'] = nil
 
-  vim.api.nvim_buf_set_option(bufnr, "bufhidden", "wipe")
+  vim.api.nvim_buf_set_option(bufnr, 'bufhidden', 'wipe')
 
   local winnr = vim.api.nvim_open_win(bufnr, false, opts)
-  vim.api.nvim_win_set_option(winnr, "winblend", 0)
+  vim.api.nvim_win_set_option(winnr, 'winblend', 0)
 
   vim.api.nvim_win_set_cursor(winnr, { range.start.line + 1, range.start.character })
-  vim.api.nvim_buf_set_var(bufnr, "lsp_floating_window", winnr)
+  vim.api.nvim_buf_set_var(bufnr, 'lsp_floating_window', winnr)
 
   -- Set some autocmds to close the window
   vim.api.nvim_command(
     string.format(
-      "autocmd %s <buffer> ++once lua pcall(vim.api.nvim_win_close, %d, true)",
+      'autocmd %s <buffer> ++once lua pcall(vim.api.nvim_win_close, %d, true)',
       unpack(close_events),
       winnr
     )
@@ -91,10 +91,10 @@ end
 
 function M.open_file()
   -- Get the file currently open in the floating window
-  local filepath = vim.fn.expand("%:.")
+  local filepath = vim.fn.expand('%:.')
 
   if not filepath then
-    vim.notify("peek: Unable to open the file!", vim.log.levels.ERROR)
+    vim.notify('peek: Unable to open the file!', vim.log.levels.ERROR)
     return
   end
 
@@ -102,7 +102,7 @@ function M.open_file()
   pcall(vim.api.nvim_win_close, M.floating_win, true)
 
   -- Edit the file
-  vim.cmd("edit " .. filepath)
+  vim.cmd('edit ' .. filepath)
 
   local winnr = vim.api.nvim_get_current_win()
 
@@ -127,7 +127,7 @@ function M.Peek(what)
   if vim.tbl_contains(vim.api.nvim_list_wins(), M.floating_win) then
     local success_1, _ = pcall(vim.api.nvim_set_current_win, M.floating_win)
     if not success_1 then
-      vim.notify("peek: You cannot edit the current file in a preview!", vim.log.levels.ERROR)
+      vim.notify('peek: You cannot edit the current file in a preview!', vim.log.levels.ERROR)
       return
     end
 
@@ -136,8 +136,8 @@ function M.Peek(what)
 
     vim.api.nvim_buf_set_keymap(
       M.floating_buf,
-      "n",
-      "<CR>",
+      'n',
+      '<CR>',
       ":lua require('user.lsp.peek').open_file()<CR>",
       { noremap = true, silent = true }
     )
@@ -148,7 +148,7 @@ function M.Peek(what)
     local success, _ = pcall(
       vim.lsp.buf_request,
       0,
-      "textDocument/" .. what,
+      'textDocument/' .. what,
       params,
       preview_callback
     )

@@ -1,176 +1,176 @@
-local conf = require("user.utils").load_conf
+local conf = require('user.utils').load_conf
 
 local tools = {}
 
-tools["sindrets/diffview.nvim"] = {
-  event = "BufReadPre",
+tools['sindrets/diffview.nvim'] = {
+  event = 'BufReadPre',
   setup = function()
-    rvim.nnoremap("<localleader>gd", "<Cmd>DiffviewOpen<CR>", "diffview: diff HEAD")
-    rvim.nnoremap("<localleader>gh", "<Cmd>DiffviewFileHistory<CR>", "diffview: file history")
+    rvim.nnoremap('<localleader>gd', '<Cmd>DiffviewOpen<CR>', 'diffview: diff HEAD')
+    rvim.nnoremap('<localleader>gh', '<Cmd>DiffviewFileHistory<CR>', 'diffview: file history')
   end,
-  config = conf("tools", "diffview"),
+  config = conf('tools', 'diffview'),
 }
 
-tools["mbbill/undotree"] = {
-  event = "BufWinEnter",
-  cmd = "UndotreeToggle",
+tools['mbbill/undotree'] = {
+  event = 'BufWinEnter',
+  cmd = 'UndotreeToggle',
   setup = function()
-    rvim.nnoremap("<leader>u", "<cmd>UndotreeToggle<CR>", "undotree: toggle")
+    rvim.nnoremap('<leader>u', '<cmd>UndotreeToggle<CR>', 'undotree: toggle')
   end,
   config = function()
-    vim.g.undotree_TreeNodeShape = "◦" -- Alternative: '◉'
+    vim.g.undotree_TreeNodeShape = '◦' -- Alternative: '◉'
     vim.g.undotree_SetFocusWhenToggle = 1
   end,
 }
 
-tools["ahmedkhalf/project.nvim"] = {
-  config = conf("tools", "project"),
+tools['ahmedkhalf/project.nvim'] = {
+  config = conf('tools', 'project'),
 }
 
-tools["npxbr/glow.nvim"] = {
-  run = ":GlowInstall",
-  branch = "main",
+tools['npxbr/glow.nvim'] = {
+  run = ':GlowInstall',
+  branch = 'main',
 }
 
-tools["kkoomen/vim-doge"] = {
-  run = ":call doge#install()",
+tools['kkoomen/vim-doge'] = {
+  run = ':call doge#install()',
   config = function()
-    vim.g.doge_mapping = "<Leader>lD"
+    vim.g.doge_mapping = '<Leader>lD'
   end,
   disable = true,
 }
 
-tools["numToStr/FTerm.nvim"] = {
-  event = { "BufWinEnter" },
-  config = conf("tools", "fterm"),
+tools['numToStr/FTerm.nvim'] = {
+  event = { 'BufWinEnter' },
+  config = conf('tools', 'fterm'),
 }
 
-tools["diepm/vim-rest-console"] = {
-  event = "VimEnter",
+tools['diepm/vim-rest-console'] = {
+  event = 'VimEnter',
   disable = true,
 }
 
-tools["iamcco/markdown-preview.nvim"] = {
+tools['iamcco/markdown-preview.nvim'] = {
   run = function()
-    vim.fn["mkdp#util#install"]()
+    vim.fn['mkdp#util#install']()
   end,
-  ft = { "markdown" },
+  ft = { 'markdown' },
   config = function()
     vim.g.mkdp_auto_start = 0
     vim.g.mkdp_auto_close = 1
   end,
 }
 
-tools["brooth/far.vim"] = {
-  event = { "BufRead" },
+tools['brooth/far.vim'] = {
+  event = { 'BufRead' },
   config = function()
-    vim.g["far#source"] = "rg"
-    vim.g["far#enable_undo"] = 1
-    require("which-key").register({
-      ["<leader>Ff"] = { ":Farr --source=vimgrep<cr>", "far: replace in File" },
-      ["<leader>Fd"] = { ":Fardo<cr>", "far: do" },
-      ["<leader>Fi"] = { ":Farf<cr>", "far: search iteratively" },
-      ["<leader>Fr"] = { ":Farr --source=rgnvim<cr>", "far: replace in project" },
-      ["<leader>Fu"] = { ":Farundo<cr>", "far: undo" },
-      ["<leader>FU"] = { ":UpdateRemotePlugins<cr>", "far: update remote" },
+    vim.g['far#source'] = 'rg'
+    vim.g['far#enable_undo'] = 1
+    require('which-key').register({
+      ['<leader>Ff'] = { ':Farr --source=vimgrep<cr>', 'far: replace in File' },
+      ['<leader>Fd'] = { ':Fardo<cr>', 'far: do' },
+      ['<leader>Fi'] = { ':Farf<cr>', 'far: search iteratively' },
+      ['<leader>Fr'] = { ':Farr --source=rgnvim<cr>', 'far: replace in project' },
+      ['<leader>Fu'] = { ':Farundo<cr>', 'far: undo' },
+      ['<leader>FU'] = { ':UpdateRemotePlugins<cr>', 'far: update remote' },
     })
   end,
 }
 
-tools["Tastyep/structlog.nvim"] = {}
+tools['Tastyep/structlog.nvim'] = {}
 
-tools["AckslD/nvim-neoclip.lua"] = {
+tools['AckslD/nvim-neoclip.lua'] = {
   config = function()
-    require("neoclip").setup({
+    require('neoclip').setup({
       enable_persistent_history = false,
       keys = {
         telescope = {
-          i = { select = "<c-p>", paste = "<CR>", paste_behind = "<c-k>" },
-          n = { select = "p", paste = "<CR>", paste_behind = "P" },
+          i = { select = '<c-p>', paste = '<CR>', paste_behind = '<c-k>' },
+          n = { select = 'p', paste = '<CR>', paste_behind = 'P' },
         },
       },
     })
     local function clip()
-      require("telescope").extensions.neoclip.default(rvim.telescope.dropdown())
+      require('telescope').extensions.neoclip.default(rvim.telescope.dropdown())
     end
 
-    require("which-key").register({
-      ["<leader>fN"] = { clip, "neoclip: open yank history" },
+    require('which-key').register({
+      ['<leader>fN'] = { clip, 'neoclip: open yank history' },
     })
   end,
 }
 
-tools["nvim-telescope/telescope.nvim"] = {
-  config = conf("tools", "telescope"),
+tools['nvim-telescope/telescope.nvim'] = {
+  config = conf('tools', 'telescope'),
 }
 
-tools["nvim-telescope/telescope-fzf-native.nvim"] = {
-  run = "make",
+tools['nvim-telescope/telescope-fzf-native.nvim'] = {
+  run = 'make',
 }
 
-tools["tami5/sqlite.lua"] = {}
+tools['tami5/sqlite.lua'] = {}
 
-tools["ilAYAli/scMRU.nvim"] = {}
+tools['ilAYAli/scMRU.nvim'] = {}
 
-tools["nvim-telescope/telescope-ui-select.nvim"] = {}
+tools['nvim-telescope/telescope-ui-select.nvim'] = {}
 
-tools["nvim-telescope/telescope-dap.nvim"] = {}
+tools['nvim-telescope/telescope-dap.nvim'] = {}
 
-tools["nvim-telescope/telescope-file-browser.nvim"] = {}
+tools['nvim-telescope/telescope-file-browser.nvim'] = {}
 
-tools["nvim-telescope/telescope-media-files.nvim"] = {}
+tools['nvim-telescope/telescope-media-files.nvim'] = {}
 
-tools["jvgrootveld/telescope-zoxide"] = {}
+tools['jvgrootveld/telescope-zoxide'] = {}
 
-tools["rmagatti/auto-session"] = {
+tools['rmagatti/auto-session'] = {
   config = function()
-    require("auto-session").setup({
-      log_level = "error",
-      auto_session_root_dir = join_paths(rvim.get_cache_dir(), "session/auto/"),
+    require('auto-session').setup({
+      log_level = 'error',
+      auto_session_root_dir = join_paths(rvim.get_cache_dir(), 'session/auto/'),
       auto_restore_enabled = false,
       auto_session_use_git_branch = false, -- This cause inconsistent results
     })
-    require("which-key").register({
-      ["<leader>sl"] = { ":RestoreSession<cr>", "auto-session: restore" },
-      ["<leader>ss"] = { ":SaveSession<cr>", "auto-session: save" },
+    require('which-key').register({
+      ['<leader>sl'] = { ':RestoreSession<cr>', 'auto-session: restore' },
+      ['<leader>ss'] = { ':SaveSession<cr>', 'auto-session: save' },
     })
   end,
 }
 
-tools["phaazon/hop.nvim"] = {
-  branch = "v1",
-  keys = { { "n", "s" }, "f", "F" },
-  config = conf("tools", "hop"),
+tools['phaazon/hop.nvim'] = {
+  branch = 'v1',
+  keys = { { 'n', 's' }, 'f', 'F' },
+  config = conf('tools', 'hop'),
 }
 
-tools["lewis6991/impatient.nvim"] = {}
+tools['lewis6991/impatient.nvim'] = {}
 
-tools["moll/vim-bbye"] = {
-  event = "BufWinEnter",
+tools['moll/vim-bbye'] = {
+  event = 'BufWinEnter',
   config = function()
-    require("which-key").register({
-      ["<leader>c"] = { ":Bdelete!<cr>", "close buffer" },
-      ["<leader>bx"] = { ":bufdo :Bdelete<cr>", "close all" },
-      ["<leader>q"] = { "<Cmd>Bwipeout<CR>", "wipe buffer" },
+    require('which-key').register({
+      ['<leader>c'] = { ':Bdelete!<cr>', 'close buffer' },
+      ['<leader>bx'] = { ':bufdo :Bdelete<cr>', 'close all' },
+      ['<leader>q'] = { '<Cmd>Bwipeout<CR>', 'wipe buffer' },
     })
   end,
 }
 
-tools["tpope/vim-apathy"] = {}
+tools['tpope/vim-apathy'] = {}
 
-tools["tpope/vim-projectionist"] = {
-  config = conf("tools", "vim-projectionist"),
+tools['tpope/vim-projectionist'] = {
+  config = conf('tools', 'vim-projectionist'),
 }
 
-tools["nvim-lua/plenary.nvim"] = {}
+tools['nvim-lua/plenary.nvim'] = {}
 
-tools["nvim-lua/popup.nvim"] = {}
+tools['nvim-lua/popup.nvim'] = {}
 
-tools["NTBBloodbath/rest.nvim"] = {
-  requires = { "nvim-lua/plenary.nvim" },
-  ft = { "http", "json" },
+tools['NTBBloodbath/rest.nvim'] = {
+  requires = { 'nvim-lua/plenary.nvim' },
+  ft = { 'http', 'json' },
   config = function()
-    require("rest-nvim").setup({
+    require('rest-nvim').setup({
       -- Open request results in a horizontal split
       result_split_horizontal = true,
       -- Skip SSL verification, useful for unknown certificates
@@ -180,114 +180,114 @@ tools["NTBBloodbath/rest.nvim"] = {
       custom_dynamic_variables = {},
     })
 
-    rvim.nnoremap("<leader>rr", "<Plug>RestNvim", "rest: run")
-    rvim.nnoremap("<leader>rp", "<Plug>RestNvimPreview", "rest: run")
-    rvim.nnoremap("<leader>rl", "<Plug>RestNvimLast", "rest: run")
+    rvim.nnoremap('<leader>rr', '<Plug>RestNvim', 'rest: run')
+    rvim.nnoremap('<leader>rp', '<Plug>RestNvimPreview', 'rest: run')
+    rvim.nnoremap('<leader>rl', '<Plug>RestNvimLast', 'rest: run')
   end,
 }
 
-tools["michaelb/sniprun"] = {
-  event = "BufWinEnter",
-  config = conf("tools", "sniprun"),
-  run = "bash ./install.sh",
+tools['michaelb/sniprun'] = {
+  event = 'BufWinEnter',
+  config = conf('tools', 'sniprun'),
+  run = 'bash ./install.sh',
 }
 
-tools["vuki656/package-info.nvim"] = {
-  event = "BufWinEnter",
-  ft = { "json" },
-  config = conf("tools", "package-info"),
-  requires = "MunifTanjim/nui.nvim",
+tools['vuki656/package-info.nvim'] = {
+  event = 'BufWinEnter',
+  ft = { 'json' },
+  config = conf('tools', 'package-info'),
+  requires = 'MunifTanjim/nui.nvim',
   disable = true,
 }
 
-tools["nvim-neotest/neotest"] = {
-  config = conf("tools", "neotest"),
+tools['nvim-neotest/neotest'] = {
+  config = conf('tools', 'neotest'),
   requires = {
-    "rcarriga/neotest-plenary",
-    "rcarriga/neotest-vim-test",
-    "nvim-lua/plenary.nvim",
-    "nvim-treesitter/nvim-treesitter",
-    "antoinemadec/FixCursorHold.nvim",
+    'rcarriga/neotest-plenary',
+    'rcarriga/neotest-vim-test',
+    'nvim-lua/plenary.nvim',
+    'nvim-treesitter/nvim-treesitter',
+    'antoinemadec/FixCursorHold.nvim',
   },
 }
 
-tools["Zane-/howdoi.nvim"] = {}
+tools['Zane-/howdoi.nvim'] = {}
 
-tools["smjonas/inc-rename.nvim"] = {
+tools['smjonas/inc-rename.nvim'] = {
   config = function()
-    require("inc_rename").setup({
-      hl_group = "Visual",
+    require('inc_rename').setup({
+      hl_group = 'Visual',
     })
-    vim.keymap.set("n", "<leader>rn", function()
-      return ":IncRename " .. vim.fn.expand("<cword>")
-    end, { expr = true, silent = false, desc = "lsp: incremental rename" })
+    vim.keymap.set('n', '<leader>rn', function()
+      return ':IncRename ' .. vim.fn.expand('<cword>')
+    end, { expr = true, silent = false, desc = 'lsp: incremental rename' })
   end,
 }
 
-tools["AndrewRadev/linediff.vim"] = {
-  cmd = "Linediff",
+tools['AndrewRadev/linediff.vim'] = {
+  cmd = 'Linediff',
 }
 
-tools["Djancyp/cheat-sheet"] = {
+tools['Djancyp/cheat-sheet'] = {
   config = function()
-    require("cheat-sheet").setup({
+    require('cheat-sheet').setup({
       auto_fill = {
         current_word = false,
       },
       main_win = {
-        border = "single",
+        border = 'single',
       },
       input_win = {
-        border = "single",
+        border = 'single',
       },
     })
-    rvim.nnoremap("<localleader>s", ":CheatSH<CR>", "cheat-sheet")
+    rvim.nnoremap('<localleader>s', ':CheatSH<CR>', 'cheat-sheet')
   end,
 }
 
-tools["SmiteshP/nvim-navic"] = {
-  requires = "neovim/nvim-lspconfig",
+tools['SmiteshP/nvim-navic'] = {
+  requires = 'neovim/nvim-lspconfig',
   config = function()
     vim.g.navic_silence = true
-    local highlights = require("user.utils.highlights")
+    local highlights = require('user.utils.highlights')
     local s = rvim.style
     local misc = s.icons.misc
 
-    highlights.set_hl("NavicText", { bold = false })
-    highlights.set_hl("NavicSeparator", { link = "Directory" })
+    highlights.set_hl('NavicText', { bold = false })
+    highlights.set_hl('NavicSeparator', { link = 'Directory' })
     local icons = rvim.map(function(icon, key)
-      highlights.set_hl(("NavicIcons%s"):format(key), { link = rvim.lsp.kind_highlights[key] })
-      return icon .. " "
+      highlights.set_hl(('NavicIcons%s'):format(key), { link = rvim.lsp.kind_highlights[key] })
+      return icon .. ' '
     end, s.codicons.kind)
 
-    require("nvim-navic").setup({
+    require('nvim-navic').setup({
       icons = icons,
       highlight = true,
       depth_limit_indicator = misc.ellipsis,
-      separator = (" %s "):format(misc.arrow_right),
+      separator = (' %s '):format(misc.arrow_right),
     })
   end,
 }
 
-tools["vhyrro/neorg"] = {
-  requires = { "vhyrro/neorg-telescope" },
-  config = conf("tools", "neorg"),
+tools['vhyrro/neorg'] = {
+  requires = { 'vhyrro/neorg-telescope' },
+  config = conf('tools', 'neorg'),
 }
 
-tools["kevinhwang91/nvim-bqf"] = {
+tools['kevinhwang91/nvim-bqf'] = {
   -- optional
   requires = {
-    "junegunn/fzf",
+    'junegunn/fzf',
     run = function()
-      vim.fn["fzf#install"]()
+      vim.fn['fzf#install']()
     end,
   },
-  ft = "qf",
+  ft = 'qf',
 }
 
-tools["anuvyklack/hydra.nvim"] = {
-  requires = "anuvyklack/keymap-layer.nvim",
-  config = conf("tools", "hydra"),
+tools['anuvyklack/hydra.nvim'] = {
+  requires = 'anuvyklack/keymap-layer.nvim',
+  config = conf('tools', 'hydra'),
 }
 
 return tools

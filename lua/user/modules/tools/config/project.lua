@@ -13,18 +13,18 @@ return function()
       -- lsp, while **"pattern"** uses vim-rooter like glob pattern matching. Here
       -- order matters: if one is not detected, the other is used as fallback. You
       -- can also delete or rearangne the detection methods.
-      detection_methods = { "pattern", "lsp" },
+      detection_methods = { 'pattern', 'lsp' },
 
       -- All the patterns used to detect root dir, when **"pattern"** is in
       -- detection_methods
       patterns = {
-        ".git",
-        ".hg",
-        ".svn",
-        "Makefile",
-        "package.json",
-        ".luacheckrc",
-        ".stylua.toml",
+        '.git',
+        '.hg',
+        '.svn',
+        'Makefile',
+        'package.json',
+        '.luacheckrc',
+        '.stylua.toml',
       },
 
       -- Show hidden files in telescope
@@ -35,7 +35,7 @@ return function()
       silent_chdir = true,
 
       ---@usage list of lsp client names to ignore when using **lsp** detection. eg: { "efm", ... }
-      ignore_lsp = { "null-ls" },
+      ignore_lsp = { 'null-ls' },
 
       ---@type string
       ---@usage path to store the project history for use in telescope
@@ -43,7 +43,7 @@ return function()
     },
   }
 
-  local status_ok, project_nvim = rvim.safe_require("project_nvim")
+  local status_ok, project_nvim = rvim.safe_require('project_nvim')
   if not status_ok then
     return
   end

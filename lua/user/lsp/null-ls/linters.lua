@@ -1,9 +1,9 @@
 local M = {}
 
-local Log = require("user.core.log")
+local Log = require('user.core.log')
 
-local null_ls = require("null-ls")
-local services = require("user.lsp.null-ls.services")
+local null_ls = require('null-ls')
+local services = require('user.lsp.null-ls.services')
 local method = null_ls.methods.DIAGNOSTICS
 
 function M.list_registered(filetype)
@@ -12,8 +12,8 @@ function M.list_registered(filetype)
 end
 
 function M.list_supported(filetype)
-  local s = require("null-ls.sources")
-  local supported_linters = s.get_supported(filetype, "diagnostics")
+  local s = require('null-ls.sources')
+  local supported_linters = s.get_supported(filetype, 'diagnostics')
   table.sort(supported_linters)
   return supported_linters
 end
@@ -26,7 +26,7 @@ function M.setup(linter_configs)
   local registered = services.register_sources(linter_configs, method)
 
   if #registered > 0 then
-    Log:debug("Registered the following linters: " .. unpack(registered))
+    Log:debug('Registered the following linters: ' .. unpack(registered))
   end
 end
 

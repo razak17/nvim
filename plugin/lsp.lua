@@ -4,7 +4,7 @@ local lsp = vim.lsp
 local fn = vim.fn
 local api = vim.api
 local fmt = string.format
-local AUGROUP = "LspCommands"
+local AUGROUP = 'LspCommands'
 local L = vim.lsp.log_levels
 
 local icons = rvim.style.icons
@@ -22,10 +22,10 @@ end
 -- Show the popup diagnostics window, but only once for the current cursor location
 -- by checking whether the word under the cursor has changed.
 local function diagnostic_popup()
-  local cword = vim.fn.expand("<cword>")
+  local cword = vim.fn.expand('<cword>')
   if cword ~= vim.w.lsp_diagnostics_cword then
     vim.w.lsp_diagnostics_cword = cword
-    vim.diagnostic.open_float(0, { scope = "cursor", focus = false })
+    vim.diagnostic.open_float(0, { scope = 'cursor', focus = false })
   end
 end
 
@@ -35,8 +35,8 @@ end
 local function setup_autocommands(client, bufnr)
   local cmds = {}
   if not client then
-    local msg = fmt("Unable to setup LSP autocommands, client for %d is missing", bufnr)
-    return vim.notify(msg, "error", { title = "LSP Setup" })
+    local msg = fmt('Unable to setup LSP autocommands, client for %d is missing', bufnr)
+    return vim.notify(msg, 'error', { title = 'LSP Setup' })
   end
   if client.server_capabilities.documentFormattingProvider then
     -- Format On Save
@@ -45,11 +45,11 @@ local function setup_autocommands(client, bufnr)
       return
     end
     table.insert(cmds, {
-      event = { "BufWritePre" },
+      event = { 'BufWritePre' },
       pattern = { opts.pattern },
-      desc = "Format the current buffer on save",
+      desc = 'Format the current buffer on save',
       command = function()
-        require("user.utils.lsp").format({ timeout_ms = opts.timeout, filter = opts.filter })
+        require('user.utils.lsp').format({ timeout_ms = opts.timeout, filter = opts.filter })
       end,
     })
   end
@@ -57,7 +57,7 @@ local function setup_autocommands(client, bufnr)
     if rvim.lsp.code_lens_refresh then
       -- Code Lens
       table.insert(cmds, {
-        event = { "BufEnter", "CursorHold", "InsertLeave" },
+        event = { 'BufEnter', 'CursorHold', 'InsertLeave' },
         buffer = bufnr,
         command = function()
           vim.lsp.codelens.refresh()
@@ -69,9 +69,9 @@ local function setup_autocommands(client, bufnr)
     if rvim.lsp.hover_diagnostics then
       -- Hover Diagnostics
       table.insert(cmds, {
-        event = { "CursorHold" },
+        event = { 'CursorHold' },
         buffer = bufnr,
-        desc = "Show diagnostics on hover",
+        desc = 'Show diagnostics on hover',
         command = function()
           diagnostic_popup()
         end,
@@ -80,16 +80,16 @@ local function setup_autocommands(client, bufnr)
     if rvim.lsp.document_highlight then
       -- Cursor Commands
       table.insert(cmds, {
-        event = { "CursorHold", "CursorHoldI" },
+        event = { 'CursorHold', 'CursorHoldI' },
         buffer = bufnr,
-        desc = "LSP: Document Highlight",
+        desc = 'LSP: Document Highlight',
         command = function()
           vim.lsp.buf.document_highlight()
         end,
       })
       table.insert(cmds, {
-        event = { "CursorMoved" },
-        desc = "LSP: Document Highlight (Clear)",
+        event = { 'CursorMoved' },
+        desc = 'LSP: Document Highlight (Clear)',
         buffer = bufnr,
         command = function()
           vim.lsp.buf.clear_references()
@@ -107,14 +107,14 @@ end
 local function setup_plugins(client, bufnr)
   -- vim-illuminate
   if rvim.lsp.document_highlight then
-    local status_ok, illuminate = rvim.safe_require("illuminate")
+    local status_ok, illuminate = rvim.safe_require('illuminate')
     if not status_ok then
       return
     end
     illuminate.on_attach(client)
   end
   -- nvim-navic
-  local ok, navic = pcall(require, "nvim-navic")
+  local ok, navic = pcall(require, 'nvim-navic')
   if ok and client.server_capabilities.documentSymbolProvider then
     navic.attach(client, bufnr)
   end
@@ -124,27 +124,27 @@ end
 ---@param client table lsp client
 ---@param bufnr number
 function rvim.lsp.on_attach(client, bufnr)
-  local keymaps = require("user.lsp.keymaps")
+  local keymaps = require('user.lsp.keymaps')
   setup_autocommands(client, bufnr)
   setup_plugins(client, bufnr)
   keymaps.init(client)
   local function buf_set_option(...)
     vim.api.nvim_buf_set_option(bufnr, ...)
   end
-  buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
+  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
   if client.server_capabilities.definitionProvider then
-    vim.bo[bufnr].tagfunc = "v:lua.vim.lsp.tagfunc"
+    vim.bo[bufnr].tagfunc = 'v:lua.vim.lsp.tagfunc'
   end
 
   if client.server_capabilities.documentFormattingProvider then
-    vim.bo[bufnr].formatexpr = "v:lua.vim.lsp.formatexpr()"
+    vim.bo[bufnr].formatexpr = 'v:lua.vim.lsp.formatexpr()'
   end
 end
 
-rvim.augroup("LspSetupCommands", {
+rvim.augroup('LspSetupCommands', {
   {
-    event = "LspAttach",
-    desc = "setup the language server autocommands",
+    event = 'LspAttach',
+    desc = 'setup the language server autocommands',
     command = function(args)
       local bufnr = args.buf
       -- if the buffer is invalid we should not try and attach to it
@@ -156,8 +156,8 @@ rvim.augroup("LspSetupCommands", {
     end,
   },
   {
-    event = "LspDetach",
-    desc = "Clean up after detached LSP",
+    event = 'LspDetach',
+    desc = 'Clean up after detached LSP',
     command = function(args)
       api.nvim_clear_autocmds({ group = AUGROUP, buffer = args.buf })
     end,
@@ -168,8 +168,8 @@ rvim.augroup("LspSetupCommands", {
 -----------------------------------------------------------------------------//
 local command = rvim.command
 
-command("LspFormat", function()
-  require("user.utils.lsp").format()
+command('LspFormat', function()
+  require('user.utils.lsp').format()
 end)
 
 -- A helper function to auto-update the quickfix list when new diagnostics come
@@ -183,7 +183,7 @@ local function make_diagnostic_qf_updater()
       return
     end
     vim.diagnostic.setqflist({ open = false })
-    rvim.toggle_list("quickfix")
+    rvim.toggle_list('quickfix')
     if not rvim.is_vim_list_open() and cmd_id then
       api.nvim_del_autocmd(cmd_id)
       cmd_id = nil
@@ -191,12 +191,12 @@ local function make_diagnostic_qf_updater()
     if cmd_id then
       return
     end
-    cmd_id = api.nvim_create_autocmd("DiagnosticChanged", {
+    cmd_id = api.nvim_create_autocmd('DiagnosticChanged', {
       callback = function()
         if rvim.is_vim_list_open() then
           vim.diagnostic.setqflist({ open = false })
           if #vim.fn.getqflist() == 0 then
-            rvim.toggle_list("quickfix")
+            rvim.toggle_list('quickfix')
           end
         end
       end,
@@ -204,8 +204,8 @@ local function make_diagnostic_qf_updater()
   end
 end
 
-command("LspDiagnostics", make_diagnostic_qf_updater())
-rvim.nnoremap("<leader>ll", "<Cmd>LspDiagnostics<CR>", "lsp: toggle quickfix diagnostics")
+command('LspDiagnostics', make_diagnostic_qf_updater())
+rvim.nnoremap('<leader>ll', '<Cmd>LspDiagnostics<CR>', 'lsp: toggle quickfix diagnostics')
 
 -----------------------------------------------------------------------------//
 -- Signs
@@ -214,15 +214,15 @@ local function sign(opts)
   fn.sign_define(opts.highlight, {
     text = opts.icon,
     texthl = opts.highlight,
-    linehl = fmt("%sLine", opts.highlight),
-    culhl = opts.highlight .. "Line",
+    linehl = fmt('%sLine', opts.highlight),
+    culhl = opts.highlight .. 'Line',
   })
 end
 
-sign({ highlight = "DiagnosticSignError", icon = icons.lsp.error })
-sign({ highlight = "DiagnosticSignWarn", icon = icons.lsp.warn })
-sign({ highlight = "DiagnosticSignInfo", icon = icons.lsp.info })
-sign({ highlight = "DiagnosticSignHint", icon = icons.lsp.hint })
+sign({ highlight = 'DiagnosticSignError', icon = icons.lsp.error })
+sign({ highlight = 'DiagnosticSignWarn', icon = icons.lsp.warn })
+sign({ highlight = 'DiagnosticSignInfo', icon = icons.lsp.info })
+sign({ highlight = 'DiagnosticSignHint', icon = icons.lsp.hint })
 
 -----------------------------------------------------------------------------//
 -- Diagnostic Configuration
@@ -239,44 +239,44 @@ diagnostic.config({
   update_in_insert = diagnostics.update_in_insert,
   severity_sort = diagnostics.severity_sort,
   virtual_text = {
-    prefix = "",
+    prefix = '',
     spacing = diagnostics.virtual_text_spacing,
     format = function(d)
       local level = diagnostic.severity[d.severity]
-      return fmt("%s %s", icons.lsp[level:lower()], d.message)
+      return fmt('%s %s', icons.lsp[level:lower()], d.message)
     end,
   },
-  float = vim.tbl_deep_extend("keep", {
+  float = vim.tbl_deep_extend('keep', {
     max_width = max_width,
     max_height = max_height,
     prefix = function(diag, i, _)
       local level = diagnostic.severity[diag.severity]
-      local prefix = fmt("%d. %s ", i, icons.lsp[level:lower()])
-      return prefix, "Diagnostic" .. level:gsub("^%l", string.upper)
+      local prefix = fmt('%d. %s ', i, icons.lsp[level:lower()])
+      return prefix, 'Diagnostic' .. level:gsub('^%l', string.upper)
     end,
   }, float),
 })
 
 -- NOTE: the hover handler returns the bufnr,winnr so can be used for mappings
-lsp.handlers["textDocument/hover"] = lsp.with(
+lsp.handlers['textDocument/hover'] = lsp.with(
   lsp.handlers.hover,
   { border = border, max_width = max_width, max_height = max_height }
 )
 
-lsp.handlers["textDocument/signatureHelp"] = lsp.with(lsp.handlers.signature_help, {
+lsp.handlers['textDocument/signatureHelp'] = lsp.with(lsp.handlers.signature_help, {
   border = border,
   max_width = max_width,
   max_height = max_height,
 })
 
-lsp.handlers["window/showMessage"] = function(_, result, ctx)
+lsp.handlers['window/showMessage'] = function(_, result, ctx)
   local client = vim.lsp.get_client_by_id(ctx.client_id)
-  local lvl = ({ "ERROR", "WARN", "INFO", "DEBUG" })[result.type]
+  local lvl = ({ 'ERROR', 'WARN', 'INFO', 'DEBUG' })[result.type]
   vim.notify(result.message, lvl, {
-    title = "LSP | " .. client.name,
+    title = 'LSP | ' .. client.name,
     timeout = 8000,
     keep = function()
-      return lvl == "ERROR" or lvl == "WARN"
+      return lvl == 'ERROR' or lvl == 'WARN'
     end,
   })
 end
