@@ -115,10 +115,8 @@ rvim.wk = {
     },
     git = {
       name = "+Git",
-      c = {
-        name = "commit dotfiles",
-        c = { ':lua _G.__fterm_cmd("conf_commit")<cr>', "conf commit" },
-      },
+      c = {':lua _G.__fterm_cmd("git_commit")<cr>', "commit" },
+      d = { ':lua _G.__fterm_cmd("conf_commit")<cr>', "commit dotfiles" },
     },
   },
 }

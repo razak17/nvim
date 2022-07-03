@@ -10,6 +10,8 @@ return function()
       cmd = term:new({ cmd = "lazygit" })
     elseif key == "ranger" then
       cmd = term:new({ cmd = "ranger" })
+    elseif key == "git_commit" then
+      cmd = term:new({ cmd = "git commit -a" })
     elseif key == "conf_commit" then
       cmd = term:new({ cmd = "iconf -ccma" })
     end
