@@ -3,6 +3,30 @@ return function()
   local border = rvim.style.border.current
 
   Hydra({
+    name = "Folds",
+    mode = "n",
+    body = "<leader>z",
+    color = "teal",
+    config = {
+      invoke_on_body = true,
+      hint = { border = border },
+      on_enter = function()
+        vim.cmd("BeaconOff")
+      end,
+      on_exit = function()
+        vim.cmd("BeaconOn")
+      end,
+    },
+    heads = {
+      { "j", "zj", { desc = "next fold" } },
+      { "k", "zk", { desc = "previous fold" } },
+      { "l", require("fold-cycle").open_all, { desc = "open folds underneath" } },
+      { "h", require("fold-cycle").close_all, { desc = "close folds underneath" } },
+      { "<Esc>", nil, { exit = true, desc = "Quit" } },
+    },
+  })
+
+  Hydra({
     name = "Side scroll",
     mode = "n",
     body = "z",
