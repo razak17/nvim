@@ -4,7 +4,8 @@ local lang = {}
 
 -- Debugging
 lang["mfussenegger/nvim-dap"] = {
-  config = conf("user", "dap"),
+  config = conf("lang", "dap").config,
+  setup = conf("lang", "dap").setup,
 }
 
 lang["rcarriga/nvim-dap-ui"] = {
