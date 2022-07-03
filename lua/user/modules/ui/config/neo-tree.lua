@@ -19,7 +19,7 @@ return function()
       {
         event = "neo_tree_buffer_enter",
         handler = function()
-          vim.cmd("setlocal signcolumn=no nocursorline")
+          vim.opt_local.signcolumn = "no"
           vim.cmd("highlight! Cursor blend=100")
         end,
       },
