@@ -1,6 +1,7 @@
 {
   "go.buildOnSave": "off"
   "gopls": {
+    // https://github.com/golang/tools/blob/master/gopls/doc/settings.md
     "ui.codelenses": {
       "enabled": true,
       "generate": true
@@ -12,6 +13,9 @@
       "unusedparams": true,
       "loopclosure": true
     },
+    "build.directoryFilters": [
+      "-node_modules"
+    ],
     "ui.completion.usePlaceholders": true,
     "ui.diagnostic.staticcheck": true,
 
