@@ -46,13 +46,14 @@ editor["xiyaowong/nvim-cursorword"] = {
 editor["norcalli/nvim-colorizer.lua"] = {
   event = { "BufReadPre", "BufNewFile" },
   config = function()
-    require("colorizer").setup({ "*", "!dart" }, {
+    require("colorizer").setup({ "lua", "css", "vim", "kitty", "conf" }, {
       css = { rgb_fn = true, hsl_fn = true, names = true },
       scss = { rgb_fn = true, hsl_fn = true, names = true },
       sass = { rgb_fn = true, names = true },
       vim = { names = true },
       html = { mode = "foreground" },
     }, {
+      RGB = false,
       names = false,
       mode = "background",
     })
