@@ -48,16 +48,6 @@ rvim.wk = {
         "open vimrc",
       },
     },
-    -- n = {
-    --   name = "+New",
-    -- },
-    w = {
-      name = "+Window",
-    },
-    z = {
-      name = "+Utils",
-      z = "refocus folds",
-    },
   },
   localleader = {
     d = { name = "Dap" },
