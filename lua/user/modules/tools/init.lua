@@ -127,7 +127,8 @@ tools['rmagatti/auto-session'] = {
     require('auto-session').setup({
       log_level = 'error',
       auto_session_root_dir = join_paths(rvim.get_cache_dir(), 'session/auto/'),
-      auto_restore_enabled = false,
+      -- Do not enable auto restoration in my projects directory, I'd like to choose projects myself
+      auto_restore_enabled = not vim.startswith(vim.fn.getcwd(0), vim.env.DEV_HOME),
       auto_session_use_git_branch = false, -- This cause inconsistent results
     })
     require('which-key').register({
