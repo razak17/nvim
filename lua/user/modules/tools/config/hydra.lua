@@ -17,7 +17,7 @@ return function()
   Hydra({
     name = 'Window management',
     config = {
-      invoke_on_body = true,
+      invoke_on_body = false,
       hint = {
         border = border,
       },
