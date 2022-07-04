@@ -276,14 +276,14 @@ return function()
   end
 
   local function installed_plugins()
-    require('telescope.builtins').find_files({
+    require('telescope.builtin').find_files({
       prompt_title = 'Installed plugins',
       cwd = join_paths(rvim.get_runtime_dir(), '/site/pack/packer'),
     })
   end
 
   local function builtin()
-    require('telescope.builtins').builtin({ include_extensions = true })
+    require('telescope.builtin').builtin({ include_extensions = true })
   end
 
   local function project_files(opts)
@@ -351,11 +351,11 @@ return function()
   end
 
   local function delta_git_commits(opts)
-    require('telescope.builtins').git_commits(delta_opts(opts))
+    require('telescope.builtin').git_commits(delta_opts(opts))
   end
 
   local function delta_git_bcommits(opts)
-    require('telescope.builtins').git_bcommits(delta_opts(opts, true))
+    require('telescope.builtin').git_bcommits(delta_opts(opts, true))
   end
 
   local function howdoi()
