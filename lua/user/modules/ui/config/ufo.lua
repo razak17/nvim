@@ -47,7 +47,13 @@ return function()
     provider_selector = function(_, filetype)
       return ft_map[filetype] or { 'treesitter', 'indent' }
     end,
+    preview = {
+      win_config = {
+        winhighlight = 'Normal:Normal,FloatBorder:Normal',
+      },
+    },
   })
   rvim.nnoremap('zR', ufo.openAllFolds, 'open all folds')
   rvim.nnoremap('zM', ufo.closeAllFolds, 'close all folds')
+  rvim.nnoremap('zP', ufo.peekFoldedLinesUnderCursor, 'preview fold')
 end
