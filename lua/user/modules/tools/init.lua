@@ -108,7 +108,7 @@ tools['nvim-telescope/telescope-fzf-native.nvim'] = {
   run = 'make',
 }
 
-tools['tami5/sqlite.lua'] = {}
+tools['kkharji/sqlite.lua'] = {}
 
 tools['ilAYAli/scMRU.nvim'] = {}
 
