@@ -144,6 +144,30 @@ function rvim._exists(file)
   return ok, err
 end
 
+local installed
+
+function rvim.list_installed_plugins()
+  if installed then
+    return installed
+  end
+  local data_dir = fn.stdpath('data')
+  local start = fn.expand(data_dir .. '/site/pack/packer/start/*', true, true)
+  local opt = fn.expand(data_dir .. '/site/pack/packer/opt/*', true, true)
+  vim.list_extend(start, opt)
+  installed = vim.tbl_map(function(path)
+    return fn.fnamemodify(path, ':t')
+  end, start)
+  return installed
+end
+
+---Check if a plugin is on the system not whether or not it is loaded
+---@param plugin_name string
+---@return boolean
+function rvim.plugin_installed(plugin_name)
+  local list = installed or rvim.list_installed_plugins()
+  return vim.tbl_contains(list, plugin_name)
+end
+
 ---NOTE: this plugin returns the currently loaded state of a plugin given
 ---given certain assumptions i.e. it will only be true if the plugin has been
 ---loaded e.g. lazy loading will return false
