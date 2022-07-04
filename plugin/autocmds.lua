@@ -174,6 +174,7 @@ local column_block_list = {
   'lspinfo',
   'which_key',
   'packer',
+  'dap-repl',
 }
 local function check_color_column()
   for _, win in ipairs(api.nvim_list_wins()) do
