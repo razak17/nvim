@@ -24,7 +24,7 @@ return function()
   -- NOTE: this opens dap UI automatically when dap starts
   dap.listeners.after.event_initialized['dapui_config'] = function()
     dapui.open()
-    vim.api.nvim_exec_autocmds('User', 'DapStarted')
+    vim.api.nvim_exec_autocmds('User', { pattern = 'DapStarted' })
   end
   dap.listeners.before.event_terminated['dapui_config'] = function()
     dapui.close()
