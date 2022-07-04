@@ -19,9 +19,6 @@ return function()
         java = false,
         lua = { 'string', 'source' },
         javascript = { 'string', 'template_string' },
-        fast_wrap = {
-          map = '<c-e>',
-        },
       },
       disable_filetype = { 'TelescopePrompt', 'spectre_panel' },
       ignored_next_char = string.gsub([[ [%w%%%'%[%"%.] ]], '%s+', ''),

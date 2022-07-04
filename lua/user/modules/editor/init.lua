@@ -122,10 +122,7 @@ editor['abecodes/tabout.nvim'] = {
   wants = { 'nvim-treesitter' },
   after = { 'nvim-cmp' },
   config = function()
-    require('tabout').setup({
-      completion = false,
-      ignore_beginning = false,
-    })
+    require('tabout').setup()
   end,
 }
 
