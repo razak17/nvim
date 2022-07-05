@@ -315,8 +315,6 @@ nnoremap('<leader>`', [[ciw`<c-r>"`<esc>]], 'wrap backticks')
 nnoremap("<leader>'", [[ciw'<c-r>"'<esc>]], 'wrap single quotes')
 nnoremap('<leader>)', [[ciw(<c-r>")<esc>]], 'wrap parenthesis')
 nnoremap('<leader>}', [[ciw{<c-r>"}<esc>]], 'wrap curly bracket')
--- Map Q to replay q register
-nnoremap('Q', '@q')
 ------------------------------------------------------------------------------
 -- Multiple Cursor Replacement
 -- http://www.kevinli.co/posts/2017-01-19-multiple-cursors-in-500-bytes-of-vimscript/
