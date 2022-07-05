@@ -7,8 +7,25 @@ tools['sindrets/diffview.nvim'] = {
   setup = function()
     rvim.nnoremap('<localleader>gd', '<Cmd>DiffviewOpen<CR>', 'diffview: diff HEAD')
     rvim.nnoremap('<localleader>gh', '<Cmd>DiffviewFileHistory<CR>', 'diffview: file history')
+    rvim.vnoremap('gh', [[:'<'>DiffviewFileHistory<CR>]], 'diffview: file history')
   end,
-  config = conf('tools', 'diffview'),
+  config = function()
+    require('diffview').setup({
+      hooks = {
+        diff_buf_read = function()
+          vim.opt_local.wrap = false
+          vim.opt_local.list = false
+          vim.opt_local.colorcolumn = ''
+        end,
+      },
+      enhanced_diff_hl = true,
+      keymaps = {
+        view = { q = '<Cmd>DiffviewClose<CR>' },
+        file_panel = { q = '<Cmd>DiffviewClose<CR>' },
+        file_history_panel = { q = '<Cmd>DiffviewClose<CR>' },
+      },
+    })
+  end,
 }
 
 tools['mbbill/undotree'] = {
