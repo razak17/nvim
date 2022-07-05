@@ -11,7 +11,7 @@ return function()
     elseif key == 'ranger' then
       cmd = term:new({ cmd = 'ranger' })
     elseif key == 'git_commit' then
-      cmd = term:new({ cmd = 'git commit -a' })
+      cmd = term:new({ cmd = 'git add . && git commit -a' })
     elseif key == 'conf_commit' then
       cmd = term:new({ cmd = 'iconf -ccma' })
     end
