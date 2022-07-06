@@ -23,7 +23,7 @@ rvim.wk = {
     },
     L = {
       name = 'rVim',
-      [';'] = { ':Dashboard<cr>', 'dashboard' },
+      [';'] = { ':Alpha<cr>', 'alpha' },
       c = {
         "<cmd>lua vim.fn.execute('edit ' .. join_paths(rvim.get_user_dir(), 'config/init.lua'))<cr>",
         'open config file',
