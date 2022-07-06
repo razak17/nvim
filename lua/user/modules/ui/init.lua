@@ -6,6 +6,7 @@ local ui = {}
 ui['glepnir/dashboard-nvim'] = {
   event = 'BufWinEnter',
   config = conf('ui', 'dashboard'),
+  disable = true,
 }
 
 ui['akinsho/bufferline.nvim'] = {
@@ -167,5 +168,7 @@ ui['kevinhwang91/nvim-ufo'] = {
   requires = 'kevinhwang91/promise-async',
   config = conf('ui', 'ufo'),
 }
+
+ui['goolord/alpha-nvim'] = { config = conf('ui', 'alpha') }
 
 return ui

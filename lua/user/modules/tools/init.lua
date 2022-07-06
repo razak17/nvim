@@ -159,6 +159,7 @@ tools['rmagatti/auto-session'] = {
       ['<leader>ss'] = { ':SaveSession<cr>', 'auto-session: save' },
     })
   end,
+  disable = true,
 }
 
 tools['phaazon/hop.nvim'] = {
