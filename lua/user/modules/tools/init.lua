@@ -159,7 +159,15 @@ tools['rmagatti/auto-session'] = {
       ['<leader>ss'] = { ':SaveSession<cr>', 'auto-session: save' },
     })
   end,
-  disable = true,
+}
+
+tools['rmagatti/session-lens'] = {
+  config = function()
+    require('session-lens').setup({
+      path_display = { 'smart', 'tail' },
+      previewer = false,
+    })
+  end,
 }
 
 tools['phaazon/hop.nvim'] = {
