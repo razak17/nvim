@@ -3,7 +3,7 @@ return function()
   local dashboard = require('alpha.themes.dashboard')
   local fortune = require('alpha.fortune')
   local hl = require('user.utils.highlights')
-
+  local f = string.format
 
   local button = function(h, ...)
     local btn = dashboard.button(...)
@@ -52,7 +52,7 @@ return function()
 
   local installed_plugins = {
     type = 'text',
-    val = '  ' .. #rvim.list_installed_plugins() .. ' plugins installed',
+    val = f(' %d plugins installed', #rvim.list_installed_plugins()),
     opts = { position = 'center', hl = 'NonText' },
   }
 
