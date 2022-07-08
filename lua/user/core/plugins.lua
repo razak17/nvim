@@ -90,7 +90,6 @@ rvim.augroup('PackerSetupInit', {
     pattern = 'PackerCompileDone',
     desc = 'Inform me that packer has finished compiling',
     command = function()
-      vim.cmd('LspStop')
       utils:plug_notify('Packer compile complete')
     end,
   },
