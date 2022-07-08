@@ -53,6 +53,16 @@ return function()
     },
   })
 
+  rvim.augroup('UfoSettings', {
+    {
+      event = 'FileType',
+      pattern = { 'org' },
+      command = function()
+        ufo.detach()
+      end,
+    },
+  })
+
   ufo.setup({
     open_fold_hl_timeout = 0,
     fold_virt_text_handler = handler,
