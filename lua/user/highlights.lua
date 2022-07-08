@@ -62,6 +62,9 @@ local function general_overrides()
     commentTSWarning = { background = P.error_red, foreground = 'fg', bold = true },
     commentTSDanger = { background = P.dark_green, foreground = P.base0, bold = true },
     commentTSNote = { background = P.blue, foreground = P.base0, bold = true },
+    CommentTasksTodo = { link = 'commentTSWarning' },
+    CommentTasksFixme = { link = 'commentTSDanger' },
+    CommentTasksNote = { link = 'commentTSNote' },
 
     LspCodeLens = { link = 'NonText' },
     LspReferenceText = { underline = true, background = 'NONE' },
