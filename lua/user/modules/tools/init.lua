@@ -171,7 +171,7 @@ tools['rmagatti/session-lens'] = {
 }
 
 tools['phaazon/hop.nvim'] = {
-  branch = 'v1',
+  tag = 'v2.*',
   keys = { { 'n', 's' }, 'f', 'F' },
   config = conf('tools', 'hop'),
 }
