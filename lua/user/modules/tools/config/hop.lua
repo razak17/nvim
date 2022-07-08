@@ -7,7 +7,7 @@ return function()
   rvim.nnoremap('s', hop.hint_char1)
   rvim.nnoremap('s', function()
     -- TODO: Multi window mode is currently not working in nvim 0.8
-    hop.hint_char1({ multi_windows = false })
+    hop.hint_char1({ multi_windows = true })
   end)
 
   -- NOTE: override F/f using hop motions
