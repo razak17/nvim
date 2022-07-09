@@ -47,6 +47,7 @@ ui['stevearc/dressing.nvim'] = {
 
 ui['lukas-reineke/headlines.nvim'] = {
   event = 'BufWinEnter',
+  ft = { 'org', 'norg', 'markdown', 'yaml' },
   setup = conf('ui', 'headlines').setup,
   config = conf('ui', 'headlines').config,
 }
