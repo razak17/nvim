@@ -60,7 +60,6 @@ lang['williamboman/mason.nvim'] = {
 }
 
 lang['williamboman/nvim-lsp-installer'] = {
-  after = 'mason.nvim',
   requires = {
     'neovim/nvim-lspconfig',
   },
