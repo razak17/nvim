@@ -222,7 +222,7 @@ function rvim.empty(item)
   elseif item_type == 'table' then
     return vim.tbl_isempty(item)
   end
-  return false
+  return item ~= nil
 end
 
 --- Usage:
@@ -252,7 +252,7 @@ rvim.open_command = oss == 'Darwin' and 'open' or 'xdg-open'
 
 ---Reload lua modules
 ---@param path string
----@param recursive string
+---@param recursive boolean
 function rvim.invalidate(path, recursive)
   if recursive then
     for key, value in pairs(package.loaded) do
