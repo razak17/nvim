@@ -219,7 +219,7 @@ nnoremap('gx', utils.open_link)
 ---------------------------------------------------------------------------------
 --- Utility function to toggle the location or the quickfix list
 ---@param list_type '"quickfix"' | '"location"'
----@return nil
+---@return string?
 function rvim.toggle_list(list_type)
   local is_location_target = list_type == 'location'
   local prefix = is_location_target and 'l' or 'c'
