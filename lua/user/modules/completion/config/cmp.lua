@@ -125,9 +125,9 @@ return function()
         deprecated = true,
         fields = { 'kind', 'abbr', 'menu' },
         source_names = {
+          luasnip = '(SN)',
           nvim_lsp = '(LSP)',
           nvim_lua = '(Lua)',
-          luasnip = '(SN)',
           path = '(Path)',
           buffer = '(Buf)',
           spell = '(SP)',
@@ -150,9 +150,9 @@ return function()
         end,
       },
       sources = {
+        { name = 'luasnip' },
         { name = 'nvim_lsp' },
         { name = 'nvim_lua' },
-        { name = 'luasnip' },
         { name = 'path' },
         {
           name = 'buffer',
