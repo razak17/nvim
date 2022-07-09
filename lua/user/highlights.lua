@@ -48,7 +48,6 @@ local function general_overrides()
       foreground = 'NONE',
       bold = false,
       underdouble = true,
-      -- underdouble = true,
       sp = 'white',
     },
     -----------------------------------------------------------------------------//
