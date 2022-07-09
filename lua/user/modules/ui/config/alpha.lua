@@ -59,8 +59,8 @@ return function()
 
   dashboard.section.buttons.val = {
     button('Directory', 'r', '  Restore last session', '<Cmd>RestoreSession<CR>'),
-    button('Todo', 'p', '  Pick a session', '<Cmd>Autosession search<CR>'),
-    button('Label', 'd', '  Recent Projects', ':Telescope projects<CR>'),
+    button('Todo', 's', '  Pick a session', '<Cmd>Autosession search<CR>'),
+    button('Label', 'p', '  Recent Projects', ':Telescope projects<CR>'),
     button('Title', 'f', '  Find file', ':Telescope find_files<CR>'),
     button('String', 'e', '  New file', ':ene | startinsert <CR>'),
     button('ErrorMsg', 'q', '  Quit NVIM', ':qa<CR>'),
