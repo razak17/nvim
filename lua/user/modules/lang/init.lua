@@ -46,7 +46,21 @@ lang['theHamsta/nvim-dap-virtual-text'] = {
 }
 
 -- Lsp
+lang['williamboman/mason.nvim'] = {
+  config = function()
+    require('mason').setup({
+      ui = { border = rvim.style.border.current },
+      -- The directory in which to install packages.
+      install_root_dir = join_paths(rvim.get_runtime_dir(), 'mason'),
+    })
+    require('mason-lspconfig').setup({
+      automatic_installation = true,
+    })
+  end,
+}
+
 lang['williamboman/nvim-lsp-installer'] = {
+  after = 'mason.nvim',
   requires = {
     'neovim/nvim-lspconfig',
   },
