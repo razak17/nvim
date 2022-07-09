@@ -13,8 +13,6 @@ if not vim.tbl_contains(vim.opt.rtp:get(), base_dir) then
   vim.opt.rtp:append(base_dir)
 end
 
-vim.g.did_load_filetypes = 0 -- deactivate vim based filetype detection
-
 vim.api.nvim_create_augroup('vimrc', {}) -- Ensure all autocommands are cleared
 
 local ok, reload = pcall(require, 'plenary.reload')
