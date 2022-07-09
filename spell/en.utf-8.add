@@ -98,3 +98,11 @@ loclist
 Buf
 vimrc
 ui
+dap
+treesitter
+xml
+nlua
+lldb
+graphql
+jsonc
+yaml
