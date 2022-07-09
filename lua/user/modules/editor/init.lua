@@ -13,11 +13,9 @@ editor['xiyaowong/accelerated-jk.nvim'] = {
   end,
 }
 
-editor['tpope/vim-surround'] = {
-  event = 'BufWinEnter',
+editor['kylechui/nvim-surround'] = {
   config = function()
-    rvim.xmap('S', '<Plug>VSurround')
-    rvim.xmap('S', '<Plug>VSurround')
+    require('nvim-surround').setup({})
   end,
 }
 
