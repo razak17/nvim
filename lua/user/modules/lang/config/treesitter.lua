@@ -2,42 +2,10 @@ rvim.treesitter = rvim.treesitter or {
   install_attempted = {},
 }
 
--- When visiting a file with a type we don't have a parser for, ask me if I want to install it.
-function rvim.treesitter.ensure_parser_installed()
-  local WAIT_TIME = 6000
-  local parsers = require('nvim-treesitter.parsers')
-  local lang = parsers.get_buf_lang()
-  local fmt = string.format
-  if
-    parsers.get_parser_configs()[lang]
-    and not parsers.has_parser(lang)
-    and not rvim.treesitter.install_attempted[lang]
-  then
-    vim.schedule(function()
-      vim.cmd('TSInstall ' .. lang)
-      rvim.treesitter.install_attempted[lang] = true
-      vim.notify(fmt('Installing Treesitter parser for %s', lang), 'info', {
-        title = 'Nvim Treesitter',
-        icon = rvim.style.icons.misc.down,
-        timeout = WAIT_TIME,
-      })
-    end)
-  end
-end
-
 return function()
-  if rvim.util.autoinstall_ts_parsers then
-    rvim.augroup('TSParserCheck', {
-      {
-        event = 'FileType',
-        desc = 'Treesitter: install missing parsers',
-        command = rvim.treesitter.ensure_parser_installed,
-      },
-    })
-  end
-
   rvim.treesitter = {
     setup = {
+      auto_install = true,
       highlight = { enabled = true },
       ensure_installed = {
         'lua',
