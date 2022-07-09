@@ -161,15 +161,6 @@ tools['rmagatti/auto-session'] = {
   end,
 }
 
-tools['rmagatti/session-lens'] = {
-  config = function()
-    require('session-lens').setup({
-      path_display = { 'smart', 'tail' },
-      previewer = false,
-    })
-  end,
-}
-
 tools['phaazon/hop.nvim'] = {
   tag = 'v2.*',
   keys = { { 'n', 's' }, 'f', 'F' },
