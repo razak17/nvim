@@ -85,6 +85,7 @@ rvim.wk = {
       u = 'peek func definition',
       h = { ':LspInfo<cr>', 'lsp: info' },
       H = { ':LspInstallInfo<cr>', 'lspinstaller: info' },
+      m = { ':Mason<cr>', 'mason: info' },
       n = { ':NullLsInfo<cr>', 'null-ls: info' },
       N = { ':LspSettings buffer local<cr>', 'nlsp: buffer config' },
       R = { ':Telescope lsp_references<cr>', 'telescope: references' },
