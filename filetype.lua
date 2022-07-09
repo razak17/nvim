@@ -7,6 +7,7 @@ vim.filetype.add({
     lock = 'yaml',
   },
   filename = {
+    ['NEOGIT_COMMIT_EDITMSG'] = 'NeogitCommitMessage',
     ['go.mod'] = 'gomod',
     ['.gitignore'] = 'conf',
     ['launch.json'] = 'jsonc',
