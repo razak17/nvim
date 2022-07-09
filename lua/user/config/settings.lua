@@ -126,6 +126,7 @@ M.load_default_options = function()
     writebackup = false,
     mouse = 'a',
     mousefocus = true,
+    mousescroll = { 'ver:1', 'hor:6' },
     showcmd = false,
     completeopt = { 'menu', 'menuone', 'noselect', 'noinsert' },
     more = false,
