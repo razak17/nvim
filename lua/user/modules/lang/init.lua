@@ -107,6 +107,35 @@ lang['simrat39/symbols-outline.nvim'] = {
   config = conf('lang', 'symbols-outline'),
 }
 
+lang['ray-x/lsp_signature.nvim'] = {
+  event = 'InsertEnter',
+  config = function()
+    require('lsp_signature').setup({
+      debug = false,
+      log_path = rvim.get_cache_dir() .. '/lsp_signature.log',
+      bind = true,
+      fix_pos = false,
+      auto_close_after = 15,
+      hint_enable = false,
+      handler_opts = { border = rvim.style.border.current },
+      toggle_key = '<C-K>',
+      select_signature_key = '<M-N>',
+    })
+  end,
+}
+
+lang['olexsmir/gopher.nvim'] = {
+  ft = 'go',
+  requires = { -- dependencies
+    'nvim-lua/plenary.nvim',
+    'nvim-treesitter/nvim-treesitter',
+  },
+}
+
+lang['nanotee/sqls.nvim'] = {}
+
+lang['razak17/rust-tools.nvim'] = {}
+
 -- Treesitter
 lang['nvim-treesitter/nvim-treesitter'] = {
   run = ':TSUpdate',
@@ -175,27 +204,6 @@ lang['windwp/nvim-autopairs'] = {
   config = conf('lang', 'autopairs'),
 }
 
-lang['razak17/rust-tools.nvim'] = {}
-
-lang['b0o/schemastore.nvim'] = {}
-
-lang['ray-x/lsp_signature.nvim'] = {
-  event = 'InsertEnter',
-  config = function()
-    require('lsp_signature').setup({
-      debug = false,
-      log_path = rvim.get_cache_dir() .. '/lsp_signature.log',
-      bind = true,
-      fix_pos = false,
-      auto_close_after = 15,
-      hint_enable = false,
-      handler_opts = { border = rvim.style.border.current },
-      toggle_key = '<C-K>',
-      select_signature_key = '<M-N>',
-    })
-  end,
-}
-
 lang['lewis6991/spellsitter.nvim'] = {
   config = function()
     require('spellsitter').setup({
@@ -204,18 +212,11 @@ lang['lewis6991/spellsitter.nvim'] = {
   end,
 }
 
-lang['olexsmir/gopher.nvim'] = {
-  ft = 'go',
-  requires = { -- dependencies
-    'nvim-lua/plenary.nvim',
-    'nvim-treesitter/nvim-treesitter',
-  },
-}
+-- Rest
+lang['b0o/schemastore.nvim'] = {}
 
 lang['mtdl9/vim-log-highlighting'] = {}
 
 lang['fladson/vim-kitty'] = {}
-
-lang['nanotee/sqls.nvim'] = {}
 
 return lang
