@@ -4,8 +4,6 @@ return function()
   local fortune = require('alpha.fortune')
   local hl = require('user.utils.highlights')
   local f = string.format
-  local fn = vim.fn
-  local luv = vim.loop
 
   local button = function(h, ...)
     local btn = dashboard.button(...)
@@ -59,69 +57,6 @@ return function()
     opts = { position = 'center', hl = 'NonText' },
   }
 
-  ---@param dir string
-  ---@param files table<string, string>
-  local function sort_sessions_by_mtime(dir, files)
-    table.sort(files, function(a, b)
-      if not a.path then
-        return true
-      end
-      if not b.path then
-        return false
-      end
-
-      local a_file, b_file = f('%s/%s', dir, a.path), f('%s/%s', dir, b.path)
-      local a_stat, b_stat = luv.fs_stat(a_file), luv.fs_stat(b_file)
-
-      if not a_stat then
-        return true
-      end
-      if not b_stat then
-        return false
-      end
-
-      local a_time, b_time = luv.fs_stat(a_file).mtime.sec, luv.fs_stat(b_file).mtime.sec
-      return a_time > b_time
-    end)
-  end
-
-  local function sessions()
-    local session = require('auto-session')
-    local files = session.get_session_files()
-    if not files or vim.tbl_isempty(files) then
-      return
-    end
-    files = vim.list_slice(files, 1, 10)
-
-    sort_sessions_by_mtime(session.get_root_dir():sub(1, -2), files)
-
-    local elements = rvim.map(function(item, key)
-      local name = item.display_name or item.path
-      if name:match('__') then
-        local parts = vim.split(name, '__')
-        name = parts[#parts]
-      else
-        name = fn.fnamemodify(item.display_name, ':t')
-      end
-      return {
-        type = 'button',
-        val = rvim.truncate(name, 40),
-        on_press = function()
-          session.RestoreSessionFromFile(item.display_name or item.path)
-        end,
-        opts = {
-          hl = 'Directory',
-          position = 'center',
-          align_shortcut = 'right',
-          shortcut = key,
-          hl_shortcut = 'Title',
-          width = 50,
-        },
-      }
-    end, files)
-    return { type = 'group', val = elements }
-  end
-
   dashboard.section.buttons.val = {
     button('Directory', 'r', '  Restore last session', '<Cmd>RestoreSession<CR>'),
     button('Todo', 'p', '  Pick a session', '<Cmd>Autosession search<CR>'),
@@ -142,8 +77,6 @@ return function()
       installed_plugins,
       { type = 'padding', val = 2 },
       dashboard.section.buttons,
-      { type = 'text', val = 'Sessions', opts = { position = 'center', hl = 'NonText' } },
-      sessions(),
       dashboard.section.footer,
     },
     opts = { margin = 5 },
