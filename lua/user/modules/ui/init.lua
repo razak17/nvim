@@ -21,11 +21,6 @@ ui['kyazdani42/nvim-web-devicons'] = {
   config = conf('ui', 'nvim-web-devicons'),
 }
 
-ui['kyazdani42/nvim-tree.lua'] = {
-  config = conf('ui', 'nvimtree'),
-  disable = true,
-}
-
 ui['lukas-reineke/indent-blankline.nvim'] = {
   config = conf('ui', 'indentline'),
 }
