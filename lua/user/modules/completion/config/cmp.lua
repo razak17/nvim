@@ -131,7 +131,6 @@ return function()
           path = '(Path)',
           buffer = '(Buf)',
           spell = '(SP)',
-          copilot = '(CP)',
           cmdline = '(Cmd)',
           git = '(Git)',
           calc = '(Calc)',
@@ -145,11 +144,7 @@ return function()
           local MAX = math.floor(vim.o.columns * 0.5)
           vim_item.abbr = #vim_item.abbr >= MAX and string.sub(vim_item.abbr, 1, MAX) .. ellipsis
             or vim_item.abbr
-          if entry.source.name == 'copilot' then
-            vim_item.kind = rvim.style.icons.misc.octoface
-          else
-            vim_item.kind = rvim.style.codicons.kind[vim_item.kind]
-          end
+          vim_item.kind = rvim.style.codicons.kind[vim_item.kind]
           vim_item.menu = rvim.cmp.setup.formatting.source_names[entry.source.name]
           return vim_item
         end,
@@ -171,7 +166,6 @@ return function()
             end,
           },
         },
-        { name = 'copilot' },
         { name = 'spell' },
         { name = 'git' },
         { name = 'calc' },
