@@ -135,7 +135,9 @@ return function()
     {
       event = { 'FileType' },
       pattern = rvim.treesitter.get_filetypes(),
-      command = 'setlocal foldexpr=nvim_treesitter#foldexpr()',
+      command = function()
+        vim.cmd('setlocal foldexpr=nvim_treesitter#foldexpr()')
+      end,
     },
   })
 end
