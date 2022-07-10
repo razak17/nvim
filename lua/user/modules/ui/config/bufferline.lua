@@ -4,6 +4,8 @@ return function()
     return
   end
 
+  local fn = vim.fn
+  local fmt = string.format
   local P = rvim.palette
   local groups = require('bufferline.groups')
   local util = require('user.utils.highlights')
@@ -119,6 +121,13 @@ return function()
         items = {
           groups.builtin.pinned:with({ icon = '' }),
           groups.builtin.ungrouped,
+          {
+            name = 'Plugins',
+            highlight = { guifg = '#ECBE7B' },
+            matcher = function(buf)
+              return vim.startswith(buf.path, fmt('%s/site/pack/packer', rvim.get_runtime_dir()))
+            end,
+          },
           {
             name = 'Terraform',
             matcher = function(buf)
