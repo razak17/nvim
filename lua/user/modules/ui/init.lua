@@ -3,6 +3,14 @@ local conf = utils.load_conf
 
 local ui = {}
 
+ui['razak17/nvim-colorscheme'] = {
+  requires = { 'nvim-treesitter/nvim-treesitter', opt = true },
+  local_path = 'personal',
+  config = function()
+    vim.cmd('colorscheme zephyr')
+  end,
+}
+
 ui['glepnir/dashboard-nvim'] = {
   event = 'BufWinEnter',
   config = conf('ui', 'dashboard'),
