@@ -138,4 +138,12 @@ editor['psliwka/vim-dirtytalk'] = {
   run = ':DirtytalkUpdate',
 }
 
+editor['glepnir/template.nvim'] = {
+  config = function()
+    local temp = require('template')
+    temp.temp_dir = ('%s/templates/'):format(rvim.get_config_dir())
+    -- temp.temp_dir = join_paths(rvim.get_config_dir(), 'templates')
+  end,
+}
+
 return editor

@@ -114,21 +114,6 @@ rvim.augroup('TrimWhitespace', {
   },
 })
 
--- See :h skeleton
-local templates_dir = rvim.get_config_dir() .. '/utils/templates'
-rvim.augroup('Templates', {
-  {
-    event = { 'BufNewFile' },
-    pattern = { '*.sh' },
-    command = '0r' .. templates_dir .. '/skeleton.sh',
-  },
-  {
-    event = { 'BufNewFile' },
-    pattern = { '*.lua' },
-    command = '0r' .. templates_dir .. '/skeleton.lua',
-  },
-})
-
 --- automatically clear commandline messages after a few seconds delay
 --- source: http//unix.stackexchange.com/a/613645
 rvim.augroup('ClearCommandMessages', {
