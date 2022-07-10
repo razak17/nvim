@@ -55,6 +55,7 @@ local function general_overrides()
     -----------------------------------------------------------------------------//
     TSNamespace = { foreground = P.pale_pink, italic = true, bold = true },
     TSKeywordReturn = { italic = true, foreground = keyword_fg },
+    TSConstructor = { foreground = P.teal, italic = true, bold = true },
     -- TSError = { undercurl = true, sp = error_line, foreground = "NONE" } ,
     TSParameter = { italic = true, bold = true, foreground = 'NONE' },
     -- highlight FIXME comments
