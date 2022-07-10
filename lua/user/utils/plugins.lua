@@ -88,7 +88,7 @@ end
 ---@param spec table
 function M:with_local(spec)
   assert(type(spec) == 'table', fmt('spec must be a table', spec[1]))
-  assert(spec.is_local, fmt('%s has no specified local path', spec[1]))
+  assert(spec.local_path, fmt('%s has no specified local path', spec[1]))
 
   local name = vim.split(spec[1], '/')[2]
   local path = M:dev(name)
@@ -115,14 +115,15 @@ end
 ---local variant of packer's use function that specifies both a local and
 ---upstream version of a plugin
 ---@param original table
--- TODO: figure out how to use
 function M:use_local(original)
   local use = require('packer').use
   local spec, local_spec = M:with_local(original)
   if local_spec then
     use(local_spec)
+  else
+    -- NOTE: Don't install from repo is local is available
+    use(spec)
   end
-  use(spec)
 end
 
 function M.goto_repo()
@@ -141,7 +142,7 @@ end
 
 ---@param path string
 function M:dev(path)
-  return join_paths(vim.env.HOME, 'workspace/plugins/', path)
+  return join_paths(vim.env.HOME, 'personal/workspace/coding/plugins', path)
 end
 
 return M

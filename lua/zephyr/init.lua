@@ -52,7 +52,7 @@ function zephyr.colorscheme()
   end
   vim.o.background = 'dark'
   vim.o.termguicolors = true
-  vim.g.colors_name = 'zephyr'
+  -- vim.g.colors_name = 'zephyr'
   local syntax = require('zephyr.syntax')
   set_hl(syntax)
   async_load_plugin:send()
