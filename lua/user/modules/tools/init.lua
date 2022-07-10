@@ -142,15 +142,18 @@ tools['jvgrootveld/telescope-zoxide'] = {}
 tools['rmagatti/auto-session'] = {
   config = function()
     local fn = vim.fn
+    local fmt = string.format
     require('auto-session').setup({
       log_level = 'error',
       auto_session_root_dir = join_paths(rvim.get_cache_dir(), 'session/auto/'),
       -- Do not enable auto restoration in my projects directory, I'd like to choose projects myself
       auto_restore_enabled = not vim.startswith(fn.getcwd(), vim.env.DEV_HOME),
       auto_session_suppress_dirs = {
-        fn.expand('~'),
-        fn.expand('~/Desktop/'),
-        unpack(rvim.list_installed_plugins()),
+        vim.env.HOME,
+        fmt('%s/Desktop', vim.env.HOME),
+        fmt('%s/Desktop', vim.env.HOME),
+        fmt('%s/site/pack/packer/opt/*', rvim.get_runtime_dir()),
+        fmt('%s/site/pack/packer/start/*', rvim.get_runtime_dir()),
       },
       auto_session_use_git_branch = false, -- This cause inconsistent results
     })
