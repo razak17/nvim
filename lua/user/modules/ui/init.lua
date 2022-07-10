@@ -8,12 +8,6 @@ ui['razak17/zephyr-nvim'] = {
   local_path = 'personal',
 }
 
-ui['glepnir/dashboard-nvim'] = {
-  event = 'BufWinEnter',
-  config = conf('ui', 'dashboard'),
-  disable = true,
-}
-
 ui['akinsho/bufferline.nvim'] = {
   config = conf('ui', 'bufferline'),
 }
