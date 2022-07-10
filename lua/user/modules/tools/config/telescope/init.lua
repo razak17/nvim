@@ -263,37 +263,37 @@ return function()
   --- NOTE: this must be required after setting up telescope
   --- otherwise the result will be cached without the updates
   --- from the setup call
-  local builtins = require('telescope.builtin')
+  local builtin = require('telescope.builtin')
 
   local rvim_files = require('user.modules.tools.config.telescope.nvim_files')
   local bg_selector = require('user.modules.tools.config.telescope.bg_selector')
 
   local function notes()
-    builtins.find_files({
+    builtin.find_files({
       prompt_title = 'Notes',
       cwd = vim.fn.expand('~/notes/src/'),
     })
   end
 
   local function installed_plugins()
-    require('telescope.builtin').find_files({
+    builtin.find_files({
       prompt_title = 'Installed plugins',
       cwd = join_paths(rvim.get_runtime_dir(), '/site/pack/packer'),
     })
   end
 
-  local function builtin()
-    require('telescope.builtin').builtin({ include_extensions = true })
+  local function builtins()
+    builtin.builtin({ include_extensions = true })
   end
 
   local function project_files(opts)
-    if not pcall(builtins.git_files, opts) then
-      builtins.find_files(opts)
+    if not pcall(builtin.git_files, opts) then
+      builtin.find_files(opts)
     end
   end
 
   local function find_files(opts)
-    builtins.find_files(opts)
+    builtin.find_files(opts)
   end
 
   local function file_browser()
@@ -351,11 +351,11 @@ return function()
   end
 
   local function delta_git_commits(opts)
-    require('telescope.builtin').git_commits(delta_opts(opts))
+    builtin.git_commits(delta_opts(opts))
   end
 
   local function delta_git_bcommits(opts)
-    require('telescope.builtin').git_bcommits(delta_opts(opts, true))
+    builtin.git_bcommits(delta_opts(opts, true))
   end
 
   local function howdoi()
@@ -366,8 +366,8 @@ return function()
     ['<c-p>'] = { project_files, 'telescope: find files' },
     ['<leader>f'] = {
       name = 'Telescope',
-      a = { builtin, 'builtins' },
-      b = { builtins.current_buffer_fuzzy_find, 'find in current buffer' },
+      a = { builtins, 'builtin' },
+      b = { builtin.current_buffer_fuzzy_find, 'find in current buffer' },
       B = { file_browser, 'find browser' },
       c = {
         name = 'rVim config',
@@ -380,31 +380,31 @@ return function()
       f = { find_files, 'find files' },
       g = {
         name = 'Git',
-        b = { builtins.git_branches, 'branch' },
+        b = { builtin.git_branches, 'branch' },
         B = { delta_git_bcommits, 'buffer commits' },
         c = { delta_git_commits, 'commits' },
-        f = { builtins.git_files, 'files' },
-        o = { builtins.git_status, 'open changed file' },
-        s = { builtins.git_status, 'status' },
+        f = { builtin.git_files, 'files' },
+        o = { builtin.git_status, 'open changed file' },
+        s = { builtin.git_status, 'status' },
       },
       h = { MFU, 'most frequently used files' },
       H = { howdoi, 'howdoi' },
       m = { media_files, 'media files' },
       n = { notes, 'notes' },
-      o = { builtins.oldfiles, 'old files' },
+      o = { builtin.oldfiles, 'old files' },
       p = { projects, 'recent projects' },
       P = { installed_plugins, 'plugins' },
       r = { MRU, 'most recently used files' },
-      R = { builtins.reloader, 'module reloader' },
-      s = { builtins.live_grep, 'find word' },
+      R = { builtin.reloader, 'module reloader' },
+      s = { builtin.live_grep, 'find word' },
       v = {
         name = 'vim',
-        a = { builtins.autocommands, 'autocommands' },
-        h = { builtins.highlights, 'highlights' },
-        o = { builtins.vim_options, 'options' },
-        r = { builtins.resume, 'resume last picker' },
+        a = { builtin.autocommands, 'autocommands' },
+        h = { builtin.highlights, 'highlights' },
+        o = { builtin.vim_options, 'options' },
+        r = { builtin.resume, 'resume last picker' },
       },
-      w = { builtins.grep_string, 'find current word' },
+      w = { builtin.grep_string, 'find current word' },
       W = { bg_selector.set_bg_image, 'change background' },
       z = { zoxide_list, 'zoxide list' },
     },
