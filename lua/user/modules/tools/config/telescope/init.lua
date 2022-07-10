@@ -198,7 +198,7 @@ return function()
             width = 0.5,
           },
         }),
-        live_grep = {
+        live_grep = rvim.telescope.ivy({
           --@usage don't include the filename in the search results
           only_sort_text = true,
           -- NOTE: previewing html seems to cause some stalling/blocking whilst live grepping
@@ -214,7 +214,7 @@ return function()
             -- AND operator for live_grep like how fzf handles spaces with wildcards in rg
             return { prompt = prompt:gsub('%s', '.*') }
           end,
-        },
+        }),
         oldfiles = dropdown(),
         current_buffer_fuzzy_find = dropdown({
           previewer = false,
