@@ -238,8 +238,6 @@ tools['nvim-neotest/neotest'] = {
   },
 }
 
-tools['Zane-/howdoi.nvim'] = {}
-
 tools['smjonas/inc-rename.nvim'] = {
   config = function()
     require('inc_rename').setup({
