@@ -266,7 +266,9 @@ tools['Djancyp/cheat-sheet'] = {
         border = 'single',
       },
     })
-    rvim.nnoremap('<localleader>s', ':CheatSH<CR>', 'cheat-sheet')
+    require('which-key').register({
+      ['<localleader>s'] = { ':CheatSH<CR>', 'cheat-sheet' },
+    })
   end,
 }
 
