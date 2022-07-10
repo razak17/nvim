@@ -42,7 +42,6 @@ completion['hrsh7th/cmp-emoji'] = {}
 completion['octaltree/cmp-look'] = {}
 
 completion['petertriho/cmp-git'] = {
-  opt = true,
   config = function()
     require('cmp_git').setup({
       filetypes = { 'gitcommit', 'NeogitCommitMessage' },
@@ -51,14 +50,21 @@ completion['petertriho/cmp-git'] = {
 }
 
 completion['David-Kunz/cmp-npm'] = {
-  opt = true,
   config = function()
     require('cmp-npm').setup({})
   end,
 }
 
 completion['uga-rosa/cmp-dictionary'] = {
-  event = 'InsertEnter',
+  config = function()
+    require('cmp_dictionary').setup({
+      async = true,
+      dic = {
+        ['*'] = { '/usr/share/dict/words' },
+      },
+    })
+    require('cmp_dictionary').update()
+  end,
 }
 
 completion['dmitmel/cmp-cmdline-history'] = {

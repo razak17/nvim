@@ -173,6 +173,10 @@ return function()
         { name = 'look' },
         { name = 'nvim_lsp_document_symbol' },
         { name = 'npm', keyword_length = 4 },
+        {
+          name = 'dictionary',
+          keyword_length = 2,
+        },
         { name = 'cmdline_history' },
       },
     },
