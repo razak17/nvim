@@ -30,6 +30,7 @@ return function()
             notes = fn.expand('$HOME/notes/src/'),
             tasks = fn.expand('$HOME/notes/src/'),
             work = fn.expand('$HOME/notes/src/'),
+            dotfiles = fn.expand('$HOME/.dots/neorg/'),
           },
         },
       },
