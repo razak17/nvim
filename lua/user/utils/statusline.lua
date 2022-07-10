@@ -48,15 +48,6 @@ function M.env_cleanup(venv)
   return venv
 end
 
----The currently focused function
----@return string?
-function M.current_function()
-  local gps = require('nvim-gps')
-  if gps.is_available() then
-    return gps.get_location()
-  end
-end
-
 function M.python_env()
   if vim.bo.filetype == 'python' then
     local venv = os.getenv('CONDA_DEFAULT_ENV')
