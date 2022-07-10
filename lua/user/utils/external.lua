@@ -2,7 +2,7 @@ local M = {
   tmux = {},
 }
 
-local u = require('user.utils.highlights')
+local u = require('zephyr.utils')
 local fn = vim.fn
 local fmt = string.format
 

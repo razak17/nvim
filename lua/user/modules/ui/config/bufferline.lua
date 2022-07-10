@@ -8,7 +8,7 @@ return function()
   local fmt = string.format
   local P = rvim.palette
   local groups = require('bufferline.groups')
-  local util = require('user.utils.highlights')
+  local util = require('zephyr.utils')
   local normal_bg = util.get('Normal', 'bg')
   local darker_bg = util.alter_color(normal_bg, -1)
   local bg = rvim.ui.transparent_window == true and 'none' or P.dark

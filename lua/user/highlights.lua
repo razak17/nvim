@@ -1,5 +1,5 @@
 local P = rvim.palette
-local util = require('user.utils.highlights')
+local util = require('zephyr.utils')
 
 local function general_overrides()
   local comment_fg = util.get('Comment', 'fg')
@@ -139,5 +139,5 @@ rvim.augroup('UserHighlights', {
 -----------------------------------------------------------------------------//
 -- Color Scheme {{{1
 -----------------------------------------------------------------------------//
--- vim.g.colors_name = rvim.colorscheme
--- vim.cmd('colorscheme ' .. rvim.colorscheme)
+vim.g.colors_name = rvim.colorscheme
+vim.cmd('colorscheme ' .. rvim.colorscheme)

@@ -9,7 +9,7 @@ return function()
     return (results <= (LIMIT - PADDING) and results + PADDING or LIMIT)
   end
 
-  require('user.utils.highlights').plugin(
+  require('zephyr.utils').plugin(
     'dressing',
     { FloatTitle = { inherit = 'Visual', bold = true } }
   )

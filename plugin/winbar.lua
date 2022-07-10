@@ -8,7 +8,7 @@ if not ok then
 end
 
 local devicons = require('nvim-web-devicons')
-local highlights = require('user.utils.highlights')
+local highlights = require('zephyr.utils')
 local utils = require('user.utils.statusline')
 local component = utils.component
 local component_raw = utils.component_raw

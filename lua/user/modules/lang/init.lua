@@ -87,7 +87,7 @@ lang['jose-elias-alvarez/null-ls.nvim'] = {}
 lang['kosayoda/nvim-lightbulb'] = {
   config = function()
     local lightbulb = require('nvim-lightbulb')
-    require('user.utils.highlights').plugin('Lightbulb', {
+    require('zephyr.utils').plugin('Lightbulb', {
       LightBulbFloatWin = { foreground = { from = 'Type' } },
     })
     lightbulb.setup({
@@ -143,7 +143,7 @@ lang['nvim-treesitter/nvim-treesitter'] = {
 
 lang['nvim-treesitter/nvim-treesitter-context'] = {
   config = function()
-    local hl = require('user.utils.highlights')
+    local hl = require('zephyr.utils')
     local norm_bg = hl.get('Normal', 'bg')
     local dim = hl.alter_color(norm_bg, 25)
     hl.plugin('treesitter-context', {

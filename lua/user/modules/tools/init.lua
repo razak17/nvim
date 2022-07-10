@@ -276,7 +276,7 @@ tools['SmiteshP/nvim-navic'] = {
   requires = 'neovim/nvim-lspconfig',
   config = function()
     vim.g.navic_silence = true
-    local highlights = require('user.utils.highlights')
+    local highlights = require('zephyr.utils')
     local s = rvim.style
     local misc = s.icons.misc
 

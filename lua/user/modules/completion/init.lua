@@ -88,7 +88,7 @@ completion['github/copilot.vim'] = {
       ['neo-tree-popup'] = false,
       ['dap-repl'] = false,
     }
-    require('user.utils.highlights').plugin('copilot', { CopilotSuggestion = { link = 'Comment' } })
+    require('zephyr.utils').plugin('copilot', { CopilotSuggestion = { link = 'Comment' } })
   end,
 }
 

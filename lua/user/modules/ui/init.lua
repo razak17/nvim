@@ -3,12 +3,9 @@ local conf = utils.load_conf
 
 local ui = {}
 
-ui['razak17/nvim-colorscheme'] = {
+ui['razak17/zephyr-nvim'] = {
   requires = { 'nvim-treesitter/nvim-treesitter', opt = true },
   local_path = 'personal',
-  config = function()
-    vim.cmd('colorscheme zephyr')
-  end,
 }
 
 ui['glepnir/dashboard-nvim'] = {
@@ -86,7 +83,7 @@ ui['rainbowhxch/beacon.nvim'] = {
 ui['zbirenbaum/neodim'] = {
   config = function()
     require('neodim').setup({
-      blend_color = require('user.utils.highlights').get('Normal', 'bg'),
+      blend_color = require('zephyr.utils').get('Normal', 'bg'),
       alpha = 0.60,
       hide = {
         virtual_text = false,
@@ -111,7 +108,7 @@ ui['s1n7ax/nvim-window-picker'] = {
 
 ui['itchyny/vim-highlighturl'] = {
   config = function()
-    vim.g.highlighturl_guifg = require('user.utils.highlights').get('URL', 'fg')
+    vim.g.highlighturl_guifg = require('zephyr.utils').get('URL', 'fg')
   end,
 }
 
@@ -147,7 +144,7 @@ ui['RRethy/vim-illuminate'] = {
 
 ui['m-demare/hlargs.nvim'] = {
   config = function()
-    require('user.utils.highlights').plugin('hlargs', {
+    require('zephyr.utils').plugin('hlargs', {
       Hlargs = { italic = true, bold = false, foreground = '#A5D6FF' },
     })
     require('hlargs').setup({

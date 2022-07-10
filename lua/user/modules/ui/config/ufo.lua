@@ -1,6 +1,6 @@
 return function()
   local ufo = require('ufo')
-  local hl = require('user.utils.highlights')
+  local hl = require('zephyr.utils')
   local opt, get_width = vim.opt, vim.api.nvim_strwidth
 
   local function handler(virt_text, _, _, width, truncate, ctx)

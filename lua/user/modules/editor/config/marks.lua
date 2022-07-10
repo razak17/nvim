@@ -1,5 +1,5 @@
 return function()
-  require('user.utils.highlights').plugin(
+  require('zephyr.utils').plugin(
     'marks',
     { MarkSignHL = { link = 'Directory' }, MarkSignNumHL = { link = 'Directory' } }
   )

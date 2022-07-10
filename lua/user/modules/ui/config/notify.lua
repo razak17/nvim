@@ -68,7 +68,7 @@ return function()
     ['<leader>nx'] = { notify.dismiss, 'notify: dimiss' },
   })
 
-  require('user.utils.highlights').plugin('notify', {
+  require('zephyr.utils').plugin('notify', {
     NotifyERRORBorder = { bg = { from = 'NormalFloat' } },
     NotifyWARNBorder = { bg = { from = 'NormalFloat' } },
     NotifyINFOBorder = { bg = { from = 'NormalFloat' } },
