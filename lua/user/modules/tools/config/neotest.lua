@@ -21,9 +21,10 @@ return function()
   local function run_file()
     neotest.run.run(vim.fn.expand('%'))
   end
+  local nnoremap  = rvim.nnoremap
 
-  rvim.nnoremap('<localleader>ts', neotest.summary.toggle, 'neotest: run suite')
-  rvim.nnoremap('<localleader>to', open, 'neotest: output')
-  rvim.nnoremap('<localleader>tn', neotest.run.run, 'neotest: run')
-  rvim.nnoremap('<localleader>tf', run_file, 'neotest: run file')
+  nnoremap('<localleader>ts', neotest.summary.toggle, 'neotest: run suite')
+  nnoremap('<localleader>to', open, 'neotest: output')
+  nnoremap('<localleader>tn', neotest.run.run, 'neotest: run')
+  nnoremap('<localleader>tf', run_file, 'neotest: run file')
 end
