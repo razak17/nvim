@@ -59,8 +59,10 @@ local function setup_autocommands(client, bufnr)
       table.insert(cmds, {
         event = { 'BufEnter', 'CursorHold', 'InsertLeave' },
         buffer = bufnr,
-        command = function()
-          vim.lsp.codelens.refresh()
+        command = function(args)
+          if api.nvim_buf_is_valid(args.buf) then
+            vim.lsp.codelens.refresh()
+          end
         end,
       })
     end
@@ -244,7 +246,9 @@ local function max_diagnostic(callback)
     local max_severity_per_line = {}
     for _, d in pairs(diagnostics) do
       local m = max_severity_per_line[d.lnum]
-      if not m or d.severity < m.severity then max_severity_per_line[d.lnum] = d end
+      if not m or d.severity < m.severity then
+        max_severity_per_line[d.lnum] = d
+      end
     end
     -- Pass the filtered diagnostics (with our custom namespace) to
     -- the original handler
@@ -255,13 +259,17 @@ end
 local signs_handler = diagnostic.handlers.signs
 diagnostic.handlers.signs = vim.tbl_extend('force', signs_handler, {
   show = max_diagnostic(signs_handler.show),
-  hide = function(_, bufnr) signs_handler.hide(ns, bufnr) end,
+  hide = function(_, bufnr)
+    signs_handler.hide(ns, bufnr)
+  end,
 })
 
 local virt_text_handler = diagnostic.handlers.virtual_text
 diagnostic.handlers.virtual_text = vim.tbl_extend('force', virt_text_handler, {
   show = max_diagnostic(virt_text_handler.show),
-  hide = function(_, bufnr) virt_text_handler.hide(ns, bufnr) end,
+  hide = function(_, bufnr)
+    virt_text_handler.hide(ns, bufnr)
+  end,
 })
 
 -----------------------------------------------------------------------------//
