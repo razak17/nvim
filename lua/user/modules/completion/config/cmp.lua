@@ -93,7 +93,7 @@ return function()
 
   rvim.cmp = {
     setup = {
-      experimental = { ghost_text = true },
+      experimental = { ghost_text = false },
       preselect = cmp.PreselectMode.None,
       window = {
         completion = cmp.config.window.bordered(cmp_window),
