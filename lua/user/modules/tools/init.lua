@@ -4,6 +4,10 @@ local block_reload = utils.block_reload
 
 local tools = {}
 
+tools['folke/which-key.nvim'] = {
+  config = conf('tools', 'which_key'),
+}
+
 tools['sindrets/diffview.nvim'] = {
   event = 'BufReadPre',
   setup = function()

@@ -213,6 +213,117 @@ lang['lewis6991/spellsitter.nvim'] = {
   end,
 }
 
+-- nvim-cmp
+lang['hrsh7th/nvim-cmp'] = {
+  config = conf('lang', 'cmp'),
+}
+
+lang['L3MON4D3/LuaSnip'] = {
+  module = 'luasnip',
+  requires = 'rafamadriz/friendly-snippets',
+  config = conf('lang', 'luasnip'),
+}
+
+lang['zbirenbaum/copilot-cmp'] = {
+  module = 'copilot_cmp',
+}
+
+lang['hrsh7th/cmp-nvim-lsp'] = {}
+
+lang['hrsh7th/cmp-nvim-lua'] = {}
+
+lang['hrsh7th/cmp-nvim-lsp-document-symbol'] = {}
+
+lang['saadparwaiz1/cmp_luasnip'] = {}
+
+lang['hrsh7th/cmp-buffer'] = {}
+
+lang['hrsh7th/cmp-path'] = {}
+
+lang['hrsh7th/cmp-cmdline'] = {}
+
+lang['f3fora/cmp-spell'] = {}
+
+lang['hrsh7th/cmp-emoji'] = {}
+
+lang['octaltree/cmp-look'] = {}
+
+lang['petertriho/cmp-git'] = {
+  config = function()
+    require('cmp_git').setup({
+      filetypes = { 'gitcommit', 'NeogitCommitMessage' },
+    })
+  end,
+}
+
+lang['David-Kunz/cmp-npm'] = {
+  config = function()
+    require('cmp-npm').setup({})
+  end,
+}
+
+lang['uga-rosa/cmp-dictionary'] = {
+  config = function()
+    require('cmp_dictionary').setup({
+      async = true,
+      dic = {
+        ['*'] = { '/usr/share/dict/words' },
+      },
+    })
+    require('cmp_dictionary').update()
+  end,
+}
+
+lang['dmitmel/cmp-cmdline-history'] = {
+  event = 'InsertEnter',
+}
+
+lang['github/copilot.vim'] = {
+  config = function()
+    vim.g.copilot_no_tab_map = true
+    rvim.imap('<Plug>(rvim-copilot-accept)', "copilot#Accept('<Tab>')", { expr = true })
+    rvim.inoremap('<M-]>', '<Plug>(copilot-next)')
+    rvim.inoremap('<M-[>', '<Plug>(copilot-previous)')
+    rvim.inoremap('<C-\\>', '<Cmd>vertical Copilot panel<CR>')
+
+    vim.g.copilot_filetypes = {
+      ['*'] = true,
+      gitcommit = false,
+      NeogitCommitMessage = false,
+      DressingInput = false,
+      TelescopePrompt = false,
+      ['neo-tree-popup'] = false,
+      ['dap-repl'] = false,
+    }
+    require('zephyr.utils').plugin('copilot', { CopilotSuggestion = { link = 'Comment' } })
+  end,
+}
+
+lang['zbirenbaum/copilot.lua'] = {
+  event = { 'VimEnter' },
+  config = function()
+    require('copilot').setup({
+      cmp = {
+        enabled = true,
+        method = 'getPanelCompletions',
+      },
+      panel = { -- no config options yet
+        enabled = true,
+      },
+      ft_disable = {
+        'markdown',
+        'gitcommit',
+        'NeogitCommitMessage',
+        'DressingInput',
+        'TelescopePrompt',
+        'neo-tree-popup',
+        'dap-repl',
+      },
+    })
+  end,
+}
+
+
 -- Rest
 lang['b0o/schemastore.nvim'] = {}
 

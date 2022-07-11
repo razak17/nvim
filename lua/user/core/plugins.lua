@@ -63,7 +63,7 @@ function plugins.reload()
 end
 
 function plugins.invalidate()
-  for _, m in ipairs({ 'ui', 'editor', 'tools', 'lang', 'completion' }) do
+  for _, m in ipairs({ 'ui', 'editor', 'tools', 'lang' }) do
     rvim.invalidate(fmt('user.modules.%s', m), true)
   end
   plugins.reload()
