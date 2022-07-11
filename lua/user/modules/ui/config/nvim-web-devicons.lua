@@ -27,7 +27,7 @@ return function()
     },
     ['.gitignore'] = {
       icon = '',
-      color = P.dark_red,
+      color = P.yellow,
       cterm_color = '59',
       name = 'GitIgnore',
     },
