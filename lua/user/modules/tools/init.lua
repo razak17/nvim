@@ -53,6 +53,7 @@ tools['ahmedkhalf/project.nvim'] = {
 tools['npxbr/glow.nvim'] = {
   run = ':GlowInstall',
   branch = 'main',
+  disable = true,
 }
 
 tools['kkoomen/vim-doge'] = {

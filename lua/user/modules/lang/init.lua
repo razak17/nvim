@@ -215,63 +215,58 @@ lang['lewis6991/spellsitter.nvim'] = {
 
 -- nvim-cmp
 lang['hrsh7th/nvim-cmp'] = {
+  module = 'cmp',
+  event = 'InsertEnter',
   config = conf('lang', 'cmp'),
+  requires = {
+    { 'hrsh7th/cmp-nvim-lsp', after = 'nvim-cmp' },
+    { 'hrsh7th/cmp-nvim-lua', after = 'nvim-cmp' },
+    { 'hrsh7th/cmp-nvim-lsp-document-symbol', after = 'nvim-cmp' },
+    { 'saadparwaiz1/cmp_luasnip', after = 'nvim-cmp' },
+    { 'hrsh7th/cmp-buffer', after = 'nvim-cmp' },
+    { 'hrsh7th/cmp-path', after = 'nvim-cmp' },
+    { 'hrsh7th/cmp-cmdline', after = 'nvim-cmp' },
+    { 'f3fora/cmp-spell', after = 'nvim-cmp' },
+    { 'hrsh7th/cmp-emoji', after = 'nvim-cmp' },
+    { 'octaltree/cmp-look', after = 'nvim-cmp' },
+    { 'dmitmel/cmp-cmdline-history', after = 'nvim-cmp' },
+    {
+      'petertriho/cmp-git',
+      after = 'nvim-cmp',
+      config = function()
+        require('cmp_git').setup({
+          filetypes = { 'gitcommit', 'NeogitCommitMessage' },
+        })
+      end,
+    },
+    {
+      'David-Kunz/cmp-npm',
+      after = 'nvim-cmp',
+      config = function()
+        require('cmp-npm').setup({})
+      end,
+    },
+  },
+  {
+    'uga-rosa/cmp-dictionary',
+    after = 'nvim-cmp',
+    config = function()
+      require('cmp_dictionary').setup({
+        async = true,
+        dic = {
+          ['*'] = { '/usr/share/dict/words' },
+        },
+      })
+      require('cmp_dictionary').update()
+    end,
+  },
 }
 
 lang['L3MON4D3/LuaSnip'] = {
+  event = 'InsertEnter',
   module = 'luasnip',
   requires = 'rafamadriz/friendly-snippets',
   config = conf('lang', 'luasnip'),
-}
-
-lang['hrsh7th/cmp-nvim-lsp'] = {}
-
-lang['hrsh7th/cmp-nvim-lua'] = {}
-
-lang['hrsh7th/cmp-nvim-lsp-document-symbol'] = {}
-
-lang['saadparwaiz1/cmp_luasnip'] = {}
-
-lang['hrsh7th/cmp-buffer'] = {}
-
-lang['hrsh7th/cmp-path'] = {}
-
-lang['hrsh7th/cmp-cmdline'] = {}
-
-lang['f3fora/cmp-spell'] = {}
-
-lang['hrsh7th/cmp-emoji'] = {}
-
-lang['octaltree/cmp-look'] = {}
-
-lang['petertriho/cmp-git'] = {
-  config = function()
-    require('cmp_git').setup({
-      filetypes = { 'gitcommit', 'NeogitCommitMessage' },
-    })
-  end,
-}
-
-lang['David-Kunz/cmp-npm'] = {
-  config = function()
-    require('cmp-npm').setup({})
-  end,
-}
-
-lang['uga-rosa/cmp-dictionary'] = {
-  config = function()
-    require('cmp_dictionary').setup({
-      async = true,
-      dic = {
-        ['*'] = { '/usr/share/dict/words' },
-      },
-    })
-    require('cmp_dictionary').update()
-  end,
-}
-
-lang['dmitmel/cmp-cmdline-history'] = {
-  event = 'InsertEnter',
 }
 
 lang['github/copilot.vim'] = {
