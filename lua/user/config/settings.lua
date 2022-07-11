@@ -1,4 +1,5 @@
 local vim = vim
+local cmd, opt = vim.cmd, vim.opt
 
 local M = {}
 
@@ -111,7 +112,7 @@ M.load_default_options = function()
       precedes = '', -- Alternatives: … « ‹
       trail = '·', -- BULLET (U+2022, UTF-8: E2 80 A2) •
     },
-    diffopt = vim.opt.diffopt + {
+    diffopt = opt.diffopt + {
       'vertical',
       'iwhite',
       'hiddenoff',
@@ -188,14 +189,14 @@ M.load_default_options = function()
   }
 
   ---  SETTINGS  ---
-  vim.opt.shortmess:append('c')
-  vim.opt.iskeyword:append('-')
-  vim.opt.shadafile = join_paths(rvim.get_cache_dir(), 'shada', 'rvim.shada')
-  vim.opt.spellsuggest:prepend({ 12 })
-  vim.opt.spelllang:append('programming')
+  opt.shortmess:append('c')
+  opt.iskeyword:append('-')
+  opt.shadafile = join_paths(rvim.get_cache_dir(), 'shada', 'rvim.shada')
+  opt.spellsuggest:prepend({ 12 })
+  opt.spelllang:append('programming')
 
   for k, v in pairs(default_options) do
-    vim.opt[k] = v
+    opt[k] = v
   end
 end
 
@@ -208,8 +209,6 @@ M.load_commands = function()
     t_Co = 256,
     shell = '/bin/zsh',
   }
-
-  local cmd = vim.cmd
 
   for k, v in pairs(command_options) do
     if v == true or v == false then
@@ -229,11 +228,11 @@ M.load_commands = function()
 end
 
 M.load_headless_options = function()
-  vim.opt.shortmess = '' -- try to prevent echom from cutting messages off or prompting
-  vim.opt.more = false -- don't pause listing when screen is filled
-  vim.opt.cmdheight = 9999 -- helps avoiding |hit-enter| prompts.
-  vim.opt.columns = 9999 -- set the widest screen possible
-  vim.opt.swapfile = false -- don't use a swap file
+  opt.shortmess = '' -- try to prevent echom from cutting messages off or prompting
+  opt.more = false -- don't pause listing when screen is filled
+  opt.cmdheight = 9999 -- helps avoiding |hit-enter| prompts.
+  opt.columns = 9999 -- set the widest screen possible
+  opt.swapfile = false -- don't use a swap file
 end
 
 M.load_options = function()
