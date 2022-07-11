@@ -153,7 +153,7 @@ function M.lua()
   vim.b[fmt('surround_%s', fn.char2nr('F'))] = 'function \1function: \1() \r end'
   vim.b[fmt('surround_%s', fn.char2nr('i'))] = 'if \1if: \1 then \r end'
 
-  nnoremap('gK', keyword, { buffer = 0 })
+  nnoremap('gK', keyword, { buffer = 0, desc = 'goto keyword' })
   nnoremap('<leader>so', function()
     vim.cmd('luafile %')
     vim.notify('Sourced ' .. fn.expand('%'))
