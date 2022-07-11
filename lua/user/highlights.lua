@@ -59,7 +59,7 @@ local function general_overrides()
     -- TSError = { undercurl = true, sp = error_line, foreground = "NONE" } ,
     TSParameter = { italic = true, bold = true, foreground = 'NONE' },
     -- highlight FIXME comments
-    commentTSWarning = { background = P.teal, foreground = 'fg', bold = true },
+    commentTSWarning = { background = P.teal, foreground = P.base0, bold = true },
     commentTSDanger = { background = P.dark_green, foreground = P.base0, bold = true },
     commentTSNote = { background = P.blue, foreground = P.base0, bold = true },
     CommentTasksTodo = { link = 'commentTSWarning' },
