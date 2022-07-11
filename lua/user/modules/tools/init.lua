@@ -228,9 +228,7 @@ tools['vuki656/package-info.nvim'] = {
 }
 
 tools['nvim-neotest/neotest'] = {
-  module = 'neotest',
-  setup = conf('tools', 'neotest').setup(),
-  config = conf('tools', 'neotest').config(),
+  config = conf('tools', 'neotest'),
   requires = {
     'rcarriga/neotest-plenary',
     'rcarriga/neotest-vim-test',

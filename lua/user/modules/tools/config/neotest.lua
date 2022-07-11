@@ -1,6 +1,19 @@
-local M = {}
+return function()
+  require('neotest').setup({
+    diagnostic = {
+      enabled = false,
+    },
+    icons = {
+      running = rvim.style.icons.misc.clock,
+    },
+    floating = {
+      border = rvim.style.border.current,
+    },
+    adapters = {
+      require('neotest-plenary'),
+    },
+  })
 
-function M.setup()
   local function open()
     require('neotest').output.open({ enter = true, short = false })
   end
@@ -26,22 +39,3 @@ function M.setup()
   rvim.nnoremap('[n', next_failed, 'jump to next failed test')
   rvim.nnoremap(']n', prev_failed, 'jump to previous failed test')
 end
-
-function M.config()
-  require('neotest').setup({
-    diagnostic = {
-      enabled = false,
-    },
-    icons = {
-      running = rvim.style.icons.misc.clock,
-    },
-    floating = {
-      border = rvim.style.border.current,
-    },
-    adapters = {
-      require('neotest-plenary'),
-    },
-  })
-end
-
-return M
