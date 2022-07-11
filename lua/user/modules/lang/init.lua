@@ -299,31 +299,6 @@ lang['github/copilot.vim'] = {
   end,
 }
 
-lang['zbirenbaum/copilot.lua'] = {
-  event = { 'VimEnter' },
-  config = function()
-    require('copilot').setup({
-      cmp = {
-        enabled = true,
-        method = 'getPanelCompletions',
-      },
-      panel = { -- no config options yet
-        enabled = true,
-      },
-      ft_disable = {
-        'markdown',
-        'gitcommit',
-        'NeogitCommitMessage',
-        'DressingInput',
-        'TelescopePrompt',
-        'neo-tree-popup',
-        'dap-repl',
-      },
-    })
-  end,
-}
-
-
 -- Rest
 lang['b0o/schemastore.nvim'] = {}
 
