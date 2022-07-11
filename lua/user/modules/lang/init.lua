@@ -224,10 +224,6 @@ lang['L3MON4D3/LuaSnip'] = {
   config = conf('lang', 'luasnip'),
 }
 
-lang['zbirenbaum/copilot-cmp'] = {
-  module = 'copilot_cmp',
-}
-
 lang['hrsh7th/cmp-nvim-lsp'] = {}
 
 lang['hrsh7th/cmp-nvim-lua'] = {}
