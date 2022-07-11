@@ -10,7 +10,6 @@ au BufNewFile,BufRead *.git/config,.gitconfig,gitconfig,.gitmodules set ft=gitco
 au BufNewFile,BufRead */.config/git/config set ft=gitconfig
 au BufNewFile,BufRead *.git/modules/**/config set ft=gitconfig
 au BufNewFile,BufRead git-rebase-todo set ft=gitrebase
-au BufNewFile,BufRead .gitsendemail.* set ft=gitsendemail
 " handlebars
 au  BufNewFile,BufRead *.mustache,*.hogan,*.hulk,*.hjs set ft=html.mustache syn=mustache | runtime! ftplugin/mustache.vim ftplugin/mustache*.vim ftplugin/mustache/*.vim indent/handlebars.vim
 au  BufNewFile,BufRead *.handlebars,*.hdbs,*.hbs,*.hb set ft=html.handlebars syn=mustache | runtime! ftplugin/mustache.vim ftplugin/mustache*.vim ftplugin/mustache/*.vim
