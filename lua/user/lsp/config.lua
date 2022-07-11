@@ -65,7 +65,7 @@ rvim.lsp = {
     },
   },
   format_on_save_exclusions = { 'zsh', 'tmux', 'gitcommit', 'query' },
-  format_exclusions = { 'sumneko_lua', 'html', 'jsonls', 'gopls', 'quick_lint_js' },
+  format_exclusions = { 'sumneko_lua', 'html', 'jsonls', 'quick_lint_js' },
   emmet_ft = {
     'html',
     'css',
@@ -91,7 +91,6 @@ rvim.lsp = {
     'emmet_ls',
     'eslint',
     'eslintls',
-    'gopls',
     'grammarly',
     'graphql',
     'jedi_language_server',
