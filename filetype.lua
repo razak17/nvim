@@ -22,5 +22,6 @@ vim.filetype.add({
     ['.*%.theme'] = 'conf',
     ['.*%.gradle'] = 'groovy',
     ['.*%.env%..*'] = 'env',
+    ['.*%.tmux%..conf'] = 'tmux',
   },
 })
