@@ -1,7 +1,7 @@
 local M = {}
+local dap = require('dap')
 
 function M.setup()
-  local dap = require('dap')
   local fn = vim.fn
 
   local function repl_toggle()
@@ -102,7 +102,6 @@ function M.setup()
 end
 
 function M.config()
-  local dap = require('dap')
   local icons = rvim.style.icons
 
   rvim.dap = {

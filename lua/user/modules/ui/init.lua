@@ -32,7 +32,7 @@ ui['lewis6991/gitsigns.nvim'] = {
 
 ui['rcarriga/nvim-notify'] = {
   cond = utils.not_headless, -- TODO: causes blocking output in headless mode
-  config = block_reload(conf('ui', 'notify'))
+  config = block_reload(conf('ui', 'notify')),
 }
 
 ui['stevearc/dressing.nvim'] = {
@@ -166,5 +166,29 @@ ui['kevinhwang91/nvim-ufo'] = {
 }
 
 ui['goolord/alpha-nvim'] = { config = conf('ui', 'alpha') }
+
+ui['mtdl9/vim-log-highlighting'] = {}
+
+ui['fladson/vim-kitty'] = {}
+
+ui['pantharshit00/vim-prisma'] = {}
+
+ui['m-demare/hlargs.nvim'] = {
+  branch = 'expected_lua_number',
+  config = function()
+    require('zephyr.utils').plugin('hlargs', {
+      Hlargs = { italic = true, bold = false, foreground = '#A5D6FF' },
+    })
+    require('hlargs').setup({
+      excluded_argnames = {
+        declarations = { 'use', 'use_rocks', '_' },
+        usages = {
+          go = { '_' },
+          lua = { 'self', 'use', 'use_rocks', '_' },
+        },
+      },
+    })
+  end,
+}
 
 return ui

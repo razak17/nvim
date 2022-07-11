@@ -11,7 +11,7 @@ function Plug:load_packer()
     vim.cmd('packadd! packer.nvim')
     packer = require('packer')
   end
-  rvim.safe_require('impatient')
+  -- rvim.safe_require('impatient')
 
   local plugins = utils:get_plugins_list()
   utils:bootstrap_packer(packer, plugins)

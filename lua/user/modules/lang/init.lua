@@ -6,12 +6,28 @@ local lang = {}
 
 -- Debugging
 lang['mfussenegger/nvim-dap'] = {
+  module = 'dap',
   config = conf('lang', 'dap').config,
   setup = conf('lang', 'dap').setup,
-}
-
-lang['rcarriga/nvim-dap-ui'] = {
-  config = block_reload(conf('lang', 'dap-ui')),
+  requires = {
+    {
+      'rcarriga/nvim-dap-ui',
+      after = 'nvim-dap',
+      config = block_reload(conf('lang', 'dap-ui')),
+    },
+    {
+      'theHamsta/nvim-dap-virtual-text',
+      after = 'nvim-dap',
+      config = function()
+        require('nvim-dap-virtual-text').setup({
+          enabled = true, -- enable this plugin (the default)
+          enabled_commands = true, -- create commands DapVirtualTextEnable, DapVirtualTextDisable, DapVirtualTextToggle, (DapVirtualTextForceRefresh for refreshing when debug adapter did not notify its termination)
+          highlight_changed_variables = true, -- highlight changed values with NvimDapVirtualTextChanged, else always NvimDapVirtualText
+          all_frames = true, -- show virtual text for all stack frames not only current. Only works for debugpy on my machine.
+        })
+      end,
+    },
+  },
 }
 
 lang['ravenxrz/DAPInstall.nvim'] = {
@@ -33,18 +49,6 @@ lang['jbyuki/one-small-step-for-vimkind'] = {
     })
   end,
   disable = true,
-}
-
-lang['theHamsta/nvim-dap-virtual-text'] = {
-  after = 'nvim-dap',
-  config = function()
-    require('nvim-dap-virtual-text').setup({
-      enabled = true, -- enable this plugin (the default)
-      enabled_commands = true, -- create commands DapVirtualTextEnable, DapVirtualTextDisable, DapVirtualTextToggle, (DapVirtualTextForceRefresh for refreshing when debug adapter did not notify its termination)
-      highlight_changed_variables = true, -- highlight changed values with NvimDapVirtualTextChanged, else always NvimDapVirtualText
-      all_frames = true, -- show virtual text for all stack frames not only current. Only works for debugpy on my machine.
-    })
-  end,
 }
 
 -- Lsp
@@ -218,48 +222,45 @@ lang['hrsh7th/nvim-cmp'] = {
   module = 'cmp',
   event = 'InsertEnter',
   config = conf('lang', 'cmp'),
-  requires = {
-    { 'hrsh7th/cmp-nvim-lsp', after = 'nvim-cmp' },
-    { 'hrsh7th/cmp-nvim-lua', after = 'nvim-cmp' },
-    { 'hrsh7th/cmp-nvim-lsp-document-symbol', after = 'nvim-cmp' },
-    { 'saadparwaiz1/cmp_luasnip', after = 'nvim-cmp' },
-    { 'hrsh7th/cmp-buffer', after = 'nvim-cmp' },
-    { 'hrsh7th/cmp-path', after = 'nvim-cmp' },
-    { 'hrsh7th/cmp-cmdline', after = 'nvim-cmp' },
-    { 'f3fora/cmp-spell', after = 'nvim-cmp' },
-    { 'hrsh7th/cmp-emoji', after = 'nvim-cmp' },
-    { 'octaltree/cmp-look', after = 'nvim-cmp' },
-    { 'dmitmel/cmp-cmdline-history', after = 'nvim-cmp' },
-    {
-      'petertriho/cmp-git',
-      after = 'nvim-cmp',
-      config = function()
-        require('cmp_git').setup({
-          filetypes = { 'gitcommit', 'NeogitCommitMessage' },
-        })
-      end,
-    },
-    {
-      'David-Kunz/cmp-npm',
-      after = 'nvim-cmp',
-      config = function()
-        require('cmp-npm').setup({})
-      end,
-    },
-  },
-  {
-    'uga-rosa/cmp-dictionary',
-    after = 'nvim-cmp',
-    config = function()
-      require('cmp_dictionary').setup({
-        async = true,
-        dic = {
-          ['*'] = { '/usr/share/dict/words' },
-        },
-      })
-      require('cmp_dictionary').update()
-    end,
-  },
+}
+lang['hrsh7th/cmp-nvim-lsp'] = { after = 'nvim-lspconfig' }
+lang['hrsh7th/cmp-nvim-lua'] = { after = 'nvim-cmp' }
+lang['hrsh7th/cmp-nvim-lsp-document-symbol'] = { after = 'nvim-cmp' }
+lang['saadparwaiz1/cmp_luasnip'] = { after = 'nvim-cmp' }
+lang['hrsh7th/cmp-buffer'] = { after = 'nvim-cmp' }
+lang['hrsh7th/cmp-path'] = { after = 'nvim-cmp' }
+lang['hrsh7th/cmp-cmdline'] = { after = 'nvim-cmp' }
+lang['f3fora/cmp-spell'] = { after = 'nvim-cmp' }
+lang['hrsh7th/cmp-emoji'] = { after = 'nvim-cmp' }
+lang['octaltree/cmp-look'] = { after = 'nvim-cmp' }
+lang['petertriho/cmp-git'] = {
+  after = 'nvim-cmp',
+  config = function()
+    require('cmp_git').setup({
+      filetypes = { 'gitcommit', 'NeogitCommitMessage' },
+    })
+  end,
+}
+lang['David-Kunz/cmp-npm'] = {
+  after = 'nvim-cmp',
+  config = function()
+    require('cmp-npm').setup({})
+  end,
+}
+lang['uga-rosa/cmp-dictionary'] = {
+  after = 'nvim-cmp',
+  config = function()
+    require('cmp_dictionary').setup({
+      async = true,
+      dic = {
+        ['*'] = { '/usr/share/dict/words' },
+      },
+    })
+    require('cmp_dictionary').update()
+  end,
+}
+lang['dmitmel/cmp-cmdline-history'] = {
+  after = 'nvim-cmp',
 }
 
 lang['L3MON4D3/LuaSnip'] = {
@@ -272,7 +273,7 @@ lang['L3MON4D3/LuaSnip'] = {
 lang['github/copilot.vim'] = {
   config = function()
     vim.g.copilot_no_tab_map = true
-    rvim.imap('<Plug>(rvim-copilot-accept)', "copilot#Accept('<Tab>')", { expr = true })
+    rvim.imap('<Plug>(rvim-copilot-accept)', 'copilot#Accept("<Tab>")', { expr = true })
     rvim.inoremap('<M-]>', '<Plug>(copilot-next)')
     rvim.inoremap('<M-[>', '<Plug>(copilot-previous)')
     rvim.inoremap('<C-\\>', '<Cmd>vertical Copilot panel<CR>')
@@ -292,11 +293,5 @@ lang['github/copilot.vim'] = {
 
 -- Rest
 lang['b0o/schemastore.nvim'] = {}
-
-lang['mtdl9/vim-log-highlighting'] = {}
-
-lang['fladson/vim-kitty'] = {}
-
-lang['pantharshit00/vim-prisma'] = {}
 
 return lang
