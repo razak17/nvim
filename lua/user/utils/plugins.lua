@@ -80,6 +80,28 @@ function M:bootstrap_packer(packer, plugins)
   end)
 end
 
+---Some plugins are not safe to be reloaded because their setup functions
+---are not idempotent. This wraps the setup calls of such plugins
+---@param func fun()
+function M.block_reload(func)
+  if vim.g.packer_compiled_loaded then return end
+  func()
+end
+
+---Require a plugin config
+---@param dir string
+---@param name string
+---@return any
+function M.load_conf(dir, name)
+  local module_dir = fmt('user.modules.%s', dir)
+  if dir == 'user' then
+    return require(string.format(dir .. '.%s', name))
+  end
+
+  return require(fmt(module_dir .. '.%s.%s', 'config', name))
+end
+
+
 --- Automagically register local and remote plugins as well as managing when they are enabled or disabled
 --- 1. Local plugins that I created should be used but specified with their git URLs so they are
 --- installed from git on other machines

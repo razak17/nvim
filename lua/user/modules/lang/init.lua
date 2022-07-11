@@ -1,4 +1,6 @@
-local conf = require('user.utils').load_conf
+local utils = require('user.utils.plugins')
+local conf = utils.load_conf
+local block_reload = utils.block_reload
 
 local lang = {}
 
@@ -9,7 +11,7 @@ lang['mfussenegger/nvim-dap'] = {
 }
 
 lang['rcarriga/nvim-dap-ui'] = {
-  config = conf('lang', 'dap-ui'),
+  config = block_reload(conf('lang', 'dap-ui')),
 }
 
 lang['ravenxrz/DAPInstall.nvim'] = {
@@ -217,5 +219,7 @@ lang['b0o/schemastore.nvim'] = {}
 lang['mtdl9/vim-log-highlighting'] = {}
 
 lang['fladson/vim-kitty'] = {}
+
+lang['pantharshit00/vim-prisma'] = {}
 
 return lang

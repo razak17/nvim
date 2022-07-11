@@ -1,5 +1,6 @@
-local utils = require('user.utils')
+local utils = require('user.utils.plugins')
 local conf = utils.load_conf
+local block_reload = utils.block_reload
 
 local ui = {}
 
@@ -31,7 +32,7 @@ ui['lewis6991/gitsigns.nvim'] = {
 
 ui['rcarriga/nvim-notify'] = {
   cond = utils.not_headless, -- TODO: causes blocking output in headless mode
-  config = conf('ui', 'notify'),
+  config = block_reload(conf('ui', 'notify'))
 }
 
 ui['stevearc/dressing.nvim'] = {

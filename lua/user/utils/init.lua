@@ -82,15 +82,6 @@ function utils.rename(name)
   vim.api.nvim_command(' saveas ' .. newname)
 end
 
-function utils.load_conf(dir, name)
-  local module_dir = fmt('user.modules.%s', dir)
-  if dir == 'user' then
-    return require(string.format(dir .. '.%s', name))
-  end
-
-  return require(fmt(module_dir .. '.%s.%s', 'config', name))
-end
-
 function utils.enable_transparent_mode()
   cmd('au ColorScheme * hi Normal ctermbg=none guibg=none')
   cmd('au ColorScheme * hi SignColumn ctermbg=none guibg=none')

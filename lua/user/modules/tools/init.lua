@@ -1,4 +1,6 @@
-local conf = require('user.utils').load_conf
+local utils = require('user.utils.plugins')
+local conf = utils.load_conf
+local block_reload = utils.block_reload
 
 local tools = {}
 
@@ -314,7 +316,7 @@ tools['kevinhwang91/nvim-bqf'] = {
 
 tools['anuvyklack/hydra.nvim'] = {
   requires = 'anuvyklack/keymap-layer.nvim',
-  config = conf('tools', 'hydra'),
+  config = block_reload(conf('tools', 'hydra')),
 }
 
 return tools

@@ -110,3 +110,8 @@ uneeded
 trpc
 gui
 params
+url
+datasource
+postgresql
+prisma
+js

@@ -1,4 +1,5 @@
-local conf = require('user.utils').load_conf
+local utils = require('user.utils.plugins')
+local conf = utils.load_conf
 
 local completion = {}
 
