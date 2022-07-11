@@ -134,9 +134,6 @@ function rvim.lsp.on_attach(client, bufnr)
     vim.api.nvim_buf_set_option(bufnr, ...)
   end
   buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
-  if client.server_capabilities.definitionProvider then
-    vim.bo[bufnr].tagfunc = 'v:lua.vim.lsp.tagfunc'
-  end
 
   if client.server_capabilities.documentFormattingProvider then
     vim.bo[bufnr].formatexpr = 'v:lua.vim.lsp.formatexpr()'
