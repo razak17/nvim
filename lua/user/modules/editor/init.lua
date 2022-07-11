@@ -147,4 +147,6 @@ editor['glepnir/template.nvim'] = {
   end,
 }
 
+editor['RRethy/nvim-treesitter-endwise'] = {}
+
 return editor

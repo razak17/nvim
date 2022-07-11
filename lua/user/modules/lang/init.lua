@@ -6,9 +6,7 @@ local lang = {}
 
 -- Debugging
 lang['mfussenegger/nvim-dap'] = {
-  module = 'dap',
-  config = conf('lang', 'dap').config,
-  setup = conf('lang', 'dap').setup,
+  config = conf('lang', 'dap'),
   requires = {
     {
       'rcarriga/nvim-dap-ui',
