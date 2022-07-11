@@ -33,24 +33,6 @@ function M.setup(server_name)
       },
     })
   end
-
-  -- golangci-lint-ls
-  if server_name == 'golangci_lint_ls' then
-    config = vim.tbl_deep_extend('force', config, {
-      init_options = {
-        command = {
-          'golangci-lint',
-          'run',
-          '--enable-all',
-          '--disable',
-          'lll',
-          '--out-format',
-          'json',
-        },
-      },
-    })
-  end
-
   -- rust_analyzer
   if server_name == 'rust_analyzer' then
     M.rust_tools_init(server, config)

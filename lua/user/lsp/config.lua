@@ -76,7 +76,6 @@ rvim.lsp = {
   },
   override_servers = {
     'rust_analyzer',
-    'golangci_lint_ls',
     'sqlls',
     'yamlls',
   },
