@@ -28,7 +28,6 @@ return function()
     ['<leader>t'] = {
       name = 'Fterm',
       [';'] = { '<cmd>lua require("FTerm").open()<cr>', 'new' },
-      l = { ':lua _G.__fterm_cmd("lazygit")<cr>', 'lazygit' },
       n = { ':lua _G.__fterm_cmd("node")<cr>', 'node' },
       p = { ':lua _G.__fterm_cmd("python")<cr>', 'python' },
       R = { ':lua _G.__fterm_cmd("ranger")<cr>', 'ranger' },
