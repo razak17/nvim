@@ -174,7 +174,6 @@ return function()
             },
           },
         },
-        howdoi = rvim.telescope.ivy(),
       },
       pickers = {
         buffers = dropdown({
@@ -253,7 +252,6 @@ return function()
     telescope_file_browser = 'file_browser',
     telescope_media_files = 'media_files',
     telescope_zoxide = 'zoxide',
-    howdoi = 'howdoi',
   }
 
   for _, plug in pairs(plugins) do
@@ -358,10 +356,6 @@ return function()
     builtin.git_bcommits(delta_opts(opts, true))
   end
 
-  local function howdoi()
-    telescope.extensions.howdoi.howdoi()
-  end
-
   require('which-key').register({
     ['<c-p>'] = { project_files, 'telescope: find files' },
     ['<leader>f'] = {
@@ -388,7 +382,6 @@ return function()
         s = { builtin.git_status, 'status' },
       },
       h = { MFU, 'most frequently used files' },
-      H = { howdoi, 'howdoi' },
       m = { media_files, 'media files' },
       n = { notes, 'notes' },
       o = { builtin.oldfiles, 'old files' },
