@@ -148,7 +148,7 @@ function M.spacer(size, opts)
 end
 
 --- @param component string
---- @param hl string
+--- @param hl string | number
 --- @param opts table
 function M.component(component, hl, opts)
   -- do not allow empty values to be shown note 0 is considered empty

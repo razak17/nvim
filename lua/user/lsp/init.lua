@@ -52,7 +52,7 @@ function rvim.lsp.on_init(client)
   end
   local ok, json = pcall(fn.readfile, config_path)
   if not ok then
-    return false
+    return true
   end
   local overrides = vim.json.decode(table.concat(json, '\n'))
   for name, config in pairs(overrides) do
