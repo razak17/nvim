@@ -177,7 +177,7 @@ return function()
           name = 'dictionary',
           keyword_length = 2,
         },
-        { name = 'cmdline_history' },
+        { name = 'cmdline_history', priority = 10, max_item_count = 5 },
       },
     },
   }
