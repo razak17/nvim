@@ -150,7 +150,7 @@ rvim.list_installed_plugins = (function()
     if plugins then
       return plugins
     end
-    local data_dir = fn.stdpath('data')
+    local data_dir = rvim.get_runtime_dir()
     local start = fn.expand(data_dir .. '/site/pack/packer/start/*', true, true)
     local opt = fn.expand(data_dir .. '/site/pack/packer/opt/*', true, true)
     plugins = vim.list_extend(start, opt)
@@ -218,17 +218,19 @@ end
 ---@param name string | Plugin
 ---@param callback fun(module: table)
 function rvim.ftplugin_conf(name, callback)
-  local plugin_name = type(name) == "table" and name.plugin or nil
-  if plugin_name and not rvim.plugin_loaded(plugin_name) then return end
+  local plugin_name = type(name) == 'table' and name.plugin or nil
+  if plugin_name and not rvim.plugin_loaded(plugin_name) then
+    return
+  end
 
-  local module = type(name) == "table" and name[1] or name
-  local info = debug.getinfo(1,'S')
-  local ok, plugin = rvim.safe_require(module, {message = fmt("In file: %s", info.source)})
+  local module = type(name) == 'table' and name[1] or name
+  local info = debug.getinfo(1, 'S')
+  local ok, plugin = rvim.safe_require(module, { message = fmt('In file: %s', info.source) })
 
-  if ok then callback(plugin) end
+  if ok then
+    callback(plugin)
+  end
 end
-
-
 
 ---@param str string
 ---@param max_len integer
