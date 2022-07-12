@@ -81,7 +81,7 @@ rvim.wk = {
         ':Telescope diagnostics bufnr=0 theme=get_ivy<CR>',
         'telescope: document diagnostics',
       },
-      c = 'peek class definition',
+      C = 'peek class definition',
       u = 'peek func definition',
       h = { ':LspInfo<CR>', 'lsp: info' },
       H = { ':LspInstallInfo<CR>', 'lspinstaller: info' },

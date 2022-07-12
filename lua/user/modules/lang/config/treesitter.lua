@@ -62,7 +62,7 @@ return function()
           border = rvim.style.border.current,
           peek_definition_code = {
             ['<leader>lu'] = '@function.outer',
-            ['<leader>lc'] = '@class.outer',
+            ['<leader>lC'] = '@class.outer',
           },
         },
       },
