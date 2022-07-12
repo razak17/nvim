@@ -1,6 +1,64 @@
+local dap = require('dap')
+local fn = vim.fn
+
+local function repl_toggle()
+  require('dap').repl.toggle(nil, 'botright split')
+end
+local function continue()
+  require('dap').continue()
+end
+local function step_out()
+  require('dap').step_out()
+end
+local function step_into()
+  require('dap').step_into()
+end
+local function step_over()
+  require('dap').step_over()
+end
+local function step_back()
+  require('dap').step_back()
+end
+local function run_last()
+  require('dap').run_last()
+end
+local function toggle_breakpoint()
+  require('dap').toggle_breakpoint()
+end
+local function set_breakpoint()
+  require('dap').set_breakpoint(fn.input('Breakpoint condition: '))
+end
+
+-- utils
+
+local function attach()
+  print('attaching')
+  dap.run({
+    type = 'node2',
+    request = 'attach',
+    cwd = vim.fn.getcwd(),
+    sourceMaps = true,
+    protocol = 'inspector',
+    skipFiles = { '<node_internals>/**/*.js' },
+  })
+end
+
+local function attach_to_remote()
+  print('attaching')
+  dap.run({
+    type = 'node2',
+    request = 'attach',
+    address = '127.0.0.1',
+    port = 9229,
+    localRoot = vim.fn.getcwd(),
+    remoteRoot = '/home/vcap/app',
+    sourceMaps = true,
+    protocol = 'inspector',
+    skipFiles = { '<node_internals>/**/*.js' },
+  })
+end
+
 return function()
-  local dap = require('dap')
-  local fn = vim.fn
   local icons = rvim.style.icons
 
   rvim.dap = {
@@ -30,7 +88,7 @@ return function()
   vim.fn.sign_define('DapBreakpointRejected', rvim.dap.breakpoint_rejected)
   vim.fn.sign_define('DapStopped', rvim.dap.stopped)
 
-  dap.defaults.fallback.terminal_win_cmd = '50vsplit new'
+  -- dap.defaults.fallback.terminal_win_cmd = '50vsplit new'
 
   -- DON'T automatically stop at exceptions
   dap.defaults.fallback.exception_breakpoints = {}
@@ -123,63 +181,6 @@ return function()
   dap.configurations.c = dap.configurations.cpp
   -- Rust
   dap.configurations.rust = dap.configurations.cpp
-
-  local function repl_toggle()
-    require('dap').repl.toggle(nil, 'botright split')
-  end
-  local function continue()
-    require('dap').continue()
-  end
-  local function step_out()
-    require('dap').step_out()
-  end
-  local function step_into()
-    require('dap').step_into()
-  end
-  local function step_over()
-    require('dap').step_over()
-  end
-  local function step_back()
-    require('dap').step_back()
-  end
-  local function run_last()
-    require('dap').run_last()
-  end
-  local function toggle_breakpoint()
-    require('dap').toggle_breakpoint()
-  end
-  local function set_breakpoint()
-    require('dap').set_breakpoint(fn.input('Breakpoint condition: '))
-  end
-
-  -- utils
-
-  local function attach()
-    print('attaching')
-    dap.run({
-      type = 'node2',
-      request = 'attach',
-      cwd = vim.fn.getcwd(),
-      sourceMaps = true,
-      protocol = 'inspector',
-      skipFiles = { '<node_internals>/**/*.js' },
-    })
-  end
-
-  local function attach_to_remote()
-    print('attaching')
-    dap.run({
-      type = 'node2',
-      request = 'attach',
-      address = '127.0.0.1',
-      port = 9229,
-      localRoot = vim.fn.getcwd(),
-      remoteRoot = '/home/vcap/app',
-      sourceMaps = true,
-      protocol = 'inspector',
-      skipFiles = { '<node_internals>/**/*.js' },
-    })
-  end
 
   require('which-key').register({
     ['<leader>d'] = {

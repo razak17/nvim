@@ -83,6 +83,7 @@ tools['iamcco/markdown-preview.nvim'] = {
     vim.g.mkdp_auto_start = 0
     vim.g.mkdp_auto_close = 1
   end,
+  disable = true,
 }
 
 tools['brooth/far.vim'] = {
@@ -306,6 +307,7 @@ tools['SmiteshP/nvim-navic'] = {
 tools['vhyrro/neorg'] = {
   requires = { 'vhyrro/neorg-telescope' },
   config = conf('tools', 'neorg'),
+  disable = true,
 }
 
 tools['kevinhwang91/nvim-bqf'] = {
