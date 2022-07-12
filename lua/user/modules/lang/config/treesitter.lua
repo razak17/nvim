@@ -111,7 +111,6 @@ return function()
     matchup = { enable = true, disable = { 'c', 'python' } },
     autopairs = { enable = true },
     rainbow = rvim.treesitter.setup.rainbow,
-    endwise = { enable = true },
     query_linter = {
       enable = true,
       use_virtual_text = true,
