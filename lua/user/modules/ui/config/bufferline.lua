@@ -4,7 +4,6 @@ return function()
     return
   end
 
-  local fn = vim.fn
   local fmt = string.format
   local P = rvim.palette
   local groups = require('bufferline.groups')
@@ -12,7 +11,7 @@ return function()
   local normal_bg = util.get('Normal', 'bg')
   local darker_bg = util.alter_color(normal_bg, -1)
   local bg = rvim.ui.transparent_window == true and 'none' or P.dark
-  local fg_def = P.base88
+  local fg_def = P.base5
   local fg_sel = P.base00
 
   local highlights = {
