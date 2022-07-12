@@ -25,8 +25,6 @@ return function()
     duplicate_selected = { guifg = P.base7, guibg = bg, gui = 'italic' },
     buffer_visible = { guifg = fg_def, guibg = darker_bg },
     buffer_selected = { guifg = fg_sel, guibg = bg },
-    diagnostic = { guifg = P.pale_red, guibg = darker_bg },
-    diagnostic_visible = { guifg = P.pale_red, guibg = darker_bg },
     diagnostic_selected = { guifg = P.pale_red, guibg = bg },
     error_selected = { guifg = P.pale_red, guibg = bg },
     info_selected = { guifg = P.pale_blue, guibg = bg },
