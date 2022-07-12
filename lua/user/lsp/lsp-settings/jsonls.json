@@ -1,3 +1,5 @@
 {
-
+  "json.validate.enable": true
+  "json.format.enable": true
+  "json.format.indent_style": "space"
 }
