@@ -95,7 +95,7 @@ end
 function M.load_conf(dir, name)
   local module_dir = fmt('user.modules.%s', dir)
   if dir == 'user' then
-    return require(string.format(dir .. '.%s', name))
+    return require(fmt(dir .. '.%s', name))
   end
 
   return require(fmt(module_dir .. '.%s.%s', 'config', name))

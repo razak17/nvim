@@ -147,4 +147,16 @@ editor['glepnir/template.nvim'] = {
   end,
 }
 
+editor['AckslD/nvim-trevJ.lua'] = {
+  module = 'trevj',
+  setup = function()
+    rvim.nnoremap('gj', function()
+      require('trevj').format_at_cursor()
+    end, { desc = 'splitjoin: split' })
+  end,
+  config = function()
+    require('trevj').setup()
+  end,
+}
+
 return editor
