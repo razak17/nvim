@@ -88,8 +88,6 @@ return function()
   vim.fn.sign_define('DapBreakpointRejected', rvim.dap.breakpoint_rejected)
   vim.fn.sign_define('DapStopped', rvim.dap.stopped)
 
-  -- dap.defaults.fallback.terminal_win_cmd = '50vsplit new'
-
   -- DON'T automatically stop at exceptions
   dap.defaults.fallback.exception_breakpoints = {}
   -- python
