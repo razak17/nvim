@@ -145,6 +145,7 @@ editor['glepnir/template.nvim'] = {
     temp.temp_dir = ('%s/templates/'):format(rvim.get_config_dir())
     -- temp.temp_dir = join_paths(rvim.get_config_dir(), 'templates')
   end,
+  disable = true,
 }
 
 editor['AckslD/nvim-trevJ.lua'] = {
