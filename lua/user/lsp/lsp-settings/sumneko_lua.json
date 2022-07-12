@@ -2,6 +2,8 @@
   "Lua.runtime.version": "LuaJIT",
   "Lua.diagnostics.enable": true,
   "Lua.diagnostics.globals": [
+    "vim",
+    "rvim",
     "packer_plugins",
     "notify_opts",
     "stds",
