@@ -6,7 +6,9 @@ local lang = {}
 
 -- Debugging
 lang['mfussenegger/nvim-dap'] = {
-  config = conf('lang', 'dap'),
+  module = 'dap',
+  config = conf('lang', 'dap').config,
+  setup = conf('lang', 'dap').setup,
   requires = {
     {
       'rcarriga/nvim-dap-ui',
@@ -221,7 +223,7 @@ lang['hrsh7th/nvim-cmp'] = {
   event = 'InsertEnter',
   config = conf('lang', 'cmp'),
 }
-lang['hrsh7th/cmp-nvim-lsp'] = { after = 'nvim-cmp' }
+lang['hrsh7th/cmp-nvim-lsp'] = { after = 'nvim-lspconfig' }
 lang['hrsh7th/cmp-nvim-lua'] = { after = 'nvim-cmp' }
 lang['hrsh7th/cmp-nvim-lsp-document-symbol'] = { after = 'nvim-cmp' }
 lang['saadparwaiz1/cmp_luasnip'] = { after = 'nvim-cmp' }

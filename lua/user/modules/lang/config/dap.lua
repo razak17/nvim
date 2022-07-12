@@ -1,64 +1,108 @@
-local dap = require('dap')
-local fn = vim.fn
+local M = {}
 
-local function repl_toggle()
-  require('dap').repl.toggle(nil, 'botright split')
-end
-local function continue()
-  require('dap').continue()
-end
-local function step_out()
-  require('dap').step_out()
-end
-local function step_into()
-  require('dap').step_into()
-end
-local function step_over()
-  require('dap').step_over()
-end
-local function step_back()
-  require('dap').step_back()
-end
-local function run_last()
-  require('dap').run_last()
-end
-local function toggle_breakpoint()
-  require('dap').toggle_breakpoint()
-end
-local function set_breakpoint()
-  require('dap').set_breakpoint(fn.input('Breakpoint condition: '))
-end
+function M.setup()
+  local dap = require('dap')
+  local fn = vim.fn
 
--- utils
+  local function repl_toggle()
+    require('dap').repl.toggle(nil, 'botright split')
+  end
+  local function continue()
+    require('dap').continue()
+  end
+  local function step_out()
+    require('dap').step_out()
+  end
+  local function step_into()
+    require('dap').step_into()
+  end
+  local function step_over()
+    require('dap').step_over()
+  end
+  local function step_back()
+    require('dap').step_back()
+  end
+  local function run_last()
+    require('dap').run_last()
+  end
+  local function toggle_breakpoint()
+    require('dap').toggle_breakpoint()
+  end
+  local function set_breakpoint()
+    require('dap').set_breakpoint(fn.input('Breakpoint condition: '))
+  end
 
-local function attach()
-  print('attaching')
-  dap.run({
-    type = 'node2',
-    request = 'attach',
-    cwd = vim.fn.getcwd(),
-    sourceMaps = true,
-    protocol = 'inspector',
-    skipFiles = { '<node_internals>/**/*.js' },
+  -- utils
+
+  local function attach()
+    print('attaching')
+    dap.run({
+      type = 'node2',
+      request = 'attach',
+      cwd = vim.fn.getcwd(),
+      sourceMaps = true,
+      protocol = 'inspector',
+      skipFiles = { '<node_internals>/**/*.js' },
+    })
+  end
+
+  local function attach_to_remote()
+    print('attaching')
+    dap.run({
+      type = 'node2',
+      request = 'attach',
+      address = '127.0.0.1',
+      port = 9229,
+      localRoot = vim.fn.getcwd(),
+      remoteRoot = '/home/vcap/app',
+      sourceMaps = true,
+      protocol = 'inspector',
+      skipFiles = { '<node_internals>/**/*.js' },
+    })
+  end
+
+  require('which-key').register({
+    ['<leader>d'] = {
+      name = '+Debug',
+      a = { attach, 'attach' },
+      A = { attach_to_remote, 'attach remote' },
+
+      H = { step_back, 'dap: step back' },
+      i = { step_into, 'dap: step into' },
+      o = { step_over, 'dap: step over' },
+      u = { step_out, 'dap: step out' },
+
+      b = { toggle_breakpoint, 'dap: toggle breakpoint' },
+      B = { set_breakpoint, 'dap: set breakpoint' },
+      c = { continue, 'dap: continue or start debugging' },
+      l = { run_last, 'dap REPL: run last' },
+      t = { repl_toggle, 'dap REPL: toggle' },
+
+      -- ["?"] = {
+      --   ':lua local widgets=require"dap.ui.widgets";widgets.centered_float(widgets.scopes)<CR>',
+      --   "scopes",
+      -- },
+      -- C = { ":lua require'dap'.clear_breakpoints()<cr>", "clear breakpoints" },
+      -- e = { ":lua require'dap'.set_exception_breakpoints({'all'})<cr>", "breakpoint exception" },
+      -- n = { ":lua require'dap'.run_to_cursor()<cr>", "run to cursor" },
+      -- K = { ":lua require'dap.ui.widgets'.hover()<cr>", "hover" },
+      -- R = { ':lua require"dap".repl.open({}, "vsplit")<cr><C-w>l<cr>', "open repl in vsplit" },
+      -- x = { ":lua require'dap'.disconnect()<cr>", "disconnect" },
+      -- z = { ":lua require'dap'.terminate()<cr>", "terminate" },
+      -- g = { ":lua require'dap'.session()<cr>", "get session" },
+      -- q = { ":lua require'dap'.close()<cr>", "quit" },
+      -- k = { ":lua require'dap'.up()<cr>", "up" },
+      -- j = { ":lua require'dap'.down()<cr>", "down" },
+      -- p = { ":lua require'dap'.pause.toggle()<cr>", "pause" },
+      -- f = { ":Telescope dap frames<cr>", "frames" },
+      -- v = { ":Telescope dap variables<cr>", "variables" },
+      -- b = { ":Telescope dap list_breakpoints<cr>", "list breakpoints" },
+    },
   })
 end
 
-local function attach_to_remote()
-  print('attaching')
-  dap.run({
-    type = 'node2',
-    request = 'attach',
-    address = '127.0.0.1',
-    port = 9229,
-    localRoot = vim.fn.getcwd(),
-    remoteRoot = '/home/vcap/app',
-    sourceMaps = true,
-    protocol = 'inspector',
-    skipFiles = { '<node_internals>/**/*.js' },
-  })
-end
-
-return function()
+function M.config()
+  local dap = require('dap')
   local icons = rvim.style.icons
 
   rvim.dap = {
@@ -87,6 +131,8 @@ return function()
   vim.fn.sign_define('DapBreakpoint', rvim.dap.breakpoint)
   vim.fn.sign_define('DapBreakpointRejected', rvim.dap.breakpoint_rejected)
   vim.fn.sign_define('DapStopped', rvim.dap.stopped)
+
+  dap.defaults.fallback.terminal_win_cmd = '50vsplit new'
 
   -- DON'T automatically stop at exceptions
   dap.defaults.fallback.exception_breakpoints = {}
@@ -179,43 +225,6 @@ return function()
   dap.configurations.c = dap.configurations.cpp
   -- Rust
   dap.configurations.rust = dap.configurations.cpp
-
-  require('which-key').register({
-    ['<leader>d'] = {
-      name = '+Debug',
-      a = { attach, 'attach' },
-      A = { attach_to_remote, 'attach remote' },
-
-      H = { step_back, 'dap: step back' },
-      i = { step_into, 'dap: step into' },
-      o = { step_over, 'dap: step over' },
-      u = { step_out, 'dap: step out' },
-
-      b = { toggle_breakpoint, 'dap: toggle breakpoint' },
-      B = { set_breakpoint, 'dap: set breakpoint' },
-      c = { continue, 'dap: continue or start debugging' },
-      l = { run_last, 'dap REPL: run last' },
-      t = { repl_toggle, 'dap REPL: toggle' },
-
-      -- ["?"] = {
-      --   ':lua local widgets=require"dap.ui.widgets";widgets.centered_float(widgets.scopes)<CR>',
-      --   "scopes",
-      -- },
-      -- C = { ":lua require'dap'.clear_breakpoints()<cr>", "clear breakpoints" },
-      -- e = { ":lua require'dap'.set_exception_breakpoints({'all'})<cr>", "breakpoint exception" },
-      -- n = { ":lua require'dap'.run_to_cursor()<cr>", "run to cursor" },
-      -- K = { ":lua require'dap.ui.widgets'.hover()<cr>", "hover" },
-      -- R = { ':lua require"dap".repl.open({}, "vsplit")<cr><C-w>l<cr>', "open repl in vsplit" },
-      -- x = { ":lua require'dap'.disconnect()<cr>", "disconnect" },
-      -- z = { ":lua require'dap'.terminate()<cr>", "terminate" },
-      -- g = { ":lua require'dap'.session()<cr>", "get session" },
-      -- q = { ":lua require'dap'.close()<cr>", "quit" },
-      -- k = { ":lua require'dap'.up()<cr>", "up" },
-      -- j = { ":lua require'dap'.down()<cr>", "down" },
-      -- p = { ":lua require'dap'.pause.toggle()<cr>", "pause" },
-      -- f = { ":Telescope dap frames<cr>", "frames" },
-      -- v = { ":Telescope dap variables<cr>", "variables" },
-      -- b = { ":Telescope dap list_breakpoints<cr>", "list breakpoints" },
-    },
-  })
 end
+
+return M
