@@ -55,8 +55,8 @@ local function breadcrumbs()
   if not ok or not navic.is_available() then
     return empty_state
   end
-  local location = navic.get_location()
-  if empty(location) then
+  local navic_ok, location = pcall(navic.get_location)
+  if not navic_ok or empty(location) then
     return empty_state
   end
   local win = api.nvim_get_current_win()
