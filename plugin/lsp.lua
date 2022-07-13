@@ -181,7 +181,7 @@ local function make_diagnostic_qf_updater()
     if not api.nvim_buf_is_valid(0) then
       return
     end
-    vim.diagnostic.setqflist({ open = false })
+    pcall(vim.diagnostic.setqflist, { open = false })
     rvim.toggle_list('quickfix')
     if not rvim.is_vim_list_open() and cmd_id then
       api.nvim_del_autocmd(cmd_id)
@@ -193,8 +193,8 @@ local function make_diagnostic_qf_updater()
     cmd_id = api.nvim_create_autocmd('DiagnosticChanged', {
       callback = function()
         if rvim.is_vim_list_open() then
-          vim.diagnostic.setqflist({ open = false })
-          if #vim.fn.getqflist() == 0 then
+          pcall(vim.diagnostic.setqflist, { open = false })
+          if #fn.getqflist() == 0 then
             rvim.toggle_list('quickfix')
           end
         end
@@ -303,10 +303,8 @@ diagnostic.config({
 })
 
 -- NOTE: the hover handler returns the bufnr,winnr so can be used for mappings
-lsp.handlers['textDocument/hover'] = lsp.with(
-  lsp.handlers.hover,
-  { border = border, max_width = max_width, max_height = max_height }
-)
+lsp.handlers['textDocument/hover'] =
+  lsp.with(lsp.handlers.hover, { border = border, max_width = max_width, max_height = max_height })
 
 lsp.handlers['textDocument/signatureHelp'] = lsp.with(lsp.handlers.signature_help, {
   border = border,
