@@ -5,6 +5,7 @@ return function()
   end
 
   local fmt = string.format
+  local fn = vim.fn
   local P = rvim.palette
   local groups = require('bufferline.groups')
   local util = require('zephyr.utils')
@@ -104,10 +105,11 @@ return function()
           groups.builtin.pinned:with({ icon = '' }),
           groups.builtin.ungrouped,
           {
-            name = 'Plugins',
+            name = 'Dependencies',
             highlight = { guifg = '#ECBE7B' },
             matcher = function(buf)
               return vim.startswith(buf.path, fmt('%s/site/pack/packer', rvim.get_runtime_dir()))
+                               or vim.startswith(buf.path, fn.expand('$VIMRUNTIME'))
             end,
           },
           {
@@ -138,7 +140,7 @@ return function()
             icon = '',
             matcher = function(buf)
               for _, ext in ipairs({ 'md', 'txt', 'org', 'norg', 'wiki' }) do
-                if ext == vim.fn.fnamemodify(buf.path, ':e') then
+                if ext == fn.fnamemodify(buf.path, ':e') then
                   return true
                 end
               end
