@@ -1,4 +1,5 @@
 return function()
+  local cwd = vim.fn.getcwd()
   local gitsigns_ok, gitsigns = rvim.safe_require('gitsigns')
   if not gitsigns_ok then
     return
@@ -15,6 +16,7 @@ return function()
       },
       _threaded_diff = true, -- NOTE: experimental but I'm curious
       word_diff = false,
+      current_line_blame = not cwd:match('personal') and not cwd:match('dotfiles'),
       numhl = false,
       preview_config = {
         border = rvim.style.border.current,
