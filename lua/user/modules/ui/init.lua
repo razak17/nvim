@@ -97,7 +97,7 @@ ui['nvim-neo-tree/neo-tree.nvim'] = {
 ui['MunifTanjim/nui.nvim'] = {}
 
 ui['s1n7ax/nvim-window-picker'] = {
-  tag = '1.*',
+  tag = 'v1.*',
   config = conf('ui', 'window-picker'),
 }
 
