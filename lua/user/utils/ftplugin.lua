@@ -206,15 +206,6 @@ function M.vim()
   vim.opt_local.foldmethod = 'marker'
 
   nnoremap('so', ":source % <bar> :lua vim.notify('Sourced ' .. vim.fn.expand('%'))<CR>")
-
-  -- add custom vim-surround mappings for vim
-  -- https://github.com/AndrewRadev/Vimfiles/blob/eada7a20dc705729f963348357d7754124d0b183/ftplugin/vim.vim#L3
-  vim.b[fmt('surround_%s', fn.char2nr('i'))] = 'if \1if: \1 then \r end'
-  vim.b[fmt('surround_%s', fn.char2nr('w'))] = 'while \1while: \1 \r endwhile'
-  vim.b[fmt('surround_%s', fn.char2nr('f'))] = 'for \1for: \1 {\r endfor'
-  vim.b[fmt('surround_%s', fn.char2nr('e'))] = 'foreach \1foreach: \1 \r enforeach'
-  vim.b[fmt('surround_%s', fn.char2nr('F'))] = 'function! \1function: \1() \r endfunction'
-  vim.b[fmt('surround_%s', fn.char2nr('T'))] = 'try \r endtry'
 end
 
 function M.yaml()
