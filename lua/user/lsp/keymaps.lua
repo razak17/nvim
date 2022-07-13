@@ -73,8 +73,20 @@ function M.init(client)
     with_desc('peek: type definition')
   )
 
-  rvim.nnoremap('<leader>lk', vim.diagnostic.goto_prev, with_desc('lsp: go to prev diagnostic'))
-  rvim.nnoremap('<leader>lj', vim.diagnostic.goto_next, with_desc('lsp: go to next diagnostic'))
+  rvim.nnoremap('<leader>lk', function()
+    if rvim.lsp.hover_diagnostics then
+      vim.diagnostic.goto_prev({ float = false })
+    else
+      vim.diagnostic.goto_prev()
+    end
+  end, with_desc('lsp: go to prev diagnostic'))
+  rvim.nnoremap('<leader>lj', function()
+    if rvim.lsp.hover_diagnostics then
+      vim.diagnostic.goto_next({ float = false })
+    else
+      vim.diagnostic.goto_next()
+    end
+  end, with_desc('lsp: go to next diagnostic'))
   rvim.nnoremap(
     '<leader>lL',
     vim.diagnostic.setloclist,
