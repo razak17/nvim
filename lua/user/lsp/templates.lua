@@ -18,7 +18,7 @@ local function write_override(filename, server_name)
 end
 
 local function write_ft(filename, filetype)
-  local cmd = fmt([[require("user.utils.after_ftplugin").setup(%q)]], filetype)
+  local cmd = fmt([[require("user.utils.ftplugin").setup(%q)]], filetype)
   utils.write_file(filename, cmd .. '\n', 'a')
 end
 
@@ -77,7 +77,7 @@ function M.generate_ftplugin(server_name, dir)
 
     -- ftplugin settings
     if find_string(rvim.util.ftplugin_filetypes, filetype) then
-      -- TEMPFIX: Prevent after_ftplugin for js from generating twice
+      -- TEMPFIX: Prevent ftplugin utils for js from generating twice
       if server_name == 'quick_lint_js' then
         return
       end
