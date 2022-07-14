@@ -10,7 +10,6 @@ return function()
     return
   end
 
-  local renderer = require('notify.render')
   local Log = require('user.core.log')
 
   rvim.nvim_notify = {
