@@ -123,16 +123,6 @@ function M.generate_templates(servers_names)
     M.generate_ftplugin(server, ftplugin_dir)
   end
 
-  -- Custom lsp config
-  local custom_lsp = {
-    markdown = 'marksman',
-  }
-
-  for ft, server in pairs(custom_lsp) do
-    local filename = join_paths(ftplugin_dir, ft .. '.lua')
-    write_manager(filename, server)
-  end
-
   -- ftplugin settings
   M.generate_ftplugin_util(ftplugin_dir)
 
