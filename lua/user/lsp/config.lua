@@ -108,7 +108,6 @@ rvim.lsp = {
     'spectral',
     'sqls',
     'stylelint_lsp',
-    'tailwindcss',
     'tflint',
     'volar',
     'zk',
