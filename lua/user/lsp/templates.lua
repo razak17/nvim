@@ -70,27 +70,29 @@ function M.generate_ftplugin(server_name, dir)
     if server_name == 'vuels' then
       write_manager(filename, 'eslint')
     end
-
-    if find_string(rvim.lsp.emmet_ft, filetype) then
-      write_override(filename, 'emmet_ls')
-    end
   end
 end
 
----Generates or writes to an ftplugin file based on filename in ftplugin_filetypes
+---Generates or writes to an ftplugin file based on filetype
 ---@param dir string the full path to the desired directory
 function M.generate_ftplugin_util(dir)
+  -- emmet
+  for _, filetype in ipairs(rvim.lsp.emmet_ft) do
+    local filename = join_paths(dir, filetype .. '.lua')
+    write_override(filename, 'emmet_ls')
+  end
+  -- ftplugin settings
   for _, filetype in ipairs(rvim.util.ftplugin_filetypes) do
     local filename = join_paths(dir, filetype .. '.lua')
 
-      local react_fts = { 'typescript.tsx', 'javascript.jsx' }
+    local react_fts = { 'typescript.tsx', 'javascript.jsx' }
 
-      -- jsx/tsx in js/ts
-      if find_string(react_fts, filetype) then
-        write_ft(filename, 'javascriptreact')
-      else
-        write_ft(filename, filetype)
-      end
+    -- jsx/tsx in js/ts
+    if find_string(react_fts, filetype) then
+      write_ft(filename, 'javascriptreact')
+    else
+      write_ft(filename, filetype)
+    end
   end
 end
 
