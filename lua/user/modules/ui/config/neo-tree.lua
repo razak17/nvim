@@ -1,5 +1,8 @@
 return function()
-  require('zephyr.utils').plugin('NeoTree', {
+  local icons = rvim.style.icons
+  local highlights = require('zephyr.utils')
+
+  highlights.plugin('NeoTree', {
     NeoTreeIndentMarker = { link = 'Comment' },
     NeoTreeNormal = { link = 'PanelBackground' },
     NeoTreeNormalNC = { link = 'PanelBackground' },
@@ -7,9 +10,11 @@ return function()
     NeoTreeCursorLine = { link = 'Visual' },
     NeoTreeStatusLine = { link = 'PanelSt' },
   })
+
   vim.g.neo_tree_remove_legacy_commands = 1
-  local icons = rvim.style.icons
+
   rvim.nnoremap('<c-n>', '<Cmd>Neotree toggle reveal<CR>')
+
   require('which-key').register({
     ['<leader>e'] = { '<Cmd>Neotree toggle reveal<CR>', 'toggle tree' },
   })
@@ -20,13 +25,13 @@ return function()
       {
         event = 'neo_tree_buffer_enter',
         handler = function()
-          vim.cmd('highlight! Cursor blend=100')
+          highlights.set_hl('Cursor', { blend = 100 })
         end,
       },
       {
         event = 'neo_tree_buffer_leave',
         handler = function()
-          vim.cmd('highlight! Cursor blend=0')
+          highlights.set_hl('Cursor', { blend = 0 })
         end,
       },
     },
