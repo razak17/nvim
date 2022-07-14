@@ -77,7 +77,6 @@ rvim.lsp = {
   override_servers = {
     'rust_analyzer',
     'sqlls',
-    'yamlls',
   },
   skipped_filetypes = { 'edn', 'dhall', 'objcpp', 'objc', 'cuda', 'rst', 'plaintext' },
   skipped_servers = {

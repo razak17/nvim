@@ -1,5 +1,8 @@
 {
   "yaml.schemas": {
     "https://mattn.github.io/efm-langserver/schema.json": "/efm-langserver/config.yaml"
-  }
+  },
+  "yaml.customTags": [
+    "!reference sequence"
+  ]
 }

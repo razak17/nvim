@@ -48,19 +48,6 @@ function M.setup(server_name)
     }
   end
 
-  -- yamlls
-  if server == 'yamlls' then
-    config = {
-      settings = {
-        yaml = {
-          customTags = {
-            '!reference sequence', -- necessary for gitlab-ci.yaml files
-          },
-        },
-      },
-    }
-  end
-
   -- Initialize Server
   lsp_manager.launch_server(server_name, config)
 end
