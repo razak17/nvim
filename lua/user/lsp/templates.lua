@@ -74,13 +74,14 @@ function M.generate_ftplugin(server_name, dir)
     if find_string(rvim.lsp.emmet_ft, filetype) then
       write_override(filename, 'emmet_ls')
     end
+  end
+end
 
-    -- ftplugin settings
-    if find_string(rvim.util.ftplugin_filetypes, filetype) then
-      -- TEMPFIX: Prevent ftplugin utils for js from generating twice
-      if server_name == 'quick_lint_js' then
-        return
-      end
+---Generates or writes to an ftplugin file based on filename in ftplugin_filetypes
+---@param dir string the full path to the desired directory
+function M.generate_ftplugin_util(dir)
+  for _, filetype in ipairs(rvim.util.ftplugin_filetypes) do
+    local filename = join_paths(dir, filetype .. '.lua')
 
       local react_fts = { 'typescript.tsx', 'javascript.jsx' }
 
@@ -90,7 +91,6 @@ function M.generate_ftplugin(server_name, dir)
       else
         write_ft(filename, filetype)
       end
-    end
   end
 end
 
@@ -132,6 +132,10 @@ function M.generate_templates(servers_names)
     local filename = join_paths(ftplugin_dir, ft .. '.lua')
     write_manager(filename, server)
   end
+
+  -- ftplugin settings
+  M.generate_ftplugin_util(ftplugin_dir)
+
   Log:debug('Templates installation is complete')
 end
 

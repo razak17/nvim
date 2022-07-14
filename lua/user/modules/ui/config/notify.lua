@@ -54,7 +54,6 @@ return function()
     },
   }
 
-  ---@type table<string, fun(bufnr: number, notif: table, highlights: table)>
   local notify = require('notify')
   notify.setup(rvim.nvim_notify.setup)
 
