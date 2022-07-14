@@ -193,6 +193,7 @@ lang['andymass/vim-matchup'] = {
       ['<localleader>lm'] = { ':<c-u>MatchupWhereAmI?<CR>', 'matchup: where am i' },
     })
   end,
+  disable = true,
 }
 
 lang['windwp/nvim-ts-autotag'] = {
