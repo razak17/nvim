@@ -77,10 +77,11 @@ rvim.wk = {
   plugin = {
     lsp = {
       name = '+Lsp',
-      d = {
+      e = {
         ':Telescope diagnostics bufnr=0 theme=get_ivy<CR>',
         'telescope: document diagnostics',
       },
+      E = { ':Telescope diagnostics theme=get_ivy<CR>', 'telescope: workspace diagnostics' },
       C = 'peek class definition',
       u = 'peek func definition',
       h = { ':LspInfo<CR>', 'lsp: info' },
@@ -89,9 +90,8 @@ rvim.wk = {
       n = { ':NullLsInfo<CR>', 'null-ls: info' },
       N = { ':LspSettings buffer local<CR>', 'nlsp: buffer config' },
       R = { ':Telescope lsp_references<CR>', 'telescope: references' },
-      s = { ':Telescope lsp_document_symbols<CR>', 'telescope: document symbols' },
-      S = { ':Telescope lsp_dynamic_workspace_symbols<CR>', 'telescope: workspace symbols' },
-      w = { ':Telescope diagnostics theme=get_ivy<CR>', 'telescope: workspace diagnostics' },
+      d = { ':Telescope lsp_document_symbols<CR>', 'telescope: document symbols' },
+      s = { ':Telescope lsp_dynamic_workspace_symbols<CR>', 'telescope: workspace symbols' },
     },
     dap_ui = {
       toggle = {
