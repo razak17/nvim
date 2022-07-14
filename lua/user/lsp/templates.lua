@@ -66,10 +66,6 @@ function M.generate_ftplugin(server_name, dir)
     else
       write_manager(filename, server_name)
     end
-
-    if server_name == 'vuels' then
-      write_manager(filename, 'eslint')
-    end
   end
 end
 
