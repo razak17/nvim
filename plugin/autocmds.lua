@@ -144,7 +144,6 @@ local column_block_list = {
   'Trouble',
   'NvimTree',
   'log',
-  'fTerm',
   'TelescopePrompt',
   'lspinfo',
   'lsp-installer',

@@ -99,7 +99,6 @@ local blocked = {
   'toggleterm',
   'DressingInput',
   'dashboard',
-  'fTerm',
   'TelescopePrompt',
   'sql',
 }
