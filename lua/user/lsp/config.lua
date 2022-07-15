@@ -32,22 +32,6 @@ rvim.lsp = {
   },
   automatic_servers_installation = true,
   hover_diagnostics = false,
-  null_ls = {
-    setup = {
-      debug = true,
-      -- root_dir = require("lspconfig").util.root_pattern("Makefile", ".git", "node_modules"),
-    },
-    config = {},
-  },
-  nlsp_settings = {
-    setup = {
-      config_home = join_paths(rvim.get_user_dir(), 'lsp', 'lsp-settings'),
-      -- set to false to overwrite schemastore.nvim
-      append_default_schemas = true,
-      ignored_servers = {},
-      loader = 'json',
-    },
-  },
   configured_servers = {
     'astro',
     'bashls',

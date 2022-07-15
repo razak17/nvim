@@ -46,7 +46,18 @@ lang['neovim/nvim-lspconfig'] = {
   requires = {
     { 'antoinemadec/FixCursorHold.nvim' },
     { 'jose-elias-alvarez/null-ls.nvim' },
-    { 'tamago324/nlsp-settings.nvim' },
+    {
+      'tamago324/nlsp-settings.nvim',
+      config = function()
+        require('nvim-lsp-installer').setup({
+          config_home = join_paths(rvim.get_user_dir(), 'lsp', 'lsp-settings'),
+          -- set to false to overwrite schemastore.nvim
+          append_default_schemas = true,
+          ignored_servers = {},
+          loader = 'json',
+        })
+      end,
+    },
     {
       'williamboman/mason.nvim',
       config = function()

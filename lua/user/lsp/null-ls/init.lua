@@ -76,7 +76,12 @@ function M.setup()
   })
 
   local default_opts = require('user.lsp').get_global_opts()
-  null_ls.setup(vim.tbl_deep_extend('force', default_opts, rvim.lsp.null_ls.setup))
+  local opts = {
+    debug = true,
+    -- root_dir = require("lspconfig").util.root_pattern("Makefile", ".git", "node_modules"),
+    config = {},
+  }
+  null_ls.setup(vim.tbl_deep_extend('force', default_opts, opts))
 end
 
 return M

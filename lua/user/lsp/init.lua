@@ -68,16 +68,6 @@ function M.get_global_opts()
 end
 
 function M.setup()
-  Log:debug('Setting up LSP support')
-
-  local lsp_status_ok, _ = rvim.safe_require('lspconfig')
-  if not lsp_status_ok then return end
-
-  pcall(function() require('nlspsettings').setup(rvim.lsp.nlsp_settings.setup) end)
-
-  pcall(function() require('nvim-lsp-installer').setup(rvim.lsp.installer.setup) end)
-
-  require('user.lsp.null-ls').setup()
 end
 
 return M

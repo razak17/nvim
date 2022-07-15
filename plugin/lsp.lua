@@ -285,3 +285,5 @@ lsp.handlers['window/showMessage'] = function(_, result, ctx)
     keep = function() return lvl == 'ERROR' or lvl == 'WARN' end,
   })
 end
+
+require('user.lsp.null-ls').setup()
