@@ -123,17 +123,15 @@ function rvim.find_string(table, string)
   return found
 end
 
---- Check if a file or directory exists in this path
-function rvim._exists(file)
-  if file == '' or file == nil then return false end
-  local ok, err, code = os.rename(file, file)
-  if not ok then
-    if code == 13 then
-      -- Permission denied, but it exists
-      return true
-    end
+
+function rvim.file_exists (name)
+  local f = io.open(name, 'r')
+  if f ~= nil then
+    io.close(f)
+    return true
+  else
+    return false
   end
-  return ok, err
 end
 
 rvim.list_installed_plugins = (function()

@@ -29,6 +29,8 @@ rvim.dap = {
 function M.setup()
   local dap = require('dap')
   local P = require('zephyr.palette')
+  local utils = require("user.utils")
+  local is_directory = utils.is_directory
   local fn = vim.fn
 
   fn.sign_define('DapBreakpoint', rvim.dap.breakpoint)
@@ -55,9 +57,9 @@ function M.setup()
       program = '${file}',
       pythonPath = function()
         local cwd = fn.getcwd()
-        if rvim._exists(cwd .. '/venv/bin/python') then
+        if is_directory(cwd .. '/venv/bin/python') then
           return cwd .. '/venv/bin/python'
-        elseif rvim._exists(cwd .. '/.venv/bin/python') then
+        elseif is_directory(cwd .. '/.venv/bin/python') then
           return cwd .. '/.venv/bin/python'
         else
           return rvim.dap.python_dir
