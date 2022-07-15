@@ -67,13 +67,15 @@ lang['neovim/nvim-lspconfig'] = {
         local style = rvim.style
         local icons = style.icons
         require('mason').setup({
-          ui = { border = style.border.current },
-          icons = {
-            package_installed = icons.misc.checkmark,
-            package_pending = icons.misc.right_arrow,
-            package_uninstalled = icons.misc.x,
-          },
           install_root_dir = rvim.paths.mason,
+          ui = {
+            border = style.border.current,
+            icons = {
+              package_installed = icons.misc.checkmark,
+              package_pending = icons.misc.right_arrow,
+              package_uninstalled = icons.misc.x,
+            },
+          },
         })
         require('mason-lspconfig').setup({
           automatic_installation = rvim.lsp.automatic_servers_installation,
