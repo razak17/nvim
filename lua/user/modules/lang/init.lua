@@ -46,6 +46,9 @@ lang['neovim/nvim-lspconfig'] = {
   requires = {
     { 'antoinemadec/FixCursorHold.nvim' },
     { 'jose-elias-alvarez/null-ls.nvim' },
+    { 'nanotee/sqls.nvim' },
+    { 'b0o/schemastore.nvim' },
+    { 'razak17/rust-tools.nvim' },
     {
       'tamago324/nlsp-settings.nvim',
       config = function()
@@ -151,11 +154,6 @@ lang['olexsmir/gopher.nvim'] = {
     'nvim-treesitter/nvim-treesitter',
   },
 }
-
-lang['nanotee/sqls.nvim'] = {}
-
-lang['razak17/rust-tools.nvim'] = {}
-
 -- Treesitter
 lang['nvim-treesitter/nvim-treesitter'] = {
   run = ':TSUpdate',
@@ -300,8 +298,5 @@ lang['github/copilot.vim'] = {
     require('zephyr.utils').plugin('copilot', { CopilotSuggestion = { link = 'Comment' } })
   end,
 }
-
--- Rest
-lang['b0o/schemastore.nvim'] = {}
 
 return lang

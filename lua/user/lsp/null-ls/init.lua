@@ -75,7 +75,7 @@ function M.setup()
     { exe = 'golangci-lint', filetypes = { 'go' } },
   })
 
-  local default_opts = require('user.lsp').get_global_opts()
+  local default_opts = rvim.lsp.get_global_opts()
   local opts = {
     debug = true,
     -- root_dir = require("lspconfig").util.root_pattern("Makefile", ".git", "node_modules"),

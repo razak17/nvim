@@ -8,7 +8,7 @@ local lsp_utils = require('user.utils.lsp')
 ---@vararg any config table [optional]
 ---@return table
 function M.resolve_config(server_name, ...)
-  local defaults = require('user.lsp').get_global_opts()
+  local defaults = rvim.lsp.get_global_opts()
 
   local has_custom_provider, custom_config = pcall(require, 'user/lsp/providers/' .. server_name)
   if has_custom_provider then
