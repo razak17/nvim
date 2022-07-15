@@ -150,6 +150,7 @@ return function()
         { name = 'path' },
         {
           name = 'buffer',
+          keyword_length = 2,
           options = {
             get_bufnrs = function()
               local bufs = {}
@@ -169,7 +170,7 @@ return function()
         { name = 'npm', keyword_length = 4 },
         {
           name = 'dictionary',
-          keyword_length = 2,
+          keyword_length = 3,
         },
         { name = 'cmdline_history', priority = 10, max_item_count = 5 },
       },

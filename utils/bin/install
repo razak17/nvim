@@ -133,6 +133,15 @@ install_nodejs_deps() {
   echo "Unknown package manager"
 }
 
+install_dict() {
+  url="https://raw.githubusercontent.com/eneko/data-repository/master/data/words.txt"
+  dicwords="$RVIM_RUNTIME_DIR/site/dictionary.txt"
+  if [ ! -e "$dicwords" ]; then
+    echo 'Installing dictionary.txt'
+    curl "$url" -o "$dicwords" -s
+  fi
+}
+
 install_deps() {
 	printf "Would you like to install node packages now (y/n)? "
 	read -r answer
@@ -211,6 +220,9 @@ while [ "$#" -gt 0 ]; do
 		;;
 	-deps)
     install_deps
+		;;
+	-dict)
+    install_dict
 		;;
 	*--all*)
 		cloneconfig
