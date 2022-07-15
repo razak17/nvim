@@ -257,7 +257,7 @@ local oss = vim.loop.os_uname().sysname
 rvim.open_command = oss == 'Darwin' and 'open' or 'xdg-open'
 
 ---Reload lua modules
----@param path string
+---@param path any
 ---@param recursive boolean
 function rvim.invalidate(path, recursive)
   if recursive then
