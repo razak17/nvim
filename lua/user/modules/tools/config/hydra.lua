@@ -48,12 +48,8 @@ return function()
     config = {
       invoke_on_body = true,
       hint = { border = border },
-      on_enter = function()
-        vim.cmd('BeaconOff')
-      end,
-      on_exit = function()
-        vim.cmd('BeaconOn')
-      end,
+      on_enter = function() vim.cmd('BeaconOff') end,
+      on_exit = function() vim.cmd('BeaconOn') end,
     },
     heads = {
       { 'j', 'zj', { desc = 'next fold' } },
@@ -67,9 +63,7 @@ return function()
   local function run(method, args)
     return function()
       local dap = require('dap')
-      if dap[method] then
-        dap[method](args)
-      end
+      if dap[method] then dap[method](args) end
     end
   end
 
@@ -118,9 +112,7 @@ return function()
     event = 'User',
     user = 'DapStarted',
     command = function()
-      vim.schedule(function()
-        dap_hydra:activate()
-      end)
+      vim.schedule(function() dap_hydra:activate() end)
     end,
   })
 end

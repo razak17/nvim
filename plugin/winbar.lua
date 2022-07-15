@@ -37,9 +37,7 @@ rvim.winbar_state = {}
 ---@param _ "l"|"r"|"m" the button clicked
 ---@param _ string modifiers
 function rvim.winbar_click(id, _, _, _)
-  if id then
-    vim.cmd('edit ' .. rvim.winbar_state[id])
-  end
+  if id then vim.cmd('edit ' .. rvim.winbar_state[id]) end
 end
 
 highlights.plugin('winbar', {
@@ -52,13 +50,9 @@ highlights.plugin('winbar', {
 
 local function breadcrumbs()
   local empty_state = { component(ellipsis, 'NonText', { priority = 0 }) }
-  if not ok or not navic.is_available() then
-    return empty_state
-  end
+  if not ok or not navic.is_available() then return empty_state end
   local navic_ok, location = pcall(navic.get_location)
-  if not navic_ok or empty(location) then
-    return empty_state
-  end
+  if not navic_ok or empty(location) then return empty_state end
   local win = api.nvim_get_current_win()
   return { component_raw(location, { priority = 1, win_id = win, type = 'winbar' }) }
 end
@@ -71,9 +65,7 @@ function rvim.ui.winbar()
   add(utils.spacer(1))
 
   local bufname = api.nvim_buf_get_name(api.nvim_get_current_buf())
-  if empty(bufname) then
-    return add(component('[No name]', 'Winbar', { priority = 0 }))
-  end
+  if empty(bufname) then return add(component('[No name]', 'Winbar', { priority = 0 })) end
 
   local parts = vim.split(fn.fnamemodify(bufname, ':.'), '/')
   local icon, color = devicons.get_icon(bufname, nil, { default = true })
@@ -81,9 +73,7 @@ function rvim.ui.winbar()
   rvim.foreach(function(part, index)
     local priority = (#parts - (index - 1)) * 2
     local is_first = nil
-    if rvim.ui.winbar_ft_icon then
-      is_first = index == 1
-    end
+    if rvim.ui.winbar_ft_icon then is_first = index == 1 end
     local is_last = index == #parts
     local sep = is_last and separator or dir_separator
     local hl = is_last and 'Winbar' or 'LineNr'

@@ -4,26 +4,18 @@ local _, state = pcall(require, 'telescope.actions.state')
 
 local bg_selector = {}
 
-local function set_background(content)
-  os.execute('xwallpaper --zoom ' .. content)
-end
+local function set_background(content) os.execute('xwallpaper --zoom ' .. content) end
 
 local function select_background(prompt_bufnr, map)
   local function set_the_background(close)
     local content = state.get_selected_entry(prompt_bufnr)
     set_background(content.cwd .. '/' .. content.value)
-    if close then
-      actions.close(prompt_bufnr)
-    end
+    if close then actions.close(prompt_bufnr) end
   end
 
-  map('i', '<C-y>', function()
-    set_the_background()
-  end)
+  map('i', '<C-y>', function() set_the_background() end)
 
-  map('i', '<CR>', function()
-    set_the_background(true)
-  end)
+  map('i', '<CR>', function() set_the_background(true) end)
 end
 
 local image_selector = function(prompt, cwd)

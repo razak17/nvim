@@ -1,8 +1,6 @@
 return function()
   local bufferline_ok, bufferline = rvim.safe_require('bufferline')
-  if not bufferline_ok then
-    return
-  end
+  if not bufferline_ok then return end
 
   local fmt = string.format
   local fn = vim.fn
@@ -60,9 +58,7 @@ return function()
         enforce_regular_tabs = false,
         diagnostics = 'nvim_lsp',
         separator_style = { '', '' },
-        diagnostics_indicator = function()
-          return ''
-        end,
+        diagnostics_indicator = function() return '' end,
         numbers = 'none',
         offsets = {
           {
@@ -109,29 +105,23 @@ return function()
             highlight = { guifg = '#ECBE7B' },
             matcher = function(buf)
               return vim.startswith(buf.path, fmt('%s/site/pack/packer', rvim.get_runtime_dir()))
-                               or vim.startswith(buf.path, fn.expand('$VIMRUNTIME'))
+                or vim.startswith(buf.path, fn.expand('$VIMRUNTIME'))
             end,
           },
           {
             name = 'Terraform',
-            matcher = function(buf)
-              return buf.name:match('%.tf') ~= nil
-            end,
+            matcher = function(buf) return buf.name:match('%.tf') ~= nil end,
           },
           {
             name = 'SQL',
-            matcher = function(buf)
-              return buf.filename:match('%.sql$')
-            end,
+            matcher = function(buf) return buf.filename:match('%.sql$') end,
           },
           {
             name = 'tests',
             icon = '',
             matcher = function(buf)
               local name = buf.filename
-              if name:match('%.sql$') == nil then
-                return false
-              end
+              if name:match('%.sql$') == nil then return false end
               return name:match('_spec') or name:match('_test')
             end,
           },
@@ -140,9 +130,7 @@ return function()
             icon = '',
             matcher = function(buf)
               for _, ext in ipairs({ 'md', 'txt', 'org', 'norg', 'wiki' }) do
-                if ext == fn.fnamemodify(buf.path, ':e') then
-                  return true
-                end
+                if ext == fn.fnamemodify(buf.path, ':e') then return true end
               end
             end,
           },

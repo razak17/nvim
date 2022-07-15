@@ -218,13 +218,9 @@ M.load_commands = function()
     end
   end
 
-  if rvim.ui.line_wrap_cursor_movement then
-    cmd('set whichwrap+=<,>,[,],h,l,~')
-  end
+  if rvim.ui.line_wrap_cursor_movement then cmd('set whichwrap+=<,>,[,],h,l,~') end
 
-  if rvim.ui.transparent_window then
-    require('user.utils').enable_transparent_mode()
-  end
+  if rvim.ui.transparent_window then require('user.utils').enable_transparent_mode() end
 end
 
 M.load_headless_options = function()

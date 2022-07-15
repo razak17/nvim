@@ -17,13 +17,9 @@ local function create_floating_file(location, opts)
 
   -- location may be LocationLink or Location
   local uri = location.targetUri or location.uri
-  if uri == nil then
-    return
-  end
+  if uri == nil then return end
   local bufnr = vim.uri_to_bufnr(uri)
-  if not vim.api.nvim_buf_is_loaded(bufnr) then
-    vim.fn.bufload(bufnr)
-  end
+  if not vim.api.nvim_buf_is_loaded(bufnr) then vim.fn.bufload(bufnr) end
 
   local range = location.targetRange or location.range
 
@@ -67,9 +63,7 @@ local function create_floating_file(location, opts)
 end
 
 local function preview_location_callback(result)
-  if result == nil or vim.tbl_isempty(result) then
-    return nil
-  end
+  if result == nil or vim.tbl_isempty(result) then return nil end
 
   local opts = {
     border = rvim.lsp.diagnostics.border,
@@ -145,13 +139,8 @@ function M.Peek(what)
     -- Make a new request and then create the new window in the callback
     local params = vim.lsp.util.make_position_params()
     local preview_callback = preview_location_callback_new_signature
-    local success, _ = pcall(
-      vim.lsp.buf_request,
-      0,
-      'textDocument/' .. what,
-      params,
-      preview_callback
-    )
+    local success, _ =
+      pcall(vim.lsp.buf_request, 0, 'textDocument/' .. what, params, preview_callback)
     if not success then
       vim.notify(
         'peek: Error calling LSP method "textDocument/'

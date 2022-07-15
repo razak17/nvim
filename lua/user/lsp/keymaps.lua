@@ -1,13 +1,9 @@
 local M = {}
 
 function M.init(client)
-  if not client == nil then
-    return
-  end
+  if not client == nil then return end
 
-  local function with_desc(desc)
-    return { buffer = 0, desc = desc }
-  end
+  local function with_desc(desc) return { buffer = 0, desc = desc } end
 
   rvim.nnoremap('gl', function()
     local config = rvim.lsp.diagnostics.float

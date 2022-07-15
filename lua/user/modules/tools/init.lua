@@ -37,9 +37,7 @@ tools['sindrets/diffview.nvim'] = {
 tools['mbbill/undotree'] = {
   event = 'BufWinEnter',
   cmd = 'UndotreeToggle',
-  setup = function()
-    rvim.nnoremap('<leader>u', '<cmd>UndotreeToggle<CR>', 'undotree: toggle')
-  end,
+  setup = function() rvim.nnoremap('<leader>u', '<cmd>UndotreeToggle<CR>', 'undotree: toggle') end,
   config = function()
     vim.g.undotree_TreeNodeShape = '◦' -- Alternative: '◉'
     vim.g.undotree_SetFocusWhenToggle = 1
@@ -58,9 +56,7 @@ tools['npxbr/glow.nvim'] = {
 
 tools['kkoomen/vim-doge'] = {
   run = ':call doge#install()',
-  config = function()
-    vim.g.doge_mapping = '<Leader>lD'
-  end,
+  config = function() vim.g.doge_mapping = '<Leader>lD' end,
   disable = true,
 }
 
@@ -75,9 +71,7 @@ tools['diepm/vim-rest-console'] = {
 }
 
 tools['iamcco/markdown-preview.nvim'] = {
-  run = function()
-    vim.fn['mkdp#util#install']()
-  end,
+  run = function() vim.fn['mkdp#util#install']() end,
   ft = { 'markdown' },
   config = function()
     vim.g.mkdp_auto_start = 0
@@ -115,9 +109,7 @@ tools['AckslD/nvim-neoclip.lua'] = {
         },
       },
     })
-    local function clip()
-      require('telescope').extensions.neoclip.default(rvim.telescope.dropdown())
-    end
+    local function clip() require('telescope').extensions.neoclip.default(rvim.telescope.dropdown()) end
 
     require('which-key').register({
       ['<leader>fN'] = { clip, 'neoclip: open yank history' },
@@ -252,9 +244,12 @@ tools['smjonas/inc-rename.nvim'] = {
     require('inc_rename').setup({
       hl_group = 'Visual',
     })
-    vim.keymap.set('n', '<leader>rn', function()
-      return ':IncRename ' .. vim.fn.expand('<cword>')
-    end, { expr = true, silent = false, desc = 'lsp: incremental rename' })
+    vim.keymap.set(
+      'n',
+      '<leader>rn',
+      function() return ':IncRename ' .. vim.fn.expand('<cword>') end,
+      { expr = true, silent = false, desc = 'lsp: incremental rename' }
+    )
   end,
 }
 
@@ -315,9 +310,7 @@ tools['kevinhwang91/nvim-bqf'] = {
   -- optional
   requires = {
     'junegunn/fzf',
-    run = function()
-      vim.fn['fzf#install']()
-    end,
+    run = function() vim.fn['fzf#install']() end,
   },
   ft = 'qf',
 }

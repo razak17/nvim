@@ -41,28 +41,20 @@ return function()
   }
 
   -- Inserts a component in lualine_c at left section
-  local function ins_left(component)
-    table.insert(config.sections.lualine_c, component)
-  end
+  local function ins_left(component) table.insert(config.sections.lualine_c, component) end
 
   -- Inserts a component in lualine_x ot right section
-  local function ins_right(component)
-    table.insert(config.sections.lualine_x, component)
-  end
+  local function ins_right(component) table.insert(config.sections.lualine_x, component) end
 
   ins_left({
-    function()
-      return icons.statusline.bar
-    end,
+    function() return icons.statusline.bar end,
     color = { fg = P.pale_blue }, -- Sets highlighting of component
     padding = { left = 0, right = 1 }, -- We don't need space before this
   })
 
   ins_left({
     -- mode component
-    function()
-      return icons.statusline.mode
-    end,
+    function() return icons.statusline.mode end,
     color = function()
       -- auto change color according to neovims mode
       local mode_color = {
@@ -133,9 +125,7 @@ return function()
   ins_left({
     function()
       local package = require('package-info')
-      if package.get_status() then
-        return package.get_status()
-      end
+      if package.get_status() then return package.get_status() end
     end,
     cond = conditions.hide_in_width,
   })
@@ -160,9 +150,7 @@ return function()
       local buf_clients = vim.lsp.buf_get_clients()
       if next(buf_clients) == nil then
         -- TODO: clean up this if statement
-        if type(msg) == 'boolean' or #msg == 0 then
-          return 'LS Inactive'
-        end
+        if type(msg) == 'boolean' or #msg == 0 then return 'LS Inactive' end
         return msg
       end
       local buf_client_names = {}
@@ -181,9 +169,7 @@ return function()
   ins_right({
     function()
       local b = vim.api.nvim_get_current_buf()
-      if next(vim.treesitter.highlighter.active[b]) then
-        return icons.misc.tree
-      end
+      if next(vim.treesitter.highlighter.active[b]) then return icons.misc.tree end
       return ''
     end,
     color = { fg = P.dark_green },
@@ -227,9 +213,7 @@ return function()
   ins_right({ 'progress', color = { fg = P.base88 } })
 
   ins_right({
-    function()
-      return icons.statusline.bar
-    end,
+    function() return icons.statusline.bar end,
     color = { fg = P.pale_blue },
     padding = { left = 1 },
   })

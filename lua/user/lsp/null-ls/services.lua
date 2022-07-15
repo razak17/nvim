@@ -7,9 +7,7 @@ local function find_root_dir()
   local lsp_utils = require('user.utils.lsp')
 
   local ts_client = lsp_utils.is_client_active('typescript')
-  if ts_client then
-    return ts_client.config.root_dir
-  end
+  if ts_client then return ts_client.config.root_dir end
   local dirname = vim.fn.expand('%:p:h')
   return util.root_pattern('package.json')(dirname)
 end
@@ -17,9 +15,7 @@ end
 local function from_node_modules(command)
   local root_dir = find_root_dir()
 
-  if not root_dir then
-    return nil
-  end
+  if not root_dir then return nil end
 
   return join_paths(root_dir, 'node_modules', '.bin', command)
 end
@@ -36,14 +32,10 @@ local local_providers = {
 function M.find_command(command)
   if local_providers[command] then
     local local_command = local_providers[command].find(command)
-    if command and vim.fn.executable(command) == 1 then
-      return local_command
-    end
+    if command and vim.fn.executable(command) == 1 then return local_command end
   end
 
-  if vim.fn.executable(command) == 1 then
-    return command
-  end
+  if vim.fn.executable(command) == 1 then return command end
   return nil
 end
 
@@ -95,9 +87,7 @@ function M.register_sources(configs, method)
     end
   end
 
-  if #sources > 0 then
-    null_ls.register({ sources = sources })
-  end
+  if #sources > 0 then null_ls.register({ sources = sources }) end
   return registered_names
 end
 

@@ -67,9 +67,7 @@ ui['rainbowhxch/beacon.nvim'] = {
       {
         event = 'BufReadPre',
         pattern = '*.norg',
-        command = function()
-          beacon.beacon_off()
-        end,
+        command = function() beacon.beacon_off() end,
       },
     })
   end,
@@ -102,9 +100,7 @@ ui['s1n7ax/nvim-window-picker'] = {
 }
 
 ui['itchyny/vim-highlighturl'] = {
-  config = function()
-    vim.g.highlighturl_guifg = require('zephyr.utils').get('URL', 'fg')
-  end,
+  config = function() vim.g.highlighturl_guifg = require('zephyr.utils').get('URL', 'fg') end,
 }
 
 ui['EdenEast/nightfox.nvim'] = {}
@@ -155,9 +151,7 @@ ui['m-demare/hlargs.nvim'] = {
 }
 
 ui['j-hui/fidget.nvim'] = {
-  config = function()
-    require('fidget').setup()
-  end,
+  config = function() require('fidget').setup() end,
 }
 
 ui['kevinhwang91/nvim-ufo'] = {

@@ -13,12 +13,8 @@ local constants = {
 }
 
 M.conditions = {
-  buffer_not_empty = function()
-    return vim.fn.empty(vim.fn.expand('%:t')) ~= 1
-  end,
-  hide_in_width = function()
-    return vim.fn.winwidth(0) > 99
-  end,
+  buffer_not_empty = function() return vim.fn.empty(vim.fn.expand('%:t')) ~= 1 end,
+  hide_in_width = function() return vim.fn.winwidth(0) > 99 end,
   check_git_workspace = function()
     local filepath = vim.fn.expand('%:p:h')
     local gitdir = vim.fn.finddir('.git', filepath .. ';')
@@ -51,41 +47,29 @@ end
 function M.python_env()
   if vim.bo.filetype == 'python' then
     local venv = os.getenv('CONDA_DEFAULT_ENV')
-    if venv then
-      return string.format('(%s)', M.env_cleanup(venv))
-    end
+    if venv then return string.format('(%s)', M.env_cleanup(venv)) end
     venv = os.getenv('VIRTUAL_ENV')
-    if venv then
-      return string.format('(%s)', M.env_cleanup(venv))
-    end
+    if venv then return string.format('(%s)', M.env_cleanup(venv)) end
     return ''
   end
   return ''
 end
 
 local function sum_lengths(list)
-  return rvim.fold(function(acc, item)
-    return acc + (item.length or 0)
-  end, list, 0)
+  return rvim.fold(function(acc, item) return acc + (item.length or 0) end, list, 0)
 end
 
 local function is_lowest(item, lowest)
   -- if there hasn't been a lowest selected so far
   -- then the item is the lowest
-  if not lowest or not lowest.length then
-    return true
-  end
+  if not lowest or not lowest.length then return true end
   -- if the item doesn't have a priority or a length
   -- it is likely a special character so should never
   -- be the lowest
-  if not item.priority or not item.length then
-    return false
-  end
+  if not item.priority or not item.length then return false end
   -- if the item has the same priority as the lowest then if the item
   -- has a greater length it should become the lowest
-  if item.priority == lowest.priority then
-    return item.length > lowest.length
-  end
+  if item.priority == lowest.priority then return item.length > lowest.length end
 
   return item.priority > lowest.priority
 end
@@ -99,9 +83,7 @@ end
 --- @param length number
 local function prioritize(statusline, space, length)
   length = length or sum_lengths(statusline)
-  if length <= space then
-    return statusline
-  end
+  if length <= space then return statusline end
   local lowest
   local index_to_remove
   for idx, c in ipairs(statusline) do
@@ -127,9 +109,7 @@ end
 ---@param func_name string
 ---@param id string
 ---@return string
-local function get_click_start(func_name, id)
-  return '%' .. id .. '@' .. func_name .. '@'
-end
+local function get_click_start(func_name, id) return '%' .. id .. '@' .. func_name .. '@' end
 
 --- Creates a spacer statusline component i.e. for padding
 --- or to represent an empty component
@@ -153,9 +133,7 @@ end
 function M.component(component, hl, opts)
   -- do not allow empty values to be shown note 0 is considered empty
   -- since if there is nothing of something I don't need to see it
-  if not component or component == '' or component == 0 then
-    return M.spacer()
-  end
+  if not component or component == '' or component == 0 then return M.spacer() end
   assert(
     opts and opts.priority,
     fmt("each item's priority is required: %s is missing one", component)
@@ -175,9 +153,7 @@ function M.component(component, hl, opts)
   local click_end = opts.click and constants.CLICK_END or ''
 
   --- handle numeric inputs etc.
-  if type(component) ~= 'string' then
-    component = tostring(component)
-  end
+  if type(component) ~= 'string' then component = tostring(component) end
 
   if opts.max_size and component and #component >= opts.max_size then
     component = component:sub(1, opts.max_size - 1) .. '…'
@@ -211,9 +187,7 @@ function M.display(statusline, available_space)
   local str = ''
   local items = prioritize(statusline, available_space)
   for _, item in ipairs(items) do
-    if type(item.component) == 'string' and #item.component > 0 then
-      str = str .. item.component
-    end
+    if type(item.component) == 'string' and #item.component > 0 then str = str .. item.component end
   end
   return str
 end

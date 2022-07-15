@@ -112,9 +112,7 @@ function M.setup()
       name = 'Launch',
       type = 'lldb',
       request = 'launch',
-      program = function()
-        return fn.input('Path to executable: ', fn.getcwd() .. '/', 'file')
-      end,
+      program = function() return fn.input('Path to executable: ', fn.getcwd() .. '/', 'file') end,
       cwd = '${workspaceFolder}',
       stopOnEntry = false,
       args = {},

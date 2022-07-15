@@ -63,9 +63,7 @@ lang['williamboman/nvim-lsp-installer'] = {
       {
         event = 'Filetype',
         pattern = 'lsp-installer',
-        command = function()
-          vim.api.nvim_win_set_config(0, { border = rvim.style.border.current })
-        end,
+        command = function() vim.api.nvim_win_set_config(0, { border = rvim.style.border.current }) end,
       },
     })
   end,
@@ -159,12 +157,8 @@ lang['nvim-treesitter/playground'] = {
   keys = '<leader>LE',
   module = 'nvim-treesitter-playground',
   cmd = { 'TSPlaygroundToggle', 'TSHighlightCapturesUnderCursor' },
-  setup = function()
-    require('which-key').register({ ['<leader>LE'] = 'treesitter: inspect token' })
-  end,
-  config = function()
-    rvim.nnoremap('<leader>LE', '<Cmd>TSHighlightCapturesUnderCursor<CR>')
-  end,
+  setup = function() require('which-key').register({ ['<leader>LE'] = 'treesitter: inspect token' }) end,
+  config = function() rvim.nnoremap('<leader>LE', '<Cmd>TSHighlightCapturesUnderCursor<CR>') end,
 }
 
 lang['nvim-treesitter/nvim-treesitter-textobjects'] = {
@@ -233,9 +227,7 @@ lang['petertriho/cmp-git'] = {
 }
 lang['David-Kunz/cmp-npm'] = {
   after = 'nvim-cmp',
-  config = function()
-    require('cmp-npm').setup({})
-  end,
+  config = function() require('cmp-npm').setup({}) end,
 }
 lang['uga-rosa/cmp-dictionary'] = {
   after = 'nvim-cmp',

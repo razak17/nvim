@@ -1,8 +1,6 @@
 return function()
   local telescope_ok, telescope = rvim.safe_require('telescope')
-  if not telescope_ok then
-    return
-  end
+  if not telescope_ok then return end
 
   rvim.telescope = {}
 
@@ -30,9 +28,7 @@ return function()
   function telescope_custom_actions._multiopen(prompt_bufnr, open_cmd)
     local picker = action_state.get_current_picker(prompt_bufnr)
     local num_selections = #picker:get_multi_selection()
-    if not num_selections or num_selections <= 1 then
-      actions.add_selection(prompt_bufnr)
-    end
+    if not num_selections or num_selections <= 1 then actions.add_selection(prompt_bufnr) end
     actions.send_selected_to_qflist(prompt_bufnr)
     vim.cmd('cfdo ' .. open_cmd)
   end
@@ -49,9 +45,7 @@ return function()
 
   ---@param opts table
   ---@return table
-  function rvim.telescope.dropdown(opts)
-    return themes.get_dropdown(get_border(opts))
-  end
+  function rvim.telescope.dropdown(opts) return themes.get_dropdown(get_border(opts)) end
 
   function rvim.telescope.ivy(opts)
     return require('telescope.themes').get_ivy(vim.tbl_deep_extend('keep', opts or {}, {
@@ -115,9 +109,7 @@ return function()
       mappings = {
         i = {
           ['<C-w>'] = actions.send_selected_to_qflist,
-          ['<c-c>'] = function()
-            vim.cmd('stopinsert!')
-          end,
+          ['<c-c>'] = function() vim.cmd('stopinsert!') end,
           ['<esc>'] = actions.close,
           ['<C-j>'] = actions.move_selection_next,
           ['<C-k>'] = actions.move_selection_previous,
@@ -280,31 +272,19 @@ return function()
     })
   end
 
-  local function builtins()
-    builtin.builtin({ include_extensions = true })
-  end
+  local function builtins() builtin.builtin({ include_extensions = true }) end
 
   local function project_files(opts)
-    if not pcall(builtin.git_files, opts) then
-      builtin.find_files(opts)
-    end
+    if not pcall(builtin.git_files, opts) then builtin.find_files(opts) end
   end
 
-  local function find_files(opts)
-    builtin.find_files(opts)
-  end
+  local function find_files(opts) builtin.find_files(opts) end
 
-  local function file_browser()
-    telescope.extensions.file_browser.file_browser({})
-  end
+  local function file_browser() telescope.extensions.file_browser.file_browser({}) end
 
-  local function media_files()
-    telescope.extensions.media_files.media_files({})
-  end
+  local function media_files() telescope.extensions.media_files.media_files({}) end
 
-  local function zoxide_list()
-    telescope.extensions.zoxide.list({})
-  end
+  local function zoxide_list() telescope.extensions.zoxide.list({}) end
 
   local function MRU()
     require('mru').display_cache(rvim.telescope.dropdown({
@@ -318,9 +298,7 @@ return function()
     )
   end
 
-  local function projects()
-    telescope.extensions.projects.projects({})
-  end
+  local function projects() telescope.extensions.projects.projects({}) end
 
   local function delta_opts(opts, is_buf)
     local delta = previewers.new_termopen_previewer({
@@ -334,9 +312,7 @@ return function()
           'diff',
           entry.value .. '^!',
         }
-        if is_buf then
-          vim.list_extend(args, { '--', entry.current_file })
-        end
+        if is_buf then vim.list_extend(args, { '--', entry.current_file }) end
         return args
       end,
     })
@@ -348,13 +324,9 @@ return function()
     return opts
   end
 
-  local function delta_git_commits(opts)
-    builtin.git_commits(delta_opts(opts))
-  end
+  local function delta_git_commits(opts) builtin.git_commits(delta_opts(opts)) end
 
-  local function delta_git_bcommits(opts)
-    builtin.git_bcommits(delta_opts(opts, true))
-  end
+  local function delta_git_bcommits(opts) builtin.git_bcommits(delta_opts(opts, true)) end
 
   require('which-key').register({
     ['<c-p>'] = { project_files, 'telescope: find files' },

@@ -15,9 +15,7 @@ vim.tbl_add_reverse_lookup(Log.levels)
 function Log:init()
   local status_ok, structlog = pcall(require, 'structlog')
   -- local status_ok, structlog = rvim.safe_require "structlog"
-  if not status_ok then
-    return nil
-  end
+  if not status_ok then return nil end
 
   local log_level = Log.levels[(rvim.log.level):upper() or 'WARN']
   local rvim_log = {
@@ -86,9 +84,7 @@ end
 ---@param notif_handle table The implementation used by the sink for displaying the notifications
 function Log:configure_notifications(notif_handle)
   local status_ok, structlog = pcall(require, 'structlog')
-  if not status_ok then
-    return
-  end
+  if not status_ok then return end
 
   local default_namer = function(logger, entry)
     entry['title'] = logger.name
@@ -138,9 +134,7 @@ function Log:add_entry(level, msg, event)
   end
 
   local logger = self:init()
-  if not logger then
-    return
-  end
+  if not logger then return end
 
   self.__handle = logger
   self.__handle:log(level, vim.inspect(msg), event)
@@ -148,44 +142,32 @@ end
 
 ---Retrieves the path of the logfile
 ---@return string path of the logfile
-function Log:get_path()
-  return logfile
-end
+function Log:get_path() return logfile end
 
 ---Add a log entry at TRACE level
 ---@param msg any
 ---@param event any
-function Log:trace(msg, event)
-  self:add_entry(self.levels.TRACE, msg, event)
-end
+function Log:trace(msg, event) self:add_entry(self.levels.TRACE, msg, event) end
 
 ---Add a log entry at DEBUG level
 ---@param msg any
 ---@param event any
-function Log:debug(msg, event)
-  self:add_entry(self.levels.DEBUG, msg, event)
-end
+function Log:debug(msg, event) self:add_entry(self.levels.DEBUG, msg, event) end
 
 ---Add a log entry at INFO level
 ---@param msg any
 ---@param event any
-function Log:info(msg, event)
-  self:add_entry(self.levels.INFO, msg, event)
-end
+function Log:info(msg, event) self:add_entry(self.levels.INFO, msg, event) end
 
 ---Add a log entry at WARN level
 ---@param msg any
 ---@param event any
-function Log:warn(msg, event)
-  self:add_entry(self.levels.WARN, msg, event)
-end
+function Log:warn(msg, event) self:add_entry(self.levels.WARN, msg, event) end
 
 ---Add a log entry at ERROR level
 ---@param msg any
 ---@param event any
-function Log:error(msg, event)
-  self:add_entry(self.levels.ERROR, msg, event)
-end
+function Log:error(msg, event) self:add_entry(self.levels.ERROR, msg, event) end
 
 setmetatable({}, Log)
 

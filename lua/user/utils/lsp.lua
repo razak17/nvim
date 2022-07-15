@@ -4,21 +4,15 @@ local M = {}
 
 function M.is_client_active(name)
   local clients = vim.lsp.get_active_clients()
-  return tbl.find_first(clients, function(client)
-    return client.name == name
-  end)
+  return tbl.find_first(clients, function(client) return client.name == name end)
 end
 
 ---Get all supported filetypes by nvim-lsp-installer
 ---@return table supported filestypes as a list of strings
 function M.get_all_supported_filetypes()
-  local status_ok, lsp_installer_filetypes = pcall(
-    require,
-    'nvim-lsp-installer._generated.filetype_map'
-  )
-  if not status_ok then
-    return {}
-  end
+  local status_ok, lsp_installer_filetypes =
+    pcall(require, 'nvim-lsp-installer._generated.filetype_map')
+  if not status_ok then return {} end
   return vim.tbl_keys(lsp_installer_filetypes or {})
 end
 
@@ -27,14 +21,10 @@ end
 ---@return table supported filestypes as a list of strings
 function M.get_supported_filetypes(server_name)
   local status_ok, lsp_installer_servers = pcall(require, 'nvim-lsp-installer.servers')
-  if not status_ok then
-    return {}
-  end
+  if not status_ok then return {} end
 
   local server_available, requested_server = lsp_installer_servers.get_server(server_name)
-  if not server_available then
-    return {}
-  end
+  if not server_available then return {} end
 
   return requested_server:get_supported_filetypes()
 end
@@ -45,9 +35,9 @@ end
 ---@return table chosen clients
 function M.format_filter(clients)
   return vim.tbl_filter(function(client)
-    local status_ok, formatting_supported = pcall(function()
-      return client.server_capabilities.documentFormattingProvider
-    end)
+    local status_ok, formatting_supported = pcall(
+      function() return client.server_capabilities.documentFormattingProvider end
+    )
 
     if vim.tbl_contains(rvim.lsp.format_exclusions, clients.name) then
       clients.server_capabilities.documentFormattingProvider = false
@@ -67,9 +57,7 @@ end
 function M.format(opts)
   opts = opts or { filter = M.format_filter }
 
-  if vim.lsp.buf.format then
-    vim.lsp.buf.format(opts)
-  end
+  if vim.lsp.buf.format then vim.lsp.buf.format(opts) end
 
   local bufnr = opts.bufnr or vim.api.nvim_get_current_buf()
   local clients = vim.lsp.buf_get_clients(bufnr)
@@ -77,18 +65,15 @@ function M.format(opts)
   if opts.filter then
     clients = opts.filter(clients)
   elseif opts.id then
-    clients = vim.tbl_filter(function(client)
-      return client.id == opts.id
-    end, clients)
+    clients = vim.tbl_filter(function(client) return client.id == opts.id end, clients)
   elseif opts.name then
-    clients = vim.tbl_filter(function(client)
-      return client.name == opts.name
-    end, clients)
+    clients = vim.tbl_filter(function(client) return client.name == opts.name end, clients)
   end
 
-  clients = vim.tbl_filter(function(client)
-    return client.supports_method('textDocument/formatting')
-  end, clients)
+  clients = vim.tbl_filter(
+    function(client) return client.supports_method('textDocument/formatting') end,
+    clients
+  )
 
   if #clients == 0 then
     vim.notify_once('[LSP] Format request failed, no matching language servers.')

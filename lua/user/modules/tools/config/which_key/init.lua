@@ -79,9 +79,7 @@ return function()
   key_maps.g = plugin_keymaps.git
 
   -- lsp
-  if rvim.plugin_loaded('nvim-lspconfig') then
-    key_maps.l = plugin_keymaps.lsp
-  end
+  if rvim.plugin_loaded('nvim-lspconfig') then key_maps.l = plugin_keymaps.lsp end
 
   -- packer
   key_maps.p = plugin_keymaps.packer

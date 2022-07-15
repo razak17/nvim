@@ -36,9 +36,7 @@ end
 ---@return string
 function rvim.get_config_dir()
   local rvim_config_dir = vim.env.RVIM_CONFIG_DIR
-  if not rvim_config_dir then
-    return vim.call('stdpath', 'config')
-  end
+  if not rvim_config_dir then return vim.call('stdpath', 'config') end
   return rvim_config_dir
 end
 
@@ -46,9 +44,7 @@ end
 ---@return string
 function rvim.get_cache_dir()
   local rvim_cache_dir = vim.env.RVIM_CACHE_DIR
-  if not rvim_cache_dir then
-    return vim.call('stdpath', 'cache')
-  end
+  if not rvim_cache_dir then return vim.call('stdpath', 'cache') end
   return rvim_cache_dir
 end
 
@@ -56,9 +52,7 @@ end
 ---@return string
 function rvim.get_user_dir()
   local config_dir = vim.env.RVIM_CONFIG_DIR
-  if not config_dir then
-    config_dir = vim.call('stdpath', 'config')
-  end
+  if not config_dir then config_dir = vim.call('stdpath', 'config') end
   return join_paths(config_dir, 'lua', 'user')
 end
 
@@ -131,9 +125,7 @@ end
 
 --- Check if a file or directory exists in this path
 function rvim._exists(file)
-  if file == '' or file == nil then
-    return false
-  end
+  if file == '' or file == nil then return false end
   local ok, err, code = os.rename(file, file)
   if not ok then
     if code == 13 then
@@ -147,9 +139,7 @@ end
 rvim.list_installed_plugins = (function()
   local plugins
   return function()
-    if plugins then
-      return plugins
-    end
+    if plugins then return plugins end
     local data_dir = rvim.get_runtime_dir()
     local start = fn.expand(data_dir .. '/site/pack/packer/start/*', true, true)
     local opt = fn.expand(data_dir .. '/site/pack/packer/opt/*', true, true)
@@ -163,9 +153,7 @@ end)()
 ---@return boolean
 function rvim.plugin_installed(plugin_name)
   for _, path in ipairs(rvim.list_installed_plugins()) do
-    if vim.endswith(path, plugin_name) then
-      return true
-    end
+    if vim.endswith(path, plugin_name) then return true end
   end
   return false
 end
@@ -187,9 +175,7 @@ function rvim.is_vim_list_open()
     local buf = api.nvim_win_get_buf(win)
     local location_list = fn.getloclist(0, { filewinid = 0 })
     local is_loc_list = location_list.filewinid > 0
-    if vim.bo[buf].filetype == 'qf' or is_loc_list then
-      return true
-    end
+    if vim.bo[buf].filetype == 'qf' or is_loc_list then return true end
   end
   return false
 end
@@ -202,9 +188,7 @@ function rvim.safe_require(module, opts)
   opts = opts or { silent = false }
   local ok, result = pcall(require, module)
   if not ok and not opts.silent then
-    if opts.message then
-      result = opts.message .. '\n' .. result
-    end
+    if opts.message then result = opts.message .. '\n' .. result end
     vim.notify(result, vim.log.levels.ERROR, { title = fmt('Error requiring: %s', module) })
   end
   return ok, result
@@ -219,17 +203,13 @@ end
 ---@param callback fun(module: table)
 function rvim.ftplugin_conf(name, callback)
   local plugin_name = type(name) == 'table' and name.plugin or nil
-  if plugin_name and not rvim.plugin_loaded(plugin_name) then
-    return
-  end
+  if plugin_name and not rvim.plugin_loaded(plugin_name) then return end
 
   local module = type(name) == 'table' and name[1] or name
   local info = debug.getinfo(1, 'S')
   local ok, plugin = rvim.safe_require(module, { message = fmt('In file: %s', info.source) })
 
-  if ok then
-    callback(plugin)
-  end
+  if ok then callback(plugin) end
 end
 
 ---@param str string
@@ -245,9 +225,7 @@ end
 ---@param item any
 ---@return boolean?
 function rvim.empty(item)
-  if not item then
-    return true
-  end
+  if not item then return true end
   local item_type = type(item)
   if item_type == 'string' then
     return item == ''
@@ -267,17 +245,13 @@ function rvim.profile(filename)
   local base = '/tmp/config/profile/'
   fn.mkdir(base, 'p')
   local success, profile = pcall(require, 'plenary.profile.lua_profiler')
-  if not success then
-    vim.api.nvim_echo({ 'Plenary is not installed.', 'Title' }, true, {})
-  end
+  if not success then vim.api.nvim_echo({ 'Plenary is not installed.', 'Title' }, true, {}) end
   profile.start()
   return function()
     profile.stop()
     local logfile = base .. filename .. '.log'
     profile.report(logfile)
-    vim.defer_fn(function()
-      vim.cmd('tabedit ' .. logfile)
-    end, 1000)
+    vim.defer_fn(function() vim.cmd('tabedit ' .. logfile) end, 1000)
   end
 end
 
@@ -314,19 +288,17 @@ P = vim.pretty_print
 local function validate_autocmd(name, cmd)
   local keys = { 'event', 'buffer', 'pattern', 'desc', 'command', 'group', 'once', 'nested' }
   local incorrect = rvim.fold(function(accum, _, key)
-    if not vim.tbl_contains(keys, key) then
-      table.insert(accum, key)
-    end
+    if not vim.tbl_contains(keys, key) then table.insert(accum, key) end
     return accum
   end, cmd, {})
-  if #incorrect == 0 then
-    return
-  end
-  vim.schedule(function()
-    vim.notify('Incorrect keys: ' .. table.concat(incorrect, ', '), 'error', {
-      title = fmt('Autocmd: %s', name),
-    })
-  end)
+  if #incorrect == 0 then return end
+  vim.schedule(
+    function()
+      vim.notify('Incorrect keys: ' .. table.concat(incorrect, ', '), 'error', {
+        title = fmt('Autocmd: %s', name),
+      })
+    end
+  )
 end
 
 ---@class Autocommand
@@ -391,16 +363,12 @@ end
 ---A terser proxy for `nvim_replace_termcodes`
 ---@param str string
 ---@return any
-function rvim.replace_termcodes(str)
-  return api.nvim_replace_termcodes(str, true, true, true)
-end
+function rvim.replace_termcodes(str) return api.nvim_replace_termcodes(str, true, true, true) end
 
 ---check if a certain feature/version/commit exists in nvim
 ---@param feature string
 ---@return boolean
-function rvim.has(feature)
-  return vim.fn.has(feature) > 0
-end
+function rvim.has(feature) return vim.fn.has(feature) > 0 end
 
 ----------------------------------------------------------------------------------------------------
 -- Keymaps

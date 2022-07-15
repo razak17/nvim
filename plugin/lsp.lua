@@ -11,9 +11,7 @@ local icons = rvim.style.icons
 local border = rvim.style.border.current
 local diagnostic = vim.diagnostic
 
-if vim.env.DEVELOPING then
-  vim.lsp.set_log_level(L.DEBUG)
-end
+if vim.env.DEVELOPING then vim.lsp.set_log_level(L.DEBUG) end
 
 -----------------------------------------------------------------------------//
 -- Autocommands
@@ -41,9 +39,7 @@ local function setup_autocommands(client, bufnr)
   if client.server_capabilities.documentFormattingProvider then
     -- Format On Save
     local opts = rvim.util.format_on_save
-    if rvim.find_string(rvim.lsp.format_on_save_exclusions, vim.bo.ft) then
-      return
-    end
+    if rvim.find_string(rvim.lsp.format_on_save_exclusions, vim.bo.ft) then return end
     table.insert(cmds, {
       event = { 'BufWritePre' },
       pattern = { opts.pattern },
@@ -60,9 +56,7 @@ local function setup_autocommands(client, bufnr)
         event = { 'BufEnter', 'CursorHold', 'InsertLeave' },
         buffer = bufnr,
         command = function(args)
-          if api.nvim_buf_is_valid(args.buf) then
-            vim.lsp.codelens.refresh()
-          end
+          if api.nvim_buf_is_valid(args.buf) then vim.lsp.codelens.refresh() end
         end,
       })
     end
@@ -74,9 +68,7 @@ local function setup_autocommands(client, bufnr)
         event = { 'CursorHold' },
         buffer = bufnr,
         desc = 'Show diagnostics on hover',
-        command = function()
-          diagnostic_popup()
-        end,
+        command = function() diagnostic_popup() end,
       })
     end
     if rvim.lsp.document_highlight then
@@ -85,17 +77,13 @@ local function setup_autocommands(client, bufnr)
         event = { 'CursorHold', 'CursorHoldI' },
         buffer = bufnr,
         desc = 'LSP: Document Highlight',
-        command = function()
-          vim.lsp.buf.document_highlight()
-        end,
+        command = function() vim.lsp.buf.document_highlight() end,
       })
       table.insert(cmds, {
         event = { 'CursorMoved' },
         desc = 'LSP: Document Highlight (Clear)',
         buffer = bufnr,
-        command = function()
-          vim.lsp.buf.clear_references()
-        end,
+        command = function() vim.lsp.buf.clear_references() end,
       })
     end
   end
@@ -110,16 +98,12 @@ local function setup_plugins(client, bufnr)
   -- vim-illuminate
   if rvim.lsp.document_highlight then
     local status_ok, illuminate = rvim.safe_require('illuminate')
-    if not status_ok then
-      return
-    end
+    if not status_ok then return end
     illuminate.on_attach(client)
   end
   -- nvim-navic
   local ok, navic = pcall(require, 'nvim-navic')
-  if ok and client.server_capabilities.documentSymbolProvider then
-    navic.attach(client, bufnr)
-  end
+  if ok and client.server_capabilities.documentSymbolProvider then navic.attach(client, bufnr) end
 end
 
 ---Add buffer local mappings, autocommands, tagfunc etc for attaching servers
@@ -130,9 +114,7 @@ function rvim.lsp.on_attach(client, bufnr)
   setup_autocommands(client, bufnr)
   setup_plugins(client, bufnr)
   keymaps.init(client)
-  local function buf_set_option(...)
-    vim.api.nvim_buf_set_option(bufnr, ...)
-  end
+  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
   buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
   if client.server_capabilities.documentFormattingProvider then
@@ -147,9 +129,7 @@ rvim.augroup('LspSetupCommands', {
     command = function(args)
       local bufnr = args.buf
       -- if the buffer is invalid we should not try and attach to it
-      if not api.nvim_buf_is_valid(args.buf) or not args.data then
-        return
-      end
+      if not api.nvim_buf_is_valid(args.buf) or not args.data then return end
       local client = vim.lsp.get_client_by_id(args.data.client_id)
       rvim.lsp.on_attach(client, bufnr)
     end,
@@ -157,9 +137,7 @@ rvim.augroup('LspSetupCommands', {
   {
     event = 'LspDetach',
     desc = 'Clean up after detached LSP',
-    command = function(args)
-      api.nvim_clear_autocmds({ group = AUGROUP, buffer = args.buf })
-    end,
+    command = function(args) api.nvim_clear_autocmds({ group = AUGROUP, buffer = args.buf }) end,
   },
 })
 -----------------------------------------------------------------------------//
@@ -167,9 +145,7 @@ rvim.augroup('LspSetupCommands', {
 -----------------------------------------------------------------------------//
 local command = rvim.command
 
-command('LspFormat', function()
-  require('user.utils.lsp').format()
-end)
+command('LspFormat', function() require('user.utils.lsp').format() end)
 
 -- A helper function to auto-update the quickfix list when new diagnostics come
 -- in and close it once everything is resolved. This functionality only runs whilst
@@ -178,25 +154,19 @@ end)
 local function make_diagnostic_qf_updater()
   local cmd_id = nil
   return function()
-    if not api.nvim_buf_is_valid(0) then
-      return
-    end
+    if not api.nvim_buf_is_valid(0) then return end
     pcall(vim.diagnostic.setqflist, { open = false })
     rvim.toggle_list('quickfix')
     if not rvim.is_vim_list_open() and cmd_id then
       api.nvim_del_autocmd(cmd_id)
       cmd_id = nil
     end
-    if cmd_id then
-      return
-    end
+    if cmd_id then return end
     cmd_id = api.nvim_create_autocmd('DiagnosticChanged', {
       callback = function()
         if rvim.is_vim_list_open() then
           pcall(vim.diagnostic.setqflist, { open = false })
-          if #fn.getqflist() == 0 then
-            rvim.toggle_list('quickfix')
-          end
+          if #fn.getqflist() == 0 then rvim.toggle_list('quickfix') end
         end
       end,
     })
@@ -243,9 +213,7 @@ local function max_diagnostic(callback)
     local max_severity_per_line = {}
     for _, d in pairs(diagnostics) do
       local m = max_severity_per_line[d.lnum]
-      if not m or d.severity < m.severity then
-        max_severity_per_line[d.lnum] = d
-      end
+      if not m or d.severity < m.severity then max_severity_per_line[d.lnum] = d end
     end
     -- Pass the filtered diagnostics (with our custom namespace) to
     -- the original handler
@@ -256,17 +224,13 @@ end
 local signs_handler = diagnostic.handlers.signs
 diagnostic.handlers.signs = vim.tbl_extend('force', signs_handler, {
   show = max_diagnostic(signs_handler.show),
-  hide = function(_, bufnr)
-    signs_handler.hide(ns, bufnr)
-  end,
+  hide = function(_, bufnr) signs_handler.hide(ns, bufnr) end,
 })
 
 local virt_text_handler = diagnostic.handlers.virtual_text
 diagnostic.handlers.virtual_text = vim.tbl_extend('force', virt_text_handler, {
   show = max_diagnostic(virt_text_handler.show),
-  hide = function(_, bufnr)
-    virt_text_handler.hide(ns, bufnr)
-  end,
+  hide = function(_, bufnr) virt_text_handler.hide(ns, bufnr) end,
 })
 
 -----------------------------------------------------------------------------//
@@ -318,8 +282,6 @@ lsp.handlers['window/showMessage'] = function(_, result, ctx)
   vim.notify(result.message, lvl, {
     title = 'LSP | ' .. client.name,
     timeout = 8000,
-    keep = function()
-      return lvl == 'ERROR' or lvl == 'WARN'
-    end,
+    keep = function() return lvl == 'ERROR' or lvl == 'WARN' end,
   })
 end

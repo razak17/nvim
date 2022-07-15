@@ -4,9 +4,7 @@ local fmt = string.format
 local M = {}
 M.__index = M
 
-function M:plug_notify(msg)
-  vim.notify(msg, nil, { title = 'Packer' })
-end
+function M:plug_notify(msg) vim.notify(msg, nil, { title = 'Packer' }) end
 
 function M:get_plugins_list()
   local list = {}
@@ -35,9 +33,11 @@ function M:init_ensure_installed()
   if not state then
     local cmd = '!git clone https://github.com/wbthomason/packer.nvim ' .. packer_dir
     api.nvim_command(cmd)
-    uv.fs_mkdir(rvim.get_runtime_dir() .. '/site/lua', 511, function()
-      assert('make compile path dir failed')
-    end)
+    uv.fs_mkdir(
+      rvim.get_runtime_dir() .. '/site/lua',
+      511,
+      function() assert('make compile path dir failed') end
+    )
     self:load_packer()
     require('packer').sync()
   end
@@ -94,13 +94,10 @@ end
 ---@return any
 function M.load_conf(dir, name)
   local module_dir = fmt('user.modules.%s', dir)
-  if dir == 'user' then
-    return require(fmt(dir .. '.%s', name))
-  end
+  if dir == 'user' then return require(fmt(dir .. '.%s', name)) end
 
   return require(fmt(module_dir .. '.%s.%s', 'config', name))
 end
-
 
 --- Automagically register local and remote plugins as well as managing when they are enabled or disabled
 --- 1. Local plugins that I created should be used but specified with their git URLs so they are
@@ -114,9 +111,7 @@ function M:with_local(spec)
 
   local name = vim.split(spec[1], '/')[2]
   local path = M:dev(name)
-  if fn.isdirectory(fn.expand(path)) < 1 then
-    return spec, nil
-  end
+  if fn.isdirectory(fn.expand(path)) < 1 then return spec, nil end
   local local_spec = {
     path,
     config = spec.config,
@@ -150,12 +145,8 @@ end
 
 function M.goto_repo()
   local repo = fn.expand('<cfile>')
-  if repo:match('https://') then
-    return vim.cmd('norm gx')
-  end
-  if not repo or #vim.split(repo, '/') ~= 2 then
-    return vim.cmd('norm! gf')
-  end
+  if repo:match('https://') then return vim.cmd('norm gx') end
+  if not repo or #vim.split(repo, '/') ~= 2 then return vim.cmd('norm! gf') end
   local url = fmt('https://www.github.com/%s', repo)
   fn.system(fn.printf(rvim.open_command .. ' "https://github.com/%s"', repo))
   -- fn.jobstart(fmt('%s %s', vim.g.open_command, url))
@@ -163,8 +154,6 @@ function M.goto_repo()
 end
 
 ---@param path string
-function M:dev(path)
-  return join_paths(vim.env.HOME, 'personal/workspace/coding/plugins', path)
-end
+function M:dev(path) return join_paths(vim.env.HOME, 'personal/workspace/coding/plugins', path) end
 
 return M

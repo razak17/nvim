@@ -1,5 +1,5 @@
 return function()
-  local dapui = require("dapui")
+  local dapui = require('dapui')
   dapui.setup({
     icons = { expanded = '▾', collapsed = '▸' },
     floating = {
@@ -23,10 +23,6 @@ return function()
     dapui.open()
     vim.api.nvim_exec_autocmds('User', { pattern = 'DapStarted' })
   end
-  dap.listeners.before.event_terminated['dapui_config'] = function()
-    dapui.close()
-  end
-  dap.listeners.before.event_exited['dapui_config'] = function()
-    dapui.close()
-  end
+  dap.listeners.before.event_terminated['dapui_config'] = function() dapui.close() end
+  dap.listeners.before.event_exited['dapui_config'] = function() dapui.close() end
 end

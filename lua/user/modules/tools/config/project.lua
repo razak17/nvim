@@ -44,9 +44,7 @@ return function()
   }
 
   local status_ok, project_nvim = rvim.safe_require('project_nvim')
-  if not status_ok then
-    return
-  end
+  if not status_ok then return end
 
   project_nvim.setup(rvim.project.setup)
 end

@@ -14,13 +14,9 @@ function M.go()
   vim.opt_local.smarttab = true
   vim.cmd([[setlocal iskeyword+=-]])
 
-  if not rvim then
-    return
-  end
+  if not rvim then return end
   local ok, whichkey = rvim.safe_require('which-key')
-  if not ok then
-    return
-  end
+  if not ok then return end
 
   whichkey.register({
     ['<leader>G'] = {
@@ -61,9 +57,7 @@ function M.html()
   -- setlocal matchpairs+=<:>
 end
 
-function M.javascript()
-  vim.opt_local.spell = true
-end
+function M.javascript() vim.opt_local.spell = true end
 
 function M.javascriptreact()
   vim.opt_local.textwidth = 100
@@ -97,16 +91,12 @@ function M.log()
 end
 
 function M.lua()
-  if not rvim then
-    return
-  end
+  if not rvim then return end
 
   local function find(word, ...)
     for _, str in ipairs({ ... }) do
       local match_start, match_end = string.find(word, str)
-      if match_start then
-        return str, match_start, match_end
-      end
+      if match_start then return str, match_start, match_end end
     end
   end
 
@@ -135,9 +125,7 @@ function M.lua()
       return
     elseif fn_match then
       local _, finish = string.find(word, fn_match .. '.')
-      if not finish then
-        return
-      end
+      if not finish then return end
       local api_function = string.sub(word, finish + 1) .. '()'
 
       vim.cmd(string.format('help %s', api_function))
@@ -192,9 +180,7 @@ function M.python()
   vim.opt_local.tabstop = 4
 end
 
-function M.rust()
-  vim.opt_local.spell = true
-end
+function M.rust() vim.opt_local.spell = true end
 
 function M.typescript()
   vim.opt_local.spell = true
@@ -220,45 +206,19 @@ function M.yaml()
 end
 
 function M.setup(filetype)
-  if filetype == 'go' then
-    M.go()
-  end
-  if filetype == 'graphql' then
-    M.graphql()
-  end
-  if filetype == 'html' then
-    M.html()
-  end
-  if filetype == 'javascript' then
-    M.javascript()
-  end
-  if filetype == 'javascriptreact' then
-    M.javascriptreact()
-  end
-  if filetype == 'json' then
-    M.json()
-  end
-  if filetype == 'log' then
-    M.log()
-  end
-  if filetype == 'lua' then
-    M.lua()
-  end
-  if filetype == 'python' then
-    M.python()
-  end
-  if filetype == 'rust' then
-    M.rust()
-  end
-  if filetype == 'typescript' then
-    M.typescript()
-  end
-  if filetype == 'typescriptreact' then
-    M.javascriptreact()
-  end
-  if filetype == 'yaml' then
-    M.yaml()
-  end
+  if filetype == 'go' then M.go() end
+  if filetype == 'graphql' then M.graphql() end
+  if filetype == 'html' then M.html() end
+  if filetype == 'javascript' then M.javascript() end
+  if filetype == 'javascriptreact' then M.javascriptreact() end
+  if filetype == 'json' then M.json() end
+  if filetype == 'log' then M.log() end
+  if filetype == 'lua' then M.lua() end
+  if filetype == 'python' then M.python() end
+  if filetype == 'rust' then M.rust() end
+  if filetype == 'typescript' then M.typescript() end
+  if filetype == 'typescriptreact' then M.javascriptreact() end
+  if filetype == 'yaml' then M.yaml() end
 end
 
 return M

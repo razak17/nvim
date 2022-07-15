@@ -19,15 +19,11 @@ function M.list_supported(filetype)
 end
 
 function M.setup(linter_configs)
-  if vim.tbl_isempty(linter_configs) then
-    return
-  end
+  if vim.tbl_isempty(linter_configs) then return end
 
   local registered = services.register_sources(linter_configs, method)
 
-  if #registered > 0 then
-    Log:debug('Registered the following linters: ' .. unpack(registered))
-  end
+  if #registered > 0 then Log:debug('Registered the following linters: ' .. unpack(registered)) end
 end
 
 return M

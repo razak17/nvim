@@ -34,9 +34,7 @@ function M.global_capabilities()
   capabilities.textDocument.codeAction = code_action_support
   capabilities.textDocument.foldingRange = folding_range_support
   local ok, cmp_nvim_lsp = rvim.safe_require('cmp_nvim_lsp')
-  if ok then
-    cmp_nvim_lsp.update_capabilities(capabilities)
-  end
+  if ok then cmp_nvim_lsp.update_capabilities(capabilities) end
 
   return capabilities
 end
@@ -47,13 +45,9 @@ end
 function rvim.lsp.on_init(client)
   local path = client.workspace_folders[1].name
   local config_path = path .. '/.vim/settings.json'
-  if fn.filereadable(config_path) == 0 then
-    return true
-  end
+  if fn.filereadable(config_path) == 0 then return true end
   local ok, json = pcall(fn.readfile, config_path)
-  if not ok then
-    return true
-  end
+  if not ok then return true end
   local overrides = vim.json.decode(table.concat(json, '\n'))
   for name, config in pairs(overrides) do
     if name == client.name then
@@ -77,17 +71,11 @@ function M.setup()
   Log:debug('Setting up LSP support')
 
   local lsp_status_ok, _ = rvim.safe_require('lspconfig')
-  if not lsp_status_ok then
-    return
-  end
+  if not lsp_status_ok then return end
 
-  pcall(function()
-    require('nlspsettings').setup(rvim.lsp.nlsp_settings.setup)
-  end)
+  pcall(function() require('nlspsettings').setup(rvim.lsp.nlsp_settings.setup) end)
 
-  pcall(function()
-    require('nvim-lsp-installer').setup(rvim.lsp.installer.setup)
-  end)
+  pcall(function() require('nvim-lsp-installer').setup(rvim.lsp.installer.setup) end)
 
   require('user.lsp.null-ls').setup()
 end

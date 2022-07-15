@@ -23,9 +23,7 @@ local smart_close_filetypes = {
 local smart_close_buftypes = {} -- Don't include no file buffers rvim diff buffers are nofile
 
 local function smart_close()
-  if fn.winnr('$') ~= 1 then
-    api.nvim_win_close(0, true)
-  end
+  if fn.winnr('$') ~= 1 then api.nvim_win_close(0, true) end
 end
 
 -- FIXME: Causing problems telescope mappings keymap
@@ -48,9 +46,7 @@ rvim.augroup('SmartClose', {
         or vim.tbl_contains(smart_close_buftypes, vim.bo.buftype)
         or vim.tbl_contains(smart_close_filetypes, vim.bo.filetype)
 
-      if is_eligible then
-        rvim.nnoremap('q', smart_close, { buffer = 0, nowait = true })
-      end
+      if is_eligible then rvim.nnoremap('q', smart_close, { buffer = 0, nowait = true }) end
     end,
   },
   {
@@ -70,9 +66,7 @@ rvim.augroup('SmartClose', {
     pattern = { '*' },
     nested = true,
     command = function()
-      if vim.bo.filetype ~= 'qf' then
-        vim.cmd('silent! lclose')
-      end
+      if vim.bo.filetype ~= 'qf' then vim.cmd('silent! lclose') end
     end,
   },
 })
@@ -82,9 +76,7 @@ rvim.augroup('ExternalCommands', {
     -- Open images in an image viewer (probably Preview)
     event = { 'BufEnter' },
     pattern = { '*.png', '*.jpg', '*.gif' },
-    command = function()
-      vim.cmd(fmt('silent! "%s | :bw"', rvim.open_command .. ' ' .. fn.expand('%')))
-    end,
+    command = function() vim.cmd(fmt('silent! "%s | :bw"', rvim.open_command .. ' ' .. fn.expand('%'))) end,
   },
 })
 
@@ -122,9 +114,7 @@ rvim.augroup('ClearCommandMessages', {
     pattern = { ':' },
     command = function()
       vim.defer_fn(function()
-        if fn.mode() == 'n' then
-          vim.cmd([[echon '']])
-        end
+        if fn.mode() == 'n' then vim.cmd([[echon '']]) end
       end, 10000)
     end,
   },
@@ -238,9 +228,7 @@ rvim.augroup('WinBehavior', {
     event = { 'FocusLost' },
     pattern = { '*' },
     command = function()
-      if rvim.util.save_on_focus_lost then
-        vim.cmd('silent! wall')
-      end
+      if rvim.util.save_on_focus_lost then vim.cmd('silent! wall') end
     end,
   },
   { event = { 'TermOpen' }, pattern = { '*:zsh' }, command = 'startinsert' },
@@ -260,17 +248,13 @@ rvim.augroup('WinBehavior', {
   {
     event = { 'BufWinEnter' },
     command = function(args)
-      if vim.wo.diff then
-        vim.diagnostic.disable(args.buf)
-      end
+      if vim.wo.diff then vim.diagnostic.disable(args.buf) end
     end,
   },
   {
     event = { 'BufWinLeave' },
     command = function(args)
-      if vim.wo.diff then
-        vim.diagnostic.enable(args.buf)
-      end
+      if vim.wo.diff then vim.diagnostic.enable(args.buf) end
     end,
   },
 })
@@ -288,16 +272,12 @@ rvim.augroup('Cursorline', {
   {
     event = { 'BufEnter' },
     pattern = { '*' },
-    command = function()
-      vim.wo.cursorline = should_show_cursorline()
-    end,
+    command = function() vim.wo.cursorline = should_show_cursorline() end,
   },
   {
     event = { 'BufLeave' },
     pattern = { '*' },
-    command = function()
-      vim.wo.cursorline = should_show_cursorline()
-    end,
+    command = function() vim.wo.cursorline = should_show_cursorline() end,
   },
 })
 
@@ -307,30 +287,22 @@ if vim.env.TMUX ~= nil then
     {
       event = { 'BufEnter' },
       pattern = { '*' },
-      command = function()
-        vim.o.titlestring = external.title_string()
-      end,
+      command = function() vim.o.titlestring = external.title_string() end,
     },
     {
       event = { 'FocusGained', 'BufReadPost', 'BufEnter' },
       pattern = { '*' },
-      command = function()
-        external.tmux.set_window_title()
-      end,
+      command = function() external.tmux.set_window_title() end,
     },
     {
       event = { 'VimLeave' },
       pattern = { '*' },
-      command = function()
-        external.tmux.clear_pane_title()
-      end,
+      command = function() external.tmux.clear_pane_title() end,
     },
     {
       event = { 'VimLeavePre', 'FocusLost' },
       pattern = { '*' },
-      command = function()
-        external.tmux.set_statusline(true)
-      end,
+      command = function() external.tmux.set_statusline(true) end,
     },
     {
       event = { 'ColorScheme', 'FocusGained' },
@@ -339,9 +311,7 @@ if vim.env.TMUX ~= nil then
         -- NOTE: there is a race condition here rvim the colors
         -- for kitty to re-use need to be set AFTER the rest of the colorscheme
         -- overrides
-        vim.defer_fn(function()
-          external.tmux.set_statusline()
-        end, 1)
+        vim.defer_fn(function() external.tmux.set_statusline() end, 1)
       end,
     },
   })
@@ -367,9 +337,7 @@ rvim.augroup('Utilities', {
     event = { 'BufReadCmd' },
     pattern = { 'file:///*' },
     nested = true,
-    command = function(args)
-      vim.cmd(fmt('bd!|edit %s', vim.uri_to_fname(args.file)))
-    end,
+    command = function(args) vim.cmd(fmt('bd!|edit %s', vim.uri_to_fname(args.file))) end,
   },
   {
     -- When editing a file, always jump to the last known cursor position.
@@ -402,9 +370,7 @@ rvim.augroup('Utilities', {
     event = { 'BufLeave' },
     pattern = { '*' },
     command = function()
-      if can_save() then
-        vim.cmd('silent! update')
-      end
+      if can_save() then vim.cmd('silent! update') end
     end,
   },
   {
@@ -451,9 +417,7 @@ rvim.augroup('TerminalAutocommands', {
     pattern = { '*' },
     command = function()
       --- automatically close a terminal if the job was successful
-      if not vim.v.event.status == 0 then
-        vim.cmd('bdelete! ' .. fn.expand('<abuf>'))
-      end
+      if not vim.v.event.status == 0 then vim.cmd('bdelete! ' .. fn.expand('<abuf>')) end
     end,
   },
 })

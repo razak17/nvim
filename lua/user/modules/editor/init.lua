@@ -15,9 +15,7 @@ editor['xiyaowong/accelerated-jk.nvim'] = {
 }
 
 editor['kylechui/nvim-surround'] = {
-  config = function()
-    require('nvim-surround').setup({})
-  end,
+  config = function() require('nvim-surround').setup({}) end,
 }
 
 editor['monaqa/dial.nvim'] = {
@@ -36,9 +34,7 @@ editor['junegunn/vim-easy-align'] = {
 
 editor['xiyaowong/nvim-cursorword'] = {
   event = { 'InsertEnter' },
-  config = function()
-    vim.cmd([[hi! CursorWord cterm=NONE gui=NONE guibg=#3f444a]])
-  end,
+  config = function() vim.cmd([[hi! CursorWord cterm=NONE gui=NONE guibg=#3f444a]]) end,
   disable = true,
 }
 
@@ -61,17 +57,13 @@ editor['norcalli/nvim-colorizer.lua'] = {
 
 editor['romainl/vim-cool'] = {
   event = { 'BufWinEnter' },
-  config = function()
-    vim.g.CoolTotalMatches = 1
-  end,
+  config = function() vim.g.CoolTotalMatches = 1 end,
 }
 
 editor['jghauser/fold-cycle.nvim'] = {
   config = function()
     require('fold-cycle').setup()
-    rvim.nnoremap('<BS>', function()
-      require('fold-cycle').open()
-    end)
+    rvim.nnoremap('<BS>', function() require('fold-cycle').open() end)
   end,
 }
 
@@ -106,23 +98,17 @@ editor['Matt-A-Bennett/vim-surround-funk'] = {
 }
 
 editor['danymat/neogen'] = {
-  setup = function()
-    rvim.nnoremap('<localleader>lc', require('neogen').generate, 'comment: generate')
-  end,
+  setup = function() rvim.nnoremap('<localleader>lc', require('neogen').generate, 'comment: generate') end,
   keys = { '<localleader>lc' },
   requires = 'nvim-treesitter/nvim-treesitter',
   module = 'neogen',
-  config = function()
-    require('neogen').setup({ snippet_engine = 'luasnip' })
-  end,
+  config = function() require('neogen').setup({ snippet_engine = 'luasnip' }) end,
 }
 
 editor['abecodes/tabout.nvim'] = {
   wants = { 'nvim-treesitter' },
   after = { 'nvim-cmp' },
-  config = function()
-    require('tabout').setup({ ignore_beginning = false, completion = false })
-  end,
+  config = function() require('tabout').setup({ ignore_beginning = false, completion = false }) end,
 }
 
 editor['chentoast/marks.nvim'] = {
@@ -151,13 +137,13 @@ editor['glepnir/template.nvim'] = {
 editor['AckslD/nvim-trevJ.lua'] = {
   module = 'trevj',
   setup = function()
-    rvim.nnoremap('gj', function()
-      require('trevj').format_at_cursor()
-    end, { desc = 'splitjoin: split' })
+    rvim.nnoremap(
+      'gj',
+      function() require('trevj').format_at_cursor() end,
+      { desc = 'splitjoin: split' }
+    )
   end,
-  config = function()
-    require('trevj').setup()
-  end,
+  config = function() require('trevj').setup() end,
 }
 
 return editor

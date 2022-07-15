@@ -45,18 +45,15 @@ end
 ---@param server_name string name of a valid language server, e.g. pyright, gopls, tsserver, etc.
 ---@param dir string the full path to the desired directory
 function M.generate_ftplugin(server_name, dir)
-  if should_skip(server_name) then
-    return
-  end
+  if should_skip(server_name) then return end
 
   -- get the supported filetypes and remove any ignored ones
-  local filetypes = vim.tbl_filter(function(ft)
-    return not vim.tbl_contains(skipped_filetypes, ft)
-  end, lsp_utils.get_supported_filetypes(server_name) or {})
+  local filetypes = vim.tbl_filter(
+    function(ft) return not vim.tbl_contains(skipped_filetypes, ft) end,
+    lsp_utils.get_supported_filetypes(server_name) or {}
+  )
 
-  if not filetypes then
-    return
-  end
+  if not filetypes then return end
 
   for _, filetype in ipairs(filetypes) do
     local filename = join_paths(dir, filetype .. '.lua')
@@ -113,9 +110,7 @@ function M.generate_templates(servers_names)
   end
 
   -- create the directory if it didn't exist
-  if not utils.is_directory(rvim.lsp.templates_dir) then
-    vim.fn.mkdir(ftplugin_dir, 'p')
-  end
+  if not utils.is_directory(rvim.lsp.templates_dir) then vim.fn.mkdir(ftplugin_dir, 'p') end
 
   for _, server in ipairs(servers_names) do
     M.generate_ftplugin(server, ftplugin_dir)

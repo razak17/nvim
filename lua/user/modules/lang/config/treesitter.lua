@@ -88,9 +88,10 @@ return function()
     vim.cmd([[packadd nvim-treesitter]])
     local parsers = require('nvim-treesitter.parsers')
     local configs = parsers.get_parser_configs()
-    return vim.tbl_map(function(ft)
-      return configs[ft].filetype or ft
-    end, parsers.available_parsers())
+    return vim.tbl_map(
+      function(ft) return configs[ft].filetype or ft end,
+      parsers.available_parsers()
+    )
   end
 
   local Log = require('user.core.log')
@@ -133,9 +134,7 @@ return function()
     {
       event = { 'FileType' },
       pattern = rvim.treesitter.get_filetypes(),
-      command = function()
-        vim.cmd('setlocal foldexpr=nvim_treesitter#foldexpr()')
-      end,
+      command = function() vim.cmd('setlocal foldexpr=nvim_treesitter#foldexpr()') end,
     },
   })
 end

@@ -1,8 +1,6 @@
 return function()
   local status_cmp_ok, cmp = rvim.safe_require('cmp')
-  if not status_cmp_ok then
-    return
-  end
+  if not status_cmp_ok then return end
 
   local fn = vim.fn
   local api = vim.api
@@ -58,9 +56,7 @@ return function()
     local clients = vim.lsp.buf_get_clients()
 
     for _, client in pairs(clients) do
-      if client.name == 'emmet_ls' then
-        return true
-      end
+      if client.name == 'emmet_ls' then return true end
     end
     return false
   end
@@ -100,14 +96,12 @@ return function()
         documentation = cmp.config.window.bordered(cmp_window),
       },
       snippet = {
-        expand = function(args)
-          require('luasnip').lsp_expand(args.body)
-        end,
+        expand = function(args) require('luasnip').lsp_expand(args.body) end,
       },
       mapping = {
-        ['<c-h>'] = cmp.mapping(function()
-          api.nvim_feedkeys(fn['copilot#Accept'](t('<Tab>')), 'n', true)
-        end),
+        ['<c-h>'] = cmp.mapping(
+          function() api.nvim_feedkeys(fn['copilot#Accept'](t('<Tab>')), 'n', true) end
+        ),
         ['<C-k>'] = cmp.mapping.select_prev_item(),
         ['<C-j>'] = cmp.mapping.select_next_item(),
         ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
@@ -208,9 +202,7 @@ return function()
     {
       event = { 'FileType' },
       pattern = { 'TelescopePrompt' },
-      command = function()
-        cmp.setup.buffer({ completion = { autocomplete = false } })
-      end,
+      command = function() cmp.setup.buffer({ completion = { autocomplete = false } }) end,
     },
   })
 end

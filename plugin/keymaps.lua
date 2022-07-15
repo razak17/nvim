@@ -225,9 +225,7 @@ function rvim.toggle_list(list_type)
   local prefix = is_location_target and 'l' or 'c'
   local L = vim.log.levels
   local is_open = rvim.is_vim_list_open()
-  if is_open then
-    return fn.execute(prefix .. 'close')
-  end
+  if is_open then return fn.execute(prefix .. 'close') end
   local list = is_location_target and fn.getloclist(0) or fn.getqflist()
   if vim.tbl_isempty(list) then
     local msg_prefix = (is_location_target and 'Location' or 'QuickFix')
@@ -236,17 +234,11 @@ function rvim.toggle_list(list_type)
 
   local winnr = fn.winnr()
   fn.execute(prefix .. 'open')
-  if fn.winnr() ~= winnr then
-    vim.cmd('wincmd p')
-  end
+  if fn.winnr() ~= winnr then vim.cmd('wincmd p') end
 end
 
-nnoremap('<leader>lq', function()
-  rvim.toggle_list('quickfix')
-end, 'toggle quickfix')
-nnoremap('<leader>lo', function()
-  rvim.toggle_list('location')
-end, 'toggle loclist')
+nnoremap('<leader>lq', function() rvim.toggle_list('quickfix') end, 'toggle quickfix')
+nnoremap('<leader>lo', function() rvim.toggle_list('location') end, 'toggle loclist')
 
 ------------------------------------------------------------------------------
 -- Utils

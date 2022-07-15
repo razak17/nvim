@@ -19,9 +19,7 @@ end
 
 local plugins = setmetatable({}, {
   __index = function(_, key)
-    if not packer then
-      Plug:load_packer()
-    end
+    if not packer then Plug:load_packer() end
     return packer[key]
   end,
 })
@@ -81,17 +79,13 @@ rvim.augroup('PackerSetupInit', {
     event = { 'BufWritePost' },
     desc = 'Packer setup and reload',
     pattern = { '*/user/modules/**/*.lua', '*/user/config/init.lua' },
-    command = function()
-      plugins.invalidate()
-    end,
+    command = function() plugins.invalidate() end,
   },
   {
     event = 'User',
     pattern = 'PackerCompileDone',
     desc = 'Inform me that packer has finished compiling',
-    command = function()
-      utils:plug_notify('Packer compile complete')
-    end,
+    command = function() utils:plug_notify('Packer compile complete') end,
   },
 })
 

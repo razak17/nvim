@@ -13,20 +13,14 @@ end
 
 function utils.open_link()
   local file = fn.expand('<cfile>')
-  if not file or fn.isdirectory(file) > 0 then
-    return vim.cmd('edit ' .. file)
-  end
+  if not file or fn.isdirectory(file) > 0 then return vim.cmd('edit ' .. file) end
 
-  if file:match('https://') then
-    return open(file)
-  end
+  if file:match('https://') then return open(file) end
 
   -- consider anything that looks like string/string a github link
   local plugin_url_regex = '[%a%d%-%.%_]*%/[%a%d%-%.%_]*'
   local link = string.match(file, plugin_url_regex)
-  if link then
-    return open(fmt('https://www.github.com/%s', link))
-  end
+  if link then return open(fmt('https://www.github.com/%s', link)) end
 end
 
 function utils.color_my_pencils()
@@ -111,9 +105,7 @@ function utils.write_file(path, txt, flag)
     assert(not open_err, open_err)
     uv.fs_write(fd, data, -1, function(write_err)
       assert(not write_err, write_err)
-      uv.fs_close(fd, function(close_err)
-        assert(not close_err, close_err)
-      end)
+      uv.fs_close(fd, function(close_err) assert(not close_err, close_err) end)
     end)
   end)
 end
@@ -179,9 +171,7 @@ function utils.smart_quit()
     vim.ui.input({
       prompt = 'You have unsaved changes. Quit anyway? (y/n) ',
     }, function(input)
-      if input == 'y' then
-        cmd('q!')
-      end
+      if input == 'y' then cmd('q!') end
     end)
   else
     cmd('q!')

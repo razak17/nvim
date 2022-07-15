@@ -34,17 +34,13 @@ function M.setup(server_name)
     })
   end
   -- rust_analyzer
-  if server_name == 'rust_analyzer' then
-    M.rust_tools_init(server, config)
-  end
+  if server_name == 'rust_analyzer' then M.rust_tools_init(server, config) end
 
   -- sqlls
   if server_name == 'sqlls' then
     server_name = 'sqls'
     config = {
-      on_attach = function(client, bufnr)
-        require('sqls').on_attach(client, bufnr)
-      end,
+      on_attach = function(client, bufnr) require('sqls').on_attach(client, bufnr) end,
     }
   end
 

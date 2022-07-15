@@ -1,8 +1,6 @@
 return function()
   local status_ok, nvim_web_devicons = rvim.safe_require('nvim-web-devicons')
-  if not status_ok then
-    return
-  end
+  if not status_ok then return end
 
   local P = rvim.palette
 

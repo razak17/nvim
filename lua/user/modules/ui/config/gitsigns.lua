@@ -1,9 +1,7 @@
 return function()
   local cwd = vim.fn.getcwd()
   local gitsigns_ok, gitsigns = rvim.safe_require('gitsigns')
-  if not gitsigns_ok then
-    return
-  end
+  if not gitsigns_ok then return end
 
   rvim.gitsigns = {
     setup = {
@@ -24,9 +22,7 @@ return function()
       on_attach = function()
         local gs = package.loaded.gitsigns
 
-        local function qf_list_modified()
-          gs.setqflist('all')
-        end
+        local function qf_list_modified() gs.setqflist('all') end
 
         require('which-key').register({
           ['<leader>h'] = {
@@ -67,11 +63,13 @@ return function()
 
   gitsigns.setup(rvim.gitsigns.setup)
 
-  rvim.vnoremap('<leader>hs', function()
-    gitsigns.stage_hunk({ vim.fn.line('.'), vim.fn.line('v') })
-  end)
-  rvim.vnoremap('<leader>hr', function()
-    gitsigns.reset_hunk({ vim.fn.line('.'), vim.fn.line('v') })
-  end)
+  rvim.vnoremap(
+    '<leader>hs',
+    function() gitsigns.stage_hunk({ vim.fn.line('.'), vim.fn.line('v') }) end
+  )
+  rvim.vnoremap(
+    '<leader>hr',
+    function() gitsigns.reset_hunk({ vim.fn.line('.'), vim.fn.line('v') }) end
+  )
   vim.keymap.set({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
 end

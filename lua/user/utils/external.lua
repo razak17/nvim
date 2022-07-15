@@ -27,18 +27,14 @@ end
 function M.title_string()
   local dir = fn.fnamemodify(fn.getcwd(), ':t')
   local icon, hl = fileicon()
-  if not hl then
-    return (icon or '') .. ' '
-  end
+  if not hl then return (icon or '') .. ' ' end
   local title_string = fmt('%s #[fg=%s]%s ', dir, u.get(hl, 'fg'), icon)
   local has_tmux = vim.env.TMUX ~= nil
   -- fn.jobstart(fmt("tmux set-titles-string '%s'", title_string))
   return has_tmux and title_string or dir .. ' ' .. icon
 end
 
-function M.tmux.clear_pane_title()
-  fn.jobstart('tmux set-window-option automatic-rename on')
-end
+function M.tmux.clear_pane_title() fn.jobstart('tmux set-window-option automatic-rename on') end
 
 function M.tmux.set_window_title()
   local session = fn.fnamemodify(vim.loop.cwd(), ':t') or 'Neovim'

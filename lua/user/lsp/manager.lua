@@ -57,9 +57,7 @@ function M.setup(server_name, user_config)
   vim.validate({ name = { server_name, 'string' } })
   user_config = user_config or {}
 
-  if lsp_utils.is_client_active(server_name) or M.client_is_configured(server_name) then
-    return
-  end
+  if lsp_utils.is_client_active(server_name) or M.client_is_configured(server_name) then return end
 
   local servers = require('nvim-lsp-installer.servers')
   local server_available, server = servers.get_server(server_name)
@@ -95,8 +93,6 @@ function M.setup(server_name, user_config)
   end)
 end
 
-M.override_setup = function(server_name)
-  require('user.lsp.overrides').setup(server_name)
-end
+M.override_setup = function(server_name) require('user.lsp.overrides').setup(server_name) end
 
 return M
