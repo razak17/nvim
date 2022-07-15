@@ -130,10 +130,7 @@ tools['nvim-telescope/telescope.nvim'] = {
     { 'nvim-telescope/telescope-ui-select.nvim' },
     { 'ilAYAli/scMRU.nvim' },
     { 'kkharji/sqlite.lua' },
-    {
-      'natecraddock/telescope-zf-native.nvim',
-      config = function() require('telescope').load_extension('zf-native') end,
-    },
+    { 'natecraddock/telescope-zf-native.nvim' },
   },
 }
 
