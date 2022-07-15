@@ -50,12 +50,14 @@ lang['neovim/nvim-lspconfig'] = {
     {
       'williamboman/mason.nvim',
       config = function()
+        local style = rvim.style
+        local icons = style.icons
         require('mason').setup({
-          ui = { border = rvim.style.border.current },
+          ui = { border = style.border.current },
           icons = {
-            package_installed = '✓',
-            package_pending = '',
-            package_uninstalled = '✗',
+            package_installed = icons.misc.checkmark,
+            package_pending = icons.misc.right_arrow,
+            package_uninstalled = icons.misc.x,
           },
           install_root_dir = rvim.paths.mason,
         })
@@ -68,14 +70,15 @@ lang['neovim/nvim-lspconfig'] = {
     {
       'tamago324/nlsp-settings.nvim',
       config = function()
+        local icons = rvim.style.icons
         require('nvim-lsp-installer').setup({
           ensure_installed = {},
           install_root_dir = join_paths(rvim.get_runtime_dir(), 'lsp_servers'),
           ui = {
             icons = {
-              server_installed = '✓',
-              server_pending = '',
-              server_uninstalled = '✗',
+              server_installed = icons.misc.checkmark,
+              server_pending = icons.misc.right_arrow,
+              server_uninstalled = icons.misc.x,
             },
           },
         })

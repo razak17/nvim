@@ -98,6 +98,9 @@ rvim.style = {
       calendar = '',
       tree = '',
       octoface = '',
+      checkmark='✓',
+      right_arrow = '',
+      x = '✗'
     },
     kind = {
       Class = '', -- '',
