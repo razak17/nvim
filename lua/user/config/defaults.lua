@@ -31,7 +31,7 @@ rvim.log = {
 }
 
 rvim.plugins = {
-  SANE = false,
+  SANE = true,
   packer = { active = true },
 }
 
