@@ -60,9 +60,9 @@ tools['kkoomen/vim-doge'] = {
   disable = true,
 }
 
-tools['numToStr/FTerm.nvim'] = {
-  event = { 'BufWinEnter' },
-  config = conf('tools', 'fterm'),
+tools['akinsho/toggleterm.nvim'] = {
+  tag = 'v2.*',
+  config = conf('tools', 'toggleterm'),
 }
 
 tools['diepm/vim-rest-console'] = {

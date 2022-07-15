@@ -38,10 +38,7 @@ return function()
           },
           ['<leader>g'] = {
             name = '+git',
-            b = {
-              name = '+blame',
-              l = { gs.blame_line, 'gitsigns: blame current line' },
-            },
+            b = { gs.blame_line, 'gitsigns: blame' },
             m = { qf_list_modified, 'gitsigns: list modified in quickfix' },
             r = {
               name = '+reset',

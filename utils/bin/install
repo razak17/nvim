@@ -79,6 +79,7 @@ archExtra() {
     unzip \
     curl \
     sqlite3 \
+    btop \
     trash-cli
 }
 

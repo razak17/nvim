@@ -105,11 +105,5 @@ rvim.wk = {
       s = { ':PlugSync<CR>', 'sync' },
       S = { ':PlugStatus<CR>', 'Status' },
     },
-    git = {
-      name = '+Git',
-      c = { ':lua _G.__fterm_cmd("git_commit")<CR>', 'commit' },
-      d = { ':lua _G.__fterm_cmd("conf_commit")<CR>', 'commit dotfiles' },
-      l = { ':lua _G.__fterm_cmd("lazygit")<cr>', 'lazygit' },
-    },
   },
 }
