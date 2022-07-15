@@ -17,9 +17,6 @@ function M.setup(server_name)
     return
   end
 
-  local servers = require('nvim-lsp-installer.servers')
-  local _, server = servers.get_server(server_name)
-
   -- emmet-ls
   if server_name == 'emmet_ls' then
     config = vim.tbl_deep_extend('force', config, {
@@ -34,6 +31,7 @@ function M.setup(server_name)
     })
   end
   -- rust_analyzer
+  -- FIX: waiting for cargo metadata or cargo check (figure out fix)
   if server_name == 'rust_analyzer' then M.rust_tools_init(config) end
 
   -- sqlls
