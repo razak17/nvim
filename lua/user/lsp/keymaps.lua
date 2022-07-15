@@ -4,16 +4,20 @@ function M.init(client)
   if not client == nil then return end
 
   local function with_desc(desc) return { buffer = 0, desc = desc } end
+  local nnoremap = rvim .nnoremap
+  local inoremap = rvim .inoremap
+  local vnoremap = rvim .vnoremap
+  local xnoremap = rvim .xnoremap
 
-  rvim.nnoremap('gl', function()
+  nnoremap('gl', function()
     local config = rvim.lsp.diagnostics.float
     config.scope = 'line'
     return vim.diagnostic.open_float({ scope = 'line' }, config)
   end, with_desc('lsp: line diagnostics'))
 
   if client.server_capabilities.codeActionProvider then
-    rvim.nnoremap('<leader>la', vim.lsp.buf.code_action, with_desc('lsp: code action'))
-    rvim.xnoremap(
+    nnoremap('<leader>la', vim.lsp.buf.code_action, with_desc('lsp: code action'))
+    xnoremap(
       '<leader>la',
       '<esc><Cmd>lua vim.lsp.buf.range_code_action()<CR>',
       with_desc('lsp: code action')
@@ -21,31 +25,31 @@ function M.init(client)
   end
 
   if client.server_capabilities.hoverProvider then
-    rvim.nnoremap('K', vim.lsp.buf.hover, with_desc('lsp: hover'))
+    nnoremap('K', vim.lsp.buf.hover, with_desc('lsp: hover'))
   end
 
   if client.server_capabilities.definitionProvider then
-    rvim.nnoremap('gd', vim.lsp.buf.definition, with_desc('lsp: definition'))
+    nnoremap('gd', vim.lsp.buf.definition, with_desc('lsp: definition'))
   end
 
   if client.server_capabilities.referencesProvider then
-    rvim.nnoremap('gr', vim.lsp.buf.references, with_desc('lsp: references'))
+    nnoremap('gr', vim.lsp.buf.references, with_desc('lsp: references'))
   end
 
   if client.server_capabilities.declarationProvider then
-    rvim.nnoremap('gD', vim.lsp.buf.declaration, with_desc('lsp: go to declaration'))
+    nnoremap('gD', vim.lsp.buf.declaration, with_desc('lsp: go to declaration'))
   end
 
   if client.server_capabilities.implementationProvider then
-    rvim.nnoremap('gi', vim.lsp.buf.implementation, with_desc('lsp: go to implementation'))
+    nnoremap('gi', vim.lsp.buf.implementation, with_desc('lsp: go to implementation'))
   end
 
   if client.server_capabilities.typeDefinitionProvider then
-    rvim.nnoremap('gt', vim.lsp.buf.type_definition, with_desc('lsp: go to type definition'))
+    nnoremap('gt', vim.lsp.buf.type_definition, with_desc('lsp: go to type definition'))
   end
 
   if client.supports_method('textDocument/prepareCallHierarchy') then
-    rvim.nnoremap('gI', vim.lsp.buf.incoming_calls, with_desc('lsp: incoming calls'))
+    nnoremap('gI', vim.lsp.buf.incoming_calls, with_desc('lsp: incoming calls'))
   end
 
   ------------------------------------------------------------------------------
@@ -53,52 +57,52 @@ function M.init(client)
   ------------------------------------------------------------------------------
 
   -- Peek
-  rvim.nnoremap(
+  nnoremap(
     '<leader>lp',
     "<cmd>lua require('user.lsp.peek').Peek('definition')<cr>",
     with_desc('peek: definition')
   )
-  rvim.nnoremap(
+  nnoremap(
     '<leader>li',
     "<cmd>lua require('user.lsp.peek').Peek('implementation')<cr>",
     with_desc('peek: implementation')
   )
-  rvim.nnoremap(
+  nnoremap(
     '<leader>lt',
     "<cmd>lua require('user.lsp.peek').Peek('typeDefinition')<cr>",
     with_desc('peek: type definition')
   )
 
-  rvim.nnoremap('<leader>lk', function()
+  nnoremap('<leader>lk', function()
     if rvim.lsp.hover_diagnostics then
       vim.diagnostic.goto_prev({ float = false })
     else
       vim.diagnostic.goto_prev()
     end
   end, with_desc('lsp: go to prev diagnostic'))
-  rvim.nnoremap('<leader>lj', function()
+  nnoremap('<leader>lj', function()
     if rvim.lsp.hover_diagnostics then
       vim.diagnostic.goto_next({ float = false })
     else
       vim.diagnostic.goto_next()
     end
   end, with_desc('lsp: go to next diagnostic'))
-  rvim.nnoremap(
+  nnoremap(
     '<leader>lL',
     vim.diagnostic.setloclist,
     with_desc('lsp: toggle loclist diagnostics')
   )
 
   if client.server_capabilities.documentFormattingProvider then
-    rvim.nnoremap('<leader>lf', '<cmd>LspFormat<cr>', with_desc('lsp: format buffer'))
+    nnoremap('<leader>lf', '<cmd>LspFormat<cr>', with_desc('lsp: format buffer'))
   end
 
   if client.server_capabilities.codeLensProvider then
-    rvim.nnoremap('<leader>lc', vim.lsp.codelens.run, with_desc('lsp: run code lens'))
+    nnoremap('<leader>lc', vim.lsp.codelens.run, with_desc('lsp: run code lens'))
   end
 
   if client.server_capabilities.renameProvider then
-    rvim.nnoremap('<leader>lr', vim.lsp.buf.rename, with_desc('lsp: rename'))
+    nnoremap('<leader>lr', vim.lsp.buf.rename, with_desc('lsp: rename'))
   end
 end
 
