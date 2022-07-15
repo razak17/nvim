@@ -410,15 +410,6 @@ nnoremap('<leader>=', '<C-W>=', 'balance window')
 nnoremap('<leader>ah', '<C-W>s', 'horizontal split')
 -- opens a vertical split
 nnoremap('<leader>V', '<C-W>v', 'vsplit')
--- Templates
-nnoremap('<leader>lG', function()
-  require('user.lsp.templates').generate_templates()
-  vim.notify('Templates have been generated', nil, { title = 'Lsp' })
-end, 'lsp: generate templates')
-nnoremap('<leader>lD', function()
-  require('user.lsp.templates').remove_template_files()
-  vim.notify('Templates have been removed', nil, { title = 'Lsp' })
-end, 'lsp: delete templates')
 ------------------------------------------------------------------------------
 -- Undo
 ------------------------------------------------------------------------------

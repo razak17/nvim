@@ -4,10 +4,8 @@ function M.init(client)
   if not client == nil then return end
 
   local function with_desc(desc) return { buffer = 0, desc = desc } end
-  local nnoremap = rvim .nnoremap
-  local inoremap = rvim .inoremap
-  local vnoremap = rvim .vnoremap
-  local xnoremap = rvim .xnoremap
+  local nnoremap = rvim.nnoremap
+  local xnoremap = rvim.xnoremap
 
   nnoremap('gl', function()
     local config = rvim.lsp.diagnostics.float
@@ -87,11 +85,7 @@ function M.init(client)
       vim.diagnostic.goto_next()
     end
   end, with_desc('lsp: go to next diagnostic'))
-  nnoremap(
-    '<leader>lL',
-    vim.diagnostic.setloclist,
-    with_desc('lsp: toggle loclist diagnostics')
-  )
+  nnoremap('<leader>lL', vim.diagnostic.setloclist, with_desc('lsp: toggle loclist diagnostics'))
 
   if client.server_capabilities.documentFormattingProvider then
     nnoremap('<leader>lf', '<cmd>LspFormat<cr>', with_desc('lsp: format buffer'))
@@ -104,6 +98,15 @@ function M.init(client)
   if client.server_capabilities.renameProvider then
     nnoremap('<leader>lr', vim.lsp.buf.rename, with_desc('lsp: rename'))
   end
+  -- Templates
+  nnoremap('<leader>lG', function()
+    require('user.lsp.templates').generate_templates()
+    vim.notify('Templates have been generated', nil, { title = 'Lsp' })
+  end, 'lsp: generate templates')
+  nnoremap('<leader>lD', function()
+    require('user.lsp.templates').remove_template_files()
+    vim.notify('Templates have been removed', nil, { title = 'Lsp' })
+  end, 'lsp: delete templates')
 end
 
 return M
