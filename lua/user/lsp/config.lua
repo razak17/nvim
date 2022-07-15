@@ -92,7 +92,6 @@ rvim.lsp = {
   },
   override_servers = {
     'rust_analyzer',
-    'sqlls',
   },
   skipped_filetypes = {
     'edn',
