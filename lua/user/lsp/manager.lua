@@ -59,38 +59,8 @@ function M.setup(server_name, user_config)
 
   if lsp_utils.is_client_active(server_name) or M.client_is_configured(server_name) then return end
 
-  local servers = require('nvim-lsp-installer.servers')
-  local server_available, server = servers.get_server(server_name)
-
-  if not server_available then
-    local config = M.resolve_config(server_name, user_config)
-    M.launch_server(server_name, config)
-    return
-  end
-
-  local install_in_progress = false
-
-  if not server:is_installed() then
-    if rvim.lsp.automatic_servers_installation then
-      Log:debug('Automatic server installation detected')
-      server:install()
-      install_in_progress = true
-    else
-      Log:debug(server.name .. ' is not managed by the automatic installer')
-    end
-  end
-
-  server:on_ready(function()
-    if install_in_progress then
-      vim.notify(
-        string.format('Installation complete for [%s] server', server.name),
-        vim.log.levels.INFO
-      )
-    end
-    install_in_progress = false
-    local config = M.resolve_config(server_name, server:get_default_options(), user_config)
-    M.launch_server(server_name, config)
-  end)
+  local config = M.resolve_config(server_name, user_config)
+  M.launch_server(server_name, config)
 end
 
 M.override_setup = function(server_name) require('user.lsp.overrides').setup(server_name) end

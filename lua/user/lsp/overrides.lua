@@ -34,6 +34,7 @@ function M.setup(server_name)
     })
   end
   -- rust_analyzer
+  print('LALALALAL', server)
   if server_name == 'rust_analyzer' then M.rust_tools_init(server, config) end
 
   -- sqlls

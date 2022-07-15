@@ -50,6 +50,7 @@ lang['williamboman/mason.nvim'] = {
     })
     require('mason-lspconfig').setup({
       automatic_installation = true,
+      ensure_installed = rvim.lsp.configured_servers,
     })
   end,
 }

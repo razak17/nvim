@@ -29,24 +29,11 @@ function M.remove_template_files()
   end
 end
 
-local skipped_filetypes = rvim.lsp.skipped_filetypes
-local skipped_servers = rvim.lsp.skipped_servers
-local ensure_installed_servers = rvim.lsp.installer.setup.ensure_installed
-
----Check if we should skip generating an ftplugin file based on the server_name
----@param server_name string name of a valid language server
-local function should_skip(server_name)
-  -- ensure_installed_servers should take priority over skipped_servers
-  return vim.tbl_contains(skipped_servers, server_name)
-    and not vim.tbl_contains(ensure_installed_servers, server_name)
-end
-
 ---Generates an ftplugin file based on the server_name in the selected directory
 ---@param server_name string name of a valid language server, e.g. pyright, gopls, tsserver, etc.
 ---@param dir string the full path to the desired directory
 function M.generate_ftplugin(server_name, dir)
-  if should_skip(server_name) then return end
-
+  local skipped_filetypes = rvim.lsp.skipped_filetypes
   -- get the supported filetypes and remove any ignored ones
   local filetypes = vim.tbl_filter(
     function(ft) return not vim.tbl_contains(skipped_filetypes, ft) end,
@@ -100,11 +87,10 @@ function M.generate_templates(servers_names)
   M.remove_template_files()
 
   if vim.tbl_isempty(servers_names) then
-    -- local available_servers = require("nvim-lsp-installer.servers").get_available_servers()
-    local available_servers = require('nvim-lsp-installer.servers').get_installed_servers()
+    local configured_servers = rvim.lsp.configured_servers
 
-    for _, server in pairs(available_servers) do
-      table.insert(servers_names, server.name)
+    for _, server in pairs(configured_servers) do
+      table.insert(servers_names, server)
       table.sort(servers_names)
     end
   end
