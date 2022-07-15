@@ -30,12 +30,6 @@ lang['mfussenegger/nvim-dap'] = {
   },
 }
 
-lang['ravenxrz/DAPInstall.nvim'] = {
-  config = require('dap-install').setup({
-    installation_path = rvim.paths.dap_install_dir,
-  }),
-}
-
 lang['jbyuki/one-small-step-for-vimkind'] = {
   requires = 'nvim-dap',
   config = function()
