@@ -120,10 +120,13 @@ tools['AckslD/nvim-neoclip.lua'] = {
 tools['nvim-telescope/telescope.nvim'] = {
   branch = '0.1.x',
   config = conf('tools', 'telescope'),
-}
-
-tools['nvim-telescope/telescope-fzf-native.nvim'] = {
-  run = 'make',
+  requires = {
+    {
+      'natecraddock/telescope-zf-native.nvim',
+      after = 'telescope.nvim',
+      config = function() require('telescope').load_extension('zf-native') end,
+    },
+  },
 }
 
 tools['kkharji/sqlite.lua'] = {}
