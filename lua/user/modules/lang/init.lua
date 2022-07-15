@@ -171,73 +171,75 @@ lang['olexsmir/gopher.nvim'] = {
 lang['nvim-treesitter/nvim-treesitter'] = {
   run = ':TSUpdate',
   config = conf('lang', 'treesitter'),
-}
-
-lang['nvim-treesitter/nvim-treesitter-context'] = {
-  config = function()
-    local hl = require('zephyr.utils')
-    local norm_bg = hl.get('Normal', 'bg')
-    local dim = hl.alter_color(norm_bg, 25)
-    hl.plugin('treesitter-context', {
-      ContextBorder = { foreground = dim },
-      TreesitterContext = { inherit = 'Normal' },
-      TreesitterContextLineNumber = { inherit = 'LineNr' },
-    })
-    require('treesitter-context').setup({
-      multiline_threshold = 4,
-      separator = { '─', 'ContextBorder' }, --[[alernatives: ▁ ─ ▄ ]]
-      mode = 'topline',
-    })
-  end,
-}
-
-lang['nvim-treesitter/playground'] = {
-  event = 'VimEnter',
-  keys = '<leader>LE',
-  module = 'nvim-treesitter-playground',
-  cmd = { 'TSPlaygroundToggle', 'TSHighlightCapturesUnderCursor' },
-  setup = function() require('which-key').register({ ['<leader>LE'] = 'treesitter: inspect token' }) end,
-  config = function() rvim.nnoremap('<leader>LE', '<Cmd>TSHighlightCapturesUnderCursor<CR>') end,
-}
-
-lang['nvim-treesitter/nvim-treesitter-textobjects'] = {
-  after = 'nvim-treesitter',
-}
-
-lang['p00f/nvim-ts-rainbow'] = {
-  after = 'nvim-treesitter',
-}
-
-lang['andymass/vim-matchup'] = {
-  after = 'nvim-treesitter',
-  config = function()
-    require('which-key').register({
-      ['<localleader>lm'] = { ':<c-u>MatchupWhereAmI?<CR>', 'matchup: where am i' },
-    })
-  end,
-  disable = true,
-}
-
-lang['windwp/nvim-ts-autotag'] = {
-  config = function()
-    require('nvim-ts-autotag').setup({
-      filetypes = { 'html', 'xml', 'typescriptreact', 'javascriptreact' },
-    })
-  end,
+  requires = {
+    {
+      'nvim-treesitter/nvim-treesitter-context',
+      config = function()
+        local hl = require('zephyr.utils')
+        local norm_bg = hl.get('Normal', 'bg')
+        local dim = hl.alter_color(norm_bg, 25)
+        hl.plugin('treesitter-context', {
+          ContextBorder = { foreground = dim },
+          TreesitterContext = { inherit = 'Normal' },
+          TreesitterContextLineNumber = { inherit = 'LineNr' },
+        })
+        require('treesitter-context').setup({
+          multiline_threshold = 4,
+          separator = { '─', 'ContextBorder' }, --[[alernatives: ▁ ─ ▄ ]]
+          mode = 'topline',
+        })
+      end,
+    },
+    {
+      'nvim-treesitter/playground',
+      event = 'VimEnter',
+      keys = '<leader>LE',
+      module = 'nvim-treesitter-playground',
+      cmd = { 'TSPlaygroundToggle', 'TSHighlightCapturesUnderCursor' },
+      setup = function() require('which-key').register({ ['<leader>LE'] = 'treesitter: inspect token' }) end,
+      config = function() rvim.nnoremap('<leader>LE', '<Cmd>TSHighlightCapturesUnderCursor<CR>') end,
+    },
+    {
+      'nvim-treesitter/nvim-treesitter-textobjects',
+      after = 'nvim-treesitter',
+    },
+    {
+      'p00f/nvim-ts-rainbow',
+      after = 'nvim-treesitter',
+    },
+    {
+      'andymass/vim-matchup',
+      after = 'nvim-treesitter',
+      config = function()
+        require('which-key').register({
+          ['<localleader>lm'] = { ':<c-u>MatchupWhereAmI?<CR>', 'matchup: where am i' },
+        })
+      end,
+      disable = true,
+    },
+    {
+      'windwp/nvim-ts-autotag',
+      config = function()
+        require('nvim-ts-autotag').setup({
+          filetypes = { 'html', 'xml', 'typescriptreact', 'javascriptreact' },
+        })
+      end,
+    },
+    {
+      'lewis6991/spellsitter.nvim',
+      config = function()
+        require('spellsitter').setup({
+          enable = true,
+        })
+      end,
+    },
+  },
 }
 
 lang['windwp/nvim-autopairs'] = {
   event = 'InsertEnter',
   after = { 'telescope.nvim', 'nvim-treesitter' },
   config = conf('lang', 'autopairs'),
-}
-
-lang['lewis6991/spellsitter.nvim'] = {
-  config = function()
-    require('spellsitter').setup({
-      enable = true,
-    })
-  end,
 }
 
 -- nvim-cmp
