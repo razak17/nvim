@@ -48,6 +48,11 @@ rvim.wk = {
         'open vimrc',
       },
     },
+    n = { name = 'Notify' },
+    s = { name = 'Snip' },
+    t = { name = 'Terminal' },
+    C = { name = 'Change' },
+    r = { name = 'Remove' },
     z = { name = 'Fold' },
   },
   localleader = {

@@ -26,7 +26,7 @@ return function()
 
         require('which-key').register({
           ['<leader>h'] = {
-            name = '+Gitsigns',
+            name = 'Gitsigns',
             d = { gs.toggle_deleted, 'show deleted lines' },
             j = { gs.next_hunk, 'Next Hunk' },
             k = { gs.prev_hunk, 'Prev Hunk' },
@@ -37,7 +37,7 @@ return function()
             w = { gs.toggle_word_diff, 'toggle word diff' },
           },
           ['<leader>g'] = {
-            name = '+git',
+            name = 'Git',
             b = { gs.blame_line, 'gitsigns: blame' },
             m = { qf_list_modified, 'gitsigns: list modified in quickfix' },
             r = {

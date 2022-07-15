@@ -5,7 +5,7 @@ return function()
   )
   require('which-key').register({
     m = {
-      name = 'marks',
+      name = 'Marks',
       b = { '<Cmd>MarksListBuf<CR>', 'list buffer' },
       g = { '<Cmd>MarksQFListGlobal<CR>', 'list global' },
       ['0'] = { '<Cmd>BookmarksQFList 0<CR>', 'list bookmark' },
