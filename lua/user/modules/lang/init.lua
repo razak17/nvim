@@ -68,6 +68,17 @@ lang['neovim/nvim-lspconfig'] = {
     {
       'tamago324/nlsp-settings.nvim',
       config = function()
+        require('nvim-lsp-installer').setup({
+          ensure_installed = {},
+          install_root_dir = join_paths(rvim.get_runtime_dir(), 'lsp_servers'),
+          ui = {
+            icons = {
+              server_installed = '✓',
+              server_pending = '',
+              server_uninstalled = '✗',
+            },
+          },
+        })
         rvim.augroup('LspInstallerConfig', {
           {
             event = 'Filetype',
