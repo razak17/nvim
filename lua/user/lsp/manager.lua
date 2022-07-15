@@ -50,6 +50,13 @@ function M.launch_server(server_name, config)
   end)
 end
 
+function M.already_configured(server_name)
+  if lsp_utils.is_client_active(server_name) or M.client_is_configured(server_name) then
+    return true
+  end
+  return false
+end
+
 ---Setup a language server by providing a name
 ---@param server_name string name of the language server
 ---@param user_config table? when available it will take predence over any default configurations
@@ -57,12 +64,72 @@ function M.setup(server_name, user_config)
   vim.validate({ name = { server_name, 'string' } })
   user_config = user_config or {}
 
-  if lsp_utils.is_client_active(server_name) or M.client_is_configured(server_name) then return end
+  if M.already_configured(server_name) then return end
 
   local config = M.resolve_config(server_name, user_config)
   M.launch_server(server_name, config)
 end
 
-M.override_setup = function(server_name) require('user.lsp.overrides').setup(server_name) end
+---Setup a language server by providing a name
+---@param server_name string name of the language server
+---@param user_config table? when available it will take predence over any default configurations
+function M.override_setup(server_name, user_config)
+  vim.validate({ name = { server_name, 'string' } })
+  user_config = user_config or {}
+
+  if M.already_configured(server_name) then return end
+
+  local config = M.resolve_config(server_name, user_config)
+
+  -- sqls
+  if server_name == 'sqls' then
+    config = vim.tbl_extend('force', config, {
+      on_attach = function(client, bufnr) require('sqls').on_attach(client, bufnr) end,
+    })
+    require('lspconfig').sqls.setup(config)
+  end
+
+  -- rust_analyzer
+  -- FIX: waiting for cargo metadata or cargo check (figure out fix)
+  if server_name == 'rust_analyzer' then
+    local status_ok, rust_tools = rvim.safe_require('rust-tools')
+    if not status_ok then
+      Log:debug('Failed to load rust-tools')
+      return
+    end
+
+    local vscode_lldb = rvim.paths.vscode_lldb
+    local dap = nil
+
+    local utils = require('user.utils')
+    if utils.is_directory(vscode_lldb) then
+      local codelldb_path = vscode_lldb .. '/adapter/codelldb'
+      local liblldb_path = vscode_lldb .. '/lldb/lib/liblldb.so'
+      -- FIX: https://github.com/simrat39/rust-tools.nvim/issues/179
+      dap = {
+        adapter = require('rust-tools.dap').get_codelldb_adapter(codelldb_path, liblldb_path),
+      }
+    end
+
+    local server = {
+      -- setting it to false may improve startup time
+      standalone = false,
+    }
+    local tools = {
+      runnables = { use_telescope = true },
+      hover_actions = { border = rvim.style.border.rectangle, auto_focus = true },
+    }
+    -- Initialize the LSP via rust-tools
+    rust_tools.setup({
+      tools = tools,
+      dap = dap,
+      -- all the opts to send to nvim-lspconfig
+      -- these override the defaults set by rust-tools.nvim
+      server = vim.tbl_deep_extend('force', config, server),
+    })
+  end
+
+  M.launch_server(server_name, config)
+end
 
 return M
