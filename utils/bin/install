@@ -5,7 +5,6 @@ RVIM_CONFIG_DIR="${RVIM_CONFIG_DIR:-"$XDG_CONFIG_HOME/rvim"}"
 RV_BRANCH="${RV_BRANCH:-"dual"}"
 RV_REMOTE="${RV_REMOTE:-razak17/nvim.git}"
 
-lsp_path='.cache/rvim/nvim_lsp'
 neovim_py='.cache/rvim/venv/neovim'
 
 asktoinstallgit() {
@@ -38,14 +37,11 @@ installpacker() {
 createDirs() {
 	mkdir -p "$HOME/.dots"
 	mkdir -p "$HOME/.cache/rvim"
-	mkdir -p "$HOME/.cache/rvim/dap"
 	mkdir -p "$HOME/.cache/rvim/shada"
 	mkdir -p "$HOME/.cache/rvim/session"
 	mkdir -p "$HOME/.cache/rvim/undodir"
-	mkdir -p "$HOME/.cache/rvim/nvim_lsp"
 	mkdir -p "$HOME/.cache/rvim/telescope"
 	mkdir -p "$HOME/.local/share/rvim"
-	mkdir -p "$HOME/$lsp_path"
 }
 
 pythonVenvInit() {
