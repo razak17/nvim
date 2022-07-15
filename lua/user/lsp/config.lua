@@ -64,6 +64,7 @@ rvim.lsp = {
   },
   configured_servers = {
     'astro',
+    'bashls',
     'clangd',
     'clojure_lsp',
     'cmake',
@@ -85,6 +86,7 @@ rvim.lsp = {
     'svelte',
     'tailwindcss',
     'tsserver',
+    'vimls',
     'vuels',
     'yamlls',
   },
