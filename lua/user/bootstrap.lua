@@ -17,4 +17,4 @@ vim.cmd([[let &packpath = &runtimepath]])
 
 R('user.config.defaults')
 R('user.config.style')
-R('user.lsp.config')
+R('user.config.lsp')
