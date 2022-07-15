@@ -231,16 +231,16 @@ return function()
   telescope.setup(rvim.telescope.setup)
 
   local plugins = {
-    project = 'projects',
-    telescope_dap = 'dap',
-    telescope_zf_native = 'zf-native',
-    telescope_ui_select = 'ui-select',
-    telescope_file_browser = 'file_browser',
-    telescope_media_files = 'media_files',
-    telescope_zoxide = 'zoxide',
+    'projects',
+    'dap',
+    'zf-native',
+    'ui-select',
+    'file_browser',
+    'media_files',
+    'zoxide',
   }
 
-  for _, plug in pairs(plugins) do
+  for _, plug in ipairs(plugins) do
     require('telescope').load_extension(plug)
   end
 
