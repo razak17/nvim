@@ -118,46 +118,46 @@ lang['neovim/nvim-lspconfig'] = {
         })
       end,
     },
+    {
+      'ray-x/lsp_signature.nvim',
+      event = 'InsertEnter',
+      config = function()
+        require('lsp_signature').setup({
+          debug = false,
+          log_path = rvim.get_cache_dir() .. '/lsp_signature.log',
+          bind = true,
+          fix_pos = false,
+          auto_close_after = 15,
+          hint_enable = false,
+          handler_opts = { border = rvim.style.border.current },
+          toggle_key = '<C-K>',
+          select_signature_key = '<M-N>',
+        })
+      end,
+    },
+    {
+      'kosayoda/nvim-lightbulb',
+      config = function()
+        local lightbulb = require('nvim-lightbulb')
+        require('zephyr.utils').plugin('Lightbulb', {
+          LightBulbFloatWin = { foreground = { from = 'Type' } },
+        })
+        lightbulb.setup({
+          sign = {
+            enabled = false,
+            -- Priority of the gutter sign
+            priority = 10,
+          },
+          float = { text = '', enabled = true, win_opts = { border = 'none' } }, -- 
+          autocmd = { enabled = true },
+        })
+      end,
+    },
+    {
+      'simrat39/symbols-outline.nvim',
+      config = conf('lang', 'symbols-outline'),
+    },
   },
-}
-
-lang['kosayoda/nvim-lightbulb'] = {
-  config = function()
-    local lightbulb = require('nvim-lightbulb')
-    require('zephyr.utils').plugin('Lightbulb', {
-      LightBulbFloatWin = { foreground = { from = 'Type' } },
-    })
-    lightbulb.setup({
-      sign = {
-        enabled = false,
-        -- Priority of the gutter sign
-        priority = 10,
-      },
-      float = { text = '', enabled = true, win_opts = { border = 'none' } }, -- 
-      autocmd = { enabled = true },
-    })
-  end,
-}
-
-lang['simrat39/symbols-outline.nvim'] = {
-  config = conf('lang', 'symbols-outline'),
-}
-
-lang['ray-x/lsp_signature.nvim'] = {
-  event = 'InsertEnter',
-  config = function()
-    require('lsp_signature').setup({
-      debug = false,
-      log_path = rvim.get_cache_dir() .. '/lsp_signature.log',
-      bind = true,
-      fix_pos = false,
-      auto_close_after = 15,
-      hint_enable = false,
-      handler_opts = { border = rvim.style.border.current },
-      toggle_key = '<C-K>',
-      select_signature_key = '<M-N>',
-    })
-  end,
 }
 
 lang['olexsmir/gopher.nvim'] = {
@@ -247,43 +247,46 @@ lang['hrsh7th/nvim-cmp'] = {
   module = 'cmp',
   event = 'InsertEnter',
   config = conf('lang', 'cmp'),
-}
-lang['hrsh7th/cmp-nvim-lsp'] = {}
-lang['hrsh7th/cmp-nvim-lua'] = { after = 'nvim-cmp' }
-lang['hrsh7th/cmp-nvim-lsp-document-symbol'] = { after = 'nvim-cmp' }
-lang['saadparwaiz1/cmp_luasnip'] = { after = 'nvim-cmp' }
-lang['hrsh7th/cmp-buffer'] = { after = 'nvim-cmp' }
-lang['hrsh7th/cmp-path'] = { after = 'nvim-cmp' }
-lang['hrsh7th/cmp-cmdline'] = { after = 'nvim-cmp' }
-lang['f3fora/cmp-spell'] = { after = 'nvim-cmp' }
-lang['hrsh7th/cmp-emoji'] = { after = 'nvim-cmp' }
-lang['octaltree/cmp-look'] = { after = 'nvim-cmp' }
-lang['petertriho/cmp-git'] = {
-  after = 'nvim-cmp',
-  config = function()
-    require('cmp_git').setup({
-      filetypes = { 'gitcommit', 'NeogitCommitMessage' },
-    })
-  end,
-}
-lang['David-Kunz/cmp-npm'] = {
-  after = 'nvim-cmp',
-  config = function() require('cmp-npm').setup({}) end,
-}
-lang['uga-rosa/cmp-dictionary'] = {
-  after = 'nvim-cmp',
-  config = function()
-    require('cmp_dictionary').setup({
-      async = true,
-      dic = {
-        ['*'] = { '/usr/share/dict/words' },
-      },
-    })
-    require('cmp_dictionary').update()
-  end,
-}
-lang['dmitmel/cmp-cmdline-history'] = {
-  after = 'nvim-cmp',
+  requires = {
+    { 'hrsh7th/cmp-nvim-lsp', after = 'nvim-cmp' },
+    { 'hrsh7th/cmp-nvim-lua', after = 'nvim-cmp' },
+    { 'hrsh7th/cmp-nvim-lsp-document-symbol', after = 'nvim-cmp' },
+    { 'saadparwaiz1/cmp_luasnip', after = 'nvim-cmp' },
+    { 'hrsh7th/cmp-buffer', after = 'nvim-cmp' },
+    { 'hrsh7th/cmp-path', after = 'nvim-cmp' },
+    { 'hrsh7th/cmp-cmdline', after = 'nvim-cmp' },
+    { 'f3fora/cmp-spell', after = 'nvim-cmp' },
+    { 'hrsh7th/cmp-emoji', after = 'nvim-cmp' },
+    { 'octaltree/cmp-look', after = 'nvim-cmp' },
+    { 'dmitmel/cmp-cmdline-history', after = 'nvim-cmp' },
+    {
+      'David-Kunz/cmp-npm',
+      after = 'nvim-cmp',
+      config = function() require('cmp-npm').setup({}) end,
+    },
+    {
+      'petertriho/cmp-git',
+      after = 'nvim-cmp',
+      config = function()
+        require('cmp_git').setup({
+          filetypes = { 'gitcommit', 'NeogitCommitMessage' },
+        })
+      end,
+    },
+    {
+      'uga-rosa/cmp-dictionary',
+      after = 'nvim-cmp',
+      config = function()
+        require('cmp_dictionary').setup({
+          async = true,
+          dic = {
+            ['*'] = { '/usr/share/dict/words' },
+          },
+        })
+        require('cmp_dictionary').update()
+      end,
+    },
+  },
 }
 
 lang['L3MON4D3/LuaSnip'] = {
