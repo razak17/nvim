@@ -17,6 +17,9 @@ function M.setup(server_name)
     return
   end
 
+  local servers = require('nvim-lsp-installer.servers')
+  local _, server = servers.get_server(server_name)
+
   -- emmet-ls
   if server_name == 'emmet_ls' then
     config = vim.tbl_deep_extend('force', config, {
