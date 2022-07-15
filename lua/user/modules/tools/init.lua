@@ -132,7 +132,6 @@ tools['nvim-telescope/telescope.nvim'] = {
     { 'kkharji/sqlite.lua' },
     {
       'natecraddock/telescope-zf-native.nvim',
-      after = 'telescope.nvim',
       config = function() require('telescope').load_extension('zf-native') end,
     },
   },

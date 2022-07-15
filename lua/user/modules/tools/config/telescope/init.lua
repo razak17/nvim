@@ -135,12 +135,6 @@ return function()
           filetypes = { 'png', 'webp', 'jpg', 'jpeg' },
           find_cmd = 'rg', -- find command (defaults to `fd`)
         },
-        fzf = {
-          fuzzy = true, -- false will only do exact matching
-          override_generic_sorter = true, -- override the generic sorter
-          override_file_sorter = true, -- override the file sorter
-          case_mode = 'smart_case', -- or "ignore_case" or "respect_case"
-        },
         ['ui-select'] = {
           themes.get_cursor(get_border({
             layout_config = {
@@ -239,7 +233,7 @@ return function()
   local plugins = {
     project = 'projects',
     telescope_dap = 'dap',
-    telescope_fzf = 'fzf',
+    telescope_zf_native = 'zf-native',
     telescope_ui_select = 'ui-select',
     telescope_file_browser = 'file_browser',
     telescope_media_files = 'media_files',
