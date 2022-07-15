@@ -8,30 +8,38 @@ rvim.dap = {
   lldb_dir = rvim.paths.vscode_lldb .. '/adapter/codelldb',
   breakpoint = {
     text = icons.misc.bug_alt,
-    texthl = 'LspDiagnosticsSignError',
+    texthl = 'DapBreakpoint',
     linehl = '',
     numhl = '',
   },
   breakpoint_rejected = {
     text = icons.misc.bug_alt,
-    texthl = 'LspDiagnosticsSignHint',
+    texthl = 'DapBreakpointRejected',
     linehl = '',
     numhl = '',
   },
   stopped = {
     text = icons.misc.dap_hollow,
-    texthl = 'LspDiagnosticsSignInformation',
-    linehl = 'DiagnosticUnderlineInfo',
-    numhl = 'LspDiagnosticsSignInformation',
+    texthl = 'DapStopped',
+    linehl = '',
+    numhl = '',
   },
 }
 
 function M.setup()
   local dap = require('dap')
+  local P = require('zephyr.palette')
   local fn = vim.fn
+
   fn.sign_define('DapBreakpoint', rvim.dap.breakpoint)
   fn.sign_define('DapBreakpointRejected', rvim.dap.breakpoint_rejected)
   fn.sign_define('DapStopped', rvim.dap.stopped)
+
+  require('zephyr.utils').plugin('dap', {
+    DapBreakpoint = { foreground = P.error_red },
+    DapBreakpointRejected = { foreground = P.dark_orange },
+    DapStopped = { foreground = P.dark_green },
+  })
 
   -- python
   dap.adapters.python = {
