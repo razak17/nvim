@@ -81,7 +81,6 @@ rvim.lsp = {
     'pyright',
     'quick_lint_js',
     'rust_analyzer',
-    'sqlls',
     'sumneko_lua',
     'svelte',
     'tailwindcss',
@@ -129,6 +128,7 @@ rvim.lsp = {
   },
   format_on_save_exclusions = { 'zsh', 'tmux', 'gitcommit', 'query' },
   format_exclusions = { 'sumneko_lua', 'html', 'jsonls', 'quick_lint_js' },
+  sqls_fts = { 'sql', 'mysql' },
   emmet_ft = {
     'html',
     'css',

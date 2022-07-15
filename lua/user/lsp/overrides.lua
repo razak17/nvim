@@ -20,8 +20,8 @@ function M.setup(server_name)
   -- FIX: waiting for cargo metadata or cargo check (figure out fix)
   if server_name == 'rust_analyzer' then M.rust_tools_init(config) end
 
-  -- sqlls
-  if server_name == 'sqlls' then M.sqls_init(config) end
+  -- sqls
+  if server_name == 'sqls' then M.sqls_init(config) end
 
   -- Initialize Server
   lsp_manager.launch_server(server_name, config)

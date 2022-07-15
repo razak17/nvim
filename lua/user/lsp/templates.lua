@@ -61,6 +61,11 @@ function M.generate_ftplugin_util(dir)
     local filename = join_paths(dir, filetype .. '.lua')
     write_manager(filename, 'emmet_ls')
   end
+  -- sqls
+  for _, filetype in ipairs(rvim.lsp.sqls_fts) do
+    local filename = join_paths(dir, filetype .. '.lua')
+    write_override(filename, 'sqls')
+  end
   -- ftplugin settings
   for _, filetype in ipairs(rvim.util.ftplugin_filetypes) do
     local filename = join_paths(dir, filetype .. '.lua')
