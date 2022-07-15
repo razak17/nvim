@@ -11,34 +11,19 @@ lang['rcarriga/nvim-dap-ui'] = {
       'mfussenegger/nvim-dap',
       config = conf('lang', 'dap'),
     },
+    {
+      'theHamsta/nvim-dap-virtual-text',
+      config = function()
+        require('nvim-dap-virtual-text').setup({
+          enabled = true,
+          enabled_commands = true,
+          highlight_changed_variables = true,
+          all_frames = true,
+        })
+      end,
+    },
   },
   config = block_reload(conf('lang', 'dap-ui')),
-}
-
-lang['theHamsta/nvim-dap-virtual-text'] = {
-  config = function()
-    require('nvim-dap-virtual-text').setup({
-      enabled = true, -- enable this plugin (the default)
-      enabled_commands = true, -- create commands DapVirtualTextEnable, DapVirtualTextDisable, DapVirtualTextToggle, (DapVirtualTextForceRefresh for refreshing when debug adapter did not notify its termination)
-      highlight_changed_variables = true, -- highlight changed values with NvimDapVirtualTextChanged, else always NvimDapVirtualText
-      all_frames = true, -- show virtual text for all stack frames not only current. Only works for debugpy on my machine.
-    })
-  end,
-}
-
-lang['jbyuki/one-small-step-for-vimkind'] = {
-  requires = 'nvim-dap',
-  config = function()
-    local nnoremap = rvim.nnoremap
-    nnoremap('<Leader>dE', ':lua require"osv".run_this()<CR>')
-    nnoremap('<Leader>dl', ':lua require"osv".launch()<CR>')
-
-    require('which-key').register({
-      ['<leader>dE'] = 'osv run this',
-      ['<leader>dL'] = 'osv launch',
-    })
-  end,
-  disable = true,
 }
 
 -- Lsp
