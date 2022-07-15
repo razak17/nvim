@@ -17,9 +17,6 @@ function M.setup(server_name)
     return
   end
 
-  local servers = require('nvim-lsp-installer.servers')
-  local _, server = servers.get_server(server_name)
-
   -- emmet-ls
   if server_name == 'emmet_ls' then
     config = vim.tbl_deep_extend('force', config, {
@@ -34,8 +31,7 @@ function M.setup(server_name)
     })
   end
   -- rust_analyzer
-  print('LALALALAL', server)
-  if server_name == 'rust_analyzer' then M.rust_tools_init(server, config) end
+  if server_name == 'rust_analyzer' then M.rust_tools_init(config) end
 
   -- sqlls
   if server_name == 'sqlls' then
@@ -49,7 +45,7 @@ function M.setup(server_name)
   lsp_manager.launch_server(server_name, config)
 end
 
-function M.rust_tools_init(server, config)
+function M.rust_tools_init(config)
   local status_ok, rust_tools = rvim.safe_require('rust-tools')
   if not status_ok then
     Log:debug('Failed to load rust-tools')
@@ -68,7 +64,7 @@ function M.rust_tools_init(server, config)
     }
   end
 
-  server = {
+  local server = {
     -- setting it to false may improve startup time
     standalone = false,
   }
