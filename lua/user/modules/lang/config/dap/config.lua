@@ -4,8 +4,8 @@ local M = {}
 
 rvim.dap = {
   python_dir = rvim.paths.mason .. '/packages/debugpy/venv/bin/python',
-  -- node_dir = rvim.get_cache_dir() .. '/dap/jsnode/vscode-node-debug2/out/src/nodeDebug.js',
-  -- lldb_dir = rvim.paths.vscode_lldb .. '/adapter/codelldb',
+  node_dir = rvim.paths.mason .. '/packages/node-debug2-adapter/out/src/nodeDebug.js',
+  lldb_dir = rvim.paths.vscode_lldb .. '/adapter/codelldb',
   breakpoint = {
     text = icons.misc.bug_alt,
     texthl = 'LspDiagnosticsSignError',
