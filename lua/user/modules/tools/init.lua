@@ -307,12 +307,12 @@ tools['vhyrro/neorg'] = {
 }
 
 tools['kevinhwang91/nvim-bqf'] = {
-  -- optional
-  requires = {
-    'junegunn/fzf',
-    run = function() vim.fn['fzf#install']() end,
-  },
   ft = 'qf',
+  config = function()
+    require('zephyr.utils').plugin('bqf', {
+      BqfPreviewBorder = { link = 'WinSeparator' },
+    })
+  end,
 }
 
 tools['anuvyklack/hydra.nvim'] = {
