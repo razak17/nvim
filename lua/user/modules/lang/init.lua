@@ -46,6 +46,11 @@ lang['williamboman/mason.nvim'] = {
   config = function()
     require('mason').setup({
       ui = { border = rvim.style.border.current },
+      icons = {
+        package_installed = '✓',
+        package_pending = '',
+        package_uninstalled = '✗',
+      },
       install_root_dir = rvim.paths.mason,
     })
     require('mason-lspconfig').setup({
