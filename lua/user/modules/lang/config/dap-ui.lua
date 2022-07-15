@@ -1,9 +1,5 @@
 return function()
-  local dap_ui_status_ok, dapui = pcall(require, 'dapui')
-  if not dap_ui_status_ok then
-    return
-  end
-
+  local dapui = require("dapui")
   dapui.setup({
     icons = { expanded = '▾', collapsed = '▸' },
     floating = {
@@ -20,6 +16,7 @@ return function()
     ['<localleader>dx'] = { dapui.close, 'dap-ui: close' },
     ['<localleader>do'] = { dapui.toggle, 'dap-ui: toggle' },
   })
+
   local dap = require('dap')
   -- NOTE: this opens dap UI automatically when dap starts
   dap.listeners.after.event_initialized['dapui_config'] = function()
