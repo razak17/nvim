@@ -197,11 +197,11 @@ tools['NTBBloodbath/rest.nvim'] = {
       jump_to_request = false,
       custom_dynamic_variables = {},
     })
-
     rvim.nnoremap('<leader>rr', '<Plug>RestNvim', 'rest: run')
     rvim.nnoremap('<leader>rp', '<Plug>RestNvimPreview', 'rest: run')
     rvim.nnoremap('<leader>rl', '<Plug>RestNvimLast', 'rest: run')
   end,
+  disable = true,
 }
 
 tools['michaelb/sniprun'] = {
