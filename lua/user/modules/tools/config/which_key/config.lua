@@ -93,16 +93,6 @@ rvim.wk = {
       d = { ':Telescope lsp_document_symbols<CR>', 'telescope: document symbols' },
       s = { ':Telescope lsp_dynamic_workspace_symbols<CR>', 'telescope: workspace symbols' },
     },
-    dap_ui = {
-      toggle = {
-        ':lua require"dapui".toggle()',
-        'toggle ui',
-      },
-      inspect = {
-        ':lua require"dap.ui.variables".hover()',
-        'inspect',
-      },
-    },
     packer = {
       name = '+Plug',
       c = { ':PlugCompile<CR>', 'compile' },
