@@ -32,6 +32,20 @@ rvim.lsp = {
   },
   automatic_servers_installation = true,
   hover_diagnostics = false,
+  format_on_save_exclusions = { 'zsh', 'tmux', 'gitcommit', 'query' },
+  format_exclusions = { 'sumneko_lua', 'html', 'jsonls', 'quick_lint_js' },
+  sqls_fts = { 'sql', 'mysql' },
+  emmet_ft = {
+    'html',
+    'css',
+    'javascriptreact',
+    'javascript.jsx',
+    'typescriptreact',
+    'typescript.tsx',
+  },
+  override_servers = {
+    'rust_analyzer',
+  },
   configured_servers = {
     'astro',
     'bashls',
@@ -59,9 +73,6 @@ rvim.lsp = {
     'vimls',
     'vuels',
     'yamlls',
-  },
-  override_servers = {
-    'rust_analyzer',
   },
   skipped_filetypes = {
     'edn',
@@ -96,17 +107,6 @@ rvim.lsp = {
     'stylus',
     'sugarss',
     'twig',
-  },
-  format_on_save_exclusions = { 'zsh', 'tmux', 'gitcommit', 'query' },
-  format_exclusions = { 'sumneko_lua', 'html', 'jsonls', 'quick_lint_js' },
-  sqls_fts = { 'sql', 'mysql' },
-  emmet_ft = {
-    'html',
-    'css',
-    'javascriptreact',
-    'javascript.jsx',
-    'typescriptreact',
-    'typescript.tsx',
   },
   kind_highlights = {
     Text = 'String',
