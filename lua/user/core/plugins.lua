@@ -33,7 +33,6 @@ function plugins.ensure_installed()
   if not vim.g.packer_compiled_loaded and vim.loop.fs_stat(packer_compiled) then
     rvim.source(packer_compiled)
     vim.g.packer_compiled_loaded = true
-    plugins.invalidate()
   end
 end
 
@@ -41,7 +40,6 @@ function plugins.load_compile()
   if vim.fn.filereadable(packer_compiled) ~= 1 then
     plugins.install()
     plugins.compile()
-    plugins.invalidate()
   end
 end
 
@@ -60,7 +58,6 @@ function plugins.reload()
   plugins.install()
   plugins.compile()
   require('_compiled_rolling')
-  plugins.invalidate()
 end
 
 function plugins.invalidate()
