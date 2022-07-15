@@ -1,5 +1,5 @@
 return function()
-  local P = rvim.palette
+  local P = require('zephyr.palette')
   local icons = rvim.style.icons
   local utils = require('user.utils.statusline')
   local conditions = utils.conditions

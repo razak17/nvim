@@ -1,12 +1,13 @@
 return function()
   local icons = rvim.style.icons
   local highlights = require('zephyr.utils')
+  local P = require('zephyr.palette')
 
   highlights.plugin('NeoTree', {
     NeoTreeIndentMarker = { link = 'Comment' },
     NeoTreeNormal = { link = 'PanelBackground' },
     NeoTreeNormalNC = { link = 'PanelBackground' },
-    NeoTreeRootName = { bold = true, italic = false, foreground = rvim.palette.base6 },
+    NeoTreeRootName = { bold = true, italic = false, foreground = P.base6 },
     NeoTreeCursorLine = { link = 'Visual' },
     NeoTreeStatusLine = { link = 'PanelSt' },
   })

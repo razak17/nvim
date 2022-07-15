@@ -4,7 +4,7 @@ return function()
 
   local fmt = string.format
   local fn = vim.fn
-  local P = rvim.palette
+  local P = require('zephyr.palette')
   local groups = require('bufferline.groups')
   local util = require('zephyr.utils')
   local normal_bg = util.get('Normal', 'bg')

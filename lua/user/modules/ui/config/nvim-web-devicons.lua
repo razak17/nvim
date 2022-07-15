@@ -2,7 +2,7 @@ return function()
   local status_ok, nvim_web_devicons = rvim.safe_require('nvim-web-devicons')
   if not status_ok then return end
 
-  local P = rvim.palette
+  local P = require('zephyr.palette')
 
   nvim_web_devicons.set_icon({
     sh = {

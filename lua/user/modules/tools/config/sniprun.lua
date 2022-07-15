@@ -1,5 +1,5 @@
 return function()
-  local P = rvim.palette
+  local P = require('zephyr.palette')
   require('sniprun').setup({
     snipruncolors = {
       SniprunVirtualTextOk = {

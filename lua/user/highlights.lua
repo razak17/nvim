@@ -1,4 +1,4 @@
-local P = rvim.palette
+local P = require('zephyr.palette')
 local util = require('zephyr.utils')
 
 local function general_overrides()
