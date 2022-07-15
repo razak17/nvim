@@ -121,6 +121,15 @@ tools['nvim-telescope/telescope.nvim'] = {
   branch = '0.1.x',
   config = conf('tools', 'telescope'),
   requires = {
+    { 'nvim-lua/plenary.nvim' },
+    { 'nvim-lua/popup.nvim' },
+    { 'jvgrootveld/telescope-zoxide' },
+    { 'nvim-telescope/telescope-media-files.nvim' },
+    { 'nvim-telescope/telescope-file-browser.nvim' },
+    { 'nvim-telescope/telescope-dap.nvim' },
+    { 'nvim-telescope/telescope-ui-select.nvim' },
+    { 'ilAYAli/scMRU.nvim' },
+    { 'kkharji/sqlite.lua' },
     {
       'natecraddock/telescope-zf-native.nvim',
       after = 'telescope.nvim',
@@ -128,20 +137,6 @@ tools['nvim-telescope/telescope.nvim'] = {
     },
   },
 }
-
-tools['kkharji/sqlite.lua'] = {}
-
-tools['ilAYAli/scMRU.nvim'] = {}
-
-tools['nvim-telescope/telescope-ui-select.nvim'] = {}
-
-tools['nvim-telescope/telescope-dap.nvim'] = {}
-
-tools['nvim-telescope/telescope-file-browser.nvim'] = {}
-
-tools['nvim-telescope/telescope-media-files.nvim'] = {}
-
-tools['jvgrootveld/telescope-zoxide'] = {}
 
 tools['rmagatti/auto-session'] = {
   config = function()
@@ -192,10 +187,6 @@ tools['tpope/vim-apathy'] = {}
 tools['tpope/vim-projectionist'] = {
   config = conf('tools', 'vim-projectionist'),
 }
-
-tools['nvim-lua/plenary.nvim'] = {}
-
-tools['nvim-lua/popup.nvim'] = {}
 
 tools['NTBBloodbath/rest.nvim'] = {
   requires = { 'nvim-lua/plenary.nvim' },
