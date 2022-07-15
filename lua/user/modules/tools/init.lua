@@ -308,11 +308,6 @@ tools['vhyrro/neorg'] = {
 
 tools['kevinhwang91/nvim-bqf'] = {
   ft = 'qf',
-  config = function()
-    require('zephyr.utils').plugin('bqf', {
-      BqfPreviewBorder = { link = 'WinSeparator' },
-    })
-  end,
 }
 
 tools['anuvyklack/hydra.nvim'] = {
