@@ -59,7 +59,7 @@ function M.generate_ftplugin_util(dir)
   -- emmet
   for _, filetype in ipairs(rvim.lsp.emmet_ft) do
     local filename = join_paths(dir, filetype .. '.lua')
-    write_override(filename, 'emmet_ls')
+    write_manager(filename, 'emmet_ls')
   end
   -- ftplugin settings
   for _, filetype in ipairs(rvim.util.ftplugin_filetypes) do

@@ -16,20 +16,6 @@ function M.setup(server_name)
     )
     return
   end
-
-  -- emmet-ls
-  if server_name == 'emmet_ls' then
-    config = vim.tbl_deep_extend('force', config, {
-      filetypes = {
-        'html',
-        'css',
-        'typescriptreact',
-        'typescript.tsx',
-        'javascriptreact',
-        'javascript.jsx',
-      },
-    })
-  end
   -- rust_analyzer
   -- FIX: waiting for cargo metadata or cargo check (figure out fix)
   if server_name == 'rust_analyzer' then M.rust_tools_init(config) end
