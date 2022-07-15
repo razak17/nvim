@@ -46,7 +46,7 @@ lang['neovim/nvim-lspconfig'] = {
   requires = {
     { 'antoinemadec/FixCursorHold.nvim' },
     { 'jose-elias-alvarez/null-ls.nvim' },
-    { 'williamboman/nvim-lsp-installer' },
+    { 'tamago324/nlsp-settings.nvim' },
     {
       'williamboman/mason.nvim',
       config = function()
@@ -68,7 +68,7 @@ lang['neovim/nvim-lspconfig'] = {
       end,
     },
     {
-      'tamago324/nlsp-settings.nvim',
+      'williamboman/nvim-lsp-installer',
       config = function()
         local icons = rvim.style.icons
         require('nvim-lsp-installer').setup({
