@@ -45,10 +45,21 @@ lang['jbyuki/one-small-step-for-vimkind'] = {
 lang['neovim/nvim-lspconfig'] = {
   requires = {
     { 'antoinemadec/FixCursorHold.nvim' },
-    { 'jose-elias-alvarez/null-ls.nvim' },
     { 'nanotee/sqls.nvim' },
     { 'b0o/schemastore.nvim' },
     { 'razak17/rust-tools.nvim' },
+    {
+      'jose-elias-alvarez/null-ls.nvim',
+      config = function()
+        rvim.augroup('NullLsConfig', {
+          {
+            event = 'Filetype',
+            pattern = 'null-ls-info',
+            command = function() vim.api.nvim_win_set_config(0, { border = rvim.style.border.current }) end,
+          },
+        })
+      end,
+    },
     {
       'tamago324/nlsp-settings.nvim',
       config = function()
