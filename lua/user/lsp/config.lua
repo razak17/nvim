@@ -23,20 +23,6 @@ rvim.lsp = {
       end,
     },
   },
-  ---@usage list of settings of nvim-lsp-installer
-  installer = {
-    setup = {
-      ensure_installed = {},
-      install_root_dir = join_paths(rvim.get_runtime_dir(), 'lsp_servers'),
-      ui = {
-        icons = {
-          server_installed = '✓',
-          server_pending = '',
-          server_uninstalled = '✗',
-        },
-      },
-    },
-  },
   document_highlight = true,
   code_lens_refresh = true,
   float = {

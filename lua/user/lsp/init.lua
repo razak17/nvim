@@ -75,8 +75,6 @@ function M.setup()
 
   pcall(function() require('nlspsettings').setup(rvim.lsp.nlsp_settings.setup) end)
 
-  pcall(function() require('nvim-lsp-installer').setup(rvim.lsp.installer.setup) end)
-
   require('user.lsp.null-ls').setup()
 end
 

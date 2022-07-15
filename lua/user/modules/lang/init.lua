@@ -42,46 +42,43 @@ lang['jbyuki/one-small-step-for-vimkind'] = {
 }
 
 -- Lsp
-lang['williamboman/mason.nvim'] = {
-  config = function()
-    require('mason').setup({
-      ui = { border = rvim.style.border.current },
-      icons = {
-        package_installed = '✓',
-        package_pending = '',
-        package_uninstalled = '✗',
-      },
-      install_root_dir = rvim.paths.mason,
-    })
-    require('mason-lspconfig').setup({
-      automatic_installation = rvim.lsp.automatic_servers_installation,
-      ensure_installed = rvim.lsp.configured_servers,
-    })
-  end,
-}
-
-lang['williamboman/nvim-lsp-installer'] = {
+lang['neovim/nvim-lspconfig'] = {
   requires = {
-    'neovim/nvim-lspconfig',
+    { 'antoinemadec/FixCursorHold.nvim' },
+    { 'jose-elias-alvarez/null-ls.nvim' },
+    { 'williamboman/nvim-lsp-installer' },
+    {
+      'williamboman/mason.nvim',
+      config = function()
+        require('mason').setup({
+          ui = { border = rvim.style.border.current },
+          icons = {
+            package_installed = '✓',
+            package_pending = '',
+            package_uninstalled = '✗',
+          },
+          install_root_dir = rvim.paths.mason,
+        })
+        require('mason-lspconfig').setup({
+          automatic_installation = rvim.lsp.automatic_servers_installation,
+          ensure_installed = rvim.lsp.configured_servers,
+        })
+      end,
+    },
+    {
+      'tamago324/nlsp-settings.nvim',
+      config = function()
+        rvim.augroup('LspInstallerConfig', {
+          {
+            event = 'Filetype',
+            pattern = 'lsp-installer',
+            command = function() vim.api.nvim_win_set_config(0, { border = rvim.style.border.current }) end,
+          },
+        })
+      end,
+    },
   },
-  config = function()
-    rvim.augroup('LspInstallerConfig', {
-      {
-        event = 'Filetype',
-        pattern = 'lsp-installer',
-        command = function() vim.api.nvim_win_set_config(0, { border = rvim.style.border.current }) end,
-      },
-    })
-  end,
 }
-
-lang['antoinemadec/FixCursorHold.nvim'] = {}
-
-lang['neovim/nvim-lspconfig'] = {}
-
-lang['tamago324/nlsp-settings.nvim'] = {}
-
-lang['jose-elias-alvarez/null-ls.nvim'] = {}
 
 lang['kosayoda/nvim-lightbulb'] = {
   config = function()
