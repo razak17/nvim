@@ -142,11 +142,9 @@ local function setup_mappings(client)
   if client.supports_method('textDocument/prepareCallHierarchy') then
     nnoremap('gI', vim.lsp.buf.incoming_calls, with_desc('lsp: incoming calls'))
   end
-
   ------------------------------------------------------------------------------
   -- leader keymaps
   ------------------------------------------------------------------------------
-
   -- Peek
   nnoremap(
     '<leader>lp',
