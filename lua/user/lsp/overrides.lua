@@ -21,15 +21,17 @@ function M.setup(server_name)
   if server_name == 'rust_analyzer' then M.rust_tools_init(config) end
 
   -- sqlls
-  if server_name == 'sqlls' then
-    server_name = 'sqls'
-    config = {
-      on_attach = function(client, bufnr) require('sqls').on_attach(client, bufnr) end,
-    }
-  end
+  if server_name == 'sqlls' then M.sqls_init(config) end
 
   -- Initialize Server
   lsp_manager.launch_server(server_name, config)
+end
+
+function M.sqls_init(config)
+  config = vim.tbl_extend('force', config, {
+    on_attach = function(client, bufnr) require('sqls').on_attach(client, bufnr) end,
+  })
+  require('lspconfig').sqls.setup(config)
 end
 
 function M.rust_tools_init(config)
