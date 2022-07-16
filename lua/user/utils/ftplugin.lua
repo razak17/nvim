@@ -1,11 +1,9 @@
 local M = {}
 
 local nnoremap = rvim.nnoremap
-local fn = vim.fn
 local fmt = string.format
 
 function M.go()
-  vim.opt_local.spell = true
   vim.opt_local.expandtab = false
   vim.opt_local.textwidth = 0 -- Go doesn't specify a max line length so don't force one
   vim.opt_local.softtabstop = 0
@@ -51,8 +49,6 @@ function M.html()
   vim.opt_local.matchpairs:append('<:>')
 end
 
-function M.javascript() vim.opt_local.spell = true end
-
 function M.json()
   vim.opt_local.autoindent = true
   vim.opt_local.conceallevel = 0
@@ -86,6 +82,8 @@ function M.lua()
       if match_start then return str, match_start, match_end end
     end
   end
+
+  local fn = vim.fn
 
   --- Stolen from nlua.nvim this function attempts to open
   --- vim help docs if an api or vim.fn function otherwise it
@@ -153,29 +151,21 @@ function M.lua()
     vim.notify('Sourced ' .. fn.expand('%'))
   end, 'source current file')
 
-  vim.opt_local.spell = true
   vim.cmd([[setlocal iskeyword+="]])
   vim.opt_local.textwidth = 100
   vim.opt_local.formatoptions:remove('o')
 end
 
 function M.python()
-  vim.opt_local.spell = true
   vim.cmd([[setlocal iskeyword+="]])
   vim.opt_local.shiftwidth = 4
   vim.opt_local.softtabstop = 4
   vim.opt_local.tabstop = 4
 end
 
-function M.rust() vim.opt_local.spell = true end
-
-function M.typescript()
-  vim.opt_local.spell = true
-  vim.opt_local.textwidth = 100
-end
+function M.typescript() vim.opt_local.textwidth = 100 end
 
 function M.vim()
-  vim.opt_local.spell = true
   vim.opt_local.colorcolumn = 120
   vim.cmd([[setlocal iskeyword+=:,#]])
   vim.opt_local.foldmethod = 'marker'
@@ -193,13 +183,11 @@ function M.setup(filetype)
   if filetype == 'go' then M.go() end
   if filetype == 'graphql' then M.graphql() end
   if filetype == 'html' then M.html() end
-  if filetype == 'javascript' then M.javascript() end
   if filetype == 'json' then M.json() end
   if filetype == 'jsonc' then M.json() end
   if filetype == 'log' then M.log() end
   if filetype == 'lua' then M.lua() end
   if filetype == 'python' then M.python() end
-  if filetype == 'rust' then M.rust() end
   if filetype == 'typescript' then M.typescript() end
   if filetype == 'yaml' then M.yaml() end
 end
