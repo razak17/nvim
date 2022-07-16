@@ -67,11 +67,7 @@ golangInit() {
 archExtra() {
 	sudo pacman -S \
     ripgrep \
-    fzf \
     cppcheck \
-    stylua \
-    shfmt \
-    shellcheck \
     xsel \
     fd \
     delve \
@@ -84,7 +80,7 @@ archExtra() {
 }
 
 yayExtra() {
-	yay -S stylua
+  echo 'Done'
 }
 
 importRvim() {
