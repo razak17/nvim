@@ -227,13 +227,6 @@ lang['windwp/nvim-autopairs'] = {
   config = conf('lang', 'autopairs'),
 }
 
-lang['L3MON4D3/LuaSnip'] = {
-  event = 'InsertEnter',
-  module = 'luasnip',
-  requires = 'rafamadriz/friendly-snippets',
-  config = conf('lang', 'luasnip'),
-}
-
 lang['github/copilot.vim'] = {
   config = function()
     vim.g.copilot_no_tab_map = true

@@ -53,6 +53,13 @@ editor['hrsh7th/nvim-cmp'] = {
   },
 }
 
+editor['L3MON4D3/LuaSnip'] = {
+  event = 'InsertEnter',
+  module = 'luasnip',
+  requires = 'rafamadriz/friendly-snippets',
+  config = conf('lang', 'luasnip'),
+}
+
 editor['xiyaowong/accelerated-jk.nvim'] = {
   event = { 'BufWinEnter' },
   config = function()
