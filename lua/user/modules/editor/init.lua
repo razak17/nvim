@@ -223,6 +223,7 @@ editor['chentoast/marks.nvim'] = {
 editor['jsborjesson/vim-uppercase-sql'] = {
   event = 'InsertEnter',
   ft = { 'sql' },
+  disable = true,
 }
 
 editor['psliwka/vim-dirtytalk'] = {
