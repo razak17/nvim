@@ -104,7 +104,6 @@ return function()
   treesitter_configs.setup({
     highlight = {
       enable = rvim.treesitter.setup.highlight.enabled,
-      additional_vim_regex_highlighting = true,
     },
     incremental_selection = rvim.treesitter.setup.incremental_selection,
     textobjects = rvim.treesitter.setup.textobjects,
