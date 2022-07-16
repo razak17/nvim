@@ -56,7 +56,7 @@ rvim.wk = {
   },
   localleader = {
     d = { name = 'Dap' },
-    l = { name = 'Lsp' },
+    -- l = { name = 'Lsp' },
     L = { name = 'rVim' },
     t = { name = 'Neotest' },
     w = { name = 'Window' },

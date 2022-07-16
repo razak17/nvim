@@ -6,15 +6,6 @@ M.__index = M
 
 function M:plug_notify(msg, level) vim.notify(msg, level, { title = 'Packer' }) end
 
-function M:get_plugins_list()
-  local list = {}
-  local modules_dir = join_paths(rvim.get_user_dir(), 'modules')
-  local tmp = vim.split(fn.globpath(modules_dir, '*/init.lua'), '\n')
-  for _, f in ipairs(tmp) do
-    list[#list + 1] = f:sub(#modules_dir - 6, -1)
-  end
-  return list
-end
 
 function M:load_plugins(plugins)
   self.repos = {}
@@ -25,6 +16,16 @@ function M:load_plugins(plugins)
       self.repos[#self.repos + 1] = vim.tbl_extend('force', { repo }, conf)
     end
   end
+end
+
+function M:get_plugins_list()
+  local list = {}
+  local modules_dir = join_paths(rvim.get_user_dir(), 'modules')
+  local tmp = vim.split(fn.globpath(modules_dir, '*/init.lua'), '\n')
+  for _, f in ipairs(tmp) do
+    list[#list + 1] = f:sub(#modules_dir - 6, -1)
+  end
+  return list
 end
 
 function M:init_ensure_installed()

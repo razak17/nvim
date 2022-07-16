@@ -174,11 +174,13 @@ editor['Matt-A-Bennett/vim-surround-funk'] = {
 }
 
 editor['danymat/neogen'] = {
-  setup = function() rvim.nnoremap('<localleader>lc', require('neogen').generate, 'comment: generate') end,
-  keys = { '<localleader>lc' },
-  requires = 'nvim-treesitter/nvim-treesitter',
-  module = 'neogen',
-  config = function() require('neogen').setup({ snippet_engine = 'luasnip' }) end,
+  requires = { 'nvim-treesitter/nvim-treesitter' },
+  config = function()
+    require('neogen').setup({ snippet_engine = 'luasnip' })
+    require('which-key').register({
+      ['<localleader>lc'] = { require('neogen').generate, 'comment: generate' },
+    })
+  end,
 }
 
 editor['abecodes/tabout.nvim'] = {
