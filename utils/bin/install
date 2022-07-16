@@ -2,6 +2,7 @@
 #Set Variable to master is not set differently
 
 RVIM_CONFIG_DIR="${RVIM_CONFIG_DIR:-"$XDG_CONFIG_HOME/rvim"}"
+RVIM_RUNTIME_DIR="${RVIM_RUNTIME_DIR:-"$XDG_DATA_HOME/rvim"}"
 RV_BRANCH="${RV_BRANCH:-"dual"}"
 RV_REMOTE="${RV_REMOTE:-razak17/nvim.git}"
 
@@ -138,6 +139,15 @@ install_dict() {
   fi
 }
 
+little_fixes() {
+  file_name='programming.utf-8.spl'
+  file="$XDG_DATA_HOME/nvim/site/spell/$file_name"
+  if [ -e "$file" ]; then
+    echo "copying $file"
+    cp "$file" "$RVIM_RUNTIME_DIR/site/spell/$file_name"
+  fi
+}
+
 install_deps() {
 	printf "Would you like to install node packages now (y/n)? "
 	read -r answer
@@ -192,8 +202,6 @@ cloneconfig() {
 		installpacker
 	fi
 
-  install_deps
-
 	sudo cp --force "$HOME/.config/rvim/utils/bin/rvim" "$HOME/.local/bin"
 }
 
@@ -220,8 +228,14 @@ while [ "$#" -gt 0 ]; do
 	-dict)
     install_dict
 		;;
+	-fixes)
+    little_fixes
+		;;
 	*--all*)
 		cloneconfig
+    install_deps
+    install_dict
+    little_fixes
 		;;
 	*) echo "Unavailable command... $curr" ;;
 	esac
