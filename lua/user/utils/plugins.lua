@@ -96,7 +96,7 @@ function M.load_conf(dir, name)
   local module_dir = fmt('user.modules.%s', dir)
   if dir == 'user' then return require(fmt(dir .. '.%s', name)) end
 
-  return require(fmt(module_dir .. '.%s.%s', 'config', name))
+  return require(fmt(module_dir .. '.%s', name))
 end
 
 --- Automagically register local and remote plugins as well as managing when they are enabled or disabled

@@ -249,7 +249,7 @@ return function()
   --- from the setup call
   local builtin = require('telescope.builtin')
 
-  local bg_selector = require('user.modules.tools.config.telescope.bg_selector')
+  local bg_selector = require('user.modules.tools.telescope.bg_selector')
 
   local function notes()
     builtin.find_files({

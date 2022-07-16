@@ -1,6 +1,6 @@
 return function()
   local fn = vim.fn
-  local config = require('user.modules.lang.config.dap.config')
+  local config = require('user.modules.lang.dap.config')
 
   local function repl_toggle() require('dap').repl.toggle(nil, 'botright split') end
   local function continue() require('dap').continue() end

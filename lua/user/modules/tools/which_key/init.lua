@@ -1,4 +1,4 @@
-R('user.modules.tools.config.which_key.config')
+R('user.modules.tools.which_key.config')
 
 return function()
   rvim.which_key = {
