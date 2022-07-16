@@ -8,32 +8,6 @@ tools['folke/which-key.nvim'] = {
   config = conf('tools', 'which_key'),
 }
 
-tools['sindrets/diffview.nvim'] = {
-  event = 'BufReadPre',
-  setup = function()
-    rvim.nnoremap('<localleader>gd', '<Cmd>DiffviewOpen<CR>', 'diffview: diff HEAD')
-    rvim.nnoremap('<localleader>gh', '<Cmd>DiffviewFileHistory<CR>', 'diffview: file history')
-    rvim.vnoremap('gh', [[:'<'>DiffviewFileHistory<CR>]], 'diffview: file history')
-  end,
-  config = function()
-    require('diffview').setup({
-      hooks = {
-        diff_buf_read = function()
-          vim.opt_local.wrap = false
-          vim.opt_local.list = false
-          vim.opt_local.colorcolumn = ''
-        end,
-      },
-      enhanced_diff_hl = true,
-      keymaps = {
-        view = { q = '<Cmd>DiffviewClose<CR>' },
-        file_panel = { q = '<Cmd>DiffviewClose<CR>' },
-        file_history_panel = { q = '<Cmd>DiffviewClose<CR>' },
-      },
-    })
-  end,
-}
-
 tools['mbbill/undotree'] = {
   event = 'BufWinEnter',
   cmd = 'UndotreeToggle',
@@ -72,37 +46,10 @@ tools['ahmedkhalf/project.nvim'] = {
   end,
 }
 
-tools['npxbr/glow.nvim'] = {
-  run = ':GlowInstall',
-  branch = 'main',
-  disable = true,
-}
-
-tools['kkoomen/vim-doge'] = {
-  run = ':call doge#install()',
-  config = function() vim.g.doge_mapping = '<Leader>lD' end,
-  disable = true,
-}
-
 tools['akinsho/toggleterm.nvim'] = {
   event = 'CursorHold',
   tag = 'v2.*',
   config = conf('tools', 'toggleterm'),
-}
-
-tools['diepm/vim-rest-console'] = {
-  event = 'VimEnter',
-  disable = true,
-}
-
-tools['iamcco/markdown-preview.nvim'] = {
-  run = function() vim.fn['mkdp#util#install']() end,
-  ft = { 'markdown' },
-  config = function()
-    vim.g.mkdp_auto_start = 0
-    vim.g.mkdp_auto_close = 1
-  end,
-  disable = true,
 }
 
 tools['brooth/far.vim'] = {
@@ -203,10 +150,90 @@ tools['moll/vim-bbye'] = {
   end,
 }
 
-tools['tpope/vim-apathy'] = {}
+tools['Djancyp/cheat-sheet'] = {
+  config = function()
+    require('cheat-sheet').setup({
+      auto_fill = {
+        current_word = false,
+      },
+      main_win = {
+        border = 'single',
+      },
+      input_win = {
+        border = 'single',
+      },
+    })
+    require('which-key').register({
+      ['<localleader>s'] = { ':CheatSH<CR>', 'cheat-sheet' },
+    })
+  end,
+}
+
+tools['SmiteshP/nvim-navic'] = {
+  requires = 'neovim/nvim-lspconfig',
+  config = function()
+    vim.g.navic_silence = true
+    local highlights = require('zephyr.utils')
+    local s = rvim.style
+    local misc = s.icons.misc
+
+    highlights.set_hl('NavicText', { bold = false })
+    highlights.set_hl('NavicSeparator', { link = 'Directory' })
+    local icons = rvim.map(function(icon, key)
+      highlights.set_hl(('NavicIcons%s'):format(key), { link = rvim.lsp.kind_highlights[key] })
+      return icon .. ' '
+    end, s.codicons.kind)
+
+    require('nvim-navic').setup({
+      icons = icons,
+      highlight = true,
+      depth_limit_indicator = misc.ellipsis,
+      separator = (' %s '):format(misc.arrow_right),
+    })
+  end,
+}
+
+tools['kevinhwang91/nvim-bqf'] = {
+  ft = 'qf',
+}
+
+tools['anuvyklack/hydra.nvim'] = {
+  requires = 'anuvyklack/keymap-layer.nvim',
+  config = block_reload(conf('tools', 'hydra')),
+}
+
+tools['sindrets/diffview.nvim'] = {
+  event = 'BufReadPre',
+  setup = function()
+    rvim.nnoremap('<localleader>gd', '<Cmd>DiffviewOpen<CR>', 'diffview: diff HEAD')
+    rvim.nnoremap('<localleader>gh', '<Cmd>DiffviewFileHistory<CR>', 'diffview: file history')
+    rvim.vnoremap('gh', [[:'<'>DiffviewFileHistory<CR>]], 'diffview: file history')
+  end,
+  config = function()
+    require('diffview').setup({
+      hooks = {
+        diff_buf_read = function()
+          vim.opt_local.wrap = false
+          vim.opt_local.list = false
+          vim.opt_local.colorcolumn = ''
+        end,
+      },
+      enhanced_diff_hl = true,
+      keymaps = {
+        view = { q = '<Cmd>DiffviewClose<CR>' },
+        file_panel = { q = '<Cmd>DiffviewClose<CR>' },
+        file_history_panel = { q = '<Cmd>DiffviewClose<CR>' },
+      },
+    })
+  end,
+  disable = true,
+}
+
+tools['tpope/vim-apathy'] = { disable = true }
 
 tools['tpope/vim-projectionist'] = {
   config = conf('tools', 'vim-projectionist'),
+  disable = true,
 }
 
 tools['NTBBloodbath/rest.nvim'] = {
@@ -228,6 +255,8 @@ tools['NTBBloodbath/rest.nvim'] = {
   end,
   disable = true,
 }
+
+tools['nvim-lua/plenary.nvim'] = {}
 
 tools['michaelb/sniprun'] = {
   event = 'BufWinEnter',
@@ -258,6 +287,7 @@ tools['michaelb/sniprun'] = {
     rvim.nnoremap('<leader>sx', ':SnipReset<cr>', 'sniprun: reset')
   end,
   run = 'bash ./install.sh',
+  disable = true,
 }
 
 tools['vuki656/package-info.nvim'] = {
@@ -305,6 +335,7 @@ tools['nvim-neotest/neotest'] = {
     'nvim-treesitter/nvim-treesitter',
     'antoinemadec/FixCursorHold.nvim',
   },
+  disable = true,
 }
 
 tools['smjonas/inc-rename.nvim'] = {
@@ -319,53 +350,12 @@ tools['smjonas/inc-rename.nvim'] = {
       { expr = true, silent = false, desc = 'lsp: incremental rename' }
     )
   end,
+  disable = true,
 }
 
 tools['AndrewRadev/linediff.vim'] = {
   cmd = 'Linediff',
-}
-
-tools['Djancyp/cheat-sheet'] = {
-  config = function()
-    require('cheat-sheet').setup({
-      auto_fill = {
-        current_word = false,
-      },
-      main_win = {
-        border = 'single',
-      },
-      input_win = {
-        border = 'single',
-      },
-    })
-    require('which-key').register({
-      ['<localleader>s'] = { ':CheatSH<CR>', 'cheat-sheet' },
-    })
-  end,
-}
-
-tools['SmiteshP/nvim-navic'] = {
-  requires = 'neovim/nvim-lspconfig',
-  config = function()
-    vim.g.navic_silence = true
-    local highlights = require('zephyr.utils')
-    local s = rvim.style
-    local misc = s.icons.misc
-
-    highlights.set_hl('NavicText', { bold = false })
-    highlights.set_hl('NavicSeparator', { link = 'Directory' })
-    local icons = rvim.map(function(icon, key)
-      highlights.set_hl(('NavicIcons%s'):format(key), { link = rvim.lsp.kind_highlights[key] })
-      return icon .. ' '
-    end, s.codicons.kind)
-
-    require('nvim-navic').setup({
-      icons = icons,
-      highlight = true,
-      depth_limit_indicator = misc.ellipsis,
-      separator = (' %s '):format(misc.arrow_right),
-    })
-  end,
+  disable = true,
 }
 
 tools['vhyrro/neorg'] = {
@@ -374,13 +364,31 @@ tools['vhyrro/neorg'] = {
   disable = true,
 }
 
-tools['kevinhwang91/nvim-bqf'] = {
-  ft = 'qf',
+tools['npxbr/glow.nvim'] = {
+  run = ':GlowInstall',
+  branch = 'main',
+  disable = true,
 }
 
-tools['anuvyklack/hydra.nvim'] = {
-  requires = 'anuvyklack/keymap-layer.nvim',
-  config = block_reload(conf('tools', 'hydra')),
+tools['kkoomen/vim-doge'] = {
+  run = ':call doge#install()',
+  config = function() vim.g.doge_mapping = '<Leader>lD' end,
+  disable = true,
+}
+
+tools['diepm/vim-rest-console'] = {
+  event = 'VimEnter',
+  disable = true,
+}
+
+tools['iamcco/markdown-preview.nvim'] = {
+  run = function() vim.fn['mkdp#util#install']() end,
+  ft = { 'markdown' },
+  config = function()
+    vim.g.mkdp_auto_start = 0
+    vim.g.mkdp_auto_close = 1
+  end,
+  disable = true,
 }
 
 return tools

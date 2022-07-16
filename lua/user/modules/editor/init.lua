@@ -80,21 +80,6 @@ editor['monaqa/dial.nvim'] = {
   config = conf('editor', 'dial'),
 }
 
-editor['junegunn/vim-easy-align'] = {
-  config = function()
-    rvim.nmap('ga', '<Plug>(EasyAlign)')
-    rvim.xmap('ga', '<Plug>(EasyAlign)')
-    rvim.vmap('<Enter>', '<Plug>(EasyAlign)')
-  end,
-  event = { 'BufReadPre', 'BufNewFile' },
-}
-
-editor['xiyaowong/nvim-cursorword'] = {
-  event = { 'InsertEnter' },
-  config = function() vim.cmd([[hi! CursorWord cterm=NONE gui=NONE guibg=#3f444a]]) end,
-  disable = true,
-}
-
 editor['norcalli/nvim-colorizer.lua'] = {
   event = { 'BufReadPre', 'BufNewFile' },
   config = function()
@@ -183,12 +168,6 @@ editor['danymat/neogen'] = {
   end,
 }
 
-editor['abecodes/tabout.nvim'] = {
-  wants = { 'nvim-treesitter' },
-  after = { 'nvim-cmp' },
-  config = function() require('tabout').setup({ ignore_beginning = false, completion = false }) end,
-}
-
 editor['chentoast/marks.nvim'] = {
   event = { 'BufWinEnter' },
   config = function()
@@ -220,14 +199,14 @@ editor['chentoast/marks.nvim'] = {
   end,
 }
 
+editor['psliwka/vim-dirtytalk'] = {
+  run = ':DirtytalkUpdate',
+}
+
 editor['jsborjesson/vim-uppercase-sql'] = {
   event = 'InsertEnter',
   ft = { 'sql' },
   disable = true,
-}
-
-editor['psliwka/vim-dirtytalk'] = {
-  run = ':DirtytalkUpdate',
 }
 
 editor['glepnir/template.nvim'] = {
@@ -249,6 +228,29 @@ editor['AckslD/nvim-trevJ.lua'] = {
     )
   end,
   config = function() require('trevj').setup() end,
+  disable = true,
+}
+
+editor['junegunn/vim-easy-align'] = {
+  config = function()
+    rvim.nmap('ga', '<Plug>(EasyAlign)')
+    rvim.xmap('ga', '<Plug>(EasyAlign)')
+    rvim.vmap('<Enter>', '<Plug>(EasyAlign)')
+  end,
+  event = { 'BufReadPre', 'BufNewFile' },
+  disable = true,
+}
+
+editor['xiyaowong/nvim-cursorword'] = {
+  event = { 'InsertEnter' },
+  config = function() vim.cmd([[hi! CursorWord cterm=NONE gui=NONE guibg=#3f444a]]) end,
+  disable = true,
+}
+
+editor['abecodes/tabout.nvim'] = {
+  wants = { 'nvim-treesitter' },
+  after = { 'nvim-cmp' },
+  config = function() require('tabout').setup({ ignore_beginning = false, completion = false }) end,
   disable = true,
 }
 

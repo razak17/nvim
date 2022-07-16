@@ -157,14 +157,6 @@ lang['neovim/nvim-lspconfig'] = {
   },
 }
 
-lang['olexsmir/gopher.nvim'] = {
-  ft = 'go',
-  requires = { -- dependencies
-    'nvim-lua/plenary.nvim',
-    'nvim-treesitter/nvim-treesitter',
-  },
-}
-
 -- Treesitter
 lang['nvim-treesitter/nvim-treesitter'] = {
   run = ':TSUpdate',
@@ -258,6 +250,15 @@ lang['github/copilot.vim'] = {
     }
     require('zephyr.utils').plugin('copilot', { CopilotSuggestion = { link = 'Comment' } })
   end,
+}
+
+lang['olexsmir/gopher.nvim'] = {
+  ft = 'go',
+  requires = { -- dependencies
+    'nvim-lua/plenary.nvim',
+    'nvim-treesitter/nvim-treesitter',
+  },
+  disable = true,
 }
 
 return lang

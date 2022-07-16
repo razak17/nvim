@@ -33,6 +33,7 @@ ui['lewis6991/gitsigns.nvim'] = {
 ui['rcarriga/nvim-notify'] = {
   cond = utils.not_headless, -- TODO: causes blocking output in headless mode
   config = block_reload(conf('ui', 'notify')),
+  disable = true,
 }
 
 ui['stevearc/dressing.nvim'] = {
@@ -62,32 +63,6 @@ ui['lukas-reineke/headlines.nvim'] = {
   end,
 }
 
-ui['rainbowhxch/beacon.nvim'] = {
-  config = function()
-    local beacon = require('beacon')
-    beacon.setup({
-      minimal_jump = 20,
-      ignore_buffers = { 'terminal', 'nofile', 'neorg://Quick Actions' },
-      ignore_filetypes = {
-        'neo-tree',
-        'qf',
-        'NeogitCommitMessage',
-        'NeogitPopup',
-        'NeogitStatus',
-        'packer',
-        'trouble',
-      },
-    })
-    rvim.augroup('BeaconCmds', {
-      {
-        event = 'BufReadPre',
-        pattern = '*.norg',
-        command = function() beacon.beacon_off() end,
-      },
-    })
-  end,
-}
-
 ui['zbirenbaum/neodim'] = {
   config = function()
     require('neodim').setup({
@@ -112,36 +87,22 @@ ui['MunifTanjim/nui.nvim'] = {}
 ui['s1n7ax/nvim-window-picker'] = {
   tag = 'v1.*',
   config = function()
-  require('window-picker').setup({
-    autoselect_one = true,
-    include_current = false,
-    filter_rules = {
-      bo = {
-        filetype = { 'neo-tree-popup', 'quickfix', 'incline' },
-        buftype = { 'terminal', 'quickfix', 'nofile' },
+    require('window-picker').setup({
+      autoselect_one = true,
+      include_current = false,
+      filter_rules = {
+        bo = {
+          filetype = { 'neo-tree-popup', 'quickfix', 'incline' },
+          buftype = { 'terminal', 'quickfix', 'nofile' },
+        },
       },
-    },
-    other_win_hl_color = require('zephyr.utils').get('Visual', 'bg'),
-  })
-  end
+      other_win_hl_color = require('zephyr.utils').get('Visual', 'bg'),
+    })
+  end,
 }
 
 ui['itchyny/vim-highlighturl'] = {
   config = function() vim.g.highlighturl_guifg = require('zephyr.utils').get('URL', 'fg') end,
-}
-
-ui['EdenEast/nightfox.nvim'] = {}
-
-ui['NTBBloodbath/doom-one.nvim'] = {
-  config = function()
-    require('doom-one').setup({
-      pumblend = {
-        enable = true,
-        transparency_amount = 3,
-      },
-    })
-  end,
-  disable = true,
 }
 
 ui['j-hui/fidget.nvim'] = {
@@ -162,24 +123,6 @@ ui['mtdl9/vim-log-highlighting'] = {}
 
 ui['pantharshit00/vim-prisma'] = {}
 
-ui['m-demare/hlargs.nvim'] = {
-  branch = 'expected_lua_number',
-  config = function()
-    require('zephyr.utils').plugin('hlargs', {
-      Hlargs = { italic = true, bold = false, foreground = '#A5D6FF' },
-    })
-    require('hlargs').setup({
-      excluded_argnames = {
-        declarations = { 'use', 'use_rocks', '_' },
-        usages = {
-          go = { '_' },
-          lua = { 'self', 'use', 'use_rocks', '_' },
-        },
-      },
-    })
-  end,
-}
-
 ui['RRethy/vim-illuminate'] = {
   config = function()
     vim.g.Illuminate_ftblacklist = {
@@ -197,6 +140,7 @@ ui['RRethy/vim-illuminate'] = {
 }
 
 ui['m-demare/hlargs.nvim'] = {
+  branch = 'expected_lua_number',
   config = function()
     require('zephyr.utils').plugin('hlargs', {
       Hlargs = { italic = true, bold = false, foreground = '#A5D6FF' },
@@ -211,6 +155,66 @@ ui['m-demare/hlargs.nvim'] = {
       },
     })
   end,
+  disable = true,
+}
+
+ui['m-demare/hlargs.nvim'] = {
+  config = function()
+    require('zephyr.utils').plugin('hlargs', {
+      Hlargs = { italic = true, bold = false, foreground = '#A5D6FF' },
+    })
+    require('hlargs').setup({
+      excluded_argnames = {
+        declarations = { 'use', 'use_rocks', '_' },
+        usages = {
+          go = { '_' },
+          lua = { 'self', 'use', 'use_rocks', '_' },
+        },
+      },
+    })
+  end,
+  disable = true,
+}
+
+ui['rainbowhxch/beacon.nvim'] = {
+  config = function()
+    local beacon = require('beacon')
+    beacon.setup({
+      minimal_jump = 20,
+      ignore_buffers = { 'terminal', 'nofile', 'neorg://Quick Actions' },
+      ignore_filetypes = {
+        'neo-tree',
+        'qf',
+        'NeogitCommitMessage',
+        'NeogitPopup',
+        'NeogitStatus',
+        'packer',
+        'trouble',
+      },
+    })
+    rvim.augroup('BeaconCmds', {
+      {
+        event = 'BufReadPre',
+        pattern = '*.norg',
+        command = function() beacon.beacon_off() end,
+      },
+    })
+  end,
+  disable = true,
+}
+
+ui['EdenEast/nightfox.nvim'] = { disable = true }
+
+ui['NTBBloodbath/doom-one.nvim'] = {
+  config = function()
+    require('doom-one').setup({
+      pumblend = {
+        enable = true,
+        transparency_amount = 3,
+      },
+    })
+  end,
+  disable = true,
 }
 
 return ui
