@@ -74,7 +74,11 @@ function M.log()
 end
 
 function M.lua()
-  if not rvim then return end
+  vim.cmd([[setlocal iskeyword+="]])
+  vim.opt_local.textwidth = 100
+  vim.opt_local.formatoptions:remove('o')
+
+  if not rvim or not rvim.plugin_loaded('nvim-surround') then return end
 
   local function find(word, ...)
     for _, str in ipairs({ ... }) do
@@ -150,10 +154,6 @@ function M.lua()
     vim.cmd('luafile %')
     vim.notify('Sourced ' .. fn.expand('%'))
   end, 'source current file')
-
-  vim.cmd([[setlocal iskeyword+="]])
-  vim.opt_local.textwidth = 100
-  vim.opt_local.formatoptions:remove('o')
 end
 
 function M.python()

@@ -64,7 +64,7 @@ editor['xiyaowong/accelerated-jk.nvim'] = {
 }
 
 editor['kylechui/nvim-surround'] = {
-  config = function() require('nvim-surround').setup({}) end,
+  config = function() require('nvim-surround').setup() end,
 }
 
 editor['monaqa/dial.nvim'] = {
@@ -106,10 +106,10 @@ editor['numToStr/Comment.nvim'] = {
     require('Comment').setup()
     local ft = require('Comment.ft')
     ft
-      .set('javascriptreact',  '{/*%s*/}')
-      .set('javascript.jsx',   '{/*%s*/}')
-      .set('typescriptreact',   '{/*%s*/}')
-      .set('typescript.tsx',   '{/*%s*/}')
+      .set('javascriptreact', '{/*%s*/}')
+      .set('javascript.jsx', '{/*%s*/}')
+      .set('typescriptreact', '{/*%s*/}')
+      .set('typescript.tsx', '{/*%s*/}')
       .set('graphql', '//%s')
       .set('json', '//%s')
   end,
