@@ -61,6 +61,7 @@ tools['kkoomen/vim-doge'] = {
 }
 
 tools['akinsho/toggleterm.nvim'] = {
+  event = 'CursorHold',
   tag = 'v2.*',
   config = conf('tools', 'toggleterm'),
 }

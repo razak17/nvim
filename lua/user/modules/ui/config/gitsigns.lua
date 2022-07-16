@@ -36,16 +36,13 @@ return function()
             u = { gs.undo_stage_hunk, 'undo stage' },
             w = { gs.toggle_word_diff, 'toggle word diff' },
           },
-          ['<leader>g'] = {
-            name = 'Git',
-            b = { gs.blame_line, 'gitsigns: blame' },
-            m = { qf_list_modified, 'gitsigns: list modified in quickfix' },
-            r = {
-              name = '+reset',
-              e = { gs.reset_buffer, 'gitsigns: reset entire buffer' },
-            },
-            w = { gs.stage_buffer, 'gitsigns: stage entire buffer' },
+          ['<leader>gb'] = { gs.blame_line, 'gitsigns: blame' },
+          ['<leader>gm'] = { qf_list_modified, 'gitsigns: list modified in quickfix' },
+          ['<leader>gr'] = {
+            name = '+reset',
+            e = { gs.reset_buffer, 'gitsigns: reset entire buffer' },
           },
+          ['<leader>gw'] = { gs.stage_buffer, 'gitsigns: stage entire buffer' },
         })
       end,
       watch_gitdir = {
