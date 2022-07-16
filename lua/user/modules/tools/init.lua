@@ -46,12 +46,27 @@ tools['ahmedkhalf/project.nvim'] = {
   end,
 }
 
-tools['akinsho/toggleterm.nvim'] = {
-  event = 'CursorHold',
-  tag = 'v2.*',
-  config = conf('tools', 'toggleterm'),
-}
+tools['numToStr/FTerm.nvim'] = {
+  event = { 'BufWinEnter' },
+  config = function()
+    local fterm = require('FTerm')
+    local function new_float(cmd) cmd = fterm:new({ cmd = cmd }):toggle() end
+    rvim.nnoremap([[<c-\>]], function() fterm.toggle() end, 'fterm: toggle lazygit')
+    rvim.tnoremap([[<c-\>]], function() fterm.toggle() end, 'fterm: toggle lazygit')
+    rvim.nnoremap('<leader>lg', function() new_float('lazygit') end, 'fterm: toggle lazygit')
+    rvim.nnoremap(
+      '<leader>gc',
+      function() new_float('git add . && git commit -v -a') end,
+      'git: commit'
+    )
+    rvim.nnoremap('<leader>gd', function() new_float('iconf -ccma') end, 'git: commit dotfiles')
 
+    rvim.nnoremap('<leader>tb', function() new_float('btop') end, 'fterm: btop')
+    rvim.nnoremap('<leader>tn', function() new_float('node') end, 'fterm: node')
+    rvim.nnoremap('<leader>tr', function() new_float('ranger') end, 'fterm: ranger')
+    rvim.nnoremap('<leader>tp', function() new_float('python') end, 'fterm: python')
+  end,
+}
 
 tools['brooth/far.vim'] = {
   event = { 'BufRead' },
