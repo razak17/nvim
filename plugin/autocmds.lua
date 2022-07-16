@@ -258,7 +258,7 @@ rvim.augroup('WinBehavior', {
   },
 })
 
-local cursorline_exclusion = { 'dashboard' }
+local cursorline_exclusion = { 'alpha' }
 local function should_show_cursorline()
   return vim.bo.buftype ~= 'terminal'
     and not vim.wo.previewwindow
