@@ -1,7 +1,5 @@
 local Log = {}
 
-local logfile = string.format('%s/%s.log', rvim.get_cache_dir(), 'rvim')
-
 Log.levels = {
   TRACE = 1,
   DEBUG = 2,
@@ -13,8 +11,7 @@ Log.levels = {
 vim.tbl_add_reverse_lookup(Log.levels)
 
 function Log:init()
-  local status_ok, structlog = pcall(require, 'structlog')
-  -- local status_ok, structlog = rvim.safe_require "structlog"
+  local status_ok, structlog = rvim.safe_require('structlog')
   if not status_ok then return nil end
 
   local log_level = Log.levels[(rvim.log.level):upper() or 'WARN']
@@ -37,7 +34,7 @@ function Log:init()
             { level = structlog.formatters.FormatColorizer.color_level() }
           ),
         }),
-        structlog.sinks.File(log_level, logfile, {
+        structlog.sinks.File(log_level, self:get_path(), {
           processors = {
             structlog.processors.Namer(),
             structlog.processors.StackWriter(
@@ -126,7 +123,7 @@ end
 
 --- Adds a log entry using Plenary.log
 ---@fparam msg any
----@param level string [same as vim.log.log_levels]
+---@param level string | integer [same as vim.log.log_levels]
 function Log:add_entry(level, msg, event)
   if self.__handle then
     self.__handle:log(level, vim.inspect(msg), event)
@@ -142,7 +139,7 @@ end
 
 ---Retrieves the path of the logfile
 ---@return string path of the logfile
-function Log:get_path() return logfile end
+function Log:get_path() return string.format('%s/%s.log', rvim.get_cache_dir(), 'rvim') end
 
 ---Add a log entry at TRACE level
 ---@param msg any
