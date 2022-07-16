@@ -109,28 +109,17 @@ editor['jghauser/fold-cycle.nvim'] = {
   end,
 }
 
-editor['b3nj5m1n/kommentary'] = {
-  event = { 'BufWinEnter' },
+editor['numToStr/Comment.nvim'] = {
   config = function()
-    require('kommentary.config').configure_language(
-      'default',
-      { prefer_single_line_comments = true }
-    )
-    local fts = { 'zsh', 'sh', 'yaml', 'vim' }
-    for _, f in pairs(fts) do
-      if f == 'vim' then
-        require('kommentary.config').configure_language(f, { single_line_comment_string = '"' })
-      else
-        require('kommentary.config').configure_language(f, { single_line_comment_string = '#' })
-      end
-    end
-
-    rvim.xmap('<leader>/', '<Plug>kommentary_visual_default')
-
-    require('which-key').register({
-      ['<leader>/'] = { '<Plug>kommentary_line_default', 'comment' },
-      ['<leader>a/'] = { '<Plug>kommentary_motion_default', 'comment motion default' },
-    })
+    require('Comment').setup()
+    local ft = require('Comment.ft')
+    ft
+      .set('javascriptreact',  '{/*%s*/}')
+      .set('javascript.jsx',   '{/*%s*/}')
+      .set('typescriptreact',   '{/*%s*/}')
+      .set('typescript.tsx',   '{/*%s*/}')
+      .set('graphql', '//%s')
+      .set('json', '//%s')
   end,
 }
 
@@ -162,9 +151,9 @@ editor['danymat/neogen'] = {
   event = { 'BufWinEnter' },
   requires = { 'nvim-treesitter/nvim-treesitter' },
   config = function()
-    local neogen = require 'neogen'
+    local neogen = require('neogen')
     require('neogen').setup({ snippet_engine = 'luasnip' })
-    rvim.nnoremap('<localleader>lc', function() neogen.generate()  end, 'git: commit dotfiles')
+    rvim.nnoremap('<localleader>lc', function() neogen.generate() end, 'git: commit dotfiles')
   end,
 }
 

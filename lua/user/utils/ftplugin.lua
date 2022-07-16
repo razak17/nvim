@@ -33,8 +33,6 @@ function M.go()
 end
 
 function M.graphql()
-  vim.opt_local.comment = ':#'
-  vim.cmd([[setlocal commentstring=//\ %s]])
   vim.cmd([[setlocal iskeyword+=$,@-@]])
   vim.opt_local.formatoptions:remove('t')
 end
@@ -44,25 +42,16 @@ function M.html()
   vim.opt_local.tabstop = 2
   vim.opt_local.shiftwidth = 2
   vim.opt_local.softtabstop = 2
-
   -- Fix quirkiness in indentation
   vim.opt_local.indentkeys:remove('*<Return>')
   -- setlocal indentkeys-=*<Return>
-
   -- Make lines longer, and don't break them automatically
   vim.cmd([[setlocal tw=120 linebreak textwidth=0]])
-
   vim.opt_local.wrap = false
   vim.opt_local.matchpairs:append('<:>')
-  -- setlocal matchpairs+=<:>
 end
 
 function M.javascript() vim.opt_local.spell = true end
-
-function M.javascriptreact()
-  vim.opt_local.textwidth = 100
-  vim.cmd([[setlocal commentstring={/*%s*/}]])
-end
 
 function M.json()
   vim.opt_local.autoindent = true
@@ -73,11 +62,9 @@ function M.json()
   vim.opt_local.shiftwidth = 2
   vim.opt_local.softtabstop = 2
   vim.opt_local.tabstop = 2
-
   -- json 5 comment
   vim.cmd([[syntax region Comment start="//" end="$" |]])
   vim.cmd([[syntax region Comment start="/\*" end="\*/" |]])
-  vim.cmd([[setlocal commentstring=//\ %s]])
 end
 
 function M.log()
@@ -192,15 +179,12 @@ function M.vim()
   vim.opt_local.colorcolumn = 120
   vim.cmd([[setlocal iskeyword+=:,#]])
   vim.opt_local.foldmethod = 'marker'
-
   nnoremap('so', ":source % <bar> :lua vim.notify('Sourced ' .. vim.fn.expand('%'))<CR>")
 end
 
 function M.yaml()
   vim.opt_local.indentkeys:remove('<:>')
-  -- setlocal indentkeys-=<:>
   vim.cmd([[setlocal iskeyword+=-,$,#]])
-
   vim.opt_local.foldlevel = 99
   vim.opt_local.foldlevelstart = 99
 end
@@ -210,14 +194,13 @@ function M.setup(filetype)
   if filetype == 'graphql' then M.graphql() end
   if filetype == 'html' then M.html() end
   if filetype == 'javascript' then M.javascript() end
-  if filetype == 'javascriptreact' then M.javascriptreact() end
   if filetype == 'json' then M.json() end
+  if filetype == 'jsonc' then M.json() end
   if filetype == 'log' then M.log() end
   if filetype == 'lua' then M.lua() end
   if filetype == 'python' then M.python() end
   if filetype == 'rust' then M.rust() end
   if filetype == 'typescript' then M.typescript() end
-  if filetype == 'typescriptreact' then M.javascriptreact() end
   if filetype == 'yaml' then M.yaml() end
 end
 
