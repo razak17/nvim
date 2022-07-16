@@ -264,9 +264,7 @@ lang['hrsh7th/nvim-cmp'] = {
       config = function()
         -- Refer to install script
         local dicwords = join_paths(rvim.get_runtime_dir(), 'site', 'dictionary.txt')
-        if vim.fn.filereadable(dicwords) ~= 1 then
-          dicwords = '/usr/share/dict/words'
-        end
+        if vim.fn.filereadable(dicwords) ~= 1 then dicwords = '/usr/share/dict/words' end
         require('cmp_dictionary').setup({
           async = true,
           dic = {
