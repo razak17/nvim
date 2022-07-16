@@ -96,7 +96,7 @@ local function prioritize(statusline, space, length)
   return prioritize(statusline, space, length - lowest.length)
 end
 
---- @param hl string
+--- @param hl string|number
 local function wrap(hl)
   assert(hl, 'A highlight name must be specified')
   return '%#' .. hl .. '#'
@@ -113,7 +113,7 @@ local function get_click_start(func_name, id) return '%' .. id .. '@' .. func_na
 
 --- Creates a spacer statusline component i.e. for padding
 --- or to represent an empty component
---- @param size number
+--- @param size integer
 --- @param opts table<string, any>
 function M.spacer(size, opts)
   opts = opts or {}
