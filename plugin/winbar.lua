@@ -22,12 +22,6 @@ local dir_separator = '/'
 local separator = icons.arrow_right
 local ellipsis = icons.ellipsis
 
-vim.cmd([[
-function! HandleWinbarClick(minwid, clicks, btn, modifiers) abort
-  call v:lua.rvim.winbar_click(a:minwid, a:clicks, a:btn, a:modifiers)
-endfunction
-]])
-
 --- A mapping of each winbar items ID to its path
 --- @type table<string, string>
 rvim.winbar_state = {}
@@ -82,7 +76,7 @@ function rvim.ui.winbar()
     add(component(part, hl, {
       id = priority,
       priority = priority,
-      click = 'HandleWinbarClick',
+      click = 'v:lua.rvim.winbar_click',
       suffix = sep,
       suffix_color = suffix_hl,
       prefix = is_first and icon or nil,
