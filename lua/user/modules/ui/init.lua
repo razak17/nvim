@@ -120,8 +120,6 @@ ui['fladson/vim-kitty'] = {}
 -- Syntax
 ui['mtdl9/vim-log-highlighting'] = {}
 
-ui['pantharshit00/vim-prisma'] = {}
-
 ui['RRethy/vim-illuminate'] = {
   config = function()
     vim.g.Illuminate_ftblacklist = {
