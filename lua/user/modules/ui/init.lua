@@ -33,7 +33,6 @@ ui['lewis6991/gitsigns.nvim'] = {
 ui['rcarriga/nvim-notify'] = {
   cond = utils.not_headless, -- TODO: causes blocking output in headless mode
   config = block_reload(conf('ui', 'notify')),
-  disable = true,
 }
 
 ui['stevearc/dressing.nvim'] = {

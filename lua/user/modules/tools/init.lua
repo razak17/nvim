@@ -52,6 +52,7 @@ tools['akinsho/toggleterm.nvim'] = {
   config = conf('tools', 'toggleterm'),
 }
 
+
 tools['brooth/far.vim'] = {
   event = { 'BufRead' },
   config = function()
