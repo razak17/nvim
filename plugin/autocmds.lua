@@ -262,7 +262,7 @@ local cursorline_exclusion = { 'dashboard' }
 local function should_show_cursorline()
   return vim.bo.buftype ~= 'terminal'
     and not vim.wo.previewwindow
-    and vim.wo.winhighlight == ''
+    -- and vim.wo.winhighlight == ''
     and vim.bo.filetype ~= ''
     and not vim.tbl_contains(cursorline_exclusion, vim.bo.filetype)
 end
