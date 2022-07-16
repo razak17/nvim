@@ -3,6 +3,56 @@ local conf = utils.load_conf
 
 local editor = {}
 
+-- nvim-cmp
+editor['hrsh7th/nvim-cmp'] = {
+  module = 'cmp',
+  event = 'InsertEnter',
+  config = conf('lang', 'cmp'),
+  requires = {
+    { 'hrsh7th/cmp-nvim-lsp', after = 'nvim-cmp' },
+    { 'hrsh7th/cmp-nvim-lua', after = 'nvim-cmp' },
+    { 'hrsh7th/cmp-nvim-lsp-document-symbol', after = 'nvim-cmp' },
+    { 'saadparwaiz1/cmp_luasnip', after = 'nvim-cmp' },
+    { 'hrsh7th/cmp-buffer', after = 'nvim-cmp' },
+    { 'hrsh7th/cmp-path', after = 'nvim-cmp' },
+    { 'hrsh7th/cmp-cmdline', after = 'nvim-cmp' },
+    { 'f3fora/cmp-spell', after = 'nvim-cmp' },
+    { 'hrsh7th/cmp-emoji', after = 'nvim-cmp' },
+    { 'octaltree/cmp-look', after = 'nvim-cmp' },
+    { 'dmitmel/cmp-cmdline-history', after = 'nvim-cmp' },
+    {
+      'David-Kunz/cmp-npm',
+      after = 'nvim-cmp',
+      config = function() require('cmp-npm').setup({}) end,
+    },
+    {
+      'petertriho/cmp-git',
+      after = 'nvim-cmp',
+      config = function()
+        require('cmp_git').setup({
+          filetypes = { 'gitcommit', 'NeogitCommitMessage' },
+        })
+      end,
+    },
+    {
+      'uga-rosa/cmp-dictionary',
+      after = 'nvim-cmp',
+      config = function()
+        -- Refer to install script
+        local dicwords = join_paths(rvim.get_runtime_dir(), 'site', 'dictionary.txt')
+        if vim.fn.filereadable(dicwords) ~= 1 then dicwords = '/usr/share/dict/words' end
+        require('cmp_dictionary').setup({
+          async = true,
+          dic = {
+            ['*'] = dicwords,
+          },
+        })
+        require('cmp_dictionary').update()
+      end,
+    },
+  },
+}
+
 editor['xiyaowong/accelerated-jk.nvim'] = {
   event = { 'BufWinEnter' },
   config = function()
