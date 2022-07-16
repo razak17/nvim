@@ -248,6 +248,7 @@ editor['AckslD/nvim-trevJ.lua'] = {
     )
   end,
   config = function() require('trevj').setup() end,
+  disable = true,
 }
 
 return editor
