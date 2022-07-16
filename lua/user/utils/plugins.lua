@@ -4,7 +4,7 @@ local fmt = string.format
 local M = {}
 M.__index = M
 
-function M:plug_notify(msg) vim.notify(msg, nil, { title = 'Packer' }) end
+function M:plug_notify(msg, level) vim.notify(msg, level, { title = 'Packer' }) end
 
 function M:get_plugins_list()
   local list = {}

@@ -45,10 +45,10 @@ end
 
 function plugins.del_compiled()
   if vim.fn.filereadable(packer_compiled) ~= 1 then
-    utils:plug_notify('packer_compiled file does not exist')
+    utils:plug_notify('packer_compiled file does not exist', 'info')
   else
     vim.fn.delete(packer_compiled)
-    utils:plug_notify('packer_compiled was deleted')
+    utils:plug_notify('packer_compiled was deleted', 'info')
   end
 end
 
@@ -85,7 +85,7 @@ rvim.augroup('PackerSetupInit', {
     event = 'User',
     pattern = 'PackerCompileDone',
     desc = 'Inform me that packer has finished compiling',
-    command = function() utils:plug_notify('Packer compile complete') end,
+    command = function() utils:plug_notify('Packer compile complete', 'info') end,
   },
 })
 
