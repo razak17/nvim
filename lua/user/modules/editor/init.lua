@@ -159,12 +159,12 @@ editor['Matt-A-Bennett/vim-surround-funk'] = {
 }
 
 editor['danymat/neogen'] = {
+  event = { 'BufWinEnter' },
   requires = { 'nvim-treesitter/nvim-treesitter' },
   config = function()
+    local neogen = require 'neogen'
     require('neogen').setup({ snippet_engine = 'luasnip' })
-    require('which-key').register({
-      ['<localleader>lc'] = { require('neogen').generate, 'comment: generate' },
-    })
+    rvim.nnoremap('<localleader>lc', function() neogen.generate()  end, 'git: commit dotfiles')
   end,
 }
 
