@@ -249,7 +249,6 @@ return function()
   --- from the setup call
   local builtin = require('telescope.builtin')
 
-  local rvim_files = require('user.modules.tools.config.telescope.nvim_files')
   local bg_selector = require('user.modules.tools.config.telescope.bg_selector')
 
   local function notes()
@@ -329,14 +328,6 @@ return function()
       a = { builtins, 'builtin' },
       b = { builtin.current_buffer_fuzzy_find, 'find in current buffer' },
       B = { file_browser, 'find browser' },
-      c = {
-        name = 'rVim config',
-        b = { rvim_files.branches, 'branches' },
-        c = { rvim_files.commits, 'commits' },
-        f = { rvim_files.files, 'nvim files' },
-        g = { rvim_files.grep_files, 'find in files' },
-        i = { rvim_files.view_changelog, 'view changelog' },
-      },
       f = { find_files, 'find files' },
       g = {
         name = 'Git',

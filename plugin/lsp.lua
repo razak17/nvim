@@ -232,20 +232,28 @@ local function setup_capabilities()
       },
     },
   }
-  local fold = {
+  local folding_range = {
     dynamicRegistration = false,
     lineFoldingOnly = true,
   }
-  return snippet, code_action, fold
+  local documentation = { 'markdown', 'plaintext' }
+  return snippet, code_action, folding_range, documentation
 end
 
 local function global_capabilities()
   local capabilities = vim.lsp.protocol.make_client_capabilities()
-  local snippet_support, code_action_support, folding_range_support = setup_capabilities()
+  local snippet, code_action, folding_range, documentation = setup_capabilities()
   capabilities.textDocument.completion.completionItem.snippetSupport = true
-  capabilities.textDocument.completion.completionItem.resolveSupport = snippet_support
-  capabilities.textDocument.codeAction = code_action_support
-  capabilities.textDocument.foldingRange = folding_range_support
+  capabilities.textDocument.completion.completionItem.preselectSupport = true
+  capabilities.textDocument.completion.completionItem.insertReplaceSupport = true
+  capabilities.textDocument.completion.completionItem.labelDetailsSupport = true
+  capabilities.textDocument.completion.completionItem.deprecatedSupport = true
+  capabilities.textDocument.completion.completionItem.commitCharactersSupport = true
+  capabilities.textDocument.completion.completionItem.tagSupport = { valueSet = { 1 } }
+  capabilities.textDocument.completion.completionItem.documentationFormat = documentation
+  capabilities.textDocument.completion.completionItem.resolveSupport = snippet
+  capabilities.textDocument.codeAction = code_action
+  capabilities.textDocument.foldingRange = folding_range
   local ok, cmp_nvim_lsp = rvim.safe_require('cmp_nvim_lsp')
   if ok then cmp_nvim_lsp.update_capabilities(capabilities) end
 
