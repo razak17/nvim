@@ -102,9 +102,7 @@ return function()
   end
 
   treesitter_configs.setup({
-    highlight = {
-      enable = rvim.treesitter.setup.highlight.enabled,
-    },
+    highlight = { enable = rvim.treesitter.setup.highlight.enabled },
     incremental_selection = rvim.treesitter.setup.incremental_selection,
     textobjects = rvim.treesitter.setup.textobjects,
     indent = { enable = { 'javascriptreact' } },
