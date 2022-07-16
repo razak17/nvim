@@ -121,7 +121,6 @@ return function()
         source_names = {
           luasnip = '(SN)',
           nvim_lsp = '(LSP)',
-          nvim_lua = '(Lua)',
           path = '(Path)',
           buffer = '(Buf)',
           spell = '(SP)',
@@ -129,8 +128,6 @@ return function()
           git = '(Git)',
           calc = '(Calc)',
           emoji = '(E)',
-          look = '(Look)',
-          npm = '(NPM)',
           dictionary = '(Dict)',
           cmdline_history = '(Hist)',
         },
@@ -146,7 +143,6 @@ return function()
       sources = {
         { name = 'luasnip' },
         { name = 'nvim_lsp' },
-        { name = 'nvim_lua' },
         { name = 'path' },
         {
           name = 'buffer',
@@ -165,9 +161,7 @@ return function()
         { name = 'git' },
         { name = 'calc' },
         { name = 'emoji' },
-        { name = 'look' },
         { name = 'nvim_lsp_document_symbol' },
-        { name = 'npm', keyword_length = 4 },
         {
           name = 'dictionary',
           keyword_length = 3,

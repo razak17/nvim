@@ -10,7 +10,6 @@ editor['hrsh7th/nvim-cmp'] = {
   config = conf('lang', 'cmp'),
   requires = {
     { 'hrsh7th/cmp-nvim-lsp', after = 'nvim-cmp' },
-    { 'hrsh7th/cmp-nvim-lua', after = 'nvim-cmp' },
     { 'hrsh7th/cmp-nvim-lsp-document-symbol', after = 'nvim-cmp' },
     { 'saadparwaiz1/cmp_luasnip', after = 'nvim-cmp' },
     { 'hrsh7th/cmp-buffer', after = 'nvim-cmp' },
@@ -18,13 +17,7 @@ editor['hrsh7th/nvim-cmp'] = {
     { 'hrsh7th/cmp-cmdline', after = 'nvim-cmp' },
     { 'f3fora/cmp-spell', after = 'nvim-cmp' },
     { 'hrsh7th/cmp-emoji', after = 'nvim-cmp' },
-    { 'octaltree/cmp-look', after = 'nvim-cmp' },
     { 'dmitmel/cmp-cmdline-history', after = 'nvim-cmp' },
-    {
-      'David-Kunz/cmp-npm',
-      after = 'nvim-cmp',
-      config = function() require('cmp-npm').setup({}) end,
-    },
     {
       'petertriho/cmp-git',
       after = 'nvim-cmp',
