@@ -43,8 +43,23 @@ ui['stevearc/dressing.nvim'] = {
 ui['lukas-reineke/headlines.nvim'] = {
   event = 'BufWinEnter',
   ft = { 'org', 'norg', 'markdown', 'yaml' },
-  setup = conf('ui', 'headlines').setup,
-  config = conf('ui', 'headlines').config,
+  setup = function()
+    -- https://observablehq.com/@d3/color-schemes?collection=@d3/d3-scale-chromatic
+    -- NOTE: this must be set in the setup function or it will crash nvim...
+    require('zephyr.utils').plugin('Headlines', {
+      Headline1 = { background = '#003c30', foreground = 'White' },
+      Headline2 = { background = '#00441b', foreground = 'White' },
+      Headline3 = { background = '#084081', foreground = 'White' },
+      Dash = { background = '#0b60a1', bold = true },
+    })
+  end,
+  config = function()
+    require('headlines').setup({
+      markdown = {
+        headline_highlights = { 'Headline1', 'Headline2', 'Headline3' },
+      },
+    })
+  end,
 }
 
 ui['rainbowhxch/beacon.nvim'] = {
@@ -96,7 +111,19 @@ ui['MunifTanjim/nui.nvim'] = {}
 
 ui['s1n7ax/nvim-window-picker'] = {
   tag = 'v1.*',
-  config = conf('ui', 'window-picker'),
+  config = function()
+  require('window-picker').setup({
+    autoselect_one = true,
+    include_current = false,
+    filter_rules = {
+      bo = {
+        filetype = { 'neo-tree-popup', 'quickfix', 'incline' },
+        buftype = { 'terminal', 'quickfix', 'nofile' },
+      },
+    },
+    other_win_hl_color = require('zephyr.utils').get('Visual', 'bg'),
+  })
+  end
 }
 
 ui['itchyny/vim-highlighturl'] = {
@@ -117,6 +144,42 @@ ui['NTBBloodbath/doom-one.nvim'] = {
   disable = true,
 }
 
+ui['j-hui/fidget.nvim'] = {
+  config = function() require('fidget').setup() end,
+}
+
+ui['kevinhwang91/nvim-ufo'] = {
+  requires = 'kevinhwang91/promise-async',
+  config = conf('ui', 'ufo'),
+}
+
+ui['goolord/alpha-nvim'] = { config = conf('ui', 'alpha') }
+
+ui['fladson/vim-kitty'] = {}
+
+-- Syntax
+ui['mtdl9/vim-log-highlighting'] = {}
+
+ui['pantharshit00/vim-prisma'] = {}
+
+ui['m-demare/hlargs.nvim'] = {
+  branch = 'expected_lua_number',
+  config = function()
+    require('zephyr.utils').plugin('hlargs', {
+      Hlargs = { italic = true, bold = false, foreground = '#A5D6FF' },
+    })
+    require('hlargs').setup({
+      excluded_argnames = {
+        declarations = { 'use', 'use_rocks', '_' },
+        usages = {
+          go = { '_' },
+          lua = { 'self', 'use', 'use_rocks', '_' },
+        },
+      },
+    })
+  end,
+}
+
 ui['RRethy/vim-illuminate'] = {
   config = function()
     vim.g.Illuminate_ftblacklist = {
@@ -134,41 +197,6 @@ ui['RRethy/vim-illuminate'] = {
 }
 
 ui['m-demare/hlargs.nvim'] = {
-  config = function()
-    require('zephyr.utils').plugin('hlargs', {
-      Hlargs = { italic = true, bold = false, foreground = '#A5D6FF' },
-    })
-    require('hlargs').setup({
-      excluded_argnames = {
-        declarations = { 'use', 'use_rocks', '_' },
-        usages = {
-          go = { '_' },
-          lua = { 'self', 'use', 'use_rocks', '_' },
-        },
-      },
-    })
-  end,
-}
-
-ui['j-hui/fidget.nvim'] = {
-  config = function() require('fidget').setup() end,
-}
-
-ui['kevinhwang91/nvim-ufo'] = {
-  requires = 'kevinhwang91/promise-async',
-  config = conf('ui', 'ufo'),
-}
-
-ui['goolord/alpha-nvim'] = { config = conf('ui', 'alpha') }
-
-ui['mtdl9/vim-log-highlighting'] = {}
-
-ui['fladson/vim-kitty'] = {}
-
-ui['pantharshit00/vim-prisma'] = {}
-
-ui['m-demare/hlargs.nvim'] = {
-  branch = 'expected_lua_number',
   config = function()
     require('zephyr.utils').plugin('hlargs', {
       Hlargs = { italic = true, bold = false, foreground = '#A5D6FF' },

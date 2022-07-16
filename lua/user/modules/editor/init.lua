@@ -151,7 +151,26 @@ editor['b3nj5m1n/kommentary'] = {
 
 editor['Matt-A-Bennett/vim-surround-funk'] = {
   event = 'BufWinEnter',
-  config = conf('editor', 'vim-surround-funk'),
+  config = function()
+    vim.g.surround_funk_create_mappings = 0
+    local map = vim.keymap.set
+    -- operator pending mode: grip surround
+    map({ 'n', 'v' }, 'gs', '<Plug>(GripSurroundObject)')
+    map({ 'o', 'x' }, 'sF', '<Plug>(SelectWholeFUNCTION)')
+
+    require('which-key').register({
+      ['<leader>rf'] = { '<Plug>(DeleteSurroundingFunction)', 'dsf: delete surrounding function' },
+      ['<leader>rF'] = {
+        '<Plug>(DeleteSurroundingFUNCTION)',
+        'dsf: delete surrounding outer function',
+      },
+      ['<leader>Cf'] = { '<Plug>(ChangeSurroundingFunction)', 'dsf: change surrounding function' },
+      ['<leader>CF'] = {
+        '<Plug>(ChangeSurroundingFUNCTION)',
+        'dsf: change outer surrounding function',
+      },
+    })
+  end,
 }
 
 editor['danymat/neogen'] = {
@@ -170,7 +189,33 @@ editor['abecodes/tabout.nvim'] = {
 
 editor['chentoast/marks.nvim'] = {
   event = { 'BufWinEnter' },
-  config = conf('editor', 'marks'),
+  config = function()
+    require('zephyr.utils').plugin(
+      'marks',
+      { MarkSignHL = { link = 'Directory' }, MarkSignNumHL = { link = 'Directory' } }
+    )
+    require('which-key').register({
+      m = {
+        name = 'Marks',
+        b = { '<Cmd>MarksListBuf<CR>', 'list buffer' },
+        g = { '<Cmd>MarksQFListGlobal<CR>', 'list global' },
+        ['0'] = { '<Cmd>BookmarksQFList 0<CR>', 'list bookmark' },
+      },
+    }, {
+      prefix = '<leader>',
+    })
+    require('marks').setup({
+      force_write_shada = false, -- This can cause data loss
+      excluded_filetypes = { 'NeogitStatus', 'NeogitCommitMessage', 'toggleterm' },
+      bookmark_0 = {
+        sign = '⚑',
+        virt_text = '',
+      },
+      mappings = {
+        annotate = 'm?',
+      },
+    })
+  end,
 }
 
 editor['jsborjesson/vim-uppercase-sql'] = {

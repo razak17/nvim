@@ -23,7 +23,23 @@ lang['rcarriga/nvim-dap-ui'] = {
       end,
     },
   },
-  config = block_reload(conf('lang', 'dap-ui')),
+  config = block_reload(function()
+    local dapui = require('dapui')
+    require('dapui').setup()
+    require('which-key').register({
+      ['<localleader>dx'] = { dapui.close, 'dap-ui: close' },
+      ['<localleader>do'] = { dapui.toggle, 'dap-ui: toggle' },
+    })
+
+    local dap = require('dap')
+    -- NOTE: this opens dap UI automatically when dap starts
+    dap.listeners.after.event_initialized['dapui_config'] = function()
+      dapui.open()
+      vim.api.nvim_exec_autocmds('User', { pattern = 'DapStarted' })
+    end
+    dap.listeners.before.event_terminated['dapui_config'] = function() dapui.close() end
+    dap.listeners.before.event_exited['dapui_config'] = function() dapui.close() end
+  end),
 }
 
 -- Lsp
@@ -138,10 +154,6 @@ lang['neovim/nvim-lspconfig'] = {
         })
       end,
     },
-    {
-      'simrat39/symbols-outline.nvim',
-      config = conf('lang', 'symbols-outline'),
-    },
   },
 }
 
@@ -152,6 +164,7 @@ lang['olexsmir/gopher.nvim'] = {
     'nvim-treesitter/nvim-treesitter',
   },
 }
+
 -- Treesitter
 lang['nvim-treesitter/nvim-treesitter'] = {
   run = ':TSUpdate',
@@ -177,21 +190,11 @@ lang['nvim-treesitter/nvim-treesitter'] = {
     },
     {
       'nvim-treesitter/playground',
-      event = 'VimEnter',
-      keys = '<leader>LE',
-      module = 'nvim-treesitter-playground',
       cmd = { 'TSPlaygroundToggle', 'TSHighlightCapturesUnderCursor' },
-      setup = function() require('which-key').register({ ['<leader>LE'] = 'treesitter: inspect token' }) end,
-      config = function() rvim.nnoremap('<leader>LE', '<Cmd>TSHighlightCapturesUnderCursor<CR>') end,
+      setup = function() rvim.nnoremap('<leader>LE', '<Cmd>TSHighlightCapturesUnderCursor<CR>') end,
     },
-    {
-      'nvim-treesitter/nvim-treesitter-textobjects',
-      after = 'nvim-treesitter',
-    },
-    {
-      'p00f/nvim-ts-rainbow',
-      after = 'nvim-treesitter',
-    },
+    { 'nvim-treesitter/nvim-treesitter-textobjects' },
+    { 'p00f/nvim-ts-rainbow' },
     {
       'andymass/vim-matchup',
       after = 'nvim-treesitter',
@@ -212,19 +215,28 @@ lang['nvim-treesitter/nvim-treesitter'] = {
     },
     {
       'lewis6991/spellsitter.nvim',
-      config = function()
-        require('spellsitter').setup({
-          enable = true,
-        })
-      end,
+      config = function() require('spellsitter').setup({ enable = true }) end,
     },
   },
 }
 
 lang['windwp/nvim-autopairs'] = {
   event = 'InsertEnter',
-  after = { 'telescope.nvim', 'nvim-treesitter' },
-  config = conf('lang', 'autopairs'),
+  after = 'nvim-cmp',
+  config = function()
+    require('nvim-autopairs').setup({
+      close_triple_quotes = true,
+      check_ts = true,
+      fast_wrap = { map = '<c-e>' },
+      enable_check_bracket_line = false,
+      disable_filetype = { 'TelescopePrompt', 'spectre_panel' },
+      ts_config = {
+        java = false,
+        lua = { 'string', 'source' },
+        javascript = { 'string', 'template_string' },
+      },
+    })
+  end,
 }
 
 lang['github/copilot.vim'] = {
