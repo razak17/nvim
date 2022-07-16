@@ -16,6 +16,8 @@ return function()
         'comment',
         'markdown',
         'markdown_inline',
+        'prisma',
+        'graphql'
       },
       incremental_selection = {
         enable = true,
