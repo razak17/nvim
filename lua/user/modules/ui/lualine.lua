@@ -129,7 +129,7 @@ return function()
     cond = conditions.hide_in_width,
   })
 
-  ins_right({
+  ins_left({
     'diagnostics',
     sources = { 'nvim_diagnostic' },
     symbols = {
