@@ -95,7 +95,6 @@ M.load_default_options = function()
     numberwidth = 4,
     list = true,
     fillchars = {
-      vert = '▕', -- alternatives │
       fold = ' ',
       eob = ' ', -- suppress ~ at EndOfBuffer
       diff = '╱', -- alternatives = ⣿ ░ ─
