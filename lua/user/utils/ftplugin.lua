@@ -1,8 +1,7 @@
-local M = {}
-
 local nnoremap = rvim.nnoremap
 local fmt = string.format
 
+local M = {}
 function M.go()
   vim.opt_local.expandtab = false
   vim.opt_local.textwidth = 0 -- Go doesn't specify a max line length so don't force one

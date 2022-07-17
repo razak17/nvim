@@ -45,10 +45,10 @@ return function()
       a = { attach, 'attach' },
       A = { attach_to_remote, 'attach remote' },
 
-      H = { step_back, 'dap: step back' },
+      h = { step_back, 'dap: step back' },
       i = { step_into, 'dap: step into' },
       o = { step_over, 'dap: step over' },
-      u = { step_out, 'dap: step out' },
+      O = { step_out, 'dap: step out' },
 
       b = { toggle_breakpoint, 'dap: toggle breakpoint' },
       B = { set_breakpoint, 'dap: set breakpoint' },
