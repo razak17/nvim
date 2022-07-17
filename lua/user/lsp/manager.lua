@@ -97,10 +97,8 @@ function M.override_setup(server_name, user_config)
       Log:debug('Failed to load rust-tools')
       return
     end
-
     local vscode_lldb = rvim.paths.vscode_lldb
     local dap = nil
-
     local utils = require('user.utils')
     if utils.is_directory(vscode_lldb) then
       local codelldb_path = vscode_lldb .. '/adapter/codelldb'
@@ -110,18 +108,43 @@ function M.override_setup(server_name, user_config)
         adapter = require('rust-tools.dap').get_codelldb_adapter(codelldb_path, liblldb_path),
       }
     end
-
     local tools = {
       runnables = { use_telescope = true },
+      inlay_hints = {
+        only_current_line = false,
+        only_current_line_autocmd = 'CursorHold',
+        show_parameter_hints = false,
+        show_variable_name = false,
+        parameter_hints_prefix = ' ',
+        max_len_align = false,
+        max_len_align_padding = 1,
+        right_align = false,
+        right_align_padding = 7,
+        highlight = 'Comment',
+      },
       hover_actions = { border = rvim.style.border.rectangle, auto_focus = true },
     }
-    -- Initialize the LSP via rust-tools
+    local server = {
+      -- setting it to false may improve startup time
+      standalone = false,
+      cmd = { 'rustup', 'run', 'nightly', rvim.paths.mason .. '/bin/rust-analyzer' },
+      settings = {
+        ['rust-analyzer'] = {
+          lens = {
+            enable = true,
+          },
+          checkOnSave = {
+            command = 'clippy',
+          },
+        },
+      },
+    }
     rust_tools.setup({
       tools = tools,
       dap = dap,
       -- all the opts to send to nvim-lspconfig
       -- these override the defaults set by rust-tools.nvim
-      server = { standalone = false },
+      server = vim.tbl_deep_extend('force', config, server),
     })
   end
 
