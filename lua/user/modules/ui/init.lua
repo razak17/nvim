@@ -137,25 +137,6 @@ ui['RRethy/vim-illuminate'] = {
 }
 
 ui['m-demare/hlargs.nvim'] = {
-  branch = 'expected_lua_number',
-  config = function()
-    require('zephyr.utils').plugin('hlargs', {
-      Hlargs = { italic = true, bold = false, foreground = '#A5D6FF' },
-    })
-    require('hlargs').setup({
-      excluded_argnames = {
-        declarations = { 'use', 'use_rocks', '_' },
-        usages = {
-          go = { '_' },
-          lua = { 'self', 'use', 'use_rocks', '_' },
-        },
-      },
-    })
-  end,
-  disable = true,
-}
-
-ui['m-demare/hlargs.nvim'] = {
   config = function()
     require('zephyr.utils').plugin('hlargs', {
       Hlargs = { italic = true, bold = false, foreground = '#A5D6FF' },
