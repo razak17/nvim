@@ -100,6 +100,7 @@ rvim.style = {
       octoface = '',
       checkmark='✓',
       right_arrow = '',
+      right_arrow_alt = '',
       x = '✗'
     },
     kind = {

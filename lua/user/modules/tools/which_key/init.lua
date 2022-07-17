@@ -1,6 +1,7 @@
 R('user.modules.tools.which_key.config')
 
 return function()
+  local icons = rvim.style.icons
   rvim.which_key = {
     setup = {
       plugins = {
@@ -20,8 +21,8 @@ return function()
         spelling = { enabled = true, suggestions = 20 }, -- use which-key for spelling hints
       },
       icons = {
-        breadcrumb = '»', -- symbol used in the command line area that shows your active key combo
-        separator = '', -- symbol used between a key and it's label
+        breadcrumb = icons.misc.double_chevron_right, -- symbol used in the command line area that shows your active key combo
+        separator = icons.misc.right_arrow_alt, -- symbol used between a key and it's label
         group = '+', -- symbol prepended to a group
       },
       window = {
