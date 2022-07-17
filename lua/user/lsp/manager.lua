@@ -128,16 +128,6 @@ function M.override_setup(server_name, user_config)
       -- setting it to false may improve startup time
       standalone = false,
       cmd = { 'rustup', 'run', 'nightly', rvim.paths.mason .. '/bin/rust-analyzer' },
-      settings = {
-        ['rust-analyzer'] = {
-          lens = {
-            enable = true,
-          },
-          checkOnSave = {
-            command = 'clippy',
-          },
-        },
-      },
     }
     rust_tools.setup({
       tools = tools,
