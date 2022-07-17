@@ -154,13 +154,18 @@ return function()
         return msg
       end
       local buf_client_names = {}
+      local copilot_active = false
 
       -- add client
       for _, client in pairs(buf_clients) do
-        table.insert(buf_client_names, client.name)
+        if client.name == 'copilot' then copilot_active = true end
+        if client.name ~= 'copilot' then table.insert(buf_client_names, client.name) end
       end
 
-      return table.concat(buf_client_names, '  ') -- alt: •
+      local clients = table.concat(buf_client_names, '  ') -- alt: •
+      local copilot = clients .. '%#SLCopilot#' .. '  ' .. icons.misc.octoface
+      local lsps = copilot_active and copilot or clients
+      return lsps
     end,
     colors = { fg = P.base88 },
     cond = conditions.hide_in_width,
