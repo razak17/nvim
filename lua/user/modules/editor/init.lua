@@ -5,7 +5,6 @@ local editor = {}
 
 -- nvim-cmp
 editor['hrsh7th/nvim-cmp'] = {
-  module = 'cmp',
   event = 'InsertEnter',
   config = conf('lang', 'cmp'),
   requires = {
