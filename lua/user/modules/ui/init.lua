@@ -62,20 +62,6 @@ ui['lukas-reineke/headlines.nvim'] = {
   end,
 }
 
-ui['zbirenbaum/neodim'] = {
-  config = function()
-    require('neodim').setup({
-      blend_color = require('zephyr.utils').get('Normal', 'bg'),
-      alpha = 0.60,
-      hide = {
-        virtual_text = false,
-        signs = false,
-        underline = false,
-      },
-    })
-  end,
-}
-
 ui['nvim-neo-tree/neo-tree.nvim'] = {
   branch = 'v2.x',
   config = conf('ui', 'neo-tree'),
@@ -139,6 +125,21 @@ ui['RRethy/vim-illuminate'] = {
 ----------------------------------------------------------------------------------------------------
 -- Graveyard
 ----------------------------------------------------------------------------------------------------
+ui['zbirenbaum/neodim'] = {
+  config = function()
+    require('neodim').setup({
+      blend_color = require('zephyr.utils').get('Normal', 'bg'),
+      alpha = 0.60,
+      hide = {
+        virtual_text = false,
+        signs = false,
+        underline = false,
+      },
+    })
+  end,
+  disable = true,
+}
+
 ui['m-demare/hlargs.nvim'] = {
   config = function()
     require('zephyr.utils').plugin('hlargs', {
