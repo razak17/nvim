@@ -9,12 +9,6 @@ ui['razak17/zephyr-nvim'] = {
   local_path = 'personal',
 }
 
--- ui['glepnir/zephyr-nvim'] = {
---   requires = { 'nvim-treesitter/nvim-treesitter', opt = true },
--- }
-
-ui['ghillb/cybu.nvim'] = {}
-
 ui['akinsho/bufferline.nvim'] = {
   config = conf('ui', 'bufferline'),
 }
