@@ -352,6 +352,7 @@ return function()
         name = 'vim',
         a = { builtin.autocommands, 'autocommands' },
         h = { builtin.highlights, 'highlights' },
+        k = { builtin.keymaps, 'keymaps' },
         o = { builtin.vim_options, 'options' },
         r = { builtin.resume, 'resume last picker' },
       },
