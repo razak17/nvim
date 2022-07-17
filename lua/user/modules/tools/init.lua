@@ -281,6 +281,40 @@ tools['NTBBloodbath/rest.nvim'] = {
 
 tools['nvim-lua/plenary.nvim'] = {}
 
+tools['is0n/jaq-nvim'] = {
+  config = function()
+    require('jaq-nvim').setup({
+      cmds = {
+        default = 'term',
+        external = {
+          typescript = 'deno run %',
+          javascript = 'node %',
+          python = 'python %',
+          rust = 'cargo run',
+          cpp = 'g++ % -o $fileBase && ./$fileBase',
+          go = 'go run %',
+        },
+      },
+      behavior = { startinsert = true },
+      terminal = {
+        position = 'vert',
+        size = 60,
+      },
+    })
+    rvim.augroup('JaqConfig', {
+      {
+        event = 'Filetype',
+        pattern = 'Jaq',
+        command = function() vim.api.nvim_win_set_config(0, { border = rvim.style.border.current }) end,
+      },
+    })
+    rvim.nnoremap('<leader>rr', ':silent only | Jaq<cr>', 'jaq: run')
+  end,
+}
+
+----------------------------------------------------------------------------------------------------
+-- Graveyard
+----------------------------------------------------------------------------------------------------
 tools['michaelb/sniprun'] = {
   event = 'BufWinEnter',
   config = function()
