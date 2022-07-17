@@ -47,14 +47,15 @@ command(
 )
 
 -- Packer
-command('PlugCompile', [[lua require('user.core.plugins').compile()]])
-command('PlugInstall', [[lua require('user.core.plugins').install()]])
-command('PlugSync', [[lua require('user.core.plugins').sync()]])
-command('PlugClean', [[lua require('user.core.plugins').clean()]])
-command('PlugUpdate', [[lua require('user.core.plugins').update()]])
-command('PlugStatus', [[lua require('user.core.plugins').status()]])
-command('PlugInvalidate', [[lua require('user.core.plugins').invalidate()]])
-
+local plugins = require('user.core.plugins')
+command('PlugCompile', function() plugins.compile() end)
+command('PlugInstall', function() plugins.install() end)
+command('PlugSync', function() plugins.sync() end)
+command('PlugClean', function() plugins.clean() end)
+command('PlugUpdate', function() plugins.update() end)
+command('PlugStatus', function() plugins.status() end)
+command('PlugInvalidate', function() plugins.invalidate() end)
+command('PlugReload', function() plugins.reload() end)
+command('PlugRecompile', function() plugins.recompile() end)
+command('PlugCompiledDelete', function() plugins.del_compiled() end)
 command('PlugCompiledEdit', function() vim.cmd(fmt('edit %s', rvim.paths.packer_compiled)) end)
-
-command('PlugCompiledDelete', function() require('user.core.plugins').del_compiled() end)

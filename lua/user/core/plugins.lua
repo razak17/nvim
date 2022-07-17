@@ -61,16 +61,12 @@ function plugins.reload()
 end
 
 function plugins.invalidate()
-  for _, m in ipairs({ 'ui', 'editor', 'tools', 'lang' }) do
-    rvim.invalidate(fmt('user.modules.%s', m), true)
-  end
+  rvim.invalidate('user.modules', true)
   plugins.reload()
 end
 
 function plugins.recompile()
-  local file_name = vim.fn.expand('%')
-  local file_dir = vim.split(file_name, '/')[5]
-  rvim.invalidate(fmt('user.modules.%s', file_dir), true)
+  rvim.invalidate(fmt('user.modules.%s', vim.split(vim.fn.expand('%'), '/')[4]), true)
   plugins.reload()
 end
 
@@ -79,7 +75,7 @@ rvim.augroup('PackerSetupInit', {
     event = { 'BufWritePost' },
     desc = 'Packer setup and reload',
     pattern = { '*/user/modules/**/*.lua', '*/user/config/init.lua' },
-    command = function() plugins.invalidate() end,
+    command = function() plugins.recompile() end,
   },
   {
     event = 'User',
