@@ -7,7 +7,8 @@ local fmt = string.format
 local AUGROUP = 'LspCommands'
 local L = vim.lsp.log_levels
 
-local icons = rvim.style.icons
+local s = rvim.style
+local codicons = s.codicons
 local border = rvim.style.border.current
 local diagnostic = vim.diagnostic
 
@@ -329,10 +330,10 @@ local function sign(opts)
     culhl = opts.highlight .. 'Line',
   })
 end
-sign({ highlight = 'DiagnosticSignError', icon = icons.lsp.error })
-sign({ highlight = 'DiagnosticSignWarn', icon = icons.lsp.warn })
-sign({ highlight = 'DiagnosticSignInfo', icon = icons.lsp.info })
-sign({ highlight = 'DiagnosticSignHint', icon = icons.lsp.hint })
+sign({ highlight = 'DiagnosticSignError', icon = codicons.lsp.error })
+sign({ highlight = 'DiagnosticSignWarn', icon = codicons.lsp.warn })
+sign({ highlight = 'DiagnosticSignInfo', icon = codicons.lsp.info })
+sign({ highlight = 'DiagnosticSignHint', icon = codicons.lsp.hint })
 -----------------------------------------------------------------------------//
 -- Handler Overrides
 -----------------------------------------------------------------------------//
@@ -384,7 +385,7 @@ local diagnostics = rvim.lsp.diagnostics
 local float = rvim.lsp.diagnostics.float
 
 diagnostic.config({
-  signs = { active = diagnostics.signs.active, values = icons.lsp },
+  signs = { active = diagnostics.signs.active, values = codicons.lsp },
   underline = diagnostics.underline,
   update_in_insert = diagnostics.update_in_insert,
   severity_sort = diagnostics.severity_sort,
@@ -393,7 +394,7 @@ diagnostic.config({
     spacing = diagnostics.virtual_text_spacing,
     format = function(d)
       local level = diagnostic.severity[d.severity]
-      return fmt('%s %s', icons.lsp[level:lower()], d.message)
+      return fmt('%s %s', codicons.lsp[level:lower()], d.message)
     end,
   },
   float = vim.tbl_deep_extend('keep', {
@@ -401,7 +402,7 @@ diagnostic.config({
     max_height = max_height,
     prefix = function(diag, i, _)
       local level = diagnostic.severity[diag.severity]
-      local prefix = fmt('%d. %s ', i, icons.lsp[level:lower()])
+      local prefix = fmt('%d. %s ', i, codicons.lsp[level:lower()])
       return prefix, 'Diagnostic' .. level:gsub('^%l', string.upper)
     end,
   }, float),

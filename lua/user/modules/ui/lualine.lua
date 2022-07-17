@@ -117,10 +117,10 @@ return function()
     'diagnostics',
     sources = { 'nvim_diagnostic' },
     symbols = {
-      error = icons.lsp.error .. ' ',
-      warn = icons.lsp.warn .. ' ',
-      info = icons.lsp.info .. ' ',
-      hint = icons.lsp.hint .. ' ',
+      error = s.codicons.lsp.error .. ' ',
+      warn = s.codicons.lsp.warn .. ' ',
+      info = s.codicons.lsp.info .. ' ',
+      hint = s.codicons.lsp.hint .. ' ',
     },
     color = {},
     cond = conditions.hide_in_width,
@@ -131,9 +131,9 @@ return function()
     source = utils.diff_source,
     -- Is it me or the symbol for modified us really weird
     symbols = {
-      added = icons.git.added .. ' ',
-      modified = icons.git.mod .. ' ',
-      removed = icons.git.removed .. ' ',
+      added = s.codicons.git.added .. ' ',
+      modified = s.codicons.git.mod .. ' ',
+      removed = s.codicons.git.removed .. ' ',
     },
     diff_color = {
       added = { fg = P.yellowgreen },

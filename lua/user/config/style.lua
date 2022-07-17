@@ -235,12 +235,11 @@ rvim.style = {
       Calendar = ' ',
       CloudDownload = ' ',
     },
-    diagnostics = {
-      Error = ' ',
-      Warning = ' ',
-      Information = ' ',
-      Question = ' ',
-      Hint = ' ',
+    lsp = {
+      error = ' ',
+      warn = ' ',
+      info = ' ',
+      hint = ' ',
     },
     misc = {
       Robot = ' ',
