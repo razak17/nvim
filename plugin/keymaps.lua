@@ -428,3 +428,15 @@ nnoremap('<C-h>', '<C-w>h')
 nnoremap('<C-j>', '<C-w>j')
 nnoremap('<C-k>', '<C-w>k')
 nnoremap('<C-l>', '<C-w>l')
+------------------------------------------------------------------------------
+-- Abbreviations
+------------------------------------------------------------------------------
+vim.cmd([[
+  cnoreabbrev W! w!
+  cnoreabbrev Q! q!
+  cnoreabbrev Wq wq
+  cnoreabbrev wQ wq
+  cnoreabbrev WQ wq
+  cnoreabbrev W w
+  cnoreabbrev Q q
+]])

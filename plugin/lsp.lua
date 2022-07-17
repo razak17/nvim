@@ -219,7 +219,6 @@ local function global_capabilities()
   capabilities.textDocument.foldingRange = folding_range
   local ok, cmp_nvim_lsp = rvim.safe_require('cmp_nvim_lsp')
   if ok then cmp_nvim_lsp.update_capabilities(capabilities) end
-
   return capabilities
 end
 
@@ -252,7 +251,6 @@ function rvim.lsp.on_attach(client, bufnr)
   setup_mappings(client)
   local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
   buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
-
   if client.server_capabilities.documentFormattingProvider then
     vim.bo[bufnr].formatexpr = 'v:lua.vim.lsp.formatexpr()'
   end
@@ -331,7 +329,6 @@ local function sign(opts)
     culhl = opts.highlight .. 'Line',
   })
 end
-
 sign({ highlight = 'DiagnosticSignError', icon = icons.lsp.error })
 sign({ highlight = 'DiagnosticSignWarn', icon = icons.lsp.warn })
 sign({ highlight = 'DiagnosticSignInfo', icon = icons.lsp.info })
