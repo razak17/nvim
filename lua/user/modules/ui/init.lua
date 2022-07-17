@@ -9,6 +9,8 @@ ui['razak17/zephyr-nvim'] = {
   local_path = 'personal',
 }
 
+ui['shaunsingh/nord.nvim'] = {}
+
 ui['akinsho/bufferline.nvim'] = {
   config = conf('ui', 'bufferline'),
 }
