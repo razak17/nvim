@@ -91,11 +91,11 @@ return function()
     color = { fg = P.base88 },
   })
 
-  ins_left({
-    'filename',
-    cond = conditions.buffer_not_empty,
-    color = { fg = P.base88 },
-  })
+  -- ins_left({
+  --   'filename',
+  --   cond = conditions.buffer_not_empty,
+  --   color = { fg = P.base88 },
+  -- })
 
   ins_left({
     'branch',
