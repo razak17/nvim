@@ -59,8 +59,8 @@ return function()
 
   rvim.telescope.setup = {
     defaults = {
-      prompt_prefix = ' ' .. icons.misc.chevron_right .. ' ',
-      selection_caret = ' ' .. icons.misc.chevron_right .. ' ', --  ,
+      prompt_prefix = ' ' .. icons.misc.chevron_right_alt .. ' ',
+      selection_caret = ' ' .. icons.misc.chevron_right_alt .. ' ', --  ,
       cycle_layout_list = { 'flex', 'horizontal', 'vertical', 'bottom_pane', 'center' },
       sorting_strategy = 'ascending',
       layout_strategy = 'horizontal',
