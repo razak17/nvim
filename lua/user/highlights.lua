@@ -74,7 +74,7 @@ local function general_overrides()
 
     -- Matchup
     MatchWord = { fg = P.red, underline = false, cterm = { underline = false } },
-    SLCopilot = { fg = '#6CC644', bg = P.dark },
+    SLCopilot = { fg = P.forest_green, bg = P.dark },
     SLLSP = { fg = '#5e81ac', bg = P.dark },
   })
 end

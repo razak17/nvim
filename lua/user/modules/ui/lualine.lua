@@ -99,7 +99,6 @@ return function()
 
   ins_left({
     'branch',
-    -- "b:gitsigns_head",
     icon = icons.git.branch,
     color = { fg = P.dark_green },
     cond = conditions.hide_in_width,
