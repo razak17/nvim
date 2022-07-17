@@ -240,6 +240,7 @@ rvim.style = {
       warn = ' ',
       info = ' ',
       hint = ' ',
+      trace = '✎',
     },
     misc = {
       Robot = ' ',

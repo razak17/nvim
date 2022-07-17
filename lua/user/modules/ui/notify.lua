@@ -9,6 +9,7 @@ return function()
   end
 
   local Log = require('user.core.log')
+  local codicons = rvim.style.codicons
 
   rvim.nvim_notify = {
     setup = {
@@ -38,11 +39,11 @@ return function()
 
       ---@usage Icons for the different levels
       icons = {
-        ERROR = '',
-        WARN = '',
-        INFO = '',
-        HINT = '',
-        TRACE = '✎',
+        ERROR = codicons.lsp.error,
+        WARN = codicons.lsp.warn,
+        INFO = codicons.lsp.info,
+        HINT = codicons.lsp.hint,
+        TRACE = codicons.lsp.trace,
       },
     },
   }
