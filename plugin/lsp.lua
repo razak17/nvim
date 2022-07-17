@@ -96,53 +96,26 @@ end
 local function with_desc(desc) return { buffer = 0, desc = desc } end
 local function setup_mappings(client)
   if not client == nil then return end
-
   local nnoremap = rvim.nnoremap
   local xnoremap = rvim.xnoremap
-
   nnoremap('gl', function()
     local config = rvim.lsp.diagnostics.float
     config.scope = 'line'
     return vim.diagnostic.open_float({ scope = 'line' }, config)
   end, with_desc('lsp: line diagnostics'))
-
-  if client.server_capabilities.codeActionProvider then
-    nnoremap('<leader>la', vim.lsp.buf.code_action, with_desc('lsp: code action'))
-    xnoremap(
-      '<leader>la',
-      '<esc><Cmd>lua vim.lsp.buf.range_code_action()<CR>',
-      with_desc('lsp: code action')
-    )
-  end
-
-  if client.server_capabilities.hoverProvider then
-    nnoremap('K', vim.lsp.buf.hover, with_desc('lsp: hover'))
-  end
-
-  if client.server_capabilities.definitionProvider then
-    nnoremap('gd', vim.lsp.buf.definition, with_desc('lsp: definition'))
-  end
-
-  if client.server_capabilities.referencesProvider then
-    nnoremap('gr', vim.lsp.buf.references, with_desc('lsp: references'))
-  end
-
-  if client.server_capabilities.declarationProvider then
-    nnoremap('gD', vim.lsp.buf.declaration, with_desc('lsp: go to declaration'))
-  end
-
-  if client.server_capabilities.implementationProvider then
-    nnoremap('gi', vim.lsp.buf.implementation, with_desc('lsp: go to implementation'))
-  end
-
-  if client.server_capabilities.typeDefinitionProvider then
-    nnoremap('gt', vim.lsp.buf.type_definition, with_desc('lsp: go to type definition'))
-  end
-
-  if client.supports_method('textDocument/prepareCallHierarchy') then
-    nnoremap('gI', vim.lsp.buf.incoming_calls, with_desc('lsp: incoming calls'))
-  end
-  ------------------------------------------------------------------------------
+  nnoremap('<leader>la', vim.lsp.buf.code_action, with_desc('lsp: code action'))
+  xnoremap(
+    '<leader>la',
+    '<esc><Cmd>lua vim.lsp.buf.range_code_action()<CR>',
+    with_desc('lsp: code action')
+  )
+  nnoremap('K', vim.lsp.buf.hover, with_desc('lsp: hover'))
+  nnoremap('gd', vim.lsp.buf.definition, with_desc('lsp: definition'))
+  nnoremap('gr', vim.lsp.buf.references, with_desc('lsp: references'))
+  nnoremap('gD', vim.lsp.buf.declaration, with_desc('lsp: go to declaration'))
+  nnoremap('gi', vim.lsp.buf.implementation, with_desc('lsp: go to implementation'))
+  nnoremap('gt', vim.lsp.buf.type_definition, with_desc('lsp: go to type definition'))
+  nnoremap('gI', vim.lsp.buf.incoming_calls, with_desc('lsp: incoming calls'))
   -- leader keymaps
   ------------------------------------------------------------------------------
   -- Peek
@@ -161,7 +134,6 @@ local function setup_mappings(client)
     "<cmd>lua require('user.lsp.peek').Peek('typeDefinition')<cr>",
     with_desc('peek: type definition')
   )
-
   nnoremap('<leader>lk', function()
     if rvim.lsp.hover_diagnostics then
       vim.diagnostic.goto_prev({ float = false })
@@ -177,18 +149,9 @@ local function setup_mappings(client)
     end
   end, with_desc('lsp: go to next diagnostic'))
   nnoremap('<leader>lL', vim.diagnostic.setloclist, with_desc('lsp: toggle loclist diagnostics'))
-
-  if client.server_capabilities.documentFormattingProvider then
-    nnoremap('<leader>lf', '<cmd>LspFormat<cr>', with_desc('lsp: format buffer'))
-  end
-
-  if client.server_capabilities.codeLensProvider then
-    nnoremap('<leader>lc', vim.lsp.codelens.run, with_desc('lsp: run code lens'))
-  end
-
-  if client.server_capabilities.renameProvider then
-    nnoremap('<leader>lr', vim.lsp.buf.rename, with_desc('lsp: rename'))
-  end
+  nnoremap('<leader>lf', '<cmd>LspFormat<cr>', with_desc('lsp: format buffer'))
+  nnoremap('<leader>lc', vim.lsp.codelens.run, with_desc('lsp: run code lens'))
+  nnoremap('<leader>lr', vim.lsp.buf.rename, with_desc('lsp: rename'))
   -- Templates
   nnoremap('<leader>lG', function()
     require('user.lsp.templates').generate_templates()
