@@ -211,6 +211,13 @@ tools['SmiteshP/nvim-navic'] = {
 
 tools['kevinhwang91/nvim-bqf'] = {
   ft = 'qf',
+  config = function()
+    require('bqf').setup({
+      preview = {
+        border_chars = rvim.style.border.bqf,
+      },
+    })
+  end,
 }
 
 tools['anuvyklack/hydra.nvim'] = {
