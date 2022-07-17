@@ -32,6 +32,6 @@ local image_selector = function(prompt, cwd)
   end
 end
 
-bg_selector.set_bg_image = image_selector('Choose Wallpaper', '$HOME/pics/distro')
+bg_selector.set_bg_image = image_selector('Choose Wallpaper', '$HOME/pics/distro/main')
 
 return bg_selector

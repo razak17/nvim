@@ -89,9 +89,9 @@ return function()
         path = rvim.get_cache_dir() .. '/telescope/history.sqlite3',
       },
       file_ignore_patterns = {
-        '%.jpg',
-        '%.jpeg',
-        '%.png',
+        -- '%.jpg',
+        -- '%.jpeg',
+        -- '%.png',
         '%.otf',
         '%.ttf',
         '%.DS_Store',
