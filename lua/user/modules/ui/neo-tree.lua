@@ -9,7 +9,7 @@ return function()
     NeoTreeNormalNC = { link = 'PanelBackground' },
     NeoTreeRootName = { bold = true, italic = false, foreground = P.base6 },
     NeoTreeCursorLine = { link = 'Visual' },
-    NeoTreeStatusLine = { link = 'PanelSt' },
+    NeoTreeStatusLine = { link = 'PanelBackground' },
   })
 
   vim.g.neo_tree_remove_legacy_commands = 1
