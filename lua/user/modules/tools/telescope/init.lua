@@ -271,7 +271,7 @@ return function()
     if not pcall(builtin.git_files, opts) then builtin.find_files(opts) end
   end
 
-  local function find_files(opts) builtin.find_files(opts) end
+  local function find_files() builtin.find_files(require('telescope.themes').get_dropdown{previewer = false}) end
 
   local function file_browser() telescope.extensions.file_browser.file_browser({}) end
 
@@ -322,13 +322,13 @@ return function()
   local function delta_git_bcommits(opts) builtin.git_bcommits(delta_opts(opts, true)) end
 
   require('which-key').register({
-    ['<c-p>'] = { project_files, 'telescope: find files' },
+    ['<c-p>'] = { find_files, 'telescope: find files' },
     ['<leader>f'] = {
       name = 'Telescope',
       a = { builtins, 'builtin' },
       b = { builtin.current_buffer_fuzzy_find, 'find in current buffer' },
       B = { file_browser, 'find browser' },
-      f = { find_files, 'find files' },
+      f = { project_files, 'find files' },
       g = {
         name = 'Git',
         b = { builtin.git_branches, 'branch' },
