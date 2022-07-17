@@ -84,7 +84,7 @@ return function()
           preview_height = 0.5,
         },
       },
-      winblend = 5,
+      winblend = 0,
       history = {
         path = rvim.get_cache_dir() .. '/telescope/history.sqlite3',
       },
