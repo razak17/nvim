@@ -63,7 +63,6 @@ function rvim.ui.winbar()
 
   if rvim.ui.winbar_opts.use_filename then
     local filename = vim.fn.expand('%:t')
-    print(filename)
     add(component(filename, 'Winbar', { priority = 1, suffix = separator }))
   else
     local parts = vim.split(fn.fnamemodify(bufname, ':.'), '/')
