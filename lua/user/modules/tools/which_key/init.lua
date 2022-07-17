@@ -22,7 +22,6 @@ return function()
       },
       icons = {
         breadcrumb = icons.misc.double_chevron_right, -- symbol used in the command line area that shows your active key combo
-        separator = icons.misc.right_arrow_alt, -- symbol used between a key and it's label
         group = '+', -- symbol prepended to a group
       },
       window = {
