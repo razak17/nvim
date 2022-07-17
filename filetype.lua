@@ -15,6 +15,7 @@ vim.filetype.add({
     ['rebar.config'] = 'erlang',
   },
   pattern = {
+    ['.*%.astro'] = 'astro',
     ['.*%.sld'] = 'slide',
     ['.*%.graphql'] = 'graphql',
     ['.*%.gql'] = 'graphql',
