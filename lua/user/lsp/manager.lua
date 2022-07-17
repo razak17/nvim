@@ -111,10 +111,6 @@ function M.override_setup(server_name, user_config)
       }
     end
 
-    local server = {
-      -- setting it to false may improve startup time
-      standalone = false,
-    }
     local tools = {
       runnables = { use_telescope = true },
       hover_actions = { border = rvim.style.border.rectangle, auto_focus = true },
@@ -125,7 +121,7 @@ function M.override_setup(server_name, user_config)
       dap = dap,
       -- all the opts to send to nvim-lspconfig
       -- these override the defaults set by rust-tools.nvim
-      server = vim.tbl_deep_extend('force', config, server),
+      server = { standalone = false },
     })
   end
 
