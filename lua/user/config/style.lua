@@ -193,9 +193,9 @@ rvim.style = {
       OpenFolder = ' ',
     },
     git = {
-      Add = ' ',
-      Mod = ' ',
-      Remove = ' ',
+      added = ' ',
+      mod = ' ',
+      removed = ' ',
       Ignore = ' ',
       Rename = ' ',
       Diff = ' ',

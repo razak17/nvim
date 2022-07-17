@@ -1,6 +1,7 @@
 return function()
   local P = require('zephyr.palette')
-  local icons = rvim.style.icons
+  local s = rvim.style
+  local icons = s.icons
   local utils = require('user.utils.statusline')
   local conditions = utils.conditions
 
@@ -105,23 +106,6 @@ return function()
   })
 
   ins_left({
-    'diff',
-    source = utils.diff_source,
-    -- Is it me or the symbol for modified us really weird
-    symbols = {
-      added = icons.git.added .. ' ',
-      modified = icons.git.mod .. ' ',
-      removed = icons.git.removed .. ' ',
-    },
-    diff_color = {
-      added = { fg = P.yellowgreen },
-      modified = { fg = P.dark_orange },
-      removed = { fg = P.error_red },
-    },
-    cond = conditions.hide_in_width,
-  })
-
-  ins_left({
     function()
       local package = require('package-info')
       if package.get_status() then return package.get_status() end
@@ -139,6 +123,23 @@ return function()
       hint = icons.lsp.hint .. ' ',
     },
     color = {},
+    cond = conditions.hide_in_width,
+  })
+
+  ins_right({
+    'diff',
+    source = utils.diff_source,
+    -- Is it me or the symbol for modified us really weird
+    symbols = {
+      added = icons.git.added .. ' ',
+      modified = icons.git.mod .. ' ',
+      removed = icons.git.removed .. ' ',
+    },
+    diff_color = {
+      added = { fg = P.yellowgreen },
+      modified = { fg = P.dark_orange },
+      removed = { fg = P.error_red },
+    },
     cond = conditions.hide_in_width,
   })
 
