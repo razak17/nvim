@@ -57,7 +57,6 @@ rvim.lsp = {
     'dockerls',
     'emmet_ls',
     'gopls',
-    'grammarly',
     'graphql',
     'html',
     'jsonls',
