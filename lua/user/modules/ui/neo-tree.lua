@@ -9,9 +9,9 @@ return function()
     NeoTreeNormalNC = { link = 'PanelBackground' },
     NeoTreeRootName = { bold = true, italic = false, foreground = P.base6 },
     NeoTreeStatusLine = { link = 'PanelBackground' },
-    NeoTreeTabBackground = { link = 'PanelDarkBackground' },
-    NeoTreeTab = { bg = { from = 'PanelDarkBackground' }, fg = { from = 'Comment' } },
-    NeoTreeSeparator = { link = 'PanelDarkBackground' },
+    NeoTreeTabBackground = { link = 'PanelBackground' },
+    NeoTreeTab = { bg = { from = 'PanelBackground' }, fg = { from = 'Comment' } },
+    NeoTreeSeparator = { link = 'PanelBackground' },
     NeoTreeActiveTab = { bg = { from = 'PanelBackground' }, fg = 'fg', bold = true },
   })
 
