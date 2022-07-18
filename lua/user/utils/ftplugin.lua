@@ -62,6 +62,15 @@ function M.json()
   vim.cmd([[syntax region Comment start="/\*" end="\*/" |]])
 end
 
+function M.jsonc()
+  local extension = vim.fn.expand('%:e')
+  if extension == 'jsonschema' then
+    vim.opt_local.shiftwidth = 2
+    vim.opt_local.softtabstop = 2
+    vim.opt_local.tabstop = 2
+  end
+end
+
 function M.log()
   vim.opt_local.wrap = false
   vim.opt_local.foldmethod = 'manual'
@@ -240,7 +249,7 @@ function M.setup(filetype)
   if filetype == 'graphql' then M.graphql() end
   if filetype == 'html' then M.html() end
   if filetype == 'json' then M.json() end
-  if filetype == 'jsonc' then M.json() end
+  if filetype == 'jsonc' then M.jsonc() end
   if filetype == 'log' then M.log() end
   if filetype == 'lua' then M.lua() end
   if filetype == 'markdown' then M.markdown() end
