@@ -164,6 +164,13 @@ function M.markdown()
 
   local args = { buffer = 0 }
 
+  vim.cmd([[
+    iabbrev :tup: 👍
+    iabbrev :tdo: 👎
+    iabbrev :smi: 😊
+    iabbrev :sad: 😔
+  ]])
+
   rvim.onoremap('ih', [[:<c-u>execute "normal! ?^==\\+$\r:nohlsearch\rkvg_"<cr>]], args)
   rvim.onoremap('ah', [[:<c-u>execute "normal! ?^==\\+$\r:nohlsearch\rg_vk0"<cr>]], args)
   rvim.onoremap('aa', [[:<c-u>execute "normal! ?^--\\+$\r:nohlsearch\rg_vk0"<cr>]], args)
