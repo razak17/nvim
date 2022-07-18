@@ -101,7 +101,7 @@ local blocked = {
   'TelescopePrompt',
   'sql',
 }
-local allowed = { 'toggleterm' }
+local allowed = { 'toggleterm', 'neo-tree' }
 
 rvim.augroup('AttachWinbar', {
   {
