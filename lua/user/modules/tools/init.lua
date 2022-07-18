@@ -220,10 +220,7 @@ tools['kevinhwang91/nvim-bqf'] = {
   end,
 }
 
-tools['anuvyklack/hydra.nvim'] = {
-  requires = 'anuvyklack/keymap-layer.nvim',
-  config = block_reload(conf('tools', 'hydra')),
-}
+tools['anuvyklack/hydra.nvim'] = { config = block_reload(conf('tools', 'hydra')) }
 
 tools['sindrets/diffview.nvim'] = {
   event = 'BufReadPre',
