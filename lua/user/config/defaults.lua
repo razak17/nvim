@@ -55,6 +55,7 @@ rvim.util = {
     'jsonc',
     'log',
     'lua',
+    'markdown',
     'python',
     'yaml',
   },

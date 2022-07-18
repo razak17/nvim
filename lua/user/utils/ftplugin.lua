@@ -155,6 +155,56 @@ function M.lua()
   end, 'source current file')
 end
 
+function M.markdown()
+  vim.opt_local.spell = true
+  vim.opt_local.spelloptions = 'camel'
+  -- no distractions in markdown files
+  vim.opt_local.number = false
+  vim.opt_local.relativenumber = false
+
+  local args = { buffer = 0 }
+
+  rvim.onoremap('ih', [[:<c-u>execute "normal! ?^==\\+$\r:nohlsearch\rkvg_"<cr>]], args)
+  rvim.onoremap('ah', [[:<c-u>execute "normal! ?^==\\+$\r:nohlsearch\rg_vk0"<cr>]], args)
+  rvim.onoremap('aa', [[:<c-u>execute "normal! ?^--\\+$\r:nohlsearch\rg_vk0"<cr>]], args)
+  rvim.onoremap('ia', [[:<c-u>execute "normal! ?^--\\+$\r:nohlsearch\rkvg_"<cr>]], args)
+  rvim.onoremap('ia', [[:<c-u>execute "normal! ?^--\\+$\r:nohlsearch\rkvg_"<cr>]], args)
+
+  if rvim.plugin_loaded('markdown-preview.nvim') then
+    rvim.nmap('<localleader>p', '<Plug>MarkdownPreviewToggle', args)
+  end
+
+  rvim.ftplugin_conf(
+    'cmp',
+    function(cmp)
+      cmp.setup.filetype('markdown', {
+        sources = cmp.config.sources({
+          { name = 'dictionary' },
+          { name = 'spell' },
+          { name = 'emoji' },
+        }, {
+          { name = 'buffer' },
+        }),
+      })
+    end
+  )
+
+  rvim.ftplugin_conf('nvim-surround', function(surround)
+    surround.buffer_setup({
+      delimiters = {
+        pairs = {
+          ['l'] = function()
+            return {
+              '[',
+              '](' .. vim.fn.getreg('*') .. ')',
+            }
+          end,
+        },
+      },
+    })
+  end)
+end
+
 function M.python()
   vim.cmd([[setlocal iskeyword+="]])
   vim.opt_local.shiftwidth = 4
@@ -186,6 +236,7 @@ function M.setup(filetype)
   if filetype == 'jsonc' then M.json() end
   if filetype == 'log' then M.log() end
   if filetype == 'lua' then M.lua() end
+  if filetype == 'markdown' then M.markdown() end
   if filetype == 'python' then M.python() end
   if filetype == 'typescript' then M.typescript() end
   if filetype == 'yaml' then M.yaml() end
