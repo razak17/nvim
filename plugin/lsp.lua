@@ -4,7 +4,6 @@ local lsp = vim.lsp
 local fn = vim.fn
 local api = vim.api
 local fmt = string.format
-local AUGROUP = 'LspCommands'
 local L = vim.lsp.log_levels
 
 local s = rvim.style
@@ -17,6 +16,10 @@ if vim.env.DEVELOPING then vim.lsp.set_log_level(L.DEBUG) end
 -----------------------------------------------------------------------------//
 -- Autocommands
 -----------------------------------------------------------------------------//
+local get_augroup = function(bufnr)
+  assert(bufnr, 'A bufnr is required to create an lsp augroup')
+  return fmt('LspCommands_%d', bufnr)
+end
 
 -- Show the popup diagnostics window, but only once for the current cursor location
 -- by checking whether the word under the cursor has changed.
@@ -32,11 +35,16 @@ end
 ---@param client table<string, any>
 ---@param bufnr number
 local function setup_autocommands(client, bufnr)
-  local cmds = {}
   if not client then
     local msg = fmt('Unable to setup LSP autocommands, client for %d is missing', bufnr)
     return vim.notify(msg, 'error', { title = 'LSP Setup' })
   end
+
+  local group = get_augroup(bufnr)
+  -- Clear pre-existing buffer autocommands
+  pcall(api.nvim_clear_autocmds, { group = group })
+
+  local cmds = {}
   if client.server_capabilities.documentFormattingProvider then
     -- Format On Save
     local opts = rvim.util.format_on_save
@@ -88,7 +96,7 @@ local function setup_autocommands(client, bufnr)
       })
     end
   end
-  rvim.augroup(AUGROUP, cmds)
+  rvim.augroup(group, cmds)
 end
 
 -----------------------------------------------------------------------------//
@@ -280,7 +288,7 @@ rvim.augroup('LspSetupCommands', {
   {
     event = 'LspDetach',
     desc = 'Clean up after detached LSP',
-    command = function(args) api.nvim_clear_autocmds({ group = AUGROUP, buffer = args.buf }) end,
+    command = function(args) api.nvim_clear_autocmds({ group = get_augroup(args.buf), buffer = args.buf }) end,
   },
 })
 -----------------------------------------------------------------------------//
