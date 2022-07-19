@@ -102,8 +102,8 @@ end
 -----------------------------------------------------------------------------//
 -- Mappings
 -----------------------------------------------------------------------------//
-local function with_desc(desc) return { buffer = 0, desc = desc } end
-local function setup_mappings(client)
+local function setup_mappings(client, bufnr)
+  local function with_desc(desc) return { buffer = bufnr, desc = desc } end
   if not client == nil then return end
   local nnoremap = rvim.nnoremap
   local xnoremap = rvim.xnoremap
@@ -268,7 +268,7 @@ function rvim.lsp.on_attach(client, bufnr)
   if #attached > 0 then return end
 
   setup_autocommands(client, bufnr)
-  setup_mappings(client)
+  setup_mappings(client, bufnr)
   local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
   buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
   if client.server_capabilities.documentFormattingProvider then
