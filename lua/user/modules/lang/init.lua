@@ -74,28 +74,6 @@ lang['neovim/nvim-lspconfig'] = {
       end,
     },
     {
-      'williamboman/mason.nvim',
-      config = function()
-        local style = rvim.style
-        local icons = style.icons
-        require('mason').setup({
-          install_root_dir = rvim.paths.mason,
-          ui = {
-            border = style.border.current,
-            icons = {
-              package_installed = icons.misc.checkmark,
-              package_pending = icons.misc.right_arrow,
-              package_uninstalled = icons.misc.x,
-            },
-          },
-        })
-        require('mason-lspconfig').setup({
-          automatic_installation = rvim.lsp.automatic_servers_installation,
-          ensure_installed = rvim.lsp.configured_servers,
-        })
-      end,
-    },
-    {
       'williamboman/nvim-lsp-installer',
       config = function()
         local icons = rvim.style.icons
@@ -157,6 +135,30 @@ lang['neovim/nvim-lspconfig'] = {
   },
 }
 
+lang['williamboman/mason.nvim'] = {
+  event = 'BufRead',
+  branch = 'alpha',
+  requires = { 'nvim-lspconfig' },
+  config = function()
+    local style = rvim.style
+    local icons = style.icons
+    require('mason').setup({
+      install_root_dir = rvim.paths.mason,
+      ui = {
+        border = style.border.current,
+        icons = {
+          package_installed = icons.misc.checkmark,
+          package_pending = icons.misc.right_arrow,
+          package_uninstalled = icons.misc.x,
+        },
+      },
+    })
+    require('mason-lspconfig').setup({
+      automatic_installation = rvim.lsp.automatic_servers_installation,
+      ensure_installed = rvim.lsp.configured_servers,
+    })
+  end,
+}
 -- Treesitter
 lang['nvim-treesitter/nvim-treesitter'] = {
   run = ':TSUpdate',
@@ -251,7 +253,6 @@ lang['github/copilot.vim'] = {
     require('zephyr.utils').plugin('copilot', { CopilotSuggestion = { link = 'Comment' } })
   end,
 }
-
 
 ----------------------------------------------------------------------------------------------------
 -- Graveyard
