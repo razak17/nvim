@@ -176,6 +176,8 @@ end
 -- LSP SETUP/TEARDOWN
 -----------------------------------------------------------------------------//
 
+-- @param client table
+---@param bufnr number
 local function setup_plugins(client, bufnr)
   -- vim-illuminate
   if rvim.lsp.document_highlight then
@@ -252,11 +254,20 @@ function rvim.lsp.on_init(client)
 end
 
 ---Add buffer local mappings, autocommands, tagfunc etc for attaching servers
----@param client table lsp client
+---@param client table the lsp client
 ---@param bufnr number
 function rvim.lsp.on_attach(client, bufnr)
-  setup_autocommands(client, bufnr)
+  -- Plugins should be setup for every client being attached
+  -- in case one of multiple is the target for that plugin
   setup_plugins(client, bufnr)
+
+  -- Otherwise, if there is already an attached client then
+  -- mappings and other settings should not be re-applied
+  local active = vim.lsp.get_active_clients({ bufnr = bufnr })
+  local attached = vim.tbl_filter(function(c) return c.attached_buffers[bufnr] end, active)
+  if #attached > 0 then return end
+
+  setup_autocommands(client, bufnr)
   setup_mappings(client)
   local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
   buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
