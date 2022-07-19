@@ -17,7 +17,7 @@ return function()
         'markdown',
         'markdown_inline',
         'prisma',
-        'graphql'
+        'graphql',
       },
       incremental_selection = {
         enable = true,
@@ -129,11 +129,13 @@ return function()
   })
 
   -- Only apply folding to supported files:
-  rvim.augroup('TreesitterFolds', {
-    {
-      event = { 'FileType' },
-      pattern = rvim.treesitter.get_filetypes(),
-      command = function() vim.cmd('setlocal foldexpr=nvim_treesitter#foldexpr()') end,
-    },
-  })
+  if not rvim.plugin_installed('nvim-ufo') then
+    rvim.augroup('TreesitterFolds', {
+      {
+        event = { 'FileType' },
+        pattern = rvim.treesitter.get_filetypes(),
+        command = function() vim.cmd('setlocal foldexpr=nvim_treesitter#foldexpr()') end,
+      },
+    })
+  end
 end
