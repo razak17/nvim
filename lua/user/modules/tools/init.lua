@@ -106,7 +106,7 @@ tools['AckslD/nvim-neoclip.lua'] = {
 }
 
 tools['nvim-telescope/telescope.nvim'] = {
-  branch = '0.1.x',
+  branch = 'master', -- '0.1.x',
   config = conf('tools', 'telescope'),
   requires = {
     { 'nvim-lua/plenary.nvim' },
