@@ -69,7 +69,7 @@ ui['lukas-reineke/headlines.nvim'] = {
 }
 
 ui['nvim-neo-tree/neo-tree.nvim'] = {
-  branch = 'v2.x',
+  branch = 'main', -- branch = 'v2.x',
   config = conf('ui', 'neo-tree'),
 }
 

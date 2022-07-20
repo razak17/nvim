@@ -101,7 +101,7 @@ return function()
         'dist/',
         'site-packages/',
       },
-      path_display = { 'smart', 'absolute', 'truncate' },
+      path_display = { 'truncate' },
       file_sorter = sorters.get_fzy_sorter,
       file_previewer = previewers.vim_buffer_cat.new,
       grep_previewer = previewers.vim_buffer_vimgrep.new,
