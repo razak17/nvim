@@ -123,8 +123,7 @@ function rvim.find_string(table, string)
   return found
 end
 
-
-function rvim.file_exists (name)
+function rvim.file_exists(name)
   local f = io.open(name, 'r')
   if f ~= nil then
     io.close(f)
@@ -259,12 +258,15 @@ rvim.open_command = oss == 'Darwin' and 'open' or 'xdg-open'
 ---Reload lua modules
 ---@param path any
 ---@param recursive boolean
-function rvim.invalidate(path, recursive)
+---@param exclusions string[]?
+function rvim.invalidate(path, recursive, exclusions)
   if recursive then
     for key, value in pairs(package.loaded) do
       if key ~= '_G' and value and fn.match(key, path) ~= -1 then
-        package.loaded[key] = nil
-        require(key)
+        if not exclusions or not vim.tbl_contains(exclusions, value) then
+          package.loaded[key] = nil
+          require(key)
+        end
       end
     end
   else

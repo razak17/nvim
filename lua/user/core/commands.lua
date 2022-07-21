@@ -31,7 +31,11 @@ command('MoveAppend', [[<line1>,<line2>write<bang> >> <args> | <line1>,<line2>de
 
 command('AutoResize', function() require('user.utils').auto_resize() end, { nargs = '?' })
 
-command('LuaInvalidate', function(pattern) rvim.invalidate(pattern, true) end, { nargs = 1 })
+command(
+  'LuaInvalidate',
+  function(pattern) rvim.invalidate(pattern, true, { 'mason' }) end,
+  { nargs = 1 }
+)
 
 command(
   'CloseOthers',
