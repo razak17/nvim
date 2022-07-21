@@ -1,5 +1,4 @@
 local command = rvim.command
-local fmt = string.format
 
 command('Rename', [[call v:lua.require('user.utils').rename(<f-args>) ]], { nargs = 1 })
 
@@ -62,4 +61,4 @@ command('PlugInvalidate', function() plugins.invalidate() end)
 command('PlugReload', function() plugins.reload() end)
 command('PlugRecompile', function() plugins.recompile() end)
 command('PlugCompiledDelete', function() plugins.del_compiled() end)
-command('PlugCompiledEdit', function() vim.cmd(fmt('edit %s', rvim.paths.packer_compiled)) end)
+command('PlugCompiledEdit', function() vim.cmd.edit(rvim.paths.packer_compiled) end)

@@ -8,13 +8,15 @@ Plug.__index = Plug
 
 function Plug:load_packer()
   if not packer then
-    vim.cmd('packadd! packer.nvim')
+    vim.cmd.packadd({ 'packer.nvim', bang = true })
     packer = require('packer')
   end
   rvim.safe_require('impatient')
 
   local plugins = utils:get_plugins_list()
   utils:bootstrap_packer(packer, plugins)
+  -- cfilter plugin allows filtering down an existing quickfix list
+  vim.cmd.packadd({ 'cfilter', bang = true })
 end
 
 local plugins = setmetatable({}, {
@@ -31,7 +33,7 @@ function plugins.ensure_installed()
   plugins.load_compile()
 
   if not vim.g.packer_compiled_loaded and vim.loop.fs_stat(packer_compiled) then
-    rvim.source(packer_compiled)
+    rvim.cmd.source(packer_compiled)
     vim.g.packer_compiled_loaded = true
   end
 end

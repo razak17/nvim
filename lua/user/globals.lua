@@ -349,17 +349,6 @@ function rvim.command(name, rhs, opts)
   api.nvim_create_user_command(name, rhs, opts)
 end
 
----Source a lua or vimscript file
----@param path string path relative to the nvim directory
----@param prefix boolean?
-function rvim.source(path, prefix)
-  if not prefix then
-    vim.cmd(fmt('source %s', path))
-  else
-    vim.cmd(fmt('source %s/%s', vim.g.vim_dir, path))
-  end
-end
-
 ---A terser proxy for `nvim_replace_termcodes`
 ---@param str string
 ---@return any

@@ -199,7 +199,7 @@ rvim.augroup('UpdateVim', {
     },
     nested = true,
     command = function()
-      -- rvim.source(config_dir() .. '/init.lua')
+      -- vim.cmd.source(config_dir() .. '/init.lua')
       rvim.invalidate(config_dir() .. '/init.lua', true)
       rvim.invalidate(config_dir() .. '/defaults.lua', true)
       -- plugins
