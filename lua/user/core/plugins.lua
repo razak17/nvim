@@ -33,7 +33,7 @@ function plugins.ensure_installed()
   plugins.load_compile()
 
   if not vim.g.packer_compiled_loaded and vim.loop.fs_stat(packer_compiled) then
-    rvim.cmd.source(packer_compiled)
+    vim.cmd.source(packer_compiled)
     vim.g.packer_compiled_loaded = true
   end
 end
