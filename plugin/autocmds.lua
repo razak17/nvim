@@ -371,7 +371,7 @@ rvim.augroup('Utilities', {
     event = { 'BufLeave' },
     pattern = { '*' },
     command = function()
-      if can_save() then vim.cmd.update({ emsg_silent = true }) end
+      if can_save() then vim.cmd('silent! update') end
     end,
   },
   {
