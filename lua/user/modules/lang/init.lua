@@ -26,6 +26,7 @@ lang['rcarriga/nvim-dap-ui'] = {
   requires = {
     {
       'mfussenegger/nvim-dap',
+      tag = '0.1.*',
       config = conf('lang', 'dap'),
     },
     {
