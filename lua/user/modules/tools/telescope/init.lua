@@ -109,7 +109,7 @@ return function()
       mappings = {
         i = {
           ['<C-w>'] = actions.send_selected_to_qflist,
-          ['<c-c>'] = function() vim.cmd('stopinsert!') end,
+          ['<c-c>'] = function() vim.cmd.stopinsert({ bang = true }) end,
           ['<esc>'] = actions.close,
           ['<C-j>'] = actions.move_selection_next,
           ['<C-k>'] = actions.move_selection_previous,
@@ -271,7 +271,9 @@ return function()
     if not pcall(builtin.git_files, opts) then builtin.find_files(opts) end
   end
 
-  local function find_files() builtin.find_files(require('telescope.themes').get_dropdown{previewer = false}) end
+  local function find_files()
+    builtin.find_files(require('telescope.themes').get_dropdown({ previewer = false }))
+  end
 
   local function file_browser() telescope.extensions.file_browser.file_browser({}) end
 
