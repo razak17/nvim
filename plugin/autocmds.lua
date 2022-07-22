@@ -66,7 +66,7 @@ rvim.augroup('SmartClose', {
     pattern = { '*' },
     nested = true,
     command = function()
-      if vim.bo.filetype ~= 'qf' then vim.cmd.lclose({ emsg_silent = true }) end
+      if vim.bo.filetype ~= 'qf' then vim.cmd('silent! lclose') end
     end,
   },
 })
