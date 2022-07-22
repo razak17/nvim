@@ -13,8 +13,7 @@ end
 
 function utils.open_link()
   local file = fn.expand('<cfile>')
-  if not file or fn.isdirectory(file) > 0 then return vim.cmd('edit ' .. file) end
-
+  if not file or fn.isdirectory(file) > 0 then return vim.cmd.edit(file) end
   if file:match('https://') then return open(file) end
 
   -- consider anything that looks like string/string a github link

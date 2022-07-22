@@ -234,7 +234,7 @@ function rvim.toggle_list(list_type)
 
   local winnr = fn.winnr()
   fn.execute(prefix .. 'open')
-  if fn.winnr() ~= winnr then vim.cmd('wincmd p') end
+  if fn.winnr() ~= winnr then vim.cmd.wincmd('p') end
 end
 
 nnoremap('<leader>lq', function() rvim.toggle_list('quickfix') end, 'toggle quickfix')
@@ -432,11 +432,11 @@ nnoremap('<C-l>', '<C-w>l')
 -- Abbreviations
 ------------------------------------------------------------------------------
 vim.cmd([[
-  cnoreabbrev W! w!
-  cnoreabbrev Q! q!
-  cnoreabbrev Wq wq
-  cnoreabbrev wQ wq
-  cnoreabbrev WQ wq
-  cnoreabbrev W w
-  cnoreabbrev Q q
+cnoreabbrev W! w!
+cnoreabbrev Q! q!
+cnoreabbrev Wq wq
+cnoreabbrev wQ wq
+cnoreabbrev WQ wq
+cnoreabbrev W w
+cnoreabbrev Q q
 ]])

@@ -118,14 +118,14 @@ function M.lua()
       local _, finish = string.find(word, api_match .. '.')
       local api_function = string.sub(word, finish + 1)
 
-      vim.cmd(string.format('help %s', api_function))
+      vim.cmd.help(api_function)
       return
     elseif fn_match then
       local _, finish = string.find(word, fn_match .. '.')
       if not finish then return end
       local api_function = string.sub(word, finish + 1) .. '()'
 
-      vim.cmd(string.format('help %s', api_function))
+      vim.cmd.help(api_function)
       return
     elseif callback then
       callback()
@@ -163,7 +163,7 @@ function M.lua()
 
   nnoremap('gK', keyword, { buffer = 0, desc = 'goto keyword' })
   nnoremap('<leader>so', function()
-    vim.cmd('luafile %')
+    vim.cmd.luafile('%')
     vim.notify('Sourced ' .. fn.expand('%'))
   end, 'source current file')
 end

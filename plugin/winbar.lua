@@ -31,7 +31,7 @@ rvim.winbar_state = {}
 ---@param _ "l"|"r"|"m" the button clicked
 ---@param _ string modifiers
 function rvim.winbar_click(id, _, _, _)
-  if id then vim.cmd('edit ' .. rvim.winbar_state[id]) end
+  if id then vim.cmd.edit(rvim.winbar_state[id]) end
 end
 
 highlights.plugin('winbar', {
