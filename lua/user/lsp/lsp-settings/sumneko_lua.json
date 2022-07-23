@@ -1,5 +1,0 @@
-{
-  "Lua.diagnostics.enable": true,
-  "Lua.completion.callSnippet": "Both",
-  "Lua.completion.keywordSnippet": "Both"
-}

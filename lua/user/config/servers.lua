@@ -97,6 +97,9 @@ local servers = {
         hover = true,
         completion = true,
         validate = true,
+        customTags = {
+          '!reference sequence', -- necessary for gitlab-ci.yaml files
+        },
         schemaStore = {
           enable = true,
           url = 'https://www.schemastore.org/api/json/catalog.json',
