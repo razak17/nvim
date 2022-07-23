@@ -77,7 +77,10 @@ rvim.augroup('PackerSetupInit', {
     event = { 'BufWritePost' },
     desc = 'Packer setup and reload',
     pattern = { '*/user/modules/**/*.lua', '*/user/config/init.lua' },
-    command = function() plugins.recompile() end,
+    command = function()
+      vim.cmd.doautocmd('LspDetach')
+      plugins.recompile()
+    end,
   },
   {
     event = 'User',
