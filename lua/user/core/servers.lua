@@ -16,6 +16,7 @@ local servers = {
   jsonls = {
     settings = {
       json = {
+        validate = { enable = true },
         schemas = vim.tbl_deep_extend(
           'force',
           require('schemastore').json.schemas(),
