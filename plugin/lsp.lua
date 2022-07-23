@@ -178,6 +178,7 @@ end
 
 -- @param client table
 ---@param bufnr number
+-- TODO: Check if plugins are installed first
 local function setup_plugins(client, bufnr)
   -- vim-illuminate
   if rvim.lsp.document_highlight then
