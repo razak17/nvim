@@ -6,7 +6,6 @@ M.__index = M
 
 function M:plug_notify(msg, level) vim.notify(msg, level, { title = 'Packer' }) end
 
-
 function M:load_plugins(plugins)
   self.repos = {}
 

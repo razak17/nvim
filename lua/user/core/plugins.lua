@@ -63,12 +63,12 @@ function plugins.reload()
 end
 
 function plugins.invalidate()
-  rvim.invalidate('user.modules', true, { 'mason' })
+  rvim.invalidate('user.modules', true)
   plugins.reload()
 end
 
 function plugins.recompile()
-  rvim.invalidate(fmt('user.modules.%s', vim.split(vim.fn.expand('%'), '/')[4]), true, { 'mason' })
+  rvim.invalidate(fmt('user.modules.%s', vim.split(vim.fn.expand('%'), '/')[4]), true)
   plugins.reload()
 end
 
