@@ -127,22 +127,6 @@ local function setup_mappings(client, bufnr)
   nnoremap('gI', vim.lsp.buf.incoming_calls, with_desc('lsp: incoming calls'))
   -- leader keymaps
   ------------------------------------------------------------------------------
-  -- Peek
-  nnoremap(
-    '<leader>lp',
-    "<cmd>lua require('user.lsp.peek').Peek('definition')<cr>",
-    with_desc('peek: definition')
-  )
-  nnoremap(
-    '<leader>li',
-    "<cmd>lua require('user.lsp.peek').Peek('implementation')<cr>",
-    with_desc('peek: implementation')
-  )
-  nnoremap(
-    '<leader>lt',
-    "<cmd>lua require('user.lsp.peek').Peek('typeDefinition')<cr>",
-    with_desc('peek: type definition')
-  )
   nnoremap('<leader>lk', function()
     if rvim.lsp.hover_diagnostics then
       vim.diagnostic.goto_prev({ float = false })
