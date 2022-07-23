@@ -21,7 +21,6 @@ if rvim.ui.defer then
   )
 end
 
-R('user.config.settings'):init()
 R('user.core.commands')
 R('user.highlights')
 R('user.core.plugins').ensure_installed()
