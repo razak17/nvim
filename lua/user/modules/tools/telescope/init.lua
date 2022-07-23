@@ -274,6 +274,7 @@ return function()
   local function find_files()
     builtin.find_files(require('telescope.themes').get_dropdown({
       previewer = false,
+      hidden = true,
       borderchars = border.telescope.ui_select,
     }))
   end
