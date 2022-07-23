@@ -13,6 +13,9 @@ _G.rvim = rvim or {
   ui = {},
 }
 
+local oss = vim.loop.os_uname().sysname
+rvim.open_command = oss == 'Darwin' and 'open' or 'xdg-open'
+
 ---Join path segments that were passed rvim input
 ---@return string
 function join_paths(...)
@@ -171,7 +174,7 @@ function rvim.is_vim_list_open()
   for _, win in ipairs(api.nvim_list_wins()) do
     local buf = api.nvim_win_get_buf(win)
     local location_list = fn.getloclist(0, { filewinid = 0 })
-    local is_loc_list = location_list.filewinid > 0
+    local is_loc_list = location_list and location_list.filewinid > 0
     if vim.bo[buf].filetype == 'qf' or is_loc_list then return true end
   end
   return false
@@ -233,9 +236,6 @@ function rvim.empty(item)
   end
   return item ~= nil
 end
-
-local oss = vim.loop.os_uname().sysname
-rvim.open_command = oss == 'Darwin' and 'open' or 'xdg-open'
 
 ---Reload lua modules
 ---@param path any
