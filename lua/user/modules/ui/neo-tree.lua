@@ -34,16 +34,6 @@ return function()
     },
     enable_git_status = true,
     git_status_async = true,
-    event_handlers = {
-      {
-        event = 'neo_tree_buffer_enter',
-        handler = function() highlights.set_hl('Cursor', { blend = 100 }) end,
-      },
-      {
-        event = 'neo_tree_buffer_leave',
-        handler = function() highlights.set_hl('Cursor', { blend = 0 }) end,
-      },
-    },
     filesystem = {
       hijack_netrw_behavior = 'open_current',
       use_libuv_file_watcher = true,
