@@ -10,8 +10,6 @@ function M.resolve_config(server_name)
   local defaults = rvim.lsp.get_global_opts()
   local config = rvim.servers[server_name]
   if not config then return defaults end
-  local t = type(config)
-  if t == 'function' then config = config() end
   Log:debug('Using custom configuration for requested server: ' .. server_name)
   defaults = vim.tbl_deep_extend('force', defaults, config)
   return defaults
