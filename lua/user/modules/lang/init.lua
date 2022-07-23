@@ -55,8 +55,8 @@ lang['neovim/nvim-lspconfig'] = {
       config = function()
         rvim.augroup('NullLsConfig', {
           {
-            event = 'Filetype',
-            pattern = 'null-ls-info',
+            event = { 'Filetype' },
+            pattern = { 'null-ls-info' },
             command = function() vim.api.nvim_win_set_config(0, { border = rvim.style.border.current }) end,
           },
         })
@@ -91,8 +91,8 @@ lang['neovim/nvim-lspconfig'] = {
         })
         rvim.augroup('LspInstallerConfig', {
           {
-            event = 'Filetype',
-            pattern = 'lsp-installer',
+            event = { 'Filetype' },
+            pattern = { 'lsp-installer' },
             command = function() vim.api.nvim_win_set_config(0, { border = rvim.style.border.current }) end,
           },
         })

@@ -190,7 +190,7 @@ rvim.augroup('UpdateVim', {
     -- TODO: not clear what effect this has in the post vimscript world
     -- it correctly sources $MYVIMRC but all the other files that it
     -- requires will need to be resourced or reloaded themselves
-    event = 'BufWritePost',
+    event = { 'BufWritePost' },
     pattern = {
       config_dir() .. '/plugin/*.{lua,vim}',
       config_dir() .. '/init.{lua,vim}',
