@@ -28,6 +28,7 @@ return {
       workspace = {
         library = {
           [join_paths(rvim.get_config_dir(), 'lua')] = true,
+          [join_paths(rvim.get_runtime_dir(), 'site/pack/packer/start/emmylua-nvim')] = true,
         },
         telemetry = {
           enable = false,
