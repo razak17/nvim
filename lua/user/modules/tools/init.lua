@@ -280,6 +280,7 @@ tools['nvim-lua/plenary.nvim'] = {}
 
 -- TODO: Get keymaps to work without the need to invalidate
 tools['is0n/jaq-nvim'] = {
+  event = { 'BufWinEnter' },
   config = function()
     require('jaq-nvim').setup({
       cmds = {
