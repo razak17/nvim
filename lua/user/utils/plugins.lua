@@ -145,7 +145,7 @@ end
 
 function M.goto_repo()
   local repo = fn.expand('<cfile>')
-  if repo:match('https://') then return vim.cmd('norm gx') end
+  if repo and repo:match('https://') then return vim.cmd('norm gx') end
   if not repo or #vim.split(repo, '/') ~= 2 then return vim.cmd('norm! gf') end
   local url = fmt('https://www.github.com/%s', repo)
   fn.system(fn.printf(rvim.open_command .. ' "https://github.com/%s"', repo))
