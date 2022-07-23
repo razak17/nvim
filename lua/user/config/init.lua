@@ -22,6 +22,6 @@ if rvim.ui.defer then
 end
 
 R('user.core.commands')
-R('user.highlights')
+R('user.core.highlights')
 R('user.core.plugins').ensure_installed()
-R('user.config.servers')
+R('user.core.servers')
