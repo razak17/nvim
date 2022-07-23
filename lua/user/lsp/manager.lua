@@ -5,19 +5,15 @@ local lsp_utils = require('user.utils.lsp')
 
 ---Resolve the configuration for a server by merging with the default config
 ---@param server_name string
----@vararg any config table [optional]
 ---@return table
-function M.resolve_config(server_name, ...)
+function M.resolve_config(server_name)
   local defaults = rvim.lsp.get_global_opts()
-
-  local has_custom_provider, custom_config = pcall(require, 'user/lsp/providers/' .. server_name)
-  if has_custom_provider then
-    Log:debug('Using custom configuration for requested server: ' .. server_name)
-    defaults = vim.tbl_deep_extend('force', defaults, custom_config)
-  end
-
-  defaults = vim.tbl_deep_extend('force', defaults, ...)
-
+  local config = rvim.servers[server_name]
+  if not config then return defaults end
+  local t = type(config)
+  if t == 'function' then config = config() end
+  Log:debug('Using custom configuration for requested server: ' .. server_name)
+  defaults = vim.tbl_deep_extend('force', defaults, config)
   return defaults
 end
 
@@ -59,27 +55,21 @@ end
 
 ---Setup a language server by providing a name
 ---@param server_name string name of the language server
----@param user_config table? when available it will take predence over any default configurations
-function M.setup(server_name, user_config)
+function M.setup(server_name)
   vim.validate({ name = { server_name, 'string' } })
-  user_config = user_config or {}
-
   if M.already_configured(server_name) then return end
 
-  local config = M.resolve_config(server_name, user_config)
+  local config = M.resolve_config(server_name)
   M.launch_server(server_name, config)
 end
 
 ---Setup a language server by providing a name
 ---@param server_name string name of the language server
----@param user_config table? when available it will take predence over any default configurations
-function M.override_setup(server_name, user_config)
+function M.override_setup(server_name)
   vim.validate({ name = { server_name, 'string' } })
-  user_config = user_config or {}
-
   if M.already_configured(server_name) then return end
 
-  local config = M.resolve_config(server_name, user_config)
+  local config = M.resolve_config(server_name)
 
   -- sqls
   if server_name == 'sqls' then
