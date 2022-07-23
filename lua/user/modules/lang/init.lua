@@ -139,7 +139,7 @@ lang['neovim/nvim-lspconfig'] = {
 lang['williamboman/mason.nvim'] = {
   event = 'BufRead',
   branch = 'alpha',
-  requires = { 'nvim-lspconfig' },
+  requires = { 'nvim-lspconfig', 'williamboman/mason-lspconfig.nvim' },
   config = function()
     local style = rvim.style
     local icons = style.icons
@@ -154,17 +154,13 @@ lang['williamboman/mason.nvim'] = {
         },
       },
     })
-  end,
-}
-
-lang['williamboman/mason-lspconfig.nvim'] = {
-  config = function()
     require('mason-lspconfig').setup({
       automatic_installation = rvim.lsp.automatic_servers_installation,
       ensure_installed = rvim.lsp.configured_servers,
     })
   end,
 }
+
 -- Treesitter
 lang['nvim-treesitter/nvim-treesitter'] = {
   run = ':TSUpdate',
