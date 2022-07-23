@@ -272,7 +272,10 @@ return function()
   end
 
   local function find_files()
-    builtin.find_files(require('telescope.themes').get_dropdown({ previewer = false }))
+    builtin.find_files(require('telescope.themes').get_dropdown({
+      previewer = false,
+      borderchars = border.telescope.ui_select,
+    }))
   end
 
   local function file_browser() telescope.extensions.file_browser.file_browser({}) end
