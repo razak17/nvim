@@ -123,11 +123,11 @@ end
 
 rvim.augroup('UserHighlights', {
   {
-    event = 'ColorScheme',
+    event = { 'ColorScheme' },
     command = function() user_highlights() end,
   },
   {
-    event = 'FileType',
+    event = { 'FileType' },
     pattern = sidebar_fts,
     command = function() on_sidebar_enter() end,
   },

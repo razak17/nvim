@@ -51,7 +51,7 @@ return function()
 
   rvim.augroup('UfoSettings', {
     {
-      event = 'FileType',
+      event = { 'FileType' },
       pattern = { 'org' },
       command = function() ufo.detach() end,
     },

@@ -87,8 +87,8 @@ return function()
 
   rvim.augroup('AlphaSettings', {
     {
-      event = 'User ',
-      pattern = 'AlphaReady',
+      event = { 'User ' },
+      pattern = { 'AlphaReady' },
       command = function(args)
         vim.opt_local.foldenable = false
         vim.opt_local.colorcolumn = ''

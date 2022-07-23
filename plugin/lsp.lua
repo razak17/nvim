@@ -279,7 +279,7 @@ end
 
 rvim.augroup('LspSetupCommands', {
   {
-    event = 'LspAttach',
+    event = { 'LspAttach' },
     desc = 'setup the language server autocommands',
     command = function(args)
       local bufnr = args.buf
@@ -290,7 +290,7 @@ rvim.augroup('LspSetupCommands', {
     end,
   },
   {
-    event = 'LspDetach',
+    event = { 'LspDetach' },
     desc = 'Clean up after detached LSP',
     command = function(args) api.nvim_clear_autocmds({ group = get_augroup(args.buf), buffer = args.buf }) end,
   },

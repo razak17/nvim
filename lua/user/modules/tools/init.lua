@@ -301,8 +301,8 @@ tools['is0n/jaq-nvim'] = {
     })
     rvim.augroup('JaqConfig', {
       {
-        event = 'Filetype',
-        pattern = 'Jaq',
+        event = { 'Filetype' },
+        pattern = { 'Jaq' },
         command = function() vim.api.nvim_win_set_config(0, { border = rvim.style.border.current }) end,
       },
     })

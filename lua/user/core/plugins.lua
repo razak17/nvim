@@ -83,8 +83,8 @@ rvim.augroup('PackerSetupInit', {
     end,
   },
   {
-    event = 'User',
-    pattern = 'PackerCompileDone',
+    event = { 'User' },
+    pattern = { 'PackerCompileDone' },
     desc = 'Inform me that packer has finished compiling',
     command = function() utils:plug_notify('Packer compile complete', 'info') end,
   },

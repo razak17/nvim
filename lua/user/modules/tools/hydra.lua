@@ -109,8 +109,8 @@ return function()
   })
 
   rvim.augroup('HydraDap', {
-    event = 'User',
-    user = 'DapStarted',
+    event = { 'User' },
+    user = { 'DapStarted' },
     command = function()
       vim.schedule(function() dap_hydra:activate() end)
     end,

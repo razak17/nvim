@@ -182,8 +182,8 @@ ui['rainbowhxch/beacon.nvim'] = {
     })
     rvim.augroup('BeaconCmds', {
       {
-        event = 'BufReadPre',
-        pattern = '*.norg',
+        event = { 'BufReadPre' },
+        pattern = { '*.norg' },
         command = function() beacon.beacon_off() end,
       },
     })

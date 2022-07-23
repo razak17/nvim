@@ -15,8 +15,8 @@ return function()
 
   rvim.augroup('TelescopePreviews', {
     {
-      event = 'User',
-      pattern = 'TelescopePreviewerLoaded',
+      event = { 'User' },
+      pattern = { 'TelescopePreviewerLoaded' },
       command = 'setlocal number',
     },
   })
