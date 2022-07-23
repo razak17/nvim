@@ -1,19 +1,26 @@
-local opts = {
+local path = vim.split(package.path, ';')
+table.insert(path, 'lua/?.lua')
+table.insert(path, 'lua/?/init.lua')
+
+return {
   settings = {
     Lua = {
+      runtime = {
+        path = path,
+        version = 'LuaJIT',
+      },
+      format = { enable = false },
       diagnostics = {
         globals = {
           'vim',
-          'rvim',
-          'packer_plugins',
-          'notify_opts',
-          'stds',
           'describe',
           'it',
           'before_each',
           'after_each',
+          'packer_plugins',
+          'rvim',
+          'notify_opts',
           'pairs',
-          '_G',
           'R',
           'join_paths',
         },
@@ -22,25 +29,12 @@ local opts = {
         library = {
           [join_paths(rvim.get_config_dir(), 'lua')] = true,
         },
+        telemetry = {
+          enable = false,
+        },
         maxPreload = 100000,
         preloadFileSize = 10000,
       },
     },
   },
 }
-
-local lua_dev_loaded, lua_dev = pcall(require, 'lua-dev')
-if not lua_dev_loaded then return opts end
-
-local dev_opts = {
-  library = {
-    vimruntime = true, -- runtime path
-    types = true, -- full signature, docs and completion of vim.api, vim.treesitter, vim.lsp and others
-    -- plugins = true, -- installed opt or start plugins in packpath
-    -- you can also specify the list of plugins to make available as a workspace library
-    plugins = { 'plenary.nvim' },
-  },
-  lspconfig = opts,
-}
-
-return lua_dev.setup(dev_opts)
