@@ -13,6 +13,14 @@ local servers = {
       'javascript.jsx',
     },
   },
+  graphql = {
+    root_dir = require('lspconfig').util.root_pattern(
+      '.graphqlrc*',
+      '.graphql.config.*',
+      'graphql.config.*'
+    ),
+    single_file_support = false,
+  },
   jsonls = {
     settings = {
       json = {
