@@ -51,18 +51,7 @@ lang['neovim/nvim-lspconfig'] = {
     { 'razak17/rust-tools.nvim' },
     { 'antoinemadec/FixCursorHold.nvim' },
     { 'b0o/schemastore.nvim' },
-    {
-      'jose-elias-alvarez/null-ls.nvim',
-      config = function()
-        rvim.augroup('NullLsConfig', {
-          {
-            event = { 'Filetype' },
-            pattern = { 'null-ls-info' },
-            command = function() vim.api.nvim_win_set_config(0, { border = rvim.style.border.current }) end,
-          },
-        })
-      end,
-    },
+    { 'jose-elias-alvarez/null-ls.nvim', config = conf('lang', 'null-ls') },
     {
       'tamago324/nlsp-settings.nvim',
       config = function()

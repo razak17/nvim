@@ -240,7 +240,7 @@ rvim.augroup('LspSetupCommands', {
 -----------------------------------------------------------------------------//
 local command = rvim.command
 
-command('LspFormat', function() require('user.utils.lsp').format() end)
+command('LspFormat', function() format({ bufnr = 0, async = false }) end)
 
 -- A helper function to auto-update the quickfix list when new diagnostics come
 -- in and close it once everything is resolved. This functionality only runs whilst
@@ -379,5 +379,3 @@ lsp.handlers['window/showMessage'] = function(_, result, ctx)
     keep = function() return lvl == 'ERROR' or lvl == 'WARN' end,
   })
 end
-
-require('user.lsp.null-ls').setup()
