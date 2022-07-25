@@ -1,7 +1,4 @@
-rvim.keys = {
-  leader = 'space',
-  localleader = ',',
-}
+rvim.keys = { leader = 'space', localleader = ',' }
 
 rvim.paths = {
   snippets = join_paths(rvim.get_config_dir(), 'snippets', 'textmate'),
@@ -12,28 +9,7 @@ rvim.paths = {
   mason = join_paths(rvim.get_runtime_dir(), 'mason'),
 }
 
-rvim.log = {
-  ---@usage can be { "trace", "debug", "info", "warn", "error", "fatal" },
-  level = 'warn',
-  viewer = {
-    ---@usage this will fallback on "less +F" if not found
-    cmd = 'lnav',
-    layout_config = {
-      ---@usage direction = 'vertical' | 'horizontal' | 'window' | 'float',
-      direction = 'horizontal',
-      open_mapping = '',
-      size = 40,
-      float_opts = {},
-    },
-  },
-  -- currently disabled due to instabilities
-  override_notify = false,
-}
-
-rvim.plugins = {
-  SANE = true,
-  packer = { active = true },
-}
+rvim.plugins = { SANE = true, packer = { active = true } }
 
 rvim.ui = {
   line_wrap_cursor_movement = false,
@@ -45,25 +21,8 @@ rvim.ui = {
   },
 }
 
-rvim.util = {
-  disabled_providers = { 'python', 'ruby', 'perl' },
-  ftplugin_filetypes = {
-    'go',
-    'graphql',
-    'html',
-    'json',
-    'jsonc',
-    'log',
-    'lua',
-    'markdown',
-    'python',
-    'yaml',
-  },
-  format_on_save = true,
-  save_on_focus_lost = true,
-  format_on_focus_lost = false,
-  autoinstall_ts_parsers = true,
-  debug = false,
-}
+rvim.lang = { format_on_save = true }
+
+rvim.util = { disabled_providers = { 'python', 'ruby', 'perl' }, save_on_focus_lost = true }
 
 rvim.colorscheme = 'zephyr'

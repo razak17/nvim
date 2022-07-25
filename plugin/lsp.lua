@@ -69,7 +69,7 @@ local function setup_autocommands(client, bufnr)
         buffer = bufnr,
         desc = 'Format the current buffer on save',
         command = function(args)
-          if not vim.g.formatting_disabled or rvim.util.format_on_save then
+          if not vim.g.formatting_disabled or rvim.lang.format_on_save then
             format({ bufnr = args.buf, async = true })
           end
         end,
