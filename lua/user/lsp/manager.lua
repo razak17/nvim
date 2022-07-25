@@ -45,10 +45,7 @@ function M.launch_server(server_name, config)
 end
 
 function M.already_configured(server_name)
-  if lsp_utils.is_client_active(server_name) or M.client_is_configured(server_name) then
-    return true
-  end
-  return false
+  return lsp_utils.is_client_active(server_name) or M.client_is_configured(server_name)
 end
 
 ---Setup a language server by providing a name

@@ -143,6 +143,7 @@ lang['williamboman/mason.nvim'] = {
   config = function()
     local style = rvim.style
     local icons = style.icons
+    local get_config = require('user.core.servers')
     require('mason').setup({
       install_root_dir = rvim.paths.mason,
       ui = {
@@ -157,6 +158,13 @@ lang['williamboman/mason.nvim'] = {
     require('mason-lspconfig').setup({
       automatic_installation = rvim.lsp.automatic_servers_installation,
       ensure_installed = rvim.lsp.configured_servers,
+    })
+    require('mason-lspconfig').setup_handlers({
+      function(name)
+        local config = get_config(name)
+        if config then require('lspconfig')[name].setup(config) end
+      end,
+      -- gopls = require('as.plugins.go'),
     })
   end,
 }

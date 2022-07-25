@@ -1,4 +1,21 @@
 local servers = {
+  astro = true,
+  bashls = true,
+  clangd = true,
+  clojure_lsp = true,
+  cmake = true,
+  cssls = true,
+  dockerls = true,
+  gopls = true,
+  html = true,
+  marksman = true,
+  prismals = true,
+  pyright = true,
+  quick_lint_js = true,
+  rust_analyzer = true,
+  svelte = true,
+  tsserver = true,
+  vimls = true,
   denols = {
     root_dir = require('lspconfig').util.root_pattern('deno.json', 'deno.jsonc'),
     single_file_support = false,
@@ -134,3 +151,15 @@ local servers = {
 }
 
 rvim.servers = servers
+
+return function(name)
+  local config = servers[name]
+  if not config then return end
+  local t = type(config)
+  if t == 'boolean' then config = {} end
+  if t == 'function' then config = config() end
+  local defaults = rvim.lsp.get_global_opts()
+  if not config then return defaults end
+  defaults = vim.tbl_deep_extend('force', defaults, config)
+  return defaults
+end
