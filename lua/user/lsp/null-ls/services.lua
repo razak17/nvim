@@ -1,10 +1,16 @@
+local tbl = require('user.utils.table')
+
 local M = {}
+
+local function is_client_active(name)
+  local clients = vim.lsp.get_active_clients()
+  return tbl.find_first(clients, function(client) return client.name == name end)
+end
 
 local function find_root_dir()
   local util = require('lspconfig/util')
-  local lsp_utils = require('user.utils.lsp')
 
-  local ts_client = lsp_utils.is_client_active('typescript')
+  local ts_client = is_client_active('typescript')
   if ts_client then return ts_client.config.root_dir end
   local dirname = vim.fn.expand('%:p:h')
   return util.root_pattern('package.json')(dirname)

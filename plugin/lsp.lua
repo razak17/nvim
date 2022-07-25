@@ -31,6 +31,22 @@ local function diagnostic_popup()
   end
 end
 
+local function formatting_filter(client)
+  local exceptions = (rvim.lsp.format_exclusions)[vim.bo.filetype]
+  if not exceptions then return true end
+  return not vim.tbl_contains(exceptions, client.name)
+end
+
+---@param opts table<string, any>
+local format = function(opts)
+  opts = opts or {}
+  vim.lsp.buf.format({
+    bufnr = opts.bufnr,
+    async = opts.async,
+    filter = formatting_filter,
+  })
+end
+
 --- Add lsp autocommands
 ---@param client table<string, any>
 ---@param bufnr number
@@ -45,18 +61,20 @@ local function setup_autocommands(client, bufnr)
   pcall(api.nvim_clear_autocmds, { group = group, buffer = bufnr })
 
   local cmds = {}
+  -- Format On Save
   if client.server_capabilities.documentFormattingProvider then
-    -- Format On Save
-    local opts = rvim.util.format_on_save
-    if rvim.find_string(rvim.lsp.format_on_save_exclusions, vim.bo.ft) then return end
-    table.insert(cmds, {
-      event = { 'BufWritePre' },
-      pattern = { opts.pattern },
-      desc = 'Format the current buffer on save',
-      command = function()
-        require('user.utils.lsp').format({ timeout_ms = opts.timeout, filter = opts.filter })
-      end,
-    })
+    if not rvim.find_string(rvim.lsp.format_on_save_exclusions, vim.bo.ft) then
+      table.insert(cmds, {
+        event = { 'BufWritePre' },
+        buffer = bufnr,
+        desc = 'Format the current buffer on save',
+        command = function(args)
+          if not vim.g.formatting_disabled or rvim.util.format_on_save then
+            format({ bufnr = args.buf, async = true })
+          end
+        end,
+      })
+    end
   end
   if client.server_capabilities.codeLensProvider then
     if rvim.lsp.code_lens_refresh then

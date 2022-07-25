@@ -59,14 +59,7 @@ rvim.util = {
     'python',
     'yaml',
   },
-  format_on_save = {
-    ---@usage pattern string pattern used for the autocommand (Default: '*')
-    pattern = '*',
-    ---@usage timeout number timeout in ms for the format request (Default: 1000)
-    timeout = 2000,
-    ---@usage filter func to select client
-    filter = require('user.utils.lsp').format_filter,
-  },
+  format_on_save = true,
   save_on_focus_lost = true,
   format_on_focus_lost = false,
   autoinstall_ts_parsers = true,

@@ -33,7 +33,16 @@ rvim.lsp = {
   automatic_servers_installation = true,
   hover_diagnostics = false,
   format_on_save_exclusions = { 'zsh', 'tmux', 'gitcommit', 'query' },
-  format_exclusions = { 'sumneko_lua', 'html', 'jsonls', 'quick_lint_js' },
+  format_exclusions = {
+    {
+      lua = { 'sumneko_lua' },
+      go = { 'null-ls' },
+      proto = { 'null-ls' },
+      html = { 'html' },
+      json = { 'jsonls' },
+      javascript = { 'quick_lint_js' },
+    },
+  },
   kind_highlights = {
     Text = 'String',
     Method = 'Method',
