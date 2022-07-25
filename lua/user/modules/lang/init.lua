@@ -67,7 +67,7 @@ lang['neovim/nvim-lspconfig'] = {
       'tamago324/nlsp-settings.nvim',
       config = function()
         require('nvim-lsp-installer').setup({
-          config_home = join_paths(rvim.get_user_dir(), 'lsp', 'lsp-settings'),
+          config_home = join_paths(rvim.get_user_dir(), 'lsp', 'nlsp'),
           -- set to false to overwrite schemastore.nvim
           append_default_schemas = true,
           ignored_servers = {},
@@ -158,7 +158,6 @@ lang['williamboman/mason.nvim'] = {
     })
     require('mason-lspconfig').setup({
       automatic_installation = rvim.lsp.automatic_servers_installation,
-      ensure_installed = rvim.lsp.configured_servers,
     })
     require('mason-lspconfig').setup_handlers({
       function(name)
