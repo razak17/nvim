@@ -34,12 +34,7 @@ return function()
       }),
       null_ls.builtins.formatting.prettier_d_slim.with({
         filetypes = {
-          'javascript',
-          'typescriptreact',
-          'javascriptreact',
           'html',
-          'json',
-          'jsonc',
           'yaml',
           'graphql',
           'markdown',

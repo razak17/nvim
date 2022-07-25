@@ -40,7 +40,10 @@ rvim.lsp = {
       proto = { 'null-ls' },
       html = { 'html' },
       json = { 'jsonls' },
-      javascript = { 'quick_lint_js' },
+      javascript = { 'quick_lint_js', 'tsserver' },
+      typescript = { 'tsserver' },
+      typescriptreact = { 'tsserver' },
+      javascriptreact = { 'tsserver' },
     },
   },
   kind_highlights = {

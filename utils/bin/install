@@ -52,7 +52,7 @@ pythonVenvInit() {
 }
 
 nodeExtra() {
-	npm install -g tree-sitter-cli eslint prettier_d_slim esint_d neovim prettier gofmt live-server picgo
+	npm install -g tree-sitter-cli prettier_d_slim eslint_d neovim gofmt live-server picgo
 }
 
 pythonExtra() {
