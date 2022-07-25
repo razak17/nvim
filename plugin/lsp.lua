@@ -261,7 +261,7 @@ end
 -- attaches it might enable autocommands or mappings that the previous client did not support
 ---@param client table the lsp client
 ---@param bufnr number
-function rvim.lsp.on_attach(client, bufnr)
+local function on_attach(client, bufnr)
   setup_plugins(client, bufnr)
   setup_autocommands(client, bufnr)
   setup_mappings(client, bufnr)
@@ -274,11 +274,17 @@ end
 
 function rvim.lsp.get_global_opts()
   return {
-    on_attach = rvim.lsp.on_attach,
     on_init = rvim.lsp.on_init,
     capabilities = global_capabilities(),
   }
 end
+
+--- A set of custom overrides for specific lsp clients
+--- This is a way of adding functionality for specific lsps
+--- without putting all this logic in the general on_attach function
+local client_overrides = {
+  sqls = function(client, bufnr) require('sqls').on_attach(client, bufnr) end,
+}
 
 rvim.augroup('LspSetupCommands', {
   {
@@ -289,7 +295,8 @@ rvim.augroup('LspSetupCommands', {
       -- if the buffer is invalid we should not try and attach to it
       if not api.nvim_buf_is_valid(args.buf) or not args.data then return end
       local client = vim.lsp.get_client_by_id(args.data.client_id)
-      rvim.lsp.on_attach(client, bufnr)
+      on_attach(client, bufnr)
+      if client_overrides[client.name] then client_overrides[client.name](client, bufnr) end
     end,
   },
   {
