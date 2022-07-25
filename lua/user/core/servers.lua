@@ -1,3 +1,71 @@
+-----------------------------------------------------------------------------//
+-- Language servers
+-----------------------------------------------------------------------------//
+local fn = vim.fn
+
+local function setup_capabilities()
+  local snippet = {
+    properties = { 'documentation', 'detail', 'additionalTextEdits' },
+  }
+  local code_action = {
+    dynamicRegistration = false,
+    codeActionLiteralSupport = {
+      codeActionKind = {
+        valueSet = (function()
+          local res = vim.tbl_values(vim.lsp.protocol.CodeActionKind)
+          table.sort(res)
+          return res
+        end)(),
+      },
+    },
+  }
+  local folding_range = {
+    dynamicRegistration = false,
+    lineFoldingOnly = true,
+  }
+  local documentation = { 'markdown', 'plaintext' }
+  return snippet, code_action, folding_range, documentation
+end
+
+local function global_capabilities()
+  local capabilities = vim.lsp.protocol.make_client_capabilities()
+  local snippet, code_action, folding_range, documentation = setup_capabilities()
+  capabilities.textDocument.completion.completionItem.snippetSupport = true
+  capabilities.textDocument.completion.completionItem.preselectSupport = true
+  capabilities.textDocument.completion.completionItem.insertReplaceSupport = true
+  capabilities.textDocument.completion.completionItem.labelDetailsSupport = true
+  capabilities.textDocument.completion.completionItem.deprecatedSupport = true
+  capabilities.textDocument.completion.completionItem.commitCharactersSupport = true
+  capabilities.textDocument.completion.completionItem.tagSupport = { valueSet = { 1 } }
+  capabilities.textDocument.completion.completionItem.documentationFormat = documentation
+  capabilities.textDocument.completion.completionItem.resolveSupport = snippet
+  capabilities.textDocument.codeAction = code_action
+  capabilities.textDocument.foldingRange = folding_range
+  local ok, cmp_nvim_lsp = rvim.safe_require('cmp_nvim_lsp')
+  if ok then cmp_nvim_lsp.update_capabilities(capabilities) end
+  return capabilities
+end
+
+-- This function allows reading a per project "settings.json" file in the `.vim` directory of the project.
+---@param client table<string, any>
+---@return boolean
+local function on_init(client)
+  local path = client.workspace_folders[1].name
+  local config_path = path .. '/.vim/settings.json'
+  if fn.filereadable(config_path) == 0 then return true end
+  local ok, json = pcall(fn.readfile, config_path)
+  if not ok then return true end
+  local overrides = vim.json.decode(table.concat(json, '\n'))
+  for name, config in pairs(overrides) do
+    if name == client.name then
+      local original = client.config
+      client.config = vim.tbl_deep_extend('force', original, config)
+      client.notify('workspace/didChangeConfiguration')
+    end
+  end
+  return true
+end
+
 local servers = {
   astro = true,
   bashls = true,
@@ -180,8 +248,7 @@ return function(name)
   local t = type(config)
   if t == 'boolean' then config = {} end
   if t == 'function' then config = config() end
-  local defaults = rvim.lsp.get_global_opts()
-  if not config then return defaults end
-  defaults = vim.tbl_deep_extend('force', defaults, config)
-  return defaults
+  config.on_init = on_init
+  config.capabilities = global_capabilities()
+  return config
 end

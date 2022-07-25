@@ -72,13 +72,12 @@ function M.setup()
     { exe = 'golangci-lint', filetypes = { 'go' } },
   })
 
-  local default_opts = rvim.lsp.get_global_opts()
   local opts = {
     debug = true,
     -- root_dir = require("lspconfig").util.root_pattern("Makefile", ".git", "node_modules"),
     config = {},
   }
-  null_ls.setup(vim.tbl_deep_extend('force', default_opts, opts))
+  null_ls.setup(opts)
 end
 
 return M
