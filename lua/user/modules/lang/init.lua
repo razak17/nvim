@@ -164,10 +164,12 @@ lang['williamboman/mason.nvim'] = {
         local config = get_config(name)
         if config then require('lspconfig')[name].setup(config) end
       end,
-      -- gopls = require('as.plugins.go'),
+      gopls = require('user.lsp.go'),
     })
   end,
 }
+
+lang['ray-x/go.nvim'] = {}
 
 -- Treesitter
 lang['nvim-treesitter/nvim-treesitter'] = {

@@ -6,7 +6,6 @@ local servers = {
   cmake = true,
   cssls = true,
   dockerls = true,
-  gopls = true,
   html = true,
   marksman = true,
   prismals = true,
@@ -28,6 +27,28 @@ local servers = {
       'typescript.tsx',
       'javascriptreact',
       'javascript.jsx',
+    },
+  },
+  --- https://github.com/golang/tools/blob/master/gopls/doc/settings.md
+  gopls = {
+    settings = {
+      gopls = {
+        gofumpt = true,
+        codelenses = {
+          generate = true,
+          gc_details = false,
+          test = true,
+          tidy = true,
+        },
+        analyses = {
+          unusedparams = true,
+          loopclosure = true,
+        },
+        usePlaceholders = true,
+        completeUnimported = true,
+        staticcheck = true,
+        directoryFilters = { '-node_modules' },
+      },
     },
   },
   graphql = {
