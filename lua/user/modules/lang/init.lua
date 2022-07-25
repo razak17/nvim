@@ -46,10 +46,11 @@ lang['rcarriga/nvim-dap-ui'] = {
 -- Lsp
 lang['neovim/nvim-lspconfig'] = {
   requires = {
-    { 'antoinemadec/FixCursorHold.nvim' },
+    { 'ray-x/go.nvim' },
     { 'nanotee/sqls.nvim' },
-    { 'b0o/schemastore.nvim' },
     { 'razak17/rust-tools.nvim' },
+    { 'antoinemadec/FixCursorHold.nvim' },
+    { 'b0o/schemastore.nvim' },
     {
       'jose-elias-alvarez/null-ls.nvim',
       config = function()
@@ -162,14 +163,15 @@ lang['williamboman/mason.nvim'] = {
     require('mason-lspconfig').setup_handlers({
       function(name)
         local config = get_config(name)
-        if config then require('lspconfig')[name].setup(config) end
+        if config then
+          if name == 'rust_analyzer' then require('user.lsp.rust') end
+          require('lspconfig')[name].setup(config)
+        end
       end,
       gopls = require('user.lsp.go'),
     })
   end,
 }
-
-lang['ray-x/go.nvim'] = {}
 
 -- Treesitter
 lang['nvim-treesitter/nvim-treesitter'] = {

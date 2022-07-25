@@ -78,6 +78,10 @@ local servers = {
       },
     },
   },
+  sqls = {
+    -- TODO: overwriting global on_attach
+    on_attach = function(client, bufnr) require('sqls').on_attach(client, bufnr) end,
+  },
   sumneko_lua = {
     settings = {
       Lua = {
