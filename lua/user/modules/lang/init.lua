@@ -234,16 +234,4 @@ lang['github/copilot.vim'] = {
 
 lang['ii14/emmylua-nvim'] = {}
 
-----------------------------------------------------------------------------------------------------
--- Graveyard
-----------------------------------------------------------------------------------------------------
-lang['olexsmir/gopher.nvim'] = {
-  ft = 'go',
-  requires = { -- dependencies
-    'nvim-lua/plenary.nvim',
-    'nvim-treesitter/nvim-treesitter',
-  },
-  disable = true,
-}
-
 return lang
