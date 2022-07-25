@@ -65,30 +65,6 @@ lang['neovim/nvim-lspconfig'] = {
       end,
     },
     {
-      'williamboman/nvim-lsp-installer',
-      config = function()
-        local icons = rvim.style.icons
-        require('nvim-lsp-installer').setup({
-          ensure_installed = {},
-          install_root_dir = join_paths(rvim.get_runtime_dir(), 'lsp_servers'),
-          ui = {
-            icons = {
-              server_installed = icons.misc.checkmark,
-              server_pending = icons.misc.right_arrow,
-              server_uninstalled = icons.misc.x,
-            },
-          },
-        })
-        rvim.augroup('LspInstallerConfig', {
-          {
-            event = { 'Filetype' },
-            pattern = { 'lsp-installer' },
-            command = function() vim.api.nvim_win_set_config(0, { border = rvim.style.border.current }) end,
-          },
-        })
-      end,
-    },
-    {
       'ray-x/lsp_signature.nvim',
       event = 'InsertEnter',
       config = function()
