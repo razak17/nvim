@@ -8,7 +8,6 @@ return function()
     return
   end
 
-  local Log = require('user.core.log')
   local codicons = rvim.style.codicons
 
   rvim.nvim_notify = {
@@ -52,7 +51,6 @@ return function()
   notify.setup(rvim.nvim_notify.setup)
 
   vim.notify = notify
-  Log:configure_notifications(notify)
 
   require('telescope').load_extension('notify')
 

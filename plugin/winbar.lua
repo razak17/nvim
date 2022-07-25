@@ -1,9 +1,7 @@
 ---@diagnostic disable: duplicate-doc-param
 
-local Log = require('user.core.log')
 local ok, navic = pcall(require, 'nvim-navic')
 if not ok then
-  Log:debug('Failed to load nvim-navic')
   return
 end
 

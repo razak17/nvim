@@ -29,10 +29,6 @@ rvim.wk = {
         'open config file',
       },
       C = { ':checkhealth<CR>', 'check health' },
-      d = {
-        "<cmd>lua vim.fn.execute('edit ' .. require('user.core.log').get_path())<CR>",
-        'open rvim logfile',
-      },
       l = {
         "<cmd>lua vim.fn.execute('edit ' .. vim.lsp.get_log_path())<CR>",
         'lsp: open logfile',

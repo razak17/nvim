@@ -1,7 +1,5 @@
 local M = {}
 
-local Log = require('user.core.log')
-
 local null_ls = require('null-ls')
 local services = require('user.lsp.null-ls.services')
 local method = null_ls.methods.FORMATTING
@@ -24,7 +22,11 @@ function M.setup(formatter_configs)
   local registered = services.register_sources(formatter_configs, method)
 
   if #registered > 0 then
-    Log:debug('Registered the following formatters: ' .. unpack(registered))
+    vim.notify(
+      'Registered the following formatters: ' .. unpack(registered),
+      'info',
+      { title = 'Null-ls' }
+    )
   end
 end
 

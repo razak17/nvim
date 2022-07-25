@@ -1,7 +1,5 @@
 local M = {}
 
-local Log = require('user.core.log')
-
 local null_ls = require('null-ls')
 local services = require('user.lsp.null-ls.services')
 local method = null_ls.methods.DIAGNOSTICS
@@ -23,7 +21,13 @@ function M.setup(linter_configs)
 
   local registered = services.register_sources(linter_configs, method)
 
-  if #registered > 0 then Log:debug('Registered the following linters: ' .. unpack(registered)) end
+  if #registered > 0 then
+    vim.notify(
+      'Registered the following linters: ' .. unpack(registered),
+      'info',
+      { title = 'Null-ls' }
+    )
+  end
 end
 
 return M
