@@ -1,7 +1,7 @@
 -----------------------------------------------------------------------------//
 -- Language servers
 -----------------------------------------------------------------------------//
-local fn, api = vim.fn, vim.api
+local fn  = vim.fn
 
 local function setup_capabilities()
   local snippet = {
