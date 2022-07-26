@@ -247,7 +247,7 @@ rvim.style = {
       squirrel = ' ',
       tag = ' ',
       watch = ' ',
-      smiley = ' ',
+      Smiley = ' ',
     },
   },
 }
