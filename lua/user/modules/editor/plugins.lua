@@ -197,16 +197,6 @@ package({
 })
 
 package({
-  'glepnir/template.nvim',
-  config = function()
-    local temp = require('template')
-    temp.temp_dir = ('%s/templates/'):format(rvim.get_config_dir())
-    -- temp.temp_dir = join_paths(rvim.get_config_dir(), 'templates')
-  end,
-  disable = true,
-})
-
-package({
   'AckslD/nvim-trevJ.lua',
   module = 'trevj',
   setup = function()
