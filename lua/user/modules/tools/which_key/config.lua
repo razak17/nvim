@@ -1,4 +1,4 @@
-rvim.wk = {
+return {
   leader_mode = {
     S = 'edit snippet',
     a = {

@@ -1,4 +1,6 @@
+R('user.modules.tools.which_key.config')
 return function()
+  local wk = require('user.modules.tools.which_key.config')
   local icons = rvim.style.icons
   rvim.which_key = {
     setup = {
@@ -67,11 +69,11 @@ return function()
   which_key.setup(rvim.which_key.setup)
 
   -- Set default keymaps
-  vim.g.which_key_map = rvim.wk.leader_mode
+  vim.g.which_key_map = wk.leader_mode
 
   -- Get Which-Key keymap
   local key_maps = vim.g.which_key_map
-  local plugin_keymaps = rvim.wk.plugin
+  local plugin_keymaps = wk.plugin
 
   -- git
   key_maps.g = plugin_keymaps.git
@@ -88,9 +90,9 @@ return function()
   local localleader_opts = rvim.which_key.localleader_opts
 
   which_key.register(key_maps, leader_opts)
-  which_key.register(rvim.wk.visual_mode, vopts)
-  which_key.register(rvim.wk.normal_mode)
-  which_key.register(rvim.wk.localleader, localleader_opts)
+  which_key.register(wk.visual_mode, vopts)
+  which_key.register(wk.normal_mode)
+  which_key.register(wk.localleader, localleader_opts)
 
   rvim.augroup('WhichKeyMode', {
     {

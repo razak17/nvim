@@ -3,9 +3,7 @@ local conf = utils.load_conf
 local block_reload = utils.block_reload
 local package = require('user.core.plugins').package
 
-package({ 'folke/which-key.nvim',
-  config = conf('tools', 'which_key')
-})
+package({ 'folke/which-key.nvim', config = conf('tools', 'which_key') })
 
 package({
   'mbbill/undotree',
