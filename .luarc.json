@@ -1,22 +1,35 @@
 {
     "$schema": "https://raw.githubusercontent.com/sumneko/vscode-lua/master/setting/schema.json",
     "Lua.diagnostics.disable": [
-      "missing-parameter",
-      "return-type-mismatch",
-      "param-type-mismatch",
-      "redundant-parameter",
+        "missing-parameter",
+        "return-type-mismatch",
+        "param-type-mismatch",
+        "redundant-parameter"
     ],
     "Lua.diagnostics.globals": [
-      "vim",
-      "describe",
-      "it",
-      "before_each",
-      "after_each",
-      "rvim",
-      "packer_plugins",
-      "notify_opts",
-      "stds",
-      "pairs",
-      "join_paths"
+        "vim",
+        "describe",
+        "it",
+        "before_each",
+        "after_each",
+        "rvim",
+        "packer_plugins",
+        "notify_opts",
+        "stds",
+        "pairs",
+        "join_paths",
+        "lfs"
+    ],
+    "Lua.workspace.checkThirdParty": false,
+    "Lua.workspace.library": [
+        "/home/razak/.config/rvim",
+        "/home/razak/.local/share/rvim/site",
+        "/home/razak/.local/share/rvim/site/pack/packer/start/emmylua-nvim",
+        "/etc/xdg/nvim",
+        "/home/razak/neovim/share/nvim/runtime",
+        "/home/razak/neovim/share/nvim/runtime/pack/dist/opt/matchit",
+        "/home/razak/neovim/lib/nvim",
+        "/home/razak/.config/rvim/after",
+        "${3rd}/lfs/library"
     ]
 }

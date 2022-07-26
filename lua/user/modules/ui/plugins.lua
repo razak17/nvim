@@ -21,10 +21,10 @@ package({ 'lukas-reineke/indent-blankline.nvim', config = conf('ui', 'indentline
 
 package({ 'lewis6991/gitsigns.nvim', event = 'CursorHold', config = conf('ui', 'gitsigns') })
 
--- package({
---   'rcarriga/nvim-notify',
---   config = block_reload(conf('ui', 'notify')),
--- })
+package({
+  'rcarriga/nvim-notify',
+  config = block_reload(conf('ui', 'notify')),
+})
 
 package({ 'stevearc/dressing.nvim', event = 'BufWinEnter', config = function() end })
 

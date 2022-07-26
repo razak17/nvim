@@ -1,8 +1,9 @@
-local packer = nil
+local uv, api, fn = vim.loop, vim.api, vim.fn
 local fmt = string.format
 local utils = require('user.utils.plugins')
+local plug_notify = utils.plug_notify
 local packer_compiled = rvim.paths.packer_compiled
-local uv, api, fn = vim.loop, vim.api, vim.fn
+local packer = nil
 
 local Plug = {}
 Plug.__index = Plug
@@ -101,10 +102,10 @@ end
 
 function plugins.del_compiled()
   if vim.fn.filereadable(packer_compiled) ~= 1 then
-    utils:plug_notify('packer_compiled file does not exist', 'info')
+    plug_notify('packer_compiled file does not exist', 'info')
   else
     vim.fn.delete(packer_compiled)
-    utils:plug_notify('packer_compiled was deleted', 'info')
+    plug_notify('packer_compiled was deleted', 'info')
   end
 end
 
@@ -143,7 +144,7 @@ function plugins.load_compile()
       event = { 'User' },
       pattern = { 'PackerCompileDone' },
       desc = 'Inform me that packer has finished compiling',
-      command = function() utils:plug_notify('Packer compile complete', 'info') end,
+      command = function() plug_notify('Packer compile complete', 'info') end,
     },
   })
 end

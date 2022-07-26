@@ -3,13 +3,7 @@ local fmt = string.format
 
 local M = {}
 
-function M.plug_notify(msg, level)
-  if rvim.plugin_loaded('nvim-notify') then
-    vim.notify(msg, level, { title = 'Packer' })
-    return
-  end
-  print(msg)
-end
+function M.plug_notify(msg, level) vim.notify(msg, level, { title = 'Packer' }) end
 
 ---Some plugins are not safe to be reloaded because their setup functions
 ---are not idempotent. This wraps the setup calls of such plugins
