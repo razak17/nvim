@@ -231,63 +231,6 @@ package({
 
 package({ 'anuvyklack/hydra.nvim', config = block_reload(conf('tools', 'hydra')) })
 
-package({
-  'sindrets/diffview.nvim',
-  event = 'BufReadPre',
-  setup = function()
-    rvim.nnoremap('<localleader>gd', '<Cmd>DiffviewOpen<CR>', 'diffview: diff HEAD')
-    rvim.nnoremap('<localleader>gh', '<Cmd>DiffviewFileHistory<CR>', 'diffview: file history')
-    rvim.vnoremap('gh', [[:'<'>DiffviewFileHistory<CR>]], 'diffview: file history')
-  end,
-  config = function()
-    require('diffview').setup({
-      hooks = {
-        diff_buf_read = function()
-          vim.opt_local.wrap = false
-          vim.opt_local.list = false
-          vim.opt_local.colorcolumn = ''
-        end,
-      },
-      enhanced_diff_hl = true,
-      keymaps = {
-        view = { q = '<Cmd>DiffviewClose<CR>' },
-        file_panel = { q = '<Cmd>DiffviewClose<CR>' },
-        file_history_panel = { q = '<Cmd>DiffviewClose<CR>' },
-      },
-    })
-  end,
-  disable = true,
-})
-
-package({ 'tpope/vim-apathy', disable = true })
-
-package({
-  'tpope/vim-projectionist',
-  config = conf('tools', 'vim-projectionist'),
-  disable = true,
-})
-
-package({
-  'NTBBloodbath/rest.nvim',
-  requires = { 'nvim-lua/plenary.nvim' },
-  ft = { 'http', 'json' },
-  config = function()
-    require('rest-nvim').setup({
-      -- Open request results in a horizontal split
-      result_split_horizontal = true,
-      -- Skip SSL verification, useful for unknown certificates
-      skip_ssl_verification = true,
-      -- Jump to request line on run
-      jump_to_request = false,
-      custom_dynamic_variables = {},
-    })
-    rvim.nnoremap('<leader>rr', '<Plug>RestNvim', 'rest: run')
-    rvim.nnoremap('<leader>rp', '<Plug>RestNvimPreview', 'rest: run')
-    rvim.nnoremap('<leader>rl', '<Plug>RestNvimLast', 'rest: run')
-  end,
-  disable = true,
-})
-
 package({ 'nvim-lua/plenary.nvim' })
 
 -- TODO: Get keymaps to work without the need to invalidate
@@ -327,6 +270,62 @@ package({
 ----------------------------------------------------------------------------------------------------
 -- Graveyard
 ----------------------------------------------------------------------------------------------------
+package({
+  'NTBBloodbath/rest.nvim',
+  requires = { 'nvim-lua/plenary.nvim' },
+  ft = { 'http', 'json' },
+  config = function()
+    require('rest-nvim').setup({
+      -- Open request results in a horizontal split
+      result_split_horizontal = true,
+      -- Skip SSL verification, useful for unknown certificates
+      skip_ssl_verification = true,
+      -- Jump to request line on run
+      jump_to_request = false,
+      custom_dynamic_variables = {},
+    })
+    rvim.nnoremap('<leader>rr', '<Plug>RestNvim', 'rest: run')
+    rvim.nnoremap('<leader>rp', '<Plug>RestNvimPreview', 'rest: run')
+    rvim.nnoremap('<leader>rl', '<Plug>RestNvimLast', 'rest: run')
+  end,
+  disable = true,
+})
+
+package({
+  'sindrets/diffview.nvim',
+  event = 'BufReadPre',
+  setup = function()
+    rvim.nnoremap('<localleader>gd', '<Cmd>DiffviewOpen<CR>', 'diffview: diff HEAD')
+    rvim.nnoremap('<localleader>gh', '<Cmd>DiffviewFileHistory<CR>', 'diffview: file history')
+    rvim.vnoremap('gh', [[:'<'>DiffviewFileHistory<CR>]], 'diffview: file history')
+  end,
+  config = function()
+    require('diffview').setup({
+      hooks = {
+        diff_buf_read = function()
+          vim.opt_local.wrap = false
+          vim.opt_local.list = false
+          vim.opt_local.colorcolumn = ''
+        end,
+      },
+      enhanced_diff_hl = true,
+      keymaps = {
+        view = { q = '<Cmd>DiffviewClose<CR>' },
+        file_panel = { q = '<Cmd>DiffviewClose<CR>' },
+        file_history_panel = { q = '<Cmd>DiffviewClose<CR>' },
+      },
+    })
+  end,
+  disable = true,
+})
+
+package({ 'tpope/vim-apathy', disable = true })
+
+package({
+  'tpope/vim-projectionist',
+  config = conf('tools', 'vim-projectionist'),
+  disable = true,
+})
 package({
   'michaelb/sniprun',
   event = 'BufWinEnter',

@@ -106,7 +106,6 @@ package({
 package({
   'williamboman/mason.nvim',
   event = 'BufRead',
-  branch = 'main',
   requires = { 'nvim-lspconfig', 'williamboman/mason-lspconfig.nvim' },
   config = function()
     local style = rvim.style
@@ -171,16 +170,6 @@ package({
     { 'nvim-treesitter/nvim-treesitter-textobjects' },
     { 'p00f/nvim-ts-rainbow' },
     {
-      'andymass/vim-matchup',
-      after = 'nvim-treesitter',
-      config = function()
-        require('which-key').register({
-          ['<localleader>lm'] = { ':<c-u>MatchupWhereAmI?<CR>', 'matchup: where am i' },
-        })
-      end,
-      disable = true,
-    },
-    {
       'windwp/nvim-ts-autotag',
       config = function()
         require('nvim-ts-autotag').setup({
@@ -238,3 +227,17 @@ package({
 })
 
 package({ 'ii14/emmylua-nvim' })
+
+----------------------------------------------------------------------------------------------------
+-- Graveyard
+----------------------------------------------------------------------------------------------------
+package({
+  'andymass/vim-matchup',
+  after = 'nvim-treesitter',
+  config = function()
+    require('which-key').register({
+      ['<localleader>lm'] = { ':<c-u>MatchupWhereAmI?<CR>', 'matchup: where am i' },
+    })
+  end,
+  disable = true,
+})
