@@ -42,6 +42,9 @@ return function()
       icon = {
         folder_empty = rvim.style.icons.documents.open_folder,
       },
+      modified = {
+        symbol = icons.misc.circle .. ' ',
+      },
       git_status = {
         symbols = {
           added = icons.git.add,
