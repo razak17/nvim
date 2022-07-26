@@ -55,6 +55,7 @@ function Packer:bootstrap_packer()
   packer.reset()
   Packer:load_plugins()
   packer.startup(function(use)
+    use({ 'wbthomason/packer.nvim', opt = true })
     if rvim.plugins.SANE then
       for _, repo in ipairs(self.repos) do
         local local_path = repo.local_path
