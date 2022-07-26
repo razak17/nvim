@@ -41,8 +41,8 @@ local function global_capabilities()
   capabilities.textDocument.completion.completionItem.resolveSupport = snippet
   capabilities.textDocument.codeAction = code_action
   capabilities.textDocument.foldingRange = folding_range
-  -- local ok, cmp_nvim_lsp = rvim.safe_require('cmp_nvim_lsp')
-  -- if ok then cmp_nvim_lsp.update_capabilities(capabilities) end
+  local ok, cmp_nvim_lsp = rvim.safe_require('cmp_nvim_lsp')
+  if ok then cmp_nvim_lsp.update_capabilities(capabilities) end
   return capabilities
 end
 
