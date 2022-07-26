@@ -17,10 +17,10 @@ return function()
 
   vim.g.neo_tree_remove_legacy_commands = 1
 
-  rvim.nnoremap('<c-n>', '<Cmd>Neotree toggle reveal<CR>')
+  rvim.nnoremap('<c-n>', '<Cmd>Neotree toggle<CR>')
 
   require('which-key').register({
-    ['<leader>e'] = { '<Cmd>Neotree toggle reveal<CR>', 'toggle tree' },
+    ['<leader>e'] = { '<Cmd>Neotree toggle<CR>', 'toggle tree' },
   })
   require('neo-tree').setup({
     source_selector = { winbar = true },
