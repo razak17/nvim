@@ -20,10 +20,7 @@ package({ 'lukas-reineke/indent-blankline.nvim', config = conf('ui', 'indentline
 
 package({ 'lewis6991/gitsigns.nvim', event = 'CursorHold', config = conf('ui', 'gitsigns') })
 
-package({
-  'rcarriga/nvim-notify',
-  config = conf('ui', 'notify'),
-})
+package({ 'rcarriga/nvim-notify', config = conf('ui', 'notify') })
 
 package({ 'stevearc/dressing.nvim', event = 'BufWinEnter', config = function() end })
 
@@ -54,11 +51,11 @@ package({
   end,
 })
 
--- package({
---   'nvim-neo-tree/neo-tree.nvim',
---   branch = 'v2.x',
---   config = conf('ui', 'neo-tree'),
--- })
+package({
+  'nvim-neo-tree/neo-tree.nvim',
+  branch = 'v2.x',
+  config = conf('ui', 'neo-tree'),
+})
 
 package({ 'MunifTanjim/nui.nvim' })
 
@@ -120,6 +117,8 @@ package({
 ----------------------------------------------------------------------------------------------------
 -- Graveyard
 ----------------------------------------------------------------------------------------------------
+package({ 'EdenEast/nightfox.nvim', disable = true })
+
 package({
   'zbirenbaum/neodim',
   config = function()
@@ -182,8 +181,6 @@ package({
   end,
   disable = true,
 })
-
-package({ 'EdenEast/nightfox.nvim', disable = true })
 
 package({
   'NTBBloodbath/doom-one.nvim',

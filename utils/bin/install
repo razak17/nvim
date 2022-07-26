@@ -52,17 +52,7 @@ pythonVenvInit() {
 }
 
 nodeExtra() {
-	npm install -g tree-sitter-cli prettier_d_slim eslint_d neovim gofmt live-server picgo
-}
-
-pythonExtra() {
-	pip3 install ueberzug yapf black flake8 pylint mypy black isort pylint-django django-stubs sqlformat debugpy
-}
-
-golangInit() {
-	go install github.com/mattn/efm-langserver
-	go install golang.org/x/tools/gopls@latest
-	go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.43.0
+	npm install -g tree-sitter-cli prettier_d_slim neovim live-server
 }
 
 archExtra() {
@@ -112,7 +102,7 @@ validate_node_installation() {
   return 0
 }
 
-install_nodejs_deps() {
+install_nodejs_deps()        {
 	printf "Which package manager would you like to use (pnpm, yarn, npm)? "
   pkg_managers=("pnpm" "yarn" "npm")
 
@@ -152,14 +142,6 @@ install_deps() {
 	printf "Would you like to install node packages now (y/n)? "
 	read -r answer
 	[ "$answer" != "${answer#[Yy]}" ] && install_nodejs_deps
-
-	printf "Would you like to install pip packages now (y/n)? "
-	read -r answer
-	[ "$answer" != "${answer#[Yy]}" ] && pythonExtra
-
-	printf "Would you like to install go packages now (y/n)? "
-	read -r answer
-	[ "$answer" != "${answer#[Yy]}" ] && golangInit
 
 	printf "Would you like to install extra arch packages now (y/n)? "
 	read -r answer
@@ -218,9 +200,6 @@ while [ "$#" -gt 0 ]; do
     ;;
 	-npm)
     install_nodejs_deps
-		;;
-	-go)
-		golangInit
 		;;
 	-deps)
     install_deps

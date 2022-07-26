@@ -131,11 +131,7 @@ local servers = {
     settings = {
       json = {
         validate = { enable = true },
-        schemas = vim.tbl_deep_extend(
-          'force',
-          require('schemastore').json.schemas(),
-          require('nlspsettings.loaders.json').get_default_schemas()
-        ),
+        schemas = require('schemastore').json.schemas(),
       },
     },
     setup = {
