@@ -148,11 +148,6 @@ local servers = {
   },
   sqls = true,
   sumneko_lua = function()
-    local lib = vim.tbl_filter(function(p)
-      if p:match('emmy') then return true end
-      return not vim.startswith(p, rvim.get_runtime_dir() .. '/site/')
-    end, api.nvim_get_runtime_file('', true))
-
     return {
       settings = {
         Lua = {
@@ -164,7 +159,10 @@ local servers = {
             globals = { 'vim', 'describe', 'it', 'before_each', 'after_each', 'packer_plugins' },
           },
           workspace = {
-            library = lib,
+            library = {
+              [join_paths(rvim.get_config_dir(), 'lua')] = true,
+              [join_paths(rvim.get_runtime_dir(), 'site/pack/packer/start/emmylua-nvim')] = true,
+            },
             telemetry = {
               enable = false,
             },
