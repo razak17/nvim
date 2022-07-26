@@ -101,6 +101,7 @@ package({
       end,
     },
   },
+  config = function() require('which-key').register({ ['<leader>lh'] = { ':LspInfo<CR>', 'lsp: info' } }) end,
 })
 
 package({
@@ -135,6 +136,7 @@ package({
       end,
       gopls = require('user.lsp.go'),
     })
+    rvim.nnoremap('<leader>lm', ':Mason<CR>', 'mason: info')
   end,
 })
 
@@ -165,7 +167,13 @@ package({
     {
       'nvim-treesitter/playground',
       cmd = { 'TSPlaygroundToggle', 'TSHighlightCapturesUnderCursor' },
-      setup = function() rvim.nnoremap('<leader>LE', '<Cmd>TSHighlightCapturesUnderCursor<CR>') end,
+      setup = function()
+        rvim.nnoremap(
+          '<leader>LE',
+          '<Cmd>TSHighlightCapturesUnderCursor<CR>',
+          'playground: inspect scope'
+        )
+      end,
     },
     { 'nvim-treesitter/nvim-treesitter-textobjects' },
     { 'p00f/nvim-ts-rainbow' },

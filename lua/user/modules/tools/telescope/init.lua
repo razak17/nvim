@@ -366,6 +366,20 @@ return function()
       W = { bg_selector.set_bg_image, 'change background' },
       z = { zoxide_list, 'zoxide list' },
     },
+    ['<leader>lR'] = { ':Telescope lsp_references<CR>', 'telescope: references' },
+    ['<leader>ld'] = { ':Telescope lsp_document_symbols<CR>', 'telescope: document symbols' },
+    ['<leader>le'] = {
+      ':Telescope diagnostics bufnr=0 theme=get_ivy<CR>',
+      'telescope: document diagnostics',
+    },
+    ['<leader>lE'] = {
+      ':Telescope diagnostics theme=get_ivy<CR>',
+      'telescope: workspace diagnostics',
+    },
+    ['<leader>ls'] = {
+      ':Telescope lsp_dynamic_workspace_symbols<CR>',
+      'telescope: workspace symbols',
+    },
   })
 
   vim.api.nvim_exec_autocmds('User', { pattern = 'TelescopeConfigComplete', modeline = false })

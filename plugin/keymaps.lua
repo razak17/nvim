@@ -154,8 +154,8 @@ onoremap('il', [[<cmd>normal! ^vg_<CR>]])
 ------------------------------------------------------------------------------
 -- Add Empty space above and below
 ------------------------------------------------------------------------------
-nnoremap('[<space>', [[<cmd>put! =repeat(nr2char(10), v:count1)<cr>'[]])
-nnoremap(']<space>', [[<cmd>put =repeat(nr2char(10), v:count1)<cr>]])
+nnoremap('[<space>', [[<cmd>put! =repeat(nr2char(10), v:count1)<cr>'[]], 'add space above')
+nnoremap(']<space>', [[<cmd>put =repeat(nr2char(10), v:count1)<cr>]], 'add space below')
 -- Paste in visual mode multiple times
 xnoremap('p', 'pgvy')
 -- search visual selection
@@ -194,6 +194,9 @@ nnoremap('<M-j>', ':resize -2<CR>')
 nnoremap('<M-k>', ':resize +2<CR>')
 nnoremap('<M-l>', ':vertical resize -2<CR>')
 nnoremap('<M-h>', ':vertical resize +2<CR>')
+nnoremap('<leader>aF', ':vertical resize 90<CR>', 'vertical resize 90%')
+nnoremap('<leader>aL', ':vertical resize 40<CR>', 'vertical resize 30%')
+nnoremap('<leader>aO', ':<C-f>:resize 10<CR>', 'open old commands')
 ------------------------------------------------------------------------------
 -- Line Movement
 ------------------------------------------------------------------------------
@@ -244,10 +247,10 @@ nnoremap('<leader>lo', function() rvim.toggle_list('location') end, 'toggle locl
 -- Utils
 ------------------------------------------------------------------------------
 nnoremap('<leader>LV', utils.color_my_pencils, 'vim with me')
-nnoremap('<leader>aR', utils.empty_registers)
-nnoremap('<leader>a;', utils.open_terminal)
-nnoremap('<leader>ao', utils.turn_on_guides)
-nnoremap('<leader>ae', utils.turn_off_guides)
+nnoremap('<leader>aR', utils.empty_registers, 'empty registers')
+nnoremap('<leader>a;', utils.open_terminal, 'open terminal')
+nnoremap('<leader>ao', utils.turn_on_guides, 'turn on guides')
+nnoremap('<leader>ae', utils.turn_off_guides, 'turn off guides')
 -- Search word
 nnoremap('<leader>B', '/<C-R>=escape(expand("<cword>"), "/")<CR><CR>', 'find cword')
 -- Greatest remap ever
@@ -271,11 +274,11 @@ nnoremap(
 ----------------------------------------------------------------------------------
 -- Folds
 ----------------------------------------------------------------------------------
-nnoremap('<leader>FR', 'zA') -- Recursively toggle
-nnoremap('<leader>Fl', 'za') -- Toggle fold under the cursor
-nnoremap('<leader>Fo', 'zR') -- Open all folds
-nnoremap('<leader>Fx', 'zM') -- Close all folds
-nnoremap('<leader>Fz', [[zMzvzz]]) -- Refocus folds
+nnoremap('<leader>FR', 'zA', 'recursive cursor') -- Recursively toggle
+nnoremap('<leader>Fl', 'za', 'under cursor') -- Toggle fold under the cursor
+nnoremap('<leader>Fo', 'zR', 'open all') -- Open all folds
+nnoremap('<leader>Fx', 'zM', 'close all') -- Close all folds
+nnoremap('<leader>Fz', [[zMzvzz]], 'refocus') -- Refocus folds
 
 -- Make zO recursively open whatever top level fold we're in, no matter where the
 -- cursor happens to be.
@@ -428,6 +431,45 @@ nnoremap('<C-h>', '<C-w>h')
 nnoremap('<C-j>', '<C-w>j')
 nnoremap('<C-k>', '<C-w>k')
 nnoremap('<C-l>', '<C-w>l')
+------------------------------------------------------------------------------
+-- rVim
+------------------------------------------------------------------------------
+nnoremap('<leader>L;', ':Alpha<CR>', 'alpha')
+nnoremap(
+  '<leader>Lc',
+  "<cmd>lua vim.fn.execute('edit ' .. join_paths(rvim.get_user_dir(), 'config/init.lua'))<CR>",
+  'open config file'
+)
+nnoremap('<leader>LC', ':checkhealth<CR>', 'check health')
+nnoremap(
+  '<leader>Ll',
+  "<cmd>lua vim.fn.execute('edit ' .. vim.lsp.get_log_path())<CR>",
+  'lsp: open logfile'
+)
+nnoremap('<leader>Lm', ':messages<CR>', 'messages')
+nnoremap(
+  '<leader>Lp',
+  "<cmd>exe 'edit '.stdpath('cache').'/packer.nvim.log'<CR>",
+  'packer: open logfile'
+)
+nnoremap(
+  '<leader>Ls',
+  "<cmd>lua vim.fn.execute('edit ' .. join_paths(rvim.get_cache_dir(), 'prof.log'))<CR>",
+  'open startuptime logs'
+)
+nnoremap('<leader>Lv', ':e ' .. join_paths(rvim.get_config_dir(), 'init.lua<CR>'), 'open vimrc')
+------------------------------------------------------------------------------
+-- Packer
+------------------------------------------------------------------------------
+rvim.nnoremap('<leader>pc', ':PlugCompile<CR>', 'compile')
+rvim.nnoremap('<leader>pC', ':PlugClean<CR>', 'clean')
+rvim.nnoremap('<leader>pd', ':PlugCompiledDelete<CR>', 'delete packer_compiled')
+rvim.nnoremap('<leader>pe', ':PlugUpdate<CR>', 'update')
+rvim.nnoremap('<leader>pu', ':PlugCompiledEdit<CR>', 'edit packer_compiled')
+rvim.nnoremap('<leader>pi', ':PlugInstall<CR>', 'install')
+rvim.nnoremap('<leader>pI', ':PlugInvalidate<CR>', 'invalidate')
+rvim.nnoremap('<leader>ps', ':PlugSync<CR>', 'sync')
+rvim.nnoremap('<leader>pS', ':PlugStatus<CR>', 'status')
 ------------------------------------------------------------------------------
 -- Abbreviations
 ------------------------------------------------------------------------------

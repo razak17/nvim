@@ -55,4 +55,6 @@ return function()
       command = function() vim.api.nvim_win_set_config(0, { border = rvim.style.border.current }) end,
     },
   })
+
+  rvim.nnoremap('<leader>ln', ':NullLsInfo<CR>', 'null-ls: info')
 end
