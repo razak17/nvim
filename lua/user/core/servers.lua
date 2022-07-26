@@ -148,26 +148,25 @@ local servers = {
   },
   sqls = true,
   sumneko_lua = function()
+    local path = vim.split(package.path, ';')
+    table.insert(path, 'lua/?.lua')
+    table.insert(path, 'lua/?/init.lua')
+
+    local lib = vim.tbl_filter(function(p)
+      if p:match('emmy') then return true end
+      return not vim.startswith(p, rvim.get_runtime_dir() .. '/site/')
+    end, vim.api.nvim_get_runtime_file('', true))
     return {
       settings = {
         Lua = {
-          runtime = {
-            version = 'LuaJIT',
-          },
+          runtime = { version = 'LuaJIT' },
           format = { enable = false },
           diagnostics = {
             globals = { 'vim', 'describe', 'it', 'before_each', 'after_each', 'packer_plugins' },
           },
           workspace = {
-            library = {
-              [join_paths(rvim.get_config_dir(), 'lua')] = true,
-              [join_paths(rvim.get_runtime_dir(), 'site/pack/packer/start/emmylua-nvim')] = true,
-            },
-            telemetry = {
-              enable = false,
-            },
-            maxPreload = 100000,
-            preloadFileSize = 10000,
+            library = lib,
+            telemetry = { enable = false },
           },
         },
       },
