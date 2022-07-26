@@ -1,7 +1,7 @@
 -----------------------------------------------------------------------------//
 -- Language servers
 -----------------------------------------------------------------------------//
-local fn = vim.fn
+local fn, api = vim.fn, vim.api
 
 local function setup_capabilities()
   local snippet = {
@@ -148,31 +148,32 @@ local servers = {
   },
   sqls = true,
   sumneko_lua = function()
-      local lib = vim.tbl_filter(function(p)
+    local lib = vim.tbl_filter(function(p)
       if p:match('emmy') then return true end
       return not vim.startswith(p, rvim.get_runtime_dir() .. '/site/')
     end, api.nvim_get_runtime_file('', true))
 
-
-    settings = {
-      Lua = {
-        runtime = {
-          version = 'LuaJIT',
-        },
-        format = { enable = false },
-        diagnostics = {
-          globals = { 'vim', 'describe', 'it', 'before_each', 'after_each', 'packer_plugins' },
-        },
-        workspace = {
-          library = lib,
-          telemetry = {
-            enable = false,
+    return {
+      settings = {
+        Lua = {
+          runtime = {
+            version = 'LuaJIT',
           },
-          maxPreload = 100000,
-          preloadFileSize = 10000,
+          format = { enable = false },
+          diagnostics = {
+            globals = { 'vim', 'describe', 'it', 'before_each', 'after_each', 'packer_plugins' },
+          },
+          workspace = {
+            library = lib,
+            telemetry = {
+              enable = false,
+            },
+            maxPreload = 100000,
+            preloadFileSize = 10000,
+          },
         },
       },
-    },
+    }
   end,
   tailwindcss = {
     root_dir = require('lspconfig').util.root_pattern(
