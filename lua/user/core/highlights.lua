@@ -74,11 +74,14 @@ local function general_overrides()
 end
 
 local function set_sidebar_highlight()
-  -- local normal_bg = rvim.ui.transparent_window and "NONE" or M.get("Normal", "bg")..
+  local normal_bg = util.get('Normal', 'bg')
   local split_color = util.get('VertSplit', 'fg')
+  local dark_bg = util.alter_color(normal_bg, -43)
   local bg_color = util.alter_color(P.bg, -20)
   local st_color = util.alter_color(util.get('Visual', 'bg'), -10)
   util.all({
+    PanelDarkBackground = { bg = dark_bg },
+    PanelDarkHeading = { bg = dark_bg, bold = true },
     PanelBackground = { link = 'Normal' },
     PanelHeading = { background = bg_color, bold = true },
     PanelVertSplit = { foreground = split_color, background = bg_color },
