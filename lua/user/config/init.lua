@@ -1,3 +1,5 @@
+if not rvim then return end
+
 vim.g.python3_host_prog = rvim.paths.python3
 vim.g.node_host_prog = rvim.paths.node
 for _, v in pairs(rvim.util.disabled_providers) do

@@ -1,3 +1,5 @@
+if not rvim then return end
+
 local g = vim.g
 local fn = vim.fn
 

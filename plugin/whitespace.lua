@@ -4,6 +4,8 @@
 --@source: https://vim.fandom.com/wiki/Highlight_unwanted_spaces (comment at the bottom)
 --@implementation: https://github.com/inkarkat/vim-ShowTrailingWhitespace
 
+if not rvim then return end
+
 local util = require('zephyr.utils')
 
 local fn = vim.fn

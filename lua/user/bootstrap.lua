@@ -1,3 +1,5 @@
+if not rvim then return end
+
 local runtime_dir = rvim.get_runtime_dir()
 local config_dir = rvim.get_config_dir()
 

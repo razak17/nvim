@@ -1,3 +1,5 @@
+if not rvim then return end
+
 local fn = vim.fn
 local fmt = string.format
 local api = vim.api
@@ -183,8 +185,6 @@ function rvim.safe_require(module, opts)
   end
   return ok, result
 end
-
----@alias Plugin table<(string | number), string>
 
 --- A convenience wrapper that calls the ftplugin config for a plugin if it exists
 --- and warns me if the plugin is not installed
