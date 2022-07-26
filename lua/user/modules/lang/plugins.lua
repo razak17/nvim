@@ -106,9 +106,8 @@ package({
 package({
   'williamboman/mason.nvim',
   event = 'BufRead',
-  branch = 'alpha',
   requires = { 'nvim-lspconfig', 'williamboman/mason-lspconfig.nvim' },
-  config = function()
+  config = block_reload(function()
     local style = rvim.style
     local icons = style.icons
     local get_config = require('user.core.servers')
@@ -136,7 +135,7 @@ package({
       end,
       gopls = require('user.lsp.go'),
     })
-  end,
+  end),
 })
 
 -- Treesitter
@@ -237,4 +236,4 @@ package({
   end,
 })
 
-package({ 'ii14/emmylua-nvim'})
+package({ 'ii14/emmylua-nvim' })
