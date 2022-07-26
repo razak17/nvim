@@ -2,18 +2,8 @@ local fn = vim.fn
 local fmt = string.format
 local api = vim.api
 local uv = vim.loop
-
-----------------------------------------------------------------------------------------------------
--- Global namespace
-----------------------------------------------------------------------------------------------------
-_G.rvim = rvim or {
-  mappings = {},
-  lang = {},
-  util = {},
-  ui = {},
-}
-
 local oss = vim.loop.os_uname().sysname
+
 rvim.open_command = oss == 'Darwin' and 'open' or 'xdg-open'
 
 ---Join path segments that were passed rvim input
