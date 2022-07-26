@@ -133,9 +133,11 @@ return function()
         },
         format = function(entry, vim_item)
           local MAX = math.floor(vim.o.columns * 0.5)
+          local codicons = rvim.style.codicons
           vim_item.abbr = #vim_item.abbr >= MAX and string.sub(vim_item.abbr, 1, MAX) .. ellipsis
             or vim_item.abbr
-          vim_item.kind = rvim.style.codicons.kind[vim_item.kind]
+          vim_item.kind = codicons.kind[vim_item.kind]
+          if entry.source.name == 'emoji' then vim_item.kind = codicons.misc.smiley end
           vim_item.menu = rvim.cmp.setup.formatting.source_names[entry.source.name]
           return vim_item
         end,

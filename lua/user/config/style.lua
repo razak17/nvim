@@ -243,11 +243,11 @@ rvim.style = {
       trace = '✎',
     },
     misc = {
-      Robot = ' ',
-      Squirrel = ' ',
-      Tag = ' ',
-      Watch = ' ',
-      Smiley = ' ',
+      robot = ' ',
+      squirrel = ' ',
+      tag = ' ',
+      watch = ' ',
+      smiley = ' ',
     },
   },
 }
