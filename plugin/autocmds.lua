@@ -66,7 +66,7 @@ rvim.augroup('SmartClose', {
     pattern = { '*' },
     nested = true,
     command = function()
-      if vim.bo.filetype ~= 'qf' then vim.cmd.lclose({ mods = { emsg_silent = true } }) end
+      if vim.bo.filetype ~= 'qf' then vim.cmd('silent! lclose') end
     end,
   },
 })
@@ -374,7 +374,7 @@ rvim.augroup('Utilities', {
     event = { 'BufLeave' },
     pattern = { '*' },
     command = function()
-      if can_save() then vim.cmd.update({ mods = { emsg_silent = true } }) end
+      if can_save() then vim.cmd('silent! update') end
     end,
   },
   {
