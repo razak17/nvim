@@ -5,10 +5,10 @@ local plug_notify = utils.plug_notify
 local packer_compiled = rvim.paths.packer_compiled
 local packer = nil
 
-local Plug = {}
-Plug.__index = Plug
+local Packer = {}
+Packer.__index = Packer
 
-function Plug:load_plugins()
+function Packer:load_plugins()
   self.repos = {}
 
   local function get_plugins_list()
@@ -27,7 +27,7 @@ function Plug:load_plugins()
   end
 end
 
-function Plug:bootstrap_packer()
+function Packer:bootstrap_packer()
   if not packer then
     vim.cmd.packadd({ 'packer.nvim', bang = true })
     packer = require('packer')
@@ -53,7 +53,7 @@ function Plug:bootstrap_packer()
     },
   })
   packer.reset()
-  Plug:load_plugins()
+  Packer:load_plugins()
   packer.startup(function(use)
     if rvim.plugins.SANE then
       for _, repo in ipairs(self.repos) do
@@ -68,7 +68,7 @@ function Plug:bootstrap_packer()
   end)
 end
 
-function Plug:init_ensure_installed()
+function Packer:init_ensure_installed()
   local packer_dir = rvim.get_runtime_dir() .. '/site/pack/packer/opt/packer.nvim'
   local state = uv.fs_stat(packer_dir)
   if not state then
@@ -86,13 +86,13 @@ end
 
 local plugins = setmetatable({}, {
   __index = function(_, key)
-    if not packer then Plug:bootstrap_packer() end
+    if not packer then Packer:bootstrap_packer() end
     return packer[key]
   end,
 })
 
 function plugins.ensure_plugins()
-  Plug:init_ensure_installed()
+  Packer:init_ensure_installed()
 
   if not vim.g.packer_compiled_loaded and vim.loop.fs_stat(packer_compiled) then
     vim.cmd.source(packer_compiled)
@@ -125,7 +125,7 @@ function plugins.recompile()
   plugins.reload()
 end
 
-function plugins.package(repo) table.insert(Plug.repos, repo) end
+function plugins.package(repo) table.insert(Packer.repos, repo) end
 
 function plugins.load_compile()
   if vim.fn.filereadable(packer_compiled) ~= 1 then plugins.compile() end
