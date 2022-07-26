@@ -105,6 +105,8 @@ package({
 
 package({
   'williamboman/mason.nvim',
+  event = 'BufRead',
+  branch = 'main',
   requires = { 'nvim-lspconfig', 'williamboman/mason-lspconfig.nvim' },
   config = block_reload(function()
     local style = rvim.style
