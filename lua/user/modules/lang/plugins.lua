@@ -1,11 +1,11 @@
 local utils = require('user.utils.plugins')
 local conf = utils.load_conf
 local block_reload = utils.block_reload
-
-local lang = {}
+local package = require('user.core.plugins').package
 
 -- Debugging
-lang['rcarriga/nvim-dap-ui'] = {
+package({
+  'rcarriga/nvim-dap-ui',
   config = block_reload(function()
     local dapui = require('dapui')
     require('dapui').setup()
@@ -41,10 +41,11 @@ lang['rcarriga/nvim-dap-ui'] = {
       end,
     },
   },
-}
+})
 
 -- Lsp
-lang['neovim/nvim-lspconfig'] = {
+package({
+  'neovim/nvim-lspconfig',
   requires = {
     { 'ray-x/go.nvim' },
     { 'nanotee/sqls.nvim' },
@@ -55,7 +56,7 @@ lang['neovim/nvim-lspconfig'] = {
     {
       'tamago324/nlsp-settings.nvim',
       config = function()
-        require('nvim-lsp-installer').setup({
+        require('nlspsettings').setup({
           config_home = join_paths(rvim.get_user_dir(), 'lsp', 'nlsp'),
           -- set to false to overwrite schemastore.nvim
           append_default_schemas = true,
@@ -100,9 +101,10 @@ lang['neovim/nvim-lspconfig'] = {
       end,
     },
   },
-}
+})
 
-lang['williamboman/mason.nvim'] = {
+package({
+  'williamboman/mason.nvim',
   event = 'BufRead',
   branch = 'alpha',
   requires = { 'nvim-lspconfig', 'williamboman/mason-lspconfig.nvim' },
@@ -135,10 +137,11 @@ lang['williamboman/mason.nvim'] = {
       gopls = require('user.lsp.go'),
     })
   end,
-}
+})
 
 -- Treesitter
-lang['nvim-treesitter/nvim-treesitter'] = {
+package({
+  'nvim-treesitter/nvim-treesitter',
   run = ':TSUpdate',
   config = conf('lang', 'treesitter'),
   requires = {
@@ -190,9 +193,10 @@ lang['nvim-treesitter/nvim-treesitter'] = {
       config = function() require('spellsitter').setup({ enable = true }) end,
     },
   },
-}
+})
 
-lang['windwp/nvim-autopairs'] = {
+package({
+  'windwp/nvim-autopairs',
   event = 'InsertEnter',
   after = 'nvim-cmp',
   config = function()
@@ -209,9 +213,10 @@ lang['windwp/nvim-autopairs'] = {
       },
     })
   end,
-}
+})
 
-lang['github/copilot.vim'] = {
+package({
+  'github/copilot.vim',
   config = function()
     vim.g.copilot_no_tab_map = true
     rvim.imap('<Plug>(rvim-copilot-accept)', 'copilot#Accept("<Tab>")', { expr = true })
@@ -230,8 +235,6 @@ lang['github/copilot.vim'] = {
     }
     require('zephyr.utils').plugin('copilot', { CopilotSuggestion = { link = 'Comment' } })
   end,
-}
+})
 
-lang['ii14/emmylua-nvim'] = {}
-
-return lang
+package({ 'ii14/emmylua-nvim'})

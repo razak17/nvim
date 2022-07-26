@@ -240,8 +240,6 @@ local servers = {
   },
 }
 
-rvim.servers = servers
-
 return function(name)
   local config = servers[name]
   if not config then return end

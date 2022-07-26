@@ -2,46 +2,100 @@ local packer = nil
 local fmt = string.format
 local utils = require('user.utils.plugins')
 local packer_compiled = rvim.paths.packer_compiled
+local uv, api, fn = vim.loop, vim.api, vim.fn
 
 local Plug = {}
 Plug.__index = Plug
 
-function Plug:load_packer()
+function Plug:load_plugins()
+  self.repos = {}
+
+  local function get_plugins_list()
+    local list = {}
+    local modules_dir = join_paths(rvim.get_user_dir(), 'modules')
+    local tmp = vim.split(fn.globpath(modules_dir, '*/plugins.lua'), '\n')
+    for _, f in ipairs(tmp) do
+      list[#list + 1] = string.match(f, 'lua/(.+).lua$')
+    end
+    return list
+  end
+
+  local plugins = get_plugins_list()
+  for _, m in ipairs(plugins) do
+    require(m)
+  end
+end
+
+function Plug:bootstrap_packer()
   if not packer then
     vim.cmd.packadd({ 'packer.nvim', bang = true })
     packer = require('packer')
   end
-  rvim.safe_require('impatient')
+  -- rvim.safe_require('impatient')
+  packer.init({
+    package_root = join_paths(rvim.get_runtime_dir(), 'site/pack/'),
+    compile_path = rvim.paths.packer_compiled,
+    git = {
+      clone_timeout = 7000,
+      subcommands = {
+        -- this is more efficient than what Packer is using
+        fetch = 'fetch --no-tags --no-recurse-submodules --update-shallow --progress',
+      },
+    },
+    disable_commands = true,
+    display = {
+      open_fn = function()
+        return require('packer.util').float({
+          border = rvim.style.border.current,
+        })
+      end,
+    },
+  })
+  packer.reset()
+  Plug:load_plugins()
+  packer.startup(function(use)
+    if rvim.plugins.SANE then
+      for _, repo in ipairs(self.repos) do
+        local local_path = repo.local_path
+        if local_path then
+          utils.use_local(repo)
+        else
+          use(repo)
+        end
+      end
+    end
+  end)
+end
 
-  local plugins = utils:get_plugins_list()
-  utils:bootstrap_packer(packer, plugins)
-  -- cfilter plugin allows filtering down an existing quickfix list
-  vim.cmd.packadd({ 'cfilter', bang = true })
+function Plug:init_ensure_installed()
+  local packer_dir = rvim.get_runtime_dir() .. '/site/pack/packer/opt/packer.nvim'
+  local state = uv.fs_stat(packer_dir)
+  if not state then
+    local cmd = '!git clone https://github.com/wbthomason/packer.nvim ' .. packer_dir
+    api.nvim_command(cmd)
+    uv.fs_mkdir(
+      rvim.get_runtime_dir() .. '/site/lua',
+      511,
+      function() assert('could not create compile_path dir') end
+    )
+    self:bootstrap_packer()
+    packer.sync()
+  end
 end
 
 local plugins = setmetatable({}, {
   __index = function(_, key)
-    if not packer then Plug:load_packer() end
+    if not packer then Plug:bootstrap_packer() end
     return packer[key]
   end,
 })
 
-function plugins.ensure_installed()
-  utils:init_ensure_installed()
-  Plug:load_packer()
-
-  plugins.load_compile()
+function plugins.ensure_plugins()
+  Plug:init_ensure_installed()
 
   if not vim.g.packer_compiled_loaded and vim.loop.fs_stat(packer_compiled) then
     vim.cmd.source(packer_compiled)
     vim.g.packer_compiled_loaded = true
-  end
-end
-
-function plugins.load_compile()
-  if vim.fn.filereadable(packer_compiled) ~= 1 then
-    plugins.install()
-    plugins.compile()
   end
 end
 
@@ -55,8 +109,6 @@ function plugins.del_compiled()
 end
 
 function plugins.reload()
-  Plug:load_packer()
-  plugins.ensure_installed()
   plugins.install()
   plugins.compile()
   require('_compiled_rolling')
@@ -72,22 +124,28 @@ function plugins.recompile()
   plugins.reload()
 end
 
-rvim.augroup('PackerSetupInit', {
-  {
-    event = { 'BufWritePost' },
-    desc = 'Packer setup and reload',
-    pattern = { '*/user/modules/**/*.lua', '*/user/config/init.lua' },
-    command = function()
-      vim.cmd.doautocmd('LspDetach')
-      plugins.recompile()
-    end,
-  },
-  {
-    event = { 'User' },
-    pattern = { 'PackerCompileDone' },
-    desc = 'Inform me that packer has finished compiling',
-    command = function() utils:plug_notify('Packer compile complete', 'info') end,
-  },
-})
+function plugins.package(repo) table.insert(Plug.repos, repo) end
+
+function plugins.load_compile()
+  if vim.fn.filereadable(packer_compiled) ~= 1 then plugins.compile() end
+
+  rvim.augroup('PackerSetupInit', {
+    {
+      event = { 'BufWritePost' },
+      desc = 'Packer setup and reload',
+      pattern = { '*/user/modules/**/*.lua' },
+      command = function()
+        vim.cmd.doautocmd('LspDetach')
+        plugins.recompile()
+      end,
+    },
+    {
+      event = { 'User' },
+      pattern = { 'PackerCompileDone' },
+      desc = 'Inform me that packer has finished compiling',
+      command = function() utils:plug_notify('Packer compile complete', 'info') end,
+    },
+  })
+end
 
 return plugins

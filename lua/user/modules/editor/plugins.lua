@@ -1,10 +1,10 @@
+local package = require('user.core.plugins').package
 local utils = require('user.utils.plugins')
 local conf = utils.load_conf
 
-local editor = {}
-
 -- nvim-cmp
-editor['hrsh7th/nvim-cmp'] = {
+package({
+  'hrsh7th/nvim-cmp',
   event = 'InsertEnter',
   config = conf('lang', 'cmp'),
   requires = {
@@ -43,16 +43,18 @@ editor['hrsh7th/nvim-cmp'] = {
       end,
     },
   },
-}
+})
 
-editor['L3MON4D3/LuaSnip'] = {
+package({
+  'L3MON4D3/LuaSnip',
   event = 'InsertEnter',
   module = 'luasnip',
   requires = 'rafamadriz/friendly-snippets',
   config = conf('lang', 'luasnip'),
-}
+})
 
-editor['xiyaowong/accelerated-jk.nvim'] = {
+package({
+  'xiyaowong/accelerated-jk.nvim',
   event = { 'BufWinEnter' },
   config = function()
     require('accelerated-jk').setup({
@@ -61,18 +63,14 @@ editor['xiyaowong/accelerated-jk.nvim'] = {
       -- acceleration_limit = 150,
     })
   end,
-}
+})
 
-editor['kylechui/nvim-surround'] = {
-  config = function() require('nvim-surround').setup() end,
-}
+package({ 'kylechui/nvim-surround', config = function() require('nvim-surround').setup() end })
 
-editor['monaqa/dial.nvim'] = {
-  event = { 'BufWinEnter' },
-  config = conf('editor', 'dial'),
-}
+package({ 'monaqa/dial.nvim', event = { 'BufWinEnter' }, config = conf('editor', 'dial') })
 
-editor['norcalli/nvim-colorizer.lua'] = {
+package({
+  'norcalli/nvim-colorizer.lua',
   event = { 'BufReadPre', 'BufNewFile' },
   config = function()
     require('colorizer').setup({ 'lua', 'css', 'vim', 'kitty', 'conf' }, {
@@ -87,21 +85,24 @@ editor['norcalli/nvim-colorizer.lua'] = {
       mode = 'background',
     })
   end,
-}
+})
 
-editor['romainl/vim-cool'] = {
+package({
+  'romainl/vim-cool',
   event = { 'BufWinEnter' },
   config = function() vim.g.CoolTotalMatches = 1 end,
-}
+})
 
-editor['jghauser/fold-cycle.nvim'] = {
+package({
+  'jghauser/fold-cycle.nvim',
   config = function()
     require('fold-cycle').setup()
     rvim.nnoremap('<BS>', function() require('fold-cycle').open() end)
   end,
-}
+})
 
-editor['numToStr/Comment.nvim'] = {
+package({
+  'numToStr/Comment.nvim',
   config = function()
     require('Comment').setup()
     local ft = require('Comment.ft')
@@ -113,9 +114,10 @@ editor['numToStr/Comment.nvim'] = {
       .set('graphql', '//%s')
       .set('json', '//%s')
   end,
-}
+})
 
-editor['Matt-A-Bennett/vim-surround-funk'] = {
+package({
+  'Matt-A-Bennett/vim-surround-funk',
   event = 'BufWinEnter',
   config = function()
     vim.g.surround_funk_create_mappings = 0
@@ -137,9 +139,10 @@ editor['Matt-A-Bennett/vim-surround-funk'] = {
       },
     })
   end,
-}
+})
 
-editor['danymat/neogen'] = {
+package({
+  'danymat/neogen',
   event = { 'BufWinEnter' },
   requires = { 'nvim-treesitter/nvim-treesitter' },
   config = function()
@@ -147,9 +150,10 @@ editor['danymat/neogen'] = {
     require('neogen').setup({ snippet_engine = 'luasnip' })
     rvim.nnoremap('<localleader>lc', function() neogen.generate() end, 'git: commit dotfiles')
   end,
-}
+})
 
-editor['chentoast/marks.nvim'] = {
+package({
+  'chentoast/marks.nvim',
   event = { 'BufWinEnter' },
   config = function()
     require('zephyr.utils').plugin(
@@ -178,31 +182,32 @@ editor['chentoast/marks.nvim'] = {
       },
     })
   end,
-}
+})
 
-editor['psliwka/vim-dirtytalk'] = {
-  run = ':DirtytalkUpdate',
-}
+package({ 'psliwka/vim-dirtytalk', run = ':DirtytalkUpdate' })
 
 ----------------------------------------------------------------------------------------------------
 -- Graveyard
 ----------------------------------------------------------------------------------------------------
-editor['jsborjesson/vim-uppercase-sql'] = {
+package({
+  'jsborjesson/vim-uppercase-sql',
   event = 'InsertEnter',
   ft = { 'sql' },
   disable = true,
-}
+})
 
-editor['glepnir/template.nvim'] = {
+package({
+  'glepnir/template.nvim',
   config = function()
     local temp = require('template')
     temp.temp_dir = ('%s/templates/'):format(rvim.get_config_dir())
     -- temp.temp_dir = join_paths(rvim.get_config_dir(), 'templates')
   end,
   disable = true,
-}
+})
 
-editor['AckslD/nvim-trevJ.lua'] = {
+package({
+  'AckslD/nvim-trevJ.lua',
   module = 'trevj',
   setup = function()
     rvim.nnoremap(
@@ -213,9 +218,10 @@ editor['AckslD/nvim-trevJ.lua'] = {
   end,
   config = function() require('trevj').setup() end,
   disable = true,
-}
+})
 
-editor['junegunn/vim-easy-align'] = {
+package({
+  'junegunn/vim-easy-align',
   config = function()
     rvim.nmap('ga', '<Plug>(EasyAlign)')
     rvim.xmap('ga', '<Plug>(EasyAlign)')
@@ -223,19 +229,19 @@ editor['junegunn/vim-easy-align'] = {
   end,
   event = { 'BufReadPre', 'BufNewFile' },
   disable = true,
-}
+})
 
-editor['xiyaowong/nvim-cursorword'] = {
+package({
+  'xiyaowong/nvim-cursorword',
   event = { 'InsertEnter' },
   config = function() vim.cmd([[hi! CursorWord cterm=NONE gui=NONE guibg=#3f444a]]) end,
   disable = true,
-}
+})
 
-editor['abecodes/tabout.nvim'] = {
+package({
+  'abecodes/tabout.nvim',
   wants = { 'nvim-treesitter' },
   after = { 'nvim-cmp' },
   config = function() require('tabout').setup({ ignore_beginning = false, completion = false }) end,
   disable = true,
-}
-
-return editor
+})

@@ -1,48 +1,35 @@
 local utils = require('user.utils.plugins')
 local conf = utils.load_conf
 local block_reload = utils.block_reload
+local package = require('user.core.plugins').package
 
-local ui = {}
-
-ui['razak17/zephyr-nvim'] = {
+package({
+  'razak17/zephyr-nvim',
   requires = { 'nvim-treesitter/nvim-treesitter', opt = true },
   local_path = 'personal',
-}
+})
 
-ui['shaunsingh/nord.nvim'] = {}
+package({ 'shaunsingh/nord.nvim' })
 
-ui['akinsho/bufferline.nvim'] = {
-  config = conf('ui', 'bufferline'),
-}
+package({ 'akinsho/bufferline.nvim', config = conf('ui', 'bufferline') })
 
-ui['nvim-lualine/lualine.nvim'] = {
-  config = conf('ui', 'lualine'),
-}
+package({ 'nvim-lualine/lualine.nvim', config = conf('ui', 'lualine') })
 
-ui['kyazdani42/nvim-web-devicons'] = {
-  config = conf('ui', 'nvim-web-devicons'),
-}
+package({ 'kyazdani42/nvim-web-devicons', config = conf('ui', 'nvim-web-devicons') })
 
-ui['lukas-reineke/indent-blankline.nvim'] = {
-  config = conf('ui', 'indentline'),
-}
+package({ 'lukas-reineke/indent-blankline.nvim', config = conf('ui', 'indentline') })
 
-ui['lewis6991/gitsigns.nvim'] = {
-  event = 'CursorHold',
-  config = conf('ui', 'gitsigns'),
-}
+package({ 'lewis6991/gitsigns.nvim', event = 'CursorHold', config = conf('ui', 'gitsigns') })
 
-ui['rcarriga/nvim-notify'] = {
-  cond = utils.not_headless, -- TODO: causes blocking output in headless mode
-  config = block_reload(conf('ui', 'notify')),
-}
+-- package({
+--   'rcarriga/nvim-notify',
+--   config = block_reload(conf('ui', 'notify')),
+-- })
 
-ui['stevearc/dressing.nvim'] = {
-  event = 'BufWinEnter',
-  config = function() end,
-}
+package({ 'stevearc/dressing.nvim', event = 'BufWinEnter', config = function() end })
 
-ui['lukas-reineke/headlines.nvim'] = {
+package({
+  'lukas-reineke/headlines.nvim',
   event = 'BufWinEnter',
   ft = { 'org', 'norg', 'markdown', 'yaml' },
   setup = function()
@@ -66,16 +53,18 @@ ui['lukas-reineke/headlines.nvim'] = {
       norg = { codeblock_highlight = false },
     })
   end,
-}
+})
 
-ui['nvim-neo-tree/neo-tree.nvim'] = {
+package({
+  'nvim-neo-tree/neo-tree.nvim',
   branch = 'main', -- branch = 'v2.x',
   config = conf('ui', 'neo-tree'),
-}
+})
 
-ui['MunifTanjim/nui.nvim'] = {}
+package({ 'MunifTanjim/nui.nvim' })
 
-ui['s1n7ax/nvim-window-picker'] = {
+package({
+  's1n7ax/nvim-window-picker',
   tag = 'v1.*',
   config = function()
     require('window-picker').setup({
@@ -90,29 +79,30 @@ ui['s1n7ax/nvim-window-picker'] = {
       other_win_hl_color = require('zephyr.utils').get('Visual', 'bg'),
     })
   end,
-}
+})
 
-ui['itchyny/vim-highlighturl'] = {
+package({
+  'itchyny/vim-highlighturl',
   config = function() vim.g.highlighturl_guifg = require('zephyr.utils').get('URL', 'fg') end,
-}
+})
 
-ui['j-hui/fidget.nvim'] = {
-  config = function() require('fidget').setup() end,
-}
+package({ 'j-hui/fidget.nvim', config = function() require('fidget').setup() end })
 
-ui['kevinhwang91/nvim-ufo'] = {
+package({
+  'kevinhwang91/nvim-ufo',
   requires = 'kevinhwang91/promise-async',
   config = conf('ui', 'ufo'),
-}
+})
 
-ui['goolord/alpha-nvim'] = { config = conf('ui', 'alpha') }
+package({ 'goolord/alpha-nvim', config = conf('ui', 'alpha') })
 
-ui['fladson/vim-kitty'] = {}
+package({ 'fladson/vim-kitty' })
 
 -- Syntax
-ui['mtdl9/vim-log-highlighting'] = {}
+package({ 'mtdl9/vim-log-highlighting' })
 
-ui['RRethy/vim-illuminate'] = {
+package({
+  'RRethy/vim-illuminate',
   config = function()
     vim.g.Illuminate_ftblacklist = {
       'alpha',
@@ -126,12 +116,13 @@ ui['RRethy/vim-illuminate'] = {
     rvim.nnoremap('<a-n>', ':lua require"illuminate".next_reference{wrap=true}<cr>')
     rvim.nnoremap('<a-p>', ':lua require"illuminate".next_reference{reverse=true,wrap=true}<cr>')
   end,
-}
+})
 
 ----------------------------------------------------------------------------------------------------
 -- Graveyard
 ----------------------------------------------------------------------------------------------------
-ui['zbirenbaum/neodim'] = {
+package({
+  'zbirenbaum/neodim',
   config = function()
     require('neodim').setup({
       blend_color = require('zephyr.utils').get('Normal', 'bg'),
@@ -144,9 +135,10 @@ ui['zbirenbaum/neodim'] = {
     })
   end,
   disable = true,
-}
+})
 
-ui['m-demare/hlargs.nvim'] = {
+package({
+  'm-demare/hlargs.nvim',
   config = function()
     require('zephyr.utils').plugin('hlargs', {
       Hlargs = { italic = true, bold = false, foreground = '#A5D6FF' },
@@ -162,9 +154,10 @@ ui['m-demare/hlargs.nvim'] = {
     })
   end,
   disable = true,
-}
+})
 
-ui['rainbowhxch/beacon.nvim'] = {
+package({
+  'rainbowhxch/beacon.nvim',
   config = function()
     local beacon = require('beacon')
     beacon.setup({
@@ -189,11 +182,12 @@ ui['rainbowhxch/beacon.nvim'] = {
     })
   end,
   disable = true,
-}
+})
 
-ui['EdenEast/nightfox.nvim'] = { disable = true }
+package({ 'EdenEast/nightfox.nvim', disable = true })
 
-ui['NTBBloodbath/doom-one.nvim'] = {
+package({
+  'NTBBloodbath/doom-one.nvim',
   config = function()
     require('doom-one').setup({
       pumblend = {
@@ -203,6 +197,4 @@ ui['NTBBloodbath/doom-one.nvim'] = {
     })
   end,
   disable = true,
-}
-
-return ui
+})

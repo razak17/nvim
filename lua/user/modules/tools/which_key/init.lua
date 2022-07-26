@@ -1,5 +1,3 @@
-R('user.modules.tools.which_key.config')
-
 return function()
   local icons = rvim.style.icons
   rvim.which_key = {
