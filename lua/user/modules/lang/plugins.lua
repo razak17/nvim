@@ -131,10 +131,10 @@ package({
         local config = get_config(name)
         if config then
           if name == 'rust_analyzer' then require('user.lsp.rust') end
+          if name == 'gopls' then require('user.lsp.go') end
           require('lspconfig')[name].setup(config)
         end
       end,
-      gopls = require('user.lsp.go'),
     })
     rvim.nnoremap('<leader>lm', ':Mason<CR>', 'mason: info')
   end,
