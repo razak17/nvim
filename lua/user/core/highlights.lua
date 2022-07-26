@@ -12,7 +12,7 @@ local function general_overrides()
     mkdLineBreak = { link = 'NONE' },
     -- Directory = { inherit = "Keyword", bold = true },
     URL = { foreground = P.blue, underline = true },
-    -----------------------------------------------------------------------------//
+    ------------------------------------------------------------------------------------------------
     CursorLineSign = { link = 'CursorLine' },
     LineNr = { background = 'NONE' },
     FoldColumn = { background = 'background' },
@@ -20,9 +20,9 @@ local function general_overrides()
     -- Add undercurl to existing spellbad highlight
     SpellBad = { undercurl = true, background = 'NONE', foreground = 'NONE', sp = 'green' },
     SpellRare = { undercurl = true },
-    -----------------------------------------------------------------------------//
+    ------------------------------------------------------------------------------------------------
     -- colorscheme overrides
-    -----------------------------------------------------------------------------//
+    ------------------------------------------------------------------------------------------------
     -- Comment = { italic = true } ,
     Include = { italic = true },
     -- Type = { italic = true, bold = true } ,
@@ -43,9 +43,9 @@ local function general_overrides()
     SignColumn = { background = 'NONE' },
     EndOfBuffer = { background = 'NONE' },
     MatchParen = { reverse = true },
-    -----------------------------------------------------------------------------//
+    ------------------------------------------------------------------------------------------------
     -- Treesitter
-    -----------------------------------------------------------------------------//
+    ------------------------------------------------------------------------------------------------
     TSNamespace = { foreground = P.pale_pink, italic = true, bold = true },
     TSKeywordReturn = { italic = true, foreground = keyword_fg },
     TSConstructor = { foreground = P.teal, italic = true, bold = true },
@@ -58,6 +58,9 @@ local function general_overrides()
     CommentTasksTodo = { link = 'commentTSWarning' },
     CommentTasksFixme = { link = 'commentTSDanger' },
     CommentTasksNote = { link = 'commentTSNote' },
+    ------------------------------------------------------------------------------------------------
+    -- LSP
+    ------------------------------------------------------------------------------------------------
 
     LspCodeLens = { link = 'NonText' },
     LspReferenceText = { underline = true, background = 'NONE' },
@@ -130,8 +133,8 @@ rvim.augroup('UserHighlights', {
   },
 })
 
------------------------------------------------------------------------------//
+----------------------------------------------------------------------------------------------------
 -- Color Scheme {{{1
------------------------------------------------------------------------------//
+----------------------------------------------------------------------------------------------------
 vim.g.colors_name = rvim.colorscheme
 vim.cmd('colorscheme ' .. rvim.colorscheme)

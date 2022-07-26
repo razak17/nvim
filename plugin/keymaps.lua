@@ -464,12 +464,12 @@ nnoremap('<leader>Lv', ':e ' .. join_paths(rvim.get_config_dir(), 'init.lua<CR>'
 rvim.nnoremap('<leader>pc', ':PlugCompile<CR>', 'compile')
 rvim.nnoremap('<leader>pC', ':PlugClean<CR>', 'clean')
 rvim.nnoremap('<leader>pd', ':PlugCompiledDelete<CR>', 'delete packer_compiled')
-rvim.nnoremap('<leader>pe', ':PlugUpdate<CR>', 'update')
-rvim.nnoremap('<leader>pu', ':PlugCompiledEdit<CR>', 'edit packer_compiled')
+rvim.nnoremap('<leader>pe', ':PlugCompiledEdit<CR>', 'edit packer_compiled')
 rvim.nnoremap('<leader>pi', ':PlugInstall<CR>', 'install')
 rvim.nnoremap('<leader>pI', ':PlugInvalidate<CR>', 'invalidate')
 rvim.nnoremap('<leader>ps', ':PlugSync<CR>', 'sync')
 rvim.nnoremap('<leader>pS', ':PlugStatus<CR>', 'status')
+rvim.nnoremap('<leader>pu', ':PlugUpdate<CR>', 'update')
 ------------------------------------------------------------------------------
 -- Abbreviations
 ------------------------------------------------------------------------------
