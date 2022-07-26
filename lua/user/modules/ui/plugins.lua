@@ -1,6 +1,5 @@
 local utils = require('user.utils.plugins')
 local conf = utils.load_conf
-local block_reload = utils.block_reload
 local package = require('user.core.plugins').package
 
 package({
@@ -23,7 +22,7 @@ package({ 'lewis6991/gitsigns.nvim', event = 'CursorHold', config = conf('ui', '
 
 package({
   'rcarriga/nvim-notify',
-  config = block_reload(conf('ui', 'notify')),
+  config = conf('ui', 'notify'),
 })
 
 package({ 'stevearc/dressing.nvim', event = 'BufWinEnter', config = function() end })
