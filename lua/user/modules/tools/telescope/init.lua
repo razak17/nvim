@@ -57,7 +57,7 @@ return function()
 
   local dropdown = rvim.telescope.dropdown
 
-  rvim.telescope.setup = {
+  telescope.setup({
     defaults = {
       prompt_prefix = ' ' .. icons.misc.chevron_right_alt .. ' ',
       selection_caret = ' ' .. icons.misc.chevron_right_alt .. ' ', --  ,
@@ -227,8 +227,7 @@ return function()
       },
     },
   }
-
-  telescope.setup(rvim.telescope.setup)
+)
 
   local plugins = {
     'projects',

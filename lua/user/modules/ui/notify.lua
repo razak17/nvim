@@ -34,17 +34,4 @@ return function()
     ['<leader>nn'] = { ':Notifications<cr>', 'notify: show' },
     ['<leader>nx'] = { notify.dismiss, 'notify: dimiss' },
   })
-
-  require('zephyr.utils').plugin('notify', {
-    NotifyERRORBorder = { bg = { from = 'NormalFloat' } },
-    NotifyWARNBorder = { bg = { from = 'NormalFloat' } },
-    NotifyINFOBorder = { bg = { from = 'NormalFloat' } },
-    NotifyDEBUGBorder = { bg = { from = 'NormalFloat' } },
-    NotifyTRACEBorder = { bg = { from = 'NormalFloat' } },
-    NotifyERRORBody = { link = 'NormalFloat' },
-    NotifyWARNBody = { link = 'NormalFloat' },
-    NotifyINFOBody = { link = 'NormalFloat' },
-    NotifyDEBUGBody = { link = 'NormalFloat' },
-    NotifyTRACEBody = { link = 'NormalFloat' },
-  })
 end
