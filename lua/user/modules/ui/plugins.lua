@@ -51,11 +51,11 @@ package({
   end,
 })
 
-package({
-  'nvim-neo-tree/neo-tree.nvim',
-  branch = 'v2.x',
-  config = conf('ui', 'neo-tree'),
-})
+-- package({
+--   'nvim-neo-tree/neo-tree.nvim',
+--   branch = 'v2.x',
+--   config = conf('ui', 'neo-tree'),
+-- })
 
 package({ 'MunifTanjim/nui.nvim' })
 

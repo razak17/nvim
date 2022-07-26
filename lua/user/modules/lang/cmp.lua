@@ -50,17 +50,6 @@ return function()
     return col == 0 or vim.fn.getline('.'):sub(col, col):match('%s')
   end
 
-  ---checks if emmet_ls is available and active in the buffer
-  ---@return boolean true if available, false otherwise
-  local is_emmet_active = function()
-    local clients = vim.lsp.buf_get_clients()
-
-    for _, client in pairs(clients) do
-      if client.name == 'emmet_ls' then return true end
-    end
-    return false
-  end
-
   local function tab(fallback)
     local ok, luasnip = rvim.safe_require('luasnip', { silent = true })
     if cmp.visible() then
@@ -69,8 +58,6 @@ return function()
       luasnip.expand_or_jump()
     elseif check_backspace() then
       fallback()
-    elseif is_emmet_active() then
-      return vim.fn['cmp#complete']()
     else
       fallback()
     end
