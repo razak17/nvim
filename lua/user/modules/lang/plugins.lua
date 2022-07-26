@@ -108,7 +108,7 @@ package({
   event = 'BufRead',
   branch = 'main',
   requires = { 'nvim-lspconfig', 'williamboman/mason-lspconfig.nvim' },
-  config = block_reload(function()
+  config = function()
     local style = rvim.style
     local icons = style.icons
     local get_config = require('user.core.servers')
@@ -136,7 +136,7 @@ package({
       end,
       gopls = require('user.lsp.go'),
     })
-  end),
+  end,
 })
 
 -- Treesitter
