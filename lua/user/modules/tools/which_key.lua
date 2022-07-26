@@ -14,15 +14,23 @@ return function()
   })
 
   which_key.register({
+    [']'] = {
+      name = '+next',
+      ['<space>'] = 'add space below',
+    },
+    ['['] = {
+      name = '+prev',
+      ['<space>'] = 'add space above',
+    },
     ['<leader>'] = {
-      a = '+Actions',
-      b = '+Bufferline',
+      a = 'Actions',
+      b = 'Bufferline',
       C = 'Change',
-      F = '+Fold',
-      l = '+Lsp',
+      F = 'Fold',
+      l = 'Lsp',
       L = 'rVim',
       n = 'Notify',
-      p = '+Packer',
+      p = 'Packer',
       s = 'Snip',
       r = 'Remove',
       z = 'Fold',

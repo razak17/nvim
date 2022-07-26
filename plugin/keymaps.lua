@@ -154,8 +154,8 @@ onoremap('il', [[<cmd>normal! ^vg_<CR>]])
 ------------------------------------------------------------------------------
 -- Add Empty space above and below
 ------------------------------------------------------------------------------
-nnoremap('[<space>', [[<cmd>put! =repeat(nr2char(10), v:count1)<cr>'[]], 'add space above')
-nnoremap(']<space>', [[<cmd>put =repeat(nr2char(10), v:count1)<cr>]], 'add space below')
+nnoremap('[<space>', [[<cmd>put! =repeat(nr2char(10), v:count1)<cr>'[]])
+nnoremap(']<space>', [[<cmd>put =repeat(nr2char(10), v:count1)<cr>]])
 -- Paste in visual mode multiple times
 xnoremap('p', 'pgvy')
 -- search visual selection
