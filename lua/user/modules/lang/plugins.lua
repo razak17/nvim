@@ -54,18 +54,6 @@ package({
     { 'b0o/schemastore.nvim' },
     { 'jose-elias-alvarez/null-ls.nvim', config = conf('lang', 'null-ls') },
     {
-      'tamago324/nlsp-settings.nvim',
-      config = function()
-        require('nlspsettings').setup({
-          config_home = join_paths(rvim.get_user_dir(), 'lsp', 'nlsp'),
-          -- set to false to overwrite schemastore.nvim
-          append_default_schemas = true,
-          ignored_servers = {},
-          loader = 'json',
-        })
-      end,
-    },
-    {
       'ray-x/lsp_signature.nvim',
       event = 'InsertEnter',
       config = function()

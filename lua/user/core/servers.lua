@@ -77,9 +77,9 @@ local servers = {
   html = true,
   marksman = true,
   prismals = true,
-  pyright = true,
   quick_lint_js = true,
   rust_analyzer = true,
+  sqls = true,
   svelte = true,
   tsserver = true,
   vimls = true,
@@ -146,7 +146,17 @@ local servers = {
       },
     },
   },
-  sqls = true,
+  pyright = {
+    python = {
+      analysis = {
+        typeCheckingMode = 'off',
+        autoSearchPaths = true,
+        diagnosticMode = 'workspace',
+        useLibraryCodeForTypes = true,
+        diagnosticSeverityOverrides = { reportUndefinedVariable = 'none' },
+      },
+    },
+  },
   sumneko_lua = function()
     local path = vim.split(package.path, ';')
     table.insert(path, 'lua/?.lua')
@@ -156,6 +166,7 @@ local servers = {
       if p:match('emmy') then return true end
       return not vim.startswith(p, rvim.get_runtime_dir() .. '/site/')
     end, vim.api.nvim_get_runtime_file('', true))
+
     return {
       settings = {
         Lua = {
