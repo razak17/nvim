@@ -9,10 +9,10 @@ return function()
     NeoTreeNormalNC = { link = 'PanelBackground' },
     NeoTreeRootName = { bold = true, italic = false, foreground = P.base6 },
     NeoTreeStatusLine = { link = 'PanelBackground' },
-    NeoTreeTabBackground = { link = 'PanelBackground' },
-    NeoTreeTab = { bg = { from = 'PanelBackground' }, fg = { from = 'Comment' } },
-    NeoTreeSeparator = { link = 'PanelBackground' },
-    NeoTreeActiveTab = { bg = { from = 'PanelBackground' }, fg = 'fg', bold = true },
+    NeoTreeTabActive = { bg = { from = 'PanelBackground' } },
+    NeoTreeTabInactive = { bg = { from = 'PanelDarkBackground' }, fg = { from = 'Comment' } },
+    NeoTreeTabSeparatorInactive = { bg = { from = 'PanelDarkBackground' }, fg = 'black' },
+    NeoTreeTabSeparatorActive = { bg = { from = 'PanelBackground' }, fg = { from = 'Comment' } },
   })
 
   vim.g.neo_tree_remove_legacy_commands = 1
@@ -23,15 +23,7 @@ return function()
     ['<leader>e'] = { '<Cmd>Neotree toggle reveal<CR>', 'toggle tree' },
   })
   require('neo-tree').setup({
-    source_selector = {
-      -- winbar = true,
-      separator = ' ',
-      highlight_tab = 'NeoTreeTab',
-      highlight_tab_active = 'NeoTreeActiveTab',
-      highlight_separator = 'NeoTreeSeparator',
-      highlight_separator_active = 'NeoTreeSeparator',
-      highlight_background = 'NeoTreeTabBackground',
-    },
+    source_selector = { winbar = true },
     enable_git_status = true,
     git_status_async = true,
     filesystem = {
