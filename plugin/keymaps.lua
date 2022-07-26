@@ -369,13 +369,15 @@ cnoremap('%%', "<C-r>=fnameescape(expand('%'))<cr>")
 -- Credit: June Gunn <leader>?/! | Google it / Feeling lucky
 ------------------------------------------------------------------------------
 function rvim.mappings.ddg(pat)
-  local query = '"' .. fn.substitute(pat, '["\n]', ' ', 'g') .. '"'
+  local query = nil
+  query = '"' .. fn.substitute(pat, '["\n]', ' ', 'g') .. '"'
   query = fn.substitute(query, '[[:punct:] ]', [[\=printf("%%%02X", char2nr(submatch(0)))]], 'g')
   fn.system(fn.printf(rvim.open_command .. ' "https://html.duckduckgo.com/html?%sq=%s"', '', query))
 end
 
 function rvim.mappings.gh(pat)
-  local query = '"' .. fn.substitute(pat, '["\n]', ' ', 'g') .. '"'
+  local query = nil
+  query = '"' .. fn.substitute(pat, '["\n]', ' ', 'g') .. '"'
   query = fn.substitute(query, '[[:punct:] ]', [[\=printf("%%%02X", char2nr(submatch(0)))]], 'g')
   fn.system(fn.printf(rvim.open_command .. ' "https://github.com/search?%sq=%s"', '', query))
 end
