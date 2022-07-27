@@ -122,7 +122,7 @@ package({
         relative_to = 'win',
         anchor = 'topright',
       },
-      style = { border = rvim.style.border.current },
+      style = { border = rvim.style.border.current, hide_buffer_id = true },
     })
     rvim.nnoremap('<c-k>', '<Plug>(CybuPrev)')
     rvim.nnoremap('<c-j>', '<Plug>(CybuNext)')
