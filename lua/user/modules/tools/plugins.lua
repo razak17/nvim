@@ -240,8 +240,6 @@ package({
   end,
 })
 
-package({ 'anuvyklack/hydra.nvim', config = block_reload(conf('tools', 'hydra')) })
-
 package({ 'nvim-lua/plenary.nvim' })
 
 -- TODO: Get keymaps to work without the need to invalidate
