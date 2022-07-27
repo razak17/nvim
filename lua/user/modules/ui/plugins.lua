@@ -14,7 +14,7 @@ package({ 'MunifTanjim/nui.nvim' })
 
 package({ 'goolord/alpha-nvim', config = conf('ui', 'alpha') })
 
-package({ 'akinsho/bufferline.nvim', config = conf('ui', 'bufferline') })
+package({ 'akinsho/bufferline.nvim', config = conf('ui', 'bufferline'), disable = true })
 
 package({ 'nvim-lualine/lualine.nvim', config = conf('ui', 'lualine') })
 
@@ -124,8 +124,8 @@ package({
       },
       style = { border = 'single', hide_buffer_id = true },
     })
-    rvim.nnoremap('<c-k>', '<Plug>(CybuPrev)')
-    rvim.nnoremap('<c-j>', '<Plug>(CybuNext)')
+    rvim.nnoremap('H', '<Plug>(CybuPrev)')
+    rvim.nnoremap('L', '<Plug>(CybuNext)')
   end,
 })
 

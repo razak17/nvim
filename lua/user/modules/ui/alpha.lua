@@ -93,15 +93,11 @@ return function()
         vim.opt_local.foldenable = false
         vim.opt_local.colorcolumn = ''
         vim.opt.laststatus = 0
-        vim.opt.showtabline = 0
         rvim.nnoremap('q', '<Cmd>Alpha<CR>', { buffer = args.buf, nowait = true })
 
         vim.api.nvim_create_autocmd('BufUnload', {
           buffer = args.buf,
-          callback = function()
-            vim.opt.laststatus = 3
-            vim.opt.showtabline = 2
-          end,
+          callback = function() vim.opt.laststatus = 3 end,
         })
       end,
     },
