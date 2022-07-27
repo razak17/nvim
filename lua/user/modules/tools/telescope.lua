@@ -249,8 +249,6 @@ return function()
   --- from the setup call
   local builtin = require('telescope.builtin')
 
-  local bg_selector = require('user.modules.tools.telescope.bg_selector')
-
   local function notes()
     builtin.find_files({
       prompt_title = 'Notes',
@@ -327,6 +325,29 @@ return function()
 
   local function delta_git_bcommits(opts) builtin.git_bcommits(delta_opts(opts, true)) end
 
+  local function set_background(content) os.execute('xwallpaper --zoom ' .. content) end
+
+  local function select_background(prompt_bufnr, map)
+    local function set_the_background(close)
+      local content = action_state.get_selected_entry(prompt_bufnr)
+      set_background(content.cwd .. '/' .. content.value)
+      if close then actions.close(prompt_bufnr) end
+    end
+    map('i', '<C-y>', function() set_the_background() end)
+    map('i', '<CR>', function() set_the_background(true) end)
+  end
+
+  local function image_selector()
+    builtin.find_files({
+      prompt_title = 'Choose Wallpaper',
+      cwd = '$HOME/pics/distro/main',
+      attach_mappings = function(prompt_bufnr, map)
+        select_background(prompt_bufnr, map)
+        return true
+      end,
+    })
+  end
+
   require('which-key').register({
     ['<c-p>'] = { find_files, 'telescope: find files' },
     ['<leader>f'] = {
@@ -363,7 +384,7 @@ return function()
         r = { builtin.resume, 'resume last picker' },
       },
       w = { builtin.grep_string, 'find current word' },
-      W = { bg_selector.set_bg_image, 'change background' },
+      W = { image_selector, 'change background' },
       z = { zoxide_list, 'zoxide list' },
     },
     ['<leader>lR'] = { ':Telescope lsp_references<CR>', 'telescope: references' },
