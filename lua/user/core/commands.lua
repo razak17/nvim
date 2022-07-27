@@ -40,7 +40,7 @@ command(
       wall
       silent execute 'bdelete ' . join(utils#buf_filt(1))
     ]],
-      false
+    false
     )
   end
 )
