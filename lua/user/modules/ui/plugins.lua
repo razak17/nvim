@@ -126,8 +126,6 @@ package({
     })
     rvim.nnoremap('<c-k>', '<Plug>(CybuPrev)')
     rvim.nnoremap('<c-j>', '<Plug>(CybuNext)')
-    rvim.nnoremap('<s-tab>', '<plug>(CybuLastusedPrev)')
-    rvim.nnoremap('<tab>', '<plug>(CybuLastusedNext)')
   end,
 })
 

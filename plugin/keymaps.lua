@@ -475,6 +475,21 @@ rvim.nnoremap('<leader>ps', ':PlugSync<CR>', 'sync')
 rvim.nnoremap('<leader>pS', ':PlugStatus<CR>', 'status')
 rvim.nnoremap('<leader>pu', ':PlugUpdate<CR>', 'update')
 ----------------------------------------------------------------------------------------------------
+-- Plugins
+----------------------------------------------------------------------------------------------------
+local opts = {
+  previewer = false,
+  initial_mode = 'normal',
+  prompt_title = 'Harpoon',
+  borderchars = rvim.style.border.telescope.ui_select,
+}
+local dropdown = require('telescope.themes').get_dropdown(opts)
+local function harp_marks() require('telescope').extensions.harpoon.marks(dropdown) end
+local function harp_buffers() require('telescope.builtin').buffers(dropdown) end
+
+rvim.nnoremap('<tab>', harp_buffers)
+rvim.nnoremap('<s-tab>', harp_marks)
+----------------------------------------------------------------------------------------------------
 -- Abbreviations
 ----------------------------------------------------------------------------------------------------
 vim.cmd([[
