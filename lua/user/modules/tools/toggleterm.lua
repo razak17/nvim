@@ -2,13 +2,12 @@ return function()
   require('toggleterm').setup({
     open_mapping = [[<F2>]],
     shade_filetypes = { 'none' },
+    shade_terminals = false,
     direction = 'float',
     insert_mappings = false,
     start_in_insert = true,
     highlights = {
-      Normal = { link = 'NormalFloat' },
       NormalFloat = { link = 'NormalFloat' },
-      SignColumn = { link = 'SignColumn' },
       FloatBorder = { link = 'FloatBorder' },
     },
     float_opts = {
