@@ -105,6 +105,7 @@ package({
       'lspinfo',
       'lsp-installer',
       'harpoon',
+      'packer',
     }
     rvim.nnoremap('<a-n>', ':lua require"illuminate".next_reference{wrap=true}<cr>')
     rvim.nnoremap('<a-p>', ':lua require"illuminate".next_reference{reverse=true,wrap=true}<cr>')
