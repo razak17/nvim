@@ -104,7 +104,8 @@ package({
     })
     local Terminal = require('toggleterm.terminal').Terminal
     local new_term = function(direction, key, count)
-      local cmd = '<cmd>' .. count .. 'ToggleTerm' .. ' direction=' .. direction .. '<cr>'
+      local fmt = string.format
+      local cmd = fmt('<cmd>%sToggleTerm direction=%s<CR>', count, direction)
       return Terminal:new({
         direction = direction,
         on_open = function() vim.cmd('startinsert!') end,
