@@ -49,7 +49,7 @@ package({
   requires = {
     { 'ray-x/go.nvim' },
     { 'nanotee/sqls.nvim' },
-    { 'razak17/rust-tools.nvim' },
+    { 'christianchiarulli/rust-tools.nvim', branch = 'modularize_and_inlay_rewrite' },
     { 'antoinemadec/FixCursorHold.nvim' },
     { 'b0o/schemastore.nvim' },
     { 'jose-elias-alvarez/null-ls.nvim', config = conf('lang', 'null-ls') },
