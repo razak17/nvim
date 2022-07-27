@@ -186,10 +186,12 @@ function rvim.safe_require(module, opts)
   return ok, result
 end
 
+ ---@alias Plug table<(string | number), string>
+
 --- A convenience wrapper that calls the ftplugin config for a plugin if it exists
 --- and warns me if the plugin is not installed
 --- TODO: find out if it's possible to annotate the plugin rvim a module
----@param name string | Plugin
+---@param name string | Plug
 ---@param callback fun(module: table)
 function rvim.ftplugin_conf(name, callback)
   local plugin_name = type(name) == 'table' and name.plugin or nil
