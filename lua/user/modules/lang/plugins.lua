@@ -156,11 +156,12 @@ package({
       'nvim-treesitter/playground',
       cmd = { 'TSPlaygroundToggle', 'TSHighlightCapturesUnderCursor' },
       setup = function()
-        rvim.nnoremap(
-          '<leader>LE',
-          '<Cmd>TSHighlightCapturesUnderCursor<CR>',
-          'playground: inspect scope'
-        )
+        require('which-key').register({
+          ['<leader>LE'] = {
+            '<Cmd>TSHighlightCapturesUnderCursor<CR>',
+            'playground: inspect scope',
+          },
+        })
       end,
     },
     { 'nvim-treesitter/nvim-treesitter-textobjects' },

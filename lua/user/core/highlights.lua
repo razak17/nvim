@@ -61,7 +61,6 @@ local function general_overrides()
     ------------------------------------------------------------------------------------------------
     -- LSP
     ------------------------------------------------------------------------------------------------
-
     LspCodeLens = { link = 'NonText' },
     LspReferenceText = { underline = true, background = 'NONE' },
     LspReferenceRead = { underline = true, background = 'NONE' },
@@ -69,10 +68,8 @@ local function general_overrides()
     -- occurrences so should be highlighted more distinctly
     LspReferenceWrite = { underline = true, bold = true, italic = true, background = 'NONE' },
 
-    -- Matchup
     MatchWord = { fg = P.red, underline = false, cterm = { underline = false } },
     SLCopilot = { fg = P.forest_green, bg = P.dark },
-    SLLSP = { fg = '#5e81ac', bg = P.dark },
   })
 end
 
