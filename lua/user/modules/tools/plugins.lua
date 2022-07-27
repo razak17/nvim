@@ -119,6 +119,12 @@ package({
       config = function()
         local ui = require('harpoon.ui')
         local m = require('harpoon.mark')
+        require('harpoon').setup({
+          menu = {
+            width = vim.api.nvim_win_get_width(0) - 4,
+            borderchars = rvim.style.border.telescope.prompt,
+          },
+        })
         require('which-key').register({
           ['<leader>mm'] = { m.add_file, 'harpoon: add' },
           ['<leader>m.'] = { ui.nav_next, 'harpoon: next' },
