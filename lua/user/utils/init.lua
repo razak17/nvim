@@ -4,14 +4,14 @@ local cmd = vim.cmd
 local api = vim.api
 local fmt = string.format
 
-local utils = {}
+local M = {}
 
 local function open(path)
   fn.jobstart({ rvim.open_command, path }, { detach = true })
   vim.notify(fmt('Opening %s', path))
 end
 
-function utils.open_link()
+function M.open_link()
   local file = fn.expand('<cfile>')
   if not file or fn.isdirectory(file) > 0 then return vim.cmd.edit(file) end
   if file:match('https://') then return open(file) end
@@ -22,7 +22,7 @@ function utils.open_link()
   if link then return open(fmt('https://www.github.com/%s', link)) end
 end
 
-function utils.empty_registers()
+function M.empty_registers()
   vim.api.nvim_exec(
     [[
     let regs=split('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/-"', '\zs')
@@ -34,19 +34,19 @@ function utils.empty_registers()
   )
 end
 
-function utils.open_terminal()
+function M.open_terminal()
   cmd('split term://zsh')
   cmd('resize 10')
 end
 
 -- https://github.com/CalinLeafshade/dots/blob/master/nvim/.config/nvim/lua/leafshade/rename.lua
-function utils.rename(name)
+function M.rename(name)
   local curfilepath = vim.fn.expand('%:p:h')
   local newname = curfilepath .. '/' .. name
   vim.api.nvim_command(' saveas ' .. newname)
 end
 
-function utils.enable_transparent_mode()
+function M.enable_transparent_mode()
   cmd('au ColorScheme * hi Normal ctermbg=none guibg=none')
   cmd('au ColorScheme * hi SignColumn ctermbg=none guibg=none')
   cmd('au ColorScheme * hi NormalNC ctermbg=none guibg=none')
@@ -60,7 +60,7 @@ end
 --- Checks whether a given path exists and is a directory
 --@param path (string) path to check
 --@returns (bool)
-function utils.is_directory(path)
+function M.is_directory(path)
   local stat = uv.fs_stat(path)
   return stat and stat.type == 'directory' or false
 end
@@ -80,7 +80,7 @@ end
 -- - ";"
 ---@param character string
 ---@return function
-function utils.modify_line_end_delimiter(character)
+function M.modify_line_end_delimiter(character)
   local delimiters = { ',', ';' }
   return function()
     local line = api.nvim_get_current_line()
@@ -95,7 +95,7 @@ function utils.modify_line_end_delimiter(character)
   end
 end
 
-function utils.smart_quit()
+function M.smart_quit()
   local bufnr = api.nvim_get_current_buf()
   local modified = api.nvim_buf_get_option(bufnr, 'modified')
   if modified then
@@ -109,4 +109,10 @@ function utils.smart_quit()
   end
 end
 
-return utils
+function M.toggle_option(option)
+  local value = not vim.api.nvim_get_option_value(option, {})
+  vim.opt[option] = value
+  vim.notify(option .. ' set to ' .. tostring(value))
+end
+
+return M

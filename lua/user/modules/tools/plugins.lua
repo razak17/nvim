@@ -62,20 +62,16 @@ package({
     local function new_float(cmd)
       cmd = fterm:new({ cmd = cmd, dimensions = { height = 0.9, width = 0.9 } }):toggle()
     end
-    rvim.nnoremap([[<c-\>]], function() fterm.toggle() end, 'fterm: toggle lazygit')
+    local nnoremap = rvim.nnoremap
+    nnoremap([[<c-\>]], function() fterm.toggle() end, 'fterm: toggle lazygit')
     rvim.tnoremap([[<c-\>]], function() fterm.toggle() end, 'fterm: toggle lazygit')
-    rvim.nnoremap('<leader>lg', function() new_float('lazygit') end, 'fterm: toggle lazygit')
-    rvim.nnoremap(
-      '<leader>gc',
-      function() new_float('git add . && git commit -v -a') end,
-      'git: commit'
-    )
-    rvim.nnoremap('<leader>gd', function() new_float('iconf -ccma') end, 'git: commit dotfiles')
-
-    rvim.nnoremap('<leader>tb', function() new_float('btop') end, 'fterm: btop')
-    rvim.nnoremap('<leader>tn', function() new_float('node') end, 'fterm: node')
-    rvim.nnoremap('<leader>tr', function() new_float('ranger') end, 'fterm: ranger')
-    rvim.nnoremap('<leader>tp', function() new_float('python') end, 'fterm: python')
+    nnoremap('<leader>lg', function() new_float('lazygit') end, 'fterm: toggle lazygit')
+    nnoremap('<leader>gc', function() new_float('git add . && git commit -v -a') end, 'git: commit')
+    nnoremap('<leader>gd', function() new_float('iconf -ccma') end, 'git: commit dotfiles')
+    nnoremap('<leader>tb', function() new_float('btop') end, 'fterm: btop')
+    nnoremap('<leader>tn', function() new_float('node') end, 'fterm: node')
+    nnoremap('<leader>tr', function() new_float('ranger') end, 'fterm: ranger')
+    nnoremap('<leader>tp', function() new_float('python') end, 'fterm: python')
   end,
 })
 

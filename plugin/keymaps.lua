@@ -244,7 +244,6 @@ end
 
 nnoremap('<leader>lq', function() rvim.toggle_list('quickfix') end, 'toggle quickfix')
 nnoremap('<leader>lo', function() rvim.toggle_list('location') end, 'toggle loclist')
-
 ----------------------------------------------------------------------------------------------------
 -- Utils
 ----------------------------------------------------------------------------------------------------
