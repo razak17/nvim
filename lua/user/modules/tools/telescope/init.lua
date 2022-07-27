@@ -226,9 +226,9 @@ return function()
         reloader = dropdown(),
       },
     },
-  }
-)
+  })
 
+  -- TODO: add installed check
   local plugins = {
     'projects',
     'dap',
@@ -237,6 +237,7 @@ return function()
     'file_browser',
     'media_files',
     'zoxide',
+    'harpoon',
   }
 
   for _, plug in ipairs(plugins) do

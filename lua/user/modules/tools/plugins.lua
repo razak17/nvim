@@ -114,6 +114,20 @@ package({
     { 'ilAYAli/scMRU.nvim' },
     { 'kkharji/sqlite.lua' },
     { 'natecraddock/telescope-zf-native.nvim' },
+    {
+      'ThePrimeagen/harpoon',
+      config = function()
+        local nnoremap = rvim.nnoremap
+        nnoremap('<leader>mm', '<cmd>lua require("harpoon.mark").add_file()<cr>', 'harpoon: add')
+        nnoremap('<leader>m.', '<cmd>lua require("harpoon.ui").nav_next()<cr>', 'harpoon: next')
+        nnoremap('<leader>m,', '<cmd>lua require("harpoon.ui").nav_prev()<cr>', 'harpoon: prev')
+        nnoremap(
+          '<leader>m;',
+          '<cmd>lua require("harpoon.ui").toggle_quick_menu()<cr>',
+          'harpoon: ui'
+        )
+      end,
+    },
   },
 })
 

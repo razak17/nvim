@@ -96,6 +96,7 @@ local blocked = {
   'dashboard',
   'TelescopePrompt',
   'sql',
+  'harpoon',
 }
 local allowed = { 'toggleterm', 'neo-tree' }
 

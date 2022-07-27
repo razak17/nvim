@@ -163,9 +163,9 @@ package({
     require('which-key').register({
       m = {
         name = 'Marks',
-        b = { '<Cmd>MarksListBuf<CR>', 'list buffer' },
-        g = { '<Cmd>MarksQFListGlobal<CR>', 'list global' },
-        ['0'] = { '<Cmd>BookmarksQFList 0<CR>', 'list bookmark' },
+        b = { '<Cmd>MarksListBuf<CR>', 'marks: list buffer' },
+        g = { '<Cmd>MarksQFListGlobal<CR>', 'marks: list global' },
+        ['0'] = { '<Cmd>BookmarksQFList 0<CR>', 'marks: list bookmark' },
       },
     }, {
       prefix = '<leader>',
