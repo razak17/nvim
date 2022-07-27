@@ -1,7 +1,7 @@
 local nnoremap = rvim.nnoremap
 local fmt = string.format
 
-vim.cmd([[setlocal iskeyword+="]])
+vim.cmd([[setlocal iskeyword+=-"]])
 vim.opt_local.textwidth = 100
 vim.opt_local.formatoptions:remove('o')
 
