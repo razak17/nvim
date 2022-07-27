@@ -248,11 +248,8 @@ nnoremap('<leader>lo', function() rvim.toggle_list('location') end, 'toggle locl
 ----------------------------------------------------------------------------------------------------
 -- Utils
 ----------------------------------------------------------------------------------------------------
-nnoremap('<leader>LV', utils.color_my_pencils, 'vim with me')
 nnoremap('<leader>aR', utils.empty_registers, 'empty registers')
 nnoremap('<leader>a;', utils.open_terminal, 'open terminal')
-nnoremap('<leader>ao', utils.turn_on_guides, 'turn on guides')
-nnoremap('<leader>ae', utils.turn_off_guides, 'turn off guides')
 -- Search word
 nnoremap('<leader>B', '/<C-R>=escape(expand("<cword>"), "/")<CR><CR>', 'find cword')
 -- Greatest remap ever

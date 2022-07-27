@@ -185,6 +185,7 @@ rvim.augroup('CustomFormatOptions', {
     command = 'setlocal formatoptions-=c formatoptions-=r formatoptions-=o',
   },
 })
+
 rvim.augroup('UpdateVim', {
   -- Make windows equal size when vim resizes
   { event = { 'VimResized' }, pattern = { '*' }, command = 'wincmd =' },
