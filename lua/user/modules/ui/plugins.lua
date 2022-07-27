@@ -122,7 +122,6 @@ package({
         relative_to = 'win',
         anchor = 'topright',
       },
-      display_time = 750,
       style = {
         path = 'relative',
         border = 'rounded',
