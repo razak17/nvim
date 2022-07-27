@@ -81,8 +81,7 @@ package({
   event = { 'BufRead' },
   config = function()
     vim.g['far#source'] = 'rg'
-    vim.g['far#enable_undo'] = 1
-    require('which-key').register({
+    vim.g['far#enable_undo'] = 1 require('which-key').register({
       ['<leader>Ff'] = { ':Farr --source=vimgrep<cr>', 'far: replace in File' },
       ['<leader>Fd'] = { ':Fardo<cr>', 'far: do' },
       ['<leader>Fi'] = { ':Farf<cr>', 'far: search iteratively' },

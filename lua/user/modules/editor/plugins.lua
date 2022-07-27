@@ -186,6 +186,15 @@ package({
 
 package({ 'psliwka/vim-dirtytalk', run = ':DirtytalkUpdate' })
 
+package({
+  'mizlan/iswap.nvim',
+  event = 'BufRead',
+  config = function()
+    rvim.nnoremap('<leader>ii', '<Cmd>ISwap<CR>', 'iswap: auto swap')
+    rvim.nnoremap('<leader>iw', '<Cmd>ISwapWith<CR>', 'iswap: swap with')
+  end,
+})
+
 ----------------------------------------------------------------------------------------------------
 -- Graveyard
 ----------------------------------------------------------------------------------------------------

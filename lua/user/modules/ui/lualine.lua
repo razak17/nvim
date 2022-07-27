@@ -216,7 +216,6 @@ return function()
   ins_right({ 'location' })
 
   ins_right({ 'progress', color = { fg = P.base88 } })
-
   ins_right({
     function() return icons.statusline.bar end,
     color = { fg = P.pale_blue },
