@@ -279,13 +279,9 @@ package({
 ----------------------------------------------------------------------------------------------------
 -- Graveyard
 ----------------------------------------------------------------------------------------------------
-package({ 'tpope/vim-apathy', disable = true })
-
 package({ 'AndrewRadev/linediff.vim', cmd = 'Linediff', disable = true })
 
 package({ 'diepm/vim-rest-console', event = 'VimEnter', disable = true })
-
-package({ 'npxbr/glow.nvim', run = ':GlowInstall', branch = 'main', disable = true })
 
 package({
   'NTBBloodbath/rest.nvim',
@@ -387,7 +383,6 @@ package({
       },
     },
   })
-
   local package_info = require('package-info')
   local nnoremap = rvim.nnoremap
   nnoremap('<leader>ns', function() package_info.show() end, 'package-info: show')

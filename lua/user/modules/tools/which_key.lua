@@ -9,7 +9,7 @@ return function()
     icons = { breadcrumb = icons.misc.double_chevron_right },
     window = { border = rvim.style.border.current },
     layout = { align = 'center' },
-    hidden = { '<silent>', '<cmd>', '<Cmd>', '<CR>', 'call', 'lua', '^:', '^ ' }, -- hide mapping boilerplate
+    hidden = { '<silent>', '<cmd>', '<Cmd>', '<CR>', 'call', 'lua', '^:', '^ ' },
     show_help = true,
   })
 
