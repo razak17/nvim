@@ -109,10 +109,11 @@ function M.smart_quit()
   end
 end
 
-function M.toggle_option(option)
-  local value = not vim.api.nvim_get_option_value(option, {})
-  vim.opt[option] = value
-  vim.notify(option .. ' set to ' .. tostring(value))
+function M.toggle_opt(opt)
+  local value = nil
+  value = not vim.api.nvim_get_option_value(opt, {})
+  vim.opt[opt] = value
+  vim.notify(opt .. ' set to ' .. tostring(value), 'info', { title = 'UI Toggles' })
 end
 
 return M

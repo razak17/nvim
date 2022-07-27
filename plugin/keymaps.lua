@@ -245,6 +245,11 @@ end
 nnoremap('<leader>lq', function() rvim.toggle_list('quickfix') end, 'toggle quickfix')
 nnoremap('<leader>lo', function() rvim.toggle_list('location') end, 'toggle loclist')
 ----------------------------------------------------------------------------------------------------
+-- UI Toggles
+----------------------------------------------------------------------------------------------------
+nnoremap('<leader>ow', function() utils.toggle_opt('wrap') end, 'toggle: wrap')
+nnoremap('<leader>or', function() utils.toggle_opt('relativenumber') end, 'toggle: relativenumber')
+----------------------------------------------------------------------------------------------------
 -- Utils
 ----------------------------------------------------------------------------------------------------
 nnoremap('<leader>aR', utils.empty_registers, 'empty registers')
