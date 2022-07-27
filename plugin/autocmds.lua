@@ -185,30 +185,7 @@ rvim.augroup('CustomFormatOptions', {
     command = 'setlocal formatoptions-=c formatoptions-=r formatoptions-=o',
   },
 })
-local config_dir = rvim.get_config_dir
-local user_dir = rvim.get_user_dir
 rvim.augroup('UpdateVim', {
-  {
-    -- TODO: not clear what effect this has in the post vimscript world
-    -- it correctly sources $MYVIMRC but all the other files that it
-    -- requires will need to be resourced or reloaded themselves
-    event = { 'BufWritePost' },
-    pattern = {
-      config_dir() .. '/plugin/*.{lua,vim}',
-      config_dir() .. '/init.{lua,vim}',
-      user_dir() .. '/config/*.{lua,vim}',
-      user_dir() .. '/core/*.{lua,vim}',
-    },
-    nested = true,
-    command = function()
-      -- vim.cmd.source(config_dir() .. '/init.lua')
-      rvim.invalidate(config_dir() .. '/init.lua', true)
-      rvim.invalidate(config_dir() .. '/defaults.lua', true)
-      -- plugins
-      vim.cmd(':PlugInvalidate')
-      vim.notify('Config has been reloaded', nil, { title = 'rVim' })
-    end,
-  },
   -- Make windows equal size when vim resizes
   { event = { 'VimResized' }, pattern = { '*' }, command = 'wincmd =' },
 })

@@ -9,7 +9,7 @@ rvim.paths = {
   mason = join_paths(rvim.get_runtime_dir(), 'mason'),
 }
 
-rvim.plugins = { SANE = true, packer = { active = true } }
+rvim.plugins = { SANE = false, packer = { active = true } }
 
 rvim.ui = {
   line_wrap_cursor_movement = false,
