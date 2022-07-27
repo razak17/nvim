@@ -200,27 +200,6 @@ package({
 -- Graveyard
 ----------------------------------------------------------------------------------------------------
 package({
-  'jsborjesson/vim-uppercase-sql',
-  event = 'InsertEnter',
-  ft = { 'sql' },
-  disable = true,
-})
-
-package({
-  'AckslD/nvim-trevJ.lua',
-  module = 'trevj',
-  setup = function()
-    rvim.nnoremap(
-      'gj',
-      function() require('trevj').format_at_cursor() end,
-      { desc = 'splitjoin: split' }
-    )
-  end,
-  config = function() require('trevj').setup() end,
-  disable = true,
-})
-
-package({
   'junegunn/vim-easy-align',
   config = function()
     rvim.nmap('ga', '<Plug>(EasyAlign)')
@@ -228,20 +207,5 @@ package({
     rvim.vmap('<Enter>', '<Plug>(EasyAlign)')
   end,
   event = { 'BufReadPre', 'BufNewFile' },
-  disable = true,
-})
-
-package({
-  'xiyaowong/nvim-cursorword',
-  event = { 'InsertEnter' },
-  config = function() vim.cmd([[hi! CursorWord cterm=NONE gui=NONE guibg=#3f444a]]) end,
-  disable = true,
-})
-
-package({
-  'abecodes/tabout.nvim',
-  wants = { 'nvim-treesitter' },
-  after = { 'nvim-cmp' },
-  config = function() require('tabout').setup({ ignore_beginning = false, completion = false }) end,
   disable = true,
 })
