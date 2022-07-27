@@ -7,7 +7,7 @@ package({
   'hrsh7th/nvim-cmp',
   module = 'cmp',
   event = 'InsertEnter',
-  config = conf('lang', 'cmp'),
+  config = conf('editor', 'cmp'),
   requires = {
     { 'hrsh7th/cmp-nvim-lsp', module = 'cmp_nvim_lsp' },
     { 'hrsh7th/cmp-nvim-lsp-document-symbol', after = 'nvim-cmp' },
@@ -51,7 +51,7 @@ package({
   event = 'InsertEnter',
   module = 'luasnip',
   requires = 'rafamadriz/friendly-snippets',
-  config = conf('lang', 'luasnip'),
+  config = conf('editor', 'luasnip'),
 })
 
 package({
