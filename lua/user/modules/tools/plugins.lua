@@ -1,6 +1,5 @@
 local utils = require('user.utils.plugins')
 local conf = utils.load_conf
-local block_reload = utils.block_reload
 local package = require('user.core.plugins').package
 
 package({ 'Tastyep/structlog.nvim' })
@@ -53,12 +52,7 @@ package({
   event = { 'BufWinEnter' },
   config = function()
     local fterm = require('FTerm')
-    fterm.setup({
-      dimensions = {
-        height = 0.9,
-        width = 0.9,
-      },
-    })
+    fterm.setup({ dimensions = { height = 0.9, width = 0.9 } })
     local function new_float(cmd)
       cmd = fterm:new({ cmd = cmd, dimensions = { height = 0.9, width = 0.9 } }):toggle()
     end
@@ -75,8 +69,7 @@ package({
   end,
 })
 
-package({
-  'akinsho/toggleterm.nvim',
+package({ 'akinsho/toggleterm.nvim',
   event = { 'BufWinEnter' },
   config = conf('tools', 'toggleterm'),
 })
@@ -370,28 +363,32 @@ package({
   event = 'BufWinEnter',
   ft = { 'json' },
   config = function()
-  require('package-info').setup({
-    colors = {
-      up_to_date = '#3C4048', -- Text color for up to date package virtual text
-      outdated = '#d19a66', -- Text color for outdated package virtual text
-    },
-    icons = {
-      enable = true, -- Whether to display icons
-      style = {
-        up_to_date = '|  ', -- Icon for up to date packages
-        outdated = '|  ', -- Icon for outdated packages
+    require('package-info').setup({
+      colors = {
+        up_to_date = '#3C4048', -- Text color for up to date package virtual text
+        outdated = '#d19a66', -- Text color for outdated package virtual text
       },
-    },
-  })
-  local package_info = require('package-info')
-  local nnoremap = rvim.nnoremap
-  nnoremap('<leader>ns', function() package_info.show() end, 'package-info: show')
-  nnoremap('<leader>nc', function() package_info.hide() end, 'package-info: hide')
-  nnoremap('<leader>nu', function() package_info.update() end, 'package-info: update')
-  nnoremap('<leader>nd', function() package_info.delete() end, 'package-info: delete')
-  nnoremap('<leader>ni', function() package_info.install() end, 'package-info: install')
-  nnoremap('<leader>nr', function() package_info.reinstall() end, 'package-info: reinstall')
-  nnoremap('<leader>np', function() package_info.change_version() end, 'package-info: change version')
+      icons = {
+        enable = true, -- Whether to display icons
+        style = {
+          up_to_date = '|  ', -- Icon for up to date packages
+          outdated = '|  ', -- Icon for outdated packages
+        },
+      },
+    })
+    local package_info = require('package-info')
+    local nnoremap = rvim.nnoremap
+    nnoremap('<leader>ns', function() package_info.show() end, 'package-info: show')
+    nnoremap('<leader>nc', function() package_info.hide() end, 'package-info: hide')
+    nnoremap('<leader>nu', function() package_info.update() end, 'package-info: update')
+    nnoremap('<leader>nd', function() package_info.delete() end, 'package-info: delete')
+    nnoremap('<leader>ni', function() package_info.install() end, 'package-info: install')
+    nnoremap('<leader>nr', function() package_info.reinstall() end, 'package-info: reinstall')
+    nnoremap(
+      '<leader>np',
+      function() package_info.change_version() end,
+      'package-info: change version'
+    )
   end,
   requires = 'MunifTanjim/nui.nvim',
   disable = true,

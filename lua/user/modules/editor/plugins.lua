@@ -5,6 +5,7 @@ local conf = utils.load_conf
 -- nvim-cmp
 package({
   'hrsh7th/nvim-cmp',
+  module = 'cmp',
   event = 'InsertEnter',
   config = conf('lang', 'cmp'),
   requires = {
