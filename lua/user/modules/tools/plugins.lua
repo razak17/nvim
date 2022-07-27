@@ -50,7 +50,15 @@ package({
   event = { 'BufWinEnter' },
   config = function()
     local fterm = require('FTerm')
-    local function new_float(cmd) cmd = fterm:new({ cmd = cmd }):toggle() end
+    fterm.setup({
+      dimensions = {
+        height = 0.9,
+        width = 0.9,
+      },
+    })
+    local function new_float(cmd)
+      cmd = fterm:new({ cmd = cmd, dimensions = { height = 0.9, width = 0.9 } }):toggle()
+    end
     rvim.nnoremap([[<c-\>]], function() fterm.toggle() end, 'fterm: toggle lazygit')
     rvim.tnoremap([[<c-\>]], function() fterm.toggle() end, 'fterm: toggle lazygit')
     rvim.nnoremap('<leader>lg', function() new_float('lazygit') end, 'fterm: toggle lazygit')
