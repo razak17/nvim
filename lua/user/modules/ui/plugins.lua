@@ -131,8 +131,6 @@ package({
 ----------------------------------------------------------------------------------------------------
 -- Graveyard
 ----------------------------------------------------------------------------------------------------
-package({ 'akinsho/bufferline.nvim', config = conf('ui', 'bufferline'), disable = true })
-
 package({
   'zbirenbaum/neodim',
   config = function()
