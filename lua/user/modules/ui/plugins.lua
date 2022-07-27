@@ -14,8 +14,6 @@ package({ 'MunifTanjim/nui.nvim' })
 
 package({ 'goolord/alpha-nvim', config = conf('ui', 'alpha') })
 
-package({ 'akinsho/bufferline.nvim', config = conf('ui', 'bufferline'), disable = true })
-
 package({ 'nvim-lualine/lualine.nvim', config = conf('ui', 'lualine') })
 
 package({ 'kyazdani42/nvim-web-devicons', config = conf('ui', 'nvim-web-devicons') })
@@ -133,6 +131,8 @@ package({
 -- Graveyard
 ----------------------------------------------------------------------------------------------------
 package({ 'EdenEast/nightfox.nvim', disable = true })
+
+package({ 'akinsho/bufferline.nvim', config = conf('ui', 'bufferline'), disable = true })
 
 package({
   'zbirenbaum/neodim',

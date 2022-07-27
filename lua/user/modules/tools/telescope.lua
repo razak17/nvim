@@ -228,20 +228,19 @@ return function()
     },
   })
 
-  -- TODO: add installed check
   local plugins = {
-    'projects',
-    'dap',
-    'zf-native',
-    'ui-select',
-    'file_browser',
-    'media_files',
-    'zoxide',
-    'harpoon',
+    ['telescope-zoxide'] = 'zoxide',
+    ['project.nvim'] = 'projects',
+    ['telescope-media-files.nvim'] = 'media_files',
+    ['telescope-file-browser.nvim'] = 'file_browser',
+    ['telescope-ui-select.nvim'] = 'ui-select',
+    ['telescope-dap'] = 'dap',
+    ['telescope-zf-native.nvim'] = 'zf-native',
+    ['harpoon'] = 'harpoon',
   }
 
-  for _, plug in ipairs(plugins) do
-    require('telescope').load_extension(plug)
+  for plugin, setup in ipairs(plugins) do
+    if rvim.plugin_installed(plugin) then require('telescope').load_extension(setup) end
   end
 
   --- NOTE: this must be required after setting up telescope

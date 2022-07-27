@@ -110,10 +110,10 @@ package({
     { 'nvim-telescope/telescope-media-files.nvim' },
     { 'nvim-telescope/telescope-file-browser.nvim' },
     { 'nvim-telescope/telescope-dap.nvim' },
+    { 'natecraddock/telescope-zf-native.nvim' },
     { 'nvim-telescope/telescope-ui-select.nvim' },
     { 'ilAYAli/scMRU.nvim' },
     { 'kkharji/sqlite.lua' },
-    { 'natecraddock/telescope-zf-native.nvim' },
     {
       'ThePrimeagen/harpoon',
       config = function()
