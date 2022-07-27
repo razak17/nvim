@@ -3,16 +3,19 @@ local conf = utils.load_conf
 local block_reload = utils.block_reload
 local package = require('user.core.plugins').package
 
+package({ 'Tastyep/structlog.nvim' })
+
+package({ 'lewis6991/impatient.nvim' })
+
 package({ 'folke/which-key.nvim', config = conf('tools', 'which_key') })
 
 package({
   'mbbill/undotree',
-  event = 'BufWinEnter',
-  cmd = 'UndotreeToggle',
-  setup = function() rvim.nnoremap('<leader>u', '<cmd>UndotreeToggle<CR>', 'undotree: toggle') end,
+  event = 'BufRead',
   config = function()
     vim.g.undotree_TreeNodeShape = '◦' -- Alternative: '◉'
     vim.g.undotree_SetFocusWhenToggle = 1
+    rvim.nnoremap('<leader>u', '<cmd>UndotreeToggle<CR>', 'undotree: toggle')
   end,
 })
 
@@ -75,24 +78,6 @@ package({
     rvim.nnoremap('<leader>tp', function() new_float('python') end, 'fterm: python')
   end,
 })
-
-package({
-  'brooth/far.vim',
-  event = { 'BufRead' },
-  config = function()
-    vim.g['far#source'] = 'rg'
-    vim.g['far#enable_undo'] = 1 require('which-key').register({
-      ['<leader>Ff'] = { ':Farr --source=vimgrep<cr>', 'far: replace in File' },
-      ['<leader>Fd'] = { ':Fardo<cr>', 'far: do' },
-      ['<leader>Fi'] = { ':Farf<cr>', 'far: search iteratively' },
-      ['<leader>Fr'] = { ':Farr --source=rgnvim<cr>', 'far: replace in project' },
-      ['<leader>Fu'] = { ':Farundo<cr>', 'far: undo' },
-      ['<leader>FU'] = { ':UpdateRemotePlugins<cr>', 'far: update remote' },
-    })
-  end,
-})
-
-package({ 'Tastyep/structlog.nvim' })
 
 package({
   'AckslD/nvim-neoclip.lua',
@@ -164,8 +149,6 @@ package({
   keys = { { 'n', 's' }, 'f', 'F' },
   config = conf('tools', 'hop'),
 })
-
-package({ 'lewis6991/impatient.nvim' })
 
 package({
   'moll/vim-bbye',
@@ -277,6 +260,14 @@ package({
 ----------------------------------------------------------------------------------------------------
 -- Graveyard
 ----------------------------------------------------------------------------------------------------
+package({ 'tpope/vim-apathy', disable = true })
+
+package({ 'AndrewRadev/linediff.vim', cmd = 'Linediff', disable = true })
+
+package({ 'diepm/vim-rest-console', event = 'VimEnter', disable = true })
+
+package({ 'npxbr/glow.nvim', run = ':GlowInstall', branch = 'main', disable = true })
+
 package({
   'NTBBloodbath/rest.nvim',
   requires = { 'nvim-lua/plenary.nvim' },
@@ -325,8 +316,6 @@ package({
   end,
   disable = true,
 })
-
-package({ 'tpope/vim-apathy', disable = true })
 
 package({
   'tpope/vim-projectionist',
@@ -432,8 +421,6 @@ package({
   disable = true,
 })
 
-package({ 'AndrewRadev/linediff.vim', cmd = 'Linediff', disable = true })
-
 package({
   'vhyrro/neorg',
   requires = { 'vhyrro/neorg-telescope' },
@@ -441,16 +428,12 @@ package({
   disable = true,
 })
 
-package({ 'npxbr/glow.nvim', run = ':GlowInstall', branch = 'main', disable = true })
-
 package({
   'kkoomen/vim-doge',
   run = ':call doge#install()',
   config = function() vim.g.doge_mapping = '<Leader>lD' end,
   disable = true,
 })
-
-package({ 'diepm/vim-rest-console', event = 'VimEnter', disable = true })
 
 package({
   'iamcco/markdown-preview.nvim',
