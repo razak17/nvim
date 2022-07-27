@@ -5,6 +5,7 @@ return function()
       pattern = { '*.go' },
       command = function() require('go.format').goimport() end,
     },
+    -- FIX: Running more than once
     {
       event = { 'BufEnter' },
       pattern = { '*.go' },

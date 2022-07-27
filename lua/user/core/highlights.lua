@@ -42,7 +42,13 @@ local function general_overrides()
     -- if either are specified this can lead to issues when a winhighlight is set
     SignColumn = { background = 'NONE' },
     EndOfBuffer = { background = 'NONE' },
-    MatchParen = { reverse = true },
+    MatchParen = {
+      background = 'NONE',
+      foreground = 'NONE',
+      bold = false,
+      underline = true,
+      sp = 'white',
+    },
     ------------------------------------------------------------------------------------------------
     -- Treesitter
     ------------------------------------------------------------------------------------------------
