@@ -131,8 +131,6 @@ package({
 ----------------------------------------------------------------------------------------------------
 -- Graveyard
 ----------------------------------------------------------------------------------------------------
-package({ 'EdenEast/nightfox.nvim', disable = true })
-
 package({ 'akinsho/bufferline.nvim', config = conf('ui', 'bufferline'), disable = true })
 
 package({
@@ -192,19 +190,6 @@ package({
         event = { 'BufReadPre' },
         pattern = { '*.norg' },
         command = function() beacon.beacon_off() end,
-      },
-    })
-  end,
-  disable = true,
-})
-
-package({
-  'NTBBloodbath/doom-one.nvim',
-  config = function()
-    require('doom-one').setup({
-      pumblend = {
-        enable = true,
-        transparency_amount = 3,
       },
     })
   end,
