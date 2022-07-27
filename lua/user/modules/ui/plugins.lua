@@ -8,6 +8,12 @@ package({
   local_path = 'personal',
 })
 
+package({ 'fladson/vim-kitty' })
+
+package({ 'MunifTanjim/nui.nvim' })
+
+package({ 'goolord/alpha-nvim', config = conf('ui', 'alpha') })
+
 package({ 'akinsho/bufferline.nvim', config = conf('ui', 'bufferline') })
 
 package({ 'nvim-lualine/lualine.nvim', config = conf('ui', 'lualine') })
@@ -29,7 +35,8 @@ package({
   setup = function()
     -- https://observablehq.com/@d3/color-schemes?collection=@d3/d3-scale-chromatic
     -- NOTE: this must be set in the setup function or it will crash nvim...
-    require('zephyr.utils').plugin('Headlines', { Headline1 = { background = '#003c30', foreground = 'White' },
+    require('zephyr.utils').plugin('Headlines', {
+      Headline1 = { background = '#003c30', foreground = 'White' },
       Headline2 = { background = '#00441b', foreground = 'White' },
       Headline3 = { background = '#084081', foreground = 'White' },
       Dash = { background = '#0b60a1', bold = true },
@@ -53,8 +60,6 @@ package({
   branch = 'v2.x',
   config = conf('ui', 'neo-tree'),
 })
-
-package({ 'MunifTanjim/nui.nvim' })
 
 package({
   's1n7ax/nvim-window-picker',
@@ -87,10 +92,6 @@ package({
   config = conf('ui', 'ufo'),
 })
 
-package({ 'goolord/alpha-nvim', config = conf('ui', 'alpha') })
-
-package({ 'fladson/vim-kitty' })
-
 -- Syntax
 package({ 'mtdl9/vim-log-highlighting' })
 
@@ -105,10 +106,40 @@ package({
       'qf',
       'lspinfo',
       'lsp-installer',
-      'harpoon'
+      'harpoon',
     }
     rvim.nnoremap('<a-n>', ':lua require"illuminate".next_reference{wrap=true}<cr>')
     rvim.nnoremap('<a-p>', ':lua require"illuminate".next_reference{reverse=true,wrap=true}<cr>')
+  end,
+})
+
+package({
+  'ghillb/cybu.nvim',
+  event = 'BufRead',
+  config = function()
+    require('cybu').setup({
+      position = {
+        relative_to = 'win',
+        anchor = 'topright',
+      },
+      display_time = 750,
+      style = {
+        path = 'relative',
+        border = 'rounded',
+        separator = ' ',
+        prefix = '…',
+        padding = 1,
+        hide_buffer_id = true,
+        devicons = {
+          enabled = true,
+          colored = true,
+        },
+      },
+    })
+    rvim.nnoremap('<c-k>', '<Plug>(CybuPrev)')
+    rvim.nnoremap('<c-j>', '<Plug>(CybuNext)')
+    rvim.nnoremap('<s-tab>', '<plug>(CybuLastusedPrev)')
+    rvim.nnoremap('<tab>', '<plug>(CybuLastusedNext)')
   end,
 })
 
