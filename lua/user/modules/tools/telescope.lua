@@ -401,6 +401,7 @@ return function()
       ':Telescope lsp_dynamic_workspace_symbols<CR>',
       'telescope: workspace symbols',
     },
+    ['<leader>ms'] = { '<cmd>Telescope harpoon marks<cr>', 'telescope: harpoon search' },
   })
 
   vim.api.nvim_exec_autocmds('User', { pattern = 'TelescopeConfigComplete', modeline = false })

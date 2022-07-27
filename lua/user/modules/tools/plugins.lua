@@ -117,15 +117,14 @@ package({
     {
       'ThePrimeagen/harpoon',
       config = function()
-        local nnoremap = rvim.nnoremap
-        nnoremap('<leader>mm', '<cmd>lua require("harpoon.mark").add_file()<cr>', 'harpoon: add')
-        nnoremap('<leader>m.', '<cmd>lua require("harpoon.ui").nav_next()<cr>', 'harpoon: next')
-        nnoremap('<leader>m,', '<cmd>lua require("harpoon.ui").nav_prev()<cr>', 'harpoon: prev')
-        nnoremap(
-          '<leader>m;',
-          '<cmd>lua require("harpoon.ui").toggle_quick_menu()<cr>',
-          'harpoon: ui'
-        )
+        local ui = require('harpoon.ui')
+        local m = require('harpoon.mark')
+        require('which-key').register({
+          ['<leader>mm'] = { m.add_file, 'harpoon: add' },
+          ['<leader>m.'] = { ui.nav_next, 'harpoon: next' },
+          ['<leader>m,'] = { ui.nav_prev, 'harpoon: prev' },
+          ['<leader>m;'] = { ui.toggle_quick_menu, 'harpoon: ui' },
+        })
       end,
     },
   },
