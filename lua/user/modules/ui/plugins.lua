@@ -12,19 +12,25 @@ package({ 'fladson/vim-kitty' })
 
 package({ 'MunifTanjim/nui.nvim' })
 
+package({ 'mtdl9/vim-log-highlighting' })
+
+package({ 'kyazdani42/nvim-web-devicons' })
+
 package({ 'goolord/alpha-nvim', config = conf('ui', 'alpha') })
-
-package({ 'nvim-lualine/lualine.nvim', config = conf('ui', 'lualine') })
-
-package({ 'kyazdani42/nvim-web-devicons', config = conf('ui', 'nvim-web-devicons') })
-
-package({ 'lukas-reineke/indent-blankline.nvim', config = conf('ui', 'indentline') })
-
-package({ 'lewis6991/gitsigns.nvim', event = 'CursorHold', config = conf('ui', 'gitsigns') })
 
 package({ 'rcarriga/nvim-notify', config = conf('ui', 'notify') })
 
-package({ 'stevearc/dressing.nvim', event = 'BufWinEnter', config = function() end })
+package({ 'nvim-lualine/lualine.nvim', config = conf('ui', 'lualine') })
+
+package({ 'j-hui/fidget.nvim', config = function() require('fidget').setup() end })
+
+package({ 'lukas-reineke/indent-blankline.nvim', config = conf('ui', 'indentline') })
+
+package({ 'nvim-neo-tree/neo-tree.nvim', branch = 'v2.x', config = conf('ui', 'neo-tree') })
+
+package({ 'lewis6991/gitsigns.nvim', event = 'CursorHold', config = conf('ui', 'gitsigns') })
+
+package({ 'stevearc/dressing.nvim', event = 'BufWinEnter', config = conf('ui', 'dressing')  })
 
 package({
   'lukas-reineke/headlines.nvim',
@@ -54,12 +60,6 @@ package({
 })
 
 package({
-  'nvim-neo-tree/neo-tree.nvim',
-  branch = 'v2.x',
-  config = conf('ui', 'neo-tree'),
-})
-
-package({
   's1n7ax/nvim-window-picker',
   tag = 'v1.*',
   config = function()
@@ -82,16 +82,10 @@ package({
   config = function() vim.g.highlighturl_guifg = require('zephyr.utils').get('URL', 'fg') end,
 })
 
-package({ 'j-hui/fidget.nvim', config = function() require('fidget').setup() end })
-
-package({
-  'kevinhwang91/nvim-ufo',
+package({ 'kevinhwang91/nvim-ufo',
   requires = 'kevinhwang91/promise-async',
   config = conf('ui', 'ufo'),
 })
-
--- Syntax
-package({ 'mtdl9/vim-log-highlighting' })
 
 package({
   'RRethy/vim-illuminate',
