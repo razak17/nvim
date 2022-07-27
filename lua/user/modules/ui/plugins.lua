@@ -8,8 +8,6 @@ package({
   local_path = 'personal',
 })
 
-package({ 'shaunsingh/nord.nvim' })
-
 package({ 'akinsho/bufferline.nvim', config = conf('ui', 'bufferline') })
 
 package({ 'nvim-lualine/lualine.nvim', config = conf('ui', 'lualine') })
