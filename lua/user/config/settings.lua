@@ -86,7 +86,6 @@ if not rvim.plugin_installed('nvim-ufo') then
   opt.foldexpr = 'nvim_treesitter#foldexpr()'
   opt.foldmethod = 'expr'
 end
--- opt.foldtext = "v:lua.folds()"
 -----------------------------------------------------------------------------//
 -- Grepprg {{{1
 -----------------------------------------------------------------------------//
