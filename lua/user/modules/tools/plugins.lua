@@ -14,6 +14,7 @@ package({
   config = function()
     vim.g.undotree_TreeNodeShape = '◦' -- Alternative: '◉'
     vim.g.undotree_SetFocusWhenToggle = 1
+    vim.g.undotree_SplitWidth = 35
     rvim.nnoremap('<leader>u', '<cmd>UndotreeToggle<CR>', 'undotree: toggle')
   end,
 })
