@@ -69,7 +69,8 @@ package({
   end,
 })
 
-package({ 'akinsho/toggleterm.nvim',
+package({
+  'akinsho/toggleterm.nvim',
   event = { 'BufWinEnter' },
   config = conf('tools', 'toggleterm'),
 })
@@ -269,6 +270,16 @@ package({
   end,
 })
 
+package({
+  'iamcco/markdown-preview.nvim',
+  run = function() vim.fn['mkdp#util#install']() end,
+  ft = { 'markdown' },
+  config = function()
+    vim.g.mkdp_auto_start = 0
+    vim.g.mkdp_auto_close = 1
+  end,
+})
+
 ----------------------------------------------------------------------------------------------------
 -- Graveyard
 ----------------------------------------------------------------------------------------------------
@@ -447,17 +458,6 @@ package({
       function() return ':IncRename ' .. vim.fn.expand('<cword>') end,
       { expr = true, silent = false, desc = 'lsp: incremental rename' }
     )
-  end,
-  disable = true,
-})
-
-package({
-  'iamcco/markdown-preview.nvim',
-  run = function() vim.fn['mkdp#util#install']() end,
-  ft = { 'markdown' },
-  config = function()
-    vim.g.mkdp_auto_start = 0
-    vim.g.mkdp_auto_close = 1
   end,
   disable = true,
 })
