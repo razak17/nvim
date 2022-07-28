@@ -30,7 +30,7 @@ package({ 'nvim-neo-tree/neo-tree.nvim', branch = 'v2.x', config = conf('ui', 'n
 
 package({ 'lewis6991/gitsigns.nvim', event = 'CursorHold', config = conf('ui', 'gitsigns') })
 
-package({ 'stevearc/dressing.nvim', event = 'BufWinEnter', config = conf('ui', 'dressing')  })
+package({ 'stevearc/dressing.nvim', event = 'BufWinEnter', config = conf('ui', 'dressing') })
 
 package({
   'lukas-reineke/headlines.nvim',
@@ -82,7 +82,8 @@ package({
   config = function() vim.g.highlighturl_guifg = require('zephyr.utils').get('URL', 'fg') end,
 })
 
-package({ 'kevinhwang91/nvim-ufo',
+package({
+  'kevinhwang91/nvim-ufo',
   requires = 'kevinhwang91/promise-async',
   config = conf('ui', 'ufo'),
 })
@@ -101,6 +102,7 @@ package({
       'harpoon',
       'packer',
       'mason.nvim',
+      'help',
     }
     rvim.nnoremap('<a-n>', ':lua require"illuminate".next_reference{wrap=true}<cr>')
     rvim.nnoremap('<a-p>', ':lua require"illuminate".next_reference{reverse=true,wrap=true}<cr>')
