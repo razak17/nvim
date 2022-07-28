@@ -247,6 +247,17 @@ package({
 
 package({ 'ii14/emmylua-nvim' })
 
+package({
+  'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
+  event = { 'BufWinEnter' },
+  config = function()
+    local lsp_lines = require('lsp_lines')
+    lsp_lines.setup()
+    lsp_lines.toggle()
+    rvim.nnoremap('<leader>ol', function() lsp_lines.toggle() end, 'lsp_lines: toggle')
+  end,
+})
+
 ----------------------------------------------------------------------------------------------------
 -- Graveyard
 ----------------------------------------------------------------------------------------------------

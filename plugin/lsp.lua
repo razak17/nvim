@@ -336,20 +336,22 @@ local max_height = math.min(math.floor(vim.o.lines * 0.3), 30)
 
 local diagnostics = rvim.lsp.diagnostics
 local float = rvim.lsp.diagnostics.float
+local virtual_text = {
+  prefix = '',
+  spacing = diagnostics.virtual_text_spacing,
+  format = function(d)
+    local level = diagnostic.severity[d.severity]
+    return fmt('%s %s', codicons.lsp[level:lower()], d.message)
+  end,
+}
 
 diagnostic.config({
   signs = { active = diagnostics.signs.active, values = codicons.lsp },
   underline = diagnostics.underline,
   update_in_insert = diagnostics.update_in_insert,
   severity_sort = diagnostics.severity_sort,
-  virtual_text = {
-    prefix = '',
-    spacing = diagnostics.virtual_text_spacing,
-    format = function(d)
-      local level = diagnostic.severity[d.severity]
-      return fmt('%s %s', codicons.lsp[level:lower()], d.message)
-    end,
-  },
+  virtual_lines = false,
+  virtual_text = false,
   float = vim.tbl_deep_extend('keep', {
     max_width = max_width,
     max_height = max_height,
@@ -360,6 +362,18 @@ diagnostic.config({
     end,
   }, float),
 })
+
+local current_vt = false
+local function toggle_vt()
+  if current_vt then
+    vim.diagnostic.config({ virtual_text = false })
+    current_vt = false
+    return
+  end
+  vim.diagnostic.config({ virtual_text = virtual_text })
+  current_vt = true
+end
+rvim.nnoremap('<leader>ov', toggle_vt, 'lsp: toggle virtual text')
 
 -- NOTE: the hover handler returns the bufnr,winnr so can be used for mappings
 lsp.handlers['textDocument/hover'] =
