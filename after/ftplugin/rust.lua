@@ -1,3 +1,5 @@
+if not rvim then return end
+
 rvim.ftplugin_conf('which-key', function(which_key)
   which_key.register({
     ['<localleader>r'] = {
