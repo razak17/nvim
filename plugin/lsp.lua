@@ -125,18 +125,11 @@ local function setup_mappings(client, bufnr)
   local function with_desc(desc) return { buffer = bufnr, desc = desc } end
   if not client == nil then return end
   local nnoremap = rvim.nnoremap
-  local xnoremap = rvim.xnoremap
   nnoremap('gl', function()
     local config = rvim.lsp.diagnostics.float
     config.scope = 'line'
     return vim.diagnostic.open_float({ scope = 'line' }, config)
   end, with_desc('lsp: line diagnostics'))
-  nnoremap('<leader>la', vim.lsp.buf.code_action, with_desc('lsp: code action'))
-  xnoremap(
-    '<leader>la',
-    '<esc><Cmd>lua vim.lsp.buf.range_code_action()<CR>',
-    with_desc('lsp: code action')
-  )
   nnoremap('K', vim.lsp.buf.hover, with_desc('lsp: hover'))
   nnoremap('gd', vim.lsp.buf.definition, with_desc('lsp: definition'))
   nnoremap('gr', vim.lsp.buf.references, with_desc('lsp: references'))
@@ -145,7 +138,8 @@ local function setup_mappings(client, bufnr)
   nnoremap('gt', vim.lsp.buf.type_definition, with_desc('lsp: go to type definition'))
   nnoremap('gI', vim.lsp.buf.incoming_calls, with_desc('lsp: incoming calls'))
   -- leader keymaps
-----------------------------------------------------------------------------------------------------
+  ----------------------------------------------------------------------------------------------------
+  vim.keymap.set({ 'n', 'x' }, '<leader>la', vim.lsp.buf.code_action, with_desc('lsp: code action'))
   nnoremap('<leader>lk', function()
     if rvim.lsp.hover_diagnostics then
       vim.diagnostic.goto_prev({ float = false })
