@@ -95,14 +95,6 @@ package({
 })
 
 package({
-  'jghauser/fold-cycle.nvim',
-  config = function()
-    require('fold-cycle').setup()
-    rvim.nnoremap('<BS>', function() require('fold-cycle').open() end)
-  end,
-})
-
-package({
   'numToStr/Comment.nvim',
   config = function()
     require('Comment').setup()
@@ -207,5 +199,14 @@ package({
     rvim.vmap('<Enter>', '<Plug>(EasyAlign)')
   end,
   event = { 'BufReadPre', 'BufNewFile' },
+  disable = true,
+})
+
+package({
+  'jghauser/fold-cycle.nvim',
+  config = function()
+    require('fold-cycle').setup()
+    rvim.nnoremap('<BS>', function() require('fold-cycle').open() end)
+  end,
   disable = true,
 })

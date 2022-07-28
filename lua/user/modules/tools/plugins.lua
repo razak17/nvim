@@ -179,26 +179,6 @@ package({
 })
 
 package({
-  'Djancyp/cheat-sheet',
-  config = function()
-    require('cheat-sheet').setup({
-      auto_fill = {
-        current_word = false,
-      },
-      main_win = {
-        border = 'single',
-      },
-      input_win = {
-        border = 'single',
-      },
-    })
-    require('which-key').register({
-      ['<localleader>s'] = { ':CheatSH<CR>', 'cheat-sheet' },
-    })
-  end,
-})
-
-package({
   'SmiteshP/nvim-navic',
   requires = 'neovim/nvim-lspconfig',
   config = function()
@@ -462,6 +442,27 @@ package({
       function() return ':IncRename ' .. vim.fn.expand('<cword>') end,
       { expr = true, silent = false, desc = 'lsp: incremental rename' }
     )
+  end,
+  disable = true,
+})
+
+package({
+  'Djancyp/cheat-sheet',
+  config = function()
+    require('cheat-sheet').setup({
+      auto_fill = {
+        current_word = false,
+      },
+      main_win = {
+        border = 'single',
+      },
+      input_win = {
+        border = 'single',
+      },
+    })
+    require('which-key').register({
+      ['<localleader>s'] = { ':CheatSH<CR>', 'cheat-sheet' },
+    })
   end,
   disable = true,
 })
