@@ -19,5 +19,6 @@
     "pairs",
     "join_paths",
     "lfs"
-  ]
+  ],
+  "Lua.workspace.checkThirdParty": false
 }
