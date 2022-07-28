@@ -97,6 +97,7 @@ local servers = {
       'javascript.jsx',
     },
   },
+  golangci_lint_ls = true,
   --- https://github.com/golang/tools/blob/master/gopls/doc/settings.md
   gopls = {
     settings = {
