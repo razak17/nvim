@@ -23,7 +23,7 @@ return function()
     ['<leader>e'] = { '<Cmd>Neotree toggle reveal<CR>', 'toggle tree' },
   })
   require('neo-tree').setup({
-    source_selector = { winbar = true },
+    source_selector = { winbar = true, separator_active = ' ' },
     enable_git_status = true,
     git_status_async = true,
     filesystem = {
