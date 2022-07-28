@@ -14,10 +14,25 @@ return function()
       diagnostics.shellcheck.with({ extra_args = { '--severity', 'warning' } }),
       -- formatters
       formatting.black.with({ extra_args = { '--fast' } }),
-      formatting.eslint_d.with({
-        extra_args = { '--fix' },
+      -- formatting.eslint_d.with({
+      --   extra_args = { '--fix' },
+      --   filetypes = {
+      --     'vue',
+      --     'json',
+      --     'jsonc',
+      --     'javascript',
+      --     'javascriptreact',
+      --     'typescriptreact',
+      --     'typescript',
+      --   },
+      -- }),
+      formatting.prettier_d_slim.with({
         filetypes = {
-          'vue',
+          'html',
+          'yaml',
+          'graphql',
+          'markdown',
+          'css',
           'json',
           'jsonc',
           'javascript',
@@ -25,9 +40,6 @@ return function()
           'typescriptreact',
           'typescript',
         },
-      }),
-      formatting.prettier_d_slim.with({
-        filetypes = { 'html', 'yaml', 'graphql', 'markdown', 'css' },
       }),
       formatting.isort,
       formatting.shfmt,
