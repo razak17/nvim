@@ -130,6 +130,7 @@ package({
 
 package({
   'Saecki/crates.nvim',
+  ft = 'rust',
   config = function()
     require('crates').setup({
       popup = {
@@ -206,7 +207,6 @@ package({
 package({
   'windwp/nvim-autopairs',
   event = 'InsertEnter',
-  after = 'nvim-cmp',
   config = function()
     require('nvim-autopairs').setup({
       close_triple_quotes = true,
