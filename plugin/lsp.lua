@@ -14,9 +14,9 @@ local diagnostic = vim.diagnostic
 
 if vim.env.DEVELOPING then vim.lsp.set_log_level(L.DEBUG) end
 
------------------------------------------------------------------------------//
+----------------------------------------------------------------------------------------------------
 -- Autocommands
------------------------------------------------------------------------------//
+----------------------------------------------------------------------------------------------------
 local get_augroup = function(bufnr)
   assert(bufnr, 'A bufnr is required to create an lsp augroup')
   return fmt('LspCommands_%d', bufnr)
@@ -118,9 +118,9 @@ local function setup_autocommands(client, bufnr)
   rvim.augroup(group, cmds)
 end
 
------------------------------------------------------------------------------//
+----------------------------------------------------------------------------------------------------
 -- Mappings
------------------------------------------------------------------------------//
+----------------------------------------------------------------------------------------------------
 local function setup_mappings(client, bufnr)
   local function with_desc(desc) return { buffer = bufnr, desc = desc } end
   if not client == nil then return end
@@ -145,7 +145,7 @@ local function setup_mappings(client, bufnr)
   nnoremap('gt', vim.lsp.buf.type_definition, with_desc('lsp: go to type definition'))
   nnoremap('gI', vim.lsp.buf.incoming_calls, with_desc('lsp: incoming calls'))
   -- leader keymaps
-  ------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
   nnoremap('<leader>lk', function()
     if rvim.lsp.hover_diagnostics then
       vim.diagnostic.goto_prev({ float = false })
@@ -175,9 +175,9 @@ local function setup_mappings(client, bufnr)
   end, 'lsp: delete templates')
 end
 
------------------------------------------------------------------------------//
+----------------------------------------------------------------------------------------------------
 -- LSP SETUP/TEARDOWN
------------------------------------------------------------------------------//
+----------------------------------------------------------------------------------------------------
 
 -- @param client table
 ---@param bufnr number
@@ -236,9 +236,9 @@ rvim.augroup('LspSetupCommands', {
     command = function(args) api.nvim_clear_autocmds({ group = get_augroup(args.buf), buffer = args.buf }) end,
   },
 })
------------------------------------------------------------------------------//
+----------------------------------------------------------------------------------------------------
 -- Commands
------------------------------------------------------------------------------//
+----------------------------------------------------------------------------------------------------
 local command = rvim.command
 
 command('LspFormat', function() format({ bufnr = 0, async = false }) end)
@@ -272,9 +272,9 @@ end
 command('LspDiagnostics', make_diagnostic_qf_updater())
 rvim.nnoremap('<leader>ll', '<Cmd>LspDiagnostics<CR>', 'lsp: toggle quickfix diagnostics')
 
------------------------------------------------------------------------------//
+----------------------------------------------------------------------------------------------------
 -- Signs
------------------------------------------------------------------------------//
+----------------------------------------------------------------------------------------------------
 local function sign(opts)
   fn.sign_define(opts.highlight, {
     text = opts.icon,
@@ -287,9 +287,9 @@ sign({ highlight = 'DiagnosticSignError', icon = codicons.lsp.error })
 sign({ highlight = 'DiagnosticSignWarn', icon = codicons.lsp.warn })
 sign({ highlight = 'DiagnosticSignInfo', icon = codicons.lsp.info })
 sign({ highlight = 'DiagnosticSignHint', icon = codicons.lsp.hint })
------------------------------------------------------------------------------//
+----------------------------------------------------------------------------------------------------
 -- Handler Overrides
------------------------------------------------------------------------------//
+----------------------------------------------------------------------------------------------------
 --[[
 This section overrides the default diagnostic handlers for signs and virtual text so that only
 the most severe diagnostic is shown per line
@@ -328,9 +328,9 @@ diagnostic.handlers.virtual_text = vim.tbl_extend('force', virt_text_handler, {
   hide = function(_, bufnr) virt_text_handler.hide(ns, bufnr) end,
 })
 
------------------------------------------------------------------------------//
+----------------------------------------------------------------------------------------------------
 -- Diagnostic Configuration
------------------------------------------------------------------------------//
+----------------------------------------------------------------------------------------------------
 local max_width = math.min(math.floor(vim.o.columns * 0.7), 100)
 local max_height = math.min(math.floor(vim.o.lines * 0.3), 30)
 

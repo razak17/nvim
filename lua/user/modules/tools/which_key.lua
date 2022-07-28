@@ -37,8 +37,8 @@ return function()
     },
     ['<localleader>'] = {
       d = 'Dap',
-      L = 'rVim',
       l = 'lsp',
+      p = 'markdown-preview: toggle',
       w = 'Window',
     },
   })
