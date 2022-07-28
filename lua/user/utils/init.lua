@@ -6,7 +6,7 @@ local fmt = string.format
 
 local M = {}
 
-local function open(path)
+ function M.open(path)
   fn.jobstart({ rvim.open_command, path }, { detach = true })
   vim.notify(fmt('Opening %s', path))
 end
@@ -14,12 +14,12 @@ end
 function M.open_link()
   local file = fn.expand('<cfile>')
   if not file or fn.isdirectory(file) > 0 then return vim.cmd.edit(file) end
-  if file:match('https://') then return open(file) end
+  if file:match('https://') then return M.open(file) end
 
   -- consider anything that looks like string/string a github link
   local plugin_url_regex = '[%a%d%-%.%_]*%/[%a%d%-%.%_]*'
   local link = string.match(file, plugin_url_regex)
-  if link then return open(fmt('https://www.github.com/%s', link)) end
+  if link then return M.open(fmt('https://www.github.com/%s', link)) end
 end
 
 function M.empty_registers()

@@ -366,38 +366,25 @@ cnoremap(
 
 -- insert path of current file into a command
 cnoremap('%%', "<C-r>=fnameescape(expand('%'))<cr>")
--- FIXME: disable for now as this breaks nvim-surround
--- 'cnoremap'('::', "<C-r>=fnameescape(expand('%:p:h'))<cr>/")
-----------------------------------------------------------------------------------------------------
--- Credit: June Gunn <leader>?/! | Google it / Feeling lucky
-----------------------------------------------------------------------------------------------------
-function rvim.mappings.ddg(pat)
-  local query = nil
-  query = '"' .. fn.substitute(pat, '["\n]', ' ', 'g') .. '"'
-  query = fn.substitute(query, '[[:punct:] ]', [[\=printf("%%%02X", char2nr(submatch(0)))]], 'g')
-  fn.system(fn.printf(rvim.open_command .. ' "https://html.duckduckgo.com/html?%sq=%s"', '', query))
-end
-
-function rvim.mappings.gh(pat)
-  local query = nil
-  query = '"' .. fn.substitute(pat, '["\n]', ' ', 'g') .. '"'
-  query = fn.substitute(query, '[[:punct:] ]', [[\=printf("%%%02X", char2nr(submatch(0)))]], 'g')
-  fn.system(fn.printf(rvim.open_command .. ' "https://github.com/search?%sq=%s"', '', query))
-end
-
+cnoremap('::', "<C-r>=fnameescape(expand('%:p:h'))<cr>/")
 ----------------------------------------------------------------------------------------------------
 -- Web Search
 ----------------------------------------------------------------------------------------------------
+local function web_search(pat, url)
+  local fmt = string.format
+  local query = '"' .. fn.substitute(pat, '["\n]', ' ', 'g') .. '"'
+  utils.open(fmt('%s%s', url, query))
+end
+
+function rvim.mappings.ddg(pat) web_search(pat, 'https://html.duckduckgo.com/html?q=') end
+function rvim.mappings.gh(pat) web_search(pat, 'https://github.com/search?q=') end
+
 -- Search DuckDuckGo
 nnoremap('<localleader>?', [[:lua rvim.mappings.ddg(vim.fn.expand("<cword>"))<cr>]], 'search')
 xnoremap('<localleader>?', [["gy:lua rvim.mappings.ddg(vim.api.nvim_eval("@g"))<cr>gv]], 'search')
 -- Search Github
 nnoremap('<localleader>!', [[:lua rvim.mappings.gh(vim.fn.expand("<cword>"))<cr>]], 'gh search')
-xnoremap(
-  '<localleader>!',
-  [["gy:lua rvim.mappings.gh(vim.api.nvim_eval("@g"))<cr>gv]],
-  'gh search'
-)
+xnoremap('<localleader>!', [["gy:lua rvim.mappings.gh(vim.api.nvim_eval("@g"))<cr>gv]], 'gh search')
 ----------------------------------------------------------------------------------------------------
 -- Personal
 ----------------------------------------------------------------------------------------------------
