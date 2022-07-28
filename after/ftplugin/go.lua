@@ -7,6 +7,7 @@ vim.opt_local.smarttab = true
 vim.cmd([[setlocal iskeyword+=-]])
 
 if not rvim then return end
+
 local ok, whichkey = rvim.safe_require('which-key')
 if not ok then return end
 
