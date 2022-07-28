@@ -370,6 +370,9 @@ cnoremap('::', "<C-r>=fnameescape(expand('%:p:h'))<cr>/")
 ----------------------------------------------------------------------------------------------------
 -- Web Search
 ----------------------------------------------------------------------------------------------------
+--- search current word in website. see usage below
+---@param pat string
+---@param url string
 local function web_search(pat, url)
   local fmt = string.format
   local query = '"' .. fn.substitute(pat, '["\n]', ' ', 'g') .. '"'

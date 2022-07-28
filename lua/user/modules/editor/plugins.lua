@@ -149,7 +149,7 @@ package({
   config = function()
     local neogen = require('neogen')
     require('neogen').setup({ snippet_engine = 'luasnip' })
-    rvim.nnoremap('<localleader>lc', function() neogen.generate() end, 'git: commit dotfiles')
+    rvim.nnoremap('<localleader>lc', function() neogen.generate() end, 'neogen: generate doc')
   end,
 })
 
