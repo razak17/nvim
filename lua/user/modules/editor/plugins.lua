@@ -154,14 +154,9 @@ package({
       { MarkSignHL = { link = 'Directory' }, MarkSignNumHL = { link = 'Directory' } }
     )
     require('which-key').register({
-      m = {
-        name = 'Marks',
-        b = { '<Cmd>MarksListBuf<CR>', 'marks: list buffer' },
-        g = { '<Cmd>MarksQFListGlobal<CR>', 'marks: list global' },
-        ['0'] = { '<Cmd>BookmarksQFList 0<CR>', 'marks: list bookmark' },
-      },
-    }, {
-      prefix = '<leader>',
+      ['<leader>mb'] = { '<Cmd>MarksListBuf<CR>', 'marks: list buffer' },
+      ['<leader>mg'] = { '<Cmd>MarksQFListGlobal<CR>', 'marks: list global' },
+      ['<leader>m0'] = { '<Cmd>BookmarksQFList 0<CR>', 'marks: list bookmark' },
     })
     require('marks').setup({
       force_write_shada = false, -- This can cause data loss

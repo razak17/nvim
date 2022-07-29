@@ -29,6 +29,7 @@ return function()
       F = 'Fold',
       l = 'Lsp',
       L = 'rVim',
+      m = 'marks',
       n = 'Notify',
       p = 'Packer',
       s = 'Snip',
