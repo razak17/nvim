@@ -30,7 +30,7 @@ package({ 'nvim-neo-tree/neo-tree.nvim', branch = 'v2.x', config = conf('ui', 'n
 
 package({ 'lewis6991/gitsigns.nvim', event = 'CursorHold', config = conf('ui', 'gitsigns') })
 
-package({ 'stevearc/dressing.nvim', event = 'BufWinEnter', config = conf('ui', 'dressing') })
+package({ 'stevearc/dressing.nvim', after = 'telescope.nvim', config = conf('ui', 'dressing') })
 
 package({
   'lukas-reineke/headlines.nvim',

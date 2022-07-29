@@ -5,8 +5,6 @@ local conf = utils.load_conf
 -- nvim-cmp
 package({
   'hrsh7th/nvim-cmp',
-  module = 'cmp',
-  event = 'InsertEnter',
   config = conf('editor', 'cmp'),
   requires = {
     { 'hrsh7th/cmp-nvim-lsp', module = 'cmp_nvim_lsp' },
@@ -56,7 +54,6 @@ package({
 
 package({
   'xiyaowong/accelerated-jk.nvim',
-  event = { 'BufWinEnter' },
   config = function()
     require('accelerated-jk').setup({
       mappings = { j = 'gj', k = 'gk' },
@@ -68,11 +65,10 @@ package({
 
 package({ 'kylechui/nvim-surround', config = function() require('nvim-surround').setup() end })
 
-package({ 'monaqa/dial.nvim', event = { 'BufWinEnter' }, config = conf('editor', 'dial') })
+package({ 'monaqa/dial.nvim', config = conf('editor', 'dial') })
 
 package({
   'norcalli/nvim-colorizer.lua',
-  event = { 'BufReadPre', 'BufNewFile' },
   config = function()
     require('colorizer').setup({ 'lua', 'css', 'vim', 'kitty', 'conf' }, {
       css = { rgb_fn = true, hsl_fn = true, names = true },
@@ -88,11 +84,7 @@ package({
   end,
 })
 
-package({
-  'romainl/vim-cool',
-  event = { 'BufWinEnter' },
-  config = function() vim.g.CoolTotalMatches = 1 end,
-})
+package({ 'romainl/vim-cool', config = function() vim.g.CoolTotalMatches = 1 end })
 
 package({
   'numToStr/Comment.nvim',
@@ -111,7 +103,6 @@ package({
 
 package({
   'Matt-A-Bennett/vim-surround-funk',
-  event = 'BufWinEnter',
   config = function()
     vim.g.surround_funk_create_mappings = 0
     local map = vim.keymap.set
@@ -147,7 +138,6 @@ package({
 
 package({
   'chentoast/marks.nvim',
-  event = { 'BufWinEnter' },
   config = function()
     require('zephyr.utils').plugin(
       'marks',
@@ -193,7 +183,6 @@ package({
     rvim.xmap('ga', '<Plug>(EasyAlign)')
     rvim.vmap('<Enter>', '<Plug>(EasyAlign)')
   end,
-  event = { 'BufReadPre', 'BufNewFile' },
   disable = true,
 })
 

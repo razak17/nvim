@@ -266,7 +266,7 @@ package({
 ----------------------------------------------------------------------------------------------------
 package({ 'AndrewRadev/linediff.vim', cmd = 'Linediff', disable = true })
 
-package({ 'diepm/vim-rest-console', event = 'VimEnter', disable = true })
+package({ 'diepm/vim-rest-console',  disable = true })
 
 package({
   'NTBBloodbath/rest.nvim',

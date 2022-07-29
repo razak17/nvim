@@ -55,7 +55,6 @@ package({
     { 'jose-elias-alvarez/null-ls.nvim', config = conf('lang', 'null-ls') },
     {
       'ray-x/lsp_signature.nvim',
-      event = 'InsertEnter',
       config = function()
         require('lsp_signature').setup({
           debug = false,
@@ -206,7 +205,6 @@ package({
 
 package({
   'windwp/nvim-autopairs',
-  event = 'InsertEnter',
   config = function()
     require('nvim-autopairs').setup({
       close_triple_quotes = true,
