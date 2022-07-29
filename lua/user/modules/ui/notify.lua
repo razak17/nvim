@@ -1,4 +1,5 @@
 return function()
+  if not rvim.plugin_installed('nvim-notify') then return end
   local api = vim.api
   local codicons = rvim.style.codicons
 

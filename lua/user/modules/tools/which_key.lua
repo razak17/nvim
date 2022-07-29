@@ -1,4 +1,6 @@
 return function()
+  if not rvim.plugin_installed('which-key.nvim') then return end
+
   local icons = rvim.style.icons
   local which_key = require('which-key')
 

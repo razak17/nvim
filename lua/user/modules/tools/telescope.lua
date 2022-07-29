@@ -1,4 +1,6 @@
 return function()
+  if not rvim.plugin_installed('telescope.nvim') then return end
+
   local telescope_ok, telescope = rvim.safe_require('telescope')
   if not telescope_ok then return end
 

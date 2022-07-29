@@ -1,4 +1,5 @@
 return function()
+    if not rvim.plugin_installed('gitsigns.nvim') then return end
   local cwd = vim.fn.getcwd()
   local gitsigns_ok, gitsigns = rvim.safe_require('gitsigns')
   if not gitsigns_ok then return end

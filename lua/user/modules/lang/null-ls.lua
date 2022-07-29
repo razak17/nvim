@@ -1,4 +1,5 @@
 return function()
+  if not rvim.plugin_installed('null-ls.nvim') then return end
   local null_ls = require('null-ls')
   local diagnostics = null_ls.builtins.diagnostics
   local formatting = null_ls.builtins.formatting

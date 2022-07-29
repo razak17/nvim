@@ -1,4 +1,6 @@
 return function()
+  if not rvim.plugin_installed('toggleterm.nvim') then return end
+
   require('toggleterm').setup({
     open_mapping = [[<F2>]],
     shade_filetypes = { 'none' },

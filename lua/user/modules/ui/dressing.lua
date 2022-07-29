@@ -1,4 +1,5 @@
 return function()
+  if not rvim.plugin_installed('dressing.nvim') then return end
   -- NOTE: the limit is half the max lines because this is the cursor theme so
   -- unless the cursor is at the top or bottom it realistically most often will
   -- only have half the screen available

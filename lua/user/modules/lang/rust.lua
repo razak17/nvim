@@ -1,8 +1,5 @@
-local status_ok, rust_tools = rvim.safe_require('rust-tools')
-if not status_ok then
-  print('Failed to load rust-tools')
-  return
-end
+if not rvim.plugin_installed('rust-tools.nvim') then return end
+
 local dap = nil
 local utils = require('user.utils')
 local vscode_lldb = rvim.paths.vscode_lldb
@@ -30,7 +27,7 @@ local server = {
   },
 }
 
-rust_tools.setup({
+require('rust-tools').setup({
   tools = {
     runnables = { use_telescope = true },
     inlay_hints = {

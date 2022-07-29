@@ -1,4 +1,6 @@
 return function()
+  if not rvim.plugin_installed('nvim-cmp') then return end
+
   local status_cmp_ok, cmp = rvim.safe_require('cmp')
   if not status_cmp_ok then return end
 

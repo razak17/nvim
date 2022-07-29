@@ -1,4 +1,6 @@
 return function()
+  if not rvim.plugin_installed('go.nvim') then return end
+
   rvim.augroup('GoLang', {
     {
       event = { 'BufWritePost' },
