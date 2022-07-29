@@ -5,12 +5,12 @@ local plug_notify = utils.plug_notify
 local packer_compiled = rvim.paths.packer_compiled
 local packer = nil
 
-local Packer = {}
+local Packer = {
+  repos = {},
+}
 Packer.__index = Packer
 
 function Packer:load_plugins()
-  self.repos = {}
-
   local function get_plugins_list()
     local list = {}
     local modules_dir = join_paths(rvim.get_user_dir(), 'modules')
