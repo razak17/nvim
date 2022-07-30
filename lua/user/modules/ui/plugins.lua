@@ -28,7 +28,12 @@ package({ 'lukas-reineke/indent-blankline.nvim', config = conf('ui', 'indentline
 
 package({ 'nvim-neo-tree/neo-tree.nvim', branch = 'v2.x', config = conf('ui', 'neo-tree') })
 
-package({ 'lewis6991/gitsigns.nvim', event = 'CursorHold', config = conf('ui', 'gitsigns') })
+package({
+  'lewis6991/gitsigns.nvim',
+  module = 'gitsigns',
+  event = 'CursorHold',
+  config = conf('ui', 'gitsigns'),
+})
 
 package({ 'stevearc/dressing.nvim', after = 'telescope.nvim', config = conf('ui', 'dressing') })
 
