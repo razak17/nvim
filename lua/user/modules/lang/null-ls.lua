@@ -4,7 +4,7 @@ return function()
   local builtins = null_ls.builtins
   local diagnostics = builtins.diagnostics
   local formatting = builtins.formatting
-  local code_actions = builtins.codeactions
+  local code_actions = builtins.code_actions
   null_ls.setup({
     sources = {
       -- codeactions
