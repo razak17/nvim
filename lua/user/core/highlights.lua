@@ -1,5 +1,5 @@
 local P = require('zephyr.palette')
-local util = require('zephyr.utils')
+local util = require('user.utils.highlights')
 
 local function general_overrides()
   local comment_fg = util.get('Comment', 'fg')

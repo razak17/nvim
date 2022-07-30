@@ -37,7 +37,7 @@ function M.setup()
   fn.sign_define('DapBreakpointRejected', rvim.dap.breakpoint_rejected)
   fn.sign_define('DapStopped', rvim.dap.stopped)
 
-  require('zephyr.utils').plugin('dap', {
+  require('user.utils.highlights').plugin('dap', {
     DapBreakpoint = { foreground = P.error_red },
     DapBreakpointRejected = { foreground = P.dark_orange },
     DapStopped = { foreground = P.dark_green },

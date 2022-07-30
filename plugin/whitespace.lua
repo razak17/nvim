@@ -6,7 +6,7 @@
 
 if not rvim then return end
 
-local util = require('zephyr.utils')
+local util = require('user.utils.highlights')
 
 local fn = vim.fn
 

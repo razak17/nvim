@@ -1,7 +1,7 @@
 return function()
   if not rvim.plugin_installed('neo-tree.nvim') then return end
   local icons = rvim.style.icons
-  local highlights = require('zephyr.utils')
+  local highlights = require('user.utils.highlights')
   local P = require('zephyr.palette')
 
   highlights.plugin('NeoTree', {

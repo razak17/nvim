@@ -78,7 +78,7 @@ package({
       'kosayoda/nvim-lightbulb',
       config = function()
         if not rvim.plugin_installed('nvim-lightbulb') then return end
-        require('zephyr.utils').plugin('Lightbulb', {
+        require('user.utils.highlights').plugin('Lightbulb', {
           LightBulbFloatWin = { foreground = { from = 'Type' } },
         })
         require('nvim-lightbulb').setup({
@@ -167,7 +167,7 @@ package({
     {
       'nvim-treesitter/nvim-treesitter-context',
       config = function()
-        local hl = require('zephyr.utils')
+        local hl = require('user.utils.highlights')
         local norm_bg = hl.get('Normal', 'bg')
         local dim = hl.alter_color(norm_bg, 25)
         hl.plugin('treesitter-context', {
@@ -249,7 +249,7 @@ package({
       ['neo-tree-popup'] = false,
       ['dap-repl'] = false,
     }
-    require('zephyr.utils').plugin('copilot', { CopilotSuggestion = { link = 'Comment' } })
+    require('user.utils.highlights').plugin('copilot', { CopilotSuggestion = { link = 'Comment' } })
   end,
 })
 

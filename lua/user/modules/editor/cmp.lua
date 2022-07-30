@@ -10,7 +10,7 @@ return function()
   local t = rvim.replace_termcodes
   local border = rvim.style.border.current
   local lsp_hls = rvim.lsp.kind_highlights
-  local util = require('zephyr.utils')
+  local util = require('user.utils.highlights')
   local ellipsis = rvim.style.icons.misc.ellipsis
 
   local kind_hls = rvim.fold(

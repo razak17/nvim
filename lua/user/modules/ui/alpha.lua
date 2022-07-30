@@ -3,7 +3,7 @@ return function()
   local alpha = require('alpha')
   local dashboard = require('alpha.themes.dashboard')
   local fortune = require('alpha.fortune')
-  local hl = require('zephyr.utils')
+  local hl = require('user.utils.highlights')
   local f = string.format
 
   local button = function(h, ...)

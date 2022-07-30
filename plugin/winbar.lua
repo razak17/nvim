@@ -1,9 +1,9 @@
-if not rvim or not rvim.ui.winbar.enable then return end
 -- disable until https://github.com/neovim/neovim/issues/19458 is fixed
+if not rvim or not rvim.ui.winbar.enable then return end
 
 ---@diagnostic disable: duplicate-doc-param
 local devicons = require('nvim-web-devicons')
-local highlights = require('zephyr.utils')
+local util = require('user.utils.highlights')
 local utils = require('user.utils.statusline')
 local component = utils.component
 local component_raw = utils.component_raw

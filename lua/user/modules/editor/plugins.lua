@@ -158,7 +158,7 @@ package({
   'chentoast/marks.nvim',
   config = function()
     if not rvim.plugin_installed('marks.nvim') then return end
-    require('zephyr.utils').plugin(
+    require('user.utils.highlights').plugin(
       'marks',
       { MarkSignHL = { link = 'Directory' }, MarkSignNumHL = { link = 'Directory' } }
     )

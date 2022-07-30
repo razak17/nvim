@@ -191,7 +191,7 @@ package({
   config = function()
     if not rvim.plugin_installed('nvim-navic') then return end
     vim.g.navic_silence = true
-    local highlights = require('zephyr.utils')
+    local highlights = require('user.utils.highlights')
     local s = rvim.style
     local misc = s.icons.misc
 

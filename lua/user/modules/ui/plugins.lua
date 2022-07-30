@@ -40,7 +40,7 @@ package({
     if not rvim.plugin_installed('headlines.nvim') then return end
     -- https://observablehq.com/@d3/color-schemes?collection=@d3/d3-scale-chromatic
     -- NOTE: this must be set in the setup function or it will crash nvim...
-    require('zephyr.utils').plugin('Headlines', {
+    require('user.utils.highlights').plugin('Headlines', {
       Headline1 = { background = '#003c30', foreground = 'White' },
       Headline2 = { background = '#00441b', foreground = 'White' },
       Headline3 = { background = '#084081', foreground = 'White' },
@@ -75,7 +75,7 @@ package({
           buftype = { 'terminal', 'quickfix', 'nofile' },
         },
       },
-      other_win_hl_color = require('zephyr.utils').get('Visual', 'bg'),
+      other_win_hl_color = require('user.utils.highlights').get('Visual', 'bg'),
     })
   end,
 })
@@ -84,7 +84,7 @@ package({
   'itchyny/vim-highlighturl',
   config = function()
     if not rvim.plugin_installed('vim-highlighturl') then return end
-    vim.g.highlighturl_guifg = require('zephyr.utils').get('URL', 'fg')
+    vim.g.highlighturl_guifg = require('user.utils.highlights').get('URL', 'fg')
   end,
 })
 
@@ -141,7 +141,7 @@ package({
   config = function()
     if not rvim.plugin_installed('neodim') then return end
     require('neodim').setup({
-      blend_color = require('zephyr.utils').get('Normal', 'bg'),
+      blend_color = require('user.utils.highlights').get('Normal', 'bg'),
       alpha = 0.60,
       hide = {
         virtual_text = false,
@@ -157,7 +157,7 @@ package({
   'm-demare/hlargs.nvim',
   config = function()
     if not rvim.plugin_installed('hlargs.nvim') then return end
-    require('zephyr.utils').plugin('hlargs', {
+    require('user.utils.highlights').plugin('hlargs', {
       Hlargs = { italic = true, bold = false, foreground = '#A5D6FF' },
     })
     require('hlargs').setup({
