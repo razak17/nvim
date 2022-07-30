@@ -8,6 +8,7 @@ local function general_overrides()
   local keyword_fg = util.get('Keyword', 'fg')
   local search_bg = util.get('Search', 'bg')
   util.all({
+    Dim = { foreground = { from = 'Normal', attr = 'bg', alter = 25 } },
     mkdLineBreak = { link = 'NONE' },
     URL = { foreground = P.blue, underline = true },
     ------------------------------------------------------------------------------------------------
