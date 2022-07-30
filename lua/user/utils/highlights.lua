@@ -124,12 +124,15 @@ end
 function M.plugin(name, hls)
   name = name:gsub('^%l', string.upper) -- capitalise the name for autocommand convention sake
   M.all(hls)
-  for _, _ in ipairs(hls) do
-    vim.api.nvim_create_autocmd('ColorScheme', {
-      group = fmt('%sHighlightOverrides', name),
-      callback = function() M.all(hls) end,
-    })
-  end
+  rvim.augroup(fmt('%sHighlightOverrides', name), {
+    {
+      event = { 'ColorScheme' },
+      command = function()
+        -- Defer resetting these highlights to ensure they apply after other overrides
+        vim.defer_fn(function() M.all(hls) end, 1)
+      end,
+    },
+  })
 end
 
 return M
