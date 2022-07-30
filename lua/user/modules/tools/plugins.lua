@@ -221,7 +221,6 @@ package({
 
 package({ 'nvim-lua/plenary.nvim' })
 
--- TODO: Get keymaps to work without the need to invalidate
 package({
   'is0n/jaq-nvim',
   event = { 'BufWinEnter' },
