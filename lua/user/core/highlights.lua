@@ -5,7 +5,6 @@ local util = require('user.utils.highlights')
 
 local function general_overrides()
   local comment_fg = util.get('Comment', 'fg')
-  local keyword_fg = util.get('Keyword', 'fg')
   local search_bg = util.get('Search', 'bg')
   util.all({
     Dim = { foreground = { from = 'Normal', attr = 'bg', alter = 25 } },
@@ -49,7 +48,7 @@ local function general_overrides()
     -- Treesitter
     ------------------------------------------------------------------------------------------------
     TSNamespace = { foreground = P.pale_pink, italic = true, bold = true },
-    TSKeywordReturn = { italic = true, foreground = keyword_fg },
+    TSKeywordReturn = { italic = true, foreground = { from = 'Keyword' } },
     TSConstructor = { foreground = P.teal, italic = true, bold = true },
     TSError = { undercurl = true, sp = 'DarkRed', foreground = 'NONE' },
     TSParameter = { italic = true, bold = true, foreground = 'NONE' },
