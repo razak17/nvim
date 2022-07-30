@@ -40,21 +40,25 @@ command(
       wall
       silent execute 'bdelete ' . join(utils#buf_filt(1))
     ]],
-    false
+      false
     )
   end
 )
 
 -- Packer
-local plugins = require('user.core.plugins')
-command('PlugCompile', function() plugins.compile() end)
-command('PlugInstall', function() plugins.install() end)
-command('PlugSync', function() plugins.sync() end)
-command('PlugClean', function() plugins.clean() end)
-command('PlugUpdate', function() plugins.update() end)
-command('PlugStatus', function() plugins.status() end)
-command('PlugInvalidate', function() plugins.invalidate() end)
-command('PlugReload', function() plugins.reload() end)
-command('PlugRecompile', function() plugins.recompile() end)
-command('PlugCompiledDelete', function() plugins.del_compiled() end)
-command('PlugCompiledEdit', function() vim.cmd.edit(rvim.paths.packer_compiled) end)
+local cmds = {
+  'Compile',
+  'Install',
+  'Update',
+  'Sync',
+  'Clean',
+  'Status',
+  'Invalidate',
+  'Reload',
+  'Recompile',
+  'Delete',
+}
+for _, cmd in ipairs(cmds) do
+  command('Packer' .. cmd, function() require('user.core.plugins')[vim.fn.tolower(cmd)]() end)
+end
+command('PackerCompiledEdit', function() vim.cmd.edit(rvim.paths.packer_compiled) end)
