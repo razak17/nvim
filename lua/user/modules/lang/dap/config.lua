@@ -28,7 +28,6 @@ rvim.dap = {
 
 function M.setup()
   local dap = require('dap')
-  local P = require('zephyr.palette')
   local utils = require("user.utils")
   local is_directory = utils.is_directory
   local fn = vim.fn
@@ -36,12 +35,6 @@ function M.setup()
   fn.sign_define('DapBreakpoint', rvim.dap.breakpoint)
   fn.sign_define('DapBreakpointRejected', rvim.dap.breakpoint_rejected)
   fn.sign_define('DapStopped', rvim.dap.stopped)
-
-  require('user.utils.highlights').plugin('dap', {
-    DapBreakpoint = { foreground = P.error_red },
-    DapBreakpointRejected = { foreground = P.dark_orange },
-    DapStopped = { foreground = P.dark_green },
-  })
 
   -- python
   dap.adapters.python = {

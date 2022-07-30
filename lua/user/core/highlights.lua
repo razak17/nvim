@@ -1,3 +1,5 @@
+if not rvim.plugin_installed('zephyr-nvim') then return end
+
 local P = require('zephyr.palette')
 local util = require('user.utils.highlights')
 

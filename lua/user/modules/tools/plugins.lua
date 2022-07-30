@@ -340,19 +340,18 @@ package({
   event = 'BufWinEnter',
   config = function()
     if not rvim.plugin_installed('sniprun') then return end
-    local P = require('zephyr.palette')
     require('sniprun').setup({
       snipruncolors = {
         SniprunVirtualTextOk = {
-          bg = P.darker_blue,
-          fg = P.black,
+          bg = 'Cyan',
+          fg = 'Magenta',
           ctermbg = 'Cyan',
           cterfg = 'Black',
         },
         SniprunFloatingWinOk = { fg = P.darker_blue, ctermfg = 'Cyan' },
         SniprunVirtualTextErr = {
-          bg = P.error_red,
-          fg = P.black,
+          bg = 'Cyan',
+          fg = 'Magenta',
           ctermbg = 'DarkRed',
           cterfg = 'Cyan',
         },

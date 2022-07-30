@@ -2,13 +2,12 @@ return function()
   if not rvim.plugin_installed('neo-tree.nvim') then return end
   local icons = rvim.style.icons
   local highlights = require('user.utils.highlights')
-  local P = require('zephyr.palette')
 
   highlights.plugin('NeoTree', {
     NeoTreeIndentMarker = { link = 'Comment' },
     NeoTreeNormal = { link = 'PanelBackground' },
     NeoTreeNormalNC = { link = 'PanelBackground' },
-    NeoTreeRootName = { bold = true, italic = false, foreground = P.base6 },
+    NeoTreeRootName = { bold = true, italic = true },
     NeoTreeStatusLine = { link = 'PanelBackground' },
     NeoTreeTabActive = { bg = { from = 'PanelBackground' } },
     NeoTreeTabInactive = { bg = { from = 'PanelDarkBackground' }, fg = { from = 'Comment' } },
