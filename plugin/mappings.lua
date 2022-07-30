@@ -247,6 +247,7 @@ nnoremap('<leader>lo', function() rvim.toggle_list('location') end, 'toggle locl
 -- UI Toggles
 ----------------------------------------------------------------------------------------------------
 nnoremap('<leader>ow', function() utils.toggle_opt('wrap') end, 'toggle: wrap')
+nnoremap('<leader>oc', function() utils.toggle_opt('cursorline') end, 'toggle: cursorline')
 nnoremap('<leader>or', ':ToggleRelativeNumber<CR>', 'toggle: relativenumber')
 ----------------------------------------------------------------------------------------------------
 -- Utils
