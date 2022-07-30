@@ -45,35 +45,30 @@ return function()
     }, ','),
   }
 
-  ---checks if the character preceding the cursor is a space character
-  ---@return boolean true if it is a space character, false otherwise
-  local check_backspace = function()
-    local col = vim.fn.col('.') - 1
-    return col == 0 or vim.fn.getline('.'):sub(col, col):match('%s')
-  end
-
   local function tab(fallback)
     local ok, luasnip = rvim.safe_require('luasnip', { silent = true })
     if cmp.visible() then
       cmp.select_next_item()
-    elseif ok and luasnip.expand_or_locally_jumpable() then
-      luasnip.expand_or_jump()
-    elseif check_backspace() then
-      fallback()
-    else
-      fallback()
+      return
     end
+    if ok and luasnip.expand_or_locally_jumpable() then
+      luasnip.expand_or_jump()
+      return
+    end
+    fallback()
   end
 
   local function shift_tab(fallback)
     local ok, luasnip = rvim.safe_require('luasnip', { silent = true })
     if cmp.visible() then
       cmp.select_prev_item()
-    elseif ok and luasnip.jumpable(-1) then
-      luasnip.jump(-1)
-    else
-      fallback()
+      return
     end
+    if ok and luasnip.jumpable(-1) then
+      luasnip.jump(-1)
+      return
+    end
+    fallback()
   end
 
   rvim.cmp = {

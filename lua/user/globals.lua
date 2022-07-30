@@ -130,16 +130,6 @@ function rvim.find_string(table, string)
   return found
 end
 
-function rvim.file_exists(name)
-  local f = io.open(name, 'r')
-  if f ~= nil then
-    io.close(f)
-    return true
-  else
-    return false
-  end
-end
-
 rvim.list_installed_plugins = (function()
   local plugins
   return function()
@@ -231,13 +221,9 @@ end
 function rvim.empty(item)
   if not item then return true end
   local item_type = type(item)
-  if item_type == 'string' then
-    return item == ''
-  elseif item_type == 'number' then
-    return item <= 0
-  elseif item_type == 'table' then
-    return vim.tbl_isempty(item)
-  end
+  if item_type == 'string' then return item == '' end
+  if item_type == 'number' then return item <= 0 end
+  if item_type == 'table' then return vim.tbl_isempty(item) end
   return item ~= nil
 end
 
@@ -252,10 +238,10 @@ function rvim.invalidate(path, recursive)
         require(key)
       end
     end
-  else
-    package.loaded[path] = nil
-    require(path)
+    return
   end
+  package.loaded[path] = nil
+  require(path)
 end
 
 ----------------------------------------------------------------------------------------------------

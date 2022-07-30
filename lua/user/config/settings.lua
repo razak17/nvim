@@ -94,10 +94,13 @@ if rvim.executable('rg') then
   vim.o.grepprg = [[rg --glob "!.git" --no-heading --vimgrep --follow $*]]
   vim.o.grepprg = [[rg --hidden --glob "!.git" --no-heading --smart-case --vimgrep --follow $*]]
   opt.grepformat = opt.grepformat ^ { '%f:%l:%c:%m' }
-elseif rvim.executable('ag') then
+  goto continue
+end
+if rvim.executable('ag') then
   vim.o.grepprg = [[ag --nogroup --nocolor --vimgrep]]
   opt.grepformat = opt.grepformat ^ { '%f:%l:%c:%m' }
 end
+::continue::
 -----------------------------------------------------------------------------//
 -- Wild and file globbing stuff in command mode {{{1
 -----------------------------------------------------------------------------//

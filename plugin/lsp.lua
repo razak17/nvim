@@ -143,16 +143,16 @@ local function setup_mappings(client, bufnr)
   nnoremap('<leader>lk', function()
     if rvim.lsp.hover_diagnostics then
       vim.diagnostic.goto_prev({ float = false })
-    else
-      vim.diagnostic.goto_prev()
+      return
     end
+    vim.diagnostic.goto_prev()
   end, with_desc('lsp: go to prev diagnostic'))
   nnoremap('<leader>lj', function()
     if rvim.lsp.hover_diagnostics then
       vim.diagnostic.goto_next({ float = false })
-    else
-      vim.diagnostic.goto_next()
+      return
     end
+    vim.diagnostic.goto_next()
   end, with_desc('lsp: go to next diagnostic'))
   nnoremap('<leader>lL', vim.diagnostic.setloclist, with_desc('lsp: toggle loclist diagnostics'))
   nnoremap('<leader>lf', '<cmd>LspFormat<cr>', with_desc('lsp: format buffer'))

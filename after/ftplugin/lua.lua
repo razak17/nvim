@@ -39,18 +39,20 @@ local function keyword(word, callback)
 
     vim.cmd.help(api_function)
     return
-  elseif fn_match then
+  end
+  if fn_match then
     local _, finish = string.find(word, fn_match .. '.')
     if not finish then return end
     local api_function = string.sub(word, finish + 1) .. '()'
 
     vim.cmd.help(api_function)
     return
-  elseif callback then
-    callback()
-  else
-    vim.lsp.buf.hover()
   end
+  if callback then
+    callback()
+    return
+  end
+  vim.lsp.buf.hover()
 end
 
 rvim.ftplugin_conf('nvim-surround', function(surround)

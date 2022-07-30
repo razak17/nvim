@@ -82,9 +82,11 @@ validate_node_installation() {
 
   if [ "$pkg_manager" = "npm" ]; then
     manager_home="$(npm config get prefix 2>/dev/null)"
-  elif [ "$pkg_manager" = "pnpm" ]; then
+  fi
+  if [ "$pkg_manager" = "pnpm" ]; then
     manager_home="$(pnpm config get prefix 2>/dev/null)"
-  else
+  fi
+  if [ "$pkg_manager" = "yarn" ]; then
     manager_home="$(yarn global bin 2>/dev/null)"
   fi
 
@@ -174,9 +176,9 @@ cloneconfig() {
 
 	if [ -e "$RVIM_RUNTIME_DIR/site/pack/packer/opt/packer.nvim" ]; then
 		echo 'packer already installed'
-	else
-		installpacker
-	fi
+    return 1
+  fi
+	installpacker
 
 	sudo cp --force "$RVIM_CONFIG_DIR/utils/bin/rvim" "$HOME/.local/bin"
 }

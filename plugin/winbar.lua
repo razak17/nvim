@@ -57,10 +57,12 @@ function rvim.ui.winbar.get()
   local bufname = api.nvim_buf_get_name(api.nvim_get_current_buf())
   if empty(bufname) then return add(component('[No name]', 'Winbar', { priority = 0 })) end
 
-  if rvim.ui.winbar.use_filename then
+  local cond = rvim.ui.winbar.use_filename
+  if cond then
     local filename = vim.fn.expand('%:t')
     add(component(filename, 'Winbar', { priority = 1, suffix = separator }))
-  else
+  end
+  if not cond then
     local parts = vim.split(fn.fnamemodify(bufname, ':.'), '/')
     local icon, color = devicons.get_icon(bufname, nil, { default = true })
     rvim.foreach(function(part, index)

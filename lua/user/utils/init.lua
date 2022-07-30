@@ -6,7 +6,7 @@ local fmt = string.format
 
 local M = {}
 
- function M.open(path)
+function M.open(path)
   fn.jobstart({ rvim.open_command, path }, { detach = true })
   vim.notify(fmt('Opening %s', path))
 end
@@ -87,11 +87,13 @@ function M.modify_line_end_delimiter(character)
     local last_char = line:sub(-1)
     if last_char == character then
       api.nvim_set_current_line(line:sub(1, #line - 1))
-    elseif vim.tbl_contains(delimiters, last_char) then
-      api.nvim_set_current_line(line:sub(1, #line - 1) .. character)
-    else
-      api.nvim_set_current_line(line .. character)
+      return
     end
+    if vim.tbl_contains(delimiters, last_char) then
+      api.nvim_set_current_line(line:sub(1, #line - 1) .. character)
+      return
+    end
+    api.nvim_set_current_line(line .. character)
   end
 end
 
@@ -104,9 +106,9 @@ function M.smart_quit()
     }, function(input)
       if input == 'y' then cmd('q!') end
     end)
-  else
-    cmd('q!')
+    return
   end
+  cmd('q!')
 end
 
 function M.toggle_opt(opt)

@@ -14,9 +14,9 @@ return function()
     for _, chunk in ipairs(virt_text) do
       local chunk_text = chunk[1]
       local chunk_width = get_width(chunk_text)
-      if target_width > cur_width + chunk_width then
-        table.insert(result, chunk)
-      else
+      local cond = target_width > cur_width + chunk_width
+      if cond then table.insert(result, chunk) end
+      if not cond then
         chunk_text = truncate(chunk_text, target_width - cur_width)
         local hl_group = chunk[2]
         table.insert(result, { chunk_text, hl_group })

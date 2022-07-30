@@ -62,10 +62,10 @@ function M.use_local(original)
   local spec, local_spec = M.with_local(original)
   if local_spec then
     use(local_spec)
-  else
-    -- NOTE: Don't install from repo is local is available
-    use(spec)
+    return
   end
+  -- NOTE: Don't install from repo if local is available
+  use(spec)
 end
 
 ---@param path string
