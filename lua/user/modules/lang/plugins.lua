@@ -7,7 +7,9 @@ local package = require('user.core.plugins').package
 package({
   'rcarriga/nvim-dap-ui',
   config = block_reload(function()
-    if not rvim.plugin_installed('nvim-dap-ui') or not rvim.plugin_installed('nvim-dap') then return end
+    if not rvim.plugin_installed('nvim-dap-ui') or not rvim.plugin_installed('nvim-dap') then
+      return
+    end
     local dapui = require('dapui')
     require('dapui').setup()
     require('which-key').register({
@@ -99,7 +101,8 @@ package({
   event = 'BufRead',
   requires = { 'nvim-lspconfig', 'williamboman/mason-lspconfig.nvim' },
   config = function()
-    if not rvim.plugin_installed('mason.nvim') or not rvim.plugin_installed('mason-lspconfig') then return end
+    local installed = rvim.plugin_installed
+    if not installed('mason.nvim') or not installed('mason-lspconfig.nvim') then return end
     local style = rvim.style
     local icons = style.icons
     local get_config = require('user.core.servers')
