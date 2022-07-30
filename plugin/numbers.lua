@@ -78,10 +78,10 @@ local function enable_relative_number()
   if is_blocked() then
     vim.wo.number = false
     vim.wo.relativenumber = false
-  else
-    vim.wo.number = true
-    vim.wo.relativenumber = true
+    return
   end
+  vim.wo.number = true
+  vim.wo.relativenumber = true
 end
 
 local function disable_relative_number()
@@ -89,19 +89,19 @@ local function disable_relative_number()
   if is_blocked() then
     vim.wo.number = false
     vim.wo.relativenumber = false
-  else
-    vim.wo.number = true
-    vim.wo.relativenumber = false
+    return
   end
+  vim.wo.number = true
+  vim.wo.relativenumber = false
 end
 
 rvim.command('ToggleRelativeNumber', function()
   is_enabled = not is_enabled
   if is_enabled then
     enable_relative_number()
-  else
-    disable_relative_number()
+    return
   end
+  disable_relative_number()
 end)
 
 rvim.augroup('ToggleRelativeLineNumbers', {

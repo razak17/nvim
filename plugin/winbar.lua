@@ -3,7 +3,7 @@ if not rvim or not rvim.ui.winbar.enable then return end
 
 ---@diagnostic disable: duplicate-doc-param
 local devicons = require('nvim-web-devicons')
-local util = require('user.utils.highlights')
+local highlights = require('user.utils.highlights')
 local utils = require('user.utils.statusline')
 local component = utils.component
 local component_raw = utils.component_raw
@@ -63,7 +63,6 @@ function rvim.ui.winbar.get()
   else
     local parts = vim.split(fn.fnamemodify(bufname, ':.'), '/')
     local icon, color = devicons.get_icon(bufname, nil, { default = true })
-
     rvim.foreach(function(part, index)
       local priority = (#parts - (index - 1)) * 2
       local is_first = nil
@@ -114,9 +113,9 @@ rvim.augroup('AttachWinbar', {
           and not empty(vim.bo[buf].filetype)
         then
           vim.wo[win].winbar = '%{%v:lua.rvim.ui.winbar.get()%}'
-        elseif not vim.tbl_contains(allowed, vim.bo[buf].filetype) then
-          vim.wo[win].winbar = nil
+          return
         end
+        if not vim.tbl_contains(allowed, vim.bo[buf].filetype) then vim.wo[win].winbar = nil end
       end
     end,
   },

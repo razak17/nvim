@@ -104,10 +104,10 @@ end
 function plugins.delete()
   if vim.fn.filereadable(packer_compiled) ~= 1 then
     plug_notify('packer_compiled file does not exist', 'info')
-  else
-    vim.fn.delete(packer_compiled)
-    plug_notify('packer_compiled was deleted', 'info')
+    return
   end
+  vim.fn.delete(packer_compiled)
+  plug_notify('packer_compiled was deleted', 'info')
 end
 
 function plugins.reload()

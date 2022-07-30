@@ -20,6 +20,15 @@ rvim.ui = {
 
 rvim.colorscheme = 'zephyr'
 rvim.lang = { format_on_save = true }
-rvim.keys = { leader = 'space', localleader = ',' }
-rvim.plugins = { SANE = true, packer = { active = true } }
-rvim.util = { disabled_providers = { 'python', 'ruby', 'perl' }, save_on_focus_lost = true }
+rvim.keys = {
+  leader = 'space',
+  localleader = ','
+}
+rvim.plugins = {
+  SANE = true,
+  packer = { active = true },
+}
+rvim.util = {
+  disabled_providers = { 'python', 'ruby', 'perl' },
+  save_on_focus_lost = true,
+}

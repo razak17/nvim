@@ -28,7 +28,7 @@ rvim.dap = {
 
 function M.setup()
   local dap = require('dap')
-  local utils = require("user.utils")
+  local utils = require('user.utils')
   local is_directory = utils.is_directory
   local fn = vim.fn
 
@@ -50,13 +50,9 @@ function M.setup()
       program = '${file}',
       pythonPath = function()
         local cwd = fn.getcwd()
-        if is_directory(cwd .. '/venv/bin/python') then
-          return cwd .. '/venv/bin/python'
-        elseif is_directory(cwd .. '/.venv/bin/python') then
-          return cwd .. '/.venv/bin/python'
-        else
-          return rvim.dap.python_dir
-        end
+        if is_directory(cwd .. '/venv/bin/python') then return cwd .. '/venv/bin/python' end
+        if is_directory(cwd .. '/.venv/bin/python') then return cwd .. '/.venv/bin/python' end
+        return rvim.dap.python_dir
       end,
     },
   }

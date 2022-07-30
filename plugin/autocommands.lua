@@ -164,9 +164,9 @@ local function check_color_column()
       local is_excluded = vim.tbl_contains(column_block_list, buffer.filetype)
       if is_excluded or too_small then
         window.colorcolumn = ''
-      elseif window.colorcolumn == '' then
-        window.colorcolumn = '+1'
+        return
       end
+      if window.colorcolumn == '' then window.colorcolumn = '+1' end
     end
   end
 end
@@ -405,4 +405,3 @@ rvim.augroup('TerminalAutocommands', {
     end,
   },
 })
-
