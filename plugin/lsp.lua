@@ -339,18 +339,6 @@ local virtual_text = {
   end,
 }
 
-local current_vt = false
-local function toggle_vt()
-  if current_vt then
-    vim.diagnostic.config({ virtual_text = false })
-    current_vt = false
-    return
-  end
-  vim.diagnostic.config({ virtual_text = virtual_text })
-  current_vt = true
-end
-rvim.nnoremap('<leader>ov', toggle_vt, 'lsp: toggle virtual text')
-
 diagnostic.config({
   signs = { active = diagnostics.signs.active, values = codicons.lsp },
   underline = diagnostics.underline,
@@ -368,6 +356,18 @@ diagnostic.config({
     end,
   }, float),
 })
+
+-- NOTE: virtual_text should be set to false by default. see above
+local function toggle_vt()
+  local new_value = vim.diagnostic.config().virtual_text
+  if type(new_value) == 'boolean' then
+    vim.diagnostic.config({ virtual_text = virtual_text })
+    return
+  end
+  vim.diagnostic.config({ virtual_text = false })
+end
+command('ToggleVirtualText', toggle_vt)
+rvim.nnoremap('<leader>ov', toggle_vt, 'lsp: toggle virtual_text')
 
 -- NOTE: the hover handler returns the bufnr,winnr so can be used for mappings
 lsp.handlers['textDocument/hover'] =
