@@ -1,4 +1,5 @@
 return function()
+  if not rvim.plugin_installed('dressing.nvim') then return end
   -- NOTE: the limit is half the max lines because this is the cursor theme so
   -- unless the cursor is at the top or bottom it realistically most often will
   -- only have half the screen available
@@ -9,7 +10,7 @@ return function()
     return (results <= (LIMIT - PADDING) and results + PADDING or LIMIT)
   end
 
-  require('zephyr.utils').plugin('dressing', { FloatTitle = { inherit = 'Visual', bold = true } })
+  require('user.utils.highlights').plugin('dressing', { FloatTitle = { inherit = 'Visual', bold = true } })
   require('dressing').setup({
     input = {
       winblend = 2,

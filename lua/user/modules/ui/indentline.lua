@@ -1,4 +1,5 @@
 return function()
+  if not rvim.plugin_installed('indent-blankline.nvim') then return end
   require('indent_blankline').setup({
     char = '│', -- ┆ ┊ 
     show_foldtext = false,

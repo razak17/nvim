@@ -1,18 +1,18 @@
 return function()
+  if not rvim.plugin_installed('neo-tree.nvim') then return end
   local icons = rvim.style.icons
-  local highlights = require('zephyr.utils')
-  local P = require('zephyr.palette')
+  local highlights = require('user.utils.highlights')
 
   highlights.plugin('NeoTree', {
     NeoTreeIndentMarker = { link = 'Comment' },
     NeoTreeNormal = { link = 'PanelBackground' },
     NeoTreeNormalNC = { link = 'PanelBackground' },
-    NeoTreeRootName = { bold = true, italic = false, foreground = P.base6 },
+    NeoTreeRootName = { bold = true, italic = true },
     NeoTreeStatusLine = { link = 'PanelBackground' },
-    NeoTreeTabBackground = { link = 'PanelBackground' },
-    NeoTreeTab = { bg = { from = 'PanelBackground' }, fg = { from = 'Comment' } },
-    NeoTreeSeparator = { link = 'PanelBackground' },
-    NeoTreeActiveTab = { bg = { from = 'PanelBackground' }, fg = 'fg', bold = true },
+    NeoTreeTabActive = { bg = { from = 'PanelBackground' } },
+    NeoTreeTabInactive = { bg = { from = 'PanelDarkBackground' }, fg = { from = 'Comment' } },
+    NeoTreeTabSeparatorInactive = { bg = { from = 'PanelDarkBackground' }, fg = 'black' },
+    NeoTreeTabSeparatorActive = { bg = { from = 'PanelBackground' }, fg = { from = 'Comment' } },
   })
 
   vim.g.neo_tree_remove_legacy_commands = 1
@@ -23,35 +23,9 @@ return function()
     ['<leader>e'] = { '<Cmd>Neotree toggle reveal<CR>', 'toggle tree' },
   })
   require('neo-tree').setup({
-    source_selector = {
-      winbar = true, -- toggle to show selector on winbar
-      statusline = false, -- toggle to show selector on statusline
-      tabs_layout = 'start',
-      tab_labels = { -- falls back to source_name if nil
-        filesystem = ' Files',
-        buffers = ' Buffers',
-        git_status = ' Git',
-      },
-      tabs_min_width = 11,
-      separator = ' ',
-      highlight_tab = 'NeoTreeTab',
-      highlight_tab_active = 'NeoTreeActiveTab',
-      highlight_separator = 'NeoTreeSeparator',
-      highlight_separator_active = 'NeoTreeSeparator',
-      highlight_background = 'NeoTreeTabBackground',
-    },
+    source_selector = { winbar = true, separator_active = ' ' },
     enable_git_status = true,
     git_status_async = true,
-    event_handlers = {
-      {
-        event = 'neo_tree_buffer_enter',
-        handler = function() highlights.set_hl('Cursor', { blend = 100 }) end,
-      },
-      {
-        event = 'neo_tree_buffer_leave',
-        handler = function() highlights.set_hl('Cursor', { blend = 0 }) end,
-      },
-    },
     filesystem = {
       hijack_netrw_behavior = 'open_current',
       use_libuv_file_watcher = true,
@@ -67,6 +41,9 @@ return function()
     default_component_configs = {
       icon = {
         folder_empty = rvim.style.icons.documents.open_folder,
+      },
+      modified = {
+        symbol = icons.misc.circle .. ' ',
       },
       git_status = {
         symbols = {

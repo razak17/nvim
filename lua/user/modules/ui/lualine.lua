@@ -1,4 +1,7 @@
 return function()
+  local installed = rvim.plugin_installed
+  if not installed('lualine.nvim') or not installed('zephyr-nvim') then return end
+
   local P = require('zephyr.palette')
   local s = rvim.style
   local icons = s.icons
@@ -147,7 +150,7 @@ return function()
     -- Lsp server name .
     function(msg)
       msg = msg or 'LS Inactive'
-      local buf_clients = vim.lsp.buf_get_clients()
+      local buf_clients = vim.lsp.get_active_clients()
       if next(buf_clients) == nil then
         -- TODO: clean up this if statement
         if type(msg) == 'boolean' or #msg == 0 then return 'LS Inactive' end
@@ -216,7 +219,6 @@ return function()
   ins_right({ 'location' })
 
   ins_right({ 'progress', color = { fg = P.base88 } })
-
   ins_right({
     function() return icons.statusline.bar end,
     color = { fg = P.pale_blue },

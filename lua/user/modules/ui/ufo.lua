@@ -1,6 +1,7 @@
 return function()
+  if not rvim.plugin_installed('nvim-ufo') then return end
   local ufo = require('ufo')
-  local hl = require('zephyr.utils')
+  local hl = require('user.utils.highlights')
   local opt, get_width = vim.opt, vim.api.nvim_strwidth
 
   local function handler(virt_text, _, _, width, truncate, ctx)
@@ -45,13 +46,13 @@ return function()
     Folded = {
       bold = false,
       italic = false,
-      bg = hl.alter_color(hl.get('Normal', 'bg'), -7),
+      bg = { from = 'Normal', alter = -7 },
     },
   })
 
   rvim.augroup('UfoSettings', {
     {
-      event = 'FileType',
+      event = { 'FileType' },
       pattern = { 'org' },
       command = function() ufo.detach() end,
     },

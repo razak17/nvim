@@ -4,37 +4,25 @@ local cmd = vim.cmd
 local api = vim.api
 local fmt = string.format
 
-local utils = {}
+local M = {}
 
-local function open(path)
+ function M.open(path)
   fn.jobstart({ rvim.open_command, path }, { detach = true })
   vim.notify(fmt('Opening %s', path))
 end
 
-function utils.open_link()
+function M.open_link()
   local file = fn.expand('<cfile>')
-  if not file or fn.isdirectory(file) > 0 then return vim.cmd('edit ' .. file) end
-
-  if file:match('https://') then return open(file) end
+  if not file or fn.isdirectory(file) > 0 then return vim.cmd.edit(file) end
+  if file:match('https://') then return M.open(file) end
 
   -- consider anything that looks like string/string a github link
   local plugin_url_regex = '[%a%d%-%.%_]*%/[%a%d%-%.%_]*'
   local link = string.match(file, plugin_url_regex)
-  if link then return open(fmt('https://www.github.com/%s', link)) end
+  if link then return M.open(fmt('https://www.github.com/%s', link)) end
 end
 
-function utils.color_my_pencils()
-  cmd([[ hi! ColorColumn guibg=#aeacec ]])
-  cmd([[ hi! Normal ctermbg=none guibg=none ]])
-  cmd([[ hi! SignColumn ctermbg=none guibg=none ]])
-  cmd([[ hi! LineNr guifg=#4dd2dc ]])
-  cmd([[ hi! CursorLineNr guifg=#f0c674 ]])
-  cmd([[ hi! TelescopeBorder guifg=#ffff00 guibg=#ff0000 ]])
-  cmd([[ hi! WhichKeyGroup guifg=#4dd2dc ]])
-  cmd([[ hi! WhichKeyDesc guifg=#4dd2dc  ]])
-end
-
-function utils.empty_registers()
+function M.empty_registers()
   vim.api.nvim_exec(
     [[
     let regs=split('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/-"', '\zs')
@@ -46,37 +34,19 @@ function utils.empty_registers()
   )
 end
 
-function utils.open_terminal()
+function M.open_terminal()
   cmd('split term://zsh')
   cmd('resize 10')
 end
 
-function utils.turn_on_guides()
-  vim.wo.number = true
-  vim.wo.relativenumber = true
-  vim.wo.signcolumn = 'auto:2-4'
-  vim.wo.colorcolumn = '+1'
-  vim.o.laststatus = 2
-  vim.o.showtabline = 2
-end
-
-function utils.turn_off_guides()
-  vim.wo.number = false
-  vim.wo.relativenumber = false
-  vim.wo.signcolumn = 'no'
-  vim.wo.colorcolumn = ''
-  vim.o.laststatus = 0
-  vim.o.showtabline = 0
-end
-
 -- https://github.com/CalinLeafshade/dots/blob/master/nvim/.config/nvim/lua/leafshade/rename.lua
-function utils.rename(name)
+function M.rename(name)
   local curfilepath = vim.fn.expand('%:p:h')
   local newname = curfilepath .. '/' .. name
   vim.api.nvim_command(' saveas ' .. newname)
 end
 
-function utils.enable_transparent_mode()
+function M.enable_transparent_mode()
   cmd('au ColorScheme * hi Normal ctermbg=none guibg=none')
   cmd('au ColorScheme * hi SignColumn ctermbg=none guibg=none')
   cmd('au ColorScheme * hi NormalNC ctermbg=none guibg=none')
@@ -90,50 +60,11 @@ end
 --- Checks whether a given path exists and is a directory
 --@param path (string) path to check
 --@returns (bool)
-function utils.is_directory(path)
+function M.is_directory(path)
   local stat = uv.fs_stat(path)
   return stat and stat.type == 'directory' or false
 end
 
----Write data to a file
----@param path string can be full or relative to `cwd`
----@param txt string|table text to be written, uses `vim.inspect` internally for tables
----@param flag string used to determine access mode, common flags: "w" for `overwrite` or "a" for `append`
-function utils.write_file(path, txt, flag)
-  local data = type(txt) == 'string' and txt or vim.inspect(txt)
-  uv.fs_open(path, flag, 438, function(open_err, fd)
-    assert(not open_err, open_err)
-    uv.fs_write(fd, data, -1, function(write_err)
-      assert(not write_err, write_err)
-      uv.fs_close(fd, function(close_err) assert(not close_err, close_err) end)
-    end)
-  end)
-end
-
--- Auto resize Vim splits to active split to 70% -
--- https://stackoverflow.com/questions/11634804/vim-auto-resize-focused-window
-utils.auto_resize = function()
-  local auto_resize_on = false
-  return function(args)
-    if not auto_resize_on then
-      local factor = args and tonumber(args) or 70
-      local fraction = factor / 10
-      -- NOTE: mutating &winheight/&winwidth are key to how
-      -- this functionality works, the API fn equivalents do
-      -- not work the same way
-      cmd(fmt('let &winheight=&lines * %d / 10 ', fraction))
-      cmd(fmt('let &winwidth=&columns * %d / 10 ', fraction))
-      auto_resize_on = true
-      vim.notify('Auto resize ON')
-    else
-      cmd('let &winheight=30')
-      cmd('let &winwidth=30')
-      cmd('wincmd =')
-      auto_resize_on = false
-      vim.notify('Auto resize OFF')
-    end
-  end
-end
 -- TLDR: Conditionally modify character at end of line
 -- Description:
 -- This function takes a delimiter character and:
@@ -149,7 +80,7 @@ end
 -- - ";"
 ---@param character string
 ---@return function
-function utils.modify_line_end_delimiter(character)
+function M.modify_line_end_delimiter(character)
   local delimiters = { ',', ';' }
   return function()
     local line = api.nvim_get_current_line()
@@ -164,7 +95,7 @@ function utils.modify_line_end_delimiter(character)
   end
 end
 
-function utils.smart_quit()
+function M.smart_quit()
   local bufnr = api.nvim_get_current_buf()
   local modified = api.nvim_buf_get_option(bufnr, 'modified')
   if modified then
@@ -178,4 +109,11 @@ function utils.smart_quit()
   end
 end
 
-return utils
+function M.toggle_opt(opt)
+  local value = nil
+  value = not vim.api.nvim_get_option_value(opt, {})
+  vim.opt[opt] = value
+  vim.notify(opt .. ' set to ' .. tostring(value), 'info', { title = 'UI Toggles' })
+end
+
+return M

@@ -1,3 +1,5 @@
+if not rvim.plugin_installed('nvim-treesitter') then return end
+
 rvim.treesitter = rvim.treesitter or {
   install_attempted = {},
 }
@@ -96,12 +98,8 @@ return function()
     )
   end
 
-  local Log = require('user.core.log')
   local status_ok, treesitter_configs = rvim.safe_require('nvim-treesitter.configs')
-  if not status_ok then
-    Log:debug('Failed to load nvim-treesitter.configs')
-    return
-  end
+  if not status_ok then return end
 
   treesitter_configs.setup({
     highlight = { enable = rvim.treesitter.setup.highlight.enabled },

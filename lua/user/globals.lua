@@ -1,17 +1,12 @@
+if not rvim then return end
+
 local fn = vim.fn
 local fmt = string.format
 local api = vim.api
 local uv = vim.loop
+local oss = vim.loop.os_uname().sysname
 
-----------------------------------------------------------------------------------------------------
--- Global namespace
-----------------------------------------------------------------------------------------------------
-_G.rvim = rvim or {
-  mappings = {},
-  lang = {},
-  util = {},
-  ui = {},
-}
+rvim.open_command = oss == 'Darwin' and 'open' or 'xdg-open'
 
 ---Join path segments that were passed rvim input
 ---@return string
@@ -70,7 +65,7 @@ end
 function rvim.fold(callback, list, accum)
   for k, v in pairs(list) do
     accum = callback(accum, v, k)
-    assert(accum, 'The accumulator must be returned on each iteration')
+    assert(accum ~= nil, 'The accumulator must be returned on each iteration')
   end
   return accum
 end
@@ -93,6 +88,18 @@ function rvim.foreach(callback, list)
   for k, v in pairs(list) do
     callback(v, k)
   end
+end
+
+--- Check if the target matches  any item in the list.
+---@param target string
+---@param list string[]
+---@return boolean
+function rvim.any(target, list)
+  return rvim.fold(function(accum, item)
+    if accum then return accum end
+    if target:match(item) then return true end
+    return accum
+  end, list, false)
 end
 
 ---Find an item in a list
@@ -123,8 +130,7 @@ function rvim.find_string(table, string)
   return found
 end
 
-
-function rvim.file_exists (name)
+function rvim.file_exists(name)
   local f = io.open(name, 'r')
   if f ~= nil then
     io.close(f)
@@ -172,7 +178,7 @@ function rvim.is_vim_list_open()
   for _, win in ipairs(api.nvim_list_wins()) do
     local buf = api.nvim_win_get_buf(win)
     local location_list = fn.getloclist(0, { filewinid = 0 })
-    local is_loc_list = location_list.filewinid > 0
+    local is_loc_list = location_list and location_list.filewinid > 0
     if vim.bo[buf].filetype == 'qf' or is_loc_list then return true end
   end
   return false
@@ -192,12 +198,12 @@ function rvim.safe_require(module, opts)
   return ok, result
 end
 
----@alias Plugin table<(string | number), string>
+---@alias Plug table<(string | number), string>
 
 --- A convenience wrapper that calls the ftplugin config for a plugin if it exists
 --- and warns me if the plugin is not installed
 --- TODO: find out if it's possible to annotate the plugin rvim a module
----@param name string | Plugin
+---@param name string | Plug
 ---@param callback fun(module: table)
 function rvim.ftplugin_conf(name, callback)
   local plugin_name = type(name) == 'table' and name.plugin or nil
@@ -234,27 +240,6 @@ function rvim.empty(item)
   end
   return item ~= nil
 end
-
---- Usage:
---- 1. Call `local stop = utils.profile('my-log')` at the top of the file
---- 2. At the bottom of the file call `stop()`
---- 3. Restart neovim, the newly created log file should open
-function rvim.profile(filename)
-  local base = '/tmp/config/profile/'
-  fn.mkdir(base, 'p')
-  local success, profile = pcall(require, 'plenary.profile.lua_profiler')
-  if not success then vim.api.nvim_echo({ 'Plenary is not installed.', 'Title' }, true, {}) end
-  profile.start()
-  return function()
-    profile.stop()
-    local logfile = base .. filename .. '.log'
-    profile.report(logfile)
-    vim.defer_fn(function() vim.cmd('tabedit ' .. logfile) end, 1000)
-  end
-end
-
-local oss = vim.loop.os_uname().sysname
-rvim.open_command = oss == 'Darwin' and 'open' or 'xdg-open'
 
 ---Reload lua modules
 ---@param path any
@@ -299,11 +284,20 @@ local function validate_autocmd(name, cmd)
   )
 end
 
+---@class AutocmdArgs
+---@field id number
+---@field event string
+---@field group string?
+---@field buf number
+---@field file string
+---@field match string | number
+---@field data any
+
 ---@class Autocommand
 ---@field desc string
----@field event  string[] list of autocommand events
+---@field event  string[] | string list of autocommand events
 ---@field pattern string[] list of autocommand patterns
----@field command string | function
+---@field command string | fun(args: AutocmdArgs): boolean?
 ---@field nested  boolean
 ---@field once    boolean
 ---@field buffer  number
@@ -347,16 +341,10 @@ function rvim.command(name, rhs, opts)
   api.nvim_create_user_command(name, rhs, opts)
 end
 
----Source a lua or vimscript file
----@param path string path relative to the nvim directory
----@param prefix boolean?
-function rvim.source(path, prefix)
-  if not prefix then
-    vim.cmd(fmt('source %s', path))
-  else
-    vim.cmd(fmt('source %s/%s', vim.g.vim_dir, path))
-  end
-end
+---Check if a cmd is executable
+---@param e string
+---@return boolean
+function rvim.executable(e) return fn.executable(e) > 0 end
 
 ---A terser proxy for `nvim_replace_termcodes`
 ---@param str string

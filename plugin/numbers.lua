@@ -2,6 +2,8 @@
 -- 1. vim-relativity
 -- 2. numbers.vim - https://github.com/myusuf3/numbers.vim/blob/master/plugin/numbers.vim
 
+if not rvim then return end
+
 local api = vim.api
 local M = {}
 

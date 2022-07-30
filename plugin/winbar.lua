@@ -1,14 +1,9 @@
+-- disable until https://github.com/neovim/neovim/issues/19458 is fixed
+if not rvim or not rvim.ui.winbar.enable then return end
+
 ---@diagnostic disable: duplicate-doc-param
-
-local Log = require('user.core.log')
-local ok, navic = pcall(require, 'nvim-navic')
-if not ok then
-  Log:debug('Failed to load nvim-navic')
-  return
-end
-
 local devicons = require('nvim-web-devicons')
-local highlights = require('zephyr.utils')
+local util = require('user.utils.highlights')
 local utils = require('user.utils.statusline')
 local component = utils.component
 local component_raw = utils.component_raw
@@ -24,14 +19,14 @@ local ellipsis = icons.ellipsis
 
 --- A mapping of each winbar items ID to its path
 --- @type table<string, string>
-rvim.winbar_state = {}
+rvim.ui.winbar.state = {}
 
 ---@param id number
 ---@param _ number number of clicks
 ---@param _ "l"|"r"|"m" the button clicked
 ---@param _ string modifiers
-function rvim.winbar_click(id, _, _, _)
-  if id then vim.cmd('edit ' .. rvim.winbar_state[id]) end
+function rvim.ui.winbar.click(id, _, _, _)
+  if id then vim.cmd.edit(rvim.ui.winbar.state[id]) end
 end
 
 highlights.plugin('winbar', {
@@ -43,6 +38,7 @@ highlights.plugin('winbar', {
 })
 
 local function breadcrumbs()
+  local ok, navic = pcall(require, 'nvim-navic')
   local empty_state = { component(ellipsis, 'NonText', { priority = 0 }) }
   if not ok or not navic.is_available() then return empty_state end
   local navic_ok, location = pcall(navic.get_location)
@@ -52,7 +48,7 @@ local function breadcrumbs()
 end
 
 ---@return string
-function rvim.ui.winbar()
+function rvim.ui.winbar.get()
   local winbar = {}
   local add = utils.winline(winbar)
 
@@ -61,7 +57,7 @@ function rvim.ui.winbar()
   local bufname = api.nvim_buf_get_name(api.nvim_get_current_buf())
   if empty(bufname) then return add(component('[No name]', 'Winbar', { priority = 0 })) end
 
-  if rvim.ui.winbar_opts.use_filename then
+  if rvim.ui.winbar.use_filename then
     local filename = vim.fn.expand('%:t')
     add(component(filename, 'Winbar', { priority = 1, suffix = separator }))
   else
@@ -71,16 +67,16 @@ function rvim.ui.winbar()
     rvim.foreach(function(part, index)
       local priority = (#parts - (index - 1)) * 2
       local is_first = nil
-      if rvim.ui.winbar_opts.use_ft_icon then is_first = index == 1 end
+      if rvim.ui.winbar.use_icon then is_first = index == 1 end
       local is_last = index == #parts
       local sep = is_last and separator or dir_separator
       local hl = is_last and 'Winbar' or 'LineNr'
       local suffix_hl = is_last and 'WinbarDirectory' or 'LineNr'
-      rvim.winbar_state[priority] = table.concat(vim.list_slice(parts, 1, index), '/')
+      rvim.ui.winbar.state[priority] = table.concat(vim.list_slice(parts, 1, index), '/')
       add(component(part, hl, {
         id = priority,
         priority = priority,
-        click = 'v:lua.rvim.winbar_click',
+        click = 'v:lua.rvim.ui.winbar.click',
         suffix = sep,
         suffix_color = suffix_hl,
         prefix = is_first and icon or nil,
@@ -100,6 +96,7 @@ local blocked = {
   'dashboard',
   'TelescopePrompt',
   'sql',
+  'harpoon',
 }
 local allowed = { 'toggleterm', 'neo-tree' }
 
@@ -116,7 +113,7 @@ rvim.augroup('AttachWinbar', {
           and empty(vim.bo[buf].buftype)
           and not empty(vim.bo[buf].filetype)
         then
-          vim.wo[win].winbar = '%{%v:lua.rvim.ui.winbar()%}'
+          vim.wo[win].winbar = '%{%v:lua.rvim.ui.winbar.get()%}'
         elseif not vim.tbl_contains(allowed, vim.bo[buf].filetype) then
           vim.wo[win].winbar = nil
         end

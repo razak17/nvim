@@ -1,5 +1,4 @@
-local Log = require('user.core.log')
-Log:debug('Starting rVim')
+if not rvim then return end
 
 vim.g.python3_host_prog = rvim.paths.python3
 vim.g.node_host_prog = rvim.paths.node
@@ -21,7 +20,7 @@ if rvim.ui.defer then
   )
 end
 
-R('user.config.settings'):init()
+R('user.core.highlights')
 R('user.core.commands')
-R('user.highlights')
-R('user.core.plugins').ensure_installed()
+R('user.core.plugins').ensure_plugins()
+R('user.core.plugins').load_compile()

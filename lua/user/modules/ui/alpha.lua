@@ -1,8 +1,9 @@
 return function()
+  if not rvim.plugin_installed('alpha-nvim') then return end
   local alpha = require('alpha')
   local dashboard = require('alpha.themes.dashboard')
   local fortune = require('alpha.fortune')
-  local hl = require('zephyr.utils')
+  local hl = require('user.utils.highlights')
   local f = string.format
 
   local button = function(h, ...)
@@ -63,7 +64,7 @@ return function()
   dashboard.section.buttons.val = {
     button('Directory', 'r', '  Restore last session', '<Cmd>RestoreSession<CR>'),
     button('Todo', 's', '  Pick a session', '<Cmd>Autosession search<CR>'),
-    button('Label', 'p', '  Recent Projects', ':Telescope projects<CR>'),
+    button('Label', 'o', '  Recent Projects', ':Telescope oldfiles<CR>'),
     button('Title', 'f', '  Find file', ':Telescope find_files<CR>'),
     button('String', 'g', '  Find word', ':Telescope live_grep<CR>'),
     button('String', 'e', '  New file', ':ene | startinsert <CR>'),
@@ -87,21 +88,17 @@ return function()
 
   rvim.augroup('AlphaSettings', {
     {
-      event = 'User ',
-      pattern = 'AlphaReady',
+      event = { 'User ' },
+      pattern = { 'AlphaReady' },
       command = function(args)
         vim.opt_local.foldenable = false
         vim.opt_local.colorcolumn = ''
         vim.opt.laststatus = 0
-        vim.opt.showtabline = 0
         rvim.nnoremap('q', '<Cmd>Alpha<CR>', { buffer = args.buf, nowait = true })
 
         vim.api.nvim_create_autocmd('BufUnload', {
           buffer = args.buf,
-          callback = function()
-            vim.opt.laststatus = 3
-            vim.opt.showtabline = 2
-          end,
+          callback = function() vim.opt.laststatus = 3 end,
         })
       end,
     },

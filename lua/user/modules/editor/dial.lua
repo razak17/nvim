@@ -1,4 +1,5 @@
 return function()
+  -- if not rvim.plugin_installed('dial.nvim') then return end
   local dial = require('dial.map')
   local augend = require('dial.augend')
   local map = vim.keymap.set
@@ -33,7 +34,7 @@ return function()
 
   rvim.augroup('DialMaps', {
     {
-      event = 'FileType',
+      event = {'FileType'},
       pattern = { 'yaml', 'toml' },
       command = function() map('n', '<C-a>', require('dial.map').inc_normal('dep_files'), { remap = true }) end,
     },
