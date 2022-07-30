@@ -1,7 +1,0 @@
-{
-  "resets": {
-    "prefix": "resets",
-    "body": ["* {\nbox-sizing: border-box;\nmargin: 0;\npadding: 0;\n}\n"],
-    "description": "Code snippet for css resets"
-  }
-}

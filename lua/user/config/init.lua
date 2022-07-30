@@ -1,0 +1,26 @@
+if not rvim then return end
+
+vim.g.python3_host_prog = rvim.paths.python3
+vim.g.node_host_prog = rvim.paths.node
+for _, v in pairs(rvim.util.disabled_providers) do
+  vim.g['loaded_' .. v .. '_provider'] = 0
+end
+
+if rvim.ui.defer then
+  vim.cmd([[syntax off]])
+  vim.cmd([[filetype off]])
+  vim.defer_fn(
+    vim.schedule_wrap(function()
+      vim.defer_fn(function()
+        vim.cmd([[syntax on]])
+        vim.cmd([[filetype plugin indent on]])
+      end, 0)
+    end),
+    0
+  )
+end
+
+R('user.core.highlights')
+R('user.core.commands')
+R('user.core.plugins').ensure_plugins()
+R('user.core.plugins').load_compile()

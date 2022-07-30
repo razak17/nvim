@@ -12,15 +12,15 @@ setlocal norelativenumber
 setlocal nowrap
 setlocal signcolumn=yes
 setlocal colorcolumn=
-set nobuflisted " quickfix buffers should not pop up when doing :bn or :bp
-call s:adjust_height(1, 10)
+setlocal nobuflisted " quickfix buffers should not pop up when doing :bn or :bp
+call s:adjust_height(3, 10)
 setlocal winfixheight
 
 "--------------------------------------------------------------------------------
 " Helper functions
 "--------------------------------------------------------------------------------
-nnoremap <silent><buffer>dd :call utils#qf_delete(bufnr())<CR>
-vnoremap <silent><buffer>d  :call utils#qf_delete(bufnr())<CR>
+nnoremap <silent><buffer>dd :lua rvim.qf.delete()<CR>
+vnoremap <silent><buffer>d  :lua rvim.qf.delete()<CR>
 "--------------------------------------------------------------------------------
 " Mappings
 "--------------------------------------------------------------------------------

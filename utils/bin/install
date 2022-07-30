@@ -1,0 +1,219 @@
+#!/bin/sh
+#Set Variable to master is not set differently
+
+RVIM_CONFIG_DIR="${RVIM_CONFIG_DIR:-"$XDG_CONFIG_HOME/rvim"}"
+RVIM_RUNTIME_DIR="${RVIM_RUNTIME_DIR:-"$XDG_DATA_HOME/rvim"}"
+RV_BRANCH="${RV_BRANCH:-"dual"}"
+RV_REMOTE="${RV_REMOTE:-razak17/nvim.git}"
+
+asktoinstallgit() {
+	echo "git not found, please install git"
+	exit
+}
+
+asktoinstallgo() {
+	echo "Please install go before continuing with install" && exit
+}
+
+asktoinstallnode() {
+	echo "Please install node before continuing with install" && exit
+}
+
+asktoinstallpip() {
+	echo "Please install pip3 before continuing with install" && exit
+}
+
+moveoldrvim() {
+	echo "rvim not installed"
+  echo "Please remove '$RVIM_CONFIG_DIR' path before installing" && exit
+}
+
+installpacker() {
+	git clone https://github.com/wbthomason/packer.nvim ~/.local/share/rvim/site/pack/packer/opt/packer.nvim
+}
+
+createDirs() {
+	mkdir -p "$HOME/.dots"
+	mkdir -p "$HOME/.cache/rvim"
+	mkdir -p "$HOME/.cache/rvim/shada"
+	mkdir -p "$HOME/.cache/rvim/session"
+	mkdir -p "$HOME/.cache/rvim/undodir"
+	mkdir -p "$HOME/.cache/rvim/telescope"
+	mkdir -p "$HOME/.local/share/rvim"
+}
+
+pythonVenvInit() {
+  neovim_py="$HOME/.cache/rvim/venv/neovim"
+  mkdir -p "$neovim_py"
+  python3 -m venv "$neovim_py"
+  "$neovim_py"/bin/pip3 install -U setuptools pynvim jedi neovim-remote
+}
+
+nodeExtra() {
+	npm install -g tree-sitter-cli prettier_d_slim neovim live-server
+}
+
+archExtra() {
+	sudo pacman -S \
+    ripgrep \
+    cppcheck \
+    xsel \
+    fd \
+    delve \
+    lazygit \
+    unzip \
+    curl \
+    sqlite3 \
+    btop \
+    trash-cli
+}
+
+yayExtra() {
+  echo 'Done'
+}
+
+importRvim() {
+  echo "Cloning rVim configuration"
+  if ! git clone --branch "$RV_BRANCH" \
+    --depth 1 "https://github.com/${RV_REMOTE}" "$RVIM_CONFIG_DIR"; then
+    echo "Failed to clone repository. Installation failed."
+    exit 1
+  fi
+}
+
+validate_node_installation() {
+  pkg_manager="$1"
+
+  if [ "$pkg_manager" = "npm" ]; then
+    manager_home="$(npm config get prefix 2>/dev/null)"
+  elif [ "$pkg_manager" = "pnpm" ]; then
+    manager_home="$(pnpm config get prefix 2>/dev/null)"
+  else
+    manager_home="$(yarn global bin 2>/dev/null)"
+  fi
+
+  if [ ! -d "$manager_home" ] || [ ! -w "$manager_home" ]; then
+    echo "[$pkg_manager] not found."
+    return 1
+  fi
+
+  return 0
+}
+
+install_nodejs_deps()        {
+	printf "Which package manager would you like to use (pnpm, yarn, npm)? "
+  pkg_managers=("pnpm" "yarn" "npm")
+
+	read -r answer
+  for pkg_manager in "${pkg_managers[@]}"; do
+    if [ "$answer" = "$pkg_manager" ]; then
+      if validate_node_installation "$pkg_manager"; then
+        echo "Proceed to Install"
+        nodeExtra
+        return
+      fi
+      return
+    fi
+  done
+  echo "Unknown package manager"
+}
+
+install_dict() {
+  url="https://raw.githubusercontent.com/eneko/data-repository/master/data/words.txt"
+  dicwords="$RVIM_RUNTIME_DIR/site/dictionary.txt"
+  if [ ! -e "$dicwords" ]; then
+    echo 'Installing dictionary.txt'
+    curl "$url" -o "$dicwords" -s
+  fi
+}
+
+little_fixes() {
+  file_name='programming.utf-8.spl'
+  file="$XDG_DATA_HOME/nvim/site/spell/$file_name"
+  if [ -e "$file" ]; then
+    echo "copying $file"
+    cp "$file" "$RVIM_RUNTIME_DIR/site/spell/$file_name"
+  fi
+}
+
+install_deps() {
+	printf "Would you like to install node packages now (y/n)? "
+	read -r answer
+	[ "$answer" != "${answer#[Yy]}" ] && install_nodejs_deps
+
+	printf "Would you like to install extra arch packages now (y/n)? "
+	read -r answer
+	[ "$answer" != "${answer#[Yy]}" ] && archExtra
+
+	printf "Would you like to install extra aur packages now (y/n)? "
+	read -r answer
+	[ "$answer" != "${answer#[Yy]}" ] && yayExtra
+}
+
+cloneconfig() {
+	# check existing config
+	[ -d "$RVIM_CONFIG_DIR" ] && moveoldrvim
+
+	# install go
+	(command -v go >/dev/null && echo "go installed, moving on...") || asktoinstallgo
+
+	# install pip
+	(command -v pip3 >/dev/null && echo "pip installed, moving on...") || asktoinstallpip
+
+	# create dirs
+	echo "Creating default directories"
+	createDirs
+
+	# Cloning rvim configuration
+	echo "Installing rvim"
+	importRvim
+
+	# Install core python packages
+	printf "Would you like to initialize python now (y/n)? "
+	read -r answer
+	[ "$answer" != "${answer#[Yy]}" ] && pythonVenvInit
+
+	# install node and neovim support
+	(command -v git >/dev/null && echo "git installed, moving on...") || asktoinstallgit
+
+	if [ -e "$RVIM_RUNTIME_DIR/site/pack/packer/opt/packer.nvim" ]; then
+		echo 'packer already installed'
+	else
+		installpacker
+	fi
+
+	sudo cp --force "$RVIM_CONFIG_DIR/utils/bin/rvim" "$HOME/.local/bin"
+}
+
+while [ "$#" -gt 0 ]; do
+	curr=$1
+	shift
+
+	case "$curr" in
+	-py)
+		pythonVenvInit
+		;;
+	-node)
+		nodeHostInit
+    ;;
+	-npm)
+    install_nodejs_deps
+		;;
+	-deps)
+    install_deps
+		;;
+	-dict)
+    install_dict
+		;;
+	-fixes)
+    little_fixes
+		;;
+	*--all*)
+		cloneconfig
+    install_deps
+    install_dict
+    little_fixes
+		;;
+	*) echo "Unavailable command... $curr" ;;
+	esac
+done

@@ -1,0 +1,52 @@
+{
+  "contributes": {
+    "snippets": [
+      {
+        "language": [
+          "global"
+        ],
+        "path": "./global.json"
+      },
+      {
+        "language": "cpp",
+        "path": "./cpp.json"
+      },
+      {
+        "language": "css",
+        "path": "./css.json"
+      },
+      {
+        "language": "help",
+        "path": "./help.json"
+      },
+      {
+        "language": "lua",
+        "path": "./lua.json"
+      },
+      {
+        "language": "vim",
+        "path": "./vim.json"
+      },
+      {
+        "language": "tmux",
+        "path": "./tmux.json"
+      },
+      {
+        "language": "markdown",
+        "path": "./markdown.json"
+      },
+      {
+        "language": "html",
+        "path": "./html.json"
+      },
+      {
+        "language": "javascript",
+        "path": "./javascript.json"
+      },
+      {
+        "language": "json",
+        "path": "./json.json"
+      }
+    ]
+  }
+}
