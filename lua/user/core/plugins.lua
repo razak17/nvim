@@ -5,12 +5,12 @@ local plug_notify = utils.plug_notify
 local packer_compiled = rvim.paths.packer_compiled
 local packer = nil
 
-local Packer = {
-  repos = {},
-}
+local Packer = {}
 Packer.__index = Packer
 
 function Packer:load_plugins()
+  self.repos = {}
+
   local function get_plugins_list()
     local list = {}
     local modules_dir = join_paths(rvim.get_user_dir(), 'modules')
@@ -72,19 +72,17 @@ end
 function Packer:init_ensure_installed()
   local packer_dir = rvim.get_runtime_dir() .. '/site/pack/packer/opt/packer.nvim'
   local state = uv.fs_stat(packer_dir)
-  if state then
+  if not state then
+    local cmd = '!git clone https://github.com/wbthomason/packer.nvim ' .. packer_dir
+    api.nvim_command(cmd)
+    uv.fs_mkdir(
+      rvim.get_runtime_dir() .. '/site/lua',
+      511,
+      function() assert('could not create compile_path dir') end
+    )
     self:bootstrap_packer()
-    return
+    packer.sync()
   end
-  local cmd = '!git clone https://github.com/wbthomason/packer.nvim ' .. packer_dir
-  api.nvim_command(cmd)
-  uv.fs_mkdir(
-    rvim.get_runtime_dir() .. '/site/lua',
-    511,
-    function() assert('could not create compile_path dir') end
-  )
-  self:bootstrap_packer()
-  packer.sync()
 end
 
 local plugins = setmetatable({}, {
@@ -103,7 +101,7 @@ function plugins.ensure_plugins()
   end
 end
 
-function plugins.del_compiled()
+function plugins.delete()
   if vim.fn.filereadable(packer_compiled) ~= 1 then
     plug_notify('packer_compiled file does not exist', 'info')
   else

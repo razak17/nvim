@@ -1,7 +1,6 @@
 local package = require('user.core.plugins').package
 local utils = require('user.utils.plugins')
 local conf = utils.load_conf
-local plugin_installed = rvim.plugin_installed
 
 -- nvim-cmp
 package({
@@ -56,7 +55,7 @@ package({
 package({
   'xiyaowong/accelerated-jk.nvim',
   config = function()
-    if not plugin_installed('accelerated-jk.nvim') then return end
+    if not rvim.plugin_installed('accelerated-jk.nvim') then return end
     require('accelerated-jk').setup({
       mappings = { j = 'gj', k = 'gk' },
       -- If the interval of key-repeat takes more than `acceleration_limit` ms, the step is reset
@@ -68,7 +67,7 @@ package({
 package({
   'kylechui/nvim-surround',
   config = function()
-    if not plugin_installed('nvim-surround') then return end
+    if not rvim.plugin_installed('nvim-surround') then return end
     require('nvim-surround').setup()
   end,
 })
@@ -78,7 +77,7 @@ package({ 'monaqa/dial.nvim', config = conf('editor', 'dial') })
 package({
   'norcalli/nvim-colorizer.lua',
   config = function()
-    if not plugin_installed('nvim-colorizer') then return end
+    if not rvim.plugin_installed('nvim-colorizer') then return end
     require('colorizer').setup({ 'lua', 'css', 'vim', 'kitty', 'conf' }, {
       css = { rgb_fn = true, hsl_fn = true, names = true },
       scss = { rgb_fn = true, hsl_fn = true, names = true },
@@ -96,7 +95,7 @@ package({
 package({
   'romainl/vim-cool',
   config = function()
-    if not plugin_installed('vim-cool') then return end
+    if not rvim.plugin_installed('vim-cool') then return end
     vim.g.CoolTotalMatches = 1
   end,
 })
@@ -104,7 +103,7 @@ package({
 package({
   'numToStr/Comment.nvim',
   config = function()
-    if not plugin_installed('Comment.nvim') then return end
+    if not rvim.plugin_installed('Comment.nvim') then return end
     require('Comment').setup()
     local ft = require('Comment.ft')
     ft
@@ -120,7 +119,7 @@ package({
 package({
   'Matt-A-Bennett/vim-surround-funk',
   config = function()
-    if not plugin_installed('vim-surround-funk') then return end
+    if not rvim.plugin_installed('vim-surround-funk') then return end
     vim.g.surround_funk_create_mappings = 0
     local map = vim.keymap.set
     -- operator pending mode: grip surround
@@ -147,7 +146,7 @@ package({
   event = { 'BufWinEnter' },
   requires = { 'nvim-treesitter/nvim-treesitter' },
   config = function()
-    if not plugin_installed('neogen') then return end
+    if not rvim.plugin_installed('neogen') then return end
     local neogen = require('neogen')
     require('neogen').setup({ snippet_engine = 'luasnip' })
     rvim.nnoremap('<localleader>lc', function() neogen.generate() end, 'neogen: generate doc')
@@ -157,7 +156,7 @@ package({
 package({
   'chentoast/marks.nvim',
   config = function()
-    if not plugin_installed('marks.nvim') then return end
+    if not rvim.plugin_installed('marks.nvim') then return end
     require('zephyr.utils').plugin(
       'marks',
       { MarkSignHL = { link = 'Directory' }, MarkSignNumHL = { link = 'Directory' } }
@@ -187,7 +186,7 @@ package({
   'mizlan/iswap.nvim',
   event = 'BufRead',
   config = function()
-    if not plugin_installed('iswap.nvim') then return end
+    if not rvim.plugin_installed('iswap.nvim') then return end
     rvim.nnoremap('<leader>ii', '<Cmd>ISwap<CR>', 'iswap: auto swap')
     rvim.nnoremap('<leader>iw', '<Cmd>ISwapWith<CR>', 'iswap: swap with')
   end,
@@ -199,7 +198,7 @@ package({
 package({
   'junegunn/vim-easy-align',
   config = function()
-    if not plugin_installed('vim-easy-align') then return end
+    if not rvim.plugin_installed('vim-easy-align') then return end
     rvim.nmap('ga', '<Plug>(EasyAlign)')
     rvim.xmap('ga', '<Plug>(EasyAlign)')
     rvim.vmap('<Enter>', '<Plug>(EasyAlign)')
@@ -210,7 +209,7 @@ package({
 package({
   'jghauser/fold-cycle.nvim',
   config = function()
-    if not plugin_installed('fold-cycle.nvim') then return end
+    if not rvim.rvim.plugin_installed('fold-cycle.nvim') then return end
     require('fold-cycle').setup()
     rvim.nnoremap('<BS>', function() require('fold-cycle').open() end)
   end,

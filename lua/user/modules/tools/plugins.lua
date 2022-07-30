@@ -1,7 +1,6 @@
 local utils = require('user.utils.plugins')
 local conf = utils.load_conf
 local package = require('user.core.plugins').package
-local plugin_installed = rvim.plugin_installed
 
 package({ 'Tastyep/structlog.nvim' })
 
@@ -13,7 +12,7 @@ package({
   'mbbill/undotree',
   event = 'BufRead',
   config = function()
-    if not plugin_installed('undotree') then return end
+    if not rvim.plugin_installed('undotree') then return end
     vim.g.undotree_TreeNodeShape = '◦' -- Alternative: '◉'
     vim.g.undotree_SetFocusWhenToggle = 1
     vim.g.undotree_SplitWidth = 35
@@ -24,7 +23,7 @@ package({
 package({
   'ahmedkhalf/project.nvim',
   config = function()
-    if not plugin_installed('project.nvim') then return end
+    if not rvim.plugin_installed('project.nvim') then return end
     rvim.project = {
       setup = {
         active = true,
@@ -55,7 +54,7 @@ package({
   'numToStr/FTerm.nvim',
   event = { 'BufWinEnter' },
   config = function()
-    if not plugin_installed('FTerm.nvim') then return end
+    if not rvim.plugin_installed('FTerm.nvim') then return end
     local fterm = require('FTerm')
     fterm.setup({ dimensions = { height = 0.9, width = 0.9 } })
     local function new_float(cmd)
@@ -83,7 +82,7 @@ package({
 package({
   'AckslD/nvim-neoclip.lua',
   config = function()
-    if not plugin_installed('nvim-neoclip.lua') then return end
+    if not rvim.plugin_installed('nvim-neoclip.lua') then return end
     require('neoclip').setup({
       enable_persistent_history = false,
       keys = {
@@ -119,7 +118,7 @@ package({
     {
       'ThePrimeagen/harpoon',
       config = function()
-    if not plugin_installed('harpoon') then return end
+        if not rvim.plugin_installed('harpoon') then return end
         local ui = require('harpoon.ui')
         local m = require('harpoon.mark')
         require('harpoon').setup({
@@ -142,7 +141,7 @@ package({
 package({
   'rmagatti/auto-session',
   config = function()
-    if not plugin_installed('auto-session') then return end
+    if not rvim.plugin_installed('auto-session') then return end
     local fn = vim.fn
     local fmt = string.format
     require('auto-session').setup({
@@ -177,7 +176,7 @@ package({
   'moll/vim-bbye',
   event = 'BufWinEnter',
   config = function()
-    if not plugin_installed('vim-bbye') then return end
+    if not rvim.plugin_installed('vim-bbye') then return end
     require('which-key').register({
       ['<leader>c'] = { ':Bdelete!<cr>', 'close buffer' },
       ['<leader>bx'] = { ':bufdo :Bdelete<cr>', 'close all' },
@@ -190,7 +189,7 @@ package({
   'SmiteshP/nvim-navic',
   requires = 'neovim/nvim-lspconfig',
   config = function()
-    if not plugin_installed('nvim-navic') then return end
+    if not rvim.plugin_installed('nvim-navic') then return end
     vim.g.navic_silence = true
     local highlights = require('zephyr.utils')
     local s = rvim.style
@@ -216,7 +215,7 @@ package({
   'kevinhwang91/nvim-bqf',
   ft = 'qf',
   config = function()
-    if not plugin_installed('nvim-bqf') then return end
+    if not rvim.plugin_installed('nvim-bqf') then return end
     require('bqf').setup({
       preview = {
         border_chars = rvim.style.border.bqf,
@@ -232,7 +231,7 @@ package({
   'is0n/jaq-nvim',
   event = { 'BufWinEnter' },
   config = function()
-    if not plugin_installed('jaq-nvim') then return end
+    if not rvim.plugin_installed('jaq-nvim') then return end
     require('jaq-nvim').setup({
       cmds = {
         default = 'term',
@@ -267,7 +266,7 @@ package({
   run = function() vim.fn['mkdp#util#install']() end,
   ft = { 'markdown' },
   config = function()
-    if not plugin_installed('markdown-preview.nvim') then return end
+    if not rvim.plugin_installed('markdown-preview.nvim') then return end
     vim.g.mkdp_auto_start = 0
     vim.g.mkdp_auto_close = 1
   end,
@@ -279,14 +278,14 @@ package({
 ----------------------------------------------------------------------------------------------------
 package({ 'AndrewRadev/linediff.vim', cmd = 'Linediff', disable = true })
 
-package({ 'diepm/vim-rest-console',  disable = true })
+package({ 'diepm/vim-rest-console', disable = true })
 
 package({
   'NTBBloodbath/rest.nvim',
   requires = { 'nvim-lua/plenary.nvim' },
   ft = { 'http', 'json' },
   config = function()
-    if not plugin_installed('rest.nvim') then return end
+    if not rvim.plugin_installed('rest.nvim') then return end
     require('rest-nvim').setup({
       -- Open request results in a horizontal split
       result_split_horizontal = true,
@@ -307,13 +306,13 @@ package({
   'sindrets/diffview.nvim',
   event = 'BufReadPre',
   setup = function()
-    if not plugin_installed('diffview.nvim') then return end
+    if not rvim.plugin_installed('diffview.nvim') then return end
     rvim.nnoremap('<localleader>gd', '<Cmd>DiffviewOpen<CR>', 'diffview: open')
     rvim.nnoremap('<localleader>gh', '<Cmd>DiffviewFileHistory<CR>', 'diffview: file history')
     rvim.vnoremap('gh', [[:'<'>DiffviewFileHistory<CR>]], 'diffview: file history')
   end,
   config = function()
-    if not plugin_installed('diffview.nvim') then return end
+    if not rvim.plugin_installed('diffview.nvim') then return end
     require('diffview').setup({
       default_args = {
         DiffviewFileHistory = { '%' },
@@ -340,7 +339,7 @@ package({
   'michaelb/sniprun',
   event = 'BufWinEnter',
   config = function()
-    if not plugin_installed('sniprun') then return end
+    if not rvim.plugin_installed('sniprun') then return end
     local P = require('zephyr.palette')
     require('sniprun').setup({
       snipruncolors = {
@@ -375,7 +374,7 @@ package({
   event = 'BufWinEnter',
   ft = { 'json' },
   config = function()
-    if not plugin_installed('package-info.nvim') then return end
+    if not rvim.plugin_installed('package-info.nvim') then return end
     require('package-info').setup({
       colors = {
         up_to_date = '#3C4048', -- Text color for up to date package virtual text
@@ -410,7 +409,7 @@ package({
 package({
   'nvim-neotest/neotest',
   config = function()
-    if not plugin_installed('neotest') then return end
+    if not rvim.plugin_installed('neotest') then return end
     require('neotest').setup({
       diagnostic = {
         enabled = false,
@@ -452,7 +451,7 @@ package({
 package({
   'smjonas/inc-rename.nvim',
   config = function()
-    if not plugin_installed('inc-rename.nvim') then return end
+    if not rvim.plugin_installed('inc-rename.nvim') then return end
     require('inc_rename').setup({
       hl_group = 'Visual',
     })
@@ -469,7 +468,7 @@ package({
 package({
   'Djancyp/cheat-sheet',
   config = function()
-    if not plugin_installed('cheat-sheet') then return end
+    if not rvim.plugin_installed('cheat-sheet') then return end
     require('cheat-sheet').setup({
       auto_fill = {
         current_word = false,
