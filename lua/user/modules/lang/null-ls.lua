@@ -1,11 +1,17 @@
 return function()
   if not rvim.plugin_installed('null-ls.nvim') then return end
   local null_ls = require('null-ls')
-  local diagnostics = null_ls.builtins.diagnostics
-  local formatting = null_ls.builtins.formatting
+  local builtins = null_ls.builtins
+  local diagnostics = builtins.diagnostics
+  local formatting = builtins.formatting
+  local code_actions = builtins.codeactions
   null_ls.setup({
-    debounce = 150,
     sources = {
+      -- codeactions
+      code_actions.shellcheck,
+      code_actions.gitsigns,
+      null_ls.builtins.code_actions.eslint_d,
+      -- linters
       diagnostics.zsh,
       diagnostics.flake8,
       diagnostics.eslint_d:with({
@@ -14,18 +20,6 @@ return function()
       diagnostics.shellcheck.with({ extra_args = { '--severity', 'warning' } }),
       -- formatters
       formatting.black.with({ extra_args = { '--fast' } }),
-      -- formatting.eslint_d.with({
-      --   extra_args = { '--fix' },
-      --   filetypes = {
-      --     'vue',
-      --     'json',
-      --     'jsonc',
-      --     'javascript',
-      --     'javascriptreact',
-      --     'typescriptreact',
-      --     'typescript',
-      --   },
-      -- }),
       formatting.prettier_d_slim.with({
         filetypes = {
           'html',
