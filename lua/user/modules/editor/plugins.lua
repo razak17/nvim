@@ -78,7 +78,7 @@ package({ 'monaqa/dial.nvim', config = conf('editor', 'dial') })
 package({
   'norcalli/nvim-colorizer.lua',
   config = function()
-    if not rvim.plugin_installed('nvim-colorizer') then return end
+    if not rvim.plugin_installed('nvim-colorizer.lua') then return end
     require('colorizer').setup({ 'lua', 'css', 'vim', 'kitty', 'conf' }, {
       css = { rgb_fn = true, hsl_fn = true, names = true },
       scss = { rgb_fn = true, hsl_fn = true, names = true },
