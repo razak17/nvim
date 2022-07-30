@@ -76,6 +76,7 @@ package({
 
 package({
   'AckslD/nvim-neoclip.lua',
+  event = { 'BufWinEnter' },
   config = function()
     if not rvim.plugin_installed('nvim-neoclip.lua') then return end
     require('neoclip').setup({
@@ -88,10 +89,7 @@ package({
       },
     })
     local function clip() require('telescope').extensions.neoclip.default(rvim.telescope.dropdown()) end
-
-    require('which-key').register({
-      ['<leader>fN'] = { clip, 'neoclip: open yank history' },
-    })
+    rvim.nnoremap('<leader>fN', clip, 'neoclip: open yank history')
   end,
 })
 
