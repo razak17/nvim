@@ -4,6 +4,12 @@ local levels = vim.log.levels
 
 local M = {}
 
+---@class HighlightAttributes
+---@field from string
+---@field attr 'foreground' | 'fg' | 'background' | 'bg'
+---@field alter integer
+
+
 ---Convert a hex color to RGB
 ---@param color string
 ---@return number
@@ -43,38 +49,44 @@ local function get(group_name)
   return {}
 end
 
----@class HLAttrs
----@field from string
----@field attr 'foreground' | 'fg' | 'background' | 'bg'
-
----This helper takes a table of highlights and converts any highlights
----specified as `highlight_prop = { from = 'group'}` into the underlying colour
----by querying the highlight property of the from group so it can be used when specifying highlights
----as a shorthand to derive the right color.
----For example:
----```lua
----  M.set({ MatchParen = {foreground = {from = 'ErrorMsg'}}})
----```
----This will take the foreground colour from ErrorMsg and set it to the foreground of MatchParen.
----@param opts table<string, string|boolean|HLAttrs>
-local function convert_hl_to_val(opts)
-  for name, value in pairs(opts) do
-    if type(value) == 'table' and value.from then
-      opts[name] = M.get(value.from, vim.F.if_nil(value.attribute, name))
-      if value.alter then opts[name] = M.alter_color(opts[name], value.alter) end
-    end
+---@param group_name string A highlight group name
+local function get_hl(group_name)
+  local ok, hl = pcall(api.nvim_get_hl_by_name, group_name, true)
+  if ok then
+    hl.foreground = hl.foreground and '#' .. bit.tohex(hl.foreground, 6)
+    hl.background = hl.background and '#' .. bit.tohex(hl.background, 6)
+    hl[true] = nil -- BUG: API returns a true key which errors during the merge
+    return hl
   end
+  return {}
 end
 
+--- Sets a neovim highlight with some syntactic sugar. It takes a highlight table and converts
+--- any highlights specified as `GroupName = { from = 'group'}` into the underlying colour
+--- by querying the highlight property of the from group so it can be used when specifying highlights
+--- as a shorthand to derive the right color.
+--- For example:
+--- ```lua
+---   M.set({ MatchParen = {foreground = {from = 'ErrorMsg'}}})
+--- ```
+--- This will take the foreground colour from ErrorMsg and set it to the foreground of MatchParen.
 ---@param name string
----@param opts table
+---@param opts table<string, string|boolean|HighlightAttributes>
 function M.set(name, opts)
   assert(name and opts, "Both 'name' and 'opts' must be specified")
-  local hl = get(opts.inherit or name)
-  convert_hl_to_val(opts)
+
+  local hl = get_hl(opts.inherit or name)
   opts.inherit = nil
+
+  for attr, value in pairs(opts) do
+    if type(value) == 'table' and value.from then
+      opts[attr] = M.get(value.from, vim.F.if_nil(value.attr, attr))
+      if value.alter then opts[attr] = M.alter_color(opts[attr], value.alter) end
+    end
+  end
+
   local ok, msg = pcall(api.nvim_set_hl, 0, name, vim.tbl_deep_extend('force', hl, opts))
-  if not ok then vim.notify(fmt('Failed to set %s because: %s', name, msg)) end
+  if not ok then vim.notify(fmt('Failed to set %s because - %s', name, msg)) end
 end
 
 ---Get the value a highlight group whilst handling errors, fallbacks nvim well as returning a gui value
@@ -108,7 +120,7 @@ function M.clear_hl(name)
 end
 
 ---Apply a list of highlights
----@param hls table<string, table<string, boolean|string|HLAttrs>>
+---@param hls table<string, table<string, boolean|string|HighlightAttributes>>
 function M.all(hls)
   for name, hl in pairs(hls) do
     M.set(name, hl)
