@@ -4,12 +4,8 @@ return function()
   local builtins = null_ls.builtins
   local diagnostics = builtins.diagnostics
   local formatting = builtins.formatting
-  local code_actions = builtins.code_actions
   null_ls.setup({
     sources = {
-      -- codeactions
-      code_actions.shellcheck,
-      code_actions.gitsigns,
       -- linters
       diagnostics.zsh,
       diagnostics.flake8,
