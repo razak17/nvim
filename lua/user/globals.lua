@@ -65,7 +65,7 @@ end
 function rvim.fold(callback, list, accum)
   for k, v in pairs(list) do
     accum = callback(accum, v, k)
-    assert(accum, 'The accumulator must be returned on each iteration')
+    assert(accum ~= nil, 'The accumulator must be returned on each iteration')
   end
   return accum
 end
@@ -88,6 +88,18 @@ function rvim.foreach(callback, list)
   for k, v in pairs(list) do
     callback(v, k)
   end
+end
+
+--- Check if the target matches  any item in the list.
+---@param target string
+---@param list string[]
+---@return boolean
+function rvim.any(target, list)
+  return rvim.fold(function(accum, item)
+    if accum then return accum end
+    if target:match(item) then return true end
+    return accum
+  end, list, false)
 end
 
 ---Find an item in a list
@@ -186,7 +198,7 @@ function rvim.safe_require(module, opts)
   return ok, result
 end
 
- ---@alias Plug table<(string | number), string>
+---@alias Plug table<(string | number), string>
 
 --- A convenience wrapper that calls the ftplugin config for a plugin if it exists
 --- and warns me if the plugin is not installed
