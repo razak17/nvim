@@ -5,12 +5,8 @@ local function general_overrides()
   local comment_fg = util.get('Comment', 'fg')
   local keyword_fg = util.get('Keyword', 'fg')
   local search_bg = util.get('Search', 'bg')
-  -- local error_line = util.alter_color(P.error_red, -80)
-  local msg_area_bg = rvim.ui.transparent_window and 'NONE' or P.darker_bg
   util.all({
-    MsgArea = { background = msg_area_bg },
     mkdLineBreak = { link = 'NONE' },
-    -- Directory = { inherit = "Keyword", bold = true },
     URL = { foreground = P.blue, underline = true },
     ------------------------------------------------------------------------------------------------
     CursorLineSign = { link = 'CursorLine' },
@@ -23,14 +19,11 @@ local function general_overrides()
     ------------------------------------------------------------------------------------------------
     -- colorscheme overrides
     ------------------------------------------------------------------------------------------------
-    -- Comment = { italic = true } ,
     Include = { italic = true },
-    -- Type = { italic = true, bold = true } ,
     Folded = {
       background = 'NONE',
       foreground = comment_fg,
       bold = true,
-      -- italic = true,
     },
     QuickFixLine = { background = search_bg },
     Visual = {
