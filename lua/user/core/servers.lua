@@ -154,24 +154,32 @@ local servers = {
       },
     },
   },
-  sumneko_lua = {
-    settings = {
-      Lua = {
-        runtime = { version = 'LuaJIT' },
-        format = { enable = false },
-        diagnostics = {
-          globals = { 'vim', 'describe', 'it', 'before_each', 'after_each', 'packer_plugins' },
-        },
-        workspace = {
-          library = {
-            [join_paths(rvim.get_config_dir(), 'lua')] = true,
-            [join_paths(rvim.get_runtime_dir(), 'site/pack/packer/start/emmylua-nvim')] = true,
+  sumneko_lua = function()
+    local path = vim.split(package.path, ';')
+    table.insert(path, 'lua/?.lua')
+    table.insert(path, 'lua/?/init.lua')
+
+    local plugins = ('%s/site/pack/packer'):format(rvim.get_runtime_dir())
+    local emmy = ('%s/start/emmylua-nvim'):format(plugins)
+    local plenary = ('%s/start/plenary.nvim'):format(plugins)
+    local packer = ('%s/opt/packer.nvim'):format(plugins)
+
+    return {
+      settings = {
+        Lua = {
+          runtime = { version = 'LuaJIT' },
+          format = { enable = false },
+          diagnostics = {
+            globals = { 'vim', 'describe', 'it', 'before_each', 'after_each', 'packer_plugins' },
+          },
+          workspace = {
+            library = { vim.env.VIMRUNTIME, emmy, packer, plenary },
           },
           telemetry = { enable = false },
         },
       },
-    },
-  },
+    }
+  end,
   tailwindcss = {
     root_dir = require('lspconfig').util.root_pattern(
       'tailwind.config.js',
