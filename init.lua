@@ -9,35 +9,6 @@
 local init_path = debug.getinfo(1, 'S').source:sub(2)
 local base_dir = init_path:match('(.*[/\\])'):sub(1, -2)
 
-<<<<<<< HEAD
-vim.cmd [[syntax off]]
-vim.cmd [[filetype off]]
-
--- Load base config
-if fn.filereadable(fn.fnamemodify("~/.vimrc.local", ":p")) > 0 then
-  cmd [[source ~/.vimrc.local]]
-end
-
--- Bootstrap
-local home_dir = vim.loop.os_homedir()
-
-vim.opt.rtp:append(home_dir .. "/.local/share/rvim/site")
-
-vim.opt.rtp:remove(home_dir .. "/.config/nvim")
-vim.opt.rtp:remove(home_dir .. "/.config/nvim/after")
-vim.opt.rtp:append(home_dir .. "/.config/rvim")
-vim.opt.rtp:append(home_dir .. "/.config/rvim/after")
-
-vim.opt.rtp:remove(home_dir .. "/.local/share/nvim/site")
-vim.opt.rtp:remove(home_dir .. "/.local/share/nvim/site/after")
-vim.opt.rtp:append(home_dir .. "/.local/share/rvim/site")
-vim.opt.rtp:append(home_dir .. "/.local/share/rvim/site/after")
-
-vim.cmd [[let &packpath = &runtimepath]]
-
--- Load Modules
-require "core"
-=======
 if not vim.tbl_contains(vim.opt.rtp:get(), base_dir) then vim.opt.rtp:append(base_dir) end
 
 vim.api.nvim_create_augroup('vimrc', {}) -- Ensure all autocommands are cleared
@@ -68,4 +39,3 @@ _G.rvim = rvim or namespace
 R('user.globals')
 R('user.bootstrap')
 R('user.config')
->>>>>>> origin/dual

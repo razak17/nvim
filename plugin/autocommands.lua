@@ -1,30 +1,10 @@
-<<<<<<< HEAD:plugin/autocommands.lua
-local g = vim.g
-=======
 if not rvim then return end
 
->>>>>>> origin/dual:plugin/autocmds.lua
 local fn = vim.fn
 local api = vim.api
 local fmt = string.format
 
 local smart_close_filetypes = {
-<<<<<<< HEAD:plugin/autocommands.lua
-  "help",
-  "git-status",
-  "git-log",
-  "gitcommit",
-  "dbui",
-  "fugitive",
-  "fugitiveblame",
-  "LuaTree",
-  "NvimTree",
-  "log",
-  "tsplayground",
-  "qf",
-  "lspinfo",
-  "packer",
-=======
   'help',
   'git-status',
   'git-log',
@@ -40,7 +20,6 @@ local smart_close_filetypes = {
   'packer',
   'lspinfo',
   'neotest-summary',
->>>>>>> origin/dual:plugin/autocmds.lua
 }
 
 local smart_close_buftypes = {} -- Don't include no file buffers rvim diff buffers are nofile
@@ -129,19 +108,6 @@ rvim.augroup('TrimWhitespace', {
   },
 })
 
-<<<<<<< HEAD:plugin/autocommands.lua
--- See :h skeleton
-rvim.augroup("Templates", {
-  {events = {"BufNewFile"}, targets = {"*.sh"}, command = "0r" .. g.templates_dir .. "/skeleton.sh"},
-  {
-    events = {"BufNewFile"},
-    targets = {"*.lua"},
-    command = "0r" .. g.templates_dir .. "/skeleton.lua",
-  },
-})
-
-=======
->>>>>>> origin/dual:plugin/autocmds.lua
 --- automatically clear commandline messages after a few seconds delay
 --- source: http//unix.stackexchange.com/a/613645
 rvim.augroup('ClearCommandMessages', {
@@ -162,35 +128,11 @@ rvim.augroup('TextYankHighlight', {
     event = { 'TextYankPost' },
     pattern = { '*' },
     command = function()
-<<<<<<< HEAD:plugin/autocommands.lua
-      require("vim.highlight").on_yank {timeout = 77, on_visual = false, higroup = "Visual"}
-=======
       require('vim.highlight').on_yank({ timeout = 277, on_visual = false, higroup = 'Visual' })
->>>>>>> origin/dual:plugin/autocmds.lua
     end,
   },
 })
 
-<<<<<<< HEAD:plugin/autocommands.lua
-local column_exclude = {"gitcommit"}
-local column_clear = {
-  "dashboard",
-  "Packer",
-  "qf",
-  "help",
-  "text",
-  "Trouble",
-  "fugitive",
-  "NvimTree",
-  "log",
-  "fTerm",
-  "TelescopePrompt",
-  "lspinfo",
-  "lspinfo",
-  "which_key",
-  "packer",
-  "slide",
-=======
 local column_exclude = { 'gitcommit' }
 local column_block_list = {
   'DiffviewFileHistory',
@@ -212,7 +154,6 @@ local column_block_list = {
   'which_key',
   'packer',
   'dap-repl',
->>>>>>> origin/dual:plugin/autocmds.lua
 }
 local function check_color_column()
   for _, win in ipairs(api.nvim_list_wins()) do
@@ -237,93 +178,6 @@ rvim.augroup('CustomColorColumn', {
   },
 })
 
-<<<<<<< HEAD:plugin/autocommands.lua
---- Set or unset the cursor line depending on the filetype of the buffer and its eligibility
----@param leaving boolean?
--- local function check_cursor_line(leaving)
---   if contains(column_exclude, vim.bo.filetype) then
---     return
---   end
---   if contains(column_clear, vim.bo.filetype) or not_eligible or leaving then
---     vim.wo.cursorline = false
---     return
---   end
---   if not contains(column_clear, vim.bo.filetype) and vim.wo.cursorline == false then
---     vim.wo.cursorline = true
---   end
--- end
-
--- rvim.augroup("CustomCursorLine", {
---   {
---     events = { "InsertEnter" },
---     targets = { "*" },
---     command = "setlocal nocursorline | autocmd InsertLeave <buffer> set cursorline",
---   },
---   {
---     events = { "VimResized", "FocusGained", "WinEnter", "BufEnter" },
---     targets = { "*" },
---     command = function()
---       check_cursor_line()
---     end,
---   },
---   {
---     events = { "FocusLost", "WinLeave" },
---     targets = { "*" },
---     command = function()
---       check_cursor_line(true)
---     end,
---   },
--- })
-
-rvim.augroup("CustomFormatOptions", {
-  {
-    events = {"VimEnter", "BufWinEnter", "BufRead", "BufNewFile"},
-    targets = {"*"},
-    command = "setlocal formatoptions-=c formatoptions-=r formatoptions-=o",
-  },
-})
-
-rvim.augroup("PackerSetupInit", {
-  {
-    events = {"BufWritePost"},
-    targets = {vim.g.vim_path .. "/lua/core/config.lua"},
-    command = function()
-      vim.cmd [[source ~/.config/rvim/lua/core/config.lua]]
-      vim.cmd [[source ~/.config/rvim/lua/core/opts.lua]]
-      vim.cmd [[source ~/.config/rvim/lua/core/binds.lua]]
-      local plug = require "core.plugins"
-      plug.magic_compile()
-      plug.load_compile()
-      vim.notify("packer compiled...", {timeout = 1000})
-    end,
-  },
-  -- {
-  --   events = { "BufWritePost" },
-  --   targets = {
-  --     vim.g.vim_path .. "/lua/core/plugins.lua",
-  --     vim.g.vim_path .. "/lua/modules/**/*.lua",
-  --   },
-  --   command = function()
-  --     local plug = require "core.plugins"
-  --     local files = vim.api.nvim_eval [[sort(glob(g:modules_dir .. '/*/*.lua', '', v:true))]]
-  --     vim.cmd [[source ~/.config/rvim/lua/core/plugins.lua]]
-  --     for _, file in ipairs(files) do
-  --       vim.cmd("source " .. file)
-  --     end
-  --     plug.ensure_plugins()
-  --     plug.magic_compile()
-  --     plug.load_compile()
-  --     plug.install()
-  --     local null_ls = require "lsp.null-ls"
-  --     null_ls.setup(vim.bo.filetype, { force_reload = true })
-  --     vim.notify("Reload plugins...", { timeout = 1000 })
-  --   end,
-  -- },
-})
-
-rvim.augroup("UpdateVim", {
-  {events = {"FocusLost"}, targets = {"*"}, command = "silent! wall"},
-=======
 rvim.augroup('CustomFormatOptions', {
   {
     event = { 'VimEnter', 'BufWinEnter', 'BufRead', 'BufNewFile' },
@@ -333,7 +187,6 @@ rvim.augroup('CustomFormatOptions', {
 })
 
 rvim.augroup('UpdateVim', {
->>>>>>> origin/dual:plugin/autocmds.lua
   -- Make windows equal size when vim resizes
   { event = { 'VimResized' }, pattern = { '*' }, command = 'wincmd =' },
 })
@@ -350,10 +203,6 @@ rvim.augroup('WinBehavior', {
     pattern = { '*' },
     command = [[if has('nvim') | wshada! | else | wviminfo! | endif]],
   },
-<<<<<<< HEAD:plugin/autocommands.lua
-  {events = {"FocusLost"}, targets = {"*"}, command = "silent! wall"},
-  {events = {"TermOpen"}, targets = {"*:zsh"}, command = "startinsert"},
-=======
   {
     event = { 'FocusLost' },
     pattern = { '*' },
@@ -411,7 +260,6 @@ rvim.augroup('Cursorline', {
     pattern = { '*' },
     command = function() vim.wo.cursorline = false end,
   },
->>>>>>> origin/dual:plugin/autocmds.lua
 })
 
 if vim.env.TMUX ~= nil then
@@ -441,14 +289,10 @@ if vim.env.TMUX ~= nil then
       event = { 'ColorScheme', 'FocusGained' },
       pattern = { '*' },
       command = function()
-<<<<<<< HEAD:plugin/autocommands.lua
-        fn.jobstart "tmux set-window-option automatic-rename on"
-=======
         -- NOTE: there is a race condition here rvim the colors
         -- for kitty to re-use need to be set AFTER the rest of the colorscheme
         -- overrides
         vim.defer_fn(function() external.tmux.set_statusline() end, 1)
->>>>>>> origin/dual:plugin/autocmds.lua
       end,
     },
   })
