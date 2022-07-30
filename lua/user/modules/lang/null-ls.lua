@@ -10,7 +10,6 @@ return function()
       -- codeactions
       code_actions.shellcheck,
       code_actions.gitsigns,
-      null_ls.builtins.code_actions.eslint_d,
       -- linters
       diagnostics.zsh,
       diagnostics.flake8,
