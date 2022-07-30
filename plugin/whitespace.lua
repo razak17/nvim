@@ -31,14 +31,14 @@ local function toggle_trailing(mode)
   end
 end
 
-util.set_hl('ExtraWhitespace', { foreground = 'red' })
+util.set('ExtraWhitespace', { foreground = 'red' })
 
 rvim.augroup('WhitespaceMatch', {
   {
     event = { 'ColorScheme' },
     desc = 'Add extra whitespace highlight',
     pattern = { '*' },
-    command = function() util.set_hl('ExtraWhitespace', { foreground = 'red' }) end,
+    command = function() util.set('ExtraWhitespace', { foreground = 'red' }) end,
   },
   {
     event = { 'BufEnter', 'FileType', 'InsertLeave' },

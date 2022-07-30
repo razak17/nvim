@@ -53,7 +53,7 @@ end
 ---as a shorthand to derive the right color.
 ---For example:
 ---```lua
----  M.set_hl({ MatchParen = {foreground = {from = 'ErrorMsg'}}})
+---  M.set({ MatchParen = {foreground = {from = 'ErrorMsg'}}})
 ---```
 ---This will take the foreground colour from ErrorMsg and set it to the foreground of MatchParen.
 ---@param opts table<string, string|boolean|HLAttrs>
@@ -68,7 +68,7 @@ end
 
 ---@param name string
 ---@param opts table
-function M.set_hl(name, opts)
+function M.set(name, opts)
   assert(name and opts, "Both 'name' and 'opts' must be specified")
   local hl = get(opts.inherit or name)
   convert_hl_to_val(opts)
@@ -111,7 +111,7 @@ end
 ---@param hls table<string, table<string, boolean|string|HLAttrs>>
 function M.all(hls)
   for name, hl in pairs(hls) do
-    M.set_hl(name, hl)
+    M.set(name, hl)
   end
 end
 
