@@ -54,6 +54,7 @@ package({
 
 package({
   'xiyaowong/accelerated-jk.nvim',
+  event = { 'BufWinEnter' },
   config = function()
     if not rvim.plugin_installed('accelerated-jk.nvim') then return end
     require('accelerated-jk').setup({
