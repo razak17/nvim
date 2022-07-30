@@ -24,29 +24,24 @@ package({
   'ahmedkhalf/project.nvim',
   config = function()
     if not rvim.plugin_installed('project.nvim') then return end
-    rvim.project = {
-      setup = {
-        active = true,
-        manual_mode = false,
-        detection_methods = { 'pattern', 'lsp' },
-        patterns = {
-          '.git',
-          '.hg',
-          '.svn',
-          'Makefile',
-          'package.json',
-          '.luacheckrc',
-          '.stylua.toml',
-        },
-        show_hidden = false,
-        silent_chdir = true,
-        ignore_lsp = { 'null-ls' },
-        datapath = rvim.get_cache_dir(),
+    require('project_nvim').setup({
+      active = true,
+      manual_mode = false,
+      detection_methods = { 'pattern', 'lsp' },
+      patterns = {
+        '.git',
+        '.hg',
+        '.svn',
+        'Makefile',
+        'package.json',
+        '.luacheckrc',
+        '.stylua.toml',
       },
-    }
-    local status_ok, project_nvim = rvim.safe_require('project_nvim')
-    if not status_ok then return end
-    project_nvim.setup(rvim.project.setup)
+      show_hidden = false,
+      silent_chdir = true,
+      ignore_lsp = { 'null-ls' },
+      datapath = rvim.get_cache_dir(),
+    })
   end,
 })
 
