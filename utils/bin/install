@@ -4,7 +4,7 @@
 RVIM_CONFIG_DIR="${RVIM_CONFIG_DIR:-"$XDG_CONFIG_HOME/rvim"}"
 RVIM_RUNTIME_DIR="${RVIM_RUNTIME_DIR:-"$XDG_DATA_HOME/rvim"}"
 RV_BRANCH="${RV_BRANCH:-"main"}"
-RV_REMOTE="${RV_REMOTE:-razak17/nvim.git}"
+RV_REMOTE="${RV_REMOTE:-razak17/nvim}"
 
 asktoinstallgit() {
 	echo "git not found, please install git"
@@ -74,11 +74,7 @@ yayExtra() {
 
 importRvim() {
   echo "Cloning rVim configuration"
-  if ! git clone --branch "$RV_BRANCH" \
-    --depth 1 "https://github.com/${RV_REMOTE}" "$RVIM_CONFIG_DIR"; then
-    echo "Failed to clone repository. Installation failed."
-    exit 1
-  fi
+  git clone  "https://github.com/${RV_REMOTE}" "$RVIM_CONFIG_DIR"
 }
 
 validate_node_installation() {
