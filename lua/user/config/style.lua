@@ -256,5 +256,4 @@ rvim.style = {
 -- Global style settings
 ----------------------------------------------------------------------------------------------------
 -- Some styles can be tweak here to apply globally i.e. by setting the current value for that style
-
 rvim.style.border.current = rvim.style.border.line
