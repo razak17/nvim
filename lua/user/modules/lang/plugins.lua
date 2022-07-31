@@ -124,7 +124,6 @@ package({
           require('lspconfig')[name].setup(config)
         end
       end,
-      gopls = require('user.modules.lang.go'),
     })
   end,
 })
@@ -151,6 +150,11 @@ package({
       },
     })
   end,
+})
+
+package({
+  'olexsmir/gopher.nvim',
+  requires = { 'nvim-lua/plenary.nvim', 'nvim-treesitter/nvim-treesitter' },
 })
 
 -- Treesitter
