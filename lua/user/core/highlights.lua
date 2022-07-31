@@ -51,7 +51,7 @@ local function general_overrides()
     -- This represents when a reference is assigned which is more interesting than regular
     -- occurrences so should be highlighted more distinctly
     LspReferenceWrite = { underline = true, bold = true, italic = true, background = 'NONE' },
-    MatchWord = { fg = { from = 'DiffRemoved' }, underline = false, cterm = { underline = false } },
+    MatchWord = { fg = { from = 'diffRemoved' }, underline = false, cterm = { underline = false } },
   })
 end
 
