@@ -32,7 +32,7 @@ function Packer:bootstrap_packer()
     vim.cmd.packadd({ 'packer.nvim', bang = true })
     packer = require('packer')
   end
-  -- rvim.safe_require('impatient')
+  rvim.safe_require('impatient')
   packer.init({
     package_root = join_paths(rvim.get_runtime_dir(), 'site/pack/'),
     compile_path = rvim.paths.packer_compiled,
