@@ -7,7 +7,7 @@ local function general_overrides()
   local comment_fg = util.get('Comment', 'fg')
   local search_bg = util.get('Search', 'bg')
   util.all({
-    Dim = { foreground = { from = 'Normal', attr = 'bg', alter = 25 } },
+    Dim = { foreground = { from = 'Normal', attr = 'bg', alter = 50 } },
     mkdLineBreak = { link = 'NONE' },
     URL = { foreground = P.blue, underline = true },
     ------------------------------------------------------------------------------------------------
@@ -28,10 +28,6 @@ local function general_overrides()
       bold = true,
     },
     QuickFixLine = { background = search_bg },
-    Visual = {
-      foreground = 'NONE',
-      background = util.alter_color(P.pale_blue, -50),
-    },
     -- Neither the sign column or end of buffer highlights require an explicit background
     -- they should both just use the background that is in the window they are in.
     -- if either are specified this can lead to issues when a winhighlight is set
@@ -44,9 +40,6 @@ local function general_overrides()
       underline = true,
       sp = 'white',
     },
-    ------------------------------------------------------------------------------------------------
-    -- Treesitter
-    ------------------------------------------------------------------------------------------------
     TSNamespace = { foreground = P.pale_pink, italic = true, bold = true },
     TSKeywordReturn = { italic = true, foreground = { from = 'Keyword' } },
     TSConstructor = { foreground = P.teal, italic = true, bold = true },
@@ -55,23 +48,12 @@ local function general_overrides()
     -- FIXME: this should be removed once
     -- https://github.com/nvim-treesitter/nvim-treesitter/issues/3213 is resolved
     yamlTSError = { link = 'None' },
-    -- FIXME: commentshighlight
-    commentTSWarning = { background = P.teal, foreground = P.base0, bold = true },
-    commentTSDanger = { background = P.dark_green, foreground = P.base0, bold = true },
-    commentTSNote = { background = P.blue, foreground = P.base0, bold = true },
-    CommentTasksTodo = { link = 'commentTSWarning' },
-    CommentTasksFixme = { link = 'commentTSDanger' },
-    CommentTasksNote = { link = 'commentTSNote' },
-    ------------------------------------------------------------------------------------------------
-    -- LSP
-    ------------------------------------------------------------------------------------------------
     LspCodeLens = { link = 'NonText' },
-    LspReferenceText = { underline = true, background = 'NONE' },
-    LspReferenceRead = { underline = true, background = 'NONE' },
+    LspReferenceText = { underline = true, background = 'NONE', sp = P.comment_grey },
+    LspReferenceRead = { underline = true, background = 'NONE', sp = P.comment_grey },
     -- This represents when a reference is assigned which is more interesting than regular
     -- occurrences so should be highlighted more distinctly
     LspReferenceWrite = { underline = true, bold = true, italic = true, background = 'NONE' },
-
     MatchWord = { fg = P.red, underline = false, cterm = { underline = false } },
     SLCopilot = { fg = P.forest_green, bg = P.dark },
   })
