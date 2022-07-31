@@ -1,6 +1,5 @@
-if not rvim.plugin_installed('zephyr-nvim') then return end
+if not rvim then return end
 
-local P = require('zephyr.palette')
 local util = require('user.utils.highlights')
 
 local function general_overrides()
@@ -49,8 +48,6 @@ local function general_overrides()
     -- https://github.com/nvim-treesitter/nvim-treesitter/issues/3213 is resolved
     yamlTSError = { link = 'None' },
     LspCodeLens = { link = 'NonText' },
-    LspReferenceText = { underline = true, background = 'NONE', sp = P.gray },
-    LspReferenceRead = { underline = true, background = 'NONE', sp = P.gray },
     -- This represents when a reference is assigned which is more interesting than regular
     -- occurrences so should be highlighted more distinctly
     LspReferenceWrite = { underline = true, bold = true, italic = true, background = 'NONE' },
