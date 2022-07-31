@@ -13,7 +13,7 @@ local function general_overrides()
     CursorLineSign = { link = 'CursorLine' },
     LineNr = { background = 'NONE' },
     FoldColumn = { background = 'background' },
-    TermCursor = { ctermfg = 'green', foreground = { from = 'WinSeparator' } },
+    TermCursor = { ctermfg = 'green', foreground = { from = 'NormalFloat' } },
     -- Add undercurl to existing spellbad highlight
     SpellBad = { undercurl = true, background = 'NONE', foreground = 'NONE', sp = 'green' },
     SpellRare = { undercurl = true },
