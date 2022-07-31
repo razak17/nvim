@@ -9,12 +9,12 @@ local function general_overrides()
   util.all({
     Dim = { foreground = { from = 'Normal', attr = 'bg', alter = 50 } },
     mkdLineBreak = { link = 'NONE' },
-    URL = { foreground = P.blue, underline = true },
+    URL = { foreground = { from = 'WinSeparator' }, underline = true },
     ------------------------------------------------------------------------------------------------
     CursorLineSign = { link = 'CursorLine' },
     LineNr = { background = 'NONE' },
     FoldColumn = { background = 'background' },
-    TermCursor = { ctermfg = 'green', foreground = 'royalblue' },
+    TermCursor = { ctermfg = 'green', foreground = { from = 'WinSeparator' } },
     -- Add undercurl to existing spellbad highlight
     SpellBad = { undercurl = true, background = 'NONE', foreground = 'NONE', sp = 'green' },
     SpellRare = { undercurl = true },
@@ -40,41 +40,35 @@ local function general_overrides()
       underline = true,
       sp = 'white',
     },
-    TSNamespace = { foreground = P.pale_pink, italic = true, bold = true },
+    TSNamespace = { foreground = { from = 'TSFunction' }, italic = true, bold = true },
     TSKeywordReturn = { italic = true, foreground = { from = 'Keyword' } },
-    TSConstructor = { foreground = P.teal, italic = true, bold = true },
+    TSConstructor = { foreground = { from = 'TSType' }, italic = true, bold = true },
     TSError = { undercurl = true, sp = 'DarkRed', foreground = 'NONE' },
     TSParameter = { italic = true, bold = true, foreground = 'NONE' },
     -- FIXME: this should be removed once
     -- https://github.com/nvim-treesitter/nvim-treesitter/issues/3213 is resolved
     yamlTSError = { link = 'None' },
     LspCodeLens = { link = 'NonText' },
-    LspReferenceText = { underline = true, background = 'NONE', sp = P.comment_grey },
-    LspReferenceRead = { underline = true, background = 'NONE', sp = P.comment_grey },
+    LspReferenceText = { underline = true, background = 'NONE', sp = P.gray },
+    LspReferenceRead = { underline = true, background = 'NONE', sp = P.gray },
     -- This represents when a reference is assigned which is more interesting than regular
     -- occurrences so should be highlighted more distinctly
     LspReferenceWrite = { underline = true, bold = true, italic = true, background = 'NONE' },
-    MatchWord = { fg = P.red, underline = false, cterm = { underline = false } },
-    SLCopilot = { fg = P.forest_green, bg = P.dark },
+    MatchWord = { fg = { from = 'DiffRemoved' }, underline = false, cterm = { underline = false } },
   })
 end
 
 local function set_sidebar_highlight()
-  local normal_bg = util.get('Normal', 'bg')
-  local split_color = util.get('VertSplit', 'fg')
-  local dark_bg = util.alter_color(normal_bg, -43)
-  local bg_color = util.alter_color(P.bg, -20)
-  local st_color = util.alter_color(util.get('Visual', 'bg'), -10)
   util.all({
-    PanelDarkBackground = { bg = dark_bg },
-    PanelDarkHeading = { bg = dark_bg, bold = true },
-    PanelBackground = { link = 'Normal' },
-    PanelHeading = { background = bg_color, bold = true },
-    PanelVertSplit = { foreground = split_color, background = bg_color },
-    PanelVertSplitAlt = { foreground = bg_color, background = bg_color },
-    PanelWinSeparator = { foreground = split_color, background = bg_color },
-    PanelStNC = { background = st_color, cterm = { italic = true } },
-    PanelSt = { background = st_color },
+    PanelDarkBackground = { bg = { from = 'Normal', alter = -43 } },
+    PanelDarkHeading = { inherit = 'PanelDarkBackground', bold = true },
+    PanelBackground = { background = { from = 'Normal', alter = -8 } },
+    PanelHeading = { inherit = 'PanelBackground', bold = true },
+    PanelVertSplit = { inherit = 'PanelBackground', foreground = { from = 'WinSeparator' } },
+    PanelVertSplitAlt = { inherit = 'PanelBackground', foreground = { from = 'WinSeparator' } },
+    PanelWinSeparator = { inherit = 'PanelBackground', foreground = { from = 'WinSeparator' } },
+    PanelStNC = { link = 'PanelWinSeparator' },
+    PanelSt = { background = { from = 'Visual', alter = -10 } },
   })
 end
 
