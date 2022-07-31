@@ -20,6 +20,7 @@ local function general_overrides()
     ------------------------------------------------------------------------------------------------
     -- colorscheme overrides
     ------------------------------------------------------------------------------------------------
+    Visual = { foreground = { from = 'Search' } },
     Include = { italic = true },
     Folded = {
       background = 'NONE',
