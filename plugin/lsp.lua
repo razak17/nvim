@@ -179,13 +179,17 @@ end
 local function setup_plugins(client, bufnr)
   -- vim-illuminate
   if rvim.lsp.document_highlight then
-    local status_ok, illuminate = rvim.safe_require('illuminate')
-    if not status_ok then return end
-    illuminate.on_attach(client)
+    local illuminate_ok, illuminate = pcall(require, 'illuminate')
+    if illuminate_ok then illuminate.on_attach(client) end
   end
   -- nvim-navic
-  local ok, navic = pcall(require, 'nvim-navic')
-  if ok and client.server_capabilities.documentSymbolProvider then navic.attach(client, bufnr) end
+  local navic_ok, navic = pcall(require, 'nvim-navic')
+  if navic_ok and client.server_capabilities.documentSymbolProvider then
+    navic.attach(client, bufnr)
+  end
+  -- lsp-inlayhints
+  local hints_ok, hints = pcall(require, 'lsp-inlayhints')
+  if hints_ok then hints.on_attach(bufnr, client) end
 end
 
 -- Add buffer local mappings, autocommands etc for attaching servers

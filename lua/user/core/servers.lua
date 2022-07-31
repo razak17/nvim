@@ -109,6 +109,14 @@ local servers = {
           test = true,
           tidy = true,
         },
+        hints = {
+          assignVariableTypes = true,
+          compositeLiteralFields = true,
+          constantValues = true,
+          functionTypeParameters = true,
+          parameterNames = true,
+          rangeVariableTypes = true,
+        },
         analyses = {
           unusedparams = true,
           loopclosure = true,
@@ -167,7 +175,8 @@ local servers = {
     return {
       settings = {
         Lua = {
-          runtime = { version = 'LuaJIT' },
+          runtime = { path = path, version = 'LuaJIT' },
+          hint = { enable = true, arrayIndex = 'Disable', setType = true },
           format = { enable = false },
           diagnostics = {
             globals = { 'vim', 'describe', 'it', 'before_each', 'after_each', 'packer_plugins' },
