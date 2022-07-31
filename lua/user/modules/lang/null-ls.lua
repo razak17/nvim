@@ -10,6 +10,7 @@ return function()
       diagnostics.zsh,
       diagnostics.flake8,
       diagnostics.eslint_d,
+      diagnostics.golangci_lint,
       diagnostics.shellcheck.with({ extra_args = { '--severity', 'warning' } }),
       -- formatters
       formatting.black.with({ extra_args = { '--fast' } }),
