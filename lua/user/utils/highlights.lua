@@ -82,7 +82,7 @@ end
 --- ```
 --- This will take the foreground colour from ErrorMsg and set it to the foreground of MatchParen.
 ---@param name string
- ---@param opts HighlightKeys
+---@param opts HighlightKeys
 function M.set(name, opts)
   assert(name and opts, "Both 'name' and 'opts' must be specified")
 
@@ -131,11 +131,9 @@ function M.clear_hl(name)
 end
 
 ---Apply a list of highlights
----@param hls table<string, table<string, boolean|string|HighlightAttributes>>
+---@param hls table<string, HighlightKeys>
 function M.all(hls)
-  for name, hl in pairs(hls) do
-    M.set(name, hl)
-  end
+  rvim.foreach(function(hl, name) M.set(name, hl) end, hls)
 end
 
 ---------------------------------------------------------------------------------
