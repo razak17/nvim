@@ -260,6 +260,26 @@ package({
 })
 
 package({
+  'RRethy/vim-illuminate',
+  config = function()
+    if not rvim.plugin_installed('vim-illuminate') then return end
+    vim.g.Illuminate_ftblacklist = {
+      'alpha',
+      'NvimTree',
+      'dashboard',
+      'neo-tree',
+      'qf',
+      'lspinfo',
+      'lsp-installer',
+      'harpoon',
+      'packer',
+      'mason.nvim',
+      'help',
+    }
+  end,
+})
+
+package({
   'lvimuser/lsp-inlayhints.nvim',
   config = function()
     require('lsp-inlayhints').setup({
