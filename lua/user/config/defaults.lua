@@ -1,6 +1,6 @@
 rvim.paths = {
   snippets = join_paths(rvim.get_config_dir(), 'snippets', 'textmate'),
-  packer_compiled = join_paths(rvim.get_runtime_dir(), 'site', 'lua', '_compiled_rolling.lua'),
+  packer_compiled = join_paths(rvim.get_runtime_dir(), 'site', 'lua', '_compiled_nightly.lua'),
   node = join_paths(vim.env.FNMPATH, 'neovim-node-host'),
   python3 = join_paths(rvim.get_cache_dir(), 'venv', 'neovim', 'bin', 'python3'),
   vscode_lldb = join_paths(vim.env.HOME, '.vscode-oss', 'extensions', 'vadimcn.vscode-lldb-1.7.0'),

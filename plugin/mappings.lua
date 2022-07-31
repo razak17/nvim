@@ -582,24 +582,56 @@ nnoremap('<leader>u', '<cmd>UndotreeToggle<CR>', with_plugin('undotree: toggle',
 ----------------------------------------------------------------------------------------------------
 -- FTerm.nvim
 local function new_float(cmd)
-  cmd = fterm:new({ cmd = cmd, dimensions = { height = 0.9, width = 0.9 } }):toggle()
+  cmd = require('FTerm'):new({ cmd = cmd, dimensions = { height = 0.9, width = 0.9 } }):toggle()
 end
-nnoremap([[<c-\>]], function() fterm.toggle() end, with_plugin('fterm: toggle lazygit', 'FTerm.nvim'))
-tnoremap([[<c-\>]], function() fterm.toggle() end, with_plugin('fterm: toggle lazygit', 'FTerm.nvim'))
-nnoremap('<leader>lg', function() new_float('lazygit') end, with_plugin('fterm: toggle lazygit', 'FTerm.nvim'))
-nnoremap('<leader>gc', function() new_float('git add . && git commit -v -a') end, with_plugin('git: commit', 'FTerm.nvim'))
-nnoremap('<leader>gd', function() new_float('iconf -ccma') end, with_plugin('git: commit dotfiles', 'FTerm.nvim'))
+nnoremap(
+  [[<c-\>]],
+  function() require('FTerm').toggle() end,
+  with_plugin('fterm: toggle lazygit', 'FTerm.nvim')
+)
+tnoremap(
+  [[<c-\>]],
+  function() require('FTerm').toggle() end,
+  with_plugin('fterm: toggle lazygit', 'FTerm.nvim')
+)
+nnoremap(
+  '<leader>lg',
+  function() new_float('lazygit') end,
+  with_plugin('fterm: toggle lazygit', 'FTerm.nvim')
+)
+nnoremap(
+  '<leader>gc',
+  function() new_float('git add . && git commit -v -a') end,
+  with_plugin('git: commit', 'FTerm.nvim')
+)
+nnoremap(
+  '<leader>gd',
+  function() new_float('iconf -ccma') end,
+  with_plugin('git: commit dotfiles', 'FTerm.nvim')
+)
 nnoremap('<leader>tb', function() new_float('btop') end, with_plugin('fterm: btop', 'FTerm.nvim'))
 nnoremap('<leader>tn', function() new_float('node') end, with_plugin('fterm: node', 'FTerm.nvim'))
-nnoremap('<leader>tr', function() new_float('ranger') end, with_plugin('fterm: ranger', 'FTerm.nvim'))
-nnoremap('<leader>tp', function() new_float('python') end, with_plugin('fterm: python', 'FTerm.nvim'))
+nnoremap(
+  '<leader>tr',
+  function() new_float('ranger') end,
+  with_plugin('fterm: ranger', 'FTerm.nvim')
+)
+nnoremap(
+  '<leader>tp',
+  function() new_float('python') end,
+  with_plugin('fterm: python', 'FTerm.nvim')
+)
 ----------------------------------------------------------------------------------------------------
 -- nvim-neoclip.lua
 local function clip() require('telescope').extensions.neoclip.default(rvim.telescope.dropdown()) end
 nnoremap('<leader>fN', clip, with_plugin('neoclip: open yank history', 'nvim-neoclip.lua'))
 ----------------------------------------------------------------------------------------------------
 -- auto-session
-nnoremap('<leader>ss', '<cmd>RestoreSession<cr>', with_plugin('auto-session: restore', 'auto-session'))
+nnoremap(
+  '<leader>ss',
+  '<cmd>RestoreSession<cr>',
+  with_plugin('auto-session: restore', 'auto-session')
+)
 nnoremap('<leader>sl', '<cmd>SaveSession<cr>', with_plugin('auto-session: save', 'auto-session'))
 ----------------------------------------------------------------------------------------------------
 -- harpoon
@@ -627,9 +659,10 @@ nnoremap('<localleader>s', '<cmd>CheatSH<CR>', with_plugin('cheat-sheet: search'
 ----------------------------------------------------------------------------------------------------
 -- inc-rename.nvim
 nnoremap(
-'<leader>rn',
-function() return ':IncRename ' .. vim.fn.expand('<cword>') end,
-{ expr = true, silent = false, desc = 'inc-rename: inc rename', plugin = 'inc-rename.nvim' })
+  '<leader>rn',
+  function() return ':IncRename ' .. vim.fn.expand('<cword>') end,
+  { expr = true, silent = false, desc = 'inc-rename: inc rename', plugin = 'inc-rename.nvim' }
+)
 ----------------------------------------------------------------------------------------------------
 -- sniprun
 nnoremap('<leader>sr', ':SnipRun<cr>', with_plugin('sniprun: run', 'sniprun'))
@@ -639,27 +672,48 @@ nnoremap('<leader>sx', ':SnipReset<cr>', with_plugin('sniprun: reset', 'sniprun'
 ----------------------------------------------------------------------------------------------------
 -- diffview.nvim
 nnoremap('<localleader>gd', '<Cmd>DiffviewOpen<CR>', with_plugin('diffview: open', 'diffview.nvim'))
-nnoremap('<localleader>gh', '<Cmd>DiffviewFileHistory<CR>', with_plugin('diffview: file history', 'diffview.nvim'))
-vnoremap('gh', [[:'<'>DiffviewFileHistory<CR>]], with_plugin('diffview: file history', 'diffview.nvim'))
+nnoremap(
+  '<localleader>gh',
+  '<Cmd>DiffviewFileHistory<CR>',
+  with_plugin('diffview: file history', 'diffview.nvim')
+)
+vnoremap(
+  'gh',
+  [[:'<'>DiffviewFileHistory<CR>]],
+  with_plugin('diffview: file history', 'diffview.nvim')
+)
 ----------------------------------------------------------------------------------------------------
 -- UI {{{
 ----------------------------------------------------------------------------------------------------
 -- vim-illuminate
-nnoremap('<a-n>', ':lua require"illuminate".next_reference{wrap=true}<cr>', with_plugin('illuminate: next', 'vim-illuminate'))
-nnoremap('<a-p>', ':lua require"illuminate".next_reference{reverse=true,wrap=true}<cr>', with_plugin('illuminate: reverse', 'vim-illuminate'))
+nnoremap(
+  '<a-n>',
+  ':lua require"illuminate".next_reference{wrap=true}<cr>',
+  with_plugin('illuminate: next', 'vim-illuminate')
+)
+nnoremap(
+  '<a-p>',
+  ':lua require"illuminate".next_reference{reverse=true,wrap=true}<cr>',
+  with_plugin('illuminate: reverse', 'vim-illuminate')
+)
 ----------------------------------------------------------------------------------------------------
 -- cybu.nvim
-nnoremap('H', '<Plug>(CybuPrev)', with_plugin('cybu: prev', 'cybu.nvim'))
-nnoremap('L', '<Plug>(CybuNext)', with_plugin('cybu: next', 'cybu.nvim'))
+if rvim.plugin_installed('cybu.nvim') then
+  nnoremap('H', '<Plug>(CybuPrev)', 'cybu: prev')
+  nnoremap('L', '<Plug>(CybuNext)', 'cybu: next')
+else
+  nnoremap('H', '<cmd>bnext<CR>', 'next buffer')
+  nnoremap('L', '<cmd>bprevious<CR>', 'prev buffer')
+end
 ----------------------------------------------------------------------------------------------------
 -- Abbreviations
 ----------------------------------------------------------------------------------------------------
 vim.cmd([[
-cnoreabbrev W! w!
-cnoreabbrev Q! q!
-cnoreabbrev Wq wq
-cnoreabbrev wQ wq
-cnoreabbrev WQ wq
-cnoreabbrev W w
-cnoreabbrev Q q
+  cnoreabbrev W! w!
+  cnoreabbrev Q! q!
+  cnoreabbrev Wq wq
+  cnoreabbrev wQ wq
+  cnoreabbrev WQ wq
+  cnoreabbrev W w
+  cnoreabbrev Q q
 ]])
