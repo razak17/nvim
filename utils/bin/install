@@ -40,6 +40,8 @@ createDirs() {
 	mkdir -p "$HOME/.cache/rvim/undodir"
 	mkdir -p "$HOME/.cache/rvim/telescope"
 	mkdir -p "$HOME/.local/share/rvim"
+	mkdir -p "$HOME/.local/share/rvim/site"
+	mkdir -p "$HOME/.local/share/rvim/site/spell"
 }
 
 pythonVenvInit() {
@@ -118,7 +120,7 @@ install_nodejs_deps()        {
 
 install_dict() {
   url="https://raw.githubusercontent.com/eneko/data-repository/master/data/words.txt"
-  dicwords="$RVIM_RUNTIME_DIR/site/dictionary.txt"
+  dicwords="$RVIM_RUNTIME_DIR/site/spell/dictionary.txt"
   if [ ! -e "$dicwords" ]; then
     echo 'Installing dictionary.txt'
     curl "$url" -o "$dicwords" -s
