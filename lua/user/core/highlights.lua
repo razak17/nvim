@@ -7,7 +7,7 @@ local function general_overrides()
   local comment_fg = util.get('Comment', 'fg')
   local search_bg = util.get('Search', 'bg')
   util.all({
-    Dim = { foreground = { from = 'Normal', attr = 'bg', alter = 50 } },
+    Dim = { foreground = { from = 'Normal', attr = 'bg', alter = 20 } },
     mkdLineBreak = { link = 'NONE' },
     URL = { foreground = { from = 'WinSeparator' }, underline = true },
     ------------------------------------------------------------------------------------------------
