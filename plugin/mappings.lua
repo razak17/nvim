@@ -3,8 +3,11 @@ if not rvim then return end
 local g = vim.g
 local fn = vim.fn
 
-local nmap = rvim.nmap
 local imap = rvim.imap
+local nmap = rvim.nmap
+local omap = rvim.omap
+local xmap = rvim.xmap
+local vmap = rvim.vmap
 local nnoremap = rvim.nnoremap
 local xnoremap = rvim.xnoremap
 local vnoremap = rvim.vnoremap
@@ -408,6 +411,8 @@ nnoremap('<leader>=', '<C-W>=', 'balance window')
 nnoremap('<leader>ah', '<C-W>s', 'horizontal split')
 -- opens a vertical split
 nnoremap('<leader>V', '<C-W>v', 'vsplit')
+-- Buffers
+nnoremap('<leader>bc', '<cmd>CloseOther<CR>', 'close others')
 ----------------------------------------------------------------------------------------------------
 -- Undo
 ----------------------------------------------------------------------------------------------------
@@ -427,7 +432,7 @@ nnoremap('<C-j>', '<C-w>j')
 nnoremap('<C-k>', '<C-w>k')
 nnoremap('<C-l>', '<C-w>l')
 ----------------------------------------------------------------------------------------------------
--- rVim
+-- rVim {{{
 ----------------------------------------------------------------------------------------------------
 nnoremap('<leader>L;', ':Alpha<CR>', 'alpha')
 nnoremap(
@@ -454,36 +459,198 @@ nnoremap(
 )
 nnoremap('<leader>Lv', ':e ' .. join_paths(rvim.get_config_dir(), 'init.lua<CR>'), 'open vimrc')
 ----------------------------------------------------------------------------------------------------
--- Packer
+-- Plugins {{{
 ----------------------------------------------------------------------------------------------------
-rvim.nnoremap('<leader>pc', ':PackerCompile<CR>', 'compile')
-rvim.nnoremap('<leader>pC', ':PackerClean<CR>', 'clean')
-rvim.nnoremap('<leader>pd', ':PackerDelete<CR>', 'delete packer_compiled')
-rvim.nnoremap('<leader>pe', ':PackerCompiledEdit<CR>', 'edit packer_compiled')
-rvim.nnoremap('<leader>pi', ':PackerInstall<CR>', 'install')
-rvim.nnoremap('<leader>pI', ':PackerInvalidate<CR>', 'invalidate')
-rvim.nnoremap('<leader>ps', ':PackerSync<CR>', 'sync')
-rvim.nnoremap('<leader>pS', ':PackerStatus<CR>', 'status')
-rvim.nnoremap('<leader>pu', ':PackerUpdate<CR>', 'update')
+local function with_plugin(desc, plugin) return { desc = desc, plugin = plugin } end
+-- packer
+nnoremap('<leader>pc', ':PackerCompile<CR>', 'compile')
+nnoremap('<leader>pC', ':PackerClean<CR>', 'clean')
+nnoremap('<leader>pd', ':PackerDelete<CR>', 'delete packer_compiled')
+nnoremap('<leader>pe', ':PackerCompiledEdit<CR>', 'edit packer_compiled')
+nnoremap('<leader>pi', ':PackerInstall<CR>', 'install')
+nnoremap('<leader>pI', ':PackerInvalidate<CR>', 'invalidate')
+nnoremap('<leader>ps', ':PackerSync<CR>', 'sync')
+nnoremap('<leader>pS', ':PackerStatus<CR>', 'status')
+nnoremap('<leader>pu', ':PackerUpdate<CR>', 'update')
 ----------------------------------------------------------------------------------------------------
--- Buffers
+-- Editor {{{
 ----------------------------------------------------------------------------------------------------
-rvim.nnoremap('<leader>bc', '<cmd>CloseOther<CR>', 'close others')
+-- neogen
+nnoremap(
+  '<localleader>lc',
+  function() require('neogen').generate() end,
+  with_plugin('neogen: generate doc', 'neogen')
+)
 ----------------------------------------------------------------------------------------------------
--- Plugins
+-- iswap.nvim
+nnoremap('<leader>ii', '<Cmd>ISwap<CR>', with_plugin('iswap: auto swap', 'iswap.nvim'))
+nnoremap('<leader>iw', '<Cmd>ISwapWith<CR>', with_plugin('iswap: swap with', 'iswap.nvim'))
 ----------------------------------------------------------------------------------------------------
-local opts = {
+-- fold-cycle.nvim
+nnoremap(
+  '<BS>',
+  function() require('fold-cycle').open() end,
+  with_plugin('fold-cycle: open', 'fold-cycle.nvim')
+)
+----------------------------------------------------------------------------------------------------
+-- vim-easy-align
+nmap('ga', '<Plug>(EasyAlign)', with_plugin('easy-align: align', 'vim-easy-align'))
+xmap('ga', '<Plug>(EasyAlign)', with_plugin('easy-align: align', 'vim-easy-align'))
+vmap('<Enter>', '<Plug>(EasyAlign)', with_plugin('easy-align: align', 'vim-easy-align'))
+----------------------------------------------------------------------------------------------------
+-- vim-surround-funk
+nnoremap(
+  '<leader>rf',
+  '<Plug>(DeleteSurroundingFunction)',
+  with_plugin('vsf: delete surrounding function', 'vim-surround-funk')
+)
+nnoremap(
+  '<leader>rF',
+  '<Plug>(DeleteSurroundingFUNCTION)',
+  with_plugin('vsf: delete surrounding outer function', 'vim-surround-funk')
+)
+nnoremap(
+  '<leader>cf',
+  '<Plug>(ChangeSurroundingFunction)',
+  with_plugin('vsf: change surrounding function', 'vim-surround-funk')
+)
+nnoremap(
+  '<leader>cF',
+  '<Plug>(ChangeSurroundingFUNCTION)',
+  with_plugin('vsf: change outer surrounding function', 'vim-surround-funk')
+)
+-- operator pending mode: grip surround
+nmap('gs', '<Plug>(GripSurroundObject)', with_plugin('vsf: grip surround', 'vim-surround-funk'))
+vmap('gs', '<Plug>(GripSurroundObject)', with_plugin('vsf: grip surround', 'vim-surround-funk'))
+omap('sF', '<Plug>(SelectWholeFUNCTION)', with_plugin('vsf: select function', 'vim-surround-funk'))
+xmap('sF', '<Plug>(SelectWholeFUNCTION)', with_plugin('vsf: select function', 'vim-surround-funk'))
+----------------------------------------------------------------------------------------------------
+-- marks.nvim
+nnoremap('<leader>mb', '<Cmd>MarksListBuf<CR>', with_plugin('marks: list buffer', 'marks.nvim'))
+nnoremap(
+  '<leader>mg',
+  '<Cmd>MarksQFListGlobal<CR>',
+  with_plugin('marks: list global', 'marks.nvim')
+)
+nnoremap(
+  '<leader>m0',
+  '<Cmd>BookmarksQFList 0<CR>',
+  with_plugin('marks: list bookmark', 'marks.nvim')
+)
+----------------------------------------------------------------------------------------------------
+-- Lang {{{
+----------------------------------------------------------------------------------------------------
+-- null-ls.nvim
+nnoremap('<leader>ln', '<cmd>NullLsInfo<CR>', with_plugin('null-ls: info', 'null-ls.nvim'))
+----------------------------------------------------------------------------------------------------
+-- nvim-treesitter
+nnoremap(
+  'R',
+  '<cmd>edit | TSBufEnable highlight<CR>',
+  with_plugin('treesitter: enable highlight', 'nvim-treesitter')
+)
+nnoremap('<leader>Le', '<cmd>TSInstallInfo<CR>', with_plugin('treesitter: info', 'nvim-treesitter'))
+nnoremap(
+  '<leader>Lm',
+  '<cmd>TSModuleInfo<CR>',
+  with_plugin('treesitter: module info', 'nvim-treesitter')
+)
+nnoremap('<leader>Lu', '<cmd>TSUpdate<CR>', with_plugin('treesitter: update', 'nvim-treesitter'))
+----------------------------------------------------------------------------------------------------
+-- mason.nvim
+nnoremap('<leader>lm', ':Mason<CR>', with_plugin('mason: info', 'mason.nvim'))
+----------------------------------------------------------------------------------------------------
+-- lsp_lines.nvim
+nnoremap(
+  '<leader>ol',
+  function() require('lsp_lines').toggle() end,
+  with_plugin('lsp_lines: toggle')
+)
+----------------------------------------------------------------------------------------------------
+-- nvim-dap-ui
+nnoremap('<localleader>dx', function() require('dapui').close() end, with_plugin('', 'nvim-dap-ui'))
+nnoremap(
+  '<localleader>do',
+  function() require('dapui').toggle() end,
+  with_plugin('', 'nvim-dap-ui')
+)
+----------------------------------------------------------------------------------------------------
+-- Lang {{{
+----------------------------------------------------------------------------------------------------
+-- undotree
+nnoremap('<leader>u', '<cmd>UndotreeToggle<CR>', with_plugin('undotree: toggle', 'undotree'))
+----------------------------------------------------------------------------------------------------
+-- FTerm.nvim
+local function new_float(cmd)
+  cmd = fterm:new({ cmd = cmd, dimensions = { height = 0.9, width = 0.9 } }):toggle()
+end
+nnoremap([[<c-\>]], function() fterm.toggle() end, with_plugin('fterm: toggle lazygit', 'FTerm.nvim'))
+tnoremap([[<c-\>]], function() fterm.toggle() end, with_plugin('fterm: toggle lazygit', 'FTerm.nvim'))
+nnoremap('<leader>lg', function() new_float('lazygit') end, with_plugin('fterm: toggle lazygit', 'FTerm.nvim'))
+nnoremap('<leader>gc', function() new_float('git add . && git commit -v -a') end, with_plugin('git: commit', 'FTerm.nvim'))
+nnoremap('<leader>gd', function() new_float('iconf -ccma') end, with_plugin('git: commit dotfiles', 'FTerm.nvim'))
+nnoremap('<leader>tb', function() new_float('btop') end, with_plugin('fterm: btop', 'FTerm.nvim'))
+nnoremap('<leader>tn', function() new_float('node') end, with_plugin('fterm: node', 'FTerm.nvim'))
+nnoremap('<leader>tr', function() new_float('ranger') end, with_plugin('fterm: ranger', 'FTerm.nvim'))
+nnoremap('<leader>tp', function() new_float('python') end, with_plugin('fterm: python', 'FTerm.nvim'))
+----------------------------------------------------------------------------------------------------
+-- nvim-neoclip.lua
+local function clip() require('telescope').extensions.neoclip.default(rvim.telescope.dropdown()) end
+nnoremap('<leader>fN', clip, with_plugin('neoclip: open yank history', 'nvim-neoclip.lua'))
+----------------------------------------------------------------------------------------------------
+-- auto-session
+nnoremap('<leader>ss', '<cmd>RestoreSession<cr>', with_plugin('auto-session: restore', 'auto-session'))
+nnoremap('<leader>sl', '<cmd>SaveSession<cr>', with_plugin('auto-session: save', 'auto-session'))
+----------------------------------------------------------------------------------------------------
+-- harpoon
+local dropdown = require('telescope.themes').get_dropdown({
   previewer = false,
   initial_mode = 'normal',
   prompt_title = 'Harpoon',
   borderchars = rvim.style.border.telescope.ui_select,
-}
-local dropdown = require('telescope.themes').get_dropdown(opts)
+})
 local function harp_marks() require('telescope').extensions.harpoon.marks(dropdown) end
 local function harp_buffers() require('telescope.builtin').buffers(dropdown) end
-
-rvim.nnoremap('<tab>', harp_buffers)
-rvim.nnoremap('<s-tab>', harp_marks)
+nnoremap('<tab>', harp_buffers, with_plugin('harpoon: buffers', 'harpoon'))
+nnoremap('<s-tab>', harp_marks, with_plugin('harpoon: marks', 'harpoon'))
+----------------------------------------------------------------------------------------------------
+-- vim-bbye
+nnoremap('<leader>c', '<cmd>Bdelete!<cr>', with_plugin('bbye: close buffer', 'vim-bbye'))
+nnoremap('<leader>bx', '<cmd>bufdo :Bdelete<cr>', with_plugin('close all', 'bbye: vim-bbye'))
+nnoremap('<leader>q', '<Cmd>Bwipeout<CR>', with_plugin('bbye: wipe buffer', 'vim-bbye'))
+----------------------------------------------------------------------------------------------------
+-- jaq.nvim
+nnoremap('<leader>rr', ':silent only | Jaq<cr>', with_plugin('jaq: run', 'jaq.nvim'))
+----------------------------------------------------------------------------------------------------
+-- cheat-sheet
+nnoremap('<localleader>s', '<cmd>CheatSH<CR>', with_plugin('cheat-sheet: search', 'cheat-sheet'))
+----------------------------------------------------------------------------------------------------
+-- inc-rename.nvim
+nnoremap(
+'<leader>rn',
+function() return ':IncRename ' .. vim.fn.expand('<cword>') end,
+{ expr = true, silent = false, desc = 'inc-rename: inc rename', plugin = 'inc-rename.nvim' })
+----------------------------------------------------------------------------------------------------
+-- sniprun
+nnoremap('<leader>sr', ':SnipRun<cr>', with_plugin('sniprun: run', 'sniprun'))
+vnoremap('<leader>sr', ':SnipRun<cr>', with_plugin('sniprun: run', 'sniprun'))
+nnoremap('<leader>sc', ':SnipClose<cr>', with_plugin('sniprun: close', 'sniprun'))
+nnoremap('<leader>sx', ':SnipReset<cr>', with_plugin('sniprun: reset', 'sniprun'))
+----------------------------------------------------------------------------------------------------
+-- diffview.nvim
+nnoremap('<localleader>gd', '<Cmd>DiffviewOpen<CR>', with_plugin('diffview: open', 'diffview.nvim'))
+nnoremap('<localleader>gh', '<Cmd>DiffviewFileHistory<CR>', with_plugin('diffview: file history', 'diffview.nvim'))
+vnoremap('gh', [[:'<'>DiffviewFileHistory<CR>]], with_plugin('diffview: file history', 'diffview.nvim'))
+----------------------------------------------------------------------------------------------------
+-- UI {{{
+----------------------------------------------------------------------------------------------------
+-- vim-illuminate
+nnoremap('<a-n>', ':lua require"illuminate".next_reference{wrap=true}<cr>', with_plugin('illuminate: next', 'vim-illuminate'))
+nnoremap('<a-p>', ':lua require"illuminate".next_reference{reverse=true,wrap=true}<cr>', with_plugin('illuminate: reverse', 'vim-illuminate'))
+----------------------------------------------------------------------------------------------------
+-- cybu.nvim
+nnoremap('H', '<Plug>(CybuPrev)', with_plugin('cybu: prev', 'cybu.nvim'))
+nnoremap('L', '<Plug>(CybuNext)', with_plugin('cybu: next', 'cybu.nvim'))
 ----------------------------------------------------------------------------------------------------
 -- Abbreviations
 ----------------------------------------------------------------------------------------------------

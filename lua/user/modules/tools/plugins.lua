@@ -16,7 +16,6 @@ package({
     vim.g.undotree_TreeNodeShape = '◦' -- Alternative: '◉'
     vim.g.undotree_SetFocusWhenToggle = 1
     vim.g.undotree_SplitWidth = 35
-    rvim.nnoremap('<leader>u', '<cmd>UndotreeToggle<CR>', 'undotree: toggle')
   end,
 })
 
@@ -52,19 +51,6 @@ package({
     if not rvim.plugin_installed('FTerm.nvim') then return end
     local fterm = require('FTerm')
     fterm.setup({ dimensions = { height = 0.9, width = 0.9 } })
-    local function new_float(cmd)
-      cmd = fterm:new({ cmd = cmd, dimensions = { height = 0.9, width = 0.9 } }):toggle()
-    end
-    local nnoremap = rvim.nnoremap
-    nnoremap([[<c-\>]], function() fterm.toggle() end, 'fterm: toggle lazygit')
-    rvim.tnoremap([[<c-\>]], function() fterm.toggle() end, 'fterm: toggle lazygit')
-    nnoremap('<leader>lg', function() new_float('lazygit') end, 'fterm: toggle lazygit')
-    nnoremap('<leader>gc', function() new_float('git add . && git commit -v -a') end, 'git: commit')
-    nnoremap('<leader>gd', function() new_float('iconf -ccma') end, 'git: commit dotfiles')
-    nnoremap('<leader>tb', function() new_float('btop') end, 'fterm: btop')
-    nnoremap('<leader>tn', function() new_float('node') end, 'fterm: node')
-    nnoremap('<leader>tr', function() new_float('ranger') end, 'fterm: ranger')
-    nnoremap('<leader>tp', function() new_float('python') end, 'fterm: python')
   end,
 })
 
@@ -88,8 +74,6 @@ package({
         },
       },
     })
-    local function clip() require('telescope').extensions.neoclip.default(rvim.telescope.dropdown()) end
-    rvim.nnoremap('<leader>fN', clip, 'neoclip: open yank history')
   end,
 })
 
@@ -151,10 +135,6 @@ package({
       },
       auto_session_use_git_branch = false, -- This cause inconsistent results
     })
-    require('which-key').register({
-      ['<leader>sl'] = { ':RestoreSession<cr>', 'auto-session: restore' },
-      ['<leader>ss'] = { ':SaveSession<cr>', 'auto-session: save' },
-    })
   end,
 })
 
@@ -165,18 +145,7 @@ package({
   config = conf('tools', 'hop'),
 })
 
-package({
-  'moll/vim-bbye',
-  event = 'BufWinEnter',
-  config = function()
-    if not rvim.plugin_installed('vim-bbye') then return end
-    require('which-key').register({
-      ['<leader>c'] = { ':Bdelete!<cr>', 'close buffer' },
-      ['<leader>bx'] = { ':bufdo :Bdelete<cr>', 'close all' },
-      ['<leader>q'] = { '<Cmd>Bwipeout<CR>', 'wipe buffer' },
-    })
-  end,
-})
+package({ 'moll/vim-bbye', event = 'BufWinEnter' })
 
 package({
   'SmiteshP/nvim-navic',
@@ -187,14 +156,12 @@ package({
     local highlights = require('user.utils.highlights')
     local s = rvim.style
     local misc = s.icons.misc
-
     highlights.set('NavicText', { bold = false })
     highlights.set('NavicSeparator', { link = 'Directory' })
     local icons = rvim.map(function(icon, key)
       highlights.set(('NavicIcons%s'):format(key), { link = rvim.lsp.kind_highlights[key] })
       return icon .. ' '
     end, s.codicons.kind)
-
     require('nvim-navic').setup({
       icons = icons,
       highlight = true,
@@ -249,7 +216,6 @@ package({
         command = function() vim.api.nvim_win_set_config(0, { border = rvim.style.border.current }) end,
       },
     })
-    rvim.nnoremap('<leader>rr', ':silent only | Jaq<cr>', 'jaq: run')
   end,
 })
 
@@ -270,26 +236,21 @@ package({
 ----------------------------------------------------------------------------------------------------
 package({ 'AndrewRadev/linediff.vim', cmd = 'Linediff', disable = true })
 
-package({ 'diepm/vim-rest-console', disable = true })
-
 package({
-  'NTBBloodbath/rest.nvim',
-  requires = { 'nvim-lua/plenary.nvim' },
-  ft = { 'http', 'json' },
+  'Djancyp/cheat-sheet',
   config = function()
-    if not rvim.plugin_installed('rest.nvim') then return end
-    require('rest-nvim').setup({
-      -- Open request results in a horizontal split
-      result_split_horizontal = true,
-      -- Skip SSL verification, useful for unknown certificates
-      skip_ssl_verification = true,
-      -- Jump to request line on run
-      jump_to_request = false,
-      custom_dynamic_variables = {},
+    if not rvim.plugin_installed('cheat-sheet') then return end
+    require('cheat-sheet').setup({
+      auto_fill = {
+        current_word = false,
+      },
+      main_win = {
+        border = 'single',
+      },
+      input_win = {
+        border = 'single',
+      },
     })
-    rvim.nnoremap('<leader>rr', '<Plug>RestNvim', 'rest: run')
-    rvim.nnoremap('<leader>rp', '<Plug>RestNvimPreview', 'rest: run')
-    rvim.nnoremap('<leader>rl', '<Plug>RestNvimLast', 'rest: run')
   end,
   disable = true,
 })
@@ -297,12 +258,6 @@ package({
 package({
   'sindrets/diffview.nvim',
   event = 'BufReadPre',
-  setup = function()
-    if not rvim.plugin_installed('diffview.nvim') then return end
-    rvim.nnoremap('<localleader>gd', '<Cmd>DiffviewOpen<CR>', 'diffview: open')
-    rvim.nnoremap('<localleader>gh', '<Cmd>DiffviewFileHistory<CR>', 'diffview: file history')
-    rvim.vnoremap('gh', [[:'<'>DiffviewFileHistory<CR>]], 'diffview: file history')
-  end,
   config = function()
     if not rvim.plugin_installed('diffview.nvim') then return end
     require('diffview').setup({
@@ -350,11 +305,6 @@ package({
         SniprunFloatingWinErr = { fg = P.error_red, ctermfg = 'DarkRed' },
       },
     })
-
-    rvim.nnoremap('<leader>sr', ':SnipRun<cr>', 'sniprun: run')
-    rvim.vnoremap('<leader>sr', ':SnipRun<cr>', 'sniprun: run')
-    rvim.nnoremap('<leader>sc', ':SnipClose<cr>', 'sniprun: close')
-    rvim.nnoremap('<leader>sx', ':SnipReset<cr>', 'sniprun: reset')
   end,
   run = 'bash ./install.sh',
   disable = true,
@@ -446,34 +396,30 @@ package({
     require('inc_rename').setup({
       hl_group = 'Visual',
     })
-    vim.keymap.set(
-      'n',
-      '<leader>rn',
-      function() return ':IncRename ' .. vim.fn.expand('<cword>') end,
-      { expr = true, silent = false, desc = 'lsp: incremental rename' }
-    )
   end,
   disable = true,
 })
 
+package({ 'diepm/vim-rest-console', disable = true })
+
 package({
-  'Djancyp/cheat-sheet',
+  'NTBBloodbath/rest.nvim',
+  requires = { 'nvim-lua/plenary.nvim' },
+  ft = { 'http', 'json' },
   config = function()
-    if not rvim.plugin_installed('cheat-sheet') then return end
-    require('cheat-sheet').setup({
-      auto_fill = {
-        current_word = false,
-      },
-      main_win = {
-        border = 'single',
-      },
-      input_win = {
-        border = 'single',
-      },
+    if not rvim.plugin_installed('rest.nvim') then return end
+    require('rest-nvim').setup({
+      -- Open request results in a horizontal split
+      result_split_horizontal = true,
+      -- Skip SSL verification, useful for unknown certificates
+      skip_ssl_verification = true,
+      -- Jump to request line on run
+      jump_to_request = false,
+      custom_dynamic_variables = {},
     })
-    require('which-key').register({
-      ['<localleader>s'] = { ':CheatSH<CR>', 'cheat-sheet' },
-    })
+    rvim.nnoremap('<leader>rr', '<Plug>RestNvim', 'rest: run')
+    rvim.nnoremap('<leader>rp', '<Plug>RestNvimPreview', 'rest: run')
+    rvim.nnoremap('<leader>rl', '<Plug>RestNvimLast', 'rest: run')
   end,
   disable = true,
 })

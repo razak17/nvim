@@ -116,8 +116,6 @@ package({
       'mason.nvim',
       'help',
     }
-    rvim.nnoremap('<a-n>', ':lua require"illuminate".next_reference{wrap=true}<cr>')
-    rvim.nnoremap('<a-p>', ':lua require"illuminate".next_reference{reverse=true,wrap=true}<cr>')
   end,
 })
 
@@ -133,8 +131,6 @@ package({
       },
       style = { border = 'single', hide_buffer_id = true },
     })
-    rvim.nnoremap('H', '<Plug>(CybuPrev)')
-    rvim.nnoremap('L', '<Plug>(CybuNext)')
   end,
 })
 

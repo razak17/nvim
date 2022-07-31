@@ -4,8 +4,7 @@ return function()
   local status_cmp_ok, cmp = rvim.safe_require('cmp')
   if not status_cmp_ok then return end
 
-  local fn = vim.fn
-  local api = vim.api
+  local fn, api = vim.fn, vim.api
 
   local t = rvim.replace_termcodes
   local border = rvim.style.border.current

@@ -12,10 +12,6 @@ package({
     end
     local dapui = require('dapui')
     require('dapui').setup()
-    require('which-key').register({
-      ['<localleader>dx'] = { dapui.close, 'dap-ui: close' },
-      ['<localleader>do'] = { dapui.toggle, 'dap-ui: toggle' },
-    })
 
     local dap = require('dap')
     -- NOTE: this opens dap UI automatically when dap starts
@@ -130,7 +126,6 @@ package({
       end,
       gopls = require('user.modules.lang.go'),
     })
-    rvim.nnoremap('<leader>lm', ':Mason<CR>', 'mason: info')
   end,
 })
 
@@ -261,7 +256,6 @@ package({
     local lsp_lines = require('lsp_lines')
     lsp_lines.setup()
     lsp_lines.toggle()
-    rvim.nnoremap('<leader>ol', function() lsp_lines.toggle() end, 'lsp_lines: toggle')
   end,
 })
 

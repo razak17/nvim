@@ -5,6 +5,8 @@ local conf = utils.load_conf
 -- nvim-cmp
 package({
   'hrsh7th/nvim-cmp',
+	event = "InsertEnter",
+	module = "cmp",
   config = conf('editor', 'cmp'),
   requires = {
     { 'hrsh7th/cmp-nvim-lsp', module = 'cmp_nvim_lsp' },
@@ -122,23 +124,6 @@ package({
   config = function()
     if not rvim.plugin_installed('vim-surround-funk') then return end
     vim.g.surround_funk_create_mappings = 0
-    local map = vim.keymap.set
-    -- operator pending mode: grip surround
-    map({ 'n', 'v' }, 'gs', '<Plug>(GripSurroundObject)')
-    map({ 'o', 'x' }, 'sF', '<Plug>(SelectWholeFUNCTION)')
-
-    require('which-key').register({
-      ['<leader>rf'] = { '<Plug>(DeleteSurroundingFunction)', 'dsf: delete surrounding function' },
-      ['<leader>rF'] = {
-        '<Plug>(DeleteSurroundingFUNCTION)',
-        'dsf: delete surrounding outer function',
-      },
-      ['<leader>Cf'] = { '<Plug>(ChangeSurroundingFunction)', 'dsf: change surrounding function' },
-      ['<leader>CF'] = {
-        '<Plug>(ChangeSurroundingFUNCTION)',
-        'dsf: change outer surrounding function',
-      },
-    })
   end,
 })
 
@@ -148,9 +133,7 @@ package({
   requires = { 'nvim-treesitter/nvim-treesitter' },
   config = function()
     if not rvim.plugin_installed('neogen') then return end
-    local neogen = require('neogen')
     require('neogen').setup({ snippet_engine = 'luasnip' })
-    rvim.nnoremap('<localleader>lc', function() neogen.generate() end, 'neogen: generate doc')
   end,
 })
 
@@ -162,11 +145,6 @@ package({
       'marks',
       { MarkSignHL = { link = 'Directory' }, MarkSignNumHL = { link = 'Directory' } }
     )
-    require('which-key').register({
-      ['<leader>mb'] = { '<Cmd>MarksListBuf<CR>', 'marks: list buffer' },
-      ['<leader>mg'] = { '<Cmd>MarksQFListGlobal<CR>', 'marks: list global' },
-      ['<leader>m0'] = { '<Cmd>BookmarksQFList 0<CR>', 'marks: list bookmark' },
-    })
     require('marks').setup({
       force_write_shada = false, -- This can cause data loss
       excluded_filetypes = { 'NeogitStatus', 'NeogitCommitMessage', 'toggleterm' },
@@ -183,15 +161,7 @@ package({
 
 package({ 'psliwka/vim-dirtytalk', run = ':DirtytalkUpdate' })
 
-package({
-  'mizlan/iswap.nvim',
-  event = 'BufRead',
-  config = function()
-    if not rvim.plugin_installed('iswap.nvim') then return end
-    rvim.nnoremap('<leader>ii', '<Cmd>ISwap<CR>', 'iswap: auto swap')
-    rvim.nnoremap('<leader>iw', '<Cmd>ISwapWith<CR>', 'iswap: swap with')
-  end,
-})
+package({ 'mizlan/iswap.nvim', event = 'BufRead' })
 
 ----------------------------------------------------------------------------------------------------
 -- Graveyard
@@ -200,9 +170,6 @@ package({
   'junegunn/vim-easy-align',
   config = function()
     if not rvim.plugin_installed('vim-easy-align') then return end
-    rvim.nmap('ga', '<Plug>(EasyAlign)')
-    rvim.xmap('ga', '<Plug>(EasyAlign)')
-    rvim.vmap('<Enter>', '<Plug>(EasyAlign)')
   end,
   disable = true,
 })
@@ -212,7 +179,6 @@ package({
   config = function()
     if not rvim.rvim.plugin_installed('fold-cycle.nvim') then return end
     require('fold-cycle').setup()
-    rvim.nnoremap('<BS>', function() require('fold-cycle').open() end)
   end,
   disable = true,
 })

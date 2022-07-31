@@ -20,6 +20,7 @@ if rvim.ui.defer then
   )
 end
 
+-- NOTE: order matters
 R('user.core.highlights')
 R('user.core.commands')
 R('user.core.plugins').ensure_plugins()
