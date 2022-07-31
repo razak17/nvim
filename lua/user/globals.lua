@@ -343,7 +343,7 @@ function rvim.replace_termcodes(str) return api.nvim_replace_termcodes(str, true
 function rvim.has(feature) return vim.fn.has(feature) > 0 end
 
 ----------------------------------------------------------------------------------------------------
--- Keymaps
+-- Mappings
 ----------------------------------------------------------------------------------------------------
 
 ---create a mapping function factory
@@ -358,6 +358,12 @@ local function make_mapper(mode, o)
   ---@param rhs string|function
   ---@param opts table
   return function(lhs, rhs, opts)
+    -- check if plugin is installed if plugin option is passed in opts
+    if type(opts) == 'table' and opts.plugin then
+      if not rvim.plugin_installed(opts.plugin) then return end
+      -- remove plugin option from opts to enable vim.keymap.set to use it
+      opts = vim.tbl_filter(function(_, key) return key == 'plugin' end, opts)
+    end
     -- If the label is all that was passed in, set the opts automagically
     opts = type(opts) == 'string' and { desc = opts } or opts and vim.deepcopy(opts) or {}
     vim.keymap.set(mode, lhs, rhs, vim.tbl_extend('keep', opts, parent_opts))
