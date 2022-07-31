@@ -637,7 +637,6 @@ nnoremap('<leader>sl', '<cmd>SaveSession<cr>', with_plugin('auto-session: save',
 -- harpoon
 local dropdown = require('telescope.themes').get_dropdown({
   previewer = false,
-  initial_mode = 'normal',
   prompt_title = 'Harpoon',
   borderchars = rvim.style.border.telescope.ui_select,
 })

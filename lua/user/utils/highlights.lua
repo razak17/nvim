@@ -9,6 +9,18 @@ local M = {}
 ---@field attr 'foreground' | 'fg' | 'background' | 'bg'
 ---@field alter integer
 
+---@class HighlightKeys
+---@field blend integer
+---@field foreground string | HighlightAttributes
+---@field background string | HighlightAttributes
+---@field fg string | HighlightAttributes
+---@field bg string | HighlightAttributes
+---@field sp string | HighlightAttributes
+---@field bold boolean
+---@field italic boolean
+---@field undercurl boolean
+---@field underline boolean
+---@field underdot boolean
 
 ---Convert a hex color to RGB
 ---@param color string
@@ -25,9 +37,8 @@ local function alter(attribute, percent) return math.floor(attribute * (100 + pe
 ---@source https://stackoverflow.com/q/5560248
 ---@see: https://stackoverflow.com/a/37797380
 ---Darken a specified hex color
----@param color string
----@param percent number
----@return string
+---@param color string A hex color
+---@param percent integer a negative number darkens and a positive one brightens
 function M.alter_color(color, percent)
   local r, g, b = hex_to_rgb(color)
   if not r or not g or not b then return 'NONE' end
@@ -71,7 +82,7 @@ end
 --- ```
 --- This will take the foreground colour from ErrorMsg and set it to the foreground of MatchParen.
 ---@param name string
----@param opts table<string, string|boolean|HighlightAttributes>
+ ---@param opts HighlightKeys
 function M.set(name, opts)
   assert(name and opts, "Both 'name' and 'opts' must be specified")
 
