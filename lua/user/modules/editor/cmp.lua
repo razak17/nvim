@@ -22,6 +22,12 @@ return function()
       CmpItemAbbr = { foreground = 'fg', background = 'NONE', italic = false, bold = false },
       CmpItemAbbrDeprecated = { strikethrough = true, inherit = 'Comment' },
       CmpItemAbbrMatchFuzzy = { italic = true, foreground = { from = 'Keyword' } },
+      -- Make the source information less prominent
+      CmpItemMenu = {
+        fg = { from = 'Pmenu', attr = 'bg', alter = 30 },
+        italic = true,
+        bold = false,
+      },
     }
   )
 
@@ -117,8 +123,7 @@ return function()
         format = function(entry, vim_item)
           local MAX = math.floor(vim.o.columns * 0.5)
           local codicons = rvim.style.codicons
-          vim_item.abbr = #vim_item.abbr >= MAX and string.sub(vim_item.abbr, 1, MAX) .. ellipsis
-            or vim_item.abbr
+          if #vim_item.abbr >= MAX then vim_item.abbr = vim_item.abbr:sub(1, MAX) .. ellipsis end
           vim_item.kind = codicons.kind[vim_item.kind]
           if entry.source.name == 'emoji' then vim_item.kind = codicons.misc.smiley end
           vim_item.menu = rvim.cmp.setup.formatting.source_names[entry.source.name]
