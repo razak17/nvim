@@ -248,6 +248,13 @@ package({
     map('!', '<C-u>', readline.backward_kill_line)
   end,
 })
+
+-- prevent select and visual mode from overwriting the clipboard
+package({
+  'kevinhwang91/nvim-hclipboard',
+  event = 'InsertCharPre',
+  config = function() require('hclipboard').start() end,
+})
 ----------------------------------------------------------------------------------------------------
 -- Graveyard
 ----------------------------------------------------------------------------------------------------
