@@ -1,3 +1,5 @@
+vim.opt_local.textwidth = 120
+
 if not rvim then return end
 
 rvim.ftplugin_conf('which-key', function(which_key)
