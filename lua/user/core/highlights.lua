@@ -112,5 +112,4 @@ rvim.augroup('UserHighlights', {
 ----------------------------------------------------------------------------------------------------
 -- Color Scheme {{{1
 ----------------------------------------------------------------------------------------------------
-vim.g.colors_name = rvim.colorscheme
-vim.cmd('colorscheme ' .. rvim.colorscheme)
+if rvim.plugin_installed(rvim.colorscheme) then vim.cmd('colorscheme ' .. rvim.colorscheme) end
