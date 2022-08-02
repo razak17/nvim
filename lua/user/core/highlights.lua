@@ -53,6 +53,7 @@ local function general_overrides()
     -- occurrences so should be highlighted more distinctly
     LspReferenceWrite = { bold = true, italic = true },
     MatchWord = { fg = { from = 'diffRemoved' }, underline = false, cterm = { underline = false } },
+    GitSignsCurrentLineBlame = { link = 'Comment' },
   })
 end
 
