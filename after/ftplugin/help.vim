@@ -2,9 +2,9 @@ setlocal nonumber norelativenumber nolist
 setlocal colorcolumn=
 setlocal concealcursor=nc
 
-""---------------------------------------------------------------------------//
+----------------------------------------------------------------------------------------------------
 " Credit: Tweekmonster!
-""---------------------------------------------------------------------------//
+----------------------------------------------------------------------------------------------------
 " if this a vim help file rather than one I'm creating
 " add mappings otherwise do not
 if expand('%') =~# '^'.$VIMRUNTIME || &readonly

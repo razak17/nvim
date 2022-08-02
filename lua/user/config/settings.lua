@@ -243,7 +243,7 @@ opt.sessionoptions = {
 opt.viewoptions = { 'cursor', 'folds' } -- save/restore just these (with `:{mk,load}view`)
 opt.virtualedit = 'block' -- allow cursor to move where there is no text in visual block mode
 -- opt.shadafile = join_paths(rvim.get_cache_dir(), 'shada', 'rvim.shada')
------------------------------------------------------------------------------//
+----------------------------------------------------------------------------------------------------
 -- Jumplist
 ----------------------------------------------------------------------------------------------------
 opt.jumpoptions = { 'stack' } -- make the jumplist behave like a browser stack
