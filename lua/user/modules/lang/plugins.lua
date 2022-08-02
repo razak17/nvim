@@ -46,6 +46,7 @@ package({
 -- Lsp
 package({
   'neovim/nvim-lspconfig',
+  module_pattern = 'lspconfig.*',
   requires = {
     { 'ray-x/go.nvim' },
     { 'nanotee/sqls.nvim' },
