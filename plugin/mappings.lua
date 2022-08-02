@@ -651,7 +651,7 @@ nnoremap('<leader>bx', '<cmd>bufdo :Bdelete<cr>', with_plugin('close all', 'bbye
 nnoremap('<leader>q', '<Cmd>Bwipeout<CR>', with_plugin('bbye: wipe buffer', 'vim-bbye'))
 ----------------------------------------------------------------------------------------------------
 -- jaq.nvim
-nnoremap('<leader>rr', ':silent only | Jaq<cr>', with_plugin('jaq: run', 'jaq.nvim'))
+nnoremap('<leader>rr', ':silent only | Jaq<cr>', with_plugin('jaq: run', 'jaq-nvim'))
 ----------------------------------------------------------------------------------------------------
 -- cheat-sheet
 nnoremap('<localleader>s', '<cmd>CheatSH<CR>', with_plugin('cheat-sheet: search', 'cheat-sheet'))

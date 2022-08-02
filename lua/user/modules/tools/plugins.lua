@@ -195,7 +195,7 @@ package({
       cmds = {
         default = 'term',
         external = {
-          typescript = 'deno run %',
+          typescript = 'ts-node %',
           javascript = 'node %',
           python = 'python %',
           rust = 'cargo run',
