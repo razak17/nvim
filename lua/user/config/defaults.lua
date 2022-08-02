@@ -18,7 +18,6 @@ rvim.ui = {
   },
 }
 
-rvim.colorscheme = 'zephyr'
 rvim.lang = { format_on_save = true }
 rvim.keys = {
   leader = 'space',

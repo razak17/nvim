@@ -112,4 +112,4 @@ rvim.augroup('UserHighlights', {
 ----------------------------------------------------------------------------------------------------
 -- Color Scheme {{{1
 ----------------------------------------------------------------------------------------------------
-if rvim.plugin_installed(rvim.colorscheme) then vim.cmd('colorscheme ' .. rvim.colorscheme) end
+if rvim.plugin_installed('zephyr-nvim') then vim.cmd.colorscheme('zephyr') end
