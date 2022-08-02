@@ -18,6 +18,7 @@
     "stds",
     "pairs",
     "join_paths",
+    "require_clean",
     "lfs"
   ],
   "Lua.workspace.checkThirdParty": false

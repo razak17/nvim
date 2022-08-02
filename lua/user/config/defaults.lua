@@ -22,7 +22,7 @@ rvim.colorscheme = 'zephyr'
 rvim.lang = { format_on_save = true }
 rvim.keys = {
   leader = 'space',
-  localleader = ','
+  localleader = ',',
 }
 rvim.plugins = {
   SANE = true,
@@ -31,4 +31,20 @@ rvim.plugins = {
 rvim.util = {
   disabled_providers = { 'python', 'ruby', 'perl' },
   save_on_focus_lost = true,
+}
+
+rvim.filetypes = {
+  'NeogitCommitMessage',
+  'go',
+  'graphql',
+  'html',
+  'json',
+  'jsonc',
+  'log',
+  'lua',
+  'markdown',
+  'python',
+  'rust',
+  'vim',
+  'yaml',
 }

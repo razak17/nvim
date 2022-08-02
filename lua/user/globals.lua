@@ -16,6 +16,19 @@ function join_paths(...)
   return result
 end
 
+---Require a module in protected mode without relying on its cached value
+---@param module string
+---@return any
+function require_clean(module)
+  package.loaded[module] = nil
+  _G[module] = nil
+  local status, requested = pcall(require, module)
+  if not status then
+    return
+  end
+  return requested
+end
+
 ---Get the full path to `$RVIM_RUNTIME_DIR`
 ---@return string
 function rvim.get_runtime_dir()
