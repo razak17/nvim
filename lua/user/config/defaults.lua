@@ -24,7 +24,7 @@ rvim.keys = {
   localleader = ',',
 }
 rvim.plugins = {
-  SANE = true,
+  SANE = false,
   packer = { active = true },
 }
 rvim.util = {

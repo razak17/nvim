@@ -117,6 +117,16 @@ package({
   end,
 })
 
+package({
+  'lukas-reineke/virt-column.nvim',
+  config = function()
+    require('user.utils.highlights').plugin('virt_column', {
+      VirtColumn = { bg = 'None', inherit = 'Comment' },
+    })
+    require('virt-column').setup({ char = '▕' })
+  end,
+})
+
 ----------------------------------------------------------------------------------------------------
 -- Graveyard
 ----------------------------------------------------------------------------------------------------
