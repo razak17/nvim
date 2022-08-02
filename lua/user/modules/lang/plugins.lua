@@ -75,7 +75,7 @@ package({
       config = function()
         if not rvim.plugin_installed('nvim-lightbulb') then return end
         require('user.utils.highlights').plugin('Lightbulb', {
-          LightBulbFloatWin = { foreground = { from = 'Type' } },
+          { LightBulbFloatWin = { foreground = { from = 'Type' } } },
         })
         require('nvim-lightbulb').setup({
           sign = {
@@ -168,9 +168,9 @@ package({
       config = function()
         local hl = require('user.utils.highlights')
         hl.plugin('treesitter-context', {
-          ContextBorder = { link = 'Dim' },
-          TreesitterContext = { inherit = 'Normal' },
-          TreesitterContextLineNumber = { inherit = 'LineNr' },
+          { ContextBorder = { link = 'Dim' } },
+          { TreesitterContext = { inherit = 'Normal' } },
+          { TreesitterContextLineNumber = { inherit = 'LineNr' } },
         })
         require('treesitter-context').setup({
           multiline_threshold = 4,
@@ -246,7 +246,9 @@ package({
       ['neo-tree-popup'] = false,
       ['dap-repl'] = false,
     }
-    require('user.utils.highlights').plugin('copilot', { CopilotSuggestion = { link = 'Comment' } })
+    require('user.utils.highlights').plugin('copilot', {
+      { CopilotSuggestion = { link = 'Comment' } },
+    })
   end,
 })
 

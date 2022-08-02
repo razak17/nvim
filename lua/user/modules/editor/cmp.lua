@@ -14,19 +14,21 @@ return function()
 
   local kind_hls = rvim.fold(
     function(accum, value, key)
-      accum['CmpItemKind' .. key] = { foreground = { from = value } }
+      accum[#accum + 1] = { ['CmpItemKind' .. key] = { foreground = { from = value } } }
       return accum
     end,
     lsp_hls,
     {
-      CmpItemAbbr = { foreground = 'fg', background = 'NONE', italic = false, bold = false },
-      CmpItemAbbrDeprecated = { strikethrough = true, inherit = 'Comment' },
-      CmpItemAbbrMatchFuzzy = { italic = true, foreground = { from = 'Keyword' } },
+      { CmpItemAbbr = { foreground = 'fg', background = 'NONE', italic = false, bold = false } },
+      { CmpItemAbbrDeprecated = { strikethrough = true, inherit = 'Comment' } },
+      { CmpItemAbbrMatchFuzzy = { italic = true, foreground = { from = 'Keyword' } } },
       -- Make the source information less prominent
-      CmpItemMenu = {
-        fg = { from = 'Pmenu', attr = 'bg', alter = 30 },
-        italic = true,
-        bold = false,
+      {
+        CmpItemMenu = {
+          fg = { from = 'Pmenu', attr = 'bg', alter = 30 },
+          italic = true,
+          bold = false,
+        },
       },
     }
   )

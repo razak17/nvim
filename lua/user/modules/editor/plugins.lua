@@ -141,10 +141,10 @@ package({
   'chentoast/marks.nvim',
   config = function()
     if not rvim.plugin_installed('marks.nvim') then return end
-    require('user.utils.highlights').plugin(
-      'marks',
-      { MarkSignHL = { link = 'Directory' }, MarkSignNumHL = { link = 'Directory' } }
-    )
+    require('user.utils.highlights').plugin('marks', {
+      { MarkSignHL = { link = 'Directory' } },
+      { MarkSignNumHL = { link = 'Directory' } },
+    })
     require('marks').setup({
       force_write_shada = false, -- This can cause data loss
       excluded_filetypes = { 'NeogitStatus', 'NeogitCommitMessage', 'toggleterm' },

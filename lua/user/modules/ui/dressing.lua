@@ -10,7 +10,10 @@ return function()
     return (results <= (LIMIT - PADDING) and results + PADDING or LIMIT)
   end
 
-  require('user.utils.highlights').plugin('dressing', { FloatTitle = { inherit = 'Visual', bold = true } })
+  require('user.utils.highlights').plugin(
+    'dressing',
+    { { FloatTitle = { inherit = 'Visual', bold = true } } }
+  )
   require('dressing').setup({
     input = {
       winblend = 2,

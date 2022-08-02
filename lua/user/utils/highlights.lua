@@ -133,7 +133,7 @@ end
 ---Apply a list of highlights
 ---@param hls table<string, HighlightKeys>
 function M.all(hls)
-  rvim.foreach(function(hl, name) M.set(name, hl) end, hls)
+  rvim.foreach(function(hl) M.set(next(hl)) end, hls)
 end
 
 ---------------------------------------------------------------------------------

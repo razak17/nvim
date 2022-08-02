@@ -4,16 +4,18 @@ return function()
   local highlights = require('user.utils.highlights')
 
   highlights.plugin('NeoTree', {
-    NeoTreeTitleBar = { foreground = { from = 'Search' } },
-    NeoTreeIndentMarker = { link = 'Comment' },
-    NeoTreeNormal = { link = 'PanelBackground' },
-    NeoTreeNormalNC = { link = 'PanelBackground' },
-    NeoTreeRootName = { bold = true, italic = true },
-    NeoTreeStatusLine = { link = 'PanelBackground' },
-    NeoTreeTabActive = { bg = { from = 'PanelBackground' } },
-    NeoTreeTabInactive = { bg = { from = 'PanelDarkBackground' }, fg = { from = 'Comment' } },
-    NeoTreeTabSeparatorInactive = { bg = { from = 'PanelDarkBackground' }, fg = 'black' },
-    NeoTreeTabSeparatorActive = { bg = { from = 'PanelBackground' }, fg = { from = 'Comment' } },
+    { NeoTreeTitleBar = { foreground = { from = 'Search' } } },
+    { NeoTreeIndentMarker = { link = 'Comment' } },
+    { NeoTreeNormal = { link = 'PanelBackground' } },
+    { NeoTreeNormalNC = { link = 'PanelBackground' } },
+    { NeoTreeRootName = { bold = true, italic = true } },
+    { NeoTreeStatusLine = { link = 'PanelBackground' } },
+    { NeoTreeTabActive = { bg = { from = 'PanelBackground' } } },
+    { NeoTreeTabInactive = { bg = { from = 'PanelDarkBackground' }, fg = { from = 'Comment' } } },
+    { NeoTreeTabSeparatorInactive = { bg = { from = 'PanelDarkBackground' }, fg = 'black' } },
+    {
+      NeoTreeTabSeparatorActive = { bg = { from = 'PanelBackground' }, fg = { from = 'Comment' } },
+    },
   })
 
   vim.g.neo_tree_remove_legacy_commands = 1
