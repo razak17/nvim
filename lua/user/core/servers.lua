@@ -181,7 +181,7 @@ local servers = {
             globals = { 'vim', 'describe', 'it', 'before_each', 'after_each', 'packer_plugins' },
           },
           workspace = {
-            library = { vim.env.VIMRUNTIME, emmy, packer, plenary },
+            library = { fn.expand('$VIMRUNTIME/lua'), emmy, packer, plenary },
           },
           telemetry = { enable = false },
         },
