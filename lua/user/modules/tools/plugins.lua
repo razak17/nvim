@@ -141,7 +141,7 @@ package({
 package({
   'phaazon/hop.nvim',
   tag = 'v2.*',
-  keys = { { 'n', 's' }, 'f', 'F' },
+  keys = { { 'n', 's' }, { 'n', 'f' }, { 'n', 'F' } },
   config = conf('tools', 'hop'),
 })
 
