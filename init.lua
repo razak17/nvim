@@ -39,4 +39,3 @@ _G.rvim = rvim or namespace
 R('user.globals')
 R('user.bootstrap')
 R('user.config')
-R('user.filetypes')
