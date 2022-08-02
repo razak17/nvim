@@ -568,11 +568,11 @@ nnoremap(
 )
 ----------------------------------------------------------------------------------------------------
 -- nvim-dap-ui
-nnoremap('<localleader>dx', function() require('dapui').close() end, with_plugin('', 'nvim-dap-ui'))
+nnoremap('<localleader>dx', function() require('dapui').close() end, with_plugin('dapui: close', 'nvim-dap-ui'))
 nnoremap(
   '<localleader>do',
   function() require('dapui').toggle() end,
-  with_plugin('', 'nvim-dap-ui')
+  with_plugin('dapui: toggle', 'nvim-dap-ui')
 )
 ----------------------------------------------------------------------------------------------------
 -- Lang {{{

@@ -23,9 +23,7 @@ function require_clean(module)
   package.loaded[module] = nil
   _G[module] = nil
   local status, requested = pcall(require, module)
-  if not status then
-    return
-  end
+  if not status then return end
   return requested
 end
 
@@ -359,6 +357,15 @@ function rvim.has(feature) return vim.fn.has(feature) > 0 end
 -- Mappings
 ----------------------------------------------------------------------------------------------------
 
+--- remove key from table
+---@param table table
+---@param key string
+---@return table
+function rvim.removekey(table, key)
+  table[key] = nil
+  return table
+end
+
 ---create a mapping function factory
 ---@param mode string
 ---@param o table
@@ -375,7 +382,7 @@ local function make_mapper(mode, o)
     if type(opts) == 'table' and opts.plugin then
       if not rvim.plugin_installed(opts.plugin) then return end
       -- remove plugin option from opts to enable vim.keymap.set to use it
-      opts = vim.tbl_filter(function(_, key) return key == 'plugin' end, opts)
+      rvim.removekey(opts, 'plugin')
     end
     -- If the label is all that was passed in, set the opts automagically
     opts = type(opts) == 'string' and { desc = opts } or opts and vim.deepcopy(opts) or {}
