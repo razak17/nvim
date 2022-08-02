@@ -1,12 +1,11 @@
 local utils = require('user.utils.plugins')
 local conf = utils.load_conf
-local block_reload = utils.block_reload
 local package = require('user.core.plugins').package
 
 -- Debugging
 package({
   'rcarriga/nvim-dap-ui',
-  config = block_reload(function()
+  config = function()
     if not rvim.plugin_installed('nvim-dap-ui') or not rvim.plugin_installed('nvim-dap') then
       return
     end
@@ -21,7 +20,7 @@ package({
     end
     dap.listeners.before.event_terminated['dapui_config'] = function() dapui.close() end
     dap.listeners.before.event_exited['dapui_config'] = function() dapui.close() end
-  end),
+  end,
   requires = {
     {
       'mfussenegger/nvim-dap',

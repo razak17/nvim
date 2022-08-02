@@ -5,14 +5,6 @@ local M = {}
 
 function M.plug_notify(msg, level) vim.notify(msg, level, { title = 'Packer' }) end
 
----Some plugins are not safe to be reloaded because their setup functions
----are not idempotent. This wraps the setup calls of such plugins
----@param func fun()
-function M.block_reload(func)
-  if vim.g.packer_compiled_loaded then return end
-  func()
-end
-
 ---Require a plugin config
 ---@param dir string
 ---@param name string
