@@ -1,11 +1,6 @@
 return function()
   if not rvim.plugin_installed('telescope.nvim') then return end
 
-  local telescope_ok, telescope = rvim.safe_require('telescope')
-  if not telescope_ok then return end
-
-  rvim.telescope = {}
-
   local previewers = require('telescope.previewers')
   local sorters = require('telescope.sorters')
   local actions = require('telescope.actions')
@@ -14,6 +9,8 @@ return function()
   local themes = require('telescope.themes')
   local icons = rvim.style.icons
   local border = rvim.style.border
+
+  rvim.telescope = {}
 
   rvim.augroup('TelescopePreviews', {
     {
@@ -57,6 +54,7 @@ return function()
     }))
   end
 
+  local telescope = require('telescope')
   local dropdown = rvim.telescope.dropdown
 
   telescope.setup({
@@ -388,21 +386,6 @@ return function()
       W = { image_selector, 'change background' },
       z = { zoxide_list, 'zoxide list' },
     },
-    ['<leader>lR'] = { ':Telescope lsp_references<CR>', 'telescope: references' },
-    ['<leader>ld'] = { ':Telescope lsp_document_symbols<CR>', 'telescope: document symbols' },
-    ['<leader>le'] = {
-      ':Telescope diagnostics bufnr=0 theme=get_ivy<CR>',
-      'telescope: document diagnostics',
-    },
-    ['<leader>lE'] = {
-      ':Telescope diagnostics theme=get_ivy<CR>',
-      'telescope: workspace diagnostics',
-    },
-    ['<leader>ls'] = {
-      ':Telescope lsp_dynamic_workspace_symbols<CR>',
-      'telescope: workspace symbols',
-    },
-    ['<leader>ms'] = { '<cmd>Telescope harpoon marks<cr>', 'telescope: harpoon search' },
   })
 
   vim.api.nvim_exec_autocmds('User', { pattern = 'TelescopeConfigComplete', modeline = false })

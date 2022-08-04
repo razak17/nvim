@@ -17,6 +17,7 @@ local tnoremap = rvim.tnoremap
 local onoremap = rvim.onoremap
 
 local utils = require('user.utils')
+local plugin_installed = rvim.plugin_installed
 
 g.mapleader = (rvim.keys.leader == 'space' and ' ') or rvim.keys.leader
 g.maplocalleader = (rvim.keys.localleader == 'space' and ' ') or rvim.keys.localleader
@@ -463,7 +464,7 @@ nnoremap('<leader>Lv', ':e ' .. join_paths(rvim.get_config_dir(), 'init.lua<CR>'
 ----------------------------------------------------------------------------------------------------
 local function with_plugin(desc, plugin) return { desc = desc, plugin = plugin } end
 -- packer
-if rvim.plugin_installed('packer.nvim') then
+if plugin_installed('packer.nvim') then
   nnoremap('<leader>pc', ':PackerCompile<CR>', 'compile')
   nnoremap('<leader>pC', ':PackerClean<CR>', 'clean')
   nnoremap('<leader>pd', ':PackerDelete<CR>', 'delete packer_compiled')
@@ -581,7 +582,7 @@ nnoremap(
 nnoremap('<leader>u', '<cmd>UndotreeToggle<CR>', with_plugin('undotree: toggle', 'undotree'))
 ----------------------------------------------------------------------------------------------------
 -- nvim-neoclip.lua
-if rvim.plugin_installed('nvim-neoclip') then
+if plugin_installed('nvim-neoclip') then
   local function clip() require('telescope').extensions.neoclip.default(rvim.telescope.dropdown()) end
   nnoremap('<leader>fN', clip, 'neoclip: open yank history')
 end
@@ -595,7 +596,7 @@ nnoremap(
 nnoremap('<leader>sl', '<cmd>SaveSession<cr>', with_plugin('auto-session: save', 'auto-session'))
 ----------------------------------------------------------------------------------------------------
 -- harpoon
-if rvim.plugin_installed('harpoon') then
+if plugin_installed('harpoon') then
   local ui = require('harpoon.ui')
   local m = require('harpoon.mark')
   nnoremap('<leader>mm', m.add_file, 'harpoon: add')
@@ -663,7 +664,7 @@ nnoremap(
 )
 ----------------------------------------------------------------------------------------------------
 -- cybu.nvim
-if rvim.plugin_installed('cybu.nvim') then
+if plugin_installed('cybu.nvim') then
   nnoremap('H', '<Plug>(CybuPrev)', 'cybu: prev')
   nnoremap('L', '<Plug>(CybuNext)', 'cybu: next')
 else
@@ -672,7 +673,7 @@ else
 end
 ----------------------------------------------------------------------------------------------------
 -- FTerm.nvim
-if rvim.plugin_installed('FTerm.nvim') then
+if plugin_installed('FTerm.nvim') then
   local function new_float(cmd)
     cmd = require('FTerm'):new({ cmd = cmd, dimensions = { height = 0.9, width = 0.9 } }):toggle()
   end
@@ -692,7 +693,7 @@ if rvim.plugin_installed('FTerm.nvim') then
 end
 ----------------------------------------------------------------------------------------------------
 -- toggleterm.nvim
-if rvim.plugin_installed('toggleterm.nvim') then
+if plugin_installed('toggleterm.nvim') then
   local new_term = function(direction, key, count)
     local Terminal = require('toggleterm.terminal').Terminal
     local fmt = string.format
@@ -700,22 +701,54 @@ if rvim.plugin_installed('toggleterm.nvim') then
     return Terminal:new({
       direction = direction,
       on_open = function() vim.cmd('startinsert!') end,
-      rvim.nnoremap(key, cmd),
-      rvim.inoremap(key, cmd),
-      rvim.tnoremap(key, cmd),
+      nnoremap(key, cmd),
+      inoremap(key, cmd),
+      tnoremap(key, cmd),
       count = count,
     })
   end
   local float_term = new_term('float', '<f2>', 1)
   local vertical_term = new_term('vertical', '<F3>', 2)
   local horizontal_term = new_term('horizontal', '<F4>', 3)
-  rvim.nnoremap('<f2>', function() float_term:toggle() end)
-  rvim.inoremap('<f2>', function() float_term:toggle() end)
-  rvim.nnoremap('<F3>', function() vertical_term:toggle() end)
-  rvim.inoremap('<F3>', function() vertical_term:toggle() end)
-  rvim.nnoremap('<F4>', function() horizontal_term:toggle() end)
-  rvim.inoremap('<F4>', function() horizontal_term:toggle() end)
+  nnoremap('<f2>', function() float_term:toggle() end)
+  inoremap('<f2>', function() float_term:toggle() end)
+  nnoremap('<F3>', function() vertical_term:toggle() end)
+  inoremap('<F3>', function() vertical_term:toggle() end)
+  nnoremap('<F4>', function() horizontal_term:toggle() end)
+  inoremap('<F4>', function() horizontal_term:toggle() end)
 end
+----------------------------------------------------------------------------------------------------
+-- telescope.nvim
+nnoremap(
+  '<leader>lR',
+  '<cmd>Telescope lsp_references<CR>',
+  with_plugin('telescope: references', 'telescope.nvim')
+)
+nnoremap(
+  '<leader>ld',
+  '<cmd>Telescope lsp_document_symbols<CR>',
+  with_plugin('telescope: document symbols', 'telescope.nvim')
+)
+nnoremap(
+  '<leader>le',
+  '<cmd>Telescope diagnostics bufnr=0 theme=get_ivy<CR>',
+  with_plugin('telescope: document diagnostics', 'telescope.nvim')
+)
+nnoremap(
+  '<leader>lE',
+  '<cmd>Telescope diagnostics theme=get_ivy<CR>',
+  with_plugin('telescope: workspace diagnostics', 'telescope.nvim')
+)
+nnoremap(
+  '<leader>ls',
+  '<cmd>Telescope lsp_dynamic_workspace_symbols<CR>',
+  with_plugin('telescope: workspace symbols', 'telescope.nvim')
+)
+nnoremap(
+  '<leader>ms',
+  '<cmd>Telescope harpoon marks<cr>',
+  with_plugin('telescope: harpoon search', 'telescope.nvim')
+)
 ----------------------------------------------------------------------------------------------------
 -- Abbreviations
 ----------------------------------------------------------------------------------------------------
