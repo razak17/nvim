@@ -463,17 +463,17 @@ nnoremap('<leader>Lv', ':e ' .. join_paths(rvim.get_config_dir(), 'init.lua<CR>'
 ----------------------------------------------------------------------------------------------------
 local function with_plugin(desc, plugin) return { desc = desc, plugin = plugin } end
 -- packer
-nnoremap('<leader>pc', ':PackerCompile<CR>', 'compile')
-nnoremap('<leader>pC', ':PackerClean<CR>', 'clean')
-nnoremap('<leader>pd', ':PackerDelete<CR>', 'delete packer_compiled')
-nnoremap('<leader>pe', ':PackerCompiledEdit<CR>', 'edit packer_compiled')
-nnoremap('<leader>pi', ':PackerInstall<CR>', 'install')
-nnoremap('<leader>pI', ':PackerInvalidate<CR>', 'invalidate')
-nnoremap('<leader>ps', ':PackerSync<CR>', 'sync')
-nnoremap('<leader>pS', ':PackerStatus<CR>', 'status')
-nnoremap('<leader>pu', ':PackerUpdate<CR>', 'update')
-----------------------------------------------------------------------------------------------------
--- Editor {{{
+if rvim.plugin_installed('packer.nvim') then
+  nnoremap('<leader>pc', ':PackerCompile<CR>', 'compile')
+  nnoremap('<leader>pC', ':PackerClean<CR>', 'clean')
+  nnoremap('<leader>pd', ':PackerDelete<CR>', 'delete packer_compiled')
+  nnoremap('<leader>pe', ':PackerCompiledEdit<CR>', 'edit packer_compiled')
+  nnoremap('<leader>pi', ':PackerInstall<CR>', 'install')
+  nnoremap('<leader>pI', ':PackerInvalidate<CR>', 'invalidate')
+  nnoremap('<leader>ps', ':PackerSync<CR>', 'sync')
+  nnoremap('<leader>pS', ':PackerStatus<CR>', 'status')
+  nnoremap('<leader>pu', ':PackerUpdate<CR>', 'update')
+end
 ----------------------------------------------------------------------------------------------------
 -- neogen
 nnoremap(
@@ -538,8 +538,6 @@ nnoremap(
   with_plugin('marks: list bookmark', 'marks.nvim')
 )
 ----------------------------------------------------------------------------------------------------
--- Lang {{{
-----------------------------------------------------------------------------------------------------
 -- null-ls.nvim
 nnoremap('<leader>ln', '<cmd>NullLsInfo<CR>', with_plugin('null-ls: info', 'null-ls.nvim'))
 ----------------------------------------------------------------------------------------------------
@@ -568,63 +566,25 @@ nnoremap(
 )
 ----------------------------------------------------------------------------------------------------
 -- nvim-dap-ui
-nnoremap('<localleader>dx', function() require('dapui').close() end, with_plugin('dapui: close', 'nvim-dap-ui'))
+nnoremap(
+  '<localleader>dx',
+  function() require('dapui').close() end,
+  with_plugin('dapui: close', 'nvim-dap-ui')
+)
 nnoremap(
   '<localleader>do',
   function() require('dapui').toggle() end,
   with_plugin('dapui: toggle', 'nvim-dap-ui')
 )
 ----------------------------------------------------------------------------------------------------
--- Lang {{{
-----------------------------------------------------------------------------------------------------
 -- undotree
 nnoremap('<leader>u', '<cmd>UndotreeToggle<CR>', with_plugin('undotree: toggle', 'undotree'))
 ----------------------------------------------------------------------------------------------------
--- FTerm.nvim
-local function new_float(cmd)
-  cmd = require('FTerm'):new({ cmd = cmd, dimensions = { height = 0.9, width = 0.9 } }):toggle()
-end
-nnoremap(
-  [[<c-\>]],
-  function() require('FTerm').toggle() end,
-  with_plugin('fterm: toggle lazygit', 'FTerm.nvim')
-)
-tnoremap(
-  [[<c-\>]],
-  function() require('FTerm').toggle() end,
-  with_plugin('fterm: toggle lazygit', 'FTerm.nvim')
-)
-nnoremap(
-  '<leader>lg',
-  function() new_float('lazygit') end,
-  with_plugin('fterm: toggle lazygit', 'FTerm.nvim')
-)
-nnoremap(
-  '<leader>gc',
-  function() new_float('git add . && git commit -v -a') end,
-  with_plugin('git: commit', 'FTerm.nvim')
-)
-nnoremap(
-  '<leader>gd',
-  function() new_float('iconf -ccma') end,
-  with_plugin('git: commit dotfiles', 'FTerm.nvim')
-)
-nnoremap('<leader>tb', function() new_float('btop') end, with_plugin('fterm: btop', 'FTerm.nvim'))
-nnoremap('<leader>tn', function() new_float('node') end, with_plugin('fterm: node', 'FTerm.nvim'))
-nnoremap(
-  '<leader>tr',
-  function() new_float('ranger') end,
-  with_plugin('fterm: ranger', 'FTerm.nvim')
-)
-nnoremap(
-  '<leader>tp',
-  function() new_float('python') end,
-  with_plugin('fterm: python', 'FTerm.nvim')
-)
-----------------------------------------------------------------------------------------------------
 -- nvim-neoclip.lua
-local function clip() require('telescope').extensions.neoclip.default(rvim.telescope.dropdown()) end
-nnoremap('<leader>fN', clip, with_plugin('neoclip: open yank history', 'nvim-neoclip.lua'))
+if rvim.plugin_installed('nvim-neoclip') then
+  local function clip() require('telescope').extensions.neoclip.default(rvim.telescope.dropdown()) end
+  nnoremap('<leader>fN', clip, 'neoclip: open yank history')
+end
 ----------------------------------------------------------------------------------------------------
 -- auto-session
 nnoremap(
@@ -635,15 +595,23 @@ nnoremap(
 nnoremap('<leader>sl', '<cmd>SaveSession<cr>', with_plugin('auto-session: save', 'auto-session'))
 ----------------------------------------------------------------------------------------------------
 -- harpoon
-local dropdown = require('telescope.themes').get_dropdown({
-  previewer = false,
-  prompt_title = 'Harpoon',
-  borderchars = rvim.style.border.telescope.ui_select,
-})
-local function harp_marks() require('telescope').extensions.harpoon.marks(dropdown) end
-local function harp_buffers() require('telescope.builtin').buffers(dropdown) end
-nnoremap('<tab>', harp_buffers, with_plugin('harpoon: buffers', 'harpoon'))
-nnoremap('<s-tab>', harp_marks, with_plugin('harpoon: marks', 'harpoon'))
+if rvim.plugin_installed('harpoon') then
+  local ui = require('harpoon.ui')
+  local m = require('harpoon.mark')
+  nnoremap('<leader>mm', m.add_file, 'harpoon: add')
+  nnoremap('<leader>m.', ui.nav_next, 'harpoon: next')
+  nnoremap('<leader>m,', ui.nav_prev, 'harpoon: prev')
+  nnoremap('<leader>m;', ui.toggle_quick_menu, 'harpoon: ui')
+  local dropdown = require('telescope.themes').get_dropdown({
+    previewer = false,
+    prompt_title = 'Harpoon',
+    borderchars = rvim.style.border.telescope.ui_select,
+  })
+  local function harp_marks() require('telescope').extensions.harpoon.marks(dropdown) end
+  local function harp_buffers() require('telescope.builtin').buffers(dropdown) end
+  nnoremap('<tab>', harp_buffers, 'harpoon: buffers')
+  nnoremap('<s-tab>', harp_marks, 'harpoon: marks')
+end
 ----------------------------------------------------------------------------------------------------
 -- vim-bbye
 nnoremap('<leader>c', '<cmd>Bdelete!<cr>', with_plugin('bbye: close buffer', 'vim-bbye'))
@@ -682,8 +650,6 @@ vnoremap(
   with_plugin('diffview: file history', 'diffview.nvim')
 )
 ----------------------------------------------------------------------------------------------------
--- UI {{{
-----------------------------------------------------------------------------------------------------
 -- vim-illuminate
 nnoremap(
   '<a-n>',
@@ -701,8 +667,54 @@ if rvim.plugin_installed('cybu.nvim') then
   nnoremap('H', '<Plug>(CybuPrev)', 'cybu: prev')
   nnoremap('L', '<Plug>(CybuNext)', 'cybu: next')
 else
-  nnoremap('H', '<cmd>bnext<CR>', 'next buffer')
-  nnoremap('L', '<cmd>bprevious<CR>', 'prev buffer')
+  nnoremap('H', '<cmd>bprevious<CR>', 'previous buffer')
+  nnoremap('L', '<cmd>bnext<CR>', 'next buffer')
+end
+----------------------------------------------------------------------------------------------------
+-- FTerm.nvim
+if rvim.plugin_installed('FTerm.nvim') then
+  local function new_float(cmd)
+    cmd = require('FTerm'):new({ cmd = cmd, dimensions = { height = 0.9, width = 0.9 } }):toggle()
+  end
+  nnoremap([[<c-\>]], function() require('FTerm').toggle() end, 'fterm: toggle lazygit')
+  tnoremap([[<c-\>]], function() require('FTerm').toggle() end, 'fterm: toggle lazygit')
+  nnoremap('<leader>lg', function() new_float('lazygit') end, 'fterm: toggle lazygit')
+  nnoremap('<leader>gc', function() new_float('git add . && git commit -v -a') end, 'git: commit')
+  nnoremap(
+    '<leader>gd',
+    function() new_float('iconf -ccma') end,
+    with_plugin('git: commit dotfiles', 'FTerm.nvim')
+  )
+  nnoremap('<leader>tb', function() new_float('btop') end, 'fterm: btop')
+  nnoremap('<leader>tn', function() new_float('node') end, 'fterm: node')
+  nnoremap('<leader>tr', function() new_float('ranger') end, 'fterm: ranger')
+  nnoremap('<leader>tp', function() new_float('python') end, 'fterm: python')
+end
+----------------------------------------------------------------------------------------------------
+-- toggleterm.nvim
+if rvim.plugin_installed('toggleterm.nvim') then
+  local new_term = function(direction, key, count)
+    local Terminal = require('toggleterm.terminal').Terminal
+    local fmt = string.format
+    local cmd = fmt('<cmd>%sToggleTerm direction=%s<CR>', count, direction)
+    return Terminal:new({
+      direction = direction,
+      on_open = function() vim.cmd('startinsert!') end,
+      rvim.nnoremap(key, cmd),
+      rvim.inoremap(key, cmd),
+      rvim.tnoremap(key, cmd),
+      count = count,
+    })
+  end
+  local float_term = new_term('float', '<f2>', 1)
+  local vertical_term = new_term('vertical', '<F3>', 2)
+  local horizontal_term = new_term('horizontal', '<F4>', 3)
+  rvim.nnoremap('<f2>', function() float_term:toggle() end)
+  rvim.inoremap('<f2>', function() float_term:toggle() end)
+  rvim.nnoremap('<F3>', function() vertical_term:toggle() end)
+  rvim.inoremap('<F3>', function() vertical_term:toggle() end)
+  rvim.nnoremap('<F4>', function() horizontal_term:toggle() end)
+  rvim.inoremap('<F4>', function() horizontal_term:toggle() end)
 end
 ----------------------------------------------------------------------------------------------------
 -- Abbreviations

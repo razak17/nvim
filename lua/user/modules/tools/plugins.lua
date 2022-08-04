@@ -56,8 +56,31 @@ package({
 
 package({
   'akinsho/toggleterm.nvim',
-  event = { 'BufWinEnter' },
-  config = conf('tools', 'toggleterm'),
+  config = function()
+    if not rvim.plugin_installed('toggleterm.nvim') then return end
+    require('toggleterm').setup({
+      open_mapping = [[<F2>]],
+      shade_filetypes = { 'none' },
+      shade_terminals = false,
+      direction = 'float',
+      insert_mappings = false,
+      start_in_insert = true,
+      highlights = {
+        NormalFloat = { link = 'NormalFloat' },
+        FloatBorder = { link = 'FloatBorder' },
+      },
+      float_opts = {
+        width = 150,
+        height = 30,
+        winblend = 3,
+        border = rvim.style.border.current,
+      },
+      size = function(term)
+        if term.direction == 'horizontal' then return 10 end
+        if term.direction == 'vertical' then return math.floor(vim.o.columns * 0.3) end
+      end,
+    })
+  end,
 })
 
 package({
@@ -96,19 +119,11 @@ package({
       'ThePrimeagen/harpoon',
       config = function()
         if not rvim.plugin_installed('harpoon') then return end
-        local ui = require('harpoon.ui')
-        local m = require('harpoon.mark')
         require('harpoon').setup({
           menu = {
             width = vim.api.nvim_win_get_width(0) - 4,
             borderchars = rvim.style.border.telescope.prompt,
           },
-        })
-        require('which-key').register({
-          ['<leader>mm'] = { m.add_file, 'harpoon: add' },
-          ['<leader>m.'] = { ui.nav_next, 'harpoon: next' },
-          ['<leader>m,'] = { ui.nav_prev, 'harpoon: prev' },
-          ['<leader>m;'] = { ui.toggle_quick_menu, 'harpoon: ui' },
         })
       end,
     },
