@@ -484,7 +484,7 @@ nnoremap(
 )
 ----------------------------------------------------------------------------------------------------
 -- iswap.nvim
-nnoremap('<leader>ii', '<Cmd>ISwap<CR>', with_plugin('iswap: auto swap', 'iswap.nvim'))
+nnoremap('<leader>ia', '<Cmd>ISwap<CR>', with_plugin('iswap: swap any', 'iswap.nvim'))
 nnoremap('<leader>iw', '<Cmd>ISwapWith<CR>', with_plugin('iswap: swap with', 'iswap.nvim'))
 ----------------------------------------------------------------------------------------------------
 -- fold-cycle.nvim
