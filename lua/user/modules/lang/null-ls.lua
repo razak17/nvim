@@ -11,7 +11,16 @@ return function()
       diagnostics.flake8,
       diagnostics.eslint_d,
       diagnostics.golangci_lint,
-      diagnostics.shellcheck.with({ extra_args = { '--severity', 'warning' } }),
+      diagnostics.shellcheck.with({
+        condition = function()
+          return rvim.executable('stylua')
+            and not vim.tbl_isempty(vim.fs.find({ '.stylua.toml', 'stylua.toml' }, {
+              path = vim.fn.expand('%:p'),
+              upward = true,
+            }))
+        end,
+        extra_args = { '--severity', 'warning' },
+      }),
       -- formatters
       formatting.black.with({ extra_args = { '--fast' } }),
       formatting.prettierd,
