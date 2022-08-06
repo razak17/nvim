@@ -616,7 +616,7 @@ end
 ----------------------------------------------------------------------------------------------------
 -- vim-bbye
 nnoremap('<leader>c', '<cmd>Bdelete!<cr>', with_plugin('bbye: close buffer', 'vim-bbye'))
-nnoremap('<leader>bx', '<cmd>bufdo :Bdelete<cr>', with_plugin('close all', 'bbye: vim-bbye'))
+nnoremap('<leader>bx', '<cmd>bufdo :Bdelete<cr>', with_plugin('bbye: close all', 'vim-bbye'))
 nnoremap('<leader>q', '<Cmd>Bwipeout<CR>', with_plugin('bbye: wipe buffer', 'vim-bbye'))
 ----------------------------------------------------------------------------------------------------
 -- jaq.nvim
