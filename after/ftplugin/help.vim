@@ -1,6 +1,7 @@
 setlocal nonumber norelativenumber nolist
 setlocal colorcolumn=
 setlocal concealcursor=nc
+setlocal textwidth=100
 
 ----------------------------------------------------------------------------------------------------
 " Credit: Tweekmonster!
