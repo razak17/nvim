@@ -121,7 +121,7 @@ package({
   'lukas-reineke/virt-column.nvim',
   config = function()
     require('user.utils.highlights').plugin('virt_column', {
-      { VirtColumn = { bg = 'None', inherit = 'Comment' } },
+      { VirtColumn = { bg = 'None', fg = { from = 'Comment', alter = 10 } } },
     })
     require('virt-column').setup({ char = '▕' })
   end,
