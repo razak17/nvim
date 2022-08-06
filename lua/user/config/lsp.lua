@@ -39,7 +39,6 @@ rvim.lsp = {
       go = { 'null-ls' },
       proto = { 'null-ls' },
       html = { 'html' },
-      json = { 'jsonls' },
       javascript = { 'quick_lint_js', 'tsserver' },
       typescript = { 'tsserver' },
       typescriptreact = { 'tsserver' },

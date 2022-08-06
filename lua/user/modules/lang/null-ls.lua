@@ -5,6 +5,7 @@ return function()
   local diagnostics = builtins.diagnostics
   local formatting = builtins.formatting
   null_ls.setup({
+    debug = true,
     sources = {
       -- linters
       diagnostics.zsh,
