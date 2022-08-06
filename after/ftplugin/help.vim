@@ -31,7 +31,7 @@ if exists('*HelpFormatExpr')
   finish
 endif
 
-
+" TODO: invalid range error
 function! s:right_align() abort
   let text = matchstr(getline('.'), '^\s*\zs.\+\ze\s*$')
   let remainder = (&l:textwidth + 1) - len(text)
