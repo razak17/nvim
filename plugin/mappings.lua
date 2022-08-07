@@ -750,6 +750,10 @@ nnoremap(
   with_plugin('telescope: harpoon search', 'telescope.nvim')
 )
 ----------------------------------------------------------------------------------------------------
+-- bracey.vim
+nnoremap('<leader>bs', '<cmd>Bracey<CR>', with_plugin('bracey: start', 'bracey.vim'))
+nnoremap('<leader>be', '<cmd>BraceyStop<CR>', with_plugin('bracey: stop', 'bracey.vim'))
+----------------------------------------------------------------------------------------------------
 -- Abbreviations
 ----------------------------------------------------------------------------------------------------
 vim.cmd([[

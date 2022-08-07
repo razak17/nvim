@@ -271,6 +271,9 @@ package({
   event = 'InsertCharPre',
   config = function() require('hclipboard').start() end,
 })
+
+package({ 'turbio/bracey.vim', run = 'npm install --prefix server' })
+
 ----------------------------------------------------------------------------------------------------
 -- Graveyard
 ----------------------------------------------------------------------------------------------------
