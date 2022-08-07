@@ -176,6 +176,7 @@ local servers = {
           },
           workspace = {
             library = { fn.expand('$VIMRUNTIME/lua'), emmy, packer, plenary },
+            checkThirdParty = false,
           },
           telemetry = { enable = false },
         },
