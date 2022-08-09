@@ -2,6 +2,7 @@
 -- Language servers
 ----------------------------------------------------------------------------------------------------
 local fn = vim.fn
+local util = require('lspconfig/util')
 
 local function setup_capabilities()
   local snippet = {
@@ -84,7 +85,7 @@ local servers = {
   tsserver = true,
   vimls = true,
   denols = {
-    root_dir = require('lspconfig').util.root_pattern('deno.json', 'deno.jsonc'),
+    root_dir = function(fname) return util.root_pattern('deno.json', 'deno.jsonc')(fname) end,
     single_file_support = false,
   },
   emmet_ls = {
@@ -128,11 +129,9 @@ local servers = {
     },
   },
   graphql = {
-    root_dir = require('lspconfig').util.root_pattern(
-      '.graphqlrc*',
-      '.graphql.config.*',
-      'graphql.config.*'
-    ),
+    root_dir = function(fname)
+      return util.root_pattern('.graphqlrc*', '.graphql.config.*', 'graphql.config.*')(fname)
+    end,
     single_file_support = false,
   },
   jsonls = {
@@ -184,22 +183,19 @@ local servers = {
     }
   end,
   tailwindcss = {
-    root_dir = require('lspconfig').util.root_pattern(
-      'tailwind.config.js',
-      'tailwind.config.ts',
-      'postcss.config.js',
-      'postcss.config.ts'
-    ),
+    root_dir = function(fname)
+      return util.root_pattern(
+        'tailwind.config.js',
+        'tailwind.config.cjs',
+        'tailwind.js',
+        'tailwind.cjs'
+      )(fname)
+    end,
     single_file_support = false,
   },
   vuels = {
     setup = {
-      root_dir = function(fname)
-        local util = require('rvim.lspconfig/util')
-        return util.root_pattern('package.json')(fname)
-          or util.root_pattern('vue.config.js')(fname)
-          or vim.fn.getcwd()
-      end,
+      root_dir = function(fname) return util.root_pattern('package.json', 'vue.config.js')(fname) end,
       init_options = {
         config = {
           vetur = {
