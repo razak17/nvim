@@ -12,7 +12,6 @@ package({
   'mbbill/undotree',
   event = 'BufRead',
   config = function()
-    if not rvim.plugin_installed('undotree') then return end
     vim.g.undotree_TreeNodeShape = '◦' -- Alternative: '◉'
     vim.g.undotree_SetFocusWhenToggle = 1
     vim.g.undotree_SplitWidth = 35
@@ -22,7 +21,6 @@ package({
 package({
   'ahmedkhalf/project.nvim',
   config = function()
-    if not rvim.plugin_installed('project.nvim') then return end
     require('project_nvim').setup({
       active = true,
       manual_mode = false,
@@ -48,7 +46,6 @@ package({
   'numToStr/FTerm.nvim',
   event = { 'BufWinEnter' },
   config = function()
-    if not rvim.plugin_installed('FTerm.nvim') then return end
     local fterm = require('FTerm')
     fterm.setup({ dimensions = { height = 0.9, width = 0.9 } })
   end,
@@ -57,7 +54,6 @@ package({
 package({
   'akinsho/toggleterm.nvim',
   config = function()
-    if not rvim.plugin_installed('toggleterm.nvim') then return end
     require('toggleterm').setup({
       open_mapping = [[<F2>]],
       shade_filetypes = { 'none' },
@@ -88,7 +84,6 @@ package({
   'AckslD/nvim-neoclip.lua',
   event = { 'BufWinEnter' },
   config = function()
-    if not rvim.plugin_installed('nvim-neoclip.lua') then return end
     require('neoclip').setup({
       enable_persistent_history = false,
       keys = {
@@ -119,7 +114,6 @@ package({
     {
       'ThePrimeagen/harpoon',
       config = function()
-        if not rvim.plugin_installed('harpoon') then return end
         require('harpoon').setup({
           menu = {
             width = vim.api.nvim_win_get_width(0) - 4,
@@ -134,7 +128,6 @@ package({
 package({
   'rmagatti/auto-session',
   config = function()
-    if not rvim.plugin_installed('auto-session') then return end
     local fn = vim.fn
     local fmt = string.format
     require('auto-session').setup({
@@ -167,7 +160,6 @@ package({
   'SmiteshP/nvim-navic',
   requires = 'neovim/nvim-lspconfig',
   config = function()
-    if not rvim.plugin_installed('nvim-navic') then return end
     vim.g.navic_silence = true
     local highlights = require('user.utils.highlights')
     local s = rvim.style
@@ -191,7 +183,6 @@ package({
   'kevinhwang91/nvim-bqf',
   ft = 'qf',
   config = function()
-    if not rvim.plugin_installed('nvim-bqf') then return end
     require('bqf').setup({
       preview = {
         border_chars = rvim.style.border.bqf,
@@ -206,7 +197,6 @@ package({
   'is0n/jaq-nvim',
   event = { 'BufWinEnter' },
   config = function()
-    if not rvim.plugin_installed('jaq-nvim') then return end
     require('jaq-nvim').setup({
       cmds = {
         default = 'term',
@@ -240,7 +230,6 @@ package({
   run = function() vim.fn['mkdp#util#install']() end,
   ft = { 'markdown' },
   config = function()
-    if not rvim.plugin_installed('markdown-preview.nvim') then return end
     vim.g.mkdp_auto_start = 0
     vim.g.mkdp_auto_close = 1
   end,
@@ -282,7 +271,6 @@ package({ 'AndrewRadev/linediff.vim', cmd = 'Linediff', disable = true })
 package({
   'Djancyp/cheat-sheet',
   config = function()
-    if not rvim.plugin_installed('cheat-sheet') then return end
     require('cheat-sheet').setup({
       auto_fill = {
         current_word = false,
@@ -302,7 +290,6 @@ package({
   'sindrets/diffview.nvim',
   event = 'BufReadPre',
   config = function()
-    if not rvim.plugin_installed('diffview.nvim') then return end
     require('diffview').setup({
       default_args = {
         DiffviewFileHistory = { '%' },
@@ -329,7 +316,6 @@ package({
   'michaelb/sniprun',
   event = 'BufWinEnter',
   config = function()
-    if not rvim.plugin_installed('sniprun') then return end
     require('sniprun').setup({
       snipruncolors = {
         SniprunVirtualTextOk = {
@@ -358,7 +344,6 @@ package({
   event = 'BufWinEnter',
   ft = { 'json' },
   config = function()
-    if not rvim.plugin_installed('package-info.nvim') then return end
     require('package-info').setup({
       colors = {
         up_to_date = '#3C4048', -- Text color for up to date package virtual text
@@ -393,7 +378,6 @@ package({
 package({
   'nvim-neotest/neotest',
   config = function()
-    if not rvim.plugin_installed('neotest') then return end
     require('neotest').setup({
       diagnostic = {
         enabled = false,
@@ -435,7 +419,6 @@ package({
 package({
   'smjonas/inc-rename.nvim',
   config = function()
-    if not rvim.plugin_installed('inc-rename.nvim') then return end
     require('inc_rename').setup({
       hl_group = 'Visual',
     })
@@ -450,7 +433,6 @@ package({
   requires = { 'nvim-lua/plenary.nvim' },
   ft = { 'http', 'json' },
   config = function()
-    if not rvim.plugin_installed('rest.nvim') then return end
     require('rest-nvim').setup({
       -- Open request results in a horizontal split
       result_split_horizontal = true,

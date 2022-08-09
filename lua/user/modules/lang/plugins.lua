@@ -6,9 +6,6 @@ local package = require('user.core.plugins').package
 package({
   'rcarriga/nvim-dap-ui',
   config = function()
-    if not rvim.plugin_installed('nvim-dap-ui') or not rvim.plugin_installed('nvim-dap') then
-      return
-    end
     local dapui = require('dapui')
     require('dapui').setup()
 
@@ -30,7 +27,6 @@ package({
     {
       'theHamsta/nvim-dap-virtual-text',
       config = function()
-        if not rvim.plugin_installed('nvim-dap-virtual-text') then return end
         require('nvim-dap-virtual-text').setup({
           enabled = true,
           enabled_commands = true,
@@ -56,7 +52,6 @@ package({
     {
       'ray-x/lsp_signature.nvim',
       config = function()
-        if not rvim.plugin_installed('lsp_signature.nvim') then return end
         require('lsp_signature').setup({
           debug = false,
           log_path = rvim.get_cache_dir() .. '/lsp_signature.log',
@@ -73,7 +68,6 @@ package({
     {
       'kosayoda/nvim-lightbulb',
       config = function()
-        if not rvim.plugin_installed('nvim-lightbulb') then return end
         require('user.utils.highlights').plugin('Lightbulb', {
           { LightBulbFloatWin = { foreground = { from = 'Type' } } },
         })
@@ -94,10 +88,9 @@ package({
 
 package({
   'williamboman/mason.nvim',
+  event = 'BufRead',
   requires = { 'nvim-lspconfig', 'williamboman/mason-lspconfig.nvim' },
   config = function()
-    local installed = rvim.plugin_installed
-    if not installed('mason.nvim') or not installed('mason-lspconfig.nvim') then return end
     local style = rvim.style
     local icons = style.icons
     require('mason').setup({
@@ -121,7 +114,6 @@ package({
   'Saecki/crates.nvim',
   ft = 'rust',
   config = function()
-    if not rvim.plugin_installed('crates.nvim') then return end
     require('crates').setup({
       popup = {
         -- autofocus = true,
@@ -200,7 +192,6 @@ package({
 package({
   'windwp/nvim-autopairs',
   config = function()
-    if not rvim.plugin_installed('nvim-autopairs') then return end
     require('nvim-autopairs').setup({
       close_triple_quotes = true,
       check_ts = true,
@@ -219,7 +210,6 @@ package({
 package({
   'github/copilot.vim',
   config = function()
-    if not rvim.plugin_installed('copilot.vim') then return end
     vim.g.copilot_no_tab_map = true
     rvim.imap('<Plug>(rvim-copilot-accept)', 'copilot#Accept("<Tab>")', { expr = true })
     rvim.inoremap('<M-]>', '<Plug>(copilot-next)')
@@ -247,7 +237,6 @@ package({
   'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
   event = { 'BufWinEnter' },
   config = function()
-    if not rvim.plugin_installed('lsp_lines.nvim') then return end
     local lsp_lines = require('lsp_lines')
     lsp_lines.setup()
     lsp_lines.toggle()
@@ -257,7 +246,6 @@ package({
 package({
   'RRethy/vim-illuminate',
   config = function()
-    if not rvim.plugin_installed('vim-illuminate') then return end
     vim.g.Illuminate_ftblacklist = {
       'alpha',
       'NvimTree',
@@ -292,7 +280,6 @@ package({
   'andymass/vim-matchup',
   after = 'nvim-treesitter',
   config = function()
-    if not rvim.plugin_installed('vim-matchup') then return end
     require('which-key').register({
       ['<localleader>lm'] = { ':<c-u>MatchupWhereAmI?<CR>', 'matchup: where am i' },
     })

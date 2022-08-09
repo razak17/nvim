@@ -58,7 +58,6 @@ package({
   'xiyaowong/accelerated-jk.nvim',
   event = { 'BufWinEnter' },
   config = function()
-    if not rvim.plugin_installed('accelerated-jk.nvim') then return end
     require('accelerated-jk').setup({
       mappings = { j = 'gj', k = 'gk' },
       -- If the interval of key-repeat takes more than `acceleration_limit` ms, the step is reset
@@ -69,10 +68,7 @@ package({
 
 package({
   'kylechui/nvim-surround',
-  config = function()
-    if not rvim.plugin_installed('nvim-surround') then return end
-    require('nvim-surround').setup()
-  end,
+  config = function() require('nvim-surround').setup() end,
 })
 
 package({ 'monaqa/dial.nvim', config = conf('editor', 'dial') })
@@ -80,7 +76,6 @@ package({ 'monaqa/dial.nvim', config = conf('editor', 'dial') })
 package({
   'norcalli/nvim-colorizer.lua',
   config = function()
-    if not rvim.plugin_installed('nvim-colorizer.lua') then return end
     require('colorizer').setup({ 'lua', 'css', 'vim', 'kitty', 'conf' }, {
       css = { rgb_fn = true, hsl_fn = true, names = true },
       scss = { rgb_fn = true, hsl_fn = true, names = true },
@@ -97,16 +92,12 @@ package({
 
 package({
   'romainl/vim-cool',
-  config = function()
-    if not rvim.plugin_installed('vim-cool') then return end
-    vim.g.CoolTotalMatches = 1
-  end,
+  config = function() vim.g.CoolTotalMatches = 1 end,
 })
 
 package({
   'numToStr/Comment.nvim',
   config = function()
-    if not rvim.plugin_installed('Comment.nvim') then return end
     require('Comment').setup()
     local ft = require('Comment.ft')
     ft
@@ -121,26 +112,19 @@ package({
 
 package({
   'Matt-A-Bennett/vim-surround-funk',
-  config = function()
-    if not rvim.plugin_installed('vim-surround-funk') then return end
-    vim.g.surround_funk_create_mappings = 0
-  end,
+  config = function() vim.g.surround_funk_create_mappings = 0 end,
 })
 
 package({
   'danymat/neogen',
   event = { 'BufWinEnter' },
   requires = { 'nvim-treesitter/nvim-treesitter' },
-  config = function()
-    if not rvim.plugin_installed('neogen') then return end
-    require('neogen').setup({ snippet_engine = 'luasnip' })
-  end,
+  config = function() require('neogen').setup({ snippet_engine = 'luasnip' }) end,
 })
 
 package({
   'chentoast/marks.nvim',
   config = function()
-    if not rvim.plugin_installed('marks.nvim') then return end
     require('user.utils.highlights').plugin('marks', {
       { MarkSignHL = { link = 'Directory' } },
       { MarkSignNumHL = { link = 'Directory' } },
@@ -187,17 +171,12 @@ package({
 ----------------------------------------------------------------------------------------------------
 package({
   'junegunn/vim-easy-align',
-  config = function()
-    if not rvim.plugin_installed('vim-easy-align') then return end
-  end,
+  config = function() end,
   disable = true,
 })
 
 package({
   'jghauser/fold-cycle.nvim',
-  config = function()
-    if not rvim.rvim.plugin_installed('fold-cycle.nvim') then return end
-    require('fold-cycle').setup()
-  end,
+  config = function() require('fold-cycle').setup() end,
   disable = true,
 })

@@ -42,7 +42,6 @@ package({
   event = 'BufWinEnter',
   ft = { 'org', 'norg', 'markdown', 'yaml' },
   setup = function()
-    if not rvim.plugin_installed('headlines.nvim') then return end
     -- https://observablehq.com/@d3/color-schemes?collection=@d3/d3-scale-chromatic
     -- NOTE: this must be set in the setup function or it will crash nvim...
     require('user.utils.highlights').plugin('Headlines', {
@@ -53,7 +52,6 @@ package({
     })
   end,
   config = function()
-    if not rvim.plugin_installed('headlines.nvim') then return end
     require('headlines').setup({
       markdown = {
         headline_highlights = { 'Headline1', 'Headline2', 'Headline3' },
@@ -70,7 +68,6 @@ package({
   's1n7ax/nvim-window-picker',
   tag = 'v1.*',
   config = function()
-    if not rvim.plugin_installed('nvim') then return end
     require('window-picker').setup({
       autoselect_one = true,
       include_current = false,
@@ -87,10 +84,7 @@ package({
 
 package({
   'itchyny/vim-highlighturl',
-  config = function()
-    if not rvim.plugin_installed('vim-highlighturl') then return end
-    vim.g.highlighturl_guifg = require('user.utils.highlights').get('URL', 'fg')
-  end,
+  config = function() vim.g.highlighturl_guifg = require('user.utils.highlights').get('URL', 'fg') end,
 })
 
 package({
@@ -103,7 +97,6 @@ package({
   'ghillb/cybu.nvim',
   event = 'BufRead',
   config = function()
-    if not rvim.plugin_installed('cybu.nvim') then return end
     require('cybu').setup({
       position = {
         relative_to = 'win',
@@ -133,7 +126,6 @@ package({
 package({
   'zbirenbaum/neodim',
   config = function()
-    if not rvim.plugin_installed('neodim') then return end
     require('neodim').setup({
       blend_color = require('user.utils.highlights').get('Normal', 'bg'),
       alpha = 0.60,
@@ -150,7 +142,6 @@ package({
 package({
   'm-demare/hlargs.nvim',
   config = function()
-    if not rvim.plugin_installed('hlargs.nvim') then return end
     require('user.utils.highlights').plugin('hlargs', {
       { Hlargs = { italic = true, bold = false, foreground = '#A5D6FF' } },
     })
@@ -170,7 +161,6 @@ package({
 package({
   'rainbowhxch/beacon.nvim',
   config = function()
-    if not rvim.plugin_installed('beacon.nvim') then return end
     local beacon = require('beacon')
     beacon.setup({
       minimal_jump = 20,
