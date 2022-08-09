@@ -79,7 +79,10 @@ local servers = {
   marksman = true,
   prismals = true,
   quick_lint_js = true,
-  rust_analyzer = true,
+  rust_analyzer = {
+    root_dir = function(fname) return util.root_pattern('Cargo.toml')(fname) end,
+    single_file_support = false,
+  },
   sqls = true,
   svelte = true,
   tsserver = true,
