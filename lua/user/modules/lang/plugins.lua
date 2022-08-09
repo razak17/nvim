@@ -94,7 +94,6 @@ package({
 
 package({
   'williamboman/mason.nvim',
-  event = 'BufRead',
   requires = { 'nvim-lspconfig', 'williamboman/mason-lspconfig.nvim' },
   config = function()
     local installed = rvim.plugin_installed
