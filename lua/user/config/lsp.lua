@@ -1,6 +1,29 @@
 local border = rvim.style.border.current
 
 rvim.lsp = {
+  configured_filetypes = {
+    'lua',
+    'javascript',
+    'javascriptreact',
+    'typescript',
+    'typescriptreact',
+    'python',
+    'go',
+    'rust',
+    'yaml',
+    'vue',
+    'vim',
+    'json',
+    'jsonc',
+    'html',
+    'css',
+    'bash',
+    'sh',
+    'zsh',
+    'markdown',
+    'graphql',
+    'sql'
+  },
   templates_dir = join_paths(rvim.get_config_dir(), 'after', 'ftplugin'),
   diagnostics = {
     signs = { active = true },

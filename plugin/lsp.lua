@@ -391,3 +391,10 @@ lsp.handlers['window/showMessage'] = function(_, result, ctx)
     keep = function() return lvl == 'ERROR' or lvl == 'WARN' end,
   })
 end
+
+-- Generate templates
+local utils = require('user.utils')
+local templates = rvim.lsp.templates_dir
+if not utils.is_directory(templates) or fn.filereadable(join_paths(templates, 'lua.lua')) ~= 1 then
+  require('user.lsp.templates').generate_templates()
+end

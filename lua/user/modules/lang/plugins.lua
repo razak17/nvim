@@ -101,7 +101,6 @@ package({
     if not installed('mason.nvim') or not installed('mason-lspconfig.nvim') then return end
     local style = rvim.style
     local icons = style.icons
-    local get_config = require('user.core.servers')
     require('mason').setup({
       install_root_dir = rvim.paths.mason,
       ui = {
@@ -115,15 +114,6 @@ package({
     })
     require('mason-lspconfig').setup({
       automatic_installation = rvim.lsp.automatic_servers_installation,
-    })
-    require('mason-lspconfig').setup_handlers({
-      function(name)
-        local config = get_config(name)
-        if config then
-          if name == 'rust_analyzer' then require('user.modules.lang.rust') end
-          require('lspconfig')[name].setup(config)
-        end
-      end,
     })
   end,
 })
