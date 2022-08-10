@@ -141,16 +141,23 @@ end
 ---------------------------------------------------------------------------------
 ---Apply highlights for a plugin and refresh on colorscheme change
 ---@param name string plugin name
----@param hls table<string, table> map of highlights
-function M.plugin(name, hls)
-  name = name:gsub('^%l', string.upper) -- capitalise the name for autocommand convention sake
-  M.all(hls)
+---@param opts table<string, table> map of highlights
+function M.plugin(name, opts)
+  -- Options can be specified by theme name so check if they have been or there is a general
+  -- definition otherwise use the opts as is
+  if opts.theme then
+    opts = vim.tbl_extend('keep', opts.theme[vim.g.colors_name] or {}, opts['*'] or {})
+    if not next(opts) then return end
+  end
+  -- capitalise the name for autocommand convention sake
+  name = name:gsub('^%l', string.upper)
+  M.all(opts)
   rvim.augroup(fmt('%sHighlightOverrides', name), {
     {
       event = { 'ColorScheme' },
       command = function()
         -- Defer resetting these highlights to ensure they apply after other overrides
-        vim.defer_fn(function() M.all(hls) end, 1)
+        vim.defer_fn(function() M.all(opts) end, 1)
       end,
     },
   })

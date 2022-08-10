@@ -143,7 +143,10 @@ package({
   'm-demare/hlargs.nvim',
   config = function()
     require('user.utils.highlights').plugin('hlargs', {
-      { Hlargs = { italic = true, bold = false, foreground = '#A5D6FF' } },
+      theme = {
+        ['*'] = { { Hlargs = { italic = true, foreground = '#A5D6FF' } } },
+        ['horizon'] = { { Hlargs = { italic = true, foreground = { from = 'Normal' } } } },
+      },
     })
     require('hlargs').setup({
       excluded_argnames = {
