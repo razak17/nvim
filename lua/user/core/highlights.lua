@@ -124,4 +124,8 @@ rvim.augroup('UserHighlights', {
 ----------------------------------------------------------------------------------------------------
 -- Color Scheme {{{1
 ----------------------------------------------------------------------------------------------------
-if rvim.plugin_installed('zephyr-nvim') then vim.cmd.colorscheme('zephyr') end
+local fmt = string.format
+local ok, msg = pcall(vim.cmd.colorscheme, 'zephyr')
+if not ok then
+  vim.schedule(function() vim.notify(fmt('Theme failed to load because: %s', msg), 'error') end)
+end
