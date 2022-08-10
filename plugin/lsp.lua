@@ -202,9 +202,6 @@ local function on_attach(client, bufnr)
   setup_autocommands(client, bufnr)
   setup_mappings(client, bufnr)
   api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-  if client.server_capabilities.documentFormattingProvider then
-    vim.bo[bufnr].formatexpr = 'v:lua.vim.lsp.formatexpr()'
-  end
 end
 
 --- A set of custom overrides for specific lsp clients
