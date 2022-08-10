@@ -38,7 +38,7 @@ return function()
             w = { gs.toggle_word_diff, 'toggle word diff' },
           },
           ['<leader>gb'] = { gs.blame_line, 'gitsigns: blame' },
-          ['<leader>gm'] = { qf_list_modified, 'gitsigns: list modified in quickfix' },
+          ['<leader>gL'] = { qf_list_modified, 'gitsigns: list modified in quickfix' },
           ['<leader>gr'] = {
             name = '+reset',
             e = { gs.reset_buffer, 'gitsigns: reset entire buffer' },

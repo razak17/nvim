@@ -754,6 +754,15 @@ nnoremap(
 nnoremap('<leader>bs', '<cmd>Bracey<CR>', with_plugin('bracey: start', 'bracey.vim'))
 nnoremap('<leader>be', '<cmd>BraceyStop<CR>', with_plugin('bracey: stop', 'bracey.vim'))
 ----------------------------------------------------------------------------------------------------
+-- neogit
+if rvim.plugin_installed('neogit') then
+  local neogit = require('neogit')
+  rvim.nnoremap('<localleader>gs', function() neogit.open() end, 'neogit: open status buffer')
+  rvim.nnoremap('<localleader>gm', function() neogit.open({ 'commit' }) end, 'neogit: open commit buffer')
+  rvim.nnoremap('<localleader>gl', neogit.popups.pull.create, 'neogit: open pull popup')
+  rvim.nnoremap('<localleader>gp', neogit.popups.push.create, 'neogit: open push popup')
+end
+----------------------------------------------------------------------------------------------------
 -- Abbreviations
 ----------------------------------------------------------------------------------------------------
 vim.cmd([[
