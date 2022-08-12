@@ -1,6 +1,5 @@
 local api = vim.api
 local fmt = string.format
-local levels = vim.log.levels
 
 local M = {}
 
@@ -48,20 +47,7 @@ function M.alter_color(color, percent)
 end
 
 ---@param group_name string A highlight group name
-local function get(group_name)
-  local ok, hl = pcall(api.nvim_get_hl_by_name, group_name, true)
-  if ok then
-    hl.foreground = hl.foreground and '#' .. bit.tohex(hl.foreground, 6)
-    hl.background = hl.background and '#' .. bit.tohex(hl.background, 6)
-    --- BUG: API returns a true key which errors during the merge
-    hl[true] = nil
-    return hl
-  end
-  return {}
-end
-
----@param group_name string A highlight group name
-local function get_hl(group_name)
+local function get_highlight(group_name)
   local ok, hl = pcall(api.nvim_get_hl_by_name, group_name, true)
   if not ok then return {} end
   hl.foreground = hl.foreground and '#' .. bit.tohex(hl.foreground, 6)
@@ -84,7 +70,7 @@ end
 function M.set(name, opts)
   assert(name and opts, "Both 'name' and 'opts' must be specified")
 
-  local hl = get_hl(opts.inherit or name)
+  local hl = get_highlight(opts.inherit or name)
   opts.inherit = nil
 
   for attr, value in pairs(opts) do
@@ -106,7 +92,7 @@ end
 ---@return string | table
 function M.get(group, attribute, fallback)
   assert(group, 'cannot get a highlight without specifying a group name')
-  local data = get_hl(group)
+  local data = get_highlight(group)
   if not attribute then return data end
   local attr = ({ fg = 'foreground', bg = 'background' })[attribute] or attribute
   local color = data[attr] or fallback
