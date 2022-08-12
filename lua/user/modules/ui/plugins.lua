@@ -30,8 +30,7 @@ package({ 'nvim-neo-tree/neo-tree.nvim', branch = 'v2.x', config = conf('ui', 'n
 
 package({
   'lewis6991/gitsigns.nvim',
-  module = 'gitsigns',
-  event = 'CursorHold',
+  event = 'BufRead',
   config = conf('ui', 'gitsigns'),
 })
 
