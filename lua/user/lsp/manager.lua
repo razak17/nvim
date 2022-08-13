@@ -35,7 +35,7 @@ end
 ---@return table
 local function resolve_config(server_name, ...)
   local get_config = require('user.core.servers')
-  local config = get_config(server_name)
+  local config = get_config.setup(server_name)
   config = vim.tbl_deep_extend('force', config, ...)
   return config
 end

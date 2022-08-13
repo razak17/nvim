@@ -4,6 +4,8 @@
 local fn = vim.fn
 local util = require('lspconfig/util')
 
+local M = {}
+
 local function setup_capabilities()
   local snippet = {
     properties = { 'documentation', 'detail', 'additionalTextEdits' },
@@ -67,7 +69,7 @@ local function on_init(client)
   return true
 end
 
-local servers = {
+M.servers = {
   astro = true,
   bashls = true,
   clangd = true,
@@ -251,8 +253,8 @@ local servers = {
   },
 }
 
-return function(name)
-  local config = servers[name]
+function M.setup(name)
+  local config = M.servers[name]
   if not config then return end
   local t = type(config)
   if t == 'boolean' then config = {} end
@@ -261,3 +263,5 @@ return function(name)
   config.capabilities = global_capabilities()
   return config
 end
+
+return M
