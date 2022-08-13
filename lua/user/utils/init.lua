@@ -14,7 +14,7 @@ end
 function M.open_link()
   local file = fn.expand('<cfile>')
   if not file or fn.isdirectory(file) > 0 then return vim.cmd.edit(file) end
-  if file:match('https://') or file:match('http://') then return M.open(file) end
+  if file:match('http[s]?://') then return M.open(file) end
 
   -- consider anything that looks like string/string a github link
   local plugin_url_regex = '[%a%d%-%.%_]*%/[%a%d%-%.%_]*'
