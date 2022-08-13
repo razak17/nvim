@@ -4,6 +4,24 @@ local fn = vim.fn
 local api = vim.api
 local fmt = string.format
 
+rvim.augroup('VimrcIncSearchHighlight', {
+  {
+    event = { 'OptionSet' },
+    pattern = { 'hlsearch' },
+    command = function()
+      vim.schedule(function() vim.cmd.redrawstatus() end)
+    end,
+  },
+  {
+    event = 'RecordingEnter',
+    command = function() vim.opt.hlsearch = false end,
+  },
+  {
+    event = 'RecordingLeave',
+    command = function() vim.opt.hlsearch = true end,
+  },
+})
+
 local smart_close_filetypes = {
   'help',
   'git-status',
