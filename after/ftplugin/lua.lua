@@ -62,33 +62,33 @@ rvim.ftplugin_conf('nvim-surround', function(surround)
     return input
   end
   surround.buffer_setup({
-    delimiters = {
-      pairs = {
-        l = { 'function () ', ' end' },
-        F = {
-          add = function()
-            return {
-              { fmt('local function %s() ', get_input('Enter a function name')) },
-              { ' end' },
-            }
-          end,
-        },
-        i = {
-          add = function()
-            return {
-              { fmt('if %s then ', get_input('Enter a condition')) },
-              { ' end' },
-            }
-          end,
-        },
-        t = {
-          add = function()
-            return {
-              { fmt('{ %s = { ', get_input('Enter a field name')) },
-              { ' }}' },
-            }
-          end,
-        },
+    surrounds = {
+      l = {
+        add = { 'function () ', ' end' },
+      },
+      F = {
+        add = function()
+          return {
+            { fmt('local function %s() ', get_input('Enter a function name')) },
+            { ' end' },
+          }
+        end,
+      },
+      i = {
+        add = function()
+          return {
+            { fmt('if %s then ', get_input('Enter a condition')) },
+            { ' end' },
+          }
+        end,
+      },
+      t = {
+        add = function()
+          return {
+            { fmt('{ %s = { ', get_input('Enter a field name')) },
+            { ' }}' },
+          }
+        end,
       },
     },
   })
