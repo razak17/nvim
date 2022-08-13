@@ -328,23 +328,23 @@ nnoremap('cN', '*``cgN')
 -- 2. Hit cq to start recording the macro.
 -- 3. Once you are done with the macro, go back to normal mode.
 -- 4. Hit Enter to repeat the macro over search matches.
-function rvim.mappings.setup_CR()
-  nmap('<Enter>', [[:nnoremap <lt>Enter> n@z<CR>q:<C-u>let @z=strpart(@z,0,strlen(@z)-1)<CR>n@z]])
+function rvim.mappings.setup_map()
+  nnoremap('M', [[:nnoremap M n@z<CR>q:<C-u>let @z=strpart(@z,0,strlen(@z)-1)<CR>n@z]])
 end
 
 vim.g.mc = rvim.replace_termcodes([[y/\V<C-r>=escape(@", '/')<CR><CR>]])
 xnoremap('cn', [[g:mc . "``cgn"]], { expr = true, silent = true })
 xnoremap('cN', [[g:mc . "``cgN"]], { expr = true, silent = true })
-nnoremap('cq', [[:\<C-u>call v:lua.rvim.mappings.setup_CR()<CR>*``qz]])
-nnoremap('cQ', [[:\<C-u>call v:lua.rvim.mappings.setup_CR()<CR>#``qz]])
+nnoremap('cq', [[:\<C-u>call v:lua.rvim.mappings.setup_map()<CR>*``qz]])
+nnoremap('cQ', [[:\<C-u>call v:lua.rvim.mappings.setup_map()<CR>#``qz]])
 xnoremap(
   'cq',
-  [[":\<C-u>call v:lua.rvim.mappings.setup_CR()<CR>gv" . g:mc . "``qz"]],
+  [[":\<C-u>call v:lua.rvim.mappings.setup_map()<CR>gv" . g:mc . "``qz"]],
   { expr = true }
 )
 xnoremap(
   'cQ',
-  [[":\<C-u>call v:lua.rvim.mappings.setup_CR()<CR>gv" . substitute(g:mc, '/', '?', 'g') . "``qz"]],
+  [[":\<C-u>call v:lua.rvim.mappings.setup_map()<CR>gv" . substitute(g:mc, '/', '?', 'g') . "``qz"]],
   { expr = true }
 )
 
@@ -758,7 +758,11 @@ nnoremap('<leader>be', '<cmd>BraceyStop<CR>', with_plugin('bracey: stop', 'brace
 if rvim.plugin_installed('neogit') then
   local neogit = require('neogit')
   rvim.nnoremap('<localleader>gs', function() neogit.open() end, 'neogit: open status buffer')
-  rvim.nnoremap('<localleader>gm', function() neogit.open({ 'commit' }) end, 'neogit: open commit buffer')
+  rvim.nnoremap(
+    '<localleader>gm',
+    function() neogit.open({ 'commit' }) end,
+    'neogit: open commit buffer'
+  )
   rvim.nnoremap('<localleader>gl', neogit.popups.pull.create, 'neogit: open pull popup')
   rvim.nnoremap('<localleader>gp', neogit.popups.push.create, 'neogit: open push popup')
 end
