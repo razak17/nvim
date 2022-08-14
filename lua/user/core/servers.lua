@@ -2,7 +2,6 @@
 -- Language servers
 ----------------------------------------------------------------------------------------------------
 local fn = vim.fn
-local util = require('lspconfig/util')
 
 local M = {}
 
@@ -82,7 +81,7 @@ M.servers = {
   prismals = true,
   quick_lint_js = true,
   rust_analyzer = {
-    root_dir = function(fname) return util.root_pattern('Cargo.toml')(fname) end,
+    root_dir = function(fname) return require('lspconfig/util').root_pattern('Cargo.toml')(fname) end,
     single_file_support = false,
   },
   sqls = true,
@@ -90,7 +89,9 @@ M.servers = {
   tsserver = true,
   vimls = true,
   denols = {
-    root_dir = function(fname) return util.root_pattern('deno.json', 'deno.jsonc')(fname) end,
+    root_dir = function(fname)
+      return require('lspconfig/util').root_pattern('deno.json', 'deno.jsonc')(fname)
+    end,
     single_file_support = false,
   },
   emmet_ls = {
@@ -135,7 +136,11 @@ M.servers = {
   },
   graphql = {
     root_dir = function(fname)
-      return util.root_pattern('.graphqlrc*', '.graphql.config.*', 'graphql.config.*')(fname)
+      return require('lspconfig/util').root_pattern(
+        '.graphqlrc*',
+        '.graphql.config.*',
+        'graphql.config.*'
+      )(fname)
     end,
     single_file_support = false,
   },
@@ -189,7 +194,7 @@ M.servers = {
   end,
   tailwindcss = {
     root_dir = function(fname)
-      return util.root_pattern(
+      return require('lspconfig/util').root_pattern(
         'tailwind.config.js',
         'tailwind.config.cjs',
         'tailwind.js',
@@ -200,7 +205,9 @@ M.servers = {
   },
   vuels = {
     setup = {
-      root_dir = function(fname) return util.root_pattern('package.json', 'vue.config.js')(fname) end,
+      root_dir = function(fname)
+        return require('lspconfig/util').root_pattern('package.json', 'vue.config.js')(fname)
+      end,
       init_options = {
         config = {
           vetur = {
