@@ -1,8 +1,6 @@
 return function()
-    if not rvim.plugin_installed('gitsigns.nvim') then return end
+  if not rvim.plugin_installed('gitsigns.nvim') then return end
   local cwd = vim.fn.getcwd()
-  local gitsigns_ok, gitsigns = rvim.safe_require('gitsigns')
-  if not gitsigns_ok then return end
 
   rvim.gitsigns = {
     setup = {
@@ -56,6 +54,7 @@ return function()
     },
   }
 
+  local gitsigns = require("gitsigns")
   gitsigns.setup(rvim.gitsigns.setup)
 
   rvim.vnoremap(
