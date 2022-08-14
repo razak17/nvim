@@ -28,6 +28,7 @@ return function()
       formatting.isort,
       formatting.shfmt,
       formatting.stylua.with({ condition = function() return rvim.executable('stylua') end }),
+      formatting.goimports,
     },
   })
   rvim.augroup('NullLsConfig', {
