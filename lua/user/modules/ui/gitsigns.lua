@@ -1,10 +1,8 @@
 return function()
   if not rvim.plugin_installed('gitsigns.nvim') then return end
 
-  local gitsigns = require('gitsigns')
   local cwd = vim.fn.getcwd()
-
-  gitsigns.setup({
+  require('gitsigns').setup({
     signs = {
       add = { hl = 'GitGutterAdd', text = '▋' },
       change = { hl = 'GitGutterChange', text = '▋' },
@@ -44,6 +42,16 @@ return function()
         },
         ['<leader>gw'] = { gs.stage_buffer, 'gitsigns: stage entire buffer' },
       })
+
+      rvim.vnoremap(
+        '<leader>hs',
+        function() gs.stage_hunk({ vim.fn.line('.'), vim.fn.line('v') }) end
+      )
+      rvim.vnoremap(
+        '<leader>hr',
+        function() gs.reset_hunk({ vim.fn.line('.'), vim.fn.line('v') }) end
+      )
+      vim.keymap.set({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
     end,
     watch_gitdir = {
       interval = 1000,
@@ -53,14 +61,4 @@ return function()
     update_debounce = 200,
     status_formatter = nil, -- Use default
   })
-
-  rvim.vnoremap(
-    '<leader>hs',
-    function() gitsigns.stage_hunk({ vim.fn.line('.'), vim.fn.line('v') }) end
-  )
-  rvim.vnoremap(
-    '<leader>hr',
-    function() gitsigns.reset_hunk({ vim.fn.line('.'), vim.fn.line('v') }) end
-  )
-  vim.keymap.set({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
 end
