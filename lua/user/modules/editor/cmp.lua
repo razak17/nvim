@@ -11,6 +11,7 @@ return function()
   local lsp_hls = rvim.lsp.kind_highlights
   local util = require('user.utils.highlights')
   local ellipsis = rvim.style.icons.misc.ellipsis
+  local luasnip = require('luasnip')
 
   local kind_hls = rvim.fold(
     function(accum, value, key)
@@ -53,12 +54,11 @@ return function()
   }
 
   local function tab(fallback)
-    local ok, luasnip = rvim.safe_require('luasnip', { silent = true })
     if cmp.visible() then
       cmp.select_next_item()
       return
     end
-    if ok and luasnip.expand_or_locally_jumpable() then
+    if luasnip.expand_or_locally_jumpable() then
       luasnip.expand_or_jump()
       return
     end
@@ -66,12 +66,11 @@ return function()
   end
 
   local function shift_tab(fallback)
-    local ok, luasnip = rvim.safe_require('luasnip', { silent = true })
     if cmp.visible() then
       cmp.select_prev_item()
       return
     end
-    if ok and luasnip.jumpable(-1) then
+    if luasnip.jumpable(-1) then
       luasnip.jump(-1)
       return
     end
