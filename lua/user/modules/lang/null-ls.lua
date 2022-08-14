@@ -7,7 +7,6 @@ return function()
   null_ls.setup({
     debug = true,
     sources = {
-      -- linters
       diagnostics.zsh,
       diagnostics.flake8,
       diagnostics.eslint_d,
@@ -22,7 +21,6 @@ return function()
         end,
         extra_args = { '--severity', 'warning' },
       }),
-      -- formatters
       formatting.black.with({ extra_args = { '--fast' } }),
       formatting.prettierd,
       formatting.isort,
