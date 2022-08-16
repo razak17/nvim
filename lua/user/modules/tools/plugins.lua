@@ -109,6 +109,7 @@ package({
     { 'nvim-telescope/telescope-dap.nvim' },
     { 'natecraddock/telescope-zf-native.nvim' },
     { 'nvim-telescope/telescope-ui-select.nvim' },
+    { 'benfowler/telescope-luasnip.nvim' },
     { 'ilAYAli/scMRU.nvim' },
     { 'kkharji/sqlite.lua' },
     {

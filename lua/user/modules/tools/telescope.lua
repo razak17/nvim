@@ -237,6 +237,7 @@ return function()
     ['telescope-dap'] = 'dap',
     ['telescope-zf-native.nvim'] = 'zf-native',
     ['harpoon'] = 'harpoon',
+    ['telescope-luasnip.nvim'] = 'luasnip',
   }
 
   for plugin, setup in ipairs(plugins) do
@@ -253,6 +254,10 @@ return function()
       prompt_title = 'Notes',
       cwd = vim.fn.expand('~/notes/src/'),
     })
+  end
+
+  local function luasnips()
+    require('telescope').extensions.luasnip.luasnip(rvim.telescope.dropdown())
   end
 
   local function installed_plugins()
@@ -365,6 +370,7 @@ return function()
         s = { builtin.git_status, 'status' },
       },
       h = { MFU, 'most frequently used files' },
+      L = { luasnips, 'luasnip: available snippets' },
       m = { media_files, 'media files' },
       n = { notes, 'notes' },
       o = { builtin.oldfiles, 'old files' },
