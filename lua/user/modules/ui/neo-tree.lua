@@ -12,10 +12,23 @@ return function()
     { NeoTreeStatusLine = { link = 'PanelBackground' } },
     { NeoTreeTabActive = { bg = { from = 'PanelBackground' } } },
     {
-      NeoTreeTabInactive = { bg = { from = 'PanelDarkBackground' }, fg = { from = 'Comment' } },
+      NeoTreeTabInactive = {
+        bg = { from = 'PanelDarkBackground', alter = 15 },
+        fg = { from = 'Comment' },
+      },
     },
-    { NeoTreeTabSeparatorInactive = { bg = { from = 'PanelDarkBackground' }, fg = 'black' } },
-    { NeoTreeTabSeparatorActive = { inherit = 'PanelBackground', fg = { from = 'Comment' } } },
+    {
+      NeoTreeTabSeparatorInactive = {
+        inherit = 'NeoTreeTabInactive',
+        fg = { from = 'PanelDarkBackground', attr = 'bg' },
+      },
+    },
+    {
+      NeoTreeTabSeparatorActive = {
+        inherit = 'PanelBackground',
+        fg = { from = 'Comment' },
+      },
+    },
   })
 
   vim.g.neo_tree_remove_legacy_commands = 1
