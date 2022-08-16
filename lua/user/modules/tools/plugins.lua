@@ -288,7 +288,22 @@ package({
 
 package({
   'andrewferrier/debugprint.nvim',
-  config = function() require('debugprint').setup() end,
+  config = function()
+    local dp = require('debugprint')
+    dp.setup({ create_keymaps = false })
+
+    rvim.nnoremap(
+      '<leader>dp',
+      function() return dp.debugprint({ variable = true }) end,
+      { desc = 'debugprint: cursor', expr = true }
+    )
+    rvim.nnoremap(
+      '<leader>do',
+      function() return dp.debugprint({ motion = true }) end,
+      { desc = 'debugprint: operator', expr = true }
+    )
+    rvim.nnoremap('<leader>dC', '<Cmd>DeleteDebugPrints<CR>', 'debugprint: clear all')
+  end,
 })
 
 ----------------------------------------------------------------------------------------------------
