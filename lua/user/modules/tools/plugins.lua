@@ -261,7 +261,7 @@ package({
   config = function() require('hclipboard').start() end,
 })
 
-package({ 'turbio/bracey.vim', run = 'npm install --prefix server' })
+package({ 'turbio/bracey.vim', ft = { 'html' }, run = 'npm install --prefix server' })
 
 package({
   'TimUntersberger/neogit',
