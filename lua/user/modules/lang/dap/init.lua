@@ -56,8 +56,7 @@ return function()
       l = { run_last, 'dap REPL: run last' },
       t = { repl_toggle, 'dap REPL: toggle' },
     },
-    { prefix = '<localleader>' },
-  })
+  }, { prefix = '<localleader>' })
 
   require('dap').defaults.fallback.terminal_win_cmd = '50vsplit new'
 
