@@ -582,7 +582,7 @@ nnoremap(
 nnoremap('<leader>u', '<cmd>UndotreeToggle<CR>', with_plugin('undotree: toggle', 'undotree'))
 ----------------------------------------------------------------------------------------------------
 -- nvim-neoclip.lua
-if plugin_installed('nvim-neoclip') then
+if plugin_installed('nvim-neoclip.lua') then
   local function clip() require('telescope').extensions.neoclip.default(rvim.telescope.dropdown()) end
   nnoremap('<leader>fN', clip, 'neoclip: open yank history')
 end
