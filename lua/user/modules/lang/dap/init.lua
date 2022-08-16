@@ -42,22 +42,21 @@ return function()
   end
 
   require('which-key').register({
-    ['<leader>d'] = {
+    d = {
       name = '+Debug',
       a = { attach, 'attach' },
       A = { attach_to_remote, 'attach remote' },
-
       h = { step_back, 'dap: step back' },
       i = { step_into, 'dap: step into' },
       o = { step_over, 'dap: step over' },
       O = { step_out, 'dap: step out' },
-
       b = { toggle_breakpoint, 'dap: toggle breakpoint' },
       B = { set_breakpoint, 'dap: set breakpoint' },
       c = { continue, 'dap: continue or start debugging' },
       l = { run_last, 'dap REPL: run last' },
       t = { repl_toggle, 'dap REPL: toggle' },
     },
+    { prefix = '<localleader>' },
   })
 
   require('dap').defaults.fallback.terminal_win_cmd = '50vsplit new'

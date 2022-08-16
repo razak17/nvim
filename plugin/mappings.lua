@@ -573,7 +573,7 @@ nnoremap(
   with_plugin('dapui: close', 'nvim-dap-ui')
 )
 nnoremap(
-  '<localleader>do',
+  '<localleader>dT',
   function() require('dapui').toggle() end,
   with_plugin('dapui: toggle', 'nvim-dap-ui')
 )
