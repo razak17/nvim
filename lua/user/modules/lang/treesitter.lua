@@ -20,6 +20,7 @@ return function()
         'markdown_inline',
         'prisma',
         'graphql',
+        'go',
       },
       incremental_selection = {
         enable = true,
