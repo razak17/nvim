@@ -29,6 +29,24 @@ package({ 'lukas-reineke/indent-blankline.nvim', config = conf('ui', 'indentline
 package({ 'nvim-neo-tree/neo-tree.nvim', branch = 'v2.x', config = conf('ui', 'neo-tree') })
 
 package({
+  's1n7ax/nvim-window-picker',
+  tag = 'v1.*',
+  config = function()
+    require('window-picker').setup({
+      autoselect_one = true,
+      include_current = false,
+      filter_rules = {
+        bo = {
+          filetype = { 'neo-tree-popup', 'quickfix', 'incline' },
+          buftype = { 'terminal', 'quickfix', 'nofile' },
+        },
+      },
+      other_win_hl_color = require('user.utils.highlights').get('Visual', 'bg'),
+    })
+  end,
+})
+
+package({
   'lewis6991/gitsigns.nvim',
   event = 'BufWinEnter',
   config = conf('ui', 'gitsigns'),
@@ -59,24 +77,6 @@ package({
         headline_highlights = false,
       },
       norg = { codeblock_highlight = false },
-    })
-  end,
-})
-
-package({
-  's1n7ax/nvim-window-picker',
-  tag = 'v1.*',
-  config = function()
-    require('window-picker').setup({
-      autoselect_one = true,
-      include_current = false,
-      filter_rules = {
-        bo = {
-          filetype = { 'neo-tree-popup', 'quickfix', 'incline' },
-          buftype = { 'terminal', 'quickfix', 'nofile' },
-        },
-      },
-      other_win_hl_color = require('user.utils.highlights').get('Visual', 'bg'),
     })
   end,
 })
