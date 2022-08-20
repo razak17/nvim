@@ -82,7 +82,7 @@ return function()
         ['o'] = 'toggle_node',
         ['/'] = 'noop',
         ['g/'] = 'fuzzy_finder',
-        l = 'open',
+        ['l'] = 'open',
         ['<CR>'] = 'open_with_window_picker',
         ['<c-s>'] = 'split_with_window_picker',
         ['<c-v>'] = 'vsplit_with_window_picker',
