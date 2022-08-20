@@ -8,7 +8,7 @@ package({
   event = 'InsertEnter',
   module = 'cmp',
   config = conf('editor', 'cmp'),
-  want = { 'LuaSnip' },
+  want = { 'LuaSnip', 'cmp-path' },
   requires = {
     { 'hrsh7th/cmp-nvim-lsp', module = 'cmp_nvim_lsp' },
     { 'hrsh7th/cmp-nvim-lsp-document-symbol', after = 'nvim-cmp' },
