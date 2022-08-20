@@ -4,6 +4,7 @@ return function()
   ---Get all filetypes for which we have a treesitter parser installed
   ---@return string[]
   local function get_filetypes()
+    vim.cmd([[packadd nvim-treesitter]])
     local parsers = require('nvim-treesitter.parsers')
     local configs = parsers.get_parser_configs()
     return vim.tbl_map(
@@ -16,7 +17,8 @@ return function()
   if not status_ok then return end
 
   treesitter_configs.setup({
-    highlight = { enabled = true },
+    auto_install = true,
+    highlight = { enable = true },
     incremental_selection = {
       enable = true,
       keymaps = {
