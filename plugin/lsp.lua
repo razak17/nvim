@@ -177,11 +177,6 @@ end
 ---@param bufnr number
 -- TODO: Check if plugins are installed first
 local function setup_plugins(client, bufnr)
-  -- vim-illuminate
-  if rvim.lsp.document_highlight then
-    local illuminate_ok, illuminate = pcall(require, 'illuminate')
-    if illuminate_ok then illuminate.on_attach(client) end
-  end
   -- nvim-navic
   local navic_ok, navic = pcall(require, 'nvim-navic')
   if navic_ok and client.server_capabilities.documentSymbolProvider then

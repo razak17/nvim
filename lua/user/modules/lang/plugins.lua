@@ -246,19 +246,21 @@ package({
 package({
   'RRethy/vim-illuminate',
   config = function()
-    vim.g.Illuminate_ftblacklist = {
-      'alpha',
-      'NvimTree',
-      'dashboard',
-      'neo-tree',
-      'qf',
-      'lspinfo',
-      'lsp-installer',
-      'harpoon',
-      'packer',
-      'mason.nvim',
-      'help',
-    }
+    require('illuminate').configure({
+      filetypes_denylist = {
+        'alpha',
+        'NvimTree',
+        'dashboard',
+        'neo-tree',
+        'qf',
+        'lspinfo',
+        'lsp-installer',
+        'harpoon',
+        'packer',
+        'mason.nvim',
+        'help',
+      },
+    })
   end,
 })
 
