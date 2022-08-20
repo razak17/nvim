@@ -67,8 +67,16 @@ end
 --- This will take the foreground colour from ErrorMsg and set it to the foreground of MatchParen.
 ---@param name string
 ---@param opts HighlightKeys
-function M.set(name, opts)
+---@overload fun(namespace: integer, name: string, opts: HighlightKeys)
+function M.set(namespace, name, opts)
+  if type(namespace) == 'string' and type(name) == 'table' then
+    opts, name, namespace = name, namespace, 0
+  end
+
   assert(name and opts, "Both 'name' and 'opts' must be specified")
+  assert(type(name) == 'string', fmt("Name must be a string but got '%s'", name))
+  assert(type(opts) == 'table', fmt("Opts must be a table but got '%s'", vim.inspect(opts)))
+  assert(namespace, 'You must specify a valid namespace, you passed %s', vim.inspect(namespace))
 
   local hl = get_highlight(opts.inherit or name)
   opts.inherit = nil
@@ -80,7 +88,7 @@ function M.set(name, opts)
     end
   end
 
-  local ok, msg = pcall(api.nvim_set_hl, 0, name, vim.tbl_deep_extend('force', hl, opts))
+  local ok, msg = pcall(api.nvim_set_hl, namespace, name, vim.tbl_extend('force', hl, opts))
   if not ok then vim.notify(fmt('Failed to set %s because - %s', name, msg)) end
 end
 
@@ -109,8 +117,9 @@ end
 
 ---Apply a list of highlights
 ---@param hls table<string, HighlightKeys>
-function M.all(hls)
-  rvim.foreach(function(hl) M.set(next(hl)) end, hls)
+---@param namespace integer?
+function M.all(hls, namespace)
+  rvim.foreach(function(hl) M.set(namespace or 0, next(hl)) end, hls)
 end
 
 ---------------------------------------------------------------------------------
