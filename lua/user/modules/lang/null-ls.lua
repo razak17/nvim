@@ -9,7 +9,7 @@ return function()
     sources = {
       diagnostics.zsh,
       diagnostics.flake8,
-      diagnostics.eslint,
+      diagnostics.eslint_d,
       diagnostics.golangci_lint,
       diagnostics.shellcheck.with({
         condition = function()
@@ -22,7 +22,7 @@ return function()
         extra_args = { '--severity', 'warning' },
       }),
       formatting.black.with({ extra_args = { '--fast' } }),
-      formatting.prettierd,
+      formatting.eslint_d,
       formatting.isort,
       formatting.shfmt,
       formatting.stylua.with({ condition = function() return rvim.executable('stylua') end }),
