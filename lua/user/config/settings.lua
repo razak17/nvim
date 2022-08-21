@@ -150,7 +150,7 @@ opt.linebreak = true -- lines wrap at words rather than random characters
 opt.synmaxcol = 1024 -- don't syntax highlight long lines
 opt.signcolumn = 'auto:2-5'
 opt.ruler = false
-opt.cmdheight = 1
+opt.cmdheight = 0
 opt.showbreak = [[↪ ]] -- Options include -> '…', '↳ ', '→','↪ '
 ----------------------------------------------------------------------------------------------------
 -- List chars {{{1
