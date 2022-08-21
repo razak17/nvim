@@ -90,6 +90,7 @@ function rvim.ui.winbar.get()
 end
 
 local blocked = {
+  'DiffviewFiles',
   'NeogitStatus',
   'NeogitCommitMessage',
   'toggleterm',
@@ -100,24 +101,39 @@ local blocked = {
 }
 local allowed = { 'toggleterm', 'neo-tree' }
 
+local function set(win, value)
+  return pcall(api.nvim_set_option_value, 'winbar', value, { win = win, scope = 'local' })
+end
+
+local function set_winbar()
+  rvim.foreach(function(win)
+    local buf = api.nvim_win_get_buf(win)
+    local ft, bt = vim.bo[buf].filetype, vim.bo[buf].buftype
+    local is_diff = vim.wo[win].diff
+    if
+      not vim.tbl_contains(blocked, ft)
+      and fn.win_gettype(win) == ''
+      and bt == ''
+      and ft ~= ''
+      and not is_diff
+    then
+      set(win, '%{%v:lua.rvim.ui.winbar.get()%}')
+    elseif is_diff or not vim.tbl_contains(allowed, ft) then
+      set(win, nil)
+    end
+  end, api.nvim_tabpage_list_wins(0))
+end
+
 rvim.augroup('AttachWinbar', {
   {
-    event = { 'BufWinEnter', 'BufEnter', 'WinClosed' },
+    event = { 'BufWinEnter', 'TabNew', 'TabEnter', 'BufEnter', 'WinClosed' },
     desc = 'Toggle winbar',
-    command = function()
-      for _, win in ipairs(api.nvim_tabpage_list_wins(0)) do
-        local buf = api.nvim_win_get_buf(win)
-        if
-          not vim.tbl_contains(blocked, vim.bo[buf].filetype)
-          and empty(fn.win_gettype(win))
-          and empty(vim.bo[buf].buftype)
-          and not empty(vim.bo[buf].filetype)
-        then
-          vim.wo[win].winbar = '%{%v:lua.rvim.ui.winbar.get()%}'
-          return
-        end
-        if not vim.tbl_contains(allowed, vim.bo[buf].filetype) then vim.wo[win].winbar = nil end
-      end
-    end,
+    command = set_winbar,
+  },
+  {
+    event = 'User',
+    pattern = { 'DiffviewDiffBufRead', 'DiffviewDiffBufWinEnter' },
+    desc = 'Toggle winbar',
+    command = set_winbar,
   },
 })
