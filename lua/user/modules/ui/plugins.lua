@@ -8,6 +8,8 @@ use({
   local_path = 'personal',
 })
 
+use({ 'LunarVim/horizon.nvim' })
+
 use({ 'fladson/vim-kitty' })
 
 use({ 'MunifTanjim/nui.nvim' })

@@ -237,6 +237,7 @@ use({
         'qf',
         'lspinfo',
         'lsp-installer',
+        'TelescopePrompt',
         'harpoon',
         'packer',
         'mason.nvim',
