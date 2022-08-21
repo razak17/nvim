@@ -80,14 +80,15 @@ M.servers = {
   marksman = true,
   prismals = true,
   quick_lint_js = true,
-  rust_analyzer = {
-    root_dir = function(fname) return require('lspconfig/util').root_pattern('Cargo.toml')(fname) end,
-    single_file_support = false,
-  },
   sqls = true,
   svelte = true,
   tsserver = true,
   vimls = true,
+  prosemd_lsp = true,
+  rust_analyzer = {
+    root_dir = function(fname) return require('lspconfig/util').root_pattern('Cargo.toml')(fname) end,
+    single_file_support = false,
+  },
   denols = {
     root_dir = function(fname)
       return require('lspconfig/util').root_pattern('deno.json', 'deno.jsonc')(fname)

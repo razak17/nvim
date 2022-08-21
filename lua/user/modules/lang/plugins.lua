@@ -190,24 +190,6 @@ package({
 })
 
 package({
-  'windwp/nvim-autopairs',
-  config = function()
-    require('nvim-autopairs').setup({
-      close_triple_quotes = true,
-      check_ts = true,
-      fast_wrap = { map = '<c-e>' },
-      enable_check_bracket_line = false,
-      disable_filetype = { 'TelescopePrompt', 'spectre_panel' },
-      ts_config = {
-        java = false,
-        lua = { 'string', 'source' },
-        javascript = { 'string', 'template_string' },
-      },
-    })
-  end,
-})
-
-package({
   'github/copilot.vim',
   config = function()
     vim.g.copilot_no_tab_map = true
