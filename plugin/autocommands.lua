@@ -260,7 +260,7 @@ rvim.augroup('WinBehavior', {
   },
 })
 
-local cursorline_exclusions = { 'alpha' }
+local cursorline_exclusions = { 'alpha', 'TelescopePrompt' }
 ---@param buf number
 ---@return boolean
 local function should_show_cursorline(buf)

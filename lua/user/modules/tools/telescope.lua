@@ -57,6 +57,13 @@ return function()
   local telescope = require('telescope')
   local dropdown = rvim.telescope.dropdown
 
+  local function stopinsert(callback)
+    return function(prompt_bufnr)
+      vim.cmd.stopinsert()
+      vim.schedule(function() callback(prompt_bufnr) end)
+    end
+  end
+
   telescope.setup({
     defaults = {
       prompt_prefix = ' ' .. icons.misc.chevron_right_alt .. ' ',
@@ -109,17 +116,17 @@ return function()
       mappings = {
         i = {
           ['<C-w>'] = actions.send_selected_to_qflist,
-          ['<c-c>'] = function() vim.cmd.stopinsert({ bang = true }) end,
+          ['<c-c>'] = function() vim.cmd.stopinsert() end,
           ['<esc>'] = actions.close,
           ['<C-j>'] = actions.move_selection_next,
           ['<C-k>'] = actions.move_selection_previous,
           ['<C-q>'] = actions.smart_send_to_qflist + actions.open_qflist,
           ['<c-s>'] = actions.select_horizontal,
-          ['<CR>'] = actions.select_default,
           ['<c-e>'] = layout_actions.toggle_preview,
           ['<c-l>'] = layout_actions.cycle_layout_next,
           ['<C-A>'] = telescope_custom_actions.multi_selection_open,
           ['<Tab>'] = actions.toggle_selection,
+          ['<CR>'] = stopinsert(actions.select_default),
         },
         n = {
           ['<C-j>'] = actions.move_selection_next,
