@@ -1,39 +1,39 @@
 local utils = require('user.utils.plugins')
 local conf = utils.load_conf
-local package = require('user.core.plugins').package
+local use = require('user.core.plugins').use
 
-package({
+use({
   'razak17/zephyr-nvim',
   requires = { 'nvim-treesitter/nvim-treesitter', opt = true },
   local_path = 'personal',
 })
 
-package({ 'fladson/vim-kitty' })
+use({ 'fladson/vim-kitty' })
 
-package({ 'MunifTanjim/nui.nvim' })
+use({ 'MunifTanjim/nui.nvim' })
 
-package({ 'mtdl9/vim-log-highlighting' })
+use({ 'mtdl9/vim-log-highlighting' })
 
-package({ 'kyazdani42/nvim-web-devicons' })
+use({ 'kyazdani42/nvim-web-devicons' })
 
-package({ 'goolord/alpha-nvim', config = conf('ui', 'alpha') })
+use({ 'goolord/alpha-nvim', config = conf('ui', 'alpha') })
 
-package({ 'rcarriga/nvim-notify', config = conf('ui', 'notify') })
+use({ 'rcarriga/nvim-notify', config = conf('ui', 'notify') })
 
-package({ 'nvim-lualine/lualine.nvim', config = conf('ui', 'lualine') })
+use({ 'nvim-lualine/lualine.nvim', config = conf('ui', 'lualine') })
 
-package({ 'j-hui/fidget.nvim', config = function() require('fidget').setup() end })
+use({ 'j-hui/fidget.nvim', config = function() require('fidget').setup() end })
 
-package({ 'lukas-reineke/indent-blankline.nvim', config = conf('ui', 'indentline') })
+use({ 'lukas-reineke/indent-blankline.nvim', config = conf('ui', 'indentline') })
 
-package({ 'nvim-neo-tree/neo-tree.nvim', branch = 'v2.x', config = conf('ui', 'neo-tree') })
+use({ 'nvim-neo-tree/neo-tree.nvim', branch = 'v2.x', config = conf('ui', 'neo-tree') })
 
-package({
+use({
   'B4mbus/todo-comments.nvim',
   config = function() require('todo-comments').setup() end,
 })
 
-package({
+use({
   's1n7ax/nvim-window-picker',
   tag = 'v1.*',
   config = function()
@@ -51,15 +51,15 @@ package({
   end,
 })
 
-package({
+use({
   'lewis6991/gitsigns.nvim',
   event = 'BufWinEnter',
   config = conf('ui', 'gitsigns'),
 })
 
-package({ 'stevearc/dressing.nvim', after = 'telescope.nvim', config = conf('ui', 'dressing') })
+use({ 'stevearc/dressing.nvim', after = 'telescope.nvim', config = conf('ui', 'dressing') })
 
-package({
+use({
   'lukas-reineke/headlines.nvim',
   event = 'BufWinEnter',
   ft = { 'org', 'norg', 'markdown', 'yaml' },
@@ -86,18 +86,18 @@ package({
   end,
 })
 
-package({
+use({
   'itchyny/vim-highlighturl',
   config = function() vim.g.highlighturl_guifg = require('user.utils.highlights').get('URL', 'fg') end,
 })
 
-package({
+use({
   'kevinhwang91/nvim-ufo',
   requires = 'kevinhwang91/promise-async',
   config = conf('ui', 'ufo'),
 })
 
-package({
+use({
   'ghillb/cybu.nvim',
   event = 'BufRead',
   config = function()
@@ -114,7 +114,7 @@ package({
   end,
 })
 
-package({
+use({
   'lukas-reineke/virt-column.nvim',
   config = function()
     require('user.utils.highlights').plugin('virt_column', {
@@ -127,7 +127,7 @@ package({
 ----------------------------------------------------------------------------------------------------
 -- Graveyard
 ----------------------------------------------------------------------------------------------------
-package({
+use({
   'zbirenbaum/neodim',
   config = function()
     require('neodim').setup({
@@ -143,7 +143,7 @@ package({
   disable = true,
 })
 
-package({
+use({
   'm-demare/hlargs.nvim',
   config = function()
     require('user.utils.highlights').plugin('hlargs', {
@@ -165,7 +165,7 @@ package({
   disable = true,
 })
 
-package({
+use({
   'rainbowhxch/beacon.nvim',
   config = function()
     local beacon = require('beacon')

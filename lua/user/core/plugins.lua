@@ -126,7 +126,7 @@ function plugins.recompile()
   plugins.reload()
 end
 
-function plugins.package(repo) table.insert(Packer.repos, repo) end
+function plugins.use(repo) table.insert(Packer.repos, repo) end
 
 function plugins.load_compile()
   if vim.fn.filereadable(packer_compiled) ~= 1 then plugins.compile() end

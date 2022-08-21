@@ -1,9 +1,9 @@
 local utils = require('user.utils.plugins')
 local conf = utils.load_conf
-local package = require('user.core.plugins').package
+local use = require('user.core.plugins').use
 
 -- Debugging
-package({
+use({
   'rcarriga/nvim-dap-ui',
   config = function()
     local dapui = require('dapui')
@@ -39,7 +39,7 @@ package({
 })
 
 -- Lsp
-package({
+use({
   'neovim/nvim-lspconfig',
   module_pattern = 'lspconfig.*',
   requires = {
@@ -86,7 +86,7 @@ package({
   config = function() require('which-key').register({ ['<leader>lh'] = { ':LspInfo<CR>', 'lsp: info' } }) end,
 })
 
-package({
+use({
   'williamboman/mason.nvim',
   event = 'BufRead',
   requires = { 'nvim-lspconfig', 'williamboman/mason-lspconfig.nvim' },
@@ -110,7 +110,7 @@ package({
   end,
 })
 
-package({
+use({
   'Saecki/crates.nvim',
   ft = 'rust',
   config = function()
@@ -133,13 +133,13 @@ package({
   end,
 })
 
-package({
+use({
   'olexsmir/gopher.nvim',
   requires = { 'nvim-lua/plenary.nvim', 'nvim-treesitter/nvim-treesitter' },
 })
 
 -- Treesitter
-package({
+use({
   'nvim-treesitter/nvim-treesitter',
   run = ':TSUpdate',
   config = conf('lang', 'treesitter'),
@@ -189,7 +189,7 @@ package({
   },
 })
 
-package({
+use({
   'github/copilot.vim',
   config = function()
     vim.g.copilot_no_tab_map = true
@@ -213,9 +213,9 @@ package({
   end,
 })
 
-package({ 'ii14/emmylua-nvim' })
+use({ 'ii14/emmylua-nvim' })
 
-package({
+use({
   'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
   event = { 'BufWinEnter' },
   config = function()
@@ -225,7 +225,7 @@ package({
   end,
 })
 
-package({
+use({
   'RRethy/vim-illuminate',
   config = function()
     require('illuminate').configure({
@@ -246,7 +246,7 @@ package({
   end,
 })
 
-package({
+use({
   'lvimuser/lsp-inlayhints.nvim',
   config = function()
     require('lsp-inlayhints').setup({
@@ -268,7 +268,7 @@ package({
 ----------------------------------------------------------------------------------------------------
 -- Graveyard
 ----------------------------------------------------------------------------------------------------
-package({
+use({
   'andymass/vim-matchup',
   after = 'nvim-treesitter',
   config = function()

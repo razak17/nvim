@@ -1,14 +1,14 @@
 local utils = require('user.utils.plugins')
 local conf = utils.load_conf
-local package = require('user.core.plugins').package
+local use = require('user.core.plugins').use
 
-package({ 'Tastyep/structlog.nvim' })
+use({ 'Tastyep/structlog.nvim' })
 
-package({ 'lewis6991/impatient.nvim' })
+use({ 'lewis6991/impatient.nvim' })
 
-package({ 'folke/which-key.nvim', config = conf('tools', 'which_key') })
+use({ 'folke/which-key.nvim', config = conf('tools', 'which_key') })
 
-package({
+use({
   'mbbill/undotree',
   event = 'BufRead',
   config = function()
@@ -18,7 +18,7 @@ package({
   end,
 })
 
-package({
+use({
   'ahmedkhalf/project.nvim',
   config = function()
     require('project_nvim').setup({
@@ -42,7 +42,7 @@ package({
   end,
 })
 
-package({
+use({
   'numToStr/FTerm.nvim',
   event = { 'BufWinEnter' },
   config = function()
@@ -51,7 +51,7 @@ package({
   end,
 })
 
-package({
+use({
   'akinsho/toggleterm.nvim',
   config = function()
     require('toggleterm').setup({
@@ -80,7 +80,7 @@ package({
   end,
 })
 
-package({
+use({
   'AckslD/nvim-neoclip.lua',
   event = { 'BufWinEnter' },
   config = function()
@@ -96,7 +96,7 @@ package({
   end,
 })
 
-package({
+use({
   'nvim-telescope/telescope.nvim',
   branch = 'master', -- '0.1.x',
   config = conf('tools', 'telescope'),
@@ -126,7 +126,7 @@ package({
   },
 })
 
-package({
+use({
   'rmagatti/auto-session',
   config = function()
     local fn = vim.fn
@@ -148,16 +148,16 @@ package({
   end,
 })
 
-package({
+use({
   'phaazon/hop.nvim',
   tag = 'v2.*',
   keys = { { 'n', 's' }, { 'n', 'f' }, { 'n', 'F' } },
   config = conf('tools', 'hop'),
 })
 
-package({ 'moll/vim-bbye', event = 'BufWinEnter' })
+use({ 'moll/vim-bbye', event = 'BufWinEnter' })
 
-package({
+use({
   'SmiteshP/nvim-navic',
   requires = 'neovim/nvim-lspconfig',
   config = function()
@@ -180,7 +180,7 @@ package({
   end,
 })
 
-package({
+use({
   'kevinhwang91/nvim-bqf',
   ft = 'qf',
   config = function()
@@ -192,9 +192,9 @@ package({
   end,
 })
 
-package({ 'nvim-lua/plenary.nvim' })
+use({ 'nvim-lua/plenary.nvim' })
 
-package({
+use({
   'is0n/jaq-nvim',
   event = { 'BufWinEnter' },
   config = function()
@@ -226,7 +226,7 @@ package({
   end,
 })
 
-package({
+use({
   'iamcco/markdown-preview.nvim',
   run = function() vim.fn['mkdp#util#install']() end,
   ft = { 'markdown' },
@@ -237,7 +237,7 @@ package({
   disable = true,
 })
 
-package({
+use({
   'linty-org/readline.nvim',
   event = 'CmdlineEnter',
   config = function()
@@ -256,15 +256,15 @@ package({
 })
 
 -- prevent select and visual mode from overwriting the clipboard
-package({
+use({
   'kevinhwang91/nvim-hclipboard',
   event = 'InsertCharPre',
   config = function() require('hclipboard').start() end,
 })
 
-package({ 'turbio/bracey.vim', ft = { 'html' }, run = 'npm install --prefix server' })
+use({ 'turbio/bracey.vim', ft = { 'html' }, run = 'npm install --prefix server' })
 
-package({
+use({
   'TimUntersberger/neogit',
   requires = 'plenary.nvim',
   config = function()
@@ -287,7 +287,7 @@ package({
   end,
 })
 
-package({
+use({
   'andrewferrier/debugprint.nvim',
   config = function()
     local dp = require('debugprint')
@@ -307,7 +307,7 @@ package({
   end,
 })
 
-package({
+use({
   'nacro90/numb.nvim',
   event = 'CmdlineEnter',
   config = function() require('numb').setup() end,
@@ -316,9 +316,9 @@ package({
 ----------------------------------------------------------------------------------------------------
 -- Graveyard
 ----------------------------------------------------------------------------------------------------
-package({ 'AndrewRadev/linediff.vim', cmd = 'Linediff', disable = true })
+use({ 'AndrewRadev/linediff.vim', cmd = 'Linediff', disable = true })
 
-package({
+use({
   'Djancyp/cheat-sheet',
   config = function()
     require('cheat-sheet').setup({
@@ -336,7 +336,7 @@ package({
   disable = true,
 })
 
-package({
+use({
   'sindrets/diffview.nvim',
   event = 'BufReadPre',
   config = function()
@@ -362,7 +362,7 @@ package({
   disable = true,
 })
 
-package({
+use({
   'michaelb/sniprun',
   event = 'BufWinEnter',
   config = function()
@@ -389,7 +389,7 @@ package({
   disable = true,
 })
 
-package({
+use({
   'vuki656/package-info.nvim',
   event = 'BufWinEnter',
   ft = { 'json' },
@@ -425,7 +425,7 @@ package({
   disable = true,
 })
 
-package({
+use({
   'nvim-neotest/neotest',
   config = function()
     require('neotest').setup({
@@ -466,7 +466,7 @@ package({
   disable = true,
 })
 
-package({
+use({
   'smjonas/inc-rename.nvim',
   config = function()
     require('inc_rename').setup({
@@ -476,9 +476,9 @@ package({
   disable = true,
 })
 
-package({ 'diepm/vim-rest-console', disable = true })
+use({ 'diepm/vim-rest-console', disable = true })
 
-package({
+use({
   'NTBBloodbath/rest.nvim',
   requires = { 'nvim-lua/plenary.nvim' },
   ft = { 'http', 'json' },

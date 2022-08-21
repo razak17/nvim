@@ -1,9 +1,9 @@
-local package = require('user.core.plugins').package
+local use = require('user.core.plugins').use
 local utils = require('user.utils.plugins')
 local conf = utils.load_conf
 
 -- nvim-cmp
-package({
+use({
   'hrsh7th/nvim-cmp',
   event = 'InsertEnter',
   module = 'cmp',
@@ -47,7 +47,7 @@ package({
   },
 })
 
-package({
+use({
   'L3MON4D3/LuaSnip',
   event = 'InsertEnter',
   module = 'luasnip',
@@ -55,7 +55,7 @@ package({
   config = conf('editor', 'luasnip'),
 })
 
-package({
+use({
   'windwp/nvim-autopairs',
   after = 'nvim-cmp',
   requires = 'nvim-cmp',
@@ -77,7 +77,7 @@ package({
   end,
 })
 
-package({
+use({
   'xiyaowong/accelerated-jk.nvim',
   event = { 'BufWinEnter' },
   config = function()
@@ -89,14 +89,14 @@ package({
   end,
 })
 
-package({
+use({
   'kylechui/nvim-surround',
   config = function() require('nvim-surround').setup() end,
 })
 
-package({ 'monaqa/dial.nvim', config = conf('editor', 'dial') })
+use({ 'monaqa/dial.nvim', config = conf('editor', 'dial') })
 
-package({
+use({
   'norcalli/nvim-colorizer.lua',
   config = function()
     require('colorizer').setup({ 'lua', 'css', 'vim', 'kitty', 'conf' }, {
@@ -113,12 +113,12 @@ package({
   end,
 })
 
-package({
+use({
   'romainl/vim-cool',
   config = function() vim.g.CoolTotalMatches = 1 end,
 })
 
-package({
+use({
   'numToStr/Comment.nvim',
   config = function()
     require('Comment').setup()
@@ -133,19 +133,19 @@ package({
   end,
 })
 
-package({
+use({
   'Matt-A-Bennett/vim-surround-funk',
   config = function() vim.g.surround_funk_create_mappings = 0 end,
 })
 
-package({
+use({
   'danymat/neogen',
   event = { 'BufWinEnter' },
   requires = { 'nvim-treesitter/nvim-treesitter' },
   config = function() require('neogen').setup({ snippet_engine = 'luasnip' }) end,
 })
 
-package({
+use({
   'chentoast/marks.nvim',
   config = function()
     require('user.utils.highlights').plugin('marks', {
@@ -166,11 +166,11 @@ package({
   end,
 })
 
-package({ 'psliwka/vim-dirtytalk', run = ':DirtytalkUpdate' })
+use({ 'psliwka/vim-dirtytalk', run = ':DirtytalkUpdate' })
 
-package({ 'mizlan/iswap.nvim', event = 'BufRead' })
+use({ 'mizlan/iswap.nvim', event = 'BufRead' })
 
-package({
+use({
   'mfussenegger/nvim-treehopper',
   config = function()
     rvim.augroup('TreehopperMaps', {
@@ -192,13 +192,13 @@ package({
 ----------------------------------------------------------------------------------------------------
 -- Graveyard
 ----------------------------------------------------------------------------------------------------
-package({
+use({
   'junegunn/vim-easy-align',
   config = function() end,
   disable = true,
 })
 
-package({
+use({
   'jghauser/fold-cycle.nvim',
   config = function() require('fold-cycle').setup() end,
   disable = true,
