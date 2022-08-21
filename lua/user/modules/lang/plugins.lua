@@ -234,6 +234,7 @@ use({
         'NvimTree',
         'dashboard',
         'neo-tree',
+        'neo-tree-popup',
         'qf',
         'lspinfo',
         'lsp-installer',
