@@ -73,10 +73,11 @@ function M.set(namespace, name, opts)
     opts, name, namespace = name, namespace, 0
   end
 
-  assert(name and opts, "Both 'name' and 'opts' must be specified")
-  assert(type(name) == 'string', fmt("Name must be a string but got '%s'", name))
-  assert(type(opts) == 'table', fmt("Opts must be a table but got '%s'", vim.inspect(opts)))
-  assert(namespace, 'You must specify a valid namespace, you passed %s', vim.inspect(namespace))
+  vim.validate({
+    opts = { opts, 'table' },
+    name = { name, 'string' },
+    namespace = { namespace, 'number' },
+  })
 
   local hl = get_highlight(opts.inherit or name)
   opts.inherit = nil
