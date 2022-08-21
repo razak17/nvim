@@ -153,6 +153,7 @@ rvim.augroup('TextYankHighlight', {
 
 local column_exclude = { 'gitcommit' }
 local column_block_list = {
+  'NeogitCommitSelectView',
   'DiffviewFileHistory',
   'log',
   'norg',
@@ -181,6 +182,7 @@ local function check_color_column()
     local is_current = win == api.nvim_get_current_win()
     if fn.win_gettype() == '' and not vim.tbl_contains(column_exclude, buffer.filetype) then
       local too_small = api.nvim_win_get_width(win) <= buffer.textwidth + 1
+      -- TODO: This should do a pattern match against a string rather than direct comparison
       local is_excluded = vim.tbl_contains(column_block_list, buffer.filetype)
       if is_excluded or too_small then
         window.colorcolumn = ''
