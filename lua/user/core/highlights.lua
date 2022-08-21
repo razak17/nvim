@@ -94,21 +94,16 @@ local sidebar_fts = {
   'neotest-summary',
 }
 
-local api = vim.api
-local SIDEBAR_NS = api.nvim_create_namespace('sidebars')
-
 local function on_sidebar_enter()
+  vim.wo.winhighlight = table.concat({
+    'Normal:PanelBackground',
+    'EndOfBuffer:PanelBackground',
+    'StatusLine:PanelSt',
+    'StatusLineNC:PanelStNC',
+    'SignColumn:PanelBackground',
+    'VertSplit:PanelVertSplit',
+  }, ',')
   ---@diagnostic disable-next-line: undefined-field
-  api.nvim_win_set_hl_ns(api.nvim_get_current_win(), SIDEBAR_NS)
-  util.all({
-    { Normal = { link = 'PanelBackground' } },
-    { EndOfBuffer = { link = 'PanelBackground' } },
-    { StatusLine = { link = 'PanelSt' } },
-    { StatusLineNC = { link = 'PanelStNC' } },
-    { SignColumn = { link = 'PanelBackground' } },
-    { VertSplit = { link = 'PanelVertSplit' } },
-    { WinSeparator = { link = 'PanelWinSeparator' } },
-  }, SIDEBAR_NS)
 end
 
 local function user_highlights()
