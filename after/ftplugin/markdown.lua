@@ -42,12 +42,12 @@ rvim.ftplugin_conf(
 
 rvim.ftplugin_conf('nvim-surround', function(surround)
   surround.buffer_setup({
-    delimiters = {
-      pairs = {
-        ['l'] = function()
+    surrounds = {
+      l = {
+        add = function()
           return {
-            '[',
-            '](' .. vim.fn.getreg('*') .. ')',
+            { '[' },
+            { '](' .. vim.fn.getreg('*') .. ')' },
           }
         end,
       },
