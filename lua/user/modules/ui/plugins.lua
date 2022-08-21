@@ -29,6 +29,11 @@ package({ 'lukas-reineke/indent-blankline.nvim', config = conf('ui', 'indentline
 package({ 'nvim-neo-tree/neo-tree.nvim', branch = 'v2.x', config = conf('ui', 'neo-tree') })
 
 package({
+  'B4mbus/todo-comments.nvim',
+  config = function() require('todo-comments').setup() end,
+})
+
+package({
   's1n7ax/nvim-window-picker',
   tag = 'v1.*',
   config = function()
