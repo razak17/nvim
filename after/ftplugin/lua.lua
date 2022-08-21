@@ -63,6 +63,9 @@ rvim.ftplugin_conf('nvim-surround', function(surround)
   end
   surround.buffer_setup({
     surrounds = {
+      s = {
+        add = { "['", "']" },
+      },
       l = {
         add = { 'function () ', ' end' },
       },
