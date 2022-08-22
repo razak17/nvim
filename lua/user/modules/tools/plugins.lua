@@ -227,17 +227,6 @@ use({
 })
 
 use({
-  'iamcco/markdown-preview.nvim',
-  run = function() vim.fn['mkdp#util#install']() end,
-  ft = { 'markdown' },
-  config = function()
-    vim.g.mkdp_auto_start = 0
-    vim.g.mkdp_auto_close = 1
-  end,
-  disable = true,
-})
-
-use({
   'linty-org/readline.nvim',
   event = 'CmdlineEnter',
   config = function()
@@ -313,6 +302,15 @@ use({
   config = function() require('numb').setup() end,
 })
 
+use({
+  'iamcco/markdown-preview.nvim',
+  run = function() vim.fn['mkdp#util#install']() end,
+  ft = { 'markdown' },
+  config = function()
+    vim.g.mkdp_auto_start = 0
+    vim.g.mkdp_auto_close = 1
+  end,
+})
 ----------------------------------------------------------------------------------------------------
 -- Graveyard
 ----------------------------------------------------------------------------------------------------
