@@ -83,7 +83,6 @@ use({
       end,
     },
   },
-  config = function() require('which-key').register({ ['<leader>lh'] = { ':LspInfo<CR>', 'lsp: info' } }) end,
 })
 
 use({
