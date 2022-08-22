@@ -27,6 +27,7 @@ return function()
       formatting.shfmt,
       formatting.stylua.with({ condition = function() return rvim.executable('stylua') end }),
       formatting.goimports,
+      formatting.sql_formatter,
     },
   })
   rvim.augroup('NullLsConfig', {

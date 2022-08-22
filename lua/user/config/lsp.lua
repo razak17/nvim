@@ -43,6 +43,7 @@ rvim.lsp = {
       typescript = { 'tsserver' },
       typescriptreact = { 'tsserver' },
       javascriptreact = { 'tsserver' },
+      sql = { 'sqls' },
     },
   },
   configured_filetypes = {
