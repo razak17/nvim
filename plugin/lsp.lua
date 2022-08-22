@@ -199,6 +199,9 @@ local function setup_plugins(client, bufnr)
   -- lsp-inlayhints
   local hints_ok, hints = pcall(require, 'lsp-inlayhints')
   if hints_ok then hints.on_attach(bufnr, client) end
+  -- document-color
+  local color_ok, color = pcall(require, 'document-color')
+  if color_ok and client.server_capabilities.colorProvider then color.buf_attach(bufnr) end
 end
 
 -- Add buffer local mappings, autocommands etc for attaching servers
