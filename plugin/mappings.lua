@@ -782,6 +782,13 @@ rvim.xnoremap(
 -- nvim-lspconfig
 rvim.nnoremap('<leader>li', '<cmd>LspInfo<CR>', with_plugin('lsp: info', 'nvim-lspconfig'))
 ----------------------------------------------------------------------------------------------------
+-- nvim-toggler
+rvim.nnoremap(
+  '<leader>ii',
+  '<cmd>lua require("nvim-toggler").toggle()<CR>',
+  with_plugin('nvim-toggler: toggle', 'nvim-toggler')
+)
+----------------------------------------------------------------------------------------------------
 -- Abbreviations
 ----------------------------------------------------------------------------------------------------
 vim.cmd([[

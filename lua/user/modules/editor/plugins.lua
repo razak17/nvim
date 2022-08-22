@@ -194,6 +194,18 @@ use({
   end,
 })
 
+use({
+  'nguyenvukhang/nvim-toggler',
+  config = function()
+    require('nvim-toggler').setup({
+      inverses = {
+        ['vim'] = 'emacs',
+      },
+      remove_default_keybinds = true,
+    })
+  end,
+})
+
 ----------------------------------------------------------------------------------------------------
 -- Graveyard
 ----------------------------------------------------------------------------------------------------
