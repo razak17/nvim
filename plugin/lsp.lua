@@ -17,9 +17,16 @@ if vim.env.DEVELOPING then vim.lsp.set_log_level(L.DEBUG) end
 ----------------------------------------------------------------------------------------------------
 -- Autocommands
 ----------------------------------------------------------------------------------------------------
-local get_augroup = function(bufnr)
+local features = {
+  FORMATTING = 'formatting',
+  CODELENS = 'codelens',
+  DIAGNOSTICS = 'diagnostics',
+  REFERENCES = 'references',
+}
+
+local get_augroup = function(bufnr, method)
   assert(bufnr, 'A bufnr is required to create an lsp augroup')
-  return fmt('LspCommands_%d', bufnr)
+  return fmt('LspCommands_%d_%s', bufnr, method)
 end
 
 -- Show the popup diagnostics window, but only once for the current cursor location
@@ -39,13 +46,23 @@ local function formatting_filter(client)
 end
 
 ---@param opts table<string, any>
-local format = function(opts)
+local function format(opts)
   opts = opts or {}
   vim.lsp.buf.format({
     bufnr = opts.bufnr,
     async = opts.async,
     filter = formatting_filter,
   })
+end
+
+--- Check that a buffer is valid and loaded before calling a callback
+--- TODO: neovim upstream should validate the buffer itself rather than
+-- each user having to implement this logic
+---@param callback function
+---@param buf integer
+local function valid_call(callback, buf)
+  if not buf or not api.nvim_buf_is_loaded(buf) or not api.nvim_buf_is_valid(buf) then return end
+  callback()
 end
 
 --- Add lsp autocommands
@@ -57,65 +74,62 @@ local function setup_autocommands(client, bufnr)
     return vim.notify(msg, 'error', { title = 'LSP Setup' })
   end
 
-  local group = get_augroup(bufnr)
-  -- Clear pre-existing buffer autocommands
-  pcall(api.nvim_clear_autocmds, { group = group, buffer = bufnr })
-
-  local cmds = {}
-  -- Format On Save
   if client.server_capabilities.documentFormattingProvider then
     if not rvim.find_string(rvim.lsp.format_on_save_exclusions, vim.bo.ft) then
-      table.insert(cmds, {
-        event = { 'BufWritePre' },
-        buffer = bufnr,
-        desc = 'Format the current buffer on save',
-        command = function(args)
-          if not vim.g.formatting_disabled or rvim.lang.format_on_save then
-            format({ bufnr = args.buf, async = true })
-          end
-        end,
+      rvim.augroup(get_augroup(bufnr, features.FORMATTING), {
+        {
+          event = 'BufWritePre',
+          buffer = bufnr,
+          desc = 'LSP: Format on save',
+          command = function(args)
+            if not vim.g.formatting_disabled or rvim.lang.format_on_save then
+              format({ bufnr = args.buf, async = true })
+            end
+          end,
+        },
       })
     end
   end
   if client.server_capabilities.codeLensProvider then
     if rvim.lsp.code_lens_refresh then
-      -- Code Lens
-      table.insert(cmds, {
-        event = { 'BufEnter', 'CursorHold', 'InsertLeave' },
-        buffer = bufnr,
-        command = function(args)
-          if api.nvim_buf_is_valid(args.buf) then vim.lsp.codelens.refresh() end
-        end,
+      rvim.augroup(get_augroup(bufnr, features.CODELENS), {
+        {
+          event = { 'BufEnter', 'CursorHold', 'InsertLeave' },
+          desc = 'LSP: Code Lens',
+          buffer = bufnr,
+          command = function(args) valid_call(vim.lsp.codelens.refresh, args.buf) end,
+        },
       })
     end
   end
   if client.server_capabilities.documentHighlightProvider then
     if rvim.lsp.hover_diagnostics then
-      -- Hover Diagnostics
-      table.insert(cmds, {
-        event = { 'CursorHold' },
-        buffer = bufnr,
-        desc = 'Show diagnostics on hover',
-        command = function() diagnostic_popup() end,
+      rvim.augroup(get_augroup(bufnr, features.DIAGNOSTICS), {
+        {
+          event = { 'CursorHold' },
+          buffer = bufnr,
+          desc = 'LSP: Show diagnostics',
+          command = function() diagnostic_popup() end,
+        },
       })
     end
     if rvim.lsp.document_highlight then
-      -- Cursor Commands
-      table.insert(cmds, {
-        event = { 'CursorHold', 'CursorHoldI' },
-        buffer = bufnr,
-        desc = 'LSP: Document Highlight',
-        command = function() vim.lsp.buf.document_highlight() end,
-      })
-      table.insert(cmds, {
-        event = { 'CursorMoved' },
-        desc = 'LSP: Document Highlight (Clear)',
-        buffer = bufnr,
-        command = function() vim.lsp.buf.clear_references() end,
+      rvim.augroup(get_augroup(bufnr, features.REFERENCES), {
+        {
+          event = { 'CursorHold', 'CursorHoldI' },
+          buffer = bufnr,
+          desc = 'LSP: References',
+          command = function(args) valid_call(vim.lsp.buf.document_highlight, args.buf) end,
+        },
+        {
+          event = 'CursorMoved',
+          desc = 'LSP: References Clear',
+          buffer = bufnr,
+          command = function(args) valid_call(vim.lsp.buf.clear_references, args.buf) end,
+        },
       })
     end
   end
-  rvim.augroup(group, cmds)
 end
 
 ----------------------------------------------------------------------------------------------------
@@ -222,7 +236,19 @@ rvim.augroup('LspSetupCommands', {
   {
     event = { 'LspDetach' },
     desc = 'Clean up after detached LSP',
-    command = function(args) api.nvim_clear_autocmds({ group = get_augroup(args.buf), buffer = args.buf }) end,
+    command = function(args)
+      -- Only clear autocommands if there are no other clients attached to the buffer
+      if next(vim.lsp.get_active_clients({ bufnr = args.buf })) then return end
+      rvim.foreach(
+        function(feature)
+          pcall(api.nvim_clear_autocmds, {
+            group = get_augroup(args.buf, feature),
+            buffer = args.buf,
+          })
+        end,
+        features
+      )
+    end,
   },
 })
 ----------------------------------------------------------------------------------------------------
