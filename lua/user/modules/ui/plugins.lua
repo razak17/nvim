@@ -32,7 +32,13 @@ use({ 'nvim-neo-tree/neo-tree.nvim', branch = 'v2.x', config = conf('ui', 'neo-t
 
 use({
   'B4mbus/todo-comments.nvim',
-  config = function() require('todo-comments').setup() end,
+  config = function()
+    require('todo-comments').setup()
+    rvim.command(
+      'TodoDots',
+      string.format('TodoQuickFix cwd=%s keywords=TODO,FIXME', vim.g.vim_dir)
+    )
+  end,
 })
 
 use({
