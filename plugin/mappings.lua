@@ -767,6 +767,18 @@ if rvim.plugin_installed('neogit') then
   rvim.nnoremap('<localleader>gp', neogit.popups.push.create, 'neogit: open push popup')
 end
 ----------------------------------------------------------------------------------------------------
+-- Comment.nvim
+rvim.nnoremap(
+  '<leader>/',
+  '<Plug>(comment_toggle_linewise_current)',
+  with_plugin('comment: toggle current line', 'Comment.nvim')
+)
+rvim.xnoremap(
+  '<leader>/',
+  '<Plug>(comment_toggle_linewise_visual)',
+  with_plugin('comment: toggle linewise', 'Comment.nvim')
+)
+----------------------------------------------------------------------------------------------------
 -- Abbreviations
 ----------------------------------------------------------------------------------------------------
 vim.cmd([[
