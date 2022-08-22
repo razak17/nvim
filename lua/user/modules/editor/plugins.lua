@@ -91,7 +91,12 @@ use({
 
 use({
   'kylechui/nvim-surround',
-  config = function() require('nvim-surround').setup() end,
+  config = function()
+    require('nvim-surround').setup({
+      move_cursor = false,
+      keymaps = { visual = 's' },
+    })
+  end,
 })
 
 use({ 'monaqa/dial.nvim', config = conf('editor', 'dial') })
