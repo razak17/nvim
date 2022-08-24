@@ -9,6 +9,7 @@ return function()
   local themes = require('telescope.themes')
   local icons = rvim.style.icons
   local border = rvim.style.border
+  local fmt, fn = string.format, vim.fn
 
   rvim.telescope = {}
 
@@ -267,6 +268,14 @@ return function()
     require('telescope').extensions.luasnip.luasnip(rvim.telescope.dropdown())
   end
 
+  local function find_near_files()
+    local cwd = require('telescope.utils').buffer_dir()
+    builtin.find_files({
+      prompt_title = fmt('Searching %s', fn.fnamemodify(cwd, ':~:.')),
+      cwd = cwd,
+    })
+  end
+
   local function installed_plugins()
     builtin.find_files({
       prompt_title = 'Installed plugins',
@@ -379,7 +388,8 @@ return function()
       h = { MFU, 'most frequently used files' },
       L = { luasnips, 'luasnip: available snippets' },
       m = { media_files, 'media files' },
-      n = { notes, 'notes' },
+      j = { notes, 'notes' },
+      n = { find_near_files, 'find near files' },
       o = { builtin.oldfiles, 'old files' },
       p = { projects, 'recent projects' },
       P = { installed_plugins, 'plugins' },
