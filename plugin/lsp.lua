@@ -17,7 +17,7 @@ if vim.env.DEVELOPING then vim.lsp.set_log_level(L.DEBUG) end
 ----------------------------------------------------------------------------------------------------
 -- Autocommands
 ----------------------------------------------------------------------------------------------------
-local features = {
+local FEATURES = {
   FORMATTING = 'formatting',
   CODELENS = 'codelens',
   DIAGNOSTICS = 'diagnostics',
@@ -76,7 +76,7 @@ local function setup_autocommands(client, bufnr)
 
   if client.server_capabilities.documentFormattingProvider then
     if not rvim.find_string(rvim.lsp.format_on_save_exclusions, vim.bo.ft) then
-      rvim.augroup(get_augroup(bufnr, features.FORMATTING), {
+      rvim.augroup(get_augroup(bufnr, FEATURES.FORMATTING), {
         {
           event = 'BufWritePre',
           buffer = bufnr,
@@ -92,7 +92,7 @@ local function setup_autocommands(client, bufnr)
   end
   if client.server_capabilities.codeLensProvider then
     if rvim.lsp.code_lens_refresh then
-      rvim.augroup(get_augroup(bufnr, features.CODELENS), {
+      rvim.augroup(get_augroup(bufnr, FEATURES.CODELENS), {
         {
           event = { 'BufEnter', 'CursorHold', 'InsertLeave' },
           desc = 'LSP: Code Lens',
@@ -104,7 +104,7 @@ local function setup_autocommands(client, bufnr)
   end
   if client.server_capabilities.documentHighlightProvider then
     if rvim.lsp.hover_diagnostics then
-      rvim.augroup(get_augroup(bufnr, features.DIAGNOSTICS), {
+      rvim.augroup(get_augroup(bufnr, FEATURES.DIAGNOSTICS), {
         {
           event = { 'CursorHold' },
           buffer = bufnr,
@@ -114,7 +114,7 @@ local function setup_autocommands(client, bufnr)
       })
     end
     if rvim.lsp.document_highlight then
-      rvim.augroup(get_augroup(bufnr, features.REFERENCES), {
+      rvim.augroup(get_augroup(bufnr, FEATURES.REFERENCES), {
         {
           event = { 'CursorHold', 'CursorHoldI' },
           buffer = bufnr,
@@ -249,7 +249,7 @@ rvim.augroup('LspSetupCommands', {
             buffer = args.buf,
           })
         end,
-        features
+        FEATURES
       )
     end,
   },
