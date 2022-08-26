@@ -24,7 +24,18 @@ use({ 'rcarriga/nvim-notify', config = conf('ui', 'notify') })
 
 use({ 'nvim-lualine/lualine.nvim', config = conf('ui', 'lualine') })
 
-use({ 'j-hui/fidget.nvim', config = function() require('fidget').setup() end })
+use({
+  'j-hui/fidget.nvim',
+  config = function()
+    require('fidget').setup()
+    rvim.augroup('CloseFidget', {
+      {
+        event = 'VimLeavePre',
+        command = 'silent! FidgetClose',
+      },
+    })
+  end,
+})
 
 use({ 'lukas-reineke/indent-blankline.nvim', config = conf('ui', 'indentline') })
 

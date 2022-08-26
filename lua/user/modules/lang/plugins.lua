@@ -146,8 +146,7 @@ use({
     {
       'nvim-treesitter/nvim-treesitter-context',
       config = function()
-        local hl = require('user.utils.highlights')
-        hl.plugin('treesitter-context', {
+        require('user.utils.highlights').plugin('treesitter-context', {
           { ContextBorder = { link = 'Dim' } },
           { TreesitterContext = { inherit = 'Normal' } },
           { TreesitterContextLineNumber = { inherit = 'LineNr' } },
