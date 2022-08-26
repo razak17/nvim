@@ -180,10 +180,6 @@ use({
         })
       end,
     },
-    {
-      'lewis6991/spellsitter.nvim',
-      config = function() require('spellsitter').setup({ enable = true }) end,
-    },
   },
 })
 
