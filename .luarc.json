@@ -4,6 +4,7 @@
     "missing-parameter",
     "return-type-mismatch",
     "param-type-mismatch",
+    "cast-local-type",
     "redundant-parameter"
   ],
   "Lua.diagnostics.globals": [

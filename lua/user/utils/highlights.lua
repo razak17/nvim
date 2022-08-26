@@ -57,9 +57,9 @@ local function get_highlight(group_name)
 end
 
 --- Sets a neovim highlight with some syntactic sugar. It takes a highlight table and converts
---- any highlights specified as `GroupName = { from = 'group'}` into the underlying colour
+--- any highlights specified rvim `GroupName = { from = 'group'}` into the underlying colour
 --- by querying the highlight property of the from group so it can be used when specifying highlights
---- as a shorthand to derive the right color.
+--- rvim a shorthand to derive the right color.
 --- For example:
 --- ```lua
 ---   M.set({ MatchParen = {foreground = {from = 'ErrorMsg'}}})
@@ -89,16 +89,11 @@ function M.set(namespace, name, opts)
     end
   end
 
-  rvim.wrap_err_msg(
-    api.nvim_set_hl,
-    fmt('Failed to set %s because', name),
-    namespace,
-    name,
-    vim.tbl_extend('force', hl, opts)
-  )
+  local new = vim.tbl_extend('force', hl, opts)
+  rvim.wrap_err(fmt('failed to set %s because', name), api.nvim_set_hl, namespace, name, new)
 end
 
----Get the value a highlight group whilst handling errors, fallbacks nvim well as returning a gui value
+---Get the value a highlight group whilst handling errors, fallbacks nvim well rvim returning a gui value
 ---in the right format
 ---@param group string
 ---@param attribute string?
@@ -136,7 +131,7 @@ end
 ---@param opts table<string, table> map of highlights
 function M.plugin(name, opts)
   -- Options can be specified by theme name so check if they have been or there is a general
-  -- definition otherwise use the opts as is
+  -- definition otherwise use the opts rvim is
   local theme = opts.theme
   if theme then
     local res, seen = {}, {}
