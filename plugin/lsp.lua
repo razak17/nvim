@@ -104,12 +104,8 @@ local function setup_autocommands(client, bufnr)
               and not vim.b.formatting_disabled
               and not rvim.lang.format_on_save
             then
-              format({ bufnr = args.buf, async = true })
-              local multiple_formatters = #vim.tbl_filter(
-                function(c) return c.server_capabilities.documentFormattingProvider end,
-                lsp.get_active_clients({ buffer = bufnr })
-              ) > 1
-              format({ bufnr = args.buf, async = not multiple_formatters })
+              local is_valid, clients = check_valid_client(args.buf, 'documentFormattingProvider')
+              if is_valid then format({ bufnr = args.buf, async = #clients == 1 }) end
             end
           end,
         },
@@ -305,7 +301,7 @@ command('LspFormat', function() format({ bufnr = 0, async = false }) end)
 local function make_diagnostic_qf_updater()
   local cmd_id = nil
   return function()
-    if not api.nvim_buf_is_valid(0) then return end
+     if not is_buffer_valid(api.nvim_get_current_buf()) then return end
     rvim.wrap_err(vim.diagnostic.setqflist, { open = false })
     rvim.toggle_list('quickfix')
     if not rvim.is_vim_list_open() and cmd_id then
