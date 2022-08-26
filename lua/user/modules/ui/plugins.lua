@@ -27,7 +27,15 @@ use({ 'nvim-lualine/lualine.nvim', config = conf('ui', 'lualine') })
 use({
   'j-hui/fidget.nvim',
   config = function()
-    require('fidget').setup()
+    require('fidget').setup({
+      align = {
+        bottom = false,
+        right = true,
+      },
+      fmt = {
+        stack_upwards = false,
+      },
+    })
     rvim.augroup('CloseFidget', {
       {
         event = 'VimLeavePre',
