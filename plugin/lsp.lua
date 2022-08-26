@@ -5,14 +5,14 @@ local lsp = vim.lsp
 local fn = vim.fn
 local api = vim.api
 local fmt = string.format
-local L = vim.lsp.log_levels
+local L = lsp.log_levels
 
 local s = rvim.style
 local codicons = s.codicons
 local border = rvim.style.border.current
 local diagnostic = vim.diagnostic
 
-if vim.env.DEVELOPING then vim.lsp.set_log_level(L.DEBUG) end
+if vim.env.DEVELOPING then lsp.set_log_level(L.DEBUG) end
 
 ----------------------------------------------------------------------------------------------------
 -- Autocommands
@@ -48,21 +48,38 @@ end
 ---@param opts table<string, any>
 local function format(opts)
   opts = opts or {}
-  vim.lsp.buf.format({
+  lsp.buf.format({
     bufnr = opts.bufnr,
     async = opts.async,
     filter = formatting_filter,
   })
 end
 
---- Check that a buffer is valid and loaded before calling a callback
---- TODO: neovim upstream should validate the buffer itself rather than
--- each user having to implement this logic
----@param callback function
+---@param bufnr integer
+---@param capability string
+---@return table[]
+local function clients_by_capability(bufnr, capability)
+  return vim.tbl_filter(
+    function(c) return c.server_capabilities[capability] end,
+    lsp.get_active_clients({ buffer = bufnr })
+  )
+end
+
 ---@param buf integer
-local function valid_call(callback, buf)
-  if not buf or not api.nvim_buf_is_loaded(buf) or not api.nvim_buf_is_valid(buf) then return end
-  callback()
+---@return boolean
+local function is_buffer_valid(buf)
+  return buf and api.nvim_buf_is_loaded(buf) and api.nvim_buf_is_valid(buf)
+end
+
+--- TODO: neovim upstream should validate the buffer itself rather than each user having to implement this logic
+--- Check that a buffer is valid and loaded before calling a callback
+--- it also ensures that a client which supports the capability is attached
+---@param buf integer
+---@return boolean, table[]
+local function check_valid_client(buf, capability)
+  if not is_buffer_valid(buf) then return false, {} end
+  local clients = clients_by_capability(buf, capability)
+  return next(clients) ~= nil, clients
 end
 
 --- Add lsp autocommands
@@ -106,7 +123,9 @@ local function setup_autocommands(client, bufnr)
           event = { 'BufEnter', 'CursorHold', 'InsertLeave' },
           desc = 'LSP: Code Lens',
           buffer = bufnr,
-          command = function(args) valid_call(vim.lsp.codelens.refresh, args.buf) end,
+          command = function(args)
+            if check_valid_client(args.buf, 'codeLensProvider') then lsp.codelens.refresh() end
+          end,
         },
       })
     end
@@ -128,13 +147,21 @@ local function setup_autocommands(client, bufnr)
           event = { 'CursorHold', 'CursorHoldI' },
           buffer = bufnr,
           desc = 'LSP: References',
-          command = function(args) valid_call(vim.lsp.buf.document_highlight, args.buf) end,
+          command = function(args)
+            if check_valid_client(args.buf, 'documentHighlightProvider') then
+              lsp.buf.document_highlight()
+            end
+          end,
         },
         {
           event = 'CursorMoved',
           desc = 'LSP: References Clear',
           buffer = bufnr,
-          command = function(args) valid_call(vim.lsp.buf.clear_references, args.buf) end,
+          command = function(args)
+            if check_valid_client(args.buf, 'documentHighlightProvider') then
+              lsp.buf.clear_references()
+            end
+          end,
         },
       })
     end
@@ -153,16 +180,16 @@ local function setup_mappings(client, bufnr)
     config.scope = 'line'
     return vim.diagnostic.open_float({ scope = 'line' }, config)
   end, with_desc('lsp: line diagnostics'))
-  nnoremap('K', vim.lsp.buf.hover, with_desc('lsp: hover'))
-  nnoremap('gd', vim.lsp.buf.definition, with_desc('lsp: definition'))
-  nnoremap('gr', vim.lsp.buf.references, with_desc('lsp: references'))
-  nnoremap('gD', vim.lsp.buf.declaration, with_desc('lsp: go to declaration'))
-  nnoremap('gi', vim.lsp.buf.implementation, with_desc('lsp: go to implementation'))
-  nnoremap('gt', vim.lsp.buf.type_definition, with_desc('lsp: go to type definition'))
-  nnoremap('gI', vim.lsp.buf.incoming_calls, with_desc('lsp: incoming calls'))
+  nnoremap('K', lsp.buf.hover, with_desc('lsp: hover'))
+  nnoremap('gd', lsp.buf.definition, with_desc('lsp: definition'))
+  nnoremap('gr', lsp.buf.references, with_desc('lsp: references'))
+  nnoremap('gD', lsp.buf.declaration, with_desc('lsp: go to declaration'))
+  nnoremap('gi', lsp.buf.implementation, with_desc('lsp: go to implementation'))
+  nnoremap('gt', lsp.buf.type_definition, with_desc('lsp: go to type definition'))
+  nnoremap('gI', lsp.buf.incoming_calls, with_desc('lsp: incoming calls'))
   -- leader keymaps
   ----------------------------------------------------------------------------------------------------
-  vim.keymap.set({ 'n', 'x' }, '<leader>la', vim.lsp.buf.code_action, with_desc('lsp: code action'))
+  vim.keymap.set({ 'n', 'x' }, '<leader>la', lsp.buf.code_action, with_desc('lsp: code action'))
   nnoremap('<leader>lk', function()
     if rvim.lsp.hover_diagnostics then
       vim.diagnostic.goto_prev({ float = false })
@@ -179,8 +206,8 @@ local function setup_mappings(client, bufnr)
   end, with_desc('lsp: go to next diagnostic'))
   nnoremap('<leader>lL', vim.diagnostic.setloclist, with_desc('lsp: toggle loclist diagnostics'))
   nnoremap('<leader>lf', '<cmd>LspFormat<cr>', with_desc('lsp: format buffer'))
-  nnoremap('<leader>lc', vim.lsp.codelens.run, with_desc('lsp: run code lens'))
-  nnoremap('<leader>lr', vim.lsp.buf.rename, with_desc('lsp: rename'))
+  nnoremap('<leader>lc', lsp.codelens.run, with_desc('lsp: run code lens'))
+  nnoremap('<leader>lr', lsp.buf.rename, with_desc('lsp: rename'))
   -- Templates
   nnoremap('<leader>lG', function()
     require('user.lsp.templates').generate_templates()
@@ -240,7 +267,7 @@ rvim.augroup('LspSetupCommands', {
       local bufnr = args.buf
       -- if the buffer is invalid we should not try and attach to it
       if not api.nvim_buf_is_valid(args.buf) or not args.data then return end
-      local client = vim.lsp.get_client_by_id(args.data.client_id)
+      local client = lsp.get_client_by_id(args.data.client_id)
       on_attach(client, bufnr)
       if client_overrides[client.name] then client_overrides[client.name](client, bufnr) end
     end,
@@ -250,7 +277,7 @@ rvim.augroup('LspSetupCommands', {
     desc = 'Clean up after detached LSP',
     command = function(args)
       -- Only clear autocommands if there are no other clients attached to the buffer
-      if next(vim.lsp.get_active_clients({ bufnr = args.buf })) then return end
+      if next(lsp.get_active_clients({ bufnr = args.buf })) then return end
       rvim.foreach(
         function(feature)
           rvim.wrap_err(
@@ -414,7 +441,7 @@ lsp.handlers['textDocument/signatureHelp'] = lsp.with(lsp.handlers.signature_hel
 })
 
 lsp.handlers['window/showMessage'] = function(_, result, ctx)
-  local client = vim.lsp.get_client_by_id(ctx.client_id)
+  local client = lsp.get_client_by_id(ctx.client_id)
   local lvl = ({ 'ERROR', 'WARN', 'INFO', 'DEBUG' })[result.type]
   vim.notify(result.message, lvl, {
     title = 'LSP | ' .. client.name,
