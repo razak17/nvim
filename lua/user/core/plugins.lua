@@ -116,10 +116,7 @@ function plugins.reload()
   require('_compiled_nightly')
 end
 
-function plugins.invalidate()
-  rvim.invalidate('user.modules', true)
-  plugins.reload()
-end
+function plugins.invalidate() rvim.invalidate('user.modules', true) end
 
 function plugins.recompile()
   rvim.invalidate(fmt('user.modules.%s', vim.split(vim.fn.expand('%'), '/')[4]), true)
@@ -136,10 +133,13 @@ function plugins.load_compile()
       event = { 'BufWritePost' },
       desc = 'Packer setup and reload',
       pattern = { '*/user/modules/**/*.lua' },
-      command = function()
-        vim.cmd.doautocmd('LspDetach')
-        plugins.recompile()
-      end,
+      command = plugins.recompile,
+    },
+    {
+      event = 'User',
+      pattern = { 'VimrcReloaded' },
+      desc = 'Packer setup and reload',
+      command = plugins.recompile,
     },
     {
       event = { 'User' },
