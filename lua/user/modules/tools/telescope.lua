@@ -168,6 +168,15 @@ return function()
             },
           },
         },
+        frecency = {
+          default_workspace = 'LSP',
+          show_unindexed = false, -- Show all files or only those that have been indexed
+          ignore_patterns = { '*.git/*', '*/tmp/*', '*node_modules/*', '*vendor/*' },
+          workspaces = {
+            conf = vim.env.DOTFILES,
+            project = vim.env.DEV_HOME,
+          },
+        },
       },
       pickers = {
         buffers = dropdown({
@@ -246,6 +255,7 @@ return function()
     ['telescope-zf-native.nvim'] = 'zf-native',
     ['harpoon'] = 'harpoon',
     ['telescope-luasnip.nvim'] = 'luasnip',
+    ['telescope-frecency.nvim'] = 'frecency',
   }
 
   for plugin, setup in ipairs(plugins) do
@@ -303,16 +313,10 @@ return function()
 
   local function zoxide_list() telescope.extensions.zoxide.list({}) end
 
-  local function MRU()
-    require('mru').display_cache(rvim.telescope.dropdown({
+  local function frecency()
+    require('telescope').extensions.frecency.frecency(rvim.telescope.dropdown({
       previewer = false,
     }))
-  end
-
-  local function MFU()
-    require('mru').display_cache(
-      vim.tbl_extend('keep', { algorithm = 'mfu' }, rvim.telescope.dropdown({ previewer = false }))
-    )
   end
 
   local function projects() telescope.extensions.projects.projects({}) end
@@ -385,7 +389,7 @@ return function()
         o = { builtin.git_status, 'open changed file' },
         s = { builtin.git_status, 'status' },
       },
-      h = { MFU, 'most frequently used files' },
+      h = { frecency, 'most frequently used files' },
       L = { luasnips, 'luasnip: available snippets' },
       m = { media_files, 'media files' },
       j = { notes, 'notes' },
@@ -394,7 +398,6 @@ return function()
       p = { projects, 'recent projects' },
       P = { installed_plugins, 'plugins' },
       r = { builtin.resume, 'most recently used files' },
-      u = { MRU, 'most recently used files' },
       R = { builtin.reloader, 'module reloader' },
       s = { builtin.live_grep, 'find word' },
       v = {

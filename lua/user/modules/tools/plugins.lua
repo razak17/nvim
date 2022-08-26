@@ -110,8 +110,13 @@ use({
     { 'natecraddock/telescope-zf-native.nvim' },
     { 'nvim-telescope/telescope-ui-select.nvim' },
     { 'benfowler/telescope-luasnip.nvim' },
-    { 'ilAYAli/scMRU.nvim' },
     { 'kkharji/sqlite.lua' },
+    {
+      'nvim-telescope/telescope-frecency.nvim',
+      after = 'telescope.nvim',
+      requires = { { 'kkharji/sqlite.lua', module = 'sqlite' } },
+      config = function() require('telescope').load_extension('frecency') end,
+    },
     {
       'ThePrimeagen/harpoon',
       config = function()
