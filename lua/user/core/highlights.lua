@@ -126,8 +126,4 @@ rvim.augroup('UserHighlights', {
 ----------------------------------------------------------------------------------------------------
 -- Color Scheme {{{1
 ----------------------------------------------------------------------------------------------------
-local fmt = string.format
-local ok, msg = pcall(vim.cmd.colorscheme, 'zephyr')
-if not ok then
-  vim.schedule(function() vim.notify(fmt('Theme failed to load because: %s', msg), 'error') end)
-end
+rvim.wrap_err_msg(vim.cmd.colorscheme, 'Theme failed to load because', 'zephyr')

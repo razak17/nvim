@@ -253,10 +253,11 @@ rvim.augroup('LspSetupCommands', {
       if next(vim.lsp.get_active_clients({ bufnr = args.buf })) then return end
       rvim.foreach(
         function(feature)
-          pcall(api.nvim_clear_autocmds, {
-            group = get_augroup(args.buf, feature),
-            buffer = args.buf,
-          })
+          rvim.wrap_err_msg(
+            api.nvim_clear_autocmds,
+            fmt('Failed to clear buffer %d augroup for %s', args.buf, feature),
+            { group = get_augroup(args.buf, feature), buffer = args.buf }
+          )
         end,
         FEATURES
       )
@@ -278,7 +279,7 @@ local function make_diagnostic_qf_updater()
   local cmd_id = nil
   return function()
     if not api.nvim_buf_is_valid(0) then return end
-    pcall(vim.diagnostic.setqflist, { open = false })
+    rvim.wrap_err(vim.diagnostic.setqflist, { open = false })
     rvim.toggle_list('quickfix')
     if not rvim.is_vim_list_open() and cmd_id then
       api.nvim_del_autocmd(cmd_id)
@@ -288,7 +289,7 @@ local function make_diagnostic_qf_updater()
     cmd_id = api.nvim_create_autocmd('DiagnosticChanged', {
       callback = function()
         if rvim.is_vim_list_open() then
-          pcall(vim.diagnostic.setqflist, { open = false })
+          rvim.wrap_err(vim.diagnostic.setqflist, { open = false })
           if #fn.getqflist() == 0 then rvim.toggle_list('quickfix') end
         end
       end,

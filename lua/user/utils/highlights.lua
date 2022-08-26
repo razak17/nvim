@@ -89,8 +89,13 @@ function M.set(namespace, name, opts)
     end
   end
 
-  local ok, msg = pcall(api.nvim_set_hl, namespace, name, vim.tbl_extend('force', hl, opts))
-  if not ok then vim.notify(fmt('Failed to set %s because - %s', name, msg)) end
+  rvim.wrap_err_msg(
+    api.nvim_set_hl,
+    fmt('Failed to set %s because', name),
+    namespace,
+    name,
+    vim.tbl_extend('force', hl, opts)
+  )
 end
 
 ---Get the value a highlight group whilst handling errors, fallbacks nvim well as returning a gui value

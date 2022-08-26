@@ -5,6 +5,7 @@ local fmt = string.format
 local api = vim.api
 local uv = vim.loop
 local oss = vim.loop.os_uname().sysname
+local l = vim.log.levels
 
 rvim.open_command = oss == 'Darwin' and 'open' or 'xdg-open'
 
@@ -195,9 +196,30 @@ function rvim.safe_require(module, opts)
   local ok, result = pcall(require, module)
   if not ok and not opts.silent then
     if opts.message then result = opts.message .. '\n' .. result end
-    vim.notify(result, vim.log.levels.ERROR, { title = fmt('Error requiring: %s', module) })
+    vim.notify(result, l.ERROR, { title = fmt('Error requiring: %s', module) })
   end
   return ok, result
+end
+
+--- Call the given function and use [vim.notify] to notify of any errors
+---@param func function
+---@vararg any
+---@return boolean, any
+function rvim.wrap_err(func, ...)
+  return xpcall(func, function(err)
+    vim.schedule(function() vim.notify(err, l.ERROR, { title = 'Error' }) end)
+  end, ...)
+end
+
+--- Call the given function and use [vim.notify] to notify of any errors
+---@param func function
+---@param msg string
+---@vararg any
+---@return boolean, any
+function rvim.wrap_err_msg(func, msg, ...)
+  return xpcall(func, function(err)
+    vim.schedule(function() vim.notify(fmt('%s:\n %s', msg, err), l.ERROR, { title = 'Error' }) end)
+  end, ...)
 end
 
 ---@alias Plug table<(string | number), string>
