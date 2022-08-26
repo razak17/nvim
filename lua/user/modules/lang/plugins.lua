@@ -189,8 +189,9 @@ use({
 
 use({
   'github/copilot.vim',
+  after = 'nvim-cmp',
+  setup = function() vim.g.copilot_no_tab_map = true end,
   config = function()
-    vim.g.copilot_no_tab_map = true
     rvim.imap('<Plug>(rvim-copilot-accept)', 'copilot#Accept("<Tab>")', { expr = true })
     rvim.inoremap('<M-]>', '<Plug>(copilot-next)')
     rvim.inoremap('<M-[>', '<Plug>(copilot-previous)')
