@@ -6,7 +6,6 @@ local function general_overrides()
   util.all({
     { Dim = { foreground = { from = 'Normal', attr = 'bg', alter = 20 } } },
     { mkdLineBreak = { link = 'NONE' } },
-    { URL = { foreground = { from = 'WinSeparator' }, underline = true } },
     ------------------------------------------------------------------------------------------------
     { CursorLineSign = { link = 'CursorLine' } },
     { LineNr = { background = 'NONE' } },
