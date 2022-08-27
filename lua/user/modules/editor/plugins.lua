@@ -104,7 +104,7 @@ use({ 'monaqa/dial.nvim', config = conf('editor', 'dial') })
 use({
   'norcalli/nvim-colorizer.lua',
   config = function()
-    require('colorizer').setup({ 'lua', 'css', 'vim', 'kitty', 'conf' }, {
+    require('colorizer').setup({ 'lua', 'typescript', 'css', 'vim', 'kitty', 'conf' }, {
       css = { rgb_fn = true, hsl_fn = true, names = true },
       scss = { rgb_fn = true, hsl_fn = true, names = true },
       sass = { rgb_fn = true, names = true },
