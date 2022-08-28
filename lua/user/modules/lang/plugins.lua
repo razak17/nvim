@@ -65,24 +65,25 @@ use({
         })
       end,
     },
-    {
-      'kosayoda/nvim-lightbulb',
-      config = function()
-        require('user.utils.highlights').plugin('Lightbulb', {
-          { LightBulbFloatWin = { foreground = { from = 'Type' } } },
-        })
-        require('nvim-lightbulb').setup({
-          sign = {
-            enabled = false,
-            -- Priority of the gutter sign
-            priority = 10,
-          },
-          float = { text = '', enabled = true, win_opts = { border = 'none' } }, -- 
-          autocmd = { enabled = true },
-        })
-      end,
-    },
   },
+})
+
+use({
+  'kosayoda/nvim-lightbulb',
+  config = function()
+    require('user.utils.highlights').plugin('Lightbulb', {
+      { LightBulbFloatWin = { foreground = { from = 'Type' } } },
+      { LightBulbVirtualText = { foreground = { from = 'Type' } } },
+    })
+    local icon = rvim.style.icons.misc.lightbulb
+    require('nvim-lightbulb').setup({
+      ignore = { 'null-ls' },
+      autocmd = { enabled = true },
+      sign = { enabled = false },
+      virtual_text = { enabled = true, text = icon, hl_mode = 'blend' },
+      float = { text = icon, enabled = false, win_opts = { border = 'none' } }, -- 
+    })
+  end,
 })
 
 use({
