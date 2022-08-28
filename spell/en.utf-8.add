@@ -128,3 +128,5 @@ eslint
 async
 Dropdown
 lightbulb
+vite
+tsconfig
