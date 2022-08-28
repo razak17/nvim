@@ -7,7 +7,9 @@ use({
   'rcarriga/nvim-dap-ui',
   config = function()
     local dapui = require('dapui')
-    require('dapui').setup()
+    require('dapui').setup({
+      windows = { indent = 2 },
+    })
 
     local dap = require('dap')
     -- NOTE: this opens dap UI automatically when dap starts
