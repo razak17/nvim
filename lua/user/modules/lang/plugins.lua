@@ -44,6 +44,12 @@ use({
 use({
   'neovim/nvim-lspconfig',
   module_pattern = 'lspconfig.*',
+  config = function()
+    require('user.utils.highlights').plugin('lspconfig', {
+      { LspInfoBorder = { link = 'FloatBorder' } },
+    })
+    require('lspconfig.ui.windows').default_options.border = rvim.style.border.current
+  end,
   requires = {
     { 'ray-x/go.nvim' },
     { 'nanotee/sqls.nvim' },
