@@ -169,7 +169,7 @@ return function()
           },
         },
         frecency = {
-          default_workspace = 'LSP',
+          default_workspace = 'CWD',
           show_unindexed = false, -- Show all files or only those that have been indexed
           ignore_patterns = { '*.git/*', '*/tmp/*', '*node_modules/*', '*vendor/*' },
           workspaces = {
@@ -212,10 +212,6 @@ return function()
             'zsh/plugins/.*',
           },
           max_results = 2000,
-          on_input_filter_cb = function(prompt)
-            -- AND operator for live_grep like how fzf handles spaces with wildcards in rg
-            return { prompt = prompt:gsub('%s', '.*') }
-          end,
         }),
         oldfiles = dropdown(),
         current_buffer_fuzzy_find = dropdown({
