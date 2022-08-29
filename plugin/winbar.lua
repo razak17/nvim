@@ -89,7 +89,7 @@ function rvim.ui.winbar.get()
   return utils.display(winbar, api.nvim_win_get_width(api.nvim_get_current_win()))
 end
 
-local blocked = {
+local blocked_fts = {
   'DiffviewFiles',
   'NeogitStatus',
   'NeogitCommitMessage',
@@ -99,21 +99,22 @@ local blocked = {
   'TelescopePrompt',
   'harpoon',
 }
-local allowed = { 'toggleterm', 'neo-tree' }
+
+local allowed_fts = { 'toggleterm', 'neo-tree' }
 
 local function set_winbar()
   rvim.foreach(function(w)
     local buf, win = vim.bo[api.nvim_win_get_buf(w)], vim.wo[w]
     local buftype, filetype, is_diff = buf.buftype, buf.filetype, win.diff
     if
-      not vim.tbl_contains(blocked, filetype)
+      not vim.tbl_contains(blocked_fts, filetype)
       and fn.win_gettype(api.nvim_win_get_number(w)) == ''
       and buftype == ''
       and filetype ~= ''
       and not is_diff
     then
       win.winbar = '%{%v:lua.rvim.ui.winbar.get()%}'
-    elseif is_diff or not vim.tbl_contains(allowed, filetype) then
+    elseif is_diff or not vim.tbl_contains(allowed_fts, filetype) then
       win.winbar = nil
     end
   end, api.nvim_tabpage_list_wins(0))
