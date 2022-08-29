@@ -201,6 +201,7 @@ use({
       inverses = {
         ['vim'] = 'emacs',
         ['let'] = 'const',
+        ['margin'] = 'padding',
       },
       remove_default_keybinds = true,
     })
