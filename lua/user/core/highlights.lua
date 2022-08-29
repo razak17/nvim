@@ -44,7 +44,7 @@ local function general_overrides()
     { TSNamespace = { foreground = { from = 'TSFunction' }, italic = true, bold = true } },
     { TSKeywordReturn = { italic = true, foreground = { from = 'Keyword' } } },
     { TSConstructor = { foreground = { from = 'TSType' }, italic = true, bold = true } },
-    { TSError = { undercurl = true, sp = 'DarkRed', foreground = 'NONE' } },
+    { TSError = { sp = 'DarkRed', foreground = 'NONE' } },
     { TSParameter = { italic = true, bold = true, foreground = 'NONE' } },
     -- FIXME: this should be removed once
     -- https://github.com/nvim-treesitter/nvim-treesitter/issues/3213 is resolved
