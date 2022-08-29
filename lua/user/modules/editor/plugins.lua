@@ -200,6 +200,7 @@ use({
     require('nvim-toggler').setup({
       inverses = {
         ['vim'] = 'emacs',
+        ['let'] = 'const',
       },
       remove_default_keybinds = true,
     })
