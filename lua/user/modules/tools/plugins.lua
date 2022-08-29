@@ -170,8 +170,10 @@ use({
     local highlights = require('user.utils.highlights')
     local s = rvim.style
     local misc = s.icons.misc
-    highlights.set('NavicText', { bold = false })
-    highlights.set('NavicSeparator', { link = 'Directory' })
+    require('user.utils.highlights').plugin('navic', {
+      { NavicText = { bold = false } },
+      { NavicSeparator = { link = 'Directory' } },
+    })
     local icons = rvim.map(function(icon, key)
       highlights.set(('NavicIcons%s'):format(key), { link = rvim.lsp.kind_highlights[key] })
       return icon .. ' '
