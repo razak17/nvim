@@ -301,8 +301,8 @@ command('LspFormat', function() format({ bufnr = 0, async = false }) end)
 local function make_diagnostic_qf_updater()
   local cmd_id = nil
   return function()
-     if not is_buffer_valid(api.nvim_get_current_buf()) then return end
-    rvim.wrap_err(vim.diagnostic.setqflist, { open = false })
+    if not is_buffer_valid(api.nvim_get_current_buf()) then return end
+    vim.diagnostic.setqflist({ open = false })
     rvim.toggle_list('quickfix')
     if not rvim.is_vim_list_open() and cmd_id then
       api.nvim_del_autocmd(cmd_id)
@@ -312,7 +312,7 @@ local function make_diagnostic_qf_updater()
     cmd_id = api.nvim_create_autocmd('DiagnosticChanged', {
       callback = function()
         if rvim.is_vim_list_open() then
-          rvim.wrap_err(vim.diagnostic.setqflist, { open = false })
+          vim.diagnostic.setqflist({ open = false })
           if #fn.getqflist() == 0 then rvim.toggle_list('quickfix') end
         end
       end,
