@@ -43,7 +43,7 @@ function M.with_local(spec)
   spec.local_cond = nil
   spec.local_disable = nil
 
-  return spec, local_spec
+  return local_spec, spec
 end
 
 ---local variant of packer's use function that specifies both a local and
@@ -51,7 +51,7 @@ end
 ---@param original table
 function M.use_local(original)
   local use = require('packer').use
-  local spec, local_spec = M.with_local(original)
+  local local_spec, spec = M.with_local(original)
   if local_spec then
     use(local_spec)
     return
