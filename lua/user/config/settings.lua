@@ -262,7 +262,6 @@ o.showmatch = true
 ----------------------------------------------------------------------------------------------------
 -- Spelling {{{1
 ----------------------------------------------------------------------------------------------------
-opt.spell = true
 opt.spellsuggest:prepend({ 12 })
 opt.spelloptions = 'camel'
 opt.spellcapcheck = '' -- don't check for capital letters at start of sentence

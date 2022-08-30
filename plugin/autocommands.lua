@@ -350,10 +350,22 @@ rvim.augroup('Utilities', {
     pattern = { 'gitcommit', 'gitrebase' },
     command = 'set bufhidden=delete',
   },
-  { -- TODO: should this be done in ftplugin files
+  {
     event = { 'FileType' },
-    pattern = { 'lua', 'vim', 'dart', 'python', 'javascript', 'typescript', 'rust' },
+    pattern = {
+      'NeogitCommitMessage',
+      'go',
+      'markdown',
+      'lua',
+      'vim',
+      'python',
+      'javascript',
+      'typescript',
+      'rust',
+    },
     -- FIXME: spellsitter is slow in large files
+    -- TODO: should this be done in ftplugin files
+    -- NOTE: setting spell only works using opt_local otherwise it leaks into subsequent windows
     command = function(args) vim.opt_local.spell = vim.api.nvim_buf_line_count(args.buf) < 8000 end,
   },
   {
