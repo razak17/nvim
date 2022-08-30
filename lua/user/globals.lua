@@ -216,9 +216,7 @@ function rvim.wrap_err(msg, func, ...)
   end
   return xpcall(func, function(err)
     msg = msg and fmt('%s:\n%s', msg, err) or err
-    local info = debug.getinfo(2, 'S')
-    local title = fmt('ERROR(%s:%d)', fn.fnamemodify(info.short_src, ':~:.'), info.linedefined)
-    vim.schedule(function() vim.notify(msg, l.ERROR, { title = title }) end)
+    vim.schedule(function() vim.notify(msg, l.ERROR, { title = 'ERROR' }) end)
   end, unpack(args))
 end
 
