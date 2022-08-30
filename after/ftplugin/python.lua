@@ -1,4 +1,4 @@
-vim.cmd([[setlocal iskeyword+="]])
-vim.opt_local.shiftwidth = 4
-vim.opt_local.softtabstop = 4
-vim.opt_local.tabstop = 4
+vim.opt_local.iskeyword:append('"')
+vim.bo.shiftwidth = 4
+vim.bo.softtabstop = 4
+vim.bo.tabstop = 4

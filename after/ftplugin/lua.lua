@@ -3,7 +3,7 @@ if not rvim or not rvim.plugin_loaded('nvim-surround') then return end
 local nnoremap = rvim.nnoremap
 local fmt = string.format
 
-vim.opt_local.textwidth = 100
+vim.bo.textwidth = 100
 vim.opt_local.iskeyword:append('-')
 vim.opt_local.formatoptions:remove('o')
 

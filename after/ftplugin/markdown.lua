@@ -1,8 +1,6 @@
-vim.opt_local.spell = true
-vim.opt_local.spelloptions = 'camel'
 -- no distractions in markdown files
-vim.opt_local.number = false
-vim.opt_local.relativenumber = false
+vim.wo.number = false
+vim.wo.relativenumber = false
 
 local args = { buffer = 0 }
 

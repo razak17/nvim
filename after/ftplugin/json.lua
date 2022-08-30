@@ -1,11 +1,11 @@
-vim.opt_local.autoindent = true
-vim.opt_local.conceallevel = 0
-vim.opt_local.expandtab = true
-vim.opt_local.foldmethod = 'syntax'
-vim.opt_local.formatoptions = 'tcq2l'
-vim.opt_local.shiftwidth = 2
-vim.opt_local.softtabstop = 2
-vim.opt_local.tabstop = 2
+vim.bo.autoindent = true
+vim.wo.conceallevel = 0
+vim.bo.expandtab = true
+vim.wo.foldmethod = 'syntax'
+vim.bo.formatoptions = 'tcq2l'
+vim.bo.shiftwidth = 2
+vim.bo.softtabstop = 2
+vim.bo.tabstop = 2
 -- json 5 comment
 vim.cmd([[syntax region Comment start="//" end="$" |]])
 vim.cmd([[syntax region Comment start="/\*" end="\*/" |]])

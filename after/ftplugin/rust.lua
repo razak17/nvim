@@ -1,4 +1,4 @@
-vim.opt_local.textwidth = 120
+vim.bo.textwidth = 120
 
 if not rvim then return end
 
