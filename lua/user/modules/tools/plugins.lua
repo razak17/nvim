@@ -132,6 +132,14 @@ use({
 })
 
 use({
+  'wincent/command-t',
+  run = 'cd lua/wincent/commandt/lib && make',
+  cmd = { 'CommandT', 'CommandTRipgrep' },
+  setup = function() vim.g.CommandTPreferredImplementation = 'lua' end,
+  config = function() require('wincent.commandt').setup() end,
+})
+
+use({
   'rmagatti/auto-session',
   config = function()
     local fn = vim.fn
