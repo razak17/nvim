@@ -23,18 +23,16 @@ rvim.lsp = {
       end,
     },
   },
-  document_highlight = true,
-  code_lens_refresh = true,
   float = {
     focusable = false,
     style = 'minimal',
     border = border,
   },
   automatic_servers_installation = true,
-  hover_diagnostics = false,
-  format_on_save_exclusions = { 'zsh', 'tmux', 'gitcommit', 'query' },
+  hover_diagnostics = true,
   format_exclusions = {
-    {
+    format_on_save = { 'zsh', 'tmux', 'gitcommit', 'query' },
+    servers = {
       lua = { 'sumneko_lua' },
       go = { 'null-ls' },
       proto = { 'null-ls' },

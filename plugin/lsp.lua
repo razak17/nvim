@@ -11,6 +11,7 @@ local s = rvim.style
 local codicons = s.codicons
 local border = rvim.style.border.current
 local diagnostic = vim.diagnostic
+local format_exclusions = rvim.lsp.format_exclusions
 
 if vim.env.DEVELOPING then lsp.set_log_level(L.DEBUG) end
 
@@ -18,41 +19,15 @@ if vim.env.DEVELOPING then lsp.set_log_level(L.DEBUG) end
 -- Autocommands
 ----------------------------------------------------------------------------------------------------
 local FEATURES = {
-  FORMATTING = 'formatting',
-  CODELENS = 'codelens',
-  DIAGNOSTICS = 'diagnostics',
-  REFERENCES = 'references',
+  DIAGNOSTICS = { name = 'diagnostics' },
+  CODELENS = { name = 'codelens', provider = 'codeLensProvider' },
+  FORMATTING = { name = 'formatting', provider = 'documentFormattingProvider' },
+  REFERENCES = { name = 'references', provider = 'documentHighlightProvider' },
 }
 
 local get_augroup = function(bufnr, method)
   assert(bufnr, 'A bufnr is required to create an lsp augroup')
   return fmt('LspCommands_%d_%s', bufnr, method)
-end
-
--- Show the popup diagnostics window, but only once for the current cursor location
--- by checking whether the word under the cursor has changed.
-local function diagnostic_popup()
-  local cword = vim.fn.expand('<cword>')
-  if cword ~= vim.w.lsp_diagnostics_cword then
-    vim.w.lsp_diagnostics_cword = cword
-    vim.diagnostic.open_float(0, { scope = 'cursor', focus = false })
-  end
-end
-
-local function formatting_filter(client)
-  local exceptions = (rvim.lsp.format_exclusions)[vim.bo.filetype]
-  if not exceptions then return true end
-  return not vim.tbl_contains(exceptions, client.name)
-end
-
----@param opts table<string, any>
-local function format(opts)
-  opts = opts or {}
-  lsp.buf.format({
-    bufnr = opts.bufnr,
-    async = opts.async,
-    filter = formatting_filter,
-  })
 end
 
 ---@param bufnr integer
@@ -82,6 +57,49 @@ local function check_valid_client(buf, capability)
   return next(clients) ~= nil, clients
 end
 
+--- Create augroups for each LSP feature and track which capabilities each client
+--- registers in a buffer local table
+---@param bufnr integer
+---@param client table
+---@param events table
+---@return fun(feature: string, commands: fun(string): Autocommand[])
+local function augroup_factory(bufnr, client, events)
+  return function(feature, commands)
+    local provider, name = feature.provider, feature.name
+    if not provider or client.server_capabilities[provider] then
+      events[name].group_id =
+        rvim.augroup(fmt('LspCommands_%d_%s', bufnr, name), commands(provider))
+      table.insert(events[name].clients, client.id)
+    end
+  end
+end
+
+-- Show the popup diagnostics window, but only once for the current cursor location
+-- by checking whether the word under the cursor has changed.
+local function diagnostic_popup()
+  local cword = vim.fn.expand('<cword>')
+  if cword ~= vim.w.lsp_diagnostics_cword then
+    vim.w.lsp_diagnostics_cword = cword
+    vim.diagnostic.open_float(0, { scope = 'cursor', focus = false })
+  end
+end
+
+local function formatting_filter(client)
+  local exceptions = (format_exclusions.servers)[vim.bo.filetype]
+  if not exceptions then return true end
+  return not vim.tbl_contains(exceptions, client.name)
+end
+
+---@param opts table<string, any>
+local function format(opts)
+  opts = opts or {}
+  lsp.buf.format({
+    bufnr = opts.bufnr,
+    async = opts.async,
+    filter = formatting_filter,
+  })
+end
+
 --- Add lsp autocommands
 ---@param client table<string, any>
 ---@param bufnr number
@@ -91,77 +109,78 @@ local function setup_autocommands(client, bufnr)
     return vim.notify(msg, 'error', { title = 'LSP Setup' })
   end
 
-  if client.server_capabilities.documentFormattingProvider then
-    if not rvim.find_string(rvim.lsp.format_on_save_exclusions, vim.bo.ft) then
-      rvim.augroup(get_augroup(bufnr, FEATURES.FORMATTING), {
-        {
-          event = 'BufWritePre',
-          buffer = bufnr,
-          desc = 'LSP: Format on save',
-          command = function(args)
-            if
-              not vim.g.formatting_disabled
-              and not vim.b.formatting_disabled
-              and not rvim.lang.format_on_save
-            then
-              local is_valid, clients = check_valid_client(args.buf, 'documentFormattingProvider')
-              if is_valid then format({ bufnr = args.buf, async = #clients == 1 }) end
-            end
-          end,
-        },
-      })
-    end
-  end
-  if client.server_capabilities.codeLensProvider then
-    if rvim.lsp.code_lens_refresh then
-      rvim.augroup(get_augroup(bufnr, FEATURES.CODELENS), {
-        {
-          event = { 'BufEnter', 'CursorHold', 'InsertLeave' },
-          desc = 'LSP: Code Lens',
-          buffer = bufnr,
-          command = function(args)
-            if check_valid_client(args.buf, 'codeLensProvider') then lsp.codelens.refresh() end
-          end,
-        },
-      })
-    end
-  end
-  if client.server_capabilities.documentHighlightProvider then
-    if rvim.lsp.hover_diagnostics then
-      rvim.augroup(get_augroup(bufnr, FEATURES.DIAGNOSTICS), {
-        {
-          event = { 'CursorHold' },
-          buffer = bufnr,
-          desc = 'LSP: Show diagnostics',
-          command = function() diagnostic_popup() end,
-        },
-      })
-    end
-    if rvim.lsp.document_highlight then
-      rvim.augroup(get_augroup(bufnr, FEATURES.REFERENCES), {
-        {
-          event = { 'CursorHold', 'CursorHoldI' },
-          buffer = bufnr,
-          desc = 'LSP: References',
-          command = function(args)
-            if check_valid_client(args.buf, 'documentHighlightProvider') then
-              lsp.buf.document_highlight()
-            end
-          end,
-        },
-        {
-          event = 'CursorMoved',
-          desc = 'LSP: References Clear',
-          buffer = bufnr,
-          command = function(args)
-            if check_valid_client(args.buf, 'documentHighlightProvider') then
-              lsp.buf.clear_references()
-            end
-          end,
-        },
-      })
-    end
-  end
+  local events = vim.F.if_nil(vim.b.lsp_events, {
+    [FEATURES.CODELENS.name] = { clients = {}, group_id = nil },
+    [FEATURES.FORMATTING.name] = { clients = {}, group_id = nil },
+    [FEATURES.DIAGNOSTICS.name] = { clients = {}, group_id = nil },
+    [FEATURES.REFERENCES.name] = { clients = {}, group_id = nil },
+  })
+
+  local lsp_augroup = augroup_factory(bufnr, client, events)
+
+  lsp_augroup(FEATURES.DIAGNOSTICS, function()
+    return {
+      {
+        event = { 'CursorHold' },
+        buffer = bufnr,
+        desc = 'LSP: Show diagnostics',
+        command = function()
+          if rvim.lsp.hover_diagnostics then diagnostic_popup() end
+        end,
+      },
+    }
+  end)
+
+  lsp_augroup(FEATURES.FORMATTING, function(provider)
+    if rvim.find_string(format_exclusions.format_on_save, vim.bo.ft) then return end
+    return {
+      {
+        event = 'BufWritePre',
+        buffer = bufnr,
+        desc = 'LSP: Format on save',
+        command = function(args)
+          if not vim.g.formatting_disabled and not vim.b.formatting_disabled then
+            local is_valid, clients = check_valid_client(args.buf, provider)
+            if is_valid then format({ bufnr = args.buf, async = #clients == 1 }) end
+          end
+        end,
+      },
+    }
+  end)
+
+  lsp_augroup(FEATURES.REFERENCES, function(provider)
+    return {
+      {
+        event = { 'CursorHold', 'CursorHoldI' },
+        buffer = bufnr,
+        desc = 'LSP: References',
+        command = function(args)
+          if check_valid_client(args.buf, provider) then lsp.buf.document_highlight() end
+        end,
+      },
+      {
+        event = 'CursorMoved',
+        desc = 'LSP: References Clear',
+        buffer = bufnr,
+        command = function(args)
+          if check_valid_client(args.buf, provider) then lsp.buf.clear_references() end
+        end,
+      },
+    }
+  end)
+
+  lsp_augroup(FEATURES.CODELENS, function(provider)
+    return {
+      {
+        event = { 'BufEnter', 'CursorHold', 'InsertLeave' },
+        desc = 'LSP: Code Lens',
+        buffer = bufnr,
+        command = function(args)
+          if check_valid_client(args.buf, provider) then lsp.codelens.refresh() end
+        end,
+      },
+    }
+  end)
 end
 
 ----------------------------------------------------------------------------------------------------
