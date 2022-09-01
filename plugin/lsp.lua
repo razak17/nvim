@@ -276,8 +276,7 @@ rvim.augroup('LspSetupCommands', {
       if next(lsp.get_active_clients({ bufnr = args.buf })) then return end
       rvim.foreach(
         function(feature)
-          rvim.wrap_err(
-            fmt('failed to clear buffer %d augroup for %s', args.buf, feature),
+          pcall(
             api.nvim_clear_autocmds,
             { group = get_augroup(args.buf, feature), buffer = args.buf }
           )
