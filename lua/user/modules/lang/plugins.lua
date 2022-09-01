@@ -193,6 +193,28 @@ use({
 })
 
 use({
+  'windwp/nvim-autopairs',
+  after = 'nvim-cmp',
+  requires = 'nvim-cmp',
+  config = function()
+    local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+    require('cmp').event:on('confirm_done', cmp_autopairs.on_confirm_done())
+    require('nvim-autopairs').setup({
+      close_triple_quotes = true,
+      check_ts = true,
+      fast_wrap = { map = '<c-e>' },
+      enable_check_bracket_line = false,
+      disable_filetype = { 'TelescopePrompt', 'spectre_panel' },
+      ts_config = {
+        java = false,
+        lua = { 'string', 'source' },
+        javascript = { 'string', 'template_string' },
+      },
+    })
+  end,
+})
+
+use({
   'github/copilot.vim',
   after = 'nvim-cmp',
   setup = function() vim.g.copilot_no_tab_map = true end,
