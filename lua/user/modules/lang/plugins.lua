@@ -269,6 +269,7 @@ use({
         'packer',
         'mason.nvim',
         'help',
+        'CommandTPrompt',
       },
     })
   end,
