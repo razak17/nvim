@@ -91,8 +91,8 @@ return function()
       event = { 'User ' },
       pattern = { 'AlphaReady' },
       command = function(args)
-        vim.wo.foldenable = false
-        vim.wo.colorcolumn = ''
+        vim.opt_local.foldenable = false
+        vim.opt_local.colorcolumn = ''
         vim.o.laststatus = 0
         rvim.nnoremap('q', '<Cmd>Alpha<CR>', { buffer = args.buf, nowait = true })
 
