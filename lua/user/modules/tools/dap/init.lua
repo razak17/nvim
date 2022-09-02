@@ -2,7 +2,7 @@ return function()
   if not rvim.plugin_installed('nvim-dap') then return end
 
   local fn = vim.fn
-  local config = require('user.modules.lang.dap.config')
+  local config = require('user.modules.tools.dap.config')
 
   local function repl_toggle() require('dap').repl.toggle(nil, 'botright split') end
   local function continue() require('dap').continue() end

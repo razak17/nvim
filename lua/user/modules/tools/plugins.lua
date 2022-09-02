@@ -2,19 +2,102 @@ local utils = require('user.utils.plugins')
 local conf = utils.load_conf
 local use = require('user.core.plugins').use
 
-use({ 'Tastyep/structlog.nvim' })
+-- Debugging
+use({
+  'rcarriga/nvim-dap-ui',
+  config = function()
+    if rvim.dapui then return end
+    rvim.dapui = true
+    local dapui = require('dapui')
+    require('dapui').setup({
+      windows = { indent = 2 },
+    })
 
-use({ 'lewis6991/impatient.nvim' })
-
-use({ 'folke/which-key.nvim', config = conf('tools', 'which_key') })
+    local dap = require('dap')
+    -- NOTE: this opens dap UI automatically when dap starts
+    dap.listeners.after.event_initialized['dapui_config'] = function()
+      dapui.open()
+      vim.api.nvim_exec_autocmds('User', { pattern = 'DapStarted' })
+    end
+    dap.listeners.before.event_terminated['dapui_config'] = function() dapui.close() end
+    dap.listeners.before.event_exited['dapui_config'] = function() dapui.close() end
+  end,
+  requires = {
+    {
+      'mfussenegger/nvim-dap',
+      tag = '0.1.*',
+      config = conf('tools', 'dap'),
+    },
+    {
+      'theHamsta/nvim-dap-virtual-text',
+      config = function()
+        require('nvim-dap-virtual-text').setup({
+          enabled = true,
+          enabled_commands = true,
+          highlight_changed_variables = true,
+          all_frames = true,
+        })
+      end,
+    },
+  },
+})
 
 use({
-  'mbbill/undotree',
-  event = 'BufRead',
+  'nvim-telescope/telescope.nvim',
+  branch = 'master', -- '0.1.x',
+  config = conf('tools', 'telescope'),
+  requires = {
+    { 'nvim-lua/plenary.nvim' },
+    { 'nvim-lua/popup.nvim' },
+    { 'jvgrootveld/telescope-zoxide' },
+    { 'nvim-telescope/telescope-media-files.nvim' },
+    { 'nvim-telescope/telescope-file-browser.nvim' },
+    { 'nvim-telescope/telescope-dap.nvim' },
+    { 'natecraddock/telescope-zf-native.nvim' },
+    { 'nvim-telescope/telescope-ui-select.nvim' },
+    { 'benfowler/telescope-luasnip.nvim' },
+    { 'kkharji/sqlite.lua' },
+    {
+      'nvim-telescope/telescope-frecency.nvim',
+      after = 'telescope.nvim',
+      requires = { { 'kkharji/sqlite.lua', module = 'sqlite' } },
+      config = function() require('telescope').load_extension('frecency') end,
+    },
+    {
+      'ThePrimeagen/harpoon',
+      config = function()
+        require('harpoon').setup({
+          menu = {
+            width = vim.api.nvim_win_get_width(0) - 4,
+            borderchars = rvim.style.border.telescope.prompt,
+          },
+        })
+      end,
+    },
+  },
+})
+
+use({
+  'wincent/command-t',
+  run = 'cd lua/wincent/commandt/lib && make',
+  cmd = { 'CommandT', 'CommandTRipgrep' },
+  setup = function() vim.g.CommandTPreferredImplementation = 'lua' end,
+  config = function() require('wincent.commandt').setup() end,
+})
+
+use({
+  'AckslD/nvim-neoclip.lua',
+  event = { 'BufWinEnter' },
   config = function()
-    vim.g.undotree_TreeNodeShape = '◦' -- Alternative: '◉'
-    vim.g.undotree_SetFocusWhenToggle = 1
-    vim.g.undotree_SplitWidth = 35
+    require('neoclip').setup({
+      enable_persistent_history = false,
+      keys = {
+        telescope = {
+          i = { select = '<c-p>', paste = '<CR>', paste_behind = '<c-k>' },
+          n = { select = 'p', paste = '<CR>', paste_behind = 'P' },
+        },
+      },
+    })
   end,
 })
 
@@ -81,65 +164,6 @@ use({
 })
 
 use({
-  'AckslD/nvim-neoclip.lua',
-  event = { 'BufWinEnter' },
-  config = function()
-    require('neoclip').setup({
-      enable_persistent_history = false,
-      keys = {
-        telescope = {
-          i = { select = '<c-p>', paste = '<CR>', paste_behind = '<c-k>' },
-          n = { select = 'p', paste = '<CR>', paste_behind = 'P' },
-        },
-      },
-    })
-  end,
-})
-
-use({
-  'nvim-telescope/telescope.nvim',
-  branch = 'master', -- '0.1.x',
-  config = conf('tools', 'telescope'),
-  requires = {
-    { 'nvim-lua/plenary.nvim' },
-    { 'nvim-lua/popup.nvim' },
-    { 'jvgrootveld/telescope-zoxide' },
-    { 'nvim-telescope/telescope-media-files.nvim' },
-    { 'nvim-telescope/telescope-file-browser.nvim' },
-    { 'nvim-telescope/telescope-dap.nvim' },
-    { 'natecraddock/telescope-zf-native.nvim' },
-    { 'nvim-telescope/telescope-ui-select.nvim' },
-    { 'benfowler/telescope-luasnip.nvim' },
-    { 'kkharji/sqlite.lua' },
-    {
-      'nvim-telescope/telescope-frecency.nvim',
-      after = 'telescope.nvim',
-      requires = { { 'kkharji/sqlite.lua', module = 'sqlite' } },
-      config = function() require('telescope').load_extension('frecency') end,
-    },
-    {
-      'ThePrimeagen/harpoon',
-      config = function()
-        require('harpoon').setup({
-          menu = {
-            width = vim.api.nvim_win_get_width(0) - 4,
-            borderchars = rvim.style.border.telescope.prompt,
-          },
-        })
-      end,
-    },
-  },
-})
-
-use({
-  'wincent/command-t',
-  run = 'cd lua/wincent/commandt/lib && make',
-  cmd = { 'CommandT', 'CommandTRipgrep' },
-  setup = function() vim.g.CommandTPreferredImplementation = 'lua' end,
-  config = function() require('wincent.commandt').setup() end,
-})
-
-use({
   'rmagatti/auto-session',
   config = function()
     local fn = vim.fn
@@ -157,6 +181,29 @@ use({
         fmt('%s/site/pack/packer/start/*', rvim.get_runtime_dir()),
       },
       auto_session_use_git_branch = true, -- This cause inconsistent results
+    })
+  end,
+})
+
+use({
+  'TimUntersberger/neogit',
+  requires = 'plenary.nvim',
+  config = function()
+    local neogit = require('neogit')
+    neogit.setup({
+      disable_signs = false,
+      disable_hint = true,
+      disable_commit_confirmation = true,
+      disable_builtin_notifications = true,
+      disable_insert_on_commit = false,
+      signs = {
+        section = { '', '' }, -- "", ""
+        item = { '▸', '▾' },
+        hunk = { '樂', '' },
+      },
+      integrations = {
+        diffview = true,
+      },
     })
   end,
 })
@@ -269,29 +316,6 @@ use({
 use({ 'turbio/bracey.vim', ft = { 'html' }, run = 'npm install --prefix server' })
 
 use({
-  'TimUntersberger/neogit',
-  requires = 'plenary.nvim',
-  config = function()
-    local neogit = require('neogit')
-    neogit.setup({
-      disable_signs = false,
-      disable_hint = true,
-      disable_commit_confirmation = true,
-      disable_builtin_notifications = true,
-      disable_insert_on_commit = false,
-      signs = {
-        section = { '', '' }, -- "", ""
-        item = { '▸', '▾' },
-        hunk = { '樂', '' },
-      },
-      integrations = {
-        diffview = true,
-      },
-    })
-  end,
-})
-
-use({
   'andrewferrier/debugprint.nvim',
   config = function()
     local dp = require('debugprint')
@@ -308,6 +332,22 @@ use({
       { desc = 'debugprint: operator', expr = true }
     )
     rvim.nnoremap('<leader>dC', '<Cmd>DeleteDebugPrints<CR>', 'debugprint: clear all')
+  end,
+})
+
+use({ 'Tastyep/structlog.nvim' })
+
+use({ 'lewis6991/impatient.nvim' })
+
+use({ 'folke/which-key.nvim', config = conf('tools', 'which_key') })
+
+use({
+  'mbbill/undotree',
+  event = 'BufRead',
+  config = function()
+    vim.g.undotree_TreeNodeShape = '◦' -- Alternative: '◉'
+    vim.g.undotree_SetFocusWhenToggle = 1
+    vim.g.undotree_SplitWidth = 35
   end,
 })
 

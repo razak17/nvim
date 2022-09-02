@@ -2,46 +2,6 @@ local utils = require('user.utils.plugins')
 local conf = utils.load_conf
 local use = require('user.core.plugins').use
 
--- Debugging
-use({
-  'rcarriga/nvim-dap-ui',
-  config = function()
-    if rvim.dapui then return end
-    rvim.dapui = true
-    local dapui = require('dapui')
-    require('dapui').setup({
-      windows = { indent = 2 },
-    })
-
-    local dap = require('dap')
-    -- NOTE: this opens dap UI automatically when dap starts
-    dap.listeners.after.event_initialized['dapui_config'] = function()
-      dapui.open()
-      vim.api.nvim_exec_autocmds('User', { pattern = 'DapStarted' })
-    end
-    dap.listeners.before.event_terminated['dapui_config'] = function() dapui.close() end
-    dap.listeners.before.event_exited['dapui_config'] = function() dapui.close() end
-  end,
-  requires = {
-    {
-      'mfussenegger/nvim-dap',
-      tag = '0.1.*',
-      config = conf('lang', 'dap'),
-    },
-    {
-      'theHamsta/nvim-dap-virtual-text',
-      config = function()
-        require('nvim-dap-virtual-text').setup({
-          enabled = true,
-          enabled_commands = true,
-          highlight_changed_variables = true,
-          all_frames = true,
-        })
-      end,
-    },
-  },
-})
-
 -- Lsp
 use({
   'neovim/nvim-lspconfig',
