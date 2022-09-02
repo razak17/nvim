@@ -141,3 +141,4 @@ cnoreabbrev
 vnoremap
 keymap
 builtins
+nx

@@ -18,7 +18,7 @@ return function()
     input = {
       winblend = 2,
       insert_only = false,
-      border = rvim.style.border.line,
+      border = rvim.style.border.current,
     },
     select = {
       get_config = function(opts)
