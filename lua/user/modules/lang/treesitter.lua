@@ -1,5 +1,3 @@
-if not rvim.plugin_installed('nvim-treesitter') then return end
-
 return function()
   -- This option, which currently doesn't work upstream, disables linking treesitter highlights
   -- to the new capture highlights which color schemes and plugins depend on. By toggling it

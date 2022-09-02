@@ -1,5 +1,4 @@
 return function()
-  if not rvim.plugin_installed('alpha-nvim') then return end
   local alpha = require('alpha')
   local dashboard = require('alpha.themes.dashboard')
   local fortune = require('alpha.fortune')

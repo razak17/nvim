@@ -1,6 +1,4 @@
 return function()
-  if not rvim.plugin_installed('nvim-notify') then return end
-
   local stages_util = require('notify.stages.util')
   local fade_in_slide_out_bottom = {
     function(state)

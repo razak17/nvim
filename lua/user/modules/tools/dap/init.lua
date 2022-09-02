@@ -1,6 +1,4 @@
 return function()
-  if not rvim.plugin_installed('nvim-dap') then return end
-
   local fn = vim.fn
   local config = require('user.modules.tools.dap.config')
 

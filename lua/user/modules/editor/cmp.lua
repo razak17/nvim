@@ -1,6 +1,4 @@
 return function()
-  if not rvim.plugin_installed('nvim-cmp') then return end
-
   local cmp = require('cmp')
   local h = require('user.utils.highlights')
 

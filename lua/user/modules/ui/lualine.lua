@@ -1,7 +1,4 @@
 return function()
-  local installed = rvim.plugin_installed
-  if not installed('lualine.nvim') or not installed('zephyr-nvim') then return end
-
   local P = require('zephyr.palette')
   local s = rvim.style
   local icons = s.icons

@@ -6,8 +6,6 @@ local use = require('user.core.plugins').use
 use({
   'rcarriga/nvim-dap-ui',
   config = function()
-    if rvim.dapui then return end
-    rvim.dapui = true
     local dapui = require('dapui')
     require('dapui').setup({
       windows = { indent = 2 },

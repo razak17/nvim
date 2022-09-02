@@ -1,5 +1,3 @@
-if not rvim.plugin_installed('rust-tools.nvim') then return end
-
 local dap = nil
 local utils = require('user.utils')
 local vscode_lldb = rvim.paths.vscode_lldb

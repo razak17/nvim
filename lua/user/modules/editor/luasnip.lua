@@ -1,5 +1,4 @@
 return function()
-  if not rvim.plugin_installed('LuaSnip') then return end
   local ls = require('luasnip')
   local types = require('luasnip.util.types')
   local extras = require('luasnip.extras')

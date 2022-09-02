@@ -1,6 +1,4 @@
 return function()
-  if not rvim.plugin_installed('which-key.nvim') then return end
-
   local icons = rvim.style.icons
   local which_key = require('which-key')
 
@@ -14,11 +12,6 @@ return function()
     hidden = { '<silent>', '<cmd>', '<Cmd>', '<CR>', 'call', 'lua', '^:', '^ ' },
     show_help = true,
   })
-
-  local function installed(name, desc)
-    if rvim.plugin_installed(name) then return desc end
-    return 'not installed'
-  end
 
   which_key.register({
     [']'] = {

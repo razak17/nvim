@@ -1,6 +1,4 @@
 return function()
-  if not rvim.plugin_installed('gitsigns.nvim') then return end
-
   local cwd = vim.fn.getcwd()
   require('gitsigns').setup({
     signs = {
