@@ -10,15 +10,18 @@ return function()
     return (results <= (LIMIT - PADDING) and results + PADDING or LIMIT)
   end
 
+  local border = rvim.style.border
+
   require('user.utils.highlights').plugin(
     'dressing',
     { { FloatTitle = { inherit = 'Visual', bold = true } } }
   )
+
   require('dressing').setup({
     input = {
       winblend = 2,
       insert_only = false,
-      border = rvim.style.border.current,
+      border = border.current,
     },
     select = {
       get_config = function(opts)
@@ -28,6 +31,7 @@ return function()
             backend = 'telescope',
             telescope = require('telescope.themes').get_cursor({
               layout_config = { height = get_height },
+              borderchars = border.telescope.ui_select,
             }),
           }
         end
