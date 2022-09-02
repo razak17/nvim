@@ -140,3 +140,4 @@ nnoremap
 cnoreabbrev
 vnoremap
 keymap
+builtins
