@@ -120,6 +120,7 @@ return function()
           calc = '(Calc)',
           emoji = '(E)',
           cmdline_history = '(Hist)',
+          rg = '(Rg)',
         },
         format = function(entry, vim_item)
           local MAX = math.floor(vim.o.columns * 0.5)
@@ -158,6 +159,12 @@ return function()
         { name = 'emoji' },
         { name = 'nvim_lsp_document_symbol' },
         { name = 'cmdline_history', priority = 10, max_item_count = 5 },
+      },
+      {
+        name = 'rg',
+        keyword_length = 4,
+        max_item_count = 10,
+        option = { additional_arguments = '--max-depth 8' },
       },
     },
   }
