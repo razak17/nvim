@@ -151,7 +151,7 @@ return function()
         },
         {
           name = 'dictionary',
-          keyword_length = 3,
+          keyword_length = 5,
         },
         { name = 'spell' },
         { name = 'git' },
