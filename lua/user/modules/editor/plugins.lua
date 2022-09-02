@@ -20,6 +20,7 @@ use({
     { 'hrsh7th/cmp-emoji', after = 'nvim-cmp' },
     { 'dmitmel/cmp-cmdline-history', after = 'nvim-cmp' },
     { 'lukas-reineke/cmp-rg', branch = 'bug/implement-chunk-size', after = 'nvim-cmp' },
+    { 'rcarriga/cmp-dap', after = 'nvim-cmp' },
     {
       'petertriho/cmp-git',
       after = 'nvim-cmp',

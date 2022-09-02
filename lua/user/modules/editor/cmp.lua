@@ -185,17 +185,12 @@ return function()
     sources = cmp.config.sources({
       { name = 'cmdline', keyword_pattern = [=[[^[:blank:]\!]*]=] },
       { name = 'path' },
-      -- { name = 'cmdline_history' },
+      { name = 'cmdline_history', priority = 10, max_item_count = 5 },
     }),
   })
-
-  -- FIXME: this should not be required if we were using a prompt buffer in telescope i.e. prompt prefix
-  -- Deactivate cmp in telescope prompt buffer
-  rvim.augroup('CmpConfig', {
-    {
-      event = { 'FileType' },
-      pattern = { 'TelescopePrompt' },
-      command = function() cmp.setup.buffer({ completion = { autocomplete = false } }) end,
+  require('cmp').setup.filetype({ 'dap-repl', 'dapui_watches' }, {
+    sources = {
+      { name = 'dap' },
     },
   })
 end
