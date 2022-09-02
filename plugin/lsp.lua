@@ -181,6 +181,7 @@ local function setup_autocommands(client, bufnr)
       },
     }
   end)
+  vim.b[bufnr].lsp_events = events
 end
 
 ----------------------------------------------------------------------------------------------------
@@ -281,7 +282,7 @@ rvim.augroup('LspSetupCommands', {
     command = function(args)
       local bufnr = args.buf
       -- if the buffer is invalid we should not try and attach to it
-      if not api.nvim_buf_is_valid(args.buf) or not args.data then return end
+      if not api.nvim_buf_is_valid(bufnr) or not args.data then return end
       local client = lsp.get_client_by_id(args.data.client_id)
       on_attach(client, bufnr)
       if client_overrides[client.name] then client_overrides[client.name](client, bufnr) end
