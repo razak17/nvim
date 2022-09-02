@@ -462,7 +462,7 @@ nnoremap('<leader>Lv', ':e ' .. join_paths(rvim.get_config_dir(), 'init.lua<CR>'
 ----------------------------------------------------------------------------------------------------
 -- Plugins {{{
 ----------------------------------------------------------------------------------------------------
-local function with_plugin(desc, plugin) return { desc = desc, plugin = plugin } end
+local with_plugin = rvim.with_plugin
 -- packer
 if plugin_installed('packer.nvim') then
   nnoremap('<leader>pc', ':PackerCompile<CR>', 'compile')
@@ -755,39 +755,56 @@ nnoremap('<leader>bs', '<cmd>Bracey<CR>', with_plugin('bracey: start', 'bracey.v
 nnoremap('<leader>be', '<cmd>BraceyStop<CR>', with_plugin('bracey: stop', 'bracey.vim'))
 ----------------------------------------------------------------------------------------------------
 -- neogit
-if rvim.plugin_installed('neogit') then
+if plugin_installed('neogit') then
   local neogit = require('neogit')
-  rvim.nnoremap('<localleader>gs', function() neogit.open() end, 'neogit: open status buffer')
-  rvim.nnoremap(
+  nnoremap('<localleader>gs', function() neogit.open() end, 'neogit: open status buffer')
+  nnoremap(
     '<localleader>gm',
     function() neogit.open({ 'commit' }) end,
     'neogit: open commit buffer'
   )
-  rvim.nnoremap('<localleader>gl', neogit.popups.pull.create, 'neogit: open pull popup')
-  rvim.nnoremap('<localleader>gp', neogit.popups.push.create, 'neogit: open push popup')
+  nnoremap('<localleader>gl', neogit.popups.pull.create, 'neogit: open pull popup')
+  nnoremap('<localleader>gp', neogit.popups.push.create, 'neogit: open push popup')
 end
 ----------------------------------------------------------------------------------------------------
 -- Comment.nvim
-rvim.nnoremap(
+nnoremap(
   '<leader>/',
   '<Plug>(comment_toggle_linewise_current)',
   with_plugin('comment: toggle current line', 'Comment.nvim')
 )
-rvim.xnoremap(
+xnoremap(
   '<leader>/',
   '<Plug>(comment_toggle_linewise_visual)',
   with_plugin('comment: toggle linewise', 'Comment.nvim')
 )
 ----------------------------------------------------------------------------------------------------
 -- nvim-lspconfig
-rvim.nnoremap('<leader>li', '<cmd>LspInfo<CR>', with_plugin('lsp: info', 'nvim-lspconfig'))
+nnoremap('<leader>li', '<cmd>LspInfo<CR>', with_plugin('lsp: info', 'nvim-lspconfig'))
 ----------------------------------------------------------------------------------------------------
 -- nvim-toggler
-rvim.nnoremap(
+nnoremap(
   '<leader>ii',
   '<cmd>lua require("nvim-toggler").toggle()<CR>',
   with_plugin('nvim-toggler: toggle', 'nvim-toggler')
 )
+----------------------------------------------------------------------------------------------------
+-- nvim-notify
+nnoremap('<leader>nn', '<cmd>Notifications<cr>', with_plugin('notify: show', 'nvim-notify'))
+nnoremap(
+  '<leader>nx',
+  '<cmd>lua require("notify").dismiss<cr>',
+  with_plugin('notify: dismiss', 'nvim-notify')
+)
+----------------------------------------------------------------------------------------------------
+-- LuaSnip
+nnoremap('<leader>S', '<cmd>LuaSnipEdit<CR>', with_plugin('LuaSnip: edit snippet', 'LuaSnip'))
+----------------------------------------------------------------------------------------------------
+-- neo-tree.nvim
+nnoremap('<leader>e', '<Cmd>Neotree toggle reveal<CR>', with_plugin('toggle tree', 'neo-tree.nvim'))
+----------------------------------------------------------------------------------------------------
+-- playground
+nnoremap('<leader>LE', '<Cmd>TSHighlightCapturesUnderCursor<CR>', with_plugin('playground: inspect scope', 'playground'))
 ----------------------------------------------------------------------------------------------------
 -- Abbreviations
 ----------------------------------------------------------------------------------------------------

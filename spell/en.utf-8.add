@@ -136,3 +136,7 @@ fn
 Neogit
 Diffview
 ok
+nnoremap
+cnoreabbrev
+vnoremap
+keymap

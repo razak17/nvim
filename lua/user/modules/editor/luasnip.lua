@@ -42,11 +42,6 @@ return function()
     function() require('luasnip.loaders.from_lua').edit_snippet_files() end
   )
 
-  -- FIXME: Doesn't work
-  require('which-key').register({
-    ['<leader>S'] = { ':LuaSnipEdit<CR> 1<CR><CR>', 'edit snippet' },
-  })
-
   -- <c-l> is selecting within a list of options.
   vim.keymap.set({ 's', 'i' }, '<c-l>', function()
     if ls.choice_active() then ls.change_choice(1) end

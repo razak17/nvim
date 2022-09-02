@@ -35,9 +35,6 @@ return function()
 
   rvim.nnoremap('<C-N>', '<Cmd>Neotree toggle reveal<CR>')
 
-  require('which-key').register({
-    ['<leader>e'] = { '<Cmd>Neotree toggle reveal<CR>', 'toggle tree' },
-  })
   require('neo-tree').setup({
     source_selector = { winbar = true, separator_active = ' ' },
     enable_git_status = true,

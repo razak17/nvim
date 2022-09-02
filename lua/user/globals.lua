@@ -388,6 +388,12 @@ function rvim.removekey(table, key)
   return table
 end
 
+--- add mapping only if plugin is installed
+---@param desc string
+---@param plugin string
+---@return table
+function rvim.with_plugin(desc, plugin) return { desc = desc, plugin = plugin } end
+
 ---create a mapping function factory
 ---@param mode string
 ---@param o table

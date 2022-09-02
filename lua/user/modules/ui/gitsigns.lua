@@ -21,36 +21,24 @@ return function()
       local gs = package.loaded.gitsigns
 
       local function qf_list_modified() gs.setqflist('all') end
+      local nnoremap, vnoremap = rvim.nnoremap, rvim.vnoremap
 
-      require('which-key').register({
-        ['<leader>h'] = {
-          name = 'Gitsigns',
-          d = { gs.toggle_deleted, 'show deleted lines' },
-          j = { gs.next_hunk, 'Next Hunk' },
-          k = { gs.prev_hunk, 'Prev Hunk' },
-          p = { gs.preview_hunk, 'preview hunk' },
-          r = { gs.reset_hunk, 'reset current hunk' },
-          s = { gs.stage_hunk, 'stage current hunk' },
-          u = { gs.undo_stage_hunk, 'undo stage' },
-          w = { gs.toggle_word_diff, 'toggle word diff' },
-        },
-        ['<leader>gb'] = { gs.blame_line, 'gitsigns: blame' },
-        ['<leader>gL'] = { qf_list_modified, 'gitsigns: list modified in quickfix' },
-        ['<leader>gr'] = {
-          name = '+reset',
-          e = { gs.reset_buffer, 'gitsigns: reset entire buffer' },
-        },
-        ['<leader>gw'] = { gs.stage_buffer, 'gitsigns: stage entire buffer' },
-      })
+      nnoremap('<leader>hd', gs.toggle_deleted, 'show deleted lines')
+      nnoremap('<leader>hj', gs.next_hunk, 'next hunk')
+      nnoremap('<leader>hk', gs.prev_hunk, 'prev hunk')
+      nnoremap('<leader>hp', gs.preview_hunk, 'preview hunk')
+      nnoremap('<leader>hr', gs.reset_hunk, 'reset hunk')
+      nnoremap('<leader>hs', gs.stage_hunk, 'stage hunk')
+      nnoremap('<leader>hu', gs.undo_stage_hunk, 'undo stage')
+      nnoremap('<leader>hw', gs.toggle_word_diff, 'toggle word diff')
 
-      rvim.vnoremap(
-        '<leader>hs',
-        function() gs.stage_hunk({ vim.fn.line('.'), vim.fn.line('v') }) end
-      )
-      rvim.vnoremap(
-        '<leader>hr',
-        function() gs.reset_hunk({ vim.fn.line('.'), vim.fn.line('v') }) end
-      )
+      nnoremap('<leader>gL', qf_list_modified, 'gitsigns: list modified in quickfix')
+      nnoremap('<leader>gb', gs.blame_line, 'gitsigns: blame current line')
+      nnoremap('<localleader>gr', gs.reset_buffer, 'gitsigns: reset entire buffer')
+      nnoremap('<localleader>gw', gs.stage_buffer, 'gitsigns: stage entire buffer')
+
+      vnoremap('<leader>hs', function() gs.stage_hunk({ vim.fn.line('.'), vim.fn.line('v') }) end)
+      vnoremap('<leader>hr', function() gs.reset_hunk({ vim.fn.line('.'), vim.fn.line('v') }) end)
       vim.keymap.set({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
     end,
     watch_gitdir = {

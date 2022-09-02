@@ -1,6 +1,4 @@
 return function()
-  if not rvim.plugin_installed('telescope.nvim') then return end
-
   local previewers = require('telescope.previewers')
   local sorters = require('telescope.sorters')
   local actions = require('telescope.actions')
@@ -252,6 +250,7 @@ return function()
     ['harpoon'] = 'harpoon',
     ['telescope-luasnip.nvim'] = 'luasnip',
     ['telescope-frecency.nvim'] = 'frecency',
+    ['nvim-notify'] = 'notify',
   }
 
   for plugin, setup in ipairs(plugins) do

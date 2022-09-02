@@ -41,22 +41,17 @@ return function()
     })
   end
 
-  require('which-key').register({
-    d = {
-      name = '+Debug',
-      a = { attach, 'attach' },
-      A = { attach_to_remote, 'attach remote' },
-      h = { step_back, 'dap: step back' },
-      i = { step_into, 'dap: step into' },
-      o = { step_over, 'dap: step over' },
-      O = { step_out, 'dap: step out' },
-      b = { toggle_breakpoint, 'dap: toggle breakpoint' },
-      B = { set_breakpoint, 'dap: set breakpoint' },
-      c = { continue, 'dap: continue or start debugging' },
-      l = { run_last, 'dap REPL: run last' },
-      t = { repl_toggle, 'dap REPL: toggle' },
-    },
-  }, { prefix = '<localleader>' })
+  rvim.nnoremap('<localleader>da', attach, 'dap: attach')
+  rvim.nnoremap('<localleader>dA', attach_to_remote, 'dap: attach to remote')
+  rvim.nnoremap('<localleader>db', toggle_breakpoint, 'dap: toggle breakpoint')
+  rvim.nnoremap('<localleader>dB', set_breakpoint, 'dap: set breakpoint')
+  rvim.nnoremap('<localleader>dc', continue, 'dap: continue or start debugging')
+  rvim.nnoremap('<localleader>dh', step_back, 'dap: step back')
+  rvim.nnoremap('<localleader>de', step_out, 'dap: step out')
+  rvim.nnoremap('<localleader>di', step_into, 'dap: step into')
+  rvim.nnoremap('<localleader>do', step_over, 'dap: step over')
+  rvim.nnoremap('<localleader>dl', run_last, 'dap REPL: run last')
+  rvim.nnoremap('<localleader>dt', repl_toggle, 'dap REPL: toggle')
 
   require('dap').defaults.fallback.terminal_win_cmd = '50vsplit new'
 

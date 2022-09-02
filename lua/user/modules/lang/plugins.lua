@@ -172,14 +172,6 @@ use({
     {
       'nvim-treesitter/playground',
       cmd = { 'TSPlaygroundToggle', 'TSHighlightCapturesUnderCursor' },
-      setup = function()
-        require('which-key').register({
-          ['<leader>LE'] = {
-            '<Cmd>TSHighlightCapturesUnderCursor<CR>',
-            'playground: inspect scope',
-          },
-        })
-      end,
     },
     { 'nvim-treesitter/nvim-treesitter-textobjects' },
     { 'p00f/nvim-ts-rainbow' },
@@ -303,10 +295,6 @@ use({ 'mrshmllow/document-color.nvim' })
 use({
   'andymass/vim-matchup',
   after = 'nvim-treesitter',
-  config = function()
-    require('which-key').register({
-      ['<localleader>lm'] = { ':<c-u>MatchupWhereAmI?<CR>', 'matchup: where am i' },
-    })
-  end,
+  config = function() rvim.nnoremap('<leader>lm', ':<c-u>MatchupWhereAmI?<CR>', 'where am i') end,
   disable = true,
 })

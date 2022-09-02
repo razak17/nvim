@@ -96,9 +96,4 @@ return function()
   })
 
   vim.notify = notify
-  require('telescope').load_extension('notify')
-  require('which-key').register({
-    ['<leader>nn'] = { ':Notifications<cr>', 'notify: show' },
-    ['<leader>nx'] = { notify.dismiss, 'notify: dimiss' },
-  })
 end
