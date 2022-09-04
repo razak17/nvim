@@ -142,3 +142,13 @@ vnoremap
 keymap
 builtins
 nx
+bo
+tabstop
+shiftwidth
+softtabstop
+indentkeys
+tw
+matchpairs
+linebreak
+textwidth
+conf
