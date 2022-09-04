@@ -127,7 +127,7 @@ install_dict() {
   fi
 }
 
-little_fixes() {
+dirty_talk() {
   file_name='programming.utf-8.spl'
   file="$XDG_DATA_HOME/nvim/site/spell/$file_name"
   if [ -e "$file" ]; then
@@ -206,13 +206,13 @@ while [ "$#" -gt 0 ]; do
     install_dict
 		;;
 	-fixes)
-    little_fixes
+    dirty_talk
 		;;
 	*--all*)
 		cloneconfig
     install_deps
     install_dict
-    little_fixes
+    dirty_talk
 		;;
 	*) echo "Unavailable command... $curr" ;;
 	esac
