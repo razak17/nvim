@@ -22,7 +22,7 @@ return function()
       -- Make the source information less prominent
       {
         CmpItemMenu = {
-          fg = { from = 'Pmenu', attr = 'bg', alter = 30 },
+          fg = { from = 'LineNr', attr = 'fg',},
           italic = true,
           bold = false,
         },
