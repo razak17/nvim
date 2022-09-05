@@ -231,3 +231,5 @@ matchtime
 mousefocus
 mousescroll
 exrc
+req
+openapi
