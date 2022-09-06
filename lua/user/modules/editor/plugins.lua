@@ -19,7 +19,7 @@ use({
     { 'f3fora/cmp-spell', after = 'nvim-cmp' },
     { 'hrsh7th/cmp-emoji', after = 'nvim-cmp' },
     { 'dmitmel/cmp-cmdline-history', after = 'nvim-cmp' },
-    { 'lukas-reineke/cmp-rg', branch = 'bug/implement-chunk-size', after = 'nvim-cmp' },
+    { 'lukas-reineke/cmp-rg', tag = '*', after = 'nvim-cmp' },
     { 'rcarriga/cmp-dap', after = 'nvim-cmp' },
     {
       'petertriho/cmp-git',
@@ -108,8 +108,7 @@ use({
   config = function()
     require('Comment').setup()
     local ft = require('Comment.ft')
-    ft
-      .set('javascriptreact', '{/*%s*/}')
+    ft.set('javascriptreact', '{/*%s*/}')
       .set('javascript.jsx', '{/*%s*/}')
       .set('typescriptreact', '{/*%s*/}')
       .set('typescript.tsx', '{/*%s*/}')
