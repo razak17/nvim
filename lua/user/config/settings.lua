@@ -263,7 +263,7 @@ o.showmatch = true
 -- Spelling {{{1
 ----------------------------------------------------------------------------------------------------
 opt.spellsuggest:prepend({ 12 })
-opt.spelloptions = 'camel'
+opt.spelloptions:append({ 'camel', 'noplainbuffer' })
 opt.spellcapcheck = '' -- don't check for capital letters at start of sentence
 opt.fileformats = { 'unix', 'mac', 'dos' }
 opt.spelllang:append('programming')
