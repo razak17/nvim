@@ -212,6 +212,7 @@ use({
       filetypes_denylist = {
         'alpha',
         'NvimTree',
+        'DressingInput',
         'dashboard',
         'neo-tree',
         'neo-tree-popup',
