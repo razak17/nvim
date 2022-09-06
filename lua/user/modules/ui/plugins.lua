@@ -50,7 +50,7 @@ use({ 'lukas-reineke/indent-blankline.nvim', config = conf('ui', 'indentline') }
 use({ 'nvim-neo-tree/neo-tree.nvim', branch = 'v2.x', config = conf('ui', 'neo-tree') })
 
 use({
-  'B4mbus/todo-comments.nvim',
+  'folke/todo-comments.nvim',
   config = function()
     require('todo-comments').setup()
     rvim.command(
