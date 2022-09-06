@@ -352,6 +352,11 @@ rvim.augroup('Utilities', {
   },
   {
     event = { 'FileType' },
+    pattern = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
+    command = function() vim.bo.tw = 120 end,
+  },
+  {
+    event = { 'FileType' },
     pattern = {
       'NeogitCommitMessage',
       'go',
