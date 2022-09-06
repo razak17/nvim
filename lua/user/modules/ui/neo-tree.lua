@@ -70,6 +70,14 @@ return function()
           conflict = '',
         },
       },
+      diagnostics = {
+        highlights = {
+          hint = 'DiagnosticHint',
+          info = 'DiagnosticInfo',
+          warn = 'DiagnosticWarn',
+          error = 'DiagnosticError',
+        },
+      },
     },
     window = {
       position = 'right',

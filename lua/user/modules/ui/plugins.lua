@@ -47,7 +47,7 @@ use({
 
 use({ 'lukas-reineke/indent-blankline.nvim', config = conf('ui', 'indentline') })
 
-use({ 'nvim-neo-tree/neo-tree.nvim', branch = 'v2.x', config = conf('ui', 'neo-tree') })
+use({ 'nvim-neo-tree/neo-tree.nvim', branch = 'main', config = conf('ui', 'neo-tree') })
 
 use({
   'folke/todo-comments.nvim',
