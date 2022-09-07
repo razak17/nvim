@@ -181,6 +181,7 @@ use({
         ['vim'] = 'emacs',
         ['let'] = 'const',
         ['margin'] = 'padding',
+        ['public'] = 'private',
       },
       remove_default_keybinds = true,
     })
