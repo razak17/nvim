@@ -51,6 +51,8 @@ use({ 'nvim-neo-tree/neo-tree.nvim', branch = 'main', config = conf('ui', 'neo-t
 
 use({
   'folke/todo-comments.nvim',
+  after = 'nvim-treesitter',
+  requires = { 'nvim-treesitter' },
   config = function()
     require('todo-comments').setup()
     rvim.command(
