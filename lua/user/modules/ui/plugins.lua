@@ -38,7 +38,7 @@ use({
     })
     rvim.augroup('CloseFidget', {
       {
-        event = 'VimLeavePre',
+        event = { 'VimLeavePre', 'LspDetach' },
         command = 'silent! FidgetClose',
       },
     })
