@@ -91,14 +91,15 @@ local sidebar_fts = {
 }
 
 local function on_sidebar_enter()
-  vim.wo.winhighlight = table.concat({
-    'Normal:PanelBackground',
-    'EndOfBuffer:PanelBackground',
-    'StatusLine:PanelSt',
-    'StatusLineNC:PanelStNC',
-    'SignColumn:PanelBackground',
-    'VertSplit:PanelVertSplit',
-  }, ',')
+  vim.opt_local.winhighlight:append({
+    Normal = 'PanelBackground',
+    EndOfBuffer = 'PanelBackground',
+    StatusLine = 'PanelSt',
+    StatusLineNC = 'PanelStNC',
+    SignColumn = 'PanelBackground',
+    VertSplit = 'PanelVertSplit',
+    WinSeparator = 'PanelWinSeparator',
+  })
   ---@diagnostic disable-next-line: undefined-field
 end
 
