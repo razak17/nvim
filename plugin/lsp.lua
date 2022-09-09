@@ -35,11 +35,6 @@ local function clients_by_capability(bufnr, capability)
   )
 end
 
-local get_augroup = function(bufnr, method)
-  assert(bufnr, 'A bufnr is required to create an lsp augroup')
-  return fmt('LspCommands_%d_%s', bufnr, method)
-end
-
 ---@param buf integer
 ---@return boolean
 local function is_buffer_valid(buf)
@@ -275,17 +270,14 @@ rvim.augroup('LspSetupCommands', {
     event = { 'LspDetach' },
     desc = 'Clean up after detached LSP',
     command = function(args)
-      -- Only clear autocommands if there are no other clients attached to the buffer
-      if next(lsp.get_active_clients({ bufnr = args.buf })) then return end
-      rvim.foreach(
-        function(feature)
-          pcall(
-            api.nvim_clear_autocmds,
-            { group = get_augroup(args.buf, feature), buffer = args.buf }
-          )
-        end,
-        FEATURES
-      )
+      local client_id = args.data.client_id
+      if not vim.b.lsp_events or not client_id then return end
+      for _, state in pairs(vim.b.lsp_events) do
+        if #state.clients == 1 and state.clients[1] == client_id then
+          api.nvim_clear_autocmds({ group = state.group_id, buffer = args.buf })
+        end
+        vim.tbl_filter(function(id) return id ~= client_id end, state.clients)
+      end
     end,
   },
 })
