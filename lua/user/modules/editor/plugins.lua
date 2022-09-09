@@ -83,16 +83,19 @@ use({ 'monaqa/dial.nvim', config = conf('editor', 'dial') })
 use({
   'NvChad/nvim-colorizer.lua',
   config = function()
-    require('colorizer').setup({ 'lua', 'typescript', 'css', 'vim', 'kitty', 'conf' }, {
-      css = { rgb_fn = true, hsl_fn = true, names = true },
-      scss = { rgb_fn = true, hsl_fn = true, names = true },
-      sass = { rgb_fn = true, names = true },
-      vim = { names = true },
-      html = { mode = 'foreground' },
-    }, {
-      RGB = false,
-      names = false,
-      mode = 'background',
+    require('colorizer').setup({
+      filetypes = {
+        'lua',
+        'typescript',
+        'kitty',
+        'conf',
+        css = { rgb_fn = true, hsl_fn = true, names = true },
+        scss = { rgb_fn = true, hsl_fn = true, names = true },
+        sass = { rgb_fn = true, names = true },
+        vim = { names = true },
+        html = { mode = 'foreground' },
+      },
+      user_default_options = { RGB = false, names = false, mode = 'background' },
     })
   end,
 })
