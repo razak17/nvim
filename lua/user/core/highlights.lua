@@ -100,7 +100,6 @@ local function on_sidebar_enter()
     VertSplit = 'PanelVertSplit',
     WinSeparator = 'PanelWinSeparator',
   })
-  ---@diagnostic disable-next-line: undefined-field
 end
 
 local function user_highlights()
