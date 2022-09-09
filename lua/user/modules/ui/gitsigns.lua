@@ -10,7 +10,8 @@ return function()
     },
     _threaded_diff = true, -- NOTE: experimental but I'm curious
     word_diff = false,
-    current_line_blame = not cwd:match('personal') and not cwd:match('dotfiles'),
+    current_line_blame = not cwd:match('personal') and not cwd:match('dots'),
+    current_line_blame_formatter = ' <author>, <author_time> · <summary>',
     numhl = false,
     preview_config = {
       border = rvim.style.border.current,
