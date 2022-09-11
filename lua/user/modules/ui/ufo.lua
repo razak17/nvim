@@ -1,25 +1,25 @@
 return function()
   local ufo = require('ufo')
   local hl = require('user.utils.highlights')
-  local opt, get_width = vim.opt, vim.api.nvim_strwidth
+  local opt, strwidth = vim.opt, vim.api.nvim_strwidth
 
-  local function handler(virt_text, _, _, width, truncate, ctx)
+  local function handler(virt_text, _, end_lnum, width, truncate, ctx)
     local result = {}
     local padding = ''
     local cur_width = 0
-    local suffix_width = get_width(ctx.text)
+    local suffix_width = strwidth(ctx.text)
     local target_width = width - suffix_width
 
     for _, chunk in ipairs(virt_text) do
       local chunk_text = chunk[1]
-      local chunk_width = get_width(chunk_text)
+      local chunk_width = strwidth(chunk_text)
       local cond = target_width > cur_width + chunk_width
       if cond then table.insert(result, chunk) end
       if not cond then
         chunk_text = truncate(chunk_text, target_width - cur_width)
         local hl_group = chunk[2]
         table.insert(result, { chunk_text, hl_group })
-        chunk_width = get_width(chunk_text)
+        chunk_width = strwidth(chunk_text)
         if cur_width + chunk_width < target_width then
           padding = padding .. (' '):rep(target_width - cur_width - chunk_width)
         end
@@ -28,7 +28,7 @@ return function()
       cur_width = cur_width + chunk_width
     end
 
-    local end_text = ctx.end_virt_text
+    local end_text = ctx.get_fold_virt_text(end_lnum)
     -- reformat the end text to trim excess whitespace from indentation usually the first item is indentation
     if end_text[1] and end_text[1][1] then end_text[1][1] = end_text[1][1]:gsub('[%s\t]+', '') end
 
@@ -56,7 +56,7 @@ return function()
   ufo.setup({
     open_fold_hl_timeout = 0,
     fold_virt_text_handler = handler,
-    enable_fold_end_virt_text = true,
+    enable_get_fold_virt_text = true,
     provider_selector = function() return { 'treesitter', 'indent' } end,
     preview = {
       win_config = {
