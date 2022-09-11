@@ -41,15 +41,6 @@ local function general_overrides()
         sp = 'white',
       },
     },
-    { TSNamespace = { foreground = { from = 'TSFunction' }, italic = true, bold = true } },
-    { TSKeywordReturn = { italic = true, foreground = { from = 'Keyword' } } },
-    { TSConstructor = { foreground = { from = 'TSType' }, italic = true, bold = true } },
-    { TSError = { foreground = 'NONE', background = 'NONE' } },
-    { TSParameter = { italic = true, bold = true, foreground = 'NONE' } },
-    { LspCodeLens = { link = 'NonText' } },
-    -- This represents when a reference is assigned which is more interesting than regular
-    -- occurrences so should be highlighted more distinctly
-    { LspReferenceWrite = { bold = true, italic = true } },
     {
       MatchWord = {
         fg = { from = 'diffRemoved' },
@@ -59,6 +50,26 @@ local function general_overrides()
     },
     { GitSignsCurrentLineBlame = { link = 'Comment' } },
     { Constant = { bold = true } },
+    ------------------------------------------------------------------------------------------------
+    -- Treesitter
+    ------------------------------------------------------------------------------------------------
+    { TSNamespace = { foreground = { from = 'TSFunction' }, italic = true, bold = true } },
+    { TSKeywordReturn = { italic = true, foreground = { from = 'Keyword' } } },
+    { TSConstructor = { foreground = { from = 'TSType' }, italic = true, bold = true } },
+    { TSError = { foreground = 'NONE', background = 'NONE' } },
+    { TSParameter = { italic = true, bold = true, foreground = 'NONE' } },
+    ------------------------------------------------------------------------------------------------
+    -- LSP
+    ------------------------------------------------------------------------------------------------
+    { LspCodeLens = { link = 'NonText' } },
+    -- This represents when a reference is assigned which is more interesting than regular
+    -- occurrences so should be highlighted more distinctly
+    { LspReferenceWrite = { bold = true, italic = true } },
+    -- Sign column line
+    { DiagnosticSignInfoLine = { inherit = 'DiagnosticVirtualTextInfo', fg = 'NONE' } },
+    { DiagnosticSignHintLine = { inherit = 'DiagnosticVirtualTextHint', fg = 'NONE' } },
+    { DiagnosticSignErrorLine = { inherit = 'DiagnosticVirtualTextError', fg = 'NONE' } },
+    { DiagnosticSignWarnLine = { inherit = 'DiagnosticVirtualTextWarn', fg = 'NONE' } },
   })
 end
 

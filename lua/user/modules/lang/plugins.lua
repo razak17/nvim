@@ -196,16 +196,6 @@ use({
 use({ 'ii14/emmylua-nvim' })
 
 use({
-  'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
-  event = { 'BufWinEnter' },
-  config = function()
-    local lsp_lines = require('lsp_lines')
-    lsp_lines.setup()
-    lsp_lines.toggle()
-  end,
-})
-
-use({
   'RRethy/vim-illuminate',
   config = function()
     require('illuminate').configure({
@@ -258,4 +248,15 @@ use({
   after = 'nvim-treesitter',
   config = function() rvim.nnoremap('<leader>lm', ':<c-u>MatchupWhereAmI?<CR>', 'where am i') end,
   disable = true,
+})
+
+use({
+  'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
+  event = { 'BufWinEnter' },
+  disable = true,
+  config = function()
+    local lsp_lines = require('lsp_lines')
+    lsp_lines.setup()
+    lsp_lines.toggle()
+  end,
 })
