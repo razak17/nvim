@@ -22,7 +22,7 @@ return function()
       -- Make the source information less prominent
       {
         CmpItemMenu = {
-          fg = { from = 'LineNr', attr = 'fg',},
+          fg = { from = 'LineNr', attr = 'fg' },
           italic = true,
           bold = false,
         },
@@ -141,18 +141,19 @@ return function()
       end,
     },
     sources = cmp.config.sources({
-      { name = 'luasnip' },
+      { name = 'luasnip', max_item_count = 6 },
       { name = 'nvim_lsp' },
       { name = 'path' },
       {
         name = 'rg',
         keyword_length = 4,
-        max_item_count = 10,
+        max_item_count = 6,
         option = { additional_arguments = '--max-depth 8' },
       },
       {
         name = 'dictionary',
         keyword_length = 5,
+        max_item_count = 6,
       },
     }, {
       {
