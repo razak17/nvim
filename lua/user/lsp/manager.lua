@@ -60,10 +60,13 @@ end
 
 local function launch_server(server_name, config)
   pcall(function()
+    if server_name ~= 'rust_analyzer' then
+      require('lspconfig')[server_name].setup(config)
+      buf_try_add(server_name)
+      return
+    end
     -- NOTE: handle rust-tools like this for now
-    if server_name == 'rust_analyzer' then require('user.lsp.rust-tools') end
-    require('lspconfig')[server_name].setup(config)
-    buf_try_add(server_name)
+    require('user.lsp.rust-tools')
   end)
 end
 
