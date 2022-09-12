@@ -566,6 +566,33 @@ nnoremap(
   with_plugin('lsp_lines: toggle')
 )
 ----------------------------------------------------------------------------------------------------
+-- nvim-dap
+if plugin_installed('nvim-dap') then
+  local function repl_toggle() require('dap').repl.toggle(nil, 'botright split') end
+  local function continue() require('dap').continue() end
+  local function step_out() require('dap').step_out() end
+  local function step_into() require('dap').step_into() end
+  local function step_over() require('dap').step_over() end
+  local function step_back() require('dap').step_back() end
+  local function run_last() require('dap').run_last() end
+  local function toggle_breakpoint() require('dap').toggle_breakpoint() end
+  local function set_breakpoint() require('dap').set_breakpoint(fn.input('Breakpoint condition: ')) end
+
+  rvim.nnoremap('<localleader>db', toggle_breakpoint, 'dap: toggle breakpoint')
+  rvim.nnoremap('<localleader>dB', set_breakpoint, 'dap: set breakpoint')
+  rvim.nnoremap('<localleader>dc', continue, 'dap: continue or start debugging')
+  rvim.nnoremap('<localleader>dh', step_back, 'dap: step back')
+  rvim.nnoremap('<localleader>de', step_out, 'dap: step out')
+  rvim.nnoremap('<localleader>di', step_into, 'dap: step into')
+  rvim.nnoremap('<localleader>do', step_over, 'dap: step over')
+  rvim.nnoremap('<localleader>dl', run_last, 'dap REPL: run last')
+  rvim.nnoremap('<localleader>dt', repl_toggle, 'dap REPL: toggle')
+
+  local dap_utils = require('user.modules.tools.dap.utils')
+  rvim.nnoremap('<localleader>da', dap_utils.attach, 'dap: attach')
+  rvim.nnoremap('<localleader>dA', dap_utils.attach_to_remote, 'dap: attach to remote')
+end
+----------------------------------------------------------------------------------------------------
 -- nvim-dap-ui
 nnoremap(
   '<localleader>dx',
@@ -804,7 +831,11 @@ nnoremap('<leader>S', '<cmd>LuaSnipEdit<CR>', with_plugin('LuaSnip: edit snippet
 nnoremap('<leader>e', '<Cmd>Neotree toggle reveal<CR>', with_plugin('toggle tree', 'neo-tree.nvim'))
 ----------------------------------------------------------------------------------------------------
 -- playground
-nnoremap('<leader>LE', '<Cmd>TSHighlightCapturesUnderCursor<CR>', with_plugin('playground: inspect scope', 'playground'))
+nnoremap(
+  '<leader>LE',
+  '<Cmd>TSHighlightCapturesUnderCursor<CR>',
+  with_plugin('playground: inspect scope', 'playground')
+)
 ----------------------------------------------------------------------------------------------------
 -- Abbreviations
 ----------------------------------------------------------------------------------------------------

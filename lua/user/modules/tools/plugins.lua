@@ -4,27 +4,25 @@ local use = require('user.core.plugins').use
 
 -- Debugging
 use({
-  'rcarriga/nvim-dap-ui',
-  config = function()
-    local dapui = require('dapui')
-    require('dapui').setup({
-      windows = { indent = 2 },
-    })
-
-    local dap = require('dap')
-    -- NOTE: this opens dap UI automatically when dap starts
-    dap.listeners.after.event_initialized['dapui_config'] = function()
-      dapui.open()
-      vim.api.nvim_exec_autocmds('User', { pattern = 'DapStarted' })
-    end
-    dap.listeners.before.event_terminated['dapui_config'] = function() dapui.close() end
-    dap.listeners.before.event_exited['dapui_config'] = function() dapui.close() end
-  end,
+  'mfussenegger/nvim-dap',
+  module = 'dap',
+  tag = '*',
+  config = conf('tools', 'dap'),
   requires = {
     {
-      'mfussenegger/nvim-dap',
-      tag = '0.1.*',
-      config = conf('tools', 'dap'),
+      'rcarriga/nvim-dap-ui',
+      config = function()
+        local dapui = require('dapui')
+        require('dapui').setup({ windows = { indent = 2 } })
+        local dap = require('dap')
+        -- NOTE: this opens dap UI automatically when dap starts
+        dap.listeners.after.event_initialized['dapui_config'] = function()
+          dapui.open()
+          vim.api.nvim_exec_autocmds('User', { pattern = 'DapStarted' })
+        end
+        dap.listeners.before.event_terminated['dapui_config'] = function() dapui.close() end
+        dap.listeners.before.event_exited['dapui_config'] = function() dapui.close() end
+      end,
     },
     {
       'theHamsta/nvim-dap-virtual-text',
