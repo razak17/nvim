@@ -49,6 +49,12 @@ return function()
           '.DS_Store',
         },
       },
+      window = {
+        mappings = {
+          ['/'] = 'noop',
+          ['g/'] = 'fuzzy_finder',
+        },
+      },
     },
     default_component_configs = {
       icon = {
@@ -84,8 +90,6 @@ return function()
       width = 30,
       mappings = {
         ['o'] = 'toggle_node',
-        ['/'] = 'noop',
-        ['g/'] = 'fuzzy_finder',
         ['l'] = 'open',
         ['<CR>'] = 'open_with_window_picker',
         ['<c-s>'] = 'split_with_window_picker',
