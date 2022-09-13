@@ -50,7 +50,7 @@ return function()
     if ls.expand_or_jumpable() then ls.expand_or_jump() end
   end)
 
-  vim.keymap.set({ 's', 'i' }, '<c-k>', function()
+  vim.keymap.set({ 's', 'i' }, '<c-b>', function()
     if ls.jumpable(-1) then ls.jump(-1) end
   end)
 
