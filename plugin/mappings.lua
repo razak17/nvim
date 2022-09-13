@@ -186,7 +186,7 @@ nnoremap('<leader><leader>', [[<c-^>]])
 nnoremap('<leader>U', 'gUiw`]', 'capitalize word')
 inoremap('<C-u>', '<cmd>norm!gUiw`]a<CR>')
 -- Help
-nnoremap('<leader>H', ':h <C-R>=expand("<cword>")<cr><CR>', 'help')
+nnoremap('<leader>ah', ':h <C-R>=expand("<cword>")<cr><CR>', 'help')
 -- find visually selected text
 vnoremap('*', [[y/<C-R>"<CR>]])
 -- make . work with visually selected lines
@@ -409,7 +409,7 @@ nnoremap('<leader>Y', 'gg"+yG<C-o>', 'yank all')
 -- actions
 nnoremap('<leader>=', '<C-W>=', 'balance window')
 -- opens a horizontal split
-nnoremap('<leader>ah', '<C-W>s', 'horizontal split')
+nnoremap('<leader>H', '<C-W>s', 'horizontal split')
 -- opens a vertical split
 nnoremap('<leader>V', '<C-W>v', 'vsplit')
 -- Buffers
