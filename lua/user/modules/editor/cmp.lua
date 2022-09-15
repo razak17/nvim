@@ -136,6 +136,7 @@ return function()
           cmdline_history = '(Hist)',
           rg = '(Rg)',
           dictionary = '(Dict)',
+          crates = '(Crt)',
         })[entry.source.name]
         return vim_item
       end,
@@ -155,6 +156,7 @@ return function()
         keyword_length = 5,
         max_item_count = 6,
       },
+      { name = 'crates', gropu_index = 1 },
     }, {
       {
         name = 'buffer',
