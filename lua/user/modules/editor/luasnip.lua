@@ -36,10 +36,7 @@ return function()
     },
   })
 
-  rvim.command(
-    'LuaSnipEdit',
-    function() require('luasnip.loaders.from_lua').edit_snippet_files() end
-  )
+  rvim.command('LuaSnipEdit', function() require('luasnip.loaders').edit_snippet_files() end)
 
   -- <c-l> is selecting within a list of options.
   vim.keymap.set({ 's', 'i' }, '<c-l>', function()
@@ -63,10 +60,7 @@ return function()
   local user_snippets = rvim.paths.snippets
   if utils.is_directory(user_snippets) then paths[#paths + 1] = user_snippets end
   require('luasnip.loaders.from_lua').lazy_load()
-  require('luasnip.loaders.from_vscode').lazy_load({
-    paths = paths,
-  })
-  require('luasnip.loaders.from_snipmate').lazy_load()
+  require('luasnip.loaders.from_vscode').lazy_load({ paths = paths })
 
   -- Enable react snippets in js and ts files
   require('luasnip').filetype_extend('javascript', { 'javascriptreact' })
