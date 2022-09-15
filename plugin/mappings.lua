@@ -588,7 +588,7 @@ if plugin_installed('nvim-dap') then
   rvim.nnoremap('<localleader>dl', run_last, 'dap REPL: run last')
   rvim.nnoremap('<localleader>dt', repl_toggle, 'dap REPL: toggle')
 
-  local dap_utils = require('user.modules.tools.dap.utils')
+  local dap_utils = require('user.utils.dap')
   rvim.nnoremap('<localleader>da', dap_utils.attach, 'dap: attach')
   rvim.nnoremap('<localleader>dA', dap_utils.attach_to_remote, 'dap: attach to remote')
 end
