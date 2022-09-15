@@ -13,7 +13,6 @@ use({
     require('lspconfig.ui.windows').default_options.border = rvim.style.border.current
   end,
   requires = {
-    { 'ray-x/go.nvim' },
     { 'nanotee/sqls.nvim' },
     { 'simrat39/rust-tools.nvim', branch = 'modularize_and_inlay_rewrite' },
     { 'antoinemadec/FixCursorHold.nvim' },
