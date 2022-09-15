@@ -26,14 +26,12 @@ return function()
         cyclic = true,
       }),
     },
-    dep_files = {
-      augend.semver.alias.semver,
-    },
+    dep_files = { augend.semver.alias.semver },
   })
 
   rvim.augroup('DialMaps', {
     {
-      event = {'FileType'},
+      event = { 'FileType' },
       pattern = { 'yaml', 'toml' },
       command = function() map('n', '<C-a>', require('dial.map').inc_normal('dep_files'), { remap = true }) end,
     },

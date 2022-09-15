@@ -24,6 +24,8 @@ use({ 'rcarriga/nvim-notify', config = conf('ui', 'notify') })
 
 use({ 'nvim-lualine/lualine.nvim', config = conf('ui', 'lualine') })
 
+use({ 'romainl/vim-cool', config = function() vim.g.CoolTotalMatches = 1 end })
+
 use({
   'j-hui/fidget.nvim',
   config = function()

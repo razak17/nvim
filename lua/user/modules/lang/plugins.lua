@@ -169,6 +169,32 @@ use({
 })
 
 use({
+  'danymat/neogen',
+  event = { 'BufWinEnter' },
+  requires = { 'nvim-treesitter/nvim-treesitter' },
+  config = function() require('neogen').setup({ snippet_engine = 'luasnip' }) end,
+})
+
+use({
+  'mfussenegger/nvim-treehopper',
+  config = function()
+    rvim.augroup('TreehopperMaps', {
+      {
+        event = 'FileType',
+        command = function(args)
+          -- FIXME: this issue should be handled inside the plugin rather than manually
+          local langs = require('nvim-treesitter.parsers').available_parsers()
+          if vim.tbl_contains(langs, vim.bo[args.buf].filetype) then
+            rvim.omap('u', ":<c-u>lua require('tsht').nodes()<cr>", { buffer = args.buf })
+            rvim.vnoremap('u', ":lua require('tsht').nodes()<CR>", { buffer = args.buf })
+          end
+        end,
+      },
+    })
+  end,
+})
+
+use({
   'github/copilot.vim',
   after = 'nvim-cmp',
   setup = function() vim.g.copilot_no_tab_map = true end,
