@@ -185,8 +185,6 @@ nnoremap('<leader><leader>', [[<c-^>]])
 ----------------------------------------------------------------------------------------------------
 nnoremap('<leader>U', 'gUiw`]', 'capitalize word')
 inoremap('<C-u>', '<cmd>norm!gUiw`]a<CR>')
--- Help
-nnoremap('<leader>ah', ':h <C-R>=expand("<cword>")<cr><CR>', 'help')
 -- find visually selected text
 vnoremap('*', [[y/<C-R>"<CR>]])
 -- make . work with visually selected lines
