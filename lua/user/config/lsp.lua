@@ -65,6 +65,7 @@ rvim.lsp = {
     'markdown',
     'graphql',
     'sql',
+    'prisma'
   },
   kind_highlights = {
     Text = 'String',
