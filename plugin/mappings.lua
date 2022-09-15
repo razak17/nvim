@@ -506,17 +506,17 @@ nnoremap(
   with_plugin('vsf: delete surrounding function', 'vim-surround-funk')
 )
 nnoremap(
-  '<leader>rF',
+  '<leader>RF',
   '<Plug>(DeleteSurroundingFUNCTION)',
   with_plugin('vsf: delete surrounding outer function', 'vim-surround-funk')
 )
 nnoremap(
-  '<leader>cf',
+  '<leader>Cf',
   '<Plug>(ChangeSurroundingFunction)',
   with_plugin('vsf: change surrounding function', 'vim-surround-funk')
 )
 nnoremap(
-  '<leader>cF',
+  '<leader>CF',
   '<Plug>(ChangeSurroundingFUNCTION)',
   with_plugin('vsf: change outer surrounding function', 'vim-surround-funk')
 )
