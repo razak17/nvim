@@ -303,7 +303,7 @@ local function make_diagnostic_qf_updater()
   return function()
     if not is_buffer_valid(api.nvim_get_current_buf()) then return end
     vim.diagnostic.setqflist({ open = false })
-    rvim.toggle_list('quickfix')
+    rvim.toggle_qf_list()
     if not rvim.is_vim_list_open() and cmd_id then
       api.nvim_del_autocmd(cmd_id)
       cmd_id = nil
