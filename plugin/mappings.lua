@@ -138,11 +138,7 @@ vnoremap('$', 'g_')
 -- NOTE: this is a recursive mapping so anything bound (by a plugin) to <esc> still works
 imap('jk', [[col('.') == 1 ? '<esc>' : '<esc>l']], { expr = true })
 -- Toggle top/center/bottom
-nmap(
-  'zz',
-  [[(winline() == (winheight (0) + 1)/ 2) ?  'zt' : (winline() == 1)? 'zb' : 'zz']],
-  { expr = true }
-)
+nmap('zz', [[(winline() == (winheight (0) + 1)/ 2) ?  'zt' : (winline() == 1)? 'zb' : 'zz']], { expr = true })
 ----------------------------------------------------------------------------------------------------
 -- Move selected line / block of text in visual mode
 ----------------------------------------------------------------------------------------------------
@@ -227,7 +223,7 @@ nnoremap('gx', utils.open_link)
 --- Utility function to toggle the location or the quickfix list
 ---@param list_type '"quickfix"' | '"location"'
 ---@return string?
-function rvim.toggle_list(list_type)
+local function toggle_list(list_type)
   local is_location_target = list_type == 'location'
   local cmd = is_location_target and { 'lclose', 'lopen' } or { 'cclose', 'copen' }
   local is_open = rvim.is_vim_list_open()
@@ -243,8 +239,11 @@ function rvim.toggle_list(list_type)
   if fn.winnr() ~= winnr then vim.cmd.wincmd('p') end
 end
 
-nnoremap('<leader>lq', function() rvim.toggle_list('quickfix') end, 'toggle quickfix')
-nnoremap('<leader>lo', function() rvim.toggle_list('location') end, 'toggle loclist')
+function rvim.toggle_qf_list() toggle_list('quickfix') end
+function rvim.toggle_loc_list() toggle_list('location') end
+
+nnoremap('<leader>lq', function() rvim.toggle_qf_list() end, 'toggle quickfix')
+nnoremap('<leader>lo', function() rvim.toggle_loc_list() end, 'toggle loclist')
 ----------------------------------------------------------------------------------------------------
 -- UI Toggles
 ----------------------------------------------------------------------------------------------------
@@ -265,17 +264,9 @@ vnoremap('<leader>r', [[:s/\%V.\+\%V./\=utils#rev_str(submatch(0))<CR>gv]], 'rev
 ----------------------------------------------------------------------------------------------------
 -- Windows
 ----------------------------------------------------------------------------------------------------
-nnoremap(
-  '<localleader>wv',
-  '<C-W>t <C-W>H<C-W>=',
-  'change two vertically split windows to horizontal splits'
-)
+nnoremap('<localleader>wv', '<C-W>t <C-W>H<C-W>=', 'change two vertically split windows to horizontal splits')
 -- Change two vertically split windows to horizontal splits
-nnoremap(
-  '<localleader>wh',
-  '<C-W>t <C-W>K<C-W>=',
-  'change two horizontally split windows to vertical splits'
-)
+nnoremap('<localleader>wh', '<C-W>t <C-W>K<C-W>=', 'change two horizontally split windows to vertical splits')
 ----------------------------------------------------------------------------------------------------
 -- Folds
 ----------------------------------------------------------------------------------------------------
@@ -326,20 +317,14 @@ nnoremap('cN', '*``cgN')
 -- 2. Hit cq to start recording the macro.
 -- 3. Once you are done with the macro, go back to normal mode.
 -- 4. Hit Enter to repeat the macro over search matches.
-function rvim.mappings.setup_map()
-  nnoremap('M', [[:nnoremap M n@z<CR>q:<C-u>let @z=strpart(@z,0,strlen(@z)-1)<CR>n@z]])
-end
+function rvim.mappings.setup_map() nnoremap('M', [[:nnoremap M n@z<CR>q:<C-u>let @z=strpart(@z,0,strlen(@z)-1)<CR>n@z]]) end
 
 vim.g.mc = rvim.replace_termcodes([[y/\V<C-r>=escape(@", '/')<CR><CR>]])
 xnoremap('cn', [[g:mc . "``cgn"]], { expr = true, silent = true })
 xnoremap('cN', [[g:mc . "``cgN"]], { expr = true, silent = true })
 nnoremap('cq', [[:\<C-u>call v:lua.rvim.mappings.setup_map()<CR>*``qz]])
 nnoremap('cQ', [[:\<C-u>call v:lua.rvim.mappings.setup_map()<CR>#``qz]])
-xnoremap(
-  'cq',
-  [[":\<C-u>call v:lua.rvim.mappings.setup_map()<CR>gv" . g:mc . "``qz"]],
-  { expr = true }
-)
+xnoremap('cq', [[":\<C-u>call v:lua.rvim.mappings.setup_map()<CR>gv" . g:mc . "``qz"]], { expr = true })
 xnoremap(
   'cQ',
   [[":\<C-u>call v:lua.rvim.mappings.setup_map()<CR>gv" . substitute(g:mc, '/', '?', 'g') . "``qz"]],
@@ -352,17 +337,9 @@ xnoremap(
 -- smooth searching, allow tabbing between search results similar to using <c-g>
 -- or <c-t> the main difference being tab is easier to hit and remapping those keys
 -- to these would swallow up a tab mapping
-cnoremap(
-  '<Tab>',
-  [[getcmdtype() == "/" || getcmdtype() == "?" ? "<CR>/<C-r>/" : "<C-z>"]],
-  { expr = true }
-)
+cnoremap('<Tab>', [[getcmdtype() == "/" || getcmdtype() == "?" ? "<CR>/<C-r>/" : "<C-z>"]], { expr = true })
 
-cnoremap(
-  '<S-Tab>',
-  [[getcmdtype() == "/" || getcmdtype() == "?" ? "<CR>?<C-r>/" : "<S-Tab>"]],
-  { expr = true }
-)
+cnoremap('<S-Tab>', [[getcmdtype() == "/" || getcmdtype() == "?" ? "<CR>?<C-r>/" : "<S-Tab>"]], { expr = true })
 -- Smart mappings on the command line
 -- cnoremap("w!!", [[w !sudo tee % >/dev/null]])
 
@@ -440,17 +417,9 @@ nnoremap(
   'open config file'
 )
 nnoremap('<leader>LC', ':checkhealth<CR>', 'check health')
-nnoremap(
-  '<leader>Ll',
-  "<cmd>lua vim.fn.execute('edit ' .. vim.lsp.get_log_path())<CR>",
-  'lsp: open logfile'
-)
+nnoremap('<leader>Ll', "<cmd>lua vim.fn.execute('edit ' .. vim.lsp.get_log_path())<CR>", 'lsp: open logfile')
 nnoremap('<leader>Lm', ':messages<CR>', 'messages')
-nnoremap(
-  '<leader>Lp',
-  "<cmd>exe 'edit '.stdpath('cache').'/packer.nvim.log'<CR>",
-  'packer: open logfile'
-)
+nnoremap('<leader>Lp', "<cmd>exe 'edit '.stdpath('cache').'/packer.nvim.log'<CR>", 'packer: open logfile')
 nnoremap(
   '<leader>Ls',
   "<cmd>lua vim.fn.execute('edit ' .. join_paths(rvim.get_cache_dir(), 'prof.log'))<CR>",
@@ -475,22 +444,14 @@ if plugin_installed('packer.nvim') then
 end
 ----------------------------------------------------------------------------------------------------
 -- neogen
-nnoremap(
-  '<localleader>lc',
-  function() require('neogen').generate() end,
-  with_plugin('neogen: generate doc', 'neogen')
-)
+nnoremap('<localleader>lc', function() require('neogen').generate() end, with_plugin('neogen: generate doc', 'neogen'))
 ----------------------------------------------------------------------------------------------------
 -- iswap.nvim
 nnoremap('<leader>ia', '<Cmd>ISwap<CR>', with_plugin('iswap: swap any', 'iswap.nvim'))
 nnoremap('<leader>iw', '<Cmd>ISwapWith<CR>', with_plugin('iswap: swap with', 'iswap.nvim'))
 ----------------------------------------------------------------------------------------------------
 -- fold-cycle.nvim
-nnoremap(
-  '<BS>',
-  function() require('fold-cycle').open() end,
-  with_plugin('fold-cycle: open', 'fold-cycle.nvim')
-)
+nnoremap('<BS>', function() require('fold-cycle').open() end, with_plugin('fold-cycle: open', 'fold-cycle.nvim'))
 ----------------------------------------------------------------------------------------------------
 -- vim-easy-align
 nmap('ga', '<Plug>(EasyAlign)', with_plugin('easy-align: align', 'vim-easy-align'))
@@ -526,43 +487,23 @@ xmap('sF', '<Plug>(SelectWholeFUNCTION)', with_plugin('vsf: select function', 'v
 ----------------------------------------------------------------------------------------------------
 -- marks.nvim
 nnoremap('<leader>mb', '<Cmd>MarksListBuf<CR>', with_plugin('marks: list buffer', 'marks.nvim'))
-nnoremap(
-  '<leader>mg',
-  '<Cmd>MarksQFListGlobal<CR>',
-  with_plugin('marks: list global', 'marks.nvim')
-)
-nnoremap(
-  '<leader>m0',
-  '<Cmd>BookmarksQFList 0<CR>',
-  with_plugin('marks: list bookmark', 'marks.nvim')
-)
+nnoremap('<leader>mg', '<Cmd>MarksQFListGlobal<CR>', with_plugin('marks: list global', 'marks.nvim'))
+nnoremap('<leader>m0', '<Cmd>BookmarksQFList 0<CR>', with_plugin('marks: list bookmark', 'marks.nvim'))
 ----------------------------------------------------------------------------------------------------
 -- null-ls.nvim
 nnoremap('<leader>ln', '<cmd>NullLsInfo<CR>', with_plugin('null-ls: info', 'null-ls.nvim'))
 ----------------------------------------------------------------------------------------------------
 -- nvim-treesitter
-nnoremap(
-  'R',
-  '<cmd>edit | TSBufEnable highlight<CR>',
-  with_plugin('treesitter: enable highlight', 'nvim-treesitter')
-)
+nnoremap('R', '<cmd>edit | TSBufEnable highlight<CR>', with_plugin('treesitter: enable highlight', 'nvim-treesitter'))
 nnoremap('<leader>Le', '<cmd>TSInstallInfo<CR>', with_plugin('treesitter: info', 'nvim-treesitter'))
-nnoremap(
-  '<leader>Lm',
-  '<cmd>TSModuleInfo<CR>',
-  with_plugin('treesitter: module info', 'nvim-treesitter')
-)
+nnoremap('<leader>Lm', '<cmd>TSModuleInfo<CR>', with_plugin('treesitter: module info', 'nvim-treesitter'))
 nnoremap('<leader>Lu', '<cmd>TSUpdate<CR>', with_plugin('treesitter: update', 'nvim-treesitter'))
 ----------------------------------------------------------------------------------------------------
 -- mason.nvim
 nnoremap('<leader>lm', ':Mason<CR>', with_plugin('mason: info', 'mason.nvim'))
 ----------------------------------------------------------------------------------------------------
 -- lsp_lines.nvim
-nnoremap(
-  '<leader>ol',
-  function() require('lsp_lines').toggle() end,
-  with_plugin('lsp_lines: toggle')
-)
+nnoremap('<leader>ol', function() require('lsp_lines').toggle() end, with_plugin('lsp_lines: toggle'))
 ----------------------------------------------------------------------------------------------------
 -- nvim-dap
 if plugin_installed('nvim-dap') then
@@ -592,16 +533,8 @@ if plugin_installed('nvim-dap') then
 end
 ----------------------------------------------------------------------------------------------------
 -- nvim-dap-ui
-nnoremap(
-  '<localleader>dx',
-  function() require('dapui').close() end,
-  with_plugin('dapui: close', 'nvim-dap-ui')
-)
-nnoremap(
-  '<localleader>dT',
-  function() require('dapui').toggle() end,
-  with_plugin('dapui: toggle', 'nvim-dap-ui')
-)
+nnoremap('<localleader>dx', function() require('dapui').close() end, with_plugin('dapui: close', 'nvim-dap-ui'))
+nnoremap('<localleader>dT', function() require('dapui').toggle() end, with_plugin('dapui: toggle', 'nvim-dap-ui'))
 ----------------------------------------------------------------------------------------------------
 -- undotree
 nnoremap('<leader>u', '<cmd>UndotreeToggle<CR>', with_plugin('undotree: toggle', 'undotree'))
@@ -613,11 +546,7 @@ if plugin_installed('nvim-neoclip.lua') then
 end
 ----------------------------------------------------------------------------------------------------
 -- auto-session
-nnoremap(
-  '<leader>ss',
-  '<cmd>RestoreSession<cr>',
-  with_plugin('auto-session: restore', 'auto-session')
-)
+nnoremap('<leader>ss', '<cmd>RestoreSession<cr>', with_plugin('auto-session: restore', 'auto-session'))
 nnoremap('<leader>sl', '<cmd>SaveSession<cr>', with_plugin('auto-session: save', 'auto-session'))
 ----------------------------------------------------------------------------------------------------
 -- harpoon
@@ -665,16 +594,8 @@ nnoremap('<leader>sx', ':SnipReset<cr>', with_plugin('sniprun: reset', 'sniprun'
 ----------------------------------------------------------------------------------------------------
 -- diffview.nvim
 nnoremap('<localleader>gd', '<Cmd>DiffviewOpen<CR>', with_plugin('diffview: open', 'diffview.nvim'))
-nnoremap(
-  '<localleader>gh',
-  '<Cmd>DiffviewFileHistory<CR>',
-  with_plugin('diffview: file history', 'diffview.nvim')
-)
-vnoremap(
-  'gh',
-  [[:'<'>DiffviewFileHistory<CR>]],
-  with_plugin('diffview: file history', 'diffview.nvim')
-)
+nnoremap('<localleader>gh', '<Cmd>DiffviewFileHistory<CR>', with_plugin('diffview: file history', 'diffview.nvim'))
+vnoremap('gh', [[:'<'>DiffviewFileHistory<CR>]], with_plugin('diffview: file history', 'diffview.nvim'))
 ----------------------------------------------------------------------------------------------------
 -- vim-illuminate
 nnoremap(
@@ -706,11 +627,7 @@ if plugin_installed('FTerm.nvim') then
   tnoremap([[<c-\>]], function() require('FTerm').toggle() end, 'fterm: toggle lazygit')
   nnoremap('<leader>lg', function() new_float('lazygit') end, 'fterm: toggle lazygit')
   nnoremap('<leader>gc', function() new_float('git add . && git commit -v -a') end, 'git: commit')
-  nnoremap(
-    '<leader>gd',
-    function() new_float('iconf -ccma') end,
-    with_plugin('git: commit dotfiles', 'FTerm.nvim')
-  )
+  nnoremap('<leader>gd', function() new_float('iconf -ccma') end, with_plugin('git: commit dotfiles', 'FTerm.nvim'))
   nnoremap('<leader>tb', function() new_float('btop') end, 'fterm: btop')
   nnoremap('<leader>tn', function() new_float('node') end, 'fterm: node')
   nnoremap('<leader>tr', function() new_float('ranger') end, 'fterm: ranger')
@@ -744,11 +661,7 @@ if plugin_installed('toggleterm.nvim') then
 end
 ----------------------------------------------------------------------------------------------------
 -- telescope.nvim
-nnoremap(
-  '<leader>lR',
-  '<cmd>Telescope lsp_references<CR>',
-  with_plugin('telescope: references', 'telescope.nvim')
-)
+nnoremap('<leader>lR', '<cmd>Telescope lsp_references<CR>', with_plugin('telescope: references', 'telescope.nvim'))
 nnoremap(
   '<leader>ld',
   '<cmd>Telescope lsp_document_symbols<CR>',
@@ -769,11 +682,7 @@ nnoremap(
   '<cmd>Telescope lsp_dynamic_workspace_symbols<CR>',
   with_plugin('telescope: workspace symbols', 'telescope.nvim')
 )
-nnoremap(
-  '<leader>ms',
-  '<cmd>Telescope harpoon marks<cr>',
-  with_plugin('telescope: harpoon search', 'telescope.nvim')
-)
+nnoremap('<leader>ms', '<cmd>Telescope harpoon marks<cr>', with_plugin('telescope: harpoon search', 'telescope.nvim'))
 ----------------------------------------------------------------------------------------------------
 -- bracey.vim
 nnoremap('<leader>bs', '<cmd>Bracey<CR>', with_plugin('bracey: start', 'bracey.vim'))
@@ -783,11 +692,7 @@ nnoremap('<leader>be', '<cmd>BraceyStop<CR>', with_plugin('bracey: stop', 'brace
 if plugin_installed('neogit') then
   local neogit = require('neogit')
   nnoremap('<localleader>gs', function() neogit.open() end, 'neogit: open status buffer')
-  nnoremap(
-    '<localleader>gm',
-    function() neogit.open({ 'commit' }) end,
-    'neogit: open commit buffer'
-  )
+  nnoremap('<localleader>gm', function() neogit.open({ 'commit' }) end, 'neogit: open commit buffer')
   nnoremap('<localleader>gl', neogit.popups.pull.create, 'neogit: open pull popup')
   nnoremap('<localleader>gp', neogit.popups.push.create, 'neogit: open push popup')
 end
@@ -798,11 +703,7 @@ nnoremap(
   '<Plug>(comment_toggle_linewise_current)',
   with_plugin('comment: toggle current line', 'Comment.nvim')
 )
-xnoremap(
-  '<leader>/',
-  '<Plug>(comment_toggle_linewise_visual)',
-  with_plugin('comment: toggle linewise', 'Comment.nvim')
-)
+xnoremap('<leader>/', '<Plug>(comment_toggle_linewise_visual)', with_plugin('comment: toggle linewise', 'Comment.nvim'))
 ----------------------------------------------------------------------------------------------------
 -- nvim-lspconfig
 nnoremap('<leader>li', '<cmd>LspInfo<CR>', with_plugin('lsp: info', 'nvim-lspconfig'))
@@ -816,11 +717,7 @@ nnoremap(
 ----------------------------------------------------------------------------------------------------
 -- nvim-notify
 nnoremap('<leader>nn', '<cmd>Notifications<cr>', with_plugin('notify: show', 'nvim-notify'))
-nnoremap(
-  '<leader>nx',
-  '<cmd>lua require("notify").dismiss<cr>',
-  with_plugin('notify: dismiss', 'nvim-notify')
-)
+nnoremap('<leader>nx', '<cmd>lua require("notify").dismiss<cr>', with_plugin('notify: dismiss', 'nvim-notify'))
 ----------------------------------------------------------------------------------------------------
 -- LuaSnip
 nnoremap('<leader>S', '<cmd>LuaSnipEdit<CR>', with_plugin('LuaSnip: edit snippet', 'LuaSnip'))
