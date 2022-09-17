@@ -717,7 +717,7 @@ nnoremap(
 ----------------------------------------------------------------------------------------------------
 -- nvim-notify
 nnoremap('<leader>nn', '<cmd>Notifications<cr>', with_plugin('notify: show', 'nvim-notify'))
-nnoremap('<leader>nx', '<cmd>lua require("notify").dismiss<cr>', with_plugin('notify: dismiss', 'nvim-notify'))
+nnoremap('<leader>nx', '<cmd>lua require("notify").dismiss()<cr>', with_plugin('notify: dismiss', 'nvim-notify'))
 ----------------------------------------------------------------------------------------------------
 -- LuaSnip
 nnoremap('<leader>S', '<cmd>LuaSnipEdit<CR>', with_plugin('LuaSnip: edit snippet', 'LuaSnip'))
