@@ -97,19 +97,13 @@ M.servers = {
     single_file_support = false,
   },
   denols = {
-    root_dir = function(fname)
-      return require('lspconfig/util').root_pattern('deno.json', 'deno.jsonc')(fname)
-    end,
+    root_dir = function(fname) return require('lspconfig/util').root_pattern('deno.json', 'deno.jsonc')(fname) end,
     single_file_support = false,
   },
   emmet_ls = {
     filetypes = {
       'html',
       'css',
-      'typescriptreact',
-      'typescript.tsx',
-      'javascriptreact',
-      'javascript.jsx',
     },
   },
   --- https://github.com/golang/tools/blob/master/gopls/doc/settings.md
@@ -144,11 +138,7 @@ M.servers = {
   },
   graphql = {
     root_dir = function(fname)
-      return require('lspconfig/util').root_pattern(
-        '.graphqlrc*',
-        '.graphql.config.*',
-        'graphql.config.*'
-      )(fname)
+      return require('lspconfig/util').root_pattern('.graphqlrc*', '.graphql.config.*', 'graphql.config.*')(fname)
     end,
     single_file_support = false,
   },
@@ -213,9 +203,7 @@ M.servers = {
   },
   vuels = {
     setup = {
-      root_dir = function(fname)
-        return require('lspconfig/util').root_pattern('package.json', 'vue.config.js')(fname)
-      end,
+      root_dir = function(fname) return require('lspconfig/util').root_pattern('package.json', 'vue.config.js')(fname) end,
       init_options = {
         config = {
           vetur = {
