@@ -185,29 +185,6 @@ use({
 })
 
 use({
-  'TimUntersberger/neogit',
-  requires = 'plenary.nvim',
-  config = function()
-    local neogit = require('neogit')
-    neogit.setup({
-      disable_signs = false,
-      disable_hint = true,
-      disable_commit_confirmation = true,
-      disable_builtin_notifications = true,
-      disable_insert_on_commit = false,
-      signs = {
-        section = { '', '' }, -- "", ""
-        item = { '▸', '▾' },
-        hunk = { '樂', '' },
-      },
-      integrations = {
-        diffview = true,
-      },
-    })
-  end,
-})
-
-use({
   'phaazon/hop.nvim',
   tag = 'v2.*',
   keys = { { 'n', 's' }, { 'n', 'f' }, { 'n', 'F' } },
@@ -467,11 +444,7 @@ use({
     nnoremap('<leader>nd', function() package_info.delete() end, 'package-info: delete')
     nnoremap('<leader>ni', function() package_info.install() end, 'package-info: install')
     nnoremap('<leader>nr', function() package_info.reinstall() end, 'package-info: reinstall')
-    nnoremap(
-      '<leader>np',
-      function() package_info.change_version() end,
-      'package-info: change version'
-    )
+    nnoremap('<leader>np', function() package_info.change_version() end, 'package-info: change version')
   end,
   requires = 'MunifTanjim/nui.nvim',
   disable = true,
@@ -547,6 +520,30 @@ use({
     rvim.nnoremap('<leader>rr', '<Plug>RestNvim', 'rest: run')
     rvim.nnoremap('<leader>rp', '<Plug>RestNvimPreview', 'rest: run')
     rvim.nnoremap('<leader>rl', '<Plug>RestNvimLast', 'rest: run')
+  end,
+  disable = true,
+})
+
+use({
+  'TimUntersberger/neogit',
+  requires = 'plenary.nvim',
+  config = function()
+    local neogit = require('neogit')
+    neogit.setup({
+      disable_signs = false,
+      disable_hint = true,
+      disable_commit_confirmation = true,
+      disable_builtin_notifications = true,
+      disable_insert_on_commit = false,
+      signs = {
+        section = { '', '' }, -- "", ""
+        item = { '▸', '▾' },
+        hunk = { '樂', '' },
+      },
+      integrations = {
+        diffview = true,
+      },
+    })
   end,
   disable = true,
 })
