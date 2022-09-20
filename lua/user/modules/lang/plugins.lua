@@ -16,7 +16,6 @@ use({
     { 'nanotee/sqls.nvim' },
     { 'simrat39/rust-tools.nvim', branch = 'modularize_and_inlay_rewrite' },
     { 'b0o/schemastore.nvim' },
-    { 'jose-elias-alvarez/null-ls.nvim', config = conf('lang', 'null-ls') },
     {
       'ray-x/lsp_signature.nvim',
       config = function()
@@ -34,24 +33,6 @@ use({
       end,
     },
   },
-})
-
-use({
-  'kosayoda/nvim-lightbulb',
-  config = function()
-    require('user.utils.highlights').plugin('Lightbulb', {
-      { LightBulbFloatWin = { foreground = { from = 'Type' } } },
-      { LightBulbVirtualText = { foreground = { from = 'Type' } } },
-    })
-    local icon = rvim.style.icons.misc.lightbulb
-    require('nvim-lightbulb').setup({
-      ignore = { 'null-ls' },
-      autocmd = { enabled = true },
-      sign = { enabled = false },
-      virtual_text = { enabled = true, text = icon, hl_mode = 'blend' },
-      float = { text = icon, enabled = false, win_opts = { border = 'none' } }, -- 
-    })
-  end,
 })
 
 use({
@@ -74,6 +55,40 @@ use({
     })
     require('mason-lspconfig').setup({
       automatic_installation = rvim.lsp.automatic_servers_installation,
+    })
+  end,
+})
+
+use({ 'jose-elias-alvarez/null-ls.nvim', config = conf('lang', 'null-ls') })
+
+use({
+  'jayp0521/mason-null-ls.nvim',
+  requires = {
+    'williamboman/mason.nvim',
+    'jose-elias-alvarez/null-ls.nvim',
+  },
+  after = 'mason.nvim',
+  config = function()
+    require('mason-null-ls').setup({
+      automatic_installation = true,
+    })
+  end,
+})
+
+use({
+  'kosayoda/nvim-lightbulb',
+  config = function()
+    require('user.utils.highlights').plugin('Lightbulb', {
+      { LightBulbFloatWin = { foreground = { from = 'Type' } } },
+      { LightBulbVirtualText = { foreground = { from = 'Type' } } },
+    })
+    local icon = rvim.style.icons.misc.lightbulb
+    require('nvim-lightbulb').setup({
+      ignore = { 'null-ls' },
+      autocmd = { enabled = true },
+      sign = { enabled = false },
+      virtual_text = { enabled = true, text = icon, hl_mode = 'blend' },
+      float = { text = icon, enabled = false, win_opts = { border = 'none' } }, -- 
     })
   end,
 })
