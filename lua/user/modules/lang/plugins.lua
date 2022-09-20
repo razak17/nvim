@@ -15,7 +15,6 @@ use({
   requires = {
     { 'nanotee/sqls.nvim' },
     { 'simrat39/rust-tools.nvim', branch = 'modularize_and_inlay_rewrite' },
-    { 'antoinemadec/FixCursorHold.nvim' },
     { 'b0o/schemastore.nvim' },
     { 'jose-elias-alvarez/null-ls.nvim', config = conf('lang', 'null-ls') },
     {
