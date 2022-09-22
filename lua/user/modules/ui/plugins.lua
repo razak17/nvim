@@ -8,8 +8,6 @@ use({
   local_path = 'personal',
 })
 
-use({ 'LunarVim/horizon.nvim' })
-
 use({ 'fladson/vim-kitty' })
 
 use({ 'MunifTanjim/nui.nvim' })
@@ -189,22 +187,6 @@ use({
 ----------------------------------------------------------------------------------------------------
 -- Graveyard
 ----------------------------------------------------------------------------------------------------
-use({
-  'zbirenbaum/neodim',
-  config = function()
-    require('neodim').setup({
-      blend_color = require('user.utils.highlights').get('Normal', 'bg'),
-      alpha = 0.60,
-      hide = {
-        virtual_text = false,
-        signs = false,
-        underline = false,
-      },
-    })
-  end,
-  disable = true,
-})
-
 use({
   'm-demare/hlargs.nvim',
   config = function()

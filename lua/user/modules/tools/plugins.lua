@@ -229,38 +229,6 @@ use({
 use({ 'nvim-lua/plenary.nvim' })
 
 use({
-  'is0n/jaq-nvim',
-  event = { 'BufWinEnter' },
-  config = function()
-    require('jaq-nvim').setup({
-      cmds = {
-        default = 'term',
-        external = {
-          typescript = 'ts-node %',
-          javascript = 'node %',
-          python = 'python %',
-          rust = 'cargo run',
-          cpp = 'g++ % -o $fileBase && ./$fileBase',
-          go = 'go run %',
-        },
-      },
-      behavior = { startinsert = true },
-      terminal = {
-        position = 'vert',
-        size = 60,
-      },
-    })
-    rvim.augroup('JaqConfig', {
-      {
-        event = { 'Filetype' },
-        pattern = { 'Jaq' },
-        command = function() vim.api.nvim_win_set_config(0, { border = rvim.style.border.current }) end,
-      },
-    })
-  end,
-})
-
-use({
   'linty-org/readline.nvim',
   event = 'CmdlineEnter',
   config = function()
@@ -307,8 +275,6 @@ use({
   end,
 })
 
-use({ 'Tastyep/structlog.nvim' })
-
 use({ 'lewis6991/impatient.nvim' })
 
 use({ 'folke/which-key.nvim', config = conf('tools', 'which_key') })
@@ -321,12 +287,6 @@ use({
     vim.g.undotree_SetFocusWhenToggle = 1
     vim.g.undotree_SplitWidth = 35
   end,
-})
-
-use({
-  'nacro90/numb.nvim',
-  event = 'CmdlineEnter',
-  config = function() require('numb').setup() end,
 })
 
 use({
@@ -549,5 +509,38 @@ use({
   cmd = { 'CommandT', 'CommandTRipgrep' },
   setup = function() vim.g.CommandTPreferredImplementation = 'lua' end,
   config = function() require('wincent.commandt').setup() end,
+  disable = true,
+})
+
+use({
+  'is0n/jaq-nvim',
+  event = { 'BufWinEnter' },
+  config = function()
+    require('jaq-nvim').setup({
+      cmds = {
+        default = 'term',
+        external = {
+          typescript = 'ts-node %',
+          javascript = 'node %',
+          python = 'python %',
+          rust = 'cargo run',
+          cpp = 'g++ % -o $fileBase && ./$fileBase',
+          go = 'go run %',
+        },
+      },
+      behavior = { startinsert = true },
+      terminal = {
+        position = 'vert',
+        size = 60,
+      },
+    })
+    rvim.augroup('JaqConfig', {
+      {
+        event = { 'Filetype' },
+        pattern = { 'Jaq' },
+        command = function() vim.api.nvim_win_set_config(0, { border = rvim.style.border.current }) end,
+      },
+    })
+  end,
   disable = true,
 })
