@@ -14,7 +14,12 @@ use({
       config = function()
         rvim.block_reload(function()
           local dapui = require('dapui')
-          require('dapui').setup({ windows = { indent = 2 } })
+          require('dapui').setup({
+            windows = { indent = 2 },
+            floating = {
+              border = rvim.style.border.current,
+            },
+          })
           local dap = require('dap')
           -- NOTE: this opens dap UI automatically when dap starts
           dap.listeners.after.event_initialized['dapui_config'] = function()
