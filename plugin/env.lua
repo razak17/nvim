@@ -1,5 +1,5 @@
 local api, fn, fs = vim.api, vim.fn, vim.fs
- local fmt = string.format
+local fmt = string.format
 
 local function read_file(file, line_handler)
   for line in io.lines(file) do
@@ -8,7 +8,7 @@ local function read_file(file, line_handler)
 end
 
 api.nvim_create_user_command('DotEnv', function()
-       local files = fs.find('.env', {
+  local files = fs.find('.env', {
     upward = true,
     stop = fn.fnamemodify(fn.getcwd(), ':p:h:h'),
     path = fn.expand('%:p:h'),

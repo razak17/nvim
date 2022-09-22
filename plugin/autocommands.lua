@@ -75,9 +75,7 @@ rvim.augroup('SmartClose', {
     pattern = { '*' },
     nested = true,
     command = function()
-      if fn.winnr('$') == 1 and vim.bo.buftype == 'quickfix' then
-        api.nvim_buf_delete(0, { force = true })
-      end
+      if fn.winnr('$') == 1 and vim.bo.buftype == 'quickfix' then api.nvim_buf_delete(0, { force = true }) end
     end,
   },
   {
@@ -145,9 +143,7 @@ rvim.augroup('TextYankHighlight', {
     -- don't execute silently in case of errors
     event = { 'TextYankPost' },
     pattern = { '*' },
-    command = function()
-      require('vim.highlight').on_yank({ timeout = 277, on_visual = false, higroup = 'Visual' })
-    end,
+    command = function() require('vim.highlight').on_yank({ timeout = 277, on_visual = false, higroup = 'Visual' }) end,
   },
 })
 

@@ -84,9 +84,7 @@ return function()
       expand = function(args) require('luasnip').lsp_expand(args.body) end,
     },
     mapping = {
-      ['<c-h>'] = cmp.mapping(
-        function() api.nvim_feedkeys(fn['copilot#Accept'](t('<Tab>')), 'n', true) end
-      ),
+      ['<c-h>'] = cmp.mapping(function() api.nvim_feedkeys(fn['copilot#Accept'](t('<Tab>')), 'n', true) end),
       ['<C-k>'] = cmp.mapping.select_prev_item(),
       ['<C-j>'] = cmp.mapping.select_next_item(),
       ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),

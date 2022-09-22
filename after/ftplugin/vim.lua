@@ -1,4 +1,4 @@
-vim.opt_local.iskeyword:append(":,#")
+vim.opt_local.iskeyword:append(':,#')
 vim.wo.foldmethod = 'marker'
 
 if not rvim then return end
