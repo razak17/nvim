@@ -150,22 +150,6 @@ return function()
             },
           })),
         },
-        file_browser = {
-          theme = 'ivy',
-          mappings = {
-            ['i'] = {
-              i = {
-                ['<C-h>'] = require('telescope').extensions.file_browser.actions.goto_home_dir,
-              },
-            },
-            ['n'] = {
-              n = {
-                ['<C-h>'] = require('telescope').extensions.file_browser.actions.goto_home_dir,
-                f = false,
-              },
-            },
-          },
-        },
         frecency = {
           default_workspace = 'CWD',
           show_unindexed = false, -- Show all files or only those that have been indexed
@@ -243,7 +227,6 @@ return function()
     ['telescope-zoxide'] = 'zoxide',
     ['project.nvim'] = 'projects',
     ['telescope-media-files.nvim'] = 'media_files',
-    ['telescope-file-browser.nvim'] = 'file_browser',
     ['telescope-ui-select.nvim'] = 'ui-select',
     ['telescope-dap'] = 'dap',
     ['telescope-zf-native.nvim'] = 'zf-native',
@@ -299,8 +282,6 @@ return function()
       borderchars = border.telescope.ui_select,
     }))
   end
-
-  local function file_browser() telescope.extensions.file_browser.file_browser({}) end
 
   local function media_files() telescope.extensions.media_files.media_files({}) end
 
@@ -371,7 +352,6 @@ return function()
       name = 'Telescope',
       a = { builtins, 'builtin' },
       b = { builtin.current_buffer_fuzzy_find, 'find in current buffer' },
-      B = { file_browser, 'find browser' },
       f = { project_files, 'find files' },
       g = {
         name = 'Git',

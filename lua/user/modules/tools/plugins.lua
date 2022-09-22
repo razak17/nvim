@@ -54,7 +54,6 @@ use({
     { 'nvim-lua/popup.nvim' },
     { 'jvgrootveld/telescope-zoxide' },
     { 'nvim-telescope/telescope-media-files.nvim' },
-    { 'nvim-telescope/telescope-file-browser.nvim' },
     { 'nvim-telescope/telescope-dap.nvim' },
     { 'natecraddock/telescope-zf-native.nvim' },
     { 'nvim-telescope/telescope-ui-select.nvim' },
