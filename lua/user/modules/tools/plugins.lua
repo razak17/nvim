@@ -80,14 +80,6 @@ use({
 })
 
 use({
-  'wincent/command-t',
-  run = 'cd lua/wincent/commandt/lib && make',
-  cmd = { 'CommandT', 'CommandTRipgrep' },
-  setup = function() vim.g.CommandTPreferredImplementation = 'lua' end,
-  config = function() require('wincent.commandt').setup() end,
-})
-
-use({
   'AckslD/nvim-neoclip.lua',
   event = { 'BufWinEnter' },
   config = function()
@@ -548,5 +540,14 @@ use({
       },
     })
   end,
+  disable = true,
+})
+
+use({
+  'wincent/command-t',
+  run = 'cd lua/wincent/commandt/lib && make',
+  cmd = { 'CommandT', 'CommandTRipgrep' },
+  setup = function() vim.g.CommandTPreferredImplementation = 'lua' end,
+  config = function() require('wincent.commandt').setup() end,
   disable = true,
 })
