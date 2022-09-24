@@ -73,7 +73,7 @@ use({
   config = function()
     require('nvim-surround').setup({
       move_cursor = false,
-      keymaps = { visual = 's' },
+      keymaps = { visual = 'S' },
     })
   end,
 })
