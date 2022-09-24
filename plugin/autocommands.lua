@@ -364,10 +364,7 @@ rvim.augroup('Utilities', {
       'typescript',
       'rust',
     },
-    -- FIXME: spellsitter is slow in large files
-    -- TODO: should this be done in ftplugin files
-    -- NOTE: setting spell only works using opt_local otherwise it leaks into subsequent windows
-    command = function(args) vim.opt_local.spell = vim.api.nvim_buf_line_count(args.buf) < 8000 end,
+    command = function() vim.opt_local.spell = true end,
   },
   {
     event = { 'BufWritePre', 'FileWritePre' },
