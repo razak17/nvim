@@ -186,15 +186,8 @@ use({
 
 use({
   'uga-rosa/ccc.nvim',
-  opt = true,
   config = function()
-    local ccc = require('ccc')
-    ccc.setup({
-      pickers = {
-        ccc.picker.hex,
-        ccc.picker.css_rgb,
-        ccc.picker.css_hsl,
-      },
+    require('ccc').setup({
       win_opts = { border = rvim.style.border.current },
       highlighter = {
         auto_enable = true,
