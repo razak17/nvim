@@ -124,7 +124,7 @@ use({
   event = { 'BufWinEnter' },
   config = function()
     local fterm = require('FTerm')
-    fterm.setup({ dimensions = { height = 0.9, width = 0.9 } })
+    fterm.setup({ dimensions = { height = 0.8, width = 0.9 } })
   end,
 })
 
