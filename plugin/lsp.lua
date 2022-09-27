@@ -448,4 +448,5 @@ local is_directory = require('user.utils').is_directory
 local templates = rvim.lsp.templates_dir
 if not is_directory(templates) or fn.filereadable(join_paths(templates, 'lua.lua')) ~= 1 then
   require('user.lsp.templates').generate_templates()
+  vim.notify('Templates have been generated', 'info', { title = 'Lsp' })
 end
