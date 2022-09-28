@@ -21,7 +21,7 @@ return function()
         extra_args = { '--severity', 'warning' },
       }),
       formatting.black.with({ extra_args = { '--fast' } }),
-      formatting.prettier,
+      formatting.prettierd,
       formatting.isort,
       formatting.shfmt,
       formatting.stylua.with({ condition = function() return rvim.executable('stylua') end }),
