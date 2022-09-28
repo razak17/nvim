@@ -349,7 +349,7 @@ rvim.augroup('Utilities', {
   {
     event = { 'FileType' },
     pattern = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
-    command = function() vim.bo.tw = 120 end,
+    command = function() vim.bo.tw = 100 end,
   },
   {
     event = { 'FileType' },
