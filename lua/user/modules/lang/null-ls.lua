@@ -8,7 +8,7 @@ return function()
     sources = {
       diagnostics.zsh,
       diagnostics.flake8,
-      diagnostics.eslint_d,
+      diagnostics.eslint,
       diagnostics.golangci_lint,
       diagnostics.shellcheck.with({
         condition = function()
