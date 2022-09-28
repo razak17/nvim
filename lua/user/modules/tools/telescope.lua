@@ -371,7 +371,7 @@ return function()
       o = { builtin.oldfiles, 'old files' },
       p = { projects, 'recent projects' },
       P = { installed_plugins, 'plugins' },
-      r = { builtin.resume, 'most recently used files' },
+      r = { builtin.resume, 'resume' },
       R = { builtin.reloader, 'module reloader' },
       s = { builtin.live_grep, 'find word' },
       v = {
