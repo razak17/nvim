@@ -91,7 +91,12 @@ M.servers = {
   svelte = true,
   tsserver = true,
   vimls = true,
-  prosemd_lsp = true,
+  prosemd_lsp = {
+    root_dir = function(fname)
+      return require('lspconfig/util').root_pattern('README.md')(fname)
+    end,
+    single_file_support = false,
+  },
   rust_analyzer = {
     root_dir = function(fname) return require('lspconfig/util').root_pattern('Cargo.toml')(fname) end,
     single_file_support = false,
@@ -150,6 +155,10 @@ M.servers = {
         schemas = require('schemastore').json.schemas(),
       },
     },
+    root_dir = function(fname)
+      return require('lspconfig/util').root_pattern('package.json')(fname)
+    end,
+    single_file_support = false,
   },
   pyright = {
     python = {
