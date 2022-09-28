@@ -235,6 +235,7 @@ return function()
     ['telescope-luasnip.nvim'] = 'luasnip',
     ['telescope-frecency.nvim'] = 'frecency',
     ['nvim-notify'] = 'notify',
+    ['telescope-recent-files'] = 'recent_files',
   }
 
   for plugin, setup in ipairs(plugins) do
@@ -285,6 +286,8 @@ return function()
   end
 
   local function media_files() telescope.extensions.media_files.media_files({}) end
+
+  local function recent_files() telescope.extensions.recent_files.pick() end
 
   local function zoxide_list() telescope.extensions.zoxide.list({}) end
 
@@ -353,6 +356,7 @@ return function()
       name = 'Telescope',
       a = { builtins, 'builtin' },
       b = { builtin.current_buffer_fuzzy_find, 'find in current buffer' },
+      c = { builtin.resume, 'resume' },
       f = { project_files, 'find files' },
       g = {
         name = 'Git',
@@ -371,7 +375,7 @@ return function()
       o = { builtin.oldfiles, 'old files' },
       p = { projects, 'recent projects' },
       P = { installed_plugins, 'plugins' },
-      r = { builtin.resume, 'resume' },
+      r = { recent_files, 'resume' },
       R = { builtin.reloader, 'module reloader' },
       s = { builtin.live_grep, 'find word' },
       v = {
