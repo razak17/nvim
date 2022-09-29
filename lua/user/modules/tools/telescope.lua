@@ -196,6 +196,11 @@ return function()
           },
           max_results = 2000,
         }),
+        registers = rvim.telescope.dropdown({
+          layout_config = {
+            height = 25,
+          },
+        }),
         oldfiles = dropdown(),
         current_buffer_fuzzy_find = dropdown({
           previewer = false,
