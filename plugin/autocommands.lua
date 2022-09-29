@@ -269,12 +269,12 @@ end
 
 rvim.augroup('Cursorline', {
   {
-    event = { 'BufEnter' },
+    event = { 'BufEnter', 'InsertLeave' },
     pattern = { '*' },
     command = function(args) vim.wo.cursorline = should_show_cursorline(args.buf) end,
   },
   {
-    event = { 'BufLeave' },
+    event = { 'BufLeave', 'InsertEnter' },
     pattern = { '*' },
     command = function() vim.wo.cursorline = false end,
   },
