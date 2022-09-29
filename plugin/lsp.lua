@@ -55,16 +55,6 @@ local function augroup_factory(bufnr, client, events)
   end
 end
 
--- Show the popup diagnostics window, but only once for the current cursor location
--- by checking whether the word under the cursor has changed.
-local function diagnostic_popup()
-  local cword = vim.fn.expand('<cword>')
-  if cword ~= vim.w.lsp_diagnostics_cword then
-    vim.w.lsp_diagnostics_cword = cword
-    vim.diagnostic.open_float(0, { scope = 'cursor', focus = false })
-  end
-end
-
 local function formatting_filter(client)
   local exceptions = (format_exclusions.servers)[vim.bo.filetype]
   if not exceptions then return true end
@@ -105,9 +95,9 @@ local function setup_autocommands(client, bufnr)
         event = { 'CursorHold' },
         buffer = bufnr,
         desc = 'LSP: Show diagnostics',
-        command = function()
+        command = function(args)
           if vim.b.lsp_hover_win and api.nvim_win_is_valid(vim.b.lsp_hover_win) then return end
-          if rvim.lsp.hover_diagnostics then diagnostic_popup() end
+          vim.diagnostic.open_float(args.buf, { scope = 'cursor', focus = false })
         end,
       },
     }
