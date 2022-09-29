@@ -197,12 +197,6 @@ use({
   end,
 })
 
-use({
-  'mvllow/modes.nvim',
-  tag = 'v0.2.0',
-  config = function() require('modes').setup() end,
-})
-
 ----------------------------------------------------------------------------------------------------
 -- Graveyard
 ----------------------------------------------------------------------------------------------------
@@ -253,5 +247,12 @@ use({
       },
     })
   end,
+  disable = true,
+})
+
+use({
+  'mvllow/modes.nvim',
+  tag = 'v0.2.0',
+  config = function() require('modes').setup() end,
   disable = true,
 })
