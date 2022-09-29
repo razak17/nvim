@@ -135,7 +135,7 @@ use({
       style = { border = 'single', hide_buffer_id = true },
     })
     require('user.utils.highlights').plugin('Cybu', {
-      { CybuFocus = { background = { from = 'Visual' }, foreground = { from = 'Search' } } },
+      { CybuFocus = { background = { from = 'PmenuThumb' }, foreground = { from = 'Search' } } },
     })
   end,
 })
