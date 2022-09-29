@@ -37,7 +37,9 @@ end
 
 ---@param buf integer
 ---@return boolean
-local function is_buffer_valid(buf) return buf and api.nvim_buf_is_loaded(buf) and api.nvim_buf_is_valid(buf) end
+local function is_buffer_valid(buf)
+  return buf and api.nvim_buf_is_loaded(buf) and api.nvim_buf_is_valid(buf)
+end
 
 --- Create augroups for each LSP feature and track which capabilities each client
 --- registers in a buffer local table
@@ -49,7 +51,8 @@ local function augroup_factory(bufnr, client, events)
   return function(feature, commands)
     local provider, name = feature.provider, feature.name
     if not provider or client.server_capabilities[provider] then
-      events[name].group_id = rvim.augroup(fmt('LspCommands_%d_%s', bufnr, name), commands(provider))
+      events[name].group_id =
+        rvim.augroup(fmt('LspCommands_%d_%s', bufnr, name), commands(provider))
       table.insert(events[name].clients, client.id)
     end
   end
@@ -155,8 +158,12 @@ end
 ----------------------------------------------------------------------------------------------------
 local function show_documentation()
   local filetype = vim.bo.filetype
-  if vim.tbl_contains({ 'vim', 'help' }, filetype) then return vim.cmd('h ' .. vim.fn.expand('<cword>')) end
-  if vim.tbl_contains({ 'man' }, filetype) then return vim.cmd('Man ' .. vim.fn.expand('<cword>')) end
+  if vim.tbl_contains({ 'vim', 'help' }, filetype) then
+    return vim.cmd('h ' .. vim.fn.expand('<cword>'))
+  end
+  if vim.tbl_contains({ 'man' }, filetype) then
+    return vim.cmd('Man ' .. vim.fn.expand('<cword>'))
+  end
   if vim.fn.expand('%:t') == 'Cargo.toml' and rvim.plugin_installed('crates.nvim') then
     return require('crates').show_popup()
   end
@@ -222,7 +229,9 @@ end
 local function setup_plugins(client, bufnr)
   -- nvim-navic
   local navic_ok, navic = pcall(require, 'nvim-navic')
-  if navic_ok and client.server_capabilities.documentSymbolProvider then navic.attach(client, bufnr) end
+  if navic_ok and client.server_capabilities.documentSymbolProvider then
+    navic.attach(client, bufnr)
+  end
   -- lsp-inlayhints
   local hints_ok, hints = pcall(require, 'lsp-inlayhints')
   if hints_ok then hints.on_attach(client, bufnr) end

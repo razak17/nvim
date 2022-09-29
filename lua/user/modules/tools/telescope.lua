@@ -259,7 +259,9 @@ return function()
     })
   end
 
-  local function luasnips() require('telescope').extensions.luasnip.luasnip(rvim.telescope.dropdown()) end
+  local function luasnips()
+    require('telescope').extensions.luasnip.luasnip(rvim.telescope.dropdown())
+  end
 
   local function find_near_files()
     local cwd = require('telescope.utils').buffer_dir()

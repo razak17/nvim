@@ -10,7 +10,9 @@ return function()
     max_height = function() return math.floor(vim.o.lines * 0.8) end,
     background_colour = 'NormalFloat',
     on_open = function(win)
-      if api.nvim_win_is_valid(win) then vim.api.nvim_win_set_config(win, { border = rvim.style.border.current }) end
+      if api.nvim_win_is_valid(win) then
+        vim.api.nvim_win_set_config(win, { border = rvim.style.border.current })
+      end
     end,
     timeout = 500,
     stages = 'fade_in_slide_out',

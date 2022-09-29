@@ -55,7 +55,10 @@ use({
   requires = { 'nvim-treesitter' },
   config = function()
     require('todo-comments').setup({ highlight = { after = '' } })
-    rvim.command('TodoDots', string.format('TodoQuickFix cwd=%s keywords=TODO,FIXME', vim.g.vim_dir))
+    rvim.command(
+      'TodoDots',
+      string.format('TodoQuickFix cwd=%s keywords=TODO,FIXME', vim.g.vim_dir)
+    )
   end,
 })
 

@@ -401,7 +401,11 @@ use({
     nnoremap('<leader>nd', function() package_info.delete() end, 'package-info: delete')
     nnoremap('<leader>ni', function() package_info.install() end, 'package-info: install')
     nnoremap('<leader>nr', function() package_info.reinstall() end, 'package-info: reinstall')
-    nnoremap('<leader>np', function() package_info.change_version() end, 'package-info: change version')
+    nnoremap(
+      '<leader>np',
+      function() package_info.change_version() end,
+      'package-info: change version'
+    )
   end,
   requires = 'MunifTanjim/nui.nvim',
   disable = true,

@@ -18,7 +18,8 @@ local function is_client_active(name)
 end
 
 local function resolve_mason_config(server_name)
-  local found, mason_config = pcall(require, 'mason-lspconfig.server_configurations.' .. server_name)
+  local found, mason_config =
+    pcall(require, 'mason-lspconfig.server_configurations.' .. server_name)
   if not found then return {} end
   local server_mapping = require('mason-lspconfig.mappings.server')
   local path = require('mason-core.path')
@@ -66,7 +67,9 @@ local function launch_server(server_name, config)
   end)
 end
 
-local function already_configured(server_name) return is_client_active(server_name) or client_is_configured(server_name) end
+local function already_configured(server_name)
+  return is_client_active(server_name) or client_is_configured(server_name)
+end
 
 ---Setup a language server by providing a name
 ---@param server_name string name of the language server

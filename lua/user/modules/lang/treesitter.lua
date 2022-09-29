@@ -11,7 +11,10 @@ return function()
     vim.cmd([[packadd nvim-treesitter]])
     local parsers = require('nvim-treesitter.parsers')
     local configs = parsers.get_parser_configs()
-    return vim.tbl_map(function(ft) return configs[ft].filetype or ft end, parsers.available_parsers())
+    return vim.tbl_map(
+      function(ft) return configs[ft].filetype or ft end,
+      parsers.available_parsers()
+    )
   end
 
   local status_ok, treesitter_configs = rvim.safe_require('nvim-treesitter.configs')

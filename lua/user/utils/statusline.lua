@@ -133,7 +133,10 @@ function M.component(component, hl, opts)
   -- do not allow empty values to be shown note 0 is considered empty
   -- since if there is nothing of something I don't need to see it
   if not component or component == '' or component == 0 then return M.spacer() end
-  assert(opts and opts.priority, fmt("each item's priority is required: %s is missing one", component))
+  assert(
+    opts and opts.priority,
+    fmt("each item's priority is required: %s is missing one", component)
+  )
   opts.padding = opts.padding or { suffix = true, prefix = true }
   local padding = ' '
   local before, after = opts.before or '', opts.after or padding

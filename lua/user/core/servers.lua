@@ -92,9 +92,7 @@ M.servers = {
   tsserver = true,
   vimls = true,
   prosemd_lsp = {
-    root_dir = function(fname)
-      return require('lspconfig/util').root_pattern('README.md')(fname)
-    end,
+    root_dir = function(fname) return require('lspconfig/util').root_pattern('README.md')(fname) end,
     single_file_support = false,
   },
   rust_analyzer = {
@@ -102,7 +100,9 @@ M.servers = {
     single_file_support = false,
   },
   denols = {
-    root_dir = function(fname) return require('lspconfig/util').root_pattern('deno.json', 'deno.jsonc')(fname) end,
+    root_dir = function(fname)
+      return require('lspconfig/util').root_pattern('deno.json', 'deno.jsonc')(fname)
+    end,
     single_file_support = false,
   },
   emmet_ls = {
@@ -143,7 +143,11 @@ M.servers = {
   },
   graphql = {
     root_dir = function(fname)
-      return require('lspconfig/util').root_pattern('.graphqlrc*', '.graphql.config.*', 'graphql.config.*')(fname)
+      return require('lspconfig/util').root_pattern(
+        '.graphqlrc*',
+        '.graphql.config.*',
+        'graphql.config.*'
+      )(fname)
     end,
     single_file_support = false,
   },
@@ -155,9 +159,7 @@ M.servers = {
         schemas = require('schemastore').json.schemas(),
       },
     },
-    root_dir = function(fname)
-      return require('lspconfig/util').root_pattern('package.json')(fname)
-    end,
+    root_dir = function(fname) return require('lspconfig/util').root_pattern('package.json')(fname) end,
     single_file_support = false,
   },
   pyright = {
@@ -212,7 +214,9 @@ M.servers = {
   },
   vuels = {
     setup = {
-      root_dir = function(fname) return require('lspconfig/util').root_pattern('package.json', 'vue.config.js')(fname) end,
+      root_dir = function(fname)
+        return require('lspconfig/util').root_pattern('package.json', 'vue.config.js')(fname)
+      end,
       init_options = {
         config = {
           vetur = {

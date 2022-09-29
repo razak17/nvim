@@ -11,7 +11,10 @@ return function()
 
   local border = rvim.style.border
 
-  require('user.utils.highlights').plugin('dressing', { { FloatTitle = { inherit = 'CybuFocus', bold = true } } })
+  require('user.utils.highlights').plugin(
+    'dressing',
+    { { FloatTitle = { inherit = 'CybuFocus', bold = true } } }
+  )
 
   require('dressing').setup({
     input = {

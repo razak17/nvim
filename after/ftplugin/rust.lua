@@ -12,11 +12,19 @@ if rvim.plugin_installed('rust-tools.nvim') then
   nnoremap('<localleader>rc', '<cmd>RustOpenCargo<Cr>', with_desc('rust-tools: open cargo'))
   nnoremap('<localleader>rp', '<cmd>RustParentModule<Cr>', with_desc('rust-tools: parent Module'))
   nnoremap('<localleader>rd', '<cmd>RustDebuggables<Cr>', with_desc('rust-tools: debuggables'))
-  nnoremap('<localleader>rv', '<cmd>RustViewCrateGraph<Cr>', with_desc('rust-tools: view crate graph'))
+  nnoremap(
+    '<localleader>rv',
+    '<cmd>RustViewCrateGraph<Cr>',
+    with_desc('rust-tools: view crate graph')
+  )
   nnoremap(
     '<localleader>rR',
     "<cmd>lua require('rust-tools/workspace_refresh')._reload_workspace_from_cargo_toml()<Cr>",
     with_desc('rust-tools: reload workspace')
   )
-  nnoremap('<localleader>ro', '<cmd>RustOpenExternalDocs<Cr>', with_desc('rust-tools: open external docs'))
+  nnoremap(
+    '<localleader>ro',
+    '<cmd>RustOpenExternalDocs<Cr>',
+    with_desc('rust-tools: open external docs')
+  )
 end

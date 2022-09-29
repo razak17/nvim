@@ -76,7 +76,11 @@ function Packer:init_ensure_installed()
   if not state then
     local cmd = '!git clone https://github.com/wbthomason/packer.nvim ' .. packer_dir
     api.nvim_command(cmd)
-    uv.fs_mkdir(rvim.get_runtime_dir() .. '/site/lua', 511, function() assert('could not create compile_path dir') end)
+    uv.fs_mkdir(
+      rvim.get_runtime_dir() .. '/site/lua',
+      511,
+      function() assert('could not create compile_path dir') end
+    )
     self:bootstrap_packer()
     packer.sync()
   end
