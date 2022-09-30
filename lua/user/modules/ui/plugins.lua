@@ -8,11 +8,7 @@ use({
   local_path = 'personal',
 })
 
-use({ 'fladson/vim-kitty' })
-
 use({ 'MunifTanjim/nui.nvim' })
-
-use({ 'mtdl9/vim-log-highlighting' })
 
 use({ 'kyazdani42/nvim-web-devicons' })
 
@@ -50,19 +46,6 @@ use({ 'lukas-reineke/indent-blankline.nvim', config = conf('ui', 'indentline') }
 use({ 'nvim-neo-tree/neo-tree.nvim', branch = 'main', config = conf('ui', 'neo-tree') })
 
 use({
-  'folke/todo-comments.nvim',
-  after = 'nvim-treesitter',
-  requires = { 'nvim-treesitter' },
-  config = function()
-    require('todo-comments').setup({ highlight = { after = '' } })
-    rvim.command(
-      'TodoDots',
-      string.format('TodoQuickFix cwd=%s keywords=TODO,FIXME', vim.g.vim_dir)
-    )
-  end,
-})
-
-use({
   's1n7ax/nvim-window-picker',
   tag = 'v1.*',
   config = function()
@@ -87,38 +70,6 @@ use({
 })
 
 use({ 'stevearc/dressing.nvim', after = 'telescope.nvim', config = conf('ui', 'dressing') })
-
-use({
-  'lukas-reineke/headlines.nvim',
-  event = 'BufWinEnter',
-  ft = { 'org', 'norg', 'markdown', 'yaml' },
-  setup = function()
-    -- https://observablehq.com/@d3/color-schemes?collection=@d3/d3-scale-chromatic
-    -- NOTE: this must be set in the setup function or it will crash nvim...
-    require('user.utils.highlights').plugin('Headlines', {
-      { Headline1 = { background = '#003c30', foreground = 'White' } },
-      { Headline2 = { background = '#00441b', foreground = 'White' } },
-      { Headline3 = { background = '#084081', foreground = 'White' } },
-      { Dash = { background = '#0b60a1', bold = true } },
-    })
-  end,
-  config = function()
-    require('headlines').setup({
-      markdown = {
-        headline_highlights = { 'Headline1', 'Headline2', 'Headline3' },
-      },
-      org = {
-        headline_highlights = false,
-      },
-      norg = { codeblock_highlight = false },
-    })
-  end,
-})
-
-use({
-  'itchyny/vim-highlighturl',
-  config = function() vim.g.highlighturl_guifg = require('user.utils.highlights').get('URL', 'fg') end,
-})
 
 use({
   'kevinhwang91/nvim-ufo',
@@ -258,4 +209,56 @@ use({
   tag = 'v0.2.0',
   config = function() require('modes').setup() end,
   disable = true,
+})
+
+use({ 'fladson/vim-kitty', disable = true })
+
+use({ 'mtdl9/vim-log-highlighting', disable = true })
+
+use({
+  'folke/todo-comments.nvim',
+  disable = true,
+  after = 'nvim-treesitter',
+  requires = { 'nvim-treesitter' },
+  config = function()
+    require('todo-comments').setup({ highlight = { after = '' } })
+    rvim.command(
+      'TodoDots',
+      string.format('TodoQuickFix cwd=%s keywords=TODO,FIXME', vim.g.vim_dir)
+    )
+  end,
+})
+
+use({
+  'lukas-reineke/headlines.nvim',
+  disable = true,
+  event = 'BufWinEnter',
+  ft = { 'org', 'norg', 'markdown', 'yaml' },
+  setup = function()
+    -- https://observablehq.com/@d3/color-schemes?collection=@d3/d3-scale-chromatic
+    -- NOTE: this must be set in the setup function or it will crash nvim...
+    require('user.utils.highlights').plugin('Headlines', {
+      { Headline1 = { background = '#003c30', foreground = 'White' } },
+      { Headline2 = { background = '#00441b', foreground = 'White' } },
+      { Headline3 = { background = '#084081', foreground = 'White' } },
+      { Dash = { background = '#0b60a1', bold = true } },
+    })
+  end,
+  config = function()
+    require('headlines').setup({
+      markdown = {
+        headline_highlights = { 'Headline1', 'Headline2', 'Headline3' },
+      },
+      org = {
+        headline_highlights = false,
+      },
+      norg = { codeblock_highlight = false },
+    })
+  end,
+})
+
+use({
+  'itchyny/vim-highlighturl',
+  disable = true,
+  config = function() vim.g.highlighturl_guifg = require('user.utils.highlights').get('URL', 'fg') end,
 })

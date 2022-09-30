@@ -130,58 +130,6 @@ use({
 })
 
 use({
-  'akinsho/toggleterm.nvim',
-  config = function()
-    require('toggleterm').setup({
-      open_mapping = [[<F2>]],
-      shade_filetypes = { 'none' },
-      shade_terminals = false,
-      direction = 'float',
-      persist_mode = true,
-      insert_mappings = false,
-      start_in_insert = true,
-      autochdir = false,
-      highlights = {
-        NormalFloat = { link = 'NormalFloat' },
-        FloatBorder = { link = 'FloatBorder' },
-      },
-      float_opts = {
-        width = 150,
-        height = 30,
-        winblend = 3,
-        border = rvim.style.border.current,
-      },
-      size = function(term)
-        if term.direction == 'horizontal' then return 10 end
-        if term.direction == 'vertical' then return math.floor(vim.o.columns * 0.3) end
-      end,
-    })
-  end,
-})
-
-use({
-  'rmagatti/auto-session',
-  config = function()
-    local fn = vim.fn
-    local fmt = string.format
-    require('auto-session').setup({
-      log_level = 'error',
-      auto_session_root_dir = join_paths(rvim.get_cache_dir(), 'session/auto/'),
-      -- Do not enable auto restoration in my projects directory, I'd like to choose projects myself
-      auto_restore_enabled = not vim.startswith(fn.getcwd(), vim.env.DEV_HOME),
-      auto_session_suppress_dirs = {
-        vim.env.HOME,
-        fmt('%s/Desktop', vim.env.HOME),
-        fmt('%s/Desktop', vim.env.HOME),
-        fmt('%s/site/pack/packer/opt/*', rvim.get_runtime_dir()),
-        fmt('%s/site/pack/packer/start/*', rvim.get_runtime_dir()),
-      },
-      auto_session_use_git_branch = true, -- This cause inconsistent results
-    })
-  end,
-})
-
-use({
   'phaazon/hop.nvim',
   tag = 'v2.*',
   keys = { { 'n', 's' }, { 'n', 'f' }, { 'n', 'F' } },
@@ -215,66 +163,7 @@ use({
   end,
 })
 
-use({
-  'kevinhwang91/nvim-bqf',
-  ft = 'qf',
-  config = function()
-    require('bqf').setup({
-      preview = {
-        border_chars = rvim.style.border.bqf,
-      },
-    })
-  end,
-})
-
 use({ 'nvim-lua/plenary.nvim' })
-
-use({
-  'linty-org/readline.nvim',
-  event = 'CmdlineEnter',
-  config = function()
-    local readline = require('readline')
-    local map = vim.keymap.set
-    map('!', '<M-f>', readline.forward_word)
-    map('!', '<M-b>', readline.backward_word)
-    map('!', '<C-a>', readline.beginning_of_line)
-    map('!', '<C-e>', readline.end_of_line)
-    map('!', '<M-d>', readline.kill_word)
-    map('!', '<M-BS>', readline.backward_kill_word)
-    map('!', '<C-w>', readline.unix_word_rubout)
-    map('!', '<C-k>', readline.kill_line)
-    map('!', '<C-u>', readline.backward_kill_line)
-  end,
-})
-
--- prevent select and visual mode from overwriting the clipboard
-use({
-  'kevinhwang91/nvim-hclipboard',
-  event = 'InsertCharPre',
-  config = function() require('hclipboard').start() end,
-})
-
-use({ 'turbio/bracey.vim', ft = { 'html' }, run = 'npm install --prefix server' })
-
-use({
-  'andrewferrier/debugprint.nvim',
-  config = function()
-    local dp = require('debugprint')
-    dp.setup({ create_keymaps = false })
-
-    rvim.nnoremap(
-      '<leader>dp',
-      function() return dp.debugprint({ variable = true }) end,
-      { desc = 'debugprint: cursor', expr = true }
-    )
-    rvim.nnoremap(
-      '<leader>do',
-      function() return dp.debugprint({ motion = true }) end,
-      { desc = 'debugprint: operator', expr = true }
-    )
-    rvim.nnoremap('<leader>dC', '<Cmd>DeleteDebugPrints<CR>', 'debugprint: clear all')
-  end,
-})
 
 use({ 'lewis6991/impatient.nvim' })
 
@@ -287,16 +176,6 @@ use({
     vim.g.undotree_TreeNodeShape = '◦' -- Alternative: '◉'
     vim.g.undotree_SetFocusWhenToggle = 1
     vim.g.undotree_SplitWidth = 35
-  end,
-})
-
-use({
-  'iamcco/markdown-preview.nvim',
-  run = function() vim.fn['mkdp#util#install']() end,
-  ft = { 'markdown' },
-  config = function()
-    vim.g.mkdp_auto_start = 0
-    vim.g.mkdp_auto_close = 1
   end,
 })
 ----------------------------------------------------------------------------------------------------
@@ -548,4 +427,132 @@ use({
     })
   end,
   disable = true,
+})
+
+use({
+  'akinsho/toggleterm.nvim',
+  disable = true,
+  config = function()
+    require('toggleterm').setup({
+      open_mapping = [[<F2>]],
+      shade_filetypes = { 'none' },
+      shade_terminals = false,
+      direction = 'float',
+      persist_mode = true,
+      insert_mappings = false,
+      start_in_insert = true,
+      autochdir = false,
+      highlights = {
+        NormalFloat = { link = 'NormalFloat' },
+        FloatBorder = { link = 'FloatBorder' },
+      },
+      float_opts = {
+        width = 150,
+        height = 30,
+        winblend = 3,
+        border = rvim.style.border.current,
+      },
+      size = function(term)
+        if term.direction == 'horizontal' then return 10 end
+        if term.direction == 'vertical' then return math.floor(vim.o.columns * 0.3) end
+      end,
+    })
+  end,
+})
+
+use({
+  'rmagatti/auto-session',
+  disable = true,
+  config = function()
+    local fn = vim.fn
+    local fmt = string.format
+    require('auto-session').setup({
+      log_level = 'error',
+      auto_session_root_dir = join_paths(rvim.get_cache_dir(), 'session/auto/'),
+      -- Do not enable auto restoration in my projects directory, I'd like to choose projects myself
+      auto_restore_enabled = not vim.startswith(fn.getcwd(), vim.env.DEV_HOME),
+      auto_session_suppress_dirs = {
+        vim.env.HOME,
+        fmt('%s/Desktop', vim.env.HOME),
+        fmt('%s/Desktop', vim.env.HOME),
+        fmt('%s/site/pack/packer/opt/*', rvim.get_runtime_dir()),
+        fmt('%s/site/pack/packer/start/*', rvim.get_runtime_dir()),
+      },
+      auto_session_use_git_branch = true, -- This cause inconsistent results
+    })
+  end,
+})
+
+use({
+  'kevinhwang91/nvim-bqf',
+  disable = true,
+  ft = 'qf',
+  config = function()
+    require('bqf').setup({
+      preview = {
+        border_chars = rvim.style.border.bqf,
+      },
+    })
+  end,
+})
+
+use({
+  'linty-org/readline.nvim',
+  disable = true,
+  event = 'CmdlineEnter',
+  config = function()
+    local readline = require('readline')
+    local map = vim.keymap.set
+    map('!', '<M-f>', readline.forward_word)
+    map('!', '<M-b>', readline.backward_word)
+    map('!', '<C-a>', readline.beginning_of_line)
+    map('!', '<C-e>', readline.end_of_line)
+    map('!', '<M-d>', readline.kill_word)
+    map('!', '<M-BS>', readline.backward_kill_word)
+    map('!', '<C-w>', readline.unix_word_rubout)
+    map('!', '<C-k>', readline.kill_line)
+    map('!', '<C-u>', readline.backward_kill_line)
+  end,
+})
+
+-- prevent select and visual mode from overwriting the clipboard
+use({
+  'kevinhwang91/nvim-hclipboard',
+  disable = true,
+  event = 'InsertCharPre',
+  config = function() require('hclipboard').start() end,
+})
+
+use({ 'turbio/bracey.vim', ft = { 'html' }, run = 'npm install --prefix server' })
+
+use({
+  'andrewferrier/debugprint.nvim',
+  disable = true,
+  config = function()
+    local dp = require('debugprint')
+    dp.setup({ create_keymaps = false })
+
+    rvim.nnoremap(
+      '<leader>dp',
+      function() return dp.debugprint({ variable = true }) end,
+      { desc = 'debugprint: cursor', expr = true }
+    )
+    rvim.nnoremap(
+      '<leader>do',
+      function() return dp.debugprint({ motion = true }) end,
+      { desc = 'debugprint: operator', expr = true }
+    )
+    rvim.nnoremap('<leader>dC', '<Cmd>DeleteDebugPrints<CR>', 'debugprint: clear all')
+  end,
+})
+
+use({
+  'iamcco/markdown-preview.nvim',
+  disable = true,
+  run = function() vim.fn['mkdp#util#install']() end,
+  ft = { 'markdown' },
+  config = function()
+    vim.g.mkdp_auto_start = 0
+    vim.g.mkdp_auto_close = 1
+  end,
 })

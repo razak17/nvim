@@ -78,8 +78,6 @@ use({
   end,
 })
 
-use({ 'monaqa/dial.nvim', config = conf('editor', 'dial') })
-
 use({
   'numToStr/Comment.nvim',
   config = function()
@@ -94,9 +92,29 @@ use({
   end,
 })
 
+use({ 'psliwka/vim-dirtytalk', run = ':DirtytalkUpdate' })
+
+----------------------------------------------------------------------------------------------------
+-- Graveyard
+----------------------------------------------------------------------------------------------------
+use({
+  'junegunn/vim-easy-align',
+  config = function() end,
+  disable = true,
+})
+
+use({
+  'jghauser/fold-cycle.nvim',
+  config = function() require('fold-cycle').setup() end,
+  disable = true,
+})
+
+use({ 'monaqa/dial.nvim', config = conf('editor', 'dial') })
+
 use({
   'Matt-A-Bennett/vim-surround-funk',
   config = function() vim.g.surround_funk_create_mappings = 0 end,
+  disable = true,
 })
 
 use({
@@ -118,9 +136,8 @@ use({
       },
     })
   end,
+  disable = true,
 })
-
-use({ 'psliwka/vim-dirtytalk', run = ':DirtytalkUpdate' })
 
 use({
   'nguyenvukhang/nvim-toggler',
@@ -135,19 +152,5 @@ use({
       remove_default_keybinds = true,
     })
   end,
-})
-
-----------------------------------------------------------------------------------------------------
--- Graveyard
-----------------------------------------------------------------------------------------------------
-use({
-  'junegunn/vim-easy-align',
-  config = function() end,
-  disable = true,
-})
-
-use({
-  'jghauser/fold-cycle.nvim',
-  config = function() require('fold-cycle').setup() end,
   disable = true,
 })

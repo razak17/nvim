@@ -93,35 +93,6 @@ use({
   end,
 })
 
-use({
-  'Saecki/crates.nvim',
-  event = { 'BufRead Cargo.toml' },
-  requires = { 'nvim-lua/plenary.nvim' },
-  config = function()
-    require('crates').setup({
-      popup = {
-        -- autofocus = true,
-        style = 'minimal',
-        border = 'rounded',
-        show_version_date = false,
-        show_dependency_version = true,
-        max_height = 30,
-        min_width = 20,
-        padding = 1,
-      },
-      null_ls = {
-        enabled = true,
-        name = 'crates.nvim',
-      },
-    })
-  end,
-})
-
-use({
-  'olexsmir/gopher.nvim',
-  requires = { 'nvim-lua/plenary.nvim', 'nvim-treesitter/nvim-treesitter' },
-})
-
 -- Treesitter
 use({
   'nvim-treesitter/nvim-treesitter',
@@ -183,32 +154,6 @@ use({
 })
 
 use({
-  'danymat/neogen',
-  event = { 'BufWinEnter' },
-  requires = { 'nvim-treesitter/nvim-treesitter' },
-  config = function() require('neogen').setup({ snippet_engine = 'luasnip' }) end,
-})
-
-use({
-  'mfussenegger/nvim-treehopper',
-  config = function()
-    rvim.augroup('TreehopperMaps', {
-      {
-        event = 'FileType',
-        command = function(args)
-          -- FIXME: this issue should be handled inside the plugin rather than manually
-          local langs = require('nvim-treesitter.parsers').available_parsers()
-          if vim.tbl_contains(langs, vim.bo[args.buf].filetype) then
-            rvim.omap('u', ":<c-u>lua require('tsht').nodes()<cr>", { buffer = args.buf })
-            rvim.vnoremap('u', ":lua require('tsht').nodes()<CR>", { buffer = args.buf })
-          end
-        end,
-      },
-    })
-  end,
-})
-
-use({
   'github/copilot.vim',
   after = 'nvim-cmp',
   setup = function() vim.g.copilot_no_tab_map = true end,
@@ -232,8 +177,6 @@ use({
     })
   end,
 })
-
-use({ 'ii14/emmylua-nvim' })
 
 use({
   'RRethy/vim-illuminate',
@@ -260,25 +203,6 @@ use({
   end,
 })
 
-use({
-  'lvimuser/lsp-inlayhints.nvim',
-  config = function()
-    require('lsp-inlayhints').setup({
-      inlay_hints = {
-        highlight = 'Comment',
-        labels_separator = ' ⏐ ',
-        parameter_hints = {
-          prefix = '',
-        },
-        type_hints = {
-          prefix = '=> ',
-          remove_colon_start = true,
-        },
-      },
-    })
-  end,
-})
-
 ----------------------------------------------------------------------------------------------------
 -- Graveyard
 ----------------------------------------------------------------------------------------------------
@@ -297,5 +221,86 @@ use({
     local lsp_lines = require('lsp_lines')
     lsp_lines.setup()
     lsp_lines.toggle()
+  end,
+})
+
+use({
+  'Saecki/crates.nvim',
+  event = { 'BufRead Cargo.toml' },
+  requires = { 'nvim-lua/plenary.nvim' },
+  disable = true,
+  config = function()
+    require('crates').setup({
+      popup = {
+        -- autofocus = true,
+        style = 'minimal',
+        border = 'rounded',
+        show_version_date = false,
+        show_dependency_version = true,
+        max_height = 30,
+        min_width = 20,
+        padding = 1,
+      },
+      null_ls = {
+        enabled = true,
+        name = 'crates.nvim',
+      },
+    })
+  end,
+})
+
+use({
+  'olexsmir/gopher.nvim',
+  disable = true,
+  requires = { 'nvim-lua/plenary.nvim', 'nvim-treesitter/nvim-treesitter' },
+})
+
+use({
+  'danymat/neogen',
+  event = { 'BufWinEnter' },
+  requires = { 'nvim-treesitter/nvim-treesitter' },
+  config = function() require('neogen').setup({ snippet_engine = 'luasnip' }) end,
+  disable = true,
+})
+
+use({
+  'mfussenegger/nvim-treehopper',
+  disable = true,
+  config = function()
+    rvim.augroup('TreehopperMaps', {
+      {
+        event = 'FileType',
+        command = function(args)
+          -- FIXME: this issue should be handled inside the plugin rather than manually
+          local langs = require('nvim-treesitter.parsers').available_parsers()
+          if vim.tbl_contains(langs, vim.bo[args.buf].filetype) then
+            rvim.omap('u', ":<c-u>lua require('tsht').nodes()<cr>", { buffer = args.buf })
+            rvim.vnoremap('u', ":lua require('tsht').nodes()<CR>", { buffer = args.buf })
+          end
+        end,
+      },
+    })
+  end,
+})
+
+use({ 'ii14/emmylua-nvim', disable = true })
+
+use({
+  'lvimuser/lsp-inlayhints.nvim',
+  disable = true,
+  config = function()
+    require('lsp-inlayhints').setup({
+      inlay_hints = {
+        highlight = 'Comment',
+        labels_separator = ' ⏐ ',
+        parameter_hints = {
+          prefix = '',
+        },
+        type_hints = {
+          prefix = '=> ',
+          remove_colon_start = true,
+        },
+      },
+    })
   end,
 })

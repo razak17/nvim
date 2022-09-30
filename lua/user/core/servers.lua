@@ -183,6 +183,12 @@ M.servers = {
     local plenary = ('%s/start/plenary.nvim'):format(plugins)
     local packer = ('%s/opt/packer.nvim'):format(plugins)
 
+    local library = { fn.expand('$VIMRUNTIME/lua') }
+
+    if rvim.plugin_installed('emmylua-nvim') then
+      library = { fn.expand('$VIMRUNTIME/lua'), emmy, packer, plenary }
+    end
+
     return {
       settings = {
         Lua = {
@@ -193,7 +199,7 @@ M.servers = {
             globals = { 'vim', 'describe', 'it', 'before_each', 'after_each', 'packer_plugins' },
           },
           workspace = {
-            library = { fn.expand('$VIMRUNTIME/lua'), emmy, packer, plenary },
+            library = library,
             checkThirdParty = false,
           },
           telemetry = { enable = false },
