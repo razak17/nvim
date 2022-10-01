@@ -147,13 +147,13 @@ return function()
       { name = 'path' },
       {
         name = 'rg',
-        keyword_length = 4,
+        keyword_length = 3,
         max_item_count = 6,
         option = { additional_arguments = '--max-depth 8' },
       },
       {
         name = 'dictionary',
-        keyword_length = 5,
+        keyword_length = 3,
         max_item_count = 6,
       },
       { name = 'crates', gropu_index = 1 },
