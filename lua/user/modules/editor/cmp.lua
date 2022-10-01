@@ -122,20 +122,18 @@ return function()
         local codicons = rvim.style.codicons
         if #vim_item.abbr >= MAX then vim_item.abbr = vim_item.abbr:sub(1, MAX) .. ellipsis end
         vim_item.kind = codicons.kind[vim_item.kind]
-        if entry.source.name == 'emoji' then vim_item.kind = codicons.misc.smiley end
         vim_item.menu = ({
           nvim_lsp = '(LSP)',
           luasnip = '(SN)',
           path = '(Path)',
           buffer = '(Buf)',
+          dictionary = '(Dict)',
           spell = '(SP)',
           cmdline = '(Cmd)',
           git = '(Git)',
           calc = '(Calc)',
-          emoji = '(E)',
           cmdline_history = '(Hist)',
           rg = '(Rg)',
-          dictionary = '(Dict)',
           crates = '(Crt)',
         })[entry.source.name]
         return vim_item
