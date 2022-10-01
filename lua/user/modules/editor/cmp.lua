@@ -103,20 +103,6 @@ return function()
     formatting = {
       deprecated = true,
       fields = { 'kind', 'abbr', 'menu' },
-      source_names = {
-        luasnip = '(SN)',
-        nvim_lsp = '(LSP)',
-        path = '(Path)',
-        buffer = '(Buf)',
-        dictionary = '(Dict)',
-        spell = '(SP)',
-        cmdline = '(Cmd)',
-        git = '(Git)',
-        calc = '(Calc)',
-        emoji = '(E)',
-        cmdline_history = '(Hist)',
-        rg = '(Rg)',
-      },
       format = function(entry, vim_item)
         local MAX = math.floor(vim.o.columns * 0.5)
         local codicons = rvim.style.codicons
