@@ -143,18 +143,18 @@ return function()
     },
     sources = cmp.config.sources({
       { name = 'nvim_lsp' },
-      { name = 'luasnip', max_item_count = 6 },
+      { name = 'luasnip', max_item_count = 4 },
       { name = 'path' },
       {
         name = 'rg',
         keyword_length = 3,
-        max_item_count = 6,
+        max_item_count = 4,
         option = { additional_arguments = '--max-depth 8' },
       },
       {
         name = 'dictionary',
         keyword_length = 3,
-        max_item_count = 6,
+        max_item_count = 4,
       },
       { name = 'crates', gropu_index = 1 },
     }, {
