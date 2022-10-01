@@ -124,8 +124,8 @@ return function()
         vim_item.kind = codicons.kind[vim_item.kind]
         if entry.source.name == 'emoji' then vim_item.kind = codicons.misc.smiley end
         vim_item.menu = ({
-          luasnip = '(SN)',
           nvim_lsp = '(LSP)',
+          luasnip = '(SN)',
           path = '(Path)',
           buffer = '(Buf)',
           spell = '(SP)',
@@ -142,8 +142,8 @@ return function()
       end,
     },
     sources = cmp.config.sources({
-      { name = 'luasnip', max_item_count = 6 },
       { name = 'nvim_lsp' },
+      { name = 'luasnip', max_item_count = 6 },
       { name = 'path' },
       {
         name = 'rg',
