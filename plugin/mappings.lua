@@ -397,7 +397,7 @@ xnoremap('<localleader>!', [["gy:lua rvim.mappings.gh(vim.api.nvim_eval("@g"))<c
 -- Personal
 ----------------------------------------------------------------------------------------------------
 -- leave extra space when deleting word
-nnoremap('dw', 'cw<ESC>')
+nnoremap('dw', 'cw<C-c>')
 -- Next greatest remap ever : asbjornHaland
 nnoremap('<leader>y', '"+y', 'yank')
 vnoremap('<leader>y', '"+y', 'yank')
