@@ -110,6 +110,7 @@ M.servers = {
       'html',
       'css',
     },
+    single_file_support = false,
   },
   --- https://github.com/golang/tools/blob/master/gopls/doc/settings.md
   gopls = {
