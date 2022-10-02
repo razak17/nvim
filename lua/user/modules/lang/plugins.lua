@@ -203,6 +203,32 @@ use({
   end,
 })
 
+use({
+  'lvimuser/lsp-inlayhints.nvim',
+  config = function()
+    require('lsp-inlayhints').setup({
+      inlay_hints = {
+        highlight = 'Comment',
+        labels_separator = ' ⏐ ',
+        parameter_hints = {
+          prefix = '',
+        },
+        type_hints = {
+          prefix = '=> ',
+          remove_colon_start = true,
+        },
+      },
+    })
+  end,
+})
+
+use({
+  'danymat/neogen',
+  event = { 'BufWinEnter' },
+  requires = { 'nvim-treesitter/nvim-treesitter' },
+  config = function() require('neogen').setup({ snippet_engine = 'luasnip' }) end,
+})
+
 ----------------------------------------------------------------------------------------------------
 -- Graveyard
 ----------------------------------------------------------------------------------------------------
@@ -256,14 +282,6 @@ use({
 })
 
 use({
-  'danymat/neogen',
-  event = { 'BufWinEnter' },
-  requires = { 'nvim-treesitter/nvim-treesitter' },
-  config = function() require('neogen').setup({ snippet_engine = 'luasnip' }) end,
-  disable = true,
-})
-
-use({
   'mfussenegger/nvim-treehopper',
   disable = true,
   config = function()
@@ -284,23 +302,3 @@ use({
 })
 
 use({ 'ii14/emmylua-nvim', disable = true })
-
-use({
-  'lvimuser/lsp-inlayhints.nvim',
-  disable = true,
-  config = function()
-    require('lsp-inlayhints').setup({
-      inlay_hints = {
-        highlight = 'Comment',
-        labels_separator = ' ⏐ ',
-        parameter_hints = {
-          prefix = '',
-        },
-        type_hints = {
-          prefix = '=> ',
-          remove_colon_start = true,
-        },
-      },
-    })
-  end,
-})

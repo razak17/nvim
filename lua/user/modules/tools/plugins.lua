@@ -202,6 +202,28 @@ use({
   end,
 })
 
+use({
+  'iamcco/markdown-preview.nvim',
+  run = function() vim.fn['mkdp#util#install']() end,
+  ft = { 'markdown' },
+  config = function()
+    vim.g.mkdp_auto_start = 0
+    vim.g.mkdp_auto_close = 1
+  end,
+})
+
+use({
+  'kevinhwang91/nvim-bqf',
+  ft = 'qf',
+  config = function()
+    require('bqf').setup({
+      preview = {
+        border_chars = rvim.style.border.bqf,
+      },
+    })
+  end,
+})
+
 ----------------------------------------------------------------------------------------------------
 -- Graveyard
 ----------------------------------------------------------------------------------------------------
@@ -484,19 +506,6 @@ use({
 })
 
 use({
-  'kevinhwang91/nvim-bqf',
-  disable = true,
-  ft = 'qf',
-  config = function()
-    require('bqf').setup({
-      preview = {
-        border_chars = rvim.style.border.bqf,
-      },
-    })
-  end,
-})
-
-use({
   'linty-org/readline.nvim',
   disable = true,
   event = 'CmdlineEnter',
@@ -543,16 +552,5 @@ use({
       { desc = 'debugprint: operator', expr = true }
     )
     rvim.nnoremap('<leader>dC', '<Cmd>DeleteDebugPrints<CR>', 'debugprint: clear all')
-  end,
-})
-
-use({
-  'iamcco/markdown-preview.nvim',
-  disable = true,
-  run = function() vim.fn['mkdp#util#install']() end,
-  ft = { 'markdown' },
-  config = function()
-    vim.g.mkdp_auto_start = 0
-    vim.g.mkdp_auto_close = 1
   end,
 })
