@@ -557,9 +557,6 @@ nnoremap(
 )
 nnoremap('<leader>Lu', '<cmd>TSUpdate<CR>', with_plugin('treesitter: update', 'nvim-treesitter'))
 ----------------------------------------------------------------------------------------------------
--- mason.nvim
-nnoremap('<leader>lm', ':Mason<CR>', with_plugin('mason: info', 'mason.nvim'))
-----------------------------------------------------------------------------------------------------
 -- lsp_lines.nvim
 nnoremap(
   '<leader>ol',
@@ -608,12 +605,6 @@ nnoremap(
 ----------------------------------------------------------------------------------------------------
 -- undotree
 nnoremap('<leader>u', '<cmd>UndotreeToggle<CR>', with_plugin('undotree: toggle', 'undotree'))
-----------------------------------------------------------------------------------------------------
--- nvim-neoclip.lua
-if plugin_loaded('nvim-neoclip.lua') then
-  local function clip() require('telescope').extensions.neoclip.default(rvim.telescope.dropdown()) end
-  nnoremap('<leader>fN', clip, 'neoclip: open yank history')
-end
 ----------------------------------------------------------------------------------------------------
 -- auto-session
 nnoremap(

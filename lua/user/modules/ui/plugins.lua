@@ -79,7 +79,6 @@ use({
 
 use({
   'ghillb/cybu.nvim',
-  event = 'BufRead',
   config = function()
     require('cybu').setup({
       position = {

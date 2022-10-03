@@ -93,6 +93,8 @@ use({
         },
       },
     })
+    local function clip() require('telescope').extensions.neoclip.default(rvim.telescope.dropdown()) end
+    rvim.nnoremap('<leader>fN', clip, 'neoclip: open yank history')
   end,
 })
 
@@ -122,7 +124,6 @@ use({
 
 use({
   'numToStr/FTerm.nvim',
-  event = { 'BufWinEnter' },
   config = function()
     local fterm = require('FTerm')
     fterm.setup({ dimensions = { height = 0.8, width = 0.9 } })

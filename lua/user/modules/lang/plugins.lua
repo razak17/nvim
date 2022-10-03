@@ -37,7 +37,7 @@ use({
 
 use({
   'williamboman/mason.nvim',
-  event = 'BufRead',
+  event = 'BufWinEnter',
   requires = { 'nvim-lspconfig', 'williamboman/mason-lspconfig.nvim' },
   config = function()
     local style = rvim.style
@@ -56,6 +56,7 @@ use({
     require('mason-lspconfig').setup({
       automatic_installation = rvim.lsp.automatic_servers_installation,
     })
+    rvim.nnoremap('<leader>lm', ':Mason<CR>', 'mason: info')
   end,
 })
 
