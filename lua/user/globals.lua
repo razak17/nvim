@@ -415,7 +415,7 @@ local function make_mapper(mode, o)
   return function(lhs, rhs, opts)
     -- check if plugin is installed if plugin option is passed in opts
     if type(opts) == 'table' and opts.plugin then
-      if not rvim.plugin_installed(opts.plugin) then return end
+      if not rvim.plugin_loaded(opts.plugin) then return end
       -- remove plugin option from opts to enable vim.keymap.set to use it
       rvim.removekey(opts, 'plugin')
     end

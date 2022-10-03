@@ -17,7 +17,7 @@ local tnoremap = rvim.tnoremap
 local onoremap = rvim.onoremap
 
 local utils = require('user.utils')
-local plugin_installed = rvim.plugin_installed
+local plugin_loaded = rvim.plugin_loaded
 
 g.mapleader = (rvim.keys.leader == 'space' and ' ') or rvim.keys.leader
 g.maplocalleader = (rvim.keys.localleader == 'space' and ' ') or rvim.keys.localleader
@@ -465,7 +465,7 @@ nnoremap('<leader>Lv', ':e ' .. join_paths(rvim.get_config_dir(), 'init.lua<CR>'
 ----------------------------------------------------------------------------------------------------
 local with_plugin = rvim.with_plugin
 -- packer
-if plugin_installed('packer.nvim') then
+if plugin_loaded('packer.nvim') then
   nnoremap('<leader>pc', ':PackerCompile<CR>', 'compile')
   nnoremap('<leader>pC', ':PackerClean<CR>', 'clean')
   nnoremap('<leader>pd', ':PackerDelete<CR>', 'delete packer_compiled')
@@ -568,7 +568,7 @@ nnoremap(
 )
 ----------------------------------------------------------------------------------------------------
 -- nvim-dap
-if plugin_installed('nvim-dap') then
+if plugin_loaded('nvim-dap') then
   local function repl_toggle() require('dap').repl.toggle(nil, 'botright split') end
   local function continue() require('dap').continue() end
   local function step_out() require('dap').step_out() end
@@ -610,7 +610,7 @@ nnoremap(
 nnoremap('<leader>u', '<cmd>UndotreeToggle<CR>', with_plugin('undotree: toggle', 'undotree'))
 ----------------------------------------------------------------------------------------------------
 -- nvim-neoclip.lua
-if plugin_installed('nvim-neoclip.lua') then
+if plugin_loaded('nvim-neoclip.lua') then
   local function clip() require('telescope').extensions.neoclip.default(rvim.telescope.dropdown()) end
   nnoremap('<leader>fN', clip, 'neoclip: open yank history')
 end
@@ -624,7 +624,7 @@ nnoremap(
 nnoremap('<leader>sl', '<cmd>SaveSession<cr>', with_plugin('auto-session: save', 'auto-session'))
 ----------------------------------------------------------------------------------------------------
 -- harpoon
-if plugin_installed('harpoon') then
+if plugin_loaded('harpoon') then
   local ui = require('harpoon.ui')
   local m = require('harpoon.mark')
   nnoremap('<leader>mm', m.add_file, 'harpoon: add')
@@ -692,7 +692,7 @@ nnoremap(
 )
 ----------------------------------------------------------------------------------------------------
 -- cybu.nvim
-if plugin_installed('cybu.nvim') then
+if plugin_loaded('cybu.nvim') then
   nnoremap('H', '<Plug>(CybuPrev)', 'cybu: prev')
   nnoremap('L', '<Plug>(CybuNext)', 'cybu: next')
 else
@@ -701,7 +701,7 @@ else
 end
 ----------------------------------------------------------------------------------------------------
 -- FTerm.nvim
-if plugin_installed('FTerm.nvim') then
+if plugin_loaded('FTerm.nvim') then
   local function new_float(cmd)
     cmd = require('FTerm'):new({ cmd = cmd, dimensions = { height = 0.9, width = 0.9 } }):toggle()
   end
@@ -721,7 +721,7 @@ if plugin_installed('FTerm.nvim') then
 end
 ----------------------------------------------------------------------------------------------------
 -- toggleterm.nvim
-if plugin_installed('toggleterm.nvim') then
+if plugin_loaded('toggleterm.nvim') then
   local new_term = function(direction, key, count)
     local Terminal = require('toggleterm.terminal').Terminal
     local fmt = string.format
@@ -783,7 +783,7 @@ nnoremap('<leader>bs', '<cmd>Bracey<CR>', with_plugin('bracey: start', 'bracey.v
 nnoremap('<leader>be', '<cmd>BraceyStop<CR>', with_plugin('bracey: stop', 'bracey.vim'))
 ----------------------------------------------------------------------------------------------------
 -- neogit
-if plugin_installed('neogit') then
+if plugin_loaded('neogit') then
   local neogit = require('neogit')
   nnoremap('<localleader>gs', function() neogit.open() end, 'neogit: open status buffer')
   nnoremap(
