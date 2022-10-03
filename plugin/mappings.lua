@@ -465,7 +465,7 @@ nnoremap('<leader>Lv', ':e ' .. join_paths(rvim.get_config_dir(), 'init.lua<CR>'
 ----------------------------------------------------------------------------------------------------
 local with_plugin = rvim.with_plugin
 -- packer
-if plugin_loaded('packer.nvim') then
+if rvim.plugin_installed('packer.nvim') then
   nnoremap('<leader>pc', ':PackerCompile<CR>', 'compile')
   nnoremap('<leader>pC', ':PackerClean<CR>', 'clean')
   nnoremap('<leader>pd', ':PackerDelete<CR>', 'delete packer_compiled')
