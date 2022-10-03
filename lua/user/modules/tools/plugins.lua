@@ -136,7 +136,7 @@ use({
   config = conf('tools', 'hop'),
 })
 
-use({ 'moll/vim-bbye', event = 'BufWinEnter' })
+use({ 'moll/vim-bbye' })
 
 use({
   'SmiteshP/nvim-navic',
