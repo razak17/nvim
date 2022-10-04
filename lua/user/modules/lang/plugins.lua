@@ -16,22 +16,6 @@ use({
     { 'nanotee/sqls.nvim' },
     { 'simrat39/rust-tools.nvim', branch = 'modularize_and_inlay_rewrite' },
     { 'b0o/schemastore.nvim' },
-    {
-      'ray-x/lsp_signature.nvim',
-      config = function()
-        require('lsp_signature').setup({
-          debug = false,
-          log_path = rvim.get_cache_dir() .. '/lsp_signature.log',
-          bind = true,
-          fix_pos = false,
-          auto_close_after = 15,
-          hint_enable = false,
-          handler_opts = { border = rvim.style.border.current },
-          toggle_key = '<C-K>',
-          select_signature_key = '<M-N>',
-        })
-      end,
-    },
   },
 })
 
@@ -303,3 +287,21 @@ use({
 })
 
 use({ 'ii14/emmylua-nvim', disable = true })
+
+use({
+  'ray-x/lsp_signature.nvim',
+  disable = true,
+  config = function()
+    require('lsp_signature').setup({
+      debug = false,
+      log_path = rvim.get_cache_dir() .. '/lsp_signature.log',
+      bind = true,
+      fix_pos = false,
+      auto_close_after = 15,
+      hint_enable = false,
+      handler_opts = { border = rvim.style.border.current },
+      toggle_key = '<C-K>',
+      select_signature_key = '<M-N>',
+    })
+  end,
+})
