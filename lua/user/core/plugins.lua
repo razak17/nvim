@@ -1,5 +1,4 @@
 local uv, api, fn = vim.loop, vim.api, vim.fn
-local fmt = string.format
 local utils = require('user.utils.plugins')
 local plug_notify = utils.plug_notify
 local packer_compiled = rvim.paths.packer_compiled
@@ -120,7 +119,6 @@ end
 function plugins.invalidate() rvim.invalidate('user.modules', true) end
 
 function plugins.recompile()
-  -- rvim.invalidate(fmt('user.modules.%s', vim.split(vim.fn.expand('%'), '/')[4]), true)
   plugins.delete()
   plugins.reload()
 end
