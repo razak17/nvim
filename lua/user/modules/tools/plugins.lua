@@ -81,21 +81,10 @@ use({
 })
 
 use({
-  'AckslD/nvim-neoclip.lua',
-  event = { 'BufWinEnter' },
-  config = function()
-    require('neoclip').setup({
-      enable_persistent_history = false,
-      keys = {
-        telescope = {
-          i = { select = '<c-p>', paste = '<CR>', paste_behind = '<c-k>' },
-          n = { select = 'p', paste = '<CR>', paste_behind = 'P' },
-        },
-      },
-    })
-    local function clip() require('telescope').extensions.neoclip.default(rvim.telescope.dropdown()) end
-    rvim.nnoremap('<leader>fN', clip, 'neoclip: open yank history')
-  end,
+  'gbprod/yanky.nvim',
+  keys = { 'p', 'P', '<localleader>p' },
+  requires = { { 'kkharji/sqlite.lua', module = 'sqlite' } },
+  config = conf('tools', 'yanky'),
 })
 
 use({
