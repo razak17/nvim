@@ -5,7 +5,6 @@ return function()
   local notify = require('notify')
 
   notify.setup({
-    min_width = function() return math.floor(vim.o.columns * 0.4) end,
     max_width = function() return math.floor(vim.o.columns * 0.4) end,
     max_height = function() return math.floor(vim.o.lines * 0.8) end,
     background_colour = 'NormalFloat',
