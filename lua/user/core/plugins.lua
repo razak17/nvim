@@ -120,7 +120,8 @@ end
 function plugins.invalidate() rvim.invalidate('user.modules', true) end
 
 function plugins.recompile()
-  rvim.invalidate(fmt('user.modules.%s', vim.split(vim.fn.expand('%'), '/')[4]), true)
+  -- rvim.invalidate(fmt('user.modules.%s', vim.split(vim.fn.expand('%'), '/')[4]), true)
+  plugins.delete()
   plugins.reload()
 end
 
