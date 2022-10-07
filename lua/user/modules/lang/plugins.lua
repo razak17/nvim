@@ -21,7 +21,7 @@ use({
 
 use({
   'williamboman/mason.nvim',
-  event = 'BufWinEnter',
+  event = 'BufRead',
   requires = { 'nvim-lspconfig', 'williamboman/mason-lspconfig.nvim' },
   config = function()
     local style = rvim.style
