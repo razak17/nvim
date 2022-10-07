@@ -798,9 +798,6 @@ xnoremap(
   with_plugin('comment: toggle linewise', 'Comment.nvim')
 )
 ----------------------------------------------------------------------------------------------------
--- nvim-lspconfig
-nnoremap('<leader>li', '<cmd>LspInfo<CR>', with_plugin('lsp: info', 'nvim-lspconfig'))
-----------------------------------------------------------------------------------------------------
 -- nvim-toggler
 nnoremap(
   '<leader>ii',

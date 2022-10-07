@@ -217,6 +217,7 @@ local function setup_mappings(client, bufnr)
     require('user.lsp.templates').remove_template_files()
     vim.notify('Templates have been removed', nil, { title = 'Lsp' })
   end, 'lsp: delete templates')
+  nnoremap('<leader>li', '<cmd>LspInfo<CR>', 'lsp: info')
 end
 
 ----------------------------------------------------------------------------------------------------
