@@ -16,6 +16,7 @@ use({
     { 'hrsh7th/cmp-path', after = 'nvim-cmp' },
     { 'hrsh7th/cmp-cmdline', after = 'nvim-cmp' },
     { 'f3fora/cmp-spell', after = 'nvim-cmp' },
+    { 'hrsh7th/cmp-emoji', after = 'nvim-cmp' },
     { 'dmitmel/cmp-cmdline-history', after = 'nvim-cmp' },
     { 'lukas-reineke/cmp-rg', tag = '*', after = 'nvim-cmp' },
     { 'rcarriga/cmp-dap', after = 'nvim-cmp' },

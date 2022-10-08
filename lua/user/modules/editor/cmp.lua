@@ -111,6 +111,7 @@ return function()
         vim_item.menu = ({
           nvim_lsp = '(LSP)',
           luasnip = '(SN)',
+          emoji = '(E)',
           path = '(Path)',
           buffer = '(Buf)',
           dictionary = '(Dict)',
