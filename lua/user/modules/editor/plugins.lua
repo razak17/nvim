@@ -95,6 +95,15 @@ use({
 
 use({ 'psliwka/vim-dirtytalk', run = ':DirtytalkUpdate' })
 
+use({
+  'axelvc/template-string.nvim',
+  config = function()
+    require('template-string').setup({
+      remove_template_string = true, -- remove backticks when there are no template string
+    })
+  end,
+})
+
 ----------------------------------------------------------------------------------------------------
 -- Graveyard
 ----------------------------------------------------------------------------------------------------
