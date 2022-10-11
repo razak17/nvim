@@ -114,6 +114,7 @@ return function()
           emoji = '(E)',
           path = '(Path)',
           buffer = '(Buf)',
+          ['buffer-lines'] = '(Bufl)',
           dictionary = '(Dict)',
           spell = '(SP)',
           cmdline = '(Cmd)',
