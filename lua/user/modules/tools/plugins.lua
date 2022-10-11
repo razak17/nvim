@@ -262,7 +262,7 @@ use({
         fmt('%s/site/pack/packer/opt/*', rvim.get_runtime_dir()),
         fmt('%s/site/pack/packer/start/*', rvim.get_runtime_dir()),
       },
-      auto_session_use_git_branch = true, -- This cause inconsistent results
+      auto_session_use_git_branch = false, -- This cause inconsistent results
     })
   end,
 })
