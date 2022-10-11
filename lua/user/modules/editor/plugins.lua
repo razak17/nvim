@@ -18,6 +18,7 @@ use({
     { 'f3fora/cmp-spell', after = 'nvim-cmp' },
     { 'hrsh7th/cmp-emoji', after = 'nvim-cmp' },
     { 'dmitmel/cmp-cmdline-history', after = 'nvim-cmp' },
+    { 'amarakon/nvim-cmp-buffer-lines', after = 'nvim-cmp' },
     { 'lukas-reineke/cmp-rg', tag = '*', after = 'nvim-cmp' },
     { 'rcarriga/cmp-dap', after = 'nvim-cmp' },
     {
