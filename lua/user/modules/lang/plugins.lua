@@ -40,7 +40,6 @@ use({
     require('mason-lspconfig').setup({
       automatic_installation = rvim.lsp.automatic_servers_installation,
     })
-    rvim.nnoremap('<leader>lm', ':Mason<CR>', 'mason: info')
   end,
 })
 

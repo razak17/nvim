@@ -464,6 +464,8 @@ nnoremap('<leader>Lv', ':e ' .. join_paths(rvim.get_config_dir(), 'init.lua<CR>'
 -- Plugins {{{
 ----------------------------------------------------------------------------------------------------
 local with_plugin = rvim.with_plugin
+local with_plugin_installed = function(desc, plugin) rvim.with_plugin(desc, plugin, true) end
+----------------------------------------------------------------------------------------------------
 -- packer
 if rvim.plugin_installed('packer.nvim') then
   nnoremap('<leader>pc', ':PackerCompile<CR>', 'compile')
@@ -638,8 +640,11 @@ nnoremap('<leader>c', '<cmd>Bdelete!<cr>', with_plugin('bbye: close buffer', 'vi
 nnoremap('<leader>bx', '<cmd>bufdo :Bdelete<cr>', with_plugin('bbye: close all', 'vim-bbye'))
 nnoremap('<leader>q', '<Cmd>Bwipeout<CR>', with_plugin('bbye: wipe buffer', 'vim-bbye'))
 ----------------------------------------------------------------------------------------------------
+-- mason.nvim
+nnoremap('<leader>lm', ':Mason<CR>', with_plugin_installed('mason: info', 'mason.nvim'))
+----------------------------------------------------------------------------------------------------
 -- jaq.nvim
-nnoremap('<leader>rr', ':silent only | Jaq<cr>', with_plugin('jaq: run', 'jaq-nvim'))
+nnoremap('<leader>rr', ':silent only | Jaq<cr>', with_plugin_installed('jaq: run', 'jaq-nvim'))
 ----------------------------------------------------------------------------------------------------
 -- cheat-sheet
 nnoremap('<localleader>s', '<cmd>CheatSH<CR>', with_plugin('cheat-sheet: search', 'cheat-sheet'))

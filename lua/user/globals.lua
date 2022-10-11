@@ -398,8 +398,11 @@ end
 --- add mapping only if plugin is installed
 ---@param desc string
 ---@param plugin string
+---@param useInstalled boolean|nil
 ---@return table
-function rvim.with_plugin(desc, plugin) return { desc = desc, plugin = plugin } end
+function rvim.with_plugin(desc, plugin, useInstalled)
+  return { desc = desc, plugin = plugin, useInstalled = useInstalled }
+end
 
 ---create a mapping function factory
 ---@param mode string
@@ -413,8 +416,13 @@ local function make_mapper(mode, o)
   ---@param rhs string|function
   ---@param opts table
   return function(lhs, rhs, opts)
-    -- check if plugin is installed if plugin option is passed in opts
-    if type(opts) == 'table' and opts.plugin then
+    -- check if plugin is installed if plugin option and useInstalled are passed in opts
+    if type(opts) == 'table' and opts.plugin and opts.useInstalled then
+      if not rvim.plugin_installed(opts.plugin) then return end
+      rvim.removekey(opts, 'plugin')
+      rvim.removekey(opts, 'useInstalled')
+    -- check if plugin is loaded if plugin option is passed in opts
+    elseif type(opts) == 'table' and opts.plugin then
       if not rvim.plugin_loaded(opts.plugin) then return end
       -- remove plugin option from opts to enable vim.keymap.set to use it
       rvim.removekey(opts, 'plugin')
