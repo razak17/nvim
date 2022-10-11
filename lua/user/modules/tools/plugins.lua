@@ -246,6 +246,27 @@ use({
   end,
 })
 
+use({
+  'rmagatti/auto-session',
+  config = function()
+    local fn = vim.fn
+    local fmt = string.format
+    require('auto-session').setup({
+      log_level = 'error',
+      auto_session_root_dir = join_paths(rvim.get_cache_dir(), 'session/auto/'),
+      -- Do not enable auto restoration in my projects directory, I'd like to choose projects myself
+      auto_restore_enabled = not vim.startswith(fn.getcwd(), vim.env.DEV_HOME),
+      auto_session_suppress_dirs = {
+        vim.env.HOME,
+        fmt('%s/Desktop', vim.env.HOME),
+        fmt('%s/site/pack/packer/opt/*', rvim.get_runtime_dir()),
+        fmt('%s/site/pack/packer/start/*', rvim.get_runtime_dir()),
+      },
+      auto_session_use_git_branch = true, -- This cause inconsistent results
+    })
+  end,
+})
+
 ----------------------------------------------------------------------------------------------------
 -- Graveyard
 ----------------------------------------------------------------------------------------------------
@@ -467,29 +488,6 @@ use({
         if term.direction == 'horizontal' then return 10 end
         if term.direction == 'vertical' then return math.floor(vim.o.columns * 0.3) end
       end,
-    })
-  end,
-})
-
-use({
-  'rmagatti/auto-session',
-  disable = true,
-  config = function()
-    local fn = vim.fn
-    local fmt = string.format
-    require('auto-session').setup({
-      log_level = 'error',
-      auto_session_root_dir = join_paths(rvim.get_cache_dir(), 'session/auto/'),
-      -- Do not enable auto restoration in my projects directory, I'd like to choose projects myself
-      auto_restore_enabled = not vim.startswith(fn.getcwd(), vim.env.DEV_HOME),
-      auto_session_suppress_dirs = {
-        vim.env.HOME,
-        fmt('%s/Desktop', vim.env.HOME),
-        fmt('%s/Desktop', vim.env.HOME),
-        fmt('%s/site/pack/packer/opt/*', rvim.get_runtime_dir()),
-        fmt('%s/site/pack/packer/start/*', rvim.get_runtime_dir()),
-      },
-      auto_session_use_git_branch = true, -- This cause inconsistent results
     })
   end,
 })
