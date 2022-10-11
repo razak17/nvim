@@ -113,7 +113,7 @@ end
 function plugins.reload()
   plugins.install()
   plugins.compile()
-  require('_compiled_nightly')
+  -- require('_compiled_nightly')
 end
 
 function plugins.invalidate() rvim.invalidate('user.modules', true) end
