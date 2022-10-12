@@ -146,7 +146,7 @@ rvim.augroup('TextYankHighlight', {
     event = { 'TextYankPost' },
     pattern = { '*' },
     command = function()
-      require('vim.highlight').on_yank({ timeout = 277, on_visual = false, higroup = 'PmenuThumb' })
+      require('vim.highlight').on_yank({ timeout = 277, on_visual = false, higroup = 'Search' })
     end,
   },
 })
