@@ -844,7 +844,7 @@ nnoremap('<leader>e', '<Cmd>Neotree toggle reveal<CR>', with_plugin('toggle tree
 nnoremap(
   '<leader>LE',
   '<Cmd>TSHighlightCapturesUnderCursor<CR>',
-  with_plugin('playground: inspect scope', 'playground')
+  with_plugin_installed('playground: inspect scope', 'playground')
 )
 ----------------------------------------------------------------------------------------------------
 -- Abbreviations
