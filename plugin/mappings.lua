@@ -479,6 +479,22 @@ if rvim.plugin_installed('packer.nvim') then
   nnoremap('<leader>pu', ':PackerUpdate<CR>', 'update')
 end
 ----------------------------------------------------------------------------------------------------
+-- neotest
+if rvim.plugin_installed('neotest') then
+  local function open() require('neotest').output.open({ enter = true, short = false }) end
+  local function run_file() require('neotest').run.run(vim.fn.expand('%')) end
+  local function nearest() require('neotest').run.run() end
+  local function next_failed() require('neotest').jump.prev({ status = 'failed' }) end
+  local function prev_failed() require('neotest').jump.next({ status = 'failed' }) end
+  local function toggle_summary() require('neotest').summary.toggle() end
+  nnoremap('<localleader>ts', toggle_summary, 'neotest: run suite')
+  nnoremap('<localleader>to', open, 'neotest: output')
+  nnoremap('<localleader>tn', nearest, 'neotest: run')
+  nnoremap('<localleader>tf', run_file, 'neotest: run file')
+  nnoremap('[n', next_failed, 'jump to next failed test')
+  nnoremap(']n', prev_failed, 'jump to previous failed test')
+end
+----------------------------------------------------------------------------------------------------
 -- neogen
 nnoremap(
   '<localleader>lc',
