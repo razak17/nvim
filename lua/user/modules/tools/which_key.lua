@@ -43,7 +43,6 @@ return function()
       d = { name = 'Dap' },
       g = { name = 'Git' },
       l = { name = 'lsp' },
-      p = 'markdown-preview: toggle',
       w = { name = 'Window' },
     },
   })
