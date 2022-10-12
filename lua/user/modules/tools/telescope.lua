@@ -241,6 +241,7 @@ return function()
     ['telescope-frecency.nvim'] = 'frecency',
     ['nvim-notify'] = 'notify',
     ['telescope-recent-files'] = 'recent_files',
+    ['yanky.nvim' ]= 'yank_history',
   }
 
   for plugin, setup in ipairs(plugins) do
