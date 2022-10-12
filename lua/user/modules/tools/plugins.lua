@@ -281,6 +281,7 @@ use({
       },
       adapters = {
         require('neotest-plenary'),
+        require('neotest-python'),
       },
     })
   end,
@@ -289,6 +290,7 @@ use({
     'rcarriga/neotest-vim-test',
     'nvim-lua/plenary.nvim',
     'nvim-treesitter/nvim-treesitter',
+    'nvim-neotest/neotest-python',
   },
 })
 
