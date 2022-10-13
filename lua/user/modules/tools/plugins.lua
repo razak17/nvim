@@ -272,6 +272,8 @@ use({
   },
 })
 
+use({ 'turbio/bracey.vim', ft = { 'html' }, run = 'npm install --prefix server' })
+
 ----------------------------------------------------------------------------------------------------
 -- Graveyard
 ----------------------------------------------------------------------------------------------------
@@ -483,8 +485,6 @@ use({
   event = 'InsertCharPre',
   config = function() require('hclipboard').start() end,
 })
-
-use({ 'turbio/bracey.vim', ft = { 'html' }, run = 'npm install --prefix server' })
 
 use({
   'andrewferrier/debugprint.nvim',
