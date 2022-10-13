@@ -15,6 +15,7 @@ local function general_overrides()
     { SpellBad = { undercurl = true, background = 'NONE', foreground = 'NONE', sp = 'green' } },
     { SpellRare = { undercurl = true } },
     { CursorLineNr = { background = { from = 'CursorLine' }, bold = true } },
+    { SLCopilot = { background = { from = 'CursorLine' } } },
     ------------------------------------------------------------------------------------------------
     -- colorscheme overrides
     ------------------------------------------------------------------------------------------------
