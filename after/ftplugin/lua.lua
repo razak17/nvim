@@ -6,6 +6,7 @@ local fmt = string.format
 vim.bo.textwidth = 100
 vim.opt_local.iskeyword:append('-')
 vim.opt_local.formatoptions:remove('o')
+vim.opt_local.spell = true
 
 local function find(word, ...)
   for _, str in ipairs({ ... }) do

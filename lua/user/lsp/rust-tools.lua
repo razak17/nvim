@@ -2,7 +2,7 @@ if not rvim.plugin_installed('rust-tools.nvim') then return end
 
 local dap = nil
 local utils = require('user.utils')
-local vscode_lldb = rvim.paths.vscode_lldb
+local vscode_lldb = rvim.path.vscode_lldb
 if utils.is_directory(vscode_lldb) then
   local codelldb_path = vscode_lldb .. '/adapter/codelldb'
   local liblldb_path = vscode_lldb .. '/lldb/lib/liblldb.so'

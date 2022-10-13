@@ -1,8 +1,8 @@
 return function()
   local icons = rvim.style.icons
-  local python_dir = rvim.paths.mason .. '/packages/debugpy/venv/bin/python'
-  local lldb_dir = rvim.paths.vscode_lldb .. '/adapter/codelldb'
-  local node_dir = rvim.paths.mason .. '/packages/node-debug2-adapter/out/src/nodeDebug.js'
+  local python_dir = rvim.path.mason .. '/packages/debugpy/venv/bin/python'
+  local lldb_dir = rvim.path.vscode_lldb .. '/adapter/codelldb'
+  local node_dir = rvim.path.mason .. '/packages/node-debug2-adapter/out/src/nodeDebug.js'
 
   require('dap').defaults.fallback.terminal_win_cmd = '50vsplit new'
   -- DON'T automatically stop at exceptions

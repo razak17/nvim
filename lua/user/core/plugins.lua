@@ -1,7 +1,7 @@
 local uv, api, fn = vim.loop, vim.api, vim.fn
 local utils = require('user.utils.plugins')
 local plug_notify = utils.plug_notify
-local packer_compiled = rvim.paths.packer_compiled
+local packer_compiled = rvim.path.packer_compiled
 local packer = nil
 
 local Packer = {}
@@ -34,7 +34,7 @@ function Packer:bootstrap_packer()
   rvim.safe_require('impatient')
   packer.init({
     package_root = join_paths(rvim.get_runtime_dir(), 'site/pack/'),
-    compile_path = rvim.paths.packer_compiled,
+    compile_path = rvim.path.packer_compiled,
     preview_updates = true,
     git = {
       clone_timeout = 7000,

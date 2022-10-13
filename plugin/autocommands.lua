@@ -374,17 +374,7 @@ rvim.augroup('Utilities', {
   },
   {
     event = { 'FileType' },
-    pattern = {
-      'NeogitCommitMessage',
-      'go',
-      'markdown',
-      'lua',
-      'vim',
-      'python',
-      'javascript',
-      'typescript',
-      'rust',
-    },
+    pattern = { 'javascript', 'typescript' },
     command = function() vim.opt_local.spell = true end,
   },
   {

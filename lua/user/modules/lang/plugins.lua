@@ -27,7 +27,7 @@ use({
     local style = rvim.style
     local icons = style.icons
     require('mason').setup({
-      install_root_dir = rvim.paths.mason,
+      install_root_dir = rvim.path.mason,
       ui = {
         border = style.border.current,
         icons = {

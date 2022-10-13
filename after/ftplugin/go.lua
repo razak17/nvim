@@ -4,6 +4,7 @@ vim.bo.softtabstop = 0
 vim.bo.tabstop = 4
 vim.bo.shiftwidth = 4
 vim.opt_local.iskeyword:append('-')
+vim.opt_local.spell = true
 
 if not rvim then return end
 

@@ -1,6 +1,7 @@
 -- no distractions in markdown files
 vim.opt_local.number = false
 vim.opt_local.relativenumber = false
+vim.opt_local.spell = true
 
 local args = { buffer = 0 }
 
