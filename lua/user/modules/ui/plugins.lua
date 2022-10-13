@@ -18,7 +18,7 @@ use({ 'rcarriga/nvim-notify', config = conf('ui', 'notify') })
 
 use({ 'nvim-lualine/lualine.nvim', config = conf('ui', 'lualine') })
 
-use({ 'romainl/vim-cool', config = function() vim.g.CoolTotalMatches = 1 end })
+use({ 'romainl/vim-cool', event = 'BufRead', config = function() vim.g.CoolTotalMatches = 1 end })
 
 use({
   'j-hui/fidget.nvim',
@@ -73,6 +73,7 @@ use({ 'stevearc/dressing.nvim', after = 'telescope.nvim', config = conf('ui', 'd
 
 use({
   'kevinhwang91/nvim-ufo',
+  event = 'BufRead',
   requires = 'kevinhwang91/promise-async',
   config = conf('ui', 'ufo'),
 })
@@ -113,6 +114,7 @@ use({
 
 use({
   'lukas-reineke/virt-column.nvim',
+  event = 'BufRead',
   config = function()
     require('user.utils.highlights').plugin('virt_column', {
       { VirtColumn = { bg = 'None', fg = { from = 'Comment', alter = 10 } } },
@@ -136,7 +138,7 @@ use({
 
 use({
   'lukas-reineke/headlines.nvim',
-  event = 'BufWinEnter',
+  event = 'BufRead',
   ft = { 'org', 'norg', 'markdown', 'yaml' },
   setup = function()
     -- https://observablehq.com/@d3/color-schemes?collection=@d3/d3-scale-chromatic

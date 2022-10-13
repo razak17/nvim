@@ -61,6 +61,7 @@ use({
 
 use({
   'kosayoda/nvim-lightbulb',
+  event = 'BufRead',
   config = function()
     require('user.utils.highlights').plugin('Lightbulb', {
       { LightBulbFloatWin = { foreground = { from = 'Type' } } },
@@ -85,6 +86,7 @@ use({
   requires = {
     {
       'nvim-treesitter/nvim-treesitter-context',
+      event = 'BufRead',
       config = function()
         require('user.utils.highlights').plugin('treesitter-context', {
           { ContextBorder = { link = 'Dim' } },
@@ -106,6 +108,7 @@ use({
     { 'p00f/nvim-ts-rainbow' },
     {
       'windwp/nvim-ts-autotag',
+      event = 'BufRead',
       config = function()
         require('nvim-ts-autotag').setup({
           filetypes = { 'html', 'xml', 'typescriptreact', 'javascriptreact' },
@@ -164,6 +167,7 @@ use({
 
 use({
   'RRethy/vim-illuminate',
+  event = 'BufRead',
   config = function()
     require('illuminate').configure({
       filetypes_denylist = {
@@ -189,6 +193,7 @@ use({
 
 use({
   'lvimuser/lsp-inlayhints.nvim',
+  event = 'BufRead',
   config = function()
     require('lsp-inlayhints').setup({
       inlay_hints = {
@@ -208,7 +213,6 @@ use({
 
 use({
   'danymat/neogen',
-  event = { 'BufWinEnter' },
   requires = { 'nvim-treesitter/nvim-treesitter' },
   config = function() require('neogen').setup({ snippet_engine = 'luasnip' }) end,
 })

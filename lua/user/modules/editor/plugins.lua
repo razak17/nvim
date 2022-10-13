@@ -71,6 +71,7 @@ use({
 
 use({
   'kylechui/nvim-surround',
+  event = 'BufRead',
   config = function()
     require('nvim-surround').setup({
       move_cursor = false,
@@ -81,6 +82,7 @@ use({
 
 use({
   'numToStr/Comment.nvim',
+  event = 'BufRead',
   config = function()
     require('Comment').setup()
     local ft = require('Comment.ft')
@@ -93,10 +95,11 @@ use({
   end,
 })
 
-use({ 'psliwka/vim-dirtytalk', run = ':DirtytalkUpdate' })
+use({ 'psliwka/vim-dirtytalk', event = 'BufRead', run = ':DirtytalkUpdate' })
 
 use({
   'axelvc/template-string.nvim',
+  event = 'BufRead',
   config = function()
     require('template-string').setup({
       remove_template_string = true, -- remove backticks when there are no template string
@@ -119,7 +122,7 @@ use({
   disable = true,
 })
 
-use({ 'monaqa/dial.nvim', config = conf('editor', 'dial') })
+use({ 'monaqa/dial.nvim', event = 'BufRead', config = conf('editor', 'dial') })
 
 use({
   'Matt-A-Bennett/vim-surround-funk',

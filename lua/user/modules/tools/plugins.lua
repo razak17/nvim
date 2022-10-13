@@ -130,6 +130,7 @@ use({ 'moll/vim-bbye' })
 
 use({
   'SmiteshP/nvim-navic',
+  event = 'BufRead',
   requires = 'neovim/nvim-lspconfig',
   config = function()
     vim.g.navic_silence = true
@@ -216,7 +217,7 @@ use({
 
 use({
   'is0n/jaq-nvim',
-  event = { 'BufWinEnter' },
+  event = 'BufRead',
   config = function()
     require('jaq-nvim').setup({
       cmds = {
