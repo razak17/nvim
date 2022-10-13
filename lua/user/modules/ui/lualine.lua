@@ -1,5 +1,6 @@
 return function()
   local P = require('zephyr.palette')
+  local fade = require('zephyr.utils').fade
   local s = rvim.style
   local icons = s.icons
   local utils = require('user.utils.statusline')
@@ -15,8 +16,8 @@ return function()
         -- We are going to use lualine_c an lualine_x as left and
         -- right section. Both are highlighted by c theme .  So we
         -- are just setting default looks o statusline
-        normal = { c = { fg = P.base88, bg = P.dark } },
-        inactive = { c = { fg = P.base88, bg = P.dark } },
+        normal = { c = { fg = P.base88, bg = fade(P.dark, -20) } },
+        inactive = { c = { fg = P.base88, bg = fade(P.dark, -20) } },
       },
       disabled_filetypes = { 'alpha', 'NvimTree', 'Outline', 'neo-tree' },
     },
