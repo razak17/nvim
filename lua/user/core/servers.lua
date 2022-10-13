@@ -39,6 +39,7 @@ local function global_capabilities()
   capabilities.textDocument.completion.completionItem.deprecatedSupport = true
   capabilities.textDocument.completion.completionItem.commitCharactersSupport = true
   capabilities.textDocument.completion.completionItem.tagSupport = { valueSet = { 1 } }
+  capabilities.textDocument.colorProvider = { dynamicRegistration = true }
   capabilities.textDocument.completion.completionItem.documentationFormat = documentation
   capabilities.textDocument.completion.completionItem.resolveSupport = snippet
   capabilities.textDocument.codeAction = code_action

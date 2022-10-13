@@ -118,7 +118,7 @@ use({
       win_opts = { border = rvim.style.border.current },
       highlighter = {
         auto_enable = true,
-        excludes = { 'dart' },
+        excludes = { 'dart', 'html', 'css', 'typescriptreact' },
       },
     })
   end,
