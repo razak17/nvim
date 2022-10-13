@@ -43,6 +43,7 @@ return function()
       d = { name = 'Dap' },
       g = { name = 'Git' },
       l = { name = 'lsp' },
+      t = { name = 'Neotest' },
       w = { name = 'Window' },
     },
   })
