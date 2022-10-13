@@ -106,6 +106,12 @@ return function()
   })
 
   ins_left({
+    utils.python_env,
+    color = { fg = P.dark_green },
+    cond = conditions.hide_in_width,
+  })
+
+  ins_left({
     function()
       local package = require('package-info')
       if package.get_status() then return package.get_status() end
@@ -185,11 +191,6 @@ return function()
     'filetype',
     icons_enabled = false, -- I think icons are cool but Eviline doesn't have them. sigh
     color = {},
-  })
-
-  ins_right({
-    utils.python_env,
-    cond = conditions.hide_in_width,
   })
 
   -- ins_right {
