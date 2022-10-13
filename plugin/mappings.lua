@@ -794,19 +794,6 @@ nnoremap(
 nnoremap('<leader>bs', '<cmd>Bracey<CR>', with_plugin('bracey: start', 'bracey.vim'))
 nnoremap('<leader>be', '<cmd>BraceyStop<CR>', with_plugin('bracey: stop', 'bracey.vim'))
 ----------------------------------------------------------------------------------------------------
--- neogit
-if plugin_loaded('neogit') then
-  local neogit = require('neogit')
-  nnoremap('<localleader>gs', function() neogit.open() end, 'neogit: open status buffer')
-  nnoremap(
-    '<localleader>gm',
-    function() neogit.open({ 'commit' }) end,
-    'neogit: open commit buffer'
-  )
-  nnoremap('<localleader>gl', neogit.popups.pull.create, 'neogit: open pull popup')
-  nnoremap('<localleader>gp', neogit.popups.push.create, 'neogit: open push popup')
-end
-----------------------------------------------------------------------------------------------------
 -- Comment.nvim
 nnoremap(
   '<leader>/',
