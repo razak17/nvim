@@ -14,6 +14,7 @@ local function general_overrides()
     -- Add undercurl to existing spellbad highlight
     { SpellBad = { undercurl = true, background = 'NONE', foreground = 'NONE', sp = 'green' } },
     { SpellRare = { undercurl = true } },
+    { CursorLineNr = { background = { from = 'CursorLine' }, bold = true } },
     ------------------------------------------------------------------------------------------------
     -- colorscheme overrides
     ------------------------------------------------------------------------------------------------
