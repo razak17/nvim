@@ -8,10 +8,6 @@ use({
   local_path = 'personal',
 })
 
-use({ 'MunifTanjim/nui.nvim' })
-
-use({ 'kyazdani42/nvim-web-devicons' })
-
 use({ 'goolord/alpha-nvim', config = conf('ui', 'alpha') })
 
 use({ 'rcarriga/nvim-notify', config = conf('ui', 'notify') })
@@ -43,24 +39,16 @@ use({
 
 use({ 'lukas-reineke/indent-blankline.nvim', config = conf('ui', 'indentline') })
 
-use({ 'nvim-neo-tree/neo-tree.nvim', branch = 'main', config = conf('ui', 'neo-tree') })
+use({ 'MunifTanjim/nui.nvim' })
 
 use({
-  's1n7ax/nvim-window-picker',
-  tag = 'v1.*',
-  config = function()
-    require('window-picker').setup({
-      autoselect_one = true,
-      include_current = false,
-      filter_rules = {
-        bo = {
-          filetype = { 'neo-tree-popup', 'quickfix', 'incline' },
-          buftype = { 'terminal', 'quickfix', 'nofile' },
-        },
-      },
-      other_win_hl_color = require('user.utils.highlights').get('Visual', 'bg'),
-    })
-  end,
+  'nvim-neo-tree/neo-tree.nvim',
+  branch = 'main',
+  config = conf('ui', 'neo-tree'),
+  requires = {
+    'nvim-lua/plenary.nvim',
+    'kyazdani42/nvim-web-devicons',
+  },
 })
 
 use({
