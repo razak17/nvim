@@ -36,19 +36,27 @@ function M.remove_template_files()
   end
 end
 
+local function getFileTypes(server_name)
+  local configured_filetypes = rvim.lsp.configured_filetypes
+  return vim.tbl_filter(
+    function(ft) return vim.tbl_contains(configured_filetypes, ft) end,
+    get_supported_filetypes(server_name) or {}
+  )
+end
+
 ---Generates an ftplugin file based on the server_name in the selected directory
 ---@param server_name string name of a valid language server, e.g. pyright, gopls, tsserver, etc.
 ---@param dir string the full path to the desired directory
 local function generate_ftplugin(server_name, dir)
-  local configured_filetypes = rvim.lsp.configured_filetypes
-  local filetypes = vim.tbl_filter(
-    function(ft) return vim.tbl_contains(configured_filetypes, ft) end,
-    get_supported_filetypes(server_name) or {}
-  )
+  local filetypes = getFileTypes(server_name)
   if not filetypes then return end
   for _, filetype in ipairs(filetypes) do
     local filename = join_paths(dir, filetype .. '.lua')
     write_manager(filename, server_name)
+    if server_name == 'tsserver' then
+      local cmd = 'vim.lsp.handlers["textDocument/publishDiagnostics"] = function() end'
+      utils.write_file(filename, cmd .. '\n', 'a')
+    end
   end
 end
 
