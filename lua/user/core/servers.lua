@@ -5,11 +5,14 @@ local fn, fmt = vim.fn, string.format
 
 local M = {}
 
-local function setup_capabilities()
-  local snippet = {
-    properties = { 'documentation', 'detail', 'additionalTextEdits' },
-  }
-  local code_action = {
+local function global_capabilities()
+  local ok, cmp_nvim_lsp = rvim.safe_require('cmp_nvim_lsp')
+  if ok then cmp_nvim_lsp.default_capabilities() end
+  local capabilities = vim.lsp.protocol.make_client_capabilities()
+  capabilities.textDocument.colorProvider = { dynamicRegistration = true }
+  capabilities.textDocument.completion.completionItem.documentationFormat =
+    { 'markdown', 'plaintext' }
+  capabilities.textDocument.codeAction = {
     dynamicRegistration = false,
     codeActionLiteralSupport = {
       codeActionKind = {
@@ -21,31 +24,10 @@ local function setup_capabilities()
       },
     },
   }
-  local folding_range = {
+  capabilities.textDocument.foldingRange = {
     dynamicRegistration = false,
     lineFoldingOnly = true,
   }
-  local documentation = { 'markdown', 'plaintext' }
-  return snippet, code_action, folding_range, documentation
-end
-
-local function global_capabilities()
-  local ok, cmp_nvim_lsp = rvim.safe_require('cmp_nvim_lsp')
-  if ok then cmp_nvim_lsp.default_capabilities() end
-  local capabilities = vim.lsp.protocol.make_client_capabilities()
-  local snippet, code_action, folding_range, documentation = setup_capabilities()
-  capabilities.textDocument.completion.completionItem.snippetSupport = true
-  capabilities.textDocument.completion.completionItem.preselectSupport = true
-  capabilities.textDocument.completion.completionItem.insertReplaceSupport = true
-  capabilities.textDocument.completion.completionItem.labelDetailsSupport = true
-  capabilities.textDocument.completion.completionItem.deprecatedSupport = true
-  capabilities.textDocument.completion.completionItem.commitCharactersSupport = true
-  capabilities.textDocument.completion.completionItem.tagSupport = { valueSet = { 1 } }
-  capabilities.textDocument.colorProvider = { dynamicRegistration = true }
-  capabilities.textDocument.completion.completionItem.documentationFormat = documentation
-  capabilities.textDocument.completion.completionItem.resolveSupport = snippet
-  capabilities.textDocument.codeAction = code_action
-  capabilities.textDocument.foldingRange = folding_range
   return capabilities
 end
 
