@@ -834,6 +834,18 @@ nnoremap(
   with_plugin_installed('playground: inspect scope', 'playground')
 )
 ----------------------------------------------------------------------------------------------------
+-- spread.nvim
+nnoremap(
+  'gS',
+  function() require('spread').out() end,
+  with_plugin_installed('spread: expand', 'spread.nvim')
+)
+nnoremap(
+  'gJ',
+  function() require('spread').combine() end,
+  with_plugin_installed('spread: combine', 'spread.nvim')
+)
+----------------------------------------------------------------------------------------------------
 -- Abbreviations
 ----------------------------------------------------------------------------------------------------
 vim.cmd([[
