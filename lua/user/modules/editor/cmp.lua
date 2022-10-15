@@ -123,6 +123,7 @@ return function()
           cmdline_history = '(Hist)',
           rg = '(Rg)',
           crates = '(Crt)',
+          treesitter = '(TS)',
         })[entry.source.name]
         return vim_item
       end,
@@ -143,7 +144,8 @@ return function()
         keyword_length = 3,
         max_item_count = 3,
       },
-      { name = 'crates', gropu_index = 1 },
+      { name = 'crates' },
+      { name = 'treesitter' },
     }, {
       {
         name = 'buffer',
