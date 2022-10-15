@@ -23,10 +23,8 @@ local function resolve_mason_config(server_name)
   if not found then return {} end
   local server_mapping = require('mason-lspconfig.mappings.server')
   local path = require('mason-core.path')
-  local pkg_name = server_mapping.lspconfig_to_package[server_name]
-  local install_dir = path.package_prefix(pkg_name)
-  local conf = mason_config(install_dir)
-  return conf or {}
+  local install_dir = path.package_prefix(server_mapping.lspconfig_to_package[server_name])
+  return mason_config(install_dir) or {}
 end
 
 ---Resolve the configuration for a server by merging with the default config
