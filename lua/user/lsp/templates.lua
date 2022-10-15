@@ -4,6 +4,9 @@ local utils = require('user.utils')
 local ftplugin_dir = rvim.lsp.templates_dir
 local fmt = string.format
 
+---Write command to file
+---@param filename string the filetype for praticular server
+---@param server_name string can be any server supported by nvim-lsp-installer
 local function write_manager(filename, server_name)
   local cmd = fmt([[require("user.lsp.manager").setup(%q)]], server_name)
   utils.write_file(filename, cmd .. '\n', 'a')
@@ -29,6 +32,7 @@ local function get_supported_servers(filter)
   return supported_servers or {}
 end
 
+---Remove Templates
 function M.remove_template_files()
   -- remove any outdated files
   for _, file in ipairs(vim.fn.glob(ftplugin_dir .. '/*.lua', 1, 1)) do
@@ -36,6 +40,9 @@ function M.remove_template_files()
   end
 end
 
+---Get filetypes for particular server
+---@param server_name string can be any server supported by nvim-lsp-installer
+---@return string[] list of filtetypes for server_name
 local function getFileTypes(server_name)
   local configured_filetypes = rvim.lsp.configured_filetypes
   return vim.tbl_filter(
