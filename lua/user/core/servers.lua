@@ -30,6 +30,8 @@ local function setup_capabilities()
 end
 
 local function global_capabilities()
+  local ok, cmp_nvim_lsp = rvim.safe_require('cmp_nvim_lsp')
+  if ok then cmp_nvim_lsp.default_capabilities() end
   local capabilities = vim.lsp.protocol.make_client_capabilities()
   local snippet, code_action, folding_range, documentation = setup_capabilities()
   capabilities.textDocument.completion.completionItem.snippetSupport = true
@@ -44,8 +46,6 @@ local function global_capabilities()
   capabilities.textDocument.completion.completionItem.resolveSupport = snippet
   capabilities.textDocument.codeAction = code_action
   capabilities.textDocument.foldingRange = folding_range
-  local ok, cmp_nvim_lsp = rvim.safe_require('cmp_nvim_lsp')
-  if ok then cmp_nvim_lsp.update_capabilities(capabilities) end
   return capabilities
 end
 
