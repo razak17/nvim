@@ -31,6 +31,10 @@ return function()
         node_decremental = '<C-CR>',
       },
     },
+    context_commentstring = {
+      enable = true,
+      enable_autocmd = false,
+    },
     textobjects = {
       lookahead = true,
       select = {
