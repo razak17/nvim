@@ -26,9 +26,9 @@ local function toggle_trailing(mode)
   if vim.w.whitespace_match_number then
     fn.matchdelete(vim.w.whitespace_match_number)
     fn.matchadd('ExtraWhitespace', pattern, 10, vim.w.whitespace_match_number)
-  else
-    vim.w.whitespace_match_number = fn.matchadd('ExtraWhitespace', pattern)
+    return
   end
+  vim.w.whitespace_match_number = fn.matchadd('ExtraWhitespace', pattern)
 end
 
 util.set('ExtraWhitespace', { foreground = 'red' })

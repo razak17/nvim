@@ -1,49 +1,32 @@
 return function()
-  if not rvim.plugin_installed('null-ls.nvim') then return end
   local null_ls = require('null-ls')
-  local diagnostics = null_ls.builtins.diagnostics
-  local formatting = null_ls.builtins.formatting
+  local builtins = null_ls.builtins
+  local diagnostics = builtins.diagnostics
+  local formatting = builtins.formatting
   null_ls.setup({
-    debounce = 150,
+    debug = true,
     sources = {
       diagnostics.zsh,
       diagnostics.flake8,
-      diagnostics.eslint_d:with({
-        filetypes = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact', 'vue' },
+      diagnostics.eslint_d,
+      diagnostics.golangci_lint,
+      diagnostics.shellcheck.with({
+        condition = function()
+          return rvim.executable('stylua')
+            and not vim.tbl_isempty(vim.fs.find({ '.stylua.toml', 'stylua.toml' }, {
+              path = vim.fn.expand('%:p'),
+              upward = true,
+            }))
+        end,
+        extra_args = { '--severity', 'warning' },
       }),
-      diagnostics.shellcheck.with({ extra_args = { '--severity', 'warning' } }),
-      -- formatters
       formatting.black.with({ extra_args = { '--fast' } }),
-      -- formatting.eslint_d.with({
-      --   extra_args = { '--fix' },
-      --   filetypes = {
-      --     'vue',
-      --     'json',
-      --     'jsonc',
-      --     'javascript',
-      --     'javascriptreact',
-      --     'typescriptreact',
-      --     'typescript',
-      --   },
-      -- }),
-      formatting.prettier_d_slim.with({
-        filetypes = {
-          'html',
-          'yaml',
-          'graphql',
-          'markdown',
-          'css',
-          'json',
-          'jsonc',
-          'javascript',
-          'javascriptreact',
-          'typescriptreact',
-          'typescript',
-        },
-      }),
+      formatting.prettier,
       formatting.isort,
       formatting.shfmt,
       formatting.stylua.with({ condition = function() return rvim.executable('stylua') end }),
+      formatting.goimports,
+      -- formatting.pg_format,
     },
   })
   rvim.augroup('NullLsConfig', {
@@ -53,6 +36,4 @@ return function()
       command = function() vim.api.nvim_win_set_config(0, { border = rvim.style.border.current }) end,
     },
   })
-
-  rvim.nnoremap('<leader>ln', ':NullLsInfo<CR>', 'null-ls: info')
 end

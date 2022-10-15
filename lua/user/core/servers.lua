@@ -1,7 +1,9 @@
 ----------------------------------------------------------------------------------------------------
 -- Language servers
 ----------------------------------------------------------------------------------------------------
-local fn = vim.fn
+local fn, fmt = vim.fn, string.format
+
+local M = {}
 
 local function setup_capabilities()
   local snippet = {
@@ -37,6 +39,7 @@ local function global_capabilities()
   capabilities.textDocument.completion.completionItem.deprecatedSupport = true
   capabilities.textDocument.completion.completionItem.commitCharactersSupport = true
   capabilities.textDocument.completion.completionItem.tagSupport = { valueSet = { 1 } }
+  capabilities.textDocument.colorProvider = { dynamicRegistration = true }
   capabilities.textDocument.completion.completionItem.documentationFormat = documentation
   capabilities.textDocument.completion.completionItem.resolveSupport = snippet
   capabilities.textDocument.codeAction = code_action
@@ -50,23 +53,30 @@ end
 ---@param client table<string, any>
 ---@return boolean
 local function on_init(client)
-  local path = client.workspace_folders[1].name
-  local config_path = path .. '/.vim/settings.json'
-  if fn.filereadable(config_path) == 0 then return true end
-  local ok, json = pcall(fn.readfile, config_path)
+  local settings = client.workspace_folders[1].name .. '/.vim/settings.json'
+
+  if fn.filereadable(settings) == 0 then return true end
+  local ok, json = pcall(fn.readfile, settings)
   if not ok then return true end
+
   local overrides = vim.json.decode(table.concat(json, '\n'))
+
   for name, config in pairs(overrides) do
     if name == client.name then
-      local original = client.config
-      client.config = vim.tbl_deep_extend('force', original, config)
+      client.config = vim.tbl_deep_extend('force', client.config, config)
       client.notify('workspace/didChangeConfiguration')
+
+      vim.schedule(function()
+        local path = fn.fnamemodify(settings, ':~:.')
+        local msg = fmt('loaded local settings for %s from %s', client.name, path)
+        vim.notify_once(msg, 'info', { title = 'LSP Settings' })
+      end)
     end
   end
   return true
 end
 
-local servers = {
+M.servers = {
   astro = true,
   bashls = true,
   clangd = true,
@@ -75,29 +85,34 @@ local servers = {
   cssls = true,
   dockerls = true,
   html = true,
-  marksman = true,
+  marksman = false,
   prismals = true,
-  quick_lint_js = true,
-  rust_analyzer = true,
+  -- quick_lint_js = true,
   sqls = true,
   svelte = true,
   tsserver = true,
   vimls = true,
+  prosemd_lsp = {
+    root_dir = function(fname) return require('lspconfig/util').root_pattern('README.md')(fname) end,
+    single_file_support = false,
+  },
+  rust_analyzer = {
+    root_dir = function(fname) return require('lspconfig/util').root_pattern('Cargo.toml')(fname) end,
+    single_file_support = false,
+  },
   denols = {
-    root_dir = require('lspconfig').util.root_pattern('deno.json', 'deno.jsonc'),
+    root_dir = function(fname)
+      return require('lspconfig/util').root_pattern('deno.json', 'deno.jsonc')(fname)
+    end,
     single_file_support = false,
   },
   emmet_ls = {
     filetypes = {
       'html',
       'css',
-      'typescriptreact',
-      'typescript.tsx',
-      'javascriptreact',
-      'javascript.jsx',
     },
+    single_file_support = false,
   },
-  golangci_lint_ls = true,
   --- https://github.com/golang/tools/blob/master/gopls/doc/settings.md
   gopls = {
     settings = {
@@ -108,6 +123,14 @@ local servers = {
           gc_details = false,
           test = true,
           tidy = true,
+        },
+        hints = {
+          assignVariableTypes = true,
+          compositeLiteralFields = true,
+          constantValues = true,
+          functionTypeParameters = true,
+          parameterNames = true,
+          rangeVariableTypes = true,
         },
         analyses = {
           unusedparams = true,
@@ -121,27 +144,25 @@ local servers = {
     },
   },
   graphql = {
-    root_dir = require('lspconfig').util.root_pattern(
-      '.graphqlrc*',
-      '.graphql.config.*',
-      'graphql.config.*'
-    ),
+    root_dir = function(fname)
+      return require('lspconfig/util').root_pattern(
+        '.graphqlrc*',
+        '.graphql.config.*',
+        'graphql.config.*'
+      )(fname)
+    end,
     single_file_support = false,
   },
   jsonls = {
+    init_options = { provideFormatter = false },
     settings = {
       json = {
         validate = { enable = true },
         schemas = require('schemastore').json.schemas(),
       },
     },
-    setup = {
-      commands = {
-        Format = {
-          function() vim.lsp.buf.range_formatting({}, { 0, 0 }, { vim.fn.line('$'), 0 }) end,
-        },
-      },
-    },
+    root_dir = function(fname) return require('lspconfig/util').root_pattern('package.json')(fname) end,
+    single_file_support = false,
   },
   pyright = {
     python = {
@@ -164,16 +185,24 @@ local servers = {
     local plenary = ('%s/start/plenary.nvim'):format(plugins)
     local packer = ('%s/opt/packer.nvim'):format(plugins)
 
+    local library = { fn.expand('$VIMRUNTIME/lua') }
+
+    if rvim.plugin_installed('emmylua-nvim') then
+      library = { fn.expand('$VIMRUNTIME/lua'), emmy, packer, plenary }
+    end
+
     return {
       settings = {
         Lua = {
-          runtime = { version = 'LuaJIT' },
+          runtime = { path = path, version = 'LuaJIT' },
+          hint = { enable = true, arrayIndex = 'Disable', setType = true },
           format = { enable = false },
           diagnostics = {
             globals = { 'vim', 'describe', 'it', 'before_each', 'after_each', 'packer_plugins' },
           },
           workspace = {
-            library = { vim.env.VIMRUNTIME, emmy, packer, plenary },
+            library = library,
+            checkThirdParty = false,
           },
           telemetry = { enable = false },
         },
@@ -181,21 +210,20 @@ local servers = {
     }
   end,
   tailwindcss = {
-    root_dir = require('lspconfig').util.root_pattern(
-      'tailwind.config.js',
-      'tailwind.config.ts',
-      'postcss.config.js',
-      'postcss.config.ts'
-    ),
+    root_dir = function(fname)
+      return require('lspconfig/util').root_pattern(
+        'tailwind.config.js',
+        'tailwind.config.cjs',
+        'tailwind.js',
+        'tailwind.cjs'
+      )(fname)
+    end,
     single_file_support = false,
   },
   vuels = {
     setup = {
       root_dir = function(fname)
-        local util = require('rvim.lspconfig/util')
-        return util.root_pattern('package.json')(fname)
-          or util.root_pattern('vue.config.js')(fname)
-          or vim.fn.getcwd()
+        return require('lspconfig/util').root_pattern('package.json', 'vue.config.js')(fname)
       end,
       init_options = {
         config = {
@@ -249,8 +277,8 @@ local servers = {
   },
 }
 
-return function(name)
-  local config = servers[name]
+function M.setup(name)
+  local config = M.servers[name]
   if not config then return end
   local t = type(config)
   if t == 'boolean' then config = {} end
@@ -259,3 +287,5 @@ return function(name)
   config.capabilities = global_capabilities()
   return config
 end
+
+return M

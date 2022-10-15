@@ -1,11 +1,12 @@
+if not rvim or not rvim.plugin_loaded('nvim-surround') then return end
+
 local nnoremap = rvim.nnoremap
 local fmt = string.format
 
-vim.opt_local.textwidth = 100
+vim.bo.textwidth = 100
 vim.opt_local.iskeyword:append('-')
 vim.opt_local.formatoptions:remove('o')
-
-if not rvim or not rvim.plugin_loaded('nvim-surround') then return end
+vim.opt_local.spell = true
 
 local function find(word, ...)
   for _, str in ipairs({ ... }) do
@@ -15,6 +16,8 @@ local function find(word, ...)
 end
 
 local fn = vim.fn
+
+local function open_help(tag) rvim.wrap_err(vim.cmd.help, tag) end
 
 --- Stolen from nlua.nvim this function attempts to open
 --- vim help docs if an api or vim.fn function otherwise it
@@ -29,50 +32,55 @@ local function keyword(word, callback)
 
   vim.bo.iskeyword = original_iskeyword
 
-  -- TODO: This is a sub par work around, since I usually rename `vim.api` -> `api` or similar
-  -- consider maybe using treesitter in the future
-  local api_match = find(word, 'api', 'vim.api')
-  local fn_match = find(word, 'fn', 'vim.fn')
-  if api_match then
-    local _, finish = string.find(word, api_match .. '.')
-    local api_function = string.sub(word, finish + 1)
+  local match, _, end_idx = find(word, 'api.', 'vim.api.')
+  if match and end_idx then return open_help(word:sub(end_idx + 1)) end
 
-    vim.cmd.help(api_function)
-    return
-  elseif fn_match then
-    local _, finish = string.find(word, fn_match .. '.')
-    if not finish then return end
-    local api_function = string.sub(word, finish + 1) .. '()'
+  match, _, end_idx = find(word, 'fn.', 'vim.fn.')
+  if match and end_idx then return open_help(word:sub(end_idx + 1) .. '()') end
 
-    vim.cmd.help(api_function)
-    return
-  elseif callback then
-    callback()
-  else
-    vim.lsp.buf.hover()
-  end
+  match, _, end_idx = find(word, '^vim.(%w+)')
+  if match and end_idx then return open_help(word:sub(1, end_idx)) end
+
+  if callback then return callback() end
+
+  vim.lsp.buf.hover()
 end
 
 rvim.ftplugin_conf('nvim-surround', function(surround)
   local get_input = function(prompt)
-    local ok, input = pcall(vim.fn.input, prompt)
+    local ok, input = pcall(vim.fn.input, fmt('%s: ', prompt))
     if not ok then return end
     return input
   end
   surround.buffer_setup({
-    delimiters = {
-      pairs = {
-        l = { 'function () ', ' end' },
-        F = function()
+    surrounds = {
+      s = {
+        add = { "['", "']" },
+      },
+      l = {
+        add = { 'function () ', ' end' },
+      },
+      F = {
+        add = function()
           return {
-            fmt('local function %s() ', get_input('Enter a function name: ')),
-            ' end',
+            { fmt('local function %s() ', get_input('Enter a function name')) },
+            { ' end' },
           }
         end,
-        i = function()
+      },
+      i = {
+        add = function()
           return {
-            fmt('if %s then ', get_input('Enter a condition:')),
-            ' end',
+            { fmt('if %s then ', get_input('Enter a condition')) },
+            { ' end' },
+          }
+        end,
+      },
+      t = {
+        add = function()
+          return {
+            { fmt('{ %s = { ', get_input('Enter a field name')) },
+            { ' }}' },
           }
         end,
       },

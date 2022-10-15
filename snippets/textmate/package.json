@@ -16,6 +16,10 @@
         "path": "./css.json"
       },
       {
+        "language": "gitcommit",
+        "path": "./gitcommit.json"
+      },
+      {
         "language": "help",
         "path": "./help.json"
       },

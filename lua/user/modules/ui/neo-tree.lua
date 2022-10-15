@@ -1,27 +1,39 @@
 return function()
-  if not rvim.plugin_installed('neo-tree.nvim') then return end
   local icons = rvim.style.icons
   local highlights = require('user.utils.highlights')
 
   highlights.plugin('NeoTree', {
-    NeoTreeIndentMarker = { link = 'Comment' },
-    NeoTreeNormal = { link = 'PanelBackground' },
-    NeoTreeNormalNC = { link = 'PanelBackground' },
-    NeoTreeRootName = { bold = true, italic = true },
-    NeoTreeStatusLine = { link = 'PanelBackground' },
-    NeoTreeTabActive = { bg = { from = 'PanelBackground' } },
-    NeoTreeTabInactive = { bg = { from = 'PanelDarkBackground' }, fg = { from = 'Comment' } },
-    NeoTreeTabSeparatorInactive = { bg = { from = 'PanelDarkBackground' }, fg = 'black' },
-    NeoTreeTabSeparatorActive = { bg = { from = 'PanelBackground' }, fg = { from = 'Comment' } },
+    { NeoTreeTitleBar = { inherit = 'CybuFocus', bold = true } },
+    { NeoTreeIndentMarker = { link = 'Comment' } },
+    { NeoTreeNormal = { link = 'PanelBackground' } },
+    { NeoTreeNormalNC = { link = 'PanelBackground' } },
+    { NeoTreeRootName = { bold = true, italic = true } },
+    { NeoTreeStatusLine = { link = 'PanelBackground' } },
+    { NeoTreeTabActive = { bg = { from = 'PanelBackground' } } },
+    {
+      NeoTreeTabInactive = {
+        bg = { from = 'PanelDarkBackground', alter = 15 },
+        fg = { from = 'Comment' },
+      },
+    },
+    {
+      NeoTreeTabSeparatorInactive = {
+        inherit = 'NeoTreeTabInactive',
+        fg = { from = 'PanelDarkBackground', attr = 'bg' },
+      },
+    },
+    {
+      NeoTreeTabSeparatorActive = {
+        inherit = 'PanelBackground',
+        fg = { from = 'Comment' },
+      },
+    },
   })
 
   vim.g.neo_tree_remove_legacy_commands = 1
 
-  rvim.nnoremap('<c-n>', '<Cmd>Neotree toggle reveal<CR>')
+  rvim.nnoremap('<C-N>', '<Cmd>Neotree toggle reveal<CR>')
 
-  require('which-key').register({
-    ['<leader>e'] = { '<Cmd>Neotree toggle reveal<CR>', 'toggle tree' },
-  })
   require('neo-tree').setup({
     source_selector = { winbar = true, separator_active = ' ' },
     enable_git_status = true,
@@ -35,6 +47,12 @@ return function()
         hide_gitignored = true,
         never_show = {
           '.DS_Store',
+        },
+      },
+      window = {
+        mappings = {
+          ['/'] = 'noop',
+          ['g/'] = 'fuzzy_finder',
         },
       },
     },
@@ -58,16 +76,26 @@ return function()
           conflict = '',
         },
       },
+      diagnostics = {
+        highlights = {
+          hint = 'DiagnosticHint',
+          info = 'DiagnosticInfo',
+          warn = 'DiagnosticWarn',
+          error = 'DiagnosticError',
+        },
+      },
     },
     window = {
       position = 'right',
       width = 30,
       mappings = {
-        o = 'toggle_node',
-        l = 'open',
+        ['o'] = 'toggle_node',
+        ['l'] = 'open',
         ['<CR>'] = 'open_with_window_picker',
         ['<c-s>'] = 'split_with_window_picker',
         ['<c-v>'] = 'vsplit_with_window_picker',
+        ['<esc>'] = 'revert_preview',
+        ['P'] = { 'toggle_preview', config = { use_float = true } },
       },
     },
   })

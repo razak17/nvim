@@ -4,6 +4,24 @@ local fn = vim.fn
 local api = vim.api
 local fmt = string.format
 
+rvim.augroup('VimrcIncSearchHighlight', {
+  {
+    event = { 'OptionSet' },
+    pattern = { 'hlsearch' },
+    command = function()
+      vim.schedule(function() vim.cmd.redrawstatus() end)
+    end,
+  },
+  {
+    event = 'RecordingEnter',
+    command = function() vim.o.hlsearch = false end,
+  },
+  {
+    event = 'RecordingLeave',
+    command = function() vim.o.hlsearch = true end,
+  },
+})
+
 local smart_close_filetypes = {
   'help',
   'git-status',
@@ -128,13 +146,14 @@ rvim.augroup('TextYankHighlight', {
     event = { 'TextYankPost' },
     pattern = { '*' },
     command = function()
-      require('vim.highlight').on_yank({ timeout = 277, on_visual = false, higroup = 'Visual' })
+      require('vim.highlight').on_yank({ timeout = 277, on_visual = false, higroup = 'Search' })
     end,
   },
 })
 
 local column_exclude = { 'gitcommit' }
 local column_block_list = {
+  'NeogitCommitSelectView',
   'DiffviewFileHistory',
   'log',
   'norg',
@@ -155,16 +174,19 @@ local column_block_list = {
   'packer',
   'dap-repl',
 }
+
 local function check_color_column()
   for _, win in ipairs(api.nvim_list_wins()) do
     local buffer = vim.bo[api.nvim_win_get_buf(win)]
     local window = vim.wo[win]
+    local is_current = win == api.nvim_get_current_win()
     if fn.win_gettype() == '' and not vim.tbl_contains(column_exclude, buffer.filetype) then
       local too_small = api.nvim_win_get_width(win) <= buffer.textwidth + 1
+      -- TODO: This should do a pattern match against a string rather than direct comparison
       local is_excluded = vim.tbl_contains(column_block_list, buffer.filetype)
       if is_excluded or too_small then
         window.colorcolumn = ''
-      elseif window.colorcolumn == '' then
+      elseif rvim.empty(window.colorcolumn) and is_current then
         window.colorcolumn = '+1'
       end
     end
@@ -238,7 +260,7 @@ rvim.augroup('WinBehavior', {
   },
 })
 
-local cursorline_exclusions = { 'alpha' }
+local cursorline_exclusions = { 'alpha', 'TelescopePrompt', 'CommandTPrompt' }
 ---@param buf number
 ---@return boolean
 local function should_show_cursorline(buf)
@@ -251,12 +273,12 @@ end
 
 rvim.augroup('Cursorline', {
   {
-    event = { 'BufEnter' },
+    event = { 'BufEnter', 'InsertLeave' },
     pattern = { '*' },
     command = function(args) vim.wo.cursorline = should_show_cursorline(args.buf) end,
   },
   {
-    event = { 'BufLeave' },
+    event = { 'BufLeave', 'InsertEnter' },
     pattern = { '*' },
     command = function() vim.wo.cursorline = false end,
   },
@@ -346,6 +368,16 @@ rvim.augroup('Utilities', {
     command = 'set bufhidden=delete',
   },
   {
+    event = { 'FileType' },
+    pattern = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
+    command = function() vim.bo.tw = 100 end,
+  },
+  {
+    event = { 'FileType' },
+    pattern = { 'javascript', 'typescript' },
+    command = function() vim.opt_local.spell = true end,
+  },
+  {
     event = { 'BufWritePre', 'FileWritePre' },
     pattern = { '*' },
     command = "silent! call mkdir(expand('<afile>:p:h'), 'p')",
@@ -374,27 +406,6 @@ rvim.augroup('Utilities', {
   },
 })
 
--- rvim.augroup("RememberFolds", {
---   {
---     event = { "BufWinLeave" },
---     pattern = { "*" },
---     command = function()
---       if can_save() then
---         vim.cmd "mkview"
---       end
---     end,
---   },
---   {
---     event = { "BufWinEnter" },
---     pattern = { "*" },
---     command = function()
---       if can_save() then
---         vim.cmd "silent! loadview"
---       end
---     end,
---   },
--- })
-
 rvim.augroup('TerminalAutocommands', {
   {
     event = { 'TermClose' },
@@ -405,4 +416,3 @@ rvim.augroup('TerminalAutocommands', {
     end,
   },
 })
-

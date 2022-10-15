@@ -3,7 +3,7 @@ if not rvim or not rvim.ui.winbar.enable then return end
 
 ---@diagnostic disable: duplicate-doc-param
 local devicons = require('nvim-web-devicons')
-local util = require('user.utils.highlights')
+local highlights = require('user.utils.highlights')
 local utils = require('user.utils.statusline')
 local component = utils.component
 local component_raw = utils.component_raw
@@ -12,6 +12,7 @@ local empty = rvim.empty
 local fn = vim.fn
 local api = vim.api
 local icons = rvim.style.icons.misc
+local contains = vim.tbl_contains
 
 local dir_separator = '/'
 local separator = icons.arrow_right
@@ -30,11 +31,11 @@ function rvim.ui.winbar.click(id, _, _, _)
 end
 
 highlights.plugin('winbar', {
-  Winbar = { bold = false },
-  WinbarNC = { bold = false },
-  WinbarCrumb = { bold = true },
-  WinbarIcon = { inherit = 'Function' },
-  WinbarDirectory = { inherit = 'Directory' },
+  { Winbar = { bold = false } },
+  { WinbarNC = { bold = false } },
+  { WinbarCrumb = { bold = true } },
+  { WinbarIcon = { inherit = 'Function' } },
+  { WinbarDirectory = { inherit = 'Directory' } },
 })
 
 local function breadcrumbs()
@@ -57,13 +58,14 @@ function rvim.ui.winbar.get()
   local bufname = api.nvim_buf_get_name(api.nvim_get_current_buf())
   if empty(bufname) then return add(component('[No name]', 'Winbar', { priority = 0 })) end
 
-  if rvim.ui.winbar.use_filename then
+  local cond = rvim.ui.winbar.use_filename
+  if cond then
     local filename = vim.fn.expand('%:t')
     add(component(filename, 'Winbar', { priority = 1, suffix = separator }))
-  else
+  end
+  if not cond then
     local parts = vim.split(fn.fnamemodify(bufname, ':.'), '/')
     local icon, color = devicons.get_icon(bufname, nil, { default = true })
-
     rvim.foreach(function(part, index)
       local priority = (#parts - (index - 1)) * 2
       local is_first = nil
@@ -88,36 +90,51 @@ function rvim.ui.winbar.get()
   return utils.display(winbar, api.nvim_win_get_width(api.nvim_get_current_win()))
 end
 
-local blocked = {
+local blocked_fts = {
+  'DiffviewFiles',
   'NeogitStatus',
   'NeogitCommitMessage',
   'toggleterm',
   'DressingInput',
   'dashboard',
   'TelescopePrompt',
-  'sql',
   'harpoon',
 }
-local allowed = { 'toggleterm', 'neo-tree' }
+
+local allowed_fts = { 'toggleterm', 'neo-tree' }
+local allowed_buftypes = { 'terminal' }
+
+local function set_winbar()
+  rvim.foreach(function(w)
+    local buf, win = vim.bo[api.nvim_win_get_buf(w)], vim.wo[w]
+    local bt, ft, is_diff = buf.buftype, buf.filetype, win.diff
+    local ignored = contains(allowed_fts, ft) or contains(allowed_buftypes, bt)
+    if not ignored then
+      if
+        not contains(blocked_fts, ft)
+        and fn.win_gettype(api.nvim_win_get_number(w)) == ''
+        and bt == ''
+        and ft ~= ''
+        and not is_diff
+      then
+        win.winbar = '%{%v:lua.rvim.ui.winbar.get()%}'
+      elseif is_diff then
+        win.winbar = nil
+      end
+    end
+  end, api.nvim_tabpage_list_wins(0))
+end
 
 rvim.augroup('AttachWinbar', {
   {
-    event = { 'BufWinEnter', 'BufEnter', 'WinClosed' },
+    event = { 'BufWinEnter', 'TabNew', 'TabEnter', 'BufEnter', 'WinClosed' },
     desc = 'Toggle winbar',
-    command = function()
-      for _, win in ipairs(api.nvim_tabpage_list_wins(0)) do
-        local buf = api.nvim_win_get_buf(win)
-        if
-          not vim.tbl_contains(blocked, vim.bo[buf].filetype)
-          and empty(fn.win_gettype(win))
-          and empty(vim.bo[buf].buftype)
-          and not empty(vim.bo[buf].filetype)
-        then
-          vim.wo[win].winbar = '%{%v:lua.rvim.ui.winbar.get()%}'
-        elseif not vim.tbl_contains(allowed, vim.bo[buf].filetype) then
-          vim.wo[win].winbar = nil
-        end
-      end
-    end,
+    command = set_winbar,
+  },
+  {
+    event = 'User',
+    pattern = { 'DiffviewDiffBufRead', 'DiffviewDiffBufWinEnter' },
+    desc = 'Toggle winbar',
+    command = set_winbar,
   },
 })

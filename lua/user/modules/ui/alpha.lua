@@ -1,5 +1,4 @@
 return function()
-  if not rvim.plugin_installed('alpha-nvim') then return end
   local alpha = require('alpha')
   local dashboard = require('alpha.themes.dashboard')
   local fortune = require('alpha.fortune')
@@ -16,14 +15,14 @@ return function()
   end
 
   hl.plugin('alpha', {
-    StartLogo1 = { fg = '#1C506B' },
-    StartLogo2 = { fg = '#1D5D68' },
-    StartLogo3 = { fg = '#1E6965' },
-    StartLogo4 = { fg = '#1F7562' },
-    StartLogo5 = { fg = '#21825F' },
-    StartLogo6 = { fg = '#228E5C' },
-    StartLogo7 = { fg = '#239B59' },
-    StartLogo8 = { fg = '#24A755' },
+    { StartLogo1 = { fg = '#1C506B' } },
+    { StartLogo2 = { fg = '#1D5D68' } },
+    { StartLogo3 = { fg = '#1E6965' } },
+    { StartLogo4 = { fg = '#1F7562' } },
+    { StartLogo5 = { fg = '#21825F' } },
+    { StartLogo6 = { fg = '#228E5C' } },
+    { StartLogo7 = { fg = '#239B59' } },
+    { StartLogo8 = { fg = '#24A755' } },
   })
 
   local header = {
@@ -93,12 +92,12 @@ return function()
       command = function(args)
         vim.opt_local.foldenable = false
         vim.opt_local.colorcolumn = ''
-        vim.opt.laststatus = 0
+        vim.o.laststatus = 0
         rvim.nnoremap('q', '<Cmd>Alpha<CR>', { buffer = args.buf, nowait = true })
 
         vim.api.nvim_create_autocmd('BufUnload', {
           buffer = args.buf,
-          callback = function() vim.opt.laststatus = 3 end,
+          callback = function() vim.o.laststatus = 3 end,
         })
       end,
     },

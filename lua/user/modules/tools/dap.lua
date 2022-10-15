@@ -1,45 +1,42 @@
-local icons = rvim.style.icons
+return function()
+  local icons = rvim.style.icons
+  local python_dir = rvim.path.mason .. '/packages/debugpy/venv/bin/python'
+  local lldb_dir = rvim.path.vscode_lldb .. '/adapter/codelldb'
+  local node_dir = rvim.path.mason .. '/packages/node-debug2-adapter/out/src/nodeDebug.js'
 
-local M = {}
+  require('dap').defaults.fallback.terminal_win_cmd = '50vsplit new'
+  -- DON'T automatically stop at exceptions
+  require('dap').defaults.fallback.exception_breakpoints = {}
 
-rvim.dap = {
-  python_dir = rvim.paths.mason .. '/packages/debugpy/venv/bin/python',
-  node_dir = rvim.paths.mason .. '/packages/node-debug2-adapter/out/src/nodeDebug.js',
-  lldb_dir = rvim.paths.vscode_lldb .. '/adapter/codelldb',
-  breakpoint = {
+  -- config
+  local dap = require('dap')
+  local utils = require('user.utils')
+  local is_directory = utils.is_directory
+  local fn = vim.fn
+
+  fn.sign_define('DapBreakpoint', {
     text = icons.misc.bug_alt,
     texthl = 'DapBreakpoint',
     linehl = '',
     numhl = '',
-  },
-  breakpoint_rejected = {
+  })
+  fn.sign_define('DapBreakpointRejected', {
     text = icons.misc.bug_alt,
     texthl = 'DapBreakpointRejected',
     linehl = '',
     numhl = '',
-  },
-  stopped = {
+  })
+  fn.sign_define('DapStopped', {
     text = icons.misc.dap_hollow,
     texthl = 'DapStopped',
     linehl = '',
     numhl = '',
-  },
-}
-
-function M.setup()
-  local dap = require('dap')
-  local utils = require("user.utils")
-  local is_directory = utils.is_directory
-  local fn = vim.fn
-
-  fn.sign_define('DapBreakpoint', rvim.dap.breakpoint)
-  fn.sign_define('DapBreakpointRejected', rvim.dap.breakpoint_rejected)
-  fn.sign_define('DapStopped', rvim.dap.stopped)
+  })
 
   -- python
   dap.adapters.python = {
     type = 'executable',
-    command = rvim.dap.python_dir,
+    command = python_dir,
     args = { '-m', 'debugpy.adapter' },
   }
   dap.configurations.python = {
@@ -50,18 +47,14 @@ function M.setup()
       program = '${file}',
       pythonPath = function()
         local cwd = fn.getcwd()
-        if is_directory(cwd .. '/venv/bin/python') then
-          return cwd .. '/venv/bin/python'
-        elseif is_directory(cwd .. '/.venv/bin/python') then
-          return cwd .. '/.venv/bin/python'
-        else
-          return rvim.dap.python_dir
-        end
+        if is_directory(cwd .. '/venv/bin/python') then return cwd .. '/venv/bin/python' end
+        if is_directory(cwd .. '/.venv/bin/python') then return cwd .. '/.venv/bin/python' end
+        return python_dir
       end,
     },
   }
   -- nodejs
-  dap.adapters.node2 = { type = 'executable', command = 'node', args = { rvim.dap.node_dir } }
+  dap.adapters.node2 = { type = 'executable', command = 'node', args = { node_dir } }
   dap.configurations.javascript = {
     {
       -- name = "Launch",
@@ -98,7 +91,7 @@ function M.setup()
   -- lldb
   dap.adapters.lldb = {
     type = 'executable',
-    command = rvim.dap.lldb_dir,
+    command = lldb_dir,
     name = 'lldb',
   }
   -- CPP
@@ -119,5 +112,3 @@ function M.setup()
   -- Rust
   dap.configurations.rust = dap.configurations.cpp
 end
-
-return M

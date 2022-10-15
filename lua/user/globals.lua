@@ -5,6 +5,7 @@ local fmt = string.format
 local api = vim.api
 local uv = vim.loop
 local oss = vim.loop.os_uname().sysname
+local l = vim.log.levels
 
 rvim.open_command = oss == 'Darwin' and 'open' or 'xdg-open'
 
@@ -14,6 +15,17 @@ function join_paths(...)
   local path_sep = uv.os_uname().version:match('Windows') and '\\' or '/'
   local result = table.concat({ ... }, path_sep)
   return result
+end
+
+---Require a module in protected mode without relying on its cached value
+---@param module string
+---@return any
+function require_clean(module)
+  package.loaded[module] = nil
+  _G[module] = nil
+  local status, requested = pcall(require, module)
+  if not status then return end
+  return requested
 end
 
 ---Get the full path to `$RVIM_RUNTIME_DIR`
@@ -51,9 +63,9 @@ function rvim.get_user_dir()
   return join_paths(config_dir, 'lua', 'user')
 end
 
------------------------------------------------------------------------------//
+----------------------------------------------------------------------------------------------------
 -- Utils
------------------------------------------------------------------------------//
+----------------------------------------------------------------------------------------------------
 
 --- Convert a list or map of items into a value by iterating all it's fields and transforming
 --- them with a callback
@@ -61,8 +73,9 @@ end
 ---@param callback fun(T, T, key: string | number): T
 ---@param list T[]
 ---@param accum T
----@return T
+---@return T?
 function rvim.fold(callback, list, accum)
+  accum = accum or {}
   for k, v in pairs(list) do
     accum = callback(accum, v, k)
     assert(accum ~= nil, 'The accumulator must be returned on each iteration')
@@ -95,11 +108,10 @@ end
 ---@param list string[]
 ---@return boolean
 function rvim.any(target, list)
-  return rvim.fold(function(accum, item)
-    if accum then return accum end
+  for _, item in ipairs(list) do
     if target:match(item) then return true end
-    return accum
-  end, list, false)
+  end
+  return false
 end
 
 ---Find an item in a list
@@ -130,14 +142,12 @@ function rvim.find_string(table, string)
   return found
 end
 
-function rvim.file_exists(name)
-  local f = io.open(name, 'r')
-  if f ~= nil then
-    io.close(f)
-    return true
-  else
-    return false
-  end
+---Some plugins are not safe to be reloaded because their setup functions
+---and are not idempotent. This wraps the setup calls of such plugins
+---@param func fun()
+function rvim.block_reload(func)
+  if vim.g.packer_compiled_loaded then return end
+  func()
 end
 
 rvim.list_installed_plugins = (function()
@@ -193,9 +203,28 @@ function rvim.safe_require(module, opts)
   local ok, result = pcall(require, module)
   if not ok and not opts.silent then
     if opts.message then result = opts.message .. '\n' .. result end
-    vim.notify(result, vim.log.levels.ERROR, { title = fmt('Error requiring: %s', module) })
+    vim.notify(result, l.ERROR, { title = fmt('Error requiring: %s', module) })
   end
   return ok, result
+end
+
+--- Call the given function and use `vim.notify` to notify of any errors
+--- this function is a wrapper around `xpcall` which allows having a single
+--- error handler for all errors
+---@param msg? string
+---@param func function
+---@vararg any
+---@return boolean, any
+---@overload fun(fun: function, ...): boolean, any
+function rvim.wrap_err(msg, func, ...)
+  local args = { ... }
+  if type(msg) == 'function' then
+    args, func, msg = { func, unpack(args) }, msg, nil
+  end
+  return xpcall(func, function(err)
+    msg = msg and fmt('%s:\n%s', msg, err) or err
+    vim.schedule(function() vim.notify(msg, l.ERROR, { title = 'ERROR' }) end)
+  end, unpack(args))
 end
 
 ---@alias Plug table<(string | number), string>
@@ -231,13 +260,9 @@ end
 function rvim.empty(item)
   if not item then return true end
   local item_type = type(item)
-  if item_type == 'string' then
-    return item == ''
-  elseif item_type == 'number' then
-    return item <= 0
-  elseif item_type == 'table' then
-    return vim.tbl_isempty(item)
-  end
+  if item_type == 'string' then return item == '' end
+  if item_type == 'number' then return item <= 0 end
+  if item_type == 'table' then return vim.tbl_isempty(item) end
   return item ~= nil
 end
 
@@ -252,10 +277,10 @@ function rvim.invalidate(path, recursive)
         require(key)
       end
     end
-  else
-    package.loaded[path] = nil
-    require(path)
+    return
   end
+  package.loaded[path] = nil
+  require(path)
 end
 
 ----------------------------------------------------------------------------------------------------
@@ -309,6 +334,7 @@ end
 ---@return number
 function rvim.augroup(name, commands)
   assert(name ~= 'User', 'The name of an augroup CANNOT be User')
+  assert(#commands > 0, fmt('You must specify at least one autocommand for %s', name))
   local id = api.nvim_create_augroup(name, { clear = true })
   for _, autocmd in ipairs(commands) do
     validate_autocmd(name, autocmd)
@@ -357,8 +383,26 @@ function rvim.replace_termcodes(str) return api.nvim_replace_termcodes(str, true
 function rvim.has(feature) return vim.fn.has(feature) > 0 end
 
 ----------------------------------------------------------------------------------------------------
--- Keymaps
+-- Mappings
 ----------------------------------------------------------------------------------------------------
+
+--- remove key from table
+---@param table table
+---@param key string
+---@return table
+function rvim.removekey(table, key)
+  table[key] = nil
+  return table
+end
+
+--- add mapping only if plugin is installed
+---@param desc string
+---@param plugin string
+---@param useInstalled boolean|nil
+---@return table
+function rvim.with_plugin(desc, plugin, useInstalled)
+  return { desc = desc, plugin = plugin, useInstalled = useInstalled }
+end
 
 ---create a mapping function factory
 ---@param mode string
@@ -372,6 +416,17 @@ local function make_mapper(mode, o)
   ---@param rhs string|function
   ---@param opts table
   return function(lhs, rhs, opts)
+    -- check if plugin is installed if plugin option and useInstalled are passed in opts
+    if type(opts) == 'table' and opts.plugin and opts.useInstalled then
+      if not rvim.plugin_installed(opts.plugin) then return end
+      rvim.removekey(opts, 'plugin')
+      rvim.removekey(opts, 'useInstalled')
+    -- check if plugin is loaded if plugin option is passed in opts
+    elseif type(opts) == 'table' and opts.plugin then
+      if not rvim.plugin_loaded(opts.plugin) then return end
+      -- remove plugin option from opts to enable vim.keymap.set to use it
+      rvim.removekey(opts, 'plugin')
+    end
     -- If the label is all that was passed in, set the opts automagically
     opts = type(opts) == 'string' and { desc = opts } or opts and vim.deepcopy(opts) or {}
     vim.keymap.set(mode, lhs, rhs, vim.tbl_extend('keep', opts, parent_opts))

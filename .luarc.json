@@ -4,6 +4,7 @@
     "missing-parameter",
     "return-type-mismatch",
     "param-type-mismatch",
+    "cast-local-type",
     "redundant-parameter"
   ],
   "Lua.diagnostics.globals": [
@@ -18,6 +19,7 @@
     "stds",
     "pairs",
     "join_paths",
+    "require_clean",
     "lfs"
   ],
   "Lua.workspace.checkThirdParty": false

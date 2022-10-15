@@ -40,6 +40,8 @@ createDirs() {
 	mkdir -p "$HOME/.cache/rvim/undodir"
 	mkdir -p "$HOME/.cache/rvim/telescope"
 	mkdir -p "$HOME/.local/share/rvim"
+	mkdir -p "$HOME/.local/share/rvim/site"
+	mkdir -p "$HOME/.local/share/rvim/site/spell"
 }
 
 pythonVenvInit() {
@@ -82,9 +84,11 @@ validate_node_installation() {
 
   if [ "$pkg_manager" = "npm" ]; then
     manager_home="$(npm config get prefix 2>/dev/null)"
-  elif [ "$pkg_manager" = "pnpm" ]; then
+  fi
+  if [ "$pkg_manager" = "pnpm" ]; then
     manager_home="$(pnpm config get prefix 2>/dev/null)"
-  else
+  fi
+  if [ "$pkg_manager" = "yarn" ]; then
     manager_home="$(yarn global bin 2>/dev/null)"
   fi
 
@@ -116,14 +120,14 @@ install_nodejs_deps()        {
 
 install_dict() {
   url="https://raw.githubusercontent.com/eneko/data-repository/master/data/words.txt"
-  dicwords="$RVIM_RUNTIME_DIR/site/dictionary.txt"
+  dicwords="$RVIM_RUNTIME_DIR/site/spell/dictionary.txt"
   if [ ! -e "$dicwords" ]; then
     echo 'Installing dictionary.txt'
     curl "$url" -o "$dicwords" -s
   fi
 }
 
-little_fixes() {
+dirty_talk() {
   file_name='programming.utf-8.spl'
   file="$XDG_DATA_HOME/nvim/site/spell/$file_name"
   if [ -e "$file" ]; then
@@ -174,9 +178,9 @@ cloneconfig() {
 
 	if [ -e "$RVIM_RUNTIME_DIR/site/pack/packer/opt/packer.nvim" ]; then
 		echo 'packer already installed'
-	else
-		installpacker
-	fi
+    return 1
+  fi
+	installpacker
 
 	sudo cp --force "$RVIM_CONFIG_DIR/utils/bin/rvim" "$HOME/.local/bin"
 }
@@ -202,13 +206,13 @@ while [ "$#" -gt 0 ]; do
     install_dict
 		;;
 	-fixes)
-    little_fixes
+    dirty_talk
 		;;
 	*--all*)
 		cloneconfig
     install_deps
     install_dict
-    little_fixes
+    dirty_talk
 		;;
 	*) echo "Unavailable command... $curr" ;;
 	esac

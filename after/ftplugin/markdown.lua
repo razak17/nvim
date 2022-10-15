@@ -1,8 +1,7 @@
-vim.opt_local.spell = true
-vim.opt_local.spelloptions = 'camel'
 -- no distractions in markdown files
 vim.opt_local.number = false
 vim.opt_local.relativenumber = false
+vim.opt_local.spell = true
 
 local args = { buffer = 0 }
 
@@ -42,12 +41,12 @@ rvim.ftplugin_conf(
 
 rvim.ftplugin_conf('nvim-surround', function(surround)
   surround.buffer_setup({
-    delimiters = {
-      pairs = {
-        ['l'] = function()
+    surrounds = {
+      l = {
+        add = function()
           return {
-            '[',
-            '](' .. vim.fn.getreg('*') .. ')',
+            { '[' },
+            { '](' .. vim.fn.getreg('*') .. ')' },
           }
         end,
       },

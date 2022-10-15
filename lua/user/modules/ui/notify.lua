@@ -1,11 +1,11 @@
 return function()
-  if not rvim.plugin_installed('nvim-notify') then return end
   local api = vim.api
   local codicons = rvim.style.codicons
 
   local notify = require('notify')
+
   notify.setup({
-    max_width = function() return math.floor(vim.o.columns * 0.8) end,
+    max_width = function() return math.floor(vim.o.columns * 0.4) end,
     max_height = function() return math.floor(vim.o.lines * 0.8) end,
     background_colour = 'NormalFloat',
     on_open = function(win)
@@ -15,6 +15,7 @@ return function()
     end,
     timeout = 500,
     stages = 'fade_in_slide_out',
+    top_down = false,
     render = function(...)
       local notif = select(2, ...)
       local style = notif.title[1] == '' and 'minimal' or 'default'
@@ -30,9 +31,4 @@ return function()
   })
 
   vim.notify = notify
-  require('telescope').load_extension('notify')
-  require('which-key').register({
-    ['<leader>nn'] = { ':Notifications<cr>', 'notify: show' },
-    ['<leader>nx'] = { notify.dismiss, 'notify: dimiss' },
-  })
 end

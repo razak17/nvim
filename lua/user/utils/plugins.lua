@@ -5,14 +5,6 @@ local M = {}
 
 function M.plug_notify(msg, level) vim.notify(msg, level, { title = 'Packer' }) end
 
----Some plugins are not safe to be reloaded because their setup functions
----are not idempotent. This wraps the setup calls of such plugins
----@param func fun()
-function M.block_reload(func)
-  if vim.g.packer_compiled_loaded then return end
-  func()
-end
-
 ---Require a plugin config
 ---@param dir string
 ---@param name string
@@ -51,7 +43,7 @@ function M.with_local(spec)
   spec.local_cond = nil
   spec.local_disable = nil
 
-  return spec, local_spec
+  return local_spec, spec
 end
 
 ---local variant of packer's use function that specifies both a local and
@@ -59,13 +51,13 @@ end
 ---@param original table
 function M.use_local(original)
   local use = require('packer').use
-  local spec, local_spec = M.with_local(original)
+  local local_spec, spec = M.with_local(original)
   if local_spec then
     use(local_spec)
-  else
-    -- NOTE: Don't install from repo is local is available
-    use(spec)
+    return
   end
+  -- NOTE: Don't install from repo if local is available
+  use(spec)
 end
 
 ---@param path string

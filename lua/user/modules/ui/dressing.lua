@@ -1,5 +1,4 @@
 return function()
-  if not rvim.plugin_installed('dressing.nvim') then return end
   -- NOTE: the limit is half the max lines because this is the cursor theme so
   -- unless the cursor is at the top or bottom it realistically most often will
   -- only have half the screen available
@@ -10,12 +9,18 @@ return function()
     return (results <= (LIMIT - PADDING) and results + PADDING or LIMIT)
   end
 
-  require('user.utils.highlights').plugin('dressing', { FloatTitle = { inherit = 'Visual', bold = true } })
+  local border = rvim.style.border
+
+  require('user.utils.highlights').plugin(
+    'dressing',
+    { { FloatTitle = { inherit = 'CybuFocus', bold = true } } }
+  )
+
   require('dressing').setup({
     input = {
       winblend = 2,
       insert_only = false,
-      border = rvim.style.border.line,
+      border = border.current,
     },
     select = {
       get_config = function(opts)
@@ -25,6 +30,7 @@ return function()
             backend = 'telescope',
             telescope = require('telescope.themes').get_cursor({
               layout_config = { height = get_height },
+              borderchars = border.telescope.ui_select,
             }),
           }
         end

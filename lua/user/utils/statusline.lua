@@ -46,9 +46,9 @@ end
 
 function M.python_env()
   if vim.bo.filetype == 'python' then
-    local venv = os.getenv('CONDA_DEFAULT_ENV')
+    local venv = vim.env.CONDA_DEFAULT_ENV
     if venv then return string.format('(%s)', M.env_cleanup(venv)) end
-    venv = os.getenv('VIRTUAL_ENV')
+    venv = vim.env.VIRTUAL_ENV
     if venv then return string.format('(%s)', M.env_cleanup(venv)) end
     return ''
   end
@@ -122,9 +122,8 @@ function M.spacer(size, opts)
   if size and size >= 1 then
     local spacer = string.rep(filler, size)
     return { component = spacer, length = strwidth(spacer), priority = priority }
-  else
-    return { component = '', length = 0, priority = priority }
   end
+  return { component = '', length = 0, priority = priority }
 end
 
 --- @param component string

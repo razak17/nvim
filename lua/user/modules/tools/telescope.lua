@@ -1,11 +1,4 @@
 return function()
-  if not rvim.plugin_installed('telescope.nvim') then return end
-
-  local telescope_ok, telescope = rvim.safe_require('telescope')
-  if not telescope_ok then return end
-
-  rvim.telescope = {}
-
   local previewers = require('telescope.previewers')
   local sorters = require('telescope.sorters')
   local actions = require('telescope.actions')
@@ -14,6 +7,9 @@ return function()
   local themes = require('telescope.themes')
   local icons = rvim.style.icons
   local border = rvim.style.border
+  local fmt, fn = string.format, vim.fn
+
+  rvim.telescope = {}
 
   rvim.augroup('TelescopePreviews', {
     {
@@ -57,7 +53,15 @@ return function()
     }))
   end
 
+  local telescope = require('telescope')
   local dropdown = rvim.telescope.dropdown
+
+  local function stopinsert(callback)
+    return function(prompt_bufnr)
+      vim.cmd.stopinsert()
+      vim.schedule(function() callback(prompt_bufnr) end)
+    end
+  end
 
   telescope.setup({
     defaults = {
@@ -91,9 +95,9 @@ return function()
         path = rvim.get_cache_dir() .. '/telescope/history.sqlite3',
       },
       file_ignore_patterns = {
-        -- '%.jpg',
-        -- '%.jpeg',
-        -- '%.png',
+        '%.jpg',
+        '%.jpeg',
+        '%.png',
         '%.otf',
         '%.ttf',
         '%.DS_Store',
@@ -101,6 +105,7 @@ return function()
         '.git/',
         'node_modules/',
         'dist/',
+        'build/',
         'site-packages/',
       },
       path_display = { 'truncate' },
@@ -111,17 +116,17 @@ return function()
       mappings = {
         i = {
           ['<C-w>'] = actions.send_selected_to_qflist,
-          ['<c-c>'] = function() vim.cmd.stopinsert({ bang = true }) end,
+          ['<c-c>'] = function() vim.cmd.stopinsert() end,
           ['<esc>'] = actions.close,
           ['<C-j>'] = actions.move_selection_next,
           ['<C-k>'] = actions.move_selection_previous,
           ['<C-q>'] = actions.smart_send_to_qflist + actions.open_qflist,
           ['<c-s>'] = actions.select_horizontal,
-          ['<CR>'] = actions.select_default,
           ['<c-e>'] = layout_actions.toggle_preview,
           ['<c-l>'] = layout_actions.cycle_layout_next,
           ['<C-A>'] = telescope_custom_actions.multi_selection_open,
           ['<Tab>'] = actions.toggle_selection,
+          ['<CR>'] = stopinsert(actions.select_default),
         },
         n = {
           ['<C-j>'] = actions.move_selection_next,
@@ -146,20 +151,13 @@ return function()
             },
           })),
         },
-        file_browser = {
-          theme = 'ivy',
-          mappings = {
-            ['i'] = {
-              i = {
-                ['<C-h>'] = require('telescope').extensions.file_browser.actions.goto_home_dir,
-              },
-            },
-            ['n'] = {
-              n = {
-                ['<C-h>'] = require('telescope').extensions.file_browser.actions.goto_home_dir,
-                f = false,
-              },
-            },
+        frecency = {
+          default_workspace = 'CWD',
+          show_unindexed = false, -- Show all files or only those that have been indexed
+          ignore_patterns = { '*.git/*', '*/tmp/*', '*node_modules/*', '*vendor/*' },
+          workspaces = {
+            conf = vim.env.DOTFILES,
+            project = vim.env.DEV_HOME,
           },
         },
       },
@@ -197,10 +195,11 @@ return function()
             'zsh/plugins/.*',
           },
           max_results = 2000,
-          on_input_filter_cb = function(prompt)
-            -- AND operator for live_grep like how fzf handles spaces with wildcards in rg
-            return { prompt = prompt:gsub('%s', '.*') }
-          end,
+        }),
+        registers = rvim.telescope.dropdown({
+          layout_config = {
+            height = 25,
+          },
         }),
         oldfiles = dropdown(),
         current_buffer_fuzzy_find = dropdown({
@@ -234,11 +233,15 @@ return function()
     ['telescope-zoxide'] = 'zoxide',
     ['project.nvim'] = 'projects',
     ['telescope-media-files.nvim'] = 'media_files',
-    ['telescope-file-browser.nvim'] = 'file_browser',
     ['telescope-ui-select.nvim'] = 'ui-select',
     ['telescope-dap'] = 'dap',
     ['telescope-zf-native.nvim'] = 'zf-native',
     ['harpoon'] = 'harpoon',
+    ['telescope-luasnip.nvim'] = 'luasnip',
+    ['telescope-frecency.nvim'] = 'frecency',
+    ['nvim-notify'] = 'notify',
+    ['telescope-recent-files'] = 'recent_files',
+    ['yanky.nvim' ]= 'yank_history',
   }
 
   for plugin, setup in ipairs(plugins) do
@@ -254,6 +257,18 @@ return function()
     builtin.find_files({
       prompt_title = 'Notes',
       cwd = vim.fn.expand('~/notes/src/'),
+    })
+  end
+
+  local function luasnips()
+    require('telescope').extensions.luasnip.luasnip(rvim.telescope.dropdown())
+  end
+
+  local function find_near_files()
+    local cwd = require('telescope.utils').buffer_dir()
+    builtin.find_files({
+      prompt_title = fmt('Searching %s', fn.fnamemodify(cwd, ':~:.')),
+      cwd = cwd,
     })
   end
 
@@ -278,22 +293,16 @@ return function()
     }))
   end
 
-  local function file_browser() telescope.extensions.file_browser.file_browser({}) end
-
   local function media_files() telescope.extensions.media_files.media_files({}) end
+
+  local function recent_files() telescope.extensions.recent_files.pick() end
 
   local function zoxide_list() telescope.extensions.zoxide.list({}) end
 
-  local function MRU()
-    require('mru').display_cache(rvim.telescope.dropdown({
+  local function frecency()
+    require('telescope').extensions.frecency.frecency(rvim.telescope.dropdown({
       previewer = false,
     }))
-  end
-
-  local function MFU()
-    require('mru').display_cache(
-      vim.tbl_extend('keep', { algorithm = 'mfu' }, rvim.telescope.dropdown({ previewer = false }))
-    )
   end
 
   local function projects() telescope.extensions.projects.projects({}) end
@@ -355,7 +364,7 @@ return function()
       name = 'Telescope',
       a = { builtins, 'builtin' },
       b = { builtin.current_buffer_fuzzy_find, 'find in current buffer' },
-      B = { file_browser, 'find browser' },
+      c = { builtin.resume, 'resume' },
       f = { project_files, 'find files' },
       g = {
         name = 'Git',
@@ -366,14 +375,15 @@ return function()
         o = { builtin.git_status, 'open changed file' },
         s = { builtin.git_status, 'status' },
       },
-      h = { MFU, 'most frequently used files' },
+      h = { frecency, 'most frequently used files' },
+      L = { luasnips, 'luasnip: available snippets' },
       m = { media_files, 'media files' },
-      n = { notes, 'notes' },
+      j = { notes, 'notes' },
+      n = { find_near_files, 'find near files' },
       o = { builtin.oldfiles, 'old files' },
       p = { projects, 'recent projects' },
       P = { installed_plugins, 'plugins' },
-      r = { builtin.resume, 'most recently used files' },
-      u = { MRU, 'most recently used files' },
+      r = { recent_files, 'resume' },
       R = { builtin.reloader, 'module reloader' },
       s = { builtin.live_grep, 'find word' },
       v = {
@@ -388,21 +398,6 @@ return function()
       W = { image_selector, 'change background' },
       z = { zoxide_list, 'zoxide list' },
     },
-    ['<leader>lR'] = { ':Telescope lsp_references<CR>', 'telescope: references' },
-    ['<leader>ld'] = { ':Telescope lsp_document_symbols<CR>', 'telescope: document symbols' },
-    ['<leader>le'] = {
-      ':Telescope diagnostics bufnr=0 theme=get_ivy<CR>',
-      'telescope: document diagnostics',
-    },
-    ['<leader>lE'] = {
-      ':Telescope diagnostics theme=get_ivy<CR>',
-      'telescope: workspace diagnostics',
-    },
-    ['<leader>ls'] = {
-      ':Telescope lsp_dynamic_workspace_symbols<CR>',
-      'telescope: workspace symbols',
-    },
-    ['<leader>ms'] = { '<cmd>Telescope harpoon marks<cr>', 'telescope: harpoon search' },
   })
 
   vim.api.nvim_exec_autocmds('User', { pattern = 'TelescopeConfigComplete', modeline = false })

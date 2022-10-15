@@ -6,7 +6,7 @@ local fmt = string.format
 
 local M = {}
 
- function M.open(path)
+function M.open(path)
   fn.jobstart({ rvim.open_command, path }, { detach = true })
   vim.notify(fmt('Opening %s', path))
 end
@@ -14,11 +14,12 @@ end
 function M.open_link()
   local file = fn.expand('<cfile>')
   if not file or fn.isdirectory(file) > 0 then return vim.cmd.edit(file) end
-  if file:match('https://') then return M.open(file) end
+  if file:match('http[s]?://') then return M.open(file) end
 
   -- consider anything that looks like string/string a github link
   local plugin_url_regex = '[%a%d%-%.%_]*%/[%a%d%-%.%_]*'
   local link = string.match(file, plugin_url_regex)
+  print(link)
   if link then return M.open(fmt('https://www.github.com/%s', link)) end
 end
 
@@ -87,11 +88,13 @@ function M.modify_line_end_delimiter(character)
     local last_char = line:sub(-1)
     if last_char == character then
       api.nvim_set_current_line(line:sub(1, #line - 1))
-    elseif vim.tbl_contains(delimiters, last_char) then
-      api.nvim_set_current_line(line:sub(1, #line - 1) .. character)
-    else
-      api.nvim_set_current_line(line .. character)
+      return
     end
+    if vim.tbl_contains(delimiters, last_char) then
+      api.nvim_set_current_line(line:sub(1, #line - 1) .. character)
+      return
+    end
+    api.nvim_set_current_line(line .. character)
   end
 end
 
@@ -104,9 +107,9 @@ function M.smart_quit()
     }, function(input)
       if input == 'y' then cmd('q!') end
     end)
-  else
-    cmd('q!')
+    return
   end
+  cmd('q!')
 end
 
 function M.toggle_opt(opt)
@@ -114,6 +117,21 @@ function M.toggle_opt(opt)
   value = not vim.api.nvim_get_option_value(opt, {})
   vim.opt[opt] = value
   vim.notify(opt .. ' set to ' .. tostring(value), 'info', { title = 'UI Toggles' })
+end
+
+---Write data to a file
+---@param path string can be full or relative to `cwd`
+---@param txt string|table text to be written, uses `vim.inspect` internally for tables
+---@param flag string used to determine access mode, common flags: "w" for `overwrite` or "a" for `append`
+function M.write_file(path, txt, flag)
+  local data = type(txt) == 'string' and txt or vim.inspect(txt)
+  uv.fs_open(path, flag, 438, function(open_err, fd)
+    assert(not open_err, open_err)
+    uv.fs_write(fd, data, -1, function(write_err)
+      assert(not write_err, write_err)
+      uv.fs_close(fd, function(close_err) assert(not close_err, close_err) end)
+    end)
+  end)
 end
 
 return M

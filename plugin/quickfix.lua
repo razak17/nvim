@@ -17,7 +17,8 @@ function rvim.qf.delete(bufnr)
   local qfl = fn.getqflist()
   local line = unpack(api.nvim_win_get_cursor(0))
   -- FIXME: get visual selection so this functionality can work in visual mode
-  if api.nvim_get_mode().mode == 'v' then
+  local cond = api.nvim_get_mode().mode == 'v'
+  if cond then
     local firstline = unpack(api.nvim_buf_get_mark(0, '<'))
     local lastline = unpack(api.nvim_buf_get_mark(0, '>'))
     local result = {}
@@ -25,9 +26,8 @@ function rvim.qf.delete(bufnr)
       if i < firstline or i > lastline then table.insert(result, item) end
     end
     qfl = result
-  else
-    table.remove(qfl, line)
   end
+  if not cond then table.remove(qfl, line) end
   -- replace items in the current list, do not make a new copy of it;
   -- this also preserves the list title
   fn.setqflist({}, 'r', { items = qfl })

@@ -1,6 +1,5 @@
 local api = vim.api
 local fmt = string.format
-local levels = vim.log.levels
 
 local M = {}
 
@@ -9,6 +8,18 @@ local M = {}
 ---@field attr 'foreground' | 'fg' | 'background' | 'bg'
 ---@field alter integer
 
+---@class HighlightKeys
+---@field blend integer
+---@field foreground string | HighlightAttributes
+---@field background string | HighlightAttributes
+---@field fg string | HighlightAttributes
+---@field bg string | HighlightAttributes
+---@field sp string | HighlightAttributes
+---@field bold boolean
+---@field italic boolean
+---@field undercurl boolean
+---@field underline boolean
+---@field underdot boolean
 
 ---Convert a hex color to RGB
 ---@param color string
@@ -25,9 +36,8 @@ local function alter(attribute, percent) return math.floor(attribute * (100 + pe
 ---@source https://stackoverflow.com/q/5560248
 ---@see: https://stackoverflow.com/a/37797380
 ---Darken a specified hex color
----@param color string
----@param percent number
----@return string
+---@param color string A hex color
+---@param percent integer a negative number darkens and a positive one brightens
 function M.alter_color(color, percent)
   local r, g, b = hex_to_rgb(color)
   if not r or not g or not b then return 'NONE' end
@@ -37,81 +47,69 @@ function M.alter_color(color, percent)
 end
 
 ---@param group_name string A highlight group name
-local function get(group_name)
+local function get_highlight(group_name)
   local ok, hl = pcall(api.nvim_get_hl_by_name, group_name, true)
-  if ok then
-    hl.foreground = hl.foreground and '#' .. bit.tohex(hl.foreground, 6)
-    hl.background = hl.background and '#' .. bit.tohex(hl.background, 6)
-    --- BUG: API returns a true key which errors during the merge
-    hl[true] = nil
-    return hl
-  end
-  return {}
-end
-
----@param group_name string A highlight group name
-local function get_hl(group_name)
-  local ok, hl = pcall(api.nvim_get_hl_by_name, group_name, true)
-  if ok then
-    hl.foreground = hl.foreground and '#' .. bit.tohex(hl.foreground, 6)
-    hl.background = hl.background and '#' .. bit.tohex(hl.background, 6)
-    hl[true] = nil -- BUG: API returns a true key which errors during the merge
-    return hl
-  end
-  return {}
+  if not ok then return {} end
+  hl.foreground = hl.foreground and '#' .. bit.tohex(hl.foreground, 6)
+  hl.background = hl.background and '#' .. bit.tohex(hl.background, 6)
+  hl[true] = nil -- BUG: API returns a true key which errors during the merge
+  return hl
 end
 
 --- Sets a neovim highlight with some syntactic sugar. It takes a highlight table and converts
---- any highlights specified as `GroupName = { from = 'group'}` into the underlying colour
+--- any highlights specified rvim `GroupName = { from = 'group'}` into the underlying colour
 --- by querying the highlight property of the from group so it can be used when specifying highlights
---- as a shorthand to derive the right color.
+--- rvim a shorthand to derive the right color.
 --- For example:
 --- ```lua
 ---   M.set({ MatchParen = {foreground = {from = 'ErrorMsg'}}})
 --- ```
 --- This will take the foreground colour from ErrorMsg and set it to the foreground of MatchParen.
+---  NOTE: this function must NOT mutate the options table as these are re-used when the colorscheme
+--- is updated
 ---@param name string
----@param opts table<string, string|boolean|HighlightAttributes>
-function M.set(name, opts)
-  assert(name and opts, "Both 'name' and 'opts' must be specified")
+---@param opts HighlightKeys
+---@overload fun(namespace: integer, name: string, opts: HighlightKeys)
+function M.set(namespace, name, opts)
+  if type(namespace) == 'string' and type(name) == 'table' then
+    opts, name, namespace = name, namespace, 0
+  end
 
-  local hl = get_hl(opts.inherit or name)
-  opts.inherit = nil
+  vim.validate({
+    opts = { opts, 'table' },
+    name = { name, 'string' },
+    namespace = { namespace, 'number' },
+  })
+
+  local hl = get_highlight(opts.inherit or name)
 
   for attr, value in pairs(opts) do
     if type(value) == 'table' and value.from then
-      opts[attr] = M.get(value.from, vim.F.if_nil(value.attr, attr))
-      if value.alter then opts[attr] = M.alter_color(opts[attr], value.alter) end
+      hl[attr] = M.get(value.from, value.attr or attr)
+      if value.alter then hl[attr] = M.alter_color(hl[attr], value.alter) end
+    elseif attr ~= 'inherit' then
+      hl[attr] = value
     end
   end
 
-  local ok, msg = pcall(api.nvim_set_hl, 0, name, vim.tbl_deep_extend('force', hl, opts))
-  if not ok then vim.notify(fmt('Failed to set %s because - %s', name, msg)) end
+  rvim.wrap_err(fmt('failed to set %s because', name), api.nvim_set_hl, namespace, name, hl)
 end
 
----Get the value a highlight group whilst handling errors, fallbacks nvim well as returning a gui value
+---Get the value a highlight group whilst handling errors, fallbacks nvim well rvim returning a gui value
 ---in the right format
 ---@param group string
 ---@param attribute string?
 ---@param fallback string?
 ---@return string | table
 function M.get(group, attribute, fallback)
-  if not group then
-    vim.notify('Cannot get a highlight without specifying a group', levels.ERROR)
-    return 'NONE'
-  end
-  local hl = get(group)
-  if not attribute then return hl end
-  attribute = ({ fg = 'foreground', bg = 'background' })[attribute] or attribute
-  local color = hl[attribute] or fallback
-  if not color then
-    vim.schedule(
-      function() vim.notify(fmt('%s %s does not exist', group, attribute), levels.INFO) end
-    )
-    return 'NONE'
-  end
-  -- convert the decimal RGBA value from the hl by name to a 6 character hex + padding if needed
-  return color
+  assert(group, 'cannot get a highlight without specifying a group name')
+  local data = get_highlight(group)
+  if not attribute then return data end
+  local attr = ({ fg = 'foreground', bg = 'background' })[attribute] or attribute
+  local color = data[attr] or fallback
+  if color then return color end
+  vim.schedule(function() vim.notify(fmt("%s's %s does not exist", group, attr), 'error') end)
+  return 'NONE'
 end
 
 function M.clear_hl(name)
@@ -120,28 +118,49 @@ function M.clear_hl(name)
 end
 
 ---Apply a list of highlights
----@param hls table<string, table<string, boolean|string|HighlightAttributes>>
-function M.all(hls)
-  for name, hl in pairs(hls) do
-    M.set(name, hl)
-  end
+---@param hls table<string, HighlightKeys>
+---@param namespace integer?
+function M.all(hls, namespace)
+  rvim.foreach(function(hl) M.set(namespace or 0, next(hl)) end, hls)
 end
 
 ---------------------------------------------------------------------------------
 -- Plugin highlights
 ---------------------------------------------------------------------------------
+--- Takes the overrides for each theme and merges the lists, avoiding duplicates and ensuring
+--- priority is given to specific themes rather than the fallback
+---@param theme table<string, table<string, string>>
+---@return table<string, string>
+local function add_theme_overrides(theme)
+  local res, seen = {}, {}
+  local list = vim.list_extend(theme[vim.g.colors_name] or {}, theme['*'] or {})
+  for _, hl in ipairs(list) do
+    local n = next(hl)
+    if not seen[n] then res[#res + 1] = hl end
+    seen[n] = true
+  end
+  return res
+end
+
 ---Apply highlights for a plugin and refresh on colorscheme change
 ---@param name string plugin name
----@param hls table<string, table> map of highlights
-function M.plugin(name, hls)
-  name = name:gsub('^%l', string.upper) -- capitalise the name for autocommand convention sake
-  M.all(hls)
+---@param opts table<string, table> map of highlights
+function M.plugin(name, opts)
+  -- Options can be specified by theme name so check if they have been or there is a general
+  -- definition otherwise use the opts rvim is
+  if opts.theme then
+    opts = add_theme_overrides(opts.theme)
+    if not next(opts) then return end
+  end
+  -- capitalise the name for autocommand convention sake
+  name = name:gsub('^%l', string.upper)
+  M.all(opts)
   rvim.augroup(fmt('%sHighlightOverrides', name), {
     {
       event = { 'ColorScheme' },
       command = function()
         -- Defer resetting these highlights to ensure they apply after other overrides
-        vim.defer_fn(function() M.all(hls) end, 1)
+        vim.defer_fn(function() M.all(opts) end, 1)
       end,
     },
   })

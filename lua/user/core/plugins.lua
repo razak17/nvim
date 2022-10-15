@@ -1,8 +1,7 @@
 local uv, api, fn = vim.loop, vim.api, vim.fn
-local fmt = string.format
 local utils = require('user.utils.plugins')
 local plug_notify = utils.plug_notify
-local packer_compiled = rvim.paths.packer_compiled
+local packer_compiled = rvim.path.packer_compiled
 local packer = nil
 
 local Packer = {}
@@ -32,10 +31,11 @@ function Packer:bootstrap_packer()
     vim.cmd.packadd({ 'packer.nvim', bang = true })
     packer = require('packer')
   end
-  -- rvim.safe_require('impatient')
+  rvim.safe_require('impatient')
   packer.init({
     package_root = join_paths(rvim.get_runtime_dir(), 'site/pack/'),
-    compile_path = rvim.paths.packer_compiled,
+    compile_path = rvim.path.packer_compiled,
+    preview_updates = true,
     git = {
       clone_timeout = 7000,
       subcommands = {
@@ -104,29 +104,26 @@ end
 function plugins.delete()
   if vim.fn.filereadable(packer_compiled) ~= 1 then
     plug_notify('packer_compiled file does not exist', 'info')
-  else
-    vim.fn.delete(packer_compiled)
-    plug_notify('packer_compiled was deleted', 'info')
+    return
   end
+  vim.fn.delete(packer_compiled)
+  plug_notify('packer_compiled was deleted', 'info')
 end
 
 function plugins.reload()
   plugins.install()
   plugins.compile()
-  require('_compiled_rolling')
+  -- require('_compiled_nightly')
 end
 
-function plugins.invalidate()
-  rvim.invalidate('user.modules', true)
-  plugins.reload()
-end
+function plugins.invalidate() rvim.invalidate('user.modules', true) end
 
 function plugins.recompile()
-  rvim.invalidate(fmt('user.modules.%s', vim.split(vim.fn.expand('%'), '/')[4]), true)
+  plugins.delete()
   plugins.reload()
 end
 
-function plugins.package(repo) table.insert(Packer.repos, repo) end
+function plugins.use(repo) table.insert(Packer.repos, repo) end
 
 function plugins.load_compile()
   if vim.fn.filereadable(packer_compiled) ~= 1 then plugins.compile() end
@@ -136,10 +133,13 @@ function plugins.load_compile()
       event = { 'BufWritePost' },
       desc = 'Packer setup and reload',
       pattern = { '*/user/modules/**/*.lua' },
-      command = function()
-        vim.cmd.doautocmd('LspDetach')
-        plugins.recompile()
-      end,
+      command = plugins.recompile,
+    },
+    {
+      event = 'User',
+      pattern = { 'VimrcReloaded' },
+      desc = 'Packer setup and reload',
+      command = plugins.recompile,
     },
     {
       event = { 'User' },

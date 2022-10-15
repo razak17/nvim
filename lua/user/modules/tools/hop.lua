@@ -1,6 +1,4 @@
 return function()
-  if not rvim.plugin_installed('hop.nvim') then return end
-
   local hop = require('hop')
   local map = vim.keymap.set
 
