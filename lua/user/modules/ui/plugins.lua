@@ -67,7 +67,8 @@ use({
 })
 
 use({
-  'ghillb/cybu.nvim',
+  'razak17/cybu.nvim',
+  local_path = 'personal',
   config = function()
     require('cybu').setup({
       position = {
