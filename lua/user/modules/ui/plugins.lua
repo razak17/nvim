@@ -8,6 +8,8 @@ use({
   local_path = 'personal',
 })
 
+use('folke/tokyonight.nvim')
+
 use({ 'goolord/alpha-nvim', config = conf('ui', 'alpha') })
 
 use({ 'rcarriga/nvim-notify', config = conf('ui', 'notify') })
