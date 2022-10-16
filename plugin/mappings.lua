@@ -622,7 +622,11 @@ nnoremap(
 )
 ----------------------------------------------------------------------------------------------------
 -- undotree
-nnoremap('<leader>u', '<cmd>UndotreeToggle<CR>', with_plugin('undotree: toggle', 'undotree'))
+nnoremap(
+  '<leader>u',
+  '<cmd>UndotreeToggle<CR>',
+  with_plugin_installed('undotree: toggle', 'undotree')
+)
 ----------------------------------------------------------------------------------------------------
 -- auto-session
 nnoremap(
