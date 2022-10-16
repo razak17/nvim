@@ -1,4 +1,4 @@
-local use = require('user.core.plugins').use
+local use = require('user.core.packer').use
 local utils = require('user.utils.plugins')
 local conf = utils.load_conf
 

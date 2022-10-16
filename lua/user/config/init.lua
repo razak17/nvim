@@ -23,5 +23,5 @@ end
 -- NOTE: order matters
 R('user.core.highlights')
 R('user.core.commands')
-R('user.core.plugins').ensure_plugins()
-R('user.core.plugins').load_compile()
+R('user.core.packer').ensure_plugins()
+R('user.core.packer').load_compile()

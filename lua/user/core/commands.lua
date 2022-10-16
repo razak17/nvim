@@ -59,6 +59,6 @@ local cmds = {
   'Delete',
 }
 for _, cmd in ipairs(cmds) do
-  command('Packer' .. cmd, function() require('user.core.plugins')[vim.fn.tolower(cmd)]() end)
+  command('Packer' .. cmd, function() require('user.core.packer')[vim.fn.tolower(cmd)]() end)
 end
 command('PackerCompiledEdit', function() vim.cmd.edit(rvim.path.packer_compiled) end)
