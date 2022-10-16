@@ -23,8 +23,16 @@ return function()
       local nnoremap, vnoremap = rvim.nnoremap, rvim.vnoremap
 
       nnoremap('<leader>hd', gs.toggle_deleted, 'show deleted lines')
-      nnoremap('<leader>hj', gs.next_hunk, 'next hunk')
-      nnoremap('<leader>hk', gs.prev_hunk, 'prev hunk')
+      nnoremap(
+        '<leader>hj',
+        function() gs.next_hunk({ navigation_message = false }) end,
+        'next hunk'
+      )
+      nnoremap(
+        '<leader>hk',
+        function() gs.prev_hunk({ navigation_message = false }) end,
+        'prev hunk'
+      )
       nnoremap('<leader>hp', gs.preview_hunk, 'preview hunk')
       nnoremap('<leader>hr', gs.reset_hunk, 'reset hunk')
       nnoremap('<leader>hs', gs.stage_hunk, 'stage hunk')
