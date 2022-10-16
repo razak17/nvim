@@ -6,7 +6,7 @@ local function general_overrides()
   util.all({
     { Normal = { background = { from = 'Normal', alter = -50 } } },
     { NormalFloat = { inherit = 'Normal' } },
-    { Dim = { foreground = { from = 'LineNr', alter = -8 } } },
+    { Dim = { foreground = { from = 'VertSplit', alter = -50 } } },
     { mkdLineBreak = { link = 'NONE' } },
     ------------------------------------------------------------------------------------------------
     { CursorLineSign = { link = 'CursorLine' } },
