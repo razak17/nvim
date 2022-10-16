@@ -2,7 +2,6 @@ return function()
   local icons = rvim.style.icons
   local python_dir = rvim.path.mason .. '/packages/debugpy/venv/bin/python'
   local lldb_dir = rvim.path.vscode_lldb .. '/adapter/codelldb'
-  local node_dir = rvim.path.mason .. '/packages/node-debug2-adapter/out/src/nodeDebug.js'
 
   require('dap').defaults.fallback.terminal_win_cmd = '50vsplit new'
   -- DON'T automatically stop at exceptions
@@ -54,10 +53,17 @@ return function()
     },
   }
   -- nodejs
-  dap.adapters.node2 = { type = 'executable', command = 'node', args = { node_dir } }
+  dap.adapters.node2 = {
+    type = 'executable',
+    command = 'node',
+    args = {
+      rvim.path.mason .. '/packages/node-debug2-adapter/out/src/nodeDebug.js',
+    },
+  }
+  -- javascript
   dap.configurations.javascript = {
     {
-      -- name = "Launch",
+      name = 'Launch',
       type = 'node2',
       request = 'launch',
       program = '${workspaceFolder}/${file}',
@@ -65,6 +71,40 @@ return function()
       sourceMaps = true,
       protocol = 'inspector',
       console = 'integratedTerminal',
+    },
+    {
+      -- For this to work you need to make sure the node process
+      -- is started with the `--inspect` flag.
+      name = 'Attach to process',
+      type = 'node2',
+      request = 'attach',
+      processId = require('dap.utils').pick_process,
+    },
+  }
+  -- typescript
+  dap.configurations.typescript = {
+    {
+      name = 'ts-node (Node2 with ts-node)',
+      type = 'node2',
+      request = 'launch',
+      cwd = vim.loop.cwd(),
+      runtimeArgs = { '-r', 'ts-node/register' },
+      runtimeExecutable = 'node',
+      args = { '--inspect', '${file}' },
+      sourceMaps = true,
+      skipFiles = { '<node_internals>/**', 'node_modules/**' },
+    },
+    {
+      name = 'Jest (Node2 with ts-node)',
+      type = 'node2',
+      request = 'launch',
+      cwd = vim.loop.cwd(),
+      runtimeArgs = { '--inspect-brk', '${workspaceFolder}/node_modules/.bin/jest' },
+      runtimeExecutable = 'node',
+      args = { '${file}', '--runInBand', '--coverage', 'false' },
+      sourceMaps = true,
+      port = 9229,
+      skipFiles = { '<node_internals>/**', 'node_modules/**' },
     },
   }
   -- nlua
