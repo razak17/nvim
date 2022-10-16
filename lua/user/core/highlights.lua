@@ -4,7 +4,9 @@ local util = require('user.utils.highlights')
 
 local function general_overrides()
   util.all({
-    { Dim = { foreground = { from = 'Normal', attr = 'bg', alter = 20 } } },
+    { Normal = { background = { from = 'Normal', alter = -50 } } },
+    { NormalFloat = { inherit = 'Normal' } },
+    { Dim = { foreground = { from = 'LineNr', alter = -8 } } },
     { mkdLineBreak = { link = 'NONE' } },
     ------------------------------------------------------------------------------------------------
     { CursorLineSign = { link = 'CursorLine' } },
@@ -15,7 +17,7 @@ local function general_overrides()
     { SpellBad = { undercurl = true, background = 'NONE', foreground = 'NONE', sp = 'green' } },
     { SpellRare = { undercurl = true } },
     { CursorLineNr = { background = { from = 'CursorLine' }, bold = true } },
-    { SLCopilot = { background = { from = 'CursorLine' } } },
+    { SLCopilot = { background = { from = 'StatusLine' } } },
     ------------------------------------------------------------------------------------------------
     -- colorscheme overrides
     ------------------------------------------------------------------------------------------------
@@ -134,4 +136,4 @@ rvim.augroup('UserHighlights', {
 ----------------------------------------------------------------------------------------------------
 -- Color Scheme {{{1
 ----------------------------------------------------------------------------------------------------
-rvim.wrap_err('theme failed to load because', vim.cmd.colorscheme, 'tokyonight')
+rvim.wrap_err('theme failed to load because', vim.cmd.colorscheme, 'zephyr')
