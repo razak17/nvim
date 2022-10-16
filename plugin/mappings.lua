@@ -18,6 +18,7 @@ local onoremap = rvim.onoremap
 
 local utils = require('user.utils')
 local plugin_loaded = rvim.plugin_loaded
+local plugin_installed = rvim.plugin_installed
 
 g.mapleader = (rvim.keys.leader == 'space' and ' ') or rvim.keys.leader
 g.maplocalleader = (rvim.keys.localleader == 'space' and ' ') or rvim.keys.localleader
@@ -467,7 +468,7 @@ local with_plugin = rvim.with_plugin
 local with_plugin_installed = function(desc, plugin) rvim.with_plugin(desc, plugin, true) end
 ----------------------------------------------------------------------------------------------------
 -- packer
-if rvim.plugin_installed('packer.nvim') then
+if plugin_installed('packer.nvim') then
   nnoremap('<leader>pc', ':PackerCompile<CR>', 'compile')
   nnoremap('<leader>pC', ':PackerClean<CR>', 'clean')
   nnoremap('<leader>pd', ':PackerDelete<CR>', 'delete packer_compiled')
@@ -480,7 +481,7 @@ if rvim.plugin_installed('packer.nvim') then
 end
 ----------------------------------------------------------------------------------------------------
 -- neotest
-if rvim.plugin_installed('neotest') then
+if plugin_installed('neotest') then
   local function open() require('neotest').output.open({ enter = true, short = false }) end
   local function run_file() require('neotest').run.run(vim.fn.expand('%')) end
   local function nearest() require('neotest').run.run() end
@@ -708,7 +709,7 @@ nnoremap(
 )
 ----------------------------------------------------------------------------------------------------
 -- cybu.nvim
-if plugin_loaded('cybu.nvim') then
+if plugin_installed('cybu.nvim') then
   nnoremap('H', '<Plug>(CybuPrev)', 'cybu: prev')
   nnoremap('L', '<Plug>(CybuNext)', 'cybu: next')
 else

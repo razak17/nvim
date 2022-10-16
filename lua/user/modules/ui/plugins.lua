@@ -94,9 +94,6 @@ use({
         'CommandTPrompt',
       },
     })
-    require('user.utils.highlights').plugin('Cybu', {
-      { CybuFocus = { background = { from = 'PmenuThumb' }, foreground = { from = 'Search' } } },
-    })
   end,
 })
 

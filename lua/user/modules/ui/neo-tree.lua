@@ -3,8 +3,6 @@ return function()
   local highlights = require('user.utils.highlights')
 
   highlights.plugin('NeoTree', {
-    { NeoTreeTitleBar = { inherit = 'CybuFocus', bold = true } },
-    { NeoTreeIndentMarker = { link = 'Comment' } },
     { NeoTreeNormal = { link = 'PanelBackground' } },
     { NeoTreeNormalNC = { link = 'PanelBackground' } },
     { NeoTreeRootName = { bold = true, italic = true } },

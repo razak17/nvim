@@ -13,7 +13,9 @@ return function()
 
   require('user.utils.highlights').plugin(
     'dressing',
-    { { FloatTitle = { inherit = 'CybuFocus', bold = true } } }
+    {
+      { FloatTitle = { background = { from = 'VertSplit', attr = 'fg' }, fg = { from = 'Search' } } },
+    }
   )
 
   require('dressing').setup({
