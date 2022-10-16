@@ -110,17 +110,12 @@ function plugins.delete()
   plug_notify('packer_compiled was deleted', 'info')
 end
 
-function plugins.reload()
-  plugins.install()
-  plugins.compile()
-  -- require('_compiled_nightly')
-end
-
 function plugins.invalidate() rvim.invalidate('user.modules', true) end
 
 function plugins.recompile()
-  plugins.delete()
-  plugins.reload()
+  plugins.clean()
+  plugins.compile()
+  require('_compiled_nightly')
 end
 
 function plugins.use(repo) table.insert(Packer.repos, repo) end
