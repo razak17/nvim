@@ -132,7 +132,6 @@ return function()
       { name = 'nvim_lsp', max_item_count = 5 },
       { name = 'luasnip', max_item_count = 3 },
       { name = 'path' },
-      { name = 'buffer-lines', max_item_count = 5 },
       {
         name = 'rg',
         keyword_length = 3,
@@ -146,6 +145,7 @@ return function()
       },
       { name = 'crates' },
       { name = 'treesitter' },
+      { name = 'buffer-lines', max_item_count = 5 },
     }, {
       {
         name = 'buffer',
