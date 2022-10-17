@@ -11,3 +11,4 @@ call s:adjust_height(10, 15)
 
  setlocal winfixheight
  setlocal signcolumn=yes
+setlocal colorcolumn=
