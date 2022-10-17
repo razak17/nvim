@@ -1,8 +1,13 @@
 {
+  "newf": {
+    "prefix": "newf",
+    "body": "const ${1:${TM_FILENAME_BASE}} = () => {\n    \n}",
+    "description": "creates a new function using file base name"
+  },
   "exd": {
     "prefix": "exd",
-    "body": "export default ${TM_FILENAME_BASE}",
-    "description": "Creates a React function component without PropTypes"
+    "body": "export default ${tm_filename_base}",
+    "description": "creates a react function component without proptypes"
   },
   "cw": {
     "prefix": "cw",

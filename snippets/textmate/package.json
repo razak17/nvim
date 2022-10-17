@@ -48,6 +48,10 @@
         "path": "./javascript.json"
       },
       {
+        "language": "typescript",
+        "path": "./javascript.json"
+      },
+      {
         "language": "json",
         "path": "./json.json"
       }
