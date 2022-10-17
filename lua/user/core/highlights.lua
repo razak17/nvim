@@ -55,11 +55,11 @@ local function general_overrides()
     ------------------------------------------------------------------------------------------------
     -- Treesitter
     ------------------------------------------------------------------------------------------------
-    { TSNamespace = { foreground = { from = 'TSFunction' }, italic = true, bold = true } },
-    { TSKeywordReturn = { italic = true, foreground = { from = 'Keyword' } } },
-    { TSConstructor = { foreground = { from = 'TSType' }, italic = true, bold = true } },
-    { TSError = { foreground = 'NONE', background = 'NONE' } },
-    { TSParameter = { italic = true, bold = true, foreground = 'NONE' } },
+    { ['@namespace'] = { foreground = { from = 'Function' }, italic = true, bold = true } },
+    { ['@keyword.return']= { italic = true, foreground = { from = 'Keyword' } } },
+    { ['@constructor.lua'] = { foreground = { from = 'Type' }, italic = true, bold = true } },
+    { ['@error'] = { foreground = 'NONE', background = 'NONE' } },
+    { ['@parameter'] = { italic = true, bold = true, foreground = 'NONE' } },
     ------------------------------------------------------------------------------------------------
     -- LSP
     ------------------------------------------------------------------------------------------------
