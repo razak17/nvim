@@ -32,19 +32,6 @@ command('AutoResize', function() require('user.utils').auto_resize() end, { narg
 
 command('LuaInvalidate', function(pattern) rvim.invalidate(pattern, true) end, { nargs = 1 })
 
-command(
-  'CloseOthers',
-  function()
-    vim.api.nvim_exec(
-      [[
-      wall
-      silent execute 'bdelete ' . join(utils#buf_filt(1))
-    ]],
-      false
-    )
-  end
-)
-
 -- Packer
 local cmds = {
   'Compile',

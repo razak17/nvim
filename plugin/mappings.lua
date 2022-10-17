@@ -414,8 +414,6 @@ nnoremap('<leader>=', '<C-W>=', 'balance window')
 nnoremap('<leader>H', '<C-W>s', 'horizontal split')
 -- opens a vertical split
 nnoremap('<leader>V', '<C-W>v', 'vsplit')
--- Buffers
-nnoremap('<leader>bc', '<cmd>CloseOther<CR>', 'close others')
 ----------------------------------------------------------------------------------------------------
 -- Undo
 ----------------------------------------------------------------------------------------------------
@@ -656,11 +654,6 @@ if plugin_loaded('harpoon') then
   nnoremap('<s-tab>', harp_marks, 'harpoon: marks')
 end
 ----------------------------------------------------------------------------------------------------
--- vim-bbye
-nnoremap('<leader>c', '<cmd>Bdelete!<cr>', with_plugin('bbye: close buffer', 'vim-bbye'))
-nnoremap('<leader>bx', '<cmd>bufdo :Bdelete<cr>', with_plugin('bbye: close all', 'vim-bbye'))
-nnoremap('<leader>q', '<Cmd>Bwipeout<CR>', with_plugin('bbye: wipe buffer', 'vim-bbye'))
-----------------------------------------------------------------------------------------------------
 -- mason.nvim
 nnoremap('<leader>lm', ':Mason<CR>', with_plugin_installed('mason: info', 'mason.nvim'))
 ----------------------------------------------------------------------------------------------------
@@ -850,6 +843,14 @@ nnoremap(
   function() require('spread').combine() end,
   with_plugin_installed('spread: combine', 'spread.nvim')
 )
+----------------------------------------------------------------------------------------------------
+-- close-buffers.nvim
+if plugin_installed('close-buffers.nvim') then
+  local cb = require('close_buffers')
+  nnoremap('<leader>c', function() cb.wipe({ type = 'this' }) end, 'close buffer')
+  nnoremap('<leader>bc', function() cb.wipe({ type = 'other' }) end, 'close others')
+  nnoremap('<leader>bx', function() cb.wipe({ type = 'all', force = true }) end, 'close others')
+end
 ----------------------------------------------------------------------------------------------------
 -- Abbreviations
 ----------------------------------------------------------------------------------------------------

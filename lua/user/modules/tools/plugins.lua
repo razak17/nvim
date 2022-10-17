@@ -126,8 +126,6 @@ use({
   config = conf('tools', 'hop'),
 })
 
-use({ 'moll/vim-bbye' })
-
 use({
   'SmiteshP/nvim-navic',
   event = 'BufRead',
