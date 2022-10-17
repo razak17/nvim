@@ -6,8 +6,6 @@ local fn, fmt = vim.fn, string.format
 local M = {}
 
 local function global_capabilities()
-  local ok, cmp_nvim_lsp = rvim.safe_require('cmp_nvim_lsp')
-  if ok then cmp_nvim_lsp.default_capabilities() end
   local capabilities = vim.lsp.protocol.make_client_capabilities()
   capabilities.textDocument.colorProvider = { dynamicRegistration = true }
   capabilities.textDocument.completion.completionItem.documentationFormat =
@@ -28,6 +26,8 @@ local function global_capabilities()
     dynamicRegistration = false,
     lineFoldingOnly = true,
   }
+  local ok, cmp_nvim_lsp = rvim.safe_require('cmp_nvim_lsp')
+  if ok then cmp_nvim_lsp.default_capabilities(capabilities) end
   return capabilities
 end
 
