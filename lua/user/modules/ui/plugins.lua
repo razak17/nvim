@@ -241,12 +241,12 @@ use({
     require('tint').setup({
       tint = -30,
       highlight_ignore_patterns = {
-        'WinSeparator',
-        'St.*',
-        'Comment',
-        'Panel.*',
-        'Telescope.*',
-        'Bqf.*',
+        'winseparator',
+        'st.*',
+        'comment',
+        'panel.*',
+        'telescope.*',
+        'bqf.*',
       },
       window_ignore_function = function(win_id)
         if vim.wo[win_id].diff or vim.fn.win_gettype(win_id) ~= '' then return true end
