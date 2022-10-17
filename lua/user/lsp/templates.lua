@@ -60,10 +60,10 @@ local function generate_ftplugin(server_name, dir)
   for _, filetype in ipairs(filetypes) do
     local filename = join_paths(dir, filetype .. '.lua')
     write_manager(filename, server_name)
-    if server_name == 'tsserver' then
-      local cmd = 'vim.lsp.handlers["textDocument/publishDiagnostics"] = function() end'
-      utils.write_file(filename, cmd .. '\n', 'a')
-    end
+    -- if server_name == 'tsserver' then
+    --   local cmd = 'vim.lsp.handlers["textDocument/publishDiagnostics"] = function() end'
+    --   utils.write_file(filename, cmd .. '\n', 'a')
+    -- end
   end
 end
 
