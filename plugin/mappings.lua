@@ -195,18 +195,13 @@ vnoremap('$', 'g_')
 ----------------------------------------------------------------------------------------------------
 -- Use alt + hjkl to resize windows
 ----------------------------------------------------------------------------------------------------
-nnoremap('<M-j>', ':resize -2<CR>')
-nnoremap('<M-k>', ':resize +2<CR>')
+nnoremap('<M-j>', ':resize +2<CR>')
+nnoremap('<M-k>', ':resize -2<CR>')
 nnoremap('<M-l>', ':vertical resize -2<CR>')
 nnoremap('<M-h>', ':vertical resize +2<CR>')
 nnoremap('<leader>aF', ':vertical resize 90<CR>', 'vertical resize 90%')
 nnoremap('<leader>aL', ':vertical resize 40<CR>', 'vertical resize 30%')
 nnoremap('<leader>aO', ':<C-f>:resize 10<CR>', 'open old commands')
-----------------------------------------------------------------------------------------------------
--- Line Movement
-----------------------------------------------------------------------------------------------------
--- nnoremap("<A-j>", ":m .+1<CR>==")
--- nnoremap("<A-k>", ":m .-2<CR>==")
 ----------------------------------------------------------------------------------------------------
 -- Yank from cursor position to end-of-line
 nnoremap('Y', 'y$')
