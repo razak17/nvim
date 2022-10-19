@@ -65,7 +65,7 @@ return function()
     button('Todo', 's', '  Pick a session', '<Cmd>Autosession search<CR>'),
     button('Label', 'o', '  Recent Projects', ':Telescope oldfiles<CR>'),
     button('Title', 'f', '  Find file', ':Telescope find_files<CR>'),
-    button('String', 'g', '  Find word', ':Telescope live_grep<CR>'),
+    button('String', 'w', '  Find word', ':Telescope live_grep<CR>'),
     button('String', 'e', '  New file', ':ene | startinsert <CR>'),
   }
 
