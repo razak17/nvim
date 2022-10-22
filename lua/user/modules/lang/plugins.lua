@@ -232,17 +232,6 @@ use({
 })
 
 use({
-  'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
-  event = { 'BufWinEnter' },
-  disable = true,
-  config = function()
-    local lsp_lines = require('lsp_lines')
-    lsp_lines.setup()
-    lsp_lines.toggle()
-  end,
-})
-
-use({
   'Saecki/crates.nvim',
   event = { 'BufRead Cargo.toml' },
   requires = { 'nvim-lua/plenary.nvim' },
@@ -262,32 +251,6 @@ use({
       null_ls = {
         enabled = true,
         name = 'crates.nvim',
-      },
-    })
-  end,
-})
-
-use({
-  'olexsmir/gopher.nvim',
-  disable = true,
-  requires = { 'nvim-lua/plenary.nvim', 'nvim-treesitter/nvim-treesitter' },
-})
-
-use({
-  'mfussenegger/nvim-treehopper',
-  disable = true,
-  config = function()
-    rvim.augroup('TreehopperMaps', {
-      {
-        event = 'FileType',
-        command = function(args)
-          -- FIXME: this issue should be handled inside the plugin rather than manually
-          local langs = require('nvim-treesitter.parsers').available_parsers()
-          if vim.tbl_contains(langs, vim.bo[args.buf].filetype) then
-            rvim.omap('u', ":<c-u>lua require('tsht').nodes()<cr>", { buffer = args.buf })
-            rvim.vnoremap('u', ":lua require('tsht').nodes()<CR>", { buffer = args.buf })
-          end
-        end,
       },
     })
   end,
