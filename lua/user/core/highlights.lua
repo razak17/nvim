@@ -56,10 +56,12 @@ local function general_overrides()
     -- Treesitter
     ------------------------------------------------------------------------------------------------
     { ['@namespace'] = { foreground = { from = 'Function' }, italic = true, bold = true } },
-    { ['@keyword.return']= { italic = true, foreground = { from = 'Keyword' } } },
+    { ['@keyword.return'] = { italic = true, foreground = { from = 'Keyword' } } },
     { ['@constructor.lua'] = { foreground = { from = 'Type' }, italic = true, bold = true } },
     { ['@error'] = { foreground = 'NONE', background = 'NONE' } },
     { ['@parameter'] = { italic = true, bold = true, foreground = 'NONE' } },
+    { ['@text.diff.add'] = { link = 'DiffAdd' } },
+    { ['@text.diff.delete'] = { link = 'DiffDelete' } },
     ------------------------------------------------------------------------------------------------
     -- LSP
     ------------------------------------------------------------------------------------------------
