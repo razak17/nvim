@@ -373,6 +373,9 @@ rvim.augroup('Utilities', {
     command = function()
       vim.bo.tw = 100
       vim.opt_local.spell = true
+      vim.cmd([[
+        inoreabbrev cosnt const
+      ]])
     end,
   },
   {
