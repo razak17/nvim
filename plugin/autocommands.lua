@@ -200,14 +200,6 @@ rvim.augroup('CustomColorColumn', {
   },
 })
 
-rvim.augroup('CustomFormatOptions', {
-  {
-    event = { 'VimEnter', 'BufWinEnter', 'BufRead', 'BufNewFile' },
-    pattern = { '*' },
-    command = 'setlocal formatoptions-=c formatoptions-=r formatoptions-=o',
-  },
-})
-
 rvim.augroup('UpdateVim', {
   -- Make windows equal size when vim resizes
   { event = { 'VimResized' }, pattern = { '*' }, command = 'wincmd =' },
