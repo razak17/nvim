@@ -854,7 +854,7 @@ end
 -- Abbreviations
 ----------------------------------------------------------------------------------------------------
 vim.cmd([[
-  inoreabbrev cosnt const
+  inoreabbrev fucntion function
   cnoreabbrev W! w!
   cnoreabbrev Q! q!
   cnoreabbrev Wq wq
