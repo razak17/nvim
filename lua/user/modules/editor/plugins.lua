@@ -127,6 +127,11 @@ use({
 
 use({ 'kazhala/close-buffers.nvim' })
 
+use({
+  'karb94/neoscroll.nvim', -- NOTE: alternative: 'declancm/cinnamon.nvim'
+  config = function() require('neoscroll').setup({ hide_cursor = true }) end,
+})
+
 ----------------------------------------------------------------------------------------------------
 -- Graveyard
 ----------------------------------------------------------------------------------------------------
