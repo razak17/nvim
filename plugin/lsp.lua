@@ -100,7 +100,9 @@ local function setup_autocommands(client, bufnr)
         desc = 'LSP: Show diagnostics',
         command = function(args)
           if vim.b.lsp_hover_win and api.nvim_win_is_valid(vim.b.lsp_hover_win) then return end
-          vim.diagnostic.open_float(args.buf, { scope = 'cursor', focus = false })
+          if rvim.lsp.hover_diagnostics then
+            vim.diagnostic.open_float(args.buf, { scope = 'line' })
+          end
         end,
       },
     }
@@ -177,7 +179,7 @@ local function setup_mappings(client, bufnr)
   nnoremap('gl', function()
     local config = rvim.lsp.diagnostics.float
     config.scope = 'line'
-    return vim.diagnostic.open_float({ scope = 'line' }, config)
+    return vim.diagnostic.open_float(config)
   end, with_desc('lsp: line diagnostics'))
   -- nnoremap('K', lsp.buf.hover, with_desc('lsp: hover'))
   nnoremap('K', show_documentation, with_desc('lsp: hover'))
