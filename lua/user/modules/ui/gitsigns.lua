@@ -2,11 +2,11 @@ return function()
   local cwd = vim.fn.getcwd()
   require('gitsigns').setup({
     signs = {
-      add = { hl = 'GitGutterAdd', text = '▋' },
-      change = { hl = 'GitGutterChange', text = '▋' },
-      delete = { hl = 'GitGutterDelete', text = '▋' },
-      topdelete = { hl = 'GitGutterDeleteChange', text = '▔' },
-      changedelete = { hl = 'GitGutterChange', text = '▎' },
+      add = { hl = 'GitSignsAdd', text = '▋' },
+      change = { hl = 'GitSignsChange', text = '▋' },
+      delete = { hl = 'GitSignsDelete', text = '▋' },
+      topdelete = { hl = 'GitSignsChangeDelete', text = '▔' },
+      changedelete = { hl = 'GitSignsChange', text = '▎' },
     },
     _threaded_diff = true, -- NOTE: experimental but I'm curious
     word_diff = false,
