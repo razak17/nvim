@@ -18,7 +18,7 @@ return function()
         normal = { c = { fg = P.base88, bg = P.bg_dark } },
         inactive = { c = { fg = P.base88, bg = P.bg_dark } },
       },
-      disabled_filetypes = { 'alpha', 'NvimTree', 'Outline', 'neo-tree' },
+      disabled_filetypes = { 'alpha', 'NvimTree', 'Outline' },
     },
     sections = {
       -- these are to remove the defaults
