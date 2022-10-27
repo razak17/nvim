@@ -122,7 +122,10 @@ return function()
       {
         event = { 'FileType' },
         pattern = get_filetypes(),
-        command = function() vim.cmd('setlocal foldexpr=nvim_treesitter#foldexpr()') end,
+        command = function()
+          vim.cmd('setlocal foldexpr=nvim_treesitter#foldexpr()')
+          vim.cmd('setlocal foldmethod=expr')
+        end,
       },
     })
   end
