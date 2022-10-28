@@ -103,7 +103,7 @@ use({
   event = 'BufRead',
   config = function()
     require('user.utils.highlights').plugin('virt_column', {
-      { VirtColumn = { bg = 'None', fg = { from = 'Comment', alter = -10 } } },
+      { VirtColumn = { bg = 'None', fg = { from = 'VertSplit', alter = -50 } } },
     })
     require('virt-column').setup({ char = '│' })
   end,
