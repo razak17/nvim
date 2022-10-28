@@ -138,8 +138,7 @@ return function()
       end
 
       local clients = table.concat(buf_client_names, '  ') -- alt: •
-      local copilot = clients .. '%#SLCopilot#' .. '  ' .. icons.misc.octoface
-      return copilot_active and copilot or clients
+      return copilot_active and clients .. '%#SLCopilot#' .. '  ' .. icons.misc.octoface or clients
     end,
     cond = conditions.hide_in_width,
   })
