@@ -59,7 +59,7 @@ use({
 
 use({
   'xiyaowong/accelerated-jk.nvim',
-  event = { 'BufWinEnter' },
+  event = { 'BufRead' },
   config = function()
     require('accelerated-jk').setup({
       mappings = { j = 'gj', k = 'gk' },
