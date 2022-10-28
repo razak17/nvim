@@ -75,7 +75,10 @@ return function()
   })
 
   ins_left({
-    'filename',
+    function()
+      local filename = (vim.fn.expand('%') == '' and 'Empty ') or vim.fn.expand('%:t')
+      return filename == 'neo-tree filesystem [1]' and 'File Explorer' or filename
+    end,
     padding = { left = 1, right = 0 },
     cond = conditions.buffer_not_empty,
   })
