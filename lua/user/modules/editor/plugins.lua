@@ -132,6 +132,22 @@ use({
   config = function() require('neoscroll').setup({ hide_cursor = true }) end,
 })
 
+use({
+  'nguyenvukhang/nvim-toggler',
+  event = 'BufRead',
+  config = function()
+    require('nvim-toggler').setup({
+      inverses = {
+        ['vim'] = 'emacs',
+        ['let'] = 'const',
+        ['margin'] = 'padding',
+        ['public'] = 'private',
+      },
+      remove_default_keybinds = true,
+    })
+  end,
+})
+
 ----------------------------------------------------------------------------------------------------
 -- Graveyard
 ----------------------------------------------------------------------------------------------------
@@ -172,22 +188,6 @@ use({
       mappings = {
         annotate = 'm?',
       },
-    })
-  end,
-  disable = true,
-})
-
-use({
-  'nguyenvukhang/nvim-toggler',
-  config = function()
-    require('nvim-toggler').setup({
-      inverses = {
-        ['vim'] = 'emacs',
-        ['let'] = 'const',
-        ['margin'] = 'padding',
-        ['public'] = 'private',
-      },
-      remove_default_keybinds = true,
     })
   end,
   disable = true,
