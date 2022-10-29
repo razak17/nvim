@@ -806,7 +806,7 @@ xnoremap(
 nnoremap(
   '<leader>ii',
   '<cmd>lua require("nvim-toggler").toggle()<CR>',
-  with_plugin('nvim-toggler: toggle', 'nvim-toggler')
+  with_plugin_installed('nvim-toggler: toggle', 'nvim-toggler')
 )
 ----------------------------------------------------------------------------------------------------
 -- nvim-notify
