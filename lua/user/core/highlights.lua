@@ -9,13 +9,11 @@ local function general_overrides()
     { Dim = { foreground = { from = 'VertSplit', alter = -50 } } },
     { mkdLineBreak = { link = 'NONE' } },
     ------------------------------------------------------------------------------------------------
-    { CursorLineSign = { link = 'CursorLine' } },
     { LineNr = { background = 'NONE' } },
     { TermCursor = { ctermfg = 'green', foreground = { from = 'NormalFloat' } } },
     -- Add undercurl to existing spellbad highlight
     { SpellBad = { undercurl = true, background = 'NONE', foreground = 'NONE', sp = 'green' } },
     { SpellRare = { undercurl = true } },
-    { CursorLineNr = { background = { from = 'CursorLine' }, bold = true } },
     { SLCopilot = { background = { from = 'StatusLine' } } },
     ------------------------------------------------------------------------------------------------
     -- colorscheme overrides
