@@ -40,7 +40,6 @@ local function general_overrides()
         foreground = 'NONE',
         bold = false,
         underline = true,
-        sp = 'white',
       },
     },
     {
