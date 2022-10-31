@@ -36,7 +36,6 @@ local function general_overrides()
       MatchParen = {
         background = 'NONE',
         foreground = 'NONE',
-        bold = false,
         underline = true,
       },
     },
