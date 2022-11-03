@@ -124,6 +124,7 @@ return function()
           crates = '(Crt)',
           treesitter = '(TS)',
           ['buffer-lines'] = '(Bufl)',
+          ['lab.quick_data'] = '(Lab)'
         })[entry.source.name]
         return vim_item
       end,
@@ -142,6 +143,7 @@ return function()
       { name = 'dictionary', keyword_length = 3, max_item_count = 3 },
       { name = 'crates' },
       { name = 'treesitter' },
+      { name = 'lab.quick_data', keyword_length = 5 },
       { name = 'buffer-lines', keyword_length = 5, max_item_count = 3 },
     }, {
       {

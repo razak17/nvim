@@ -273,6 +273,19 @@ use({
 
 use({ 'turbio/bracey.vim', ft = { 'html' }, run = 'npm install --prefix server' })
 
+use({
+  '0x100101/lab.nvim',
+  event = 'BufRead',
+  run = 'cd js && npm ci',
+  requires = { 'nvim-lua/plenary.nvim' },
+  config = function()
+    require('lab').setup({
+      code_runner = { enabled = true },
+      quick_data = { enabled = true },
+    })
+  end,
+})
+
 ----------------------------------------------------------------------------------------------------
 -- Graveyard
 ----------------------------------------------------------------------------------------------------
