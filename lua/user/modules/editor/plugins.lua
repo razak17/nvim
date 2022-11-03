@@ -16,6 +16,7 @@ use({
     { 'hrsh7th/cmp-path', after = 'nvim-cmp' },
     { 'hrsh7th/cmp-cmdline', after = 'nvim-cmp' },
     { 'f3fora/cmp-spell', after = 'nvim-cmp' },
+    { 'hrsh7th/cmp-nvim-lsp-signature-help', after = 'nvim-cmp' },
     { 'hrsh7th/cmp-emoji', after = 'nvim-cmp' },
     { 'dmitmel/cmp-cmdline-history', after = 'nvim-cmp' },
     { 'amarakon/nvim-cmp-buffer-lines', after = 'nvim-cmp' },

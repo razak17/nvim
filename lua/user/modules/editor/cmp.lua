@@ -114,7 +114,6 @@ return function()
           emoji = '(E)',
           path = '(Path)',
           buffer = '(Buf)',
-          ['buffer-lines'] = '(Bufl)',
           dictionary = '(Dict)',
           spell = '(SP)',
           cmdline = '(Cmd)',
@@ -124,12 +123,14 @@ return function()
           rg = '(Rg)',
           crates = '(Crt)',
           treesitter = '(TS)',
+          ['buffer-lines'] = '(Bufl)',
         })[entry.source.name]
         return vim_item
       end,
     },
     sources = cmp.config.sources({
       { name = 'nvim_lsp', max_item_count = 5 },
+      { name = 'nvim_lsp_signature_help' },
       { name = 'luasnip', max_item_count = 3 },
       { name = 'path' },
       {
@@ -138,14 +139,10 @@ return function()
         max_item_count = 3,
         option = { additional_arguments = '--max-depth 8' },
       },
-      {
-        name = 'dictionary',
-        keyword_length = 3,
-        max_item_count = 3,
-      },
+      { name = 'dictionary', keyword_length = 3, max_item_count = 3 },
       { name = 'crates' },
       { name = 'treesitter' },
-      { name = 'buffer-lines', max_item_count = 5 },
+      { name = 'buffer-lines', keyword_length = 5, max_item_count = 3 },
     }, {
       {
         name = 'buffer',
