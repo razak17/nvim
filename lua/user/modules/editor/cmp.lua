@@ -124,6 +124,7 @@ return function()
           crates = '(Crt)',
           treesitter = '(TS)',
           ['buffer-lines'] = '(Bufl)',
+          nvim_lsp_signature_help = '(Sig)',
           ['lab.quick_data'] = '(Lab)'
         })[entry.source.name]
         return vim_item
