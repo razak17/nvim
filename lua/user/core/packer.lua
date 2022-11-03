@@ -113,9 +113,22 @@ end
 function plugins.invalidate() rvim.invalidate('user.modules', true) end
 
 function plugins.recompile()
-  plugins.clean()
-  plugins.compile()
-  require('_compiled_nightly')
+  if vim.bo.buftype == "" then
+    if vim.fn.exists ":LspStop" ~= 0 then
+      vim.cmd "LspStop"
+    end
+
+    for name, _ in pairs(package.loaded) do
+      if name:match "^user" then
+        package.loaded[name] = nil
+      end
+    end
+
+    vim.cmd "PackerCompile"
+    plug_notify("Wait for Compile Done", "info")
+  else
+    plug_notify("Not available in this window/buffer", "info")
+  end
 end
 
 function plugins.use(repo) table.insert(Packer.repos, repo) end
