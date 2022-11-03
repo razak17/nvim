@@ -281,12 +281,6 @@ nnoremap(
 ----------------------------------------------------------------------------------------------------
 -- Folds
 ----------------------------------------------------------------------------------------------------
-nnoremap('<leader>FR', 'zA', 'recursive cursor') -- Recursively toggle
-nnoremap('<leader>Fl', 'za', 'under cursor') -- Toggle fold under the cursor
-nnoremap('<leader>Fo', 'zR', 'open all') -- Open all folds
-nnoremap('<leader>Fx', 'zM', 'close all') -- Close all folds
-nnoremap('<leader>Fz', [[zMzvzz]], 'refocus') -- Refocus folds
-
 -- Make zO recursively open whatever top level fold we're in, no matter where the
 -- cursor happens to be.
 nnoremap('zO', [[zCzO]])
