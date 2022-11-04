@@ -166,11 +166,12 @@ M.servers = {
     local emmy = ('%s/start/emmylua-nvim'):format(plugins)
     local plenary = ('%s/start/plenary.nvim'):format(plugins)
     local packer = ('%s/opt/packer.nvim'):format(plugins)
+    local neotest = ('%s/opt/neotest'):format(plugins)
 
     local library = { fn.expand('$VIMRUNTIME/lua') }
 
-    if rvim.plugin_installed('emmylua-nvim') then
-      library = { fn.expand('$VIMRUNTIME/lua'), emmy, packer, plenary }
+    for _, p in ipairs({ emmy, plenary, packer, neotest }) do
+      if fn.isdirectory(p) == 1 then table.insert(library, p) end
     end
 
     return {
