@@ -11,12 +11,11 @@ return function()
 
   local border = rvim.style.border
 
-  require('user.utils.highlights').plugin(
-    'dressing',
+  require('user.utils.highlights').plugin('dressing', {
     {
-      { FloatTitle = { background = { from = 'VertSplit', attr = 'fg' }, fg = { from = 'Search' } } },
-    }
-  )
+      FloatTitle = { background = { from = 'VertSplit', attr = 'fg' }, fg = { from = 'PmenuSel' } },
+    },
+  })
 
   require('dressing').setup({
     input = {
