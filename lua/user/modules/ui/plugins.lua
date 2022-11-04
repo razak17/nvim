@@ -21,7 +21,7 @@ use({
   config = function()
     require('fidget').setup({
       align = {
-        bottom = false,
+        bottom = true,
         right = true,
       },
       fmt = {
