@@ -385,7 +385,7 @@ return function()
       P = { installed_plugins, 'plugins' },
       r = { recent_files, 'resume' },
       R = { builtin.reloader, 'module reloader' },
-      s = { builtin.live_grep, 'find word' },
+      s = { builtin.live_grep, 'find string' },
       v = {
         name = 'vim',
         a = { builtin.autocommands, 'autocommands' },
