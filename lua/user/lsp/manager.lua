@@ -60,6 +60,22 @@ end
 
 local function launch_server(server_name, config)
   pcall(function()
+    local command = config.cmd
+      or (function()
+        local default_config =
+          require('lspconfig.server_configurations.' .. server_name).default_config
+        return default_config.cmd
+      end)()
+    if vim.fn.executable(command[1]) ~= 1 then
+      vim.notify(
+        string.format('[%q] is missing from PATH or not executable.', command[1]),
+        vim.log.levels.ERROR,
+        {
+          title = server_name,
+        }
+      )
+      return
+    end
     -- NOTE: handle rust-tools like this for now
     if server_name == 'rust_analyzer' then require('user.lsp.rust-tools') end
     if server_name ~= 'rust_analyzer' then require('lspconfig')[server_name].setup(config) end
