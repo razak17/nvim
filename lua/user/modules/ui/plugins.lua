@@ -47,7 +47,7 @@ use({
   config = conf('ui', 'neo-tree'),
   requires = {
     'nvim-lua/plenary.nvim',
-    'kyazdani42/nvim-web-devicons',
+    'nvim-tree/nvim-web-devicons',
   },
 })
 
@@ -76,7 +76,7 @@ use({
         anchor = 'topright',
       },
       style = { border = 'single', hide_buffer_id = true },
-      exclude = { -- filetypes, cybu will not be active
+      exclude = {
         'neo-tree',
         'qf',
         'lspinfo',
