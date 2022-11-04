@@ -278,12 +278,7 @@ use({
   event = 'BufRead',
   run = 'cd js && npm ci',
   requires = { 'nvim-lua/plenary.nvim' },
-  config = function()
-    require('lab').setup({
-      code_runner = { enabled = true },
-      quick_data = { enabled = true },
-    })
-  end,
+  config = function() require('lab').setup() end,
 })
 
 ----------------------------------------------------------------------------------------------------
