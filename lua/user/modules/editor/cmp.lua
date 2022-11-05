@@ -144,7 +144,6 @@ return function()
       { name = 'crates' },
       { name = 'treesitter' },
       { name = 'lab.quick_data', keyword_length = 5 },
-      { name = 'buffer-lines', keyword_length = 5, max_item_count = 3 },
     }, {
       {
         name = 'buffer',
@@ -160,7 +159,8 @@ return function()
     sources = {
       sources = cmp.config.sources(
         { { name = 'nvim_lsp_document_symbol' } },
-        { { name = 'buffer' } }
+        { { name = 'buffer' } },
+        { { name = 'buffer-lines' } }
       ),
     },
   })
