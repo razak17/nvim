@@ -8,7 +8,15 @@ return function()
     sources = {
       diagnostics.zsh,
       diagnostics.flake8,
-      diagnostics.eslint_d,
+      diagnostics.eslint_d.with({
+        condition = function()
+          return rvim.executable('eslint_d')
+            and not vim.tbl_isempty(vim.fs.find({ '.eslintrc.json', '.eslintrc.js', '.eslintrc' }, {
+              path = vim.fn.expand('%:p'),
+              upward = true,
+            }))
+        end,
+      }),
       diagnostics.golangci_lint,
       diagnostics.shellcheck.with({
         condition = function()
