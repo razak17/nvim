@@ -113,6 +113,7 @@ return function()
           luasnip = '(SN)',
           emoji = '(E)',
           path = '(Path)',
+          buffer = '(Buf)',
           dictionary = '(Dict)',
           cmdline = '(Cmd)',
           git = '(Git)',
@@ -123,7 +124,7 @@ return function()
           treesitter = '(TS)',
           ['buffer-lines'] = '(Bufl)',
           nvim_lsp_signature_help = '(Sig)',
-          ['lab.quick_data'] = '(Lab)'
+          ['lab.quick_data'] = '(Lab)',
         })[entry.source.name]
         return vim_item
       end,
@@ -144,6 +145,13 @@ return function()
       { name = 'treesitter' },
       { name = 'lab.quick_data', keyword_length = 5 },
       { name = 'buffer-lines', keyword_length = 5, max_item_count = 3 },
+    }, {
+      {
+        name = 'buffer',
+        options = {
+          get_bufnrs = function() return vim.api.nvim_list_bufs() end,
+        },
+      },
     }),
   })
 
