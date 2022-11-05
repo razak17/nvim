@@ -113,9 +113,7 @@ return function()
           luasnip = '(SN)',
           emoji = '(E)',
           path = '(Path)',
-          buffer = '(Buf)',
           dictionary = '(Dict)',
-          spell = '(SP)',
           cmdline = '(Cmd)',
           git = '(Git)',
           calc = '(Calc)',
@@ -146,15 +144,6 @@ return function()
       { name = 'treesitter' },
       { name = 'lab.quick_data', keyword_length = 5 },
       { name = 'buffer-lines', keyword_length = 5, max_item_count = 3 },
-    }, {
-      {
-        name = 'buffer',
-        keyword_length = 2,
-        options = {
-          get_bufnrs = function() return vim.api.nvim_list_bufs() end,
-        },
-      },
-      { name = 'spell' },
     }),
   })
 
