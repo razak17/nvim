@@ -142,6 +142,8 @@ use({
         ['vim'] = 'emacs',
         ['let'] = 'const',
         ['margin'] = 'padding',
+        ['-'] = '+',
+        ['onClick = 'onSubmit',
         ['public'] = 'private',
       },
       remove_default_keybinds = true,
