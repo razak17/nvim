@@ -100,10 +100,7 @@ use({
         })
       end,
     },
-    {
-      'nvim-treesitter/playground',
-      cmd = { 'TSPlaygroundToggle', 'TSHighlightCapturesUnderCursor' },
-    },
+    { 'nvim-treesitter/playground' },
     { 'nvim-treesitter/nvim-treesitter-textobjects' },
     { 'p00f/nvim-ts-rainbow' },
     {
