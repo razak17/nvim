@@ -56,7 +56,7 @@ return function()
     },
     default_component_configs = {
       icon = {
-        folder_empty = rvim.style.icons.documents.open_folder,
+        folder_empty = icons.documents.open_folder,
       },
       modified = {
         symbol = icons.misc.circle .. ' ',
@@ -67,11 +67,11 @@ return function()
           deleted = icons.git.remove,
           modified = icons.git.mod,
           renamed = icons.git.rename,
-          untracked = '',
-          ignored = '',
-          unstaged = '',
-          staged = '',
-          conflict = '',
+          untracked = icons.git.untracked,
+          ignored = icons.git.ignore,
+          unstaged = icons.git.staged,
+          staged = icons.git.unstaged,
+          conflict = icons.git.conflict,
         },
       },
       diagnostics = {

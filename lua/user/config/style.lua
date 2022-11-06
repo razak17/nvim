@@ -40,6 +40,10 @@ rvim.style = {
       diff = '',
       repo = '',
       logo = '',
+      conflict = '',
+      staged = '',
+      unstaged = '',
+      untracked = '',
     },
     documents = {
       file = '',
