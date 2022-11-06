@@ -23,7 +23,7 @@ local function general_overrides()
         bold = true,
       },
     },
-    { QuickFixLine = { background = { from = 'Search' } } },
+    { QuickFixLine = { bg = { from = 'VertSplit', attr = 'fg' } } },
     -- Neither the sign column or end of buffer highlights require an explicit background
     -- they should both just use the background that is in the window they are in.
     -- if either are specified this can lead to issues when a winhighlight is set
