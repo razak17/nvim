@@ -11,9 +11,6 @@ local function general_overrides()
     ------------------------------------------------------------------------------------------------
     { LineNr = { background = 'NONE' } },
     { TermCursor = { ctermfg = 'green', foreground = { from = 'NormalFloat' } } },
-    -- Add undercurl to existing spellbad highlight
-    { SpellBad = { undercurl = true, background = 'NONE', foreground = 'NONE', sp = 'green' } },
-    { SpellRare = { undercurl = true } },
     { SLCopilot = { background = { from = 'StatusLine' } } },
     ------------------------------------------------------------------------------------------------
     -- colorscheme overrides
