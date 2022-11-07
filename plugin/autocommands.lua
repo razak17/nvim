@@ -218,10 +218,10 @@ rvim.augroup('WinBehavior', {
     command = [[if has('nvim') | wshada! | else | wviminfo! | endif]],
   },
   {
-    event = { 'FocusLost' },
+    event = { 'FocusLost', 'InsertLeave' },
     pattern = { '*' },
     command = function()
-      if rvim.util.save_on_focus_lost then vim.cmd('silent! wall') end
+      if rvim.util.auto_save then vim.cmd('silent! wall') end
     end,
   },
   { event = { 'TermOpen' }, pattern = { '*:zsh' }, command = 'startinsert' },

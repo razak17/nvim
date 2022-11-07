@@ -32,5 +32,5 @@ rvim.plugins = {
 
 rvim.util = {
   disabled_providers = { 'python', 'ruby', 'perl' },
-  save_on_focus_lost = true,
+  auto_save = true,
 }
