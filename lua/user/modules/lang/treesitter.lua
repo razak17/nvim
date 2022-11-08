@@ -105,6 +105,7 @@ return function()
       'prisma',
       'graphql',
       'go',
+      'git_rebase',
     },
   })
 
