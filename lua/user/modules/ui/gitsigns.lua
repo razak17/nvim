@@ -33,7 +33,7 @@ return function()
         function() gs.prev_hunk({ navigation_message = false }) end,
         'prev hunk'
       )
-      nnoremap('<leader>hp', gs.preview_hunk, 'preview hunk')
+      nnoremap('<leader>hp', gs.preview_hunk_inline, 'preview hunk')
       nnoremap('<leader>hr', gs.reset_hunk, 'reset hunk')
       nnoremap('<leader>hs', gs.stage_hunk, 'stage hunk')
       nnoremap('<leader>hu', gs.undo_stage_hunk, 'undo stage')
