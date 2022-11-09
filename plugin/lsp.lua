@@ -109,14 +109,14 @@ local function setup_autocommands(client, bufnr)
   end)
 
   augroup(FEATURES.FORMATTING, function(provider)
-    if rvim.find_string(format_exclusions.format_on_save, vim.bo.ft) then return end
     return {
       {
         event = 'BufWritePre',
         buffer = bufnr,
         desc = 'LSP: Format on save',
         command = function(args)
-          if not vim.g.formatting_disabled and not vim.b.formatting_disabled then
+          local excluded = rvim.find_string(format_exclusions.format_on_save, vim.bo.ft)
+          if not excluded and not vim.g.formatting_disabled and not vim.b.formatting_disabled then
             local clients = clients_by_capability(args.buf, provider)
             format({ bufnr = args.buf, async = #clients == 1 })
           end
