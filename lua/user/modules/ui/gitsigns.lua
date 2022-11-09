@@ -7,6 +7,7 @@ return function()
       delete = { hl = 'GitSignsDelete', text = '▋' },
       topdelete = { hl = 'GitSignsChangeDelete', text = '▔' },
       changedelete = { hl = 'GitSignsChange', text = '▎' },
+      untracked = { hl = 'GitSignsAdd', text = '▋' },
     },
     _threaded_diff = true, -- NOTE: experimental but I'm curious
     word_diff = false,
