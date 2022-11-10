@@ -5,7 +5,7 @@ return function()
   highlights.plugin('NeoTree', {
     { NeoTreeNormal = { link = 'PanelBackground' } },
     { NeoTreeNormalNC = { link = 'PanelBackground' } },
-    { NeoTreeRootName = { bold = true, italic = true } },
+    { NeoTreeRootName = { bold = true } },
     { NeoTreeStatusLine = { link = 'PanelBackground' } },
     { NeoTreeTabActive = { bg = { from = 'PanelBackground' } } },
     {
