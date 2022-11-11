@@ -234,15 +234,15 @@ end
 -- TODO: Check if plugins are installed first
 local function setup_plugins(client, bufnr)
   -- nvim-navic
-  local navic_ok, navic = pcall(require, 'nvim-navic')
+  local navic_ok, navic = rvim.safe_require('nvim-navic')
   if navic_ok and client.server_capabilities.documentSymbolProvider then
     navic.attach(client, bufnr)
   end
   -- lsp-inlayhints
-  local hints_ok, hints = pcall(require, 'lsp-inlayhints')
+  local hints_ok, hints = rvim.safe_require('lsp-inlayhints')
   if hints_ok then hints.on_attach(client, bufnr) end
 
-  local dc_ok, dc = pcall(require, 'document-color')
+  local dc_ok, dc = rvim.safe_require('document-color')
   if dc_ok then
     if client.server_capabilities.colorProvider then dc.buf_attach(bufnr) end
   end

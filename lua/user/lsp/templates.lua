@@ -17,7 +17,7 @@ end
 ---@return string[] supported filestypes as a list of strings
 local function get_supported_filetypes(server_name)
   local status_ok, config =
-    pcall(require, ('lspconfig.server_configurations.%s'):format(server_name))
+    rvim.safe_require(('lspconfig.server_configurations.%s'):format(server_name))
   if not status_ok then return {} end
   return config.default_config.filetypes or {}
 end

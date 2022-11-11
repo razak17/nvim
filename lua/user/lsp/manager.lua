@@ -19,7 +19,7 @@ end
 
 local function resolve_mason_config(server_name)
   local found, mason_config =
-    pcall(require, 'mason-lspconfig.server_configurations.' .. server_name)
+    rvim.safe_require('mason-lspconfig.server_configurations.' .. server_name, { silent = true })
   if not found then return {} end
   local server_mapping = require('mason-lspconfig.mappings.server')
   local path = require('mason-core.path')
