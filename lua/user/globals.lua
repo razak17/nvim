@@ -401,7 +401,8 @@ end
 ---@param useInstalled boolean|nil
 ---@return table
 function rvim.with_plugin(desc, plugin, useInstalled)
-  return { desc = desc, plugin = plugin, useInstalled = useInstalled }
+  if useInstalled == true then return { desc = desc, plugin = plugin, useInstalled = true } end
+  return { desc = desc, plugin = plugin }
 end
 
 ---create a mapping function factory
@@ -417,15 +418,17 @@ local function make_mapper(mode, o)
   ---@param opts table
   return function(lhs, rhs, opts)
     -- check if plugin is installed if plugin option and useInstalled are passed in opts
-    if type(opts) == 'table' and opts.plugin and opts.useInstalled then
-      if not rvim.plugin_installed(opts.plugin) then return end
-      rvim.removekey(opts, 'plugin')
-      rvim.removekey(opts, 'useInstalled')
-    -- check if plugin is loaded if plugin option is passed in opts
-    elseif type(opts) == 'table' and opts.plugin then
-      if not rvim.plugin_loaded(opts.plugin) then return end
-      -- remove plugin option from opts to enable vim.keymap.set to use it
-      rvim.removekey(opts, 'plugin')
+    if type(opts) == 'table' then
+      if opts.plugin and opts.useInstalled then
+        local installed = rvim.plugin_installed(opts.plugin)
+        rvim.removekey(opts, 'plugin')
+        rvim.removekey(opts, 'useInstalled')
+        if not installed then return end
+      elseif opts.plugin then
+        local loaded = rvim.plugin_loaded(opts.plugin)
+        rvim.removekey(opts, 'plugin')
+        if not loaded then return end
+      end
     end
     -- If the label is all that was passed in, set the opts automagically
     opts = type(opts) == 'string' and { desc = opts } or opts and vim.deepcopy(opts) or {}
