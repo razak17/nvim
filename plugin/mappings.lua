@@ -570,7 +570,7 @@ nnoremap('<leader>Lu', '<cmd>TSUpdate<CR>', with_plugin('treesitter: update', 'n
 nnoremap(
   '<leader>ol',
   function() require('lsp_lines').toggle() end,
-  with_plugin('lsp_lines: toggle')
+  with_plugin('lsp_lines.nvim', 'lsp_lines: toggle')
 )
 ----------------------------------------------------------------------------------------------------
 -- nvim-dap
