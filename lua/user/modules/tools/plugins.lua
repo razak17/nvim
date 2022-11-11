@@ -232,7 +232,6 @@ use({
       auto_session_root_dir = join_paths(rvim.get_cache_dir(), 'session/auto/'),
       -- Do not enable auto restoration in my projects directory, I'd like to choose projects myself
       auto_restore_enabled = not vim.startswith(vim.fn.getcwd(), vim.env.DEV_HOME),
-      auto_restore_enabled = true,
       auto_session_suppress_dirs = {
         vim.env.HOME,
         fmt('%s/Desktop', vim.env.HOME),
