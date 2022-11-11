@@ -207,7 +207,6 @@ local function setup_mappings(client, bufnr)
     vim.diagnostic.goto_next()
   end, with_desc('lsp: go to next diagnostic'))
   nnoremap('<leader>lL', vim.diagnostic.setloclist, with_desc('lsp: toggle loclist diagnostics'))
-  nnoremap('<leader>lf', '<cmd>LspFormat<cr>', with_desc('lsp: format buffer'))
   nnoremap('<leader>lc', lsp.codelens.run, with_desc('lsp: run code lens'))
   nnoremap('<leader>lr', lsp.buf.rename, with_desc('lsp: rename'))
   -- Templates
@@ -219,7 +218,11 @@ local function setup_mappings(client, bufnr)
     require('user.lsp.templates').remove_template_files()
     vim.notify('Templates have been removed', nil, { title = 'Lsp' })
   end, 'lsp: delete templates')
+  -- Others
   nnoremap('<leader>li', '<cmd>LspInfo<CR>', 'lsp: info')
+  nnoremap('<leader>lf', '<cmd>LspFormat<cr>', with_desc('lsp: format buffer'))
+  nnoremap('<leader>ov', '<cmd>ToggleVirtualText<cr>', with_desc('lsp: toggle virtual_text'))
+  nnoremap('<leader>ll', '<cmd>LspDiagnostics<CR>', with_desc('lsp: toggle quickfix diagnostics'))
 end
 
 ----------------------------------------------------------------------------------------------------
@@ -324,9 +327,7 @@ local function make_diagnostic_qf_updater()
     })
   end
 end
-
 command('LspDiagnostics', make_diagnostic_qf_updater())
-rvim.nnoremap('<leader>ll', '<Cmd>LspDiagnostics<CR>', 'lsp: toggle quickfix diagnostics')
 
 ----------------------------------------------------------------------------------------------------
 -- Signs
@@ -392,14 +393,6 @@ local max_height = math.min(math.floor(vim.o.lines * 0.3), 30)
 
 local diagnostics = rvim.lsp.diagnostics
 local float = rvim.lsp.diagnostics.float
-local virtual_text = {
-  prefix = '',
-  spacing = diagnostics.virtual_text_spacing,
-  format = function(d)
-    local level = diagnostic.severity[d.severity]
-    return fmt('%s %s', codicons.lsp[level:lower()], d.message)
-  end,
-}
 
 diagnostic.config({
   signs = { active = diagnostics.signs.active, values = codicons.lsp },
@@ -423,13 +416,21 @@ diagnostic.config({
 local function toggle_vt()
   local new_value = vim.diagnostic.config().virtual_text
   if type(new_value) == 'boolean' then
-    vim.diagnostic.config({ virtual_text = virtual_text })
+    vim.diagnostic.config({
+      virtual_text = {
+        prefix = '',
+        spacing = diagnostics.virtual_text_spacing,
+        format = function(d)
+          local level = diagnostic.severity[d.severity]
+          return fmt('%s %s', codicons.lsp[level:lower()], d.message)
+        end,
+      },
+    })
     return
   end
   vim.diagnostic.config({ virtual_text = false })
 end
 command('ToggleVirtualText', toggle_vt)
-rvim.nnoremap('<leader>ov', toggle_vt, 'lsp: toggle virtual_text')
 
 lsp.handlers['textDocument/hover'] = function(...)
   local hover_handler = lsp.with(lsp.handlers.hover, {
