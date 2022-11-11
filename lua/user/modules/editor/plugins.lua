@@ -34,6 +34,7 @@ use({
       'uga-rosa/cmp-dictionary',
       after = 'nvim-cmp',
       config = function()
+        -- NOTE: run :CmpDictionaryUpdate to update dictionary
         require('cmp_dictionary').setup({
           async = true,
           dic = {
@@ -41,7 +42,6 @@ use({
             ['*'] = join_paths(rvim.get_runtime_dir(), 'site', 'spell', 'dictionary.txt'),
           },
         })
-        require('cmp_dictionary').update()
       end,
     },
   },
