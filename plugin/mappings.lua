@@ -455,7 +455,7 @@ nnoremap('<leader>Lv', ':e ' .. join_paths(rvim.get_config_dir(), 'init.lua<CR>'
 -- Plugins {{{
 ----------------------------------------------------------------------------------------------------
 local with_plugin = rvim.with_plugin
-local with_plugin_installed = function(desc, plugin) rvim.with_plugin(desc, plugin, true) end
+local with_plugin_installed = function(desc, plugin) return rvim.with_plugin(desc, plugin, true) end
 ----------------------------------------------------------------------------------------------------
 -- packer
 if plugin_installed('packer.nvim') then
