@@ -109,6 +109,7 @@ use({ 'psliwka/vim-dirtytalk', event = 'BufRead', run = ':DirtytalkUpdate' })
 
 use({
   'axelvc/template-string.nvim',
+  ft = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
   event = 'BufRead',
   config = function()
     require('template-string').setup({
