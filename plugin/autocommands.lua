@@ -361,14 +361,13 @@ rvim.augroup('Utilities', {
   },
   {
     event = { 'FileType' },
+    pattern = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact', 'text' },
+    command = function() vim.opt_local.spell = true end,
+  },
+  {
+    event = { 'FileType' },
     pattern = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
-    command = function()
-      vim.bo.tw = 100
-      vim.opt_local.spell = true
-      vim.cmd([[
-        inoreabbrev cosnt const
-      ]])
-    end,
+    command = function() vim.bo.tw = 100 end,
   },
   {
     event = { 'BufWritePre', 'FileWritePre' },
