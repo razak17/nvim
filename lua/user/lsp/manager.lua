@@ -60,15 +60,16 @@ end
 
 local function launch_server(server_name, config)
   pcall(function()
-    local command = config.cmd
+    local cmd = config.cmd
       or (function()
         local default_config =
           require('lspconfig.server_configurations.' .. server_name).default_config
         return default_config.cmd
       end)()
-    if vim.fn.executable(command[1]) ~= 1 then
+    -- some servers have dynamic commands defined with on_new_config
+    if type(cmd) == 'table' and type(cmd[1]) == 'string' and rvim.executable(cmd[1]) ~= 1 then
       vim.notify(
-        string.format('[%q] is missing from PATH or not executable.', command[1]),
+        string.format('[%q] is missing from PATH or not executable.', cmd[1]),
         vim.log.levels.ERROR,
         {
           title = server_name,
