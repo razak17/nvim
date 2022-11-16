@@ -71,9 +71,7 @@ local function launch_server(server_name, config)
       vim.notify(
         string.format('[%q] is missing from PATH or not executable.', cmd[1]),
         vim.log.levels.ERROR,
-        {
-          title = server_name,
-        }
+        { title = server_name }
       )
       return
     end
