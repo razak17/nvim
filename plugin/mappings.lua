@@ -710,7 +710,7 @@ if plugin_loaded('FTerm.nvim') then
   nnoremap([[<c-\>]], function() require('FTerm').toggle() end, 'fterm: toggle lazygit')
   tnoremap([[<c-\>]], function() require('FTerm').toggle() end, 'fterm: toggle lazygit')
   nnoremap('<leader>lg', function() new_float('lazygit') end, 'fterm: toggle lazygit')
-  nnoremap('<leader>gc', function() new_float('git add . && git commit -v -a') end, 'git: commit')
+  nnoremap('<leader>gc', function() new_float('git add . && git commit -a -v') end, 'git: commit')
   nnoremap(
     '<leader>gd',
     function() new_float('iconf -ccma') end,
