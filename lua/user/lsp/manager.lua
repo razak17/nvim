@@ -67,7 +67,7 @@ local function launch_server(server_name, config)
         return default_config.cmd
       end)()
     -- some servers have dynamic commands defined with on_new_config
-    if type(cmd) == 'table' and type(cmd[1]) == 'string' and rvim.executable(cmd[1]) ~= 1 then
+    if type(cmd) == 'table' and type(cmd[1]) == 'string' and not rvim.executable(cmd[1]) then
       vim.notify(
         string.format('[%q] is missing from PATH or not executable.', cmd[1]),
         vim.log.levels.ERROR,

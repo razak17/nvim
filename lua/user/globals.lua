@@ -370,7 +370,7 @@ end
 ---Check if a cmd is executable
 ---@param e string
 ---@return boolean
-function rvim.executable(e) return fn.executable(e) end
+function rvim.executable(e) return fn.executable(e) > 0 end
 
 ---A terser proxy for `nvim_replace_termcodes`
 ---@param str string
