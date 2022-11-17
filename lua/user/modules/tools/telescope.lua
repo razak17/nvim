@@ -54,7 +54,6 @@ return function()
   end
 
   local telescope = require('telescope')
-  local dropdown = rvim.telescope.dropdown
 
   local function stopinsert(callback)
     return function(prompt_bufnr)
@@ -162,7 +161,7 @@ return function()
         },
       },
       pickers = {
-        buffers = dropdown({
+        buffers = rvim.telescope.dropdown({
           sort_mru = true,
           sort_lastused = true,
           show_all_buffers = true,
@@ -177,7 +176,7 @@ return function()
         find_files = {
           hidden = true,
         },
-        keymaps = dropdown({
+        keymaps = rvim.telescope.dropdown({
           layout_config = {
             height = 18,
             width = 0.5,
@@ -201,15 +200,15 @@ return function()
             height = 25,
           },
         }),
-        oldfiles = dropdown(),
-        current_buffer_fuzzy_find = dropdown({
+        oldfiles = rvim.telescope.dropdown(),
+        current_buffer_fuzzy_find = rvim.telescope.dropdown({
           previewer = false,
           shorten_path = false,
         }),
         colorscheme = {
           enable_preview = true,
         },
-        git_branches = dropdown(),
+        git_branches = rvim.telescope.dropdown(),
         git_bcommits = {
           layout_config = {
             horizontal = {
@@ -224,7 +223,7 @@ return function()
             },
           },
         },
-        reloader = dropdown(),
+        reloader = rvim.telescope.dropdown(),
       },
     },
   })
@@ -241,7 +240,7 @@ return function()
     ['telescope-frecency.nvim'] = 'frecency',
     ['nvim-notify'] = 'notify',
     ['telescope-recent-files'] = 'recent_files',
-    ['yanky.nvim' ]= 'yank_history',
+    ['yanky.nvim'] = 'yank_history',
   }
 
   for plugin, setup in ipairs(plugins) do
