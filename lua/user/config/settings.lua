@@ -187,7 +187,7 @@ opt.clipboard = { 'unnamedplus' }
 o.laststatus = 3
 o.showtabline = 0
 o.termguicolors = true
--- opt.guifont = 'CartographCF Nerd Font Mono:h14,codicon'
+opt.diffopt:append('linematch:50')
 ----------------------------------------------------------------------------------------------------
 -- Emoji {{{1
 ----------------------------------------------------------------------------------------------------
