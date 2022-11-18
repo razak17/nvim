@@ -149,7 +149,11 @@ function plugins.load_compile()
       event = { 'User' },
       pattern = { 'PackerCompileDone' },
       desc = 'Inform me that packer has finished compiling',
-      command = function() plug_notify('Packer compile complete', 'info') end,
+      command = function()
+        plug_notify('Packer compile complete', 'info')
+        package.loaded['_compiled_nightly'] = nil
+        require('_compiled_nightly')
+      end,
     },
   })
 end
