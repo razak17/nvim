@@ -113,21 +113,17 @@ end
 function plugins.invalidate() rvim.invalidate('user.modules', true) end
 
 function plugins.recompile()
-  if vim.bo.buftype == "" then
-    if vim.fn.exists ":LspStop" ~= 0 then
-      vim.cmd "LspStop"
-    end
+  if vim.bo.buftype == '' then
+    if vim.fn.exists(':LspStop') ~= 0 then vim.cmd('LspStop') end
 
     for name, _ in pairs(package.loaded) do
-      if name:match "^user" then
-        package.loaded[name] = nil
-      end
+      if name:match('^user') then package.loaded[name] = nil end
     end
 
-    vim.cmd "PackerCompile"
-    plug_notify("Wait for Compile Done", "info")
+    vim.cmd('PackerCompile')
+    plug_notify('Wait for Compile Done', 'info')
   else
-    plug_notify("Not available in this window/buffer", "info")
+    plug_notify('Not available in this window/buffer', 'info')
   end
 end
 
@@ -140,7 +136,7 @@ function plugins.load_compile()
     {
       event = { 'BufWritePost' },
       desc = 'Packer setup and reload',
-      pattern = { '*/user/modules/**/*.lua' },
+      pattern = { rvim.get_user_dir() .. '/modules/**/*.lua' },
       command = plugins.recompile,
     },
     {
