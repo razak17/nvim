@@ -52,14 +52,42 @@ use({
   requires = {
     { 'nvim-lua/plenary.nvim' },
     { 'nvim-lua/popup.nvim' },
-    { 'jvgrootveld/telescope-zoxide' },
-    { 'smartpde/telescope-recent-files' },
-    { 'nvim-telescope/telescope-media-files.nvim' },
-    { 'nvim-telescope/telescope-dap.nvim' },
-    { 'natecraddock/telescope-zf-native.nvim' },
-    { 'nvim-telescope/telescope-ui-select.nvim' },
-    { 'benfowler/telescope-luasnip.nvim' },
     { 'kkharji/sqlite.lua' },
+    {
+      'jvgrootveld/telescope-zoxide',
+      after = 'telescope.nvim',
+      config = function() require('telescope').load_extension('zoxide') end,
+    },
+    {
+      'smartpde/telescope-recent-files',
+      after = 'telescope.nvim',
+      config = function() require('telescope').load_extension('recent_files') end,
+    },
+    {
+      'nvim-telescope/telescope-media-files.nvim',
+      after = 'telescope.nvim',
+      config = function() require('telescope').load_extension('media_files') end,
+    },
+    {
+      'nvim-telescope/telescope-dap.nvim',
+      after = 'telescope.nvim',
+      config = function() require('telescope').load_extension('dap') end,
+    },
+    {
+      'natecraddock/telescope-zf-native.nvim',
+      after = 'telescope.nvim',
+      config = function() require('telescope').load_extension('zf-native') end,
+    },
+    {
+      'nvim-telescope/telescope-ui-select.nvim',
+      after = 'telescope.nvim',
+      config = function() require('telescope').load_extension('ui-select') end,
+    },
+    {
+      'benfowler/telescope-luasnip.nvim',
+      after = 'telescope.nvim',
+      config = function() require('telescope').load_extension('luasnip') end,
+    },
     {
       'nvim-telescope/telescope-frecency.nvim',
       after = 'telescope.nvim',
@@ -75,6 +103,7 @@ use({
             borderchars = rvim.style.border.telescope.prompt,
           },
         })
+        require('telescope').load_extension('harpoon')
       end,
     },
   },
@@ -89,6 +118,7 @@ use({
 
 use({
   'ahmedkhalf/project.nvim',
+  after = 'telescope.nvim',
   config = function()
     require('project_nvim').setup({
       active = true,
@@ -108,6 +138,7 @@ use({
       ignore_lsp = { 'null-ls' },
       datapath = rvim.get_cache_dir(),
     })
+    require('telescope').load_extension('zoxide')
   end,
 })
 

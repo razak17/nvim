@@ -228,25 +228,6 @@ return function()
     },
   })
 
-  local plugins = {
-    ['telescope-zoxide'] = 'zoxide',
-    ['project.nvim'] = 'projects',
-    ['telescope-media-files.nvim'] = 'media_files',
-    ['telescope-ui-select.nvim'] = 'ui-select',
-    ['telescope-dap'] = 'dap',
-    ['telescope-zf-native.nvim'] = 'zf-native',
-    ['harpoon'] = 'harpoon',
-    ['telescope-luasnip.nvim'] = 'luasnip',
-    ['telescope-frecency.nvim'] = 'frecency',
-    ['nvim-notify'] = 'notify',
-    ['telescope-recent-files'] = 'recent_files',
-    ['yanky.nvim'] = 'yank_history',
-  }
-
-  for plugin, setup in ipairs(plugins) do
-    if rvim.plugin_installed(plugin) then require('telescope').load_extension(setup) end
-  end
-
   --- NOTE: this must be required after setting up telescope
   --- otherwise the result will be cached without the updates
   --- from the setup call
