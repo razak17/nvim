@@ -138,7 +138,7 @@ use({
       ignore_lsp = { 'null-ls' },
       datapath = rvim.get_cache_dir(),
     })
-    require('telescope').load_extension('zoxide')
+    require('telescope').load_extension('projects')
   end,
 })
 
