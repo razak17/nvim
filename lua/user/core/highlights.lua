@@ -4,13 +4,8 @@ local util = require('user.utils.highlights')
 
 local function general_overrides()
   util.all({
-    { Normal = { background = { from = 'Normal', alter = -50 } } },
-    { NormalFloat = { inherit = 'Normal' } },
-    { Dim = { foreground = { from = 'VertSplit', alter = -50 } } },
     { mkdLineBreak = { link = 'NONE' } },
-    ------------------------------------------------------------------------------------------------
     { LineNr = { background = 'NONE' } },
-    { TermCursor = { ctermfg = 'green', foreground = { from = 'NormalFloat' } } },
     { SLCopilot = { background = { from = 'StatusLine' } } },
     ------------------------------------------------------------------------------------------------
     -- colorscheme overrides
@@ -36,25 +31,8 @@ local function general_overrides()
         underline = true,
       },
     },
-    {
-      MatchWord = {
-        fg = { from = 'diffRemoved' },
-        underline = false,
-        cterm = { underline = false },
-      },
-    },
     { GitSignsCurrentLineBlame = { link = 'Comment' } },
     { Constant = { bold = true } },
-    ------------------------------------------------------------------------------------------------
-    -- Treesitter
-    ------------------------------------------------------------------------------------------------
-    { ['@namespace'] = { foreground = { from = 'Function' }, italic = true, bold = true } },
-    { ['@keyword.return'] = { italic = true, foreground = { from = 'Keyword' } } },
-    { ['@constructor.lua'] = { foreground = { from = 'Type' }, italic = true, bold = true } },
-    { ['@error'] = { foreground = 'NONE', background = 'NONE' } },
-    { ['@parameter'] = { italic = true, bold = true, foreground = 'NONE' } },
-    { ['@text.diff.add'] = { link = 'DiffAdd' } },
-    { ['@text.diff.delete'] = { link = 'DiffDelete' } },
     ------------------------------------------------------------------------------------------------
     -- LSP
     ------------------------------------------------------------------------------------------------
@@ -110,9 +88,56 @@ local function on_sidebar_enter()
   })
 end
 
+local function colorscheme_overrides()
+  local overrides = {
+    ['zephyr'] = {
+      { Normal = { background = { from = 'Normal', alter = -50 } } },
+      { NormalFloat = { inherit = 'Normal' } },
+      { TermCursor = { ctermfg = 'green', foreground = { from = 'NormalFloat' } } },
+      { Dim = { foreground = { from = 'VertSplit', alter = -50 } } },
+      ----------------------------------------------------------------------------------------------
+      -- Treesitter
+      ----------------------------------------------------------------------------------------------
+      { ['@namespace'] = { foreground = { from = 'Function' }, italic = true, bold = true } },
+      { ['@keyword.return'] = { italic = true, foreground = { from = 'Keyword' } } },
+      { ['@constructor.lua'] = { foreground = { from = 'Type' }, italic = true, bold = true } },
+      { ['@error'] = { foreground = 'NONE', background = 'NONE' } },
+      { ['@parameter'] = { italic = true, bold = true, foreground = 'NONE' } },
+      { ['@text.diff.add'] = { link = 'DiffAdd' } },
+      { ['@text.diff.delete'] = { link = 'DiffDelete' } },
+    },
+    ['horizon'] = {
+      ----------------------------------------------------------------------------------------------
+      --- TODO: upstream these highlights to horizon.nvim
+      ----------------------------------------------------------------------------------------------
+      { Normal = { fg = '#C1C1C1' } },
+      ----------------------------------------------------------------------------------------------
+      { NormalNC = { inherit = 'Normal' } },
+      { WinSeparator = { fg = '#353647' } },
+      { Constant = { bold = true } },
+      { NonText = { fg = { from = 'Comment' } } },
+      { LineNr = { background = 'NONE' } },
+      { TabLineSel = { background = { from = 'SpecialKey', attr = 'fg' } } },
+      { VisibleTab = { background = { from = 'Normal', alter = 40 }, bold = true } },
+      { ['@constant.comment'] = { inherit = 'Constant', bold = true } },
+      { ['@constructor.lua'] = { inherit = 'Type', italic = false, bold = false } },
+      { PanelBackground = { link = 'Normal' } },
+      { PanelWinSeparator = { inherit = 'PanelBackground', fg = { from = 'WinSeparator' } } },
+      { PanelHeading = { bg = 'bg', bold = true, fg = { from = 'Normal', alter = -30 } } },
+      { PanelDarkBackground = { background = { from = 'Normal', alter = -25 } } },
+      { PanelDarkHeading = { inherit = 'PanelDarkBackground', bold = true } },
+    },
+  }
+  local hls = overrides[vim.g.colors_name]
+  if not hls then return end
+
+  util.all(hls)
+end
+
 local function user_highlights()
-  general_overrides()
+  -- general_overrides()
   set_sidebar_highlight()
+  colorscheme_overrides()
 end
 
 rvim.augroup('UserHighlights', {
@@ -130,4 +155,5 @@ rvim.augroup('UserHighlights', {
 ----------------------------------------------------------------------------------------------------
 -- Color Scheme {{{1
 ----------------------------------------------------------------------------------------------------
-rvim.wrap_err('theme failed to load because', vim.cmd.colorscheme, 'zephyr')
+-- rvim.wrap_err('theme failed to load because', vim.cmd.colorscheme, 'zephyr')
+rvim.wrap_err('theme failed to load because', vim.cmd.colorscheme, 'horizon')
