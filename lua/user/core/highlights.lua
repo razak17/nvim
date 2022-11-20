@@ -6,7 +6,6 @@ local function general_overrides()
   util.all({
     { mkdLineBreak = { link = 'NONE' } },
     { LineNr = { background = 'NONE' } },
-    { Include = { italic = true } },
     ------------------------------------------------------------------------------------------------
     -- colorscheme overrides
     ------------------------------------------------------------------------------------------------
