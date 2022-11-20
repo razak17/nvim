@@ -6,11 +6,10 @@ local function general_overrides()
   util.all({
     { mkdLineBreak = { link = 'NONE' } },
     { LineNr = { background = 'NONE' } },
-    { SLCopilot = { background = { from = 'StatusLine' } } },
+    { Include = { italic = true } },
     ------------------------------------------------------------------------------------------------
     -- colorscheme overrides
     ------------------------------------------------------------------------------------------------
-    { Include = { italic = true } },
     {
       Folded = {
         background = 'NONE',
@@ -24,15 +23,16 @@ local function general_overrides()
     -- if either are specified this can lead to issues when a winhighlight is set
     { SignColumn = { background = 'NONE' } },
     { EndOfBuffer = { background = 'NONE' } },
-    {
-      MatchParen = {
-        background = 'NONE',
-        foreground = 'NONE',
-        underline = true,
-      },
-    },
     { GitSignsCurrentLineBlame = { link = 'Comment' } },
     { Constant = { bold = true } },
+    ------------------------------------------------------------------------------------------------
+    -- Treesitter
+    ------------------------------------------------------------------------------------------------
+    { ['@keyword.return'] = { italic = true, foreground = { from = 'Keyword' } } },
+    { ['@parameter'] = { italic = true, bold = true, foreground = 'NONE' } },
+    { ['@error'] = { foreground = 'fg', background = 'NONE' } },
+    { ['@text.diff.add'] = { link = 'DiffAdd' } },
+    { ['@text.diff.delete'] = { link = 'DiffDelete' } },
     ------------------------------------------------------------------------------------------------
     -- LSP
     ------------------------------------------------------------------------------------------------
@@ -95,16 +95,7 @@ local function colorscheme_overrides()
       { NormalFloat = { inherit = 'Normal' } },
       { TermCursor = { ctermfg = 'green', foreground = { from = 'NormalFloat' } } },
       { Dim = { foreground = { from = 'VertSplit', alter = -50 } } },
-      ----------------------------------------------------------------------------------------------
-      -- Treesitter
-      ----------------------------------------------------------------------------------------------
-      { ['@namespace'] = { foreground = { from = 'Function' }, italic = true, bold = true } },
-      { ['@keyword.return'] = { italic = true, foreground = { from = 'Keyword' } } },
-      { ['@constructor.lua'] = { foreground = { from = 'Type' }, italic = true, bold = true } },
-      { ['@error'] = { foreground = 'NONE', background = 'NONE' } },
-      { ['@parameter'] = { italic = true, bold = true, foreground = 'NONE' } },
-      { ['@text.diff.add'] = { link = 'DiffAdd' } },
-      { ['@text.diff.delete'] = { link = 'DiffDelete' } },
+      { SLCopilot = { background = { from = 'StatusLine' } } },
     },
     ['horizon'] = {
       ----------------------------------------------------------------------------------------------
@@ -135,7 +126,7 @@ local function colorscheme_overrides()
 end
 
 local function user_highlights()
-  -- general_overrides()
+  general_overrides()
   set_sidebar_highlight()
   colorscheme_overrides()
 end
@@ -155,5 +146,4 @@ rvim.augroup('UserHighlights', {
 ----------------------------------------------------------------------------------------------------
 -- Color Scheme {{{1
 ----------------------------------------------------------------------------------------------------
--- rvim.wrap_err('theme failed to load because', vim.cmd.colorscheme, 'zephyr')
-rvim.wrap_err('theme failed to load because', vim.cmd.colorscheme, 'horizon')
+rvim.wrap_err('theme failed to load because', vim.cmd.colorscheme, 'zephyr')
