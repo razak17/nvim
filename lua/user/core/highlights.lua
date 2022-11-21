@@ -126,8 +126,8 @@ end
 
 local function user_highlights()
   general_overrides()
-  set_sidebar_highlight()
   colorscheme_overrides()
+  set_sidebar_highlight()
 end
 
 rvim.augroup('UserHighlights', {
