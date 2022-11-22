@@ -61,7 +61,6 @@ use({
 
 use({
   'kosayoda/nvim-lightbulb',
-  event = 'BufRead',
   config = function()
     require('user.utils.highlights').plugin('Lightbulb', {
       { LightBulbFloatWin = { foreground = { from = 'Type' } } },
