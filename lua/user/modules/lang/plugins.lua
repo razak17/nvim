@@ -217,6 +217,23 @@ use({ 'mrshmllow/document-color.nvim' })
 
 use({ 'ii14/emmylua-nvim' })
 
+use({
+  'ray-x/lsp_signature.nvim',
+  config = function()
+    require('lsp_signature').setup({
+      debug = false,
+      log_path = rvim.get_cache_dir() .. '/lsp_signature.log',
+      bind = true,
+      fix_pos = false,
+      auto_close_after = 15,
+      hint_enable = false,
+      handler_opts = { border = rvim.style.border.current },
+      toggle_key = '<C-K>',
+      select_signature_key = '<M-N>',
+    })
+  end,
+})
+
 ----------------------------------------------------------------------------------------------------
 -- Graveyard
 ----------------------------------------------------------------------------------------------------
@@ -248,24 +265,6 @@ use({
         enabled = true,
         name = 'crates.nvim',
       },
-    })
-  end,
-})
-
-use({
-  'ray-x/lsp_signature.nvim',
-  disable = true,
-  config = function()
-    require('lsp_signature').setup({
-      debug = false,
-      log_path = rvim.get_cache_dir() .. '/lsp_signature.log',
-      bind = true,
-      fix_pos = false,
-      auto_close_after = 15,
-      hint_enable = false,
-      handler_opts = { border = rvim.style.border.current },
-      toggle_key = '<C-K>',
-      select_signature_key = '<M-N>',
     })
   end,
 })
