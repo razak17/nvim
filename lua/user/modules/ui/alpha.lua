@@ -60,6 +60,13 @@ return function()
     opts = { position = 'center', hl = 'NonText' },
   }
 
+  local v = vim.version()
+  local version = {
+    type = 'text',
+    val = f(' v%d.%d.%d %s', v.major, v.minor, v.patch, v.prerelease and '(nightly)' or ''),
+    opts = { position = 'center', hl = 'NonText' },
+  }
+
   dashboard.section.buttons.val = {
     button('Directory', 'r', '  Restore last session', '<Cmd>RestoreSession<CR>'),
     button('Todo', 's', '  Pick a session', '<Cmd>Autosession search<CR>'),
@@ -81,6 +88,8 @@ return function()
       { type = 'padding', val = 2 },
       dashboard.section.buttons,
       dashboard.section.footer,
+      { type = 'padding', val = 2 },
+      version,
     },
     opts = { margin = 5 },
   })
