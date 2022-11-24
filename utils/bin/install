@@ -48,7 +48,7 @@ pythonVenvInit() {
   neovim_py="$HOME/.cache/rvim/venv/neovim"
   mkdir -p "$neovim_py"
   python3 -m venv "$neovim_py"
-  "$neovim_py"/bin/pip3 install -U setuptools pynvim jedi neovim-remote
+  "$neovim_py"/bin/pip3 install -U setuptools pynvim neovim-remote
 }
 
 nodeExtra() {
