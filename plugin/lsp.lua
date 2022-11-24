@@ -413,7 +413,7 @@ diagnostic.config({
 })
 
 -- NOTE: virtual_text should be set to false by default. see above
-local function toggle_vt()
+local function toggle_virtual_text()
   local new_value = vim.diagnostic.config().virtual_text
   if type(new_value) == 'boolean' then
     vim.diagnostic.config({
@@ -430,7 +430,7 @@ local function toggle_vt()
   end
   vim.diagnostic.config({ virtual_text = false })
 end
-command('ToggleVirtualText', toggle_vt)
+command('ToggleVirtualText', toggle_virtual_text)
 
 lsp.handlers['textDocument/hover'] = function(...)
   local hover_handler = lsp.with(lsp.handlers.hover, {

@@ -75,9 +75,11 @@ local function launch_server(server_name, config)
       )
       return
     end
-    -- NOTE: handle rust-tools like this for now
     if server_name == 'rust_analyzer' then require('user.lsp.rust-tools') end
-    if server_name ~= 'rust_analyzer' then require('lspconfig')[server_name].setup(config) end
+    if server_name == 'tsserver' then require('user.lsp.typescript') end
+    if server_name ~= 'rust_analyzer' and server_name ~= 'tsserver' then
+      require('lspconfig')[server_name].setup(config)
+    end
     buf_try_add(server_name)
   end)
 end
