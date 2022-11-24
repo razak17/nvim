@@ -3,6 +3,13 @@ return function()
   local builtins = null_ls.builtins
   local diagnostics = builtins.diagnostics
   local formatting = builtins.formatting
+
+  local function add_ts_code_actions()
+    if rvim.plugin_installed('typescript.nvim') then
+      require('typescript.extensions.null-ls.code-actions')
+    end
+  end
+
   null_ls.setup({
     debug = true,
     sources = {
@@ -35,6 +42,7 @@ return function()
       formatting.stylua.with({ condition = function() return rvim.executable('stylua') end }),
       formatting.goimports,
       -- formatting.pg_format,
+      add_ts_code_actions(),
     },
   })
   rvim.augroup('NullLsConfig', {
