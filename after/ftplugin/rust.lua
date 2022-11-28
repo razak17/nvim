@@ -6,7 +6,7 @@ if not rvim then return end
 local nnoremap = rvim.nnoremap
 local with_desc = function(desc) return { buffer = 0, desc = desc } end
 if rvim.plugin_installed('rust-tools.nvim') then
-  nnoremap('<localleader>h', '<cmd>RustToggleInlayHints<Cr>', with_desc('toggle hints'))
+  nnoremap('<localleader>rh', '<cmd>RustToggleInlayHints<Cr>', with_desc('toggle hints'))
   nnoremap('<localleader>rr', '<cmd>RustRunnables<Cr>', with_desc('rust-tools: runnables'))
   nnoremap('<localleader>rt', '<cmd>lua _CARGO_TEST()<cr>', with_desc('rust-tools: cargo test'))
   nnoremap('<localleader>rm', '<cmd>RustExpandMacro<Cr>', with_desc('rust-tools: expand cargo'))
