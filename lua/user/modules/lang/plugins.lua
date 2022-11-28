@@ -236,27 +236,16 @@ use({
 
 use({ 'jose-elias-alvarez/typescript.nvim' })
 
-----------------------------------------------------------------------------------------------------
--- Graveyard
-----------------------------------------------------------------------------------------------------
-use({
-  'andymass/vim-matchup',
-  after = 'nvim-treesitter',
-  config = function() rvim.nnoremap('<leader>lm', ':<c-u>MatchupWhereAmI?<CR>', 'where am i') end,
-  disable = true,
-})
-
 use({
   'Saecki/crates.nvim',
   event = { 'BufRead Cargo.toml' },
   requires = { 'nvim-lua/plenary.nvim' },
-  disable = true,
   config = function()
     require('crates').setup({
       popup = {
         -- autofocus = true,
         style = 'minimal',
-        border = 'rounded',
+        border = 'single',
         show_version_date = false,
         show_dependency_version = true,
         max_height = 30,
@@ -269,4 +258,14 @@ use({
       },
     })
   end,
+})
+
+----------------------------------------------------------------------------------------------------
+-- Graveyard
+----------------------------------------------------------------------------------------------------
+use({
+  'andymass/vim-matchup',
+  after = 'nvim-treesitter',
+  config = function() rvim.nnoremap('<leader>lm', ':<c-u>MatchupWhereAmI?<CR>', 'where am i') end,
+  disable = true,
 })

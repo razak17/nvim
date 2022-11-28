@@ -1,59 +1,19 @@
-if not rvim then return end
-
 local nnoremap = rvim.nnoremap
 local with_desc = function(desc) return { buffer = 0, desc = desc } end
-if rvim.plugin_installed('crates.nvim') then
-  nnoremap('<localleader>Kt', "<cmd>lua require('crates').toggle()<CR>", with_desc('Toggle Hints'))
-  nnoremap('<localleader>Ku', "<cmd>lua require('crates').update_crate()<CR>", with_desc('Update'))
-  nnoremap(
-    '<localleader>KU',
-    "<cmd>lua require('crates').upgrade_crate()<CR>",
-    with_desc('Upgrade')
-  )
-  nnoremap(
-    '<localleader>Ka',
-    "<cmd>lua require('crates').update_all_crates()<CR>",
-    with_desc('Update All')
-  )
-  nnoremap(
-    '<localleader>KA',
-    "<cmd>lua require('crates').upgrade_all_crates()<CR>",
-    with_desc('Upgrade All')
-  )
-  nnoremap(
-    '<localleader>Kh',
-    "<cmd>lua require('crates').open_homepage()<CR>",
-    with_desc('Open Home')
-  )
-  nnoremap(
-    '<localleader>Kr',
-    "<cmd>lua require('crates').open_repository()<CR>",
-    with_desc('Open Repo')
-  )
-  nnoremap(
-    '<localleader>Kd',
-    "<cmd>lua require('crates').open_documentation()<CR>",
-    with_desc('Open Doc')
-  )
-  nnoremap(
-    '<localleader>Kc',
-    "<cmd>lua require('crates').open_crates_io()<CR>",
-    with_desc('Open Crates.io')
-  )
-  nnoremap('<localleader>Ki', "<cmd>lua require('crates').show_popup()<CR>", 'Info')
-  nnoremap(
-    '<localleader>Kv',
-    "<cmd>lua require('crates').show_versions_popup()<CR>",
-    with_desc('Versions')
-  )
-  nnoremap(
-    '<localleader>Kf',
-    "<cmd>lua require('crates').show_features_popup()<CR>",
-    with_desc('Features')
-  )
-  nnoremap(
-    '<localleader>KD',
-    "<cmd>lua require('crates').show_dependencies_popup()<CR>",
-    'Dependencies'
-  )
-end
+
+if not rvim.plugin_installed('crates.nvim') then return end
+
+local crates = require('crates')
+nnoremap('<localleader>ct', crates.toggle, with_desc('crates: toggle'))
+nnoremap('<localleader>cu', crates.update_crate, with_desc('crates: update'))
+nnoremap('<localleader>cU', crates.upgrade_crate, with_desc('crates: upgrade'))
+nnoremap('<localleader>ca', crates.update_all_crates, with_desc('crates: update all'))
+nnoremap('<localleader>cA', crates.upgrade_all_crates, with_desc('crates: upgrade all'))
+nnoremap('<localleader>ch', crates.open_homepage, with_desc('crates: open home'))
+nnoremap('<localleader>cr', crates.open_repository, with_desc('crates: open repo'))
+nnoremap('<localleader>cd', crates.open_documentation, with_desc('crates: open doc'))
+nnoremap('<localleader>cc', crates.open_crates_io, with_desc('crates: open crates.io'))
+nnoremap('<localleader>ci', crates.show_popup, with_desc('crates: info'))
+nnoremap('<localleader>cv', crates.show_versions_popup, with_desc('crates: versions'))
+nnoremap('<localleader>cf', crates.show_features_popup, with_desc('crates: features'))
+nnoremap('<localleader>cD', crates.show_dependencies_popup, with_desc('crates: dependencies'))
