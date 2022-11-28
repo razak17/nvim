@@ -1,9 +1,9 @@
-local nnoremap = rvim.nnoremap
-local with_desc = function(desc) return { buffer = 0, desc = desc } end
-
 if not rvim.plugin_installed('crates.nvim') then return end
 
+local nnoremap = rvim.nnoremap
+local with_desc = function(desc) return { buffer = 0, desc = desc } end
 local crates = require('crates')
+
 nnoremap('<localleader>ct', crates.toggle, with_desc('crates: toggle'))
 nnoremap('<localleader>cu', crates.update_crate, with_desc('crates: update'))
 nnoremap('<localleader>cU', crates.upgrade_crate, with_desc('crates: upgrade'))
