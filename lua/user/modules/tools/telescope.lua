@@ -41,6 +41,14 @@ return function()
     })
   end
 
+  function rvim.telescope.minimal_ui()
+    return require('telescope.themes').get_dropdown({
+      previewer = false,
+      hidden = true,
+      borderchars = border.telescope.ui_select,
+    })
+  end
+
   ---@param opts table
   ---@return table
   function rvim.telescope.dropdown(opts) return themes.get_dropdown(get_border(opts)) end
@@ -265,17 +273,13 @@ return function()
     if not pcall(builtin.git_files, opts) then builtin.find_files(opts) end
   end
 
-  local function find_files()
-    builtin.find_files(require('telescope.themes').get_dropdown({
-      previewer = false,
-      hidden = true,
-      borderchars = border.telescope.ui_select,
-    }))
-  end
+  local function find_files() builtin.find_files(rvim.telescope.minimal_ui()) end
+
+  local function old_files() builtin.oldfiles(rvim.telescope.minimal_ui()) end
 
   local function media_files() telescope.extensions.media_files.media_files({}) end
 
-  local function recent_files() telescope.extensions.recent_files.pick() end
+  local function recent_files() telescope.extensions.recent_files.pick(rvim.telescope.minimal_ui()) end
 
   local function zoxide_list() telescope.extensions.zoxide.list({}) end
 
@@ -336,7 +340,7 @@ return function()
       m = { media_files, 'media files' },
       j = { notes, 'notes' },
       n = { find_near_files, 'find near files' },
-      o = { builtin.oldfiles, 'old files' },
+      o = { old_files, 'old files' },
       p = { projects, 'recent projects' },
       P = { installed_plugins, 'plugins' },
       r = { recent_files, 'resume' },
