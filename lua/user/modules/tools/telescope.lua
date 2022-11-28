@@ -340,6 +340,8 @@ return function()
 
   require('which-key').register({
     ['<c-p>'] = { find_files, 'telescope: find files' },
+    ['<leader>gs'] = { builtin.git_status, 'git: status' },
+    ['<leader>gf'] = { builtin.git_files, 'git: files' },
     ['<leader>f'] = {
       name = 'Telescope',
       a = { builtins, 'builtin' },
@@ -351,9 +353,6 @@ return function()
         b = { builtin.git_branches, 'branch' },
         B = { delta_git_bcommits, 'buffer commits' },
         c = { delta_git_commits, 'commits' },
-        f = { builtin.git_files, 'files' },
-        o = { builtin.git_status, 'open changed file' },
-        s = { builtin.git_status, 'status' },
       },
       h = { frecency, 'most frequently used files' },
       L = { luasnips, 'luasnip: available snippets' },
