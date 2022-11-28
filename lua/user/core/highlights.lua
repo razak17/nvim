@@ -23,7 +23,6 @@ local function general_overrides()
     { SignColumn = { background = 'NONE' } },
     { EndOfBuffer = { background = 'NONE' } },
     { GitSignsCurrentLineBlame = { link = 'Comment' } },
-    { Constant = { bold = true } },
     ------------------------------------------------------------------------------------------------
     -- Treesitter
     ------------------------------------------------------------------------------------------------
