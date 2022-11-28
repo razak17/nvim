@@ -21,9 +21,10 @@ return function()
 
   -- https://github.com/nvim-telescope/telescope.nvim/issues/1048
   -- Ref: https://github.com/whatsthatsmell/dots/blob/master/public%20dots/vim-nvim/lua/joel/telescope/init.lua
-  local telescope_custom_actions = {}
+  rvim.telescope.custom_actions = {}
 
-  function telescope_custom_actions._multiopen(prompt_bufnr, open_cmd)
+  -- Open multiple files at once
+  function rvim.telescope.custom_actions._multiopen(prompt_bufnr, open_cmd)
     local picker = action_state.get_current_picker(prompt_bufnr)
     local num_selections = #picker:get_multi_selection()
     if not num_selections or num_selections <= 1 then actions.add_selection(prompt_bufnr) end
@@ -31,8 +32,8 @@ return function()
     vim.cmd('cfdo ' .. open_cmd)
   end
 
-  function telescope_custom_actions.multi_selection_open(prompt_bufnr)
-    telescope_custom_actions._multiopen(prompt_bufnr, 'edit')
+  function rvim.telescope.custom_actions.multi_selection_open(prompt_bufnr)
+    rvim.telescope.custom_actions._multiopen(prompt_bufnr, 'edit')
   end
 
   local function get_border(opts)
@@ -135,7 +136,7 @@ return function()
           ['<c-s>'] = actions.select_horizontal,
           ['<c-e>'] = layout_actions.toggle_preview,
           ['<c-l>'] = layout_actions.cycle_layout_next,
-          ['<C-A>'] = telescope_custom_actions.multi_selection_open,
+          ['<C-a>'] = rvim.telescope.custom_actions.multi_selection_open,
           ['<Tab>'] = actions.toggle_selection,
           ['<CR>'] = stopinsert(actions.select_default),
         },
@@ -143,7 +144,7 @@ return function()
           ['<C-j>'] = actions.move_selection_next,
           ['<C-k>'] = actions.move_selection_previous,
           ['<C-q>'] = actions.smart_send_to_qflist + actions.open_qflist,
-          ['<C-A>'] = telescope_custom_actions.multi_selection_open,
+          ['<C-a>'] = rvim.telescope.custom_actions.multi_selection_open,
         },
       },
       extensions = {
