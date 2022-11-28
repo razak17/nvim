@@ -30,7 +30,7 @@ nnoremap('<localleader>rr', '<cmd>RustRunnables<CR>', with_desc('rust-tools: run
 nnoremap('<localleader>rt', '<cmd>lua _CARGO_TEST()<CR>', with_desc('rust-tools: cargo test'))
 nnoremap('<localleader>rm', '<cmd>RustExpandMacro<CR>', with_desc('rust-tools: expand cargo'))
 nnoremap('<localleader>rc', '<cmd>RustOpenCargo<CR>', with_desc('rust-tools: open cargo'))
-nnoremap('<localleader>rp', '<cmd>RustParentModule<CR>', with_desc('rust-tools: parent Module'))
+nnoremap('<localleader>rp', '<cmd>RustParentModule<CR>', with_desc('rust-tools: parent module'))
 nnoremap('<localleader>rd', '<cmd>RustDebuggables<CR>', with_desc('rust-tools: debuggables'))
 nnoremap(
   '<localleader>rv',
