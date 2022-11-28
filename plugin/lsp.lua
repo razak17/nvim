@@ -169,6 +169,9 @@ local function show_documentation()
   if vim.fn.expand('%:t') == 'Cargo.toml' and rvim.plugin_installed('crates.nvim') then
     return require('crates').show_popup()
   end
+  if vim.bo.ft == 'rust' and rvim.plugin_installed('rust-tools.nvim') then
+    return require('rust-tools').hover_actions.hover_actions()
+  end
   vim.lsp.buf.hover()
 end
 
