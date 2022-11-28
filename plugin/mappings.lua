@@ -635,6 +635,7 @@ if plugin_loaded('harpoon') then
   nnoremap('<leader>m.', ui.nav_next, 'harpoon: next')
   nnoremap('<leader>m,', ui.nav_prev, 'harpoon: prev')
   nnoremap('<leader>m;', ui.toggle_quick_menu, 'harpoon: ui')
+  if not plugin_loaded('telescope.nvim') then return end
   local dropdown = require('telescope.themes').get_dropdown({
     previewer = false,
     prompt_title = 'Harpoon',
@@ -644,6 +645,7 @@ if plugin_loaded('harpoon') then
   local function harp_buffers() require('telescope.builtin').buffers(dropdown) end
   nnoremap('<tab>', harp_buffers, 'harpoon: buffers')
   nnoremap('<s-tab>', harp_marks, 'harpoon: marks')
+  nnoremap('<leader>ms', '<cmd>Telescope harpoon marks<cr>', 'telescope: harpoon search')
 end
 ----------------------------------------------------------------------------------------------------
 -- mason.nvim
@@ -749,36 +751,25 @@ if plugin_loaded('toggleterm.nvim') then
 end
 ----------------------------------------------------------------------------------------------------
 -- telescope.nvim
-nnoremap(
-  '<leader>lR',
-  '<cmd>Telescope lsp_references<CR>',
-  with_plugin('telescope: references', 'telescope.nvim')
-)
-nnoremap(
-  '<leader>ld',
-  '<cmd>Telescope lsp_document_symbols<CR>',
-  with_plugin('telescope: document symbols', 'telescope.nvim')
-)
-nnoremap(
-  '<leader>le',
-  '<cmd>Telescope diagnostics bufnr=0 theme=get_ivy<CR>',
-  with_plugin('telescope: document diagnostics', 'telescope.nvim')
-)
-nnoremap(
-  '<leader>lE',
-  '<cmd>Telescope diagnostics theme=get_ivy<CR>',
-  with_plugin('telescope: workspace diagnostics', 'telescope.nvim')
-)
-nnoremap(
-  '<leader>ls',
-  '<cmd>Telescope lsp_dynamic_workspace_symbols<CR>',
-  with_plugin('telescope: workspace symbols', 'telescope.nvim')
-)
-nnoremap(
-  '<leader>ms',
-  '<cmd>Telescope harpoon marks<cr>',
-  with_plugin('telescope: harpoon search', 'telescope.nvim')
-)
+if plugin_loaded('telescope.nvim') then
+  nnoremap('<leader>lR', '<cmd>Telescope lsp_references<CR>', 'telescope: references')
+  nnoremap('<leader>ld', '<cmd>Telescope lsp_document_symbols<CR>', 'telescope: document symbols')
+  nnoremap(
+    '<leader>le',
+    '<cmd>Telescope diagnostics bufnr=0 theme=get_ivy<CR>',
+    'telescope: document diagnostics'
+  )
+  nnoremap(
+    '<leader>lE',
+    '<cmd>Telescope diagnostics theme=get_ivy<CR>',
+    'telescope: workspace diagnostics'
+  )
+  nnoremap(
+    '<leader>ls',
+    '<cmd>Telescope lsp_dynamic_workspace_symbols<CR>',
+    'telescope: workspace symbols'
+  )
+end
 ----------------------------------------------------------------------------------------------------
 -- bracey.vim
 nnoremap('<leader>bs', '<cmd>Bracey<CR>', with_plugin('bracey: start', 'bracey.vim'))
