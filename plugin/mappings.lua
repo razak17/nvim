@@ -42,7 +42,7 @@ rvim.augroup('AddTerminalMappings', {
         tnoremap(']t', '<Cmd>tablast<CR>')
         tnoremap('[t', '<Cmd>tabnext<CR>')
         tnoremap('<S-Tab>', '<Cmd>bprev<CR>')
-        tnoremap('<leader><Tab>', '<Cmd>close \\| :bnext<cr>')
+        tnoremap('<leader><Tab>', '<Cmd>close \\| :bnext<CR>')
       end
     end,
   },
@@ -114,8 +114,8 @@ nnoremap('qa', '<cmd>qa<CR>')
 ----------------------------------------------------------------------------------------------------
 nnoremap(']q', '<cmd>cnext<CR>zz')
 nnoremap('[q', '<cmd>cprev<CR>zz')
-nnoremap(']l', '<cmd>lnext<cr>zz')
-nnoremap('[l', '<cmd>lprev<cr>zz')
+nnoremap(']l', '<cmd>lnext<CR>zz')
+nnoremap('[l', '<cmd>lprev<CR>zz')
 ----------------------------------------------------------------------------------------------------
 -- ?ie | entire object
 ----------------------------------------------------------------------------------------------------
@@ -146,7 +146,7 @@ nmap(
 ----------------------------------------------------------------------------------------------------
 -- Help
 ----------------------------------------------------------------------------------------------------
-nnoremap('<leader>ah', ':h <C-R>=expand("<cword>")<cr><CR>', 'help')
+nnoremap('<leader>ah', ':h <C-R>=expand("<cword>")<CR><CR>', 'help')
 ----------------------------------------------------------------------------------------------------
 -- Move selected line / block of text in visual mode
 ----------------------------------------------------------------------------------------------------
@@ -164,8 +164,8 @@ onoremap('il', [[<cmd>normal! ^vg_<CR>]])
 ----------------------------------------------------------------------------------------------------
 -- Add Empty space above and below
 ----------------------------------------------------------------------------------------------------
-nnoremap('[<space>', [[<cmd>put! =repeat(nr2char(10), v:count1)<cr>'[]])
-nnoremap(']<space>', [[<cmd>put =repeat(nr2char(10), v:count1)<cr>]])
+nnoremap('[<space>', [[<cmd>put! =repeat(nr2char(10), v:count1)<CR>'[]])
+nnoremap(']<space>', [[<cmd>put =repeat(nr2char(10), v:count1)<CR>]])
 -- Paste in visual mode multiple times
 xnoremap('p', 'pgvy')
 -- search visual selection
@@ -216,8 +216,8 @@ nnoremap('Y', 'y$')
 nnoremap('0', "getline('.')[0 : col('.') - 2] =~# '^\\s\\+$' ? '0' : '^'", { expr = true })
 ----------------------------------------------------------------------------------------------------
 -- Add Empty space above and below
-nnoremap('[<space>', [[<cmd>put! =repeat(nr2char(10), v:count1)<cr>'[]])
-nnoremap(']<space>', [[<cmd>put =repeat(nr2char(10), v:count1)<cr>]])
+nnoremap('[<space>', [[<cmd>put! =repeat(nr2char(10), v:count1)<CR>'[]])
+nnoremap(']<space>', [[<cmd>put =repeat(nr2char(10), v:count1)<CR>]])
 -- replicate netrw functionality
 nnoremap('gx', utils.open_link)
 ----------------------------------------------------------------------------------------------------
@@ -363,8 +363,8 @@ cnoremap(
 -- cnoremap("w!!", [[w !sudo tee % >/dev/null]])
 
 -- insert path of current file into a command
-cnoremap('%%', "<C-r>=fnameescape(expand('%'))<cr>")
-cnoremap('::', "<C-r>=fnameescape(expand('%:p:h'))<cr>/")
+cnoremap('%%', "<C-r>=fnameescape(expand('%'))<CR>")
+cnoremap('::', "<C-r>=fnameescape(expand('%:p:h'))<CR>/")
 ----------------------------------------------------------------------------------------------------
 -- Web Search
 ----------------------------------------------------------------------------------------------------
@@ -381,11 +381,11 @@ function rvim.mappings.ddg(pat) web_search(pat, 'https://html.duckduckgo.com/htm
 function rvim.mappings.gh(pat) web_search(pat, 'https://github.com/search?q=') end
 
 -- Search DuckDuckGo
-nnoremap('<localleader>?', [[:lua rvim.mappings.ddg(vim.fn.expand("<cword>"))<cr>]], 'search')
-xnoremap('<localleader>?', [["gy:lua rvim.mappings.ddg(vim.api.nvim_eval("@g"))<cr>gv]], 'search')
+nnoremap('<localleader>?', [[:lua rvim.mappings.ddg(vim.fn.expand("<cword>"))<CR>]], 'search')
+xnoremap('<localleader>?', [["gy:lua rvim.mappings.ddg(vim.api.nvim_eval("@g"))<CR>gv]], 'search')
 -- Search Github
-nnoremap('<localleader>!', [[:lua rvim.mappings.gh(vim.fn.expand("<cword>"))<cr>]], 'gh search')
-xnoremap('<localleader>!', [["gy:lua rvim.mappings.gh(vim.api.nvim_eval("@g"))<cr>gv]], 'gh search')
+nnoremap('<localleader>!', [[:lua rvim.mappings.gh(vim.fn.expand("<cword>"))<CR>]], 'gh search')
+xnoremap('<localleader>!', [["gy:lua rvim.mappings.gh(vim.api.nvim_eval("@g"))<CR>gv]], 'gh search')
 ----------------------------------------------------------------------------------------------------
 -- Personal
 ----------------------------------------------------------------------------------------------------
@@ -622,10 +622,10 @@ nnoremap(
 -- auto-session
 nnoremap(
   '<leader>ss',
-  '<cmd>RestoreSession<cr>',
+  '<cmd>RestoreSession<CR>',
   with_plugin('auto-session: restore', 'auto-session')
 )
-nnoremap('<leader>sl', '<cmd>SaveSession<cr>', with_plugin('auto-session: save', 'auto-session'))
+nnoremap('<leader>sl', '<cmd>SaveSession<CR>', with_plugin('auto-session: save', 'auto-session'))
 ----------------------------------------------------------------------------------------------------
 -- harpoon
 if plugin_loaded('harpoon') then
@@ -648,14 +648,14 @@ if plugin_loaded('harpoon') then
   end
   nnoremap('<tab>', harpoon_buffers, 'harpoon: buffers')
   nnoremap('<leader>mm', harpoon_marks, 'harpoon: marks')
-  nnoremap('<leader>mf', '<cmd>Telescope harpoon marks<cr>', 'telescope: harpoon search')
+  nnoremap('<leader>mf', '<cmd>Telescope harpoon marks<CR>', 'telescope: harpoon search')
 end
 ----------------------------------------------------------------------------------------------------
 -- mason.nvim
 nnoremap('<leader>lm', ':Mason<CR>', with_plugin_installed('mason: info', 'mason.nvim'))
 ----------------------------------------------------------------------------------------------------
 -- jaq.nvim
-nnoremap('<leader>rr', ':silent only | Jaq<cr>', with_plugin_installed('jaq: run', 'jaq-nvim'))
+nnoremap('<C-b>', ':silent only | Jaq<CR>', with_plugin_installed('jaq: run', 'jaq-nvim'))
 ----------------------------------------------------------------------------------------------------
 -- cheat-sheet
 nnoremap('<localleader>s', '<cmd>CheatSH<CR>', with_plugin('cheat-sheet: search', 'cheat-sheet'))
@@ -668,10 +668,10 @@ nnoremap(
 )
 ----------------------------------------------------------------------------------------------------
 -- sniprun
-nnoremap('<leader>sr', ':SnipRun<cr>', with_plugin('sniprun: run', 'sniprun'))
-vnoremap('<leader>sr', ':SnipRun<cr>', with_plugin('sniprun: run', 'sniprun'))
-nnoremap('<leader>sc', ':SnipClose<cr>', with_plugin('sniprun: close', 'sniprun'))
-nnoremap('<leader>sx', ':SnipReset<cr>', with_plugin('sniprun: reset', 'sniprun'))
+nnoremap('<leader>sr', ':SnipRun<CR>', with_plugin('sniprun: run', 'sniprun'))
+vnoremap('<leader>sr', ':SnipRun<CR>', with_plugin('sniprun: run', 'sniprun'))
+nnoremap('<leader>sc', ':SnipClose<CR>', with_plugin('sniprun: close', 'sniprun'))
+nnoremap('<leader>sx', ':SnipReset<CR>', with_plugin('sniprun: reset', 'sniprun'))
 ----------------------------------------------------------------------------------------------------
 -- diffview.nvim
 nnoremap('<localleader>gd', '<Cmd>DiffviewOpen<CR>', with_plugin('diffview: open', 'diffview.nvim'))
@@ -689,12 +689,12 @@ vnoremap(
 -- vim-illuminate
 nnoremap(
   '<a-n>',
-  ':lua require"illuminate".next_reference{wrap=true}<cr>',
+  ':lua require"illuminate".next_reference{wrap=true}<CR>',
   with_plugin('illuminate: next', 'vim-illuminate')
 )
 nnoremap(
   '<a-p>',
-  ':lua require"illuminate".next_reference{reverse=true,wrap=true}<cr>',
+  ':lua require"illuminate".next_reference{reverse=true,wrap=true}<CR>',
   with_plugin('illuminate: reverse', 'vim-illuminate')
 )
 ----------------------------------------------------------------------------------------------------
@@ -798,10 +798,10 @@ nnoremap(
 )
 ----------------------------------------------------------------------------------------------------
 -- nvim-notify
-nnoremap('<leader>nn', '<cmd>Notifications<cr>', with_plugin('notify: show', 'nvim-notify'))
+nnoremap('<leader>nn', '<cmd>Notifications<CR>', with_plugin('notify: show', 'nvim-notify'))
 nnoremap(
   '<leader>nx',
-  '<cmd>lua require("notify").dismiss()<cr>',
+  '<cmd>lua require("notify").dismiss()<CR>',
   with_plugin('notify: dismiss', 'nvim-notify')
 )
 ----------------------------------------------------------------------------------------------------

@@ -27,7 +27,7 @@ local with_desc = function(desc) return { buffer = 0, desc = desc } end
 
 nnoremap('<localleader>rh', '<cmd>RustToggleInlayHints<CR>', with_desc('rust-tools: toggle hints'))
 nnoremap('<localleader>rr', '<cmd>RustRunnables<CR>', with_desc('rust-tools: runnables'))
-nnoremap('<localleader>rt', '<cmd>lua _CARGO_TEST()<cr>', with_desc('rust-tools: cargo test'))
+nnoremap('<localleader>rt', '<cmd>lua _CARGO_TEST()<CR>', with_desc('rust-tools: cargo test'))
 nnoremap('<localleader>rm', '<cmd>RustExpandMacro<CR>', with_desc('rust-tools: expand cargo'))
 nnoremap('<localleader>rc', '<cmd>RustOpenCargo<CR>', with_desc('rust-tools: open cargo'))
 nnoremap('<localleader>rp', '<cmd>RustParentModule<CR>', with_desc('rust-tools: parent Module'))

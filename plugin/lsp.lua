@@ -220,8 +220,8 @@ local function setup_mappings(client, bufnr)
   end, 'lsp: delete templates')
   -- Others
   nnoremap('<leader>li', '<cmd>LspInfo<CR>', 'lsp: info')
-  nnoremap('<leader>lf', '<cmd>LspFormat<cr>', with_desc('lsp: format buffer'))
-  nnoremap('<leader>ov', '<cmd>ToggleVirtualText<cr>', with_desc('lsp: toggle virtual_text'))
+  nnoremap('<leader>lf', '<cmd>LspFormat<CR>', with_desc('lsp: format buffer'))
+  nnoremap('<leader>ov', '<cmd>ToggleVirtualText<CR>', with_desc('lsp: toggle virtual_text'))
   nnoremap('<leader>ll', '<cmd>LspDiagnostics<CR>', with_desc('lsp: toggle quickfix diagnostics'))
 end
 
