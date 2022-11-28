@@ -33,7 +33,7 @@ use({
         icons = {
           package_installed = icons.misc.checkmark,
           package_pending = icons.misc.right_arrow,
-          package_uninstalled = icons.misc.x,
+          package_uninstalled = icons.misc.uninstalled,
         },
       },
     })

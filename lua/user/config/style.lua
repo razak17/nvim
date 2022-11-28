@@ -106,7 +106,7 @@ rvim.style = {
       checkmark = '✓',
       right_arrow = '',
       right_arrow_alt = '',
-      x = '✗',
+      uninstalled = '✗',
     },
     kind = {
       Class = '', -- '',
