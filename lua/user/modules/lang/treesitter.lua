@@ -27,6 +27,14 @@ return function()
       enable = true,
       enable_autocmd = false,
     },
+    incremental_selection = {
+      enable = true,
+      keymaps = {
+        init_selection = '<CR>', -- maps in normal mode to init the node/scope selection
+        node_incremental = '<CR>', -- increment to the upper named parent
+        node_decremental = '<C-CR>', -- decrement to the previous node
+      },
+    },
     textobjects = {
       lookahead = true,
       select = {
