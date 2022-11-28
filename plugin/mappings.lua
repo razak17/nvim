@@ -631,21 +631,24 @@ nnoremap('<leader>sl', '<cmd>SaveSession<cr>', with_plugin('auto-session: save',
 if plugin_loaded('harpoon') then
   local ui = require('harpoon.ui')
   local m = require('harpoon.mark')
-  nnoremap('<leader>mm', m.add_file, 'harpoon: add')
+  nnoremap('<leader>ma', m.add_file, 'harpoon: add')
   nnoremap('<leader>m.', ui.nav_next, 'harpoon: next')
   nnoremap('<leader>m,', ui.nav_prev, 'harpoon: prev')
   nnoremap('<leader>m;', ui.toggle_quick_menu, 'harpoon: ui')
   if not plugin_loaded('telescope.nvim') then return end
-  local dropdown = require('telescope.themes').get_dropdown({
-    previewer = false,
-    prompt_title = 'Harpoon',
-    borderchars = rvim.style.border.telescope.ui_select,
-  })
-  local function harp_marks() require('telescope').extensions.harpoon.marks(dropdown) end
-  local function harp_buffers() require('telescope.builtin').buffers(dropdown) end
-  nnoremap('<tab>', harp_buffers, 'harpoon: buffers')
-  nnoremap('<s-tab>', harp_marks, 'harpoon: marks')
-  nnoremap('<leader>ms', '<cmd>Telescope harpoon marks<cr>', 'telescope: harpoon search')
+  local function harpoon_marks()
+    require('telescope').extensions.harpoon.marks(
+      rvim.telescope.minimal_ui({ prompt_title = 'Harpoon Marks' })
+    )
+  end
+  local function harpoon_buffers()
+    require('telescope.builtin').buffers(
+      rvim.telescope.minimal_ui({ prompt_title = 'Harpoon Buffers' })
+    )
+  end
+  nnoremap('<tab>', harpoon_buffers, 'harpoon: buffers')
+  nnoremap('<leader>mm', harpoon_marks, 'harpoon: marks')
+  nnoremap('<leader>mf', '<cmd>Telescope harpoon marks<cr>', 'telescope: harpoon search')
 end
 ----------------------------------------------------------------------------------------------------
 -- mason.nvim

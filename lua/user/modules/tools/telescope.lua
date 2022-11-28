@@ -41,18 +41,22 @@ return function()
     })
   end
 
-  function rvim.telescope.minimal_ui()
-    return require('telescope.themes').get_dropdown({
+  ---@param opts table
+  ---@return table
+  function rvim.telescope.minimal_ui(opts)
+    return require('telescope.themes').get_dropdown(vim.tbl_deep_extend('force', opts or {}, {
       previewer = false,
       hidden = true,
       borderchars = border.telescope.ui_select,
-    })
+    }))
   end
 
   ---@param opts table
   ---@return table
   function rvim.telescope.dropdown(opts) return themes.get_dropdown(get_border(opts)) end
 
+  ---@param opts table
+  ---@return table
   function rvim.telescope.ivy(opts)
     return require('telescope.themes').get_ivy(vim.tbl_deep_extend('keep', opts or {}, {
       borderchars = {
