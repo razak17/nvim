@@ -339,6 +339,7 @@ use({
   requires = { 'MunifTanjim/nui.nvim' },
   config = function()
     require('package-info').setup({
+      autostart = false,
       hide_up_to_date = true,
       package_manager = 'yarn',
     })
