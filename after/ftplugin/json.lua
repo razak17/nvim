@@ -9,3 +9,15 @@ vim.bo.tabstop = 2
 -- json 5 comment
 vim.cmd([[syntax region Comment start="//" end="$" |]])
 vim.cmd([[syntax region Comment start="/\*" end="\*/" |]])
+
+if not rvim.plugin_installed('package-info.nvim') then return end
+
+local nnoremap = rvim.nnoremap
+local with_desc = function(desc) return { buffer = 0, desc = desc } end
+local package_info = require('package-info')
+
+nnoremap('<localleader>pt', package_info.toggle, with_desc('package-info: toggle'))
+nnoremap('<localleader>pu', package_info.update, with_desc('package-info: update'))
+nnoremap('<localleader>pd', package_info.delete, with_desc('package-info: delete'))
+nnoremap('<localleader>pi', package_info.install, with_desc('package-info: install new'))
+nnoremap('<localleader>pc', package_info.change_version, with_desc('package-info: change version'))

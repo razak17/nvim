@@ -35,9 +35,8 @@ return function()
   rvim.nnoremap('<m-n>', '<Plug>(YankyCycleForward)')
   rvim.nnoremap('<m-p>', '<Plug>(YankyCycleBackward)')
   rvim.nnoremap(
-    '<localleader>p',
+    '<localleader>y',
     function() require('telescope').extensions.yank_history.yank_history(rvim.telescope.dropdown()) end,
     'yanky: open yank history'
   )
-  require('telescope').load_extension('harpoon')
 end
