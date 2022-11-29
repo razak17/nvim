@@ -395,9 +395,7 @@ diagnostic.handlers.virtual_text = vim.tbl_extend('force', virt_text_handler, {
 ----------------------------------------------------------------------------------------------------
 local max_width = math.min(math.floor(vim.o.columns * 0.7), 100)
 local max_height = math.min(math.floor(vim.o.lines * 0.3), 30)
-
 local diagnostics = rvim.lsp.diagnostics
-local float = rvim.lsp.diagnostics.float
 
 diagnostic.config({
   signs = { active = diagnostics.signs.active, values = codicons.lsp },
@@ -414,7 +412,7 @@ diagnostic.config({
       local prefix = fmt('%d. %s ', i, codicons.lsp[level:lower()])
       return prefix, 'Diagnostic' .. level:gsub('^%l', string.upper)
     end,
-  }, float),
+  }, rvim.lsp.diagnostics.float),
 })
 
 -- NOTE: virtual_text should be set to false by default. see above
