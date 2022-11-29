@@ -40,10 +40,13 @@ return function()
       r = { name = 'Remove' },
     },
     ['<localleader>'] = {
+      c = { name = 'Crates' },
       d = { name = 'Dap' },
       g = { name = 'Git' },
-      l = { name = 'lsp' },
+      l = { name = 'Neogen' },
+      r = { name = 'Rust Tools' },
       t = { name = 'Neotest' },
+      p = { name = 'Package Info' },
       w = { name = 'Window' },
     },
   })
