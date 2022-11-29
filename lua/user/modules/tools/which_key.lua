@@ -24,11 +24,10 @@ return function()
     },
     ['<leader>'] = {
       a = { name = 'Actions' },
-      b = { name = 'Bufferline' },
-      C = { name = 'Change' },
+      b = { name = 'Buffer' },
       F = { name = 'Fold' },
       g = { name = 'Git' },
-      i = { name = 'Swap' },
+      i = { name = 'Toggler' },
       l = { name = 'Lsp' },
       L = { name = 'rVim' },
       m = { name = 'Marks' },
@@ -37,7 +36,6 @@ return function()
       p = { name = 'Packer' },
       s = { name = 'Snip' },
       t = { name = 'Term' },
-      r = { name = 'Remove' },
     },
     ['<localleader>'] = {
       c = { name = 'Crates' },
