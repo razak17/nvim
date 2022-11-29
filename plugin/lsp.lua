@@ -234,7 +234,6 @@ end
 
 -- @param client table
 ---@param bufnr number
--- TODO: Check if plugins are installed first
 local function setup_plugins(client, bufnr)
   -- nvim-navic
   local navic_ok, navic = rvim.safe_require('nvim-navic')
@@ -244,11 +243,14 @@ local function setup_plugins(client, bufnr)
   -- lsp-inlayhints
   local hints_ok, hints = rvim.safe_require('lsp-inlayhints')
   if hints_ok then hints.on_attach(client, bufnr) end
-
+  -- document-color
   local document_color_ok, document_color = rvim.safe_require('document-color')
   if document_color_ok then
     if client.server_capabilities.colorProvider then document_color.buf_attach(bufnr) end
   end
+  -- twoslash-queries
+  local twoslash_ok, twoslash = rvim.safe_require('twoslash-queries')
+  if twoslash_ok and client.name == 'tsserver' then twoslash.attach(client, bufnr) end
 end
 
 -- Add buffer local mappings, autocommands etc for attaching servers
