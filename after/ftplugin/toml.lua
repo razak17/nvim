@@ -1,4 +1,4 @@
-if not rvim.plugin_installed('crates.nvim') then return end
+if not rvim.plugin_loaded('crates.nvim') then return end
 
 local nnoremap = rvim.nnoremap
 local with_desc = function(desc) return { buffer = 0, desc = desc } end

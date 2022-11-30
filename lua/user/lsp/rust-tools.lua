@@ -1,4 +1,4 @@
-if not rvim.plugin_installed('rust-tools.nvim') then return end
+if not rvim.plugin_loaded('rust-tools.nvim') then return end
 
 require('rust-tools').setup({
   tools = {

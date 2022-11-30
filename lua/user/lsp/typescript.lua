@@ -1,4 +1,4 @@
-if not rvim.plugin_installed('typescript.nvim') then return end
+if not rvim.plugin_loaded('typescript.nvim') then return end
 
 require('typescript').setup({
   disable_commands = false,
