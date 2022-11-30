@@ -6,9 +6,6 @@ vim.bo.formatoptions = 'tcq2l'
 vim.bo.shiftwidth = 2
 vim.bo.softtabstop = 2
 vim.bo.tabstop = 2
--- json 5 comment
-vim.cmd([[syntax region Comment start="//" end="$" |]])
-vim.cmd([[syntax region Comment start="/\*" end="\*/" |]])
 
 if not rvim.plugin_loaded('package-info.nvim') then return end
 
