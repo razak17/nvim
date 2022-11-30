@@ -10,7 +10,7 @@ vim.bo.tabstop = 2
 vim.cmd([[syntax region Comment start="//" end="$" |]])
 vim.cmd([[syntax region Comment start="/\*" end="\*/" |]])
 
-if not rvim.plugin_installed('package-info.nvim') then return end
+if not rvim.plugin_loaded('package-info.nvim') then return end
 
 local nnoremap = rvim.nnoremap
 local with_desc = function(desc) return { buffer = 0, desc = desc } end
