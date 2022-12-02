@@ -362,7 +362,10 @@ rvim.augroup('Utilities', {
   {
     event = { 'FileType' },
     pattern = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact', 'text' },
-    command = function() vim.opt_local.spell = true end,
+    command = function()
+      vim.opt_local.spell = true
+      vim.bo.textwidth = 100
+    end,
   },
   {
     event = { 'FileType' },
