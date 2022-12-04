@@ -226,6 +226,19 @@ local function setup_mappings(client, bufnr)
   nnoremap('<leader>lf', '<cmd>LspFormat<CR>', with_desc('lsp: format buffer'))
   nnoremap('<leader>ov', '<cmd>ToggleVirtualText<CR>', with_desc('lsp: toggle virtual_text'))
   nnoremap('<leader>ll', '<cmd>LspDiagnostics<CR>', with_desc('lsp: toggle quickfix diagnostics'))
+  -- Typescript
+  if client.name == 'tsserver' and rvim.plugin_loaded('typescript.nvim') then
+    local actions = require('typescript').actions
+    nnoremap(
+      '<localleader>tr',
+      '<cmd>TypescriptRenameFile<CR>',
+      with_desc('typescript: rename file')
+    )
+    nnoremap('<localleader>tf', actions.fixAll, with_desc('typescript: fix all'))
+    nnoremap('<localleader>tia', actions.addMissingImports, with_desc('typescript: add missing'))
+    nnoremap('<localleader>tio', actions.organizeImports, with_desc('typescript: organize'))
+    nnoremap('<localleader>tix', actions.removeUnused, with_desc('typescript: remove unused'))
+  end
 end
 
 ----------------------------------------------------------------------------------------------------
