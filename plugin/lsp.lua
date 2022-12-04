@@ -192,7 +192,7 @@ local function setup_mappings(client, bufnr)
   nnoremap('gi', lsp.buf.implementation, with_desc('lsp: go to implementation'))
   nnoremap('gt', lsp.buf.type_definition, with_desc('lsp: go to type definition'))
   nnoremap('gI', lsp.buf.incoming_calls, with_desc('lsp: incoming calls'))
-  -- leader keymaps
+  -- Leader keymaps
   ----------------------------------------------------------------------------------------------------
   vim.keymap.set({ 'n', 'x' }, '<leader>la', lsp.buf.code_action, with_desc('lsp: code action'))
   nnoremap('<leader>lk', function()
@@ -238,6 +238,35 @@ local function setup_mappings(client, bufnr)
     nnoremap('<localleader>tia', actions.addMissingImports, with_desc('typescript: add missing'))
     nnoremap('<localleader>tio', actions.organizeImports, with_desc('typescript: organize'))
     nnoremap('<localleader>tix', actions.removeUnused, with_desc('typescript: remove unused'))
+  end
+  -- Rust tools
+  if client.name == 'rust_analyzer' and rvim.plugin_loaded('rust-tools.nvim') then
+    nnoremap(
+      '<localleader>rh',
+      '<cmd>RustToggleInlayHints<CR>',
+      with_desc('rust-tools: toggle hints')
+    )
+    nnoremap('<localleader>rr', '<cmd>RustRunnables<CR>', with_desc('rust-tools: runnables'))
+    nnoremap('<localleader>rt', '<cmd>lua _CARGO_TEST()<CR>', with_desc('rust-tools: cargo test'))
+    nnoremap('<localleader>rm', '<cmd>RustExpandMacro<CR>', with_desc('rust-tools: expand cargo'))
+    nnoremap('<localleader>rc', '<cmd>RustOpenCargo<CR>', with_desc('rust-tools: open cargo'))
+    nnoremap('<localleader>rp', '<cmd>RustParentModule<CR>', with_desc('rust-tools: parent module'))
+    nnoremap('<localleader>rd', '<cmd>RustDebuggables<CR>', with_desc('rust-tools: debuggables'))
+    nnoremap(
+      '<localleader>rv',
+      '<cmd>RustViewCrateGraph<CR>',
+      with_desc('rust-tools: view crate graph')
+    )
+    nnoremap(
+      '<localleader>rR',
+      "<cmd>lua require('rust-tools/workspace_refresh')._reload_workspace_from_cargo_toml()<CR>",
+      with_desc('rust-tools: reload workspace')
+    )
+    nnoremap(
+      '<localleader>ro',
+      '<cmd>RustOpenExternalDocs<CR>',
+      with_desc('rust-tools: open external docs')
+    )
   end
 end
 
@@ -313,6 +342,7 @@ rvim.augroup('LspSetupCommands', {
     end,
   },
 })
+
 ----------------------------------------------------------------------------------------------------
 -- Commands
 ----------------------------------------------------------------------------------------------------
@@ -362,6 +392,7 @@ sign({ highlight = 'DiagnosticSignError', icon = codicons.lsp.error })
 sign({ highlight = 'DiagnosticSignWarn', icon = codicons.lsp.warn })
 sign({ highlight = 'DiagnosticSignInfo', icon = codicons.lsp.info })
 sign({ highlight = 'DiagnosticSignHint', icon = codicons.lsp.hint })
+
 ----------------------------------------------------------------------------------------------------
 -- Handler Overrides
 ----------------------------------------------------------------------------------------------------
