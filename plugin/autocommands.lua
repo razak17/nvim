@@ -368,11 +368,6 @@ rvim.augroup('Utilities', {
     end,
   },
   {
-    event = { 'FileType' },
-    pattern = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
-    command = function() vim.bo.tw = 100 end,
-  },
-  {
     event = { 'BufWritePre', 'FileWritePre' },
     pattern = { '*' },
     command = "silent! call mkdir(expand('<afile>:p:h'), 'p')",
