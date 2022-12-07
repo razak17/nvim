@@ -7,7 +7,12 @@ require('rust-tools').setup({
       show_parameter_hints = false,
       parameter_hints_prefix = ' ',
     },
-    hover_actions = { border = rvim.style.border.rectangle, auto_focus = true },
+    hover_actions = {
+      border = rvim.style.border.rectangle,
+      auto_focus = true,
+      max_width = math.min(math.floor(vim.o.columns * 0.7), 100),
+      max_height = math.min(math.floor(vim.o.lines * 0.3), 30),
+    },
   },
   dap = {
     adapter = require('rust-tools.dap').get_codelldb_adapter(
@@ -16,6 +21,8 @@ require('rust-tools').setup({
     ),
   },
   server = {
+    -- setting it to false may improve startup time
+    standalone = false,
     -- cmd = { 'rustup', 'run', 'nightly', rvim.path.mason .. '/bin/rust-analyzer' },
     settings = {
       ['rust-analyzer'] = {
