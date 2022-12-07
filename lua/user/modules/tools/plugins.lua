@@ -214,9 +214,7 @@ use({
   ft = 'qf',
   config = function()
     require('bqf').setup({
-      preview = {
-        border_chars = rvim.style.border.bqf,
-      },
+      preview = { border_chars = rvim.style.border.bqf },
     })
   end,
 })
@@ -279,12 +277,8 @@ use({
   config = function()
     require('neotest').setup({
       diagnostic = { enabled = false },
-      icons = {
-        running = rvim.style.icons.misc.clock,
-      },
-      floating = {
-        border = rvim.style.border.current,
-      },
+      icons = { running = rvim.style.icons.misc.clock },
+      floating = { border = rvim.style.border.current },
       adapters = {
         require('neotest-plenary'),
         require('neotest-python'),
@@ -314,7 +308,8 @@ use({
   event = { 'BufRead Cargo.toml' },
   requires = { 'nvim-lua/plenary.nvim' },
   config = function()
-    require('crates').setup({
+    local crates = require('crates')
+    crates.setup({
       popup = {
         -- autofocus = true,
         style = 'minimal',
@@ -330,6 +325,23 @@ use({
         name = 'crates.nvim',
       },
     })
+    local ok, which_key = rvim.safe_require('which-key')
+    if ok then which_key.register({ ['<localleader>'] = { c = { name = 'Crates' } } }) end
+    local nnoremap = rvim.nnoremap
+    local with_desc = function(desc) return { buffer = 0, desc = desc } end
+    nnoremap('<localleader>ct', crates.toggle, with_desc('crates: toggle'))
+    nnoremap('<localleader>cu', crates.update_crate, with_desc('crates: update'))
+    nnoremap('<localleader>cU', crates.upgrade_crate, with_desc('crates: upgrade'))
+    nnoremap('<localleader>ca', crates.update_all_crates, with_desc('crates: update all'))
+    nnoremap('<localleader>cA', crates.upgrade_all_crates, with_desc('crates: upgrade all'))
+    nnoremap('<localleader>ch', crates.open_homepage, with_desc('crates: open home'))
+    nnoremap('<localleader>cr', crates.open_repository, with_desc('crates: open repo'))
+    nnoremap('<localleader>cd', crates.open_documentation, with_desc('crates: open doc'))
+    nnoremap('<localleader>cc', crates.open_crates_io, with_desc('crates: open crates.io'))
+    nnoremap('<localleader>ci', crates.show_popup, with_desc('crates: info'))
+    nnoremap('<localleader>cv', crates.show_versions_popup, with_desc('crates: versions'))
+    nnoremap('<localleader>cf', crates.show_features_popup, with_desc('crates: features'))
+    nnoremap('<localleader>cD', crates.show_dependencies_popup, with_desc('crates: dependencies'))
   end,
 })
 
@@ -338,11 +350,25 @@ use({
   event = { 'BufRead package.json' },
   requires = { 'MunifTanjim/nui.nvim' },
   config = function()
-    require('package-info').setup({
+    local package_info = require('package-info')
+    package_info.setup({
       autostart = false,
       hide_up_to_date = true,
       package_manager = 'yarn',
     })
+    local ok, which_key = rvim.safe_require('which-key')
+    if ok then which_key.register({ ['<localleader>'] = { p = { name = 'Package Info' } } }) end
+    local nnoremap = rvim.nnoremap
+    local with_desc = function(desc) return { buffer = 0, desc = desc } end
+    nnoremap('<localleader>pt', package_info.toggle, with_desc('package-info: toggle'))
+    nnoremap('<localleader>pu', package_info.update, with_desc('package-info: update'))
+    nnoremap('<localleader>pd', package_info.delete, with_desc('package-info: delete'))
+    nnoremap('<localleader>pi', package_info.install, with_desc('package-info: install new'))
+    nnoremap(
+      '<localleader>pc',
+      package_info.change_version,
+      with_desc('package-info: change version')
+    )
   end,
 })
 
@@ -358,12 +384,8 @@ use({
       auto_fill = {
         current_word = false,
       },
-      main_win = {
-        border = 'single',
-      },
-      input_win = {
-        border = 'single',
-      },
+      main_win = { border = 'single' },
+      input_win = { border = 'single' },
     })
   end,
   disable = true,
@@ -424,11 +446,7 @@ use({
 
 use({
   'smjonas/inc-rename.nvim',
-  config = function()
-    require('inc_rename').setup({
-      hl_group = 'Visual',
-    })
-  end,
+  config = function() require('inc_rename').setup({ hl_group = 'Visual' }) end,
   disable = true,
 })
 
