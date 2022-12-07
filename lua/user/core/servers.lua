@@ -92,6 +92,10 @@ M.servers = {
     filetypes = {
       'html',
       'css',
+      'sass',
+      'scss',
+      'typescriptreact',
+      'javascriptreact',
     },
     single_file_support = false,
   },
