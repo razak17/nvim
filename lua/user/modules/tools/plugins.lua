@@ -187,7 +187,7 @@ use({ 'nvim-lua/plenary.nvim' })
 
 use({ 'lewis6991/impatient.nvim' })
 
-use({ 'folke/which-key.nvim', config = conf('tools', 'which_key') })
+use({ 'folke/which-key.nvim', config = conf('tools', 'which-key') })
 
 use({
   'mbbill/undotree',
