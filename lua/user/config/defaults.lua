@@ -3,7 +3,7 @@ rvim.path = {
   packer_compiled = join_paths(rvim.get_runtime_dir(), 'site', 'lua', '_compiled_nightly.lua'),
   node = join_paths(vim.env.FNMPATH, 'neovim-node-host'),
   python3 = join_paths(rvim.get_cache_dir(), 'venv', 'neovim', 'bin', 'python3'),
-  vscode_lldb = join_paths(vim.env.HOME, '.vscode-oss', 'extensions', 'vadimcn.vscode-lldb-1.8.1'),
+  codelldb = join_paths(rvim.get_cache_dir(), 'codelldb', 'extension'),
   mason = join_paths(rvim.get_runtime_dir(), 'mason'),
 }
 

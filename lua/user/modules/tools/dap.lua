@@ -1,7 +1,6 @@
 return function()
   local icons = rvim.style.icons
   local python_dir = rvim.path.mason .. '/packages/debugpy/venv/bin/python'
-  local codelldb_path = rvim.path.vscode_lldb .. '/adapter/codelldb'
 
   require('dap').defaults.fallback.terminal_win_cmd = '50vsplit new'
   -- DON'T automatically stop at exceptions
@@ -133,7 +132,7 @@ return function()
     type = 'server',
     port = '${port}',
     executable = {
-      command = codelldb_path,
+      command = rvim.path.codelldb .. '/adapter/codelldb',
       args = { '--port', '${port}' },
     },
   }
@@ -143,7 +142,9 @@ return function()
       name = 'Launch file',
       type = 'codelldb',
       request = 'launch',
-      program = function() return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file') end,
+      program = function()
+        return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/target/debug/', 'file')
+      end,
       cwd = '${workspaceFolder}',
       stopOnEntry = false,
     },
