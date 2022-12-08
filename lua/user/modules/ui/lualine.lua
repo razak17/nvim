@@ -120,6 +120,15 @@ return function()
   })
 
   ins_right({
+    function()
+      if not rvim.plugin_installed('package-info.nvim') then return end
+      local package_info = require('package-info')
+      return package_info.get_status()
+    end,
+    padding = { left = 1, right = 0 },
+  })
+
+  ins_right({
     function(msg)
       msg = msg or 'LS Inactive'
       local buf_clients = vim.lsp.get_active_clients()

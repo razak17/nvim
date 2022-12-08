@@ -354,7 +354,7 @@ use({
     local package_info = require('package-info')
     package_info.setup({
       autostart = false,
-      hide_up_to_date = true,
+      hide_up_to_date = false,
       package_manager = 'yarn',
     })
     local ok, which_key = rvim.safe_require('which-key')
