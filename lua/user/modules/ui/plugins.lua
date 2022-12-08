@@ -8,6 +8,17 @@ use({
   local_path = 'personal',
 })
 
+use({
+  'razak17/buffer_manager.nvim',
+  local_path = 'personal',
+  config = function()
+    require('buffer_manager').setup({
+      borderchars = rvim.style.border.common,
+      border_highlight = 'VertSplit',
+    })
+  end,
+})
+
 use({ 'LunarVim/horizon.nvim' })
 
 use({ 'goolord/alpha-nvim', config = conf('ui', 'alpha') })
