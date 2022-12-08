@@ -33,7 +33,7 @@ use({
   config = function()
     require('fidget').setup({
       align = {
-        bottom = true,
+        bottom = false,
         right = true,
       },
       fmt = {
