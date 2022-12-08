@@ -1,6 +1,5 @@
-local utils = require('user.utils.plugins')
-local conf = utils.load_conf
 local use = require('user.core.packer').use
+local conf = require('user.utils.plugins').load_conf
 
 use({
   'razak17/zephyr-nvim',

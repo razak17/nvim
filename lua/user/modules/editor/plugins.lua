@@ -1,6 +1,5 @@
 local use = require('user.core.packer').use
-local utils = require('user.utils.plugins')
-local conf = utils.load_conf
+local conf = require('user.utils.plugins').load_conf
 
 -- nvim-cmp
 use({
@@ -82,17 +81,17 @@ use({
   'numToStr/Comment.nvim',
   event = 'BufRead',
   config = function()
+    local utils = require('Comment.utils')
     require('Comment').setup({
       pre_hook = function(ctx)
-        local U = require('Comment.utils')
         local location = nil
-        if ctx.ctype == U.ctype.blockwise then
+        if ctx.ctype == utils.ctype.blockwise then
           location = require('ts_context_commentstring.utils').get_cursor_location()
-        elseif ctx.cmotion == U.cmotion.v or ctx.cmotion == U.cmotion.V then
+        elseif ctx.cmotion == utils.cmotion.v or ctx.cmotion == utils.cmotion.V then
           location = require('ts_context_commentstring.utils').get_visual_start_location()
         end
         return require('ts_context_commentstring.internal').calculate_commentstring({
-          key = ctx.ctype == U.ctype.linewise and '__default' or '__multiline',
+          key = ctx.ctype == utils.ctype.linewise and '__default' or '__multiline',
           location = location,
         })
       end,
