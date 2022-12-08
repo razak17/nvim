@@ -837,7 +837,7 @@ local buffer_manager = require('buffer_manager.ui')
 nnoremap(
   '<tab>',
   buffer_manager.toggle_quick_menu,
-  with_plugin('buffer_manager: toggle', 'buffer_manager.nvim')
+  with_plugin_installed('buffer_manager: toggle', 'local-buffer_manager.nvim')
 )
 ----------------------------------------------------------------------------------------------------
 -- Abbreviations

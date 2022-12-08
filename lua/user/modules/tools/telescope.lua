@@ -83,7 +83,7 @@ return function()
       sorting_strategy = 'ascending',
       layout_strategy = 'horizontal',
       set_env = { ['TERM'] = vim.env.TERM },
-      borderchars = border.telescope.prompt,
+      borderchars = border.common,
       file_browser = { hidden = true },
       color_devicons = true,
       dynamic_preview_title = true,

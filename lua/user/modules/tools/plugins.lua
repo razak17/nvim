@@ -100,7 +100,7 @@ use({
         require('harpoon').setup({
           menu = {
             width = vim.api.nvim_win_get_width(0) - 4,
-            borderchars = rvim.style.border.telescope.prompt,
+            borderchars = rvim.style.border.common,
           },
         })
         require('telescope').load_extension('harpoon')
@@ -373,7 +373,16 @@ use({
   end,
 })
 
-use({ 'j-morano/buffer_manager.nvim' })
+use({
+  'razak17/buffer_manager.nvim',
+  local_path = 'personal',
+  config = function()
+    require('buffer_manager').setup({
+      borderchars = rvim.style.border.common,
+      border_highlight = 'VertSplit',
+    })
+  end,
+})
 
 ----------------------------------------------------------------------------------------------------
 -- Graveyard
