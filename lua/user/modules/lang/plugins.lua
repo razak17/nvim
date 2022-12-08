@@ -182,6 +182,7 @@ use({
         'mason.nvim',
         'help',
         'CommandTPrompt',
+        'buffer_manager'
       },
     })
   end,
