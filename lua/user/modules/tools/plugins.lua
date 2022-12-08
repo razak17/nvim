@@ -297,6 +297,7 @@ use({ 'turbio/bracey.vim', ft = { 'html' }, run = 'npm install --prefix server' 
 
 use({
   '0x100101/lab.nvim',
+  ft = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
   event = { 'InsertEnter' },
   run = 'cd js && npm ci',
   requires = { 'nvim-lua/plenary.nvim' },
