@@ -641,12 +641,6 @@ if plugin_loaded('harpoon') then
       rvim.telescope.minimal_ui({ prompt_title = 'Harpoon Marks' })
     )
   end
-  local function harpoon_buffers()
-    require('telescope.builtin').buffers(
-      rvim.telescope.minimal_ui({ prompt_title = 'Harpoon Buffers' })
-    )
-  end
-  nnoremap('<tab>', harpoon_buffers, 'harpoon: buffers')
   nnoremap('<leader>mm', harpoon_marks, 'harpoon: marks')
   nnoremap('<leader>mf', '<cmd>Telescope harpoon marks<CR>', 'telescope: harpoon search')
 end
@@ -837,6 +831,14 @@ if plugin_installed('close-buffers.nvim') then
   nnoremap('<leader>bc', function() cb.wipe({ type = 'other' }) end, 'close others')
   nnoremap('<leader>bx', function() cb.wipe({ type = 'all', force = true }) end, 'close others')
 end
+----------------------------------------------------------------------------------------------------
+-- buffer_manager.nvim
+local buffer_manager = require('buffer_manager.ui')
+nnoremap(
+  '<tab>',
+  buffer_manager.toggle_quick_menu,
+  with_plugin('buffer_manager: toggle', 'buffer_manager.nvim')
+)
 ----------------------------------------------------------------------------------------------------
 -- Abbreviations
 ----------------------------------------------------------------------------------------------------
