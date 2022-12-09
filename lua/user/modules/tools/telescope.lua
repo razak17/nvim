@@ -48,7 +48,6 @@ return function()
     return require('telescope.themes').get_dropdown(vim.tbl_deep_extend('force', opts or {}, {
       previewer = false,
       hidden = true,
-      borderchars = border.telescope.ui_select,
     }))
   end
 
@@ -286,12 +285,10 @@ return function()
 
   local function recent_files() telescope.extensions.recent_files.pick(rvim.telescope.minimal_ui()) end
 
-  local function zoxide_list() telescope.extensions.zoxide.list({}) end
+  local function zoxide_list() telescope.extensions.zoxide.list(rvim.telescope.minimal_ui()) end
 
   local function frecency()
-    require('telescope').extensions.frecency.frecency(rvim.telescope.dropdown({
-      previewer = false,
-    }))
+    telescope.extensions.frecency.frecency(rvim.telescope.dropdown(rvim.telescope.minimal_ui()))
   end
 
   local function projects() telescope.extensions.projects.projects({}) end

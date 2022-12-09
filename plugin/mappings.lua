@@ -859,7 +859,7 @@ nnoremap(
 -- no-neck-pain.nvim
 nnoremap(
   '<leader>on',
-  ':lua require("no-neck-pain").start()<CR>',
+  '<cmd>lua require("no-neck-pain").start()<CR>',
   with_plugin_installed('no-neck-pain: toggle', 'no-neck-pain.nvim')
 )
 ----------------------------------------------------------------------------------------------------
