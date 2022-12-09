@@ -18,7 +18,6 @@ local cnoremap = rvim.cnoremap
 local tnoremap = rvim.tnoremap
 local onoremap = rvim.onoremap
 
-local utils = require('user.utils')
 local plugin_loaded = rvim.plugin_loaded
 local plugin_installed = rvim.plugin_installed
 
@@ -452,7 +451,7 @@ cnoremap('::', "<C-r>=fnameescape(expand('%:p:h'))<CR>/")
 ---@param url string
 local function web_search(pat, url)
   local query = '"' .. fn.substitute(pat, '["\n]', ' ', 'g') .. '"'
-  utils.open(fmt('%s%s', url, query))
+  open(fmt('%s%s', url, query))
 end
 
 function rvim.mappings.ddg(pat) web_search(pat, 'https://html.duckduckgo.com/html?q=') end

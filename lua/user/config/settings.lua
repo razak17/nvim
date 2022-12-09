@@ -284,4 +284,3 @@ end
 -- vim:foldmethod=marker
 -- ifstream
 if rvim.ui.line_wrap_cursor_movement then vim.opt.whichwrap:append('<,>,[,],h,l,~') end
-if rvim.ui.transparent_window then require('user.utils').enable_transparent_mode() end
