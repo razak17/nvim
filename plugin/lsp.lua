@@ -173,6 +173,7 @@ local function show_documentation()
     return require('rust-tools').hover_actions.hover_actions()
   end
   vim.lsp.buf.hover()
+  vim.lsp.buf.hover()
 end
 
 local function setup_mappings(client, bufnr)
