@@ -841,6 +841,13 @@ nnoremap(
   with_plugin_installed('buffer_manager: toggle', 'local-buffer_manager.nvim')
 )
 ----------------------------------------------------------------------------------------------------
+-- no-neck-pain.nvim
+nnoremap(
+  '<leader>on',
+  ':lua require("no-neck-pain").start()<CR>',
+  with_plugin_installed('no-neck-pain: toggle', 'no-neck-pain.nvim')
+)
+----------------------------------------------------------------------------------------------------
 -- Abbreviations
 ----------------------------------------------------------------------------------------------------
 vim.cmd([[
