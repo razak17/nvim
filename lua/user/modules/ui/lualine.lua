@@ -1,7 +1,8 @@
 return function()
   local P = require('zephyr.palette')
-  local s = rvim.style
-  local icons = s.icons
+  local style = rvim.style
+  local icons = style.icons
+  local codicons = style.codicons
   local utils = require('user.utils.statusline')
   local conditions = utils.conditions
 
@@ -93,10 +94,10 @@ return function()
     'diagnostics',
     sources = { 'nvim_diagnostic' },
     symbols = {
-      error = s.codicons.lsp.error .. ' ',
-      warn = s.codicons.lsp.warn .. ' ',
-      info = s.codicons.lsp.info .. ' ',
-      hint = s.codicons.lsp.hint .. ' ',
+      error = codicons.lsp.error .. ' ',
+      warn = codicons.lsp.warn .. ' ',
+      info = codicons.lsp.info .. ' ',
+      hint = codicons.lsp.hint .. ' ',
     },
     color = {},
     cond = conditions.hide_in_width,
@@ -107,9 +108,9 @@ return function()
     'diff',
     source = utils.diff_source,
     symbols = {
-      added = s.codicons.git.added .. ' ',
-      modified = s.codicons.git.mod .. ' ',
-      removed = s.codicons.git.removed .. ' ',
+      added = codicons.git.added .. ' ',
+      modified = codicons.git.mod .. ' ',
+      removed = codicons.git.removed .. ' ',
     },
     diff_color = {
       added = { fg = P.yellowgreen },
@@ -137,17 +138,35 @@ return function()
         if type(msg) == 'boolean' or #msg == 0 then return 'LS Inactive' end
         return msg
       end
-      local buf_client_names = {}
+      local client_names = {}
+      local registered_sources = {}
       local copilot_active = false
+      local copilot_hl = '%#SLCopilot#'
 
-      -- add client
+      -- add lsp clients
       for _, client in pairs(buf_clients) do
         if client.name == 'copilot' then copilot_active = true end
-        if client.name ~= 'copilot' then table.insert(buf_client_names, client.name) end
+        if client.name ~= 'copilot' and client.name ~= 'null-ls' then
+          table.insert(client_names, client.name)
+        end
       end
 
-      local clients = table.concat(buf_client_names, '  ') -- alt: •
-      return copilot_active and clients .. '%#SLCopilot#' .. '  ' .. icons.misc.octoface or clients
+      -- add null-ls sources
+      local available_sources = require('null-ls.sources').get_available(vim.bo.filetype)
+      for _, source in ipairs(available_sources) do
+        for method in pairs(source.methods) do
+          registered_sources[method] = registered_sources[method] or {}
+          table.insert(registered_sources[method], source.name)
+        end
+      end
+
+      local formatter = registered_sources['NULL_LS_FORMATTING']
+      local linter = registered_sources['NULL_LS_DIAGNOSTICS']
+      if formatter ~= nil then vim.list_extend(client_names, formatter) end
+      if linter ~= nil then vim.list_extend(client_names, linter) end
+
+      local clients = ' ' .. table.concat(client_names, '  ') .. '  ' -- alt: •
+      return copilot_active and clients .. copilot_hl .. icons.misc.octoface or clients
     end,
     cond = conditions.hide_in_width,
   })
