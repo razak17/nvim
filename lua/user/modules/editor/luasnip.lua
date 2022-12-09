@@ -53,12 +53,11 @@ return function()
 
   require('luasnip').config.setup({ store_selection_keys = '<C-x>' })
 
-  local utils = require('user.utils')
   local paths = {
     join_paths(rvim.get_runtime_dir(), 'site', 'pack', 'packer', 'start', 'friendly-snippets'),
   }
   local user_snippets = rvim.path.snippets
-  if utils.is_directory(user_snippets) then paths[#paths + 1] = user_snippets end
+  if rvim.is_directory(user_snippets) then paths[#paths + 1] = user_snippets end
   require('luasnip.loaders.from_lua').lazy_load()
   require('luasnip.loaders.from_vscode').lazy_load({ paths = paths })
 

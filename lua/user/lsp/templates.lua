@@ -1,15 +1,30 @@
 local M = {}
 
-local utils = require('user.utils')
+local uv = vim.loop
 local ftplugin_dir = rvim.lsp.templates_dir
 local fmt = string.format
+
+---Write data to a file
+---@param path string can be full or relative to `cwd`
+---@param txt string|table text to be written, uses `vim.inspect` internally for tables
+---@param flag string used to determine access mode, common flags: "w" for `overwrite` or "a" for `append`
+local function write_file(path, txt, flag)
+  local data = type(txt) == 'string' and txt or vim.inspect(txt)
+  uv.fs_open(path, flag, 438, function(open_err, fd)
+    assert(not open_err, open_err)
+    uv.fs_write(fd, data, -1, function(write_err)
+      assert(not write_err, write_err)
+      uv.fs_close(fd, function(close_err) assert(not close_err, close_err) end)
+    end)
+  end)
+end
 
 ---Write command to file
 ---@param filename string the filetype for praticular server
 ---@param server_name string can be any server supported by nvim-lsp-installer
 local function write_manager(filename, server_name)
   local cmd = fmt([[require("user.lsp.manager").setup(%q)]], server_name)
-  utils.write_file(filename, cmd .. '\n', 'a')
+  write_file(filename, cmd .. '\n', 'a')
 end
 
 ---Get supported filetypes per server
@@ -44,9 +59,8 @@ end
 ---@param server_name string can be any server supported by nvim-lsp-installer
 ---@return string[] list of filtetypes for server_name
 local function getFileTypes(server_name)
-  local configured_filetypes = rvim.lsp.configured_filetypes
   return vim.tbl_filter(
-    function(ft) return vim.tbl_contains(configured_filetypes, ft) end,
+    function(ft) return vim.tbl_contains(rvim.lsp.configured_filetypes, ft) end,
     get_supported_filetypes(server_name) or {}
   )
 end
@@ -62,7 +76,7 @@ local function generate_ftplugin(server_name, dir)
     write_manager(filename, server_name)
     -- if server_name == 'tsserver' then
     --   local cmd = 'vim.lsp.handlers["textDocument/publishDiagnostics"] = function() end'
-    --   utils.write_file(filename, cmd .. '\n', 'a')
+    --   write_file(filename, cmd .. '\n', 'a')
     -- end
   end
 end
@@ -73,7 +87,7 @@ function M.generate_templates()
   -- servers_names = servers_names or get_supported_servers()
   --NOTE: use custom server list for now
   M.remove_template_files()
-  if not utils.is_directory(rvim.lsp.templates_dir) then vim.fn.mkdir(ftplugin_dir, 'p') end
+  if not rvim.is_directory(rvim.lsp.templates_dir) then vim.fn.mkdir(ftplugin_dir, 'p') end
   local server_name = require('user.core.servers').servers
   for server, v in pairs(server_name) do
     if v ~= false then generate_ftplugin(server, ftplugin_dir) end

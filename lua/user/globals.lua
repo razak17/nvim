@@ -67,6 +67,14 @@ end
 -- Utils
 ----------------------------------------------------------------------------------------------------
 
+--- Checks whether a given path exists and is a directory
+--@param path (string) path to check
+--@returns (bool)
+function rvim.is_directory(path)
+  local stat = uv.fs_stat(path)
+  return stat and stat.type == 'directory' or false
+end
+
 --- Convert a list or map of items into a value by iterating all it's fields and transforming
 --- them with a callback
 ---@generic T : table

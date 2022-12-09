@@ -9,8 +9,6 @@ return function()
 
   -- config
   local dap = require('dap')
-  local utils = require('user.utils')
-  local is_directory = utils.is_directory
   local fn = vim.fn
 
   fn.sign_define('DapBreakpoint', {
@@ -46,8 +44,8 @@ return function()
       program = '${file}',
       pythonPath = function()
         local cwd = fn.getcwd()
-        if is_directory(cwd .. '/venv/bin/python') then return cwd .. '/venv/bin/python' end
-        if is_directory(cwd .. '/.venv/bin/python') then return cwd .. '/.venv/bin/python' end
+        if rvim.is_directory(cwd .. '/venv/bin/python') then return cwd .. '/venv/bin/python' end
+        if rvim.is_directory(cwd .. '/.venv/bin/python') then return cwd .. '/.venv/bin/python' end
         return python_dir
       end,
     },

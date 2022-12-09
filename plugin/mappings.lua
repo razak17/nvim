@@ -2,6 +2,8 @@ if not rvim then return end
 
 local g = vim.g
 local fn = vim.fn
+local api = vim.api
+local fmt = string.format
 
 local imap = rvim.imap
 local nmap = rvim.nmap
@@ -103,10 +105,23 @@ cnoremap('/', [[getcmdtype() == "/" ? "\/" : "/"]], { expr = true })
 ----------------------------------------------------------------------------------------------------
 -- Save
 ----------------------------------------------------------------------------------------------------
+local function smart_quit()
+  local bufnr = api.nvim_get_current_buf()
+  local modified = api.nvim_buf_get_option(bufnr, 'modified')
+  if modified then
+    vim.ui.input({
+      prompt = 'You have unsaved changes. Quit anyway? (y/n) ',
+    }, function(input)
+      if input == 'y' then vim.cmd('q!') end
+    end)
+    return
+  end
+  vim.cmd('q!')
+end
 -- Alternate way to save
 nnoremap('<C-s>', ':silent! write<CR>')
 -- Quit
-nnoremap('<leader>x', "<cmd>lua require('user.utils').smart_quit()<CR>", 'quit')
+nnoremap('<leader>x', smart_quit, 'quit')
 -- Write and quit all files, ZZ is NOT equivalent to this
 nnoremap('qa', '<cmd>qa<CR>')
 ----------------------------------------------------------------------------------------------------
@@ -219,7 +234,23 @@ nnoremap('0', "getline('.')[0 : col('.') - 2] =~# '^\\s\\+$' ? '0' : '^'", { exp
 nnoremap('[<space>', [[<cmd>put! =repeat(nr2char(10), v:count1)<CR>'[]])
 nnoremap(']<space>', [[<cmd>put =repeat(nr2char(10), v:count1)<CR>]])
 -- replicate netrw functionality
-nnoremap('gx', utils.open_link)
+local function open(path)
+  fn.jobstart({ rvim.open_command, path }, { detach = true })
+  vim.notify(fmt('Opening %s', path))
+end
+
+local function open_link()
+  local file = fn.expand('<cfile>')
+  if not file or fn.isdirectory(file) > 0 then return vim.cmd.edit(file) end
+  if file:match('http[s]?://') then return open(file) end
+
+  -- consider anything that looks like string/string a github link
+  local plugin_url_regex = '[%a%d%-%.%_]*%/[%a%d%-%.%_]*'
+  local link = string.match(file, plugin_url_regex)
+  print(link)
+  if link then return open(fmt('https://www.github.com/%s', link)) end
+end
+nnoremap('gx', open_link)
 ----------------------------------------------------------------------------------------------------
 -- Toggle list
 ----------------------------------------------------------------------------------------------------
@@ -250,14 +281,31 @@ nnoremap('<leader>lo', function() rvim.toggle_loc_list() end, 'toggle loclist')
 ----------------------------------------------------------------------------------------------------
 -- UI Toggles
 ----------------------------------------------------------------------------------------------------
-nnoremap('<leader>ow', function() utils.toggle_opt('wrap') end, 'toggle: wrap')
-nnoremap('<leader>oc', function() utils.toggle_opt('cursorline') end, 'toggle: cursorline')
+local function toggle_opt(opt)
+  local value = nil
+  value = not api.nvim_get_option_value(opt, {})
+  vim.opt[opt] = value
+  vim.notify(opt .. ' set to ' .. tostring(value), 'info', { title = 'UI Toggles' })
+end
+nnoremap('<leader>ow', function() toggle_opt('wrap') end, 'toggle: wrap')
+nnoremap('<leader>oc', function() toggle_opt('cursorline') end, 'toggle: cursorline')
 nnoremap('<leader>or', ':ToggleRelativeNumber<CR>', 'toggle: relativenumber')
 ----------------------------------------------------------------------------------------------------
 -- Utils
 ----------------------------------------------------------------------------------------------------
-nnoremap('<leader>aR', utils.empty_registers, 'empty registers')
-nnoremap('<leader>a;', utils.open_terminal, 'open terminal')
+
+local function empty_registers()
+  api.nvim_exec(
+    [[
+    let regs=split('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/-"', '\zs')
+    for r in regs
+        call setreg(r, [])
+    endfor
+  ]],
+    false
+  )
+end
+nnoremap('<leader>aR', empty_registers, 'empty registers')
 -- Search word
 nnoremap('<leader>B', '/<C-R>=escape(expand("<cword>"), "/")<CR><CR>', 'find cword')
 -- Greatest remap ever
@@ -287,10 +335,41 @@ nnoremap('zO', [[zCzO]])
 ----------------------------------------------------------------------------------------------------
 -- Delimiters
 ----------------------------------------------------------------------------------------------------
+-- TLDR: Conditionally modify character at end of line
+-- Description:
+-- This function takes a delimiter character and:
+--   * removes that character from the end of the line if the character at the end
+--     of the line is that character
+--   * removes the character at the end of the line if that character is a
+--     delimiter that is not the input character and appends that character to
+--     the end of the line
+--   * adds that character to the end of the line if the line does not end with
+--     a delimiter
+-- Delimiters:
+-- - ","
+-- - ";"
+---@param character string
+---@return function
+local function modify_line_end_delimiter(character)
+  local delimiters = { ',', ';' }
+  return function()
+    local line = api.nvim_get_current_line()
+    local last_char = line:sub(-1)
+    if last_char == character then
+      api.nvim_set_current_line(line:sub(1, #line - 1))
+      return
+    end
+    if vim.tbl_contains(delimiters, last_char) then
+      api.nvim_set_current_line(line:sub(1, #line - 1) .. character)
+      return
+    end
+    api.nvim_set_current_line(line .. character)
+  end
+end
 -- Conditionally modify character at end of line
-nnoremap('<localleader>,', utils.modify_line_end_delimiter(','), 'append comma')
-nnoremap('<localleader>;', utils.modify_line_end_delimiter(';'), 'append semi colon')
-nnoremap('<localleader>.', utils.modify_line_end_delimiter('.'), 'append period')
+nnoremap('<localleader>,', modify_line_end_delimiter(','), 'append comma')
+nnoremap('<localleader>;', modify_line_end_delimiter(';'), 'append semi colon')
+nnoremap('<localleader>.', modify_line_end_delimiter('.'), 'append period')
 
 ----------------------------------------------------------------------------------------------------
 -- Quick find/replace
@@ -372,7 +451,6 @@ cnoremap('::', "<C-r>=fnameescape(expand('%:p:h'))<CR>/")
 ---@param pat string
 ---@param url string
 local function web_search(pat, url)
-  local fmt = string.format
   local query = '"' .. fn.substitute(pat, '["\n]', ' ', 'g') .. '"'
   utils.open(fmt('%s%s', url, query))
 end
@@ -472,14 +550,14 @@ end
 ----------------------------------------------------------------------------------------------------
 -- neotest
 if plugin_installed('neotest') then
-  local function open() require('neotest').output.open({ enter = true, short = false }) end
+  local function neotest_open() require('neotest').output.open({ enter = true, short = false }) end
   local function run_file() require('neotest').run.run(vim.fn.expand('%')) end
   local function nearest() require('neotest').run.run() end
   local function next_failed() require('neotest').jump.prev({ status = 'failed' }) end
   local function prev_failed() require('neotest').jump.next({ status = 'failed' }) end
   local function toggle_summary() require('neotest').summary.toggle() end
   nnoremap('<localleader>ts', toggle_summary, 'neotest: run suite')
-  nnoremap('<localleader>to', open, 'neotest: output')
+  nnoremap('<localleader>to', neotest_open, 'neotest: output')
   nnoremap('<localleader>tn', nearest, 'neotest: run')
   nnoremap('<localleader>tf', run_file, 'neotest: run file')
   nnoremap('[n', next_failed, 'jump to next failed test')
@@ -726,7 +804,6 @@ end
 if plugin_loaded('toggleterm.nvim') then
   local new_term = function(direction, key, count)
     local Terminal = require('toggleterm.terminal').Terminal
-    local fmt = string.format
     local cmd = fmt('<cmd>%sToggleTerm direction=%s<CR>', count, direction)
     return Terminal:new({
       direction = direction,

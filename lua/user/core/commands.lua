@@ -1,7 +1,5 @@
 local command = rvim.command
 
-command('Rename', [[call v:lua.require('user.utils').rename(<f-args>) ]], { nargs = 1 })
-
 command('Todo', [[noautocmd silent! grep! 'TODO\|FIXME\|BUG\|HACK' | copen]])
 
 command(
