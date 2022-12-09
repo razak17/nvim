@@ -750,6 +750,21 @@ end
 ----------------------------------------------------------------------------------------------------
 -- telescope.nvim
 if plugin_loaded('telescope.nvim') then
+  local builtin = require('telescope.builtin')
+  nnoremap('<leader>fb', builtin.current_buffer_fuzzy_find, 'find in current buffer')
+  nnoremap('<leader>fR', builtin.reloader, 'module reloader')
+  nnoremap('<leader>fw', builtin.grep_string, 'find current word')
+  nnoremap('<leader>fs', builtin.live_grep, 'find string')
+  nnoremap('<leader>fva', builtin.autocommands, 'autocommands')
+  nnoremap('<leader>fvh', builtin.highlights, 'highlights')
+  nnoremap('<leader>fvk', builtin.keymaps, 'keymaps')
+  nnoremap('<leader>fvo', builtin.vim_options, 'options')
+  nnoremap('<leader>fvr', builtin.resume, 'resume')
+  -- Git
+  nnoremap('<leader>gf', builtin.git_files, 'git: files')
+  nnoremap('<leader>gs', builtin.git_status, 'git: status')
+  nnoremap('<leader>fgb', builtin.git_branches, 'git: branches')
+  -- LSP
   nnoremap('<leader>lR', '<cmd>Telescope lsp_references<CR>', 'telescope: references')
   nnoremap('<leader>ld', '<cmd>Telescope lsp_document_symbols<CR>', 'telescope: document symbols')
   nnoremap(

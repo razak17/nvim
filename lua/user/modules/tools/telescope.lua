@@ -326,17 +326,12 @@ return function()
 
   require('which-key').register({
     ['<c-p>'] = { find_files, 'telescope: find files' },
-    ['<leader>gs'] = { builtin.git_status, 'git: status' },
-    ['<leader>gf'] = { builtin.git_files, 'git: files' },
     ['<leader>f'] = {
       name = 'Telescope',
       a = { builtins, 'builtin' },
-      b = { builtin.current_buffer_fuzzy_find, 'find in current buffer' },
-      c = { builtin.resume, 'resume' },
       f = { project_files, 'find files' },
       g = {
         name = 'Git',
-        b = { builtin.git_branches, 'branch' },
         B = { delta_git_bcommits, 'buffer commits' },
         c = { delta_git_commits, 'commits' },
       },
@@ -349,17 +344,6 @@ return function()
       p = { projects, 'recent projects' },
       P = { installed_plugins, 'plugins' },
       r = { recent_files, 'resume' },
-      R = { builtin.reloader, 'module reloader' },
-      s = { builtin.live_grep, 'find string' },
-      v = {
-        name = 'vim',
-        a = { builtin.autocommands, 'autocommands' },
-        h = { builtin.highlights, 'highlights' },
-        k = { builtin.keymaps, 'keymaps' },
-        o = { builtin.vim_options, 'options' },
-        r = { builtin.resume, 'resume last picker' },
-      },
-      w = { builtin.grep_string, 'find current word' },
       z = { zoxide_list, 'zoxide list' },
     },
   })

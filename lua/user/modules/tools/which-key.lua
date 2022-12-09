@@ -37,6 +37,7 @@ return function()
       s = { name = 'Snip' },
       t = { name = 'Term' },
     },
+    ['<leader>fv'] = { name = 'Vim' },
     ['<localleader>'] = {
       d = { name = 'Dap' },
       g = { name = 'Git' },
