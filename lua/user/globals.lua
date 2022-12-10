@@ -170,14 +170,16 @@ rvim.list_installed_plugins = (function()
   end
 end)()
 
-rvim.list_loaded_plugins = function()
-  local plugins = packer_plugins or {}
+rvim.list_loaded_plugins = (function()
   local loaded = {}
-  for _, plugin in pairs(plugins) do
-    if plugin.loaded then loaded[#loaded + 1] = plugin end
+  return function()
+    local plugins = packer_plugins or {}
+    for _, plugin in pairs(plugins) do
+      if plugin.loaded then loaded[#loaded + 1] = plugin end
+    end
+    return loaded
   end
-  return loaded
-end
+end)()
 
 ---Check if a plugin is on the system not whether or not it is loaded
 ---@param plugin_name string
