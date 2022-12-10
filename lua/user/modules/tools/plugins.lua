@@ -11,23 +11,21 @@ use({
     {
       'rcarriga/nvim-dap-ui',
       config = function()
-        rvim.block_reload(function()
-          local dapui = require('dapui')
-          require('dapui').setup({
-            windows = { indent = 2 },
-            floating = {
-              border = rvim.style.border.current,
-            },
-          })
-          local dap = require('dap')
-          -- NOTE: this opens dap UI automatically when dap starts
-          dap.listeners.after.event_initialized['dapui_config'] = function()
-            dapui.open()
-            vim.api.nvim_exec_autocmds('User', { pattern = 'DapStarted' })
-          end
-          dap.listeners.before.event_terminated['dapui_config'] = function() dapui.close() end
-          dap.listeners.before.event_exited['dapui_config'] = function() dapui.close() end
-        end)
+        local dapui = require('dapui')
+        require('dapui').setup({
+          windows = { indent = 2 },
+          floating = {
+            border = rvim.style.border.current,
+          },
+        })
+        local dap = require('dap')
+        -- NOTE: this opens dap UI automatically when dap starts
+        dap.listeners.after.event_initialized['dapui_config'] = function()
+          dapui.open()
+          vim.api.nvim_exec_autocmds('User', { pattern = 'DapStarted' })
+        end
+        dap.listeners.before.event_terminated['dapui_config'] = function() dapui.close() end
+        dap.listeners.before.event_exited['dapui_config'] = function() dapui.close() end
       end,
     },
     {

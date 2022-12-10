@@ -150,14 +150,6 @@ function rvim.find_string(table, string)
   return found
 end
 
----Some plugins are not safe to be reloaded because their setup functions
----and are not idempotent. This wraps the setup calls of such plugins
----@param func fun()
-function rvim.block_reload(func)
-  if vim.g.packer_compiled_loaded then return end
-  func()
-end
-
 rvim.list_installed_plugins = (function()
   local plugins
   return function()
