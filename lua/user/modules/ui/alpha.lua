@@ -56,7 +56,11 @@ return function()
 
   local installed_plugins = {
     type = 'text',
-    val = f(' %d plugins installed', #rvim.list_installed_plugins()),
+    val = f(
+      ' %d out of %d plugins loaded',
+      #rvim.list_loaded_plugins(),
+      #rvim.list_installed_plugins()
+    ),
     opts = { position = 'center', hl = 'NonText' },
   }
 
