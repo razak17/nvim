@@ -67,7 +67,7 @@ return function()
   local v = vim.version()
   local version = {
     type = 'text',
-    val = f(' v%d.%d.%d %s', v.major, v.minor, v.patch, v.prerelease and '(nightly)' or ''),
+    val = f('Neovim v%d.%d.%d %s', v.major, v.minor, v.patch, v.prerelease and '(nightly)' or ''),
     opts = { position = 'center', hl = 'NonText' },
   }
 
