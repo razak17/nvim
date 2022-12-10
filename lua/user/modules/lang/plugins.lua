@@ -180,7 +180,7 @@ use({
         'mason.nvim',
         'help',
         'CommandTPrompt',
-        'buffer_manager'
+        'buffer_manager',
       },
     })
   end,
@@ -212,7 +212,7 @@ use({
   config = function() require('neogen').setup({ snippet_engine = 'luasnip' }) end,
 })
 
-use({ 'mrshmllow/document-color.nvim' })
+use({ 'mrshmllow/document-color.nvim', ft = { 'html', 'javascriptreact', 'typescriptreact' } })
 
 use({ 'ii14/emmylua-nvim' })
 
