@@ -48,6 +48,7 @@ return function()
     return require('telescope.themes').get_dropdown(vim.tbl_deep_extend('force', opts or {}, {
       previewer = false,
       hidden = true,
+      borderchars = border.telescope.ui_select,
     }))
   end
 
