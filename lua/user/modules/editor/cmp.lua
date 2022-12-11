@@ -143,7 +143,7 @@ return function()
       { name = 'dictionary', keyword_length = 3, max_item_count = 3 },
       { name = 'crates' },
       { name = 'treesitter' },
-      { name = 'lab.quick_data', keyword_length = 5 },
+      { name = 'lab.quick_data', keyword_length = 3 },
     }, {
       {
         name = 'buffer',
