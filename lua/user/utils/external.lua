@@ -10,7 +10,7 @@ local fmt = string.format
 ---@param reset boolean?
 function M.tmux.set_statusline(reset)
   -- TODO: we should correctly derive the previous bg value automatically
-  local bg = reset and '#373d48' or u.get('Normal', 'bg')
+  local bg = reset and '#292e42' or u.get('Normal', 'bg')
   fn.jobstart(fmt('tmux set-option -g status-style bg=%s', bg))
 end
 
