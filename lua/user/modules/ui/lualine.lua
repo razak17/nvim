@@ -162,7 +162,9 @@ return function()
       if linter ~= nil then vim.list_extend(client_names, linter) end
 
       local clients = ' ' .. table.concat(client_names, '  ') .. '  ' -- alt: •
-      return copilot_active and clients .. copilot_hl .. icons.misc.octoface or clients
+      if #client_names > 4 then clients = ' ' .. #client_names .. ' LSPs running  ' end
+      local with_copilot = clients .. copilot_hl .. icons.misc.octoface
+      return copilot_active and with_copilot or clients
     end,
     cond = conditions.hide_in_width,
   })
