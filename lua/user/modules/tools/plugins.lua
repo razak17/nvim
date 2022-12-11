@@ -366,7 +366,7 @@ use({
   event = { 'BufRead package.json' },
   requires = { 'MunifTanjim/nui.nvim' },
   config = function()
-    require('package_info').setup({
+    require('package-info').setup({
       autostart = false,
       package_manager = 'yarn',
     })
