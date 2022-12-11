@@ -6,3 +6,18 @@ vim.bo.formatoptions = 'tcq2l'
 vim.bo.shiftwidth = 2
 vim.bo.softtabstop = 2
 vim.bo.tabstop = 2
+
+local is_installed = rvim.plugin_installed('package-info.nvim')
+local filename = vim.fn.expand('%:t')
+if not is_installed or filename ~= 'package.json' then return end
+
+local ok, which_key = rvim.safe_require('which-key')
+if ok then which_key.register({ ['<localleader>'] = { p = { name = 'Package Info' } } }) end
+local nnoremap = rvim.nnoremap
+local with_desc = function(desc) return { buffer = 0, desc = desc } end
+local package_info = require('package-info')
+nnoremap('<localleader>pt', package_info.toggle, with_desc('package-info: toggle'))
+nnoremap('<localleader>pu', package_info.update, with_desc('package-info: update'))
+nnoremap('<localleader>pd', package_info.delete, with_desc('package-info: delete'))
+nnoremap('<localleader>pi', package_info.install, with_desc('package-info: install new'))
+nnoremap('<localleader>pc', package_info.change_version, with_desc('package-info: change version'))
