@@ -218,6 +218,7 @@ use({ 'ii14/emmylua-nvim' })
 
 use({
   'ray-x/lsp_signature.nvim',
+  event = 'InsertEnter',
   config = function()
     require('lsp_signature').setup({
       debug = false,
