@@ -148,10 +148,33 @@ use({
 })
 
 use({
-  'phaazon/hop.nvim',
-  tag = 'v2.*',
-  keys = { { 'n', 's' }, { 'n', 'f' }, { 'n', 'F' } },
-  config = conf('tools', 'hop'),
+  'ggandor/leap.nvim',
+  keys = { { 'n', 's' } },
+  config = function()
+    require('user.utils.highlights').plugin('leap', {
+      theme = {
+        ['*'] = {
+          { LeapBackdrop = { fg = '#707070' } },
+        },
+        horizon = {
+          { LeapLabelPrimary = { bg = 'NONE', fg = '#ccff88', italic = true } },
+          { LeapLabelSecondary = { bg = 'NONE', fg = '#99ccff' } },
+          { LeapLabelSelected = { bg = 'NONE', fg = 'Magenta' } },
+        },
+      },
+    })
+    require('leap').setup({
+      equivalence_classes = { ' \t\r\n', '([{', ')]}', '`"\'' },
+    })
+    rvim.nnoremap('s', function()
+      require('leap').leap({
+        target_windows = vim.tbl_filter(
+          function(win) return rvim.empty(vim.fn.win_gettype(win)) end,
+          vim.api.nvim_tabpage_list_wins(0)
+        ),
+      })
+    end)
+  end,
 })
 
 use({
