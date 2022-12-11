@@ -178,6 +178,19 @@ use({
 })
 
 use({
+  'ggandor/flit.nvim',
+  keys = { { 'n', 'f' } },
+  wants = { 'leap.nvim' },
+  after = 'leap.nvim',
+  config = function()
+    require('flit').setup({
+      labeled_modes = 'nvo',
+      multiline = false,
+    })
+  end,
+})
+
+use({
   'SmiteshP/nvim-navic',
   event = 'BufRead',
   requires = 'neovim/nvim-lspconfig',
