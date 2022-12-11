@@ -346,7 +346,7 @@ use({
     local crates = require('crates')
     crates.setup({
       popup = {
-        -- autofocus = true,
+        autofocus = true,
         style = 'minimal',
         border = 'single',
         show_version_date = false,
