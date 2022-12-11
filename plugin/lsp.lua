@@ -292,7 +292,7 @@ local function setup_plugins(client, bufnr)
     if client.server_capabilities.colorProvider then document_color.buf_attach(bufnr) end
   end
   -- twoslash-queries
-  local twoslash_ok, twoslash = rvim.safe_require('twoslash-queries')
+  local twoslash_ok, twoslash = rvim.safe_require('twoslash-queries', { silent = true })
   if twoslash_ok and client.name == 'tsserver' then twoslash.attach(client, bufnr) end
 end
 

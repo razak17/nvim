@@ -236,7 +236,7 @@ use({
 
 use({ 'jose-elias-alvarez/typescript.nvim' })
 
-use({ 'marilari88/twoslash-queries.nvim' })
+use({ 'marilari88/twoslash-queries.nvim', ft = { 'typescript', 'typescriptreact' } })
 
 ----------------------------------------------------------------------------------------------------
 -- Graveyard
