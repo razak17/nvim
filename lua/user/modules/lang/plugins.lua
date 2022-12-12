@@ -97,7 +97,8 @@ use({
         })
       end,
     },
-    { 'nvim-treesitter/playground' },
+    -- use this until:  https://github.com/nvim-treesitter/playground/pull/57 is merged
+    { 'nullchilly/lsp-playground' },
     { 'nvim-treesitter/nvim-treesitter-textobjects' },
     { 'p00f/nvim-ts-rainbow' },
     {
