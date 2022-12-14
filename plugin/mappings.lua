@@ -939,6 +939,19 @@ nnoremap(
   '<cmd>lua require("no-neck-pain").start()<CR>',
   with_plugin_installed('no-neck-pain: toggle', 'no-neck-pain.nvim')
 )
+
+----------------------------------------------------------------------------------------------------
+-- todo-comments.nvim
+nnoremap(
+  '<leader>tj',
+  function() require('todo-comments').jump_next() end,
+  with_plugin('todo-comments: next todo', 'todo-comments.nvim')
+)
+nnoremap(
+  '<leader>tk',
+  function() require('todo-comments').jump_prev() end,
+  with_plugin('todo-comments: prev todo', 'todo-comments.nvim')
+)
 ----------------------------------------------------------------------------------------------------
 -- Abbreviations
 ----------------------------------------------------------------------------------------------------
