@@ -178,6 +178,19 @@ use({
   end,
 })
 
+use({
+  'folke/todo-comments.nvim',
+  after = 'nvim-treesitter',
+  requires = { 'nvim-treesitter' },
+  config = function()
+    require('todo-comments').setup({ highlight = { after = '' } })
+    rvim.command(
+      'TodoDots',
+      string.format('TodoTelescope cwd=%s keywords=TODO,FIXME', rvim.get_config_dir())
+    )
+  end,
+})
+
 ----------------------------------------------------------------------------------------------------
 -- Graveyard
 ----------------------------------------------------------------------------------------------------
@@ -241,20 +254,6 @@ use({
 use({ 'fladson/vim-kitty', disable = true })
 
 use({ 'mtdl9/vim-log-highlighting', disable = true })
-
-use({
-  'folke/todo-comments.nvim',
-  disable = true,
-  after = 'nvim-treesitter',
-  requires = { 'nvim-treesitter' },
-  config = function()
-    require('todo-comments').setup({ highlight = { after = '' } })
-    rvim.command(
-      'TodoDots',
-      string.format('TodoQuickFix cwd=%s keywords=TODO,FIXME', vim.g.vim_dir)
-    )
-  end,
-})
 
 use({
   'itchyny/vim-highlighturl',
