@@ -38,8 +38,9 @@ return function()
     return result
   end
 
+  opt.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
   opt.foldlevelstart = 99
-  -- opt.sessionoptions:append('folds')
+
   -- Don't add folds to sessions because they are added asynchronously and if the file does not
   -- exist on a git branch for which the folds where saved it will cause an error on startup
   -- opt.sessionoptions:append('folds')
