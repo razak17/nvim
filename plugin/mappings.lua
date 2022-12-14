@@ -118,7 +118,7 @@ local function smart_quit()
   vim.cmd('q!')
 end
 -- Alternate way to save
-nnoremap('<C-s>', ':silent! write<CR>')
+nnoremap('<C-s>', '<cmd>silent! write<CR>')
 -- Quit
 nnoremap('<leader>x', smart_quit, 'quit')
 -- Write and quit all files, ZZ is NOT equivalent to this
@@ -160,7 +160,7 @@ nmap(
 ----------------------------------------------------------------------------------------------------
 -- Help
 ----------------------------------------------------------------------------------------------------
-nnoremap('<leader>ah', ':h <C-R>=expand("<cword>")<CR><CR>', 'help')
+nnoremap('<leader>ah', '<cmd>h <C-R>=expand("<cword>")<CR><CR>', 'help')
 ----------------------------------------------------------------------------------------------------
 -- Move selected line / block of text in visual mode
 ----------------------------------------------------------------------------------------------------
@@ -486,9 +486,9 @@ nnoremap('<leader>V', '<C-W>v', 'vsplit')
 ----------------------------------------------------------------------------------------------------
 -- Undo
 ----------------------------------------------------------------------------------------------------
-nnoremap('<C-z>', ':undo<CR>')
-vnoremap('<C-z>', ':undo<CR><Esc>')
-xnoremap('<C-z>', ':undo<CR><Esc>')
+nnoremap('<C-z>', '<cmd>undo<CR>')
+vnoremap('<C-z>', '<cmd>undo<CR><Esc>')
+xnoremap('<C-z>', '<cmd>undo<CR><Esc>')
 inoremap('<c-z>', [[<Esc>:undo<CR>]])
 ----------------------------------------------------------------------------------------------------
 -- Escape
@@ -504,19 +504,19 @@ nnoremap('<C-l>', '<C-w>l')
 ----------------------------------------------------------------------------------------------------
 -- rVim {{{
 ----------------------------------------------------------------------------------------------------
-nnoremap('<leader>L;', ':Alpha<CR>', 'alpha')
+nnoremap('<leader>L;', '<cmd>Alpha<CR>', 'alpha')
 nnoremap(
   '<leader>Lc',
   "<cmd>lua vim.fn.execute('edit ' .. join_paths(rvim.get_user_dir(), 'config/init.lua'))<CR>",
   'open config file'
 )
-nnoremap('<leader>LC', ':checkhealth<CR>', 'check health')
+nnoremap('<leader>LC', '<cmd>checkhealth<CR>', 'check health')
 nnoremap(
   '<leader>Ll',
   "<cmd>lua vim.fn.execute('edit ' .. vim.lsp.get_log_path())<CR>",
   'lsp: open logfile'
 )
-nnoremap('<leader>Lm', ':messages<CR>', 'messages')
+nnoremap('<leader>Lm', '<cmd>messages<CR>', 'messages')
 nnoremap(
   '<leader>Lp',
   "<cmd>exe 'edit '.stdpath('cache').'/packer.nvim.log'<CR>",
@@ -528,6 +528,7 @@ nnoremap(
   'open startuptime logs'
 )
 nnoremap('<leader>Lv', ':e ' .. join_paths(rvim.get_config_dir(), 'init.lua<CR>'), 'open vimrc')
+nnoremap('<leader>tt', '<cmd>TodoDots<CR>', 'todo: dotfiles todos')
 ----------------------------------------------------------------------------------------------------
 -- Plugins {{{
 ----------------------------------------------------------------------------------------------------
@@ -536,15 +537,15 @@ local with_plugin_installed = function(desc, plugin) return rvim.with_plugin(des
 ----------------------------------------------------------------------------------------------------
 -- packer
 if plugin_installed('packer.nvim') then
-  nnoremap('<leader>pc', ':PackerCompile<CR>', 'compile')
-  nnoremap('<leader>pC', ':PackerClean<CR>', 'clean')
-  nnoremap('<leader>pd', ':PackerDelete<CR>', 'delete packer_compiled')
-  nnoremap('<leader>pe', ':PackerCompiledEdit<CR>', 'edit packer_compiled')
-  nnoremap('<leader>pi', ':PackerInstall<CR>', 'install')
-  nnoremap('<leader>pI', ':PackerInvalidate<CR>', 'invalidate')
-  nnoremap('<leader>ps', ':PackerSync<CR>', 'sync')
-  nnoremap('<leader>pS', ':PackerStatus<CR>', 'status')
-  nnoremap('<leader>pu', ':PackerUpdate<CR>', 'update')
+  nnoremap('<leader>pc', '<cmd>PackerCompile<CR>', 'compile')
+  nnoremap('<leader>pC', '<cmd>PackerClean<CR>', 'clean')
+  nnoremap('<leader>pd', '<cmd>PackerDelete<CR>', 'delete packer_compiled')
+  nnoremap('<leader>pe', '<cmd>PackerCompiledEdit<CR>', 'edit packer_compiled')
+  nnoremap('<leader>pi', '<cmd>PackerInstall<CR>', 'install')
+  nnoremap('<leader>pI', '<cmd>PackerInvalidate<CR>', 'invalidate')
+  nnoremap('<leader>ps', '<cmd>PackerSync<CR>', 'sync')
+  nnoremap('<leader>pS', '<cmd>PackerStatus<CR>', 'status')
+  nnoremap('<leader>pu', '<cmd>PackerUpdate<CR>', 'update')
 end
 ----------------------------------------------------------------------------------------------------
 -- neotest
@@ -723,7 +724,7 @@ if plugin_loaded('harpoon') then
 end
 ----------------------------------------------------------------------------------------------------
 -- mason.nvim
-nnoremap('<leader>lm', ':Mason<CR>', with_plugin_installed('mason: info', 'mason.nvim'))
+nnoremap('<leader>lm', '<cmd>Mason<CR>', with_plugin_installed('mason: info', 'mason.nvim'))
 ----------------------------------------------------------------------------------------------------
 -- jaq.nvim
 nnoremap('<C-b>', ':silent only | Jaq<CR>', with_plugin_installed('jaq: run', 'jaq-nvim'))
@@ -739,13 +740,13 @@ nnoremap(
 )
 ----------------------------------------------------------------------------------------------------
 -- sniprun
-nnoremap('<leader>sr', ':SnipRun<CR>', with_plugin('sniprun: run', 'sniprun'))
-vnoremap('<leader>sr', ':SnipRun<CR>', with_plugin('sniprun: run', 'sniprun'))
-nnoremap('<leader>sc', ':SnipClose<CR>', with_plugin('sniprun: close', 'sniprun'))
-nnoremap('<leader>sx', ':SnipReset<CR>', with_plugin('sniprun: reset', 'sniprun'))
+nnoremap('<leader>sr', '<cmd>SnipRun<CR>', with_plugin('sniprun: run', 'sniprun'))
+vnoremap('<leader>sr', '<cmd>SnipRun<CR>', with_plugin('sniprun: run', 'sniprun'))
+nnoremap('<leader>sc', '<cmd>SnipClose<CR>', with_plugin('sniprun: close', 'sniprun'))
+nnoremap('<leader>sx', '<cmd>SnipReset<CR>', with_plugin('sniprun: reset', 'sniprun'))
 ----------------------------------------------------------------------------------------------------
 -- diffview.nvim
-nnoremap('<localleader>gd', '<Cmd>DiffviewOpen<CR>', with_plugin('diffview: open', 'diffview.nvim'))
+nnoremap('<localleader>gd', '<cmd>DiffviewOpen<CR>', with_plugin('diffview: open', 'diffview.nvim'))
 nnoremap(
   '<localleader>gh',
   '<Cmd>DiffviewFileHistory<CR>',
