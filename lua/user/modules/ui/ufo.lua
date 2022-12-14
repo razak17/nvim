@@ -64,11 +64,12 @@ return function()
     provider_selector = function() return { 'treesitter', 'indent' } end,
     preview = {
       win_config = {
-        winhighlight = 'Normal:Normal,FloatBorder:Normal',
+        border = 'single',
+        winhighlight = 'Normal:VertSplit,FloatBorder:VertSplit',
       },
     },
   })
   rvim.nnoremap('zR', ufo.openAllFolds, 'open all folds')
   rvim.nnoremap('zM', ufo.closeAllFolds, 'close all folds')
-  -- rvim.nnoremap('zP', ufo.peekFoldedLinesUnderCursor, 'preview fold')
+  rvim.nnoremap('zP', ufo.peekFoldedLinesUnderCursor, 'preview fold')
 end
