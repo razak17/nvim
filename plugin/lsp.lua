@@ -173,7 +173,6 @@ local function show_documentation()
     return require('rust-tools').hover_actions.hover_actions()
   end
   vim.lsp.buf.hover()
-  vim.lsp.buf.hover()
 end
 
 local function setup_mappings(client, bufnr)
@@ -185,7 +184,6 @@ local function setup_mappings(client, bufnr)
     config.scope = 'line'
     return vim.diagnostic.open_float(config)
   end, with_desc('lsp: line diagnostics'))
-  -- nnoremap('K', lsp.buf.hover, with_desc('lsp: hover'))
   nnoremap('K', show_documentation, with_desc('lsp: hover'))
   nnoremap('gd', lsp.buf.definition, with_desc('lsp: definition'))
   nnoremap('gr', lsp.buf.references, with_desc('lsp: references'))
