@@ -353,28 +353,37 @@ command('LspFormat', function() format({ bufnr = 0, async = false }) end)
 -- in and close it once everything is resolved. This functionality only runs whilst
 -- the list is open.
 -- similar functionality is provided by: https://github.com/onsails/diaglist.nvim
-local function make_diagnostic_qf_updater()
-  local cmd_id = nil
-  return function()
+do
+  ---@type integer?
+  local id
+  local TITLE = 'DIAGNOSTICS'
+  -- A helper function to auto-update the quickfix list when new diagnostics come
+  -- in and close it once everything is resolved. This functionality only runs whilst
+  -- the list is open.
+  -- similar functionality is provided by: https://github.com/onsails/diaglist.nvim
+  local function smart_quickfix_diagnostics()
     if not is_buffer_valid(api.nvim_get_current_buf()) then return end
-    vim.diagnostic.setqflist({ open = false })
+
+    diagnostic.setqflist({ open = false, title = TITLE })
     rvim.toggle_qf_list()
-    if not rvim.is_vim_list_open() and cmd_id then
-      api.nvim_del_autocmd(cmd_id)
-      cmd_id = nil
+
+    if not rvim.is_vim_list_open() and id then
+      api.nvim_del_autocmd(id)
+      id = nil
     end
-    if cmd_id then return end
-    cmd_id = api.nvim_create_autocmd('DiagnosticChanged', {
-      callback = function()
-        if rvim.is_vim_list_open() then
-          vim.diagnostic.setqflist({ open = false })
-          if #fn.getqflist() == 0 then rvim.toggle_list('quickfix') end
-        end
-      end,
-    })
+
+    id = id
+      or api.nvim_create_autocmd('DiagnosticChanged', {
+        callback = function()
+          -- skip QF lists that we did not populate
+          if not rvim.is_vim_list_open() or fn.getqflist({ title = 0 }).title ~= TITLE then return end
+          diagnostic.setqflist({ open = false, title = TITLE })
+          if #fn.getqflist() == 0 then rvim.toggle_qf_list() end
+        end,
+      })
   end
+  command('LspDiagnostics', smart_quickfix_diagnostics)
 end
-command('LspDiagnostics', make_diagnostic_qf_updater())
 
 ----------------------------------------------------------------------------------------------------
 -- Signs

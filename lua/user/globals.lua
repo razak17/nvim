@@ -265,6 +265,31 @@ function rvim.truncate(str, max_len)
     or str
 end
 
+---------------------------------------------------------------------------------
+-- Toggle list
+---------------------------------------------------------------------------------
+--- Utility function to toggle the location or the quickfix list
+---@param list_type '"quickfix"' | '"location"'
+---@return string?
+local function toggle_list(list_type)
+  local is_location_target = list_type == 'location'
+  local cmd = is_location_target and { 'lclose', 'lopen' } or { 'cclose', 'copen' }
+  local is_open = rvim.is_vim_list_open()
+  if is_open then return vim.cmd[cmd[1]]() end
+  local list = is_location_target and fn.getloclist(0) or fn.getqflist()
+  if vim.tbl_isempty(list) then
+    local msg_prefix = (is_location_target and 'Location' or 'QuickFix')
+    return vim.notify(msg_prefix .. ' List is Empty.', vim.log.levels.WARN)
+  end
+
+  local winnr = fn.winnr()
+  vim.cmd[cmd[2]]()
+  if fn.winnr() ~= winnr then vim.cmd.wincmd('p') end
+end
+
+function rvim.toggle_qf_list() toggle_list('quickfix') end
+function rvim.toggle_loc_list() toggle_list('location') end
+
 ---Determine if a value of any type is empty
 ---@param item any
 ---@return boolean?
