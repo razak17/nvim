@@ -37,5 +37,6 @@ vim.filetype.add({
     ['.*%.app.src'] = 'erlang',
     ['.*%.tmux%..conf'] = 'tmux',
     ['.*%.gitsendmail%..*'] = 'gitsendmail',
+    ['[jt]sconfig.*.json'] = 'jsonc',
   },
 })
