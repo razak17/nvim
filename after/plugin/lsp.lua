@@ -518,3 +518,4 @@ if not rvim.is_directory(templates) or fn.filereadable(join_paths(templates, 'lu
   require('user.lsp.templates').generate_templates()
   vim.notify('Templates have been generated', 'info', { title = 'Lsp' })
 end
+
