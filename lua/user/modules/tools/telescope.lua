@@ -292,6 +292,9 @@ return function()
     telescope.extensions.frecency.frecency(rvim.telescope.dropdown(rvim.telescope.minimal_ui()))
   end
 
+  -- FIXME: <C-cr> mapping does not work
+  local function undo() telescope.extensions.undo.undo() end
+
   local function projects() telescope.extensions.projects.projects({}) end
 
   local function delta_opts(opts, is_buf)
@@ -342,6 +345,7 @@ return function()
       p = { projects, 'recent projects' },
       P = { installed_plugins, 'plugins' },
       r = { recent_files, 'resume' },
+      u = { undo, 'undo' },
       z = { zoxide_list, 'zoxide list' },
     },
   })

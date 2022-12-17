@@ -92,6 +92,11 @@ use({
       config = function() require('telescope').load_extension('frecency') end,
     },
     {
+      'debugloop/telescope-undo.nvim',
+      after = 'telescope.nvim',
+      config = function() require('telescope').load_extension('undo') end,
+    },
+    {
       'ThePrimeagen/harpoon',
       config = function()
         require('harpoon').setup({
