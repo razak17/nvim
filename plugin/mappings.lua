@@ -653,7 +653,7 @@ nnoremap(
 )
 nnoremap(
   '<localleader>dT',
-  function() require('dapui').toggle() end,
+  function() require('dapui').toggle({ reset = true }) end,
   with_plugin('dapui: toggle', 'nvim-dap-ui')
 )
 ----------------------------------------------------------------------------------------------------
