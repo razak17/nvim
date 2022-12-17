@@ -96,7 +96,9 @@ rvim.augroup('ExternalCommands', {
     -- Open images in an image viewer (probably Preview)
     event = { 'BufEnter' },
     pattern = { '*.png', '*.jpg', '*.gif' },
-    command = function() vim.cmd(fmt('silent! "%s | :bw"', rvim.open_command .. ' ' .. fn.expand('%'))) end,
+    command = function()
+      vim.cmd(fmt('silent! "%s | :bw"', rvim.open_command .. ' ' .. fn.expand('%')))
+    end,
   },
 })
 
@@ -142,11 +144,10 @@ rvim.augroup('ClearCommandMessages', {
 
 rvim.augroup('TextYankHighlight', {
   {
-    -- don't execute silently in case of errors
     event = { 'TextYankPost' },
     pattern = { '*' },
     command = function()
-      require('vim.highlight').on_yank({ timeout = 277, on_visual = false, higroup = 'Search' })
+      vim.highlight.on_yank({ timeout = 177, on_visual = false, higroup = 'Search' })
     end,
   },
 })
