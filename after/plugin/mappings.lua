@@ -274,28 +274,6 @@ nnoremap('<leader>ow', function() toggle_opt('wrap') end, 'toggle: wrap')
 nnoremap('<leader>oc', function() toggle_opt('cursorline') end, 'toggle: cursorline')
 nnoremap('<leader>or', ':ToggleRelativeNumber<CR>', 'toggle: relativenumber')
 ----------------------------------------------------------------------------------------------------
--- Utils
-----------------------------------------------------------------------------------------------------
-
-local function empty_registers()
-  api.nvim_exec(
-    [[
-    let regs=split('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/-"', '\zs')
-    for r in regs
-        call setreg(r, [])
-    endfor
-  ]],
-    false
-  )
-end
-nnoremap('<leader>aR', empty_registers, 'empty registers')
--- Search word
-nnoremap('<leader>B', '/<C-R>=escape(expand("<cword>"), "/")<CR><CR>', 'find cword')
--- Greatest remap ever
-vnoremap('<leader>p', '"_dP', 'greatest remap')
--- Reverse Line
-vnoremap('<leader>r', [[:s/\%V.\+\%V./\=utils#rev_str(submatch(0))<CR>gv]], 'reverse line')
-----------------------------------------------------------------------------------------------------
 -- Windows
 ----------------------------------------------------------------------------------------------------
 nnoremap(
@@ -448,26 +426,6 @@ xnoremap('<localleader>?', [["gy:lua rvim.mappings.ddg(vim.api.nvim_eval("@g"))<
 nnoremap('<localleader>!', [[:lua rvim.mappings.gh(vim.fn.expand("<cword>"))<CR>]], 'gh search')
 xnoremap('<localleader>!', [["gy:lua rvim.mappings.gh(vim.api.nvim_eval("@g"))<CR>gv]], 'gh search')
 ----------------------------------------------------------------------------------------------------
--- Personal
-----------------------------------------------------------------------------------------------------
--- leave extra space when deleting word
-nnoremap('dw', 'cw<C-c>')
--- Next greatest remap ever : asbjornHaland
-nnoremap('<leader>y', '"+y', 'yank')
-vnoremap('<leader>y', '"+y', 'yank')
--- Select all
-nnoremap('<leader>A', 'gg"+VG', 'select all')
--- Delete all
-nnoremap('<leader>D', 'gg"+VGd', 'delete all')
--- Yank all
-nnoremap('<leader>Y', 'gg"+yG<C-o>', 'yank all')
--- actions
-nnoremap('<leader>=', '<C-W>=', 'balance window')
--- opens a horizontal split
-nnoremap('<leader>H', '<C-W>s', 'horizontal split')
--- opens a vertical split
-nnoremap('<leader>V', '<C-W>v', 'vsplit')
-----------------------------------------------------------------------------------------------------
 -- Undo
 ----------------------------------------------------------------------------------------------------
 nnoremap('<C-z>', '<cmd>undo<CR>')
@@ -485,6 +443,44 @@ nnoremap('<C-h>', '<C-w>h')
 nnoremap('<C-j>', '<C-w>j')
 nnoremap('<C-k>', '<C-w>k')
 nnoremap('<C-l>', '<C-w>l')
+----------------------------------------------------------------------------------------------------
+-- Personal
+----------------------------------------------------------------------------------------------------
+local function empty_registers()
+  api.nvim_exec(
+    [[
+    let regs=split('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/-"', '\zs')
+    for r in regs
+        call setreg(r, [])
+    endfor
+  ]],
+    false
+  )
+end
+nnoremap('<leader>aR', empty_registers, 'empty registers')
+-- Search word
+nnoremap('<leader>B', '/<C-R>=escape(expand("<cword>"), "/")<CR><CR>', 'find cword')
+-- Greatest remap ever
+vnoremap('<leader>p', '"_dP', 'greatest remap')
+-- Next greatest remap ever : asbjornHaland
+nnoremap('<leader>y', '"+y', 'yank')
+vnoremap('<leader>y', '"+y', 'yank')
+-- Reverse Line
+vnoremap('<leader>r', [[:s/\%V.\+\%V./\=utils#rev_str(submatch(0))<CR>gv]], 'reverse line')
+-- leave extra space when deleting word
+nnoremap('dw', 'cw<C-c>')
+-- Select all
+nnoremap('<leader>A', 'gg"+VG', 'select all')
+-- Delete all
+nnoremap('<leader>D', 'gg"+VGd', 'delete all')
+-- Yank all
+nnoremap('<leader>Y', 'gg"+yG<C-o>', 'yank all')
+-- actions
+nnoremap('<leader>=', '<C-W>=', 'balance window')
+-- opens a horizontal split
+nnoremap('<leader>H', '<C-W>s', 'horizontal split')
+-- opens a vertical split
+nnoremap('<leader>V', '<C-W>v', 'vsplit')
 ----------------------------------------------------------------------------------------------------
 -- rVim {{{
 ----------------------------------------------------------------------------------------------------
