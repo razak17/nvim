@@ -376,7 +376,9 @@ do
       or api.nvim_create_autocmd('DiagnosticChanged', {
         callback = function()
           -- skip QF lists that we did not populate
-          if not rvim.is_vim_list_open() or fn.getqflist({ title = 0 }).title ~= TITLE then return end
+          if not rvim.is_vim_list_open() or fn.getqflist({ title = 0 }).title ~= TITLE then
+            return
+          end
           diagnostic.setqflist({ open = false, title = TITLE })
           if #fn.getqflist() == 0 then rvim.toggle_qf_list() end
         end,
@@ -518,4 +520,3 @@ if not rvim.is_directory(templates) or fn.filereadable(join_paths(templates, 'lu
   require('user.lsp.templates').generate_templates()
   vim.notify('Templates have been generated', 'info', { title = 'Lsp' })
 end
-
