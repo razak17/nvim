@@ -107,7 +107,6 @@ return function()
         local MAX = math.floor(vim.o.columns * 0.5)
         local codicons = rvim.style.codicons
         if #vim_item.abbr >= MAX then vim_item.abbr = vim_item.abbr:sub(1, MAX) .. ellipsis end
-        print(vim_item.kind)
         vim_item.kind = codicons.kind[vim_item.kind]
         if entry.source.name == 'nvim_lsp_signature_help' then
           vim_item.kind = codicons.kind['Field']
