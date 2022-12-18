@@ -107,7 +107,16 @@ return function()
         local MAX = math.floor(vim.o.columns * 0.5)
         local codicons = rvim.style.codicons
         if #vim_item.abbr >= MAX then vim_item.abbr = vim_item.abbr:sub(1, MAX) .. ellipsis end
+        print(vim_item.kind)
         vim_item.kind = codicons.kind[vim_item.kind]
+        if entry.source.name == 'nvim_lsp_signature_help' then
+          vim_item.kind = codicons.kind['Field']
+        end
+        if entry.source.name == 'lab.quick_data' then
+          vim_item.kind = codicons.misc['CircuitBoard']
+        end
+        if entry.source.name == 'emoji' then vim_item.kind = codicons.misc['Smiley'] end
+        if entry.source.name == 'crates' then vim_item.kind = codicons.misc['Package'] end
         vim_item.menu = ({
           nvim_lsp = '(LSP)',
           luasnip = '(SN)',

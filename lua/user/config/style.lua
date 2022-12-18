@@ -252,6 +252,8 @@ rvim.style = {
       tag = ' ',
       watch = ' ',
       Smiley = ' ',
+      Package = '',
+      CircuitBoard = '',
     },
   },
 }
