@@ -3,14 +3,14 @@ return function()
   local mason_path = join_paths(vim.call('stdpath', 'data'), '/mason')
   local python_dir = join_paths(mason_path, '/packages/debugpy/venv/bin/python')
 
-  require('dap').defaults.fallback.terminal_win_cmd = '50vsplit new'
-  -- DON'T automatically stop at exceptions
-  require('dap').defaults.fallback.exception_breakpoints = {}
-
-  -- config
   local dap = require('dap')
   local fn = vim.fn
 
+  dap.defaults.fallback.terminal_win_cmd = '50vsplit new'
+  -- DON'T automatically stop at exceptions
+  dap.defaults.fallback.exception_breakpoints = {}
+
+  -- config
   fn.sign_define('DapBreakpoint', {
     text = icons.misc.bug_alt,
     texthl = 'DapBreakpoint',
