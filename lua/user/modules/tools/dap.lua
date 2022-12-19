@@ -1,10 +1,7 @@
 return function()
-  local icons = rvim.style.icons
-  local mason_path = join_paths(vim.call('stdpath', 'data'), '/mason')
-  local python_dir = join_paths(mason_path, '/packages/debugpy/venv/bin/python')
-
-  local dap = require('dap')
   local fn = vim.fn
+  local dap = require('dap')
+  local icons = rvim.style.icons
 
   dap.defaults.fallback.terminal_win_cmd = '50vsplit new'
   -- DON'T automatically stop at exceptions
@@ -31,6 +28,7 @@ return function()
   })
 
   -- python
+  local python_dir = join_paths(rvim.path.mason, 'packages/debugpy/venv/bin/python')
   dap.adapters.python = {
     type = 'executable',
     command = python_dir,
@@ -55,7 +53,7 @@ return function()
     type = 'executable',
     command = 'node',
     args = {
-      join_paths(mason_path, '/packages/node-debug2-adapter/out/src/nodeDebug.js'),
+      join_paths(rvim.path.mason, 'packages/node-debug2-adapter/out/src/nodeDebug.js'),
     },
   }
   -- javascript
