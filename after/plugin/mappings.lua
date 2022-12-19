@@ -268,14 +268,23 @@ nnoremap('<leader>lo', function() rvim.toggle_loc_list() end, 'toggle loclist')
 ----------------------------------------------------------------------------------------------------
 -- UI Toggles
 ----------------------------------------------------------------------------------------------------
+--- Toggle vim options
+---@param opt string
 local function toggle_opt(opt)
-  local value = nil
-  value = not api.nvim_get_option_value(opt, {})
+  local value = api.nvim_get_option_value(opt, {})
+  if type(value) == 'number' and value == 0 then
+    value = 3
+  elseif type(value) == 'number' and value > 0 then
+    value = 0
+  elseif type(value) == 'boolean' then
+    value = not value
+  end
   vim.opt[opt] = value
   vim.notify(opt .. ' set to ' .. tostring(value), 'info', { title = 'UI Toggles' })
 end
 nnoremap('<leader>ow', function() toggle_opt('wrap') end, 'toggle: wrap')
 nnoremap('<leader>oc', function() toggle_opt('cursorline') end, 'toggle: cursorline')
+nnoremap('<leader>os', function() toggle_opt('laststatus') end, 'toggle: statusline')
 nnoremap('<leader>or', ':ToggleRelativeNumber<CR>', 'toggle: relativenumber')
 ----------------------------------------------------------------------------------------------------
 -- Windows
