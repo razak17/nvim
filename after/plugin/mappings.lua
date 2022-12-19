@@ -571,33 +571,6 @@ nmap('ga', '<Plug>(EasyAlign)', with_plugin('easy-align: align', 'vim-easy-align
 xmap('ga', '<Plug>(EasyAlign)', with_plugin('easy-align: align', 'vim-easy-align'))
 vmap('<Enter>', '<Plug>(EasyAlign)', with_plugin('easy-align: align', 'vim-easy-align'))
 ----------------------------------------------------------------------------------------------------
--- vim-surround-funk
-nnoremap(
-  '<leader>rf',
-  '<Plug>(DeleteSurroundingFunction)',
-  with_plugin('vsf: delete surrounding function', 'vim-surround-funk')
-)
-nnoremap(
-  '<leader>RF',
-  '<Plug>(DeleteSurroundingFUNCTION)',
-  with_plugin('vsf: delete surrounding outer function', 'vim-surround-funk')
-)
-nnoremap(
-  '<leader>Cf',
-  '<Plug>(ChangeSurroundingFunction)',
-  with_plugin('vsf: change surrounding function', 'vim-surround-funk')
-)
-nnoremap(
-  '<leader>CF',
-  '<Plug>(ChangeSurroundingFUNCTION)',
-  with_plugin('vsf: change outer surrounding function', 'vim-surround-funk')
-)
--- operator pending mode: grip surround
-nmap('gs', '<Plug>(GripSurroundObject)', with_plugin('vsf: grip surround', 'vim-surround-funk'))
-vmap('gs', '<Plug>(GripSurroundObject)', with_plugin('vsf: grip surround', 'vim-surround-funk'))
-omap('sF', '<Plug>(SelectWholeFUNCTION)', with_plugin('vsf: select function', 'vim-surround-funk'))
-xmap('sF', '<Plug>(SelectWholeFUNCTION)', with_plugin('vsf: select function', 'vim-surround-funk'))
-----------------------------------------------------------------------------------------------------
 -- marks.nvim
 nnoremap('<leader>mb', '<Cmd>MarksListBuf<CR>', with_plugin('marks: list buffer', 'marks.nvim'))
 nnoremap(

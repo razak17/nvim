@@ -163,12 +163,6 @@ use({
 use({ 'monaqa/dial.nvim', event = 'BufRead', config = conf('editor', 'dial') })
 
 use({
-  'Matt-A-Bennett/vim-surround-funk',
-  config = function() vim.g.surround_funk_create_mappings = 0 end,
-  disable = true,
-})
-
-use({
   'chentoast/marks.nvim',
   config = function()
     require('user.utils.highlights').plugin('marks', {
