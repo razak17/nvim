@@ -126,16 +126,6 @@ install_dict() {
   fi
 }
 
-install_codelldb() {
-  codelldb="$RVIM_CACHE_DIR/codelldb"
-  if [ ! -d "$codelldb" ]; then
-    mkdir -p "$codelldb" && echo 'Installing codelldb'
-    curl -fsSL "https://github.com/vadimcn/vscode-lldb/releases/download/v1.8.1/codelldb-x86_64-linux.vsix" --output "$codelldb"/codelldb.vsix
-    cd "$codelldb" || exit
-    unzip codelldb.vsix
-  fi
-}
-
 dirty_talk() {
   file_name='programming.utf-8.spl'
   file="$XDG_DATA_HOME/nvim/site/spell/$file_name"
@@ -213,9 +203,6 @@ while [ "$#" -gt 0 ]; do
 		;;
 	-dict)
     install_dict
-		;;
-	-codelldb)
-    install_codelldb
 		;;
 	-fixes)
     dirty_talk
