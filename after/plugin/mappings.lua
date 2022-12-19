@@ -7,7 +7,6 @@ local fmt = string.format
 
 local imap = rvim.imap
 local nmap = rvim.nmap
-local omap = rvim.omap
 local xmap = rvim.xmap
 local vmap = rvim.vmap
 local nnoremap = rvim.nnoremap
