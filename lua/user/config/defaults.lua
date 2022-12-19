@@ -3,7 +3,7 @@ rvim.path = {
   packer_compiled = join_paths(rvim.get_runtime_dir(), 'site', 'lua', '_compiled_nightly.lua'),
   node = join_paths(vim.env.FNMPATH, 'neovim-node-host'),
   python3 = join_paths(rvim.get_cache_dir(), 'venv', 'neovim', 'bin', 'python3'),
-  mason = join_paths(vim.call('stdpath', 'data'), 'mason')
+  mason = join_paths(vim.call('stdpath', 'data'), 'mason'),
 }
 
 rvim.ui = {
@@ -31,5 +31,25 @@ rvim.plugins = {
 
 rvim.util = {
   disabled_providers = { 'python', 'ruby', 'perl' },
+  disabled_builtins = {
+    '2html_plugin',
+    'gzip',
+    'matchit',
+    'rrhelper',
+    'netrw',
+    'netrwPlugin',
+    'netrwSettings',
+    'netrwFileHandlers',
+    'zip',
+    'zipPlugin',
+    'tar',
+    'tarPlugin',
+    'getscript',
+    'getscriptPlugin',
+    'vimball',
+    'vimballPlugin',
+    'logipat',
+    'spellfile_plugin',
+  },
   auto_save = true,
 }
