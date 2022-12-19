@@ -1,7 +1,5 @@
 local command = rvim.command
 
-command('Todo', [[noautocmd silent! grep! 'TODO\|FIXME\|BUG\|HACK' | copen]])
-
 command(
   'ToggleBackground',
   function() vim.o.background = vim.o.background == 'dark' and 'light' or 'dark' end
