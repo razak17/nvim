@@ -131,7 +131,7 @@ return function()
     type = 'server',
     port = '${port}',
     executable = {
-      command = rvim.path.codelldb .. '/adapter/codelldb',
+      command = rvim.path.mason .. '/bin/codelldb',
       args = { '--port', '${port}' },
     },
   }

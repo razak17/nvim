@@ -3,7 +3,7 @@ rvim.path = {
   packer_compiled = join_paths(rvim.get_runtime_dir(), 'site', 'lua', '_compiled_nightly.lua'),
   node = join_paths(vim.env.FNMPATH, 'neovim-node-host'),
   python3 = join_paths(rvim.get_cache_dir(), 'venv', 'neovim', 'bin', 'python3'),
-  codelldb = join_paths(rvim.get_cache_dir(), 'codelldb', 'extension'),
+  mason = join_paths(vim.call('stdpath', 'data'), 'mason')
 }
 
 rvim.ui = {

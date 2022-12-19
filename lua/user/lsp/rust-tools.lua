@@ -19,8 +19,8 @@ require('rust-tools').setup({
   },
   dap = {
     adapter = require('rust-tools.dap').get_codelldb_adapter(
-      rvim.path.codelldb .. '/adapter/codelldb',
-      rvim.path.codelldb .. '/lldb/lib/liblldb.so'
+      rvim.path.mason .. '/bin/codelldb',
+      rvim.path.mason .. '/packages/codelldb/extension/lldb/lib/liblldb.so'
     ),
   },
   server = {
