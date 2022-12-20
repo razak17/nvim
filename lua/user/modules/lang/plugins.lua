@@ -188,7 +188,7 @@ use({
 
 use({
   'lvimuser/lsp-inlayhints.nvim',
-  event = 'BufRead',
+  event = { 'BufRead', 'BufNewFile' },
   config = function()
     require('lsp-inlayhints').setup({
       inlay_hints = {

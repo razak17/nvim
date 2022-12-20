@@ -197,7 +197,7 @@ use({
 
 use({
   'SmiteshP/nvim-navic',
-  event = 'BufRead',
+  event = { 'BufRead', 'BufNewFile' },
   requires = 'neovim/nvim-lspconfig',
   config = function()
     vim.g.navic_silence = true
