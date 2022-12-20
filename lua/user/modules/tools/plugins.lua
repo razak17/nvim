@@ -45,6 +45,7 @@ use({
 use({
   'nvim-telescope/telescope.nvim',
   keys = { '<c-p>' },
+  cmd = { 'Telescope' },
   branch = 'master', -- '0.1.x',
   config = conf('tools', 'telescope'),
   requires = {
