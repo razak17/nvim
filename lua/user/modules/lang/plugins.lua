@@ -19,15 +19,16 @@ use({
 })
 
 use({
-  'williamboman/mason.nvim',
-  event = 'BufRead',
-  requires = { 'nvim-lspconfig', 'williamboman/mason-lspconfig.nvim' },
+  'razak17/mason.nvim',
+  local_path = 'personal',
   config = function()
     local style = rvim.style
     local icons = style.icons
     require('mason').setup({
       ui = {
         border = style.border.current,
+        top_offset = 5,
+        height = vim.o.lines - vim.o.cmdheight - 5 - 8,
         icons = {
           package_installed = icons.misc.checkmark,
           package_pending = icons.misc.right_arrow,
@@ -41,15 +42,13 @@ use({
   end,
 })
 
+use({ 'williamboman/mason-lspconfig.nvim' })
+
 use({ 'jose-elias-alvarez/null-ls.nvim', config = conf('lang', 'null-ls') })
 
 use({
   'jayp0521/mason-null-ls.nvim',
-  requires = {
-    'williamboman/mason.nvim',
-    'jose-elias-alvarez/null-ls.nvim',
-  },
-  after = 'mason.nvim',
+  after = 'local-mason.nvim',
   config = function()
     require('mason-null-ls').setup({
       automatic_installation = true,
