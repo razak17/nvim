@@ -153,6 +153,7 @@ use({
 
 use({
   'uga-rosa/ccc.nvim',
+  cmd = { 'CccHighlighterToggle', 'CccHighlighterEnable', 'CccHighlighterDisable' },
   config = function()
     require('ccc').setup({
       win_opts = { border = rvim.style.border.current },

@@ -925,6 +925,12 @@ nnoremap(
   function() require('todo-comments').jump_prev() end,
   with_plugin('todo-comments: prev todo', 'todo-comments.nvim')
 )
+-- ccc.nvim
+nnoremap(
+  '<leader>oC',
+  '<cmd>CccHighlighterToggle<CR>',
+  with_plugin_installed('ccc: toggle', 'ccc.nvim')
+)
 ----------------------------------------------------------------------------------------------------
 -- Abbreviations
 ----------------------------------------------------------------------------------------------------
