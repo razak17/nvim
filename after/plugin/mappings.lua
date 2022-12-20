@@ -781,35 +781,19 @@ end
 ----------------------------------------------------------------------------------------------------
 -- telescope.nvim
 if plugin_installed('telescope.nvim') then
-  nnoremap(
-    '<leader>fb',
-    function() require('telescope.builtin').current_buffer_fuzzy_find() end,
-    'find in current buffer'
-  )
-  nnoremap('<leader>fR', function() require('telescope.builtin').reloader() end, 'module reloader')
-  nnoremap(
-    '<leader>fw',
-    function() require('telescope.builtin').grep_string() end,
-    'find current word'
-  )
-  nnoremap('<leader>fs', function() require('telescope.builtin').live_grep() end, 'find string')
-  nnoremap(
-    '<leader>fva',
-    function() require('telescope.builtin').autocommands() end,
-    'autocommands'
-  )
-  nnoremap('<leader>fvh', function() require('telescope.builtin').highlights() end, 'highlights')
-  nnoremap('<leader>fvk', function() require('telescope.builtin').keymaps() end, 'keymaps')
-  nnoremap('<leader>fvo', function() require('telescope.builtin').vim_options() end, 'options')
-  nnoremap('<leader>fvr', function() require('telescope.builtin').resume() end, 'resume')
+  nnoremap('<leader>fb', '<cmd>Telescope current_buffer_fuzzy_find<CR>', 'find in current buffer')
+  nnoremap('<leader>fR', '<cmd>Telescope reloader<CR>', 'module reloader')
+  nnoremap('<leader>fw', '<cmd>Telescope grep_string<CR>', 'find current word')
+  nnoremap('<leader>fs', '<cmd>Telescope live_grep<CR>', 'find string')
+  nnoremap('<leader>fva', '<cmd>Telescope autocommands<CR>', 'autocommands')
+  nnoremap('<leader>fvh', '<cmd>Telescope highlights<CR>', 'highlights')
+  nnoremap('<leader>fvk', '<cmd>Telescope highlights<CR>', 'keymaps')
+  nnoremap('<leader>fvo', '<cmd>Telescope vim_options<CR>', 'options')
+  nnoremap('<leader>fvr', '<cmd>Telescope resume<CR>', 'resume')
   -- Git
-  nnoremap('<leader>gf', function() require('telescope.builtin').git_files() end, 'git: files')
-  nnoremap('<leader>gs', function() require('telescope.builtin').git_status() end, 'git: status')
-  nnoremap(
-    '<leader>fgb',
-    function() require('telescope.builtin').git_branches() end,
-    'git: branches'
-  )
+  nnoremap('<leader>gf', '<cmd>Telescope git_files<CR>', 'git: files')
+  nnoremap('<leader>gs', '<cmd>Telescope git_status<CR>', 'git: status')
+  nnoremap('<leader>fgb', '<cmd>Telescope git_branches<CR>', 'git: branches')
   -- LSP
   nnoremap('<leader>lR', '<cmd>Telescope lsp_references<CR>', 'telescope: references')
   nnoremap('<leader>ld', '<cmd>Telescope lsp_document_symbols<CR>', 'telescope: document symbols')
