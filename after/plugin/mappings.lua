@@ -786,49 +786,25 @@ if plugin_installed('telescope.nvim') then
     function() require('telescope.builtin').current_buffer_fuzzy_find() end,
     'find in current buffer'
   )
-  nnoremap(
-    '<leader>fR',
-    function() require('telescope.builtin').reloader() end,
-    'module reloader'
-  )
+  nnoremap('<leader>fR', function() require('telescope.builtin').reloader() end, 'module reloader')
   nnoremap(
     '<leader>fw',
     function() require('telescope.builtin').grep_string() end,
     'find current word'
   )
-  nnoremap(
-    '<leader>fs',
-    function() require('telescope.builtin').live_grep() end,
-    'find string'
-  )
+  nnoremap('<leader>fs', function() require('telescope.builtin').live_grep() end, 'find string')
   nnoremap(
     '<leader>fva',
     function() require('telescope.builtin').autocommands() end,
     'autocommands'
   )
-  nnoremap(
-    '<leader>fvh',
-    function() require('telescope.builtin').highlights() end,
-    'highlights'
-  )
+  nnoremap('<leader>fvh', function() require('telescope.builtin').highlights() end, 'highlights')
   nnoremap('<leader>fvk', function() require('telescope.builtin').keymaps() end, 'keymaps')
-  nnoremap(
-    '<leader>fvo',
-    function() require('telescope.builtin').vim_options() end,
-    'options'
-  )
+  nnoremap('<leader>fvo', function() require('telescope.builtin').vim_options() end, 'options')
   nnoremap('<leader>fvr', function() require('telescope.builtin').resume() end, 'resume')
   -- Git
-  nnoremap(
-    '<leader>gf',
-    function() require('telescope.builtin').git_files() end,
-    'git: files'
-  )
-  nnoremap(
-    '<leader>gs',
-    function() require('telescope.builtin').git_status() end,
-    'git: status'
-  )
+  nnoremap('<leader>gf', function() require('telescope.builtin').git_files() end, 'git: files')
+  nnoremap('<leader>gs', function() require('telescope.builtin').git_status() end, 'git: status')
   nnoremap(
     '<leader>fgb',
     function() require('telescope.builtin').git_branches() end,
