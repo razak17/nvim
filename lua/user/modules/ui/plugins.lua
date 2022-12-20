@@ -3,8 +3,8 @@ local conf = require('user.utils.plugins').load_conf
 
 use({
   'razak17/zephyr-nvim',
-  requires = { 'nvim-treesitter/nvim-treesitter', opt = true },
   local_path = 'personal',
+  requires = { 'nvim-treesitter/nvim-treesitter', opt = true },
 })
 
 use({
@@ -22,9 +22,13 @@ use({ 'LunarVim/horizon.nvim' })
 
 use({ 'goolord/alpha-nvim', config = conf('ui', 'alpha') })
 
-use({ 'rcarriga/nvim-notify', config = conf('ui', 'notify') })
+use({ 'rcarriga/nvim-notify', after = 'telescope.nvim', config = conf('ui', 'notify') })
 
-use({ 'nvim-lualine/lualine.nvim', config = conf('ui', 'lualine') })
+use({
+  'nvim-lualine/lualine.nvim',
+  event = { 'BufRead', 'BufNewFile' },
+  config = conf('ui', 'lualine'),
+})
 
 use({ 'romainl/vim-cool', event = 'BufRead', config = function() vim.g.CoolTotalMatches = 1 end })
 
@@ -49,12 +53,17 @@ use({
   end,
 })
 
-use({ 'lukas-reineke/indent-blankline.nvim', config = conf('ui', 'indentline') })
+use({
+  'lukas-reineke/indent-blankline.nvim',
+  event = { 'BufRead', 'BufNewFile' },
+  config = conf('ui', 'indentline'),
+})
 
 use({ 'MunifTanjim/nui.nvim' })
 
 use({
   'nvim-neo-tree/neo-tree.nvim',
+  cmd = { 'Neotree' },
   branch = 'main',
   config = conf('ui', 'neo-tree'),
   requires = {
@@ -82,15 +91,19 @@ use({
 
 use({
   'lewis6991/gitsigns.nvim',
-  event = 'BufWinEnter',
+  event = { 'BufRead', 'BufNewFile' },
   config = conf('ui', 'gitsigns'),
 })
 
-use({ 'stevearc/dressing.nvim', after = 'telescope.nvim', config = conf('ui', 'dressing') })
+use({
+  'stevearc/dressing.nvim',
+  after = 'telescope.nvim',
+  config = conf('ui', 'dressing'),
+})
 
 use({
   'kevinhwang91/nvim-ufo',
-  event = 'BufRead',
+  event = { 'BufRead', 'BufNewFile' },
   requires = 'kevinhwang91/promise-async',
   config = conf('ui', 'ufo'),
 })
@@ -129,7 +142,7 @@ use({
 
 use({
   'lukas-reineke/virt-column.nvim',
-  event = 'BufRead',
+  event = { 'BufRead', 'BufNewFile' },
   config = function()
     require('user.utils.highlights').plugin('virt_column', {
       { VirtColumn = { bg = 'None', fg = { from = 'VertSplit', alter = -50 } } },
@@ -153,7 +166,7 @@ use({
 
 use({
   'lukas-reineke/headlines.nvim',
-  event = 'BufRead',
+  event = { 'BufRead', 'BufNewFile' },
   ft = { 'org', 'norg', 'markdown', 'yaml' },
   setup = function()
     -- https://observablehq.com/@d3/color-schemes?collection=@d3/d3-scale-chromatic
@@ -180,6 +193,7 @@ use({
 
 use({
   'folke/todo-comments.nvim',
+  cmd = { 'TodoTelescope', 'TodoTrouble', 'TodoQuickFix', 'TodoDots' },
   after = 'nvim-treesitter',
   requires = { 'nvim-treesitter' },
   config = function()

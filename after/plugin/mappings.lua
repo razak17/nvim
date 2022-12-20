@@ -661,21 +661,20 @@ nnoremap(
 nnoremap('<leader>sl', '<cmd>SaveSession<CR>', with_plugin('auto-session: save', 'auto-session'))
 ----------------------------------------------------------------------------------------------------
 -- harpoon
-if plugin_loaded('harpoon') then
-  local ui = require('harpoon.ui')
-  local m = require('harpoon.mark')
-  nnoremap('<leader>ma', m.add_file, 'harpoon: add')
-  nnoremap('<leader>m.', ui.nav_next, 'harpoon: next')
-  nnoremap('<leader>m,', ui.nav_prev, 'harpoon: prev')
-  nnoremap('<leader>m;', ui.toggle_quick_menu, 'harpoon: ui')
-  if not plugin_loaded('telescope.nvim') then return end
-  local function harpoon_marks()
-    require('telescope').extensions.harpoon.marks(
-      rvim.telescope.minimal_ui({ prompt_title = 'Harpoon Marks' })
-    )
-  end
-  nnoremap('<leader>mm', harpoon_marks, 'harpoon: marks')
-  nnoremap('<leader>mf', '<cmd>Telescope harpoon marks<CR>', 'telescope: harpoon search')
+if plugin_installed('harpoon') then
+  nnoremap('<leader>ma', function() require('harpoon.mark').add_file() end, 'harpoon: add')
+  nnoremap('<leader>mn', function() require('harpoon.ui').nav_next() end, 'harpoon: next')
+  nnoremap('<leader>mp', function() require('harpoon.ui').nav_prev() end, 'harpoon: prev')
+  nnoremap('<leader>m;', function() require('harpoon.ui').toggle_quick_menu() end, 'harpoon: ui')
+  nnoremap(
+    '<leader>mm',
+    function()
+      require('telescope').extensions.harpoon.marks(
+        rvim.telescope.minimal_ui({ prompt_title = 'Harpoon Marks' })
+      )
+    end,
+    'harpoon: marks'
+  )
 end
 ----------------------------------------------------------------------------------------------------
 -- mason.nvim
@@ -735,7 +734,7 @@ else
 end
 ----------------------------------------------------------------------------------------------------
 -- FTerm.nvim
-if plugin_loaded('FTerm.nvim') then
+if plugin_installed('FTerm.nvim') then
   local function new_float(cmd)
     cmd = require('FTerm'):new({ cmd = cmd, dimensions = { height = 0.9, width = 0.9 } }):toggle()
   end
@@ -781,21 +780,60 @@ if plugin_loaded('toggleterm.nvim') then
 end
 ----------------------------------------------------------------------------------------------------
 -- telescope.nvim
-if plugin_loaded('telescope.nvim') then
-  local builtin = require('telescope.builtin')
-  nnoremap('<leader>fb', builtin.current_buffer_fuzzy_find, 'find in current buffer')
-  nnoremap('<leader>fR', builtin.reloader, 'module reloader')
-  nnoremap('<leader>fw', builtin.grep_string, 'find current word')
-  nnoremap('<leader>fs', builtin.live_grep, 'find string')
-  nnoremap('<leader>fva', builtin.autocommands, 'autocommands')
-  nnoremap('<leader>fvh', builtin.highlights, 'highlights')
-  nnoremap('<leader>fvk', builtin.keymaps, 'keymaps')
-  nnoremap('<leader>fvo', builtin.vim_options, 'options')
-  nnoremap('<leader>fvr', builtin.resume, 'resume')
+if plugin_installed('telescope.nvim') then
+  nnoremap(
+    '<leader>fb',
+    function() require('telescope.builtin').current_buffer_fuzzy_find() end,
+    'find in current buffer'
+  )
+  nnoremap(
+    '<leader>fR',
+    function() require('telescope.builtin').reloader() end,
+    'module reloader'
+  )
+  nnoremap(
+    '<leader>fw',
+    function() require('telescope.builtin').grep_string() end,
+    'find current word'
+  )
+  nnoremap(
+    '<leader>fs',
+    function() require('telescope.builtin').live_grep() end,
+    'find string'
+  )
+  nnoremap(
+    '<leader>fva',
+    function() require('telescope.builtin').autocommands() end,
+    'autocommands'
+  )
+  nnoremap(
+    '<leader>fvh',
+    function() require('telescope.builtin').highlights() end,
+    'highlights'
+  )
+  nnoremap('<leader>fvk', function() require('telescope.builtin').keymaps() end, 'keymaps')
+  nnoremap(
+    '<leader>fvo',
+    function() require('telescope.builtin').vim_options() end,
+    'options'
+  )
+  nnoremap('<leader>fvr', function() require('telescope.builtin').resume() end, 'resume')
   -- Git
-  nnoremap('<leader>gf', builtin.git_files, 'git: files')
-  nnoremap('<leader>gs', builtin.git_status, 'git: status')
-  nnoremap('<leader>fgb', builtin.git_branches, 'git: branches')
+  nnoremap(
+    '<leader>gf',
+    function() require('telescope.builtin').git_files() end,
+    'git: files'
+  )
+  nnoremap(
+    '<leader>gs',
+    function() require('telescope.builtin').git_status() end,
+    'git: status'
+  )
+  nnoremap(
+    '<leader>fgb',
+    function() require('telescope.builtin').git_branches() end,
+    'git: branches'
+  )
   -- LSP
   nnoremap('<leader>lR', '<cmd>Telescope lsp_references<CR>', 'telescope: references')
   nnoremap('<leader>ld', '<cmd>Telescope lsp_document_symbols<CR>', 'telescope: document symbols')
@@ -851,7 +889,11 @@ nnoremap(
 nnoremap('<leader>S', '<cmd>LuaSnipEdit<CR>', with_plugin('LuaSnip: edit snippet', 'LuaSnip'))
 ----------------------------------------------------------------------------------------------------
 -- neo-tree.nvim
-nnoremap('<leader>e', '<Cmd>Neotree toggle reveal<CR>', with_plugin('toggle tree', 'neo-tree.nvim'))
+nnoremap(
+  '<c-n>',
+  '<cmd>Neotree toggle reveal<CR>',
+  with_plugin_installed('toggle tree', 'neo-tree.nvim')
+)
 ----------------------------------------------------------------------------------------------------
 -- playground
 nnoremap(

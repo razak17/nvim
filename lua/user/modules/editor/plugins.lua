@@ -56,7 +56,7 @@ use({
 
 use({
   'xiyaowong/accelerated-jk.nvim',
-  event = { 'BufWinEnter' },
+  event = { 'BufRead', 'BufNewFile' },
   config = function()
     require('accelerated-jk').setup({
       mappings = { j = 'gj', k = 'gk' },
@@ -68,7 +68,7 @@ use({
 
 use({
   'kylechui/nvim-surround',
-  event = 'BufRead',
+  event = { 'BufRead', 'BufNewFile' },
   config = function()
     require('nvim-surround').setup({
       move_cursor = false,
@@ -79,7 +79,7 @@ use({
 
 use({
   'numToStr/Comment.nvim',
-  event = 'BufRead',
+  event = { 'BufRead', 'BufNewFile' },
   config = function()
     local utils = require('Comment.utils')
     require('Comment').setup({
@@ -101,7 +101,7 @@ use({
 
 use({ 'JoosepAlviste/nvim-ts-context-commentstring', event = 'BufReadPost' })
 
-use({ 'psliwka/vim-dirtytalk', event = 'BufRead', run = ':DirtytalkUpdate' })
+use({ 'psliwka/vim-dirtytalk', event = { 'BufRead', 'BufNewFile' }, run = ':DirtytalkUpdate' })
 
 use({
   'axelvc/template-string.nvim',
@@ -124,12 +124,13 @@ use({ 'kazhala/close-buffers.nvim' })
 
 use({
   'karb94/neoscroll.nvim', -- NOTE: alternative: 'declancm/cinnamon.nvim'
+  event = { 'BufRead', 'BufNewFile' },
   config = function() require('neoscroll').setup({ hide_cursor = true }) end,
 })
 
 use({
   'nguyenvukhang/nvim-toggler',
-  event = 'BufRead',
+  event = { 'BufRead', 'BufNewFile' },
   config = function()
     require('nvim-toggler').setup({
       inverses = {

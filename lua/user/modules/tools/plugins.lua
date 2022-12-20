@@ -44,6 +44,7 @@ use({
 
 use({
   'nvim-telescope/telescope.nvim',
+  keys = { '<c-p>' },
   branch = 'master', -- '0.1.x',
   config = conf('tools', 'telescope'),
   requires = {
@@ -98,6 +99,7 @@ use({
     },
     {
       'ThePrimeagen/harpoon',
+      after = 'telescope.nvim',
       config = function()
         require('harpoon').setup({
           menu = {
@@ -113,7 +115,7 @@ use({
 
 use({
   'gbprod/yanky.nvim',
-  keys = { 'p', 'P', '<localleader>p' },
+  keys = { 'p', 'P', '<localleader>y' },
   requires = { { 'kkharji/sqlite.lua', module = 'sqlite' } },
   config = conf('tools', 'yanky'),
 })
@@ -146,6 +148,7 @@ use({
 
 use({
   'numToStr/FTerm.nvim',
+  event = { 'BufRead', 'BufNewFile' },
   config = function()
     local fterm = require('FTerm')
     fterm.setup({ dimensions = { height = 0.8, width = 0.9 } })

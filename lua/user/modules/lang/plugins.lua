@@ -20,6 +20,11 @@ use({
 
 use({
   'razak17/mason.nvim',
+  event = { 'BufRead', 'BufNewFile' },
+  requires = {
+    'nvim-lspconfig',
+    'williamboman/mason-lspconfig.nvim',
+  },
   config = function()
     local style = rvim.style
     local icons = style.icons
@@ -41,8 +46,6 @@ use({
   end,
 })
 
-use({ 'williamboman/mason-lspconfig.nvim' })
-
 use({ 'jose-elias-alvarez/null-ls.nvim', config = conf('lang', 'null-ls') })
 
 use({
@@ -57,6 +60,7 @@ use({
 
 use({
   'kosayoda/nvim-lightbulb',
+  event = { 'BufRead', 'BufNewFile' },
   config = function()
     require('user.utils.highlights').plugin('Lightbulb', {
       { LightBulbFloatWin = { foreground = { from = 'Type' } } },
@@ -96,12 +100,15 @@ use({
       end,
     },
     -- use this until:  https://github.com/nvim-treesitter/playground/pull/57 is merged
-    { 'nullchilly/lsp-playground' },
+    {
+      'nullchilly/lsp-playground',
+      cmd = { 'TSPlaygroundToggle', 'TSHighlightCapturesUnderCursor' },
+    },
     { 'nvim-treesitter/nvim-treesitter-textobjects' },
     { 'p00f/nvim-ts-rainbow' },
     {
       'windwp/nvim-ts-autotag',
-      event = 'BufRead',
+      event = { 'BufRead', 'BufNewFile' },
       config = function()
         require('nvim-ts-autotag').setup({
           filetypes = { 'html', 'xml', 'typescriptreact', 'javascriptreact' },
@@ -160,7 +167,7 @@ use({
 
 use({
   'RRethy/vim-illuminate',
-  event = 'BufRead',
+  event = { 'BufRead', 'BufNewFile' },
   config = function()
     require('illuminate').configure({
       filetypes_denylist = {
@@ -213,6 +220,7 @@ use({
 
 use({
   'danymat/neogen',
+  event = { 'BufRead', 'BufNewFile' },
   requires = { 'nvim-treesitter/nvim-treesitter' },
   config = function() require('neogen').setup({ snippet_engine = 'luasnip' }) end,
 })
@@ -241,7 +249,11 @@ use({
 
 use({ 'jose-elias-alvarez/typescript.nvim' })
 
-use({ 'marilari88/twoslash-queries.nvim', ft = { 'typescript', 'typescriptreact' } })
+use({
+  'marilari88/twoslash-queries.nvim',
+  event = { 'BufRead', 'BufNewFile' },
+  ft = { 'typescript', 'typescriptreact' },
+})
 
 ----------------------------------------------------------------------------------------------------
 -- Graveyard

@@ -30,8 +30,6 @@ return function()
 
   vim.g.neo_tree_remove_legacy_commands = 1
 
-  rvim.nnoremap('<C-N>', '<Cmd>Neotree toggle reveal<CR>')
-
   require('neo-tree').setup({
     source_selector = { winbar = true, separator_active = ' ' },
     enable_git_status = true,
