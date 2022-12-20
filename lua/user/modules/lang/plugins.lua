@@ -46,11 +46,15 @@ use({
   end,
 })
 
-use({ 'jose-elias-alvarez/null-ls.nvim', config = conf('lang', 'null-ls') })
+use({
+  'jose-elias-alvarez/null-ls.nvim',
+  event = { 'BufRead', 'BufNewFile' },
+  config = conf('lang', 'null-ls'),
+})
 
 use({
   'jayp0521/mason-null-ls.nvim',
-  after = 'mason.nvim',
+  after = { 'mason.nvim', 'null-ls.nvim' },
   config = function()
     require('mason-null-ls').setup({
       automatic_installation = true,
