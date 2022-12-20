@@ -633,7 +633,7 @@ if plugin_loaded('nvim-dap') then
   rvim.nnoremap('<localleader>dl', dap.run_last, 'dap: run last')
   rvim.nnoremap('<localleader>dr', dap.restart, 'dap: restart')
   rvim.nnoremap('<localleader>dx', dap.terminate, 'dap: terminate')
-  rvim.nnoremap('<localleader>dt', repl_toggle, 'dap REPL: toggle')
+  rvim.nnoremap('<localleader>dt', repl_toggle, 'dap: toggle REPL')
   rvim.nnoremap('<localleader>da', dap_utils.attach, 'dap(node): attach')
   rvim.nnoremap('<localleader>dA', dap_utils.attach_to_remote, 'dap(node): attach to remote')
 end
