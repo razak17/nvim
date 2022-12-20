@@ -20,7 +20,6 @@ use({
 
 use({
   'razak17/mason.nvim',
-  local_path = 'personal',
   config = function()
     local style = rvim.style
     local icons = style.icons
@@ -48,7 +47,7 @@ use({ 'jose-elias-alvarez/null-ls.nvim', config = conf('lang', 'null-ls') })
 
 use({
   'jayp0521/mason-null-ls.nvim',
-  after = 'local-mason.nvim',
+  after = 'mason.nvim',
   config = function()
     require('mason-null-ls').setup({
       automatic_installation = true,
