@@ -77,8 +77,8 @@ return function()
 
   telescope.setup({
     defaults = {
-      prompt_prefix = ' ' .. icons.misc.chevron_right_alt .. ' ',
-      selection_caret = ' ' .. icons.misc.chevron_right_alt .. ' ', --  ,
+      prompt_prefix = ' ' .. icons.misc.search_alt .. '  ',
+      selection_caret = ' ' .. icons.misc.pick .. ' ',
       cycle_layout_list = { 'flex', 'horizontal', 'vertical', 'bottom_pane', 'center' },
       sorting_strategy = 'ascending',
       layout_strategy = 'horizontal',

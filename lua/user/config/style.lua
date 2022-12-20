@@ -82,6 +82,7 @@ rvim.style = {
       smiley = 'ﲃ',
       lightbulb = '',
       search = '',
+      search_alt = '',
       code = '',
       telescope = '',
       gear = '',
@@ -107,6 +108,7 @@ rvim.style = {
       right_arrow = '',
       right_arrow_alt = '',
       uninstalled = '✗',
+      pick = '',
     },
     kind = {
       Class = '', -- '',
