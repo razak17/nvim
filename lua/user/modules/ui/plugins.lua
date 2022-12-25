@@ -55,11 +55,12 @@ use({
   config = conf('ui', 'indentline'),
 })
 
+use({ 'nvim-tree/nvim-web-devicons', event = 'VeryLazy' })
+
 use({
   'nvim-neo-tree/neo-tree.nvim',
   cmd = { 'Neotree' },
   branch = 'main',
-  dependencies = { 'nvim-tree/nvim-web-devicons' },
   init = function()
     rvim.nnoremap('<c-n>', '<cmd>Neotree toggle reveal<CR>', 'toggle tree', 'neo-tree.nvim')
   end,
