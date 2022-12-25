@@ -159,7 +159,7 @@ use({
 
 use({
   'ahmedkhalf/project.nvim',
-  event = { 'BufRead', 'BufNewFile' },
+  event = 'VeryLazy',
   config = function()
     require('project_nvim').setup({
       active = true,
