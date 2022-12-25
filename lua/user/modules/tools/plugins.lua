@@ -339,25 +339,23 @@ use({
 })
 
 use({
-  'rmagatti/auto-session',
-  lazy = false,
+  'folke/persistence.nvim',
+  event = 'BufReadPre', -- this will only start session saving when an actual file was opened
   init = function()
-    rvim.nnoremap('<leader>ss', '<cmd>RestoreSession<CR>', 'auto-session: restore')
-    rvim.nnoremap('<leader>sl', '<cmd>SaveSession<CR>', 'auto-session: save')
+    rvim.nnoremap(
+      '<leader>sr',
+      '<cmd>lua require("persistence").load()<CR>',
+      'persistence: restore for directory'
+    )
+    rvim.nnoremap(
+      '<leader>sl',
+      '<cmd>lua require("persistence").load({ last = true })<CR>',
+      'persistence: restore last'
+    )
   end,
   config = function()
-    local fmt = string.format
-    require('auto-session').setup({
-      log_level = 'error',
-      auto_session_root_dir = join_paths(rvim.get_cache_dir(), 'session/auto/'),
-      -- Do not enable auto restoration in my projects directory, I'd like to choose projects myself
-      auto_restore_enabled = not vim.startswith(vim.fn.getcwd(), vim.env.DEV_HOME),
-      auto_session_suppress_dirs = {
-        vim.env.HOME,
-        fmt('%s/Desktop', vim.env.HOME),
-        fmt('%s/site/lazy/*', rvim.get_runtime_dir()),
-      },
-      auto_session_use_git_branch = false, -- This cause inconsistent results
+    require('persistence').setup({
+      dir = vim.fn.expand(rvim.get_cache_dir() .. '/sessions/'),
     })
   end,
 })

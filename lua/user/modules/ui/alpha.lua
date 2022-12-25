@@ -70,8 +70,12 @@ return function()
   }
 
   dashboard.section.buttons.val = {
-    button('Directory', 'r', '  Restore last session', '<Cmd>RestoreSession<CR>'),
-    button('Todo', 's', '  Pick a session', '<Cmd>Autosession search<CR>'),
+    button(
+      'Directory',
+      'r',
+      '  Restore last session',
+      '<cmd>lua require("persistence").load()<CR>'
+    ),
     button('Label', 'o', '  Recent Projects', ':Telescope oldfiles<CR>'),
     button('Title', 'f', '  Find file', ':Telescope find_files<CR>'),
     button('String', 'w', '  Find word', ':Telescope live_grep<CR>'),
