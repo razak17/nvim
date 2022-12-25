@@ -33,7 +33,9 @@ return function()
     {
       event = { 'FileType' },
       pattern = { 'yaml', 'toml' },
-      command = function() map('n', '<C-a>', require('dial.map').inc_normal('dep_files'), { remap = true }) end,
+      command = function()
+        map('n', '<C-a>', require('dial.map').inc_normal('dep_files'), { remap = true })
+      end,
     },
   })
 end

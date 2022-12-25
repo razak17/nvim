@@ -122,7 +122,6 @@ return function()
 
   ins_right({
     function()
-      if not rvim.plugin_installed('package-info.nvim') then return end
       local package_info = require('package-info')
       return package_info.get_status()
     end,
@@ -163,6 +162,7 @@ return function()
 
       local clients = ' ' .. table.concat(client_names, '  ') .. '  ' -- alt: •
       if #client_names > 4 then clients = ' ' .. #client_names .. ' LSPs running  ' end
+      if vim.tbl_isempty(client_names) then clients = 'No LSP  ' end
       local with_copilot = clients .. copilot_hl .. icons.misc.octoface
       return copilot_active and with_copilot or clients
     end,

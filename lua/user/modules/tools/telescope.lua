@@ -1,4 +1,153 @@
-return function()
+local M = {}
+
+function M.init()
+  local telescope = require('telescope')
+  local previewers = require('telescope.previewers')
+
+  local fmt, fn = string.format, vim.fn
+
+  --- NOTE: this must be required after setting up telescope
+  --- otherwise the result will be cached without the updates
+  --- from the setup call
+  local builtin = require('telescope.builtin')
+
+  local function notes()
+    builtin.find_files({
+      prompt_title = 'Notes',
+      cwd = vim.fn.expand('~/notes/src/'),
+    })
+  end
+
+  local function luasnips() telescope.extensions.luasnip.luasnip(rvim.telescope.dropdown()) end
+
+  local function find_near_files()
+    local cwd = require('telescope.utils').buffer_dir()
+    builtin.find_files({
+      prompt_title = fmt('Searching %s', fn.fnamemodify(cwd, ':~:.')),
+      cwd = cwd,
+    })
+  end
+
+  local function installed_plugins()
+    builtin.find_files({
+      prompt_title = 'Installed plugins',
+      cwd = join_paths(rvim.get_runtime_dir(), '/site/lazy'),
+    })
+  end
+
+  local function builtins() builtin.builtin({ include_extensions = true }) end
+
+  local function project_files(opts)
+    if not pcall(builtin.git_files, opts) then builtin.find_files(opts) end
+  end
+
+  local function find_files() builtin.find_files(rvim.telescope.minimal_ui()) end
+
+  local function old_files() builtin.oldfiles(rvim.telescope.minimal_ui()) end
+
+  local function media_files() telescope.extensions.media_files.media_files({}) end
+
+  local function recent_files() telescope.extensions.recent_files.pick(rvim.telescope.minimal_ui()) end
+
+  local function zoxide_list() telescope.extensions.zoxide.list(rvim.telescope.minimal_ui()) end
+
+  local function frecency()
+    telescope.extensions.frecency.frecency(rvim.telescope.dropdown(rvim.telescope.minimal_ui()))
+  end
+
+  -- FIXME: <C-cr> mapping does not work
+  local function undo() telescope.extensions.undo.undo() end
+
+  local function projects() telescope.extensions.projects.projects({}) end
+
+  local function delta_opts(opts, is_buf)
+    local delta = previewers.new_termopen_previewer({
+      get_command = function(entry)
+        local args = {
+          'git',
+          '-c',
+          'core.pager=delta',
+          '-c',
+          'delta.side-by-side=false',
+          'diff',
+          entry.value .. '^!',
+        }
+        if is_buf then vim.list_extend(args, { '--', entry.current_file }) end
+        return args
+      end,
+    })
+    opts = opts or {}
+    opts.previewer = {
+      delta,
+      previewers.git_commit_message.new(opts),
+    }
+    return opts
+  end
+
+  local function delta_git_commits(opts) builtin.git_commits(delta_opts(opts)) end
+
+  local function delta_git_bcommits(opts) builtin.git_bcommits(delta_opts(opts, true)) end
+
+  local nnoremap = rvim.nnoremap
+  nnoremap('<leader>fb', '<cmd>Telescope current_buffer_fuzzy_find<CR>', 'find in current buffer')
+  nnoremap('<leader>fR', '<cmd>Telescope reloader<CR>', 'module reloader')
+  nnoremap('<leader>fw', '<cmd>Telescope grep_string<CR>', 'find current word')
+  nnoremap('<leader>fs', '<cmd>Telescope live_grep<CR>', 'find string')
+  nnoremap('<leader>fva', '<cmd>Telescope autocommands<CR>', 'autocommands')
+  nnoremap('<leader>fvh', '<cmd>Telescope highlights<CR>', 'highlights')
+  nnoremap('<leader>fvk', '<cmd>Telescope highlights<CR>', 'keymaps')
+  nnoremap('<leader>fvo', '<cmd>Telescope vim_options<CR>', 'options')
+  nnoremap('<leader>fvr', '<cmd>Telescope resume<CR>', 'resume')
+  -- Git
+  nnoremap('<leader>gf', '<cmd>Telescope git_files<CR>', 'git: files')
+  nnoremap('<leader>gs', '<cmd>Telescope git_status<CR>', 'git: status')
+  nnoremap('<leader>fgb', '<cmd>Telescope git_branches<CR>', 'git: branches')
+  -- LSP
+  nnoremap('<leader>lR', '<cmd>Telescope lsp_references<CR>', 'telescope: references')
+  nnoremap('<leader>ld', '<cmd>Telescope lsp_document_symbols<CR>', 'telescope: document symbols')
+  nnoremap(
+    '<leader>le',
+    '<cmd>Telescope diagnostics bufnr=0 theme=get_ivy<CR>',
+    'telescope: document diagnostics'
+  )
+  nnoremap(
+    '<leader>lE',
+    '<cmd>Telescope diagnostics theme=get_ivy<CR>',
+    'telescope: workspace diagnostics'
+  )
+  nnoremap(
+    '<leader>ls',
+    '<cmd>Telescope lsp_dynamic_workspace_symbols<CR>',
+    'telescope: workspace symbols'
+  )
+
+  require('which-key').register({
+    ['<c-p>'] = { find_files, 'telescope: find files' },
+    ['<leader>f'] = {
+      name = 'Telescope',
+      a = { builtins, 'builtin' },
+      f = { project_files, 'find files' },
+      g = {
+        name = 'Git',
+        B = { delta_git_bcommits, 'buffer commits' },
+        c = { delta_git_commits, 'commits' },
+      },
+      h = { frecency, 'most frequently used files' },
+      L = { luasnips, 'luasnip: available snippets' },
+      m = { media_files, 'media files' },
+      j = { notes, 'notes' },
+      n = { find_near_files, 'find near files' },
+      o = { old_files, 'old files' },
+      p = { projects, 'recent projects' },
+      P = { installed_plugins, 'plugins' },
+      r = { recent_files, 'resume' },
+      u = { undo, 'undo' },
+      z = { zoxide_list, 'zoxide list' },
+    },
+  })
+end
+
+function M.config()
   local previewers = require('telescope.previewers')
   local sorters = require('telescope.sorters')
   local actions = require('telescope.actions')
@@ -7,7 +156,6 @@ return function()
   local themes = require('telescope.themes')
   local icons = rvim.style.icons
   local border = rvim.style.border
-  local fmt, fn = string.format, vim.fn
 
   rvim.telescope = {}
 
@@ -241,114 +389,7 @@ return function()
     },
   })
 
-  --- NOTE: this must be required after setting up telescope
-  --- otherwise the result will be cached without the updates
-  --- from the setup call
-  local builtin = require('telescope.builtin')
-
-  local function notes()
-    builtin.find_files({
-      prompt_title = 'Notes',
-      cwd = vim.fn.expand('~/notes/src/'),
-    })
-  end
-
-  local function luasnips()
-    telescope.extensions.luasnip.luasnip(rvim.telescope.dropdown())
-  end
-
-  local function find_near_files()
-    local cwd = require('telescope.utils').buffer_dir()
-    builtin.find_files({
-      prompt_title = fmt('Searching %s', fn.fnamemodify(cwd, ':~:.')),
-      cwd = cwd,
-    })
-  end
-
-  local function installed_plugins()
-    builtin.find_files({
-      prompt_title = 'Installed plugins',
-      cwd = join_paths(rvim.get_runtime_dir(), '/site/pack/packer'),
-    })
-  end
-
-  local function builtins() builtin.builtin({ include_extensions = true }) end
-
-  local function project_files(opts)
-    if not pcall(builtin.git_files, opts) then builtin.find_files(opts) end
-  end
-
-  local function find_files() builtin.find_files(rvim.telescope.minimal_ui()) end
-
-  local function old_files() builtin.oldfiles(rvim.telescope.minimal_ui()) end
-
-  local function media_files() telescope.extensions.media_files.media_files({}) end
-
-  local function recent_files() telescope.extensions.recent_files.pick(rvim.telescope.minimal_ui()) end
-
-  local function zoxide_list() telescope.extensions.zoxide.list(rvim.telescope.minimal_ui()) end
-
-  local function frecency()
-    telescope.extensions.frecency.frecency(rvim.telescope.dropdown(rvim.telescope.minimal_ui()))
-  end
-
-  -- FIXME: <C-cr> mapping does not work
-  local function undo() telescope.extensions.undo.undo() end
-
-  local function projects() telescope.extensions.projects.projects({}) end
-
-  local function delta_opts(opts, is_buf)
-    local delta = previewers.new_termopen_previewer({
-      get_command = function(entry)
-        local args = {
-          'git',
-          '-c',
-          'core.pager=delta',
-          '-c',
-          'delta.side-by-side=false',
-          'diff',
-          entry.value .. '^!',
-        }
-        if is_buf then vim.list_extend(args, { '--', entry.current_file }) end
-        return args
-      end,
-    })
-    opts = opts or {}
-    opts.previewer = {
-      delta,
-      previewers.git_commit_message.new(opts),
-    }
-    return opts
-  end
-
-  local function delta_git_commits(opts) builtin.git_commits(delta_opts(opts)) end
-
-  local function delta_git_bcommits(opts) builtin.git_bcommits(delta_opts(opts, true)) end
-
-  require('which-key').register({
-    ['<c-p>'] = { find_files, 'telescope: find files' },
-    ['<leader>f'] = {
-      name = 'Telescope',
-      a = { builtins, 'builtin' },
-      f = { project_files, 'find files' },
-      g = {
-        name = 'Git',
-        B = { delta_git_bcommits, 'buffer commits' },
-        c = { delta_git_commits, 'commits' },
-      },
-      h = { frecency, 'most frequently used files' },
-      L = { luasnips, 'luasnip: available snippets' },
-      m = { media_files, 'media files' },
-      j = { notes, 'notes' },
-      n = { find_near_files, 'find near files' },
-      o = { old_files, 'old files' },
-      p = { projects, 'recent projects' },
-      P = { installed_plugins, 'plugins' },
-      r = { recent_files, 'resume' },
-      u = { undo, 'undo' },
-      z = { zoxide_list, 'zoxide list' },
-    },
-  })
-
   vim.api.nvim_exec_autocmds('User', { pattern = 'TelescopeConfigComplete', modeline = false })
 end
+
+return M

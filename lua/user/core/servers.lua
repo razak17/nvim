@@ -166,15 +166,14 @@ M.servers = {
     table.insert(path, 'lua/?.lua')
     table.insert(path, 'lua/?/init.lua')
 
-    local plugins = ('%s/site/pack/packer'):format(rvim.get_runtime_dir())
-    local emmy = ('%s/start/emmylua-nvim'):format(plugins)
-    -- local plenary = ('%s/start/plenary.nvim'):format(plugins)
-    -- local packer = ('%s/opt/packer.nvim'):format(plugins)
-    -- local neotest = ('%s/opt/neotest'):format(plugins)
+    local plugins = ('%s/site/lazy'):format(rvim.get_runtime_dir())
+    local emmy = ('%s/emmylua-nvim'):format(plugins)
+    -- local plenary = ('%s/plenary.nvim'):format(plugins)
+    -- local neotest = ('%s/neotest'):format(plugins)
 
     local library = { fn.expand('$VIMRUNTIME/lua') }
 
-    -- for _, p in ipairs({ emmy, plenary, packer, neotest }) do
+    -- for _, p in ipairs({ emmy, plenary, neotest }) do
     for _, p in ipairs({ emmy }) do
       if fn.isdirectory(p) == 1 then table.insert(library, p) end
     end
@@ -186,7 +185,7 @@ M.servers = {
           hint = { enable = true, arrayIndex = 'Disable', setType = true },
           format = { enable = false },
           diagnostics = {
-            globals = { 'vim', 'describe', 'it', 'before_each', 'after_each', 'packer_plugins' },
+            globals = { 'vim', 'describe', 'it', 'before_each', 'after_each' },
           },
           workspace = {
             library = library,

@@ -1,28 +1,26 @@
-local use = require('user.core.packer').use
+local use = require('user.core.lazy').use
 local conf = require('user.utils.plugins').load_conf
 
 -- nvim-cmp
 use({
   'hrsh7th/nvim-cmp',
   event = 'InsertEnter',
-  module = 'cmp',
   config = conf('editor', 'cmp'),
-  requires = {
-    { 'hrsh7th/cmp-nvim-lsp', module = 'cmp_nvim_lsp' },
-    { 'hrsh7th/cmp-nvim-lsp-document-symbol', after = 'nvim-cmp' },
-    { 'saadparwaiz1/cmp_luasnip', after = 'nvim-cmp' },
-    { 'hrsh7th/cmp-path', after = 'nvim-cmp' },
-    { 'hrsh7th/cmp-buffer', after = 'nvim-cmp' },
-    { 'hrsh7th/cmp-cmdline', after = 'nvim-cmp' },
-    { 'hrsh7th/cmp-nvim-lsp-signature-help', after = 'nvim-cmp' },
-    { 'hrsh7th/cmp-emoji', after = 'nvim-cmp' },
-    { 'dmitmel/cmp-cmdline-history', after = 'nvim-cmp' },
-    { 'amarakon/nvim-cmp-buffer-lines', after = 'nvim-cmp' },
-    { 'lukas-reineke/cmp-rg', tag = '*', after = 'nvim-cmp' },
-    { 'rcarriga/cmp-dap', after = 'nvim-cmp' },
+  dependencies = {
+    { 'hrsh7th/cmp-nvim-lsp' },
+    { 'hrsh7th/cmp-nvim-lsp-document-symbol' },
+    { 'saadparwaiz1/cmp_luasnip' },
+    { 'hrsh7th/cmp-path' },
+    { 'hrsh7th/cmp-buffer' },
+    { 'hrsh7th/cmp-cmdline' },
+    { 'hrsh7th/cmp-nvim-lsp-signature-help' },
+    { 'hrsh7th/cmp-emoji' },
+    { 'dmitmel/cmp-cmdline-history' },
+    { 'amarakon/nvim-cmp-buffer-lines' },
+    { 'lukas-reineke/cmp-rg' },
+    { 'rcarriga/cmp-dap' },
     {
       'petertriho/cmp-git',
-      after = 'nvim-cmp',
       config = function()
         require('cmp_git').setup({
           filetypes = { 'gitcommit', 'NeogitCommitMessage' },
@@ -31,7 +29,6 @@ use({
     },
     {
       'uga-rosa/cmp-dictionary',
-      after = 'nvim-cmp',
       config = function()
         -- NOTE: run :CmpDictionaryUpdate to update dictionary
         require('cmp_dictionary').setup({
@@ -49,14 +46,14 @@ use({
 use({
   'L3MON4D3/LuaSnip',
   event = 'InsertEnter',
-  module = 'luasnip',
-  requires = 'rafamadriz/friendly-snippets',
+  dependencies = { 'rafamadriz/friendly-snippets' },
+  init = function() rvim.nnoremap('<leader>S', '<cmd>LuaSnipEdit<CR>', 'LuaSnip: edit snippet') end,
   config = conf('editor', 'luasnip'),
 })
 
 use({
   'xiyaowong/accelerated-jk.nvim',
-  event = { 'BufRead', 'BufNewFile' },
+  event = 'VeryLazy',
   config = function()
     require('accelerated-jk').setup({
       mappings = { j = 'gj', k = 'gk' },
@@ -68,7 +65,7 @@ use({
 
 use({
   'kylechui/nvim-surround',
-  event = { 'BufRead', 'BufNewFile' },
+  event = 'VeryLazy',
   config = function()
     require('nvim-surround').setup({
       move_cursor = false,
@@ -79,7 +76,15 @@ use({
 
 use({
   'numToStr/Comment.nvim',
-  event = { 'BufRead', 'BufNewFile' },
+  event = 'VeryLazy',
+  init = function()
+    rvim.nnoremap(
+      '<leader>/',
+      '<Plug>(comment_toggle_linewise_current)',
+      'comment: toggle current line'
+    )
+    rvim.xnoremap('<leader>/', '<Plug>(comment_toggle_linewise_visual)', 'comment: toggle linewise')
+  end,
   config = function()
     local utils = require('Comment.utils')
     require('Comment').setup({
@@ -99,14 +104,13 @@ use({
   end,
 })
 
-use({ 'JoosepAlviste/nvim-ts-context-commentstring', event = 'BufReadPost' })
+use({ 'JoosepAlviste/nvim-ts-context-commentstring' })
 
-use({ 'psliwka/vim-dirtytalk', event = { 'BufRead', 'BufNewFile' }, run = ':DirtytalkUpdate' })
+use({ 'psliwka/vim-dirtytalk', build = ':DirtytalkUpdate' })
 
 use({
   'axelvc/template-string.nvim',
   ft = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
-  event = 'BufRead',
   config = function()
     require('template-string').setup({
       remove_template_string = true, -- remove backticks when there are no template string
@@ -116,21 +120,49 @@ use({
 
 use({
   'aarondiel/spread.nvim',
-  after = 'nvim-treesitter',
-  module = 'spread',
+  init = function()
+    rvim.nnoremap('gS', function() require('spread').out() end, 'spread: expand')
+    rvim.nnoremap('gJ', function() require('spread').combine() end, 'spread: combine')
+  end,
 })
 
-use({ 'kazhala/close-buffers.nvim' })
+use({
+  'kazhala/close-buffers.nvim',
+  init = function()
+    rvim.nnoremap(
+      '<leader>c',
+      function() require('close_buffers').wipe({ type = 'this' }) end,
+      'close buffer'
+    )
+    rvim.nnoremap(
+      '<leader>bc',
+      function() require('close_buffers').wipe({ type = 'other' }) end,
+      'close others'
+    )
+    rvim.nnoremap(
+      '<leader>bx',
+      function() require('close_buffers').wipe({ type = 'all', force = true }) end,
+      'close others'
+    )
+  end,
+})
 
 use({
   'karb94/neoscroll.nvim', -- NOTE: alternative: 'declancm/cinnamon.nvim'
-  event = { 'BufRead', 'BufNewFile' },
+  event = 'VeryLazy',
   config = function() require('neoscroll').setup({ hide_cursor = true }) end,
 })
 
 use({
   'nguyenvukhang/nvim-toggler',
-  event = { 'BufRead', 'BufNewFile' },
+  event = 'VeryLazy',
+  init = function()
+    rvim.nnoremap(
+      '<leader>ii',
+      '<cmd>lua require("nvim-toggler").toggle()<CR>',
+      'nvim-toggler: toggle'
+    )
+  end,
   config = function()
     require('nvim-toggler').setup({
       inverses = {
@@ -149,38 +181,56 @@ use({
 ----------------------------------------------------------------------------------------------------
 -- Graveyard
 ----------------------------------------------------------------------------------------------------
-use({
-  'junegunn/vim-easy-align',
-  config = function() end,
-  disable = true,
-})
-
-use({
-  'jghauser/fold-cycle.nvim',
-  config = function() require('fold-cycle').setup() end,
-  disable = true,
-})
-
-use({ 'monaqa/dial.nvim', event = 'BufRead', config = conf('editor', 'dial') })
-
-use({
-  'chentoast/marks.nvim',
-  config = function()
-    require('user.utils.highlights').plugin('marks', {
-      { MarkSignHL = { link = 'Directory' } },
-      { MarkSignNumHL = { link = 'Directory' } },
-    })
-    require('marks').setup({
-      force_write_shada = false, -- This can cause data loss
-      excluded_filetypes = { 'NeogitStatus', 'NeogitCommitMessage', 'toggleterm' },
-      bookmark_0 = {
-        sign = '⚑',
-        virt_text = '',
-      },
-      mappings = {
-        annotate = 'm?',
-      },
-    })
-  end,
-  disable = true,
-})
+-- use({
+--   'mizlan/iswap.nvim',
+--   init = function()
+--     rvim.nnoremap('<leader>ia', '<Cmd>ISwap<CR>', 'iswap: swap any')
+--     rvim.nnoremap('<leader>iw', '<Cmd>ISwapWith<CR>', 'iswap: swap with')
+--   end,
+-- })
+--
+-- use({
+--   'junegunn/vim-easy-align',
+--   init = function()
+--     rvim.nmap('ga', '<Plug>(EasyAlign)', 'easy-align: align')
+--     rvim.xmap('ga', '<Plug>(EasyAlign)', 'easy-align: align')
+--     rvim.vmap('<Enter>', '<Plug>(EasyAlign)', 'easy-align: align')
+--   end,
+--   config = function() end,
+-- })
+--
+-- use({
+--   'jghauser/fold-cycle.nvim',
+--   init = function()
+--     rvim.nnoremap('<BS>', function() require('fold-cycle').open() end, 'fold-cycle: open')
+--   end,
+--   config = function() require('fold-cycle').setup() end,
+-- })
+--
+-- use({ 'monaqa/dial.nvim', config = conf('editor', 'dial') })
+--
+-- use({
+--   'chentoast/marks.nvim',
+--   init = function()
+--     rvim.nnoremap('<leader>mb', '<Cmd>MarksListBuf<CR>', 'marks: list buffer')
+--     rvim.nnoremap('<leader>mg', '<Cmd>MarksQFListGlobal<CR>', 'marks: list global')
+--     rvim.nnoremap('<leader>m0', '<Cmd>BookmarksQFList 0<CR>', 'marks: list bookmark')
+--   end,
+--   config = function()
+--     require('user.utils.highlights').plugin('marks', {
+--       { MarkSignHL = { link = 'Directory' } },
+--       { MarkSignNumHL = { link = 'Directory' } },
+--     })
+--     require('marks').setup({
+--       force_write_shada = false, -- This can cause data loss
+--       excluded_filetypes = { 'NeogitStatus', 'NeogitCommitMessage', 'toggleterm' },
+--       bookmark_0 = {
+--         sign = '⚑',
+--         virt_text = '',
+--       },
+--       mappings = {
+--         annotate = 'm?',
+--       },
+--     })
+--   end,
+-- })

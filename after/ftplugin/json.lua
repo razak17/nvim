@@ -7,9 +7,8 @@ vim.bo.shiftwidth = 2
 vim.bo.softtabstop = 2
 vim.bo.tabstop = 2
 
-local is_installed = rvim.plugin_installed('package-info.nvim')
 local filename = vim.fn.expand('%:t')
-if not is_installed or filename ~= 'package.json' then return end
+if filename ~= 'package.json' then return end
 
 local ok, which_key = rvim.safe_require('which-key')
 if ok then which_key.register({ ['<localleader>'] = { p = { name = 'Package Info' } } }) end

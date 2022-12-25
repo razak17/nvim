@@ -27,21 +27,3 @@ command('MoveAppend', [[<line1>,<line2>write<bang> >> <args> | <line1>,<line2>de
 command('AutoResize', function() require('user.utils').auto_resize() end, { nargs = '?' })
 
 command('LuaInvalidate', function(pattern) rvim.invalidate(pattern, true) end, { nargs = 1 })
-
--- Packer
-local cmds = {
-  'Compile',
-  'Install',
-  'Update',
-  'Sync',
-  'Clean',
-  'Status',
-  'Invalidate',
-  'Reload',
-  'Recompile',
-  'Delete',
-}
-for _, cmd in ipairs(cmds) do
-  command('Packer' .. cmd, function() require('user.core.packer')[vim.fn.tolower(cmd)]() end)
-end
-command('PackerCompiledEdit', function() vim.cmd.edit(rvim.path.packer_compiled) end)

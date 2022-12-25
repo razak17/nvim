@@ -20,9 +20,7 @@ rvim.onoremap('aa', [[:<c-u>execute "normal! ?^--\\+$\r:nohlsearch\rg_vk0"<cr>]]
 rvim.onoremap('ia', [[:<c-u>execute "normal! ?^--\\+$\r:nohlsearch\rkvg_"<cr>]], args)
 rvim.onoremap('ia', [[:<c-u>execute "normal! ?^--\\+$\r:nohlsearch\rkvg_"<cr>]], args)
 
-if rvim.plugin_loaded('markdown-preview.nvim') then
-  rvim.nmap('<localleader>p', '<Plug>MarkdownPreviewToggle', args)
-end
+rvim.nmap('<localleader>p', '<Plug>MarkdownPreviewToggle', args)
 
 rvim.ftplugin_conf(
   'cmp',

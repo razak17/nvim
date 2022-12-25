@@ -28,10 +28,6 @@ moveoldrvim() {
   echo "Please remove '$RVIM_CONFIG_DIR' path before installing" && exit
 }
 
-installpacker() {
-	git clone https://github.com/wbthomason/packer.nvim ~/.local/share/rvim/site/pack/packer/opt/packer.nvim
-}
-
 createDirs() {
 	mkdir -p "$HOME/.dots"
 	mkdir -p "$HOME/.cache/rvim"
@@ -174,12 +170,6 @@ cloneconfig() {
 
 	# install node and neovim support
 	(command -v git >/dev/null && echo "git installed, moving on...") || asktoinstallgit
-
-	if [ -e "$RVIM_RUNTIME_DIR/site/pack/packer/opt/packer.nvim" ]; then
-		echo 'packer already installed'
-    return 1
-  fi
-	installpacker
 
 	sudo cp --force "$RVIM_CONFIG_DIR/utils/bin/rvim" "$HOME/.local/bin"
 }

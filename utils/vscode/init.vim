@@ -1,6 +1,5 @@
-" packadd vim-surround
-
 " execute 'luafile ' . '~/.config/rvim' . '/lua/core/opts.lua'
+"
 set mouse+=a
 
 function! s:manageEditorSize(...)

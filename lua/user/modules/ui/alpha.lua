@@ -54,13 +54,11 @@ return function()
     )
   end
 
+  local stats = require('lazy').stats()
+
   local installed_plugins = {
     type = 'text',
-    val = f(
-      ' %d out of %d plugins loaded',
-      #rvim.list_loaded_plugins(),
-      #rvim.list_installed_plugins()
-    ),
+    val = f(' %d plugins installed', stats.count),
     opts = { position = 'center', hl = 'NonText' },
   }
 

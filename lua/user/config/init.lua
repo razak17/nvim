@@ -9,22 +9,22 @@ for _, plugin in pairs(rvim.util.disabled_builtins) do
   vim.g['loaded_' .. plugin] = 1
 end
 
-if rvim.ui.defer then
-  vim.cmd([[syntax off]])
-  vim.cmd([[filetype off]])
-  vim.defer_fn(
-    vim.schedule_wrap(function()
-      vim.defer_fn(function()
-        vim.cmd([[syntax on]])
-        vim.cmd([[filetype plugin indent on]])
-      end, 0)
-    end),
-    0
-  )
-end
-
 -- NOTE: order matters
+R('user.core.lazy').ensure_plugins()
 R('user.core.highlights')
 R('user.core.commands')
-R('user.core.packer').ensure_plugins()
-R('user.core.packer').load_compile()
+
+local runtime_dir = rvim.get_runtime_dir()
+local config_dir = rvim.get_config_dir()
+
+vim.opt.rtp:remove(join_paths(vim.call('stdpath', 'data'), 'site'))
+vim.opt.rtp:remove(join_paths(vim.call('stdpath', 'data'), 'site', 'after'))
+vim.opt.rtp:prepend(join_paths(runtime_dir, 'site'))
+vim.opt.rtp:append(join_paths(runtime_dir, 'site', 'after'))
+
+vim.opt.rtp:remove(vim.call('stdpath', 'config'))
+vim.opt.rtp:remove(join_paths(vim.call('stdpath', 'config'), 'after'))
+vim.opt.rtp:prepend(config_dir)
+vim.opt.rtp:append(join_paths(config_dir, 'after'))
+
+vim.cmd([[let &packpath = &runtimepath]])

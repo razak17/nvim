@@ -1,5 +1,3 @@
-if not rvim or not rvim.plugin_loaded('nvim-surround') then return end
-
 local nnoremap = rvim.nnoremap
 local fmt = string.format
 

@@ -1,28 +1,21 @@
-local use = require('user.core.packer').use
+local use = require('user.core.lazy').use
 local conf = require('user.utils.plugins').load_conf
 
-use({
-  'razak17/zephyr-nvim',
-  local_path = 'personal',
-  requires = { 'nvim-treesitter/nvim-treesitter', opt = true },
-})
-
-use({
-  'razak17/buffer_manager.nvim',
-  local_path = 'personal',
-  config = function()
-    require('buffer_manager').setup({
-      borderchars = rvim.style.border.common,
-      border_highlight = 'VertSplit',
-    })
-  end,
-})
+use({ 'razak17/zephyr-nvim', lazy = false })
 
 use({ 'LunarVim/horizon.nvim' })
 
-use({ 'goolord/alpha-nvim', config = conf('ui', 'alpha') })
+use({ 'goolord/alpha-nvim', lazy = false, config = conf('ui', 'alpha') })
 
-use({ 'rcarriga/nvim-notify', after = 'telescope.nvim', config = conf('ui', 'notify') })
+use({
+  'rcarriga/nvim-notify',
+  event = 'VeryLazy',
+  init = function()
+    rvim.nnoremap('<leader>nn', '<cmd>Notifications<CR>', 'notify: show')
+    rvim.nnoremap('<leader>nx', '<cmd>lua require("notify").dismiss()<CR>', 'notify: dismiss')
+  end,
+  config = conf('ui', 'notify'),
+})
 
 use({
   'nvim-lualine/lualine.nvim',
@@ -30,19 +23,22 @@ use({
   config = conf('ui', 'lualine'),
 })
 
-use({ 'romainl/vim-cool', event = 'BufRead', config = function() vim.g.CoolTotalMatches = 1 end })
+use({
+  'romainl/vim-cool',
+  event = { 'BufRead', 'BufNewFile' },
+  config = function() vim.g.CoolTotalMatches = 1 end,
+})
 
 use({
   'j-hui/fidget.nvim',
+  event = { 'BufRead', 'BufNewFile' },
   config = function()
     require('fidget').setup({
       align = {
         bottom = false,
         right = true,
       },
-      fmt = {
-        stack_upwards = false,
-      },
+      fmt = { stack_upwards = false },
     })
     rvim.augroup('CloseFidget', {
       {
@@ -59,34 +55,34 @@ use({
   config = conf('ui', 'indentline'),
 })
 
-use({ 'MunifTanjim/nui.nvim' })
-
 use({
   'nvim-neo-tree/neo-tree.nvim',
   cmd = { 'Neotree' },
   branch = 'main',
+  dependencies = { 'nvim-tree/nvim-web-devicons' },
+  init = function()
+    rvim.nnoremap('<c-n>', '<cmd>Neotree toggle reveal<CR>', 'toggle tree', 'neo-tree.nvim')
+  end,
   config = conf('ui', 'neo-tree'),
-  requires = {
-    'nvim-lua/plenary.nvim',
-    'nvim-tree/nvim-web-devicons',
-    {
-      's1n7ax/nvim-window-picker',
-      tag = 'v1.*',
-      config = function()
-        require('window-picker').setup({
-          autoselect_one = true,
-          include_current = false,
-          filter_rules = {
-            bo = {
-              filetype = { 'neo-tree-popup', 'quickfix', 'incline' },
-              buftype = { 'terminal', 'quickfix', 'nofile' },
-            },
-          },
-          other_win_hl_color = require('user.utils.highlights').get('Visual', 'bg'),
-        })
-      end,
-    },
-  },
+})
+
+use({
+  's1n7ax/nvim-window-picker',
+  version = 'v1.*',
+  event = 'VeryLazy',
+  config = function()
+    require('window-picker').setup({
+      autoselect_one = true,
+      include_current = false,
+      filter_rules = {
+        bo = {
+          filetype = { 'neo-tree-popup', 'quickfix', 'incline' },
+          buftype = { 'terminal', 'quickfix', 'nofile' },
+        },
+      },
+      other_win_hl_color = require('user.utils.highlights').get('Visual', 'bg'),
+    })
+  end,
 })
 
 use({
@@ -95,49 +91,13 @@ use({
   config = conf('ui', 'gitsigns'),
 })
 
-use({
-  'stevearc/dressing.nvim',
-  after = 'telescope.nvim',
-  config = conf('ui', 'dressing'),
-})
+use({ 'stevearc/dressing.nvim', event = 'VeryLazy', config = conf('ui', 'dressing') })
 
 use({
   'kevinhwang91/nvim-ufo',
   event = { 'BufRead', 'BufNewFile' },
-  requires = 'kevinhwang91/promise-async',
+  dependencies = { 'kevinhwang91/promise-async' },
   config = conf('ui', 'ufo'),
-})
-
-use({
-  'razak17/cybu.nvim',
-  local_path = 'personal',
-  config = function()
-    require('cybu').setup({
-      position = {
-        relative_to = 'win',
-        anchor = 'topright',
-      },
-      style = { border = 'single', hide_buffer_id = true },
-      exclude = {
-        'neo-tree',
-        'qf',
-        'lspinfo',
-        'alpha',
-        'NvimTree',
-        'DressingInput',
-        'dashboard',
-        'neo-tree',
-        'neo-tree-popup',
-        'lsp-installer',
-        'TelescopePrompt',
-        'harpoon',
-        'packer',
-        'mason.nvim',
-        'help',
-        'CommandTPrompt',
-      },
-    })
-  end,
 })
 
 use({
@@ -154,6 +114,7 @@ use({
 use({
   'uga-rosa/ccc.nvim',
   cmd = { 'CccHighlighterToggle', 'CccHighlighterEnable', 'CccHighlighterDisable' },
+  init = function() rvim.nnoremap('<leader>oC', '<cmd>CccHighlighterToggle<CR>', 'ccc: toggle') end,
   config = function()
     require('ccc').setup({
       win_opts = { border = rvim.style.border.current },
@@ -167,11 +128,8 @@ use({
 
 use({
   'lukas-reineke/headlines.nvim',
-  event = { 'BufRead', 'BufNewFile' },
   ft = { 'org', 'norg', 'markdown', 'yaml' },
-  setup = function()
-    -- https://observablehq.com/@d3/color-schemes?collection=@d3/d3-scale-chromatic
-    -- NOTE: this must be set in the setup function or it will crash nvim...
+  init = function()
     require('user.utils.highlights').plugin('Headlines', {
       { Headline1 = { background = '#003c30', foreground = 'White' } },
       { Headline2 = { background = '#00441b', foreground = 'White' } },
@@ -184,9 +142,7 @@ use({
       markdown = {
         headline_highlights = { 'Headline1', 'Headline2', 'Headline3' },
       },
-      org = {
-        headline_highlights = false,
-      },
+      org = { headline_highlights = false },
       norg = { codeblock_highlight = false },
     })
   end,
@@ -195,8 +151,19 @@ use({
 use({
   'folke/todo-comments.nvim',
   cmd = { 'TodoTelescope', 'TodoTrouble', 'TodoQuickFix', 'TodoDots' },
-  after = 'nvim-treesitter',
-  requires = { 'nvim-treesitter' },
+  init = function()
+    -- todo-comments.nvim
+    rvim.nnoremap(
+      '<leader>tj',
+      function() require('todo-comments').jump_next() end,
+      'todo-comments: next todo'
+    )
+    rvim.nnoremap(
+      '<leader>tk',
+      function() require('todo-comments').jump_prev() end,
+      'todo-comments: prev todo'
+    )
+  end,
   config = function()
     require('todo-comments').setup({ highlight = { after = '' } })
     rvim.command(
@@ -209,104 +176,104 @@ use({
 ----------------------------------------------------------------------------------------------------
 -- Graveyard
 ----------------------------------------------------------------------------------------------------
-use({
-  'm-demare/hlargs.nvim',
-  config = function()
-    require('user.utils.highlights').plugin('hlargs', {
-      theme = {
-        ['*'] = { { Hlargs = { italic = true, foreground = '#A5D6FF' } } },
-        ['horizon'] = { { Hlargs = { italic = true, foreground = { from = 'Normal' } } } },
-      },
-    })
-    require('hlargs').setup({
-      excluded_argnames = {
-        declarations = { 'use', 'use_rocks', '_' },
-        usages = {
-          go = { '_' },
-          lua = { 'self', 'use', 'use_rocks', '_' },
-        },
-      },
-    })
-  end,
-  disable = true,
-})
-
-use({
-  'rainbowhxch/beacon.nvim',
-  config = function()
-    local beacon = require('beacon')
-    beacon.setup({
-      minimal_jump = 20,
-      ignore_buffers = { 'terminal', 'nofile', 'neorg://Quick Actions' },
-      ignore_filetypes = {
-        'neo-tree',
-        'qf',
-        'NeogitCommitMessage',
-        'NeogitPopup',
-        'NeogitStatus',
-        'packer',
-        'trouble',
-      },
-    })
-    rvim.augroup('BeaconCmds', {
-      {
-        event = { 'BufReadPre' },
-        pattern = { '*.norg' },
-        command = function() beacon.beacon_off() end,
-      },
-    })
-  end,
-  disable = true,
-})
-
-use({
-  'mvllow/modes.nvim',
-  tag = 'v0.2.0',
-  config = function() require('modes').setup() end,
-  disable = true,
-})
-
-use({ 'fladson/vim-kitty', disable = true })
-
-use({ 'mtdl9/vim-log-highlighting', disable = true })
-
-use({
-  'itchyny/vim-highlighturl',
-  disable = true,
-  config = function() vim.g.highlighturl_guifg = require('user.utils.highlights').get('URL', 'fg') end,
-})
-
-use({
-  'levouh/tint.nvim',
-  event = 'BufRead',
-  disable = true,
-  config = function()
-    require('tint').setup({
-      tint = -30,
-      highlight_ignore_patterns = {
-        'winseparator',
-        'st.*',
-        'comment',
-        'panel.*',
-        'telescope.*',
-        'bqf.*',
-      },
-      window_ignore_function = function(win_id)
-        if vim.wo[win_id].diff or vim.fn.win_gettype(win_id) ~= '' then return true end
-        local buf = vim.api.nvim_win_get_buf(win_id)
-        local b = vim.bo[buf]
-        local ignore_bt = { 'terminal', 'prompt', 'nofile' }
-        local ignore_ft = {
-          'neo-tree',
-          'packer',
-          'diff',
-          'toggleterm',
-          'Neogit.*',
-          'Telescope.*',
-          'qf',
-        }
-        return rvim.any(b.bt, ignore_bt) or rvim.any(b.ft, ignore_ft)
-      end,
-    })
-  end,
-})
+-- use({
+--   'm-demare/hlargs.nvim',
+--   config = function()
+--     require('user.utils.highlights').plugin('hlargs', {
+--       theme = {
+--         ['*'] = { { Hlargs = { italic = true, foreground = '#A5D6FF' } } },
+--         ['horizon'] = { { Hlargs = { italic = true, foreground = { from = 'Normal' } } } },
+--       },
+--     })
+--     require('hlargs').setup({
+--       excluded_argnames = {
+--         declarations = { 'use', 'use_rocks', '_' },
+--         usages = {
+--           go = { '_' },
+--           lua = { 'self', 'use', 'use_rocks', '_' },
+--         },
+--       },
+--     })
+--   end,
+--   disable = true,
+-- })
+--
+-- use({
+--   'rainbowhxch/beacon.nvim',
+--   config = function()
+--     local beacon = require('beacon')
+--     beacon.setup({
+--       minimal_jump = 20,
+--       ignore_buffers = { 'terminal', 'nofile', 'neorg://Quick Actions' },
+--       ignore_filetypes = {
+--         'neo-tree',
+--         'qf',
+--         'NeogitCommitMessage',
+--         'NeogitPopup',
+--         'NeogitStatus',
+--         'packer',
+--         'trouble',
+--       },
+--     })
+--     rvim.augroup('BeaconCmds', {
+--       {
+--         event = { 'BufReadPre' },
+--         pattern = { '*.norg' },
+--         command = function() beacon.beacon_off() end,
+--       },
+--     })
+--   end,
+--   disable = true,
+-- })
+--
+-- use({
+--   'mvllow/modes.nvim',
+--   tag = 'v0.2.0',
+--   config = function() require('modes').setup() end,
+--   disable = true,
+-- })
+--
+-- use({ 'fladson/vim-kitty', disable = true })
+--
+-- use({ 'mtdl9/vim-log-highlighting', disable = true })
+--
+-- use({
+--   'itchyny/vim-highlighturl',
+--   disable = true,
+--   config = function() vim.g.highlighturl_guifg = require('user.utils.highlights').get('URL', 'fg') end,
+-- })
+--
+-- use({
+--   'levouh/tint.nvim',
+--   event = 'BufRead',
+--   disable = true,
+--   config = function()
+--     require('tint').setup({
+--       tint = -30,
+--       highlight_ignore_patterns = {
+--         'winseparator',
+--         'st.*',
+--         'comment',
+--         'panel.*',
+--         'telescope.*',
+--         'bqf.*',
+--       },
+--       window_ignore_function = function(win_id)
+--         if vim.wo[win_id].diff or vim.fn.win_gettype(win_id) ~= '' then return true end
+--         local buf = vim.api.nvim_win_get_buf(win_id)
+--         local b = vim.bo[buf]
+--         local ignore_bt = { 'terminal', 'prompt', 'nofile' }
+--         local ignore_ft = {
+--           'neo-tree',
+--           'packer',
+--           'diff',
+--           'toggleterm',
+--           'Neogit.*',
+--           'Telescope.*',
+--           'qf',
+--         }
+--         return rvim.any(b.bt, ignore_bt) or rvim.any(b.ft, ignore_ft)
+--       end,
+--     })
+--   end,
+-- })

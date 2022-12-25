@@ -1,30 +1,71 @@
-local use = require('user.core.packer').use
+local use = require('user.core.lazy').use
 local conf = require('user.utils.plugins').load_conf
+
+-- Debugging
+use({
+  'mfussenegger/nvim-dap',
+  version = '0.1.*',
+  init = conf('tools', 'dap').init,
+  config = conf('tools', 'dap').config,
+})
+
+use({
+  'rcarriga/nvim-dap-ui',
+  event = { 'BufRead', 'BufNewFile' },
+  init = function()
+    rvim.nnoremap(
+      '<localleader>dT',
+      function() require('dapui').toggle({ reset = true }) end,
+      'dapui: toggle'
+    )
+  end,
+  config = function()
+    local dapui = require('dapui')
+    require('dapui').setup({
+      windows = { indent = 2 },
+      floating = {
+        border = rvim.style.border.current,
+      },
+    })
+    local dap = require('dap')
+    -- NOTE: this opens dap UI automatically when dap starts
+    dap.listeners.after.event_initialized['dapui_config'] = function()
+      dapui.open()
+      vim.api.nvim_exec_autocmds('User', { pattern = 'DapStarted' })
+    end
+    dap.listeners.before.event_terminated['dapui_config'] = function() dapui.close() end
+    dap.listeners.before.event_exited['dapui_config'] = function() dapui.close() end
+  end,
+})
+
+use({
+  'theHamsta/nvim-dap-virtual-text',
+  event = { 'BufRead', 'BufNewFile' },
+  config = function()
+    require('nvim-dap-virtual-text').setup({
+      enabled = true,
+      enabled_commands = true,
+      highlight_changed_variables = true,
+      all_frames = true,
+    })
+  end,
+})
 
 -- Lsp
 use({
   'neovim/nvim-lspconfig',
-  module_pattern = 'lspconfig.*',
   config = function()
     require('user.utils.highlights').plugin('lspconfig', {
       { LspInfoBorder = { link = 'FloatBorder' } },
     })
     require('lspconfig.ui.windows').default_options.border = rvim.style.border.current
   end,
-  requires = {
-    { 'nanotee/sqls.nvim' },
-    { 'simrat39/rust-tools.nvim', branch = 'modularize_and_inlay_rewrite' },
-    { 'b0o/schemastore.nvim' },
-  },
 })
 
 use({
   'razak17/mason.nvim',
-  event = { 'BufRead', 'BufNewFile' },
-  requires = {
-    'nvim-lspconfig',
-    'williamboman/mason-lspconfig.nvim',
-  },
+  event = 'VeryLazy',
+  init = function() rvim.nnoremap('<leader>lm', '<cmd>Mason<CR>', 'mason: info') end,
   config = function()
     local style = rvim.style
     local icons = style.icons
@@ -46,15 +87,16 @@ use({
   end,
 })
 
+use({ 'williamboman/mason-lspconfig.nvim' })
+
 use({
   'jose-elias-alvarez/null-ls.nvim',
-  event = { 'BufRead', 'BufNewFile' },
   config = conf('lang', 'null-ls'),
 })
 
 use({
   'jayp0521/mason-null-ls.nvim',
-  after = { 'mason.nvim', 'null-ls.nvim' },
+  init = function() rvim.nnoremap('<leader>ln', '<cmd>NullLsInfo<CR>', 'null-ls: info') end,
   config = function()
     require('mason-null-ls').setup({
       automatic_installation = true,
@@ -64,7 +106,6 @@ use({
 
 use({
   'kosayoda/nvim-lightbulb',
-  event = { 'BufRead', 'BufNewFile' },
   config = function()
     require('user.utils.highlights').plugin('Lightbulb', {
       { LightBulbFloatWin = { foreground = { from = 'Type' } } },
@@ -84,48 +125,55 @@ use({
 -- Treesitter
 use({
   'nvim-treesitter/nvim-treesitter',
-  run = ':TSUpdate',
-  config = conf('lang', 'treesitter'),
-  requires = {
-    {
-      'nvim-treesitter/nvim-treesitter-context',
-      event = 'BufRead',
-      config = function()
-        require('user.utils.highlights').plugin('treesitter-context', {
-          { ContextBorder = { link = 'Dim' } },
-          { TreesitterContext = { inherit = 'Normal' } },
-          { TreesitterContextLineNumber = { inherit = 'LineNr' } },
-        })
-        require('treesitter-context').setup({
-          multiline_threshold = 4,
-          separator = { '─', 'ContextBorder' }, --[[alernatives: ▁ ─ ▄ ]]
-          mode = 'topline',
-        })
-      end,
-    },
-    -- use this until:  https://github.com/nvim-treesitter/playground/pull/57 is merged
-    {
-      'nullchilly/lsp-playground',
-      cmd = { 'TSPlaygroundToggle', 'TSHighlightCapturesUnderCursor' },
-    },
-    { 'nvim-treesitter/nvim-treesitter-textobjects' },
-    { 'p00f/nvim-ts-rainbow' },
-    {
-      'windwp/nvim-ts-autotag',
-      event = { 'BufRead', 'BufNewFile' },
-      config = function()
-        require('nvim-ts-autotag').setup({
-          filetypes = { 'html', 'xml', 'typescriptreact', 'javascriptreact' },
-        })
-      end,
-    },
-  },
+  build = ':TSUpdate',
+  init = conf('lang', 'treesitter').init,
+  config = conf('lang', 'treesitter').config,
+})
+
+-- use this until:  https://github.com/nvim-treesitter/playground/pull/57 is merged
+-- kind of redundant since neovim has Inspect command now
+use({ 'nvim-treesitter/nvim-treesitter-textobjects' })
+
+use({ 'p00f/nvim-ts-rainbow' })
+
+use({
+  'nvim-treesitter/nvim-treesitter-context',
+  event = { 'BufRead', 'BufNewFile' },
+  config = function()
+    require('user.utils.highlights').plugin('treesitter-context', {
+      { ContextBorder = { link = 'Dim' } },
+      { TreesitterContext = { inherit = 'Normal' } },
+      { TreesitterContextLineNumber = { inherit = 'LineNr' } },
+    })
+    require('treesitter-context').setup({
+      multiline_threshold = 4,
+      separator = { '─', 'ContextBorder' }, --[[alernatives: ▁ ─ ▄ ]]
+      mode = 'topline',
+    })
+  end,
+})
+
+use({
+  'windwp/nvim-ts-autotag',
+  event = 'InsertEnter',
+  config = function()
+    require('nvim-ts-autotag').setup({
+      filetypes = { 'html', 'xml', 'typescriptreact', 'javascriptreact' },
+    })
+  end,
+})
+
+use({
+  'nullchilly/lsp-playground',
+  init = function()
+    rvim.nnoremap('<leader>LE', ':TSHighlightCapturesUnderCursor<CR>', 'playground: inspect scope')
+  end,
+  cmd = { 'TSPlaygroundToggle', 'TSHighlightCapturesUnderCursor' },
 })
 
 use({
   'windwp/nvim-autopairs',
-  after = 'nvim-cmp',
-  requires = 'nvim-cmp',
+  event = 'VeryLazy',
   config = function()
     local cmp_autopairs = require('nvim-autopairs.completion.cmp')
     require('cmp').event:on('confirm_done', cmp_autopairs.on_confirm_done())
@@ -146,7 +194,7 @@ use({
 
 use({
   'github/copilot.vim',
-  after = 'nvim-cmp',
+  event = { 'BufRead', 'BufNewFile' },
   setup = function() vim.g.copilot_no_tab_map = true end,
   config = function()
     rvim.imap('<Plug>(rvim-copilot-accept)', 'copilot#Accept("<Tab>")', { expr = true })
@@ -170,41 +218,7 @@ use({
 })
 
 use({
-  'RRethy/vim-illuminate',
-  event = { 'BufRead', 'BufNewFile' },
-  config = function()
-    require('illuminate').configure({
-      filetypes_denylist = {
-        'alpha',
-        'NvimTree',
-        'DressingInput',
-        'dashboard',
-        'neo-tree',
-        'neo-tree-popup',
-        'qf',
-        'lspinfo',
-        'lsp-installer',
-        'TelescopePrompt',
-        'harpoon',
-        'packer',
-        'mason.nvim',
-        'help',
-        'CommandTPrompt',
-        'buffer_manager',
-        'dapui_scopes',
-        'dapui_breakpoints',
-        'dapui_stacks',
-        'dapui_watches',
-        'dapui_console',
-        'dap-repl',
-      },
-    })
-  end,
-})
-
-use({
   'lvimuser/lsp-inlayhints.nvim',
-  event = { 'BufRead', 'BufNewFile' },
   config = function()
     require('lsp-inlayhints').setup({
       inlay_hints = {
@@ -224,14 +238,17 @@ use({
 
 use({
   'danymat/neogen',
-  event = { 'BufRead', 'BufNewFile' },
-  requires = { 'nvim-treesitter/nvim-treesitter' },
+  init = function()
+    rvim.nnoremap(
+      '<localleader>lc',
+      function() require('neogen').generate() end,
+      'neogen: generate doc'
+    )
+  end,
   config = function() require('neogen').setup({ snippet_engine = 'luasnip' }) end,
 })
 
 use({ 'mrshmllow/document-color.nvim', ft = { 'html', 'javascriptreact', 'typescriptreact' } })
-
-use({ 'ii14/emmylua-nvim' })
 
 use({
   'ray-x/lsp_signature.nvim',
@@ -251,20 +268,69 @@ use({
   end,
 })
 
+use({ 'ii14/emmylua-nvim' })
+
 use({ 'jose-elias-alvarez/typescript.nvim' })
+
+use({ 'nanotee/sqls.nvim' })
+
+use({ 'simrat39/rust-tools.nvim', branch = 'modularize_and_inlay_rewrite' })
+
+use({ 'b0o/schemastore.nvim' })
 
 use({
   'marilari88/twoslash-queries.nvim',
-  event = { 'BufRead', 'BufNewFile' },
   ft = { 'typescript', 'typescriptreact' },
 })
 
 ----------------------------------------------------------------------------------------------------
 -- Graveyard
 ----------------------------------------------------------------------------------------------------
-use({
-  'andymass/vim-matchup',
-  after = 'nvim-treesitter',
-  config = function() rvim.nnoremap('<leader>lm', ':<c-u>MatchupWhereAmI?<CR>', 'where am i') end,
-  disable = true,
-})
+-- use({
+--   'andymass/vim-matchup',
+--   config = function() rvim.nnoremap('<leader>lm', ':<c-u>MatchupWhereAmI?<CR>', 'where am i') end,
+-- })
+--
+-- use({
+--   'RRethy/vim-illuminate',
+--   init = function()
+--     rvim.nnoremap(
+--       '<a-n>',
+--       ':lua require"illuminate".next_reference{wrap=true}<CR>',
+--       'illuminate: next'
+--     )
+--     rvim.nnoremap(
+--       '<a-p>',
+--       ':lua require"illuminate".next_reference{reverse=true,wrap=true}<CR>',
+--       'illuminate: reverse'
+--     )
+--   end,
+--   config = function()
+--     require('illuminate').configure({
+--       filetypes_denylist = {
+--         'alpha',
+--         'NvimTree',
+--         'DressingInput',
+--         'dashboard',
+--         'neo-tree',
+--         'neo-tree-popup',
+--         'qf',
+--         'lspinfo',
+--         'lsp-installer',
+--         'TelescopePrompt',
+--         'harpoon',
+--         'packer',
+--         'mason.nvim',
+--         'help',
+--         'CommandTPrompt',
+--         'buffer_manager',
+--         'dapui_scopes',
+--         'dapui_breakpoints',
+--         'dapui_stacks',
+--         'dapui_watches',
+--         'dapui_console',
+--         'dap-repl',
+--       },
+--     })
+--   end,
+-- })

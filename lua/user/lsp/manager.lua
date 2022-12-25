@@ -75,9 +75,7 @@ local function launch_server(server_name, config)
       )
       return
     end
-    if server_name == 'rust_analyzer' then
-      require('user.lsp.rust-tools')
-    elseif server_name == 'tsserver' then
+    if server_name == 'tsserver' then
       require('user.lsp.typescript')
     else
       require('lspconfig')[server_name].setup(config)
@@ -94,7 +92,7 @@ end
 ---@param server_name string name of the language server
 ---@param user_config table? when available it will take predence over any default configurations
 function M.setup(server_name, user_config)
-  if not rvim.plugins.SANE or not rvim.plugin_loaded('mason.nvim') then return end
+  if not rvim.plugins.SANE then return end
   vim.validate({ name = { server_name, 'string' } })
   user_config = user_config or {}
   if already_configured(server_name) then return end

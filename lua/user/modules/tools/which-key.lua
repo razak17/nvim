@@ -33,7 +33,7 @@ return function()
       m = { name = 'Marks' },
       n = { name = 'Notify' },
       o = { name = 'Toggle' },
-      p = { name = 'Packer' },
+      p = { name = 'Lazy' },
       s = { name = 'Snip' },
       t = { name = 'Term' },
     },

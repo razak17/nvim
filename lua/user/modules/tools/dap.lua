@@ -1,4 +1,28 @@
-return function()
+local M = {}
+
+function M.init()
+  local fn = vim.fn
+  local dap = require('dap')
+  local dap_utils = require('user.utils.dap')
+  local function repl_toggle() dap.repl.toggle(nil, 'botright split') end
+  local function set_breakpoint() dap.set_breakpoint(fn.input('Breakpoint condition: ')) end
+  rvim.nnoremap('<localleader>db', dap.toggle_breakpoint, 'dap: toggle breakpoint')
+  rvim.nnoremap('<localleader>dB', set_breakpoint, 'dap: set breakpoint')
+  rvim.nnoremap('<localleader>dc', dap.continue, 'dap: continue or start debugging')
+  rvim.nnoremap('<localleader>dC', dap.clear_breakpoints, 'dap: clear breakpoint')
+  rvim.nnoremap('<localleader>dh', dap.step_back, 'dap: step back')
+  rvim.nnoremap('<localleader>de', dap.step_out, 'dap: step out')
+  rvim.nnoremap('<localleader>di', dap.step_into, 'dap: step into')
+  rvim.nnoremap('<localleader>do', dap.step_over, 'dap: step over')
+  rvim.nnoremap('<localleader>dl', dap.run_last, 'dap: run last')
+  rvim.nnoremap('<localleader>dr', dap.restart, 'dap: restart')
+  rvim.nnoremap('<localleader>dx', dap.terminate, 'dap: terminate')
+  rvim.nnoremap('<localleader>dt', repl_toggle, 'dap: toggle REPL')
+  rvim.nnoremap('<localleader>da', dap_utils.attach, 'dap(node): attach')
+  rvim.nnoremap('<localleader>dA', dap_utils.attach_to_remote, 'dap(node): attach to remote')
+end
+
+function M.config()
   local fn = vim.fn
   local dap = require('dap')
   local icons = rvim.style.icons
@@ -191,3 +215,5 @@ return function()
   -- Rust
   dap.configurations.rust = dap.configurations.cpp
 end
+
+return M

@@ -166,12 +166,8 @@ local function show_documentation()
   if vim.tbl_contains({ 'man' }, filetype) then
     return vim.cmd('Man ' .. vim.fn.expand('<cword>'))
   end
-  if vim.fn.expand('%:t') == 'Cargo.toml' and rvim.plugin_installed('crates.nvim') then
-    return require('crates').show_popup()
-  end
-  if vim.bo.ft == 'rust' and rvim.plugin_installed('rust-tools.nvim') then
-    return require('rust-tools').hover_actions.hover_actions()
-  end
+  if vim.fn.expand('%:t') == 'Cargo.toml' then return require('crates').show_popup() end
+  if vim.bo.ft == 'rust' then return require('rust-tools').hover_actions.hover_actions() end
   vim.lsp.buf.hover()
 end
 
@@ -231,7 +227,7 @@ local function setup_mappings(client, bufnr)
     with_desc('lsp: toggle diagnostic lines')
   )
   -- Typescript
-  if client.name == 'tsserver' and rvim.plugin_loaded('typescript.nvim') then
+  if client.name == 'tsserver' then
     local actions = require('typescript').actions
     nnoremap(
       '<localleader>tr',
@@ -244,7 +240,7 @@ local function setup_mappings(client, bufnr)
     nnoremap('<localleader>tix', actions.removeUnused, with_desc('typescript: remove unused'))
   end
   -- Rust tools
-  if client.name == 'rust_analyzer' and rvim.plugin_loaded('rust-tools.nvim') then
+  if client.name == 'rust_analyzer' then
     nnoremap(
       '<localleader>rh',
       '<cmd>RustToggleInlayHints<CR>',

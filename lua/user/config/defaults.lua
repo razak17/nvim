@@ -1,6 +1,5 @@
 rvim.path = {
   snippets = join_paths(rvim.get_config_dir(), 'snippets', 'textmate'),
-  packer_compiled = join_paths(rvim.get_runtime_dir(), 'site', 'lua', '_compiled_nightly.lua'),
   node = join_paths(vim.env.FNMPATH, 'neovim-node-host'),
   python3 = join_paths(rvim.get_cache_dir(), 'venv', 'neovim', 'bin', 'python3'),
   mason = join_paths(vim.call('stdpath', 'data'), 'mason'),
@@ -9,7 +8,6 @@ rvim.path = {
 rvim.ui = {
   line_wrap_cursor_movement = false,
   transparent_window = false,
-  defer = false,
   winbar = {
     enable = true,
     use_filename = true,
@@ -24,10 +22,7 @@ rvim.keys = {
   localleader = ',',
 }
 
-rvim.plugins = {
-  SANE = true,
-  packer = { active = true },
-}
+rvim.plugins = { SANE = true }
 
 rvim.util = {
   disabled_providers = { 'python', 'ruby', 'perl' },

@@ -1,4 +1,13 @@
-return function()
+local M = {}
+
+function M.init()
+  rvim.nnoremap('R', '<cmd>edit | TSBufEnable highlight<CR>', 'treesitter: enable highlight')
+  rvim.nnoremap('<leader>Le', '<cmd>TSInstallInfo<CR>', 'treesitter: info')
+  rvim.nnoremap('<leader>Lm', '<cmd>TSModuleInfo<CR>', 'treesitter: module info')
+  rvim.nnoremap('<leader>Lu', '<cmd>TSUpdate<CR>', 'treesitter: update')
+end
+
+function M.config()
   -- This option, which currently doesn't work upstream, disables linking treesitter highlights
   -- to the new capture highlights which color schemes and plugins depend on. By toggling it
   -- I can see which highlights still need to be supported in upstream plugins.
@@ -8,7 +17,6 @@ return function()
   ---Get all filetypes for which we have a treesitter parser installed
   ---@return string[]
   local function get_filetypes()
-    vim.cmd([[packadd nvim-treesitter]])
     local parsers = require('nvim-treesitter.parsers')
     local configs = parsers.get_parser_configs()
     return vim.tbl_map(
@@ -118,16 +126,16 @@ return function()
   })
 
   -- Only apply folding to supported files:
-  if not rvim.plugin_installed('nvim-ufo') then
-    rvim.augroup('TreesitterFolds', {
-      {
-        event = { 'FileType' },
-        pattern = get_filetypes(),
-        command = function()
-          vim.cmd('setlocal foldexpr=nvim_treesitter#foldexpr()')
-          vim.cmd('setlocal foldmethod=expr')
-        end,
-      },
-    })
-  end
+  rvim.augroup('TreesitterFolds', {
+    {
+      event = { 'FileType' },
+      pattern = get_filetypes(),
+      command = function()
+        vim.cmd('setlocal foldexpr=nvim_treesitter#foldexpr()')
+        vim.cmd('setlocal foldmethod=expr')
+      end,
+    },
+  })
 end
+
+return M

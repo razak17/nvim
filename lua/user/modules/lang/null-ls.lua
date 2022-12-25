@@ -4,11 +4,7 @@ return function()
   local diagnostics = builtins.diagnostics
   local formatting = builtins.formatting
 
-  local function add_ts_code_actions()
-    if rvim.plugin_installed('typescript.nvim') then
-      require('typescript.extensions.null-ls.code-actions')
-    end
-  end
+  local function add_ts_code_actions() require('typescript.extensions.null-ls.code-actions') end
 
   null_ls.setup({
     debug = true,

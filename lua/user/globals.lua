@@ -150,49 +150,6 @@ function rvim.find_string(table, string)
   return found
 end
 
-rvim.list_installed_plugins = (function()
-  local plugins
-  return function()
-    if plugins then return plugins end
-    local data_dir = rvim.get_runtime_dir()
-    local start = fn.expand(data_dir .. '/site/pack/packer/start/*', true, true)
-    local opt = fn.expand(data_dir .. '/site/pack/packer/opt/*', true, true)
-    plugins = vim.list_extend(start, opt)
-    return plugins
-  end
-end)()
-
-rvim.list_loaded_plugins = (function()
-  local loaded = {}
-  return function()
-    local plugins = packer_plugins or {}
-    for _, plugin in pairs(plugins) do
-      if plugin.loaded then loaded[#loaded + 1] = plugin end
-    end
-    return loaded
-  end
-end)()
-
----Check if a plugin is on the system not whether or not it is loaded
----@param plugin_name string
----@return boolean
-function rvim.plugin_installed(plugin_name)
-  for _, path in ipairs(rvim.list_installed_plugins()) do
-    if vim.endswith(path, plugin_name) then return true end
-  end
-  return false
-end
-
----NOTE: this plugin returns the currently loaded state of a plugin given
----given certain assumptions i.e. it will only be true if the plugin has been
----loaded e.g. lazy loading will return false
----@param plugin_name string
----@return boolean?
-function rvim.plugin_loaded(plugin_name)
-  local plugins = packer_plugins or {}
-  return plugins[plugin_name] and plugins[plugin_name].loaded
-end
-
 ---Check whether or not the location or quickfix list is open
 ---@return boolean
 function rvim.is_vim_list_open()
@@ -247,7 +204,7 @@ end
 ---@param callback fun(module: table)
 function rvim.ftplugin_conf(name, callback)
   local plugin_name = type(name) == 'table' and name.plugin or nil
-  if plugin_name and not rvim.plugin_loaded(plugin_name) then return end
+  if plugin_name then return end
 
   local module = type(name) == 'table' and name[1] or name
   local info = debug.getinfo(1, 'S')
@@ -453,19 +410,6 @@ local function make_mapper(mode, o)
   ---@param rhs string|function
   ---@param opts table
   return function(lhs, rhs, opts)
-    -- check if plugin is installed if plugin option and useInstalled are passed in opts
-    if type(opts) == 'table' then
-      if opts.plugin and opts.useInstalled then
-        local installed = rvim.plugin_installed(opts.plugin)
-        rvim.removekey(opts, 'plugin')
-        rvim.removekey(opts, 'useInstalled')
-        if not installed then return end
-      elseif opts.plugin then
-        local loaded = rvim.plugin_loaded(opts.plugin)
-        rvim.removekey(opts, 'plugin')
-        if not loaded then return end
-      end
-    end
     -- If the label is all that was passed in, set the opts automagically
     opts = type(opts) == 'string' and { desc = opts } or opts and vim.deepcopy(opts) or {}
     vim.keymap.set(mode, lhs, rhs, vim.tbl_extend('keep', opts, parent_opts))
