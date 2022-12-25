@@ -209,7 +209,7 @@ use({
 
 use({
   'ggandor/leap.nvim',
-  keys = { 'n', 's' },
+  event = { 'BufRead', 'BufNewFile' },
   init = function()
     rvim.nnoremap('s', function()
       require('leap').leap({
