@@ -59,6 +59,7 @@ function Lazy:init_ensure_installed()
   end
   vim.opt.runtimepath:prepend(lazy_path)
   self:bootstrap_lazy()
+  rvim.nnoremap('<leader>Ll', '<cmd>Lazy<CR>', 'lazygit: toggle ui')
 end
 
 local plugins = setmetatable({}, {

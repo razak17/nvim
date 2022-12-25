@@ -492,9 +492,8 @@ nnoremap('<leader>V', '<C-W>v', 'vsplit')
 -- rVim {{{
 ----------------------------------------------------------------------------------------------------
 -- FIXME: Mapping not respinding to change
-nnoremap('<leader>lp', '<cmd>Lazy<CR>', 'lazygit: toggle ui')
-nnoremap('<leader>L;', '<cmd>Lazy<CR>', 'alpha')
-nnoremap('<leader>tt', '<cmd>Lazy<CR>', 'todo: dotfiles todos')
+nnoremap('<leader>L;', '<cmd>Alpha<CR>', 'alpha')
+nnoremap('<leader>tt', '<cmd>TodoDots<CR>', 'todo: dotfiles todos')
 ----------------------------------------------------------------------------------------------------
 -- lazy.nvim
 ----------------------------------------------------------------------------------------------------
