@@ -76,8 +76,9 @@ return function()
       '  Restore last session',
       '<cmd>lua require("persistence").load()<CR>'
     ),
-    button('Label', 'o', '  Recent Projects', ':Telescope projects<CR>'),
+    button('Label', 'o', '  Recent projects', ':Telescope projects<CR>'),
     button('Title', 'f', '  Find file', ':Telescope find_files<CR>'),
+    button('Title', 'f', '  Recently used', ':Telescope oldfiles<CR>'),
     button('String', 'w', '  Find word', ':Telescope live_grep<CR>'),
     button('String', 'e', '  New file', ':ene | startinsert <CR>'),
   }
