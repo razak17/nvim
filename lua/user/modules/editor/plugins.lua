@@ -77,14 +77,6 @@ use({
 use({
   'numToStr/Comment.nvim',
   event = 'VeryLazy',
-  init = function()
-    rvim.nnoremap(
-      '<leader>/',
-      '<Plug>(comment_toggle_linewise_current)',
-      'comment: toggle current line'
-    )
-    rvim.xnoremap('<leader>/', '<Plug>(comment_toggle_linewise_visual)', 'comment: toggle linewise')
-  end,
   config = function()
     local utils = require('Comment.utils')
     require('Comment').setup({
