@@ -64,8 +64,9 @@ use({
 
 use({
   'razak17/mason.nvim',
-  event = 'VeryLazy',
+  lazy = false,
   init = function() rvim.nnoremap('<leader>lm', '<cmd>Mason<CR>', 'mason: info') end,
+  dependencies = {'williamboman/mason-lspconfig.nvim' },
   config = function()
     local style = rvim.style
     local icons = style.icons
@@ -86,8 +87,6 @@ use({
     })
   end,
 })
-
-use({ 'williamboman/mason-lspconfig.nvim' })
 
 use({
   'jose-elias-alvarez/null-ls.nvim',
