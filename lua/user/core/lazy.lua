@@ -40,22 +40,19 @@ function Lazy:bootstrap_lazy()
     performance = {
       enabled = true,
       cache = { path = join_paths(rvim.get_cache_dir(), 'lazy/cache') },
-    rtp = {
-      reset = false, -- reset the runtime path to $VIMRUNTIME and your config directory
-      ---@type string[]
-      paths = {}, -- add any custom paths here that you want to indluce in the rtp
-      ---@type string[] list any plugins you want to disable here
-      disabled_plugins = {
-        -- "gzip",
-        -- "matchit",
-        -- "matchparen",
-        -- "netrwPlugin",
-        -- "tarPlugin",
-        -- "tohtml",
-        -- "tutor",
-        -- "zipPlugin",
+      rtp = {
+        reset = false,
+        disabled_plugins = {
+          -- "gzip",
+          -- "matchit",
+          -- "matchparen",
+          -- "netrwPlugin",
+          -- "tarPlugin",
+          -- "tohtml",
+          -- "tutor",
+          -- "zipPlugin",
+        },
       },
-    },
     },
     readme = { root = join_paths(rvim.get_cache_dir(), 'lazy/readme') },
   }
