@@ -15,54 +15,47 @@ use({
 
 use({
   'nvim-telescope/telescope.nvim',
+  dependencies = {
+    {
+      'jvgrootveld/telescope-zoxide',
+      config = function() require('telescope').load_extension('zoxide') end,
+    },
+    {
+      'smartpde/telescope-recent-files',
+      config = function() require('telescope').load_extension('recent_files') end,
+    },
+    {
+      'nvim-telescope/telescope-media-files.nvim',
+      config = function() require('telescope').load_extension('media_files') end,
+    },
+    {
+      'nvim-telescope/telescope-dap.nvim',
+      config = function() require('telescope').load_extension('dap') end,
+    },
+    {
+      'natecraddock/telescope-zf-native.nvim',
+      config = function() require('telescope').load_extension('zf-native') end,
+    },
+    {
+      'nvim-telescope/telescope-ui-select.nvim',
+      config = function() require('telescope').load_extension('ui-select') end,
+    },
+    {
+      'benfowler/telescope-luasnip.nvim',
+      config = function() require('telescope').load_extension('luasnip') end,
+    },
+    {
+      'nvim-telescope/telescope-frecency.nvim',
+      config = function() require('telescope').load_extension('frecency') end,
+    },
+    {
+      'debugloop/telescope-undo.nvim',
+      config = function() require('telescope').load_extension('undo') end,
+    },
+  },
   branch = 'master', -- '0.1.x',
   init = conf('tools', 'telescope').init,
   config = conf('tools', 'telescope').config,
-})
-
-use({
-  'jvgrootveld/telescope-zoxide',
-  config = function() require('telescope').load_extension('zoxide') end,
-})
-
-use({
-  'smartpde/telescope-recent-files',
-  config = function() require('telescope').load_extension('recent_files') end,
-})
-
-use({
-  'nvim-telescope/telescope-media-files.nvim',
-  config = function() require('telescope').load_extension('media_files') end,
-})
-
-use({
-  'nvim-telescope/telescope-dap.nvim',
-  config = function() require('telescope').load_extension('dap') end,
-})
-
-use({
-  'natecraddock/telescope-zf-native.nvim',
-  config = function() require('telescope').load_extension('zf-native') end,
-})
-
-use({
-  'nvim-telescope/telescope-ui-select.nvim',
-  config = function() require('telescope').load_extension('ui-select') end,
-})
-
-use({
-  'benfowler/telescope-luasnip.nvim',
-  config = function() require('telescope').load_extension('luasnip') end,
-})
-
-use({
-  'nvim-telescope/telescope-frecency.nvim',
-  config = function() require('telescope').load_extension('frecency') end,
-})
-
-use({
-  'debugloop/telescope-undo.nvim',
-  config = function() require('telescope').load_extension('undo') end,
 })
 
 use({
