@@ -474,7 +474,12 @@ vnoremap('<leader>y', '"+y', 'yank')
 -- Paste in visual mode multiple times
 xnoremap('p', 'pgvy')
 -- Reverse Line
-vnoremap('<leader>r', [[:s/\%V.\+\%V./\=utils#rev_str(submatch(0))<CR>gv]], 'reverse line')
+function rvim.rev_str(str) return string.reverse(str) end
+vnoremap(
+  '<leader>r',
+  [[:s/\%V.\+\%V./\=v:lua.rvim.rev_str(submatch(0))<CR>gv<ESC>]],
+  'reverse line'
+)
 -- leave extra space when deleting word
 nnoremap('dw', 'cw<C-c>')
 -- Select all
