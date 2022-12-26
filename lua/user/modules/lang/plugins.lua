@@ -52,6 +52,8 @@ use({
 })
 
 -- Lsp
+use({ 'folke/neodev.nvim' })
+
 use({
   'neovim/nvim-lspconfig',
   config = function()
@@ -66,7 +68,7 @@ use({
   'razak17/mason.nvim',
   lazy = false,
   init = function() rvim.nnoremap('<leader>lm', '<cmd>Mason<CR>', 'mason: info') end,
-  dependencies = {'williamboman/mason-lspconfig.nvim' },
+  dependencies = { 'williamboman/mason-lspconfig.nvim' },
   config = function()
     local style = rvim.style
     local icons = style.icons
@@ -266,8 +268,6 @@ use({
     })
   end,
 })
-
-use({ 'ii14/emmylua-nvim' })
 
 use({ 'jose-elias-alvarez/typescript.nvim' })
 

@@ -42,7 +42,9 @@ end
 ---Get the full path to `$RVIM_CONFIG_DIR`
 ---@return string
 function rvim.get_config_dir()
-  return vim.env.RVIM_CONFIG_DIR
+  local rvim_config_dir = vim.env.RVIM_CONFIG_DIR
+  if not rvim_config_dir then return vim.call('stdpath', 'config') end
+  return rvim_config_dir
 end
 
 ---Get the full path to `$RVIM_CACHE_DIR`

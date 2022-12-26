@@ -166,18 +166,6 @@ M.servers = {
     table.insert(path, 'lua/?.lua')
     table.insert(path, 'lua/?/init.lua')
 
-    local plugins = ('%s/site/lazy'):format(rvim.get_runtime_dir())
-    local emmy = ('%s/emmylua-nvim'):format(plugins)
-    -- local plenary = ('%s/plenary.nvim'):format(plugins)
-    -- local neotest = ('%s/neotest'):format(plugins)
-
-    local library = { fn.expand('$VIMRUNTIME/lua') }
-
-    -- for _, p in ipairs({ emmy, plenary, neotest }) do
-    for _, p in ipairs({ emmy }) do
-      if fn.isdirectory(p) == 1 then table.insert(library, p) end
-    end
-
     return {
       settings = {
         Lua = {
@@ -188,7 +176,9 @@ M.servers = {
             globals = { 'vim', 'describe', 'it', 'before_each', 'after_each' },
           },
           workspace = {
-            library = library,
+            library = {
+              { fn.expand('$VIMRUNTIME'), require('neodev.config').types() },
+            },
             checkThirdParty = false,
           },
           telemetry = { enable = false },
