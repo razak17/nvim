@@ -25,7 +25,7 @@ return function()
     ['<leader>'] = {
       a = { name = 'Actions' },
       b = { name = 'Buffer' },
-      F = { name = 'Fold' },
+      f = { name = 'Telescope', v = { name = 'Vim' } },
       g = { name = 'Git' },
       i = { name = 'Toggler' },
       l = { name = 'Lsp' },
@@ -33,11 +33,9 @@ return function()
       m = { name = 'Marks' },
       n = { name = 'Notify' },
       o = { name = 'Toggle' },
-      p = { name = 'Lazy' },
-      s = { name = 'Snip' },
+      s = { name = 'Session' },
       t = { name = 'Term' },
     },
-    ['<leader>fv'] = { name = 'Vim' },
     ['<localleader>'] = {
       d = { name = 'Dap' },
       g = { name = 'Git' },

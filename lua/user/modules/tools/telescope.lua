@@ -11,13 +11,6 @@ function M.init()
   --- from the setup call
   local builtin = require('telescope.builtin')
 
-  local function notes()
-    builtin.find_files({
-      prompt_title = 'Notes',
-      cwd = vim.fn.expand('~/notes/src/'),
-    })
-  end
-
   local function luasnips() telescope.extensions.luasnip.luasnip(rvim.telescope.dropdown()) end
 
   local function find_near_files()
@@ -43,17 +36,15 @@ function M.init()
 
   local function find_files() builtin.find_files(rvim.telescope.minimal_ui()) end
 
-  local function old_files() builtin.oldfiles(rvim.telescope.minimal_ui()) end
-
   local function media_files() telescope.extensions.media_files.media_files({}) end
-
-  local function recent_files() telescope.extensions.recent_files.pick(rvim.telescope.minimal_ui()) end
 
   local function zoxide_list() telescope.extensions.zoxide.list(rvim.telescope.minimal_ui()) end
 
   local function frecency()
     telescope.extensions.frecency.frecency(rvim.telescope.dropdown(rvim.telescope.minimal_ui()))
   end
+
+  local function notifications() telescope.extensions.notify.notify(rvim.telescope.dropdown()) end
 
   -- FIXME: <C-cr> mapping does not work
   local function undo() telescope.extensions.undo.undo() end
@@ -89,62 +80,49 @@ function M.init()
   local function delta_git_bcommits(opts) builtin.git_bcommits(delta_opts(opts, true)) end
 
   local nnoremap = rvim.nnoremap
-  nnoremap('<leader>fb', '<cmd>Telescope current_buffer_fuzzy_find<CR>', 'find in current buffer')
-  nnoremap('<leader>fR', '<cmd>Telescope reloader<CR>', 'module reloader')
-  nnoremap('<leader>fw', '<cmd>Telescope grep_string<CR>', 'find current word')
-  nnoremap('<leader>fs', '<cmd>Telescope live_grep<CR>', 'find string')
-  nnoremap('<leader>fva', '<cmd>Telescope autocommands<CR>', 'autocommands')
-  nnoremap('<leader>fvh', '<cmd>Telescope highlights<CR>', 'highlights')
-  nnoremap('<leader>fvk', '<cmd>Telescope highlights<CR>', 'keymaps')
-  nnoremap('<leader>fvo', '<cmd>Telescope vim_options<CR>', 'options')
-  nnoremap('<leader>fvr', '<cmd>Telescope resume<CR>', 'resume')
+  nnoremap('<c-p>', find_files, 'telescope: find files')
+  nnoremap('<leader>fa', builtins, 'telescope: builtins')
+  nnoremap('<leader>fb', builtin.current_buffer_fuzzy_find, 'find in current buffer')
+  nnoremap('<leader>ff', project_files, 'telescope: project files')
+  nnoremap('<leader>fh', frecency, 'Most (f)recently used files')
+  nnoremap('<leader>fL', luasnips, 'luasnip: available snippets')
+  nnoremap('<leader>fm', media_files, 'telescope: media files')
+  nnoremap('<leader>fn', notifications, 'notifications')
+  nnoremap('<leader>f?', builtin.help_tags, 'help')
+  nnoremap('<leader>ffn', find_near_files, 'find near files')
+  nnoremap('<leader>fo', builtin.buffers, 'buffers')
+  nnoremap('<leader>fp', projects, 'projects')
+  nnoremap('<leader>fP', installed_plugins, 'plugins')
+  nnoremap('<leader>fr', builtin.resume, 'resume last picker')
+  nnoremap('<leader>fR', builtin.reloader, 'module reloader')
+  nnoremap('<leader>fs', builtin.live_grep, 'find string')
+  nnoremap('<leader>fu', undo, 'undo')
+  nnoremap('<leader>fva', builtin.autocommands, 'autocommands')
+  nnoremap('<leader>fvh', builtin.highlights, 'highlights')
+  nnoremap('<leader>fvk', builtin.keymaps, 'autocommands')
+  nnoremap('<leader>fvo', builtin.vim_options, 'options')
+  nnoremap('<leader>fvr', builtin.resume, 'resume last picker')
+  nnoremap('<leader>fw', builtin.live_grep, 'find word')
+  nnoremap('<leader>fz', zoxide_list, 'zoxide')
   -- Git
-  nnoremap('<leader>gf', '<cmd>Telescope git_files<CR>', 'git: files')
-  nnoremap('<leader>gs', '<cmd>Telescope git_status<CR>', 'git: status')
-  nnoremap('<leader>fgb', '<cmd>Telescope git_branches<CR>', 'git: branches')
+  nnoremap('<leader>gf', builtin.git_files, 'git files')
+  nnoremap('<leader>gs', builtin.git_status, 'git status')
+  nnoremap('<leader>fgb', builtin.git_branches, 'git branches')
+  nnoremap('<leader>fgB', delta_git_bcommits, 'buffer commits')
+  nnoremap('<leader>fgc', delta_git_commits, 'commits')
   -- LSP
-  nnoremap('<leader>lR', '<cmd>Telescope lsp_references<CR>', 'telescope: references')
-  nnoremap('<leader>ld', '<cmd>Telescope lsp_document_symbols<CR>', 'telescope: document symbols')
+  nnoremap('<leader>ld', builtin.lsp_document_symbols, 'telescope: document symbols')
+  nnoremap('<leader>ls', builtin.lsp_dynamic_workspace_symbols, 'telescope: workspace symbols')
   nnoremap(
     '<leader>le',
     '<cmd>Telescope diagnostics bufnr=0 theme=get_ivy<CR>',
     'telescope: document diagnostics'
   )
   nnoremap(
-    '<leader>lE',
+    '<leader>lw',
     '<cmd>Telescope diagnostics theme=get_ivy<CR>',
     'telescope: workspace diagnostics'
   )
-  nnoremap(
-    '<leader>ls',
-    '<cmd>Telescope lsp_dynamic_workspace_symbols<CR>',
-    'telescope: workspace symbols'
-  )
-
-  require('which-key').register({
-    ['<c-p>'] = { find_files, 'telescope: find files' },
-    ['<leader>f'] = {
-      name = 'Telescope',
-      a = { builtins, 'builtin' },
-      f = { project_files, 'find files' },
-      g = {
-        name = 'Git',
-        B = { delta_git_bcommits, 'buffer commits' },
-        c = { delta_git_commits, 'commits' },
-      },
-      h = { frecency, 'most frequently used files' },
-      L = { luasnips, 'luasnip: available snippets' },
-      m = { media_files, 'media files' },
-      j = { notes, 'notes' },
-      n = { find_near_files, 'find near files' },
-      o = { old_files, 'old files' },
-      p = { projects, 'recent projects' },
-      P = { installed_plugins, 'plugins' },
-      r = { recent_files, 'resume' },
-      u = { undo, 'undo' },
-      z = { zoxide_list, 'zoxide list' },
-    },
-  })
 end
 
 function M.config()
