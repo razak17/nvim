@@ -44,6 +44,10 @@ function M.init()
     telescope.extensions.frecency.frecency(rvim.telescope.dropdown(rvim.telescope.minimal_ui()))
   end
 
+  local function recent_files()
+    telescope.extensions.recent_files.pick(rvim.telescope.dropdown(rvim.telescope.minimal_ui()))
+  end
+
   local function notifications() telescope.extensions.notify.notify(rvim.telescope.dropdown()) end
 
   -- FIXME: <C-cr> mapping does not work
@@ -83,6 +87,7 @@ function M.init()
   nnoremap('<c-p>', find_files, 'telescope: find files')
   nnoremap('<leader>fa', builtins, 'telescope: builtins')
   nnoremap('<leader>fb', builtin.current_buffer_fuzzy_find, 'find in current buffer')
+  nnoremap('<leader>fc', builtin.resume, 'resume last picker')
   nnoremap('<leader>ff', project_files, 'telescope: project files')
   nnoremap('<leader>fh', frecency, 'Most (f)recently used files')
   nnoremap('<leader>fL', luasnips, 'luasnip: available snippets')
@@ -93,7 +98,7 @@ function M.init()
   nnoremap('<leader>fo', builtin.buffers, 'buffers')
   nnoremap('<leader>fp', projects, 'projects')
   nnoremap('<leader>fP', installed_plugins, 'plugins')
-  nnoremap('<leader>fr', builtin.resume, 'resume last picker')
+  nnoremap('<leader>fr', recent_files, 'recent files')
   nnoremap('<leader>fR', builtin.reloader, 'module reloader')
   nnoremap('<leader>fs', builtin.live_grep, 'find string')
   nnoremap('<leader>fu', undo, 'undo')
@@ -101,7 +106,6 @@ function M.init()
   nnoremap('<leader>fvh', builtin.highlights, 'highlights')
   nnoremap('<leader>fvk', builtin.keymaps, 'autocommands')
   nnoremap('<leader>fvo', builtin.vim_options, 'options')
-  nnoremap('<leader>fvr', builtin.resume, 'resume last picker')
   nnoremap('<leader>fw', builtin.grep_string, 'find word')
   nnoremap('<leader>fz', zoxide_list, 'zoxide')
   -- Git
