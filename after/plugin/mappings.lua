@@ -269,11 +269,7 @@ local function toggle_opt(opt)
     value = not value
   end
   vim.opt[opt] = value
-  vim.notify(
-    fmt('%s set to %s', opt, tostring(value)),
-    'info',
-    { title = 'UI Toggles', timeout = 8000 }
-  )
+  vim.notify(fmt('%s set to %s', opt, tostring(value)), 'info', { title = 'UI Toggles' })
 end
 nnoremap('<leader>ow', function() toggle_opt('wrap') end, 'toggle: wrap')
 nnoremap('<leader>oL', function() toggle_opt('cursorline') end, 'toggle: cursorline')
