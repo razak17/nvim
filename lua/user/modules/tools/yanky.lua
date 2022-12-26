@@ -20,9 +20,22 @@ function M.config()
   local utils = require('yanky.utils')
   local mapping = require('yanky.telescope.mapping')
 
+  -- NOTE: use this workaround until https://github.com/gbprod/yanky.nvim/issues/37 is fixed
+  vim.g.clipboard = {
+    name = 'xsel_override',
+    copy = {
+      ['+'] = 'xsel --input --clipboard',
+      ['*'] = 'xsel --input --primary',
+    },
+    paste = {
+      ['+'] = 'xsel --output --clipboard',
+      ['*'] = 'xsel --output --primary',
+    },
+    cache_enabled = 1,
+  }
+
   require('yanky').setup({
     ring = { storage = 'sqlite' },
-    preserve_cursor_position = { enabled = true },
     picker = {
       telescope = {
         mappings = {
