@@ -1,9 +1,35 @@
 local M = {}
 
+local function attach()
+  print('attaching')
+  require('dap').run({
+    type = 'node2',
+    request = 'attach',
+    cwd = vim.fn.getcwd(),
+    sourceMaps = true,
+    protocol = 'inspector',
+    skipFiles = { '<node_internals>/**/*.js' },
+  })
+end
+
+local function attach_to_remote()
+  print('attaching')
+  require('dap').run({
+    type = 'node2',
+    request = 'attach',
+    address = '127.0.0.1',
+    port = 9229,
+    localRoot = vim.fn.getcwd(),
+    remoteRoot = '/home/vcap/app',
+    sourceMaps = true,
+    protocol = 'inspector',
+    skipFiles = { '<node_internals>/**/*.js' },
+  })
+end
+
 function M.init()
   local fn = vim.fn
   local dap = require('dap')
-  local dap_utils = require('user.utils.dap')
   local function repl_toggle() dap.repl.toggle(nil, 'botright split') end
   local function set_breakpoint() dap.set_breakpoint(fn.input('Breakpoint condition: ')) end
   rvim.nnoremap('<localleader>db', dap.toggle_breakpoint, 'dap: toggle breakpoint')
@@ -18,8 +44,8 @@ function M.init()
   rvim.nnoremap('<localleader>dr', dap.restart, 'dap: restart')
   rvim.nnoremap('<localleader>dx', dap.terminate, 'dap: terminate')
   rvim.nnoremap('<localleader>dt', repl_toggle, 'dap: toggle REPL')
-  rvim.nnoremap('<localleader>da', dap_utils.attach, 'dap(node): attach')
-  rvim.nnoremap('<localleader>dA', dap_utils.attach_to_remote, 'dap(node): attach to remote')
+  rvim.nnoremap('<localleader>da', attach, 'dap(node): attach')
+  rvim.nnoremap('<localleader>dA', attach_to_remote, 'dap(node): attach to remote')
 end
 
 function M.config()
