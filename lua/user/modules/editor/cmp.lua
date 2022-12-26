@@ -19,10 +19,9 @@ return function()
       { CmpItemAbbr = { foreground = 'fg', background = 'NONE', italic = false, bold = false } },
       { CmpItemAbbrDeprecated = { strikethrough = true, inherit = 'Comment' } },
       { CmpItemAbbrMatchFuzzy = { italic = true, foreground = { from = 'Keyword' } } },
-      -- Make the source information less prominent
       {
         CmpItemMenu = {
-          fg = { from = 'LineNr', attr = 'fg' },
+          fg = { from = 'VertSplit', attr = 'fg' },
           italic = true,
           bold = false,
         },
