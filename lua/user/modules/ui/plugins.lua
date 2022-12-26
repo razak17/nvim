@@ -61,29 +61,27 @@ use({
   'nvim-neo-tree/neo-tree.nvim',
   cmd = { 'Neotree' },
   branch = 'main',
+  dependencies = {
+    's1n7ax/nvim-window-picker',
+    version = 'v1.*',
+    config = function()
+      require('window-picker').setup({
+        autoselect_one = true,
+        include_current = false,
+        filter_rules = {
+          bo = {
+            filetype = { 'neo-tree-popup', 'quickfix', 'incline' },
+            buftype = { 'terminal', 'quickfix', 'nofile' },
+          },
+        },
+        other_win_hl_color = require('user.utils.highlights').get('Visual', 'bg'),
+      })
+    end,
+  },
   init = function()
     rvim.nnoremap('<c-n>', '<cmd>Neotree toggle reveal<CR>', 'toggle tree', 'neo-tree.nvim')
   end,
   config = conf('ui', 'neo-tree'),
-})
-
-use({
-  's1n7ax/nvim-window-picker',
-  version = 'v1.*',
-  event = 'VeryLazy',
-  config = function()
-    require('window-picker').setup({
-      autoselect_one = true,
-      include_current = false,
-      filter_rules = {
-        bo = {
-          filetype = { 'neo-tree-popup', 'quickfix', 'incline' },
-          buftype = { 'terminal', 'quickfix', 'nofile' },
-        },
-      },
-      other_win_hl_color = require('user.utils.highlights').get('Visual', 'bg'),
-    })
-  end,
 })
 
 use({

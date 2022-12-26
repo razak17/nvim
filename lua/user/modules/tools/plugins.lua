@@ -308,7 +308,7 @@ use({
 use({
   'is0n/jaq-nvim',
   event = 'VeryLazy',
-  init = function() rvim.nnoremap('<C-b>', ':silent only | Jaq<CR>', 'jaq: run') end,
+  init = function() rvim.nnoremap('<leader>rr', ':silent only | Jaq<CR>', 'jaq: run') end,
   config = function()
     require('jaq-nvim').setup({
       cmds = {

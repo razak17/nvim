@@ -76,7 +76,7 @@ use({
 
 use({
   'numToStr/Comment.nvim',
-  event = 'VeryLazy',
+  keys = { 'gcc' },
   config = function()
     local utils = require('Comment.utils')
     require('Comment').setup({
