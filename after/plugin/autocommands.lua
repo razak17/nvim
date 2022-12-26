@@ -366,7 +366,7 @@ rvim.augroup('Utilities', {
     command = "silent! call mkdir(expand('<afile>:p:h'), 'p')",
   },
   {
-    event = { 'FocusLost', 'InsertLeave' },
+    event = { 'FocusLost', 'InsertLeave', 'BufLeave' },
     pattern = { '*' },
     command = function()
       if rvim.util.auto_save and can_save() then vim.cmd('silent! wall') end
