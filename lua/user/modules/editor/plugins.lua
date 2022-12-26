@@ -131,7 +131,7 @@ use({
   init = function()
     rvim.nnoremap(
       '<leader>c',
-      function() require('close_buffers').wipe({ type = 'this' }) end,
+      function() require('close_buffers').delete({ type = 'this' }) end,
       'close buffer'
     )
     rvim.nnoremap(
