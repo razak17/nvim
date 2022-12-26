@@ -115,7 +115,7 @@ use({
 use({
   'uga-rosa/ccc.nvim',
   cmd = { 'CccHighlighterToggle', 'CccHighlighterEnable', 'CccHighlighterDisable' },
-  init = function() rvim.nnoremap('<leader>oC', '<cmd>CccHighlighterToggle<CR>', 'ccc: toggle') end,
+  init = function() rvim.nnoremap('<leader>oc', '<cmd>CccHighlighterToggle<CR>', 'ccc: toggle') end,
   config = function()
     require('ccc').setup({
       win_opts = { border = rvim.style.border.current },

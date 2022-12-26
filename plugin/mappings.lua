@@ -272,7 +272,7 @@ local function toggle_opt(opt)
   vim.notify(opt .. ' set to ' .. tostring(value), 'info', { title = 'UI Toggles' })
 end
 nnoremap('<leader>ow', function() toggle_opt('wrap') end, 'toggle: wrap')
-nnoremap('<leader>oc', function() toggle_opt('cursorline') end, 'toggle: cursorline')
+nnoremap('<leader>oL', function() toggle_opt('cursorline') end, 'toggle: cursorline')
 nnoremap('<leader>os', function() toggle_opt('laststatus') end, 'toggle: statusline')
 nnoremap('<leader>or', ':ToggleRelativeNumber<CR>', 'toggle: relativenumber')
 ----------------------------------------------------------------------------------------------------
