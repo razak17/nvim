@@ -102,7 +102,7 @@ function M.init()
   nnoremap('<leader>fvk', builtin.keymaps, 'autocommands')
   nnoremap('<leader>fvo', builtin.vim_options, 'options')
   nnoremap('<leader>fvr', builtin.resume, 'resume last picker')
-  nnoremap('<leader>fw', builtin.live_grep, 'find word')
+  nnoremap('<leader>fw', builtin.grep_string, 'find word')
   nnoremap('<leader>fz', zoxide_list, 'zoxide')
   -- Git
   nnoremap('<leader>gf', builtin.git_files, 'git files')
