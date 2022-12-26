@@ -40,6 +40,22 @@ function Lazy:bootstrap_lazy()
     performance = {
       enabled = true,
       cache = { path = join_paths(rvim.get_cache_dir(), 'lazy/cache') },
+    rtp = {
+      reset = false, -- reset the runtime path to $VIMRUNTIME and your config directory
+      ---@type string[]
+      paths = {}, -- add any custom paths here that you want to indluce in the rtp
+      ---@type string[] list any plugins you want to disable here
+      disabled_plugins = {
+        -- "gzip",
+        -- "matchit",
+        -- "matchparen",
+        -- "netrwPlugin",
+        -- "tarPlugin",
+        -- "tohtml",
+        -- "tutor",
+        -- "zipPlugin",
+      },
+    },
     },
     readme = { root = join_paths(rvim.get_cache_dir(), 'lazy/readme') },
   }
@@ -58,7 +74,7 @@ function Lazy:init_ensure_installed()
       lazy_path,
     })
   end
-  vim.opt.runtimepath:prepend(lazy_path)
+  vim.opt.rtp:prepend(lazy_path)
   self:bootstrap_lazy()
   rvim.nnoremap('<leader>Ll', '<cmd>Lazy<CR>', 'lazygit: toggle ui')
 end
