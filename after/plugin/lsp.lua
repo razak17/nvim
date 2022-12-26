@@ -389,22 +389,6 @@ do
 end
 
 ----------------------------------------------------------------------------------------------------
--- Signs
-----------------------------------------------------------------------------------------------------
-local function sign(opts)
-  fn.sign_define(opts.highlight, {
-    text = opts.icon,
-    texthl = opts.highlight,
-    linehl = fmt('%sLine', opts.highlight),
-    culhl = opts.highlight .. 'Line',
-  })
-end
-sign({ highlight = 'DiagnosticSignError', icon = codicons.lsp.error })
-sign({ highlight = 'DiagnosticSignWarn', icon = codicons.lsp.warn })
-sign({ highlight = 'DiagnosticSignInfo', icon = codicons.lsp.info })
-sign({ highlight = 'DiagnosticSignHint', icon = codicons.lsp.hint })
-
-----------------------------------------------------------------------------------------------------
 -- Handler Overrides
 ----------------------------------------------------------------------------------------------------
 --[[
@@ -444,6 +428,22 @@ diagnostic.handlers.virtual_text = vim.tbl_extend('force', virt_text_handler, {
   show = max_diagnostic(virt_text_handler.show),
   hide = function(_, bufnr) virt_text_handler.hide(ns, bufnr) end,
 })
+
+----------------------------------------------------------------------------------------------------
+-- Signs
+----------------------------------------------------------------------------------------------------
+local function sign(opts)
+  fn.sign_define(opts.highlight, {
+    text = opts.icon,
+    texthl = opts.highlight,
+    linehl = fmt('%sLine', opts.highlight),
+    culhl = opts.highlight .. 'Line',
+  })
+end
+sign({ highlight = 'DiagnosticSignError', icon = codicons.lsp.error })
+sign({ highlight = 'DiagnosticSignWarn', icon = codicons.lsp.warn })
+sign({ highlight = 'DiagnosticSignInfo', icon = codicons.lsp.info })
+sign({ highlight = 'DiagnosticSignHint', icon = codicons.lsp.hint })
 
 ----------------------------------------------------------------------------------------------------
 -- Diagnostic Configuration
