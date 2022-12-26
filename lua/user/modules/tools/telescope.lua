@@ -309,9 +309,7 @@ function M.config()
             preview_height = 0.8,
           },
         },
-        recent_files = {
-          only_cwd = true,
-        },
+        recent_files = { only_cwd = true },
       },
       pickers = {
         buffers = rvim.telescope.dropdown({
