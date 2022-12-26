@@ -17,10 +17,7 @@ rvim.ui = {
 
 rvim.lang = { format_on_save = true }
 
-rvim.keys = {
-  leader = 'space',
-  localleader = ',',
-}
+rvim.keys = { leader = 'space', localleader = ',' }
 
 rvim.plugins = { SANE = true }
 

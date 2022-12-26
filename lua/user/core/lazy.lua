@@ -40,19 +40,7 @@ function Lazy:bootstrap_lazy()
     performance = {
       enabled = true,
       cache = { path = join_paths(rvim.get_cache_dir(), 'lazy/cache') },
-      rtp = {
-        reset = false,
-        disabled_plugins = {
-          -- "gzip",
-          -- "matchit",
-          -- "matchparen",
-          -- "netrwPlugin",
-          -- "tarPlugin",
-          -- "tohtml",
-          -- "tutor",
-          -- "zipPlugin",
-        },
-      },
+      rtp = { reset = false },
     },
     readme = { root = join_paths(rvim.get_cache_dir(), 'lazy/readme') },
   }
