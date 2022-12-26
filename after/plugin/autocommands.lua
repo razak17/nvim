@@ -216,13 +216,6 @@ rvim.augroup('WinBehavior', {
     pattern = { '*' },
     command = [[if has('nvim') | wshada! | else | wviminfo! | endif]],
   },
-  {
-    event = { 'FocusLost', 'InsertLeave' },
-    pattern = { '*' },
-    command = function()
-      if rvim.util.auto_save then vim.cmd('silent! wall') end
-    end,
-  },
   { event = { 'TermOpen' }, pattern = { '*:zsh' }, command = 'startinsert' },
   -- Automatically jump into the quickfix window on open
   {
@@ -371,12 +364,13 @@ rvim.augroup('Utilities', {
     event = { 'BufWritePre', 'FileWritePre' },
     pattern = { '*' },
     command = "silent! call mkdir(expand('<afile>:p:h'), 'p')",
+
   },
   {
-    event = { 'BufLeave' },
+    event = { 'FocusLost', 'InsertLeave' },
     pattern = { '*' },
     command = function()
-      if can_save() then vim.cmd.update({ mods = { silent = true } }) end
+      if rvim.util.auto_save and can_save() then vim.cmd('silent! wall') end
     end,
   },
   {
