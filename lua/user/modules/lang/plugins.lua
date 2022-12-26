@@ -272,7 +272,7 @@ use({ 'jose-elias-alvarez/typescript.nvim' })
 
 use({ 'nanotee/sqls.nvim' })
 
-use({ 'simrat39/rust-tools.nvim', branch = 'modularize_and_inlay_rewrite' })
+use({ 'simrat39/rust-tools.nvim' })
 
 use({ 'b0o/schemastore.nvim' })
 
