@@ -3,6 +3,8 @@ if ok then which_key.register({ ['<localleader>'] = { r = { name = 'Rust Tools' 
 
 require('rust-tools').setup({
   tools = {
+    executor = require('rust-tools/executors').termopen, -- can be quickfix or termopen
+    reload_workspace_from_cargo_toml = true,
     runnables = { use_telescope = false },
     inlay_hints = {
       show_parameter_hints = false,
@@ -14,6 +16,14 @@ require('rust-tools').setup({
       max_width = math.min(math.floor(vim.o.columns * 0.7), 100),
       max_height = math.min(math.floor(vim.o.lines * 0.3), 30),
     },
+    on_initialized = function()
+      vim.api.nvim_create_autocmd({ 'BufWritePost', 'BufEnter', 'CursorHold', 'InsertLeave' }, {
+        pattern = { '*.rs' },
+        callback = function()
+          local _, _ = pcall(vim.lsp.codelens.refresh)
+        end,
+      })
+    end,
   },
   dap = {
     adapter = require('rust-tools.dap').get_codelldb_adapter(
@@ -22,13 +32,11 @@ require('rust-tools').setup({
     ),
   },
   server = {
-    -- setting it to false may improve startup time
     standalone = false,
-    -- cmd = { 'rustup', 'run', 'nightly', rvim.path.mason .. '/bin/rust-analyzer' },
     settings = {
       ['rust-analyzer'] = {
         lens = { enable = true },
-        checkOnSave = { command = 'clippy' },
+        checkOnSave = { enable = true, command = 'clippy' },
       },
     },
   },

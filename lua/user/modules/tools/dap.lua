@@ -219,7 +219,7 @@ function M.config()
     type = 'server',
     port = '${port}',
     executable = {
-      command = join_paths(rvim.path.mason, '/bin/codelldb'),
+      command = join_paths(rvim.path.mason, 'bin/codelldb'),
       args = { '--port', '${port}' },
     },
   }
