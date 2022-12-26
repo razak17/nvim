@@ -2,9 +2,6 @@ local M = {}
 
 function M.init()
   rvim.nnoremap('R', '<cmd>edit | TSBufEnable highlight<CR>', 'treesitter: enable highlight')
-  rvim.nnoremap('<leader>Le', '<cmd>TSInstallInfo<CR>', 'treesitter: info')
-  rvim.nnoremap('<leader>Lm', '<cmd>TSModuleInfo<CR>', 'treesitter: module info')
-  rvim.nnoremap('<leader>Lu', '<cmd>TSUpdate<CR>', 'treesitter: update')
 end
 
 function M.config()

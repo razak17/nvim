@@ -131,8 +131,6 @@ use({
   config = conf('lang', 'treesitter').config,
 })
 
--- use this until:  https://github.com/nvim-treesitter/playground/pull/57 is merged
--- kind of redundant since neovim has Inspect command now
 use({ 'nvim-treesitter/nvim-treesitter-textobjects' })
 
 use({ 'p00f/nvim-ts-rainbow' })
@@ -165,7 +163,7 @@ use({
 })
 
 use({
-  'nullchilly/lsp-playground',
+  'nvim-treesitter/playground',
   init = function()
     rvim.nnoremap('<leader>LE', ':TSHighlightCapturesUnderCursor<CR>', 'playground: inspect scope')
   end,
