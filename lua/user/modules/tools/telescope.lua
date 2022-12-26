@@ -298,6 +298,13 @@ function M.config()
             project = vim.env.DEV_HOME,
           },
         },
+        undo = {
+          side_by_side = true,
+          layout_strategy = 'vertical',
+          layout_config = {
+            preview_height = 0.8,
+          },
+        },
       },
       pickers = {
         buffers = rvim.telescope.dropdown({

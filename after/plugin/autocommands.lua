@@ -364,7 +364,6 @@ rvim.augroup('Utilities', {
     event = { 'BufWritePre', 'FileWritePre' },
     pattern = { '*' },
     command = "silent! call mkdir(expand('<afile>:p:h'), 'p')",
-
   },
   {
     event = { 'FocusLost', 'InsertLeave' },
