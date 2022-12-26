@@ -1,5 +1,7 @@
 if not rvim then return end
-
+----------------------------------------------------------------------------------------------------
+-- Set Providers & Disable Builtins
+----------------------------------------------------------------------------------------------------
 vim.g.python3_host_prog = rvim.path.python3
 vim.g.node_host_prog = rvim.path.node
 for _, v in pairs(rvim.util.disabled_providers) do
@@ -8,12 +10,16 @@ end
 for _, plugin in pairs(rvim.util.disabled_builtins) do
   vim.g['loaded_' .. plugin] = 1
 end
-
+----------------------------------------------------------------------------------------------------
+-- Load Modules
+----------------------------------------------------------------------------------------------------
 -- NOTE: order matters
 R('user.core.lazy').ensure_plugins()
 R('user.core.highlights')
 R('user.core.commands')
-
+----------------------------------------------------------------------------------------------------
+-- Append RTP
+----------------------------------------------------------------------------------------------------
 local runtime_dir = rvim.get_runtime_dir()
 local config_dir = rvim.get_config_dir()
 
