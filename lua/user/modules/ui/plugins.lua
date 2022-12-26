@@ -1,7 +1,7 @@
 local use = require('user.core.lazy').use
 local conf = require('user.utils.plugins').load_conf
 
-use({ 'razak17/zephyr-nvim', lazy = false })
+use({ 'razak17/zephyr-nvim' })
 
 use({ 'LunarVim/horizon.nvim' })
 
