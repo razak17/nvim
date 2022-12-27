@@ -15,7 +15,7 @@ local api = vim.api
 local icons = rvim.style.icons.misc
 local contains = vim.tbl_contains
 
-local dir_separator = '/'
+local dir_separator = icons.caret_right
 local separator = icons.arrow_right
 local ellipsis = icons.ellipsis
 
