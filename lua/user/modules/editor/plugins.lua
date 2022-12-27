@@ -179,11 +179,11 @@ use({
   end,
 })
 
+use({ 'monaqa/dial.nvim', event = { 'BufRead', 'BufNewFile' }, config = conf('editor', 'dial') })
+
 ----------------------------------------------------------------------------------------------------
 -- Graveyard
 ----------------------------------------------------------------------------------------------------
-
--- use({ 'monaqa/dial.nvim', config = conf('editor', 'dial') })
 --
 -- use({
 --   'chentoast/marks.nvim',
