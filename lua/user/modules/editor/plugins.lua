@@ -170,16 +170,18 @@ use({
   end,
 })
 
+use({
+  'mizlan/iswap.nvim',
+  event = 'VeryLazy',
+  init = function()
+    rvim.nnoremap('<leader>ia', '<Cmd>ISwap<CR>', 'iswap: swap any')
+    rvim.nnoremap('<leader>iw', '<Cmd>ISwapWith<CR>', 'iswap: swap with')
+  end,
+})
+
 ----------------------------------------------------------------------------------------------------
 -- Graveyard
 ----------------------------------------------------------------------------------------------------
--- use({
---   'mizlan/iswap.nvim',
---   init = function()
---     rvim.nnoremap('<leader>ia', '<Cmd>ISwap<CR>', 'iswap: swap any')
---     rvim.nnoremap('<leader>iw', '<Cmd>ISwapWith<CR>', 'iswap: swap with')
---   end,
--- })
 --
 -- use({
 --   'junegunn/vim-easy-align',
