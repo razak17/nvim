@@ -182,15 +182,7 @@ use({
 ----------------------------------------------------------------------------------------------------
 -- Graveyard
 ----------------------------------------------------------------------------------------------------
---
--- use({
---   'jghauser/fold-cycle.nvim',
---   init = function()
---     rvim.nnoremap('<BS>', function() require('fold-cycle').open() end, 'fold-cycle: open')
---   end,
---   config = function() require('fold-cycle').setup() end,
--- })
---
+
 -- use({ 'monaqa/dial.nvim', config = conf('editor', 'dial') })
 --
 -- use({
