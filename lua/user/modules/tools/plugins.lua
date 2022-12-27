@@ -5,7 +5,7 @@ use({ 'nvim-lua/plenary.nvim' })
 
 use({ 'nvim-lua/popup.nvim' })
 
-use({ 'kkharji/sqlite.lua' })
+use({ 'kkharji/sqlite.lua', event = 'VeryLazy' })
 
 use({
   'folke/which-key.nvim',
@@ -399,13 +399,12 @@ use({
   end,
 })
 
--- FIXME: handle insyallation freezes
--- use({
---   '0x100101/lab.nvim',
---   event = { 'InsertEnter' },
---   build = 'cd js && npm ci',
---   config = function() require('lab').setup() end,
--- })
+use({
+  '0x100101/lab.nvim',
+  event = { 'InsertEnter' },
+  build = 'cd js && npm ci',
+  config = function() require('lab').setup() end,
+})
 
 use({
   'Saecki/crates.nvim',
