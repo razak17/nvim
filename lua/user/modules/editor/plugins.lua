@@ -122,11 +122,6 @@ use({
   'kazhala/close-buffers.nvim',
   init = function()
     rvim.nnoremap(
-      '<leader>c',
-      function() require('close_buffers').delete({ type = 'this' }) end,
-      'close buffer'
-    )
-    rvim.nnoremap(
       '<leader>bc',
       function() require('close_buffers').wipe({ type = 'other' }) end,
       'close others'
