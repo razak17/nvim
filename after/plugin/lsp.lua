@@ -220,7 +220,12 @@ local function setup_mappings(client, bufnr)
   nnoremap('<leader>li', '<cmd>LspInfo<CR>', 'lsp: info')
   nnoremap('<leader>lf', '<cmd>LspFormat<CR>', with_desc('lsp: format buffer'))
   nnoremap('<leader>ll', '<cmd>LspDiagnostics<CR>', with_desc('lsp: toggle quickfix diagnostics'))
-  nnoremap('<leader>ov', '<cmd>ToggleVirtualText<CR>', with_desc('lsp: toggle virtual_text'))
+  nnoremap('<leader>ov', '<cmd>ToggleVirtualText<CR>', with_desc('lsp: toggle virtual text'))
+  nnoremap(
+    '<leader>os',
+    '<cmd>ToggleDiagnosticSigns<CR>',
+    with_desc('lsp: toggle diagnostic signs')
+  )
   nnoremap(
     '<leader>ol',
     '<cmd>ToggleDiagnosticLines<CR>',
@@ -440,23 +445,36 @@ local function sign(opts)
     culhl = opts.highlight .. 'Line',
   })
 end
-sign({ highlight = 'DiagnosticSignError', icon = codicons.lsp.error })
-sign({ highlight = 'DiagnosticSignWarn', icon = codicons.lsp.warn })
-sign({ highlight = 'DiagnosticSignInfo', icon = codicons.lsp.info })
-sign({ highlight = 'DiagnosticSignHint', icon = codicons.lsp.hint })
+
+local function toggle_diagnostic_signs()
+  if rvim.lsp.diagnostics.signs.active then
+    rvim.lsp.diagnostics.signs.active = false
+    sign({ highlight = 'DiagnosticSignError', icon = codicons.lsp.error })
+    sign({ highlight = 'DiagnosticSignWarn', icon = codicons.lsp.warn })
+    sign({ highlight = 'DiagnosticSignInfo', icon = codicons.lsp.info })
+    sign({ highlight = 'DiagnosticSignHint', icon = codicons.lsp.hint })
+    return
+  end
+  rvim.lsp.diagnostics.signs.active = true
+  sign({ highlight = 'DiagnosticSignError', icon = '' })
+  sign({ highlight = 'DiagnosticSignWarn', icon = '' })
+  sign({ highlight = 'DiagnosticSignInfo', icon = '' })
+  sign({ highlight = 'DiagnosticSignHint', icon = '' })
+end
+toggle_diagnostic_signs()
+command('ToggleDiagnosticSigns', toggle_diagnostic_signs)
 
 ----------------------------------------------------------------------------------------------------
 -- Diagnostic Configuration
 ----------------------------------------------------------------------------------------------------
 local max_width = math.min(math.floor(vim.o.columns * 0.7), 100)
 local max_height = math.min(math.floor(vim.o.lines * 0.3), 30)
-local diagnostics = rvim.lsp.diagnostics
 
 diagnostic.config({
-  signs = { active = diagnostics.signs.active, values = codicons.lsp },
-  underline = diagnostics.underline,
-  update_in_insert = diagnostics.update_in_insert,
-  severity_sort = diagnostics.severity_sort,
+  signs = { active = rvim.lsp.diagnostics.signs.active, values = codicons.lsp },
+  underline = rvim.lsp.diagnostics.underline,
+  update_in_insert = rvim.lsp.diagnostics.update_in_insert,
+  severity_sort = rvim.lsp.diagnostics.severity_sort,
   virtual_lines = false,
   virtual_text = false,
   float = vim.tbl_deep_extend('keep', {
@@ -477,7 +495,7 @@ local function toggle_virtual_text()
     vim.diagnostic.config({
       virtual_text = {
         prefix = '',
-        spacing = diagnostics.virtual_text_spacing,
+        spacing = rvim.lsp.diagnostics.virtual_text_spacing,
         format = function(d)
           local level = diagnostic.severity[d.severity]
           return fmt('%s %s', codicons.lsp[level:lower()], d.message)
