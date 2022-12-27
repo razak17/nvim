@@ -278,14 +278,16 @@ use({ 'b0o/schemastore.nvim' })
 
 use({ 'marilari88/twoslash-queries.nvim', ft = { 'typescript', 'typescriptreact' } })
 
+use({
+  'andymass/vim-matchup',
+  lazy = false,
+  config = function() vim.g.matchup_matchparen_enabled = 0 end,
+  init = function() rvim.nnoremap('<leader>lh', ':<c-u>MatchupWhereAmI?<CR>', 'where am i') end,
+})
+
 ----------------------------------------------------------------------------------------------------
 -- Graveyard
 ----------------------------------------------------------------------------------------------------
--- use({
---   'andymass/vim-matchup',
---   config = function() rvim.nnoremap('<leader>lm', ':<c-u>MatchupWhereAmI?<CR>', 'where am i') end,
--- })
---
 -- use({
 --   'RRethy/vim-illuminate',
 --   init = function()
