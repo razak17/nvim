@@ -180,33 +180,3 @@ use({
 })
 
 use({ 'monaqa/dial.nvim', event = { 'BufRead', 'BufNewFile' }, config = conf('editor', 'dial') })
-
-----------------------------------------------------------------------------------------------------
--- Graveyard
-----------------------------------------------------------------------------------------------------
---
--- use({
---   'chentoast/marks.nvim',
---   init = function()
---     rvim.nnoremap('<leader>mb', '<Cmd>MarksListBuf<CR>', 'marks: list buffer')
---     rvim.nnoremap('<leader>mg', '<Cmd>MarksQFListGlobal<CR>', 'marks: list global')
---     rvim.nnoremap('<leader>m0', '<Cmd>BookmarksQFList 0<CR>', 'marks: list bookmark')
---   end,
---   config = function()
---     require('user.utils.highlights').plugin('marks', {
---       { MarkSignHL = { link = 'Directory' } },
---       { MarkSignNumHL = { link = 'Directory' } },
---     })
---     require('marks').setup({
---       force_write_shada = false, -- This can cause data loss
---       excluded_filetypes = { 'NeogitStatus', 'NeogitCommitMessage', 'toggleterm' },
---       bookmark_0 = {
---         sign = '⚑',
---         virt_text = '',
---       },
---       mappings = {
---         annotate = 'm?',
---       },
---     })
---   end,
--- })
