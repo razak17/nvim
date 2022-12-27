@@ -276,10 +276,7 @@ use({ 'simrat39/rust-tools.nvim' })
 
 use({ 'b0o/schemastore.nvim' })
 
-use({
-  'marilari88/twoslash-queries.nvim',
-  ft = { 'typescript', 'typescriptreact' },
-})
+use({ 'marilari88/twoslash-queries.nvim', ft = { 'typescript', 'typescriptreact' } })
 
 ----------------------------------------------------------------------------------------------------
 -- Graveyard

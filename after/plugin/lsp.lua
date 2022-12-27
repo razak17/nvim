@@ -284,7 +284,7 @@ local function setup_plugins(client, bufnr)
   end
   -- lsp-inlayhints
   local hints_ok, hints = rvim.safe_require('lsp-inlayhints')
-  if hints_ok then hints.on_attach(client, bufnr) end
+  if hints_ok and client.name ~= 'tsserver' then hints.on_attach(client, bufnr) end
   -- document-color
   local document_color_ok, document_color = rvim.safe_require('document-color', { silent = true })
   if document_color_ok then
