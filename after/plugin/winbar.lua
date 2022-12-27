@@ -1,7 +1,8 @@
 -- disable until https://github.com/neovim/neovim/issues/19458 is fixed
 if not rvim or not rvim.ui.winbar.enable then return end
 
----@diagnostic disable: duplicate-doc-param
+---@diagnostic disable: duplicate-doc-param missing-return
+---@diagnostic disable:  missing-return
 local devicons = require('nvim-web-devicons')
 local highlights = require('user.utils.highlights')
 local utils = require('user.utils.statusline')
@@ -58,7 +59,7 @@ function rvim.ui.winbar.get()
   local bufname = api.nvim_buf_get_name(api.nvim_get_current_buf())
   if empty(bufname) then return add(component('[No name]', 'Winbar', { priority = 0 })) end
 
-  local cond = rvim.ui.winbar.use_filename
+  local cond = rvim.ui.winbar.use_filename_only
   if cond then
     local filename = vim.fn.expand('%:t')
     add(component(filename, 'Winbar', { priority = 1, suffix = separator }))
