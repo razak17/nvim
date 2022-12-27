@@ -172,7 +172,7 @@ use({
 
 use({
   'mizlan/iswap.nvim',
-  event = 'VeryLazy',
+  event = { 'BufRead', 'BufNewFile' },
   init = function()
     rvim.nnoremap('<leader>ia', '<Cmd>ISwap<CR>', 'iswap: swap any')
     rvim.nnoremap('<leader>iw', '<Cmd>ISwapWith<CR>', 'iswap: swap with')
@@ -182,16 +182,6 @@ use({
 ----------------------------------------------------------------------------------------------------
 -- Graveyard
 ----------------------------------------------------------------------------------------------------
---
--- use({
---   'junegunn/vim-easy-align',
---   init = function()
---     rvim.nmap('ga', '<Plug>(EasyAlign)', 'easy-align: align')
---     rvim.xmap('ga', '<Plug>(EasyAlign)', 'easy-align: align')
---     rvim.vmap('<Enter>', '<Plug>(EasyAlign)', 'easy-align: align')
---   end,
---   config = function() end,
--- })
 --
 -- use({
 --   'jghauser/fold-cycle.nvim',
