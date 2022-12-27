@@ -166,7 +166,7 @@ use({
 use({
   'nvim-treesitter/playground',
   init = function()
-    rvim.nnoremap('<leader>LE', ':TSHighlightCapturesUnderCursor<CR>', 'playground: inspect scope')
+    rvim.nnoremap('<leader>Li', ':TSHighlightCapturesUnderCursor<CR>', 'playground: inspect scope')
   end,
   cmd = { 'TSPlaygroundToggle', 'TSHighlightCapturesUnderCursor' },
 })
