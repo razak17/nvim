@@ -273,11 +273,16 @@ local function toggle_opt(opt)
   vim.opt[opt] = value
   vim.notify(fmt('%s set to %s', opt, tostring(value)), 'info', { title = 'UI Toggles' })
 end
-nnoremap('<leader>ow', function() toggle_opt('wrap') end, 'toggle line wrap')
-nnoremap('<leader>od', function() toggle_opt('spell') end, 'toggle spell')
-nnoremap('<leader>oL', function() toggle_opt('cursorline') end, 'toggle cursorline')
-nnoremap('<leader>ot', function() toggle_opt('laststatus') end, 'toggle statusline')
-nnoremap('<leader>oh', function() toggle_opt('colorcolumn') end, 'toggle colorcolumn')
+local function toggle_wrap() toggle_opt('wrap') end
+local function toggle_spell() toggle_opt('spell') end
+local function toggle_cursorline() toggle_opt('cursorline') end
+local function toggle_statusline() toggle_opt('laststatus') end
+local function toggle_colorcolumn() toggle_opt('colorcolumn') end
+nnoremap('<leader>ow', toggle_wrap, 'toggle line wrap')
+nnoremap('<leader>od', toggle_spell, 'toggle spell')
+nnoremap('<leader>oL', toggle_cursorline, 'toggle cursorline')
+nnoremap('<leader>ot', toggle_statusline, 'toggle statusline')
+nnoremap('<leader>oh', toggle_colorcolumn, 'toggle colorcolumn')
 nnoremap('<leader>or', ':ToggleRelativeNumber<CR>', 'toggle relativenumber')
 ----------------------------------------------------------------------------------------------------
 -- Windows
