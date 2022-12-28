@@ -261,20 +261,23 @@ nnoremap('<leader>lo', function() rvim.toggle_loc_list() end, 'toggle loclist')
 ---@param opt string
 local function toggle_opt(opt)
   local value = api.nvim_get_option_value(opt, {})
-  if type(value) == 'number' and value == 0 then
-    value = 3
-  elseif type(value) == 'number' and value > 0 then
-    value = 0
+  if opt == 'laststatus' then
+    if value == 0 then value = 3 end
+    if value > 0 then value = 0 end
+  elseif opt == 'colorcolumn' then
+    if value == '' then value = '+1' end
+    if value ~= '' then value = '' end
   elseif type(value) == 'boolean' then
     value = not value
   end
   vim.opt[opt] = value
   vim.notify(fmt('%s set to %s', opt, tostring(value)), 'info', { title = 'UI Toggles' })
 end
-nnoremap('<leader>ow', function() toggle_opt('wrap') end, 'toggle: wrap')
-nnoremap('<leader>oL', function() toggle_opt('cursorline') end, 'toggle: cursorline')
-nnoremap('<leader>os', function() toggle_opt('laststatus') end, 'toggle: statusline')
-nnoremap('<leader>or', ':ToggleRelativeNumber<CR>', 'toggle: relativenumber')
+nnoremap('<leader>ow', function() toggle_opt('wrap') end, 'toggle line wrap')
+nnoremap('<leader>oL', function() toggle_opt('cursorline') end, 'toggle cursorline')
+nnoremap('<leader>ot', function() toggle_opt('laststatus') end, 'toggle statusline')
+nnoremap('<leader>oh', function() toggle_opt('colorcolumn') end, 'toggle colorcolumn')
+nnoremap('<leader>or', ':ToggleRelativeNumber<CR>', 'toggle relativenumber')
 ----------------------------------------------------------------------------------------------------
 -- Windows
 ----------------------------------------------------------------------------------------------------
