@@ -350,6 +350,7 @@ use({
   config = function()
     require('persistence').setup({
       dir = vim.fn.expand(rvim.get_cache_dir() .. '/sessions/'),
+      options = { 'buffers', 'curdir', 'tabpages', 'winsize', 'help' },
     })
   end,
 })
