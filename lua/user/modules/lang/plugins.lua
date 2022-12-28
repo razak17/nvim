@@ -92,17 +92,19 @@ use({
 
 use({
   'jose-elias-alvarez/null-ls.nvim',
+  lazy = false,
+  dependencies = {
+    {
+      'jayp0521/mason-null-ls.nvim',
+      init = function() rvim.nnoremap('<leader>ln', '<cmd>NullLsInfo<CR>', 'null-ls: info') end,
+      config = function()
+        require('mason-null-ls').setup({
+          automatic_installation = true,
+        })
+      end,
+    },
+  },
   config = conf('lang', 'null-ls'),
-})
-
-use({
-  'jayp0521/mason-null-ls.nvim',
-  init = function() rvim.nnoremap('<leader>ln', '<cmd>NullLsInfo<CR>', 'null-ls: info') end,
-  config = function()
-    require('mason-null-ls').setup({
-      automatic_installation = true,
-    })
-  end,
 })
 
 use({
@@ -127,6 +129,7 @@ use({
 -- Treesitter
 use({
   'nvim-treesitter/nvim-treesitter',
+  lazy = false,
   build = ':TSUpdate',
   init = conf('lang', 'treesitter').init,
   config = conf('lang', 'treesitter').config,
