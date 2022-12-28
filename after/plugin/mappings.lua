@@ -274,6 +274,7 @@ local function toggle_opt(opt)
   vim.notify(fmt('%s set to %s', opt, tostring(value)), 'info', { title = 'UI Toggles' })
 end
 nnoremap('<leader>ow', function() toggle_opt('wrap') end, 'toggle line wrap')
+nnoremap('<leader>od', function() toggle_opt('spell') end, 'toggle spell')
 nnoremap('<leader>oL', function() toggle_opt('cursorline') end, 'toggle cursorline')
 nnoremap('<leader>ot', function() toggle_opt('laststatus') end, 'toggle statusline')
 nnoremap('<leader>oh', function() toggle_opt('colorcolumn') end, 'toggle colorcolumn')
