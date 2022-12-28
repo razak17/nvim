@@ -259,14 +259,25 @@ nnoremap('<leader>lo', function() rvim.toggle_loc_list() end, 'toggle loclist')
 ----------------------------------------------------------------------------------------------------
 --- Toggle vim options
 ---@param opt string
+local function get_option_value(opt) return api.nvim_get_option_value(opt, {}) end
+
+---@param opt string
+-- TODO: simplify/improve logic
 local function toggle_opt(opt)
-  local value = api.nvim_get_option_value(opt, {})
+  local value = get_option_value(opt)
   if opt == 'laststatus' then
     if value == 0 then value = 3 end
     if value > 0 then value = 0 end
   elseif opt == 'colorcolumn' then
+    local tw = get_option_value('textwidth')
     if value == '' then value = '+1' end
-    if value ~= '' then value = '' end
+    if value ~= '' and tw ~= 0 then value = '' end
+    if tw == 0 then
+      -- TODO: find a way to get this dynamically based on filetype
+      vim.opt['tw'] = 100
+    else
+      vim.opt['tw'] = 0
+    end
   elseif type(value) == 'boolean' then
     value = not value
   end
