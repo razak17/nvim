@@ -15,6 +15,7 @@ use({
 
 use({
   'nvim-telescope/telescope.nvim',
+  lazy = false,
   dependencies = {
     {
       'jvgrootveld/telescope-zoxide',
