@@ -42,8 +42,7 @@ function M.config()
   local cmp = require('cmp')
   local h = require('user.utils.highlights')
 
-  local fn, api = vim.fn, vim.api
-  local t = rvim.replace_termcodes
+  local api = vim.api
   local border = rvim.style.border.current
   local lsp_hls = rvim.lsp.kind_highlights
   local ellipsis = rvim.style.icons.misc.ellipsis
