@@ -1,5 +1,6 @@
 local M = {
   'mfussenegger/nvim-dap',
+  tag = '*',
   dependencies = {
     {
       'rcarriga/nvim-dap-ui',
@@ -17,6 +18,15 @@ local M = {
             border = rvim.style.border.current,
           },
         })
+        local dapui = require('dapui')
+        local dap = require('dap')
+        -- NOTE: this opens dap UI automatically when dap starts
+        dap.listeners.after.event_initialized['dapui_config'] = function()
+          dapui.open()
+          vim.api.nvim_exec_autocmds('User', { pattern = 'DapStarted' })
+        end
+        dap.listeners.before.event_terminated['dapui_config'] = function() dapui.close() end
+        dap.listeners.before.event_exited['dapui_config'] = function() dapui.close() end
       end,
     },
     {
@@ -35,7 +45,7 @@ local M = {
 
 function M.init()
   local fn = vim.fn
-  local dap = require('dap')
+  local function dap() return require('dap') end
 
   local function repl_toggle() dap.repl.toggle(nil, 'botright split') end
   local function set_breakpoint() dap.set_breakpoint(fn.input('Breakpoint condition: ')) end
@@ -67,28 +77,27 @@ function M.init()
     })
   end
 
-  rvim.nnoremap('<localleader>db', dap.toggle_breakpoint, 'dap: toggle breakpoint')
+  rvim.nnoremap('<localleader>db', dap().toggle_breakpoint, 'dap: toggle breakpoint')
   rvim.nnoremap('<localleader>dB', set_breakpoint, 'dap: set breakpoint')
-  rvim.nnoremap('<localleader>dc', dap.continue, 'dap: continue or start debugging')
-  rvim.nnoremap('<localleader>dC', dap.clear_breakpoints, 'dap: clear breakpoint')
-  rvim.nnoremap('<localleader>dh', dap.step_back, 'dap: step back')
-  rvim.nnoremap('<localleader>de', dap.step_out, 'dap: step out')
-  rvim.nnoremap('<localleader>di', dap.step_into, 'dap: step into')
-  rvim.nnoremap('<localleader>do', dap.step_over, 'dap: step over')
-  rvim.nnoremap('<localleader>dl', dap.run_last, 'dap: run last')
-  rvim.nnoremap('<localleader>dr', dap.restart, 'dap: restart')
-  rvim.nnoremap('<localleader>dx', dap.terminate, 'dap: terminate')
+  rvim.nnoremap('<localleader>dc', dap().continue, 'dap: continue or start debugging')
+  rvim.nnoremap('<localleader>dC', dap().clear_breakpoints, 'dap: clear breakpoint')
+  rvim.nnoremap('<localleader>dh', dap().step_back, 'dap: step back')
+  rvim.nnoremap('<localleader>de', dap().step_out, 'dap: step out')
+  rvim.nnoremap('<localleader>di', dap().step_into, 'dap: step into')
+  rvim.nnoremap('<localleader>do', dap().step_over, 'dap: step over')
+  rvim.nnoremap('<localleader>dl', dap().run_last, 'dap: run last')
+  rvim.nnoremap('<localleader>dr', dap().restart, 'dap: restart')
+  rvim.nnoremap('<localleader>dx', dap().terminate, 'dap: terminate')
   rvim.nnoremap('<localleader>dt', repl_toggle, 'dap: toggle REPL')
   rvim.nnoremap('<localleader>da', attach, 'dap(node): attach')
   rvim.nnoremap('<localleader>dA', attach_to_remote, 'dap(node): attach to remote')
 end
 
 function M.config()
-  local fn = vim.fn
+  local fn, icons = vim.fn, rvim.style.icons
   local dap = require('dap')
-  local icons = rvim.style.icons
 
-  dap.defaults.fallback.terminal_win_cmd = '50vsplit new'
+  -- dap.defaults.fallback.terminal_win_cmd = '50vsplit new'
   -- DON'T automatically stop at exceptions
   dap.defaults.fallback.exception_breakpoints = {}
 
@@ -275,15 +284,6 @@ function M.config()
   dap.configurations.c = dap.configurations.cpp
   -- Rust
   dap.configurations.rust = dap.configurations.cpp
-
-  local dapui = require('dapui')
-  -- NOTE: this opens dap UI automatically when dap starts
-  dap.listeners.after.event_initialized['dapui_config'] = function()
-    dapui.open()
-    vim.api.nvim_exec_autocmds('User', { pattern = 'DapStarted' })
-  end
-  dap.listeners.before.event_terminated['dapui_config'] = function() dapui.close() end
-  dap.listeners.before.event_exited['dapui_config'] = function() dapui.close() end
 end
 
 return M
