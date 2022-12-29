@@ -1,40 +1,16 @@
-local conf = require('user.utils.plugins').load_conf
-
 return {
   'razak17/zephyr-nvim',
   'LunarVim/horizon.nvim',
 
   {
-    'goolord/alpha-nvim',
-    lazy = false,
-    config = conf('ui', 'alpha'),
-  },
-
-  {
-    'rcarriga/nvim-notify',
-    event = 'VeryLazy',
-    init = function()
-      rvim.nnoremap('<leader>nn', '<cmd>Notifications<CR>', 'notify: show')
-      rvim.nnoremap('<leader>nx', '<cmd>lua require("notify").dismiss()<CR>', 'notify: dismiss')
-    end,
-    config = conf('ui', 'notify'),
-  },
-
-  {
-    'nvim-lualine/lualine.nvim',
-    event = { 'BufRead', 'BufNewFile' },
-    config = conf('ui', 'lualine'),
-  },
-
-  {
     'romainl/vim-cool',
-    event = { 'BufRead', 'BufNewFile' },
+    event = 'BufReadPre',
     config = function() vim.g.CoolTotalMatches = 1 end,
   },
 
   {
     'j-hui/fidget.nvim',
-    event = { 'BufRead', 'BufNewFile' },
+    event = 'BufReadPre',
     config = function()
       require('fidget').setup({
         align = {
@@ -52,59 +28,11 @@ return {
     end,
   },
 
-  {
-    'lukas-reineke/indent-blankline.nvim',
-    event = { 'BufRead', 'BufNewFile' },
-    config = conf('ui', 'indentline'),
-  },
-
   { 'nvim-tree/nvim-web-devicons', event = 'VeryLazy' },
 
   {
-    'nvim-neo-tree/neo-tree.nvim',
-    cmd = { 'Neotree' },
-    branch = 'main',
-    dependencies = {
-      's1n7ax/nvim-window-picker',
-      version = 'v1.*',
-      config = function()
-        require('window-picker').setup({
-          autoselect_one = true,
-          include_current = false,
-          filter_rules = {
-            bo = {
-              filetype = { 'neo-tree-popup', 'quickfix', 'incline' },
-              buftype = { 'terminal', 'quickfix', 'nofile' },
-            },
-          },
-          other_win_hl_color = require('user.utils.highlights').get('Visual', 'bg'),
-        })
-      end,
-    },
-    init = function()
-      rvim.nnoremap('<c-n>', '<cmd>Neotree toggle reveal<CR>', 'toggle tree', 'neo-tree.nvim')
-    end,
-    config = conf('ui', 'neo-tree'),
-  },
-
-  {
-    'lewis6991/gitsigns.nvim',
-    event = { 'BufRead', 'BufNewFile' },
-    config = conf('ui', 'gitsigns'),
-  },
-
-  { 'stevearc/dressing.nvim', event = 'VeryLazy', config = conf('ui', 'dressing') },
-
-  {
-    'kevinhwang91/nvim-ufo',
-    event = { 'BufRead', 'BufNewFile' },
-    dependencies = { 'kevinhwang91/promise-async' },
-    config = conf('ui', 'ufo'),
-  },
-
-  {
     'lukas-reineke/virt-column.nvim',
-    event = { 'BufRead', 'BufNewFile' },
+    event = 'BufReadPre',
     config = function()
       require('user.utils.highlights').plugin('virt_column', {
         { VirtColumn = { bg = 'None', fg = { from = 'VertSplit', alter = -50 } } },
@@ -115,6 +43,7 @@ return {
 
   {
     'uga-rosa/ccc.nvim',
+    event = 'BufReadPre',
     cmd = { 'CccHighlighterToggle', 'CccHighlighterEnable', 'CccHighlighterDisable' },
     init = function() rvim.nnoremap('<leader>oc', '<cmd>CccHighlighterToggle<CR>', 'ccc: toggle') end,
     config = function()
@@ -152,6 +81,7 @@ return {
 
   {
     'folke/todo-comments.nvim',
+    event = 'BufReadPre',
     cmd = { 'TodoTelescope', 'TodoTrouble', 'TodoQuickFix', 'TodoDots' },
     init = function()
       -- todo-comments.nvim

@@ -1,64 +1,11 @@
-local conf = require('user.utils.plugins').load_conf
-
 return {
   'nanotee/sqls.nvim',
   'b0o/schemastore.nvim',
   'simrat39/rust-tools.nvim',
   'jose-elias-alvarez/typescript.nvim',
-
-  -- Debugging
-  {
-    'mfussenegger/nvim-dap',
-    version = '0.1.*',
-    init = conf('tools', 'dap').init,
-    config = conf('tools', 'dap').config,
-  },
-
-  {
-    'rcarriga/nvim-dap-ui',
-    event = { 'BufRead', 'BufNewFile' },
-    init = function()
-      rvim.nnoremap(
-        '<localleader>dT',
-        function() require('dapui').toggle({ reset = true }) end,
-        'dapui: toggle'
-      )
-    end,
-    config = function()
-      local dapui = require('dapui')
-      require('dapui').setup({
-        windows = { indent = 2 },
-        floating = {
-          border = rvim.style.border.current,
-        },
-      })
-      local dap = require('dap')
-      -- NOTE: this opens dap UI automatically when dap starts
-      dap.listeners.after.event_initialized['dapui_config'] = function()
-        dapui.open()
-        vim.api.nvim_exec_autocmds('User', { pattern = 'DapStarted' })
-      end
-      dap.listeners.before.event_terminated['dapui_config'] = function() dapui.close() end
-      dap.listeners.before.event_exited['dapui_config'] = function() dapui.close() end
-    end,
-  },
-
-  {
-    'theHamsta/nvim-dap-virtual-text',
-    event = { 'BufRead', 'BufNewFile' },
-    config = function()
-      require('nvim-dap-virtual-text').setup({
-        enabled = true,
-        enabled_commands = true,
-        highlight_changed_variables = true,
-        all_frames = true,
-      })
-    end,
-  },
+  'folke/neodev.nvim',
 
   -- Lsp
-  { 'folke/neodev.nvim' },
-
   {
     'neovim/nvim-lspconfig',
     config = function()
@@ -71,7 +18,6 @@ return {
 
   {
     'razak17/mason.nvim',
-    lazy = false,
     init = function() rvim.nnoremap('<leader>lm', '<cmd>Mason<CR>', 'mason: info') end,
     dependencies = { 'williamboman/mason-lspconfig.nvim' },
     config = function()
@@ -96,25 +42,8 @@ return {
   },
 
   {
-    'jose-elias-alvarez/null-ls.nvim',
-    lazy = false,
-    dependencies = {
-      {
-        'jayp0521/mason-null-ls.nvim',
-        init = function() rvim.nnoremap('<leader>ln', '<cmd>NullLsInfo<CR>', 'null-ls: info') end,
-        config = function()
-          require('mason-null-ls').setup({
-            automatic_installation = true,
-          })
-        end,
-      },
-    },
-    config = conf('lang', 'null-ls'),
-  },
-
-  {
     'kosayoda/nvim-lightbulb',
-    lazy = false,
+    event = 'BufReadPre',
     config = function()
       require('user.utils.highlights').plugin('Lightbulb', {
         { LightBulbFloatWin = { foreground = { from = 'Type' } } },
@@ -129,44 +58,6 @@ return {
         float = { text = icon, enabled = false, win_opts = { border = 'none' } }, -- 
       })
     end,
-  },
-
-  -- Treesitter
-  {
-    'nvim-treesitter/nvim-treesitter',
-    lazy = false,
-    build = ':TSUpdate',
-    init = conf('lang', 'treesitter').init,
-    dependencies = {
-      { 'nvim-treesitter/nvim-treesitter-textobjects' },
-      { 'p00f/nvim-ts-rainbow' },
-      {
-        'nvim-treesitter/nvim-treesitter-context',
-        event = { 'BufRead', 'BufNewFile' },
-        config = function()
-          require('user.utils.highlights').plugin('treesitter-context', {
-            { ContextBorder = { link = 'Dim' } },
-            { TreesitterContext = { inherit = 'Normal' } },
-            { TreesitterContextLineNumber = { inherit = 'LineNr' } },
-          })
-          require('treesitter-context').setup({
-            multiline_threshold = 4,
-            separator = { '─', 'ContextBorder' }, --[[alernatives: ▁ ─ ▄ ]]
-            mode = 'topline',
-          })
-        end,
-      },
-      {
-        'windwp/nvim-ts-autotag',
-        event = 'InsertEnter',
-        config = function()
-          require('nvim-ts-autotag').setup({
-            filetypes = { 'html', 'xml', 'typescriptreact', 'javascriptreact' },
-          })
-        end,
-      },
-    },
-    config = conf('lang', 'treesitter').config,
   },
 
   {
@@ -204,7 +95,7 @@ return {
 
   {
     'github/copilot.vim',
-    event = { 'BufRead', 'BufNewFile' },
+    event = 'VeryLazy',
     setup = function() vim.g.copilot_no_tab_map = true end,
     config = function()
       rvim.imap('<Plug>(rvim-copilot-accept)', 'copilot#Accept("<Tab>")', { expr = true })
@@ -248,6 +139,7 @@ return {
 
   {
     'danymat/neogen',
+    event = 'VeryLazy',
     init = function()
       rvim.nnoremap(
         '<localleader>lc',
@@ -282,7 +174,7 @@ return {
 
   {
     'andymass/vim-matchup',
-    lazy = false,
+    event = 'BufReadPre',
     config = function() vim.g.matchup_matchparen_enabled = 0 end,
     init = function() rvim.nnoremap('<leader>lh', ':<c-u>MatchupWhereAmI?<CR>', 'where am i') end,
   },
@@ -292,6 +184,7 @@ return {
   ----------------------------------------------------------------------------------------------------
   -- {
   --   'RRethy/vim-illuminate',
+  --    event = "BufReadPost",
   --   init = function()
   --     rvim.nnoremap(
   --       '<a-n>',

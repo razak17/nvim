@@ -1,4 +1,6 @@
-return function()
+local M = { 'lewis6991/gitsigns.nvim', event = 'BufReadPre' }
+
+function M.config()
   local cwd = vim.fn.getcwd()
   require('gitsigns').setup({
     signs = {
@@ -58,3 +60,5 @@ return function()
     status_formatter = nil, -- Use default
   })
 end
+
+return M

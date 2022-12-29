@@ -1,4 +1,37 @@
-local M = {}
+local M = {
+  'nvim-treesitter/nvim-treesitter',
+  event = 'BufReadPost',
+  build = ':TSUpdate',
+  dependencies = {
+    'nvim-treesitter/nvim-treesitter-textobjects',
+    'p00f/nvim-ts-rainbow',
+    {
+      'nvim-treesitter/nvim-treesitter-context',
+      event = { 'BufRead', 'BufNewFile' },
+      config = function()
+        require('user.utils.highlights').plugin('treesitter-context', {
+          { ContextBorder = { link = 'Dim' } },
+          { TreesitterContext = { inherit = 'Normal' } },
+          { TreesitterContextLineNumber = { inherit = 'LineNr' } },
+        })
+        require('treesitter-context').setup({
+          multiline_threshold = 4,
+          separator = { '─', 'ContextBorder' }, --[[alernatives: ▁ ─ ▄ ]]
+          mode = 'topline',
+        })
+      end,
+    },
+    {
+      'windwp/nvim-ts-autotag',
+      event = 'InsertEnter',
+      config = function()
+        require('nvim-ts-autotag').setup({
+          filetypes = { 'html', 'xml', 'typescriptreact', 'javascriptreact' },
+        })
+      end,
+    },
+  },
+}
 
 function M.init()
   rvim.nnoremap('R', '<cmd>edit | TSBufEnable highlight<CR>', 'treesitter: enable highlight')

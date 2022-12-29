@@ -1,4 +1,7 @@
-local M = {}
+local M = {
+  'gbprod/yanky.nvim',
+  event = 'BufReadPost',
+}
 
 function M.init()
   local map = vim.keymap.set

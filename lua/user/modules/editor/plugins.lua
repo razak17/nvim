@@ -1,57 +1,5 @@
-local conf = require('user.utils.plugins').load_conf
-
 return {
-  'JoosepAlviste/nvim-ts-context-commentstring',
-
-  -- nvim-cmp
-  {
-    'hrsh7th/nvim-cmp',
-    event = 'InsertEnter',
-    config = conf('editor', 'cmp'),
-    dependencies = {
-      { 'hrsh7th/cmp-nvim-lsp' },
-      { 'hrsh7th/cmp-nvim-lsp-document-symbol' },
-      { 'saadparwaiz1/cmp_luasnip' },
-      { 'hrsh7th/cmp-path' },
-      { 'hrsh7th/cmp-buffer' },
-      { 'hrsh7th/cmp-cmdline' },
-      { 'hrsh7th/cmp-nvim-lsp-signature-help' },
-      { 'hrsh7th/cmp-emoji' },
-      { 'dmitmel/cmp-cmdline-history' },
-      { 'amarakon/nvim-cmp-buffer-lines' },
-      { 'lukas-reineke/cmp-rg' },
-      { 'rcarriga/cmp-dap' },
-      {
-        'petertriho/cmp-git',
-        config = function()
-          require('cmp_git').setup({
-            filetypes = { 'gitcommit', 'NeogitCommitMessage' },
-          })
-        end,
-      },
-      {
-        'uga-rosa/cmp-dictionary',
-        config = function()
-          -- NOTE: run :CmpDictionaryUpdate to update dictionary
-          require('cmp_dictionary').setup({
-            async = true,
-            dic = {
-              -- Refer to install script
-              ['*'] = join_paths(rvim.get_runtime_dir(), 'site', 'spell', 'dictionary.txt'),
-            },
-          })
-        end,
-      },
-    },
-  },
-
-  {
-    'L3MON4D3/LuaSnip',
-    event = 'InsertEnter',
-    dependencies = { 'rafamadriz/friendly-snippets' },
-    init = function() rvim.nnoremap('<leader>S', '<cmd>LuaSnipEdit<CR>', 'LuaSnip: edit snippet') end,
-    config = conf('editor', 'luasnip'),
-  },
+  { 'JoosepAlviste/nvim-ts-context-commentstring' },
 
   {
 
@@ -174,6 +122,4 @@ return {
       rvim.nnoremap('<leader>iw', '<Cmd>ISwapWith<CR>', 'iswap: swap with')
     end,
   },
-
-  { 'monaqa/dial.nvim', event = { 'BufRead', 'BufNewFile' }, config = conf('editor', 'dial') },
 }

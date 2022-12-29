@@ -1,61 +1,7 @@
-local conf = require('user.utils.plugins').load_conf
-
 return {
-
   { 'nvim-lua/plenary.nvim' },
   { 'nvim-lua/popup.nvim' },
   { 'kkharji/sqlite.lua', event = 'VeryLazy' },
-
-  {
-    'folke/which-key.nvim',
-    lazy = false,
-    config = conf('tools', 'which-key'),
-  },
-  {
-    'nvim-telescope/telescope.nvim',
-    lazy = false,
-    dependencies = {
-      {
-        'jvgrootveld/telescope-zoxide',
-        config = function() require('telescope').load_extension('zoxide') end,
-      },
-      {
-        'smartpde/telescope-recent-files',
-        config = function() require('telescope').load_extension('recent_files') end,
-      },
-      {
-        'nvim-telescope/telescope-media-files.nvim',
-        config = function() require('telescope').load_extension('media_files') end,
-      },
-      {
-        'nvim-telescope/telescope-dap.nvim',
-        config = function() require('telescope').load_extension('dap') end,
-      },
-      {
-        'natecraddock/telescope-zf-native.nvim',
-        config = function() require('telescope').load_extension('zf-native') end,
-      },
-      {
-        'nvim-telescope/telescope-ui-select.nvim',
-        config = function() require('telescope').load_extension('ui-select') end,
-      },
-      {
-        'benfowler/telescope-luasnip.nvim',
-        config = function() require('telescope').load_extension('luasnip') end,
-      },
-      {
-        'nvim-telescope/telescope-frecency.nvim',
-        config = function() require('telescope').load_extension('frecency') end,
-      },
-      {
-        'debugloop/telescope-undo.nvim',
-        config = function() require('telescope').load_extension('undo') end,
-      },
-    },
-    branch = 'master', -- '0.1.x',
-    init = conf('tools', 'telescope').init,
-    config = conf('tools', 'telescope').config,
-  },
   {
     'ThePrimeagen/harpoon',
     init = function()
@@ -138,12 +84,6 @@ return {
       })
     end,
   },
-  {
-    'gbprod/yanky.nvim',
-    event = 'VeryLazy',
-    init = conf('tools', 'yanky').init,
-    config = conf('tools', 'yanky').config,
-  },
 
   {
     'ahmedkhalf/project.nvim',
@@ -198,7 +138,7 @@ return {
 
   {
     'ggandor/leap.nvim',
-    event = { 'BufRead', 'BufNewFile' },
+    event = 'VeryLazy',
     init = function()
       rvim.nnoremap('s', function()
         require('leap').leap({

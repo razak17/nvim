@@ -1,4 +1,12 @@
-return function()
+local M = {
+  'L3MON4D3/LuaSnip',
+  event = 'InsertEnter',
+  dependencies = { 'rafamadriz/friendly-snippets' },
+}
+
+function M.init() rvim.nnoremap('<leader>S', '<cmd>LuaSnipEdit<CR>', 'LuaSnip: edit snippet') end
+
+function M.config()
   local ls = require('luasnip')
   local types = require('luasnip.util.types')
   local extras = require('luasnip.extras')
@@ -65,3 +73,5 @@ return function()
   require('luasnip').filetype_extend('javascript', { 'javascriptreact' })
   require('luasnip').filetype_extend('typescript', { 'typescriptreact' })
 end
+
+return M

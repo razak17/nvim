@@ -1,4 +1,44 @@
-return function()
+local M = {
+  'hrsh7th/nvim-cmp',
+  event = 'InsertEnter',
+  dependencies = {
+    { 'hrsh7th/cmp-nvim-lsp' },
+    { 'hrsh7th/cmp-nvim-lsp-document-symbol' },
+    { 'saadparwaiz1/cmp_luasnip' },
+    { 'hrsh7th/cmp-path' },
+    { 'hrsh7th/cmp-buffer' },
+    { 'hrsh7th/cmp-cmdline' },
+    { 'hrsh7th/cmp-nvim-lsp-signature-help' },
+    { 'hrsh7th/cmp-emoji' },
+    { 'dmitmel/cmp-cmdline-history' },
+    { 'amarakon/nvim-cmp-buffer-lines' },
+    { 'lukas-reineke/cmp-rg' },
+    { 'rcarriga/cmp-dap' },
+    {
+      'petertriho/cmp-git',
+      config = function()
+        require('cmp_git').setup({
+          filetypes = { 'gitcommit', 'NeogitCommitMessage' },
+        })
+      end,
+    },
+    {
+      'uga-rosa/cmp-dictionary',
+      config = function()
+        -- NOTE: run :CmpDictionaryUpdate to update dictionary
+        require('cmp_dictionary').setup({
+          async = true,
+          dic = {
+            -- Refer to install script
+            ['*'] = join_paths(rvim.get_runtime_dir(), 'site', 'spell', 'dictionary.txt'),
+          },
+        })
+      end,
+    },
+  },
+}
+
+function M.config()
   local cmp = require('cmp')
   local h = require('user.utils.highlights')
 
@@ -190,3 +230,5 @@ return function()
     },
   })
 end
+
+return M

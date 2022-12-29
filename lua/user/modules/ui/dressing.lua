@@ -1,4 +1,6 @@
-return function()
+local M = { 'stevearc/dressing.nvim' }
+
+function M.config()
   -- NOTE: the limit is half the max lines because this is the cursor theme so
   -- unless the cursor is at the top or bottom it realistically most often will
   -- only have half the screen available
@@ -49,3 +51,5 @@ return function()
     },
   })
 end
+
+return M

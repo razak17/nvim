@@ -1,4 +1,6 @@
-return function()
+local M = { 'folke/which-key.nvim', lazy = false }
+
+function M.config()
   local icons = rvim.style.icons
   local which_key = require('which-key')
 
@@ -53,3 +55,5 @@ return function()
     },
   })
 end
+
+return M

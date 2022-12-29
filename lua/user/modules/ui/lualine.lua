@@ -1,4 +1,6 @@
-return function()
+local M = { 'nvim-lualine/lualine.nvim', event = 'VeryLazy' }
+
+function M.config()
   local P = require('zephyr.palette')
   local style = rvim.style
   local icons = style.icons
@@ -210,3 +212,5 @@ return function()
 
   require('lualine').setup(config)
 end
+
+return M

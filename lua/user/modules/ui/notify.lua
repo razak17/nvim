@@ -1,4 +1,11 @@
-return function()
+local M = { 'rcarriga/nvim-notify', event = 'VeryLazy' }
+
+function M.init()
+  rvim.nnoremap('<leader>nn', '<cmd>Notifications<CR>', 'notify: show')
+  rvim.nnoremap('<leader>nx', '<cmd>lua require("notify").dismiss()<CR>', 'notify: dismiss')
+end
+
+function M.config()
   local api = vim.api
   local codicons = rvim.style.codicons
 
@@ -33,3 +40,5 @@ return function()
   vim.notify = notify
   require('telescope').load_extension('notify')
 end
+
+return M

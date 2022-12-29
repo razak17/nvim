@@ -1,4 +1,6 @@
-return function()
+local M = { 'lukas-reineke/indent-blankline.nvim', event = 'BufReadPre' }
+
+function M.config()
   require('indent_blankline').setup({
     char = '│', -- ┆ ┊ 
     show_foldtext = false,
@@ -36,3 +38,5 @@ return function()
     buftype_exclude = { 'terminal', 'nofile' },
   })
 end
+
+return M

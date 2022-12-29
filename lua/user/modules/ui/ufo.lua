@@ -1,4 +1,17 @@
-return function()
+local M = {
+  'kevinhwang91/nvim-ufo',
+  event = { 'BufRead', 'BufNewFile' },
+  dependencies = { 'kevinhwang91/promise-async' },
+}
+
+function M.init()
+  local ufo = require('ufo')
+  rvim.nnoremap('zR', ufo.openAllFolds, 'open all folds')
+  rvim.nnoremap('zM', ufo.closeAllFolds, 'close all folds')
+  rvim.nnoremap('zP', ufo.peekFoldedLinesUnderCursor, 'preview fold')
+end
+
+function M.config()
   local ufo = require('ufo')
   local hl = require('user.utils.highlights')
   local opt, strwidth = vim.opt, vim.api.nvim_strwidth
@@ -69,7 +82,6 @@ return function()
       },
     },
   })
-  rvim.nnoremap('zR', ufo.openAllFolds, 'open all folds')
-  rvim.nnoremap('zM', ufo.closeAllFolds, 'close all folds')
-  rvim.nnoremap('zP', ufo.peekFoldedLinesUnderCursor, 'preview fold')
 end
+
+return M

@@ -10,7 +10,7 @@ function Lazy:load_plugins()
   local function get_plugins_list()
     local list = {}
     local modules_dir = join_paths(rvim.get_user_dir(), 'modules')
-    local tmp = vim.split(fn.globpath(modules_dir, '*/plugins.lua'), '\n')
+    local tmp = vim.split(fn.globpath(modules_dir, '*/*.lua'), '\n')
     for _, f in ipairs(tmp) do
       list[#list + 1] = string.match(f, 'lua/(.+).lua$')
     end
@@ -20,8 +20,15 @@ function Lazy:load_plugins()
   local plugins = get_plugins_list()
 
   for _, m in ipairs(plugins) do
-    local repos = require(m)
-    self.repos[#self.repos + 1] = vim.tbl_extend('force', self.repos, repos)
+    local suffix = string.match(m, '.*/(.*)')
+    local module = require(m)
+    if suffix ~= 'plugins' then
+      self.repos[#self.repos + 1] = module
+    else
+      for _, repo in ipairs(module) do
+        self.repos[#self.repos + 1] = repo
+      end
+    end
   end
 end
 

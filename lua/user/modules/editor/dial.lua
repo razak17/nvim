@@ -1,4 +1,6 @@
-return function()
+local M = { 'monaqa/dial.nvim', event = { 'BufRead', 'BufNewFile' } }
+
+function M.config()
   local dial = require('dial.map')
   local augend = require('dial.augend')
   local map = vim.keymap.set
@@ -39,3 +41,5 @@ return function()
     },
   })
 end
+
+return M
