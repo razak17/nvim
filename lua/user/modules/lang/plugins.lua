@@ -5,7 +5,6 @@ return {
   'jose-elias-alvarez/typescript.nvim',
   'folke/neodev.nvim',
 
-  -- Lsp
   {
     'neovim/nvim-lspconfig',
     config = function()
@@ -94,7 +93,6 @@ return {
     end,
   },
 
-  -- FIXME: Causes issues with lsp-inlayhints
   {
     'zbirenbaum/copilot.lua',
     event = 'VeryLazy',

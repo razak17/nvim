@@ -7,6 +7,7 @@ require('rust-tools').setup({
     reload_workspace_from_cargo_toml = true,
     runnables = { use_telescope = false },
     inlay_hints = {
+      auto = false,
       show_parameter_hints = false,
       parameter_hints_prefix = ' ',
     },
