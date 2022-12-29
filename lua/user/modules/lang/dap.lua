@@ -6,7 +6,7 @@ local M = {
       'rcarriga/nvim-dap-ui',
       init = function()
         rvim.nnoremap(
-          '<localleader>dT',
+          '<localleader>dU',
           function() require('dapui').toggle({ reset = true }) end,
           'dapui: toggle'
         )

@@ -76,8 +76,6 @@ return {
     'windwp/nvim-autopairs',
     event = 'InsertEnter',
     config = function()
-      local cmp_autopairs = require('nvim-autopairs.completion.cmp')
-      require('cmp').event:on('confirm_done', cmp_autopairs.on_confirm_done())
       require('nvim-autopairs').setup({
         close_triple_quotes = true,
         check_ts = true,
@@ -90,6 +88,8 @@ return {
           javascript = { 'string', 'template_string' },
         },
       })
+      local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+      require('cmp').event:on('confirm_done', cmp_autopairs.on_confirm_done())
     end,
   },
 
@@ -113,6 +113,9 @@ return {
           },
         },
       })
+      local cmp = require('cmp')
+      cmp.event:on('menu_opened', function() vim.b.copilot_suggestion_hidden = true end)
+      cmp.event:on('menu_closed', function() vim.b.copilot_suggestion_hidden = false end)
     end,
   },
 
