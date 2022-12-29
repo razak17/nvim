@@ -1,4 +1,4 @@
-local M = { 'stevearc/dressing.nvim' }
+local M = { 'stevearc/dressing.nvim', event = 'VeryLazy' }
 
 function M.config()
   -- NOTE: the limit is half the max lines because this is the cursor theme so

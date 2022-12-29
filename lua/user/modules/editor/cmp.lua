@@ -2,18 +2,18 @@ local M = {
   'hrsh7th/nvim-cmp',
   event = 'InsertEnter',
   dependencies = {
-    { 'hrsh7th/cmp-nvim-lsp' },
-    { 'hrsh7th/cmp-nvim-lsp-document-symbol' },
-    { 'saadparwaiz1/cmp_luasnip' },
-    { 'hrsh7th/cmp-path' },
-    { 'hrsh7th/cmp-buffer' },
-    { 'hrsh7th/cmp-cmdline' },
-    { 'hrsh7th/cmp-nvim-lsp-signature-help' },
-    { 'hrsh7th/cmp-emoji' },
-    { 'dmitmel/cmp-cmdline-history' },
-    { 'amarakon/nvim-cmp-buffer-lines' },
-    { 'lukas-reineke/cmp-rg' },
-    { 'rcarriga/cmp-dap' },
+    'hrsh7th/cmp-nvim-lsp',
+    'hrsh7th/cmp-nvim-lsp-document-symbol',
+    'saadparwaiz1/cmp_luasnip',
+    'hrsh7th/cmp-path',
+    'hrsh7th/cmp-buffer',
+    'hrsh7th/cmp-cmdline',
+    'hrsh7th/cmp-nvim-lsp-signature-help',
+    'hrsh7th/cmp-emoji',
+    'dmitmel/cmp-cmdline-history',
+    'amarakon/nvim-cmp-buffer-lines',
+    'lukas-reineke/cmp-rg',
+    'rcarriga/cmp-dap',
     {
       'petertriho/cmp-git',
       config = function()
@@ -77,13 +77,8 @@ function M.config()
       'Normal:NormalFloat',
       'FloatBorder:FloatBorder',
       'CursorLine:Visual',
-      completion = {
-        -- TODO: consider 'shadow', and tweak the winhighlight
-        border = border,
-      },
-      documentation = {
-        border = border,
-      },
+      completion = { border = border },
+      documentation = { border = border },
       'Search:None',
     }, ','),
   }
@@ -119,13 +114,8 @@ function M.config()
       completion = cmp.config.window.bordered(cmp_window),
       documentation = cmp.config.window.bordered(cmp_window),
     },
-    snippet = {
-      expand = function(args) require('luasnip').lsp_expand(args.body) end,
-    },
+    snippet = { expand = function(args) require('luasnip').lsp_expand(args.body) end },
     mapping = {
-      ['<c-h>'] = cmp.mapping(
-        function() api.nvim_feedkeys(fn['copilot#Accept'](t('<Tab>')), 'n', true) end
-      ),
       ['<C-k>'] = cmp.mapping.select_prev_item(),
       ['<C-j>'] = cmp.mapping.select_next_item(),
       ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
@@ -195,11 +185,14 @@ function M.config()
       {
         name = 'buffer',
         options = {
-          get_bufnrs = function() return vim.api.nvim_list_bufs() end,
+          get_bufnrs = function() return api.nvim_list_bufs() end,
         },
       },
     }),
   })
+
+  cmp.event:on('menu_opened', function() vim.b.copilot_suggestion_hidden = true end)
+  cmp.event:on('menu_closed', function() vim.b.copilot_suggestion_hidden = false end)
 
   cmp.setup.cmdline({ '/', '?' }, {
     mapping = cmp.mapping.preset.cmdline(),

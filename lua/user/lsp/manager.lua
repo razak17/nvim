@@ -77,7 +77,6 @@ local function launch_server(server_name, config)
     end
     if server_name == 'rust_analyzer' then
       require('user.lsp.rust-tools')
-      -- TODO: new tsserver instance triggered when TSBufEnable is called
     elseif server_name == 'tsserver' then
       require('user.lsp.typescript')
     else

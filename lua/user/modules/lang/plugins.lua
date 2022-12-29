@@ -18,6 +18,7 @@ return {
 
   {
     'razak17/mason.nvim',
+    lazy = false,
     init = function() rvim.nnoremap('<leader>lm', '<cmd>Mason<CR>', 'mason: info') end,
     dependencies = { 'williamboman/mason-lspconfig.nvim' },
     config = function()
@@ -93,33 +94,33 @@ return {
     end,
   },
 
+  -- FIXME: Causes issues with lsp-inlayhints
   {
-    'github/copilot.vim',
+    'zbirenbaum/copilot.lua',
     event = 'VeryLazy',
-    setup = function() vim.g.copilot_no_tab_map = true end,
     config = function()
-      rvim.imap('<Plug>(rvim-copilot-accept)', 'copilot#Accept("<Tab>")', { expr = true })
-      rvim.inoremap('<M-]>', '<Plug>(copilot-next)')
-      rvim.inoremap('<M-[>', '<Plug>(copilot-previous)')
-      rvim.inoremap('<C-\\>', '<Cmd>vertical Copilot panel<CR>')
-
-      vim.g.copilot_filetypes = {
-        ['*'] = true,
-        gitcommit = false,
-        NeogitCommitMessage = false,
-        DressingInput = false,
-        TelescopePrompt = false,
-        ['neo-tree-popup'] = false,
-        ['dap-repl'] = false,
-      }
-      require('user.utils.highlights').plugin('copilot', {
-        { CopilotSuggestion = { link = 'Comment' } },
+      require('copilot').setup({
+        suggestion = { auto_trigger = true },
+        filetypes = {
+          gitcommit = false,
+          NeogitCommitMessage = false,
+          DressingInput = false,
+          TelescopePrompt = false,
+          ['neo-tree-popup'] = false,
+          ['dap-repl'] = false,
+        },
+        server_opts_overrides = {
+          settings = {
+            advanced = { inlineSuggestCount = 3 },
+          },
+        },
       })
     end,
   },
 
   {
     'lvimuser/lsp-inlayhints.nvim',
+    event = 'VeryLazy',
     config = function()
       require('lsp-inlayhints').setup({
         inlay_hints = {
