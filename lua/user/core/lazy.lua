@@ -18,8 +18,10 @@ function Lazy:load_plugins()
   end
 
   local plugins = get_plugins_list()
+
   for _, m in ipairs(plugins) do
-    require(m)
+    local repos = require(m)
+    self.repos[#self.repos + 1] = vim.tbl_extend('force', self.repos, repos)
   end
 end
 
@@ -72,7 +74,5 @@ local plugins = setmetatable({}, {
 })
 
 function plugins.ensure_plugins() Lazy:init_ensure_installed() end
-
-function plugins.use(repo) table.insert(Lazy.repos, repo) end
 
 return plugins
