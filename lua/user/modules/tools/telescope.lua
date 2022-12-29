@@ -1,6 +1,6 @@
 local M = {
   'nvim-telescope/telescope.nvim',
-  lazy = false,
+  event = 'VeryLazy',
   dependencies = {
     {
       'jvgrootveld/telescope-zoxide',
