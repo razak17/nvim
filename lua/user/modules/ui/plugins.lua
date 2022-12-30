@@ -53,30 +53,31 @@ return {
     end,
   },
 
+  {
+    'm-demare/hlargs.nvim',
+    event = 'VeryLazy',
+    config = function()
+      require('user.utils.highlights').plugin('hlargs', {
+        theme = {
+          ['*'] = { { Hlargs = { italic = true, foreground = '#A5D6FF' } } },
+          ['horizon'] = { { Hlargs = { italic = true, foreground = { from = 'Normal' } } } },
+        },
+      })
+      require('hlargs').setup({
+        excluded_argnames = {
+          declarations = { 'use', 'use_rocks', '_' },
+          usages = {
+            go = { '_' },
+            lua = { 'self', 'use', 'use_rocks', '_' },
+          },
+        },
+      })
+    end,
+  },
+
   ----------------------------------------------------------------------------------------------------
   -- Graveyard
   ----------------------------------------------------------------------------------------------------
-  -- {
-  --   'm-demare/hlargs.nvim',
-  --   config = function()
-  --     require('user.utils.highlights').plugin('hlargs', {
-  --       theme = {
-  --         ['*'] = { { Hlargs = { italic = true, foreground = '#A5D6FF' } } },
-  --         ['horizon'] = { { Hlargs = { italic = true, foreground = { from = 'Normal' } } } },
-  --       },
-  --     })
-  --     require('hlargs').setup({
-  --       excluded_argnames = {
-  --         declarations = { 'use', 'use_rocks', '_' },
-  --         usages = {
-  --           go = { '_' },
-  --           lua = { 'self', 'use', 'use_rocks', '_' },
-  --         },
-  --       },
-  --     })
-  --   end,
-  --   disable = true,
-  -- },
   --
   -- {
   --   'rainbowhxch/beacon.nvim',
