@@ -1,8 +1,8 @@
 return {
   'razak17/zephyr-nvim',
   'LunarVim/horizon.nvim',
+  'nvim-tree/nvim-web-devicons',
   { 'fladson/vim-kitty', lazy = false },
-  { 'nvim-tree/nvim-web-devicons', event = 'VeryLazy' },
 
   {
     'itchyny/vim-highlighturl',
