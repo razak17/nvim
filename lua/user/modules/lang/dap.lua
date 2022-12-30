@@ -1,6 +1,6 @@
 local M = {
   'mfussenegger/nvim-dap',
-  tag = '*',
+  version = '*',
   dependencies = {
     {
       'rcarriga/nvim-dap-ui',

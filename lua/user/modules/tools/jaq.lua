@@ -1,4 +1,4 @@
-local M = { 'is0n/jaq-nvim', event = 'VeryLazy' }
+local M = { 'is0n/jaq-nvim', cmd = { 'Jaq' } }
 
 function M.init() rvim.nnoremap('<leader>rr', ':silent only | Jaq<CR>', 'jaq: run') end
 

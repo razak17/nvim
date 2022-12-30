@@ -109,162 +109,41 @@ return {
     end,
   },
 
-  ----------------------------------------------------------------------------------------------------
-  -- Graveyard
-  ----------------------------------------------------------------------------------------------------
-  -- {
-  --   'Djancyp/cheat-sheet',
-  --   init = function() rvim.nnoremap('<localleader>s', '<cmd>CheatSH<CR>', 'cheat-sheet: search') end,
-  --   config = function()
-  --     require('cheat-sheet').setup({
-  --       auto_fill = {
-  --         current_word = false,
-  --       },
-  --       main_win = { border = 'single' },
-  --       input_win = { border = 'single' },
-  --     })
-  --   end,
-  -- },
-  --
-  --
-  -- {
-  --   'smjonas/inc-rename.nvim',
-  --   init = function()
-  --     -- inc-rename.nvim
-  --     rvim.nnoremap(
-  --       '<leader>rn',
-  --       function() return ':IncRename ' .. vim.fn.expand('<cword>') end,
-  --       { expr = true, silent = false, desc = 'inc-rename: inc rename' }
-  --     )
-  --   end,
-  --   config = function() require('inc_rename').setup({ hl_group = 'Visual' }) end,
-  -- },
-  --
-  -- { 'diepm/vim-rest-console' },
-  --
-  -- {
-  --   'NTBBloodbath/rest.nvim',
-  --   ft = { 'http', 'json' },
-  --   config = function()
-  --     require('rest-nvim').setup({
-  --       -- Open request results in a horizontal split
-  --       result_split_horizontal = true,
-  --       -- Skip SSL verification, useful for unknown certificates
-  --       skip_ssl_verification = true,
-  --       -- Jump to request line on run
-  --       jump_to_request = false,
-  --       custom_dynamic_variables = {},
-  --     })
-  --     rvim.nnoremap('<leader>rr', '<Plug>RestNvim', 'rest: run')
-  --     rvim.nnoremap('<leader>rp', '<Plug>RestNvimPreview', 'rest: run')
-  --     rvim.nnoremap('<leader>rl', '<Plug>RestNvimLast', 'rest: run')
-  --   end,
-  -- },
-  --
-  -- {
-  --   'wincent/command-t',
-  --   run = 'cd lua/wincent/commandt/lib && make',
-  --   cmd = { 'CommandT', 'CommandTRipgrep' },
-  --   setup = function() vim.g.CommandTPreferredImplementation = 'lua' end,
-  --   config = function() require('wincent.commandt').setup() end,
-  -- },
-  --
-  -- {
-  --   'akinsho/toggleterm.nvim',
-  --   init = function()
-  --     local new_term = function(direction, key, count)
-  --       local Terminal = require('toggleterm.terminal').Terminal
-  --       local fmt = string.format
-  --       local cmd = fmt('<cmd>%sToggleTerm direction=%s<CR>', count, direction)
-  --       return Terminal:new({
-  --         direction = direction,
-  --         on_open = function() vim.cmd('startinsert!') end,
-  --         rvim.nnoremap(key, cmd),
-  --         rvim.inoremap(key, cmd),
-  --         rvim.tnoremap(key, cmd),
-  --         count = count,
-  --       })
-  --     end
-  --     local float_term = new_term('float', '<f2>', 1)
-  --     local vertical_term = new_term('vertical', '<F3>', 2)
-  --     local horizontal_term = new_term('horizontal', '<F4>', 3)
-  --     rvim.nnoremap('<f2>', function() float_term:toggle() end)
-  --     rvim.inoremap('<f2>', function() float_term:toggle() end)
-  --     rvim.nnoremap('<F3>', function() vertical_term:toggle() end)
-  --     rvim.inoremap('<F3>', function() vertical_term:toggle() end)
-  --     rvim.nnoremap('<F4>', function() horizontal_term:toggle() end)
-  --     rvim.inoremap('<F4>', function() horizontal_term:toggle() end)
-  --   end,
-  --   config = function()
-  --     require('toggleterm').setup({
-  --       open_mapping = [[<F2>]],
-  --       shade_filetypes = { 'none' },
-  --       shade_terminals = false,
-  --       direction = 'float',
-  --       persist_mode = true,
-  --       insert_mappings = false,
-  --       start_in_insert = true,
-  --       autochdir = false,
-  --       highlights = {
-  --         NormalFloat = { link = 'NormalFloat' },
-  --         FloatBorder = { link = 'FloatBorder' },
-  --       },
-  --       float_opts = {
-  --         width = 150,
-  --         height = 30,
-  --         winblend = 3,
-  --         border = rvim.style.border.current,
-  --       },
-  --       size = function(term)
-  --         if term.direction == 'horizontal' then return 10 end
-  --         if term.direction == 'vertical' then return math.floor(vim.o.columns * 0.3) end
-  --       end,
-  --     })
-  --   end,
-  -- },
-  --
-  -- {
-  --   'linty-org/readline.nvim',
-  --   event = 'CmdlineEnter',
-  --   config = function()
-  --     local readline = require('readline')
-  --     local map = vim.keymap.set
-  --     map('!', '<M-f>', readline.forward_word)
-  --     map('!', '<M-b>', readline.backward_word)
-  --     map('!', '<C-a>', readline.beginning_of_line)
-  --     map('!', '<C-e>', readline.end_of_line)
-  --     map('!', '<M-d>', readline.kill_word)
-  --     map('!', '<M-BS>', readline.backward_kill_word)
-  --     map('!', '<C-w>', readline.unix_word_rubout)
-  --     map('!', '<C-k>', readline.kill_line)
-  --     map('!', '<C-u>', readline.backward_kill_line)
-  --   end,
-  -- },
-  --
-  -- -- prevent select and visual mode from overwriting the clipboard
-  -- {
-  --   'kevinhwang91/nvim-hclipboard',
-  --   event = 'InsertCharPre',
-  --   config = function() require('hclipboard').start() end,
-  -- },
-  --
-  -- {
-  --   'andrewferrier/debugprint.nvim',
-  --   config = function()
-  --     local dp = require('debugprint')
-  --     dp.setup({ create_keymaps = false })
-  --
-  --     rvim.nnoremap(
-  --       '<leader>dp',
-  --       function() return dp.debugprint({ variable = true }) end,
-  --       { desc = 'debugprint: cursor', expr = true }
-  --     )
-  --     rvim.nnoremap(
-  --       '<leader>do',
-  --       function() return dp.debugprint({ motion = true }) end,
-  --       { desc = 'debugprint: operator', expr = true }
-  --     )
-  --     rvim.nnoremap('<leader>dC', '<Cmd>DeleteDebugPrints<CR>', 'debugprint: clear all')
-  --   end,
-  -- },
+  {
+    'andrewferrier/debugprint.nvim',
+    event = 'VeryLazy',
+    init = function()
+      rvim.nnoremap(
+        '<leader>dp',
+        function() return require('debugprint').debugprint({ variable = true }) end,
+        { desc = 'debugprint: cursor', expr = true }
+      )
+      rvim.nnoremap(
+        '<leader>do',
+        function() return require('debugprint').debugprint({ motion = true }) end,
+        { desc = 'debugprint: operator', expr = true }
+      )
+      rvim.nnoremap('<leader>dx', '<Cmd>DeleteDebugPrints<CR>', 'debugprint: clear all')
+    end,
+    config = function()
+      local dp = require('debugprint')
+      dp.setup({ create_keymaps = false })
+    end,
+  },
+
+  {
+    'NTBBloodbath/rest.nvim',
+    ft = { 'http', 'json' },
+    init = function()
+      rvim.nnoremap('<leader>rs', '<Plug>RestNvim', 'rest: run')
+      rvim.nnoremap('<leader>rp', '<Plug>RestNvimPreview', 'rest: run')
+      rvim.nnoremap('<leader>rl', '<Plug>RestNvimLast', 'rest: run')
+    end,
+    config = function()
+      require('rest-nvim').setup({
+        -- Skip SSL verification, useful for unknown certificates
+        skip_ssl_verification = true,
+      })
+    end,
+  },
 }

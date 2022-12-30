@@ -144,6 +144,7 @@ function M.config()
       'dart',
       'rust',
       'typescript',
+      'tsx',
       'javascript',
       'comment',
       'markdown',
@@ -151,7 +152,15 @@ function M.config()
       'prisma',
       'graphql',
       'go',
+      'python',
+      'json',
+      'http',
+      'help',
       'git_rebase',
+      'bash',
+      'c',
+      'diff',
+      'toml',
     },
   })
 
