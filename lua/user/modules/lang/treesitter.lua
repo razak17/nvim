@@ -161,6 +161,8 @@ function M.config()
       'c',
       'diff',
       'toml',
+      'cpp',
+      'jsonc',
     },
   })
 
