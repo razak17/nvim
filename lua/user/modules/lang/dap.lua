@@ -3,6 +3,24 @@ local M = {
   version = '*',
   dependencies = {
     {
+      'mxsdev/nvim-dap-vscode-js',
+      config = function()
+        require('dap-vscode-js').setup({
+          node_path = 'node',
+          debugger_path = rvim.get_runtime_dir() .. '/site/lazy/vscode-js-debug',
+          log_file_path = rvim.get_cache_dir() .. '/dap_vscode_js.log',
+          adapters = {
+            'pwa-node',
+            'pwa-chrome',
+            'pwa-msedge',
+            'node-terminal',
+            'pwa-extensionHost',
+          },
+        })
+      end,
+    },
+    { 'microsoft/vscode-js-debug', build = 'npm install --legacy-peer-deps && npm run compile' },
+    {
       'rcarriga/nvim-dap-ui',
       init = function()
         rvim.nnoremap(
@@ -178,66 +196,121 @@ function M.config()
       port = '9080',
     },
   }
-  -- nodejs
-  dap.adapters.node2 = {
-    type = 'executable',
-    command = 'node',
-    args = {
-      join_paths(rvim.path.mason, 'packages/node-debug2-adapter/out/src/nodeDebug.js'),
-    },
-  }
   -- javascript
   dap.configurations.javascript = {
     {
-      name = 'Launch',
-      type = 'node2',
+      type = 'pwa-node',
       request = 'launch',
-      program = '${workspaceFolder}/${file}',
-      cwd = fn.getcwd(),
+      name = 'Launch Current File (pwa-node)',
+      cwd = vim.fn.getcwd(),
+      args = { '${file}' },
       sourceMaps = true,
       protocol = 'inspector',
-      console = 'integratedTerminal',
     },
     {
-      -- For this to work you need to make sure the node process
-      -- is started with the `--inspect` flag.
-      name = 'Attach to process',
+      type = 'pwa-node',
+      request = 'launch',
+      name = 'Launch Current File (pwa-node with ts-node)',
+      cwd = vim.fn.getcwd(),
+      runtimeArgs = { '--loader', 'ts-node/esm' },
+      runtimeExecutable = 'node',
+      args = { '${file}' },
+      sourceMaps = true,
+      protocol = 'inspector',
+      skipFiles = { '<node_internals>/**', 'node_modules/**' },
+      resolveSourceMapLocations = {
+        '${workspaceFolder}/**',
+        '!**/node_modules/**',
+      },
+    },
+    {
+      type = 'pwa-node',
+      request = 'launch',
+      name = 'Launch Current File (pwa-node with deno)',
+      cwd = vim.fn.getcwd(),
+      runtimeArgs = { 'run', '--inspect-brk', '--allow-all', '${file}' },
+      runtimeExecutable = 'deno',
+      attachSimplePort = 9229,
+    },
+    {
+      type = 'pwa-node',
+      request = 'launch',
+      name = 'Launch Test Current File (pwa-node with jest)',
+      cwd = vim.fn.getcwd(),
+      runtimeArgs = { '${workspaceFolder}/node_modules/.bin/jest' },
+      runtimeExecutable = 'node',
+      args = { '${file}', '--coverage', 'false' },
+      rootPath = '${workspaceFolder}',
+      sourceMaps = true,
+      console = 'integratedTerminal',
+      internalConsoleOptions = 'neverOpen',
+      skipFiles = { '<node_internals>/**', 'node_modules/**' },
+    },
+    {
+      type = 'pwa-node',
+      request = 'launch',
+      name = 'Launch Test Current File (pwa-node with vitest)',
+      cwd = vim.fn.getcwd(),
+      program = '${workspaceFolder}/node_modules/vitest/vitest.mjs',
+      args = { '--inspect-brk', '--threads', 'false', 'run', '${file}' },
+      autoAttachChildProcesses = true,
+      smartStep = true,
+      console = 'integratedTerminal',
+      skipFiles = { '<node_internals>/**', 'node_modules/**' },
+    },
+    {
+      type = 'pwa-node',
+      request = 'launch',
+      name = 'Launch Test Current File (pwa-node with deno)',
+      cwd = vim.fn.getcwd(),
+      runtimeArgs = { 'test', '--inspect-brk', '--allow-all', '${file}' },
+      runtimeExecutable = 'deno',
+      attachSimplePort = 9229,
+    },
+    {
+      type = 'pwa-chrome',
+      request = 'attach',
+      name = 'Attach Program (pwa-chrome = { port: 9222 })',
+      program = '${file}',
+      cwd = vim.fn.getcwd(),
+      sourceMaps = true,
+      port = 9222,
+      webRoot = '${workspaceFolder}',
+    },
+    {
       type = 'node2',
       request = 'attach',
+      name = 'Attach Program (Node2)',
       processId = require('dap.utils').pick_process,
     },
-  }
-  -- typescript
-  dap.configurations.typescript = {
     {
-      name = 'ts-node (Node2 with ts-node)',
       type = 'node2',
-      request = 'launch',
-      cwd = vim.loop.cwd(),
-      runtimeArgs = { '-r', 'ts-node/register' },
-      runtimeExecutable = 'node',
-      args = { '--inspect', '${file}' },
+      request = 'attach',
+      name = 'Attach Program (Node2 with ts-node)',
+      cwd = vim.fn.getcwd(),
       sourceMaps = true,
-      skipFiles = { '<node_internals>/**', 'node_modules/**' },
-    },
-    {
-      name = 'Jest (Node2 with ts-node)',
-      type = 'node2',
-      request = 'launch',
-      cwd = vim.loop.cwd(),
-      runtimeArgs = { '--inspect-brk', '${workspaceFolder}/node_modules/.bin/jest' },
-      runtimeExecutable = 'node',
-      args = { '${file}', '--runInBand', '--coverage', 'false' },
-      sourceMaps = true,
+      skipFiles = { '<node_internals>/**' },
       port = 9229,
-      skipFiles = { '<node_internals>/**', 'node_modules/**' },
+    },
+    {
+      type = 'pwa-node',
+      request = 'attach',
+      name = 'Attach Program (pwa-node)',
+      cwd = vim.fn.getcwd(),
+      processId = require('dap.utils').pick_process,
+      skipFiles = { '<node_internals>/**' },
     },
   }
-  -- nlua
+  dap.configurations.typescript = dap.configurations.javascript
+  dap.configurations.javascriptreact = dap.configurations.javascript
+  dap.configurations.typescriptreact = dap.configurations.javascript
+  -- using pwa-chrome
+  dap.configurations.vue = dap.configurations.javascript
+  dap.configurations.svelte = dap.configurations.javascript
+  -- Lua
   dap.adapters.nlua = function(callback, config)
     callback({ type = 'server', host = config.host, port = config.port })
   end
-  -- Lua
   dap.configurations.lua = {
     {
       type = 'nlua',
