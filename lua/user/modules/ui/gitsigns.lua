@@ -44,8 +44,8 @@ function M.config()
 
       nnoremap('<leader>gL', qf_list_modified, 'gitsigns: list modified in quickfix')
       nnoremap('<leader>gb', gs.blame_line, 'gitsigns: blame current line')
-      nnoremap('<localleader>gr', gs.reset_buffer, 'gitsigns: reset entire buffer')
-      nnoremap('<localleader>gw', gs.stage_buffer, 'gitsigns: stage entire buffer')
+      nnoremap('<leader>gr', gs.reset_buffer, 'gitsigns: reset entire buffer')
+      nnoremap('<leader>gw', gs.stage_buffer, 'gitsigns: stage entire buffer')
 
       vnoremap('<leader>hs', function() gs.stage_hunk({ vim.fn.line('.'), vim.fn.line('v') }) end)
       vnoremap('<leader>hr', function() gs.reset_hunk({ vim.fn.line('.'), vim.fn.line('v') }) end)
