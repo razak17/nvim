@@ -359,7 +359,6 @@ rvim.augroup('Utilities', {
     command = function()
       vim.opt_local.spell = true
       vim.bo.textwidth = 100
-      vim.opt_local.formatoptions:remove('o')
     end,
   },
   {
@@ -395,6 +394,11 @@ rvim.augroup('Utilities', {
           ]])
       end
     end,
+  },
+  {
+    event = 'FileType',
+    pattern = { '*' },
+    command = function() vim.opt_local.formatoptions:remove('o') end,
   },
 })
 
