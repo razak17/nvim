@@ -1,7 +1,16 @@
 return {
   'razak17/zephyr-nvim',
   'LunarVim/horizon.nvim',
+  { 'fladson/vim-kitty', lazy = false },
   { 'nvim-tree/nvim-web-devicons', event = 'VeryLazy' },
+
+  {
+    'itchyny/vim-highlighturl',
+    lazy = false,
+    config = function()
+      vim.g.highlighturl_guifg = require('user.utils.highlights').get('URL', 'fg')
+    end,
+  },
 
   {
     'romainl/vim-cool',
@@ -75,89 +84,24 @@ return {
     end,
   },
 
-  ----------------------------------------------------------------------------------------------------
-  -- Graveyard
-  ----------------------------------------------------------------------------------------------------
-  --
-  -- {
-  --   'rainbowhxch/beacon.nvim',
-  --   config = function()
-  --     local beacon = require('beacon')
-  --     beacon.setup({
-  --       minimal_jump = 20,
-  --       ignore_buffers = { 'terminal', 'nofile', 'neorg://Quick Actions' },
-  --       ignore_filetypes = {
-  --         'neo-tree',
-  --         'qf',
-  --         'NeogitCommitMessage',
-  --         'NeogitPopup',
-  --         'NeogitStatus',
-  --         'packer',
-  --         'trouble',
-  --       },
-  --     })
-  --     rvim.augroup('BeaconCmds', {
-  --       {
-  --         event = { 'BufReadPre' },
-  --         pattern = { '*.norg' },
-  --         command = function() beacon.beacon_off() end,
-  --       },
-  --     })
-  --   end,
-  --   disable = true,
-  -- },
-  --
-  -- {
-  --   'mvllow/modes.nvim',
-  --   tag = 'v0.2.0',
-  --   config = function() require('modes').setup() end,
-  --   disable = true,
-  -- },
-  --
-  -- { 'fladson/vim-kitty', disable = true },
-  --
-  -- { 'mtdl9/vim-log-highlighting', disable = true },
-  --
-  -- {
-  --   'itchyny/vim-highlighturl',
-  --   disable = true,
-  --   config = function()
-  --     vim.g.highlighturl_guifg = require('user.utils.highlights').get('URL', 'fg')
-  --   end,
-  -- },
-  --
-  -- {
-  --   'levouh/tint.nvim',
-  --   event = 'BufRead',
-  --   disable = true,
-  --   config = function()
-  --     require('tint').setup({
-  --       tint = -30,
-  --       highlight_ignore_patterns = {
-  --         'winseparator',
-  --         'st.*',
-  --         'comment',
-  --         'panel.*',
-  --         'telescope.*',
-  --         'bqf.*',
-  --       },
-  --       window_ignore_function = function(win_id)
-  --         if vim.wo[win_id].diff or vim.fn.win_gettype(win_id) ~= '' then return true end
-  --         local buf = vim.api.nvim_win_get_buf(win_id)
-  --         local b = vim.bo[buf]
-  --         local ignore_bt = { 'terminal', 'prompt', 'nofile' }
-  --         local ignore_ft = {
-  --           'neo-tree',
-  --           'packer',
-  --           'diff',
-  --           'toggleterm',
-  --           'Neogit.*',
-  --           'Telescope.*',
-  --           'qf',
-  --         }
-  --         return rvim.any(b.bt, ignore_bt) or rvim.any(b.ft, ignore_ft)
-  --       end,
-  --     })
-  --   end,
-  -- },
+  {
+    'rainbowhxch/beacon.nvim',
+    config = function()
+      local beacon = require('beacon')
+      beacon.setup({
+        minimal_jump = 20,
+        ignore_buffers = { 'terminal', 'nofile' },
+        ignore_filetypes = {
+          'neo-tree',
+          'qf',
+          'NeogitCommitMessage',
+          'NeogitPopup',
+          'NeogitStatus',
+          'packer',
+          'trouble',
+        },
+      })
+    end,
+    enabled = false,
+  },
 }
