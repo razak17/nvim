@@ -1,6 +1,3 @@
-local ok, which_key = rvim.safe_require('which-key')
-if ok then which_key.register({ ['<localleader>'] = { r = { name = 'Rust Tools' } } }) end
-
 require('rust-tools').setup({
   tools = {
     executor = require('rust-tools/executors').termopen, -- can be quickfix or termopen

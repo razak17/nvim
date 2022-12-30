@@ -87,6 +87,7 @@
   "promise-async": { "branch": "main", "commit": "25ac2ddb577bbc1bda2402e6dd6bd33d52cec398" },
   "rust-tools.nvim": { "branch": "master", "commit": "99fd1238c6068d0637df30b6cee9a264334015e9" },
   "schemastore.nvim": { "branch": "main", "commit": "8e06574becec41469a9d0d46d3cc893841d97c3f" },
+  "sniprun": { "branch": "master", "commit": "79806dad094770a1563ac0227c9692f7592df744" },
   "spread.nvim": { "branch": "main", "commit": "ced38ee20f76375e29a86f754583b6871c92d13c" },
   "sqlite.lua": { "branch": "master", "commit": "53cac3fdb5f5e4e63e243232b6eccf3c764ae18a" },
   "sqls.nvim": { "branch": "main", "commit": "a0048b7018c99b68456f91b4aa42ce288f0c0774" },
