@@ -59,6 +59,8 @@ function M.config()
     update_debounce = 200,
     status_formatter = nil, -- Use default
   })
+  local ok, which_key = rvim.safe_require('which-key')
+  if ok then which_key.register({ ['<localleader>g'] = { name = 'Gitsigns' } }) end
 end
 
 return M
