@@ -1,6 +1,7 @@
 return {
   'razak17/zephyr-nvim',
   'LunarVim/horizon.nvim',
+  { 'nvim-tree/nvim-web-devicons', event = 'VeryLazy' },
 
   {
     'romainl/vim-cool',
@@ -13,10 +14,7 @@ return {
     event = 'BufReadPre',
     config = function()
       require('fidget').setup({
-        align = {
-          bottom = false,
-          right = true,
-        },
+        align = { bottom = false, right = true },
         fmt = { stack_upwards = false },
       })
       rvim.augroup('CloseFidget', {
@@ -27,8 +25,6 @@ return {
       })
     end,
   },
-
-  { 'nvim-tree/nvim-web-devicons', event = 'VeryLazy' },
 
   {
     'lukas-reineke/virt-column.nvim',
@@ -54,54 +50,6 @@ return {
           excludes = { 'dart', 'html', 'css', 'typescriptreact' },
         },
       })
-    end,
-  },
-
-  {
-    'lukas-reineke/headlines.nvim',
-    ft = { 'org', 'norg', 'markdown', 'yaml' },
-    init = function()
-      require('user.utils.highlights').plugin('Headlines', {
-        { Headline1 = { background = '#003c30', foreground = 'White' } },
-        { Headline2 = { background = '#00441b', foreground = 'White' } },
-        { Headline3 = { background = '#084081', foreground = 'White' } },
-        { Dash = { background = '#0b60a1', bold = true } },
-      })
-    end,
-    config = function()
-      require('headlines').setup({
-        markdown = {
-          headline_highlights = { 'Headline1', 'Headline2', 'Headline3' },
-        },
-        org = { headline_highlights = false },
-        norg = { codeblock_highlight = false },
-      })
-    end,
-  },
-
-  {
-    'folke/todo-comments.nvim',
-    event = 'BufReadPre',
-    cmd = { 'TodoTelescope', 'TodoTrouble', 'TodoQuickFix', 'TodoDots' },
-    init = function()
-      -- todo-comments.nvim
-      rvim.nnoremap(
-        '<leader>tj',
-        function() require('todo-comments').jump_next() end,
-        'todo-comments: next todo'
-      )
-      rvim.nnoremap(
-        '<leader>tk',
-        function() require('todo-comments').jump_prev() end,
-        'todo-comments: prev todo'
-      )
-    end,
-    config = function()
-      require('todo-comments').setup({ highlight = { after = '' } })
-      rvim.command(
-        'TodoDots',
-        string.format('TodoTelescope cwd=%s keywords=TODO,FIXME', rvim.get_config_dir())
-      )
     end,
   },
 

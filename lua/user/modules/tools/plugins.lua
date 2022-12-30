@@ -2,37 +2,13 @@ return {
   { 'nvim-lua/plenary.nvim' },
   { 'nvim-lua/popup.nvim' },
   { 'kkharji/sqlite.lua', event = 'VeryLazy' },
+
   {
-    'ThePrimeagen/harpoon',
-    init = function()
-      rvim.nnoremap('<leader>ma', function() require('harpoon.mark').add_file() end, 'harpoon: add')
-      rvim.nnoremap('<leader>mn', function() require('harpoon.ui').nav_next() end, 'harpoon: next')
-      rvim.nnoremap('<leader>mp', function() require('harpoon.ui').nav_prev() end, 'harpoon: prev')
-      rvim.nnoremap(
-        '<leader>m;',
-        function() require('harpoon.ui').toggle_quick_menu() end,
-        'harpoon: ui'
-      )
-      rvim.nnoremap(
-        '<leader>mm',
-        function()
-          require('telescope').extensions.harpoon.marks(
-            rvim.telescope.minimal_ui({ prompt_title = 'Harpoon Marks' })
-          )
-        end,
-        'harpoon: marks'
-      )
-    end,
-    config = function()
-      require('harpoon').setup({
-        menu = {
-          width = vim.api.nvim_win_get_width(0) - 4,
-          borderchars = rvim.style.border.common,
-        },
-      })
-      require('telescope').load_extension('harpoon')
-    end,
+    'AndrewRadev/linediff.vim',
+    cmd = 'Linediff',
+    init = function() rvim.nnoremap('<localleader>ll', '<cmd>Linediff<CR>', 'linediff: toggle') end,
   },
+
   {
     'razak17/buffer_manager.nvim',
     init = function()
@@ -49,124 +25,6 @@ return {
       })
     end,
   },
-  {
-    'razak17/cybu.nvim',
-    event = { 'BufRead', 'BufNewFile' },
-    init = function()
-      rvim.nnoremap('H', '<Plug>(CybuPrev)', 'cybu: prev')
-      rvim.nnoremap('L', '<Plug>(CybuNext)', 'cybu: next')
-    end,
-    config = function()
-      require('cybu').setup({
-        position = {
-          relative_to = 'win',
-          anchor = 'topright',
-        },
-        style = { border = 'single', hide_buffer_id = true },
-        exclude = {
-          'neo-tree',
-          'qf',
-          'lspinfo',
-          'alpha',
-          'NvimTree',
-          'DressingInput',
-          'dashboard',
-          'neo-tree',
-          'neo-tree-popup',
-          'lsp-installer',
-          'TelescopePrompt',
-          'harpoon',
-          'packer',
-          'mason.nvim',
-          'help',
-          'CommandTPrompt',
-        },
-      })
-    end,
-  },
-
-  {
-    'ahmedkhalf/project.nvim',
-    event = 'VeryLazy',
-    config = function()
-      require('project_nvim').setup({
-        active = true,
-        manual_mode = false,
-        detection_methods = { 'pattern', 'lsp' },
-        patterns = {
-          '.git',
-          '.hg',
-          '.svn',
-          'Makefile',
-          'package.json',
-          '.luacheckrc',
-          '.stylua.toml',
-        },
-        show_hidden = false,
-        silent_chdir = true,
-        ignore_lsp = { 'null-ls' },
-        datapath = rvim.get_cache_dir(),
-      })
-      require('telescope').load_extension('projects')
-    end,
-  },
-
-  {
-    'numToStr/FTerm.nvim',
-    event = 'VeryLazy',
-    init = function()
-      local function new_float(cmd)
-        cmd =
-          require('FTerm'):new({ cmd = cmd, dimensions = { height = 0.9, width = 0.9 } }):toggle()
-      end
-      rvim.nnoremap([[<c-\>]], function() require('FTerm').toggle() end, 'fterm: toggle lazygit')
-      rvim.tnoremap([[<c-\>]], function() require('FTerm').toggle() end, 'fterm: toggle lazygit')
-      rvim.nnoremap('<leader>lg', function() new_float('lazygit') end, 'fterm: toggle lazygit')
-      rvim.nnoremap('<leader>ga', function() new_float('git add .') end, 'add all')
-      rvim.nnoremap('<leader>gc', function() new_float('git commit -a -v') end, 'commit')
-      rvim.nnoremap('<leader>gd', function() new_float('iconf -ccma') end, 'commit dotfiles')
-      rvim.nnoremap('<leader>tb', function() new_float('btop') end, 'fterm: btop')
-      rvim.nnoremap('<leader>tn', function() new_float('node') end, 'fterm: node')
-      rvim.nnoremap('<leader>tr', function() new_float('ranger') end, 'fterm: ranger')
-      rvim.nnoremap('<leader>tp', function() new_float('python') end, 'fterm: python')
-    end,
-    config = function()
-      local fterm = require('FTerm')
-      fterm.setup({ dimensions = { height = 0.8, width = 0.9 } })
-    end,
-  },
-
-  {
-    'ggandor/leap.nvim',
-    event = 'VeryLazy',
-    init = function()
-      rvim.nnoremap('s', function()
-        require('leap').leap({
-          target_windows = vim.tbl_filter(
-            function(win) return rvim.empty(vim.fn.win_gettype(win)) end,
-            vim.api.nvim_tabpage_list_wins(0)
-          ),
-        })
-      end, 'leap: search')
-    end,
-    config = function()
-      require('user.utils.highlights').plugin('leap', {
-        theme = {
-          ['*'] = {
-            { LeapBackdrop = { fg = '#707070' } },
-          },
-          horizon = {
-            { LeapLabelPrimary = { bg = 'NONE', fg = '#ccff88', italic = true } },
-            { LeapLabelSecondary = { bg = 'NONE', fg = '#99ccff' } },
-            { LeapLabelSelected = { bg = 'NONE', fg = 'Magenta' } },
-          },
-        },
-      })
-      require('leap').setup({
-        equivalence_classes = { ' \t\r\n', '([{', ')]}', '`"\'' },
-      })
-    end,
-  },
 
   {
     'ggandor/flit.nvim',
@@ -175,30 +33,6 @@ return {
       require('flit').setup({
         labeled_modes = 'nvo',
         multiline = false,
-      })
-    end,
-  },
-
-  {
-    'SmiteshP/nvim-navic',
-    config = function()
-      vim.g.navic_silence = true
-      local highlights = require('user.utils.highlights')
-      local s = rvim.style
-      local misc = s.icons.misc
-      require('user.utils.highlights').plugin('navic', {
-        { NavicText = { bold = false } },
-        { NavicSeparator = { link = 'Directory' } },
-      })
-      local icons = rvim.map(function(icon, key)
-        highlights.set(('NavicIcons%s'):format(key), { link = rvim.lsp.kind_highlights[key] })
-        return icon .. ' '
-      end, s.codicons.kind)
-      require('nvim-navic').setup({
-        icons = icons,
-        highlight = true,
-        depth_limit_indicator = misc.ellipsis,
-        separator = (' %s '):format(misc.arrow_right),
       })
     end,
   },
@@ -235,100 +69,6 @@ return {
   },
 
   {
-    'is0n/jaq-nvim',
-    event = 'VeryLazy',
-    init = function() rvim.nnoremap('<leader>rr', ':silent only | Jaq<CR>', 'jaq: run') end,
-    config = function()
-      require('jaq-nvim').setup({
-        cmds = {
-          default = 'term',
-          external = {
-            typescript = 'ts-node %',
-            javascript = 'node %',
-            python = 'python %',
-            rust = 'cargo run',
-            cpp = 'g++ % -o $fileBase && ./$fileBase',
-            go = 'go run %',
-          },
-        },
-        behavior = { startinsert = true },
-        terminal = {
-          position = 'vert',
-          size = 60,
-        },
-      })
-      rvim.augroup('JaqConfig', {
-        {
-          event = { 'Filetype' },
-          pattern = { 'Jaq' },
-          command = function()
-            vim.api.nvim_win_set_config(0, { border = rvim.style.border.current })
-          end,
-        },
-      })
-    end,
-  },
-
-  {
-    'folke/persistence.nvim',
-    event = 'BufReadPre', -- this will only start session saving when an actual file was opened
-    init = function()
-      rvim.nnoremap(
-        '<leader>sr',
-        '<cmd>lua require("persistence").load()<CR>',
-        'persistence: restore for directory'
-      )
-      rvim.nnoremap(
-        '<leader>sl',
-        '<cmd>lua require("persistence").load({ last = true })<CR>',
-        'persistence: restore last'
-      )
-    end,
-    config = function()
-      require('persistence').setup({
-        dir = vim.fn.expand(rvim.get_cache_dir() .. '/sessions/'),
-        options = { 'buffers', 'curdir', 'tabpages', 'winsize', 'help' },
-      })
-    end,
-  },
-
-  {
-    'nvim-neotest/neotest',
-    version = 'v2.*',
-    event = { 'BufRead', 'BufNewFile' },
-    init = function()
-      local function neotest_open() require('neotest').output.open({ enter = true, short = false }) end
-      local function run_file() require('neotest').run.run(vim.fn.expand('%')) end
-      local function nearest() require('neotest').run.run() end
-      local function next_failed() require('neotest').jump.prev({ status = 'failed' }) end
-      local function prev_failed() require('neotest').jump.next({ status = 'failed' }) end
-      local function toggle_summary() require('neotest').summary.toggle() end
-      rvim.nnoremap('<localleader>ts', toggle_summary, 'neotest: run suite')
-      rvim.nnoremap('<localleader>to', neotest_open, 'neotest: output')
-      rvim.nnoremap('<localleader>tn', nearest, 'neotest: run')
-      rvim.nnoremap('<localleader>tf', run_file, 'neotest: run file')
-      rvim.nnoremap('[n', next_failed, 'jump to next failed test')
-      rvim.nnoremap(']n', prev_failed, 'jump to previous failed test')
-    end,
-    config = function()
-      require('neotest').setup({
-        diagnostic = { enabled = false },
-        icons = { running = rvim.style.icons.misc.clock },
-        floating = { border = rvim.style.border.current },
-        adapters = {
-          require('neotest-plenary'),
-          require('neotest-python'),
-        },
-      })
-    end,
-    dependencies = {
-      'rcarriga/neotest-plenary',
-      'rcarriga/neotest-vim-test',
-      'nvim-neotest/neotest-python',
-    },
-  },
-
-  {
     'turbio/bracey.vim',
     ft = { 'html' },
     build = 'npm install --prefix server',
@@ -343,29 +83,6 @@ return {
     event = { 'InsertEnter' },
     build = 'cd js && npm ci',
     config = function() require('lab').setup() end,
-  },
-
-  {
-    'Saecki/crates.nvim',
-    event = { 'BufRead Cargo.toml' },
-    config = function()
-      require('crates').setup({
-        popup = {
-          autofocus = true,
-          style = 'minimal',
-          border = 'single',
-          show_version_date = false,
-          show_dependency_version = true,
-          max_height = 30,
-          min_width = 20,
-          padding = 1,
-        },
-        null_ls = {
-          enabled = true,
-          name = 'crates.nvim',
-        },
-      })
-    end,
   },
 
   {
@@ -395,8 +112,6 @@ return {
   ----------------------------------------------------------------------------------------------------
   -- Graveyard
   ----------------------------------------------------------------------------------------------------
-  -- { 'AndrewRadev/linediff.vim', cmd = 'Linediff' },
-  --
   -- {
   --   'Djancyp/cheat-sheet',
   --   init = function() rvim.nnoremap('<localleader>s', '<cmd>CheatSH<CR>', 'cheat-sheet: search') end,
