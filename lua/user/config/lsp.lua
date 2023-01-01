@@ -1,7 +1,7 @@
 local border = rvim.style.border.current
 
 rvim.lsp = {
-  templates_dir = join_paths(rvim.get_runtime_dir(), 'site/after/ftplugin'),
+  templates_dir = join_paths(rvim.get_runtime_dir(), 'site', 'after', 'ftplugin'),
   diagnostics = {
     signs = { active = true },
     underline = true,
