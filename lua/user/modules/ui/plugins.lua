@@ -37,7 +37,7 @@ return {
 
   {
     'lukas-reineke/virt-column.nvim',
-    event = 'BufReadPre',
+    lazy = false,
     config = function()
       require('user.utils.highlights').plugin('virt_column', {
         { VirtColumn = { bg = 'None', fg = { from = 'VertSplit', alter = -50 } } },
