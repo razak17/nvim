@@ -73,8 +73,8 @@ function rvim.ui.winbar.get()
       if rvim.ui.winbar.use_icon then is_first = index == 1 end
       local is_last = index == #parts
       local sep = is_last and separator or dir_separator
-      local hl = is_last and 'Winbar' or 'VertSplit'
-      local suffix_hl = is_last and 'WinbarDirectory' or 'VertSplit'
+      local hl = is_last and 'Winbar' or 'LineNr'
+      local suffix_hl = is_last and 'WinbarDirectory' or 'LineNr'
       rvim.ui.winbar.state[priority] = table.concat(vim.list_slice(parts, 1, index), '/')
       add(component(part, hl, {
         id = priority,
