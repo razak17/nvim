@@ -488,11 +488,11 @@ diagnostic.config({
   }, rvim.lsp.diagnostics.float),
 })
 
--- NOTE: virtual_text should be set to false by default. see above
 local function toggle_virtual_text()
-  local new_value = vim.diagnostic.config().virtual_text
-  if type(new_value) == 'boolean' then
-    vim.diagnostic.config({
+  local prev_config = vim.diagnostic.config()
+  local new_config = vim.tbl_extend('force', prev_config, { virtual_text = false })
+  if type(prev_config.virtual_text) == 'boolean' then
+    new_config = vim.tbl_extend('force', prev_config, {
       virtual_text = {
         prefix = '',
         spacing = rvim.lsp.diagnostics.virtual_text_spacing,
@@ -502,9 +502,8 @@ local function toggle_virtual_text()
         end,
       },
     })
-    return
   end
-  vim.diagnostic.config({ virtual_text = false })
+  vim.diagnostic.config(new_config)
 end
 command('ToggleVirtualText', toggle_virtual_text)
 
