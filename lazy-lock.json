@@ -39,7 +39,7 @@
   "iswap.nvim": { "branch": "master", "commit": "16cec32fe27dafd5372ffb9da659c070aa21859e" },
   "jaq-nvim": { "branch": "master", "commit": "236296aae555657487d1bb4d066cbde9d79d8cd4" },
   "lab.nvim": { "branch": "main", "commit": "733b4dd2c1b87013291c21d80afbe5255712d1d3" },
-  "lazy.nvim": { "branch": "main", "commit": "887c6029577152d8a7b0b343ba8d318aee2fe1f0" },
+  "lazy.nvim": { "branch": "main", "commit": "1edd1b8945ee91cdfd61654af96c427dce285a9d" },
   "leap.nvim": { "branch": "main", "commit": "e0145906c5f004b23eb6ec876fad55ffd3382ec9" },
   "linediff.vim": { "branch": "main", "commit": "b4d3c3f03eed00caa741c2650e13db5b7b7ce0ef" },
   "lsp-inlayhints.nvim": { "branch": "main", "commit": "a28c51a6362e3faa17f67749436cb5c8b55dcc6d" },

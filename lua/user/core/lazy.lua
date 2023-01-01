@@ -36,7 +36,7 @@ function Lazy:bootstrap_lazy()
   Lazy:load_plugins()
   if not lazy then lazy = require('lazy') end
   local lazy_opts = {
-    root = join_paths(rvim.get_runtime_dir(), 'site', 'lazy'),
+    root = join_paths(rvim.get_pack_dir(), 'lazy'),
     defaults = { lazy = true },
     lockfile = join_paths(rvim.get_config_dir(), 'lazy-lock.json'),
     git = { timeout = 720 },
@@ -57,7 +57,7 @@ function Lazy:bootstrap_lazy()
 end
 
 function Lazy:init_ensure_installed()
-  local lazy_path = join_paths(rvim.get_runtime_dir(), 'site', 'lazy', 'lazy.nvim')
+  local lazy_path = join_paths(rvim.get_pack_dir(), 'lazy', 'lazy.nvim')
   if not vim.loop.fs_stat(lazy_path) then
     vim.fn.system({
       'git',
