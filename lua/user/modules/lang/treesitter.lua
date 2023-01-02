@@ -74,9 +74,9 @@ function M.config()
       },
     },
     textobjects = {
-      lookahead = true,
       select = {
         enable = true,
+        lookahead = true,
         include_surrounding_whitespace = true,
         keymaps = {
           ['af'] = '@function.outer',
@@ -146,7 +146,7 @@ function M.config()
       'typescript',
       'tsx',
       'javascript',
-      'comment',
+      -- "comment", -- comments are slowing down TS bigtime, so disable for now
       'markdown',
       'markdown_inline',
       'prisma',
