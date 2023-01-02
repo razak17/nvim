@@ -15,6 +15,6 @@ end
 -- Load Modules
 ----------------------------------------------------------------------------------------------------
 -- NOTE: order matters
+R('user.core.lazy').ensure_plugins()
 R('user.core.commands')
 R('user.core.highlights')
-R('user.core.lazy').ensure_plugins()

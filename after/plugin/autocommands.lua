@@ -164,6 +164,9 @@ local column_block_list = {
   'Trouble',
   'NvimTree',
   'log',
+  'lazy',
+  'fTerm',
+  'mason',
   'TelescopePrompt',
   'lspinfo',
   'lsp-installer',
@@ -176,7 +179,8 @@ local column_block_list = {
 
 local function check_color_column()
   local tw = api.nvim_get_option_value('textwidth', {})
-  if tw == 0 then return end
+  local cc = api.nvim_get_option_value('colorcolumn', {})
+  if tw == 0 or cc == '+1' then return end
   for _, win in ipairs(api.nvim_list_wins()) do
     local buffer = vim.bo[api.nvim_win_get_buf(win)]
     local window = vim.wo[win]
