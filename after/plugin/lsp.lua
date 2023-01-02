@@ -226,11 +226,6 @@ local function setup_mappings(client, bufnr)
     '<cmd>ToggleDiagnosticSigns<CR>',
     with_desc('lsp: toggle diagnostic signs')
   )
-  nnoremap(
-    '<leader>ol',
-    '<cmd>ToggleDiagnosticLines<CR>',
-    with_desc('lsp: toggle diagnostic lines')
-  )
   -- Typescript
   if client.name == 'tsserver' then
     local actions = require('typescript').actions
@@ -465,27 +460,6 @@ local function toggle_virtual_text()
   vim.diagnostic.config(new_config)
 end
 command('ToggleVirtualText', toggle_virtual_text)
-
-local function toggle_diagnostic_lines()
-  local _, hl = pcall(api.nvim_get_hl_by_name, 'DiagnosticSignInfoLine', true)
-  local hl_all = require('user.utils.highlights').all
-  if not hl.background then
-    hl_all({
-      { DiagnosticSignInfoLine = { link = 'DiagnosticVirtualTextInfo' } },
-      { DiagnosticSignHintLine = { link = 'DiagnosticVirtualTextHint' } },
-      { DiagnosticSignErrorLine = { link = 'DiagnosticVirtualTextError' } },
-      { DiagnosticSignWarnLine = { link = 'DiagnosticVirtualTextWarn' } },
-    })
-  else
-    hl_all({
-      { DiagnosticSignInfoLine = { link = 'NONE' } },
-      { DiagnosticSignHintLine = { link = 'NONE' } },
-      { DiagnosticSignErrorLine = { link = 'NONE' } },
-      { DiagnosticSignWarnLine = { link = 'NONE' } },
-    })
-  end
-end
-command('ToggleDiagnosticLines', toggle_diagnostic_lines)
 
 lsp.handlers['textDocument/hover'] = function(...)
   local hover_handler = lsp.with(lsp.handlers.hover, {
