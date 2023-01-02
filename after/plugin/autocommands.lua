@@ -38,6 +38,7 @@ local smart_close_filetypes = {
   'packer',
   'lspinfo',
   'neotest-summary',
+  'neotest-output',
 }
 
 local smart_close_buftypes = {} -- Don't include no file buffers rvim diff buffers are nofile

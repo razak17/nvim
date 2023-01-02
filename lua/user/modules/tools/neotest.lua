@@ -6,6 +6,7 @@ local M = {
     'rcarriga/neotest-plenary',
     'rcarriga/neotest-vim-test',
     'nvim-neotest/neotest-python',
+    'rouge8/neotest-rust',
   },
 }
 
@@ -32,6 +33,7 @@ function M.config()
     adapters = {
       require('neotest-plenary'),
       require('neotest-python'),
+      require('neotest-rust'),
     },
   })
 end
