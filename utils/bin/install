@@ -48,22 +48,19 @@ pythonVenvInit() {
 }
 
 nodeExtra() {
-	npm install -g tree-sitter-cli prettier_d_slim neovim live-server
+	npm install -g tree-sitter-cli neovim
 }
 
 archExtra() {
 	sudo pacman -S \
     ripgrep \
-    cppcheck \
     xsel \
     fd \
-    delve \
     lazygit \
     unzip \
     curl \
     sqlite3 \
-    btop \
-    trash-cli
+    btop 
 }
 
 yayExtra() {
