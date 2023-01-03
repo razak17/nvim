@@ -1,3 +1,4 @@
+-- FIXME: UI is broken
 local M = { 'razak17/cybu.nvim', event = { 'BufRead', 'BufNewFile' } }
 
 function M.init()
