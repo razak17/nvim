@@ -1,6 +1,11 @@
 return {
   { 'JoosepAlviste/nvim-ts-context-commentstring' },
-  { 'psliwka/vim-dirtytalk', build = ':DirtytalkUpdate' },
+
+  {
+    'psliwka/vim-dirtytalk',
+    build = ':DirtytalkUpdate',
+    config = function() vim.opt.spelllang:append('programming') end,
+  },
 
   {
 
