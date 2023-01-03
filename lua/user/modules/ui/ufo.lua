@@ -77,7 +77,7 @@ function M.config()
     provider_selector = function() return { 'treesitter', 'indent' } end,
     preview = {
       win_config = {
-        border = 'single',
+        border = rvim.style.border.current,
         winhighlight = 'Normal:VertSplit,FloatBorder:VertSplit',
       },
     },
