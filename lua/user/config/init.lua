@@ -1,4 +1,12 @@
 if not rvim then return end
+
+----------------------------------------------------------------------------------------------------
+-- Set leader keys
+----------------------------------------------------------------------------------------------------
+if rvim.ui.line_wrap_cursor_movement then vim.opt.whichwrap:append('<,>,[,],h,l,~') end
+vim.g.mapleader = (rvim.keys.leader == 'space' and ' ') or rvim.keys.leader
+vim.g.maplocalleader = (rvim.keys.localleader == 'space' and ' ') or rvim.keys.localleader
+
 ----------------------------------------------------------------------------------------------------
 -- Set Providers & Disable Builtins
 ----------------------------------------------------------------------------------------------------

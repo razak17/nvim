@@ -281,8 +281,3 @@ if rvim.executable('nvr') then
   vim.env.GIT_EDITOR = "nvr -cc split --remote-wait +'set bufhidden=wipe'"
   vim.env.EDITOR = "nvr -cc split --remote-wait +'set bufhidden=wipe'"
 end
--- vim:foldmethod=marker
--- ifstream
-if rvim.ui.line_wrap_cursor_movement then vim.opt.whichwrap:append('<,>,[,],h,l,~') end
-vim.g.mapleader = (rvim.keys.leader == 'space' and ' ') or rvim.keys.leader
-vim.g.maplocalleader = (rvim.keys.localleader == 'space' and ' ') or rvim.keys.localleader
