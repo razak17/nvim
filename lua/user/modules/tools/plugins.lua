@@ -99,14 +99,17 @@ return {
 
   {
     'shortcuts/no-neck-pain.nvim',
-    event = 'VeryLazy',
-    init = function()
-      rvim.nnoremap(
+    keys = {
+      {
         '<leader>on',
-        '<cmd>lua require("no-neck-pain").toggle()<CR>',
-        'no-neck-pain: toggle'
-      )
-    end,
+        function() require('no-neck-pain').toggle() end,
+        mode = 'n',
+        desc = 'toggle no-neck-pain',
+        noremap = true,
+        silent = true,
+        expr = false,
+      },
+    },
   },
 
   {

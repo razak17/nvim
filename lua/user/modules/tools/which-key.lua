@@ -27,10 +27,12 @@ function M.config()
     ['<leader>'] = {
       a = { name = 'Actions' },
       b = { name = 'Buffer' },
-      f = { name = 'Telescope', v = { name = 'Vim' } },
+      f = { name = 'Telescope' },
+      fv = { name = 'Vim' },
       g = { name = 'Git' },
       i = { name = 'Toggler' },
       l = { name = 'Lsp' },
+      lt = { name = 'Lsp' },
       L = { name = 'rVim' },
       m = { name = 'Marks' },
       n = { name = 'Notify' },

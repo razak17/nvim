@@ -7,6 +7,7 @@ rvim.path = {
 rvim.ui = {
   line_wrap_cursor_movement = false,
   transparent_window = false,
+  tw = {},
   winbar = {
     enable = true,
     use_filename_only = false,

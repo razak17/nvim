@@ -50,7 +50,17 @@ return {
     'uga-rosa/ccc.nvim',
     event = 'BufReadPre',
     cmd = { 'CccHighlighterToggle', 'CccHighlighterEnable', 'CccHighlighterDisable' },
-    init = function() rvim.nnoremap('<leader>oc', '<cmd>CccHighlighterToggle<CR>', 'ccc: toggle') end,
+    keys = {
+      {
+        '<leader>oc',
+        '<cmd>CccHighlighterToggle<CR>',
+        mode = 'n',
+        desc = 'toggle ccc',
+        noremap = true,
+        silent = true,
+        expr = false,
+      },
+    },
     config = function()
       require('ccc').setup({
         win_opts = { border = rvim.style.border.current },

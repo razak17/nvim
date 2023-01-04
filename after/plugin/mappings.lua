@@ -268,19 +268,23 @@ local function toggle_opt(opt)
   if opt == 'laststatus' then
     if value == 0 then value = 3 end
     if value > 0 then value = 0 end
-  elseif opt == 'colorcolumn' then
+  end
+  if opt == 'colorcolumn' then
     local tw = get_option_value('textwidth')
     if value == '' then value = '+1' end
     if value ~= '' and tw ~= 0 then value = '' end
+    local ft = vim.bo.ft
+    local tw_ft = rvim.ui.tw[ft]
     if tw == 0 then
-      -- TODO: find a way to get this dynamically based on filetype
-      vim.opt['tw'] = 100
-    else
-      vim.opt['tw'] = 0
+      if tw_ft then vim.bo['tw'] = tw_ft end
+      if not tw_ft then vim.bo['tw'] = 80 end
     end
-  elseif type(value) == 'boolean' then
-    value = not value
+    if tw > 0 then
+      rvim.ui.tw[ft] = tw
+      vim.bo['tw'] = 0
+    end
   end
+  if type(value) == 'boolean' then value = not value end
   vim.opt[opt] = value
   vim.notify(fmt('%s set to %s', opt, tostring(value)), 'info', { title = 'UI Toggles' })
 end
@@ -289,12 +293,11 @@ local function toggle_spell() toggle_opt('spell') end
 local function toggle_cursorline() toggle_opt('cursorline') end
 local function toggle_statusline() toggle_opt('laststatus') end
 local function toggle_colorcolumn() toggle_opt('colorcolumn') end
-nnoremap('<leader>ow', toggle_wrap, 'toggle line wrap')
-nnoremap('<leader>od', toggle_spell, 'toggle spell')
+nnoremap('<leader>ow', toggle_wrap, 'toggle wrap')
+nnoremap('<leader>os', toggle_spell, 'toggle spell')
+nnoremap('<leader>ol', toggle_statusline, 'toggle statusline')
 nnoremap('<leader>oL', toggle_cursorline, 'toggle cursorline')
-nnoremap('<leader>ot', toggle_statusline, 'toggle statusline')
-nnoremap('<leader>oh', toggle_colorcolumn, 'toggle colorcolumn')
-nnoremap('<leader>or', ':ToggleRelativeNumber<CR>', 'toggle relativenumber')
+nnoremap('<leader>oC', toggle_colorcolumn, 'toggle colorcolumn')
 ----------------------------------------------------------------------------------------------------
 -- Windows
 ----------------------------------------------------------------------------------------------------

@@ -103,6 +103,7 @@ rvim.command('ToggleRelativeNumber', function()
   end
   disable_relative_number()
 end)
+rvim.nnoremap('<leader>or', '<cmd>ToggleRelativeNumber<CR>', 'toggle relativenumber')
 
 rvim.augroup('ToggleRelativeLineNumbers', {
   {
