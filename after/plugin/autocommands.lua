@@ -32,6 +32,8 @@ local smart_close_filetypes = {
   'log',
   'tsplayground',
   'qf',
+  'man',
+  'notify',
   'NvimTree',
   'lsp-installer',
   'null-ls-info',
