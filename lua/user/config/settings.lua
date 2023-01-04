@@ -43,9 +43,9 @@ opt.fillchars = {
   eob = ' ', -- suppress ~ at EndOfBuffer
   diff = '╱', -- alternatives = ⣿ ░ ─
   msgsep = ' ', -- alternatives: ‾ ─
-  foldopen = '▾',
+  foldopen = '▾', -- alternatives: 
   foldsep = '│',
-  foldclose = '▸',
+  foldclose = '▸', -- alternatives: 
 }
 ----------------------------------------------------------------------------------------------------
 -- Diff {{{1
@@ -240,6 +240,7 @@ opt.jumpoptions = { 'stack' } -- make the jumplist behave like a browser stack
 ----------------------------------------------------------------------------------------------------
 o.backup = false
 o.undofile = true
+o.undolevels = 10000
 o.swapfile = false
 --}}}
 ----------------------------------------------------------------------------------------------------
