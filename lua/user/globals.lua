@@ -59,9 +59,7 @@ end
 ---@return string
 function rvim.get_pack_dir()
   local rvim_runtime_dir = vim.env.RVIM_RUNTIME_DIR
-  if not rvim_runtime_dir then
-    return join_paths(vim.call('stdpath', 'data'), 'site', 'pack')
-  end
+  if not rvim_runtime_dir then return join_paths(vim.call('stdpath', 'data'), 'site', 'pack') end
   return join_paths(rvim_runtime_dir, 'site', 'pack')
 end
 
