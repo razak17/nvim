@@ -15,14 +15,6 @@ local M = {
     'lukas-reineke/cmp-rg',
     'rcarriga/cmp-dap',
     {
-      'petertriho/cmp-git',
-      config = function()
-        require('cmp_git').setup({
-          filetypes = { 'gitcommit', 'NeogitCommitMessage' },
-        })
-      end,
-    },
-    {
       'uga-rosa/cmp-dictionary',
       config = function()
         -- NOTE: run :CmpDictionaryUpdate to update dictionary
