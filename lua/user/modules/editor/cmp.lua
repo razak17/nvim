@@ -35,6 +35,38 @@ local M = {
         })
       end,
     },
+    {
+      'uga-rosa/cmp-dynamic',
+      config = function()
+        local Date = require('cmp_dynamic.utils.date')
+        require('cmp_dynamic').register({
+          {
+            label = 'today',
+            insertText = 1,
+            cb = { function() return os.date('%Y/%m/%d') end },
+          },
+          {
+            label = 'tomorrow',
+            insertText = 1,
+            cb = { function() return Date.new():add_date(1):format('%Y/%m/%d') end },
+          },
+          {
+            label = 'next Week',
+            insertText = 1,
+            cb = {
+              function() return Date.new():add_date(7):format('%Y/%m/%d') end,
+            },
+            resolve = true, -- default: false
+          },
+          {
+            label = 'next Monday',
+            insertText = 1,
+            cb = { function() return Date.new():add_date(7):day(1):format('%Y/%m/%d') end },
+            resolve = true, -- default: false
+          },
+        })
+      end,
+    },
   },
 }
 
@@ -160,6 +192,7 @@ function M.config()
           treesitter = '(TS)',
           ['buffer-lines'] = '(Bufl)',
           nvim_lsp_signature_help = '(Sig)',
+          dynamic = '(Dyn)',
           ['lab.quick_data'] = '(Lab)',
         })[entry.source.name]
         return vim_item
@@ -180,6 +213,7 @@ function M.config()
       { name = 'crates' },
       { name = 'treesitter' },
       { name = 'lab.quick_data', keyword_length = 3 },
+      { name = 'dynamic' },
     }, {
       {
         name = 'buffer',
