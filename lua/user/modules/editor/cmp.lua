@@ -145,10 +145,7 @@ function M.config()
       ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
       ['<Tab>'] = cmp.mapping(tab, { 'i', 's', 'c' }),
       ['<S-Tab>'] = cmp.mapping(shift_tab, { 'i', 's', 'c' }),
-      ['<C-q>'] = cmp.mapping({
-        i = cmp.mapping.abort(),
-        c = cmp.mapping.close(),
-      }),
+      ['<C-q>'] = cmp.mapping({ i = cmp.mapping.abort(), c = cmp.mapping.close() }),
       ['<C-space>'] = cmp.mapping.complete(),
       ['<CR>'] = cmp.mapping.confirm({ select = false }), -- If nothing is selected don't complete
     },
@@ -157,8 +154,8 @@ function M.config()
       fields = { 'kind', 'abbr', 'menu' },
       format = function(entry, vim_item)
         local MAX = math.floor(vim.o.columns * 0.5)
-        local codicons = rvim.style.codicons
         if #vim_item.abbr >= MAX then vim_item.abbr = vim_item.abbr:sub(1, MAX) .. ellipsis end
+        local codicons = rvim.style.codicons
         vim_item.kind = codicons.kind[vim_item.kind]
         local name = entry.source.name
         if name == 'nvim_lsp_signature_help' then vim_item.kind = codicons.kind['Field'] end
@@ -172,11 +169,9 @@ function M.config()
           path = '(Path)',
           buffer = '(Buf)',
           dictionary = '(Dict)',
-          cmdline = '(Cmd)',
-          git = '(Git)',
-          calc = '(Calc)',
-          cmdline_history = '(Hist)',
           rg = '(Rg)',
+          cmdline = '(Cmd)',
+          cmdline_history = '(Hist)',
           crates = '(Crt)',
           treesitter = '(TS)',
           ['buffer-lines'] = '(Bufl)',
