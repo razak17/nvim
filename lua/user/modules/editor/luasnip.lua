@@ -62,13 +62,12 @@ function M.config()
   require('luasnip').config.setup({ store_selection_keys = '<C-x>' })
 
   local paths = {
-    join_paths(rvim.get_runtime_dir(), 'site', 'lazy', 'friendly-snippets'),
+    join_paths(rvim.get_runtime_dir(), 'site', 'pack', 'lazy', 'friendly-snippets'),
   }
   local user_snippets = rvim.path.snippets
   if rvim.is_directory(user_snippets) then paths[#paths + 1] = user_snippets end
   require('luasnip.loaders.from_lua').lazy_load()
   require('luasnip.loaders.from_vscode').lazy_load({ paths = paths })
-
   -- Enable react snippets in js and ts files
   require('luasnip').filetype_extend('javascript', { 'javascriptreact' })
   require('luasnip').filetype_extend('typescript', { 'typescriptreact' })
