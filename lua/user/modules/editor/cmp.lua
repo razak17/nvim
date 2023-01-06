@@ -199,21 +199,22 @@ function M.config()
       end,
     },
     sources = cmp.config.sources({
-      { name = 'nvim_lsp', max_item_count = 5 },
+      { name = 'nvim_lsp' },
+      { name = 'luasnip' },
       { name = 'nvim_lsp_signature_help' },
-      { name = 'luasnip', max_item_count = 3 },
       { name = 'path' },
       {
         name = 'rg',
-        keyword_length = 3,
-        max_item_count = 3,
+        keyword_length = 4,
+        max_item_count = 10,
         option = { additional_arguments = '--max-depth 8' },
       },
-      { name = 'dictionary', keyword_length = 3, max_item_count = 3 },
+      { name = 'dictionary' },
       { name = 'crates' },
       { name = 'treesitter' },
-      { name = 'lab.quick_data', keyword_length = 3 },
+      { name = 'lab.quick_data' },
       { name = 'dynamic' },
+      { name = 'emoji' },
     }, {
       {
         name = 'buffer',
