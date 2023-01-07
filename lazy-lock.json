@@ -14,7 +14,6 @@
   "cmp-dictionary": { "branch": "main", "commit": "b7c0629e10c8a3a10311aa4ad952d207509d5e67" },
   "cmp-dynamic": { "branch": "main", "commit": "9b8887f30217801d75d09e4019db0f1673a63295" },
   "cmp-emoji": { "branch": "main", "commit": "19075c36d5820253d32e2478b6aaf3734aeaafa0" },
-  "cmp-git": { "branch": "main", "commit": "fae6cdb407ad6c63a0b1928670bad1a67a55b887" },
   "cmp-nvim-lsp": { "branch": "main", "commit": "59224771f91b86d1de12570b4070fe4ad7cd1eeb" },
   "cmp-nvim-lsp-document-symbol": { "branch": "main", "commit": "069a207be6a0327dcc62c957dbb38156b210733a" },
   "cmp-nvim-lsp-signature-help": { "branch": "main", "commit": "d2768cb1b83de649d57d967085fe73c5e01f8fd7" },
