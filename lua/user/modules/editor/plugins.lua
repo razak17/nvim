@@ -56,6 +56,23 @@ return {
     end,
   },
 
+  -- buffer remove
+  {
+    'echasnovski/mini.bufremove',
+    keys = {
+      {
+        '<leader>c',
+        function() require('mini.bufremove').delete(0, false) end,
+        desc = 'delete buffer',
+      },
+      {
+        '<leader>bd',
+        function() require('mini.bufremove').delete(0, true) end,
+        desc = 'delete buffer (force)',
+      },
+    },
+  },
+
   {
     'kazhala/close-buffers.nvim',
     init = function()
@@ -67,7 +84,7 @@ return {
       rvim.nnoremap(
         '<leader>bx',
         function() require('close_buffers').wipe({ type = 'all', force = true }) end,
-        'close others'
+        'close all'
       )
     end,
   },
