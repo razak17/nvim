@@ -1,4 +1,4 @@
-local M = { 'levouh/tint.nvim', event = 'VeryLazy' }
+local M = { 'levouh/tint.nvim', event = 'VeryLazy', enabled = false }
 
 function M.config()
   require('tint').setup({
