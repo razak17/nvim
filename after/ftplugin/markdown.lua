@@ -36,18 +36,3 @@ rvim.ftplugin_conf(
     })
   end
 )
-
-rvim.ftplugin_conf('nvim-surround', function(surround)
-  surround.buffer_setup({
-    surrounds = {
-      l = {
-        add = function()
-          return {
-            { '[' },
-            { '](' .. vim.fn.getreg('*') .. ')' },
-          }
-        end,
-      },
-    },
-  })
-end)
