@@ -234,22 +234,17 @@ nnoremap('0', "getline('.')[0 : col('.') - 2] =~# '^\\s\\+$' ? '0' : '^'", { exp
 -- Add Empty space above and below
 nnoremap('[<space>', [[<cmd>put! =repeat(nr2char(10), v:count1)<CR>'[]])
 nnoremap(']<space>', [[<cmd>put =repeat(nr2char(10), v:count1)<CR>]])
--- replicate netrw functionality
-local function open(path)
-  fn.jobstart({ rvim.open_command, path }, { detach = true })
-  vim.notify(fmt('Opening %s', path))
-end
 
 local function open_link()
   local file = fn.expand('<cfile>')
   if not file or fn.isdirectory(file) > 0 then return vim.cmd.edit(file) end
-  if file:match('http[s]?://') then return open(file) end
+  if file:match('http[s]?://') then return rvim.open(file) end
 
   -- consider anything that looks like string/string a github link
   local plugin_url_regex = '[%a%d%-%.%_]*%/[%a%d%-%.%_]*'
   local link = string.match(file, plugin_url_regex)
   print(link)
-  if link then return open(fmt('https://www.github.com/%s', link)) end
+  if link then return rvim.open(fmt('https://www.github.com/%s', link)) end
 end
 nnoremap('gx', open_link)
 nnoremap('<leader>lq', function() rvim.toggle_qf_list() end, 'toggle quickfix')
@@ -433,16 +428,8 @@ cnoremap('::', "<C-r>=fnameescape(expand('%:p:h'))<CR>/")
 ----------------------------------------------------------------------------------------------------
 -- Web Search
 ----------------------------------------------------------------------------------------------------
---- search current word in website. see usage below
----@param pat string
----@param url string
-local function web_search(pat, url)
-  local query = '"' .. fn.substitute(pat, '["\n]', ' ', 'g') .. '"'
-  open(fmt('%s%s', url, query))
-end
-
-function rvim.mappings.ddg(pat) web_search(pat, 'https://html.duckduckgo.com/html?q=') end
-function rvim.mappings.gh(pat) web_search(pat, 'https://github.com/search?q=') end
+function rvim.mappings.ddg(pat) rvim.web_search(pat, 'https://html.duckduckgo.com/html?q=') end
+function rvim.mappings.gh(pat) rvim.web_search(pat, 'https://github.com/search?q=') end
 
 -- Search DuckDuckGo
 nnoremap('<localleader>?', [[:lua rvim.mappings.ddg(vim.fn.expand("<cword>"))<CR>]], 'search')

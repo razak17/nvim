@@ -230,6 +230,22 @@ function rvim.truncate(str, max_len)
     or str
 end
 
+--- search current word or go to file
+--- replicate netrw functionality
+---@param path string
+function rvim.open(path)
+  fn.jobstart({ rvim.open_command, path }, { detach = true })
+  vim.notify(fmt('Opening %s', path))
+end
+
+--- search current word in website. see usage below
+---@param path string
+---@param url string
+function rvim.web_search(path, url)
+  local query = '"' .. fn.substitute(path, '["\n]', ' ', 'g') .. '"'
+  rvim.open(fmt('%s%s', url, query))
+end
+
 ---------------------------------------------------------------------------------
 -- Toggle list
 ---------------------------------------------------------------------------------
