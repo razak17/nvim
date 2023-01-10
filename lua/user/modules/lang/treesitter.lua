@@ -4,7 +4,7 @@ local M = {
   build = ':TSUpdate',
   dependencies = {
     'nvim-treesitter/nvim-treesitter-textobjects',
-    'p00f/nvim-ts-rainbow',
+    'mrjones2014/nvim-ts-rainbow',
     {
       'nvim-treesitter/nvim-treesitter-context',
       event = { 'BufRead', 'BufNewFile' },
