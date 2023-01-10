@@ -72,17 +72,13 @@ function M.config()
   }
 
   dashboard.section.buttons.val = {
-    button(
-      'Directory',
-      'r',
-      '  Restore last session',
-      '<cmd>lua require("persistence").load()<CR>'
-    ),
-    button('Label', 'p', '  Recent projects', ':Telescope projects<CR>'),
-    button('Title', 'o', '  Recently used', ':Telescope oldfiles<CR>'),
-    button('Title', 'f', '  Find file', ':Telescope find_files<CR>'),
-    button('String', 'w', '  Find word', ':Telescope live_grep<CR>'),
-    button('String', 'e', '  New file', ':ene | startinsert <CR>'),
+    button('Directory', 's', '  Restore session', '<cmd>lua require("persistence").load()<CR>'),
+    button('Type', 'r', '  Recently used', ':Telescope oldfiles<CR>'),
+    button('String', 'f', '  Find file', ':Telescope find_files<CR>'),
+    button('Define', 'w', '  Find text', ':Telescope live_grep<CR>'),
+    button('Keyword', 'n', '  New file', ':ene | startinsert<CR>'),
+    button('Ignore', 'l', '鈴  Lazy', ':Lazy<CR>'),
+    button('ErrorMsg', 'q', '  Quit', ':qa<CR>'),
   }
 
   dashboard.section.footer.val = fortune()
