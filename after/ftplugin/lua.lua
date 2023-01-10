@@ -43,48 +43,6 @@ local function keyword(word, callback)
   vim.lsp.buf.hover()
 end
 
-rvim.ftplugin_conf('nvim-surround', function(surround)
-  local get_input = function(prompt)
-    local ok, input = pcall(vim.fn.input, fmt('%s: ', prompt))
-    if not ok then return end
-    return input
-  end
-  surround.buffer_setup({
-    surrounds = {
-      s = {
-        add = { "['", "']" },
-      },
-      l = {
-        add = { 'function () ', ' end' },
-      },
-      F = {
-        add = function()
-          return {
-            { fmt('local function %s() ', get_input('Enter a function name')) },
-            { ' end' },
-          }
-        end,
-      },
-      i = {
-        add = function()
-          return {
-            { fmt('if %s then ', get_input('Enter a condition')) },
-            { ' end' },
-          }
-        end,
-      },
-      t = {
-        add = function()
-          return {
-            { fmt('{ %s = { ', get_input('Enter a field name')) },
-            { ' }}' },
-          }
-        end,
-      },
-    },
-  })
-end)
-
 nnoremap('gK', keyword, { buffer = 0, desc = 'goto keyword' })
 nnoremap('<leader>so', function()
   vim.cmd.luafile('%')
