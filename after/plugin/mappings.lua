@@ -428,8 +428,8 @@ cnoremap('::', "<C-r>=fnameescape(expand('%:p:h'))<CR>/")
 ----------------------------------------------------------------------------------------------------
 -- Web Search
 ----------------------------------------------------------------------------------------------------
-function rvim.mappings.ddg(pat) rvim.web_search(pat, 'https://html.duckduckgo.com/html?q=') end
-function rvim.mappings.gh(pat) rvim.web_search(pat, 'https://github.com/search?q=') end
+function rvim.mappings.ddg(path) rvim.web_search(path, 'https://html.duckduckgo.com/html?q=') end
+function rvim.mappings.gh(path) rvim.web_search(path, 'https://github.com/search?q=') end
 
 -- Search DuckDuckGo
 nnoremap('<localleader>?', [[:lua rvim.mappings.ddg(vim.fn.expand("<cword>"))<CR>]], 'search')

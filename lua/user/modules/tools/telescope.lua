@@ -168,6 +168,59 @@ function M.init()
     '<cmd>Telescope diagnostics theme=get_ivy<CR>',
     'telescope: workspace diagnostics'
   )
+
+  local function cmd(alias, command)
+    return vim.api.nvim_create_user_command(alias, command, { nargs = 0 })
+  end
+
+  cmd('WebSearch', function()
+    local search = vim.fn.input('Search: ')
+    local pickers = require('telescope.pickers')
+    local actions = require('telescope.actions')
+    local action_state = require('telescope.actions.state')
+    local finders = require('telescope.finders')
+    local conf = require('telescope.config').values
+
+    local searcher = function(opts)
+      opts = opts or {}
+      pickers
+        .new(opts, {
+          prompt_title = 'Web Search',
+          finder = finders.new_table({
+            results = {
+              {
+                'Google Search',
+                ('https://www.google.com/search?q=' .. search:gsub(' ', '+')),
+              },
+              {
+                'DuckDuckGo',
+                ('https://html.duckduckgo.com/html?q=' .. search:gsub(' ', '+')),
+              },
+              {
+                'Youtube',
+                ('https://www.youtube.com/results?search_query=' .. search:gsub(' ', '+')),
+              },
+              { 'Github', ('https://github.com/search?q=' .. search:gsub(' ', '+')) },
+            },
+            entry_maker = function(entry)
+              return { value = entry, display = entry[1], ordinal = entry[1] }
+            end,
+          }),
+          sorter = conf.generic_sorter(opts),
+          attach_mappings = function(prompt_bufnr, _)
+            actions.select_default:replace(function()
+              actions.close(prompt_bufnr)
+              local selection = action_state.get_selected_entry()
+              rvim.open(selection['value'][2])
+            end)
+            return true
+          end,
+        })
+        :find()
+    end
+    searcher(require('telescope.themes').get_dropdown({}))
+  end)
+  nnoremap('<leader>fd', '<cmd>WebSearch<CR>', 'web search')
 end
 
 function M.config()
