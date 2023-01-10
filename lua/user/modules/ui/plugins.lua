@@ -84,6 +84,17 @@ return {
   },
 
   {
+    'zbirenbaum/neodim',
+    event = 'VeryLazy',
+    config = function()
+      require('neodim').setup({
+        blend_color = require('user.utils.highlights').get('Normal', 'bg'),
+        hide = { underline = false },
+      })
+    end,
+  },
+
+  {
     'rainbowhxch/beacon.nvim',
     config = function()
       local beacon = require('beacon')
