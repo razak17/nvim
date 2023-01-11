@@ -4,10 +4,7 @@ local fn = vim.fn
 local fmt = string.format
 local api = vim.api
 local uv = vim.loop
-local oss = vim.loop.os_uname().sysname
 local l = vim.log.levels
-
-rvim.open_command = oss == 'Darwin' and 'open' or 'xdg-open'
 
 ---Join path segments that were passed rvim input
 ---@return string
