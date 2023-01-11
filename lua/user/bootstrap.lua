@@ -5,8 +5,8 @@ if not rvim then return end
 ----------------------------------------------------------------------------------------------------
 vim.opt.rtp:remove(join_paths(vim.call('stdpath', 'data'), 'site'))
 vim.opt.rtp:remove(join_paths(vim.call('stdpath', 'data'), 'site', 'after'))
-vim.opt.rtp:prepend(join_paths(rvim.get_runtime_dir(), 'site'))
-vim.opt.rtp:append(join_paths(rvim.get_runtime_dir(), 'site', 'after'))
+vim.opt.rtp:prepend(join_paths(rvim.get_runtime_dir(), 'site', 'after'))
+vim.opt.rtp:append(join_paths(rvim.get_runtime_dir(), 'site', 'pack', 'lazy'))
 
 vim.opt.rtp:remove(vim.call('stdpath', 'config'))
 vim.opt.rtp:remove(join_paths(vim.call('stdpath', 'config'), 'after'))
