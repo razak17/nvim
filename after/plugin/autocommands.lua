@@ -41,6 +41,7 @@ local smart_close_filetypes = {
   'lspinfo',
   'neotest-summary',
   'neotest-output',
+  'dap-float',
 }
 
 local smart_close_buftypes = {} -- Don't include no file buffers rvim diff buffers are nofile
@@ -49,7 +50,6 @@ local function smart_close()
   if fn.winnr('$') ~= 1 then api.nvim_win_close(0, true) end
 end
 
--- FIXME: Causing problems telescope mappings keymap
 rvim.augroup('SmartClose', {
   {
     -- Auto open grep quickfix window
