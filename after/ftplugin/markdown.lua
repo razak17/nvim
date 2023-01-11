@@ -27,7 +27,7 @@ rvim.ftplugin_conf(
   function(cmp)
     cmp.setup.filetype('markdown', {
       sources = cmp.config.sources({
-        { name = 'dictionary' },
+        -- { name = 'dictionary' },
         { name = 'spell' },
         { name = 'emoji' },
       }, {

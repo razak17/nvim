@@ -6,7 +6,7 @@ rvim.ftplugin_conf(
     cmp.setup.filetype('gitcommit', {
       sources = cmp.config.sources({
         { name = 'luasnip' },
-        { name = 'dictionary' },
+        -- { name = 'dictionary' },
         { name = 'spell' },
         { name = 'emoji' },
         { name = 'buffer' },

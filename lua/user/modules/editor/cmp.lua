@@ -17,10 +17,11 @@ local M = {
     'rcarriga/cmp-dap',
     {
       'uga-rosa/cmp-dictionary',
+      enabled = false,
       config = function()
         -- NOTE: run :CmpDictionaryUpdate to update dictionary
         require('cmp_dictionary').setup({
-          async = true,
+          async = false,
           dic = {
             -- Refer to install script
             ['*'] = join_paths(rvim.get_runtime_dir(), 'site', 'spell', 'dictionary.txt'),
@@ -195,7 +196,7 @@ function M.config()
         max_item_count = 10,
         option = { additional_arguments = '--max-depth 8' },
       },
-      { name = 'dictionary' },
+      -- { name = 'dictionary' },
       { name = 'crates' },
       { name = 'treesitter' },
       { name = 'lab.quick_data' },
