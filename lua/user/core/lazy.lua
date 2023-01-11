@@ -1,5 +1,4 @@
 local fn = vim.fn
-local lazy = nil
 
 local Lazy = {}
 Lazy.__index = Lazy
@@ -32,10 +31,22 @@ function Lazy:load_plugins()
   end
 end
 
-function Lazy:bootstrap_lazy()
-  Lazy:load_plugins()
-  if not lazy then lazy = require('lazy') end
-  local lazy_opts = {
+function Lazy:bootstrap()
+  local lazy_path = join_paths(rvim.get_pack_dir(), 'lazy', 'lazy.nvim')
+  if not vim.loop.fs_stat(lazy_path) then
+    vim.fn.system({
+      'git',
+      'clone',
+      '--filter=blob:none',
+      '--single-branch',
+      'https://github.com/folke/lazy.nvim.git',
+      lazy_path,
+    })
+  end
+  vim.opt.rtp:prepend(lazy_path)
+  self:load_plugins()
+  local lazy = require('lazy')
+  local opts = {
     root = join_paths(rvim.get_pack_dir(), 'lazy'),
     defaults = { lazy = true },
     lockfile = join_paths(rvim.get_config_dir(), 'lazy-lock.json'),
@@ -53,33 +64,8 @@ function Lazy:bootstrap_lazy()
     },
     readme = { root = join_paths(rvim.get_cache_dir(), 'lazy', 'readme') },
   }
-  lazy.setup(self.repos, lazy_opts)
-end
-
-function Lazy:init_ensure_installed()
-  local lazy_path = join_paths(rvim.get_pack_dir(), 'lazy', 'lazy.nvim')
-  if not vim.loop.fs_stat(lazy_path) then
-    vim.fn.system({
-      'git',
-      'clone',
-      '--filter=blob:none',
-      '--single-branch',
-      'https://github.com/folke/lazy.nvim.git',
-      lazy_path,
-    })
-  end
-  vim.opt.rtp:prepend(lazy_path)
-  self:bootstrap_lazy()
+  lazy.setup(self.repos, opts)
   rvim.nnoremap('<leader>Ll', '<cmd>Lazy<CR>', 'lazygit: toggle ui')
 end
 
-local plugins = setmetatable({}, {
-  __index = function(_, key)
-    if not lazy then Lazy:bootstrap_lazy() end
-    return lazy[key]
-  end,
-})
-
-function plugins.ensure_plugins() Lazy:init_ensure_installed() end
-
-return plugins
+return Lazy

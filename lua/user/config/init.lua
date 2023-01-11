@@ -28,5 +28,5 @@ rvim.open_command = oss == 'Darwin' and 'open' or 'xdg-open'
 -- Load Modules
 ----------------------------------------------------------------------------------------------------
 -- NOTE: order matters
-R('user.core.lazy').ensure_plugins()
+R('user.core.lazy'):bootstrap()
 R('user.core.highlights')
