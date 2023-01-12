@@ -49,11 +49,13 @@ return {
   },
 
   {
-    'aarondiel/spread.nvim',
-    init = function()
-      rvim.nnoremap('gS', function() require('spread').out() end, 'spread: expand')
-      rvim.nnoremap('gJ', function() require('spread').combine() end, 'spread: combine')
-    end,
+    'Wansmer/treesj',
+    dependencies = { 'nvim-treesitter' },
+    keys = {
+      { 'gS', '<cmd>TSJSplit<CR>', desc = 'split to multiple lines' },
+      { 'gJ', '<cmd>TSJJoin<CR>', desc = 'join to single line' },
+    },
+    config = { use_default_keymaps = false },
   },
 
   -- buffer remove

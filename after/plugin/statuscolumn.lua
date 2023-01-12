@@ -17,6 +17,7 @@ local excluded = {
   'NeogitCommitMessage',
   'undotree',
   'log',
+  'lazy',
   'man',
   'dap-repl',
   'markdown',
