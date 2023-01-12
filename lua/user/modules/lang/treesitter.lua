@@ -113,13 +113,7 @@ function M.config()
       extended_mode = true,
       max_file_lines = 1000,
       disable = { 'lua', 'json', 'c', 'cpp', 'html' },
-      colors = {
-        'royalblue3',
-        'darkorange3',
-        'seagreen3',
-        'firebrick',
-        'darkorchid3',
-      },
+      colors = { 'royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3' },
     },
     query_linter = {
       enable = true,
