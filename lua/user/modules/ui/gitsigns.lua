@@ -11,7 +11,9 @@ function M.config()
       changedelete = { hl = 'GitSignsChange', text = '▎' },
       untracked = { hl = 'GitSignsAdd', text = '▋' },
     },
-    _threaded_diff = true, -- NOTE: experimental but I'm curious
+    _threaded_diff = true,
+    _extmark_signs = true,
+    _signs_staged_enable = true,
     word_diff = false,
     current_line_blame = not cwd:match('personal') and not cwd:match('dots'),
     current_line_blame_formatter = ' <author>, <author_time> · <summary>',
