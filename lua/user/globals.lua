@@ -25,6 +25,13 @@ function require_clean(module)
   return requested
 end
 
+---Get whether using nightly version of neovim
+function rvim.nightly()
+  local v = vim.version()
+  if v.prerelease then return true end
+  return false
+end
+
 ---Get the full path to `$RVIM_RUNTIME_DIR`
 ---@return string
 function rvim.get_runtime_dir()
