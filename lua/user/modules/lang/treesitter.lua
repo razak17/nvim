@@ -119,7 +119,6 @@ function M.config()
     },
     indent = { enable = { 'javascriptreact' } },
     matchup = { enable = true, disable = { 'c', 'python' } },
-    autopairs = { enable = true },
     rainbow = {
       enable = true,
       extended_mode = true,
