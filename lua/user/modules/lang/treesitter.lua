@@ -44,17 +44,6 @@ function M.config()
   -- NOTE: this is currently broken, do not set to true
   vim.g.skip_ts_default_groups = false
 
-  ---Get all filetypes for which we have a treesitter parser installed
-  ---@return string[]
-  local function get_filetypes()
-    local parsers = require('nvim-treesitter.parsers')
-    local configs = parsers.get_parser_configs()
-    return vim.tbl_map(
-      function(ft) return configs[ft].filetype or ft end,
-      parsers.available_parsers()
-    )
-  end
-
   local status_ok, treesitter_configs = rvim.safe_require('nvim-treesitter.configs')
   if not status_ok then return end
 
@@ -162,18 +151,6 @@ function M.config()
       'toml',
       'cpp',
       'jsonc',
-    },
-  })
-
-  -- Only apply folding to supported files:
-  rvim.augroup('TreesitterFolds', {
-    {
-      event = { 'FileType' },
-      pattern = get_filetypes(),
-      command = function()
-        vim.cmd('setlocal foldexpr=nvim_treesitter#foldexpr()')
-        vim.cmd('setlocal foldmethod=expr')
-      end,
     },
   })
 end
