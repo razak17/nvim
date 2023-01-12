@@ -11,7 +11,7 @@ rvim.ui = {
   winbar = {
     enable = true,
     use_filename_only = false,
-    use_icon = false,
+    use_file_icon = false,
   },
 }
 
