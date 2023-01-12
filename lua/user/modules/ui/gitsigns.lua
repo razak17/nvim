@@ -18,9 +18,7 @@ function M.config()
     current_line_blame = not cwd:match('personal') and not cwd:match('dots'),
     current_line_blame_formatter = ' <author>, <author_time> · <summary>',
     numhl = false,
-    preview_config = {
-      border = rvim.style.border.current,
-    },
+    preview_config = { border = rvim.style.border.current },
     on_attach = function()
       local gs = package.loaded.gitsigns
 
@@ -39,7 +37,11 @@ function M.config()
         'prev hunk'
       )
       nnoremap('<leader>hp', gs.preview_hunk_inline, 'preview hunk')
-      nnoremap('<leader>hr', gs.reset_hunk, 'reset hunk')
+      nnoremap(
+        '<leader>hr',
+        function() gs.stage_hunk({ vim.fn.line('.'), vim.fn.line('v') }) end,
+        'reset hunk'
+      )
       nnoremap('<leader>hs', gs.stage_hunk, 'stage hunk')
       nnoremap('<leader>hu', gs.undo_stage_hunk, 'undo stage')
       nnoremap('<leader>hw', gs.toggle_word_diff, 'toggle word diff')
@@ -53,13 +55,6 @@ function M.config()
       vnoremap('<leader>hr', function() gs.reset_hunk({ vim.fn.line('.'), vim.fn.line('v') }) end)
       vim.keymap.set({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
     end,
-    watch_gitdir = {
-      interval = 1000,
-      follow_files = true,
-    },
-    sign_priority = 6,
-    update_debounce = 200,
-    status_formatter = nil, -- Use default
   })
   local ok, which_key = rvim.safe_require('which-key')
   if ok then which_key.register({ ['<localleader>g'] = { name = 'Gitsigns' } }) end
