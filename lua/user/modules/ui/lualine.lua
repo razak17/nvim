@@ -78,11 +78,8 @@ function M.config()
   })
 
   ins_left({
-    function()
-      local filename = (vim.fn.expand('%') == '' and 'Empty ') or vim.fn.expand('%:t')
-      return filename == 'neo-tree filesystem [1]' and 'File Explorer' or filename
-    end,
-    padding = { left = 1, right = 0 },
+    'filename',
+    color = {},
     cond = conditions.buffer_not_empty,
   })
 
@@ -131,24 +128,31 @@ function M.config()
   })
 
   ins_right({
-    function(msg)
-      local buf_clients = vim.lsp.get_active_clients()
-      if next(buf_clients) == nil then return #msg == 0 and 'No LSP' or msg end
+    function() return ' LSP(s):' end,
+    color = { fg = P.comment },
+    cond = conditions.hide_in_width,
+  })
 
-      local client_names = {}
-      local registered_sources = {}
-      local copilot_active = false
-      local copilot_hl = '%#SLCopilot#'
+  ins_right({
+    function()
+      local buf_clients = vim.lsp.get_active_clients()
+      table.sort(buf_clients, function(a, b)
+        if a.name == 'null-ls' then
+          return false
+        elseif b.name == 'null-ls' then
+          return true
+        end
+        return a.name < b.name
+      end)
 
       -- add lsp clients
+      local client_names = {}
       for _, client in pairs(buf_clients) do
-        if client.name == 'copilot' then copilot_active = true end
-        if client.name ~= 'copilot' and client.name ~= 'null-ls' then
-          table.insert(client_names, client.name)
-        end
+        if client.name ~= 'null-ls' then table.insert(client_names, client.name) end
       end
 
       -- add null-ls sources
+      local registered_sources = {}
       local available_sources = require('null-ls.sources').get_available(vim.bo.filetype)
       for _, source in ipairs(available_sources) do
         for method in pairs(source.methods) do
@@ -157,46 +161,30 @@ function M.config()
         end
       end
 
+      local null_ls = {}
       local formatter = registered_sources['NULL_LS_FORMATTING']
       local linter = registered_sources['NULL_LS_DIAGNOSTICS']
-      if formatter ~= nil then vim.list_extend(client_names, formatter) end
-      if linter ~= nil then vim.list_extend(client_names, linter) end
+      if formatter ~= nil then vim.list_extend(null_ls, formatter) end
+      if linter ~= nil then vim.list_extend(null_ls, linter) end
 
-      local clients = ' ' .. table.concat(client_names, '  ') .. '  ' -- alt: •
-      if #client_names > 4 then clients = ' ' .. #client_names .. ' LSPs running  ' end
-      if vim.tbl_isempty(client_names) then clients = 'No LSP  ' end
-      local with_copilot = clients .. copilot_hl .. icons.misc.octoface
-      return copilot_active and with_copilot or clients
+      local null_ls_clients = table.concat(null_ls, ', ') -- alt: •
+      local clients = table.concat(client_names, '  ') .. '  ' .. null_ls_clients -- alt: •
+      -- if #client_names > 3 then clients = #client_names - 1 .. ' clients running ' end
+      if rvim.empty(client_names) then return 'No LSP clients available' end
+      return clients
     end,
+    color = { gui = 'bold' },
     cond = conditions.hide_in_width,
   })
 
   ins_right({
     function()
       local b = vim.api.nvim_get_current_buf()
-      if next(vim.treesitter.highlighter.active[b]) then return icons.misc.tree end
+      if next(vim.treesitter.highlighter.active[b]) then return ' ts' end
       return ''
     end,
-    color = { fg = P.dark_green },
-    cond = conditions.hide_in_width,
-  })
-
-  ins_right({
-    'filetype',
-    icons_enabled = false, -- I think icons are cool but Eviline doesn't have them. sigh
-    color = {},
-  })
-
-  ins_right({
-    'o:encoding',
-    fmt = string.upper,
-    cond = conditions.hide_in_width,
-  })
-
-  ins_right({
-    'fileformat',
-    fmt = string.upper,
-    icons_enabled = false,
+    padding = { left = 0, right = 0 },
+    color = { fg = P.darker_green, gui = 'bold' },
     cond = conditions.hide_in_width,
   })
 
@@ -207,7 +195,6 @@ function M.config()
   ins_right({
     function() return icons.statusline.bar end,
     color = function() return { fg = mode_color[vim.fn.mode()] } end,
-    padding = { left = 1 },
   })
 
   require('lualine').setup(config)
