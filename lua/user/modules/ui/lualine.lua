@@ -77,11 +77,7 @@ function M.config()
     color = { fg = P.yellowgreen },
   })
 
-  ins_left({
-    'filename',
-    color = {},
-    cond = conditions.buffer_not_empty,
-  })
+  ins_left({ 'filetype', cond = nil, padding = { left = 1, right = 1 } })
 
   ins_left({
     utils.python_env,
