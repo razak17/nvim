@@ -173,16 +173,16 @@ function M.config()
 
   ins_right({ 'filetype', cond = nil, padding = { left = 1, right = 1 } })
 
-  ins_right({
-    function()
-      local b = vim.api.nvim_get_current_buf()
-      if next(vim.treesitter.highlighter.active[b]) then return 'ts' end
-      return ''
-    end,
-    padding = { left = 1, right = 0 },
-    color = { fg = P.darker_green, gui = 'bold' },
-    cond = conditions.hide_in_width,
-  })
+  -- ins_right({
+  --   function()
+  --     local b = vim.api.nvim_get_current_buf()
+  --     if next(vim.treesitter.highlighter.active[b]) then return 'ts' end
+  --     return ''
+  --   end,
+  --   padding = { left = 1, right = 0 },
+  --   color = { fg = P.darker_green, gui = 'bold' },
+  --   cond = conditions.hide_in_width,
+  -- })
 
   ins_right({ 'location' })
 
