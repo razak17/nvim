@@ -176,10 +176,10 @@ function M.config()
   ins_right({
     function()
       local b = vim.api.nvim_get_current_buf()
-      if next(vim.treesitter.highlighter.active[b]) then return ' ts' end
+      if next(vim.treesitter.highlighter.active[b]) then return 'ts' end
       return ''
     end,
-    padding = { left = 0, right = 0 },
+    padding = { left = 1, right = 0 },
     color = { fg = P.darker_green, gui = 'bold' },
     cond = conditions.hide_in_width,
   })
