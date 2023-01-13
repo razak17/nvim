@@ -77,8 +77,6 @@ function M.config()
     color = { fg = P.yellowgreen },
   })
 
-  ins_left({ 'filetype', cond = nil, padding = { left = 1, right = 1 } })
-
   ins_left({
     utils.python_env,
     color = { fg = P.yellowgreen },
@@ -172,6 +170,8 @@ function M.config()
     color = { gui = 'bold' },
     cond = conditions.hide_in_width,
   })
+
+  ins_right({ 'filetype', cond = nil, padding = { left = 1, right = 1 } })
 
   ins_right({
     function()
