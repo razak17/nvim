@@ -135,7 +135,7 @@ function M.config()
 
   ins_right({
     function() return ' LSP(s):' end,
-    color = { fg = P.comment },
+    color = { fg = P.comment, gui = 'italic' },
     cond = conditions.hide_in_width,
   })
 
