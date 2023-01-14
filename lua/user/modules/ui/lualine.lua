@@ -176,7 +176,7 @@ function M.config()
       local null_ls_clients = table.concat(null_ls, ', ') -- alt: •
       local clients = table.concat(client_names, '  ') .. '  ' .. null_ls_clients -- alt: •
       -- if #client_names > 3 then clients = #client_names - 1 .. ' clients running ' end
-      if rvim.empty(client_names) then return 'No LSP clients available' end
+      if rvim.empty(client_names) then return 'No Active LSP' end
       return clients
     end,
     color = { gui = 'bold' },
