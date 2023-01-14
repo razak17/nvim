@@ -79,9 +79,10 @@ function M.config()
   })
 
   ins_left({
-    utils.python_env,
-    color = { fg = P.yellowgreen },
-    cond = conditions.hide_in_width,
+    'filename',
+    cond = conditions.buffer_not_empty,
+    path = 1,
+    color = { fg = P.purple },
   })
 
   ins_left({
