@@ -91,6 +91,7 @@
   "popup.nvim": { "branch": "master", "commit": "b7404d35d5d3548a82149238289fa71f7f6de4ac" },
   "project.nvim": { "branch": "main", "commit": "685bc8e3890d2feb07ccf919522c97f7d33b94e4" },
   "promise-async": { "branch": "main", "commit": "842dca33e6b1af7bedcefc72cffbc807d54dbfca" },
+  "refactoring.nvim": { "branch": "master", "commit": "b253bcee0488209875fafceda0d0832a121fa3c7" },
   "rest.nvim": { "branch": "main", "commit": "090e253c114b6d5448bac5869a28a6623c195e3a" },
   "rust-tools.nvim": { "branch": "master", "commit": "df584e84393ef255f5b8cbd709677d6a3a5bf42f" },
   "schemastore.nvim": { "branch": "main", "commit": "c55c35929dd4e670af7ab6e2e197a4687baa2076" },

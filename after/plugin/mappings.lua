@@ -498,7 +498,7 @@ xnoremap('p', 'pgvy')
 ----------------------------------------------------------------------------------------------------
 function rvim.rev_str(str) return string.reverse(str) end
 vnoremap(
-  '<leader>r',
+  '<leader>R',
   [[:s/\%V.\+\%V./\=v:lua.rvim.rev_str(submatch(0))<CR>gv<ESC>]],
   'reverse line'
 )
