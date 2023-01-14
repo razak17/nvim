@@ -85,6 +85,12 @@ function M.config()
   })
 
   ins_left({
+    utils.python_env,
+    color = { fg = P.yellowgreen },
+    cond = conditions.hide_in_width,
+  })
+
+  ins_left({
     'diagnostics',
     sources = { 'nvim_diagnostic' },
     symbols = {
@@ -93,7 +99,6 @@ function M.config()
       info = codicons.lsp.info .. ' ',
       hint = codicons.lsp.hint .. ' ',
     },
-    color = {},
     cond = conditions.hide_in_width,
   })
 
@@ -120,6 +125,12 @@ function M.config()
       return package_info.get_status()
     end,
     padding = { left = 1, right = 0 },
+  })
+
+  ins_right({
+    require('lazy.status').updates,
+    cond = require('lazy.status').has_updates,
+    color = { fg = P.orange },
   })
 
   ins_right({
