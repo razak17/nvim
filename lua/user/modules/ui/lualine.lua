@@ -82,7 +82,6 @@ function M.config()
     'filename',
     cond = conditions.buffer_not_empty,
     path = 1,
-    color = { fg = P.purple },
   })
 
   ins_left({
