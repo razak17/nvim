@@ -11,13 +11,14 @@ function M.config()
   -- Config
   local config = {
     options = {
+      globalstatus = true,
       component_separators = { left = '', right = '' },
       section_separators = { left = '', right = '' },
+      disabled_filetypes = { 'alpha', 'Outline' },
       theme = {
         normal = { c = { fg = P.base88, bg = P.bg_dark } },
         inactive = { c = { fg = P.base88, bg = P.bg_dark } },
       },
-      disabled_filetypes = { 'alpha', 'Outline' },
     },
     sections = {
       lualine_a = {},
@@ -30,8 +31,8 @@ function M.config()
     inactive_sections = {
       lualine_a = {},
       lualine_b = {},
-      lualine_c = { 'filename' },
-      lualine_x = { 'location' },
+      lualine_c = {},
+      lualine_x = {},
       lualine_y = {},
       lualine_z = {},
     },
