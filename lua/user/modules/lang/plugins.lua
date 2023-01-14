@@ -63,15 +63,14 @@ return {
 
   {
     'danymat/neogen',
-    event = 'VeryLazy',
-    init = function()
-      rvim.nnoremap(
-        '<localleader>lc',
+    keys = {
+      {
+        '<leader>cc',
         function() require('neogen').generate() end,
-        'neogen: generate doc'
-      )
-    end,
-    config = function() require('neogen').setup({ snippet_engine = 'luasnip' }) end,
+        desc = 'neogen: generate doc',
+      },
+    },
+    config = { snippet_engine = 'luasnip' },
   },
 
   {

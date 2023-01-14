@@ -77,18 +77,18 @@ return {
 
   {
     'kazhala/close-buffers.nvim',
-    init = function()
-      rvim.nnoremap(
+    keys = {
+      {
         '<leader>bc',
         function() require('close_buffers').wipe({ type = 'other' }) end,
-        'close others'
-      )
-      rvim.nnoremap(
+        desc = 'close others',
+      },
+      {
         '<leader>bx',
         function() require('close_buffers').wipe({ type = 'all', force = true }) end,
-        'close all'
-      )
-    end,
+        desc = 'close all',
+      },
+    },
   },
 
   {
@@ -99,11 +99,10 @@ return {
 
   {
     'mizlan/iswap.nvim',
-    event = { 'BufRead', 'BufNewFile' },
-    init = function()
-      rvim.nnoremap('<leader>ia', '<Cmd>ISwap<CR>', 'iswap: swap any')
-      rvim.nnoremap('<leader>iw', '<Cmd>ISwapWith<CR>', 'iswap: swap with')
-    end,
+    keys = {
+      { '<leader>ia', '<cmd>ISwap<CR>', desc = 'iswap: swap any' },
+      { '<leader>iw', '<cmd>ISwapWith<CR>', desc = 'iswap: swap with' },
+    },
   },
 
   {
