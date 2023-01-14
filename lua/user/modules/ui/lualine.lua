@@ -173,9 +173,14 @@ function M.config()
       if formatter ~= nil then vim.list_extend(null_ls, formatter) end
       if linter ~= nil then vim.list_extend(null_ls, linter) end
 
-      local null_ls_clients = table.concat(null_ls, ', ') -- alt: •
-      local clients = table.concat(client_names, '  ') .. '  ' .. null_ls_clients -- alt: •
-      -- if #client_names > 3 then clients = #client_names - 1 .. ' clients running ' end
+      local clients = table.concat(client_names, '  ')
+      null_ls = table.concat(null_ls, ', ')
+      if not rvim.empty(null_ls) then
+        null_ls = null_ls .. ' '
+        clients = clients .. '  ' .. null_ls
+      else
+        clients = clients .. ' '
+      end
       if rvim.empty(client_names) then return 'No Active LSP' end
       return clients
     end,
