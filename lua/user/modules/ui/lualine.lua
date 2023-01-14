@@ -16,8 +16,8 @@ function M.config()
       section_separators = { left = '', right = '' },
       disabled_filetypes = { 'alpha', 'Outline' },
       theme = {
-        normal = { c = { fg = P.base88, bg = P.bg_dark } },
-        inactive = { c = { fg = P.base88, bg = P.bg_dark } },
+        normal = { c = { fg = P.base8, bg = P.bg_dark } },
+        inactive = { c = { fg = P.base8, bg = P.bg_dark } },
       },
     },
     sections = {
