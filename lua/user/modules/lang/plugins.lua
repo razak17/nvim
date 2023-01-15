@@ -65,7 +65,7 @@ return {
     'danymat/neogen',
     keys = {
       {
-        '<leader>cc',
+        '<localleader>lc',
         function() require('neogen').generate() end,
         desc = 'neogen: generate doc',
       },
