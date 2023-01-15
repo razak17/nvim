@@ -94,6 +94,7 @@ cnoremap('/', [[getcmdtype() == "/" ? "\/" : "/"]], { expr = true })
 ----------------------------------------------------------------------------------------------------
 -- Save
 ----------------------------------------------------------------------------------------------------
+-- FIXME: There's a bug in this function
 local function smart_quit()
   local bufnr = api.nvim_get_current_buf()
   local buf_windows = vim.call('win_findbuf', bufnr)
