@@ -121,10 +121,10 @@ function M.config()
 
   ins_right({
     function()
-      if vim.fn.expand('%') ~= 'package.json' then return end
       local package_info = require('package-info')
       return package_info.get_status()
     end,
+    cond = function() return vim.fn.expand('%') == 'package.json' end,
     padding = { left = 1, right = 0 },
   })
 
