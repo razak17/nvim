@@ -3,7 +3,7 @@ if not rvim or not rvim.ui.winbar.enable then return end
 
 ---@diagnostic disable: duplicate-doc-param missing-return
 ---@diagnostic disable:  missing-return
-local devicons = require('nvim-web-devicons')
+local _, devicons = rvim.safe_require('nvim-web-devicons', { silent = true })
 local highlights = require('user.utils.highlights')
 local utils = require('user.utils.statusline')
 local component = utils.component
