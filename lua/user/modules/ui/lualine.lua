@@ -73,7 +73,7 @@ function M.config()
 
   ins_left({
     'branch',
-    icon = ' ',
+    icon = '',
     padding = { left = 1, right = 1 },
     color = { fg = P.yellowgreen },
   })
