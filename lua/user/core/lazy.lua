@@ -18,6 +18,8 @@ function Lazy:load_plugins()
 
   local plugins = get_plugins_list()
 
+  if not rvim.plugins.SANE then return end
+
   for _, m in ipairs(plugins) do
     local suffix = string.match(m, '.*/(.*)')
     local module = require(m)
