@@ -19,7 +19,7 @@ rvim.lang = { format_on_save = true }
 
 rvim.keys = { leader = 'space', localleader = ',' }
 
-rvim.plugins = { SANE = false }
+rvim.plugins = { SANE = true }
 
 rvim.util = {
   disabled_providers = { 'python', 'ruby', 'perl' },
