@@ -15,7 +15,7 @@ function M.init()
   rvim.nnoremap(
     '<localleader>y',
     function() require('telescope').extensions.yank_history.yank_history(rvim.telescope.dropdown()) end,
-    'yanky: open yank history'
+    'yanky: open history'
   )
 end
 
