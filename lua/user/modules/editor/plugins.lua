@@ -127,6 +127,7 @@ return {
         noremap = true,
         silent = true,
         expr = false,
+        desc = 'refactor',
       },
     },
     config = {},
