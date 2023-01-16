@@ -17,6 +17,8 @@ function M.config()
       ['-'] = '+',
       ['onClick'] = 'onSubmit',
       ['public'] = 'private',
+      ['string'] = 'int',
+      ['leader'] = 'localleader',
     },
     remove_default_keybinds = true,
   })
