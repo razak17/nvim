@@ -55,7 +55,7 @@ return {
       { 'gS', '<cmd>TSJSplit<CR>', desc = 'split to multiple lines' },
       { 'gJ', '<cmd>TSJJoin<CR>', desc = 'join to single line' },
     },
-    config = { use_default_keymaps = false },
+    opts = { use_default_keymaps = false, max_join_length = 150 },
   },
 
   -- buffer remove
@@ -130,6 +130,6 @@ return {
         desc = 'refactor',
       },
     },
-    config = {},
+    opts = {},
   },
 }

@@ -70,7 +70,7 @@ return {
         desc = 'neogen: generate doc',
       },
     },
-    config = { snippet_engine = 'luasnip' },
+    opts = { snippet_engine = "luasnip" },
   },
 
   {
