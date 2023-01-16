@@ -280,6 +280,14 @@ local function toggle_opt(opt)
       vim.bo['tw'] = 0
     end
   end
+  if opt == 'signcolumn' then
+    print(value)
+    if value == 'no' then
+      value = 'yes:1'
+    elseif value ~= 'no' then
+      value = 'no'
+    end
+  end
 
   if type(value) == 'boolean' then value = not value end
   vim.opt[opt] = value
@@ -287,6 +295,7 @@ local function toggle_opt(opt)
 end
 nnoremap('<leader>ow', function() toggle_opt('wrap') end, 'toggle wrap')
 nnoremap('<leader>os', function() toggle_opt('spell') end, 'toggle spell')
+nnoremap('<leader>oS', function() toggle_opt('signcolumn') end, 'toggle signcolumn')
 nnoremap('<leader>oL', function() toggle_opt('cursorline') end, 'toggle cursorline')
 nnoremap('<leader>ol', function() toggle_opt('laststatus') end, 'toggle statusline')
 nnoremap('<leader>oC', function() toggle_opt('colorcolumn') end, 'toggle colorcolumn')
