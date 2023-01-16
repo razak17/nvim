@@ -50,7 +50,6 @@ return {
 
   {
     'Wansmer/treesj',
-    dependencies = { 'nvim-treesitter' },
     keys = {
       { 'gS', '<cmd>TSJSplit<CR>', desc = 'split to multiple lines' },
       { 'gJ', '<cmd>TSJJoin<CR>', desc = 'join to single line' },
@@ -58,7 +57,6 @@ return {
     opts = { use_default_keymaps = false, max_join_length = 150 },
   },
 
-  -- buffer remove
   {
     'echasnovski/mini.bufremove',
     keys = {
