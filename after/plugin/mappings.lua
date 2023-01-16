@@ -262,8 +262,11 @@ local function get_option_value(opt) return api.nvim_get_option_value(opt, {}) e
 local function toggle_opt(opt)
   local value = get_option_value(opt)
   if opt == 'laststatus' then
-    if value == 0 then value = 3 end
-    if value > 0 then value = 0 end
+    if value == 0 then
+      value = 3
+    elseif value > 0 then
+      value = 0
+    end
   end
   if opt == 'colorcolumn' then
     local tw = get_option_value('textwidth')
