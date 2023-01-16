@@ -139,8 +139,8 @@ return {
     ft = { 'http', 'json' },
     init = function()
       rvim.nnoremap('<leader>rs', '<Plug>RestNvim', 'rest: run')
-      rvim.nnoremap('<leader>rp', '<Plug>RestNvimPreview', 'rest: run')
-      rvim.nnoremap('<leader>rl', '<Plug>RestNvimLast', 'rest: run')
+      rvim.nnoremap('<leader>rp', '<Plug>RestNvimPreview', 'rest: preview')
+      rvim.nnoremap('<leader>rl', '<Plug>RestNvimLast', 'rest: run last')
     end,
     config = function()
       require('rest-nvim').setup({
