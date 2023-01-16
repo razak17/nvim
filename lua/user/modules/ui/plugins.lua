@@ -85,6 +85,7 @@ return {
   {
     'zbirenbaum/neodim',
     event = 'VeryLazy',
+    enabled = false,
     config = function()
       require('neodim').setup({
         blend_color = require('user.utils.highlights').get('Normal', 'bg'),
