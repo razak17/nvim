@@ -67,6 +67,8 @@ local M = {
 function M.config()
   local cmp = require('cmp')
   local h = require('user.utils.highlights')
+  local codicons = rvim.style.codicons
+  local fmt = string.format
 
   local api = vim.api
   local border = rvim.style.border.current
@@ -132,6 +134,12 @@ function M.config()
     fallback()
   end
 
+  local function blackOrWhiteFg(r, g, b)
+    return ((r * 0.299 + g * 0.587 + b * 0.114) > 186) and '#000000' or '#ffffff'
+  end
+
+  local function formatIcon(icon) return fmt(' %s ', icon) end
+
   cmp.setup({
     experimental = { ghost_text = false },
     preselect = cmp.PreselectMode.None,
@@ -157,13 +165,31 @@ function M.config()
       format = function(entry, vim_item)
         local MAX = math.floor(vim.o.columns * 0.5)
         if #vim_item.abbr >= MAX then vim_item.abbr = vim_item.abbr:sub(1, MAX) .. ellipsis end
-        local codicons = rvim.style.codicons
-        vim_item.kind = codicons.kind[vim_item.kind]
+        if vim_item.kind ~= 'Color' then
+          vim_item.kind = formatIcon(codicons.kind[vim_item.kind])
+        end
         local name = entry.source.name
-        if name == 'nvim_lsp_signature_help' then vim_item.kind = codicons.kind['Field'] end
-        if name == 'lab.quick_data' then vim_item.kind = codicons.misc['CircuitBoard'] end
-        if name == 'emoji' then vim_item.kind = codicons.misc['Smiley'] end
-        if name == 'crates' then vim_item.kind = codicons.misc['Package'] end
+        if name == 'nvim_lsp_signature_help' then
+          vim_item.kind = formatIcon(codicons.kind['Field'])
+        end
+        if name == 'lab.quick_data' then
+          vim_item.kind = formatIcon(codicons.misc['CircuitBoard'])
+        end
+        if name == 'emoji' then vim_item.kind = formatIcon(codicons.misc['Smiley']) end
+        if name == 'crates' then vim_item.kind = formatIcon(codicons.misc['Package']) end
+        if vim_item.kind == 'Color' and entry.completion_item.documentation then
+          local _, _, r, g, b =
+            string.find(entry.completion_item.documentation, '^rgb%((%d+), (%d+), (%d+)')
+          if r then
+            local color = fmt('%02x', r) .. fmt('%02x', g) .. fmt('%02x', b)
+            local group = fmt('Tw_%s', color)
+            if vim.fn.hlID(group) < 1 then
+              vim.api.nvim_set_hl(0, group, { fg = blackOrWhiteFg(r, g, b), bg = '#' .. color })
+            end
+            vim_item.kind = formatIcon(codicons.kind[vim_item.kind])
+            vim_item.kind_hl_group = group
+          end
+        end
         vim_item.menu = ({
           nvim_lsp = '(Lsp)',
           luasnip = '(Snip)',
