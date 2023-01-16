@@ -42,7 +42,7 @@ local smart_close_filetypes = {
   'neotest-summary',
   'neotest-output',
   'dap-float',
-  'httpResult'
+  'httpResult',
 }
 
 local smart_close_buftypes = {} -- Don't include no file buffers rvim diff buffers are nofile

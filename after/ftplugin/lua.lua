@@ -1,5 +1,4 @@
 local nnoremap = rvim.nnoremap
-local fmt = string.format
 
 vim.bo.textwidth = 100
 vim.opt_local.iskeyword:append('-')
