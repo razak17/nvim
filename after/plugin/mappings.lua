@@ -273,7 +273,7 @@ local function toggle_opt(opt)
     local tw_ft = rvim.ui.tw[ft]
     if tw == 0 then
       if tw_ft then vim.bo['tw'] = tw_ft end
-      if not tw_ft then vim.bo['tw'] = 80 end
+      if not tw_ft then vim.bo['tw'] = 100 end
     end
     if tw > 0 then
       rvim.ui.tw[ft] = tw
