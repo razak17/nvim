@@ -37,7 +37,6 @@
   "indent-blankline.nvim": { "branch": "master", "commit": "c4c203c3e8a595bc333abaf168fcb10c13ed5fb7" },
   "iswap.nvim": { "branch": "master", "commit": "f4935e477c3dd8914a008884c4d83388d024487a" },
   "jaq-nvim": { "branch": "master", "commit": "236296aae555657487d1bb4d066cbde9d79d8cd4" },
-  "lab.nvim": { "branch": "main", "commit": "733b4dd2c1b87013291c21d80afbe5255712d1d3" },
   "lazy.nvim": { "branch": "main", "commit": "984008f7ae17c1a8009d9e2f6dc007e13b90a744" },
   "leap.nvim": { "branch": "main", "commit": "a968ab4250840dc879e805f918b4f3b892310a12" },
   "linediff.vim": { "branch": "main", "commit": "b4d3c3f03eed00caa741c2650e13db5b7b7ce0ef" },
@@ -120,6 +119,5 @@
   "vim-matchup": { "branch": "master", "commit": "db5120dd9887c988de7cd973ddb951e465d413e5" },
   "virt-column.nvim": { "branch": "master", "commit": "36fa3be9cba9195081e934b4f9729021726c5889" },
   "vscode-js-debug": { "branch": "main", "commit": "175d9120d25005db7a66a2a67317c8ce406a6c6f" },
-  "which-key.nvim": { "branch": "main", "commit": "e4fa445065a2bb0bbc3cca85346b67817f28e83e" },
-  "yanky.nvim": { "branch": "main", "commit": "930493f645ea6b75df5c1007cb7d57767987981b" }
+  "which-key.nvim": { "branch": "main", "commit": "e4fa445065a2bb0bbc3cca85346b67817f28e83e" }
 }
