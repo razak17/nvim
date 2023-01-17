@@ -1,7 +1,4 @@
-local M = {
-  'gbprod/yanky.nvim',
-  event = 'BufReadPost',
-}
+local M = { 'razak17/yanky.nvim', event = 'BufReadPost' }
 
 function M.init()
   local map = vim.keymap.set
@@ -38,6 +35,7 @@ function M.config()
   }
 
   require('yanky').setup({
+    dbpath = join_paths(rvim.get_runtime_dir(), 'yanky', 'yanky.db'),
     ring = { storage = 'sqlite' },
     picker = {
       telescope = {
