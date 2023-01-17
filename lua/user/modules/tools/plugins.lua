@@ -79,10 +79,14 @@ return {
   },
 
   {
-    '0x100101/lab.nvim',
+    'razak17/lab.nvim',
     event = { 'InsertEnter' },
     build = 'cd js && npm ci',
-    config = function() require('lab').setup() end,
+    config = function()
+      require('lab').setup({
+        runnerconf_path = join_paths(rvim.get_cache_dir(), 'lab', 'runnerconf'),
+      })
+    end,
   },
 
   {

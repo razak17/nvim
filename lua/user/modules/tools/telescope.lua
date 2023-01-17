@@ -65,7 +65,7 @@ function M.init()
   local function installed_plugins()
     builtin.find_files({
       prompt_title = 'Installed plugins',
-      cwd = join_paths(rvim.get_runtime_dir(), 'site', 'lazy'),
+      cwd = join_paths(rvim.get_runtime_dir(), 'site', 'pack', 'lazy'),
     })
   end
 
