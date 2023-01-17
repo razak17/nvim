@@ -11,7 +11,7 @@ function M.init()
   rvim.nnoremap('<m-p>', '<Plug>(YankyCycleBackward)', { desc = 'yanky: cycle backward' })
   rvim.nnoremap(
     '<localleader>y',
-    function() require('telecope').extensions.yank_history.yank_history(rvim.telescope.dropdown()) end,
+    function() require('telescope').extensions.yank_history.yank_history(rvim.telescope.dropdown()) end,
     'yanky: open history'
   )
 end
