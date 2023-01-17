@@ -302,8 +302,8 @@ function M.config()
 
   telescope.setup({
     defaults = {
-      prompt_prefix = fmt(' %s ', icons.misc.search_alt),
-      selection_caret = fmt(' %s ', icons.misc.pick),
+      prompt_prefix = fmt(' %s  ', icons.misc.search_alt),
+      selection_caret = fmt(' %s  ', icons.misc.pick),
       cycle_layout_list = { 'flex', 'horizontal', 'vertical', 'bottom_pane', 'center' },
       sorting_strategy = 'ascending',
       layout_strategy = 'horizontal',
