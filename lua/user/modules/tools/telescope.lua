@@ -328,7 +328,7 @@ function M.config()
         },
       },
       winblend = 0,
-      history = { path = join_paths(rvim.get_cache_dir(), 'telescope', 'history.sqlite3') },
+      history = { path = join_paths(rvim.get_runtime_dir(), 'telescope', 'history.sqlite3') },
       file_ignore_patterns = {
         '%.jpg',
         '%.jpeg',

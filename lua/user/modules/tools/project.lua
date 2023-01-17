@@ -17,7 +17,7 @@ function M.config()
     show_hidden = false,
     silent_chdir = true,
     ignore_lsp = { 'null-ls' },
-    datapath = rvim.get_cache_dir(),
+    datapath = rvim.get_runtime_dir(),
   })
 
   require('telescope').load_extension('projects')
