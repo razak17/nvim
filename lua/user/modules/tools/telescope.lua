@@ -232,6 +232,7 @@ function M.config()
   local themes = require('telescope.themes')
   local icons = rvim.style.icons
   local border = rvim.style.border
+  local fmt = string.format
 
   rvim.telescope = {}
 
@@ -301,8 +302,8 @@ function M.config()
 
   telescope.setup({
     defaults = {
-      prompt_prefix = ' ' .. icons.misc.search_alt .. '  ',
-      selection_caret = ' ' .. icons.misc.pick .. ' ',
+      prompt_prefix = fmt(' %s ', icons.misc.search_alt),
+      selection_caret = fmt(' %s ', icons.misc.pick),
       cycle_layout_list = { 'flex', 'horizontal', 'vertical', 'bottom_pane', 'center' },
       sorting_strategy = 'ascending',
       layout_strategy = 'horizontal',
@@ -327,9 +328,7 @@ function M.config()
         },
       },
       winblend = 0,
-      history = {
-        path = rvim.get_cache_dir() .. '/telescope/history.sqlite3',
-      },
+      history = { path = join_paths(rvim.get_cache_dir(), 'telescope', 'history.sqlite3') },
       file_ignore_patterns = {
         '%.jpg',
         '%.jpeg',
@@ -370,40 +369,6 @@ function M.config()
           ['<C-q>'] = actions.smart_send_to_qflist + actions.open_qflist,
           ['<C-a>'] = rvim.telescope.custom_actions.multi_selection_open,
         },
-      },
-      extensions = {
-        media_files = {
-          -- filetypes whitelist
-          -- defaults to {"png", "jpg", "mp4", "webm", "pdf"}
-          filetypes = { 'png', 'webp', 'jpg', 'jpeg' },
-          find_cmd = 'rg', -- find command (defaults to `fd`)
-        },
-        ['ui-select'] = {
-          themes.get_cursor(get_border({
-            layout_config = {
-              cursor = {
-                width = 25,
-              },
-            },
-          })),
-        },
-        frecency = {
-          default_workspace = 'CWD',
-          show_unindexed = false, -- Show all files or only those that have been indexed
-          ignore_patterns = { '*.git/*', '*/tmp/*', '*node_modules/*', '*vendor/*' },
-          workspaces = {
-            conf = vim.env.DOTFILES,
-            project = vim.env.DEV_HOME,
-          },
-        },
-        undo = {
-          side_by_side = true,
-          layout_strategy = 'vertical',
-          layout_config = {
-            preview_height = 0.8,
-          },
-        },
-        recent_files = { only_cwd = true },
       },
       pickers = {
         buffers = rvim.telescope.dropdown({
@@ -469,6 +434,41 @@ function M.config()
           },
         },
         reloader = rvim.telescope.dropdown(),
+      },
+      extensions = {
+        media_files = {
+          -- filetypes whitelist
+          -- defaults to {"png", "jpg", "mp4", "webm", "pdf"}
+          filetypes = { 'png', 'webp', 'jpg', 'jpeg' },
+          find_cmd = 'rg', -- find command (defaults to `fd`)
+        },
+        ['ui-select'] = {
+          themes.get_cursor(get_border({
+            layout_config = {
+              cursor = {
+                width = 25,
+              },
+            },
+          })),
+        },
+        frecency = {
+          db_root = join_paths(rvim.get_cache_dir(), 'telescope'),
+          default_workspace = 'CWD',
+          show_unindexed = false, -- Show all files or only those that have been indexed
+          ignore_patterns = { '*.git/*', '*/tmp/*', '*node_modules/*', '*vendor/*' },
+          workspaces = {
+            conf = vim.env.DOTFILES,
+            project = vim.env.DEV_HOME,
+          },
+        },
+        undo = {
+          side_by_side = true,
+          layout_strategy = 'vertical',
+          layout_config = {
+            preview_height = 0.8,
+          },
+        },
+        recent_files = { only_cwd = true },
       },
     },
   })
