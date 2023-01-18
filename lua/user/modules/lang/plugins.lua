@@ -102,7 +102,13 @@ return {
     'andymass/vim-matchup',
     event = 'BufReadPre',
     config = function() vim.g.matchup_matchparen_enabled = 0 end,
-    init = function() rvim.nnoremap('<leader>lh', ':<c-u>MatchupWhereAmI?<CR>', 'where am i') end,
+    keys = {
+      {
+        '<localleader>lm',
+        ':<c-u>MatchupWhereAmI?<CR>',
+        desc = 'matchup: where am i',
+      },
+    },
   },
 
   {
