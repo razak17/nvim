@@ -162,14 +162,13 @@ M.servers = {
     },
   },
   sumneko_lua = function()
-    local path = vim.split(package.path, ';')
-    table.insert(path, 'lua/?.lua')
-    table.insert(path, 'lua/?/init.lua')
-
     return {
       settings = {
         Lua = {
-          runtime = { path = path, version = 'LuaJIT' },
+          runtime = {
+            special = { reload = 'require' },
+            version = 'LuaJIT',
+          },
           hint = { enable = true, arrayIndex = 'Disable', setType = true },
           format = { enable = false },
           diagnostics = {

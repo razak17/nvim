@@ -3,7 +3,14 @@ return {
   'b0o/schemastore.nvim',
   'simrat39/rust-tools.nvim',
   'jose-elias-alvarez/typescript.nvim',
-  'folke/neodev.nvim',
+  {
+    'folke/neodev.nvim',
+    opts = {
+      debug = true,
+      experimental = { pathStrict = true },
+      library = { runtime = join_paths(vim.env.HOME, 'neovim', 'share', 'nvim', 'runtime') },
+    },
+  },
   { 'mrshmllow/document-color.nvim', ft = { 'html', 'javascriptreact', 'typescriptreact' } },
   { 'marilari88/twoslash-queries.nvim', ft = { 'typescript', 'typescriptreact' } },
 
@@ -70,7 +77,7 @@ return {
         desc = 'neogen: generate doc',
       },
     },
-    opts = { snippet_engine = "luasnip" },
+    opts = { snippet_engine = 'luasnip' },
   },
 
   {
