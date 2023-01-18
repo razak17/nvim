@@ -420,3 +420,29 @@ rvim.augroup('TerminalAutocommands', {
     end,
   },
 })
+
+rvim.augroup('ConcealMappings', {
+  {
+    event = { 'FileType' },
+    pattern = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact', 'lua' },
+    command = function()
+      local function toggle_coceallevel()
+        if vim.o.conceallevel > 0 then
+          vim.o.conceallevel = 0
+        else
+          vim.o.conceallevel = 2
+        end
+      end
+      rvim.nnoremap('<localleader>cl', toggle_coceallevel, 'toggle conceallevel')
+
+      local function toggle_cocealcursor()
+        if vim.o.concealcursor == 'n' then
+          vim.o.concealcursor = ''
+        else
+          vim.o.concealcursor = 'n'
+        end
+      end
+      rvim.nnoremap('<localleader>cc', toggle_cocealcursor, 'disable concealcursor')
+    end,
+  },
+})
