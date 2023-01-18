@@ -424,7 +424,7 @@ rvim.augroup('TerminalAutocommands', {
 rvim.augroup('ConcealMappings', {
   {
     event = { 'FileType' },
-    pattern = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact', 'lua' },
+    pattern = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact', 'html', 'lua' },
     command = function()
       local function toggle_coceallevel()
         if vim.o.conceallevel > 0 then

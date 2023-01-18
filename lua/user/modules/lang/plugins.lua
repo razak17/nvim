@@ -118,6 +118,24 @@ return {
   },
 
   {
+    'ckolkey/ts-node-action',
+    dependencies = { 'nvim-treesitter' },
+    event = 'VeryLazy',
+    opts = {
+      html = {
+        ['string'] = function() require('ts-node-action').actions.conceal_string() end,
+      },
+    },
+    keys = {
+      {
+        '<localleader>ct',
+        function() require('ts-node-action').node_action() end,
+        desc = 'ts-node-action: run',
+      },
+    },
+  },
+
+  {
     'folke/paint.nvim',
     enabled = false,
     event = 'BufReadPre',
