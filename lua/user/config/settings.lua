@@ -134,7 +134,7 @@ opt.wildignore = {
   'tags.lock',
 }
 o.wildoptions = 'pum'
-o.pumblend = 3 -- Make popup window translucent
+-- o.pumblend = 3 -- Make popup window translucent, NOTE: causes codicons to be rendered funny
 ----------------------------------------------------------------------------------------------------
 -- Display {{{1
 ----------------------------------------------------------------------------------------------------
