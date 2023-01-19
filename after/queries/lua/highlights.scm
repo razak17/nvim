@@ -1,7 +1,7 @@
 ;; extends
 ;; source: https://github.com/ziontee113/yt-tutorials/tree/treesitter_conceal
 
-(("return"   @keyword) (#set! conceal ""))
+(("return"   @keyword) (#set! conceal ""))
 
 (("local"    @keyword) (#set! conceal "~"))
 
