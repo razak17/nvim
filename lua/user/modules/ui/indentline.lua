@@ -2,9 +2,9 @@ local M = { 'lukas-reineke/indent-blankline.nvim', event = 'BufReadPre' }
 
 function M.config()
   require('indent_blankline').setup({
-    char = '│', -- ┆ ┊ 
+    char = '▏', -- ┆ ┊ ▎
     show_foldtext = false,
-    context_char = '▎',
+    context_char = '▏', -- ▎
     char_priority = 12,
     show_current_context = true,
     show_current_context_start = false,
