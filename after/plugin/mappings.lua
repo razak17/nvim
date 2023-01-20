@@ -542,7 +542,6 @@ nnoremap('<leader>V', '<C-W>v', 'vsplit')
 ----------------------------------------------------------------------------------------------------
 -- rVim {{{
 ----------------------------------------------------------------------------------------------------
--- FIXME: Mapping not respinding to change
 nnoremap('<leader>L;', '<cmd>Alpha<CR>', 'alpha')
 nnoremap('<leader>tt', '<cmd>TodoDots<CR>', 'todo: dotfiles todos')
 nnoremap(
