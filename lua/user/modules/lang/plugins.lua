@@ -146,15 +146,14 @@ return {
 
   {
     'joechrisellis/lsp-format-modifications.nvim',
-    keys = {
-      {
+    config = function()
+      rvim.nnoremap(
         '<localleader>lf',
         '<cmd>FormatModifications<CR>',
-        desc = 'lsp-format-modifications: format',
-      },
-    },
+        'lsp-format-modifications: format'
+      )
+    end,
     ft = { 'typescript', 'typescriptreact' },
-    event = 'VeryLazy',
   },
 
   {
