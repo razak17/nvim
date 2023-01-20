@@ -124,7 +124,7 @@ return {
     config = function()
       require('ts-node-action').setup({
         typescriptreact = {
-          ['string_fragment'] = require('ts-node-action.actions').conceal_string(),
+          ['string_fragment'] = require('ts-node-action.actions').conceal_string("…"),
         },
       })
     end,
