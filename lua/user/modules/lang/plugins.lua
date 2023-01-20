@@ -145,6 +145,12 @@ return {
   },
 
   {
+    'joechrisellis/lsp-format-modifications.nvim',
+    ft = { 'typescript', 'typescriptreact' },
+    event = 'VeryLazy',
+  },
+
+  {
     'folke/paint.nvim',
     enabled = false,
     event = 'BufReadPre',
