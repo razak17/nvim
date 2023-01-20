@@ -2,42 +2,15 @@ local M = {
   'nvim-telescope/telescope.nvim',
   event = 'VeryLazy',
   dependencies = {
-    {
-      'jvgrootveld/telescope-zoxide',
-      config = function() require('telescope').load_extension('zoxide') end,
-    },
-    {
-      'smartpde/telescope-recent-files',
-      config = function() require('telescope').load_extension('recent_files') end,
-    },
-    {
-      'nvim-telescope/telescope-media-files.nvim',
-      config = function() require('telescope').load_extension('media_files') end,
-    },
-    {
-      'nvim-telescope/telescope-dap.nvim',
-      config = function() require('telescope').load_extension('dap') end,
-    },
-    {
-      'natecraddock/telescope-zf-native.nvim',
-      config = function() require('telescope').load_extension('zf-native') end,
-    },
-    {
-      'nvim-telescope/telescope-ui-select.nvim',
-      config = function() require('telescope').load_extension('ui-select') end,
-    },
-    {
-      'benfowler/telescope-luasnip.nvim',
-      config = function() require('telescope').load_extension('luasnip') end,
-    },
-    {
-      'nvim-telescope/telescope-frecency.nvim',
-      config = function() require('telescope').load_extension('frecency') end,
-    },
-    {
-      'debugloop/telescope-undo.nvim',
-      -- config = function() require('telescope').load_extension('undo') end,
-    },
+    'jvgrootveld/telescope-zoxide',
+    'smartpde/telescope-recent-files',
+    'nvim-telescope/telescope-media-files.nvim',
+    'nvim-telescope/telescope-dap.nvim',
+    'natecraddock/telescope-zf-native.nvim',
+    'nvim-telescope/telescope-ui-select.nvim',
+    'benfowler/telescope-luasnip.nvim',
+    'nvim-telescope/telescope-frecency.nvim',
+    'debugloop/telescope-undo.nvim',
   },
 }
 
@@ -453,7 +426,7 @@ function M.config()
         })),
       },
       frecency = {
-        db_root = join_paths(rvim.get_cache_dir(), 'telescope'),
+        db_root = join_paths(rvim.get_runtime_dir(), 'telescope'),
         default_workspace = 'CWD',
         show_unindexed = false, -- Show all files or only those that have been indexed
         ignore_patterns = { '*.git/*', '*/tmp/*', '*node_modules/*', '*vendor/*' },
@@ -463,28 +436,28 @@ function M.config()
         },
       },
       undo = {
-        -- side_by_side = true,
-        -- layout_strategy = 'vertical',
-        -- layout_config = {
-        --   preview_height = 0.8,
-        -- },
         mappings = {
           i = {
-            -- IMPORTANT: Note that telescope-undo must be available when telescope is configured if
-            -- you want to replicate these defaults and use the following actions. This means
-            -- installing as a dependency of telescope in it's `requirements` and loading this
-            -- extension from there instead of having the separate plugin definition as outlined
-            -- above.
-            ['<cr>'] = require('telescope-undo.actions').yank_additions,
-            ['<S-cr>'] = require('telescope-undo.actions').yank_deletions,
-            ['<C-y>'] = require('telescope-undo.actions').restore,
+            ['<C-a>'] = require('telescope-undo.actions').yank_additions,
+            ['<C-d>'] = require('telescope-undo.actions').yank_deletions,
+            ['<C-u>'] = require('telescope-undo.actions').restore,
           },
         },
       },
       recent_files = { only_cwd = true },
     },
   })
+
+  require('telescope').load_extension('zoxide')
+  require('telescope').load_extension('recent_files')
+  require('telescope').load_extension('media_files')
+  require('telescope').load_extension('dap')
+  require('telescope').load_extension('zf-native')
+  require('telescope').load_extension('ui-select')
+  require('telescope').load_extension('luasnip')
+  require('telescope').load_extension('frecency')
   require('telescope').load_extension('undo')
+
   vim.api.nvim_exec_autocmds('User', { pattern = 'TelescopeConfigComplete', modeline = false })
 end
 
