@@ -20,9 +20,6 @@ function M.init()
 
   local fmt, fn = string.format, vim.fn
 
-  --- NOTE: this must be required after setting up telescope
-  --- otherwise the result will be cached without the updates
-  --- from the setup call
   local builtin = require('telescope.builtin')
 
   local function luasnips() telescope.extensions.luasnip.luasnip(rvim.telescope.dropdown()) end
