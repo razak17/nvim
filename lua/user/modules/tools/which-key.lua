@@ -33,7 +33,7 @@ function M.config()
       g = { name = 'Git' },
       i = { name = 'Toggler' },
       l = { name = 'Lsp' },
-      lt = { name = 'Lsp' },
+      lt = { name = 'Toggle' },
       L = { name = 'rVim' },
       m = { name = 'Marks' },
       n = { name = 'Notify' },

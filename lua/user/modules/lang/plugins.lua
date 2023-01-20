@@ -51,6 +51,13 @@ return {
   {
     'lvimuser/lsp-inlayhints.nvim',
     event = 'VeryLazy',
+    keys = {
+      {
+        '<leader>lth',
+        function() require('lsp-inlayhints').toggle() end,
+        desc = 'toggle inlay_hints',
+      },
+    },
     config = function()
       require('lsp-inlayhints').setup({
         inlay_hints = {
@@ -124,7 +131,7 @@ return {
     config = function()
       require('ts-node-action').setup({
         typescriptreact = {
-          ['string_fragment'] = require('ts-node-action.actions').conceal_string("…"),
+          ['string_fragment'] = require('ts-node-action.actions').conceal_string('…'),
         },
       })
     end,

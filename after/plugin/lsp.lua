@@ -219,9 +219,9 @@ local function setup_mappings(client, bufnr)
   -- Others
   nnoremap('<leader>li', '<cmd>LspInfo<CR>', 'lsp: info')
   nnoremap('<leader>lf', '<cmd>LspFormat<CR>', with_desc('lsp: format buffer'))
-  nnoremap('<leader>ll', '<cmd>LspDiagnostics<CR>', with_desc('lsp: toggle quickfix diagnostics'))
-  nnoremap('<leader>ltv', '<cmd>ToggleVirtualText<CR>', with_desc('lsp: toggle virtual text'))
-  nnoremap('<leader>lts', '<cmd>ToggleDiagnosticSigns<CR>', with_desc('lsp: toggle  signs'))
+  nnoremap('<leader>ll', '<cmd>LspDiagnostics<CR>', with_desc('toggle quickfix diagnostics'))
+  nnoremap('<leader>ltv', '<cmd>ToggleVirtualText<CR>', with_desc('toggle virtual text'))
+  nnoremap('<leader>lts', '<cmd>ToggleDiagnosticSigns<CR>', with_desc('toggle  signs'))
   -- Typescript
   if client.name == 'tsserver' then
     local actions = require('typescript').actions
