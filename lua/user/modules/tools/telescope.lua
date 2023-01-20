@@ -354,9 +354,7 @@ function M.config()
           n = { ['<c-x>'] = 'delete_buffer' },
         },
       }),
-      find_files = {
-        hidden = true,
-      },
+      find_files = { hidden = true },
       keymaps = rvim.telescope.dropdown({
         layout_config = {
           height = 18,
@@ -368,12 +366,7 @@ function M.config()
         only_sort_text = true,
         -- NOTE: previewing html seems to cause some stalling/blocking whilst live grepping
         -- so filter out html.
-        file_ignore_patterns = {
-          '.git/',
-          '%.html',
-          'dotbot/.*',
-          'zsh/plugins/.*',
-        },
+        file_ignore_patterns = { '.git/', '%.html', 'dotbot/.*', 'zsh/plugins/.*' },
         max_results = 2000,
       }),
       registers = rvim.telescope.dropdown({
