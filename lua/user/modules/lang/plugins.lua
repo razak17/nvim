@@ -89,7 +89,7 @@ return {
 
   {
     'ray-x/lsp_signature.nvim',
-    event = 'InsertEnter',
+    event = 'VeryLazy',
     config = function()
       require('lsp_signature').setup({
         debug = false,
@@ -108,6 +108,7 @@ return {
   {
     'andymass/vim-matchup',
     event = 'BufReadPost',
+    lazy = false,
     config = function() vim.g.matchup_matchparen_enabled = 0 end,
     keys = {
       {

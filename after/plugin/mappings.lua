@@ -545,6 +545,11 @@ nnoremap('<leader>V', '<C-W>v', 'vsplit')
 -- FIXME: Mapping not respinding to change
 nnoremap('<leader>L;', '<cmd>Alpha<CR>', 'alpha')
 nnoremap('<leader>tt', '<cmd>TodoDots<CR>', 'todo: dotfiles todos')
+nnoremap(
+  '<localleader>lt',
+  function() vim.treesitter.show_tree({ command = 'botright 60vnew' }) end,
+  'open ts tree for current buffer'
+)
 ----------------------------------------------------------------------------------------------------
 -- Abbreviations
 ----------------------------------------------------------------------------------------------------
