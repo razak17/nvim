@@ -243,7 +243,7 @@ function M.config()
   ---@param opts table
   ---@return table
   function rvim.telescope.minimal_ui(opts)
-    return require('telescope.themes').get_dropdown(vim.tbl_deep_extend('force', opts or {}, {
+    return themes.get_dropdown(vim.tbl_deep_extend('force', opts or {}, {
       previewer = false,
       hidden = true,
       borderchars = border.telescope.ui_select,
@@ -257,7 +257,7 @@ function M.config()
   ---@param opts table
   ---@return table
   function rvim.telescope.ivy(opts)
-    return require('telescope.themes').get_ivy(vim.tbl_deep_extend('keep', opts or {}, {
+    return themes.get_ivy(vim.tbl_deep_extend('keep', opts or {}, {
       borderchars = {
         preview = { '▔', '▕', '▁', '▏', '🭽', '🭾', '🭿', '🭼' },
       },
