@@ -146,6 +146,13 @@ return {
 
   {
     'joechrisellis/lsp-format-modifications.nvim',
+    keys = {
+      {
+        '<localleader>lf',
+        '<cmd>FormatModifications<CR>',
+        desc = 'lsp-format-modifications: format',
+      },
+    },
     ft = { 'typescript', 'typescriptreact' },
     event = 'VeryLazy',
   },
