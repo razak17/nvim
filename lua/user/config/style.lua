@@ -245,7 +245,7 @@ rvim.style = {
       error = '',
       warn = '',
       info = '',
-      hint = '',
+      hint = '', -- alt: 
       trace = '✎',
     },
     misc = {
