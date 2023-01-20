@@ -36,7 +36,7 @@ local M = {
     },
     {
       'debugloop/telescope-undo.nvim',
-      config = function() require('telescope').load_extension('undo') end,
+      -- config = function() require('telescope').load_extension('undo') end,
     },
   },
 }
@@ -370,109 +370,121 @@ function M.config()
           ['<C-a>'] = rvim.telescope.custom_actions.multi_selection_open,
         },
       },
-      pickers = {
-        buffers = rvim.telescope.dropdown({
-          sort_mru = true,
-          sort_lastused = true,
-          show_all_buffers = true,
-          ignore_current_buffer = true,
-          previewer = false,
-          theme = 'dropdown',
-          mappings = {
-            i = { ['<c-x>'] = 'delete_buffer' },
-            n = { ['<c-x>'] = 'delete_buffer' },
-          },
-        }),
-        find_files = {
-          hidden = true,
+    },
+    pickers = {
+      buffers = rvim.telescope.dropdown({
+        sort_mru = true,
+        sort_lastused = true,
+        show_all_buffers = true,
+        ignore_current_buffer = true,
+        previewer = false,
+        theme = 'dropdown',
+        mappings = {
+          i = { ['<c-x>'] = 'delete_buffer' },
+          n = { ['<c-x>'] = 'delete_buffer' },
         },
-        keymaps = rvim.telescope.dropdown({
-          layout_config = {
-            height = 18,
-            width = 0.5,
-          },
-        }),
-        live_grep = rvim.telescope.ivy({
-          --@usage don't include the filename in the search results
-          only_sort_text = true,
-          -- NOTE: previewing html seems to cause some stalling/blocking whilst live grepping
-          -- so filter out html.
-          file_ignore_patterns = {
-            '.git/',
-            '%.html',
-            'dotbot/.*',
-            'zsh/plugins/.*',
-          },
-          max_results = 2000,
-        }),
-        registers = rvim.telescope.dropdown({
-          layout_config = {
-            height = 25,
-          },
-        }),
-        oldfiles = rvim.telescope.dropdown(),
-        current_buffer_fuzzy_find = rvim.telescope.dropdown({
-          previewer = false,
-          shorten_path = false,
-        }),
-        colorscheme = {
-          enable_preview = true,
-        },
-        git_branches = rvim.telescope.dropdown(),
-        git_bcommits = {
-          layout_config = {
-            horizontal = {
-              preview_width = 0.55,
-            },
-          },
-        },
-        git_commits = {
-          layout_config = {
-            horizontal = {
-              preview_width = 0.55,
-            },
-          },
-        },
-        reloader = rvim.telescope.dropdown(),
+      }),
+      find_files = {
+        hidden = true,
       },
-      extensions = {
-        media_files = {
-          -- filetypes whitelist
-          -- defaults to {"png", "jpg", "mp4", "webm", "pdf"}
-          filetypes = { 'png', 'webp', 'jpg', 'jpeg' },
-          find_cmd = 'rg', -- find command (defaults to `fd`)
+      keymaps = rvim.telescope.dropdown({
+        layout_config = {
+          height = 18,
+          width = 0.5,
         },
-        ['ui-select'] = {
-          themes.get_cursor(get_border({
-            layout_config = {
-              cursor = {
-                width = 25,
-              },
-            },
-          })),
+      }),
+      live_grep = rvim.telescope.ivy({
+        --@usage don't include the filename in the search results
+        only_sort_text = true,
+        -- NOTE: previewing html seems to cause some stalling/blocking whilst live grepping
+        -- so filter out html.
+        file_ignore_patterns = {
+          '.git/',
+          '%.html',
+          'dotbot/.*',
+          'zsh/plugins/.*',
         },
-        frecency = {
-          db_root = join_paths(rvim.get_cache_dir(), 'telescope'),
-          default_workspace = 'CWD',
-          show_unindexed = false, -- Show all files or only those that have been indexed
-          ignore_patterns = { '*.git/*', '*/tmp/*', '*node_modules/*', '*vendor/*' },
-          workspaces = {
-            conf = vim.env.DOTFILES,
-            project = vim.env.DEV_HOME,
-          },
+        max_results = 2000,
+      }),
+      registers = rvim.telescope.dropdown({
+        layout_config = {
+          height = 25,
         },
-        undo = {
-          side_by_side = true,
-          layout_strategy = 'vertical',
-          layout_config = {
-            preview_height = 0.8,
-          },
-        },
-        recent_files = { only_cwd = true },
+      }),
+      oldfiles = rvim.telescope.dropdown(),
+      current_buffer_fuzzy_find = rvim.telescope.dropdown({
+        previewer = false,
+        shorten_path = false,
+      }),
+      colorscheme = {
+        enable_preview = true,
       },
+      git_branches = rvim.telescope.dropdown(),
+      git_bcommits = {
+        layout_config = {
+          horizontal = {
+            preview_width = 0.55,
+          },
+        },
+      },
+      git_commits = {
+        layout_config = {
+          horizontal = {
+            preview_width = 0.55,
+          },
+        },
+      },
+      reloader = rvim.telescope.dropdown(),
+    },
+    extensions = {
+      media_files = {
+        -- filetypes whitelist
+        -- defaults to {"png", "jpg", "mp4", "webm", "pdf"}
+        filetypes = { 'png', 'webp', 'jpg', 'jpeg' },
+        find_cmd = 'rg', -- find command (defaults to `fd`)
+      },
+      ['ui-select'] = {
+        themes.get_cursor(get_border({
+          layout_config = {
+            cursor = {
+              width = 25,
+            },
+          },
+        })),
+      },
+      frecency = {
+        db_root = join_paths(rvim.get_cache_dir(), 'telescope'),
+        default_workspace = 'CWD',
+        show_unindexed = false, -- Show all files or only those that have been indexed
+        ignore_patterns = { '*.git/*', '*/tmp/*', '*node_modules/*', '*vendor/*' },
+        workspaces = {
+          conf = vim.env.DOTFILES,
+          project = vim.env.DEV_HOME,
+        },
+      },
+      undo = {
+        -- side_by_side = true,
+        -- layout_strategy = 'vertical',
+        -- layout_config = {
+        --   preview_height = 0.8,
+        -- },
+        mappings = {
+          i = {
+            -- IMPORTANT: Note that telescope-undo must be available when telescope is configured if
+            -- you want to replicate these defaults and use the following actions. This means
+            -- installing as a dependency of telescope in it's `requirements` and loading this
+            -- extension from there instead of having the separate plugin definition as outlined
+            -- above.
+            ['<cr>'] = require('telescope-undo.actions').yank_additions,
+            ['<S-cr>'] = require('telescope-undo.actions').yank_deletions,
+            ['<C-y>'] = require('telescope-undo.actions').restore,
+          },
+        },
+      },
+      recent_files = { only_cwd = true },
     },
   })
-
+  require('telescope').load_extension('undo')
   vim.api.nvim_exec_autocmds('User', { pattern = 'TelescopeConfigComplete', modeline = false })
 end
 
