@@ -121,11 +121,13 @@ return {
     'ckolkey/ts-node-action',
     dependencies = { 'nvim-treesitter' },
     event = 'VeryLazy',
-    opts = {
-      html = {
-        ['string'] = function() require('ts-node-action').actions.conceal_string() end,
-      },
-    },
+    config = function()
+      require('ts-node-action').setup({
+        typescriptreact = {
+          ['string_fragment'] = require('ts-node-action.actions').conceal_string(),
+        },
+      })
+    end,
     keys = {
       {
         '<localleader>ct',
