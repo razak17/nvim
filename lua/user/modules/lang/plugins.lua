@@ -107,7 +107,7 @@ return {
 
   {
     'andymass/vim-matchup',
-    event = 'BufReadPre',
+    event = 'BufReadPost',
     config = function() vim.g.matchup_matchparen_enabled = 0 end,
     keys = {
       {
