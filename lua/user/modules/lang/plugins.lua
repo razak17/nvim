@@ -87,8 +87,10 @@ return {
     opts = { snippet_engine = 'luasnip' },
   },
 
+  -- FIXME: disable for now. hijacks <tab> in insert mode
   {
     'ray-x/lsp_signature.nvim',
+    enabled = false,
     event = 'VeryLazy',
     config = function()
       require('lsp_signature').setup({
