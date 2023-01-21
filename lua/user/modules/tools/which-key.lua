@@ -52,6 +52,10 @@ function M.config()
     },
   })
 
+  which_key.register({
+    l = 'lsp',
+  }, { mode = 'v', prefix = '<leader>' })
+
   rvim.augroup('WhichKeyMode', {
     {
       event = { 'FileType' },
