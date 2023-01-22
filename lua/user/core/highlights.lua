@@ -88,7 +88,6 @@ local function colorscheme_overrides()
       { NormalFloat = { inherit = 'Normal' } },
       { TermCursor = { ctermfg = 'green', foreground = { from = 'NormalFloat' } } },
       { Dim = { foreground = { from = 'VertSplit', alter = -50 } } },
-      { SLCopilot = { background = { from = 'StatusLine' } } },
     },
     ['horizon'] = {
       ----------------------------------------------------------------------------------------------
