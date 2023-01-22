@@ -85,6 +85,7 @@ return {
     config = function()
       require('lab').setup({
         runnerconf_path = join_paths(rvim.get_cache_dir(), 'lab', 'runnerconf'),
+        code_runner = { enabled = false },
       })
     end,
   },
