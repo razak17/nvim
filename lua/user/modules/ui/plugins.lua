@@ -4,7 +4,7 @@ return {
   { 'razak17/zephyr-nvim', lazy = false, priority = 1000 },
   { 'LunarVim/horizon.nvim', lazy = false, priority = 1000 },
 
-  {
+ {
     'itchyny/vim-highlighturl',
     event = 'BufReadPre',
     config = function()
@@ -40,7 +40,7 @@ return {
     event = 'VeryLazy',
     config = function()
       require('user.utils.highlights').plugin('virt_column', {
-        { VirtColumn = { bg = 'None', fg = { from = 'VertSplit', alter = -50 } } },
+        { VirtColumn = { bg = 'None', fg = { from = 'VertSplit' } } },
       })
       require('virt-column').setup({ char = '│' })
     end,

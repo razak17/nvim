@@ -87,9 +87,9 @@ function M.config()
       { CmpItemAbbrMatchFuzzy = { italic = true, foreground = { from = 'Keyword' } } },
       {
         CmpItemMenu = {
-          fg = { from = 'VertSplit', attr = 'fg' },
+          fg = { from = 'Comment', attr = 'fg' },
           italic = true,
-          bold = false,
+          bold = true,
         },
       },
     }

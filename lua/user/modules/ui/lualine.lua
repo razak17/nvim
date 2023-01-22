@@ -2,6 +2,7 @@ local M = { 'nvim-lualine/lualine.nvim', event = 'VeryLazy' }
 
 function M.config()
   local P = require('zephyr.palette')
+  local hl = require('user.utils.highlights')
   local style = rvim.style
   local icons = style.icons
   local codicons = style.codicons
@@ -16,7 +17,7 @@ function M.config()
       section_separators = { left = '', right = '' },
       disabled_filetypes = { 'alpha', 'Outline' },
       theme = {
-        normal = { c = { fg = P.base8, bg = P.bg_dark } },
+        normal = { c = { fg = P.base8, bg = hl.alter_color(P.bg_dark, -20) } },
         inactive = { c = { fg = P.base8, bg = P.bg_dark } },
       },
     },

@@ -10,7 +10,7 @@ local M = {
       event = { 'BufRead', 'BufNewFile' },
       config = function()
         require('user.utils.highlights').plugin('treesitter-context', {
-          { ContextBorder = { link = 'Dim' } },
+          { ContextBorder = { link = 'FloatBorder' } },
           { TreesitterContext = { inherit = 'Normal' } },
           { TreesitterContextLineNumber = { inherit = 'LineNr' } },
         })

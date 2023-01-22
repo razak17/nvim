@@ -59,7 +59,7 @@ function M.config()
   -- opt.sessionoptions:append('folds')
 
   hl.plugin('ufo', {
-    { Folded = { bold = false, italic = false, bg = { from = 'CursorLine', alter = -7 } } },
+    { Folded = { bold = false, italic = false, bg = { from = 'CursorLine' } } },
   })
 
   rvim.augroup('UfoSettings', {

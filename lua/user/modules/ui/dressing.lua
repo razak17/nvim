@@ -19,7 +19,7 @@ function M.config()
         {
           FloatTitle = {
             background = { from = 'VertSplit', attr = 'fg' },
-            fg = { from = 'PmenuSel' },
+            fg = { from = 'Normal' },
           },
         },
       },

@@ -27,30 +27,30 @@ end
 
 function M.config()
   local icons = rvim.style.icons
-  local highlights = require('user.utils.highlights')
+  local hl = require('user.utils.highlights')
 
-  highlights.plugin('NeoTree', {
-    { NeoTreeNormal = { link = 'PanelBackground' } },
-    { NeoTreeNormalNC = { link = 'PanelBackground' } },
-    { NeoTreeRootName = { bold = true } },
-    { NeoTreeStatusLine = { link = 'PanelBackground' } },
-    { NeoTreeTabActive = { bg = { from = 'PanelBackground' } } },
-    {
-      NeoTreeTabInactive = {
-        bg = { from = 'PanelDarkBackground', alter = 15 },
-        fg = { from = 'Comment' },
-      },
-    },
-    {
-      NeoTreeTabSeparatorInactive = {
-        inherit = 'NeoTreeTabInactive',
-        fg = { from = 'PanelDarkBackground', attr = 'bg' },
-      },
-    },
-    {
-      NeoTreeTabSeparatorActive = {
-        inherit = 'PanelBackground',
-        fg = { from = 'Comment' },
+  -- TODO: get working
+  hl.plugin('NeoTree', {
+    theme = {
+      ['zephyr'] = {
+        { NeoTreeNormal = { link = 'PanelBackground' } },
+        { NeoTreeNormalNC = { link = 'PanelBackground' } },
+        { NeoTreeRootName = { bold = false, italic = false } },
+        { NeoTreeStatusLine = { link = 'PanelBackground' } },
+        { NeoTreeTabActive = { bg = { from = 'PanelBackground' } } },
+        { NeoTreeFloatTitle = { link = 'FloatTitle' } },
+        {
+          NeoTreeTabSeparatorInactive = {
+            inherit = 'NeoTreeTabInactive',
+            fg = { from = 'PanelDarkBackground', attr = 'bg' },
+          },
+        },
+        {
+          NeoTreeTabSeparatorActive = {
+            inherit = 'PanelBackground',
+            fg = { from = 'Comment' },
+          },
+        },
       },
     },
   })

@@ -9,13 +9,6 @@ local function general_overrides()
     ------------------------------------------------------------------------------------------------
     -- colorscheme overrides
     ------------------------------------------------------------------------------------------------
-    {
-      Folded = {
-        background = 'NONE',
-        foreground = { from = 'Comment' },
-        bold = true,
-      },
-    },
     { QuickFixLine = { bg = { from = 'Cursorline' }, fg = 'NONE' } },
     -- Neither the sign column or end of buffer highlights require an explicit background
     -- they should both just use the background that is in the window they are in.
@@ -86,8 +79,12 @@ local function colorscheme_overrides()
     ['zephyr'] = {
       { Normal = { background = { from = 'Normal', alter = -50 } } },
       { NormalFloat = { inherit = 'Normal' } },
-      { TermCursor = { ctermfg = 'green', foreground = { from = 'NormalFloat' } } },
-      { Dim = { foreground = { from = 'VertSplit', alter = -50 } } },
+      { NormalNC = { inherit = 'Normal' } },
+      { CursorLine = { background = { from = 'CursorLine', alter = -20 } } },
+      { VertSplit = { fg = { from = 'VertSplit', alter = -60 } } },
+      { Dim = { inherit = 'VertSplit' } },
+      { TelescopePreviewBorder = { fg = { from = 'TelescopePreviewBorder', alter = -60 } } },
+      { TelescopePromptPrefix = { fg = { from = 'TelescopePromptPrefix', alter = -30 } } },
     },
     ['horizon'] = {
       ----------------------------------------------------------------------------------------------
