@@ -23,8 +23,14 @@ end
 function M.config()
   require('harpoon').setup({
     menu = {
-      width = vim.api.nvim_win_get_width(0) - 4,
       borderchars = rvim.style.border.common,
+    },
+  })
+  require('user.utils.highlights').plugin('harpoon', {
+    theme = {
+      ['zephyr'] = {
+        { HarpoonBorder = { fg = { from = 'CursorLineNr', alter = -30 } } },
+      },
     },
   })
   require('telescope').load_extension('harpoon')

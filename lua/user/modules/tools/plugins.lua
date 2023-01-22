@@ -21,7 +21,13 @@ return {
     config = function()
       require('buffer_manager').setup({
         borderchars = rvim.style.border.common,
-        border_highlight = 'VertSplit',
+      })
+      require('user.utils.highlights').plugin('harpoon', {
+        theme = {
+          ['zephyr'] = {
+            { BufferManagerBorder = { fg = { from = 'CursorLineNr', alter = -30 } } },
+          },
+        },
       })
     end,
   },
