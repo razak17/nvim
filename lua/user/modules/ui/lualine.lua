@@ -18,7 +18,7 @@ function M.config()
       disabled_filetypes = { 'alpha', 'Outline' },
       theme = {
         normal = { c = { fg = P.base8, bg = hl.alter_color(P.bg_dark, -20) } },
-        inactive = { c = { fg = P.base8, bg = P.bg_dark } },
+        inactive = { c = { fg = P.base8, bg = hl.alter_color(P.bg_dark, -20) } },
       },
     },
     sections = {
