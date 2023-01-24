@@ -58,7 +58,7 @@ function Lazy:bootstrap()
       patterns = { 'razak17' },
     },
     install = { colorscheme = { 'zephyr', 'habamax' } },
-    ui = { border = rvim.style.border.current },
+    ui = { border = rvim.style.current.border },
     performance = {
       enabled = true,
       cache = { path = join_paths(rvim.get_cache_dir(), 'lazy', 'cache') },

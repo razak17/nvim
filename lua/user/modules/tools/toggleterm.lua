@@ -43,7 +43,7 @@ function M.config()
       width = 150,
       height = 30,
       winblend = 3,
-      border = rvim.style.border.current,
+      border = rvim.style.current.border,
     },
     size = function(term)
       if term.direction == 'horizontal' then return 10 end

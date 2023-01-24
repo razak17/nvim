@@ -7,11 +7,10 @@ local M = {
 function M.init() rvim.nnoremap('<leader>lm', '<cmd>Mason<CR>', 'mason: info') end
 
 function M.config()
-  local style = rvim.style
-  local icons = style.icons
+  local icons = rvim.style.icons
   require('mason').setup({
     ui = {
-      border = style.border.current,
+      border = rvim.style.current.border,
       top_offset = 5,
       height = vim.o.lines - vim.o.cmdheight - 5 - 8,
       icons = {

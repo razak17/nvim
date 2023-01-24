@@ -51,7 +51,7 @@ return {
     keys = { { '<leader>oc', '<cmd>CccHighlighterToggle<CR>', desc = 'toggle ccc' } },
     config = function()
       require('ccc').setup({
-        win_opts = { border = rvim.style.border.current },
+        win_opts = { border = rvim.style.current.border },
         highlighter = {
           auto_enable = true,
           excludes = { 'dart', 'html', 'css', 'typescriptreact' },

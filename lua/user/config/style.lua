@@ -1,20 +1,9 @@
-local borders = {
-  telescope = {
-    ui_select = {
-      { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
-      prompt = { '─', '│', ' ', '│', '┌', '┐', '│', '│' },
-      results = { '─', '│', '─', '│', '├', '┤', '┘', '└' },
-      preview = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
-    },
-  },
-  common = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
-  bqf = { '│', '│', '─', '─', '┌', '┐', '└', '┘', '▊' },
-  line = { '🭽', '▔', '🭾', '▕', '🭿', '▁', '🭼', '▏' },
-  rectangle = { '┌', '─', '┐', '│', '┘', '─', '└', '│' },
-}
-
 rvim.style = {
-  border = vim.tbl_extend('force', borders, { current = borders.line }),
+  border = {
+    common = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
+    line = { '🭽', '▔', '🭾', '▕', '🭿', '▁', '🭼', '▏' },
+    rectangle = { '┌', '─', '┐', '│', '┘', '─', '└', '│' },
+  },
   icons = {
     separators = {
       vert_bottom_half_block = '▄',
@@ -264,4 +253,8 @@ rvim.style = {
 -- Global style settings
 ----------------------------------------------------------------------------------------------------
 -- Some styles can be tweak here to apply globally i.e. by setting the current value for that style
-rvim.style.border.current = rvim.style.border.line
+-- The current styles for various UI elements
+rvim.style.current = {
+  border = rvim.style.border.line,
+  lsp_icons = rvim.style.codicons.kind,
+}

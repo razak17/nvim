@@ -70,7 +70,7 @@ function M.config()
   local fmt = string.format
 
   local api = vim.api
-  local border = rvim.style.border.current
+  local border = rvim.style.current.border
   local lsp_hls = rvim.lsp.kind_highlights
   local ellipsis = rvim.style.icons.misc.ellipsis
   local luasnip = require('luasnip')
@@ -166,13 +166,14 @@ function M.config()
         if #vim_item.abbr >= MAX then vim_item.abbr = vim_item.abbr:sub(1, MAX) .. ellipsis end
 
         local codicons = rvim.style.codicons
+        local lsp_icons = rvim.style.current.lsp_icons
 
         if vim_item.kind ~= 'Color' then
-          vim_item.kind = formatIcon(codicons.kind[vim_item.kind])
+          vim_item.kind = formatIcon(lsp_icons[vim_item.kind])
         end
 
         if entry.source.name == 'nvim_lsp_signature_help' then
-          vim_item.kind = formatIcon(codicons.kind.Field)
+          vim_item.kind = formatIcon(lsp_icons.Field)
         end
 
         if entry.source.name == 'lab.quick_data' then
@@ -193,11 +194,11 @@ function M.config()
               if vim.fn.hlID(group) < 1 then
                 vim.api.nvim_set_hl(0, group, { fg = blackOrWhiteFg(r, g, b), bg = '#' .. color })
               end
-              vim_item.kind = formatIcon(codicons.kind[vim_item.kind])
+              vim_item.kind = formatIcon(lsp_icons[vim_item.kind])
               vim_item.kind_hl_group = group
             end
           else
-            vim_item.kind = formatIcon(codicons.kind[vim_item.kind])
+            vim_item.kind = formatIcon(lsp_icons[vim_item.kind])
           end
         end
 

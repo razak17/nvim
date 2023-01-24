@@ -12,7 +12,7 @@ function M.config()
       relative_to = 'win',
       anchor = 'topright',
     },
-    style = { border = rvim.style.border.current, hide_buffer_id = true },
+    style = { border = rvim.style.current.border, hide_buffer_id = true },
     exclude = {
       'neo-tree',
       'qf',

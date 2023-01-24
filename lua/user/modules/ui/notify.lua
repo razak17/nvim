@@ -17,7 +17,7 @@ function M.config()
     background_colour = 'NormalFloat',
     on_open = function(win)
       if api.nvim_win_is_valid(win) then
-        vim.api.nvim_win_set_config(win, { border = rvim.style.border.current })
+        vim.api.nvim_win_set_config(win, { border = rvim.style.current.border })
       end
     end,
     timeout = 500,

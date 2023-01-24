@@ -32,7 +32,7 @@ local M = {
       config = function()
         require('dapui').setup({
           windows = { indent = 2 },
-          floating = { border = rvim.style.border.current },
+          floating = { border = rvim.style.current.border },
         })
         local dapui = require('dapui')
         local dap = require('dap')

@@ -20,7 +20,7 @@ return {
       require('user.utils.highlights').plugin('lspconfig', {
         { LspInfoBorder = { link = 'FloatBorder' } },
       })
-      require('lspconfig.ui.windows').default_options.border = rvim.style.border.current
+      require('lspconfig.ui.windows').default_options.border = rvim.style.current.border
     end,
   },
 
@@ -100,7 +100,7 @@ return {
         fix_pos = false,
         auto_close_after = 15,
         hint_enable = false,
-        handler_opts = { border = rvim.style.border.current },
+        handler_opts = { border = rvim.style.current.border },
         toggle_key = '<C-I>',
         select_signature_key = '<M-N>',
       })

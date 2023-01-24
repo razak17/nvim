@@ -5,7 +5,7 @@ function M.config()
     popup = {
       autofocus = true,
       style = 'minimal',
-      border = rvim.style.border.current,
+      border = rvim.style.current.border,
       show_version_date = false,
       show_dependency_version = true,
       max_height = 30,

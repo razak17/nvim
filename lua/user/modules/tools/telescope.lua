@@ -200,8 +200,6 @@ function M.config()
   local action_state = require('telescope.actions.state')
   local layout_actions = require('telescope.actions.layout')
   local themes = require('telescope.themes')
-  local icons = rvim.style.icons
-  local border = rvim.style.border
   local fmt = string.format
 
   rvim.telescope = {}
@@ -231,9 +229,16 @@ function M.config()
     rvim.telescope.custom_actions._multiopen(prompt_bufnr, 'edit')
   end
 
+  local ui_select_border = {
+    { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
+    prompt = { '─', '│', ' ', '│', '┌', '┐', '│', '│' },
+    results = { '─', '│', '─', '│', '├', '┤', '┘', '└' },
+    preview = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
+  }
+
   local function get_border(opts)
     return vim.tbl_deep_extend('force', opts or {}, {
-      borderchars = border.telescope.ui_select,
+      borderchars = ui_select_border,
     })
   end
 
@@ -243,7 +248,7 @@ function M.config()
     return themes.get_dropdown(vim.tbl_deep_extend('force', opts or {}, {
       previewer = false,
       hidden = true,
-      borderchars = border.telescope.ui_select,
+      borderchars = ui_select_border,
     }))
   end
 
@@ -272,13 +277,13 @@ function M.config()
 
   telescope.setup({
     defaults = {
-      prompt_prefix = fmt(' %s  ', icons.misc.search_alt),
-      selection_caret = fmt(' %s ', icons.misc.pick),
+      prompt_prefix = fmt(' %s  ', rvim.style.icons.misc.search_alt),
+      selection_caret = fmt(' %s ', rvim.style.icons.misc.pick),
       cycle_layout_list = { 'flex', 'horizontal', 'vertical', 'bottom_pane', 'center' },
       sorting_strategy = 'ascending',
       layout_strategy = 'horizontal',
       set_env = { ['TERM'] = vim.env.TERM },
-      borderchars = border.common,
+      borderchars = rvim.style.border.common,
       file_browser = { hidden = true },
       color_devicons = true,
       dynamic_preview_title = true,

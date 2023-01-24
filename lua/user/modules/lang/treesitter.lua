@@ -99,7 +99,7 @@ function M.config()
       },
       lsp_interop = {
         enable = true,
-        border = rvim.style.border.current,
+        border = rvim.style.current.border,
         peek_definition_code = {
           ['<leader>lu'] = '@function.outer',
           ['<leader>lC'] = '@class.outer',

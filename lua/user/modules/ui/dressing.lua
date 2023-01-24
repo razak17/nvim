@@ -11,8 +11,6 @@ function M.config()
     return (results <= (LIMIT - PADDING) and results + PADDING or LIMIT)
   end
 
-  local border = rvim.style.border
-
   require('user.utils.highlights').plugin('dressing', {
     theme = {
       ['zephyr'] = {
@@ -29,7 +27,7 @@ function M.config()
   require('dressing').setup({
     input = {
       insert_only = false,
-      border = border.current,
+      border = rvim.style.current.border,
       win_options = { winblend = 2 },
     },
     select = {
@@ -40,7 +38,12 @@ function M.config()
             backend = 'telescope',
             telescope = require('telescope.themes').get_cursor({
               layout_config = { height = get_height },
-              borderchars = border.telescope.ui_select,
+              borderchars = {
+                { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
+                prompt = { '─', '│', ' ', '│', '┌', '┐', '│', '│' },
+                results = { '─', '│', '─', '│', '├', '┤', '┘', '└' },
+                preview = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
+              },
             }),
           }
         end

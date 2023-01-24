@@ -9,7 +9,7 @@ function M.config()
       spelling = { enabled = true },
     },
     icons = { breadcrumb = icons.misc.double_chevron_right },
-    window = { border = rvim.style.border.current },
+    window = { border = rvim.style.current.border },
     layout = { align = 'center' },
     hidden = { '<silent>', '<cmd>', '<Cmd>', '<CR>', 'call', 'lua', '^:', '^ ' },
     show_help = true,

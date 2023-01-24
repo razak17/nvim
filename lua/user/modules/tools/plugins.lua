@@ -69,7 +69,9 @@ return {
     ft = 'qf',
     config = function()
       require('bqf').setup({
-        preview = { border_chars = rvim.style.border.bqf },
+        preview = {
+          border_chars = { '│', '│', '─', '─', '┌', '┐', '└', '┘', '▊' },
+        },
       })
     end,
   },

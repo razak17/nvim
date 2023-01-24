@@ -25,7 +25,7 @@ function M.config()
     {
       event = { 'Filetype' },
       pattern = { 'Jaq' },
-      command = function() vim.api.nvim_win_set_config(0, { border = rvim.style.border.current }) end,
+      command = function() vim.api.nvim_win_set_config(0, { border = rvim.style.current.border }) end,
     },
   })
 end

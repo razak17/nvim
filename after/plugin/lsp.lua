@@ -9,7 +9,7 @@ local L = lsp.log_levels
 
 local s = rvim.style
 local codicons = s.codicons
-local border = rvim.style.border.current
+local border = rvim.style.current.border
 local diagnostic = vim.diagnostic
 local format_exclusions = rvim.lsp.format_exclusions
 
