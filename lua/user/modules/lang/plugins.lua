@@ -3,6 +3,12 @@ return {
   'b0o/schemastore.nvim',
   'simrat39/rust-tools.nvim',
   'jose-elias-alvarez/typescript.nvim',
+
+  {
+    'olexsmir/gopher.nvim',
+    dependencies = { 'nvim-lua/plenary.nvim', 'nvim-treesitter/nvim-treesitter' },
+  },
+
   {
     'folke/neodev.nvim',
     opts = {
@@ -11,7 +17,9 @@ return {
       library = { runtime = join_paths(vim.env.HOME, 'neovim', 'share', 'nvim', 'runtime') },
     },
   },
+
   { 'mrshmllow/document-color.nvim', ft = { 'html', 'javascriptreact', 'typescriptreact' } },
+
   { 'marilari88/twoslash-queries.nvim', ft = { 'typescript', 'typescriptreact' } },
 
   {
