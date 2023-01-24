@@ -73,15 +73,13 @@ function rvim.ui.winbar.get()
       if rvim.ui.winbar.use_file_icon then is_first = index == 1 end
       local is_last = index == #parts
       local sep = is_last and separator or dir_separator
-      local hl = is_last and 'Winbar' or 'LineNr'
-      local suffix_hl = is_last and 'WinbarDirectory' or 'LineNr'
       rvim.ui.winbar.state[priority] = table.concat(vim.list_slice(parts, 1, index), '/')
-      add(component(part, hl, {
+      add(component(part, 'Winbar', {
         id = priority,
         priority = priority,
         click = 'v:lua.rvim.ui.winbar.click',
         suffix = sep,
-        suffix_color = suffix_hl,
+        suffix_color = 'Winbar',
         prefix = is_first and icon or nil,
         prefix_color = is_first and color or nil,
       }))
