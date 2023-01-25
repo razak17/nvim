@@ -15,7 +15,11 @@ return {
     opts = {
       debug = true,
       experimental = { pathStrict = true },
-      library = { runtime = join_paths(vim.env.HOME, 'neovim', 'share', 'nvim', 'runtime') },
+      library = {
+        runtime = join_paths(vim.env.HOME, 'neovim', 'share', 'nvim', 'runtime'),
+        plugins = { 'neotest' },
+        types = true,
+      },
     },
   },
 
