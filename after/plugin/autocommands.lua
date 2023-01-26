@@ -455,3 +455,40 @@ rvim.augroup('ConcealMappings', {
     end,
   },
 })
+
+-- should get bufnr from autocmd or something
+-- conceal only accepts one character
+-- thanks to u/Rafat913 for many suggestions and tips
+
+local conceal_html_class = function(bufnr)
+  local namespace = vim.api.nvim_create_namespace('HTMLClassConceal')
+  local language_tree = vim.treesitter.get_parser(bufnr, 'html')
+  local syntax_tree = language_tree:parse()
+  local root = syntax_tree[1]:root()
+
+  local query = vim.treesitter.parse_query(
+    'html',
+    [[
+    ((attribute
+        (attribute_name) @att_name (#eq? @att_name "class")
+        (quoted_attribute_value (attribute_value) @class_value) (#set! @class_value conceal "…")))
+    ]]
+  ) -- using single character for conceal thanks to u/Rafat913
+
+  for _, captures, metadata in query:iter_matches(root, bufnr, root:start(), root:end_()) do
+    local start_row, start_col, end_row, end_col = captures[2]:range()
+    vim.api.nvim_buf_set_extmark(bufnr, namespace, start_row, start_col, {
+      end_line = end_row,
+      end_col = end_col,
+      conceal = metadata[2].conceal,
+    })
+  end
+end
+
+rvim.augroup('HTMLClassConceal', {
+  {
+    event = { 'BufEnter', 'BufWritePost', 'TextChanged', 'InsertLeave' },
+    pattern = { '*.html' },
+    command = function() conceal_html_class(vim.api.nvim_get_current_buf()) end,
+  },
+})
