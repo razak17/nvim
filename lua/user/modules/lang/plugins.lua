@@ -4,6 +4,10 @@ return {
   'simrat39/rust-tools.nvim',
   'jose-elias-alvarez/typescript.nvim',
 
+  { 'mrshmllow/document-color.nvim', ft = { 'html', 'javascriptreact', 'typescriptreact' } },
+
+  { 'marilari88/twoslash-queries.nvim', ft = { 'typescript', 'typescriptreact' } },
+
   {
     'olexsmir/gopher.nvim',
     ft = 'go',
@@ -22,10 +26,6 @@ return {
       },
     },
   },
-
-  { 'mrshmllow/document-color.nvim', ft = { 'html', 'javascriptreact', 'typescriptreact' } },
-
-  { 'marilari88/twoslash-queries.nvim', ft = { 'typescript', 'typescriptreact' } },
 
   {
     'neovim/nvim-lspconfig',
@@ -143,11 +143,13 @@ return {
   {
     'ckolkey/ts-node-action',
     dependencies = { 'nvim-treesitter' },
-    event = 'VeryLazy',
     config = function()
       require('ts-node-action').setup({
         typescriptreact = {
           ['string_fragment'] = require('ts-node-action.actions').conceal_string('…'),
+        },
+        html = {
+          ['attribute_value'] = require('ts-node-action.actions').conceal_string('…'),
         },
       })
     end,
