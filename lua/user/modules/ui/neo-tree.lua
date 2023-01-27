@@ -29,7 +29,6 @@ function M.config()
   local icons = rvim.style.icons
   local hl = require('user.utils.highlights')
 
-  -- TODO: get working
   hl.plugin('NeoTree', {
     theme = {
       ['zephyr'] = {
