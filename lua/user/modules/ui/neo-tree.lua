@@ -38,7 +38,6 @@ function M.config()
         { NeoTreeRootName = { bold = false, italic = false } },
         { NeoTreeStatusLine = { link = 'PanelBackground' } },
         { NeoTreeTabActive = { bg = { from = 'PanelBackground' } } },
-        { NeoTreeFloatTitle = { link = 'FloatTitle' } },
         {
           NeoTreeTabSeparatorInactive = {
             inherit = 'NeoTreeTabInactive',

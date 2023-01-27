@@ -11,19 +11,6 @@ function M.config()
     return (results <= (LIMIT - PADDING) and results + PADDING or LIMIT)
   end
 
-  require('user.utils.highlights').plugin('dressing', {
-    theme = {
-      ['zephyr'] = {
-        {
-          FloatTitle = {
-            background = { from = 'VertSplit', attr = 'fg' },
-            fg = { from = 'Normal' },
-          },
-        },
-      },
-    },
-  })
-
   require('dressing').setup({
     input = {
       insert_only = false,
