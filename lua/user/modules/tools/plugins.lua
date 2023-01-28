@@ -141,10 +141,7 @@ return {
       )
       rvim.nnoremap('<leader>dx', '<Cmd>DeleteDebugPrints<CR>', 'debugprint: clear all')
     end,
-    config = function()
-      local dp = require('debugprint')
-      dp.setup({ create_keymaps = false })
-    end,
+    config = function() require('debugprint').setup({ create_keymaps = false }) end,
   },
 
   {
@@ -155,11 +152,6 @@ return {
       rvim.nnoremap('<leader>rp', '<Plug>RestNvimPreview', 'rest: preview')
       rvim.nnoremap('<leader>rl', '<Plug>RestNvimLast', 'rest: run last')
     end,
-    config = function()
-      require('rest-nvim').setup({
-        -- Skip SSL verification, useful for unknown certificates
-        skip_ssl_verification = true,
-      })
-    end,
+    config = function() require('rest-nvim').setup({ skip_ssl_verification = true }) end,
   },
 }
