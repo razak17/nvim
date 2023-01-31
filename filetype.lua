@@ -38,5 +38,6 @@ vim.filetype.add({
     ['.*%.tmux%..conf'] = 'tmux',
     ['.*%.gitsendmail%..*'] = 'gitsendmail',
     ['[jt]sconfig.*.json'] = 'jsonc',
+    ['req.*.txt'] = 'config',
   },
 })
