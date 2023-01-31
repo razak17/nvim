@@ -13,6 +13,7 @@ vim.filetype.add({
     ['Podfile'] = 'ruby',
     ['.vimrc.local'] = 'vim',
     ['rebar.config'] = 'erlang',
+		[".env"] = "config",
   },
   pattern = {
     ['.*%.astro'] = 'astro',
@@ -32,7 +33,6 @@ vim.filetype.add({
     ['.*%.xrl'] = 'erlang',
     ['.*%.escript'] = 'erlang',
     ['.*%.yaws'] = 'erlang',
-    ['.*%.env%..*'] = 'env',
     ['.*%.js.map'] = 'json',
     ['.*%.app.src'] = 'erlang',
     ['.*%.tmux%..conf'] = 'tmux',
