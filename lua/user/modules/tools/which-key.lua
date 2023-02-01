@@ -43,8 +43,8 @@ function M.config()
       t = { name = 'Term' },
     },
     ['<localleader>'] = {
+      c = { name = 'Conceal' },
       d = { name = 'Dap' },
-      g = { name = 'Git' },
       l = { name = 'Neogen' },
       s = { name = 'Sniprun' },
       t = { name = 'Neotest' },

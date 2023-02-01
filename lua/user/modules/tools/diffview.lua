@@ -4,8 +4,8 @@ local M = {
 }
 
 function M.init()
-  rvim.nnoremap('<localleader>gd', '<cmd>DiffviewOpen<CR>', 'diffview: open')
-  rvim.nnoremap('<localleader>gh', '<Cmd>DiffviewFileHistory<CR>', 'diffview: file history')
+  rvim.nnoremap('<leader>gd', '<cmd>DiffviewOpen<CR>', 'diffview: open')
+  rvim.nnoremap('<leader>gh', '<Cmd>DiffviewFileHistory<CR>', 'diffview: file history')
   rvim.vnoremap('gh', [[:'<'>DiffviewFileHistory<CR>]], 'diffview: file history')
 end
 
