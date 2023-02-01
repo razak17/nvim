@@ -64,46 +64,13 @@ function M.config()
     },
     textobjects = {
       select = {
-        enable = true,
-        lookahead = true,
-        include_surrounding_whitespace = true,
-        keymaps = {
-          ['af'] = '@function.outer',
-          ['if'] = '@function.inner',
-          ['ac'] = '@class.outer',
-          ['ic'] = '@class.inner',
-          ['aC'] = '@conditional.outer',
-          ['iC'] = '@conditional.inner',
-        },
-      },
-      swap = {
-        enable = true,
-        swap_next = {
-          ['[w'] = '@parameter.inner',
-        },
-        swap_previous = {
-          [']w'] = '@parameter.inner',
-        },
+        enable = false,
       },
       move = {
-        enable = true,
-        set_jumps = true, -- whether to set jumps in the jumplist
-        goto_next_start = {
-          [']m'] = '@function.outer',
-          [']c'] = '@class.outer',
-        },
-        goto_previous_start = {
-          ['[m'] = '@function.outer',
-          ['[c'] = '@class.outer',
-        },
+        enable = false,
       },
       lsp_interop = {
-        enable = true,
-        border = rvim.style.current.border,
-        peek_definition_code = {
-          ['<leader>lu'] = '@function.outer',
-          ['<leader>lC'] = '@class.outer',
-        },
+        enable = false,
       },
     },
     indent = { enable = { 'javascriptreact' } },
