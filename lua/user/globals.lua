@@ -112,7 +112,7 @@ function rvim.map(callback, list)
 end
 
 ---@generic T : table
----@param callback fun(T, key: string | number): T
+---@param callback fun(T, key: string | number)
 ---@param list T[]
 function rvim.foreach(callback, list)
   for k, v in pairs(list) do

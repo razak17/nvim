@@ -2,14 +2,15 @@ local M = { 'lewis6991/gitsigns.nvim', event = 'BufReadPre' }
 
 function M.config()
   local cwd = vim.fn.getcwd()
+  local right_block = '🮉'
   require('gitsigns').setup({
     signs = {
-      add = { hl = 'GitSignsAdd', text = '▋' },
-      change = { hl = 'GitSignsChange', text = '▋' },
-      delete = { hl = 'GitSignsDelete', text = '▋' },
-      topdelete = { hl = 'GitSignsChangeDelete', text = '▔' },
-      changedelete = { hl = 'GitSignsChange', text = '▎' },
-      untracked = { hl = 'GitSignsAdd', text = '▋' },
+      add = { hl = 'GitSignsAdd', text = right_block },
+      change = { hl = 'GitSignsChange', text = right_block },
+      delete = { hl = 'GitSignsDelete', text = right_block },
+      topdelete = { hl = 'GitSignsChangeDelete', text = right_block },
+      changedelete = { hl = 'GitSignsChange', text = right_block },
+      untracked = { hl = 'GitSignsAdd', text = right_block },
     },
     _threaded_diff = true,
     _extmark_signs = false,

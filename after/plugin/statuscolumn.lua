@@ -28,6 +28,14 @@ local function nr()
   return fn.substitute(num, '\\d\\zs\\ze\\' .. '%(\\d\\d\\d\\)\\+$', ',', 'g')
 end
 
+-- Format the git sign i.e. remove the extra padding that is added
+---@param sign {texthl: string, text: string}
+---@return string
+local function format_git_sign(sign)
+  if not sign then return ' ' end
+  return '%#' .. sign.texthl .. '#' .. sign.text:gsub(' ', '') .. '%*'
+end
+
 function rvim.statuscolumn.render()
   local sign, git_sign
   -- This is dependent on using normal signs (rather than extmarks) for git signs
@@ -43,7 +51,7 @@ function rvim.statuscolumn.render()
     [[%=]],
     nr(),
     space,
-    git_sign and ('%#' .. git_sign.texthl .. '#' .. git_sign.text .. '%*') or '  ',
+    format_git_sign(git_sign),
     separator,
     fdm(),
     space,
