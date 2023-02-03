@@ -110,26 +110,6 @@ return {
     opts = { snippet_engine = 'luasnip' },
   },
 
-  -- FIXME: disable for now. hijacks <tab> in insert mode
-  {
-    'ray-x/lsp_signature.nvim',
-    enabled = false,
-    event = 'VeryLazy',
-    config = function()
-      require('lsp_signature').setup({
-        debug = false,
-        log_path = rvim.get_cache_dir() .. '/lsp_signature.log',
-        bind = true,
-        fix_pos = false,
-        auto_close_after = 15,
-        hint_enable = false,
-        handler_opts = { border = rvim.style.current.border },
-        toggle_key = '<C-I>',
-        select_signature_key = '<M-N>',
-      })
-    end,
-  },
-
   {
     'andymass/vim-matchup',
     event = 'BufReadPost',

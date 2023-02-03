@@ -19,24 +19,6 @@ return {
   },
 
   {
-    'j-hui/fidget.nvim',
-    enabled = not rvim.nightly(),
-    event = 'BufReadPre',
-    config = function()
-      require('fidget').setup({
-        align = { bottom = false, right = true },
-        fmt = { stack_upwards = false },
-      })
-      rvim.augroup('CloseFidget', {
-        {
-          event = { 'VimLeavePre', 'LspDetach' },
-          command = 'silent! FidgetClose',
-        },
-      })
-    end,
-  },
-
-  {
     'lukas-reineke/virt-column.nvim',
     event = 'VeryLazy',
     config = function()
