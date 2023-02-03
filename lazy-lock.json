@@ -64,6 +64,7 @@
   "neotest-rust": { "branch": "main", "commit": "53db2f682e337c2188d81e8ecdf779bff869fb74" },
   "neotest-vim-test": { "branch": "master", "commit": "07f25ab7ba4e7646b38c84e10002b195a53b0096" },
   "no-neck-pain.nvim": { "branch": "main", "commit": "0dd69f6e5e7402e55ddf0af153883e1e903404f5" },
+  "noice.nvim": { "branch": "main", "commit": "34f7cf628666c6eb0c93fbe8a0490e977ac78b7b" },
   "nui.nvim": { "branch": "main", "commit": "b99e6cb13dc51768abc1c4c8585045a0c0459ef1" },
   "null-ls.nvim": { "branch": "main", "commit": "7b2b28e207a1df4ebb13c7dc0bd83f69b5403d71" },
   "nvim-bqf": { "branch": "main", "commit": "d15b59d7429d45f0b057aa63a0266989adc95715" },
