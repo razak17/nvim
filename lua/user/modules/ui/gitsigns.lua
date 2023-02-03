@@ -12,7 +12,7 @@ function M.config()
       untracked = { hl = 'GitSignsAdd', text = '▋' },
     },
     _threaded_diff = true,
-    _extmark_signs = true,
+    _extmark_signs = false,
     _signs_staged_enable = true,
     word_diff = false,
     current_line_blame = not cwd:match('personal') and not cwd:match('dots'),

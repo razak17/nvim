@@ -2,16 +2,54 @@ if not rvim then return end
 
 if not vim.o.statuscolumn then return end
 
-local fn, v = vim.fn, vim.v
+local fn, v, api = vim.fn, vim.v, vim.api
 
-rvim.statuscolumn = { separator = '│' }
+local space = ' '
+local separator = '▏' -- '│'
 
-function rvim.statuscolumn.fdm()
-  local is_folded = fn.foldlevel(v.lnum) > fn.foldlevel(v.lnum - 1)
-  return is_folded and (fn.foldclosed(v.lnum) == -1 and '▼' or '') or ' '
+rvim.statuscolumn = {}
+
+---@return {name:string, text:string, texthl:string}[]
+local function get_signs()
+  local buf = api.nvim_win_get_buf(vim.g.statusline_winid)
+  return vim.tbl_map(
+    function(sign) return fn.sign_getdefined(sign.name)[1] end,
+    fn.sign_getplaced(buf, { group = '*', lnum = v.lnum })[1].signs
+  )
 end
 
-function rvim.statuscolumn.nr() return (not rvim.empty(v.relnum) and v.relnum or v.lnum) end
+local function fdm()
+  local is_folded = fn.foldlevel(v.lnum) > fn.foldlevel(v.lnum - 1)
+  return is_folded and (fn.foldclosed(v.lnum) == -1 and '▼' or '⏵') or ' '
+end
+
+local function nr()
+  local num = (not rvim.empty(v.relnum) and v.relnum or v.lnum)
+  return fn.substitute(num, '\\d\\zs\\ze\\' .. '%(\\d\\d\\d\\)\\+$', ',', 'g')
+end
+
+function rvim.statuscolumn.render()
+  local sign, git_sign
+  -- This is dependent on using normal signs (rather than extmarks) for git signs
+  for _, s in ipairs(get_signs()) do
+    if s.name:find('GitSign') then
+      git_sign = s
+    else
+      sign = s
+    end
+  end
+  local components = {
+    sign and ('%#' .. sign.texthl .. '#' .. sign.text .. '%*') or ' ',
+    [[%=]],
+    nr(),
+    space,
+    git_sign and ('%#' .. git_sign.texthl .. '#' .. git_sign.text .. '%*') or '  ',
+    separator,
+    fdm(),
+    space,
+  }
+  return table.concat(components, '')
+end
 
 local excluded = {
   'neo-tree',
@@ -40,7 +78,7 @@ local excluded = {
   'NeogitRebaseTodo',
 }
 
-vim.o.statuscolumn = ' %=%{v:lua.rvim.statuscolumn.nr()} │ %s%{v:lua.rvim.statuscolumn.fdm()} ' -- %C for folds
+vim.o.statuscolumn = [[%!v:lua.rvim.statuscolumn.render()]]
 
 rvim.augroup('StatusCol', {
   {
