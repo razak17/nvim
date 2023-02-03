@@ -167,9 +167,7 @@ function M.config()
         local codicons = rvim.style.codicons
         local lsp_icons = rvim.style.current.lsp_icons
 
-        if vim_item.kind ~= 'Color' then
-          vim_item.kind = formatIcon(lsp_icons[vim_item.kind])
-        end
+        if vim_item.kind ~= 'Color' then vim_item.kind = formatIcon(lsp_icons[vim_item.kind]) end
 
         if entry.source.name == 'nvim_lsp_signature_help' then
           vim_item.kind = formatIcon(lsp_icons.Field)
@@ -251,24 +249,26 @@ function M.config()
   cmp.event:on('menu_opened', function() vim.b.copilot_suggestion_hidden = true end)
   cmp.event:on('menu_closed', function() vim.b.copilot_suggestion_hidden = false end)
 
-  cmp.setup.cmdline({ '/', '?' }, {
-    mapping = cmp.mapping.preset.cmdline(),
-    sources = {
-      sources = cmp.config.sources(
-        { { name = 'nvim_lsp_document_symbol' } },
-        { { name = 'buffer' } },
-        { { name = 'buffer-lines' } }
-      ),
-    },
-  })
+  if not rvim.nightly() then
+    cmp.setup.cmdline({ '/', '?' }, {
+      mapping = cmp.mapping.preset.cmdline(),
+      sources = {
+        sources = cmp.config.sources(
+          { { name = 'nvim_lsp_document_symbol' } },
+          { { name = 'buffer' } },
+          { { name = 'buffer-lines' } }
+        ),
+      },
+    })
 
-  cmp.setup.cmdline(':', {
-    sources = cmp.config.sources({
-      { name = 'cmdline', keyword_pattern = [=[[^[:blank:]\!]*]=] },
-      { name = 'path' },
-      { name = 'cmdline_history', priority = 10, max_item_count = 5 },
-    }),
-  })
+    cmp.setup.cmdline(':', {
+      sources = cmp.config.sources({
+        { name = 'cmdline', keyword_pattern = [=[[^[:blank:]\!]*]=] },
+        { name = 'path' },
+        { name = 'cmdline_history', priority = 10, max_item_count = 5 },
+      }),
+    })
+  end
 
   require('cmp').setup.filetype({ 'dap-repl', 'dapui_watches' }, {
     sources = { { name = 'dap' } },
