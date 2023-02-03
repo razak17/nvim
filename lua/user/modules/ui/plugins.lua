@@ -20,6 +20,7 @@ return {
 
   {
     'j-hui/fidget.nvim',
+    enabled = not rvim.nightly(),
     event = 'BufReadPre',
     config = function()
       require('fidget').setup({
