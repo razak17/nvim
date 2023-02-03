@@ -9,6 +9,26 @@ return {
   { 'marilari88/twoslash-queries.nvim', ft = { 'typescript', 'typescriptreact' } },
 
   {
+    'neovim/nvim-lspconfig',
+    config = function()
+      require('user.utils.highlights').plugin('lspconfig', {
+        { LspInfoBorder = { link = 'FloatBorder' } },
+      })
+      require('lspconfig.ui.windows').default_options.border = rvim.style.current.border
+    end,
+  },
+
+  {
+    'DNLHC/glance.nvim',
+    keys = {
+      { 'gD', '<Cmd>Glance definitions<CR>', desc = 'lsp: glance definitions' },
+      { 'gR', '<Cmd>Glance references<CR>', desc = 'lsp: glance references' },
+      { 'gY', '<Cmd>Glance type_definitions<CR>', desc = 'lsp: glance type definitions' },
+      { 'gM', '<Cmd>Glance implementations<CR>', desc = 'lsp: glance implementations' },
+    },
+  },
+
+  {
     'olexsmir/gopher.nvim',
     ft = 'go',
     dependencies = { 'nvim-lua/plenary.nvim', 'nvim-treesitter/nvim-treesitter' },
@@ -25,16 +45,6 @@ return {
         types = true,
       },
     },
-  },
-
-  {
-    'neovim/nvim-lspconfig',
-    config = function()
-      require('user.utils.highlights').plugin('lspconfig', {
-        { LspInfoBorder = { link = 'FloatBorder' } },
-      })
-      require('lspconfig.ui.windows').default_options.border = rvim.style.current.border
-    end,
   },
 
   {
