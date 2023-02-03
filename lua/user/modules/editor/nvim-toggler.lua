@@ -19,6 +19,7 @@ function M.config()
       ['public'] = 'private',
       ['string'] = 'int',
       ['leader'] = 'localleader',
+      ['chore'] = 'feat',
     },
     remove_default_keybinds = true,
   })
