@@ -1,6 +1,4 @@
-if not rvim then return end
-
-if not vim.o.statuscolumn then return end
+if not rvim  or not vim.o.statuscolumn then return end
 
 local fn, v, api = vim.fn, vim.v, vim.api
 
