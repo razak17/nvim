@@ -15,7 +15,7 @@ function M.config()
     lsp = {
       documentation = {
         opts = {
-          border = { style = rvim.style.current.border },
+          border = { style = 'single' },
           position = { row = 2 },
         },
       },
@@ -43,7 +43,7 @@ function M.config()
           height = 'auto',
         },
         border = {
-          style = rvim.style.current.border,
+          style = 'single',
           padding = { 0, 1 },
         },
       },
@@ -58,7 +58,7 @@ function M.config()
           height = 10,
         },
         border = {
-          style = rvim.style.current.border,
+          style = 'single',
           padding = { 0, 1 },
         },
         win_options = {
@@ -84,6 +84,43 @@ function M.config()
       long_message_to_split = true,
       lsp_doc_border = true,
     },
+  })
+
+  require('user.utils.highlights').plugin('noice', {
+    {
+      NoicePopupBaseGroup = {
+        bg = { from = 'NormalFloat' },
+        fg = { from = 'DiagnosticSignInfo' },
+      },
+    },
+    {
+      NoicePopupWarnBaseGroup = {
+        bg = { from = 'NormalFloat' },
+        fg = { from = 'Float' },
+      },
+    },
+    {
+      NoicePopupInfoBaseGroup = {
+        bg = { from = 'NormalFloat' },
+        fg = { from = 'Conditional' },
+      },
+    },
+    { NoiceCmdlinePopup = { bg = { from = 'NormalFloat' } } },
+    { NoiceCmdlinePopupBorder = { link = 'FloatBorder' } },
+    { NoiceCmdlinePopupBorderCmdline = { link = 'NoicePopupBaseGroup' } },
+    { NoiceCmdlinePopupBorderSearch = { link = 'NoicePopupWarnBaseGroup' } },
+    { NoiceCmdlinePopupBorderFilter = { link = 'NoicePopupWarnBaseGroup' } },
+    { NoiceCmdlinePopupBorderHelp = { link = 'NoicePopupInfoBaseGroup' } },
+    { NoiceCmdlinePopupBorderIncRename = { link = 'NoicePopupWarnBaseGroup' } },
+    { NoiceCmdlinePopupBorderInput = { link = 'NoicePopupBaseGroup' } },
+    { NoiceCmdlinePopupBorderLua = { link = 'NoicePopupBaseGroup' } },
+    { NoiceCmdlineIconCmdline = { link = 'NoicePopupBaseGroup' } },
+    { NoiceCmdlineIconSearch = { link = 'NoicePopupWarnBaseGroup' } },
+    { NoiceCmdlineIconFilter = { link = 'NoicePopupWarnBaseGroup' } },
+    { NoiceCmdlineIconHelp = { link = 'NoicePopupInfoBaseGroup' } },
+    { NoiceCmdlineIconIncRename = { link = 'NoicePopupWarnBaseGroup' } },
+    { NoiceCmdlineIconInput = { link = 'NoicePopupBaseGroup' } },
+    { NoiceCmdlineIconLua = { link = 'NoicePopupBaseGroup' } },
   })
 end
 
