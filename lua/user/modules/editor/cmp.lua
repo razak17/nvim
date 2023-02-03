@@ -141,7 +141,6 @@ function M.config()
 
   cmp.setup({
     experimental = { ghost_text = false },
-    preselect = cmp.PreselectMode.None,
     window = {
       completion = cmp.config.window.bordered(cmp_window),
       documentation = cmp.config.window.bordered(cmp_window),
