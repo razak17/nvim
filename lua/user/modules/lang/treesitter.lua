@@ -75,13 +75,7 @@ function M.config()
     },
     indent = { enable = { 'javascriptreact' } },
     matchup = { enable = true, disable = { 'c', 'python' } },
-    rainbow = {
-      enable = true,
-      extended_mode = true,
-      max_file_lines = 1000,
-      disable = { 'lua', 'json', 'c', 'cpp', 'html' },
-      colors = { 'royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3' },
-    },
+    query = 'rainbow-parens',
     query_linter = {
       enable = true,
       use_virtual_text = true,
