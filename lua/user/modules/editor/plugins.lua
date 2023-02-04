@@ -2,6 +2,44 @@ return {
   'JoosepAlviste/nvim-ts-context-commentstring',
 
   {
+    'ghillb/cybu.nvim',
+    event = { 'BufRead', 'BufNewFile' },
+    config = function()
+      require('cybu').setup({
+        position = {
+          relative_to = 'win',
+          anchor = 'topright',
+        },
+        style = { border = 'single', hide_buffer_id = true },
+      })
+      rvim.nnoremap('H', '<Plug>(CybuPrev)', 'cybu: prev')
+      rvim.nnoremap('L', '<Plug>(CybuNext)', 'cybu: next')
+    end,
+  },
+
+  {
+    'kazhala/close-buffers.nvim',
+    keys = {
+      {
+        '<leader>bc',
+        function() require('close_buffers').wipe({ type = 'other' }) end,
+        desc = 'close others',
+      },
+      {
+        '<leader>bx',
+        function() require('close_buffers').wipe({ type = 'all', force = true }) end,
+        desc = 'close all',
+      },
+    },
+  },
+
+  {
+    'karb94/neoscroll.nvim', -- NOTE: alternative: 'declancm/cinnamon.nvim'
+    event = 'VeryLazy',
+    config = function() require('neoscroll').setup({ hide_cursor = true }) end,
+  },
+
+  {
     'psliwka/vim-dirtytalk',
     build = ':DirtytalkUpdate',
     config = function() vim.opt.spelllang:append('programming') end,
@@ -39,6 +77,18 @@ return {
   },
 
   {
+    'echasnovski/mini.comment',
+    event = 'VeryLazy',
+    config = function()
+      require('mini.comment').setup({
+        hooks = {
+          pre = function() require('ts_context_commentstring.internal').update_commentstring() end,
+        },
+      })
+    end,
+  },
+
+  {
     'axelvc/template-string.nvim',
     ft = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
     config = function() require('template-string').setup({ remove_template_string = true }) end,
@@ -70,45 +120,11 @@ return {
   },
 
   {
-    'kazhala/close-buffers.nvim',
-    keys = {
-      {
-        '<leader>bc',
-        function() require('close_buffers').wipe({ type = 'other' }) end,
-        desc = 'close others',
-      },
-      {
-        '<leader>bx',
-        function() require('close_buffers').wipe({ type = 'all', force = true }) end,
-        desc = 'close all',
-      },
-    },
-  },
-
-  {
-    'karb94/neoscroll.nvim', -- NOTE: alternative: 'declancm/cinnamon.nvim'
-    event = 'VeryLazy',
-    config = function() require('neoscroll').setup({ hide_cursor = true }) end,
-  },
-
-  {
     'mizlan/iswap.nvim',
     keys = {
       { '<leader>ia', '<cmd>ISwap<CR>', desc = 'iswap: swap any' },
       { '<leader>iw', '<cmd>ISwapWith<CR>', desc = 'iswap: swap with' },
     },
-  },
-
-  {
-    'echasnovski/mini.comment',
-    event = 'VeryLazy',
-    config = function()
-      require('mini.comment').setup({
-        hooks = {
-          pre = function() require('ts_context_commentstring.internal').update_commentstring() end,
-        },
-      })
-    end,
   },
 
   {
