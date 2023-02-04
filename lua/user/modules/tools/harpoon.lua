@@ -29,7 +29,7 @@ function M.config()
   require('user.utils.highlights').plugin('harpoon', {
     theme = {
       ['zephyr'] = {
-        { HarpoonBorder = { fg = { from = 'CursorLineNr', alter = -30 } } },
+        { HarpoonBorder = { fg = { from = 'FloatBorder', alter = 40 } } },
       },
     },
   })

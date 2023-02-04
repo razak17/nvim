@@ -38,7 +38,7 @@ return {
       require('user.utils.highlights').plugin('harpoon', {
         theme = {
           ['zephyr'] = {
-            { BufferManagerBorder = { fg = { from = 'CursorLineNr', alter = -30 } } },
+            { BufferManagerBorder = { fg = { from = 'FloatBorder', alter = 40 } } },
           },
         },
       })
