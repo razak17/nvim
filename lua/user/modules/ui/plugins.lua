@@ -5,12 +5,7 @@ return {
   { 'fladson/vim-kitty', lazy = false },
   { 'razak17/zephyr-nvim', lazy = false, priority = 1000 },
   { 'LunarVim/horizon.nvim', lazy = false, priority = 1000 },
-
-  {
-    'itchyny/vim-highlighturl',
-    event = 'BufReadPre',
-    config = function() vim.g.highlighturl_guifg = hl.get('URL', 'fg') end,
-  },
+  { 'itchyny/vim-highlighturl', event = 'BufReadPre' },
 
   {
     'romainl/vim-cool',

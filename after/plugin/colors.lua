@@ -109,6 +109,7 @@ local function colorscheme_overrides()
       { PanelHeading = { bg = 'bg', bold = true, fg = { from = 'Normal', alter = -30 } } },
       { PanelDarkBackground = { background = { from = 'Normal', alter = -25 } } },
       { PanelDarkHeading = { inherit = 'PanelDarkBackground', bold = true } },
+      { URL = { fg = { from = 'Keyword' }, underline = true } },
     },
   }
   local hls = overrides[vim.g.colors_name]
