@@ -64,10 +64,29 @@ function M.config()
     },
     textobjects = {
       select = {
-        enable = false,
+        enable = true,
+        lookahead = true,
+        include_surrounding_whitespace = true,
+        keymaps = {
+          ['af'] = { query = '@function.outer', desc = 'ts: all function' },
+          ['if'] = { query = '@function.inner', desc = 'ts: inner function' },
+          ['ac'] = { query = '@class.outer', desc = 'ts: all class' },
+          ['ic'] = { query = '@class.inner', desc = 'ts: inner class' },
+          ['aC'] = { query = '@conditional.outer', desc = 'ts: all conditional' },
+          ['iC'] = { query = '@conditional.inner', desc = 'ts: inner conditional' },
+        },
       },
       move = {
-        enable = false,
+        enable = true,
+        set_jumps = true, -- whether to set jumps in the jumplist
+        goto_next_start = {
+          [']m'] = '@function.outer',
+          [']c'] = '@class.outer',
+        },
+        goto_previous_start = {
+          ['[m'] = '@function.outer',
+          ['[c'] = '@class.outer',
+        },
       },
       lsp_interop = {
         enable = false,
