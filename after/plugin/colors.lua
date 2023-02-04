@@ -131,8 +131,3 @@ rvim.augroup('UserHighlights', {
     command = function() on_sidebar_enter() end,
   },
 })
-
-----------------------------------------------------------------------------------------------------
--- Colors
-----------------------------------------------------------------------------------------------------
-rvim.wrap_err('theme failed to load because', vim.cmd.colorscheme, 'zephyr')

@@ -36,3 +36,8 @@ _G.rvim = rvim or namespace
 R('user.globals')
 R('user.bootstrap')
 R('user.config')
+
+----------------------------------------------------------------------------------------------------
+-- Color Scheme
+----------------------------------------------------------------------------------------------------
+rvim.wrap_err('theme failed to load because', vim.cmd.colorscheme, 'zephyr')
