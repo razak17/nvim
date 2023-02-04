@@ -1,18 +1,19 @@
 local M = {
   'williamboman/mason.nvim',
   lazy = false,
-  dependencies = { 'williamboman/mason-lspconfig.nvim' },
+  init = function() rvim.nnoremap('<leader>lm', '<cmd>Mason<CR>', 'mason: info') end,
+  dependencies = {
+    'williamboman/mason-lspconfig.nvim',
+    { 'jayp0521/mason-null-ls.nvim', opts = { automatic_installation = true } },
+  },
 }
-
-function M.init() rvim.nnoremap('<leader>lm', '<cmd>Mason<CR>', 'mason: info') end
 
 function M.config()
   local icons = rvim.style.icons
   require('mason').setup({
     ui = {
       border = rvim.style.current.border,
-      top_offset = 5,
-      height = vim.o.lines - vim.o.cmdheight - 5 - 8,
+      height = vim.o.lines - vim.o.cmdheight - 11,
       icons = {
         package_installed = icons.misc.checkmark,
         package_pending = icons.misc.right_arrow,
@@ -20,9 +21,7 @@ function M.config()
       },
     },
   })
-  require('mason-lspconfig').setup({
-    automatic_installation = rvim.lsp.automatic_servers_installation,
-  })
+  require('mason-lspconfig').setup({ automatic_installation = true })
 end
 
 return M

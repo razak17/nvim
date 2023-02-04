@@ -10,6 +10,19 @@ return {
   },
 
   {
+    'ahmedkhalf/project.nvim',
+    event = 'VeryLazy',
+    config = function()
+      require('project_nvim').setup({
+        detection_methods = { 'pattern', 'lsp' },
+        ignore_lsp = { 'null-ls' },
+        patterns = { '.git' },
+        datapath = rvim.get_runtime_dir(),
+      })
+    end,
+  },
+
+  {
     'razak17/buffer_manager.nvim',
     init = function()
       rvim.nnoremap(

@@ -23,7 +23,6 @@ rvim.lsp = {
       end,
     },
   },
-  automatic_servers_installation = true,
   hover_diagnostics = true,
   format_exclusions = {
     format_on_save = { 'zsh' },

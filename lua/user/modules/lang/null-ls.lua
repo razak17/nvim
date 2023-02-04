@@ -1,19 +1,8 @@
 local M = {
   'jose-elias-alvarez/null-ls.nvim',
   event = 'VeryLazy',
-  dependencies = {
-    {
-      'jayp0521/mason-null-ls.nvim',
-      config = function()
-        require('mason-null-ls').setup({
-          automatic_installation = true,
-        })
-      end,
-    },
-  },
+  init = function() rvim.nnoremap('<leader>ln', '<cmd>NullLsInfo<CR>', 'null-ls: info') end,
 }
-
-function M.init() rvim.nnoremap('<leader>ln', '<cmd>NullLsInfo<CR>', 'null-ls: info') end
 
 function M.config()
   local null_ls = require('null-ls')
