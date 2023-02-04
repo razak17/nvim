@@ -2,7 +2,7 @@ local M = {
   'folke/noice.nvim',
   dependencies = { 'MunifTanjim/nui.nvim' },
   event = 'VeryLazy',
-  enabled = rvim.nightly(),
+  enabled = not rvim.nightly(),
 }
 
 function M.config()
