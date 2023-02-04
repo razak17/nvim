@@ -137,7 +137,10 @@ function M.config()
     return ((r * 0.299 + g * 0.587 + b * 0.114) > 186) and '#000000' or '#ffffff'
   end
 
-  local function formatIcon(icon) return fmt(' %s  ', icon) end
+  local function formatIcon(icon)
+    if vim.bo.ft == 'typescriptreact' then return fmt(' %s  ', icon) end
+    return fmt('%s ', icon)
+  end
 
   cmp.setup({
     experimental = { ghost_text = false },
