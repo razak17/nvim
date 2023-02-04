@@ -179,6 +179,7 @@ local column_block_list = {
   'which_key',
   'packer',
   'dap-repl',
+  'noice',
 }
 
 local function check_color_column()
