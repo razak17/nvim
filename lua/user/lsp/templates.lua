@@ -88,7 +88,7 @@ function M.generate_templates()
   --NOTE: use custom server list for now
   M.remove_template_files()
   if not rvim.is_directory(rvim.lsp.templates_dir) then vim.fn.mkdir(ftplugin_dir, 'p') end
-  local server_name = require('user.core.servers').servers
+  local server_name = require('user.servers').servers
   for server, v in pairs(server_name) do
     if v ~= false then generate_ftplugin(server, ftplugin_dir) end
   end
