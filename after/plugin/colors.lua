@@ -77,9 +77,6 @@ end
 local function colorscheme_overrides()
   local overrides = {
     ['zephyr'] = {
-      { Normal = { background = { from = 'Normal', alter = -50 } } },
-      { NormalFloat = { inherit = 'Normal' } },
-      { NormalNC = { inherit = 'Normal' } },
       {
         FloatTitle = {
           bg = { from = 'FloatTitle', alter = -60 },
