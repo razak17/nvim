@@ -111,10 +111,12 @@ function M.config()
       width = 30,
       mappings = {
         ['o'] = 'toggle_node',
+        ['h'] = 'navigate_up',
         ['l'] = 'open',
         ['<CR>'] = 'open_with_window_picker',
+        ['Z'] = 'expand_all_nodes',
         ['<c-s>'] = 'split_with_window_picker',
-        ['<c-v>'] = 'vsplit_with_window_picker',
+        ['v'] = 'vsplit_with_window_picker',
         ['<esc>'] = 'revert_preview',
         ['P'] = { 'toggle_preview', config = { use_float = true } },
       },
