@@ -176,7 +176,8 @@ M.servers = {
           },
           workspace = {
             library = {
-              { fn.expand('$VIMRUNTIME'), require('neodev.config').types() },
+              fn.expand('$VIMRUNTIME/lua'),
+              require('neodev.config').types(),
             },
             checkThirdParty = false,
           },
