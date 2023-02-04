@@ -216,7 +216,7 @@ local function setup_mappings(client, bufnr)
     vim.notify('Templates have been removed', nil, { title = 'Lsp' })
   end, 'lsp: delete templates')
   -- Others
-  nnoremap('<leader>li', '<cmd>LspInfo<CR>', 'lsp: info')
+  nnoremap('<leader>li', '<cmd>LspInfo<CR>', with_desc('lsp: info'))
   nnoremap('<leader>lf', '<cmd>LspFormat<CR>', with_desc('lsp: format buffer'))
   nnoremap('<leader>ll', '<cmd>LspDiagnostics<CR>', with_desc('toggle quickfix diagnostics'))
   nnoremap('<leader>ltv', '<cmd>ToggleVirtualText<CR>', with_desc('toggle virtual text'))
