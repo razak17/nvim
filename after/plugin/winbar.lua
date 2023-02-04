@@ -40,7 +40,7 @@ highlights.plugin('winbar', {
 })
 
 local function breadcrumbs()
-  local ok, navic = rvim.safe_require('nvim-navic', { silent = true })
+  local ok, navic = rvim.safe_require('nvim-navic')
   local empty_state = { component(ellipsis, 'NonText', { priority = 0 }) }
   if not ok or not navic.is_available() then return empty_state end
   local navic_ok, location = pcall(navic.get_location)
