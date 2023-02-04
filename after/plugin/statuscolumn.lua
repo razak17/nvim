@@ -18,7 +18,7 @@ end
 
 local function fdm()
   local is_folded = fn.foldlevel(v.lnum) > fn.foldlevel(v.lnum - 1)
-  return is_folded and (fn.foldclosed(v.lnum) == -1 and '▼' or '⏵') or ' '
+  return is_folded and (fn.foldclosed(v.lnum) == -1 and '▼' or '') or ' '
 end
 
 local function nr()
