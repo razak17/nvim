@@ -31,6 +31,7 @@ function M.config()
       f = { name = 'Telescope' },
       fv = { name = 'Vim' },
       g = { name = 'Git' },
+      h = { name = 'Gitsigns' },
       i = { name = 'Toggler' },
       l = { name = 'Lsp' },
       lt = { name = 'Toggle' },

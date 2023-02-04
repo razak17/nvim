@@ -57,8 +57,6 @@ function M.config()
       vim.keymap.set({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
     end,
   })
-  local ok, which_key = rvim.safe_require('which-key')
-  if ok then which_key.register({ ['<localleader>g'] = { name = 'Gitsigns' } }) end
 end
 
 return M
