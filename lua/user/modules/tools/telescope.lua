@@ -370,7 +370,14 @@ function M.config()
         only_sort_text = true,
         -- NOTE: previewing html seems to cause some stalling/blocking whilst live grepping
         -- so filter out html.
-        file_ignore_patterns = { '.git/', '%.html', 'dotbot/.*', 'zsh/plugins/.*' },
+        file_ignore_patterns = {
+          '.git/',
+          '%.html',
+          'dotbot/.*',
+          'zsh/plugins/.*',
+          'yarn.lock',
+          'package-lock.json',
+        },
         max_results = 2000,
       }),
       registers = rvim.telescope.dropdown({
