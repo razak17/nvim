@@ -163,20 +163,22 @@ return {
 
   {
     'andrewferrier/debugprint.nvim',
-    event = 'VeryLazy',
-    init = function()
-      rvim.nnoremap(
+    keys = {
+      {
         '<leader>dp',
         function() return require('debugprint').debugprint({ variable = true }) end,
-        { desc = 'debugprint: cursor', expr = true }
-      )
-      rvim.nnoremap(
+        expr = true,
+        desc = 'debugprint: cursor',
+      },
+      {
         '<leader>do',
         function() return require('debugprint').debugprint({ motion = true }) end,
-        { desc = 'debugprint: operator', expr = true }
-      )
-      rvim.nnoremap('<leader>dx', '<Cmd>DeleteDebugPrints<CR>', 'debugprint: clear all')
-    end,
+        mode = 'o',
+        expr = true,
+        desc = 'debugprint: operator',
+      },
+      { '<leader>dx', '<Cmd>DeleteDebugPrints<CR>', desc = 'debugprint: clear all' },
+    },
     config = function() require('debugprint').setup({ create_keymaps = false }) end,
   },
 
