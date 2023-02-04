@@ -1,3 +1,5 @@
+local hl = require('user.utils.highlights')
+
 return {
   'nvim-tree/nvim-web-devicons',
   { 'fladson/vim-kitty', lazy = false },
@@ -7,9 +9,7 @@ return {
   {
     'itchyny/vim-highlighturl',
     event = 'BufReadPre',
-    config = function()
-      vim.g.highlighturl_guifg = require('user.utils.highlights').get('URL', 'fg')
-    end,
+    config = function() vim.g.highlighturl_guifg = hl.get('URL', 'fg') end,
   },
 
   {
@@ -29,7 +29,7 @@ return {
         org = { headline_highlights = false },
         norg = { codeblock_highlight = false },
       })
-      require('user.utils.highlights').plugin('Headlines', {
+      hl.plugin('Headlines', {
         { Headline1 = { background = '#003c30', foreground = 'White' } },
         { Headline2 = { background = '#00441b', foreground = 'White' } },
         { Headline3 = { background = '#084081', foreground = 'White' } },
@@ -42,14 +42,9 @@ return {
     'SmiteshP/nvim-navic',
     config = function()
       vim.g.navic_silence = true
-      local highlights = require('user.utils.highlights')
       local misc = rvim.style.icons.misc
-      require('user.utils.highlights').plugin('navic', {
-        { NavicText = { bold = false } },
-        { NavicSeparator = { link = 'Directory' } },
-      })
       local icons = rvim.map(function(icon, key)
-        highlights.set(('NavicIcons%s'):format(key), { link = rvim.lsp.kind_highlights[key] })
+        hl.set(('NavicIcons%s'):format(key), { link = rvim.lsp.kind_highlights[key] })
         return icon .. ' '
       end, rvim.style.current.lsp_icons)
       require('nvim-navic').setup({
@@ -57,6 +52,10 @@ return {
         highlight = true,
         depth_limit_indicator = misc.ellipsis,
         separator = (' %s '):format(misc.arrow_right),
+      })
+      hl.plugin('navic', {
+        { NavicText = { bold = false } },
+        { NavicSeparator = { link = 'Directory' } },
       })
     end,
   },
@@ -90,7 +89,7 @@ return {
     'lukas-reineke/virt-column.nvim',
     event = 'VeryLazy',
     config = function()
-      require('user.utils.highlights').plugin('virt_column', {
+      hl.plugin('virt_column', {
         { VirtColumn = { bg = 'None', fg = { from = 'VertSplit' } } },
       })
       require('virt-column').setup({ char = '│' })
@@ -115,7 +114,7 @@ return {
     'm-demare/hlargs.nvim',
     event = 'VeryLazy',
     config = function()
-      require('user.utils.highlights').plugin('hlargs', {
+      hl.plugin('hlargs', {
         theme = {
           ['*'] = { { Hlargs = { italic = true, foreground = '#A5D6FF' } } },
           ['horizon'] = { { Hlargs = { italic = true, foreground = { from = 'Normal' } } } },
@@ -139,7 +138,7 @@ return {
     enabled = false,
     config = function()
       require('neodim').setup({
-        blend_color = require('user.utils.highlights').get('Normal', 'bg'),
+        blend_color = hl.get('Normal', 'bg'),
         hide = { underline = false },
       })
     end,

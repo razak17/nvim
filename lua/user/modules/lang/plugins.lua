@@ -1,3 +1,5 @@
+local hl = require('user.utils.highlights')
+
 return {
   'nanotee/sqls.nvim',
   'b0o/schemastore.nvim',
@@ -11,7 +13,7 @@ return {
   {
     'neovim/nvim-lspconfig',
     config = function()
-      require('user.utils.highlights').plugin('lspconfig', {
+      hl.plugin('lspconfig', {
         { LspInfoBorder = { link = 'FloatBorder' } },
       })
       require('lspconfig.ui.windows').default_options.border = rvim.style.current.border
@@ -28,7 +30,7 @@ return {
     },
     config = function()
       require('glance').setup({
-        require('user.utils.highlights').plugin('glance', {
+        hl.plugin('glance', {
           { GlancePreviewNormal = { link = 'Normal' } },
           { GlanceListCount = { link = 'Normal' } },
         }),
@@ -82,7 +84,7 @@ return {
     'kosayoda/nvim-lightbulb',
     event = 'BufReadPre',
     config = function()
-      require('user.utils.highlights').plugin('Lightbulb', {
+      hl.plugin('Lightbulb', {
         { LightBulbFloatWin = { foreground = { from = 'Type' } } },
         { LightBulbVirtualText = { foreground = { from = 'Type' } } },
       })
