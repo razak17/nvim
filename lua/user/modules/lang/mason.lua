@@ -1,11 +1,11 @@
 local M = {
   'williamboman/mason.nvim',
   lazy = false,
-  init = function() rvim.nnoremap('<leader>lm', '<cmd>Mason<CR>', 'mason: info') end,
   dependencies = {
     'williamboman/mason-lspconfig.nvim',
     { 'jayp0521/mason-null-ls.nvim', opts = { automatic_installation = true } },
   },
+  init = function() rvim.nnoremap('<leader>lm', '<cmd>Mason<CR>', 'mason: info') end,
 }
 
 function M.config()

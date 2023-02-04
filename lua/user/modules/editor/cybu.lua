@@ -1,10 +1,12 @@
 -- FIXME: UI is broken
-local M = { 'razak17/cybu.nvim', event = { 'BufRead', 'BufNewFile' } }
-
-function M.init()
-  rvim.nnoremap('H', '<Plug>(CybuPrev)', 'cybu: prev')
-  rvim.nnoremap('L', '<Plug>(CybuNext)', 'cybu: next')
-end
+local M = {
+  'razak17/cybu.nvim',
+  event = { 'BufRead', 'BufNewFile' },
+  init = function()
+    rvim.nnoremap('H', '<Plug>(CybuPrev)', 'cybu: prev')
+    rvim.nnoremap('L', '<Plug>(CybuNext)', 'cybu: next')
+  end,
+}
 
 function M.config()
   require('cybu').setup({

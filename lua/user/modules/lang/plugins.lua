@@ -37,6 +37,29 @@ return {
   },
 
   {
+    'zbirenbaum/copilot.lua',
+    event = 'VeryLazy',
+    config = function()
+      require('copilot').setup({
+        suggestion = { auto_trigger = true },
+        filetypes = {
+          gitcommit = false,
+          NeogitCommitMessage = false,
+          DressingInput = false,
+          TelescopePrompt = false,
+          ['neo-tree-popup'] = false,
+          ['dap-repl'] = false,
+        },
+        server_opts_overrides = {
+          settings = {
+            advanced = { inlineSuggestCount = 3 },
+          },
+        },
+      })
+    end,
+  },
+
+  {
     'olexsmir/gopher.nvim',
     ft = 'go',
     dependencies = { 'nvim-lua/plenary.nvim', 'nvim-treesitter/nvim-treesitter' },

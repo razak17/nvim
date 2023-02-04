@@ -19,6 +19,74 @@ return {
   },
 
   {
+    'lukas-reineke/headlines.nvim',
+    ft = { 'org', 'norg', 'markdown', 'yaml' },
+    config = function()
+      require('headlines').setup({
+        markdown = {
+          headline_highlights = { 'Headline1', 'Headline2', 'Headline3' },
+        },
+        org = { headline_highlights = false },
+        norg = { codeblock_highlight = false },
+      })
+      require('user.utils.highlights').plugin('Headlines', {
+        { Headline1 = { background = '#003c30', foreground = 'White' } },
+        { Headline2 = { background = '#00441b', foreground = 'White' } },
+        { Headline3 = { background = '#084081', foreground = 'White' } },
+        { Dash = { background = '#0b60a1', bold = true } },
+      })
+    end,
+  },
+
+  {
+    'SmiteshP/nvim-navic',
+    config = function()
+      vim.g.navic_silence = true
+      local highlights = require('user.utils.highlights')
+      local misc = rvim.style.icons.misc
+      require('user.utils.highlights').plugin('navic', {
+        { NavicText = { bold = false } },
+        { NavicSeparator = { link = 'Directory' } },
+      })
+      local icons = rvim.map(function(icon, key)
+        highlights.set(('NavicIcons%s'):format(key), { link = rvim.lsp.kind_highlights[key] })
+        return icon .. ' '
+      end, rvim.style.current.lsp_icons)
+      require('nvim-navic').setup({
+        icons = icons,
+        highlight = true,
+        depth_limit_indicator = misc.ellipsis,
+        separator = (' %s '):format(misc.arrow_right),
+      })
+    end,
+  },
+
+  {
+    'folke/todo-comments.nvim',
+    event = 'BufReadPre',
+    cmd = { 'TodoTelescope', 'TodoTrouble', 'TodoQuickFix', 'TodoDots' },
+    init = function()
+      rvim.nnoremap(
+        '<leader>tj',
+        function() require('todo-comments').jump_next() end,
+        'todo-comments: next todo'
+      )
+      rvim.nnoremap(
+        '<leader>tk',
+        function() require('todo-comments').jump_prev() end,
+        'todo-comments: prev todo'
+      )
+    end,
+    config = function()
+      require('todo-comments').setup({ highlight = { after = '' } })
+      rvim.command(
+        'TodoDots',
+        string.format('TodoTelescope cwd=%s keywords=TODO,FIXME', rvim.get_config_dir())
+      )
+    end,
+  },
+
+  {
     'lukas-reineke/virt-column.nvim',
     event = 'VeryLazy',
     config = function()

@@ -1,12 +1,14 @@
-local M = { 'nguyenvukhang/nvim-toggler', event = 'VeryLazy' }
-
-function M.init()
-  rvim.nnoremap(
-    '<leader>ii',
-    '<cmd>lua require("nvim-toggler").toggle()<CR>',
-    'nvim-toggler: toggle'
-  )
-end
+local M = {
+  'nguyenvukhang/nvim-toggler',
+  event = 'VeryLazy',
+  init = function()
+    rvim.nnoremap(
+      '<leader>ii',
+      '<cmd>lua require("nvim-toggler").toggle()<CR>',
+      'nvim-toggler: toggle'
+    )
+  end,
+}
 
 function M.config()
   require('nvim-toggler').setup({

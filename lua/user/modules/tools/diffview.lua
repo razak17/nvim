@@ -1,13 +1,12 @@
 local M = {
   'sindrets/diffview.nvim',
   cmd = { 'DiffviewOpen', 'DiffviewFileHistory', 'DiffviewToggleFiles', 'DiffviewFocusFiles' },
+  init = function()
+    rvim.nnoremap('<leader>gd', '<cmd>DiffviewOpen<CR>', 'diffview: open')
+    rvim.nnoremap('<leader>gh', '<Cmd>DiffviewFileHistory<CR>', 'diffview: file history')
+    rvim.vnoremap('gh', [[:'<'>DiffviewFileHistory<CR>]], 'diffview: file history')
+  end,
 }
-
-function M.init()
-  rvim.nnoremap('<leader>gd', '<cmd>DiffviewOpen<CR>', 'diffview: open')
-  rvim.nnoremap('<leader>gh', '<Cmd>DiffviewFileHistory<CR>', 'diffview: file history')
-  rvim.vnoremap('gh', [[:'<'>DiffviewFileHistory<CR>]], 'diffview: file history')
-end
 
 function M.config()
   require('user.utils.highlights').plugin('diffview', {

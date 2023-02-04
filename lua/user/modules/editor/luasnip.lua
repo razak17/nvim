@@ -2,9 +2,8 @@ local M = {
   'L3MON4D3/LuaSnip',
   event = 'InsertEnter',
   dependencies = { 'rafamadriz/friendly-snippets' },
+  init = function() rvim.nnoremap('<leader>S', '<cmd>LuaSnipEdit<CR>', 'LuaSnip: edit snippet') end,
 }
-
-function M.init() rvim.nnoremap('<leader>S', '<cmd>LuaSnipEdit<CR>', 'LuaSnip: edit snippet') end
 
 function M.config()
   local ls = require('luasnip')

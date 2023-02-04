@@ -1,6 +1,8 @@
-local M = { 'is0n/jaq-nvim', cmd = { 'Jaq' } }
-
-function M.init() rvim.nnoremap('<leader>rr', ':silent only | Jaq<CR>', 'jaq: run') end
+local M = {
+  'is0n/jaq-nvim',
+  cmd = 'Jaq',
+  init = function() rvim.nnoremap('<leader>rr', ':silent only | Jaq<CR>', 'jaq: run') end,
+}
 
 function M.config()
   require('jaq-nvim').setup({
