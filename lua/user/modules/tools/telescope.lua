@@ -61,7 +61,6 @@ function M.init()
 
   local function notifications() telescope.extensions.notify.notify(rvim.telescope.dropdown()) end
 
-  -- FIXME: <C-cr> mapping does not work
   local function undo() telescope.extensions.undo.undo() end
 
   local function projects() telescope.extensions.projects.projects({}) end
