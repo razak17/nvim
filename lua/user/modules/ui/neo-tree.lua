@@ -19,11 +19,10 @@ local M = {
       })
     end,
   },
+  init = function()
+    rvim.nnoremap('<c-n>', '<cmd>Neotree toggle reveal<CR>', 'toggle tree', 'neo-tree.nvim')
+  end,
 }
-
-function M.init()
-  rvim.nnoremap('<c-n>', '<cmd>Neotree toggle reveal<CR>', 'toggle tree', 'neo-tree.nvim')
-end
 
 function M.config()
   local icons = rvim.style.icons
@@ -110,15 +109,15 @@ function M.config()
       position = 'right',
       width = 30,
       mappings = {
-        ['o'] = 'toggle_node',
+        ['<esc>'] = 'revert_preview',
+        ['<CR>'] = 'open_with_window_picker',
+        ['<c-s>'] = 'split_with_window_picker',
         ['h'] = 'navigate_up',
         ['l'] = 'open',
-        ['<CR>'] = 'open_with_window_picker',
-        ['Z'] = 'expand_all_nodes',
-        ['<c-s>'] = 'split_with_window_picker',
-        ['v'] = 'vsplit_with_window_picker',
-        ['<esc>'] = 'revert_preview',
+        ['o'] = 'toggle_node',
         ['P'] = { 'toggle_preview', config = { use_float = true } },
+        ['v'] = 'vsplit_with_window_picker',
+        ['Z'] = 'expand_all_nodes',
       },
     },
   })
