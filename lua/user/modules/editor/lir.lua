@@ -55,6 +55,7 @@ function M.config()
     },
     hide_cursor = false,
   })
+  rvim.nnoremap('<leader>Lf', function() require('lir.float').toggle() end, 'lir: toggle')
 end
 
 return M
