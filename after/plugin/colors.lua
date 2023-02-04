@@ -80,7 +80,13 @@ local function colorscheme_overrides()
       { Normal = { background = { from = 'Normal', alter = -50 } } },
       { NormalFloat = { inherit = 'Normal' } },
       { NormalNC = { inherit = 'Normal' } },
-      { CursorLine = { background = { from = 'CursorLine', alter = -20 } } },
+      {
+        FloatTitle = {
+          bg = { from = 'FloatTitle', alter = -60 },
+          fg = { from = 'Normal' },
+        },
+      },
+      { CursorLine = { bg = { from = 'CursorLine', alter = -20 } } },
       { VertSplit = { fg = { from = 'VertSplit', alter = -60 } } },
       { Dim = { inherit = 'VertSplit' } },
       { TelescopePreviewBorder = { fg = { from = 'TelescopePreviewBorder', alter = -60 } } },
