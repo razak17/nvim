@@ -96,6 +96,7 @@ function M.config()
     matchup = { enable = true, disable = { 'c', 'python' } },
     rainbow = {
       enable = true,
+      disable = { 'ts' },
       query = 'rainbow-parens',
     },
     query_linter = {
