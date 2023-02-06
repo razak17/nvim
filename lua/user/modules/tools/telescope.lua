@@ -143,7 +143,7 @@ function M.init()
   end
 
   cmd('WebSearch', function()
-    local search = vim.fn.input('Search: ')
+    local search = vim.fn.input('Search String: ')
     local pickers = require('telescope.pickers')
     local actions = require('telescope.actions')
     local action_state = require('telescope.actions.state')
