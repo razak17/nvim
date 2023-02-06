@@ -95,13 +95,12 @@ function M.config()
     indent = { enable = { 'javascriptreact' } },
     matchup = { enable = true, disable = { 'c', 'python' } },
     rainbow = {
-      enable = true,
-      disable = { 'ts' },
+      enable = false,
       query = 'rainbow-parens',
     },
     query_linter = {
       enable = true,
-      use_virtual_text = true,
+      use_virtual_text = false,
       lint_events = { 'BufWrite', 'CursorHold' },
     },
     playground = { persist_queries = true },
