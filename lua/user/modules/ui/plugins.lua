@@ -35,6 +35,7 @@ return {
 
   {
     'SmiteshP/nvim-navic',
+    event = { 'BufRead', 'BufNewFile' },
     config = function()
       vim.g.navic_silence = true
       local misc = rvim.style.icons.misc
