@@ -95,7 +95,8 @@ function M.config()
     indent = { enable = { 'javascriptreact' } },
     matchup = { enable = true, disable = { 'c', 'python' } },
     rainbow = {
-      enable = false,
+      enable = true,
+      disable = { 'typescript' },
       query = 'rainbow-parens',
     },
     query_linter = {
