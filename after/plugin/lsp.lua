@@ -456,6 +456,31 @@ local function toggle_virtual_text()
 end
 command('ToggleVirtualText', toggle_virtual_text)
 
+lsp.handlers['textDocument/hover'] = function(...)
+  local hover_handler = lsp.with(lsp.handlers.hover, {
+    border = border,
+    max_width = max_width,
+    max_height = max_height,
+  })
+  vim.b.lsp_hover_buf, vim.b.lsp_hover_win = hover_handler(...)
+end
+
+lsp.handlers['textDocument/signatureHelp'] = lsp.with(lsp.handlers.signature_help, {
+  border = border,
+  max_width = max_width,
+  max_height = max_height,
+})
+
+lsp.handlers['window/showMessage'] = function(_, result, ctx)
+  local client = lsp.get_client_by_id(ctx.client_id)
+  local lvl = ({ 'ERROR', 'WARN', 'INFO', 'DEBUG' })[result.type]
+  vim.notify(result.message, lvl, {
+    title = 'LSP | ' .. client.name,
+    timeout = 8000,
+    keep = function() return lvl == 'ERROR' or lvl == 'WARN' end,
+  })
+end
+
 -- Generate templates
 local templates = rvim.lsp.templates_dir
 if not rvim.is_directory(templates) or fn.filereadable(join_paths(templates, 'lua.lua')) ~= 1 then
