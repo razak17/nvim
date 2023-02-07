@@ -18,10 +18,7 @@ function M.config()
       },
     },
     behavior = { startinsert = true },
-    terminal = {
-      position = 'vert',
-      size = 60,
-    },
+    terminal = { position = 'vert', size = 60 },
   })
   rvim.augroup('JaqConfig', {
     {
