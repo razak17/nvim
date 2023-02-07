@@ -282,3 +282,4 @@ if rvim.executable('nvr') then
   vim.env.GIT_EDITOR = "nvr -cc split --remote-wait +'set bufhidden=wipe'"
   vim.env.EDITOR = "nvr -cc split --remote-wait +'set bufhidden=wipe'"
 end
+if rvim.ui.line_wrap_cursor_movement then vim.opt.whichwrap:append('<,>,[,],h,l,~') end
