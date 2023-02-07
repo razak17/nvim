@@ -1,0 +1,6 @@
+{
+  "chore conventional commit": {
+    "prefix": "revert",
+    "body": ["revert(${1:scope})${2}: ${3:title}", "", "$0"]
+  }
+}
