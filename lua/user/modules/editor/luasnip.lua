@@ -67,9 +67,6 @@ function M.config()
   if rvim.is_directory(user_snippets) then paths[#paths + 1] = user_snippets end
   require('luasnip.loaders.from_lua').lazy_load()
   require('luasnip.loaders.from_vscode').lazy_load({ paths = paths })
-  -- Enable react snippets in js and ts files
-  require('luasnip').filetype_extend('javascript', { 'javascriptreact' })
-  require('luasnip').filetype_extend('typescript', { 'typescriptreact' })
 end
 
 return M

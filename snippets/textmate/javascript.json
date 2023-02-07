@@ -1,4 +1,9 @@
 {
+  "consoleLog": {
+    "prefix": "clg",
+    "body": ["console.log(${1:first})"],
+    "description": "Displays a message in the console"
+  },
   "exd": {
     "prefix": "exd",
     "body": "export default ${tm_filename_base}",
