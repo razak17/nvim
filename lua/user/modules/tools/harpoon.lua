@@ -1,4 +1,4 @@
-local M = { 'ThePrimeagen/harpoon' }
+local M = { 'razak17/harpoon' }
 
 function M.init()
   rvim.nnoremap('<leader>ma', function() require('harpoon.mark').add_file() end, 'harpoon: add')
@@ -29,7 +29,8 @@ function M.config()
   require('user.utils.highlights').plugin('harpoon', {
     theme = {
       ['zephyr'] = {
-        { HarpoonBorder = { fg = { from = 'FloatBorder', alter = 40 } } },
+        { HarpoonTitle = { fg = { from = 'Winbar' } } },
+        { HarpoonBorder = { fg = { from = 'FloatBorder' } } },
       },
     },
   })
