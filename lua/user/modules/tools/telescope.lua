@@ -95,16 +95,15 @@ function M.init()
 
   local nnoremap = rvim.nnoremap
   nnoremap('<c-p>', find_files, 'telescope: find files')
+  nnoremap('<leader>f?', builtin.help_tags, 'help')
   nnoremap('<leader>fa', builtins, 'telescope: builtins')
   nnoremap('<leader>fb', builtin.current_buffer_fuzzy_find, 'find in current buffer')
-  nnoremap('<leader>fc', builtin.resume, 'resume last picker')
   nnoremap('<leader>ff', project_files, 'telescope: project files')
   nnoremap('<leader>fh', frecency, 'Most (f)recently used files')
+  nnoremap('<leader>fl', builtin.resume, 'resume last picker')
   nnoremap('<leader>fL', luasnips, 'luasnip: available snippets')
   nnoremap('<leader>fm', media_files, 'telescope: media files')
   nnoremap('<leader>fn', notifications, 'notifications')
-  nnoremap('<leader>f?', builtin.help_tags, 'help')
-  nnoremap('<leader>ffn', find_near_files, 'find near files')
   nnoremap('<leader>fo', builtin.buffers, 'buffers')
   nnoremap('<leader>fp', projects, 'projects')
   nnoremap('<leader>fP', installed_plugins, 'plugins')
@@ -112,12 +111,13 @@ function M.init()
   nnoremap('<leader>fR', builtin.reloader, 'module reloader')
   nnoremap('<leader>fs', builtin.live_grep, 'find string')
   nnoremap('<leader>fu', undo, 'undo')
+  nnoremap('<leader>fw', builtin.grep_string, 'find word')
+  nnoremap('<leader>fz', zoxide_list, 'zoxide')
+  nnoremap('<leader>ffn', find_near_files, 'find near files')
   nnoremap('<leader>fva', builtin.autocommands, 'autocommands')
   nnoremap('<leader>fvh', builtin.highlights, 'highlights')
   nnoremap('<leader>fvk', builtin.keymaps, 'keymaps')
   nnoremap('<leader>fvo', builtin.vim_options, 'options')
-  nnoremap('<leader>fw', builtin.grep_string, 'find word')
-  nnoremap('<leader>fz', zoxide_list, 'zoxide')
   -- Git
   nnoremap('<leader>gf', builtin.git_files, 'git files')
   nnoremap('<leader>gs', builtin.git_status, 'git status')
@@ -157,19 +157,13 @@ function M.init()
           prompt_title = 'Web Search',
           finder = finders.new_table({
             results = {
-              {
-                'Google Search',
-                ('https://www.google.com/search?q=' .. search:gsub(' ', '+')),
-              },
-              {
-                'DuckDuckGo',
-                ('https://html.duckduckgo.com/html?q=' .. search:gsub(' ', '+')),
-              },
+              { 'Github', ('https://github.com/search?q=' .. search:gsub(' ', '+')) },
+              { 'DuckDuckGo', ('https://html.duckduckgo.com/html?q=' .. search:gsub(' ', '+')) },
+              { 'Google Search', ('https://www.google.com/search?q=' .. search:gsub(' ', '+')) },
               {
                 'Youtube',
                 ('https://www.youtube.com/results?search_query=' .. search:gsub(' ', '+')),
               },
-              { 'Github', ('https://github.com/search?q=' .. search:gsub(' ', '+')) },
             },
             entry_maker = function(entry)
               return { value = entry, display = entry[1], ordinal = entry[1] }
@@ -189,7 +183,7 @@ function M.init()
     end
     searcher(rvim.telescope.minimal_ui())
   end)
-  nnoremap('<leader>fd', '<cmd>WebSearch<CR>', 'web search')
+  nnoremap('<leader>fS', '<cmd>WebSearch<CR>', 'web search')
 end
 
 function M.config()
