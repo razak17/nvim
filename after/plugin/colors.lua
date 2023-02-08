@@ -84,9 +84,9 @@ local function colorscheme_overrides()
         },
       },
       { CursorLine = { bg = { from = 'CursorLine', alter = -20 } } },
-      { VertSplit = { fg = { from = 'VertSplit', alter = -60 } } },
+      { VertSplit = { fg = { from = 'VertSplit', alter = -50 } } },
       { Dim = { inherit = 'VertSplit' } },
-      { TelescopePreviewBorder = { fg = { from = 'TelescopePreviewBorder', alter = -60 } } },
+      { TelescopePreviewBorder = { fg = { from = 'TelescopePreviewBorder', alter = -50 } } },
       { TelescopePromptPrefix = { fg = { from = 'TelescopePromptPrefix', alter = -30 } } },
     },
     ['horizon'] = {
