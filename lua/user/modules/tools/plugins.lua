@@ -144,7 +144,7 @@ return {
   {
     'iamcco/markdown-preview.nvim',
     build = function() vim.fn['mkdp#util#install']() end,
-    ft = { 'markdown' },
+    ft = 'markdown',
     config = function()
       vim.g.mkdp_auto_start = 0
       vim.g.mkdp_auto_close = 1
@@ -165,7 +165,7 @@ return {
 
   {
     'turbio/bracey.vim',
-    ft = { 'html' },
+    ft = 'html',
     build = 'npm install --prefix server',
     init = function()
       rvim.nnoremap('<leader>bs', '<cmd>Bracey<CR>', 'bracey: start')
@@ -175,7 +175,7 @@ return {
 
   {
     'razak17/lab.nvim',
-    event = { 'InsertEnter' },
+    event = 'InsertEnter',
     build = 'cd js && npm ci',
     config = function()
       require('lab').setup({
@@ -187,7 +187,7 @@ return {
 
   {
     'razak17/package-info.nvim',
-    event = { 'BufRead package.json' },
+    event = 'BufRead package.json',
     dependencies = { 'MunifTanjim/nui.nvim' },
     config = function()
       require('package-info').setup({

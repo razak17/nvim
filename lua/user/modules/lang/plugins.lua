@@ -21,6 +21,30 @@ return {
   },
 
   {
+    'SmiteshP/nvim-navic',
+    event = { 'BufRead', 'BufNewFile' },
+    config = function()
+      vim.g.navic_silence = true
+      local misc = rvim.style.icons.misc
+      local lsp_icons = {}
+      for k, v in pairs(rvim.style.current.lsp_icons) do
+        hl.set(('NavicIcons%s'):format(k), { link = rvim.lsp.kind_highlights[k] })
+        lsp_icons[k] = v .. ' '
+      end
+      require('nvim-navic').setup({
+        icons = lsp_icons,
+        highlight = true,
+        depth_limit_indicator = misc.ellipsis,
+        separator = (' %s '):format(misc.arrow_right),
+      })
+      hl.plugin('navic', {
+        { NavicText = { bold = false } },
+        { NavicSeparator = { link = 'Directory' } },
+      })
+    end,
+  },
+
+  {
     'DNLHC/glance.nvim',
     keys = {
       { 'gD', '<Cmd>Glance definitions<CR>', desc = 'lsp: glance definitions' },
@@ -159,7 +183,6 @@ return {
 
   {
     'ckolkey/ts-node-action',
-    dependencies = { 'nvim-treesitter' },
     config = function()
       require('ts-node-action').setup({
         typescriptreact = {
