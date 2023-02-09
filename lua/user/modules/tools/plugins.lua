@@ -236,27 +236,6 @@ return {
   },
 
   {
-    'andrewferrier/debugprint.nvim',
-    keys = {
-      {
-        '<leader>dp',
-        function() return require('debugprint').debugprint({ variable = true }) end,
-        expr = true,
-        desc = 'debugprint: cursor',
-      },
-      {
-        '<leader>do',
-        function() return require('debugprint').debugprint({ motion = true }) end,
-        mode = 'o',
-        expr = true,
-        desc = 'debugprint: operator',
-      },
-      { '<leader>dx', '<Cmd>DeleteDebugPrints<CR>', desc = 'debugprint: clear all' },
-    },
-    config = function() require('debugprint').setup({ create_keymaps = false }) end,
-  },
-
-  {
     'NTBBloodbath/rest.nvim',
     ft = { 'http', 'json' },
     init = function()

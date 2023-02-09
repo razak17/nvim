@@ -158,12 +158,6 @@ return {
   },
 
   {
-    'echasnovski/mini.pairs',
-    event = 'VeryLazy',
-    config = function() require('mini.pairs').setup() end,
-  },
-
-  {
     'ckolkey/ts-node-action',
     dependencies = { 'nvim-treesitter' },
     config = function()
