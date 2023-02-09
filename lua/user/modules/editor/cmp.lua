@@ -4,9 +4,9 @@ local M = {
   dependencies = {
     'hrsh7th/cmp-nvim-lsp',
     'saadparwaiz1/cmp_luasnip',
-    { 'hrsh7th/cmp-cmdline', enabled = not rvim.nightly() },
-    { 'dmitmel/cmp-cmdline-history', enabled = not rvim.nightly() },
-    { 'hrsh7th/cmp-nvim-lsp-document-symbol', enabled = not rvim.nightly() },
+    'hrsh7th/cmp-cmdline',
+    'dmitmel/cmp-cmdline-history',
+    'hrsh7th/cmp-nvim-lsp-document-symbol',
     'hrsh7th/cmp-path',
     'f3fora/cmp-spell',
     'hrsh7th/cmp-buffer',
@@ -253,26 +253,24 @@ function M.config()
   cmp.event:on('menu_opened', function() vim.b.copilot_suggestion_hidden = true end)
   cmp.event:on('menu_closed', function() vim.b.copilot_suggestion_hidden = false end)
 
-  if not rvim.nightly() then
-    cmp.setup.cmdline({ '/', '?' }, {
-      mapping = cmp.mapping.preset.cmdline(),
-      sources = {
-        sources = cmp.config.sources(
-          { { name = 'nvim_lsp_document_symbol' } },
-          { { name = 'buffer' } },
-          { { name = 'buffer-lines' } }
-        ),
-      },
-    })
+  cmp.setup.cmdline({ '/', '?' }, {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = {
+      sources = cmp.config.sources(
+        { { name = 'nvim_lsp_document_symbol' } },
+        { { name = 'buffer' } },
+        { { name = 'buffer-lines' } }
+      ),
+    },
+  })
 
-    cmp.setup.cmdline(':', {
-      sources = cmp.config.sources({
-        { name = 'cmdline', keyword_pattern = [=[[^[:blank:]\!]*]=] },
-        { name = 'path' },
-        { name = 'cmdline_history', priority = 10, max_item_count = 5 },
-      }),
-    })
-  end
+  cmp.setup.cmdline(':', {
+    sources = cmp.config.sources({
+      { name = 'cmdline', keyword_pattern = [=[[^[:blank:]\!]*]=] },
+      { name = 'path' },
+      { name = 'cmdline_history', priority = 10, max_item_count = 5 },
+    }),
+  })
 
   require('cmp').setup.filetype({ 'dap-repl', 'dapui_watches' }, {
     sources = { { name = 'dap' } },
