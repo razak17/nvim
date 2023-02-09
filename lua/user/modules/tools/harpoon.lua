@@ -1,4 +1,4 @@
-local M = { 'razak17/harpoon' }
+local M = { 'razak17/harpoon', enabled = false }
 
 function M.init()
   rvim.nnoremap('<leader>ma', function() require('harpoon.mark').add_file() end, 'harpoon: add')

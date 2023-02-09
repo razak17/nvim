@@ -23,6 +23,31 @@ return {
   },
 
   {
+    'LeonHeidelbach/trailblazer.nvim',
+    event = 'VeryLazy',
+    init = function()
+      rvim.nnoremap('<leader>ms', '<cmd>TrailBlazerSaveSession<CR>', 'trailblazer: save session')
+      rvim.nnoremap('<leader>ml', '<cmd>TrailBlazerLoadSession<CR>', 'trailblazer: load session')
+    end,
+    config = function()
+      require('trailblazer').setup({
+        custom_session_storage_dir = join_paths(rvim.get_runtime_dir(), 'trailblazer'),
+        trail_options = {
+          current_trail_mark_list_type = 'quickfix',
+        },
+        mappings = {
+          nv = {
+            motions = {
+              peek_move_next_down = '<A-K>',
+              peek_move_previous_up = '<A-J>',
+            },
+          },
+        },
+      })
+    end,
+  },
+
+  {
     'razak17/buffer_manager.nvim',
     init = function()
       rvim.nnoremap(
