@@ -88,6 +88,7 @@ local function colorscheme_overrides()
       { Dim = { inherit = 'VertSplit' } },
       { TelescopePreviewBorder = { fg = { from = 'TelescopePreviewBorder', alter = -50 } } },
       { TelescopePromptPrefix = { fg = { from = 'TelescopePromptPrefix', alter = -30 } } },
+      { StatusLine = { bg = { from = 'StatusLine', alter = -20 } } },
     },
     ['horizon'] = {
       ----------------------------------------------------------------------------------------------
