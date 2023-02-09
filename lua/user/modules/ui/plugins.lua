@@ -116,25 +116,4 @@ return {
       })
     end,
   },
-
-  {
-    'rainbowhxch/beacon.nvim',
-    config = function()
-      local beacon = require('beacon')
-      beacon.setup({
-        minimal_jump = 20,
-        ignore_buffers = { 'terminal', 'nofile' },
-        ignore_filetypes = {
-          'neo-tree',
-          'qf',
-          'NeogitCommitMessage',
-          'NeogitPopup',
-          'NeogitStatus',
-          'packer',
-          'trouble',
-        },
-      })
-    end,
-    enabled = false,
-  },
 }
