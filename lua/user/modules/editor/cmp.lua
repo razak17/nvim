@@ -85,13 +85,7 @@ function M.config()
       { CmpItemAbbr = { foreground = { from = 'StatusLine' } } },
       { CmpItemAbbrDeprecated = { strikethrough = true, inherit = 'Comment' } },
       { CmpItemAbbrMatchFuzzy = { foreground = { from = 'Title' } } },
-      {
-        CmpItemMenu = {
-          fg = { from = 'Comment', attr = 'fg' },
-          italic = true,
-          bold = true,
-        },
-      },
+      { CmpItemMenu = { fg = { from = 'Comment', attr = 'fg' }, italic = true, bold = true } },
     }
   )
 

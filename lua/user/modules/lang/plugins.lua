@@ -55,8 +55,9 @@ return {
     config = function()
       require('glance').setup({
         hl.plugin('glance', {
-          { GlancePreviewNormal = { link = 'Normal' } },
-          { GlanceListCount = { link = 'Normal' } },
+          { GlanceWinBarFilename = { link = 'Error' } },
+          { GlanceWinBarFilepath = { link = 'StatusLine' } },
+          { GlanceWinBarTitle = { link = 'StatusLine' } },
         }),
       })
     end,
