@@ -11,8 +11,10 @@ local base_dir = init_path:match('(.*[/\\])'):sub(1, -2)
 
 if not vim.tbl_contains(vim.opt.rtp:get(), base_dir) then vim.opt.rtp:append(base_dir) end
 
-vim.api.nvim_create_augroup('vimrc', {}) -- Ensure all autocommands are cleared
-
+----------------------------------------------------------------------------------------------------
+-- Ensure all autocommands are cleared
+vim.api.nvim_create_augroup('vimrc', {})
+----------------------------------------------------------------------------------------------------
 local ok, reload = pcall(require, 'plenary.reload')
 RELOAD = ok and reload.reload_module or function(...) return ... end
 function R(name)
@@ -30,6 +32,7 @@ local namespace = {
 }
 
 _G.rvim = rvim or namespace
+
 ----------------------------------------------------------------------------------------------------
 -- Load Modules
 ----------------------------------------------------------------------------------------------------
