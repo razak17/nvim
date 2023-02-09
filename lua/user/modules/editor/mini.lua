@@ -1,4 +1,7 @@
 return {
+
+  { 'echasnovski/mini.ai', config = true },
+
   {
     'echasnovski/mini.pairs',
     event = 'VeryLazy',
