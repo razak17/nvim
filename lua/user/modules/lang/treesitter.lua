@@ -4,7 +4,7 @@ local M = {
   build = ':TSUpdate',
   dependencies = {
     'nvim-treesitter/nvim-treesitter-textobjects',
-    'HiPhish/nvim-ts-rainbow2',
+    'mrjones2014/nvim-ts-rainbow',
     {
       'nvim-treesitter/nvim-treesitter-context',
       event = { 'BufRead', 'BufNewFile' },
@@ -32,10 +32,6 @@ local M = {
     },
   },
 }
-
-function M.init()
-  rvim.nnoremap('R', '<cmd>edit | TSBufEnable highlight<CR>', 'treesitter: enable highlight')
-end
 
 function M.config()
   -- This option, which currently doesn't work upstream, disables linking treesitter highlights
@@ -96,8 +92,13 @@ function M.config()
     matchup = { enable = true, disable = { 'c', 'python' } },
     rainbow = {
       enable = true,
-      disable = { 'typescript' },
-      query = 'rainbow-parens',
+      colors = {
+        'royalblue3',
+        'darkorange3',
+        'seagreen3',
+        'firebrick',
+        'darkorchid3',
+      },
     },
     query_linter = {
       enable = true,
@@ -131,6 +132,8 @@ function M.config()
       'jsonc',
     },
   })
+
+  rvim.nnoremap('R', '<cmd>edit | TSBufEnable highlight<CR>', 'treesitter: enable highlight')
 end
 
 return M
