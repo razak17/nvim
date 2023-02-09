@@ -1,3 +1,13 @@
+local function neotest() return require('neotest') end
+local function open() neotest().output.open({ enter = true, short = false }) end
+local function run_file() neotest().run.run(vim.fn.expand('%')) end
+local function run_file_sync() neotest().run.run({ vim.fn.expand('%'), concurrent = false }) end
+local function nearest() neotest().run.run() end
+local function next_failed() neotest().jump.prev({ status = 'failed' }) end
+local function prev_failed() neotest().jump.next({ status = 'failed' }) end
+local function toggle_summary() neotest().summary.toggle() end
+local function cancel() neotest().run.stop({ interactive = true }) end
+
 local M = {
   'nvim-neotest/neotest',
   event = { 'BufRead', 'BufNewFile' },
@@ -8,32 +18,19 @@ local M = {
     'rouge8/neotest-rust',
     'nvim-neotest/neotest-go',
   },
+  keys = {
+    { '<localleader>ts', toggle_summary, desc = 'neotest: toggle summary' },
+    { '<localleader>to', open, desc = 'neotest: output' },
+    { '<localleader>tn', nearest, desc = 'neotest: run' },
+    { '<localleader>tf', run_file, desc = 'neotest: run file' },
+    { '<localleader>tF', run_file_sync, desc = 'neotest: run file synchronously' },
+    { '<localleader>tc', cancel, desc = 'neotest: cancel' },
+    { '[n', next_failed, desc = 'jump to next failed test' },
+    { ']n', prev_failed, desc = 'jump to previous failed test' },
+  },
 }
 
-function M.init()
-  local function neotest_open() require('neotest').output.open({ enter = true, short = false }) end
-  local function run_file() require('neotest').run.run(vim.fn.expand('%')) end
-  local function run_file_sync()
-    require('neotest').run.run({ vim.fn.expand('%'), concurrent = false })
-  end
-  local function nearest() require('neotest').run.run() end
-  local function next_failed() require('neotest').jump.prev({ status = 'failed' }) end
-  local function prev_failed() require('neotest').jump.next({ status = 'failed' }) end
-  local function toggle_summary() require('neotest').summary.toggle() end
-  local function cancel() require('neotest').run.stop({ interactive = true }) end
-
-  rvim.nnoremap('<localleader>ts', toggle_summary, 'neotest: toggle summary')
-  rvim.nnoremap('<localleader>to', neotest_open, 'neotest: output')
-  rvim.nnoremap('<localleader>tn', nearest, 'neotest: run')
-  rvim.nnoremap('<localleader>tf', run_file, 'neotest: run file')
-  rvim.nnoremap('<localleader>tF', run_file_sync, 'neotest: run file synchronously')
-  rvim.nnoremap('<localleader>tc', cancel, 'neotest: cancel')
-  rvim.nnoremap('[n', next_failed, 'jump to next failed test')
-  rvim.nnoremap(']n', prev_failed, 'jump to previous failed test')
-end
-
 function M.config()
-  -- get neotest namespace (api call creates or returns namespace)
   local neotest_ns = vim.api.nvim_create_namespace('neotest')
   vim.diagnostic.config({
     virtual_text = {
