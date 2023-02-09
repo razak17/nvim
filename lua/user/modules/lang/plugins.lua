@@ -129,6 +129,27 @@ return {
   },
 
   {
+    'mfussenegger/nvim-treehopper',
+    keys = {
+      {
+        'u',
+        function() require('tsht').nodes() end,
+        desc = 'treehopper: toggle',
+        mode = 'o',
+        noremap = false,
+        silent = true,
+      },
+      {
+        'u',
+        ":lua require('tsht').nodes()<CR>",
+        desc = 'treehopper: toggle',
+        mode = 'x',
+        silent = true,
+      },
+    },
+  },
+
+  {
     'lvimuser/lsp-inlayhints.nvim',
     event = 'VeryLazy',
     keys = {
