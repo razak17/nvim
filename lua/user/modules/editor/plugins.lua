@@ -60,6 +60,7 @@ return {
 
   {
     'andrewferrier/debugprint.nvim',
+    opts = { create_keymaps = false },
     keys = {
       {
         '<leader>dp',
