@@ -45,7 +45,7 @@ return {
   },
 
   {
-    'DNLHC/glance.nvim',
+    'razak17/glance.nvim',
     keys = {
       { 'gD', '<Cmd>Glance definitions<CR>', desc = 'lsp: glance definitions' },
       { 'gR', '<Cmd>Glance references<CR>', desc = 'lsp: glance references' },
