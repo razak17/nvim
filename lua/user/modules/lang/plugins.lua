@@ -54,6 +54,7 @@ return {
     },
     config = function()
       require('glance').setup({
+        preview_win_opts = { relativenumber = false },
         hl.plugin('glance', {
           { GlanceWinBarFilename = { link = 'Error' } },
           { GlanceWinBarFilepath = { link = 'StatusLine' } },
