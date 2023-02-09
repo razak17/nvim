@@ -1,7 +1,9 @@
-local api = vim.api
 local fmt = string.format
+local api, notify = vim.api, vim.notify
 
-local M = {}
+local M = { win_hl = {} }
+
+---@alias ErrorMsg {msg: string}
 
 ---@class HighlightAttributes
 ---@field from string
@@ -15,6 +17,15 @@ local M = {}
 ---@field fg string | HighlightAttributes
 ---@field bg string | HighlightAttributes
 ---@field sp string | HighlightAttributes
+---@field bold boolean
+---@field italic boolean
+---@field undercurl boolean
+---@field underline boolean
+---@field underdot boolean
+
+---@class NvimHighlightData
+---@field foreground string
+---@field background string
 ---@field bold boolean
 ---@field italic boolean
 ---@field undercurl boolean
@@ -56,6 +67,24 @@ local function get_highlight(group_name)
   return hl
 end
 
+---Get the value a highlight group whilst handling errors, fallbacks rvim well rvim returning a gui value
+---If no attribute is specified return the entire highlight table
+---in the right format
+---@param group string
+---@param attribute string?
+---@param fallback string?
+---@return string, ErrorMsg?
+---@overload fun(group: string): NvimHighlightData, ErrorMsg?
+function M.get(group, attribute, fallback)
+  assert(group, 'cannot get a highlight without specifying a group name')
+  local data = get_highlight(group)
+  if not attribute then return data end
+  local attr = ({ fg = 'foreground', bg = 'background' })[attribute] or attribute
+  local color = data[attr] or fallback
+  if color then return color end
+  return 'NONE', { msg = fmt('failed to get highlight %s for attribute %s', group, attribute) }
+end
+
 --- Sets a neovim highlight with some syntactic sugar. It takes a highlight table and converts
 --- any highlights specified rvim `GroupName = { from = 'group'}` into the underlying colour
 --- by querying the highlight property of the from group so it can be used when specifying highlights
@@ -65,11 +94,12 @@ end
 ---   M.set({ MatchParen = {foreground = {from = 'ErrorMsg'}}})
 --- ```
 --- This will take the foreground colour from ErrorMsg and set it to the foreground of MatchParen.
----  NOTE: this function must NOT mutate the options table as these are re-used when the colorscheme
+--- NOTE: this function must NOT mutate the options table rvim these are re-used when the colorscheme
 --- is updated
 ---@param name string
 ---@param opts HighlightKeys
----@overload fun(namespace: integer, name: string, opts: HighlightKeys)
+---@overload fun(namespace: integer, name: string, opts: HighlightKeys): ErrorMsg[]?
+---@return ErrorMsg[]?
 function M.set(namespace, name, opts)
   if type(namespace) == 'string' and type(name) == 'table' then
     opts, name, namespace = name, namespace, 0
@@ -82,37 +112,71 @@ function M.set(namespace, name, opts)
   })
 
   local hl = get_highlight(opts.inherit or name)
+  local errs = {}
 
   for attr, value in pairs(opts) do
     if type(value) == 'table' and value.from then
-      hl[attr] = M.get(value.from, value.attr or attr)
-      if value.alter then hl[attr] = M.alter_color(hl[attr], value.alter) end
+      local new_attr, err = M.get(value.from, value.attr or attr)
+      if value.alter then new_attr = M.alter_color(new_attr, value.alter) end
+      if err then table.insert(errs, err) end
+      hl[attr] = new_attr
     elseif attr ~= 'inherit' then
       hl[attr] = value
     end
   end
 
-  rvim.wrap_err(fmt('failed to set %s because', name), api.nvim_set_hl, namespace, name, hl)
+  if not pcall(api.nvim_set_hl, namespace, name, hl) then
+    table.insert(errs, { msg = fmt('failed to set highlight %s with values %s', name, hl) })
+  end
+  if #errs > 0 then return errs end
 end
 
----Get the value a highlight group whilst handling errors, fallbacks nvim well rvim returning a gui value
----in the right format
----@param group string
----@param attribute string?
----@param fallback string?
----@return string | table
-function M.get(group, attribute, fallback)
-  assert(group, 'cannot get a highlight without specifying a group name')
-  local data = get_highlight(group)
-  if not attribute then return data end
-  local attr = ({ fg = 'foreground', bg = 'background' })[attribute] or attribute
-  local color = data[attr] or fallback
-  if color then return color end
-  vim.schedule(function() vim.notify(fmt("%s's %s does not exist", group, attr), 'error') end)
-  return 'NONE'
+--- Set window local highlights
+---@param name string
+---@param win_id number
+---@param hls HighlightKeys[]
+function M.win_hl.set(name, win_id, hls)
+  local namespace = api.nvim_create_namespace(name)
+  M.all(hls, namespace)
+  api.nvim_win_set_hl_ns(win_id, namespace)
 end
 
-function M.clear_hl(name)
+--- Check if the current window has a winhighlight
+--- which includes the specific target highlight
+--- FIXME: setting a window highlight with `nvim_win_set_hl_ns` will cause this check to fail as
+--- a winhighlight is not set and the win namespace cannot be detected
+--- @param win_id integer
+--- @vararg string
+--- @return boolean, string
+function M.win_hl.exists(win_id, ...)
+  local win_hl = vim.wo[win_id].winhighlight
+  for _, target in ipairs({ ... }) do
+    if win_hl:match(target) then return true, win_hl end
+  end
+  return false, win_hl
+end
+
+---A mechanism to allow inheritance of the winhighlight of a specific
+---group in a window
+---@param win_id integer
+---@param target string
+---@param name string
+---@param fallback string
+function M.win_hl.adopt(win_id, target, name, fallback)
+  local win_hl_name = name .. win_id
+  local _, win_hl = M.win_hl.exists(win_id, target)
+
+  if pcall(api.nvim_get_hl_by_name, win_hl_name, true) then return win_hl_name end
+
+  local hl = as.find(function(part) return part:match(target) end, vim.split(win_hl, ','))
+  if not hl then return fallback end
+
+  local hl_group = vim.split(hl, ':')[2]
+  M.set(win_hl_name, { inherit = fallback, background = { from = hl_group, attr = 'bg' } })
+  return win_hl_name
+end
+
+function M.clear(name)
   assert(name, 'name is required to clear a highlight')
   api.nvim_set_hl(0, name, {})
 end
@@ -121,7 +185,14 @@ end
 ---@param hls table<string, HighlightKeys>
 ---@param namespace integer?
 function M.all(hls, namespace)
-  rvim.foreach(function(hl) M.set(namespace or 0, next(hl)) end, hls)
+  local errors = rvim.fold(function(errors, hl)
+    local curr_errors = M.set(namespace or 0, next(hl))
+    if curr_errors then vim.list_extend(errors, curr_errors) end
+    return errors
+  end, hls)
+  if #errors > 0 then
+    notify(rvim.fold(function(acc, err) return acc .. '\n' .. err.msg end, errors, ''), 'error')
+  end
 end
 
 ---------------------------------------------------------------------------------
