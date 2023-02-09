@@ -82,9 +82,9 @@ function M.config()
     end,
     lsp_hls,
     {
-      { CmpItemAbbr = { background = 'NONE', italic = false, bold = false } },
+      { CmpItemAbbr = { foreground = { from = 'StatusLine' } } },
       { CmpItemAbbrDeprecated = { strikethrough = true, inherit = 'Comment' } },
-      { CmpItemAbbrMatchFuzzy = { italic = true, foreground = { from = 'Keyword' } } },
+      { CmpItemAbbrMatchFuzzy = { foreground = { from = 'Title' } } },
       {
         CmpItemMenu = {
           fg = { from = 'Comment', attr = 'fg' },
