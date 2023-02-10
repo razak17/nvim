@@ -86,10 +86,6 @@ local function launch_server(server_name, config)
   end)
 end
 
-local function already_configured(server_name)
-  return is_client_active(server_name) or client_is_configured(server_name)
-end
-
 ---Setup a language server by providing a name
 ---@param server_name string name of the language server
 ---@param user_config table? when available it will take predence over any default configurations
@@ -97,7 +93,7 @@ function M.setup(server_name, user_config)
   if not rvim.plugins.SANE then return end
   vim.validate({ name = { server_name, 'string' } })
   user_config = user_config or {}
-  if already_configured(server_name) then return end
+  if is_client_active(server_name) or client_is_configured(server_name) then return end
   local config = resolve_config(server_name, resolve_mason_config(server_name), user_config)
   launch_server(server_name, config)
 end

@@ -23,6 +23,7 @@ return {
   {
     'SmiteshP/nvim-navic',
     event = { 'BufRead', 'BufNewFile' },
+    dependencies = { 'williamboman/mason-lspconfig.nvim' },
     config = function()
       vim.g.navic_silence = true
       local misc = rvim.style.icons.misc
