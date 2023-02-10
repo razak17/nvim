@@ -14,6 +14,23 @@ return {
   },
 
   {
+    'j-hui/fidget.nvim',
+    event = 'BufReadPre',
+    config = function()
+      require('fidget').setup({
+        align = { bottom = false, right = true },
+        fmt = { stack_upwards = false },
+      })
+      rvim.augroup('CloseFidget', {
+        {
+          event = { 'VimLeavePre', 'LspDetach' },
+          command = 'silent! FidgetClose',
+        },
+      })
+    end,
+  },
+
+  {
     'lukas-reineke/headlines.nvim',
     ft = { 'org', 'norg', 'markdown', 'yaml' },
     config = function()
