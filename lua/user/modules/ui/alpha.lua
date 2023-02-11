@@ -77,7 +77,7 @@ function M.config()
     button('String', 'f', '  Find file', ':Telescope find_files<CR>'),
     button('Define', 'w', '  Find text', ':Telescope live_grep<CR>'),
     button('Keyword', 'n', '  New file', ':ene | startinsert<CR>'),
-    button('Ignore', 'l', '鈴  Lazy', ':Lazy<CR>'),
+    button('Ignore', 'l', '鈴 Lazy', ':Lazy<CR>'),
     button('ErrorMsg', 'q', '  Quit', ':qa<CR>'),
   }
 
