@@ -1,4 +1,7 @@
-local M = { 'folke/which-key.nvim', event = 'VeryLazy' }
+local M = {
+  'folke/which-key.nvim',
+  event = 'VeryLazy',
+}
 
 function M.config()
   local icons = rvim.style.icons

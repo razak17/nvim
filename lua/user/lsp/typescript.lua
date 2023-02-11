@@ -1,4 +1,4 @@
-local ok, which_key = rvim.safe_require('which-key')
+local ok, which_key = rvim.safe_require('which-key', { silent = true })
 if ok then which_key.register({ ['<localleader>'] = { r = { name = 'Rust Tools' } } }) end
 
 require('typescript').setup({

@@ -8,7 +8,7 @@ vim.opt_local.spell = true
 
 if not rvim then return end
 
-local ok, which_key = rvim.safe_require('which-key')
+local ok, which_key = rvim.safe_require('which-key', { silent = true })
 if ok then which_key.register({ ['<localleader>g'] = { name = 'Gopher' } }) end
 local with_desc = function(desc) return { buffer = 0, desc = desc } end
 rvim.nnoremap('<localleader>gb', '<Cmd>GoBuild<CR>', with_desc('build'))
