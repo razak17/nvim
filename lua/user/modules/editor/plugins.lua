@@ -116,6 +116,5 @@ return {
         desc = 'refactor',
       },
     },
-    opts = {},
   },
 }
