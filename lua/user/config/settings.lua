@@ -198,13 +198,8 @@ o.emoji = false
 ----------------------------------------------------------------------------------------------------
 -- Cursor {{{1
 ----------------------------------------------------------------------------------------------------
--- This is from the help docs, it enables mode shapes, "Cursor" highlight, and blinking
--- opt.guicursor = {
---   [[n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50]],
---   [[a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor]],
---   [[sm:block-blinkwait175-blinkoff150-blinkon175]],
--- }
-opt.guicursor = { 'a:block' }
+-- NOTE: Using a block cursor in all modes causes ghost text in dressing prompt
+-- opt.guicursor = ""
 ----------------------------------------------------------------------------------------------------
 -- Title {{{1
 ----------------------------------------------------------------------------------------------------
