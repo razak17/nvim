@@ -72,6 +72,7 @@ local function generate_ftplugin(server_name, dir)
   local filetypes = getFileTypes(server_name)
   if not filetypes then return end
   for _, filetype in ipairs(filetypes) do
+    filetype = filetype:match('%.([^.]*)$') or filetype
     local filename = join_paths(dir, filetype .. '.lua')
     write_manager(filename, server_name)
     -- if server_name == 'tsserver' then
