@@ -89,7 +89,7 @@ return {
       rvim.nnoremap('<leader>tp', function() new_float('python') end, 'fterm: python')
     end,
     opts = {
-      border = rvim.style.border.common,
+      border = rvim.style.current.border,
       dimensions = { height = 0.8, width = 0.9 },
     },
   },
