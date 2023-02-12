@@ -21,6 +21,28 @@ return {
   },
 
   {
+    'joechrisellis/lsp-format-modifications.nvim',
+    ft = { 'typescript', 'typescriptreact' },
+    keys = {
+      {
+        '<localleader>lm',
+        '<cmd>FormatModifications<CR>',
+        desc = 'format-modifications: format',
+      },
+    },
+  },
+
+  {
+    'laytan/tailwind-sorter.nvim',
+    dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-lua/plenary.nvim' },
+    build = 'cd formatter && npm i && npm run build',
+    keys = {
+      { '<localleader>lt', '<Cmd>TailwindSort<CR>', desc = 'tailwind-sorter: sort' },
+    },
+    config = {},
+  },
+
+  {
     'SmiteshP/nvim-navic',
     event = { 'BufRead', 'BufNewFile' },
     dependencies = { 'williamboman/mason-lspconfig.nvim' },
@@ -198,7 +220,7 @@ return {
     config = function() vim.g.matchup_matchparen_enabled = 0 end,
     keys = {
       {
-        '<localleader>lm',
+        '<localleader>lw',
         ':<c-u>MatchupWhereAmI?<CR>',
         desc = 'matchup: where am i',
       },
@@ -224,17 +246,5 @@ return {
         desc = 'ts-node-action: run',
       },
     },
-  },
-
-  {
-    'joechrisellis/lsp-format-modifications.nvim',
-    config = function()
-      rvim.nnoremap(
-        '<localleader>lf',
-        '<cmd>FormatModifications<CR>',
-        'lsp-format-modifications: format'
-      )
-    end,
-    ft = { 'typescript', 'typescriptreact' },
   },
 }
