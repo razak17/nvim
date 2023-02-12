@@ -2,11 +2,10 @@ if not rvim or not vim.o.statuscolumn then return end
 
 local fn, g, v, api = vim.fn, vim.g, vim.v, vim.api
 
----@alias SignColumnItem {name:string, text:string, texthl:string}
-
-local sep_hl = '%#StatusColSep#'
 local space = ' '
+local shade = '░'
 local separator = '▏' -- '│'
+local sep_hl = '%#StatusColSep#'
 
 rvim.statuscolumn = {}
 
@@ -15,7 +14,7 @@ rvim.statuscolumn = {}
 ---@return string
 local function hl(group, text) return '%#' .. group .. '#' .. text .. '%*' end
 
----@return SignColumnItem[]
+---@return {name:string, text:string, texthl:string}[]
 local function get_signs()
   local buf = api.nvim_win_get_buf(g.statusline_winid)
   return vim.tbl_map(
@@ -29,10 +28,18 @@ local function fdm()
   return is_folded and (fn.foldclosed(v.lnum) == -1 and '▼' or '') or ' '
 end
 
+local function is_virt_line() return v.virtnum < 0 end
+
 local function nr()
+  if is_virt_line() then return shade end -- virtual line
   local is_relative = vim.wo[g.statusline_winid].relativenumber
   local num = (is_relative and not rvim.empty(v.relnum)) and v.relnum or v.lnum
   return fn.substitute(num, '\\d\\zs\\ze\\' .. '%(\\d\\d\\d\\)\\+$', ',', 'g')
+end
+
+local function sep()
+  local separator_hl = not is_virt_line() and rvim.empty(v.relnum) and sep_hl or ''
+  return separator_hl .. separator
 end
 
 function rvim.statuscolumn.render()
@@ -48,11 +55,11 @@ function rvim.statuscolumn.render()
   local components = {
     sign and hl(sign.texthl, sign.text) or space,
     [[%=]],
+    '%=',
     nr(),
     space,
     git_sign and hl(git_sign.texthl, git_sign.text:gsub(space, '')) or space,
-    rvim.empty(v.relnum) and sep_hl or '',
-    separator,
+    sep(),
     fdm(),
     space,
   }
