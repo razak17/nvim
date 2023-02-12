@@ -70,6 +70,7 @@ return {
         'TodoDots',
         string.format('TodoTelescope cwd=%s keywords=TODO,FIXME', rvim.get_config_dir())
       )
+      rvim.nnoremap('<leader>tt', '<cmd>TodoDots<CR>', 'todo: dotfiles todos')
     end,
   },
 

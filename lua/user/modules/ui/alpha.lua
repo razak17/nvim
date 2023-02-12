@@ -98,6 +98,8 @@ function M.config()
     opts = { margin = 5 },
   })
 
+  rvim.nnoremap('<leader>;', '<cmd>Alpha<CR>', 'alpha')
+
   rvim.augroup('AlphaSettings', {
     {
       event = { 'User ' },
