@@ -29,22 +29,20 @@ return {
       rvim.nnoremap('<leader>ms', '<cmd>TrailBlazerSaveSession<CR>', 'trailblazer: save session')
       rvim.nnoremap('<leader>ml', '<cmd>TrailBlazerLoadSession<CR>', 'trailblazer: load session')
     end,
-    config = function()
-      require('trailblazer').setup({
-        custom_session_storage_dir = join_paths(rvim.get_runtime_dir(), 'trailblazer'),
-        trail_options = {
-          current_trail_mark_list_type = 'quickfix',
-        },
-        mappings = {
-          nv = {
-            motions = {
-              peek_move_next_down = '<A-K>',
-              peek_move_previous_up = '<A-J>',
-            },
+    opts = {
+      custom_session_storage_dir = join_paths(rvim.get_runtime_dir(), 'trailblazer'),
+      trail_options = {
+        current_trail_mark_list_type = 'quickfix',
+      },
+      mappings = {
+        nv = {
+          motions = {
+            peek_move_next_down = '<A-K>',
+            peek_move_previous_up = '<A-J>',
           },
         },
-      })
-    end,
+      },
+    },
   },
 
   {
@@ -90,10 +88,10 @@ return {
       rvim.nnoremap('<leader>tr', function() new_float('ranger') end, 'fterm: ranger')
       rvim.nnoremap('<leader>tp', function() new_float('python') end, 'fterm: python')
     end,
-    config = function()
-      local fterm = require('FTerm')
-      fterm.setup({ dimensions = { height = 0.8, width = 0.9 } })
-    end,
+    opts = {
+      border = rvim.style.border.common,
+      dimensions = { height = 0.8, width = 0.9 },
+    },
   },
 
   {
@@ -111,23 +109,19 @@ return {
         'persistence: restore last'
       )
     end,
-    config = function()
-      require('persistence').setup({
-        dir = vim.fn.expand(rvim.get_cache_dir() .. '/sessions/'),
-        options = { 'buffers', 'curdir', 'tabpages', 'winsize', 'help' },
-      })
-    end,
+    opts = {
+      dir = vim.fn.expand(rvim.get_cache_dir() .. '/sessions/'),
+      options = { 'buffers', 'curdir', 'tabpages', 'winsize', 'help' },
+    },
   },
 
   {
     'ggandor/flit.nvim',
     keys = { 'n', 'f' },
-    config = function()
-      require('flit').setup({
-        labeled_modes = 'nvo',
-        multiline = false,
-      })
-    end,
+    opts = {
+      labeled_modes = 'nvo',
+      multiline = false,
+    },
   },
 
   {
@@ -154,13 +148,11 @@ return {
   {
     'kevinhwang91/nvim-bqf',
     ft = 'qf',
-    config = function()
-      require('bqf').setup({
-        preview = {
-          border_chars = { '│', '│', '─', '─', '┌', '┐', '└', '┘', '▊' },
-        },
-      })
-    end,
+    opts = {
+      preview = {
+        border_chars = { '│', '│', '─', '─', '┌', '┐', '└', '┘', '▊' },
+      },
+    },
   },
 
   {
@@ -177,47 +169,41 @@ return {
     'razak17/lab.nvim',
     event = 'InsertEnter',
     build = 'cd js && npm ci',
-    config = function()
-      require('lab').setup({
-        runnerconf_path = join_paths(rvim.get_cache_dir(), 'lab', 'runnerconf'),
-        code_runner = { enabled = false },
-      })
-    end,
+    opts = {
+      runnerconf_path = join_paths(rvim.get_cache_dir(), 'lab', 'runnerconf'),
+      code_runner = { enabled = false },
+    },
   },
 
   {
     'razak17/package-info.nvim',
     event = 'BufRead package.json',
     dependencies = { 'MunifTanjim/nui.nvim' },
-    config = function()
-      require('package-info').setup({
-        autostart = false,
-        package_manager = 'yarn',
-      })
-    end,
+    opts = {
+      autostart = false,
+      package_manager = 'yarn',
+    },
   },
 
   {
     'Saecki/crates.nvim',
     event = 'BufRead Cargo.toml',
-    config = function()
-      require('crates').setup({
-        popup = {
-          autofocus = true,
-          style = 'minimal',
-          border = rvim.style.current.border,
-          show_version_date = false,
-          show_dependency_version = true,
-          max_height = 30,
-          min_width = 20,
-          padding = 1,
-        },
-        null_ls = {
-          enabled = true,
-          name = 'crates.nvim',
-        },
-      })
-    end,
+    opts = {
+      popup = {
+        autofocus = true,
+        style = 'minimal',
+        border = rvim.style.current.border,
+        show_version_date = false,
+        show_dependency_version = true,
+        max_height = 30,
+        min_width = 20,
+        padding = 1,
+      },
+      null_ls = {
+        enabled = true,
+        name = 'crates.nvim',
+      },
+    },
   },
 
   {
@@ -243,6 +229,6 @@ return {
       rvim.nnoremap('<leader>rp', '<Plug>RestNvimPreview', 'rest: preview')
       rvim.nnoremap('<leader>rl', '<Plug>RestNvimLast', 'rest: run last')
     end,
-    config = function() require('rest-nvim').setup({ skip_ssl_verification = true }) end,
+    opts = { skip_ssl_verification = true },
   },
 }

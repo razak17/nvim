@@ -87,15 +87,13 @@ return {
   {
     'uga-rosa/ccc.nvim',
     keys = { { '<leader>oc', '<cmd>CccHighlighterToggle<CR>', desc = 'toggle ccc' } },
-    config = function()
-      require('ccc').setup({
-        win_opts = { border = rvim.style.current.border },
-        highlighter = {
-          auto_enable = true,
-          excludes = { 'dart', 'html', 'css', 'typescriptreact' },
-        },
-      })
-    end,
+    opts = {
+      win_opts = { border = rvim.style.current.border },
+      highlighter = {
+        auto_enable = true,
+        excludes = { 'dart', 'html', 'css', 'typescriptreact' },
+      },
+    },
   },
 
   {
@@ -124,11 +122,9 @@ return {
     'zbirenbaum/neodim',
     event = 'VeryLazy',
     enabled = false,
-    config = function()
-      require('neodim').setup({
-        blend_color = rvim.highlight.get('Normal', 'bg'),
-        hide = { underline = false },
-      })
-    end,
+    opts = {
+      blend_color = rvim.highlight.get('Normal', 'bg'),
+      hide = { underline = false },
+    },
   },
 }

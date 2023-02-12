@@ -87,7 +87,7 @@ return {
 
   {
     'zbirenbaum/copilot.lua',
-    event = 'VeryLazy',
+    event = 'InsertEnter',
     opts = {
       suggestion = {
         auto_trigger = true,
@@ -183,21 +183,19 @@ return {
         desc = 'toggle inlay_hints',
       },
     },
-    config = function()
-      require('lsp-inlayhints').setup({
-        inlay_hints = {
-          highlight = 'Comment',
-          labels_separator = ' ⏐ ',
-          parameter_hints = {
-            prefix = '',
-          },
-          type_hints = {
-            prefix = '=> ',
-            remove_colon_start = true,
-          },
+    opts = {
+      inlay_hints = {
+        highlight = 'Comment',
+        labels_separator = ' ⏐ ',
+        parameter_hints = {
+          prefix = '',
         },
-      })
-    end,
+        type_hints = {
+          prefix = '=> ',
+          remove_colon_start = true,
+        },
+      },
+    },
   },
 
   {
@@ -228,6 +226,13 @@ return {
 
   {
     'ckolkey/ts-node-action',
+    keys = {
+      {
+        '<localleader>ct',
+        function() require('ts-node-action').node_action() end,
+        desc = 'ts-node-action: run',
+      },
+    },
     config = function()
       require('ts-node-action').setup({
         typescriptreact = {
@@ -238,12 +243,5 @@ return {
         },
       })
     end,
-    keys = {
-      {
-        '<localleader>ct',
-        function() require('ts-node-action').node_action() end,
-        desc = 'ts-node-action: run',
-      },
-    },
   },
 }

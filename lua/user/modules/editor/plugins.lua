@@ -36,7 +36,7 @@ return {
   {
     'karb94/neoscroll.nvim', -- NOTE: alternative: 'declancm/cinnamon.nvim'
     event = 'VeryLazy',
-    config = function() require('neoscroll').setup({ hide_cursor = true }) end,
+    opts = { hide_cursor = true },
   },
 
   {
@@ -49,18 +49,13 @@ return {
 
     'xiyaowong/accelerated-jk.nvim',
     event = 'VeryLazy',
-    config = function()
-      require('accelerated-jk').setup({
-        mappings = { j = 'gj', k = 'gk' },
-        -- If the interval of key-repeat takes more than `acceleration_limit` ms, the step is reset
-        -- acceleration_limit = 150,
-      })
-    end,
+    opts = {
+      mappings = { j = 'gj', k = 'gk' },
+    },
   },
 
   {
     'andrewferrier/debugprint.nvim',
-    opts = { create_keymaps = false },
     keys = {
       {
         '<leader>dp',
@@ -77,13 +72,13 @@ return {
       },
       { '<leader>dx', '<Cmd>DeleteDebugPrints<CR>', desc = 'debugprint: clear all' },
     },
-    config = function() require('debugprint').setup({ create_keymaps = false }) end,
+    opts = { create_keymaps = false },
   },
 
   {
     'axelvc/template-string.nvim',
     ft = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
-    config = function() require('template-string').setup({ remove_template_string = true }) end,
+    opts = { remove_template_string = true },
   },
 
   {
