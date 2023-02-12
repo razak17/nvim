@@ -88,24 +88,25 @@ return {
   {
     'zbirenbaum/copilot.lua',
     event = 'VeryLazy',
-    config = function()
-      require('copilot').setup({
-        suggestion = { auto_trigger = true },
-        filetypes = {
-          gitcommit = false,
-          NeogitCommitMessage = false,
-          DressingInput = false,
-          TelescopePrompt = false,
-          ['neo-tree-popup'] = false,
-          ['dap-repl'] = false,
+    opts = {
+      suggestion = {
+        auto_trigger = true,
+        keymap = { accept = '<M-l>', next = '<M-]>', prev = '<M-[>', dismiss = '<C-\\>' },
+      },
+      filetypes = {
+        gitcommit = false,
+        NeogitCommitMessage = false,
+        DressingInput = false,
+        TelescopePrompt = false,
+        ['neo-tree-popup'] = false,
+        ['dap-repl'] = false,
+      },
+      server_opts_overrides = {
+        settings = {
+          advanced = { inlineSuggestCount = 3 },
         },
-        server_opts_overrides = {
-          settings = {
-            advanced = { inlineSuggestCount = 3 },
-          },
-        },
-      })
-    end,
+      },
+    },
   },
 
   {
