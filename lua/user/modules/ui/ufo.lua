@@ -13,7 +13,6 @@ end
 
 function M.config()
   local ufo = require('ufo')
-  local hl = require('user.utils.highlights')
   local opt, strwidth = vim.opt, vim.api.nvim_strwidth
 
   local function handler(virt_text, _, end_lnum, width, truncate, ctx)
@@ -58,7 +57,7 @@ function M.config()
   -- exist on a git branch for which the folds where saved it will cause an error on startup
   -- opt.sessionoptions:append('folds')
 
-  hl.plugin('ufo', {
+  rvim.highlight.plugin('ufo', {
     { Folded = { bold = false, italic = false, bg = { from = 'CursorLine' } } },
   })
 

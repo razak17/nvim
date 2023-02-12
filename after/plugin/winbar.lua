@@ -4,7 +4,6 @@ if not rvim or not rvim.ui.winbar.enable then return end
 ---@diagnostic disable: duplicate-doc-param missing-return
 ---@diagnostic disable:  missing-return
 local _, devicons = rvim.safe_require('nvim-web-devicons', { silent = true })
-local highlights = require('user.utils.highlights')
 local utils = require('user.utils.statusline')
 local component = utils.component
 local component_raw = utils.component_raw
@@ -31,7 +30,7 @@ function rvim.ui.winbar.click(id, _, _, _)
   if id then vim.cmd.edit(rvim.ui.winbar.state[id]) end
 end
 
-highlights.plugin('winbar', {
+rvim.highlight.plugin('winbar', {
   { Winbar = { bold = false } },
   { WinbarNC = { bold = false } },
   { WinbarCrumb = { bold = true } },

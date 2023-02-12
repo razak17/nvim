@@ -6,8 +6,6 @@
 
 if not rvim then return end
 
-local util = require('user.utils.highlights')
-
 local fn = vim.fn
 
 local function is_floating_win() return vim.fn.win_gettype() == 'popup' end
@@ -31,14 +29,14 @@ local function toggle_trailing(mode)
   vim.w.whitespace_match_number = fn.matchadd('ExtraWhitespace', pattern)
 end
 
-util.set('ExtraWhitespace', { foreground = 'red' })
+rvim.highlight.set('ExtraWhitespace', { foreground = 'red' })
 
 rvim.augroup('WhitespaceMatch', {
   {
     event = { 'ColorScheme' },
     desc = 'Add extra whitespace highlight',
     pattern = { '*' },
-    command = function() util.set('ExtraWhitespace', { foreground = 'red' }) end,
+    command = function() rvim.highlight.set('ExtraWhitespace', { foreground = 'red' }) end,
   },
   {
     event = { 'BufEnter', 'FileType', 'InsertLeave' },

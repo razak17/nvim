@@ -1,5 +1,3 @@
-local hl = require('user.utils.highlights')
-
 return {
   'nvim-tree/nvim-web-devicons',
   { 'fladson/vim-kitty', ft = 'kitty' },
@@ -41,7 +39,7 @@ return {
         org = { headline_highlights = false },
         norg = { codeblock_highlight = false },
       })
-      hl.plugin('Headlines', {
+      rvim.highlight.plugin('Headlines', {
         { Headline1 = { background = '#003c30', foreground = 'White' } },
         { Headline2 = { background = '#00441b', foreground = 'White' } },
         { Headline3 = { background = '#084081', foreground = 'White' } },
@@ -79,7 +77,7 @@ return {
     'lukas-reineke/virt-column.nvim',
     event = 'VeryLazy',
     config = function()
-      hl.plugin('virt_column', {
+      rvim.highlight.plugin('virt_column', {
         { VirtColumn = { bg = 'None', fg = { from = 'VertSplit' } } },
       })
       require('virt-column').setup({ char = '│' })
@@ -104,7 +102,7 @@ return {
     'm-demare/hlargs.nvim',
     event = 'VeryLazy',
     config = function()
-      hl.plugin('hlargs', {
+      rvim.highlight.plugin('hlargs', {
         theme = {
           ['*'] = { { Hlargs = { italic = true, foreground = '#A5D6FF' } } },
           ['horizon'] = { { Hlargs = { italic = true, foreground = { from = 'Normal' } } } },
@@ -128,7 +126,7 @@ return {
     enabled = false,
     config = function()
       require('neodim').setup({
-        blend_color = hl.get('Normal', 'bg'),
+        blend_color = rvim.highlight.get('Normal', 'bg'),
         hide = { underline = false },
       })
     end,

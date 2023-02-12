@@ -66,7 +66,6 @@ local M = {
 
 function M.config()
   local cmp = require('cmp')
-  local hl = require('user.utils.highlights')
   local fmt = string.format
 
   local api = vim.api
@@ -89,7 +88,7 @@ function M.config()
     }
   )
 
-  hl.plugin('Cmp', kind_hls)
+  rvim.highlight.plugin('Cmp', kind_hls)
 
   local cmp_window = {
     border = border,

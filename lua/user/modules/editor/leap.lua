@@ -12,7 +12,7 @@ function M.init()
 end
 
 function M.config()
-  require('user.utils.highlights').plugin('leap', {
+  rvim.highlight.plugin('leap', {
     theme = {
       ['*'] = {
         { LeapBackdrop = { fg = '#707070' } },

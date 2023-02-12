@@ -15,7 +15,7 @@ local M = {
             buftype = { 'terminal', 'quickfix', 'nofile' },
           },
         },
-        other_win_hl_color = require('user.utils.highlights').get('Visual', 'bg'),
+        other_win_hl_color = rvim.highlight.get('Visual', 'bg'),
       })
     end,
   },
@@ -26,9 +26,8 @@ local M = {
 
 function M.config()
   local icons = rvim.style.icons
-  local hl = require('user.utils.highlights')
 
-  hl.plugin('NeoTree', {
+  rvim.highlight.plugin('NeoTree', {
     theme = {
       ['zephyr'] = {
         { NeoTreeNormal = { link = 'PanelBackground' } },

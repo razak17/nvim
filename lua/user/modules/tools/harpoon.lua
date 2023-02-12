@@ -26,7 +26,7 @@ function M.config()
       borderchars = rvim.style.border.common,
     },
   })
-  require('user.utils.highlights').plugin('harpoon', {
+  rvim.highlight.plugin('harpoon', {
     theme = {
       ['zephyr'] = {
         { HarpoonTitle = { fg = { from = 'Winbar' } } },

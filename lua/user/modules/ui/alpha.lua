@@ -4,7 +4,6 @@ function M.config()
   local alpha = require('alpha')
   local dashboard = require('alpha.themes.dashboard')
   local fortune = require('alpha.fortune')
-  local hl = require('user.utils.highlights')
   local f = string.format
 
   local button = function(h, ...)
@@ -16,7 +15,7 @@ function M.config()
     return btn
   end
 
-  hl.plugin('alpha', {
+  rvim.highlight.plugin('alpha', {
     { StartLogo1 = { fg = '#1C506B' } },
     { StartLogo2 = { fg = '#1D5D68' } },
     { StartLogo3 = { fg = '#1E6965' } },

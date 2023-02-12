@@ -2,15 +2,14 @@ local M = { 'nvim-lualine/lualine.nvim', event = 'VeryLazy' }
 
 function M.config()
   local P = require('zephyr.palette')
-  local hl = require('user.utils.highlights')
   local style = rvim.style
   local icons = style.icons
   local codicons = style.codicons
   local utils = require('user.utils.statusline')
   local conditions = utils.conditions
 
-  local bg = hl.get('StatusLine', 'bg')
-  local fg = hl.get('StatusLine', 'fg')
+  local bg = rvim.highlight.get('StatusLine', 'bg')
+  local fg = rvim.highlight.get('StatusLine', 'fg')
 
   -- Config
   local config = {

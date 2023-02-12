@@ -60,7 +60,7 @@ return {
       require('buffer_manager').setup({
         borderchars = rvim.style.border.common,
       })
-      require('user.utils.highlights').plugin('harpoon', {
+      rvim.highlight.plugin('harpoon', {
         theme = {
           ['zephyr'] = {
             { BufferManagerTitle = { fg = { from = 'Winbar' } } },

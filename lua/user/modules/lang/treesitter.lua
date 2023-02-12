@@ -9,7 +9,7 @@ local M = {
       'nvim-treesitter/nvim-treesitter-context',
       event = { 'BufRead', 'BufNewFile' },
       config = function()
-        require('user.utils.highlights').plugin('treesitter-context', {
+        rvim.highlight.plugin('treesitter-context', {
           { ContextBorder = { link = 'FloatBorder' } },
           { TreesitterContext = { inherit = 'Normal' } },
           { TreesitterContextLineNumber = { inherit = 'LineNr' } },

@@ -1,5 +1,3 @@
-local hl = require('user.utils.highlights')
-
 return {
   'nanotee/sqls.nvim',
   'b0o/schemastore.nvim',
@@ -13,7 +11,7 @@ return {
   {
     'neovim/nvim-lspconfig',
     config = function()
-      hl.plugin('lspconfig', {
+      rvim.highlight.plugin('lspconfig', {
         { LspInfoBorder = { link = 'FloatBorder' } },
       })
       require('lspconfig.ui.windows').default_options.border = rvim.style.current.border
@@ -51,7 +49,7 @@ return {
       local misc = rvim.style.icons.misc
       local lsp_icons = {}
       for k, v in pairs(rvim.style.current.lsp_icons) do
-        hl.set(('NavicIcons%s'):format(k), { link = rvim.lsp.kind_highlights[k] })
+        rvim.highlight.set(('NavicIcons%s'):format(k), { link = rvim.lsp.kind_highlights[k] })
         lsp_icons[k] = v .. ' '
       end
       require('nvim-navic').setup({
@@ -60,7 +58,7 @@ return {
         depth_limit_indicator = misc.ellipsis,
         separator = (' %s '):format(misc.arrow_right),
       })
-      hl.plugin('navic', {
+      rvim.highlight.plugin('navic', {
         { NavicText = { bold = false } },
         { NavicSeparator = { link = 'Directory' } },
       })
@@ -78,7 +76,7 @@ return {
     config = function()
       require('glance').setup({
         preview_win_opts = { relativenumber = false },
-        hl.plugin('glance', {
+        rvim.highlight.plugin('glance', {
           { GlanceWinBarFilename = { link = 'Error' } },
           { GlanceWinBarFilepath = { link = 'StatusLine' } },
           { GlanceWinBarTitle = { link = 'StatusLine' } },
@@ -133,7 +131,7 @@ return {
     'kosayoda/nvim-lightbulb',
     event = 'BufReadPre',
     config = function()
-      hl.plugin('Lightbulb', {
+      rvim.highlight.plugin('Lightbulb', {
         { LightBulbFloatWin = { foreground = { from = 'Type' } } },
         { LightBulbVirtualText = { foreground = { from = 'Type' } } },
       })

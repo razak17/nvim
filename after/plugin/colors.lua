@@ -1,9 +1,7 @@
 if not rvim then return end
 
-local util = require('user.utils.highlights')
-
 local function general_overrides()
-  util.all({
+  rvim.highlight.all({
     { mkdLineBreak = { link = 'NONE' } },
     { LineNr = { background = 'NONE' } },
     ------------------------------------------------------------------------------------------------
@@ -36,7 +34,7 @@ local function general_overrides()
 end
 
 local function set_sidebar_highlight()
-  util.all({
+  rvim.highlight.all({
     { PanelDarkBackground = { bg = { from = 'Normal', alter = -43 } } },
     { PanelDarkHeading = { inherit = 'PanelDarkBackground', bold = true } },
     { PanelBackground = { background = { from = 'Normal', alter = -8 } } },
@@ -117,7 +115,7 @@ local function colorscheme_overrides()
   local hls = overrides[vim.g.colors_name]
   if not hls then return end
 
-  util.all(hls)
+  rvim.highlight.all(hls)
 end
 
 local function user_highlights()

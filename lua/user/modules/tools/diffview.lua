@@ -9,7 +9,7 @@ local M = {
 }
 
 function M.config()
-  require('user.utils.highlights').plugin('diffview', {
+  rvim.highlight.plugin('diffview', {
     { DiffAddedChar = { bg = 'NONE', fg = { from = 'DiffAdd', attr = 'bg', alter = 30 } } },
     { DiffChangedChar = { bg = 'NONE', fg = { from = 'DiffChange', attr = 'bg', alter = 30 } } },
     { DiffviewStatusAdded = { link = 'DiffAddedChar' } },
