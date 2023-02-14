@@ -159,10 +159,6 @@ return {
     'turbio/bracey.vim',
     ft = 'html',
     build = 'npm install --prefix server',
-    init = function()
-      rvim.nnoremap('<leader>bs', '<cmd>Bracey<CR>', 'bracey: start')
-      rvim.nnoremap('<leader>be', '<cmd>BraceyStop<CR>', 'bracey: stop')
-    end,
   },
 
   {
