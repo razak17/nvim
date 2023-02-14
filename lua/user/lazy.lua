@@ -62,6 +62,7 @@ function Lazy:bootstrap()
     performance = {
       rtp = {
         reset = false,
+        paths = { join_paths(rvim.get_runtime_dir(), 'site') },
         disabled_plugins = rvim.util.disabled_builtins,
       },
       enabled = true,
