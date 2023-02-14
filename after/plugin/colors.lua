@@ -16,6 +16,10 @@ local function general_overrides()
     { GitSignsCurrentLineBlame = { link = 'Comment' } },
     { StatusColSep = { fg = { from = 'WinSeparator' }, bg = { from = 'CursorLine' } } },
     ------------------------------------------------------------------------------------------------
+    --  Semantic tokens
+    ------------------------------------------------------------------------------------------------
+    { ['@global'] = { bold = true, inherit = '@namespace' } },
+    ------------------------------------------------------------------------------------------------
     -- Treesitter
     ------------------------------------------------------------------------------------------------
     { ['@keyword.return'] = { italic = true, foreground = { from = 'Keyword' } } },
