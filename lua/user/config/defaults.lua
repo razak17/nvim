@@ -1,6 +1,6 @@
 rvim.path = {
   snippets = join_paths(rvim.get_config_dir(), 'snippets', 'textmate'),
-  python3 = join_paths(rvim.get_cache_dir(), 'venv', 'neovim', 'bin', 'python3'),
+  python = join_paths(rvim.get_cache_dir(), 'venv', 'neovim', 'bin', 'python3'),
   mason = join_paths(vim.call('stdpath', 'data'), 'mason'),
 }
 

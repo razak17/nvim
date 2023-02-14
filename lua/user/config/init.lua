@@ -9,14 +9,11 @@ g.mapleader = (rvim.keys.leader == 'space' and ' ') or rvim.keys.leader
 g.maplocalleader = (rvim.keys.localleader == 'space' and ' ') or rvim.keys.localleader
 
 ----------------------------------------------------------------------------------------------------
--- Set Providers & Disable Builtins
+-- Set Providers
 ----------------------------------------------------------------------------------------------------
-g.python3_host_prog = rvim.path.python3
+g.python3_host_prog = rvim.path.python
 for _, v in pairs(rvim.util.disabled_providers) do
   g['loaded_' .. v .. '_provider'] = 0
-end
-for _, plugin in pairs(rvim.util.disabled_builtins) do
-  g['loaded_' .. plugin] = 1
 end
 
 ----------------------------------------------------------------------------------------------------
