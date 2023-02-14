@@ -22,6 +22,7 @@ function M.config()
       ['string'] = 'int',
       ['leader'] = 'localleader',
       ['chore'] = 'feat',
+      ['double'] = 'single',
     },
     remove_default_keybinds = true,
   })
