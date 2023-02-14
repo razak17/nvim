@@ -266,7 +266,7 @@ function M.config()
     }),
   })
 
-  require('cmp').setup.filetype({ 'dap-repl', 'dapui_watches' }, {
+  cmp.setup.filetype({ 'dap-repl', 'dapui_watches' }, {
     sources = { { name = 'dap' } },
   })
 
