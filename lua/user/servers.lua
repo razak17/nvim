@@ -169,7 +169,7 @@ M.servers = {
       },
     },
   },
-  sumneko_lua = function()
+  lua_ls = function()
     return {
       settings = {
         Lua = {
