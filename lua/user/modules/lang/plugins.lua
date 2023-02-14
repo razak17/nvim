@@ -48,9 +48,12 @@ return {
       vim.g.navic_silence = true
       local misc = rvim.style.icons.misc
       local lsp_icons = {}
-      for k, v in pairs(rvim.style.current.lsp_icons) do
-        rvim.highlight.set(('NavicIcons%s'):format(k), { link = rvim.lsp.kind_highlights[k] })
-        lsp_icons[k] = v .. ' '
+      for key, val in pairs(rvim.style.current.lsp_icons) do
+        rvim.highlight.set(
+          string.format('NavicIcons%s', key),
+          { link = rvim.lsp.kind_highlights[key] }
+        )
+        lsp_icons[key] = val .. ' '
       end
       require('nvim-navic').setup({
         icons = lsp_icons,
