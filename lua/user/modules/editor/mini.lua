@@ -16,11 +16,6 @@ return {
         function() require('mini.bufremove').delete(0, false) end,
         desc = 'delete buffer',
       },
-      {
-        '<leader>bd',
-        function() require('mini.bufremove').delete(0, true) end,
-        desc = 'delete buffer (force)',
-      },
     },
   },
 

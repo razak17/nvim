@@ -29,7 +29,6 @@ function M.config()
     },
     ['<leader>'] = {
       a = { name = 'Actions' },
-      b = { name = 'Buffer' },
       d = { name = 'Debugprint' },
       f = { name = 'Telescope' },
       fv = { name = 'Vim' },

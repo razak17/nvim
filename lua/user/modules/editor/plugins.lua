@@ -17,26 +17,20 @@ return {
     end,
   },
 
-  {
-    'kazhala/close-buffers.nvim',
-    keys = {
-      {
-        '<leader>bc',
-        function() require('close_buffers').wipe({ type = 'other' }) end,
-        desc = 'close others',
-      },
-      {
-        '<leader>bx',
-        function() require('close_buffers').wipe({ type = 'all', force = true }) end,
-        desc = 'close all',
-      },
-    },
-  },
+  { 'kazhala/close-buffers.nvim' },
 
   {
     'karb94/neoscroll.nvim', -- NOTE: alternative: 'declancm/cinnamon.nvim'
     event = 'VeryLazy',
     opts = { hide_cursor = true },
+  },
+
+  {
+    'jghauser/fold-cycle.nvim',
+    config = true,
+    keys = {
+      { '<BS>', function() require('fold-cycle').open() end, desc = 'fold-cycle: toggle' },
+    },
   },
 
   {
