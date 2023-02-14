@@ -42,7 +42,7 @@ end
 
 local function fdm()
   if fn.foldlevel(v.lnum) <= fn.foldlevel(v.lnum - 1) then return space end
-  return fn.foldclosed(v.lnum) == -1 and fold_closed or fold_opened
+  return fn.foldclosed(v.lnum) == -1 and fold_opened or fold_closed
 end
 
 local function is_virt_line() return v.virtnum < 0 end
