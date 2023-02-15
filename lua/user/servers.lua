@@ -67,21 +67,21 @@ local function on_init(client)
 end
 
 M.servers = {
-  astro = true,
-  bashls = true,
-  clangd = true,
-  clojure_lsp = true,
-  cmake = true,
-  cssls = true,
-  dockerls = true,
-  html = true,
-  marksman = false,
-  prismals = true,
-  quick_lint_js = false,
-  sqls = true,
-  svelte = true,
-  tsserver = true,
-  vimls = true,
+  astro = {},
+  bashls = {},
+  clangd = {},
+  clojure_lsp = {},
+  cmake = {},
+  cssls = {},
+  dockerls = {},
+  html = {},
+  marksman = {},
+  prismals = {},
+  quick_lint_js = {},
+  sqls = {},
+  svelte = {},
+  tsserver = {},
+  vimls = {},
   prosemd_lsp = {
     root_dir = function(fname) return require('lspconfig/util').root_pattern('README.md')(fname) end,
     single_file_support = false,
@@ -265,9 +265,7 @@ M.servers = {
 function M.setup(name)
   local config = M.servers[name]
   if not config then return end
-  local t = type(config)
-  if t == 'boolean' then config = {} end
-  if t == 'function' then config = config() end
+  if type(config) == 'function' then config = config() end
   config.on_init = on_init
   config.capabilities = global_capabilities()
   return config
