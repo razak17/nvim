@@ -51,6 +51,9 @@ function M.config()
       end
     end,
   })
+  rvim.highlight.plugin('null-ls', {
+    { NullLsInfoBorder = { link = 'FloatBorder' } },
+  })
   rvim.augroup('NullLsConfig', {
     {
       event = { 'Filetype' },
