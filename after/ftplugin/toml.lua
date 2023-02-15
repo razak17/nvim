@@ -1,7 +1,7 @@
 local filename = vim.fn.expand('%:t')
 if filename ~= 'Cargo.toml' then return end
 
-local ok, which_key = rvim.safe_require('which-key', { silent = true })
+local ok, which_key = rvim.safe_require('which-key')
 if ok then which_key.register({ ['<localleader>'] = { c = { name = 'Crates' } } }) end
 local nnoremap = rvim.nnoremap
 local with_desc = function(desc) return { buffer = 0, desc = desc } end
