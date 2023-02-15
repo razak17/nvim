@@ -2,7 +2,11 @@ local M = { 'rcarriga/nvim-notify', event = 'VeryLazy' }
 
 function M.init()
   rvim.nnoremap('<leader>nn', '<cmd>Notifications<CR>', 'notify: show')
-  rvim.nnoremap('<leader>nx', '<cmd>lua require("notify").dismiss()<CR>', 'notify: dismiss')
+  rvim.nnoremap(
+    '<leader>nd',
+    function() require('notify').dismiss({ silent = true, pending = true }) end,
+    { desc = 'dismiss notifications' }
+  )
 end
 
 function M.config()
