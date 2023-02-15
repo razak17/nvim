@@ -93,28 +93,6 @@ local function colorscheme_overrides()
       { TelescopePromptPrefix = { fg = { from = 'TelescopePromptPrefix', alter = -30 } } },
       { StatusLine = { bg = { from = 'StatusLine', alter = -20 } } },
     },
-    ['horizon'] = {
-      ----------------------------------------------------------------------------------------------
-      --- TODO: upstream these highlights to horizon.nvim
-      ----------------------------------------------------------------------------------------------
-      { Normal = { fg = '#C1C1C1' } },
-      ----------------------------------------------------------------------------------------------
-      { NormalNC = { inherit = 'Normal' } },
-      { WinSeparator = { fg = '#353647' } },
-      { Constant = { bold = true } },
-      { NonText = { fg = { from = 'Comment' } } },
-      { LineNr = { background = 'NONE' } },
-      { TabLineSel = { background = { from = 'SpecialKey', attr = 'fg' } } },
-      { VisibleTab = { background = { from = 'Normal', alter = 40 }, bold = true } },
-      { ['@constant.comment'] = { inherit = 'Constant', bold = true } },
-      { ['@constructor.lua'] = { inherit = 'Type', italic = false, bold = false } },
-      { PanelBackground = { link = 'Normal' } },
-      { PanelWinSeparator = { inherit = 'PanelBackground', fg = { from = 'WinSeparator' } } },
-      { PanelHeading = { bg = 'bg', bold = true, fg = { from = 'Normal', alter = -30 } } },
-      { PanelDarkBackground = { background = { from = 'Normal', alter = -25 } } },
-      { PanelDarkHeading = { inherit = 'PanelDarkBackground', bold = true } },
-      { URL = { fg = { from = 'Keyword' }, underline = true } },
-    },
   }
   local hls = overrides[vim.g.colors_name]
   if not hls then return end

@@ -2,7 +2,6 @@ return {
   'nvim-tree/nvim-web-devicons',
   { 'fladson/vim-kitty', ft = 'kitty' },
   { 'razak17/zephyr-nvim', lazy = false, priority = 1000 },
-  { 'LunarVim/horizon.nvim', lazy = false, priority = 1000 },
   { 'itchyny/vim-highlighturl', event = 'BufReadPre' },
 
   {
@@ -104,7 +103,6 @@ return {
       rvim.highlight.plugin('hlargs', {
         theme = {
           ['*'] = { { Hlargs = { italic = true, foreground = '#A5D6FF' } } },
-          ['horizon'] = { { Hlargs = { italic = true, foreground = { from = 'Normal' } } } },
         },
       })
       require('hlargs').setup({

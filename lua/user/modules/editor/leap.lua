@@ -17,11 +17,6 @@ function M.config()
       ['*'] = {
         { LeapBackdrop = { fg = '#707070' } },
       },
-      horizon = {
-        { LeapLabelPrimary = { bg = 'NONE', fg = '#ccff88', italic = true } },
-        { LeapLabelSecondary = { bg = 'NONE', fg = '#99ccff' } },
-        { LeapLabelSelected = { bg = 'NONE', fg = 'Magenta' } },
-      },
     },
   })
   require('leap').setup({
