@@ -4,7 +4,7 @@ return {
   'simrat39/rust-tools.nvim',
   'jose-elias-alvarez/typescript.nvim',
 
-  { 'mrshmllow/document-color.nvim', ft = { 'html', 'javascriptreact', 'typescriptreact' } },
+  { 'mrshmllow/document-color.nvim' },
 
   { 'marilari88/twoslash-queries.nvim', ft = { 'typescript', 'typescriptreact' } },
 
