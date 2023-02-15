@@ -10,6 +10,8 @@ function M.config()
   local diagnostics = builtins.diagnostics
   local formatting = builtins.formatting
 
+  local function add_ts_code_actions() require('typescript.extensions.null-ls.code-actions') end
+
   null_ls.setup({
     debug = true,
     sources = {
@@ -41,6 +43,7 @@ function M.config()
       formatting.shfmt,
       formatting.stylua.with({ condition = function() return rvim.executable('stylua') end }),
       formatting.goimports,
+      add_ts_code_actions(),
     },
     on_attach = function(client, bufnr)
       -- lsp-format-modifications.nvim
