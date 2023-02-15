@@ -1,5 +1,7 @@
 local M = {}
 
+local fmt = string.format
+
 --- Find the first entry for which the predicate returns true.
 
 -- @param t The table
@@ -18,8 +20,10 @@ local function is_client_active(name)
 end
 
 local function resolve_mason_config(server_name)
-  local found, mason_config =
-    rvim.safe_require('mason-lspconfig.server_configurations.' .. server_name, { silent = true })
+  local found, mason_config = rvim.safe_require(
+    fmt('mason-lspconfig.server_configurations.%s', server_name),
+    { silent = true }
+  )
   if not found then return {} end
   local server_mapping = require('mason-lspconfig.mappings.server')
   local path = require('mason-core.path')
@@ -51,9 +55,7 @@ local function client_is_configured(server_name, ft)
   ft = ft or vim.bo.filetype
   local active_autocmds = vim.api.nvim_get_autocmds({ event = 'FileType', pattern = ft })
   for _, result in ipairs(active_autocmds) do
-    if result.desc ~= nil and result.desc:match('server ' .. server_name .. ' ') then
-      return true
-    end
+    if result.desc ~= nil and result.desc:match(fmt('server %s ', server_name)) then return true end
   end
   return false
 end
@@ -69,7 +71,7 @@ local function launch_server(server_name, config)
     -- some servers have dynamic commands defined with on_new_config
     if type(cmd) == 'table' and type(cmd[1]) == 'string' and not rvim.executable(cmd[1]) then
       vim.notify(
-        string.format('[%q] is missing from PATH or not executable.', cmd[1]),
+        fmt('[%q] is missing from PATH or not executable.', cmd[1]),
         vim.log.levels.ERROR,
         { title = server_name }
       )

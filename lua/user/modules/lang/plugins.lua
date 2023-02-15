@@ -46,20 +46,18 @@ return {
     dependencies = { 'williamboman/mason-lspconfig.nvim' },
     config = function()
       vim.g.navic_silence = true
+      local fmt = string.format
       local misc = rvim.style.icons.misc
       local lsp_icons = {}
       for key, val in pairs(rvim.style.current.lsp_icons) do
-        rvim.highlight.set(
-          string.format('NavicIcons%s', key),
-          { link = rvim.lsp.kind_highlights[key] }
-        )
+        rvim.highlight.set(fmt('NavicIcons%s', key), { link = rvim.lsp.kind_highlights[key] })
         lsp_icons[key] = val .. ' '
       end
       require('nvim-navic').setup({
         icons = lsp_icons,
         highlight = true,
         depth_limit_indicator = misc.ellipsis,
-        separator = (' %s '):format(misc.arrow_right),
+        separator = fmt(' %s ', misc.arrow_right),
       })
       rvim.highlight.plugin('navic', {
         { NavicText = { bold = false } },
