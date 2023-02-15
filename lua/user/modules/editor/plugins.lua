@@ -1,5 +1,6 @@
 return {
   'JoosepAlviste/nvim-ts-context-commentstring',
+  'kazhala/close-buffers.nvim',
 
   {
     'ghillb/cybu.nvim',
@@ -16,8 +17,6 @@ return {
       rvim.nnoremap('L', '<Plug>(CybuNext)', 'cybu: next')
     end,
   },
-
-  { 'kazhala/close-buffers.nvim' },
 
   {
     'karb94/neoscroll.nvim', -- NOTE: alternative: 'declancm/cinnamon.nvim'
