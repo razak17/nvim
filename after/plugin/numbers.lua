@@ -59,11 +59,7 @@ local function is_blocked()
 
   if not api.nvim_buf_is_valid(0) and not api.nvim_buf_is_loaded(0) then return true end
 
-  if vim.wo.diff then return true end
-
-  if win_type == 'command' then return true end
-
-  if vim.wo.previewwindow then return true end
+  if win_type == 'command' or vim.wo.diff or vim.wo.previewwindow then return true end
 
   for _, ft in ipairs(number_filetype_exclusions) do
     if vim.bo.ft == ft or string.match(vim.bo.ft, ft) then return true end
