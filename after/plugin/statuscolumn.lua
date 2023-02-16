@@ -1,4 +1,4 @@
-if not rvim or not vim.o.statuscolumn then return end
+if not rvim or not rvim.has('nvim-0.9') then return end
 
 local fn, g, v, api = vim.fn, vim.g, vim.v, vim.api
 
