@@ -14,7 +14,7 @@ function M.config()
   require('mason').setup({
     ui = {
       border = rvim.ui.current.border,
-      height = vim.o.lines - vim.o.cmdheight - 8,
+      height = 0.8,
       icons = {
         package_installed = icons.misc.checkmark,
         package_pending = icons.misc.right_arrow,
