@@ -12,7 +12,7 @@ local M = {
   'nvim-neotest/neotest',
   event = { 'BufRead', 'BufNewFile' },
   dependencies = {
-    'rcarriga/neotest-plenary',
+    { 'rcarriga/neotest-plenary', dependencies = { 'nvim-lua/plenary.nvim' } },
     'rcarriga/neotest-vim-test',
     'nvim-neotest/neotest-python',
     'rouge8/neotest-rust',
@@ -50,11 +50,7 @@ function M.config()
       require('neotest-plenary'),
       require('neotest-python'),
       require('neotest-rust'),
-      require('neotest-go')({
-        experimental = {
-          test_table = true,
-        },
-      }),
+      require('neotest-go')({ experimental = { test_table = true } }),
     },
   })
 end
