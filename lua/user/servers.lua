@@ -262,8 +262,11 @@ M.servers = {
   },
 }
 
+---Get the configuration for a specific language server
+---@param name string?
+---@return table<string, any>?
 function M.setup(name)
-  local config = M.servers[name]
+  local config = name and M.servers[name] or {}
   if not config then return end
   if type(config) == 'function' then config = config() end
   config.on_init = on_init
