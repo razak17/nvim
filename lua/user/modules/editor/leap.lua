@@ -1,27 +1,31 @@
-local M = { 'ggandor/leap.nvim', event = 'VeryLazy' }
+local api, fn = vim.api, vim.fn
+local hl = rvim.highlight
 
-function M.init()
-  rvim.nnoremap('s', function()
-    require('leap').leap({
-      target_windows = vim.tbl_filter(
-        function(win) return rvim.empty(vim.fn.win_gettype(win)) end,
-        vim.api.nvim_tabpage_list_wins(0)
-      ),
-    })
-  end, 'leap: search')
+local function leap_keys()
+  require('leap').leap({
+    target_windows = vim.tbl_filter(
+      function(win) return rvim.empty(fn.win_gettype(win)) end,
+      api.nvim_tabpage_list_wins(0)
+    ),
+  })
 end
 
-function M.config()
-  rvim.highlight.plugin('leap', {
-    theme = {
-      ['*'] = {
-        { LeapBackdrop = { fg = '#707070' } },
+return {
+  'ggandor/leap.nvim',
+  event = 'VeryLazy',
+  keys = { { 's', leap_keys, mode = 'n' } },
+  opts = { equivalence_classes = { ' \t\r\n', '([{', ')]}', '`"\'' } },
+  config = function(_, opts)
+    hl.plugin('leap', {
+      theme = {
+        ['*'] = { { LeapBackdrop = { fg = '#707070' } } },
+        horizon = {
+          { LeapLabelPrimary = { bg = 'NONE', fg = '#ccff88', italic = true } },
+          { LeapLabelSecondary = { bg = 'NONE', fg = '#99ccff' } },
+          { LeapLabelSelected = { bg = 'NONE', fg = 'Magenta' } },
+        },
       },
-    },
-  })
-  require('leap').setup({
-    equivalence_classes = { ' \t\r\n', '([{', ')]}', '`"\'' },
-  })
-end
-
-return M
+    })
+    require('leap').setup(opts)
+  end,
+}
