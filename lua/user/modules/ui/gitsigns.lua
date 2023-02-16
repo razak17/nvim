@@ -1,4 +1,7 @@
-local M = { 'lewis6991/gitsigns.nvim', event = 'BufReadPre' }
+local M = {
+  'lewis6991/gitsigns.nvim',
+  event = { 'BufReadPre', 'BufNewFile' },
+}
 
 function M.config()
   local cwd = vim.fn.getcwd()
@@ -12,13 +15,8 @@ function M.config()
       changedelete = { hl = 'GitSignsChange', text = right_block },
       untracked = { hl = 'GitSignsAdd', text = right_block },
     },
-    _threaded_diff = true,
-    _extmark_signs = false,
-    _signs_staged_enable = true,
-    word_diff = false,
     current_line_blame = not cwd:match('personal') and not cwd:match('dots'),
     current_line_blame_formatter = ' <author>, <author_time> · <summary>',
-    numhl = false,
     preview_config = { border = rvim.style.current.border },
     on_attach = function()
       local gs = package.loaded.gitsigns
