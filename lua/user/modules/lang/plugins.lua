@@ -38,7 +38,7 @@ return {
     keys = {
       { '<localleader>lt', '<Cmd>TailwindSort<CR>', desc = 'tailwind-sorter: sort' },
     },
-    config = {},
+    opts = {},
   },
 
   {
