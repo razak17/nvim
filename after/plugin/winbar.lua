@@ -11,7 +11,7 @@ local empty = rvim.empty
 
 local fn = vim.fn
 local api = vim.api
-local icons = rvim.style.icons.misc
+local icons = rvim.ui.icons.misc
 local contains = vim.tbl_contains
 
 local dir_separator = icons.caret_right

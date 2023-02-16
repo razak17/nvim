@@ -58,7 +58,7 @@ function M.config()
     {
       event = { 'Filetype' },
       pattern = { 'null-ls-info' },
-      command = function() vim.api.nvim_win_set_config(0, { border = rvim.style.current.border }) end,
+      command = function() vim.api.nvim_win_set_config(0, { border = rvim.ui.current.border }) end,
     },
   })
 end

@@ -69,9 +69,9 @@ function M.config()
   local fmt = string.format
 
   local api = vim.api
-  local border = rvim.style.current.border
+  local border = rvim.ui.current.border
   local lsp_hls = rvim.lsp.kind_highlights
-  local ellipsis = rvim.style.icons.misc.ellipsis
+  local ellipsis = rvim.ui.icons.misc.ellipsis
   local luasnip = require('luasnip')
 
   local kind_hls = rvim.fold(
@@ -162,8 +162,8 @@ function M.config()
         local MAX = math.floor(vim.o.columns * 0.5)
         if #vim_item.abbr >= MAX then vim_item.abbr = vim_item.abbr:sub(1, MAX) .. ellipsis end
 
-        local codicons = rvim.style.codicons
-        local lsp_icons = rvim.style.current.lsp_icons
+        local codicons = rvim.ui.codicons
+        local lsp_icons = rvim.ui.current.lsp_icons
 
         if vim_item.kind ~= 'Color' then vim_item.kind = formatIcon(lsp_icons[vim_item.kind]) end
 

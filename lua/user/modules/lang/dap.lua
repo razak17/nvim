@@ -32,7 +32,7 @@ local M = {
       config = function()
         require('dapui').setup({
           windows = { indent = 2 },
-          floating = { border = rvim.style.current.border },
+          floating = { border = rvim.ui.current.border },
         })
         local dapui = require('dapui')
         local dap = require('dap')
@@ -110,7 +110,7 @@ function M.init()
 end
 
 function M.config()
-  local fn, icons = vim.fn, rvim.style.icons
+  local fn, icons = vim.fn, rvim.ui.icons
   local dap = require('dap')
 
   -- DON'T automatically stop at exceptions

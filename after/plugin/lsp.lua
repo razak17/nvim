@@ -7,9 +7,9 @@ local api = vim.api
 local fmt = string.format
 local L = lsp.log_levels
 
-local s = rvim.style
-local codicons = s.codicons
-local border = rvim.style.current.border
+local ui = rvim.ui
+local codicons = ui.codicons
+local border = rvim.ui.current.border
 local diagnostic = vim.diagnostic
 local format_exclusions = rvim.lsp.format_exclusions
 

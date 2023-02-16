@@ -2,7 +2,7 @@ local M = { 'anuvyklack/hydra.nvim', event = 'VeryLazy' }
 
 function M.config()
   local Hydra = require('hydra')
-  local border = rvim.style.current.border
+  local border = rvim.ui.current.border
   local hint_opts = { position = 'bottom', border = border, type = 'window' }
 
   Hydra({

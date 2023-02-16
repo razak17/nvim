@@ -23,7 +23,7 @@ end
 function M.config()
   require('harpoon').setup({
     menu = {
-      borderchars = rvim.style.border.common,
+      borderchars = rvim.ui.border.common,
     },
   })
   rvim.highlight.plugin('harpoon', {

@@ -58,7 +58,7 @@ function Lazy:bootstrap()
       patterns = { 'razak17' },
     },
     install = { colorscheme = { 'zephyr', 'habamax' } },
-    ui = { border = rvim.style.current.border },
+    ui = { border = rvim.ui.current.border },
     performance = {
       rtp = {
         reset = false,

@@ -82,13 +82,13 @@ local function config()
 
   telescope.setup({
     defaults = {
-      prompt_prefix = fmt(' %s  ', rvim.style.icons.misc.search_alt),
-      selection_caret = fmt(' %s ', rvim.style.icons.misc.pick),
+      prompt_prefix = fmt(' %s  ', rvim.ui.icons.misc.search_alt),
+      selection_caret = fmt(' %s ', rvim.ui.icons.misc.pick),
       cycle_layout_list = { 'flex', 'horizontal', 'vertical', 'bottom_pane', 'center' },
       sorting_strategy = 'ascending',
       layout_strategy = 'horizontal',
       set_env = { ['TERM'] = vim.env.TERM },
-      borderchars = rvim.style.border.common,
+      borderchars = rvim.ui.border.common,
       file_browser = { hidden = true },
       color_devicons = true,
       dynamic_preview_title = true,

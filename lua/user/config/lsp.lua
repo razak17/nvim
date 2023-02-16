@@ -1,4 +1,4 @@
-local border = rvim.style.current.border
+local border = rvim.ui.current.border
 
 rvim.lsp = {
   templates_dir = join_paths(rvim.get_runtime_dir(), 'site', 'after', 'ftplugin'),

@@ -11,7 +11,7 @@ end
 
 function M.config()
   local api = vim.api
-  local codicons = rvim.style.codicons
+  local codicons = rvim.ui.codicons
 
   local notify = require('notify')
 
@@ -21,7 +21,7 @@ function M.config()
     background_colour = 'NormalFloat',
     on_open = function(win)
       if api.nvim_win_is_valid(win) then
-        vim.api.nvim_win_set_config(win, { border = rvim.style.current.border })
+        vim.api.nvim_win_set_config(win, { border = rvim.ui.current.border })
       end
     end,
     timeout = 500,

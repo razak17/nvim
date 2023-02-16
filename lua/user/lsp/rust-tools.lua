@@ -9,7 +9,7 @@ require('rust-tools').setup({
       parameter_hints_prefix = ' ',
     },
     hover_actions = {
-      border = rvim.style.border.rectangle,
+      border = rvim.ui.border.rectangle,
       auto_focus = true,
       max_width = math.min(math.floor(vim.o.columns * 0.7), 100),
       max_height = math.min(math.floor(vim.o.lines * 0.3), 30),

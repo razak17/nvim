@@ -10,10 +10,10 @@ local M = {
 }
 
 function M.config()
-  local icons = rvim.style.icons
+  local icons = rvim.ui.icons
   require('mason').setup({
     ui = {
-      border = rvim.style.current.border,
+      border = rvim.ui.current.border,
       height = vim.o.lines - vim.o.cmdheight - 8,
       icons = {
         package_installed = icons.misc.checkmark,

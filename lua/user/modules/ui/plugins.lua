@@ -88,7 +88,7 @@ return {
     'uga-rosa/ccc.nvim',
     keys = { { '<leader>oc', '<cmd>CccHighlighterToggle<CR>', desc = 'toggle ccc' } },
     opts = {
-      win_opts = { border = rvim.style.current.border },
+      win_opts = { border = rvim.ui.current.border },
       highlighter = {
         auto_enable = true,
         excludes = { 'dart', 'html', 'css', 'typescriptreact' },

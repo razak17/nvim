@@ -4,7 +4,7 @@ local M = {
 }
 
 function M.config()
-  local icons = rvim.style.icons
+  local icons = rvim.ui.icons
   local which_key = require('which-key')
 
   which_key.setup({
@@ -12,7 +12,7 @@ function M.config()
       spelling = { enabled = true },
     },
     icons = { breadcrumb = icons.misc.double_chevron_right },
-    window = { border = rvim.style.current.border },
+    window = { border = rvim.ui.current.border },
     layout = { align = 'center' },
     hidden = { '<silent>', '<cmd>', '<Cmd>', '<CR>', 'call', 'lua', '^:', '^ ' },
     show_help = true,

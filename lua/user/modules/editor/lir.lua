@@ -47,7 +47,7 @@ function M.config()
       },
       win_opts = function()
         return {
-          border = rvim.style.current.border,
+          border = rvim.ui.current.border,
           width = math.floor(vim.o.columns * 0.7),
           height = math.floor(vim.o.lines * 0.7),
         }

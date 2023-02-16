@@ -44,8 +44,8 @@ function M.config()
   require('neotest').setup({
     discovery = { enabled = true },
     diagnostic = { enabled = true },
-    icons = { running = rvim.style.icons.misc.clock },
-    floating = { border = rvim.style.current.border },
+    icons = { running = rvim.ui.icons.misc.clock },
+    floating = { border = rvim.ui.current.border },
     adapters = {
       require('neotest-plenary'),
       require('neotest-python'),

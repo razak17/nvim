@@ -56,7 +56,7 @@ return {
     end,
     config = function()
       require('buffer_manager').setup({
-        borderchars = rvim.style.border.common,
+        borderchars = rvim.ui.border.common,
       })
       rvim.highlight.plugin('harpoon', {
         theme = {
@@ -89,7 +89,7 @@ return {
       rvim.nnoremap('<leader>tp', function() new_float('python') end, 'fterm: python')
     end,
     opts = {
-      border = rvim.style.current.border,
+      border = rvim.ui.current.border,
       dimensions = { height = 0.8, width = 0.9 },
     },
   },
@@ -188,7 +188,7 @@ return {
       popup = {
         autofocus = true,
         style = 'minimal',
-        border = rvim.style.current.border,
+        border = rvim.ui.current.border,
         show_version_date = false,
         show_dependency_version = true,
         max_height = 30,

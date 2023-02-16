@@ -25,7 +25,7 @@ local M = {
 }
 
 function M.config()
-  local icons = rvim.style.icons
+  local icons = rvim.ui.icons
 
   rvim.highlight.plugin('NeoTree', {
     theme = {

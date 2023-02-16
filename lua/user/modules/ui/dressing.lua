@@ -26,7 +26,7 @@ function M.config()
   require('dressing').setup({
     input = {
       insert_only = false,
-      border = rvim.style.current.border,
+      border = rvim.ui.current.border,
       win_options = { winblend = 2 },
     },
     select = {
