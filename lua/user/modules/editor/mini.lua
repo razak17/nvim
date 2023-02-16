@@ -1,6 +1,11 @@
 return {
 
-  { 'echasnovski/mini.ai', config = true },
+  {
+    'echasnovski/mini.ai',
+    config = function()
+      require('mini.ai').setup({ mappings = { around_last = '', inside_last = '' } })
+    end,
+  },
 
   {
     'echasnovski/mini.pairs',
