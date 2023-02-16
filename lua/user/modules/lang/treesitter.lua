@@ -70,6 +70,8 @@ function M.config()
           ['ic'] = { query = '@class.inner', desc = 'ts: inner class' },
           ['aC'] = { query = '@conditional.outer', desc = 'ts: all conditional' },
           ['iC'] = { query = '@conditional.inner', desc = 'ts: inner conditional' },
+          ['iA'] = { query = '@assignment.lhs', desc = 'ts: assignment lhs' },
+          ['aA'] = { query = '@assignment.rhs', desc = 'ts: assignment rhs' },
         },
       },
       move = {
