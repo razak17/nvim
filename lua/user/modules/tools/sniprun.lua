@@ -11,24 +11,27 @@ return {
     { '<localleader>sx', '<cmd>SnipReset<CR>', desc = 'sniprun: reset' },
   },
   config = function()
-    local P = require('zephyr.palette')
+    local hl = rvim.highlight
     require('sniprun').setup({
       live_mode_toggle = 'enable',
       snipruncolors = {
         SniprunVirtualTextOk = {
-          bg = P.bg_highlight,
-          fg = P.dark_cyan,
+          bg = hl.get('FloatTitle', 'bg'),
+          fg = hl.get('FloatTitle', 'fg'),
           ctermbg = 'LightBlue',
           cterfg = 'Black',
         },
-        SniprunFloatingWinOk = { fg = P.bg_highlight, ctermfg = 'LightBlue' },
+        SniprunFloatingWinOk = { fg = hl.get('CursorLine', 'fg'), ctermfg = 'LightBlue' },
         SniprunVirtualTextErr = {
-          bg = P.error_red,
-          fg = P.black,
+          bg = hl.get('DiagnosticVirtualTextError', 'bg'),
+          fg = hl.get('DiagnosticVirtualTextError', 'fg'),
           ctermbg = 'DarkRed',
           cterfg = 'Black',
         },
-        SniprunFloatingWinErr = { fg = P.error_red, ctermfg = 'DarkRed' },
+        SniprunFloatingWinErr = {
+          fg = hl.get('DiagnosticVirtualTextError', 'fg'),
+          ctermfg = 'DarkRed',
+        },
       },
     })
   end,
