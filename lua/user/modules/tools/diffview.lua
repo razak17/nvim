@@ -1,7 +1,6 @@
 return {
   'sindrets/diffview.nvim',
   cmd = { 'DiffviewOpen', 'DiffviewFileHistory', 'DiffviewToggleFiles', 'DiffviewFocusFiles' },
-  init = function() end,
   config = function()
     rvim.highlight.plugin('diffview', {
       { DiffAddedChar = { bg = 'NONE', fg = { from = 'DiffAdd', attr = 'bg', alter = 30 } } },

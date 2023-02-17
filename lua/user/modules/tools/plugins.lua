@@ -47,17 +47,15 @@ return {
 
   {
     'razak17/buffer_manager.nvim',
-    init = function()
+    config = function()
+      require('buffer_manager').setup({
+        borderchars = rvim.ui.border.common,
+      })
       rvim.nnoremap(
         '<tab>',
         function() require('buffer_manager.ui').toggle_quick_menu() end,
         'buffer_manager: toggle'
       )
-    end,
-    config = function()
-      require('buffer_manager').setup({
-        borderchars = rvim.ui.border.common,
-      })
       rvim.highlight.plugin('harpoon', {
         theme = {
           ['zephyr'] = {
@@ -127,11 +125,11 @@ return {
   {
     'mbbill/undotree',
     event = 'VeryLazy',
-    init = function() rvim.nnoremap('<leader>u', '<cmd>UndotreeToggle<CR>', 'undotree: toggle') end,
     config = function()
       vim.g.undotree_TreeNodeShape = '◦' -- Alternative: '◉'
       vim.g.undotree_SetFocusWhenToggle = 1
       vim.g.undotree_SplitWidth = 35
+      rvim.nnoremap('<leader>u', '<cmd>UndotreeToggle<CR>', 'undotree: toggle')
     end,
   },
 

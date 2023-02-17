@@ -119,6 +119,5 @@ return {
       })
     end,
   },
-  init = function() end,
   config = config,
 }
