@@ -171,6 +171,14 @@ function rvim.is_vim_list_open()
   return false
 end
 
+--- Autosize quickfix to match its minimum content
+--- https://vim.fandom.com/wiki/Automatically_fitting_a_quickfix_window_height
+---@param minheight number
+---@param maxheight number
+function rvim.adjust_split_height(minheight, maxheight)
+  api.nvim_win_set_height(0, math.max(math.min(fn.line('$'), maxheight), minheight))
+end
+
 ---Require a module using [pcall] and report any errors
 ---@param module string
 ---@param opts table?
