@@ -2,6 +2,14 @@ return {
   'michaelb/sniprun',
   cmd = { 'SnipRun', 'SnipInfo', 'SnipReset', 'SnipClose', 'SnipLive' },
   build = 'bash ./install.sh',
+  keys = {
+    { '<localleader>sr', '<cmd>SnipRun<CR>', desc = 'sniprun: run' },
+    { '<localleader>sr', '<cmd>SnipRun<CR>', desc = 'sniprun: run', mode = 'v' },
+    { '<localleader>so', '<cmd>SnipRunOperator<CR>', desc = 'sniprun: run operator' },
+    { '<localleader>sc', '<cmd>SnipClose<CR>', desc = 'sniprun: close' },
+    { '<localleader>sl', '<cmd>SnipLive<CR>', desc = 'sniprun: live mode' },
+    { '<localleader>sx', '<cmd>SnipReset<CR>', desc = 'sniprun: reset' },
+  },
   config = function()
     local P = require('zephyr.palette')
     require('sniprun').setup({
@@ -23,11 +31,5 @@ return {
         SniprunFloatingWinErr = { fg = P.error_red, ctermfg = 'DarkRed' },
       },
     })
-    rvim.nnoremap('<localleader>sr', '<cmd>SnipRun<CR>', 'sniprun: run')
-    rvim.nnoremap('<localleader>so', '<cmd>SnipRunOperator<CR>', 'sniprun: run operator')
-    rvim.vnoremap('<localleader>sr', ':SnipRun<CR>', 'sniprun: run')
-    rvim.nnoremap('<localleader>sc', '<cmd>SnipClose<CR>', 'sniprun: close')
-    rvim.nnoremap('<localleader>sl', '<cmd>SnipLive<CR>', 'sniprun: live mode')
-    rvim.nnoremap('<localleader>sx', '<cmd>SnipReset<CR>', 'sniprun: reset')
   end,
 }
