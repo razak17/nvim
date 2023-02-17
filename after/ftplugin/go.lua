@@ -1,10 +1,12 @@
-vim.bo.expandtab = false
-vim.bo.textwidth = 0 -- Go doesn't specify a max line length so don't force one
-vim.bo.softtabstop = 0
-vim.bo.tabstop = 4
-vim.bo.shiftwidth = 4
-vim.opt_local.iskeyword:append('-')
-vim.opt_local.spell = true
+local opt = vim.opt_local
+
+opt.expandtab = false
+opt.textwidth = 0 -- Go doesn't specify a max line length so don't force one
+opt.softtabstop = 0
+opt.tabstop = 4
+opt.shiftwidth = 4
+opt.iskeyword:append('-')
+opt.spell = true
 
 if not rvim then return end
 
