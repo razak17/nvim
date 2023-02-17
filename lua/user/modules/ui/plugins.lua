@@ -12,7 +12,7 @@ return {
 
   {
     'lukas-reineke/indent-blankline.nvim',
-    event = 'BufReadPre',
+    event = { 'BufReadPre', 'BufNewFile' },
     opts = {
       char = '▏', -- ┆ ┊ ▎
       show_foldtext = false,
