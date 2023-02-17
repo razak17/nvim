@@ -1,6 +1,4 @@
-local M = { 'goolord/alpha-nvim', lazy = false }
-
-function M.config()
+local function config()
   local alpha = require('alpha')
   local dashboard = require('alpha.themes.dashboard')
   local fortune = require('alpha.fortune')
@@ -119,4 +117,8 @@ function M.config()
   })
 end
 
-return M
+return {
+  'goolord/alpha-nvim',
+  lazy = false,
+  config = config,
+}

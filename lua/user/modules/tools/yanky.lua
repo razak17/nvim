@@ -1,22 +1,4 @@
-local M = { 'razak17/yanky.nvim', event = 'BufReadPost' }
-
-function M.init()
-  local map = vim.keymap.set
-  map({ 'n', 'x' }, 'p', '<Plug>(YankyPutAfter)', { desc = 'yanky: put after' })
-  map({ 'n', 'x' }, 'P', '<Plug>(YankyPutBefore)', { desc = 'yanky: put before' })
-  map({ 'n', 'x' }, 'gp', '<Plug>(YankyGPutAfter)', { desc = 'yanky: gput after' })
-  map({ 'n', 'x' }, 'gP', '<Plug>(YankyGPutBefore)', { desc = 'yanky: gput before' })
-
-  rvim.nnoremap('<m-n>', '<Plug>(YankyCycleForward)', { desc = 'yanky: cycle forward' })
-  rvim.nnoremap('<m-p>', '<Plug>(YankyCycleBackward)', { desc = 'yanky: cycle backward' })
-  rvim.nnoremap(
-    '<localleader>y',
-    function() require('telescope').extensions.yank_history.yank_history(rvim.telescope.dropdown()) end,
-    'yanky: open history'
-  )
-end
-
-function M.config()
+local function config()
   local utils = require('yanky.utils')
   local mapping = require('yanky.telescope.mapping')
 
@@ -59,4 +41,23 @@ function M.config()
   })
 end
 
-return M
+return {
+  'razak17/yanky.nvim',
+  event = 'BufReadPost',
+  keys = {
+    { 'p', '<Plug>(YankyPutAfter)', mode = { 'n', 'x' }, desc = 'yanky: put after' },
+    { 'P', '<Plug>(YankyPutBefore)', mode = { 'n', 'x' }, desc = 'yanky: put before' },
+    { 'gp', '<Plug>(YankyGPutAfter)', mode = { 'n', 'x' }, desc = 'yanky: gput after' },
+    { 'gP', '<Plug>(YankyGPutBefore)', mode = { 'n', 'x' }, desc = 'yanky: gput before' },
+    { '<m-n>', '<Plug>(YankyCycleForward)', desc = 'yanky: cycle forward' },
+    { '<m-p>', '<Plug>(YankyCycleBackward)', desc = 'yanky: cycle backward' },
+    {
+      '<localleader>y',
+      function()
+        require('telescope').extensions.yank_history.yank_history(rvim.telescope.dropdown())
+      end,
+      desc = 'yanky: open yank history',
+    },
+  },
+  config = config,
+}

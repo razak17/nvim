@@ -1,30 +1,4 @@
-local M = {
-  'nvim-neo-tree/neo-tree.nvim',
-  cmd = { 'Neotree' },
-  branch = 'main',
-  dependencies = {
-    's1n7ax/nvim-window-picker',
-    version = 'v1.*',
-    config = function()
-      require('window-picker').setup({
-        autoselect_one = true,
-        include_current = false,
-        filter_rules = {
-          bo = {
-            filetype = { 'neo-tree-popup', 'quickfix', 'incline' },
-            buftype = { 'terminal', 'quickfix', 'nofile' },
-          },
-        },
-        other_win_hl_color = rvim.highlight.get('Visual', 'bg'),
-      })
-    end,
-  },
-  init = function()
-    rvim.nnoremap('<c-n>', '<cmd>Neotree toggle reveal<CR>', 'toggle tree', 'neo-tree.nvim')
-  end,
-}
-
-function M.config()
+local function config()
   local icons = rvim.ui.icons
 
   rvim.highlight.plugin('NeoTree', {
@@ -120,6 +94,31 @@ function M.config()
       },
     },
   })
+
+  rvim.nnoremap('<c-n>', '<cmd>Neotree toggle reveal<CR>', 'toggle tree', 'neo-tree.nvim')
 end
 
-return M
+return {
+  'nvim-neo-tree/neo-tree.nvim',
+  cmd = { 'Neotree' },
+  branch = 'main',
+  dependencies = {
+    's1n7ax/nvim-window-picker',
+    version = 'v1.*',
+    config = function()
+      require('window-picker').setup({
+        autoselect_one = true,
+        include_current = false,
+        filter_rules = {
+          bo = {
+            filetype = { 'neo-tree-popup', 'quickfix', 'incline' },
+            buftype = { 'terminal', 'quickfix', 'nofile' },
+          },
+        },
+        other_win_hl_color = rvim.highlight.get('Visual', 'bg'),
+      })
+    end,
+  },
+  init = function() end,
+  config = config,
+}

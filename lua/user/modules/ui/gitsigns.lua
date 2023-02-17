@@ -1,9 +1,4 @@
-local M = {
-  'lewis6991/gitsigns.nvim',
-  event = { 'BufReadPre', 'BufNewFile' },
-}
-
-function M.config()
+local function config()
   local cwd = vim.fn.getcwd()
   local right_block = '🮉'
   require('gitsigns').setup({
@@ -57,4 +52,8 @@ function M.config()
   })
 end
 
-return M
+return {
+  'lewis6991/gitsigns.nvim',
+  event = { 'BufReadPre', 'BufNewFile' },
+  conf = config,
+}

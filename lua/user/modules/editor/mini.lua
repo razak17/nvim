@@ -1,5 +1,4 @@
 return {
-
   {
     'echasnovski/mini.ai',
     config = function()

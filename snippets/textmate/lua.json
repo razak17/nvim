@@ -6,7 +6,7 @@
   },
   "config": {
     "prefix": "conf",
-    "body": ["config = function()", "\t${2}", "end)"]
+    "body": ["config = function()", "\t${2}", "end,"]
   },
   "it": {
     "prefix": "it",

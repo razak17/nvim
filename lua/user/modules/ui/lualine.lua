@@ -1,6 +1,4 @@
-local M = { 'nvim-lualine/lualine.nvim', event = 'VeryLazy' }
-
-function M.config()
+local function config()
   local P = require('zephyr.palette')
   local style = rvim.ui
   local icons = style.icons
@@ -12,7 +10,7 @@ function M.config()
   local fg = rvim.highlight.get('StatusLine', 'fg')
 
   -- Config
-  local config = {
+  local lualine_config = {
     options = {
       globalstatus = true,
       component_separators = { left = '', right = '' },
@@ -64,9 +62,9 @@ function M.config()
     t = P.red,
   }
 
-  local function ins_left(component) table.insert(config.sections.lualine_c, component) end
+  local function ins_left(component) table.insert(lualine_config.sections.lualine_c, component) end
 
-  local function ins_right(component) table.insert(config.sections.lualine_x, component) end
+  local function ins_right(component) table.insert(lualine_config.sections.lualine_x, component) end
 
   ins_left({
     function() return icons.statusline.bar end,
@@ -214,7 +212,11 @@ function M.config()
     color = function() return { fg = mode_color[vim.fn.mode()] } end,
   })
 
-  require('lualine').setup(config)
+  require('lualine').setup(lualine_config)
 end
 
-return M
+return {
+  'nvim-lualine/lualine.nvim',
+  event = 'VeryLazy',
+  config = config,
+}

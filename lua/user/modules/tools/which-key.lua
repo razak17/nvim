@@ -1,9 +1,4 @@
-local M = {
-  'folke/which-key.nvim',
-  event = 'VeryLazy',
-}
-
-function M.config()
+local function config()
   local icons = rvim.ui.icons
   local which_key = require('which-key')
 
@@ -67,4 +62,8 @@ function M.config()
   })
 end
 
-return M
+return {
+  'folke/which-key.nvim',
+  event = 'VeryLazy',
+  config = config,
+}

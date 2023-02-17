@@ -8,16 +8,9 @@ local function prev_failed() neotest().jump.next({ status = 'failed' }) end
 local function toggle_summary() neotest().summary.toggle() end
 local function cancel() neotest().run.stop({ interactive = true }) end
 
-local M = {
+return {
   'nvim-neotest/neotest',
   event = { 'BufRead', 'BufNewFile' },
-  dependencies = {
-    { 'rcarriga/neotest-plenary', dependencies = { 'nvim-lua/plenary.nvim' } },
-    'rcarriga/neotest-vim-test',
-    'nvim-neotest/neotest-python',
-    'rouge8/neotest-rust',
-    'nvim-neotest/neotest-go',
-  },
   keys = {
     { '<localleader>ts', toggle_summary, desc = 'neotest: toggle summary' },
     { '<localleader>to', open, desc = 'neotest: output' },
@@ -28,31 +21,35 @@ local M = {
     { '[n', next_failed, desc = 'jump to next failed test' },
     { ']n', prev_failed, desc = 'jump to previous failed test' },
   },
+  config = function()
+    local neotest_ns = vim.api.nvim_create_namespace('neotest')
+    vim.diagnostic.config({
+      virtual_text = {
+        format = function(diagnostic)
+          local message =
+            diagnostic.message:gsub('\n', ' '):gsub('\t', ' '):gsub('%s+', ' '):gsub('^%s+', '')
+          return message
+        end,
+      },
+    }, neotest_ns)
+    require('neotest').setup({
+      discovery = { enabled = true },
+      diagnostic = { enabled = true },
+      icons = { running = rvim.ui.icons.misc.clock },
+      floating = { border = rvim.ui.current.border },
+      adapters = {
+        require('neotest-plenary'),
+        require('neotest-python'),
+        require('neotest-rust'),
+        require('neotest-go')({ experimental = { test_table = true } }),
+      },
+    })
+  end,
+  dependencies = {
+    { 'rcarriga/neotest-plenary', dependencies = { 'nvim-lua/plenary.nvim' } },
+    'rcarriga/neotest-vim-test',
+    'nvim-neotest/neotest-python',
+    'rouge8/neotest-rust',
+    'nvim-neotest/neotest-go',
+  },
 }
-
-function M.config()
-  local neotest_ns = vim.api.nvim_create_namespace('neotest')
-  vim.diagnostic.config({
-    virtual_text = {
-      format = function(diagnostic)
-        local message =
-          diagnostic.message:gsub('\n', ' '):gsub('\t', ' '):gsub('%s+', ' '):gsub('^%s+', '')
-        return message
-      end,
-    },
-  }, neotest_ns)
-  require('neotest').setup({
-    discovery = { enabled = true },
-    diagnostic = { enabled = true },
-    icons = { running = rvim.ui.icons.misc.clock },
-    floating = { border = rvim.ui.current.border },
-    adapters = {
-      require('neotest-plenary'),
-      require('neotest-python'),
-      require('neotest-rust'),
-      require('neotest-go')({ experimental = { test_table = true } }),
-    },
-  })
-end
-
-return M

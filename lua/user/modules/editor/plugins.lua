@@ -105,4 +105,32 @@ return {
       },
     },
   },
+
+  {
+    'nguyenvukhang/nvim-toggler',
+    event = 'VeryLazy',
+    config = function()
+      require('nvim-toggler').setup({
+        inverses = {
+          ['vim'] = 'emacs',
+          ['let'] = 'const',
+          ['margin'] = 'padding',
+          ['-'] = '+',
+          ['onClick'] = 'onSubmit',
+          ['public'] = 'private',
+          ['string'] = 'int',
+          ['leader'] = 'localleader',
+          ['chore'] = 'feat',
+          ['double'] = 'single',
+        },
+        remove_default_keybinds = true,
+      })
+
+      rvim.nnoremap(
+        '<leader>ii',
+        '<cmd>lua require("nvim-toggler").toggle()<CR>',
+        'nvim-toggler: toggle'
+      )
+    end,
+  },
 }
