@@ -256,7 +256,7 @@ local codicons = {
 ----------------------------------------------------------------------------------------------------
 ---@class UiSetting {
 ---@field winbar boolean
----@field number boolean
+---@field number 'ignore' | boolean
 ---@field statusline 'minimal' | boolean
 ---@field statuscolumn boolean
 ---@field colorcolumn boolean
@@ -314,6 +314,7 @@ local settings = {
     ['nofile'] = presets.tool_panel,
     ['nowrite'] = presets.tool_panel,
     ['acwrite'] = presets.tool_panel,
+    ['terminal'] = presets.tool_panel,
   },
   filetypes = {
     ['help'] = presets.tool_panel,
@@ -322,14 +323,14 @@ local settings = {
     ['Trouble'] = presets.tool_panel,
     ['dap-repl'] = presets.tool_panel,
     ['tsplayground'] = presets.tool_panel,
-    ['toggleterm'] = presets.tool_panel,
     ['list'] = presets.tool_panel,
     ['netrw'] = presets.tool_panel,
     ['NvimTree'] = presets.tool_panel,
     ['undotree'] = presets.tool_panel,
     ['NeogitPopup'] = presets.tool_panel,
     ['NeogitStatus'] = presets.tool_panel,
-    ['neo-tree'] = presets.tool_panel:with({ winbar = true }),
+    ['neo-tree'] = presets.tool_panel:with({ winbar = 'ignore' }),
+    ['toggleterm'] = presets.tool_panel:with({ winbar = 'ignore' }),
     ['NeogitCommitSelectView'] = presets.tool_panel,
     ['NeogitRebaseTodo'] = presets.tool_panel,
     ['DiffviewFiles'] = presets.tool_panel,

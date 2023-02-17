@@ -9,10 +9,10 @@ local component = utils.component
 local component_raw = utils.component_raw
 local empty = rvim.empty
 
+local ui = rvim.ui
 local fn = vim.fn
 local api = vim.api
 local icons = rvim.ui.icons.misc
-local contains = vim.tbl_contains
 
 local dir_separator = icons.caret_right
 local separator = icons.arrow_right
@@ -88,28 +88,16 @@ function rvim.ui.winbar.get()
   return utils.display(winbar, api.nvim_win_get_width(api.nvim_get_current_win()))
 end
 
-local blocked_fts = {
-  'DiffviewFiles',
-  'NeogitStatus',
-  'NeogitCommitMessage',
-  'toggleterm',
-  'DressingInput',
-  'dashboard',
-  'TelescopePrompt',
-  'harpoon',
-}
-
-local allowed_fts = { 'toggleterm', 'neo-tree' }
-local allowed_buftypes = { 'terminal' }
-
 local function set_winbar()
   rvim.foreach(function(w)
     local buf, win = vim.bo[api.nvim_win_get_buf(w)], vim.wo[w]
     local bt, ft, is_diff = buf.buftype, buf.filetype, win.diff
-    local ignored = contains(allowed_fts, ft) or contains(allowed_buftypes, bt)
+    local ft_setting = ui.settings.get(ft, 'winbar', 'ft')
+    local bt_setting = ui.settings.get(bt, 'winbar', 'bt')
+    local ignored = ft_setting == 'ignore' or bt_setting == 'ignore'
     if not ignored then
       if
-        not contains(blocked_fts, ft)
+        not ft_setting
         and fn.win_gettype(api.nvim_win_get_number(w)) == ''
         and bt == ''
         and ft ~= ''
