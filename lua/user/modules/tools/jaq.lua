@@ -1,6 +1,9 @@
 return {
   'is0n/jaq-nvim',
   cmd = 'Jaq',
+  keys = {
+    { '<leader>rr', ':silent only | Jaq<CR>', desc = 'jaq: run' },
+  },
   config = function()
     require('jaq-nvim').setup({
       cmds = {
@@ -17,7 +20,6 @@ return {
       behavior = { startinsert = true },
       terminal = { position = 'vert', size = 60 },
     })
-    rvim.nnoremap('<leader>rr', ':silent only | Jaq<CR>', 'jaq: run')
     rvim.augroup('JaqConfig', {
       {
         event = { 'Filetype' },
