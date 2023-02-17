@@ -1,14 +1,17 @@
-local function config()
-  local cwd = vim.fn.getcwd()
-  local right_block = '🮉'
-  require('gitsigns').setup({
+local cwd = vim.fn.getcwd()
+local icons = rvim.ui.icons.separators
+
+return {
+  'lewis6991/gitsigns.nvim',
+  event = { 'BufReadPre', 'BufNewFile' },
+  opts = {
     signs = {
-      add = { hl = 'GitSignsAdd', text = right_block },
-      change = { hl = 'GitSignsChange', text = right_block },
-      delete = { hl = 'GitSignsDelete', text = right_block },
-      topdelete = { hl = 'GitSignsChangeDelete', text = right_block },
-      changedelete = { hl = 'GitSignsChange', text = right_block },
-      untracked = { hl = 'GitSignsAdd', text = right_block },
+      add = { hl = 'GitSignsAdd', text = icons.right_block },
+      change = { hl = 'GitSignsChange', text = icons.right_block },
+      delete = { hl = 'GitSignsDelete', text = icons.right_block },
+      topdelete = { hl = 'GitSignsChangeDelete', text = icons.right_block },
+      changedelete = { hl = 'GitSignsChange', text = icons.right_block },
+      untracked = { hl = 'GitSignsAdd', text = icons.right_block },
     },
     _threaded_diff = true,
     _extmark_signs = false,
@@ -54,11 +57,5 @@ local function config()
       vnoremap('<leader>hr', function() gs.reset_hunk({ vim.fn.line('.'), vim.fn.line('v') }) end)
       vim.keymap.set({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
     end,
-  })
-end
-
-return {
-  'lewis6991/gitsigns.nvim',
-  event = { 'BufReadPre', 'BufNewFile' },
-  config = config,
+  },
 }
