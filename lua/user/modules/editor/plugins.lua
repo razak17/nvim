@@ -1,5 +1,4 @@
 return {
-  'JoosepAlviste/nvim-ts-context-commentstring',
   'kazhala/close-buffers.nvim',
 
   {

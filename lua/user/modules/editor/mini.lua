@@ -44,6 +44,7 @@ return {
 
   {
     'echasnovski/mini.comment',
+    dependencies = { 'JoosepAlviste/nvim-ts-context-commentstring' },
     event = 'VeryLazy',
     config = function()
       require('mini.comment').setup({
