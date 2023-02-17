@@ -252,6 +252,122 @@ local codicons = {
 }
 
 ----------------------------------------------------------------------------------------------------
+-- UI Settings
+----------------------------------------------------------------------------------------------------
+---@class UiSetting {
+---@field winbar boolean
+---@field number boolean
+---@field statusline 'minimal' | boolean
+---@field statuscolumn boolean
+---@field colorcolumn boolean
+
+---@alias UiSettings {buftypes: table<string, UiSetting>, filetypes: table<string, UiSetting>}
+
+---@class UiSetting
+local Preset = {}
+
+---@param o UiSetting
+function Preset:new(o)
+  assert(o, 'a present must be defined')
+  self.__index = self
+  return setmetatable(o, self)
+end
+
+--- WARNING: deep extend does not copy lua meta methods
+function Preset:with(o) return vim.tbl_deep_extend('force', self, o) end
+
+---@type table<string, UiSetting>
+local presets = {
+  statusline_only = Preset:new({
+    number = false,
+    winbar = false,
+    colorcolumn = false,
+    statusline = true,
+    statuscolumn = false,
+  }),
+  minimal_editing = Preset:new({
+    number = false,
+    winbar = true,
+    colorcolumn = false,
+    statusline = true,
+    statuscolumn = false,
+  }),
+  tool_panel = Preset:new({
+    number = false,
+    winbar = false,
+    colorcolumn = false,
+    statusline = 'minimal',
+    statuscolumn = false,
+  }),
+}
+
+local commit_buffer = presets.minimal_editing:with({
+  colorcolumn = true,
+  winbar = false,
+})
+
+---@type UiSettings
+local settings = {
+  buftypes = {
+    ['terminal'] = presets.tool_panel,
+    ['quickfix'] = presets.tool_panel,
+    ['nofile'] = presets.tool_panel,
+    ['nowrite'] = presets.tool_panel,
+    ['acwrite'] = presets.tool_panel,
+  },
+  filetypes = {
+    ['help'] = presets.tool_panel,
+    ['dapui'] = presets.tool_panel,
+    ['minimap'] = presets.tool_panel,
+    ['Trouble'] = presets.tool_panel,
+    ['dap-repl'] = presets.tool_panel,
+    ['tsplayground'] = presets.tool_panel,
+    ['toggleterm'] = presets.tool_panel,
+    ['list'] = presets.tool_panel,
+    ['netrw'] = presets.tool_panel,
+    ['NvimTree'] = presets.tool_panel,
+    ['undotree'] = presets.tool_panel,
+    ['NeogitPopup'] = presets.tool_panel,
+    ['NeogitStatus'] = presets.tool_panel,
+    ['neo-tree'] = presets.tool_panel:with({ winbar = true }),
+    ['NeogitCommitSelectView'] = presets.tool_panel,
+    ['NeogitRebaseTodo'] = presets.tool_panel,
+    ['DiffviewFiles'] = presets.tool_panel,
+    ['DiffviewFileHistory'] = presets.tool_panel,
+    ['mail'] = presets.statusline_only,
+    ['noice'] = presets.statusline_only,
+    ['diff'] = presets.statusline_only,
+    ['qf'] = presets.statusline_only,
+    ['alpha'] = presets.statusline_only,
+    ['vimwiki'] = presets.statusline_only,
+    ['vim-plug'] = presets.statusline_only,
+    ['fugitive'] = presets.statusline_only,
+    ['startify'] = presets.statusline_only,
+    ['man'] = presets.minimal_editing,
+    ['org'] = presets.minimal_editing,
+    ['norg'] = presets.minimal_editing,
+    ['markdown'] = presets.minimal_editing,
+    ['himalaya'] = presets.minimal_editing,
+    ['orgagenda'] = presets.minimal_editing,
+    ['gitcommit'] = commit_buffer,
+    ['NeogitCommitMessage'] = commit_buffer,
+  },
+}
+
+---Get the UI setting for a particular filetype
+---@param key string
+---@param setting 'statuscolumn'|'winbar'|'statusline'|'number'|'colorcolumn'
+---@param t 'ft'|'bt'
+---@return (boolean | string)?
+function settings.get(key, setting, t)
+  if not key or not setting then return nil end
+  if t == 'ft' then return settings.filetypes[key] and settings.filetypes[key][setting] end
+  if t == 'bt' then return settings.buftypes[key] and settings.buftypes[key][setting] end
+end
+
+----------------------------------------------------------------------------------------------------
+
+----------------------------------------------------------------------------------------------------
 -- Global style settings
 ----------------------------------------------------------------------------------------------------
 -- Some styles can be tweak here to apply globally i.e. by setting the current value for that style
@@ -262,3 +378,4 @@ rvim.ui.icons = icons
 rvim.ui.codicons = codicons
 rvim.ui.border = border
 rvim.ui.current = current
+rvim.ui.settings = settings

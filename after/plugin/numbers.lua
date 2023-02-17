@@ -1,3 +1,5 @@
+if not rvim then return end
+local ui = rvim.ui
 -- Inspiration
 -- 1. vim-relativity
 -- 2. numbers.vim - https://github.com/myusuf3/numbers.vim/blob/master/plugin/numbers.vim
@@ -6,40 +8,6 @@ if not rvim then return end
 
 local api = vim.api
 local M = {}
-
-local number_filetype_exclusions = {
-  'undotree',
-  'dashboard',
-  'log',
-  'man',
-  'netrw',
-  'dap-repl',
-  'markdown',
-  'vimwiki',
-  'vim-plug',
-  'gitcommit',
-  'toggleterm',
-  'coc-explorer',
-  'coc-list',
-  'list',
-  'NvimTree',
-  'startify',
-  'help',
-  'orgagenda',
-  'org',
-  'lsputil_locations_list',
-  'lsputil_symbols_list',
-  'himalaya',
-  'Trouble',
-}
-
-local number_buftype_exclusions = {
-  'terminal',
-  'help',
-  'nofile',
-  'acwrite',
-  'quickfix',
-}
 
 local number_buftype_ignored = { 'quickfix' }
 
@@ -61,11 +29,11 @@ local function is_blocked()
 
   if win_type == 'command' or vim.wo.diff or vim.wo.previewwindow then return true end
 
-  for _, ft in ipairs(number_filetype_exclusions) do
-    if vim.bo.ft == ft or string.match(vim.bo.ft, ft) then return true end
+  local ft_settings = ui.settings.filetypes[vim.bo.ft]
+  local bt_settings = ui.settings.buftypes[vim.bo.buftype]
+  if (ft_settings and not ft_settings.number) or (bt_settings and not bt_settings.number) then
+    return true
   end
-
-  if vim.tbl_contains(number_buftype_exclusions, vim.bo.buftype) then return true end
   return false
 end
 

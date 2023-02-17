@@ -1,6 +1,7 @@
 if not rvim or not rvim.has('nvim-0.9') then return end
 
 local fn, g, v, api = vim.fn, vim.g, vim.v, vim.api
+local ui = rvim.ui
 
 local space = ' '
 local shade = '░'
@@ -9,14 +10,14 @@ local fold_opened = '▼'
 local fold_closed = '▶'
 local sep_hl = '%#StatusColSep#'
 
-rvim.statuscolumn = {}
+ui.statuscolumn = {}
 
 ---@param group string
 ---@param text string
 ---@return string
 local function hl(group, text) return '%#' .. group .. '#' .. text .. '%*' end
 
-local function click(name, item) return '%@v:lua.rvim.statuscolumn.' .. name .. '@' .. item end
+local function click(name, item) return '%@v:lua.rvim.ui.statuscolumn.' .. name .. '@' .. item end
 
 ---@return {name:string, text:string, texthl:string}[]
 local function get_signs()
@@ -27,7 +28,7 @@ local function get_signs()
   )
 end
 
-function rvim.statuscolumn.toggle_breakpoint(_, _, _, mods)
+function ui.statuscolumn.toggle_breakpoint(_, _, _, mods)
   local ok, dap = pcall(require, 'dap')
   if not ok then return end
   if mods:find('c') then
@@ -47,12 +48,13 @@ end
 
 local function is_virt_line() return v.virtnum < 0 end
 
-local function nr()
+local function nr(win)
   if is_virt_line() then return shade end -- virtual line
-  local is_relative = vim.wo[g.statusline_winid].relativenumber
-  local num = (is_relative and not rvim.empty(v.relnum)) and v.relnum or v.lnum
+  local num = vim.wo[win].relativenumber and not rvim.empty(v.relnum) and v.relnum or v.lnum
   local lnum = fn.substitute(num, '\\d\\zs\\ze\\' .. '%(\\d\\d\\d\\)\\+$', ',', 'g')
-  return click('toggle_breakpoint', lnum)
+  local num_width = (vim.wo[win].numberwidth - 1) - api.nvim_strwidth(lnum)
+  local padding = string.rep(space, num_width)
+  return click('toggle_breakpoint', padding .. lnum)
 end
 
 local function sep()
@@ -60,10 +62,12 @@ local function sep()
   return separator_hl .. separator
 end
 
-function rvim.statuscolumn.render()
+function ui.statuscolumn.render()
+  local curwin = api.nvim_get_current_win()
+  local curbuf = api.nvim_win_get_buf(curwin)
+
   local sign, git_sign
-  -- This is dependent on using normal signs (rather than extmarks) for git signs
-  for _, s in ipairs(get_signs()) do
+  for _, s in ipairs(get_signs(curbuf)) do
     if s.name:find('GitSign') then
       git_sign = s
     else
@@ -74,7 +78,7 @@ function rvim.statuscolumn.render()
     sign and hl(sign.texthl, sign.text) or space,
     [[%=]],
     '%=',
-    nr(),
+    nr(curwin),
     space,
     git_sign and hl(git_sign.texthl, git_sign.text:gsub(space, '')) or space,
     sep(),
@@ -84,43 +88,16 @@ function rvim.statuscolumn.render()
   return table.concat(components, '')
 end
 
-local excluded = {
-  'neo-tree',
-  'NeogitStatus',
-  'NeogitCommitMessage',
-  'undotree',
-  'log',
-  'lazy',
-  'man',
-  'dap-repl',
-  'markdown',
-  'vimwiki',
-  'vim-plug',
-  'gitcommit',
-  'toggleterm',
-  'fugitive',
-  'list',
-  'NvimTree',
-  'startify',
-  'help',
-  'orgagenda',
-  'org',
-  'himalaya',
-  'Trouble',
-  'NeogitCommitMessage',
-  'NeogitRebaseTodo',
-}
-
-vim.o.statuscolumn = [[%!v:lua.rvim.statuscolumn.render()]]
+vim.o.statuscolumn = [[%!v:lua.rvim.ui.statuscolumn.render()]]
 
 rvim.augroup('StatusCol', {
   {
     event = { 'BufEnter', 'FileType' },
     command = function(args)
       local buf = vim.bo[args.buf]
-      if buf.bt ~= '' or vim.tbl_contains(excluded, buf.ft) then vim.opt_local.statuscolumn = '' end
+      if ui.settings.get(buf.ft, 'statuscolumn', 'ft') == false then
+        vim.opt_local.statuscolumn = ''
+      end
     end,
   },
 })
-
-if not vim.o.statuscolumn then return end
