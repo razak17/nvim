@@ -2,7 +2,12 @@ return {
   'nvim-tree/nvim-web-devicons',
   { 'fladson/vim-kitty', ft = 'kitty' },
   { 'razak17/zephyr-nvim', lazy = false, priority = 1000 },
-  { 'itchyny/vim-highlighturl', event = 'BufReadPre' },
+
+  {
+    'itchyny/vim-highlighturl',
+    event = 'BufReadPre',
+    config = function() vim.g.highlighturl_guifg = rvim.highlight.get('URL', 'fg') end,
+  },
 
   {
     'romainl/vim-cool',

@@ -94,14 +94,15 @@ local function config()
       },
     },
   })
-
-  rvim.nnoremap('<c-n>', '<cmd>Neotree toggle reveal<CR>', 'toggle tree', 'neo-tree.nvim')
 end
 
 return {
   'nvim-neo-tree/neo-tree.nvim',
   cmd = { 'Neotree' },
   branch = 'main',
+  keys = {
+    { '<c-n>', '<cmd>Neotree toggle reveal<CR>', desc = 'toggle tree', 'neo-tree.nvim' },
+  },
   dependencies = {
     's1n7ax/nvim-window-picker',
     version = 'v1.*',

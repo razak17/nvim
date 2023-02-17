@@ -89,6 +89,7 @@ return {
       { 'gY', '<Cmd>Glance type_definitions<CR>', desc = 'lsp: glance type definitions' },
       { 'gM', '<Cmd>Glance implementations<CR>', desc = 'lsp: glance implementations' },
     },
+
     config = function()
       require('glance').setup({
         preview_win_opts = { relativenumber = false },

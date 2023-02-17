@@ -47,15 +47,17 @@ return {
 
   {
     'razak17/buffer_manager.nvim',
+    keys = {
+      {
+        '<tab>',
+        function() require('buffer_manager.ui').toggle_quick_menu() end,
+        desc = 'buffer_manager: toggle',
+      },
+    },
     config = function()
       require('buffer_manager').setup({
         borderchars = rvim.ui.border.common,
       })
-      rvim.nnoremap(
-        '<tab>',
-        function() require('buffer_manager.ui').toggle_quick_menu() end,
-        'buffer_manager: toggle'
-      )
       rvim.highlight.plugin('harpoon', {
         theme = {
           ['zephyr'] = {
@@ -75,16 +77,17 @@ return {
         cmd =
           require('FTerm'):new({ cmd = cmd, dimensions = { height = 0.9, width = 0.9 } }):toggle()
       end
-      rvim.nnoremap([[<c-\>]], function() require('FTerm').toggle() end, 'fterm: toggle lazygit')
-      rvim.tnoremap([[<c-\>]], function() require('FTerm').toggle() end, 'fterm: toggle lazygit')
-      rvim.nnoremap('<leader>lg', function() new_float('lazygit') end, 'fterm: toggle lazygit')
-      rvim.nnoremap('<leader>ga', function() new_float('git add .') end, 'add all')
-      rvim.nnoremap('<leader>gc', function() new_float('git commit -a -v') end, 'commit')
-      rvim.nnoremap('<leader>gD', function() new_float('iconf -ccma') end, 'commit dotfiles')
-      rvim.nnoremap('<leader>tb', function() new_float('btop') end, 'fterm: btop')
-      rvim.nnoremap('<leader>tn', function() new_float('node') end, 'fterm: node')
-      rvim.nnoremap('<leader>tr', function() new_float('ranger') end, 'fterm: ranger')
-      rvim.nnoremap('<leader>tp', function() new_float('python') end, 'fterm: python')
+      local nnoremap, tnoremap = rvim.nnoremap, rvim.tnoremap
+      nnoremap([[<c-\>]], function() require('FTerm').toggle() end, 'fterm: toggle lazygit')
+      tnoremap([[<c-\>]], function() require('FTerm').toggle() end, 'fterm: toggle lazygit')
+      nnoremap('<leader>lg', function() new_float('lazygit') end, 'fterm: toggle lazygit')
+      nnoremap('<leader>ga', function() new_float('git add . ') end, 'add all')
+      nnoremap('<leader>gc', function() new_float('git add . && git commit -a -v') end, 'commit')
+      nnoremap('<leader>gD', function() new_float('iconf -ccma') end, 'commit dotfiles')
+      nnoremap('<leader>tb', function() new_float('btop') end, 'fterm: btop')
+      nnoremap('<leader>tn', function() new_float('node') end, 'fterm: node')
+      nnoremap('<leader>tr', function() new_float('ranger') end, 'fterm: ranger')
+      nnoremap('<leader>tp', function() new_float('python') end, 'fterm: python')
     end,
     opts = {
       border = rvim.ui.current.border,
@@ -218,11 +221,11 @@ return {
   {
     'NTBBloodbath/rest.nvim',
     ft = { 'http', 'json' },
-    init = function()
-      rvim.nnoremap('<leader>rs', '<Plug>RestNvim', 'rest: run')
-      rvim.nnoremap('<leader>rp', '<Plug>RestNvimPreview', 'rest: preview')
-      rvim.nnoremap('<leader>rl', '<Plug>RestNvimLast', 'rest: run last')
-    end,
+    keys = {
+      { '<leader>rs', '<Plug>RestNvim', desc = 'rest: run' },
+      { '<leader>rp', '<Plug>RestNvimPreview', desc = 'rest: preview' },
+      { '<leader>rl', '<Plug>RestNvimLast', desc = 'rest: run last' },
+    },
     opts = { skip_ssl_verification = true },
   },
 }
