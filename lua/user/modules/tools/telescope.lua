@@ -1,17 +1,11 @@
 rvim.telescope = {}
 
+local ui = rvim.ui
 local fmt, fn = string.format, vim.fn
-
-local ui_select_border = {
-  { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
-  prompt = { '─', '│', ' ', '│', '┌', '┐', '│', '│' },
-  results = { '─', '│', '─', '│', '├', '┤', '┘', '└' },
-  preview = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
-}
 
 local function get_border(opts)
   return vim.tbl_deep_extend('force', opts or {}, {
-    borderchars = ui_select_border,
+    borderchars = ui.border.ui_select,
   })
 end
 
@@ -21,7 +15,7 @@ function rvim.telescope.minimal_ui(opts)
   return require('telescope.themes').get_dropdown(vim.tbl_deep_extend('force', opts or {}, {
     previewer = false,
     hidden = true,
-    borderchars = ui_select_border,
+    borderchars = ui.border.ui_select,
   }))
 end
 
@@ -82,13 +76,13 @@ local function config()
 
   telescope.setup({
     defaults = {
-      prompt_prefix = fmt(' %s  ', rvim.ui.icons.misc.search_alt),
-      selection_caret = fmt(' %s ', rvim.ui.icons.misc.pick),
+      prompt_prefix = fmt(' %s  ', ui.icons.misc.search_alt),
+      selection_caret = fmt(' %s ', ui.icons.misc.pick),
       cycle_layout_list = { 'flex', 'horizontal', 'vertical', 'bottom_pane', 'center' },
       sorting_strategy = 'ascending',
       layout_strategy = 'horizontal',
       set_env = { ['TERM'] = vim.env.TERM },
-      borderchars = rvim.ui.border.common,
+      borderchars = ui.border.common,
       file_browser = { hidden = true },
       color_devicons = true,
       dynamic_preview_title = true,
