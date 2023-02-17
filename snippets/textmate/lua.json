@@ -8,6 +8,14 @@
     ],
     "description": "Example for selected text"
   },
+  "config": {
+    "prefix": "conf",
+    "body": [
+      "config = function()",
+      "\t${2}",
+      "end)"
+    ]
+  },
   "it": {
     "prefix": "it",
     "body": [
