@@ -6,8 +6,6 @@ vim.filetype.add({
   },
   filename = {
     ['NEOGIT_COMMIT_EDITMSG'] = 'NeogitCommitMessage',
-    ['go.mod'] = 'gomod',
-    ['.gitignore'] = 'conf',
     ['launch.json'] = 'jsonc',
     ['Makefile.toml'] = 'cargo-make',
     ['Podfile'] = 'ruby',
