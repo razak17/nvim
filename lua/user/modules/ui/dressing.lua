@@ -19,17 +19,14 @@ return {
         win_options = { winblend = 2 },
       },
       select = {
-        get_config = function(opts)
-          -- center the picker for treesitter prompts
-          if opts.kind == 'codeaction' then
-            return {
-              backend = 'telescope',
-              telescope = require('telescope.themes').get_cursor({
-                layout_config = { height = get_height },
-                borderchars = rvim.ui.border.ui_select,
-              }),
-            }
-          end
+        get_config = function()
+          return {
+            backend = 'telescope',
+            telescope = require('telescope.themes').get_cursor({
+              layout_config = { height = get_height },
+              borderchars = rvim.ui.border.ui_select,
+            }),
+          }
         end,
         telescope = require('telescope.themes').get_dropdown({
           layout_config = { height = get_height },
