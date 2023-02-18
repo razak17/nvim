@@ -1,7 +1,7 @@
 ----------------------------------------------------------------------------------------------------
 -- Language servers
 ----------------------------------------------------------------------------------------------------
-local fn, fmt = vim.fn, string.format
+local fn = vim.fn
 
 local M = {}
 
@@ -53,7 +53,15 @@ M.servers = {
   quick_lint_js = {},
   sqls = {},
   svelte = {},
-  tsserver = {},
+  tsserver = {
+    -- NOTE: Apparently setting this to false improves performance
+    -- https://github.com/sublimelsp/LSP-typescript/issues/129#issuecomment-1281643371
+    initializationOptions = {
+      preferences = {
+        includeCompletionsForModuleExports = false,
+      },
+    },
+  },
   vimls = {},
   prosemd_lsp = {
     root_dir = function(fname) return require('lspconfig/util').root_pattern('README.md')(fname) end,

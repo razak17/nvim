@@ -40,7 +40,6 @@ return {
         formatting.shfmt,
         formatting.stylua.with({ condition = function() return rvim.executable('stylua') end }),
         formatting.goimports,
-        require('typescript.extensions.null-ls.code-actions'),
       },
       on_attach = function(client, bufnr)
         -- lsp-format-modifications.nvim

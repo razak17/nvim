@@ -147,7 +147,7 @@ return {
 
   {
     'kosayoda/nvim-lightbulb',
-    event = 'BufReadPre',
+    event = 'LspAttach',
     config = function()
       hl.plugin('Lightbulb', {
         { LightBulbFloatWin = { foreground = { from = 'Type' } } },
@@ -192,7 +192,7 @@ return {
 
   {
     'lvimuser/lsp-inlayhints.nvim',
-    event = 'VeryLazy',
+    event = 'LspAttach',
     keys = {
       {
         '<leader>lth',
