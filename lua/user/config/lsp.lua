@@ -39,6 +39,7 @@ rvim.lsp = {
     },
   },
   configured_filetypes = {
+    'astro',
     'lua',
     'javascript',
     'javascriptreact',

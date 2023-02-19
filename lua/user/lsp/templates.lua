@@ -4,6 +4,8 @@ local uv = vim.loop
 local ftplugin_dir = rvim.lsp.templates_dir
 local fmt = string.format
 
+local server_names = require('user.servers').servers
+
 ---Write data to a file
 ---@param path string can be full or relative to `cwd`
 ---@param txt string|table text to be written, uses `vim.inspect` internally for tables
@@ -34,7 +36,15 @@ local function get_supported_filetypes(server_name)
   local status_ok, config =
     rvim.safe_require(fmt('lspconfig.server_configurations.%s', server_name))
   if not status_ok then return {} end
-  return config.default_config.filetypes or {}
+  local filetypes = config.default_config.filetypes or {}
+  if type(server_names[server_name]) == 'table' and server_names[server_name].filetypes ~= nil then
+    -- Extend filetypes with server_names[server_name].filetypes
+    -- for _, ft in ipairs(server_names[server_name].filetypes) do
+    --   if not vim.tbl_contains(filetypes, ft) then filetypes[#filetypes + 1] = ft end
+    -- end
+    return server_names[server_name].filetypes
+  end
+  return filetypes
 end
 
 ---Get supported servers per filetype
@@ -72,6 +82,9 @@ local function generate_ftplugin(server_name, dir)
   local filetypes = getFileTypes(server_name)
   if not filetypes then return end
   for _, filetype in ipairs(filetypes) do
+    -- if server_name == 'emmet_ls' then
+    --   print('DEBUGPRINT[1]: templates.lua:74: filetypes=' .. vim.inspect(filetypes))
+    -- end
     filetype = filetype:match('%.([^.]*)$') or filetype
     local filename = join_paths(dir, filetype .. '.lua')
     write_manager(filename, server_name)
@@ -89,8 +102,7 @@ function M.generate_templates()
   --NOTE: use custom server list for now
   M.remove_template_files()
   if not rvim.is_directory(rvim.lsp.templates_dir) then vim.fn.mkdir(ftplugin_dir, 'p') end
-  local server_name = require('user.servers').servers
-  for server, v in pairs(server_name) do
+  for server, v in pairs(server_names) do
     if v ~= false then generate_ftplugin(server, ftplugin_dir) end
   end
 end

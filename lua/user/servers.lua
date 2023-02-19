@@ -79,6 +79,7 @@ M.servers = {
   },
   emmet_ls = {
     filetypes = {
+      'astro',
       'html',
       'css',
       'sass',
