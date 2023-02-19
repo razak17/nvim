@@ -87,6 +87,7 @@ M.servers = {
       'typescriptreact',
       'javascriptreact',
     },
+    root_dir = function(fname) return require('lspconfig/util').root_pattern('package.json')(fname) end,
     single_file_support = false,
   },
   --- https://github.com/golang/tools/blob/master/gopls/doc/settings.md
