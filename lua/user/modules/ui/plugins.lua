@@ -1,3 +1,5 @@
+local hl = rvim.highlight
+
 return {
   'nvim-tree/nvim-web-devicons',
   { 'fladson/vim-kitty', ft = 'kitty' },
@@ -6,7 +8,7 @@ return {
   {
     'itchyny/vim-highlighturl',
     event = 'BufReadPre',
-    config = function() vim.g.highlighturl_guifg = rvim.highlight.get('URL', 'fg') end,
+    config = function() vim.g.highlighturl_guifg = hl.get('URL', 'fg') end,
   },
 
   {
@@ -84,7 +86,7 @@ return {
         org = { headline_highlights = false },
         norg = { codeblock_highlight = false },
       })
-      rvim.highlight.plugin('Headlines', {
+      hl.plugin('Headlines', {
         { Headline1 = { background = '#003c30', foreground = 'White' } },
         { Headline2 = { background = '#00441b', foreground = 'White' } },
         { Headline3 = { background = '#084081', foreground = 'White' } },
@@ -121,7 +123,7 @@ return {
     'lukas-reineke/virt-column.nvim',
     event = 'VeryLazy',
     config = function()
-      rvim.highlight.plugin('virt_column', {
+      hl.plugin('virt_column', {
         { VirtColumn = { bg = 'None', fg = { from = 'VertSplit' } } },
       })
       require('virt-column').setup({ char = '│' })
@@ -144,7 +146,7 @@ return {
     'm-demare/hlargs.nvim',
     event = 'VeryLazy',
     config = function()
-      rvim.highlight.plugin('hlargs', {
+      hl.plugin('hlargs', {
         theme = {
           ['*'] = { { Hlargs = { italic = true, foreground = '#A5D6FF' } } },
         },
@@ -166,7 +168,7 @@ return {
     event = 'VeryLazy',
     enabled = false,
     opts = {
-      blend_color = rvim.highlight.get('Normal', 'bg'),
+      blend_color = hl.get('Normal', 'bg'),
       hide = { underline = false },
     },
   },
