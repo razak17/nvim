@@ -29,12 +29,6 @@ local function config()
       TRACE = codicons.lsp.trace,
     },
   })
-  rvim.nnoremap('<leader>nn', '<cmd>Notifications<CR>', 'notify: show')
-  rvim.nnoremap(
-    '<leader>nd',
-    function() require('notify').dismiss({ silent = true, pending = true }) end,
-    { desc = 'dismiss notifications' }
-  )
 
   vim.notify = notify
   require('telescope').load_extension('notify')
@@ -43,5 +37,13 @@ end
 return {
   'rcarriga/nvim-notify',
   event = 'VeryLazy',
+  keys = {
+    { '<leader>nn', '<cmd>Notifications<CR>', desc = 'notify: show' },
+    {
+      '<leader>nx',
+      function() require('notify').dismiss({ silent = true, pending = true }) end,
+      desc = 'notify: dismiss notifications',
+    },
+  },
   config = config,
 }

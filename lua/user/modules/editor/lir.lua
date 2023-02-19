@@ -53,6 +53,11 @@ return {
       },
       hide_cursor = false,
     })
-    rvim.nnoremap('<localleader>lf', function() require('lir.float').toggle() end, 'lir: toggle')
+    map(
+      'n',
+      '<localleader>lf',
+      function() require('lir.float').toggle() end,
+      { desc = 'lir: toggle' }
+    )
   end,
 }

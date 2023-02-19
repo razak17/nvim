@@ -1,5 +1,3 @@
-local nnoremap = rvim.nnoremap
-
 vim.bo.textwidth = 100
 vim.opt_local.iskeyword:append('-')
 vim.opt_local.spell = true
@@ -42,8 +40,8 @@ local function keyword(word, callback)
   vim.lsp.buf.hover()
 end
 
-nnoremap('gK', keyword, { buffer = 0, desc = 'goto keyword' })
-nnoremap('<leader>so', function()
+map('n', 'gK', keyword, { buffer = 0, desc = 'goto keyword' })
+map('n', '<leader>so', function()
   vim.cmd.luafile('%')
   vim.notify('Sourced ' .. fn.expand('%'))
-end, 'source current file')
+end, { desc = 'source current file' })

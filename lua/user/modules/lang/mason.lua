@@ -15,7 +15,7 @@ return {
       },
     })
     require('mason-lspconfig').setup({ automatic_installation = true })
-    rvim.nnoremap('<leader>lm', '<cmd>Mason<CR>', 'mason: info')
+    map('n', '<leader>lm', '<cmd>Mason<CR>', { desc = 'mason: info' })
   end,
   dependencies = {
     'williamboman/mason-lspconfig.nvim',

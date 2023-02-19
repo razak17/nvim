@@ -71,7 +71,7 @@ function Lazy:bootstrap()
     readme = { root = join_paths(rvim.get_cache_dir(), 'lazy', 'readme') },
   }
   lazy.setup(self.repos, opts)
-  rvim.nnoremap('<localleader>L', '<cmd>Lazy<CR>', 'lazygit: toggle ui')
+  map('n', '<localleader>L', '<cmd>Lazy<CR>', { desc = 'lazygit: toggle ui' })
 end
 
 return Lazy

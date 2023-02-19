@@ -29,8 +29,8 @@ return {
         file_history_panel = { q = '<Cmd>DiffviewClose<CR>' },
       },
     })
-    rvim.nnoremap('<leader>gd', '<cmd>DiffviewOpen<CR>', 'diffview: open')
-    rvim.nnoremap('<leader>gh', '<Cmd>DiffviewFileHistory<CR>', 'diffview: file history')
-    rvim.vnoremap('gh', [[:'<'>DiffviewFileHistory<CR>]], 'diffview: file history')
+    map('n', '<leader>gd', '<cmd>DiffviewOpen<CR>', { desc = 'diffview: open' })
+    map('n', '<leader>gh', '<Cmd>DiffviewFileHistory<CR>', { desc = 'diffview: file history' })
+    map('n', 'gh', [[:'<'>DiffviewFileHistory<CR>]], { desc = 'diffview: file history' })
   end,
 }

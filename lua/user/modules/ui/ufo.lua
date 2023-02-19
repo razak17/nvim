@@ -68,15 +68,16 @@ local function config()
       },
     },
   })
-
-  rvim.nnoremap('zR', ufo.openAllFolds, 'open all folds')
-  rvim.nnoremap('zM', ufo.closeAllFolds, 'close all folds')
-  rvim.nnoremap('zP', ufo.peekFoldedLinesUnderCursor, 'preview fold')
 end
 
 return {
   'kevinhwang91/nvim-ufo',
   event = { 'BufRead', 'BufNewFile' },
+  keys = {
+    { 'zR', function() require('ufo').openAllFolds() end, 'open all folds' },
+    { 'zM', function() require('ufo').closeAllFolds() end, 'close all folds' },
+    { 'zP', function() require('ufo').peekFoldedLinesUnderCursor() end, 'preview fold' },
+  },
   config = config,
   dependencies = { 'kevinhwang91/promise-async' },
 }

@@ -105,7 +105,12 @@ return {
         },
       })
 
-      rvim.nnoremap('R', '<cmd>edit | TSBufEnable highlight<CR>', 'treesitter: enable highlight')
+      map(
+        'n',
+        'R',
+        '<cmd>edit | TSBufEnable highlight<CR>',
+        { desc = 'treesitter: enable highlight' }
+      )
     end,
     dependencies = {
       'nvim-treesitter/nvim-treesitter-textobjects',

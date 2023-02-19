@@ -174,90 +174,94 @@ end
 local function setup_mappings(client, bufnr)
   local function with_desc(desc) return { buffer = bufnr, desc = desc } end
   if not client == nil then return end
-  local nnoremap = rvim.nnoremap
-  nnoremap('gl', function()
+  map('n', 'gl', function()
     local config = rvim.lsp.diagnostics.float
     config.scope = 'line'
     return vim.diagnostic.open_float(config)
   end, with_desc('lsp: line diagnostics'))
-  nnoremap('K', show_documentation, with_desc('lsp: hover'))
-  nnoremap('gd', lsp.buf.definition, with_desc('lsp: definition'))
-  nnoremap('gr', lsp.buf.references, with_desc('lsp: references'))
-  nnoremap('gi', lsp.buf.implementation, with_desc('lsp: go to implementation'))
-  nnoremap('gt', lsp.buf.type_definition, with_desc('lsp: go to type definition'))
-  nnoremap('gI', lsp.buf.incoming_calls, with_desc('lsp: incoming calls'))
+  map('n', 'K', show_documentation, with_desc('lsp: hover'))
+  map('n', 'gd', lsp.buf.definition, with_desc('lsp: definition'))
+  map('n', 'gr', lsp.buf.references, with_desc('lsp: references'))
+  map('n', 'gi', lsp.buf.implementation, with_desc('lsp: go to implementation'))
+  map('n', 'gt', lsp.buf.type_definition, with_desc('lsp: go to type definition'))
+  map('n', 'gI', lsp.buf.incoming_calls, with_desc('lsp: incoming calls'))
   -- Leader keymaps
-  ----------------------------------------------------------------------------------------------------
-  vim.keymap.set({ 'n', 'x' }, '<leader>la', lsp.buf.code_action, with_desc('lsp: code action'))
-  nnoremap('<leader>lk', function()
+  --------------------------------------------------------------------------------------------------
+  map({ 'n', 'x' }, '<leader>la', lsp.buf.code_action, with_desc('lsp: code action'))
+  map('n', '<leader>lk', function()
     if rvim.lsp.hover_diagnostics then
       vim.diagnostic.goto_prev({ float = false })
       return
     end
     vim.diagnostic.goto_prev()
   end, with_desc('lsp: go to prev diagnostic'))
-  nnoremap('<leader>lj', function()
+  map('n', '<leader>lj', function()
     if rvim.lsp.hover_diagnostics then
       vim.diagnostic.goto_next({ float = false })
       return
     end
     vim.diagnostic.goto_next()
   end, with_desc('lsp: go to next diagnostic'))
-  nnoremap('<leader>lL', vim.diagnostic.setloclist, with_desc('lsp: toggle loclist diagnostics'))
-  nnoremap('<leader>lc', lsp.codelens.run, with_desc('lsp: run code lens'))
-  nnoremap('<leader>lr', lsp.buf.rename, with_desc('lsp: rename'))
+  map('n', '<leader>lL', vim.diagnostic.setloclist, with_desc('lsp: toggle loclist diagnostics'))
+  map('n', '<leader>lc', lsp.codelens.run, with_desc('lsp: run code lens'))
+  map('n', '<leader>lr', lsp.buf.rename, with_desc('lsp: rename'))
   -- Templates
-  nnoremap('<leader>lG', function()
+  map('n', '<leader>lG', function()
     require('user.lsp.templates').generate_templates()
     vim.notify('Templates have been generated', nil, { title = 'Lsp' })
-  end, 'lsp: generate templates')
-  nnoremap('<leader>lD', function()
+  end, { desc = 'lsp: generate templates' })
+  map('n', '<leader>lD', function()
     require('user.lsp.templates').remove_template_files()
     vim.notify('Templates have been removed', nil, { title = 'Lsp' })
-  end, 'lsp: delete templates')
+  end, { desc = 'lsp: delete templates' })
   -- Others
-  nnoremap('<leader>li', '<cmd>LspInfo<CR>', with_desc('lsp: info'))
-  nnoremap('<leader>lf', '<cmd>LspFormat<CR>', with_desc('lsp: format buffer'))
-  nnoremap('<leader>ll', '<cmd>LspDiagnostics<CR>', with_desc('toggle quickfix diagnostics'))
-  nnoremap('<leader>ltv', '<cmd>ToggleVirtualText<CR>', with_desc('toggle virtual text'))
-  nnoremap('<leader>lts', '<cmd>ToggleDiagnosticSigns<CR>', with_desc('toggle  signs'))
+  map('n', '<leader>li', '<cmd>LspInfo<CR>', with_desc('lsp: info'))
+  map('n', '<leader>lf', '<cmd>LspFormat<CR>', with_desc('lsp: format buffer'))
+  map('n', '<leader>ll', '<cmd>LspDiagnostics<CR>', with_desc('toggle quickfix diagnostics'))
+  map('n', '<leader>ltv', '<cmd>ToggleVirtualText<CR>', with_desc('toggle virtual text'))
+  map('n', '<leader>lts', '<cmd>ToggleDiagnosticSigns<CR>', with_desc('toggle  signs'))
   -- Typescript
   if client.name == 'tsserver' then
     local actions = require('typescript').actions
-    nnoremap(
+    map(
+      'n',
       '<localleader>tr',
       '<cmd>TypescriptRenameFile<CR>',
       with_desc('typescript: rename file')
     )
-    nnoremap('<localleader>tf', actions.fixAll, with_desc('typescript: fix all'))
-    nnoremap('<localleader>tia', actions.addMissingImports, with_desc('typescript: add missing'))
-    nnoremap('<localleader>tio', actions.organizeImports, with_desc('typescript: organize'))
-    nnoremap('<localleader>tix', actions.removeUnused, with_desc('typescript: remove unused'))
+    map('n', '<localleader>tf', actions.fixAll, with_desc('typescript: fix all'))
+    map('n', '<localleader>tia', actions.addMissingImports, with_desc('typescript: add missing'))
+    map('n', '<localleader>tio', actions.organizeImports, with_desc('typescript: organize'))
+    map('n', '<localleader>tix', actions.removeUnused, with_desc('typescript: remove unused'))
   end
   -- Rust tools
   if client.name == 'rust_analyzer' then
-    nnoremap(
+    map(
+      'n',
       '<localleader>rh',
       '<cmd>RustToggleInlayHints<CR>',
       with_desc('rust-tools: toggle hints')
     )
-    nnoremap('<localleader>rr', '<cmd>RustRunnables<CR>', with_desc('rust-tools: runnables'))
-    nnoremap('<localleader>rt', '<cmd>lua _CARGO_TEST()<CR>', with_desc('rust-tools: cargo test'))
-    nnoremap('<localleader>rm', '<cmd>RustExpandMacro<CR>', with_desc('rust-tools: expand cargo'))
-    nnoremap('<localleader>rc', '<cmd>RustOpenCargo<CR>', with_desc('rust-tools: open cargo'))
-    nnoremap('<localleader>rp', '<cmd>RustParentModule<CR>', with_desc('rust-tools: parent module'))
-    nnoremap('<localleader>rd', '<cmd>RustDebuggables<CR>', with_desc('rust-tools: debuggables'))
-    nnoremap(
+    map('n', '<localleader>rr', '<cmd>RustRunnables<CR>', with_desc('rust-tools: runnables'))
+    map('n', '<localleader>rt', '<cmd>lua _CARGO_TEST()<CR>', with_desc('rust-tools: cargo test'))
+    map('n', '<localleader>rm', '<cmd>RustExpandMacro<CR>', with_desc('rust-tools: expand cargo'))
+    map('n', '<localleader>rc', '<cmd>RustOpenCargo<CR>', with_desc('rust-tools: open cargo'))
+    map('n', '<localleader>rp', '<cmd>RustParentModule<CR>', with_desc('rust-tools: parent module'))
+    map('n', '<localleader>rd', '<cmd>RustDebuggables<CR>', with_desc('rust-tools: debuggables'))
+    map(
+      'n',
       '<localleader>rv',
       '<cmd>RustViewCrateGraph<CR>',
       with_desc('rust-tools: view crate graph')
     )
-    nnoremap(
+    map(
+      'n',
       '<localleader>rR',
       "<cmd>lua require('rust-tools/workspace_refresh')._reload_workspace_from_cargo_toml()<CR>",
       with_desc('rust-tools: reload workspace')
     )
-    nnoremap(
+    map(
+      'n',
       '<localleader>ro',
       '<cmd>RustOpenExternalDocs<CR>',
       with_desc('rust-tools: open external docs')

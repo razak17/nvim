@@ -49,7 +49,7 @@ return {
         end
       end,
     })
-    rvim.nnoremap('<leader>ln', '<cmd>NullLsInfo<CR>', 'null-ls: info')
+    map('n', '<leader>ln', '<cmd>NullLsInfo<CR>', { desc = 'null-ls: info' })
     rvim.highlight.plugin('null-ls', {
       { NullLsInfoBorder = { link = 'FloatBorder' } },
     })

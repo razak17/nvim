@@ -99,29 +99,31 @@ return {
     'folke/todo-comments.nvim',
     event = 'BufReadPre',
     cmd = { 'TodoTelescope', 'TodoTrouble', 'TodoQuickFix', 'TodoDots' },
+    keys = {
+      { '<leader>tt', '<cmd>TodoDots<CR>', desc = 'todo: dotfiles todos' },
+      {
+        '<leader>tj',
+        function() require('todo-comments').jump_next() end,
+        desc = 'todo-comments: next todo',
+      },
+      {
+        '<leader>tk',
+        function() require('todo-comments').jump_prev() end,
+        desc = 'todo-comments: prev todo',
+      },
+    },
     config = function()
       require('todo-comments').setup({ highlight = { after = '' } })
       rvim.command(
         'TodoDots',
         string.format('TodoTelescope cwd=%s keywords=TODO,FIXME', rvim.get_config_dir())
       )
-      rvim.nnoremap('<leader>tt', '<cmd>TodoDots<CR>', 'todo: dotfiles todos')
-      rvim.nnoremap(
-        '<leader>tj',
-        function() require('todo-comments').jump_next() end,
-        'todo-comments: next todo'
-      )
-      rvim.nnoremap(
-        '<leader>tk',
-        function() require('todo-comments').jump_prev() end,
-        'todo-comments: prev todo'
-      )
     end,
   },
 
   {
     'lukas-reineke/virt-column.nvim',
-    event = 'VeryLazy',
+    event = 'BufReadPre',
     config = function()
       hl.plugin('virt_column', {
         { VirtColumn = { bg = 'None', fg = { from = 'VertSplit' } } },

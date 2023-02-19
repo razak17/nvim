@@ -101,7 +101,7 @@ return {
   cmd = { 'Neotree' },
   branch = 'main',
   keys = {
-    { '<c-n>', '<cmd>Neotree toggle reveal<CR>', desc = 'toggle tree', 'neo-tree.nvim' },
+    { '<c-n>', '<cmd>Neotree toggle reveal<CR>', desc = 'toggle tree' },
   },
   dependencies = {
     's1n7ax/nvim-window-picker',

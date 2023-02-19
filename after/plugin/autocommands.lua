@@ -70,7 +70,7 @@ rvim.augroup('SmartClose', {
         or vim.tbl_contains(smart_close_buftypes, vim.bo.buftype)
         or vim.tbl_contains(smart_close_filetypes, vim.bo.filetype)
 
-      if is_eligible then rvim.nnoremap('q', smart_close, { buffer = 0, nowait = true }) end
+      if is_eligible then map('n', 'q', smart_close, { buffer = 0, nowait = true }) end
     end,
   },
   {
@@ -446,7 +446,7 @@ rvim.augroup('ConcealMappings', {
           vim.o.conceallevel = 2
         end
       end
-      rvim.nnoremap('<localleader>cl', toggle_coceallevel, 'toggle conceallevel')
+      map('n', '<localleader>cl', toggle_coceallevel, { desc = 'toggle conceallevel' })
 
       local function toggle_cocealcursor()
         if vim.o.concealcursor == 'n' then
@@ -455,7 +455,7 @@ rvim.augroup('ConcealMappings', {
           vim.o.concealcursor = 'n'
         end
       end
-      rvim.nnoremap('<localleader>cc', toggle_cocealcursor, 'disable concealcursor')
+      map('n', '<localleader>cc', toggle_cocealcursor, { desc = 'disable concealcursor' })
     end,
   },
 })

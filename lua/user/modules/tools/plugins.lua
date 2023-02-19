@@ -6,7 +6,9 @@ return {
   {
     'AndrewRadev/linediff.vim',
     cmd = 'Linediff',
-    init = function() rvim.nnoremap('<localleader>ll', '<cmd>Linediff<CR>', 'linediff: toggle') end,
+    keys = {
+      { '<localleader>ll', '<cmd>Linediff<CR>', desc = 'linediff: toggle' },
+    },
   },
 
   {
@@ -24,10 +26,10 @@ return {
   {
     'LeonHeidelbach/trailblazer.nvim',
     event = 'VeryLazy',
-    init = function()
-      rvim.nnoremap('<leader>ms', '<cmd>TrailBlazerSaveSession<CR>', 'trailblazer: save session')
-      rvim.nnoremap('<leader>ml', '<cmd>TrailBlazerLoadSession<CR>', 'trailblazer: load session')
-    end,
+    keys = {
+      { '<leader>ms', '<cmd>TrailBlazerSaveSession<CR>', desc = 'trailblazer: save session' },
+      { '<leader>ml', '<cmd>TrailBlazerLoadSession<CR>', desc = 'trailblazer: load session' },
+    },
     opts = {
       custom_session_storage_dir = join_paths(rvim.get_runtime_dir(), 'trailblazer'),
       trail_options = {
@@ -76,17 +78,36 @@ return {
         cmd =
           require('FTerm'):new({ cmd = cmd, dimensions = { height = 0.9, width = 0.9 } }):toggle()
       end
-      local nnoremap, tnoremap = rvim.nnoremap, rvim.tnoremap
-      nnoremap([[<c-\>]], function() require('FTerm').toggle() end, 'fterm: toggle lazygit')
-      tnoremap([[<c-\>]], function() require('FTerm').toggle() end, 'fterm: toggle lazygit')
-      nnoremap('<leader>lg', function() new_float('lazygit') end, 'fterm: toggle lazygit')
-      nnoremap('<leader>ga', function() new_float('git add . ') end, 'add all')
-      nnoremap('<leader>gc', function() new_float('git add . && git commit -a -v') end, 'commit')
-      nnoremap('<leader>gD', function() new_float('iconf -ccma') end, 'commit dotfiles')
-      nnoremap('<leader>tb', function() new_float('btop') end, 'fterm: btop')
-      nnoremap('<leader>tn', function() new_float('node') end, 'fterm: node')
-      nnoremap('<leader>tr', function() new_float('ranger') end, 'fterm: ranger')
-      nnoremap('<leader>tp', function() new_float('python') end, 'fterm: python')
+      map(
+        'n',
+        [[<c-\>]],
+        function() require('FTerm').toggle() end,
+        { desc = 'fterm: toggle lazygit' }
+      )
+      map(
+        'n',
+        [[<c-\>]],
+        function() require('FTerm').toggle() end,
+        { desc = 'fterm: toggle lazygit' }
+      )
+      map(
+        'n',
+        '<leader>lg',
+        function() new_float('lazygit') end,
+        { desc = 'fterm: toggle lazygit' }
+      )
+      map('n', '<leader>ga', function() new_float('git add . ') end, { desc = 'add all' })
+      map(
+        'n',
+        '<leader>gc',
+        function() new_float('git add . && git commit -a -v') end,
+        { desc = 'commit' }
+      )
+      map('n', '<leader>gD', function() new_float('iconf -ccma') end, { desc = 'commit dotfiles' })
+      map('n', '<leader>tb', function() new_float('btop') end, { desc = 'fterm: btop' })
+      map('n', '<leader>tn', function() new_float('node') end, { desc = 'fterm: node' })
+      map('n', '<leader>tr', function() new_float('ranger') end, { desc = 'fterm: ranger' })
+      map('n', '<leader>tp', function() new_float('python') end, { desc = 'fterm: python' })
     end,
     opts = {
       border = rvim.ui.current.border,
@@ -97,18 +118,18 @@ return {
   {
     'folke/persistence.nvim',
     event = 'BufReadPre', -- this will only start session saving when an actual file was opened
-    init = function()
-      rvim.nnoremap(
+    keys = {
+      {
         '<leader>sr',
         '<cmd>lua require("persistence").load()<CR>',
-        'persistence: restore for directory'
-      )
-      rvim.nnoremap(
+        desc = 'persistence: restore for directory',
+      },
+      {
         '<leader>sl',
         '<cmd>lua require("persistence").load({ last = true })<CR>',
-        'persistence: restore last'
-      )
-    end,
+        desc = 'persistence: restore last',
+      },
+    },
     opts = {
       dir = vim.fn.expand(rvim.get_cache_dir() .. '/sessions/'),
       options = { 'buffers', 'curdir', 'tabpages', 'winsize', 'help' },
@@ -131,7 +152,7 @@ return {
       vim.g.undotree_TreeNodeShape = '◦' -- Alternative: '◉'
       vim.g.undotree_SetFocusWhenToggle = 1
       vim.g.undotree_SplitWidth = 35
-      rvim.nnoremap('<leader>u', '<cmd>UndotreeToggle<CR>', 'undotree: toggle')
+      map('n', '<leader>u', '<cmd>UndotreeToggle<CR>', { desc = 'undotree: toggle' })
     end,
   },
 

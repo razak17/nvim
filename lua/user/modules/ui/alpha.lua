@@ -96,7 +96,7 @@ local function config()
     opts = { margin = 5 },
   })
 
-  rvim.nnoremap('<leader>;', '<cmd>Alpha<CR>', 'alpha')
+  map('n', '<leader>;', '<cmd>Alpha<CR>', { desc = 'alpha' })
 
   rvim.augroup('AlphaSettings', {
     {
@@ -106,7 +106,7 @@ local function config()
         vim.opt_local.foldenable = false
         vim.opt_local.colorcolumn = ''
         vim.o.laststatus = 0
-        rvim.nnoremap('q', '<Cmd>Alpha<CR>', { buffer = args.buf, nowait = true })
+        map('n', 'q', '<Cmd>Alpha<CR>', { buffer = args.buf, nowait = true })
 
         vim.api.nvim_create_autocmd('BufUnload', {
           buffer = args.buf,

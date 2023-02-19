@@ -12,8 +12,8 @@ return {
         },
         style = { border = 'single', hide_buffer_id = true },
       })
-      rvim.nnoremap('H', '<Plug>(CybuPrev)', 'cybu: prev')
-      rvim.nnoremap('L', '<Plug>(CybuNext)', 'cybu: next')
+      map('n', 'H', '<Plug>(CybuPrev)', { desc = 'cybu: prev' })
+      map('n', 'L', '<Plug>(CybuNext)', { desc = 'cybu: next' })
     end,
   },
 
@@ -126,10 +126,11 @@ return {
         remove_default_keybinds = true,
       })
 
-      rvim.nnoremap(
+      map(
+        'n',
         '<leader>ii',
         '<cmd>lua require("nvim-toggler").toggle()<CR>',
-        'nvim-toggler: toggle'
+        { desc = 'nvim-toggler: toggle' }
       )
     end,
   },

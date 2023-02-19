@@ -65,7 +65,7 @@ return {
     require('luasnip.loaders.from_lua').lazy_load()
     require('luasnip.loaders.from_vscode').lazy_load({ paths = paths })
 
-    rvim.nnoremap('<leader>S', '<cmd>LuaSnipEdit<CR>', 'LuaSnip: edit snippet')
+    map('n', '<leader>S', '<cmd>LuaSnipEdit<CR>', { desc = 'LuaSnip: edit snippet' })
   end,
   dependencies = { 'rafamadriz/friendly-snippets' },
 }

@@ -4,15 +4,21 @@ local fn = vim.fn
 local api = vim.api
 local fmt = string.format
 
-local imap = rvim.imap
-local nmap = rvim.nmap
-local nnoremap = rvim.nnoremap
-local xnoremap = rvim.xnoremap
-local vnoremap = rvim.vnoremap
-local inoremap = rvim.inoremap
-local cnoremap = rvim.cnoremap
-local tnoremap = rvim.tnoremap
-local onoremap = rvim.onoremap
+local recursive_map = function(mode, lhs, rhs, opts)
+  opts = opts or {}
+  opts.remap = true
+  map(mode, lhs, rhs, opts)
+end
+
+local nmap = function(...) recursive_map('n', ...) end
+local imap = function(...) recursive_map('i', ...) end
+local nnoremap = function(...) map('n', ...) end
+local xnoremap = function(...) map('x', ...) end
+local vnoremap = function(...) map('v', ...) end
+local inoremap = function(...) map('i', ...) end
+local onoremap = function(...) map('o', ...) end
+local cnoremap = function(...) map('c', ...) end
+local tnoremap = function(...) map('t', ...) end
 
 ----------------------------------------------------------------------------------------------------
 -- Terminal {{{
@@ -112,7 +118,7 @@ end
 -- Alternate way to save
 nnoremap('<C-s>', '<cmd>silent! write<CR>')
 -- Quit
-nnoremap('<leader>x', smart_quit, 'quit')
+nnoremap('<leader>x', smart_quit, { desc = 'quit' })
 -- Write and quit all files, ZZ is NOT equivalent to this
 nnoremap('qa', '<cmd>qa<CR>')
 ----------------------------------------------------------------------------------------------------
@@ -152,11 +158,11 @@ nmap(
 ----------------------------------------------------------------------------------------------------
 -- Help
 ----------------------------------------------------------------------------------------------------
-nnoremap('<leader>ah', ':h <C-R>=expand("<cword>")<CR><CR>', 'help')
+nnoremap('<leader>ah', ':h <C-R>=expand("<cword>")<CR><CR>', { desc = 'help' })
 ----------------------------------------------------------------------------------------------------
 -- Inspect
 ----------------------------------------------------------------------------------------------------
-nnoremap('<leader>I', '<cmd>Inspect<CR>', 'inspect')
+nnoremap('<leader>I', '<cmd>Inspect<CR>', { desc = 'inspect' })
 ----------------------------------------------------------------------------------------------------
 -- Move selected line / block of text in visual mode
 ----------------------------------------------------------------------------------------------------
@@ -188,7 +194,11 @@ nnoremap(']<space>', [[<cmd>put =repeat(nr2char(10), v:count1)<CR>]])
 -- search visual selection
 vnoremap('//', [[y/<C-R>"<CR>]])
 -- Credit: Justinmk
-nnoremap('g>', [[<cmd>set nomore<bar>40messages<bar>set more<CR>]], 'show message history')
+nnoremap(
+  'g>',
+  [[<cmd>set nomore<bar>40messages<bar>set more<CR>]],
+  { desc = 'show message history' }
+)
 -- Start new line from any cursor position
 inoremap('<S-Return>', '<C-o>o')
 ----------------------------------------------------------------------------------------------------
@@ -200,11 +210,11 @@ vnoremap('>', '>gv')
 -- Buffers
 ----------------------------------------------------------------------------------------------------
 -- Switch between the last two files
-nnoremap('<leader><leader>', [[<c-^>]], '')
+nnoremap('<leader><leader>', [[<c-^>]], { desc = 'switch to last file' })
 ----------------------------------------------------------------------------------------------------
 -- Capitalize
 ----------------------------------------------------------------------------------------------------
-nnoremap('<leader>U', 'gUiw`]', 'capitalize word')
+nnoremap('<leader>U', 'gUiw`]', { desc = 'capitalize word' })
 inoremap('<C-u>', '<cmd>norm!gUiw`]a<CR>')
 -- find visually selected text
 vnoremap('*', [[y/<C-R>"<CR>]])
@@ -215,9 +225,9 @@ vnoremap('$', 'g_')
 ----------------------------------------------------------------------------------------------------
 -- Use alt + hjkl to resize windows
 ----------------------------------------------------------------------------------------------------
-nnoremap('<leader>aF', ':vertical resize 90<CR>', 'vertical resize 90%')
-nnoremap('<leader>aL', ':vertical resize 40<CR>', 'vertical resize 30%')
-nnoremap('<leader>aO', ':<C-f>:resize 10<CR>', 'open old commands')
+nnoremap('<leader>aF', ':vertical resize 90<CR>', { desc = 'vertical resize 90%' })
+nnoremap('<leader>aL', ':vertical resize 40<CR>', { desc = 'vertical resize 30%' })
+nnoremap('<leader>aO', ':<C-f>:resize 10<CR>', { desc = 'open old commands' })
 ----------------------------------------------------------------------------------------------------
 -- Yank from cursor position to end-of-line
 nnoremap('Y', 'y$')
@@ -244,8 +254,8 @@ local function open_link()
   if link then return rvim.open(fmt('https://www.github.com/%s', link)) end
 end
 nnoremap('gx', open_link)
-nnoremap('<leader>lq', function() rvim.toggle_qf_list() end, 'toggle quickfix')
-nnoremap('<leader>lo', function() rvim.toggle_loc_list() end, 'toggle loclist')
+nnoremap('<leader>lq', function() rvim.toggle_qf_list() end, { desc = 'toggle quickfix' })
+nnoremap('<leader>lo', function() rvim.toggle_loc_list() end, { desc = 'toggle loclist' })
 ----------------------------------------------------------------------------------------------------
 -- UI Toggles
 ----------------------------------------------------------------------------------------------------
@@ -292,25 +302,25 @@ local function toggle_opt(opt)
   vim.opt[opt] = value
   vim.notify(fmt('%s set to %s', opt, tostring(value)), 'info', { title = 'UI Toggles' })
 end
-nnoremap('<leader>ow', function() toggle_opt('wrap') end, 'toggle wrap')
-nnoremap('<leader>os', function() toggle_opt('spell') end, 'toggle spell')
-nnoremap('<leader>oS', function() toggle_opt('signcolumn') end, 'toggle signcolumn')
-nnoremap('<leader>oL', function() toggle_opt('cursorline') end, 'toggle cursorline')
-nnoremap('<leader>ol', function() toggle_opt('laststatus') end, 'toggle statusline')
-nnoremap('<leader>oC', function() toggle_opt('colorcolumn') end, 'toggle colorcolumn')
+nnoremap('<leader>ow', function() toggle_opt('wrap') end, { desc = 'toggle wrap' })
+nnoremap('<leader>os', function() toggle_opt('spell') end, { desc = 'toggle spell' })
+nnoremap('<leader>oS', function() toggle_opt('signcolumn') end, { desc = 'toggle signcolumn' })
+nnoremap('<leader>oL', function() toggle_opt('cursorline') end, { desc = 'toggle cursorline' })
+nnoremap('<leader>ol', function() toggle_opt('laststatus') end, { desc = 'toggle statusline' })
+nnoremap('<leader>oC', function() toggle_opt('colorcolumn') end, { desc = 'toggle colorcolumn' })
 ----------------------------------------------------------------------------------------------------
 -- Windows
 ----------------------------------------------------------------------------------------------------
 nnoremap(
   '<localleader>wv',
   '<C-W>t <C-W>H<C-W>=',
-  'change two vertically split windows to horizontal splits'
+  { desc = 'change two vertically split windows to horizontal splits' }
 )
 -- Change two vertically split windows to horizontal splits
 nnoremap(
   '<localleader>wh',
   '<C-W>t <C-W>K<C-W>=',
-  'change two horizontally split windows to vertical splits'
+  { desc = 'change two horizontally split windows to vertical splits' }
 )
 ----------------------------------------------------------------------------------------------------
 -- Folds
@@ -353,21 +363,25 @@ local function modify_line_end_delimiter(character)
   end
 end
 -- Conditionally modify character at end of line
-nnoremap('<localleader>,', modify_line_end_delimiter(','), 'append comma')
-nnoremap('<localleader>;', modify_line_end_delimiter(';'), 'append semi colon')
-nnoremap('<localleader>.', modify_line_end_delimiter('.'), 'append period')
+nnoremap('<localleader>,', modify_line_end_delimiter(','), { desc = 'append comma' })
+nnoremap('<localleader>;', modify_line_end_delimiter(';'), { desc = 'append semi colon' })
+nnoremap('<localleader>.', modify_line_end_delimiter('.'), { desc = 'append period' })
 
 ----------------------------------------------------------------------------------------------------
 -- Quick find/replace
 ----------------------------------------------------------------------------------------------------
-nnoremap('<leader>[', [[:%s/\<<C-r>=expand("<cword>")<CR>\>/]], 'replace all')
-nnoremap('<leader>]', [[:s/\<<C-r>=expand("<cword>")<CR>\>/]], 'replace in line')
-vnoremap('<leader>[', [["zy:%s/<C-r><C-o>"/]], 'replace all')
+nnoremap('<leader>[', [[:%s/\<<C-r>=expand("<cword>")<CR>\>/]], { desc = 'replace all' })
+nnoremap('<leader>]', [[:s/\<<C-r>=expand("<cword>")<CR>\>/]], { desc = 'replace in line' })
+vnoremap('<leader>[', [["zy:%s/<C-r><C-o>"/]], { desc = 'replace all' })
 ----------------------------------------------------------------------------------------------------
 -- open a new file in the same directory
-nnoremap('<leader>no', [[:e <C-R>=expand("%:p:h") . "/" <CR>]], 'open file in same dir')
+nnoremap('<leader>no', [[:e <C-R>=expand("%:p:h") . "/" <CR>]], { desc = 'open file in same dir' })
 -- create a new file in the same directory
-nnoremap('<leader>nf', [[:vsp <C-R>=expand("%:p:h") . "/" <CR>]], 'create new file in same dir')
+nnoremap(
+  '<leader>nf',
+  [[:vsp <C-R>=expand("%:p:h") . "/" <CR>]],
+  { desc = 'create new file in same dir' }
+)
 ----------------------------------------------------------------------------------------------------
 -- Multiple Cursor Replacement
 -- http://www.kevinli.co/posts/2017-01-19-multiple-cursors-in-500-bytes-of-vimscript/
@@ -429,11 +443,27 @@ function rvim.mappings.ddg(path) rvim.web_search(path, 'https://html.duckduckgo.
 function rvim.mappings.gh(path) rvim.web_search(path, 'https://github.com/search?q=') end
 
 -- Search DuckDuckGo
-nnoremap('<localleader>?', [[:lua rvim.mappings.ddg(vim.fn.expand("<cword>"))<CR>]], 'search')
-xnoremap('<localleader>?', [["gy:lua rvim.mappings.ddg(vim.api.nvim_eval("@g"))<CR>gv]], 'search')
+nnoremap(
+  '<localleader>?',
+  [[:lua rvim.mappings.ddg(vim.fn.expand("<cword>"))<CR>]],
+  { desc = 'search' }
+)
+xnoremap(
+  '<localleader>?',
+  [["gy:lua rvim.mappings.ddg(vim.api.nvim_eval("@g"))<CR>gv]],
+  { desc = 'search' }
+)
 -- Search Github
-nnoremap('<localleader>!', [[:lua rvim.mappings.gh(vim.fn.expand("<cword>"))<CR>]], 'gh search')
-xnoremap('<localleader>!', [["gy:lua rvim.mappings.gh(vim.api.nvim_eval("@g"))<CR>gv]], 'gh search')
+nnoremap(
+  '<localleader>!',
+  [[:lua rvim.mappings.gh(vim.fn.expand("<cword>"))<CR>]],
+  { desc = 'gh search' }
+)
+xnoremap(
+  '<localleader>!',
+  [["gy:lua rvim.mappings.gh(vim.api.nvim_eval("@g"))<CR>gv]],
+  { desc = 'gh search' }
+)
 ----------------------------------------------------------------------------------------------------
 -- Undo
 ----------------------------------------------------------------------------------------------------
@@ -454,8 +484,8 @@ nnoremap('<C-k>', '<C-w>k')
 nnoremap('<C-l>', '<C-w>l')
 ----------------------------------------------------------------------------------------------------
 -- Buffer Movement
-nnoremap('H', '<cmd>bprevious<CR>', 'previous buffer')
-nnoremap('L', '<cmd>bnext<CR>', 'next buffer')
+nnoremap('H', '<cmd>bprevious<CR>', { desc = 'previous buffer' })
+nnoremap('L', '<cmd>bnext<CR>', { desc = 'next buffer' })
 ----------------------------------------------------------------------------------------------------
 -- Personal
 ----------------------------------------------------------------------------------------------------
@@ -470,22 +500,22 @@ local function empty_registers()
     false
   )
 end
-nnoremap('<leader>aR', empty_registers, 'empty registers')
+nnoremap('<leader>aR', empty_registers, { desc = 'empty registers' })
 ----------------------------------------------------------------------------------------------------
 -- Search word
 ----------------------------------------------------------------------------------------------------
-nnoremap('<leader>B', '/<C-R>=escape(expand("<cword>"), "/")<CR><CR>', 'find cword')
+nnoremap('<leader>B', '/<C-R>=escape(expand("<cword>"), "/")<CR><CR>', { desc = 'find cword' })
 ----------------------------------------------------------------------------------------------------
 -- Greatest remap ever
 ----------------------------------------------------------------------------------------------------
-vnoremap('<leader>p', '"_dP', 'greatest remap')
+vnoremap('<leader>p', '"_dP', { desc = 'greatest remap' })
 ----------------------------------------------------------------------------------------------------
 -- Next greatest remap ever : asbjornHaland
 ----------------------------------------------------------------------------------------------------
-nnoremap('<leader>y', '"+y', 'yank')
-vnoremap('<leader>y', '"+y', 'yank')
-nnoremap('<leader>dd', '"_d', 'delete')
-vnoremap('<leader>dd', '"_d', 'delete')
+nnoremap('<leader>y', '"+y', { desc = 'yank' })
+vnoremap('<leader>y', '"+y', { desc = 'yank' })
+nnoremap('<leader>dd', '"_d', { desc = 'delete' })
+vnoremap('<leader>dd', '"_d', { desc = 'delete' })
 ----------------------------------------------------------------------------------------------------
 -- Paste in visual mode multiple times
 ----------------------------------------------------------------------------------------------------
@@ -497,21 +527,21 @@ function rvim.rev_str(str) return string.reverse(str) end
 vnoremap(
   '<leader>R',
   [[:s/\%V.\+\%V./\=v:lua.rvim.rev_str(submatch(0))<CR>gv<ESC>]],
-  'reverse line'
+  { desc = 'reverse line' }
 )
 ----------------------------------------------------------------------------------------------------
 -- Yank / Select / Delete All
 ----------------------------------------------------------------------------------------------------
-nnoremap('<leader>Y', 'gg"+VGy<C-o>', 'yank all')
-nnoremap('<leader>A', 'gg"+VG', 'select all')
-nnoremap('<leader>D', 'gg"+VGd', 'delete all')
+nnoremap('<leader>Y', 'gg"+VGy<C-o>', { desc = 'yank all' })
+nnoremap('<leader>A', 'gg"+VG', { desc = 'select all' })
+nnoremap('<leader>D', 'gg"+VGd', { desc = 'delete all' })
 ----------------------------------------------------------------------------------------------------
 -- rVim {{{
 ----------------------------------------------------------------------------------------------------
 nnoremap(
   '<localleader>le',
   function() vim.treesitter.show_tree({ command = 'botright 60vnew' }) end,
-  'open ts tree for current buffer'
+  { desc = 'open ts tree for current buffer' }
 )
 ----------------------------------------------------------------------------------------------------
 -- Abbreviations

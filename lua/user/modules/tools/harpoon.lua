@@ -16,22 +16,39 @@ return {
       },
     })
 
-    rvim.nnoremap('<leader>ma', function() require('harpoon.mark').add_file() end, 'harpoon: add')
-    rvim.nnoremap('<leader>mn', function() require('harpoon.ui').nav_next() end, 'harpoon: next')
-    rvim.nnoremap('<leader>mp', function() require('harpoon.ui').nav_prev() end, 'harpoon: prev')
-    rvim.nnoremap(
+    map(
+      'n',
+      '<leader>ma',
+      function() require('harpoon.mark').add_file() end,
+      { desc = 'harpoon: add' }
+    )
+    map(
+      'n',
+      '<leader>mn',
+      function() require('harpoon.ui').nav_next() end,
+      { desc = 'harpoon: next' }
+    )
+    map(
+      'n',
+      '<leader>mp',
+      function() require('harpoon.ui').nav_prev() end,
+      { desc = 'harpoon: prev' }
+    )
+    map(
+      'n',
       '<leader>m;',
       function() require('harpoon.ui').toggle_quick_menu() end,
-      'harpoon: ui'
+      { desc = 'harpoon: ui' }
     )
-    rvim.nnoremap(
+    map(
+      'n',
       '<leader>mm',
       function()
         require('telescope').extensions.harpoon.marks(
           rvim.telescope.minimal_ui({ prompt_title = 'Harpoon Marks' })
         )
       end,
-      'harpoon: marks'
+      { desc = 'harpoon: marks' }
     )
     require('telescope').load_extension('harpoon')
   end,

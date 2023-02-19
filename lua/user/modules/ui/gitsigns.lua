@@ -25,36 +25,38 @@ return {
       local gs = package.loaded.gitsigns
 
       local function qf_list_modified() gs.setqflist('all') end
-      local nnoremap, vnoremap = rvim.nnoremap, rvim.vnoremap
 
-      nnoremap('<leader>hd', gs.toggle_deleted, 'show deleted lines')
-      nnoremap(
+      map('n', '<leader>hd', gs.toggle_deleted, { desc = 'show deleted lines' })
+      map(
+        'n',
         '<leader>hj',
         function() gs.next_hunk({ navigation_message = false }) end,
-        'next hunk'
+        { desc = 'next hunk' }
       )
-      nnoremap(
+      map(
+        'n',
         '<leader>hk',
         function() gs.prev_hunk({ navigation_message = false }) end,
-        'prev hunk'
+        { desc = 'prev hunk' }
       )
-      nnoremap('<leader>hp', gs.preview_hunk_inline, 'preview hunk')
-      nnoremap(
+      map('n', '<leader>hp', gs.preview_hunk_inline, { desc = 'preview hunk' })
+      map(
+        'n',
         '<leader>hr',
         function() gs.stage_hunk({ vim.fn.line('.'), vim.fn.line('v') }) end,
-        'reset hunk'
+        { desc = 'reset hunk' }
       )
-      nnoremap('<leader>hs', gs.stage_hunk, 'stage hunk')
-      nnoremap('<leader>hu', gs.undo_stage_hunk, 'undo stage')
-      nnoremap('<leader>hw', gs.toggle_word_diff, 'toggle word diff')
+      map('n', '<leader>hs', gs.stage_hunk, { desc = 'stage hunk' })
+      map('n', '<leader>hu', gs.undo_stage_hunk, { desc = 'undo stage' })
+      map('n', '<leader>hw', gs.toggle_word_diff, { desc = 'toggle word diff' })
 
-      nnoremap('<leader>gL', qf_list_modified, 'gitsigns: list modified in quickfix')
-      nnoremap('<leader>gb', gs.blame_line, 'gitsigns: blame current line')
-      nnoremap('<leader>gr', gs.reset_buffer, 'gitsigns: reset entire buffer')
-      nnoremap('<leader>gw', gs.stage_buffer, 'gitsigns: stage entire buffer')
+      map('n', '<leader>gL', qf_list_modified, { desc = 'gitsigns: list modified in quickfix' })
+      map('n', '<leader>gb', gs.blame_line, { desc = 'gitsigns: blame current line' })
+      map('n', '<leader>gr', gs.reset_buffer, { desc = 'gitsigns: reset entire buffer' })
+      map('n', '<leader>gw', gs.stage_buffer, { desc = 'gitsigns: stage entire buffer' })
 
-      vnoremap('<leader>hs', function() gs.stage_hunk({ vim.fn.line('.'), vim.fn.line('v') }) end)
-      vnoremap('<leader>hr', function() gs.reset_hunk({ vim.fn.line('.'), vim.fn.line('v') }) end)
+      map('v', '<leader>hs', function() gs.stage_hunk({ vim.fn.line('.'), vim.fn.line('v') }) end)
+      map('v', '<leader>hr', function() gs.reset_hunk({ vim.fn.line('.'), vim.fn.line('v') }) end)
       vim.keymap.set({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
     end,
   },

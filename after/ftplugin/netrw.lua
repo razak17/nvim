@@ -9,7 +9,7 @@ vim.opt_local.bufhidden = 'wipe'
 
 local with_desc = function(desc) return { buffer = 0, desc = desc } end
 -- FIX: These mappings are not working
-rvim.nnoremap('q', ':q<CR>', with_desc('quit'))
-rvim.nnoremap('l', '<CR>', with_desc('open'))
-rvim.nnoremap('h', '<CR>', with_desc('open'))
-rvim.nnoremap('o', '<CR>', with_desc('open'))
+map('n', 'q', ':q<CR>', with_desc('quit'))
+map('n', 'l', '<CR>', with_desc('open'))
+map('n', 'h', '<CR>', with_desc('open'))
+map('n', 'o', '<CR>', with_desc('open'))

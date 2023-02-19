@@ -12,11 +12,10 @@ if filename ~= 'package.json' then return end
 
 local ok, which_key = rvim.safe_require('which-key')
 if ok then which_key.register({ ['<localleader>'] = { p = { name = 'Package Info' } } }) end
-local nnoremap = rvim.nnoremap
 local with_desc = function(desc) return { buffer = 0, desc = desc } end
 local package_info = require('package-info')
-nnoremap('<localleader>pt', package_info.toggle, with_desc('package-info: toggle'))
-nnoremap('<localleader>pu', package_info.update, with_desc('package-info: update'))
-nnoremap('<localleader>pd', package_info.delete, with_desc('package-info: delete'))
-nnoremap('<localleader>pi', package_info.install, with_desc('package-info: install new'))
-nnoremap('<localleader>pc', package_info.change_version, with_desc('package-info: change version'))
+map('n', '<localleader>pt', package_info.toggle, with_desc('package-info: toggle'))
+map('n', '<localleader>pu', package_info.update, with_desc('package-info: update'))
+map('n', '<localleader>pd', package_info.delete, with_desc('package-info: delete'))
+map('n', '<localleader>pi', package_info.install, with_desc('package-info: install new'))
+map('n', '<localleader>pc', package_info.change_version, with_desc('package-info: change version'))
