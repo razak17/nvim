@@ -12,14 +12,13 @@ return {
   {
     'ahmedkhalf/project.nvim',
     event = 'LspAttach',
-    config = function()
-      require('project_nvim').setup({
-        detection_methods = { 'pattern', 'lsp' },
-        ignore_lsp = { 'null-ls' },
-        patterns = { '.git' },
-        datapath = rvim.get_runtime_dir(),
-      })
-    end,
+    name = 'project_nvim',
+    opts = {
+      detection_methods = { 'pattern', 'lsp' },
+      ignore_lsp = { 'null-ls' },
+      patterns = { '.git' },
+      datapath = rvim.get_runtime_dir(),
+    },
   },
 
   {
