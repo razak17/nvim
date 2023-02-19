@@ -1,6 +1,6 @@
 return {
   'levouh/tint.nvim',
-  event = 'VeryLazy',
+  event = 'WinNew',
   enabled = false,
   config = function()
     require('tint').setup({
