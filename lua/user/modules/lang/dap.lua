@@ -25,83 +25,84 @@ local function attach_to_remote()
   })
 end
 
-local function init()
-  local function dap() return require('dap') end
-
-  local function repl_toggle() dap().repl.toggle(nil, 'botright split') end
-  local function continue() dap().continue() end
-  local function step_out() dap().step_out() end
-  local function step_into() dap().step_into() end
-  local function step_over() dap().step_over() end
-  local function run_last() dap().run_last() end
-  local function step_back() dap().step_back() end
-  local function restart() dap().restart() end
-  local function terminate() dap().terminate() end
-  local function toggle_breakpoint() dap().toggle_breakpoint() end
-  local function set_breakpoint() dap().set_breakpoint(vim.fn.input('Breakpoint condition: ')) end
-  local function clear_breakpoints() dap().clear_breakpoints() end
-  local function hover() require('dap.ui.widgets').hover() end
-
-  rvim.nnoremap('<localleader>db', toggle_breakpoint, 'dap: toggle breakpoint')
-  rvim.nnoremap('<localleader>dB', set_breakpoint, 'dap: set breakpoint')
-  rvim.nnoremap('<localleader>dc', continue, 'dap: continue or start debugging')
-  rvim.nnoremap('<localleader>dC', clear_breakpoints, 'dap: clear breakpoint')
-  rvim.nnoremap('<localleader>dh', step_back, 'dap: step back')
-  rvim.nnoremap('<localleader>de', step_out, 'dap: step out')
-  rvim.nnoremap('<localleader>di', step_into, 'dap: step into')
-  rvim.nnoremap('<localleader>do', step_over, 'dap: step over')
-  rvim.nnoremap('<localleader>dl', run_last, 'dap: run last')
-  rvim.nnoremap('<localleader>dr', restart, 'dap: restart')
-  rvim.nnoremap('<localleader>dw', hover, 'dap: hover')
-  rvim.nnoremap('<localleader>dx', terminate, 'dap: terminate')
-  rvim.nnoremap('<localleader>dt', repl_toggle, 'dap: toggle REPL')
-  rvim.nnoremap('<localleader>da', attach, 'dap(node): attach')
-  rvim.nnoremap('<localleader>dA', attach_to_remote, 'dap(node): attach to remote')
+local function repl_toggle() require('dap').repl.toggle(nil, 'botright split') end
+local function continue() require('dap').continue() end
+local function step_out() require('dap').step_out() end
+local function step_into() require('dap').step_into() end
+local function step_over() require('dap').step_over() end
+local function run_last() require('dap').run_last() end
+local function step_back() require('dap').step_back() end
+local function restart() require('dap').restart() end
+local function terminate() require('dap').terminate() end
+local function toggle_breakpoint() require('dap').toggle_breakpoint() end
+local function clear_breakpoints() require('dap').clear_breakpoints() end
+local function hover() require('dap.ui.widgets').hover() end
+local function set_breakpoint()
+  require('dap').set_breakpoint(vim.fn.input('Breakpoint condition: '))
 end
-
-local function config()
-  local fn, icons = vim.fn, rvim.ui.icons
-  local dap = require('dap')
-
-  -- DON'T automatically stop at exceptions
-  dap.defaults.fallback.exception_breakpoints = {}
-
-  fn.sign_define('DapBreakpoint', {
-    text = icons.misc.bug_alt,
-    texthl = 'DapBreakpoint',
-    linehl = '',
-    numhl = '',
-  })
-
-  fn.sign_define('DapBreakpointRejected', {
-    text = icons.misc.bug_alt,
-    texthl = 'DapBreakpointRejected',
-    linehl = '',
-    numhl = '',
-  })
-
-  fn.sign_define('DapStopped', {
-    text = icons.misc.dap_hollow,
-    texthl = 'DapStopped',
-    linehl = '',
-    numhl = '',
-  })
-
-  -- python
-  require('user.dap.python')
-  -- go
-  require('user.dap.go')
-  -- typescript
-  require('user.dap.typescript')
-  -- Lua
-  require('user.dap.lua')
-  -- codelldb
-  require('user.dap.rust')
+local function log_breakpoint()
+  require('dap').set_breakpoint(nil, nil, vim.fn.input('Log point message: '))
 end
 
 return {
   'mfussenegger/nvim-dap',
-  version = '*',
+  keys = {
+    { '<localleader>db', toggle_breakpoint, desc = 'dap: toggle breakpoint' },
+    { '<localleader>dB', set_breakpoint, desc = 'dap: set conditional breakpoint' },
+    { '<localleader>dc', continue, desc = 'dap: continue or start debugging' },
+    { '<localleader>dC', clear_breakpoints, desc = 'dap: clear breakpoint' },
+    { '<localleader>de', step_out, desc = 'dap: step out' },
+    { '<localleader>dh', step_back, desc = 'dap: step back' },
+    { '<localleader>di', step_into, desc = 'dap: step into' },
+    { '<localleader>dl', run_last, desc = 'dap REPL: run last' },
+    { '<localleader>dL', log_breakpoint, desc = 'dap: log breakpoint' },
+    { '<localleader>do', step_over, desc = 'dap: step over' },
+    { '<localleader>dr', restart, desc = 'dap: restart' },
+    { '<localleader>dw', hover, desc = 'dap: hover' },
+    { '<localleader>dx', terminate, desc = 'dap: terminate' },
+    { '<localleader>dt', repl_toggle, desc = 'dap REPL: toggle' },
+    { '<localleader>da', attach, desc = 'dap(node): attach' },
+    { '<localleader>dA', attach_to_remote, desc = 'dap(node): attach to remote' },
+  },
+  config = function()
+    local fn, icons = vim.fn, rvim.ui.icons
+    local dap = require('dap')
+
+    -- DON'T automatically stop at exceptions
+    dap.defaults.fallback.exception_breakpoints = {}
+
+    fn.sign_define('DapBreakpoint', {
+      text = icons.misc.bug_alt,
+      texthl = 'DapBreakpoint',
+      linehl = '',
+      numhl = '',
+    })
+
+    fn.sign_define('DapBreakpointRejected', {
+      text = icons.misc.bug_alt,
+      texthl = 'DapBreakpointRejected',
+      linehl = '',
+      numhl = '',
+    })
+
+    fn.sign_define('DapStopped', {
+      text = icons.misc.dap_hollow,
+      texthl = 'DapStopped',
+      linehl = '',
+      numhl = '',
+    })
+
+    -- python
+    require('user.dap.python')
+    -- go
+    require('user.dap.go')
+    -- typescript
+    require('user.dap.typescript')
+    -- Lua
+    require('user.dap.lua')
+    -- codelldb
+    require('user.dap.rust')
+  end,
   dependencies = {
     {
       'mxsdev/nvim-dap-vscode-js',
@@ -123,25 +124,25 @@ return {
     { 'microsoft/vscode-js-debug', build = 'npm install --legacy-peer-deps && npm run compile' },
     {
       'rcarriga/nvim-dap-ui',
+      keys = {
+        {
+          '<localleader>du',
+          function() require('dapui').toggle({ reset = true }) end,
+          desc = 'dap-ui: toggle',
+        },
+      },
       config = function()
         require('dapui').setup({
           windows = { indent = 2 },
           floating = { border = rvim.ui.current.border },
         })
-        rvim.nnoremap(
-          '<localleader>du',
-          function() require('dapui').toggle({ reset = true }) end,
-          'dapui: toggle'
-        )
-        local dapui = require('dapui')
         local dap = require('dap')
-        -- NOTE: this opens dap UI automatically when dap starts
         dap.listeners.after.event_initialized['dapui_config'] = function()
-          dapui.open()
+          require('dapui').open()
           vim.api.nvim_exec_autocmds('User', { pattern = 'DapStarted' })
         end
-        dap.listeners.before.event_terminated['dapui_config'] = function() dapui.close() end
-        dap.listeners.before.event_exited['dapui_config'] = function() dapui.close() end
+        dap.listeners.before.event_terminated['dapui_config'] = function() require('dapui').close() end
+        dap.listeners.before.event_exited['dapui_config'] = function() require('dapui').close() end
       end,
     },
     {
@@ -156,5 +157,4 @@ return {
       end,
     },
   },
-  config = config,
 }
