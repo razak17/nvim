@@ -43,11 +43,7 @@ return {
     map(
       'n',
       '<leader>mm',
-      function()
-        require('telescope').extensions.harpoon.marks(
-          rvim.telescope.minimal_ui({ prompt_title = 'Harpoon Marks' })
-        )
-      end,
+      function() require('telescope').extensions.harpoon.marks() end,
       { desc = 'harpoon: marks' }
     )
     require('telescope').load_extension('harpoon')

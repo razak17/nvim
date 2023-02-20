@@ -1,19 +1,7 @@
-rvim.telescope = {}
-
 local ui = rvim.ui
-local fmt, fn = string.format, vim.fn
+local fmt = string.format
 
 local function extensions(name) return require('telescope').extensions[name] end
-
----@param opts table
----@return table
-function rvim.telescope.minimal_ui(opts)
-  return require('telescope.themes').get_dropdown(vim.tbl_deep_extend('force', opts or {}, {
-    previewer = false,
-    hidden = true,
-    borderchars = ui.border.ui_select,
-  }))
-end
 
 ---@param opts table
 ---@return table
@@ -23,21 +11,17 @@ local function dropdown(opts)
   return require('telescope.themes').get_dropdown(opts)
 end
 
----@param opts table
 ---@return table
-function rvim.telescope.ivy(opts)
-  return require('telescope.themes').get_ivy(vim.tbl_deep_extend('keep', opts or {}, {
-    borderchars = {
-      preview = { '▔', '▕', '▁', '▏', '🭽', '🭾', '🭿', '🭼' },
-    },
-  }))
+local function minimal_ui()
+  return require('telescope.themes').get_dropdown({
+    previewer = false,
+    theme = 'dropdown',
+  })
 end
 
 local function builtin() return require('telescope.builtin') end
 
 local function builtins() builtin().builtin({ include_extensions = true }) end
-
-local function telescope() return require('telescope') end
 
 local function delta_opts(opts, is_buf)
   local previewers = require('telescope.previewers')
@@ -64,8 +48,8 @@ local function delta_opts(opts, is_buf)
   return opts
 end
 
-local function live_grep(opts) return telescope().extensions.menufacture.live_grep(opts) end
-local function find_files(opts) return telescope().extensions.menufacture.find_files(opts) end
+local function live_grep(opts) return extensions('menufacture').live_grep(opts) end
+local function find_files(opts) return extensions('menufacture').find_files(opts) end
 
 local function nvim_config()
   find_files({
@@ -75,41 +59,18 @@ local function nvim_config()
   })
 end
 
-local function find_near_files()
-  local cwd = require('telescope.utils').buffer_dir()
-  builtin().find_files({
-    prompt_title = fmt('Searching %s', fn.fnamemodify(cwd, ':~:.')),
-    cwd = cwd,
-  })
-end
-
 local function project_files()
   if not pcall(require('telescope.builtin').git_files, { show_untracked = true }) then
     find_files()
   end
 end
 
-local function frecency()
-  telescope().extensions.frecency.frecency(dropdown(rvim.telescope.minimal_ui()))
-end
-
-local function recent_files()
-  telescope().extensions.recent_files.pick(dropdown(rvim.telescope.minimal_ui()))
-end
-
-local function installed_plugins()
-  builtin().find_files({
-    prompt_title = 'Installed plugins',
-    cwd = join_paths(rvim.get_runtime_dir(), 'site', 'pack', 'lazy'),
-  })
-end
-
-local function luasnips() telescope().extensions.luasnip.luasnip(dropdown()) end
-local function media_files() telescope().extensions.media_files.media_files({}) end
-local function zoxide_list() telescope().extensions.zoxide.list(rvim.telescope.minimal_ui()) end
-local function notifications() telescope().extensions.notify.notify(dropdown()) end
-local function undo() telescope().extensions.undo.undo() end
-local function projects() telescope().extensions.projects.projects({}) end
+local function frecency() extensions('frecency').frecency(dropdown(minimal_ui())) end
+local function recent_files() extensions('recent_files').pick(dropdown(minimal_ui())) end
+local function luasnips() extensions('luasnip').luasnip(dropdown()) end
+local function notifications() extensions('notify').notify(dropdown()) end
+local function undo() extensions('undo').undo() end
+local function projects() extensions('projects').projects({}) end
 local function delta_git_commits(opts) builtin().git_commits(delta_opts(opts)) end
 local function delta_git_bcommits(opts) builtin().git_bcommits(delta_opts(opts, true)) end
 
@@ -156,7 +117,7 @@ cmd('WebSearch', function()
       })
       :find()
   end
-  searcher(rvim.telescope.minimal_ui())
+  searcher(minimal_ui())
 end)
 
 return {
@@ -175,7 +136,6 @@ return {
         event = { 'User' },
         pattern = { 'TelescopePreviewerLoaded' },
         command = function(args)
-          --- TODO: Contribute upstream change to telescope to pass preview buffer data in autocommand
           local bufname = vim.tbl_get(args, 'data', 'bufname')
           local ft = bufname and require('plenary.filetype').detect(bufname) or nil
           vim.opt_local.number = not ft or ui.settings.get(ft, 'number', 'ft') ~= false
@@ -184,8 +144,7 @@ return {
     })
 
     -- https://github.com/nvim-telescope/telescope.nvim/issues/1048
-    -- Ref: https://github.com/whatsthatsmell/dots/blob/master/public%20dots/vim-nvim/lua/joel/telescope/init.lua
-    rvim.telescope.custom_actions = {}
+    -- https://github.com/whatsthatsmell/dots/blob/master/public%20dots/vim-nvim/lua/joel/telescope/init.lua
 
     -- Open multiple files at once
     local function multiopen(prompt_bufnr, open_cmd)
@@ -221,16 +180,8 @@ return {
           height = 0.9,
           width = 0.9,
           preview_cutoff = 120,
-          horizontal = {
-            width_padding = 0.04,
-            height_padding = 0.1,
-            preview_width = 0.6,
-          },
-          vertical = {
-            width_padding = 0.05,
-            height_padding = 0.1,
-            preview_height = 0.5,
-          },
+          horizontal = { width_padding = 0.04, height_padding = 0.1, preview_width = 0.6 },
+          vertical = { width_padding = 0.05, height_padding = 0.1, preview_height = 0.5 },
         },
         winblend = 0,
         history = { path = join_paths(rvim.get_runtime_dir(), 'telescope', 'history.sqlite3') },
@@ -272,7 +223,7 @@ return {
             ['<C-j>'] = actions.move_selection_next,
             ['<C-k>'] = actions.move_selection_previous,
             ['<C-q>'] = actions.smart_send_to_qflist + actions.open_qflist,
-            ['<C-a>'] = rvim.telescope.custom_actions.multi_selection_open,
+            ['<C-a>'] = multi_selection_open,
           },
         },
       },
@@ -291,16 +242,13 @@ return {
         }),
         find_files = { hidden = true },
         keymaps = dropdown({
-          layout_config = {
-            height = 18,
-            width = 0.5,
-          },
+          layout_config = { height = 18, width = 0.5 },
         }),
-        live_grep = rvim.telescope.ivy({
-          --@usage don't include the filename in the search results
+        live_grep = themes.get_ivy({
+          borderchars = {
+            preview = { '▔', '▕', '▁', '▏', '🭽', '🭾', '🭿', '🭼' },
+          },
           only_sort_text = true,
-          -- NOTE: previewing html seems to cause some stalling/blocking whilst live grepping
-          -- so filter out html.
           file_ignore_patterns = {
             '.git/',
             '%.html',
@@ -311,43 +259,16 @@ return {
           },
           max_results = 2000,
         }),
-        registers = dropdown({
-          layout_config = {
-            height = 25,
-          },
-        }),
+        registers = dropdown({ layout_config = { height = 25 } }),
         oldfiles = dropdown(),
-        current_buffer_fuzzy_find = dropdown({
-          previewer = false,
-          shorten_path = false,
-        }),
-        colorscheme = {
-          enable_preview = true,
-        },
+        current_buffer_fuzzy_find = dropdown({ previewer = false, shorten_path = false }),
+        colorscheme = { enable_preview = true },
         git_branches = dropdown(),
-        git_bcommits = {
-          layout_config = {
-            horizontal = {
-              preview_width = 0.55,
-            },
-          },
-        },
-        git_commits = {
-          layout_config = {
-            horizontal = {
-              preview_width = 0.55,
-            },
-          },
-        },
+        git_bcommits = { layout_config = { horizontal = { preview_width = 0.55 } } },
+        git_commits = { layout_config = { horizontal = { preview_width = 0.55 } } },
         reloader = dropdown(),
       },
       extensions = {
-        media_files = {
-          -- filetypes whitelist
-          -- defaults to {"png", "jpg", "mp4", "webm", "pdf"}
-          filetypes = { 'png', 'webp', 'jpg', 'jpeg' },
-          find_cmd = 'rg', -- find command (defaults to `fd`)
-        },
         frecency = {
           db_root = join_paths(rvim.get_runtime_dir(), 'telescope'),
           default_workspace = 'CWD',
@@ -371,9 +292,7 @@ return {
       },
     })
 
-    require('telescope').load_extension('zoxide')
     require('telescope').load_extension('recent_files')
-    require('telescope').load_extension('media_files')
     require('telescope').load_extension('dap')
     require('telescope').load_extension('zf-native')
     require('telescope').load_extension('luasnip')
@@ -397,25 +316,19 @@ return {
     { '<leader>fh', frecency, desc = 'Most (f)recently used files' },
     { '<leader>fl', function() builtin().resume() end, desc = 'resume last picker' },
     { '<leader>fL', luasnips, desc = 'luasnip: available snippets' },
-    { '<leader>fm', media_files, desc = 'media files' },
     { '<leader>fn', notifications, desc = 'notify: notifications' },
     { '<leader>fo', function() builtin().buffers() end, desc = 'buffers' },
     { '<leader>fp', projects, desc = 'projects' },
-    { '<leader>fP', installed_plugins, desc = 'plugins' },
     { '<leader>fr', recent_files, desc = 'recent files' },
-    { '<leader>fR', function() builtin().reloader() end, desc = 'module reloader' },
     { '<leader>fs', live_grep, desc = 'find string' },
     { '<leader>fS', '<cmd>WebSearch<CR>', desc = 'web search' },
     { '<leader>fu', undo, desc = 'undo' },
     { '<leader>fw', function() builtin().grep_string() end, desc = 'find word' },
-    { '<leader>fz', zoxide_list, desc = 'zoxide' },
-    { '<leader>fN', find_near_files, desc = 'find near files' },
     { '<leader>fva', function() builtin().autocommands() end, desc = 'autocommands' },
     { '<leader>fvh', function() builtin().highlights() end, desc = 'highlights' },
     { '<leader>fvk', function() builtin().keymaps() end, desc = 'keymaps' },
     { '<leader>fvo', function() builtin().vim_options() end, desc = 'options' },
     -- Git
-    { '<leader>gf', function() builtin().git_files() end, desc = 'git files' },
     { '<leader>gs', function() builtin().git_status() end, desc = 'git status' },
     { '<leader>fgb', function() builtin().git_branches() end, desc = 'git branches' },
     { '<leader>fgB', delta_git_bcommits, desc = 'buffer commits' },
@@ -443,7 +356,6 @@ return {
     },
   },
   dependencies = {
-    'jvgrootveld/telescope-zoxide',
     'smartpde/telescope-recent-files',
     'nvim-telescope/telescope-media-files.nvim',
     'nvim-telescope/telescope-dap.nvim',
