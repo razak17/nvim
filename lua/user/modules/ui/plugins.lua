@@ -128,7 +128,7 @@ return {
       hl.plugin('virt_column', {
         { VirtColumn = { bg = 'None', fg = { from = 'VertSplit' } } },
       })
-      require('virt-column').setup({ char = '│' })
+      require('virt-column').setup({ char = '▕' })
     end,
   },
 
