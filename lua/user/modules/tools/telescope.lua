@@ -263,6 +263,7 @@ local function config()
   require('telescope').load_extension('luasnip')
   require('telescope').load_extension('frecency')
   require('telescope').load_extension('undo')
+  require('telescope').load_extension('menufacture')
 
   vim.api.nvim_exec_autocmds('User', { pattern = 'TelescopeConfigComplete', modeline = false })
 end
@@ -298,8 +299,11 @@ local function delta_opts(opts, is_buf)
   return opts
 end
 
+local function live_grep(opts) return telescope().extensions.menufacture.live_grep(opts) end
+local function find_files(opts) return telescope().extensions.menufacture.find_files(opts) end
+
 local function nvim_config()
-  builtin().find_files({
+  find_files({
     prompt_title = '~ rVim config ~',
     cwd = rvim.get_config_dir(),
     file_ignore_patterns = { '.git/.*', 'dotbot/.*', 'zsh/plugins/.*' },
@@ -315,7 +319,9 @@ local function find_near_files()
 end
 
 local function project_files()
-  if not pcall(builtin().git_files, { show_untracked = true }) then builtin().find_files() end
+  if not pcall(require('telescope.builtin').git_files, { show_untracked = true }) then
+    find_files()
+  end
 end
 
 local function frecency()
@@ -333,7 +339,7 @@ local function installed_plugins()
   })
 end
 
-local function find_files() builtin().find_files(rvim.telescope.minimal_ui()) end
+-- local function find_files() builtin().find_files(rvim.telescope.minimal_ui()) end
 local function luasnips() telescope().extensions.luasnip.luasnip(rvim.telescope.dropdown()) end
 local function media_files() telescope().extensions.media_files.media_files({}) end
 local function zoxide_list() telescope().extensions.zoxide.list(rvim.telescope.minimal_ui()) end
@@ -414,7 +420,7 @@ return {
     { '<leader>fP', installed_plugins, desc = 'plugins' },
     { '<leader>fr', recent_files, desc = 'recent files' },
     { '<leader>fR', function() builtin().reloader() end, desc = 'module reloader' },
-    { '<leader>fs', function() builtin().live_grep() end, desc = 'find string' },
+    { '<leader>fs', live_grep, desc = 'find string' },
     { '<leader>fS', '<cmd>WebSearch<CR>', desc = 'web search' },
     { '<leader>fu', undo, desc = 'undo' },
     { '<leader>fw', function() builtin().grep_string() end, desc = 'find word' },
@@ -462,5 +468,6 @@ return {
     'benfowler/telescope-luasnip.nvim',
     'nvim-telescope/telescope-frecency.nvim',
     'debugloop/telescope-undo.nvim',
+    'molecule-man/telescope-menufacture',
   },
 }
