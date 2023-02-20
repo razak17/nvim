@@ -437,6 +437,7 @@ rvim.augroup('ConcealMappings', {
       'lua',
       'http',
       'json',
+      'markdown'
     },
     command = function()
       local function toggle_coceallevel()
