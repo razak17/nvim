@@ -314,8 +314,8 @@ local function find_near_files()
   })
 end
 
-local function project_files(opts)
-  if not pcall(builtin().git_files, opts) then builtin().find_files(opts) end
+local function project_files()
+  if not pcall(builtin().git_files, { show_untracked = true }) then builtin().find_files() end
 end
 
 local function frecency()
