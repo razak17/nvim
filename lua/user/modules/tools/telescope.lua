@@ -419,7 +419,7 @@ return {
     { '<leader>fu', undo, desc = 'undo' },
     { '<leader>fw', function() builtin().grep_string() end, desc = 'find word' },
     { '<leader>fz', zoxide_list, desc = 'zoxide' },
-    { '<leader>ffn', find_near_files, desc = 'find near files' },
+    { '<leader>fN', find_near_files, desc = 'find near files' },
     { '<leader>fva', function() builtin().autocommands() end, desc = 'autocommands' },
     { '<leader>fvh', function() builtin().highlights() end, desc = 'highlights' },
     { '<leader>fvk', function() builtin().keymaps() end, desc = 'keymaps' },
