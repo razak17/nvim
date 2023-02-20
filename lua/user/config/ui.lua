@@ -322,6 +322,7 @@ local settings = {
     ['acwrite'] = presets.tool_panel,
   },
   filetypes = {
+    ['checkhealth'] = presets.tool_panel,
     ['help'] = presets.tool_panel,
     ['dapui'] = presets.tool_panel,
     ['Trouble'] = presets.tool_panel,
