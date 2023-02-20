@@ -154,34 +154,6 @@ rvim.augroup('TextYankHighlight', {
   },
 })
 
-local column_exclude = { 'gitcommit' }
-local column_block_list = {
-  'NeogitCommitSelectView',
-  'DiffviewFileHistory',
-  'log',
-  'norg',
-  'dashboard',
-  'Packer',
-  'qf',
-  'help',
-  'text',
-  'Trouble',
-  'NvimTree',
-  'log',
-  'lazy',
-  'fTerm',
-  'mason',
-  'TelescopePrompt',
-  'lspinfo',
-  'lsp-installer',
-  'null-ls-info',
-  'lspinfo',
-  'which_key',
-  'packer',
-  'dap-repl',
-  'noice',
-}
-
 local function check_color_column()
   local tw = api.nvim_get_option_value('textwidth', {})
   local cc = api.nvim_get_option_value('colorcolumn', {})
@@ -190,9 +162,9 @@ local function check_color_column()
     local buffer = vim.bo[api.nvim_win_get_buf(win)]
     local window = vim.wo[win]
     local is_current = win == api.nvim_get_current_win()
-    if fn.win_gettype() == '' and not vim.tbl_contains(column_exclude, buffer.filetype) then
+    if rvim.empty(fn.win_gettype()) then
       local too_small = api.nvim_win_get_width(win) <= buffer.textwidth + 1
-      local is_excluded = vim.tbl_contains(column_block_list, buffer.filetype)
+      local is_excluded = rvim.ui.settings.get(buffer.filetype, 'colorcolumn', 'ft') == false
       if is_excluded or too_small then
         window.colorcolumn = ''
       elseif rvim.empty(window.colorcolumn) and is_current then
@@ -414,17 +386,6 @@ rvim.augroup('Utilities', {
   },
 })
 
-rvim.augroup('TerminalAutocommands', {
-  {
-    event = { 'TermClose' },
-    pattern = { '*' },
-    command = function()
-      --- automatically close a terminal if the job was successful
-      if not vim.v.event.status == 0 then vim.cmd.bdelete({ fn.expand('<abuf>'), bang = true }) end
-    end,
-  },
-})
-
 rvim.augroup('ConcealMappings', {
   {
     event = { 'FileType' },
@@ -437,7 +398,7 @@ rvim.augroup('ConcealMappings', {
       'lua',
       'http',
       'json',
-      'markdown'
+      'markdown',
     },
     command = function()
       local function toggle_coceallevel()
@@ -461,10 +422,6 @@ rvim.augroup('ConcealMappings', {
   },
 })
 
--- should get bufnr from autocmd or something
--- conceal only accepts one character
--- thanks to u/Rafat913 for many suggestions and tips
-
 local conceal_html_class = function(bufnr)
   local namespace = vim.api.nvim_create_namespace('HTMLClassConceal')
   local language_tree = vim.treesitter.get_parser(bufnr, 'html')
@@ -478,7 +435,7 @@ local conceal_html_class = function(bufnr)
         (attribute_name) @att_name (#eq? @att_name "class")
         (quoted_attribute_value (attribute_value) @class_value) (#set! @class_value conceal "…")))
     ]]
-  ) -- using single character for conceal thanks to u/Rafat913
+  )
 
   for _, captures, metadata in query:iter_matches(root, bufnr, root:start(), root:end_()) do
     local start_row, start_col, end_row, end_col = captures[2]:range()
