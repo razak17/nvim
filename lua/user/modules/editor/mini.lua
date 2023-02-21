@@ -44,7 +44,16 @@ return {
   {
     'echasnovski/mini.comment',
     dependencies = { 'JoosepAlviste/nvim-ts-context-commentstring' },
-    keys = { 'gcc', 'gc' },
+    keys = {
+      'gcc',
+      'gc',
+      {
+        'gc',
+        [[:<c-u>lua MiniComment.operator('visual')<cr>]],
+        desc = 'comment selection',
+        mode = 'x',
+      },
+    },
     config = function()
       require('mini.comment').setup({
         hooks = {
