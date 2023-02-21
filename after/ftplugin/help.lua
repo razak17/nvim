@@ -24,6 +24,6 @@ else
   vim.opt_local.spell = true
   vim.opt_local.spelllang = 'en_gb'
   vim.opt_local.textwidth = 78
-  vim.opt_local.colorcolumn = 78
+  vim.opt_local.colorcolumn = '+1'
   map('n', '<leader>ml', 'maGovim:tw=78:ts=8:noet:ft=help:norl:<esc>`a', opts)
 end
