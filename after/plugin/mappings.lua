@@ -97,23 +97,38 @@ cnoremap('<Esc>b', [[<S-Left>]])
 cnoremap('<Esc>f', [[<S-Right>]])
 -- Insert escaped '/' while inputting a search pattern
 cnoremap('/', [[getcmdtype() == "/" ? "\/" : "/"]], { expr = true })
+
+-- smooth searching, allow tabbing between search results similar to using <c-g>
+-- or <c-t> the main difference being tab is easier to hit and remapping those keys
+-- to these would swallow up a tab mapping
+local function search(direction_key, default)
+  local cmd = fn.getcmdtype()
+  return (cmd == '/' or cmd == '?') and fmt('<CR>%s<C-r>/', direction_key) or default
+end
+cnoremap('<Tab>', function() return search('/', '<Tab>') end, { expr = true })
+cnoremap('<S-Tab>', function() return search('?', '<S-Tab>') end, { expr = true })
+-- Smart mappings on the command line
+cnoremap('w!!', [[w !sudo tee % >/dev/null]])
+-- insert path of current file into a command
+cnoremap('%%', "<C-r>=fnameescape(expand('%'))<cr>")
+cnoremap('::', "<C-r>=fnameescape(expand('%:p:h'))<cr>/")
 ----------------------------------------------------------------------------------------------------
 -- Save
 ----------------------------------------------------------------------------------------------------
--- FIXME: There's a bug in this function
 local function smart_quit()
-  local bufnr = api.nvim_get_current_buf()
-  local buf_windows = vim.call('win_findbuf', bufnr)
-  local modified = api.nvim_buf_get_option(bufnr, 'modified')
-  if modified and #buf_windows == 1 then
+  local bufnr = vim.api.nvim_get_current_buf()
+  local modified = vim.api.nvim_buf_get_option(bufnr, "modified")
+  if modified then
     vim.ui.input({
-      prompt = 'You have unsaved changes. Quit anyway? (y/n) ',
+      prompt = "You have unsaved changes. Quit anyway? (y/n) ",
     }, function(input)
-      if input == 'y' then vim.cmd('q!') end
+      if input == "y" then
+        vim.cmd "q!"
+      end
     end)
-    return
+  else
+    vim.cmd "q!"
   end
-  vim.cmd('q!')
 end
 -- Alternate way to save
 nnoremap('<C-s>', '<cmd>silent! write<CR>')
@@ -413,29 +428,6 @@ xnoremap(
   { expr = true }
 )
 
-----------------------------------------------------------------------------------------------------
--- Command mode related
-----------------------------------------------------------------------------------------------------
--- smooth searching, allow tabbing between search results similar to using <c-g>
--- or <c-t> the main difference being tab is easier to hit and remapping those keys
--- to these would swallow up a tab mapping
-cnoremap(
-  '<Tab>',
-  [[getcmdtype() == "/" || getcmdtype() == "?" ? "<CR>/<C-r>/" : "<C-z>"]],
-  { expr = true }
-)
-
-cnoremap(
-  '<S-Tab>',
-  [[getcmdtype() == "/" || getcmdtype() == "?" ? "<CR>?<C-r>/" : "<S-Tab>"]],
-  { expr = true }
-)
--- Smart mappings on the command line
--- cnoremap("w!!", [[w !sudo tee % >/dev/null]])
-
--- insert path of current file into a command
-cnoremap('%%', "<C-r>=fnameescape(expand('%'))<CR>")
-cnoremap('::', "<C-r>=fnameescape(expand('%:p:h'))<CR>/")
 ----------------------------------------------------------------------------------------------------
 -- Web Search
 ----------------------------------------------------------------------------------------------------
