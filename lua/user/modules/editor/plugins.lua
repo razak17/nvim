@@ -42,9 +42,7 @@ return {
 
     'xiyaowong/accelerated-jk.nvim',
     event = 'VeryLazy',
-    opts = {
-      mappings = { j = 'gj', k = 'gk' },
-    },
+    opts = { mappings = { j = 'gj', k = 'gk' } },
   },
 
   {

@@ -2,6 +2,7 @@ local hl = rvim.highlight
 
 return {
   'nvim-tree/nvim-web-devicons',
+
   { 'fladson/vim-kitty', ft = 'kitty' },
   { 'razak17/zephyr-nvim', lazy = false, priority = 1000 },
 
@@ -137,10 +138,7 @@ return {
     keys = { { '<leader>oc', '<cmd>CccHighlighterToggle<CR>', desc = 'toggle ccc' } },
     opts = {
       win_opts = { border = rvim.ui.current.border },
-      highlighter = {
-        auto_enable = true,
-        excludes = { 'dart', 'html', 'css', 'typescriptreact' },
-      },
+      highlighter = { auto_enable = true, excludes = { 'dart', 'html', 'css', 'typescriptreact' } },
     },
   },
 

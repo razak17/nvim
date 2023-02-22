@@ -4,10 +4,8 @@ return {
   'b0o/schemastore.nvim',
   'simrat39/rust-tools.nvim',
   'jose-elias-alvarez/typescript.nvim',
-
-  { 'mrshmllow/document-color.nvim' },
-
-  { 'marilari88/twoslash-queries.nvim', ft = { 'typescript', 'typescriptreact' } },
+  'mrshmllow/document-color.nvim',
+  'marilari88/twoslash-queries.nvim',
 
   {
     'neovim/nvim-lspconfig',
@@ -35,7 +33,6 @@ return {
 
   {
     'joechrisellis/lsp-format-modifications.nvim',
-    ft = { 'typescript', 'typescriptreact' },
     keys = {
       {
         '<localleader>lm',
@@ -232,13 +229,7 @@ return {
     event = 'BufReadPost',
     lazy = false,
     config = function() vim.g.matchup_matchparen_enabled = 0 end,
-    keys = {
-      {
-        '<localleader>lw',
-        ':<c-u>MatchupWhereAmI?<CR>',
-        desc = 'matchup: where am i',
-      },
-    },
+    keys = { { '<localleader>lw', ':<c-u>MatchupWhereAmI?<CR>', desc = 'matchup: where am i' } },
   },
 
   {

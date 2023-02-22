@@ -139,10 +139,7 @@ return {
   {
     'ggandor/flit.nvim',
     keys = { 'n', 'f' },
-    opts = {
-      labeled_modes = 'nvo',
-      multiline = false,
-    },
+    opts = { labeled_modes = 'nvo', multiline = false },
   },
 
   {
@@ -196,10 +193,7 @@ return {
     'razak17/package-info.nvim',
     event = 'BufRead package.json',
     dependencies = { 'MunifTanjim/nui.nvim' },
-    opts = {
-      autostart = false,
-      package_manager = 'yarn',
-    },
+    opts = { autostart = false, package_manager = 'yarn' },
   },
 
   {
@@ -216,10 +210,7 @@ return {
         min_width = 20,
         padding = 1,
       },
-      null_ls = {
-        enabled = true,
-        name = 'crates.nvim',
-      },
+      null_ls = { enabled = true, name = 'crates.nvim' },
     },
   },
 
