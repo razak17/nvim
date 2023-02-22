@@ -30,7 +30,11 @@ local function config()
     },
   })
 
-  vim.notify = notify
+  vim.notify = function(msg, level, opts)
+    if msg == 'No information available' then return end
+
+    return notify(msg, level, opts)
+  end
   require('telescope').load_extension('notify')
 end
 
