@@ -6,6 +6,7 @@ local function general_overrides()
   hl.all({
     { mkdLineBreak = { link = 'NONE' } },
     { LineNr = { background = 'NONE' } },
+    { ErrorMsg = { background = 'NONE' } },
     ------------------------------------------------------------------------------------------------
     -- colorscheme overrides
     ------------------------------------------------------------------------------------------------
