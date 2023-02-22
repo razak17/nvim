@@ -79,7 +79,7 @@ return {
           require('FTerm'):new({ cmd = cmd, dimensions = { height = 0.9, width = 0.9 } }):toggle()
       end
       map(
-        'n',
+        't',
         [[<c-\>]],
         function() require('FTerm').toggle() end,
         { desc = 'fterm: toggle lazygit' }
