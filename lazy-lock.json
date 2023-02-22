@@ -128,6 +128,5 @@
   "vim-kitty": { "branch": "main", "commit": "d4c60f096b751c1462c80cbf42550e29c8cd2983" },
   "vim-matchup": { "branch": "master", "commit": "3a48818a8113a502f245c29d894201421727577a" },
   "virt-column.nvim": { "branch": "master", "commit": "93b40ea038f676f5a72d7d1f2336fe7b051fc0ce" },
-  "vscode-js-debug": { "branch": "main", "commit": "582e6c5b868dfb8fc4ddde0d3058c67c4c6c3311" },
   "which-key.nvim": { "branch": "main", "commit": "5224c261825263f46f6771f1b644cae33cd06995" }
 }
