@@ -307,10 +307,7 @@ local presets = {
   }),
 }
 
-local commit_buffer = presets.minimal_editing:with({
-  colorcolumn = true,
-  winbar = false,
-})
+local commit_buffer = presets.minimal_editing:with({ colorcolumn = true, winbar = false })
 
 ---@type UiSettings
 local settings = {

@@ -62,6 +62,8 @@ rvim.lsp = {
     'sql',
     'prisma',
   },
+  --- LSP Kinds come via the LSP spec
+  --- see: https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#symbolKind
   kind_highlights = {
     Text = '@string',
     Method = '@method',
