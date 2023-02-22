@@ -43,7 +43,6 @@ end
 
 return {
   'razak17/yanky.nvim',
-  event = 'BufReadPost',
   keys = {
     { 'p', '<Plug>(YankyPutAfter)', mode = { 'n', 'x' }, desc = 'yanky: put after' },
     { 'P', '<Plug>(YankyPutBefore)', mode = { 'n', 'x' }, desc = 'yanky: put before' },
@@ -54,7 +53,11 @@ return {
     {
       '<localleader>y',
       function()
-        require('telescope').extensions.yank_history.yank_history(rvim.telescope.dropdown())
+        require('telescope').extensions.yank_history.yank_history(
+          require('telescope.themes').get_dropdown({
+            borderchars = rvim.ui.border.ui_select,
+          })
+        )
       end,
       desc = 'yanky: open yank history',
     },
