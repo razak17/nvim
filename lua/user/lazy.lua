@@ -59,6 +59,12 @@ function Lazy:bootstrap()
     },
     install = { colorscheme = { 'zephyr', 'habamax' } },
     ui = { border = rvim.ui.current.border },
+    checker = {
+      enabled = true,
+      concurrency = 30,
+      notify = false,
+      frequency = 3600, -- check for updates every hour
+    },
     performance = {
       rtp = {
         reset = false,
