@@ -123,7 +123,7 @@ end)
 
 return {
   'nvim-telescope/telescope.nvim',
-  lazy = false,
+  event = 'VimEnter',
   config = function()
     local previewers = require('telescope.previewers')
     local sorters = require('telescope.sorters')
