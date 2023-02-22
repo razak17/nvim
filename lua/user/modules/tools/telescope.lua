@@ -1,8 +1,6 @@
 local ui = rvim.ui
 local fmt = string.format
 
-local function extensions(name) return require('telescope').extensions[name] end
-
 ---@param opts table
 ---@return table
 local function dropdown(opts)
@@ -18,6 +16,10 @@ local function minimal_ui()
     theme = 'dropdown',
   })
 end
+
+rvim.telescope = { dropdown = dropdown }
+
+local function extensions(name) return require('telescope').extensions[name] end
 
 local function builtin() return require('telescope.builtin') end
 
@@ -50,6 +52,7 @@ end
 
 local function live_grep(opts) return extensions('menufacture').live_grep(opts) end
 local function find_files(opts) return extensions('menufacture').find_files(opts) end
+local function git_files(opts) return extensions('menufacture').git_files(opts) end
 
 local function nvim_config()
   find_files({
@@ -60,9 +63,7 @@ local function nvim_config()
 end
 
 local function project_files()
-  if not pcall(require('telescope.builtin').git_files, { show_untracked = true }) then
-    find_files()
-  end
+  if not pcall(git_files, { show_untracked = true }) then find_files() end
 end
 
 local function frecency() extensions('frecency').frecency(dropdown(minimal_ui())) end
@@ -289,6 +290,14 @@ return {
           },
         },
         recent_files = { only_cwd = true },
+        ['zf-native'] = {
+          generic = { enable = true, match_filename = true },
+        },
+        menufacture = {
+          mappings = {
+            main_menu = { [{ 'i', 'n' }] = '<C-;>' },
+          },
+        },
       },
     })
 
