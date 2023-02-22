@@ -212,22 +212,17 @@ function rvim.wrap_err(msg, func, ...)
   end, unpack(args))
 end
 
----@alias Plug table<(string | number), string>
-
 --- A convenience wrapper that calls the ftplugin config for a plugin if it exists
 --- and warns me if the plugin is not installed
---- TODO: find out if it's possible to annotate the plugin rvim a module
----@param name string | Plug
----@param callback fun(module: table)
-function rvim.ftplugin_conf(name, callback)
-  local plugin_name = type(name) == 'table' and name.plugin or nil
-  if plugin_name then return end
-
-  local module = type(name) == 'table' and name[1] or name
-  local info = debug.getinfo(1, 'S')
-  local ok, plugin = rvim.safe_require(module, { message = fmt('In file: %s', info.source) })
-
-  if ok then callback(plugin) end
+--- TODO: find out if it's possible to annotate the plugin as a module
+---@param configs table<string, fun(module: table)>
+function rvim.ftplugin_conf(configs)
+  if type(configs) ~= 'table' then return end
+  for name, callback in pairs(configs) do
+    local info = debug.getinfo(1, 'S')
+    local ok, plugin = rvim.safe_require(name, { message = fmt('In file: %s', info.source) })
+    if ok then callback(plugin) end
+  end
 end
 
 ---@param str string

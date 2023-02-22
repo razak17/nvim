@@ -1,6 +1,8 @@
+local fn, opt = vim.fn, vim.opt_local
+
 vim.bo.textwidth = 100
-vim.opt_local.iskeyword:append('-')
-vim.opt_local.spell = true
+opt.iskeyword:append('-')
+opt.spell = true
 
 local function find(word, ...)
   for _, str in ipairs({ ... }) do
@@ -8,8 +10,6 @@ local function find(word, ...)
     if match_start then return str, match_start, match_end end
   end
 end
-
-local fn = vim.fn
 
 local function open_help(tag) rvim.wrap_err(vim.cmd.help, tag) end
 
