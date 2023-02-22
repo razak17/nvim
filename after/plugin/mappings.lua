@@ -134,8 +134,6 @@ end
 nnoremap('<C-s>', '<cmd>silent! write<CR>')
 -- Quit
 nnoremap('<leader>x', smart_quit, { desc = 'quit' })
--- Write and quit all files, ZZ is NOT equivalent to this
-nnoremap('qa', '<cmd>qa<CR>')
 ----------------------------------------------------------------------------------------------------
 -- Quickfix
 ----------------------------------------------------------------------------------------------------
