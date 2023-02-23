@@ -6,10 +6,7 @@ return {
     event = { 'BufRead', 'BufNewFile' },
     config = function()
       require('cybu').setup({
-        position = {
-          relative_to = 'win',
-          anchor = 'topright',
-        },
+        position = { relative_to = 'win', anchor = 'topright' },
         style = { border = 'single', hide_buffer_id = true },
       })
       map('n', 'H', '<Plug>(CybuPrev)', { desc = 'cybu: prev' })

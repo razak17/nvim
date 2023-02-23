@@ -34,11 +34,7 @@ return {
   {
     'joechrisellis/lsp-format-modifications.nvim',
     keys = {
-      {
-        '<localleader>lm',
-        '<cmd>FormatModifications<CR>',
-        desc = 'format-modifications: format',
-      },
+      { '<localleader>lm', '<cmd>FormatModifications<CR>', desc = 'format-modifications: format' },
     },
   },
 
@@ -46,9 +42,7 @@ return {
     'laytan/tailwind-sorter.nvim',
     dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-lua/plenary.nvim' },
     build = 'cd formatter && npm i && npm run build',
-    keys = {
-      { '<localleader>lt', '<Cmd>TailwindSort<CR>', desc = 'tailwind-sorter: sort' },
-    },
+    keys = { { '<localleader>lt', '<Cmd>TailwindSort<CR>', desc = 'tailwind-sorter: sort' } },
     opts = {},
   },
 
@@ -194,7 +188,7 @@ return {
       {
         '<leader>lth',
         function() require('lsp-inlayhints').toggle() end,
-        desc = 'toggle inlay_hints',
+        desc = 'toggle inlay hints',
       },
     },
     opts = {
