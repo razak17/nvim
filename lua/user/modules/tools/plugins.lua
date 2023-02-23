@@ -1,7 +1,7 @@
 return {
-  { 'nvim-lua/plenary.nvim' },
-  { 'nvim-lua/popup.nvim' },
-  { 'kkharji/sqlite.lua', event = 'VeryLazy' },
+  'nvim-lua/plenary.nvim',
+  'nvim-lua/popup.nvim',
+  'kkharji/sqlite.lua',
 
   {
     'AndrewRadev/linediff.vim',
