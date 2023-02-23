@@ -38,8 +38,8 @@ return {
       mappings = {
         nv = {
           motions = {
-            peek_move_next_down = '<A-K>',
-            peek_move_previous_up = '<A-J>',
+            peek_move_next_down = '<a-j>',
+            peek_move_previous_up = '<a-k>',
           },
         },
       },
