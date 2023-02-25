@@ -1,4 +1,4 @@
-local border = {
+rvim.ui.border = {
   common = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
   line = { '🭽', '▔', '🭾', '▕', '🭿', '▁', '🭼', '▏' },
   rectangle = { '┌', '─', '┐', '│', '┘', '─', '└', '│' },
@@ -10,7 +10,7 @@ local border = {
   },
 }
 
-local icons = {
+rvim.ui.icons = {
   separators = {
     vert_bottom_half_block = '▄',
     vert_top_half_block = '▀',
@@ -145,7 +145,7 @@ local icons = {
   },
 }
 
-local codicons = {
+rvim.ui.codicons = {
   kind = {
     Text = '',
     Method = '',
@@ -308,48 +308,47 @@ local presets = {
 }
 
 local commit_buffer = presets.minimal_editing:with({ colorcolumn = '50,72', winbar = false })
+local buftypes = {
+  ['terminal'] = presets.tool_panel,
+  ['quickfix'] = presets.tool_panel,
+  ['nofile'] = presets.tool_panel,
+  ['nowrite'] = presets.tool_panel,
+  ['acwrite'] = presets.tool_panel,
+}
+local filetypes = {
+  ['checkhealth'] = presets.tool_panel,
+  ['help'] = presets.tool_panel,
+  ['dapui'] = presets.tool_panel,
+  ['Trouble'] = presets.tool_panel,
+  ['tsplayground'] = presets.tool_panel,
+  ['list'] = presets.tool_panel,
+  ['netrw'] = presets.tool_panel,
+  ['NvimTree'] = presets.tool_panel,
+  ['undotree'] = presets.tool_panel,
+  ['dap-repl'] = presets.tool_panel:with({ winbar = 'ignore' }),
+  ['neo-tree'] = presets.tool_panel:with({ winbar = 'ignore' }),
+  ['toggleterm'] = presets.tool_panel:with({ winbar = 'ignore' }),
+  ['^Neogit.*'] = presets.tool_panel,
+  ['DiffviewFiles'] = presets.tool_panel,
+  ['DiffviewFileHistory'] = presets.tool_panel,
+  ['diff'] = presets.statusline_only,
+  ['qf'] = presets.statusline_only,
+  ['alpha'] = presets.tool_panel:with({ statusline = false }),
+  ['fugitive'] = presets.statusline_only,
+  ['startify'] = presets.statusline_only,
+  ['man'] = presets.minimal_editing,
+  ['markdown'] = presets.minimal_editing,
+  ['gitcommit'] = commit_buffer,
+  ['NeogitCommitMessage'] = commit_buffer,
+}
 
 ---@type UiSettings
-local decorations = {
-  buftypes = {
-    ['terminal'] = presets.tool_panel,
-    ['quickfix'] = presets.tool_panel,
-    ['nofile'] = presets.tool_panel,
-    ['nowrite'] = presets.tool_panel,
-    ['acwrite'] = presets.tool_panel,
-  },
-  filetypes = {
-    ['checkhealth'] = presets.tool_panel,
-    ['help'] = presets.tool_panel,
-    ['dapui'] = presets.tool_panel,
-    ['Trouble'] = presets.tool_panel,
-    ['tsplayground'] = presets.tool_panel,
-    ['list'] = presets.tool_panel,
-    ['netrw'] = presets.tool_panel,
-    ['NvimTree'] = presets.tool_panel,
-    ['undotree'] = presets.tool_panel,
-    ['dap-repl'] = presets.tool_panel:with({ winbar = 'ignore' }),
-    ['neo-tree'] = presets.tool_panel:with({ winbar = 'ignore' }),
-    ['toggleterm'] = presets.tool_panel:with({ winbar = 'ignore' }),
-    ['^Neogit.*'] = presets.tool_panel,
-    ['DiffviewFiles'] = presets.tool_panel,
-    ['DiffviewFileHistory'] = presets.tool_panel,
-    ['diff'] = presets.statusline_only,
-    ['qf'] = presets.statusline_only,
-    ['alpha'] = presets.tool_panel:with({ statusline = false }),
-    ['fugitive'] = presets.statusline_only,
-    ['startify'] = presets.statusline_only,
-    ['man'] = presets.minimal_editing,
-    ['markdown'] = presets.minimal_editing,
-    ['gitcommit'] = commit_buffer,
-    ['NeogitCommitMessage'] = commit_buffer,
-  },
-}
+rvim.ui.decorations = { filetypes = filetypes, buftypes = buftypes }
 
 --- When searching through the filetypes table if a match can't be found then search
 --- again but check if there is matching lua pattern. This is useful for filetypes for
 --- plugins like Neogit which have a filetype of Neogit<something>.
-setmetatable(decorations.filetypes, {
+setmetatable(filetypes, {
   __index = function(tbl, key)
     if not key then return end
     for k, v in pairs(tbl) do
@@ -363,10 +362,10 @@ setmetatable(decorations.filetypes, {
 ---@param setting 'statuscolumn'|'winbar'|'statusline'|'number'|'colorcolumn'
 ---@param t 'ft'|'bt'
 ---@return (boolean | string)?
-function decorations.get(key, setting, t)
+function rvim.ui.decorations.get(key, setting, t)
   if not key or not setting then return nil end
-  if t == 'ft' then return decorations.filetypes[key] and decorations.filetypes[key][setting] end
-  if t == 'bt' then return decorations.buftypes[key] and decorations.buftypes[key][setting] end
+  if t == 'ft' then return filetypes[key] and filetypes[key][setting] end
+  if t == 'bt' then return buftypes[key] and buftypes[key][setting] end
 end
 
 ---A helper to set the value of the colorcolumn option, to my preferences, this can be used
@@ -374,10 +373,10 @@ end
 ---to set it's virtual column
 ---@param bufnr integer
 ---@param fn fun(virtcolumn: string)
-function decorations.set_colorcolumn(bufnr, fn)
+function rvim.ui.decorations.set_colorcolumn(bufnr, fn)
   local buf = vim.bo[bufnr]
-  local ft_ccol = decorations.get(buf.ft, 'colorcolumn', 'ft')
-  local bt_ccol = decorations.get(buf.bt, 'colorcolumn', 'bt')
+  local ft_ccol = rvim.ui.decorations.get(buf.ft, 'colorcolumn', 'ft')
+  local bt_ccol = rvim.ui.decorations.get(buf.bt, 'colorcolumn', 'bt')
   if buf.ft == '' or buf.bt ~= '' or ft_ccol == false or bt_ccol == false then return end
   local ccol = ft_ccol or bt_ccol or ''
   local virtcolumn = not rvim.empty(ccol) and ccol or '+1'
@@ -385,16 +384,5 @@ function decorations.set_colorcolumn(bufnr, fn)
 end
 
 ----------------------------------------------------------------------------------------------------
-
-----------------------------------------------------------------------------------------------------
--- Global style settings
-----------------------------------------------------------------------------------------------------
--- Some styles can be tweak here to apply globally i.e. by setting the current value for that style
 -- The current styles for various UI elements
-local current = { border = border.line, lsp_icons = codicons.kind }
-
-rvim.ui.icons = icons
-rvim.ui.codicons = codicons
-rvim.ui.border = border
-rvim.ui.current = current
-rvim.ui.decorations = decorations
+rvim.ui.current = { border = rvim.ui.border.line, lsp_icons = rvim.ui.codicons.kind }
