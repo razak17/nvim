@@ -97,7 +97,7 @@ rvim.augroup('StatusCol', {
     event = { 'BufEnter', 'FileType' },
     command = function(args)
       local buf = vim.bo[args.buf]
-      if ui.settings.get(buf.ft, 'statuscolumn', 'ft') == false then
+      if ui.decorations.get(buf.ft, 'statuscolumn', 'ft') == false then
         vim.opt_local.statuscolumn = ''
       end
     end,

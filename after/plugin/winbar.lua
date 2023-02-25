@@ -92,8 +92,8 @@ local function set_winbar()
   rvim.foreach(function(w)
     local buf, win = vim.bo[api.nvim_win_get_buf(w)], vim.wo[w]
     local bt, ft, is_diff = buf.buftype, buf.filetype, win.diff
-    local ft_setting = ui.settings.get(ft, 'winbar', 'ft')
-    local bt_setting = ui.settings.get(bt, 'winbar', 'bt')
+    local ft_setting = ui.decorations.get(ft, 'winbar', 'ft')
+    local bt_setting = ui.decorations.get(bt, 'winbar', 'bt')
     local ignored = ft_setting == 'ignore' or bt_setting == 'ignore'
     if not ignored then
       if

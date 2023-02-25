@@ -29,8 +29,8 @@ local function is_blocked()
 
   if win_type == 'command' or vim.wo.diff or vim.wo.previewwindow then return true end
 
-  local ft_settings = ui.settings.filetypes[vim.bo.ft]
-  local bt_settings = ui.settings.buftypes[vim.bo.buftype]
+  local ft_settings = ui.decorations.filetypes[vim.bo.ft]
+  local bt_settings = ui.decorations.buftypes[vim.bo.buftype]
   if (ft_settings and not ft_settings.number) or (bt_settings and not bt_settings.number) then
     return true
   end

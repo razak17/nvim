@@ -134,7 +134,7 @@ return {
         {
           event = { 'BufEnter', 'WinEnter' },
           command = function(args)
-            rvim.ui.settings.set_colorcolumn(
+            rvim.ui.decorations.set_colorcolumn(
               args.buf,
               function(virtcolumn) require('virt-column').setup_buffer({ virtcolumn = virtcolumn }) end
             )

@@ -260,19 +260,19 @@ local codicons = {
 ----------------------------------------------------------------------------------------------------
 -- UI Settings
 ----------------------------------------------------------------------------------------------------
----@class UiSetting {
+---@class Decorations {
 ---@field winbar boolean
 ---@field number 'ignore' | boolean
 ---@field statusline 'minimal' | boolean
 ---@field statuscolumn boolean
 ---@field colorcolumn boolean | string
 
----@alias UiSettings {buftypes: table<string, UiSetting>, filetypes: table<string, UiSetting>}
+---@alias UiSettings {buftypes: table<string, Decorations>, filetypes: table<string, Decorations>}
 
----@class UiSetting
+---@class Decorations
 local Preset = {}
 
----@param o UiSetting
+---@param o Decorations
 function Preset:new(o)
   assert(o, 'a present must be defined')
   self.__index = self
@@ -282,7 +282,7 @@ end
 --- WARNING: deep extend does not copy lua meta methods
 function Preset:with(o) return vim.tbl_deep_extend('force', self, o) end
 
----@type table<string, UiSetting>
+---@type table<string, Decorations>
 local presets = {
   statusline_only = Preset:new({
     number = false,
@@ -310,7 +310,7 @@ local presets = {
 local commit_buffer = presets.minimal_editing:with({ colorcolumn = '50,72', winbar = false })
 
 ---@type UiSettings
-local settings = {
+local decorations = {
   buftypes = {
     ['terminal'] = presets.tool_panel,
     ['quickfix'] = presets.tool_panel,
@@ -349,7 +349,7 @@ local settings = {
 --- When searching through the filetypes table if a match can't be found then search
 --- again but check if there is matching lua pattern. This is useful for filetypes for
 --- plugins like Neogit which have a filetype of Neogit<something>.
-setmetatable(settings.filetypes, {
+setmetatable(decorations.filetypes, {
   __index = function(tbl, key)
     if not key then return end
     for k, v in pairs(tbl) do
@@ -363,10 +363,10 @@ setmetatable(settings.filetypes, {
 ---@param setting 'statuscolumn'|'winbar'|'statusline'|'number'|'colorcolumn'
 ---@param t 'ft'|'bt'
 ---@return (boolean | string)?
-function settings.get(key, setting, t)
+function decorations.get(key, setting, t)
   if not key or not setting then return nil end
-  if t == 'ft' then return settings.filetypes[key] and settings.filetypes[key][setting] end
-  if t == 'bt' then return settings.buftypes[key] and settings.buftypes[key][setting] end
+  if t == 'ft' then return decorations.filetypes[key] and decorations.filetypes[key][setting] end
+  if t == 'bt' then return decorations.buftypes[key] and decorations.buftypes[key][setting] end
 end
 
 ---A helper to set the value of the colorcolumn option, to my preferences, this can be used
@@ -374,10 +374,10 @@ end
 ---to set it's virtual column
 ---@param bufnr integer
 ---@param fn fun(virtcolumn: string)
-function settings.set_colorcolumn(bufnr, fn)
+function decorations.set_colorcolumn(bufnr, fn)
   local buf = vim.bo[bufnr]
-  local ft_ccol = settings.get(buf.ft, 'colorcolumn', 'ft')
-  local bt_ccol = settings.get(buf.bt, 'colorcolumn', 'bt')
+  local ft_ccol = decorations.get(buf.ft, 'colorcolumn', 'ft')
+  local bt_ccol = decorations.get(buf.bt, 'colorcolumn', 'bt')
   if buf.ft == '' or buf.bt ~= '' or ft_ccol == false or bt_ccol == false then return end
   local ccol = ft_ccol or bt_ccol or ''
   local virtcolumn = not rvim.empty(ccol) and ccol or '+1'
@@ -397,4 +397,4 @@ rvim.ui.icons = icons
 rvim.ui.codicons = codicons
 rvim.ui.border = border
 rvim.ui.current = current
-rvim.ui.settings = settings
+rvim.ui.decorations = decorations
