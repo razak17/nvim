@@ -169,19 +169,20 @@ return {
   {
     'm-demare/hlargs.nvim',
     event = 'VeryLazy',
-    config = function()
+    opts = {
+      excluded_filetypes = { 'buffer_manager' },
+      excluded_argnames = {
+        declarations = { 'use', 'use_rocks', '_' },
+        usages = {
+          go = { '_' },
+          lua = { 'self', 'use', 'use_rocks', '_' },
+        },
+      },
+    },
+    init = function()
       hl.plugin('hlargs', {
         theme = {
           ['*'] = { { Hlargs = { italic = true, foreground = '#A5D6FF' } } },
-        },
-      })
-      require('hlargs').setup({
-        excluded_argnames = {
-          declarations = { 'use', 'use_rocks', '_' },
-          usages = {
-            go = { '_' },
-            lua = { 'self', 'use', 'use_rocks', '_' },
-          },
         },
       })
     end,
