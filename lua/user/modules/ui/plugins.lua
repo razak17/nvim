@@ -125,11 +125,22 @@ return {
   {
     'lukas-reineke/virt-column.nvim',
     event = 'BufReadPre',
-    config = function()
+    opts = { char = '▕' },
+    init = function()
       hl.plugin('virt_column', {
-        { VirtColumn = { bg = 'None', fg = { from = 'VertSplit' } } },
+        { VirtColumn = { fg = { from = 'Comment', alter = 10 } } },
       })
-      require('virt-column').setup({ char = '▕' })
+      rvim.augroup('VirtCol', {
+        {
+          event = { 'BufEnter', 'WinEnter' },
+          command = function(args)
+            rvim.ui.settings.set_colorcolumn(
+              args.buf,
+              function(virtcolumn) require('virt-column').setup_buffer({ virtcolumn = virtcolumn }) end
+            )
+          end,
+        },
+      })
     end,
   },
 

@@ -265,7 +265,7 @@ local codicons = {
 ---@field number 'ignore' | boolean
 ---@field statusline 'minimal' | boolean
 ---@field statuscolumn boolean
----@field colorcolumn boolean
+---@field colorcolumn boolean | string
 
 ---@alias UiSettings {buftypes: table<string, UiSetting>, filetypes: table<string, UiSetting>}
 
@@ -307,7 +307,7 @@ local presets = {
   }),
 }
 
-local commit_buffer = presets.minimal_editing:with({ colorcolumn = true, winbar = false })
+local commit_buffer = presets.minimal_editing:with({ colorcolumn = '50,72', winbar = false })
 
 ---@type UiSettings
 local settings = {
@@ -367,6 +367,21 @@ function settings.get(key, setting, t)
   if not key or not setting then return nil end
   if t == 'ft' then return settings.filetypes[key] and settings.filetypes[key][setting] end
   if t == 'bt' then return settings.buftypes[key] and settings.buftypes[key][setting] end
+end
+
+---A helper to set the value of the colorcolumn option, to my preferences, this can be used
+---in an autocommand to set the `vim.opt_local.colorcolumn` or by a plugin such as `virtcolumn.nvim`
+---to set it's virtual column
+---@param bufnr integer
+---@param fn fun(virtcolumn: string)
+function settings.set_colorcolumn(bufnr, fn)
+  local buf = vim.bo[bufnr]
+  local ft_ccol = settings.get(buf.ft, 'colorcolumn', 'ft')
+  local bt_ccol = settings.get(buf.bt, 'colorcolumn', 'bt')
+  if buf.ft == '' or buf.bt ~= '' or ft_ccol == false or bt_ccol == false then return end
+  local ccol = ft_ccol or bt_ccol or ''
+  local virtcolumn = not rvim.empty(ccol) and ccol or '+1'
+  if vim.is_callable(fn) then fn(virtcolumn) end
 end
 
 ----------------------------------------------------------------------------------------------------

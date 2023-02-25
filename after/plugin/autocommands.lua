@@ -154,33 +154,6 @@ rvim.augroup('TextYankHighlight', {
   },
 })
 
-local function check_color_column()
-  local tw = api.nvim_get_option_value('textwidth', {})
-  local cc = api.nvim_get_option_value('colorcolumn', {})
-  if tw == 0 or cc == '+1' then return end
-  for _, win in ipairs(api.nvim_list_wins()) do
-    local buffer = vim.bo[api.nvim_win_get_buf(win)]
-    local window = vim.wo[win]
-    local is_current = win == api.nvim_get_current_win()
-    if rvim.empty(fn.win_gettype()) then
-      local too_small = api.nvim_win_get_width(win) <= buffer.textwidth + 1
-      local is_excluded = rvim.ui.settings.get(buffer.filetype, 'colorcolumn', 'ft') == false
-      if is_excluded or too_small then
-        window.colorcolumn = ''
-      elseif rvim.empty(window.colorcolumn) and is_current then
-        window.colorcolumn = '+1'
-      end
-    end
-  end
-end
-
-rvim.augroup('CustomColorColumn', {
-  {
-    event = { 'BufEnter', 'WinNew', 'WinClosed', 'FileType', 'VimResized' },
-    command = check_color_column,
-  },
-})
-
 rvim.augroup('UpdateVim', {
   -- Make windows equal size when vim resizes
   { event = { 'VimResized' }, pattern = { '*' }, command = 'wincmd =' },
