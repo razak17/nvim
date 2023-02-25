@@ -4,14 +4,14 @@ return {
   {
     'ghillb/cybu.nvim',
     event = { 'BufRead', 'BufNewFile' },
-    config = function()
-      require('cybu').setup({
-        position = { relative_to = 'win', anchor = 'topright' },
-        style = { border = 'single', hide_buffer_id = true },
-      })
-      map('n', 'H', '<Plug>(CybuPrev)', { desc = 'cybu: prev' })
-      map('n', 'L', '<Plug>(CybuNext)', { desc = 'cybu: next' })
-    end,
+    keys = {
+      { 'H', '<cmd>Cybu prev<CR>', desc = 'cybu: prev' },
+      { 'L', '<cmd>Cybu next<CR>', desc = 'cybu: next' },
+    },
+    opts = {
+      position = { relative_to = 'win', anchor = 'topright' },
+      style = { border = 'single', hide_buffer_id = true },
+    },
   },
 
   {
@@ -104,29 +104,28 @@ return {
   {
     'nguyenvukhang/nvim-toggler',
     event = 'VeryLazy',
-    config = function()
-      require('nvim-toggler').setup({
-        inverses = {
-          ['vim'] = 'emacs',
-          ['let'] = 'const',
-          ['margin'] = 'padding',
-          ['-'] = '+',
-          ['onClick'] = 'onSubmit',
-          ['public'] = 'private',
-          ['string'] = 'int',
-          ['leader'] = 'localleader',
-          ['chore'] = 'feat',
-          ['double'] = 'single',
-        },
-        remove_default_keybinds = true,
-      })
-
-      map(
-        'n',
+    keys = {
+      {
         '<leader>ii',
         '<cmd>lua require("nvim-toggler").toggle()<CR>',
-        { desc = 'nvim-toggler: toggle' }
-      )
-    end,
+        desc = 'nvim-toggler: toggle',
+      },
+    },
+    opts = {
+      remove_default_keybinds = true,
+      inverses = {
+        ['vim'] = 'emacs',
+        ['let'] = 'const',
+        ['margin'] = 'padding',
+        ['-'] = '+',
+        ['onClick'] = 'onSubmit',
+        ['public'] = 'private',
+        ['string'] = 'int',
+        ['leader'] = 'localleader',
+        ['chore'] = 'feat',
+        ['double'] = 'single',
+        ['config'] = 'opts',
+      },
+    },
   },
 }
