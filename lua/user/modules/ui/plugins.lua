@@ -4,6 +4,7 @@ return {
   'nvim-tree/nvim-web-devicons',
 
   { 'fladson/vim-kitty', ft = 'kitty' },
+
   { 'razak17/zephyr-nvim', lazy = false, priority = 1000 },
 
   {
@@ -141,9 +142,7 @@ return {
     event = 'BufReadPre',
     opts = { char = '▕' },
     init = function()
-      hl.plugin('virt_column', {
-        { VirtColumn = { fg = { from = 'Comment', alter = 10 } } },
-      })
+      hl.plugin('virt_column', { { VirtColumn = { link = 'FloatBorder' } } })
       rvim.augroup('VirtCol', {
         {
           event = { 'BufEnter', 'WinEnter' },

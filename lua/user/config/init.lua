@@ -5,14 +5,14 @@ local g = vim.g
 ----------------------------------------------------------------------------------------------------
 -- Set leader keys
 ----------------------------------------------------------------------------------------------------
-g.mapleader = (rvim.keys.leader == 'space' and ' ') or rvim.keys.leader
-g.maplocalleader = (rvim.keys.localleader == 'space' and ' ') or rvim.keys.localleader
+g.mapleader = ' '
+g.maplocalleader = ','
 
 ----------------------------------------------------------------------------------------------------
 -- Set Providers
 ----------------------------------------------------------------------------------------------------
-g.python3_host_prog = rvim.path.python
-for _, v in pairs(rvim.util.disabled_providers) do
+g.python3_host_prog = join_paths(rvim.get_cache_dir(), 'venv', 'neovim', 'bin', 'python3')
+for _, v in pairs({ 'python', 'ruby', 'perl' }) do
   g['loaded_' .. v .. '_provider'] = 0
 end
 
