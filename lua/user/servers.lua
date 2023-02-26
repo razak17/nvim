@@ -12,11 +12,7 @@ local function global_capabilities()
   capabilities.textDocument.completion.completionItem.documentationFormat =
     { 'markdown', 'plaintext' }
   capabilities.textDocument.completion.completionItem.resolveSupport = {
-    properties = {
-      'documentation',
-      'detail',
-      'additionalTextEdits',
-    },
+    properties = { 'documentation', 'detail', 'additionalTextEdits' },
   }
   capabilities.textDocument.codeAction = {
     dynamicRegistration = false,
@@ -78,15 +74,7 @@ M.servers = {
     single_file_support = false,
   },
   emmet_ls = {
-    filetypes = {
-      'astro',
-      'html',
-      'css',
-      'sass',
-      'scss',
-      'typescriptreact',
-      'javascriptreact',
-    },
+    filetypes = { 'astro', 'html', 'css', 'sass', 'scss', 'typescriptreact', 'javascriptreact' },
     root_dir = function(fname) return require('lspconfig/util').root_pattern('package.json')(fname) end,
     single_file_support = false,
   },
@@ -162,9 +150,7 @@ M.servers = {
           },
           hint = { enable = true, arrayIndex = 'Disable', setType = true },
           format = { enable = false },
-          diagnostics = {
-            globals = { 'vim', 'describe', 'it', 'before_each', 'after_each' },
-          },
+          diagnostics = { globals = { 'vim', 'describe', 'it', 'before_each', 'after_each' } },
           workspace = {
             library = {
               fn.expand('$VIMRUNTIME/lua'),
