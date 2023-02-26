@@ -11,10 +11,7 @@ end
 
 ---@return table
 local function minimal_ui()
-  return require('telescope.themes').get_dropdown({
-    previewer = false,
-    theme = 'dropdown',
-  })
+  return require('telescope.themes').get_dropdown({ previewer = false, theme = 'dropdown' })
 end
 
 rvim.telescope = { dropdown = dropdown }
@@ -43,10 +40,7 @@ local function delta_opts(opts, is_buf)
     end,
   })
   opts = opts or {}
-  opts.previewer = {
-    delta,
-    previewers.git_commit_message.new(opts),
-  }
+  opts.previewer = { delta, previewers.git_commit_message.new(opts) }
   return opts
 end
 

@@ -11,9 +11,7 @@ return {
       '<localleader>y',
       function()
         require('telescope').extensions.yank_history.yank_history(
-          require('telescope.themes').get_dropdown({
-            borderchars = rvim.ui.border.ui_select,
-          })
+          require('telescope.themes').get_dropdown({ borderchars = rvim.ui.border.ui_select })
         )
       end,
       desc = 'yanky: open yank history',
