@@ -1,14 +1,11 @@
 -- https://github.com/akinsho/dotfiles/blob/main/.config/nvim/plugin/lsp.lua
 if not rvim then return end
 
-local lsp = vim.lsp
-local fn = vim.fn
-local api = vim.api
-local fmt = string.format
+local lsp, fn, api, fmt = vim.lsp, vim.fn, vim.api, string.format
+local b = vim.b --[[@as table<string, any>]]
 local L = lsp.log_levels
 
-local ui = rvim.ui
-local codicons = ui.codicons
+local codicons = rvim.ui.codicons
 local border = rvim.ui.current.border
 local diagnostic = vim.diagnostic
 local format_exclusions = rvim.lsp.format_exclusions
@@ -83,7 +80,7 @@ local function setup_autocommands(client, bufnr)
     return vim.notify(msg, 'error', { title = 'LSP Setup' })
   end
 
-  local events = vim.F.if_nil(vim.b.lsp_events, {
+  local events = vim.F.if_nil(b.lsp_events, {
     [FEATURES.CODELENS.name] = { clients = {}, group_id = nil },
     [FEATURES.FORMATTING.name] = { clients = {}, group_id = nil },
     [FEATURES.DIAGNOSTICS.name] = { clients = {}, group_id = nil },
@@ -116,7 +113,7 @@ local function setup_autocommands(client, bufnr)
         desc = 'LSP: Format on save',
         command = function(args)
           local excluded = rvim.find_string(format_exclusions.format_on_save, vim.bo.ft)
-          if not excluded and not vim.g.formatting_disabled and not vim.b.formatting_disabled then
+          if not excluded and not vim.g.formatting_disabled and not b.formatting_disabled then
             local clients = clients_by_capability(args.buf, provider)
             format({ bufnr = args.buf, async = #clients == 1 })
           end
@@ -335,8 +332,8 @@ rvim.augroup('LspSetupCommands', {
     desc = 'Clean up after detached LSP',
     command = function(args)
       local client_id = args.data.client_id
-      if not vim.b.lsp_events or not client_id then return end
-      for _, state in pairs(vim.b.lsp_events) do
+      if not b.lsp_events or not client_id then return end
+      for _, state in pairs(b.lsp_events) do
         if #state.clients == 1 and state.clients[1] == client_id then
           api.nvim_clear_autocmds({ group = state.group_id, buffer = args.buf })
         end
