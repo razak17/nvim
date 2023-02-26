@@ -167,24 +167,6 @@ return {
   },
 
   {
-    'm-demare/hlargs.nvim',
-    init = function()
-      hl.plugin('hlargs', {
-        theme = {
-          ['*'] = { { Hlargs = { italic = true, foreground = '#A5D6FF' } } },
-        },
-      })
-      require('hlargs').setup({
-      excluded_filetypes = { 'buffer_manager' },
-        excluded_argnames = {
-          declarations = { 'use', '_' },
-          usages = { go = { '_' }, lua = { 'self', 'use', '_' } },
-        },
-      })
-    end,
-  },
-
-  {
     'zbirenbaum/neodim',
     event = 'VeryLazy',
     enabled = false,
