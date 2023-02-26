@@ -42,14 +42,19 @@ return {
         require('neotest-python'),
         require('neotest-rust'),
         require('neotest-go')({ experimental = { test_table = true } }),
+        require('neotest-jest')({
+          jestCommand = 'npm test --',
+          jestConfigFile = 'jest.config.js',
+        }),
       },
     })
   end,
   dependencies = {
-    { 'rcarriga/neotest-plenary', dependencies = { 'nvim-lua/plenary.nvim' } },
     'rcarriga/neotest-vim-test',
+    'haydenmeade/neotest-jest',
     'nvim-neotest/neotest-python',
     'rouge8/neotest-rust',
     'nvim-neotest/neotest-go',
+    { 'rcarriga/neotest-plenary', dependencies = { 'nvim-lua/plenary.nvim' } },
   },
 }
