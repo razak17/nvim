@@ -63,8 +63,7 @@ local function launch_server(server_name, config)
   pcall(function()
     local cmd = config.cmd
       or (function()
-        local default_config =
-          require('lspconfig.server_configurations.' .. server_name).default_config
+        local default_config = require('lspconfig.server_configurations.' .. server_name).default_config
         return default_config.cmd
       end)()
     -- some servers have dynamic commands defined with on_new_config
@@ -76,6 +75,10 @@ local function launch_server(server_name, config)
       )
       return
     end
+    -- NOTE: Example usage
+    -- require("user.lsp.manager").setup("tailwindcss", {
+    --   cmd = { "tailwindcss-language-server", "--stdio" },
+    -- })
     if server_name == 'rust_analyzer' then
       require('user.lsp.rust-tools')
     elseif server_name == 'tsserver' then
