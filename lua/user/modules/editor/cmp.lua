@@ -68,7 +68,7 @@ return {
       return ((r * 0.299 + g * 0.587 + b * 0.114) > 186) and '#000000' or '#ffffff'
     end
 
-    local function formatIcon(icon)
+    local function format_icon(icon)
       if vim.bo.ft == 'typescriptreact' then return fmt(' %s  ', icon) end
       return fmt('%s ', icon)
     end
@@ -103,20 +103,20 @@ return {
           local codicons = ui.codicons
           local lsp_icons = ui.current.lsp_icons
 
-          if vim_item.kind ~= 'Color' then vim_item.kind = formatIcon(lsp_icons[vim_item.kind]) end
+          if vim_item.kind ~= 'Color' then vim_item.kind = format_icon(lsp_icons[vim_item.kind]) end
 
           if entry.source.name == 'nvim_lsp_signature_help' then
-            vim_item.kind = formatIcon(lsp_icons.Field)
+            vim_item.kind = format_icon(lsp_icons.Field)
           end
 
           if entry.source.name == 'lab.quick_data' then
-            vim_item.kind = formatIcon(codicons.misc.CircuitBoard)
+            vim_item.kind = format_icon(codicons.misc.CircuitBoard)
           end
 
-          if entry.source.name == 'emoji' then vim_item.kind = formatIcon(codicons.misc.Smiley) end
+          if entry.source.name == 'emoji' then vim_item.kind = format_icon(codicons.misc.Smiley) end
 
           if entry.source.name == 'crates' then
-            vim_item.kind = formatIcon(codicons.misc.Package)
+            vim_item.kind = format_icon(codicons.misc.Package)
           end
 
           if vim_item.kind == 'Color' then
@@ -129,11 +129,11 @@ return {
                 if vim.fn.hlID(group) < 1 then
                   vim.api.nvim_set_hl(0, group, { fg = blackOrWhiteFg(r, g, b), bg = '#' .. color })
                 end
-                vim_item.kind = formatIcon(lsp_icons[vim_item.kind])
+                vim_item.kind = format_icon(lsp_icons[vim_item.kind])
                 vim_item.kind_hl_group = group
               end
             else
-              vim_item.kind = formatIcon(lsp_icons[vim_item.kind])
+              vim_item.kind = format_icon(lsp_icons[vim_item.kind])
             end
           end
 
