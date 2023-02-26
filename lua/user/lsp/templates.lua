@@ -47,19 +47,8 @@ local function get_supported_filetypes(server_name)
   return filetypes
 end
 
----Get supported servers per filetype
----@param filter { filetype: string | string[] }?: (optional) Used to filter the list of server names.
----@return string[] list of names of supported servers
-local function get_supported_servers(filter)
-  local _, supported_servers = pcall(
-    function() return require('mason-lspconfig').get_available_servers(filter) end
-  )
-  return supported_servers or {}
-end
-
 ---Remove Templates
 function M.remove_template_files()
-  -- remove any outdated files
   for _, file in ipairs(vim.fn.glob(ftplugin_dir .. '/*.lua', 1, 1)) do
     vim.fn.delete(file)
   end
@@ -82,24 +71,15 @@ local function generate_ftplugin(server_name, dir)
   local filetypes = getFileTypes(server_name)
   if not filetypes then return end
   for _, filetype in ipairs(filetypes) do
-    -- if server_name == 'emmet_ls' then
-    --   print('DEBUGPRINT[1]: templates.lua:74: filetypes=' .. vim.inspect(filetypes))
-    -- end
     filetype = filetype:match('%.([^.]*)$') or filetype
     local filename = join_paths(dir, filetype .. '.lua')
     write_manager(filename, server_name)
-    -- if server_name == 'tsserver' then
-    --   local cmd = 'vim.lsp.handlers["textDocument/publishDiagnostics"] = function() end'
-    --   write_file(filename, cmd .. '\n', 'a')
-    -- end
   end
 end
 
 ---Generates ftplugin files based on a list of server_names
 ---The files are generated to a runtimepath: "$RVIM_RUNTIME_DIR/site/after/ftplugin/template.lua"
 function M.generate_templates()
-  -- servers_names = servers_names or get_supported_servers()
-  --NOTE: use custom server list for now
   M.remove_template_files()
   if not rvim.is_directory(rvim.lsp.templates_dir) then vim.fn.mkdir(ftplugin_dir, 'p') end
   for server, v in pairs(server_names) do
