@@ -1,7 +1,6 @@
 return {
   'williamboman/mason.nvim',
-  lazy = false,
-  config = function()
+  init = function()
     local icons = rvim.ui.icons
     require('mason').setup({
       ui = {
