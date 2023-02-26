@@ -50,11 +50,10 @@ return {
     })
   end,
   dependencies = {
-    'rcarriga/neotest-vim-test',
-    'haydenmeade/neotest-jest',
-    'nvim-neotest/neotest-python',
     'rouge8/neotest-rust',
     'nvim-neotest/neotest-go',
+    'haydenmeade/neotest-jest',
+    'nvim-neotest/neotest-python',
     { 'rcarriga/neotest-plenary', dependencies = { 'nvim-lua/plenary.nvim' } },
   },
 }
