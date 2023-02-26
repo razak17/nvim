@@ -18,33 +18,7 @@ local vnoremap = function(...) map('v', ...) end
 local inoremap = function(...) map('i', ...) end
 local onoremap = function(...) map('o', ...) end
 local cnoremap = function(...) map('c', ...) end
-local tnoremap = function(...) map('t', ...) end
 
-----------------------------------------------------------------------------------------------------
--- Terminal {{{
-----------------------------------------------------------------------------------------------------
-rvim.augroup('AddTerminalMappings', {
-  {
-    event = { 'TermOpen' },
-    pattern = { 'term://*' },
-    command = function()
-      if vim.bo.filetype == '' or vim.bo.filetype == 'toggleterm' then
-        local opts = { silent = false, buffer = 0 }
-        tnoremap('<esc>', [[<C-\><C-n>]], opts)
-        tnoremap('jk', [[<C-\><C-n>]], opts)
-        tnoremap('<C-h>', '<Cmd>wincmd h<CR>', opts)
-        tnoremap('<C-j>', '<Cmd>wincmd j<CR>', opts)
-        tnoremap('<C-k>', '<Cmd>wincmd k<CR>', opts)
-        tnoremap('<C-l>', '<Cmd>wincmd l<CR>', opts)
-        tnoremap(']t', '<Cmd>tablast<CR>')
-        tnoremap('[t', '<Cmd>tabnext<CR>')
-        tnoremap('<S-Tab>', '<Cmd>bprev<CR>')
-        tnoremap('<leader><Tab>', '<Cmd>close \\| :bnext<CR>')
-      end
-    end,
-  },
-})
---}}}
 ----------------------------------------------------------------------------------------------------
 -- MACROS {{{
 ----------------------------------------------------------------------------------------------------

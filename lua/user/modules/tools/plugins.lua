@@ -1,3 +1,5 @@
+local fn = vim.fn
+
 return {
   'nvim-lua/plenary.nvim',
   'nvim-lua/popup.nvim',
@@ -71,48 +73,62 @@ return {
   },
 
   {
-    'numToStr/FTerm.nvim',
+    'akinsho/toggleterm.nvim',
     event = 'VeryLazy',
-    init = function()
-      local function new_float(cmd)
-        cmd =
-          require('FTerm'):new({ cmd = cmd, dimensions = { height = 0.9, width = 0.9 } }):toggle()
-      end
-      map(
-        't',
-        [[<c-\>]],
-        function() require('FTerm').toggle() end,
-        { desc = 'fterm: toggle lazygit' }
-      )
-      map(
-        'n',
-        [[<c-\>]],
-        function() require('FTerm').toggle() end,
-        { desc = 'fterm: toggle lazygit' }
-      )
-      map(
-        'n',
-        '<leader>lg',
-        function() new_float('lazygit') end,
-        { desc = 'fterm: toggle lazygit' }
-      )
-      map('n', '<leader>ga', function() new_float('git add . ') end, { desc = 'add all' })
-      map(
-        'n',
-        '<leader>gc',
-        function() new_float('git add . && git commit -a -v') end,
-        { desc = 'commit' }
-      )
-      map('n', '<leader>gD', function() new_float('iconf -ccma') end, { desc = 'commit dotfiles' })
-      map('n', '<leader>tb', function() new_float('btop') end, { desc = 'fterm: btop' })
-      map('n', '<leader>tn', function() new_float('node') end, { desc = 'fterm: node' })
-      map('n', '<leader>tr', function() new_float('ranger') end, { desc = 'fterm: ranger' })
-      map('n', '<leader>tp', function() new_float('python') end, { desc = 'fterm: python' })
-    end,
     opts = {
-      border = rvim.ui.current.border,
-      dimensions = { height = 0.8, width = 0.9 },
+      open_mapping = [[<c-\>]],
+      shade_filetypes = { 'none' },
+      direction = 'float',
+      autochdir = true,
+      persist_mode = true,
+      insert_mappings = false,
+      start_in_insert = true,
+      winbar = { enabled = rvim.ui.winbar.enable },
+      highlights = {
+        FloatBorder = { link = 'FloatBorder' },
+        NormalFloat = { link = 'NormalFloat' },
+      },
+      float_opts = {
+        winblend = 3,
+        border = rvim.ui.current.border,
+      },
+      size = function(term)
+        if term.direction == 'horizontal' then return 15 end
+        if term.direction == 'vertical' then return math.floor(vim.o.columns * 0.4) end
+      end,
     },
+    config = function(_, opts)
+      require('toggleterm').setup(opts)
+
+      local float_handler = function(term)
+        if not rvim.empty(fn.mapcheck('jk', 't')) then
+          vim.keymap.del('t', 'jk', { buffer = term.bufnr })
+          vim.keymap.del('t', '<esc>', { buffer = term.bufnr })
+        end
+      end
+
+      local Terminal = require('toggleterm.terminal').Terminal
+
+      local function git_float(cmd)
+        return Terminal:new({
+          cmd = cmd,
+          dir = 'git_dir',
+          hidden = true,
+          direction = 'float',
+          on_open = float_handler,
+        }):toggle()
+      end
+
+      local function lazygit() git_float('lazygit') end
+      local function git_add() git_float('git add .') end
+      local function git_commit() git_float('git add . && git commit -a -v') end
+      local function dotfiles() git_float('iconf -ccma') end
+
+      map('n', '<leader>lg', lazygit, { desc = 'toggleterm: lazygit' })
+      map('n', '<leader>ga', git_add, { desc = 'toggleterm: add all' })
+      map('n', '<leader>gc', git_commit, { desc = 'toggleterm: commit' })
+      map('n', '<leader>gD', dotfiles, { desc = 'toggleterm: commit dotfiles' })
+    end,
   },
 
   {
@@ -131,7 +147,7 @@ return {
       },
     },
     opts = {
-      dir = vim.fn.expand(rvim.get_cache_dir() .. '/sessions/'),
+      dir = fn.expand(rvim.get_cache_dir() .. '/sessions/'),
       options = { 'buffers', 'curdir', 'tabpages', 'winsize', 'help' },
     },
   },
@@ -155,7 +171,7 @@ return {
 
   {
     'iamcco/markdown-preview.nvim',
-    build = function() vim.fn['mkdp#util#install']() end,
+    build = function() fn['mkdp#util#install']() end,
     ft = 'markdown',
     config = function()
       vim.g.mkdp_auto_start = 0

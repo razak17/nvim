@@ -1,5 +1,4 @@
 {
-  "FTerm.nvim": { "branch": "master", "commit": "d1320892cc2ebab472935242d9d992a2c9570180" },
   "LuaSnip": { "branch": "master", "commit": "f7c845749aba6096f041a73a26ba64f3817bab99" },
   "accelerated-jk.nvim": { "branch": "main", "commit": "1b3160724383e0180071753f958806859e2bc81a" },
   "alpha-nvim": { "branch": "main", "commit": "b6c7b5d9d6d2633722255abf2be3ecb8733e8d2d" },
@@ -116,6 +115,7 @@
   "telescope.nvim": { "branch": "master", "commit": "a486ac3e8fb2198f3636da1927ed57a28836fbd8" },
   "template-string.nvim": { "branch": "main", "commit": "b97ee201fa2d5edced1c6dbaf432d00fec0468f1" },
   "todo-comments.nvim": { "branch": "main", "commit": "74c7d28cb50b0713c881ef69bcb6cdd77d8907d1" },
+  "toggleterm.nvim": { "branch": "main", "commit": "1f47ea9cda973af3f1742a71841f3914f5b1469f" },
   "trailblazer.nvim": { "branch": "main", "commit": "5276270cbcf73146659054987afa8338926d5db5" },
   "treesj": { "branch": "main", "commit": "21e60b625892f4ab12362a0f56337d833a963d59" },
   "ts-node-action": { "branch": "master", "commit": "6bc45ed4460b2be86ec66a06041138c584564db8" },
