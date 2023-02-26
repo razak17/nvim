@@ -1,4 +1,5 @@
 local icons = rvim.ui.icons
+local highlight = rvim.highlight
 
 return {
   'nvim-neo-tree/neo-tree.nvim',
@@ -8,7 +9,7 @@ return {
     { '<c-n>', '<cmd>Neotree toggle reveal<CR>', desc = 'toggle tree' },
   },
   config = function()
-    rvim.highlight.plugin('NeoTree', {
+    highlight.plugin('NeoTree', {
       theme = {
         ['zephyr'] = {
           { NeoTreeNormal = { link = 'PanelBackground' } },
@@ -35,9 +36,20 @@ return {
     vim.g.neo_tree_remove_legacy_commands = 1
 
     require('neo-tree').setup({
+      sources = { 'filesystem', 'buffers', 'git_status', 'diagnostics' },
       source_selector = { winbar = true, separator_active = ' ' },
       enable_git_status = true,
       git_status_async = true,
+      event_handlers = {
+        {
+          event = 'neo_tree_buffer_enter',
+          handler = function() highlight.set('Cursor', { blend = 100 }) end,
+        },
+        {
+          event = 'neo_tree_buffer_leave',
+          handler = function() highlight.set('Cursor', { blend = 0 }) end,
+        },
+      },
       filesystem = {
         hijack_netrw_behavior = 'open_current',
         use_libuv_file_watcher = true,
@@ -86,7 +98,6 @@ return {
           ['<esc>'] = 'revert_preview',
           ['<CR>'] = 'open_with_window_picker',
           ['<c-s>'] = 'split_with_window_picker',
-          ['h'] = 'navigate_up',
           ['l'] = 'open',
           ['o'] = 'toggle_node',
           ['P'] = { 'toggle_preview', config = { use_float = true } },
@@ -98,6 +109,7 @@ return {
   end,
   dependencies = {
     's1n7ax/nvim-window-picker',
+    'mrbjarksen/neo-tree-diagnostics.nvim',
     version = 'v1.*',
     config = function()
       require('window-picker').setup({
@@ -109,7 +121,7 @@ return {
             buftype = { 'terminal', 'quickfix', 'nofile' },
           },
         },
-        other_win_hl_color = rvim.highlight.get('Visual', 'bg'),
+        other_win_hl_color = highlight.get('Visual', 'bg'),
       })
     end,
   },
