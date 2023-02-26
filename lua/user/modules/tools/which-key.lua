@@ -2,8 +2,7 @@ local icons = rvim.ui.icons
 
 return {
   'folke/which-key.nvim',
-  event = 'VeryLazy',
-  config = function()
+  init = function()
     local which_key = require('which-key')
 
     which_key.setup({
