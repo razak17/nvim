@@ -1,15 +1,24 @@
+local ui, api, fmt = rvim.ui, vim.api, string.format
+local border = ui.current.border
+local lsp_hls = rvim.lsp.kind_highlights
+local ellipsis = ui.icons.misc.ellipsis
+
+local function blackOrWhiteFg(r, g, b)
+  return ((r * 0.299 + g * 0.587 + b * 0.114) > 186) and '#000000' or '#ffffff'
+end
+
+local function format_icon(icon)
+  -- TODO: Quick check for now
+  if vim.bo.ft == 'typescriptreact' then return fmt(' %s  ', icon) end
+  return fmt('%s ', icon)
+end
+
 return {
   'hrsh7th/nvim-cmp',
   event = { 'InsertEnter', 'CmdlineEnter' },
   config = function()
     local cmp = require('cmp')
-    local fmt = string.format
 
-    local api = vim.api
-    local ui = rvim.ui
-    local border = ui.current.border
-    local lsp_hls = rvim.lsp.kind_highlights
-    local ellipsis = ui.icons.misc.ellipsis
     local luasnip = require('luasnip')
 
     local kind_hls = rvim.fold(
@@ -62,15 +71,6 @@ return {
         return
       end
       fallback()
-    end
-
-    local function blackOrWhiteFg(r, g, b)
-      return ((r * 0.299 + g * 0.587 + b * 0.114) > 186) and '#000000' or '#ffffff'
-    end
-
-    local function format_icon(icon)
-      if vim.bo.ft == 'typescriptreact' then return fmt(' %s  ', icon) end
-      return fmt('%s ', icon)
     end
 
     cmp.setup({
