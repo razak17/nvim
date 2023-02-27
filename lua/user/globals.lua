@@ -398,6 +398,22 @@ function rvim.executable(e) return fn.executable(e) > 0 end
 ---@return any
 function rvim.replace_termcodes(str) return api.nvim_replace_termcodes(str, true, true, true) end
 
+---@generic T
+---Given a table return a new table which if the key is not found will search
+---all the table's keys for a match using `string.match`
+---@param map T
+---@return T
+function rvim.p_table(map)
+  return setmetatable(map, {
+    __index = function(tbl, key)
+      if not key then return end
+      for k, v in pairs(tbl) do
+        if key:match(k) then return v end
+      end
+    end,
+  })
+end
+
 ---check if a certain feature/version/commit exists in nvim
 ---@param feature string
 ---@return boolean
