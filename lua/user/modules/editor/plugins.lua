@@ -103,7 +103,6 @@ return {
 
   {
     'nguyenvukhang/nvim-toggler',
-    event = 'VeryLazy',
     keys = {
       {
         '<leader>ii',
