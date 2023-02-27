@@ -54,7 +54,11 @@ return {
 
     which_key.register({
       l = 'lsp',
-    }, { mode = 'v', prefix = '<leader>' })
+    }, { mode = 'x', prefix = '<leader>' })
+
+    which_key.register({
+      s = 'Sniprun',
+    }, { mode = 'x', prefix = '<localleader>' })
 
     rvim.augroup('WhichKeyMode', {
       {
