@@ -88,21 +88,6 @@ return {
           ['*'] = {
             { Dash = { background = '#0b60a1', bold = true } },
           },
-          ['horizon'] = {
-            {
-              Headline = {
-                bold = true,
-                italic = true,
-                background = { from = 'Normal', alter = 20 },
-              },
-            },
-            {
-              Headline1 = {
-                inherit = 'Headline',
-                fg = { from = 'Type' },
-              },
-            },
-          },
         },
       })
       require('headlines').setup({
