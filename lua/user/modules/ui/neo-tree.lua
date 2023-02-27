@@ -110,19 +110,21 @@ return {
   dependencies = {
     's1n7ax/nvim-window-picker',
     'mrbjarksen/neo-tree-diagnostics.nvim',
-    version = 'v1.*',
-    config = function()
-      require('window-picker').setup({
+    {
+      's1n7ax/nvim-window-picker',
+      version = '*',
+      opts = {
+        use_winbar = 'smart',
         autoselect_one = true,
         include_current = false,
+        other_win_hl_color = highlight.get('Visual', 'bg'),
         filter_rules = {
           bo = {
-            filetype = { 'neo-tree-popup', 'quickfix', 'incline' },
+            filetype = { 'neo-tree-popup', 'quickfix' },
             buftype = { 'terminal', 'quickfix', 'nofile' },
           },
         },
-        other_win_hl_color = highlight.get('Visual', 'bg'),
-      })
-    end,
+      },
+    },
   },
 }
