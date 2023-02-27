@@ -109,7 +109,7 @@ return {
       config = function()
         require('dap-vscode-js').setup({
           node_path = 'node',
-          debugger_path = rvim.get_runtime_dir() .. '/site/lazy/vscode-js-debug',
+          debugger_path = rvim.get_runtime_dir() .. '/site/pack/lazy/vscode-js-debug',
           log_file_path = rvim.get_cache_dir() .. '/dap_vscode_js.log',
           adapters = {
             'pwa-node',
