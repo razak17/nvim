@@ -1,4 +1,5 @@
 local hl = rvim.highlight
+local ui = rvim.ui
 
 return {
   'nvim-tree/nvim-web-devicons',
@@ -147,7 +148,7 @@ return {
         {
           event = { 'BufEnter', 'WinEnter' },
           command = function(args)
-            rvim.ui.decorations.set_colorcolumn(
+            ui.decorations.set_colorcolumn(
               args.buf,
               function(virtcolumn) require('virt-column').setup_buffer({ virtcolumn = virtcolumn }) end
             )
@@ -161,7 +162,7 @@ return {
     'uga-rosa/ccc.nvim',
     keys = { { '<leader>oc', '<cmd>CccHighlighterToggle<CR>', desc = 'toggle ccc' } },
     opts = {
-      win_opts = { border = rvim.ui.current.border },
+      win_opts = { border = ui.current.border },
       highlighter = { auto_enable = true, excludes = { 'dart', 'html', 'css', 'typescriptreact' } },
     },
   },

@@ -1,4 +1,6 @@
 local hl = rvim.highlight
+local ui = rvim.ui
+
 return {
   'nanotee/sqls.nvim',
   'b0o/schemastore.nvim',
@@ -13,7 +15,7 @@ return {
       hl.plugin('lspconfig', {
         { LspInfoBorder = { link = 'FloatBorder' } },
       })
-      require('lspconfig.ui.windows').default_options.border = rvim.ui.current.border
+      require('lspconfig.ui.windows').default_options.border = ui.current.border
     end,
   },
 
@@ -25,7 +27,7 @@ return {
       fix_pos = false,
       auto_close_after = 15, -- close after 15 seconds
       hint_enable = false,
-      handler_opts = { border = rvim.ui.current.border },
+      handler_opts = { border = ui.current.border },
       toggle_key = '<C-K>',
       select_signature_key = '<M-N>',
     },
@@ -53,9 +55,9 @@ return {
     config = function()
       vim.g.navic_silence = true
       local fmt = string.format
-      local misc = rvim.ui.icons.misc
+      local misc = ui.icons.misc
       local lsp_icons = {}
-      for key, val in pairs(rvim.ui.current.lsp_icons) do
+      for key, val in pairs(ui.current.lsp_icons) do
         hl.set(fmt('NavicIcons%s', key), { link = rvim.lsp.kind_highlights[key] })
         lsp_icons[key] = val .. ' '
       end
@@ -144,7 +146,7 @@ return {
         { LightBulbFloatWin = { foreground = { from = 'Type' } } },
         { LightBulbVirtualText = { foreground = { from = 'Type' } } },
       })
-      local icon = rvim.ui.icons.misc.lightbulb
+      local icon = ui.icons.misc.lightbulb
       require('nvim-lightbulb').setup({
         ignore = { 'null-ls' },
         autocmd = { enabled = true },

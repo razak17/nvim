@@ -1,4 +1,5 @@
 local fn = vim.fn
+local ui = rvim.ui
 
 return {
   'nvim-lua/plenary.nvim',
@@ -59,7 +60,7 @@ return {
     },
     config = function()
       require('buffer_manager').setup({
-        borderchars = rvim.ui.border.common,
+        borderchars = ui.border.common,
       })
       rvim.highlight.plugin('buffer_manager', {
         theme = {
@@ -83,14 +84,14 @@ return {
       persist_mode = true,
       insert_mappings = false,
       start_in_insert = true,
-      winbar = { enabled = rvim.ui.winbar.enable },
+      winbar = { enabled = ui.winbar.enable },
       highlights = {
         FloatBorder = { link = 'FloatBorder' },
         NormalFloat = { link = 'NormalFloat' },
       },
       float_opts = {
         winblend = 3,
-        border = rvim.ui.current.border,
+        border = ui.current.border,
       },
       size = function(term)
         if term.direction == 'horizontal' then return 15 end
@@ -219,7 +220,7 @@ return {
       popup = {
         autofocus = true,
         style = 'minimal',
-        border = rvim.ui.current.border,
+        border = ui.current.border,
         show_version_date = false,
         show_dependency_version = true,
         max_height = 30,
