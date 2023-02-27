@@ -81,7 +81,6 @@ return {
   {
     'lukas-reineke/headlines.nvim',
     ft = { 'org', 'norg', 'markdown', 'yaml' },
-    lazy = false,
     config = function()
       hl.plugin('Headlines', {
         theme = {
