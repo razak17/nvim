@@ -105,10 +105,6 @@ return {
 
           if vim_item.kind ~= 'Color' then vim_item.kind = format_icon(lsp_icons[vim_item.kind]) end
 
-          if entry.source.name == 'nvim_lsp_signature_help' then
-            vim_item.kind = format_icon(lsp_icons.Field)
-          end
-
           if entry.source.name == 'lab.quick_data' then
             vim_item.kind = format_icon(codicons.misc.CircuitBoard)
           end
@@ -151,7 +147,6 @@ return {
             crates = '(Crt)',
             treesitter = '(TS)',
             ['buffer-lines'] = '(Bufl)',
-            nvim_lsp_signature_help = '(Sig)',
             dynamic = '(Dyn)',
             ['lab.quick_data'] = '(Lab)',
           })[entry.source.name]
@@ -161,7 +156,6 @@ return {
       sources = {
         { name = 'nvim_lsp' },
         { name = 'luasnip' },
-        { name = 'nvim_lsp_signature_help' },
         { name = 'path' },
         {
           name = 'rg',
@@ -225,7 +219,6 @@ return {
     'hrsh7th/cmp-path',
     'f3fora/cmp-spell',
     'hrsh7th/cmp-buffer',
-    'hrsh7th/cmp-nvim-lsp-signature-help',
     'hrsh7th/cmp-emoji',
     'amarakon/nvim-cmp-buffer-lines',
     'lukas-reineke/cmp-rg',
