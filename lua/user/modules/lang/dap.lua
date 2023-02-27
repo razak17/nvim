@@ -121,11 +121,7 @@ return {
         })
       end,
     },
-    {
-      'microsoft/vscode-js-debug',
-      enabled = false,
-      build = 'npm install --legacy-peer-deps && npm run compile',
-    },
+    { 'microsoft/vscode-js-debug', build = 'npm install --legacy-peer-deps && npm run compile' },
     {
       'rcarriga/nvim-dap-ui',
       keys = {
