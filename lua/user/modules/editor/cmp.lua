@@ -100,20 +100,18 @@ return {
           local MAX = math.floor(vim.o.columns * 0.5)
           if #vim_item.abbr >= MAX then vim_item.abbr = vim_item.abbr:sub(1, MAX) .. ellipsis end
 
-          local codicons = ui.codicons
+          local icons = ui.codicons
           local lsp_icons = ui.current.lsp_icons
 
-          if vim_item.kind ~= 'Color' then vim_item.kind = format_icon(lsp_icons[vim_item.kind]) end
+          vim_item.kind = format_icon(lsp_icons[vim_item.kind])
 
           if entry.source.name == 'lab.quick_data' then
-            vim_item.kind = format_icon(codicons.misc.CircuitBoard)
+            vim_item.kind = format_icon(icons.misc.CircuitBoard)
           end
 
-          if entry.source.name == 'emoji' then vim_item.kind = format_icon(codicons.misc.Smiley) end
-
-          if entry.source.name == 'crates' then
-            vim_item.kind = format_icon(codicons.misc.Package)
-          end
+          if entry.source.name == 'dynamic' then vim_item.kind = format_icon(icons.ui.Calendar) end
+          if entry.source.name == 'emoji' then vim_item.kind = format_icon(icons.misc.Smiley) end
+          if entry.source.name == 'crates' then vim_item.kind = format_icon(icons.misc.Package) end
 
           if vim_item.kind == 'Color' then
             if entry.completion_item.documentation then
