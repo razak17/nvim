@@ -73,11 +73,11 @@ dap.configurations.javascript = {
   {
     type = 'pwa-chrome',
     request = 'attach',
-    name = 'Attach Program (pwa-chrome = { port: 9222 })',
+    name = 'Attach Program (pwa-chrome, select port)',
     program = '${file}',
     cwd = vim.fn.getcwd(),
     sourceMaps = true,
-    port = 9222,
+    port = function() return vim.fn.input('Select port: ', 9222) end,
     webRoot = '${workspaceFolder}',
   },
   -- {
