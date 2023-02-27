@@ -223,7 +223,6 @@ return {
   {
     'andymass/vim-matchup',
     event = 'BufReadPost',
-    lazy = false,
     keys = { { '<localleader>lw', ':<c-u>MatchupWhereAmI?<CR>', desc = 'matchup: where am i' } },
     config = function() vim.g.matchup_matchparen_enabled = 0 end,
   },
