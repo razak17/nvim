@@ -98,7 +98,7 @@ dap.configurations.javascript = {
   {
     type = 'pwa-node',
     request = 'attach',
-    name = 'Attach Program (pwa-node)',
+    name = 'Attach Program (pwa-node, select pid)',
     cwd = vim.fn.getcwd(),
     processId = require('dap.utils').pick_process,
     skipFiles = { '<node_internals>/**' },
