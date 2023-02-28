@@ -108,7 +108,6 @@ return {
     })
   end,
   dependencies = {
-    's1n7ax/nvim-window-picker',
     'mrbjarksen/neo-tree-diagnostics.nvim',
     {
       's1n7ax/nvim-window-picker',
