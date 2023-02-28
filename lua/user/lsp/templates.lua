@@ -33,16 +33,17 @@ end
 ---@param server_name string can be any server supported by nvim-lsp-installer
 ---@return string[] supported filestypes as a list of strings
 local function get_supported_filetypes(server_name)
-  local status_ok, config =
+  local status_ok, lspconfig =
     rvim.safe_require(fmt('lspconfig.server_configurations.%s', server_name))
   if not status_ok then return {} end
-  local filetypes = config.default_config.filetypes or {}
-  if type(server_names[server_name]) == 'table' and server_names[server_name].filetypes ~= nil then
+  local filetypes = lspconfig.default_config.filetypes or {}
+  local config = require('user.servers').setup(server_name)
+  if config and config.filetypes ~= nil then
     -- Extend filetypes with server_names[server_name].filetypes
     -- for _, ft in ipairs(server_names[server_name].filetypes) do
     --   if not vim.tbl_contains(filetypes, ft) then filetypes[#filetypes + 1] = ft end
     -- end
-    return server_names[server_name].filetypes
+    filetypes = config.filetypes
   end
   return filetypes
 end
