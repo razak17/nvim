@@ -8,7 +8,7 @@ opt.spell = true
 
 if not rvim then return end
 
-require('which_key').register({ ['<localleader>g'] = { name = 'Gopher' } })
+require('which-key').register({ ['<localleader>g'] = { name = 'Gopher' } })
 local with_desc = function(desc) return { buffer = 0, desc = desc } end
 map('n', '<localleader>gb', '<Cmd>GoBuild<CR>', with_desc('build'))
 map('n', '<localleader>gfs', '<Cmd>GoFillStruct<CR>', with_desc('fill struct'))
