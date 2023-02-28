@@ -1,5 +1,4 @@
-local ok, which_key = rvim.safe_require('which-key')
-if ok then which_key.register({ ['<localleader>'] = { r = { name = 'Rust Tools' } } }) end
+require 'which_key'.register({ ['<localleader>'] = { t = { name = 'Typescript' } } })
 
 require('typescript').setup({ server = require('user.servers')('tsserver') })
 require('null-ls').register({

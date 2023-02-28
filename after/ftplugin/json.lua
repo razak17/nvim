@@ -10,8 +10,7 @@ vim.bo.tabstop = 2
 local filename = vim.fn.expand('%:t')
 if filename ~= 'package.json' then return end
 
-local ok, which_key = rvim.safe_require('which-key')
-if ok then which_key.register({ ['<localleader>'] = { p = { name = 'Package Info' } } }) end
+require('which_key').register({ ['<localleader>'] = { p = { name = 'Package Info' } } })
 local with_desc = function(desc) return { buffer = 0, desc = desc } end
 local package_info = require('package-info')
 map('n', '<localleader>pt', package_info.toggle, with_desc('package-info: toggle'))

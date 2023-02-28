@@ -40,14 +40,13 @@ return {
         o = { name = 'Toggle' },
         r = { name = 'Rest' },
         s = { name = 'Session' },
-        t = { name = 'Term' },
+        t = { name = 'Test' },
       },
       ['<localleader>'] = {
         c = { name = 'Conceal' },
         d = { name = 'Dap' },
         l = { name = 'Neogen' },
         s = { name = 'Sniprun' },
-        t = { name = 'Neotest' },
         w = { name = 'Window' },
       },
     })
