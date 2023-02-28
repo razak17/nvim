@@ -2,21 +2,9 @@ local M = {}
 
 local fmt = string.format
 
---- Find the first entry for which the predicate returns true.
-
--- @param t The table
--- @param predicate The function called for each entry of t
--- @return The entry for which the predicate returned True or nil
-local function find_first(t, predicate)
-  for _, entry in pairs(t) do
-    if predicate(entry) then return entry end
-  end
-  return nil
-end
-
 local function is_client_active(name)
   local clients = vim.lsp.get_active_clients()
-  return find_first(clients, function(client) return client.name == name end)
+  return rvim.find_first(clients, function(client) return client.name == name end)
 end
 
 local function resolve_mason_config(server_name)
@@ -63,7 +51,8 @@ local function launch_server(server_name, config)
   pcall(function()
     local cmd = config.cmd
       or (function()
-        local default_config = require('lspconfig.server_configurations.' .. server_name).default_config
+        local default_config =
+          require('lspconfig.server_configurations.' .. server_name).default_config
         return default_config.cmd
       end)()
     -- some servers have dynamic commands defined with on_new_config
