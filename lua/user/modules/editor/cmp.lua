@@ -1,9 +1,9 @@
-local ui, api, fmt = rvim.ui, vim.api, string.format
+local ui, fn, api, fmt = rvim.ui, vim.fn, vim.api, string.format
 local border = ui.current.border
 local lsp_hls = rvim.lsp.kind_highlights
 local ellipsis = ui.icons.misc.ellipsis
 
-local function blackOrWhiteFg(r, g, b)
+local function get_color(r, g, b)
   return ((r * 0.299 + g * 0.587 + b * 0.114) > 186) and '#000000' or '#ffffff'
 end
 
@@ -100,35 +100,39 @@ return {
           local MAX = math.floor(vim.o.columns * 0.5)
           if #vim_item.abbr >= MAX then vim_item.abbr = vim_item.abbr:sub(1, MAX) .. ellipsis end
 
-          local icons = ui.codicons
+          local codicons = ui.codicons
           local lsp_icons = ui.current.lsp_icons
 
-          vim_item.kind = format_icon(lsp_icons[vim_item.kind])
+          if vim_item.kind ~= 'Color' then vim_item.kind = format_icon(lsp_icons[vim_item.kind]) end
+
+          if entry.source.name == 'emoji' then vim_item.kind = format_icon(codicons.misc.Smiley) end
 
           if entry.source.name == 'lab.quick_data' then
-            vim_item.kind = format_icon(icons.misc.CircuitBoard)
+            vim_item.kind = format_icon(codicons.misc.CircuitBoard)
           end
 
-          if entry.source.name == 'dynamic' then vim_item.kind = format_icon(icons.ui.Calendar) end
-          if entry.source.name == 'emoji' then vim_item.kind = format_icon(icons.misc.Smiley) end
-          if entry.source.name == 'crates' then vim_item.kind = format_icon(icons.misc.Package) end
+          if entry.source.name == 'dynamic' then
+            vim_item.kind = format_icon(codicons.ui.Calendar)
+          end
+
+          if entry.source.name == 'crates' then
+            vim_item.kind = format_icon(ui.icons.misc.Package)
+          end
 
           if vim_item.kind == 'Color' then
             if entry.completion_item.documentation then
               local _, _, r, g, b =
                 string.find(entry.completion_item.documentation, '^rgb%((%d+), (%d+), (%d+)')
               if r then
-                local color = fmt('%02x', r) .. fmt('%02x', g) .. fmt('%02x', b)
-                local group = fmt('Tw_%s', color)
-                if vim.fn.hlID(group) < 1 then
-                  vim.api.nvim_set_hl(0, group, { fg = blackOrWhiteFg(r, g, b), bg = '#' .. color })
+                local color = fmt('%s%s%s', fmt('%02x', r), fmt('%02x', g), fmt('%02x', b))
+                local group = fmt('CmpItemKind_%s', color)
+                if fn.hlID(group) < 1 then
+                  api.nvim_set_hl(0, group, { fg = get_color(r, g, b), bg = fmt('#%s', color) })
                 end
-                vim_item.kind = format_icon(lsp_icons[vim_item.kind])
                 vim_item.kind_hl_group = group
               end
-            else
-              vim_item.kind = format_icon(lsp_icons[vim_item.kind])
             end
+            vim_item.kind = format_icon(lsp_icons[vim_item.kind])
           end
 
           vim_item.menu = ({
