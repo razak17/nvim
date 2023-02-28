@@ -51,6 +51,14 @@ local function buf_try_add(server_name, bufnr)
 end
 
 local function launch_server(server, config)
+  if server == 'rust_analyzer' then
+    require('user.lsp.rust-tools')
+    return
+  end
+  if server == 'tsserver' then
+    require('user.lsp.typescript')
+    return
+  end
   pcall(function()
     local cmd = config.cmd
       or (function()
@@ -66,13 +74,7 @@ local function launch_server(server, config)
     -- require("user.lsp.manager").setup("tailwindcss", {
     --   cmd = { "tailwindcss-language-server", "--stdio" },
     -- })
-    if server == 'rust_analyzer' then
-      require('user.lsp.rust-tools')
-    elseif server == 'tsserver' then
-      require('user.lsp.typescript')
-    else
-      require('lspconfig')[server].setup(config)
-    end
+    require('lspconfig')[server].setup(config)
     buf_try_add(server)
   end)
 end
