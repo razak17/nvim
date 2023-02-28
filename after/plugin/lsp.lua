@@ -444,22 +444,22 @@ diagnostic.config({
 })
 
 local function toggle_virtual_text()
-  local prev_config = vim.diagnostic.config()
-  local new_config = vim.tbl_extend('force', prev_config, { virtual_text = false })
-  local opts = {
-    virtual_text = {
-      prefix = '',
-      spacing = rvim.lsp.diagnostics.virtual_text_spacing,
-      format = function(d)
-        local level = diagnostic.severity[d.severity]
-        return fmt('%s %s', codicons.lsp[level:lower()], d.message)
-      end,
-    },
-  }
-  if type(prev_config.virtual_text) == 'boolean' then
-    new_config = vim.tbl_extend('force', prev_config, opts)
+  local config = vim.diagnostic.config()
+  if type(config.virtual_text) == 'boolean' then
+    config = vim.tbl_extend('force', config, {
+      virtual_text = {
+        prefix = '',
+        spacing = rvim.lsp.diagnostics.virtual_text_spacing,
+        format = function(d)
+          local level = diagnostic.severity[d.severity]
+          return fmt('%s %s', codicons.lsp[level:lower()], d.message)
+        end,
+      },
+    })
+  else
+    config = vim.tbl_extend('force', config, { virtual_text = false })
   end
-  vim.diagnostic.config(new_config)
+  vim.diagnostic.config(config)
 end
 command('ToggleVirtualText', toggle_virtual_text)
 
