@@ -63,6 +63,11 @@ return {
     { '<localleader>dt', repl_toggle, desc = 'dap REPL: toggle' },
     { '<localleader>da', attach, desc = 'dap(node): attach' },
     { '<localleader>dA', attach_to_remote, desc = 'dap(node): attach to remote' },
+    {
+      '<localleader>du',
+      function() require('dapui').toggle({ reset = true }) end,
+      desc = 'dap-ui: toggle',
+    },
   },
   config = function()
     local fn, icons = vim.fn, rvim.ui.icons
@@ -124,18 +129,7 @@ return {
     { 'microsoft/vscode-js-debug', build = 'npm install --legacy-peer-deps && npm run compile' },
     {
       'rcarriga/nvim-dap-ui',
-      keys = {
-        {
-          '<localleader>du',
-          function() require('dapui').toggle({ reset = true }) end,
-          desc = 'dap-ui: toggle',
-        },
-      },
       config = function()
-        require('dapui').setup({
-          windows = { indent = 2 },
-          floating = { border = rvim.ui.current.border },
-        })
         local dap = require('dap')
         dap.listeners.after.event_initialized['dapui_config'] = function()
           require('dapui').open()
