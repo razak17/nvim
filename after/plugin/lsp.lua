@@ -453,7 +453,6 @@ local function toggle_virtual_text()
         end,
       },
     })
-    -- HACK:
     if type(config.virtual_lines) == 'table' then
       config = vim.tbl_extend('force', config, { virtual_lines = false })
       rvim.lsp.hover_diagnostics = true
