@@ -162,6 +162,9 @@ local servers = {
     }
   end,
   tailwindcss = {
+    -- cmd = { '/home/razak/.bun/bin/tailwindcss-language-server', '--stdio' },
+    -- cmd = { '/home/razak/.local/share/nvim/mason/bin/tailwindcss-language-server', '--stdio' },
+    -- cmd = { 'tailwindcss-language-server', '--stdio' },
     root_dir = function(fname)
       return require('lspconfig/util').root_pattern(
         'tailwind.config.js',

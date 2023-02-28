@@ -70,10 +70,6 @@ local function launch_server(server, config)
       vim.notify(fmt('[%q] is not executable.', cmd[1]), vim.log.levels.ERROR, { title = server })
       return
     end
-    -- NOTE: Example usage
-    -- require("user.lsp.manager").setup("tailwindcss", {
-    --   cmd = { "tailwindcss-language-server", "--stdio" },
-    -- })
     require('lspconfig')[server].setup(config)
     buf_try_add(server)
   end)
