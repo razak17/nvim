@@ -96,10 +96,9 @@ local function setup_autocommands(client, bufnr)
         buffer = bufnr,
         desc = 'LSP: Show diagnostics',
         command = function(args)
+          if not rvim.lsp.hover_diagnostics then return end
           if vim.b.lsp_hover_win and api.nvim_win_is_valid(vim.b.lsp_hover_win) then return end
-          if rvim.lsp.hover_diagnostics then
-            vim.diagnostic.open_float(args.buf, { scope = 'line' })
-          end
+          vim.diagnostic.open_float(args.buf, { scope = 'line' })
         end,
       },
     }
@@ -185,20 +184,18 @@ local function setup_mappings(client, bufnr)
   -- Leader keymaps
   --------------------------------------------------------------------------------------------------
   map({ 'n', 'x' }, '<leader>la', lsp.buf.code_action, with_desc('lsp: code action'))
-  map('n', '<leader>lk', function()
-    if rvim.lsp.hover_diagnostics then
-      vim.diagnostic.goto_prev({ float = false })
-      return
-    end
-    vim.diagnostic.goto_prev()
-  end, with_desc('lsp: go to prev diagnostic'))
-  map('n', '<leader>lj', function()
-    if rvim.lsp.hover_diagnostics then
-      vim.diagnostic.goto_next({ float = false })
-      return
-    end
-    vim.diagnostic.goto_next()
-  end, with_desc('lsp: go to next diagnostic'))
+  map(
+    'n',
+    '<leader>lk',
+    function() vim.diagnostic.goto_prev({ float = false }) end,
+    with_desc('lsp: prev diagnostic')
+  )
+  map(
+    'n',
+    '<leader>lj',
+    function() vim.diagnostic.goto_next({ float = false }) end,
+    with_desc('lsp: next diagnostic')
+  )
   map('n', '<leader>lL', vim.diagnostic.setloclist, with_desc('lsp: toggle loclist diagnostics'))
   map('n', '<leader>lc', lsp.codelens.run, with_desc('lsp: run code lens'))
   map('n', '<leader>lr', lsp.buf.rename, with_desc('lsp: rename'))
@@ -456,6 +453,11 @@ local function toggle_virtual_text()
         end,
       },
     })
+    -- HACK:
+    if type(config.virtual_lines) == 'table' then
+      config = vim.tbl_extend('force', config, { virtual_lines = false })
+      rvim.lsp.hover_diagnostics = true
+    end
   else
     config = vim.tbl_extend('force', config, { virtual_text = false })
   end
@@ -467,6 +469,9 @@ local function toggle_virtual_lines()
   local config = vim.diagnostic.config()
   if type(config.virtual_lines) == 'boolean' then
     config = vim.tbl_extend('force', config, { virtual_lines = { only_current_line = true } })
+    if type(config.virtual_text) == 'table' then
+      config = vim.tbl_extend('force', config, { virtual_text = false })
+    end
     rvim.lsp.hover_diagnostics = false
   else
     config = vim.tbl_extend('force', config, { virtual_lines = false })
