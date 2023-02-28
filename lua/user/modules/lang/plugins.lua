@@ -251,9 +251,6 @@ return {
   {
     'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
     event = 'LspAttach',
-    keys = {
-      { '<leader>ltl', function() require('lsp_lines').toggle() end, desc = 'toggle lsp lines' },
-    },
     config = function() require('lsp_lines').setup() end,
   },
 }

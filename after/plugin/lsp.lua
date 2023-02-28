@@ -216,6 +216,7 @@ local function setup_mappings(client, bufnr)
   map('n', '<leader>lf', '<cmd>LspFormat<CR>', with_desc('lsp: format buffer'))
   map('n', '<leader>ll', '<cmd>LspDiagnostics<CR>', with_desc('toggle quickfix diagnostics'))
   map('n', '<leader>ltv', '<cmd>ToggleVirtualText<CR>', with_desc('toggle virtual text'))
+  map('n', '<leader>ltl', '<cmd>ToggleVirtualLines<CR>', with_desc('toggle virtual lines'))
   map('n', '<leader>lts', '<cmd>ToggleDiagnosticSigns<CR>', with_desc('toggle  signs'))
   -- Typescript
   if client.name == 'tsserver' then
@@ -445,21 +446,35 @@ diagnostic.config({
 local function toggle_virtual_text()
   local prev_config = vim.diagnostic.config()
   local new_config = vim.tbl_extend('force', prev_config, { virtual_text = false })
+  local opts = {
+    virtual_text = {
+      prefix = '',
+      spacing = rvim.lsp.diagnostics.virtual_text_spacing,
+      format = function(d)
+        local level = diagnostic.severity[d.severity]
+        return fmt('%s %s', codicons.lsp[level:lower()], d.message)
+      end,
+    },
+  }
   if type(prev_config.virtual_text) == 'boolean' then
-    new_config = vim.tbl_extend('force', prev_config, {
-      virtual_text = {
-        prefix = '',
-        spacing = rvim.lsp.diagnostics.virtual_text_spacing,
-        format = function(d)
-          local level = diagnostic.severity[d.severity]
-          return fmt('%s %s', codicons.lsp[level:lower()], d.message)
-        end,
-      },
-    })
+    new_config = vim.tbl_extend('force', prev_config, opts)
   end
   vim.diagnostic.config(new_config)
 end
 command('ToggleVirtualText', toggle_virtual_text)
+
+local function toggle_virtual_lines()
+  local config = vim.diagnostic.config()
+  if type(config.virtual_lines) == 'boolean' then
+    config = vim.tbl_extend('force', config, { virtual_lines = { only_current_line = true } })
+    rvim.lsp.hover_diagnostics = false
+  else
+    config = vim.tbl_extend('force', config, { virtual_lines = false })
+    rvim.lsp.hover_diagnostics = true
+  end
+  vim.diagnostic.config(config)
+end
+command('ToggleVirtualLines', toggle_virtual_lines)
 
 lsp.handlers['textDocument/hover'] = function(...)
   local hover_handler = lsp.with(lsp.handlers.hover, {
