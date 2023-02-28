@@ -101,7 +101,14 @@ return {
     opts = {
       suggestion = {
         auto_trigger = true,
-        keymap = { accept = '<M-l>', next = '<M-]>', prev = '<M-[>', dismiss = '<C-\\>' },
+        keymap = {
+          accept_word = '<M-w>',
+          accept_line = '<M-l>',
+          accept = '<M-u>',
+          next = '<M-]>',
+          prev = '<M-[>',
+          dismiss = '<C-\\>',
+        },
       },
       filetypes = {
         gitcommit = false,
