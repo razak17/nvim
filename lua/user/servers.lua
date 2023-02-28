@@ -3,8 +3,6 @@
 ----------------------------------------------------------------------------------------------------
 local fn = vim.fn
 
-local M = {}
-
 local function global_capabilities()
   local capabilities = vim.lsp.protocol.make_client_capabilities()
   capabilities.textDocument.completion.completionItem.snippetSupport = true
@@ -35,7 +33,7 @@ local function global_capabilities()
   return capabilities
 end
 
-M.servers = {
+local servers = {
   astro = {},
   bashls = {},
   clangd = {},
@@ -234,12 +232,10 @@ M.servers = {
 ---Get the configuration for a specific language server
 ---@param name string?
 ---@return table<string, any>?
-function M.setup(name)
-  local config = name and M.servers[name] or {}
-  if not config then return end
+return function(name)
+  local config = servers[name]
+  if not config then return false end
   if type(config) == 'function' then config = config() end
   config.capabilities = global_capabilities()
   return config
 end
-
-return M

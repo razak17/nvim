@@ -36,7 +36,7 @@ end
 ---@vararg any config table [optional]
 ---@return table
 local function resolve_config(server_name, ...)
-  local config = require('user.servers').setup(server_name)
+  local config = require('user.servers')(server_name)
   config = vim.tbl_deep_extend('force', config, ...)
   return config
 end

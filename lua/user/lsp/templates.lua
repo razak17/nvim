@@ -4,8 +4,6 @@ local uv = vim.loop
 local ftplugin_dir = rvim.lsp.templates_dir
 local fmt = string.format
 
-local server_names = require('user.servers').servers
-
 ---Write data to a file
 ---@param path string can be full or relative to `cwd`
 ---@param txt string|table text to be written, uses `vim.inspect` internally for tables
@@ -26,7 +24,7 @@ end
 ---@param server_name string can be any server supported by nvim-lsp-installer
 local function write_manager(filename, server_name)
   local cmd = fmt([[require("user.lsp.manager").setup(%q)]], server_name)
-  write_file(filename, cmd .. '\n', 'a')
+  write_file(filename, fmt('%s\n', cmd), 'a')
 end
 
 ---Get supported filetypes per server
@@ -34,18 +32,23 @@ end
 ---@return string[] supported filestypes as a list of strings
 local function get_supported_filetypes(server_name)
   local status_ok, lspconfig =
-    rvim.safe_require(fmt('lspconfig.server_configurations.%s', server_name))
+    rvim.safe_require(fmt('lspconfig.server_configurations.%s', server_name), { silent = true })
   if not status_ok then return {} end
   local filetypes = lspconfig.default_config.filetypes or {}
-  local config = require('user.servers').setup(server_name)
-  if config and config.filetypes ~= nil then
-    -- Extend filetypes with server_names[server_name].filetypes
-    -- for _, ft in ipairs(server_names[server_name].filetypes) do
-    --   if not vim.tbl_contains(filetypes, ft) then filetypes[#filetypes + 1] = ft end
-    -- end
-    filetypes = config.filetypes
-  end
+  local config = require('user.servers')(server_name)
+  -- override filetypes from lspconfig
+  if config and config.filetypes then filetypes = config.filetypes end
   return filetypes
+end
+
+---Get supported servers per filetype
+---@param filter { filetype: string | string[] }?: (optional) Used to filter the list of server names.
+---@return string[] list of names of supported servers
+local function get_supported_servers(filter)
+  local _, supported_servers = pcall(
+    function() return require('mason-lspconfig').get_available_servers(filter) end
+  )
+  return supported_servers or {}
 end
 
 ---Remove Templates
@@ -73,18 +76,20 @@ local function generate_ftplugin(server_name, dir)
   if not filetypes then return end
   for _, filetype in ipairs(filetypes) do
     filetype = filetype:match('%.([^.]*)$') or filetype
-    local filename = join_paths(dir, filetype .. '.lua')
+    local filename = join_paths(dir, fmt('%s.lua', filetype))
     write_manager(filename, server_name)
   end
 end
 
 ---Generates ftplugin files based on a list of server_names
 ---The files are generated to a runtimepath: "$RVIM_RUNTIME_DIR/site/after/ftplugin/template.lua"
-function M.generate_templates()
+function M.generate_templates(servers_names)
+  servers_names = servers_names or get_supported_servers()
   M.remove_template_files()
   if not rvim.is_directory(rvim.lsp.templates_dir) then vim.fn.mkdir(ftplugin_dir, 'p') end
-  for server, config in pairs(server_names) do
-    if config ~= false then generate_ftplugin(server, ftplugin_dir) end
+  for _, server in ipairs(servers_names) do
+    local config = require('user.servers')(server)
+    if config then generate_ftplugin(server, ftplugin_dir) end
   end
 end
 
