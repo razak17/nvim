@@ -405,13 +405,13 @@ local function toggle_diagnostic_signs()
     sign({ highlight = 'DiagnosticSignWarn', icon = codicons.lsp.warn })
     sign({ highlight = 'DiagnosticSignInfo', icon = codicons.lsp.info })
     sign({ highlight = 'DiagnosticSignHint', icon = codicons.lsp.hint })
-    return
+  else
+    rvim.lsp.diagnostics.signs.active = true
+    sign({ highlight = 'DiagnosticSignError', icon = '' })
+    sign({ highlight = 'DiagnosticSignWarn', icon = '' })
+    sign({ highlight = 'DiagnosticSignInfo', icon = '' })
+    sign({ highlight = 'DiagnosticSignHint', icon = '' })
   end
-  rvim.lsp.diagnostics.signs.active = true
-  sign({ highlight = 'DiagnosticSignError', icon = '' })
-  sign({ highlight = 'DiagnosticSignWarn', icon = '' })
-  sign({ highlight = 'DiagnosticSignInfo', icon = '' })
-  sign({ highlight = 'DiagnosticSignHint', icon = '' })
 end
 toggle_diagnostic_signs()
 command('ToggleDiagnosticSigns', toggle_diagnostic_signs)

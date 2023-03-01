@@ -71,7 +71,7 @@ function ui.statuscolumn.render()
     if s.name:find('GitSign') then
       git_sign = s
     else
-      sign = s
+      if not rvim.lsp.diagnostics.signs.active then sign = s end
     end
   end
   local components = {
