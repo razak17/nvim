@@ -28,8 +28,11 @@ return {
 
   {
     'LeonHeidelbach/trailblazer.nvim',
-    event = 'VeryLazy',
     keys = {
+      '<M-l>',
+      '<a-b>',
+      '<a-j>',
+      '<a-k>',
       { '<leader>ms', '<cmd>TrailBlazerSaveSession<CR>', desc = 'trailblazer: save session' },
       { '<leader>ml', '<cmd>TrailBlazerLoadSession<CR>', desc = 'trailblazer: load session' },
     },
