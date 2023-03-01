@@ -40,8 +40,13 @@ return {
       },
     })
 
+    local ignored = {
+      'No information available',
+      '[LSP] Format request failed, no matching language servers.',
+    }
+
     vim.notify = function(msg, level, opts)
-      if msg == 'No information available' then return end
+      if vim.tbl_contains(ignored, msg) then return end
       return notify(msg, level, opts)
     end
 
