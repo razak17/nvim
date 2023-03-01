@@ -165,11 +165,6 @@ return {
   },
 
   {
-    'nvim-treesitter/playground',
-    cmd = { 'TSPlaygroundToggle', 'TSHighlightCapturesUnderCursor' },
-  },
-
-  {
     'mfussenegger/nvim-treehopper',
     keys = {
       {

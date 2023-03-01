@@ -122,6 +122,11 @@ return {
     end,
   },
   {
+    'nvim-treesitter/playground',
+    cmd = { 'TSPlaygroundToggle', 'TSHighlightCapturesUnderCursor' },
+    dependencies = { 'nvim-treesitter' },
+  },
+  {
     'nvim-treesitter/nvim-treesitter-context',
     event = { 'BufRead', 'BufNewFile' },
     config = function()
