@@ -111,44 +111,41 @@ return {
   dependencies = {
     {
       'mxsdev/nvim-dap-vscode-js',
-      config = function()
-        require('dap-vscode-js').setup({
-          node_path = 'node',
-          debugger_path = rvim.get_runtime_dir() .. '/site/pack/lazy/vscode-js-debug',
-          log_file_path = rvim.get_cache_dir() .. '/dap_vscode_js.log',
-          adapters = {
-            'pwa-node',
-            'pwa-chrome',
-            'pwa-msedge',
-            'node-terminal',
-            'pwa-extensionHost',
-          },
-        })
-      end,
+      opts = {
+        node_path = 'node',
+        debugger_path = rvim.get_runtime_dir() .. '/site/pack/lazy/vscode-js-debug',
+        log_file_path = rvim.get_cache_dir() .. '/dap_vscode_js.log',
+        adapters = {
+          'pwa-node',
+          'pwa-chrome',
+          'pwa-msedge',
+          'node-terminal',
+          'pwa-extensionHost',
+        },
+      },
     },
     { 'microsoft/vscode-js-debug', build = 'npm install --legacy-peer-deps && npm run compile' },
     {
       'rcarriga/nvim-dap-ui',
       config = function()
         local dap = require('dap')
-        dap.listeners.after.event_initialized['dapui_config'] = function()
-          require('dapui').open()
-          vim.api.nvim_exec_autocmds('User', { pattern = 'DapStarted' })
-        end
-        dap.listeners.before.event_terminated['dapui_config'] = function() require('dapui').close() end
-        dap.listeners.before.event_exited['dapui_config'] = function() require('dapui').close() end
+        local dapui = require('dapui')
+
+        dapui.setup({ windows = { indent = 2 }, floating = { border = rvim.ui.current.border } })
+
+        dap.listeners.after.event_initialized['dapui_config'] = function() dapui.open() end
+        dap.listeners.before.event_terminated['dapui_config'] = function() dapui.close() end
+        dap.listeners.before.event_exited['dapui_config'] = function() dapui.close() end
       end,
     },
     {
       'theHamsta/nvim-dap-virtual-text',
-      config = function()
-        require('nvim-dap-virtual-text').setup({
-          enabled = true,
-          enabled_commands = true,
-          highlight_changed_variables = true,
-          all_frames = true,
-        })
-      end,
+      opts = {
+        enabled = true,
+        enabled_commands = true,
+        highlight_changed_variables = true,
+        all_frames = true,
+      },
     },
   },
 }
