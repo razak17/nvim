@@ -4,7 +4,7 @@ local Lazy = {}
 Lazy.__index = Lazy
 
 function Lazy:load_plugins()
-  local modules_dir = join_paths(rvim.get_user_dir(), 'modules')
+  local modules_dir = join_paths(rvim.get_config_dir(), 'lua', 'user', 'modules')
 
   self.repos = {}
 

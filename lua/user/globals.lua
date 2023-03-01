@@ -64,14 +64,6 @@ function rvim.get_pack_dir()
   return join_paths(rvim_runtime_dir, 'site', 'pack')
 end
 
----Get the full path to `$RVIM_CONFIG_DIR/lua/user`
----@return string
-function rvim.get_user_dir()
-  local config_dir = vim.env.RVIM_CONFIG_DIR
-  if not config_dir then config_dir = vim.call('stdpath', 'config') end
-  return join_paths(config_dir, 'lua', 'user')
-end
-
 ----------------------------------------------------------------------------------------------------
 -- Utils
 ----------------------------------------------------------------------------------------------------
