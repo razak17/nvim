@@ -9,7 +9,9 @@ end
 
 local function format_icon(icon)
   -- TODO: Quick check for now
-  if vim.bo.ft == 'typescriptreact' then return fmt(' %s  ', icon) end
+  if vim.loop.fs_stat('./tailwind.config.js') or vim.loop.fs_stat('./tailwind.config.cjs') then
+    return fmt(' %s  ', icon)
+  end
   return fmt('%s ', icon)
 end
 
