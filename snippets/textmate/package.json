@@ -50,10 +50,6 @@
       {
         "language": "typescript",
         "path": "./javascript.json"
-      },
-      {
-        "language": "typescriptreact",
-        "path": "./typescriptreact.json"
       }
     ]
   }

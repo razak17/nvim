@@ -59,11 +59,12 @@ return {
 
     local paths = {
       join_paths(rvim.get_runtime_dir(), 'site', 'pack', 'lazy', 'friendly-snippets'),
+      join_paths(rvim.get_config_dir(), 'snippets', 'textmate'),
     }
-    local user_snippets = join_paths(rvim.get_config_dir(), 'snippets', 'textmate')
-    if rvim.is_directory(user_snippets) then paths[#paths + 1] = user_snippets end
     require('luasnip.loaders.from_lua').lazy_load()
     require('luasnip.loaders.from_vscode').lazy_load({ paths = paths })
+
+    ls.filetype_extend('typescriptreact', { 'javascript', 'typescript' })
 
     map('n', '<leader>S', '<cmd>LuaSnipEdit<CR>', { desc = 'LuaSnip: edit snippet' })
   end,
