@@ -171,12 +171,13 @@ return {
         { name = 'lab.quick_data' },
         { name = 'dynamic' },
         { name = 'emoji' },
+      },
+      {
         {
           name = 'buffer',
-          options = {
-            get_bufnrs = function() return api.nvim_list_bufs() end,
-          },
+          options = { get_bufnrs = function() return vim.api.nvim_list_bufs() end },
         },
+        { name = 'spell' },
       },
     })
 
@@ -219,12 +220,15 @@ return {
     'dmitmel/cmp-cmdline-history',
     'hrsh7th/cmp-nvim-lsp-document-symbol',
     'hrsh7th/cmp-path',
-    'f3fora/cmp-spell',
     'hrsh7th/cmp-buffer',
     'hrsh7th/cmp-emoji',
     'amarakon/nvim-cmp-buffer-lines',
     'lukas-reineke/cmp-rg',
     'rcarriga/cmp-dap',
+    {
+      'f3fora/cmp-spell',
+      ft = { 'gitcommit', 'NeogitCommitMessage', 'markdown', 'norg', 'org' },
+    },
     {
       'uga-rosa/cmp-dictionary',
       enabled = false,
