@@ -87,10 +87,10 @@ return {
       mapping = {
         ['<C-k>'] = cmp.mapping.select_prev_item(),
         ['<C-j>'] = cmp.mapping.select_next_item(),
-        ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i' }),
-        ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i' }),
-        ['<Tab>'] = cmp.mapping(tab, { 'i', 's' }),
-        ['<S-Tab>'] = cmp.mapping(shift_tab, { 'i', 's' }),
+        ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
+        ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
+        ['<Tab>'] = cmp.mapping(tab, { 'i', 's', 'c' }),
+        ['<S-Tab>'] = cmp.mapping(shift_tab, { 'i', 's', 'c' }),
         ['<C-q>'] = cmp.mapping({ i = cmp.mapping.abort(), c = cmp.mapping.close() }),
         ['<C-space>'] = cmp.mapping.complete(),
         ['<CR>'] = cmp.mapping.confirm({ select = false }), -- If nothing is selected don't complete
@@ -173,13 +173,13 @@ return {
         { name = 'lab.quick_data' },
         { name = 'dynamic' },
         { name = 'emoji' },
-      },
-      {
         {
-          name = 'buffer',
-          options = { get_bufnrs = function() return vim.api.nvim_list_bufs() end },
+          {
+            name = 'buffer',
+            options = { get_bufnrs = function() return vim.api.nvim_list_bufs() end },
+          },
+          { name = 'spell' },
         },
-        { name = 'spell' },
       },
     })
 
