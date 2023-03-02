@@ -1,6 +1,6 @@
-local fn = vim.fn
-local ui = rvim.ui
+local fn, ui = vim.fn, rvim.ui
 local border = ui.current.border
+local hl = rvim.highlight
 
 return {
   'nvim-lua/plenary.nvim',
@@ -256,7 +256,18 @@ return {
       { '<leader>rp', ':Lab code panel<CR>', desc = 'lab: panel' },
     },
     build = 'cd js && npm ci',
-    opts = { runnerconf_path = join_paths(rvim.get_runtime_dir(), 'lab', 'runnerconf') },
+    config = function()
+      hl.plugin('lab', {
+        theme = {
+          ['zephyr'] = {
+            { DiagnosticVirtualTextHint = { inherit = 'CursorLine' } },
+          },
+        },
+      })
+      require('lab').setup({
+        runnerconf_path = join_paths(rvim.get_runtime_dir(), 'lab', 'runnerconf'),
+      })
+    end,
   },
 
   {
