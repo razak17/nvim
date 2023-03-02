@@ -1,5 +1,6 @@
 local fn = vim.fn
 local ui = rvim.ui
+local border = ui.current.border
 
 return {
   'nvim-lua/plenary.nvim',
@@ -94,7 +95,7 @@ return {
     },
     config = function()
       require('buffer_manager').setup({
-        borderchars = ui.border.common,
+        borderchars = border,
       })
       rvim.highlight.plugin('buffer_manager', {
         theme = {
@@ -125,7 +126,7 @@ return {
       },
       float_opts = {
         winblend = 3,
-        border = ui.current.border,
+        border = border,
       },
       size = function(term)
         if term.direction == 'horizontal' then return 15 end
@@ -235,21 +236,12 @@ return {
   {
     'is0n/jaq-nvim',
     cmd = 'Jaq',
+    event = 'VeryLazy',
     keys = {
       { '<leader>rr', ':silent only | Jaq<CR>', desc = 'jaq: run' },
     },
-    init = function()
-      rvim.augroup('JaqConfig', {
-        {
-          event = { 'Filetype' },
-          pattern = { 'Jaq' },
-          command = function() vim.api.nvim_win_set_config(0, { border = rvim.ui.current.border }) end,
-        },
-      })
-    end,
     opts = {
       cmds = {
-        default = 'term',
         external = {
           typescript = 'ts-node %',
           javascript = 'node %',
@@ -259,7 +251,8 @@ return {
           go = 'go run %',
         },
       },
-      behavior = { startinsert = true },
+      behavior = { default = 'float', startinsert = true },
+      ui = { float = { border = border } },
       terminal = { position = 'vert', size = 60 },
     },
   },
@@ -290,7 +283,7 @@ return {
       popup = {
         autofocus = true,
         style = 'minimal',
-        border = ui.current.border,
+        border = border,
         show_version_date = false,
         show_dependency_version = true,
         max_height = 30,
