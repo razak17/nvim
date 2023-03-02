@@ -114,7 +114,7 @@ return {
   },
   {
     'windwp/nvim-ts-autotag',
-    ft = { 'typescriptreact', 'javascript', 'javascriptreact', 'html', 'vue' },
+    ft = { 'typescriptreact', 'javascript', 'javascriptreact', 'html', 'vue', 'svelte' },
     config = true,
   },
   {

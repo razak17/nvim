@@ -172,7 +172,6 @@ return {
           { name = 'path' },
           {
             name = 'rg',
-            keyword_length = 4,
             max_item_count = 10,
             option = { additional_arguments = '--max-depth 8' },
           },
