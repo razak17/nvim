@@ -1,6 +1,18 @@
 return {
   'jose-elias-alvarez/null-ls.nvim',
   event = 'VeryLazy',
+  keys = {
+    {
+      '<leader>ln',
+      function() require('null-ls.info').show_window({ border = rvim.ui.current.border }) end,
+      desc = 'null-ls: info',
+    },
+  },
+  init = function()
+    rvim.highlight.plugin('null-ls', {
+      { NullLsInfoBorder = { link = 'FloatBorder' } },
+    })
+  end,
   config = function()
     local null_ls = require('null-ls')
     local builtins = null_ls.builtins
@@ -48,17 +60,6 @@ return {
           lsp_format_modifications.attach(client, bufnr, { format_on_save = false })
         end
       end,
-    })
-    map('n', '<leader>ln', '<cmd>NullLsInfo<CR>', { desc = 'null-ls: info' })
-    rvim.highlight.plugin('null-ls', {
-      { NullLsInfoBorder = { link = 'FloatBorder' } },
-    })
-    rvim.augroup('NullLsConfig', {
-      {
-        event = { 'Filetype' },
-        pattern = { 'null-ls-info' },
-        command = function() vim.api.nvim_win_set_config(0, { border = rvim.ui.current.border }) end,
-      },
     })
   end,
 }
