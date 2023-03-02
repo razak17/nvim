@@ -238,22 +238,7 @@ return {
     keys = {
       { '<leader>rr', ':silent only | Jaq<CR>', desc = 'jaq: run' },
     },
-    config = function()
-      require('jaq-nvim').setup({
-        cmds = {
-          default = 'term',
-          external = {
-            typescript = 'ts-node %',
-            javascript = 'node %',
-            python = 'python %',
-            rust = 'cargo run',
-            cpp = 'g++ % -o $fileBase && ./$fileBase',
-            go = 'go run %',
-          },
-        },
-        behavior = { startinsert = true },
-        terminal = { position = 'vert', size = 60 },
-      })
+    init = function()
       rvim.augroup('JaqConfig', {
         {
           event = { 'Filetype' },
@@ -262,6 +247,21 @@ return {
         },
       })
     end,
+    opts = {
+      cmds = {
+        default = 'term',
+        external = {
+          typescript = 'ts-node %',
+          javascript = 'node %',
+          python = 'python %',
+          rust = 'cargo run',
+          cpp = 'g++ % -o $fileBase && ./$fileBase',
+          go = 'go run %',
+        },
+      },
+      behavior = { startinsert = true },
+      terminal = { position = 'vert', size = 60 },
+    },
   },
 
   {
