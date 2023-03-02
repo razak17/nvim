@@ -29,7 +29,7 @@
   "flit.nvim": { "branch": "main", "commit": "980e80e8fe44caaeb9de501c8e97a559b17db2f4" },
   "fold-cycle.nvim": { "branch": "main", "commit": "35bb75c17c364776db8544c7b0a46093f33caa0e" },
   "friendly-snippets": { "branch": "main", "commit": "02ed98a1d4bc8baac405480935f3353d3bd60359" },
-  "gitsigns.nvim": { "branch": "main", "commit": "76b71f74ce002119fce322df13bd21cc52c1d112" },
+  "gitsigns.nvim": { "branch": "main", "commit": "3b6c0a6412b31b91eb26bb8f712562cf7bb1d3be" },
   "gopher.nvim": { "branch": "main", "commit": "cc46546a93c7ccea39f1e008e6804b93559bec29" },
   "headlines.nvim": { "branch": "master", "commit": "6496b6229ce708253a906daed07067c1d32a427b" },
   "hydra.nvim": { "branch": "master", "commit": "3ced42c0b6a6c85583ff0f221635a7f4c1ab0dd0" },
