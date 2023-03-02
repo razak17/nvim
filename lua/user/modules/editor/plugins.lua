@@ -16,7 +16,12 @@ return {
 
   {
     'karb94/neoscroll.nvim', -- NOTE: alternative: 'declancm/cinnamon.nvim'
-    event = 'VeryLazy',
+    keys = {
+      { '<C-u>', '<cmd>lua require("neoscroll").scroll(-0.10)<CR>', desc = 'neoscroll: up' },
+      { '<C-d>', '<cmd>lua require("neoscroll").scroll(0.10)<CR>', desc = 'neoscroll: down' },
+      { '<C-b>', '<cmd>lua require("neoscroll").scroll(-0.50)<CR>', desc = 'neoscroll: up' },
+      { '<C-f>', '<cmd>lua require("neoscroll").scroll(0.50)<CR>', desc = 'neoscroll: down' },
+    },
     opts = { hide_cursor = true },
   },
 
