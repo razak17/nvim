@@ -7,11 +7,15 @@ local function get_color(r, g, b)
   return ((r * 0.299 + g * 0.587 + b * 0.114) > 186) and '#000000' or '#ffffff'
 end
 
+local function is_tailwind_root()
+  return not vim.tbl_isempty(vim.fs.find({ 'tailwind.config.js', 'tailwind.config.cjs' }, {
+    path = vim.fn.expand('%:p'),
+    upward = true,
+  }))
+end
+
 local function format_icon(icon)
-  -- TODO: Quick check for now
-  if vim.loop.fs_stat('./tailwind.config.js') or vim.loop.fs_stat('./tailwind.config.cjs') then
-    return fmt(' %s  ', icon)
-  end
+  if is_tailwind_root() then return fmt(' %s  ', icon) end
   return fmt('%s ', icon)
 end
 
