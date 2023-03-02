@@ -260,7 +260,12 @@ return {
       hl.plugin('lab', {
         theme = {
           ['zephyr'] = {
-            { DiagnosticVirtualTextHint = { inherit = 'CursorLine' } },
+            {
+              DiagnosticVirtualTextHint = {
+                bg = { from = 'CursorLine' },
+                fg = { from = 'Winbar' },
+              },
+            },
           },
         },
       })
