@@ -40,14 +40,6 @@ return {
   },
 
   {
-    'laytan/tailwind-sorter.nvim',
-    dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-lua/plenary.nvim' },
-    build = 'cd formatter && npm i && npm run build',
-    keys = { { '<localleader>lt', '<Cmd>TailwindSort<CR>', desc = 'tailwind-sorter: sort' } },
-    opts = {},
-  },
-
-  {
     'SmiteshP/nvim-navic',
     event = { 'BufRead', 'BufNewFile' },
     dependencies = { 'williamboman/mason-lspconfig.nvim' },
