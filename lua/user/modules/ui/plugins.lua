@@ -115,22 +115,29 @@ return {
       })
     end,
   },
+  { 'LunarVim/horizon.nvim', lazy = false, priority = 1000 },
 
   {
     'lukas-reineke/headlines.nvim',
     ft = { 'org', 'norg', 'markdown', 'yaml' },
     config = function()
       hl.plugin('Headlines', {
-        theme = {
-          ['*'] = {
-            { Dash = { background = '#0b60a1', bold = true } },
+        { Headline1 = { background = '#003c30' } },
+        { Headline2 = { background = '#00441b' } },
+        { Headline3 = { background = '#084081' } },
+        { Dash = { background = '#0b60a1', bold = true } },
+        {
+          CodeBlock = {
+            bold = true,
+            italic = true,
+            background = { from = 'Normal', alter = 30 },
           },
         },
       })
       require('headlines').setup({
-        markdown = { headline_highlights = { 'Headline1' } },
         org = { headline_highlights = false },
-        norg = { codeblock_highlight = false },
+        norg = { headline_highlights = { 'Headline' }, codeblock_highlight = false },
+        markdown = { headline_highlights = { 'Headline1' } },
       })
     end,
   },
