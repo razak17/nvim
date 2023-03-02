@@ -1,5 +1,5 @@
-local hl = rvim.highlight
-local ui = rvim.ui
+local hl, ui = rvim.highlight, rvim.ui
+local border = ui.current.border
 
 return {
   'nvim-tree/nvim-web-devicons',
@@ -78,7 +78,7 @@ return {
       require('dressing').setup({
         input = {
           insert_only = false,
-          border = rvim.ui.current.border,
+          border = border,
           win_options = { winblend = 2 },
         },
         select = {
@@ -87,7 +87,7 @@ return {
               backend = 'telescope',
               telescope = require('telescope.themes').get_cursor({
                 layout_config = { height = get_height },
-                borderchars = rvim.ui.border.ui_select,
+                borderchars = ui.border.ui_select,
               }),
             }
           end,
@@ -190,9 +190,10 @@ return {
 
   {
     'uga-rosa/ccc.nvim',
+    ft = { 'lua', 'vim', 'typescript', 'typescriptreact', 'javascriptreact', 'svelte', 'astro' },
     keys = { { '<leader>oc', '<cmd>CccHighlighterToggle<CR>', desc = 'toggle ccc' } },
     opts = {
-      win_opts = { border = ui.current.border },
+      win_opts = { border = border },
       highlighter = { auto_enable = true, excludes = { 'dart', 'html', 'css', 'typescriptreact' } },
     },
   },

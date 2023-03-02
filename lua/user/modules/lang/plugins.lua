@@ -6,7 +6,6 @@ return {
   'b0o/schemastore.nvim',
   'simrat39/rust-tools.nvim',
   'jose-elias-alvarez/typescript.nvim',
-  'mrshmllow/document-color.nvim',
   'marilari88/twoslash-queries.nvim',
 
   {

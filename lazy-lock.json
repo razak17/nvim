@@ -23,7 +23,6 @@
   "debugprint.nvim": { "branch": "main", "commit": "ee5a3a83c87e6a50dcb1223212404240ca519bdd" },
   "dial.nvim": { "branch": "master", "commit": "5020da900cc5dfd7067f181ee2ebd872ca7c84e8" },
   "diffview.nvim": { "branch": "main", "commit": "009beb8054e510e7e2df122ee3ddb2b46bef542b" },
-  "document-color.nvim": { "branch": "main", "commit": "74c487f0e5accfaae033755451b9e367220693fd" },
   "dressing.nvim": { "branch": "master", "commit": "5f44f829481640be0f96759c965ae22a3bcaf7ce" },
   "fidget.nvim": { "branch": "main", "commit": "688b4fec4517650e29c3e63cfbb6e498b3112ba1" },
   "flit.nvim": { "branch": "main", "commit": "980e80e8fe44caaeb9de501c8e97a559b17db2f4" },
