@@ -208,16 +208,6 @@ return {
   },
 
   {
-    'iamcco/markdown-preview.nvim',
-    build = function() fn['mkdp#util#install']() end,
-    ft = 'markdown',
-    config = function()
-      vim.g.mkdp_auto_start = 0
-      vim.g.mkdp_auto_close = 1
-    end,
-  },
-
-  {
     'kevinhwang91/nvim-bqf',
     ft = 'qf',
     opts = {
@@ -267,6 +257,16 @@ return {
     },
     build = 'cd js && npm ci',
     opts = { runnerconf_path = join_paths(rvim.get_runtime_dir(), 'lab', 'runnerconf') },
+  },
+
+  {
+    'iamcco/markdown-preview.nvim',
+    build = function() fn['mkdp#util#install']() end,
+    ft = 'markdown',
+    config = function()
+      vim.g.mkdp_auto_start = 0
+      vim.g.mkdp_auto_close = 1
+    end,
   },
 
   {
