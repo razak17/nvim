@@ -61,7 +61,6 @@ local function project_files()
 end
 
 local function frecency() extensions('frecency').frecency(dropdown(minimal_ui())) end
-local function recent_files() extensions('recent_files').pick(dropdown(minimal_ui())) end
 local function luasnips() extensions('luasnip').luasnip(dropdown()) end
 local function notifications() extensions('notify').notify(dropdown()) end
 local function undo() extensions('undo').undo() end
@@ -283,10 +282,6 @@ return {
             },
           },
         },
-        recent_files = { only_cwd = true },
-        ['zf-native'] = {
-          generic = { enable = true, match_filename = true },
-        },
         menufacture = {
           mappings = {
             main_menu = { [{ 'i', 'n' }] = '<C-;>' },
@@ -295,8 +290,6 @@ return {
       },
     })
 
-    require('telescope').load_extension('recent_files')
-    require('telescope').load_extension('dap')
     require('telescope').load_extension('zf-native')
     require('telescope').load_extension('luasnip')
     require('telescope').load_extension('frecency')
@@ -322,7 +315,6 @@ return {
     { '<leader>fn', notifications, desc = 'notify: notifications' },
     { '<leader>fo', function() builtin().buffers() end, desc = 'buffers' },
     { '<leader>fp', projects, desc = 'projects' },
-    { '<leader>fr', recent_files, desc = 'recent files' },
     { '<leader>fs', live_grep, desc = 'find string' },
     { '<leader>fS', '<cmd>WebSearch<CR>', desc = 'web search' },
     { '<leader>fu', undo, desc = 'undo' },
@@ -359,9 +351,6 @@ return {
     },
   },
   dependencies = {
-    'smartpde/telescope-recent-files',
-    'nvim-telescope/telescope-media-files.nvim',
-    'nvim-telescope/telescope-dap.nvim',
     'natecraddock/telescope-zf-native.nvim',
     'benfowler/telescope-luasnip.nvim',
     'nvim-telescope/telescope-frecency.nvim',
