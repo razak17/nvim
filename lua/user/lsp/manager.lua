@@ -51,14 +51,6 @@ local function buf_try_add(server_name, bufnr)
 end
 
 local function launch_server(server, config)
-  if server == 'rust_analyzer' then
-    require('user.lsp.rust-tools')
-    return
-  end
-  if server == 'tsserver' then
-    require('user.lsp.typescript')
-    return
-  end
   pcall(function()
     local cmd = config.cmd
       or (function()
@@ -70,6 +62,8 @@ local function launch_server(server, config)
       vim.notify(fmt('[%q] is not executable.', cmd[1]), vim.log.levels.ERROR, { title = server })
       return
     end
+    if server == 'rust_analyzer' then require('user.lsp.rust-tools') end
+    if server == 'tsserver' then require('user.lsp.typescript') end
     require('lspconfig')[server].setup(config)
     buf_try_add(server)
   end)
