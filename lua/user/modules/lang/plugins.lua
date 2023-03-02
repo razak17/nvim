@@ -96,37 +96,6 @@ return {
   },
 
   {
-    'zbirenbaum/copilot.lua',
-    event = 'InsertEnter',
-    opts = {
-      suggestion = {
-        auto_trigger = true,
-        keymap = {
-          accept_word = '<M-w>',
-          accept_line = '<M-l>',
-          accept = '<M-u>',
-          next = '<M-]>',
-          prev = '<M-[>',
-          dismiss = '<C-\\>',
-        },
-      },
-      filetypes = {
-        gitcommit = false,
-        NeogitCommitMessage = false,
-        DressingInput = false,
-        TelescopePrompt = false,
-        ['neo-tree-popup'] = false,
-        ['dap-repl'] = false,
-      },
-      server_opts_overrides = {
-        settings = {
-          advanced = { inlineSuggestCount = 3 },
-        },
-      },
-    },
-  },
-
-  {
     'olexsmir/gopher.nvim',
     ft = 'go',
     dependencies = { 'nvim-lua/plenary.nvim', 'nvim-treesitter/nvim-treesitter' },
