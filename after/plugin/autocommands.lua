@@ -1,8 +1,6 @@
 if not rvim then return end
 
-local fn = vim.fn
-local api = vim.api
-local fmt = string.format
+local fn, api, fmt = vim.fn, vim.api, string.format
 
 rvim.augroup('VimrcIncSearchHighlight', {
   {
@@ -43,7 +41,7 @@ local smart_close_filetypes = {
   'neotest-output',
   'dap-float',
   'httpResult',
-  'query'
+  'query',
 }
 
 local smart_close_buftypes = {} -- Don't include no file buffers rvim diff buffers are nofile
@@ -373,14 +371,14 @@ rvim.augroup('ConcealMappings', {
       'http',
       'json',
       'markdown',
+      'svelte',
+      'astro',
     },
     command = function()
       local function toggle_coceallevel()
-        if vim.o.conceallevel > 0 then
-          vim.o.conceallevel = 0
-        else
-          vim.o.conceallevel = 2
-        end
+        local level = api.nvim_get_option_value('conceallevel', {})
+        if level > 0 then vim.o.conceallevel = 0 end
+        if level == 0 then vim.o.conceallevel = 2 end
       end
       map('n', '<localleader>cl', toggle_coceallevel, { desc = 'toggle conceallevel' })
 
@@ -424,7 +422,7 @@ end
 rvim.augroup('HTMLClassConceal', {
   {
     event = { 'BufEnter', 'BufWritePost', 'TextChanged', 'InsertLeave' },
-    pattern = { '*.html' },
+    pattern = { '*.html', '*.svelte', '*.astro' },
     command = function() conceal_html_class(vim.api.nvim_get_current_buf()) end,
   },
 })
