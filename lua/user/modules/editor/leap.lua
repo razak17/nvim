@@ -12,7 +12,6 @@ end
 
 return {
   'ggandor/leap.nvim',
-  event = 'VeryLazy',
   keys = { { 's', leap_keys, mode = 'n' } },
   opts = { equivalence_classes = { ' \t\r\n', '([{', ')]}', '`"\'' } },
   config = function(_, opts)

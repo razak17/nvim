@@ -217,16 +217,11 @@ return {
     },
   },
 
-  {
-    'turbio/bracey.vim',
-    ft = 'html',
-    build = 'npm install --prefix server',
-  },
+  { 'turbio/bracey.vim', ft = 'html', build = 'npm install --prefix server' },
 
   {
     'is0n/jaq-nvim',
     cmd = 'Jaq',
-    event = 'VeryLazy',
     keys = {
       { '<leader>rr', ':silent only | Jaq<CR>', desc = 'jaq: run' },
     },
@@ -249,7 +244,7 @@ return {
 
   {
     'razak17/lab.nvim',
-    event = 'VeryLazy',
+    event = 'InsertEnter',
     keys = {
       { '<leader>rl', ':Lab code run<CR>', desc = 'lab: run' },
       { '<leader>rx', ':Lab code stop<CR>', desc = 'lab: stop' },
