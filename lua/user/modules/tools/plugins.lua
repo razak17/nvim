@@ -95,7 +95,7 @@ return {
     },
     config = function()
       require('buffer_manager').setup({
-        borderchars = border,
+        borderchars = ui.border.common,
       })
       rvim.highlight.plugin('buffer_manager', {
         theme = {
