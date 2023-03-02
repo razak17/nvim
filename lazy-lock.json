@@ -100,7 +100,6 @@
   "rest.nvim": { "branch": "main", "commit": "0fdb69f328529b34a2279c14be63b3325dc52740" },
   "rust-tools.nvim": { "branch": "master", "commit": "71d2cf67b5ed120a0e31b2c8adb210dd2834242f" },
   "schemastore.nvim": { "branch": "main", "commit": "e340c528bc4c0df132556cc8d8c419901fd06883" },
-  "sniprun": { "branch": "master", "commit": "6511fd71e751ed80ea374ef096ec5187682241cd" },
   "sqlite.lua": { "branch": "master", "commit": "93ff5824682ecc874200e338fd8ca9ccd08508f8" },
   "sqls.nvim": { "branch": "main", "commit": "a0048b7018c99b68456f91b4aa42ce288f0c0774" },
   "tailwind-sorter.nvim": { "branch": "main", "commit": "7a32f59c0cc8a73022be2c93fcbac1de825abfb9" },
