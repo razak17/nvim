@@ -249,6 +249,7 @@ return {
             'dotbot/.*',
             'zsh/plugins/.*',
             'yarn.lock',
+            'node_modules',
             'package-lock.json',
           },
           max_results = 2000,
