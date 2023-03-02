@@ -1,5 +1,5 @@
-local api = vim.api
-local codicons = rvim.ui.codicons
+local api, ui = vim.api, rvim.ui
+local codicons = ui.codicons
 
 return {
   'rcarriga/nvim-notify',
@@ -20,7 +20,7 @@ return {
       background_colour = 'NormalFloat',
       on_open = function(win)
         if api.nvim_win_is_valid(win) then
-          vim.api.nvim_win_set_config(win, { border = rvim.ui.current.border })
+          api.nvim_win_set_config(win, { border = ui.current.border })
         end
       end,
       timeout = 500,
