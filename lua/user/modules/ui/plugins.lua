@@ -115,7 +115,6 @@ return {
       })
     end,
   },
-  { 'LunarVim/horizon.nvim', lazy = false, priority = 1000 },
 
   {
     'lukas-reineke/headlines.nvim',
