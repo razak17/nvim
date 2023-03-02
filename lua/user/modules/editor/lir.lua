@@ -1,6 +1,8 @@
 return {
   'tamago324/lir.nvim',
-  event = 'VeryLazy',
+  keys = {
+    { '<localleader>lf', '<cmd>lua require("lir.float").toggle()<CR>', desc = 'lir: toggle' },
+  },
   config = function()
     local actions = require('lir.actions')
     local mark_actions = require('lir.mark.actions')
@@ -53,11 +55,5 @@ return {
       },
       hide_cursor = false,
     })
-    map(
-      'n',
-      '<localleader>lf',
-      function() require('lir.float').toggle() end,
-      { desc = 'lir: toggle' }
-    )
   end,
 }
