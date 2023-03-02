@@ -267,6 +267,11 @@ return {
   {
     'razak17/lab.nvim',
     event = 'VeryLazy',
+    keys = {
+      { '<leader>rl', ':Lab code run<CR>', desc = 'lab: run' },
+      { '<leader>rx', ':Lab code stop<CR>', desc = 'lab: stop' },
+      { '<leader>rp', ':Lab code panel<CR>', desc = 'lab: panel' },
+    },
     build = 'cd js && npm ci',
     opts = { runnerconf_path = join_paths(rvim.get_runtime_dir(), 'lab', 'runnerconf') },
   },
@@ -315,9 +320,9 @@ return {
     'NTBBloodbath/rest.nvim',
     ft = { 'http', 'json' },
     keys = {
-      { '<leader>rs', '<Plug>RestNvim', desc = 'rest: run' },
-      { '<leader>rp', '<Plug>RestNvimPreview', desc = 'rest: preview' },
-      { '<leader>rl', '<Plug>RestNvimLast', desc = 'rest: run last' },
+      { '<localleader>rs', '<Plug>RestNvim', desc = 'rest: run' },
+      { '<localleader>rp', '<Plug>RestNvimPreview', desc = 'rest: preview' },
+      { '<localleader>rl', '<Plug>RestNvimLast', desc = 'rest: run last' },
     },
     opts = { skip_ssl_verification = true },
   },
