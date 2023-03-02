@@ -8,7 +8,7 @@ return {
 
   {
     'echasnovski/mini.pairs',
-    event = 'VeryLazy',
+    event = 'InsertEnter',
     config = function() require('mini.pairs').setup() end,
   },
 
@@ -25,7 +25,7 @@ return {
 
   {
     'echasnovski/mini.surround',
-    event = 'VeryLazy',
+    keys = { 'ys', 'ds', 'yr' },
     config = function()
       require('mini.surround').setup({
         mappings = {
