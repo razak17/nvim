@@ -91,9 +91,7 @@ return {
               }),
             }
           end,
-          telescope = require('telescope.themes').get_dropdown({
-            layout_config = { height = get_height },
-          }),
+          telescope = rvim.telescope.dropdown({ layout_config = { height = get_height } }),
         },
       })
     end,
