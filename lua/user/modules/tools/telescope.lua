@@ -239,9 +239,7 @@ return {
           layout_config = { height = 18, width = 0.5 },
         }),
         live_grep = themes.get_ivy({
-          borderchars = {
-            preview = { '▔', '▕', '▁', '▏', '🭽', '🭾', '🭿', '🭼' },
-          },
+          borderchars = { preview = ui.border.ivy },
           only_sort_text = true,
           file_ignore_patterns = {
             '.git/',
@@ -262,6 +260,7 @@ return {
         git_bcommits = { layout_config = { horizontal = { preview_width = 0.55 } } },
         git_commits = { layout_config = { horizontal = { preview_width = 0.55 } } },
         reloader = dropdown(),
+        diagnostics = themes.get_ivy({ borderchars = { preview = ui.border.ivy } }),
       },
       extensions = {
         frecency = {
@@ -343,12 +342,12 @@ return {
     },
     {
       '<leader>le',
-      '<cmd>Telescope diagnostics bufnr=0 theme=get_ivy<CR>',
+      function() builtin().diagnostics({ bufnr = 0 }) end,
       desc = 'telescope: document diagnostics',
     },
     {
       '<leader>lw',
-      '<cmd>Telescope diagnostics theme=get_ivy<CR>',
+      function() builtin().diagnostics() end,
       desc = 'telescope: workspace diagnostics',
     },
   },
