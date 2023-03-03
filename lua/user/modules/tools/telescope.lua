@@ -324,6 +324,7 @@ return {
     { '<leader>fvh', function() builtin().highlights() end, desc = 'highlights' },
     { '<leader>fvk', function() builtin().keymaps() end, desc = 'keymaps' },
     { '<leader>fvo', function() builtin().vim_options() end, desc = 'options' },
+    { '<leader>fvr', function() builtin().registers() end, desc = 'registers' },
     -- Git
     { '<leader>gs', function() builtin().git_status() end, desc = 'git status' },
     { '<leader>fgb', function() builtin().git_branches() end, desc = 'git branches' },
