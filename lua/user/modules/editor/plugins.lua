@@ -127,7 +127,7 @@ return {
         ['leader'] = 'localleader',
         ['chore'] = 'feat',
         ['double'] = 'single',
-        ['config'] = 'opts',
+        ['config'] = 'init',
       },
     },
   },
