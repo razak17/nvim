@@ -20,8 +20,9 @@ vim.cmd([[let &packpath = &runtimepath]])
 ----------------------------------------------------------------------------------------------------
 -- Load Modules
 ----------------------------------------------------------------------------------------------------
+-- Order matters
 R('user.config.defaults')
 R('user.config.settings')
-R('user.config.highlights')
-R('user.config.ui')
+R('user.highlights')
+R('user.ui')
 R('user.config.lsp')
