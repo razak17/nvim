@@ -36,7 +36,7 @@ rvim.highlight.plugin('winbar', {
 })
 
 local function breadcrumbs()
-  local ok, navic = rvim.safe_require('nvim-navic')
+  local ok, navic = rvim.require('nvim-navic')
   local empty_state = { component(ellipsis, 'NonText', { priority = 0 }) }
   if not ok or not navic.is_available() then return empty_state end
   local navic_ok, location = pcall(navic.get_location)
@@ -59,7 +59,7 @@ function rvim.ui.winbar.get()
   if rvim.ui.winbar.use_relative_path then filepath = fn.fnamemodify(bufname, ':.') end
 
   local parts = vim.split(filepath, '/')
-  local _, devicons = rvim.safe_require('nvim-web-devicons')
+  local _, devicons = rvim.require('nvim-web-devicons')
   local icon, color = devicons.get_icon(bufname, nil, { default = true })
   rvim.foreach(function(part, index)
     local priority = (#parts - (index - 1)) * 2

@@ -175,7 +175,7 @@ end
 ---@param module string
 ---@param opts table?
 ---@return boolean, any
-function rvim.safe_require(module, opts)
+function rvim.require(module, opts)
   opts = opts or { silent = false }
   local ok, result = pcall(require, module)
   if not ok and not opts.silent then
@@ -212,7 +212,7 @@ function rvim.ftplugin_conf(configs)
   if type(configs) ~= 'table' then return end
   for name, callback in pairs(configs) do
     local info = debug.getinfo(1, 'S')
-    local ok, plugin = rvim.safe_require(name, { message = fmt('In file: %s', info.source) })
+    local ok, plugin = rvim.require(name, { message = fmt('In file: %s', info.source) })
     if ok then callback(plugin) end
   end
 end

@@ -10,7 +10,7 @@ return {
       -- NOTE: this is currently broken, do not set to true
       vim.g.skip_ts_default_groups = false
 
-      local status_ok, treesitter_configs = rvim.safe_require('nvim-treesitter.configs')
+      local status_ok, treesitter_configs = rvim.require('nvim-treesitter.configs')
       if not status_ok then return end
 
       treesitter_configs.setup({

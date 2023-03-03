@@ -28,7 +28,7 @@ local function global_capabilities()
     dynamicRegistration = false,
     lineFoldingOnly = true,
   }
-  local ok, cmp_nvim_lsp = rvim.safe_require('cmp_nvim_lsp')
+  local ok, cmp_nvim_lsp = rvim.require('cmp_nvim_lsp')
   if ok then cmp_nvim_lsp.default_capabilities(capabilities) end
   return capabilities
 end

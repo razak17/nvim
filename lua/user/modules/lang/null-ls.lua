@@ -55,7 +55,7 @@ return {
       },
       on_attach = function(client, bufnr)
         -- lsp-format-modifications.nvim
-        local lfm_ok, lsp_format_modifications = rvim.safe_require('lsp-format-modifications')
+        local lfm_ok, lsp_format_modifications = rvim.require('lsp-format-modifications')
         if lfm_ok and vim.tbl_contains({ 'clangd', 'tsserver', 'null-ls' }, client.name) then
           lsp_format_modifications.attach(client, bufnr, { format_on_save = false })
         end

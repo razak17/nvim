@@ -32,7 +32,7 @@ end
 ---@return string[] supported filestypes as a list of strings
 local function get_supported_filetypes(server_name)
   local status_ok, lspconfig =
-    rvim.safe_require(fmt('lspconfig.server_configurations.%s', server_name), { silent = true })
+    rvim.require(fmt('lspconfig.server_configurations.%s', server_name), { silent = true })
   if not status_ok then return {} end
   local filetypes = lspconfig.default_config.filetypes or {}
   local config = require('user.servers')(server_name)

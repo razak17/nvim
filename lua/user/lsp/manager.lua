@@ -20,7 +20,7 @@ local function client_configured(server_name, ft)
 end
 
 local function resolve_mason_config(server_name)
-  local found, mason_config = rvim.safe_require(
+  local found, mason_config = rvim.require(
     fmt('mason-lspconfig.server_configurations.%s', server_name),
     { silent = true }
   )
