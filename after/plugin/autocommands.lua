@@ -2,21 +2,6 @@ if not rvim then return end
 
 local fn, api, fmt = vim.fn, vim.api, string.format
 
-rvim.augroup('VimrcIncSearchHighlight', {
-  event = { 'OptionSet' },
-  pattern = { 'hlsearch' },
-  command = function()
-    vim.schedule(function() vim.cmd.redrawstatus() end)
-  end,
-}, {
-  event = 'RecordingEnter',
-  command = function() vim.o.hlsearch = false end,
-  {
-    event = 'RecordingLeave',
-    command = function() vim.o.hlsearch = true end,
-  },
-})
-
 local smart_close_filetypes = {
   'help',
   'git-status',
