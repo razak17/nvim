@@ -502,7 +502,7 @@ nnoremap('<leader>D', 'gg"+VGd', { desc = 'delete all' })
 ----------------------------------------------------------------------------------------------------
 nnoremap(
   '<localleader>le',
-  function() vim.treesitter.show_tree({ command = 'botright 60vnew' }) end,
+  function() vim.treesitter.inspect_tree({ command = 'botright 60vnew' }) end,
   { desc = 'open ts tree for current buffer' }
 )
 ----------------------------------------------------------------------------------------------------
