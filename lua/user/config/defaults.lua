@@ -2,11 +2,7 @@ rvim.path = { mason = join_paths(vim.call('stdpath', 'data'), 'mason') }
 
 rvim.ui = {
   tw = {},
-  winbar = {
-    enable = true,
-    use_filename_only = true,
-    use_file_icon = false,
-  },
+  winbar = { enable = true, use_relative_path = true, use_file_icon = true },
 }
 
 rvim.editor = { auto_save = true }

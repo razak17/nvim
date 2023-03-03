@@ -57,32 +57,28 @@ function rvim.ui.winbar.get()
   local bufname = api.nvim_buf_get_name(api.nvim_get_current_buf())
   if empty(bufname) then return add(component('[No name]', 'Winbar', { priority = 0 })) end
 
-  local cond = rvim.ui.winbar.use_filename_only
-  if cond then
-    local filename = vim.fn.expand('%:t')
-    add(component(filename, 'Winbar', { priority = 1, suffix = separator }))
-  end
-  if not cond then
-    local parts = vim.split(fn.fnamemodify(bufname, ':.'), '/')
-    local icon, color = devicons.get_icon(bufname, nil, { default = true })
-    rvim.foreach(function(part, index)
-      local priority = (#parts - (index - 1)) * 2
-      local is_first = nil
-      if rvim.ui.winbar.use_file_icon then is_first = index == 1 end
-      local is_last = index == #parts
-      local sep = is_last and separator or dir_separator
-      rvim.ui.winbar.state[priority] = table.concat(vim.list_slice(parts, 1, index), '/')
-      add(component(part, 'Winbar', {
-        id = priority,
-        priority = priority,
-        click = 'v:lua.rvim.ui.winbar.click',
-        suffix = sep,
-        suffix_color = 'Winbar',
-        prefix = is_first and icon or nil,
-        prefix_color = is_first and color or nil,
-      }))
-    end, parts)
-  end
+  local filepath = fn.fnamemodify(bufname, ':t')
+  if rvim.ui.winbar.use_relative_path then filepath = fn.fnamemodify(bufname, ':.') end
+
+  local parts = vim.split(filepath, '/')
+  local icon, color = devicons.get_icon(bufname, nil, { default = true })
+  rvim.foreach(function(part, index)
+    local priority = (#parts - (index - 1)) * 2
+    local is_first = index == 1
+    local show_icon = is_first and ui.winbar.use_file_icon and icon or nil
+    local is_last = index == #parts
+    local sep = is_last and separator or dir_separator
+    ui.winbar.state[priority] = table.concat(vim.list_slice(parts, 1, index), '/')
+    add(component(part, 'Winbar', {
+      id = priority,
+      priority = priority,
+      click = 'v:lua.rvim.ui.winbar.click',
+      suffix = sep,
+      suffix_color = 'Winbar',
+      prefix = show_icon and icon or nil,
+      prefix_color = show_icon and color or nil,
+    }))
+  end, parts)
   add(unpack(breadcrumbs()))
   return utils.display(winbar, api.nvim_win_get_width(api.nvim_get_current_win()))
 end
