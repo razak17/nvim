@@ -3,36 +3,6 @@
 ----------------------------------------------------------------------------------------------------
 local fn = vim.fn
 
-local function global_capabilities()
-  local capabilities = vim.lsp.protocol.make_client_capabilities()
-  capabilities.textDocument.completion.completionItem.snippetSupport = true
-  capabilities.textDocument.colorProvider = { dynamicRegistration = true }
-  capabilities.textDocument.completion.completionItem.documentationFormat =
-    { 'markdown', 'plaintext' }
-  capabilities.textDocument.completion.completionItem.resolveSupport = {
-    properties = { 'documentation', 'detail', 'additionalTextEdits' },
-  }
-  capabilities.textDocument.codeAction = {
-    dynamicRegistration = false,
-    codeActionLiteralSupport = {
-      codeActionKind = {
-        valueSet = (function()
-          local res = vim.tbl_values(vim.lsp.protocol.CodeActionKind)
-          table.sort(res)
-          return res
-        end)(),
-      },
-    },
-  }
-  capabilities.textDocument.foldingRange = {
-    dynamicRegistration = false,
-    lineFoldingOnly = true,
-  }
-  local ok, cmp_nvim_lsp = rvim.require('cmp_nvim_lsp')
-  if ok then cmp_nvim_lsp.default_capabilities(capabilities) end
-  return capabilities
-end
-
 local servers = {
   astro = {},
   bashls = {},
@@ -51,9 +21,7 @@ local servers = {
     -- NOTE: Apparently setting this to false improves performance
     -- https://github.com/sublimelsp/LSP-typescript/issues/129#issuecomment-1281643371
     initializationOptions = {
-      preferences = {
-        includeCompletionsForModuleExports = false,
-      },
+      preferences = { includeCompletionsForModuleExports = false },
     },
   },
   vimls = {},
@@ -246,6 +214,26 @@ return function(name)
   local config = servers[name]
   if not config then return false end
   if type(config) == 'function' then config = config() end
-  config.capabilities = global_capabilities()
+  local ok, cmp_nvim_lsp = rvim.require('cmp_nvim_lsp')
+  if ok then config.capabilities = cmp_nvim_lsp.default_capabilities() end
+  config.capabilities = vim.tbl_extend('keep', config.capabilities or {}, {
+    textDocument = {
+      colorProvider = { dynamicRegistration = true },
+      foldingRange = { dynamicRegistration = false, lineFoldingOnly = true },
+      completion = { completionItem = { documentationFormat = 'markdown', 'plaintext' } },
+      codeAction = {
+        dynamicRegistration = false,
+        codeActionLiteralSupport = {
+          codeActionKind = {
+            valueSet = (function()
+              local res = vim.tbl_values(vim.lsp.protocol.CodeActionKind)
+              table.sort(res)
+              return res
+            end)(),
+          },
+        },
+      },
+    },
+  })
   return config
 end
