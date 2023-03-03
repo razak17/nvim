@@ -67,8 +67,9 @@ return {
         indent = { enable = { 'javascriptreact' } },
         matchup = { enable = true, disable = { 'c', 'python' } },
         rainbow = {
-          enable = true,
-          colors = { 'royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3' },
+          query = 'rainbow-parens',
+          disable = { 'typescriptreact' },
+          strategy = { require('ts-rainbow.strategy.local') },
         },
         query_linter = {
           enable = true,
@@ -112,7 +113,7 @@ return {
     end,
     dependencies = {
       'nvim-treesitter/nvim-treesitter-textobjects',
-      'mrjones2014/nvim-ts-rainbow',
+      'HiPhish/nvim-ts-rainbow2',
     },
   },
   {
