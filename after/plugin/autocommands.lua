@@ -40,7 +40,6 @@ rvim.augroup('SmartClose', {
 }, {
   -- Close certain filetypes by pressing q.
   event = { 'FileType' },
-  pattern = { '*' },
   command = function()
     local is_unmapped = fn.hasmapto('q', 'n') == 0
 
@@ -54,7 +53,6 @@ rvim.augroup('SmartClose', {
 }, {
   -- Close quick fix window if the file containing it was closed
   event = { 'BufEnter' },
-  pattern = { '*' },
   nested = true,
   command = function()
     if fn.winnr('$') == 1 and vim.bo.buftype == 'quickfix' then
@@ -64,7 +62,6 @@ rvim.augroup('SmartClose', {
 }, {
   -- automatically close corresponding loclist when quitting a window
   event = { 'QuitPre' },
-  pattern = { '*' },
   nested = true,
   command = function()
     if vim.bo.filetype ~= 'qf' then vim.cmd.lclose({ mods = { silent = true } }) end
@@ -83,13 +80,11 @@ rvim.augroup('ExternalCommands', {
 rvim.augroup('CheckOutsideTime', {
   -- automatically check for changed files outside vim
   event = { 'WinEnter', 'BufWinEnter', 'BufWinLeave', 'BufRead', 'BufEnter', 'FocusGained' },
-  pattern = { '*' },
   command = 'silent! checktime',
 })
 
 rvim.augroup('TrimWhitespace', {
   event = { 'BufWritePre' },
-  pattern = { '*' },
   command = function()
     vim.api.nvim_exec(
       [[
@@ -116,14 +111,12 @@ rvim.augroup('ClearCommandMessages', {
 
 rvim.augroup('TextYankHighlight', {
   event = { 'TextYankPost' },
-  pattern = { '*' },
   command = function() vim.highlight.on_yank({ timeout = 177, higroup = 'Search' }) end,
 })
 
 rvim.augroup('UpdateVim', {
   -- Make windows equal size when vim resizes
   event = { 'VimResized' },
-  pattern = { '*' },
   command = 'wincmd =',
 })
 
@@ -131,13 +124,11 @@ rvim.augroup(
   'WinBehavior',
   {
     event = { 'Syntax' },
-    pattern = { '*' },
     command = [[if line('$') > 5000 | syntax sync minlines=300 | endif]],
   },
   {
     -- Force write shada on leaving nvim
     event = { 'VimLeave' },
-    pattern = { '*' },
     command = [[if has('nvim') | wshada! | else | wviminfo! | endif]],
   },
   { event = { 'TermOpen' }, pattern = { '*:zsh' }, command = 'startinsert' },
@@ -181,11 +172,9 @@ end
 
 rvim.augroup('Cursorline', {
   event = { 'BufEnter', 'InsertLeave' },
-  pattern = { '*' },
   command = function(args) vim.wo.cursorline = should_show_cursorline(args.buf) end,
 }, {
   event = { 'BufLeave', 'InsertEnter' },
-  pattern = { '*' },
   command = function() vim.wo.cursorline = false end,
 })
 
@@ -193,23 +182,18 @@ if vim.env.TMUX ~= nil then
   local external = require('user.utils.external')
   rvim.augroup('ExternalConfig', {
     event = { 'BufEnter' },
-    pattern = { '*' },
     command = function() vim.o.titlestring = external.title_string() end,
   }, {
     event = { 'FocusGained', 'BufReadPost', 'BufEnter' },
-    pattern = { '*' },
     command = function() external.tmux.set_window_title() end,
   }, {
     event = { 'VimLeave' },
-    pattern = { '*' },
     command = function() external.tmux.clear_pane_title() end,
   }, {
     event = { 'VimLeavePre', 'FocusLost' },
-    pattern = { '*' },
     command = function() external.tmux.set_statusline(true) end,
   }, {
     event = { 'ColorScheme', 'FocusGained' },
-    pattern = { '*' },
     command = function()
       -- NOTE: there is a race condition here rvim the colors
       -- for kitty to re-use need to be set AFTER the rest of the colorscheme
@@ -246,7 +230,6 @@ rvim.augroup('Utilities', {
   -- When editing a file, always jump to the last known cursor position.
   -- Don't do it for commit messages, when the position is invalid.
   event = { 'BufReadPost' },
-  pattern = { '*' },
   command = function()
     if vim.bo.ft ~= 'gitcommit' and vim.fn.win_gettype() ~= 'popup' then
       local last_place_mark = vim.api.nvim_buf_get_mark(0, '"')
@@ -271,23 +254,19 @@ rvim.augroup('Utilities', {
   end,
 }, {
   event = { 'BufWritePre', 'FileWritePre' },
-  pattern = { '*' },
   command = "silent! call mkdir(expand('<afile>:p:h'), 'p')",
 }, {
   event = { 'BufLeave' },
-  pattern = { '*' },
   command = function()
     if can_save() then vim.cmd.update({ mods = { silent = true } }) end
   end,
 }, {
   event = { 'FocusLost', 'InsertLeave' },
-  pattern = { '*' },
   command = function()
     if rvim.editor.auto_save then vim.cmd('silent! wall') end
   end,
 }, {
   event = { 'BufWritePost' },
-  pattern = { '*' },
   nested = true,
   command = function()
     -- detect filetype onsave
@@ -301,7 +280,6 @@ rvim.augroup('Utilities', {
   end,
 }, {
   event = 'FileType',
-  pattern = { '*' },
   command = function()
     vim.opt_local.formatoptions:remove('c')
     vim.opt_local.formatoptions:remove('r')
