@@ -5,7 +5,7 @@ local decorations = rvim.ui.decorations
 
 local str = require('user.strings')
 
-local fn, api= vim.fn, vim.api
+local fn, api = vim.fn, vim.api
 local component = str.component
 local component_raw = str.component_raw
 local empty = rvim.empty
@@ -106,16 +106,12 @@ local function set_winbar()
 end
 
 rvim.augroup('AttachWinbar', {
-  {
-    event = { 'BufWinEnter', 'TabNew', 'TabEnter', 'BufEnter', 'WinClosed' },
-    desc = 'Toggle winbar',
-    command = set_winbar,
-  },
-  {
-    event = 'User',
-    pattern = { 'DiffviewDiffBufRead', 'DiffviewDiffBufWinEnter' },
-    desc = 'Toggle winbar',
-    command = set_winbar,
-  },
+  event = { 'BufWinEnter', 'TabNew', 'TabEnter', 'BufEnter', 'WinClosed' },
+  desc = 'Toggle winbar',
+  command = set_winbar,
+}, {
+  event = 'User',
+  pattern = { 'DiffviewDiffBufRead', 'DiffviewDiffBufWinEnter' },
+  desc = 'Toggle winbar',
+  command = set_winbar,
 })
-

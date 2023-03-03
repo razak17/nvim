@@ -43,7 +43,7 @@ end
 ---@param bufnr integer
 ---@param client table
 ---@param events table
----@return fun(feature: {provider: string, name: string}, commands: fun(string): Autocommand[])
+---@return fun(feature: {provider: string, name: string}, commands: fun(string): ...)
 local function augroup_factory(bufnr, client, events)
   return function(feature, commands)
     local provider, name = feature.provider, feature.name
@@ -91,61 +91,52 @@ local function setup_autocommands(client, bufnr)
 
   augroup(FEATURES.DIAGNOSTICS, function()
     return {
-      {
-        event = { 'CursorHold' },
-        buffer = bufnr,
-        desc = 'LSP: Show diagnostics',
-        command = function(args)
-          if not rvim.lsp.hover_diagnostics then return end
-          if vim.b.lsp_hover_win and api.nvim_win_is_valid(vim.b.lsp_hover_win) then return end
-          vim.diagnostic.open_float(args.buf, { scope = 'line' })
-        end,
-      },
+      event = { 'CursorHold' },
+      buffer = bufnr,
+      desc = 'LSP: Show diagnostics',
+      command = function(args)
+        if not rvim.lsp.hover_diagnostics then return end
+        if vim.b.lsp_hover_win and api.nvim_win_is_valid(vim.b.lsp_hover_win) then return end
+        vim.diagnostic.open_float(args.buf, { scope = 'line' })
+      end,
     }
   end)
 
   augroup(FEATURES.FORMATTING, function(provider)
     return {
-      {
-        event = 'BufWritePre',
-        buffer = bufnr,
-        desc = 'LSP: Format on save',
-        command = function(args)
-          local excluded = rvim.find_string(format_exclusions.format_on_save, vim.bo.ft)
-          if not excluded and not vim.g.formatting_disabled and not b.formatting_disabled then
-            local clients = clients_by_capability(args.buf, provider)
-            if #clients >= 1 then format({ bufnr = args.buf, async = #clients == 1 }) end
-          end
-        end,
-      },
+      event = 'BufWritePre',
+      buffer = bufnr,
+      desc = 'LSP: Format on save',
+      command = function(args)
+        local excluded = rvim.find_string(format_exclusions.format_on_save, vim.bo.ft)
+        if not excluded and not vim.g.formatting_disabled and not b.formatting_disabled then
+          local clients = clients_by_capability(args.buf, provider)
+          if #clients >= 1 then format({ bufnr = args.buf, async = #clients == 1 }) end
+        end
+      end,
     }
   end)
 
   augroup(FEATURES.REFERENCES, function()
     return {
-      {
-        event = { 'CursorHold', 'CursorHoldI' },
-        buffer = bufnr,
-        desc = 'LSP: References',
-        command = function() lsp.buf.document_highlight() end,
-      },
-      {
-        event = 'CursorMoved',
-        desc = 'LSP: References Clear',
-        buffer = bufnr,
-        command = function() lsp.buf.clear_references() end,
-      },
+      event = { 'CursorHold', 'CursorHoldI' },
+      buffer = bufnr,
+      desc = 'LSP: References',
+      command = function() lsp.buf.document_highlight() end,
+    }, {
+      event = 'CursorMoved',
+      desc = 'LSP: References Clear',
+      buffer = bufnr,
+      command = function() lsp.buf.clear_references() end,
     }
   end)
 
   augroup(FEATURES.CODELENS, function()
     return {
-      {
-        event = { 'BufEnter', 'CursorHold', 'InsertLeave' },
-        desc = 'LSP: Code Lens',
-        buffer = bufnr,
-        command = function() lsp.codelens.refresh() end,
-      },
+      event = { 'BufEnter', 'CursorHold', 'InsertLeave' },
+      desc = 'LSP: Code Lens',
+      buffer = bufnr,
+      command = function() lsp.codelens.refresh() end,
     }
   end)
   vim.b[bufnr].lsp_events = events
@@ -308,32 +299,29 @@ local client_overrides = {
 }
 
 rvim.augroup('LspSetupCommands', {
-  {
-    event = { 'LspAttach' },
-    desc = 'setup the language server autocommands',
-    command = function(args)
-      local bufnr = args.buf
-      -- if the buffer is invalid we should not try and attach to it
-      if not api.nvim_buf_is_valid(bufnr) or not args.data then return end
-      local client = lsp.get_client_by_id(args.data.client_id)
-      on_attach(client, bufnr)
-      if client_overrides[client.name] then client_overrides[client.name](client, bufnr) end
-    end,
-  },
-  {
-    event = { 'LspDetach' },
-    desc = 'Clean up after detached LSP',
-    command = function(args)
-      local client_id = args.data.client_id
-      if not b.lsp_events or not client_id then return end
-      for _, state in pairs(b.lsp_events) do
-        if #state.clients == 1 and state.clients[1] == client_id then
-          api.nvim_clear_autocmds({ group = state.group_id, buffer = args.buf })
-        end
-        vim.tbl_filter(function(id) return id ~= client_id end, state.clients)
+  event = { 'LspAttach' },
+  desc = 'setup the language server autocommands',
+  command = function(args)
+    local bufnr = args.buf
+    -- if the buffer is invalid we should not try and attach to it
+    if not api.nvim_buf_is_valid(bufnr) or not args.data then return end
+    local client = lsp.get_client_by_id(args.data.client_id)
+    on_attach(client, bufnr)
+    if client_overrides[client.name] then client_overrides[client.name](client, bufnr) end
+  end,
+}, {
+  event = { 'LspDetach' },
+  desc = 'Clean up after detached LSP',
+  command = function(args)
+    local client_id = args.data.client_id
+    if not b.lsp_events or not client_id then return end
+    for _, state in pairs(b.lsp_events) do
+      if #state.clients == 1 and state.clients[1] == client_id then
+        api.nvim_clear_autocmds({ group = state.group_id, buffer = args.buf })
       end
-    end,
-  },
+      vim.tbl_filter(function(id) return id ~= client_id end, state.clients)
+    end
+  end,
 })
 
 ----------------------------------------------------------------------------------------------------

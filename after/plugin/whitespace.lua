@@ -32,22 +32,18 @@ end
 rvim.highlight.set('ExtraWhitespace', { foreground = 'red' })
 
 rvim.augroup('WhitespaceMatch', {
-  {
-    event = { 'ColorScheme' },
-    desc = 'Add extra whitespace highlight',
-    pattern = { '*' },
-    command = function() rvim.highlight.set('ExtraWhitespace', { foreground = 'red' }) end,
-  },
-  {
-    event = { 'BufEnter', 'FileType', 'InsertLeave' },
-    pattern = { '*' },
-    desc = 'Show extra whitespace on insert leave, buf enter or filetype',
-    command = function() toggle_trailing('n') end,
-  },
-  {
-    event = { 'InsertEnter' },
-    desc = 'Show extra whitespace on insert enter',
-    pattern = { '*' },
-    command = function() toggle_trailing('i') end,
-  },
+  event = { 'ColorScheme' },
+  desc = 'Add extra whitespace highlight',
+  pattern = { '*' },
+  command = function() rvim.highlight.set('ExtraWhitespace', { foreground = 'red' }) end,
+}, {
+  event = { 'BufEnter', 'FileType', 'InsertLeave' },
+  pattern = { '*' },
+  desc = 'Show extra whitespace on insert leave, buf enter or filetype',
+  command = function() toggle_trailing('n') end,
+}, {
+  event = { 'InsertEnter' },
+  desc = 'Show extra whitespace on insert enter',
+  pattern = { '*' },
+  command = function() toggle_trailing('i') end,
 })

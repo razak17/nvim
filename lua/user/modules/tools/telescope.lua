@@ -126,15 +126,13 @@ return {
     local themes = require('telescope.themes')
 
     rvim.augroup('TelescopePreviews', {
-      {
-        event = { 'User' },
-        pattern = { 'TelescopePreviewerLoaded' },
-        command = function(args)
-          local bufname = vim.tbl_get(args, 'data', 'bufname')
-          local ft = bufname and require('plenary.filetype').detect(bufname) or nil
-          vim.opt_local.number = not ft or ui.decorations.get(ft, 'number', 'ft') ~= false
-        end,
-      },
+      event = { 'User' },
+      pattern = { 'TelescopePreviewerLoaded' },
+      command = function(args)
+        local bufname = vim.tbl_get(args, 'data', 'bufname')
+        local ft = bufname and require('plenary.filetype').detect(bufname) or nil
+        vim.opt_local.number = not ft or ui.decorations.get(ft, 'number', 'ft') ~= false
+      end,
     })
 
     -- https://github.com/nvim-telescope/telescope.nvim/issues/1048

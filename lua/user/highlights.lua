@@ -229,12 +229,10 @@ function rvim.highlight.plugin(name, opts)
   name = name:gsub('^%l', string.upper)
   rvim.highlight.all(opts)
   rvim.augroup(fmt('%sHighlightOverrides', name), {
-    {
-      event = { 'ColorScheme' },
-      command = function()
-        -- Defer resetting these highlights to ensure they apply after other overrides
-        vim.defer_fn(function() rvim.highlight.all(opts) end, 1)
-      end,
-    },
+    event = { 'ColorScheme' },
+    command = function()
+      -- Defer resetting these highlights to ensure they apply after other overrides
+      vim.defer_fn(function() rvim.highlight.all(opts) end, 1)
+    end,
   })
 end

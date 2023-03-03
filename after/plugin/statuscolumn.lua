@@ -92,13 +92,11 @@ end
 vim.o.statuscolumn = [[%!v:lua.rvim.ui.statuscolumn.render()]]
 
 rvim.augroup('StatusCol', {
-  {
-    event = { 'BufEnter', 'FileType' },
-    command = function(args)
-      local buf = vim.bo[args.buf]
-      if ui.decorations.get(buf.ft, 'statuscolumn', 'ft') == false then
-        vim.opt_local.statuscolumn = ''
-      end
-    end,
-  },
+  event = { 'BufEnter', 'FileType' },
+  command = function(args)
+    local buf = vim.bo[args.buf]
+    if ui.decorations.get(buf.ft, 'statuscolumn', 'ft') == false then
+      vim.opt_local.statuscolumn = ''
+    end
+  end,
 })

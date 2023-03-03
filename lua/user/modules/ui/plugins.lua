@@ -106,10 +106,8 @@ return {
         fmt = { stack_upwards = false },
       })
       rvim.augroup('CloseFidget', {
-        {
-          event = { 'VimLeavePre', 'LspDetach' },
-          command = 'silent! FidgetClose',
-        },
+        event = { 'VimLeavePre', 'LspDetach' },
+        command = 'silent! FidgetClose',
       })
     end,
   },
@@ -172,15 +170,13 @@ return {
     init = function()
       hl.plugin('virt_column', { { VirtColumn = { link = 'FloatBorder' } } })
       rvim.augroup('VirtCol', {
-        {
-          event = { 'BufEnter', 'WinEnter' },
-          command = function(args)
-            ui.decorations.set_colorcolumn(
-              args.buf,
-              function(virtcolumn) require('virt-column').setup_buffer({ virtcolumn = virtcolumn }) end
-            )
-          end,
-        },
+        event = { 'BufEnter', 'WinEnter' },
+        command = function(args)
+          ui.decorations.set_colorcolumn(
+            args.buf,
+            function(virtcolumn) require('virt-column').setup_buffer({ virtcolumn = virtcolumn }) end
+          )
+        end,
       })
     end,
   },

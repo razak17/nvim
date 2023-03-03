@@ -60,11 +60,9 @@ return {
     }, { mode = 'x', prefix = '<localleader>' })
 
     rvim.augroup('WhichKeyMode', {
-      {
-        event = { 'FileType' },
-        pattern = { 'which_key' },
-        command = 'set laststatus=0 noshowmode | autocmd BufLeave <buffer> set laststatus=2',
-      },
+      event = { 'FileType' },
+      pattern = { 'which_key' },
+      command = 'set laststatus=0 noshowmode | autocmd BufLeave <buffer> set laststatus=2',
     })
   end,
 }
