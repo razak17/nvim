@@ -2,16 +2,13 @@
 
 if not rvim or not rvim.ui.winbar.enable then return end
 
-local _, devicons = rvim.safe_require('nvim-web-devicons')
-local utils = require('user.utils.statusline')
-local component = utils.component
-local component_raw = utils.component_raw
-local empty = rvim.empty
+local str = require('user.strings')
 
-local ui = rvim.ui
-local fn = vim.fn
-local api = vim.api
-local icons = rvim.ui.icons.misc
+local fn, api, ui = vim.fn, vim.api, rvim.ui
+local component = str.component
+local component_raw = str.component_raw
+local empty = rvim.empty
+local icons = ui.icons.misc
 
 local dir_separator = icons.caret_right
 local separator = icons.arrow_right
@@ -50,9 +47,9 @@ end
 ---@return string
 function rvim.ui.winbar.get()
   local winbar = {}
-  local add = utils.winline(winbar)
+  local add = str.winline(winbar)
 
-  add(utils.spacer(1))
+  add(str.spacer(1))
 
   local bufname = api.nvim_buf_get_name(api.nvim_get_current_buf())
   if empty(bufname) then return add(component('[No name]', 'Winbar', { priority = 0 })) end
@@ -61,6 +58,7 @@ function rvim.ui.winbar.get()
   if rvim.ui.winbar.use_relative_path then filepath = fn.fnamemodify(bufname, ':.') end
 
   local parts = vim.split(filepath, '/')
+  local _, devicons = rvim.safe_require('nvim-web-devicons')
   local icon, color = devicons.get_icon(bufname, nil, { default = true })
   rvim.foreach(function(part, index)
     local priority = (#parts - (index - 1)) * 2
@@ -80,7 +78,7 @@ function rvim.ui.winbar.get()
     }))
   end, parts)
   add(unpack(breadcrumbs()))
-  return utils.display(winbar, api.nvim_win_get_width(api.nvim_get_current_win()))
+  return str.display(winbar, api.nvim_win_get_width(api.nvim_get_current_win()))
 end
 
 local function set_winbar()
@@ -119,3 +117,4 @@ rvim.augroup('AttachWinbar', {
     command = set_winbar,
   },
 })
+
