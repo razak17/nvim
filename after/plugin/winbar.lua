@@ -1,14 +1,15 @@
 ---@diagnostic disable: duplicate-doc-param missing-return
 
 if not rvim or not rvim.ui.winbar.enable then return end
+local decorations = rvim.ui.decorations
 
 local str = require('user.strings')
 
-local fn, api, ui = vim.fn, vim.api, rvim.ui
+local fn, api= vim.fn, vim.api
 local component = str.component
 local component_raw = str.component_raw
 local empty = rvim.empty
-local icons = ui.icons.misc
+local icons = rvim.ui.icons.misc
 
 local dir_separator = icons.caret_right
 local separator = icons.arrow_right
@@ -63,10 +64,10 @@ function rvim.ui.winbar.get()
   rvim.foreach(function(part, index)
     local priority = (#parts - (index - 1)) * 2
     local is_first = index == 1
-    local show_icon = is_first and ui.winbar.use_file_icon and icon or nil
+    local show_icon = is_first and rvim.ui.winbar.use_file_icon and icon or nil
     local is_last = index == #parts
     local sep = is_last and separator or dir_separator
-    ui.winbar.state[priority] = table.concat(vim.list_slice(parts, 1, index), '/')
+    rvim.ui.winbar.state[priority] = table.concat(vim.list_slice(parts, 1, index), '/')
     add(component(part, 'Winbar', {
       id = priority,
       priority = priority,
@@ -85,8 +86,8 @@ local function set_winbar()
   rvim.foreach(function(w)
     local buf, win = vim.bo[api.nvim_win_get_buf(w)], vim.wo[w]
     local bt, ft, is_diff = buf.buftype, buf.filetype, win.diff
-    local ft_setting = ui.decorations.get(ft, 'winbar', 'ft')
-    local bt_setting = ui.decorations.get(bt, 'winbar', 'bt')
+    local ft_setting = decorations.get(ft, 'winbar', 'ft')
+    local bt_setting = decorations.get(bt, 'winbar', 'bt')
     local ignored = ft_setting == 'ignore' or bt_setting == 'ignore'
     if not ignored then
       if
