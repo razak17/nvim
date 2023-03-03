@@ -80,7 +80,7 @@
   "nvim-notify": { "branch": "master", "commit": "9c987081390753b625e2d94e749e80e9b4a3e082" },
   "nvim-toggler": { "branch": "main", "commit": "a9d320d2338611ef5310c3844c39d761dbf23769" },
   "nvim-treehopper": { "branch": "master", "commit": "5a28bff46c05d28bdb4bcaef67e046eb915a9390" },
-  "nvim-treesitter": { "branch": "master", "commit": "a0d6c28f893cbbc761cfa7fc7204ba6f3e2710cf" },
+  "nvim-treesitter": { "branch": "master", "commit": "f225f53510986997ae843b2a825df8083d85a191" },
   "nvim-treesitter-context": { "branch": "master", "commit": "895ec44f5c89bc67ba5440aef3d1f2efa3d59a41" },
   "nvim-treesitter-textobjects": { "branch": "master", "commit": "4b30081d2736e09f90c890a8a7adfe4df36f5b36" },
   "nvim-ts-autotag": { "branch": "main", "commit": "fdefe46c6807441460f11f11a167a2baf8e4534b" },
@@ -110,7 +110,7 @@
   "template-string.nvim": { "branch": "main", "commit": "b97ee201fa2d5edced1c6dbaf432d00fec0468f1" },
   "todo-comments.nvim": { "branch": "main", "commit": "74c7d28cb50b0713c881ef69bcb6cdd77d8907d1" },
   "toggleterm.nvim": { "branch": "main", "commit": "31d38d11390bcd35a568fcc65a79b7d6ec89de62" },
-  "trailblazer.nvim": { "branch": "main", "commit": "26ac69e011ec12b2706f02060f3e3fdfec948e5a" },
+  "trailblazer.nvim": { "branch": "main", "commit": "f3261b64d76c6e56bfd9d5e0d8d2d3f45270c65b" },
   "treesj": { "branch": "main", "commit": "f0249ad87ba858382fe51ce5326ccee5c596ad97" },
   "ts-node-action": { "branch": "master", "commit": "6bc45ed4460b2be86ec66a06041138c584564db8" },
   "twoslash-queries.nvim": { "branch": "main", "commit": "f2122d8fa34cf8316783d0828f6aa69f1c5ba87f" },
@@ -122,6 +122,6 @@
   "vim-kitty": { "branch": "main", "commit": "d4c60f096b751c1462c80cbf42550e29c8cd2983" },
   "vim-matchup": { "branch": "master", "commit": "3a48818a8113a502f245c29d894201421727577a" },
   "virt-column.nvim": { "branch": "master", "commit": "93b40ea038f676f5a72d7d1f2336fe7b051fc0ce" },
-  "vscode-js-debug": { "branch": "main", "commit": "83a5f61c6aed175ce7ff63a7869f87b81c72be50" },
+  "vscode-js-debug": { "branch": "main", "commit": "a1d156d276926f00dcf3c4de31b57c9bb3c958b0" },
   "which-key.nvim": { "branch": "main", "commit": "fb027738340502b556c3f43051f113bcaa7e8e63" }
 }
