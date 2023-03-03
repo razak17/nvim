@@ -101,6 +101,7 @@ return {
           'toml',
           'cpp',
           'jsonc',
+          'query',
         },
       })
 
