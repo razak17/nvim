@@ -1,6 +1,6 @@
 local ui, fn, api, fmt = rvim.ui, vim.fn, vim.api, string.format
 local border = ui.current.border
-local lsp_hls = rvim.lsp.kind_highlights
+local lsp_hls = rvim.ui.lsp.highlights
 local ellipsis = ui.icons.ui.ellipsis
 
 local function get_color(r, g, b)

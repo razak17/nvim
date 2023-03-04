@@ -1,8 +1,33 @@
 local M = {}
 
 local uv = vim.loop
-local ftplugin_dir = rvim.lsp.templates_dir
 local fmt = string.format
+
+local configured_filetypes = {
+  'astro',
+  'lua',
+  'javascript',
+  'javascriptreact',
+  'typescript',
+  'typescriptreact',
+  'python',
+  'go',
+  'rust',
+  'yaml',
+  'vue',
+  'vim',
+  'json',
+  'jsonc',
+  'html',
+  'css',
+  'sh',
+  'zsh',
+  'markdown',
+  'graphql',
+  'sql',
+  'prisma',
+  'svelte',
+}
 
 ---Write data to a file
 ---@param path string can be full or relative to `cwd`
@@ -63,7 +88,7 @@ end
 ---@return string[] list of filtetypes for server_name
 local function getFileTypes(server_name)
   return vim.tbl_filter(
-    function(ft) return vim.tbl_contains(rvim.lsp.configured_filetypes, ft) end,
+    function(ft) return vim.tbl_contains(configured_filetypes, ft) end,
     get_supported_filetypes(server_name) or {}
   )
 end

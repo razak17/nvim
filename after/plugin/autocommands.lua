@@ -263,7 +263,7 @@ rvim.augroup('Utilities', {
 }, {
   event = { 'FocusLost', 'InsertLeave' },
   command = function()
-    if rvim.editor.auto_save then vim.cmd('silent! wall') end
+    if rvim.auto_save then vim.cmd('silent! wall') end
   end,
 }, {
   event = { 'BufWritePost' },

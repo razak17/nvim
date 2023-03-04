@@ -1,5 +1,4 @@
-local hl = rvim.highlight
-local ui = rvim.ui
+local hl, ui = rvim.highlight, rvim.ui
 
 return {
   'nanotee/sqls.nvim',
@@ -49,7 +48,7 @@ return {
       local icons = ui.icons.ui
       local lsp_icons = {}
       for key, val in pairs(ui.current.lsp_icons) do
-        hl.set(fmt('NavicIcons%s', key), { link = rvim.lsp.kind_highlights[key] })
+        hl.set(fmt('NavicIcons%s', key), { link = ui.lsp.highlights[key] })
         lsp_icons[key] = val .. ' '
       end
       require('nvim-navic').setup({

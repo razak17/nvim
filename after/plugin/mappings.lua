@@ -3,6 +3,14 @@ if not rvim then return end
 local fn = vim.fn
 local api = vim.api
 local fmt = string.format
+local g = vim.g
+
+
+----------------------------------------------------------------------------------------------------
+-- Set leader keys
+----------------------------------------------------------------------------------------------------
+g.mapleader = ' '
+g.maplocalleader = ','
 
 local recursive_map = function(mode, lhs, rhs, opts)
   opts = opts or {}
@@ -89,17 +97,15 @@ cnoremap('::', "<C-r>=fnameescape(expand('%:p:h'))<cr>/")
 ----------------------------------------------------------------------------------------------------
 local function smart_quit()
   local bufnr = vim.api.nvim_get_current_buf()
-  local modified = vim.api.nvim_buf_get_option(bufnr, "modified")
+  local modified = vim.api.nvim_buf_get_option(bufnr, 'modified')
   if modified then
     vim.ui.input({
-      prompt = "You have unsaved changes. Quit anyway? (y/n) ",
+      prompt = 'You have unsaved changes. Quit anyway? (y/n) ',
     }, function(input)
-      if input == "y" then
-        vim.cmd "q!"
-      end
+      if input == 'y' then vim.cmd('q!') end
     end)
   else
-    vim.cmd "q!"
+    vim.cmd('q!')
   end
 end
 -- Alternate way to save

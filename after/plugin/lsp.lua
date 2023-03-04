@@ -1,6 +1,8 @@
 -- https://github.com/akinsho/dotfiles/blob/main/.config/nvim/plugin/lsp.lua
 if not rvim then return end
 
+rvim.lsp.templates_dir = join_paths(rvim.get_runtime_dir(), 'site', 'after', 'ftplugin')
+
 local lsp, fn, api, fmt = vim.lsp, vim.fn, vim.api, string.format
 local b = vim.b --[[@as table<string, any>]]
 local L = lsp.log_levels
@@ -8,7 +10,21 @@ local L = lsp.log_levels
 local codicons = rvim.ui.codicons
 local border = rvim.ui.current.border
 local diagnostic = vim.diagnostic
-local format_exclusions = rvim.lsp.format_exclusions
+
+local format_exclusions = {
+  format_on_save = { 'zsh' },
+  servers = {
+    lua = { 'lua_ls' },
+    go = { 'null-ls' },
+    proto = { 'null-ls' },
+    html = { 'html' },
+    javascript = { 'quick_lint_js', 'tsserver' },
+    typescript = { 'tsserver' },
+    typescriptreact = { 'tsserver' },
+    javascriptreact = { 'tsserver' },
+    sql = { 'sqls' },
+  },
+}
 
 if vim.env.DEVELOPING then lsp.set_log_level(L.DEBUG) end
 
@@ -382,14 +398,14 @@ local function sign(opts)
 end
 
 local function toggle_diagnostic_signs()
-  if rvim.lsp.diagnostics.signs.active then
-    rvim.lsp.diagnostics.signs.active = false
+  if rvim.lsp.signs.enable then
+    rvim.lsp.signs.enable = false
     sign({ highlight = 'DiagnosticSignError', icon = codicons.lsp.error })
     sign({ highlight = 'DiagnosticSignWarn', icon = codicons.lsp.warn })
     sign({ highlight = 'DiagnosticSignInfo', icon = codicons.lsp.info })
     sign({ highlight = 'DiagnosticSignHint', icon = codicons.lsp.hint })
   else
-    rvim.lsp.diagnostics.signs.active = true
+    rvim.lsp.signs.enable = true
     sign({ highlight = 'DiagnosticSignError', icon = '' })
     sign({ highlight = 'DiagnosticSignWarn', icon = '' })
     sign({ highlight = 'DiagnosticSignInfo', icon = '' })
@@ -406,21 +422,32 @@ local max_width = math.min(math.floor(vim.o.columns * 0.7), 100)
 local max_height = math.min(math.floor(vim.o.lines * 0.3), 30)
 
 diagnostic.config({
-  signs = { active = rvim.lsp.diagnostics.signs.active, values = codicons.lsp },
-  underline = rvim.lsp.diagnostics.underline,
-  update_in_insert = rvim.lsp.diagnostics.update_in_insert,
-  severity_sort = rvim.lsp.diagnostics.severity_sort,
+  signs = { active = rvim.lsp.signs.active, values = codicons.lsp },
+  underline = true,
+  update_in_insert = false,
+  severity_sort = true,
   virtual_lines = false,
   virtual_text = false,
-  float = vim.tbl_deep_extend('keep', {
+  float = {
     max_width = max_width,
     max_height = max_height,
+    border = border,
+    focusable = false,
+    style = 'minimal',
+    source = 'always',
+    header = '',
+    format = function(d)
+      local t = vim.deepcopy(d)
+      local code = d.code or (d.user_data and d.user_data.lsp.code)
+      if code then t.message = string.format('%s [%s]', t.message, code):gsub('1. ', '') end
+      return t.message
+    end,
     prefix = function(diag, i, _)
       local level = diagnostic.severity[diag.severity]
       local prefix = fmt('%d. %s ', i, codicons.lsp[level:lower()])
       return prefix, 'Diagnostic' .. level:gsub('^%l', string.upper)
     end,
-  }, rvim.lsp.diagnostics.float),
+  },
 })
 
 local function toggle_virtual_text()
@@ -429,7 +456,7 @@ local function toggle_virtual_text()
     config = vim.tbl_extend('force', config, {
       virtual_text = {
         prefix = '',
-        spacing = rvim.lsp.diagnostics.virtual_text_spacing,
+        spacing = 1,
         format = function(d)
           local level = diagnostic.severity[d.severity]
           return fmt('%s %s', codicons.lsp[level:lower()], d.message)

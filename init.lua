@@ -20,6 +20,12 @@ function R(name)
   RELOAD(name)
   return require(name)
 end
+
+local uv = vim.loop
+function join_paths(...)
+  local path_sep = uv.os_uname().version:match('Windows') and '\\' or '/'
+  return table.concat({ ... }, path_sep)
+end
 ----------------------------------------------------------------------------------------------------
 -- Global namespace
 ----------------------------------------------------------------------------------------------------
@@ -27,7 +33,17 @@ local namespace = {
   -- some vim mappings require a mixture of commandline commands and function calls
   -- this table is place to store lua functions to be called in those mappings
   mappings = {},
-  plugins = { enable = false },
+  auto_save = false,
+  lsp = {
+    signs = { enable = true },
+    hover_diagnostics = { enable = true },
+  },
+  path = { mason = join_paths(vim.call('stdpath', 'data'), 'mason') },
+  plugins = { enable = true },
+  ui = {
+    tw = {},
+    winbar = { enable = true, use_relative_path = true, use_file_icon = true },
+  },
 }
 
 _G.rvim = rvim or namespace
@@ -37,7 +53,6 @@ _G.map = vim.keymap.set
 ----------------------------------------------------------------------------------------------------
 R('user.globals')
 R('user.bootstrap')
-R('user.config')
 
 ----------------------------------------------------------------------------------------------------
 -- Color Scheme

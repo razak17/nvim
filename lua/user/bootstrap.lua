@@ -1,6 +1,20 @@
 if not rvim then return end
 
-local rtp = vim.opt.rtp
+local g, rtp = vim.g, vim.opt.rtp
+
+----------------------------------------------------------------------------------------------------
+-- Set Providers
+----------------------------------------------------------------------------------------------------
+g.python3_host_prog = join_paths(rvim.get_cache_dir(), 'venv', 'neovim', 'bin', 'python3')
+for _, v in pairs({ 'python', 'ruby', 'perl' }) do
+  g['loaded_' .. v .. '_provider'] = 0
+end
+
+----------------------------------------------------------------------------------------------------
+-- Set Open Command
+----------------------------------------------------------------------------------------------------
+g.os = vim.loop.os_uname().sysname
+rvim.open_command = g.os == 'Darwin' and 'open' or 'xdg-open'
 
 ----------------------------------------------------------------------------------------------------
 -- Append RTP
@@ -20,9 +34,7 @@ vim.cmd([[let &packpath = &runtimepath]])
 ----------------------------------------------------------------------------------------------------
 -- Load Modules
 ----------------------------------------------------------------------------------------------------
--- Order matters
-R('user.config.defaults')
-R('user.config.settings')
+R('user.settings')
 R('user.highlights')
 R('user.ui')
-R('user.config.lsp')
+R('user.lazy'):bootstrap() -- Lazy has to be sourced last
