@@ -22,7 +22,7 @@ end
 return {
   {
     'hrsh7th/nvim-cmp',
-    event = { 'InsertEnter'},
+    event = { 'InsertEnter' },
     config = function()
       local cmp = require('cmp')
 
@@ -166,7 +166,7 @@ return {
             return vim_item
           end,
         },
-        sources = {
+        sources = cmp.config.sources({
           { name = 'nvim_lsp' },
           { name = 'luasnip' },
           { name = 'path' },
@@ -181,14 +181,15 @@ return {
           { name = 'lab.quick_data' },
           { name = 'dynamic' },
           { name = 'emoji' },
+        }, {
           {
-            {
-              name = 'buffer',
-              options = { get_bufnrs = function() return vim.api.nvim_list_bufs() end },
+            name = 'buffer',
+            options = {
+              get_bufnrs = function() return vim.api.nvim_list_bufs() end,
             },
-            { name = 'spell' },
           },
-        },
+          { name = 'spell' },
+        }),
       })
 
       cmp.event:on('menu_opened', function() vim.b.copilot_suggestion_hidden = true end)
