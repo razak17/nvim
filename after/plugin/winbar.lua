@@ -1,13 +1,12 @@
 ---@diagnostic disable: duplicate-doc-param missing-return
 
 if not rvim or not rvim.ui.winbar.enable or not rvim.plugins.enable then return end
-local decorations = rvim.ui.decorations
 
 local str = require('user.strings')
+local decorations = rvim.ui.decorations
 
 local fn, api = vim.fn, vim.api
 local component = str.component
-local component_raw = str.component_raw
 local empty = rvim.empty
 local icons = rvim.ui.icons.ui
 
@@ -42,7 +41,7 @@ local function breadcrumbs()
   local navic_ok, location = pcall(navic.get_location)
   if not navic_ok or empty(location) then return empty_state end
   local win = api.nvim_get_current_win()
-  return { component_raw(location, { priority = 1, win_id = win, type = 'winbar' }) }
+  return { str.component_raw(location, { priority = 1, win_id = win, type = 'winbar' }) }
 end
 
 ---@return string

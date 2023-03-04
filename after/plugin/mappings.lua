@@ -1,8 +1,6 @@
 if not rvim then return end
 
-local fn = vim.fn
-local api = vim.api
-local fmt = string.format
+local fn, api, fmt = vim.fn, vim.api, string.format
 
 local recursive_map = function(mode, lhs, rhs, opts)
   opts = opts or {}
@@ -22,22 +20,130 @@ local cnoremap = function(...) map('c', ...) end
 ----------------------------------------------------------------------------------------------------
 -- MACROS {{{
 ----------------------------------------------------------------------------------------------------
--- Absolutely fantastic function from stoeffel/.dotfiles which allows you to
 -- repeat macros across a visual range
-----------------------------------------------------------------------------------------------------
--- TODO: converting this to lua does not work for some obscure reason.
 vim.cmd([[
   function! ExecuteMacroOverVisualRange()
     echo "@".getcmdline()
     execute ":'<,'>normal @".nr2char(getchar())
   endfunction
 ]])
-
 xnoremap('@', ':<C-u>call ExecuteMacroOverVisualRange()<CR>', { silent = false })
---}}}
+----------------------------------------------------------------------------------------------------
+-- Credit: JGunn Choi ?il | inner line
+----------------------------------------------------------------------------------------------------
+-- includes newline
+xnoremap('al', '$o0')
+onoremap('al', '<cmd>normal val<CR>')
+-- No Spaces or CR
+xnoremap('il', [[<Esc>^vg_]])
+onoremap('il', [[<cmd>normal! ^vg_<CR>]])
+-----------------------------------------------------------------------------//
+-- Paste in visual mode multiple times
+xnoremap('p', 'pgvy')
+-- search visual selection
+vnoremap('//', [[y/<C-R>"<CR>]])
+-- show message history
+nnoremap('g>', [[<cmd>set nomore<bar>40messages<bar>set more<CR>]])
+-- Enter key should repeat the last macro recorded or just act as enter
+nnoremap('<leader><CR>', [[empty(&buftype) ? '@@' : '<CR>']], { expr = true })
+-- Evaluates whether there is a fold on the current line if so unfold it else return a normal space
+nnoremap('<space><space>', [[@=(foldlevel('.')?'za':"\<Space>")<CR>]])
+-- Make zO recursively open whatever top level fold we're in, no matter where the
+-- cursor happens to be.
+nnoremap('zO', [[zCzO]])
+----------------------------------------------------------------------------------------------------
+-- Delimiters
+----------------------------------------------------------------------------------------------------
+-- TLDR: Conditionally modify character at end of line (add, remove or modify)
+---@param character string
+---@return function
+local function modify_line_end_delimiter(character)
+  local delimiters = { ',', ';' }
+  return function()
+    local line = api.nvim_get_current_line()
+    local last_char = line:sub(-1)
+    if last_char == character then
+      api.nvim_set_current_line(line:sub(1, #line - 1))
+      return
+    end
+    if vim.tbl_contains(delimiters, last_char) then
+      api.nvim_set_current_line(line:sub(1, #line - 1) .. character)
+      return
+    end
+    api.nvim_set_current_line(line .. character)
+  end
+end
+
+nnoremap('<localleader>,', modify_line_end_delimiter(','), { desc = 'append comma' })
+nnoremap('<localleader>;', modify_line_end_delimiter(';'), { desc = 'append semi colon' })
+----------------------------------------------------------------------------------------------------
+nnoremap('<leader>I', '<cmd>Inspect<CR>', { desc = 'inspect' })
+----------------------------------------------------------------------------------------------------
+-- Capitalize
+nnoremap('<leader>U', 'gUiw`]', { desc = 'capitalize word' })
+inoremap('<C-u>', '<cmd>norm!gUiw`]a<CR>')
+----------------------------------------------------------------------------------------------------
+-- Moving lines/visual block
+xnoremap('K', ":m '<-2<CR>gv=gv")
+xnoremap('J', ":m '>+1<CR>gv=gv")
+----------------------------------------------------------------------------------------------------
+-- Windows
+----------------------------------------------------------------------------------------------------
+-- change two vertically split windows to horizontal splits
+nnoremap('<localleader>wv', '<C-W>t <C-W>H<C-W>=')
+-- change two horizontally split windows to vertical splits
+nnoremap('<localleader>wh', '<C-W>t <C-W>K<C-W>=', { desc = '' })
+-- find visually selected text
+vnoremap('*', [[y/<C-R>"<CR>]])
+-- make . work with visually selected lines
+vnoremap('.', ':norm.<CR>')
+-- when going to the end of the line in visual mode ignore whitespace characters
+vnoremap('$', 'g_')
+-- Maintain cursor position when joining lines
+nnoremap('J', 'mzJ`z')
+-- Keep search terms in the middle
+nnoremap('n', 'nzzzv')
+nnoremap('N', 'Nzzzv')
+-- Window Movement
+nnoremap('<C-h>', '<C-w>h')
+nnoremap('<C-j>', '<C-w>j')
+nnoremap('<C-k>', '<C-w>k')
+nnoremap('<C-l>', '<C-w>l')
+-- Buffer Movement
+nnoremap('H', '<cmd>bprevious<CR>', { desc = 'previous buffer' })
+nnoremap('L', '<cmd>bnext<CR>', { desc = 'next buffer' })
+----------------------------------------------------------------------------------
+-- Operators
+----------------------------------------------------------------------------------------------------
+-- Yank from cursor position to end-of-line
+nnoremap('Y', 'y$')
+-- Greatest remap ever
+vnoremap('<leader>p', '"_dP', { desc = 'greatest remap' })
+-- Next greatest remap ever : asbjornHaland
+nnoremap('<leader>y', '"+y', { desc = 'yank' })
+vnoremap('<leader>y', '"+y', { desc = 'yank' })
+nnoremap('<leader>dd', '"_d', { desc = 'delete' })
+vnoremap('<leader>dd', '"_d', { desc = 'delete' })
+----------------------------------------------------------------------------------------------------
+-- Yank / Select / Delete All
+nnoremap('<leader>Y', 'gg"+VGy<C-o>', { desc = 'yank all' })
+nnoremap('<leader>A', 'gg"+VG', { desc = 'select all' })
+nnoremap('<leader>D', 'gg"+VGd', { desc = 'delete all' })
+----------------------------------------------------------------------------------------------------
+-- Quick find/replace
+nnoremap('<leader>[', [[:%s/\<<C-r>=expand("<cword>")<CR>\>/]], { desc = 'replace all' })
+nnoremap('<leader>]', [[:s/\<<C-r>=expand("<cword>")<CR>\>/]], { desc = 'replace in line' })
+vnoremap('<leader>[', [["zy:%s/<C-r><C-o>"/]], { desc = 'replace all' })
+-- Visual shifting (does not exit Visual mode)
+vnoremap('<', '<gv')
+vnoremap('>', '>gv')
+----------------------------------------------------------------------------------------------------
+-- open a new file in the same directory
+nnoremap('<leader>no', [[:e <C-R>=expand("%:p:h") . "/" <CR>]])
+-- create a new file in the same directory
+nnoremap('<leader>nf', [[:vsp <C-R>=expand("%:p:h") . "/" <CR>]])
 ----------------------------------------------------------------------------------------------------
 -- Arrows
-----------------------------------------------------------------------------------------------------
 nnoremap('<down>', '<nop>')
 nnoremap('<up>', '<nop>')
 nnoremap('<left>', '<nop>')
@@ -59,18 +165,13 @@ cnoremap('<C-p>', '<Up>')
 -- <C-A> allows you to insert all matches on the command line e.g. bd *.js <c-a>
 -- will insert all matching files e.g. :bd a.js b.js c.js
 cnoremap('<c-x><c-a>', '<c-a>')
-cnoremap('<C-a>', '<Home>')
-cnoremap('<C-e>', '<End>')
+-- move cursor one character backwards unless at the end of the command line
+cnoremap('<C-f>', function()
+  if fn.getcmdpos() == fn.strlen(fn.getcmdline()) then return '<c-f>' end
+  return '<Right>'
+end, { expr = true })
 cnoremap('<C-b>', '<Left>')
 cnoremap('<C-d>', '<Del>')
-cnoremap('<C-k>', [[<C-\>e getcmdpos() == 1 ? '' : getcmdline()[:getcmdpos() - 2]<CR>]])
--- move cursor one character backwards unless at the end of the command line
-cnoremap('<C-f>', [[getcmdpos() > strlen(getcmdline())? &cedit: "\<Lt>Right>"]], { expr = true })
--- see :h cmdline-editing
-cnoremap('<Esc>b', [[<S-Left>]])
-cnoremap('<Esc>f', [[<S-Right>]])
--- Insert escaped '/' while inputting a search pattern
-cnoremap('/', [[getcmdtype() == "/" ? "\/" : "/"]], { expr = true })
 
 -- smooth searching, allow tabbing between search results similar to using <c-g>
 -- or <c-t> the main difference being tab is easier to hit and remapping those keys
@@ -100,17 +201,10 @@ local function smart_quit()
     vim.cmd('q!')
   end
 end
--- Alternate way to save
+-- NOTE: this uses write specifically because we need to trigger a filesystem event
+-- even if the file isn't changed so that things like hot reload work
 nnoremap('<C-s>', '<cmd>silent! write<CR>')
--- Quit
 nnoremap('<leader>x', smart_quit, { desc = 'quit' })
-----------------------------------------------------------------------------------------------------
--- Quickfix
-----------------------------------------------------------------------------------------------------
-nnoremap(']q', '<cmd>cnext<CR>zz')
-nnoremap('[q', '<cmd>cprev<CR>zz')
-nnoremap(']l', '<cmd>lnext<CR>zz')
-nnoremap('[l', '<cmd>lprev<CR>zz')
 ----------------------------------------------------------------------------------------------------
 -- ?ie | entire object
 ----------------------------------------------------------------------------------------------------
@@ -138,93 +232,40 @@ nmap(
   [[(winline() == (winheight (0) + 1)/ 2) ?  'zt' : (winline() == 1)? 'zb' : 'zz']],
   { expr = true }
 )
-----------------------------------------------------------------------------------------------------
--- Help
-----------------------------------------------------------------------------------------------------
-nnoremap('<leader>ah', ':h <C-R>=expand("<cword>")<CR><CR>', { desc = 'help' })
-----------------------------------------------------------------------------------------------------
--- Inspect
-----------------------------------------------------------------------------------------------------
-nnoremap('<leader>I', '<cmd>Inspect<CR>', { desc = 'inspect' })
-----------------------------------------------------------------------------------------------------
--- Move selected line / block of text in visual mode
-----------------------------------------------------------------------------------------------------
-xnoremap('K', ":m '<-2<CR>gv=gv")
-xnoremap('J', ":m '>+1<CR>gv=gv")
-----------------------------------------------------------------------------------------------------
--- Maintain cursor position when joining lines
-----------------------------------------------------------------------------------------------------
-nnoremap('J', 'mzJ`z')
-----------------------------------------------------------------------------------------------------
--- Keep search terms in the middle
-----------------------------------------------------------------------------------------------------
-nnoremap('n', 'nzzzv')
-nnoremap('N', 'Nzzzv')
-----------------------------------------------------------------------------------------------------
--- Credit: JGunn Choi ?il | inner line
-----------------------------------------------------------------------------------------------------
--- includes newline
-xnoremap('al', '$o0')
-onoremap('al', '<cmd>normal val<CR>')
---No Spaces or CR
-xnoremap('il', [[<Esc>^vg_]])
-onoremap('il', [[<cmd>normal! ^vg_<CR>]])
-----------------------------------------------------------------------------------------------------
--- Add Empty space above and below
-----------------------------------------------------------------------------------------------------
-nnoremap('[<space>', [[<cmd>put! =repeat(nr2char(10), v:count1)<CR>'[]])
-nnoremap(']<space>', [[<cmd>put =repeat(nr2char(10), v:count1)<CR>]])
--- search visual selection
-vnoremap('//', [[y/<C-R>"<CR>]])
--- Credit: Justinmk
-nnoremap(
-  'g>',
-  [[<cmd>set nomore<bar>40messages<bar>set more<CR>]],
-  { desc = 'show message history' }
-)
--- Start new line from any cursor position
-inoremap('<S-Return>', '<C-o>o')
-----------------------------------------------------------------------------------------------------
--- Indent
-----------------------------------------------------------------------------------------------------
-vnoremap('<', '<gv')
-vnoremap('>', '>gv')
-----------------------------------------------------------------------------------------------------
--- Buffers
-----------------------------------------------------------------------------------------------------
--- Switch between the last two files
-nnoremap('<leader><leader>', [[<c-^>]], { desc = 'switch to last file' })
-----------------------------------------------------------------------------------------------------
--- Capitalize
-----------------------------------------------------------------------------------------------------
-nnoremap('<leader>U', 'gUiw`]', { desc = 'capitalize word' })
-inoremap('<C-u>', '<cmd>norm!gUiw`]a<CR>')
--- find visually selected text
-vnoremap('*', [[y/<C-R>"<CR>]])
--- make . work with visually selected lines
-vnoremap('.', ':norm.<CR>')
--- when going to the end of the line in visual mode ignore whitespace characters
-vnoremap('$', 'g_')
-----------------------------------------------------------------------------------------------------
--- Use alt + hjkl to resize windows
-----------------------------------------------------------------------------------------------------
-nnoremap('<leader>aF', ':vertical resize 90<CR>', { desc = 'vertical resize 90%' })
-nnoremap('<leader>aL', ':vertical resize 40<CR>', { desc = 'vertical resize 30%' })
-nnoremap('<leader>aO', ':<C-f>:resize 10<CR>', { desc = 'open old commands' })
-----------------------------------------------------------------------------------------------------
--- Yank from cursor position to end-of-line
-nnoremap('Y', 'y$')
-----------------------------------------------------------------------------------------------------
--- Zero should go to the first non-blank character not to the first column (which could be blank)
--- Zero should go to the first non-blank character not to the first column (which could be blank)
--- but if already at the first character then jump to the beginning
---@see: https://github.com/yuki-yano/zero.nvim/blob/main/lua/zero.lua
-nnoremap('0', "getline('.')[0 : col('.') - 2] =~# '^\\s\\+$' ? '0' : '^'", { expr = true })
-----------------------------------------------------------------------------------------------------
--- Add Empty space above and below
-nnoremap('[<space>', [[<cmd>put! =repeat(nr2char(10), v:count1)<CR>'[]])
-nnoremap(']<space>', [[<cmd>put =repeat(nr2char(10), v:count1)<CR>]])
+-- Escape
+nnoremap('<C-c>', '<Esc>')
 
+----------------------------------------------------------------------------------------------------
+-- Web Search
+----------------------------------------------------------------------------------------------------
+function rvim.mappings.ddg(path) rvim.web_search(path, 'https://html.duckduckgo.com/html?q=') end
+function rvim.mappings.gh(path) rvim.web_search(path, 'https://github.com/search?q=') end
+
+-- Search DuckDuckGo
+nnoremap(
+  '<localleader>?',
+  [[:lua rvim.mappings.ddg(vim.fn.expand("<cword>"))<CR>]],
+  { desc = 'search word' }
+)
+xnoremap(
+  '<localleader>?',
+  [["gy:lua rvim.mappings.ddg(vim.api.nvim_eval("@g"))<CR>gv]],
+  { desc = 'search word' }
+)
+-- Search Github
+nnoremap(
+  '<localleader>!',
+  [[:lua rvim.mappings.gh(vim.fn.expand("<cword>"))<CR>]],
+  { desc = 'gh search word' }
+)
+xnoremap(
+  '<localleader>!',
+  [["gy:lua rvim.mappings.gh(vim.api.nvim_eval("@g"))<CR>gv]],
+  { desc = 'gh search word' }
+)
+-----------------------------------------------------------------------------//
+-- GX - replicate netrw functionality
+-----------------------------------------------------------------------------//
 local function open_link()
   local file = fn.expand('<cfile>')
   if not file or fn.isdirectory(file) > 0 then return vim.cmd.edit(file) end
@@ -239,17 +280,44 @@ end
 nnoremap('gx', open_link)
 nnoremap('<leader>lq', function() rvim.toggle_qf_list() end, { desc = 'toggle quickfix' })
 nnoremap('<leader>lo', function() rvim.toggle_loc_list() end, { desc = 'toggle loclist' })
+
+-----------------------------------------------------------------------------//
+-- Completion
+-----------------------------------------------------------------------------//
+-- cycle the completion menu with <TAB>
+inoremap('<tab>', [[pumvisible() ? "\<C-n>" : "\<Tab>"]], { expr = true })
+inoremap('<s-tab>', [[pumvisible() ? "\<C-p>" : "\<S-Tab>"]], { expr = true })
+----------------------------------------------------------------------------------------------------
+-- Help
+nnoremap('<leader>ah', ':h <C-R>=expand("<cword>")<CR><CR>', { desc = 'help' })
+----------------------------------------------------------------------------------------------------
+-- Undo
+nnoremap('<C-z>', '<cmd>undo<CR>')
+vnoremap('<C-z>', '<cmd>undo<CR><Esc>')
+xnoremap('<C-z>', '<cmd>undo<CR><Esc>')
+inoremap('<c-z>', [[<Esc>:undo<CR>]])
+----------------------------------------------------------------------------------------------------
+-- Reverse Line
+function rvim.rev_str(str) return string.reverse(str) end
+vnoremap(
+  '<leader>R',
+  [[:s/\%V.\+\%V./\=v:lua.rvim.rev_str(submatch(0))<CR>gv<ESC>]],
+  { desc = 'reverse line' }
+)
+----------------------------------------------------------------------------------------------------
+-- Inspect treesitter tree
+nnoremap(
+  '<localleader>le',
+  function() vim.treesitter.inspect_tree({ command = 'botright 60vnew' }) end,
+  { desc = 'open ts tree for current buffer' }
+)
 ----------------------------------------------------------------------------------------------------
 -- UI Toggles
 ----------------------------------------------------------------------------------------------------
---- Toggle vim options
----@param opt string
-local function get_option_value(opt) return api.nvim_get_option_value(opt, {}) end
-
 ---@param opt string
 -- TODO: simplify/improve logic
 local function toggle_opt(opt)
-  local value = get_option_value(opt)
+  local value = api.nvim_get_option_value(opt, {})
   if opt == 'laststatus' then
     if value == 0 then
       value = 3
@@ -258,7 +326,7 @@ local function toggle_opt(opt)
     end
   end
   if opt == 'colorcolumn' then
-    local tw = get_option_value('textwidth')
+    local tw = api.nvim_get_option_value('textwidth', {})
     if value == '' then value = '+1' end
     if value ~= '' and tw ~= 0 then value = '' end
     local ft = vim.bo.ft
@@ -292,220 +360,7 @@ nnoremap('<leader>oL', function() toggle_opt('cursorline') end, { desc = 'toggle
 nnoremap('<leader>ol', function() toggle_opt('laststatus') end, { desc = 'toggle statusline' })
 nnoremap('<leader>oC', function() toggle_opt('colorcolumn') end, { desc = 'toggle colorcolumn' })
 ----------------------------------------------------------------------------------------------------
--- Windows
-----------------------------------------------------------------------------------------------------
-nnoremap(
-  '<localleader>wv',
-  '<C-W>t <C-W>H<C-W>=',
-  { desc = 'change two vertically split windows to horizontal splits' }
-)
--- Change two vertically split windows to horizontal splits
-nnoremap(
-  '<localleader>wh',
-  '<C-W>t <C-W>K<C-W>=',
-  { desc = 'change two horizontally split windows to vertical splits' }
-)
-----------------------------------------------------------------------------------------------------
--- Folds
-----------------------------------------------------------------------------------------------------
--- Make zO recursively open whatever top level fold we're in, no matter where the
--- cursor happens to be.
-nnoremap('zO', [[zCzO]])
-----------------------------------------------------------------------------------------------------
--- Delimiters
-----------------------------------------------------------------------------------------------------
--- TLDR: Conditionally modify character at end of line
--- Description:
--- This function takes a delimiter character and:
---   * removes that character from the end of the line if the character at the end
---     of the line is that character
---   * removes the character at the end of the line if that character is a
---     delimiter that is not the input character and appends that character to
---     the end of the line
---   * adds that character to the end of the line if the line does not end with
---     a delimiter
--- Delimiters:
--- - ","
--- - ";"
----@param character string
----@return function
-local function modify_line_end_delimiter(character)
-  local delimiters = { ',', ';' }
-  return function()
-    local line = api.nvim_get_current_line()
-    local last_char = line:sub(-1)
-    if last_char == character then
-      api.nvim_set_current_line(line:sub(1, #line - 1))
-      return
-    end
-    if vim.tbl_contains(delimiters, last_char) then
-      api.nvim_set_current_line(line:sub(1, #line - 1) .. character)
-      return
-    end
-    api.nvim_set_current_line(line .. character)
-  end
-end
--- Conditionally modify character at end of line
-nnoremap('<localleader>,', modify_line_end_delimiter(','), { desc = 'append comma' })
-nnoremap('<localleader>;', modify_line_end_delimiter(';'), { desc = 'append semi colon' })
-nnoremap('<localleader>.', modify_line_end_delimiter('.'), { desc = 'append period' })
-
-----------------------------------------------------------------------------------------------------
--- Quick find/replace
-----------------------------------------------------------------------------------------------------
-nnoremap('<leader>[', [[:%s/\<<C-r>=expand("<cword>")<CR>\>/]], { desc = 'replace all' })
-nnoremap('<leader>]', [[:s/\<<C-r>=expand("<cword>")<CR>\>/]], { desc = 'replace in line' })
-vnoremap('<leader>[', [["zy:%s/<C-r><C-o>"/]], { desc = 'replace all' })
-----------------------------------------------------------------------------------------------------
--- open a new file in the same directory
-nnoremap('<leader>no', [[:e <C-R>=expand("%:p:h") . "/" <CR>]], { desc = 'open file in same dir' })
--- create a new file in the same directory
-nnoremap(
-  '<leader>nf',
-  [[:vsp <C-R>=expand("%:p:h") . "/" <CR>]],
-  { desc = 'create new file in same dir' }
-)
-----------------------------------------------------------------------------------------------------
--- Multiple Cursor Replacement
--- http://www.kevinli.co/posts/2017-01-19-multiple-cursors-in-500-bytes-of-vimscript/
-----------------------------------------------------------------------------------------------------
-nnoremap('cn', '*``cgn')
-nnoremap('cN', '*``cgN')
-
--- 1. Position the cursor over a word; alternatively, make a selection.
--- 2. Hit cq to start recording the macro.
--- 3. Once you are done with the macro, go back to normal mode.
--- 4. Hit Enter to repeat the macro over search matches.
-function rvim.mappings.setup_map()
-  nnoremap('M', [[:nnoremap M n@z<CR>q:<C-u>let @z=strpart(@z,0,strlen(@z)-1)<CR>n@z]])
-end
-
-vim.g.mc = rvim.replace_termcodes([[y/\V<C-r>=escape(@", '/')<CR><CR>]])
-xnoremap('cn', [[g:mc . "``cgn"]], { expr = true, silent = true })
-xnoremap('cN', [[g:mc . "``cgN"]], { expr = true, silent = true })
-nnoremap('cq', [[:\<C-u>call v:lua.rvim.mappings.setup_map()<CR>*``qz]])
-nnoremap('cQ', [[:\<C-u>call v:lua.rvim.mappings.setup_map()<CR>#``qz]])
-xnoremap(
-  'cq',
-  [[":\<C-u>call v:lua.rvim.mappings.setup_map()<CR>gv" . g:mc . "``qz"]],
-  { expr = true }
-)
-xnoremap(
-  'cQ',
-  [[":\<C-u>call v:lua.rvim.mappings.setup_map()<CR>gv" . substitute(g:mc, '/', '?', 'g') . "``qz"]],
-  { expr = true }
-)
-
-----------------------------------------------------------------------------------------------------
--- Web Search
-----------------------------------------------------------------------------------------------------
-function rvim.mappings.ddg(path) rvim.web_search(path, 'https://html.duckduckgo.com/html?q=') end
-function rvim.mappings.gh(path) rvim.web_search(path, 'https://github.com/search?q=') end
-
--- Search DuckDuckGo
-nnoremap(
-  '<localleader>?',
-  [[:lua rvim.mappings.ddg(vim.fn.expand("<cword>"))<CR>]],
-  { desc = 'search' }
-)
-xnoremap(
-  '<localleader>?',
-  [["gy:lua rvim.mappings.ddg(vim.api.nvim_eval("@g"))<CR>gv]],
-  { desc = 'search' }
-)
--- Search Github
-nnoremap(
-  '<localleader>!',
-  [[:lua rvim.mappings.gh(vim.fn.expand("<cword>"))<CR>]],
-  { desc = 'gh search' }
-)
-xnoremap(
-  '<localleader>!',
-  [["gy:lua rvim.mappings.gh(vim.api.nvim_eval("@g"))<CR>gv]],
-  { desc = 'gh search' }
-)
-----------------------------------------------------------------------------------------------------
--- Undo
-----------------------------------------------------------------------------------------------------
-nnoremap('<C-z>', '<cmd>undo<CR>')
-vnoremap('<C-z>', '<cmd>undo<CR><Esc>')
-xnoremap('<C-z>', '<cmd>undo<CR><Esc>')
-inoremap('<c-z>', [[<Esc>:undo<CR>]])
-----------------------------------------------------------------------------------------------------
--- Escape
-----------------------------------------------------------------------------------------------------
-nnoremap('<C-c>', '<Esc>')
-----------------------------------------------------------------------------------------------------
--- Window Movement
-----------------------------------------------------------------------------------------------------
-nnoremap('<C-h>', '<C-w>h')
-nnoremap('<C-j>', '<C-w>j')
-nnoremap('<C-k>', '<C-w>k')
-nnoremap('<C-l>', '<C-w>l')
-----------------------------------------------------------------------------------------------------
--- Buffer Movement
-nnoremap('H', '<cmd>bprevious<CR>', { desc = 'previous buffer' })
-nnoremap('L', '<cmd>bnext<CR>', { desc = 'next buffer' })
-----------------------------------------------------------------------------------------------------
--- Personal
-----------------------------------------------------------------------------------------------------
-local function empty_registers()
-  api.nvim_exec(
-    [[
-    let regs=split('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/-"', '\zs')
-    for r in regs
-        call setreg(r, [])
-    endfor
-  ]],
-    false
-  )
-end
-nnoremap('<leader>aR', empty_registers, { desc = 'empty registers' })
-----------------------------------------------------------------------------------------------------
--- Search word
-----------------------------------------------------------------------------------------------------
-nnoremap('<leader>B', '/<C-R>=escape(expand("<cword>"), "/")<CR><CR>', { desc = 'find cword' })
-----------------------------------------------------------------------------------------------------
--- Greatest remap ever
-----------------------------------------------------------------------------------------------------
-vnoremap('<leader>p', '"_dP', { desc = 'greatest remap' })
-----------------------------------------------------------------------------------------------------
--- Next greatest remap ever : asbjornHaland
-----------------------------------------------------------------------------------------------------
-nnoremap('<leader>y', '"+y', { desc = 'yank' })
-vnoremap('<leader>y', '"+y', { desc = 'yank' })
-nnoremap('<leader>dd', '"_d', { desc = 'delete' })
-vnoremap('<leader>dd', '"_d', { desc = 'delete' })
-----------------------------------------------------------------------------------------------------
--- Paste in visual mode multiple times
-----------------------------------------------------------------------------------------------------
-xnoremap('p', 'pgvy')
-----------------------------------------------------------------------------------------------------
--- Reverse Line
-----------------------------------------------------------------------------------------------------
-function rvim.rev_str(str) return string.reverse(str) end
-vnoremap(
-  '<leader>R',
-  [[:s/\%V.\+\%V./\=v:lua.rvim.rev_str(submatch(0))<CR>gv<ESC>]],
-  { desc = 'reverse line' }
-)
-----------------------------------------------------------------------------------------------------
--- Yank / Select / Delete All
-----------------------------------------------------------------------------------------------------
-nnoremap('<leader>Y', 'gg"+VGy<C-o>', { desc = 'yank all' })
-nnoremap('<leader>A', 'gg"+VG', { desc = 'select all' })
-nnoremap('<leader>D', 'gg"+VGd', { desc = 'delete all' })
-----------------------------------------------------------------------------------------------------
--- rVim {{{
-----------------------------------------------------------------------------------------------------
-nnoremap(
-  '<localleader>le',
-  function() vim.treesitter.inspect_tree({ command = 'botright 60vnew' }) end,
-  { desc = 'open ts tree for current buffer' }
-)
-----------------------------------------------------------------------------------------------------
 -- Abbreviations
-----------------------------------------------------------------------------------------------------
 vim.cmd([[
   inoreabbrev fucntion function
   inoreabbrev cosnt const
