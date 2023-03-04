@@ -1,7 +1,7 @@
 local ui, fn, api, fmt = rvim.ui, vim.fn, vim.api, string.format
 local border = ui.current.border
 local lsp_hls = rvim.lsp.kind_highlights
-local ellipsis = ui.icons.misc.ellipsis
+local ellipsis = ui.icons.ui.ellipsis
 
 local function get_color(r, g, b)
   return ((r * 0.299 + g * 0.587 + b * 0.114) > 186) and '#000000' or '#ffffff'
@@ -115,19 +115,19 @@ return {
             end
 
             if entry.source.name == 'emoji' then
-              vim_item.kind = format_icon(codicons.misc.Smiley)
+              vim_item.kind = format_icon(codicons.misc.smiley)
             end
 
             if entry.source.name == 'lab.quick_data' then
-              vim_item.kind = format_icon(codicons.misc.CircuitBoard)
+              vim_item.kind = format_icon(codicons.misc.circuit_board)
             end
 
             if entry.source.name == 'dynamic' then
-              vim_item.kind = format_icon(codicons.ui.Calendar)
+              vim_item.kind = format_icon(codicons.ui.calendar)
             end
 
             if entry.source.name == 'crates' then
-              vim_item.kind = format_icon(ui.icons.misc.Package)
+              vim_item.kind = format_icon(ui.codicons.ui.package)
             end
 
             if vim_item.kind == 'Color' then

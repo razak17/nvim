@@ -1,15 +1,15 @@
 return {
   'williamboman/mason.nvim',
   init = function()
-    local icons = rvim.ui.icons
+    local icons = rvim.ui.icons.ui
     require('mason').setup({
       ui = {
         border = rvim.ui.current.border,
         height = 0.8,
         icons = {
-          package_installed = icons.misc.checkmark,
-          package_pending = icons.misc.right_arrow,
-          package_uninstalled = icons.misc.uninstalled,
+          package_installed = icons.checkmark,
+          package_pending = icons.right_arrow,
+          package_uninstalled = icons.uninstalled,
         },
       },
     })

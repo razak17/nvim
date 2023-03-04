@@ -1,4 +1,4 @@
-local icons = rvim.ui.icons
+local ui = rvim.ui
 
 return {
   'folke/which-key.nvim',
@@ -9,8 +9,8 @@ return {
       plugins = {
         spelling = { enabled = true },
       },
-      icons = { breadcrumb = icons.misc.double_chevron_right },
-      window = { border = rvim.ui.current.border },
+      icons = { breadcrumb = ui.icons.ui.double_chevron_right },
+      window = { border = ui.current.border },
       layout = { align = 'center' },
       hidden = { '<silent>', '<cmd>', '<Cmd>', '<CR>', 'call', 'lua', '^:', '^ ' },
       show_help = true,

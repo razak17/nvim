@@ -1,4 +1,5 @@
 local icons = rvim.ui.icons
+local codicons = rvim.ui.codicons
 local highlight = rvim.highlight
 
 return {
@@ -67,19 +68,19 @@ return {
         },
       },
       default_component_configs = {
-        icon = { folder_empty = icons.documents.open_folder },
-        modified = { symbol = icons.misc.circle .. ' ' },
+        icon = { folder_empty = codicons.documents.open_folder },
+        modified = { symbol = codicons.ui.filled_circle .. ' ' },
         git_status = {
           symbols = {
-            added = icons.git.add,
-            deleted = icons.git.remove,
-            modified = icons.git.mod,
-            renamed = icons.git.rename,
+            added = codicons.git.added,
+            deleted = codicons.git.removed,
+            modified = codicons.git.mod,
+            renamed = codicons.git.renamed,
             untracked = icons.git.untracked,
-            ignored = icons.git.ignore,
-            unstaged = icons.git.staged,
-            staged = icons.git.unstaged,
-            conflict = icons.git.conflict,
+            ignored = codicons.git.ignored,
+            unstaged = codicons.git.staged,
+            staged = codicons.git.unstaged,
+            conflict = icons.git.branch,
           },
         },
         diagnostics = {

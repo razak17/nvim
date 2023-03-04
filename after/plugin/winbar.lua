@@ -9,10 +9,10 @@ local fn, api = vim.fn, vim.api
 local component = str.component
 local component_raw = str.component_raw
 local empty = rvim.empty
-local icons = rvim.ui.icons.misc
+local icons = rvim.ui.icons.ui
 
-local dir_separator = icons.caret_right
-local separator = icons.arrow_right
+local dir_separator = icons.chevron_right
+local separator = icons.triangle
 local ellipsis = icons.ellipsis
 
 --- A mapping of each winbar items ID to its path

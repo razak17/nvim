@@ -46,7 +46,7 @@ return {
     config = function()
       vim.g.navic_silence = true
       local fmt = string.format
-      local misc = ui.icons.misc
+      local icons = ui.icons.ui
       local lsp_icons = {}
       for key, val in pairs(ui.current.lsp_icons) do
         hl.set(fmt('NavicIcons%s', key), { link = rvim.lsp.kind_highlights[key] })
@@ -55,8 +55,8 @@ return {
       require('nvim-navic').setup({
         icons = lsp_icons,
         highlight = true,
-        depth_limit_indicator = misc.ellipsis,
-        separator = fmt(' %s ', misc.arrow_right),
+        depth_limit_indicator = icons.ellipsis,
+        separator = fmt(' %s ', icons.triangle),
       })
       hl.plugin('navic', {
         { NavicText = { bold = false } },
@@ -113,7 +113,7 @@ return {
         { LightBulbFloatWin = { foreground = { from = 'Type' } } },
         { LightBulbVirtualText = { foreground = { from = 'Type' } } },
       })
-      local icon = ui.icons.misc.lightbulb
+      local icon = ui.icons.ui.lightbulb
       require('nvim-lightbulb').setup({
         ignore = { 'null-ls' },
         autocmd = { enabled = true },

@@ -71,28 +71,28 @@ return {
       },
     },
     config = function()
-      local fn, icons = vim.fn, rvim.ui.icons
+      local fn, ui = vim.fn, rvim.ui
       local dap = require('dap')
 
       -- DON'T automatically stop at exceptions
       dap.defaults.fallback.exception_breakpoints = {}
 
       fn.sign_define('DapBreakpoint', {
-        text = icons.misc.bug_alt,
+        text = ui.codicons.ui.bug,
         texthl = 'DapBreakpoint',
         linehl = '',
         numhl = '',
       })
 
       fn.sign_define('DapBreakpointRejected', {
-        text = icons.misc.bug_alt,
+        text = ui.codicons.ui.bug,
         texthl = 'DapBreakpointRejected',
         linehl = '',
         numhl = '',
       })
 
       fn.sign_define('DapStopped', {
-        text = icons.misc.dap_hollow,
+        text = ui.icons.ui.dap_green,
         texthl = 'DapStopped',
         linehl = '',
         numhl = '',

@@ -158,8 +158,8 @@ return {
 
     require('telescope').setup({
       defaults = {
-        prompt_prefix = fmt(' %s  ', ui.icons.misc.search_alt),
-        selection_caret = fmt(' %s ', ui.icons.misc.pick),
+        prompt_prefix = fmt(' %s  ', ui.codicons.ui.search_alt),
+        selection_caret = fmt(' %s ', ui.codicons.ui.pick),
         cycle_layout_list = { 'flex', 'horizontal', 'vertical', 'bottom_pane', 'center' },
         sorting_strategy = 'ascending',
         layout_strategy = 'horizontal',

@@ -70,7 +70,7 @@ return {
     local function ins_right(component) table.insert(lualine_config.sections.lualine_x, component) end
 
     ins_left({
-      function() return icons.statusline.bar end,
+      function() return icons.separators.bar end,
       color = function() return { fg = mode_color[vim.fn.mode()] } end,
       padding = { left = 0, right = 1 },
     })
