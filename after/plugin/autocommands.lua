@@ -179,26 +179,26 @@ rvim.augroup('Cursorline', {
 })
 
 if vim.env.TMUX ~= nil then
-  local external = require('user.utils.external')
+  local tmux = require('user.tmux')
   rvim.augroup('ExternalConfig', {
     event = { 'BufEnter' },
-    command = function() vim.o.titlestring = external.title_string() end,
+    command = function() vim.o.titlestring = tmux.title_string() end,
   }, {
     event = { 'FocusGained', 'BufReadPost', 'BufEnter' },
-    command = function() external.tmux.set_window_title() end,
+    command = function() tmux.set_window_title() end,
   }, {
     event = { 'VimLeave' },
-    command = function() external.tmux.clear_pane_title() end,
+    command = function() tmux.clear_pane_title() end,
   }, {
     event = { 'VimLeavePre', 'FocusLost' },
-    command = function() external.tmux.set_statusline(true) end,
+    command = function() tmux.set_statusline(true) end,
   }, {
     event = { 'ColorScheme', 'FocusGained' },
     command = function()
       -- NOTE: there is a race condition here rvim the colors
       -- for kitty to re-use need to be set AFTER the rest of the colorscheme
       -- overrides
-      vim.defer_fn(function() external.tmux.set_statusline() end, 1)
+      vim.defer_fn(function() tmux.set_statusline() end, 1)
     end,
   })
 end

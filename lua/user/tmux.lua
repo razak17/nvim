@@ -1,13 +1,10 @@
-local M = {
-  tmux = {},
-}
+local M = {}
 
-local fn = vim.fn
-local fmt = string.format
+local fn, fmt = vim.fn, string.format
 
 --- Get the color of the current vim background and update tmux accordingly
 ---@param reset boolean?
-function M.tmux.set_statusline(reset)
+function M.set_statusline(reset)
   -- TODO: we should correctly derive the previous bg value automatically
   local bg = reset and '#292e42' or rvim.highlight.get('Normal', 'bg')
   fn.jobstart(fmt('tmux set-option -g status-style bg=%s', bg))
@@ -33,9 +30,9 @@ function M.title_string()
   return has_tmux and title_string or dir .. ' ' .. icon
 end
 
-function M.tmux.clear_pane_title() fn.jobstart('tmux set-window-option automatic-rename on') end
+function M.clear_pane_title() fn.jobstart('tmux set-window-option automatic-rename on') end
 
-function M.tmux.set_window_title()
+function M.set_window_title()
   local session = fn.fnamemodify(vim.loop.cwd(), ':t') or 'Neovim'
   local window_title = fmt('%s', session)
   fn.jobstart(fmt("tmux rename-window '%s'", window_title))
