@@ -5,6 +5,7 @@ local g, rtp = vim.g, vim.opt.rtp
 ----------------------------------------------------------------------------------------------------
 -- Set leader keys
 ----------------------------------------------------------------------------------------------------
+-- NOTE: Leader keys have to be set before lazy is loaded
 g.mapleader = ' '
 g.maplocalleader = ','
 
