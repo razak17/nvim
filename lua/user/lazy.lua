@@ -22,7 +22,7 @@ function Lazy:load_plugins()
 end
 
 function Lazy:bootstrap()
-  local lazy_path = join_paths(rvim.get_pack_dir(), 'lazy', 'lazy.nvim')
+  local lazy_path = join_paths(rvim.get_runtime_dir(), 'site', 'pack', 'lazy', 'lazy.nvim')
   if not vim.loop.fs_stat(lazy_path) then
     vim.fn.system({
       'git',
@@ -36,7 +36,7 @@ function Lazy:bootstrap()
   vim.opt.rtp:prepend(lazy_path)
   self:load_plugins()
   local opts = {
-    root = join_paths(rvim.get_pack_dir(), 'lazy'),
+    root = join_paths(rvim.get_runtime_dir(), 'site', 'pack', 'lazy'),
     defaults = { lazy = true },
     lockfile = join_paths(rvim.get_config_dir(), 'lazy-lock.json'),
     git = { timeout = 720 },
