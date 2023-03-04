@@ -1,7 +1,7 @@
 local M = {}
 
-local uv = vim.loop
-local fmt = string.format
+local uv, fmt = vim.loop, string.format
+local ftplugin_dir = rvim.lsp.templates_dir
 
 local configured_filetypes = {
   'astro',
@@ -111,7 +111,7 @@ end
 function M.generate_templates(servers_names)
   servers_names = servers_names or get_supported_servers()
   M.remove_template_files()
-  if not rvim.is_directory(rvim.lsp.templates_dir) then vim.fn.mkdir(ftplugin_dir, 'p') end
+  if not rvim.is_directory(ftplugin_dir) then vim.fn.mkdir(ftplugin_dir, 'p') end
   for _, server in ipairs(servers_names) do
     local config = require('user.servers')(server)
     if config then generate_ftplugin(server, ftplugin_dir) end
