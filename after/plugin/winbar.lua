@@ -1,6 +1,6 @@
 ---@diagnostic disable: duplicate-doc-param missing-return
 
-if not rvim or not rvim.ui.winbar.enable then return end
+if not rvim or not rvim.ui.winbar.enable or not rvim.plugins.enable then return end
 local decorations = rvim.ui.decorations
 
 local str = require('user.strings')

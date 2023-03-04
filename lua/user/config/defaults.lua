@@ -9,8 +9,6 @@ rvim.editor = { auto_save = true }
 
 rvim.lang = { format_on_save = true }
 
-rvim.plugins = { SANE = true }
-
 rvim.util = {
   disabled_builtins = {
     '2html_plugin',

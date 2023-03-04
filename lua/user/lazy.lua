@@ -14,7 +14,7 @@ function Lazy:load_plugins()
     list[#list + 1] = string.match(f, 'lua/(.+).lua$')
   end
 
-  if not rvim.plugins.SANE then return end
+  if not rvim.plugins.enable then return end
 
   for _, m in ipairs(list) do
     self.repos[#self.repos + 1] = require(m)

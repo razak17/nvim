@@ -27,6 +27,7 @@ local namespace = {
   -- some vim mappings require a mixture of commandline commands and function calls
   -- this table is place to store lua functions to be called in those mappings
   mappings = {},
+  plugins = { enable = false },
 }
 
 _G.rvim = rvim or namespace
@@ -41,4 +42,5 @@ R('user.config')
 ----------------------------------------------------------------------------------------------------
 -- Color Scheme
 ----------------------------------------------------------------------------------------------------
+if not rvim.plugins.enable then return end
 rvim.wrap_err('theme failed to load because', vim.cmd.colorscheme, 'zephyr')

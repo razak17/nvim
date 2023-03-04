@@ -73,7 +73,7 @@ end
 ---@param server_name string name of the language server
 ---@param user_config table? when available it will take predence over any default configurations
 function M.setup(server_name, user_config)
-  if not rvim.plugins.SANE then return end
+  if not rvim.plugins.enabled then return end
   vim.validate({ name = { server_name, 'string' } })
   user_config = user_config or {}
   if client_active(server_name) or client_configured(server_name) then return end

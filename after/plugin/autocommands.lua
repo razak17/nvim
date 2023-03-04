@@ -1,4 +1,4 @@
-if not rvim then return end
+if not rvim or not rvim.plugins.enable then return end
 
 local fn, api, fmt = vim.fn, vim.api, string.format
 
