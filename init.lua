@@ -21,9 +21,8 @@ function R(name)
   return require(name)
 end
 
-local uv = vim.loop
 function join_paths(...)
-  local path_sep = uv.os_uname().version:match('Windows') and '\\' or '/'
+  local path_sep = vim.loop.os_uname().version:match('Windows') and '\\' or '/'
   return table.concat({ ... }, path_sep)
 end
 ----------------------------------------------------------------------------------------------------
@@ -51,6 +50,7 @@ _G.map = vim.keymap.set
 ----------------------------------------------------------------------------------------------------
 -- Load Modules
 ----------------------------------------------------------------------------------------------------
+-- Order matters here as globals needs to be instantiated first etc.
 R('user.globals')
 R('user.bootstrap')
 

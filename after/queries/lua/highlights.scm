@@ -20,7 +20,6 @@
 (("comment_start"    @comment) (#set! conceal ""))
 
 ;; Function names
-((function_call name: (identifier) @TSNote (#eq? @TSNote "join_paths")) (#set! conceal "J"))
 ((function_call name: (identifier) @TSNote (#eq? @TSNote "require"   )) (#set! conceal ""))
 ((function_call name: (identifier) @TSNote (#eq? @TSNote "print"     )) (#set! conceal ""))
 ((function_call name: (identifier) @TSNote (#eq? @TSNote "pairs"     )) (#set! conceal "P"))

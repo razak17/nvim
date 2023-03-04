@@ -3,6 +3,12 @@ if not rvim then return end
 local g, rtp = vim.g, vim.opt.rtp
 
 ----------------------------------------------------------------------------------------------------
+-- Set leader keys
+----------------------------------------------------------------------------------------------------
+g.mapleader = ' '
+g.maplocalleader = ','
+
+----------------------------------------------------------------------------------------------------
 -- Set Providers
 ----------------------------------------------------------------------------------------------------
 g.python3_host_prog = join_paths(rvim.get_cache_dir(), 'venv', 'neovim', 'bin', 'python3')
@@ -37,4 +43,4 @@ vim.cmd([[let &packpath = &runtimepath]])
 R('user.settings')
 R('user.highlights')
 R('user.ui')
-R('user.lazy'):bootstrap() -- Lazy has to be sourced last
+R('user.lazy'):bootstrap() -- Lazy has to be sourced last. Depends on modules above

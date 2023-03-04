@@ -3,14 +3,6 @@ if not rvim then return end
 local fn = vim.fn
 local api = vim.api
 local fmt = string.format
-local g = vim.g
-
-
-----------------------------------------------------------------------------------------------------
--- Set leader keys
-----------------------------------------------------------------------------------------------------
-g.mapleader = ' '
-g.maplocalleader = ','
 
 local recursive_map = function(mode, lhs, rhs, opts)
   opts = opts or {}
