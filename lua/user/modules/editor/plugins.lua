@@ -2,7 +2,7 @@ return {
   'kazhala/close-buffers.nvim',
 
   {
-    'ghillb/cybu.nvim',
+    'razak17/cybu.nvim',
     event = { 'BufRead', 'BufNewFile' },
     keys = {
       { 'H', '<cmd>Cybu prev<CR>', desc = 'cybu: prev' },
