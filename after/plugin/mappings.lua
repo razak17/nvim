@@ -315,7 +315,6 @@ nnoremap(
 -- UI Toggles
 ----------------------------------------------------------------------------------------------------
 ---@param opt string
--- TODO: simplify/improve logic
 local function toggle_opt(opt)
   local prev = api.nvim_get_option_value(opt, {})
   local value
@@ -324,20 +323,17 @@ local function toggle_opt(opt)
     if prev > 0 then value = 0 end
   end
   if opt == 'colorcolumn' then
+    -- NOTE: value is set to +1 twice during the first two toggles when using the virtcolumn plugin
     value = prev
     local tw = api.nvim_get_option_value('textwidth', {})
-    if value == '' then value = '+1' end
-    if value ~= '' and tw ~= 0 then value = '' end
+    if prev == '' then value = '+1' end
+    if prev ~= '' and tw ~= 0 then value = '' end
     local ft = vim.bo.ft
     local tw_ft = rvim.ui.tw[ft]
-    if tw == 0 then
-      if tw_ft then vim.bo['tw'] = tw_ft end
-      if not tw_ft then return end
-    end
-    if tw > 0 then
-      rvim.ui.tw[ft] = tw
-      vim.bo['tw'] = 0
-    end
+    if tw == 0 and not tw_ft then return end
+    if tw_ft then vim.bo['tw'] = tw_ft end
+    if tw > 0 then vim.bo['tw'] = 0 end
+    rvim.ui.tw[ft] = tw
   end
 
   if type(prev) == 'boolean' then value = not prev end
