@@ -317,15 +317,14 @@ nnoremap(
 ---@param opt string
 -- TODO: simplify/improve logic
 local function toggle_opt(opt)
-  local value = api.nvim_get_option_value(opt, {})
+  local prev = api.nvim_get_option_value(opt, {})
+  local value
   if opt == 'laststatus' then
-    if value == 0 then
-      value = 3
-    elseif value > 0 then
-      value = 0
-    end
+    if prev == 0 then value = 3 end
+    if prev > 0 then value = 0 end
   end
   if opt == 'colorcolumn' then
+    value = prev
     local tw = api.nvim_get_option_value('textwidth', {})
     if value == '' then value = '+1' end
     if value ~= '' and tw ~= 0 then value = '' end
@@ -341,7 +340,7 @@ local function toggle_opt(opt)
     end
   end
 
-  if type(value) == 'boolean' then value = not value end
+  if type(prev) == 'boolean' then value = not prev end
   vim.opt[opt] = value
   vim.notify(fmt('%s set to %s', opt, tostring(value)), 'info', { title = 'UI Toggles' })
 end
