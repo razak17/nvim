@@ -42,14 +42,8 @@ return {
           move = {
             enable = true,
             set_jumps = true, -- whether to set jumps in the jumplist
-            goto_next_start = {
-              [']m'] = '@function.outer',
-              [']c'] = '@class.outer',
-            },
-            goto_previous_start = {
-              ['[m'] = '@function.outer',
-              ['[c'] = '@class.outer',
-            },
+            goto_next_start = { [']m'] = '@function.outer', [']c'] = '@class.outer' },
+            goto_previous_start = { ['[m'] = '@function.outer', ['[c'] = '@class.outer' },
           },
           lsp_interop = {
             enable = false,
@@ -68,31 +62,11 @@ return {
           lint_events = { 'BufWrite', 'CursorHold' },
         },
         playground = { persist_queries = true },
+        -- stylua: ignore
         ensure_installed = {
-          'lua',
-          'dart',
-          'rust',
-          'typescript',
-          'tsx',
-          'javascript',
-          -- "comment", -- comments are slowing down TS bigtime, so disable for now
-          'markdown',
-          'markdown_inline',
-          'prisma',
-          'graphql',
-          'go',
-          'python',
-          'json',
-          'http',
-          'help',
-          'git_rebase',
-          'bash',
-          'c',
-          'diff',
-          'toml',
-          'cpp',
-          'jsonc',
-          'query',
+          'lua', 'dart', 'rust', 'typescript', 'tsx', 'javascript', 'markdown', 'markdown_inline',
+          'prisma', 'graphql', 'go', 'python', 'json', 'http', 'help', 'git_rebase', 'bash', 'c',
+          'diff', 'toml', 'cpp', 'jsonc', 'query',
         },
       })
 
