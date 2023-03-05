@@ -11,13 +11,16 @@ local servers = {
   cmake = {},
   cssls = {},
   dockerls = {},
-  html = {},
   marksman = {},
   prismals = {},
   quick_lint_js = {},
   sqls = {},
   svelte = {},
+  eslint = {},
   tsserver = {
+    on_attach = function(client)
+      client.server_capabilities.documentFormattingProvider = false -- 0.8 and later
+    end,
     -- NOTE: Apparently setting this to false improves performance
     -- https://github.com/sublimelsp/LSP-typescript/issues/129#issuecomment-1281643371
     initializationOptions = {
