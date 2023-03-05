@@ -12,7 +12,6 @@ return {
     'neovim/nvim-lspconfig',
     config = function() require('lspconfig.ui.windows').default_options.border = border end,
   },
-
   {
     'williamboman/mason.nvim',
     dependencies = { 'williamboman/mason-lspconfig.nvim', 'neovim/nvim-lspconfig' },
@@ -32,7 +31,18 @@ return {
       map('n', '<leader>lm', '<cmd>Mason<CR>', { desc = 'mason: info' })
     end,
   },
-
+  {
+    'folke/neodev.nvim',
+    opts = {
+      debug = true,
+      experimental = { pathStrict = true },
+      library = {
+        runtime = join_paths(vim.env.HOME, 'neovim', 'share', 'nvim', 'runtime'),
+        plugins = { 'neotest' },
+        types = true,
+      },
+    },
+  },
   {
     'ray-x/lsp_signature.nvim',
     event = 'InsertEnter',
@@ -46,14 +56,12 @@ return {
       select_signature_key = '<M-N>',
     },
   },
-
   {
     'joechrisellis/lsp-format-modifications.nvim',
     keys = {
       { '<localleader>lm', '<cmd>FormatModifications<CR>', desc = 'format-modifications: format' },
     },
   },
-
   {
     'SmiteshP/nvim-navic',
     event = { 'BufRead', 'BufNewFile' },
@@ -79,7 +87,6 @@ return {
       })
     end,
   },
-
   {
     'razak17/glance.nvim',
     keys = {
@@ -99,26 +106,11 @@ return {
       })
     end,
   },
-
   {
     'olexsmir/gopher.nvim',
     ft = 'go',
     dependencies = { 'nvim-lua/plenary.nvim', 'nvim-treesitter/nvim-treesitter' },
   },
-
-  {
-    'folke/neodev.nvim',
-    opts = {
-      debug = true,
-      experimental = { pathStrict = true },
-      library = {
-        runtime = join_paths(vim.env.HOME, 'neovim', 'share', 'nvim', 'runtime'),
-        plugins = { 'neotest' },
-        types = true,
-      },
-    },
-  },
-
   {
     'kosayoda/nvim-lightbulb',
     event = 'LspAttach',
@@ -137,7 +129,6 @@ return {
       })
     end,
   },
-
   {
     'mfussenegger/nvim-treehopper',
     keys = {
@@ -158,7 +149,6 @@ return {
       },
     },
   },
-
   {
     'lvimuser/lsp-inlayhints.nvim',
     event = 'LspAttach',
@@ -183,7 +173,6 @@ return {
       },
     },
   },
-
   {
     'danymat/neogen',
     keys = {
@@ -195,14 +184,12 @@ return {
     },
     opts = { snippet_engine = 'luasnip' },
   },
-
   {
     'andymass/vim-matchup',
     event = 'BufReadPost',
     keys = { { '<localleader>lw', ':<c-u>MatchupWhereAmI?<CR>', desc = 'matchup: where am i' } },
     config = function() vim.g.matchup_matchparen_enabled = 0 end,
   },
-
   {
     'ckolkey/ts-node-action',
     keys = {
@@ -223,7 +210,6 @@ return {
       })
     end,
   },
-
   {
     'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
     event = 'LspAttach',

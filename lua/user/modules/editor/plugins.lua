@@ -13,7 +13,6 @@ return {
       style = { border = 'single', hide_buffer_id = true },
     },
   },
-
   {
     'karb94/neoscroll.nvim', -- NOTE: alternative: 'declancm/cinnamon.nvim'
     keys = {
@@ -24,7 +23,6 @@ return {
     },
     opts = { hide_cursor = true },
   },
-
   {
     'jghauser/fold-cycle.nvim',
     config = true,
@@ -32,20 +30,17 @@ return {
       { '<BS>', function() require('fold-cycle').open() end, desc = 'fold-cycle: toggle' },
     },
   },
-
   {
     'psliwka/vim-dirtytalk',
     build = ':DirtytalkUpdate',
     init = function() vim.opt.spelllang:append('programming') end,
   },
-
   {
 
     'xiyaowong/accelerated-jk.nvim',
     event = 'VeryLazy',
     opts = { mappings = { j = 'gj', k = 'gk' } },
   },
-
   {
     'andrewferrier/debugprint.nvim',
     keys = {
@@ -66,13 +61,11 @@ return {
     },
     opts = { create_keymaps = false },
   },
-
   {
     'axelvc/template-string.nvim',
     ft = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
     opts = { remove_template_string = true },
   },
-
   {
     'Wansmer/treesj',
     keys = {
@@ -81,7 +74,6 @@ return {
     },
     opts = { use_default_keymaps = false, max_join_length = 150 },
   },
-
   {
     'mizlan/iswap.nvim',
     keys = {
@@ -89,7 +81,6 @@ return {
       { '<leader>iw', '<cmd>ISwapWith<CR>', desc = 'iswap: swap with' },
     },
   },
-
   {
     'ThePrimeagen/refactoring.nvim',
     keys = {
@@ -104,7 +95,6 @@ return {
       },
     },
   },
-
   {
     'nguyenvukhang/nvim-toggler',
     keys = {

@@ -5,21 +5,17 @@ return {
   'nvim-tree/nvim-web-devicons',
 
   { 'fladson/vim-kitty', ft = 'kitty' },
-
   { 'razak17/zephyr-nvim', lazy = false, priority = 1000 },
-
   {
     'itchyny/vim-highlighturl',
     event = 'BufReadPre',
     config = function() vim.g.highlighturl_guifg = hl.get('URL', 'fg') end,
   },
-
   {
     'romainl/vim-cool',
     event = 'BufReadPre',
     config = function() vim.g.CoolTotalMatches = 1 end,
   },
-
   {
     'lukas-reineke/indent-blankline.nvim',
     event = { 'BufReadPre', 'BufNewFile' },
@@ -41,7 +37,6 @@ return {
       },
     },
   },
-
   {
     'stevearc/dressing.nvim',
     event = 'VeryLazy',
@@ -55,7 +50,6 @@ return {
         local LIMIT = math.floor(max_lines / 2)
         return (results <= (LIMIT - PADDING) and results + PADDING or LIMIT)
       end
-
       require('dressing').setup({
         input = {
           insert_only = false,
@@ -77,7 +71,6 @@ return {
       })
     end,
   },
-
   {
     'j-hui/fidget.nvim',
     event = 'BufReadPre',
@@ -92,7 +85,6 @@ return {
       })
     end,
   },
-
   {
     'lukas-reineke/headlines.nvim',
     ft = { 'org', 'norg', 'markdown', 'yaml' },
@@ -117,7 +109,6 @@ return {
       })
     end,
   },
-
   {
     'folke/todo-comments.nvim',
     event = 'BufReadPre',
@@ -143,7 +134,6 @@ return {
       )
     end,
   },
-
   {
     'lukas-reineke/virt-column.nvim',
     event = 'BufReadPre',
@@ -161,7 +151,6 @@ return {
       })
     end,
   },
-
   {
     'uga-rosa/ccc.nvim',
     ft = { 'lua', 'vim', 'typescript', 'typescriptreact', 'javascriptreact', 'svelte', 'astro' },
@@ -171,7 +160,6 @@ return {
       highlighter = { auto_enable = true, excludes = { 'dart', 'html', 'css', 'typescriptreact' } },
     },
   },
-
   {
     'zbirenbaum/neodim',
     event = 'VeryLazy',
@@ -181,7 +169,6 @@ return {
       hide = { underline = false },
     },
   },
-
   {
     'levouh/tint.nvim',
     event = 'WinNew',

@@ -1,6 +1,5 @@
-local fn, ui = vim.fn, rvim.ui
+local fn, ui, hl = vim.fn, rvim.ui, rvim.highlight
 local border = ui.current.border
-local hl = rvim.highlight
 
 return {
   'nvim-lua/plenary.nvim',
@@ -14,7 +13,6 @@ return {
       { '<localleader>ll', '<cmd>Linediff<CR>', desc = 'linediff: toggle' },
     },
   },
-
   {
     'ahmedkhalf/project.nvim',
     event = 'LspAttach',
@@ -26,7 +24,6 @@ return {
       datapath = rvim.get_runtime_dir(),
     },
   },
-
   {
     'zbirenbaum/copilot.lua',
     event = 'InsertEnter',
@@ -57,7 +54,6 @@ return {
       },
     },
   },
-
   {
     'LeonHeidelbach/trailblazer.nvim',
     keys = {
@@ -83,7 +79,6 @@ return {
       },
     },
   },
-
   {
     'razak17/buffer_manager.nvim',
     keys = {
@@ -107,7 +102,6 @@ return {
       })
     end,
   },
-
   {
     'akinsho/toggleterm.nvim',
     event = 'VeryLazy',
@@ -166,7 +160,6 @@ return {
       map('n', '<leader>gD', dotfiles, { desc = 'toggleterm: commit dotfiles' })
     end,
   },
-
   {
     'folke/persistence.nvim',
     event = 'BufReadPre', -- this will only start session saving when an actual file was opened
@@ -187,13 +180,11 @@ return {
       options = { 'buffers', 'curdir', 'tabpages', 'winsize', 'help' },
     },
   },
-
   {
     'ggandor/flit.nvim',
     keys = { 'n', 'f' },
     opts = { labeled_modes = 'nvo', multiline = false },
   },
-
   {
     'mbbill/undotree',
     cmd = 'UndotreeToggle',
@@ -206,7 +197,6 @@ return {
       vim.g.undotree_SplitWidth = 35
     end,
   },
-
   {
     'kevinhwang91/nvim-bqf',
     ft = 'qf',
@@ -216,9 +206,7 @@ return {
       },
     },
   },
-
   { 'turbio/bracey.vim', ft = 'html', build = 'npm install --prefix server' },
-
   {
     'is0n/jaq-nvim',
     cmd = 'Jaq',
@@ -241,7 +229,6 @@ return {
       terminal = { position = 'vert', size = 60 },
     },
   },
-
   {
     'razak17/lab.nvim',
     event = 'InsertEnter',
@@ -269,7 +256,6 @@ return {
       })
     end,
   },
-
   {
     'iamcco/markdown-preview.nvim',
     build = function() fn['mkdp#util#install']() end,
@@ -279,14 +265,12 @@ return {
       vim.g.mkdp_auto_close = 1
     end,
   },
-
   {
     'razak17/package-info.nvim',
     event = 'BufRead package.json',
     dependencies = { 'MunifTanjim/nui.nvim' },
     opts = { autostart = false, package_manager = 'yarn' },
   },
-
   {
     'Saecki/crates.nvim',
     event = 'BufRead Cargo.toml',
@@ -304,7 +288,6 @@ return {
       null_ls = { enabled = true, name = 'crates.nvim' },
     },
   },
-
   {
     'shortcuts/no-neck-pain.nvim',
     keys = {
@@ -319,7 +302,6 @@ return {
       },
     },
   },
-
   {
     'NTBBloodbath/rest.nvim',
     ft = { 'http', 'json' },
