@@ -1,6 +1,6 @@
 return {
   'anuvyklack/hydra.nvim',
-  event = 'VeryLazy',
+  keys = { 'z', '<leader>z', '<leader>b', '<leader>dh', '<leader>w' },
   config = function()
     local Hydra = require('hydra')
     local border = rvim.ui.current.border
@@ -18,7 +18,6 @@ return {
       heads = {
         { 'j', 'zj', { desc = 'next fold' } },
         { 'k', 'zk', { desc = 'previous fold' } },
-        { 'o', require('fold-cycle').toggle_all, { desc = 'toggle folds underneath' } },
         { 'l', require('fold-cycle').open_all, { desc = 'open folds underneath' } },
         { 'h', require('fold-cycle').close_all, { desc = 'close folds underneath' } },
         { '<Esc>', nil, { exit = true, desc = 'Quit' } },
