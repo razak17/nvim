@@ -1,4 +1,5 @@
 local hl, ui = rvim.highlight, rvim.ui
+local border = ui.current.border
 
 return {
   'nanotee/sqls.nvim',
@@ -9,11 +10,26 @@ return {
 
   {
     'neovim/nvim-lspconfig',
-    config = function()
-      hl.plugin('lspconfig', {
-        { LspInfoBorder = { link = 'FloatBorder' } },
+    config = function() require('lspconfig.ui.windows').default_options.border = border end,
+  },
+
+  {
+    'williamboman/mason.nvim',
+    dependencies = { 'williamboman/mason-lspconfig.nvim', 'neovim/nvim-lspconfig' },
+    init = function()
+      require('mason').setup({
+        ui = {
+          border = border,
+          height = 0.8,
+          icons = {
+            package_installed = ui.icons.ui.checkmark,
+            package_pending = ui.icons.ui.right_arrow,
+            package_uninstalled = ui.icons.ui.uninstalled,
+          },
+        },
       })
-      require('lspconfig.ui.windows').default_options.border = ui.current.border
+      require('mason-lspconfig').setup({ automatic_installation = true })
+      map('n', '<leader>lm', '<cmd>Mason<CR>', { desc = 'mason: info' })
     end,
   },
 
@@ -25,7 +41,7 @@ return {
       fix_pos = false,
       auto_close_after = 15, -- close after 15 seconds
       hint_enable = false,
-      handler_opts = { border = ui.current.border },
+      handler_opts = { border = border },
       toggle_key = '<C-K>',
       select_signature_key = '<M-N>',
     },
@@ -72,7 +88,6 @@ return {
       { 'gY', '<Cmd>Glance type_definitions<CR>', desc = 'lsp: glance type definitions' },
       { 'gM', '<Cmd>Glance implementations<CR>', desc = 'lsp: glance implementations' },
     },
-
     config = function()
       require('glance').setup({
         preview_win_opts = { relativenumber = false },
