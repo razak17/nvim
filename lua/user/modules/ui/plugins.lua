@@ -200,4 +200,32 @@ return {
       hide = { underline = false },
     },
   },
+
+  {
+    'levouh/tint.nvim',
+    event = 'WinNew',
+    branch = 'untint-forcibly-closed-windows',
+    opts = {
+      tint = -30,
+      -- stylua: ignore
+      highlight_ignore_patterns = {
+        'WinSeparator', 'St.*', 'Comment', 'Panel.*', 'Telescope.*',
+        'Bqf.*', 'VirtColumn', 'Headline.*', 'NeoTree.*',
+      },
+      window_ignore_function = function(win_id)
+        local win, buf = vim.wo[win_id], vim.bo[vim.api.nvim_win_get_buf(win_id)]
+        if win.diff or not rvim.empty(vim.fn.win_gettype(win_id)) then return true end
+        -- BUG: neotree cannot be ignore rvim either nofile or by filetype rvim this causes tinting bugs
+        local ignore_bt = rvim.p_table({ terminal = true, prompt = true, nofile = false })
+        local ignore_ft = rvim.p_table({
+          ['Telescope.*'] = true,
+          ['neo-tree'] = false,
+          ['Neogit.*'] = true,
+          ['qf'] = true,
+        })
+        local has_bt, has_ft = ignore_bt[buf.buftype], ignore_ft[buf.filetype]
+        return has_bt or has_ft
+      end,
+    },
+  },
 }
