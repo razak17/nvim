@@ -32,10 +32,7 @@ local servers = {
     root_dir = function(fname) return require('lspconfig/util').root_pattern('README.md')(fname) end,
     single_file_support = false,
   },
-  rust_analyzer = {
-    root_dir = function(fname) return require('lspconfig/util').root_pattern('Cargo.toml')(fname) end,
-    single_file_support = false,
-  },
+  rust_analyzer = {},
   denols = {
     root_dir = function(fname)
       return require('lspconfig/util').root_pattern('deno.json', 'deno.jsonc')(fname)
