@@ -217,15 +217,11 @@ return {
         if formatter ~= nil then vim.list_extend(null_ls, formatter) end
         if linter ~= nil then vim.list_extend(null_ls, linter) end
 
+        if rvim.empty(client_names) then return 'No Active LSP' end
         local clients = table.concat(client_names, '  ')
         null_ls = table.concat(null_ls, ', ')
-        if not rvim.empty(null_ls) then
-          null_ls = null_ls .. ' '
-          clients = clients .. '  ' .. null_ls
-        else
-          clients = clients .. ' '
-        end
-        if rvim.empty(client_names) then return 'No Active LSP' end
+        clients = clients .. '  '
+        if not rvim.empty(null_ls) then clients = clients .. null_ls .. ' ' end
         return clients
       end,
       color = { gui = 'bold' },
