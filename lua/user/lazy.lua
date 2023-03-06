@@ -9,7 +9,7 @@ function Lazy:load_plugins()
   self.repos = {}
 
   local list = {}
-  local tmp = vim.split(fn.globpath(modules_dir, '*/*.lua'), '\n')
+  local tmp = vim.split(fn.globpath(modules_dir, '**/*.lua'), '\n')
   for _, f in ipairs(tmp) do
     list[#list + 1] = string.match(f, 'lua/(.+).lua$')
   end

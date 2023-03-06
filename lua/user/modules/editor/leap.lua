@@ -1,5 +1,4 @@
-local api, fn = vim.api, vim.fn
-local hl = rvim.highlight
+local fn, api, hl = vim.fn, vim.api, rvim.highlight
 
 local function leap_keys()
   require('leap').leap({

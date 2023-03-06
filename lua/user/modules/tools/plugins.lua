@@ -2,17 +2,6 @@ local fn, ui, hl = vim.fn, rvim.ui, rvim.highlight
 local border = ui.current.border
 
 return {
-  'nvim-lua/plenary.nvim',
-  'nvim-lua/popup.nvim',
-  'kkharji/sqlite.lua',
-
-  {
-    'AndrewRadev/linediff.vim',
-    cmd = 'Linediff',
-    keys = {
-      { '<localleader>ll', '<cmd>Linediff<CR>', desc = 'linediff: toggle' },
-    },
-  },
   {
     'ahmedkhalf/project.nvim',
     event = 'LspAttach',
@@ -56,11 +45,9 @@ return {
   },
   {
     'LeonHeidelbach/trailblazer.nvim',
+    -- stylua: ignore
     keys = {
-      '<M-l>',
-      '<a-b>',
-      '<a-j>',
-      '<a-k>',
+      '<M-l>', '<a-b>', '<a-j>', '<a-k>',
       { '<leader>ms', '<cmd>TrailBlazerSaveSession<CR>', desc = 'trailblazer: save session' },
       { '<leader>ml', '<cmd>TrailBlazerLoadSession<CR>', desc = 'trailblazer: load session' },
     },
@@ -70,37 +57,9 @@ return {
         current_trail_mark_list_type = 'quickfix',
       },
       mappings = {
-        nv = {
-          motions = {
-            peek_move_next_down = '<a-j>',
-            peek_move_previous_up = '<a-k>',
-          },
-        },
+        nv = { motions = { peek_move_next_down = '<a-j>', peek_move_previous_up = '<a-k>' } },
       },
     },
-  },
-  {
-    'razak17/buffer_manager.nvim',
-    keys = {
-      {
-        '<tab>',
-        function() require('buffer_manager.ui').toggle_quick_menu() end,
-        desc = 'buffer_manager: toggle',
-      },
-    },
-    config = function()
-      require('buffer_manager').setup({
-        borderchars = ui.border.common,
-      })
-      rvim.highlight.plugin('buffer_manager', {
-        theme = {
-          ['zephyr'] = {
-            { BufferManagerTitle = { fg = { from = 'Winbar' } } },
-            { BufferManagerBorder = { fg = { from = 'FloatBorder' } } },
-          },
-        },
-      })
-    end,
   },
   {
     'akinsho/toggleterm.nvim',
@@ -118,10 +77,7 @@ return {
         FloatBorder = { link = 'FloatBorder' },
         NormalFloat = { link = 'NormalFloat' },
       },
-      float_opts = {
-        winblend = 3,
-        border = border,
-      },
+      float_opts = { winblend = 3, border = border },
       size = function(term)
         if term.direction == 'horizontal' then return 15 end
         if term.direction == 'vertical' then return math.floor(vim.o.columns * 0.4) end
@@ -161,75 +117,7 @@ return {
       map('n', '<leader>gD', dotfiles, { desc = 'toggleterm: commit dotfiles' })
     end,
   },
-  {
-    'folke/persistence.nvim',
-    event = 'BufReadPre', -- this will only start session saving when an actual file was opened
-    keys = {
-      {
-        '<leader>sr',
-        '<cmd>lua require("persistence").load()<CR>',
-        desc = 'persistence: restore for directory',
-      },
-      {
-        '<leader>sl',
-        '<cmd>lua require("persistence").load({ last = true })<CR>',
-        desc = 'persistence: restore last',
-      },
-    },
-    opts = {
-      dir = fn.expand(rvim.get_cache_dir() .. '/sessions/'),
-      options = { 'buffers', 'curdir', 'tabpages', 'winsize', 'help' },
-    },
-  },
-  {
-    'ggandor/flit.nvim',
-    keys = { 'n', 'f' },
-    opts = { labeled_modes = 'nvo', multiline = false },
-  },
-  {
-    'mbbill/undotree',
-    cmd = 'UndotreeToggle',
-    keys = {
-      { '<leader>u', '<cmd>UndotreeToggle<CR>', desc = 'undotree: toggle' },
-    },
-    config = function()
-      vim.g.undotree_TreeNodeShape = '◦' -- Alternative: '◉'
-      vim.g.undotree_SetFocusWhenToggle = 1
-      vim.g.undotree_SplitWidth = 35
-    end,
-  },
-  {
-    'kevinhwang91/nvim-bqf',
-    ft = 'qf',
-    opts = {
-      preview = {
-        border_chars = { '│', '│', '─', '─', '┌', '┐', '└', '┘', '▊' },
-      },
-    },
-  },
   { 'turbio/bracey.vim', ft = 'html', build = 'npm install --prefix server' },
-  {
-    'is0n/jaq-nvim',
-    cmd = 'Jaq',
-    keys = {
-      { '<leader>rr', ':silent only | Jaq<CR>', desc = 'jaq: run' },
-    },
-    opts = {
-      cmds = {
-        external = {
-          typescript = 'ts-node %',
-          javascript = 'node %',
-          python = 'python %',
-          rust = 'cargo run',
-          cpp = 'g++ % -o $fileBase && ./$fileBase',
-          go = 'go run %',
-        },
-      },
-      behavior = { default = 'float', startinsert = true },
-      ui = { float = { border = border } },
-      terminal = { position = 'vert', size = 60 },
-    },
-  },
   {
     'razak17/lab.nvim',
     event = 'InsertEnter',
@@ -287,20 +175,6 @@ return {
         padding = 1,
       },
       null_ls = { enabled = true, name = 'crates.nvim' },
-    },
-  },
-  {
-    'shortcuts/no-neck-pain.nvim',
-    keys = {
-      {
-        '<leader>on',
-        function() require('no-neck-pain').toggle() end,
-        mode = 'n',
-        desc = 'toggle no-neck-pain',
-        noremap = true,
-        silent = true,
-        expr = false,
-      },
     },
   },
   {

@@ -72,6 +72,15 @@ return {
     end,
   },
   {
+    'kevinhwang91/nvim-bqf',
+    ft = 'qf',
+    opts = {
+      preview = {
+        border_chars = { '│', '│', '─', '─', '┌', '┐', '└', '┘', '▊' },
+      },
+    },
+  },
+  {
     'j-hui/fidget.nvim',
     event = 'BufReadPre',
     config = function()
@@ -84,6 +93,20 @@ return {
         command = 'silent! FidgetClose',
       })
     end,
+  },
+  {
+    'shortcuts/no-neck-pain.nvim',
+    keys = {
+      {
+        '<leader>on',
+        function() require('no-neck-pain').toggle() end,
+        mode = 'n',
+        desc = 'toggle no-neck-pain',
+        noremap = true,
+        silent = true,
+        expr = false,
+      },
+    },
   },
   {
     'lukas-reineke/headlines.nvim',
@@ -172,7 +195,6 @@ return {
   {
     'levouh/tint.nvim',
     event = 'WinNew',
-    branch = 'untint-forcibly-closed-windows',
     opts = {
       tint = -30,
       -- stylua: ignore

@@ -1,28 +1,4 @@
 return {
-  'kazhala/close-buffers.nvim',
-
-  {
-    'razak17/cybu.nvim',
-    event = { 'BufRead', 'BufNewFile' },
-    keys = {
-      { 'H', '<cmd>Cybu prev<CR>', desc = 'cybu: prev' },
-      { 'L', '<cmd>Cybu next<CR>', desc = 'cybu: next' },
-    },
-    opts = {
-      position = { relative_to = 'win', anchor = 'topright' },
-      style = { border = 'single', hide_buffer_id = true },
-    },
-  },
-  {
-    'karb94/neoscroll.nvim', -- NOTE: alternative: 'declancm/cinnamon.nvim'
-    keys = {
-      { '<C-u>', '<cmd>lua require("neoscroll").scroll(-0.10)<CR>', desc = 'neoscroll: up' },
-      { '<C-d>', '<cmd>lua require("neoscroll").scroll(0.10)<CR>', desc = 'neoscroll: down' },
-      { '<C-b>', '<cmd>lua require("neoscroll").scroll(-0.50)<CR>', desc = 'neoscroll: up' },
-      { '<C-f>', '<cmd>lua require("neoscroll").scroll(0.50)<CR>', desc = 'neoscroll: down' },
-    },
-    opts = { hide_cursor = true },
-  },
   {
     'jghauser/fold-cycle.nvim',
     config = true,
@@ -34,6 +10,11 @@ return {
     'psliwka/vim-dirtytalk',
     build = ':DirtytalkUpdate',
     init = function() vim.opt.spelllang:append('programming') end,
+  },
+  {
+    'ggandor/flit.nvim',
+    keys = { 'n', 'f' },
+    opts = { labeled_modes = 'nvo', multiline = false },
   },
   {
 
@@ -77,7 +58,7 @@ return {
   {
     'mizlan/iswap.nvim',
     keys = {
-      { '<leader>ia', '<cmd>ISwap<CR>', desc = 'iswap: swap any' },
+      { '<leader>ia', '<cmd>ISwap<CR>', desc = 'iswap: swap' },
       { '<leader>iw', '<cmd>ISwapWith<CR>', desc = 'iswap: swap with' },
     },
   },
