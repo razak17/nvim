@@ -1,5 +1,4 @@
-local ui = rvim.ui
-local fmt = string.format
+local ui, fmt = rvim.ui, string.format
 
 ---@param opts table
 ---@return table
@@ -177,19 +176,10 @@ return {
         },
         winblend = 0,
         history = { path = join_paths(rvim.get_runtime_dir(), 'telescope', 'history.sqlite3') },
+        -- stylua: ignore
         file_ignore_patterns = {
-          '%.jpg',
-          '%.jpeg',
-          '%.png',
-          '%.otf',
-          '%.ttf',
-          '%.DS_Store',
-          '%.lock',
-          '.git/',
-          'node_modules/',
-          'dist/',
-          'build/',
-          'site-packages/',
+          '%.jpg', '%.jpeg', '%.png', '%.otf', '%.ttf', '%.DS_Store', '%.lock', '.git/', 'node_modules/',
+          'dist/', 'build/', 'site-packages/',
         },
         path_display = { 'truncate' },
         file_sorter = sorters.get_fzy_sorter,
@@ -239,14 +229,9 @@ return {
         live_grep = themes.get_ivy({
           borderchars = { preview = ui.border.ivy },
           only_sort_text = true,
+          -- stylua: ignore
           file_ignore_patterns = {
-            '.git/',
-            '%.html',
-            'dotbot/.*',
-            'zsh/plugins/.*',
-            'yarn.lock',
-            'node_modules',
-            'package-lock.json',
+            '.git/', '%.html', 'dotbot/.*', 'zsh/plugins/.*', 'yarn.lock', 'node_modules', 'package-lock.json',
           },
           max_results = 2000,
         }),
