@@ -1,6 +1,11 @@
 return {
   'sindrets/diffview.nvim',
   cmd = { 'DiffviewOpen', 'DiffviewFileHistory', 'DiffviewToggleFiles', 'DiffviewFocusFiles' },
+  keys = {
+    { '<localleader>gd', '<Cmd>DiffviewOpen<CR>', desc = 'diffview: open' },
+    { 'gh', [[:'<'>DiffviewFileHistory<CR>]], desc = 'diffview: file history', mode = 'v' },
+    { '<localleader>gh', '<Cmd>DiffviewFileHistory<CR>', desc = 'diffview: file history' },
+  },
   config = function()
     rvim.highlight.plugin('diffview', {
       { DiffAddedChar = { bg = 'NONE', fg = { from = 'DiffAdd', attr = 'bg', alter = 30 } } },
@@ -12,14 +17,13 @@ return {
       { DiffviewStatusUntracked = { link = 'DiffAddedChar' } },
     })
     require('diffview').setup({
-      default_args = {
-        DiffviewFileHistory = { '%' },
-      },
+      default_args = { DiffviewFileHistory = { '%' } },
       hooks = {
         diff_buf_read = function()
           vim.opt_local.wrap = false
           vim.opt_local.list = false
           vim.opt_local.colorcolumn = ''
+          vim.opt_local.relativenumber = false
         end,
       },
       enhanced_diff_hl = true,
@@ -29,8 +33,5 @@ return {
         file_history_panel = { q = '<Cmd>DiffviewClose<CR>' },
       },
     })
-    map('n', '<leader>gd', '<cmd>DiffviewOpen<CR>', { desc = 'diffview: open' })
-    map('n', '<leader>gh', '<Cmd>DiffviewFileHistory<CR>', { desc = 'diffview: file history' })
-    map('n', 'gh', [[:'<'>DiffviewFileHistory<CR>]], { desc = 'diffview: file history' })
   end,
 }
