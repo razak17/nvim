@@ -1,6 +1,6 @@
 if not rvim or not rvim.plugins.enable then return end
 
-local fn, api = vim.fn, vim.api
+local fn, api, fmt = vim.fn, vim.api, string.format
 
 local smart_close_filetypes = {
   'help',
@@ -231,25 +231,6 @@ rvim.augroup('Utilities', {
     vim.opt_local.formatoptions:remove('c')
     vim.opt_local.formatoptions:remove('r')
     vim.opt_local.formatoptions:remove('o')
-  end,
-})
-
-rvim.augroup('ConcealMappings', {
-  event = { 'FileType' },
-  command = function()
-    local function toggle_coceallevel()
-      local level = api.nvim_get_option_value('conceallevel', {})
-      if level > 0 then vim.o.conceallevel = 0 end
-      if level == 0 then vim.o.conceallevel = 2 end
-    end
-
-    local function toggle_cocealcursor()
-      local level = api.nvim_get_option_value('concealcursor', {})
-      if level == 'n' then vim.o.concealcursor = '' end
-      if level == '' then vim.o.concealcursor = 'n' end
-    end
-    map('n', '<localleader>cl', toggle_coceallevel, { desc = 'toggle conceallevel' })
-    map('n', '<localleader>cc', toggle_cocealcursor, { desc = 'disable concealcursor' })
   end,
 })
 

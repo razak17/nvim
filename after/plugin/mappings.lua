@@ -311,6 +311,14 @@ local function toggle_opt(opt)
     if prev == 0 then value = 3 end
     if prev > 0 then value = 0 end
   end
+  if opt == 'conceallevel' then
+    if prev > 0 then value = 0 end
+    if prev == 0 then value = 2 end
+  end
+  if opt == 'concealcursor' then
+    if prev == 'n' then value = '' end
+    if prev == '' then value = 'n' end
+  end
   if opt == 'colorcolumn' then
     -- NOTE: value is set to +1 twice during the first two toggles when using the virtcolumn plugin
     value = prev
@@ -334,6 +342,16 @@ nnoremap('<leader>os', function() toggle_opt('spell') end, { desc = 'toggle spel
 nnoremap('<leader>oL', function() toggle_opt('cursorline') end, { desc = 'toggle cursorline' })
 nnoremap('<leader>ol', function() toggle_opt('laststatus') end, { desc = 'toggle statusline' })
 nnoremap('<leader>oC', function() toggle_opt('colorcolumn') end, { desc = 'toggle colorcolumn' })
+nnoremap(
+  '<localleader>cl',
+  function() toggle_opt('conceallevel') end,
+  { desc = 'toggle conceallevel' }
+)
+nnoremap(
+  '<localleader>cc',
+  function() toggle_opt('concealcursor') end,
+  { desc = 'toggle concealcursor' }
+)
 ----------------------------------------------------------------------------------------------------
 -- Abbreviations
 vim.cmd([[
