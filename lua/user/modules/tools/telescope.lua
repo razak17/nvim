@@ -75,9 +75,7 @@ cmd('WebSearch', function()
   local search = vim.fn.input('Search String: ')
   local pickers = require('telescope.pickers')
   local actions = require('telescope.actions')
-  local action_state = require('telescope.actions.state')
   local finders = require('telescope.finders')
-  local conf = require('telescope.config').values
 
   local searcher = function(opts)
     opts = opts or {}
@@ -89,20 +87,17 @@ cmd('WebSearch', function()
             { 'Github', ('https://github.com/search?q=' .. search:gsub(' ', '+')) },
             { 'DuckDuckGo', ('https://html.duckduckgo.com/html?q=' .. search:gsub(' ', '+')) },
             { 'Google Search', ('https://www.google.com/search?q=' .. search:gsub(' ', '+')) },
-            {
-              'Youtube',
-              ('https://www.youtube.com/results?search_query=' .. search:gsub(' ', '+')),
-            },
+            { 'Youtube', ('https://youtube.com/results?search_query=' .. search:gsub(' ', '+')) },
           },
           entry_maker = function(entry)
             return { value = entry, display = entry[1], ordinal = entry[1] }
           end,
         }),
-        sorter = conf.generic_sorter(opts),
+        sorter = require('telescope.config').values.generic_sorter(opts),
         attach_mappings = function(prompt_bufnr, _)
           actions.select_default:replace(function()
             actions.close(prompt_bufnr)
-            local selection = action_state.get_selected_entry()
+            local selection = require('telescope.actions.state').get_selected_entry()
             rvim.open(selection['value'][2])
           end)
           return true
