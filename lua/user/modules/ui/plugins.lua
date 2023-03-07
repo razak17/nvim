@@ -185,15 +185,6 @@ return {
     },
   },
   {
-    'zbirenbaum/neodim',
-    event = 'VeryLazy',
-    enabled = false,
-    opts = {
-      blend_color = hl.get('Normal', 'bg'),
-      hide = { underline = false },
-    },
-  },
-  {
     'levouh/tint.nvim',
     event = 'WinNew',
     opts = {
