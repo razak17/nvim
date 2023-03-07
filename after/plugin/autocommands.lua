@@ -145,31 +145,6 @@ rvim.augroup('Cursorline', {
   command = function() vim.wo.cursorline = false end,
 })
 
-if vim.env.TMUX ~= nil then
-  local tmux = require('user.tmux')
-  rvim.augroup('ExternalConfig', {
-    event = { 'BufEnter' },
-    command = function() vim.o.titlestring = tmux.title_string() end,
-  }, {
-    event = { 'FocusGained', 'BufReadPost', 'BufEnter' },
-    command = function() tmux.set_window_title() end,
-  }, {
-    event = { 'VimLeave' },
-    command = function() tmux.clear_pane_title() end,
-  }, {
-    event = { 'VimLeavePre', 'FocusLost' },
-    command = function() tmux.set_statusline(true) end,
-  }, {
-    event = { 'ColorScheme', 'FocusGained' },
-    command = function()
-      -- NOTE: there is a race condition here rvim the colors
-      -- for kitty to re-use need to be set AFTER the rest of the colorscheme
-      -- overrides
-      vim.defer_fn(function() tmux.set_statusline() end, 1)
-    end,
-  })
-end
-
 local save_excluded = {
   'neo-tree',
   'neo-tree-popup',

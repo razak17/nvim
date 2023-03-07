@@ -1,3 +1,5 @@
+if not rvim then return end
+
 local api = vim.api
 
 local conceal_html_class = function(bufnr)
