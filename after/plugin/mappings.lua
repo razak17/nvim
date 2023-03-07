@@ -81,7 +81,6 @@ nnoremap('<leader>I', '<cmd>Inspect<CR>', { desc = 'inspect' })
 ----------------------------------------------------------------------------------------------------
 -- Capitalize
 nnoremap('<leader>U', 'gUiw`]', { desc = 'capitalize word' })
-inoremap('<C-u>', '<cmd>norm!gUiw`]a<CR>')
 ----------------------------------------------------------------------------------------------------
 -- Moving lines/visual block
 xnoremap('K', ":m '<-2<CR>gv=gv")
@@ -93,8 +92,6 @@ xnoremap('J', ":m '>+1<CR>gv=gv")
 nnoremap('<localleader>wv', '<C-W>t <C-W>H<C-W>=')
 -- change two horizontally split windows to vertical splits
 nnoremap('<localleader>wh', '<C-W>t <C-W>K<C-W>=', { desc = '' })
--- find visually selected text
-vnoremap('*', [[y/<C-R>"<CR>]])
 -- make . work with visually selected lines
 vnoremap('.', ':norm.<CR>')
 -- when going to the end of the line in visual mode ignore whitespace characters
@@ -112,11 +109,6 @@ nnoremap('<C-l>', '<C-w>l')
 -- Buffer Movement
 nnoremap('H', '<cmd>bprevious<CR>', { desc = 'previous buffer' })
 nnoremap('L', '<cmd>bnext<CR>', { desc = 'next buffer' })
-----------------------------------------------------------------------------------
--- Operators
-----------------------------------------------------------------------------------------------------
--- Yank from cursor position to end-of-line
-nnoremap('Y', 'y$')
 -- Greatest remap ever
 vnoremap('<leader>p', '"_dP', { desc = 'greatest remap' })
 -- Next greatest remap ever : asbjornHaland
@@ -152,9 +144,6 @@ inoremap('<up>', '<nop>')
 inoremap('<down>', '<nop>')
 inoremap('<left>', '<nop>')
 inoremap('<right>', '<nop>')
--- Repeat last substitute with flags
-nnoremap('&', '<cmd>&&<CR>')
-xnoremap('&', '<cmd>&&<CR>')
 ----------------------------------------------------------------------------------------------------
 -- Commandline mappings
 ----------------------------------------------------------------------------------------------------
