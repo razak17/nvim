@@ -6,6 +6,7 @@ return {
 
   { 'fladson/vim-kitty', ft = 'kitty' },
   { 'razak17/zephyr-nvim', lazy = false, priority = 1000 },
+  { 'LunarVim/horizon.nvim', lazy = false, priority = 1000 },
   {
     'itchyny/vim-highlighturl',
     event = 'BufReadPre',
@@ -204,15 +205,11 @@ return {
       },
       window_ignore_function = function(win_id)
         local win, buf = vim.wo[win_id], vim.bo[vim.api.nvim_win_get_buf(win_id)]
-        if win.diff or not rvim.empty(vim.fn.win_gettype(win_id)) then return true end
         -- BUG: neotree cannot be ignore rvim either nofile or by filetype rvim this causes tinting bugs
+        if win.diff or not rvim.empty(vim.fn.win_gettype(win_id)) then return true end
         local ignore_bt = rvim.p_table({ terminal = true, prompt = true, nofile = false })
-        local ignore_ft = rvim.p_table({
-          ['Telescope.*'] = true,
-          ['neo-tree'] = false,
-          ['Neogit.*'] = true,
-          ['qf'] = true,
-        })
+        local ignore_ft =
+          rvim.p_table({ ['Telescope.*'] = true, ['Neogit.*'] = true, ['qf'] = true })
         local has_bt, has_ft = ignore_bt[buf.buftype], ignore_ft[buf.filetype]
         return has_bt or has_ft
       end,
