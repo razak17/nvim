@@ -1,6 +1,6 @@
 if not rvim or not rvim.plugins.enable then return end
 
-local fn, api, fmt = vim.fn, vim.api, string.format
+local fn, api = vim.fn, vim.api
 
 local smart_close_filetypes = {
   'help',
@@ -50,31 +50,6 @@ rvim.augroup('SmartClose', {
 
     if is_eligible then map('n', 'q', smart_close, { buffer = 0, nowait = true }) end
   end,
-}, {
-  -- Close quick fix window if the file containing it was closed
-  event = { 'BufEnter' },
-  nested = true,
-  command = function()
-    if fn.winnr('$') == 1 and vim.bo.buftype == 'quickfix' then
-      api.nvim_buf_delete(0, { force = true })
-    end
-  end,
-}, {
-  -- automatically close corresponding loclist when quitting a window
-  event = { 'QuitPre' },
-  nested = true,
-  command = function()
-    if vim.bo.filetype ~= 'qf' then vim.cmd.lclose({ mods = { silent = true } }) end
-  end,
-})
-
-rvim.augroup('ExternalCommands', {
-  -- Open images in an image viewer (probably Preview)
-  event = { 'BufEnter' },
-  pattern = { '*.png', '*.jpg', '*.gif' },
-  command = function()
-    vim.cmd(fmt('silent! "%s | :bw"', rvim.open_command .. ' ' .. fn.expand('%')))
-  end,
 })
 
 rvim.augroup('CheckOutsideTime', {
@@ -115,23 +90,16 @@ rvim.augroup('TextYankHighlight', {
 })
 
 rvim.augroup('UpdateVim', {
-  -- Make windows equal size when vim resizes
+  {
+    event = { 'FocusLost', 'InsertLeave' },
+    command = 'silent! wall',
+  },
   event = { 'VimResized' },
-  command = 'wincmd =',
+  command = 'wincmd =', -- Make windows equal size when vim resizes
 })
 
 rvim.augroup(
   'WinBehavior',
-  {
-    event = { 'Syntax' },
-    command = [[if line('$') > 5000 | syntax sync minlines=300 | endif]],
-  },
-  {
-    -- Force write shada on leaving nvim
-    event = { 'VimLeave' },
-    command = [[if has('nvim') | wshada! | else | wviminfo! | endif]],
-  },
-  { event = { 'TermOpen' }, pattern = { '*:zsh' }, command = 'startinsert' },
   -- Automatically jump into the quickfix window on open
   {
     event = { 'QuickFixCmdPost' },
@@ -227,21 +195,6 @@ rvim.augroup('Utilities', {
     vim.cmd.edit(vim.uri_to_fname(args.file))
   end,
 }, {
-  -- When editing a file, always jump to the last known cursor position.
-  -- Don't do it for commit messages, when the position is invalid.
-  event = { 'BufReadPost' },
-  command = function()
-    if vim.bo.ft ~= 'gitcommit' and vim.fn.win_gettype() ~= 'popup' then
-      local last_place_mark = vim.api.nvim_buf_get_mark(0, '"')
-      local line_nr = last_place_mark[1]
-      local last_line = vim.api.nvim_buf_line_count(0)
-
-      if line_nr > 0 and line_nr <= last_line then
-        vim.api.nvim_win_set_cursor(0, last_place_mark)
-      end
-    end
-  end,
-}, {
   event = { 'FileType' },
   pattern = { 'gitcommit', 'gitrebase' },
   command = 'set bufhidden=delete',
@@ -261,15 +214,9 @@ rvim.augroup('Utilities', {
     if can_save() then vim.cmd.update({ mods = { silent = true } }) end
   end,
 }, {
-  event = { 'FocusLost', 'InsertLeave' },
-  command = function()
-    if rvim.autosave then vim.cmd('silent! wall') end
-  end,
-}, {
   event = { 'BufWritePost' },
   nested = true,
   command = function()
-    -- detect filetype onsave
     if rvim.empty(vim.bo.filetype) or fn.exists('b:ftdetect') == 1 then
       vim.cmd([[
             unlet! b:ftdetect
@@ -308,15 +255,13 @@ rvim.augroup('ConcealMappings', {
       if level > 0 then vim.o.conceallevel = 0 end
       if level == 0 then vim.o.conceallevel = 2 end
     end
-    map('n', '<localleader>cl', toggle_coceallevel, { desc = 'toggle conceallevel' })
 
     local function toggle_cocealcursor()
-      if vim.o.concealcursor == 'n' then
-        vim.o.concealcursor = ''
-      else
-        vim.o.concealcursor = 'n'
-      end
+      local level = api.nvim_get_option_value('concealcursor', {})
+      if level == 'n' then vim.o.concealcursor = '' end
+      if level == '' then vim.o.concealcursor = 'n' end
     end
+    map('n', '<localleader>cl', toggle_coceallevel, { desc = 'toggle conceallevel' })
     map('n', '<localleader>cc', toggle_cocealcursor, { desc = 'disable concealcursor' })
   end,
 })
