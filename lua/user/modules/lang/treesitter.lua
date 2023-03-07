@@ -4,16 +4,11 @@ return {
     event = 'BufReadPost',
     build = ':TSUpdate',
     config = function()
+      local parsers = require('nvim-treesitter.parsers')
       require('nvim-treesitter.configs').setup({
         auto_install = true,
-        highlight = {
-          enable = true,
-          additional_vim_regex_highlighting = false,
-        },
-        context_commentstring = {
-          enable = true,
-          enable_autocmd = false,
-        },
+        highlight = { enable = true, additional_vim_regex_highlighting = false },
+        context_commentstring = { enable = true, enable_autocmd = false },
         incremental_selection = {
           enable = true,
           disable = { 'help' },
@@ -45,15 +40,20 @@ return {
             goto_next_start = { [']m'] = '@function.outer', [']c'] = '@class.outer' },
             goto_previous_start = { ['[m'] = '@function.outer', ['[c'] = '@class.outer' },
           },
-          lsp_interop = {
-            enable = false,
-          },
+          lsp_interop = { enable = false },
         },
         indent = { enable = { 'javascriptreact' } },
         matchup = { enable = true, disable = { 'c', 'python' } },
         rainbow = {
+          enable = true,
+          disable = vim.tbl_filter(function(p)
+            local disable = true
+            for _, lang in pairs({ 'dart' }) do
+              if p == lang then disable = false end
+            end
+            return disable
+          end, parsers.available_parsers()),
           query = 'rainbow-parens',
-          disable = { 'typescriptreact' },
           strategy = { require('ts-rainbow.strategy.local') },
         },
         query_linter = {
