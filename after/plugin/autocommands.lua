@@ -214,14 +214,15 @@ rvim.augroup('Utilities', {
   end,
 }, {
   event = { 'BufWritePost' },
+  pattern = { '*' },
   nested = true,
   command = function()
     if rvim.empty(vim.bo.filetype) or fn.exists('b:ftdetect') == 1 then
       vim.cmd([[
-            unlet! b:ftdetect
-            filetype detect
-            echom 'Filetype set to ' . &ft
-          ]])
+        unlet! b:ftdetect
+        filetype detect
+        echom 'Filetype set to ' . &ft
+      ]])
     end
   end,
 }, {
@@ -235,19 +236,6 @@ rvim.augroup('Utilities', {
 
 rvim.augroup('ConcealMappings', {
   event = { 'FileType' },
-  pattern = {
-    'javascript',
-    'javascriptreact',
-    'typescript',
-    'typescriptreact',
-    'html',
-    'lua',
-    'http',
-    'json',
-    'markdown',
-    'svelte',
-    'astro',
-  },
   command = function()
     local function toggle_coceallevel()
       local level = api.nvim_get_option_value('conceallevel', {})
