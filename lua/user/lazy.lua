@@ -24,12 +24,9 @@ end
 function Lazy:bootstrap()
   local lazy_path = join_paths(rvim.get_runtime_dir(), 'site', 'pack', 'lazy', 'lazy.nvim')
   if not vim.loop.fs_stat(lazy_path) then
+    -- stylua: ignore
     vim.fn.system({
-      'git',
-      'clone',
-      '--filter=blob:none',
-      '--single-branch',
-      'https://github.com/folke/lazy.nvim.git',
+      'git', 'clone', '--filter=blob:none', '--single-branch', 'https://github.com/folke/lazy.nvim.git',
       lazy_path,
     })
   end
@@ -55,25 +52,11 @@ function Lazy:bootstrap()
       rtp = {
         reset = false,
         paths = { join_paths(rvim.get_runtime_dir(), 'site') },
+        -- stylua: ignore
         disabled_plugins = {
-          '2html_plugin',
-          'gzip',
-          'matchit',
-          'rrhelper',
-          'netrw',
-          'netrwPlugin',
-          'netrwSettings',
-          'netrwFileHandlers',
-          'zip',
-          'zipPlugin',
-          'tar',
-          'tarPlugin',
-          'getscript',
-          'getscriptPlugin',
-          'vimball',
-          'vimballPlugin',
-          'logipat',
-          'spellfile_plugin',
+          '2html_plugin', 'gzip', 'matchit', 'rrhelper', 'netrw', 'netrwPlugin', 'netrwSettings',
+          'netrwFileHandlers', 'zip', 'zipPlugin', 'tar', 'tarPlugin', 'getscript', 'getscriptPlugin',
+          'vimball', 'vimballPlugin', 'logipat', 'spellfile_plugin',
         },
       },
       enabled = true,
