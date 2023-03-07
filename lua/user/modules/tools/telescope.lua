@@ -17,10 +17,6 @@ rvim.telescope = { dropdown = dropdown }
 
 local function extensions(name) return require('telescope').extensions[name] end
 
-local function builtin() return require('telescope.builtin') end
-
-local function builtins() builtin().builtin({ include_extensions = true }) end
-
 local function delta_opts(opts, is_buf)
   local previewers = require('telescope.previewers')
   local delta = previewers.new_termopen_previewer({
@@ -64,8 +60,16 @@ local function luasnips() extensions('luasnip').luasnip(dropdown()) end
 local function notifications() extensions('notify').notify(dropdown()) end
 local function undo() extensions('undo').undo() end
 local function projects() extensions('projects').projects({}) end
+
+local function builtin() return require('telescope.builtin') end
+
 local function delta_git_commits(opts) builtin().git_commits(delta_opts(opts)) end
 local function delta_git_bcommits(opts) builtin().git_bcommits(delta_opts(opts, true)) end
+
+local function b(picker, opts)
+  opts = opts or {}
+  return function() require('telescope.builtin')[picker](opts) end
+end
 
 local function cmd(alias, command)
   return vim.api.nvim_create_user_command(alias, command, { nargs = 0 })
@@ -116,6 +120,39 @@ end)
 return {
   'nvim-telescope/telescope.nvim',
   event = 'VimEnter',
+  keys = {
+    { '<c-p>', find_files, desc = 'find files' },
+    { '<leader>f?', b('help_tags'), desc = 'help tags' },
+    { '<leader>fa', b('builtin', { include_extensions = true }), desc = 'builtins' },
+    { '<leader>fb', b('current_buffer_fuzzy_find'), desc = 'find in current buffer' },
+    { '<leader>fc', nvim_config, desc = 'nvim config' },
+    { '<leader>ff', project_files, desc = 'project files' },
+    { '<leader>fh', frecency, desc = 'Most (f)recently used files' },
+    { '<leader>fL', luasnips, desc = 'luasnip: available snippets' },
+    { '<leader>fn', notifications, desc = 'notify: notifications' },
+    { '<leader>fo', b('buffers'), desc = 'buffers' },
+    { '<leader>fp', projects, desc = 'projects' },
+    { '<leader>fr', b('resume'), desc = 'resume last picker' },
+    { '<leader>fs', live_grep, desc = 'find string' },
+    { '<leader>fS', '<cmd>WebSearch<CR>', desc = 'web search' },
+    { '<leader>fu', undo, desc = 'undo' },
+    { '<leader>fw', b('grep_string'), desc = 'find word' },
+    { '<leader>fva', b('autocommands'), desc = 'autocommands' },
+    { '<leader>fvh', b('highlights'), desc = 'highlights' },
+    { '<leader>fvk', b('keymaps'), desc = 'autocommands' },
+    { '<leader>fvo', b('vim_options'), desc = 'vim options' },
+    { '<leader>fvo', b('registers'), desc = 'registers' },
+    -- Git
+    { '<leader>gs', b('git_status'), desc = 'git status' },
+    { '<leader>fgb', b('git_branches'), desc = 'git branches' },
+    { '<leader>fgB', delta_git_bcommits, desc = 'buffer commits' },
+    { '<leader>fgc', delta_git_commits, desc = 'commits' },
+    -- LSP
+    { '<leader>ld', b('lsp_document_symbols'), desc = 'telescope: document symbols' },
+    { '<leader>ls', b('lsp_dynamic_workspace_symbols'), desc = 'telescope: workspace symbols' },
+    { '<leader>le', b('diagnostics', { bufnr = 0 }), desc = 'telescope: document diagnostics' },
+    { '<leader>lw', b('diagnostics'), desc = 'telescope: workspace diagnostics' },
+  },
   config = function()
     local previewers = require('telescope.previewers')
     local sorters = require('telescope.sorters')
@@ -281,59 +318,6 @@ return {
 
     vim.api.nvim_exec_autocmds('User', { pattern = 'TelescopeConfigComplete', modeline = false })
   end,
-  keys = {
-    { '<c-p>', find_files, desc = 'find files' },
-    { '<leader>f?', function() builtin().help_tags() end, desc = 'help tags' },
-    { '<leader>fa', builtins, desc = 'builtins' },
-    {
-      '<leader>fb',
-      function() builtin().current_buffer_fuzzy_find() end,
-      desc = 'find in current buffer',
-    },
-    { '<leader>fc', nvim_config, desc = 'nvim config' },
-    { '<leader>ff', project_files, desc = 'project files' },
-    { '<leader>fh', frecency, desc = 'Most (f)recently used files' },
-    { '<leader>fl', function() builtin().resume() end, desc = 'resume last picker' },
-    { '<leader>fL', luasnips, desc = 'luasnip: available snippets' },
-    { '<leader>fn', notifications, desc = 'notify: notifications' },
-    { '<leader>fo', function() builtin().buffers() end, desc = 'buffers' },
-    { '<leader>fp', projects, desc = 'projects' },
-    { '<leader>fs', live_grep, desc = 'find string' },
-    { '<leader>fS', '<cmd>WebSearch<CR>', desc = 'web search' },
-    { '<leader>fu', undo, desc = 'undo' },
-    { '<leader>fw', function() builtin().grep_string() end, desc = 'find word' },
-    { '<leader>fva', function() builtin().autocommands() end, desc = 'autocommands' },
-    { '<leader>fvh', function() builtin().highlights() end, desc = 'highlights' },
-    { '<leader>fvk', function() builtin().keymaps() end, desc = 'keymaps' },
-    { '<leader>fvo', function() builtin().vim_options() end, desc = 'options' },
-    { '<leader>fvr', function() builtin().registers() end, desc = 'registers' },
-    -- Git
-    { '<leader>gs', function() builtin().git_status() end, desc = 'git status' },
-    { '<leader>fgb', function() builtin().git_branches() end, desc = 'git branches' },
-    { '<leader>fgB', delta_git_bcommits, desc = 'buffer commits' },
-    { '<leader>fgc', delta_git_commits, desc = 'commits' },
-    -- LSP
-    {
-      '<leader>ld',
-      function() builtin().lsp_document_symbols() end,
-      desc = 'telescope: document symbols',
-    },
-    {
-      '<leader>ls',
-      function() builtin().lsp_dynamic_workspace_symbols() end,
-      desc = 'telescope: workspace symbols',
-    },
-    {
-      '<leader>le',
-      function() builtin().diagnostics({ bufnr = 0 }) end,
-      desc = 'telescope: document diagnostics',
-    },
-    {
-      '<leader>lw',
-      function() builtin().diagnostics() end,
-      desc = 'telescope: workspace diagnostics',
-    },
-  },
   dependencies = {
     'natecraddock/telescope-zf-native.nvim',
     'benfowler/telescope-luasnip.nvim',
