@@ -139,9 +139,9 @@ return {
         ['core.norg.dirman'] = {
           config = {
             workspaces = {
-              notes = sync('neorg/notes/'),
-              tasks = sync('neorg/tasks/'),
-              work = sync('neorg/work/'),
+              notes = sync('neorg/notes'),
+              tasks = sync('neorg/tasks'),
+              work = sync('neorg/work'),
             },
           },
         },
