@@ -220,8 +220,8 @@ return {
         if rvim.empty(client_names) then return 'No Active LSP' end
         local clients = table.concat(client_names, '  ')
         null_ls = table.concat(null_ls, ', ')
-        clients = clients .. '  '
-        if not rvim.empty(null_ls) then clients = clients .. null_ls .. ' ' end
+        clients = clients .. ' '
+        if not rvim.empty(null_ls) then clients = clients .. ' '.. null_ls .. ' ' end
         return clients
       end,
       color = { gui = 'bold' },
