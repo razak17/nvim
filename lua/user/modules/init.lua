@@ -117,6 +117,10 @@ return {
   {
     'vhyrro/neorg',
     event = 'CursorHold',
+    keys = {
+      { '<localleader>nx', '<cmd>Neorg return<CR>', 'neorg: return' },
+      { '<localleader>ni', '<cmd>Neorg index<CR>', 'neorg: open default' },
+    },
     build = ':Neorg sync-parsers',
     dependencies = { 'vhyrro/neorg-telescope' },
     opts = {
