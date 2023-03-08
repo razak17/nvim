@@ -21,6 +21,7 @@ rvim.highlight = { win_hl = {} }
 ---@field undercurl boolean
 ---@field underline boolean
 ---@field underdot boolean
+---@field clear boolean
 
 ---@class NvimHighlightData
 ---@field foreground string
@@ -110,17 +111,21 @@ function rvim.highlight.set(namespace, name, opts)
     namespace = { namespace, 'number' },
   })
 
-  local hl = get_highlight(opts.inherit or name)
-  local errs = {}
+  local clear = opts.clear
+  if clear then opts.clear = nil end
 
-  for attr, value in pairs(opts) do
-    if type(value) == 'table' and value.from then
-      local new_attr, err = rvim.highlight.get(value.from, value.attr or attr)
-      if value.alter then new_attr = rvim.highlight.alter_color(new_attr, value.alter) end
-      if err then table.insert(errs, err) end
-      hl[attr] = new_attr
-    elseif attr ~= 'inherit' then
-      hl[attr] = value
+  local errs, hl = {}, {}
+  if not clear then
+    hl = get_highlight(opts.inherit or name)
+    for attr, value in pairs(opts) do
+      if type(value) == 'table' and value.from then
+        local new_attr, err = rvim.highlight.get(value.from, value.attr or attr)
+        if value.alter then new_attr = rvim.highlight.alter_color(new_attr, value.alter) end
+        if err then table.insert(errs, err) end
+        hl[attr] = new_attr
+      elseif attr ~= 'inherit' then
+        hl[attr] = value
+      end
     end
   end
 
@@ -128,59 +133,6 @@ function rvim.highlight.set(namespace, name, opts)
     table.insert(errs, { msg = fmt('failed to set highlight %s with values %s', name, hl) })
   end
   if #errs > 0 then return errs end
-end
-
---- Set window local highlights
----@param name string
----@param win_id number
----@param hls HighlightKeys[]
-function rvim.highlight.win_hl.set(name, win_id, hls)
-  local namespace = api.nvim_create_namespace(name)
-  rvim.highlight.all(hls, namespace)
-  api.nvim_win_set_hl_ns(win_id, namespace)
-end
-
---- Check if the current window has a winhighlight
---- which includes the specific target highlight
---- FIXME: setting a window highlight with `nvim_win_set_hl_ns` will cause this check to fail as
---- a winhighlight is not set and the win namespace cannot be detected
---- @param win_id integer
---- @vararg string
---- @return boolean, string
-function rvim.highlight.win_hl.exists(win_id, ...)
-  local win_hl = vim.wo[win_id].winhighlight
-  for _, target in ipairs({ ... }) do
-    if win_hl:match(target) then return true, win_hl end
-  end
-  return false, win_hl
-end
-
----A mechanism to allow inheritance of the winhighlight of a specific
----group in a window
----@param win_id integer
----@param target string
----@param name string
----@param fallback string
-function rvim.highlight.win_hl.adopt(win_id, target, name, fallback)
-  local win_hl_name = name .. win_id
-  local _, win_hl = rvim.highlight.win_hl.exists(win_id, target)
-
-  if pcall(api.nvim_get_hl_by_name, win_hl_name, true) then return win_hl_name end
-
-  local hl = rvim.find(function(part) return part:match(target) end, vim.split(win_hl, ','))
-  if not hl then return fallback end
-
-  local hl_group = vim.split(hl, ':')[2]
-  rvim.highlight.set(
-    win_hl_name,
-    { inherit = fallback, background = { from = hl_group, attr = 'bg' } }
-  )
-  return win_hl_name
-end
-
-function rvim.highlight.clear(name)
-  assert(name, 'name is required to clear a highlight')
-  api.nvim_set_hl(0, name, {})
 end
 
 ---Apply a list of highlights
