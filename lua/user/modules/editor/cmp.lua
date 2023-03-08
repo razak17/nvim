@@ -155,6 +155,7 @@ return {
               spell = '(Sp)',
               dictionary = '(Dict)',
               rg = '(Rg)',
+              norg = '(norg)',
               cmdline = '(Cmd)',
               cmdline_history = '(Hist)',
               crates = '(Crt)',

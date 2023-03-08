@@ -1,5 +1,6 @@
-local fn, ui, hl = vim.fn, rvim.ui, rvim.highlight
-local border = ui.current.border
+local fmt, fn, ui = string.format, vim.fn, rvim.ui
+local hl, border = rvim.highlight, ui.current.border
+local function sync(path) return fmt('%s/notes/%s', fn.expand(vim.env.HOME), path) end
 
 return {
   'kazhala/close-buffers.nvim',
@@ -32,7 +33,7 @@ return {
       require('buffer_manager').setup({
         borderchars = ui.border.common,
       })
-      rvim.highlight.plugin('buffer_manager', {
+      hl.plugin('buffer_manager', {
         theme = {
           ['zephyr'] = {
             { BufferManagerTitle = { fg = { from = 'Winbar' } } },
@@ -111,6 +112,40 @@ return {
     opts = {
       dir = fn.expand(rvim.get_cache_dir() .. '/sessions/'),
       options = { 'buffers', 'curdir', 'tabpages', 'winsize', 'help' },
+    },
+  },
+  {
+    'vhyrro/neorg',
+    ft = 'norg',
+    build = ':Neorg sync-parsers',
+    dependencies = { 'vhyrro/neorg-telescope' },
+    opts = {
+      configure_parsers = true,
+      load = {
+        ['core.defaults'] = {},
+        ['core.integrations.telescope'] = {},
+        ['core.keybinds'] = {
+          config = {
+            default_keybinds = true,
+            neorg_leader = '<localleader>',
+            hook = function(keybinds)
+              keybinds.unmap('norg', 'n', '<C-s>')
+              keybinds.map_event('norg', 'n', '<C-x>', 'core.integrations.telescope.find_linkable')
+            end,
+          },
+        },
+        ['core.norg.completion'] = { config = { engine = 'nvim-cmp' } },
+        ['core.norg.concealer'] = {},
+        ['core.norg.dirman'] = {
+          config = {
+            workspaces = {
+              notes = sync('neorg/notes/'),
+              tasks = sync('neorg/tasks/'),
+              work = sync('neorg/work/'),
+            },
+          },
+        },
+      },
     },
   },
 }
