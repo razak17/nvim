@@ -114,6 +114,13 @@ return {
     ft = { 'org', 'norg', 'markdown', 'yaml' },
     config = function()
       hl.plugin('Headlines', {
+        {
+          Headline = {
+            bold = true,
+            italic = true,
+            background = { from = 'Normal', alter = 20 },
+          },
+        },
         { Headline1 = { background = '#003c30' } },
         { Headline2 = { background = '#00441b' } },
         { Headline3 = { background = '#084081' } },
