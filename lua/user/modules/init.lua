@@ -143,6 +143,7 @@ return {
               tasks = sync('neorg/tasks'),
               work = sync('neorg/work'),
             },
+            default_workspace = 'notes',
           },
         },
       },
