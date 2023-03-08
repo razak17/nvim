@@ -157,6 +157,7 @@ return function(name)
     textDocument = {
       colorProvider = { dynamicRegistration = true },
       foldingRange = { dynamicRegistration = false, lineFoldingOnly = true },
+      completion = { completionItem = { documentationFormat = { 'markdown', 'plaintext' } } },
       codeAction = {
         dynamicRegistration = false,
         codeActionLiteralSupport = {
