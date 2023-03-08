@@ -4,7 +4,6 @@ return {
     event = 'BufReadPost',
     build = ':TSUpdate',
     config = function()
-      local parsers = require('nvim-treesitter.parsers')
       require('nvim-treesitter.configs').setup({
         auto_install = true,
         highlight = { enable = true, additional_vim_regex_highlighting = false },
@@ -46,15 +45,9 @@ return {
         matchup = { enable = true, disable = { 'c', 'python' } },
         rainbow = {
           enable = true,
-          disable = vim.tbl_filter(function(p)
-            local disable = true
-            for _, lang in pairs({ 'dart' }) do
-              if p == lang then disable = false end
-            end
-            return disable
-          end, parsers.available_parsers()),
+          disable = false,
           query = 'rainbow-parens',
-          strategy = { require('ts-rainbow.strategy.local') },
+          strategy = { require('ts-rainbow.strategy.global') },
         },
         query_linter = {
           enable = true,
