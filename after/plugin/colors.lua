@@ -39,6 +39,7 @@ local function general_overrides()
     { ['@lsp.typemod.variable.readonly'] = { link = '@constant' } },
     { ['@lsp.mod.deprecated'] = { strikethrough = true } },
     { ['@lsp.mod.global'] = { bold = true, italic = true, inherit = '@namespace' } },
+
     ------------------------------------------------------------------------------------------------
     -- Treesitter
     ------------------------------------------------------------------------------------------------
@@ -47,6 +48,7 @@ local function general_overrides()
     { ['@error'] = { foreground = 'fg', background = 'NONE' } },
     { ['@text.diff.add'] = { link = 'DiffAdd' } },
     { ['@text.diff.delete'] = { link = 'DiffDelete' } },
+    { ['@text.title.markdown'] = { underdouble = true } },
     ------------------------------------------------------------------------------------------------
     -- LSP
     ------------------------------------------------------------------------------------------------
