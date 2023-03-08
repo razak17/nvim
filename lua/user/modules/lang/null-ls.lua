@@ -19,8 +19,8 @@ return {
         automatic_installation = {},
       -- stylua: ignore
         ensure_installed = {
-          'goimports', 'golangci_lint', 'stylua', 'prettier', 'zsh',
-          'flake8', 'shellcheck', 'black', 'shfmt',
+          'goimports', 'golangci_lint', 'stylua', 'prettier', 'zsh', 'flake8', 'shellcheck', 'black',
+          'shfmt',
         },
       })
       require('null-ls').setup({
