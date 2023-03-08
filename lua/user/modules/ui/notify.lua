@@ -23,7 +23,7 @@ return {
           api.nvim_win_set_config(win, { border = ui.current.border })
         end
       end,
-      timeout = 500,
+      timeout = 5000,
       stages = 'fade_in_slide_out',
       top_down = false,
       render = function(...)
