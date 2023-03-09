@@ -97,7 +97,7 @@ return {
       require('treesitter-context').setup({
         multiline_threshold = 4,
         separator = { '─', 'ContextBorder' }, --[[alernatives: ▁ ─ ▄ ]]
-        mode = 'topline',
+        mode = 'cursor',
       })
     end,
   },
