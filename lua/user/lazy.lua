@@ -4,12 +4,12 @@ local Lazy = {}
 Lazy.__index = Lazy
 
 function Lazy:load_plugins()
-  local modules_dir = join_paths(rvim.get_config_dir(), 'lua', 'user', 'modules')
+  local plugins_dir = join_paths(rvim.get_config_dir(), 'lua', 'user', 'plugins')
 
   self.repos = {}
 
   local list = {}
-  local tmp = vim.split(fn.globpath(modules_dir, '**/*.lua'), '\n')
+  local tmp = vim.split(fn.globpath(plugins_dir, '**/*.lua'), '\n')
   for _, f in ipairs(tmp) do
     list[#list + 1] = string.match(f, 'lua/(.+).lua$')
   end
