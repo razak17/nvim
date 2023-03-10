@@ -152,7 +152,9 @@ local function setup_autocommands(client, bufnr)
       event = { 'BufEnter', 'CursorHold', 'InsertLeave' },
       desc = 'LSP: Code Lens',
       buffer = bufnr,
-      command = function() lsp.codelens.refresh() end,
+      command = function(args)
+        if is_buffer_valid(args.buf) then lsp.codelens.refresh() end
+      end,
     }
   end)
   vim.b[bufnr].lsp_events = events
