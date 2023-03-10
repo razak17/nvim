@@ -172,7 +172,7 @@ return {
     init = function()
       hl.plugin('virt_column', { { VirtColumn = { link = 'FloatBorder' } } })
       rvim.augroup('VirtCol', {
-        event = { 'BufEnter', 'WinEnter' },
+        event = { 'VimEnter', 'BufEnter', 'WinEnter' },
         command = function(args)
           ui.decorations.set_colorcolumn(
             args.buf,
