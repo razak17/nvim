@@ -206,8 +206,8 @@ return {
         history = { path = join_paths(rvim.get_runtime_dir(), 'telescope', 'history.sqlite3') },
         -- stylua: ignore
         file_ignore_patterns = {
-          '%.jpg', '%.jpeg', '%.png', '%.otf', '%.ttf', '%.DS_Store', '%.lock', '.git/', 'node_modules/',
-          'dist/', 'build/', 'site-packages/',
+          '%.jpg', '%.jpeg', '%.png', '%.otf', '%.ttf', '%.DS_Store', '^.git/', 'node%_modules/.*',
+          '^dist/', '^build/',  '^site-packages/', '%.yarn/.*',
         },
         path_display = { 'truncate' },
         file_sorter = sorters.get_fzy_sorter,
