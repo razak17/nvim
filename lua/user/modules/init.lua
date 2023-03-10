@@ -78,14 +78,12 @@ return {
     end,
   },
   {
-    'karb94/neoscroll.nvim', -- NOTE: alternative: 'declancm/cinnamon.nvim'
-    keys = {
-      { '<C-u>', '<cmd>lua require("neoscroll").scroll(-0.10)<CR>', desc = 'neoscroll: up' },
-      { '<C-d>', '<cmd>lua require("neoscroll").scroll(0.10)<CR>', desc = 'neoscroll: down' },
-      { '<C-b>', '<cmd>lua require("neoscroll").scroll(-0.50)<CR>', desc = 'neoscroll: up' },
-      { '<C-f>', '<cmd>lua require("neoscroll").scroll(0.50)<CR>', desc = 'neoscroll: down' },
+    'karb94/neoscroll.nvim',
+    event = 'VeryLazy',
+    opts = {
+      mappings = { '<C-d>', '<C-u>', '<C-y>', 'zt', 'zz', 'zb' },
+      hide_cursor = true,
     },
-    opts = { hide_cursor = true },
   },
   {
     'AndrewRadev/linediff.vim',
