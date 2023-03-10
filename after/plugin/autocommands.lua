@@ -2,31 +2,20 @@ if not rvim or not rvim.plugins.enable then return end
 
 local fn, api = vim.fn, vim.api
 
-local smart_close_filetypes = {
-  'help',
-  'git-status',
-  'git-log',
-  'gitcommit',
-  'dbui',
-  'LuaTree',
-  'log',
-  'tsplayground',
-  'qf',
-  'man',
-  'notify',
-  'NvimTree',
-  'lsp-installer',
-  'null-ls-info',
-  'packer',
-  'lspinfo',
-  'neotest-summary',
-  'neotest-output',
-  'dap-float',
-  'httpResult',
-  'query',
-}
-
-local smart_close_buftypes = {} -- Don't include no file buffers rvim diff buffers are nofile
+local smart_close_filetypes = rvim.p_table({
+  ['qf'] = true,
+  ['log'] = true,
+  ['help'] = true,
+  ['query'] = true,
+  ['dbui'] = true,
+  ['lspinfo'] = true,
+  ['httpResult'] = true,
+  ['git.*'] = true,
+  ['Neogit.*'] = true,
+  ['neotest.*'] = true,
+  ['fugitive.*'] = true,
+  ['tsplayground'] = true,
+})
 
 local function smart_close()
   if fn.winnr('$') ~= 1 then api.nvim_win_close(0, true) end
@@ -43,11 +32,7 @@ rvim.augroup('SmartClose', {
   command = function()
     local is_unmapped = fn.hasmapto('q', 'n') == 0
 
-    local is_eligible = is_unmapped
-      or vim.wo.previewwindow
-      or vim.tbl_contains(smart_close_buftypes, vim.bo.buftype)
-      or vim.tbl_contains(smart_close_filetypes, vim.bo.filetype)
-
+    local is_eligible = is_unmapped or vim.wo.previewwindow or smart_close_filetypes[vim.bo.ft]
     if is_eligible then map('n', 'q', smart_close, { buffer = 0, nowait = true }) end
   end,
 })
