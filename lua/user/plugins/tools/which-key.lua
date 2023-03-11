@@ -36,7 +36,7 @@ return {
         m = { name = 'Marks' },
         n = { name = 'Notify' },
         o = { name = 'Toggle' },
-        r = { name = 'Rest' },
+        r = { name = 'Run' },
         s = { name = 'Session' },
         t = { name = 'Test' },
       },
