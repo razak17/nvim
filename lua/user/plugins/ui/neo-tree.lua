@@ -3,9 +3,9 @@ local codicons = rvim.ui.codicons
 local highlight = rvim.highlight
 
 return {
-  'nvim-neo-tree/neo-tree.nvim',
+  'razak17/neo-tree.nvim',
   cmd = { 'Neotree' },
-  branch = 'main',
+  branch = 'v2.x',
   keys = {
     { '<c-n>', '<cmd>Neotree toggle reveal<CR>', desc = 'toggle tree' },
   },
