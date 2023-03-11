@@ -2,6 +2,7 @@ return {
   'L3MON4D3/LuaSnip',
   event = 'InsertEnter',
   build = 'make install_jsregexp',
+  dependencies = { 'rafamadriz/friendly-snippets' },
   config = function()
     local ls = require('luasnip')
     local types = require('luasnip.util.types')
@@ -57,16 +58,17 @@ return {
 
     require('luasnip').config.setup({ store_selection_keys = '<C-x>' })
 
-    local paths = {
-      join_paths(rvim.get_runtime_dir(), 'site', 'pack', 'lazy', 'friendly-snippets'),
-      join_paths(rvim.get_config_dir(), 'snippets', 'textmate'),
-    }
     require('luasnip.loaders.from_lua').lazy_load()
-    require('luasnip.loaders.from_vscode').lazy_load({ paths = paths })
+    require('luasnip.loaders.from_vscode').lazy_load({
+      paths = {
+        join_paths(rvim.get_runtime_dir(), 'site', 'pack', 'lazy', 'friendly-snippets'),
+        join_paths(rvim.get_config_dir(), 'snippets', 'textmate'),
+      },
+    })
 
     ls.filetype_extend('typescriptreact', { 'javascript', 'typescript' })
+    ls.filetype_extend('NeogitCommitMessage', { 'gitcommit' })
 
     map('n', '<leader>S', '<cmd>LuaSnipEdit<CR>', { desc = 'LuaSnip: edit snippet' })
   end,
-  dependencies = { 'rafamadriz/friendly-snippets' },
 }
