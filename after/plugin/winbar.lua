@@ -59,7 +59,7 @@ function rvim.ui.winbar.get()
 
   local parts = vim.split(filepath, '/')
   local _, devicons = rvim.require('nvim-web-devicons')
-  local icon, color = devicons.get_icon(bufname, nil, { default = true })
+  local icon, color = devicons.get_icon(vim.fn.expand('%:t'))
   rvim.foreach(function(part, index)
     local priority = (#parts - (index - 1)) * 2
     local is_first = index == 1
