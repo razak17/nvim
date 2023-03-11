@@ -1,5 +1,13 @@
 local ui, fmt = rvim.ui, string.format
 
+-- A helper function to limit the size of a telescope window to fit the maximum available
+-- space on the screen. This is useful for dropdowns e.g. the cursor or dropdown theme
+local function fit_to_available_height(self, _, max_lines)
+  local results, PADDING = #self.finder.results, 4 -- this represents the size of the telescope window
+  local LIMIT = math.floor(max_lines / 2)
+  return (results <= (LIMIT - PADDING) and results + PADDING or LIMIT)
+end
+
 ---@param opts table
 ---@return table
 local function dropdown(opts)
@@ -8,12 +16,19 @@ local function dropdown(opts)
   return require('telescope.themes').get_dropdown(opts)
 end
 
----@return table
-local function minimal_ui()
-  return require('telescope.themes').get_dropdown({ previewer = false, theme = 'dropdown' })
+local function cursor(opts)
+  return require('telescope.themes').get_cursor(vim.tbl_extend('keep', opts or {}, {
+    layout_config = { width = 0.4, height = fit_to_available_height },
+    borderchars = ui.border.ui_select,
+  }))
 end
 
-rvim.telescope = { dropdown = dropdown }
+rvim.telescope = {
+  cursor = cursor,
+  dropdown = dropdown,
+  adaptive_dropdown = function(_) return dropdown({ height = fit_to_available_height }) end,
+  minimal_ui = function(_) return dropdown({ previewer = false }) end,
+}
 
 local function extensions(name) return require('telescope').extensions[name] end
 
@@ -51,7 +66,7 @@ local function project_files()
   if not pcall(git_files, { show_untracked = true }) then find_files() end
 end
 
-local function frecency() extensions('frecency').frecency(dropdown(minimal_ui())) end
+local function frecency() extensions('frecency').frecency(dropdown(rvim.telescope.minimal_ui())) end
 local function luasnips() extensions('luasnip').luasnip(dropdown()) end
 local function notifications() extensions('notify').notify(dropdown()) end
 local function undo() extensions('undo').undo() end
@@ -105,7 +120,7 @@ cmd('WebSearch', function()
       })
       :find()
   end
-  searcher(minimal_ui())
+  searcher(rvim.telescope.minimal_ui())
 end)
 
 return {
@@ -263,7 +278,7 @@ return {
           },
           max_results = 2000,
         }),
-        registers = dropdown({ layout_config = { height = 25 } }),
+        registers = cursor(),
         oldfiles = dropdown(),
         current_buffer_fuzzy_find = dropdown({ previewer = false, shorten_path = false }),
         colorscheme = { enable_preview = true },
