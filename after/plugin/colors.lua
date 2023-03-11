@@ -22,7 +22,10 @@ local function general_overrides()
     --  Semantic tokens
     ------------------------------------------------------------------------------//
     { ['@lsp.type.parameter'] = { italic = true, foreground = { from = 'Normal' } } },
+    { ['@lsp.type.variable'] = { clear = true } },
     { ['@lsp.typemod.variable.global'] = { bold = true, italic = true, inherit = '@namespace' } },
+    { ['@lsp.typemod.variable.defaultLibrary'] = { link = '@lsp.typemod.variable.global' } },
+    { ['@lsp.typemod.variable.readonly.typescript'] = { clear = true } },
 
     ------------------------------------------------------------------------------------------------
     -- Treesitter
