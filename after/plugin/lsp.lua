@@ -57,8 +57,8 @@ end
 --- Create augroups for each LSP feature and track which capabilities each client
 --- registers in a buffer local table
 ---@param bufnr integer
----@param client table
----@param events table
+---@param client lsp.Client
+---@param events { [string]: { clients: number[], group_id: number? } }
 ---@return fun(feature: {provider: string, name: string}, commands: fun(string): ...)
 local function augroup_factory(bufnr, client, events)
   return function(feature, commands)
@@ -88,7 +88,7 @@ local function format(opts)
 end
 
 --- Add lsp autocommands
----@param client table<string, any>
+---@param client lsp.Client
 ---@param bufnr number
 local function setup_autocommands(client, bufnr)
   if not client then
@@ -277,34 +277,6 @@ end
 -- LSP SETUP/TEARDOWN
 ----------------------------------------------------------------------------------------------------
 
--- @param client table
----@param bufnr number
-local function setup_plugins(client, bufnr)
-  -- nvim-navic
-  local navic_ok, navic = rvim.require('nvim-navic')
-  if navic_ok and client.server_capabilities.documentSymbolProvider then
-    navic.attach(client, bufnr)
-  end
-  -- lsp-inlayhints
-  local hints_ok, hints = rvim.require('lsp-inlayhints')
-  if hints_ok and client.name ~= 'tsserver' then hints.on_attach(client, bufnr) end
-  -- twoslash-queries
-  local twoslash_ok, twoslash = rvim.require('twoslash-queries')
-  if twoslash_ok and client.name == 'tsserver' then twoslash.attach(client, bufnr) end
-end
-
--- Add buffer local mappings, autocommands etc for attaching servers
--- this runs for each client because they have different capabilities so each time one
--- attaches it might enable autocommands or mappings that the previous client did not support
----@param client table the lsp client
----@param bufnr number
-local function on_attach(client, bufnr)
-  setup_plugins(client, bufnr)
-  setup_autocommands(client, bufnr)
-  setup_mappings(client, bufnr)
-  api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-end
-
 ---@alias ClientOverrides {on_attach: fun(client: lsp.Client, bufnr: number), semantic_tokens: fun(bufnr: number, client: lsp.Client, token: table)}
 
 --- A set of custom overrides for specific lsp clients
@@ -323,6 +295,48 @@ local client_overrides = {
     end,
   },
 }
+
+---@param client lsp.Client
+---@param bufnr number
+local function setup_plugins(client, bufnr)
+  -- nvim-navic
+  local navic_ok, navic = rvim.require('nvim-navic')
+  if navic_ok and client.server_capabilities.documentSymbolProvider then
+    navic.attach(client, bufnr)
+  end
+  -- lsp-inlayhints
+  local hints_ok, hints = rvim.require('lsp-inlayhints')
+  if hints_ok and client.name ~= 'tsserver' then hints.on_attach(client, bufnr) end
+  -- twoslash-queries
+  local twoslash_ok, twoslash = rvim.require('twoslash-queries')
+  if twoslash_ok and client.name == 'tsserver' then twoslash.attach(client, bufnr) end
+end
+
+---@param client lsp.Client
+---@param bufnr number
+local function setup_semantic_tokens(client, bufnr)
+  local overrides = client_overrides[client.name]
+  if not overrides or not overrides.semantic_tokens then return end
+  as.augroup(fmt('LspSemanticTokens%s', client.name), {
+    event = 'LspTokenUpdate',
+    buffer = bufnr,
+    desc = fmt('Configure the semantic tokens for the %s', client.name),
+    command = function(args) overrides.semantic_tokens(args.buf, client, args.data.token) end,
+  })
+end
+
+-- Add buffer local mappings, autocommands etc for attaching servers
+-- this runs for each client because they have different capabilities so each time one
+-- attaches it might enable autocommands or mappings that the previous client did not support
+---@param client lsp.Client the lsp client
+---@param bufnr number
+local function on_attach(client, bufnr)
+  setup_plugins(client, bufnr)
+  setup_autocommands(client, bufnr)
+  setup_mappings(client, bufnr)
+  setup_semantic_tokens(client, bufnr)
+  api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+end
 
 rvim.augroup('LspSetupCommands', {
   event = { 'LspAttach' },
@@ -346,14 +360,6 @@ rvim.augroup('LspSetupCommands', {
       end
       vim.tbl_filter(function(id) return id ~= client_id end, state.clients)
     end
-  end,
-}, {
-  event = 'LspTokenUpdate',
-  command = function(args)
-    local client = lsp.get_client_by_id(args.data.client_id)
-    local overrides = client_overrides[client.name]
-    if not overrides or not overrides.semantic_tokens then return end
-    overrides.semantic_tokens(args.buf, client, args.data.token)
   end,
 })
 
