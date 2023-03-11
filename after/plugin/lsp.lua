@@ -4,7 +4,7 @@ if not rvim then return end
 rvim.lsp.templates_dir = join_paths(rvim.get_runtime_dir(), 'site', 'after', 'ftplugin')
 
 local lsp, fn, api, fmt = vim.lsp, vim.fn, vim.api, string.format
-local b = vim.b --[[@as table<string, any>]]
+local b = vim.b --[[@rvim table<string, any>]]
 local L = lsp.log_levels
 
 local codicons = rvim.ui.codicons
@@ -317,7 +317,7 @@ end
 local function setup_semantic_tokens(client, bufnr)
   local overrides = client_overrides[client.name]
   if not overrides or not overrides.semantic_tokens then return end
-  as.augroup(fmt('LspSemanticTokens%s', client.name), {
+  rvim.augroup(fmt('LspSemanticTokens%s', client.name), {
     event = 'LspTokenUpdate',
     buffer = bufnr,
     desc = fmt('Configure the semantic tokens for the %s', client.name),
