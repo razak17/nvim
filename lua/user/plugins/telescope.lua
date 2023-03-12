@@ -317,7 +317,6 @@ return {
     })
 
     require('telescope').load_extension('zf-native')
-    require('telescope').load_extension('luasnip')
     require('telescope').load_extension('frecency')
     require('telescope').load_extension('undo')
     require('telescope').load_extension('menufacture')
@@ -326,7 +325,6 @@ return {
   end,
   dependencies = {
     'natecraddock/telescope-zf-native.nvim',
-    'benfowler/telescope-luasnip.nvim',
     'nvim-telescope/telescope-frecency.nvim',
     'debugloop/telescope-undo.nvim',
     'molecule-man/telescope-menufacture',

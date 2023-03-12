@@ -6,6 +6,14 @@ local api = vim.api
 local uv = vim.loop
 local l = vim.log.levels
 
+---Join path segments that were passed rvim input
+---@return string
+function join_paths(...)
+  local path_sep = uv.os_uname().version:match('Windows') and '\\' or '/'
+  local result = table.concat({ ... }, path_sep)
+  return result
+end
+
 ---Require a module in protected mode without relying on its cached value
 ---@param module string
 ---@return any

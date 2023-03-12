@@ -20,11 +20,6 @@ function R(name)
   RELOAD(name)
   return require(name)
 end
-
-function join_paths(...)
-  local path_sep = vim.loop.os_uname().version:match('Windows') and '\\' or '/'
-  return table.concat({ ... }, path_sep)
-end
 ----------------------------------------------------------------------------------------------------
 -- Global namespace
 ----------------------------------------------------------------------------------------------------
@@ -33,12 +28,12 @@ local namespace = {
   -- this table is place to store lua functions to be called in those mappings
   mappings = {},
   autosave = true,
+  plugins = { enable = true },
+  path = { mason = vim.call('stdpath', 'data') .. 'mason' },
   lsp = {
     signs = { enable = true },
     hover_diagnostics = { enable = true },
   },
-  path = { mason = join_paths(vim.call('stdpath', 'data'), 'mason') },
-  plugins = { enable = true },
   ui = {
     tw = {},
     winbar = { enable = true, use_relative_path = true, use_file_icon = true },
@@ -53,9 +48,3 @@ _G.map = vim.keymap.set
 -- Order matters here as globals needs to be instantiated first etc.
 R('user.globals')
 R('user.bootstrap')
-
-----------------------------------------------------------------------------------------------------
--- Color Scheme
-----------------------------------------------------------------------------------------------------
-if not rvim.plugins.enable then return end
-rvim.wrap_err('theme failed to load because', vim.cmd.colorscheme, 'zephyr')

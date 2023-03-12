@@ -1,6 +1,5 @@
 local fmt, fn, ui = string.format, vim.fn, rvim.ui
 local hl, border = rvim.highlight, ui.current.border
-local function sync(path) return fmt('%s/notes/%s', fn.expand(vim.env.HOME), path) end
 
 return {
   'nvim-lua/popup.nvim',
@@ -166,45 +165,6 @@ return {
     },
   },
   {
-    'vhyrro/neorg',
-    event = 'CursorHold',
-    keys = {
-      { '<localleader>nx', '<cmd>Neorg return<CR>', 'neorg: return' },
-      { '<localleader>ni', '<cmd>Neorg index<CR>', 'neorg: open default' },
-    },
-    build = ':Neorg sync-parsers',
-    dependencies = { 'vhyrro/neorg-telescope' },
-    opts = {
-      configure_parsers = true,
-      load = {
-        ['core.defaults'] = {},
-        ['core.integrations.telescope'] = {},
-        ['core.keybinds'] = {
-          config = {
-            default_keybinds = true,
-            neorg_leader = '<localleader>',
-            hook = function(keybinds)
-              keybinds.unmap('norg', 'n', '<C-s>')
-              keybinds.map_event('norg', 'n', '<C-x>', 'core.integrations.telescope.find_linkable')
-            end,
-          },
-        },
-        ['core.norg.completion'] = { config = { engine = 'nvim-cmp' } },
-        ['core.norg.concealer'] = {},
-        ['core.norg.dirman'] = {
-          config = {
-            workspaces = {
-              notes = sync('neorg/notes'),
-              tasks = sync('neorg/tasks'),
-              work = sync('neorg/work'),
-            },
-            default_workspace = 'notes',
-          },
-        },
-      },
-    },
-  },
-  {
     'joechrisellis/lsp-format-modifications.nvim',
     keys = {
       { '<localleader>lm', '<cmd>FormatModifications<CR>', desc = 'format-modifications: format' },
@@ -277,26 +237,6 @@ return {
     end,
   },
   {
-    'mfussenegger/nvim-treehopper',
-    keys = {
-      {
-        'u',
-        function() require('tsht').nodes() end,
-        desc = 'treehopper: toggle',
-        mode = 'o',
-        noremap = false,
-        silent = true,
-      },
-      {
-        'u',
-        ":lua require('tsht').nodes()<CR>",
-        desc = 'treehopper: toggle',
-        mode = 'x',
-        silent = true,
-      },
-    },
-  },
-  {
     'lvimuser/lsp-inlayhints.nvim',
     event = 'LspAttach',
     keys = {
@@ -319,17 +259,6 @@ return {
         },
       },
     },
-  },
-  {
-    'danymat/neogen',
-    keys = {
-      {
-        '<localleader>lc',
-        function() require('neogen').generate() end,
-        desc = 'neogen: generate doc',
-      },
-    },
-    opts = { snippet_engine = 'luasnip' },
   },
   {
     'andymass/vim-matchup',
@@ -361,5 +290,37 @@ return {
     'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
     event = 'LspAttach',
     config = function() require('lsp_lines').setup() end,
+  },
+  {
+    'jghauser/fold-cycle.nvim',
+    config = true,
+    keys = {
+      { '<BS>', function() require('fold-cycle').open() end, desc = 'fold-cycle: toggle' },
+    },
+  },
+  {
+    'psliwka/vim-dirtytalk',
+    build = ':DirtytalkUpdate',
+    init = function() vim.opt.spelllang:append('programming') end,
+  },
+  {
+    'andrewferrier/debugprint.nvim',
+    keys = {
+      {
+        '<leader>dp',
+        function() return require('debugprint').debugprint({ variable = true }) end,
+        expr = true,
+        desc = 'debugprint: cursor',
+      },
+      {
+        '<leader>do',
+        function() return require('debugprint').debugprint({ motion = true }) end,
+        mode = 'o',
+        expr = true,
+        desc = 'debugprint: operator',
+      },
+      { '<leader>dx', '<Cmd>DeleteDebugPrints<CR>', desc = 'debugprint: clear all' },
+    },
+    opts = { create_keymaps = false },
   },
 }

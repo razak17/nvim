@@ -3,27 +3,27 @@ local border = ui.current.border
 local lsp_hls = rvim.ui.lsp.highlights
 local ellipsis = ui.icons.ui.ellipsis
 
-local function get_color(r, g, b)
-  return ((r * 0.299 + g * 0.587 + b * 0.114) > 186) and '#000000' or '#ffffff'
-end
-
-local function is_tailwind_root()
-  return not vim.tbl_isempty(vim.fs.find({ 'tailwind.config.js', 'tailwind.config.cjs' }, {
-    path = vim.fn.expand('%:p'),
-    upward = true,
-  }))
-end
-
-local function format_icon(icon)
-  if is_tailwind_root() then return fmt(' %s  ', icon) end
-  return fmt('%s ', icon)
-end
-
 return {
   {
     'hrsh7th/nvim-cmp',
     event = { 'InsertEnter' },
     config = function()
+      local function get_color(r, g, b)
+        return ((r * 0.299 + g * 0.587 + b * 0.114) > 186) and '#000000' or '#ffffff'
+      end
+
+      local function is_tailwind_root()
+        return not vim.tbl_isempty(vim.fs.find({ 'tailwind.config.js', 'tailwind.config.cjs' }, {
+          path = vim.fn.expand('%:p'),
+          upward = true,
+        }))
+      end
+
+      local function format_icon(icon)
+        if is_tailwind_root() then return fmt(' %s  ', icon) end
+        return fmt('%s ', icon)
+      end
+
       local cmp = require('cmp')
 
       local luasnip = require('luasnip')
@@ -233,7 +233,28 @@ return {
       'hrsh7th/cmp-nvim-lsp-document-symbol',
       'hrsh7th/cmp-path',
       'hrsh7th/cmp-buffer',
+      'hrsh7th/cmp-emoji',
       'lukas-reineke/cmp-rg',
+      { 'rcarriga/cmp-dap', ft = { 'dap-repl', 'dapui_watches' } },
+      { 'amarakon/nvim-cmp-buffer-lines', ft = { 'c', 'cpp' } },
+      {
+        'f3fora/cmp-spell',
+        ft = { 'gitcommit', 'NeogitCommitMessage', 'markdown', 'norg', 'org' },
+      },
+      {
+        'uga-rosa/cmp-dictionary',
+        enabled = false,
+        config = function()
+          -- NOTE: run :CmpDictionaryUpdate to update dictionary
+          require('cmp_dictionary').setup({
+            async = false,
+            dic = {
+              -- Refer to install script
+              ['*'] = join_paths(rvim.get_runtime_dir(), 'site', 'spell', 'dictionary.txt'),
+            },
+          })
+        end,
+      },
       {
         'uga-rosa/cmp-dynamic',
         config = function()
@@ -268,22 +289,34 @@ return {
       },
     },
   },
-  { 'rcarriga/cmp-dap', ft = { 'dap-repl', 'dapui_watches' } },
-  { 'hrsh7th/cmp-emoji', ft = 'markdown' },
-  { 'amarakon/nvim-cmp-buffer-lines', ft = { 'c', 'cpp' } },
-  { 'f3fora/cmp-spell', ft = { 'gitcommit', 'NeogitCommitMessage', 'markdown', 'norg', 'org' } },
   {
-    'uga-rosa/cmp-dictionary',
-    enabled = false,
-    config = function()
-      -- NOTE: run :CmpDictionaryUpdate to update dictionary
-      require('cmp_dictionary').setup({
-        async = false,
-        dic = {
-          -- Refer to install script
-          ['*'] = join_paths(rvim.get_runtime_dir(), 'site', 'spell', 'dictionary.txt'),
+    'zbirenbaum/copilot.lua',
+    event = 'InsertEnter',
+    opts = {
+      suggestion = {
+        auto_trigger = true,
+        keymap = {
+          accept_word = '<M-w>',
+          accept_line = '<M-l>',
+          accept = '<M-u>',
+          next = '<M-]>',
+          prev = '<M-[>',
+          dismiss = '<C-\\>',
         },
-      })
-    end,
+      },
+      filetypes = {
+        gitcommit = false,
+        NeogitCommitMessage = false,
+        DressingInput = false,
+        TelescopePrompt = false,
+        ['neo-tree-popup'] = false,
+        ['dap-repl'] = false,
+      },
+      server_opts_overrides = {
+        settings = {
+          advanced = { inlineSuggestCount = 3 },
+        },
+      },
+    },
   },
 }

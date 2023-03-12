@@ -221,7 +221,7 @@ return {
         local clients = table.concat(client_names, '  ')
         null_ls = table.concat(null_ls, ', ')
         clients = clients .. ' '
-        if not rvim.empty(null_ls) then clients = clients .. ' '.. null_ls .. ' ' end
+        if not rvim.empty(null_ls) then clients = clients .. ' ' .. null_ls .. ' ' end
         return clients
       end,
       color = { gui = 'bold' },
