@@ -1,4 +1,3 @@
--- https://github.com/akinsho/dotfiles/blob/main/.config/nvim/plugin/lsp.lua
 if not rvim then return end
 
 rvim.lsp.templates_dir = join_paths(rvim.get_runtime_dir(), 'site', 'after', 'ftplugin')

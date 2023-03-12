@@ -11,6 +11,12 @@ local conditions = {
   end,
 }
 
+local function is_pipfile_root()
+  return not vim.tbl_isempty(vim.fs.find({ 'Pipfile', 'Pipfile.lock' }, {
+    path = vim.fn.expand('%:p'),
+    upward = true,
+  }))
+end
 local function env_cleanup(venv)
   if string.find(venv, '/') then
     local final_venv = venv
@@ -19,18 +25,8 @@ local function env_cleanup(venv)
     end
     venv = final_venv
   end
+  if is_pipfile_root() then venv = venv:match('^([^%-]*)') end
   return venv
-end
-
-local function python_env()
-  if vim.bo.filetype == 'python' then
-    local venv = vim.env.CONDA_DEFAULT_ENV
-    if venv then return string.format('(%s)', env_cleanup(venv)) end
-    venv = vim.env.VIRTUAL_ENV
-    if venv then return string.format('(%s)', env_cleanup(venv)) end
-    return ''
-  end
-  return ''
 end
 
 return {
@@ -119,7 +115,16 @@ return {
     })
 
     ins_left({
-      python_env,
+      function()
+        if vim.bo.filetype == 'python' then
+          local venv = vim.env.CONDA_DEFAULT_ENV
+          if venv then return string.format('(%s)', env_cleanup(venv)) end
+          venv = vim.env.VIRTUAL_ENV
+          if venv then return string.format('(%s)', env_cleanup(venv)) end
+          return ''
+        end
+        return ''
+      end,
       color = { fg = P.yellowgreen },
       cond = conditions.hide_in_width,
     })
