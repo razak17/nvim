@@ -5,7 +5,6 @@ local o, opt, fn = vim.o, vim.opt, vim.fn
 -- Neovim Directories {{{1
 ----------------------------------------------------------------------------------------------------
 o.udir = rvim.get_cache_dir() .. '/undodir'
-o.directory = rvim.get_cache_dir() .. '/swap'
 o.viewdir = rvim.get_cache_dir() .. '/view'
 ----------------------------------------------------------------------------------------------------
 -- Message output on vim actions {{{1
