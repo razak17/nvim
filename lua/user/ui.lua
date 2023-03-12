@@ -81,7 +81,7 @@ rvim.ui.codicons = {
     trace = '✎',
   },
   lsp_alt = {
-    error = '',
+    error = '', -- alt: 
     warn = '',
     info = '',
     hint = '',
