@@ -7,7 +7,7 @@ return {
     keys = {
       {
         '<leader>ln',
-        function() require('null-ls.info').show_window({ border = rvim.ui.current.border }) end,
+        function() require('null-ls.info').show_window({ border = border }) end,
         desc = 'null-ls: info',
       },
     },
@@ -60,7 +60,7 @@ return {
   },
   {
     'razak17/lab.nvim',
-    event = 'InsertEnter',
+    event = { 'BufReadPre', 'BufNewFile' },
     keys = {
       { '<leader>rl', ':Lab code run<CR>', desc = 'lab: run' },
       { '<leader>rx', ':Lab code stop<CR>', desc = 'lab: stop' },
