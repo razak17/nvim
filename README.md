@@ -23,5 +23,5 @@ Debugging:
 Command to install
 
 ```bash
-bash <(curl -s https://raw.githubusercontent.com/razak17/nvim/main/utils/bin/install) --all
+bash <(curl -s https://raw.githubusercontent.com/razak17/nvim/main/bin/install) --all
 ```
