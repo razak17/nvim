@@ -168,7 +168,7 @@ cloneconfig() {
 	# install node and neovim support
 	(command -v git >/dev/null && echo "git installed, moving on...") || asktoinstallgit
 
-	sudo cp --force "$RVIM_CONFIG_DIR/utils/bin/rvim" "$HOME/.local/bin"
+	sudo cp --force "$RVIM_CONFIG_DIR/bin/rvim" "$HOME/.local/bin"
 }
 
 while [ "$#" -gt 0 ]; do
