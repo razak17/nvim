@@ -95,6 +95,20 @@ return {
         silent = true,
       },
     },
+    config = function()
+      rvim.highlight.plugin('treehopper', {
+        theme = {
+          ['zephyr'] = {
+            {
+              TSNodeKey = {
+                fg = { from = 'VertSplit', attr = 'fg', alter = -20 },
+                bg = { from = 'qfLineNr', attr = 'fg' },
+              },
+            },
+          },
+        },
+      })
+    end,
   },
   {
     'Wansmer/treesj',
