@@ -29,7 +29,7 @@ local namespace = {
   mappings = {},
   autosave = true,
   plugins = { enable = true },
-  path = { mason = vim.call('stdpath', 'data') .. 'mason' },
+  path = { mason = vim.call('stdpath', 'data') .. '/mason' },
   lsp = {
     signs = { enable = true },
     hover_diagnostics = { enable = true },

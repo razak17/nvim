@@ -135,15 +135,11 @@ return {
     },
   },
   {
-    'microsoft/vscode-js-debug',
-    build = 'npm install --legacy-peer-deps && npm run compile',
-  },
-  {
     'mxsdev/nvim-dap-vscode-js',
     ft = { 'typescriptreact', 'typescript', 'javascript', 'javascriptreact' },
     opts = {
       node_path = 'node',
-      debugger_path = rvim.get_runtime_dir() .. '/site/pack/lazy/vscode-js-debug',
+      debugger_path = rvim.path.mason .. '/packages/js-debug-adapter',
       log_file_path = rvim.get_cache_dir() .. '/dap_vscode_js.log',
       adapters = {
         'pwa-node',
