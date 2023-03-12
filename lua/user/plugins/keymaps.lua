@@ -67,7 +67,7 @@ return {
   },
   {
     'anuvyklack/hydra.nvim',
-    keys = { 'z', '<leader>z', '<leader>b', '<leader>dh', '<leader>w' },
+    event = 'VeryLazy',
     config = function()
       local Hydra = require('hydra')
       local border = rvim.ui.current.border
