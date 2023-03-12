@@ -109,7 +109,7 @@
   "telescope.nvim": { "branch": "master", "commit": "a3f17d3baf70df58b9d3544ea30abe52a7a832c2" },
   "template-string.nvim": { "branch": "main", "commit": "b97ee201fa2d5edced1c6dbaf432d00fec0468f1" },
   "tint.nvim": { "branch": "master", "commit": "f6a259861ba8c0d88afc2ef05140ddf345eb0296" },
-  "todo-comments.nvim": { "branch": "main", "commit": "74c7d28cb50b0713c881ef69bcb6cdd77d8907d1" },
+  "todo-comments.nvim": { "branch": "main", "commit": "6ccb0bebeb22dbe31940776a750db54b844ae653" },
   "toggleterm.nvim": { "branch": "main", "commit": "bfb7a7254b5d897a5b889484c6a5142951a18b29" },
   "trailblazer.nvim": { "branch": "main", "commit": "a01a5bbf5ca9cf6b0773daec3e89046a36f77d7b" },
   "treesj": { "branch": "main", "commit": "bde69d35d37477dc1997f00cc08047f49aa90f7a" },
