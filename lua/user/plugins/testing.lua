@@ -37,6 +37,7 @@ return {
       diagnostic = { enabled = true },
       icons = { running = rvim.ui.codicons.ui.clock },
       floating = { border = rvim.ui.current.border },
+      quickfix = { enabled = false, open = true },
       adapters = {
         require('neotest-plenary'),
         require('neotest-python'),
