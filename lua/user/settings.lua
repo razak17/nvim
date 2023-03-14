@@ -269,10 +269,3 @@ opt.mousescroll = { 'ver:1', 'hor:6' }
 -- these only read ".vim" files
 o.secure = true -- Disable autocmd etc for project local vimrc files.
 o.exrc = false -- Allow project local vimrc files example .nvimrc see :h exrc
-----------------------------------------------------------------------------------------------------
--- Git editor
-----------------------------------------------------------------------------------------------------
-if rvim.executable('nvr') then
-  vim.env.GIT_EDITOR = "nvr -cc split --remote-wait +'set bufhidden=wipe'"
-  vim.env.EDITOR = "nvr -cc split --remote-wait +'set bufhidden=wipe'"
-end

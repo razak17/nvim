@@ -1,4 +1,4 @@
-local fmt, fn, ui = string.format, vim.fn, rvim.ui
+local api, fn, ui, fmt = vim.api, vim.fn, rvim.ui, string.format
 local hl, border = rvim.highlight, ui.current.border
 
 return {
@@ -323,4 +323,19 @@ return {
     },
     opts = { create_keymaps = false },
   },
+  {
+    'willothy/flatten.nvim',
+    lazy = false,
+    opts = {
+      callbacks = {
+        pre_open = function() require('toggleterm').toggle() end,
+        post_open = function(_, winnr)
+          require('toggleterm').toggle()
+          api.nvim_set_current_win(winnr)
+        end,
+        block_end = function() require('toggleterm').toggle() end,
+      },
+    },
+  },
+  ----
 }
