@@ -26,10 +26,9 @@ return {
         default_args = { DiffviewFileHistory = { '%' } },
         hooks = {
           diff_buf_read = function()
-            vim.opt_local.wrap = false
-            vim.opt_local.list = false
-            vim.opt_local.colorcolumn = ''
-            vim.opt_local.relativenumber = false
+            local opt = vim.opt_local
+            opt.wrap, opt.list, opt.relativenumber = false, false, false
+            opt.colorcolumn = ''
           end,
         },
         enhanced_diff_hl = true,
@@ -80,12 +79,9 @@ return {
         map('n', '<leader>gr', gs.reset_buffer, { desc = 'reset entire buffer' })
         map('n', '<leader>gw', gs.stage_buffer, { desc = 'stage entire buffer' })
 
-        map(
-          'n',
-          '<leader>gl',
-          function() gs.setqflist('all') end,
-          { desc = 'list modified in quickfix' }
-        )
+        map('n', '<leader>gl', function() gs.setqflist('all') end, {
+          desc = 'list modified in quickfix',
+        })
         bmap({ 'n', 'v' }, '<leader>hs', '<Cmd>Gitsigns stage_hunk<CR>', { desc = 'stage hunk' })
         bmap({ 'n', 'v' }, '<leader>hr', '<Cmd>Gitsigns reset_hunk<CR>', { desc = 'reset hunk' })
         bmap({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>', { desc = 'select hunk' })
