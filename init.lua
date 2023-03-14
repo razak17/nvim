@@ -14,13 +14,6 @@ if not vim.tbl_contains(vim.opt.rtp:get(), base_dir) then vim.opt.rtp:append(bas
 -- Ensure all autocommands are cleared
 vim.api.nvim_create_augroup('vimrc', {})
 ----------------------------------------------------------------------------------------------------
-local ok, reload = pcall(require, 'plenary.reload')
-RELOAD = ok and reload.reload_module or function(...) return ... end
-function R(name)
-  RELOAD(name)
-  return require(name)
-end
-----------------------------------------------------------------------------------------------------
 -- Global namespace
 ----------------------------------------------------------------------------------------------------
 local namespace = {
@@ -46,5 +39,5 @@ _G.map = vim.keymap.set
 -- Load Modules
 ----------------------------------------------------------------------------------------------------
 -- Order matters here as globals needs to be instantiated first etc.
-R('user.globals')
-R('user.bootstrap')
+require('user.globals')
+require('user.bootstrap')
