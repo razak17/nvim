@@ -165,7 +165,7 @@ end
 
 ---Require a module using [pcall] and report any errors
 ---@param module string
----@param opts table?
+---@param opts {silent: boolean, message: string}?
 ---@return boolean, any
 function rvim.require(module, opts)
   opts = opts or { silent = false }
@@ -269,23 +269,6 @@ function rvim.empty(item)
   if item_type == 'number' then return item <= 0 end
   if item_type == 'table' then return vim.tbl_isempty(item) end
   return item ~= nil
-end
-
----Reload lua modules
----@param path any
----@param recursive boolean
-function rvim.invalidate(path, recursive)
-  if recursive then
-    for key, value in pairs(package.loaded) do
-      if key ~= '_G' and value and fn.match(key, path) ~= -1 then
-        package.loaded[key] = nil
-        require(key)
-      end
-    end
-    return
-  end
-  package.loaded[path] = nil
-  require(path)
 end
 
 ----------------------------------------------------------------------------------------------------
