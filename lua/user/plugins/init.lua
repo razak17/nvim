@@ -145,26 +145,6 @@ return {
     },
   },
   {
-    'folke/persistence.nvim',
-    event = 'BufReadPre', -- this will only start session saving when an actual file was opened
-    keys = {
-      {
-        '<leader>sr',
-        '<cmd>lua require("persistence").load()<CR>',
-        desc = 'persistence: restore for directory',
-      },
-      {
-        '<leader>sl',
-        '<cmd>lua require("persistence").load({ last = true })<CR>',
-        desc = 'persistence: restore last',
-      },
-    },
-    opts = {
-      dir = fn.expand(rvim.get_cache_dir() .. '/sessions/'),
-      options = { 'buffers', 'curdir', 'tabpages', 'winsize', 'help' },
-    },
-  },
-  {
     'joechrisellis/lsp-format-modifications.nvim',
     keys = {
       { '<localleader>lm', '<cmd>FormatModifications<CR>', desc = 'format-modifications: format' },

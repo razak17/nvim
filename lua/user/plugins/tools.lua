@@ -12,7 +12,6 @@ return {
       },
     },
   },
-
   {
     'jay-babu/mason-null-ls.nvim',
     event = { 'BufReadPre', 'BufNewFile' },
@@ -46,6 +45,26 @@ return {
       ignore_lsp = { 'null-ls' },
       patterns = { '.git' },
       datapath = rvim.get_runtime_dir(),
+    },
+  },
+  {
+    'folke/persistence.nvim',
+    event = 'BufReadPre', -- this will only start session saving when an actual file was opened
+    keys = {
+      {
+        '<leader>sr',
+        '<cmd>lua require("persistence").load()<CR>',
+        desc = 'persistence: restore for directory',
+      },
+      {
+        '<leader>sl',
+        '<cmd>lua require("persistence").load({ last = true })<CR>',
+        desc = 'persistence: restore last',
+      },
+    },
+    opts = {
+      dir = fn.expand(rvim.get_cache_dir() .. '/sessions/'),
+      options = { 'buffers', 'curdir', 'tabpages', 'winsize', 'help' },
     },
   },
   { 'turbio/bracey.vim', ft = 'html', build = 'npm install --prefix server' },
