@@ -1,7 +1,53 @@
 local cwd = vim.fn.getcwd()
+local hl = rvim.highlight
 local icons = rvim.ui.icons.separators
 
+local function neogit() return require('neogit') end
+
 return {
+  {
+    'TimUntersberger/neogit',
+    cmd = 'Neogit',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    keys = {
+      { '<localleader>gs', function() neogit().open() end, desc = 'open status buffer' },
+      {
+        '<localleader>gc',
+        function() neogit().open({ 'commit' }) end,
+        desc = 'open commit buffer',
+      },
+      { '<localleader>gl', function() neogit().popups.pull.create() end, desc = 'open pull popup' },
+      { '<localleader>gp', function() neogit().popups.push.create() end, desc = 'open push popup' },
+    },
+    opts = {
+      disable_signs = false,
+      disable_hint = true,
+      disable_commit_confirmation = true,
+      disable_builtin_notifications = true,
+      disable_insert_on_commit = false,
+      signs = {
+        section = { '', '' }, -- "", ""
+        item = { '▸', '▾' },
+        hunk = { '樂', '' },
+      },
+      integrations = {
+        diffview = true,
+      },
+    },
+    config = function(_, opts)
+      require('neogit').setup(opts)
+      -- NOTE: highlights must be set AFTER neogit's setup
+      hl.plugin('neogit', {
+        { NeogitDiffAdd = { link = 'DiffAdd' } },
+        { NeogitDiffDelete = { link = 'DiffDelete' } },
+        { NeogitDiffAddHighlight = { link = 'DiffAdd' } },
+        { NeogitDiffDeleteHighlight = { link = 'DiffDelete' } },
+        { NeogitDiffContextHighlight = { link = 'NormalFloat' } },
+        { NeogitHunkHeader = { link = 'TabLine' } },
+        { NeogitHunkHeaderHighlight = { link = 'DiffText' } },
+      })
+    end,
+  },
   {
     'sindrets/diffview.nvim',
     cmd = { 'DiffviewOpen', 'DiffviewFileHistory', 'DiffviewToggleFiles', 'DiffviewFocusFiles' },

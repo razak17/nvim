@@ -36,24 +36,16 @@ return {
 
     local Terminal = require('toggleterm.terminal').Terminal
 
-    local function git_float(cmd)
-      return Terminal:new({
-        cmd = cmd,
-        dir = 'git_dir',
-        hidden = true,
-        direction = 'float',
-        on_open = float_handler,
-      }):toggle()
-    end
+    local lazygit = Terminal:new({
+      cmd = 'lazygit',
+      dir = 'git_dir',
+      hidden = true,
+      direction = 'float',
+      on_open = float_handler,
+    })
 
-    local function lazygit() git_float('lazygit') end
-    local function git_add() git_float('git add .') end
-    local function git_commit() git_float('git add . && git commit -a -v') end
-    local function dotfiles() git_float('iconf -ccma') end
-
-    map('n', '<leader>lg', lazygit, { desc = 'toggleterm: lazygit' })
-    map('n', '<leader>ga', git_add, { desc = 'toggleterm: add all' })
-    map('n', '<leader>gc', git_commit, { desc = 'toggleterm: commit' })
-    map('n', '<leader>gD', dotfiles, { desc = 'toggleterm: commit dotfiles' })
+    map('n', '<leader>lg', function() lazygit:toggle() end, {
+      desc = 'toggleterm: toggle lazygit',
+    })
   end,
 }
