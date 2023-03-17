@@ -21,7 +21,6 @@ return {
           lookahead = true,
           select = {
             enable = true,
-            lookahead = true,
             include_surrounding_whitespace = true,
             keymaps = {
               ['af'] = { query = '@function.outer', desc = 'ts: all function' },
@@ -30,8 +29,8 @@ return {
               ['ic'] = { query = '@class.inner', desc = 'ts: inner class' },
               ['aC'] = { query = '@conditional.outer', desc = 'ts: all conditional' },
               ['iC'] = { query = '@conditional.inner', desc = 'ts: inner conditional' },
-              ['aL'] = { query = '@assignment.lhs', desc = 'ts: assignment lhs' },
-              ['aR'] = { query = '@assignment.rhs', desc = 'ts: assignment rhs' },
+              ['aH'] = { query = '@assignment.lhs', desc = 'ts: assignment lhs' },
+              ['aL'] = { query = '@assignment.rhs', desc = 'ts: assignment rhs' },
             },
           },
           move = {
@@ -71,10 +70,7 @@ return {
         { desc = 'treesitter: enable highlight' }
       )
     end,
-    dependencies = {
-      'nvim-treesitter/nvim-treesitter-textobjects',
-      'HiPhish/nvim-ts-rainbow2',
-    },
+    dependencies = { 'nvim-treesitter/nvim-treesitter-textobjects', 'HiPhish/nvim-ts-rainbow2' },
   },
   {
     'windwp/nvim-ts-autotag',
