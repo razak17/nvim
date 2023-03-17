@@ -1,14 +1,15 @@
 if not rvim or not rvim.has('nvim-0.9') then return end
 
-local fn, g, v, api = vim.fn, vim.g, vim.v, vim.api
+-- local fn, g, v, api = vim.fn, vim.g, vim.v, vim.api
+local fn, v, api, opt, optl = vim.fn, vim.v, vim.api, vim.opt, vim.opt_local
 local ui = rvim.ui
 
 local space = ' '
+local fcs = opt.fillchars:get()
 local shade = '░'
 local separator = '▏' -- '│'
-local fold_opened = '▼'
-local fold_closed = '▶'
-
+local fold_opened = fcs.foldopen
+local fold_closed = fcs.foldclose
 local sep_hl = '%#StatusColSep#'
 
 ui.statuscolumn = {}
@@ -20,9 +21,9 @@ local function hl(group, text) return '%#' .. group .. '#' .. text .. '%*' end
 
 local function click(name, item) return '%@v:lua.rvim.ui.statuscolumn.' .. name .. '@' .. item end
 
+---@param buf number
 ---@return {name:string, text:string, texthl:string}[]
-local function get_signs()
-  local buf = api.nvim_win_get_buf(g.statusline_winid)
+local function get_signs(buf)
   return vim.tbl_map(
     function(sign) return fn.sign_getdefined(sign.name)[1] end,
     fn.sign_getplaced(buf, { group = '*', lnum = v.lnum })[1].signs
@@ -94,9 +95,7 @@ vim.o.statuscolumn = [[%!v:lua.rvim.ui.statuscolumn.render()]]
 rvim.augroup('StatusCol', {
   event = { 'BufEnter', 'FileType' },
   command = function(args)
-    local buf = vim.bo[args.buf]
-    if ui.decorations.get(buf.ft, 'statuscolumn', 'ft') == false then
-      vim.opt_local.statuscolumn = ''
-    end
+    local has_statuscol = ui.decorations.get(vim.bo[args.buf].ft, 'statuscolumn', 'ft')
+    if has_statuscol == false then optl.statuscolumn = '' end
   end,
 })
