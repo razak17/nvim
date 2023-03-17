@@ -461,7 +461,7 @@ diagnostic.config({
     max_width = max_width,
     max_height = max_height,
     border = border,
-    focusable = false,
+    focusable = true,
     style = 'minimal',
     source = 'always',
     header = '',
