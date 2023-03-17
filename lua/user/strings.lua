@@ -26,10 +26,29 @@ end
 -- COMPONENTS
 ----------------------------------------------------------------------------------------------------
 
+---@type fun(): StringComponent
+M.separator = function() return { component = constants.ALIGN, length = 0, priority = 0 } end
+---@type fun(): StringComponent
+M.end_marker = function() return { component = constants.END, length = 0, priority = 0 } end
+
 ---@param func_name string
 ---@param id string
 ---@return string
-local function get_click_start(func_name, id) return '%' .. id .. '@' .. func_name .. '@' end
+local function get_click_start(func_name, id)
+  if not id then
+    vim.schedule(
+      function()
+        vim.notify_once(
+          fmt('An ID is needed to enable click handler %s to work', func_name),
+          vim.log.levels.ERROR,
+          { title = 'Statusline' }
+        )
+      end
+    )
+    return ''
+  end
+  return '%' .. id .. '@' .. func_name .. '@'
+end
 
 --- Creates a spacer statusline component i.e. for padding
 --- or to represent an empty component
@@ -61,11 +80,13 @@ end
 --- @param item string | number
 --- @param hl string
 --- @param opts ComponentOpts
+--- @return StringComponent
 function M.component(item, hl, opts)
   -- do not allow empty values to be shown note 0 is considered empty
   -- since if there is nothing of something I don't need to see it
   if empty(item) then return M.spacer() end
-  assert(opts and opts.priority, fmt("each item's priority is required: %s is missing one", item))
+  if not opts then opts = {} end
+  if not opts.priority then opts.priority = 10 end
   opts.padding = opts.padding or { suffix = true, prefix = true }
   local padding = ' '
   local before, after = opts.before or '', opts.after or padding
