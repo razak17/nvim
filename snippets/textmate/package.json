@@ -32,16 +32,8 @@
         "path": "./vim.json"
       },
       {
-        "language": "tmux",
-        "path": "./tmux.json"
-      },
-      {
         "language": "markdown",
         "path": "./markdown.json"
-      },
-      {
-        "language": "html",
-        "path": "./html.json"
       },
       {
         "language": "javascript",

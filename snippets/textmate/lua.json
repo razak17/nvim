@@ -4,10 +4,6 @@
     "body": ["autocmd $TM_SELECTED_TEXT"],
     "description": "Example for selected text"
   },
-  "config": {
-    "prefix": "conf",
-    "body": ["config = function()", "\t${2}", "end,"]
-  },
   "it": {
     "prefix": "it",
     "body": ["it('should ${1:do something}', function()", "\t${2}", "end)"]

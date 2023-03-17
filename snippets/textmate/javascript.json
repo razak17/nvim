@@ -1,5 +1,5 @@
 {
-  "consoleLog": {
+  "clg": {
     "prefix": "clg",
     "body": ["console.log(${1:first})"],
     "description": "Displays a message in the console"
@@ -8,23 +8,6 @@
     "prefix": "exd",
     "body": "export default ${tm_filename_base}",
     "description": "creates a react function component without proptypes"
-  },
-  "lred": {
-    "prefix": "lred",
-    "body": "console.log('%c${1}', 'font-weight:bold;color:red;');"
-  },
-  "lgreen": {
-    "prefix": "lgreen",
-    "body": "console.log('%c${1}', 'font-weight:bold;color:green;');"
-  },
-  "cl": {
-    "prefix": "cl",
-    "body": "console.log('$1: ', ${1});"
-  },
-  "expf": {
-    "prefix": "expf",
-    "body": "export ${1:default }function($2) {\n  $3\n\n};",
-    "description": "Export function"
   },
   "im": {
     "prefix": "im",

@@ -1,5 +1,5 @@
 {
-  "reactFunctionalExportComponent": {
+  "_rfce": {
     "prefix": "_rfce",
     "body": "function ${TM_FILENAME_BASE}() {\n\treturn (\n\t\t<div>\n\t\t\t$0\n\t\t</div>\n\t)\n}\nexport default ${TM_FILENAME_BASE}",
     "description": "Creates a React functional component with default export"
