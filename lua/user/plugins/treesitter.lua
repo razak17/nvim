@@ -18,6 +18,7 @@ return {
           },
         },
         textobjects = {
+          lookahead = true,
           select = {
             enable = true,
             lookahead = true,
