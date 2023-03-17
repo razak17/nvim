@@ -1,4 +1,4 @@
-local api, fn, cmd, fmt, ui = vim.api, vim.fn, vim.cmd, string.format, rvim.ui
+local api, cmd, fmt, ui = vim.api, vim.cmd, string.format, rvim.ui
 local hl, border = rvim.highlight, ui.current.border
 
 return {
@@ -70,6 +70,16 @@ return {
     opts = {
       position = { relative_to = 'win', anchor = 'topright' },
       style = { border = 'single', hide_buffer_id = true },
+    },
+  },
+  {
+    'echasnovski/mini.bufremove',
+    keys = {
+      {
+        '<leader>c',
+        function() require('mini.bufremove').delete(0, false) end,
+        desc = 'delete buffer',
+      },
     },
   },
   {
@@ -325,5 +335,4 @@ return {
       },
     },
   },
-  ----
 }

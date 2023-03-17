@@ -60,21 +60,41 @@ return {
     end,
   },
   {
-    'axelvc/template-string.nvim',
-    dependencies = { 'nvim-treesitter' },
-    ft = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
-    opts = { remove_template_string = true },
-  },
-  {
-    'danymat/neogen',
+    'monaqa/dial.nvim',
     keys = {
-      {
-        '<localleader>lc',
-        function() require('neogen').generate() end,
-        desc = 'neogen: generate doc',
-      },
+      { '<C-a>', '<Plug>(dial-increment)', mode = 'n' },
+      { '<C-x>', '<Plug>(dial-decrement)', mode = 'n' },
+      { '<C-a>', '<Plug>(dial-increment)', mode = 'v' },
+      { '<C-x>', '<Plug>(dial-decrement)', mode = 'v' },
+      { 'g<C-a>', 'g<Plug>(dial-increment)', mode = 'v' },
+      { 'g<C-x>', 'g<Plug>(dial-decrement)', mode = 'v' },
     },
-    opts = { snippet_engine = 'luasnip' },
+    config = function()
+      local augend = require('dial.augend')
+      local config = require('dial.config')
+
+      local operators = augend.constant.new({
+        elements = { '&&', '||' },
+        word = false,
+        cyclic = true,
+      })
+
+      config.augends:register_group({
+        default = {
+          augend.integer.alias.decimal,
+          augend.integer.alias.hex,
+          augend.date.alias['%Y/%m/%d'],
+        },
+      })
+
+      config.augends:on_filetype({
+        go = { augend.integer.alias.decimal, augend.integer.alias.hex, operators },
+        typescript = { augend.integer.alias.decimal, augend.integer.alias.hex },
+        markdown = { augend.integer.alias.decimal, augend.misc.alias.markdown_header },
+        yaml = { augend.semver.alias.semver },
+        toml = { augend.semver.alias.semver },
+      })
+    end,
   },
   {
     'mfussenegger/nvim-treehopper',
@@ -109,6 +129,23 @@ return {
         },
       })
     end,
+  },
+  {
+    'axelvc/template-string.nvim',
+    dependencies = { 'nvim-treesitter' },
+    ft = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
+    opts = { remove_template_string = true },
+  },
+  {
+    'danymat/neogen',
+    keys = {
+      {
+        '<localleader>lc',
+        function() require('neogen').generate() end,
+        desc = 'neogen: generate doc',
+      },
+    },
+    opts = { snippet_engine = 'luasnip' },
   },
   {
     'Wansmer/treesj',
@@ -168,39 +205,42 @@ return {
     },
   },
   {
-    'monaqa/dial.nvim',
-    keys = {
-      { '<C-a>', '<Plug>(dial-increment)', mode = 'n' },
-      { '<C-x>', '<Plug>(dial-decrement)', mode = 'n' },
-      { '<C-a>', '<Plug>(dial-increment)', mode = 'v' },
-      { '<C-x>', '<Plug>(dial-decrement)', mode = 'v' },
-      { 'g<C-a>', 'g<Plug>(dial-increment)', mode = 'v' },
-      { 'g<C-x>', 'g<Plug>(dial-decrement)', mode = 'v' },
-    },
+    'echasnovski/mini.pairs',
+    event = 'InsertEnter',
+    config = function() require('mini.pairs').setup() end,
+  },
+  {
+    'echasnovski/mini.ai',
     config = function()
-      local augend = require('dial.augend')
-      local config = require('dial.config')
-
-      local operators = augend.constant.new({
-        elements = { '&&', '||' },
-        word = false,
-        cyclic = true,
-      })
-
-      config.augends:register_group({
-        default = {
-          augend.integer.alias.decimal,
-          augend.integer.alias.hex,
-          augend.date.alias['%Y/%m/%d'],
+      require('mini.ai').setup({ mappings = { around_last = '', inside_last = '' } })
+    end,
+  },
+  {
+    'echasnovski/mini.surround',
+    keys = { 'ys', 'ds', 'yr' },
+    config = function()
+      require('mini.surround').setup({
+        mappings = {
+          add = 'ys', -- Add surrounding in Normal and Visual modes
+          delete = 'ds', -- Delete surrounding
+          find = 'yf', -- Find surrounding (to the right)
+          find_left = 'yF', -- Find surrounding (to the left)
+          highlight = 'yh', -- Highlight surrounding
+          replace = 'yr', -- Replace surrounding
+          update_n_lines = 'yn', -- Update `n_lines`
         },
       })
-
-      config.augends:on_filetype({
-        go = { augend.integer.alias.decimal, augend.integer.alias.hex, operators },
-        typescript = { augend.integer.alias.decimal, augend.integer.alias.hex },
-        markdown = { augend.integer.alias.decimal, augend.misc.alias.markdown_header },
-        yaml = { augend.semver.alias.semver },
-        toml = { augend.semver.alias.semver },
+    end,
+  },
+  {
+    'echasnovski/mini.comment',
+    dependencies = { 'JoosepAlviste/nvim-ts-context-commentstring' },
+    keys = { 'gcc', { 'gc', mode = { 'x', 'n', 'o' } } },
+    config = function()
+      require('mini.comment').setup({
+        hooks = {
+          pre = function() require('ts_context_commentstring.internal').update_commentstring() end,
+        },
       })
     end,
   },
