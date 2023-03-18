@@ -14,17 +14,6 @@ function join_paths(...)
   return result
 end
 
----Require a module in protected mode without relying on its cached value
----@param module string
----@return any
-function require_clean(module)
-  package.loaded[module] = nil
-  _G[module] = nil
-  local status, requested = pcall(require, module)
-  if not status then return end
-  return requested
-end
-
 ---Get whether using nightly version of neovim
 local LATEST_NIGHTLY_MINOR = 9
 function rvim.nightly() return vim.version().minor >= LATEST_NIGHTLY_MINOR end
@@ -308,8 +297,8 @@ end
 
 ---@class Autocommand
 ---@field desc string
----@field event  string[] | string list of autocommand events
----@field pattern string[] list of autocommand patterns
+---@field event  string | string[] list of autocommand events
+---@field pattern string | string[] list of autocommand patterns
 ---@field command string | fun(args: AutocmdArgs): boolean?
 ---@field nested  boolean
 ---@field once    boolean
