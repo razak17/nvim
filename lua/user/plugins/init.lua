@@ -1,4 +1,5 @@
-local api, cmd, fmt, ui = vim.api, vim.cmd, string.format, rvim.ui
+local api, cmd, fn, fmt = vim.api, vim.cmd, vim.fn, string.format
+local ui = rvim.ui
 local hl, border = rvim.highlight, ui.current.border
 
 return {
@@ -104,6 +105,33 @@ return {
         },
       })
     end,
+  },
+  {
+    'olimorris/persisted.nvim',
+    lazy = false,
+    init = function()
+      rvim.command('ListSessions', 'Telescope persisted')
+      rvim.augroup('PersistedEvents', {
+        event = 'User',
+        pattern = 'PersistedTelescopeLoadPre',
+        command = function()
+          vim.schedule(function() cmd('%bd') end)
+        end,
+      }, {
+        event = 'User',
+        pattern = 'PersistedSavePre',
+        -- Arguments are always persisted in a session and can't be removed using 'sessionoptions'
+        -- so remove them when saving a session
+        command = function() cmd('%argdelete') end,
+      })
+    end,
+    opts = {
+      use_git_branch = true,
+      save_dir = fn.expand(rvim.get_cache_dir() .. '/sessions/'),
+      ignored_dirs = { fn.stdpath('data') },
+      on_autoload_no_session = function() cmd.Alpha() end,
+      should_autosave = function() return vim.bo.filetype ~= 'alpha' end,
+    },
   },
   {
     'is0n/jaq-nvim',

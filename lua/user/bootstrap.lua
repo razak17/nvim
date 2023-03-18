@@ -1,7 +1,9 @@
 if not rvim then return end
 
-local g, rtp = vim.g, vim.opt.rtp
+local g, fn, env, rtp = vim.g, vim.fn, vim.env, vim.opt.rtp
 
+g.dotfiles = env.DOTFILES or fn.expand('~/.dots')
+g.projects_dir = env.DEV_HOME or fn.expand('~/projects')
 ----------------------------------------------------------------------------------------------------
 -- Set leader keys
 ----------------------------------------------------------------------------------------------------

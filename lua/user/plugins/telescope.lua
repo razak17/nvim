@@ -289,6 +289,7 @@ return {
         diagnostics = themes.get_ivy({ borderchars = { preview = ui.border.ivy } }),
       },
       extensions = {
+        persisted = dropdown(),
         frecency = {
           db_root = join_paths(rvim.get_runtime_dir(), 'telescope'),
           default_workspace = 'CWD',
@@ -320,6 +321,7 @@ return {
     require('telescope').load_extension('frecency')
     require('telescope').load_extension('undo')
     require('telescope').load_extension('menufacture')
+    require('telescope').load_extension('persisted')
 
     vim.api.nvim_exec_autocmds('User', { pattern = 'TelescopeConfigComplete', modeline = false })
   end,
