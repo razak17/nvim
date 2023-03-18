@@ -180,11 +180,6 @@ local function setup_mappings(client, bufnr)
     return { buffer = bufnr, desc = alt and fmt('%s: %s', alt, desc) or fmt('lsp: %s', desc) }
   end
 
-  map('n', 'gl', function()
-    local config = rvim.lsp.diagnostics.float
-    config.scope = 'line'
-    return vim.diagnostic.open_float(config)
-  end, with_desc('lsp: line diagnostics'))
   map('n', 'K', show_documentation, with_desc('hover'))
   map('n', 'gd', lsp.buf.definition, with_desc('definition'))
   map('n', 'gr', lsp.buf.references, with_desc('references'))
@@ -461,7 +456,7 @@ diagnostic.config({
     max_width = max_width,
     max_height = max_height,
     border = border,
-    focusable = true,
+    focusable = false,
     style = 'minimal',
     source = 'always',
     header = '',
