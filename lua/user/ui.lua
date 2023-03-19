@@ -33,6 +33,7 @@ rvim.ui.icons = {
     lightbulb = '',
     right_arrow = '',
     uninstalled = '✗',
+    active_ts = '',
   },
 }
 
