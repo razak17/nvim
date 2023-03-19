@@ -183,16 +183,6 @@ return {
     })
 
     ins_right({
-      function()
-        if vim.wo.spell then return icons.ui.spell_check end
-        return ''
-      end,
-      padding = { left = 1, right = 0 },
-      color = { fg = P.darker_green, gui = 'bold' },
-      cond = conditions.hide_in_width,
-    })
-
-    ins_right({
       function() return ' LSP(s):' end,
       color = { fg = P.comment, gui = 'italic' },
       cond = conditions.hide_in_width,
@@ -244,6 +234,16 @@ return {
     })
 
     ins_right({ 'filetype', cond = nil, padding = { left = 1, right = 1 } })
+
+    ins_right({
+      function()
+        if vim.wo.spell then return icons.ui.spell_check end
+        return ''
+      end,
+      padding = { left = 1, right = 0 },
+      color = { fg = P.darker_green, gui = 'bold' },
+      cond = conditions.hide_in_width,
+    })
 
     ins_right({
       function()
