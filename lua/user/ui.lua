@@ -34,6 +34,7 @@ rvim.ui.icons = {
     right_arrow = '',
     uninstalled = '✗',
     active_ts = '',
+    spell_check = '暈',
   },
 }
 
