@@ -1,3 +1,5 @@
+require('which-key').register({ ['<localleader>r'] = { name = 'Rust Tools' } })
+
 require('rust-tools').setup({
   tools = {
     executor = require('rust-tools/executors').termopen, -- can be quickfix or termopen

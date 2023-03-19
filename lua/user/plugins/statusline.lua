@@ -118,9 +118,9 @@ return {
       function()
         if vim.bo.filetype == 'python' then
           local venv = vim.env.CONDA_DEFAULT_ENV
-          if venv then return string.format('(%s)', env_cleanup(venv)) end
+          if venv then return string.format('[%s]', env_cleanup(venv)) end
           venv = vim.env.VIRTUAL_ENV
-          if venv then return string.format('(%s)', env_cleanup(venv)) end
+          if venv then return string.format('[%s]', env_cleanup(venv)) end
           return ''
         end
         return ''

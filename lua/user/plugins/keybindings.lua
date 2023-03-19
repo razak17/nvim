@@ -44,7 +44,10 @@ return {
         ['<localleader>'] = {
           c = { name = 'Conceal' },
           d = { name = 'Dap' },
+          g = { name = 'Git' },
           l = { name = 'Neogen' },
+          n = { name = 'Neorg' },
+          r = { name = 'Rest' },
           s = { name = 'Sniprun' },
           w = { name = 'Window' },
         },

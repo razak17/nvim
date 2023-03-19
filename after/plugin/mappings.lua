@@ -45,9 +45,9 @@ vnoremap('//', [[y/<C-R>"<CR>]])
 -- show message history
 nnoremap('g>', [[<cmd>set nomore<bar>40messages<bar>set more<CR>]])
 -- Enter key should repeat the last macro recorded or just act as enter
-nnoremap('<leader><CR>', [[empty(&buftype) ? '@@' : '<CR>']], { expr = true })
+nnoremap('<leader><CR>', [[empty(&buftype) ? '@@':'<CR>']], { expr = true, desc = 'repeat macro' })
 -- Evaluates whether there is a fold on the current line if so unfold it else return a normal space
-nnoremap('<space><space>', [[@=(foldlevel('.')?'za':"\<Space>")<CR>]])
+nnoremap('<space><space>', [[@=(foldlevel('.')?'za':"\<Space>")<CR>]], { desc = 'toggle fold' })
 -- Make zO recursively open whatever top level fold we're in, no matter where the
 -- cursor happens to be.
 nnoremap('zO', [[zCzO]])
