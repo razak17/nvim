@@ -303,55 +303,53 @@ nnoremap(
 ----------------------------------------------------------------------------------------------------
 -- UI Toggles
 ----------------------------------------------------------------------------------------------------
+local function bool2str(bool) return bool and 'on' or 'off' end
+local function ui_notify(msg, type)
+  vim.schedule(function() vim.notify(msg, type, { title = 'UI Toggles' }) end)
+end
 ---@param opt string
 local function toggle_opt(opt)
   local prev = api.nvim_get_option_value(opt, {})
   local value
-  if opt == 'laststatus' then
-    if prev == 0 then value = 3 end
-    if prev > 0 then value = 0 end
-  end
-  if opt == 'conceallevel' then
-    if prev > 0 then value = 0 end
-    if prev == 0 then value = 2 end
-  end
-  if opt == 'concealcursor' then
-    if prev == 'n' then value = '' end
-    if prev == '' then value = 'n' end
-  end
-  if opt == 'colorcolumn' then
-    -- NOTE: value is set to +1 twice during the first two toggles when using the virtcolumn plugin
-    value = prev
-    local tw = api.nvim_get_option_value('textwidth', {})
-    if prev == '' then value = '+1' end
-    if prev ~= '' and tw ~= 0 then value = '' end
-    local ft = vim.bo.ft
-    local tw_ft = rvim.ui.tw[ft]
-    if tw == 0 and not tw_ft then return end
-    if tw_ft then vim.bo['tw'] = tw_ft end
-    if tw > 0 then vim.bo['tw'] = 0 end
-    rvim.ui.tw[ft] = tw
-  end
-
   if type(prev) == 'boolean' then value = not prev end
-  vim.opt[opt] = value
-  vim.notify(fmt('%s set to %s', opt, tostring(value)), 'info', { title = 'UI Toggles' })
+  vim.wo[opt] = value
+  -- vim.notify(fmt('%s set to %s', opt, tostring(value)), 'info', { title = 'UI Toggles' })
+  ui_notify(string.format('%s %s', opt, bool2str(vim.wo[opt])))
 end
 nnoremap('<leader>ow', function() toggle_opt('wrap') end, { desc = 'toggle wrap' })
-nnoremap('<leader>os', function() toggle_opt('spell') end, { desc = 'toggle spell' })
 nnoremap('<leader>oL', function() toggle_opt('cursorline') end, { desc = 'toggle cursorline' })
-nnoremap('<leader>ol', function() toggle_opt('laststatus') end, { desc = 'toggle statusline' })
-nnoremap('<leader>oC', function() toggle_opt('colorcolumn') end, { desc = 'toggle colorcolumn' })
-nnoremap(
-  '<localleader>cl',
-  function() toggle_opt('conceallevel') end,
-  { desc = 'toggle conceallevel' }
-)
-nnoremap(
-  '<localleader>cc',
-  function() toggle_opt('concealcursor') end,
-  { desc = 'toggle concealcursor' }
-)
+nnoremap('<leader>os', function() toggle_opt('spell') end, { desc = 'toggle spell' })
+
+--- Toggle laststatus=3|2|0
+local function toggle_statusline()
+  local laststatus = vim.opt.laststatus:get()
+  local status
+  if laststatus == 0 then
+    vim.opt.laststatus = 2
+    status = 'local'
+  elseif laststatus == 2 then
+    vim.opt.laststatus = 3
+    status = 'global'
+  elseif laststatus == 3 then
+    vim.opt.laststatus = 0
+    status = 'off'
+  end
+  ui_notify(string.format('statusline %s', status))
+end
+nnoremap('<leader>ol', toggle_statusline, { desc = 'toggle statusline' })
+
+--- Toggle conceal=2|0
+local function toggle_conceal()
+  vim.opt.conceallevel = vim.opt.conceallevel:get() == 0 and 2 or 0
+  ui_notify(string.format('conceal %s', bool2str(vim.opt.conceallevel:get() == 2)))
+end
+--- Toggle conceal cursor=n|''
+local function toggle_conceal_cursor()
+  vim.opt.concealcursor = vim.opt.concealcursor:get() == 'n' and '' or 'n'
+  ui_notify(string.format('conceal cursor %s', bool2str(vim.opt.concealcursor:get() == '')))
+end
+nnoremap('<localleader>cl', toggle_conceal, { desc = 'toggle conceallevel' })
+nnoremap('<localleader>cc', toggle_conceal_cursor, { desc = 'toggle concealcursor' })
 ----------------------------------------------------------------------------------------------------
 -- Abbreviations
 vim.cmd([[
