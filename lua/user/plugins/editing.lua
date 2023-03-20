@@ -235,7 +235,7 @@ return {
   {
     'echasnovski/mini.comment',
     dependencies = { 'JoosepAlviste/nvim-ts-context-commentstring' },
-    keys = { 'gcc', { 'gc', mode = { 'x', 'n', 'o' } } },
+    keys = { { 'gc', mode = { 'x', 'n', 'o' } } },
     config = function()
       require('mini.comment').setup({
         hooks = {
