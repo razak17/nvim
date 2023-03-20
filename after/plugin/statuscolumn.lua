@@ -2,8 +2,9 @@ if not rvim or not rvim.has('nvim-0.9') then return end
 
 local fn, v, api, opt, optl = vim.fn, vim.v, vim.api, vim.opt, vim.opt_local
 local ui, separators = rvim.ui, rvim.ui.icons.separators
+local str = require('user.strings')
 
-local space = ' '
+local SIGN_COL_WIDTH, GIT_COL_WIDTH, space = 2, 1, ' '
 local fcs = opt.fillchars:get()
 local fold_opened, fold_closed = fcs.foldopen, fcs.foldclose -- '▶'
 local shade, separator = separators.light_shade_block, separators.left_thin_block -- '│'
@@ -11,18 +12,16 @@ local sep_hl = 'StatusColSep'
 
 ui.statuscolumn = {}
 
----@param group string
----@param text string
----@return string
-local function hl(group, text) return '%#' .. group .. '#' .. text .. '%*' end
-
 ---@param buf number
----@return {name:string, text:string, texthl:string}[]
+---@return {name:string, text:string, texthl:string}[][]
 local function get_signs(buf)
-  return vim.tbl_map(
-    function(sign) return fn.sign_getdefined(sign.name)[1] end,
-    fn.sign_getplaced(buf, { group = '*', lnum = v.lnum })[1].signs
-  )
+  return vim.tbl_map(function(sign)
+    local signs = fn.sign_getdefined(sign.name)
+    for _, s in ipairs(signs) do
+      if s.text then s.text = s.text:gsub('%s', '') end
+    end
+    return signs
+  end, fn.sign_getplaced(buf, { group = '*', lnum = v.lnum })[1].signs)
 end
 
 local function fdm()
@@ -42,20 +41,25 @@ local function nr(win)
   return padding .. lnum
 end
 
----@return string
----@return string|nil
-local function sep()
-  local separator_hl = (v.virtnum >= 0 and rvim.empty(v.relnum)) and sep_hl or nil
-  return separator, separator_hl
-end
-
+---@param signs {name:string, text:string, texthl:string}[][]
+---@return StringComponent[] sgns non-git signs
+---@return StringComponent[] g_sgns list of git signs
 local function signs_by_type(signs)
-  local sgns, g_sgn
-  for _, s in ipairs(signs) do
-    if s.name:find('GitSign') then g_sgn = s end
-    if s.name:find('Diagnostic') then sgns = s end
+  local sgns, g_sgn, opts, i = {}, {}, { after = '' }, 1
+  while #sgns < SIGN_COL_WIDTH or #g_sgn < GIT_COL_WIDTH do
+    if i <= #signs then
+      local sn = signs[i]
+      if sn and sn[1].name:find('GitSign') then
+        table.insert(g_sgn, str.component(sn[1].text, sn[1].texthl, opts))
+      else
+        rvim.foreach(function(s) table.insert(sgns, str.component(s.text, s.texthl, opts)) end, sn)
+      end
+    else
+      if #sgns < SIGN_COL_WIDTH then table.insert(sgns, str.spacer(1)) end
+      if #g_sgn < GIT_COL_WIDTH then table.insert(g_sgn, str.spacer(1)) end
+    end
+    i = i + 1
   end
-
   return sgns, g_sgn
 end
 
@@ -63,24 +67,19 @@ function ui.statuscolumn.render()
   local curwin = api.nvim_get_current_win()
   local curbuf = api.nvim_win_get_buf(curwin)
   local signs = get_signs(curbuf)
-  local sgns, g_sgn = signs_by_type(signs)
+  local sns, gitsign = signs_by_type(signs)
+  local is_absolute_lnum = v.virtnum >= 0 and rvim.empty(v.relnum)
 
-  local sns = sgns and hl(sgns.texthl, sgns.text:gsub(space, '')) or space
-  local gitsigns = g_sgn and hl(g_sgn.texthl, g_sgn.text:gsub(space, '')) or space
-
-  local components = {
-    '%=',
-    space,
-    nr(curwin),
-    space,
-    sns,
-    space,
-    gitsigns,
-    sep(),
-    fdm(),
-    space,
-  }
-  return table.concat(components, '')
+  local statuscol = {}
+  local add = str.append(statuscol)
+  add(str.separator(), str.spacer(1), str.component(nr(curwin)))
+  add(unpack(sns))
+  add(unpack(gitsign))
+  add(
+    str.component(separator, is_absolute_lnum and sep_hl or '', { after = '' }),
+    str.component(fdm())
+  )
+  return str.display(statuscol)
 end
 
 vim.o.statuscolumn = [[%!v:lua.rvim.ui.statuscolumn.render()]]
