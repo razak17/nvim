@@ -174,26 +174,10 @@ cnoremap('<S-Tab>', function() return search('?', '<S-Tab>') end, { expr = true 
 -- insert path of current file into a command
 cnoremap('%%', "<C-r>=fnameescape(expand('%'))<cr>")
 cnoremap('::', "<C-r>=fnameescape(expand('%:p:h'))<cr>/")
-----------------------------------------------------------------------------------------------------
--- Save
-----------------------------------------------------------------------------------------------------
-local function smart_quit()
-  local bufnr = vim.api.nvim_get_current_buf()
-  local modified = vim.api.nvim_buf_get_option(bufnr, 'modified')
-  if modified then
-    vim.ui.input({
-      prompt = 'You have unsaved changes. Quit anyway? (y/n) ',
-    }, function(input)
-      if input == 'y' then vim.cmd('q!') end
-    end)
-  else
-    vim.cmd('q!')
-  end
-end
 -- NOTE: this uses write specifically because we need to trigger a filesystem event
 -- even if the file isn't changed so that things like hot reload work
 nnoremap('<C-s>', '<cmd>silent! write<CR>')
-nnoremap('<leader>x', smart_quit, { desc = 'quit' })
+nnoremap('<leader>x', ':q<CR>', { desc = 'quit' })
 ----------------------------------------------------------------------------------------------------
 -- ?ie | entire object
 ----------------------------------------------------------------------------------------------------
