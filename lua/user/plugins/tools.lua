@@ -70,12 +70,7 @@ return {
       hl.plugin('lab', {
         theme = {
           ['zephyr'] = {
-            {
-              DiagnosticVirtualTextHint = {
-                bg = { from = 'CursorLine' },
-                fg = { from = 'Winbar' },
-              },
-            },
+            { LabCodeRun = { link = 'DiagnosticVirtualTextInfo' } },
           },
         },
       })
