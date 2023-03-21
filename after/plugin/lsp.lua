@@ -6,7 +6,7 @@ local lsp, fn, api, fmt = vim.lsp, vim.fn, vim.api, string.format
 local b = vim.b --[[@rvim table<string, any>]]
 local L = lsp.log_levels
 
-local codicons = rvim.ui.codicons
+local icons = rvim.ui.codicons.lsp
 local border = rvim.ui.current.border
 local diagnostic = vim.diagnostic
 
@@ -423,10 +423,10 @@ end
 local function toggle_diagnostic_signs()
   if rvim.lsp.signs.enable then
     rvim.lsp.signs.enable = false
-    sign({ highlight = 'DiagnosticSignError', icon = codicons.lsp.error })
-    sign({ highlight = 'DiagnosticSignWarn', icon = codicons.lsp.warn })
-    sign({ highlight = 'DiagnosticSignInfo', icon = codicons.lsp.info })
-    sign({ highlight = 'DiagnosticSignHint', icon = codicons.lsp.hint })
+    sign({ highlight = 'DiagnosticSignError', icon = icons.error })
+    sign({ highlight = 'DiagnosticSignWarn', icon = icons.warn })
+    sign({ highlight = 'DiagnosticSignInfo', icon = icons.info })
+    sign({ highlight = 'DiagnosticSignHint', icon = icons.hint })
   else
     rvim.lsp.signs.enable = true
     sign({ highlight = 'DiagnosticSignError', icon = '' })
@@ -445,7 +445,7 @@ local max_width = math.min(math.floor(vim.o.columns * 0.7), 100)
 local max_height = math.min(math.floor(vim.o.lines * 0.3), 30)
 
 diagnostic.config({
-  signs = { active = rvim.lsp.signs.active, values = codicons.lsp },
+  signs = { active = rvim.lsp.signs.active, values = icons },
   underline = true,
   update_in_insert = false,
   severity_sort = true,
@@ -467,7 +467,7 @@ diagnostic.config({
     end,
     prefix = function(diag, i, _)
       local level = diagnostic.severity[diag.severity]
-      local prefix = fmt('%d. %s ', i, codicons.lsp[level:lower()])
+      local prefix = fmt('%d. %s ', i, icons[level:lower()])
       return prefix, 'Diagnostic' .. level:gsub('^%l', string.upper)
     end,
   },
@@ -482,7 +482,7 @@ local function toggle_virtual_text()
         spacing = 1,
         format = function(d)
           local level = diagnostic.severity[d.severity]
-          return fmt('%s %s', codicons.lsp[level:lower()], d.message)
+          return fmt('%s %s', icons[level:lower()], d.message)
         end,
       },
     })
