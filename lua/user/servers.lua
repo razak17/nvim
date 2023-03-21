@@ -11,13 +11,16 @@ local servers = {
   cmake = {},
   cssls = {},
   dockerls = {},
+  eslint = {},
   marksman = {},
   prismals = {},
   quick_lint_js = {},
+  rust_analyzer = {},
   sqls = {},
   svelte = {},
-  eslint = {},
   yamlls = {},
+  vimls = {},
+  volar = {},
   tsserver = {
     on_attach = function(client)
       client.server_capabilities.documentFormattingProvider = false -- 0.8 and later
@@ -28,11 +31,9 @@ local servers = {
       preferences = { includeCompletionsForModuleExports = false },
     },
   },
-  vimls = {},
   prosemd_lsp = {
     root_dir = function(fname) return require('lspconfig/util').root_pattern('README.md')(fname) end,
   },
-  rust_analyzer = {},
   denols = {
     root_dir = function(fname)
       return require('lspconfig/util').root_pattern('deno.json', 'deno.jsonc')(fname)
@@ -124,22 +125,6 @@ local servers = {
         fname
       )
     end,
-  },
-  vuels = {
-    setup = {
-      root_dir = function(fname)
-        return require('lspconfig/util').root_pattern('vue.config.js', 'package.json')(fname)
-      end,
-      init_options = {
-        config = {
-          vetur = {
-            useWorkspaceDependencies = true,
-            completion = { autoImport = true, tagCasing = 'kebab', useScaffoldSnippets = true },
-            validation = { script = true, style = true, template = true },
-          },
-        },
-      },
-    },
   },
 }
 
