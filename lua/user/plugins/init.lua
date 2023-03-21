@@ -1,4 +1,4 @@
-local api, cmd, fn, fmt = vim.api, vim.cmd, vim.fn, string.format
+local api, cmd, fn = vim.api, vim.cmd, vim.fn
 local ui = rvim.ui
 local hl, border = rvim.highlight, ui.current.border
 
@@ -178,27 +178,14 @@ return {
   },
   {
     'SmiteshP/nvim-navic',
-    event = { 'BufRead', 'BufNewFile' },
-    dependencies = { 'williamboman/mason-lspconfig.nvim' },
-    config = function()
-      vim.g.navic_silence = true
-      local icons = ui.icons.ui
-      local lsp_icons = {}
-      for key, val in pairs(ui.current.lsp_icons) do
-        hl.set(fmt('NavicIcons%s', key), { link = ui.lsp.highlights[key] })
-        lsp_icons[key] = val .. ' '
-      end
-      require('nvim-navic').setup({
-        icons = lsp_icons,
-        highlight = true,
-        depth_limit_indicator = icons.ellipsis,
-        separator = fmt(' %s ', icons.triangle),
-      })
-      hl.plugin('navic', {
-        { NavicText = { bold = false } },
-        { NavicSeparator = { link = 'Directory' } },
-      })
-    end,
+    dependencies = { 'neovim/nvim-lspconfig' },
+    init = function() vim.g.navic_silence = true end,
+    opts = {
+      highlight = false,
+      icons = ui.current.lsp_icons,
+      depth_limit_indicator = ui.icons.ui.ellipsis,
+      separator = (' %s '):format(ui.icons.ui.triangle),
+    },
   },
   {
     'razak17/glance.nvim',

@@ -9,6 +9,7 @@ local fn, api = vim.fn, vim.api
 local component = str.component
 local empty = rvim.empty
 local icons = rvim.ui.icons.ui
+local lsp_hl = rvim.ui.lsp.highlights
 
 local dir_separator = icons.chevron_right
 local separator = icons.triangle
@@ -29,7 +30,7 @@ end
 rvim.highlight.plugin('winbar', {
   { Winbar = { bold = false } },
   { WinbarNC = { bold = false } },
-  { WinbarCrumb = { bold = true } },
+  { WinbarCrumb = { bold = false } },
   { WinbarIcon = { inherit = 'Function' } },
   { WinbarDirectory = { inherit = 'Directory' } },
 })
@@ -38,10 +39,22 @@ local function breadcrumbs()
   local ok, navic = rvim.require('nvim-navic')
   local empty_state = { component(ellipsis, 'NonText', { priority = 0 }) }
   if not ok or not navic.is_available() then return empty_state end
-  local navic_ok, location = pcall(navic.get_location)
-  if not navic_ok or empty(location) then return empty_state end
-  local win = api.nvim_get_current_win()
-  return { str.component_raw(location, { priority = 1, win_id = win, type = 'winbar' }) }
+  local navic_ok, data = pcall(navic.get_data)
+  if not navic_ok or empty(data) then return empty_state end
+  return rvim.map(function(crumb, index)
+    local priority = #rvim.ui.winbar.state + #data - index
+    rvim.ui.winbar.state[priority] = crumb.scope
+    return component(crumb.name, 'WinbarCrumb', {
+      priority = priority,
+      id = priority,
+      click = 'v:lua.rvim.ui.winbar.click',
+      max_size = 35,
+      prefix = crumb.icon,
+      prefix_color = lsp_hl[crumb.type] or 'NonText',
+      suffix = #data > index and separator or '',
+      suffix_color = 'Directory',
+    })
+  end, data)
 end
 
 ---@return string
