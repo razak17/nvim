@@ -132,19 +132,7 @@ function rvim.find_string(table, string)
   return found
 end
 
----Check whether or not the location or quickfix list is open
----@return boolean
-function rvim.is_vim_list_open()
-  for _, win in ipairs(api.nvim_list_wins()) do
-    local buf = api.nvim_win_get_buf(win)
-    local location_list = fn.getloclist(0, { filewinid = 0 })
-    local is_loc_list = location_list and location_list.filewinid > 0
-    if vim.bo[buf].filetype == 'qf' or is_loc_list then return true end
-  end
-  return false
-end
-
---- Autosize quickfix to match its minimum content
+--- Autosize horizontal split to match its minimum content
 --- https://vim.fandom.com/wiki/Automatically_fitting_a_quickfix_window_height
 ---@param minheight number
 ---@param maxheight number
@@ -187,7 +175,7 @@ end
 
 --- A convenience wrapper that calls the ftplugin config for a plugin if it exists
 --- and warns me if the plugin is not installed
---- TODO: find out if it's possible to annotate the plugin as a module
+--- TODO: find out if it's possible to annotate the plugin rvim a module
 ---@param configs table<string, fun(module: table)>
 function rvim.ftplugin_conf(configs)
   if type(configs) ~= 'table' then return end
@@ -224,7 +212,7 @@ function rvim.web_search(path, url)
 end
 
 ---------------------------------------------------------------------------------
--- Toggle list
+-- Quickfix and Location List
 ---------------------------------------------------------------------------------
 --- Utility function to toggle the location or the quickfix list
 ---@param list_type '"quickfix"' | '"location"'
@@ -232,7 +220,7 @@ end
 local function toggle_list(list_type)
   local is_location_target = list_type == 'location'
   local cmd = is_location_target and { 'lclose', 'lopen' } or { 'cclose', 'copen' }
-  local is_open = rvim.is_vim_list_open()
+  local is_open = rvim.list.is_open()
   if is_open then return vim.cmd[cmd[1]]() end
   local list = is_location_target and fn.getloclist(0) or fn.getqflist()
   if vim.tbl_isempty(list) then
@@ -245,8 +233,25 @@ local function toggle_list(list_type)
   if fn.winnr() ~= winnr then vim.cmd.wincmd('p') end
 end
 
-function rvim.toggle_qf_list() toggle_list('quickfix') end
-function rvim.toggle_loc_list() toggle_list('location') end
+rvim.list = {
+  toggle = {
+    qf = function() toggle_list('quickfix') end,
+    loc = function() toggle_list('location') end,
+  },
+}
+
+---Check whether or not the location or quickfix list is open
+---@return boolean
+function rvim.list.is_open()
+  for _, win in ipairs(api.nvim_list_wins()) do
+    local buf = api.nvim_win_get_buf(win)
+    local location_list = fn.getloclist(0, { filewinid = 0 })
+    local is_loc_list = location_list.filewinid > 0
+    if vim.bo[buf].filetype == 'qf' or is_loc_list then return true end
+  end
+  return false
+end
+---------------------------------------------------------------------------------
 
 ---Determine if a value of any type is empty
 ---@param item any
