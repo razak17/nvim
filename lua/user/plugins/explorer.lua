@@ -12,7 +12,7 @@ return {
   config = function()
     highlight.plugin('NeoTree', {
       theme = {
-        ['zephyr'] = {
+        ['onedark'] = {
           { NeoTreeNormal = { link = 'PanelBackground' } },
           { NeoTreeNormalNC = { link = 'PanelBackground' } },
           { NeoTreeRootName = { bold = false, italic = false } },

@@ -33,7 +33,7 @@ return {
   'nvim-lualine/lualine.nvim',
   event = 'VeryLazy',
   config = function()
-    local P = require('zephyr.palette')
+    local P = require('onedark.palette')
 
     local bg = rvim.highlight.get('StatusLine', 'bg')
     local fg = rvim.highlight.get('StatusLine', 'fg')

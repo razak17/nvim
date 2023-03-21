@@ -87,7 +87,7 @@ end
 
 local function colorscheme_overrides()
   local overrides = {
-    ['zephyr'] = {
+    ['onedark'] = {
       {
         FloatTitle = {
           bg = { from = 'FloatTitle', alter = -60 },

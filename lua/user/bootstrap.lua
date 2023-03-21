@@ -87,4 +87,4 @@ map('n', '<localleader>L', '<cmd>Lazy<CR>', { desc = 'lazygit: toggle ui' })
 -- Color Scheme
 ----------------------------------------------------------------------------------------------------
 if not rvim.plugins.enable then return end
-rvim.wrap_err('theme failed to load because', vim.cmd.colorscheme, 'zephyr')
+rvim.wrap_err('theme failed to load because', vim.cmd.colorscheme, 'onedark')

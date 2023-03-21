@@ -69,7 +69,7 @@ return {
     config = function()
       hl.plugin('lab', {
         theme = {
-          ['zephyr'] = {
+          ['onedark'] = {
             { LabCodeRun = { link = 'DiagnosticVirtualTextInfo' } },
           },
         },

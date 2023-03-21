@@ -98,7 +98,7 @@ return {
       })
       hl.plugin('buffer_manager', {
         theme = {
-          ['zephyr'] = {
+          ['onedark'] = {
             { BufferManagerTitle = { fg = { from = 'Winbar' } } },
             { BufferManagerBorder = { fg = { from = 'FloatBorder' } } },
           },

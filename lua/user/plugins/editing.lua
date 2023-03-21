@@ -118,7 +118,7 @@ return {
     config = function()
       rvim.highlight.plugin('treehopper', {
         theme = {
-          ['zephyr'] = {
+          ['onedark'] = {
             {
               TSNodeKey = {
                 fg = { from = 'VertSplit', attr = 'fg', alter = -20 },
