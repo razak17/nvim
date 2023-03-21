@@ -92,19 +92,7 @@ return {
         desc = 'buffer_manager: toggle',
       },
     },
-    config = function()
-      require('buffer_manager').setup({
-        borderchars = ui.border.common,
-      })
-      hl.plugin('buffer_manager', {
-        theme = {
-          ['onedark'] = {
-            { BufferManagerTitle = { fg = { from = 'Winbar' } } },
-            { BufferManagerBorder = { fg = { from = 'FloatBorder' } } },
-          },
-        },
-      })
-    end,
+    config = function() require('buffer_manager').setup({ borderchars = ui.border.common }) end,
   },
   {
     'olimorris/persisted.nvim',
