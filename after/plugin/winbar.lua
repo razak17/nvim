@@ -24,7 +24,13 @@ rvim.ui.winbar.state = {}
 ---@param _ "l"|"r"|"m" the button clicked
 ---@param _ string modifiers
 function rvim.ui.winbar.click(id, _, _, _)
-  if id then vim.cmd.edit(rvim.ui.winbar.state[id]) end
+  if not id then return end
+  local item = rvim.ui.winbar.state[id]
+  if type(item) == 'string' then vim.cmd.edit(rvim.ui.winbar.state[id]) end
+  if type(item) == 'table' and item.start then
+    local win = fn.getmousepos().winid
+    api.nvim_win_set_cursor(win, { item.start.line, item.start.character })
+  end
 end
 
 rvim.highlight.plugin('winbar', {
