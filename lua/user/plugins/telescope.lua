@@ -171,8 +171,7 @@ return {
       event = { 'User' },
       pattern = { 'TelescopePreviewerLoaded' },
       command = function(args)
-        local bufname = vim.tbl_get(args, 'data', 'bufname')
-        local ft = bufname and require('plenary.filetype').detect(bufname) or nil
+        local ft = vim.tbl_get(args, 'data', 'filetype')
         vim.opt_local.number = not ft or ui.decorations.get(ft, 'number', 'ft') ~= false
       end,
     })
