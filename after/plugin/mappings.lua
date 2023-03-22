@@ -239,7 +239,7 @@ xnoremap(
 -----------------------------------------------------------------------------//
 -- GX - replicate netrw functionality
 -----------------------------------------------------------------------------//
-local function open_link()
+nnoremap('gx', function()
   local file = fn.expand('<cfile>')
   if not file or fn.isdirectory(file) > 0 then return vim.cmd.edit(file) end
   if file:match('http[s]?://') then return rvim.open(file) end
@@ -249,8 +249,7 @@ local function open_link()
   local link = string.match(file, plugin_url_regex)
   print(link)
   if link then return rvim.open(fmt('https://www.github.com/%s', link)) end
-end
-nnoremap('gx', open_link)
+end)
 -----------------------------------------------------------------------------//
 nnoremap('<leader>lq', rvim.list.qf.toggle, { desc = 'toggle quickfix list' })
 nnoremap('<leader>ll', rvim.list.loc.toggle, { desc = 'toggle location list' })
