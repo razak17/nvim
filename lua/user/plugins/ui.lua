@@ -74,7 +74,10 @@ return {
     keys = { { '<leader>oc', '<cmd>CccHighlighterToggle<CR>', desc = 'toggle ccc' } },
     opts = {
       win_opts = { border = border },
-      highlighter = { auto_enable = true, excludes = { 'dart', 'html', 'css', 'typescriptreact' } },
+      highlighter = {
+        auto_enable = true,
+        excludes = { 'dart', 'lazy', 'orgagenda', 'org', 'NeogitStatus' },
+      },
     },
   },
   {
