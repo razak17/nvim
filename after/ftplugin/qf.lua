@@ -13,8 +13,8 @@ opt.winfixheight = true
 ----------------------------------------------------------------------------------
 -- Helper functions
 ----------------------------------------------------------------------------------
-map('n', 'dd', rvim.qf.delete, { desc = 'delete current quickfix entry', buffer = 0 })
-map('n', 'd', rvim.qf.delete, { desc = 'delete selected quickfix entry', buffer = 0 })
+map('n', 'dd', rvim.list.qf.delete, { desc = 'delete current quickfix entry', buffer = 0 })
+map('v', 'd', rvim.list.qf.delete, { desc = 'delete selected quickfix entry', buffer = 0 })
 ----------------------------------------------------------------------------------
 -- Mappings
 ----------------------------------------------------------------------------------
