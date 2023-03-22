@@ -251,8 +251,9 @@ local function open_link()
   if link then return rvim.open(fmt('https://www.github.com/%s', link)) end
 end
 nnoremap('gx', open_link)
-nnoremap('<leader>lq', function() rvim.list.toggle.qf() end, { desc = 'toggle quickfix' })
-nnoremap('<leader>lo', function() rvim.list.toggle.loc() end, { desc = 'toggle loclist' })
+-----------------------------------------------------------------------------//
+nnoremap('<leader>lq', rvim.list.qf.toggle, { desc = 'toggle quickfix list' })
+nnoremap('<leader>ll', rvim.list.loc.toggle, { desc = 'toggle location list' })
 
 -----------------------------------------------------------------------------//
 -- Completion

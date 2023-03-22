@@ -82,34 +82,17 @@ rvim.augroup('UpdateVim', {
   command = 'wincmd =', -- Make windows equal size when vim resizes
 })
 
-rvim.augroup(
-  'WinBehavior',
-  -- Automatically jump into the quickfix window on open
-  {
-    event = { 'QuickFixCmdPost' },
-    pattern = { '[^l]*' },
-    nested = true,
-    command = 'cwindow',
-  },
-  {
-    event = { 'QuickFixCmdPost' },
-    pattern = { 'l*' },
-    nested = true,
-    command = 'lwindow',
-  },
-  {
-    event = { 'BufWinEnter' },
-    command = function(args)
-      if vim.wo.diff then vim.diagnostic.disable(args.buf) end
-    end,
-  },
-  {
-    event = { 'BufWinLeave' },
-    command = function(args)
-      if vim.wo.diff then vim.diagnostic.enable(args.buf) end
-    end,
-  }
-)
+rvim.augroup('WinBehavior', {
+  event = { 'BufWinEnter' },
+  command = function(args)
+    if vim.wo.diff then vim.diagnostic.disable(args.buf) end
+  end,
+}, {
+  event = { 'BufWinLeave' },
+  command = function(args)
+    if vim.wo.diff then vim.diagnostic.enable(args.buf) end
+  end,
+})
 
 local cursorline_exclusions = { 'alpha', 'TelescopePrompt', 'CommandTPrompt', 'DressingInput' }
 ---@param buf number

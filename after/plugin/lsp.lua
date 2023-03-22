@@ -249,7 +249,6 @@ local function setup_mappings(client, bufnr)
   -- Others
   map('n', '<leader>li', '<cmd>LspInfo<CR>', with_desc('info'))
   map('n', '<leader>lf', '<cmd>LspFormat<CR>', with_desc('format buffer'))
-  map('n', '<leader>ll', '<cmd>LspDiagnostics<CR>', with_desc('toggle quickfix diagnostics'))
   map('n', '<leader>ltv', '<cmd>ToggleVirtualText<CR>', with_desc('toggle virtual text'))
   map('n', '<leader>ltl', '<cmd>ToggleVirtualLines<CR>', with_desc('toggle virtual lines'))
   map('n', '<leader>lts', '<cmd>ToggleDiagnosticSigns<CR>', with_desc('toggle  signs'))
@@ -395,6 +394,13 @@ rvim.augroup('LspSetupCommands', {
       vim.tbl_filter(function(id) return id ~= client_id end, state.clients)
     end
   end,
+}, {
+  event = 'DiagnosticChanged',
+  desc = 'Update the diagnostic locations',
+  command = function(args)
+    diagnostic.setloclist({ open = false })
+    if #args.data.diagnostics == 0 then vim.cmd('silent! lclose') end
+  end,
 })
 
 ----------------------------------------------------------------------------------------------------
@@ -403,9 +409,6 @@ rvim.augroup('LspSetupCommands', {
 local command = rvim.command
 
 command('LspFormat', function() format({ bufnr = 0, async = false }) end)
-command('LspDiagnostics', function() diagnostic.setqflist({ open = true }) end)
-
-map('n', '<leader>ll', '<Cmd>LspDiagnostics<CR>', { desc = 'toggle quickfix diagnostics' })
 
 ----------------------------------------------------------------------------------------------------
 -- Signs
