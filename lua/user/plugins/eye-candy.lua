@@ -5,15 +5,11 @@ return {
 
   { 'fladson/vim-kitty', ft = 'kitty' },
   { 'razak17/onedark.nvim', lazy = false, priority = 1000 },
+  { 'romainl/vim-cool', event = 'BufReadPre', config = function() vim.g.CoolTotalMatches = 1 end },
   {
     'itchyny/vim-highlighturl',
     event = 'BufReadPre',
     config = function() vim.g.highlighturl_guifg = hl.get('URL', 'fg') end,
-  },
-  {
-    'romainl/vim-cool',
-    event = 'BufReadPre',
-    config = function() vim.g.CoolTotalMatches = 1 end,
   },
   {
     'lukas-reineke/indent-blankline.nvim',
