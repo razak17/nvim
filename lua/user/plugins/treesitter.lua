@@ -46,8 +46,12 @@ return {
         rainbow = {
           enable = true,
           disable = false,
-          query = 'rainbow-parens',
-          strategy = { require('ts-rainbow.strategy.global') },
+          query = {
+            'rainbow-parens',
+            tsx = function() return nil end,
+            javascript = function() return nil end,
+          },
+          strategy = { require('ts-rainbow.strategy.local') },
         },
         query_linter = {
           enable = true,
