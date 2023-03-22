@@ -1,39 +1,24 @@
 ---@diagnostic disable: duplicate-doc-param missing-return
 
 if not rvim or not rvim.ui.winbar.enable or not rvim.plugins.enable then return end
+local navic_loaded, navic = pcall(require, 'nvim-navic')
 
 local str = require('user.strings')
-local decorations = rvim.ui.decorations
 
 local fn, api = vim.fn, vim.api
-local component = str.component
-local empty = rvim.empty
-local icons = rvim.ui.icons.ui
+local icons, decorations, highlight = rvim.ui.icons.ui, rvim.ui.decorations, rvim.highlight
 local lsp_hl = rvim.ui.lsp.highlights
+local component, empty = str.component, rvim.empty
 
 local dir_separator = icons.chevron_right
 local separator = icons.triangle
 local ellipsis = icons.ellipsis
 
 --- A mapping of each winbar items ID to its path
---- @type table<string, string>
-rvim.ui.winbar.state = {}
+---@type (string|{start: {line: integer, character: integer}})[]
+local state = {}
 
----@param id number
----@param _ number number of clicks
----@param _ "l"|"r"|"m" the button clicked
----@param _ string modifiers
-function rvim.ui.winbar.click(id, _, _, _)
-  if not id then return end
-  local item = rvim.ui.winbar.state[id]
-  if type(item) == 'string' then vim.cmd.edit(rvim.ui.winbar.state[id]) end
-  if type(item) == 'table' and item.start then
-    local win = fn.getmousepos().winid
-    api.nvim_win_set_cursor(win, { item.start.line, item.start.character })
-  end
-end
-
-rvim.highlight.plugin('winbar', {
+highlight.plugin('winbar', {
   { Winbar = { bold = false } },
   { WinbarNC = { bold = false } },
   { WinbarCrumb = { bold = false } },
@@ -41,15 +26,28 @@ rvim.highlight.plugin('winbar', {
   { WinbarDirectory = { inherit = 'Directory' } },
 })
 
+---@param id number
+---@param _ number number of clicks
+---@param _ "l"|"r"|"m" the button clicked
+---@param _ string modifiers
+function rvim.ui.winbar.click(id, _, _, _)
+  if not id then return end
+  local item = state[id]
+  if type(item) == 'string' then vim.cmd.edit(item) end
+  if type(item) == 'table' and item.start then
+    local win = fn.getmousepos().winid
+    api.nvim_win_set_cursor(win, { item.start.line, item.start.character })
+  end
+end
+
 local function breadcrumbs()
-  local ok, navic = rvim.require('nvim-navic')
   local empty_state = { component(ellipsis, 'NonText', { priority = 0 }) }
-  if not ok or not navic.is_available() then return empty_state end
-  local navic_ok, data = pcall(navic.get_data)
-  if not navic_ok or empty(data) then return empty_state end
+  if not navic.is_available() then return empty_state end
+  local ok, data = pcall(navic.get_data)
+  if not ok or empty(data) then return empty_state end
   return rvim.map(function(crumb, index)
-    local priority = #rvim.ui.winbar.state + #data - index
-    rvim.ui.winbar.state[priority] = crumb.scope
+    local priority = #state + #data - index
+    state[priority] = crumb.scope
     return component(crumb.name, 'WinbarCrumb', {
       priority = priority,
       id = priority,
@@ -64,7 +62,8 @@ local function breadcrumbs()
 end
 
 ---@return string
-function rvim.ui.winbar.get()
+function rvim.ui.winbar.render()
+  state = {}
   local winbar = {}
   local add = str.append(winbar)
 
@@ -92,7 +91,7 @@ function rvim.ui.winbar.get()
     local show_icon = is_first and rvim.ui.winbar.use_file_icon and icon or nil
     local is_last = index == #parts
     local sep = is_last and separator or dir_separator
-    rvim.ui.winbar.state[priority] = table.concat(vim.list_slice(parts, 1, index), '/')
+    state[priority] = table.concat(vim.list_slice(parts, 1, index), '/')
     add(component(part, 'Winbar', {
       id = priority,
       priority = priority,
@@ -103,7 +102,7 @@ function rvim.ui.winbar.get()
       prefix_color = show_icon and color or nil,
     }))
   end, parts)
-  add(unpack(breadcrumbs()))
+  if navic_loaded then add(unpack(breadcrumbs())) end
   return str.display(winbar, api.nvim_win_get_width(api.nvim_get_current_win()))
 end
 
@@ -122,7 +121,7 @@ local function set_winbar()
         and ft ~= ''
         and not is_diff
       then
-        win.winbar = '%{%v:lua.rvim.ui.winbar.get()%}'
+        win.winbar = '%{%v:lua.rvim.ui.winbar.render()%}'
       elseif is_diff then
         win.winbar = nil
       end
