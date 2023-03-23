@@ -53,10 +53,10 @@ local function breadcrumbs()
       id = priority,
       click = 'v:lua.rvim.ui.winbar.click',
       max_size = 35,
-      prefix = crumb.icon,
-      prefix_color = lsp_hl[crumb.type] or 'NonText',
-      suffix = #data > index and separator or '',
-      suffix_color = 'Directory',
+      prefix = {
+        { index ~= 1 and separator or '', 'Directory' },
+        { crumb.icon, lsp_hl[crumb.type] or 'NonText' },
+      },
     })
   end, data)
 end
@@ -87,8 +87,7 @@ function rvim.ui.winbar.render()
   end
   rvim.foreach(function(part, index)
     local priority = (#parts - (index - 1)) * 2
-    local is_first = index == 1
-    local show_icon = is_first and rvim.ui.winbar.use_file_icon and icon or nil
+    local show_icon = rvim.ui.winbar.use_file_icon and icon or nil
     local is_last = index == #parts
     local sep = is_last and separator or dir_separator
     state[priority] = table.concat(vim.list_slice(parts, 1, index), '/')
@@ -96,10 +95,9 @@ function rvim.ui.winbar.render()
       id = priority,
       priority = priority,
       click = 'v:lua.rvim.ui.winbar.click',
-      suffix = sep,
-      suffix_color = 'Winbar',
-      prefix = show_icon and icon or nil,
-      prefix_color = show_icon and color or nil,
+      suffix = { { sep, 'Winbar' } },
+      ---@diagnostic disable-next-line: assign-type-mismatch
+      prefix = show_icon and { { icon, color } } or '',
     }))
   end, parts)
   if navic_loaded then add(unpack(breadcrumbs())) end
