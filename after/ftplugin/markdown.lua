@@ -1,4 +1,5 @@
-local args = { buffer = 0, silent = true }
+if not rvim then return end
+
 local opt = vim.opt_local
 
 opt.tabstop = 2
@@ -12,6 +13,7 @@ vim.cmd([[
   iabbrev :sad: 😔
 ]])
 
+local args = { buffer = 0, silent = true }
 map('n', 'ih', [[:<c-u>execute "normal! ?^==\\+$\r:nohlsearch\rkvg_"<cr>]], args)
 map('n', 'ah', [[:<c-u>execute "normal! ?^==\\+$\r:nohlsearch\rg_vk0"<cr>]], args)
 map('n', 'aa', [[:<c-u>execute "normal! ?^--\\+$\r:nohlsearch\rg_vk0"<cr>]], args)
