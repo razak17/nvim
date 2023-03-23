@@ -22,13 +22,22 @@ local servers = {
   vimls = {},
   volar = {},
   tsserver = {
+    -- NOTE: Apparently setting this to false improves performance
+    -- https://github.com/sublimelsp/LSP-typescript/issues/129#issuecomment-1281643371
+    initializationOptions = { preferences = { includeCompletionsForModuleExports = false } },
     on_attach = function(client)
       client.server_capabilities.documentFormattingProvider = false -- 0.8 and later
     end,
-    -- NOTE: Apparently setting this to false improves performance
-    -- https://github.com/sublimelsp/LSP-typescript/issues/129#issuecomment-1281643371
-    initializationOptions = {
-      preferences = { includeCompletionsForModuleExports = false },
+    handlers = {
+      ['textDocument/publishDiagnostics'] = function(_, result, ctx, config)
+        result.diagnostics = vim.tbl_filter(
+          function(diagnostic)
+            return vim.tbl_contains({ 2304 }, diagnostic.code)
+          end,
+          result.diagnostics
+        )
+        return vim.lsp.handlers['textDocument/publishDiagnostics'](nil, result, ctx, config)
+      end,
     },
   },
   prosemd_lsp = {
