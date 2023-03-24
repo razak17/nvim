@@ -57,11 +57,11 @@ end
 
 --- Convert a list or map of items into a value by iterating all it's fields and transforming
 --- them with a callback
----@generic T : table
----@param callback fun(T, T, key: string | number): T
+---@generic T, S
+---@param callback fun(acc: S, item: T, key: string | number): S
 ---@param list T[]
----@param accum T
----@return T?
+---@param accum S?
+---@return S
 function rvim.fold(callback, list, accum)
   accum = accum or {}
   for k, v in pairs(list) do
@@ -71,9 +71,8 @@ function rvim.fold(callback, list, accum)
   return accum
 end
 
----@generic T : table
----@param callback fun(item: T, key: string | number, list: T[]): T
----@param list T[]
+---@generic T
+---@param callback fun(item: T, key: string | number)
 ---@return T[]
 function rvim.map(callback, list)
   return rvim.fold(function(accum, v, k)
@@ -224,7 +223,7 @@ rvim.list = { qf = {}, loc = {} }
 ---@param list_type "loclist" | "quickfix"
 ---@return boolean
 local function is_list_open(list_type)
-  return rvim.find(function(win) return not rvim.empty(win[list_type]) end, fn.getwininfo()) ~= nil
+  return rvim.find(function(win) return not rvim.falsy(win[list_type]) end, fn.getwininfo()) ~= nil
 end
 
 local silence = { mods = { silent = true, emsg_silent = true } }
@@ -278,9 +277,10 @@ end
 ---Determine if a value of any type is empty
 ---@param item any
 ---@return boolean?
-function rvim.empty(item)
+function rvim.falsy(item)
   if not item then return true end
   local item_type = type(item)
+  if item_type == 'boolean' then return not item end
   if item_type == 'string' then return item == '' end
   if item_type == 'number' then return item <= 0 end
   if item_type == 'table' then return vim.tbl_isempty(item) end

@@ -291,7 +291,7 @@ function rvim.ui.decorations.set_colorcolumn(bufnr, fn)
   local bt_ccol = rvim.ui.decorations.get(buf.bt, 'colorcolumn', 'bt')
   if buf.ft == '' or buf.bt ~= '' or ft_ccol == false or bt_ccol == false then return end
   local ccol = ft_ccol or bt_ccol or ''
-  local virtcolumn = not rvim.empty(ccol) and ccol or '+1'
+  local virtcolumn = not rvim.falsy(ccol) and ccol or '+1'
   if vim.is_callable(fn) then fn(virtcolumn) end
 end
 

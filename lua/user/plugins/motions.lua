@@ -3,7 +3,7 @@ local fn, api, hl = vim.fn, vim.api, rvim.highlight
 local function leap_keys()
   require('leap').leap({
     target_windows = vim.tbl_filter(
-      function(win) return rvim.empty(fn.win_gettype(win)) end,
+      function(win) return rvim.falsy(fn.win_gettype(win)) end,
       api.nvim_tabpage_list_wins(0)
     ),
   })

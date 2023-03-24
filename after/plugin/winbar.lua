@@ -5,11 +5,11 @@ local navic_loaded, navic = pcall(require, 'nvim-navic')
 
 local str = require('user.strings')
 
-local fn, api = vim.fn, vim.api
+local fn, api, falsy = vim.fn, vim.api, rvim.falsy
 local icons, decorations, highlight = rvim.ui.icons.ui, rvim.ui.decorations, rvim.highlight
 local lsp_hl = rvim.ui.lsp.highlights
-local component, empty = str.component, rvim.empty
 
+local space = ' '
 local dir_separator = icons.chevron_right
 local separator = icons.triangle
 local ellipsis = icons.ellipsis
@@ -18,12 +18,17 @@ local ellipsis = icons.ellipsis
 ---@type (string|{start: {line: integer, character: integer}})[]
 local state = {}
 
+local hls = {
+  separator = 'WinbarDirectory',
+  inactive = 'NonText',
+  normal = 'Winbar',
+  crumb = 'WinbarCrumb',
+}
+
 highlight.plugin('winbar', {
-  { Winbar = { bold = false } },
-  { WinbarNC = { bold = false } },
-  { WinbarCrumb = { bold = false } },
-  { WinbarIcon = { inherit = 'Function' } },
-  { WinbarDirectory = { inherit = 'Directory' } },
+  { [hls.normal] = { bold = false } },
+  { [hls.crumb] = { bold = false } },
+  { [hls.separator] = { inherit = 'Directory' } },
 })
 
 ---@param id number
@@ -41,23 +46,28 @@ function rvim.ui.winbar.click(id, _, _, _)
 end
 
 local function breadcrumbs()
-  local empty_state = { component(ellipsis, 'NonText', { priority = 0 }) }
-  if not navic.is_available() then return empty_state end
+  local empty_state = {
+    { { separator, hls.separator }, { space }, { ellipsis, hls.inactive } },
+    priority = 0,
+  }
+  if not navic_loaded or not navic.is_available() then return { empty_state } end
   local ok, data = pcall(navic.get_data)
-  if not ok or empty(data) then return empty_state end
+  if not ok or falsy(data) then return { empty_state } end
   return rvim.map(function(crumb, index)
     local priority = #state + #data - index
     state[priority] = crumb.scope
-    return component(crumb.name, 'WinbarCrumb', {
+    return {
+      {
+        { separator, hls.separator },
+        { space },
+        { crumb.icon, lsp_hl[crumb.type] or hls.inactive },
+        { space },
+        { crumb.name, hls.crumb, max_size = 35 },
+      },
       priority = priority,
       id = priority,
       click = 'v:lua.rvim.ui.winbar.click',
-      max_size = 35,
-      prefix = {
-        { index ~= 1 and separator or '', 'Directory' },
-        { crumb.icon, lsp_hl[crumb.type] or 'NonText' },
-      },
-    })
+    }
   end, data)
 end
 
@@ -70,8 +80,8 @@ function rvim.ui.winbar.render()
   add(str.spacer(1))
 
   local bufname = api.nvim_buf_get_name(api.nvim_get_current_buf())
-  if empty(bufname) then
-    add(component('[No name]', 'Winbar', { priority = 0 }))
+  if falsy(bufname) then
+    add({ { { '[No name]', hls.normal } }, priority = 0 })
     return winbar
   end
 
@@ -91,17 +101,18 @@ function rvim.ui.winbar.render()
     local is_last = index == #parts
     local sep = is_last and separator or dir_separator
     state[priority] = table.concat(vim.list_slice(parts, 1, index), '/')
-    add(component(part, 'Winbar', {
+    add({
+      { { part, 'Winbar' }, not is_last and { ' ' .. dir_separator, hls.inactive } or nil },
       id = priority,
       priority = priority,
       click = 'v:lua.rvim.ui.winbar.click',
       suffix = { { sep, 'Winbar' } },
       ---@diagnostic disable-next-line: assign-type-mismatch
       prefix = show_icon and { { icon, color } } or '',
-    }))
+    })
   end, parts)
-  if navic_loaded then add(unpack(breadcrumbs())) end
-  return str.display(winbar, api.nvim_win_get_width(api.nvim_get_current_win()))
+  add(unpack(breadcrumbs()))
+  return str.display({ winbar }, api.nvim_win_get_width(api.nvim_get_current_win()))
 end
 
 local function set_winbar()
