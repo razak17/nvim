@@ -89,18 +89,7 @@ end
 local function colorscheme_overrides()
   local overrides = {
     ['onedark'] = {
-      {
-        FloatTitle = {
-          bg = { from = 'FloatTitle', alter = -60 },
-          fg = { from = 'Normal' },
-        },
-      },
-      { CursorLine = { bg = { from = 'CursorLine', alter = -20 } } },
-      { VertSplit = { fg = { from = 'VertSplit', alter = -50 } } },
       { Dim = { inherit = 'VertSplit' } },
-      { TelescopePreviewBorder = { fg = { from = 'TelescopePreviewBorder', alter = -50 } } },
-      { TelescopePromptPrefix = { fg = { from = 'TelescopePromptPrefix', alter = -30 } } },
-      { StatusLine = { bg = { from = 'StatusLine', alter = -20 } } },
     },
   }
   local hls = overrides[vim.g.colors_name]
