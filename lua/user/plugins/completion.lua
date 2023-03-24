@@ -119,7 +119,7 @@ return {
             end
 
             if entry.source.name == 'lab.quick_data' then
-              vim_item.kind = format_icon(codicons.misc.circuit_board)
+              vim_item.kind = format_icon(codicons.misc.robot)
             end
 
             if entry.source.name == 'dynamic' then
