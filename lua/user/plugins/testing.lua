@@ -41,7 +41,9 @@ return {
       adapters = {
         require('neotest-plenary'),
         require('neotest-python'),
-        require('neotest-rust'),
+        require('neotest-rust')({
+          args = { '--verbose' },
+        }),
         require('neotest-go')({ experimental = { test_table = true } }),
         require('neotest-jest')({
           jestCommand = 'npm test --',
