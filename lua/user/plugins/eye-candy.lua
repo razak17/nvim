@@ -1,4 +1,5 @@
 local hl, ui = rvim.highlight, rvim.ui
+local separators, decorations = ui.icons.separators, ui.decorations
 
 return {
   'nvim-tree/nvim-web-devicons',
@@ -15,9 +16,9 @@ return {
     'lukas-reineke/indent-blankline.nvim',
     event = { 'BufReadPre', 'BufNewFile' },
     opts = {
-      char = '▏', -- ┆ ┊ ▎
+      char = separators.left_thin_block,
       show_foldtext = false,
-      context_char = '▏', -- ▎
+      context_char = separators.left_thin_block,
       char_priority = 12,
       show_current_context = true,
       show_current_context_start = false,
@@ -47,13 +48,13 @@ return {
   {
     'lukas-reineke/virt-column.nvim',
     event = 'BufReadPre',
-    opts = { char = '▕' },
+    opts = { char = separators.right_thin_block },
     init = function()
       hl.plugin('virt_column', { { VirtColumn = { link = 'FloatBorder' } } })
       rvim.augroup('VirtCol', {
         event = { 'VimEnter', 'BufEnter', 'WinEnter' },
         command = function(args)
-          ui.decorations.set_colorcolumn(
+          decorations.set_colorcolumn(
             args.buf,
             function(virtcolumn) require('virt-column').setup_buffer({ virtcolumn = virtcolumn }) end
           )
