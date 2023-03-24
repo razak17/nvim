@@ -32,10 +32,7 @@ highlight.plugin('winbar', {
 })
 
 ---@param id number
----@param _ number number of clicks
----@param _ "l"|"r"|"m" the button clicked
----@param _ string modifiers
-function rvim.ui.winbar.click(id, _, _, _)
+function rvim.ui.winbar.click(id)
   if not id then return end
   local item = state[id]
   if type(item) == 'string' then vim.cmd.edit(item) end

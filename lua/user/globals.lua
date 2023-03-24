@@ -72,7 +72,8 @@ function rvim.fold(callback, list, accum)
 end
 
 ---@generic T
----@param callback fun(item: T, key: string | number)
+---@param callback fun(item: T, key: string | number, list: T[]): T
+---@param list T[]
 ---@return T[]
 function rvim.map(callback, list)
   return rvim.fold(function(accum, v, k)
