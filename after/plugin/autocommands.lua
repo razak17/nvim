@@ -141,13 +141,6 @@ rvim.augroup('Utilities', {
   pattern = { 'gitcommit', 'gitrebase' },
   command = 'set bufhidden=delete',
 }, {
-  event = { 'FileType' },
-  pattern = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact', 'text' },
-  command = function()
-    vim.opt_local.spell = true
-    vim.bo.textwidth = 100
-  end,
-}, {
   event = { 'BufWritePre', 'FileWritePre' },
   command = "silent! call mkdir(expand('<afile>:p:h'), 'p')",
 }, {
