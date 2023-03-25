@@ -238,6 +238,9 @@ local function setup_mappings(client, bufnr)
   -- Typescript
   if client.name == 'tsserver' then
     local actions = require('typescript').actions
+    map('n', 'gd', 'TypescriptGoToSourceDefinition', {
+      desc = 'typescript: go to source definition',
+    })
     map(
       'n',
       '<localleader>tr',
