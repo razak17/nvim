@@ -76,7 +76,7 @@ return {
       win_opts = { border = border },
       highlighter = {
         auto_enable = true,
-        excludes = { 'dart', 'lazy', 'orgagenda', 'org', 'NeogitStatus' },
+        excludes = { 'dart', 'lazy', 'orgagenda', 'org', 'NeogitStatus', 'toggleterm' },
       },
     },
   },
