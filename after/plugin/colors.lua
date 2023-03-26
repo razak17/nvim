@@ -7,6 +7,7 @@ local function general_overrides()
     { mkdLineBreak = { link = 'NONE' } },
     { LineNr = { background = 'NONE' } },
     { ErrorMsg = { background = 'NONE' } },
+    { Cursor = { fg = 'NONE' } },
     { UnderlinedTitle = { bold = true, underline = true } },
     ------------------------------------------------------------------------------------------------
     -- colorscheme overrides
