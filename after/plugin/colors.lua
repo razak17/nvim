@@ -23,11 +23,14 @@ local function general_overrides()
     --  Semantic tokens
     ------------------------------------------------------------------------------//
     { ['@lsp.type.parameter'] = { italic = true, foreground = { from = 'Normal' } } },
-    { ['@lsp.type.variable'] = { clear = true } },
+    { ['@lsp.type.variable'] = { link = '@variable' } },
     { ['@lsp.typemod.variable.global'] = { bold = true, inherit = '@constant.builtin' } },
     { ['@lsp.typemod.variable.defaultLibrary'] = { italic = true } },
     { ['@lsp.typemod.variable.readonly.typescript'] = { clear = true } },
-
+    { ['@lsp.typemod.operator.injected'] = { link = '@operator' } },
+    { ['@lsp.typemod.keyword'] = { link = '@keyword' } },
+    { ['@lsp.typemod.string.injected'] = { link = '@string' } },
+    { ['@lsp.typemod.variable.injected'] = { link = '@variable' } },
     ------------------------------------------------------------------------------------------------
     -- Treesitter
     ------------------------------------------------------------------------------------------------
@@ -91,6 +94,7 @@ local function colorscheme_overrides()
   local overrides = {
     ['onedark'] = {
       { Dim = { inherit = 'VertSplit' } },
+      { ['@variable'] = { fg = { from = 'Normal' } } },
     },
   }
   local hls = overrides[vim.g.colors_name]
