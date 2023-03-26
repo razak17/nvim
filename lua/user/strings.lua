@@ -178,6 +178,10 @@ end
 --- @return string
 function M.display(sections, available_space)
   local components = rvim.fold(function(acc, section, count)
+    if #section == 0 then
+      table.insert(acc, separator())
+      return acc
+    end
     rvim.foreach(function(args, index)
       if not args then return end
       local ok, str = pcall(component, args)
