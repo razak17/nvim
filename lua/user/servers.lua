@@ -3,6 +3,7 @@
 ----------------------------------------------------------------------------------------------------
 local fn = vim.fn
 
+---@type lspconfig.options
 local servers = {
   astro = {},
   bashls = {},
@@ -31,9 +32,7 @@ local servers = {
     handlers = {
       ['textDocument/publishDiagnostics'] = function(_, result, ctx, config)
         result.diagnostics = vim.tbl_filter(
-          function(diagnostic)
-            return vim.tbl_contains({ 2304 }, diagnostic.code)
-          end,
+          function(diagnostic) return vim.tbl_contains({ 2304 }, diagnostic.code) end,
           result.diagnostics
         )
         return vim.lsp.handlers['textDocument/publishDiagnostics'](nil, result, ctx, config)
@@ -104,29 +103,25 @@ local servers = {
       },
     },
   },
-  lua_ls = function()
-    return {
-      settings = {
-        Lua = {
-          runtime = {
-            special = { reload = 'require' },
-            version = 'LuaJIT',
+  lua_ls = {
+    settings = {
+      Lua = {
+        codeLens = { enable = true },
+        hint = { enable = true, arrayIndex = 'Disable', setType = true },
+        format = { enable = false },
+        diagnostics = { globals = { 'vim', 'describe', 'it', 'before_each', 'after_each' } },
+        completion = { keywordSnippet = 'Replace', callSnippet = 'Replace' },
+        workspace = {
+          library = {
+            fn.expand('$VIMRUNTIME/lua'),
+            require('neodev.config').types(),
           },
-          hint = { enable = true, arrayIndex = 'Disable', setType = true },
-          format = { enable = false },
-          diagnostics = { globals = { 'vim', 'describe', 'it', 'before_each', 'after_each' } },
-          workspace = {
-            library = {
-              fn.expand('$VIMRUNTIME/lua'),
-              require('neodev.config').types(),
-            },
-            checkThirdParty = false,
-          },
-          telemetry = { enable = false },
+          checkThirdParty = false,
         },
+        telemetry = { enable = false },
       },
-    }
-  end,
+    },
+  },
   tailwindcss = {
     -- cmd = { '/home/razak/.bun/bin/tailwindcss-language-server', '--stdio' },
     root_dir = function(fname)
