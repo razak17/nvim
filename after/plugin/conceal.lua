@@ -8,7 +8,7 @@ local conceal_html_class = function(bufnr)
   local syntax_tree = language_tree:parse()
   local root = syntax_tree[1]:root()
 
-  local query = vim.treesitter.parse_query(
+  local query = vim.treesitter.query.parse(
     'html',
     [[
     ((attribute
