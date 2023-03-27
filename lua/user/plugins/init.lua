@@ -14,28 +14,36 @@ return {
   'kazhala/close-buffers.nvim',
 
   {
-    'neovim/nvim-lspconfig',
-    config = function() require('lspconfig.ui.windows').default_options.border = border end,
-  },
-  {
     'williamboman/mason.nvim',
-    dependencies = { 'williamboman/mason-lspconfig.nvim', 'neovim/nvim-lspconfig' },
+    cmd = 'Mason',
+    keys = { { '<leader>lm', '<cmd>Mason<CR>', { desc = 'mason: info' } } },
     build = ':MasonUpdate',
     opts = { ui = { border = border, height = 0.8 } },
-    init = function()
-      require('mason-lspconfig').setup({ automatic_installation = true })
-      map('n', '<leader>lm', '<cmd>Mason<CR>', { desc = 'mason: info' })
-    end,
   },
   {
-    'folke/neodev.nvim',
-    opts = {
-      debug = true,
-      experimental = { pathStrict = true },
-      library = {
-        runtime = join_paths(vim.env.HOME, 'neovim', 'share', 'nvim', 'runtime'),
-        plugins = { 'neotest' },
-        types = true,
+    'williamboman/mason-lspconfig.nvim',
+    event = { 'BufReadPre', 'BufNewFile' },
+    config = function() require('mason-lspconfig').setup({ automatic_installation = true }) end,
+    dependencies = {
+      'mason.nvim',
+      {
+        'neovim/nvim-lspconfig',
+        config = function() require('lspconfig.ui.windows').default_options.border = border end,
+        dependencies = {
+          {
+            'folke/neodev.nvim',
+            ft = 'lua',
+            opts = {
+              debug = true,
+              experimental = { pathStrict = true },
+              library = {
+                runtime = join_paths(vim.env.HOME, 'neovim', 'share', 'nvim', 'runtime'),
+                plugins = { 'neotest' },
+                types = true,
+              },
+            },
+          },
+        },
       },
     },
   },
