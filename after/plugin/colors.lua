@@ -55,7 +55,7 @@ local function set_sidebar_highlight()
   hl.all({
     { PanelDarkBackground = { bg = { from = 'Normal', alter = -0.43 } } },
     { PanelDarkHeading = { inherit = 'PanelDarkBackground', bold = true } },
-    { PanelBackground = { bg = { from = 'Normal', alter = -0.8 } } },
+    { PanelBackground = { bg = { from = 'Normal', alter = -0.08 } } },
     { PanelHeading = { inherit = 'PanelBackground', bold = true } },
     { PanelVertSplit = { inherit = 'PanelBackground', fg = { from = 'WinSeparator' } } },
     { PanelVertSplitAlt = { inherit = 'PanelBackground', fg = { from = 'WinSeparator' } } },
