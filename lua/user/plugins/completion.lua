@@ -30,14 +30,14 @@ return {
 
       local kind_hls = rvim.fold(
         function(accum, value, key)
-          accum[#accum + 1] = { ['CmpItemKind' .. key] = { foreground = { from = value } } }
+          accum[#accum + 1] = { ['CmpItemKind' .. key] = { fg = { from = value } } }
           return accum
         end,
         lsp_hls,
         {
-          { CmpItemAbbr = { foreground = { from = 'StatusLine' } } },
+          { CmpItemAbbr = { fg = { from = 'StatusLine' } } },
           { CmpItemAbbrDeprecated = { strikethrough = true, inherit = 'Comment' } },
-          { CmpItemAbbrMatchFuzzy = { foreground = { from = 'Title' } } },
+          { CmpItemAbbrMatchFuzzy = { fg = { from = 'Title' } } },
           { CmpItemMenu = { fg = { from = 'Comment', attr = 'fg' }, italic = true, bold = true } },
         }
       )

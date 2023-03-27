@@ -51,18 +51,18 @@ return {
           Headline = {
             bold = true,
             italic = true,
-            background = { from = 'Normal', alter = 20 },
+            bg = { from = 'Normal', alter = 20 },
           },
         },
-        { Headline1 = { background = '#003c30' } },
-        { Headline2 = { background = '#00441b' } },
-        { Headline3 = { background = '#084081' } },
-        { Dash = { background = '#0b60a1', bold = true } },
+        { Headline1 = { bg = '#003c30' } },
+        { Headline2 = { bg = '#00441b' } },
+        { Headline3 = { bg = '#084081' } },
+        { Dash = { bg = '#0b60a1', bold = true } },
         {
           CodeBlock = {
             bold = true,
             italic = true,
-            background = { from = 'Normal', alter = 30 },
+            bg = { from = 'Normal', alter = 30 },
           },
         },
       })

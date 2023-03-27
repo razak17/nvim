@@ -216,8 +216,8 @@ return {
     event = 'LspAttach',
     config = function()
       hl.plugin('Lightbulb', {
-        { LightBulbFloatWin = { foreground = { from = 'Type' } } },
-        { LightBulbVirtualText = { foreground = { from = 'Type' } } },
+        { LightBulbFloatWin = { fg = { from = 'Type' } } },
+        { LightBulbVirtualText = { fg = { from = 'Type' } } },
       })
       local icon = ui.icons.ui.lightbulb
       require('nvim-lightbulb').setup({

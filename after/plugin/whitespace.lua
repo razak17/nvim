@@ -29,13 +29,13 @@ local function toggle_trailing(mode)
   vim.w.whitespace_match_number = fn.matchadd('ExtraWhitespace', pattern)
 end
 
-rvim.highlight.set('ExtraWhitespace', { foreground = 'red' })
+rvim.highlight.set('ExtraWhitespace', { fg = 'red' })
 
 rvim.augroup('WhitespaceMatch', {
   event = { 'ColorScheme' },
   desc = 'Add extra whitespace highlight',
   pattern = { '*' },
-  command = function() rvim.highlight.set('ExtraWhitespace', { foreground = 'red' }) end,
+  command = function() rvim.highlight.set('ExtraWhitespace', { fg = 'red' }) end,
 }, {
   event = { 'BufEnter', 'FileType', 'InsertLeave' },
   pattern = { '*' },

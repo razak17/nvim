@@ -4,26 +4,26 @@ local hl = rvim.highlight
 
 local function general_overrides()
   hl.all({
-    { mkdLineBreak = { link = 'NONE' } },
-    { LineNr = { background = 'NONE' } },
-    { ErrorMsg = { background = 'NONE' } },
+    { mkdLineBreak = { clear = true } },
+    { LineNr = { bg = 'NONE' } },
+    { ErrorMsg = { bg = 'NONE' } },
     { Cursor = { fg = 'NONE' } },
     { UnderlinedTitle = { bold = true, underline = true } },
     ------------------------------------------------------------------------------------------------
     -- colorscheme overrides
     ------------------------------------------------------------------------------------------------
     { QuickFixLine = { bg = { from = 'Cursorline' }, fg = 'NONE' } },
-    -- Neither the sign column or end of buffer highlights require an explicit background
-    -- they should both just use the background that is in the window they are in.
+    -- Neither the sign column or end of buffer highlights require an explicit bg
+    -- they should both just use the bg that is in the window they are in.
     -- if either are specified this can lead to issues when a winhighlight is set
-    { SignColumn = { background = 'NONE' } },
-    { EndOfBuffer = { background = 'NONE' } },
+    { SignColumn = { bg = 'NONE' } },
+    { EndOfBuffer = { bg = 'NONE' } },
     { GitSignsCurrentLineBlame = { link = 'Comment' } },
     { StatusColSep = { fg = { from = 'WinSeparator' }, bg = { from = 'Normal' } } },
     ------------------------------------------------------------------------------//
     --  Semantic tokens
     ------------------------------------------------------------------------------//
-    { ['@lsp.type.parameter'] = { italic = true, foreground = { from = 'Normal' } } },
+    { ['@lsp.type.parameter'] = { italic = true, fg = { from = 'Normal' } } },
     { ['@lsp.type.variable'] = { link = '@variable' } },
     { ['@lsp.typemod.variable.global'] = { bold = true, inherit = '@constant.builtin' } },
     { ['@lsp.typemod.variable.defaultLibrary'] = { italic = true } },
@@ -35,9 +35,9 @@ local function general_overrides()
     ------------------------------------------------------------------------------------------------
     -- Treesitter
     ------------------------------------------------------------------------------------------------
-    { ['@keyword.return'] = { italic = true, foreground = { from = 'Keyword' } } },
-    { ['@parameter'] = { italic = true, bold = true, foreground = 'NONE' } },
-    { ['@error'] = { foreground = 'fg', background = 'NONE' } },
+    { ['@keyword.return'] = { italic = true, fg = { from = 'Keyword' } } },
+    { ['@parameter'] = { italic = true, bold = true, fg = 'NONE' } },
+    { ['@error'] = { fg = 'fg', bg = 'NONE' } },
     { ['@text.diff.add'] = { link = 'DiffAdd' } },
     { ['@text.diff.delete'] = { link = 'DiffDelete' } },
     { ['@text.title.markdown'] = { underdouble = true } },
@@ -55,17 +55,13 @@ local function set_sidebar_highlight()
   hl.all({
     { PanelDarkBackground = { bg = { from = 'Normal', alter = -43 } } },
     { PanelDarkHeading = { inherit = 'PanelDarkBackground', bold = true } },
-    { PanelBackground = { background = { from = 'Normal', alter = -8 } } },
+    { PanelBackground = { bg = { from = 'Normal', alter = -8 } } },
     { PanelHeading = { inherit = 'PanelBackground', bold = true } },
-    { PanelVertSplit = { inherit = 'PanelBackground', foreground = { from = 'WinSeparator' } } },
-    {
-      PanelVertSplitAlt = { inherit = 'PanelBackground', foreground = { from = 'WinSeparator' } },
-    },
-    {
-      PanelWinSeparator = { inherit = 'PanelBackground', foreground = { from = 'WinSeparator' } },
-    },
+    { PanelVertSplit = { inherit = 'PanelBackground', fg = { from = 'WinSeparator' } } },
+    { PanelVertSplitAlt = { inherit = 'PanelBackground', fg = { from = 'WinSeparator' } } },
+    { PanelWinSeparator = { inherit = 'PanelBackground', fg = { from = 'WinSeparator' } } },
     { PanelStNC = { link = 'PanelWinSeparator' } },
-    { PanelSt = { background = { from = 'Visual', alter = -10 } } },
+    { PanelSt = { bg = { from = 'Visual', alter = -10 } } },
   })
 end
 
