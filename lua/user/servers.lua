@@ -15,7 +15,6 @@ local servers = {
   eslint = {},
   marksman = {},
   prismals = {},
-  quick_lint_js = {},
   rust_analyzer = {},
   sqls = {},
   svelte = {},
