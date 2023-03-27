@@ -19,7 +19,7 @@ local function general_overrides()
     { SignColumn = { bg = 'NONE' } },
     { EndOfBuffer = { bg = 'NONE' } },
     { GitSignsCurrentLineBlame = { link = 'Comment' } },
-    { StatusColSep = { fg = { from = 'WinSeparator' }, bg = { from = 'Normal' } } },
+    { StatusColSep = { fg = { from = 'Comment' }, bg = { from = 'Normal' } } },
     ------------------------------------------------------------------------------//
     --  Semantic tokens
     ------------------------------------------------------------------------------//
