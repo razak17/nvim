@@ -48,7 +48,7 @@ rvim.augroup('CheckOutsideTime', {
 rvim.augroup('TrimWhitespace', {
   event = { 'BufWritePre' },
   command = function()
-    vim.api.nvim_exec(
+    api.nvim_exec(
       [[
         let bsave = winsaveview()
         keeppatterns %s/\s\+$//e
@@ -60,14 +60,13 @@ rvim.augroup('TrimWhitespace', {
 })
 
 --- automatically clear commandline messages after a few seconds delay
---- source: http//unix.stackexchange.com/a/613645
-rvim.augroup('ClearCommandMessages', {
-  event = { 'CmdlineLeave', 'CmdlineChanged' },
-  pattern = { ':' },
+--- source: https://unix.stackexchange.com/a/613645
+rvim.augroup('ClearCommandLineMessages', {
+  event = { 'CursorHold' },
   command = function()
     vim.defer_fn(function()
       if fn.mode() == 'n' then vim.cmd.echon("''") end
-    end, 10000)
+    end, 1000)
   end,
 })
 
