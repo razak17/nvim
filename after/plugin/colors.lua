@@ -37,7 +37,6 @@ local function general_overrides()
     ------------------------------------------------------------------------------------------------
     { ['@keyword.return'] = { italic = true, fg = { from = 'Keyword' } } },
     { ['@parameter'] = { italic = true, bold = true, fg = 'NONE' } },
-    { ['@error'] = { fg = 'fg', bg = 'NONE' } },
     { ['@text.diff.add'] = { link = 'DiffAdd' } },
     { ['@text.diff.delete'] = { link = 'DiffDelete' } },
     { ['@text.title.markdown'] = { underdouble = true } },

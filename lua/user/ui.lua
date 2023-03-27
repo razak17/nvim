@@ -132,7 +132,7 @@ rvim.ui.lsp = {
     Array = '@storageclass',
     Object = '@type',
     Key = '@field',
-    Null = '@error',
+    Null = 'Error',
     EnumMember = '@field',
   },
   kinds = {
