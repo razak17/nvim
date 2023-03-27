@@ -43,7 +43,7 @@ return {
     },
   },
   {
-    'lukas-reineke/headlines.nvim',
+    'razak17/headlines.nvim',
     ft = { 'org', 'norg', 'markdown', 'yaml' },
     config = function()
       hl.plugin('Headlines', {
