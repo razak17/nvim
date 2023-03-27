@@ -75,13 +75,13 @@ end
 ---The files are generated to a runtimepath: "$RVIM_RUNTIME_DIR/site/after/ftplugin/template.lua"
 function M.generate_templates(servers_names)
   servers_names = servers_names or get_supported_servers()
----Remove Templates
   M.remove_template_files()
   if not rvim.is_directory(ftplugin_dir) then vim.fn.mkdir(ftplugin_dir, 'p') end
   for _, server in ipairs(servers_names) do
     local config = require('user.servers')(server)
     if config then generate_ftplugin(server, ftplugin_dir) end
   end
+  vim.notify('Templates have been generated', 'info', { title = 'Lsp' })
 end
 
 return M

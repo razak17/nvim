@@ -221,14 +221,8 @@ local function setup_mappings(client, bufnr)
   map('n', '<leader>lc', lsp.codelens.run, with_desc('run code lens'))
   map('n', '<leader>lr', lsp.buf.rename, with_desc('rename'))
   -- Templates
-  map('n', '<leader>lG', function()
-    require('user.lsp.templates').generate_templates()
-    vim.notify('Templates have been generated', nil, { title = 'Lsp' })
-  end, { desc = 'lsp: generate templates' })
-  map('n', '<leader>lD', function()
-    require('user.lsp.templates').remove_template_files()
-    vim.notify('Templates have been removed', nil, { title = 'Lsp' })
-  end, { desc = 'lsp: delete templates' })
+  map('n', '<leader>lG', '<cmd>LspGenerateTemplates<CR>', { desc = 'lsp: generate templates' })
+  map('n', '<leader>lD', '<cmd>LspRemoveTemplates<CR>', { desc = 'lsp: delete templates' })
   -- Others
   map('n', '<leader>li', '<cmd>LspInfo<CR>', with_desc('info'))
   map('n', '<leader>lf', '<cmd>LspFormat<CR>', with_desc('format buffer'))
@@ -396,6 +390,13 @@ local command = rvim.command
 
 command('LspFormat', function() format({ bufnr = 0, async = false }) end)
 
+command('LspGenerateTemplates', function() require('user.lsp.templates').generate_templates() end)
+
+command('LspRemoveTemplates', function()
+  require('user.lsp.templates').remove_template_files()
+  vim.notify('Templates have been removed', 'info', { title = 'Lsp' })
+end)
+
 ----------------------------------------------------------------------------------------------------
 -- Signs
 ----------------------------------------------------------------------------------------------------
@@ -520,8 +521,6 @@ lsp.handlers['window/showMessage'] = function(_, result, ctx)
 end
 
 -- Generate templates
-local templates = rvim.lsp.templates_dir
-if not rvim.is_directory(templates) or fn.filereadable(join_paths(templates, 'lua.lua')) ~= 1 then
-  require('user.lsp.templates').generate_templates()
-  vim.notify('Templates have been generated', 'info', { title = 'Lsp' })
+if fn.filereadable(join_paths(rvim.lsp.templates_dir, 'lua.lua')) ~= 1 then
+  vim.cmd('LspGenerateTemplates')
 end
