@@ -30,7 +30,7 @@ local namespace = {
   ui = {
     tw = {},
     statuscolumn = { enable = true },
-    winbar = { enable = true, use_relative_path = true, use_file_icon = true },
+    winbar = { enable = true, relative_path = true, file_icon = true },
   },
 }
 

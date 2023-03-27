@@ -2,6 +2,7 @@
 
 if not rvim or not rvim.ui.winbar.enable or not rvim.plugins.enable then return end
 local navic_loaded, navic = pcall(require, 'nvim-navic')
+local devicons_loaded, devicons = pcall(require, 'nvim-web-devicons')
 
 local str = require('user.strings')
 
@@ -83,29 +84,29 @@ function rvim.ui.winbar.render()
   end
 
   local filepath = fn.fnamemodify(bufname, ':t')
-  if rvim.ui.winbar.use_relative_path then filepath = fn.fnamemodify(bufname, ':.') end
+  if rvim.ui.winbar.relative_path then filepath = fn.fnamemodify(bufname, ':.') end
+
+  if rvim.ui.winbar.file_icon then
+    local icon, color = '', 'DevIconDefault'
+    if devicons_loaded then
+      local devicon, devicon_color = devicons.get_icon(vim.fn.expand('%:t'))
+      if devicon ~= nil and devicon_color ~= nil then
+        icon, color = devicon, devicon_color
+      end
+    end
+    add({ { { icon, color } } })
+  end
 
   local parts = vim.split(filepath, '/')
-  local _, devicons = rvim.require('nvim-web-devicons')
-  local icon, color = devicons.get_icon(vim.fn.expand('%:t'))
-  if icon == nil and color == nil then
-    icon = ''
-    color = 'DevIconDefault'
-  end
   rvim.foreach(function(part, index)
     local priority = (#parts - (index - 1)) * 2
-    local show_icon = rvim.ui.winbar.use_file_icon and icon or nil
     local is_last = index == #parts
-    local sep = is_last and separator or dir_separator
     state[priority] = table.concat(vim.list_slice(parts, 1, index), '/')
     add({
       { { part, 'Winbar' }, not is_last and { ' ' .. dir_separator, hls.separator } or nil },
       id = priority,
       priority = priority,
       click = 'v:lua.rvim.ui.winbar.click',
-      suffix = { { sep, 'Error' } },
-      ---@diagnostic disable-next-line: assign-type-mismatch
-      prefix = show_icon and { { icon, color } } or '',
     })
   end, parts)
   add(unpack(breadcrumbs()))
