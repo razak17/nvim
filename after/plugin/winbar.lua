@@ -99,11 +99,11 @@ function rvim.ui.winbar.render()
     local sep = is_last and separator or dir_separator
     state[priority] = table.concat(vim.list_slice(parts, 1, index), '/')
     add({
-      { { part, 'Winbar' }, not is_last and { ' ' .. dir_separator, hls.inactive } or nil },
+      { { part, 'Winbar' }, not is_last and { ' ' .. dir_separator, hls.separator } or nil },
       id = priority,
       priority = priority,
       click = 'v:lua.rvim.ui.winbar.click',
-      suffix = { { sep, 'Winbar' } },
+      suffix = { { sep, 'Error' } },
       ---@diagnostic disable-next-line: assign-type-mismatch
       prefix = show_icon and { { icon, color } } or '',
     })
