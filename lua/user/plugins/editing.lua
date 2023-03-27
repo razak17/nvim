@@ -121,7 +121,7 @@ return {
           ['onedark'] = {
             {
               TSNodeKey = {
-                fg = { from = 'VertSplit', attr = 'fg', alter = -20 },
+                fg = { from = 'VertSplit', attr = 'fg', alter = -0.2 },
                 bg = { from = 'qfLineNr', attr = 'fg' },
               },
             },

@@ -58,9 +58,9 @@ return {
     },
     config = function()
       rvim.highlight.plugin('diffview', {
-        { DiffAddedChar = { bg = 'NONE', fg = { from = 'DiffAdd', attr = 'bg', alter = 30 } } },
+        { DiffAddedChar = { bg = 'NONE', fg = { from = 'DiffAdd', attr = 'bg', alter = 0.3 } } },
         {
-          DiffChangedChar = { bg = 'NONE', fg = { from = 'DiffChange', attr = 'bg', alter = 30 } },
+          DiffChangedChar = { bg = 'NONE', fg = { from = 'DiffChange', attr = 'bg', alter = 0.3 } },
         },
         { DiffviewStatusAdded = { link = 'DiffAddedChar' } },
         { DiffviewStatusModified = { link = 'DiffChangedChar' } },

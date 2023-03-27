@@ -51,7 +51,7 @@ return {
           Headline = {
             bold = true,
             italic = true,
-            bg = { from = 'Normal', alter = 20 },
+            bg = { from = 'Normal', alter = 0.2 },
           },
         },
         { Headline1 = { bg = '#003c30' } },
@@ -62,7 +62,7 @@ return {
           CodeBlock = {
             bold = true,
             italic = true,
-            bg = { from = 'Normal', alter = 30 },
+            bg = { from = 'Normal', alter = 0.3 },
           },
         },
       })
