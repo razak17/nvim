@@ -4,6 +4,8 @@ rvim.highlight = {}
 
 ---@alias ErrorMsg {msg: string}
 
+---@alias HLAttrs {from: string, attr: "fg" | "bg", alter: integer}
+
 ---@class HLData
 ---@field fg string
 ---@field bg string
@@ -11,7 +13,14 @@ rvim.highlight = {}
 ---@field italic boolean
 ---@field undercurl boolean
 ---@field underline boolean
----@field underdot boolean
+---@field underdotted boolean
+---@field underdashed boolean
+---@field underdouble boolean
+---@field strikethrough boolean
+---@field reverse boolean
+---@field nocombine boolean
+---@field link string
+---@field default boolean
 
 ---@class HLArgs
 ---@field blend integer
@@ -22,8 +31,14 @@ rvim.highlight = {}
 ---@field italic boolean
 ---@field undercurl boolean
 ---@field underline boolean
----@field underdot boolean
-
+---@field underdotted boolean
+---@field underdashed boolean
+---@field underdouble boolean
+---@field strikethrough boolean
+---@field reverse boolean
+---@field nocombine boolean
+---@field link string
+---@field default boolean
 ---@field clear boolean
 ---@field inherit string
 
@@ -34,9 +49,17 @@ local attrs = {
   blend = true,
   bold = true,
   italic = true,
-  undercurl = true,
+  standout = true,
   underline = true,
-  underdot = true,
+  undercurl = true,
+  underdouble = true,
+  underdotted = true,
+  underdashed = true,
+  strikethrough = true,
+  reverse = true,
+  nocombine = true,
+  link = true,
+  default = true,
 }
 
 ---Convert a hex color to RGB
@@ -99,44 +122,43 @@ function rvim.highlight.get(group, attribute, fallback)
   return color
 end
 
+---@param hl string | HLAttrs
+---@param attr string
+---@return HLData
+---@return ErrorMsg?
+local function resolve_from_attribute(hl, attr)
+  if type(hl) ~= 'table' or not hl.from then return hl end
+  local colour, err = rvim.highlight.get(hl.from, hl.attr or attr)
+  if hl.alter then colour = rvim.highlight.alter_color(colour, hl.alter) end
+  return colour, err
+end
+
 ---@param name string
 ---@param opts HLArgs
----@overload fun(namespace: integer, name: string, opts: HLArgs): ErrorMsg[]?
+---@overload fun(ns: integer, name: string, opts: HLArgs): ErrorMsg[]?
 ---@return ErrorMsg[]?
-function rvim.highlight.set(namespace, name, opts)
-  if type(namespace) == 'string' and type(name) == 'table' then
-    opts, name, namespace = name, namespace, 0
+function rvim.highlight.set(ns, name, opts)
+  if type(ns) == 'string' and type(name) == 'table' then
+    opts, name, ns = name, ns, 0
   end
 
-  vim.validate({
-    opts = { opts, 'table' },
-    name = { name, 'string' },
-    namespace = { namespace, 'number' },
-  })
+  vim.validate({ opts = { opts, 'table' }, name = { name, 'string' }, ns = { ns, 'number' } })
 
   local clear = opts.clear
   if clear then opts.clear = nil end
 
-  local errs, hl = {}, {}
-  if not clear then
-    hl = get_highlight({ name = opts.inherit or name })
-    for attr, value in pairs(opts) do
-      if type(value) == 'table' and value.from then
-        local new_attr, err = rvim.highlight.get(value.from, value.attr or attr)
-        if value.alter then new_attr = rvim.highlight.alter_color(new_attr, value.alter) end
-        if err then table.insert(errs, err) end
-        hl[attr] = new_attr
-      elseif attr ~= 'inherit' then
-        hl[attr] = value
-      end
-    end
+  local hl, errs = get_highlight({ name = opts.inherit or name }), {}
+  for attribute, hl_data in pairs(opts) do
+    local new_data, err = resolve_from_attribute(hl_data, attribute)
+    if err then table.insert(errs, err) end
+    if attrs[attribute] then hl[attribute] = new_data end
   end
 
-  if not pcall(api.nvim_set_hl, namespace, name, hl) then
-    table.insert(
-      errs,
-      { msg = fmt('failed to set highlight %s with values %s', name, vim.inspect(hl)) }
-    )
+  local ok, err = pcall(api.nvim_set_hl, ns, name, hl)
+  if not ok then
+    table.insert(errs, {
+      msg = ('failed to set highlight %s with value %s, %s'):format(name, vim.inspect(hl), err),
+    })
   end
   if #errs > 0 then return errs end
 end
@@ -162,8 +184,8 @@ end
 ---------------------------------------------------------------------------------
 --- Takes the overrides for each theme and merges the lists, avoiding duplicates and ensuring
 --- priority is given to specific themes rather than the fallback
----@param theme table<string, table<string, string>>
----@return table<string, string>
+---@param theme {  [string]: HLArgs[] }
+---@return HLArgs[]
 local function add_theme_overrides(theme)
   local res, seen = {}, {}
   local list = vim.list_extend(theme[vim.g.colors_name] or {}, theme['*'] or {})
@@ -177,7 +199,7 @@ end
 
 ---Apply highlights for a plugin and refresh on colorscheme change
 ---@param name string plugin name
----@param opts table<string, table> map of highlights
+---@param opts HLArgs[] | { theme: table<string, HLArgs[]> }
 function rvim.highlight.plugin(name, opts)
   -- Options can be specified by theme name so check if they have been or there is a general
   -- definition otherwise use the opts rvim is
