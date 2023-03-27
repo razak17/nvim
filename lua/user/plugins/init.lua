@@ -18,7 +18,10 @@ return {
     cmd = 'Mason',
     keys = { { '<leader>lm', '<cmd>Mason<CR>', { desc = 'mason: info' } } },
     build = ':MasonUpdate',
-    opts = { ui = { border = border, height = 0.8 } },
+    opts = {
+      registries = { 'github:mason-org/mason-registry', 'lua:mason-registry.index' },
+      ui = { border = border, height = 0.8 },
+    },
   },
   {
     'williamboman/mason-lspconfig.nvim',
