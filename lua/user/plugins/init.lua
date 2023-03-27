@@ -21,17 +21,6 @@ return {
     'williamboman/mason.nvim',
     dependencies = { 'williamboman/mason-lspconfig.nvim', 'neovim/nvim-lspconfig' },
     init = function()
-      require('mason').setup({
-        ui = {
-          border = border,
-          height = 0.8,
-          icons = {
-            package_installed = ui.icons.ui.checkmark,
-            package_pending = ui.icons.ui.right_arrow,
-            package_uninstalled = ui.icons.ui.uninstalled,
-          },
-        },
-      })
       require('mason-lspconfig').setup({ automatic_installation = true })
       map('n', '<leader>lm', '<cmd>Mason<CR>', { desc = 'mason: info' })
     end,
