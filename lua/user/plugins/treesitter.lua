@@ -48,6 +48,7 @@ return {
           disable = false,
           query = {
             'rainbow-parens',
+            html = function() return nil end,
             tsx = function() return nil end,
             javascript = function() return nil end,
           },
