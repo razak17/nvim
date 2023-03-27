@@ -1,6 +1,4 @@
-local api, notify, fmt = vim.api, vim.notify, string.format
-
-rvim.highlight = {}
+local api, notify, fmt, fold, augroup = vim.api, vim.notify, string.format, rvim.fold, rvim.augroup
 
 ---@alias ErrorMsg {msg: string}
 
@@ -62,6 +60,19 @@ local attrs = {
   default = true,
 }
 
+---@private
+---@param opts {name: string?, link: boolean?}?
+---@param ns integer?
+---@return HLData
+local function get_hl_as_hex(opts, ns)
+  ns, opts = ns or 0, opts or {}
+  opts.link = opts.link ~= nil and opts.link or false
+  local hl = api.nvim_get_hl(ns, opts)
+  hl.fg = hl.fg and '#' .. bit.tohex(hl.fg, 6)
+  hl.bg = hl.bg and '#' .. bit.tohex(hl.bg, 6)
+  return hl
+end
+
 ---Convert a hex color to RGB
 ---@param color string
 ---@return number, number, number
@@ -72,27 +83,16 @@ end
 
 local function alter(attribute, percent) return math.floor(attribute * (100 + percent) / 100) end
 
+--- Change the brightness of a color, negative numbers darken and positive ones brighten
 ---@param color string A hex color
 ---@param percent integer a negative number darkens and a positive one brightens
-function rvim.highlight.alter_color(color, percent)
+local function alter_color(color, percent)
   assert(color, 'cannot alter a color without specifying a color')
   local r, g, b = hex_to_rgb(color)
   if not r or not g or not b then return 'NONE' end
   r, g, b = alter(r, percent), alter(g, percent), alter(b, percent)
   r, g, b = math.min(r, 255), math.min(g, 255), math.min(b, 255)
   return fmt('#%02x%02x%02x', r, g, b)
-end
-
----@param opts {name: string?, link: boolean?}?
----@param ns integer?
----@return HLData
-local function get_highlight(opts, ns)
-  ns, opts = ns or 0, opts or {}
-  opts.link = opts.link or false
-  local hl = api.nvim_get_hl(ns, opts)
-  hl.fg = hl.fg and '#' .. bit.tohex(hl.fg, 6)
-  hl.bg = hl.bg and '#' .. bit.tohex(hl.bg, 6)
-  return hl
 end
 
 ---Get the value a highlight group whilst handling errors, fallbacks rvim well rvim returning a gui value
@@ -103,9 +103,9 @@ end
 ---@param fallback string?
 ---@return string, ErrorMsg?
 ---@overload fun(group: string): HLData, ErrorMsg?
-function rvim.highlight.get(group, attribute, fallback)
+local function get(group, attribute, fallback)
   assert(group, 'cannot get a highlight without specifying a group name')
-  local data = get_highlight({ name = group })
+  local data = get_hl_as_hex({ name = group })
   if not attribute then return data end
   assert(attrs[attribute], ('the attribute passed in is invalid: %s'):format(attribute))
   local color = data[attribute] or fallback
@@ -128,8 +128,8 @@ end
 ---@return ErrorMsg?
 local function resolve_from_attribute(hl, attr)
   if type(hl) ~= 'table' or not hl.from then return hl end
-  local colour, err = rvim.highlight.get(hl.from, hl.attr or attr)
-  if hl.alter then colour = rvim.highlight.alter_color(colour, hl.alter) end
+  local colour, err = get(hl.from, hl.attr or attr)
+  if hl.alter then colour = alter_color(colour, hl.alter) end
   return colour, err
 end
 
@@ -137,7 +137,7 @@ end
 ---@param opts HLArgs
 ---@overload fun(ns: integer, name: string, opts: HLArgs): ErrorMsg[]?
 ---@return ErrorMsg[]?
-function rvim.highlight.set(ns, name, opts)
+local function set(ns, name, opts)
   if type(ns) == 'string' and type(name) == 'table' then
     opts, name, ns = name, ns, 0
   end
@@ -147,7 +147,7 @@ function rvim.highlight.set(ns, name, opts)
   local clear = opts.clear
   if clear then opts.clear = nil end
 
-  local hl, errs = get_highlight({ name = opts.inherit or name }), {}
+  local hl, errs = get_hl_as_hex({ name = opts.inherit or name }), {}
   for attribute, hl_data in pairs(opts) do
     local new_data, err = resolve_from_attribute(hl_data, attribute)
     if err then table.insert(errs, err) end
@@ -166,15 +166,15 @@ end
 ---Apply a list of highlights
 ---@param hls {[string]: HLArgs}[]
 ---@param namespace integer?
-function rvim.highlight.all(hls, namespace)
-  local errors = rvim.fold(function(errors, hl)
-    local errs = rvim.highlight.set(namespace or 0, next(hl))
+local function all(hls, namespace)
+  local errors = fold(function(errors, hl)
+    local errs = set(namespace or 0, next(hl))
     if errs then vim.list_extend(errors, errs) end
     return errors
   end, hls)
   if #errors > 0 then
     vim.defer_fn(function()
-      notify(rvim.fold(function(acc, err) return acc .. '\n' .. err.msg end, errors, ''), 'error')
+      notify(fold(function(acc, err) return acc .. '\n' .. err.msg end, errors, ''), 'error')
     end, 1000)
   end
 end
@@ -200,21 +200,28 @@ end
 ---Apply highlights for a plugin and refresh on colorscheme change
 ---@param name string plugin name
 ---@param opts HLArgs[] | { theme: table<string, HLArgs[]> }
-function rvim.highlight.plugin(name, opts)
+local function plugin(name, opts)
   -- Options can be specified by theme name so check if they have been or there is a general
   -- definition otherwise use the opts rvim is
   if opts.theme then
     opts = add_theme_overrides(opts.theme)
     if not next(opts) then return end
   end
+  all(opts)
   -- capitalise the name for autocommand convention sake
-  name = name:gsub('^%l', string.upper)
-  rvim.highlight.all(opts)
-  rvim.augroup(fmt('%sHighlightOverrides', name), {
+  augroup(fmt('%sHighlightOverrides', name:gsub('^%l', string.upper)), {
     event = { 'ColorScheme' },
     command = function()
       -- Defer resetting these highlights to ensure they apply after other overrides
-      vim.defer_fn(function() rvim.highlight.all(opts) end, 1)
+      vim.defer_fn(function() all(opts) end, 1)
     end,
   })
 end
+
+rvim.highlight = {
+  get = get,
+  set = set,
+  all = all,
+  plugin = plugin,
+  alter_color = alter_color,
+}
