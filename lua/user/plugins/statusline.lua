@@ -241,7 +241,7 @@ return {
         return ''
       end,
       padding = { left = 1, right = 0 },
-      color = { fg = P.darker_green, gui = 'bold' },
+      color = { fg = P.blue, gui = 'bold' },
       cond = conditions.hide_in_width,
     })
 
