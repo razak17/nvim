@@ -238,6 +238,7 @@ local buftypes = {
 --- plugins like Neogit which have a filetype of Neogit<something>.
 local filetypes = rvim.p_table({
   ['checkhealth'] = presets.tool_panel,
+  ['log'] = presets.tool_panel,
   ['httpResult'] = presets.tool_panel,
   ['help'] = presets.tool_panel,
   ['dapui'] = presets.tool_panel,
