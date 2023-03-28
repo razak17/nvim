@@ -125,15 +125,6 @@ return {
     local layout_actions = require('telescope.actions.layout')
     local themes = require('telescope.themes')
 
-    rvim.augroup('TelescopePreviews', {
-      event = { 'User' },
-      pattern = { 'TelescopePreviewerLoaded' },
-      command = function(args)
-        local ft = vim.tbl_get(args, 'data', 'filetype')
-        vim.opt_local.number = ui.decorations.get({ ft = ft, setting = 'number' }).ft ~= false
-      end,
-    })
-
     -- https://github.com/nvim-telescope/telescope.nvim/issues/1048
     -- https://github.com/whatsthatsmell/dots/blob/master/public%20dots/vim-nvim/lua/joel/telescope/init.lua
 
