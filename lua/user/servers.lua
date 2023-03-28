@@ -21,6 +21,7 @@ local servers = {
   yamlls = {},
   vimls = {},
   volar = {},
+  prosemd_lsp = {},
   tsserver = {
     -- NOTE: Apparently setting this to false improves performance
     -- https://github.com/sublimelsp/LSP-typescript/issues/129#issuecomment-1281643371
@@ -37,9 +38,6 @@ local servers = {
         return vim.lsp.handlers['textDocument/publishDiagnostics'](nil, result, ctx, config)
       end,
     },
-  },
-  prosemd_lsp = {
-    root_dir = function(fname) return require('lspconfig/util').root_pattern('README.md')(fname) end,
   },
   denols = {
     root_dir = function(fname)
