@@ -26,9 +26,7 @@ local servers = {
     -- NOTE: Apparently setting this to false improves performance
     -- https://github.com/sublimelsp/LSP-typescript/issues/129#issuecomment-1281643371
     initializationOptions = { preferences = { includeCompletionsForModuleExports = false } },
-    on_attach = function(client)
-      client.server_capabilities.documentFormattingProvider = false -- 0.8 and later
-    end,
+    -- NOTE: Disable duplicate diagnostics from eslint
     handlers = {
       ['textDocument/publishDiagnostics'] = function(_, result, ctx, config)
         result.diagnostics = vim.tbl_filter(
@@ -37,6 +35,30 @@ local servers = {
         )
         return vim.lsp.handlers['textDocument/publishDiagnostics'](nil, result, ctx, config)
       end,
+    },
+    settings = {
+      typescript = {
+        inlayHints = {
+          includeInlayParameterNameHints = 'all',
+          includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+          includeInlayFunctionParameterTypeHints = true,
+          includeInlayVariableTypeHints = false,
+          includeInlayPropertyDeclarationTypeHints = true,
+          includeInlayFunctionLikeReturnTypeHints = true,
+          includeInlayEnumMemberValueHints = true,
+        },
+      },
+      javascript = {
+        inlayHints = {
+          includeInlayParameterNameHints = 'all',
+          includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+          includeInlayFunctionParameterTypeHints = true,
+          includeInlayVariableTypeHints = false,
+          includeInlayPropertyDeclarationTypeHints = true,
+          includeInlayFunctionLikeReturnTypeHints = true,
+          includeInlayEnumMemberValueHints = true,
+        },
+      },
     },
   },
   denols = {
@@ -102,7 +124,7 @@ local servers = {
     settings = {
       Lua = {
         codeLens = { enable = true },
-        hint = { enable = true, arrayIndex = 'Disable', setType = true },
+        hint = { enable = true, arrayIndex = 'Disable', setType = true, paramName = 'Disable' },
         format = { enable = false },
         diagnostics = { globals = { 'vim', 'describe', 'it', 'before_each', 'after_each' } },
         completion = { keywordSnippet = 'Replace', callSnippet = 'Replace' },
