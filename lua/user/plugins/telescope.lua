@@ -1,5 +1,5 @@
 local fn, fmt = vim.fn, string.format
-local ui, fmt = rvim.ui, string.format
+local ui = rvim.ui
 
 -- A helper function to limit the size of a telescope window to fit the maximum available
 -- space on the screen. This is useful for dropdowns e.g. the cursor or dropdown theme

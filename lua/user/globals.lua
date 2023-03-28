@@ -351,11 +351,6 @@ end
 ---@return boolean
 function rvim.executable(e) return fn.executable(e) > 0 end
 
----A terser proxy for `nvim_replace_termcodes`
----@param str string
----@return any
-function rvim.replace_termcodes(str) return api.nvim_replace_termcodes(str, true, true, true) end
-
 ---@generic T
 ---Given a table return a new table which if the key is not found will search
 ---all the table's keys for a match using `string.match`

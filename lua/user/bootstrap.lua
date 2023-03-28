@@ -44,7 +44,7 @@ if not vim.loop.fs_stat(lazy_path) then
     })
 end
 rtp:prepend(lazy_path)
-local opts = {
+require('lazy').setup('user.plugins', {
   defaults = { lazy = true },
   change_detection = { notify = false },
   git = { timeout = 720 },
@@ -66,8 +66,7 @@ local opts = {
         },
     },
   },
-}
-require('lazy').setup('user.plugins', opts)
+})
 map('n', '<localleader>L', '<cmd>Lazy<CR>', { desc = 'lazygit: toggle ui' })
 ----------------------------------------------------------------------------------------------------
 -- Color Scheme
