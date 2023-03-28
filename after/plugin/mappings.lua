@@ -178,6 +178,7 @@ cnoremap('::', "<C-r>=fnameescape(expand('%:p:h'))<cr>/")
 -- even if the file isn't changed so that things like hot reload work
 nnoremap('<C-s>', '<cmd>silent! write<CR>')
 nnoremap('<leader>x', ':q<CR>', { desc = 'quit' })
+nnoremap('<leader>q', ':q<CR>', { desc = 'quit' })
 ----------------------------------------------------------------------------------------------------
 -- ?ie | entire object
 ----------------------------------------------------------------------------------------------------
