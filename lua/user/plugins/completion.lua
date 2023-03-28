@@ -33,7 +33,7 @@ return {
         end,
         lsp_hls,
         {
-          { CmpItemAbbr = { fg = { from = 'StatusLine' } } },
+          { CmpItemAbbr = { fg = { from = 'Search' } } },
           { CmpItemAbbrDeprecated = { strikethrough = true, inherit = 'Comment' } },
           { CmpItemAbbrMatchFuzzy = { fg = { from = 'Title' } } },
           { CmpItemMenu = { fg = { from = 'Comment', attr = 'fg' }, italic = true, bold = true } },
