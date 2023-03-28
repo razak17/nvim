@@ -130,7 +130,7 @@ return {
       pattern = { 'TelescopePreviewerLoaded' },
       command = function(args)
         local ft = vim.tbl_get(args, 'data', 'filetype')
-        vim.opt_local.number = not ft or ui.decorations.get(ft, 'number', 'ft') ~= false
+        vim.opt_local.number = ui.decorations.get({ ft = ft, setting = 'number' }).ft ~= false
       end,
     })
 

@@ -87,7 +87,7 @@ vim.o.statuscolumn = [[%!v:lua.rvim.ui.statuscolumn.render()]]
 rvim.augroup('StatusCol', {
   event = { 'BufEnter', 'FileType' },
   command = function(args)
-    local has_statuscol = ui.decorations.get(vim.bo[args.buf].ft, 'statuscolumn', 'ft')
-    if has_statuscol == false then optl.statuscolumn = '' end
+    local decor = ui.decorations.get({ ft = vim.bo[args.buf].ft, setting = 'statuscolumn' })
+    if decor.ft == false then optl.statuscolumn = '' end
   end,
 })
