@@ -46,6 +46,7 @@ end
 rtp:prepend(lazy_path)
 local opts = {
   defaults = { lazy = true },
+  change_detection = { notify = false },
   git = { timeout = 720 },
   dev = {
     path = join_paths(vim.env.HOME, 'personal', 'workspace', 'coding', 'plugins'),
