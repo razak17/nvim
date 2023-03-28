@@ -142,11 +142,7 @@ return {
   {
     'danymat/neogen',
     keys = {
-      {
-        '<localleader>lc',
-        function() require('neogen').generate() end,
-        desc = 'neogen: generate doc',
-      },
+      { '<localleader>lc', function() require('neogen').generate() end, desc = 'neogen: generate doc' },
     },
     opts = { snippet_engine = 'luasnip' },
   },
@@ -184,11 +180,7 @@ return {
   {
     'nguyenvukhang/nvim-toggler',
     keys = {
-      {
-        '<leader>ii',
-        '<cmd>lua require("nvim-toggler").toggle()<CR>',
-        desc = 'nvim-toggler: toggle',
-      },
+      { '<leader>ii', '<cmd>lua require("nvim-toggler").toggle()<CR>', desc = 'nvim-toggler: toggle' },
     },
     opts = {
       remove_default_keybinds = true,

@@ -78,21 +78,13 @@ return {
   {
     'echasnovski/mini.bufremove',
     keys = {
-      {
-        '<leader>c',
-        function() require('mini.bufremove').delete(0, false) end,
-        desc = 'delete buffer',
-      },
+      { '<leader>c', function() require('mini.bufremove').delete(0, false) end, desc = 'delete buffer' },
     },
   },
   {
     'razak17/buffer_manager.nvim',
     keys = {
-      {
-        '<tab>',
-        function() require('buffer_manager.ui').toggle_quick_menu() end,
-        desc = 'buffer_manager: toggle',
-      },
+      { '<tab>', function() require('buffer_manager.ui').toggle_quick_menu() end, desc = 'buffer_manager: toggle' },
     },
     config = function() require('buffer_manager').setup({ borderchars = ui.border.common }) end,
   },
@@ -235,11 +227,7 @@ return {
     'lvimuser/lsp-inlayhints.nvim',
     event = 'LspAttach',
     keys = {
-      {
-        '<leader>lth',
-        function() require('lsp-inlayhints').toggle() end,
-        desc = 'toggle inlay hints',
-      },
+      { '<leader>lth', function() require('lsp-inlayhints').toggle() end, desc = 'toggle inlay hints' },
     },
     opts = {
       inlay_hints = {
@@ -264,11 +252,7 @@ return {
   {
     'ckolkey/ts-node-action',
     keys = {
-      {
-        '<localleader>ct',
-        function() require('ts-node-action').node_action() end,
-        desc = 'ts-node-action: run',
-      },
+      { '<localleader>ct', function() require('ts-node-action').node_action() end, desc = 'ts-node-action: run' },
     },
     config = function()
       require('ts-node-action').setup({

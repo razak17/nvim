@@ -47,16 +47,8 @@ return {
     cmd = { 'TodoTelescope', 'TodoTrouble', 'TodoQuickFix', 'TodoDots' },
     keys = {
       { '<leader>tt', '<cmd>TodoDots<CR>', desc = 'todo: dotfiles todos' },
-      {
-        '<leader>tj',
-        function() require('todo-comments').jump_next() end,
-        desc = 'todo-comments: next todo',
-      },
-      {
-        '<leader>tk',
-        function() require('todo-comments').jump_prev() end,
-        desc = 'todo-comments: prev todo',
-      },
+      { '<leader>tj', function() require('todo-comments').jump_next() end, desc = 'todo-comments: next todo' },
+      { '<leader>tk', function() require('todo-comments').jump_prev() end, desc = 'todo-comments: prev todo' },
     },
     config = function()
       require('todo-comments').setup({ highlight = { after = '' } })

@@ -11,11 +11,7 @@ return {
     dependencies = { 'nvim-lua/plenary.nvim' },
     keys = {
       { '<localleader>gs', function() neogit().open() end, desc = 'open status buffer' },
-      {
-        '<localleader>gc',
-        function() neogit().open({ 'commit' }) end,
-        desc = 'open commit buffer',
-      },
+      { '<localleader>gc', function() neogit().open({ 'commit' }) end, desc = 'open commit buffer' },
       { '<localleader>gl', function() neogit().popups.pull.create() end, desc = 'open pull popup' },
       { '<localleader>gp', function() neogit().popups.push.create() end, desc = 'open push popup' },
     },
