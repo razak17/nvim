@@ -1,6 +1,6 @@
 local M = {}
 
-local fmt = string.format
+local fn, fmt = vim.fn, string.format
 
 local function client_active(name)
   local clients = vim.lsp.get_active_clients()
@@ -56,7 +56,7 @@ local function launch_server(server, config)
         return lspconfig.cmd
       end)()
     -- some servers have dynamic commands defined with on_new_config
-    if type(cmd) == 'table' and type(cmd[1]) == 'string' and not rvim.executable(cmd[1]) then
+    if type(cmd) == 'table' and type(cmd[1]) == 'string' and not fn.executable(cmd[1]) then
       vim.notify(fmt('[%q] is not executable.', cmd[1]), vim.log.levels.ERROR, { title = server })
       return
     end

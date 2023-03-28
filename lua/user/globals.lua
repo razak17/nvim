@@ -324,9 +324,7 @@ local function validate_autocmd(name, _cmd)
   if #incorrect == 0 then return end
   vim.schedule(
     function()
-      vim.notify('Incorrect keys: ' .. table.concat(incorrect, ', '), 'error', {
-        title = fmt('Autocmd: %s', name),
-      })
+      vim.notify('Incorrect keys: ' .. table.concat(incorrect, ', '), 'error', { title = fmt('Autocmd: %s', name) })
     end
   )
 end
@@ -389,11 +387,6 @@ function rvim.command(name, rhs, opts)
   opts = opts or {}
   api.nvim_create_user_command(name, rhs, opts)
 end
-
----Check if a cmd is executable
----@param e string
----@return boolean
-function rvim.executable(e) return fn.executable(e) > 0 end
 
 ---@generic T
 ---Given a table return a new table which if the key is not found will search

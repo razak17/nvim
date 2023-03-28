@@ -86,13 +86,12 @@ o.foldlevelstart = 10
 -- Grepprg {{{1
 ----------------------------------------------------------------------------------------------------
 -- Use faster grep alternatives if possible
-if rvim.executable('rg') then
+if rvim and rvim.falsy(fn.executable('rg')) then
   vim.o.grepprg = [[rg --glob "!.git" --no-heading --vimgrep --follow $*]]
   vim.o.grepprg = [[rg --hidden --glob "!.git" --no-heading --smart-case --vimgrep --follow $*]]
   opt.grepformat = opt.grepformat ^ { '%f:%l:%c:%m' }
   goto continue
-end
-if rvim.executable('ag') then
+elseif rvim and not rvim.falsy(fn.executable('ag')) then
   vim.o.grepprg = [[ag --nogroup --nocolor --vimgrep]]
   opt.grepformat = opt.grepformat ^ { '%f:%l:%c:%m' }
 end
@@ -101,7 +100,7 @@ end
 -- Wild and file globbing stuff in command mode {{{1
 ----------------------------------------------------------------------------------------------------
 o.wildcharm = ('\t'):byte()
-o.wildmode = 'list:full' -- Shows a menu bar as opposed to an enormous list
+o.wildmode = 'list:full' -- Shows a menu bar rvim opposed to an enormous list
 o.wildignorecase = true -- Ignore case when completing file names and directories
 -- Binary
 opt.wildignore = {

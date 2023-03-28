@@ -1,3 +1,4 @@
+local fn = vim.fn
 local dap = require('dap')
 local python_dir = join_paths(rvim.path.mason, 'packages', 'debugpy', 'venv', 'bin', 'python')
 
@@ -14,11 +15,11 @@ dap.configurations.python = {
     name = 'Launch file',
     program = '${file}',
     pythonPath = function()
-      local cwd = vim.fn.getcwd()
-      if rvim.executable(join_paths(cwd, 'venv', 'bin', 'python')) then
+      local cwd = fn.getcwd()
+      if fn.executable(join_paths(cwd, 'venv', 'bin', 'python')) then
         return join_paths(cwd .. 'venv', 'bin', 'python')
       end
-      if rvim.executable(join_paths(cwd, '.venv', 'bin', 'python')) then
+      if fn.executable(join_paths(cwd, '.venv', 'bin', 'python')) then
         return join_paths(cwd, '.venv', 'biv', 'python')
       end
       return python_dir
