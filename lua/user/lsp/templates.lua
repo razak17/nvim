@@ -28,26 +28,20 @@ end
 ---@param server_name string can be any server supported by nvim-lsp-installer
 ---@return string[] supported filestypes as a list of strings
 local function get_supported_filetypes(server_name)
-  local status_ok, lspconfig =
-    rvim.require(fmt('lspconfig.server_configurations.%s', server_name), { silent = true })
+  local status_ok, lspconfig = rvim.require(fmt('lspconfig.server_configurations.%s', server_name), { silent = true })
   if not status_ok then return {} end
   local filetypes = lspconfig.default_config.filetypes or {}
   local config = require('user.servers')(server_name)
   -- override filetypes from lspconfig
   if config and config.filetypes then filetypes = config.filetypes end
-  return vim.tbl_filter(
-    function(ft) return vim.tbl_contains(configured_filetypes, ft) end,
-    filetypes or {}
-  )
+  return vim.tbl_filter(function(ft) return vim.tbl_contains(configured_filetypes, ft) end, filetypes or {})
 end
 
 ---Get supported servers per filetype
 ---@param filter { filetype: string | string[] }?: (optional) Used to filter the list of server names.
 ---@return string[] list of names of supported servers
 local function get_supported_servers(filter)
-  local _, supported_servers = pcall(
-    function() return require('mason-lspconfig').get_available_servers(filter) end
-  )
+  local _, supported_servers = pcall(function() return require('mason-lspconfig').get_available_servers(filter) end)
   return supported_servers or {}
 end
 

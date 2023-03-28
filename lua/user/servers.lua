@@ -40,9 +40,7 @@ local servers = {
     },
   },
   denols = {
-    root_dir = function(fname)
-      return require('lspconfig/util').root_pattern('deno.json', 'deno.jsonc')(fname)
-    end,
+    root_dir = function(fname) return require('lspconfig/util').root_pattern('deno.json', 'deno.jsonc')(fname) end,
   },
   emmet_ls = {
     filetypes = { 'astro', 'html', 'css', 'sass', 'scss', 'typescriptreact', 'javascriptreact' },
@@ -122,9 +120,7 @@ local servers = {
   tailwindcss = {
     -- cmd = { '/home/razak/.bun/bin/tailwindcss-language-server', '--stdio' },
     root_dir = function(fname)
-      return require('lspconfig/util').root_pattern('tailwind.config.js', 'tailwind.config.cjs')(
-        fname
-      )
+      return require('lspconfig/util').root_pattern('tailwind.config.js', 'tailwind.config.cjs')(fname)
     end,
   },
 }

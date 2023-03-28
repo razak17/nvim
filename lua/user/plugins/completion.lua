@@ -8,9 +8,7 @@ return {
     'hrsh7th/nvim-cmp',
     event = { 'InsertEnter' },
     config = function()
-      local function get_color(r, g, b)
-        return ((r * 0.299 + g * 0.587 + b * 0.114) > 186) and '#000000' or '#ffffff'
-      end
+      local function get_color(r, g, b) return ((r * 0.299 + g * 0.587 + b * 0.114) > 186) and '#000000' or '#ffffff' end
 
       local function is_tailwind_root()
         return not vim.tbl_isempty(vim.fs.find({ 'tailwind.config.js', 'tailwind.config.cjs' }, {
@@ -110,30 +108,19 @@ return {
             local codicons = ui.codicons
             local lsp_icons = ui.current.lsp_icons
 
-            if vim_item.kind ~= 'Color' then
-              vim_item.kind = format_icon(lsp_icons[vim_item.kind])
-            end
+            if vim_item.kind ~= 'Color' then vim_item.kind = format_icon(lsp_icons[vim_item.kind]) end
 
-            if entry.source.name == 'emoji' then
-              vim_item.kind = format_icon(codicons.misc.smiley)
-            end
+            if entry.source.name == 'emoji' then vim_item.kind = format_icon(codicons.misc.smiley) end
 
-            if entry.source.name == 'lab.quick_data' then
-              vim_item.kind = format_icon(codicons.misc.robot)
-            end
+            if entry.source.name == 'lab.quick_data' then vim_item.kind = format_icon(codicons.misc.robot) end
 
-            if entry.source.name == 'dynamic' then
-              vim_item.kind = format_icon(codicons.ui.calendar)
-            end
+            if entry.source.name == 'dynamic' then vim_item.kind = format_icon(codicons.ui.calendar) end
 
-            if entry.source.name == 'crates' then
-              vim_item.kind = format_icon(ui.codicons.ui.package)
-            end
+            if entry.source.name == 'crates' then vim_item.kind = format_icon(ui.codicons.ui.package) end
 
             if vim_item.kind == 'Color' then
               if entry.completion_item.documentation then
-                local _, _, r, g, b =
-                  string.find(entry.completion_item.documentation, '^rgb%((%d+), (%d+), (%d+)')
+                local _, _, r, g, b = string.find(entry.completion_item.documentation, '^rgb%((%d+), (%d+), (%d+)')
                 if r then
                   local color = fmt('%s%s%s', fmt('%02x', r), fmt('%02x', g), fmt('%02x', b))
                   local group = fmt('CmpItemKind_%s', color)

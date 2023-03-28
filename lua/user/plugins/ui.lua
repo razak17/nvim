@@ -36,9 +36,7 @@ return {
         input = { insert_only = false, border = border },
         select = {
           telescope = rvim.telescope.adaptive_dropdown(),
-          get_config = function()
-            return { backend = 'telescope', telescope = rvim.telescope.cursor() }
-          end,
+          get_config = function() return { backend = 'telescope', telescope = rvim.telescope.cursor() } end,
         },
       })
     end,
@@ -62,10 +60,7 @@ return {
     },
     config = function()
       require('todo-comments').setup({ highlight = { after = '' } })
-      rvim.command(
-        'TodoDots',
-        string.format('TodoTelescope cwd=%s keywords=TODO,FIXME', vim.call('stdpath', 'config'))
-      )
+      rvim.command('TodoDots', string.format('TodoTelescope cwd=%s keywords=TODO,FIXME', vim.call('stdpath', 'config')))
     end,
   },
   {
@@ -95,8 +90,7 @@ return {
         -- BUG: neotree cannot be ignore rvim either nofile or by filetype rvim this causes tinting bugs
         if win.diff or not rvim.falsy(vim.fn.win_gettype(win_id)) then return true end
         local ignore_bt = rvim.p_table({ terminal = true, prompt = true, nofile = false })
-        local ignore_ft =
-          rvim.p_table({ ['Telescope.*'] = true, ['Neogit.*'] = true, ['qf'] = true })
+        local ignore_ft = rvim.p_table({ ['Telescope.*'] = true, ['Neogit.*'] = true, ['qf'] = true })
         local has_bt, has_ft = ignore_bt[buf.buftype], ignore_ft[buf.filetype]
         return has_bt or has_ft
       end,
@@ -159,9 +153,7 @@ return {
           local end_text = ctx.get_fold_virt_text(end_lnum)
           -- reformat the end text to trim excess whitespace from
           -- indentation usually the first item is indentation
-          if end_text[1] and end_text[1][1] then
-            end_text[1][1] = end_text[1][1]:gsub('[%s\t]+', '')
-          end
+          if end_text[1] and end_text[1][1] then end_text[1][1] = end_text[1][1]:gsub('[%s\t]+', '') end
 
           vim.list_extend(result, { { ' ⋯ ', 'UfoFoldedEllipsis' }, unpack(end_text) })
           table.insert(result, { padding, '' })
@@ -188,9 +180,7 @@ return {
         max_height = function() return math.floor(vim.o.lines * 0.8) end,
         background_colour = 'NormalFloat',
         on_open = function(win)
-          if api.nvim_win_is_valid(win) then
-            api.nvim_win_set_config(win, { border = ui.current.border })
-          end
+          if api.nvim_win_is_valid(win) then api.nvim_win_set_config(win, { border = ui.current.border }) end
         end,
         timeout = 3000,
         stages = 'fade_in_slide_out',

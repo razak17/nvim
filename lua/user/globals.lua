@@ -120,9 +120,7 @@ function rvim.require(module, opts)
   local ok, result = pcall(require, module)
   if not ok and not opts.silent then
     if opts.message then result = opts.message .. '\n' .. result end
-    vim.schedule(
-      function() vim.notify(result, l.ERROR, { title = fmt('Error requiring: %s', module) }) end
-    )
+    vim.schedule(function() vim.notify(result, l.ERROR, { title = fmt('Error requiring: %s', module) }) end)
   end
   return ok, result
 end
@@ -169,8 +167,7 @@ end
 ---@return string
 function rvim.truncate(str, max_len)
   assert(str and max_len, 'string and max_len must be provided')
-  return api.nvim_strwidth(str) > max_len and str:sub(1, max_len) .. rvim.ui.icons.ui.ellipsis
-    or str
+  return api.nvim_strwidth(str) > max_len and str:sub(1, max_len) .. rvim.ui.icons.ui.ellipsis or str
 end
 
 --- search current word or go to file

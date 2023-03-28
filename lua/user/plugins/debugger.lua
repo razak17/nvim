@@ -37,12 +37,8 @@ local function terminate() require('dap').terminate() end
 local function toggle_breakpoint() require('dap').toggle_breakpoint() end
 local function clear_breakpoints() require('dap').clear_breakpoints() end
 local function hover() require('dap.ui.widgets').hover() end
-local function set_breakpoint()
-  require('dap').set_breakpoint(vim.fn.input('Breakpoint condition: '))
-end
-local function log_breakpoint()
-  require('dap').set_breakpoint(nil, nil, vim.fn.input('Log point message: '))
-end
+local function set_breakpoint() require('dap').set_breakpoint(vim.fn.input('Breakpoint condition: ')) end
+local function log_breakpoint() require('dap').set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end
 
 return {
   {

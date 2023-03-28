@@ -57,8 +57,7 @@ local function augroup_factory(bufnr, client, events)
   return function(feature, commands)
     local provider, name = feature.provider, feature.name
     if not provider or client.server_capabilities[provider] then
-      events[name].group_id =
-        rvim.augroup(fmt('LspCommands_%d_%s', bufnr, name), commands(provider))
+      events[name].group_id = rvim.augroup(fmt('LspCommands_%d_%s', bufnr, name), commands(provider))
       table.insert(events[name].clients, client.id)
     end
   end
@@ -180,12 +179,8 @@ end
 ----------------------------------------------------------------------------------------------------
 local function show_documentation()
   local filetype = vim.bo.filetype
-  if vim.tbl_contains({ 'vim', 'help' }, filetype) then
-    return vim.cmd('h ' .. vim.fn.expand('<cword>'))
-  end
-  if vim.tbl_contains({ 'man' }, filetype) then
-    return vim.cmd('Man ' .. vim.fn.expand('<cword>'))
-  end
+  if vim.tbl_contains({ 'vim', 'help' }, filetype) then return vim.cmd('h ' .. vim.fn.expand('<cword>')) end
+  if vim.tbl_contains({ 'man' }, filetype) then return vim.cmd('Man ' .. vim.fn.expand('<cword>')) end
   if vim.fn.expand('%:t') == 'Cargo.toml' then return require('crates').show_popup() end
   if vim.bo.ft == 'rust' then return require('rust-tools').hover_actions.hover_actions() end
   vim.lsp.buf.hover()
@@ -205,18 +200,8 @@ local function setup_mappings(client, bufnr)
   -- Leader keymaps
   --------------------------------------------------------------------------------------------------
   map({ 'n', 'x' }, '<leader>la', lsp.buf.code_action, with_desc('code action'))
-  map(
-    'n',
-    '<leader>lk',
-    function() vim.diagnostic.goto_prev({ float = false }) end,
-    with_desc('prev diagnostic')
-  )
-  map(
-    'n',
-    '<leader>lj',
-    function() vim.diagnostic.goto_next({ float = false }) end,
-    with_desc('next diagnostic')
-  )
+  map('n', '<leader>lk', function() vim.diagnostic.goto_prev({ float = false }) end, with_desc('prev diagnostic'))
+  map('n', '<leader>lj', function() vim.diagnostic.goto_next({ float = false }) end, with_desc('next diagnostic'))
   map('n', '<leader>lL', vim.diagnostic.setloclist, with_desc('toggle loclist diagnostics'))
   map('n', '<leader>lc', lsp.codelens.run, with_desc('run code lens'))
   map('n', '<leader>lr', lsp.buf.rename, with_desc('rename'))
@@ -235,12 +220,7 @@ local function setup_mappings(client, bufnr)
     map('n', 'gd', 'TypescriptGoToSourceDefinition', {
       desc = 'typescript: go to source definition',
     })
-    map(
-      'n',
-      '<localleader>tr',
-      '<cmd>TypescriptRenameFile<CR>',
-      with_desc('typescript: rename file')
-    )
+    map('n', '<localleader>tr', '<cmd>TypescriptRenameFile<CR>', with_desc('typescript: rename file'))
     map('n', '<localleader>tf', actions.fixAll, with_desc('fix all', 'typescript'))
     map('n', '<localleader>tia', actions.addMissingImports, with_desc('add missing', 'typescript'))
     map('n', '<localleader>tio', actions.organizeImports, with_desc('organize', 'typescript'))
@@ -248,41 +228,21 @@ local function setup_mappings(client, bufnr)
   end
   -- Rust tools
   if client.name == 'rust_analyzer' then
-    map(
-      'n',
-      '<localleader>rh',
-      '<cmd>RustToggleInlayHints<CR>',
-      with_desc('toggle hints', 'rust-tools')
-    )
+    map('n', '<localleader>rh', '<cmd>RustToggleInlayHints<CR>', with_desc('toggle hints', 'rust-tools'))
     map('n', '<localleader>rr', '<cmd>RustRunnables<CR>', with_desc('runnables', 'rust-tools'))
     map('n', '<localleader>rt', '<cmd>lua _CARGO_TEST()<CR>', with_desc('cargo test', 'rust-tools'))
     map('n', '<localleader>rm', '<cmd>RustExpandMacro<CR>', with_desc('expand cargo', 'rust-tools'))
     map('n', '<localleader>rc', '<cmd>RustOpenCargo<CR>', with_desc('open cargo', 'rust-tools'))
-    map(
-      'n',
-      '<localleader>rp',
-      '<cmd>RustParentModule<CR>',
-      with_desc('parent module', 'rust-tools')
-    )
+    map('n', '<localleader>rp', '<cmd>RustParentModule<CR>', with_desc('parent module', 'rust-tools'))
     map('n', '<localleader>rd', '<cmd>RustDebuggables<CR>', with_desc('debuggables', 'rust-tools'))
-    map(
-      'n',
-      '<localleader>rv',
-      '<cmd>RustViewCrateGraph<CR>',
-      with_desc('view crate graph', 'rust-tools')
-    )
+    map('n', '<localleader>rv', '<cmd>RustViewCrateGraph<CR>', with_desc('view crate graph', 'rust-tools'))
     map(
       'n',
       '<localleader>rR',
       "<cmd>lua require('rust-tools/workspace_refresh')._reload_workspace_from_cargo_toml()<CR>",
       with_desc('reload workspace', 'rust-tools')
     )
-    map(
-      'n',
-      '<localleader>ro',
-      '<cmd>RustOpenExternalDocs<CR>',
-      with_desc('open external docs', 'rust-tools')
-    )
+    map('n', '<localleader>ro', '<cmd>RustOpenExternalDocs<CR>', with_desc('open external docs', 'rust-tools'))
   end
 end
 
@@ -314,9 +274,7 @@ local client_overrides = {
 local function setup_plugins(client, bufnr)
   -- nvim-navic
   local navic_ok, navic = rvim.require('nvim-navic')
-  if navic_ok and client.server_capabilities.documentSymbolProvider then
-    navic.attach(client, bufnr)
-  end
+  if navic_ok and client.server_capabilities.documentSymbolProvider then navic.attach(client, bufnr) end
   -- lsp-inlayhints
   local hints_ok, hints = rvim.require('lsp-inlayhints')
   if hints_ok and client.name ~= 'tsserver' then hints.on_attach(client, bufnr) end
@@ -483,9 +441,7 @@ local function toggle_virtual_lines()
   local config = vim.diagnostic.config()
   if type(config.virtual_lines) == 'boolean' then
     config = vim.tbl_extend('force', config, { virtual_lines = { only_current_line = true } })
-    if type(config.virtual_text) == 'table' then
-      config = vim.tbl_extend('force', config, { virtual_text = false })
-    end
+    if type(config.virtual_text) == 'table' then config = vim.tbl_extend('force', config, { virtual_text = false }) end
     rvim.lsp.hover_diagnostics = false
   else
     config = vim.tbl_extend('force', config, { virtual_lines = false })
@@ -521,6 +477,4 @@ lsp.handlers['window/showMessage'] = function(_, result, ctx)
 end
 
 -- Generate templates
-if fn.filereadable(join_paths(rvim.lsp.templates_dir, 'lua.lua')) ~= 1 then
-  vim.cmd('LspGenerateTemplates')
-end
+if fn.filereadable(join_paths(rvim.lsp.templates_dir, 'lua.lua')) ~= 1 then vim.cmd('LspGenerateTemplates') end

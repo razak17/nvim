@@ -10,9 +10,7 @@ return {
       { '<m-p>', '<Plug>(YankyCycleBackward)', desc = 'yanky: cycle backward' },
       {
         '<localleader>y',
-        function()
-          require('telescope').extensions.yank_history.yank_history(rvim.telescope.dropdown())
-        end,
+        function() require('telescope').extensions.yank_history.yank_history(rvim.telescope.dropdown()) end,
         desc = 'yanky: open yank history',
       },
     },
@@ -210,9 +208,7 @@ return {
   },
   {
     'echasnovski/mini.ai',
-    config = function()
-      require('mini.ai').setup({ mappings = { around_last = '', inside_last = '' } })
-    end,
+    config = function() require('mini.ai').setup({ mappings = { around_last = '', inside_last = '' } }) end,
   },
   {
     'echasnovski/mini.surround',

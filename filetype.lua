@@ -11,7 +11,7 @@ vim.filetype.add({
     ['Podfile'] = 'ruby',
     ['.vimrc.local'] = 'vim',
     ['rebar.config'] = 'erlang',
-		[".env"] = "config",
+    ['.env'] = 'config',
   },
   pattern = {
     ['.*%.astro'] = 'astro',
