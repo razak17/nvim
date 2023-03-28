@@ -365,8 +365,8 @@ end
 --- @field bang boolean,
 
 ---Create an nvim command
----@param name any
----@param rhs string|fun(args: CommandArgs)
+---@param name string
+---@param rhs string | fun(args: CommandArgs)
 ---@param opts table
 function rvim.command(name, rhs, opts)
   opts = opts or {}
