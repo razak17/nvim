@@ -12,10 +12,6 @@ function join_paths(...)
   return result
 end
 
----Get whether using nightly version of neovim
-local LATEST_NIGHTLY_MINOR = 9
-function rvim.nightly() return vim.version().minor >= LATEST_NIGHTLY_MINOR end
-
 ----------------------------------------------------------------------------------------------------
 -- Utils
 ----------------------------------------------------------------------------------------------------
@@ -55,9 +51,9 @@ function rvim.map(callback, list)
   end, list, {})
 end
 
----@generic T : table
----@param callback fun(T, key: string | number)
----@param list T[]
+---@generic T:table
+---@param callback fun(item: T, key: any)
+---@param list table<any, T>
 function rvim.foreach(callback, list)
   for k, v in pairs(list) do
     callback(v, k)
@@ -144,9 +140,60 @@ function rvim.wrap_err(msg, func, ...)
   end, unpack(args))
 end
 
+---Get whether using nightly version of neovim
+local LATEST_NIGHTLY_MINOR = 9
+function rvim.nightly() return vim.version().minor >= LATEST_NIGHTLY_MINOR end
+
+----------------------------------------------------------------------------------------------------
+--  FILETYPE HELPERS
+----------------------------------------------------------------------------------------------------
+
+---@class FiletypeSettings
+---@field g table<string, any>
+---@field bo vim.bo
+---@field wo vim.wo
+---@field opt vim.opt
+---@field plugins {[string]: fun(module: table)}
+
+--- This function is an alternative API to using ftplugin files. It allows defining
+--- filetype settings in a single place, then creating FileType autocommands from this definition
+---
+--- e.g.
+--- ```lua
+--- rvim.filetype_settings({
+---   lua = {
+---    opt = {foldmethod = 'expr' },
+---    bo = { shiftwidth = 2 }
+---   },
+---  [{'c', 'cpp'}] = {
+---    bo = { shiftwidth = 2 }
+---  }
+--- })
+--- ```
+--- One future idea is to generate the ftplugin files from this function, so the settings are still
+--- centralized but the curation of these files is automated. Although I'm not sure this actually
+--- has value over autocommands, unless ftplugin files specifically have that value
+---@param map {[string|string]: FiletypeSettings | {[integer]: fun(args: AutocmdArgs)}}
+function rvim.filetype_settings(map)
+  local commands = rvim.map(function(settings, ft)
+    local name = type(ft) == 'string' and ft or table.concat(ft, ',')
+    return {
+      pattern = ft,
+      event = 'FileType',
+      desc = ('ft settings for %s'):format(name),
+      command = function(args)
+        rvim.foreach(function(value, scope)
+          if type(value) ~= 'table' and vim.is_callable(value) then return value(args) end
+          rvim.foreach(function(setting, option) vim[scope][option] = setting end, value)
+        end, settings)
+      end,
+    }
+  end, map)
+  rvim.augroup('filetype-settings', unpack(commands))
+end
+
 --- A convenience wrapper that calls the ftplugin config for a plugin if it exists
 --- and warns me if the plugin is not installed
---- TODO: find out if it's possible to annotate the plugin rvim a module
 ---@param configs table<string, fun(module: table)>
 ---@param opts {silent: boolean}?
 function rvim.ftplugin_conf(configs, opts)

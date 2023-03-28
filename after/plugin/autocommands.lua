@@ -2,6 +2,20 @@ if not rvim or not rvim.plugins.enable then return end
 
 local fn, api = vim.fn, vim.api
 
+rvim.filetype_settings({
+  [{ 'gitcommit', 'gitrebase' }] = {
+    bo = { bufhidden = 'delete' },
+  },
+  [{ 'typescript', 'typescriptreact' }] = {
+    bo = { textwidth = 100 },
+  },
+  -- stylua: ignore
+  [{ 'lua', 'vim', 'dart', 'python', 'javascript', 'typescript', 'rust', 'org', 'NeogitCommitMessage', 'go', 'markdown' }] = {
+    -- NOTE: setting spell only works using opt_local otherwise it leaks into subsequent windows
+    opt_local = { spell = true, },
+  },
+})
+
 local smart_close_filetypes = rvim.p_table({
   ['qf'] = true,
   ['log'] = true,
@@ -135,10 +149,6 @@ rvim.augroup('Utilities', {
     vim.cmd.bdelete({ bang = true })
     vim.cmd.edit(vim.uri_to_fname(args.file))
   end,
-}, {
-  event = { 'FileType' },
-  pattern = { 'gitcommit', 'gitrebase' },
-  command = 'set bufhidden=delete',
 }, {
   event = { 'BufWritePre', 'FileWritePre' },
   command = "silent! call mkdir(expand('<afile>:p:h'), 'p')",

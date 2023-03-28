@@ -2,7 +2,6 @@ local fn, opt = vim.fn, vim.opt_local
 
 vim.bo.textwidth = 120
 opt.iskeyword:append('-')
-opt.spell = true
 
 local function find(word, ...)
   for _, str in ipairs({ ... }) do

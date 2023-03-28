@@ -4,7 +4,6 @@ opt.expandtab = false
 opt.tabstop = 4
 opt.shiftwidth = 4
 opt.iskeyword:append('-')
-opt.spell = true
 
 if not rvim then return end
 
