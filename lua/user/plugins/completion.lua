@@ -250,7 +250,7 @@ return {
             async = false,
             dic = {
               -- Refer to install script
-              ['*'] = join_paths(rvim.get_runtime_dir(), 'site', 'spell', 'dictionary.txt'),
+              ['*'] = join_paths(vim.call('stdpath', 'data'), 'site', 'spell', 'dictionary.txt'),
             },
           })
         end,

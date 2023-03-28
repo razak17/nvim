@@ -1,3 +1,4 @@
+local fn, fmt = vim.fn, string.format
 local ui, fmt = rvim.ui, string.format
 
 -- A helper function to limit the size of a telescope window to fit the maximum available
@@ -57,7 +58,7 @@ local function git_files(opts) return extensions('menufacture').git_files(opts) 
 local function nvim_config()
   find_files({
     prompt_title = '~ rVim config ~',
-    cwd = rvim.get_config_dir(),
+    cwd = vim.call('stdpath', 'config'),
     file_ignore_patterns = { '.git/.*', 'dotbot/.*', 'zsh/plugins/.*' },
   })
 end
@@ -166,7 +167,9 @@ return {
           vertical = { width_padding = 0.05, height_padding = 0.1, preview_height = 0.5 },
         },
         winblend = 0,
-        history = { path = join_paths(rvim.get_runtime_dir(), 'telescope', 'history.sqlite3') },
+        history = {
+          path = join_paths(fn.stdpath('data'), 'databases', 'telescope_history.sqlite3'),
+        },
         -- stylua: ignore
         file_ignore_patterns = {
           '%.jpg', '%.jpeg', '%.png', '%.otf', '%.ttf', '%.DS_Store', '^.git/', 'node%_modules/.*',
@@ -239,7 +242,7 @@ return {
       extensions = {
         persisted = dropdown(),
         frecency = {
-          db_root = join_paths(rvim.get_runtime_dir(), 'telescope'),
+          db_root = join_paths(fn.stdpath('data'), 'databases'),
           default_workspace = 'CWD',
           show_unindexed = false, -- Show all files or only those that have been indexed
           ignore_patterns = { '*.git/*', '*/tmp/*', '*node_modules/*', '*vendor/*' },

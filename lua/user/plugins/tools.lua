@@ -22,7 +22,6 @@ return {
       -- stylua: ignore
         ensure_installed = {
           'goimports', 'golangci_lint', 'stylua', 'prettier', 'zsh', 'flake8', 'shellcheck', 'black',
-          'shfmt',
         },
       })
       require('null-ls').setup({
@@ -44,7 +43,6 @@ return {
       detection_methods = { 'pattern', 'lsp' },
       ignore_lsp = { 'null-ls' },
       patterns = { '.git' },
-      datapath = rvim.get_runtime_dir(),
     },
   },
   { 'turbio/bracey.vim', ft = 'html', build = 'npm install --prefix server' },
@@ -74,9 +72,7 @@ return {
           },
         },
       })
-      require('lab').setup({
-        runnerconf_path = join_paths(rvim.get_runtime_dir(), 'lab', 'runnerconf'),
-      })
+      require('lab').setup({})
     end,
   },
   {

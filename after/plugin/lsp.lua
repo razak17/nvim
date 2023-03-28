@@ -1,6 +1,6 @@
 if not rvim then return end
 
-rvim.lsp.templates_dir = join_paths(rvim.get_runtime_dir(), 'site', 'after', 'ftplugin')
+rvim.lsp.templates_dir = join_paths(vim.call('stdpath', 'data'), 'site', 'after', 'ftplugin')
 
 local lsp, fn, api, fmt = vim.lsp, vim.fn, vim.api, string.format
 local b = vim.b --[[@rvim table<string, any>]]

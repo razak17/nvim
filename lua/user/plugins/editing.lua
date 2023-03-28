@@ -1,6 +1,6 @@
 return {
   {
-    'razak17/yanky.nvim',
+    'gbprod/yanky.nvim',
     keys = {
       { 'p', '<Plug>(YankyPutAfter)', mode = { 'n', 'x' }, desc = 'yanky: put after' },
       { 'P', '<Plug>(YankyPutBefore)', mode = { 'n', 'x' }, desc = 'yanky: put before' },
@@ -35,7 +35,6 @@ return {
       }
 
       require('yanky').setup({
-        dbpath = join_paths(rvim.get_runtime_dir(), 'yanky', 'yanky.db'),
         ring = { storage = 'sqlite' },
         picker = {
           telescope = {

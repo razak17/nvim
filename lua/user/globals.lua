@@ -16,33 +16,6 @@ end
 local LATEST_NIGHTLY_MINOR = 9
 function rvim.nightly() return vim.version().minor >= LATEST_NIGHTLY_MINOR end
 
----Get the full path to `$RVIM_RUNTIME_DIR`
----@return string
-function rvim.get_runtime_dir()
-  local rvim_runtime_dir = vim.env.RVIM_RUNTIME_DIR
-  if not rvim_runtime_dir then
-    -- when nvim is used directly
-    return vim.call('stdpath', 'data')
-  end
-  return rvim_runtime_dir
-end
-
----Get the full path to `$RVIM_CONFIG_DIR`
----@return string
-function rvim.get_config_dir()
-  local rvim_config_dir = vim.env.RVIM_CONFIG_DIR
-  if not rvim_config_dir then return vim.call('stdpath', 'config') end
-  return rvim_config_dir
-end
-
----Get the full path to `$RVIM_CACHE_DIR`
----@return string
-function rvim.get_cache_dir()
-  local rvim_cache_dir = vim.env.RVIM_CACHE_DIR
-  if not rvim_cache_dir then return vim.call('stdpath', 'cache') end
-  return rvim_cache_dir
-end
-
 ----------------------------------------------------------------------------------------------------
 -- Utils
 ----------------------------------------------------------------------------------------------------

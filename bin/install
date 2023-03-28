@@ -1,8 +1,8 @@
 #!/bin/sh
 #Set Variable to master is not set differently
 
-RVIM_CONFIG_DIR="${RVIM_CONFIG_DIR:-"$XDG_CONFIG_HOME/rvim"}"
-RVIM_RUNTIME_DIR="${RVIM_RUNTIME_DIR:-"$XDG_DATA_HOME/rvim"}"
+RV_CONFIG_DIR="${RV_CONFIG_DIR:-"$XDG_CONFIG_HOME/rvim"}"
+RV_DATA_DIR="${RV_DATA_DIR:-"$XDG_DATA_HOME/rvim"}"
 RV_BRANCH="${RV_BRANCH:-"main"}"
 RV_REMOTE="${RV_REMOTE:-razak17/nvim}"
 
@@ -25,7 +25,7 @@ asktoinstallpip() {
 
 moveoldrvim() {
 	echo "rvim not installed"
-  echo "Please remove '$RVIM_CONFIG_DIR' path before installing" && exit
+  echo "Please remove '$RV_CONFIG_DIR' path before installing" && exit
 }
 
 createDirs() {
@@ -60,7 +60,7 @@ archExtra() {
     unzip \
     curl \
     sqlite3 \
-    btop 
+    btop
 }
 
 yayExtra() {
@@ -69,7 +69,7 @@ yayExtra() {
 
 importRvim() {
   echo "Cloning rVim configuration"
-  git clone  "https://github.com/${RV_REMOTE}" "$RVIM_CONFIG_DIR"
+  git clone  "https://github.com/${RV_REMOTE}" "$RV_CONFIG_DIR"
 }
 
 validate_node_installation() {
@@ -112,7 +112,7 @@ install_nodejs_deps()        {
 }
 
 install_dict() {
-  dicwords="$RVIM_RUNTIME_DIR/site/spell/dictionary.txt"
+  dicwords="$RV_DATA_DIR/site/spell/dictionary.txt"
   if [ ! -e "$dicwords" ]; then
     echo 'Installing dictionary.txt'
     curl "https://raw.githubusercontent.com/eneko/data-repository/master/data/words.txt" -o "$dicwords" -s
@@ -124,7 +124,7 @@ dirty_talk() {
   file="$XDG_DATA_HOME/nvim/site/spell/$file_name"
   if [ -e "$file" ]; then
     echo "copying $file"
-    cp "$file" "$RVIM_RUNTIME_DIR/site/spell/$file_name"
+    cp "$file" "$RV_DATA_DIR/site/spell/$file_name"
   fi
 }
 
@@ -144,7 +144,7 @@ install_deps() {
 
 cloneconfig() {
 	# check existing config
-	[ -d "$RVIM_CONFIG_DIR" ] && moveoldrvim
+	[ -d "$RV_CONFIG_DIR" ] && moveoldrvim
 
 	# install go
 	(command -v go >/dev/null && echo "go installed, moving on...") || asktoinstallgo
@@ -168,7 +168,7 @@ cloneconfig() {
 	# install node and neovim support
 	(command -v git >/dev/null && echo "git installed, moving on...") || asktoinstallgit
 
-	sudo cp --force "$RVIM_CONFIG_DIR/bin/rvim" "$HOME/.local/bin"
+	sudo cp --force "$RV_CONFIG_DIR/bin/rvim" "$HOME/.local/bin"
 }
 
 while [ "$#" -gt 0 ]; do

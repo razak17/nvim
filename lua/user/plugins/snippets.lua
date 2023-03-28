@@ -62,8 +62,8 @@ return {
       require('luasnip.loaders.from_lua').lazy_load()
       require('luasnip.loaders.from_vscode').lazy_load({
         paths = {
-          join_paths(rvim.get_runtime_dir(), 'site', 'pack', 'lazy', 'friendly-snippets'),
-          join_paths(rvim.get_config_dir(), 'snippets', 'textmate'),
+          join_paths(vim.call('stdpath', 'data'), 'lazy', 'friendly-snippets'),
+          join_paths(vim.call('stdpath', 'config'), 'snippets', 'textmate'),
         },
       })
 
