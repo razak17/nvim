@@ -1,10 +1,7 @@
 if not rvim then return end
 
-local g, fn, env, rtp = vim.g, vim.fn, vim.env, vim.opt.rtp
+local g = vim.g
 local data = vim.call('stdpath', 'data')
-
-g.dotfiles = env.DOTFILES or fn.expand('~/.dots')
-g.projects_dir = env.DEV_HOME or fn.expand('~/personal/workspace/coding')
 ----------------------------------------------------------------------------------------------------
 -- Ensure all autocommands are cleared
 vim.api.nvim_create_augroup('vimrc', {})
@@ -15,17 +12,17 @@ vim.api.nvim_create_augroup('vimrc', {})
 g.mapleader = ' '
 g.maplocalleader = ','
 ----------------------------------------------------------------------------------------------------
+-- Set Open Command
+----------------------------------------------------------------------------------------------------
+g.os = vim.loop.os_uname().sysname
+rvim.open_command = g.os == 'Darwin' and 'open' or 'xdg-open'
+----------------------------------------------------------------------------------------------------
 -- Set Providers
 ----------------------------------------------------------------------------------------------------
 g.python3_host_prog = join_paths(vim.call('stdpath', 'cache'), 'venv', 'neovim', 'bin', 'python3')
 for _, v in pairs({ 'python', 'ruby', 'perl' }) do
   g['loaded_' .. v .. '_provider'] = 0
 end
-----------------------------------------------------------------------------------------------------
--- Set Open Command
-----------------------------------------------------------------------------------------------------
-g.os = vim.loop.os_uname().sysname
-rvim.open_command = g.os == 'Darwin' and 'open' or 'xdg-open'
 ----------------------------------------------------------------------------------------------------
 -- Settings
 ----------------------------------------------------------------------------------------------------
@@ -43,7 +40,7 @@ if not vim.loop.fs_stat(lazy_path) then
       lazy_path,
     })
 end
-rtp:prepend(lazy_path)
+vim.opt.rtp:prepend(lazy_path)
 require('lazy').setup('user.plugins', {
   defaults = { lazy = true },
   change_detection = { notify = false },

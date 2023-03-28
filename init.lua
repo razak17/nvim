@@ -6,6 +6,13 @@
 --  |__|    \___/   |__|__|_|  /
 --                           \/
 ----------------------------------------------------------------------------------------------------
+local g, fn, env = vim.g, vim.fn, vim.env
+
+if vim.loader then vim.loader.enable() end
+
+g.dotfiles = env.DOTFILES or fn.expand('~/.dots')
+g.projects_dir = env.DEV_HOME or fn.expand('~/personal/workspace/coding')
+----------------------------------------------------------------------------------------------------
 -- Global namespace
 ----------------------------------------------------------------------------------------------------
 local namespace = {
