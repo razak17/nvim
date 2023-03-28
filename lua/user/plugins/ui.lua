@@ -91,8 +91,7 @@ return {
         if win.diff or not rvim.falsy(vim.fn.win_gettype(win_id)) then return true end
         local ignore_bt = rvim.p_table({ terminal = true, prompt = true, nofile = false })
         local ignore_ft = rvim.p_table({ ['Telescope.*'] = true, ['Neogit.*'] = true, ['qf'] = true })
-        local has_bt, has_ft = ignore_bt[buf.buftype], ignore_ft[buf.filetype]
-        return has_bt or has_ft
+        return ignore_bt[buf.buftype] or ignore_ft[buf.filetype]
       end,
     },
   },

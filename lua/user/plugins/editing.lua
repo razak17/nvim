@@ -88,8 +88,14 @@ return {
         go = { augend.integer.alias.decimal, augend.integer.alias.hex, operators },
         typescript = { augend.integer.alias.decimal, augend.integer.alias.hex },
         markdown = { augend.integer.alias.decimal, augend.misc.alias.markdown_header },
-        yaml = { augend.semver.alias.semver },
-        toml = { augend.semver.alias.semver },
+        yaml = {
+          augend.integer.alias.decimal,
+          augend.semver.alias.semver,
+        },
+        toml = {
+          augend.integer.alias.decimal,
+          augend.semver.alias.semver,
+        },
       })
     end,
   },
