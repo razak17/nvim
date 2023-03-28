@@ -1,6 +1,7 @@
 if not rvim then return end
 
 local g, fn, env, rtp = vim.g, vim.fn, vim.env, vim.opt.rtp
+local data = vim.call('stdpath', 'data')
 
 g.dotfiles = env.DOTFILES or fn.expand('~/.dots')
 g.projects_dir = env.DEV_HOME or fn.expand('~/personal/workspace/coding')
@@ -34,7 +35,6 @@ require('user.ui')
 ----------------------------------------------------------------------------------------------------
 -- Plugins
 ----------------------------------------------------------------------------------------------------
-local data = fn.stdpath('data')
 local lazy_path = join_paths(data, 'lazy', 'lazy.nvim')
 if not vim.loop.fs_stat(lazy_path) then
     -- stylua: ignore

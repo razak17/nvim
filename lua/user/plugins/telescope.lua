@@ -1,5 +1,5 @@
-local fn, fmt = vim.fn, string.format
-local ui = rvim.ui
+local fmt, ui = string.format, rvim.ui
+local data = vim.call('stdpath', 'data')
 
 -- A helper function to limit the size of a telescope window to fit the maximum available
 -- space on the screen. This is useful for dropdowns e.g. the cursor or dropdown theme
@@ -168,7 +168,7 @@ return {
         },
         winblend = 0,
         history = {
-          path = join_paths(fn.stdpath('data'), 'databases', 'telescope_history.sqlite3'),
+          path = join_paths(data, 'databases', 'telescope_history.sqlite3'),
         },
         -- stylua: ignore
         file_ignore_patterns = {
@@ -242,7 +242,7 @@ return {
       extensions = {
         persisted = dropdown(),
         frecency = {
-          db_root = join_paths(fn.stdpath('data'), 'databases'),
+          db_root = join_paths(data, 'databases'),
           default_workspace = 'CWD',
           show_unindexed = false, -- Show all files or only those that have been indexed
           ignore_patterns = { '*.git/*', '*/tmp/*', '*node_modules/*', '*vendor/*' },
