@@ -5,7 +5,7 @@ local function sync(path) return fmt('%s/notes/%s', fn.expand(vim.env.HOME), pat
 return {
   {
     'vhyrro/neorg',
-    event = 'CursorHold',
+    event = { 'BufReadPre', 'BufNewFile' },
     keys = {
       { '<localleader>nx', '<cmd>Neorg return<CR>', 'neorg: return' },
       { '<localleader>ni', '<cmd>Neorg index<CR>', 'neorg: open default' },
