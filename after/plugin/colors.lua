@@ -92,7 +92,7 @@ local function colorscheme_overrides()
   local overrides = {
     ['onedark'] = {
       { Dim = { inherit = 'VertSplit' } },
-      { ['@variable'] = { fg = { from = 'Normal' } } },
+      { ['@variable'] = { fg = { from = '@none' } } },
     },
   }
   local hls = overrides[vim.g.colors_name]
