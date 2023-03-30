@@ -248,7 +248,7 @@ return {
           ignore_patterns = { '*.git/*', '*/tmp/*', '*node_modules/*', '*vendor/*' },
           workspaces = {
             conf = vim.env.DOTFILES,
-            project = vim.env.DEV_HOME,
+            project = vim.g.projects_dir,
           },
         },
         undo = {

@@ -45,7 +45,7 @@ require('lazy').setup('user.plugins', {
   change_detection = { notify = false },
   git = { timeout = 720 },
   dev = {
-    path = join_paths(env.HOME, 'personal', 'workspace', 'coding', 'plugins'),
+    path = join_paths(vim.g.projects_dir, 'plugins'),
     patterns = { 'razak17' },
     fallback = true,
   },
