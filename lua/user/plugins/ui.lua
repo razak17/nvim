@@ -70,6 +70,7 @@ return {
   {
     'levouh/tint.nvim',
     event = 'WinNew',
+    enabled = false,
     opts = {
       tint = -30,
       -- stylua: ignore
