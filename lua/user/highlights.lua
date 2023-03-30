@@ -135,10 +135,7 @@ local function set(ns, name, opts)
 
   vim.validate({ opts = { opts, 'table' }, name = { name, 'string' }, ns = { ns, 'number' } })
 
-  local clear = opts.clear
-  if clear then opts.clear = nil end
-
-  local hl = get_hl_as_hex({ name = opts.inherit or name })
+  local hl = opts.clear and {} or get_hl_as_hex({ name = opts.inherit or name })
   for attribute, hl_data in pairs(opts) do
     local new_data = resolve_from_attribute(hl_data, attribute)
     if attrs[attribute] then hl[attribute] = new_data end
