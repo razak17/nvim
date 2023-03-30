@@ -10,26 +10,6 @@ local function set_statusline(reset)
   fn.jobstart(fmt('tmux set-option -g status-style bg=%s', bg))
 end
 
-local function fileicon()
-  local name = fn.bufname()
-  local icon, hl
-  local loaded, devicons = rvim.pcall(require, 'nvim-web-devicons')
-  if loaded then
-    icon, hl = devicons.get_icon(name, fn.fnamemodify(name, ':e'), { default = true })
-  end
-  return icon, hl
-end
-
-local function title_string()
-  local dir = fn.fnamemodify(fn.getcwd(), ':t')
-  local icon, hl = fileicon()
-  if not hl then return (icon or '') .. ' ' end
-  local title = fmt('%s #[fg=%s]%s ', dir, rvim.highlight.get(hl, 'fg'), icon)
-  local has_tmux = vim.env.TMUX ~= nil
-  -- fn.jobstart(fmt("tmux set-titles-string '%s'", title_string))
-  return has_tmux and title or dir .. ' ' .. icon
-end
-
 local function clear_pane_title() fn.jobstart('tmux set-window-option automatic-rename on') end
 
 local function set_window_title()
@@ -39,9 +19,6 @@ local function set_window_title()
 end
 
 rvim.augroup('ExternalConfig', {
-  event = { 'BufEnter' },
-  command = function() vim.o.titlestring = title_string() end,
-}, {
   event = { 'FocusGained', 'BufReadPost', 'BufEnter' },
   command = function() set_window_title() end,
 }, {
