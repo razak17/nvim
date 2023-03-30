@@ -131,9 +131,9 @@ vnoremap('<', '<gv')
 vnoremap('>', '>gv')
 ----------------------------------------------------------------------------------------------------
 -- open a new file in the same directory
-nnoremap('<leader>no', [[:e <C-R>=expand("%:p:h") . "/" <CR>]])
+nnoremap('<leader>no', [[:e <C-R>=expand("%:p:h") . "/" <CR>]], { desc = 'open file' })
 -- create a new file in the same directory
-nnoremap('<leader>nf', [[:vsp <C-R>=expand("%:p:h") . "/" <CR>]])
+nnoremap('<leader>nf', [[:vsp <C-R>=expand("%:p:h") . "/" <CR>]], { desc = 'create new file' })
 ----------------------------------------------------------------------------------------------------
 -- Arrows
 nnoremap('<down>', '<nop>')
