@@ -20,7 +20,7 @@ local function client_configured(server_name, ft)
 end
 
 local function resolve_mason_config(server_name)
-  local found, mason_config = pcall(require, fmt('mason-lspconfig.server_configurations.%s', server_name))
+  local found, mason_config = rvim.pcall(require, fmt('mason-lspconfig.server_configurations.%s', server_name))
   if not found then return {} end
   local server_mapping = require('mason-lspconfig.mappings.server')
   local path = require('mason-core.path')

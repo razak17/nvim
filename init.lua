@@ -18,14 +18,14 @@ g.projects_dir = env.DEV_HOME or fn.expand('~/personal/workspace/coding')
 local namespace = {
   -- some vim mappings require a mixture of commandline commands and function calls
   -- this table is place to store lua functions to be called in those mappings
-  mappings = {},
-  autosave = true,
-  plugins = { enable = true },
-  path = { mason = vim.call('stdpath', 'data') .. '/mason' },
+  debug = false,
   lsp = {
     signs = { enable = true },
     hover_diagnostics = { enable = true },
   },
+  mappings = {},
+  path = { mason = vim.call('stdpath', 'data') .. '/mason' },
+  plugins = { enable = true },
   ui = {
     tw = {},
     statuscolumn = { enable = true },

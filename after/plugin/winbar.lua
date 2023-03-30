@@ -1,8 +1,8 @@
 ---@diagnostic disable: duplicate-doc-param missing-return
 
 if not rvim or not rvim.ui.winbar.enable or not rvim.plugins.enable then return end
-local navic_loaded, navic = pcall(require, 'nvim-navic')
-local devicons_loaded, devicons = pcall(require, 'nvim-web-devicons')
+local navic_loaded, navic = rvim.pcall(require, 'nvim-navic')
+local devicons_loaded, devicons = rvim.pcall(require, 'nvim-web-devicons')
 
 local str = require('user.strings')
 
