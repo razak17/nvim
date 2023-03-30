@@ -7,7 +7,6 @@ return {
   'nvim-lua/plenary.nvim',
   'kkharji/sqlite.lua',
   'nanotee/sqls.nvim',
-  'b0o/schemastore.nvim',
   'simrat39/rust-tools.nvim',
   'jose-elias-alvarez/typescript.nvim',
   'marilari88/twoslash-queries.nvim',

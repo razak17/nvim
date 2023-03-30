@@ -13,6 +13,7 @@ local servers = {
   cssls = {},
   dockerls = {},
   eslint = {},
+  jsonls = {},
   marksman = {},
   prismals = {},
   rust_analyzer = {},
@@ -98,16 +99,6 @@ local servers = {
       -- @see: https://github.com/nvim-telescope/telescope.nvim/issues/964
       client.server_capabilities.workspaceSymbolProvider = false
     end,
-  },
-  jsonls = {
-    init_options = { provideFormatter = false },
-    settings = {
-      json = {
-        validate = { enable = true },
-        schemas = require('schemastore').json.schemas(),
-      },
-    },
-    root_dir = function(fname) return require('lspconfig/util').root_pattern('package.json')(fname) end,
   },
   pyright = {
     python = {
