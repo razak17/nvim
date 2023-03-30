@@ -215,7 +215,12 @@ return {
     dependencies = {
       'hrsh7th/cmp-nvim-lsp',
       'saadparwaiz1/cmp_luasnip',
-      'hrsh7th/cmp-cmdline',
+      {
+        'hrsh7th/cmp-cmdline',
+        config = function()
+          vim.o.wildmode = '' -- Shows a menu bar rvim opposed to an enormous list
+        end,
+      },
       'dmitmel/cmp-cmdline-history',
       'hrsh7th/cmp-nvim-lsp-document-symbol',
       'hrsh7th/cmp-path',
