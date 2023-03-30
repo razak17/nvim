@@ -152,6 +152,16 @@ local function all(hls, namespace)
   rvim.foreach(function(hl) set(namespace or 0, next(hl)) end, hls)
 end
 
+--- Set window local highlights
+---@param name string
+---@param win_id number
+---@param hls HLArgs[]
+local function set_winhl(name, win_id, hls)
+  local namespace = api.nvim_create_namespace(name)
+  all(hls, namespace)
+  api.nvim_win_set_hl_ns(win_id, namespace)
+end
+
 ---------------------------------------------------------------------------------
 -- Plugin highlights
 ---------------------------------------------------------------------------------
@@ -197,4 +207,5 @@ rvim.highlight = {
   all = all,
   tint = tint,
   plugin = plugin,
+  set_winhl = set_winhl,
 }

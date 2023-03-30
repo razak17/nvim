@@ -3,9 +3,6 @@ if not rvim then return end
 local g, env = vim.g, vim.env
 local data = vim.call('stdpath', 'data')
 ----------------------------------------------------------------------------------------------------
--- Ensure all autocommands are cleared
-vim.api.nvim_create_augroup('vimrc', {})
-----------------------------------------------------------------------------------------------------
 -- Set leader keys
 ----------------------------------------------------------------------------------------------------
 -- NOTE: Leader keys have to be set before lazy is loaded
