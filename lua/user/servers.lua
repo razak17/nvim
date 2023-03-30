@@ -154,7 +154,7 @@ return function(name)
   local config = servers[name]
   if not config then return false end
   if type(config) == 'function' then config = config() end
-  local ok, cmp_nvim_lsp = rvim.require('cmp_nvim_lsp')
+  local ok, cmp_nvim_lsp = rvim.pcall(require, 'cmp_nvim_lsp')
   if ok then config.capabilities = cmp_nvim_lsp.default_capabilities() end
   config.capabilities = vim.tbl_deep_extend('keep', config.capabilities or {}, {
     workspace = { didChangeWatchedFiles = { dynamicRegistration = true } },

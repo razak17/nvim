@@ -107,35 +107,22 @@ function rvim.adjust_split_height(minheight, maxheight)
   api.nvim_win_set_height(0, math.max(math.min(fn.line('$'), maxheight), minheight))
 end
 
----Require a module using [pcall] and report any errors
----@param module string
----@param opts {silent: boolean, message: string}?
----@return boolean, any
-function rvim.require(module, opts)
-  opts = opts or { silent = false }
-  local ok, result = pcall(require, module)
-  if not ok and not opts.silent then
-    if opts.message then result = opts.message .. '\n' .. result end
-    vim.schedule(function() vim.notify(result, l.ERROR, { title = fmt('Error requiring: %s', module) }) end)
-  end
-  return ok, result
-end
-
 --- Call the given function and use `vim.notify` to notify of any errors
 --- this function is a wrapper around `xpcall` which allows having a single
 --- error handler for all errors
 ---@param msg? string
 ---@param func function
----@vararg any
+---@param ... any
 ---@return boolean, any
----@overload fun(fun: function, ...): boolean, any
-function rvim.wrap_err(msg, func, ...)
+---@overload fun(func: function, ...): boolean, any
+function rvim.pcall(msg, func, ...)
   local args = { ... }
   if type(msg) == 'function' then
-    args, func, msg = { func, unpack(args) }, msg, nil
+    local arg = func --[[@rvim any]]
+    args, func, msg = { arg, unpack(args) }, msg, nil
   end
   return xpcall(func, function(err)
-    msg = msg and fmt('%s:\n%s', msg, err) or err
+    msg = debug.traceback(msg and fmt('%s:\n%s', msg, err) or err)
     vim.schedule(function() vim.notify(msg, l.ERROR, { title = 'ERROR' }) end)
   end, unpack(args))
 end
@@ -183,6 +170,7 @@ function rvim.filetype_settings(map)
       desc = ('ft settings for %s'):format(name),
       command = function(args)
         rvim.foreach(function(value, scope)
+          if scope == 'plugins' then return rvim.ftplugin_conf(value) end
           if type(value) ~= 'table' and vim.is_callable(value) then return value(args) end
           rvim.foreach(function(setting, option) vim[scope][option] = setting end, value)
         end, settings)
@@ -195,16 +183,10 @@ end
 --- A convenience wrapper that calls the ftplugin config for a plugin if it exists
 --- and warns me if the plugin is not installed
 ---@param configs table<string, fun(module: table)>
----@param opts {silent: boolean}?
-function rvim.ftplugin_conf(configs, opts)
+function rvim.ftplugin_conf(configs)
   if type(configs) ~= 'table' then return end
-  opts = opts or { silent = true }
   for name, callback in pairs(configs) do
-    local info = debug.getinfo(1, 'S')
-    local ok, plugin = rvim.require(name, {
-      message = fmt('In file: %s', info.source),
-      silent = opts.silent,
-    })
+    local ok, plugin = rvim.pcall(require, name)
     if ok then callback(plugin) end
   end
 end

@@ -273,13 +273,13 @@ local client_overrides = {
 ---@param bufnr number
 local function setup_plugins(client, bufnr)
   -- nvim-navic
-  local navic_ok, navic = rvim.require('nvim-navic')
+  local navic_ok, navic = rvim.pcall(require, 'nvim-navic')
   if navic_ok and client.server_capabilities.documentSymbolProvider then navic.attach(client, bufnr) end
   -- lsp-inlayhints
-  local hints_ok, hints = rvim.require('lsp-inlayhints')
+  local hints_ok, hints = rvim.pcall(require, 'lsp-inlayhints')
   if hints_ok and client.name ~= 'tsserver' then hints.on_attach(client, bufnr) end
   -- twoslash-queries
-  local twoslash_ok, twoslash = rvim.require('twoslash-queries')
+  local twoslash_ok, twoslash = rvim.pcall(require, 'twoslash-queries')
   if twoslash_ok and client.name == 'tsserver' then twoslash.attach(client, bufnr) end
 end
 
