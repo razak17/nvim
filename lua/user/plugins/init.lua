@@ -10,8 +10,13 @@ return {
   'simrat39/rust-tools.nvim',
   'jose-elias-alvarez/typescript.nvim',
   'marilari88/twoslash-queries.nvim',
-  'kazhala/close-buffers.nvim',
 
+  {
+    'kazhala/close-buffers.nvim',
+    keys = {
+      { '<leader>c', function() require('close_buffers').delete({ type = 'this' }) end, desc = 'delete buffer' },
+    },
+  },
   {
     'williamboman/mason.nvim',
     cmd = 'Mason',
@@ -76,6 +81,7 @@ return {
   },
   {
     'echasnovski/mini.bufremove',
+    enabled = false,
     keys = {
       { '<leader>c', function() require('mini.bufremove').delete(0, false) end, desc = 'delete buffer' },
     },
