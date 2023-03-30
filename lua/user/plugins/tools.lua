@@ -68,14 +68,27 @@ return {
           },
         },
       })
-      require('lab').setup({})
+      require('lab').setup()
     end,
   },
   {
     'razak17/package-info.nvim',
     event = 'BufRead package.json',
     dependencies = { 'MunifTanjim/nui.nvim' },
-    opts = { autostart = false, package_manager = 'yarn' },
+    config = function()
+      hl.plugin('package-info', {
+        theme = {
+          ['onedark'] = {
+            { PackageInfoUpToDateVersion = { link = 'DiagnosticVirtualTextInfo' } },
+            { PackageInfoOutdatedVersion = { link = 'DiagnosticVirtualTextWarn' } },
+          },
+        },
+      })
+      require('package-info').setup({
+        autostart = false,
+        hide_up_to_date = true,
+      })
+    end,
   },
   {
     'Saecki/crates.nvim',
