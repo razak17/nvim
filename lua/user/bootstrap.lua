@@ -1,6 +1,6 @@
 if not rvim then return end
 
-local g = vim.g
+local g, env = vim.g, vim.env
 local data = vim.call('stdpath', 'data')
 ----------------------------------------------------------------------------------------------------
 -- Ensure all autocommands are cleared
@@ -41,12 +41,14 @@ if not vim.loop.fs_stat(lazy_path) then
     })
 end
 vim.opt.rtp:prepend(lazy_path)
+-- If opening from inside neovim terminal then do not load other plugins
+if env.NVIM then return require('lazy').setup({ { 'willothy/flatten.nvim', config = true } }) end
 require('lazy').setup('user.plugins', {
   defaults = { lazy = true },
   change_detection = { notify = false },
   git = { timeout = 720 },
   dev = {
-    path = join_paths(vim.env.HOME, 'personal', 'workspace', 'coding', 'plugins'),
+    path = join_paths(env.HOME, 'personal', 'workspace', 'coding', 'plugins'),
     patterns = { 'razak17' },
     fallback = true,
   },
