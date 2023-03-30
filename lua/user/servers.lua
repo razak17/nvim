@@ -24,10 +24,10 @@ local servers = {
   volar = {},
   prosemd_lsp = {},
   tsserver = {
-    -- NOTE: Apparently setting this to false improves performance
-    -- https://github.com/sublimelsp/LSP-typescript/issues/129#issuecomment-1281643371
+    -- Apparently setting this to false improves performance
+    -- @see https://github.com/sublimelsp/LSP-typescript/issues/129#issuecomment-1281643371
     initializationOptions = { preferences = { includeCompletionsForModuleExports = false } },
-    -- NOTE: Disable duplicate diagnostics from eslint
+    -- Disable duplicate diagnostics from eslint
     handlers = {
       ['textDocument/publishDiagnostics'] = function(_, result, ctx, config)
         result.diagnostics = vim.tbl_filter(
@@ -119,13 +119,7 @@ local servers = {
         format = { enable = false },
         diagnostics = { globals = { 'vim', 'describe', 'it', 'before_each', 'after_each' } },
         completion = { keywordSnippet = 'Replace', callSnippet = 'Replace' },
-        workspace = {
-          library = {
-            fn.expand('$VIMRUNTIME/lua'),
-            require('neodev.config').types(),
-          },
-          checkThirdParty = false,
-        },
+        workspace = { checkThirdParty = false },
         telemetry = { enable = false },
       },
     },
