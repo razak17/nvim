@@ -86,7 +86,7 @@ o.foldlevelstart = 10
 -- Grepprg {{{1
 ----------------------------------------------------------------------------------------------------
 -- Use faster grep alternatives if possible
-if rvim and rvim.falsy(fn.executable('rg')) then
+if rvim and not rvim.falsy(fn.executable('rg')) then
   vim.o.grepprg = [[rg --glob "!.git" --no-heading --vimgrep --follow $*]]
   vim.o.grepprg = [[rg --hidden --glob "!.git" --no-heading --smart-case --vimgrep --follow $*]]
   opt.grepformat = opt.grepformat ^ { '%f:%l:%c:%m' }
@@ -102,11 +102,7 @@ end
 o.wildcharm = ('\t'):byte()
 o.wildmode = 'list:full' -- Shows a menu bar rvim opposed to an enormous list
 o.wildignorecase = true -- Ignore case when completing file names and directories
--- Binary
 opt.wildignore = {
-  '*.aux',
-  '*.out',
-  '*.toc',
   '*.o',
   '*.obj',
   '*.dll',
@@ -121,9 +117,6 @@ opt.wildignore = {
   '*.png',
   '*.avi',
   '*.wav',
-  -- Temp/System
-  '*.*~',
-  '*~ ',
   '*.swp',
   '.lock',
   '.DS_Store',
@@ -142,7 +135,6 @@ o.scrolloff = 7
 o.conceallevel = 2
 o.breakindentopt = 'sbr'
 o.linebreak = true -- lines wrap at words rather than random characters
-o.synmaxcol = 1024 -- don't syntax highlight long lines
 o.signcolumn = 'yes:1'
 o.ruler = false
 o.cmdheight = 1
@@ -174,8 +166,6 @@ o.softtabstop = -1
 o.cindent = true -- Increase indent on line after opening brace
 o.smartindent = true
 ----------------------------------------------------------------------------------------------------
--- vim.o.debug = "msg"
-o.gdefault = true
 o.pumheight = 15
 o.confirm = true -- make vim prompt me to save before doing destructive things
 opt.completeopt = { 'menuone', 'noselect' }
@@ -256,7 +246,6 @@ o.matchtime = 1
 opt.spellsuggest:prepend({ 12 })
 opt.spelloptions:append({ 'camel', 'noplainbuffer' })
 opt.spellcapcheck = '' -- don't check for capital letters at start of sentence
-opt.fileformats = { 'unix', 'mac', 'dos' }
 opt.spellfile = join_paths(vim.call('stdpath', 'config'), 'spell', 'en.utf-8.add')
 ----------------------------------------------------------------------------------------------------
 -- Mouse {{{1
@@ -265,6 +254,4 @@ o.mousefocus = true
 o.mousemoveevent = true
 opt.mousescroll = { 'ver:1', 'hor:6' }
 ----------------------------------------------------------------------------------------------------
--- these only read ".vim" files
-o.secure = true -- Disable autocmd etc for project local vimrc files.
-o.exrc = false -- Allow project local vimrc files example .nvimrc see :h exrc
+o.exrc = rvim.has('nvim-0.9')
