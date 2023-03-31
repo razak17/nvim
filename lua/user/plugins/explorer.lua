@@ -24,12 +24,7 @@ return {
               fg = { from = 'PanelDarkBackground', attr = 'bg' },
             },
           },
-          {
-            NeoTreeTabSeparatorActive = {
-              inherit = 'PanelBackground',
-              fg = { from = 'Comment' },
-            },
-          },
+          { NeoTreeTabSeparatorActive = { inherit = 'PanelBackground', fg = { from = 'Comment' } } },
         },
       },
     })

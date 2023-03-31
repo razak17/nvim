@@ -209,7 +209,10 @@ opt.sessionoptions = {
   'buffers',
   'curdir',
   'winpos',
+ 'winsize',
+  'help',
   'tabpages',
+  'terminal',
 }
 -- What to save for views and sessions:
 opt.viewoptions = { 'cursor', 'folds' } -- save/restore just these (with `:{mk,load}view`)
