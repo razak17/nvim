@@ -1,4 +1,5 @@
-local ui, fn, api, fmt = rvim.ui, vim.fn, vim.api, string.format
+local fn, api, fmt = vim.fn, vim.api, string.format
+local ui, fold = rvim.ui, rvim.fold
 local border = ui.current.border
 local lsp_hls = ui.lsp.highlights
 local ellipsis = ui.icons.ui.ellipsis
@@ -26,9 +27,9 @@ return {
 
       local luasnip = require('luasnip')
 
-      local kind_hls = rvim.fold(
+      local hl_defs = fold(
         function(accum, value, key)
-          accum[#accum + 1] = { ['CmpItemKind' .. key] = { fg = { from = value } } }
+          table.insert(accum, { [fmt('CmpItemKind%s', key)] = { fg = { from = value } } })
           return accum
         end,
         lsp_hls,
@@ -40,7 +41,7 @@ return {
         }
       )
 
-      rvim.highlight.plugin('Cmp', kind_hls)
+      rvim.highlight.plugin('Cmp', hl_defs)
 
       local cmp_window = {
         border = border,
@@ -79,14 +80,11 @@ return {
       end
 
       cmp.setup({
-        experimental = { ghost_text = false },
-        matching = { disallow_partial_fuzzy_matching = false },
         preselect = cmp.PreselectMode.None,
         window = {
           completion = cmp.config.window.bordered(cmp_window),
           documentation = cmp.config.window.bordered(cmp_window),
         },
-        snippet = { expand = function(args) require('luasnip').lsp_expand(args.body) end },
         mapping = {
           ['<C-k>'] = cmp.mapping.select_prev_item(),
           ['<C-j>'] = cmp.mapping.select_next_item(),
@@ -154,30 +152,29 @@ return {
             return vim_item
           end,
         },
-        sources = cmp.config.sources({
-          { name = 'nvim_lsp' },
-          { name = 'luasnip' },
-          { name = 'path' },
+        sources = {
+          { name = 'nvim_lsp', group_index = 1 },
+          { name = 'luasnip', group_index = 1 },
+          { name = 'path', group_index = 1 },
           {
             name = 'rg',
             max_item_count = 10,
             option = { additional_arguments = '--max-depth 8' },
+            group_index = 1,
           },
           -- { name = 'dictionary' },
-          { name = 'crates' },
-          { name = 'treesitter' },
-          { name = 'lab.quick_data' },
-          { name = 'dynamic' },
-          { name = 'emoji' },
-        }, {
+          { name = 'lab.quick_data', group_index = 1 },
+          { name = 'dynamic', group_index = 1 },
+          { name = 'emoji', group_index = 1 },
+          { name = 'treesitter', group_index = 2 },
+          { name = 'crates', group_index = 2 },
           {
             name = 'buffer',
-            options = {
-              get_bufnrs = function() return vim.api.nvim_list_bufs() end,
-            },
+            options = { get_bufnrs = function() return vim.api.nvim_list_bufs() end },
+            group_index = 2,
           },
-          { name = 'spell' },
-        }),
+          { name = 'spell', group_index = 2 },
+        },
       })
 
       cmp.event:on('menu_opened', function() vim.b.copilot_suggestion_hidden = true end)
