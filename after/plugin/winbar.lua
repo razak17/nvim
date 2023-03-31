@@ -38,8 +38,7 @@ function rvim.ui.winbar.click(id)
   local item = state[id]
   if type(item) == 'string' then vim.cmd.edit(item) end
   if type(item) == 'table' and item.start then
-    local win = fn.getmousepos().winid
-    api.nvim_win_set_cursor(win, { item.start.line, item.start.character })
+    api.nvim_win_set_cursor(fn.getmousepos().winid, { item.start.line, item.start.character })
   end
 end
 
@@ -69,8 +68,9 @@ local function breadcrumbs()
   end, data)
 end
 
+---@param current_win integer
 ---@return string
-function rvim.ui.winbar.render()
+function rvim.ui.winbar.render(current_win)
   state = {}
   local winbar = {}
   local add = str.append(winbar)
@@ -109,11 +109,13 @@ function rvim.ui.winbar.render()
       click = 'v:lua.rvim.ui.winbar.click',
     })
   end, parts)
-  add(unpack(breadcrumbs()))
-  return str.display({ winbar }, api.nvim_win_get_width(api.nvim_get_current_win()))
+  local win = api.nvim_get_current_win()
+  if win == current_win then add(unpack(breadcrumbs())) end
+  return str.display({ winbar }, api.nvim_win_get_width(win))
 end
 
 local function set_winbar()
+  local current_win = api.nvim_get_current_win()
   rvim.foreach(function(w)
     local buf, win = vim.bo[api.nvim_win_get_buf(w)], vim.wo[w]
     local bt, ft, is_diff = buf.buftype, buf.filetype, win.diff
@@ -121,7 +123,7 @@ local function set_winbar()
     if decor.ft == 'ignore' or decor.bt == 'ignore' then return end
     local is_float = falsy(fn.win_gettype(api.nvim_win_get_number(w)))
     if not decor.ft and is_float and bt == '' and ft ~= '' and not is_diff then
-      win.winbar = '%{%v:lua.rvim.ui.winbar.render()%}'
+      win.winbar = ('%%{%%v:lua.rvim.ui.winbar.render(%d)%%}'):format(current_win)
     elseif is_diff then
       win.winbar = nil
     end
