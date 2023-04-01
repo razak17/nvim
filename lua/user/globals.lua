@@ -75,16 +75,11 @@ end
 ---@generic T
 ---@param matcher fun(arg: T):boolean
 ---@param haystack T[]
----@return T
+---@return T?
 function rvim.find(matcher, haystack)
-  local found
   for _, needle in ipairs(haystack) do
-    if matcher(needle) then
-      found = needle
-      break
-    end
+    if matcher(needle) then return needle end
   end
-  return found
 end
 
 --  find string in list
