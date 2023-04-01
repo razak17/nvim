@@ -5,7 +5,11 @@ local cmd, fn, api = vim.cmd, vim.fn, vim.api
 settings({
   [{ 'gitcommit', 'gitrebase' }] = {
     bo = { bufhidden = 'delete' },
-    opt = { list = false, spell = true },
+    opt = {
+      list = false,
+      spell = true,
+      spelllang = 'en_gb',
+    },
   },
   ['dap-repl'] = {
     opt = {
@@ -83,9 +87,7 @@ settings({
     end,
   },
   lua = {
-    bo = {
-      textwidth = 120,
-    },
+    bo = { textwidth = 120 },
     opt = {
       spell = true,
       iskeyword = vim.opt.iskeyword:append('-'),
@@ -93,8 +95,9 @@ settings({
   },
   NeogitCommitMessage = {
     opt = {
-      spell = true,
       list = false,
+      spell = true,
+      spelllang = 'en_gb',
     },
     plugins = {
       cmp = function(cmp)
