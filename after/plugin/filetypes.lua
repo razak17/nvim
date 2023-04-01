@@ -90,6 +90,7 @@ settings({
     bo = { textwidth = 120 },
     opt = {
       spell = true,
+      spellfile = vim.opt.spellfile:prepend(join_paths(vim.call('stdpath', 'config'), 'spell', 'lua.utf-8.add')),
       iskeyword = vim.opt.iskeyword:append('-'),
     },
   },

@@ -249,6 +249,7 @@ o.matchtime = 1
 opt.spellsuggest:prepend({ 12 })
 opt.spelloptions:append({ 'camel', 'noplainbuffer' })
 opt.spellcapcheck = '' -- don't check for capital letters at start of sentence
+-- https://vi.stackexchange.com/questions/15051/how-can-i-use-multiple-spell-files-at-the-same-time
 opt.spellfile = join_paths(vim.call('stdpath', 'config'), 'spell', 'en.utf-8.add')
 ----------------------------------------------------------------------------------------------------
 -- Mouse {{{1
