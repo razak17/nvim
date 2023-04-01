@@ -18,6 +18,7 @@ local function is_pipfile_root()
     upward = true,
   }))
 end
+
 local function env_cleanup(venv)
   if string.find(venv, '/') then
     local final_venv = venv
