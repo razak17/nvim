@@ -33,12 +33,12 @@ end
 
 return {
   'nvim-lualine/lualine.nvim',
-  event = 'VeryLazy',
+  lazy = false,
   config = function()
+    local hl = rvim.highlight
     local P = require('onedark.palette')
 
-    local bg = rvim.highlight.get('StatusLine', 'bg')
-    local fg = rvim.highlight.get('StatusLine', 'fg')
+    local bg, fg = hl.tint(P.bg_dark, -0.2), P.base8
 
     -- Config
     local lualine_config = {
