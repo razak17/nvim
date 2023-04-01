@@ -74,6 +74,7 @@ rvim.ui.codicons = {
     Project = '',
     search = '',
     search_alt = '',
+    shaded_lock = '',
     table = '',
   },
   lsp = {

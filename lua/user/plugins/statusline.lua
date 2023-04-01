@@ -1,3 +1,4 @@
+local api = vim.api
 local icons = rvim.ui.icons
 local codicons = rvim.ui.codicons
 
@@ -234,6 +235,17 @@ return {
     })
 
     ins_right({ 'filetype', cond = nil, padding = { left = 1, right = 1 } })
+
+    ins_right({
+      function() return codicons.ui.shaded_lock end,
+      padding = { left = 1, right = 1 },
+      color = { fg = P.comment, gui = 'bold' },
+      cond = function()
+        local curwin = api.nvim_get_current_win()
+        local curbuf = api.nvim_win_get_buf(curwin)
+        return vim.b[curbuf].formatting_disabled == true or vim.g.formatting_disabled == true
+      end,
+    })
 
     ins_right({
       function()
