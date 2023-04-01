@@ -96,6 +96,7 @@ return {
           ['<C-space>'] = cmp.mapping.complete(),
           ['<CR>'] = cmp.mapping.confirm({ select = false }), -- If nothing is selected don't complete
         },
+        snippet = { expand = function(args) luasnip.lsp_expand(args.body) end },
         formatting = {
           deprecated = true,
           fields = { 'kind', 'abbr', 'menu' },
