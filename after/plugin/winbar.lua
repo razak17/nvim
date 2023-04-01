@@ -7,7 +7,7 @@ local devicons_loaded, devicons = rvim.pcall(require, 'nvim-web-devicons')
 local str = require('user.strings')
 
 local fn, api, falsy = vim.fn, vim.api, rvim.falsy
-local icons, decorations, highlight = rvim.ui.icons.ui, rvim.ui.decorations, rvim.highlight
+local icons, decorations, highlight = rvim.ui.icons.misc, rvim.ui.decorations, rvim.highlight
 local lsp_hl = rvim.ui.lsp.highlights
 
 local space = ' '

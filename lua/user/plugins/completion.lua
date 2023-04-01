@@ -2,7 +2,7 @@ local fn, api, fmt = vim.fn, vim.api, string.format
 local ui, fold = rvim.ui, rvim.fold
 local border = ui.current.border
 local lsp_hls = ui.lsp.highlights
-local ellipsis = ui.icons.ui.ellipsis
+local ellipsis = ui.icons.misc.ellipsis
 
 return {
   {
@@ -113,9 +113,9 @@ return {
 
             if entry.source.name == 'lab.quick_data' then vim_item.kind = format_icon(codicons.misc.robot) end
 
-            if entry.source.name == 'dynamic' then vim_item.kind = format_icon(codicons.ui.calendar) end
+            if entry.source.name == 'dynamic' then vim_item.kind = format_icon(codicons.misc.calendar) end
 
-            if entry.source.name == 'crates' then vim_item.kind = format_icon(ui.codicons.ui.package) end
+            if entry.source.name == 'crates' then vim_item.kind = format_icon(ui.codicons.misc.package) end
 
             if vim_item.kind == 'Color' then
               if entry.completion_item.documentation then

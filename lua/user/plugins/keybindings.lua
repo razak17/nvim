@@ -8,7 +8,7 @@ return {
         plugins = {
           spelling = { enabled = true },
         },
-        icons = { breadcrumb = rvim.ui.icons.ui.double_chevron_right },
+        icons = { breadcrumb = rvim.ui.icons.misc.double_chevron_right },
         window = { border = rvim.ui.current.border },
         layout = { align = 'center' },
         hidden = { '<silent>', '<cmd>', '<Cmd>', '<CR>', 'call', 'lua', '^:', '^ ' },

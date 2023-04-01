@@ -68,7 +68,7 @@ return {
       },
       default_component_configs = {
         icon = { folder_empty = codicons.documents.open_folder },
-        modified = { symbol = codicons.ui.filled_circle .. ' ' },
+        modified = { symbol = codicons.misc.circle .. ' ' },
         git_status = {
           symbols = {
             added = codicons.git.added,

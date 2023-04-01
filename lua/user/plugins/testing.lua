@@ -34,7 +34,7 @@ return {
     require('neotest').setup({
       discovery = { enabled = true },
       diagnostic = { enabled = true },
-      icons = { running = rvim.ui.codicons.ui.clock },
+      icons = { running = rvim.ui.codicons.misc.clock },
       floating = { border = rvim.ui.current.border },
       quickfix = { enabled = false, open = true },
       adapters = {

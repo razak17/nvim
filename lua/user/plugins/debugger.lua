@@ -74,21 +74,21 @@ return {
       dap.defaults.fallback.exception_breakpoints = {}
 
       fn.sign_define('DapBreakpoint', {
-        text = ui.codicons.ui.bug,
+        text = ui.codicons.misc.bug,
         texthl = 'DapBreakpoint',
         linehl = '',
         numhl = '',
       })
 
       fn.sign_define('DapBreakpointRejected', {
-        text = ui.codicons.ui.bug,
+        text = ui.codicons.misc.bug,
         texthl = 'DapBreakpointRejected',
         linehl = '',
         numhl = '',
       })
 
       fn.sign_define('DapStopped', {
-        text = ui.icons.ui.dap_green,
+        text = ui.icons.misc.dap_green,
         texthl = 'DapStopped',
         linehl = '',
         numhl = '',

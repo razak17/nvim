@@ -236,7 +236,7 @@ return {
     ins_right({ 'filetype', cond = nil, padding = { left = 1, right = 1 } })
 
     ins_right({
-      function() return codicons.ui.shaded_lock end,
+      function() return codicons.misc.shaded_lock end,
       padding = { left = 1, right = 1 },
       color = { fg = P.comment, gui = 'bold' },
       cond = function()
@@ -248,7 +248,7 @@ return {
     })
 
     ins_right({
-      function() return icons.ui.spell_check end,
+      function() return icons.misc.spell_check end,
       padding = { left = 1, right = 0 },
       color = { fg = P.blue, gui = 'bold' },
       cond = function() return vim.wo.spell and conditions.hide_in_width() end,
@@ -257,7 +257,7 @@ return {
     ins_right({
       function()
         local b = vim.api.nvim_get_current_buf()
-        if next(vim.treesitter.highlighter.active[b]) then return icons.ui.active_ts .. ' TS' end
+        if next(vim.treesitter.highlighter.active[b]) then return icons.misc.active_ts .. ' TS' end
         return ''
       end,
       padding = { left = 1, right = 0 },

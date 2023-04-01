@@ -13,16 +13,7 @@ rvim.ui.border = {
 
 rvim.ui.icons = {
   git = { branch = '', untracked = '' },
-  separators = {
-    left_thin_block = '▏',
-    right_thin_block = '▕',
-    right_block = '🮉',
-    light_shade_block = '░',
-    medium_shade_block = '▒',
-    bar = '▊',
-  },
-  ui = {
-    triangle = '',
+  misc = {
     chevron_right = '',
     checkmark = '✓',
     dap_green = '🟢',
@@ -34,6 +25,15 @@ rvim.ui.icons = {
     uninstalled = '✗',
     active_ts = '',
     spell_check = '暈',
+    triangle = '',
+  },
+  separators = {
+    left_thin_block = '▏',
+    right_thin_block = '▕',
+    right_block = '🮉',
+    light_shade_block = '░',
+    medium_shade_block = '▒',
+    bar = '▊',
   },
 }
 
@@ -62,21 +62,6 @@ rvim.ui.codicons = {
     staged = '',
     unstaged = '',
   },
-  ui = {
-    bug = '',
-    calendar = '',
-    code = '',
-    clock = '',
-    filled_circle = '',
-    package = '',
-    octoface = '',
-    pick = '',
-    Project = '',
-    search = '',
-    search_alt = '',
-    shaded_lock = '',
-    table = '',
-  },
   lsp = {
     error = '',
     warn = '',
@@ -91,11 +76,24 @@ rvim.ui.codicons = {
     hint = '',
   },
   misc = {
-    robot = '',
-    squirrel = '',
-    tag = '',
-    smiley = '',
+    bug = '',
+    calendar = '',
+    circle = '',
     circuit_board = '',
+    code = '',
+    clock = '',
+    package = '',
+    octoface = '',
+    pick = '',
+    project = '',
+    robot = '',
+    search = '',
+    search_alt = '',
+    shaded_lock = '',
+    smiley = '',
+    squirrel = '',
+    table = '',
+    tag = '',
   },
 }
 

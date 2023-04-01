@@ -10,8 +10,13 @@ return {
   'simrat39/rust-tools.nvim',
   'jose-elias-alvarez/typescript.nvim',
   'marilari88/twoslash-queries.nvim',
-  'kazhala/close-buffers.nvim',
 
+  {
+    'kazhala/close-buffers.nvim',
+    keys = {
+      { '<leader>c', function() require('close_buffers').delete({ type = 'this' }) end, desc = 'delete buffer' },
+    },
+  },
   {
     'williamboman/mason.nvim',
     cmd = 'Mason',
@@ -76,6 +81,7 @@ return {
   },
   {
     'echasnovski/mini.bufremove',
+    enabled = false,
     keys = {
       { '<leader>c', function() require('mini.bufremove').delete(0, false) end, desc = 'delete buffer' },
     },
@@ -176,8 +182,8 @@ return {
     opts = {
       highlight = false,
       icons = ui.current.lsp_icons,
-      depth_limit_indicator = ui.icons.ui.ellipsis,
-      separator = (' %s '):format(ui.icons.ui.triangle),
+      depth_limit_indicator = ui.icons.misc.ellipsis,
+      separator = (' %s '):format(ui.icons.misc.triangle),
     },
   },
   {
@@ -212,7 +218,7 @@ return {
         { LightBulbFloatWin = { fg = { from = 'Type' } } },
         { LightBulbVirtualText = { fg = { from = 'Type' } } },
       })
-      local icon = ui.icons.ui.lightbulb
+      local icon = ui.icons.misc.lightbulb
       require('nvim-lightbulb').setup({
         ignore = { 'null-ls' },
         autocmd = { enabled = true },

@@ -191,7 +191,7 @@ o.emoji = false
 ----------------------------------------------------------------------------------------------------
 -- Title {{{1
 ----------------------------------------------------------------------------------------------------
-function rvim.modified_icon() return vim.bo.modified and rvim.ui.codicons.ui.filled_circle or '' end
+function rvim.modified_icon() return vim.bo.modified and rvim.ui.codicons.misc.circle or '' end
 -- titlestring = ' ❐ %{fnamemodify(getcwd(), ":t")} %m'
 o.titlestring = '%<%F%=%l/%L - nvim'
 o.titleold = fn.fnamemodify(vim.loop.os_getenv('SHELL'), ':t')
