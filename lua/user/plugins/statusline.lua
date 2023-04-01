@@ -117,17 +117,15 @@ return {
 
     ins_left({
       function()
-        if vim.bo.filetype == 'python' then
-          local venv = vim.env.CONDA_DEFAULT_ENV
-          if venv then return string.format('[%s]', env_cleanup(venv)) end
-          venv = vim.env.VIRTUAL_ENV
-          if venv then return string.format('[%s]', env_cleanup(venv)) end
-          return ''
-        end
-        return ''
+        local venv = vim.env.CONDA_DEFAULT_ENV
+        if venv then return string.format('[%s]', env_cleanup(venv)) end
+        venv = vim.env.VIRTUAL_ENV
+        if venv then return string.format('[%s]', env_cleanup(venv)) end
+        return venv
       end,
+      padding = { left = 0, right = 0 },
       color = { fg = P.yellowgreen },
-      cond = conditions.hide_in_width,
+      cond = function() return vim.bo.filetype == 'python' and conditions.hide_in_width() end,
     })
 
     ins_left({
@@ -243,18 +241,16 @@ return {
       cond = function()
         local curwin = api.nvim_get_current_win()
         local curbuf = api.nvim_win_get_buf(curwin)
-        return vim.b[curbuf].formatting_disabled == true or vim.g.formatting_disabled == true
+        local formatting_disabled = vim.b[curbuf].formatting_disabled == true or vim.g.formatting_disabled == true
+        return conditions.hide_in_width() and formatting_disabled
       end,
     })
 
     ins_right({
-      function()
-        if vim.wo.spell then return icons.ui.spell_check end
-        return ''
-      end,
+      function() return icons.ui.spell_check end,
       padding = { left = 1, right = 0 },
       color = { fg = P.blue, gui = 'bold' },
-      cond = conditions.hide_in_width,
+      cond = function() return vim.wo.spell and conditions.hide_in_width() end,
     })
 
     ins_right({
