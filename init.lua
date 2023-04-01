@@ -16,8 +16,6 @@ g.projects_dir = env.DEV_HOME or fn.expand('~/personal/workspace/coding')
 -- Global namespace
 ----------------------------------------------------------------------------------------------------
 local namespace = {
-  -- some vim mappings require a mixture of commandline commands and function calls
-  -- this table is place to store lua functions to be called in those mappings
   debug = false,
   lsp = {
     signs = { enable = true },

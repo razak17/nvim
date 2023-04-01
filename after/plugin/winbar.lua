@@ -83,8 +83,9 @@ function rvim.ui.winbar.render(current_win)
     return winbar
   end
 
+  local use_relative_path = rvim.ui.winbar.relative_path
   local filepath = fn.fnamemodify(bufname, ':t')
-  if rvim.ui.winbar.relative_path then filepath = fn.fnamemodify(bufname, ':.') end
+  if use_relative_path then filepath = fn.fnamemodify(bufname, ':p:.') end
 
   if rvim.ui.winbar.file_icon then
     local icon, color = '', 'DevIconDefault'
@@ -98,6 +99,15 @@ function rvim.ui.winbar.render(current_win)
   end
 
   local parts = vim.split(filepath, '/')
+  if use_relative_path then
+    local empty_string = rvim.find_string(parts, '')
+    if empty_string then
+      for _ = 1, 3 do
+        table.remove(parts, 1)
+      end
+    end
+  end
+
   rvim.foreach(function(part, index)
     local priority = (#parts - (index - 1)) * 2
     local is_last = index == #parts
