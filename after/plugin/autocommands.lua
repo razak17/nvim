@@ -1,6 +1,6 @@
 if not rvim or not rvim.plugins.enable then return end
 
-local fn, api = vim.fn, vim.api
+local fn, api, env = vim.fn, vim.api, vim.env
 
 local smart_close_filetypes = rvim.p_table({
   ['qf'] = true,
@@ -131,6 +131,18 @@ rvim.augroup('Utilities', {
   command = function(args)
     vim.cmd.bdelete({ bang = true })
     vim.cmd.edit(vim.uri_to_fname(args.file))
+  end,
+}, {
+  --- disable formatting in directories in third party repositories
+  event = { 'BufEnter' },
+  command = function(args)
+    local paths = vim.split(vim.o.runtimepath, ',')
+    local match = rvim.find(function(dir)
+      local path = api.nvim_buf_get_name(args.buf)
+      if vim.startswith(path, vim.call('stdpath', 'data')) then return true end
+      return vim.startswith(path, dir)
+    end, paths)
+    vim.b[args.buf].formatting_disabled = match ~= nil
   end,
 }, {
   event = { 'BufWritePre', 'FileWritePre' },
