@@ -14,6 +14,7 @@ local smart_close_filetypes = rvim.p_table({
   ['Neogit.*'] = true,
   ['neotest.*'] = true,
   ['fugitive.*'] = true,
+  ['copilot.*'] = true,
   ['tsplayground'] = true,
 })
 

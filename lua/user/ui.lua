@@ -240,6 +240,7 @@ local filetypes = rvim.p_table({
   ['log'] = presets.tool_panel,
   ['httpResult'] = presets.tool_panel,
   ['help'] = presets.tool_panel,
+  ['^copilot.*'] = presets.tool_panel,
   ['dapui'] = presets.tool_panel,
   ['Trouble'] = presets.tool_panel,
   ['tsplayground'] = presets.tool_panel,
