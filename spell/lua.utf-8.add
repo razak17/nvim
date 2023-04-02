@@ -2,3 +2,8 @@ razak17
 plugins
 winbar
 colorscheme
+plugin
+autocommands
+lua
+dir
+config
