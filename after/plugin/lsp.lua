@@ -220,7 +220,6 @@ local function setup_mappings(client, bufnr)
   map('n', '<leader>lf', '<cmd>LspFormat<CR>', with_desc('format buffer'))
   map('n', '<leader>ltv', '<cmd>ToggleVirtualText<CR>', with_desc('toggle virtual text'))
   map('n', '<leader>ltl', '<cmd>ToggleVirtualLines<CR>', with_desc('toggle virtual lines'))
-  map('n', '<leader>lts', '<cmd>ToggleDiagnosticSigns<CR>', with_desc('toggle  signs'))
   -- Typescript
   if client.name == 'tsserver' then
     local actions = require('typescript').actions
@@ -376,24 +375,10 @@ local function sign(opts)
   })
 end
 
-local function toggle_diagnostic_signs()
-  if rvim.lsp.signs.enable then
-    rvim.lsp.signs.enable = false
-    sign({ highlight = 'DiagnosticSignError', icon = icons.error })
-    sign({ highlight = 'DiagnosticSignWarn', icon = icons.warn })
-    sign({ highlight = 'DiagnosticSignInfo', icon = icons.info })
-    sign({ highlight = 'DiagnosticSignHint', icon = icons.hint })
-  else
-    rvim.lsp.signs.enable = true
-    sign({ highlight = 'DiagnosticSignError', icon = '' })
-    sign({ highlight = 'DiagnosticSignWarn', icon = '' })
-    sign({ highlight = 'DiagnosticSignInfo', icon = '' })
-    sign({ highlight = 'DiagnosticSignHint', icon = '' })
-  end
-end
-toggle_diagnostic_signs()
-command('ToggleDiagnosticSigns', toggle_diagnostic_signs)
-
+sign({ highlight = 'DiagnosticSignError', icon = icons.error })
+sign({ highlight = 'DiagnosticSignWarn', icon = icons.warn })
+sign({ highlight = 'DiagnosticSignInfo', icon = icons.info })
+sign({ highlight = 'DiagnosticSignHint', icon = icons.hint })
 ----------------------------------------------------------------------------------------------------
 -- Diagnostic Configuration
 ----------------------------------------------------------------------------------------------------
