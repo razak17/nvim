@@ -186,13 +186,6 @@ local function show_documentation()
   vim.lsp.buf.hover()
 end
 
-local function prev_diagnostic(lvl)
-  return function() diagnostic.goto_prev({ float = false, severity = { min = lvl } }) end
-end
-local function next_diagnostic(lvl)
-  return function() diagnostic.goto_next({ float = false, severity = { min = lvl } }) end
-end
-
 local function setup_mappings(client, bufnr)
   local function with_desc(desc, alt)
     return { buffer = bufnr, desc = alt and fmt('%s: %s', alt, desc) or fmt('lsp: %s', desc) }
@@ -207,8 +200,8 @@ local function setup_mappings(client, bufnr)
   -- Leader keymaps
   --------------------------------------------------------------------------------------------------
   map({ 'n', 'x' }, '<leader>la', lsp.buf.code_action, with_desc('code action'))
-  map('n', '<leader>lk', prev_diagnostic(diagnostic.severity.WARN), with_desc('prev diagnostic'))
-  map('n', '<leader>lj', next_diagnostic(diagnostic.severity.WARN), with_desc('next diagnostic'))
+  map('n', '<leader>lk', function() vim.diagnostic.goto_prev({ float = false }) end, with_desc('prev diagnostic'))
+  map('n', '<leader>lj', function() vim.diagnostic.goto_next({ float = false }) end, with_desc('next diagnostic'))
   map('n', '<leader>lL', vim.diagnostic.setloclist, with_desc('toggle loclist diagnostics'))
   map('n', '<leader>lc', lsp.codelens.run, with_desc('run code lens'))
   map('n', '<leader>lr', lsp.buf.rename, with_desc('rename'))
