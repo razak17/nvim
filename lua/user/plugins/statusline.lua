@@ -1,6 +1,5 @@
 local fn, api, env = vim.fn, vim.api, vim.env
-local falsy, hl, icons, codicons = rvim.falsy, rvim.highlight, rvim.ui.icons, rvim.ui.codicons
-local curwin = api.nvim_get_current_win()
+local falsy, icons, codicons = rvim.falsy, rvim.ui.icons, rvim.ui.codicons
 
 local conditions = {
   buffer_not_empty = function() return fn.empty(fn.expand('%:t')) ~= 1 end,
@@ -11,6 +10,7 @@ local conditions = {
     return gitdir and #gitdir > 0 and #gitdir < #filepath
   end,
   formatting_disabled = function()
+    local curwin = api.nvim_get_current_win()
     local curbuf = api.nvim_win_get_buf(curwin)
     return vim.b[curbuf].formatting_disabled == true or vim.g.formatting_disabled == true
   end,
@@ -87,6 +87,7 @@ local function stl_lsp_clients(bufnum)
 end
 
 local function lsp_clients()
+  local curwin = api.nvim_get_current_win()
   local curbuf = api.nvim_win_get_buf(curwin)
   local client_names = rvim.map(function(client) return client.name end, stl_lsp_clients(curbuf))
   return table.concat(client_names, '  ') .. ' '
@@ -96,19 +97,14 @@ return {
   'nvim-lualine/lualine.nvim',
   lazy = false,
   config = function()
-    local P = require('onedark.palette')
-    local bg, fg = hl.tint(P.bg_dark, -0.2), P.base8
-
+    local colors = require('onedark.palette')
     local lualine_config = {
       options = {
+        theme = 'onedark',
         globalstatus = true,
         component_separators = { left = '', right = '' },
         section_separators = { left = '', right = '' },
         disabled_filetypes = { 'alpha', 'Outline' },
-        theme = {
-          normal = { c = { fg = fg, bg = bg } },
-          inactive = { c = { fg = fg, bg = bg } },
-        },
       },
       -- stylua: ignore
       sections = {
@@ -121,26 +117,26 @@ return {
     }
 
     local mode_color = {
-      n = P.blue,
-      i = P.yellowgreen,
-      v = P.magenta,
-      [''] = P.pale_blue,
-      V = P.pink,
-      c = P.yellow,
-      no = P.pale_red,
-      s = P.orange,
-      S = P.orange,
-      [''] = P.orange,
-      ic = P.yellowgreen,
-      R = P.violet,
-      Rv = P.violet,
-      cv = P.pale_red,
-      ce = P.pale_red,
-      r = P.cyan,
-      rm = P.cyan,
-      ['r?'] = P.cyan,
-      ['!'] = P.pale_red,
-      t = P.red,
+      n = colors.blue,
+      i = colors.yellowgreen,
+      v = colors.magenta,
+      [''] = colors.pale_blue,
+      V = colors.pink,
+      c = colors.yellow,
+      no = colors.pale_red,
+      s = colors.orange,
+      S = colors.orange,
+      [''] = colors.orange,
+      ic = colors.yellowgreen,
+      R = colors.violet,
+      Rv = colors.violet,
+      cv = colors.pale_red,
+      ce = colors.pale_red,
+      r = colors.cyan,
+      rm = colors.cyan,
+      ['r?'] = colors.cyan,
+      ['!'] = colors.pale_red,
+      t = colors.red,
     }
 
     local function block_color() return { fg = mode_color[fn.mode()] } end
@@ -150,14 +146,14 @@ return {
 
     ins_left({ block, color = block_color, padding = { left = 0, right = 1 } })
 
-    ins_left({ 'branch', icon = '', padding = { left = 0, right = 1 }, color = { fg = P.yellowgreen } })
+    ins_left({ 'branch', icon = '', padding = { left = 0, right = 1 }, color = { fg = colors.yellowgreen } })
 
     ins_left({ 'filename', cond = conditions.buffer_not_empty, padding = { left = 0, right = 1 }, path = 1 })
 
     ins_left({
       python_env,
       padding = { left = 0, right = 0 },
-      color = { fg = P.yellowgreen },
+      color = { fg = colors.yellowgreen },
       cond = function() return vim.bo.filetype == 'python' and conditions.hide_in_width() end,
     })
 
@@ -178,7 +174,7 @@ return {
 
     ins_left({
       npm_package_info,
-      color = { fg = P.comment },
+      color = { fg = colors.comment },
       cond = function() return fn.expand('%') == 'package.json' and conditions.hide_in_width() end,
     })
 
@@ -201,18 +197,18 @@ return {
         removed = codicons.git.removed .. ' ',
       },
       diff_color = {
-        added = { fg = P.yellowgreen },
-        modified = { fg = P.dark_orange },
-        removed = { fg = P.error_red },
+        added = { fg = colors.yellowgreen },
+        modified = { fg = colors.dark_orange },
+        removed = { fg = colors.error_red },
       },
       cond = conditions.hide_in_width,
     })
 
-    ins_right({ lazy_updates, color = { fg = P.orange }, cond = conditions.hide_in_width })
+    ins_right({ lazy_updates, color = { fg = colors.orange }, cond = conditions.hide_in_width })
 
     ins_right({
       function() return ' LSP(s):' end,
-      color = { fg = P.comment, gui = 'italic' },
+      color = { fg = colors.comment, gui = 'italic' },
       cond = conditions.hide_in_width,
     })
 
@@ -228,21 +224,21 @@ return {
     ins_right({
       function() return codicons.misc.shaded_lock end,
       padding = { left = 1, right = 1 },
-      color = { fg = P.comment, gui = 'bold' },
+      color = { fg = colors.comment, gui = 'bold' },
       cond = function() return conditions.hide_in_width() and conditions.formatting_disabled() end,
     })
 
     ins_right({
       function() return icons.misc.spell_check end,
       padding = { left = 1, right = 0 },
-      color = { fg = P.blue, gui = 'bold' },
+      color = { fg = colors.blue, gui = 'bold' },
       cond = function() return vim.wo.spell and conditions.hide_in_width() end,
     })
 
     ins_right({
       ts_active,
       padding = { left = 1, right = 0 },
-      color = { fg = P.darker_green, gui = 'bold' },
+      color = { fg = colors.darker_green, gui = 'bold' },
       cond = conditions.hide_in_width,
     })
 
