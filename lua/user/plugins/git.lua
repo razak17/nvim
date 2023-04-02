@@ -52,34 +52,33 @@ return {
       { 'gh', [[:'<'>DiffviewFileHistory<CR>]], desc = 'diffview: file history', mode = 'v' },
       { '<localleader>gh', '<Cmd>DiffviewFileHistory<CR>', desc = 'diffview: file history' },
     },
-    config = function()
+    opts = {
+      default_args = { DiffviewFileHistory = { '%' } },
+      enhanced_diff_hl = true,
+      hooks = {
+        diff_buf_read = function()
+          local opt = vim.opt_local
+          opt.wrap, opt.list, opt.relativenumber = false, false, false
+          opt.colorcolumn = ''
+        end,
+      },
+      keymaps = {
+        view = { q = '<Cmd>DiffviewClose<CR>' },
+        file_panel = { q = '<Cmd>DiffviewClose<CR>' },
+        file_history_panel = { q = '<Cmd>DiffviewClose<CR>' },
+      },
+    },
+    config = function(_, opts)
       rvim.highlight.plugin('diffview', {
         { DiffAddedChar = { bg = 'NONE', fg = { from = 'DiffAdd', attr = 'bg', alter = 0.3 } } },
-        {
-          DiffChangedChar = { bg = 'NONE', fg = { from = 'DiffChange', attr = 'bg', alter = 0.3 } },
-        },
+        { DiffChangedChar = { bg = 'NONE', fg = { from = 'DiffChange', attr = 'bg', alter = 0.3 } } },
         { DiffviewStatusAdded = { link = 'DiffAddedChar' } },
         { DiffviewStatusModified = { link = 'DiffChangedChar' } },
         { DiffviewStatusRenamed = { link = 'DiffChangedChar' } },
         { DiffviewStatusUnmerged = { link = 'DiffChangedChar' } },
         { DiffviewStatusUntracked = { link = 'DiffAddedChar' } },
       })
-      require('diffview').setup({
-        default_args = { DiffviewFileHistory = { '%' } },
-        hooks = {
-          diff_buf_read = function()
-            local opt = vim.opt_local
-            opt.wrap, opt.list, opt.relativenumber = false, false, false
-            opt.colorcolumn = ''
-          end,
-        },
-        enhanced_diff_hl = true,
-        keymaps = {
-          view = { q = '<Cmd>DiffviewClose<CR>' },
-          file_panel = { q = '<Cmd>DiffviewClose<CR>' },
-          file_history_panel = { q = '<Cmd>DiffviewClose<CR>' },
-        },
-      })
+      require('diffview').setup(opts)
     end,
   },
   {
