@@ -136,6 +136,7 @@ rvim.augroup('Utilities', {
   --- disable formatting in directories in third party repositories
   event = { 'BufEnter' },
   command = function(args)
+    -- TODO: Find out and fix format on save disabling in my config dir
     local paths = vim.split(vim.o.runtimepath, ',')
     local match = rvim.find(function(dir)
       local path = api.nvim_buf_get_name(args.buf)

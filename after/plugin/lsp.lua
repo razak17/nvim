@@ -4,7 +4,7 @@ rvim.lsp.templates_dir = join_paths(vim.call('stdpath', 'data'), 'site', 'after'
 
 local lsp, fn, api, fmt = vim.lsp, vim.fn, vim.api, string.format
 local b = vim.b --[[@rvim table<string, any>]]
-local L = lsp.log_levels
+local L, S = vim.lsp.log_levels, vim.diagnostic.severity
 
 local icons = rvim.ui.codicons.lsp
 local border = rvim.ui.current.border
@@ -186,6 +186,13 @@ local function show_documentation()
   vim.lsp.buf.hover()
 end
 
+local function prev_diagnostic(lvl)
+  return function() diagnostic.goto_prev({ float = false, severity = { min = lvl } }) end
+end
+local function next_diagnostic(lvl)
+  return function() diagnostic.goto_next({ float = false, severity = { min = lvl } }) end
+end
+
 local function setup_mappings(client, bufnr)
   local function with_desc(desc, alt)
     return { buffer = bufnr, desc = alt and fmt('%s: %s', alt, desc) or fmt('lsp: %s', desc) }
@@ -200,8 +207,8 @@ local function setup_mappings(client, bufnr)
   -- Leader keymaps
   --------------------------------------------------------------------------------------------------
   map({ 'n', 'x' }, '<leader>la', lsp.buf.code_action, with_desc('code action'))
-  map('n', '<leader>lk', function() vim.diagnostic.goto_prev({ float = false }) end, with_desc('prev diagnostic'))
-  map('n', '<leader>lj', function() vim.diagnostic.goto_next({ float = false }) end, with_desc('next diagnostic'))
+  map('n', '<leader>lk', prev_diagnostic(diagnostic.severity.WARN), with_desc('prev diagnostic'))
+  map('n', '<leader>lj', next_diagnostic(diagnostic.severity.WARN), with_desc('next diagnostic'))
   map('n', '<leader>lL', vim.diagnostic.setloclist, with_desc('toggle loclist diagnostics'))
   map('n', '<leader>lc', lsp.codelens.run, with_desc('run code lens'))
   map('n', '<leader>lr', lsp.buf.rename, with_desc('rename'))
@@ -358,12 +365,14 @@ end)
 ----------------------------------------------------------------------------------------------------
 -- Signs
 ----------------------------------------------------------------------------------------------------
+---@param opts {highlight: string, icon: string}
 local function sign(opts)
   fn.sign_define(opts.highlight, {
     text = opts.icon,
     texthl = opts.highlight,
-    linehl = fmt('%sLine', opts.highlight),
-    culhl = opts.highlight .. 'Line',
+    numhl = opts.highlight .. 'Nr' or nil,
+    culhl = opts.highlight .. 'CursorNr' or nil,
+    linehl = opts.highlight .. 'Line' or nil,
   })
 end
 
@@ -392,7 +401,9 @@ local max_width = math.min(math.floor(vim.o.columns * 0.7), 100)
 local max_height = math.min(math.floor(vim.o.lines * 0.3), 30)
 
 diagnostic.config({
-  signs = { active = rvim.lsp.signs.active, values = icons },
+  signs = {
+    severity = { min = S.WARN },
+  },
   underline = true,
   update_in_insert = false,
   severity_sort = true,
@@ -418,6 +429,7 @@ local function toggle_virtual_text()
   if type(config.virtual_text) == 'boolean' then
     config = vim.tbl_extend('force', config, {
       virtual_text = {
+        severity = { min = S.WARN },
         prefix = '',
         spacing = 1,
         format = function(d)
