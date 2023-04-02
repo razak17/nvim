@@ -73,7 +73,7 @@ return {
     }
 
     dashboard.section.buttons.val = {
-      button('Directory', 's', '  Restore session', ':SessionLoad<CR>'),
+      button('Directory', 'r', '  Restore session', ':SessionLoad<CR>'),
       button('Todo', 'p', '  Pick a session', '<Cmd>ListSessions<CR>'),
       button('String', 'f', '  Find file', ':Telescope find_files<CR>'),
       button('Define', 'w', '  Find text', ':Telescope live_grep<CR>'),
