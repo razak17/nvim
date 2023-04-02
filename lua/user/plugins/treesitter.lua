@@ -63,7 +63,7 @@ return {
         -- stylua: ignore
         ensure_installed = {
           'lua', 'dart', 'rust', 'typescript', 'tsx', 'javascript', 'markdown', 'markdown_inline',
-          'prisma', 'graphql', 'go', 'python', 'json', 'http', 'help', 'git_rebase', 'bash', 'c',
+          'prisma', 'graphql', 'go', 'python', 'json', 'http', 'vimdoc', 'git_rebase', 'bash', 'c',
           'diff', 'toml', 'cpp', 'jsonc', 'query',
         },
       })
