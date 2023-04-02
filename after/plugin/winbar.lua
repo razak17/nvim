@@ -145,12 +145,7 @@ local function set_winbar()
 end
 
 rvim.augroup('AttachWinbar', {
-  event = { 'BufWinEnter', 'TabNew', 'TabEnter', 'BufEnter', 'WinClosed' },
-  desc = 'Toggle winbar',
-  command = set_winbar,
-}, {
-  event = 'User',
-  pattern = { 'DiffviewDiffBufRead', 'DiffviewDiffBufWinEnter' },
+  event = { 'TabEnter', 'BufEnter', 'WinClosed' },
   desc = 'Toggle winbar',
   command = set_winbar,
 })
