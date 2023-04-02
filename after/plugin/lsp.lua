@@ -271,9 +271,6 @@ local client_overrides = {
 ---@param client lsp.Client
 ---@param bufnr number
 local function setup_plugins(client, bufnr)
-  -- nvim-navic
-  local navic_ok, navic = rvim.pcall(require, 'nvim-navic')
-  if navic_ok and client.server_capabilities.documentSymbolProvider then navic.attach(client, bufnr) end
   -- lsp-inlayhints
   local hints_ok, hints = rvim.pcall(require, 'lsp-inlayhints')
   if hints_ok and client.name ~= 'tsserver' then hints.on_attach(client, bufnr) end

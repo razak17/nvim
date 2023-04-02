@@ -1,6 +1,6 @@
 local api, cmd, fn = vim.api, vim.cmd, vim.fn
-local ui = rvim.ui
-local hl, border = rvim.highlight, ui.current.border
+local ui, hl = rvim.ui, rvim.highlight
+local border = ui.current.border
 
 return {
   'nvim-lua/popup.nvim',
@@ -178,11 +178,11 @@ return {
   {
     'SmiteshP/nvim-navic',
     dependencies = { 'neovim/nvim-lspconfig' },
-    init = function() vim.g.navic_silence = true end,
     opts = {
       highlight = false,
       icons = ui.current.lsp_icons,
       depth_limit_indicator = ui.icons.misc.ellipsis,
+      lsp = { auto_attach = true },
       separator = (' %s '):format(ui.icons.misc.triangle),
     },
   },
