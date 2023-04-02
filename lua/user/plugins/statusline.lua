@@ -1,46 +1,104 @@
-local api = vim.api
-local icons = rvim.ui.icons
-local codicons = rvim.ui.codicons
+local fn, api, env = vim.fn, vim.api, vim.env
+local falsy, hl, icons, codicons = rvim.falsy, rvim.highlight, rvim.ui.icons, rvim.ui.codicons
+local curwin = api.nvim_get_current_win()
 
 local conditions = {
-  buffer_not_empty = function() return vim.fn.empty(vim.fn.expand('%:t')) ~= 1 end,
-  hide_in_width = function() return vim.fn.winwidth(0) > 99 end,
+  buffer_not_empty = function() return fn.empty(fn.expand('%:t')) ~= 1 end,
+  hide_in_width = function() return fn.winwidth(0) > 99 end,
   check_git_workspace = function()
-    local filepath = vim.fn.expand('%:p:h')
-    local gitdir = vim.fn.finddir('.git', filepath .. ';')
+    local filepath = fn.expand('%:p:h')
+    local gitdir = fn.finddir('.git', filepath .. ';')
     return gitdir and #gitdir > 0 and #gitdir < #filepath
+  end,
+  formatting_disabled = function()
+    local curbuf = api.nvim_win_get_buf(curwin)
+    return vim.b[curbuf].formatting_disabled == true or vim.g.formatting_disabled == true
+  end,
+  is_pipfile_root = function()
+    return not vim.tbl_isempty(vim.fs.find({ 'Pipfile', 'Pipfile.lock' }, {
+      path = fn.expand('%:p'),
+      upward = true,
+    }))
   end,
 }
 
-local function is_pipfile_root()
-  return not vim.tbl_isempty(vim.fs.find({ 'Pipfile', 'Pipfile.lock' }, {
-    path = vim.fn.expand('%:p'),
-    upward = true,
-  }))
+local function ts_active()
+  local b = api.nvim_get_current_buf()
+  if next(vim.treesitter.highlighter.active[b]) then return icons.misc.active_ts .. ' TS' end
+  return ''
 end
 
 local function env_cleanup(venv)
+  local final_venv = venv
   if string.find(venv, '/') then
-    local final_venv = venv
     for w in venv:gmatch('([^/]+)') do
       final_venv = w
     end
-    venv = final_venv
   end
-  if is_pipfile_root() then venv = venv:match('^([^%-]*)') end
-  return venv
+  if conditions.is_pipfile_root() then return final_venv:match('^([^%-]*)') end
+  return final_venv
+end
+
+local function python_env()
+  local venv
+  if env.CONDA_DEFAULT_ENV then
+    venv = env.CONDA_DEFAULT_ENV
+  elseif env.VIRTUAL_ENV then
+    venv = env.VIRTUAL_ENV
+  end
+  if venv == nil then return '' end
+  return string.format('[%s]', env_cleanup(venv))
+end
+
+local function lazy_updates()
+  local lazy_ok, lazy = pcall(require, 'lazy.status')
+  local pending_updates = lazy_ok and lazy.updates() or nil
+  local has_pending_updates = lazy_ok and lazy.has_updates() or false
+  if has_pending_updates then return pending_updates end
+  return ''
+end
+
+local function npm_package_info()
+  local ok, package_info = pcall(require, 'package-info')
+  if not ok then return '' end
+  return package_info.get_status()
+end
+
+local function stl_lsp_clients(bufnum)
+  local clients = vim.lsp.get_active_clients({ bufnr = bufnum })
+  if falsy(clients) then return { { name = 'No Active LSP' } } end
+  table.sort(clients, function(a, b)
+    if a.name == 'null-ls' then
+      return false
+    elseif b.name == 'null-ls' then
+      return true
+    end
+    return a.name < b.name
+  end)
+
+  return vim.tbl_map(function(client)
+    if client.name:match('null') then
+      local sources = require('null-ls.sources').get_available(vim.bo[bufnum].filetype)
+      local source_names = vim.tbl_map(function(s) return s.name end, sources)
+      return { name = '␀ ' .. table.concat(source_names, ', ') }
+    end
+    return { name = client.name }
+  end, clients)
+end
+
+local function lsp_clients()
+  local curbuf = api.nvim_win_get_buf(curwin)
+  local client_names = rvim.map(function(client) return client.name end, stl_lsp_clients(curbuf))
+  return table.concat(client_names, '  ') .. ' '
 end
 
 return {
   'nvim-lualine/lualine.nvim',
   lazy = false,
   config = function()
-    local hl = rvim.highlight
     local P = require('onedark.palette')
-
     local bg, fg = hl.tint(P.bg_dark, -0.2), P.base8
 
-    -- Config
     local lualine_config = {
       options = {
         globalstatus = true,
@@ -52,21 +110,13 @@ return {
           inactive = { c = { fg = fg, bg = bg } },
         },
       },
+      -- stylua: ignore
       sections = {
-        lualine_a = {},
-        lualine_b = {},
-        lualine_c = {},
-        lualine_x = {},
-        lualine_y = {},
-        lualine_z = {},
+        lualine_a = {}, lualine_b = {}, lualine_y = {}, lualine_z = {}, lualine_c = {}, lualine_x = {},
       },
+      -- stylua: ignore
       inactive_sections = {
-        lualine_a = {},
-        lualine_b = {},
-        lualine_c = {},
-        lualine_x = {},
-        lualine_y = {},
-        lualine_z = {},
+        lualine_a = {}, lualine_b = {}, lualine_y = {}, lualine_z = {}, lualine_c = {}, lualine_x = {},
       },
     }
 
@@ -93,37 +143,19 @@ return {
       t = P.red,
     }
 
+    local function block_color() return { fg = mode_color[fn.mode()] } end
+    local function block() return icons.separators.bar end
     local function ins_left(component) table.insert(lualine_config.sections.lualine_c, component) end
-
     local function ins_right(component) table.insert(lualine_config.sections.lualine_x, component) end
 
-    ins_left({
-      function() return icons.separators.bar end,
-      color = function() return { fg = mode_color[vim.fn.mode()] } end,
-      padding = { left = 0, right = 1 },
-    })
+    ins_left({ block, color = block_color, padding = { left = 0, right = 1 } })
+
+    ins_left({ 'branch', icon = '', padding = { left = 0, right = 1 }, color = { fg = P.yellowgreen } })
+
+    ins_left({ 'filename', cond = conditions.buffer_not_empty, padding = { left = 0, right = 1 }, path = 1 })
 
     ins_left({
-      'branch',
-      icon = '',
-      padding = { left = 1, right = 1 },
-      color = { fg = P.yellowgreen },
-    })
-
-    ins_left({
-      'filename',
-      cond = conditions.buffer_not_empty,
-      path = 1,
-    })
-
-    ins_left({
-      function()
-        local venv = vim.env.CONDA_DEFAULT_ENV
-        if venv then return string.format('[%s]', env_cleanup(venv)) end
-        venv = vim.env.VIRTUAL_ENV
-        if venv then return string.format('[%s]', env_cleanup(venv)) end
-        return venv
-      end,
+      python_env,
       padding = { left = 0, right = 0 },
       color = { fg = P.yellowgreen },
       cond = function() return vim.bo.filetype == 'python' and conditions.hide_in_width() end,
@@ -139,6 +171,15 @@ return {
         hint = codicons.lsp.hint .. ' ',
       },
       cond = conditions.hide_in_width,
+    })
+
+    -- Insert mid section.
+    ins_left({ function() return '%=%=' end })
+
+    ins_left({
+      npm_package_info,
+      color = { fg = P.comment },
+      cond = function() return fn.expand('%') == 'package.json' and conditions.hide_in_width() end,
     })
 
     -- Add components to right sections
@@ -167,20 +208,7 @@ return {
       cond = conditions.hide_in_width,
     })
 
-    ins_right({
-      function()
-        local package_info = require('package-info')
-        return package_info.get_status()
-      end,
-      cond = function() return vim.fn.expand('%') == 'package.json' end,
-      padding = { left = 1, right = 0 },
-    })
-
-    ins_right({
-      require('lazy.status').updates,
-      cond = require('lazy.status').has_updates,
-      color = { fg = P.orange },
-    })
+    ins_right({ lazy_updates, color = { fg = P.orange }, cond = conditions.hide_in_width })
 
     ins_right({
       function() return ' LSP(s):' end,
@@ -189,62 +217,19 @@ return {
     })
 
     ins_right({
-      function()
-        local buf_clients = vim.lsp.get_active_clients()
-        table.sort(buf_clients, function(a, b)
-          if a.name == 'null-ls' then
-            return false
-          elseif b.name == 'null-ls' then
-            return true
-          end
-          return a.name < b.name
-        end)
-
-        -- add lsp clients
-        local client_names = {}
-        for _, client in pairs(buf_clients) do
-          if client.name ~= 'null-ls' then table.insert(client_names, client.name) end
-        end
-
-        -- add null-ls sources
-        local registered_sources = {}
-        local available_sources = require('null-ls.sources').get_available(vim.bo.filetype)
-        for _, source in ipairs(available_sources) do
-          for method in pairs(source.methods) do
-            registered_sources[method] = registered_sources[method] or {}
-            table.insert(registered_sources[method], source.name)
-          end
-        end
-
-        local null_ls = {}
-        local formatter = registered_sources['NULL_LS_FORMATTING']
-        local linter = registered_sources['NULL_LS_DIAGNOSTICS']
-        if formatter ~= nil then vim.list_extend(null_ls, formatter) end
-        if linter ~= nil then vim.list_extend(null_ls, linter) end
-
-        if rvim.falsy(client_names) then return 'No Active LSP' end
-        local clients = table.concat(client_names, '  ')
-        null_ls = table.concat(null_ls, ', ')
-        clients = clients .. ' '
-        if not rvim.falsy(null_ls) then clients = clients .. ' ' .. '␀ ' .. null_ls .. ' ' end
-        return clients
-      end,
+      lsp_clients,
       color = { gui = 'bold' },
+      padding = { left = 0, right = 1 },
       cond = conditions.hide_in_width,
     })
 
-    ins_right({ 'filetype', cond = nil, padding = { left = 1, right = 1 } })
+    ins_right({ 'filetype', cond = nil, padding = { left = 0, right = 1 } })
 
     ins_right({
       function() return codicons.misc.shaded_lock end,
       padding = { left = 1, right = 1 },
       color = { fg = P.comment, gui = 'bold' },
-      cond = function()
-        local curwin = api.nvim_get_current_win()
-        local curbuf = api.nvim_win_get_buf(curwin)
-        local formatting_disabled = vim.b[curbuf].formatting_disabled == true or vim.g.formatting_disabled == true
-        return conditions.hide_in_width() and formatting_disabled
-      end,
+      cond = function() return conditions.hide_in_width() and conditions.formatting_disabled() end,
     })
 
     ins_right({
@@ -255,24 +240,17 @@ return {
     })
 
     ins_right({
-      function()
-        local b = vim.api.nvim_get_current_buf()
-        if next(vim.treesitter.highlighter.active[b]) then return icons.misc.active_ts .. ' TS' end
-        return ''
-      end,
+      ts_active,
       padding = { left = 1, right = 0 },
       color = { fg = P.darker_green, gui = 'bold' },
       cond = conditions.hide_in_width,
     })
 
-    ins_right({ 'location' })
+    ins_right({ 'location', padding = { left = 1, right = 0 } })
 
-    ins_right({ 'progress' })
+    ins_right({ 'progress', padding = { left = 1, right = 0 } })
 
-    ins_right({
-      function() return icons.separators.bar end,
-      color = function() return { fg = mode_color[vim.fn.mode()] } end,
-    })
+    ins_right({ block, color = block_color, padding = { left = 1, right = 0 } })
 
     require('lualine').setup(lualine_config)
   end,
