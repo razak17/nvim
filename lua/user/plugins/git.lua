@@ -1,5 +1,5 @@
 local cwd = vim.fn.getcwd()
-local hl = rvim.highlight
+local highlight = rvim.highlight
 local icons = rvim.ui.icons.separators
 
 local function neogit() return require('neogit') end
@@ -32,8 +32,7 @@ return {
     },
     config = function(_, opts)
       require('neogit').setup(opts)
-      -- NOTE: highlights must be set AFTER neogit's setup
-      hl.plugin('neogit', {
+      highlight.plugin('neogit', { -- NOTE: highlights must be set AFTER neogit's setup
         { NeogitDiffAdd = { link = 'DiffAdd' } },
         { NeogitDiffDelete = { link = 'DiffDelete' } },
         { NeogitDiffAddHighlight = { link = 'DiffAdd' } },
@@ -86,12 +85,12 @@ return {
     event = { 'BufReadPre', 'BufNewFile' },
     opts = {
       signs = {
-        add = { hl = 'GitSignsAdd', text = icons.right_block },
-        change = { hl = 'GitSignsChange', text = icons.right_block },
-        delete = { hl = 'GitSignsDelete', text = icons.right_block },
-        topdelete = { hl = 'GitSignsChangeDelete', text = icons.right_block },
-        changedelete = { hl = 'GitSignsChange', text = icons.right_block },
-        untracked = { hl = 'GitSignsAdd', text = icons.right_block },
+        add = { highlight = 'GitSignsAdd', text = icons.right_block },
+        change = { highlight = 'GitSignsChange', text = icons.right_block },
+        delete = { highlight = 'GitSignsDelete', text = icons.right_block },
+        topdelete = { highlight = 'GitSignsChangeDelete', text = icons.right_block },
+        changedelete = { highlight = 'GitSignsChange', text = icons.right_block },
+        untracked = { highlight = 'GitSignsAdd', text = icons.right_block },
       },
       _threaded_diff = true,
       _extmark_signs = false,
@@ -107,7 +106,7 @@ return {
         local function bmap(mode, l, r, opts)
           opts = opts or {}
           opts.buffer = bufnr
-          vim.keymap.set(mode, l, r, opts)
+          map(mode, l, r, opts)
         end
 
         map('n', '<leader>hs', gs.stage_hunk, { desc = 'stage hunk' })
@@ -120,9 +119,7 @@ return {
         map('n', '<leader>gr', gs.reset_buffer, { desc = 'reset entire buffer' })
         map('n', '<leader>gw', gs.stage_buffer, { desc = 'stage entire buffer' })
 
-        map('n', '<leader>gl', function() gs.setqflist('all') end, {
-          desc = 'list modified in quickfix',
-        })
+        map('n', '<leader>gl', function() gs.setqflist('all') end, { desc = 'list modified in quickfix' })
         bmap({ 'n', 'v' }, '<leader>hs', '<Cmd>Gitsigns stage_hunk<CR>', { desc = 'stage hunk' })
         bmap({ 'n', 'v' }, '<leader>hr', '<Cmd>Gitsigns reset_hunk<CR>', { desc = 'reset hunk' })
         bmap({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>', { desc = 'select hunk' })
