@@ -1,6 +1,6 @@
 if not rvim then return end
 local settings, highlight = rvim.filetype_settings, rvim.highlight
-local cmd, fn, api = vim.cmd, vim.fn, vim.api
+local cmd, fn, api, opt_l = vim.cmd, vim.fn, vim.api, vim.opt_local
 
 settings({
   [{ 'gitcommit', 'gitrebase' }] = {
@@ -47,6 +47,31 @@ settings({
       formatoptions = vim.opt.formatoptions:remove('t'),
       iskeyword = vim.opt.iskeyword:append('$,@-@'),
     },
+  },
+  help = {
+    opt = {
+      list = false,
+      spell = true,
+      textwidth = 78,
+    },
+    plugins = {
+      ['virt-column'] = function(col)
+        if not vim.bo.readonly then col.setup_buffer({ virtcolumn = '+1' }) end
+      end,
+    },
+    function(args)
+      local opts = { buffer = args.buf }
+      -- if this a vim help file create mappings to make navigation easier otherwise enable preferred editing settings
+      if vim.startswith(fn.expand('%'), vim.env.VIMRUNTIME) or vim.bo.readonly then
+        opt_l.spell = false
+        api.nvim_create_autocmd('BufWinEnter', { buffer = 0, command = 'wincmd L | vertical resize 80' })
+        -- https://vim.fandom.com/wiki/Learn_to_use_help
+        map('n', '<CR>', '<C-]>', opts)
+        map('n', '<BS>', '<C-T>', opts)
+      else
+        map('n', '<leader>ml', 'maGovim:tw=78:ts=8:noet:ft=help:norl:<esc>`a', opts)
+      end
+    end,
   },
   httpResult = {
     function()
