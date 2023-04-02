@@ -7,3 +7,4 @@ autocommands
 lua
 dir
 config
+filtype
