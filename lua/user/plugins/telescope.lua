@@ -78,9 +78,15 @@ local function builtin() return require('telescope.builtin') end
 local function delta_git_commits(opts) builtin().git_commits(delta_opts(opts)) end
 local function delta_git_bcommits(opts) builtin().git_bcommits(delta_opts(opts, true)) end
 
-local function b(picker, opts)
-  opts = opts or {}
-  return function() require('telescope.builtin')[picker](opts) end
+local function b(picker)
+  return function() require('telescope.builtin')[picker]() end
+end
+
+local function stopinsert(callback)
+  return function(prompt_bufnr)
+    vim.cmd.stopinsert()
+    vim.schedule(function() callback(prompt_bufnr) end)
+  end
 end
 
 return {
@@ -96,7 +102,7 @@ return {
     { '<leader>fh', frecency, desc = 'Most (f)recently used files' },
     { '<leader>fL', luasnips, desc = 'luasnip: available snippets' },
     { '<leader>fn', notifications, desc = 'notify: notifications' },
-    { '<leader>fo', b('buffers'), desc = 'buffers' },
+    { '<leader>fo', b('oldfiles'), desc = 'oldfiles' },
     { '<leader>fp', projects, desc = 'projects' },
     { '<leader>fr', b('resume'), desc = 'resume last picker' },
     { '<leader>fs', live_grep, desc = 'find string' },
@@ -139,13 +145,6 @@ return {
     end
 
     local function multi_selection_open(prompt_bufnr) multiopen(prompt_bufnr, 'edit') end
-
-    local function stopinsert(callback)
-      return function(prompt_bufnr)
-        vim.cmd.stopinsert()
-        vim.schedule(function() callback(prompt_bufnr) end)
-      end
-    end
 
     require('telescope').setup({
       defaults = {
