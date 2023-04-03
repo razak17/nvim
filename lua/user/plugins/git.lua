@@ -93,7 +93,7 @@ return {
         untracked = { highlight = 'GitSignsAdd', text = icons.right_block },
       },
       _threaded_diff = true,
-      _extmark_signs = false,
+      _extmark_signs = true,
       _signs_staged_enable = true,
       word_diff = false,
       numhl = false,
