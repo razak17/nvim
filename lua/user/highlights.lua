@@ -89,7 +89,7 @@ local function tint(color, percent)
   return fmt('#%02x%02x%02x', blend(r), blend(g), blend(b))
 end
 
----Get the value a highlight group whilst handling errors, fallbacks rvim well rvim returning a gui value
+---Get the value a highlight group whilst handling errors, fallbacks as well as returning a gui value
 ---If no attribute is specified return the entire highlight table
 ---in the right format
 ---@param group string

@@ -8,3 +8,5 @@ lua
 dir
 config
 filtype
+rvim
+tmux
