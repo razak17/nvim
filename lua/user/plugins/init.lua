@@ -23,7 +23,8 @@ return {
     keys = { { '<leader>lm', '<cmd>Mason<CR>', { desc = 'mason: info' } } },
     build = ':MasonUpdate',
     opts = {
-      registries = { 'github:mason-org/mason-registry', 'lua:mason-registry.index' },
+      registries = { 'lua:mason-registry.index', 'github:mason-org/mason-registry' },
+      providers = { 'mason.providers.registry-api', 'mason.providers.client' },
       ui = { border = border, height = 0.8 },
     },
   },
