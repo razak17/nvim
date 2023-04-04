@@ -46,10 +46,12 @@ local function general_overrides()
     ------------------------------------------------------------------------------------------------
     -- LSP
     ------------------------------------------------------------------------------------------------
-    { LspCodeLens = { link = 'NonText' } },
-    -- This represents when a reference is assigned which is more interesting than regular
-    -- occurrences so should be highlighted more distinctly
-    { LspReferenceWrite = { bold = true } },
+    { LspCodeLens = { inherit = 'Comment', bold = true, italic = false } },
+    { LspCodeLensSeparator = { bold = false, italic = false } },
+    { LspReferenceText = { bg = 'NONE', underline = true, sp = { from = 'Whitespace', attr = 'fg' } } },
+    { LspReferenceRead = { link = 'LspReferenceText' } },
+    { LspReferenceWrite = { inherit = 'LspReferenceText', bold = true, italic = true, underline = true } },
+    { LspSignatureActiveParameter = { link = 'Visual' } },
   })
 end
 
