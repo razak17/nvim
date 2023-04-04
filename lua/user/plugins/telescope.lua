@@ -102,7 +102,7 @@ return {
     { '<leader>fh', frecency, desc = 'Most (f)recently used files' },
     { '<leader>fL', luasnips, desc = 'luasnip: available snippets' },
     { '<leader>fn', notifications, desc = 'notify: notifications' },
-    { '<leader>fo', b('oldfiles'), desc = 'oldfiles' },
+    { '<leader>fo', b('buffers'), desc = 'buffers' },
     { '<leader>fp', projects, desc = 'projects' },
     { '<leader>fr', b('resume'), desc = 'resume last picker' },
     { '<leader>fs', live_grep, desc = 'find string' },
@@ -209,11 +209,7 @@ return {
           show_all_buffers = true,
           ignore_current_buffer = true,
           previewer = false,
-          theme = 'dropdown',
-          mappings = {
-            i = { ['<c-x>'] = 'delete_buffer' },
-            n = { ['<c-x>'] = 'delete_buffer' },
-          },
+          mappings = { i = { ['<c-x>'] = 'delete_buffer' }, n = { ['<c-x>'] = 'delete_buffer' } },
         }),
         find_files = { hidden = true },
         keymaps = dropdown({
@@ -221,11 +217,7 @@ return {
         }),
         live_grep = themes.get_ivy({
           borderchars = { preview = ui.border.ivy },
-          only_sort_text = true,
-          -- stylua: ignore
-          file_ignore_patterns = {
-            '.git/', '%.html', 'dotbot/.*', 'zsh/plugins/.*', 'yarn.lock', 'node_modules', 'package-lock.json',
-          },
+          file_ignore_patterns = { '.git/', '%.svg', '%.lock', 'node_modules', 'package-lock.json' },
           max_results = 2000,
         }),
         registers = cursor(),
