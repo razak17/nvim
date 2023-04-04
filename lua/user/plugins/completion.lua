@@ -44,17 +44,7 @@ return {
 
       rvim.highlight.plugin('Cmp', hl_defs)
 
-      local cmp_window = {
-        border = border,
-        winhighlight = table.concat({
-          'Normal:NormalFloat',
-          'FloatBorder:FloatBorder',
-          'CursorLine:Visual',
-          completion = { border = border },
-          documentation = { border = border },
-          'Search:None',
-        }, ','),
-      }
+      local cmp_window = { border = border, winhighlight = 'FloatBorder:FloatBorder' }
 
       local function tab(fallback)
         if cmp.visible() then
