@@ -36,6 +36,7 @@ return {
         {
           { CmpItemAbbr = { fg = { from = 'Search' } } },
           { CmpItemAbbrDeprecated = { strikethrough = true, inherit = 'Comment' } },
+          { CmpItemAbbrMatch = { fg = { from = 'CursorLineNr' } } },
           { CmpItemAbbrMatchFuzzy = { fg = { from = 'Title' } } },
           { CmpItemMenu = { fg = { from = 'Comment', attr = 'fg' }, italic = true, bold = true } },
         }
