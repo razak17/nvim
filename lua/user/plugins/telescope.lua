@@ -1,4 +1,5 @@
 local fmt, ui = string.format, rvim.ui
+local border = ui.border
 local data = vim.call('stdpath', 'data')
 
 -- A helper function to limit the size of a telescope window to fit the maximum available
@@ -13,14 +14,14 @@ end
 ---@return table
 local function dropdown(opts)
   opts = opts or {}
-  opts.borderchars = ui.border.ui_select
+  opts.borderchars = border.ui_select
   return require('telescope.themes').get_dropdown(opts)
 end
 
 local function cursor(opts)
   return require('telescope.themes').get_cursor(vim.tbl_extend('keep', opts or {}, {
     layout_config = { width = 0.4, height = fit_to_available_height },
-    borderchars = ui.border.ui_select,
+    borderchars = border.ui_select,
   }))
 end
 
@@ -89,6 +90,21 @@ local function stopinsert(callback)
   end
 end
 
+-- @see: https://github.com/nvim-telescope/telescope.nvim/issues/1048
+-- @see: https://github.com/whatsthatsmell/dots/blob/master/public%20dots/vim-nvim/lua/joel/telescope/init.lua
+-- Open multiple files at once
+local function multiopen(prompt_bufnr, open_cmd)
+  local actions = require('telescope.actions')
+  local action_state = require('telescope.actions.state')
+  local picker = action_state.get_current_picker(prompt_bufnr)
+  local num_selections = #picker:get_multi_selection()
+  if not num_selections or num_selections <= 1 then actions.add_selection(prompt_bufnr) end
+  actions.send_selected_to_qflist(prompt_bufnr)
+  vim.cmd('cfdo ' .. open_cmd)
+end
+
+local function multi_selection_open(prompt_bufnr) multiopen(prompt_bufnr, 'edit') end
+
 return {
   'nvim-telescope/telescope.nvim',
   event = 'VimEnter',
@@ -128,23 +144,8 @@ return {
     local previewers = require('telescope.previewers')
     local sorters = require('telescope.sorters')
     local actions = require('telescope.actions')
-    local action_state = require('telescope.actions.state')
     local layout_actions = require('telescope.actions.layout')
     local themes = require('telescope.themes')
-
-    -- https://github.com/nvim-telescope/telescope.nvim/issues/1048
-    -- https://github.com/whatsthatsmell/dots/blob/master/public%20dots/vim-nvim/lua/joel/telescope/init.lua
-
-    -- Open multiple files at once
-    local function multiopen(prompt_bufnr, open_cmd)
-      local picker = action_state.get_current_picker(prompt_bufnr)
-      local num_selections = #picker:get_multi_selection()
-      if not num_selections or num_selections <= 1 then actions.add_selection(prompt_bufnr) end
-      actions.send_selected_to_qflist(prompt_bufnr)
-      vim.cmd('cfdo ' .. open_cmd)
-    end
-
-    local function multi_selection_open(prompt_bufnr) multiopen(prompt_bufnr, 'edit') end
 
     require('telescope').setup({
       defaults = {
@@ -154,7 +155,7 @@ return {
         sorting_strategy = 'ascending',
         layout_strategy = 'horizontal',
         set_env = { ['TERM'] = vim.env.TERM },
-        borderchars = ui.border.common,
+        borderchars = border.common,
         file_browser = { hidden = true },
         color_devicons = true,
         dynamic_preview_title = true,
@@ -203,6 +204,17 @@ return {
         },
       },
       pickers = {
+        registers = cursor(),
+        reloader = dropdown(),
+        oldfiles = dropdown(),
+        git_branches = dropdown(),
+        find_files = { hidden = true },
+        colorscheme = { enable_preview = true },
+        keymaps = dropdown({ layout_config = { height = 18, width = 0.5 } }),
+        git_commits = { layout_config = { horizontal = { preview_width = 0.55 } } },
+        git_bcommits = { layout_config = { horizontal = { preview_width = 0.55 } } },
+        current_buffer_fuzzy_find = dropdown({ previewer = false, shorten_path = false }),
+        diagnostics = themes.get_ivy({ wrap_results = true, borderchars = { preview = border.ivy } }),
         buffers = dropdown({
           sort_mru = true,
           sort_lastused = true,
@@ -211,24 +223,12 @@ return {
           previewer = false,
           mappings = { i = { ['<c-x>'] = 'delete_buffer' }, n = { ['<c-x>'] = 'delete_buffer' } },
         }),
-        find_files = { hidden = true },
-        keymaps = dropdown({
-          layout_config = { height = 18, width = 0.5 },
-        }),
         live_grep = themes.get_ivy({
-          borderchars = { preview = ui.border.ivy },
+          borderchars = { preview = border.ivy },
           file_ignore_patterns = { '.git/', '%.svg', '%.lock', 'node_modules', 'package-lock.json' },
           max_results = 2000,
+          additional_args = { '--trim' },
         }),
-        registers = cursor(),
-        oldfiles = dropdown(),
-        current_buffer_fuzzy_find = dropdown({ previewer = false, shorten_path = false }),
-        colorscheme = { enable_preview = true },
-        git_branches = dropdown(),
-        git_bcommits = { layout_config = { horizontal = { preview_width = 0.55 } } },
-        git_commits = { layout_config = { horizontal = { preview_width = 0.55 } } },
-        reloader = dropdown(),
-        diagnostics = themes.get_ivy({ borderchars = { preview = ui.border.ivy } }),
       },
       extensions = {
         persisted = dropdown(),
@@ -237,10 +237,7 @@ return {
           default_workspace = 'CWD',
           show_unindexed = false, -- Show all files or only those that have been indexed
           ignore_patterns = { '*.git/*', '*/tmp/*', '*node_modules/*', '*vendor/*' },
-          workspaces = {
-            conf = vim.env.DOTFILES,
-            project = vim.g.projects_dir,
-          },
+          workspaces = { conf = vim.env.DOTFILES, project = vim.g.projects_dir },
         },
         undo = {
           mappings = {
@@ -252,9 +249,7 @@ return {
           },
         },
         menufacture = {
-          mappings = {
-            main_menu = { [{ 'i', 'n' }] = '<C-;>' },
-          },
+          mappings = { main_menu = { [{ 'i', 'n' }] = '<C-;>' } },
         },
       },
     })
