@@ -10,11 +10,8 @@ local function leap_keys()
 end
 
 return {
-  {
-    'xiyaowong/accelerated-jk.nvim',
-    event = 'VeryLazy',
-    opts = { mappings = { j = 'gj', k = 'gk' } },
-  },
+  { 'ggandor/flit.nvim', keys = { 'n', 'f' }, opts = { labeled_modes = 'nvo', multiline = false } },
+  { 'xiyaowong/accelerated-jk.nvim', event = 'VeryLazy', opts = { mappings = { j = 'gj', k = 'gk' } } },
   {
     'ggandor/leap.nvim',
     keys = { { 's', leap_keys, mode = 'n' } },
@@ -27,11 +24,6 @@ return {
       })
       require('leap').setup(opts)
     end,
-  },
-  {
-    'ggandor/flit.nvim',
-    keys = { 'n', 'f' },
-    opts = { labeled_modes = 'nvo', multiline = false },
   },
   {
     'LeonHeidelbach/trailblazer.nvim',

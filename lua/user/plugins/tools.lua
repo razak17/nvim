@@ -2,6 +2,7 @@ local fn, ui, hl = vim.fn, rvim.ui, rvim.highlight
 local border = ui.current.border
 
 return {
+  { 'turbio/bracey.vim', ft = 'html', build = 'npm install --prefix server' },
   {
     'jose-elias-alvarez/null-ls.nvim',
     keys = {
@@ -41,7 +42,6 @@ return {
       patterns = { '.git' },
     },
   },
-  { 'turbio/bracey.vim', ft = 'html', build = 'npm install --prefix server' },
   {
     'iamcco/markdown-preview.nvim',
     build = function() fn['mkdp#util#install']() end,
