@@ -17,7 +17,6 @@ local servers = {
   marksman = {},
   prismals = {},
   rust_analyzer = {},
-  sqls = {},
   svelte = {},
   yamlls = {},
   vimls = {},

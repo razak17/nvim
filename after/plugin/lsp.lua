@@ -21,7 +21,6 @@ local format_exclusions = {
     typescript = { 'tsserver' },
     typescriptreact = { 'tsserver' },
     javascriptreact = { 'tsserver' },
-    sql = { 'sqls' },
   },
 }
 
@@ -256,9 +255,6 @@ end
 --- without putting all this logic in the general on_attach function
 ---@type {[string]: ClientOverrides}
 local client_overrides = {
-  sqls = {
-    on_attach = function(client, bufnr) require('sqls').on_attach(client, bufnr) end,
-  },
   tsserver = {
     semantic_tokens = function(bufnr, client, token)
       if token.type == 'variable' and token.modifiers['local'] and not token.modifiers.readonly then
