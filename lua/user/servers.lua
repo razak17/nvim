@@ -21,6 +21,7 @@ local servers = {
   yamlls = {},
   vimls = {},
   volar = {},
+  docker_compose_language_service = {},
   prosemd_lsp = {},
   tsserver = {
     -- Apparently setting this to false improves performance
