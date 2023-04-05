@@ -192,6 +192,7 @@ return {
             ['<c-e>'] = layout_actions.toggle_preview,
             ['<c-l>'] = layout_actions.cycle_layout_next,
             ['<C-a>'] = multi_selection_open,
+            ['<c-r>'] = actions.to_fuzzy_refine,
             ['<Tab>'] = actions.toggle_selection,
             ['<CR>'] = stopinsert(actions.select_default),
           },
