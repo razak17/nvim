@@ -168,9 +168,11 @@ settings({
     end,
   },
   vim = {
-    wo = {
-      foldmethod = 'marker',
-    },
+    bo = { syntax = 'off' },
+    wo = { foldmethod = 'marker' },
     opt = { spell = true },
+    function() -- TODO: if the syntax isn't delayed it still gets enabled
+      vim.schedule(function() vim.bo.syntax = 'off' end)
+    end,
   },
 })

@@ -1,6 +1,6 @@
 if not rvim then return end
 
-local fn, api, fmt = vim.fn, vim.api, string.format
+local fn, api, cmd, fmt = vim.fn, vim.api, vim.cmd, string.format
 
 local recursive_map = function(mode, lhs, rhs, opts)
   opts = opts or {}
@@ -166,8 +166,8 @@ cnoremap('<C-d>', '<Del>')
 -- or <c-t> the main difference being tab is easier to hit and remapping those keys
 -- to these would swallow up a tab mapping
 local function search(direction_key, default)
-  local cmd = fn.getcmdtype()
-  return (cmd == '/' or cmd == '?') and fmt('<CR>%s<C-r>/', direction_key) or default
+  local c_type = fn.getcmdtype()
+  return (c_type == '/' or c_type == '?') and fmt('<CR>%s<C-r>/', direction_key) or default
 end
 cnoremap('<Tab>', function() return search('/', '<Tab>') end, { expr = true })
 cnoremap('<S-Tab>', function() return search('?', '<S-Tab>') end, { expr = true })
@@ -313,14 +313,5 @@ nnoremap('<localleader>cl', toggle_conceal, { desc = 'toggle conceallevel' })
 nnoremap('<localleader>cc', toggle_conceal_cursor, { desc = 'toggle concealcursor' })
 ----------------------------------------------------------------------------------------------------
 -- Abbreviations
-vim.cmd([[
-  inoreabbrev fucntion function
-  inoreabbrev cosnt const
-  cnoreabbrev W! w!
-  cnoreabbrev Q! q!
-  cnoreabbrev Wq wq
-  cnoreabbrev wQ wq
-  cnoreabbrev WQ wq
-  cnoreabbrev W w
-  cnoreabbrev Q q
-]])
+----------------------------------------------------------------------------------------------------
+cmd.cabbrev('options', 'vert options')
