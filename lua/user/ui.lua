@@ -267,17 +267,24 @@ local filetypes = rvim.p_table({
   ['NeogitCommitMessage'] = commit_buffer,
 })
 
+local filenames = rvim.p_table({
+  ['option-window'] = presets.tool_panel,
+})
+
 rvim.ui.decorations = {}
 
+---@alias ui.OptionValue (boolean | string)
+
 ---Get the UI setting for a particular filetype
----@param opts {ft: string?, bt: string?, setting: DecorationType}
----@return {ft: (boolean | string)?, bt: (boolean | string)?}
+---@param opts {ft: string?, bt: string?, fname: string?, setting: DecorationType}
+---@return {ft: ui.OptionValue?, bt: ui.OptionValue?, fname: ui.OptionValue?}
 function rvim.ui.decorations.get(opts)
-  local ft, bt, setting = opts.ft, opts.bt, opts.setting
-  if (not ft and not bt) or not setting then return nil end
+  local ft, bt, fname, setting = opts.ft, opts.bt, opts.fname, opts.setting
+  if (not ft and not bt and not fname) or not setting then return nil end
   return {
     ft = ft and filetypes[ft] and filetypes[ft][setting],
     bt = bt and buftypes[bt] and buftypes[bt][setting],
+    fname = fname and filenames[fname] and filenames[fname][setting],
   }
 end
 
