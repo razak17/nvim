@@ -44,8 +44,8 @@ return {
         indent = { enable = { 'javascriptreact' } },
         matchup = { enable = true, disable = { 'c', 'python' } },
         rainbow = {
-          enable = true,
-          disable = false,
+          enable = false,
+          disable = true,
           query = {
             'rainbow-parens',
             html = function() return nil end,
