@@ -3,7 +3,6 @@ local ui, hl = rvim.ui, rvim.highlight
 local border = ui.current.border
 
 return {
-  'nvim-lua/popup.nvim',
   'nvim-lua/plenary.nvim',
   'kkharji/sqlite.lua',
   'simrat39/rust-tools.nvim',

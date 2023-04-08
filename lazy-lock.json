@@ -92,7 +92,6 @@
   "persisted.nvim": { "branch": "main", "commit": "e053ff33488431dc5bf9239b08650e650ec67292" },
   "playground": { "branch": "master", "commit": "db54848c7d878965bc31237059841f4e91e9de93" },
   "plenary.nvim": { "branch": "master", "commit": "253d34830709d690f013daf2853a9d21ad7accab" },
-  "popup.nvim": { "branch": "master", "commit": "b7404d35d5d3548a82149238289fa71f7f6de4ac" },
   "project_nvim": { "branch": "main", "commit": "8c6bad7d22eef1b71144b401c9f74ed01526a4fb" },
   "promise-async": { "branch": "main", "commit": "7fa127fa80e7d4d447e0e2c78e99af4355f4247b" },
   "refactoring.nvim": { "branch": "master", "commit": "e7c40818b2995016ede93c5620055206b1aba44f" },
