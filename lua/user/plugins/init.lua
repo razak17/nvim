@@ -248,12 +248,6 @@ return {
     },
   },
   {
-    'andymass/vim-matchup',
-    event = 'BufReadPost',
-    keys = { { '<localleader>lw', ':<c-u>MatchupWhereAmI?<CR>', desc = 'matchup: where am i' } },
-    config = function() vim.g.matchup_matchparen_enabled = 0 end,
-  },
-  {
     'ckolkey/ts-node-action',
     keys = {
       { '<localleader>ct', function() require('ts-node-action').node_action() end, desc = 'ts-node-action: run' },

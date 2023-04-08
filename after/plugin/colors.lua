@@ -50,7 +50,7 @@ local function general_overrides()
     { LspCodeLensSeparator = { bold = false, italic = false } },
     { LspReferenceText = { bg = 'NONE', underline = true, sp = { from = 'Whitespace', attr = 'fg' } } },
     { LspReferenceRead = { link = 'LspReferenceText' } },
-    { LspReferenceWrite = { inherit = 'LspReferenceText', bold = true, italic = true, underline = true } },
+    { LspReferenceWrite = { inherit = 'LspReferenceText', bold = true, underline = true } },
     { LspSignatureActiveParameter = { link = 'Visual' } },
   })
 end
