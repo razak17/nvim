@@ -210,24 +210,6 @@ return {
     dependencies = { 'nvim-lua/plenary.nvim', 'nvim-treesitter/nvim-treesitter' },
   },
   {
-    'kosayoda/nvim-lightbulb',
-    event = 'LspAttach',
-    config = function()
-      hl.plugin('Lightbulb', {
-        { LightBulbFloatWin = { fg = { from = 'Type' } } },
-        { LightBulbVirtualText = { fg = { from = 'Type' } } },
-      })
-      local icon = ui.icons.misc.lightbulb
-      require('nvim-lightbulb').setup({
-        ignore = { 'null-ls' },
-        autocmd = { enabled = true },
-        sign = { enabled = false },
-        virtual_text = { enabled = true, text = icon, hl_mode = 'blend' },
-        float = { text = icon, enabled = false, win_opts = { border = 'none' } }, -- 
-      })
-    end,
-  },
-  {
     'lvimuser/lsp-inlayhints.nvim',
     event = 'LspAttach',
     keys = {

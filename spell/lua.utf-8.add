@@ -10,3 +10,4 @@ config
 filtype
 rvim
 tmux
+nvim
