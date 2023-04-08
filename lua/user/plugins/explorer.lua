@@ -3,7 +3,7 @@ local codicons = rvim.ui.codicons
 local highlight = rvim.highlight
 
 return {
-  'razak17/neo-tree.nvim',
+  'nvim-neo-tree/neo-tree.nvim',
   cmd = { 'Neotree' },
   branch = 'v2.x',
   keys = {
