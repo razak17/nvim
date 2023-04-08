@@ -174,7 +174,7 @@ return {
         on_open = function(win)
           if api.nvim_win_is_valid(win) then api.nvim_win_set_config(win, { border = ui.current.border }) end
         end,
-        timeout = 3000,
+        timeout = 70,
         stages = 'fade_in_slide_out',
         top_down = false,
         render = function(...)
