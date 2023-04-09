@@ -6,7 +6,7 @@ return {
   {
     'jose-elias-alvarez/null-ls.nvim',
     keys = {
-      { '<leader>ln', function() require('null-ls.info').show_window({ border = border }) end, desc = 'null-ls: info' },
+      { '<leader>ln', function() require('null-ls.info').show_window({ border = border }) end, desc = 'null-ls info' },
     },
   },
   {

@@ -215,10 +215,8 @@ local function setup_mappings(client, bufnr)
   -- Typescript
   if client.name == 'tsserver' then
     local actions = require('typescript').actions
-    map('n', 'gd', 'TypescriptGoToSourceDefinition', {
-      desc = 'typescript: go to source definition',
-    })
-    map('n', '<localleader>tr', '<cmd>TypescriptRenameFile<CR>', with_desc('typescript: rename file'))
+    map('n', 'gd', 'TypescriptGoToSourceDefinition', with_desc('go to source definition', 'typescript'))
+    map('n', '<localleader>tr', '<cmd>TypescriptRenameFile<CR>', with_desc('rename file', 'typescript'))
     map('n', '<localleader>tf', actions.fixAll, with_desc('fix all', 'typescript'))
     map('n', '<localleader>tia', actions.addMissingImports, with_desc('add missing', 'typescript'))
     map('n', '<localleader>tio', actions.organizeImports, with_desc('organize', 'typescript'))

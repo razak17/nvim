@@ -18,7 +18,7 @@ return {
   {
     'williamboman/mason.nvim',
     cmd = 'Mason',
-    keys = { { '<leader>lm', '<cmd>Mason<CR>', { desc = 'mason: info' } } },
+    keys = { { '<leader>lm', '<cmd>Mason<CR>', desc = 'mason info' } },
     build = ':MasonUpdate',
     opts = {
       registries = { 'lua:mason-registry.index', 'github:mason-org/mason-registry' },

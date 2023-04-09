@@ -63,7 +63,7 @@ require('lazy').setup('user.plugins', {
     },
   },
 })
-map('n', '<localleader>L', '<cmd>Lazy<CR>', { desc = 'lazygit: toggle ui' })
+map('n', '<localleader>L', '<cmd>Lazy<CR>', { desc = 'toggle lazy ui' })
 ----------------------------------------------------------------------------------------------------
 -- Color Scheme
 ----------------------------------------------------------------------------------------------------

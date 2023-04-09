@@ -45,7 +45,7 @@ return {
     })
 
     map('n', '<leader>lg', function() lazygit:toggle() end, {
-      desc = 'toggleterm: toggle lazygit',
+      desc = 'toggle lazygit',
     })
   end,
 }
