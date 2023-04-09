@@ -1,5 +1,6 @@
-local fn, api, env = vim.fn, vim.api, vim.env
+local fn, api, env, fmt = vim.fn, vim.api, vim.env, string.format
 local falsy, icons, codicons = rvim.falsy, rvim.ui.icons, rvim.ui.codicons
+local separator = icons.separators.dotted_thin_block
 
 local conditions = {
   buffer_not_empty = function() return fn.empty(fn.expand('%:t')) ~= 1 end,
@@ -58,7 +59,7 @@ local function lazy_updates()
   return ''
 end
 
-local function npm_package_info()
+local function stl_package_info()
   local ok, package_info = pcall(require, 'package-info')
   if not ok then return '' end
   return package_info.get_status()
@@ -66,6 +67,7 @@ end
 
 local function stl_lsp_clients(bufnum)
   local clients = vim.lsp.get_active_clients({ bufnr = bufnum })
+  clients = vim.tbl_filter(function(client) return client.name ~= 'copilot' end, clients)
   if falsy(clients) then return { { name = 'No Active LSP' } } end
   table.sort(clients, function(a, b)
     if a.name == 'null-ls' then
@@ -86,11 +88,17 @@ local function stl_lsp_clients(bufnum)
   end, clients)
 end
 
+local function stl_copilot_indicator()
+  local client = vim.lsp.get_active_clients({ name = 'copilot' })[1]
+  if client == nil or vim.tbl_isempty(client.requests) then return fmt('idle %s', separator) end
+  return fmt('working %s', separator)
+end
+
 local function lsp_clients()
   local curwin = api.nvim_get_current_win()
   local curbuf = api.nvim_win_get_buf(curwin)
   local client_names = rvim.map(function(client) return client.name end, stl_lsp_clients(curbuf))
-  return table.concat(client_names, '  ') .. ' '
+  return table.concat(client_names, fmt(' %s ', separator)) .. ' ' .. separator
 end
 
 return {
@@ -173,7 +181,7 @@ return {
     ins_left({ function() return '%=%=' end })
 
     ins_left({
-      npm_package_info,
+      stl_package_info,
       color = { fg = colors.comment },
       cond = function() return fn.expand('%') == 'package.json' and conditions.hide_in_width() end,
     })
@@ -216,6 +224,19 @@ return {
       lsp_clients,
       color = { gui = 'bold' },
       padding = { left = 0, right = 1 },
+      cond = conditions.hide_in_width,
+    })
+
+    ins_right({
+      function() return 'Copilot:' end,
+      padding = { left = 0, right = 0 },
+      color = { fg = colors.comment, gui = 'italic' },
+      cond = conditions.hide_in_width,
+    })
+
+    ins_right({
+      stl_copilot_indicator,
+      color = { gui = 'bold' },
       cond = conditions.hide_in_width,
     })
 

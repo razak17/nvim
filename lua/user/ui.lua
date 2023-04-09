@@ -30,6 +30,7 @@ rvim.ui.icons = {
   separators = {
     left_thin_block = '▏',
     right_thin_block = '▕',
+    dotted_thin_block = '',
     right_block = '🮉',
     light_shade_block = '░',
     medium_shade_block = '▒',
