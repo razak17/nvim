@@ -15,11 +15,9 @@ return {
     config = function()
       require('mason-null-ls').setup({
         automatic_setup = true,
-        automatic_installation = {},
-      -- stylua: ignore
-        ensure_installed = {
-          'goimports', 'golangci_lint', 'stylua', 'prettier', 'zsh', 'flake8', 'shellcheck', 'black',
-        },
+        ensure_installed = { 'goimports', 'golangci_lint', 'stylua', 'prettier', 'zsh', 'flake8', 'black' },
+        automatic_installation = false,
+        handlers = {},
       })
       require('null-ls').setup({
         on_attach = function(client, bufnr)
@@ -29,7 +27,6 @@ return {
           end
         end,
       })
-      require('mason-null-ls').setup_handlers()
     end,
   },
   {
