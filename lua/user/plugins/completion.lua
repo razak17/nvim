@@ -1,8 +1,6 @@
 local fn, api, fmt = vim.fn, vim.api, string.format
 local ui, fold = rvim.ui, rvim.fold
-local border = ui.current.border
-local lsp_hls = ui.lsp.highlights
-local ellipsis = ui.icons.misc.ellipsis
+local border, lsp_hls, ellipsis = ui.current.border, ui.lsp.highlights, ui.icons.misc.ellipsis
 
 return {
   {
