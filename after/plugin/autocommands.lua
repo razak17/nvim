@@ -93,6 +93,9 @@ rvim.augroup('WinBehavior', {
     if vim.wo.diff then vim.diagnostic.disable(args.buf) end
   end,
 }, {
+  event = { 'TermOpen' },
+  command = 'startinsert',
+}, {
   event = { 'BufWinLeave' },
   command = function(args)
     if vim.wo.diff then vim.diagnostic.enable(args.buf) end
