@@ -12,3 +12,5 @@ rvim
 tmux
 nvim
 filetype
+statuscolumn
+ftplugin

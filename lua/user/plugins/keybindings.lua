@@ -106,21 +106,9 @@ return {
         heads = {
           { 'h', '<Plug>(CybuPrev)', { desc = 'prev buffer' } },
           { 'l', '<Plug>(CybuNext)', { desc = 'next buffer' } },
-          {
-            'c',
-            function() require('close_buffers').wipe({ type = 'other' }) end,
-            { desc = 'close others' },
-          },
-          {
-            'x',
-            function() require('close_buffers').wipe({ type = 'all' }) end,
-            { desc = 'close all' },
-          },
-          {
-            'd',
-            function() require('mini.bufremove').delete(0, true) end,
-            { desc = 'delete buffer(force)' },
-          },
+          { 'c', '<Cmd>CloseUnusedBuffers<CR>', { desc = 'close unused' } },
+          { 'a', '<Cmd>CloseAllBuffers<CR>', { desc = 'close all' } },
+          { 'd', function() require('mini.bufremove').delete(0, true) end, { desc = 'delete buffer(force)' } },
           { '<Esc>', nil, { exit = true, desc = 'Quit' } },
         },
       })

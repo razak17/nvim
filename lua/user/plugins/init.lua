@@ -10,10 +10,8 @@ return {
   'marilari88/twoslash-queries.nvim',
 
   {
-    'kazhala/close-buffers.nvim',
-    keys = {
-      { '<leader>c', function() require('close_buffers').delete({ type = 'this' }) end, desc = 'delete buffer' },
-    },
+    'echasnovski/mini.bufremove',
+    keys = { { '<leader>c', function() require('mini.bufremove').delete(0, false) end, desc = 'delete buffer' } },
   },
   {
     'williamboman/mason.nvim',
@@ -76,13 +74,6 @@ return {
     opts = {
       position = { relative_to = 'win', anchor = 'topright' },
       style = { border = 'single', hide_buffer_id = true },
-    },
-  },
-  {
-    'echasnovski/mini.bufremove',
-    enabled = false,
-    keys = {
-      { '<leader>c', function() require('mini.bufremove').delete(0, false) end, desc = 'delete buffer' },
     },
   },
   {
