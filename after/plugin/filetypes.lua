@@ -153,12 +153,10 @@ settings({
     },
     function()
       vim.b.formatting_disabled = not vim.startswith(fn.expand('%'), vim.g.projects_dir)
-      cmd([[
-        iabbrev :tup: 👍
-        iabbrev :tdo: 👎
-        iabbrev :smi: 😊
-        iabbrev :sad: 😔
-      ]])
+      cmd.iabbrev(':tup:', '👍')
+      cmd.iabbrev(':tdo:', '👎')
+      cmd.iabbrev(':smi:', '😊')
+      cmd.iabbrev(':sad:', '😔')
     end,
   },
   NeogitCommitMessage = {
