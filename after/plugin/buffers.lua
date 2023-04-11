@@ -1,6 +1,6 @@
 if not rvim then return end
 
-local api, fn, cmd = vim.api, vim.fn, vim.cmd
+local api, cmd = vim.api, vim.cmd
 
 rvim.augroup('UnusedBuffers', {
   event = 'BufRead',
@@ -13,16 +13,9 @@ rvim.augroup('UnusedBuffers', {
   end,
 })
 
-local function close_buffers_prompt(bufs)
-  local names = vim.tbl_map(function(buf) return fn.expand(('#%s:.'):format(buf)) end, bufs)
-  vim.ui.input({
-    prompt = ('Close buffers? (y/n)\n - %s\n'):format(table.concat(names, '\n - ')),
-  }, function(answer)
-    if answer == 'y' then
-      cmd.wall()
-      rvim.foreach(function(buf) api.nvim_buf_delete(buf, { force = true }) end, bufs)
-    end
-  end)
+local function close_buffers(bufs)
+  cmd.wall()
+  rvim.foreach(function(buf) api.nvim_buf_delete(buf, { force = true }) end, bufs)
 end
 
 rvim.command('CloseUnusedBuffers', function()
@@ -31,12 +24,12 @@ rvim.command('CloseUnusedBuffers', function()
     function(buf) return vim.bo[buf].buflisted and buf ~= curbuf and not vim.b[buf].bufpersist end,
     api.nvim_list_bufs()
   )
-  if #bufs > 0 then close_buffers_prompt(bufs) end
+  if #bufs > 0 then close_buffers(bufs) end
 end)
 
 rvim.command('CloseAllBuffers', function()
   local bufs = api.nvim_list_bufs()
-  if #bufs > 0 then close_buffers_prompt(bufs) end
+  if #bufs > 0 then close_buffers(bufs) end
 end)
 
 map('n', 'gbc', '<Cmd>CloseUnusedBuffers<CR>', { silent = true, desc = 'Close unused buffers' })

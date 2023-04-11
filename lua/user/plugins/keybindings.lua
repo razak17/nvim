@@ -104,11 +104,11 @@ return {
           invoke_on_body = true,
         },
         heads = {
+          { 'a', '<Cmd>CloseAllBuffers<CR>', { desc = 'close all' } },
+          { 'c', '<Cmd>CloseUnusedBuffers<CR>', { desc = 'close unused' } },
+          { 'd', function() require('mini.bufremove').delete(0, true) end, { desc = 'delete buffer(force)' } },
           { 'h', '<Plug>(CybuPrev)', { desc = 'prev buffer' } },
           { 'l', '<Plug>(CybuNext)', { desc = 'next buffer' } },
-          { 'c', '<Cmd>CloseUnusedBuffers<CR>', { desc = 'close unused' } },
-          { 'a', '<Cmd>CloseAllBuffers<CR>', { desc = 'close all' } },
-          { 'd', function() require('mini.bufremove').delete(0, true) end, { desc = 'delete buffer(force)' } },
           { '<Esc>', nil, { exit = true, desc = 'Quit' } },
         },
       })
