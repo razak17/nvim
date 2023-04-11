@@ -53,20 +53,6 @@ rvim.augroup('CheckOutsideTime', {
   command = 'silent! checktime',
 })
 
-rvim.augroup('TrimWhitespace', {
-  event = { 'BufWritePre' },
-  command = function()
-    api.nvim_exec(
-      [[
-        let bsave = winsaveview()
-        keeppatterns %s/\s\+$//e
-        call winrestview(bsave)
-      ]],
-      false
-    )
-  end,
-})
-
 --- automatically clear commandline messages after a few seconds delay
 --- source: https://unix.stackexchange.com/a/613645
 rvim.augroup('ClearCommandLineMessages', {
