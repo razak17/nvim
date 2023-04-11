@@ -206,6 +206,7 @@ return {
   },
   {
     'echasnovski/mini.ai',
+    event = 'VeryLazy',
     config = function() require('mini.ai').setup({ mappings = { around_last = '', inside_last = '' } }) end,
   },
   {
