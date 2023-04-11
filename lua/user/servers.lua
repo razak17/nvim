@@ -1,8 +1,6 @@
 ----------------------------------------------------------------------------------------------------
 -- Language servers
 ----------------------------------------------------------------------------------------------------
-local fn = vim.fn
-
 ---@type lspconfig.options
 local servers = {
   astro = {},
@@ -117,7 +115,7 @@ local servers = {
         codeLens = { enable = true },
         hint = { enable = true, arrayIndex = 'Disable', setType = true, paramName = 'Disable' },
         format = { enable = false },
-        diagnostics = { globals = { 'vim', 'describe', 'it', 'before_each', 'after_each' } },
+        diagnostics = { globals = { 'vim', 'describe', 'it', 'before_each', 'after_each', 'rvim', 'join_paths' } },
         completion = { keywordSnippet = 'Replace', callSnippet = 'Replace' },
         workspace = { checkThirdParty = false },
         telemetry = { enable = false },
@@ -134,7 +132,7 @@ local servers = {
 
 ---Get the configuration for a specific language server
 ---@param name string?
----@return table<string, any>?
+---@return boolean, table<string, any>?
 return function(name)
   local config = servers[name]
   if not config then return false end

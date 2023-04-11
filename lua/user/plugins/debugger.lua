@@ -136,7 +136,7 @@ return {
     opts = {
       node_path = 'node',
       debugger_path = rvim.path.mason .. '/packages/js-debug-adapter',
-      log_file_path = vim.call('stdpath', 'cache') .. '/dap_vscode_js.log',
+      log_file_path = vim.fn.stdpath('cache') .. '/dap_vscode_js.log',
       adapters = {
         'pwa-node',
         'pwa-chrome',

@@ -288,7 +288,7 @@ end
 
 ---Determine if a value of any type is empty
 ---@param item any
----@return boolean?
+---@return boolean
 function rvim.falsy(item)
   if not item then return true end
   local item_type = type(item)
@@ -375,7 +375,7 @@ end
 ---Create an nvim command
 ---@param name string
 ---@param rhs string | fun(args: CommandArgs)
----@param opts table
+---@param opts? table
 function rvim.command(name, rhs, opts)
   opts = opts or {}
   api.nvim_create_user_command(name, rhs, opts)

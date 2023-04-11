@@ -34,7 +34,7 @@ return {
       { '<leader>ml', '<cmd>TrailBlazerLoadSession<CR>', desc = 'trailblazer: load session' },
     },
     opts = {
-      custom_session_storage_dir = join_paths(vim.call('stdpath', 'data'), 'trailblazer'),
+      custom_session_storage_dir = join_paths(vim.fn.stdpath('data'), 'trailblazer'),
       trail_options = {
         current_trail_mark_list_type = 'quickfix',
       },

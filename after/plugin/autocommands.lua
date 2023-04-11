@@ -1,6 +1,7 @@
 if not rvim or not rvim.plugins.enable then return end
 
 local fn, api, env = vim.fn, vim.api, vim.env
+local falsy = rvim.falsy
 
 local smart_close_filetypes = rvim.p_table({
   ['qf'] = true,
@@ -129,8 +130,8 @@ local save_excluded = {
   'NeogitCommitMessage',
 }
 local function can_save()
-  return rvim.falsy(vim.bo.buftype)
-    and not rvim.falsy(vim.bo.filetype)
+  return falsy(vim.bo.buftype)
+    and not falsy(vim.bo.filetype)
     and vim.bo.modifiable
     and not vim.tbl_contains(save_excluded, vim.bo.filetype)
 end
@@ -152,7 +153,7 @@ rvim.augroup('Utilities', {
     local match = rvim.find(function(dir)
       local path = api.nvim_buf_get_name(args.buf)
       -- HACK: Disable for my config dir manually
-      if vim.startswith(path, vim.call('stdpath', 'config')) then return false end
+      if vim.startswith(path, vim.fn.stdpath('config')) then return false end
       if vim.startswith(path, env.VIMRUNTIME) then return true end
       return vim.startswith(path, dir)
     end, paths)
@@ -171,7 +172,7 @@ rvim.augroup('Utilities', {
   pattern = { '*' },
   nested = true,
   command = function()
-    if rvim.falsy(vim.bo.filetype) or fn.exists('b:ftdetect') == 1 then
+    if falsy(vim.bo.filetype) or fn.exists('b:ftdetect') == 1 then
       vim.cmd([[
         unlet! b:ftdetect
         filetype detect

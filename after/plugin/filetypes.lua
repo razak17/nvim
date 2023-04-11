@@ -130,7 +130,7 @@ settings({
     opt = {
       spell = true,
       spelllang = 'en_gb',
-      spellfile = opt_l.spellfile:prepend(join_paths(vim.call('stdpath', 'config'), 'spell', 'lua.utf-8.add')),
+      spellfile = opt_l.spellfile:prepend(join_paths(vim.fn.stdpath('config'), 'spell', 'lua.utf-8.add')),
       iskeyword = opt_l.iskeyword:append('-'),
     },
   },

@@ -1,7 +1,7 @@
 if not rvim then return end
 
 local g, env = vim.g, vim.env
-local data = vim.call('stdpath', 'data')
+local data = vim.fn.stdpath('data')
 ----------------------------------------------------------------------------------------------------
 -- Set leader keys
 ----------------------------------------------------------------------------------------------------
@@ -16,7 +16,7 @@ rvim.open_command = g.os == 'Darwin' and 'open' or 'xdg-open'
 ----------------------------------------------------------------------------------------------------
 -- Set Providers
 ----------------------------------------------------------------------------------------------------
-g.python3_host_prog = join_paths(vim.call('stdpath', 'cache'), 'venv', 'neovim', 'bin', 'python3')
+g.python3_host_prog = join_paths(vim.fn.stdpath('cache'), 'venv', 'neovim', 'bin', 'python3')
 for _, v in pairs({ 'python', 'ruby', 'perl' }) do
   g['loaded_' .. v .. '_provider'] = 0
 end

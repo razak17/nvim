@@ -1,6 +1,6 @@
 local fmt, ui = string.format, rvim.ui
 local border = ui.border
-local data = vim.call('stdpath', 'data')
+local data = vim.fn.stdpath('data')
 
 -- A helper function to limit the size of a telescope window to fit the maximum available
 -- space on the screen. This is useful for dropdowns e.g. the cursor or dropdown theme
@@ -10,7 +10,7 @@ local function fit_to_available_height(self, _, max_lines)
   return (results <= (LIMIT - PADDING) and results + PADDING or LIMIT)
 end
 
----@param opts table
+---@param opts? table
 ---@return table
 local function dropdown(opts)
   opts = opts or {}
@@ -59,7 +59,7 @@ local function git_files(opts) return extensions('menufacture').git_files(opts) 
 local function nvim_config()
   find_files({
     prompt_title = '~ rVim config ~',
-    cwd = vim.call('stdpath', 'config'),
+    cwd = vim.fn.stdpath('config'),
     file_ignore_patterns = { '.git/.*', 'dotbot/.*', 'zsh/plugins/.*' },
   })
 end
@@ -79,8 +79,11 @@ local function builtin() return require('telescope.builtin') end
 local function delta_git_commits(opts) builtin().git_commits(delta_opts(opts)) end
 local function delta_git_bcommits(opts) builtin().git_bcommits(delta_opts(opts, true)) end
 
-local function b(picker)
-  return function() require('telescope.builtin')[picker]() end
+---@param opts? table
+---@return function
+local function b(picker, opts)
+  opts = opts or {}
+  return function() require('telescope.builtin')[picker](opts) end
 end
 
 local function stopinsert(callback)

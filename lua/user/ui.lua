@@ -100,7 +100,7 @@ rvim.ui.codicons = {
 
 rvim.ui.lsp = {
   --- LSP Kinds come via the LSP spec
-  --- @see: https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#symbolKind
+  --- see: https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#symbolKind
   highlights = {
     Text = '@string',
     Method = '@method',

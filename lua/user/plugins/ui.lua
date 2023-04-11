@@ -52,7 +52,7 @@ return {
     },
     config = function()
       require('todo-comments').setup({ highlight = { after = '' } })
-      rvim.command('TodoDots', string.format('TodoTelescope cwd=%s keywords=TODO,FIXME', vim.call('stdpath', 'config')))
+      rvim.command('TodoDots', string.format('TodoTelescope cwd=%s keywords=TODO,FIXME', vim.fn.stdpath('config')))
     end,
   },
   {

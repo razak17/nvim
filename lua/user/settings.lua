@@ -4,8 +4,8 @@ local o, opt, fn = vim.o, vim.opt, vim.fn
 ----------------------------------------------------------------------------------------------------
 -- Neovim Directories {{{1
 ----------------------------------------------------------------------------------------------------
-o.udir = vim.call('stdpath', 'cache') .. '/undodir'
-o.viewdir = vim.call('stdpath', 'cache') .. '/view'
+o.udir = vim.fn.stdpath('cache') .. '/undodir'
+o.viewdir = vim.fn.stdpath('cache') .. '/view'
 ----------------------------------------------------------------------------------------------------
 -- Message output on vim actions {{{1
 ----------------------------------------------------------------------------------------------------
@@ -209,7 +209,7 @@ opt.sessionoptions = {
   'buffers',
   'curdir',
   'winpos',
- 'winsize',
+  'winsize',
   'help',
   'tabpages',
   'terminal',
@@ -217,7 +217,7 @@ opt.sessionoptions = {
 -- What to save for views and sessions:
 opt.viewoptions = { 'cursor', 'folds' } -- save/restore just these (with `:{mk,load}view`)
 o.virtualedit = 'block' -- allow cursor to move where there is no text in visual block mode
--- opt.shadafile = join_paths(vim.call('stdpath', 'cache'), 'shada', 'rvim.shada')
+-- opt.shadafile = join_paths(vim.fn.stdpath('cache'), 'shada', 'rvim.shada')
 ----------------------------------------------------------------------------------------------------
 -- Jumplist
 ----------------------------------------------------------------------------------------------------
@@ -250,7 +250,7 @@ opt.spellsuggest:prepend({ 12 })
 opt.spelloptions:append({ 'camel', 'noplainbuffer' })
 opt.spellcapcheck = '' -- don't check for capital letters at start of sentence
 -- https://vi.stackexchange.com/questions/15051/how-can-i-use-multiple-spell-files-at-the-same-time
-opt.spellfile = join_paths(vim.call('stdpath', 'config'), 'spell', 'en.utf-8.add')
+opt.spellfile = join_paths(vim.fn.stdpath('config'), 'spell', 'en.utf-8.add')
 ----------------------------------------------------------------------------------------------------
 -- Mouse {{{1
 ----------------------------------------------------------------------------------------------------
