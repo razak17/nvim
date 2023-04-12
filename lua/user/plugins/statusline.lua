@@ -88,17 +88,17 @@ local function stl_lsp_clients(bufnum)
   end, clients)
 end
 
-local function stl_copilot_indicator()
-  local client = vim.lsp.get_active_clients({ name = 'copilot' })[1]
-  if client == nil or vim.tbl_isempty(client.requests) then return fmt('idle %s', separator) end
-  return fmt('working %s', separator)
-end
-
 local function lsp_clients()
   local curwin = api.nvim_get_current_win()
   local curbuf = api.nvim_win_get_buf(curwin)
   local client_names = rvim.map(function(client) return client.name end, stl_lsp_clients(curbuf))
   return table.concat(client_names, fmt(' %s ', separator)) .. ' ' .. separator
+end
+
+local function stl_copilot_indicator()
+  local client = vim.lsp.get_active_clients({ name = 'copilot' })[1]
+  if client == nil or vim.tbl_isempty(client.requests) then return fmt('idle %s', separator) end
+  return fmt('working %s', separator)
 end
 
 return {
