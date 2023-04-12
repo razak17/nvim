@@ -189,29 +189,34 @@ local function setup_mappings(client, bufnr)
   local function with_desc(desc, alt)
     return { buffer = bufnr, desc = alt and fmt('%s: %s', alt, desc) or fmt('lsp: %s', desc) }
   end
+  local mappings = {
+    { 'n', '<leader>lk', function() vim.diagnostic.goto_prev({ float = false }) end, desc = 'go to prev diagnostic' },
+    { 'n', '<leader>lj', function() vim.diagnostic.goto_next({ float = false }) end, desc = 'go to next diagnostic' },
+    { { 'n', 'x' }, '<leader>la', lsp.buf.code_action, desc = 'code action', capability = 'codeAction' },
+    { 'n', '<leader>lf', format, desc = 'format buffer', capability = 'documentFormatting' },
+    { 'n', 'K', show_documentation, desc = 'hover', capability = 'hover' },
+    -- stylua: ignore
+    { 'n', 'gd', lsp.buf.definition, desc = 'definition', capability = 'definition', exclude = { 'typescript', 'typescriptreact' }  },
+    { 'n', 'gr', lsp.buf.references, desc = 'references', capability = 'references' },
+    { 'n', 'gi', lsp.buf.implementation, desc = 'implementation', capability = 'references' },
+    { 'n', 'gI', lsp.buf.incoming_calls, desc = 'incoming calls', capability = 'references' },
+    { 'n', 'gt', lsp.buf.type_definition, desc = 'go to type definition', capability = 'definition' },
+    { 'n', '<leader>lc', lsp.codelens.run, desc = 'run code lens', capability = 'codeLens' },
+    { 'n', '<leader>lr', lsp.buf.rename, desc = 'rename', capability = 'rename' },
+    { 'n', '<leader>lL', vim.diagnostic.setloclist, desc = 'toggle loclist diagnostics' },
+    { 'n', '<leader>lG', '<cmd>LspGenerateTemplates<CR>', desc = 'generate templates' },
+    { 'n', '<leader>lD', '<cmd>LspRemoveTemplates<CR>', desc = 'delete templates' },
+    { 'n', '<leader>li', '<cmd>LspInfo<CR>', desc = 'lsp info' },
+    { 'n', '<leader>ltv', '<cmd>ToggleVirtualText<CR>', desc = 'toggle virtual text' },
+    { 'n', '<leader>ltl', '<cmd>ToggleVirtualLines<CR>', desc = 'toggle virtual lines' },
+  }
 
-  map('n', 'K', show_documentation, with_desc('hover'))
-  map('n', 'gd', lsp.buf.definition, with_desc('definition'))
-  map('n', 'gr', lsp.buf.references, with_desc('references'))
-  map('n', 'gi', lsp.buf.implementation, with_desc('go to implementation'))
-  map('n', 'gt', lsp.buf.type_definition, with_desc('go to type definition'))
-  map('n', 'gI', lsp.buf.incoming_calls, with_desc('incoming calls'))
-  -- Leader keymaps
-  --------------------------------------------------------------------------------------------------
-  map({ 'n', 'x' }, '<leader>la', lsp.buf.code_action, with_desc('code action'))
-  map('n', '<leader>lk', function() vim.diagnostic.goto_prev({ float = false }) end, with_desc('prev diagnostic'))
-  map('n', '<leader>lj', function() vim.diagnostic.goto_next({ float = false }) end, with_desc('next diagnostic'))
-  map('n', '<leader>lL', vim.diagnostic.setloclist, with_desc('toggle loclist diagnostics'))
-  map('n', '<leader>lc', lsp.codelens.run, with_desc('run code lens'))
-  map('n', '<leader>lr', lsp.buf.rename, with_desc('rename'))
-  -- Templates
-  map('n', '<leader>lG', '<cmd>LspGenerateTemplates<CR>', { desc = 'lsp: generate templates' })
-  map('n', '<leader>lD', '<cmd>LspRemoveTemplates<CR>', { desc = 'lsp: delete templates' })
-  -- Others
-  map('n', '<leader>li', '<cmd>LspInfo<CR>', with_desc('info'))
-  map('n', '<leader>lf', '<cmd>LspFormat<CR>', with_desc('format buffer'))
-  map('n', '<leader>ltv', '<cmd>ToggleVirtualText<CR>', with_desc('toggle virtual text'))
-  map('n', '<leader>ltl', '<cmd>ToggleVirtualLines<CR>', with_desc('toggle virtual lines'))
+  rvim.foreach(function(m)
+    if not m.capability or client.server_capabilities[fmt('%sProvider', m.capability)] then
+      map(m[1], m[2], m[3], { buffer = bufnr, desc = fmt('lsp: %s', m.desc) })
+    end
+  end, mappings)
+
   -- Typescript
   if client.name == 'tsserver' then
     local actions = require('typescript').actions
@@ -336,15 +341,12 @@ rvim.augroup('LspSetupCommands', {
 ----------------------------------------------------------------------------------------------------
 local command = rvim.command
 
-command('LspFormat', function() format({ bufnr = 0, async = false }) end)
-
 command('LspGenerateTemplates', function() require('user.lsp.templates').generate_templates() end)
 
 command('LspRemoveTemplates', function()
   require('user.lsp.templates').remove_template_files()
   vim.notify('Templates have been removed', 'info', { title = 'Lsp' })
 end)
-
 ----------------------------------------------------------------------------------------------------
 -- Signs
 ----------------------------------------------------------------------------------------------------
