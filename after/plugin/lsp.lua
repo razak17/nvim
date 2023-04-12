@@ -363,10 +363,6 @@ local function toggle_virtual_text()
         severity = { min = S.WARN },
         prefix = '',
         spacing = 1,
-        format = function(d)
-          local level = diagnostic.severity[d.severity]
-          return fmt('%s %s', icons[level:lower()], d.message)
-        end,
       },
     })
     if type(config.virtual_lines) == 'table' then
