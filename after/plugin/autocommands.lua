@@ -81,7 +81,9 @@ rvim.augroup('WinBehavior', {
   end,
 }, {
   event = { 'TermOpen' },
-  command = 'startinsert',
+  command = function()
+    if falsy(vim.bo.filetype) or not falsy(vim.bo.buftype) == '' then vim.cmd.startinsert() end
+  end,
 }, {
   event = { 'BufWinLeave' },
   command = function(args)
