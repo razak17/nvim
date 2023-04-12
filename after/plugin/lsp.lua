@@ -149,6 +149,9 @@ local function show_documentation()
   vim.lsp.buf.hover()
 end
 
+---Setup mapping when an lsp attaches to a buffer
+---@param client lsp.Client
+---@param bufnr integer
 local function setup_mappings(client, bufnr)
   local mappings = {
     { 'n', '<leader>lk', function() vim.diagnostic.goto_prev({ float = false }) end, desc = 'go to prev diagnostic' },
@@ -240,17 +243,6 @@ local client_overrides = {
 
 ---@param client lsp.Client
 ---@param bufnr number
-local function setup_plugins(client, bufnr)
-  -- lsp-inlayhints
-  local hints_ok, hints = rvim.pcall(require, 'lsp-inlayhints')
-  if hints_ok and client.name ~= 'tsserver' then hints.on_attach(client, bufnr) end
-  -- twoslash-queries
-  local twoslash_ok, twoslash = rvim.pcall(require, 'twoslash-queries')
-  if twoslash_ok and client.name == 'tsserver' then twoslash.attach(client, bufnr) end
-end
-
----@param client lsp.Client
----@param bufnr number
 local function setup_semantic_tokens(client, bufnr)
   local overrides = client_overrides[client.name]
   if not overrides or not overrides.semantic_tokens then return end
@@ -268,7 +260,6 @@ end
 ---@param client lsp.Client the lsp client
 ---@param bufnr number
 local function on_attach(client, bufnr)
-  setup_plugins(client, bufnr)
   setup_autocommands(client, bufnr)
   setup_mappings(client, bufnr)
   setup_semantic_tokens(client, bufnr)

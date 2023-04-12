@@ -7,7 +7,6 @@ return {
   'kkharji/sqlite.lua',
   'simrat39/rust-tools.nvim',
   'jose-elias-alvarez/typescript.nvim',
-  'marilari88/twoslash-queries.nvim',
 
   {
     'echasnovski/mini.bufremove',
@@ -202,10 +201,20 @@ return {
   },
   {
     'lvimuser/lsp-inlayhints.nvim',
-    event = 'LspAttach',
     keys = {
       { '<leader>lth', function() require('lsp-inlayhints').toggle() end, desc = 'toggle inlay hints' },
     },
+    init = function()
+      rvim.augroup('InlayHintsSetup', {
+        event = 'LspAttach',
+        command = function(args)
+          local id = vim.tbl_get(args, 'data', 'client_id') --[[@as lsp.Client]]
+          if not id then return end
+          local client = vim.lsp.get_client_by_id(id)
+          require('lsp-inlayhints').on_attach(client, args.buf)
+        end,
+      })
+    end,
     opts = {
       inlay_hints = {
         highlight = 'Comment',
@@ -219,6 +228,21 @@ return {
         },
       },
     },
+  },
+  {
+    'marilari88/twoslash-queries.nvim',
+    ft = { 'typescript', 'typescriptreact', 'javascript', 'javascriptreact' },
+    config = function()
+      rvim.augroup('TwoSlashQueriesSetup', {
+        event = 'LspAttach',
+        command = function(args)
+          local id = vim.tbl_get(args, 'data', 'client_id') --[[@as lsp.Client]]
+          if not id then return end
+          local client = vim.lsp.get_client_by_id(id)
+          require('twoslash-queries').attach(client, args.buf)
+        end,
+      })
+    end,
   },
   {
     'ckolkey/ts-node-action',
