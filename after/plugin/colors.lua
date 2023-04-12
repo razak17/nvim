@@ -52,6 +52,8 @@ local function general_overrides()
     { LspReferenceRead = { link = 'LspReferenceText' } },
     { LspReferenceWrite = { inherit = 'LspReferenceText', bold = true, underline = true } },
     { LspSignatureActiveParameter = { link = 'Visual' } },
+    { DiagnosticFloatTitle = { inherit = 'FloatTitle', bold = true } },
+    { DiagnosticFloatTitleIcon = { inherit = 'FloatTitle', fg = { from = '@character' } } },
   })
 end
 
