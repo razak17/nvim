@@ -1,4 +1,4 @@
-local fn, api, hl = vim.fn, vim.api, rvim.highlight
+local fn, api, highlight = vim.fn, vim.api, rvim.highlight
 
 local function leap_keys()
   require('leap').leap({
@@ -17,7 +17,7 @@ return {
     keys = { { 's', leap_keys, mode = 'n' } },
     opts = { equivalence_classes = { ' \t\r\n', '([{', ')]}', '`"\'' } },
     config = function(_, opts)
-      hl.plugin('leap', {
+      highlight.plugin('leap', {
         theme = {
           ['*'] = { { LeapBackdrop = { fg = '#707070' } } },
         },

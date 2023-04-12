@@ -1,5 +1,5 @@
 local fmt, fn = string.format, vim.fn
-local hl = rvim.highlight
+local highlight = rvim.highlight
 local function sync(path) return fmt('%s/notes/%s', fn.expand(vim.env.HOME), path) end
 
 return {
@@ -46,7 +46,7 @@ return {
     'razak17/headlines.nvim',
     ft = { 'org', 'norg', 'markdown', 'yaml' },
     config = function()
-      hl.plugin('Headlines', {
+      highlight.plugin('Headlines', {
         {
           Headline = {
             bold = true,

@@ -1,4 +1,4 @@
-local fn, ui, hl = vim.fn, rvim.ui, rvim.highlight
+local fn, ui, highlight = vim.fn, rvim.ui, rvim.highlight
 local border = ui.current.border
 
 return {
@@ -58,7 +58,7 @@ return {
     },
     build = 'cd js && npm ci',
     config = function()
-      hl.plugin('lab', {
+      highlight.plugin('lab', {
         theme = {
           ['onedark'] = { { LabCodeRun = { link = 'DiagnosticVirtualTextInfo' } } },
         },
@@ -71,7 +71,7 @@ return {
     event = 'BufRead package.json',
     dependencies = { 'MunifTanjim/nui.nvim' },
     config = function()
-      hl.plugin('package-info', {
+      highlight.plugin('package-info', {
         theme = {
           ['onedark'] = {
             { PackageInfoUpToDateVersion = { link = 'DiagnosticVirtualTextInfo' } },

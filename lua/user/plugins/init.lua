@@ -1,5 +1,5 @@
 local api, cmd, fn = vim.api, vim.cmd, vim.fn
-local ui, hl = rvim.ui, rvim.highlight
+local ui, higlight = rvim.ui, rvim.highlight
 local border = ui.current.border
 
 return {
@@ -186,7 +186,7 @@ return {
     config = function()
       require('glance').setup({
         preview_win_opts = { relativenumber = false },
-        hl.plugin('glance', {
+        higlight.plugin('glance', {
           { GlanceWinBarFilename = { link = 'Error' } },
           { GlanceWinBarFilepath = { link = 'StatusLine' } },
           { GlanceWinBarTitle = { link = 'StatusLine' } },
@@ -233,7 +233,7 @@ return {
     'marilari88/twoslash-queries.nvim',
     ft = { 'typescript', 'typescriptreact' },
     config = function()
-      hl.plugin('twoslash-queries', {
+      higlight.plugin('twoslash-queries', {
         theme = {
           ['onedark'] = { { TypeVirtualText = { link = 'DiagnosticVirtualTextInfo' } } },
         },
