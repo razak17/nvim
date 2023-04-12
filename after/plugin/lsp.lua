@@ -3,12 +3,10 @@ if not rvim then return end
 rvim.lsp.templates_dir = join_paths(vim.fn.stdpath('data'), 'site', 'after', 'ftplugin')
 
 local lsp, fn, api, fmt = vim.lsp, vim.fn, vim.api, string.format
-local b = vim.b --[[@rvim table<string, any>]]
 local L, S = vim.lsp.log_levels, vim.diagnostic.severity
 
-local icons = rvim.ui.codicons.lsp
-local border = rvim.ui.current.border
 local diagnostic = vim.diagnostic
+local augroup, icons, border = rvim.augroup, rvim.ui.codicons.lsp, rvim.ui.current.border
 
 local format_exclusions = {
   format_on_save = { 'zsh' },
@@ -29,38 +27,16 @@ if vim.env.DEVELOPING then lsp.set_log_level(L.DEBUG) end
 ----------------------------------------------------------------------------------------------------
 -- Autocommands
 ----------------------------------------------------------------------------------------------------
-local FEATURES = {
-  DIAGNOSTICS = { name = 'diagnostics' },
-  CODELENS = { name = 'codelens', provider = 'codeLensProvider' },
-  FORMATTING = { name = 'formatting', provider = 'documentFormattingProvider' },
-  REFERENCES = { name = 'references', provider = 'documentHighlightProvider' },
+---@enum
+local provider = {
+  HOVER = 'hoverProvider',
+  RENAME = 'renameProvider',
+  CODELENS = 'codeLensProvider',
+  CODEACTIONS = 'codeActionProvider',
+  FORMATTING = 'documentFormattingProvider',
+  REFERENCES = 'documentHighlightProvider',
+  DEFINITION = 'definitionProvider',
 }
-
----@param bufnr integer
----@param capability string
----@return table[]
-local function clients_by_capability(bufnr, capability)
-  return vim.tbl_filter(
-    function(c) return c.server_capabilities[capability] end,
-    lsp.get_active_clients({ buffer = bufnr })
-  )
-end
-
---- Create augroups for each LSP feature and track which capabilities each client
---- registers in a buffer local table
----@param bufnr integer
----@param client lsp.Client
----@param events { [string]: { clients: number[], group_id: number? } }
----@return fun(feature: {provider: string, name: string}, commands: fun(string): ...)
-local function augroup_factory(bufnr, client, events)
-  return function(feature, commands)
-    local provider, name = feature.provider, feature.name
-    if not provider or client.server_capabilities[provider] then
-      events[name].group_id = rvim.augroup(fmt('LspCommands_%d_%s', bufnr, name), commands(provider))
-      table.insert(events[name].clients, client.id)
-    end
-  end
-end
 
 local function formatting_filter(client)
   local exceptions = (format_exclusions.servers)[vim.bo.filetype]
@@ -74,75 +50,62 @@ local function format(opts)
   lsp.buf.format({ bufnr = opts.bufnr, async = opts.async, filter = formatting_filter })
 end
 
---- Add lsp autocommands
 ---@param client lsp.Client
----@param bufnr number
-local function setup_autocommands(client, bufnr)
-  if not client then
-    local msg = fmt('Unable to setup LSP autocommands, client for %d is missing', bufnr)
-    return vim.notify(msg, 'error', { title = 'LSP Setup' })
-  end
-
-  local events = vim.F.if_nil(b.lsp_events, {
-    [FEATURES.CODELENS.name] = { clients = {}, group_id = nil },
-    [FEATURES.FORMATTING.name] = { clients = {}, group_id = nil },
-    [FEATURES.DIAGNOSTICS.name] = { clients = {}, group_id = nil },
-    [FEATURES.REFERENCES.name] = { clients = {}, group_id = nil },
-  })
-
-  local augroup = augroup_factory(bufnr, client, events)
-
-  augroup(FEATURES.DIAGNOSTICS, function()
-    return {
+---@param buf integer
+local function setup_autocommands(client, buf)
+  if client.server_capabilities[provider.HOVER] then
+    augroup(('LspHoverDiagnostics%d'):format(buf), {
       event = { 'CursorHold' },
-      buffer = bufnr,
+      buffer = buf,
       desc = 'LSP: Show diagnostics',
       command = function(args)
         if not rvim.lsp.hover_diagnostics then return end
         if vim.b.lsp_hover_win and api.nvim_win_is_valid(vim.b.lsp_hover_win) then return end
         vim.diagnostic.open_float(args.buf, { scope = 'line' })
       end,
-    }
-  end)
+    })
+  end
 
-  augroup(FEATURES.FORMATTING, function(provider)
-    return {
+  if client.server_capabilities[provider.FORMATTING] then
+    augroup(('LspFormatting%d'):format(buf), {
       event = 'BufWritePre',
-      buffer = bufnr,
+      buffer = buf,
       desc = 'LSP: Format on save',
       command = function(args)
         local excluded = rvim.find_string(format_exclusions.format_on_save, vim.bo.ft)
-        if not excluded and not vim.g.formatting_disabled and not b.formatting_disabled then
-          local clients = clients_by_capability(args.buf, provider)
+        if not excluded and not vim.g.formatting_disabled and not vim.b[buf].formatting_disabled then
+          local clients = vim.tbl_filter(
+            function(c) return c.server_capabilities[provider.FORMATTING] end,
+            lsp.get_active_clients({ buffer = buf })
+          )
           if #clients >= 1 then format({ bufnr = args.buf, async = #clients == 1 }) end
         end
       end,
-    }
-  end)
+    })
+  end
 
-  augroup(FEATURES.REFERENCES, function()
-    return {
+  if client.server_capabilities[provider.CODELENS] then
+    augroup(('LspCodeLens%d'):format(buf), {
+      event = { 'BufEnter', 'InsertLeave', 'BufWritePost' },
+      desc = 'LSP: Code Lens',
+      buffer = buf,
+      command = function() lsp.codelens.refresh() end,
+    })
+  end
+
+  if client.server_capabilities[provider.REFERENCES] then
+    augroup(('LspReferences%d'):format(buf), {
       event = { 'CursorHold', 'CursorHoldI' },
-      buffer = bufnr,
+      buffer = buf,
       desc = 'LSP: References',
       command = function() lsp.buf.document_highlight() end,
     }, {
       event = 'CursorMoved',
       desc = 'LSP: References Clear',
-      buffer = bufnr,
+      buffer = buf,
       command = function() lsp.buf.clear_references() end,
-    }
-  end)
-
-  augroup(FEATURES.CODELENS, function()
-    return {
-      event = { 'BufEnter', 'InsertLeave', 'BufWritePost' },
-      desc = 'LSP: Code Lens',
-      buffer = bufnr,
-      command = function() pcall(lsp.codelens.refresh) end,
-    }
-  end)
-  vim.b[bufnr].lsp_events = events
+    })
+  end
 end
 ----------------------------------------------------------------------------------------------------
 --  Related Locations
@@ -186,64 +149,71 @@ local function show_documentation()
 end
 
 local function setup_mappings(client, bufnr)
-  local function with_desc(desc, alt)
-    return { buffer = bufnr, desc = alt and fmt('%s: %s', alt, desc) or fmt('lsp: %s', desc) }
-  end
   local mappings = {
     { 'n', '<leader>lk', function() vim.diagnostic.goto_prev({ float = false }) end, desc = 'go to prev diagnostic' },
     { 'n', '<leader>lj', function() vim.diagnostic.goto_next({ float = false }) end, desc = 'go to next diagnostic' },
-    { { 'n', 'x' }, '<leader>la', lsp.buf.code_action, desc = 'code action', capability = 'codeAction' },
-    { 'n', '<leader>lf', format, desc = 'format buffer', capability = 'documentFormatting' },
-    { 'n', 'K', show_documentation, desc = 'hover', capability = 'hover' },
+    { { 'n', 'x' }, '<leader>la', lsp.buf.code_action, desc = 'code action', capability = provider.CODEACTIONS },
+    { 'n', '<leader>lf', format, desc = 'format buffer', capability = provider.FORMATTING },
+    { 'n', 'K', show_documentation, desc = 'hover', capability = provider.HOVER },
     -- stylua: ignore
-    { 'n', 'gd', lsp.buf.definition, desc = 'definition', capability = 'definition', exclude = { 'typescript', 'typescriptreact' }  },
-    { 'n', 'gr', lsp.buf.references, desc = 'references', capability = 'references' },
-    { 'n', 'gi', lsp.buf.implementation, desc = 'implementation', capability = 'references' },
-    { 'n', 'gI', lsp.buf.incoming_calls, desc = 'incoming calls', capability = 'references' },
-    { 'n', 'gt', lsp.buf.type_definition, desc = 'go to type definition', capability = 'definition' },
-    { 'n', '<leader>lc', lsp.codelens.run, desc = 'run code lens', capability = 'codeLens' },
-    { 'n', '<leader>lr', lsp.buf.rename, desc = 'rename', capability = 'rename' },
+    { 'n', 'gd', lsp.buf.definition, desc = 'definition', capability = provider.DEFINITION, exclude = { 'typescript', 'typescriptreact' }  },
+    { 'n', 'gr', lsp.buf.references, desc = 'references', capability = provider.REFERENCES },
+    { 'n', 'gi', lsp.buf.implementation, desc = 'implementation', capability = provider.REFERENCES },
+    { 'n', 'gI', lsp.buf.incoming_calls, desc = 'incoming calls', capability = provider.REFERENCES },
+    { 'n', 'gt', lsp.buf.type_definition, desc = 'go to type definition', capability = provider.DEFINITION },
+    { 'n', '<leader>lc', lsp.codelens.run, desc = 'run code lens', capability = provider.CODELENS },
+    { 'n', '<leader>lr', lsp.buf.rename, desc = 'rename', capability = provider.RENAME },
     { 'n', '<leader>lL', vim.diagnostic.setloclist, desc = 'toggle loclist diagnostics' },
-    { 'n', '<leader>lG', '<cmd>LspGenerateTemplates<CR>', desc = 'generate templates' },
-    { 'n', '<leader>lD', '<cmd>LspRemoveTemplates<CR>', desc = 'delete templates' },
-    { 'n', '<leader>li', '<cmd>LspInfo<CR>', desc = 'lsp info' },
-    { 'n', '<leader>ltv', '<cmd>ToggleVirtualText<CR>', desc = 'toggle virtual text' },
-    { 'n', '<leader>ltl', '<cmd>ToggleVirtualLines<CR>', desc = 'toggle virtual lines' },
+    { 'n', '<leader>lG', '<Cmd>LspGenerateTemplates<CR>', desc = 'generate templates' },
+    { 'n', '<leader>lD', '<Cmd>LspRemoveTemplates<CR>', desc = 'delete templates' },
+    { 'n', '<leader>li', '<Cmd>LspInfo<CR>', desc = 'lsp info' },
+    { 'n', '<leader>ltv', '<Cmd>ToggleVirtualText<CR>', desc = 'toggle virtual text' },
+    { 'n', '<leader>ltl', '<Cmd>ToggleVirtualLines<CR>', desc = 'toggle virtual lines' },
   }
 
   rvim.foreach(function(m)
-    if not m.capability or client.server_capabilities[fmt('%sProvider', m.capability)] then
+    if
+      (not m.exclude or not vim.tbl_contains(m.exclude, vim.bo[bufnr].ft))
+      and (not m.capability or client.server_capabilities[m.capability])
+    then
       map(m[1], m[2], m[3], { buffer = bufnr, desc = fmt('lsp: %s', m.desc) })
     end
   end, mappings)
 
-  -- Typescript
   if client.name == 'tsserver' then
     local actions = require('typescript').actions
-    map('n', 'gd', 'TypescriptGoToSourceDefinition', with_desc('go to source definition', 'typescript'))
-    map('n', '<localleader>tr', '<cmd>TypescriptRenameFile<CR>', with_desc('rename file', 'typescript'))
-    map('n', '<localleader>tf', actions.fixAll, with_desc('fix all', 'typescript'))
-    map('n', '<localleader>tia', actions.addMissingImports, with_desc('add missing', 'typescript'))
-    map('n', '<localleader>tio', actions.organizeImports, with_desc('organize', 'typescript'))
-    map('n', '<localleader>tix', actions.removeUnused, with_desc('remove unused', 'typescript'))
-  end
-  -- Rust tools
-  if client.name == 'rust_analyzer' then
-    map('n', '<localleader>rh', '<cmd>RustToggleInlayHints<CR>', with_desc('toggle hints', 'rust-tools'))
-    map('n', '<localleader>rr', '<cmd>RustRunnables<CR>', with_desc('runnables', 'rust-tools'))
-    map('n', '<localleader>rt', '<cmd>lua _CARGO_TEST()<CR>', with_desc('cargo test', 'rust-tools'))
-    map('n', '<localleader>rm', '<cmd>RustExpandMacro<CR>', with_desc('expand cargo', 'rust-tools'))
-    map('n', '<localleader>rc', '<cmd>RustOpenCargo<CR>', with_desc('open cargo', 'rust-tools'))
-    map('n', '<localleader>rp', '<cmd>RustParentModule<CR>', with_desc('parent module', 'rust-tools'))
-    map('n', '<localleader>rd', '<cmd>RustDebuggables<CR>', with_desc('debuggables', 'rust-tools'))
-    map('n', '<localleader>rv', '<cmd>RustViewCrateGraph<CR>', with_desc('view crate graph', 'rust-tools'))
-    map(
-      'n',
-      '<localleader>rR',
-      "<cmd>lua require('rust-tools/workspace_refresh')._reload_workspace_from_cargo_toml()<CR>",
-      with_desc('reload workspace', 'rust-tools')
+    local typescript_mappings = {
+      { 'n', 'gd', '<Cmd>TypescriptGoToSourceDefinition<CR>', desc = 'go to source definition' },
+      { 'n', '<localleader>tr', '<Cmd>TypescriptRenameFile<CR>', desc = 'rename file' },
+      { 'n', '<localleader>tf', actions.fixAll, desc = 'fix all' },
+      { 'n', '<localleader>tia', actions.addMissingImports, desc = 'add missing' },
+      { 'n', '<localleader>tio', actions.organizeImports, desc = 'organize' },
+      { 'n', '<localleader>tix', actions.removeUnused, desc = 'remove unused' },
+    }
+    rvim.foreach(
+      function(m) map(m[1], m[2], m[3], { buffer = bufnr, desc = fmt('typescript: %s', m.desc) }) end,
+      typescript_mappings
     )
-    map('n', '<localleader>ro', '<cmd>RustOpenExternalDocs<CR>', with_desc('open external docs', 'rust-tools'))
+  end
+
+  if client.name == 'rust_analyzer' then
+    local rust_mappings = {
+      { 'n', '<localleader>rh', '<Cmd>RustToggleInlayHints<CR>', desc = 'toggle hints' },
+      { 'n', '<localleader>rr', '<Cmd>RustRunnables<CR>', desc = 'runnables' },
+      { 'n', '<localleader>rt', '<Cmd>lua _CARGO_TEST()<CR>', desc = 'cargo test' },
+      { 'n', '<localleader>rm', '<Cmd>RustExpandMacro<CR>', desc = 'expand cargo' },
+      { 'n', '<localleader>rc', '<Cmd>RustOpenCargo<CR>', desc = 'open cargo' },
+      { 'n', '<localleader>rp', '<Cmd>RustParentModule<CR>', desc = 'parent module' },
+      { 'n', '<localleader>rd', '<Cmd>RustDebuggables<CR>', desc = 'debuggables' },
+      { 'n', '<localleader>rv', '<Cmd>RustViewCrateGraph<CR>', desc = 'view crate graph' },
+      -- stylua: ignore
+      { 'n', '<localleader>rR', "<Cmd>lua require('rust-tools/workspace_refresh')._reload_workspace_from_cargo_toml()<CR>", desc = 'rust-tools: reload workspace' },
+      { 'n', '<localleader>ro', '<Cmd>RustOpenExternalDocs<CR>', desc = 'rust-tools: open external docs' },
+    }
+    rvim.foreach(
+      function(m) map(m[1], m[2], m[3], { buffer = bufnr, desc = fmt('rust-tools: %s', m.desc) }) end,
+      rust_mappings
+    )
   end
 end
 
@@ -283,7 +253,7 @@ end
 local function setup_semantic_tokens(client, bufnr)
   local overrides = client_overrides[client.name]
   if not overrides or not overrides.semantic_tokens then return end
-  rvim.augroup(fmt('LspSemanticTokens%s', client.name), {
+  augroup(fmt('LspSemanticTokens%s', client.name), {
     event = 'LspTokenUpdate',
     buffer = bufnr,
     desc = fmt('Configure the semantic tokens for the %s', client.name),
@@ -304,28 +274,16 @@ local function on_attach(client, bufnr)
   api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 end
 
-rvim.augroup('LspSetupCommands', {
+augroup('LspSetupCommands', {
   event = { 'LspAttach' },
   desc = 'setup the language server autocommands',
   command = function(args)
     local client = lsp.get_client_by_id(args.data.client_id)
+    if not client then return end
     on_attach(client, args.buf)
     local overrides = client_overrides[client.name]
     if not overrides or not overrides.on_attach then return end
     overrides.on_attach(client, args.buf)
-  end,
-}, {
-  event = { 'LspDetach' },
-  desc = 'Clean up after detached LSP',
-  command = function(args)
-    local client_id = args.data.client_id
-    if not b.lsp_events or not client_id then return end
-    for _, state in pairs(b.lsp_events) do
-      if #state.clients == 1 and state.clients[1] == client_id then
-        api.nvim_clear_autocmds({ group = state.group_id, buffer = args.buf })
-      end
-      vim.tbl_filter(function(id) return id ~= client_id end, state.clients)
-    end
   end,
 }, {
   event = 'DiagnosticChanged',
