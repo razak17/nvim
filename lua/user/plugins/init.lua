@@ -231,7 +231,7 @@ return {
   },
   {
     'marilari88/twoslash-queries.nvim',
-    ft = { 'typescript', 'typescriptreact', 'javascript', 'javascriptreact' },
+    ft = { 'typescript', 'typescriptreact' },
     config = function()
       rvim.augroup('TwoSlashQueriesSetup', {
         event = 'LspAttach',
@@ -239,7 +239,7 @@ return {
           local id = vim.tbl_get(args, 'data', 'client_id') --[[@as lsp.Client]]
           if not id then return end
           local client = vim.lsp.get_client_by_id(id)
-          require('twoslash-queries').attach(client, args.buf)
+          if client.name == 'tsserver' then require('twoslash-queries').attach(client, args.buf) end
         end,
       })
     end,
