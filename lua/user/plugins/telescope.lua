@@ -40,8 +40,7 @@ local function delta_opts(opts, is_buf)
     get_command = function(entry)
       -- stylua: ignore
       local args = {
-        'git', '-c', 'core.pager=delta', '-c', 'delta.side-by-side=false', 'diff',
-        entry.value .. '^!',
+        'git', '-c', 'core.pager=delta', '-c', 'delta.side-by-side=false', 'diff', entry.value .. '^!',
       }
       if is_buf then vim.list_extend(args, { '--', entry.current_file }) end
       return args

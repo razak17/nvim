@@ -33,8 +33,7 @@ local lazy_path = join_paths(data, 'lazy', 'lazy.nvim')
 if not vim.loop.fs_stat(lazy_path) then
     -- stylua: ignore
     vim.fn.system({
-      'git', 'clone', '--filter=blob:none', '--single-branch', 'https://github.com/folke/lazy.nvim.git',
-      lazy_path,
+      'git', 'clone', '--filter=blob:none', '--single-branch', 'https://github.com/folke/lazy.nvim.git', lazy_path,
     })
 end
 vim.opt.rtp:prepend(lazy_path)

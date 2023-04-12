@@ -75,8 +75,7 @@ return {
       tint = -30,
       -- stylua: ignore
       highlight_ignore_patterns = {
-        'WinSeparator', 'St.*', 'Comment', 'Panel.*', 'Telescope.*',
-        'Bqf.*', 'VirtColumn', 'Headline.*', 'NeoTree.*',
+        'WinSeparator', 'St.*', 'Comment', 'Panel.*', 'Telescope.*', 'Bqf.*', 'VirtColumn', 'Headline.*', 'NeoTree.*',
       },
       window_ignore_function = function(win_id)
         local win, buf = vim.wo[win_id], vim.bo[vim.api.nvim_win_get_buf(win_id)]

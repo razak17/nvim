@@ -1,30 +1,5 @@
-local fn, api, highlight = vim.fn, vim.api, rvim.highlight
-
-local function leap_keys()
-  require('leap').leap({
-    target_windows = vim.tbl_filter(
-      function(win) return rvim.falsy(fn.win_gettype(win)) end,
-      api.nvim_tabpage_list_wins(0)
-    ),
-  })
-end
-
 return {
-  { 'ggandor/flit.nvim', keys = { 'n', 'f' }, opts = { labeled_modes = 'nvo', multiline = false } },
   { 'xiyaowong/accelerated-jk.nvim', event = 'VeryLazy', opts = { mappings = { j = 'gj', k = 'gk' } } },
-  {
-    'ggandor/leap.nvim',
-    keys = { { 's', leap_keys, mode = 'n' } },
-    opts = { equivalence_classes = { ' \t\r\n', '([{', ')]}', '`"\'' } },
-    config = function(_, opts)
-      highlight.plugin('leap', {
-        theme = {
-          ['*'] = { { LeapBackdrop = { fg = '#707070' } } },
-        },
-      })
-      require('leap').setup(opts)
-    end,
-  },
   {
     'LeonHeidelbach/trailblazer.nvim',
     -- stylua: ignore
@@ -35,12 +10,8 @@ return {
     },
     opts = {
       custom_session_storage_dir = join_paths(vim.fn.stdpath('data'), 'trailblazer'),
-      trail_options = {
-        current_trail_mark_list_type = 'quickfix',
-      },
-      mappings = {
-        nv = { motions = { peek_move_next_down = '<a-j>', peek_move_previous_up = '<a-k>' } },
-      },
+      trail_options = { current_trail_mark_list_type = 'quickfix' },
+      mappings = { nv = { motions = { peek_move_next_down = '<a-j>', peek_move_previous_up = '<a-k>' } } },
     },
   },
 }
