@@ -97,7 +97,8 @@ end
 
 local function stl_copilot_indicator()
   local client = vim.lsp.get_active_clients({ name = 'copilot' })[1]
-  if client == nil or vim.tbl_isempty(client.requests) then return fmt('idle %s', separator) end
+  if client == nil then return fmt('inactive %s', separator) end
+  if vim.tbl_isempty(client.requests) then return fmt('idle %s', separator) end
   return fmt('working %s', separator)
 end
 
