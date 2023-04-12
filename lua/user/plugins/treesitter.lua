@@ -43,6 +43,7 @@ return {
         },
         indent = { enable = { 'javascriptreact' } },
         matchup = { enable = true, disable = { 'c', 'python' } },
+        autotag = { enable = true },
         rainbow = {
           enable = false,
           disable = true,
@@ -75,7 +76,6 @@ return {
   {
     'windwp/nvim-ts-autotag',
     ft = { 'typescriptreact', 'javascript', 'javascriptreact', 'html', 'vue', 'svelte' },
-    config = true,
   },
   {
     'nvim-treesitter/playground',
