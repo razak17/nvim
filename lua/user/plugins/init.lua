@@ -233,6 +233,11 @@ return {
     'marilari88/twoslash-queries.nvim',
     ft = { 'typescript', 'typescriptreact' },
     config = function()
+      hl.plugin('twoslash-queries', {
+        theme = {
+          ['onedark'] = { { TypeVirtualText = { link = 'DiagnosticVirtualTextInfo' } } },
+        },
+      })
       rvim.augroup('TwoSlashQueriesSetup', {
         event = 'LspAttach',
         command = function(args)

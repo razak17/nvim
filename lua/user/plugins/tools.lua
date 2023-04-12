@@ -60,9 +60,7 @@ return {
     config = function()
       hl.plugin('lab', {
         theme = {
-          ['onedark'] = {
-            { LabCodeRun = { link = 'DiagnosticVirtualTextInfo' } },
-          },
+          ['onedark'] = { { LabCodeRun = { link = 'DiagnosticVirtualTextInfo' } } },
         },
       })
       require('lab').setup()
