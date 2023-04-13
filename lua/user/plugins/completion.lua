@@ -42,7 +42,10 @@ return {
 
       rvim.highlight.plugin('Cmp', hl_defs)
 
-      local cmp_window = { border = border, winhighlight = 'FloatBorder:FloatBorder' }
+      local window_opts = {
+        border = border,
+        winhighlight = 'FloatBorder:FloatBorder',
+      }
 
       local function tab(fallback)
         if cmp.visible() then
@@ -71,9 +74,10 @@ return {
       cmp.setup({
         preselect = cmp.PreselectMode.None,
         window = {
-          completion = cmp.config.window.bordered(cmp_window),
-          documentation = cmp.config.window.bordered(cmp_window),
+          completion = cmp.config.window.bordered(window_opts),
+          documentation = cmp.config.window.bordered(window_opts),
         },
+        snippet = { expand = function(args) luasnip.lsp_expand(args.body) end },
         mapping = {
           ['<C-k>'] = cmp.mapping.select_prev_item(),
           ['<C-j>'] = cmp.mapping.select_next_item(),
@@ -85,10 +89,9 @@ return {
           ['<C-space>'] = cmp.mapping.complete(),
           ['<CR>'] = cmp.mapping.confirm({ select = false }), -- If nothing is selected don't complete
         },
-        snippet = { expand = function(args) luasnip.lsp_expand(args.body) end },
         formatting = {
           deprecated = true,
-          fields = { 'kind', 'abbr', 'menu' },
+          fields = { 'abbr', 'kind', 'menu' },
           format = function(entry, vim_item)
             local MAX = math.floor(vim.o.columns * 0.5)
             if #vim_item.abbr >= MAX then vim_item.abbr = vim_item.abbr:sub(1, MAX) .. ellipsis end
@@ -122,22 +125,22 @@ return {
             end
 
             vim_item.menu = ({
-              nvim_lsp = '(Lsp)',
-              luasnip = '(Snip)',
-              emoji = '(Emj)',
-              path = '(Path)',
-              buffer = '(Buf)',
-              spell = '(Sp)',
-              dictionary = '(Dict)',
-              rg = '(Rg)',
-              norg = '(norg)',
-              cmdline = '(Cmd)',
-              cmdline_history = '(Hist)',
-              crates = '(Crt)',
-              treesitter = '(TS)',
-              ['buffer-lines'] = '(Bufl)',
-              dynamic = '(Dyn)',
-              ['lab.quick_data'] = '(Lab)',
+              nvim_lsp = 'LSP',
+              luasnip = 'SNIP',
+              emoji = 'EMJ',
+              path = 'PATH',
+              buffer = 'BUF',
+              spell = 'SPELL',
+              dictionary = 'DICT',
+              rg = 'RG',
+              norg = 'NORG',
+              cmdline = 'CMD',
+              cmdline_history = 'HIST',
+              crates = 'CRT',
+              treesitter = 'TS',
+              ['buffer-lines'] = 'BUFL',
+              dynamic = 'DYN',
+              ['lab.quick_data'] = 'LAB',
             })[entry.source.name]
             return vim_item
           end,
