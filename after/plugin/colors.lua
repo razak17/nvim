@@ -43,6 +43,7 @@ local function general_overrides()
     { ['@text.diff.add'] = { link = 'DiffAdd' } },
     { ['@text.diff.delete'] = { link = 'DiffDelete' } },
     { ['@text.title.markdown'] = { underdouble = true } },
+    { ['@text.literal.markdown'] = { bg = { from = 'Normal', alter = 0.15 } } },
     ------------------------------------------------------------------------------------------------
     -- LSP
     ------------------------------------------------------------------------------------------------

@@ -1,4 +1,4 @@
-local hl, ui = rvim.highlight, rvim.ui
+local highlight, ui = rvim.highlight, rvim.ui
 local separators, decorations = ui.icons.separators, ui.decorations
 
 return {
@@ -11,11 +11,11 @@ return {
   {
     'itchyny/vim-highlighturl',
     event = 'BufReadPre',
-    config = function() vim.g.highlighturl_guifg = hl.get('URL', 'fg') end,
+    config = function() vim.g.highlighturl_guifg = highlight.get('URL', 'fg') end,
   },
   {
     'lukas-reineke/indent-blankline.nvim',
-    event = { 'BufReadPre', 'BufNewFile' },
+    event = 'UIEnter',
     opts = {
       char = separators.left_thin_block,
       show_foldtext = false,
@@ -51,7 +51,7 @@ return {
     event = 'BufReadPre',
     opts = { char = separators.right_thin_block },
     init = function()
-      hl.plugin('virt_column', { { VirtColumn = { link = 'FloatBorder' } } })
+      highlight.plugin('virt_column', { { VirtColumn = { link = 'FloatBorder' } } })
       rvim.augroup('VirtCol', {
         event = { 'VimEnter', 'BufEnter', 'WinEnter' },
         command = function(args)
