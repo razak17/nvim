@@ -3,7 +3,7 @@ if not rvim then return end
 rvim.lsp.templates_dir = join_paths(vim.fn.stdpath('data'), 'site', 'after', 'ftplugin')
 
 local lsp, fn, api, fmt = vim.lsp, vim.fn, vim.api, string.format
-local L, S = vim.lsp.log_levels, vim.diagnostic.severity
+local L = vim.lsp.log_levels
 
 local diagnostic = vim.diagnostic
 local augroup, icons, border = rvim.augroup, rvim.ui.codicons.lsp, rvim.ui.current.border
@@ -322,9 +322,7 @@ local max_width = math.min(math.floor(vim.o.columns * 0.7), 100)
 local max_height = math.min(math.floor(vim.o.lines * 0.3), 30)
 
 diagnostic.config({
-  signs = {
-    severity = { min = S.WARN },
-  },
+  signs = true,
   underline = true,
   update_in_insert = false,
   severity_sort = true,
@@ -349,13 +347,7 @@ diagnostic.config({
 local function toggle_virtual_text()
   local config = vim.diagnostic.config()
   if type(config.virtual_text) == 'boolean' then
-    config = vim.tbl_extend('force', config, {
-      virtual_text = {
-        severity = { min = S.WARN },
-        prefix = '',
-        spacing = 1,
-      },
-    })
+    config = vim.tbl_extend('force', config, { virtual_text = { prefix = '', spacing = 1 } })
     if type(config.virtual_lines) == 'table' then
       config = vim.tbl_extend('force', config, { virtual_lines = false })
       rvim.lsp.hover_diagnostics = true
