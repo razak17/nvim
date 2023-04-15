@@ -63,7 +63,6 @@ local servers = {
     root_dir = function(fname) return require('lspconfig/util').root_pattern('deno.json', 'deno.jsonc')(fname) end,
   },
   emmet_ls = {
-    filetypes = { 'astro', 'html', 'css', 'sass', 'scss', 'typescriptreact', 'javascriptreact' },
     root_dir = function(fname) return require('lspconfig/util').root_pattern('package.json')(fname) end,
   },
   --- https://github.com/golang/tools/blob/master/gopls/doc/settings.md
