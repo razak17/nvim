@@ -373,5 +373,14 @@ local function toggle_virtual_lines()
 end
 command('ToggleVirtualLines', toggle_virtual_lines)
 
+lsp.handlers['textDocument/hover'] = function(...)
+  local hover_handler = lsp.with(lsp.handlers.hover, {
+    border = border,
+    max_width = max_width,
+    max_height = max_height,
+  })
+  vim.b.lsp_hover_buf, vim.b.lsp_hover_win = hover_handler(...)
+end
+
 -- Generate templates
 if fn.filereadable(rvim.lsp.setup_file) ~= 1 then vim.cmd('LspGenerateTemplates') end
