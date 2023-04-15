@@ -3,12 +3,6 @@ local M = {}
 local uv, fmt = vim.loop, string.format
 local lsp_setup_file = rvim.lsp.setup_file
 
--- stylua: ignore
-local configured_filetypes = {
-  'astro', 'lua', 'javascript', 'javascriptreact', 'typescript', 'typescriptreact', 'python', 'go', 'rust', 'yaml',
-  'vue', 'vim', 'json', 'jsonc', 'html', 'css', 'sh', 'zsh', 'markdown', 'graphql', 'sql', 'prisma', 'svelte', 'c'
-}
-
 local function write_file(filename, content)
   local data = type(content) == 'string' and content or vim.inspect(content)
   uv.fs_open(filename, 'a', 438, function(open_err, fd)
@@ -23,11 +17,7 @@ end
 local function get_supported_filetypes(server_name)
   local status_ok, lspconfig = rvim.pcall(require, fmt('lspconfig.server_configurations.%s', server_name))
   if not status_ok then return {} end
-  local filetypes = lspconfig.default_config.filetypes or {}
-  local config = require('user.servers')(server_name)
-  -- override filetypes from lspconfig
-  if config and config.filetypes then filetypes = config.filetypes end
-  return vim.tbl_filter(function(ft) return vim.tbl_contains(configured_filetypes, ft) end, filetypes or {})
+  return lspconfig.default_config.filetypes or {}
 end
 
 local function get_supported_servers(filter)
