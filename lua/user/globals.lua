@@ -203,6 +203,20 @@ function rvim.filetype_settings(map)
   rvim.augroup('filetype-settings', unpack(commands))
 end
 
+function rvim.lsp_setup(map)
+  local commands = rvim.map(function(fts, server)
+    return {
+      pattern = fts,
+      event = 'FileType',
+      desc = ('lsp setup for %s'):format(server),
+      command = function()
+        if not rvim.falsy(fts) then require('user.lsp.manager').setup(server) end
+      end,
+    }
+  end, map)
+  rvim.augroup('lsp-setup', unpack(commands))
+end
+
 ---@param str string
 ---@param max_len integer
 ---@return string

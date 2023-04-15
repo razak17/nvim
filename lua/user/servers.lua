@@ -6,7 +6,6 @@ local servers = {
   astro = {},
   bashls = {},
   clangd = {},
-  clojure_lsp = {},
   cmake = {},
   cssls = {},
   dockerls = {},

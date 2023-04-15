@@ -1,6 +1,6 @@
 if not rvim then return end
 
-rvim.lsp.templates_dir = join_paths(vim.fn.stdpath('data'), 'site', 'after', 'ftplugin')
+rvim.lsp.setup_file = join_paths(vim.fn.stdpath('config'), 'after', 'plugin', 'lspsetup.lua')
 
 local lsp, fn, api, fmt = vim.lsp, vim.fn, vim.api, string.format
 local L = vim.lsp.log_levels
@@ -168,8 +168,8 @@ local function setup_mappings(client, bufnr)
     { 'n', '<leader>lc', lsp.codelens.run, desc = 'run code lens', capability = provider.CODELENS },
     { 'n', '<leader>lr', lsp.buf.rename, desc = 'rename', capability = provider.RENAME },
     { 'n', '<leader>lL', vim.diagnostic.setloclist, desc = 'toggle loclist diagnostics' },
-    { 'n', '<leader>lG', '<Cmd>LspGenerateTemplates<CR>', desc = 'generate templates' },
-    { 'n', '<leader>lD', '<Cmd>LspRemoveTemplates<CR>', desc = 'delete templates' },
+    { 'n', '<leader>lG', '<Cmd>LspGenerateTemplates<CR>', desc = 'generate setup file' },
+    { 'n', '<leader>lD', '<Cmd>LspRemoveTemplates<CR>', desc = 'delete setup file' },
     { 'n', '<leader>li', '<Cmd>LspInfo<CR>', desc = 'lsp info' },
     { 'n', '<leader>ltv', '<Cmd>ToggleVirtualText<CR>', desc = 'toggle virtual text' },
     { 'n', '<leader>ltl', '<Cmd>ToggleVirtualLines<CR>', desc = 'toggle virtual lines' },
@@ -291,11 +291,11 @@ augroup('LspSetupCommands', {
 ----------------------------------------------------------------------------------------------------
 local command = rvim.command
 
-command('LspGenerateTemplates', function() require('user.lsp.templates').generate_templates() end)
+command('LspGenerateTemplates', function() require('user.lsp.templates').generate_setup_file() end)
 
 command('LspRemoveTemplates', function()
   require('user.lsp.templates').remove_template_files()
-  vim.notify('Templates have been removed', 'info', { title = 'Lsp' })
+  vim.notify('Setup file has been removed', 'info', { title = 'Lsp' })
 end)
 ----------------------------------------------------------------------------------------------------
 -- Signs
@@ -374,4 +374,4 @@ end
 command('ToggleVirtualLines', toggle_virtual_lines)
 
 -- Generate templates
-if fn.filereadable(join_paths(rvim.lsp.templates_dir, 'lua.lua')) ~= 1 then vim.cmd('LspGenerateTemplates') end
+if fn.filereadable(rvim.lsp.setup_file) ~= 1 then vim.cmd('LspGenerateTemplates') end
