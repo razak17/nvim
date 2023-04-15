@@ -167,6 +167,7 @@ return {
             group_index = 2,
           },
           { name = 'spell', group_index = 2 },
+          { name = 'norg', group_index = 2 },
         },
       })
 
