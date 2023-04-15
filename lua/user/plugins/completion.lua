@@ -77,6 +77,13 @@ return {
           completion = cmp.config.window.bordered(window_opts),
           documentation = cmp.config.window.bordered(window_opts),
         },
+        matching = {
+          disallow_fuzzy_matching = true,
+          disallow_fullfuzzy_matching = true,
+          disallow_partial_fuzzy_matching = true,
+          disallow_partial_matching = true,
+          disallow_prefix_unmatching = false,
+        },
         snippet = { expand = function(args) luasnip.lsp_expand(args.body) end },
         mapping = {
           ['<C-k>'] = cmp.mapping.select_prev_item(),

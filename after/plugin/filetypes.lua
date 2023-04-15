@@ -172,7 +172,7 @@ settings({
             { name = 'git', group_index = 1 },
             { name = 'luasnip', group_index = 1 },
             { name = 'dictionary', group_index = 1 },
-            { name = 'spell', group_index = 1, keyword_length = 4 },
+            { name = 'spell', group_index = 1 },
             { name = 'buffer', group_index = 2 },
           },
         })
