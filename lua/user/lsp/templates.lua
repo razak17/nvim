@@ -39,6 +39,7 @@ end
 function M.remove_template_files() vim.fn.delete(lsp_setup_file) end
 
 local function generate(server_names)
+  table.sort(server_names, function(a, b) return a < b end)
   for _, server in ipairs(server_names) do
     local config = require('user.servers')(server)
     if config then
