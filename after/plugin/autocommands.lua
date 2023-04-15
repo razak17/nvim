@@ -72,6 +72,10 @@ rvim.augroup('TextYankHighlight', {
 rvim.augroup('UpdateVim', {
   event = { 'FocusLost', 'InsertLeave' },
   command = 'silent! wall',
+}, {
+  event = { 'VimResized' },
+  pattern = { '*' },
+  command = 'wincmd =', -- Make windows equal size when vim resizes
 })
 
 rvim.augroup('WinBehavior', {
