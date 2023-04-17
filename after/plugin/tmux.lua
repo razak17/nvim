@@ -26,7 +26,7 @@ rvim.augroup('TmuxUtils', {
   event = { 'VimLeave' },
   command = function() clear_pane_title() end,
 }, {
-  event = { 'VimLeavePre', 'FocusLost' },
+  event = { 'VimLeave', 'VimLeavePre', 'FocusLost' },
   command = function() set_statusline(true) end,
 }, {
   event = { 'ColorScheme', 'FocusGained' },
