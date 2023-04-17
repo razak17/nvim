@@ -6,9 +6,7 @@ return {
   'nvim-neo-tree/neo-tree.nvim',
   cmd = { 'Neotree' },
   branch = 'v2.x',
-  keys = {
-    { '<c-n>', '<cmd>Neotree toggle reveal<CR>', desc = 'toggle tree' },
-  },
+  keys = { { '<c-n>', '<cmd>Neotree toggle reveal<CR>', desc = 'toggle tree' } },
   config = function()
     highlight.plugin('NeoTree', {
       theme = {
@@ -31,9 +29,22 @@ return {
 
     vim.g.neo_tree_remove_legacy_commands = 1
 
+    local lsp_icons = rvim.ui.current.lsp_icons
+    local lsp_hls = rvim.ui.lsp.highlights
+
     require('neo-tree').setup({
-      sources = { 'filesystem', 'buffers', 'git_status', 'diagnostics' },
-      source_selector = { winbar = true, separator_active = ' ' },
+      -- sources = { 'filesystem', 'buffers', 'git_status', 'diagnostics' },
+      -- source_selector = { winbar = true, separator_active = ' ' },
+      sources = { 'filesystem', 'diagnostics', 'document_symbols' },
+      source_selector = {
+        winbar = true,
+        separator_active = '',
+        sources = {
+          { source = 'filesystem' },
+          { source = 'document_symbols' },
+          { source = 'diagnostics', display_name = (' %s Diagnostics '):format(rvim.ui.codicons.lsp.error) },
+        },
+      },
       enable_git_status = true,
       git_status_async = true,
       event_handlers = {
@@ -68,6 +79,13 @@ return {
       },
       default_component_configs = {
         icon = { folder_empty = codicons.documents.open_folder },
+        name = {
+          highlight_opened_files = true,
+        },
+        document_symbols = rvim.fold(function(acc, v, k)
+          acc[k] = { icon = v, hl = lsp_hls[k] }
+          return acc
+        end, lsp_icons),
         modified = { symbol = codicons.misc.circle .. ' ' },
         git_status = {
           symbols = {

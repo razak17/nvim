@@ -8,7 +8,7 @@ local str = require('user.strings')
 
 local fn, api, falsy = vim.fn, vim.api, rvim.falsy
 local icons, decorations, highlight = rvim.ui.icons.misc, rvim.ui.decorations, rvim.highlight
-local lsp_hl = rvim.ui.lsp.highlights
+local lsp_hls = rvim.ui.lsp.highlights
 
 local space = ' '
 local dir_separator = icons.chevron_right
@@ -57,7 +57,7 @@ local function breadcrumbs()
       {
         { separator, hls.separator },
         { space },
-        { crumb.icon, lsp_hl[crumb.type] or hls.inactive },
+        { crumb.icon, lsp_hls[crumb.type] or hls.inactive },
         { space },
         { crumb.name, hls.crumb, max_size = 35 },
       },

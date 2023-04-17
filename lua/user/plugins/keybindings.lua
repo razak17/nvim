@@ -17,11 +17,11 @@ return {
 
       which_key.register({
         [']'] = {
-          name = '+next',
+          name = 'next',
           ['<space>'] = 'add space below',
         },
         ['['] = {
-          name = '+prev',
+          name = 'prev',
           ['<space>'] = 'add space above',
         },
         ['<leader>'] = {
