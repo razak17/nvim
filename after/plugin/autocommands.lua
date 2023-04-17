@@ -60,7 +60,7 @@ rvim.augroup('ClearCommandLineMessages', {
   command = function()
     vim.defer_fn(function()
       if fn.mode() == 'n' then vim.cmd.echon("''") end
-    end, 1000)
+    end, 3000)
   end,
 })
 

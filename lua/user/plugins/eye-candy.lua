@@ -8,6 +8,16 @@ return {
   { 'LunarVim/horizon.nvim', lazy = false, priority = 1000 },
   { 'fladson/vim-kitty', ft = 'kitty' },
   { 'romainl/vim-cool', event = 'BufReadPre', config = function() vim.g.CoolTotalMatches = 1 end },
+
+  {
+    'kevinhwang91/nvim-hlslens',
+    event = 'BufReadPre',
+    opts = true,
+    keys = {
+      { 'n', [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]] },
+      { 'N', [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]] },
+    },
+  },
   {
     'itchyny/vim-highlighturl',
     event = 'BufReadPre',

@@ -218,32 +218,6 @@ xnoremap('<localleader>?', [["gy:lua rvim.mappings.ddg(vim.api.nvim_eval("@g"))<
 nnoremap('<localleader>!', [[:lua rvim.mappings.gh(vim.fn.expand("<cword>"))<CR>]], { desc = 'gh search word' })
 xnoremap('<localleader>!', [["gy:lua rvim.mappings.gh(vim.api.nvim_eval("@g"))<CR>gv]], { desc = 'gh search word' })
 ----------------------------------------------------------------------------------------------------
--- Word Search
-----------------------------------------------------------------------------------------------------
--- see: https://github.com/gennaro-tedesco/dotfiles/blob/bc9acae08a4104ff5f1adbe8eef3ee58e11e1020/nvim/lua/utils.lua#L116-L133
-function rvim.mappings.hl_search(blinktime)
-  local ns = api.nvim_create_namespace('search')
-  api.nvim_buf_clear_namespace(0, ns, 0, -1)
-
-  local search_pat = '\\c\\%#' .. fn.getreg('/')
-  local ring = fn.matchadd('IncSearch', search_pat)
-  cmd('redraw')
-  cmd('sleep ' .. blinktime * 1000 .. 'm')
-
-  local sc = fn.searchcount()
-  api.nvim_buf_set_extmark(0, ns, api.nvim_win_get_cursor(0)[1] - 1, 0, {
-    virt_text = { { '[' .. sc.current .. '/' .. sc.total .. ']', 'DiagnosticVirtualTextInfo' } },
-    virt_text_pos = 'eol',
-  })
-
-  fn.matchdelete(ring)
-  cmd('redraw')
-end
-
---- blink word under cursor in search mode
-nnoremap('n', [[nzz:lua rvim.mappings.hl_search(0.3)<CR>]], { desc = 'go to next search and highlight' })
-nnoremap('n', [[nzz:lua rvim.mappings.hl_search(0.3)<CR>]], { desc = 'go to prev search and highlight' })
-----------------------------------------------------------------------------------------------------
 -- GX - replicate netrw functionality
 ----------------------------------------------------------------------------------------------------
 nnoremap('gx', function()
