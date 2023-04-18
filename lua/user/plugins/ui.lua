@@ -89,7 +89,7 @@ return {
   },
   {
     'kevinhwang91/nvim-ufo',
-    event = { 'BufRead', 'BufNewFile' },
+    event = 'VeryLazy',
     init = function()
       rvim.highlight.plugin('ufo', {
         { Folded = { bold = false, italic = false, bg = { from = 'CursorLine' } } },
