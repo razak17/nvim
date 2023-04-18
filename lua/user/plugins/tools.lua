@@ -4,9 +4,13 @@ local border = ui.current.border
 return {
   { 'turbio/bracey.vim', ft = 'html', build = 'npm install --prefix server' },
   {
-    'jose-elias-alvarez/null-ls.nvim',
+    'razak17/null-ls.nvim',
     keys = {
-      { '<leader>ln', function() require('null-ls.info').show_window({ border = border }) end, desc = 'null-ls info' },
+      {
+        '<leader>ln',
+        function() require('null-ls.info').show_window({ height = 0.7, border = border }) end,
+        desc = 'null-ls info',
+      },
     },
   },
   {
