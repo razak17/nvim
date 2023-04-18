@@ -10,7 +10,8 @@ return {
 
   {
     'echasnovski/mini.bufremove',
-    keys = { { '<leader>c', function() require('mini.bufremove').delete(0, false) end, desc = 'delete buffer' } },
+    config = function() require('mini.bufremove').setup() end,
+    keys = { { '<leader>c', '<Cmd>lua MiniBufremove.unshow()<CR>', desc = 'unshow buffer' } },
   },
   {
     'williamboman/mason.nvim',
