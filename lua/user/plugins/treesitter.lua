@@ -45,8 +45,8 @@ return {
         matchup = { enable = true, disable = { 'c', 'python' } },
         autotag = { enable = true },
         rainbow = {
-          enable = false,
-          disable = true,
+          enable = true,
+          disable = false,
           query = {
             'rainbow-parens',
             html = function() return nil end,
@@ -71,7 +71,7 @@ return {
 
       map('n', 'R', '<cmd>edit | TSBufEnable highlight<CR>', { desc = 'treesitter: enable highlight' })
     end,
-    dependencies = { 'nvim-treesitter/nvim-treesitter-textobjects', 'HiPhish/nvim-ts-rainbow2' },
+    dependencies = { 'nvim-treesitter/nvim-treesitter-textobjects', 'brokenbyte/nvim-ts-rainbow2' },
   },
   {
     'windwp/nvim-ts-autotag',
