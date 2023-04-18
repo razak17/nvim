@@ -240,7 +240,7 @@ return {
   },
   {
     'jackMort/ChatGPT.nvim',
-    event = 'VeryLazy',
+    cmd = { 'ChatGPT', 'ChatGPTActAs', 'ChatGPTEditWithInstructions' },
     config = function()
       local border = { style = rvim.ui.border.rectangle, highlight = 'FloatBorder' }
       require('chatgpt').setup({
