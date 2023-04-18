@@ -9,9 +9,9 @@ return {
   'jose-elias-alvarez/typescript.nvim',
 
   {
-    'echasnovski/mini.bufremove',
-    config = function() require('mini.bufremove').setup() end,
-    keys = { { '<leader>c', '<Cmd>lua MiniBufremove.unshow()<CR>', desc = 'unshow buffer' } },
+    'kazhala/close-buffers.nvim',
+    cmd = { 'BDelete' },
+    keys = { { '<leader>c', '<Cmd>BDelete this<CR>', desc = 'buffer delete' } },
   },
   {
     'williamboman/mason.nvim',
