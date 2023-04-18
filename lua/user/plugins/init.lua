@@ -125,6 +125,7 @@ return {
           rust = 'cargo run',
           cpp = 'g++ % -o $fileBase && ./$fileBase',
           go = 'go run %',
+          lua = 'lua %',
         },
       },
       behavior = { default = 'float', startinsert = true },
