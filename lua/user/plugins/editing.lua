@@ -211,7 +211,7 @@ return {
   },
   {
     'echasnovski/mini.surround',
-    keys = { 'ys', 'ds', 'yr' },
+    keys = { { 'ys', desc = 'add surrounding' }, 'ds', { 'yr', desc = 'delete surrounding' } },
     config = function()
       require('mini.surround').setup({
         mappings = {
@@ -229,7 +229,7 @@ return {
   {
     'echasnovski/mini.comment',
     dependencies = { 'JoosepAlviste/nvim-ts-context-commentstring' },
-    keys = { { 'gc', mode = { 'x', 'n', 'o' } } },
+    keys = { { 'gc', mode = { 'x', 'n', 'o' }, desc = 'comment' } },
     config = function()
       require('mini.comment').setup({
         hooks = {
