@@ -18,6 +18,9 @@ settings({
       spelllang = 'en_gb',
     },
   },
+ chatgpt = {
+    function() vim.treesitter.language.register('markdown', 'chatgpt') end,
+  },
   go = {
     opt = {
       tabstop = 4,

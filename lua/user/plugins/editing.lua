@@ -238,4 +238,29 @@ return {
       })
     end,
   },
+  {
+    'jackMort/ChatGPT.nvim',
+    event = 'VeryLazy',
+    config = function()
+      local border = { style = rvim.ui.border.rectangle, highlight = 'FloatBorder' }
+      require('chatgpt').setup({
+        popup_window = { border = border },
+        popup_input = {
+          border = border,
+          submit = '<C-s>',
+        },
+        settings_window = { border = border },
+        chat = {
+          keymaps = {
+            close = { '<Esc>' },
+          },
+        },
+      })
+    end,
+    dependencies = {
+      'MunifTanjim/nui.nvim',
+      'nvim-lua/plenary.nvim',
+      'nvim-telescope/telescope.nvim',
+    },
+  },
 }
