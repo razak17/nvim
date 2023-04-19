@@ -21,7 +21,7 @@ return {
   },
   {
     'itchyny/vim-highlighturl',
-    event = 'BufReadPre',
+    event = 'ColorScheme',
     config = function() vim.g.highlighturl_guifg = highlight.get('URL', 'fg') end,
   },
   {
