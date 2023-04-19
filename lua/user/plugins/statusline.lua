@@ -216,7 +216,11 @@ return {
       cond = conditions.hide_in_width,
     })
 
-    ins_right({ lazy_updates, color = { fg = colors.orange }, cond = conditions.hide_in_width })
+    ins_right({
+      lazy_updates,
+      color = { fg = colors.orange },
+      cond = function() return conditions.hide_in_width() and conditions.ignored_filetype() end,
+    })
 
     ins_right({
       function() return ' LSP(s):' end,
