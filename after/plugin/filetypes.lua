@@ -2,7 +2,19 @@ if not rvim then return end
 local settings, highlight = rvim.filetype_settings, rvim.highlight
 local cmd, fn, api, opt_l, fmt = vim.cmd, vim.fn, vim.api, vim.opt_local, string.format
 
+local function add_quotes_after_equals()
+  local cursor = vim.api.nvim_win_get_cursor(0)
+  local left_of_cursor_range = { cursor[1] - 1, cursor[2] - 1 }
+  local node = vim.treesitter.get_node({ pos = left_of_cursor_range })
+  local nodes_active_in = { 'attribute_name', 'directive_argument', 'directive_name', 'property_identifier' }
+  if not node or not vim.tbl_contains(nodes_active_in, node:type()) then return '=' end
+  return '=""<left>'
+end
+
 settings({
+  [{ 'astro', 'svelte' }] = {
+    function() map('i', '=', add_quotes_after_equals, { expr = true, buffer = true }) end,
+  },
   ['dap-repl'] = {
     opt = {
       buflisted = false,
@@ -18,7 +30,10 @@ settings({
       spelllang = 'en_gb',
     },
   },
- chatgpt = {
+  [{ 'rust', 'org' }] = {
+    opt = { spell = true },
+  },
+  chatgpt = {
     function() vim.treesitter.language.register('markdown', 'chatgpt') end,
   },
   go = {
@@ -80,6 +95,7 @@ settings({
     },
     function()
       cmd([[setlocal tw=120 linebreak textwidth=0]]) -- Make lines longer, and don't break them automatically
+      map('i', '=', add_quotes_after_equals, { expr = true, buffer = true })
     end,
   },
   httpResult = {
@@ -107,6 +123,12 @@ settings({
       foldmethod = 'syntax',
     },
     function()
+      map('n', 'o', function()
+        local line = vim.api.nvim_get_current_line()
+        local should_add_comma = string.find(line, '[^,{[]$')
+        if should_add_comma then return 'A,<cr>' end
+        return 'o'
+      end, { buffer = true, expr = true })
       if fn.expand('%:t') ~= 'package.json' then return end
       require('which-key').register({ ['<localleader>'] = { p = { name = 'Package Info' } } })
       local function with_desc(desc) return { buffer = 0, desc = fmt('package-info: %s', desc) } end
@@ -237,9 +259,6 @@ settings({
       rvim.adjust_split_height(3, 10)
     end,
   },
-  [{ 'rust', 'org' }] = {
-    opt = { spell = true },
-  },
   toml = {
     function()
       if fn.expand('%:t') ~= 'Cargo.toml' then return end
@@ -261,9 +280,14 @@ settings({
       map('n', '<localleader>cD', crates.show_dependencies_popup, with_desc('dependencies'))
     end,
   },
-  [{ 'typescript', 'typescriptreact' }] = {
+  typescript = {
     bo = { textwidth = 100 },
     opt = { spell = true },
+  },
+  typescriptreact = {
+    bo = { textwidth = 100 },
+    opt = { spell = true },
+    function() map('i', '=', add_quotes_after_equals, { expr = true, buffer = true }) end,
   },
   vim = {
     bo = { syntax = 'off' },
