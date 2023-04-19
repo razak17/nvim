@@ -119,15 +119,6 @@ install_dict() {
   fi
 }
 
-dirty_talk() {
-  file_name='programming.utf-8.spl'
-  file="$XDG_DATA_HOME/nvim/site/spell/$file_name"
-  if [ -e "$file" ]; then
-    echo "copying $file"
-    cp "$file" "$RV_DATA_DIR/site/spell/$file_name"
-  fi
-}
-
 install_deps() {
 	printf "Would you like to install node packages now (y/n)? "
 	read -r answer
@@ -191,14 +182,10 @@ while [ "$#" -gt 0 ]; do
 	-dict)
     install_dict
 		;;
-	-fixes)
-    dirty_talk
-		;;
 	*--all*)
 		cloneconfig
     install_deps
     install_dict
-    dirty_talk
 		;;
 	*) echo "Unavailable command... $curr" ;;
 	esac

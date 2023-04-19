@@ -27,7 +27,7 @@ settings({
     opt = {
       list = false,
       spell = true,
-      spelllang = 'en_gb',
+      spelllang = { 'en_gb', 'programming' },
     },
   },
   [{ 'rust', 'org' }] = {
@@ -154,7 +154,7 @@ settings({
     bo = { textwidth = 120 },
     opt = {
       spell = true,
-      spelllang = 'en_gb',
+      spelllang = { 'en_gb', 'programming' },
       spellfile = opt_l.spellfile:prepend(join_paths(vim.fn.stdpath('config'), 'spell', 'lua.utf-8.add')),
       iskeyword = opt_l.iskeyword:append('-'),
     },
@@ -188,7 +188,7 @@ settings({
     opt = {
       list = false,
       spell = true,
-      spelllang = 'en_gb',
+      spelllang = { 'en_gb', 'programming' },
     },
     plugins = {
       cmp = function(cmp)
