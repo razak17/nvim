@@ -153,7 +153,7 @@ rvim.augroup('Utilities', {
   end,
 }, {
   event = { 'BufWritePre', 'FileWritePre' },
-  command = "silent! call mkdir(expand('<afile>:p:h'), 'p')",
+  command = [[if @% !~# '\(://\)' | call mkdir(expand('<afile>:p:h'), 'p') | endif]],
 }, {
   event = { 'BufLeave' },
   command = function()
