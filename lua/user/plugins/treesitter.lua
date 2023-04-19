@@ -53,7 +53,10 @@ return {
             tsx = function() return nil end,
             javascript = function() return nil end,
           },
-          strategy = { require('ts-rainbow.strategy.local') },
+          strategy = {
+            require('ts-rainbow.strategy.local'),
+            dart = require('ts-rainbow.strategy.global'),
+          },
         },
         query_linter = {
           enable = true,
