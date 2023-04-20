@@ -1,4 +1,4 @@
-if not rvim or not rvim.has('nvim-0.9') or not rvim.ui.statuscolumn.enable then return end
+if not rvim or not rvim.ui.statuscolumn.enable then return end
 
 local fn, v, api, opt, optl = vim.fn, vim.v, vim.api, vim.opt, vim.opt_local
 local ui, separators, falsy = rvim.ui, rvim.ui.icons.separators, rvim.falsy
@@ -66,7 +66,7 @@ function ui.statuscolumn.render()
 
   local line_count = api.nvim_buf_line_count(curbuf)
   local is_absolute_lnum = v.virtnum >= 0 and falsy(v.relnum)
-  local separator_hl = is_absolute_lnum and sep_hl or nil
+  local separator_hl = is_absolute_lnum and (curwin == vim.g.actual_curwin) and sep_hl or nil
 
   local statuscol = {}
   local add = str.append(statuscol)
