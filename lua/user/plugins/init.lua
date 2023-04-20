@@ -106,7 +106,9 @@ return {
       use_git_branch = true,
       save_dir = fn.expand(vim.fn.stdpath('cache') .. '/sessions/'),
       ignored_dirs = { vim.fn.stdpath('data') },
-      on_autoload_no_session = function() cmd.SessionLoadLast() end,
+      on_autoload_no_session = function()
+        vim.schedule(function() cmd.Alpha() end)
+      end,
       should_autosave = function() return vim.bo.filetype ~= 'alpha' end,
     },
   },
