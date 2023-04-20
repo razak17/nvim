@@ -13,7 +13,7 @@ end
 
 settings({
   [{ 'astro', 'svelte' }] = {
-    function() map('i', '=', add_quotes_after_equals, { expr = true, buffer = true }) end,
+    function() map('i', '=', add_quotes_after_equals, { expr = true, buffer = 0 }) end,
   },
   ['dap-repl'] = {
     opt = {
@@ -95,7 +95,7 @@ settings({
     },
     function()
       cmd([[setlocal tw=120 linebreak textwidth=0]]) -- Make lines longer, and don't break them automatically
-      map('i', '=', add_quotes_after_equals, { expr = true, buffer = true })
+      map('i', '=', add_quotes_after_equals, { expr = true, buffer = 0 })
     end,
   },
   httpResult = {
@@ -128,7 +128,7 @@ settings({
         local should_add_comma = string.find(line, '[^,{[]$')
         if should_add_comma then return 'A,<cr>' end
         return 'o'
-      end, { buffer = true, expr = true })
+      end, { buffer = 0, expr = true })
       if fn.expand('%:t') ~= 'package.json' then return end
       require('which-key').register({ ['<localleader>'] = { p = { name = 'Package Info' } } })
       local function with_desc(desc) return { buffer = 0, desc = fmt('package-info: %s', desc) } end
@@ -174,7 +174,7 @@ settings({
       end,
     },
     mappings = {
-      { 'n', '<localleader>P', '<Plug>MarkdownPreviewToggle', desc = 'markdown preview' },
+      { 'n', '<localleader>P', '<Plug>MarkdownPreviewToggle', { desc = 'markdown preview', buffer = 0 } },
     },
     function()
       vim.b.formatting_disabled = not vim.startswith(fn.expand('%'), vim.g.projects_dir)
@@ -248,10 +248,10 @@ settings({
       winfixheight = true,
     },
     mappings = {
-      { 'n', 'dd', rvim.list.qf.delete, desc = 'delete current quickfix entry' },
-      { 'v', 'd', rvim.list.qf.delete, desc = 'delete selected quickfix entry' },
-      { 'n', 'H', ':colder<CR>' },
-      { 'n', 'L', ':cnewer<CR>' },
+      { 'n', 'dd', rvim.list.qf.delete, { buffer = 0, desc = 'delete current quickfix entry' } },
+      { 'v', 'd', rvim.list.qf.delete, { buffer = 0, desc = 'delete selected quickfix entry' } },
+      { 'n', 'H', ':colder<CR>', { buffer = 0 } },
+      { 'n', 'L', ':cnewer<CR>', { buffer = 0 } },
     },
     function()
       -- force quickfix to open beneath all other splits
@@ -287,7 +287,7 @@ settings({
   typescriptreact = {
     bo = { textwidth = 100 },
     opt = { spell = true },
-    function() map('i', '=', add_quotes_after_equals, { expr = true, buffer = true }) end,
+    function() map('i', '=', add_quotes_after_equals, { expr = true, buffer = 0 }) end,
   },
   vim = {
     bo = { syntax = 'off' },
