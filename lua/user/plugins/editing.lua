@@ -241,19 +241,19 @@ return {
   {
     'jackMort/ChatGPT.nvim',
     cmd = { 'ChatGPT', 'ChatGPTActAs', 'ChatGPTEditWithInstructions' },
+    keys = {
+      { '<leader>aa', '<cmd>ChatGPTActAs<CR>', desc = 'chatgpt: act as' },
+      { '<leader>ae', '<cmd>ChatGPTEditWithInstructions<CR>', desc = 'chatgpt: edit' },
+      { '<leader>ag', '<cmd>ChatGPT<CR>', desc = 'chatgpt: open' },
+    },
     config = function()
       local border = { style = rvim.ui.border.rectangle, highlight = 'FloatBorder' }
       require('chatgpt').setup({
         popup_window = { border = border },
-        popup_input = {
-          border = border,
-          submit = '<C-s>',
-        },
+        popup_input = { border = border, submit = '<C-s>' },
         settings_window = { border = border },
         chat = {
-          keymaps = {
-            close = { '<Esc>' },
-          },
+          keymaps = { close = { '<Esc>' } },
         },
       })
     end,

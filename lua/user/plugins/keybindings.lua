@@ -25,7 +25,7 @@ return {
           ['<space>'] = 'add space above',
         },
         ['<leader>'] = {
-          a = { name = 'Actions' },
+          a = { name = 'A.I.' },
           d = { name = 'Debugprint' },
           f = { name = 'Telescope' },
           fv = { name = 'Vim' },

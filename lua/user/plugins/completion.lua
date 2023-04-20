@@ -282,6 +282,10 @@ return {
   {
     'zbirenbaum/copilot.lua',
     event = 'InsertEnter',
+    keys = {
+      { '<leader>ap', '<Cmd>Copilot panel<CR>', desc = 'copilot: toggle panel' },
+      { '<leader>at', '<Cmd>Copilot toggle<CR>', desc = 'copilot: toggle' },
+    },
     opts = {
       suggestion = {
         auto_trigger = true,
