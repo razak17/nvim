@@ -7,8 +7,7 @@ RV_BRANCH="${RV_BRANCH:-"main"}"
 RV_REMOTE="${RV_REMOTE:-razak17/nvim}"
 
 asktoinstallgit() {
-	echo "git not found, please install git"
-	exit
+	echo "git not found, please install git" && exit
 }
 
 asktoinstallgo() {
@@ -49,19 +48,7 @@ nodeExtra() {
 }
 
 archExtra() {
-	sudo pacman -S \
-    ripgrep \
-    xsel \
-    fd \
-    lazygit \
-    unzip \
-    curl \
-    sqlite3 \
-    btop
-}
-
-yayExtra() {
-  echo 'Done'
+	sudo pacman -S ripgrep xsel fd lazygit unzip curl sqlite3 btop
 }
 
 importRvim() {
@@ -90,7 +77,7 @@ validate_node_installation() {
   return 0
 }
 
-install_nodejs_deps()        {
+install_nodejs_deps() {
 	printf "Which package manager would you like to use (pnpm, yarn, npm)? "
   pkg_managers=("pnpm" "yarn" "npm")
 
@@ -125,20 +112,23 @@ install_deps() {
 	read -r answer
 	[ "$answer" != "${answer#[Yy]}" ] && archExtra
 
-	printf "Would you like to install extra aur packages now (y/n)? "
+	printf "Would you like to initialize python now (y/n)? "
 	read -r answer
-	[ "$answer" != "${answer#[Yy]}" ] && yayExtra
+	[ "$answer" != "${answer#[Yy]}" ] && pythonPackages
 }
 
 cloneconfig() {
-	# check existing config
-	[ -d "$RV_CONFIG_DIR" ] && moveoldrvim
+	# install node and neovim support
+	(command -v git >/dev/null && echo "git installed, moving on...") || asktoinstallgit
 
 	# install go
 	(command -v go >/dev/null && echo "go installed, moving on...") || asktoinstallgo
 
 	# install pip
 	(command -v pip >/dev/null && echo "pip installed, moving on...") || asktoinstallpip
+
+	# check existing config
+	[ -d "$RV_CONFIG_DIR" ] && moveoldrvim
 
 	# create dirs
 	echo "Creating default directories"
@@ -148,14 +138,6 @@ cloneconfig() {
 	echo "Installing rvim"
 	importRvim
 
-	# Install core python packages
-	printf "Would you like to initialize python now (y/n)? "
-	read -r answer
-	[ "$answer" != "${answer#[Yy]}" ] && pythonPackages
-
-	# install node and neovim support
-	(command -v git >/dev/null && echo "git installed, moving on...") || asktoinstallgit
-
 	sudo cp --force "$RV_CONFIG_DIR/bin/rvim" "$HOME/.local/bin"
 }
 
@@ -164,21 +146,11 @@ while [ "$#" -gt 0 ]; do
 	shift
 
 	case "$curr" in
-	-py)
-		pythonPackages
-		;;
-	-node)
-		nodeHostInit
-    ;;
-	-npm)
-    install_nodejs_deps
-		;;
-	-deps)
-    install_deps
-		;;
-	-dict)
-    install_dict
-		;;
+	-py) pythonPackages ;;
+	-node) nodeHostInit ;;
+	-npm) install_nodejs_deps ;;
+	-deps) install_deps ;;
+	-dict) install_dict ;;
 	*--all*)
 		cloneconfig
     install_deps
