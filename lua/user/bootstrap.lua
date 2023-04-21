@@ -16,7 +16,6 @@ rvim.open_command = g.os == 'Darwin' and 'open' or 'xdg-open'
 ----------------------------------------------------------------------------------------------------
 -- Set Providers
 ----------------------------------------------------------------------------------------------------
-g.python3_host_prog = join_paths(vim.fn.stdpath('cache'), 'venv', 'neovim', 'bin', 'python3')
 for _, v in pairs({ 'python', 'ruby', 'perl' }) do
   g['loaded_' .. v .. '_provider'] = 0
 end

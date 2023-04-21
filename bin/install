@@ -40,11 +40,8 @@ createDirs() {
 	mkdir -p "$HOME/.local/share/rvim/site/spell"
 }
 
-pythonVenvInit() {
-  neovim_py="$HOME/.cache/rvim/venv/neovim"
-  mkdir -p "$neovim_py"
-  python3 -m venv "$neovim_py"
-  "$neovim_py"/bin/pip3 install -U setuptools pynvim neovim-remote
+pythonPackages() {
+  pip install -U setuptools pynvim neovim-remote
 }
 
 nodeExtra() {
@@ -141,7 +138,7 @@ cloneconfig() {
 	(command -v go >/dev/null && echo "go installed, moving on...") || asktoinstallgo
 
 	# install pip
-	(command -v pip3 >/dev/null && echo "pip installed, moving on...") || asktoinstallpip
+	(command -v pip >/dev/null && echo "pip installed, moving on...") || asktoinstallpip
 
 	# create dirs
 	echo "Creating default directories"
@@ -154,7 +151,7 @@ cloneconfig() {
 	# Install core python packages
 	printf "Would you like to initialize python now (y/n)? "
 	read -r answer
-	[ "$answer" != "${answer#[Yy]}" ] && pythonVenvInit
+	[ "$answer" != "${answer#[Yy]}" ] && pythonPackages
 
 	# install node and neovim support
 	(command -v git >/dev/null && echo "git installed, moving on...") || asktoinstallgit
@@ -168,7 +165,7 @@ while [ "$#" -gt 0 ]; do
 
 	case "$curr" in
 	-py)
-		pythonVenvInit
+		pythonPackages
 		;;
 	-node)
 		nodeHostInit
