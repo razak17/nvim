@@ -54,8 +54,7 @@ return {
             javascript = function() return nil end,
           },
           strategy = {
-            require('ts-rainbow.strategy.local'),
-            dart = require('ts-rainbow.strategy.global'),
+            require('ts-rainbow.strategy.global'),
           },
         },
         query_linter = {
