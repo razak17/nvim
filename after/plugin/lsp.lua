@@ -170,6 +170,8 @@ local function setup_mappings(client, bufnr)
     { 'n', '<leader>lL', vim.diagnostic.setloclist, desc = 'toggle loclist diagnostics' },
     { 'n', '<leader>lG', '<Cmd>LspGenerateTemplates<CR>', desc = 'generate setup file' },
     { 'n', '<leader>lD', '<Cmd>LspRemoveTemplates<CR>', desc = 'delete setup file' },
+    -- stylua: ignore
+    { 'n', '<leader>lO', '<Cmd>edit ' .. fn.stdpath('config') .. '/after/plugin/lspsetup.lua<CR>', desc = 'open lspsetup file' },
     { 'n', '<leader>li', '<Cmd>LspInfo<CR>', desc = 'lsp info' },
     { 'n', '<leader>ltv', '<Cmd>ToggleVirtualText<CR>', desc = 'toggle virtual text' },
     { 'n', '<leader>ltl', '<Cmd>ToggleVirtualLines<CR>', desc = 'toggle virtual lines' },
