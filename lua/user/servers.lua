@@ -11,6 +11,7 @@ local servers = {
   dockerls = {},
   eslint = {},
   jsonls = {},
+  lemminx = {},
   marksman = {},
   prismals = {},
   rust_analyzer = {},
