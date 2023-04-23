@@ -40,7 +40,7 @@
   "leap.nvim": { "branch": "main", "commit": "0eb3611593e135150e2f7880ec67568ccb51c17a" },
   "linediff.vim": { "branch": "main", "commit": "3925a50a02b4b1e7958807676f93e06b53c66e27" },
   "lsp-format-modifications.nvim": { "branch": "main", "commit": "9c17f34c0ddd15c56c575a8a187d6a566ce9939b" },
-  "lsp-inlayhints.nvim": { "branch": "main", "commit": "66f234be14b340cc87205c7ba5c5489f86c65e9d" },
+  "lsp-inlayhints.nvim": { "branch": "main", "commit": "0948ecb196b7b288459fad478480359bbf315bee" },
   "lsp_lines.nvim": { "branch": "main", "commit": "d9c8a71b8b6e6bfa2b5cf015f59450472dbf06fe" },
   "lsp_signature.nvim": { "branch": "master", "commit": "1fdc742af68f4725a22c05c132f971143be447fc" },
   "lualine.nvim": { "branch": "master", "commit": "84ffb80e452d95e2c46fa29a98ea11a240f7843e" },

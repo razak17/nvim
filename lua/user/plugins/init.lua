@@ -205,6 +205,7 @@ return {
   },
   {
     'lvimuser/lsp-inlayhints.nvim',
+    commit = '0948ecb',
     keys = {
       { '<leader>lth', function() require('lsp-inlayhints').toggle() end, desc = 'toggle inlay hints' },
     },
