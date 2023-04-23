@@ -171,7 +171,7 @@ local function setup_mappings(client, bufnr)
     { 'n', '<leader>lG', '<Cmd>LspGenerateTemplates<CR>', desc = 'generate setup file' },
     { 'n', '<leader>lD', '<Cmd>LspRemoveTemplates<CR>', desc = 'delete setup file' },
     -- stylua: ignore
-    { 'n', '<leader>lO', '<Cmd>edit ' .. fn.stdpath('config') .. '/after/plugin/lspsetup.lua<CR>', desc = 'open lspsetup file' },
+    { 'n', '<leader>lO', '<Cmd>edit ' .. rvim.lsp.setup_file .. '<CR>', desc = 'open lspsetup file' },
     { 'n', '<leader>li', '<Cmd>LspInfo<CR>', desc = 'lsp info' },
     { 'n', '<leader>ltv', '<Cmd>ToggleVirtualText<CR>', desc = 'toggle virtual text' },
     { 'n', '<leader>ltl', '<Cmd>ToggleVirtualLines<CR>', desc = 'toggle virtual lines' },
@@ -385,4 +385,4 @@ lsp.handlers['textDocument/hover'] = function(...)
 end
 
 -- Generate templates
-if fn.filereadable(rvim.lsp.setup_file) ~= 1 then vim.cmd('LspGenerateTemplates') end
+if fn.filereadable(rvim.lsp.setup_file) ~= 1 then vim.defer_fn(function() vim.cmd('LspGenerateTemplates') end, 1) end
