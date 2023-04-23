@@ -129,7 +129,7 @@ local function can_save()
 end
 
 rvim.augroup('Utilities', {
-  -- @source: https://vim.fandom.com/wiki/Use_gf_to_open_a_file_via_its_URL
+  ---@source: https://vim.fandom.com/wiki/Use_gf_to_open_a_file_via_its_URL
   event = { 'BufReadCmd' },
   pattern = { 'file:///*' },
   nested = true,
@@ -168,7 +168,7 @@ rvim.augroup('Utilities', {
       vim.cmd([[
         unlet! b:ftdetect
         filetype detect
-        echom 'Filetype set to ' . &ft
+        call nvim_notify('Filetype set to ' . &ft)
       ]])
     end
   end,
