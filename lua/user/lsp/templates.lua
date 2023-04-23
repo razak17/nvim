@@ -44,6 +44,10 @@ end
 ---The file is generated to a runtimepath: "~/.config/nvim/after/plugin/lspsetup.lua"
 function M.generate_setup_file(server_names)
   server_names = server_names or get_supported_servers()
+  if vim.tbl_isempty(server_names) then
+    vim.notify('No servers found', 'error', { title = 'Lsp' })
+    return
+  end
   write_file(lsp_setup_file, fmt('%s\n%s\n', '-- stylua: ignore', 'rvim.lsp_setup({'))
   generate(server_names)
   write_file(lsp_setup_file, '})')
