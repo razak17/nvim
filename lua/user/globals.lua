@@ -125,7 +125,7 @@ function rvim.pcall(msg, func, ...)
 end
 
 ---Get whether using nightly version of neovim
-local LATEST_NIGHTLY_MINOR = 9
+local LATEST_NIGHTLY_MINOR = 10
 function rvim.nightly() return vim.version().minor >= LATEST_NIGHTLY_MINOR end
 
 ----------------------------------------------------------------------------------------------------
