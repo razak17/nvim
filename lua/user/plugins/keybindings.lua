@@ -75,21 +75,33 @@ return {
       local Hydra = require('hydra')
       local border = rvim.ui.current.border
       local hint_opts = { position = 'bottom', border = border, type = 'window' }
+      local pcmd = require('hydra.keymap-util').pcmd
+      local hint_opts = { position = 'bottom', border = rvim.ui.current.border, type = 'window' }
+
+      local splits = rvim.reqcall('smart-splits')
+      local fold_cycle = rvim.reqcall('fold-cycle')
+      local dap = rvim.reqcall('dap')
+
+      local base_config = function(opts)
+        return vim.tbl_extend('force', {
+          invoke_on_body = true,
+          hint = hint_opts,
+          on_enter = function() vim.cmd.BeaconOff() end,
+          on_exit = function() vim.cmd.BeaconOn() end,
+        }, opts or {})
+      end
 
       Hydra({
         name = 'Folds',
         mode = 'n',
         body = '<leader>z',
         color = 'teal',
-        config = {
-          invoke_on_body = true,
-          hint = hint_opts,
-        },
+        config = base_config(),
         heads = {
           { 'j', 'zj', { desc = 'next fold' } },
           { 'k', 'zk', { desc = 'previous fold' } },
-          { 'l', require('fold-cycle').open_all, { desc = 'open folds underneath' } },
-          { 'h', require('fold-cycle').close_all, { desc = 'close folds underneath' } },
+          { 'l', fold_cycle.open_all, { desc = 'open folds underneath' } },
+          { 'h', fold_cycle.close_all, { desc = 'close folds underneath' } },
           { '<Esc>', nil, { exit = true, desc = 'Quit' } },
         },
       })
@@ -99,14 +111,11 @@ return {
         mode = 'n',
         body = '<leader>b',
         color = 'teal',
-        config = {
-          hint = hint_opts,
-          invoke_on_body = true,
-        },
+        config = base_config(),
         heads = {
           { 'a', '<Cmd>CloseAllBuffers<CR>', { desc = 'close all' } },
           { 'c', '<Cmd>CloseUnusedBuffers<CR>', { desc = 'close unused' } },
-          { 'd', function() require('mini.bufremove').delete(0, true) end, { desc = 'delete buffer(force)' } },
+          { 'd', '<Cmd>BDelete this<CR>', { desc = 'delete buffer' } },
           { 'h', '<Plug>(CybuPrev)', { desc = 'prev buffer' } },
           { 'l', '<Plug>(CybuNext)', { desc = 'next buffer' } },
           { '<Esc>', nil, { exit = true, desc = 'Quit' } },
@@ -117,11 +126,7 @@ return {
         name = 'Side scroll',
         mode = 'n',
         body = 'z',
-        config = {
-          hint = hint_opts,
-          on_enter = function() vim.cmd('IndentBlanklineDisable') end,
-          on_exit = function() vim.cmd('IndentBlanklineEnable') end,
-        },
+        config = base_config({ invoke_on_body = false }),
         heads = {
           { 'h', '5zh' },
           { 'l', '5zl', { desc = '←/→' } },
@@ -130,25 +135,52 @@ return {
         },
       })
 
+      local window_hint = [[
+      ^^^^^^^^^^^^     Move      ^^    Size   ^^   ^^     Split
+      ^^^^^^^^^^^^-------------  ^^-----------^^   ^^---------------
+      ^ ^ _k_ ^ ^  ^ ^ _K_ ^ ^   ^   _<C-k>_   ^   _s_: horizontally 
+      _h_ ^ ^ _l_  _H_ ^ ^ _L_   _<C-h>_ _<C-l>_   _v_: vertically
+      ^ ^ _j_ ^ ^  ^ ^ _J_ ^ ^   ^   _<C-j>_   ^   _q_, _c_: close
+      focus^^^^^^  window^^^^^^  ^_=_: equalize^   _o_: remain only
+      ^ ^ ^ ^ ^ ^  ^ ^ ^ ^ ^ ^   ^^ ^          ^
+      ]]
+
       Hydra({
         name = 'Window management',
-        config = {
-          invoke_on_body = false,
-          hint = hint_opts,
-        },
+        hint = window_hint,
+        config = base_config({ invoke_on_body = true }),
         mode = 'n',
         body = '<C-w>',
         heads = {
-          -- Split
-          { 's', '<C-w>s', { desc = 'split horizontally' } },
-          { 'v', '<C-w>v', { desc = 'split vertically' } },
-          { 'q', '<C-w>c', { desc = 'close window' } },
-          -- Size
-          { 'j', '2<C-w>+', { desc = 'increase height' } },
-          { 'k', '2<C-w>-', { desc = 'decrease height' } },
-          { 'h', '5<C-w>>', { desc = 'increase width' } },
-          { 'l', '5<C-w><', { desc = 'decrease width' } },
+          --- Move
+          { 'h', '<C-w>h' },
+          { 'j', '<C-w>j' },
+          { 'k', pcmd('wincmd k', 'E11', 'close') },
+          { 'l', '<C-w>l' },
+
+          { 'o', '<C-w>o', { exit = true, desc = 'remain only' } },
+          { '<C-o>', '<C-w>o', { exit = true, desc = false } },
+          -- Resize
+          { '<C-h>', function() splits.resize_left(2) end },
+          { '<C-j>', function() splits.resize_down(2) end },
+          { '<C-k>', function() splits.resize_up(2) end },
+          { '<C-l>', function() splits.resize_right(2) end },
           { '=', '<C-w>=', { desc = 'equalize' } },
+          -- Split
+          { 's', pcmd('split', 'E36') },
+          { '<C-s>', pcmd('split', 'E36'), { desc = false } },
+          { 'v', pcmd('vsplit', 'E36') },
+          { '<C-v>', pcmd('vsplit', 'E36'), { desc = false } },
+          -- Size
+          { 'H', function() splits.swap_buf_left() end },
+          { 'J', function() splits.swap_buf_down() end },
+          { 'K', function() splits.swap_buf_up() end },
+          { 'L', function() splits.swap_buf_right() end },
+
+          { 'c', pcmd('close', 'E444') },
+          { 'q', pcmd('close', 'E444'), { desc = 'close window' } },
+          { '<C-c>', pcmd('close', 'E444'), { desc = false } },
+          { '<C-q>', pcmd('close', 'E444'), { desc = false } },
           --
           { '<Esc>', nil, { exit = true } },
         },
@@ -175,13 +207,6 @@ return {
         },
       })
 
-      local function run(method, args)
-        return function()
-          local dap = require('dap')
-          if dap[method] then dap[method](args) end
-        end
-      end
-
       local hint = [[
    _n_: step over   _s_: Continue/Start   _b_: Breakpoint     _K_: Eval
    _i_: step into   _x_: Quit             ^ ^                 ^ ^
@@ -202,19 +227,19 @@ return {
         mode = { 'n', 'x' },
         body = '<leader>dh',
         heads = {
-          { 'n', run('step_over'), { silent = true } },
-          { 'i', run('step_into'), { silent = true } },
-          { 'o', run('step_out'), { silent = true } },
-          { 'c', run('run_to_cursor'), { silent = true } },
-          { 's', run('continue'), { silent = true } },
-          { 'x', run('disconnect', { terminateDebuggee = false }), { exit = true, silent = true } },
-          { 'X', run('close'), { silent = true } },
+          { 'n', dap.step_over, { silent = true } },
+          { 'i', dap.step_into, { silent = true } },
+          { 'o', dap.step_out, { silent = true } },
+          { 'c', dap.run_to_cursor, { silent = true } },
+          { 's', dap.continue, { silent = true } },
+          { 'x', function() dap.disconnect({ terminateDebuggee = false }) end, { exit = true, silent = true } },
+          { 'X', dap.close, { silent = true } },
           {
             'C',
             ":lua require('dapui').close()<cr>:DapVirtualTextForceRefresh<CR>",
             { silent = true },
           },
-          { 'b', run('toggle_breakpoint'), { silent = true } },
+          { 'b', dap.toggle_breakpoint, { silent = true } },
           { 'K', ":lua require('dap.ui.widgets').hover()<CR>", { silent = true } },
           { 'q', nil, { exit = true, nowait = true } },
         },

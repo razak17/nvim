@@ -425,3 +425,13 @@ function rvim.find_first(t, predicate)
   end
   return nil
 end
+
+---@param require_path string
+---@return table<string, fun(...): any>
+function rvim.reqcall(require_path)
+  return setmetatable({}, {
+    __index = function(_, k)
+      return function(...) return require(require_path)[k](...) end
+    end,
+  })
+end
