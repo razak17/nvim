@@ -107,7 +107,7 @@ return {
       save_dir = fn.expand(vim.fn.stdpath('cache') .. '/sessions/'),
       ignored_dirs = { vim.fn.stdpath('data') },
       on_autoload_no_session = function()
-        vim.schedule(function() cmd.Alpha() end)
+        vim.schedule(function() cmd.SessionLoadLast() end)
       end,
       should_autosave = function() return vim.bo.filetype ~= 'alpha' end,
     },
