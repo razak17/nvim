@@ -73,7 +73,7 @@ return {
 
       map('n', 'R', '<cmd>edit | TSBufEnable highlight<CR>', { desc = 'treesitter: enable highlight' })
     end,
-    dependencies = { 'nvim-treesitter/nvim-treesitter-textobjects', 'brokenbyte/nvim-ts-rainbow2' },
+    dependencies = { 'nvim-treesitter/nvim-treesitter-textobjects', 'HiPhish/nvim-ts-rainbow2' },
   },
   {
     'windwp/nvim-ts-autotag',
