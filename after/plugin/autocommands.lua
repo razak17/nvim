@@ -168,7 +168,7 @@ rvim.augroup('Utilities', {
       vim.cmd([[
         unlet! b:ftdetect
         filetype detect
-        call nvim_notify('Filetype set to ' . &ft)
+        call v:lua.vim.notify('Filetype set to ' . &ft, "info", {})
       ]])
     end
   end,
