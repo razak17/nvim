@@ -152,12 +152,9 @@ rvim.augroup('Utilities', {
     vim.b[args.buf].formatting_disabled = match ~= nil
   end,
 }, {
-  event = { 'BufWritePre', 'FileWritePre' },
-  command = [[if @% !~# '\(://\)' | call mkdir(expand('<afile>:p:h'), 'p') | endif]],
-}, {
   event = { 'BufLeave' },
   command = function()
-    if can_save() then vim.cmd.update({ mods = { silent = true } }) end
+    if can_save() then vim.cmd('silent! write ++p') end
   end,
 }, {
   event = { 'BufWritePost' },
