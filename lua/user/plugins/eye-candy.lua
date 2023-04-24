@@ -62,7 +62,6 @@ return {
     event = 'BufReadPre',
     opts = { char = separators.right_thin_block },
     init = function()
-      highlight.plugin('virt_column', { { VirtColumn = { link = 'FloatBorder' } } })
       rvim.augroup('VirtCol', {
         event = { 'VimEnter', 'BufEnter', 'WinEnter' },
         command = function(args)
