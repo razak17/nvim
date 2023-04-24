@@ -82,10 +82,13 @@ return {
         name = {
           highlight_opened_files = true,
         },
-        document_symbols = rvim.fold(function(acc, v, k)
-          acc[k] = { icon = v, hl = lsp_hls[k] }
-          return acc
-        end, lsp_icons),
+        document_symbols = {
+          follow_cursor = true,
+          kinds = rvim.fold(function(acc, v, k)
+            acc[k] = { icon = v, hl = lsp_hls[k] }
+            return acc
+          end, lsp_icons),
+        },
         modified = { symbol = codicons.misc.circle .. ' ' },
         git_status = {
           symbols = {
