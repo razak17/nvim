@@ -213,12 +213,7 @@ return {
     dependencies = {
       'hrsh7th/cmp-nvim-lsp',
       'saadparwaiz1/cmp_luasnip',
-      {
-        'hrsh7th/cmp-cmdline',
-        config = function()
-          vim.o.wildmode = '' -- Shows a menu bar rvim opposed to an enormous list
-        end,
-      },
+      { 'hrsh7th/cmp-cmdline', config = function() vim.o.wildmode = '' end },
       'dmitmel/cmp-cmdline-history',
       'hrsh7th/cmp-nvim-lsp-document-symbol',
       'hrsh7th/cmp-path',
@@ -227,10 +222,7 @@ return {
       'lukas-reineke/cmp-rg',
       { 'rcarriga/cmp-dap', ft = { 'dap-repl', 'dapui_watches' } },
       { 'amarakon/nvim-cmp-buffer-lines', ft = { 'c', 'cpp' } },
-      {
-        'f3fora/cmp-spell',
-        ft = { 'gitcommit', 'NeogitCommitMessage', 'markdown', 'norg', 'org' },
-      },
+      { 'f3fora/cmp-spell', ft = { 'gitcommit', 'NeogitCommitMessage', 'markdown', 'norg', 'org' } },
       {
         'uga-rosa/cmp-dictionary',
         enabled = false,
@@ -250,30 +242,10 @@ return {
         config = function()
           local Date = require('cmp_dynamic.utils.date')
           require('cmp_dynamic').register({
-            {
-              label = 'today',
-              insertText = 1,
-              cb = { function() return os.date('%Y/%m/%d') end },
-            },
-            {
-              label = 'tomorrow',
-              insertText = 1,
-              cb = { function() return Date.new():add_date(1):format('%Y/%m/%d') end },
-            },
-            {
-              label = 'next Week',
-              insertText = 1,
-              cb = {
-                function() return Date.new():add_date(7):format('%Y/%m/%d') end,
-              },
-              resolve = true, -- default: false
-            },
-            {
-              label = 'next Monday',
-              insertText = 1,
-              cb = { function() return Date.new():add_date(7):day(1):format('%Y/%m/%d') end },
-              resolve = true, -- default: false
-            },
+            { label = 'today', insertText = os.date('%Y/%m/%d') },
+            { label = 'tomorrow', insertText = Date.new():add_date(1):format('%Y/%m/%d') },
+            { label = 'next Week', insertText = Date.new():add_date(7):format('%Y/%m/%d'), resolve = true },
+            { label = 'next Monday', insertText = Date.new():add_date(7):day(1):format('%Y/%m/%d'), resolve = true },
           })
         end,
       },
