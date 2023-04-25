@@ -435,3 +435,7 @@ function rvim.reqcall(require_path)
     end,
   })
 end
+
+---@param bool boolean
+---@return string
+function rvim.bool2str(bool) return bool and 'on' or 'off' end

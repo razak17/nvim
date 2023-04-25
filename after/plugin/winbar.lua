@@ -149,3 +149,11 @@ rvim.augroup('AttachWinbar', {
   desc = 'Toggle winbar',
   command = set_winbar,
 })
+
+local function toggle_relative_path()
+  local current = rvim.ui.winbar.relative_path
+  rvim.ui.winbar.relative_path = not current
+  rvim.ui.notify(string.format('%s %s %s', 'winbar', 'relative path', rvim.bool2str(not current)))
+end
+
+map('n', '<leader>op', toggle_relative_path, { desc = 'winbar: toggle relative path' })
