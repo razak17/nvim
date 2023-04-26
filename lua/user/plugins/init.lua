@@ -86,7 +86,6 @@ return {
   {
     'olimorris/persisted.nvim',
     lazy = false,
-    branch = 'feat/no-branch-session',
     init = function()
       rvim.command('ListSessions', 'Telescope persisted')
       rvim.augroup('PersistedEvents', {
