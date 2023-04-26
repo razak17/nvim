@@ -4,6 +4,7 @@ local highlight = rvim.highlight
 
 local function general_overrides()
   highlight.all({
+    { CursorLineNr = { bg = 'NONE' } },
     { mkdLineBreak = { clear = true } },
     { LineNr = { bg = 'NONE' } },
     { ErrorMsg = { bg = 'NONE' } },
@@ -19,7 +20,7 @@ local function general_overrides()
     { SignColumn = { bg = 'NONE' } },
     { EndOfBuffer = { bg = 'NONE' } },
     { GitSignsCurrentLineBlame = { link = 'Comment' } },
-    { StatusColSep = { fg = { from = 'Comment' }, bg = { from = 'Normal' } } },
+    { StatusColSep = { link = 'Comment' } },
     ------------------------------------------------------------------------------//
     --  Semantic tokens
     ------------------------------------------------------------------------------//
@@ -50,7 +51,13 @@ local function general_overrides()
     ------------------------------------------------------------------------------------------------
     { LspCodeLens = { inherit = 'Comment', bold = true, italic = false } },
     { LspCodeLensSeparator = { bold = false, italic = false } },
-    { LspReferenceText = { bg = { from = 'Whitespace',attr = 'fg' }, underline = true, sp = { from = 'Whitespace', attr = 'fg' } } },
+    {
+      LspReferenceText = {
+        bg = { from = 'Whitespace', attr = 'fg' },
+        underline = true,
+        sp = { from = 'Whitespace', attr = 'fg' },
+      },
+    },
     { LspReferenceRead = { link = 'LspReferenceText' } },
     { LspReferenceWrite = { inherit = 'LspReferenceText', bold = true, underline = true } },
     { LspSignatureActiveParameter = { link = 'Visual' } },
