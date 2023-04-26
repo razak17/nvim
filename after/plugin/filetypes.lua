@@ -296,8 +296,8 @@ settings({
       spell = true,
       iskeyword = opt_l.iskeyword:append(':,#'),
     },
-    function() -- TODO: if the syntax isn't delayed it still gets enabled
-      vim.schedule(function() vim.bo.syntax = 'off' end)
+    function()
+      vim.schedule(function() opt_l.syntax = 'off' end) -- FIXME: if the syntax isn't delayed it still gets enabled
     end,
   },
   yaml = {
