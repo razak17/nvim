@@ -78,10 +78,12 @@ return {
         },
       },
       default_component_configs = {
-        icon = { folder_empty = codicons.documents.open_folder },
-        name = {
-          highlight_opened_files = true,
+        icon = {
+          folder_empty = codicons.documents.open_folder,
+          default = codicons.documents.default_folder,
+          highlight = 'DevIconDefault',
         },
+        name = { highlight_opened_files = true, },
         document_symbols = {
           follow_cursor = true,
           kinds = rvim.fold(function(acc, v, k)

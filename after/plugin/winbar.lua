@@ -88,7 +88,7 @@ function rvim.ui.winbar.render(current_win)
   if use_relative_path then filepath = fn.fnamemodify(bufname, ':p:.') end
 
   if rvim.ui.winbar.file_icon then
-    local icon, color = '', 'DevIconDefault'
+    local icon, color = rvim.ui.codicons.documents.default_folder, 'DevIconDefault'
     if devicons_loaded then
       local devicon, devicon_color = devicons.get_icon(vim.fn.expand('%:t'))
       if devicon ~= nil and devicon_color ~= nil then

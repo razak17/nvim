@@ -47,6 +47,7 @@ rvim.ui.codicons = {
     folder_alt = '',
     open_folder = '',
     open_folder_alt = '',
+    default_folder = '',
   },
   git = {
     added = '',
