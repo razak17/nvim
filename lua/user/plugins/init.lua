@@ -26,8 +26,7 @@ return {
   },
   {
     'williamboman/mason-lspconfig.nvim',
-    event = { 'BufReadPre', 'BufNewFile' },
-    config = function() require('mason-lspconfig').setup({ automatic_installation = true }) end,
+    opts = { automatic_installation = true },
     dependencies = {
       'mason.nvim',
       {
