@@ -7,6 +7,10 @@ return {
     'hrsh7th/nvim-cmp',
     event = 'InsertEnter',
     config = function()
+      local cmp = require('cmp')
+      local luasnip = require('luasnip')
+      local symbols = require('lspkind').symbol_map
+
       local function get_color(r, g, b) return ((r * 0.299 + g * 0.587 + b * 0.114) > 186) and '#000000' or '#ffffff' end
 
       local function is_tailwind_root()
@@ -20,10 +24,6 @@ return {
         if is_tailwind_root() then return fmt(' %s  ', icon) end
         return fmt('%s ', icon)
       end
-
-      local cmp = require('cmp')
-
-      local luasnip = require('luasnip')
 
       local hl_defs = fold(
         function(accum, value, key)
@@ -100,15 +100,12 @@ return {
           deprecated = true,
           fields = { 'abbr', 'kind', 'menu' },
           format = function(entry, vim_item)
+            local codicons = ui.codicons
             local MAX = math.floor(vim.o.columns * 0.5)
+
             if #vim_item.abbr >= MAX then vim_item.abbr = vim_item.abbr:sub(1, MAX) .. ellipsis end
 
-            local codicons = ui.codicons
-            local lsp_icons = ui.current.lsp_icons
-
-            if vim_item.kind ~= 'Color' then vim_item.kind = format_icon(lsp_icons[vim_item.kind]) end
-
-            if entry.source.name == 'codeium' then vim_item.kind = format_icon(codicons.misc.codeium) end
+            if vim_item.kind ~= 'Color' then vim_item.kind = format_icon(symbols[vim_item.kind]) end
 
             if entry.source.name == 'emoji' then vim_item.kind = format_icon(codicons.misc.smiley) end
 
@@ -130,14 +127,15 @@ return {
                   vim_item.kind_hl_group = group
                 end
               end
-              vim_item.kind = format_icon(lsp_icons[vim_item.kind])
+              vim_item.kind = format_icon(symbols[vim_item.kind])
             end
 
             vim_item.menu = ({
               nvim_lsp = 'LSP',
               luasnip = 'SNIP',
-              emoji = 'EMJ',
+              emoji = 'EMOJI',
               path = 'PATH',
+              neorg = 'NEORG',
               buffer = 'BUF',
               spell = 'SPELL',
               dictionary = 'DICT',
@@ -150,7 +148,6 @@ return {
               ['buffer-lines'] = 'BUFL',
               dynamic = 'DYN',
               ['lab.quick_data'] = 'LAB',
-              codeium = 'CODE',
             })[entry.source.name]
             return vim_item
           end,

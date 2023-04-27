@@ -73,8 +73,6 @@ return {
     event = 'VeryLazy',
     config = function()
       local Hydra = require('hydra')
-      local border = rvim.ui.current.border
-      local hint_opts = { position = 'bottom', border = border, type = 'window' }
       local pcmd = require('hydra.keymap-util').pcmd
       local hint_opts = { position = 'bottom', border = rvim.ui.current.border, type = 'window' }
 
@@ -86,8 +84,6 @@ return {
         return vim.tbl_extend('force', {
           invoke_on_body = true,
           hint = hint_opts,
-          on_enter = function() vim.cmd.BeaconOff() end,
-          on_exit = function() vim.cmd.BeaconOn() end,
         }, opts or {})
       end
 

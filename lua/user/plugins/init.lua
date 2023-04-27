@@ -9,6 +9,11 @@ return {
   'jose-elias-alvarez/typescript.nvim',
 
   {
+    'razak17/lspkind.nvim',
+    config = function() require('lspkind').init({ preset = 'codicons' }) end,
+  },
+
+  {
     'kazhala/close-buffers.nvim',
     cmd = { 'BDelete' },
     keys = { { '<leader>c', '<Cmd>BDelete this<CR>', desc = 'buffer delete' } },
@@ -168,13 +173,14 @@ return {
   {
     'SmiteshP/nvim-navic',
     dependencies = { 'neovim/nvim-lspconfig' },
-    opts = {
-      highlight = false,
-      icons = ui.current.lsp_icons,
-      depth_limit_indicator = ui.icons.misc.ellipsis,
-      lsp = { auto_attach = true },
-      separator = (' %s '):format(ui.icons.misc.triangle),
-    },
+    opts = function()
+      require('nvim-navic').setup({
+        highlight = false,
+        icons = require('lspkind').symbol_map,
+        depth_limit_indicator = ui.icons.misc.ellipsis,
+        lsp = { auto_attach = true },
+      })
+    end,
   },
   {
     'razak17/glance.nvim',

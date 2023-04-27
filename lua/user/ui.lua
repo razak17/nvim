@@ -136,44 +136,6 @@ rvim.ui.lsp = {
     Null = 'Error',
     EnumMember = '@field',
   },
-  kinds = {
-    codicons = {
-      Array = '', -- 
-      Boolean = '',
-      Class = '',
-      Color = '',
-      Constant = '',
-      Constructor = '',
-      Enum = '',
-      EnumMember = '',
-      Event = '',
-      Field = '',
-      File = '',
-      Folder = '',
-      Function = '',
-      Interface = '',
-      Key = '', -- 
-      Keyword = '',
-      Method = '',
-      Module = '',
-      Namespace = '',
-      Null = '', -- ﳠ
-      Number = '', -- 
-      Object = '',
-      Operator = '',
-      Package = '',
-      Property = '',
-      Reference = '',
-      Snippet = '',
-      String = '',
-      Struct = '',
-      Text = '',
-      TypeParameter = '',
-      Unit = '',
-      Value = '',
-      Variable = '',
-    },
-  },
 }
 ----------------------------------------------------------------------------------------------------
 -- UI Settings
@@ -294,7 +256,7 @@ end
 ---in an autocommand to set the `vim.opt_local.colorcolumn` or by a plugin such rvim `virtcolumn.nvim`
 ---to set it's virtual column
 ---@param bufnr integer
----@param fn fun(virtcolumn: string)
+---@param fn fun(virtcolumn: string | boolean)
 function rvim.ui.decorations.set_colorcolumn(bufnr, fn)
   local buf = vim.bo[bufnr]
   local decor = rvim.ui.decorations.get({ ft = buf.ft, bt = buf.bt, setting = 'colorcolumn' })
@@ -306,4 +268,4 @@ end
 
 ----------------------------------------------------------------------------------------------------
 -- The current styles for various UI elements
-rvim.ui.current = { border = rvim.ui.border.line, lsp_icons = rvim.ui.lsp.kinds.codicons }
+rvim.ui.current = { border = rvim.ui.border.line }

@@ -1,4 +1,4 @@
-local api, notify, fmt, fold, augroup = vim.api, vim.notify, string.format, rvim.fold, rvim.augroup
+local api, notify, fmt, augroup = vim.api, vim.notify, string.format, rvim.augroup
 
 ---@alias ErrorMsg {msg: string}
 
@@ -115,7 +115,7 @@ end
 
 ---@param hl string | HLAttrs
 ---@param attr string
----@return HLData
+---@return HLData | string
 local function resolve_from_attribute(hl, attr)
   if type(hl) ~= 'table' or not hl.from then return hl end
   local colour = get(hl.from, hl.attr or attr)
@@ -124,9 +124,10 @@ local function resolve_from_attribute(hl, attr)
 end
 
 ---@param name string
----@param opts HLArgs
+---@param opts? HLArgs
 ---@overload fun(ns: integer, name: string, opts: HLArgs)
 local function set(ns, name, opts)
+  opts = opts or {}
   if type(ns) == 'string' and type(name) == 'table' then
     opts, name, ns = name, ns, 0
   end

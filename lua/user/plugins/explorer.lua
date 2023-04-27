@@ -29,12 +29,10 @@ return {
 
     vim.g.neo_tree_remove_legacy_commands = 1
 
-    local lsp_icons = rvim.ui.current.lsp_icons
+    local symbols = require('lspkind').symbol_map
     local lsp_hls = rvim.ui.lsp.highlights
 
     require('neo-tree').setup({
-      -- sources = { 'filesystem', 'buffers', 'git_status', 'diagnostics' },
-      -- source_selector = { winbar = true, separator_active = ' ' },
       sources = { 'filesystem', 'diagnostics', 'document_symbols' },
       source_selector = {
         winbar = true,
@@ -83,13 +81,13 @@ return {
           default = codicons.documents.default_folder,
           highlight = 'DevIconDefault',
         },
-        name = { highlight_opened_files = true, },
+        name = { highlight_opened_files = true },
         document_symbols = {
           follow_cursor = true,
           kinds = rvim.fold(function(acc, v, k)
             acc[k] = { icon = v, hl = lsp_hls[k] }
             return acc
-          end, lsp_icons),
+          end, symbols),
         },
         modified = { symbol = codicons.misc.circle .. ' ' },
         git_status = {
