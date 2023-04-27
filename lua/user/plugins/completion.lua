@@ -5,7 +5,7 @@ local border, lsp_hls, ellipsis = ui.current.border, ui.lsp.highlights, ui.icons
 return {
   {
     'hrsh7th/nvim-cmp',
-    event = { 'InsertEnter' },
+    event = 'InsertEnter',
     config = function()
       local function get_color(r, g, b) return ((r * 0.299 + g * 0.587 + b * 0.114) > 186) and '#000000' or '#ffffff' end
 
@@ -108,6 +108,8 @@ return {
 
             if vim_item.kind ~= 'Color' then vim_item.kind = format_icon(lsp_icons[vim_item.kind]) end
 
+            if entry.source.name == 'codeium' then vim_item.kind = format_icon(codicons.misc.codeium) end
+
             if entry.source.name == 'emoji' then vim_item.kind = format_icon(codicons.misc.smiley) end
 
             if entry.source.name == 'lab.quick_data' then vim_item.kind = format_icon(codicons.misc.robot) end
@@ -148,33 +150,46 @@ return {
               ['buffer-lines'] = 'BUFL',
               dynamic = 'DYN',
               ['lab.quick_data'] = 'LAB',
+              codeium = 'CODE',
             })[entry.source.name]
             return vim_item
           end,
         },
         sources = {
-          { name = 'nvim_lsp', group_index = 1 },
-          { name = 'luasnip', group_index = 1 },
-          { name = 'path', group_index = 1 },
+          { name = 'luasnip', priority = 10, group_index = 1 },
+          { name = 'nvim_lsp', priority = 9, group_index = 1 },
           {
             name = 'rg',
+            priority = 8,
+            keyword_length = 3,
             max_item_count = 10,
             option = { additional_arguments = '--max-depth 8' },
             group_index = 1,
           },
-          -- { name = 'dictionary' },
-          { name = 'lab.quick_data', group_index = 1 },
-          { name = 'dynamic', group_index = 1 },
-          { name = 'emoji', group_index = 1 },
-          { name = 'treesitter', group_index = 2 },
-          { name = 'crates', group_index = 2 },
+          {
+            name = 'lab.quick_data',
+            priority = 6,
+            max_item_count = 10,
+            group_index = 1,
+          },
+          { name = 'path', priority = 4, group_index = 1 },
+          { name = 'emoji', priority = 3, group_index = 1 },
+          { name = 'crates', priority = 3, group_index = 1 },
+          { name = 'dynamic', priority = 3, group_index = 1 },
           {
             name = 'buffer',
+            priority = 3,
             options = { get_bufnrs = function() return vim.api.nvim_list_bufs() end },
             group_index = 2,
           },
-          { name = 'spell', group_index = 2 },
-          { name = 'norg', group_index = 2 },
+          {
+            name = 'spell',
+            priority = 3,
+            max_item_count = 10,
+            group_index = 2,
+          },
+          { name = 'norg', priority = 3, group_index = 2 },
+          -- { name = 'dictionary' },
         },
       })
 

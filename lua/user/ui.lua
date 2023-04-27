@@ -138,7 +138,7 @@ rvim.ui.lsp = {
   },
   kinds = {
     codicons = {
-      Array = '', -- 
+      Array = '', -- 
       Boolean = '',
       Class = '',
       Color = '',
