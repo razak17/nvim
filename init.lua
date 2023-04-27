@@ -22,7 +22,6 @@ local namespace = {
     hover_diagnostics = { enable = true },
   },
   mappings = {},
-  path = { mason = vim.fn.stdpath('data') .. '/mason' },
   plugins = { enable = true },
   ui = {
     tw = {},

@@ -1,3 +1,4 @@
+local mason_path = vim.fn.stdpath('data') .. 'mason'
 local function attach()
   print('attaching')
   require('dap').run({
@@ -101,7 +102,7 @@ return {
       dap.listeners.after.event_initialized['dapui_config'] = function() dapui.open(rvim.debug.layout.ft[vim.bo.ft]) end
 
       -- python
-      local python_dir = join_paths(rvim.path.mason, 'packages', 'debugpy', 'venv', 'bin', 'python')
+      local python_dir = join_paths(mason_path, 'packages', 'debugpy', 'venv', 'bin', 'python')
       dap.adapters.python = {
         type = 'executable',
         command = python_dir,
@@ -130,7 +131,7 @@ return {
         type = 'server',
         port = '${port}',
         executable = {
-          command = join_paths(rvim.path.mason, 'bin', 'dlv'),
+          command = join_paths(mason_path, 'bin', 'dlv'),
           args = { 'dap', '-l', '127.0.0.1:${port}' },
         },
       }
@@ -188,7 +189,7 @@ return {
         type = 'server',
         port = '${port}',
         executable = {
-          command = join_paths(rvim.path.mason, 'bin', 'codelldb'),
+          command = join_paths(mason_path, 'bin', 'codelldb'),
           args = { '--port', '${port}' },
         },
       }
@@ -244,7 +245,7 @@ return {
     ft = { 'typescriptreact', 'typescript', 'javascript', 'javascriptreact' },
     opts = {
       node_path = 'node',
-      debugger_path = rvim.path.mason .. '/packages/js-debug-adapter',
+      debugger_path = mason_path .. '/packages/js-debug-adapter',
       adapters = { 'pwa-node', 'pwa-chrome', 'pwa-msedge', 'node-terminal', 'pwa-extensionHost' },
     },
     config = function(_, opts)

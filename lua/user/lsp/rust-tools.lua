@@ -1,3 +1,5 @@
+local mason_path = vim.fn.stdpath('data') .. 'mason'
+
 require('which-key').register({ ['<localleader>r'] = { name = 'Rust Tools' } })
 
 require('rust-tools').setup({
@@ -27,8 +29,8 @@ require('rust-tools').setup({
   },
   dap = {
     adapter = require('rust-tools.dap').get_codelldb_adapter(
-      rvim.path.mason .. '/bin/codelldb',
-      rvim.path.mason .. '/packages/codelldb/extension/lldb/lib/liblldb.so'
+      mason_path .. '/bin/codelldb',
+      mason_path .. '/packages/codelldb/extension/lldb/lib/liblldb.so'
     ),
   },
   server = {
