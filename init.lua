@@ -24,7 +24,6 @@ local namespace = {
   mappings = {},
   plugins = { enable = true },
   ui = {
-    tw = {},
     statuscolumn = { enable = true },
     winbar = { enable = true, relative_path = true, file_icon = true },
   },
