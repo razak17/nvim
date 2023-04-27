@@ -138,7 +138,7 @@ rvim.ui.lsp = {
   },
   kinds = {
     codicons = {
-      Array = '',
+      Array = '', -- 
       Boolean = '',
       Class = '',
       Color = '',
@@ -152,7 +152,7 @@ rvim.ui.lsp = {
       Folder = '',
       Function = '',
       Interface = '',
-      Key = '',
+      Key = '', -- 
       Keyword = '',
       Method = '',
       Module = '',
