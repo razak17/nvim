@@ -48,6 +48,7 @@ end
 local function signplaced_signs(curbuf, lnum)
   return vim.tbl_map(function(s)
     local sign = format_text(fn.sign_getdefined(s.name)[1], 'text')
+    if not sign then return end
     return { { { sign.text, sign.texthl } }, after = '' }
   end, fn.sign_getplaced(curbuf, { group = '*', lnum = lnum })[1].signs)
 end
@@ -71,17 +72,17 @@ local function extmark_signs(curbuf, lnum)
 end
 
 function ui.statuscolumn.render()
- local lnum, relnum, virtnum = v.lnum, v.relnum, v.virtnum
+  local lnum, relnum, virtnum = v.lnum, v.relnum, v.virtnum
   local win = api.nvim_get_current_win()
   local buf = api.nvim_win_get_buf(win)
 
-local gitsign, other_sns = extmark_signs(buf, lnum)
+  local gitsign, other_sns = extmark_signs(buf, lnum)
   local sns = signplaced_signs(buf, lnum)
   vim.list_extend(sns, other_sns)
 
   local line_count = api.nvim_buf_line_count(buf)
 
- local right = {}
+  local right = {}
   local add = str.append(right)
   add(str.spacer(1), { { { nr(win, lnum, relnum, virtnum, line_count) } } }, unpack(gitsign))
   add({ { { separator, sep_hl } }, after = '' }, { { { fdm(lnum) } } })
