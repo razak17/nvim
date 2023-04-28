@@ -94,6 +94,16 @@ function rvim.find_string(table, string)
   return found
 end
 
+function rvim.removeDuplicates(table)
+  local seen = {}
+  return rvim.map(function(s)
+    if not seen[s] then
+      seen[s] = true
+      return s
+    end
+    return nil
+  end, table)
+end
 --- Autosize horizontal split to match its minimum content
 --- https://vim.fandom.com/wiki/Automatically_fitting_a_quickfix_window_height
 ---@param minheight number

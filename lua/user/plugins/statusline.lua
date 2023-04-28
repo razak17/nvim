@@ -84,8 +84,9 @@ local function stl_lsp_clients(bufnum)
   return vim.tbl_map(function(client)
     if client.name:match('null') then
       local sources = require('null-ls.sources').get_available(vim.bo[bufnum].filetype)
-      local source_names = vim.tbl_map(function(s) return s.name end, sources)
-      return { name = '␀ ' .. table.concat(source_names, ', ') }
+      local source_names = rvim.map(function(s) return s.name end, sources)
+      local unique_sources = rvim.removeDuplicates(source_names)
+      return { name = '␀ ' .. table.concat(unique_sources, ', ') }
     end
     return { name = client.name }
   end, clients)
