@@ -1,10 +1,7 @@
 #!/bin/sh
-#Set Variable to master is not set differently
 
 RV_CONFIG_DIR="${RV_CONFIG_DIR:-"$XDG_CONFIG_HOME/rvim"}"
 RV_DATA_DIR="${RV_DATA_DIR:-"$XDG_DATA_HOME/rvim"}"
-RV_BRANCH="${RV_BRANCH:-"main"}"
-RV_REMOTE="${RV_REMOTE:-razak17/nvim}"
 
 asktoinstallgit() {
 	echo "git not found, please install git" && exit
@@ -43,8 +40,17 @@ pythonPackages() {
   pip install -U setuptools pynvim neovim-remote
 }
 
-nodeExtra() {
-	npm install -g tree-sitter-cli neovim
+npm_deps() {
+  pkg_manager="$1"
+  if [ "$pkg_manager" = "npm" ]; then
+    npm install -g tree-sitter-cli neovim
+  fi
+  if [ "$pkg_manager" = "pnpm" ]; then
+    pnpm install -g tree-sitter-cli neovim
+  fi
+  if [ "$pkg_manager" = "yarn" ]; then
+    yarn global add tree-sitter-cli neovim
+  fi
 }
 
 archExtra() {
@@ -53,7 +59,7 @@ archExtra() {
 
 importRvim() {
   echo "Cloning rVim configuration"
-  git clone  "https://github.com/${RV_REMOTE}" "$RV_CONFIG_DIR"
+  git clone "https://github.com/razak17/nvim" "$RV_CONFIG_DIR"
 }
 
 validate_node_installation() {
@@ -86,7 +92,7 @@ install_nodejs_deps() {
     if [ "$answer" = "$pkg_manager" ]; then
       if validate_node_installation "$pkg_manager"; then
         echo "Proceed to Install"
-        nodeExtra
+        npm_deps "$pkg_manager"
         return
       fi
       return
@@ -118,23 +124,18 @@ install_deps() {
 }
 
 cloneconfig() {
-	# install node and neovim support
 	(command -v git >/dev/null && echo "git installed, moving on...") || asktoinstallgit
 
-	# install go
 	(command -v go >/dev/null && echo "go installed, moving on...") || asktoinstallgo
 
-	# install pip
 	(command -v pip >/dev/null && echo "pip installed, moving on...") || asktoinstallpip
 
 	# check existing config
 	[ -d "$RV_CONFIG_DIR" ] && moveoldrvim
 
-	# create dirs
 	echo "Creating default directories"
 	createDirs
 
-	# Cloning rvim configuration
 	echo "Installing rvim"
 	importRvim
 
