@@ -46,8 +46,10 @@ return {
         autotag = { enable = true },
         rainbow = {
           enable = true,
-          disable = { 'lua', 'tsx', 'jsx' },
-          query = { 'rainbow-parens' },
+          query = {
+            'rainbow-parens',
+            html = 'rainbow-tags', -- TODO: fix the awful default appearance
+          },
           strategy = {
             require('ts-rainbow.strategy.global'),
             dart = require('ts-rainbow.strategy.global'),
