@@ -287,6 +287,7 @@ return {
   },
   {
     'psliwka/vim-dirtytalk',
+    lazy = false,
     build = ':DirtytalkUpdate',
     init = function() vim.opt.spelllang:append('programming') end,
   },

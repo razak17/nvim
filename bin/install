@@ -107,6 +107,7 @@ install_dict() {
     echo 'Installing dictionary.txt'
     curl "https://raw.githubusercontent.com/eneko/data-repository/master/data/words.txt" -o "$dicwords" -s
   fi
+  echo "done."
 }
 
 install_deps() {
