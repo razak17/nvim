@@ -2,7 +2,7 @@ if not rvim then return end
 
 local api = vim.api
 
-local conceal_html_class = function(bufnr, ft)
+local conceal_class = function(bufnr, ft)
   local namespace = api.nvim_create_namespace('ConcealClassName')
   local language_tree = vim.treesitter.get_parser(bufnr, ft)
   local syntax_tree = language_tree:parse()
@@ -26,11 +26,13 @@ local conceal_html_class = function(bufnr, ft)
 
   for _, captures, metadata in ts_query:iter_matches(root, bufnr, root:start(), root:end_()) do
     local start_row, start_col, end_row, end_col = captures[2]:range()
-    api.nvim_buf_set_extmark(bufnr, namespace, start_row, start_col, {
-      end_line = end_row,
-      end_col = end_col,
-      conceal = metadata[2].conceal,
-    })
+    if end_row - start_row == 0 then
+      api.nvim_buf_set_extmark(bufnr, namespace, start_row, start_col, {
+        end_line = end_row,
+        end_col = end_col,
+        conceal = metadata[2].conceal,
+      })
+    end
   end
 end
 
@@ -41,6 +43,6 @@ rvim.augroup('ConcealClassName', {
   command = function()
     local ft = 'html'
     if not vim.tbl_contains({ 'html', 'svelte', 'astro', 'vue' }, vim.bo.ft) then ft = 'tsx' end
-    conceal_html_class(api.nvim_get_current_buf(), ft)
+    conceal_class(api.nvim_get_current_buf(), ft)
   end,
 })
