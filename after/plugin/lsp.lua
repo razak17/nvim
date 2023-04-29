@@ -142,7 +142,7 @@ end
 ----------------------------------------------------------------------------------------------------
 local function show_documentation()
   local filetype = vim.bo.filetype
-  if vim.tbl_contains({ 'vim', 'help' }, filetype) then return vim.cmd('h ' .. vim.fn.expand('<cword>')) end
+  if vim.tbl_contains({ 'help' }, filetype) then return vim.cmd('h ' .. vim.fn.expand('<cword>')) end
   if vim.tbl_contains({ 'man' }, filetype) then return vim.cmd('Man ' .. vim.fn.expand('<cword>')) end
   if vim.fn.expand('%:t') == 'Cargo.toml' then return require('crates').show_popup() end
   if vim.bo.ft == 'rust' then return require('rust-tools').hover_actions.hover_actions() end
