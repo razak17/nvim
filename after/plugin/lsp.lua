@@ -1,6 +1,6 @@
 if not rvim then return end
 
-rvim.lsp.setup_file = join_paths(vim.fn.stdpath('config'), 'after', 'plugin', 'lspsetup.lua')
+rvim.lsp.config_file = join_paths(vim.fn.stdpath('config'), 'after', 'plugin', 'lspconfig.lua')
 
 local lsp, fn, api, fmt = vim.lsp, vim.fn, vim.api, string.format
 local L = vim.lsp.log_levels
@@ -171,7 +171,7 @@ local function setup_mappings(client, bufnr)
     { 'n', '<leader>lG', '<Cmd>LspGenerateTemplates<CR>', desc = 'generate setup file' },
     { 'n', '<leader>lD', '<Cmd>LspRemoveTemplates<CR>', desc = 'delete setup file' },
     -- stylua: ignore
-    { 'n', '<leader>lO', '<Cmd>edit ' .. rvim.lsp.setup_file .. '<CR>', desc = 'open lspsetup file' },
+    { 'n', '<leader>lO', '<Cmd>edit ' .. rvim.lsp.config_file .. '<CR>', desc = 'open lspsetup file' },
     { 'n', '<leader>li', '<Cmd>LspInfo<CR>', desc = 'lsp info' },
     { 'n', '<leader>ltv', '<Cmd>ToggleVirtualText<CR>', desc = 'toggle virtual text' },
     { 'n', '<leader>ltl', '<Cmd>ToggleVirtualLines<CR>', desc = 'toggle virtual lines' },
@@ -293,11 +293,11 @@ augroup('LspSetupCommands', {
 ----------------------------------------------------------------------------------------------------
 local command = rvim.command
 
-command('LspGenerateTemplates', function() require('user.lsp.templates').generate_setup_file() end)
+command('LspGenerateTemplates', function() require('user.lsp.templates').generate_config_file() end)
 
 command('LspRemoveTemplates', function()
   require('user.lsp.templates').remove_template_files()
-  vim.notify('Setup file has been removed', 'info', { title = 'Lsp' })
+  vim.notify('Lsp config file has been removed', 'info', { title = 'Lsp' })
 end)
 ----------------------------------------------------------------------------------------------------
 -- Signs
@@ -385,4 +385,4 @@ lsp.handlers['textDocument/hover'] = function(...)
 end
 
 -- Generate templates
-if fn.filereadable(rvim.lsp.setup_file) ~= 1 then vim.defer_fn(function() vim.cmd('LspGenerateTemplates') end, 1) end
+if fn.filereadable(rvim.lsp.config_file) ~= 1 then vim.defer_fn(function() vim.cmd('LspGenerateTemplates') end, 1) end

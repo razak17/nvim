@@ -194,6 +194,7 @@ end
 ---@param map {[string|string[]]: FiletypeSettings | {[integer]: fun(args: AutocmdArgs)}}
 function rvim.filetype_settings(map)
   local commands = rvim.map(function(settings, ft)
+    ---@diagnostic disable-next-line: param-type-mismatch
     local name = type(ft) == 'string' and ft or table.concat(ft, ',')
     return {
       pattern = ft,
@@ -220,7 +221,7 @@ function rvim.lsp_setup(map)
       event = 'FileType',
       desc = ('lsp setup for %s'):format(server),
       command = function()
-        if not rvim.falsy(fts) then require('user.lsp.manager').setup(server) end
+        if not rvim.falsy(fts) then require('user.lsp.manager').setup(tostring(server)) end
       end,
     }
   end, map)
