@@ -15,10 +15,10 @@ local format_exclusions = {
     go = { 'null-ls' },
     proto = { 'null-ls' },
     html = { 'html' },
-    javascript = { 'quick_lint_js', 'tsserver' },
-    typescript = { 'tsserver' },
-    typescriptreact = { 'tsserver' },
-    javascriptreact = { 'tsserver' },
+    javascript = { 'quick_lint_js', 'vtsls' },
+    typescript = { 'vtsls' },
+    typescriptreact = { 'vtsls' },
+    javascriptreact = { 'vtsls' },
   },
 }
 
@@ -58,10 +58,10 @@ local function setup_autocommands(client, buf)
       event = { 'CursorHold' },
       buffer = buf,
       desc = 'LSP: Show diagnostics',
-      command = function(args)
+      command = function()
         if not rvim.lsp.hover_diagnostics then return end
         if vim.b.lsp_hover_win and api.nvim_win_is_valid(vim.b.lsp_hover_win) then return end
-        vim.diagnostic.open_float(args.buf, { scope = 'line' })
+        vim.diagnostic.open_float({ scope = 'line' })
       end,
     })
   end
@@ -186,19 +186,23 @@ local function setup_mappings(client, bufnr)
     end
   end, mappings)
 
-  if client.name == 'tsserver' then
-    local actions = require('typescript').actions
-    local typescript_mappings = {
-      { 'n', 'gd', '<Cmd>TypescriptGoToSourceDefinition<CR>', desc = 'go to source definition' },
-      { 'n', '<localleader>tr', '<Cmd>TypescriptRenameFile<CR>', desc = 'rename file' },
-      { 'n', '<localleader>tf', actions.fixAll, desc = 'fix all' },
-      { 'n', '<localleader>tia', actions.addMissingImports, desc = 'add missing' },
-      { 'n', '<localleader>tio', actions.organizeImports, desc = 'organize' },
-      { 'n', '<localleader>tix', actions.removeUnused, desc = 'remove unused' },
+  if client.name == 'vtsls' then
+    require('which-key').register({
+      ['<localleader>t'] = { name = 'Typescript' },
+      ['<localleader>ti'] = { name = 'Imports' },
+    })
+
+    local vtsls_mappings = {
+      { 'n', 'gd', '<Cmd>VtsExec goto_source_definition<CR>', desc = 'go to source definition' },
+      { 'n', '<localleader>tr', '<Cmd>VtsExec rename_file<CR>', desc = 'rename file' },
+      { 'n', '<localleader>tf', '<Cmd>VtsExec fix_all<CR>', desc = 'fix all' },
+      { 'n', '<localleader>tia', '<Cmd>VtsExec add_missing_imports<CR>', desc = 'add missing' },
+      { 'n', '<localleader>tio', '<Cmd>VtsExec organize_imports<CR>', desc = 'organize' },
+      { 'n', '<localleader>tix', '<Cmd>VtsExec remove_unused_imports<CR>', desc = 'remove unused' },
     }
     rvim.foreach(
-      function(m) map(m[1], m[2], m[3], { buffer = bufnr, desc = fmt('typescript: %s', m.desc) }) end,
-      typescript_mappings
+      function(m) map(m[1], m[2], m[3], { buffer = bufnr, desc = fmt('vtsls: %s', m.desc) }) end,
+      vtsls_mappings
     )
   end
 
@@ -234,7 +238,7 @@ end
 --- without putting all this logic in the general on_attach function
 ---@type {[string]: ClientOverrides}
 local client_overrides = {
-  tsserver = {
+  vtsls = {
     semantic_tokens = function(bufnr, client, token)
       if token.type == 'variable' and token.modifiers['local'] and not token.modifiers.readonly then
         lsp.semantic_tokens.highlight_token(token, bufnr, client.id, '@danger')

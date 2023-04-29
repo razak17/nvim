@@ -21,7 +21,7 @@ local servers = {
   volar = {},
   docker_compose_language_service = {},
   prosemd_lsp = {},
-  tsserver = {
+  vtsls = {
     -- Apparently setting this to false improves performance
     -- @see https://github.com/sublimelsp/LSP-typescript/issues/129#issuecomment-1281643371
     initializationOptions = { preferences = { includeCompletionsForModuleExports = false } },

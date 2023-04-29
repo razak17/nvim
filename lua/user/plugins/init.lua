@@ -6,7 +6,7 @@ return {
   'nvim-lua/plenary.nvim',
   'kkharji/sqlite.lua',
   'simrat39/rust-tools.nvim',
-  'jose-elias-alvarez/typescript.nvim',
+  'yioneko/nvim-vtsls',
 
   {
     'razak17/lspkind.nvim',
@@ -251,7 +251,7 @@ return {
           local id = vim.tbl_get(args, 'data', 'client_id') --[[@as lsp.Client]]
           if not id then return end
           local client = vim.lsp.get_client_by_id(id)
-          if client.name == 'tsserver' then require('twoslash-queries').attach(client, args.buf) end
+          if client.name == 'vtsls' then require('twoslash-queries').attach(client, args.buf) end
         end,
       })
     end,
