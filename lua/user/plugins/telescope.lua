@@ -181,8 +181,6 @@ return {
             ['<C-w>'] = actions.send_selected_to_qflist,
             ['<c-c>'] = function() vim.cmd.stopinsert() end,
             ['<esc>'] = actions.close,
-            ['<C-j>'] = actions.move_selection_next,
-            ['<C-k>'] = actions.move_selection_previous,
             ['<C-q>'] = actions.smart_send_to_qflist + actions.open_qflist,
             ['<c-s>'] = actions.select_horizontal,
             ['<c-e>'] = layout_actions.toggle_preview,
