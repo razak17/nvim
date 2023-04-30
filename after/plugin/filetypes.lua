@@ -41,7 +41,7 @@ settings({
       tabstop = 4,
       shiftwidth = 4,
       expandtab = false,
-      iskeyword = opt_l.iskeyword:append('-'),
+      iskeyword = vim.opt.iskeyword:append('-'),
     },
     function()
       require('which-key').register({ ['<localleader>g'] = { name = 'Gopher' } })
@@ -54,8 +54,8 @@ settings({
   },
   graphql = {
     opt = {
-      formatoptions = opt_l.formatoptions:remove('t'),
-      iskeyword = opt_l.iskeyword:append('$,@-@'),
+      formatoptions = vim.opt.formatoptions:remove('t'),
+      iskeyword = vim.opt.iskeyword:append('$,@-@'),
     },
   },
   help = {
@@ -90,8 +90,8 @@ settings({
       shiftwidth = 2,
     },
     opt = {
-      matchpairs = opt_l.matchpairs:append('<:>'),
-      indentkeys = opt_l.indentkeys:remove('*<Return>'),
+      matchpairs = vim.opt.matchpairs:append('<:>'),
+      indentkeys = vim.opt.indentkeys:remove('*<Return>'),
     },
     function()
       cmd([[setlocal tw=120 linebreak textwidth=0]]) -- Make lines longer, and don't break them automatically
@@ -155,8 +155,8 @@ settings({
     opt = {
       spell = true,
       spelllang = { 'en_gb', 'programming' },
-      spellfile = opt_l.spellfile:prepend(join_paths(vim.fn.stdpath('config'), 'spell', 'lua.utf-8.add')),
-      iskeyword = opt_l.iskeyword:append('-'),
+      spellfile = vim.opt.spellfile:prepend(join_paths(vim.fn.stdpath('config'), 'spell', 'lua.utf-8.add')),
+      iskeyword = vim.opt.iskeyword:append('-'),
     },
   },
   markdown = {
@@ -236,7 +236,7 @@ settings({
     },
     opt = {
       spell = true,
-      iskeyword = opt_l.iskeyword:append('"'),
+      iskeyword = vim.opt.iskeyword:append('"'),
     },
   },
   qf = {
@@ -294,7 +294,7 @@ settings({
     wo = { foldmethod = 'marker' },
     opt = {
       spell = true,
-      iskeyword = opt_l.iskeyword:append(':,#'),
+      iskeyword = vim.opt.iskeyword:append(':,#'),
     },
     function()
       vim.schedule(function() opt_l.syntax = 'off' end) -- FIXME: if the syntax isn't delayed it still gets enabled
@@ -303,8 +303,8 @@ settings({
   yaml = {
     opt = {
       foldlevel = 99,
-      iskeyword = opt_l.iskeyword:append('-,$,#'),
-      indentkeys = opt_l.indentkeys:remove('<:>'),
+      iskeyword = vim.opt.iskeyword:append('-,$,#'),
+      indentkeys = vim.opt.indentkeys:remove('<:>'),
     },
   },
 })
