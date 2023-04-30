@@ -97,7 +97,8 @@ return {
       _signs_staged_enable = true,
       word_diff = false,
       numhl = false,
-      current_line_blame = not cwd:match('personal') and not cwd:match('dots'),
+      -- current_line_blame = not cwd:match('personal') and not cwd:match('dots'),
+      current_line_blame = false,
       current_line_blame_formatter = ' <author>, <author_time> · <summary>',
       preview_config = { border = rvim.ui.current.border },
       on_attach = function(bufnr)
