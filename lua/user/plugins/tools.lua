@@ -19,7 +19,7 @@ return {
     config = function()
       require('mason-null-ls').setup({
         automatic_setup = true,
-        ensure_installed = { 'goimports', 'golangci_lint', 'stylua', 'prettier', 'zsh', 'flake8', 'black' },
+        ensure_installed = { 'goimports', 'golangci_lint', 'stylua', 'prettierd', 'zsh', 'flake8', 'black' },
         automatic_installation = false,
         handlers = {},
       })
