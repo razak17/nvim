@@ -160,7 +160,7 @@ local function setup_mappings(client, bufnr)
     { 'n', '<leader>lf', format, desc = 'format buffer', capability = provider.FORMATTING },
     { 'n', 'K', show_documentation, desc = 'hover', capability = provider.HOVER },
     -- stylua: ignore
-    { 'n', 'gd', lsp.buf.definition, desc = 'definition', capability = provider.DEFINITION, exclude = { 'typescript', 'typescriptreact' }  },
+    { 'n', 'gd', lsp.buf.definition, desc = 'definition', capability = provider.DEFINITION, exclude = { 'vtsls' }  },
     { 'n', 'gr', lsp.buf.references, desc = 'references', capability = provider.REFERENCES },
     { 'n', 'gi', lsp.buf.implementation, desc = 'implementation', capability = provider.REFERENCES },
     { 'n', 'gI', lsp.buf.incoming_calls, desc = 'incoming calls', capability = provider.REFERENCES },
@@ -179,7 +179,7 @@ local function setup_mappings(client, bufnr)
 
   rvim.foreach(function(m)
     if
-      (not m.exclude or not vim.tbl_contains(m.exclude, vim.bo[bufnr].ft))
+      (not m.exclude or not vim.tbl_contains(m.exclude, client.name))
       and (not m.capability or client.server_capabilities[m.capability])
     then
       map(m[1], m[2], m[3], { buffer = bufnr, desc = fmt('lsp: %s', m.desc) })
