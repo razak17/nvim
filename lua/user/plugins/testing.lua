@@ -56,6 +56,6 @@ return {
     'nvim-neotest/neotest-go',
     'haydenmeade/neotest-jest',
     'nvim-neotest/neotest-python',
-    { 'rcarriga/neotest-plenary', commit = 'd49bfd9', dependencies = { 'nvim-lua/plenary.nvim' } },
+    { 'rcarriga/neotest-plenary', dependencies = { 'nvim-lua/plenary.nvim' } },
   },
 }
