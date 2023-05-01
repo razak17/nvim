@@ -257,22 +257,6 @@ return {
     end,
   },
   {
-    'ckolkey/ts-node-action',
-    keys = {
-      { '<localleader>ct', function() require('ts-node-action').node_action() end, desc = 'ts-node-action: run' },
-    },
-    config = function()
-      require('ts-node-action').setup({
-        typescriptreact = {
-          ['string_fragment'] = require('ts-node-action.actions').conceal_string('…'),
-        },
-        html = {
-          ['attribute_value'] = require('ts-node-action.actions').conceal_string('…'),
-        },
-      })
-    end,
-  },
-  {
     'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
     event = 'LspAttach',
     config = function() require('lsp_lines').setup() end,
