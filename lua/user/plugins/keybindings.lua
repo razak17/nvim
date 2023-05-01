@@ -109,8 +109,8 @@ return {
         color = 'teal',
         config = base_config(),
         heads = {
-          { 'a', '<Cmd>CloseAllBuffers<CR>', { desc = 'close all' } },
-          { 'c', '<Cmd>CloseUnusedBuffers<CR>', { desc = 'close unused' } },
+          { 'a', '<Cmd>BWipeout! all<CR>', { desc = 'close all' } },
+          { 'c', '<Cmd>BWipeout other<CR>', { desc = 'delete others' } },
           { 'd', '<Cmd>BDelete this<CR>', { desc = 'delete buffer' } },
           { 'h', '<Plug>(CybuPrev)', { desc = 'prev buffer' } },
           { 'l', '<Plug>(CybuNext)', { desc = 'next buffer' } },

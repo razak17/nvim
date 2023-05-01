@@ -15,7 +15,7 @@ return {
 
   {
     'kazhala/close-buffers.nvim',
-    cmd = { 'BDelete' },
+    cmd = { 'BDelete', 'BWipeout' },
     keys = { { '<leader>c', '<Cmd>BDelete this<CR>', desc = 'buffer delete' } },
   },
   {
