@@ -299,12 +299,12 @@ nnoremap('<leader>ol', toggle_statusline, { desc = 'toggle statusline' })
 --- Toggle conceal=2|0
 local function toggle_conceal()
   vim.opt.conceallevel = vim.opt.conceallevel:get() == 0 and 2 or 0
-  rvim.ui.notify(string.format('conceal %s', rvim.bool2str(vim.opt.conceallevel:get() == 2)))
+  rvim.ui.notify(string.format('conceal %s', rvim.bool2str(vim.opt_local.conceallevel:get() == 2)))
 end
 --- Toggle conceal cursor=n|''
 local function toggle_conceal_cursor()
   vim.opt.concealcursor = vim.opt.concealcursor:get() == 'n' and '' or 'n'
-  rvim.ui.notify(string.format('conceal cursor %s', rvim.bool2str(vim.opt.concealcursor:get() == '')))
+  rvim.ui.notify(string.format('conceal cursor %s', rvim.bool2str(vim.opt_local.concealcursor:get() == '')))
 end
 nnoremap('<localleader>cl', toggle_conceal, { desc = 'toggle conceallevel' })
 nnoremap('<localleader>cc', toggle_conceal_cursor, { desc = 'toggle concealcursor' })
