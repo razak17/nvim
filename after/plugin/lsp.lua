@@ -186,6 +186,13 @@ local function setup_mappings(client, bufnr)
     end
   end, mappings)
 
+  local function set_custom_mappings(custom_mappings, server)
+    rvim.foreach(
+      function(m) map(m[1], m[2], m[3], { buffer = bufnr, desc = fmt('%s: %s', server, m.desc) }) end,
+      custom_mappings
+    )
+  end
+
   if client.name == 'vtsls' then
     require('which-key').register({
       ['<localleader>t'] = { name = 'Typescript' },
@@ -200,10 +207,7 @@ local function setup_mappings(client, bufnr)
       { 'n', '<localleader>tio', '<Cmd>VtsExec organize_imports<CR>', desc = 'organize' },
       { 'n', '<localleader>tix', '<Cmd>VtsExec remove_unused_imports<CR>', desc = 'remove unused' },
     }
-    rvim.foreach(
-      function(m) map(m[1], m[2], m[3], { buffer = bufnr, desc = fmt('vtsls: %s', m.desc) }) end,
-      vtsls_mappings
-    )
+    set_custom_mappings(vtsls_mappings, 'vtsls')
   end
 
   if client.name == 'rust_analyzer' then
@@ -220,10 +224,7 @@ local function setup_mappings(client, bufnr)
       { 'n', '<localleader>rR', "<Cmd>lua require('rust-tools/workspace_refresh')._reload_workspace_from_cargo_toml()<CR>", desc = 'rust-tools: reload workspace' },
       { 'n', '<localleader>ro', '<Cmd>RustOpenExternalDocs<CR>', desc = 'rust-tools: open external docs' },
     }
-    rvim.foreach(
-      function(m) map(m[1], m[2], m[3], { buffer = bufnr, desc = fmt('rust-tools: %s', m.desc) }) end,
-      rust_mappings
-    )
+    set_custom_mappings(rust_mappings, 'rust_analyzer')
   end
 end
 
