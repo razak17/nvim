@@ -25,11 +25,11 @@ local servers = {
     -- Apparently setting this to false improves performance
     -- @see https://github.com/sublimelsp/LSP-typescript/issues/129#issuecomment-1281643371
     initializationOptions = { preferences = { includeCompletionsForModuleExports = false } },
-    -- Disable duplicate diagnostics from eslint
     handlers = {
       ['textDocument/publishDiagnostics'] = function(_, result, ctx, config)
         result.diagnostics = vim.tbl_filter(
-          function(diagnostic) return vim.tbl_contains({ 2304 }, diagnostic.code) end,
+          -- remove TS6133, TS6133 is about unused variables. eslint is already doing this.
+          function(diagnostic) return not vim.tbl_contains({ 6133 }, diagnostic.code) end,
           result.diagnostics
         )
         return vim.lsp.handlers['textDocument/publishDiagnostics'](nil, result, ctx, config)
