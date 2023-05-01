@@ -220,9 +220,7 @@ function rvim.lsp_setup(map)
       pattern = fts,
       event = 'FileType',
       desc = ('lsp setup for %s'):format(server),
-      command = function()
-        if not rvim.falsy(fts) then require('user.lsp.manager').setup(tostring(server)) end
-      end,
+      command = function() require('user.lsp.manager').setup(tostring(server)) end,
     }
   end, map)
   rvim.augroup('lsp-setup', unpack(commands))

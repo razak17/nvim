@@ -1,7 +1,7 @@
 local M = {}
 
 local uv, fmt = vim.loop, string.format
-local lsp_config_file = rvim.lsp.config_file
+local falsy, lsp_config_file = rvim.falsy, rvim.lsp.config_file
 
 local function write_file(filename, content)
   local data = type(content) == 'string' and content or vim.inspect(content)
@@ -34,7 +34,7 @@ local function generate(server_names)
   for _, server in ipairs(server_names) do
     local config = require('user.servers')(server)
     local fts = get_supported_filetypes(server)
-    if config and not rvim.falsy(fts) then servers_config[server] = fts end
+    if config and not falsy(fts) then servers_config[server] = fts end
   end
   return servers_config
 end
@@ -44,7 +44,7 @@ end
 function M.generate_config_file(server_names)
   server_names = server_names or get_supported_servers()
   local servers_config = generate(server_names)
-  if rvim.falsy(server_names) or rvim.falsy(servers_config) then
+  if falsy(server_names) or falsy(servers_config) then
     vim.notify('No servers found', 'error', { title = 'Lsp' })
     return
   end
