@@ -2,7 +2,10 @@ if not rvim then return end
 
 local api = vim.api
 
-local conceal_class = function(bufnr, ft)
+local conceal_class = function(bufnr)
+  local ft = 'html'
+  if not vim.tbl_contains({ 'html', 'svelte', 'astro', 'vue' }, vim.bo.ft) then ft = 'tsx' end
+
   local namespace = api.nvim_create_namespace('ConcealClassName')
   local language_tree = vim.treesitter.get_parser(bufnr, ft)
   local syntax_tree = language_tree:parse()
@@ -40,9 +43,5 @@ end
 rvim.augroup('ConcealClassName', {
   event = { 'BufEnter', 'BufWritePost', 'TextChanged', 'InsertLeave' },
   pattern = { '*.html', '*.svelte', '*.astro', '*.vue', '*.tsx' },
-  command = function()
-    local ft = 'html'
-    if not vim.tbl_contains({ 'html', 'svelte', 'astro', 'vue' }, vim.bo.ft) then ft = 'tsx' end
-    conceal_class(api.nvim_get_current_buf(), ft)
-  end,
+  command = function() conceal_class(api.nvim_get_current_buf()) end,
 })
