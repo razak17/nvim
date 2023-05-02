@@ -35,11 +35,6 @@ require('rust-tools').setup({
   },
   server = {
     standalone = false,
-    settings = {
-      ['rust-analyzer'] = {
-        lens = { enable = true },
-        checkOnSave = { enable = true, command = 'clippy' },
-      },
-    },
+    settings = require('user.servers')('rust_analyzer'),
   },
 })

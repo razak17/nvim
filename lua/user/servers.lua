@@ -14,13 +14,18 @@ local servers = {
   lemminx = {},
   marksman = {},
   prismals = {},
-  rust_analyzer = {},
   svelte = {},
   yamlls = {},
   vimls = {},
   volar = {},
   docker_compose_language_service = {},
   prosemd_lsp = {},
+  rust_analyzer = {
+    ['rust-analyzer'] = {
+      lens = { enable = true },
+      checkOnSave = { enable = false, command = 'clippy' },
+    },
+  },
   vtsls = {
     -- Apparently setting this to false improves performance
     -- @see https://github.com/sublimelsp/LSP-typescript/issues/129#issuecomment-1281643371
