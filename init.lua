@@ -16,7 +16,7 @@ g.projects_dir = env.DEV_HOME or fn.expand('~/personal/workspace/coding')
 -- Global namespace
 ----------------------------------------------------------------------------------------------------
 local namespace = {
-  debug = false,
+  debug = { enable = false },
   lsp = {
     signs = { enable = true },
     hover_diagnostics = { enable = true },

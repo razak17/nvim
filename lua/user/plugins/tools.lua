@@ -24,6 +24,7 @@ return {
         handlers = {},
       })
       require('null-ls').setup({
+        debug = rvim.debug.enable,
         on_attach = function(client, bufnr)
           local lfm_ok, lsp_format_modifications = rvim.pcall(require, 'lsp-format-modifications')
           if lfm_ok and vim.tbl_contains({ 'clangd', 'vtsls', 'null-ls' }, client.name) then

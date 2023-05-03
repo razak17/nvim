@@ -1,43 +1,7 @@
 local mason_path = vim.fn.stdpath('data') .. 'mason'
-local function attach()
-  print('attaching')
-  require('dap').run({
-    type = 'node2',
-    request = 'attach',
-    cwd = vim.fn.getcwd(),
-    sourceMaps = true,
-    protocol = 'inspector',
-    skipFiles = { '<node_internals>/**/*.js' },
-  })
-end
 
-local function attach_to_remote()
-  print('attaching')
-  require('dap').run({
-    type = 'node2',
-    request = 'attach',
-    address = '127.0.0.1',
-    port = 9229,
-    localRoot = vim.fn.getcwd(),
-    remoteRoot = '/home/vcap/app',
-    sourceMaps = true,
-    protocol = 'inspector',
-    skipFiles = { '<node_internals>/**/*.js' },
-  })
-end
+rvim.debugger = { layout = { ft = { dart = 2 } } }
 
-local function repl_toggle() require('dap').repl.toggle(nil, 'botright split') end
-local function continue() require('dap').continue() end
-local function step_out() require('dap').step_out() end
-local function step_into() require('dap').step_into() end
-local function step_over() require('dap').step_over() end
-local function run_last() require('dap').run_last() end
-local function step_back() require('dap').step_back() end
-local function restart() require('dap').restart() end
-local function terminate() require('dap').terminate() end
-local function toggle_breakpoint() require('dap').toggle_breakpoint() end
-local function clear_breakpoints() require('dap').clear_breakpoints() end
-local function hover() require('dap.ui.widgets').hover() end
 local function set_breakpoint() require('dap').set_breakpoint(vim.fn.input('Breakpoint condition: ')) end
 local function log_breakpoint() require('dap').set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end
 
@@ -45,22 +9,20 @@ return {
   {
     'mfussenegger/nvim-dap',
     keys = {
-      { '<localleader>db', toggle_breakpoint, desc = 'dap: toggle breakpoint' },
+      { '<localleader>db', function() require('dap').toggle_breakpoint() end, desc = 'dap: toggle breakpoint' },
       { '<localleader>dB', set_breakpoint, desc = 'dap: set conditional breakpoint' },
-      { '<localleader>dc', continue, desc = 'dap: continue or start debugging' },
-      { '<localleader>dC', clear_breakpoints, desc = 'dap: clear breakpoint' },
-      { '<localleader>de', step_out, desc = 'dap: step out' },
-      { '<localleader>dh', step_back, desc = 'dap: step back' },
-      { '<localleader>di', step_into, desc = 'dap: step into' },
-      { '<localleader>dl', run_last, desc = 'dap REPL: run last' },
+      { '<localleader>dc', function() require('dap').continue() end, desc = 'dap: continue or start debugging' },
+      { '<localleader>dC', function() require('dap').clear_breakpoints() end, desc = 'dap: clear breakpoint' },
+      { '<localleader>de', function() require('dap').step_out() end, desc = 'dap: step out' },
+      { '<localleader>dh', function() require('dap').step_back() end, desc = 'dap: step back' },
+      { '<localleader>di', function() require('dap').step_into() end, desc = 'dap: step into' },
+      { '<localleader>dl', function() require('dap').run_last() end, desc = 'dap REPL: run last' },
       { '<localleader>dL', log_breakpoint, desc = 'dap: log breakpoint' },
-      { '<localleader>do', step_over, desc = 'dap: step over' },
-      { '<localleader>dr', restart, desc = 'dap: restart' },
-      { '<localleader>dw', hover, desc = 'dap: hover' },
-      { '<localleader>dx', terminate, desc = 'dap: terminate' },
-      { '<localleader>dt', repl_toggle, desc = 'dap REPL: toggle' },
-      { '<localleader>da', attach, desc = 'dap(node): attach' },
-      { '<localleader>dA', attach_to_remote, desc = 'dap(node): attach to remote' },
+      { '<localleader>do', function() require('dap').step_over() end, desc = 'dap: step over' },
+      { '<localleader>dr', function() require('dap').restart() end, desc = 'dap: restart' },
+      { '<localleader>dt', function() require('dap').repl.toggle() end, desc = 'dap: toggle repl' },
+      { '<localleader>dw', function() require('dap.ui.widgets').hover() end, desc = 'dap: hover' },
+      { '<localleader>dx', function() require('dap').terminate() end, desc = 'dap: terminate' },
       {
         '<localleader>du',
         function() require('dapui').toggle({ reset = true }) end,
@@ -99,7 +61,7 @@ return {
       if not ui_ok then return end
       dap.listeners.before.event_exited['dapui_config'] = function() dapui.close() end
       dap.listeners.before.event_terminated['dapui_config'] = function() dapui.close() end
-      dap.listeners.after.event_initialized['dapui_config'] = function() dapui.open(rvim.debug.layout.ft[vim.bo.ft]) end
+      dap.listeners.after.event_initialized['dapui_config'] = function() dapui.open(rvim.debugger.layout.ft[vim.bo.ft]) end
 
       -- python
       local python_dir = join_paths(mason_path, 'packages', 'debugpy', 'venv', 'bin', 'python')
