@@ -159,8 +159,7 @@ local function setup_mappings(client, bufnr)
     { { 'n', 'x' }, '<leader>la', lsp.buf.code_action, desc = 'code action', capability = provider.CODEACTIONS },
     { 'n', '<leader>lf', format, desc = 'format buffer', capability = provider.FORMATTING },
     { 'n', 'K', show_documentation, desc = 'hover', capability = provider.HOVER },
-    -- stylua: ignore
-    { 'n', 'gd', lsp.buf.definition, desc = 'definition', capability = provider.DEFINITION, exclude = { 'vtsls' }  },
+    { 'n', 'gd', lsp.buf.definition, desc = 'definition', capability = provider.DEFINITION, exclude = { 'vtsls' } },
     { 'n', 'gr', lsp.buf.references, desc = 'references', capability = provider.REFERENCES },
     { 'n', 'gi', lsp.buf.implementation, desc = 'implementation', capability = provider.REFERENCES },
     { 'n', 'gI', lsp.buf.incoming_calls, desc = 'incoming calls', capability = provider.REFERENCES },
@@ -168,10 +167,6 @@ local function setup_mappings(client, bufnr)
     { 'n', '<leader>lc', lsp.codelens.run, desc = 'run code lens', capability = provider.CODELENS },
     { 'n', '<leader>lr', lsp.buf.rename, desc = 'rename', capability = provider.RENAME },
     { 'n', '<leader>lL', vim.diagnostic.setloclist, desc = 'toggle loclist diagnostics' },
-    { 'n', '<leader>lG', '<Cmd>LspGenerateTemplates<CR>', desc = 'generate setup file' },
-    { 'n', '<leader>lD', '<Cmd>LspRemoveTemplates<CR>', desc = 'delete setup file' },
-    -- stylua: ignore
-    { 'n', '<leader>lO', '<Cmd>edit ' .. rvim.lsp.config_file .. '<CR>', desc = 'open lspsetup file' },
     { 'n', '<leader>li', '<Cmd>LspInfo<CR>', desc = 'lsp info' },
     { 'n', '<leader>ltv', '<Cmd>ToggleVirtualText<CR>', desc = 'toggle virtual text' },
     { 'n', '<leader>ltl', '<Cmd>ToggleVirtualLines<CR>', desc = 'toggle virtual lines' },
@@ -379,6 +374,10 @@ local function toggle_virtual_lines()
   vim.diagnostic.config(config)
 end
 command('ToggleVirtualLines', toggle_virtual_lines)
+
+map('n', '<leader>lG', '<Cmd>LspGenerateTemplates<CR>', { desc = 'generate setup file' })
+map('n', '<leader>lD', '<Cmd>LspRemoveTemplates<CR>', { desc = 'delete setup file' })
+map('n', '<leader>lO', '<Cmd>edit ' .. rvim.lsp.config_file .. '<CR>', { desc = 'open lspsetup file' })
 
 lsp.handlers['textDocument/hover'] = function(...)
   local hover_handler = lsp.with(lsp.handlers.hover, {
