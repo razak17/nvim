@@ -10,6 +10,7 @@ local space = ' '
 local fcs = opt.fillchars:get()
 local shade, separator = separators.light_shade_block, separators.left_thin_block -- '│'
 local sep_hl = 'LineNr'
+local MIN_SIGN_WIDTH = 1
 
 local function fdm(lnum)
   if fn.foldlevel(lnum) <= fn.foldlevel(lnum - 1) then return space end
@@ -79,6 +80,9 @@ function ui.statuscolumn.render()
   local gitsign, other_sns = extmark_signs(buf, lnum)
   local sns = signplaced_signs(buf, lnum)
   vim.list_extend(sns, other_sns)
+  while #sns < MIN_SIGN_WIDTH do
+    table.insert(sns, str.spacer(1))
+  end
 
   local line_count = api.nvim_buf_line_count(buf)
 
@@ -100,6 +104,6 @@ rvim.augroup('StatusCol', {
       fname = fn.bufname(args.buf),
       setting = 'statuscolumn',
     })
-    if decor.ft == false or decor.fname == false then optl.statuscolumn = '' end
+    if decor.ft == false or decor.fname == false then vim.opt_local.statuscolumn = '' end
   end,
 })
