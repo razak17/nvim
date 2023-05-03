@@ -48,6 +48,7 @@ function M.generate_config_file(server_names)
     vim.notify('No servers found', 'error', { title = 'Lsp' })
     return
   end
+  write_file(lsp_config_file, fmt('%s\n', "if not rvim or vim.env.RVIM_LSP_ENABLED == '0' then return end"))
   write_file(lsp_config_file, fmt('%s\n%s', '-- stylua: ignore', 'rvim.lsp_setup('))
   write_file(lsp_config_file, servers_config)
   vim.defer_fn(function() write_file(lsp_config_file, ')') end, 100)

@@ -38,7 +38,13 @@ end
 vim.opt.rtp:prepend(lazy_path)
 -- If opening from inside neovim terminal then do not load other plugins
 if env.NVIM then return require('lazy').setup({ { 'willothy/flatten.nvim', config = true } }) end
-require('lazy').setup('user.plugins', {
+local plugins
+if vim.env.RVIM_PLUGINS_ENABLED == '0' then
+  plugins = {}
+else
+  plugins = 'user.plugins'
+end
+require('lazy').setup(plugins, {
   defaults = { lazy = true },
   change_detection = { notify = false },
   git = { timeout = 720 },

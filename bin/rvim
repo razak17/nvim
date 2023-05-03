@@ -1,3 +1,24 @@
 #!/bin/sh
 
+export RVIM_PLUGINS_ENABLED=1
+export RVIM_LSP_ENABLED=1
+
+args="$1"
+
+if [ "$args" = "--no-plugins" ]; then
+	export RVIM_PLUGINS_ENABLED=0
+	shift
+fi
+
+if [ "$args" = "--no-lsp" ]; then
+	export RVIM_LSP_ENABLED=0
+	shift
+fi
+
+if [ "$args" = "--none" ]; then
+	export RVIM_PLUGINS_ENABLED=0
+	export RVIM_LSP_ENABLED=0
+	shift
+fi
+
 NVIM_APPNAME=rvim nvim "$@"
