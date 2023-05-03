@@ -220,7 +220,7 @@ return {
         }),
         live_grep = themes.get_ivy({
           borderchars = { preview = border.ivy },
-          file_ignore_patterns = { '.git/', '%.svg', '%.lock', 'node_modules', 'package-lock.json' },
+          file_ignore_patterns = { '.git/', '%.svg', '%.lock', '%-lock.yaml', 'node_modules', '%-lock.json' },
           max_results = 2000,
           additional_args = { '--trim' },
         }),
