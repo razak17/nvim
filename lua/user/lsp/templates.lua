@@ -49,8 +49,8 @@ function M.generate_config_file(server_names)
     return
   end
   write_file(lsp_config_file, fmt('%s\n', "if not rvim or vim.env.RVIM_LSP_ENABLED == '0' then return end"))
-  write_file(lsp_config_file, fmt('%s\n%s', '-- stylua: ignore', 'rvim.lsp_setup('))
-  write_file(lsp_config_file, servers_config)
+  vim.defer_fn(function() write_file(lsp_config_file, fmt('%s\n%s', '-- stylua: ignore', 'rvim.lsp_setup(')) end, 100)
+  vim.defer_fn(function() write_file(lsp_config_file, servers_config) end, 100)
   vim.defer_fn(function() write_file(lsp_config_file, ')') end, 100)
   vim.notify('Config file has been generated.\nRestart neovim to start using lsp.', 'info', { title = 'Lsp' })
 end
