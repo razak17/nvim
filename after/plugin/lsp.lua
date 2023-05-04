@@ -144,8 +144,7 @@ local function show_documentation()
   local filetype = vim.bo.filetype
   if vim.tbl_contains({ 'help' }, filetype) then return vim.cmd('h ' .. vim.fn.expand('<cword>')) end
   if vim.tbl_contains({ 'man' }, filetype) then return vim.cmd('Man ' .. vim.fn.expand('<cword>')) end
-  if vim.fn.expand('%:t') == 'Cargo.toml' then return require('crates').show_popup() end
-  if vim.bo.ft == 'rust' then return require('rust-tools').hover_actions.hover_actions() end
+  -- if vim.fn.expand('%:t') == 'Cargo.toml' then return require('crates').show_popup() end
   vim.lsp.buf.hover()
 end
 
@@ -158,7 +157,7 @@ local function setup_mappings(client, bufnr)
     { 'n', '<leader>lj', function() vim.diagnostic.goto_next({ float = false }) end, desc = 'go to next diagnostic' },
     { { 'n', 'x' }, '<leader>la', lsp.buf.code_action, desc = 'code action', capability = provider.CODEACTIONS },
     { 'n', '<leader>lf', format, desc = 'format buffer', capability = provider.FORMATTING },
-    { 'n', 'K', show_documentation, desc = 'hover', capability = provider.HOVER },
+    { 'n', 'K', show_documentation, desc = 'hover', capability = provider.HOVER, exclude_ft = { 'rust', 'toml' } },
     { 'n', 'gd', lsp.buf.definition, desc = 'definition', capability = provider.DEFINITION, exclude = { 'vtsls' } },
     { 'n', 'gr', lsp.buf.references, desc = 'references', capability = provider.REFERENCES },
     { 'n', 'gi', lsp.buf.implementation, desc = 'implementation', capability = provider.REFERENCES },
@@ -174,25 +173,16 @@ local function setup_mappings(client, bufnr)
 
   rvim.foreach(function(m)
     if
-      (not m.exclude or not vim.tbl_contains(m.exclude, client.name))
+      (not m.exclude or not vim.tbl_contains(m.exclude, vim.bo[bufnr].ft))
+      and (not m.exclude_ft or not vim.tbl_contains(m.exclude_ft, vim.bo[bufnr].ft))
       and (not m.capability or client.server_capabilities[m.capability])
     then
       map(m[1], m[2], m[3], { buffer = bufnr, desc = fmt('lsp: %s', m.desc) })
     end
   end, mappings)
 
-  local function set_custom_mappings(custom_mappings, server)
-    rvim.foreach(
-      function(m) map(m[1], m[2], m[3], { buffer = bufnr, desc = fmt('%s: %s', server, m.desc) }) end,
-      custom_mappings
-    )
-  end
-
   if client.name == 'vtsls' then
-    require('which-key').register({
-      ['<localleader>t'] = { name = 'Typescript' },
-      ['<localleader>ti'] = { name = 'Imports' },
-    })
+    require('which-key').register({ ['<localleader>t'] = { name = 'Typescript', i = 'Imports' } })
 
     local vtsls_mappings = {
       { 'n', 'gd', '<Cmd>VtsExec goto_source_definition<CR>', desc = 'go to source definition' },
@@ -202,24 +192,10 @@ local function setup_mappings(client, bufnr)
       { 'n', '<localleader>tio', '<Cmd>VtsExec organize_imports<CR>', desc = 'organize' },
       { 'n', '<localleader>tix', '<Cmd>VtsExec remove_unused_imports<CR>', desc = 'remove unused' },
     }
-    set_custom_mappings(vtsls_mappings, 'vtsls')
-  end
-
-  if client.name == 'rust_analyzer' then
-    local rust_mappings = {
-      { 'n', '<localleader>rh', '<Cmd>RustToggleInlayHints<CR>', desc = 'toggle hints' },
-      { 'n', '<localleader>rr', '<Cmd>RustRunnables<CR>', desc = 'runnables' },
-      { 'n', '<localleader>rt', '<Cmd>lua _CARGO_TEST()<CR>', desc = 'cargo test' },
-      { 'n', '<localleader>rm', '<Cmd>RustExpandMacro<CR>', desc = 'expand cargo' },
-      { 'n', '<localleader>rc', '<Cmd>RustOpenCargo<CR>', desc = 'open cargo' },
-      { 'n', '<localleader>rp', '<Cmd>RustParentModule<CR>', desc = 'parent module' },
-      { 'n', '<localleader>rd', '<Cmd>RustDebuggables<CR>', desc = 'debuggables' },
-      { 'n', '<localleader>rv', '<Cmd>RustViewCrateGraph<CR>', desc = 'view crate graph' },
-      -- stylua: ignore
-      { 'n', '<localleader>rR', "<Cmd>lua require('rust-tools/workspace_refresh')._reload_workspace_from_cargo_toml()<CR>", desc = 'rust-tools: reload workspace' },
-      { 'n', '<localleader>ro', '<Cmd>RustOpenExternalDocs<CR>', desc = 'rust-tools: open external docs' },
-    }
-    set_custom_mappings(rust_mappings, 'rust_analyzer')
+    rvim.foreach(
+      function(m) map(m[1], m[2], m[3], { buffer = bufnr, desc = fmt('%s: %s', 'vtsls', m.desc) }) end,
+      vtsls_mappings
+    )
   end
 end
 

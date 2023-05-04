@@ -138,7 +138,7 @@ local servers = {
 
 ---Get the configuration for a specific language server
 ---@param name string?
----@return boolean, table<string, any>?
+---@return table<string, any>?
 return function(name)
   local config = servers[name]
   if not config then return false end

@@ -1,8 +1,24 @@
 local mason_path = vim.fn.stdpath('data') .. 'mason'
 
-require('which-key').register({ ['<localleader>r'] = { name = 'Rust Tools' } })
+require('which-key').register({ ['<localleader>r'] = { name = 'Rust Tools', h = 'Inlay Hints' } })
 
-require('rust-tools').setup({
+local rt = require('rust-tools')
+
+local on_attach = function(_, bufnr)
+  map('n', 'K', rt.hover_actions.hover_actions, { desc = 'hover' })
+  map('n', '<localleader>rhe', rt.inlay_hints.set, { desc = 'set hints', buffer = bufnr })
+  map('n', '<localleader>rhd', rt.inlay_hints.unset, { desc = 'unset hints', buffer = bufnr })
+  map('n', '<localleader>rr', rt.runnables.runnables, { desc = 'runnables', buffer = bufnr })
+  map('n', '<localleader>rc', rt.open_cargo_toml.open_cargo_toml, { desc = 'open cargo', buffer = bufnr })
+  map('n', '<localleader>rd', rt.debuggables.debuggables, { desc = 'debuggables', buffer = bufnr })
+  map('n', '<localleader>rm', rt.expand_macro.expand_macro, { desc = 'expand macro', buffer = bufnr })
+  map('n', '<localleader>ro', rt.external_docs.open_external_docs, { desc = 'open external docs', buffer = bufnr })
+  map('n', '<localleader>rp', rt.parent_module.parent_module, { desc = 'parent module', buffer = bufnr })
+  map('n', '<localleader>rs', rt.workspace_refresh.reload_workspace, { desc = 'reload workspace', buffer = bufnr })
+  map('n', '<localleader>rg', '<Cmd>RustViewCrateGraph<CR>', { desc = 'view crate graph', buffer = bufnr })
+end
+
+rt.setup({
   tools = {
     executor = require('rust-tools/executors').termopen, -- can be quickfix or termopen
     reload_workspace_from_cargo_toml = true,
@@ -34,6 +50,7 @@ require('rust-tools').setup({
     ),
   },
   server = {
+    on_attach = on_attach,
     standalone = false,
     settings = require('user.servers')('rust_analyzer'),
   },

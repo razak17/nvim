@@ -265,6 +265,7 @@ settings({
       require('which-key').register({ ['<localleader>c'] = { name = 'Crates' } })
       local function with_desc(desc) return { buffer = 0, desc = fmt('crates: %s', desc) } end
       local crates = require('crates')
+      map('n', 'K', crates.show_popup, with_desc('hover'))
       map('n', '<localleader>ct', crates.toggle, with_desc('toggle'))
       map('n', '<localleader>cu', crates.update_crate, with_desc('update'))
       map('n', '<localleader>cU', crates.upgrade_crate, with_desc('upgrade'))
