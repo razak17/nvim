@@ -5,10 +5,10 @@ local navic_loaded, navic = rvim.pcall(require, 'nvim-navic')
 local devicons_loaded, devicons = rvim.pcall(require, 'nvim-web-devicons')
 
 local str = require('user.strings')
+local section, spacer, display = str.section, str.spacer, str.display
 
-local fn, api, falsy = vim.fn, vim.api, rvim.falsy
+local fn, api, falsy, lsp_hls = vim.fn, vim.api, rvim.falsy, rvim.ui.lsp.highlights
 local icons, decorations, highlight = rvim.ui.icons.misc, rvim.ui.decorations, rvim.highlight
-local lsp_hls = rvim.ui.lsp.highlights
 
 local space = ' '
 local dir_separator = icons.chevron_right
@@ -72,30 +72,26 @@ end
 ---@return string
 function rvim.ui.winbar.render(current_win)
   state = {}
-  local winbar = {}
-  local add = str.append(winbar)
 
-  add(str.spacer(1))
+  local w1 = section:new(spacer(1))
+  local w2 = nil
 
   local bufname = api.nvim_buf_get_name(api.nvim_get_current_buf())
-  if falsy(bufname) then
-    add({ { { '[No name]', hls.normal } }, priority = 0 })
-    return winbar
-  end
+  if falsy(bufname) then return w1 + section:new({ { { '[No name]', hls.normal } }, priority = 0 }) end
 
   local use_relative_path = rvim.ui.winbar.relative_path
   local filepath = fn.fnamemodify(bufname, ':t')
   if use_relative_path then filepath = fn.fnamemodify(bufname, ':p:.') end
 
+  local icon, color = rvim.ui.codicons.documents.default_folder, 'DevIconDefault'
   if rvim.ui.winbar.file_icon then
-    local icon, color = rvim.ui.codicons.documents.default_folder, 'DevIconDefault'
     if devicons_loaded then
       local devicon, devicon_color = devicons.get_icon(vim.fn.expand('%:t'))
       if devicon ~= nil and devicon_color ~= nil then
         icon, color = devicon, devicon_color
       end
     end
-    add({ { { icon, color } } })
+    w2 = section:new({ { { icon, color } }, priority = 0 })
   end
 
   local parts = vim.split(filepath, '/')
@@ -108,20 +104,21 @@ function rvim.ui.winbar.render(current_win)
     end
   end
 
-  rvim.foreach(function(part, index)
+  local wn = rvim.map(function(part, index)
     local priority = (#parts - (index - 1)) * 2
     local is_last = index == #parts
     state[priority] = table.concat(vim.list_slice(parts, 1, index), '/')
-    add({
+    return {
       { { part, 'Winbar' }, not is_last and { ' ' .. dir_separator, hls.separator } or nil },
       id = priority,
       priority = priority,
       click = 'v:lua.rvim.ui.winbar.click',
-    })
+    }
   end, parts)
   local win = api.nvim_get_current_win()
-  if win == current_win then add(unpack(breadcrumbs())) end
-  return str.display({ winbar }, api.nvim_win_get_width(win))
+  local winbar = w1 + w2 + section:new(unpack(wn))
+  if win == current_win then winbar = section:new(unpack(winbar)) + section:new(unpack(breadcrumbs())) end
+  return display({ winbar }, api.nvim_win_get_width(win))
 end
 
 local function set_winbar()
