@@ -94,18 +94,21 @@ return {
     'Saecki/crates.nvim',
     event = 'BufRead Cargo.toml',
     opts = {
-      popup = {
-        autofocus = true,
-        style = 'minimal',
-        border = border,
-        show_version_date = false,
-        show_dependency_version = true,
-        max_height = 30,
-        min_width = 20,
-        padding = 1,
-      },
-      null_ls = { enabled = true, name = 'crates.nvim' },
+      popup = { autofocus = true, border = border },
+      null_ls = { enabled = true, name = 'crates' },
     },
+    config = function(_, opts)
+      rvim.augroup('CmpSourceCargo', {
+        event = 'BufRead',
+        pattern = 'Cargo.toml',
+        command = function()
+          require('cmp').setup.buffer({
+            sources = { { name = 'crates', priority = 3, group_index = 1 } },
+          })
+        end,
+      })
+      require('crates').setup(opts)
+    end,
   },
   {
     'NTBBloodbath/rest.nvim',

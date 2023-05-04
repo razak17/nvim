@@ -171,7 +171,6 @@ return {
           },
           { name = 'path', priority = 4, group_index = 1 },
           { name = 'emoji', priority = 3, group_index = 1 },
-          { name = 'crates', priority = 3, group_index = 1 },
           { name = 'dynamic', priority = 3, group_index = 1 },
           {
             name = 'buffer',
