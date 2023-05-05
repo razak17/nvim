@@ -229,6 +229,7 @@ local filetypes = rvim.p_table({
   ['markdown'] = presets.minimal_editing,
   ['gitcommit'] = commit_buffer,
   ['NeogitCommitMessage'] = commit_buffer,
+  ['slide'] = presets.tool_panel:with({ winbar = 'ignore' }),
 })
 
 local filenames = rvim.p_table({
