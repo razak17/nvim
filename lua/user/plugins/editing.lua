@@ -1,4 +1,5 @@
 return {
+  { 'razak17/slides.nvim', lazy = false },
   {
     'gbprod/yanky.nvim',
     keys = {
@@ -41,6 +42,7 @@ return {
         },
       })
     end,
+    dependencies = { 'kkharji/sqlite.lua' },
   },
   {
     'monaqa/dial.nvim',

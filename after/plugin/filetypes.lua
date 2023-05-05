@@ -259,6 +259,18 @@ settings({
       rvim.adjust_split_height(3, 10)
     end,
   },
+  slide = {
+    mappings = {
+      { 'n', '<localleader>aa', '<Cmd>SlideAscii term<CR>', { desc = 'slides: ascii term', buffer = 0 } },
+      { 'n', '<localleader>aA', '<Cmd>SlideAscii bigascii12<CR>', { desc = 'slides: ascii bigascii12', buffer = 0 } },
+      { 'n', '<localleader>ab', '<Cmd>SlideAscii bfraktur<CR>', { desc = 'slides: ascii bfraktur', buffer = 0 } },
+      { 'n', '<localleader>ae', '<Cmd>SlideAscii emboss<CR>', { desc = 'slides: ascii emboss', buffer = 0 } },
+      { 'n', '<localleader>aE', '<Cmd>SlideAscii emboss2<CR>', { desc = 'slides: ascii emboss2', buffer = 0 } },
+      { 'n', '<localleader>al', '<Cmd>SlideAscii letter<CR>', { desc = 'slides: ascii letter', buffer = 0 } },
+      { 'n', '<localleader>am', '<Cmd>SlideAscii bigmono12<CR>', { desc = 'slides: ascii bigmono12', buffer = 0 } },
+      { 'n', '<localleader>aw', '<Cmd>SlideAscii wideterm<CR>', { desc = 'slides: ascii wideterm', buffer = 0 } },
+    },
+  },
   toml = {
     function()
       if fn.expand('%:t') ~= 'Cargo.toml' then return end
