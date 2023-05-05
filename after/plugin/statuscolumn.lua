@@ -4,7 +4,7 @@ if not rvim or not rvim.ui.statuscolumn.enable then return end
 
 local str = require('user.strings')
 local section, spacer, display = str.section, str.spacer, str.display
-local fn, v, api, opt, optl = vim.fn, vim.v, vim.api, vim.opt, vim.opt_local
+local fn, v, api, opt = vim.fn, vim.v, vim.api, vim.opt
 local ui, sep, falsy = rvim.ui, rvim.ui.icons.separators, rvim.falsy
 
 local MIN_SIGN_WIDTH, space = 1, ' '
