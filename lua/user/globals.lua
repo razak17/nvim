@@ -128,7 +128,7 @@ function rvim.pcall(msg, func, ...)
   end
   return xpcall(func, function(err)
     if rvim.debug.enable then
-      msg = debug.traceback(msg and fmt('%s:\n%s', msg, err) or err)
+      msg = debug.traceback(msg and fmt('%s:\n%s\n%s', msg, vim.inspect(args), err) or err)
       vim.schedule(function() vim.notify(msg, l.ERROR, { title = 'ERROR' }) end)
     end
   end, unpack(args))

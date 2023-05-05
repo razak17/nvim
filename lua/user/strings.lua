@@ -98,7 +98,9 @@ local function component(opts)
   if opts.cond ~= nil and falsy(opts.cond) then return end
 
   local item = opts[1]
-  assert(vim.tbl_islist(item), ('component options are required but got %s instead'):format(vim.inspect(item)))
+  if not vim.tbl_islist(item) then
+    error(fmt('component options are required but got %s instead', vim.inspect(item)))
+  end
   local before, after = opts.before or '', opts.after or padding
 
   local item_str = get_subsection(item)
@@ -146,7 +148,7 @@ end
 --- could be fit in instead
 --- @param statusline table
 --- @param space number
---- @param length number
+--- @param length? number
 local function prioritize(statusline, space, length)
   length = length or sum_lengths(statusline)
   if length <= space then return statusline end
@@ -171,7 +173,7 @@ function M.display(sections, available_space)
     end
     rvim.foreach(function(args, index)
       if not args then return end
-      local ok, str = rvim.pcall(('Error creating component: %s'):format(vim.inspect(args)), component, args)
+      local ok, str = rvim.pcall('Error creating component', component, args)
       if not ok then return end
       table.insert(acc, str)
       if #section == index and count ~= #sections then table.insert(acc, separator()) end

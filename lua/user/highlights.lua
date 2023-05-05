@@ -151,8 +151,7 @@ local function set(ns, name, opts)
     if attrs[attribute] then hl[attribute] = new_data end
   end
 
-  local msg = ('failed to set highlight "%s" with value %s'):format(name, vim.inspect(hl))
-  rvim.pcall(msg, api.nvim_set_hl, ns, name, hl)
+  rvim.pcall(fmt('setting highlight "%s"', name), api.nvim_set_hl, ns, name, hl)
 end
 
 ---Apply a list of highlights
