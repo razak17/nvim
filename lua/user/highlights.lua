@@ -134,9 +134,9 @@ local function resolve_from_attribute(hl, attr)
   return colour
 end
 
----@param name string
+---@param name string|HLArgs
 ---@param opts? HLArgs
----@overload fun(ns: integer, name: string, opts: HLArgs)
+---@overload fun(ns: integer|string, name: string, opts: HLArgs)
 local function set(ns, name, opts)
   opts = opts or {}
   if type(ns) == 'string' and type(name) == 'table' then
