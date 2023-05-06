@@ -214,7 +214,7 @@ function rvim.filetype_settings(map)
   rvim.augroup('filetype-settings', unpack(commands))
 end
 
-function rvim.lsp_setup(map)
+function rvim.lspconfig(map)
   local commands = rvim.map(function(fts, server)
     return {
       pattern = fts,
