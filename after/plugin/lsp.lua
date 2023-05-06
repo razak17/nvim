@@ -50,64 +50,6 @@ local function format(opts)
   lsp.buf.format({ bufnr = opts.bufnr, async = opts.async, filter = formatting_filter })
 end
 
----@param client lsp.Client
----@param buf integer
-local function setup_autocommands(client, buf)
-  if client.server_capabilities[provider.HOVER] then
-    augroup(('LspHoverDiagnostics%d'):format(buf), {
-      event = { 'CursorHold' },
-      buffer = buf,
-      desc = 'LSP: Show diagnostics',
-      command = function()
-        if not rvim.lsp.hover_diagnostics then return end
-        if vim.b.lsp_hover_win and api.nvim_win_is_valid(vim.b.lsp_hover_win) then return end
-        vim.diagnostic.open_float({ scope = 'line' })
-      end,
-    })
-  end
-
-  if client.server_capabilities[provider.FORMATTING] then
-    augroup(('LspFormatting%d'):format(buf), {
-      event = 'BufWritePre',
-      buffer = buf,
-      desc = 'LSP: Format on save',
-      command = function(args)
-        local excluded = rvim.find_string(format_exclusions.format_on_save, vim.bo.ft)
-        if not excluded and not vim.g.formatting_disabled and not vim.b[buf].formatting_disabled then
-          local clients = vim.tbl_filter(
-            function(c) return c.server_capabilities[provider.FORMATTING] end,
-            lsp.get_active_clients({ buffer = buf })
-          )
-          if #clients >= 1 then format({ bufnr = args.buf, async = #clients == 1 }) end
-        end
-      end,
-    })
-  end
-
-  if client.server_capabilities[provider.CODELENS] then
-    augroup(('LspCodeLens%d'):format(buf), {
-      event = { 'BufEnter', 'InsertLeave', 'BufWritePost' },
-      desc = 'LSP: Code Lens',
-      buffer = buf,
-      -- call via vimscript so that errors are silenced
-      command = 'silent! lua vim.lsp.codelens.refresh()',
-    })
-  end
-
-  if client.server_capabilities[provider.REFERENCES] then
-    augroup(('LspReferences%d'):format(buf), {
-      event = { 'CursorHold', 'CursorHoldI' },
-      buffer = buf,
-      desc = 'LSP: References',
-      command = function() lsp.buf.document_highlight() end,
-    }, {
-      event = 'CursorMoved',
-      desc = 'LSP: References Clear',
-      buffer = buf,
-      command = function() lsp.buf.clear_references() end,
-    })
-  end
-end
 ----------------------------------------------------------------------------------------------------
 --  Related Locations
 ----------------------------------------------------------------------------------------------------
@@ -230,6 +172,65 @@ local function setup_semantic_tokens(client, bufnr)
     desc = fmt('Configure the semantic tokens for the %s', client.name),
     command = function(args) overrides.semantic_tokens(args.buf, client, args.data.token) end,
   })
+end
+
+---@param client lsp.Client
+---@param buf integer
+local function setup_autocommands(client, buf)
+  if client.server_capabilities[provider.HOVER] then
+    augroup(('LspHoverDiagnostics%d'):format(buf), {
+      event = { 'CursorHold' },
+      buffer = buf,
+      desc = 'LSP: Show diagnostics',
+      command = function()
+        if not rvim.lsp.hover_diagnostics then return end
+        if vim.b.lsp_hover_win and api.nvim_win_is_valid(vim.b.lsp_hover_win) then return end
+        vim.diagnostic.open_float({ scope = 'line' })
+      end,
+    })
+  end
+
+  if client.server_capabilities[provider.FORMATTING] then
+    augroup(('LspFormatting%d'):format(buf), {
+      event = 'BufWritePre',
+      buffer = buf,
+      desc = 'LSP: Format on save',
+      command = function(args)
+        local excluded = rvim.find_string(format_exclusions.format_on_save, vim.bo.ft)
+        if not excluded and not vim.g.formatting_disabled and not vim.b[buf].formatting_disabled then
+          local clients = vim.tbl_filter(
+            function(c) return c.server_capabilities[provider.FORMATTING] end,
+            lsp.get_active_clients({ buffer = buf })
+          )
+          if #clients >= 1 then format({ bufnr = args.buf, async = #clients == 1 }) end
+        end
+      end,
+    })
+  end
+
+  if client.server_capabilities[provider.CODELENS] then
+    augroup(('LspCodeLens%d'):format(buf), {
+      event = { 'BufEnter', 'InsertLeave', 'BufWritePost' },
+      desc = 'LSP: Code Lens',
+      buffer = buf,
+      -- call via vimscript so that errors are silenced
+      command = 'silent! lua vim.lsp.codelens.refresh()',
+    })
+  end
+
+  if client.server_capabilities[provider.REFERENCES] then
+    augroup(('LspReferences%d'):format(buf), {
+      event = { 'CursorHold', 'CursorHoldI' },
+      buffer = buf,
+      desc = 'LSP: References',
+      command = function() lsp.buf.document_highlight() end,
+    }, {
+      event = 'CursorMoved',
+      desc = 'LSP: References Clear',
+      buffer = buf,
+      command = function() lsp.buf.clear_references() end,
+    })
+  end
 end
 
 -- Add buffer local mappings, autocommands etc for attaching servers
