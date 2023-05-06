@@ -1,4 +1,4 @@
-if not rvim or vim.env.RVIM_LSP_ENABLED == '0' then return end
+if not rvim or vim.env.RVIM_LSP_ENABLED == '0' or vim.env.RVIM_PLUGINS_ENABLED == '0' then return end
 
 rvim.lsp.config_file = join_paths(vim.fn.stdpath('config'), 'after', 'plugin', 'lspconfig.lua')
 
