@@ -10,7 +10,6 @@ local servers = {
   cssls = {},
   dockerls = {},
   eslint = {},
-  jsonls = {},
   lemminx = {},
   marksman = {},
   prismals = {},
@@ -20,6 +19,17 @@ local servers = {
   volar = {},
   docker_compose_language_service = {},
   prosemd_lsp = {},
+  ---@type fun(): lspconfig.options.jsonls
+  jsonls = function()
+    return {
+      settings = {
+        json = {
+          schemas = require('schemastore').json.schemas(),
+          validate = { enable = true },
+        },
+      },
+    }
+  end,
   rust_analyzer = {
     ['rust-analyzer'] = {
       lens = { enable = true },

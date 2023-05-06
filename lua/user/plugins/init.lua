@@ -34,6 +34,7 @@ return {
     opts = { automatic_installation = true },
     dependencies = {
       'mason.nvim',
+      'b0o/schemastore.nvim',
       {
         'neovim/nvim-lspconfig',
         config = function() require('lspconfig.ui.windows').default_options.border = border end,
