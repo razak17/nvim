@@ -5,7 +5,7 @@ require('which-key').register({ ['<localleader>r'] = { name = 'Rust Tools', h = 
 local rt = require('rust-tools')
 
 local on_attach = function(_, bufnr)
-  map('n', 'K', rt.hover_actions.hover_actions, { desc = 'hover' })
+  map('n', 'K', rt.hover_actions.hover_actions, { desc = 'hover', buffer = bufnr })
   map('n', '<localleader>rhe', rt.inlay_hints.set, { desc = 'set hints', buffer = bufnr })
   map('n', '<localleader>rhd', rt.inlay_hints.unset, { desc = 'unset hints', buffer = bufnr })
   map('n', '<localleader>rr', rt.runnables.runnables, { desc = 'runnables', buffer = bufnr })
