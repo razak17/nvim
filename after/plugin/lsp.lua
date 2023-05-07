@@ -110,6 +110,7 @@ local function setup_mappings(client, bufnr)
     { 'n', '<leader>li', '<Cmd>LspInfo<CR>', desc = 'lsp info' },
     { 'n', '<leader>ltv', '<Cmd>ToggleVirtualText<CR>', desc = 'toggle virtual text' },
     { 'n', '<leader>ltl', '<Cmd>ToggleVirtualLines<CR>', desc = 'toggle virtual lines' },
+    { 'n', '<leader>lts', '<Cmd>ToggleSigns<CR>', desc = 'toggle signs' },
   }
 
   rvim.foreach(function(m)
@@ -350,6 +351,12 @@ local function toggle_virtual_lines()
   vim.diagnostic.config(config)
 end
 command('ToggleVirtualLines', toggle_virtual_lines)
+
+local function toggle_signs()
+  rvim.lsp.signs.enable = not rvim.lsp.signs.enable
+  vim.cmd('edit | silent! wall')
+end
+rvim.command('ToggleSigns', toggle_signs)
 
 map('n', '<leader>lG', '<Cmd>LspGenerateTemplates<CR>', { desc = 'generate setup file' })
 map('n', '<leader>lD', '<Cmd>LspRemoveTemplates<CR>', { desc = 'delete setup file' })

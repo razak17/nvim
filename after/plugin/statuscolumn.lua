@@ -78,7 +78,8 @@ function ui.statuscolumn.render()
   local line_count = api.nvim_buf_line_count(buf)
 
   local gitsign, other_sns = extmark_signs(buf, lnum)
-  local sns = signplaced_signs(buf, lnum)
+  local sns = {}
+  if rvim.lsp.signs.enable then sns = signplaced_signs(buf, lnum) end
   vim.list_extend(sns, other_sns)
   while #sns < MIN_SIGN_WIDTH do
     table.insert(sns, spacer(1))
