@@ -37,7 +37,7 @@ settings({
     function() vim.treesitter.language.register('markdown', 'chatgpt') end,
   },
   go = {
-    opt = {
+    bo = {
       tabstop = 4,
       shiftwidth = 4,
       expandtab = false,
@@ -234,10 +234,7 @@ settings({
       softtabstop = 4,
       shiftwidth = 4,
     },
-    opt = {
-      spell = true,
-      iskeyword = vim.opt.iskeyword:append('"'),
-    },
+    opt = { spell = true },
   },
   qf = {
     opt = {
