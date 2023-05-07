@@ -46,6 +46,7 @@ return {
         autotag = { enable = true },
         rainbow = {
           enable = true,
+          disable = { 'tsx', 'jsx', 'html', 'lua' },
           query = {
             'rainbow-parens',
             html = 'rainbow-tags', -- TODO: fix the awful default appearance
