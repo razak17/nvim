@@ -51,13 +51,7 @@ local function general_overrides()
     ------------------------------------------------------------------------------------------------
     { LspCodeLens = { inherit = 'Comment', bold = true, italic = false } },
     { LspCodeLensSeparator = { bold = false, italic = false } },
-    {
-      LspReferenceText = {
-        bg = { from = 'Whitespace', attr = 'fg' },
-        underline = true,
-        sp = { from = 'Whitespace', attr = 'fg' },
-      },
-    },
+    { LspReferenceText = { bg = 'NONE', underline = true, sp = { from = 'CursorLineNr', attr = 'fg', alter = -0.3 } } },
     { LspReferenceRead = { link = 'LspReferenceText' } },
     { LspReferenceWrite = { inherit = 'LspReferenceText', bold = true, underline = true } },
     { LspSignatureActiveParameter = { link = 'Visual' } },
