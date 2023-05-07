@@ -85,12 +85,12 @@ return {
     event = { 'BufReadPre', 'BufNewFile' },
     opts = {
       signs = {
-        add = { highlight = 'GitSignsAdd', text = icons.right_block },
-        change = { highlight = 'GitSignsChange', text = icons.right_block },
-        delete = { highlight = 'GitSignsDelete', text = icons.right_block },
-        topdelete = { highlight = 'GitSignsChangeDelete', text = icons.right_block },
-        changedelete = { highlight = 'GitSignsChange', text = icons.right_block },
-        untracked = { highlight = 'GitSignsAdd', text = icons.right_block },
+        add = { highlight = 'GitSignsAdd', text = icons.left_block },
+        change = { highlight = 'GitSignsChange', text = icons.left_block },
+        delete = { highlight = 'GitSignsDelete', text = rvim.ui.icons.misc.triangle },
+        topdelete = { highlight = 'GitSignsChangeDelete', text = icons.left_block },
+        changedelete = { highlight = 'GitSignsChange', text = icons.left_block },
+        untracked = { highlight = 'GitSignsAdd', text = icons.left_block },
       },
       _inline2 = true,
       _threaded_diff = true,
