@@ -34,7 +34,9 @@ return {
       local lsp_hls = rvim.ui.lsp.highlights
 
       require('neo-tree').setup({
+        close_if_last_window = true,
         sources = { 'filesystem', 'diagnostics', 'document_symbols' },
+        enable_opened_markers = true,
         source_selector = {
           winbar = true,
           separator_active = '',
@@ -44,8 +46,6 @@ return {
             { source = 'diagnostics', display_name = (' %s Diagnostics '):format(rvim.ui.codicons.lsp.error) },
           },
         },
-        enable_git_status = true,
-        git_status_async = true,
         event_handlers = {
           {
             event = 'neo_tree_buffer_enter',
@@ -61,9 +61,9 @@ return {
           },
         },
         filesystem = {
+          follow_current_file = true,
           hijack_netrw_behavior = 'open_current',
           use_libuv_file_watcher = true,
-          group_empty_dirs = false,
           filtered_items = {
             visible = true,
             hide_dotfiles = false,

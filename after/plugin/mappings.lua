@@ -228,7 +228,6 @@ nnoremap('gx', function()
   -- consider anything that looks like string/string a github link
   local plugin_url_regex = '[%a%d%-%.%_]*%/[%a%d%-%.%_]*'
   local link = string.match(file, plugin_url_regex)
-  print(link)
   if link then return rvim.open(fmt('https://www.github.com/%s', link)) end
 end)
 ----------------------------------------------------------------------------------------------------
