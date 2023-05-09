@@ -92,7 +92,6 @@ return {
         changedelete = { highlight = 'GitSignsChange', text = icons.left_block },
         untracked = { highlight = 'GitSignsAdd', text = icons.left_block },
       },
-      _inline2 = true,
       _threaded_diff = true,
       _extmark_signs = true,
       _signs_staged_enable = true,
