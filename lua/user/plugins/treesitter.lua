@@ -6,7 +6,10 @@ return {
     config = function()
       require('nvim-treesitter.configs').setup({
         auto_install = true,
-        highlight = { enable = true, additional_vim_regex_highlighting = false },
+        highlight = {
+          enable = true,
+          additional_vim_regex_highlighting = { 'org', 'sql' },
+        },
         context_commentstring = { enable = true, enable_autocmd = false },
         incremental_selection = {
           enable = true,
