@@ -151,7 +151,7 @@ return {
   },
   {
     'karb94/neoscroll.nvim',
-    event = 'VeryLazy',
+    event = 'BufRead',
     opts = {
       mappings = { '<C-d>', '<C-u>', '<C-y>', 'zt', 'zz', 'zb' },
       hide_cursor = true,

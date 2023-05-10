@@ -30,7 +30,7 @@ return {
   },
   {
     'stevearc/dressing.nvim',
-    event = 'VeryLazy',
+    event = 'BufRead',
     config = function()
       require('dressing').setup({
         input = { insert_only = false, border = border },
@@ -156,6 +156,7 @@ return {
   },
   {
     'rcarriga/nvim-notify',
+    event = 'BufRead',
     keys = {
       { '<leader>nn', '<cmd>Notifications<CR>', desc = 'notify: show' },
       {
@@ -199,8 +200,6 @@ return {
         if vim.tbl_contains(ignored, msg) then return end
         return notify(msg, level, opts)
       end
-
-      require('telescope').load_extension('notify')
     end,
   },
 }
