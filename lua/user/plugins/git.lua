@@ -2,7 +2,7 @@ local cwd = vim.fn.getcwd()
 local highlight = rvim.highlight
 local icons = rvim.ui.icons.separators
 
-local function neogit() return require('neogit') end
+local neogit = rvim.reqidx('neogit')
 
 return {
   {
@@ -10,10 +10,10 @@ return {
     cmd = 'Neogit',
     dependencies = { 'nvim-lua/plenary.nvim' },
     keys = {
-      { '<localleader>gs', function() neogit().open() end, desc = 'open status buffer' },
-      { '<localleader>gc', function() neogit().open({ 'commit' }) end, desc = 'open commit buffer' },
-      { '<localleader>gl', function() neogit().popups.pull.create() end, desc = 'open pull popup' },
-      { '<localleader>gp', function() neogit().popups.push.create() end, desc = 'open push popup' },
+      { '<localleader>gs', function() neogit.open() end, desc = 'open status buffer' },
+      { '<localleader>gc', function() neogit.open({ 'commit' }) end, desc = 'open commit buffer' },
+      { '<localleader>gl', function() neogit.popups.pull.create() end, desc = 'open pull popup' },
+      { '<localleader>gp', function() neogit.popups.push.create() end, desc = 'open push popup' },
     },
     opts = {
       disable_signs = false,

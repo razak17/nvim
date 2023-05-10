@@ -419,6 +419,19 @@ function rvim.p_table(map)
   })
 end
 
+--- source: https://github.com/tjdevries/lazy-require.nvim
+
+--- Require on index.
+---
+--- Will only require the module after the first index of a module.
+--- Only works for modules that export a table.
+function rvim.reqidx(require_path)
+  return setmetatable({}, {
+    __index = function(_, key) return require(require_path)[key] end,
+    __newindex = function(_, key, value) require(require_path)[key] = value end,
+  })
+end
+
 ---check if a certain feature/version/commit exists in nvim
 ---@param feature string
 ---@return boolean
