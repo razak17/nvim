@@ -48,6 +48,9 @@ local servers = {
       end,
     },
     settings = {
+      ['js/ts'] = {
+        implicitProjectConfig = { checkJs = true },
+      },
       typescript = {
         inlayHints = {
           includeInlayParameterNameHints = 'all',
@@ -148,7 +151,7 @@ local servers = {
 ---@return table<string, any>?
 return function(name)
   local config = servers[name]
-  if not config then return false end
+  if not config then return nil end
   if type(config) == 'function' then config = config() end
   local ok, cmp_nvim_lsp = rvim.pcall(require, 'cmp_nvim_lsp')
   if ok then config.capabilities = cmp_nvim_lsp.default_capabilities() end
