@@ -7,19 +7,6 @@ local function client_active(name)
   return rvim.find_first(clients, function(client) return client.name == name end)
 end
 
--- check if the manager autocomd has already been configured since some servers can take a while to initialize
--- this helps guarding against a data-race condition where a server can get configured twice
--- which seems to occur only when attaching to single-files
-local function client_configured(server_name, ft)
-  ft = ft or vim.bo.ft
-  local active_autocmds = vim.api.nvim_get_autocmds({ event = 'FileType', pattern = ft })
-  for _, result in ipairs(active_autocmds) do
-    print('DEBUGPRINT[2]: manager.lua:17: result=' .. vim.inspect(result.desc))
-    if result.desc ~= nil and result.desc:match(fmt('server %s ', server_name)) then return true end
-  end
-  return false
-end
-
 local function resolve_mason_config(server_name)
   local found, mason_config = rvim.pcall(require, fmt('mason-lspconfig.server_configurations.%s', server_name))
   if not found then return {} end
@@ -71,7 +58,7 @@ end
 function M.setup(server_name)
   if not rvim.plugins.enable then return end
   vim.validate({ name = { server_name, 'string' } })
-  if client_active(server_name) or client_configured(server_name) then return end
+  if client_active(server_name) then return end
   local config = resolve_config(server_name)
   launch_server(server_name, config)
 end
