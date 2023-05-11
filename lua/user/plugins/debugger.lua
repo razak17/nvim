@@ -1,4 +1,4 @@
-local mason_path = vim.fn.stdpath('data') .. 'mason'
+local mason_path = vim.fn.stdpath('data') .. '/mason'
 
 rvim.debugger = { layout = { ft = { dart = 2 } } }
 
@@ -207,8 +207,8 @@ return {
     ft = { 'typescriptreact', 'typescript', 'javascript', 'javascriptreact' },
     opts = {
       node_path = 'node',
-      debugger_path = mason_path .. '/packages/js-debug-adapter',
-      adapters = { 'pwa-node', 'pwa-chrome', 'pwa-msedge', 'node-terminal', 'pwa-extensionHost' },
+      debugger_path = join_paths(mason_path, 'packages', 'js-debug-adapter'),
+      adapters = { 'chrome', 'pwa-node', 'pwa-chrome', 'node-terminal', 'pwa-extensionHost' },
     },
     config = function(_, opts)
       require('dap-vscode-js').setup(opts)
