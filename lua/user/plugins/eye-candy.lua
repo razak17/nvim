@@ -26,7 +26,7 @@ return {
   },
   {
     'lukas-reineke/indent-blankline.nvim',
-    event = 'UIEnter',
+    event = 'BufRead',
     opts = {
       char = separators.left_thin_block,
       show_foldtext = false,
