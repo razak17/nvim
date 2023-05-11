@@ -1,5 +1,5 @@
 return {
-  { 'razak17/slides.nvim', lazy = false },
+  { 'razak17/slides.nvim', ft = 'slide' },
   {
     'gbprod/yanky.nvim',
     keys = {
