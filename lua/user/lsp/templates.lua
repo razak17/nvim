@@ -3,9 +3,9 @@ local M = {}
 local uv, fmt = vim.loop, string.format
 local falsy, lsp_config_file = rvim.falsy, rvim.lsp.config_file
 
-local function write_file(filename, content)
+local function write(file, content)
   local data = type(content) == 'string' and content or vim.inspect(content)
-  uv.fs_open(filename, 'a', 438, function(open_err, fd)
+  uv.fs_open(file, 'a', 438, function(open_err, fd)
     assert(not open_err, open_err)
     if not fd then return end
     uv.fs_write(fd, data, -1, function(write_err)
@@ -39,25 +39,26 @@ local function generate(server_names)
   return servers_config
 end
 
+local function write_file(filename, data)
+  vim.defer_fn(function() write(filename, data) end, 100)
+end
+
 ---Generates lsp setup file based on a list of server_names
 ---The file is generated to a runtimepath: "~/.config/nvim/after/plugin/lspsetup.lua"
 function M.generate_config_file(server_names)
   server_names = server_names or get_supported_servers()
   local servers_config = generate(server_names)
   if falsy(server_names) or falsy(servers_config) then
-    vim.notify('No servers found', 'error', { title = 'Lsp' })
+    vim.notify('No servers found', vim.log.levels.ERROR, { title = 'Lsp' })
     return
   end
   write_file(
     lsp_config_file,
-    fmt(
-      '%s\n',
-      "if not rvim or vim.env.RVIM_LSP_ENABLED == '0' or vim.env.RVIM_PLUGINS_ENABLED == '0' then return end"
-    )
+    fmt('%s\n', "if not rvim or vim.env.RVIM_LSP_ENABLED == '0' or vim.env.RVIM_PLUGINS_ENABLED == '0' then return end")
   )
-  vim.defer_fn(function() write_file(lsp_config_file, fmt('%s\n%s', '-- stylua: ignore', 'rvim.lspconfig(')) end, 100)
-  vim.defer_fn(function() write_file(lsp_config_file, servers_config) end, 100)
-  vim.defer_fn(function() write_file(lsp_config_file, ')') end, 100)
+  write_file(lsp_config_file, fmt('%s\n%s', '-- stylua: ignore', 'rvim.lspconfig('))
+  write_file(lsp_config_file, servers_config)
+  write_file(lsp_config_file, ')')
   vim.notify('Config file has been generated.\nRestart neovim to start using lsp.', 'info', { title = 'Lsp' })
 end
 
