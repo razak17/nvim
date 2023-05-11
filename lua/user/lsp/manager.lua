@@ -11,9 +11,10 @@ end
 -- this helps guarding against a data-race condition where a server can get configured twice
 -- which seems to occur only when attaching to single-files
 local function client_configured(server_name, ft)
-  ft = ft or vim.bo.filetype
+  ft = ft or vim.bo.ft
   local active_autocmds = vim.api.nvim_get_autocmds({ event = 'FileType', pattern = ft })
   for _, result in ipairs(active_autocmds) do
+    print('DEBUGPRINT[2]: manager.lua:17: result=' .. vim.inspect(result.desc))
     if result.desc ~= nil and result.desc:match(fmt('server %s ', server_name)) then return true end
   end
   return false
@@ -31,13 +32,11 @@ end
 
 ---Resolve the configuration for a server by merging with the default config
 ---@param server_name string
----@vararg any config table [optional]
 ---@return table
-local function resolve_config(server_name, ...)
-  local config = require('user.servers')(server_name) or {}
+local function resolve_config(server_name)
   local mason_config = resolve_mason_config(server_name)
+  local config = require('user.servers')(server_name) or {}
   if config then config = vim.tbl_deep_extend('force', mason_config, config) end
-  config = vim.tbl_deep_extend('force', config, ...)
   return config
 end
 
@@ -69,13 +68,11 @@ end
 
 ---Setup a language server by providing a name
 ---@param server_name string name of the language server
----@param user_config table? when available it will take predence over any default configurations
-function M.setup(server_name, user_config)
+function M.setup(server_name)
   if not rvim.plugins.enable then return end
   vim.validate({ name = { server_name, 'string' } })
-  user_config = user_config or {}
   if client_active(server_name) or client_configured(server_name) then return end
-  local config = resolve_config(server_name, user_config)
+  local config = resolve_config(server_name)
   launch_server(server_name, config)
 end
 
