@@ -112,6 +112,7 @@
   "toggleterm.nvim": { "branch": "main", "commit": "68fdf851c2b7901a7065ff129b77d3483419ddce" },
   "trailblazer.nvim": { "branch": "main", "commit": "674bb6254a376a234d0d243366224122fc064eab" },
   "treesj": { "branch": "main", "commit": "b1e2976c2d7ba922371cc7f3ab08b75136c27231" },
+  "tsc.nvim": { "branch": "main", "commit": "502f44da1f6c6248c0642c373f72b874c3a60e47" },
   "twoslash-queries.nvim": { "branch": "main", "commit": "f2122d8fa34cf8316783d0828f6aa69f1c5ba87f" },
   "undotree": { "branch": "master", "commit": "485f01efde4e22cb1ce547b9e8c9238f36566f21" },
   "vim-cool": { "branch": "master", "commit": "80536b9f2e23292708a64f2e7bcf5e596f9faf24" },

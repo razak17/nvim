@@ -8,6 +8,7 @@ return {
   'simrat39/rust-tools.nvim',
   'yioneko/nvim-vtsls',
 
+  { 'dmmulroy/tsc.nvim', cmd = 'TSC', config = true, ft = { 'typescript', 'typescriptreact' } },
   {
     'razak17/lspkind.nvim',
     config = function() require('lspkind').init({ preset = 'codicons' }) end,
