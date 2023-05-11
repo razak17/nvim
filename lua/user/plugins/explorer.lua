@@ -78,6 +78,12 @@ return {
           },
         },
         default_component_configs = {
+          indent = {
+            with_markers = false,
+            with_expanders = true,
+            expander_collapsed = icons.misc.triangle_short_down,
+            expander_expanded = icons.misc.triangle_short_right,
+          },
           icon = {
             folder_empty = codicons.documents.open_folder,
             default = codicons.documents.default_folder,
