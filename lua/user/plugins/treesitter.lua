@@ -48,7 +48,7 @@ return {
         matchup = { enable = true, disable = { 'c', 'python' } },
         autotag = { enable = true },
         rainbow = {
-          enable = true,
+          enable = false,
           disable = { 'tsx', 'jsx', 'html', 'lua' },
           query = {
             'rainbow-parens',
