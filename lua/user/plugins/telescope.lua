@@ -71,7 +71,7 @@ local function frecency() extensions('frecency').frecency(dropdown(rvim.telescop
 local function luasnips() extensions('luasnip').luasnip(dropdown()) end
 local function notifications() extensions('notify').notify(dropdown()) end
 local function undo() extensions('undo').undo() end
-local function projects() extensions('projects').projects({}) end
+local function projects() extensions('projects').projects() end
 
 local function builtin() return require('telescope.builtin') end
 

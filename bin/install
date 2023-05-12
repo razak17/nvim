@@ -27,10 +27,7 @@ moveoldrvim() {
 createDirs() {
 	mkdir -p "$HOME/.dots"
 	mkdir -p "$HOME/.cache/rvim"
-	mkdir -p "$HOME/.cache/rvim/shada"
-	mkdir -p "$HOME/.cache/rvim/session"
 	mkdir -p "$HOME/.cache/rvim/undodir"
-	mkdir -p "$HOME/.cache/rvim/telescope"
 	mkdir -p "$HOME/.local/share/rvim"
 	mkdir -p "$HOME/.local/share/rvim/site"
 	mkdir -p "$HOME/.local/share/rvim/site/spell"
