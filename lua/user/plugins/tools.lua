@@ -70,6 +70,7 @@ return {
       })
       require('lab').setup()
     end,
+    dependencies = { 'nvim-lua/plenary.nvim' },
   },
   {
     'razak17/package-info.nvim',

@@ -10,7 +10,6 @@ local function cancel() neotest().run.stop({ interactive = true }) end
 
 return {
   'nvim-neotest/neotest',
-  event = { 'BufRead', 'BufNewFile' },
   keys = {
     { '<leader>ts', toggle_summary, desc = 'neotest: toggle summary' },
     { '<leader>to', open, desc = 'neotest: output' },

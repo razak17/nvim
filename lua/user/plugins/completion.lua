@@ -3,6 +3,8 @@ local ui, fold = rvim.ui, rvim.fold
 local border, lsp_hls, ellipsis = ui.current.border, ui.lsp.highlights, ui.icons.misc.ellipsis
 
 return {
+  { 'f3fora/cmp-spell', ft = { 'gitcommit', 'NeogitCommitMessage', 'markdown', 'norg', 'org' } },
+  { 'rcarriga/cmp-dap', ft = { 'dap-repl', 'dapui_watches' } },
   {
     'hrsh7th/nvim-cmp',
     event = 'InsertEnter',
@@ -231,9 +233,7 @@ return {
       'hrsh7th/cmp-buffer',
       'hrsh7th/cmp-emoji',
       'lukas-reineke/cmp-rg',
-      { 'rcarriga/cmp-dap', ft = { 'dap-repl', 'dapui_watches' } },
       { 'amarakon/nvim-cmp-buffer-lines', ft = { 'c', 'cpp' } },
-      { 'f3fora/cmp-spell', ft = { 'gitcommit', 'NeogitCommitMessage', 'markdown', 'norg', 'org' } },
       {
         'uga-rosa/cmp-dictionary',
         enabled = false,

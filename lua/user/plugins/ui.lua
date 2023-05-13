@@ -31,15 +31,13 @@ return {
   {
     'stevearc/dressing.nvim',
     event = 'BufRead',
-    config = function()
-      require('dressing').setup({
-        input = { insert_only = false, border = border },
-        select = {
-          telescope = rvim.telescope.adaptive_dropdown(),
-          get_config = function() return { backend = 'telescope', telescope = rvim.telescope.cursor() } end,
-        },
-      })
-    end,
+    opts = {
+      input = { insert_only = false, border = border },
+      select = {
+        telescope = rvim.telescope.adaptive_dropdown(),
+        get_config = function() return { backend = 'telescope', telescope = rvim.telescope.cursor() } end,
+      },
+    },
   },
   {
     'folke/todo-comments.nvim',
