@@ -23,7 +23,7 @@ end
 local function resolve_config(server_name)
   local mason_config = resolve_mason_config(server_name)
   local config = require('user.servers')(server_name) or {}
-  if config then config = vim.tbl_deep_extend('force', mason_config, config) end
+  config = vim.tbl_deep_extend('force', mason_config, config)
   return config
 end
 
@@ -34,7 +34,7 @@ local function buf_try_add(server_name, bufnr)
 end
 
 local function launch_server(server, config)
-  pcall(function()
+  rvim.pcall(function()
     local cmd = config.cmd
       or (function()
         local lspconfig = require(fmt('lspconfig.server_configurations.%s', server)).default_config
@@ -56,7 +56,7 @@ end
 ---Setup a language server by providing a name
 ---@param server_name string name of the language server
 function M.setup(server_name)
-  if not rvim.plugins.enable then return end
+  if vim.env.RVIM_PLUGINS_ENABLED == '0' then return end
   vim.validate({ name = { server_name, 'string' } })
   if client_active(server_name) then return end
   local config = resolve_config(server_name)

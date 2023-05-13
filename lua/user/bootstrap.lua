@@ -29,20 +29,25 @@ require('user.ui')
 -- Plugins
 ----------------------------------------------------------------------------------------------------
 local lazy_path = join_paths(data, 'lazy', 'lazy.nvim')
+local plugins_enabled = vim.env.RVIM_PLUGINS_ENABLED ~= '0'
 if not vim.loop.fs_stat(lazy_path) then
-    -- stylua: ignore
-    vim.fn.system({
-      'git', 'clone', '--filter=blob:none', '--single-branch', 'https://github.com/folke/lazy.nvim.git', lazy_path,
-    })
+  vim.fn.system({
+    'git',
+    'clone',
+    '--filter=blob:none',
+    '--single-branch',
+    'https://github.com/folke/lazy.nvim.git',
+    lazy_path,
+  })
 end
 vim.opt.rtp:prepend(lazy_path)
 -- If opening from inside neovim terminal then do not load other plugins
 if env.NVIM then return require('lazy').setup({ { 'willothy/flatten.nvim', config = true } }) end
 local plugins
-if vim.env.RVIM_PLUGINS_ENABLED == '0' then
-  plugins = {}
-else
+if plugins_enabled then
   plugins = 'user.plugins'
+else
+  plugins = {}
 end
 require('lazy').setup(plugins, {
   defaults = { lazy = true },
@@ -59,11 +64,11 @@ require('lazy').setup(plugins, {
     rtp = {
       paths = { join_paths(data, 'site'), join_paths(data, 'site', 'after') },
         -- stylua: ignore
-        disabled_plugins = {
+        disabled_plugins = plugins_enabled and {
           '2html_plugin', 'gzip', 'matchit', 'rrhelper', 'netrw', 'netrwPlugin', 'netrwSettings',
           'netrwFileHandlers', 'zip', 'zipPlugin', 'tar', 'tarPlugin', 'getscript', 'getscriptPlugin',
           'vimball', 'vimballPlugin', 'logipat', 'spellfile_plugin',
-        },
+        } or {},
     },
   },
 })
@@ -71,5 +76,8 @@ map('n', '<localleader>L', '<cmd>Lazy<CR>', { desc = 'toggle lazy ui' })
 ----------------------------------------------------------------------------------------------------
 -- Color Scheme
 ----------------------------------------------------------------------------------------------------
-if not rvim.plugins.enable then return end
-rvim.pcall('theme failed to load because', vim.cmd.colorscheme, 'onedark')
+if plugins_enabled then
+  rvim.pcall('theme failed to load because', vim.cmd.colorscheme, 'onedark')
+else
+  rvim.pcall('theme failed to load because', vim.cmd.colorscheme, 'habamax')
+end
