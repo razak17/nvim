@@ -6,6 +6,8 @@
 --  |__|    \___/   |__|__|_|  /
 --                           \/
 ----------------------------------------------------------------------------------------------------
+if vim.g.vscode then return end -- if using vscode
+
 local g, fn, env = vim.g, vim.fn, vim.env
 
 if vim.loader then vim.loader.enable() end
