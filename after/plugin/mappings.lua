@@ -178,8 +178,8 @@ nnoremap('<c-s>', '<Cmd>silent! write ++p<CR>')
 nnoremap('H', '<cmd>bprevious<CR>', { desc = 'previous buffer' })
 nnoremap('L', '<cmd>bnext<CR>', { desc = 'next buffer' })
 ----------------------------------------------------------------------------------------------------
-nnoremap('<C-n>', ':Ex<CR>', { desc = 'explorer' })
-nnoremap('<leader>c', ':bd<CR>', { desc = 'delete buffer' })
+-- nnoremap('<C-n>', ':Ex<CR>', { desc = 'explorer' })
+-- nnoremap('<leader>c', ':bd<CR>', { desc = 'delete buffer' })
 nnoremap('<leader>x', ':q<CR>', { desc = 'quit' })
 nnoremap('<leader>q', ':q<CR>', { desc = 'quit' })
 ----------------------------------------------------------------------------------------------------
