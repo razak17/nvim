@@ -1,5 +1,3 @@
-if not rvim then return end
-
 local bo, fmt = vim.bo, string.format
 
 bo.tabstop = 4
@@ -7,10 +5,12 @@ bo.shiftwidth = 4
 bo.expandtab = false
 vim.opt_local.iskeyword:append('-')
 
-if vim.env.RVIM_LSP_ENABLED == '0' or vim.env.RVIM_PLUGINS_ENABLED == '0' then return end
+if not rvim or vim.env.RVIM_LSP_ENABLED == '0' or vim.env.RVIM_PLUGINS_ENABLED == '0' then return end
 
 require('which-key').register({ ['<localleader>g'] = { name = 'Gopher' } })
+
 local function with_desc(desc) return { buffer = 0, desc = fmt('gopher: %s', desc) } end
+
 map('n', '<localleader>gb', '<Cmd>GoBuild<CR>', with_desc('build'))
 map('n', '<localleader>gfs', '<Cmd>GoFillStruct<CR>', with_desc('fill struct'))
 map('n', '<localleader>gfp', '<Cmd>GoFixPlurals<CR>', with_desc('fix plurals'))

@@ -1,7 +1,7 @@
 if not rvim then return end
 
 local settings, highlight = rvim.filetype_settings, rvim.highlight
-local cmd, fn, api, opt_l, fmt = vim.cmd, vim.fn, vim.api, vim.opt_local, string.format
+local cmd, api, opt_l = vim.cmd, vim.api, vim.opt_local
 
 local function add_quotes_after_equals()
   local cursor = vim.api.nvim_win_get_cursor(0)
@@ -43,31 +43,6 @@ settings({
       iskeyword = vim.opt.iskeyword:append('$,@-@'),
     },
   },
-  help = {
-    opt = {
-      list = false,
-      spell = true,
-      textwidth = 78,
-    },
-    plugins = {
-      ['virt-column'] = function(col)
-        if not vim.bo.readonly then col.setup_buffer({ virtcolumn = '+1' }) end
-      end,
-    },
-    function(args)
-      local opts = { buffer = args.buf }
-      -- if this a vim help file create mappings to make navigation easier otherwise enable preferred editing settings
-      if vim.startswith(fn.expand('%'), vim.env.VIMRUNTIME) or vim.bo.readonly then
-        opt_l.spell = false
-        api.nvim_create_autocmd('BufWinEnter', { buffer = 0, command = 'wincmd L | vertical resize 80' })
-        -- https://vim.fandom.com/wiki/Learn_to_use_help
-        map('n', '<CR>', '<C-]>', opts)
-        map('n', '<BS>', '<C-T>', opts)
-      else
-        map('n', '<leader>ml', 'maGovim:tw=78:ts=8:noet:ft=help:norl:<esc>`a', opts)
-      end
-    end,
-  },
   html = {
     bo = {
       tabstop = 2,
@@ -94,37 +69,6 @@ settings({
   javascript = {
     opt = { spell = true },
   },
-  json = {
-    bo = {
-      autoindent = true,
-      expandtab = true,
-      formatoptions = 'tcq2l',
-      shiftwidth = 2,
-      softtabstop = 2,
-      tabstop = 2,
-    },
-    wo = {
-      conceallevel = 0,
-      foldmethod = 'syntax',
-    },
-    function()
-      map('n', 'o', function()
-        local line = vim.api.nvim_get_current_line()
-        local should_add_comma = string.find(line, '[^,{[]$')
-        if should_add_comma then return 'A,<cr>' end
-        return 'o'
-      end, { buffer = 0, expr = true })
-      if fn.expand('%:t') ~= 'package.json' then return end
-      require('which-key').register({ ['<localleader>'] = { p = { name = 'Package Info' } } })
-      local function with_desc(desc) return { buffer = 0, desc = fmt('package-info: %s', desc) } end
-      local package_info = require('package-info')
-      map('n', '<localleader>pt', package_info.toggle, with_desc('toggle'))
-      map('n', '<localleader>pu', package_info.update, with_desc('update'))
-      map('n', '<localleader>pd', package_info.delete, with_desc('delete'))
-      map('n', '<localleader>pi', package_info.install, with_desc('install new'))
-      map('n', '<localleader>pc', package_info.change_version, with_desc('package-info: change version'))
-    end,
-  },
   jsonc = {
     function()
       local extension = vim.fn.expand('%:e')
@@ -133,31 +77,6 @@ settings({
         vim.bo.softtabstop = 2
         vim.bo.tabstop = 2
       end
-    end,
-  },
-  markdown = {
-    opt = { spell = true },
-    plugins = {
-      cmp = function(cmp)
-        cmp.setup.filetype('markdown', {
-          sources = {
-            -- { name = 'dictionary', group_index = 1 },
-            { name = 'spell', group_index = 1 },
-            { name = 'emoji', group_index = 1 },
-            { name = 'buffer', group_index = 2 },
-          },
-        })
-      end,
-    },
-    mappings = {
-      { 'n', '<localleader>P', '<Plug>MarkdownPreviewToggle', { desc = 'markdown preview', buffer = 0 } },
-    },
-    function()
-      vim.b.formatting_disabled = not vim.startswith(fn.expand('%'), vim.g.projects_dir)
-      cmd.iabbrev(':tup:', '👍')
-      cmd.iabbrev(':tdo:', '👎')
-      cmd.iabbrev(':smi:', '😊')
-      cmd.iabbrev(':sad:', '😔')
     end,
   },
   NeogitCommitMessage = {
@@ -222,40 +141,6 @@ settings({
       -- force quickfix to open beneath all other splits
       cmd.wincmd('J')
       rvim.adjust_split_height(3, 10)
-    end,
-  },
-  slide = {
-    mappings = {
-      { 'n', '<localleader>aa', '<Cmd>SlideAscii term<CR>', { desc = 'slides: ascii term', buffer = 0 } },
-      { 'n', '<localleader>aA', '<Cmd>SlideAscii bigascii12<CR>', { desc = 'slides: ascii bigascii12', buffer = 0 } },
-      { 'n', '<localleader>ab', '<Cmd>SlideAscii bfraktur<CR>', { desc = 'slides: ascii bfraktur', buffer = 0 } },
-      { 'n', '<localleader>ae', '<Cmd>SlideAscii emboss<CR>', { desc = 'slides: ascii emboss', buffer = 0 } },
-      { 'n', '<localleader>aE', '<Cmd>SlideAscii emboss2<CR>', { desc = 'slides: ascii emboss2', buffer = 0 } },
-      { 'n', '<localleader>al', '<Cmd>SlideAscii letter<CR>', { desc = 'slides: ascii letter', buffer = 0 } },
-      { 'n', '<localleader>am', '<Cmd>SlideAscii bigmono12<CR>', { desc = 'slides: ascii bigmono12', buffer = 0 } },
-      { 'n', '<localleader>aw', '<Cmd>SlideAscii wideterm<CR>', { desc = 'slides: ascii wideterm', buffer = 0 } },
-    },
-  },
-  toml = {
-    function()
-      if fn.expand('%:t') ~= 'Cargo.toml' then return end
-      require('which-key').register({ ['<localleader>c'] = { name = 'Crates' } })
-      local function with_desc(desc) return { buffer = 0, desc = fmt('crates: %s', desc) } end
-      local crates = require('crates')
-      map('n', 'K', crates.show_popup, with_desc('hover'))
-      map('n', '<localleader>ct', crates.toggle, with_desc('toggle'))
-      map('n', '<localleader>cu', crates.update_crate, with_desc('update'))
-      map('n', '<localleader>cU', crates.upgrade_crate, with_desc('upgrade'))
-      map('n', '<localleader>ca', crates.update_all_crates, with_desc('update all'))
-      map('n', '<localleader>cA', crates.upgrade_all_crates, with_desc('upgrade all'))
-      map('n', '<localleader>ch', crates.open_homepage, with_desc('open home'))
-      map('n', '<localleader>cr', crates.open_repository, with_desc('open repo'))
-      map('n', '<localleader>cd', crates.open_documentation, with_desc('open doc'))
-      map('n', '<localleader>cp', crates.open_crates_io, with_desc('open crates.io'))
-      map('n', '<localleader>ci', crates.show_popup, with_desc('info'))
-      map('n', '<localleader>cv', crates.show_versions_popup, with_desc('versions'))
-      map('n', '<localleader>cf', crates.show_features_popup, with_desc('features'))
-      map('n', '<localleader>cD', crates.show_dependencies_popup, with_desc('dependencies'))
     end,
   },
   typescript = {

@@ -1,5 +1,3 @@
-if not rvim then return end
-
 local bo, opt = vim.bo, vim.opt_local
 
 bo.tabstop = 4
@@ -7,7 +5,7 @@ bo.softtabstop = 4
 bo.shiftwidth = 4
 opt.spell = true
 
-if vim.env.RVIM_LSP_ENABLED == '0' or vim.env.RVIM_PLUGINS_ENABLED == '0' then return end
+if not rvim or vim.env.RVIM_LSP_ENABLED == '0' or vim.env.RVIM_PLUGINS_ENABLED == '0' then return end
 
 local dap = require('dap')
 local mason_registry = require('mason-registry')

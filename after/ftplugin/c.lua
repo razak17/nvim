@@ -1,3 +1,5 @@
+if not rvim or vim.env.RVIM_LSP_ENABLED == '0' or vim.env.RVIM_PLUGINS_ENABLED == '0' then return end
+
 local mason_registry = require('mason-registry')
 local codelldb_path = mason_registry.get_package('codelldb'):get_install_path() .. '/extension/adapter/codelldb'
 local dap = require('dap')

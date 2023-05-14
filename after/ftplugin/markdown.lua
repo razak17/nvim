@@ -1,0 +1,26 @@
+local cmd = vim.cmd
+
+vim.opt.spell = true
+vim.b.formatting_disabled = not vim.startswith(vim.fn.expand('%'), vim.g.projects_dir)
+
+cmd.iabbrev(':tup:', '👍')
+cmd.iabbrev(':tdo:', '👎')
+cmd.iabbrev(':smi:', '😊')
+cmd.iabbrev(':sad:', '😔')
+
+if not rvim or vim.env.RVIM_LSP_ENABLED == '0' or vim.env.RVIM_PLUGINS_ENABLED == '0' then return end
+
+map('n', '<localleader>P', '<Plug>MarkdownPreviewToggle', { desc = 'markdown preview', buffer = 0 })
+
+rvim.ftplugin_conf({
+  cmp = function(cmp)
+    cmp.setup.filetype('markdown', {
+      sources = {
+        -- { name = 'dictionary', group_index = 1 },
+        { name = 'spell', group_index = 1 },
+        { name = 'emoji', group_index = 1 },
+        { name = 'buffer', group_index = 2 },
+      },
+    })
+  end,
+})
