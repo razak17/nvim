@@ -32,7 +32,12 @@ return {
     config = function()
       local fn, ui = vim.fn, rvim.ui
       local dap = require('dap')
+      local mason_registry = require('mason-registry')
       local ui_ok, dapui = pcall(require, 'dapui')
+
+      local codelldb = mason_registry.get_package('codelldb')
+      local extension_path = codelldb:get_install_path() .. '/extension'
+      local codelldb_path = extension_path .. '/adapter/codelldb'
 
       -- DON'T automatically stop at exceptions
       dap.defaults.fallback.exception_breakpoints = {}
@@ -59,9 +64,9 @@ return {
       })
 
       if not ui_ok then return end
+      dap.listeners.after.event_initialized['dapui_config'] = function() dapui.open(rvim.debugger.layout.ft[vim.bo.ft]) end
       dap.listeners.before.event_exited['dapui_config'] = function() dapui.close() end
       dap.listeners.before.event_terminated['dapui_config'] = function() dapui.close() end
-      dap.listeners.after.event_initialized['dapui_config'] = function() dapui.open(rvim.debugger.layout.ft[vim.bo.ft]) end
 
       -- python
       local python_dir = join_paths(mason_path, 'packages', 'debugpy', 'venv', 'bin', 'python')
@@ -147,23 +152,22 @@ return {
         },
       }
       -- codelldb
+      local codelldb_path = mason_registry.get_package('codelldb'):get_install_path() .. '/extension/adapter/codelldb'
       dap.adapters.codelldb = {
         type = 'server',
         port = '${port}',
         executable = {
-          command = join_paths(mason_path, 'bin', 'codelldb'),
+          command = codelldb_path,
           args = { '--port', '${port}' },
         },
       }
-      for _, language in ipairs({ 'c', 'cpp', 'rust' }) do
+      for _, language in ipairs({ 'c', 'cpp' }) do
         require('dap').configurations[language] = {
           {
             name = 'Launch file',
             type = 'codelldb',
             request = 'launch',
-            program = function()
-              return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/target/debug/', 'file')
-            end,
+            program = function() return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file') end,
             cwd = '${workspaceFolder}',
             stopOnEntry = false,
           },
