@@ -6,9 +6,7 @@ return {
 
   { 'razak17/onedark.nvim', lazy = false, priority = 1000 },
   { 'LunarVim/horizon.nvim', lazy = false, priority = 1000 },
-  { 'fladson/vim-kitty', ft = 'kitty' },
   { 'romainl/vim-cool', event = 'BufReadPre', config = function() vim.g.CoolTotalMatches = 1 end },
-  { 'razak17/tailwind-fold.nvim', ft = { 'html', 'svelte', 'astro', 'vue', 'typescriptreact' } },
   {
     'kevinhwang91/nvim-hlslens',
     event = 'BufReadPre',

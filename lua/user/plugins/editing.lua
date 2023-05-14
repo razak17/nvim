@@ -1,5 +1,4 @@
 return {
-  { 'razak17/slides.nvim', ft = 'slide' },
   {
     'gbprod/yanky.nvim',
     keys = {
@@ -122,12 +121,6 @@ return {
     end,
   },
   {
-    'axelvc/template-string.nvim',
-    dependencies = { 'nvim-treesitter' },
-    ft = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
-    opts = { remove_template_string = true },
-  },
-  {
     'danymat/neogen',
     keys = {
       { '<localleader>lc', function() require('neogen').generate() end, desc = 'neogen: generate doc' },
@@ -188,31 +181,9 @@ return {
     },
   },
   {
-    'echasnovski/mini.pairs',
-    event = 'InsertEnter',
-    config = function() require('mini.pairs').setup() end,
-  },
-  {
     'echasnovski/mini.ai',
     event = 'VeryLazy',
     config = function() require('mini.ai').setup({ mappings = { around_last = '', inside_last = '' } }) end,
-  },
-  {
-    'echasnovski/mini.surround',
-    keys = { { 'ys', desc = 'add surrounding' }, 'ds', { 'yr', desc = 'delete surrounding' } },
-    config = function()
-      require('mini.surround').setup({
-        mappings = {
-          add = 'ys', -- Add surrounding in Normal and Visual modes
-          delete = 'ds', -- Delete surrounding
-          find = 'yf', -- Find surrounding (to the right)
-          find_left = 'yF', -- Find surrounding (to the left)
-          highlight = 'yh', -- Highlight surrounding
-          replace = 'yr', -- Replace surrounding
-          update_n_lines = 'yn', -- Update `n_lines`
-        },
-      })
-    end,
   },
   {
     'echasnovski/mini.comment',

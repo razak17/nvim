@@ -45,15 +45,6 @@ return {
     },
   },
   {
-    'iamcco/markdown-preview.nvim',
-    build = function() fn['mkdp#util#install']() end,
-    ft = 'markdown',
-    config = function()
-      vim.g.mkdp_auto_start = 0
-      vim.g.mkdp_auto_close = 1
-    end,
-  },
-  {
     'razak17/lab.nvim',
     event = { 'BufReadPre', 'BufNewFile' },
     keys = {
@@ -71,45 +62,6 @@ return {
       require('lab').setup()
     end,
     dependencies = { 'nvim-lua/plenary.nvim' },
-  },
-  {
-    'razak17/package-info.nvim',
-    event = 'BufRead package.json',
-    dependencies = { 'MunifTanjim/nui.nvim' },
-    config = function()
-      highlight.plugin('package-info', {
-        theme = {
-          ['onedark'] = {
-            { PackageInfoUpToDateVersion = { link = 'DiagnosticVirtualTextInfo' } },
-            { PackageInfoOutdatedVersion = { link = 'DiagnosticVirtualTextWarn' } },
-          },
-        },
-      })
-      require('package-info').setup({
-        autostart = false,
-        hide_up_to_date = true,
-      })
-    end,
-  },
-  {
-    'Saecki/crates.nvim',
-    event = 'BufRead Cargo.toml',
-    opts = {
-      popup = { autofocus = true, border = border },
-      null_ls = { enabled = true, name = 'crates' },
-    },
-    config = function(_, opts)
-      rvim.augroup('CmpSourceCargo', {
-        event = 'BufRead',
-        pattern = 'Cargo.toml',
-        command = function()
-          require('cmp').setup.buffer({
-            sources = { { name = 'crates', priority = 3, group_index = 1 } },
-          })
-        end,
-      })
-      require('crates').setup(opts)
-    end,
   },
   {
     'NTBBloodbath/rest.nvim',
