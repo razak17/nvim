@@ -73,7 +73,6 @@
   "nvim-cmp-buffer-lines": { "branch": "master", "commit": "2036e6fbb40c770eb82f1940a0ce0b2988f8ef32" },
   "nvim-dap": { "branch": "master", "commit": "6cedcb527e264c8f25e86afa8dae74c6692dee51" },
   "nvim-dap-ui": { "branch": "master", "commit": "4ce7b97dd8f50b4f672948a34bf8f3a56214fdb8" },
-  "nvim-dap-virtual-text": { "branch": "master", "commit": "ab988dbb7d20cdaebf9b3ef7554a89f6895de042" },
   "nvim-dap-vscode-js": { "branch": "main", "commit": "03bd29672d7fab5e515fc8469b7d07cc5994bbf6" },
   "nvim-hlslens": { "branch": "main", "commit": "5e3e9088fba7508cee3612ee50b14dfdd3ab19af" },
   "nvim-lspconfig": { "branch": "master", "commit": "df58d91c9351a9dc5be6cf8d54f49ab0d9a64e73" },

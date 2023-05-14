@@ -205,15 +205,6 @@ return {
           },
         },
       },
-      {
-        'theHamsta/nvim-dap-virtual-text',
-        opts = {
-          enabled = true,
-          enabled_commands = true,
-          highlight_changed_variables = true,
-          all_frames = true,
-        },
-      },
     },
   },
   {
