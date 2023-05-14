@@ -1,4 +1,5 @@
 if not rvim then return end
+
 local settings, highlight = rvim.filetype_settings, rvim.highlight
 local cmd, fn, api, opt_l, fmt = vim.cmd, vim.fn, vim.api, vim.opt_local, string.format
 
@@ -35,22 +36,6 @@ settings({
   },
   chatgpt = {
     function() vim.treesitter.language.register('markdown', 'chatgpt') end,
-  },
-  go = {
-    bo = {
-      tabstop = 4,
-      shiftwidth = 4,
-      expandtab = false,
-      iskeyword = vim.opt.iskeyword:append('-'),
-    },
-    function()
-      require('which-key').register({ ['<localleader>g'] = { name = 'Gopher' } })
-      local function with_desc(desc) return { buffer = 0, desc = fmt('gopher: %s', desc) } end
-      map('n', '<localleader>gb', '<Cmd>GoBuild<CR>', with_desc('build'))
-      map('n', '<localleader>gfs', '<Cmd>GoFillStruct<CR>', with_desc('fill struct'))
-      map('n', '<localleader>gfp', '<Cmd>GoFixPlurals<CR>', with_desc('fix plurals'))
-      map('n', '<localleader>gie', '<Cmd>GoIfErr<CR>', with_desc('if err'))
-    end,
   },
   graphql = {
     opt = {
@@ -150,15 +135,6 @@ settings({
       end
     end,
   },
-  lua = {
-    bo = { textwidth = 120 },
-    opt = {
-      spell = true,
-      spelllang = { 'en_gb', 'programming' },
-      spellfile = vim.opt.spellfile:prepend(join_paths(vim.fn.stdpath('config'), 'spell', 'lua.utf-8.add')),
-      iskeyword = vim.opt.iskeyword:append('-'),
-    },
-  },
   markdown = {
     opt = { spell = true },
     plugins = {
@@ -227,14 +203,6 @@ settings({
       { 'n', 'h', '<CR>' },
       { 'n', 'o', '<CR>' },
     },
-  },
-  python = {
-    bo = {
-      tabstop = 4,
-      softtabstop = 4,
-      shiftwidth = 4,
-    },
-    opt = { spell = true },
   },
   qf = {
     opt = {

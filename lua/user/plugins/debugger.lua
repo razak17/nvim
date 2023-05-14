@@ -32,8 +32,6 @@ return {
     config = function()
       local fn, ui = vim.fn, rvim.ui
       local dap = require('dap')
-      local mason_registry = require('mason-registry')
-      local ui_ok, dapui = pcall(require, 'dapui')
 
       -- DON'T automatically stop at exceptions
       dap.defaults.fallback.exception_breakpoints = {}
@@ -59,126 +57,7 @@ return {
         numhl = '',
       })
 
-      -- python
-      local debugpy_path = mason_registry.get_package('debugpy'):get_install_path() .. '/venv/bin/python'
-      dap.adapters.python = function(cb, config)
-        if config.request == 'attach' then
-          local port = (config.connect or config).port
-          local host = (config.connect or config).host or '127.0.0.1'
-          cb({
-            type = 'server',
-            port = assert(port, '`connect.port` is required for a python `attach` configuration'),
-            host = host,
-            options = { source_filetype = 'python' },
-          })
-        else
-          cb({
-            type = 'executable',
-            command = debugpy_path,
-            args = { '-m', 'debugpy.adapter' },
-            options = { source_filetype = 'python' },
-          })
-        end
-      end
-      dap.configurations.python = {
-        {
-          type = 'python',
-          request = 'launch',
-          name = 'Launch file',
-          program = '${file}',
-          pythonPath = function()
-            local cwd = fn.getcwd()
-            if fn.executable(join_paths(cwd, 'venv', 'bin', 'python')) == 1 then
-              return join_paths(cwd, '/venv', 'bin', 'python')
-            end
-            if fn.executable(join_paths(cwd, '.venv', 'bin', 'python')) == 1 then
-              return join_paths(cwd, '.venv', 'bin', 'python')
-            end
-            return debugpy_path
-          end,
-        },
-      }
-      -- go
-      dap.adapters.go = {
-        type = 'server',
-        port = '${port}',
-        executable = {
-          command = join_paths(mason_path, 'bin', 'dlv'),
-          args = { 'dap', '-l', '127.0.0.1:${port}' },
-        },
-      }
-      dap.configurations.go = {
-        {
-          type = 'go', -- Which adapter to use
-          name = 'Debug', -- Human readable name
-          request = 'launch', -- Whether to "launch" or "attach" to program
-          program = '${file}', -- The buffer you are focused on when running nvim-dap
-        },
-        {
-          type = 'go',
-          name = 'Debug test (go.mod)',
-          request = 'launch',
-          mode = 'test',
-          program = './${relativeFileDirname}',
-        },
-        {
-          type = 'go',
-          name = 'Attach (Pick Process)',
-          mode = 'local',
-          request = 'attach',
-          processId = require('dap.utils').pick_process,
-        },
-        {
-          type = 'go',
-          name = 'Attach (127.0.0.1:9080)',
-          mode = 'remote',
-          request = 'attach',
-          port = '9080',
-        },
-      }
-      -- lua
-      dap.adapters.nlua = function(callback, config)
-        callback({ type = 'server', host = config.host or '127.0.0.1', port = config.port or 8086 })
-      end
-      dap.configurations.lua = {
-        {
-          type = 'nlua',
-          request = 'attach',
-          name = 'Attach to running Neovim instance',
-          host = function()
-            local value = vim.fn.input('Host [127.0.0.1]: ')
-            return value ~= '' and value or '127.0.0.1'
-          end,
-          port = function()
-            local val = tonumber(vim.fn.input('Port: '))
-            assert(val, 'Please provide a port number')
-            return val
-          end,
-        },
-      }
-      -- codelldb
-      local codelldb_path = mason_registry.get_package('codelldb'):get_install_path() .. '/extension/adapter/codelldb'
-      dap.adapters.codelldb = {
-        type = 'server',
-        port = '${port}',
-        executable = {
-          command = codelldb_path,
-          args = { '--port', '${port}' },
-        },
-      }
-      for _, language in ipairs({ 'c', 'cpp' }) do
-        require('dap').configurations[language] = {
-          {
-            name = 'Launch file',
-            type = 'codelldb',
-            request = 'launch',
-            program = function() return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file') end,
-            cwd = '${workspaceFolder}',
-            stopOnEntry = false,
-          },
-        }
-      end
-
+      local ui_ok, dapui = pcall(require, 'dapui')
       if not ui_ok then return end
       dap.listeners.after.event_initialized['dapui_config'] = function() dapui.open(rvim.debugger.layout.ft[vim.bo.ft]) end
       dap.listeners.before.event_exited['dapui_config'] = function() dapui.close() end
