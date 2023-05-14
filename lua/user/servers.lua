@@ -115,13 +115,20 @@ local servers = {
     end,
   },
   pyright = {
-    python = {
-      analysis = {
-        typeCheckingMode = 'off',
-        autoSearchPaths = true,
-        diagnosticMode = 'workspace',
-        useLibraryCodeForTypes = true,
-        diagnosticSeverityOverrides = { reportUndefinedVariable = 'none' },
+    settings = {
+      pyright = {
+        disableLanguageServices = false,
+        disableOrganizeImports = false,
+      },
+      python = {
+        analysis = {
+          autoImportCompletions = true,
+          typeCheckingMode = 'basic',
+          autoSearchPaths = true,
+          diagnosticMode = 'workspace',
+          useLibraryCodeForTypes = true,
+          diagnosticSeverityOverrides = { reportUndefinedVariable = 'none' },
+        },
       },
     },
   },
