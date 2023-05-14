@@ -35,10 +35,6 @@ return {
       local mason_registry = require('mason-registry')
       local ui_ok, dapui = pcall(require, 'dapui')
 
-      local codelldb = mason_registry.get_package('codelldb')
-      local extension_path = codelldb:get_install_path() .. '/extension'
-      local codelldb_path = extension_path .. '/adapter/codelldb'
-
       -- DON'T automatically stop at exceptions
       dap.defaults.fallback.exception_breakpoints = {}
 
@@ -63,18 +59,27 @@ return {
         numhl = '',
       })
 
-      if not ui_ok then return end
-      dap.listeners.after.event_initialized['dapui_config'] = function() dapui.open(rvim.debugger.layout.ft[vim.bo.ft]) end
-      dap.listeners.before.event_exited['dapui_config'] = function() dapui.close() end
-      dap.listeners.before.event_terminated['dapui_config'] = function() dapui.close() end
-
       -- python
-      local python_dir = join_paths(mason_path, 'packages', 'debugpy', 'venv', 'bin', 'python')
-      dap.adapters.python = {
-        type = 'executable',
-        command = python_dir,
-        args = { '-m', 'debugpy.adapter' },
-      }
+      local debugpy_path = mason_registry.get_package('debugpy'):get_install_path() .. '/venv/bin/python'
+      dap.adapters.python = function(cb, config)
+        if config.request == 'attach' then
+          local port = (config.connect or config).port
+          local host = (config.connect or config).host or '127.0.0.1'
+          cb({
+            type = 'server',
+            port = assert(port, '`connect.port` is required for a python `attach` configuration'),
+            host = host,
+            options = { source_filetype = 'python' },
+          })
+        else
+          cb({
+            type = 'executable',
+            command = debugpy_path,
+            args = { '-m', 'debugpy.adapter' },
+            options = { source_filetype = 'python' },
+          })
+        end
+      end
       dap.configurations.python = {
         {
           type = 'python',
@@ -83,13 +88,13 @@ return {
           program = '${file}',
           pythonPath = function()
             local cwd = fn.getcwd()
-            if fn.executable(join_paths(cwd, 'venv', 'bin', 'python')) then
-              return join_paths(cwd .. 'venv', 'bin', 'python')
+            if fn.executable(join_paths(cwd, 'venv', 'bin', 'python')) == 1 then
+              return join_paths(cwd, '/venv', 'bin', 'python')
             end
-            if fn.executable(join_paths(cwd, '.venv', 'bin', 'python')) then
-              return join_paths(cwd, '.venv', 'biv', 'python')
+            if fn.executable(join_paths(cwd, '.venv', 'bin', 'python')) == 1 then
+              return join_paths(cwd, '.venv', 'bin', 'python')
             end
-            return python_dir
+            return debugpy_path
           end,
         },
       }
@@ -173,6 +178,11 @@ return {
           },
         }
       end
+
+      if not ui_ok then return end
+      dap.listeners.after.event_initialized['dapui_config'] = function() dapui.open(rvim.debugger.layout.ft[vim.bo.ft]) end
+      dap.listeners.before.event_exited['dapui_config'] = function() dapui.close() end
+      dap.listeners.before.event_terminated['dapui_config'] = function() dapui.close() end
     end,
     dependencies = {
       {
