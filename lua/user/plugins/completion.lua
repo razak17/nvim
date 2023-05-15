@@ -187,7 +187,12 @@ return {
             group_index = 2,
           },
           { name = 'norg', priority = 3, group_index = 2 },
-          -- { name = 'dictionary' },
+          -- {
+          --   name = 'dictionary',
+          --   priority = 3,
+          --   max_item_count = 10,
+          --   group_index = 2,
+          -- },
         },
       })
 
@@ -236,14 +241,14 @@ return {
       { 'amarakon/nvim-cmp-buffer-lines', ft = { 'c', 'cpp' } },
       {
         'uga-rosa/cmp-dictionary',
-        enabled = false,
         config = function()
-          -- NOTE: run :CmpDictionaryUpdate to update dictionary
-          require('cmp_dictionary').setup({
-            async = false,
-            dic = {
-              -- Refer to install script
-              ['*'] = join_paths(vim.fn.stdpath('data'), 'site', 'spell', 'dictionary.txt'),
+          local en_dict = join_paths(vim.fn.stdpath('data'), 'site', 'spell', 'en.dict')
+          require('cmp_dictionary').switcher({
+            filetype = {
+              markdown = en_dict,
+              NeogitCommitMessage = en_dict,
+              norg = en_dict,
+              slide = en_dict,
             },
           })
         end,

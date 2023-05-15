@@ -11,3 +11,16 @@ map('n', '<localleader>aE', '<Cmd>SlideAscii emboss2<CR>', with_desc('ascii embo
 map('n', '<localleader>al', '<Cmd>SlideAscii letter<CR>', with_desc('ascii letter'))
 map('n', '<localleader>am', '<Cmd>SlideAscii bigmono12<CR>', with_desc('ascii bigmono12'))
 map('n', '<localleader>aw', '<Cmd>SlideAscii wideterm<CR>', with_desc('ascii wideterm'))
+
+rvim.ftplugin_conf({
+  cmp = function(cmp)
+    cmp.setup.filetype('slide', {
+      sources = {
+        { name = 'dictionary', max_item_count = 10, group_index = 1 },
+        { name = 'spell', group_index = 1 },
+        { name = 'emoji', group_index = 1 },
+        { name = 'buffer', group_index = 2 },
+      },
+    })
+  end,
+})
