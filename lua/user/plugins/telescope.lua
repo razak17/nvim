@@ -168,8 +168,8 @@ return {
           },
         -- stylua: ignore
         file_ignore_patterns = {
-          '%.jpg', '%.jpeg', '%.png', '%.otf', '%.ttf', '%.DS_Store', '^.git/', 'node%_modules/.*',
-          '^dist/', '^build/',  '^site-packages/', '%.yarn/.*',
+          '%.jpg', '%.jpeg', '%.png', '%.otf', '%.ttf', '%.DS_Store', '%.git/', 'node%_modules/',
+          'dist/', 'build/',  'site-packages/', '%.yarn/','__pycache__/'
         },
           path_display = { 'truncate' },
           file_sorter = sorters.get_fzy_sorter,
@@ -220,7 +220,7 @@ return {
           }),
           live_grep = themes.get_ivy({
             borderchars = { preview = border.ivy },
-            file_ignore_patterns = { '.git/', '%.svg', '%.lock', '%-lock.yaml', 'node_modules', '%-lock.json' },
+            file_ignore_patterns = { '%.svg', '%.lock', '%-lock.yaml', '%-lock.json' },
             max_results = 2000,
             additional_args = { '--trim' },
           }),
