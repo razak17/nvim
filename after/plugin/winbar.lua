@@ -107,7 +107,7 @@ function rvim.ui.winbar.render(current_win)
   local wn = rvim.map(function(part, index)
     local priority = (#parts - (index - 1)) * 2
     local is_last = index == #parts
-    state[priority] = table.concat(vim.list_slice(parts, 1, index), '/')
+    state[priority] = table.concat(vim.list_slice(parts, 1, tonumber(index)), '/')
     return {
       { { part, 'Winbar' }, not is_last and { ' ' .. dir_separator, hls.separator } or nil },
       id = priority,
@@ -142,7 +142,7 @@ local function set_winbar()
 end
 
 rvim.augroup('AttachWinbar', {
-  event = { 'TabEnter', 'BufEnter', 'WinClosed' },
+  event = { 'LspAttach', 'BufEnter', 'WinClosed' },
   desc = 'Toggle winbar',
   command = set_winbar,
 })
