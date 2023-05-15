@@ -141,7 +141,7 @@ return {
   -- Utilities {{{1
   ----------------------------------------------------------------------------------------------------
   {
-    'AckslD/swenv.nvim',
+    'razak17/swenv.nvim',
     keys = {
       { '<localleader>le', '<Cmd>lua require("swenv.api").pick_venv()<CR>', desc = 'swenv: pick env' },
     },
