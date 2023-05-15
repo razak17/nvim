@@ -47,6 +47,18 @@ return {
         indent = { enable = { 'javascriptreact' } },
         matchup = { enable = true, disable = { 'c', 'python' } },
         autotag = { enable = true },
+        rainbow = {
+          enable = true,
+          query = {
+            'rainbow-parens',
+            html = 'rainbow-tags',
+            svelte = 'rainbow-tags',
+          },
+          strategy = {
+            require('ts-rainbow.strategy.global'),
+            dart = require('ts-rainbow.strategy.global'),
+          },
+        },
         query_linter = {
           enable = true,
           use_virtual_text = false,
@@ -62,7 +74,10 @@ return {
 
       map('n', 'R', '<cmd>edit | TSBufEnable highlight<CR>', { desc = 'treesitter: enable highlight' })
     end,
-    dependencies = { 'nvim-treesitter/nvim-treesitter-textobjects' },
+    dependencies = {
+      'nvim-treesitter/nvim-treesitter-textobjects',
+      { 'luozhiya/nvim-ts-rainbow2', branch = 'detach' },
+    },
   },
   {
     'windwp/nvim-ts-autotag',
