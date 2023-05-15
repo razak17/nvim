@@ -75,7 +75,6 @@ local function set_sidebar_highlight()
 end
 
 local sidebar_fts = {
-  'packer',
   'flutterToolsOutline',
   'undotree',
   'NvimTree',
@@ -104,9 +103,7 @@ local function colorscheme_overrides()
     },
   }
   local hls = overrides[vim.g.colors_name]
-  if not hls then return end
-
-  highlight.all(hls)
+  if hls then highlight.all(hls) end
 end
 
 local function user_highlights()
