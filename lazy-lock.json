@@ -99,6 +99,7 @@
   "rust-tools.nvim": { "branch": "master", "commit": "71d2cf67b5ed120a0e31b2c8adb210dd2834242f" },
   "schemastore.nvim": { "branch": "main", "commit": "301471a8611494ceb7255003bc9d3c6fb8584009" },
   "sqlite.lua": { "branch": "master", "commit": "b7e28c8463254c46a8e61c52d27d6a2040492fc3" },
+  "swenv.nvim": { "branch": "main", "commit": "adaa088121d2716611cad814ecc8f0cf73d0cc57" },
   "telescope-frecency.nvim": { "branch": "master", "commit": "0a4a521471141ae3c94ff0ebcffcaff3c3aad147" },
   "telescope-luasnip.nvim": { "branch": "master", "commit": "849c4ee1951f34041a26744d2a88284545564ff0" },
   "telescope-menufacture": { "branch": "main", "commit": "284eae0c6430a67ad5d24676e791749d31bd6bdf" },

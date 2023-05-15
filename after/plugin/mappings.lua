@@ -258,7 +258,7 @@ vnoremap('<leader>R', [[:s/\%V.\+\%V./\=v:lua.rvim.rev_str(submatch(0))<CR>gv<ES
 ----------------------------------------------------------------------------------------------------
 -- Inspect treesitter tree
 nnoremap(
-  '<localleader>le',
+  '<localleader>lt',
   function() vim.treesitter.inspect_tree({ command = 'botright 60vnew' }) end,
   { desc = 'open ts tree for current buffer' }
 )
