@@ -98,12 +98,16 @@ install_nodejs_deps() {
   echo "Unknown package manager"
 }
 
-install_dict() {
-  dicwords="$RV_DATA_DIR/site/spell/dictionary.txt"
-  if [ ! -e "$dicwords" ]; then
-    echo 'Installing dictionary.txt'
-    curl "https://raw.githubusercontent.com/eneko/data-repository/master/data/words.txt" -o "$dicwords" -s
+generate_dict() {
+  dicwords="$RV_DATA_DIR/site/spell/en.dict"
+  if [ ! -x "$(command -v aspell)" ]; then
+    echo "aspell not found, please install aspell and aspell-en" && exit
   fi
+  if [ -e "$dicwords" ]; then
+    echo "en.dict already exists, skipping..." && exit
+  fi
+  echo 'Generating en.dict...'
+  aspell -d en dump master | aspell -l en expand >"$dicwords"
   echo "done."
 }
 
@@ -149,11 +153,11 @@ while [ "$#" -gt 0 ]; do
 	-node) nodeHostInit ;;
 	-npm) install_nodejs_deps ;;
 	-deps) install_deps ;;
-	-dict) install_dict ;;
+	-dict) generate_dict ;;
 	*--all*)
 		cloneconfig
     install_deps
-    install_dict
+    generate_dict
 		;;
 	*) echo "Unavailable command... $curr" ;;
 	esac
