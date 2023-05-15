@@ -55,9 +55,8 @@ return {
         playground = { persist_queries = true },
         -- stylua: ignore
         ensure_installed = {
-          'lua', 'dart', 'rust', 'typescript', 'tsx', 'javascript', 'markdown', 'markdown_inline',
-          'prisma', 'graphql', 'go', 'python', 'json', 'http', 'vimdoc', 'git_rebase', 'bash', 'c',
-          'diff', 'toml', 'cpp', 'jsonc', 'query',
+          'c', 'vim', 'vimdoc', 'query', 'lua', 'luadoc', 'luap',
+          'diff', 'regex', 'gitcommit', 'git_config', 'git_rebase', 'markdown', 'markdown_inline',
         },
       })
 
