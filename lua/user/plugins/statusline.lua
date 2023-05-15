@@ -85,6 +85,7 @@ local function stl_lsp_clients(bufnum)
     if client.name:match('null') then
       local sources = require('null-ls.sources').get_available(vim.bo[bufnum].filetype)
       local source_names = rvim.map(function(s) return s.name end, sources)
+      table.sort(source_names, function(a, b) return a < b end)
       local unique_sources = rvim.removeDuplicates(source_names)
       return { name = '␀ ' .. table.concat(unique_sources, ', ') }
     end
