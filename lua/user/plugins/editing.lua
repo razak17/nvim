@@ -177,6 +177,7 @@ return {
         ['chore'] = 'feat',
         ['double'] = 'single',
         ['config'] = 'opts',
+        ['pre'] = 'post',
       },
     },
   },
