@@ -3,6 +3,9 @@ return {
     'nvim-treesitter/nvim-treesitter',
     event = 'BufReadPost',
     build = ':TSUpdate',
+    keys = {
+      { 'R', '<cmd>edit | TSBufEnable highlight<CR>', desc = 'treesitter: enable highlight' },
+    },
     config = function()
       require('nvim-treesitter.configs').setup({
         auto_install = true,
@@ -71,14 +74,13 @@ return {
           'diff', 'regex', 'gitcommit', 'git_config', 'git_rebase', 'markdown', 'markdown_inline',
         },
       })
-
-      map('n', 'R', '<cmd>edit | TSBufEnable highlight<CR>', { desc = 'treesitter: enable highlight' })
     end,
     dependencies = {
       'nvim-treesitter/nvim-treesitter-textobjects',
       { 'luozhiya/nvim-ts-rainbow2', branch = 'detach' },
     },
   },
+  'JoosepAlviste/nvim-ts-context-commentstring',
   {
     'windwp/nvim-ts-autotag',
     ft = { 'typescriptreact', 'javascript', 'javascriptreact', 'html', 'vue', 'svelte' },
