@@ -16,6 +16,7 @@ local format_exclusions = {
     proto = { 'null-ls' },
     html = { 'html' },
     javascript = { 'quick_lint_js', 'vtsls' },
+    json = { 'jsonls' },
     typescript = { 'vtsls' },
     typescriptreact = { 'vtsls' },
     javascriptreact = { 'vtsls' },
