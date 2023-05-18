@@ -3,19 +3,7 @@ if not rvim then return end
 local settings, highlight = rvim.filetype_settings, rvim.highlight
 local cmd, api, opt_l = vim.cmd, vim.api, vim.opt_local
 
-local function add_quotes_after_equals()
-  local cursor = vim.api.nvim_win_get_cursor(0)
-  local left_of_cursor_range = { cursor[1] - 1, cursor[2] - 1 }
-  local node = vim.treesitter.get_node({ pos = left_of_cursor_range })
-  local nodes_active_in = { 'attribute_name', 'directive_argument', 'directive_name', 'property_identifier' }
-  if not node or not vim.tbl_contains(nodes_active_in, node:type()) then return '=' end
-  return '=""<left>'
-end
-
 settings({
-  [{ 'astro', 'svelte' }] = {
-    function() map('i', '=', add_quotes_after_equals, { expr = true, buffer = 0 }) end,
-  },
   ['dap-repl'] = {
     opt = {
       buflisted = false,
@@ -55,7 +43,6 @@ settings({
     },
     function()
       cmd([[setlocal tw=120 linebreak textwidth=0]]) -- Make lines longer, and don't break them automatically
-      map('i', '=', add_quotes_after_equals, { expr = true, buffer = 0 })
     end,
   },
   httpResult = {
@@ -150,7 +137,6 @@ settings({
   typescriptreact = {
     bo = { textwidth = 100 },
     opt = { spell = true },
-    function() map('i', '=', add_quotes_after_equals, { expr = true, buffer = 0 }) end,
   },
   vim = {
     bo = { syntax = 'off' },
