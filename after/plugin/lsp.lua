@@ -196,8 +196,7 @@ local function setup_autocommands(client, buf)
       buffer = buf,
       desc = 'LSP: Format on save',
       command = function(args)
-        local excluded = rvim.find_string(format_exclusions.format_on_save, vim.bo.ft)
-        if not excluded and not vim.g.formatting_disabled and not vim.b[buf].formatting_disabled then
+        if not vim.g.formatting_disabled and not vim.b[buf].formatting_disabled then
           local clients = vim.tbl_filter(
             function(c) return c.server_capabilities[provider.FORMATTING] end,
             lsp.get_active_clients({ buffer = buf })
