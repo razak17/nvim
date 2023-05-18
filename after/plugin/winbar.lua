@@ -1,8 +1,22 @@
 ---@diagnostic disable: duplicate-doc-param missing-return
 
-if not rvim or not rvim.ui.winbar.enable or vim.env.RVIM_PLUGINS_ENABLED == '0' or vim.env.RVIM_LSP_ENABLED == '0' then
+if not rvim or not rvim.ui.winbar.enable then return end
+
+if vim.env.RVIM_PLUGINS_ENABLED == '0' or vim.env.RVIM_LSP_ENABLED == '0' then
+  local api, fn = vim.api, vim.fn
+
+  rvim.augroup('AttachWinbar', {
+    event = { 'BufEnter', 'WinClosed' },
+    desc = 'Toggle winbar',
+    command = function()
+      local bufname = api.nvim_buf_get_name(api.nvim_get_current_buf())
+      local filepath = fn.fnamemodify(bufname, ':p:.')
+      vim.wo.winbar = filepath
+    end,
+  })
   return
 end
+
 local navic_loaded, navic = rvim.pcall(require, 'nvim-navic')
 local devicons_loaded, devicons = rvim.pcall(require, 'nvim-web-devicons')
 
