@@ -111,7 +111,7 @@ return {
     lazy = false,
     keys = { { '<localleader>lw', ':<c-u>MatchupWhereAmI?<CR>', desc = 'matchup: where am i' } },
     config = function()
-      vim.g.matchup_matchparen_offscreen = { method = 'popup' }
+      vim.g.matchup_matchparen_offscreen = { method = "status_manual" }
       vim.g.matchup_matchparen_deferred = 1
       rvim.highlight.plugin('vim-matchup', {
         { MatchWord = { inherit = 'LspReferenceText', underline = true } },
