@@ -46,6 +46,7 @@ local function general_overrides()
     { ['@text.diff.delete'] = { link = 'DiffDelete' } },
     { ['@text.title.markdown'] = { underdouble = true } },
     { ['@text.literal.markdown'] = { bg = { from = 'Normal', alter = 0.15 } } },
+    { ['@illuminate'] = { link = 'Search' } },
     ------------------------------------------------------------------------------------------------
     -- LSP
     ------------------------------------------------------------------------------------------------

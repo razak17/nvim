@@ -27,4 +27,25 @@ return {
       require('leap').setup(opts)
     end,
   },
+  {
+    'RRethy/vim-illuminate',
+    event = 'BufReadPre',
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
+    init = function()
+      map('n', 'gk', function() require('illuminate').goto_prev_reference() end, { desc = 'prev ref' })
+      map('n', 'gj', function() require('illuminate').goto_next_reference() end, { desc = 'next ref' })
+    end,
+    config = function()
+      rvim.highlight.plugin('leap', {
+        theme = {
+          ['*'] = {
+            { IlluminatedWordText = { link = '@illuminate' } },
+            { IlluminatedWordRead = { link = '@illuminate' } },
+            { IlluminatedWordWrite = { link = '@illuminate' } },
+          },
+        },
+      })
+      require('illuminate').configure({ modes_allowlist = { 'n' } })
+    end,
+  },
 }
