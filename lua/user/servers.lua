@@ -37,17 +37,6 @@ local servers = {
     -- Apparently setting this to false improves performance
     -- @see https://github.com/sublimelsp/LSP-typescript/issues/129#issuecomment-1281643371
     initializationOptions = { preferences = { includeCompletionsForModuleExports = false } },
-    handlers = {
-      ['textDocument/publishDiagnostics'] = function(_, result, ctx, config)
-        result.diagnostics = vim.tbl_filter(
-          -- remove TS6133, TS6133 is about unused variables. eslint is already doing this.
-          -- remove TS2304, TS2304 is about finding the referenced file. eslint is already doing this.
-          function(diagnostic) return not vim.tbl_contains({ 6133, 2304 }, diagnostic.code) end,
-          result.diagnostics
-        )
-        return vim.lsp.handlers['textDocument/publishDiagnostics'](nil, result, ctx, config)
-      end,
-    },
     settings = {
       ['js/ts'] = {
         implicitProjectConfig = { checkJs = true },
