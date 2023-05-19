@@ -54,7 +54,7 @@ function M.generate_config_file(server_names)
   end
   write_file(
     lsp_config_file,
-    fmt('%s\n', "if not rvim or vim.env.RVIM_LSP_ENABLED == '0' or vim.env.RVIM_PLUGINS_ENABLED == '0' then return end")
+    fmt('%s\n', "if not rvim or rvim.minimal then return end")
   )
   write_file(lsp_config_file, fmt('%s\n%s', '-- stylua: ignore', 'rvim.lspconfig('))
   write_file(lsp_config_file, servers_config)

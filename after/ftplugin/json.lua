@@ -19,7 +19,7 @@ map('n', 'o', function()
   return 'o'
 end, { buffer = 0, expr = true })
 
-if vim.env.RVIM_LSP_ENABLED == '0' or vim.env.RVIM_PLUGINS_ENABLED == '0' then return end
+if rvim.minimal then return end
 
 if vim.fn.expand('%:t') == 'package.json' then
   local fmt = string.format

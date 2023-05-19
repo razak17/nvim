@@ -2,7 +2,7 @@
 
 if not rvim or not rvim.ui.winbar.enable then return end
 
-if vim.env.RVIM_PLUGINS_ENABLED == '0' or vim.env.RVIM_LSP_ENABLED == '0' then
+if rvim.minimal then
   local api, fn = vim.api, vim.fn
 
   rvim.augroup('AttachWinbar', {

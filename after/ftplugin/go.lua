@@ -5,7 +5,7 @@ bo.shiftwidth = 4
 bo.expandtab = false
 vim.opt_local.iskeyword:append('-')
 
-if not rvim or vim.env.RVIM_LSP_ENABLED == '0' or vim.env.RVIM_PLUGINS_ENABLED == '0' then return end
+if not rvim or rvim.minimal then return end
 
 require('which-key').register({ ['<localleader>g'] = { name = 'Gopher' } })
 

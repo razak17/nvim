@@ -1,4 +1,5 @@
 if not rvim or vim.env.RVIM_PLUGINS_ENABLED == '0' then return end
+
 local ui = rvim.ui
 
 -- Inspiration

@@ -18,6 +18,7 @@ g.projects_dir = env.DEV_HOME or fn.expand('~/personal/workspace/coding')
 -- Global namespace
 ----------------------------------------------------------------------------------------------------
 local namespace = {
+  minimal = env.RVIM_LSP_ENABLED == '0' or env.RVIM_PLUGINS_ENABLED == '0',
   debug = { enable = false },
   lsp = {
     signs = { enable = true },

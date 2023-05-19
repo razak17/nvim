@@ -8,7 +8,7 @@ cmd.iabbrev(':tdo:', '👎')
 cmd.iabbrev(':smi:', '😊')
 cmd.iabbrev(':sad:', '😔')
 
-if not rvim or vim.env.RVIM_LSP_ENABLED == '0' or vim.env.RVIM_PLUGINS_ENABLED == '0' then return end
+if not rvim or rvim.minimal then return end
 
 map('n', '<localleader>P', '<Plug>MarkdownPreviewToggle', { desc = 'markdown preview', buffer = 0 })
 
