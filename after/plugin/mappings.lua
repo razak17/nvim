@@ -174,12 +174,13 @@ cnoremap('::', "<C-r>=fnameescape(expand('%:p:h'))<cr>/")
 -- NOTE: this uses write specifically because we need to trigger a filesystem event
 -- even if the file isn't changed so that things like hot reload work
 nnoremap('<c-s>', '<Cmd>silent! write ++p<CR>')
--- Buffer Movement
-nnoremap('H', '<cmd>bprevious<CR>', { desc = 'previous buffer' })
-nnoremap('L', '<cmd>bnext<CR>', { desc = 'next buffer' })
-----------------------------------------------------------------------------------------------------
--- nnoremap('<C-n>', ':Ex<CR>', { desc = 'explorer' })
--- nnoremap('<leader>c', ':bd<CR>', { desc = 'delete buffer' })
+if vim.env.RVIM_PLUGINS_ENABLED == '0' then
+  -- Buffer Management
+  nnoremap('H', '<cmd>bprevious<CR>', { desc = 'previous buffer' })
+  nnoremap('L', '<cmd>bnext<CR>', { desc = 'next buffer' })
+  nnoremap('<leader>c', ':bdel<CR>', { desc = 'delete buffer' })
+  nnoremap('<C-n>', ':Ex<CR>', { desc = 'explorer' })
+end
 nnoremap('<leader>x', ':q<CR>', { desc = 'quit' })
 nnoremap('<leader>q', ':q<CR>', { desc = 'quit' })
 ----------------------------------------------------------------------------------------------------
