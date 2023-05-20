@@ -250,18 +250,18 @@ return {
       cond = function() return conditions.hide_in_width() and conditions.ignored_filetype() end,
     })
 
-    ins_right({ 'filetype', cond = nil, padding = { left = 0, right = 1 } })
+    ins_right({ 'filetype', cond = nil, padding = { left = 0, right = 2 } })
 
     ins_right({
       function() return codicons.misc.shaded_lock end,
-      padding = { left = 1, right = 1 },
+      padding = { left = 0, right = 2 },
       color = { fg = colors.comment, gui = 'bold' },
       cond = function() return conditions.hide_in_width() and conditions.formatting_disabled() end,
     })
 
     ins_right({
       function() return icons.misc.spell_check end,
-      padding = { left = 1, right = 1 },
+      padding = { left = 0, right = 1 },
       color = { fg = colors.blue, gui = 'bold' },
       cond = function() return vim.wo.spell and conditions.hide_in_width() end,
     })
