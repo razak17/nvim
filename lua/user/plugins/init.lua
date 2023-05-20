@@ -287,6 +287,35 @@ return {
       terminal = { position = 'vert', size = 60 },
     },
   },
+  {
+    'ahmedkhalf/project.nvim',
+    event = 'LspAttach',
+    name = 'project_nvim',
+    opts = {
+      detection_methods = { 'pattern', 'lsp' },
+      ignore_lsp = { 'null-ls' },
+      patterns = { '.git' },
+    },
+  },
+  {
+    'razak17/lab.nvim',
+    event = { 'BufReadPre', 'BufNewFile' },
+    keys = {
+      { '<leader>rl', ':Lab code run<CR>', desc = 'lab: run' },
+      { '<leader>rx', ':Lab code stop<CR>', desc = 'lab: stop' },
+      { '<leader>rp', ':Lab code panel<CR>', desc = 'lab: panel' },
+    },
+    build = 'cd js && npm ci',
+    config = function()
+      highlight.plugin('lab', {
+        theme = {
+          ['onedark'] = { { LabCodeRun = { link = 'DiagnosticVirtualTextInfo' } } },
+        },
+      })
+      require('lab').setup()
+    end,
+    dependencies = { 'nvim-lua/plenary.nvim' },
+  },
   -- }}}
   ----------------------------------------------------------------------------------------------------
   -- Filetype Plugins {{{1
@@ -296,6 +325,7 @@ return {
   { 'fladson/vim-kitty', ft = 'kitty' },
   { 'dmmulroy/tsc.nvim', cmd = 'TSC', config = true, ft = { 'typescript', 'typescriptreact' } },
   { 'razak17/tailwind-fold.nvim', ft = { 'html', 'svelte', 'astro', 'vue', 'typescriptreact' } },
+  { 'turbio/bracey.vim', ft = 'html', build = 'npm install --prefix server' },
   {
     'olexsmir/gopher.nvim',
     ft = 'go',
@@ -309,6 +339,16 @@ return {
       vim.g.mkdp_auto_start = 0
       vim.g.mkdp_auto_close = 1
     end,
+  },
+  {
+    'NTBBloodbath/rest.nvim',
+    ft = { 'http', 'json' },
+    keys = {
+      { '<leader>rS', '<Plug>RestNvim', desc = 'rest: run' },
+      { '<leader>rP', '<Plug>RestNvimPreview', desc = 'rest: preview' },
+      { '<leader>rL', '<Plug>RestNvimLast', desc = 'rest: run last' },
+    },
+    opts = { skip_ssl_verification = true },
   },
   {
     'razak17/package-info.nvim',
