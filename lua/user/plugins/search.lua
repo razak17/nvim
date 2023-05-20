@@ -29,7 +29,6 @@ return {
   },
   {
     'RRethy/vim-illuminate',
-    enabled = false,
     event = 'BufReadPre',
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
     init = function()
