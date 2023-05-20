@@ -29,7 +29,7 @@ require('user.ui')
 -- Plugins
 ----------------------------------------------------------------------------------------------------
 local lazy_path = join_paths(data, 'lazy', 'lazy.nvim')
-local plugins_enabled = vim.env.RVIM_PLUGINS_ENABLED ~= '0'
+local plugins_enabled = rvim.plugins.enable
 if not vim.loop.fs_stat(lazy_path) then
   vim.fn.system({
     'git',

@@ -18,14 +18,15 @@ g.projects_dir = env.DEV_HOME or fn.expand('~/personal/workspace/coding')
 -- Global namespace
 ----------------------------------------------------------------------------------------------------
 local namespace = {
-  minimal = env.RVIM_LSP_ENABLED == '0' or env.RVIM_PLUGINS_ENABLED == '0',
   debug = { enable = false },
   lsp = {
+    enable = env.RVIM_LSP_ENABLED == '1',
     signs = { enable = true },
     hover_diagnostics = { enable = true },
   },
   mappings = {},
-  plugins = { enable = true },
+  minimal = env.RVIM_LSP_ENABLED == '0' or env.RVIM_PLUGINS_ENABLED == '0',
+  plugins = { enable = env.RVIM_PLUGINS_ENABLED == '1' },
   ui = {
     statuscolumn = { enable = true },
     winbar = { enable = true, relative_path = true, file_icon = true },

@@ -56,7 +56,7 @@ end
 ---Setup a language server by providing a name
 ---@param server_name string name of the language server
 function M.setup(server_name)
-  if vim.env.RVIM_PLUGINS_ENABLED == '0' then return end
+  if not rvim.plugins.enable then return end
   vim.validate({ name = { server_name, 'string' } })
   if client_active(server_name) then return end
   local config = resolve_config(server_name)

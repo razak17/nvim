@@ -174,7 +174,7 @@ cnoremap('::', "<C-r>=fnameescape(expand('%:p:h'))<cr>/")
 -- NOTE: this uses write specifically because we need to trigger a filesystem event
 -- even if the file isn't changed so that things like hot reload work
 nnoremap('<c-s>', '<Cmd>silent! write ++p<CR>')
-if vim.env.RVIM_PLUGINS_ENABLED == '0' then
+if not rvim.plugins.enable then
   -- Buffer Management
   nnoremap('H', '<cmd>bprevious<CR>', { desc = 'previous buffer' })
   nnoremap('L', '<cmd>bnext<CR>', { desc = 'next buffer' })
