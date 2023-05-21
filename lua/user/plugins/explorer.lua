@@ -30,15 +30,15 @@ return {
 
       require('neo-tree').setup({
         close_if_last_window = true,
-        sources = { 'filesystem', 'diagnostics', 'document_symbols' },
+        sources = { 'filesystem', 'git_status', 'document_symbols' },
         enable_opened_markers = true,
         source_selector = {
           winbar = true,
           separator_active = '',
           sources = {
             { source = 'filesystem' },
+            { source = 'git_status' },
             { source = 'document_symbols' },
-            { source = 'diagnostics', display_name = (' %s Diagnostics '):format(rvim.ui.codicons.lsp.error) },
           },
         },
         event_handlers = {
@@ -132,8 +132,9 @@ return {
       })
     end,
     dependencies = {
-      'mrbjarksen/neo-tree-diagnostics.nvim',
+      'nvim-lua/plenary.nvim',
       'MunifTanjim/nui.nvim',
+      'nvim-tree/nvim-web-devicons',
     },
   },
   {
