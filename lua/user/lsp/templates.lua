@@ -52,11 +52,8 @@ function M.generate_config_file(server_names)
     vim.notify('No servers found', vim.log.levels.ERROR, { title = 'Lsp' })
     return
   end
-  write_file(
-    lsp_config_file,
-    fmt('%s\n', "if not rvim or rvim.minimal then return end")
-  )
-  write_file(lsp_config_file, fmt('%s\n%s', '-- stylua: ignore', 'rvim.lspconfig('))
+  write_file(lsp_config_file, fmt('%s\n', 'if not rvim or rvim.minimal then return end'))
+  write_file(lsp_config_file, fmt('%s', 'rvim.lspconfig('))
   write_file(lsp_config_file, servers_config)
   write_file(lsp_config_file, ')')
   vim.notify('Config file has been generated.\nRestart neovim to start using lsp.', 'info', { title = 'Lsp' })
