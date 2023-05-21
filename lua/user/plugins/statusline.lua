@@ -73,11 +73,8 @@ local function stl_lsp_clients(bufnum)
   clients = vim.tbl_filter(function(client) return client.name ~= 'copilot' end, clients)
   if falsy(clients) then return { { name = 'No Active LSP' } } end
   table.sort(clients, function(a, b)
-    if a.name == 'null-ls' then
-      return false
-    elseif b.name == 'null-ls' then
-      return true
-    end
+    if a.name == 'null-ls' then return false end
+    if b.name == 'null-ls' then return true end
     return a.name < b.name
   end)
 
