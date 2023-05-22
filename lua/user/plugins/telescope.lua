@@ -110,6 +110,7 @@ local function multi_selection_open(prompt_bufnr) multiopen(prompt_bufnr, 'edit'
 return {
   {
     'nvim-telescope/telescope.nvim',
+    cmd = 'Telescope',
     keys = {
       { '<c-p>', find_files, desc = 'find files' },
       { '<leader>f?', b('help_tags'), desc = 'help tags' },
@@ -254,6 +255,7 @@ return {
       require('telescope').load_extension('undo')
       require('telescope').load_extension('menufacture')
       require('telescope').load_extension('persisted')
+      require('telescope').load_extension('projects')
       require('telescope').load_extension('notify')
 
       vim.api.nvim_exec_autocmds('User', { pattern = 'TelescopeConfigComplete', modeline = false })
