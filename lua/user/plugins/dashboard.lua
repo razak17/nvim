@@ -61,7 +61,7 @@ return {
 
     local installed_plugins = {
       type = 'text',
-      val = f(' %d plugins installed', stats.count),
+      val = f(' %d plugins loaded', stats.count),
       opts = { position = 'center', hl = 'NonText' },
     }
 
@@ -74,10 +74,11 @@ return {
 
     dashboard.section.buttons.val = {
       button('Directory', 'r', '  Restore session', ':SessionLoad<CR>'),
-      button('Todo', 'p', '  Pick a session', '<Cmd>ListSessions<CR>'),
+      button('Todo', 's', '  Pick a session', '<Cmd>ListSessions<CR>'),
       button('String', 'f', '  Find file', ':Telescope find_files<CR>'),
       button('Define', 'w', '  Find text', ':Telescope live_grep<CR>'),
-      button('Keyword', 'n', '  New file', ':ene | startinsert<CR>'),
+      button('Directory', 'p', '  Projects', '<Cmd>Telescope projects<CR>'),
+      -- button('Keyword', 'n', '  New file', ':ene | startinsert<CR>'),
       button('Ignore', 'l', '鈴 Lazy', ':Lazy<CR>'),
       button('ErrorMsg', 'q', '  Quit', ':qa<CR>'),
     }
