@@ -129,7 +129,7 @@ return {
   },
   {
     'Wansmer/treesj',
-    dependencies = { 'nvim-treesitter' },
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
     keys = {
       { 'gS', '<cmd>TSJSplit<CR>', desc = 'split to multiple lines' },
       { 'gJ', '<cmd>TSJJoin<CR>', desc = 'join to single line' },

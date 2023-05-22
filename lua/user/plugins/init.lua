@@ -389,7 +389,7 @@ return {
   },
   {
     'axelvc/template-string.nvim',
-    dependencies = { 'nvim-treesitter' },
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
     ft = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
     opts = { remove_template_string = true },
   },
