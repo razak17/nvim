@@ -287,7 +287,7 @@ return {
   },
   {
     'ahmedkhalf/project.nvim',
-    event = 'LspAttach',
+    event = 'VimEnter',
     name = 'project_nvim',
     opts = {
       detection_methods = { 'pattern', 'lsp' },
