@@ -12,6 +12,8 @@ return {
       local cmp = require('cmp')
       local luasnip = require('luasnip')
       local symbols = require('lspkind').symbol_map
+      local codicons = ui.codicons
+      local MIN_MENU_WIDTH, MAX_MENU_WIDTH = 25, math.min(50, math.floor(vim.o.columns * 0.5))
 
       local function get_color(r, g, b) return ((r * 0.299 + g * 0.587 + b * 0.114) > 186) and '#000000' or '#ffffff' end
 
@@ -102,19 +104,16 @@ return {
           deprecated = true,
           fields = { 'abbr', 'kind', 'menu' },
           format = function(entry, vim_item)
-            local codicons = ui.codicons
-            local MAX = math.floor(vim.o.columns * 0.5)
+            local label, length = vim_item.abbr, api.nvim_strwidth(vim_item.abbr)
 
-            if #vim_item.abbr >= MAX then vim_item.abbr = vim_item.abbr:sub(1, MAX) .. ellipsis end
-
-            if vim_item.kind ~= 'Color' then vim_item.kind = format_icon(symbols[vim_item.kind]) end
+            if length < MIN_MENU_WIDTH then vim_item.abbr = label .. string.rep(' ', MIN_MENU_WIDTH - length) end
+            if #vim_item.abbr >= MAX_MENU_WIDTH then
+              vim_item.abbr = vim_item.abbr:sub(1, MAX_MENU_WIDTH) .. ellipsis
+            end
 
             if entry.source.name == 'emoji' then vim_item.kind = format_icon(codicons.misc.smiley) end
-
             if entry.source.name == 'lab.quick_data' then vim_item.kind = format_icon(codicons.misc.robot) end
-
             if entry.source.name == 'dynamic' then vim_item.kind = format_icon(codicons.misc.calendar) end
-
             if entry.source.name == 'crates' then vim_item.kind = format_icon(ui.codicons.misc.package) end
 
             if vim_item.kind == 'Color' then
@@ -129,27 +128,28 @@ return {
                   vim_item.kind_hl_group = group
                 end
               end
-              vim_item.kind = format_icon(symbols[vim_item.kind])
             end
 
+            vim_item.kind = format_icon(symbols[vim_item.kind])
+
             vim_item.menu = ({
-              nvim_lsp = 'LSP',
-              luasnip = 'SNIP',
-              emoji = 'EMOJI',
-              path = 'PATH',
-              neorg = 'NEORG',
-              buffer = 'BUF',
-              spell = 'SPELL',
-              dictionary = 'DICT',
-              rg = 'RG',
-              norg = 'NORG',
-              cmdline = 'CMD',
-              cmdline_history = 'HIST',
-              crates = 'CRT',
-              treesitter = 'TS',
-              ['buffer-lines'] = 'BUFL',
-              dynamic = 'DYN',
-              ['lab.quick_data'] = 'LAB',
+              nvim_lsp = '[LSP]',
+              luasnip = '[SNIP]',
+              emoji = '[EMOJI]',
+              path = '[PATH]',
+              neorg = '[NEORG]',
+              buffer = '[BUF]',
+              spell = '[SPELL]',
+              dictionary = '[DICT]',
+              rg = '[RG]',
+              norg = '[NORG]',
+              cmdline = '[CMD]',
+              cmdline_history = '[HIST]',
+              crates = '[CRT]',
+              treesitter = '[TS]',
+              ['buffer-lines'] = '[BUFL]',
+              dynamic = '[DYN]',
+              ['lab.quick_data'] = '[LAB]',
             })[entry.source.name]
             return vim_item
           end,
