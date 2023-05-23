@@ -36,7 +36,7 @@ local servers = {
   vtsls = {
     -- Apparently setting this to false improves performance
     -- @see https://github.com/sublimelsp/LSP-typescript/issues/129#issuecomment-1281643371
-    initializationOptions = { preferences = { includeCompletionsForModuleExports = false } },
+    init_options = { preferences = { includeCompletionsForModuleExports = false } },
     settings = {
       ['js/ts'] = {
         implicitProjectConfig = { checkJs = true },
