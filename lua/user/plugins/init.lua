@@ -62,7 +62,20 @@ return {
         'mason.nvim',
         {
           'neovim/nvim-lspconfig',
-          config = function() require('lspconfig.ui.windows').default_options.border = border end,
+          config = function()
+            require('lspconfig.ui.windows').default_options.border = border
+            -- reload LspInfo floating window on VimResized
+            rvim.augroup('LspInfoResize', {
+              event = 'VimResized',
+              pattern = '*',
+              command = function()
+                if vim.bo.ft == 'lspinfo' then
+                  vim.api.nvim_win_close(0, true)
+                  vim.cmd('LspInfo')
+                end
+              end,
+            })
+          end,
           dependencies = {
             {
               'folke/neodev.nvim',
