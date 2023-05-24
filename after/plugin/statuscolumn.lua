@@ -61,10 +61,12 @@ local function extmark_signs(curbuf, lnum)
   local signs = api.nvim_buf_get_extmarks(curbuf, -1, { lnum, 0 }, { lnum, -1 }, { details = true, type = 'sign' })
   local sns = rvim.fold(function(acc, item)
     item = format_text(item[4], 'sign_text')
-    local txt, hl = item.sign_text, item.sign_hl_group
-    local is_git = hl:match('^Git')
-    local target = is_git and acc.git or acc.other
-    table.insert(target, { { { txt, hl } }, after = '' })
+    if item then
+      local txt, hl = item.sign_text, item.sign_hl_group
+      local is_git = hl:match('^Git')
+      local target = is_git and acc.git or acc.other
+      table.insert(target, { { { txt, hl } }, after = '' })
+    end
     return acc
   end, signs, { git = {}, other = {} })
   if #sns.git == 0 then sns.git = { str.spacer(1) } end
