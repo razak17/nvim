@@ -328,8 +328,8 @@ local function toggle_virtual_text()
     config = vim.tbl_extend('force', config, { virtual_text = { prefix = '', spacing = 1 } })
     if type(config.virtual_lines) == 'table' then
       config = vim.tbl_extend('force', config, { virtual_lines = false })
-      rvim.lsp.hover_diagnostics = true
     end
+    rvim.lsp.hover_diagnostics = true
   else
     config = vim.tbl_extend('force', config, { virtual_text = false })
   end
@@ -342,18 +342,24 @@ local function toggle_virtual_lines()
   if type(config.virtual_lines) == 'boolean' then
     config = vim.tbl_extend('force', config, { virtual_lines = { only_current_line = true } })
     if type(config.virtual_text) == 'table' then config = vim.tbl_extend('force', config, { virtual_text = false }) end
-    rvim.lsp.hover_diagnostics = false
   else
     config = vim.tbl_extend('force', config, { virtual_lines = false })
-    rvim.lsp.hover_diagnostics = true
   end
+  rvim.lsp.hover_diagnostics = not rvim.lsp.hover_diagnostics
   vim.diagnostic.config(config)
 end
 command('ToggleVirtualLines', toggle_virtual_lines)
 
 local function toggle_signs()
+  local config = vim.diagnostic.config()
+  if type(config.signs) == 'boolean' then
+    config = vim.tbl_extend('force', config, { signs = true })
+  else
+    config = vim.tbl_extend('force', config, { signs = false })
+  end
   rvim.lsp.signs.enable = not rvim.lsp.signs.enable
-  vim.cmd('edit | silent! wall')
+  vim.diagnostic.config(config)
+  vim.cmd('edit | silent! wall') -- Redraw
 end
 rvim.command('ToggleSigns', toggle_signs)
 
