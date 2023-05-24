@@ -266,7 +266,7 @@ nnoremap(
 ----------------------------------------------------------------------------------------------------
 -- UI Toggles
 ----------------------------------------------------------------------------------------------------
-function rvim.ui.notify(msg, type)
+function rvim.mappings.notify(msg, type)
   vim.schedule(function() vim.notify(msg, type, { title = 'UI Toggles' }) end)
 end
 ---@param opt string
@@ -275,7 +275,7 @@ local function toggle_opt(opt)
   local value
   if type(prev) == 'boolean' then value = not prev end
   vim.wo[opt] = value
-  rvim.ui.notify(string.format('%s %s', opt, rvim.bool2str(vim.wo[opt])))
+  rvim.mappings.notify(string.format('%s %s', opt, rvim.bool2str(vim.wo[opt])))
 end
 nnoremap('<leader>ow', function() toggle_opt('wrap') end, { desc = 'toggle wrap' })
 nnoremap('<leader>oL', function() toggle_opt('cursorline') end, { desc = 'toggle cursorline' })
@@ -295,19 +295,19 @@ local function toggle_statusline()
     vim.opt.laststatus = 0
     status = 'off'
   end
-  rvim.ui.notify(string.format('statusline %s', status))
+  rvim.mappings.notify(string.format('statusline %s', status))
 end
 nnoremap('<leader>ol', toggle_statusline, { desc = 'toggle statusline' })
 
 --- Toggle conceal=2|0
 local function toggle_conceal()
   vim.opt_local.conceallevel = vim.opt_local.conceallevel:get() == 0 and 2 or 0
-  rvim.ui.notify(string.format('conceal %s', rvim.bool2str(vim.opt_local.conceallevel:get() == 2)))
+  rvim.mappings.notify(string.format('conceal %s', rvim.bool2str(vim.opt_local.conceallevel:get() == 2)))
 end
 --- Toggle conceal cursor=n|''
 local function toggle_conceal_cursor()
   vim.opt_local.concealcursor = vim.opt_local.concealcursor:get() == 'n' and '' or 'n'
-  rvim.ui.notify(string.format('conceal cursor %s', rvim.bool2str(vim.opt_local.concealcursor:get() == '')))
+  rvim.mappings.notify(string.format('conceal cursor %s', rvim.bool2str(vim.opt_local.concealcursor:get() == '')))
 end
 nnoremap('<localleader>cl', toggle_conceal, { desc = 'toggle conceallevel' })
 nnoremap('<localleader>cc', toggle_conceal_cursor, { desc = 'toggle concealcursor' })
