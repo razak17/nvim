@@ -301,7 +301,7 @@ local max_width = math.min(math.floor(vim.o.columns * 0.7), 100)
 local max_height = math.min(math.floor(vim.o.lines * 0.3), 30)
 
 diagnostic.config({
-  signs = true,
+  signs = rvim.lsp.signs.enable,
   underline = true,
   update_in_insert = false,
   severity_sort = true,
