@@ -82,6 +82,7 @@ rvim.ui.codicons = {
     hint = '',
   },
   misc = {
+    bookmark = '', -- 
     bug = '',
     calendar = '',
     circle = '',
