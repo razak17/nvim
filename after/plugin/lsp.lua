@@ -6,6 +6,7 @@ local lsp, fn, api, fmt = vim.lsp, vim.fn, vim.api, string.format
 local L = vim.lsp.log_levels
 
 local diagnostic = vim.diagnostic
+local bool2str = rvim.bool2str
 local augroup, icons, border = rvim.augroup, rvim.ui.codicons.lsp, rvim.ui.current.border
 
 local format_exclusions = {
@@ -322,8 +323,12 @@ diagnostic.config({
   },
 })
 
+function rvim.lsp.notify(msg, type)
+  vim.schedule(function() vim.notify(msg, type, { title = 'Diagnostic Toggles' }) end)
+end
+
 local function toggle_virtual_text()
-  local config = vim.diagnostic.config()
+  local config = diagnostic.config()
   if type(config.virtual_text) == 'boolean' then
     config = vim.tbl_extend('force', config, { virtual_text = { prefix = '', spacing = 1 } })
     if type(config.virtual_lines) == 'table' then
@@ -333,12 +338,13 @@ local function toggle_virtual_text()
   else
     config = vim.tbl_extend('force', config, { virtual_text = false })
   end
-  vim.diagnostic.config(config)
+  diagnostic.config(config)
+  rvim.lsp.notify(string.format('virtual text %s', bool2str(type(diagnostic.config().virtual_text) ~= 'boolean')))
 end
 command('ToggleVirtualText', toggle_virtual_text)
 
 local function toggle_virtual_lines()
-  local config = vim.diagnostic.config()
+  local config = diagnostic.config()
   if type(config.virtual_lines) == 'boolean' then
     config = vim.tbl_extend('force', config, { virtual_lines = { only_current_line = true } })
     if type(config.virtual_text) == 'table' then config = vim.tbl_extend('force', config, { virtual_text = false }) end
@@ -346,20 +352,22 @@ local function toggle_virtual_lines()
     config = vim.tbl_extend('force', config, { virtual_lines = false })
   end
   rvim.lsp.hover_diagnostics = not rvim.lsp.hover_diagnostics
-  vim.diagnostic.config(config)
+  diagnostic.config(config)
+  rvim.lsp.notify(string.format('virtual lines %s', bool2str(type(diagnostic.config().virtual_lines) ~= 'boolean')))
 end
 command('ToggleVirtualLines', toggle_virtual_lines)
 
 local function toggle_signs()
-  local config = vim.diagnostic.config()
+  local config = diagnostic.config()
   if type(config.signs) == 'boolean' then
-    config = vim.tbl_extend('force', config, { signs = true })
+    config = vim.tbl_extend('force', config, { signs = { severity_limit = 'Error' } })
   else
     config = vim.tbl_extend('force', config, { signs = false })
   end
   rvim.lsp.signs.enable = not rvim.lsp.signs.enable
-  vim.diagnostic.config(config)
+  diagnostic.config(config)
   vim.cmd('edit | silent! wall') -- Redraw
+  rvim.lsp.notify(string.format('signs %s', bool2str(type(diagnostic.config().signs) ~= 'boolean')))
 end
 rvim.command('ToggleSigns', toggle_signs)
 
