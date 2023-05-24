@@ -68,6 +68,11 @@ local function stl_package_info()
   return package_info.get_status()
 end
 
+local function copilot_installed()
+  local ok, _ = pcall(require, 'copilot')
+  return ok
+end
+
 local function stl_lsp_clients(bufnum)
   local clients = vim.lsp.get_active_clients({ bufnr = bufnum })
   clients = vim.tbl_filter(function(client) return client.name ~= 'copilot' end, clients)
@@ -238,27 +243,27 @@ return {
       function() return 'Copilot:' end,
       padding = { left = 0, right = 0 },
       color = { fg = colors.comment, gui = 'italic' },
-      cond = function() return conditions.hide_in_width() and conditions.ignored_filetype() end,
+      cond = function() return conditions.hide_in_width() and conditions.ignored_filetype() and copilot_installed() end,
     })
 
     ins_right({
       stl_copilot_indicator,
       color = { gui = 'bold' },
-      cond = function() return conditions.hide_in_width() and conditions.ignored_filetype() end,
+      cond = function() return conditions.hide_in_width() and conditions.ignored_filetype() and copilot_installed() end,
     })
 
-    ins_right({ 'filetype', cond = nil, padding = { left = 0, right = 2 } })
+    ins_right({ 'filetype', cond = nil, padding = { left = 0, right = 0 } })
 
     ins_right({
       function() return codicons.misc.shaded_lock end,
-      padding = { left = 0, right = 2 },
+      padding = { left = 1, right = 2 },
       color = { fg = colors.comment, gui = 'bold' },
       cond = function() return conditions.hide_in_width() and conditions.formatting_disabled() end,
     })
 
     ins_right({
       function() return icons.misc.spell_check end,
-      padding = { left = 0, right = 1 },
+      padding = { left = 2, right = 1 },
       color = { fg = colors.blue, gui = 'bold' },
       cond = function() return vim.wo.spell and conditions.hide_in_width() end,
     })
