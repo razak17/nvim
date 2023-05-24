@@ -21,7 +21,7 @@ local namespace = {
   debug = { enable = false },
   lsp = {
     enable = env.RVIM_LSP_ENABLED == '1',
-    signs = { enable = true },
+    signs = { enable = false },
     hover_diagnostics = { enable = true },
   },
   mappings = {},
