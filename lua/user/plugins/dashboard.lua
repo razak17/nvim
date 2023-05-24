@@ -73,13 +73,13 @@ return {
     }
 
     dashboard.section.buttons.val = {
-      button('Directory', 'r', '  Restore session', ':SessionLoad<CR>'),
+      button('Directory', 'r', '  Restore session', '<Cmd>SessionLoad<CR>'),
       button('Todo', 's', '  Pick a session', '<Cmd>ListSessions<CR>'),
-      button('String', 'f', '  Find file', ':Telescope find_files<CR>'),
-      button('Define', 'w', '  Find text', ':Telescope live_grep<CR>'),
-      button('Directory', 'p', '  Projects', '<Cmd>Telescope projects<CR>'),
+      button('Directory', 'p', '  Recent projects', '<Cmd>Telescope projects<CR>'),
+      button('String', 'f', '  Find file', '<Cmd>Telescope find_files<CR>'),
+      button('Define', 'w', '  Find text', '<Cmd>Telescope live_grep<CR>'),
       -- button('Keyword', 'n', '  New file', ':ene | startinsert<CR>'),
-      button('Ignore', 'l', '鈴 Lazy', ':Lazy<CR>'),
+      button('Ignore', 'l', '鈴 Lazy', '<Cmd>Lazy<CR>'),
       button('ErrorMsg', 'q', '  Quit', ':qa<CR>'),
     }
 
