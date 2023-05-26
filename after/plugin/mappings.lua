@@ -1,6 +1,6 @@
 if not rvim then return end
 
-local fn, api, cmd, fmt = vim.fn, vim.api, vim.cmd, string.format
+local fn, api, fmt = vim.fn, vim.api, string.format
 
 local recursive_map = function(mode, lhs, rhs, opts)
   opts = opts or {}
@@ -30,13 +30,6 @@ vim.cmd([[
 xnoremap('@', ':<C-u>call ExecuteMacroOverVisualRange()<CR>', { silent = false })
 ----------------------------------------------------------------------------------------------------
 -- Credit: JGunn Choi ?il | inner line
-----------------------------------------------------------------------------------------------------
--- includes newline
-xnoremap('al', '$o0')
-onoremap('al', '<cmd>normal val<CR>')
--- No Spaces or CR
-xnoremap('il', [[<Esc>^vg_]])
-onoremap('il', [[<cmd>normal! ^vg_<CR>]])
 ----------------------------------------------------------------------------------------------------
 -- Paste in visual mode multiple times
 xnoremap('p', 'pgvy')
@@ -171,6 +164,7 @@ cnoremap('<S-Tab>', function() return search('?', '<S-Tab>') end, { expr = true 
 -- insert path of current file into a command
 cnoremap('%%', "<C-r>=fnameescape(expand('%'))<cr>")
 cnoremap('::', "<C-r>=fnameescape(expand('%:p:h'))<cr>/")
+----------------------------------------------------------------------------------------------------
 -- NOTE: this uses write specifically because we need to trigger a filesystem event
 -- even if the file isn't changed so that things like hot reload work
 nnoremap('<c-s>', '<Cmd>silent! write ++p<CR>')
@@ -191,9 +185,6 @@ onoremap('ie', [[<cmd>execute "normal! m`"<Bar>keepjumps normal! ggVG<CR>]])
 ----------------------------------------------------------------------------------------------------
 -- Core navigation
 ----------------------------------------------------------------------------------------------------
--- Store relative line number jumps in the jumplist.
-nnoremap('j', [[(v:count > 1 ? 'm`' . v:count : '') . 'gj']], { expr = true, silent = true })
-nnoremap('k', [[(v:count > 1 ? 'm`' . v:count : '') . 'gk']], { expr = true, silent = true })
 -- Zero should go to the first non-blank character not to the first column (which could be blank)
 -- but if already at the first character then jump to the beginning
 --@see: https://github.com/yuki-yano/zero.nvim/blob/main/lua/zero.lua
@@ -208,7 +199,6 @@ imap('jk', [[col('.') == 1 ? '<esc>' : '<esc>l']], { expr = true })
 nmap('zz', [[(winline() == (winheight (0) + 1)/ 2) ?  'zt' : (winline() == 1)? 'zb' : 'zz']], { expr = true })
 -- Escape
 nnoremap('<C-c>', '<Esc>')
-
 ----------------------------------------------------------------------------------------------------
 -- Web Search
 ----------------------------------------------------------------------------------------------------
@@ -311,7 +301,3 @@ local function toggle_conceal_cursor()
 end
 nnoremap('<localleader>cl', toggle_conceal, { desc = 'toggle conceallevel' })
 nnoremap('<localleader>cc', toggle_conceal_cursor, { desc = 'toggle concealcursor' })
-----------------------------------------------------------------------------------------------------
--- Abbreviations
-----------------------------------------------------------------------------------------------------
-cmd.cabbrev('options', 'vert options')
