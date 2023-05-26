@@ -263,14 +263,14 @@ return {
 
     ins_right({
       function() return icons.misc.spell_check end,
-      padding = { left = 2, right = 1 },
+      padding = { left = 2, right = 0 },
       color = { fg = colors.blue, gui = 'bold' },
       cond = function() return vim.wo.spell and conditions.hide_in_width() end,
     })
 
     ins_right({
       ts_active,
-      padding = { left = 0, right = 0 },
+      padding = { left = 1, right = 0 },
       color = { fg = colors.darker_green, gui = 'bold' },
       cond = conditions.hide_in_width,
     })
