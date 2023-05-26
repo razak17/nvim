@@ -35,6 +35,7 @@ return {
         source_selector = {
           winbar = true,
           separator_active = '',
+          tabs_layout = 'center',
           sources = {
             { source = 'filesystem' },
             { source = 'git_status' },
@@ -117,7 +118,7 @@ return {
         },
         window = {
           position = 'right',
-          width = 30,
+          width = 35,
           mappings = {
             ['<esc>'] = 'revert_preview',
             ['<CR>'] = 'open_with_window_picker',
