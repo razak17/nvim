@@ -160,6 +160,11 @@ end
 --- without putting all this logic in the general on_attach function
 ---@type {[string]: ClientOverrides}
 local client_overrides = {
+  emmet_ls = {
+    on_attach = function(client, bufnr)
+      client.server_capabilities.completionProvider.triggerCharacters = { '.', '#', }
+    end,
+  },
   vtsls = {
     semantic_tokens = function(bufnr, client, token)
       if token.type == 'variable' and token.modifiers['local'] and not token.modifiers.readonly then
