@@ -28,6 +28,7 @@ return {
           a = { name = 'A.I.' },
           d = { name = 'Debugprint' },
           f = { name = 'Telescope' },
+          fg = { name = 'Git' },
           fv = { name = 'Vim' },
           g = { name = 'Git' },
           h = { name = 'Gitsigns' },

@@ -113,6 +113,12 @@ local function setup_mappings(client, bufnr)
     { 'n', '<leader>ltv', '<Cmd>ToggleVirtualText<CR>', desc = 'toggle virtual text' },
     { 'n', '<leader>ltl', '<Cmd>ToggleVirtualLines<CR>', desc = 'toggle virtual lines' },
     { 'n', '<leader>lts', '<Cmd>ToggleSigns<CR>', desc = 'toggle signs' },
+    {
+      'n',
+      '<localleader>li',
+      '<Cmd>lua =vim.lsp.get_active_clients()[1].server_capabilities<CR>',
+      desc = 'server capabilities',
+    },
   }
 
   rvim.foreach(function(m)
