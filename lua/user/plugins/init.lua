@@ -1,4 +1,5 @@
 local api, cmd, fn = vim.api, vim.cmd, vim.fn
+local fmt = string.format
 local ui, highlight = rvim.ui, rvim.highlight
 local border = ui.current.border
 
@@ -283,10 +284,23 @@ return {
   },
   {
     'razak17/buffer_manager.nvim',
-    keys = {
-      { '<tab>', function() require('buffer_manager.ui').toggle_quick_menu() end, desc = 'buffer_manager: toggle' },
-    },
-    config = function() require('buffer_manager').setup({ borderchars = ui.border.common }) end,
+    event = { 'BufRead', 'BufNewFile' },
+    config = function()
+      require('buffer_manager').setup({
+        select_menu_item_commands = {
+          v = { key = '<C-v>', command = 'vsplit' },
+          h = { key = '<C-h>', command = 'split' },
+        },
+        borderchars = ui.border.common,
+      })
+      local bmui = require('buffer_manager.ui')
+      local keys = '1234567890'
+      for i = 1, #keys do
+        local key = keys:sub(i, i)
+        map('n', fmt('<leader>%s', key), function() bmui.nav_file(i) end, { noremap = true, desc = 'buffer ' .. key })
+      end
+      map({ 't', 'n' }, '<M-Space>', bmui.toggle_quick_menu, { noremap = true })
+    end,
   },
   {
     'is0n/jaq-nvim',
