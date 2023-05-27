@@ -45,7 +45,11 @@ return {
           },
         },
       })
-      require('illuminate').configure({ modes_allowlist = { 'n' } })
+      require('illuminate').configure({
+        modes_allowlist = { 'n' },
+        filetypes_allowlist = { 'lua', 'typescript', 'javascript', 'typescriptreact', 'javascriptreact' },
+        filetypes_denylist = { 'buffer_manager' },
+      })
     end,
   },
 }
