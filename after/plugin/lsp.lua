@@ -161,9 +161,7 @@ end
 ---@type {[string]: ClientOverrides}
 local client_overrides = {
   emmet_ls = {
-    on_attach = function(client, bufnr)
-      client.server_capabilities.completionProvider.triggerCharacters = { '.', '#', }
-    end,
+    on_attach = function(client, bufnr) client.server_capabilities.completionProvider.triggerCharacters = { '.', '#' } end,
   },
   vtsls = {
     semantic_tokens = function(bufnr, client, token)
