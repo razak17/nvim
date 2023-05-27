@@ -2,7 +2,7 @@ local fn, api, env, fmt = vim.fn, vim.api, vim.env, string.format
 local falsy, icons, codicons = rvim.falsy, rvim.ui.icons, rvim.ui.codicons
 local separator = icons.separators.dotted_thin_block
 
-local ignored_filetypes = { 'toggleterm', 'lspinfo', 'null-ls-info', 'mason' }
+local ignored_filetypes = { 'toggleterm', 'lspinfo', 'null-ls-info', 'mason', 'oil' }
 
 local conditions = {
   ignored_filetype = function() return not vim.tbl_contains(ignored_filetypes, vim.bo.filetype) end,
@@ -223,7 +223,7 @@ return {
     ins_right({
       lazy_updates,
       color = { fg = colors.orange },
-      cond = function() return conditions.hide_in_width() and conditions.ignored_filetype() end,
+      cond = function() return conditions.hide_in_width() end,
     })
 
     ins_right({
