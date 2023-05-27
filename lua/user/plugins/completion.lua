@@ -155,8 +155,8 @@ return {
           end,
         },
         sources = {
-          { name = 'luasnip', priority = 10, group_index = 1 },
-          { name = 'nvim_lsp', priority = 9, group_index = 1 },
+          { name = 'nvim_lsp', priority = 10, group_index = 1 },
+          { name = 'luasnip', priority = 9, group_index = 1 },
           {
             name = 'rg',
             priority = 8,
