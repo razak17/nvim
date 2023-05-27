@@ -218,6 +218,7 @@ local filetypes = rvim.p_table({
   ['list'] = presets.tool_panel,
   ['netrw'] = presets.tool_panel,
   ['NvimTree'] = presets.tool_panel,
+  ['oil'] = presets.tool_panel,
   ['undotree'] = presets.tool_panel,
   ['dap-repl'] = presets.tool_panel:with({ winbar = 'ignore' }),
   ['neo-tree'] = presets.tool_panel:with({ winbar = 'ignore' }),
