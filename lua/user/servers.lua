@@ -42,6 +42,7 @@ local servers = {
         implicitProjectConfig = { checkJs = true },
       },
       typescript = {
+        suggest = { completeFunctionCalls = true },
         inlayHints = {
           includeInlayParameterNameHints = 'all',
           includeInlayParameterNameHintsWhenArgumentMatchesName = false,
