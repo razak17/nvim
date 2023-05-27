@@ -32,8 +32,8 @@ return {
         ['core.dirman'] = {
           config = {
             workspaces = {
-              notes = sync('neorg/notes'),
-              tasks = sync('neorg/tasks'),
+              notes = sync('neorg'),
+              tasks = sync('neorg/neovim'),
               work = sync('neorg/work'),
             },
             default_workspace = 'notes',
