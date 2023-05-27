@@ -111,6 +111,11 @@ return {
               vim_item.abbr = vim_item.abbr:sub(1, MAX_MENU_WIDTH) .. ellipsis
             end
 
+            local custom_sources = { 'emoji', 'lab.quick_data', 'dynamic', 'crates' }
+
+            if not rvim.find_string(custom_sources, entry.source.name) and vim_item.kind ~= 'Color' then
+              vim_item.kind = format_icon(symbols[vim_item.kind])
+            end
             if entry.source.name == 'emoji' then vim_item.kind = format_icon(codicons.misc.smiley) end
             if entry.source.name == 'lab.quick_data' then vim_item.kind = format_icon(codicons.misc.robot) end
             if entry.source.name == 'dynamic' then vim_item.kind = format_icon(codicons.misc.calendar) end
@@ -128,9 +133,8 @@ return {
                   vim_item.kind_hl_group = group
                 end
               end
+              vim_item.kind = format_icon(symbols[vim_item.kind])
             end
-
-            vim_item.kind = format_icon(symbols[vim_item.kind])
 
             vim_item.menu = ({
               nvim_lsp = '[LSP]',
