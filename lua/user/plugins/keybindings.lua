@@ -112,8 +112,8 @@ return {
           { 'a', '<Cmd>BWipeout! all<CR>', { desc = 'close all' } },
           { 'c', '<Cmd>BWipeout other<CR>', { desc = 'delete others' } },
           { 'd', '<Cmd>BDelete this<CR>', { desc = 'delete buffer' } },
-          { 'h', '<Plug>(CybuPrev)', { desc = 'prev buffer' } },
-          { 'l', '<Plug>(CybuNext)', { desc = 'next buffer' } },
+          { 'p', '<Plug>(CybuPrev)', { desc = 'prev buffer' } },
+          { 'n', '<Plug>(CybuNext)', { desc = 'next buffer' } },
           { '<Esc>', nil, { exit = true, desc = 'Quit' } },
         },
       })

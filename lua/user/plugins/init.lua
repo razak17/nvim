@@ -259,10 +259,6 @@ return {
   {
     'razak17/cybu.nvim',
     event = { 'BufRead', 'BufNewFile' },
-    keys = {
-      { 'H', '<cmd>Cybu prev<CR>', desc = 'cybu: prev' },
-      { 'L', '<cmd>Cybu next<CR>', desc = 'cybu: next' },
-    },
     opts = {
       position = { relative_to = 'win', anchor = 'topright' },
       style = { border = 'single', hide_buffer_id = true },
