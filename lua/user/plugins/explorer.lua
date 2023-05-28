@@ -219,7 +219,7 @@ return {
     end,
   },
   {
-    'stevearc/oil.nvim',
+    'razak17/oil.nvim',
     keys = {
       { '-', function() require('oil').open() end, desc = 'open parent directory' },
     },
