@@ -90,7 +90,7 @@ function rvim.ui.winbar.render(current_win)
   state = {}
 
   local w1 = section:new(spacer(1))
-  local w2 = nil
+  local w2 = section:new({ { { '', 'Normal' } }, priority = 0 })
 
   local bufname = api.nvim_buf_get_name(api.nvim_get_current_buf())
   if falsy(bufname) then return w1 + section:new({ { { '[No name]', hls.normal } }, priority = 0 }) end
@@ -100,7 +100,8 @@ function rvim.ui.winbar.render(current_win)
   if use_relative_path then filepath = fn.fnamemodify(bufname, ':p:.') end
 
   local icon, color = rvim.ui.codicons.documents.default_folder, 'DevIconDefault'
-  if rvim.ui.winbar.file_icon then
+  local use_file_icon = rvim.ui.winbar.file_icon
+  if use_file_icon then
     if devicons_loaded then
       local devicon, devicon_color = devicons.get_icon(vim.fn.expand('%:t'))
       if devicon ~= nil and devicon_color ~= nil then
@@ -132,7 +133,8 @@ function rvim.ui.winbar.render(current_win)
     }
   end, parts)
   local win = api.nvim_get_current_win()
-  local winbar = w1 + w2 + section:new(unpack(wn))
+  local winbar = w1 + section:new(unpack(wn))
+  if use_file_icon then winbar = w1 + w2 + section:new(unpack(wn)) end
   if win == current_win then winbar = section:new(unpack(winbar)) + section:new(unpack(breadcrumbs())) end
   return display({ winbar }, api.nvim_win_get_width(win))
 end
