@@ -32,9 +32,11 @@ local function generate(server_names)
   table.sort(server_names, function(a, b) return a < b end)
   local servers_config = {}
   for _, server in ipairs(server_names) do
+    if rvim.find_string(rvim.lsp.disabled, server) then goto continue end
     local config = require('user.servers')(server)
     local fts = get_supported_filetypes(server)
     if config and not falsy(fts) then servers_config[server] = fts end
+    ::continue::
   end
   return servers_config
 end

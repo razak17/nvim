@@ -21,6 +21,7 @@ local namespace = {
   debug = { enable = false },
   lsp = {
     enable = env.RVIM_LSP_ENABLED == '1',
+    disabled = { 'emmet_ls' },
     signs = { enable = false },
     hover_diagnostics = { enable = true },
   },
