@@ -15,20 +15,6 @@ return {
       local codicons = ui.codicons
       local MIN_MENU_WIDTH, MAX_MENU_WIDTH = 25, math.min(50, math.floor(vim.o.columns * 0.5))
 
-      local function get_color(r, g, b) return ((r * 0.299 + g * 0.587 + b * 0.114) > 186) and '#000000' or '#ffffff' end
-
-      local function is_tailwind_root()
-        return not vim.tbl_isempty(vim.fs.find({ 'tailwind.config.js', 'tailwind.config.cjs' }, {
-          path = vim.fn.expand('%:p'),
-          upward = true,
-        }))
-      end
-
-      local function format_icon(icon)
-        if is_tailwind_root() then return fmt(' %s  ', icon) end
-        return fmt('%s ', icon)
-      end
-
       local hl_defs = fold(
         function(accum, value, key)
           table.insert(accum, { [fmt('CmpItemKind%s', key)] = { fg = { from = value } } })
@@ -114,12 +100,12 @@ return {
             local custom_sources = { 'emoji', 'lab.quick_data', 'dynamic', 'crates' }
 
             if not rvim.find_string(custom_sources, entry.source.name) and vim_item.kind ~= 'Color' then
-              vim_item.kind = format_icon(symbols[vim_item.kind])
+              vim_item.kind = symbols[vim_item.kind]
             end
-            if entry.source.name == 'emoji' then vim_item.kind = format_icon(codicons.misc.smiley) end
-            if entry.source.name == 'lab.quick_data' then vim_item.kind = format_icon(codicons.misc.robot) end
-            if entry.source.name == 'dynamic' then vim_item.kind = format_icon(codicons.misc.calendar) end
-            if entry.source.name == 'crates' then vim_item.kind = format_icon(ui.codicons.misc.package) end
+            if entry.source.name == 'emoji' then vim_item.kind = codicons.misc.smiley end
+            if entry.source.name == 'lab.quick_data' then vim_item.kind = codicons.misc.robot end
+            if entry.source.name == 'dynamic' then vim_item.kind = codicons.misc.calendar end
+            if entry.source.name == 'crates' then vim_item.kind = ui.codicons.misc.package end
 
             if vim_item.kind == 'Color' then
               if entry.completion_item.documentation then
@@ -127,13 +113,11 @@ return {
                 if r then
                   local color = fmt('%s%s%s', fmt('%02x', r), fmt('%02x', g), fmt('%02x', b))
                   local group = fmt('CmpItemKind_%s', color)
-                  if fn.hlID(group) < 1 then
-                    api.nvim_set_hl(0, group, { fg = get_color(r, g, b), bg = fmt('#%s', color) })
-                  end
+                  if fn.hlID(group) < 1 then api.nvim_set_hl(0, group, { bg = fmt('#%s', color) }) end
                   vim_item.kind_hl_group = group
                 end
               end
-              vim_item.kind = format_icon(symbols[vim_item.kind])
+              vim_item.kind = string.rep(' ', 2)
             end
 
             vim_item.menu = ({
