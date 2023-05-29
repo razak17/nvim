@@ -91,6 +91,7 @@ return {
           fields = { 'abbr', 'kind', 'menu' },
           format = function(entry, vim_item)
             local label, length = vim_item.abbr, api.nvim_strwidth(vim_item.abbr)
+            local function format_icon(icon) return fmt('%s ', icon) end
 
             if length < MIN_MENU_WIDTH then vim_item.abbr = label .. string.rep(' ', MIN_MENU_WIDTH - length) end
             if #vim_item.abbr >= MAX_MENU_WIDTH then
@@ -100,12 +101,12 @@ return {
             local custom_sources = { 'emoji', 'lab.quick_data', 'dynamic', 'crates' }
 
             if not rvim.find_string(custom_sources, entry.source.name) and vim_item.kind ~= 'Color' then
-              vim_item.kind = symbols[vim_item.kind]
+              vim_item.kind = format_icon(symbols[vim_item.kind])
             end
-            if entry.source.name == 'emoji' then vim_item.kind = codicons.misc.smiley end
-            if entry.source.name == 'lab.quick_data' then vim_item.kind = codicons.misc.robot end
-            if entry.source.name == 'dynamic' then vim_item.kind = codicons.misc.calendar end
-            if entry.source.name == 'crates' then vim_item.kind = ui.codicons.misc.package end
+            if entry.source.name == 'emoji' then vim_item.kind = format_icon(codicons.misc.smiley) end
+            if entry.source.name == 'lab.quick_data' then vim_item.kind = format_icon(codicons.misc.robot) end
+            if entry.source.name == 'dynamic' then vim_item.kind = format_icon(codicons.misc.calendar) end
+            if entry.source.name == 'crates' then vim_item.kind = format_icon(ui.codicons.misc.package) end
 
             if vim_item.kind == 'Color' then
               if entry.completion_item.documentation then
