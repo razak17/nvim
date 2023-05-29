@@ -2,9 +2,9 @@
 
 if not rvim or not rvim.ui.winbar.enable then return end
 
-if rvim.minimal then
-  local api, fn = vim.api, vim.fn
+local api, fn = vim.api, vim.fn
 
+if rvim.minimal then
   rvim.augroup('AttachWinbar', {
     event = { 'BufEnter', 'WinClosed' },
     desc = 'Toggle winbar',
@@ -23,7 +23,7 @@ local devicons_loaded, devicons = rvim.pcall(require, 'nvim-web-devicons')
 local str = require('user.strings')
 local section, spacer, display = str.section, str.spacer, str.display
 
-local fn, api, falsy, lsp_hls = vim.fn, vim.api, rvim.falsy, rvim.ui.lsp.highlights
+local falsy, lsp_hls = rvim.falsy, rvim.ui.lsp.highlights
 local icons, decorations, highlight = rvim.ui.icons.misc, rvim.ui.decorations, rvim.highlight
 
 local space = ' '
