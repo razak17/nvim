@@ -32,11 +32,11 @@ local function generate(server_names)
   table.sort(server_names, function(a, b) return a < b end)
   local servers_config = {}
   for _, server in ipairs(server_names) do
-    if rvim.find_string(rvim.lsp.disabled, server) then goto continue end
-    local config = require('user.servers')(server)
-    local fts = get_supported_filetypes(server)
-    if config and not falsy(fts) then servers_config[server] = fts end
-    ::continue::
+    if not rvim.find_string(rvim.lsp.disabled.servers, server) then
+      local config = require('user.servers')(server)
+      local fts = get_supported_filetypes(server)
+      if config and not falsy(fts) then servers_config[server] = fts end
+    end
   end
   return servers_config
 end
@@ -54,11 +54,16 @@ function M.generate_config_file(server_names)
     vim.notify('No servers found', vim.log.levels.ERROR, { title = 'Lsp' })
     return
   end
+
+  local new_config = vim.fn.filereadable(rvim.lsp.config_file) ~= 1
+  if not new_config then M.remove_template_files() end
   write_file(lsp_config_file, fmt('%s\n', 'if not rvim or rvim.minimal then return end'))
   write_file(lsp_config_file, fmt('%s', 'rvim.lspconfig('))
   write_file(lsp_config_file, servers_config)
   write_file(lsp_config_file, ')')
-  vim.notify('Config file has been generated.\nRestart neovim to start using lsp.', 'info', { title = 'Lsp' })
+  if new_config then
+    vim.notify('Config file has been generated.\nRestart neovim to start using lsp.', 'info', { title = 'Lsp' })
+  end
 end
 
 return M

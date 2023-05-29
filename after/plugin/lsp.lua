@@ -329,6 +329,15 @@ diagnostic.config({
   },
 })
 
+lsp.handlers['textDocument/hover'] = function(...)
+  local hover_handler = lsp.with(lsp.handlers.hover, {
+    border = border,
+    max_width = max_width,
+    max_height = max_height,
+  })
+  vim.b.lsp_hover_buf, vim.b.lsp_hover_win = hover_handler(...)
+end
+
 function rvim.lsp.notify(msg, type)
   vim.schedule(function() vim.notify(msg, type, { title = 'Diagnostic Toggles' }) end)
 end
@@ -381,14 +390,5 @@ map('n', '<leader>lG', '<Cmd>LspGenerateTemplates<CR>', { desc = 'generate setup
 map('n', '<leader>lD', '<Cmd>LspRemoveTemplates<CR>', { desc = 'delete setup file' })
 map('n', '<leader>lO', '<Cmd>edit ' .. rvim.lsp.config_file .. '<CR>', { desc = 'open lspsetup file' })
 
-lsp.handlers['textDocument/hover'] = function(...)
-  local hover_handler = lsp.with(lsp.handlers.hover, {
-    border = border,
-    max_width = max_width,
-    max_height = max_height,
-  })
-  vim.b.lsp_hover_buf, vim.b.lsp_hover_win = hover_handler(...)
-end
-
 -- Generate templates
-if fn.filereadable(rvim.lsp.config_file) ~= 1 then vim.defer_fn(function() vim.cmd('LspGenerateTemplates') end, 1) end
+vim.defer_fn(function() vim.cmd('LspGenerateTemplates') end, 1)
