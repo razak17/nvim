@@ -139,8 +139,8 @@ return {
           indent = {
             with_markers = false,
             with_expanders = true,
-            expander_collapsed = icons.misc.triangle_short_down,
-            expander_expanded = icons.misc.triangle_short_right,
+            expander_collapsed = icons.misc.triangle_short_right,
+            expander_expanded = icons.misc.triangle_short_down,
           },
           icon = {
             folder_empty = codicons.documents.open_folder,
