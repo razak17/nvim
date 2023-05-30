@@ -1,5 +1,3 @@
----@diagnostic disable: duplicate-doc-param missing-return
-
 if not rvim or not rvim.ui.winbar.enable then return end
 
 local api, fn = vim.api, vim.fn
