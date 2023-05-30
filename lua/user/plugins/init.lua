@@ -362,7 +362,11 @@ return {
   { 'razak17/slides.nvim', ft = 'slide' },
   { 'fladson/vim-kitty', ft = 'kitty' },
   { 'dmmulroy/tsc.nvim', cmd = 'TSC', config = true, ft = { 'typescript', 'typescriptreact' } },
-  { 'razak17/tailwind-fold.nvim', ft = { 'html', 'svelte', 'astro', 'vue', 'typescriptreact' } },
+  {
+    'razak17/tailwind-fold.nvim',
+    ft = { 'html', 'svelte', 'astro', 'vue', 'typescriptreact' },
+    opts = { min_chars = 30 },
+  },
   { 'turbio/bracey.vim', ft = 'html', build = 'npm install --prefix server' },
   {
     'olexsmir/gopher.nvim',
