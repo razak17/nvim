@@ -48,7 +48,11 @@ return {
           lsp_interop = { enable = false },
         },
         indent = { enable = { 'javascriptreact' } },
-        matchup = { enable = true, disable = { 'c', 'python' } },
+        matchup = {
+          enable = true,
+          enable_quotes = true,
+          disable = { 'c', 'python' },
+        },
         autotag = { enable = true },
         rainbow = {
           enable = true,
@@ -111,7 +115,7 @@ return {
     lazy = false,
     keys = { { '<localleader>lw', ':<c-u>MatchupWhereAmI?<CR>', desc = 'matchup: where am i' } },
     config = function()
-      vim.g.matchup_matchparen_offscreen = { method = "status_manual" }
+      vim.g.matchup_matchparen_offscreen = { method = 'status_manual' }
       vim.g.matchup_matchparen_deferred = 1
       rvim.highlight.plugin('vim-matchup', {
         { MatchWord = { inherit = 'LspReferenceText', underline = true } },
