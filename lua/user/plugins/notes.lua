@@ -11,7 +11,7 @@ return {
       { '<localleader>ni', '<cmd>Neorg index<CR>', 'neorg: open default' },
     },
     build = ':Neorg sync-parsers',
-    dependencies = { 'vhyrro/neorg-telescope' },
+    dependencies = { 'vhyrro/neorg-telescope', 'max397574/neorg-contexts' },
     opts = {
       configure_parsers = true,
       load = {
@@ -39,6 +39,7 @@ return {
             default_workspace = 'notes',
           },
         },
+        ['external.context'] = {},
       },
     },
   },

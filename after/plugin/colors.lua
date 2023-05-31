@@ -100,6 +100,7 @@ local function colorscheme_overrides()
   local overrides = {
     ['onedark'] = {
       { Dim = { inherit = 'VertSplit' } },
+      { NeorgContext = { inherit = 'Normal' } },
       { ['@variable'] = { fg = { from = '@none' } } },
     },
   }
