@@ -78,7 +78,7 @@ return {
     ft = { 'typescriptreact', 'typescript', 'javascript', 'javascriptreact' },
     opts = {
       node_path = 'node',
-      debugger_path = join_paths(mason_path, 'packages', 'js-debug-adapter'),
+      debugger_cmd = { 'js-debug-adapter' },
       adapters = { 'chrome', 'pwa-node', 'pwa-chrome', 'node-terminal', 'pwa-extensionHost' },
     },
     config = function(_, opts)
