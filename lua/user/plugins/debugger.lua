@@ -1,5 +1,3 @@
-local mason_path = vim.fn.stdpath('data') .. '/mason'
-
 rvim.debugger = { layout = { ft = { dart = 2 } } }
 
 local function set_breakpoint() require('dap').set_breakpoint(vim.fn.input('Breakpoint condition: ')) end
