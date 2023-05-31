@@ -203,6 +203,7 @@ return {
   },
   {
     'jackMort/ChatGPT.nvim',
+    enabled = rvim.ai.enable,
     cmd = { 'ChatGPT', 'ChatGPTActAs', 'ChatGPTEditWithInstructions' },
     keys = {
       { '<leader>aa', '<cmd>ChatGPTActAs<CR>', desc = 'chatgpt: act as' },

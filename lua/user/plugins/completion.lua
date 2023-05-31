@@ -258,6 +258,7 @@ return {
   },
   {
     'zbirenbaum/copilot.lua',
+    enabled = rvim.ai.enable,
     event = 'InsertEnter',
     keys = {
       { '<leader>ap', '<Cmd>Copilot panel<CR>', desc = 'copilot: toggle panel' },
