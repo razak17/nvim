@@ -97,6 +97,7 @@ return {
           dependencies = {
             {
               'folke/neodev.nvim',
+              enabled = rvim.lsp.enable,
               ft = 'lua',
               opts = {
                 debug = true,
@@ -115,6 +116,7 @@ return {
   },
   {
     'lvimuser/lsp-inlayhints.nvim',
+    enabled = rvim.lsp.enable,
     keys = {
       { '<leader>lth', function() require('lsp-inlayhints').toggle() end, desc = 'toggle inlay hints' },
     },
@@ -143,6 +145,7 @@ return {
   },
   {
     'ray-x/lsp_signature.nvim',
+    enabled = rvim.lsp.enable,
     event = 'InsertEnter',
     opts = {
       bind = true,
@@ -162,6 +165,7 @@ return {
   },
   {
     'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
+    enabled = rvim.lsp.enable,
     event = 'LspAttach',
     config = function() require('lsp_lines').setup() end,
   },

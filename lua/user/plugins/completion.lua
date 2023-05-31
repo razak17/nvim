@@ -218,15 +218,15 @@ return {
       })
     end,
     dependencies = {
-      'hrsh7th/cmp-nvim-lsp',
-      'saadparwaiz1/cmp_luasnip',
-      { 'hrsh7th/cmp-cmdline', config = function() vim.o.wildmode = '' end },
       'dmitmel/cmp-cmdline-history',
-      'hrsh7th/cmp-nvim-lsp-document-symbol',
       'hrsh7th/cmp-path',
       'hrsh7th/cmp-buffer',
       'hrsh7th/cmp-emoji',
       'lukas-reineke/cmp-rg',
+      { 'hrsh7th/cmp-nvim-lsp', enabled = rvim.lsp.enable },
+      { 'hrsh7th/cmp-cmdline', config = function() vim.o.wildmode = '' end },
+      { 'hrsh7th/cmp-nvim-lsp-document-symbol', enabled = rvim.lsp.enable },
+      'saadparwaiz1/cmp_luasnip',
       { 'amarakon/nvim-cmp-buffer-lines', ft = { 'c', 'cpp' } },
       {
         'uga-rosa/cmp-dictionary',

@@ -16,6 +16,7 @@ return {
   },
   {
     'j-hui/fidget.nvim',
+    enabled = rvim.lsp.enable,
     event = 'BufReadPre',
     config = function()
       require('fidget').setup({
