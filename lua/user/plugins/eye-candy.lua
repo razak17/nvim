@@ -24,6 +24,7 @@ return {
   },
   {
     'lukas-reineke/indent-blankline.nvim',
+    enabled = rvim.treesitter.enable,
     event = 'BufRead',
     opts = {
       char = separators.left_thin_block,

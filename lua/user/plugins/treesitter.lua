@@ -1,6 +1,7 @@
 return {
   {
     'nvim-treesitter/nvim-treesitter',
+    enabled = rvim.treesitter.enable,
     event = 'BufReadPost',
     build = ':TSUpdate',
     keys = {
@@ -81,21 +82,24 @@ return {
     end,
     dependencies = {
       'nvim-treesitter/nvim-treesitter-textobjects',
+      'JoosepAlviste/nvim-ts-context-commentstring',
       { 'luozhiya/nvim-ts-rainbow2', branch = 'detach' },
     },
   },
-  'JoosepAlviste/nvim-ts-context-commentstring',
   {
     'windwp/nvim-ts-autotag',
+    enabled = rvim.treesitter.enable,
     ft = { 'typescriptreact', 'javascript', 'javascriptreact', 'html', 'vue', 'svelte' },
   },
   {
     'nvim-treesitter/playground',
+    enabled = rvim.treesitter.enable,
     cmd = { 'TSPlaygroundToggle', 'TSHighlightCapturesUnderCursor' },
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
   },
   {
     'nvim-treesitter/nvim-treesitter-context',
+    enabled = rvim.treesitter.enable,
     event = { 'BufRead', 'BufNewFile' },
     config = function()
       rvim.highlight.plugin('treesitter-context', {
@@ -112,6 +116,7 @@ return {
   },
   {
     'andymass/vim-matchup',
+    enabled = rvim.treesitter.enable,
     lazy = false,
     keys = { { '<localleader>lw', ':<c-u>MatchupWhereAmI?<CR>', desc = 'matchup: where am i' } },
     config = function()

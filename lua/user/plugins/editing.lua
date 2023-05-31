@@ -88,6 +88,7 @@ return {
   },
   {
     'mfussenegger/nvim-treehopper',
+    enabled = rvim.treesitter.enable,
     keys = {
       {
         'u',
@@ -129,6 +130,7 @@ return {
   },
   {
     'Wansmer/treesj',
+    enabled = rvim.treesitter.enable,
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
     keys = {
       { 'gS', '<cmd>TSJSplit<CR>', desc = 'split to multiple lines' },
@@ -138,6 +140,7 @@ return {
   },
   {
     'mizlan/iswap.nvim',
+    enabled = rvim.treesitter.enable,
     keys = {
       { '<leader>ia', '<cmd>ISwap<CR>', desc = 'iswap: swap' },
       { '<leader>iw', '<cmd>ISwapWith<CR>', desc = 'iswap: swap with' },
@@ -145,6 +148,7 @@ return {
   },
   {
     'ThePrimeagen/refactoring.nvim',
+    enabled = rvim.treesitter.enable,
     dependencies = { 'nvim-lua/plenary.nvim', 'nvim-treesitter/nvim-treesitter' },
     keys = {
       {
@@ -183,11 +187,13 @@ return {
   },
   {
     'echasnovski/mini.ai',
+    enabled = rvim.treesitter.enable,
     event = 'VeryLazy',
     config = function() require('mini.ai').setup({ mappings = { around_last = '', inside_last = '' } }) end,
   },
   {
     'numToStr/Comment.nvim',
+    enabled = rvim.treesitter.enable,
     dependencies = { 'JoosepAlviste/nvim-ts-context-commentstring' },
     keys = { 'gcc', { 'gc', mode = { 'x', 'n', 'o' } } },
     opts = function(_, opts)

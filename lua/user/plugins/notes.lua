@@ -5,6 +5,7 @@ local function sync(path) return fmt('%s/notes/%s', fn.expand(vim.env.HOME), pat
 return {
   {
     'nvim-neorg/neorg',
+    enabled = rvim.treesitter.enable,
     ft = 'norg',
     keys = {
       { '<localleader>nx', '<cmd>Neorg return<CR>', 'neorg: return' },
@@ -45,6 +46,7 @@ return {
   },
   {
     'lukas-reineke/headlines.nvim',
+    enabled = rvim.treesitter.enable,
     ft = { 'org', 'norg', 'markdown', 'yaml' },
     config = function()
       highlight.plugin('Headlines', {

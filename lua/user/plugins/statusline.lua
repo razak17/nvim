@@ -272,7 +272,7 @@ return {
       ts_active,
       padding = { left = 1, right = 0 },
       color = { fg = colors.darker_green, gui = 'bold' },
-      cond = conditions.hide_in_width,
+      cond = conditions.hide_in_width and function() return rvim.treesitter.enable end,
     })
 
     ins_right({ 'location', padding = { left = 1, right = 0 } })

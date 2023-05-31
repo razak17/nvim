@@ -109,6 +109,7 @@ return {
   },
   {
     'kevinhwang91/nvim-ufo',
+    enabled = rvim.treesitter.enable,
     event = 'VeryLazy',
     init = function()
       rvim.highlight.plugin('ufo', {

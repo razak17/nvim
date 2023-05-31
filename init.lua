@@ -31,6 +31,7 @@ local namespace = {
   mappings = {},
   minimal = env.RVIM_LSP_ENABLED == '0' or env.RVIM_PLUGINS_ENABLED == '0',
   plugins = { enable = env.RVIM_PLUGINS_ENABLED == '1' },
+  treesitter = { enable = true },
   ui = {
     statuscolumn = { enable = true },
     winbar = { enable = true, relative_path = true, file_icon = true },

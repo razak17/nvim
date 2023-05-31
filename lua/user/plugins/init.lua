@@ -159,6 +159,7 @@ return {
   },
   {
     'joechrisellis/lsp-format-modifications.nvim',
+    enabled = rvim.lsp.enable,
     keys = {
       { '<localleader>lm', '<cmd>FormatModifications<CR>', desc = 'format-modifications: format' },
     },
@@ -203,6 +204,7 @@ return {
   },
   {
     'andrewferrier/debugprint.nvim',
+    enabled = rvim.treesitter.enable,
     keys = {
       {
         '<leader>dp',
@@ -223,6 +225,7 @@ return {
   },
   {
     'jghauser/fold-cycle.nvim',
+    enabled = rvim.lsp.enable,
     config = true,
     keys = {
       { '<BS>', function() require('fold-cycle').open() end, desc = 'fold-cycle: toggle' },
@@ -308,6 +311,7 @@ return {
   },
   {
     'is0n/jaq-nvim',
+    enabled = rvim.lsp.enable,
     cmd = 'Jaq',
     keys = {
       { '<leader>rr', ':silent only | Jaq<CR>', desc = 'jaq: run' },
@@ -365,9 +369,16 @@ return {
   'yioneko/nvim-vtsls',
   { 'razak17/slides.nvim', ft = 'slide' },
   { 'fladson/vim-kitty', ft = 'kitty' },
-  { 'dmmulroy/tsc.nvim', cmd = 'TSC', config = true, ft = { 'typescript', 'typescriptreact' } },
+  {
+    'dmmulroy/tsc.nvim',
+    enabled = rvim.lsp.enable,
+    cmd = 'TSC',
+    config = true,
+    ft = { 'typescript', 'typescriptreact' },
+  },
   {
     'razak17/tailwind-fold.nvim',
+    enabled = rvim.treesitter.enable,
     ft = { 'html', 'svelte', 'astro', 'vue', 'typescriptreact' },
     opts = { min_chars = 30 },
   },
@@ -443,6 +454,7 @@ return {
   },
   {
     'marilari88/twoslash-queries.nvim',
+    enabled = rvim.treesitter.enable,
     ft = { 'typescript', 'typescriptreact' },
     config = function()
       highlight.plugin('twoslash-queries', {
