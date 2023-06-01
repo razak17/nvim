@@ -1,5 +1,4 @@
-local fn, ui, highlight = vim.fn, rvim.ui, rvim.highlight
-local border = ui.current.border
+local border = rvim.ui.current.border
 
 return {
   {
