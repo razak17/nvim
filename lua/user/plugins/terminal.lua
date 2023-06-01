@@ -12,7 +12,7 @@ return {
     persist_mode = true,
     insert_mappings = false,
     start_in_insert = true,
-    winbar = { enabled = ui.winbar.enable },
+    winbar = { enabled = true },
     highlights = {
       FloatBorder = { link = 'FloatBorder' },
       NormalFloat = { link = 'NormalFloat' },
