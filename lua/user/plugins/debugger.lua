@@ -69,6 +69,7 @@ return {
           floating = { border = rvim.ui.current.border },
         },
       },
+      { 'theHamsta/nvim-dap-virtual-text', opts = { all_frames = true } },
     },
   },
   {
