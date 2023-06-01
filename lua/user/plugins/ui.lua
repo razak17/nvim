@@ -60,7 +60,7 @@ return {
           end,
         },
         icons = {
-          ui = { bar = { separator = ' ' .. ui.icons.misc.chevron_right .. ' ' } },
+          ui = { bar = { separator = ' ' .. ui.icons.misc.triangle .. ' ' } },
           kinds = { symbols = vim.tbl_map(function(value) return value .. ' ' end, require('lspkind').symbol_map) },
         },
         menu = {
@@ -69,6 +69,9 @@ return {
             col = function(menu) return menu.parent_menu and menu.parent_menu._win_configs.width + 1 or 0 end,
           },
         },
+      })
+      rvim.highlight.plugin('dropbar', {
+        { DropBarIconUISeparator = { fg = { from = 'Label' } } },
       })
     end,
   },
