@@ -35,7 +35,7 @@ local namespace = {
   treesitter = { enable = true },
   ui = {
     statuscolumn = { enable = true },
-    winbar = { enable = true, relative_path = true, file_icon = true },
+    winbar = { enable = false, relative_path = true, file_icon = true },
   },
 }
 
