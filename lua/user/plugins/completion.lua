@@ -176,12 +176,6 @@ return {
             group_index = 2,
           },
           { name = 'norg', priority = 3, group_index = 2 },
-          -- {
-          --   name = 'dictionary',
-          --   priority = 3,
-          --   max_item_count = 10,
-          --   group_index = 2,
-          -- },
         },
       })
 
