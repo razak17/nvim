@@ -136,4 +136,12 @@ return {
       end,
     },
   },
+  {
+    "almo7aya/openingh.nvim",
+    event = 'VeryLazy',
+    keys = {
+      { '<localleader>gf', '<cmd>lua require("openingh").open_file()<CR>', desc = 'openingh: open file' },
+      { '<localleader>gr', '<cmd>lua require("openingh").open_repo()<CR>', desc = 'openingh: open repo' },
+    },
+  },
 }
