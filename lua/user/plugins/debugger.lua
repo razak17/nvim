@@ -60,41 +60,23 @@ return {
       dap.listeners.after.event_initialized['dapui_config'] = function() dapui.open(rvim.debugger.layout.ft[vim.bo.ft]) end
       dap.listeners.before.event_exited['dapui_config'] = function() dapui.close() end
       dap.listeners.before.event_terminated['dapui_config'] = function() dapui.close() end
-    end,
-    dependencies = {
-      {
-        'rcarriga/nvim-dap-ui',
-        opts = {
-          windows = { indent = 2 },
-          floating = { border = rvim.ui.current.border },
+
+      require('dap').adapters['pwa-node'] = {
+        type = 'server',
+        host = 'localhost',
+        port = '${port}',
+        executable = {
+          command = 'js-debug-adapter', -- As I'm using mason, this will be in the path
+          args = { '${port}' },
         },
-      },
-      { 'theHamsta/nvim-dap-virtual-text', opts = { all_frames = true } },
-    },
-  },
-  {
-    'mxsdev/nvim-dap-vscode-js',
-    ft = { 'typescriptreact', 'typescript', 'javascript', 'javascriptreact' },
-    opts = {
-      node_path = 'node',
-      debugger_cmd = { 'js-debug-adapter' },
-      adapters = { 'chrome', 'pwa-node', 'pwa-chrome', 'node-terminal', 'pwa-extensionHost' },
-    },
-    config = function(_, opts)
-      require('dap-vscode-js').setup(opts)
+      }
+
       for _, language in ipairs({ 'typescript', 'typescriptreact', 'javascript' }) do
         require('dap').configurations[language] = {
           {
-            type = 'chrome',
-            request = 'launch',
-            name = 'Launch Chrome against localhost',
-            url = 'http://localhost:3000',
-            webRoot = '${workspaceFolder}',
-          },
-          {
             type = 'pwa-node',
             request = 'attach',
-            name = 'Attach Program (pwa-node, select pid)',
+            name = 'Attach program (pwa-node, select pid)',
             cwd = '${workspaceFolder}',
             processId = require('dap.utils').pick_process,
             skipFiles = { '<node_internals>/**' },
@@ -102,16 +84,16 @@ return {
           {
             type = 'pwa-node',
             request = 'launch',
-            name = 'Launch Current File (pwa-node)',
-            cwd = vim.fn.getcwd(),
-            args = { '${file}' },
+            name = 'Launch current file (pwa-node)',
+            program = '${file}',
+            cwd = '${workspaceFolder}',
             sourceMaps = true,
             protocol = 'inspector',
           },
           {
             type = 'pwa-node',
             request = 'launch',
-            name = 'Launch Current File (pwa-node with ts-node)',
+            name = 'Launch current file (pwa-node with ts-node)',
             cwd = vim.fn.getcwd(),
             runtimeArgs = { '--loader', 'ts-node/esm' },
             runtimeExecutable = 'node',
@@ -127,16 +109,21 @@ return {
           {
             type = 'pwa-node',
             request = 'launch',
-            name = 'Launch Current File (pwa-node with deno)',
-            cwd = vim.fn.getcwd(),
-            runtimeArgs = { 'run', '--inspect-brk', '--allow-all', '${file}' },
+            name = 'Launch current file (pwa-node with deno)',
             runtimeExecutable = 'deno',
+            runtimeArgs = {
+              'run',
+              '--inspect-wait',
+              '--allow-all',
+            },
+            program = '${file}',
+            cwd = '${workspaceFolder}',
             attachSimplePort = 9229,
           },
           {
             type = 'pwa-node',
             request = 'launch',
-            name = 'Launch Test Current File (pwa-node with jest)',
+            name = 'Launch test current file (pwa-node with jest)',
             cwd = vim.fn.getcwd(),
             runtimeArgs = { '${workspaceFolder}/node_modules/.bin/jest' },
             runtimeExecutable = 'node',
@@ -150,7 +137,7 @@ return {
           {
             type = 'pwa-node',
             request = 'launch',
-            name = 'Launch Test Current File (pwa-node with vitest)',
+            name = 'Launch test current file (pwa-node with vitest)',
             cwd = vim.fn.getcwd(),
             program = '${workspaceFolder}/node_modules/vitest/vitest.mjs',
             args = { '--inspect-brk', '--threads', 'false', 'run', '${file}' },
@@ -162,24 +149,24 @@ return {
           {
             type = 'pwa-node',
             request = 'launch',
-            name = 'Launch Test Current File (pwa-node with deno)',
+            name = 'Launch test current file (pwa-node with deno)',
             cwd = vim.fn.getcwd(),
             runtimeArgs = { 'test', '--inspect-brk', '--allow-all', '${file}' },
             runtimeExecutable = 'deno',
             attachSimplePort = 9229,
           },
-          {
-            type = 'pwa-chrome',
-            request = 'attach',
-            name = 'Attach Program (pwa-chrome, select port)',
-            program = '${file}',
-            cwd = vim.fn.getcwd(),
-            sourceMaps = true,
-            port = function() return vim.fn.input('Select port: ', 9222) end,
-            webRoot = '${workspaceFolder}',
-          },
         }
       end
     end,
+    dependencies = {
+      {
+        'rcarriga/nvim-dap-ui',
+        opts = {
+          windows = { indent = 2 },
+          floating = { border = rvim.ui.current.border },
+        },
+      },
+      { 'theHamsta/nvim-dap-virtual-text', opts = { all_frames = true } },
+    },
   },
 }

@@ -2,9 +2,8 @@ if not rvim or rvim.minimal then return end
 
 local mason_registry = require('mason-registry')
 local codelldb_path = mason_registry.get_package('codelldb'):get_install_path() .. '/extension/adapter/codelldb'
-local dap = require('dap')
 
-dap.adapters.codelldb = {
+require('dap').adapters.codelldb = {
   type = 'server',
   port = '${port}',
   executable = {
@@ -12,6 +11,7 @@ dap.adapters.codelldb = {
     args = { '--port', '${port}' },
   },
 }
+
 for _, language in ipairs({ 'c', 'cpp' }) do
   require('dap').configurations[language] = {
     {
