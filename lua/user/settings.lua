@@ -212,6 +212,7 @@ opt.sessionoptions = {
   'winpos',
   'winsize',
   'help',
+  'folds',
   'tabpages',
   'terminal',
 }
