@@ -251,7 +251,7 @@ rvim.ui.decorations = {}
 
 ---Get the UI setting for a particular filetype
 ---@param opts {ft: string?, bt: string?, fname: string?, setting: DecorationType}
----@return {ft: ui.OptionValue?, bt: ui.OptionValue?, fname: ui.OptionValue?}
+---@return {ft: ui.OptionValue?, bt: ui.OptionValue?, fname: ui.OptionValue?} | nil
 function rvim.ui.decorations.get(opts)
   local ft, bt, fname, setting = opts.ft, opts.bt, opts.fname, opts.setting
   if (not ft and not bt and not fname) or not setting then return nil end
@@ -266,14 +266,16 @@ end
 ---in an autocommand to set the `vim.opt_local.colorcolumn` or by a plugin such rvim `virtcolumn.nvim`
 ---to set it's virtual column
 ---@param bufnr integer
----@param fn fun(virtcolumn: string | boolean)
+---@param fn fun(colorcolumn: string | boolean)
 function rvim.ui.decorations.set_colorcolumn(bufnr, fn)
   local buf = vim.bo[bufnr]
   local decor = rvim.ui.decorations.get({ ft = buf.ft, bt = buf.bt, setting = 'colorcolumn' })
-  if buf.ft == '' or buf.bt ~= '' or decor.ft == false or decor.bt == false then return end
-  local ccol = decor.ft or decor.bt or ''
-  local virtcolumn = not rvim.falsy(ccol) and ccol or '+1'
-  if vim.is_callable(fn) then fn(virtcolumn) end
+  local ccol = decor and decor.ft or decor and decor.bt or ''
+  local colorcolumn = not rvim.falsy(ccol) and ccol or '+1'
+  if buf.ft == '' or buf.bt ~= '' or decor and decor.ft == false or decor and decor.bt == false then
+    colorcolumn = ''
+  end
+  if vim.is_callable(fn) then fn(colorcolumn) end
 end
 
 ----------------------------------------------------------------------------------------------------

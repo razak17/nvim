@@ -57,19 +57,24 @@ return {
     },
   },
   {
-    'lukas-reineke/virt-column.nvim',
-    event = 'BufReadPre',
-    opts = { char = separators.right_thin_block },
+    'razak17/smartcolumn.nvim',
+    event = 'VeryLazy',
     init = function()
-      rvim.augroup('VirtCol', {
+      rvim.augroup('SmartCol', {
         event = { 'VimEnter', 'BufEnter', 'WinEnter' },
         command = function(args)
           decorations.set_colorcolumn(
             args.buf,
-            function(virtcolumn) require('virt-column').setup_buffer({ virtcolumn = virtcolumn }) end
+            function(colorcolumn) require('smartcolumn').setup_buffer({ colorcolumn = colorcolumn }) end
           )
         end,
       })
     end,
+    opts = {},
+  },
+  {
+    'lukas-reineke/virt-column.nvim',
+    event = 'BufReadPre',
+    opts = { char = separators.right_thin_block },
   },
 }
