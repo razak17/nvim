@@ -39,11 +39,6 @@ end
 
 return {
   {
-    'xiyaowong/accelerated-jk.nvim',
-    event = 'VeryLazy',
-    opts = { mappings = { j = 'gj', k = 'gk' } },
-  },
-  {
     'LeonHeidelbach/trailblazer.nvim',
     event = 'VeryLazy',
     keys = {
@@ -76,9 +71,16 @@ return {
     },
   },
   {
+    'xiyaowong/accelerated-jk.nvim',
+    event = 'VeryLazy',
+    opts = { mappings = { j = 'gj', k = 'gk' } },
+  },
+  {
     'm4xshen/hardtime.nvim',
     event = 'VeryLazy',
-    opts = {},
+    opts = {
+      disabled_filetypes = { 'qf', 'neo-tree', 'lazy', 'mason', 'NeogitStatus', 'lspinfo', 'null-ls-info' },
+    },
   },
   {
     'chrisgrieser/nvim-spider',
