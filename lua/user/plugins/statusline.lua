@@ -256,7 +256,7 @@ return {
 
     ins_right({
       function() return codicons.misc.shaded_lock end,
-      padding = { left = 1, right = 2 },
+      padding = { left = 2, right = 1 },
       color = { fg = colors.comment, gui = 'bold' },
       cond = function() return conditions.hide_in_width() and conditions.formatting_disabled() end,
     })
@@ -270,7 +270,7 @@ return {
 
     ins_right({
       ts_active,
-      padding = { left = 1, right = 0 },
+      padding = { left = 2, right = 0 },
       color = { fg = colors.darker_green, gui = 'bold' },
       cond = conditions.hide_in_width and function() return rvim.treesitter.enable end,
     })
