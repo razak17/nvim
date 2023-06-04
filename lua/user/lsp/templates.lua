@@ -56,7 +56,7 @@ function M.generate_config_file(server_names)
   end
 
   local new_config = vim.fn.filereadable(rvim.lsp.config_file) ~= 1
-  if not new_config then M.remove_template_files() end
+  if not new_config then vim.defer_fn(function() M.remove_template_files() end, 100) end
   write_file(lsp_config_file, fmt('%s\n', 'if not rvim or rvim.minimal then return end'))
   write_file(lsp_config_file, fmt('%s', 'rvim.lspconfig('))
   write_file(lsp_config_file, servers_config)
