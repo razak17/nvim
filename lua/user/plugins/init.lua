@@ -8,6 +8,7 @@ return {
   -- Core {{{3
   ----------------------------------------------------------------------------------------------------
   'nvim-lua/plenary.nvim',
+  'nvim-tree/nvim-web-devicons',
   {
     'olimorris/persisted.nvim',
     lazy = false,
@@ -52,6 +53,13 @@ return {
       { '<leader><leader>l', function() require('smart-splits').swap_buf_right() end, { desc = 'swap right' } },
     },
   },
+  -- }}}
+  ----------------------------------------------------------------------------------------------------
+  -- Themes {{{1
+  ----------------------------------------------------------------------------------------------------
+  { 'razak17/onedark.nvim', lazy = false, priority = 1000 },
+  { 'LunarVim/horizon.nvim', lazy = false, priority = 1000 },
+  { 'romainl/vim-cool', event = 'BufReadPre', config = function() vim.g.CoolTotalMatches = 1 end },
   -- }}}
   ----------------------------------------------------------------------------------------------------
   -- LSP,Completion & Debugger {{{1
@@ -174,6 +182,11 @@ return {
   ----------------------------------------------------------------------------------------------------
   -- Utilities {{{1
   ----------------------------------------------------------------------------------------------------
+  {
+    'itchyny/vim-highlighturl',
+    event = 'ColorScheme',
+    config = function() vim.g.highlighturl_guifg = highlight.get('URL', 'fg') end,
+  },
   {
     'razak17/swenv.nvim',
     keys = {

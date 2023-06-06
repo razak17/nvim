@@ -1,16 +1,59 @@
 local api = vim.api
-local ui = rvim.ui
+local highlight, ui = rvim.highlight, rvim.ui
 local codicons = ui.codicons
 local border = ui.current.border
 local strwidth = vim.api.nvim_strwidth
+local separators, decorations = ui.icons.separators, ui.decorations
 
 return {
+  {
+    'lukas-reineke/virt-column.nvim',
+    event = 'BufReadPre',
+    opts = { char = separators.right_thin_block },
+  },
+  {
+    'razak17/smartcolumn.nvim',
+    event = 'VeryLazy',
+    init = function()
+      rvim.augroup('SmartCol', {
+        event = { 'VimEnter', 'BufEnter', 'WinEnter' },
+        command = function(args)
+          decorations.set_colorcolumn(
+            args.buf,
+            function(colorcolumn) require('smartcolumn').setup_buffer({ colorcolumn = colorcolumn }) end
+          )
+        end,
+      })
+    end,
+    opts = {},
+  },
   {
     'kevinhwang91/nvim-bqf',
     ft = 'qf',
     opts = {
       preview = {
         border_chars = { '│', '│', '─', '─', '┌', '┐', '└', '┘', '▊' },
+      },
+    },
+  },
+  {
+    'kevinhwang91/nvim-hlslens',
+    event = 'BufReadPre',
+    opts = {},
+    init = function() highlight.plugin('hlslens', { { HlSearchLens = { fg = { from = 'Comment', alter = 0.15 } } } }) end,
+    keys = {
+      { 'n', [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]] },
+      { 'N', [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]] },
+    },
+  },
+  {
+    'stevearc/dressing.nvim',
+    event = 'BufRead',
+    opts = {
+      input = { insert_only = false, border = border },
+      select = {
+        telescope = rvim.telescope.adaptive_dropdown(),
+        get_config = function() return { backend = 'telescope', telescope = rvim.telescope.cursor() } end,
       },
     },
   },
@@ -26,53 +69,6 @@ return {
       rvim.augroup('CloseFidget', {
         event = { 'VimLeavePre', 'LspDetach' },
         command = 'silent! FidgetClose',
-      })
-    end,
-  },
-  {
-    'stevearc/dressing.nvim',
-    event = 'BufRead',
-    opts = {
-      input = { insert_only = false, border = border },
-      select = {
-        telescope = rvim.telescope.adaptive_dropdown(),
-        get_config = function() return { backend = 'telescope', telescope = rvim.telescope.cursor() } end,
-      },
-    },
-  },
-  {
-    'Bekaboo/dropbar.nvim',
-    event = 'VeryLazy',
-    keys = {
-      { '<leader>wp', function() require('dropbar.api').pick() end, desc = 'winbar: pick' },
-    },
-    config = function()
-      require('dropbar').setup({
-        general = {
-          enable = function(buf, win)
-            local b, w = vim.bo[buf], vim.wo[win]
-            local decor = ui.decorations.get({ ft = b.ft, bt = b.bt, setting = 'winbar' })
-            return decor
-              and decor.ft ~= false
-              and b.bt == ''
-              and not w.diff
-              and not api.nvim_win_get_config(win).zindex
-              and api.nvim_buf_get_name(buf) ~= ''
-          end,
-        },
-        icons = {
-          ui = { bar = { separator = ' ' .. ui.icons.misc.triangle .. ' ' } },
-          kinds = { symbols = vim.tbl_map(function(value) return value .. ' ' end, require('lspkind').symbol_map) },
-        },
-        menu = {
-          win_configs = {
-            border = border,
-            col = function(menu) return menu.parent_menu and menu.parent_menu._win_configs.width + 1 or 0 end,
-          },
-        },
-      })
-      rvim.highlight.plugin('dropbar', {
-        { DropBarIconUISeparator = { fg = { from = 'Label' } } },
       })
     end,
   },
@@ -110,6 +106,26 @@ return {
         },
       })
     end,
+  },
+  {
+    'lukas-reineke/indent-blankline.nvim',
+    enabled = rvim.treesitter.enable,
+    event = 'BufRead',
+    opts = {
+      char = separators.left_thin_block,
+      show_foldtext = false,
+      context_char = separators.left_thin_block,
+      char_priority = 12,
+      show_current_context = true,
+      show_current_context_start = false,
+      show_current_context_start_on_current_line = false,
+      show_first_indent_level = true,
+      -- stylua: ignore
+      filetype_exclude = {
+        'dbout', 'neo-tree-popup', 'log', 'gitcommit', 'txt', 'help', 'NvimTree', 'git', 'flutterToolsOutline',
+        'undotree', 'markdown', 'norg', 'org', 'orgagenda', '', -- for all buffers without a file type
+      },
+    },
   },
   {
     'levouh/tint.nvim',
