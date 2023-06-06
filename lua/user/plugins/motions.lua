@@ -73,7 +73,10 @@ return {
   {
     'xiyaowong/accelerated-jk.nvim',
     event = 'VeryLazy',
-    opts = { mappings = { j = 'gj', k = 'gk' } },
+    keys = {
+      { 'j', "<cmd>lua require'accelerated-jk'.command('gj')<CR>", mode = { 'x', 'n' } },
+      { 'k', "<cmd>lua require'accelerated-jk'.command('gk')<CR>", mode = { 'x', 'n' } },
+    },
   },
   {
     'm4xshen/hardtime.nvim',
