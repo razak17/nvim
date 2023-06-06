@@ -52,7 +52,8 @@ return {
           enable = function(buf, win)
             local b, w = vim.bo[buf], vim.wo[win]
             local decor = ui.decorations.get({ ft = b.ft, bt = b.bt, setting = 'winbar' })
-            return decor.ft ~= false
+            return decor
+              and decor.ft ~= false
               and b.bt == ''
               and not w.diff
               and not api.nvim_win_get_config(win).zindex

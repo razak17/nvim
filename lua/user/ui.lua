@@ -45,13 +45,13 @@ rvim.ui.icons = {
 rvim.ui.codicons = {
   documents = {
     new_file = '',
+    default_file = '',
     file = '',
     files = '',
     folder = '',
-    folder_alt = '',
+    empty_folder = '',
     open_folder = '',
     open_folder_alt = '',
-    default_folder = '',
   },
   git = {
     added = '',

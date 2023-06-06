@@ -143,8 +143,11 @@ return {
             expander_expanded = icons.misc.triangle_short_down,
           },
           icon = {
-            folder_empty = codicons.documents.open_folder,
-            default = codicons.documents.default_folder,
+            folder_closed = codicons.documents.folder,
+            folder_open = codicons.documents.open_folder,
+            folder_empty = codicons.documents.empty_folder,
+            folder_empty_open = codicons.documents.empty_folder,
+            default = codicons.documents.default_file,
             highlight = 'DevIconDefault',
           },
           name = { highlight_opened_files = true },
