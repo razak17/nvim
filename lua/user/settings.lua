@@ -40,8 +40,8 @@ o.eadirection = 'hor'
 o.switchbuf = 'useopen,uselast'
 opt.fillchars = {
   fold = ' ',
-  foldopen = '▼', -- '▽'
-  foldclose = '▶', -- '▷'
+  foldopen = '▽', -- '▼'
+  foldclose = '▷', -- '▶'
   eob = ' ', -- suppress ~ at EndOfBuffer
   diff = '╱', -- alternatives = ⣿ ░ ─
   msgsep = ' ', -- alternatives: ‾ ─
