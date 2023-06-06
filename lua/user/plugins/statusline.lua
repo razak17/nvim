@@ -164,7 +164,7 @@ return {
 
     ins_left({ 'branch', icon = '', padding = { left = 0, right = 1 }, color = { fg = colors.yellowgreen } })
 
-    ins_left({ 'filename', cond = conditions.buffer_not_empty, padding = { left = 0, right = 1 }, path = 1 })
+    ins_left({ 'filename', cond = conditions.buffer_not_empty, padding = { left = 0, right = 1 }, path = 4 })
 
     ins_left({
       python_env,
