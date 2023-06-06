@@ -77,6 +77,7 @@ return {
   },
   {
     'm4xshen/hardtime.nvim',
+    enabled = false,
     event = 'VeryLazy',
     opts = {
       disabled_filetypes = { 'qf', 'neo-tree', 'lazy', 'mason', 'NeogitStatus', 'lspinfo', 'null-ls-info' },
