@@ -43,20 +43,6 @@ return {
     },
   },
   {
-    'shortcuts/no-neck-pain.nvim',
-    keys = {
-      {
-        '<leader>on',
-        function() require('no-neck-pain').toggle() end,
-        mode = 'n',
-        desc = 'toggle no-neck-pain',
-        noremap = true,
-        silent = true,
-        expr = false,
-      },
-    },
-  },
-  {
     'razak17/smartcolumn.nvim',
     event = 'VeryLazy',
     init = function()
