@@ -68,10 +68,7 @@ local function stl_package_info()
   return package_info.get_status()
 end
 
-local function copilot_installed()
-  local ok, _ = pcall(require, 'copilot')
-  return ok
-end
+local function copilot_enabled() return rvim.ai.enable end
 
 local function stl_lsp_clients(bufnum)
   local clients = vim.lsp.get_active_clients({ bufnr = bufnum })
@@ -243,13 +240,13 @@ return {
       function() return 'Copilot:' end,
       padding = { left = 0, right = 0 },
       color = { fg = colors.comment, gui = 'italic' },
-      cond = function() return conditions.hide_in_width() and conditions.ignored_filetype() and copilot_installed() end,
+      cond = function() return conditions.hide_in_width() and conditions.ignored_filetype() and copilot_enabled() end,
     })
 
     ins_right({
       stl_copilot_indicator,
       color = { gui = 'bold' },
-      cond = function() return conditions.hide_in_width() and conditions.ignored_filetype() and copilot_installed() end,
+      cond = function() return conditions.hide_in_width() and conditions.ignored_filetype() and copilot_enabled() end,
     })
 
     ins_right({ 'filetype', cond = nil, padding = { left = 0, right = 0 } })
