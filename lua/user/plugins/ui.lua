@@ -107,6 +107,42 @@ return {
       })
     end,
   },
+{
+    'Bekaboo/dropbar.nvim',
+    event = 'VeryLazy',
+    keys = {
+      { '<leader>wp', function() require('dropbar.api').pick() end, desc = 'winbar: pick' },
+    },
+    config = function()
+      require('dropbar').setup({
+        general = {
+          enable = function(buf, win)
+            local b, w = vim.bo[buf], vim.wo[win]
+            local decor = ui.decorations.get({ ft = b.ft, bt = b.bt, setting = 'winbar' })
+            return decor
+              and decor.ft ~= false
+              and b.bt == ''
+              and not w.diff
+              and not api.nvim_win_get_config(win).zindex
+              and api.nvim_buf_get_name(buf) ~= ''
+          end,
+        },
+        icons = {
+          ui = { bar = { separator = ' ' .. ui.icons.misc.triangle .. ' ' } },
+          kinds = { symbols = vim.tbl_map(function(value) return value .. ' ' end, require('lspkind').symbol_map) },
+        },
+        menu = {
+          win_configs = {
+            border = border,
+            col = function(menu) return menu.parent_menu and menu.parent_menu._win_configs.width + 1 or 0 end,
+          },
+        },
+      })
+      rvim.highlight.plugin('dropbar', {
+        { DropBarIconUISeparator = { fg = { from = 'Label' } } },
+      })
+    end,
+  },
   {
     'lukas-reineke/indent-blankline.nvim',
     enabled = rvim.treesitter.enable,
