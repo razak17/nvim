@@ -7,11 +7,6 @@ local separators, decorations = ui.icons.separators, ui.decorations
 
 return {
   {
-    'lukas-reineke/virt-column.nvim',
-    event = 'BufReadPre',
-    opts = { char = separators.right_thin_block },
-  },
-  {
     'razak17/smartcolumn.nvim',
     event = 'VeryLazy',
     init = function()
@@ -26,6 +21,13 @@ return {
       })
     end,
     opts = {},
+    dependencies = {
+      {
+        'lukas-reineke/virt-column.nvim',
+        event = 'BufReadPre',
+        opts = { char = separators.right_thin_block },
+      },
+    },
   },
   {
     'kevinhwang91/nvim-bqf',
