@@ -24,6 +24,8 @@ local conditions = {
       upward = true,
     }))
   end,
+  copilot_enabled = function() return rvim.ai.enable end,
+  lsp_enabled = function() return rvim.lsp.enable end,
 }
 
 local function ts_active()
@@ -67,8 +69,6 @@ local function stl_package_info()
   if not ok then return '' end
   return package_info.get_status()
 end
-
-local function copilot_enabled() return rvim.ai.enable end
 
 local function stl_lsp_clients(bufnum)
   local clients = vim.lsp.get_active_clients({ bufnr = bufnum })
@@ -167,7 +167,7 @@ return {
       python_env,
       padding = { left = 0, right = 0 },
       color = { fg = colors.yellowgreen },
-      cond = function() return vim.bo.filetype == 'python' and conditions.hide_in_width() end,
+      cond = conditions.hide_in_width and function() return vim.bo.filetype == 'python' end,
     })
 
     ins_left({
@@ -179,7 +179,7 @@ return {
         info = codicons.lsp.info .. ' ',
         hint = codicons.lsp.hint .. ' ',
       },
-      cond = conditions.hide_in_width,
+      cond = conditions.hide_in_width and conditions.lsp_enabled,
     })
 
     -- Insert mid section.
@@ -188,7 +188,7 @@ return {
     ins_left({
       stl_package_info,
       color = { fg = colors.comment },
-      cond = function() return fn.expand('%') == 'package.json' and conditions.hide_in_width() end,
+      cond = conditions.hide_in_width and function() return fn.expand('%') == 'package.json' end,
     })
 
     -- Add components to right sections
@@ -220,33 +220,33 @@ return {
     ins_right({
       lazy_updates,
       color = { fg = colors.orange },
-      cond = function() return conditions.hide_in_width() end,
+      cond = conditions.hide_in_width,
     })
 
     ins_right({
       function() return ' LSP(s):' end,
       color = { fg = colors.comment, gui = 'italic' },
-      cond = function() return conditions.hide_in_width() and conditions.ignored_filetype() end,
+      cond = conditions.hide_in_width and conditions.ignored_filetype and conditions.lsp_enabled,
     })
 
     ins_right({
       lsp_clients,
       color = { gui = 'bold' },
       padding = { left = 0, right = 1 },
-      cond = function() return conditions.hide_in_width() and conditions.ignored_filetype() end,
+      cond = conditions.hide_in_width and conditions.ignored_filetype and conditions.lsp_enabled,
     })
 
     ins_right({
       function() return 'Copilot:' end,
       padding = { left = 0, right = 0 },
       color = { fg = colors.comment, gui = 'italic' },
-      cond = function() return conditions.hide_in_width() and conditions.ignored_filetype() and copilot_enabled() end,
+      cond = conditions.hide_in_width and conditions.ignored_filetype and conditions.copilot_enabled,
     })
 
     ins_right({
       stl_copilot_indicator,
       color = { gui = 'bold' },
-      cond = function() return conditions.hide_in_width() and conditions.ignored_filetype() and copilot_enabled() end,
+      cond = conditions.hide_in_width and conditions.ignored_filetype and conditions.copilot_enabled,
     })
 
     ins_right({ 'filetype', cond = nil, padding = { left = 0, right = 0 } })
@@ -255,14 +255,14 @@ return {
       function() return codicons.misc.shaded_lock end,
       padding = { left = 2, right = 1 },
       color = { fg = colors.comment, gui = 'bold' },
-      cond = function() return conditions.hide_in_width() and conditions.formatting_disabled() end,
+      cond = conditions.hide_in_width and conditions.formatting_disabled,
     })
 
     ins_right({
       function() return icons.misc.spell_check end,
       padding = { left = 2, right = 0 },
       color = { fg = colors.blue, gui = 'bold' },
-      cond = function() return vim.wo.spell and conditions.hide_in_width() end,
+      cond = conditions.hide_in_width and function() return vim.wo.spell end,
     })
 
     ins_right({
