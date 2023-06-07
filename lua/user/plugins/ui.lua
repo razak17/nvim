@@ -107,7 +107,7 @@ return {
       })
     end,
   },
-{
+  {
     'Bekaboo/dropbar.nvim',
     event = 'VeryLazy',
     keys = {
@@ -156,26 +156,43 @@ return {
       show_current_context_start = false,
       show_current_context_start_on_current_line = false,
       show_first_indent_level = true,
-      -- stylua: ignore
       filetype_exclude = {
-        'dbout', 'neo-tree-popup', 'log', 'gitcommit', 'txt', 'help', 'NvimTree', 'git', 'flutterToolsOutline',
-        'undotree', 'markdown', 'norg', 'org', 'orgagenda', '', -- for all buffers without a file type
+        'dbout',
+        'neo-tree-popup',
+        'log',
+        'gitcommit',
+        'txt',
+        'help',
+        'NvimTree',
+        'git',
+        'flutterToolsOutline',
+        'undotree',
+        'markdown',
+        'norg',
+        'org',
+        'orgagenda',
+        '', -- for all buffers without a file type
       },
     },
   },
   {
     'levouh/tint.nvim',
-    event = 'WinNew',
-    enabled = false,
+    event = 'UIEnter',
     opts = {
       tint = -30,
-      -- stylua: ignore
       highlight_ignore_patterns = {
-        'WinSeparator', 'St.*', 'Comment', 'Panel.*', 'Telescope.*', 'Bqf.*', 'VirtColumn', 'Headline.*', 'NeoTree.*',
+        'WinSeparator',
+        'St.*',
+        'Comment',
+        'Panel.*',
+        'Telescope.*',
+        'Bqf.*',
+        'VirtColumn',
+        'Headline.*',
+        'NeoTree.*',
       },
       window_ignore_function = function(win_id)
         local win, buf = vim.wo[win_id], vim.bo[vim.api.nvim_win_get_buf(win_id)]
-        -- BUG: neotree cannot be ignore rvim either nofile or by filetype rvim this causes tinting bugs
         if win.diff or not rvim.falsy(vim.fn.win_gettype(win_id)) then return true end
         local ignore_bt = rvim.p_table({ terminal = true, prompt = true, nofile = false })
         local ignore_ft = rvim.p_table({ ['Telescope.*'] = true, ['Neogit.*'] = true, ['qf'] = true })

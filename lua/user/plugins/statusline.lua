@@ -119,13 +119,21 @@ return {
         section_separators = { left = '', right = '' },
         disabled_filetypes = { 'alpha', 'Outline' },
       },
-      -- stylua: ignore
       sections = {
-        lualine_a = {}, lualine_b = {}, lualine_y = {}, lualine_z = {}, lualine_c = {}, lualine_x = {},
+        lualine_a = {},
+        lualine_b = {},
+        lualine_y = {},
+        lualine_z = {},
+        lualine_c = {},
+        lualine_x = {},
       },
-      -- stylua: ignore
       inactive_sections = {
-        lualine_a = {}, lualine_b = {}, lualine_y = {}, lualine_z = {}, lualine_c = {}, lualine_x = {},
+        lualine_a = {},
+        lualine_b = {},
+        lualine_y = {},
+        lualine_z = {},
+        lualine_c = {},
+        lualine_x = {},
       },
     }
 

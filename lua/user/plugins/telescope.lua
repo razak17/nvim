@@ -38,9 +38,14 @@ local function delta_opts(opts, is_buf)
   local previewers = require('telescope.previewers')
   local delta = previewers.new_termopen_previewer({
     get_command = function(entry)
-      -- stylua: ignore
       local args = {
-        'git', '-c', 'core.pager=delta', '-c', 'delta.side-by-side=false', 'diff', entry.value .. '^!',
+        'git',
+        '-c',
+        'core.pager=delta',
+        '-c',
+        'delta.side-by-side=false',
+        'diff',
+        entry.value .. '^!',
       }
       if is_buf then vim.list_extend(args, { '--', entry.current_file }) end
       return args
@@ -167,11 +172,21 @@ return {
           history = {
             path = join_paths(data, 'databases', 'telescope_history.sqlite3'),
           },
-        -- stylua: ignore
-        file_ignore_patterns = {
-          '%.jpg', '%.jpeg', '%.png', '%.otf', '%.ttf', '%.DS_Store', '%.git/', 'node%_modules/',
-          'dist/', 'build/',  'site-packages/', '%.yarn/','__pycache__/'
-        },
+          file_ignore_patterns = {
+            '%.jpg',
+            '%.jpeg',
+            '%.png',
+            '%.otf',
+            '%.ttf',
+            '%.DS_Store',
+            '%.git/',
+            'node%_modules/',
+            'dist/',
+            'build/',
+            'site-packages/',
+            '%.yarn/',
+            '__pycache__/',
+          },
           path_display = { 'truncate' },
           file_sorter = sorters.get_fzy_sorter,
           file_previewer = previewers.vim_buffer_cat.new,
