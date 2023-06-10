@@ -61,6 +61,7 @@ return {
   },
   {
     'j-hui/fidget.nvim',
+    tag = 'legacy',
     enabled = rvim.lsp.enable,
     event = 'BufReadPre',
     config = function()
