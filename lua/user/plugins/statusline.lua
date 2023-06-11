@@ -107,185 +107,187 @@ local function stl_copilot_indicator()
 end
 
 return {
-  'nvim-lualine/lualine.nvim',
-  lazy = false,
-  config = function()
-    local colors = require('onedark.palette')
-    local lualine_config = {
-      options = {
-        theme = 'onedark',
-        globalstatus = true,
-        component_separators = { left = '', right = '' },
-        section_separators = { left = '', right = '' },
-        disabled_filetypes = { 'alpha', 'Outline' },
-      },
-      sections = {
-        lualine_a = {},
-        lualine_b = {},
-        lualine_y = {},
-        lualine_z = {},
-        lualine_c = {},
-        lualine_x = {},
-      },
-      inactive_sections = {
-        lualine_a = {},
-        lualine_b = {},
-        lualine_y = {},
-        lualine_z = {},
-        lualine_c = {},
-        lualine_x = {},
-      },
-    }
+  {
+    'nvim-lualine/lualine.nvim',
+    lazy = false,
+    config = function()
+      local colors = require('onedark.palette')
+      local lualine_config = {
+        options = {
+          theme = 'onedark',
+          globalstatus = true,
+          component_separators = { left = '', right = '' },
+          section_separators = { left = '', right = '' },
+          disabled_filetypes = { 'alpha', 'Outline' },
+        },
+        sections = {
+          lualine_a = {},
+          lualine_b = {},
+          lualine_y = {},
+          lualine_z = {},
+          lualine_c = {},
+          lualine_x = {},
+        },
+        inactive_sections = {
+          lualine_a = {},
+          lualine_b = {},
+          lualine_y = {},
+          lualine_z = {},
+          lualine_c = {},
+          lualine_x = {},
+        },
+      }
 
-    local mode_color = {
-      n = colors.blue,
-      i = colors.yellowgreen,
-      v = colors.magenta,
-      [''] = colors.pale_blue,
-      V = colors.pink,
-      c = colors.yellow,
-      no = colors.pale_red,
-      s = colors.orange,
-      S = colors.orange,
-      [''] = colors.orange,
-      ic = colors.yellowgreen,
-      R = colors.violet,
-      Rv = colors.violet,
-      cv = colors.pale_red,
-      ce = colors.pale_red,
-      r = colors.cyan,
-      rm = colors.cyan,
-      ['r?'] = colors.cyan,
-      ['!'] = colors.pale_red,
-      t = colors.red,
-    }
+      local mode_color = {
+        n = colors.blue,
+        i = colors.yellowgreen,
+        v = colors.magenta,
+        [''] = colors.pale_blue,
+        V = colors.pink,
+        c = colors.yellow,
+        no = colors.pale_red,
+        s = colors.orange,
+        S = colors.orange,
+        [''] = colors.orange,
+        ic = colors.yellowgreen,
+        R = colors.violet,
+        Rv = colors.violet,
+        cv = colors.pale_red,
+        ce = colors.pale_red,
+        r = colors.cyan,
+        rm = colors.cyan,
+        ['r?'] = colors.cyan,
+        ['!'] = colors.pale_red,
+        t = colors.red,
+      }
 
-    local function block_color() return { fg = mode_color[fn.mode()] } end
-    local function block() return icons.separators.bar end
-    local function ins_left(component) table.insert(lualine_config.sections.lualine_c, component) end
-    local function ins_right(component) table.insert(lualine_config.sections.lualine_x, component) end
+      local function block_color() return { fg = mode_color[fn.mode()] } end
+      local function block() return icons.separators.bar end
+      local function ins_left(component) table.insert(lualine_config.sections.lualine_c, component) end
+      local function ins_right(component) table.insert(lualine_config.sections.lualine_x, component) end
 
-    ins_left({ block, color = block_color, padding = { left = 0, right = 1 } })
+      ins_left({ block, color = block_color, padding = { left = 0, right = 1 } })
 
-    ins_left({ 'branch', icon = '', padding = { left = 0, right = 1 }, color = { fg = colors.yellowgreen } })
+      ins_left({ 'branch', icon = '', padding = { left = 0, right = 1 }, color = { fg = colors.yellowgreen } })
 
-    ins_left({ 'filename', cond = conditions.buffer_not_empty, padding = { left = 0, right = 1 }, path = 4 })
+      ins_left({ 'filename', cond = conditions.buffer_not_empty, padding = { left = 0, right = 1 }, path = 4 })
 
-    ins_left({
-      python_env,
-      padding = { left = 0, right = 0 },
-      color = { fg = colors.yellowgreen },
-      cond = conditions.hide_in_width and function() return vim.bo.filetype == 'python' end,
-    })
+      ins_left({
+        python_env,
+        padding = { left = 0, right = 0 },
+        color = { fg = colors.yellowgreen },
+        cond = conditions.hide_in_width and function() return vim.bo.filetype == 'python' end,
+      })
 
-    ins_left({
-      'diagnostics',
-      sources = { 'nvim_diagnostic' },
-      symbols = {
-        error = codicons.lsp.error .. ' ',
-        warn = codicons.lsp.warn .. ' ',
-        info = codicons.lsp.info .. ' ',
-        hint = codicons.lsp.hint .. ' ',
-      },
-      cond = conditions.hide_in_width and conditions.lsp_enabled,
-    })
+      ins_left({
+        'diagnostics',
+        sources = { 'nvim_diagnostic' },
+        symbols = {
+          error = codicons.lsp.error .. ' ',
+          warn = codicons.lsp.warn .. ' ',
+          info = codicons.lsp.info .. ' ',
+          hint = codicons.lsp.hint .. ' ',
+        },
+        cond = conditions.hide_in_width and conditions.lsp_enabled,
+      })
 
-    -- Insert mid section.
-    ins_left({ function() return '%=%=' end })
+      -- Insert mid section.
+      ins_left({ function() return '%=%=' end })
 
-    ins_left({
-      stl_package_info,
-      color = { fg = colors.comment },
-      cond = conditions.hide_in_width and function() return fn.expand('%') == 'package.json' end,
-    })
+      ins_left({
+        stl_package_info,
+        color = { fg = colors.comment },
+        cond = conditions.hide_in_width and function() return fn.expand('%') == 'package.json' end,
+      })
 
-    -- Add components to right sections
-    ins_right({
-      'diff',
-      source = function()
-        local gitsigns = vim.b.gitsigns_status_dict
-        if gitsigns then
-          return {
-            added = gitsigns.added,
-            modified = gitsigns.changed,
-            removed = gitsigns.removed,
-          }
-        end
-      end,
-      symbols = {
-        added = codicons.git.added .. ' ',
-        modified = codicons.git.mod .. ' ',
-        removed = codicons.git.removed .. ' ',
-      },
-      diff_color = {
-        added = { fg = colors.yellowgreen },
-        modified = { fg = colors.dark_orange },
-        removed = { fg = colors.error_red },
-      },
-      cond = conditions.hide_in_width,
-    })
+      -- Add components to right sections
+      ins_right({
+        'diff',
+        source = function()
+          local gitsigns = vim.b.gitsigns_status_dict
+          if gitsigns then
+            return {
+              added = gitsigns.added,
+              modified = gitsigns.changed,
+              removed = gitsigns.removed,
+            }
+          end
+        end,
+        symbols = {
+          added = codicons.git.added .. ' ',
+          modified = codicons.git.mod .. ' ',
+          removed = codicons.git.removed .. ' ',
+        },
+        diff_color = {
+          added = { fg = colors.yellowgreen },
+          modified = { fg = colors.dark_orange },
+          removed = { fg = colors.error_red },
+        },
+        cond = conditions.hide_in_width,
+      })
 
-    ins_right({
-      lazy_updates,
-      color = { fg = colors.orange },
-      cond = conditions.hide_in_width,
-    })
+      ins_right({
+        lazy_updates,
+        color = { fg = colors.orange },
+        cond = conditions.hide_in_width,
+      })
 
-    ins_right({
-      function() return ' LSP(s):' end,
-      color = { fg = colors.comment, gui = 'italic' },
-      cond = conditions.hide_in_width and conditions.ignored_filetype and conditions.lsp_enabled,
-    })
+      ins_right({
+        function() return ' LSP(s):' end,
+        color = { fg = colors.comment, gui = 'italic' },
+        cond = conditions.hide_in_width and conditions.ignored_filetype and conditions.lsp_enabled,
+      })
 
-    ins_right({
-      lsp_clients,
-      color = { gui = 'bold' },
-      padding = { left = 0, right = 1 },
-      cond = conditions.hide_in_width and conditions.ignored_filetype and conditions.lsp_enabled,
-    })
+      ins_right({
+        lsp_clients,
+        color = { gui = 'bold' },
+        padding = { left = 0, right = 1 },
+        cond = conditions.hide_in_width and conditions.ignored_filetype and conditions.lsp_enabled,
+      })
 
-    ins_right({
-      function() return 'Copilot:' end,
-      padding = { left = 0, right = 0 },
-      color = { fg = colors.comment, gui = 'italic' },
-      cond = conditions.hide_in_width and conditions.ignored_filetype and conditions.copilot_enabled,
-    })
+      ins_right({
+        function() return 'Copilot:' end,
+        padding = { left = 0, right = 0 },
+        color = { fg = colors.comment, gui = 'italic' },
+        cond = conditions.hide_in_width and conditions.ignored_filetype and conditions.copilot_enabled,
+      })
 
-    ins_right({
-      stl_copilot_indicator,
-      color = { gui = 'bold' },
-      cond = conditions.hide_in_width and conditions.ignored_filetype and conditions.copilot_enabled,
-    })
+      ins_right({
+        stl_copilot_indicator,
+        color = { gui = 'bold' },
+        cond = conditions.hide_in_width and conditions.ignored_filetype and conditions.copilot_enabled,
+      })
 
-    ins_right({ 'filetype', cond = nil, padding = { left = 0, right = 0 } })
+      ins_right({ 'filetype', cond = nil, padding = { left = 0, right = 0 } })
 
-    ins_right({
-      function() return codicons.misc.shaded_lock end,
-      padding = { left = 2, right = 1 },
-      color = { fg = colors.comment, gui = 'bold' },
-      cond = conditions.hide_in_width and conditions.formatting_disabled,
-    })
+      ins_right({
+        function() return codicons.misc.shaded_lock end,
+        padding = { left = 2, right = 1 },
+        color = { fg = colors.comment, gui = 'bold' },
+        cond = conditions.hide_in_width and conditions.formatting_disabled,
+      })
 
-    ins_right({
-      function() return icons.misc.spell_check end,
-      padding = { left = 2, right = 0 },
-      color = { fg = colors.blue, gui = 'bold' },
-      cond = conditions.hide_in_width and function() return vim.wo.spell end,
-    })
+      ins_right({
+        function() return icons.misc.spell_check end,
+        padding = { left = 2, right = 0 },
+        color = { fg = colors.blue, gui = 'bold' },
+        cond = conditions.hide_in_width and function() return vim.wo.spell end,
+      })
 
-    ins_right({
-      ts_active,
-      padding = { left = 2, right = 0 },
-      color = { fg = colors.darker_green, gui = 'bold' },
-      cond = conditions.hide_in_width and function() return rvim.treesitter.enable end,
-    })
+      ins_right({
+        ts_active,
+        padding = { left = 2, right = 0 },
+        color = { fg = colors.darker_green, gui = 'bold' },
+        cond = conditions.hide_in_width and function() return rvim.treesitter.enable end,
+      })
 
-    ins_right({ 'location', padding = { left = 1, right = 0 } })
+      ins_right({ 'location', padding = { left = 1, right = 0 } })
 
-    ins_right({ 'progress', padding = { left = 1, right = 0 } })
+      ins_right({ 'progress', padding = { left = 1, right = 0 } })
 
-    ins_right({ block, color = block_color, padding = { left = 1, right = 0 } })
+      ins_right({ block, color = block_color, padding = { left = 1, right = 0 } })
 
-    require('lualine').setup(lualine_config)
-  end,
+      require('lualine').setup(lualine_config)
+    end,
+  },
 }

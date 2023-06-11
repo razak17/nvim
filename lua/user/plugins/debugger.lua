@@ -6,6 +6,7 @@ local function log_breakpoint() require('dap').set_breakpoint(nil, nil, vim.fn.i
 return {
   {
     'mfussenegger/nvim-dap',
+    enabled = not rvim.plugins.minimal,
     keys = {
       { '<localleader>db', function() require('dap').toggle_breakpoint() end, desc = 'dap: toggle breakpoint' },
       { '<localleader>dB', set_breakpoint, desc = 'dap: set conditional breakpoint' },
