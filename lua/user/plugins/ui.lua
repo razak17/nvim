@@ -179,31 +179,6 @@ return {
     },
   },
   {
-    'levouh/tint.nvim',
-    event = 'UIEnter',
-    opts = {
-      tint = -30,
-      highlight_ignore_patterns = {
-        'WinSeparator',
-        'St.*',
-        'Comment',
-        'Panel.*',
-        'Telescope.*',
-        'Bqf.*',
-        'VirtColumn',
-        'Headline.*',
-        'NeoTree.*',
-      },
-      window_ignore_function = function(win_id)
-        local win, buf = vim.wo[win_id], vim.bo[vim.api.nvim_win_get_buf(win_id)]
-        if win.diff or not rvim.falsy(vim.fn.win_gettype(win_id)) then return true end
-        local ignore_bt = rvim.p_table({ terminal = true, prompt = true, nofile = false })
-        local ignore_ft = rvim.p_table({ ['Telescope.*'] = true, ['Neogit.*'] = true, ['qf'] = true })
-        return ignore_bt[buf.buftype] or ignore_ft[buf.filetype]
-      end,
-    },
-  },
-  {
     'kevinhwang91/nvim-ufo',
     enabled = rvim.treesitter.enable,
     event = 'VeryLazy',
