@@ -159,6 +159,18 @@ return {
             end, symbols),
           },
           modified = { symbol = codicons.misc.circle .. ' ' },
+          -- buffers = {
+          --   follow_current_file = true,
+          --   group_empty_dirs = true,
+          --   show_unloaded = true,
+          --   window = {
+          --     mappings = {
+          --       ['bd'] = 'buffer_delete',
+          --       ['gp'] = 'navigate_up',
+          --       ['.'] = 'set_root',
+          --     },
+          --   },
+          -- },
           git_status = {
             symbols = {
               added = codicons.git.added,
@@ -192,7 +204,9 @@ return {
             ['o'] = 'toggle_node',
             ['P'] = { 'toggle_preview', config = { use_float = false } },
             ['v'] = 'vsplit_with_window_picker',
-            ['Z'] = 'expand_all_nodes',
+            ['O'] = 'expand_all_nodes',
+            ['<bs>'] = 'close_node',
+            ['gp'] = 'navigate_up',
           },
         },
       })
