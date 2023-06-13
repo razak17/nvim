@@ -391,4 +391,4 @@ map('n', '<leader>lD', '<Cmd>LspRemoveTemplates<CR>', { desc = 'delete setup fil
 map('n', '<leader>lO', '<Cmd>edit ' .. rvim.lsp.config_file .. '<CR>', { desc = 'open lspsetup file' })
 
 -- Generate templates
-vim.defer_fn(function() vim.cmd('LspGenerateTemplates') end, 1)
+if fn.filereadable(rvim.lsp.config_file) ~= 1 then vim.defer_fn(function() vim.cmd('LspGenerateTemplates') end, 1) end
