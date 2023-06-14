@@ -68,7 +68,7 @@ return {
           documentation = cmp.config.window.bordered(window_opts),
         },
         matching = {
-          disallow_fuzzy_matching = true,
+          disallow_fuzzy_matching = false,
           disallow_fullfuzzy_matching = true,
           disallow_partial_fuzzy_matching = true,
           disallow_partial_matching = true,
