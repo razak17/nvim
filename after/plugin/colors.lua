@@ -21,9 +21,9 @@ local function general_overrides()
     { EndOfBuffer = { bg = 'NONE' } },
     { GitSignsCurrentLineBlame = { link = 'Comment' } },
     { StatusColSep = { link = 'Comment' } },
-    ------------------------------------------------------------------------------//
+    ------------------------------------------------------------------------------------------------
     --  Semantic tokens
-    ------------------------------------------------------------------------------//
+    ------------------------------------------------------------------------------------------------
     { ['@lsp.type.variable'] = { clear = true } },
     { ['@lsp.type.variable'] = { link = '@variable' } },
     { ['@lsp.typemod.method'] = { link = '@method' } },
