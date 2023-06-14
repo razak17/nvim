@@ -16,6 +16,8 @@ map('n', '<localleader>gfs', '<Cmd>GoFillStruct<CR>', with_desc('fill struct'))
 map('n', '<localleader>gfp', '<Cmd>GoFixPlurals<CR>', with_desc('fix plurals'))
 map('n', '<localleader>gie', '<Cmd>GoIfErr<CR>', with_desc('if err'))
 
+if rvim.plugins.minimal then return end
+
 local dap = require('dap')
 local mason_registry = require('mason-registry')
 local dlv_path = mason_registry.get_package('delve'):get_install_path() .. '/dlv'

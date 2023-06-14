@@ -1,4 +1,4 @@
-if not rvim or rvim.minimal then return end
+if not rvim or rvim.minimal or rvim.plugins.minimal then return end
 
 local mason_registry = require('mason-registry')
 local codelldb_path = mason_registry.get_package('codelldb'):get_install_path() .. '/extension/adapter/codelldb'

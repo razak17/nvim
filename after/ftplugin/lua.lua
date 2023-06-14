@@ -9,6 +9,8 @@ if not rvim or rvim.minimal then return end
 opt.spellfile:prepend(join_paths(vim.fn.stdpath('config'), 'spell', 'lua.utf-8.add'))
 opt.spelllang = { 'en_gb', 'programming' }
 
+if rvim.plugins.minimal then return end
+
 local dap = require('dap')
 
 dap.adapters.nlua = function(callback, config)
