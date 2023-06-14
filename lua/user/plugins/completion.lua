@@ -22,10 +22,10 @@ return {
         end,
         lsp_hls,
         {
-          { CmpItemAbbr = { fg = { from = 'Search' } } },
+          { CmpItemAbbr = { fg = { from = 'Comment' } } },
           { CmpItemAbbrDeprecated = { strikethrough = true, inherit = 'Comment' } },
-          { CmpItemAbbrMatch = { fg = { from = 'CursorLineNr' } } },
-          { CmpItemAbbrMatchFuzzy = { fg = { from = 'Title' } } },
+          { CmpItemAbbrMatch = { fg = { from = 'Search' } } },
+          { CmpItemAbbrMatchFuzzy = { fg = { from = 'Search' } } },
           { CmpItemMenu = { fg = { from = 'Comment', attr = 'fg' }, italic = true, bold = true } },
         }
       )
