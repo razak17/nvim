@@ -49,7 +49,7 @@ rt.setup({
       map('n', '<localleader>rp', rt.parent_module.parent_module, { desc = 'parent module', buffer = bufnr })
       map('n', '<localleader>rs', rt.workspace_refresh.reload_workspace, { desc = 'reload workspace', buffer = bufnr })
       map('n', '<localleader>rg', '<Cmd>RustViewCrateGraph<CR>', { desc = 'view crate graph', buffer = bufnr })
-      vim.keymap.set('n', '<Leader>k', rt.code_action_group.code_action_group, { buffer = bufnr })
+      map('n', '<localleader>ra', rt.code_action_group.code_action_group, { desc = 'code action', buffer = bufnr })
     end,
     standalone = false,
     settings = require('user.servers')('rust_analyzer'),

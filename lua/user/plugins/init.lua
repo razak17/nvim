@@ -414,9 +414,9 @@ return {
     'NTBBloodbath/rest.nvim',
     ft = { 'http', 'json' },
     keys = {
-      { '<leader>rS', '<Plug>RestNvim', desc = 'rest: run' },
-      { '<leader>rP', '<Plug>RestNvimPreview', desc = 'rest: preview' },
-      { '<leader>rL', '<Plug>RestNvimLast', desc = 'rest: run last' },
+      { '<localleader>rs', '<Plug>RestNvim', desc = 'rest: run', buffer = 0 },
+      { '<localleader>rp', '<Plug>RestNvimPreview', desc = 'rest: preview', buffer = 0 },
+      { '<localleader>rl', '<Plug>RestNvimLast', desc = 'rest: run last', buffer = 0 },
     },
     opts = { skip_ssl_verification = true },
   },
