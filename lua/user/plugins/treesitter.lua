@@ -114,13 +114,13 @@ return {
     event = { 'BufRead', 'BufNewFile' },
     config = function()
       rvim.highlight.plugin('treesitter-context', {
-        { ContextBorder = { link = 'FloatBorder' } },
+        { TreesitterContextSeparator = { link = 'Dim' } },
         { TreesitterContext = { inherit = 'Normal' } },
         { TreesitterContextLineNumber = { inherit = 'LineNr' } },
       })
       require('treesitter-context').setup({
         multiline_threshold = 4,
-        separator = '─', --[[alternatives: ▁ ─ ▄ ]]
+        separator = '─', -- alternatives: ▁ ─ ▄
         mode = 'cursor',
       })
     end,
