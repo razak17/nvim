@@ -22,7 +22,7 @@ return {
         end,
         lsp_hls,
         {
-          { CmpItemAbbr = { fg = { from = 'Comment' } } },
+          { CmpItemAbbr = { fg = { from = 'MsgSeparator' } } },
           { CmpItemAbbrDeprecated = { strikethrough = true, inherit = 'Comment' } },
           { CmpItemAbbrMatch = { fg = { from = 'Search' } } },
           { CmpItemAbbrMatchFuzzy = { fg = { from = 'Search' } } },
