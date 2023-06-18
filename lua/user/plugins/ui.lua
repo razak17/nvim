@@ -144,6 +144,9 @@ return {
       })
       rvim.highlight.plugin('dropbar', {
         { DropBarIconUISeparator = { fg = { from = 'Label' } } },
+        { DropBarIconUIIndicator = { link = 'Label' } },
+        { DropBarMenuHoverEntry = { bg = 'NONE' } },
+        { DropBarMenuCurrentContext = { link = 'CursorLine' } },
       })
     end,
   },
