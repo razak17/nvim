@@ -15,6 +15,10 @@ asktoinstallnode() {
 	echo "Please install node before continuing with install" && exit
 }
 
+asktoinstallvirtualenv() {
+	echo "Please install virtualenv before continuing with install" && exit
+}
+
 asktoinstallpip() {
 	echo "Please install pip3 before continuing with install" && exit
 }
@@ -33,8 +37,15 @@ createDirs() {
 	mkdir -p "$HOME/.local/share/rvim/site/spell"
 }
 
-pythonPackages() {
-  pip install -U setuptools pynvim neovim-remote
+setup_venv() {
+  if [ ! -d "$RV_DATA_DIR/venv" ]; then
+    virtualenv -p python3 "$RV_DATA_DIR/venv"
+  fi
+}
+
+python_packages() {
+  echo "Activating virtualenv"
+  "$RV_DATA_DIR/venv/bin/python3" -m pip install -U setuptools pynvim neovim-remote
 }
 
 npm_deps() {
@@ -125,10 +136,12 @@ install_deps() {
 	[ "$answer" != "${answer#[Yy]}" ] && pythonPackages
 }
 
-cloneconfig() {
+clone_config() {
 	(command -v git >/dev/null && echo "git installed, moving on...") || asktoinstallgit
 
 	(command -v go >/dev/null && echo "go installed, moving on...") || asktoinstallgo
+
+  (command -v virtualenv >/dev/null && echo "virtualenv installed, moving on...") || asktoinstallvirtualenv
 
 	(command -v pip >/dev/null && echo "pip installed, moving on...") || asktoinstallpip
 
@@ -141,6 +154,9 @@ cloneconfig() {
 	echo "Installing rvim"
 	importRvim
 
+  echo "Creating virtualenv"
+  setup_venv
+
 	sudo cp --force "$RV_CONFIG_DIR/bin/rvim" "$HOME/.local/bin"
 }
 
@@ -149,13 +165,13 @@ while [ "$#" -gt 0 ]; do
 	shift
 
 	case "$curr" in
-	-py) pythonPackages ;;
-	-node) nodeHostInit ;;
+	-py) python_packages ;;
+	-venv) setup_venv ;;
 	-npm) install_nodejs_deps ;;
 	-deps) install_deps ;;
 	-dict) generate_dict ;;
 	*--all*)
-		cloneconfig
+		clone_config
     install_deps
     generate_dict
 		;;
