@@ -345,7 +345,16 @@ end
 local function toggle_virtual_text()
   local config = diagnostic.config()
   if type(config.virtual_text) == 'boolean' then
-    config = vim.tbl_extend('force', config, { virtual_text = { prefix = '', spacing = 1 } })
+    config = vim.tbl_extend('force', config, {
+      virtual_text = {
+        prefix = '',
+        spacing = 1,
+        format = function(d)
+          local level = diagnostic.severity[d.severity]
+          return fmt('%s %s', icons[level:lower()], d.message)
+        end,
+      },
+    })
     if type(config.virtual_lines) == 'table' then
       config = vim.tbl_extend('force', config, { virtual_lines = false })
     end
