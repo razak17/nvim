@@ -96,7 +96,8 @@ local function lsp_clients()
   local curwin = api.nvim_get_current_win()
   local curbuf = api.nvim_win_get_buf(curwin)
   local client_names = rvim.map(function(client) return client.name end, stl_lsp_clients(curbuf))
-  return table.concat(client_names, fmt(' %s ', separator)) .. ' ' .. separator
+  return '  ' .. table.concat(client_names, fmt(' %s ', separator)) .. ' ' .. separator
+
 end
 
 local function stl_copilot_indicator()
@@ -230,12 +231,6 @@ return {
         lazy_updates,
         color = { fg = colors.orange },
         cond = conditions.hide_in_width,
-      })
-
-      ins_right({
-        function() return ' LSP(s):' end,
-        color = { fg = colors.comment, gui = 'italic' },
-        cond = conditions.hide_in_width and conditions.ignored_filetype and conditions.lsp_enabled,
       })
 
       ins_right({
