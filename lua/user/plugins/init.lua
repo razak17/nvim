@@ -461,6 +461,7 @@ return {
   },
   {
     'axelvc/template-string.nvim',
+    event = 'BufRead',
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
     ft = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
     opts = { remove_template_string = true },
