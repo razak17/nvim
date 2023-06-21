@@ -17,7 +17,13 @@ local servers = {
   yamlls = {},
   vimls = {},
   volar = {},
-  docker_compose_language_service = {},
+  docker_compose_language_service = function()
+    local lspconfig = require('lspconfig')
+    return {
+      root_dir = lspconfig.util.root_pattern('docker-compose.yml'),
+      filetypes = { 'yaml', 'dockerfile' },
+    }
+  end,
   prosemd_lsp = {},
   jsonls = {
     settings = {
