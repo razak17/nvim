@@ -89,6 +89,7 @@ local servers = {
           rangeVariableTypes = true,
         },
         analyses = { unusedparams = true, loopclosure = true },
+        semanticTokens = true,
         usePlaceholders = true,
         completeUnimported = true,
         staticcheck = true,
