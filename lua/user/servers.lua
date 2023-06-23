@@ -99,7 +99,7 @@ local servers = {
         usePlaceholders = true,
         completeUnimported = true,
         staticcheck = true,
-        directoryFilters = { '-node_modules' },
+        directoryFilters = { '-node_modules', '-vendor' },
       },
     },
   },
