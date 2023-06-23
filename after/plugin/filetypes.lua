@@ -3,6 +3,10 @@ if not rvim then return end
 local settings, highlight = rvim.filetype_settings, rvim.highlight
 local cmd, api, opt_l = vim.cmd, vim.api, vim.opt_local
 
+vim.treesitter.language.register('bash', 'sh')
+vim.treesitter.language.register('markdown', 'chatgpt')
+vim.treesitter.language.register('gitcommit', 'NeogitCommitMessage')
+
 settings({
   ['dap-repl'] = {
     opt = {
@@ -21,9 +25,6 @@ settings({
   },
   [{ 'rust', 'org' }] = {
     opt = { spell = true },
-  },
-  chatgpt = {
-    function() vim.treesitter.language.register('markdown', 'chatgpt') end,
   },
   graphql = {
     opt = {
@@ -90,7 +91,6 @@ settings({
         -- Schedule this call rvim highlights are not set correctly if there is not a delay
         highlight.set_winhl('gitcommit', 0, { { VirtColumn = { fg = { from = 'Variable' } } } })
       end)
-      vim.treesitter.language.register('gitcommit', 'NeogitCommitMessage')
     end,
   },
   netrw = {
