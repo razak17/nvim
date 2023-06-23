@@ -96,7 +96,7 @@ local function lsp_clients()
   local curwin = api.nvim_get_current_win()
   local curbuf = api.nvim_win_get_buf(curwin)
   local client_names = rvim.map(function(client) return client.name end, stl_lsp_clients(curbuf))
-  return '  ' .. table.concat(client_names, fmt(' %s ', separator)) .. ' ' .. separator
+  return ' ' .. table.concat(client_names, fmt(' %s ', separator)) .. ' ' .. separator
 
 end
 
@@ -241,9 +241,9 @@ return {
       })
 
       ins_right({
-        function() return 'Copilot:' end,
+        function() return ' ' end,
         padding = { left = 0, right = 0 },
-        color = { fg = colors.comment, gui = 'italic' },
+        color = { fg = colors.forest_green },
         cond = conditions.hide_in_width and conditions.ignored_filetype and conditions.copilot_enabled,
       })
 
@@ -257,7 +257,7 @@ return {
 
       ins_right({
         function() return codicons.misc.shaded_lock end,
-        padding = { left = 2, right = 1 },
+        padding = { left = 2, right = 0 },
         color = { fg = colors.comment, gui = 'bold' },
         cond = conditions.hide_in_width and conditions.formatting_disabled,
       })
