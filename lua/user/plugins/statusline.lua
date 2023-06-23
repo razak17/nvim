@@ -24,7 +24,7 @@ local conditions = {
       upward = true,
     }))
   end,
-  copilot_enabled = function() return rvim.ai.enable end,
+  copilot_enabled = function() return rvim.ai.enable and not rvim.plugins.minimal end,
   lsp_enabled = function() return rvim.lsp.enable end,
 }
 
@@ -97,7 +97,6 @@ local function lsp_clients()
   local curbuf = api.nvim_win_get_buf(curwin)
   local client_names = rvim.map(function(client) return client.name end, stl_lsp_clients(curbuf))
   return ' ' .. table.concat(client_names, fmt(' %s ', separator)) .. ' ' .. separator
-
 end
 
 local function stl_copilot_indicator()
