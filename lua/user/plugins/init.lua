@@ -38,7 +38,7 @@ return {
   },
   {
     'mrjones2014/smart-splits.nvim',
-    config = true,
+    opts = {},
     build = './kitty/install-kittens.bash',
     keys = {
       -- moving between splits
@@ -239,7 +239,7 @@ return {
   {
     'jghauser/fold-cycle.nvim',
     enabled = rvim.lsp.enable,
-    config = true,
+    opts = {},
     keys = {
       { '<BS>', function() require('fold-cycle').open() end, desc = 'fold-cycle: toggle' },
     },
@@ -386,7 +386,7 @@ return {
     'dmmulroy/tsc.nvim',
     enabled = rvim.lsp.enable,
     cmd = 'TSC',
-    config = true,
+    opts = {},
     ft = { 'typescript', 'typescriptreact' },
   },
   {
