@@ -324,7 +324,6 @@ return {
   },
   {
     'is0n/jaq-nvim',
-    enabled = rvim.lsp.enable,
     cmd = 'Jaq',
     keys = {
       { '<leader>rr', ':silent only | Jaq<CR>', desc = 'jaq: run' },
