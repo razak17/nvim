@@ -16,11 +16,11 @@ local format_exclusions = {
     go = { 'null-ls' },
     proto = { 'null-ls' },
     html = { 'html' },
-    javascript = { 'quick_lint_js', 'tsserver' },
+    javascript = { 'quick_lint_js', 'tsserver', 'typescript-tools' },
     json = { 'jsonls' },
-    typescript = { 'tsserver' },
-    typescriptreact = { 'tsserver' },
-    javascriptreact = { 'tsserver' },
+    typescript = { 'tsserver', 'typescript-tools' },
+    typescriptreact = { 'tsserver', 'typescript-tools' },
+    javascriptreact = { 'tsserver', 'typescript-tools' },
   },
 }
 
@@ -49,7 +49,7 @@ end
 ---@param opts {bufnr: integer, async: boolean, filter: fun(lsp.Client): boolean}
 local function format(opts)
   opts = opts or {}
-  lsp.buf.format({ bufnr = opts.bufnr, async = opts.async, filter = formatting_filter })
+  lsp.buf.format({ bufnr = opts.bufnr, async = opts.async, filter = formatting_filter, timeout_ms = 2000 })
 end
 
 ----------------------------------------------------------------------------------------------------
