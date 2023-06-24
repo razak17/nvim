@@ -49,7 +49,7 @@ end
 ---@param opts {bufnr: integer, async: boolean, filter: fun(lsp.Client): boolean}
 local function format(opts)
   opts = opts or {}
-  lsp.buf.format({ bufnr = opts.bufnr, async = opts.async, filter = formatting_filter, timeout_ms = 2000 })
+  lsp.buf.format({ bufnr = opts.bufnr, async = opts.async, filter = formatting_filter })
 end
 
 ----------------------------------------------------------------------------------------------------
