@@ -47,7 +47,6 @@ local function launch_server(server, config)
     end
     local is_custom = server == 'rust_analyzer' or false
     if server == 'rust_analyzer' then require('user.lsp.rust-tools') end
-    if server == 'vtsls' then require('lspconfig.configs').vtsls = require('vtsls').lspconfig end
     if not is_custom then require('lspconfig')[server].setup(config) end
     buf_try_add(server)
   end)

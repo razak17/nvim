@@ -16,11 +16,11 @@ local format_exclusions = {
     go = { 'null-ls' },
     proto = { 'null-ls' },
     html = { 'html' },
-    javascript = { 'quick_lint_js', 'vtsls' },
+    javascript = { 'quick_lint_js', 'tsserver' },
     json = { 'jsonls' },
-    typescript = { 'vtsls' },
-    typescriptreact = { 'vtsls' },
-    javascriptreact = { 'vtsls' },
+    typescript = { 'tsserver' },
+    typescriptreact = { 'tsserver' },
+    javascriptreact = { 'tsserver' },
   },
 }
 
@@ -101,7 +101,7 @@ local function setup_mappings(client, bufnr)
     { { 'n', 'x' }, '<leader>la', lsp.buf.code_action, desc = 'code action', capability = provider.CODEACTIONS },
     { 'n', '<leader>lf', format, desc = 'format buffer', capability = provider.FORMATTING },
     { 'n', 'K', show_documentation, desc = 'hover', capability = provider.HOVER, exclude_ft = { 'rust', 'toml' } },
-    { 'n', 'gd', lsp.buf.definition, desc = 'definition', capability = provider.DEFINITION, exclude = { 'vtsls' } },
+    { 'n', 'gd', lsp.buf.definition, desc = 'definition', capability = provider.DEFINITION, exclude = { 'tsserver' } },
     { 'n', 'gr', lsp.buf.references, desc = 'references', capability = provider.REFERENCES },
     { 'n', 'gi', lsp.buf.implementation, desc = 'implementation', capability = provider.REFERENCES },
     { 'n', 'gI', lsp.buf.incoming_calls, desc = 'incoming calls', capability = provider.REFERENCES },
@@ -130,23 +130,6 @@ local function setup_mappings(client, bufnr)
       map(m[1], m[2], m[3], { buffer = bufnr, desc = fmt('lsp: %s', m.desc) })
     end
   end, mappings)
-
-  if client.name == 'vtsls' then
-    require('which-key').register({ ['<localleader>t'] = { name = 'Typescript', i = 'Imports' } })
-
-    local vtsls_mappings = {
-      { 'n', 'gd', '<Cmd>VtsExec goto_source_definition<CR>', desc = 'go to source definition' },
-      { 'n', '<localleader>tr', '<Cmd>VtsExec rename_file<CR>', desc = 'rename file' },
-      { 'n', '<localleader>tf', '<Cmd>VtsExec fix_all<CR>', desc = 'fix all' },
-      { 'n', '<localleader>tia', '<Cmd>VtsExec add_missing_imports<CR>', desc = 'add missing' },
-      { 'n', '<localleader>tio', '<Cmd>VtsExec organize_imports<CR>', desc = 'organize' },
-      { 'n', '<localleader>tix', '<Cmd>VtsExec remove_unused_imports<CR>', desc = 'remove unused' },
-    }
-    rvim.foreach(
-      function(m) map(m[1], m[2], m[3], { buffer = bufnr, desc = fmt('%s: %s', 'vtsls', m.desc) }) end,
-      vtsls_mappings
-    )
-  end
 end
 
 ----------------------------------------------------------------------------------------------------
@@ -160,7 +143,7 @@ end
 --- without putting all this logic in the general on_attach function
 ---@type {[string]: ClientOverrides}
 local client_overrides = {
-  vtsls = {
+  tsserver = {
     semantic_tokens = function(bufnr, client, token)
       if token.type == 'variable' and token.modifiers['local'] and not token.modifiers.readonly then
         lsp.semantic_tokens.highlight_token(token, bufnr, client.id, '@danger')

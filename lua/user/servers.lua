@@ -39,41 +39,15 @@ local servers = {
       checkOnSave = { enable = true, command = 'clippy' },
     },
   },
-  vtsls = {
-    -- Apparently setting this to false improves performance
-    -- @see https://github.com/sublimelsp/LSP-typescript/issues/129#issuecomment-1281643371
-    init_options = { preferences = { includeCompletionsForModuleExports = false } },
-    settings = {
-      ['js/ts'] = {
-        implicitProjectConfig = { checkJs = true },
-      },
-      typescript = {
-        suggest = { completeFunctionCalls = true },
-        inlayHints = {
-          includeInlayParameterNameHints = 'all',
-          includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-          includeInlayVariableTypeHintsWhenTypeMatchesName = false,
-          includeInlayFunctionParameterTypeHints = true,
-          includeInlayVariableTypeHints = false,
-          includeInlayPropertyDeclarationTypeHints = true,
-          includeInlayFunctionLikeReturnTypeHints = true,
-          includeInlayEnumMemberValueHints = true,
-        },
-      },
-      javascript = {
-        inlayHints = {
-          includeInlayParameterNameHints = 'all',
-          includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-          includeInlayVariableTypeHintsWhenTypeMatchesName = false,
-          includeInlayFunctionParameterTypeHints = true,
-          includeInlayVariableTypeHints = false,
-          includeInlayPropertyDeclarationTypeHints = true,
-          includeInlayFunctionLikeReturnTypeHints = true,
-          includeInlayEnumMemberValueHints = true,
-        },
-      },
-    },
-  },
+  -- vtsls = {
+  --   -- NOTE: only works with vtsls
+  --   -- TODO: figure out how to do this with typescript-tools
+  --   settings = {
+  --     ['js/ts'] = {
+  --       implicitProjectConfig = { checkJs = true },
+  --     },
+  --   },
+  -- },
   denols = {
     root_dir = function(fname) return require('lspconfig/util').root_pattern('deno.json', 'deno.jsonc')(fname) end,
   },

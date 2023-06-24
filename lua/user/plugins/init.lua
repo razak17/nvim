@@ -379,7 +379,6 @@ return {
   ----------------------------------------------------------------------------------------------------
   -- Filetype Plugins {{{1
   ----------------------------------------------------------------------------------------------------
-  'yioneko/nvim-vtsls',
   { 'razak17/slides.nvim', ft = 'slide' },
   { 'fladson/vim-kitty', ft = 'kitty' },
   {
@@ -388,6 +387,26 @@ return {
     cmd = 'TSC',
     opts = {},
     ft = { 'typescript', 'typescriptreact' },
+  },
+  {
+    'pmizio/typescript-tools.nvim',
+    enabled = rvim.lsp.enable,
+    lazy = false,
+    dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
+    opts = {
+      settings = {
+        tsserver_file_preferences = {
+          includeInlayParameterNameHints = 'literal',
+          includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+          includeInlayVariableTypeHintsWhenTypeMatchesName = false,
+          includeInlayFunctionParameterTypeHints = true,
+          includeInlayVariableTypeHints = true,
+          includeInlayFunctionLikeReturnTypeHints = false,
+          includeInlayPropertyDeclarationTypeHints = true,
+          includeInlayEnumMemberValueHints = true,
+        },
+      },
+    },
   },
   {
     'razak17/tailwind-fold.nvim',
@@ -482,7 +501,7 @@ return {
           local id = vim.tbl_get(args, 'data', 'client_id')
           if not id then return end
           local client = vim.lsp.get_client_by_id(id)
-          if client.name == 'vtsls' then require('twoslash-queries').attach(client, args.buf) end
+          if client.name == 'tsserver' then require('twoslash-queries').attach(client, args.buf) end
         end,
       })
     end,
