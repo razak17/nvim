@@ -21,7 +21,9 @@ return {
         automatic_setup = true,
         ensure_installed = { 'goimports', 'golangci_lint', 'stylua', 'prettierd', 'zsh', 'flake8', 'black' },
         automatic_installation = false,
-        handlers = {},
+        handlers = {
+          prettier = function(source_name, methods) end,
+        },
       })
       require('null-ls').setup({
         debug = rvim.debug.enable,
