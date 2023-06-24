@@ -24,7 +24,7 @@ return {
         {
           { CmpItemAbbr = { fg = { from = 'MsgSeparator' } } },
           { CmpItemAbbrDeprecated = { strikethrough = true, inherit = 'Comment' } },
-          { CmpItemAbbrMatch = { fg = { from = 'Search' } } },
+          { CmpItemAbbrMatch = { fg = { from = 'Search' }, bold = true } },
           { CmpItemAbbrMatchFuzzy = { fg = { from = 'Search' } } },
           { CmpItemMenu = { fg = { from = 'Comment', attr = 'fg' }, italic = true, bold = true } },
         }
