@@ -113,6 +113,7 @@ return {
   {
     'Bekaboo/dropbar.nvim',
     event = 'VeryLazy',
+    enabled = not rvim.plugins.minimal,
     keys = {
       { '<leader>wp', function() require('dropbar.api').pick() end, desc = 'winbar: pick' },
     },
