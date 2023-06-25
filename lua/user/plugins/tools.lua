@@ -17,15 +17,19 @@ return {
     enabled = rvim.lsp.enable,
     event = { 'BufReadPre', 'BufNewFile' },
     config = function()
+      local null_ls = require('null-ls')
       require('mason-null-ls').setup({
         automatic_setup = true,
         ensure_installed = { 'goimports', 'golangci_lint', 'stylua', 'prettierd', 'zsh', 'flake8', 'black' },
         automatic_installation = false,
         handlers = {
-          prettier = function(source_name, methods) end,
+          eslint = function()
+            null_ls.register(null_ls.builtins.diagnostics.eslint.with({ extra_filetypes = { 'svelte' } }))
+          end,
+          prettier = function() end,
         },
       })
-      require('null-ls').setup({
+      null_ls.setup({
         debug = rvim.debug.enable,
         on_attach = function(client, bufnr)
           local lfm_ok, lsp_format_modifications = rvim.pcall(require, 'lsp-format-modifications')
