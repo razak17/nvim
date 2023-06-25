@@ -166,13 +166,6 @@ return {
     },
   },
   {
-    'joechrisellis/lsp-format-modifications.nvim',
-    enabled = rvim.lsp.enable,
-    keys = {
-      { '<localleader>lm', '<cmd>FormatModifications<CR>', desc = 'format-modifications: format' },
-    },
-  },
-  {
     'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
     enabled = rvim.lsp.enable,
     event = 'LspAttach',

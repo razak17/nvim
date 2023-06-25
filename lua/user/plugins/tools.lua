@@ -29,15 +29,7 @@ return {
           prettier = function() end,
         },
       })
-      null_ls.setup({
-        debug = rvim.debug.enable,
-        on_attach = function(client, bufnr)
-          local lfm_ok, lsp_format_modifications = rvim.pcall(require, 'lsp-format-modifications')
-          if lfm_ok and vim.tbl_contains({ 'clangd', 'tsserver', 'null-ls' }, client.name) then
-            lsp_format_modifications.attach(client, bufnr, { format_on_save = false })
-          end
-        end,
-      })
+      null_ls.setup({ debug = rvim.debug.enable })
     end,
   },
 }
