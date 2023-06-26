@@ -192,6 +192,24 @@ return {
     keys = { { '<leader>c', '<Cmd>BDelete this<CR>', desc = 'buffer delete' } },
   },
   {
+    'folke/flash.nvim',
+    opts = {
+      modes = {
+        search = {
+          search = { trigger = ';' },
+        },
+        char = {
+          keys = { 'f', 'F', 't', 'T', ';' }, -- remove "," from keys
+        },
+      },
+    },
+    keys = {
+      { 's', function() require('flash').jump() end, mode = { 'n', 'x', 'o' } },
+      { 'S', function() require('flash').treesitter() end, mode = { 'o', 'x' } },
+      { 'r', function() require('flash').remote() end, mode = 'o', desc = 'Remote Flash' },
+    },
+  },
+  {
     'echasnovski/mini.surround',
     keys = { { 'ys', desc = 'add surrounding' }, 'ds', { 'yr', desc = 'delete surrounding' } },
     config = function()
