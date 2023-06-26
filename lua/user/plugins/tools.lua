@@ -2,8 +2,32 @@ local border = rvim.ui.current.border
 
 return {
   {
-    'razak17/null-ls.nvim',
+    'jose-elias-alvarez/null-ls.nvim',
     enabled = rvim.lsp.enable,
+    -- event = { 'BufReadPre', 'BufNewFile' },
+    -- config = function()
+    --   local null_ls = require('null-ls')
+    --   local builtins = null_ls.builtins
+    --   local diagnostics = builtins.diagnostics
+    --   local formatting = builtins.formatting
+    --   null_ls.setup({
+    --     debug = true,
+    --     sources = {
+    --       diagnostics.zsh,
+    --       diagnostics.flake8,
+    --       diagnostics.eslint_d.with({ filetypes = { 'svelte' } }),
+    --       diagnostics.eslint.with({ filetypes = { 'svelte' } }),
+    --       diagnostics.golangci_lint,
+    --       diagnostics.shellcheck.with({ extra_args = { '--severity', 'warning' } }),
+    --       formatting.black.with({ extra_args = { '--fast' } }),
+    --       formatting.prettierd,
+    --       formatting.isort,
+    --       formatting.shfmt,
+    --       formatting.stylua,
+    --       formatting.goimports,
+    --     },
+    --   })
+    -- end,
     keys = {
       {
         '<leader>ln',
@@ -23,8 +47,8 @@ return {
         ensure_installed = { 'goimports', 'golangci_lint', 'stylua', 'prettierd', 'zsh', 'flake8', 'black' },
         automatic_installation = false,
         handlers = {
-          eslint = function()
-            null_ls.register(null_ls.builtins.diagnostics.eslint.with({ extra_filetypes = { 'svelte' } }))
+          eslint_d = function()
+            null_ls.register(null_ls.builtins.diagnostics.eslint_d.with({ filetypes = { 'svelte' } }))
           end,
           prettier = function() end,
         },
