@@ -367,6 +367,11 @@ return {
     end,
     dependencies = { 'nvim-lua/plenary.nvim' },
   },
+  {
+    'razak17/rayso.nvim',
+    cmd = { 'Rayso' },
+    opts = {},
+  },
   -- }}}
   ----------------------------------------------------------------------------------------------------
   -- Filetype Plugins {{{1
