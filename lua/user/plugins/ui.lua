@@ -121,6 +121,7 @@ return {
     config = function()
       require('dropbar').setup({
         general = {
+          update_interval = 100,
           enable = function(buf, win)
             local b, w = vim.bo[buf], vim.wo[win]
             local decor = ui.decorations.get({ ft = b.ft, bt = b.bt, setting = 'winbar' })
