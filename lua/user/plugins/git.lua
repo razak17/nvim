@@ -109,11 +109,11 @@ return {
           map(mode, l, r, opts)
         end
 
-        map('n', '<leader>hs', gs.stage_hunk, { desc = 'stage hunk' })
         map('n', '<leader>hu', gs.undo_stage_hunk, { desc = 'undo stage' })
         map('n', '<leader>hw', gs.toggle_word_diff, { desc = 'toggle word diff' })
         map('n', '<leader>hd', gs.toggle_deleted, { desc = 'show deleted lines' })
         map('n', '<leader>hp', gs.preview_hunk_inline, { desc = 'preview hunk' })
+        map('n', '<leader>hb', gs.toggle_current_line_blame, { desc = 'toggle current line blame' })
 
         map('n', '<leader>gb', gs.blame_line, { desc = 'blame current line' })
         map('n', '<leader>gr', gs.reset_buffer, { desc = 'reset entire buffer' })
