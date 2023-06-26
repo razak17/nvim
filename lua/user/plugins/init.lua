@@ -373,6 +373,11 @@ return {
     opts = {},
   },
   {
+    'ellisonleao/carbon-now.nvim',
+    cmd = 'CarbonNow',
+    opts = {},
+  },
+  {
     'Sanix-Darker/snips.nvim',
     cmd = { 'SnipsCreate' },
     opts = {},
