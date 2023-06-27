@@ -117,6 +117,11 @@ return {
                 },
               },
             },
+            {
+              'folke/neoconf.nvim',
+              cmd = { 'Neoconf' },
+              opts = { local_settings = '.nvim.json', global_settings = 'nvim.json' },
+            },
           },
         },
       },

@@ -62,9 +62,8 @@ return {
   },
   {
     'j-hui/fidget.nvim',
-    enabled   = not rvim.plugins.minimal,
     tag = 'legacy',
-    enabled = rvim.lsp.enable,
+    enabled = rvim.lsp.enable and not rvim.plugins.minimal,
     event = 'BufReadPre',
     config = function()
       require('fidget').setup({
@@ -79,7 +78,7 @@ return {
   },
   {
     'folke/todo-comments.nvim',
-    enabled   = not rvim.plugins.minimal,
+    enabled = not rvim.plugins.minimal,
     event = 'BufReadPre',
     cmd = { 'TodoTelescope', 'TodoTrouble', 'TodoQuickFix', 'TodoDots' },
     keys = {
