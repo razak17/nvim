@@ -55,7 +55,9 @@ return {
           disable = { 'c', 'python' },
         },
         autotag = { enable = true },
-        rainbow = {
+        rainbow = rvim.plugins.minimal and {
+          enable = false,
+        } or {
           enable = true,
           query = {
             'rainbow-parens',
@@ -94,7 +96,10 @@ return {
     dependencies = {
       'nvim-treesitter/nvim-treesitter-textobjects',
       'JoosepAlviste/nvim-ts-context-commentstring',
-      { 'HiPhish/nvim-ts-rainbow2' },
+      {
+        'HiPhish/nvim-ts-rainbow2',
+        enabled = not rvim.plugins.minimal,
+      },
     },
   },
   {
@@ -110,7 +115,7 @@ return {
   },
   {
     'nvim-treesitter/nvim-treesitter-context',
-    enabled = rvim.treesitter.enable,
+    enabled = rvim.treesitter.enable and not rvim.plugins.minimal,
     event = { 'BufRead', 'BufNewFile' },
     config = function()
       rvim.highlight.plugin('treesitter-context', {

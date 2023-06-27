@@ -25,14 +25,13 @@ while [ "$#" -gt 0 ]; do
 		export RVIM_AI_ENABLED='0'
 		shift
 		;;
-	--plugins-minimal)
+	--minimal)
 		export RVIM_PLUGINS_MINIMAL='1'
 		shift
 		;;
 	--none)
 		export RVIM_PLUGINS_ENABLED='0'
 		export RVIM_LSP_ENABLED='0'
-		export RVIM_AI_ENABLED='0'
 		shift
 		;;
 	*)

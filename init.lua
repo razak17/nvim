@@ -21,9 +21,9 @@ local namespace = {
   ai = { enable = env.RVIM_AI_ENABLED == '1' },
   debug = { enable = false },
   lsp = {
-    enable = env.RVIM_LSP_ENABLED == '1',
+    enable = env.RVIM_LSP_ENABLED == '1' and env.RVIM_PLUGINS_MINIMAL == '0',
     disabled = {
-      servers = { 'emmet_ls' },
+      servers = { 'emmet_ls', 'tailwindcss' },
       filetypes = {},
     },
     signs = { enable = false },

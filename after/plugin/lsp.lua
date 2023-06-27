@@ -1,4 +1,4 @@
-if not rvim or rvim.minimal then return end
+if not rvim or rvim.minimal or rvim.plugins.minimal then return end
 
 rvim.lsp.config_file = join_paths(vim.fn.stdpath('config'), 'after', 'plugin', 'lspconfig.lua')
 

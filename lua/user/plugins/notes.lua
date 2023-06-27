@@ -46,7 +46,7 @@ return {
   },
   {
     'lukas-reineke/headlines.nvim',
-    enabled = rvim.treesitter.enable or not rvim.plugins.minimal,
+    enabled = rvim.treesitter.enable and not rvim.plugins.minimal,
     ft = { 'org', 'norg', 'markdown', 'yaml' },
     config = function()
       highlight.plugin('Headlines', {

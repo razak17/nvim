@@ -289,6 +289,7 @@ return {
   },
   {
     'willothy/flatten.nvim',
+    enabled = not rvim.plugins.minimal,
     lazy = false,
     priority = 1001,
     opts = {
@@ -368,6 +369,7 @@ return {
   },
   {
     'razak17/lab.nvim',
+    enabled = not rvim.plugins.minimal,
     event = { 'BufReadPre', 'BufNewFile' },
     keys = {
       { '<leader>rl', ':Lab code run<CR>', desc = 'lab: run' },
@@ -435,18 +437,25 @@ return {
   },
   {
     'razak17/tailwind-fold.nvim',
-    enabled = rvim.treesitter.enable,
+    enabled = rvim.treesitter.enable and not rvim.plugins.minimal,
     ft = { 'html', 'svelte', 'astro', 'vue', 'typescriptreact' },
     opts = { min_chars = 30 },
   },
-  { 'turbio/bracey.vim', ft = 'html', build = 'npm install --prefix server' },
+  {
+    'turbio/bracey.vim',
+    enabled = not rvim.plugins.minimal,
+    ft = 'html',
+    build = 'npm install --prefix server',
+  },
   {
     'olexsmir/gopher.nvim',
+    enabled = not rvim.plugins.minimal,
     ft = 'go',
     dependencies = { 'nvim-lua/plenary.nvim', 'nvim-treesitter/nvim-treesitter' },
   },
   {
     'iamcco/markdown-preview.nvim',
+    enabled = not rvim.plugins.minimal,
     build = function() fn['mkdp#util#install']() end,
     ft = 'markdown',
     config = function()
@@ -456,6 +465,7 @@ return {
   },
   {
     'NTBBloodbath/rest.nvim',
+    enabled = not rvim.plugins.minimal,
     ft = { 'http', 'json' },
     keys = {
       { '<localleader>rs', '<Plug>RestNvim', desc = 'rest: run', buffer = 0 },
@@ -466,6 +476,7 @@ return {
   },
   {
     'razak17/package-info.nvim',
+    enabled = not rvim.plugins.minimal,
     event = 'BufRead package.json',
     dependencies = { 'MunifTanjim/nui.nvim' },
     config = function()
@@ -485,6 +496,7 @@ return {
   },
   {
     'Saecki/crates.nvim',
+    enabled = not rvim.plugins.minimal,
     event = 'BufRead Cargo.toml',
     opts = {
       popup = { autofocus = true, border = border },
@@ -505,6 +517,7 @@ return {
   },
   {
     'axelvc/template-string.nvim',
+    enabled = not rvim.plugins.minimal,
     event = 'BufRead',
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
     ft = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
@@ -512,7 +525,7 @@ return {
   },
   {
     'marilari88/twoslash-queries.nvim',
-    enabled = rvim.treesitter.enable,
+    enabled = rvim.treesitter.enable and not rvim.plugins.minimal,
     ft = { 'typescript', 'typescriptreact' },
     config = function()
       highlight.plugin('twoslash-queries', {

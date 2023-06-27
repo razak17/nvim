@@ -50,6 +50,7 @@ return {
   },
   {
     'stevearc/dressing.nvim',
+    enabled = not rvim.plugins.minimal,
     event = 'BufRead',
     opts = {
       input = { insert_only = false, border = border },
@@ -61,6 +62,7 @@ return {
   },
   {
     'j-hui/fidget.nvim',
+    enabled   = not rvim.plugins.minimal,
     tag = 'legacy',
     enabled = rvim.lsp.enable,
     event = 'BufReadPre',
@@ -77,6 +79,7 @@ return {
   },
   {
     'folke/todo-comments.nvim',
+    enabled   = not rvim.plugins.minimal,
     event = 'BufReadPre',
     cmd = { 'TodoTelescope', 'TodoTrouble', 'TodoQuickFix', 'TodoDots' },
     keys = {
@@ -155,7 +158,7 @@ return {
   },
   {
     'lukas-reineke/indent-blankline.nvim',
-    enabled = rvim.treesitter.enable,
+    enabled = rvim.treesitter.enable and not rvim.plugins.minimal,
     event = 'BufRead',
     opts = {
       char = separators.left_thin_block,

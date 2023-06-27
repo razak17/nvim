@@ -11,6 +11,7 @@ local function cancel() neotest().run.stop({ interactive = true }) end
 return {
   {
     'nvim-neotest/neotest',
+    enabled   = not rvim.plugins.minimal,
     keys = {
       { '<leader>ts', toggle_summary, desc = 'neotest: toggle summary' },
       { '<leader>to', open, desc = 'neotest: output' },
