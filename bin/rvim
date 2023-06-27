@@ -4,6 +4,7 @@ export RVIM_PLUGINS_ENABLED='1'
 export RVIM_LSP_ENABLED='1'
 export RVIM_AI_ENABLED='1'
 export RVIM_PLUGINS_MINIMAL='0'
+export RVIM_NONE='0'
 
 launch_nvim() {
 	NVIM_APPNAME=rvim nvim "$@"
@@ -32,6 +33,7 @@ while [ "$#" -gt 0 ]; do
 	--none)
 		export RVIM_PLUGINS_ENABLED='0'
 		export RVIM_LSP_ENABLED='0'
+		export RVIM_NONE='1'
 		shift
 		;;
 	*)

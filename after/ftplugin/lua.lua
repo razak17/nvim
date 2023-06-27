@@ -1,3 +1,5 @@
+if rvim and rvim.none then return end
+
 local opt = vim.opt_local
 
 opt.textwidth = 120

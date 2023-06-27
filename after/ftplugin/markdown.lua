@@ -1,3 +1,5 @@
+if rvim and rvim.none then return end
+
 local cmd = vim.cmd
 
 vim.opt.spell = true

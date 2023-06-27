@@ -1,5 +1,7 @@
 if not rvim or not rvim.ui.statuscolumn.enable then return end
 
+if rvim and rvim.none then return end
+
 ---@alias ExtmarkSign {[1]: number, [2]: number, [3]: number, [4]: {sign_text: string, sign_hl_group: string}}
 
 local str = require('user.strings')

@@ -1,3 +1,5 @@
+if rvim and rvim.none then return end
+
 local bo, wo = vim.bo, vim.wo
 
 bo.autoindent = true

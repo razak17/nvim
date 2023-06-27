@@ -1,3 +1,5 @@
+if rvim and rvim.none then return end
+
 local api, fn, fs = vim.api, vim.fn, vim.fs
 local fmt = string.format
 

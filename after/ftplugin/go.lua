@@ -1,3 +1,5 @@
+if rvim and rvim.none then return end
+
 local bo, fmt = vim.bo, string.format
 
 bo.tabstop = 4

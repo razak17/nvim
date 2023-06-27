@@ -1,3 +1,5 @@
+if rvim and rvim.none then return end
+
 local bo, opt = vim.bo, vim.opt_local
 
 bo.tabstop = 4

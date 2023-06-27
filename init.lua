@@ -30,7 +30,8 @@ local namespace = {
     hover_diagnostics = { enable = true },
   },
   mappings = {},
-  minimal = env.RVIM_LSP_ENABLED == '0' or env.RVIM_PLUGINS_ENABLED == '0',
+  minimal = env.RVIM_LSP_ENABLED == '0' or env.RVIM_PLUGINS_ENABLED == '0' or env.RVIM_NONE == '1',
+  none = env.RVIM_NONE == '1',
   plugins = {
     enable = env.RVIM_PLUGINS_ENABLED == '1',
     minimal = env.RVIM_PLUGINS_MINIMAL == '1',
