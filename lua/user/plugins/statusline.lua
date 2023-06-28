@@ -73,6 +73,7 @@ end
 local function stl_lsp_clients(bufnum)
   local clients = vim.lsp.get_active_clients({ bufnr = bufnum })
   clients = vim.tbl_filter(function(client) return client.name ~= 'copilot' end, clients)
+  local lsp_clients = vim.tbl_filter(function(client) return client.name ~= 'null-ls' end, clients)
   if falsy(clients) then return { { name = 'No Active LSP' } } end
   table.sort(clients, function(a, b)
     if a.name == 'null-ls' then return false end
@@ -85,14 +86,18 @@ local function stl_lsp_clients(bufnum)
       local sources = require('null-ls.sources').get_available(vim.bo[bufnum].filetype)
       if rvim.falsy(sources) then return { name = '' } end
       table.sort(sources, function(a, b) return a.name < b.name end)
-      local source_names = rvim.map(function(s) return s.name end, sources)
-      return { name = '␀ ' .. table.concat(rvim.removeDuplicates(source_names), ', ') }
+      local sources_names = rvim.map(function(s) return s.name end, sources)
+      local sources_component = table.concat(rvim.removeDuplicates(sources_names), ', ')
+      if falsy(lsp_clients) then
+        return { name = 'No Active LSP' .. ' ' .. separator .. ' ␀ ' .. sources_component }
+      end
+      return { name = '␀ ' .. sources_component }
     end
     return { name = client.name }
   end, clients)
 end
 
-local function lsp_clients()
+local function lsp_client_names()
   local curwin = api.nvim_get_current_win()
   local curbuf = api.nvim_win_get_buf(curwin)
   local client_names = rvim.map(function(client) return client.name end, stl_lsp_clients(curbuf))
@@ -233,7 +238,7 @@ return {
       })
 
       ins_right({
-        lsp_clients,
+        lsp_client_names,
         color = { gui = 'bold' },
         padding = { left = 0, right = 1 },
         cond = conditions.hide_in_width and conditions.ignored_filetype and conditions.lsp_enabled,
