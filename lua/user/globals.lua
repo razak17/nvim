@@ -236,12 +236,14 @@ end
 
 function rvim.lspconfig(map)
   local commands = rvim.map(function(fts, server)
-    return {
-      pattern = fts,
-      event = 'FileType',
-      desc = ('lsp setup for %s'):format(server),
-      command = function() require('user.lsp.manager').setup(tostring(server)) end,
-    }
+    if not rvim.find_string(rvim.lsp.disabled, server) then
+      return {
+        pattern = fts,
+        event = 'FileType',
+        desc = ('lsp setup for %s'):format(server),
+        command = function() require('user.lsp.manager').setup(tostring(server)) end,
+      }
+    end
   end, map)
   rvim.augroup('lsp-setup', unpack(commands))
 end

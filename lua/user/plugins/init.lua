@@ -119,6 +119,7 @@ return {
             },
             {
               'folke/neoconf.nvim',
+              enabled = rvim.lsp.enable,
               cmd = { 'Neoconf' },
               opts = { local_settings = '.nvim.json', global_settings = 'nvim.json' },
             },

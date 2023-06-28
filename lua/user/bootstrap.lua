@@ -6,6 +6,7 @@ local data = vim.fn.stdpath('data')
 ----------------------------------------------------------------------------------------------------
 -- Merge Project Config
 ----------------------------------------------------------------------------------------------------
+-- TODO: Switch to json
 local config_file = vim.fn.getcwd() .. '/rvim.lua'
 if vim.fn.filereadable(config_file) == 1 then
   local project_config = dofile(config_file)
