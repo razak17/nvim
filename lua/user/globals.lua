@@ -104,6 +104,26 @@ function rvim.removeDuplicates(table)
     return nil
   end, table)
 end
+
+function rvim.mergeTables(destination, source)
+  for k, v in pairs(source) do
+    if type(v) == 'table' and type(v[1]) == 'string' then
+      for _, item in ipairs(v) do
+        for _, existing in ipairs(destination[k]) do
+          if existing == item then goto continue end
+        end
+        table.insert(destination[k], item)
+        ::continue::
+      end
+    elseif type(v) == 'table' then
+      if destination[k] == nil or type(destination[k]) ~= 'table' then destination[k] = {} end
+      rvim.mergeTables(destination[k], v)
+    else
+      destination[k] = v
+    end
+  end
+end
+
 --- Autosize horizontal split to match its minimum content
 --- https://vim.fandom.com/wiki/Automatically_fitting_a_quickfix_window_height
 ---@param minheight number

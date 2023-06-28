@@ -2,6 +2,15 @@ if not rvim then return end
 
 local g, env = vim.g, vim.env
 local data = vim.fn.stdpath('data')
+
+----------------------------------------------------------------------------------------------------
+-- Merge Project Config
+----------------------------------------------------------------------------------------------------
+local config_file = vim.fn.getcwd() .. '/rvim.lua'
+if vim.fn.filereadable(config_file) == 1 then
+  local project_config = dofile(config_file)
+  rvim.mergeTables(rvim, project_config)
+end
 ----------------------------------------------------------------------------------------------------
 -- Set leader keys
 ----------------------------------------------------------------------------------------------------
