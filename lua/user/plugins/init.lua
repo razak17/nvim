@@ -11,6 +11,7 @@ return {
   'nvim-tree/nvim-web-devicons',
   {
     'olimorris/persisted.nvim',
+    enabled = not rvim.plugins.minimal,
     lazy = false,
     init = function()
       rvim.command('ListSessions', 'Telescope persisted')
@@ -365,6 +366,7 @@ return {
   },
   {
     'ahmedkhalf/project.nvim',
+    enabled = not rvim.plugins.minimal,
     event = 'VimEnter',
     name = 'project_nvim',
     opts = {
@@ -556,6 +558,7 @@ return {
   ----------------------------------------------------------------------------------------------------
   {
     'psliwka/vim-dirtytalk',
+    enabled = not rvim.plugins.minimal,
     lazy = false,
     build = ':DirtytalkUpdate',
     init = function() vim.opt.spelllang:append('programming') end,

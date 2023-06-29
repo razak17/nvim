@@ -269,9 +269,11 @@ return {
       require('telescope').load_extension('frecency')
       require('telescope').load_extension('undo')
       require('telescope').load_extension('menufacture')
-      require('telescope').load_extension('persisted')
-      require('telescope').load_extension('projects')
       require('telescope').load_extension('notify')
+      if not rvim.plugins.minimal then
+        require('telescope').load_extension('persisted')
+        require('telescope').load_extension('projects')
+      end
 
       vim.api.nvim_exec_autocmds('User', { pattern = 'TelescopeConfigComplete', modeline = false })
     end,

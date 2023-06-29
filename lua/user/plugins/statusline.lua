@@ -114,6 +114,7 @@ end
 return {
   {
     'nvim-lualine/lualine.nvim',
+    enabled = not rvim.plugins.minimal,
     lazy = false,
     config = function()
       local colors = require('onedark.palette')

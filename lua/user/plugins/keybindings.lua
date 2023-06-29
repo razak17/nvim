@@ -71,6 +71,7 @@ return {
   },
   {
     'anuvyklack/hydra.nvim',
+    enabled = not rvim.plugins.minimal,
     event = 'VeryLazy',
     config = function()
       local Hydra = require('hydra')

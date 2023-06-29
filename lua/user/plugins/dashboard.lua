@@ -2,6 +2,7 @@ local api, opt, f = vim.api, vim.opt_local, string.format
 
 return {
   'goolord/alpha-nvim',
+  enabled = not rvim.plugins.minimal,
   event = 'VimEnter',
   config = function()
     local alpha = require('alpha')

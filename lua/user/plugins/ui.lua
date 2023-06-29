@@ -40,7 +40,7 @@ return {
   },
   {
     'kevinhwang91/nvim-hlslens',
-    event = 'BufReadPre',
+    enabled = not rvim.plugins.minimal,
     opts = {},
     init = function() highlight.plugin('hlslens', { { HlSearchLens = { fg = { from = 'Comment', alter = 0.15 } } } }) end,
     keys = {
@@ -93,7 +93,6 @@ return {
   },
   {
     'uga-rosa/ccc.nvim',
-    ft = { 'lua', 'vim', 'typescript', 'typescriptreact', 'javascriptreact', 'svelte', 'astro' },
     keys = { { '<leader>oc', '<cmd>CccHighlighterToggle<CR>', desc = 'toggle ccc' } },
     opts = function()
       local ccc = require('ccc')
@@ -190,8 +189,8 @@ return {
   {
     'kevinhwang91/nvim-ufo',
     enabled = rvim.treesitter.enable,
-    event = 'VeryLazy',
-    init = function()
+    event = 'BufRead',
+    config = function()
       rvim.highlight.plugin('ufo', {
         { Folded = { bold = false, italic = false, bg = { from = 'CursorLine' } } },
       })

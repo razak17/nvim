@@ -1,4 +1,4 @@
-if not rvim or not rvim.plugins.enable then return end
+if not rvim or not rvim.plugins.enable or rvim.plugins.minimal then return end
 
 local ui = rvim.ui
 
