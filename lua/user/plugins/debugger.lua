@@ -1,3 +1,5 @@
+local input = vim.fn.input
+
 rvim.debugger = { layout = { ft = { dart = 2 } } }
 
 return {
@@ -8,12 +10,12 @@ return {
       { '<localleader>dbp', function() require('dap').toggle_breakpoint() end, desc = 'dap: toggle breakpoint' },
       {
         '<localleader>dbc',
-        function() require('dap').set_breakpoint(vim.fn.input('Breakpoint condition: ')) end,
-        desc = 'dap: set conditional breakpoint',
+        function() require('dap').set_breakpoint(input('Breakpoint condition: ')) end,
+        desc = 'dap: set breakpoint condition',
       },
       {
         '<localleader>dbm',
-        function() require('dap').set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end,
+        function() require('dap').set_breakpoint(nil, nil, input('Log point message: ')) end,
         desc = 'dap: log breakpoint',
       },
       { '<localleader>dbx', function() require('dap').clear_breakpoints() end, desc = 'dap: clear breakpoint' },
@@ -54,6 +56,20 @@ return {
 
       fn.sign_define('DapStopped', {
         text = ui.icons.misc.dap_green,
+        texthl = 'DapStopped',
+        linehl = '',
+        numhl = '',
+      })
+
+      fn.sign_define('DapBreakpointCondition', {
+        text = '󰙧',
+        texthl = 'DapStopped',
+        linehl = '',
+        numhl = '',
+      })
+
+      fn.sign_define('DapLogPoint', {
+        text = '󰃷',
         texthl = 'DapStopped',
         linehl = '',
         numhl = '',
