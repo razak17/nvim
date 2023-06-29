@@ -1,24 +1,27 @@
 rvim.debugger = { layout = { ft = { dart = 2 } } }
 
-local function set_breakpoint() require('dap').set_breakpoint(vim.fn.input('Breakpoint condition: ')) end
-local function log_breakpoint() require('dap').set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end
-
 return {
   {
     'mfussenegger/nvim-dap',
     enabled = not rvim.plugins.minimal,
     keys = {
-      { '<localleader>db', function() require('dap').toggle_breakpoint() end, desc = 'dap: toggle breakpoint' },
-      { '<localleader>dB', set_breakpoint, desc = 'dap: set conditional breakpoint' },
+      { '<localleader>dbp', function() require('dap').toggle_breakpoint() end, desc = 'dap: toggle breakpoint' },
+      {
+        '<localleader>dbc',
+        function() require('dap').set_breakpoint(vim.fn.input('Breakpoint condition: ')) end,
+        desc = 'dap: set conditional breakpoint',
+      },
+      {
+        '<localleader>dbm',
+        function() require('dap').set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end,
+        desc = 'dap: log breakpoint',
+      },
+      { '<localleader>dbx', function() require('dap').clear_breakpoints() end, desc = 'dap: clear breakpoint' },
       { '<localleader>dc', function() require('dap').continue() end, desc = 'dap: continue or start debugging' },
-      { '<localleader>dC', function() require('dap').clear_breakpoints() end, desc = 'dap: clear breakpoint' },
-      { '<localleader>de', function() require('dap').step_out() end, desc = 'dap: step out' },
       { '<localleader>dh', function() require('dap').step_back() end, desc = 'dap: step back' },
       { '<localleader>di', function() require('dap').step_into() end, desc = 'dap: step into' },
-      { '<localleader>dl', function() require('dap').run_last() end, desc = 'dap REPL: run last' },
-      { '<localleader>dL', log_breakpoint, desc = 'dap: log breakpoint' },
       { '<localleader>do', function() require('dap').step_over() end, desc = 'dap: step over' },
-      { '<localleader>dr', function() require('dap').restart() end, desc = 'dap: restart' },
+      { '<localleader>dO', function() require('dap').step_out() end, desc = 'dap: step out' },
       { '<localleader>dt', function() require('dap').repl.toggle() end, desc = 'dap: toggle repl' },
       { '<localleader>dw', function() require('dap.ui.widgets').hover() end, desc = 'dap: hover' },
       { '<localleader>dx', function() require('dap').terminate() end, desc = 'dap: terminate' },
