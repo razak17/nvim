@@ -8,6 +8,7 @@ local smart_close_filetypes = rvim.p_table({
   ['log'] = true,
   ['help'] = true,
   ['query'] = true,
+  ['dap-float'] = true,
   ['dbui'] = true,
   ['lspinfo'] = true,
   ['httpResult'] = true,
