@@ -2,10 +2,10 @@ local fn, api, env, fmt = vim.fn, vim.api, vim.env, string.format
 local falsy, icons, codicons = rvim.falsy, rvim.ui.icons, rvim.ui.codicons
 local separator = icons.separators.dotted_thin_block
 
-local ignored_filetypes = { 'toggleterm', 'lspinfo', 'null-ls-info', 'mason', 'oil' }
+local ignored_filetypes = { 'toggleterm', 'lspinfo', 'null-ls-info', 'mason', 'oil', 'buffer_manager' }
 
 local conditions = {
-  ignored_filetype = function() return not vim.tbl_contains(ignored_filetypes, vim.bo.filetype) end,
+  ignored_filetype = function() return not rvim.find_string(ignored_filetypes, vim.bo.filetype) end,
   buffer_not_empty = function() return fn.empty(fn.expand('%:t')) ~= 1 end,
   hide_in_width = function() return fn.winwidth(0) > 99 end,
   check_git_workspace = function()
@@ -242,20 +242,23 @@ return {
         lsp_client_names,
         color = { gui = 'bold' },
         padding = { left = 0, right = 1 },
-        cond = conditions.hide_in_width and conditions.ignored_filetype and conditions.lsp_enabled,
+        cond = conditions.hide_in_width
+          and function() return conditions.ignored_filetype() and conditions.lsp_enabled() end,
       })
 
       ins_right({
         function() return ' ' end,
         padding = { left = 0, right = 0 },
         color = { fg = colors.forest_green },
-        cond = conditions.hide_in_width and conditions.ignored_filetype and conditions.copilot_enabled,
+        cond = conditions.hide_in_width
+          and function() return conditions.ignored_filetype() and conditions.copilot_enabled() end,
       })
 
       ins_right({
         stl_copilot_indicator,
         color = { gui = 'bold' },
-        cond = conditions.hide_in_width and conditions.ignored_filetype and conditions.copilot_enabled,
+        cond = conditions.hide_in_width
+          and function() return conditions.ignored_filetype() and conditions.copilot_enabled() end,
       })
 
       ins_right({ 'filetype', cond = nil, padding = { left = 0, right = 0 } })
