@@ -72,7 +72,9 @@ rvim.augroup('TextYankHighlight', {
 
 rvim.augroup('UpdateVim', {
   event = { 'FocusLost', 'InsertLeave' },
-  command = 'silent! wall',
+  command = function()
+    if rvim.autosave.enable then vim.cmd('silent! wall') end
+  end,
 }, {
   event = { 'VimResized' },
   pattern = { '*' },
@@ -155,6 +157,7 @@ rvim.augroup('Utilities', {
 }, {
   event = { 'BufLeave' },
   command = function()
+    if not rvim.autosave.enable then return end
     if can_save() then vim.cmd('silent! write ++p') end
   end,
 }, {

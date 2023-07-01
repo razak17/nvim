@@ -20,6 +20,7 @@ g.projects_dir = env.DEV_HOME or fn.expand('~/personal/workspace/coding')
 local namespace = {
   ai = { enable = env.RVIM_AI_ENABLED == '1' },
   debug = { enable = false },
+  autosave = { enable = true },
   lsp = {
     enable = env.RVIM_LSP_ENABLED == '1' and env.RVIM_PLUGINS_MINIMAL == '0',
     disabled = {
