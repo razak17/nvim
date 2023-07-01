@@ -40,6 +40,7 @@ return {
   },
   {
     'kevinhwang91/nvim-hlslens',
+    event = 'BufReadPre',
     enabled = not rvim.plugins.minimal,
     opts = {},
     init = function() highlight.plugin('hlslens', { { HlSearchLens = { fg = { from = 'Comment', alter = 0.15 } } } }) end,
