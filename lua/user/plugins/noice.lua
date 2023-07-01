@@ -1,5 +1,5 @@
 local fn = vim.fn
-local border, highlight, L = rvim.ui.current.border, rvim.highlight, vim.log.levels
+local highlight, L = rvim.highlight, vim.log.levels
 
 return {
   'folke/noice.nvim',
@@ -8,18 +8,16 @@ return {
   opts = {
     cmdline = {
       format = {
-        IncRename = { title = ' Rename ' },
+        IncRename = { title = 'Rename' },
         substitute = { pattern = '^:%%?s/', icon = ' ', ft = 'regex', title = '' },
         input = { icon = ' ', lang = 'text', view = 'cmdline_popup', title = '' },
       },
     },
-    popupmenu = {
-      backend = 'nui',
-    },
+    popupmenu = { backend = 'nui' },
     lsp = {
       documentation = {
         opts = {
-          border = { style = border },
+          border = { style = 'single' },
           position = { row = 2 },
         },
       },
@@ -40,21 +38,21 @@ return {
       vsplit = { size = { width = 'auto' } },
       split = { win_options = { winhighlight = { Normal = 'Normal' } } },
       popup = {
-        border = { style = border, padding = { 0, 1 } },
+        border = { style = 'single', padding = { 0, 1 } },
       },
       cmdline_popup = {
         position = { row = 5, col = '50%' },
         size = { width = 'auto', height = 'auto' },
-        border = { style = border, padding = { 0, 1 } },
+        border = { style = 'single', padding = { 0, 1 } },
       },
       confirm = {
-        border = { style = border, padding = { 0, 1 }, text = { top = '' } },
+        border = { style = 'single', padding = { 0, 1 }, text = { top = '' } },
       },
       popupmenu = {
         relative = 'editor',
         position = { row = 9, col = '50%' },
         size = { width = 60, height = 10 },
-        border = { style = border, padding = { 0, 1 } },
+        border = { style = 'single', padding = { 0, 1 } },
         win_options = { winhighlight = { Normal = 'NormalFloat', FloatBorder = 'FloatBorder' } },
       },
     },
