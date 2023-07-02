@@ -14,6 +14,10 @@ return {
         input = { icon = ' ', lang = 'text', view = 'cmdline_popup', title = '' },
       },
     },
+    messages = {
+      enabled = true,
+      view = 'mini', -- minimise pattern not found messages
+    },
     popupmenu = { backend = 'nui' },
     lsp = {
       documentation = {
@@ -97,13 +101,13 @@ return {
         stop = true,
       },
       {
-        view = 'mini',
+        view = 'notify',
         filter = {
           any = {
             { event = 'msg_show', find = '^E486:' },
             { event = 'notify', max_height = 1 },
           },
-        }, -- minimise pattern not found messages
+        },
       },
       {
         view = 'notify',
