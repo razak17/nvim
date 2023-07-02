@@ -45,8 +45,8 @@ return {
     opts = {},
     init = function() highlight.plugin('hlslens', { { HlSearchLens = { fg = { from = 'Comment', alter = 0.15 } } } }) end,
     keys = {
-      { 'n', [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]] },
-      { 'N', [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]] },
+      { 'n', 'n', [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]] },
+      { 'n', 'N', [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]] },
     },
   },
   {
