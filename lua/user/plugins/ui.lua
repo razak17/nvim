@@ -277,7 +277,6 @@ return {
         end,
         timeout = 70,
         stages = 'fade_in_slide_out',
-        top_down = false,
         render = function(...)
           local notif = select(2, ...)
           local style = notif.title[1] == '' and 'minimal' or 'default'
