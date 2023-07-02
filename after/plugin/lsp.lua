@@ -283,6 +283,36 @@ sign({ highlight = 'DiagnosticSignError', icon = icons.error })
 sign({ highlight = 'DiagnosticSignWarn', icon = icons.warn })
 sign({ highlight = 'DiagnosticSignInfo', icon = icons.info })
 sign({ highlight = 'DiagnosticSignHint', icon = icons.hint })
+-----------------------------------------------------------------------------//
+-- Handler Overrides
+-----------------------------------------------------------------------------//
+-- This section overrides the default diagnostic handlers for signs and virtual text so that only
+-- the most severe diagnostic is shown per line
+
+--- The custom namespace is so that ALL diagnostics across all namespaces can be aggregated
+--- including diagnostics from plugins
+local ns = api.nvim_create_namespace('severe-diagnostics')
+
+--- Restricts nvim's diagnostic signs to only the single most severe one per line
+--- see `:help vim.diagnostic`
+---@param callback fun(namespace: integer, bufnr: integer, diagnostics: table, opts: table)
+---@return fun(namespace: integer, bufnr: integer, diagnostics: table, opts: table)
+local function max_diagnostic(callback)
+  return function(_, bufnr, diagnostics, opts)
+    local max_severity_per_line = rvim.fold(function(diag_map, d)
+      local m = diag_map[d.lnum]
+      if not m or d.severity < m.severity then diag_map[d.lnum] = d end
+      return diag_map
+    end, diagnostics, {})
+    callback(ns, bufnr, vim.tbl_values(max_severity_per_line), opts)
+  end
+end
+
+local signs_handler = diagnostic.handlers.signs
+diagnostic.handlers.signs = vim.tbl_extend('force', signs_handler, {
+  show = max_diagnostic(signs_handler.show),
+  hide = function(_, bufnr) signs_handler.hide(ns, bufnr) end,
+})
 ----------------------------------------------------------------------------------------------------
 -- Diagnostic Configuration
 ----------------------------------------------------------------------------------------------------
