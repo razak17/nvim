@@ -59,7 +59,7 @@ return {
       }, { mode = 'x', prefix = '<leader>' })
 
       which_key.register({
-        s = 'Sniprun',
+        g = 'git',
       }, { mode = 'x', prefix = '<localleader>' })
 
       rvim.augroup('WhichKeyMode', {
