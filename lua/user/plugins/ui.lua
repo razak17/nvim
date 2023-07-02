@@ -62,22 +62,6 @@ return {
     },
   },
   {
-    'j-hui/fidget.nvim',
-    tag = 'legacy',
-    enabled = rvim.lsp.enable and not rvim.plugins.minimal,
-    event = 'BufReadPre',
-    config = function()
-      require('fidget').setup({
-        align = { bottom = false, right = true },
-        fmt = { stack_upwards = false },
-      })
-      rvim.augroup('CloseFidget', {
-        event = { 'VimLeavePre', 'LspDetach' },
-        command = 'silent! FidgetClose',
-      })
-    end,
-  },
-  {
     'folke/todo-comments.nvim',
     enabled = not rvim.plugins.minimal,
     event = 'BufReadPre',
