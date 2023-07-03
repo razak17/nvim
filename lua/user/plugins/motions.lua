@@ -44,7 +44,7 @@ return {
       '<M-l>',
       { '<leader>ma', add_trail_mark_stack, desc = 'trailblazer: add stack' },
       { '<leader>md', delete_trail_mark_stack, desc = 'trailblazer: delete stack' },
-      { '<leader>mg', function() get_available_stacks(true) end, desc = 'trailblazer: delete stack' },
+      { '<leader>mg', function() get_available_stacks(true) end, desc = 'trailblazer: get stacks' },
       { '<leader>ms', '<Cmd>TrailBlazerSaveSession<CR>', desc = 'trailblazer: save session' },
       { '<leader>ml', '<Cmd>TrailBlazerLoadSession<CR>', desc = 'trailblazer: load session' },
     },
