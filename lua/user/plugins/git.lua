@@ -6,8 +6,8 @@ local neogit = rvim.reqidx('neogit')
 
 return {
   {
-    'TimUntersberger/neogit',
-    enabled   = not rvim.plugins.minimal,
+    'NeogitOrg/neogit',
+    enabled = not rvim.plugins.minimal,
     cmd = 'Neogit',
     dependencies = { 'nvim-lua/plenary.nvim' },
     keys = {
@@ -46,7 +46,7 @@ return {
   },
   {
     'sindrets/diffview.nvim',
-    enabled   = not rvim.plugins.minimal,
+    enabled = not rvim.plugins.minimal,
     cmd = { 'DiffviewOpen', 'DiffviewFileHistory', 'DiffviewToggleFiles', 'DiffviewFocusFiles' },
     keys = {
       { '<localleader>gd', '<Cmd>DiffviewOpen<CR>', desc = 'diffview: open' },
@@ -84,7 +84,7 @@ return {
   },
   {
     'lewis6991/gitsigns.nvim',
-    enabled   = not rvim.plugins.minimal,
+    enabled = not rvim.plugins.minimal,
     event = { 'BufReadPre', 'BufNewFile' },
     opts = {
       signs = {
@@ -141,7 +141,7 @@ return {
   },
   {
     'almo7aya/openingh.nvim',
-    enabled   = not rvim.plugins.minimal,
+    enabled = not rvim.plugins.minimal,
     event = 'VeryLazy',
     keys = {
       { '<localleader>gf', '<cmd>lua require("openingh").open_file()<CR>', desc = 'openingh: open file' },
