@@ -45,8 +45,9 @@ local function launch_server(server, config)
       vim.notify(fmt('[%q] is not executable.', cmd[1]), vim.log.levels.ERROR, { title = server })
       return
     end
-    local is_custom = server == 'rust_analyzer' or false
+    local is_custom = server == 'rust_analyzer' or server == 'tsserver'
     if server == 'rust_analyzer' then require('user.lsp.rust-tools') end
+    if server == 'tsserver' then require('user.lsp.typescript-tools') end
     if not is_custom then require('lspconfig')[server].setup(config) end
     buf_try_add(server)
   end)

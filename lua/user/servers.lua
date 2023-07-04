@@ -17,6 +17,7 @@ local servers = {
   yamlls = {},
   vimls = {},
   volar = {},
+  tsserver = {},
   docker_compose_language_service = function()
     local lspconfig = require('lspconfig')
     return {
