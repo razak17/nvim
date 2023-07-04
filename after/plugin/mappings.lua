@@ -177,6 +177,7 @@ if not rvim.plugins.enable then
 end
 nnoremap('<leader>x', ':q<CR>', { desc = 'quit' })
 nnoremap('<leader>q', ':q<CR>', { desc = 'quit' })
+nnoremap('<leader>Q', ':qa!<CR>', { desc = 'quit' })
 ----------------------------------------------------------------------------------------------------
 -- ?ie | entire object
 ----------------------------------------------------------------------------------------------------
