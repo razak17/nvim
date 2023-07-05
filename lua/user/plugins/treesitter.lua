@@ -55,20 +55,6 @@ return {
           disable = { 'c', 'python' },
         },
         autotag = { enable = true },
-        rainbow = rvim.plugins.minimal and {
-          enable = false,
-        } or {
-          enable = true,
-          query = {
-            'rainbow-parens',
-            html = 'rainbow-tags',
-            svelte = 'rainbow-tags',
-          },
-          strategy = {
-            require('ts-rainbow.strategy.global'),
-            dart = require('ts-rainbow.strategy.global'),
-          },
-        },
         query_linter = {
           enable = true,
           use_virtual_text = false,
@@ -96,10 +82,6 @@ return {
     dependencies = {
       'nvim-treesitter/nvim-treesitter-textobjects',
       'JoosepAlviste/nvim-ts-context-commentstring',
-      {
-        'HiPhish/nvim-ts-rainbow2',
-        enabled = not rvim.plugins.minimal,
-      },
     },
   },
   {

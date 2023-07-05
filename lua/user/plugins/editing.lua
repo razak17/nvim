@@ -192,6 +192,23 @@ return {
     config = function() require('mini.ai').setup({ mappings = { around_last = '', inside_last = '' } }) end,
   },
   {
+    'HiPhish/rainbow-delimiters.nvim',
+    enabled = not rvim.plugins.minimal,
+    event = 'VeryLazy',
+    config = function()
+      local rainbow_delimiters = require('rainbow-delimiters')
+
+      vim.g.rainbow_delimiters = {
+        strategy = {
+          [''] = rainbow_delimiters.strategy['global'],
+        },
+        query = {
+          [''] = 'rainbow-delimiters',
+        },
+      }
+    end,
+  },
+  {
     'numToStr/Comment.nvim',
     enabled = rvim.treesitter.enable,
     dependencies = { 'JoosepAlviste/nvim-ts-context-commentstring' },
