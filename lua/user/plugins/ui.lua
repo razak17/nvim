@@ -53,11 +53,61 @@ return {
     'stevearc/dressing.nvim',
     enabled = not rvim.plugins.minimal,
     event = 'BufRead',
+    init = function()
+      ---@diagnostic disable-next-line: duplicate-set-field
+      vim.ui.select = function(...)
+        require('lazy').load({ plugins = { 'dressing.nvim' } })
+        return vim.ui.select(...)
+      end
+    end,
     opts = {
       input = { insert_only = false, border = border },
       select = {
-        telescope = rvim.telescope.adaptive_dropdown(),
-        get_config = function() return { backend = 'telescope', telescope = rvim.telescope.cursor() } end,
+        backend = { 'fzf_lua', 'builtin' },
+        builtin = {
+          border = border,
+          min_height = 10,
+          win_options = { winblend = 10 },
+          mappings = { n = { ['q'] = 'Close' } },
+        },
+        get_config = function(opts)
+          opts.prompt = opts.prompt and opts.prompt:gsub(':', '')
+          if opts.kind == 'codeaction' then
+            return {
+              backend = 'fzf_lua',
+              fzf_lua = rvim.fzf.cursor_dropdown({
+                winopts = { title = opts.prompt },
+              }),
+            }
+          end
+          if opts.kind == 'orgmode' then
+            return {
+              backend = 'nui',
+              nui = {
+                position = '97%',
+                border = { style = ui.border.rectangle },
+                min_width = vim.o.columns - 2,
+              },
+            }
+          end
+          return {
+            backend = 'fzf_lua',
+            fzf_lua = rvim.fzf.dropdown({
+              winopts = { title = opts.prompt, height = 0.33, row = 0.5 },
+            }),
+          }
+        end,
+        nui = {
+          min_height = 10,
+          win_options = {
+            winhighlight = table.concat({
+              'Normal:Italic',
+              'FloatBorder:PickerBorder',
+              'FloatTitle:Title',
+              'CursorLine:Visual',
+            }, ','),
+          },
+        },
       },
     },
   },

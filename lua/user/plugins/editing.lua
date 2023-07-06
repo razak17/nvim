@@ -1,6 +1,7 @@
 return {
   {
     'gbprod/yanky.nvim',
+    cmd = { 'YankyRingHistory' },
     keys = {
       { 'p', '<Plug>(YankyPutAfter)', mode = { 'n', 'x' }, desc = 'yanky: put after' },
       { 'P', '<Plug>(YankyPutBefore)', mode = { 'n', 'x' }, desc = 'yanky: put before' },
@@ -8,39 +9,9 @@ return {
       { 'gP', '<Plug>(YankyGPutBefore)', mode = { 'n', 'x' }, desc = 'yanky: gput before' },
       { '<m-n>', '<Plug>(YankyCycleForward)', desc = 'yanky: cycle forward' },
       { '<m-p>', '<Plug>(YankyCycleBackward)', desc = 'yanky: cycle backward' },
-      {
-        '<localleader>y',
-        function() require('telescope').extensions.yank_history.yank_history(rvim.telescope.dropdown()) end,
-        desc = 'yanky: open yank history',
-      },
+      { '<localleader>y', '<Cmd>YankyRingHistory<CR>', desc = 'yanky: open yank history' },
     },
-    config = function()
-      local utils = require('yanky.utils')
-      local mapping = require('yanky.telescope.mapping')
-
-      require('yanky').setup({
-        ring = { storage = 'sqlite' },
-        picker = {
-          telescope = {
-            mappings = {
-              default = mapping.put('p'),
-              i = {
-                ['<c-p>'] = mapping.put('p'),
-                ['<c-y>'] = mapping.put('P'),
-                ['<c-x>'] = mapping.delete(),
-                ['<c-r>'] = mapping.set_register(utils.get_default_register()),
-              },
-              n = {
-                p = mapping.put('p'),
-                P = mapping.put('P'),
-                d = mapping.delete(),
-                r = mapping.set_register(utils.get_default_register()),
-              },
-            },
-          },
-        },
-      })
-    end,
+    opts = { ring = { storage = 'sqlite' } },
     dependencies = { 'kkharji/sqlite.lua' },
   },
   {
