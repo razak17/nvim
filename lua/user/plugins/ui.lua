@@ -173,8 +173,8 @@ return {
   },
   {
     'kevinhwang91/nvim-ufo',
-    enabled = rvim.treesitter.enable,
-    event = 'BufRead',
+    enabled = rvim.treesitter.enable and not rvim.plugins.minimal,
+    event = 'VeryLazy',
     config = function()
       rvim.highlight.plugin('ufo', {
         { Folded = { bold = false, italic = false, bg = { from = 'CursorLine' } } },
