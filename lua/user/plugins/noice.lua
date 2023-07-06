@@ -40,6 +40,9 @@ return {
       },
     },
     views = {
+      mini = {
+        position = { row = 1, col = '100%' },
+      },
       vsplit = { size = { width = 'auto' } },
       split = { win_options = { winhighlight = { Normal = 'Normal' } } },
       popup = {
