@@ -1,4 +1,13 @@
-if not rvim or rvim.minimal or rvim.plugins.minimal then return end
+if not rvim then return end
+
+local cwd = vim.fn.getcwd()
+
+local disabled = rvim.minimal
+  or not rvim.plugins.enable
+  or rvim.plugins.minimal
+  or rvim.dirs_match(rvim.lsp.disabled.directories, cwd)
+
+if disabled then return end
 
 rvim.lsp.config_file = join_paths(vim.fn.stdpath('config'), 'after', 'plugin', 'lspconfig.lua')
 

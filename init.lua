@@ -24,8 +24,9 @@ local namespace = {
   lsp = {
     enable = env.RVIM_LSP_ENABLED == '1' and env.RVIM_PLUGINS_MINIMAL == '0',
     disabled = {
-      servers = { 'emmet_ls' },
       filetypes = {},
+      directories = { vim.fn.stdpath('data') },
+      servers = { 'emmet_ls' },
     },
     format_on_save = { enable = true },
     signs = { enable = false },

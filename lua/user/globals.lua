@@ -154,6 +154,17 @@ function rvim.pcall(msg, func, ...)
   end, unpack(args))
 end
 
+---Check if a target directory exists in a given table
+---@param dir string
+---@param dirs_table table
+---@return boolean
+function rvim.dirs_match(dirs_table, dir)
+  for _, v in ipairs(dirs_table) do
+    if dir:match(v) then return true end
+  end
+  return false
+end
+
 ---Get whether using nightly version of neovim
 local LATEST_NIGHTLY_MINOR = 10
 function rvim.nightly() return vim.version().minor >= LATEST_NIGHTLY_MINOR end
@@ -235,6 +246,8 @@ function rvim.filetype_settings(map)
 end
 
 function rvim.lspconfig(map)
+  local cwd = vim.fn.getcwd()
+  if rvim.dirs_match(rvim.lsp.disabled.directories, cwd) then return end
   local commands = rvim.map(function(fts, server)
     if not rvim.find_string(rvim.lsp.disabled, server) then
       return {
