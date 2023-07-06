@@ -27,6 +27,7 @@ local namespace = {
       servers = { 'emmet_ls' },
       filetypes = {},
     },
+    format_on_save = { enable = true },
     signs = { enable = false },
     hover_diagnostics = { enable = true },
   },
