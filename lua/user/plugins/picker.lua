@@ -129,7 +129,6 @@ return {
         fzf_opts = {
           ['--info'] = 'default', -- hidden OR inline:⏐
           ['--reverse'] = false,
-          ['--layout'] = 'default',
           ['--scrollbar'] = '▓',
           ['--ellipsis'] = ui.icons.misc.ellipsis,
         },
