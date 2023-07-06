@@ -115,6 +115,7 @@ local function multi_selection_open(prompt_bufnr) multiopen(prompt_bufnr, 'edit'
 return {
   {
     'nvim-telescope/telescope.nvim',
+    enabled = false,
     cmd = 'Telescope',
     keys = {
       { '<c-p>', find_files, desc = 'find files' },
@@ -136,7 +137,7 @@ return {
       { '<leader>fvh', b('highlights'), desc = 'highlights' },
       { '<leader>fvk', b('keymaps'), desc = 'autocommands' },
       { '<leader>fvo', b('vim_options'), desc = 'vim options' },
-      { '<leader>fvo', b('registers'), desc = 'registers' },
+      { '<leader>fvr', b('registers'), desc = 'registers' },
       -- Git
       { '<leader>gs', b('git_status'), desc = 'git status' },
       { '<leader>fgb', b('git_branches'), desc = 'git branches' },
@@ -158,7 +159,7 @@ return {
       require('telescope').setup({
         defaults = {
           prompt_prefix = fmt(' %s  ', ui.codicons.misc.search_alt),
-          selection_caret = fmt(' %s ', ui.codicons.misc.pick),
+          selection_caret = ' ▶ ',
           cycle_layout_list = { 'flex', 'horizontal', 'vertical', 'bottom_pane', 'center' },
           sorting_strategy = 'ascending',
           layout_strategy = 'flex',
