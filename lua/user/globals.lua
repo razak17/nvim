@@ -249,7 +249,7 @@ function rvim.lspconfig(map)
   local cwd = vim.fn.getcwd()
   if rvim.dirs_match(rvim.lsp.disabled.directories, cwd) then return end
   local commands = rvim.map(function(fts, server)
-    if not rvim.find_string(rvim.lsp.disabled, server) then
+    if not rvim.find_string(rvim.lsp.disabled.servers, server) then
       return {
         pattern = fts,
         event = 'FileType',
