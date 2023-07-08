@@ -46,10 +46,9 @@ return {
           c = { name = 'Conceal' },
           d = { name = 'Dap' },
           g = { name = 'Git' },
-          l = { name = 'Neogen' },
+          l = { name = 'Lsp' },
           n = { name = 'Neorg' },
           r = { name = 'Rest' },
-          s = { name = 'Sniprun' },
           w = { name = 'Window' },
         },
       })
