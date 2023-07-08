@@ -43,12 +43,14 @@ return {
     'kevinhwang91/nvim-hlslens',
     event = 'BufReadPre',
     enabled = not rvim.plugins.minimal,
-    opts = {},
     init = function() highlight.plugin('hlslens', { { HlSearchLens = { fg = { from = 'Comment', alter = 0.15 } } } }) end,
-    keys = {
-      { 'n', [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]] },
-      { 'N', [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]] },
-    },
+    config = function()
+      local opts = { noremap = true, silent = true }
+      require('hlslens').setup()
+      local set_map = vim.api.nvim_set_keymap
+      set_map('n', 'n', [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]], opts)
+      set_map('n', 'N', [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]], opts)
+    end,
   },
   {
     'stevearc/dressing.nvim',
