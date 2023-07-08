@@ -4,14 +4,10 @@ local g, env = vim.g, vim.env
 local data = vim.fn.stdpath('data')
 
 ----------------------------------------------------------------------------------------------------
--- Merge Project Config
+-- Project local config
 ----------------------------------------------------------------------------------------------------
--- TODO: Switch to json
-local config_file = vim.fn.getcwd() .. '/rvim.lua'
-if vim.fn.filereadable(config_file) == 1 then
-  local project_config = dofile(config_file)
-  rvim.mergeTables(rvim, project_config)
-end
+local file = io.open(vim.fn.expand('%:p:h') .. '/.rvim.json', 'r')
+if file then rvim.project_config(file) end
 ----------------------------------------------------------------------------------------------------
 -- Set leader keys
 ----------------------------------------------------------------------------------------------------

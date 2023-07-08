@@ -124,6 +124,20 @@ function rvim.mergeTables(destination, source)
   end
 end
 
+--- check for project local config
+function rvim.project_config(file)
+  if not file then return end
+  local json = file:read('*a')
+  local status, table = pcall(vim.fn.json_decode, json)
+  io.close(file)
+  if not status then
+    vim.cmd("echohl ErrorMsg | echo 'Error: Invalid json' | echohl None")
+    -- vim.notify('Invalid json found in .rvim.json', 'error')
+    return
+  end
+  rvim.mergeTables(rvim, table)
+end
+
 --- Autosize horizontal split to match its minimum content
 --- https://vim.fandom.com/wiki/Automatically_fitting_a_quickfix_window_height
 ---@param minheight number
