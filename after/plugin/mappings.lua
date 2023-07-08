@@ -1,6 +1,7 @@
 if not rvim or rvim and rvim.none then return end
 
 local fn, api, fmt = vim.fn, vim.api, string.format
+local is_available = rvim.is_available
 
 local recursive_map = function(mode, lhs, rhs, opts)
   opts = opts or {}
@@ -168,13 +169,13 @@ cnoremap('::', "<C-r>=fnameescape(expand('%:p:h'))<cr>/")
 -- NOTE: this uses write specifically because we need to trigger a filesystem event
 -- even if the file isn't changed so that things like hot reload work
 nnoremap('<c-s>', '<Cmd>silent! write ++p<CR>')
-if not rvim.plugins.enable then
-  -- Buffer Management
+-- Buffer Management
+if not is_available('cybu.nvim') then
   nnoremap('H', '<cmd>bprevious<CR>', { desc = 'previous buffer' })
   nnoremap('L', '<cmd>bnext<CR>', { desc = 'next buffer' })
-  nnoremap('<leader>c', ':bdel<CR>', { desc = 'delete buffer' })
-  nnoremap('<C-n>', ':Ex<CR>', { desc = 'explorer' })
 end
+if not is_available('close-buffers.nvim') then nnoremap('<leader>c', ':bdel<CR>', { desc = 'delete buffer' }) end
+if not is_available('neo-tree.nvim') then nnoremap('<C-n>', ':Ex<CR>', { desc = 'explorer' }) end
 nnoremap('<leader>x', ':q<CR>', { desc = 'quit' })
 nnoremap('<leader>q', ':q<CR>', { desc = 'quit' })
 nnoremap('<leader>Q', ':qa!<CR>', { desc = 'quit' })

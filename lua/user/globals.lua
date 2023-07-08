@@ -179,6 +179,15 @@ function rvim.dirs_match(dirs_table, dir)
   return false
 end
 
+--- Check if a plugin is defined in lazy. Useful with lazy loading
+--- when a plugin is not necessarily loaded yet.
+---@param plugin string The plugin to search for.
+---@return boolean available # Whether the plugin is available.
+function rvim.is_available(plugin)
+  local lazy_config_avail, lazy_config = pcall(require, 'lazy.core.config')
+  return lazy_config_avail and lazy_config.plugins[plugin] ~= nil
+end
+
 ---Get whether using nightly version of neovim
 local LATEST_NIGHTLY_MINOR = 10
 function rvim.nightly() return vim.version().minor >= LATEST_NIGHTLY_MINOR end
