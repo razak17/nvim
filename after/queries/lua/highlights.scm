@@ -14,7 +14,7 @@
 
 (("and"      @keyword) (#set! conceal "▼"))
 (("end"      @keyword) (#set! conceal "–"))
-(("then"     @keyword) (#set! conceal "↙"))
+(("then"     @keyword) (#set! conceal "󰁂"))
 (("do"       @keyword) (#set! conceal ""))
 
 (("comment_start"    @comment) (#set! conceal ""))
@@ -26,7 +26,7 @@
 ((function_call name: (identifier) @TSNote (#eq? @TSNote "ipairs"    )) (#set! conceal "I"))
 
 ;; table.
-((dot_index_expression table: (identifier) @keyword  (#eq? @keyword  "math" )) (#set! conceal ""))
+((dot_index_expression table: (identifier) @keyword  (#eq? @keyword  "math" )) (#set! conceal ""))
 
 ;; break_statement
 (((break_statement) @keyword) (#set! conceal "󰑟"))
