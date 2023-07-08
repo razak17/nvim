@@ -115,7 +115,7 @@ return {
   {
     'andymass/vim-matchup',
     event = 'BufReadPost',
-    enabled = rvim.treesitter.enable,
+    enabled = rvim.treesitter.enable and not rvim.plugins.minimal,
     keys = { { '<localleader>lw', ':<c-u>MatchupWhereAmI?<CR>', desc = 'matchup: where am i' } },
     config = function()
       vim.g.matchup_matchparen_offscreen = { method = 'status_manual' }

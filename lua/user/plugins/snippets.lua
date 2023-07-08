@@ -1,6 +1,7 @@
 return {
   {
     'L3MON4D3/LuaSnip',
+    enabled = rvim.lsp.enable,
     event = 'InsertEnter',
     build = 'make install_jsregexp',
     dependencies = { 'rafamadriz/friendly-snippets' },

@@ -224,6 +224,7 @@ return {
       { 'amarakon/nvim-cmp-buffer-lines', ft = { 'c', 'cpp' } },
       {
         'uga-rosa/cmp-dictionary',
+        enabled = not rvim.plugins.minimal,
         config = function()
           local en_dict = join_paths(vim.fn.stdpath('data'), 'site', 'spell', 'en.dict')
           require('cmp_dictionary').switcher({

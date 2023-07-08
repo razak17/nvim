@@ -8,6 +8,7 @@ local separators, decorations = ui.icons.separators, ui.decorations
 return {
   {
     'razak17/smartcolumn.nvim',
+    enabled = not rvim.plugins.minimal,
     event = 'VeryLazy',
     init = function()
       rvim.augroup('SmartCol', {
