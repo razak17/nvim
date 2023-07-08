@@ -204,7 +204,7 @@ return {
   {
     'echasnovski/mini.files',
     keys = {
-      { '<leader>e', '<cmd>lua MiniFiles.open()<CR>', desc = 'mini.files: open' },
+      { '<leader>e', '<cmd>lua MiniFiles.open()<CR>', desc = 'mini.files' },
     },
     opts = {},
   },
