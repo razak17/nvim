@@ -353,7 +353,7 @@ return {
         borderchars = ui.border.common,
       })
       local bmui = require('buffer_manager.ui')
-      local keys = '1234567890'
+      local keys = '1234'
       for i = 1, #keys do
         local key = keys:sub(i, i)
         map('n', fmt('<leader>%s', key), function() bmui.nav_file(i) end, { noremap = true, desc = 'buffer ' .. key })
