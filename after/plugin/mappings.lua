@@ -83,9 +83,9 @@ xnoremap('J', ":m '>+1<CR>gv=gv")
 -- Windows
 ----------------------------------------------------------------------------------------------------
 -- change two vertically split windows to horizontal splits
-nnoremap('<localleader>wv', '<C-W>t <C-W>H<C-W>=')
+nnoremap('<localleader>wv', '<C-W>t <C-W>H<C-W>=', { desc = 'vertical to horizontal' })
 -- change two horizontally split windows to vertical splits
-nnoremap('<localleader>wh', '<C-W>t <C-W>K<C-W>=', { desc = '' })
+nnoremap('<localleader>wh', '<C-W>t <C-W>K<C-W>=', { desc = 'horizontal to vertical' })
 -- make . work with visually selected lines
 vnoremap('.', ':norm.<CR>')
 -- when going to the end of the line in visual mode ignore whitespace characters

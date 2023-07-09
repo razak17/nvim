@@ -41,6 +41,7 @@ return {
           r = { name = 'Run' },
           s = { name = 'Session' },
           t = { name = 'Test' },
+          w = { name = 'Winbar' },
         },
         ['<localleader>'] = {
           c = { name = 'Conceal' },

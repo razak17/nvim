@@ -41,7 +41,7 @@ return {
   {
     'LeonHeidelbach/trailblazer.nvim',
     keys = {
-      '<M-l>',
+      '<a-l>',
       { '<leader>ma', add_trail_mark_stack, desc = 'trailblazer: add stack' },
       { '<leader>md', delete_trail_mark_stack, desc = 'trailblazer: delete stack' },
       { '<leader>mg', function() get_available_stacks(true) end, desc = 'trailblazer: get stacks' },
