@@ -310,4 +310,4 @@ local function toggle_conceal_cursor()
   rvim.mappings.notify(string.format('conceal cursor %s', rvim.bool2str(vim.opt_local.concealcursor:get() == '')))
 end
 nnoremap('<localleader>cl', toggle_conceal, { desc = 'toggle conceallevel' })
-nnoremap('<localleader>cc', toggle_conceal_cursor, { desc = 'toggle concealcursor' })
+nnoremap('<localleader>cL', toggle_conceal_cursor, { desc = 'toggle concealcursor' })

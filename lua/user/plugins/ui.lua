@@ -34,14 +34,14 @@ return {
     'folke/zen-mode.nvim',
     cmd = 'ZenMode',
     opts = { window = { width = 90 } },
-    keys = { { '<localleader>zz', '<Cmd>ZenMode<CR>', desc = 'zen mode' } },
+    keys = { { '<localleader>zz', '<Cmd>ZenMode<CR>', desc = 'zen-mode: toggle' } },
   },
   {
     'eandrju/cellular-automaton.nvim',
     cmd = 'CellularAutomaton',
     keys = {
-      { '<localleader>ag', '<Cmd>CellularAutomaton game_of_life<CR>', desc = 'game of life' },
-      { '<localleader>am', '<Cmd>CellularAutomaton make_it_rain<CR>', desc = 'make it rain' },
+      { '<localleader>ag', '<Cmd>CellularAutomaton game_of_life<CR>', desc = 'automaton: game of life' },
+      { '<localleader>am', '<Cmd>CellularAutomaton make_it_rain<CR>', desc = 'automaton: make it rain' },
     },
   },
   {

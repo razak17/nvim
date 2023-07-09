@@ -457,6 +457,14 @@ return {
   { 'razak17/slides.nvim', ft = 'slide' },
   { 'fladson/vim-kitty', ft = 'kitty' },
   {
+    'laytan/cloak.nvim',
+    event = 'VeryLazy',
+    keys = {
+      { '<localleader>cc', '<Cmd>CloakToggle<CR>', 'cloak: toggle' },
+    },
+    opts = {},
+  },
+  {
     'dmmulroy/tsc.nvim',
     enabled = rvim.lsp.enable,
     cmd = 'TSC',
