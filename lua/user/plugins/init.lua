@@ -180,6 +180,22 @@ return {
     },
   },
   {
+    'mg979/vim-visual-multi',
+    enabled = not rvim.plugins.minimal,
+    lazy = false,
+    init = function()
+      vim.g.VM_highlight_matches = 'underline'
+      vim.g.VM_theme = 'codedark'
+      vim.g.VM_maps = {
+        ['Find Word'] = '<M-n>',
+        ['Find Under'] = '<M-n>',
+        ['Find Subword Under'] = '<M-n>',
+        ['Select Cursor Down'] = '\\j',
+        ['Select Cursor Up'] = '\\k',
+      }
+    end,
+  },
+  {
     'kazhala/close-buffers.nvim',
     cmd = { 'BDelete', 'BWipeout' },
     keys = { { '<leader>c', '<Cmd>BDelete this<CR>', desc = 'buffer delete' } },
