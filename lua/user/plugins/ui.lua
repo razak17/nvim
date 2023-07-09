@@ -37,6 +37,14 @@ return {
     keys = { { '<localleader>zz', '<Cmd>ZenMode<CR>', desc = 'zen mode' } },
   },
   {
+    'eandrju/cellular-automaton.nvim',
+    cmd = 'CellularAutomaton',
+    keys = {
+      { '<localleader>ag', '<Cmd>CellularAutomaton game_of_life<CR>', desc = 'game of life' },
+      { '<localleader>am', '<Cmd>CellularAutomaton make_it_rain<CR>', desc = 'make it rain' },
+    },
+  },
+  {
     'kevinhwang91/nvim-bqf',
     ft = 'qf',
     opts = {
