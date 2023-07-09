@@ -2,10 +2,12 @@ if not rvim or not rvim.plugins.enable or vim.env.TMUX == nil then return end
 
 local fn, fmt = vim.fn, string.format
 
+local ignored = { 'TelescopePrompt', 'buffer_manager', 'harpoon' }
+
 --- Get the color of the current vim background and update tmux accordingly
 ---@param reset boolean?
 local function set_statusline(reset)
-  if vim.bo.ft == 'TelescopePrompt' then return end
+  if rvim.find_string(ignored, vim.bo.ft) then return end
   local tmux_bg = '#292e42'
   local bg = reset and tmux_bg or rvim.highlight.get('Normal', 'bg')
   fn.jobstart(fmt('tmux set-option -g status-style bg=%s', bg))
