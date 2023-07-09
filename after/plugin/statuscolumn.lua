@@ -100,7 +100,7 @@ end
 opt.statuscolumn = [[%!v:lua.rvim.ui.statuscolumn.render()]]
 
 rvim.augroup('StatusCol', {
-  event = { 'BufEnter', 'FileType' },
+  event = { 'BufEnter', 'FileType', 'CursorHold' },
   command = function(args)
     local buf = args.buf
     local d = ui.decorations.get({ ft = vim.bo[buf].ft, fname = fn.bufname(buf), setting = 'statuscolumn' })
