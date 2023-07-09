@@ -362,6 +362,23 @@ return {
     end,
   },
   {
+    'razak17/harpoon',
+    event = 'VeryLazy',
+    keys = {
+      { '<a-;>', '<Cmd>lua require("harpoon.ui").toggle_quick_menu()<CR>', desc = 'harpoon: toggle menu' },
+      { '<localleader>ha', '<Cmd>lua require("harpoon.mark").add_file()<CR>', desc = 'harpoon: add file' },
+      { '<localleader>hn', '<Cmd>lua require("harpoon.ui").nav_next()<CR>', desc = 'harpoon: next file' },
+      { '<localleader>hp', '<Cmd>lua require("harpoon.ui").nav_prev()<CR>', desc = 'harpoon: prev file' },
+      { '<a-1>', '<Cmd>lua require("harpoon.ui").nav_file(1)<CR>', desc = 'harpoon: navigate to file 1' },
+      { '<a-2>', '<Cmd>lua require("harpoon.ui").nav_file(2)<CR>', desc = 'harpoon: navigate to file 2' },
+      { '<a-3>', '<Cmd>lua require("harpoon.ui").nav_file(3)<CR>', desc = 'harpoon: navigate to file 3' },
+      { '<a-4>', '<Cmd>lua require("harpoon.ui").nav_file(4)<CR>', desc = 'harpoon: navigate to file 4' },
+    },
+    opts = {
+      menu = { borderchars = ui.border.common },
+    },
+  },
+  {
     'is0n/jaq-nvim',
     cmd = 'Jaq',
     keys = {
