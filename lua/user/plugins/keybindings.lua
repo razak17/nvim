@@ -47,10 +47,12 @@ return {
           c = { name = 'Conceal' },
           d = { name = 'Dap' },
           g = { name = 'Git' },
+          h = { name = 'Harpoon' },
           l = { name = 'Lsp' },
           n = { name = 'Neorg' },
           r = { name = 'Rest' },
           w = { name = 'Window' },
+          z = { name = 'Zen' },
         },
       })
 

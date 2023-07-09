@@ -31,11 +31,17 @@ return {
     },
   },
   {
+    'folke/zen-mode.nvim',
+    cmd = 'ZenMode',
+    opts = { window = { width = 90 } },
+    keys = { { '<localleader>zz', '<Cmd>ZenMode<CR>', desc = 'zen mode' } },
+  },
+  {
     'kevinhwang91/nvim-bqf',
     ft = 'qf',
     opts = {
       preview = {
-        border = { '┌', '─', '┐', '│', '┘', '─', '└', '│'},
+        border = { '┌', '─', '┐', '│', '┘', '─', '└', '│' },
       },
     },
   },
