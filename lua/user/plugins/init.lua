@@ -375,7 +375,10 @@ return {
       { '<a-4>', '<Cmd>lua require("harpoon.ui").nav_file(4)<CR>', desc = 'harpoon: navigate to file 4' },
     },
     opts = {
-      menu = { borderchars = ui.border.common },
+      menu = {
+        width = 60,
+        borderchars = ui.border.common,
+      },
     },
   },
   {
