@@ -62,7 +62,7 @@ npm_deps() {
 }
 
 archExtra() {
-	sudo pacman -S ripgrep xsel fd lazygit unzip curl sqlite3 btop
+	sudo pacman -S ripgrep xsel fd lazygit unzip curl sqlite3 btop glow
 }
 
 importRvim() {
