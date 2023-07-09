@@ -3,6 +3,19 @@ local fmt = string.format
 local ui, highlight = rvim.ui, rvim.highlight
 local border = ui.current.border
 
+local function float_resize_autocmd(autocmd_name, ft, command)
+  rvim.augroup(autocmd_name, {
+    event = 'VimResized',
+    pattern = '*',
+    command = function()
+      if vim.bo.ft == ft then
+        vim.api.nvim_win_close(0, true)
+        vim.cmd(command)
+      end
+    end,
+  })
+end
+
 return {
   ----------------------------------------------------------------------------------------------------
   -- Core {{{3
@@ -91,17 +104,7 @@ return {
           'neovim/nvim-lspconfig',
           config = function()
             require('lspconfig.ui.windows').default_options.border = border
-            -- reload LspInfo floating window on VimResized
-            rvim.augroup('LspInfoResize', {
-              event = 'VimResized',
-              pattern = '*',
-              command = function()
-                if vim.bo.ft == 'lspinfo' then
-                  vim.api.nvim_win_close(0, true)
-                  vim.cmd('LspInfo')
-                end
-              end,
-            })
+            float_resize_autocmd('LspInfoResize', 'lspinfo', 'LspInfo')
           end,
           dependencies = {
             {
@@ -390,6 +393,7 @@ return {
     opts = {
       cmds = {
         external = {
+          markdown = 'glow %',
           typescript = 'ts-node %',
           javascript = 'node %',
           python = 'python %',
