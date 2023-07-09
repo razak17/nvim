@@ -2,7 +2,7 @@ local fn, api, env, fmt = vim.fn, vim.api, vim.env, string.format
 local falsy, icons, codicons = rvim.falsy, rvim.ui.icons, rvim.ui.codicons
 local separator = icons.separators.dotted_thin_block
 
-local ignored_filetypes = { 'toggleterm', 'lspinfo', 'null-ls-info', 'mason', 'oil', 'buffer_manager' }
+local ignored_filetypes = { 'toggleterm', 'lspinfo', 'null-ls-info', 'mason', 'oil', 'buffer_manager', 'Jaq' }
 
 local conditions = {
   ignored_filetype = function() return not rvim.find_string(ignored_filetypes, vim.bo.filetype) end,
