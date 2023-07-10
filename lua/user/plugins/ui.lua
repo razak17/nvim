@@ -56,7 +56,7 @@ return {
   {
     'kevinhwang91/nvim-hlslens',
     enabled = not rvim.plugins.minimal,
-    lazy = true,
+    lazy = false,
     init = function() highlight.plugin('hlslens', { { HlSearchLens = { fg = { from = 'Comment', alter = 0.15 } } } }) end,
     config = function()
       local opts = { noremap = true, silent = true }

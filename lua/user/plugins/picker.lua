@@ -119,7 +119,7 @@ return {
       { '<leader>le', fzf_lua.diagnostics_document, desc = 'document diagnostics' },
       { '<leader>lw', fzf_lua.diagnostics_workspace, desc = 'workspace diagnostics' },
       { '<leader>fc', function() file_picker(vim.fn.stdpath('config')) end, desc = 'nvim config' },
-      { '<leader>fN', function() file_picker(env.HOME .. '/notes/neorg') end, desc = 'org files' },
+      { '<leader>fN', function() file_picker(env.HOME .. '/Obsidian') end, desc = 'org files' },
     },
     config = function()
       local lsp_kind = require('lspkind')
