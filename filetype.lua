@@ -11,7 +11,7 @@ vim.filetype.add({
   pattern = {
     ['.*%.theme'] = 'conf',
     ['.*%.gradle'] = 'groovy',
-    ['^.env%..*'] = 'sh',
+    ['^.env%..*'] = 'bash',
     ['req.*.txt'] = 'config',
   },
 })
