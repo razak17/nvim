@@ -117,7 +117,8 @@ local function setup_mappings(client, bufnr)
     { 'n', 'gt', lsp.buf.type_definition, desc = 'go to type definition', capability = provider.DEFINITION },
     { 'n', '<leader>lc', lsp.codelens.run, desc = 'run code lens', capability = provider.CODELENS },
     { 'n', '<leader>lr', lsp.buf.rename, desc = 'rename', capability = provider.RENAME },
-    { 'n', '<leader>lL', vim.diagnostic.setloclist, desc = 'toggle loclist diagnostics' },
+    -- TODO: loclist is broken
+    -- { 'n', '<leader>lL', vim.diagnostic.setloclist, desc = 'toggle loclist diagnostics' },
     { 'n', '<leader>li', '<Cmd>LspInfo<CR>', desc = 'lsp info' },
     { 'n', '<leader>ltv', '<Cmd>ToggleVirtualText<CR>', desc = 'toggle virtual text' },
     { 'n', '<leader>ltl', '<Cmd>ToggleVirtualLines<CR>', desc = 'toggle virtual lines' },
