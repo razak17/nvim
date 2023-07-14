@@ -360,7 +360,13 @@ return {
   },
   {
     'razak17/buffer_manager.nvim',
-    event = { 'BufRead', 'BufNewFile' },
+    keys = {
+      {
+        '<M-Space>',
+        '<Cmd>lua require("buffer_manager.ui").toggle_quick_menu()<CR>',
+        desc = 'buffer manager: toggle',
+      },
+    },
     config = function()
       require('buffer_manager').setup({
         select_menu_item_commands = {
@@ -375,12 +381,12 @@ return {
         local key = keys:sub(i, i)
         map('n', fmt('<leader>%s', key), function() bmui.nav_file(i) end, { noremap = true, desc = 'buffer ' .. key })
       end
-      map({ 't', 'n' }, '<M-Space>', bmui.toggle_quick_menu, { noremap = true })
+      -- map({ 't', 'n' }, '<M-Space>', bmui.toggle_quick_menu, { noremap = true })
     end,
   },
+  { 'lewis6991/whatthejump.nvim', keys = { '<C-I>', '<C-O>' } },
   {
     'razak17/harpoon',
-    event = 'VeryLazy',
     keys = {
       { '<a-;>', '<Cmd>lua require("harpoon.ui").toggle_quick_menu()<CR>', desc = 'harpoon: toggle menu' },
       { '<localleader>ha', '<Cmd>lua require("harpoon.mark").add_file()<CR>', desc = 'harpoon: add file' },
