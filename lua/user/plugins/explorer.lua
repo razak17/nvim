@@ -31,7 +31,6 @@ return {
   {
     'nvim-neo-tree/neo-tree.nvim',
     cmd = { 'Neotree' },
-    branch = 'v2.x',
     keys = { { '<c-n>', '<cmd>Neotree toggle reveal<CR>', desc = 'toggle tree' } },
     config = function()
       highlight.plugin('NeoTree', {
