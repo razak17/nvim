@@ -78,13 +78,6 @@ return {
           'markdown_inline',
         },
       })
-
-      rvim.augroup('UpdateHighlights', {
-        event = { 'FocusGained' },
-        command = function()
-          vim.cmd('edit | TSBufEnable highlight')
-        end,
-      })
     end,
     dependencies = {
       'nvim-treesitter/nvim-treesitter-textobjects',

@@ -24,7 +24,7 @@ return {
         automatic_installation = false,
         handlers = {
           black = function() null_ls.register(null_ls.builtins.formatting.black.with({ extra_args = { '--fast' } })) end,
-          eslint_d = function()
+          eslint= function()
             null_ls.register(null_ls.builtins.diagnostics.eslint_d.with({ filetypes = { 'svelte' } }))
           end,
           prettier = function() end,
