@@ -45,6 +45,11 @@ return {
     },
   },
   {
+    'tzachar/highlight-undo.nvim',
+    event = 'BufRead',
+    opts = {},
+  },
+  {
     'kevinhwang91/nvim-bqf',
     ft = 'qf',
     opts = {
