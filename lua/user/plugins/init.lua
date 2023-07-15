@@ -460,7 +460,7 @@ return {
     dependencies = { 'nvim-lua/plenary.nvim' },
   },
   {
-    'razak17/rayso.nvim',
+    'TobinPalmer/rayso.nvim',
     cmd = { 'Rayso' },
     opts = {},
   },
