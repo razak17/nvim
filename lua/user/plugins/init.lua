@@ -520,6 +520,19 @@ return {
     dependencies = { 'nvim-lua/plenary.nvim', 'nvim-treesitter/nvim-treesitter' },
   },
   {
+    'ellisonleao/glow.nvim',
+    enabled = not rvim.plugins.minimal,
+    cmd = 'Glow',
+    ft = 'markdown',
+    config = function()
+      require('glow').setup({
+        border = 'single',
+        width = 120,
+      })
+      float_resize_autocmd('GlowResize', 'glowpreview', 'Glow')
+    end,
+  },
+  {
     'iamcco/markdown-preview.nvim',
     enabled = not rvim.plugins.minimal,
     build = function() fn['mkdp#util#install']() end,
