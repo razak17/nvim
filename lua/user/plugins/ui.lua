@@ -7,6 +7,18 @@ local separators, decorations = ui.icons.separators, ui.decorations
 
 return {
   {
+    'tomiis4/BufferTabs.nvim',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    keys = {
+      { '<leader>ob', '<Cmd>BufferTabsToggle<CR>', desc = 'buffer-tabs: toggle' },
+    },
+    config = function()
+      require('buffertabs').setup({
+        border = 'single',
+      })
+    end,
+  },
+  {
     'razak17/smartcolumn.nvim',
     enabled = not rvim.plugins.minimal,
     event = 'VeryLazy',
