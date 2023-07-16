@@ -41,11 +41,9 @@ return {
           end,
           prettier = function() end,
           shellcheck = function()
-            null_ls.register(
-              null_ls.builtins.diagnostics.shellcheck.with({
-                extra_args = { '--severity', 'warning' },
-              })
-            )
+            null_ls.register(null_ls.builtins.diagnostics.shellcheck.with({
+              extra_args = { '--severity', 'warning' },
+            }))
           end,
         },
       })
