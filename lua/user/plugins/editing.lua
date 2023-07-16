@@ -161,6 +161,7 @@ return {
         ['double'] = 'single',
         ['config'] = 'opts',
         ['pre'] = 'post',
+        ['column'] = 'row',
       },
     },
   },
