@@ -48,27 +48,8 @@ return {
     'lukas-reineke/headlines.nvim',
     enabled = rvim.treesitter.enable and not rvim.plugins.minimal,
     ft = { 'org', 'norg', 'markdown', 'yaml' },
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
     config = function()
-      highlight.plugin('Headlines', {
-        {
-          Headline = {
-            bold = true,
-            italic = true,
-            bg = { from = 'Normal', alter = 0.2 },
-          },
-        },
-        { Headline1 = { bg = '#003c30' } },
-        { Headline2 = { bg = '#00441b' } },
-        { Headline3 = { bg = '#084081' } },
-        { Dash = { bg = '#0b60a1', bold = true } },
-        {
-          CodeBlock = {
-            bold = true,
-            italic = true,
-            bg = { from = 'Normal', alter = 0.3 },
-          },
-        },
-      })
       require('headlines').setup({
         org = { headline_highlights = false },
         norg = { headline_highlights = { 'Headline' }, codeblock_highlight = false },
