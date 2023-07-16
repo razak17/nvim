@@ -9,13 +9,16 @@ return {
   {
     'tomiis4/BufferTabs.nvim',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
-    keys = {
-      { '<leader>ob', '<Cmd>BufferTabsToggle<CR>', desc = 'buffer-tabs: toggle' },
-    },
+    event = 'VeryLazy',
+    keys = { { '<leader>ob', '<Cmd>BufferTabsToggle<CR>', desc = 'buffer-tabs: toggle' } },
     config = function()
       require('buffertabs').setup({
         border = 'single',
+        horizontal = 'right',
+        hl_group = 'BufferTabs',
+        hl_group_inactive = 'Dim',
       })
+      require('buffertabs').toggle()
     end,
   },
   {
