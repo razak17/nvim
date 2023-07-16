@@ -205,6 +205,32 @@ return {
     end,
   },
   {
+    'robitx/gp.nvim',
+    keys = {
+      -- Chat commands
+      { '<c-g>n', '<Cmd>GpChatNew<CR>', desc = 'gp: new chat', mode = { 'n', 'i' } },
+      { '<c-g>f', '<Cmd>GpChatFinder<CR>', desc = 'gp: find chat', mode = { 'n', 'i' } },
+      { '<c-g><c-g>', '<Cmd>GpChatResponda<CR>', desc = 'gp: respond', mode = { 'n', 'i' } },
+      { '<c-g>d', '<Cmd>GpChatDeleteCR>', desc = 'gp: delete chat', mode = { 'n', 'i' } },
+      -- Prompt commands
+      { '<c-g>i', '<Cmd>GpInline<CR>', desc = 'gp: inline', mode = { 'n', 'i' } },
+      { '<c-g>a', '<Cmd>GpAppend<CR>', desc = 'gp: append', mode = { 'n', 'i' } },
+      { '<c-g>b', '<Cmd>GpPrepend<CR>', desc = 'gp: prepend', mode = { 'n', 'i' } },
+      { '<c-g>e', '<Cmd>GpEnew<CR>', desc = 'gp: enew', mode = { 'n', 'i' } },
+      { '<c-g>p', '<Cmd>GpPopup<CR>', desc = 'gp: popup', mode = { 'n', 'i' } },
+      -- Visual commands
+      { '<c-g>n', '<Cmd>GpVisualChatNew<CR>', desc = 'gp: visual chat new', mode = 'v' },
+      { '<c-g>r', '<Cmd>GpVisualRewrite<CR>', desc = 'gp: visual rewrite', mode = 'v' },
+      { '<c-g>a', '<Cmd>GpVisualAppend<CR>', desc = 'gp: visual append', mode = 'v' },
+      { '<c-g>b', '<Cmd>GpVisualPrepend<CR>', desc = 'gp: visual prepend', mode = 'v' },
+      { '<c-g>e', '<Cmd>GpVisualEnew<CR>', desc = 'gp: visual enew', mode = 'v' },
+      { '<c-g>p', '<Cmd>GpVisualPopup<CR>', desc = 'gp: visual popup', mode = 'v' },
+    },
+    opts = {
+      chat_dir = join_paths(vim.fn.stdpath('data'), 'gp', 'chats'),
+    },
+  },
+  {
     'jackMort/ChatGPT.nvim',
     enabled = rvim.ai.enable and not rvim.plugins.minimal,
     cmd = { 'ChatGPT', 'ChatGPTActAs', 'ChatGPTEditWithInstructions' },
