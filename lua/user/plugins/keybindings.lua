@@ -51,7 +51,6 @@ return {
           l = { name = 'Lsp' },
           n = { name = 'Neorg' },
           r = { name = 'Rest' },
-          w = { name = 'Window' },
           z = { name = 'Zen' },
         },
       })
@@ -82,6 +81,7 @@ return {
 
       local splits = rvim.reqcall('smart-splits')
       local fold_cycle = rvim.reqcall('fold-cycle')
+      local textcase = rvim.reqcall('textcase')
 
       local base_config = function(opts)
         return vim.tbl_extend('force', {
@@ -186,9 +186,41 @@ return {
       })
 
       Hydra({
+        name = 'TextCase',
+        mode = 'n',
+        body = '<localleader>w',
+        color = 'teal',
+        config = {
+          hint = hint_opts,
+          invoke_on_body = true,
+        },
+        heads = {
+          { 'u', function() textcase.current_word('to_upper_case') end, { desc = 'to uppercase' } },
+          { 'l', function() textcase.current_word('to_lower_case') end, { desc = 'to lowercase' } },
+          { 's', function() textcase.current_word('to_snake_case') end, { desc = 'to snakecase' } },
+          { 'c', function() textcase.current_word('to_camel_case') end, { desc = 'to camelcase' } },
+          {
+            'p',
+            function() textcase.current_word('to_pascal_case') end,
+            { desc = 'to pascalcase' },
+          },
+          { 't', function() textcase.current_word('to_title_case') end, { desc = 'to titlecase' } },
+          {
+            'C',
+            function() textcase.current_word('to_constant_case') end,
+            { desc = 'to constantcase' },
+          },
+          { '-', function() textcase.current_word('to_dash_case') end, { desc = 'to dashcase' } },
+          { '/', function() textcase.current_word('to_path_case') end, { desc = 'to pathcase' } },
+          { '.', function() textcase.current_word('to_dot_case') end, { desc = 'to dotcase' } },
+          { '<Esc>', nil, { exit = true, desc = 'Quit' } },
+        },
+      })
+
+      Hydra({
         name = 'Wrap',
         mode = 'n',
-        body = '<leader>w',
+        body = '<localleader>W',
         color = 'teal',
         config = {
           hint = hint_opts,
@@ -202,6 +234,7 @@ return {
           { ')', [[ciw(<c-r>")<esc>]], { desc = 'parenthesis' } },
           { '}', [[ciw{<c-r>"}<esc>]], { desc = 'curly bracket' } },
           { ']', [[ciw[<c-r>"]<esc>]], { desc = 'square bracket' } },
+          { '/', [[ciw/<c-r>"/<esc>]], { desc = 'square bracket' } },
           { '<Esc>', nil, { exit = true, desc = 'Quit' } },
         },
       })

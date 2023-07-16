@@ -173,6 +173,10 @@ return {
     end,
   },
   {
+    'johmsalas/text-case.nvim',
+    opts = {},
+  },
+  {
     'HiPhish/rainbow-delimiters.nvim',
     enabled = not rvim.plugins.minimal,
     event = 'VeryLazy',

@@ -41,6 +41,9 @@ local function projects() extensions('projects').projects() end
 local function harpoon()
   extensions('harpoon').marks(rvim.telescope.minimal_ui({ prompt_title = 'Harpoon Marks' }))
 end
+local function textcase()
+  extensions('textcase').normal_mode(rvim.telescope.minimal_ui({ prompt_title = 'Text Case' }))
+end
 
 local function stopinsert(callback)
   return function(prompt_bufnr)
@@ -74,6 +77,7 @@ return {
       { '<leader>fp', projects, desc = 'projects' },
       { '<leader>fu', undo, desc = 'undo' },
       { '<leader>fH', harpoon, desc = 'harpoon' },
+      { '<leader>ft', textcase, desc = 'textcase', mode = { 'n', 'v' } },
     },
     config = function()
       local previewers = require('telescope.previewers')
@@ -200,6 +204,7 @@ return {
       require('telescope').load_extension('undo')
       require('telescope').load_extension('menufacture')
       require('telescope').load_extension('notify')
+      require('telescope').load_extension('textcase')
       if not rvim.plugins.minimal then
         require('telescope').load_extension('persisted')
         require('telescope').load_extension('projects')
