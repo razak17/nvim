@@ -25,7 +25,9 @@ end
 ---@return string
 local function nr(win, lnum, relnum, virtnum, line_count)
   local col_width = api.nvim_strwidth(tostring(line_count))
-  if virtnum and virtnum ~= 0 then return space:rep(col_width - 1) .. (virtnum < 0 and shade or space) end -- virtual line
+  if virtnum and virtnum ~= 0 then
+    return space:rep(col_width - 1) .. (virtnum < 0 and shade or space)
+  end -- virtual line
   local num = vim.wo[win].relativenumber and not falsy(relnum) and relnum or lnum
   if line_count > 999 then col_width = col_width + 1 end
   local ln = tostring(num):reverse():gsub('(%d%d%d)', '%1,'):reverse():gsub('^,', '')
@@ -60,7 +62,13 @@ end
 local function extmark_signs(curbuf, lnum)
   lnum = lnum - 1
   ---@type ExtmarkSign[]
-  local signs = api.nvim_buf_get_extmarks(curbuf, -1, { lnum, 0 }, { lnum, -1 }, { details = true, type = 'sign' })
+  local signs = api.nvim_buf_get_extmarks(
+    curbuf,
+    -1,
+    { lnum, 0 },
+    { lnum, -1 },
+    { details = true, type = 'sign' }
+  )
   local sns = rvim.fold(function(acc, item)
     item = format_text(item[4], 'sign_text')
     if item then
@@ -91,7 +99,8 @@ function ui.statuscolumn.render()
     table.insert(sns, spacer(1))
   end
 
-  local r1 = section:new(spacer(1), { { { nr(win, lnum, relnum, virtnum, line_count) } } }, unpack(gitsign))
+  local r1 =
+    section:new(spacer(1), { { { nr(win, lnum, relnum, virtnum, line_count) } } }, unpack(gitsign))
   local r2 = section:new({ { { separator, 'LineNr' } }, after = '' }, { { { fdm(lnum) } } })
 
   return display({ sns, r1 + r2 })
@@ -103,7 +112,8 @@ rvim.augroup('StatusCol', {
   event = { 'BufEnter', 'FileType', 'CursorHold' },
   command = function(args)
     local buf = args.buf
-    local d = ui.decorations.get({ ft = vim.bo[buf].ft, fname = fn.bufname(buf), setting = 'statuscolumn' })
+    local d =
+      ui.decorations.get({ ft = vim.bo[buf].ft, fname = fn.bufname(buf), setting = 'statuscolumn' })
     if d.ft == false or d.fname == false then vim.opt_local.statuscolumn = '' end
   end,
 })

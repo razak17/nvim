@@ -20,16 +20,32 @@ return {
       local null_ls = require('null-ls')
       require('mason-null-ls').setup({
         automatic_setup = true,
-        ensure_installed = { 'goimports', 'golangci_lint', 'stylua', 'prettierd', 'zsh', 'flake8', 'black' },
+        ensure_installed = {
+          'goimports',
+          'golangci_lint',
+          'stylua',
+          'prettierd',
+          'zsh',
+          'flake8',
+          'black',
+        },
         automatic_installation = false,
         handlers = {
-          black = function() null_ls.register(null_ls.builtins.formatting.black.with({ extra_args = { '--fast' } })) end,
+          black = function()
+            null_ls.register(null_ls.builtins.formatting.black.with({ extra_args = { '--fast' } }))
+          end,
           eslint_d = function()
-            null_ls.register(null_ls.builtins.diagnostics.eslint_d.with({ filetypes = { 'svelte' } }))
+            null_ls.register(
+              null_ls.builtins.diagnostics.eslint_d.with({ filetypes = { 'svelte' } })
+            )
           end,
           prettier = function() end,
           shellcheck = function()
-            null_ls.register(null_ls.builtins.diagnostics.shellcheck.with({ extra_args = { '--severity', 'warning' } }))
+            null_ls.register(
+              null_ls.builtins.diagnostics.shellcheck.with({
+                extra_args = { '--severity', 'warning' },
+              })
+            )
           end,
         },
       })

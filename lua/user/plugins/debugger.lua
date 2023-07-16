@@ -7,7 +7,11 @@ return {
     'mfussenegger/nvim-dap',
     enabled = not rvim.plugins.minimal,
     keys = {
-      { '<localleader>dbp', function() require('dap').toggle_breakpoint() end, desc = 'dap: toggle breakpoint' },
+      {
+        '<localleader>dbp',
+        function() require('dap').toggle_breakpoint() end,
+        desc = 'dap: toggle breakpoint',
+      },
       {
         '<localleader>dbc',
         function() require('dap').set_breakpoint(input('Breakpoint condition: ')) end,
@@ -18,8 +22,16 @@ return {
         function() require('dap').set_breakpoint(nil, nil, input('Log point message: ')) end,
         desc = 'dap: log breakpoint',
       },
-      { '<localleader>dbx', function() require('dap').clear_breakpoints() end, desc = 'dap: clear breakpoint' },
-      { '<localleader>dc', function() require('dap').continue() end, desc = 'dap: continue or start debugging' },
+      {
+        '<localleader>dbx',
+        function() require('dap').clear_breakpoints() end,
+        desc = 'dap: clear breakpoint',
+      },
+      {
+        '<localleader>dc',
+        function() require('dap').continue() end,
+        desc = 'dap: continue or start debugging',
+      },
       { '<localleader>dh', function() require('dap').step_back() end, desc = 'dap: step back' },
       { '<localleader>di', function() require('dap').step_into() end, desc = 'dap: step into' },
       { '<localleader>do', function() require('dap').step_over() end, desc = 'dap: step over' },
@@ -77,7 +89,9 @@ return {
 
       local ui_ok, dapui = pcall(require, 'dapui')
       if not ui_ok then return end
-      dap.listeners.after.event_initialized['dapui_config'] = function() dapui.open(rvim.debugger.layout.ft[vim.bo.ft]) end
+      dap.listeners.after.event_initialized['dapui_config'] = function()
+        dapui.open(rvim.debugger.layout.ft[vim.bo.ft])
+      end
       dap.listeners.before.event_exited['dapui_config'] = function() dapui.close() end
       dap.listeners.before.event_terminated['dapui_config'] = function() dapui.close() end
 

@@ -38,7 +38,9 @@ local function luasnips() extensions('luasnip').luasnip(dropdown()) end
 local function notifications() extensions('notify').notify(dropdown()) end
 local function undo() extensions('undo').undo() end
 local function projects() extensions('projects').projects() end
-local function harpoon() extensions('harpoon').marks(rvim.telescope.minimal_ui({ prompt_title = 'Harpoon Marks' })) end
+local function harpoon()
+  extensions('harpoon').marks(rvim.telescope.minimal_ui({ prompt_title = 'Harpoon Marks' }))
+end
 
 local function stopinsert(callback)
   return function(prompt_bufnr)
@@ -150,7 +152,10 @@ return {
           git_commits = { layout_config = { horizontal = { preview_width = 0.55 } } },
           git_bcommits = { layout_config = { horizontal = { preview_width = 0.55 } } },
           current_buffer_fuzzy_find = dropdown({ previewer = false, shorten_path = false }),
-          diagnostics = themes.get_ivy({ wrap_results = true, borderchars = { preview = border.ivy } }),
+          diagnostics = themes.get_ivy({
+            wrap_results = true,
+            borderchars = { preview = border.ivy },
+          }),
           buffers = dropdown({
             sort_mru = true,
             sort_lastused = true,

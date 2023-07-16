@@ -11,7 +11,7 @@ local function cancel() neotest().run.stop({ interactive = true }) end
 return {
   {
     'nvim-neotest/neotest',
-    enabled   = not rvim.plugins.minimal,
+    enabled = not rvim.plugins.minimal,
     keys = {
       { '<leader>ts', toggle_summary, desc = 'neotest: toggle summary' },
       { '<leader>to', open, desc = 'neotest: output' },
@@ -27,7 +27,8 @@ return {
       vim.diagnostic.config({
         virtual_text = {
           format = function(diagnostic)
-            local message = diagnostic.message:gsub('\n', ' '):gsub('\t', ' '):gsub('%s+', ' '):gsub('^%s+', '')
+            local message =
+              diagnostic.message:gsub('\n', ' '):gsub('\t', ' '):gsub('%s+', ' '):gsub('^%s+', '')
             return message
           end,
         },

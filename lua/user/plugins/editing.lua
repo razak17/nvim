@@ -95,7 +95,11 @@ return {
   {
     'danymat/neogen',
     keys = {
-      { '<localleader>lc', function() require('neogen').generate() end, desc = 'neogen: generate doc' },
+      {
+        '<localleader>lc',
+        function() require('neogen').generate() end,
+        desc = 'neogen: generate doc',
+      },
     },
     opts = { snippet_engine = 'luasnip' },
   },
@@ -136,7 +140,11 @@ return {
   {
     'nguyenvukhang/nvim-toggler',
     keys = {
-      { '<leader>ii', '<cmd>lua require("nvim-toggler").toggle()<CR>', desc = 'nvim-toggler: toggle' },
+      {
+        '<leader>ii',
+        '<cmd>lua require("nvim-toggler").toggle()<CR>',
+        desc = 'nvim-toggler: toggle',
+      },
     },
     opts = {
       remove_default_keybinds = true,
@@ -160,7 +168,9 @@ return {
     'echasnovski/mini.ai',
     enabled = rvim.treesitter.enable and not rvim.plugins.minimal,
     event = 'VeryLazy',
-    config = function() require('mini.ai').setup({ mappings = { around_last = '', inside_last = '' } }) end,
+    config = function()
+      require('mini.ai').setup({ mappings = { around_last = '', inside_last = '' } })
+    end,
   },
   {
     'HiPhish/rainbow-delimiters.nvim',

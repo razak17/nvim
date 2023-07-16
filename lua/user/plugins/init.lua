@@ -61,10 +61,26 @@ return {
       { '<C-k>', function() require('smart-splits').move_cursor_up() end },
       { '<C-l>', function() require('smart-splits').move_cursor_right() end },
       -- swapping buffers between windows
-      { '<leader><leader>h', function() require('smart-splits').swap_buf_left() end, desc = { 'swap left' } },
-      { '<leader><leader>j', function() require('smart-splits').swap_buf_down() end, { desc = 'swap down' } },
-      { '<leader><leader>k', function() require('smart-splits').swap_buf_up() end, { desc = 'swap up' } },
-      { '<leader><leader>l', function() require('smart-splits').swap_buf_right() end, { desc = 'swap right' } },
+      {
+        '<leader><leader>h',
+        function() require('smart-splits').swap_buf_left() end,
+        desc = { 'swap left' },
+      },
+      {
+        '<leader><leader>j',
+        function() require('smart-splits').swap_buf_down() end,
+        { desc = 'swap down' },
+      },
+      {
+        '<leader><leader>k',
+        function() require('smart-splits').swap_buf_up() end,
+        { desc = 'swap up' },
+      },
+      {
+        '<leader><leader>l',
+        function() require('smart-splits').swap_buf_right() end,
+        { desc = 'swap right' },
+      },
     },
   },
   -- }}}
@@ -160,7 +176,11 @@ return {
     'lvimuser/lsp-inlayhints.nvim',
     enabled = rvim.lsp.enable,
     keys = {
-      { '<leader>lth', function() require('lsp-inlayhints').toggle() end, desc = 'toggle inlay hints' },
+      {
+        '<leader>lth',
+        function() require('lsp-inlayhints').toggle() end,
+        desc = 'toggle inlay hints',
+      },
     },
     init = function()
       rvim.augroup('InlayHintsSetup', {
@@ -203,7 +223,11 @@ return {
   {
     'razak17/swenv.nvim',
     keys = {
-      { '<localleader>le', '<Cmd>lua require("swenv.api").pick_venv()<CR>', desc = 'swenv: pick env' },
+      {
+        '<localleader>le',
+        '<Cmd>lua require("swenv.api").pick_venv()<CR>',
+        desc = 'swenv: pick env',
+      },
     },
   },
   {
@@ -240,7 +264,12 @@ return {
       { 's', function() require('flash').jump() end, mode = { 'n', 'x', 'o' } },
       { 'S', function() require('flash').treesitter() end, mode = { 'o', 'x' } },
       { 'r', function() require('flash').remote() end, mode = 'o', desc = 'Remote Flash' },
-      { '<c-s>', function() require('flash').toggle() end, mode = { 'c' }, desc = 'Toggle Flash Search' },
+      {
+        '<c-s>',
+        function() require('flash').toggle() end,
+        mode = { 'c' },
+        desc = 'Toggle Flash Search',
+      },
       {
         'R',
         function() require('flash').treesitter_search() end,
@@ -393,7 +422,12 @@ return {
       local keys = '1234'
       for i = 1, #keys do
         local key = keys:sub(i, i)
-        map('n', fmt('<leader>%s', key), function() bmui.nav_file(i) end, { noremap = true, desc = 'buffer ' .. key })
+        map(
+          'n',
+          fmt('<leader>%s', key),
+          function() bmui.nav_file(i) end,
+          { noremap = true, desc = 'buffer ' .. key }
+        )
       end
       -- map({ 't', 'n' }, '<M-Space>', bmui.toggle_quick_menu, { noremap = true })
     end,
@@ -402,14 +436,46 @@ return {
   {
     'razak17/harpoon',
     keys = {
-      { '<a-;>', '<Cmd>lua require("harpoon.ui").toggle_quick_menu()<CR>', desc = 'harpoon: toggle menu' },
-      { '<localleader>ha', '<Cmd>lua require("harpoon.mark").add_file()<CR>', desc = 'harpoon: add file' },
-      { '<localleader>hn', '<Cmd>lua require("harpoon.ui").nav_next()<CR>', desc = 'harpoon: next file' },
-      { '<localleader>hp', '<Cmd>lua require("harpoon.ui").nav_prev()<CR>', desc = 'harpoon: prev file' },
-      { '<a-1>', '<Cmd>lua require("harpoon.ui").nav_file(1)<CR>', desc = 'harpoon: navigate to file 1' },
-      { '<a-2>', '<Cmd>lua require("harpoon.ui").nav_file(2)<CR>', desc = 'harpoon: navigate to file 2' },
-      { '<a-3>', '<Cmd>lua require("harpoon.ui").nav_file(3)<CR>', desc = 'harpoon: navigate to file 3' },
-      { '<a-4>', '<Cmd>lua require("harpoon.ui").nav_file(4)<CR>', desc = 'harpoon: navigate to file 4' },
+      {
+        '<a-;>',
+        '<Cmd>lua require("harpoon.ui").toggle_quick_menu()<CR>',
+        desc = 'harpoon: toggle menu',
+      },
+      {
+        '<localleader>ha',
+        '<Cmd>lua require("harpoon.mark").add_file()<CR>',
+        desc = 'harpoon: add file',
+      },
+      {
+        '<localleader>hn',
+        '<Cmd>lua require("harpoon.ui").nav_next()<CR>',
+        desc = 'harpoon: next file',
+      },
+      {
+        '<localleader>hp',
+        '<Cmd>lua require("harpoon.ui").nav_prev()<CR>',
+        desc = 'harpoon: prev file',
+      },
+      {
+        '<a-1>',
+        '<Cmd>lua require("harpoon.ui").nav_file(1)<CR>',
+        desc = 'harpoon: navigate to file 1',
+      },
+      {
+        '<a-2>',
+        '<Cmd>lua require("harpoon.ui").nav_file(2)<CR>',
+        desc = 'harpoon: navigate to file 2',
+      },
+      {
+        '<a-3>',
+        '<Cmd>lua require("harpoon.ui").nav_file(3)<CR>',
+        desc = 'harpoon: navigate to file 3',
+      },
+      {
+        '<a-4>',
+        '<Cmd>lua require("harpoon.ui").nav_file(4)<CR>',
+        desc = 'harpoon: navigate to file 4',
+      },
     },
     opts = {
       menu = {
@@ -512,7 +578,8 @@ return {
   {
     'pmizio/typescript-tools.nvim',
     event = { 'BufReadPre', 'BufNewFile' },
-    enabled = rvim.lsp.enable and not rvim.find_string(rvim.plugins.disabled, 'typescript-tools.nvim'),
+    enabled = rvim.lsp.enable
+      and not rvim.find_string(rvim.plugins.disabled, 'typescript-tools.nvim'),
     dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
     opts = {
       settings = {
@@ -543,7 +610,9 @@ return {
       local codelldb_path = extension_path .. '/adapter/codelldb'
       local liblldb_path = extension_path .. '/lldb/lib/liblldb.so'
 
-      require('which-key').register({ ['<localleader>r'] = { name = 'Rust Tools', h = 'Inlay Hints' } })
+      require('which-key').register({
+        ['<localleader>r'] = { name = 'Rust Tools', h = 'Inlay Hints' },
+      })
 
       rt.setup({
         tools = {
@@ -562,12 +631,15 @@ return {
             max_height = math.min(math.floor(vim.o.lines * 0.3), 30),
           },
           on_initialized = function()
-            vim.api.nvim_create_autocmd({ 'BufWritePost', 'BufEnter', 'CursorHold', 'InsertLeave' }, {
-              pattern = { '*.rs' },
-              callback = function()
-                local _, _ = pcall(vim.lsp.codelens.refresh)
-              end,
-            })
+            vim.api.nvim_create_autocmd(
+              { 'BufWritePost', 'BufEnter', 'CursorHold', 'InsertLeave' },
+              {
+                pattern = { '*.rs' },
+                callback = function()
+                  local _, _ = pcall(vim.lsp.codelens.refresh)
+                end,
+              }
+            )
           end,
         },
         dap = {
@@ -577,25 +649,60 @@ return {
           on_attach = function(_, bufnr)
             map('n', 'K', rt.hover_actions.hover_actions, { desc = 'hover', buffer = bufnr })
             map('n', '<localleader>rhe', rt.inlay_hints.set, { desc = 'set hints', buffer = bufnr })
-            map('n', '<localleader>rhd', rt.inlay_hints.unset, { desc = 'unset hints', buffer = bufnr })
-            map('n', '<localleader>rr', rt.runnables.runnables, { desc = 'runnables', buffer = bufnr })
-            map('n', '<localleader>rc', rt.open_cargo_toml.open_cargo_toml, { desc = 'open cargo', buffer = bufnr })
-            map('n', '<localleader>rd', rt.debuggables.debuggables, { desc = 'debuggables', buffer = bufnr })
-            map('n', '<localleader>rm', rt.expand_macro.expand_macro, { desc = 'expand macro', buffer = bufnr })
+            map(
+              'n',
+              '<localleader>rhd',
+              rt.inlay_hints.unset,
+              { desc = 'unset hints', buffer = bufnr }
+            )
+            map(
+              'n',
+              '<localleader>rr',
+              rt.runnables.runnables,
+              { desc = 'runnables', buffer = bufnr }
+            )
+            map(
+              'n',
+              '<localleader>rc',
+              rt.open_cargo_toml.open_cargo_toml,
+              { desc = 'open cargo', buffer = bufnr }
+            )
+            map(
+              'n',
+              '<localleader>rd',
+              rt.debuggables.debuggables,
+              { desc = 'debuggables', buffer = bufnr }
+            )
+            map(
+              'n',
+              '<localleader>rm',
+              rt.expand_macro.expand_macro,
+              { desc = 'expand macro', buffer = bufnr }
+            )
             map(
               'n',
               '<localleader>ro',
               rt.external_docs.open_external_docs,
               { desc = 'open external docs', buffer = bufnr }
             )
-            map('n', '<localleader>rp', rt.parent_module.parent_module, { desc = 'parent module', buffer = bufnr })
+            map(
+              'n',
+              '<localleader>rp',
+              rt.parent_module.parent_module,
+              { desc = 'parent module', buffer = bufnr }
+            )
             map(
               'n',
               '<localleader>rs',
               rt.workspace_refresh.reload_workspace,
               { desc = 'reload workspace', buffer = bufnr }
             )
-            map('n', '<localleader>rg', '<Cmd>RustViewCrateGraph<CR>', { desc = 'view crate graph', buffer = bufnr })
+            map(
+              'n',
+              '<localleader>rg',
+              '<Cmd>RustViewCrateGraph<CR>',
+              { desc = 'view crate graph', buffer = bufnr }
+            )
             map(
               'n',
               '<localleader>ra',

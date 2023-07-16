@@ -60,7 +60,9 @@ return {
     config = function(_, opts)
       rvim.highlight.plugin('diffview', {
         { DiffAddedChar = { bg = 'NONE', fg = { from = 'DiffAdd', attr = 'bg', alter = 0.3 } } },
-        { DiffChangedChar = { bg = 'NONE', fg = { from = 'DiffChange', attr = 'bg', alter = 0.3 } } },
+        {
+          DiffChangedChar = { bg = 'NONE', fg = { from = 'DiffChange', attr = 'bg', alter = 0.3 } },
+        },
         { DiffviewStatusAdded = { link = 'DiffAddedChar' } },
         { DiffviewStatusModified = { link = 'DiffChangedChar' } },
         { DiffviewStatusRenamed = { link = 'DiffChangedChar' } },
@@ -110,7 +112,12 @@ return {
         map('n', '<leader>gr', gs.reset_buffer, { desc = 'reset entire buffer' })
         map('n', '<leader>gw', gs.stage_buffer, { desc = 'stage entire buffer' })
 
-        map('n', '<leader>gl', function() gs.setqflist('all') end, { desc = 'list modified in quickfix' })
+        map(
+          'n',
+          '<leader>gl',
+          function() gs.setqflist('all') end,
+          { desc = 'list modified in quickfix' }
+        )
         bmap({ 'n', 'v' }, '<leader>hs', '<Cmd>Gitsigns stage_hunk<CR>', { desc = 'stage hunk' })
         bmap({ 'n', 'v' }, '<leader>hr', '<Cmd>Gitsigns reset_hunk<CR>', { desc = 'reset hunk' })
         bmap({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>', { desc = 'select hunk' })
@@ -132,9 +139,22 @@ return {
     enabled = not rvim.plugins.minimal,
     event = 'VeryLazy',
     keys = {
-      { '<localleader>gf', '<cmd>lua require("openingh").open_file()<CR>', desc = 'openingh: open file' },
-      { '<localleader>gr', '<cmd>lua require("openingh").open_repo()<CR>', desc = 'openingh: open repo' },
-      { '<localleader>gL', '<cmd>OpenInGHFileLines<CR>', desc = 'openingh: open to line', mode = { 'n', 'x' } },
+      {
+        '<localleader>gf',
+        '<cmd>lua require("openingh").open_file()<CR>',
+        desc = 'openingh: open file',
+      },
+      {
+        '<localleader>gr',
+        '<cmd>lua require("openingh").open_repo()<CR>',
+        desc = 'openingh: open repo',
+      },
+      {
+        '<localleader>gL',
+        '<cmd>OpenInGHFileLines<CR>',
+        desc = 'openingh: open to line',
+        mode = { 'n', 'x' },
+      },
     },
   },
 }

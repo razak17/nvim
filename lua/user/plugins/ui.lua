@@ -40,8 +40,16 @@ return {
     'eandrju/cellular-automaton.nvim',
     cmd = 'CellularAutomaton',
     keys = {
-      { '<localleader>ag', '<Cmd>CellularAutomaton game_of_life<CR>', desc = 'automaton: game of life' },
-      { '<localleader>am', '<Cmd>CellularAutomaton make_it_rain<CR>', desc = 'automaton: make it rain' },
+      {
+        '<localleader>ag',
+        '<Cmd>CellularAutomaton game_of_life<CR>',
+        desc = 'automaton: game of life',
+      },
+      {
+        '<localleader>am',
+        '<Cmd>CellularAutomaton make_it_rain<CR>',
+        desc = 'automaton: make it rain',
+      },
     },
   },
   {
@@ -62,10 +70,18 @@ return {
     'kevinhwang91/nvim-hlslens',
     lazy = false,
     keys = {
-      { mode = { 'n' }, 'n', "<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>" },
-      { mode = { 'n' }, 'N', "<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>" },
+      {
+        mode = { 'n' },
+        'n',
+        "<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>",
+      },
+      {
+        mode = { 'n' },
+        'N',
+        "<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>",
+      },
     },
-    opts = {}
+    opts = {},
   },
   {
     'stevearc/dressing.nvim',
@@ -136,12 +152,23 @@ return {
     cmd = { 'TodoTelescope', 'TodoTrouble', 'TodoQuickFix', 'TodoDots' },
     keys = {
       { '<leader>tt', '<cmd>TodoDots<CR>', desc = 'todo: dotfiles todos' },
-      { '<leader>tj', function() require('todo-comments').jump_next() end, desc = 'todo-comments: next todo' },
-      { '<leader>tk', function() require('todo-comments').jump_prev() end, desc = 'todo-comments: prev todo' },
+      {
+        '<leader>tj',
+        function() require('todo-comments').jump_next() end,
+        desc = 'todo-comments: next todo',
+      },
+      {
+        '<leader>tk',
+        function() require('todo-comments').jump_prev() end,
+        desc = 'todo-comments: prev todo',
+      },
     },
     config = function()
       require('todo-comments').setup({ highlight = { after = '' } })
-      rvim.command('TodoDots', string.format('TodoTelescope cwd=%s keywords=TODO,FIXME', vim.fn.stdpath('config')))
+      rvim.command(
+        'TodoDots',
+        string.format('TodoTelescope cwd=%s keywords=TODO,FIXME', vim.fn.stdpath('config'))
+      )
     end,
   },
   {
@@ -156,7 +183,16 @@ return {
       }
       ccc.setup({
         win_opts = { border = border },
-        pickers = { p.hex, p.css_rgb, p.css_hsl, p.css_hwb, p.css_lab, p.css_lch, p.css_oklab, p.css_oklch },
+        pickers = {
+          p.hex,
+          p.css_rgb,
+          p.css_hsl,
+          p.css_hwb,
+          p.css_lab,
+          p.css_lch,
+          p.css_oklab,
+          p.css_oklch,
+        },
         highlighter = {
           auto_enable = true,
           excludes = { 'dart', 'lazy', 'orgagenda', 'org', 'NeogitStatus', 'toggleterm' },
@@ -190,12 +226,19 @@ return {
         },
         icons = {
           ui = { bar = { separator = ' ' .. ui.icons.misc.triangle .. ' ' } },
-          kinds = { symbols = vim.tbl_map(function(value) return value .. ' ' end, require('lspkind').symbol_map) },
+          kinds = {
+            symbols = vim.tbl_map(
+              function(value) return value .. ' ' end,
+              require('lspkind').symbol_map
+            ),
+          },
         },
         menu = {
           win_configs = {
             border = border,
-            col = function(menu) return menu.prev_menu and menu.prev_menu._win_configs.width + 1 or 0 end,
+            col = function(menu)
+              return menu.prev_menu and menu.prev_menu._win_configs.width + 1 or 0
+            end,
           },
         },
       })
@@ -297,7 +340,9 @@ return {
           local end_text = ctx.get_fold_virt_text(end_lnum)
           -- reformat the end text to trim excess whitespace from
           -- indentation usually the first item is indentation
-          if end_text[1] and end_text[1][1] then end_text[1][1] = end_text[1][1]:gsub('[%s\t]+', '') end
+          if end_text[1] and end_text[1][1] then
+            end_text[1][1] = end_text[1][1]:gsub('[%s\t]+', '')
+          end
 
           vim.list_extend(result, { { ' ⋯ ', 'UfoFoldedEllipsis' }, unpack(end_text) })
           table.insert(result, { padding, '' })
@@ -325,7 +370,9 @@ return {
         max_height = function() return math.floor(vim.o.lines * 0.8) end,
         background_colour = 'NormalFloat',
         on_open = function(win)
-          if api.nvim_win_is_valid(win) then api.nvim_win_set_config(win, { border = ui.current.border }) end
+          if api.nvim_win_is_valid(win) then
+            api.nvim_win_set_config(win, { border = ui.current.border })
+          end
         end,
         top_down = false,
         timeout = 70,

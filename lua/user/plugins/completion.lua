@@ -93,28 +93,43 @@ return {
             local label, length = vim_item.abbr, api.nvim_strwidth(vim_item.abbr)
             local function format_icon(icon) return fmt('%s ', icon) end
 
-            if length < MIN_MENU_WIDTH then vim_item.abbr = label .. string.rep(' ', MIN_MENU_WIDTH - length) end
+            if length < MIN_MENU_WIDTH then
+              vim_item.abbr = label .. string.rep(' ', MIN_MENU_WIDTH - length)
+            end
             if #vim_item.abbr >= MAX_MENU_WIDTH then
               vim_item.abbr = vim_item.abbr:sub(1, MAX_MENU_WIDTH) .. ellipsis
             end
 
             local custom_sources = { 'emoji', 'lab.quick_data', 'dynamic', 'crates' }
 
-            if not rvim.find_string(custom_sources, entry.source.name) and vim_item.kind ~= 'Color' then
+            if
+              not rvim.find_string(custom_sources, entry.source.name) and vim_item.kind ~= 'Color'
+            then
               vim_item.kind = format_icon(symbols[vim_item.kind])
             end
-            if entry.source.name == 'emoji' then vim_item.kind = format_icon(codicons.misc.smiley) end
-            if entry.source.name == 'lab.quick_data' then vim_item.kind = format_icon(codicons.misc.robot) end
-            if entry.source.name == 'dynamic' then vim_item.kind = format_icon(codicons.misc.calendar) end
-            if entry.source.name == 'crates' then vim_item.kind = format_icon(ui.codicons.misc.package) end
+            if entry.source.name == 'emoji' then
+              vim_item.kind = format_icon(codicons.misc.smiley)
+            end
+            if entry.source.name == 'lab.quick_data' then
+              vim_item.kind = format_icon(codicons.misc.robot)
+            end
+            if entry.source.name == 'dynamic' then
+              vim_item.kind = format_icon(codicons.misc.calendar)
+            end
+            if entry.source.name == 'crates' then
+              vim_item.kind = format_icon(ui.codicons.misc.package)
+            end
 
             if vim_item.kind == 'Color' then
               if entry.completion_item.documentation then
-                local _, _, r, g, b = string.find(entry.completion_item.documentation, '^rgb%((%d+), (%d+), (%d+)')
+                local _, _, r, g, b =
+                  string.find(entry.completion_item.documentation, '^rgb%((%d+), (%d+), (%d+)')
                 if r then
                   local color = fmt('%s%s%s', fmt('%02x', r), fmt('%02x', g), fmt('%02x', b))
                   local group = fmt('CmpItemKind_%s', color)
-                  if fn.hlID(group) < 1 then api.nvim_set_hl(0, group, { bg = fmt('#%s', color) }) end
+                  if fn.hlID(group) < 1 then
+                    api.nvim_set_hl(0, group, { bg = fmt('#%s', color) })
+                  end
                   vim_item.kind_hl_group = group
                 end
               end
@@ -244,8 +259,16 @@ return {
           require('cmp_dynamic').register({
             { label = 'today', insertText = os.date('%Y/%m/%d') },
             { label = 'tomorrow', insertText = Date.new():add_date(1):format('%Y/%m/%d') },
-            { label = 'next Week', insertText = Date.new():add_date(7):format('%Y/%m/%d'), resolve = true },
-            { label = 'next Monday', insertText = Date.new():add_date(7):day(1):format('%Y/%m/%d'), resolve = true },
+            {
+              label = 'next Week',
+              insertText = Date.new():add_date(7):format('%Y/%m/%d'),
+              resolve = true,
+            },
+            {
+              label = 'next Monday',
+              insertText = Date.new():add_date(7):day(1):format('%Y/%m/%d'),
+              resolve = true,
+            },
           })
         end,
       },

@@ -93,8 +93,12 @@ end
 ----------------------------------------------------------------------------------------------------
 local function show_documentation()
   local filetype = vim.bo.filetype
-  if vim.tbl_contains({ 'help' }, filetype) then return vim.cmd('h ' .. vim.fn.expand('<cword>')) end
-  if vim.tbl_contains({ 'man' }, filetype) then return vim.cmd('Man ' .. vim.fn.expand('<cword>')) end
+  if vim.tbl_contains({ 'help' }, filetype) then
+    return vim.cmd('h ' .. vim.fn.expand('<cword>'))
+  end
+  if vim.tbl_contains({ 'man' }, filetype) then
+    return vim.cmd('Man ' .. vim.fn.expand('<cword>'))
+  end
   vim.lsp.buf.hover()
 end
 
@@ -103,16 +107,64 @@ end
 ---@param bufnr integer
 local function setup_mappings(client, bufnr)
   local mappings = {
-    { 'n', '<leader>lk', function() vim.diagnostic.goto_prev({ float = false }) end, desc = 'go to prev diagnostic' },
-    { 'n', '<leader>lj', function() vim.diagnostic.goto_next({ float = false }) end, desc = 'go to next diagnostic' },
-    { { 'n', 'x' }, '<leader>la', lsp.buf.code_action, desc = 'code action', capability = provider.CODEACTIONS },
+    {
+      'n',
+      '<leader>lk',
+      function() vim.diagnostic.goto_prev({ float = false }) end,
+      desc = 'go to prev diagnostic',
+    },
+    {
+      'n',
+      '<leader>lj',
+      function() vim.diagnostic.goto_next({ float = false }) end,
+      desc = 'go to next diagnostic',
+    },
+    {
+      { 'n', 'x' },
+      '<leader>la',
+      lsp.buf.code_action,
+      desc = 'code action',
+      capability = provider.CODEACTIONS,
+    },
     { 'n', '<leader>lf', format, desc = 'format buffer', capability = provider.FORMATTING },
-    { 'n', 'K', show_documentation, desc = 'hover', capability = provider.HOVER, exclude_ft = { 'rust', 'toml' } },
-    { 'n', 'gd', lsp.buf.definition, desc = 'definition', capability = provider.DEFINITION, exclude = { 'tsserver' } },
+    {
+      'n',
+      'K',
+      show_documentation,
+      desc = 'hover',
+      capability = provider.HOVER,
+      exclude_ft = { 'rust', 'toml' },
+    },
+    {
+      'n',
+      'gd',
+      lsp.buf.definition,
+      desc = 'definition',
+      capability = provider.DEFINITION,
+      exclude = { 'tsserver' },
+    },
     { 'n', 'gr', lsp.buf.references, desc = 'references', capability = provider.REFERENCES },
-    { 'n', 'gi', lsp.buf.implementation, desc = 'implementation', capability = provider.REFERENCES },
-    { 'n', 'gI', lsp.buf.incoming_calls, desc = 'incoming calls', capability = provider.REFERENCES },
-    { 'n', 'gt', lsp.buf.type_definition, desc = 'go to type definition', capability = provider.DEFINITION },
+    {
+      'n',
+      'gi',
+      lsp.buf.implementation,
+      desc = 'implementation',
+      capability = provider.REFERENCES,
+    },
+    {
+      'n',
+      'gI',
+      lsp.buf.incoming_calls,
+      desc = 'incoming calls',
+      capability = provider.REFERENCES,
+    },
+    {
+      'n',
+      'gt',
+      lsp.buf.type_definition,
+      desc = 'go to type definition',
+      capability = provider.DEFINITION,
+    },
     { 'n', '<leader>lc', lsp.codelens.run, desc = 'run code lens', capability = provider.CODELENS },
     { 'n', '<leader>lr', lsp.buf.rename, desc = 'rename', capability = provider.RENAME },
     -- TODO: loclist is broken
@@ -195,7 +247,11 @@ local function setup_autocommands(client, buf)
       buffer = buf,
       desc = 'LSP: Format on save',
       command = function(args)
-        if not vim.g.formatting_disabled and not vim.b[buf].formatting_disabled and rvim.lsp.format_on_save.enable then
+        if
+          not vim.g.formatting_disabled
+          and not vim.b[buf].formatting_disabled
+          and rvim.lsp.format_on_save.enable
+        then
           local clients = vim.tbl_filter(
             function(c) return c.server_capabilities[provider.FORMATTING] end,
             lsp.get_active_clients({ buffer = buf })
@@ -375,7 +431,9 @@ local function toggle_virtual_text()
     config = vim.tbl_extend('force', config, { virtual_text = false })
   end
   diagnostic.config(config)
-  rvim.lsp.notify(string.format('virtual text %s', bool2str(type(diagnostic.config().virtual_text) ~= 'boolean')))
+  rvim.lsp.notify(
+    string.format('virtual text %s', bool2str(type(diagnostic.config().virtual_text) ~= 'boolean'))
+  )
 end
 command('ToggleVirtualText', toggle_virtual_text)
 
@@ -383,13 +441,20 @@ local function toggle_virtual_lines()
   local config = diagnostic.config()
   if type(config.virtual_lines) == 'boolean' then
     config = vim.tbl_extend('force', config, { virtual_lines = { only_current_line = true } })
-    if type(config.virtual_text) == 'table' then config = vim.tbl_extend('force', config, { virtual_text = false }) end
+    if type(config.virtual_text) == 'table' then
+      config = vim.tbl_extend('force', config, { virtual_text = false })
+    end
   else
     config = vim.tbl_extend('force', config, { virtual_lines = false })
   end
   rvim.lsp.hover_diagnostics = not rvim.lsp.hover_diagnostics
   diagnostic.config(config)
-  rvim.lsp.notify(string.format('virtual lines %s', bool2str(type(diagnostic.config().virtual_lines) ~= 'boolean')))
+  rvim.lsp.notify(
+    string.format(
+      'virtual lines %s',
+      bool2str(type(diagnostic.config().virtual_lines) ~= 'boolean')
+    )
+  )
 end
 command('ToggleVirtualLines', toggle_virtual_lines)
 

@@ -43,7 +43,9 @@ local servers = {
   --   },
   -- },
   denols = {
-    root_dir = function(fname) return require('lspconfig/util').root_pattern('deno.json', 'deno.jsonc')(fname) end,
+    root_dir = function(fname)
+      return require('lspconfig/util').root_pattern('deno.json', 'deno.jsonc')(fname)
+    end,
   },
   emmet_ls = {
     root_dir = function(fname) return require('lspconfig/util').root_pattern('package.json')(fname) end,
@@ -102,9 +104,17 @@ local servers = {
     settings = {
       Lua = {
         codeLens = { enable = true },
-        hint = { enable = true, arrayIndex = 'Disable', setType = false, paramName = 'Disable', paramType = true },
+        hint = {
+          enable = true,
+          arrayIndex = 'Disable',
+          setType = false,
+          paramName = 'Disable',
+          paramType = true,
+        },
         format = { enable = false },
-        diagnostics = { globals = { 'vim', 'describe', 'it', 'before_each', 'after_each', 'rvim', 'join_paths' } },
+        diagnostics = {
+          globals = { 'vim', 'describe', 'it', 'before_each', 'after_each', 'rvim', 'join_paths' },
+        },
         completion = { keywordSnippet = 'Replace', callSnippet = 'Replace' },
         workspace = { checkThirdParty = false },
         telemetry = { enable = false },
@@ -114,7 +124,9 @@ local servers = {
   tailwindcss = {
     -- cmd = { '/home/razak/.bun/bin/tailwindcss-language-server', '--stdio' },
     root_dir = function(fname)
-      return require('lspconfig/util').root_pattern('tailwind.config.js', 'tailwind.config.cjs')(fname)
+      return require('lspconfig/util').root_pattern('tailwind.config.js', 'tailwind.config.cjs')(
+        fname
+      )
     end,
   },
 }

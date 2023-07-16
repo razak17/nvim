@@ -2,7 +2,8 @@ local fn, api, env, fmt = vim.fn, vim.api, vim.env, string.format
 local falsy, icons, codicons = rvim.falsy, rvim.ui.icons, rvim.ui.codicons
 local separator = icons.separators.dotted_thin_block
 
-local ignored_filetypes = { 'toggleterm', 'lspinfo', 'null-ls-info', 'mason', 'oil', 'buffer_manager', 'Jaq' }
+local ignored_filetypes =
+  { 'toggleterm', 'lspinfo', 'null-ls-info', 'mason', 'oil', 'buffer_manager', 'Jaq' }
 
 local conditions = {
   ignored_filetype = function() return not rvim.find_string(ignored_filetypes, vim.bo.filetype) end,
@@ -174,9 +175,19 @@ return {
 
       ins_left({ block, color = block_color, padding = { left = 0, right = 1 } })
 
-      ins_left({ 'branch', icon = '', padding = { left = 0, right = 1 }, color = { fg = colors.yellowgreen } })
+      ins_left({
+        'branch',
+        icon = '',
+        padding = { left = 0, right = 1 },
+        color = { fg = colors.yellowgreen },
+      })
 
-      ins_left({ 'filename', cond = conditions.buffer_not_empty, padding = { left = 0, right = 1 }, path = 4 })
+      ins_left({
+        'filename',
+        cond = conditions.buffer_not_empty,
+        padding = { left = 0, right = 1 },
+        path = 4,
+      })
 
       ins_left({
         python_env,

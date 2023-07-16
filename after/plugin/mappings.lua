@@ -174,7 +174,9 @@ if not is_available('cybu.nvim') then
   nnoremap('H', '<cmd>bprevious<CR>', { desc = 'previous buffer' })
   nnoremap('L', '<cmd>bnext<CR>', { desc = 'next buffer' })
 end
-if not is_available('close-buffers.nvim') then nnoremap('<leader>c', ':bdel<CR>', { desc = 'delete buffer' }) end
+if not is_available('close-buffers.nvim') then
+  nnoremap('<leader>c', ':bdel<CR>', { desc = 'delete buffer' })
+end
 if not is_available('neo-tree.nvim') then nnoremap('<C-n>', ':Ex<CR>', { desc = 'explorer' }) end
 nnoremap('<leader>x', ':q<CR>', { desc = 'quit' })
 nnoremap('<leader>q', ':q<CR>', { desc = 'quit' })
@@ -198,7 +200,11 @@ vnoremap('$', 'g_')
 -- NOTE: this is a recursive mapping so anything bound (by a plugin) to <esc> still works
 imap('jk', [[col('.') == 1 ? '<esc>' : '<esc>l']], { expr = true })
 -- Toggle top/center/bottom
-nmap('zz', [[(winline() == (winheight (0) + 1)/ 2) ?  'zt' : (winline() == 1)? 'zb' : 'zz']], { expr = true })
+nmap(
+  'zz',
+  [[(winline() == (winheight (0) + 1)/ 2) ?  'zt' : (winline() == 1)? 'zb' : 'zz']],
+  { expr = true }
+)
 -- Escape
 nnoremap('<C-c>', '<Esc>')
 ----------------------------------------------------------------------------------------------------
@@ -208,11 +214,27 @@ function rvim.mappings.ddg(path) rvim.web_search(path, 'https://html.duckduckgo.
 function rvim.mappings.gh(path) rvim.web_search(path, 'https://github.com/search?q=') end
 
 -- Search DuckDuckGo
-nnoremap('<localleader>?', [[:lua rvim.mappings.ddg(vim.fn.expand("<cword>"))<CR>]], { desc = 'search word' })
-xnoremap('<localleader>?', [["gy:lua rvim.mappings.ddg(vim.api.nvim_eval("@g"))<CR>gv]], { desc = 'search word' })
+nnoremap(
+  '<localleader>?',
+  [[:lua rvim.mappings.ddg(vim.fn.expand("<cword>"))<CR>]],
+  { desc = 'search word' }
+)
+xnoremap(
+  '<localleader>?',
+  [["gy:lua rvim.mappings.ddg(vim.api.nvim_eval("@g"))<CR>gv]],
+  { desc = 'search word' }
+)
 -- Search Github
-nnoremap('<localleader>!', [[:lua rvim.mappings.gh(vim.fn.expand("<cword>"))<CR>]], { desc = 'gh search word' })
-xnoremap('<localleader>!', [["gy:lua rvim.mappings.gh(vim.api.nvim_eval("@g"))<CR>gv]], { desc = 'gh search word' })
+nnoremap(
+  '<localleader>!',
+  [[:lua rvim.mappings.gh(vim.fn.expand("<cword>"))<CR>]],
+  { desc = 'gh search word' }
+)
+xnoremap(
+  '<localleader>!',
+  [["gy:lua rvim.mappings.gh(vim.api.nvim_eval("@g"))<CR>gv]],
+  { desc = 'gh search word' }
+)
 ----------------------------------------------------------------------------------------------------
 -- Date & Time
 ----------------------------------------------------------------------------------------------------
@@ -220,7 +242,11 @@ nnoremap('<localleader>ac', "<Cmd>put =strftime('%F-%H-%M')<CR>", { desc = 'inse
 nnoremap('<localleader>aC', "<Cmd>put =strftime('%T')<CR>", { desc = 'insert human time' })
 nnoremap('<localleader>ad', "<Cmd>put =strftime('%F')<CR>", { desc = 'insert date' })
 nnoremap('<localleader>aD', "<Cmd>put =strftime('%a %d %b %r')<CR>", { desc = 'insert human date' })
-nnoremap('<localleader>an', "<cmd>execute 'e '.strftime(\"%F\").'.norg' <CR>", { desc = 'New Note Here' })
+nnoremap(
+  '<localleader>an',
+  "<cmd>execute 'e '.strftime(\"%F\").'.norg' <CR>",
+  { desc = 'New Note Here' }
+)
 ----------------------------------------------------------------------------------------------------
 -- GX - replicate netrw functionality
 ----------------------------------------------------------------------------------------------------
@@ -256,7 +282,11 @@ inoremap('<c-z>', [[<Esc>:undo<CR>]])
 ----------------------------------------------------------------------------------------------------
 -- Reverse Line
 function rvim.rev_str(str) return string.reverse(str) end
-vnoremap('<leader>R', [[:s/\%V.\+\%V./\=v:lua.rvim.rev_str(submatch(0))<CR>gv<ESC>]], { desc = 'reverse line' })
+vnoremap(
+  '<leader>R',
+  [[:s/\%V.\+\%V./\=v:lua.rvim.rev_str(submatch(0))<CR>gv<ESC>]],
+  { desc = 'reverse line' }
+)
 ----------------------------------------------------------------------------------------------------
 -- Inspect treesitter tree
 nnoremap(
@@ -303,12 +333,16 @@ nnoremap('<leader>ol', toggle_statusline, { desc = 'toggle statusline' })
 --- Toggle conceal=2|0
 local function toggle_conceal()
   vim.opt_local.conceallevel = vim.opt_local.conceallevel:get() == 0 and 2 or 0
-  rvim.mappings.notify(string.format('conceal %s', rvim.bool2str(vim.opt_local.conceallevel:get() == 2)))
+  rvim.mappings.notify(
+    string.format('conceal %s', rvim.bool2str(vim.opt_local.conceallevel:get() == 2))
+  )
 end
 --- Toggle conceal cursor=n|''
 local function toggle_conceal_cursor()
   vim.opt_local.concealcursor = vim.opt_local.concealcursor:get() == 'n' and '' or 'n'
-  rvim.mappings.notify(string.format('conceal cursor %s', rvim.bool2str(vim.opt_local.concealcursor:get() == '')))
+  rvim.mappings.notify(
+    string.format('conceal cursor %s', rvim.bool2str(vim.opt_local.concealcursor:get() == ''))
+  )
 end
 nnoremap('<localleader>cl', toggle_conceal, { desc = 'toggle conceallevel' })
 nnoremap('<localleader>cL', toggle_conceal_cursor, { desc = 'toggle concealcursor' })

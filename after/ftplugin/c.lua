@@ -1,7 +1,8 @@
 if not rvim or rvim.minimal or rvim.plugins.minimal then return end
 
 local mason_registry = require('mason-registry')
-local codelldb_path = mason_registry.get_package('codelldb'):get_install_path() .. '/extension/adapter/codelldb'
+local codelldb_path = mason_registry.get_package('codelldb'):get_install_path()
+  .. '/extension/adapter/codelldb'
 
 require('dap').adapters.codelldb = {
   type = 'server',
@@ -18,7 +19,9 @@ for _, language in ipairs({ 'c', 'cpp' }) do
       name = 'Launch file',
       type = 'codelldb',
       request = 'launch',
-      program = function() return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file') end,
+      program = function()
+        return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+      end,
       cwd = '${workspaceFolder}',
       stopOnEntry = false,
     },

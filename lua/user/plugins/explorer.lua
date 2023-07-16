@@ -8,7 +8,8 @@ local function make_rename_params(data)
   local clients = vim.lsp.get_active_clients()
   clients = vim.tbl_filter(function(client) return client.name ~= 'copilot' end, clients)
   for _, client in ipairs(clients) do
-    local will_rename = vim.tbl_get(client, 'server_capabilities', 'workspace', 'fileOperations', 'willRename')
+    local will_rename =
+      vim.tbl_get(client, 'server_capabilities', 'workspace', 'fileOperations', 'willRename')
     if not will_rename then
       return vim.notify(fmt('%s does not LSP file rename', client.name), 'info', { title = 'LSP' })
     end
@@ -21,11 +22,15 @@ local function make_rename_params(data)
       },
     }
     local resp = client.request_sync('workspace/willRenameFiles', params, 1000)
-    if resp and resp.result ~= nil then vim.lsp.util.apply_workspace_edit(resp.result, client.offset_encoding) end
+    if resp and resp.result ~= nil then
+      vim.lsp.util.apply_workspace_edit(resp.result, client.offset_encoding)
+    end
   end
 end
 
-local function will_rename_handler(data) make_rename_params({ old_name = data.source, new_name = data.destination }) end
+local function will_rename_handler(data)
+  make_rename_params({ old_name = data.source, new_name = data.destination })
+end
 
 return {
   {

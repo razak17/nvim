@@ -90,9 +90,13 @@ local function tint(color, percent)
 end
 
 local err_warn = vim.schedule_wrap(function(group, attribute)
-  notify(fmt('failed to get highlight %s for attribute %s\n%s', group, attribute, debug.traceback()), 'ERROR', {
-    title = fmt('Highlight - get(%s)', group),
-  }) -- stylua: ignore
+  notify(
+    fmt('failed to get highlight %s for attribute %s\n%s', group, attribute, debug.traceback()),
+    'ERROR',
+    {
+      title = fmt('Highlight - get(%s)', group),
+    }
+  ) -- stylua: ignore
 end)
 
 ---Get the value a highlight group whilst handling errors, fallbacks as well as returning a gui value

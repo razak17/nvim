@@ -273,7 +273,8 @@ end
 ---@return string
 function rvim.truncate(str, max_len)
   assert(str and max_len, 'string and max_len must be provided')
-  return api.nvim_strwidth(str) > max_len and str:sub(1, max_len) .. rvim.ui.icons.misc.ellipsis or str
+  return api.nvim_strwidth(str) > max_len and str:sub(1, max_len) .. rvim.ui.icons.misc.ellipsis
+    or str
 end
 
 --- search current word or go to file

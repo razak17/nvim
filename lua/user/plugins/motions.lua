@@ -4,7 +4,11 @@ local bookmark = rvim.ui.codicons.misc.bookmark
 local function get_available_stacks(notify)
   local available_stacks = require('trailblazer.trails').stacks.get_sorted_stack_names()
   if notify then
-    vim.notify(fmt('Available stacks: %s', table.concat(available_stacks, ', ')), 'info', { title = 'TrailBlazer' })
+    vim.notify(
+      fmt('Available stacks: %s', table.concat(available_stacks, ', ')),
+      'info',
+      { title = 'TrailBlazer' }
+    )
   end
   return available_stacks
 end
@@ -83,7 +87,15 @@ return {
     enabled = false,
     event = 'VeryLazy',
     opts = {
-      disabled_filetypes = { 'qf', 'neo-tree', 'lazy', 'mason', 'NeogitStatus', 'lspinfo', 'null-ls-info' },
+      disabled_filetypes = {
+        'qf',
+        'neo-tree',
+        'lazy',
+        'mason',
+        'NeogitStatus',
+        'lspinfo',
+        'null-ls-info',
+      },
     },
   },
   {
