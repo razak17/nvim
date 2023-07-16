@@ -173,6 +173,19 @@ return {
     },
   },
   {
+    'smjonas/inc-rename.nvim',
+    opts = { hl_group = 'Visual', preview_empty_name = true },
+    keys = {
+      {
+        '<leader>rn',
+        function() return fmt(':IncRename %s', fn.expand('<cword>')) end,
+        expr = true,
+        silent = false,
+        desc = 'lsp: incremental rename',
+      },
+    },
+  },
+  {
     'lvimuser/lsp-inlayhints.nvim',
     enabled = rvim.lsp.enable,
     keys = {
