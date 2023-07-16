@@ -442,7 +442,6 @@ return {
           { noremap = true, desc = 'buffer ' .. key }
         )
       end
-      -- map({ 't', 'n' }, '<M-Space>', bmui.toggle_quick_menu, { noremap = true })
     end,
   },
   { 'lewis6991/whatthejump.nvim', keys = { '<C-I>', '<C-O>' } },
@@ -766,6 +765,17 @@ return {
       })
       float_resize_autocmd('GlowResize', 'glowpreview', 'Glow')
     end,
+  },
+  {
+    'razak17/md-headers.nvim',
+    ft = 'markdown',
+    cmd = { 'MarkdownHeaders', 'MarkdownHeadersClosest' },
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    keys = {
+      { '<leader>mdh', '<cmd>MarkdownHeaders<CR>', desc = 'md-header: headers' },
+      { '<leader>mdc', '<cmd>MarkdownHeadersClosest<CR>', desc = 'md-header: closest' },
+    },
+    opts = { borderchars = ui.border.common },
   },
   {
     'iamcco/markdown-preview.nvim',
