@@ -17,7 +17,6 @@ local servers = {
   yamlls = {},
   vimls = {},
   volar = {},
-  tsserver = {},
   docker_compose_language_service = function()
     local lspconfig = require('lspconfig')
     return {
@@ -32,12 +31,6 @@ local servers = {
         schemas = require('schemastore').json.schemas(),
         validate = { enable = true },
       },
-    },
-  },
-  rust_analyzer = {
-    ['rust-analyzer'] = {
-      lens = { enable = true },
-      checkOnSave = { enable = true, command = 'clippy' },
     },
   },
   -- vtsls = {
