@@ -50,6 +50,7 @@ local servers = {
   emmet_ls = {
     root_dir = function(fname) return require('lspconfig/util').root_pattern('package.json')(fname) end,
   },
+  emmet_language_server = {},
   --- https://github.com/golang/tools/blob/master/gopls/doc/settings.md
   gopls = {
     settings = {
