@@ -107,7 +107,22 @@ return {
     },
     {
       'williamboman/mason-lspconfig.nvim',
-      opts = { automatic_installation = true },
+      enabled = rvim.lsp.enable,
+      event = { 'BufReadPre', 'BufNewFile' },
+      opts = {
+        automatic_installation = true,
+        handlers = {
+          function(name)
+            local cwd = vim.fn.getcwd()
+            local disabled = rvim.dirs_match(rvim.lsp.disabled.directories, cwd)
+              or rvim.find_string(rvim.lsp.disabled.servers, name)
+            if disabled then return end
+            if rvim.find_string(rvim.lsp.disabled.servers, name) then return end
+            local config = require('user.servers')(name)
+            if config then require('lspconfig')[name].setup(config) end
+          end,
+        },
+      },
       dependencies = {
         'mason.nvim',
         {

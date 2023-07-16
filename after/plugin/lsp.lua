@@ -9,8 +9,6 @@ local disabled = rvim.minimal
 
 if disabled then return end
 
-rvim.lsp.config_file = join_paths(vim.fn.stdpath('config'), 'after', 'plugin', 'lspconfig.lua')
-
 local lsp, fn, api, fmt = vim.lsp, vim.fn, vim.api, string.format
 local L = vim.lsp.log_levels
 
@@ -408,10 +406,3 @@ local function toggle_signs()
   rvim.lsp.notify(string.format('signs %s', bool2str(type(diagnostic.config().signs) ~= 'boolean')))
 end
 rvim.command('ToggleSigns', toggle_signs)
-
-map('n', '<leader>lG', '<Cmd>LspGenerateTemplates<CR>', { desc = 'generate setup file' })
-map('n', '<leader>lD', '<Cmd>LspRemoveTemplates<CR>', { desc = 'delete setup file' })
-map('n', '<leader>lO', '<Cmd>edit ' .. rvim.lsp.config_file .. '<CR>', { desc = 'open lspsetup file' })
-
--- Generate templates
-if fn.filereadable(rvim.lsp.config_file) ~= 1 then vim.defer_fn(function() vim.cmd('LspGenerateTemplates') end, 1) end
