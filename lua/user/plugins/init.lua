@@ -320,15 +320,47 @@ return {
         desc = 'debugprint: cursor',
       },
       {
+        '<leader>dP',
+        function() return require('debugprint').debugprint({ above = true, variable = true }) end,
+        expr = true,
+        desc = 'debugprint: cursor (above)',
+      },
+      {
+        '<leader>di',
+        function()
+          return require('debugprint').debugprint({ ignore_treesitter = true, variable = true })
+        end,
+        expr = true,
+        desc = 'debugprint: prompt',
+      },
+      {
+        '<leader>dI',
+        function()
+          return require('debugprint').debugprint({
+            ignore_treesitter = true,
+            above = true,
+            variable = true,
+          })
+        end,
+        expr = true,
+        desc = 'debugprint:prompt (above)',
+      },
+      {
         '<leader>do',
         function() return require('debugprint').debugprint({ motion = true }) end,
-        mode = 'o',
         expr = true,
         desc = 'debugprint: operator',
+      },
+      {
+        '<leader>dO',
+        function() return require('debugprint').debugprint({ above = true, motion = true }) end,
+        expr = true,
+        desc = 'debugprint: operator (above)',
       },
       { '<leader>dx', '<Cmd>DeleteDebugPrints<CR>', desc = 'debugprint: clear all' },
     },
     opts = { create_keymaps = false },
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
   },
   {
     'jghauser/fold-cycle.nvim',
