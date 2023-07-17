@@ -872,6 +872,19 @@ return {
     end,
   },
   {
+    'bennypowers/nvim-regexplainer',
+    keys = { { '<localleader>rx', '<Cmd>RegexplainerToggle<CR>', desc = 'regexplainer: toggle' } },
+    opts = {
+      display = 'popup',
+      popup = {
+        border = {
+          padding = { 1, 2 },
+          style = border,
+        },
+      },
+    },
+  },
+  {
     'axelvc/template-string.nvim',
     enabled = not rvim.plugins.minimal,
     event = 'BufRead',

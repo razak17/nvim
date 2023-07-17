@@ -1,5 +1,5 @@
 local api = vim.api
-local highlight, ui = rvim.highlight, rvim.ui
+local ui = rvim.ui
 local codicons = ui.codicons
 local border = ui.current.border
 local strwidth = vim.api.nvim_strwidth
