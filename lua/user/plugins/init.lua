@@ -228,6 +228,7 @@ return {
   ----------------------------------------------------------------------------------------------------
   -- Utilities {{{1
   ----------------------------------------------------------------------------------------------------
+  { 'lewis6991/whatthejump.nvim', keys = { '<C-I>', '<C-O>' } },
   {
     'itchyny/vim-highlighturl',
     event = 'ColorScheme',
@@ -444,7 +445,6 @@ return {
       end
     end,
   },
-  { 'lewis6991/whatthejump.nvim', keys = { '<C-I>', '<C-O>' } },
   {
     'razak17/harpoon',
     keys = {
