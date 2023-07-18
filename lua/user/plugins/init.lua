@@ -229,6 +229,7 @@ return {
   -- Utilities {{{1
   ----------------------------------------------------------------------------------------------------
   { 'lewis6991/whatthejump.nvim', keys = { '<C-I>', '<C-O>' } },
+  { 'sQVe/sort.nvim', cmd = { 'Sort' } },
   {
     'itchyny/vim-highlighturl',
     event = 'ColorScheme',
