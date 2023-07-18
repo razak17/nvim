@@ -162,4 +162,9 @@ return {
     ft = { 'gitrebase' },
     opts = {},
   },
+  {
+    'akinsho/git-conflict.nvim',
+    event = 'VeryLazy',
+    opts = { disable_diagnostics = true },
+  },
 }
