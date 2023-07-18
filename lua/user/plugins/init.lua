@@ -479,6 +479,11 @@ return {
     end,
   },
   {
+    'stevearc/stickybuf.nvim',
+    event = 'VeryLazy',
+    opts = {},
+  },
+  {
     'razak17/harpoon',
     keys = {
       {
