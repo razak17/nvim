@@ -95,13 +95,17 @@ return {
       dap.listeners.before.event_exited['dapui_config'] = function() dapui.close() end
       dap.listeners.before.event_terminated['dapui_config'] = function() dapui.close() end
 
+      local mason_registry = require('mason-registry')
+      local js_debug = mason_registry.get_package('js-debug-adapter')
+      local debug_server_path = js_debug:get_install_path() .. '/js-debug/src/dapDebugServer.js'
+
       require('dap').adapters['pwa-node'] = {
         type = 'server',
         host = 'localhost',
         port = '${port}',
         executable = {
-          command = 'js-debug-adapter', -- As I'm using mason, this will be in the path
-          args = { '${port}' },
+          command = 'node',
+          args = { debug_server_path, '${port}' },
         },
       }
 
