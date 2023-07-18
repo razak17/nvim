@@ -109,24 +109,24 @@ return {
         },
       }
 
-      for _, language in ipairs({ 'typescript', 'typescriptreact', 'javascript' }) do
+      for _, language in ipairs({ 'typescript', 'typescriptreact', 'javascript', 'svelte' }) do
         require('dap').configurations[language] = {
-          {
-            type = 'pwa-node',
-            request = 'attach',
-            name = 'Attach program (pwa-node, select pid)',
-            cwd = '${workspaceFolder}',
-            processId = require('dap.utils').pick_process,
-            skipFiles = { '<node_internals>/**' },
-          },
           {
             type = 'pwa-node',
             request = 'launch',
             name = 'Launch current file (pwa-node)',
             program = '${file}',
             cwd = '${workspaceFolder}',
+          },
+          {
+            type = 'pwa-node',
+            request = 'attach',
+            name = 'Attach program (pwa-node, select pid)',
+            cwd = '${workspaceFolder}/src',
+            processId = require('dap.utils').pick_process,
             sourceMaps = true,
-            protocol = 'inspector',
+            resolveSourceMapLocations = { '${workspaceFolder}/**', '!**/node_modules/**' },
+            skipFiles = { '<node_internals>/**', '${workspaceFolder}/node_modules/**/*.js' },
           },
           {
             type = 'pwa-node',
@@ -192,6 +192,18 @@ return {
             runtimeArgs = { 'test', '--inspect-brk', '--allow-all', '${file}' },
             runtimeExecutable = 'deno',
             attachSimplePort = 9229,
+          },
+          {
+            type = 'pwa-chrome',
+            name = 'Launch Chrome to debug client',
+            request = 'launch',
+            url = 'http://localhost:5173',
+            sourceMaps = true,
+            protocol = 'inspector',
+            port = 9222,
+            webRoot = '${workspaceFolder}/src',
+            -- skip files from vite's hmr
+            skipFiles = { '**/node_modules/**/*', '**/@vite/*', '**/src/client/*', '**/src/*' },
           },
         }
       end
