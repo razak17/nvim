@@ -1,5 +1,5 @@
 local cwd = vim.fn.getcwd()
-local highlight = rvim.highlight
+local fmt = string.format
 local icons = rvim.ui.icons.separators
 
 local neogit = rvim.reqidx('neogit')
@@ -141,17 +141,26 @@ return {
     keys = {
       {
         '<localleader>gf',
-        '<cmd>lua require("openingh").open_file()<CR>',
+        function()
+          require('openingh').open_file()
+          vim.notify('opening file in github', 'info', { title = 'openingh' })
+        end,
         desc = 'openingh: open file',
       },
       {
         '<localleader>gr',
-        '<cmd>lua require("openingh").open_repo()<CR>',
+        function()
+          require('openingh').open_repo()
+          vim.notify('opening repo in github', 'info', { title = 'openingh' })
+        end,
         desc = 'openingh: open repo',
       },
       {
         '<localleader>gL',
-        '<cmd>OpenInGHFileLines<CR>',
+        function()
+          require('openingh').open_file_lines()
+          vim.notify('opening file line in github', 'info', { title = 'openingh' })
+        end,
         desc = 'openingh: open to line',
         mode = { 'n', 'x' },
       },
