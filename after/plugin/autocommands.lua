@@ -3,6 +3,19 @@ if not rvim or rvim and rvim.none then return end
 local fn, api, env = vim.fn, vim.api, vim.env
 local falsy = rvim.falsy
 
+-- see: https://github.com/yutkat/convert-git-url.nvim
+rvim.command('ConvertGitUrl', function()
+  local save_pos = vim.fn.getpos('.')
+  local cur = vim.fn.expand('<cWORD>')
+  if string.match(cur, '^git@') then
+    vim.cmd([[s#git@\(.\{-}\).com:#https://\1.com/#]])
+  elseif string.match(cur, '^http') then
+    vim.cmd([[s#https://\(.\{-}\).com/#git@\1.com:#]])
+  end
+  vim.fn.setpos('.', save_pos)
+end, { force = true })
+map('n', '<leader>gu', '<Cmd>ConvertGitUrl<CR>', { desc = 'convert git url' })
+
 local smart_close_filetypes = rvim.p_table({
   ['qf'] = true,
   ['log'] = true,
