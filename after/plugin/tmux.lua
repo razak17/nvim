@@ -16,7 +16,7 @@ end
 local function clear_pane_title() fn.jobstart('tmux set-window-option automatic-rename on') end
 
 local function set_window_title()
-  local session = fn.fnamemodify(vim.loop.cwd(), ':t') or 'Neovim'
+  local session = fn.fnamemodify(vim.uv.cwd(), ':t') or 'Neovim'
   local window_title = fmt('%s', session)
   fn.jobstart(fmt("tmux rename-window '%s'", window_title))
 end

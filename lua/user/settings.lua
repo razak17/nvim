@@ -195,7 +195,7 @@ opt.cursorlineopt = { 'both' }
 function rvim.modified_icon() return vim.bo.modified and rvim.ui.codicons.misc.circle or '' end
 -- titlestring = ' ❐ %{fnamemodify(getcwd(), ":t")} %m'
 o.titlestring = '%<%F%=%l/%L - nvim'
-o.titleold = fn.fnamemodify(vim.loop.os_getenv('SHELL'), ':t')
+o.titleold = fn.fnamemodify(vim.uv.os_getenv('SHELL'), ':t')
 o.title = true
 o.titlelen = 70
 ----------------------------------------------------------------------------------------------------
