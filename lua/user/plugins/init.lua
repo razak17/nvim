@@ -186,39 +186,6 @@ return {
     },
   },
   {
-    'lvimuser/lsp-inlayhints.nvim',
-    enabled = rvim.lsp.enable,
-    keys = {
-      {
-        '<leader>lth',
-        function() require('lsp-inlayhints').toggle() end,
-        desc = 'toggle inlay hints',
-      },
-    },
-    init = function()
-      rvim.augroup('InlayHintsSetup', {
-        event = 'LspAttach',
-        command = function(args)
-          local id = vim.tbl_get(args, 'data', 'client_id')
-          if not id then return end
-          local client = vim.lsp.get_client_by_id(id)
-          require('lsp-inlayhints').on_attach(client, args.buf)
-        end,
-      })
-    end,
-    opts = {
-      inlay_hints = {
-        highlight = 'Comment',
-        labels_separator = ' ⏐ ',
-        parameter_hints = { prefix = '󰊕' },
-        type_hints = {
-          prefix = '=> ',
-          remove_colon_start = true,
-        },
-      },
-    },
-  },
-  {
     'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
     enabled = rvim.lsp.enable,
     event = 'LspAttach',
