@@ -415,11 +415,10 @@ local function toggle_virtual_text()
   if type(config.virtual_text) == 'boolean' then
     config = vim.tbl_extend('force', config, {
       virtual_text = {
-        prefix = '',
         spacing = 1,
-        format = function(d)
+        prefix = function(d)
           local level = diagnostic.severity[d.severity]
-          return fmt('%s %s', icons[level:lower()], d.message)
+          return icons[level:lower()]
         end,
       },
     })
