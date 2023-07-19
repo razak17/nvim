@@ -50,11 +50,13 @@ end
 ---@param lnum integer
 ---@return StringComponent[] sgns non-git signs
 local function signplaced_signs(curbuf, lnum)
-  return vim.tbl_map(function(s)
-    local sign = format_text(fn.sign_getdefined(s.name)[1], 'text')
-    if not sign then return end
-    return { { { sign.text, sign.texthl } }, after = '' }
-  end, fn.sign_getplaced(curbuf, { group = '*', lnum = lnum })[1].signs)
+  return vim
+    .iter(fn.sign_getplaced(curbuf, { group = '*', lnum = lnum })[1].signs)
+    :map(function(s)
+      local sign = format_text(fn.sign_getdefined(s.name)[1], 'text')
+      return { { { sign.text, sign.texthl } }, after = '' }
+    end)
+    :totable()
 end
 
 ---@param curbuf integer
@@ -69,9 +71,10 @@ local function extmark_signs(curbuf, lnum)
     { lnum, -1 },
     { details = true, type = 'sign' }
   )
-  local sns = rvim.fold(function(acc, item)
-    item = format_text(item[4], 'sign_text')
-    if item then
+  local sns = vim
+    .iter(signs)
+    :map(function(item) return format_text(item[4], 'sign_text') end)
+    :fold({ git = {}, other = {} }, function(acc, item)
       local txt, hl = item.sign_text, item.sign_hl_group
       -- Hack to remove number from trailblazer signs by replacing it with a bookmark icon
       local is_trail = hl:match('^Trail')
@@ -79,9 +82,8 @@ local function extmark_signs(curbuf, lnum)
       local is_git = hl:match('^Git')
       local target = is_git and acc.git or acc.other
       table.insert(target, { { { txt, hl } }, after = '' })
-    end
-    return acc
-  end, signs, { git = {}, other = {} })
+      return acc
+    end)
   if #sns.git == 0 then sns.git = { str.spacer(1) } end
   return sns.git, sns.other
 end

@@ -158,13 +158,13 @@ rvim.augroup('Utilities', {
   event = { 'BufEnter' },
   command = function(args)
     local paths = vim.split(vim.o.runtimepath, ',')
-    local match = rvim.find(function(dir)
+    local match = vim.iter(paths):find(function(dir)
       local path = api.nvim_buf_get_name(args.buf)
       -- HACK: Disable for my config dir manually
       if vim.startswith(path, vim.fn.stdpath('config')) then return false end
       if vim.startswith(path, env.VIMRUNTIME) then return true end
       return vim.startswith(path, dir)
-    end, paths)
+    end)
     vim.b[args.buf].formatting_disabled = match ~= nil
   end,
 }, {

@@ -125,6 +125,11 @@ local function colorscheme_overrides()
           bg = { from = 'Normal', alter = 0.8 },
         },
       },
+      { CmpItemAbbr = { fg = { from = 'MsgSeparator' } } },
+      { CmpItemAbbrDeprecated = { strikethrough = true, inherit = 'Comment' } },
+      { CmpItemAbbrMatch = { fg = { from = 'Search' }, bold = true } },
+      { CmpItemAbbrMatchFuzzy = { fg = { from = 'Search' } } },
+      { CmpItemMenu = { fg = { from = 'Comment', attr = 'fg' }, italic = true, bold = true } },
     },
   }
   local hls = overrides[vim.g.colors_name]

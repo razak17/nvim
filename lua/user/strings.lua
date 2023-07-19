@@ -129,7 +129,7 @@ end
 -- RENDER
 ----------------------------------------------------------------------------------------------------
 local function sum_lengths(list)
-  return rvim.fold(function(acc, item) return acc + (item.length or 0) end, list, 0)
+  return vim.iter(list):fold(0, function(acc, item) return acc + (item.length or 0) end)
 end
 
 local function is_lowest(item, lowest)
@@ -166,20 +166,20 @@ end
 --- @param available_space number?
 --- @return string
 function M.display(sections, available_space)
-  local components = rvim.fold(function(acc, section, count)
+  local components = vim.iter(ipairs(sections)):fold({}, function(acc, count, section)
     if #section == 0 then
       table.insert(acc, separator())
       return acc
     end
-    rvim.foreach(function(args, index)
+    vim.iter(ipairs(section)):each(function(index, args)
       if not args then return end
       local ok, str = rvim.pcall('Error creating component', component, args)
       if not ok then return end
       table.insert(acc, str)
       if #section == index and count ~= #sections then table.insert(acc, separator()) end
-    end, section)
+    end)
     return acc
-  end, sections)
+  end)
 
   local items = available_space and prioritize(components, available_space) or components
   local str = vim.tbl_map(function(item) return item.component end, items)

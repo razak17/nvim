@@ -87,7 +87,10 @@ local function stl_lsp_clients(bufnum)
       local sources = require('null-ls.sources').get_available(vim.bo[bufnum].filetype)
       if rvim.falsy(sources) then return { name = '' } end
       table.sort(sources, function(a, b) return a.name < b.name end)
-      local sources_names = rvim.map(function(s) return s.name end, sources)
+      local sources_names = vim
+        .iter(ipairs(sources))
+        :map(function(_, s) return s.name end)
+        :totable()
       local sources_component = table.concat(rvim.removeDuplicates(sources_names), ', ')
       if falsy(lsp_clients) then
         return { name = 'No Active LSP' .. ' ' .. separator .. ' ␀ ' .. sources_component }
@@ -101,7 +104,10 @@ end
 local function lsp_client_names()
   local curwin = api.nvim_get_current_win()
   local curbuf = api.nvim_win_get_buf(curwin)
-  local client_names = rvim.map(function(client) return client.name end, stl_lsp_clients(curbuf))
+  local client_names = vim
+    .iter(ipairs(stl_lsp_clients(curbuf)))
+    :map(function(_, c) return c.name end)
+    :totable()
   return ' ' .. table.concat(client_names, fmt(' %s ', separator)) .. ' ' .. separator
 end
 
