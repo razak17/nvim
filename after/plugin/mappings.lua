@@ -250,16 +250,16 @@ nnoremap(
 ----------------------------------------------------------------------------------------------------
 -- GX - replicate netrw functionality
 ----------------------------------------------------------------------------------------------------
-nnoremap('gx', function()
-  local file = fn.expand('<cfile>')
-  if not file or fn.isdirectory(file) > 0 then return vim.cmd.edit(file) end
-  if file:match('http[s]?://') then return rvim.open(file) end
-
-  -- consider anything that looks like string/string a github link
-  local plugin_url_regex = '[%a%d%-%.%_]*%/[%a%d%-%.%_]*'
-  local link = string.match(file, plugin_url_regex)
-  if link then return rvim.open(fmt('https://www.github.com/%s', link)) end
-end)
+-- nnoremap('gx', function()
+--   local file = fn.expand('<cfile>')
+--   if not file or fn.isdirectory(file) > 0 then return vim.cmd.edit(file) end
+--   if file:match('http[s]?://') then return rvim.open(file) end
+--
+--   -- consider anything that looks like string/string a github link
+--   local plugin_url_regex = '[%a%d%-%.%_]*%/[%a%d%-%.%_]*'
+--   local link = string.match(file, plugin_url_regex)
+--   if link then return rvim.open(fmt('https://www.github.com/%s', link)) end
+-- end)
 ----------------------------------------------------------------------------------------------------
 nnoremap('<leader>lq', rvim.list.qf.toggle, { desc = 'toggle quickfix list' })
 -- TODO: loclist is broken
