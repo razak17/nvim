@@ -17,7 +17,7 @@ g.maplocalleader = ','
 ----------------------------------------------------------------------------------------------------
 -- Set Open Command
 ----------------------------------------------------------------------------------------------------
-g.os = vim.loop.os_uname().sysname
+g.os = vim.uv.os_uname().sysname
 rvim.open_command = g.os == 'Darwin' and 'open' or 'xdg-open'
 ----------------------------------------------------------------------------------------------------
 -- Set Providers
@@ -37,7 +37,7 @@ require('user.ui')
 ----------------------------------------------------------------------------------------------------
 local lazy_path = join_paths(data, 'lazy', 'lazy.nvim')
 local plugins_enabled = rvim.plugins.enable
-if not vim.loop.fs_stat(lazy_path) then
+if not vim.uv.fs_stat(lazy_path) then
   vim.fn.system({
     'git',
     'clone',

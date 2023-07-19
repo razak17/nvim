@@ -1,6 +1,6 @@
 if not rvim then return end
 
-local uv = vim.loop
+local uv = vim.uv
 local fn, api, cmd, fmt = vim.fn, vim.api, vim.cmd, string.format
 local l = vim.log.levels
 
