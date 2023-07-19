@@ -210,7 +210,7 @@ return {
       -- Chat commands
       { '<c-g>n', '<Cmd>GpChatNew<CR>', desc = 'gp: new chat', mode = { 'n', 'i' } },
       { '<c-g>f', '<Cmd>GpChatFinder<CR>', desc = 'gp: find chat', mode = { 'n', 'i' } },
-      { '<c-g><c-g>', '<Cmd>GpChatResponda<CR>', desc = 'gp: respond', mode = { 'n', 'i' } },
+      { '<c-g><c-g>', '<Cmd>GpChatRespond<CR>', desc = 'gp: respond', mode = { 'n', 'i' } },
       { '<c-g>d', '<Cmd>GpChatDeleteCR>', desc = 'gp: delete chat', mode = { 'n', 'i' } },
       -- Prompt commands
       { '<c-g>i', '<Cmd>GpInline<CR>', desc = 'gp: inline', mode = { 'n', 'i' } },
