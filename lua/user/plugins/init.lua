@@ -389,11 +389,13 @@ return {
   },
   {
     'willothy/flatten.nvim',
-    enabled = not rvim.plugins.minimal,
+    -- enabled = not rvim.plugins.minimal,
+    -- TODO: Causes weird bug where only one instance of nvim can run at a time
+    enabled = false,
     lazy = false,
     priority = 1001,
     opts = {
-      window = { open = 'alternate' },
+      window = { open = 'current' },
       callbacks = {
         block_end = function() require('toggleterm').toggle() end,
         post_open = function(_, winnr, _, is_blocking)
