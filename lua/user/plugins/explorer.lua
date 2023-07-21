@@ -115,10 +115,10 @@ return {
           name = { highlight_opened_files = true },
           document_symbols = {
             follow_cursor = true,
-            kinds = rvim.fold(function(acc, v, k)
+            kinds = vim.iter(symbols):fold({}, function(acc, k, v)
               acc[k] = { icon = v, hl = lsp_hls[k] }
               return acc
-            end, symbols),
+            end),
           },
           modified = { symbol = codicons.misc.circle .. ' ' },
           -- buffers = {

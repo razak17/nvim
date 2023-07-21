@@ -130,9 +130,6 @@ end
 ----------------------------------------------------------------------------------------------------
 -- RENDER
 ----------------------------------------------------------------------------------------------------
-local function sum_lengths(list)
-  return rvim.fold(function(acc, item) return acc + (item.length or 0) end, list, 0)
-end
 --- Sort components by size and priority use a stack for the components and remove the next most important
 --- TODO: also tracking what we remove in a separate list ordered by size and priority
 --- and trying to re-add them in that order if there is space
@@ -176,20 +173,20 @@ end
 --- @param available_space number?
 --- @return string
 function M.display(sections, available_space)
-  local components = rvim.fold(function(acc, section, count)
+  local components = vim.iter(ipairs(sections)):fold({}, function(acc, count, section)
     if #section == 0 then
       table.insert(acc, separator())
       return acc
     end
-    rvim.foreach(function(args, index)
+    vim.iter(ipairs(section)):each(function(index, args)
       if not args then return end
       local ok, str = rvim.pcall('Error creating component', component, args)
       if not ok then return end
       table.insert(acc, str)
       if #section == index and count ~= #sections then table.insert(acc, separator()) end
-    end, section)
+    end)
     return acc
-  end, sections)
+  end)
 
   if not available_space then
     return vim.iter(components):fold('', function(acc, item) return acc .. item.component end)

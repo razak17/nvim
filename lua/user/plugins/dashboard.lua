@@ -42,20 +42,22 @@ return {
 
     -- Make the header a bit more fun with some color!
     local function neovim_header()
-      return rvim.map(
-        function(chars, i)
-          return {
-            type = 'text',
-            val = chars,
-            opts = {
-              hl = 'StartLogo' .. i,
-              shrink_margin = false,
-              position = 'center',
-            },
-          }
-        end,
-        header
-      )
+      return vim
+        .iter(ipairs(header))
+        :map(
+          function(i, chars)
+            return {
+              type = 'text',
+              val = chars,
+              opts = {
+                hl = 'StartLogo' .. i,
+                shrink_margin = false,
+                position = 'center',
+              },
+            }
+          end
+        )
+        :totable()
     end
 
     local stats = require('lazy').stats()

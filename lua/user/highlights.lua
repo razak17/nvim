@@ -162,7 +162,7 @@ end
 ---@param hls {[string]: HLArgs}[]
 ---@param namespace integer?
 local function all(hls, namespace)
-  rvim.foreach(function(hl) set(namespace or 0, next(hl)) end, hls)
+  vim.iter(hls):each(function(hl) set(namespace or 0, next(hl)) end)
 end
 
 --- Set window local highlights

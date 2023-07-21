@@ -1,5 +1,5 @@
 local fn, api, fmt = vim.fn, vim.api, string.format
-local ui, fold = rvim.ui, rvim.fold
+local ui = rvim.ui
 local border, lsp_hls, ellipsis = ui.current.border, ui.lsp.highlights, ui.icons.misc.ellipsis
 
 return {
@@ -15,20 +15,16 @@ return {
       local codicons = ui.codicons
       local MIN_MENU_WIDTH, MAX_MENU_WIDTH = 25, math.min(50, math.floor(vim.o.columns * 0.5))
 
-      local hl_defs = fold(
-        function(accum, value, key)
-          table.insert(accum, { [fmt('CmpItemKind%s', key)] = { fg = { from = value } } })
-          return accum
-        end,
-        lsp_hls,
-        {
-          { CmpItemAbbr = { fg = { from = 'MsgSeparator' } } },
-          { CmpItemAbbrDeprecated = { strikethrough = true, inherit = 'Comment' } },
-          { CmpItemAbbrMatch = { fg = { from = 'Search' }, bold = true } },
-          { CmpItemAbbrMatchFuzzy = { fg = { from = 'Search' } } },
-          { CmpItemMenu = { fg = { from = 'Comment', attr = 'fg' }, italic = true, bold = true } },
-        }
-      )
+      local hl_defs = vim
+        .iter(lsp_hls)
+        :map(
+          function(key, value)
+            return {
+              [fmt('CmpItemKind%s', key)] = { fg = { from = value } },
+            }
+          end
+        )
+        :totable()
 
       rvim.highlight.plugin('Cmp', hl_defs)
 
