@@ -73,7 +73,7 @@ end
 
 local function stl_lsp_clients(bufnum)
   -- TODO: Use lsp.get_active_clients() when
-  local clients = vim.lsp.get_active_clients({ bufnr = bufnum })
+  local clients = vim.lsp.get_clients({ bufnr = bufnum })
   clients = vim.tbl_filter(function(client) return client.name ~= 'copilot' end, clients)
   local lsp_clients = vim.tbl_filter(function(client) return client.name ~= 'null-ls' end, clients)
   if falsy(clients) then return { { name = 'No Active LSP' } } end
@@ -113,7 +113,7 @@ local function lsp_client_names()
 end
 
 local function stl_copilot_indicator()
-  local client = vim.lsp.get_active_clients({ name = 'copilot' })[1]
+  local client = vim.lsp.get_clients({ name = 'copilot' })[1]
   if client == nil then return fmt('inactive %s', separator) end
   if vim.tbl_isempty(client.requests) then return fmt('idle %s', separator) end
   return fmt('working %s', separator)

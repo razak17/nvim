@@ -378,9 +378,7 @@ return {
   {
     'mbbill/undotree',
     cmd = 'UndotreeToggle',
-    keys = {
-      { '<leader>u', '<cmd>UndotreeToggle<CR>', desc = 'undotree: toggle' },
-    },
+    keys = { { '<leader>u', '<cmd>UndotreeToggle<CR>', desc = 'undotree: toggle' } },
     config = function()
       vim.g.undotree_TreeNodeShape = '◦' -- Alternative: '◉'
       vim.g.undotree_SetFocusWhenToggle = 1
