@@ -72,6 +72,7 @@ local function stl_package_info()
 end
 
 local function stl_lsp_clients(bufnum)
+  -- TODO: Use lsp.get_active_clients() when
   local clients = vim.lsp.get_active_clients({ bufnr = bufnum })
   clients = vim.tbl_filter(function(client) return client.name ~= 'copilot' end, clients)
   local lsp_clients = vim.tbl_filter(function(client) return client.name ~= 'null-ls' end, clients)

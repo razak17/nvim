@@ -202,8 +202,8 @@ function rvim.filetype_settings(map)
         vim.iter(settings):each(function(key, value)
           if key == 'opt' then key = 'opt_local' end
           if key == 'mappings' then return apply_ft_mappings(value, args.buf) end
-          if key == 'plugins' then return as.ftplugin_conf(value) end
-          if type(key) == 'function' then return as.pcall(key, args) end
+          if key == 'plugins' then return rvim.ftplugin_conf(value) end
+          if type(key) == 'function' then return rvim.pcall(key, args) end
           vim.iter(value):each(function(option, setting) vim[key][option] = setting end)
         end)
       end,
