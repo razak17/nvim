@@ -50,6 +50,7 @@ return {
           h = { name = 'Harpoon' },
           l = { name = 'Lsp' },
           n = { name = 'Neorg' },
+          o = { name = 'Obsidian' },
           r = { name = 'Rest' },
           z = { name = 'Zen' },
         },

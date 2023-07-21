@@ -1,10 +1,10 @@
 local fmt, fn = string.format, vim.fn
-local function sync(path) return fmt('%s/%s', fn.expand(vim.env.HOME), path) end
+local function sync(path) return fmt('%s/notes/%s', fn.expand('$SYNC_DIR'), path) end
 
 return {
   {
     'epwalsh/obsidian.nvim',
-    event = { 'BufReadPre ' .. sync('Obsidian/**.md') },
+    event = { 'BufReadPre ' .. sync('obsidian/**.md') },
     keys = {
       { '<localleader>ob', '<Cmd>ObsidianBacklinks<CR>', desc = 'obsidian: buffer backlinks' },
       { '<localleader>od', '<Cmd>ObsidianToday<CR>', desc = 'obsidian: open daily note' },
@@ -15,7 +15,7 @@ return {
       { '<localleader>ot', '<Cmd>ObsidianTemplate<CR>', desc = 'obsidian: insert template' },
     },
     opts = {
-      dir = '~/Obsidian',
+      dir = sync('obsidian'),
       notes_subdir = 'Zettelkasten',
       daily_notes = { folder = 'Daily Notes' },
       templates = { subdir = 'Templates' },
@@ -68,9 +68,9 @@ return {
         ['core.dirman'] = {
           config = {
             workspaces = {
-              notes = sync('notes/neorg'),
-              tasks = sync('notes/neorg/neovim'),
-              work = sync('notes/neorg/work'),
+              notes = sync('neorg'),
+              tasks = sync('neorg/neovim'),
+              work = sync('neorg/work'),
             },
             default_workspace = 'notes',
           },

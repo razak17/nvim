@@ -1,5 +1,4 @@
 local cwd = vim.fn.getcwd()
-local fmt = string.format
 local icons = rvim.ui.icons.separators
 
 local neogit = rvim.reqidx('neogit')
