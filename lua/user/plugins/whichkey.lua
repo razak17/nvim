@@ -45,6 +45,7 @@ return {
       ['<localleader>'] = {
         c = { name = 'Conceal' },
         d = { name = 'Dap' },
+        db = { name = 'Breakpoint' },
         g = { name = 'Git' },
         h = { name = 'Harpoon' },
         l = { name = 'Lsp' },

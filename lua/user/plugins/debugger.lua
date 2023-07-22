@@ -36,7 +36,7 @@ return {
       { '<localleader>di', function() require('dap').step_into() end, desc = 'dap: step into' },
       { '<localleader>do', function() require('dap').step_over() end, desc = 'dap: step over' },
       { '<localleader>dO', function() require('dap').step_out() end, desc = 'dap: step out' },
-      { '<localleader>dt', function() require('dap').repl.toggle() end, desc = 'dap: toggle repl' },
+      { '<localleader>dr', function() require('dap').repl.toggle() end, desc = 'dap: toggle repl' },
       { '<localleader>dw', function() require('dap.ui.widgets').hover() end, desc = 'dap: hover' },
       { '<localleader>dx', function() require('dap').terminate() end, desc = 'dap: terminate' },
       {

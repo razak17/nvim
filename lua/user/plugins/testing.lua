@@ -16,6 +16,11 @@ return {
       { '<leader>ts', toggle_summary, desc = 'neotest: toggle summary' },
       { '<leader>to', open, desc = 'neotest: output' },
       { '<leader>tn', nearest, desc = 'neotest: run' },
+      {
+        '<leader>td',
+        function() require('neotest').run.run({ strategy = 'dap' }) end,
+        desc = 'neotest: debug nearest',
+      },
       { '<leader>tf', run_file, desc = 'neotest: run file' },
       { '<leader>tF', run_file_sync, desc = 'neotest: run file synchronously' },
       { '<leader>tc', cancel, desc = 'neotest: cancel' },
