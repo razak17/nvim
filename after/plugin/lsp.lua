@@ -10,6 +10,7 @@ local disabled = rvim.minimal
 if disabled then return end
 
 local lsp, fn, api, fmt = vim.lsp, vim.fn, vim.api, string.format
+local command = rvim.command
 local L = vim.lsp.log_levels
 
 local diagnostic = vim.diagnostic
@@ -334,18 +335,6 @@ augroup('LspSetupCommands', {
     if #args.data.diagnostics == 0 then vim.cmd('silent! lclose') end
   end,
 })
-
-----------------------------------------------------------------------------------------------------
--- Commands
-----------------------------------------------------------------------------------------------------
-local command = rvim.command
-
-command('LspGenerateTemplates', function() require('user.lsp.templates').generate_config_file() end)
-
-command('LspRemoveTemplates', function()
-  require('user.lsp.templates').remove_template_files()
-  vim.notify('Lsp config file has been removed', 'info', { title = 'Lsp' })
-end)
 ----------------------------------------------------------------------------------------------------
 -- Signs
 ----------------------------------------------------------------------------------------------------
