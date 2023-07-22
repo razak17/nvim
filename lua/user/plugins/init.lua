@@ -64,22 +64,22 @@ return {
       {
         '<leader><leader>h',
         function() require('smart-splits').swap_buf_left() end,
-        desc = { 'swap left' },
+        desc = 'swap left',
       },
       {
         '<leader><leader>j',
         function() require('smart-splits').swap_buf_down() end,
-        { desc = 'swap down' },
+        desc = 'swap down',
       },
       {
         '<leader><leader>k',
         function() require('smart-splits').swap_buf_up() end,
-        { desc = 'swap up' },
+        desc = 'swap up',
       },
       {
         '<leader><leader>l',
         function() require('smart-splits').swap_buf_right() end,
-        { desc = 'swap right' },
+        desc = 'swap right',
       },
     },
   },

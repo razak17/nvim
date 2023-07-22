@@ -24,6 +24,7 @@ return {
         ['<space>'] = 'add space above',
       },
       ['<leader>'] = {
+        ['<space>'] = 'smart splits',
         a = { name = 'A.I.' },
         d = { name = 'Debugprint' },
         f = { name = 'Telescope' },
