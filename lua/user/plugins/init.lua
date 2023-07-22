@@ -327,7 +327,17 @@ return {
       },
       { '<leader>dx', '<Cmd>DeleteDebugPrints<CR>', desc = 'debugprint: clear all' },
     },
-    opts = { create_keymaps = false },
+    opts = {
+      create_keymaps = false,
+      filetypes = {
+        svelte = {
+          left = 'console.log("',
+          right = '")',
+          mid_var = '", ',
+          right_var = ')',
+        },
+      },
+    },
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
   },
   {
