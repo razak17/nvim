@@ -72,11 +72,11 @@ local function stl_package_info()
 end
 
 local function stl_lsp_clients(bufnum)
-  -- TODO: Use lsp.get_active_clients() when
   local clients = vim.lsp.get_clients({ bufnr = bufnum })
   clients = vim.tbl_filter(function(client) return client.name ~= 'copilot' end, clients)
-  local lsp_clients = vim.tbl_filter(function(client) return client.name ~= 'null-ls' end, clients)
+  -- local lsp_clients = vim.tbl_filter(function(client) return client.name ~= 'null-ls' end, clients)
   if falsy(clients) then return { { name = 'No Active LSP' } } end
+
   table.sort(clients, function(a, b)
     if a.name == 'null-ls' then return false end
     if b.name == 'null-ls' then return true end
@@ -86,19 +86,10 @@ local function stl_lsp_clients(bufnum)
   return vim.tbl_map(function(client)
     if client.name:match('null') then
       local sources = require('null-ls.sources').get_available(vim.bo[bufnum].filetype)
-      if rvim.falsy(sources) then return { name = '' } end
-      table.sort(sources, function(a, b) return a.name < b.name end)
-      local sources_names = vim
-        .iter(ipairs(sources))
-        :map(function(_, s) return s.name end)
-        :totable()
-      local sources_component = table.concat(rvim.removeDuplicates(sources_names), ', ')
-      if falsy(lsp_clients) then
-        return { name = 'No Active LSP' .. ' ' .. separator .. ' ␀ ' .. sources_component }
-      end
-      return { name = '␀ ' .. sources_component }
+      local source_names = vim.tbl_map(function(s) return s.name end, sources)
+      return { name = '␀ ' .. table.concat(source_names, ', '), priority = 7 }
     end
-    return { name = client.name }
+    return { name = client.name, priority = 4 }
   end, clients)
 end
 

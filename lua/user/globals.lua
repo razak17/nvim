@@ -36,7 +36,7 @@ function rvim.find_string(table, string)
   return found
 end
 
-function rvim.removeDuplicates(table)
+function rvim.remove_duplicates(table)
   local seen = {}
   return vim
     .iter(table)
