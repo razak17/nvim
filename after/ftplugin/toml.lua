@@ -1,4 +1,4 @@
-if not rvim or rvim.minimal then return end
+if not rvim or rvim.minimal or rvim.plugins.minimal then return end
 
 if vim.fn.expand('%:t') == 'Cargo.toml' then
   local fmt = string.format

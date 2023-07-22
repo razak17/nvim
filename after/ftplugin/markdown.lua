@@ -10,9 +10,9 @@ cmd.iabbrev(':tdo:', '👎')
 cmd.iabbrev(':smi:', '😊')
 cmd.iabbrev(':sad:', '😔')
 
-if not rvim or rvim.minimal then return end
+if rvim.minimal or rvim.plugins.minimal then return end
 
-map('n', '<localleader>P', '<Plug>MarkdownPreviewToggle', { desc = 'markdown preview', buffer = 0 })
+map('n', '<localleader>P', '<Cmd>Glow<CR>', { desc = 'markdown preview', buffer = 0 })
 
 rvim.ftplugin_conf({
   cmp = function(cmp)
