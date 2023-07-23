@@ -876,6 +876,13 @@ return {
     },
   },
   {
+    'tomiis4/Hypersonic.nvim',
+    event = 'CmdlineEnter',
+    cmd = 'Hypersonic',
+    keys = { { mode = 'v', '<localleader>rx', '<Cmd>Hypersonic<CR>', desc = 'hypersonic: toggle' } },
+    opts = { border = border },
+  },
+  {
     'axelvc/template-string.nvim',
     enabled = not rvim.plugins.minimal,
     event = 'BufRead',
