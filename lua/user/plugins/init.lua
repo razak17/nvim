@@ -582,12 +582,9 @@ return {
     opts = {},
   },
   {
-    'bennypowers/template-literal-comments.nvim',
-    opts = true,
-    ft = {
-      'javascript',
-      'typescript',
-    },
+    'AckslD/muren.nvim',
+    cmd = { 'MurenToggle', 'MurenUnique', 'MurenFresh' },
+    opts = {},
   },
   -- }}}
   ----------------------------------------------------------------------------------------------------
@@ -861,6 +858,11 @@ return {
       })
       require('crates').setup(opts)
     end,
+  },
+  {
+    'bennypowers/template-literal-comments.nvim',
+    ft = { 'javascript', 'typescript' },
+    opts = {},
   },
   {
     'bennypowers/nvim-regexplainer',
