@@ -1,10 +1,10 @@
 local api, cmd, fn = vim.api, vim.cmd, vim.fn
 local fmt = string.format
-local ui, highlight = rvim.ui, rvim.highlight
+local ui, highlight, augroup = rvim.ui, rvim.highlight, rvim.augroup
 local border = ui.current.border
 
 local function float_resize_autocmd(autocmd_name, ft, command)
-  rvim.augroup(autocmd_name, {
+  augroup(autocmd_name, {
     event = 'VimResized',
     pattern = '*',
     command = function()
@@ -28,7 +28,7 @@ return {
     lazy = false,
     init = function()
       rvim.command('ListSessions', 'Telescope persisted')
-      rvim.augroup('PersistedEvents', {
+      augroup('PersistedEvents', {
         event = 'User',
         pattern = 'PersistedTelescopeLoadPre',
         command = function()
@@ -847,7 +847,7 @@ return {
       null_ls = { enabled = true, name = 'crates' },
     },
     config = function(_, opts)
-      rvim.augroup('CmpSourceCargo', {
+      augroup('CmpSourceCargo', {
         event = 'BufRead',
         pattern = 'Cargo.toml',
         command = function()
@@ -902,13 +902,15 @@ return {
           ['onedark'] = { { TypeVirtualText = { link = 'DiagnosticVirtualTextInfo' } } },
         },
       })
-      rvim.augroup('TwoSlashQueriesSetup', {
+      augroup('TwoSlashQueriesSetup', {
         event = 'LspAttach',
         command = function(args)
           local id = vim.tbl_get(args, 'data', 'client_id')
           if not id then return end
           local client = vim.lsp.get_client_by_id(id)
-          if client.name == 'tsserver' then require('twoslash-queries').attach(client, args.buf) end
+          if client and client.name == 'tsserver' then
+            require('twoslash-queries').attach(client, args.buf)
+          end
         end,
       })
     end,

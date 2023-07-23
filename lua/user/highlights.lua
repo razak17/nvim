@@ -21,24 +21,24 @@ local api, notify, fmt, augroup = vim.api, vim.notify, string.format, rvim.augro
 ---@field default boolean
 
 ---@class HLArgs
----@field blend integer
----@field fg string | HLAttrs
----@field bg string | HLAttrs
----@field sp string | HLAttrs
----@field bold boolean
----@field italic boolean
----@field undercurl boolean
----@field underline boolean
----@field underdotted boolean
----@field underdashed boolean
----@field underdouble boolean
----@field strikethrough boolean
----@field reverse boolean
----@field nocombine boolean
----@field link string
----@field default boolean
----@field clear boolean
----@field inherit string
+---@field blend integer?
+---@field fg string | HLAttrs?
+---@field bg string | HLAttrs?
+---@field sp string | HLAttrs?
+---@field bold boolean?
+---@field italic boolean?
+---@field undercurl boolean?
+---@field underline boolean?
+---@field underdotted boolean?
+---@field underdashed boolean?
+---@field underdouble boolean?
+---@field strikethrough boolean?
+---@field reverse boolean?
+---@field nocombine boolean?
+---@field link string?
+---@field default boolean?
+---@field clear boolean?
+---@field inherit string?
 
 local attrs = {
   fg = true,
