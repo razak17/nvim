@@ -581,6 +581,14 @@ return {
     cmd = { 'SnipsCreate' },
     opts = {},
   },
+  {
+    'bennypowers/template-literal-comments.nvim',
+    opts = true,
+    ft = {
+      'javascript',
+      'typescript',
+    },
+  },
   -- }}}
   ----------------------------------------------------------------------------------------------------
   -- Filetype Plugins {{{1
