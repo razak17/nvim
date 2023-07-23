@@ -220,7 +220,7 @@ return {
       { '<c-g>e', '<Cmd>GpEnew<CR>', desc = 'gp: enew', mode = { 'n', 'i', 'v' } },
       { '<c-g>p', '<Cmd>GpPopup<CR>', desc = 'gp: popup', mode = { 'n', 'i', 'v' } },
     },
-    opts = { chat_dir = join_paths(vim.fn.stdpath('data'), 'gp', 'chats') },
+    opts = {},
   },
   {
     'jackMort/ChatGPT.nvim',
