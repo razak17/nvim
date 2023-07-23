@@ -96,16 +96,6 @@ return {
   ----------------------------------------------------------------------------------------------------
   'b0o/schemastore.nvim',
   {
-    'kosayoda/nvim-lightbulb',
-    event = 'LspAttach',
-    opts = {
-      autocmd = { enabled = true },
-      sign = { enabled = false },
-      virtual_text = { enabled = true, text = ui.icons.misc.lightbulb, hl_mode = 'blend' },
-      float = { text = ui.icons.misc.lightbulb, enabled = false, win_opts = { border = 'none' } },
-    },
-  },
-  {
     'razak17/lspkind.nvim',
     config = function() require('lspkind').init({ preset = 'codicons' }) end,
   },
@@ -190,6 +180,21 @@ return {
     enabled = rvim.lsp.enable,
     event = 'LspAttach',
     config = function() require('lsp_lines').setup() end,
+  },
+  {
+    'kosayoda/nvim-lightbulb',
+    event = 'LspAttach',
+    opts = {
+      autocmd = { enabled = true },
+      sign = { enabled = false },
+      virtual_text = { enabled = true, text = ui.icons.misc.lightbulb, hl_mode = 'blend' },
+      float = { text = ui.icons.misc.lightbulb, enabled = false, win_opts = { border = 'none' } },
+    },
+  },
+  {
+    'dgagn/diagflow.nvim',
+    event = 'LspAttach',
+    opts = {},
   },
   -- }}}
   ----------------------------------------------------------------------------------------------------

@@ -129,7 +129,7 @@ local function colorscheme_overrides()
       { CmpItemAbbrDeprecated = { strikethrough = true, inherit = 'Comment' } },
       { CmpItemAbbrMatch = { fg = { from = 'Search' }, bold = true } },
       { CmpItemAbbrMatchFuzzy = { fg = { from = 'Search' } } },
-      { CmpItemMenu = { fg = { from = 'Comment', attr = 'fg' }, italic = true, bold = true } },
+      { CmpItemMenu = { fg = { from = 'Comment' }, italic = true, bold = true } },
     },
   }
   local hls = overrides[vim.g.colors_name]
