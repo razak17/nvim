@@ -272,7 +272,7 @@ local function setup_autocommands(client, buf)
         then
           local clients = vim.tbl_filter(
             function(c) return c.supports_method(provider.FORMATTING) end,
-            lsp.get_active_clients({ buffer = buf })
+            lsp.get_clients({ buffer = buf })
           )
           if #clients >= 1 then format({ bufnr = args.buf, async = #clients == 1 }) end
         end
