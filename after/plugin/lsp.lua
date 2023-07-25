@@ -130,14 +130,6 @@ local function setup_mappings(client, bufnr)
     { 'n', '<leader>lf', format, desc = 'format buffer', capability = provider.FORMATTING },
     {
       'n',
-      'K',
-      show_documentation,
-      desc = 'hover',
-      capability = provider.HOVER,
-      exclude_ft = { 'rust', 'toml' },
-    },
-    {
-      'n',
       'gd',
       lsp.buf.definition,
       desc = 'definition',
