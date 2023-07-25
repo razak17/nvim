@@ -48,7 +48,13 @@ return {
   {
     'folke/zen-mode.nvim',
     cmd = 'ZenMode',
-    opts = { window = { width = 90 } },
+    opts = {
+      window = { width = 90 },
+      plugins = {
+        kitty = { enabled = true, font = '+2' },
+        tmux = { enabled = true },
+      },
+    },
     keys = { { '<localleader>zz', '<Cmd>ZenMode<CR>', desc = 'zen-mode: toggle' } },
   },
   {
