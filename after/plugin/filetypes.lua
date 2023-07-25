@@ -67,6 +67,9 @@ settings({
       end
     end,
   },
+  ['Neogit*'] = {
+    wo = { winbar = '' },
+  },
   NeogitCommitMessage = {
     opt = {
       list = false,
