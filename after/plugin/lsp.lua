@@ -92,17 +92,6 @@ end
 ----------------------------------------------------------------------------------------------------
 -- Mappings
 ----------------------------------------------------------------------------------------------------
-local function show_documentation()
-  local filetype = vim.bo.filetype
-  if vim.tbl_contains({ 'help' }, filetype) then
-    return vim.cmd('h ' .. vim.fn.expand('<cword>'))
-  end
-  if vim.tbl_contains({ 'man' }, filetype) then
-    return vim.cmd('Man ' .. vim.fn.expand('<cword>'))
-  end
-  vim.lsp.buf.hover()
-end
-
 ---Setup mapping when an lsp attaches to a buffer
 ---@param client lsp.Client
 ---@param bufnr integer
@@ -236,19 +225,6 @@ local function setup_autocommands(client, buf)
 
   if client.supports_method('textDocument/inlayHint', { bufnr = buf }) then
     vim.lsp.inlay_hint(buf, true)
-    -- TODO: temporarily disable inlay hints in insert mode due to
-    -- https://github.com/neovim/neovim/issues/24075
-    augroup(('LspInlayHints%d'):format(buf), {
-      event = 'InsertEnter',
-      buffer = buf,
-      desc = 'LSP: Inlay Hints (insert disable)',
-      command = function() vim.lsp.inlay_hint(buf, false) end,
-    }, {
-      event = 'InsertLeave',
-      buffer = buf,
-      desc = 'LSP: Inlay Hints (insert enable)',
-      command = function() vim.lsp.inlay_hint(buf, true) end,
-    })
   end
 
   if not client.supports_method(provider.FORMATTING) then
