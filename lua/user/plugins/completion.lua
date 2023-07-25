@@ -1,4 +1,4 @@
-local fn, api, fmt = vim.fn, vim.api, string.format
+local fn, api, fmt, k = vim.fn, vim.api, string.format, vim.keycode
 local ui = rvim.ui
 local border, lsp_hls, ellipsis = ui.current.border, ui.lsp.highlights, ui.icons.misc.ellipsis
 
@@ -57,6 +57,12 @@ return {
         fallback()
       end
 
+      local function copilot()
+        local suggestion = require('copilot.suggestion')
+        if suggestion.is_visible() then return suggestion.accept() end
+        api.nvim_feedkeys(k('<Tab>'), 'n', false)
+      end
+
       cmp.setup({
         preselect = cmp.PreselectMode.None,
         window = {
@@ -72,6 +78,7 @@ return {
         },
         snippet = { expand = function(args) luasnip.lsp_expand(args.body) end },
         mapping = {
+          ['<C-]>'] = cmp.mapping(copilot),
           ['<C-k>'] = cmp.mapping.select_prev_item(),
           ['<C-j>'] = cmp.mapping.select_next_item(),
           ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
