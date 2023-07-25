@@ -5,7 +5,7 @@ local highlight = rvim.highlight
 
 ---@param data { old_name: string, new_name: string }
 local function make_rename_params(data)
-  local clients = vim.lsp.get_active_clients()
+  local clients = vim.lsp.get_clients()
   clients = vim.tbl_filter(function(client) return client.name ~= 'copilot' end, clients)
   for _, client in ipairs(clients) do
     local will_rename =
@@ -35,6 +35,7 @@ end
 return {
   {
     'nvim-neo-tree/neo-tree.nvim',
+    branch = 'v3.x',
     cmd = { 'Neotree' },
     keys = { { '<c-n>', '<cmd>Neotree toggle reveal<CR>', desc = 'toggle tree' } },
     config = function()
@@ -51,8 +52,6 @@ return {
           },
         },
       })
-
-      vim.g.neo_tree_remove_legacy_commands = 1
 
       local symbols = require('lspkind').symbol_map
       local lsp_hls = rvim.ui.lsp.highlights
@@ -71,6 +70,12 @@ return {
             { source = 'document_symbols' },
           },
         },
+        enable_git_status = true,
+        enable_normal_mode_for_inputs = true,
+        git_status_async = true,
+        nesting_rules = {
+          ['dart'] = { 'freezed.dart', 'g.dart' },
+        },
         event_handlers = {
           { event = 'file_renamed', handler = will_rename_handler },
           {
@@ -78,8 +83,16 @@ return {
             handler = function() highlight.set('Cursor', { blend = 100 }) end,
           },
           {
+            event = 'neo_tree_popup_buffer_enter',
+            handler = function() highlight.set('Cursor', { blend = 0 }) end,
+          },
+          {
             event = 'neo_tree_buffer_leave',
             handler = function() highlight.set('Cursor', { blend = 0 }) end,
+          },
+          {
+            event = 'neo_tree_popup_buffer_leave',
+            handler = function() highlight.set('Cursor', { blend = 100 }) end,
           },
           {
             event = 'neo_tree_window_after_close',
@@ -87,9 +100,12 @@ return {
           },
         },
         filesystem = {
-          follow_current_file = true,
           hijack_netrw_behavior = 'open_current',
           use_libuv_file_watcher = true,
+          follow_current_file = {
+            enabled = true,
+            leave_dirs_open = true,
+          },
           filtered_items = {
             visible = true,
             hide_dotfiles = false,
