@@ -603,6 +603,20 @@ return {
       },
     },
   },
+  {
+    'jpalardy/vim-slime',
+    event = 'VeryLazy',
+    keys = {
+      { '<localleader>tt', '<Plug>SlimeParagraphSend', desc = 'slime: paragraph' },
+      { '<localleader>tt', '<Plug>SlimeRegionSend', mode = { 'x' }, desc = 'slime: region' },
+      { '<localleader>tc', '<Plug>SlimeConfig', desc = 'slime: config' },
+    },
+    config = function()
+      vim.g.slime_target = 'tmux'
+      vim.g.slime_paste_file = vim.fn.stdpath('data') .. '/.slime_paste'
+      vim.g.alime_no_mappings = 1
+    end,
+  },
   -- }}}
   ----------------------------------------------------------------------------------------------------
   -- Filetype Plugins {{{1
