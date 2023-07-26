@@ -185,6 +185,7 @@ return {
       local rainbow_delimiters = require('rainbow-delimiters')
 
       vim.g.rainbow_delimiters = {
+        blacklist = { 'svelte'},
         strategy = {
           [''] = rainbow_delimiters.strategy['global'],
         },
@@ -204,6 +205,18 @@ return {
       if ok then opts.pre_hook = integration.create_pre_hook() end
     end,
   },
+  -- {
+  --   'echasnovski/mini.comment',
+  --   dependencies = { 'JoosepAlviste/nvim-ts-context-commentstring' },
+  --   keys = { 'gcc', { 'gc', mode = { 'x', 'n', 'o' } } },
+  --   config = function()
+  --     require('mini.comment').setup({
+  --       hooks = {
+  --         pre = function() require('ts_context_commentstring.internal').update_commentstring() end,
+  --       },
+  --     })
+  --   end,
+  -- },
   {
     'robitx/gp.nvim',
     keys = {
