@@ -591,6 +591,18 @@ return {
     cmd = { 'MurenToggle', 'MurenUnique', 'MurenFresh' },
     opts = {},
   },
+  {
+    'llllvvuu/nvim-js-actions',
+    ft = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
+    keys = {
+      {
+        '<leader>ltf',
+        ':lua require("nvim-js-actions/js-arrow-fn").toggle()<CR>',
+        desc = 'js-actions: toggle arrow function',
+      },
+    },
+  },
   -- }}}
   ----------------------------------------------------------------------------------------------------
   -- Filetype Plugins {{{1
