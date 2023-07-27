@@ -236,18 +236,6 @@ xnoremap(
   { desc = 'gh search word' }
 )
 ----------------------------------------------------------------------------------------------------
--- Date & Time
-----------------------------------------------------------------------------------------------------
-nnoremap('<localleader>ac', "<Cmd>put =strftime('%F-%H-%M')<CR>", { desc = 'insert time' })
-nnoremap('<localleader>aC', "<Cmd>put =strftime('%T')<CR>", { desc = 'insert human time' })
-nnoremap('<localleader>ad', "<Cmd>put =strftime('%F')<CR>", { desc = 'insert date' })
-nnoremap('<localleader>aD', "<Cmd>put =strftime('%a %d %b %r')<CR>", { desc = 'insert human date' })
-nnoremap(
-  '<localleader>an',
-  "<cmd>execute 'e '.strftime(\"%F\").'.norg' <CR>",
-  { desc = 'New Note Here' }
-)
-----------------------------------------------------------------------------------------------------
 -- GX - replicate netrw functionality
 ----------------------------------------------------------------------------------------------------
 nnoremap('gx', function()
