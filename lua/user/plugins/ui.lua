@@ -8,6 +8,7 @@ local separators, decorations = ui.icons.separators, ui.decorations
 return {
   {
     'tomiis4/BufferTabs.nvim',
+    enabled = false,
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     event = 'VeryLazy',
     keys = { { '<leader>ob', '<Cmd>BufferTabsToggle<CR>', desc = 'buffer-tabs: toggle' } },
@@ -89,6 +90,7 @@ return {
   },
   {
     'kevinhwang91/nvim-hlslens',
+    enabled = not rvim.plugins.minimal,
     lazy = false,
     keys = {
       {

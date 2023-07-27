@@ -100,6 +100,7 @@ return {
   },
   {
     'chrisgrieser/nvim-spider',
+    enabled = not rvim.plugins.minimal,
     event = 'VeryLazy',
     keys = {
       { 'w', "<cmd>lua require('spider').motion('w')<CR>", mode = { 'x', 'n', 'o' } },

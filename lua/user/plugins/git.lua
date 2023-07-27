@@ -173,6 +173,7 @@ return {
   },
   {
     'akinsho/git-conflict.nvim',
+    enabled = not rvim.plugins.minimal,
     event = 'VeryLazy',
     opts = { disable_diagnostics = true },
   },
