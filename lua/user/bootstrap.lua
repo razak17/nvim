@@ -1,6 +1,6 @@
 if not rvim then return end
 
-local g, env = vim.g, vim.env
+local g = vim.g
 local data = vim.fn.stdpath('data')
 
 ----------------------------------------------------------------------------------------------------
