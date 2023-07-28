@@ -184,7 +184,6 @@ return {
         'filename',
         cond = conditions.buffer_not_empty,
         padding = { left = 0, right = 1 },
-        path = 4,
       })
 
       ins_left({
