@@ -593,6 +593,7 @@ return {
   },
   {
     'llllvvuu/nvim-js-actions',
+    enabled = rvim.treesitter.enable,
     ft = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
     keys = {

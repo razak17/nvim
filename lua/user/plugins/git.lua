@@ -8,7 +8,7 @@ return {
     'NeogitOrg/neogit',
     enabled = not rvim.plugins.minimal,
     cmd = 'Neogit',
-    dependencies = { 'nvim-lua/plenary.nvim' },
+    dependencies = { 'nvim-lua/plenary.nvim', 'sindrets/diffview.nvim' },
     keys = {
       { '<localleader>gs', function() neogit.open() end, desc = 'open status buffer' },
       { '<localleader>gc', function() neogit.open({ 'commit' }) end, desc = 'open commit buffer' },

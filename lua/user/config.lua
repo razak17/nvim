@@ -26,9 +26,13 @@ local namespace = {
     disabled = {},
     minimal = env.RVIM_PLUGINS_MINIMAL == '1',
   },
-  treesitter = { enable = true },
+  treesitter = {
+    enable = env.RVIM_PLUGINS_MINIMAL ~= '1' and true,
+  },
   ui = {
-    statuscolumn = { enable = true },
+    statuscolumn = {
+      enable = true,
+    },
   },
 }
 
