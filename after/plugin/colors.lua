@@ -122,7 +122,7 @@ local function colorscheme_overrides()
         CodeBlock = {
           bold = true,
           italic = true,
-          bg = { from = 'CursorLine', alter=-0.35 },
+          bg = { from = 'CursorLine', alter = -0.35 },
         },
       },
       { CmpItemAbbr = { fg = { from = 'MsgSeparator' } } },
