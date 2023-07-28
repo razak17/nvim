@@ -162,6 +162,8 @@ return {
         ['config'] = 'opts',
         ['pre'] = 'post',
         ['column'] = 'row',
+        ['before'] = 'after',
+        ['end'] = 'start',
       },
     },
   },
