@@ -216,9 +216,10 @@ local function setup_autocommands(client, buf)
       buffer = buf,
       desc = 'LSP: Show diagnostics',
       command = function()
-        if not rvim.lsp.hover_diagnostics then return end
+        local hover_diagnostics = rvim.lsp.hover_diagnostics
+        if not rvim.lsp.hover_diagnostics.enable then return end
         if vim.b.lsp_hover_win and api.nvim_win_is_valid(vim.b.lsp_hover_win) then return end
-        vim.diagnostic.open_float({ scope = 'line' })
+        vim.diagnostic.open_float({ scope = rvim.lsp.hover_diagnostics.scope })
       end,
     })
   end

@@ -16,7 +16,7 @@ local namespace = {
     },
     format_on_save = { enable = true },
     signs = { enable = false },
-    hover_diagnostics = { enable = true },
+    hover_diagnostics = { enable = true, scope = 'cursor' },
   },
   mappings = {},
   minimal = env.RVIM_LSP_ENABLED == '0' or env.RVIM_PLUGINS_ENABLED == '0' or env.RVIM_NONE == '1',
