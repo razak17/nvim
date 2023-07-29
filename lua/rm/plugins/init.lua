@@ -163,6 +163,25 @@ return {
     },
   },
   {
+    'glepnir/lspsaga.nvim',
+    event = 'LspAttach',
+    opts = {
+      ui = { border = border },
+      code_action = { show_server_name = true },
+      lightbulb = { enable = false },
+      symbol_in_winbar = { enable = false },
+    },
+    keys = {
+      { '<leader>lo', '<cmd>Lspsaga outline<CR>', 'lspsaga: outline' },
+      { '<localleader>lf', '<cmd>Lspsaga lsp_finder<cr>', desc = 'lspsaga: finder' },
+      { '<localleader>la', '<cmd>Lspsaga code_action<cr>', desc = 'lspsaga: code action' },
+      { '<M-p>', '<cmd>Lspsaga peek_type_definition<cr>', desc = 'lspsaga: type definition' },
+      { '<M-i>', '<cmd>Lspsaga incoming_calls<cr>', desc = 'lspsaga: incoming calls' },
+      { '<M-o>', '<cmd>Lspsaga outgoing_calls<cr>', desc = 'lspsaga: outgoing calls' },
+    },
+    dependencies = { 'nvim-tree/nvim-web-devicons', 'nvim-treesitter/nvim-treesitter' },
+  },
+  {
     'smjonas/inc-rename.nvim',
     opts = { hl_group = 'Visual', preview_empty_name = true },
     keys = {
