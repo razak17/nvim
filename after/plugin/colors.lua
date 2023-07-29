@@ -130,6 +130,12 @@ local function colorscheme_overrides()
       { CmpItemAbbrMatch = { fg = { from = 'Search' }, bold = true } },
       { CmpItemAbbrMatchFuzzy = { fg = { from = 'Search' } } },
       { CmpItemMenu = { fg = { from = 'Comment' }, italic = true, bold = true } },
+      { NeogitDiffAdd = { inherit = 'DiffAdd' } },
+      { NeogitDiffDelete = { inherit = 'DiffDelete' } },
+      { NeogitHunkHeader = { inherit = 'Headline2', bold = true } },
+      { NeogitDiffHeader = { inherit = 'Headline2', bold = true } },
+      { NeogitFold = { bg = { from = 'CursorLine', alter = -0.25 } } },
+      { NeogitCursorLine = { bg = { from = 'CursorLine' }, fg = { from = 'Normal' } } },
     },
   }
   local hls = overrides[vim.g.colors_name]
