@@ -54,7 +54,7 @@ local function cursor_dropdown(opts)
       row = 1,
       relative = 'cursor',
       height = 0.33,
-      width = 0.65,
+      width = math.min(math.floor(vim.o.columns * 0.5), 100),
     },
   }, opts))
 end
