@@ -199,26 +199,12 @@ return {
   },
   {
     'numToStr/Comment.nvim',
-    enabled = rvim.treesitter.enable,
-    dependencies = { 'JoosepAlviste/nvim-ts-context-commentstring' },
     keys = { 'gcc', { 'gc', mode = { 'x', 'n', 'o' } } },
     opts = function(_, opts)
       local ok, integration = pcall(require, 'ts_context_commentstring.integrations.comment_nvim')
       if ok then opts.pre_hook = integration.create_pre_hook() end
     end,
   },
-  -- {
-  --   'echasnovski/mini.comment',
-  --   dependencies = { 'JoosepAlviste/nvim-ts-context-commentstring' },
-  --   keys = { 'gcc', { 'gc', mode = { 'x', 'n', 'o' } } },
-  --   config = function()
-  --     require('mini.comment').setup({
-  --       hooks = {
-  --         pre = function() require('ts_context_commentstring.internal').update_commentstring() end,
-  --       },
-  --     })
-  --   end,
-  -- },
   {
     'robitx/gp.nvim',
     keys = {
