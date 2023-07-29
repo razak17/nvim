@@ -123,7 +123,7 @@ return {
               or rvim.find_string(rvim.lsp.disabled.servers, name)
             if disabled then return end
             if rvim.find_string(rvim.lsp.disabled.servers, name) then return end
-            local config = require('user.servers')(name)
+            local config = require('rm.servers')(name)
             if config then require('lspconfig')[name].setup(config) end
           end,
         },

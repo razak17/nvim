@@ -18,6 +18,6 @@ g.projects_dir = env.DEV_HOME or fn.expand('~/personal/workspace/coding')
 -- Load Modules
 ----------------------------------------------------------------------------------------------------
 -- Order matters here as config and globals need to be instantiated first etc.
-require('user.config')
-require('user.globals')
-require('user.bootstrap')
+require('rm.config')
+require('rm.globals')
+require('rm.bootstrap')

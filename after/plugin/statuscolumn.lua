@@ -4,7 +4,7 @@ if rvim and rvim.none then return end
 
 ---@alias ExtmarkSign {[1]: number, [2]: number, [3]: number, [4]: {sign_text: string, sign_hl_group: string}}
 
-local str = require('user.strings')
+local str = require('rm.strings')
 local section, spacer, display = str.section, str.spacer, str.display
 local fn, v, api, opt = vim.fn, vim.v, vim.api, vim.opt
 local ui, sep, falsy = rvim.ui, rvim.ui.icons.separators, rvim.falsy

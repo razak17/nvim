@@ -29,9 +29,9 @@ end
 ----------------------------------------------------------------------------------------------------
 -- Settings
 ----------------------------------------------------------------------------------------------------
-require('user.settings')
-require('user.highlights')
-require('user.ui')
+require('rm.settings')
+require('rm.highlights')
+require('rm.ui')
 ----------------------------------------------------------------------------------------------------
 -- Plugins
 ----------------------------------------------------------------------------------------------------
@@ -52,7 +52,7 @@ vim.opt.rtp:prepend(lazy_path)
 -- if env.NVIM then return require('lazy').setup({ { 'willothy/flatten.nvim', opts = {} } }) end
 local plugins
 if plugins_enabled then
-  plugins = 'user.plugins'
+  plugins = 'rm.plugins'
 else
   plugins = {}
 end
