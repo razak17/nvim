@@ -54,7 +54,7 @@ local function cursor_dropdown(opts)
       row = 1,
       relative = 'cursor',
       height = 0.33,
-      width = 0.25,
+      width = 0.65,
     },
   }, opts))
 end
