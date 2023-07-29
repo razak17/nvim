@@ -2,6 +2,7 @@
 
 export RVIM_PLUGINS_ENABLED='1'
 export RVIM_LSP_ENABLED='1'
+export RVIM_TREESITTER_ENABLED='1'
 export RVIM_AI_ENABLED='1'
 export RVIM_PLUGINS_MINIMAL='0'
 export RVIM_NONE='0'
@@ -16,6 +17,10 @@ while [ "$#" -gt 0 ]; do
 	case "$arg" in
 	--no-plugins)
 		export RVIM_PLUGINS_ENABLED='0'
+		shift
+		;;
+	--no-treesitter)
+		export RVIM_TREESITTER_ENABLED='0'
 		shift
 		;;
 	--no-lsp)
