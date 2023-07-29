@@ -131,6 +131,8 @@ return {
           vim.schedule(function() gs.prev_hunk() end)
           return '<Ignore>'
         end, { expr = true, desc = 'previous hunk' })
+
+        map('n', '<leader>hx', '<Cmd>Gitsigns refresh<CR>', { desc = 'refresh' })
       end,
     },
   },
