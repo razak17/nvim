@@ -69,6 +69,17 @@ return {
           completion = cmp.config.window.bordered(window_opts),
           documentation = cmp.config.window.bordered(window_opts),
         },
+        sorting = {
+          comparators = {
+            cmp.config.compare.offset,
+            cmp.config.compare.exact,
+            cmp.config.compare.score,
+            cmp.config.compare.kind,
+            cmp.config.compare.sort_text,
+            cmp.config.compare.length,
+            cmp.config.compare.order,
+          },
+        },
         matching = {
           disallow_fuzzy_matching = false,
           disallow_fullfuzzy_matching = true,
