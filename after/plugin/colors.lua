@@ -136,6 +136,8 @@ local function colorscheme_overrides()
       { NeogitDiffHeader = { inherit = 'Headline2', bold = true } },
       { NeogitFold = { bg = { from = 'CursorLine', alter = -0.25 } } },
       { NeogitCursorLine = { bg = { from = 'CursorLine' }, fg = { from = 'Normal' } } },
+      { HlSearchNear = { fg = { from = 'Search' }, bg = 'NONE' } },
+      { HlSearchLens = { fg = { from = 'Search' }, bg = 'NONE' } },
     },
   }
   local hls = overrides[vim.g.colors_name]
