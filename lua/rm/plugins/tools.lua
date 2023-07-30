@@ -40,6 +40,19 @@ return {
             )
           end,
           prettier = function() end,
+          prettierd = function()
+            null_ls.register(null_ls.builtins.formatting.prettierd.with({
+              filetypes = {
+                'javascript',
+                'typescript',
+                'typescriptreact',
+                'json',
+                'yaml',
+                'markdown',
+                'svelte',
+              },
+            }))
+          end,
           shellcheck = function()
             null_ls.register(null_ls.builtins.diagnostics.shellcheck.with({
               extra_args = { '--severity', 'warning' },
