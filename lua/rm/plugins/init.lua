@@ -912,6 +912,7 @@ return {
   },
   {
     'bennypowers/template-literal-comments.nvim',
+    enabled = rvim.treesitter.enable,
     ft = { 'javascript', 'typescript' },
     opts = {},
   },
@@ -937,7 +938,7 @@ return {
   },
   {
     'axelvc/template-string.nvim',
-    enabled = not rvim.plugins.minimal,
+    enabled = rvim.treesitter.enable,
     event = 'BufRead',
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
     ft = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
