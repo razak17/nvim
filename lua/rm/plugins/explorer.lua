@@ -197,14 +197,12 @@ return {
   },
   {
     's1n7ax/nvim-window-picker',
-    version = '*',
+    version = '2.*',
     config = function()
       require('window-picker').setup({
         hint = 'floating-big-letter',
-        autoselect_one = true,
-        include_current = false,
-        other_win_hl_color = highlight.get('Visual', 'bg'),
         filter_rules = {
+          autoselect_one = true,
           bo = {
             filetype = { 'neo-tree-popup', 'quickfix' },
             buftype = { 'terminal', 'quickfix', 'nofile' },
