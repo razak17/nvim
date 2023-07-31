@@ -400,7 +400,7 @@ local function toggle_virtual_text()
     if type(config.virtual_lines) == 'table' then
       config = vim.tbl_extend('force', config, { virtual_lines = false })
     end
-    rvim.lsp.hover_diagnostics = true
+    rvim.lsp.hover_diagnostics.enable = true
   else
     config = vim.tbl_extend('force', config, { virtual_text = false })
   end
@@ -421,7 +421,7 @@ local function toggle_virtual_lines()
   else
     config = vim.tbl_extend('force', config, { virtual_lines = false })
   end
-  rvim.lsp.hover_diagnostics = not rvim.lsp.hover_diagnostics
+  rvim.lsp.hover_diagnostics = not rvim.lsp.hover_diagnostics.enable
   diagnostic.config(config)
   rvim.lsp.notify(
     string.format(

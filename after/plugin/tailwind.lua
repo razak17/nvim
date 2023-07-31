@@ -1,6 +1,11 @@
 if not rvim then return end
 
-local file = io.open(vim.fn.expand('%:p:h') .. '/tailwind.config.js', 'r')
+local file
+local extensions = { 'js', 'ts', 'cjs', 'mjs' }
+for _, ext in ipairs(extensions) do
+  file = io.open(vim.fn.expand('%:p:h') .. '/tailwind.config.' .. ext, 'r')
+  if file then break end
+end
 local disabled = not file or rvim.minimal or not rvim.plugins.enable or rvim.plugins.minimal
 
 if disabled then return end
@@ -20,19 +25,41 @@ if pcall(require, 'plenary') then
   end
 end
 
-local function mysplit(inputstr, sep, init_col)
+local function count_leading_whitespace(line)
+  local leadingWhitespace = string.match(line, '^[ \t]*')
+  return leadingWhitespace and #leadingWhitespace or 0
+end
+
+local function mysplit(inputstr, sep, init_col, init_row)
   if sep == nil then sep = '%s' end
   local t = {}
+  -- If there are mulitple new lines
+  local row_offset = init_row
 
-  local offset = 0
+  for row in string.gmatch(inputstr, '([^\n]+)') do
+    local offset = 0
+    local whitespace = count_leading_whitespace(row)
+    local base_col = init_col
 
-  for str in string.gmatch(inputstr, '([^' .. sep .. ']+)') do
-    local new_col = init_col + offset
-    table.insert(t, {
-      str = str,
-      col = new_col,
-    })
-    offset = offset + #str + 1
+    if whitespace ~= 0 then
+      print('Whitespace found')
+      base_col = whitespace
+    end
+
+    for str in string.gmatch(row, '([^' .. sep .. ']+)') do
+      local start_pos, end_pos = row:find(str, offset + 1, true)
+      local new_col = base_col + start_pos - 1
+
+      table.insert(t, {
+        str = str,
+        col = new_col,
+        row = row_offset,
+      })
+      offset = offset + #str + 1
+    end
+
+    -- Increment for each new line
+    row_offset = row_offset + 1
   end
   return t
 end
@@ -75,7 +102,12 @@ local function tailwind_classes(bufnr)
   }
 
   local range = { vim.treesitter.get_node_range(cursor) }
-  local classes = mysplit(parsed_cursor, ' ', range[2])
+  local init_col = range[2]
+  local init_row = range[1]
+
+  local classes = mysplit(parsed_cursor, ' ', init_col, init_row)
+
+  -- print(vim.inspect(classes))
   local index = 0
   local longest = 0
 
@@ -83,7 +115,7 @@ local function tailwind_classes(bufnr)
     tw.request('textDocument/hover', {
       textDocument = vim.lsp.util.make_text_document_params(),
       position = {
-        line = range[1],
+        line = class.row,
         -- Only this
         character = class.col, --range[2]
       },
