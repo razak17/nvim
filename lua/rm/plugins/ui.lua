@@ -88,7 +88,7 @@ return {
   },
   {
     'tamton-aquib/flirt.nvim',
-    enabled = not rvim.plugins.minimal,
+    enabled = false,
     event = 'VeryLazy',
     opts = {},
   },
