@@ -138,6 +138,12 @@ local function colorscheme_overrides()
       { NeogitCursorLine = { bg = { from = 'CursorLine' }, fg = { from = 'Normal' } } },
       { HlSearchNear = { fg = { from = 'Search' }, bg = 'NONE' } },
       { HlSearchLens = { fg = { from = 'Search' }, bg = 'NONE' } },
+      { GitConflictCurrent = { bg = { from = 'DiffAdd', alter = -0.5 } } },
+      { GitConflictCurrentLabel = { inherit = 'DiffAdd' } },
+      { GitConflictIncoming = { bg = { from = 'DiffDelete', alter = -0.5 } } },
+      { GitConflictIncomingLabel = { inherit = 'DiffDelete' } },
+      { GitConflictAncestor = { bg = { from = 'DiffText', alter = -0.5 } } },
+      { GitConflictAncestorLabel = { inherit = 'DiffText' } },
     },
   }
   local hls = overrides[vim.g.colors_name]
