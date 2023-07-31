@@ -75,6 +75,11 @@ return {
     },
   },
   {
+    'tamton-aquib/zone.nvim',
+    event = 'VeryLazy',
+    opts = { style = 'epilepsy', after = 17 },
+  },
+  {
     'tzachar/highlight-undo.nvim',
     event = 'BufRead',
     opts = {},
@@ -311,7 +316,7 @@ return {
     event = 'VeryLazy',
     config = function()
       rvim.highlight.plugin('ufo', {
-        { Folded = { bold = false, italic = false, bg = { from = 'CursorLine', alter=-0.25 } } },
+        { Folded = { bold = false, italic = false, bg = { from = 'CursorLine', alter = -0.25 } } },
       })
     end,
     keys = {
