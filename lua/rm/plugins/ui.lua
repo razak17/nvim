@@ -87,6 +87,12 @@ return {
     },
   },
   {
+    'tamton-aquib/flirt.nvim',
+    enabled = not rvim.plugins.minimal,
+    event = 'VeryLazy',
+    opts = {},
+  },
+  {
     'tzachar/highlight-undo.nvim',
     event = 'BufRead',
     opts = {},
