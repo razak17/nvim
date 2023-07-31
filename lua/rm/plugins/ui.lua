@@ -76,8 +76,15 @@ return {
   },
   {
     'tamton-aquib/zone.nvim',
+    enabled = false,
     event = 'VeryLazy',
-    opts = { style = 'epilepsy', after = 17 },
+    opts = {
+      style = 'epilepsy',
+      exclude_filetypes = {
+        'NeogitStatus',
+        'NeogitCommitMessage',
+      },
+    },
   },
   {
     'tzachar/highlight-undo.nvim',
