@@ -214,7 +214,9 @@ return {
   {
     'dgagn/diagflow.nvim',
     event = 'LspAttach',
-    opts = {},
+    opts = {
+      toggle_event = { 'InsertEnter' },
+    },
   },
   -- }}}
   ----------------------------------------------------------------------------------------------------
