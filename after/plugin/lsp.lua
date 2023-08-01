@@ -155,6 +155,7 @@ local function setup_mappings(client, bufnr)
     { 'n', '<leader>ltv', '<Cmd>ToggleVirtualText<CR>', desc = 'toggle virtual text' },
     { 'n', '<leader>ltl', '<Cmd>ToggleVirtualLines<CR>', desc = 'toggle virtual lines' },
     { 'n', '<leader>lts', '<Cmd>ToggleSigns<CR>', desc = 'toggle signs' },
+    { 'n', '<leader>lth', '<Cmd>ToggleHoverDiagnostics<CR>', desc = 'toggle hover diagnostic'},
     {
       'n',
       '<localleader>li',
@@ -400,7 +401,6 @@ local function toggle_virtual_text()
     if type(config.virtual_lines) == 'table' then
       config = vim.tbl_extend('force', config, { virtual_lines = false })
     end
-    rvim.lsp.hover_diagnostics.enable = true
   else
     config = vim.tbl_extend('force', config, { virtual_text = false })
   end
@@ -421,7 +421,6 @@ local function toggle_virtual_lines()
   else
     config = vim.tbl_extend('force', config, { virtual_lines = false })
   end
-  rvim.lsp.hover_diagnostics = not rvim.lsp.hover_diagnostics.enable
   diagnostic.config(config)
   rvim.lsp.notify(
     string.format(
@@ -445,3 +444,11 @@ local function toggle_signs()
   rvim.lsp.notify(string.format('signs %s', bool2str(type(diagnostic.config().signs) ~= 'boolean')))
 end
 rvim.command('ToggleSigns', toggle_signs)
+
+local function toggle_hover_diagnostics()
+  rvim.lsp.hover_diagnostics.enable = not rvim.lsp.hover_diagnostics.enable
+  rvim.lsp.notify(
+    string.format('hover diagnostics %s', bool2str(rvim.lsp.hover_diagnostics.enable))
+  )
+end
+command('ToggleHoverDiagnostics', toggle_hover_diagnostics)
