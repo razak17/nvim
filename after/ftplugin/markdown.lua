@@ -10,7 +10,7 @@ cmd.iabbrev(':tdo:', '👎')
 cmd.iabbrev(':smi:', '😊')
 cmd.iabbrev(':sad:', '😔')
 
-if rvim.minimal or rvim.plugins.minimal then return end
+if not rvim.lsp.enable or not rvim.plugins.enable or rvim.plugins.minimal then return end
 
 map('n', '<localleader>P', '<Cmd>Glow<CR>', { desc = 'markdown preview', buffer = 0 })
 

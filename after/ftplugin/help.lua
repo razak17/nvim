@@ -20,7 +20,7 @@ else
   map('n', '<leader>ml', 'maGovim:tw=78:ts=8:noet:ft=help:norl:<esc>`a', opts)
 end
 
-if not rvim or rvim.minimal then return end
+if not rvim or not rvim.lsp.enable or not rvim.plugins.enable then return end
 
 rvim.ftplugin_conf({
   ['virt-column'] = function(col)

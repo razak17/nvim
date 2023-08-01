@@ -6,7 +6,7 @@ for _, ext in ipairs(extensions) do
   file = io.open(vim.fn.expand('%:p:h') .. '/tailwind.config.' .. ext, 'r')
   if file then break end
 end
-local disabled = not file or rvim.minimal or not rvim.plugins.enable or rvim.plugins.minimal
+local disabled = not file or not rvim.lsp.enable or not rvim.plugins.enable or rvim.plugins.minimal
 
 if disabled then return end
 

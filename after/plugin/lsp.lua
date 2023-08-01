@@ -2,7 +2,7 @@ if not rvim then return end
 
 local cwd = vim.fn.getcwd()
 
-local disabled = rvim.minimal
+local disabled = not rvim.lsp.enable
   or not rvim.plugins.enable
   or rvim.plugins.minimal
   or rvim.dirs_match(rvim.lsp.disabled.directories, cwd)

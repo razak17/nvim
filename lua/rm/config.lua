@@ -19,7 +19,6 @@ local namespace = {
     hover_diagnostics = { enable = true, scope = 'cursor' },
   },
   mappings = {},
-  minimal = env.RVIM_LSP_ENABLED == '0' or env.RVIM_PLUGINS_ENABLED == '0' or env.RVIM_NONE == '1',
   none = env.RVIM_NONE == '1',
   plugins = {
     enable = env.RVIM_PLUGINS_ENABLED == '1',

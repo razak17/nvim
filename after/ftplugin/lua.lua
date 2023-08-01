@@ -6,7 +6,7 @@ opt.textwidth = 100
 opt.spell = true
 opt.iskeyword:append('-')
 
-if not rvim or rvim.minimal then return end
+if not rvim or not rvim.lsp.enable or not rvim.plugins.enable then return end
 
 opt.spellfile:prepend(join_paths(vim.fn.stdpath('config'), 'spell', 'lua.utf-8.add'))
 opt.spelllang = { 'en_gb', 'programming' }

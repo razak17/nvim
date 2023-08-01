@@ -1,4 +1,4 @@
-if not rvim or rvim.minimal then return end
+if not rvim or not rvim.lsp.enable or not rvim.plugins.enable then return end
 
 local fmt = string.format
 local function with_desc(desc) return { buffer = 0, desc = fmt('slides: %s', desc) } end
