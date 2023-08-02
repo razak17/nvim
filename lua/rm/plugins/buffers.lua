@@ -3,6 +3,15 @@ local fmt = string.format
 
 return {
   {
+    'chrisgrieser/nvim-early-retirement',
+    enabled = not rvim.plugins.minimal,
+    event = 'VeryLazy',
+    opts = {
+      minimumBufferNum = 4,
+      notificationOnAutoClose = true,
+    },
+  },
+  {
 
     'razak17/cybu.nvim',
     enabled = not rvim.plugins.minimal,
