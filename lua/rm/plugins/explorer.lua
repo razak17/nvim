@@ -214,16 +214,21 @@ return {
   {
     'razak17/oil.nvim',
     keys = {
-      { '-', function() require('oil').open() end, desc = 'open parent directory' },
+      {
+        '-',
+        function()
+          vim.cmd('vsplit | wincmd l | vertical resize 40')
+          require('oil').open()
+        end,
+        desc = 'open parent directory',
+      },
     },
     opts = { skip_confirm_for_simple_edits = true },
     dependencies = { 'nvim-tree/nvim-web-devicons' },
   },
   {
     'echasnovski/mini.files',
-    keys = {
-      { '<leader>e', '<cmd>lua MiniFiles.open()<CR>', desc = 'mini.files' },
-    },
+    keys = { { '<leader>e', '<cmd>lua MiniFiles.open()<CR>', desc = 'mini.files' } },
     opts = {},
   },
 }
