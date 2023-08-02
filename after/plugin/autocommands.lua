@@ -31,6 +31,7 @@ local smart_close_filetypes = rvim.p_table({
   ['fugitive.*'] = true,
   ['copilot.*'] = true,
   ['tsplayground'] = true,
+  ['oil'] = true,
 })
 
 local smart_close_buftypes = rvim.p_table({
