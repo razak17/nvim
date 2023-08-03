@@ -8,7 +8,7 @@ local ignored = { 'TelescopePrompt', 'buffer_manager', 'harpoon', '' }
 ---@param reset boolean?
 local function set_statusline(reset)
   if rvim.find_string(ignored, vim.bo.ft) then return end
-  local tmux_bg = '#292e42'
+  local tmux_bg = '#20222f'
   local bg = reset and tmux_bg or rvim.highlight.get('Normal', 'bg')
   fn.jobstart(fmt('tmux set-option -g status-style bg=%s', bg))
 end
