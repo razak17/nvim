@@ -1,5 +1,5 @@
 local api = vim.api
-local ui = rvim.ui
+local ui, highlight = rvim.ui, rvim.highlight
 local codicons = ui.codicons
 local border = ui.current.border
 local strwidth = vim.api.nvim_strwidth
@@ -288,6 +288,35 @@ return {
         { DropBarIconUIIndicator = { link = 'Label' } },
         { DropBarMenuHoverEntry = { bg = 'NONE' } },
         { DropBarMenuCurrentContext = { link = 'CursorLine' } },
+      })
+    end,
+  },
+  {
+    'shellRaining/hlchunk.nvim',
+    enabled = false,
+    event = 'BufRead',
+    config = function()
+      require('hlchunk').setup({
+        indent = {
+          chars = { '▏' },
+          style = {
+            { fg = highlight.get('IndentBlanklineChar', 'fg') },
+          },
+        },
+        blank = { enable = false },
+        chunk = {
+          chars = {
+            horizontal_line = '─',
+            vertical_line = '│',
+            left_top = '┌',
+            left_bottom = '└',
+            right_arrow = '─',
+          },
+          style = highlight.tint(highlight.get('IndentBlanklineContextChar', 'fg'), -0.2),
+        },
+        line_num = {
+          style = highlight.get('CursorLineNr', 'fg'),
+        },
       })
     end,
   },
