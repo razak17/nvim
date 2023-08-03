@@ -101,7 +101,7 @@ return {
     event = { 'BufRead', 'BufNewFile' },
     config = function()
       rvim.highlight.plugin('treesitter-context', {
-        { TreesitterContextSeparator = { link = 'Dim' } },
+        { TreesitterContextSeparator = { link = 'VertSplit' } },
         { TreesitterContext = { inherit = 'Normal' } },
         { TreesitterContextLineNumber = { inherit = 'LineNr' } },
       })
