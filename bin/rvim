@@ -48,4 +48,10 @@ while [ "$#" -gt 0 ]; do
 	esac
 done
 
-launch_nvim "$@"
+# ref: https://www.reddit.com/r/neovim/comments/15gihnd/neat_trick_for_restarting_neovim_fast_when_using/
+while true; do
+	launch_nvim "$@"
+	if [ $? -ne 1 ]; then
+		break
+	fi
+done
