@@ -358,7 +358,7 @@ return {
     event = 'VeryLazy',
     config = function()
       rvim.highlight.plugin('ufo', {
-        { Folded = { bold = false, italic = false, bg = { from = 'CursorLine', alter = -0.25 } } },
+        { Folded = { bold = false, italic = false, bg = { from = 'CursorLine', alter = -0.15 } } },
       })
     end,
     keys = {

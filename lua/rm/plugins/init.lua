@@ -721,6 +721,13 @@ return {
     },
   },
   {
+    'MaximilianLloyd/tw-values.nvim',
+    keys = {
+      { '<localleader>lt', '<cmd>TWValues<cr>', desc = 'tw-values: show values' },
+    },
+    opts = { border = border, show_unknown_classes = true },
+  },
+  {
     'turbio/bracey.vim',
     enabled = not rvim.plugins.minimal,
     ft = 'html',
