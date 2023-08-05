@@ -69,17 +69,17 @@ rvim.ui.codicons = {
     unstaged = '󰄱',
   },
   lsp = {
-    error = '',
-    warn = '',
-    info = '',
+    error = '󰅚',
+    warn = '󰀪',
+    info = '󰋽',
     hint = '󰌶', -- alt: 
     trace = '✎',
   },
   lsp_alt = {
-    error = '', -- alt: 
-    warn = '',
+    error = '󰅙', -- alt: 
+    warn = '󰀦',
     info = '󰋼', --  ℹ 󰙎 
-    hint = '',
+    hint = '󰌵',
   },
   misc = {
     bookmark = '', -- 

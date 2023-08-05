@@ -1,6 +1,7 @@
 local fn, api, env, fmt = vim.fn, vim.api, vim.env, string.format
 local falsy, icons, codicons = rvim.falsy, rvim.ui.icons, rvim.ui.codicons
 local separator = icons.separators.dotted_thin_block
+local lsp_icons = codicons.lsp
 
 local ignored_filetypes =
   { 'toggleterm', 'lspinfo', 'null-ls-info', 'mason', 'oil', 'buffer_manager', 'Jaq' }
@@ -197,10 +198,10 @@ return {
         'diagnostics',
         sources = { 'nvim_diagnostic' },
         symbols = {
-          error = codicons.lsp.error .. ' ',
-          warn = codicons.lsp.warn .. ' ',
-          info = codicons.lsp.info .. ' ',
-          hint = codicons.lsp.hint .. ' ',
+          error = lsp_icons.error .. ' ',
+          warn = lsp_icons.warn .. ' ',
+          info = lsp_icons.info .. ' ',
+          hint = lsp_icons.hint .. ' ',
         },
         cond = conditions.hide_in_width and conditions.lsp_enabled,
       })
