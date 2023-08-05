@@ -123,6 +123,13 @@ return {
       { '#', "#<Cmd>lua require('hlslens').start()<CR>" },
     },
     opts = {},
+    config = function(_, opts)
+      highlight.plugin('nvim-hlslens', {
+        { HlSearchNear = { fg = { from = 'Search' }, bg = 'NONE' } },
+        { HlSearchLens = { fg = { from = 'Search' }, bg = 'NONE' } },
+      })
+      require('hlslens').setup(opts)
+    end,
   },
   {
     'stevearc/dressing.nvim',
@@ -283,11 +290,15 @@ return {
           },
         },
       })
-      rvim.highlight.plugin('dropbar', {
-        { DropBarIconUISeparator = { fg = { from = 'Label' } } },
-        { DropBarIconUIIndicator = { link = 'Label' } },
-        { DropBarMenuHoverEntry = { bg = 'NONE' } },
-        { DropBarMenuCurrentContext = { link = 'CursorLine' } },
+      highlight.plugin('dropbar', {
+        theme = {
+          ['onedark'] = {
+            { DropBarIconUISeparator = { fg = { from = 'Label' } } },
+            { DropBarIconUIIndicator = { link = 'Label' } },
+            { DropBarMenuHoverEntry = { bg = 'NONE' } },
+            { DropBarMenuCurrentContext = { link = 'CursorLine' } },
+          },
+        },
       })
     end,
   },
@@ -357,7 +368,7 @@ return {
     enabled = rvim.treesitter.enable and not rvim.plugins.minimal,
     event = 'VeryLazy',
     config = function()
-      rvim.highlight.plugin('ufo', {
+      highlight.plugin('ufo', {
         { Folded = { bold = false, italic = false, bg = { from = 'CursorLine', alter = -0.15 } } },
       })
     end,

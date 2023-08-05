@@ -84,12 +84,10 @@ return {
     enabled = rvim.treesitter.enable and not rvim.plugins.minimal,
     ft = { 'org', 'norg', 'markdown', 'yaml' },
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
-    config = function()
-      require('headlines').setup({
-        org = { headline_highlights = false },
-        norg = { headline_highlights = { 'Headline' }, codeblock_highlight = false },
-        markdown = { headline_highlights = { 'Headline1' } },
-      })
-    end,
+    opts = {
+      org = { headline_highlights = false },
+      norg = { headline_highlights = { 'Headline' }, codeblock_highlight = false },
+      markdown = { headline_highlights = { 'Headline1' } },
+    },
   },
 }

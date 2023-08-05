@@ -31,6 +31,21 @@ return {
         diffview = true,
       },
     },
+    config = function(_, opts)
+      rvim.highlight.plugin('neogit', {
+        theme = {
+          ['onedark'] = {
+            { NeogitDiffAdd = { inherit = 'DiffAdd' } },
+            { NeogitDiffDelete = { inherit = 'DiffDelete' } },
+            { NeogitHunkHeader = { inherit = 'Headline2', bold = true } },
+            { NeogitDiffHeader = { inherit = 'Headline2', bold = true } },
+            { NeogitFold = { bg = { from = 'CursorLine', alter = -0.25 } } },
+            { NeogitCursorLine = { bg = { from = 'CursorLine' }, fg = { from = 'Normal' } } },
+          },
+        },
+      })
+      require('neogit').setup(opts)
+    end,
   },
   {
     'sindrets/diffview.nvim',
@@ -177,8 +192,23 @@ return {
     'akinsho/git-conflict.nvim',
     enabled = not rvim.plugins.minimal,
     event = 'VeryLazy',
-    opts = {
-      disable_diagnostics = true,
-    },
+    opts = { disable_diagnostics = true },
+    config = function(_, opts)
+      rvim.highlight.plugin('git-conflict', {
+        {
+          theme = {
+            ['onedark'] = {
+              { GitConflictCurrent = { bg = { from = 'DiffAdd', alter = -0.5 } } },
+              { GitConflictCurrentLabel = { inherit = 'DiffAdd' } },
+              { GitConflictIncoming = { bg = { from = 'DiffDelete', alter = -0.5 } } },
+              { GitConflictIncomingLabel = { inherit = 'DiffDelete' } },
+              { GitConflictAncestor = { bg = { from = 'DiffText', alter = -0.5 } } },
+              { GitConflictAncestorLabel = { inherit = 'DiffText' } },
+            },
+          },
+        },
+      })
+      require('git-conflict').setup(opts)
+    end,
   },
 }

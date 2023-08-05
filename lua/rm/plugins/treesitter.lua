@@ -1,3 +1,5 @@
+local highlight = rvim.highlight
+
 return {
   {
     'nvim-treesitter/nvim-treesitter',
@@ -100,7 +102,7 @@ return {
     enabled = rvim.treesitter.enable and not rvim.plugins.minimal,
     event = { 'BufRead', 'BufNewFile' },
     config = function()
-      rvim.highlight.plugin('treesitter-context', {
+      highlight.plugin('treesitter-context', {
         { TreesitterContextSeparator = { link = 'VertSplit' } },
         { TreesitterContext = { inherit = 'Normal' } },
         { TreesitterContextLineNumber = { inherit = 'LineNr' } },
@@ -120,7 +122,7 @@ return {
     config = function()
       vim.g.matchup_matchparen_offscreen = { method = 'status_manual' }
       vim.g.matchup_matchparen_deferred = 1
-      rvim.highlight.plugin('vim-matchup', {
+      highlight.plugin('vim-matchup', {
         { MatchWord = { inherit = 'LspReferenceText', underline = true } },
         { MatchParen = { link = 'CursorLineNr' } },
         { MatchParenCursor = { link = 'CursorLineNr' } },

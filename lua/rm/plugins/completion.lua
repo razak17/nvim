@@ -26,7 +26,16 @@ return {
         )
         :totable()
 
-      rvim.highlight.plugin('Cmp', hl_defs)
+      rvim.highlight.plugin(
+        'Cmp',
+        vim.tbl_extend('force', hl_defs, {
+          { CmpItemAbbr = { fg = { from = 'MsgSeparator' } } },
+          { CmpItemAbbrDeprecated = { strikethrough = true, inherit = 'Comment' } },
+          { CmpItemAbbrMatch = { fg = { from = 'Search' }, bold = true } },
+          { CmpItemAbbrMatchFuzzy = { fg = { from = 'Search' } } },
+          { CmpItemMenu = { fg = { from = 'Comment' }, italic = true, bold = true } },
+        })
+      )
 
       local window_opts = {
         border = border,
