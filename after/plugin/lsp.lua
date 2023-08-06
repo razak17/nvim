@@ -96,19 +96,35 @@ end
 ---@param client lsp.Client
 ---@param bufnr integer
 local function setup_mappings(client, bufnr)
+  local function prev_diagnostic(lvl)
+    return function()
+      diagnostic.goto_prev({
+        float = not rvim.lsp.hover_diagnostics.enable,
+        severity = { min = lvl },
+      })
+    end
+  end
+  local function next_diagnostic(lvl)
+    return function()
+      diagnostic.goto_next({
+        float = not rvim.lsp.hover_diagnostics.enable,
+        severity = { min = lvl },
+      })
+    end
+  end
+  local function line_diagnostic()
+    return function()
+      local config = diagnostic.config().float
+      return vim.diagnostic.open_float(vim.tbl_extend('force', config, {
+        focusable = true,
+        scope = 'line',
+      }))
+    end
+  end
+
   local mappings = {
-    {
-      'n',
-      '<leader>lk',
-      function() vim.diagnostic.goto_prev({ float = false }) end,
-      desc = 'go to prev diagnostic',
-    },
-    {
-      'n',
-      '<leader>lj',
-      function() vim.diagnostic.goto_next({ float = false }) end,
-      desc = 'go to next diagnostic',
-    },
+    { 'n', '<leader>lk', prev_diagnostic(), desc = 'go to prev diagnostic' },
+    { 'n', '<leader>lj', next_diagnostic(), desc = 'go to next diagnostic' },
     {
       { 'n', 'x' },
       '<leader>la',
@@ -124,6 +140,13 @@ local function setup_mappings(client, bufnr)
       desc = 'definition',
       capability = provider.DEFINITION,
       exclude = { 'tsserver' },
+    },
+    {
+      'n',
+      'gl',
+      line_diagnostic(),
+      desc = 'line diagnostics',
+      capability = provider.HOVER,
     },
     { 'n', 'gr', lsp.buf.references, desc = 'references', capability = provider.REFERENCES },
     {
@@ -155,7 +178,7 @@ local function setup_mappings(client, bufnr)
     { 'n', '<leader>ltv', '<Cmd>ToggleVirtualText<CR>', desc = 'toggle virtual text' },
     { 'n', '<leader>ltl', '<Cmd>ToggleVirtualLines<CR>', desc = 'toggle virtual lines' },
     { 'n', '<leader>lts', '<Cmd>ToggleSigns<CR>', desc = 'toggle signs' },
-    { 'n', '<leader>lth', '<Cmd>ToggleHoverDiagnostics<CR>', desc = 'toggle hover diagnostic'},
+    { 'n', '<leader>lth', '<Cmd>ToggleHoverDiagnostics<CR>', desc = 'toggle hover diagnostic' },
     {
       'n',
       '<localleader>li',
