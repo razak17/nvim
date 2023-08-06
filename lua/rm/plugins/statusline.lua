@@ -4,7 +4,7 @@ local separator = icons.separators.dotted_thin_block
 local lsp_icons = codicons.lsp
 
 local ignored_filetypes =
-  { 'toggleterm', 'lspinfo', 'null-ls-info', 'mason', 'oil', 'buffer_manager', 'Jaq' }
+  { 'toggleterm', 'lspinfo', 'null-ls-info', 'mason', 'oil', 'buffer_manager', 'Jaq', 'lazy' }
 
 local conditions = {
   ignored_filetype = function() return not rvim.find_string(ignored_filetypes, vim.bo.filetype) end,
