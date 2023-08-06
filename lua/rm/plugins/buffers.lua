@@ -4,7 +4,8 @@ local fmt = string.format
 return {
   {
     'chrisgrieser/nvim-early-retirement',
-    enabled = not rvim.plugins.minimal,
+    enabled = false,
+    -- enabled = not rvim.plugins.minimal,
     event = 'VeryLazy',
     opts = {
       minimumBufferNum = 4,
