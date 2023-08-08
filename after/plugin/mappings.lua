@@ -351,3 +351,16 @@ command('Reverse', '<line1>,<line2>g/^/m<line1>-1', {
   range = '%',
   bar = true,
 })
+
+-- see: https://github.com/yutkat/convert-git-url.nvim
+command('ConvertGitUrl', function()
+  local save_pos = vim.fn.getpos('.')
+  local cur = vim.fn.expand('<cWORD>')
+  if string.match(cur, '^git@') then
+    vim.cmd([[s#git@\(.\{-}\).com:#https://\1.com/#]])
+  elseif string.match(cur, '^http') then
+    vim.cmd([[s#https://\(.\{-}\).com/#git@\1.com:#]])
+  end
+  vim.fn.setpos('.', save_pos)
+end, { force = true })
+map('n', '<leader>gu', '<Cmd>ConvertGitUrl<CR>', { desc = 'convert git url' })

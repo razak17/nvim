@@ -389,6 +389,12 @@ function rvim.command(name, rhs, opts)
   api.nvim_create_user_command(name, rhs, opts)
 end
 
+
+---A terser proxy for `nvim_replace_termcodes`
+---@param str string
+---@return string
+function rvim.replace_termcodes(str) return api.nvim_replace_termcodes(str, true, true, true) end
+
 ---@generic T
 ---Given a table return a new table which if the key is not found will search
 ---all the table's keys for a match using `string.match`

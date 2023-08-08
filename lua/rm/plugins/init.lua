@@ -89,7 +89,6 @@ return {
   ----------------------------------------------------------------------------------------------------
   { 'razak17/onedark.nvim', lazy = false, priority = 1000 },
   { 'LunarVim/horizon.nvim', lazy = false, priority = 1000 },
-  { 'romainl/vim-cool', event = 'BufReadPre', config = function() vim.g.CoolTotalMatches = 1 end },
   -- }}}
   ----------------------------------------------------------------------------------------------------
   -- LSP,Completion & Debugger {{{1
