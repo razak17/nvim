@@ -335,3 +335,14 @@ local function toggle_conceal_cursor()
 end
 nnoremap('<localleader>cl', toggle_conceal, { desc = 'toggle conceallevel' })
 nnoremap('<localleader>cL', toggle_conceal_cursor, { desc = 'toggle concealcursor' })
+-----------------------------------------------------------------------------//
+-- Commands
+-----------------------------------------------------------------------------//
+local command = rvim.command
+
+command('ClearRegisters', function()
+  local regs = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/-'
+  for r in regs:gmatch('.') do
+    fn.setreg(r, {})
+  end
+end)
