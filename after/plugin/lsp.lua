@@ -12,6 +12,7 @@ if disabled then return end
 local lsp, fn, api, fmt = vim.lsp, vim.fn, vim.api, string.format
 local command = rvim.command
 local L = vim.lsp.log_levels
+local M = vim.lsp.protocol.Methods
 
 local diagnostic = vim.diagnostic
 local bool2str = rvim.bool2str
@@ -37,17 +38,6 @@ if vim.env.DEVELOPING then lsp.set_log_level(L.DEBUG) end
 ----------------------------------------------------------------------------------------------------
 -- Autocommands
 ----------------------------------------------------------------------------------------------------
----@enum
-local provider = {
-  HOVER = 'textDocument/hover',
-  RENAME = 'textDocument/rename',
-  CODELENS = 'textDocument/codeLens',
-  CODEACTIONS = 'textDocument/codeAction',
-  FORMATTING = 'textDocument/formatting',
-  REFERENCES = 'textDocument/documentHighlight',
-  DEFINITION = 'textDocument/definition',
-}
-
 local function formatting_filter(client)
   local exceptions = (format_exclusions.servers)[vim.bo.filetype]
   if not exceptions then return true end
@@ -130,15 +120,15 @@ local function setup_mappings(client, bufnr)
       '<leader>la',
       lsp.buf.code_action,
       desc = 'code action',
-      capability = provider.CODEACTIONS,
+      capability = M.textDocument_codeAction,
     },
-    { 'n', '<leader>lf', format, desc = 'format buffer', capability = provider.FORMATTING },
+    { 'n', '<leader>lf', format, desc = 'format buffer', capability = M.textDocument_formatting },
     {
       'n',
       'gd',
       lsp.buf.definition,
       desc = 'definition',
-      capability = provider.DEFINITION,
+      capability = M.textDocument_definition,
       exclude = { 'tsserver' },
     },
     {
@@ -146,32 +136,38 @@ local function setup_mappings(client, bufnr)
       'gl',
       line_diagnostic(),
       desc = 'line diagnostics',
-      capability = provider.HOVER,
+      capability = M.textDocument_hover,
     },
-    { 'n', 'gr', lsp.buf.references, desc = 'references', capability = provider.REFERENCES },
+    { 'n', 'gr', lsp.buf.references, desc = 'references', capability = M.textDocument_references },
     {
       'n',
       'gi',
       lsp.buf.implementation,
       desc = 'implementation',
-      capability = provider.REFERENCES,
+      capability = M.textDocument_references,
     },
     {
       'n',
       'gI',
       lsp.buf.incoming_calls,
       desc = 'incoming calls',
-      capability = provider.REFERENCES,
+      capability = M.textDocument_references,
     },
     {
       'n',
       'gt',
       lsp.buf.type_definition,
       desc = 'go to type definition',
-      capability = provider.DEFINITION,
+      capability = M.textDocument_definition,
     },
-    { 'n', '<leader>lc', lsp.codelens.run, desc = 'run code lens', capability = provider.CODELENS },
-    { 'n', '<leader>lr', lsp.buf.rename, desc = 'rename', capability = provider.RENAME },
+    {
+      'n',
+      '<leader>lc',
+      lsp.codelens.run,
+      desc = 'run code lens',
+      capability = M.textDocument_codeLens,
+    },
+    { 'n', '<leader>lr', lsp.buf.rename, desc = 'rename', capability = M.textDocument_rename },
     -- TODO: loclist is broken
     -- { 'n', '<leader>lL', vim.diagnostic.setloclist, desc = 'toggle loclist diagnostics' },
     { 'n', '<leader>li', '<Cmd>LspInfo<CR>', desc = 'lsp info' },
@@ -234,7 +230,7 @@ end
 ---@param client lsp.Client
 ---@param buf integer
 local function setup_autocommands(client, buf)
-  if not client.supports_method(provider.HOVER) then
+  if not client.supports_method(M.textDocument_hover) then
     augroup(('LspHoverDiagnostics%d'):format(buf), {
       event = { 'CursorHold' },
       buffer = buf,
@@ -251,7 +247,7 @@ local function setup_autocommands(client, buf)
     vim.lsp.inlay_hint(buf, true)
   end
 
-  if not client.supports_method(provider.FORMATTING) then
+  if not client.supports_method(M.textDocument_formatting) then
     augroup(('LspFormatting%d'):format(buf), {
       event = 'BufWritePre',
       buffer = buf,
@@ -263,7 +259,7 @@ local function setup_autocommands(client, buf)
           and rvim.lsp.format_on_save.enable
         then
           local clients = vim.tbl_filter(
-            function(c) return c.supports_method(provider.FORMATTING) end,
+            function(c) return c.supports_method(M.textDocument_formatting) end,
             lsp.get_clients({ buffer = buf })
           )
           if #clients >= 1 then format({ bufnr = args.buf, async = #clients == 1 }) end
@@ -272,7 +268,7 @@ local function setup_autocommands(client, buf)
     })
   end
 
-  if client.supports_method(provider.CODELENS) then
+  if client.supports_method(M.textDocument_codeLens) then
     augroup(('LspCodeLens%d'):format(buf), {
       event = { 'BufEnter', 'InsertLeave', 'BufWritePost' },
       desc = 'LSP: Code Lens',
@@ -282,7 +278,7 @@ local function setup_autocommands(client, buf)
     })
   end
 
-  if client.supports_method(provider.REFERENCES) then
+  if client.supports_method(M.textDocument_references) then
     augroup(('LspReferences%d'):format(buf), {
       event = { 'CursorHold', 'CursorHoldI' },
       buffer = buf,
