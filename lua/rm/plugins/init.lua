@@ -222,7 +222,6 @@ return {
   ----------------------------------------------------------------------------------------------------
   -- Utilities {{{1
   ----------------------------------------------------------------------------------------------------
-  { 'lewis6991/whatthejump.nvim', keys = { '<C-I>', '<C-O>' } },
   { 'sQVe/sort.nvim', cmd = { 'Sort' } },
   {
     'itchyny/vim-highlighturl',
@@ -368,12 +367,11 @@ return {
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
   },
   {
-    'jghauser/fold-cycle.nvim',
+    'chrisgrieser/nvim-origami',
+    event = 'BufReadPost',
+    keys = { { '<BS>', function() require('origami').h() end, desc = 'toggle fold' } },
     enabled = rvim.lsp.enable,
     opts = {},
-    keys = {
-      { '<BS>', function() require('fold-cycle').open() end, desc = 'fold-cycle: toggle' },
-    },
   },
   {
     'AndrewRadev/linediff.vim',
