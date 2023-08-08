@@ -346,3 +346,8 @@ command('ClearRegisters', function()
     fn.setreg(r, {})
   end
 end)
+
+command('Reverse', '<line1>,<line2>g/^/m<line1>-1', {
+  range = '%',
+  bar = true,
+})
