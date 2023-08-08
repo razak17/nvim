@@ -76,7 +76,7 @@ local function extmark_signs(curbuf, lnum)
     :map(function(item) return format_text(item[4], 'sign_text') end)
     :fold({ git = {}, other = {} }, function(acc, item)
       local txt, hl = item.sign_text, item.sign_hl_group
-      -- Hack to remove number from trailblazer signs by replacing it with a bookmark icon
+      -- HACK: to remove number from trailblazer signs by replacing it with a bookmark icon
       local is_trail = hl:match('^Trail')
       if is_trail then txt = rvim.ui.codicons.misc.bookmark end
       local is_git = hl:match('^Git')

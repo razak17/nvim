@@ -1,3 +1,4 @@
 spell/*.spl
 wget-*
 after/plugin/lspconfig.lua
+.rvim.json
