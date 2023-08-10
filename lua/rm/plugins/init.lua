@@ -711,6 +711,7 @@ return {
   },
   {
     'malbertzard/inline-fold.nvim', -- Optional
+    enabled = rvim.treesitter.enable and not rvim.plugins.minimal,
     ft = { 'html', 'svelte', 'astro', 'vue', 'typescriptreact' },
     keys = { { '<leader>of', '<Cmd>InlineFoldToggle<CR>', desc = 'toggle css fold' } },
     opts = {
@@ -719,6 +720,7 @@ return {
   },
   {
     'MaximilianLloyd/tw-values.nvim',
+    enabled = rvim.treesitter.enable and rvim.lsp.enable,
     keys = {
       { '<localleader>lt', '<cmd>TWValues<cr>', desc = 'tw-values: show values' },
     },
