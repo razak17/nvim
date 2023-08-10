@@ -1,12 +1,13 @@
 if not rvim or rvim and rvim.none then return end
 
-local fn, api, env, v,cmd = vim.fn, vim.api, vim.env,vim.v,vim.cmd
+local fn, api, env, v, cmd = vim.fn, vim.api, vim.env, vim.v, vim.cmd
+local fmt = string.format
 local falsy = rvim.falsy
 
 ----------------------------------------------------------------------------------------------------
 -- HLSEARCH
 ----------------------------------------------------------------------------------------------------
--- ref:https://github.com/akinsho/dotfiles/blob/main/.config/nvim/plugin/autocommands.lua 
+-- ref:https://github.com/akinsho/dotfiles/blob/main/.config/nvim/plugin/autocommands.lua
 
 map({ 'n', 'v', 'o', 'i', 'c' }, '<Plug>(StopHL)', 'execute("nohlsearch")[-1]', { expr = true })
 
@@ -229,9 +230,13 @@ rvim.augroup('Utilities', {
     if fn.getcwd() == vim.fn.stdpath('config') then
       vim.keymap.set('n', 'gx', function()
         local file = fn.expand('<cfile>')
-        local link = file:match('[%a%d%-%.%_]*%/[%a%d%-%.%_]*')
-        if link then return vim.ui.open(string.format('https://www.github.com/%s', link)) end
-        return vim.ui.open(file)
+        if not file or fn.isdirectory(file) > 0 then return vim.cmd.edit(file) end
+        if file:match('http[s]?://') then return rvim.open(file) end
+
+        -- consider anything that looks like string/string a github link
+        local plugin_url_regex = '[%a%d%-%.%_]*%/[%a%d%-%.%_]*'
+        local link = string.match(file, plugin_url_regex)
+        if link then return rvim.open(fmt('https://www.github.com/%s', link)) end
       end)
     end
   end,
