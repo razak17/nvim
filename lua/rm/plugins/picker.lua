@@ -126,6 +126,11 @@ return {
         function() file_picker(env.HOME .. '/Sync/notes/obsidian') end,
         desc = 'org files',
       },
+      {
+        '<leader>fP',
+        function() file_picker(vim.fn.stdpath('data') .. '/lazy') end,
+        desc = 'plugins',
+      },
     },
     config = function()
       local lsp_kind = require('lspkind')
