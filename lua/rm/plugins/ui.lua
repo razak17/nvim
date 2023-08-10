@@ -94,7 +94,10 @@ return {
   {
     'tzachar/highlight-undo.nvim',
     event = 'BufRead',
-    opts = {},
+    opts = {
+      undo = { hlgroup = 'Search' },
+      redo = { hlgroup = 'Search' },
+    },
   },
   {
     'kevinhwang91/nvim-bqf',
