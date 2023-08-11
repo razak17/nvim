@@ -26,7 +26,7 @@
 ((function_call name: (identifier) @TSNote (#eq? @TSNote "ipairs"    )) (#set! conceal "I"))
 
 ;; table.
-((dot_index_expression table: (identifier) @keyword  (#eq? @keyword  "math" )) (#set! conceal ""))
+((dot_index_expression table: (identifier) @keyword  (#eq? @keyword  "math" )) (#set! conceal "󰿈"))
 
 ;; break_statement
 (((break_statement) @keyword) (#set! conceal "󰑟"))
@@ -36,7 +36,7 @@
 (((dot_index_expression) @field (#eq? @field "vim.api"     )) (#set! conceal ""))
 (((dot_index_expression) @field (#eq? @field "vim.fn"      )) (#set! conceal "#"))
 (((dot_index_expression) @field (#eq? @field "vim.g"       )) (#set! conceal "G"))
-(((dot_index_expression) @field (#eq? @field "vim.schedule")) (#set! conceal "󱑔"))
+(((dot_index_expression) @field (#eq? @field "vim.schedule")) (#set! conceal "󱦟"))
 (((dot_index_expression) @field (#eq? @field "vim.opt"     )) (#set! conceal "S"))
 (((dot_index_expression) @field (#eq? @field "vim.env"     )) (#set! conceal "$"))
 (((dot_index_expression) @field (#eq? @field "vim.o"       )) (#set! conceal "O"))
