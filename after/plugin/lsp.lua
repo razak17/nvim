@@ -278,7 +278,7 @@ local function setup_autocommands(client, buf)
     })
   end
 
-  if client.supports_method(M.textDocument_references) then
+  if client.supports_method(M.textDocument_documentHighlight) then
     augroup(('LspReferences%d'):format(buf), {
       event = { 'CursorHold', 'CursorHoldI' },
       buffer = buf,
