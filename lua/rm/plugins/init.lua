@@ -118,10 +118,13 @@ return {
         handlers = {
           function(name)
             local cwd = vim.fn.getcwd()
-            local disabled = rvim.dirs_match(rvim.lsp.disabled.directories, cwd)
-              or rvim.find_string(rvim.lsp.disabled.servers, name)
-            if disabled then return end
-            if rvim.find_string(rvim.lsp.disabled.servers, name) then return end
+            if not rvim.falsy(rvim.lsp.override) then
+              if not rvim.find_string(rvim.lsp.override, name) then return end
+            else
+              local directory_disabled = rvim.dirs_match(rvim.lsp.disabled.directories, cwd)
+              local server_disabled = rvim.find_string(rvim.lsp.disabled.servers, name)
+              if directory_disabled or server_disabled then return end
+            end
             local config = require('rm.servers')(name)
             if config then require('lspconfig')[name].setup(config) end
           end,

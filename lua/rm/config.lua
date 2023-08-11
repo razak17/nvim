@@ -9,6 +9,7 @@ local namespace = {
   autosave = { enable = true },
   lsp = {
     enable = env.RVIM_LSP_ENABLED == '1' and env.RVIM_PLUGINS_MINIMAL == '0',
+    override = {},
     disabled = {
       filetypes = {},
       directories = { vim.fn.stdpath('data') },
