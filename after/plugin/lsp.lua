@@ -247,7 +247,7 @@ local function setup_autocommands(client, buf)
     vim.lsp.inlay_hint(buf, true)
   end
 
-  if not client.supports_method(M.textDocument_formatting) then
+  if client.supports_method(M.textDocument_formatting) then
     augroup(('LspFormatting%d'):format(buf), {
       event = 'BufWritePre',
       buffer = buf,
