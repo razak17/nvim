@@ -103,6 +103,7 @@ return {
       { '<leader>fb', fzf_lua.grep_curbuf, desc = 'current buffer fuzzy find' },
       { '<leader>ff', file_picker, desc = 'find files' },
       { '<leader>fh', fzf_lua.oldfiles, desc = 'Most (f)recently used files' },
+      { '<leader>fm', fzf_lua.changes, desc = 'changes' },
       { '<leader>fo', fzf_lua.buffers, desc = 'buffers' },
       { '<leader>fr', fzf_lua.resume, desc = 'resume picker' },
       { '<leader>fs', fzf_lua.live_grep, desc = 'live grep' },
@@ -111,6 +112,7 @@ return {
       { '<leader>fvh', fzf_lua.highlights, desc = 'highlights' },
       { '<leader>fvk', fzf_lua.keymaps, desc = 'keymaps' },
       { '<leader>fvr', fzf_lua.registers, desc = 'Registers' },
+      { '<leader>fvc', fzf_lua.commands, desc = 'Commands' },
       { '<leader>fgb', fzf_lua.git_branches, desc = 'branches' },
       { '<leader>fgB', fzf_lua.git_bcommits, desc = 'buffer commits' },
       { '<leader>fgc', fzf_lua.git_commits, desc = 'commits' },
@@ -124,7 +126,7 @@ return {
       {
         '<leader>fN',
         function() file_picker(env.HOME .. '/Sync/notes/obsidian') end,
-        desc = 'org files',
+        desc = 'notes',
       },
       {
         '<leader>fP',

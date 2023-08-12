@@ -76,8 +76,8 @@ return {
       { '<leader>fn', notifications, desc = 'notify: notifications' },
       { '<leader>fp', projects, desc = 'projects' },
       { '<leader>fu', undo, desc = 'undo' },
-      { '<leader>fH', harpoon, desc = 'harpoon' },
-      { '<leader>ft', textcase, desc = 'textcase', mode = { 'n', 'v' } },
+      -- { '<leader>fH', harpoon, desc = 'harpoon' },
+      -- { '<leader>ft', textcase, desc = 'textcase', mode = { 'n', 'v' } },
     },
     config = function()
       local previewers = require('telescope.previewers')
@@ -204,12 +204,12 @@ return {
       require('telescope').load_extension('undo')
       require('telescope').load_extension('menufacture')
       require('telescope').load_extension('notify')
-      require('telescope').load_extension('textcase')
+      -- require('telescope').load_extension('textcase')
       if not rvim.plugins.minimal then
         require('telescope').load_extension('persisted')
         require('telescope').load_extension('projects')
       end
-      if rvim.is_available('harpoon') then require('telescope').load_extension('harpoon') end
+      -- if rvim.is_available('harpoon') then require('telescope').load_extension('harpoon') end
 
       vim.api.nvim_exec_autocmds('User', { pattern = 'TelescopeConfigComplete', modeline = false })
     end,
