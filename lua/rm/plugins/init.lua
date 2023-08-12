@@ -373,7 +373,7 @@ return {
     event = 'BufReadPost',
     keys = { { '<BS>', function() require('origami').h() end, desc = 'toggle fold' } },
     enabled = rvim.lsp.enable,
-    opts = {},
+    opts = { setupFoldKeymaps = false },
   },
   {
     'AndrewRadev/linediff.vim',
