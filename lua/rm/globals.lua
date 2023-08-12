@@ -453,3 +453,9 @@ end
 ---@param bool boolean
 ---@return string
 function rvim.bool2str(bool) return bool and 'on' or 'off' end
+
+function rvim.change_filetype()
+  vim.ui.input({ prompt = "Change filetype to: " }, function(new_ft)
+    if new_ft ~= nil then vim.bo.filetype = new_ft end
+  end)
+end
