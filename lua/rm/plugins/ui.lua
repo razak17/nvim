@@ -253,7 +253,10 @@ return {
   },
   {
     'uga-rosa/ccc.nvim',
-    keys = { { '<leader>oc', '<cmd>CccHighlighterToggle<CR>', desc = 'toggle ccc' } },
+    keys = {
+      { '<leader>oc', '<cmd>CccHighlighterToggle<CR>', desc = 'toggle ccc' },
+      { '<localleader>cp', '<cmd>CccPick<CR>', desc = 'ccc: pick' },
+    },
     opts = function()
       local ccc = require('ccc')
       local p = ccc.picker
