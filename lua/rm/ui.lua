@@ -26,6 +26,7 @@ rvim.ui.icons = {
     active_ts = '',
     spell_check = '󰓆',
     triangle = '',
+    triangle_short = '▶',
     triangle_short_right = '',
     triangle_short_down = '',
   },

@@ -95,7 +95,7 @@ return {
       signs = {
         add = { highlight = 'GitSignsAdd', text = icons.left_block },
         change = { highlight = 'GitSignsChange', text = icons.left_block },
-        delete = { highlight = 'GitSignsDelete', text = rvim.ui.icons.misc.triangle },
+        delete = { highlight = 'GitSignsDelete', text = rvim.ui.icons.misc.triangle_short },
         topdelete = { highlight = 'GitSignsChangeDelete', text = icons.left_block },
         changedelete = { highlight = 'GitSignsChange', text = icons.left_block },
         untracked = { highlight = 'GitSignsAdd', text = icons.left_block },
