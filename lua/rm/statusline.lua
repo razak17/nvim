@@ -94,6 +94,7 @@ local function git_push_pull(action, _)
 end
 
 local function git_pull() git_push_pull('pull', 'from') end
+
 local function git_push() git_push_pull('push', 'to') end
 
 local mode_colors = {

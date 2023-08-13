@@ -1,17 +1,13 @@
 local api, fn = vim.api, vim.fn
-local ui, sep = rvim.ui, rvim.ui.icons.separators
-local separator = sep.left_thin_block
-local space = ' '
+local ui = rvim.ui
 
 local align = { provider = '%=' }
-local spacer = { provider = space }
-local divider = { provider = separator, hl = 'LineNr' }
 
 return {
   {
     'rebelot/heirline.nvim',
     event = 'VeryLazy',
-    enabled = not rvim.plugins.minimal or not rvim.ui.statuscolumn.enable,
+    enabled = not rvim.plugins.minimal,
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = function()
       local statuscolumn = require('rm.statuscolumn')
@@ -64,21 +60,15 @@ return {
               fname = fn.bufname(buf),
               setting = 'statuscolumn',
             })
+            -- if not rvim.ui.statuscolumn.enable then return false end
             if rvim.falsy(d) then return true end
             return d and d.ft == true or d and d.fname == true
           end,
           static = statuscolumn.static,
           init = statuscolumn.init,
-          statuscolumn.signs,
-          align,
-          spacer,
-          statuscolumn.line_numbers,
-          spacer,
-          statuscolumn.git_signs,
-          divider,
-          statuscolumn.folds,
-          spacer,
+          statuscolumn.render,
         },
+
       })
     end,
   },

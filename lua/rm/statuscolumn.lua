@@ -1,9 +1,13 @@
 local fn, v, api, opt, cmd = vim.fn, vim.v, vim.api, vim.opt, vim.cmd
 local ui, sep, falsy = rvim.ui, rvim.ui.icons.separators, rvim.falsy
 
+local separator = sep.left_thin_block
 local space = ' '
 local fcs = opt.fillchars:get()
 local shade = sep.light_shade_block
+
+local align = { provider = '%=' }
+local spacer = { provider = space, hl = 'HeirlineStatusColumn' }
 
 ---@class StringComponent
 ---@field component string
@@ -26,6 +30,7 @@ local function nr(win, lnum, relnum, virtnum, line_count)
   if line_count > 999 then col_width = col_width + 1 end
   local ln = tostring(num):reverse():gsub('(%d%d%d)', '%1,'):reverse():gsub('^,', '')
   local num_width = col_width - api.nvim_strwidth(ln)
+  if num_width == 0 then return ln end
   return string.rep(space, num_width) .. ln
 end
 
@@ -126,104 +131,26 @@ return {
       cmd.execute("'" .. lnum .. 'fold' .. (fn.foldclosed(lnum) == -1 and 'close' or 'open') .. "'")
     end
   end,
-  line_numbers = {
-    provider = function()
+  render = {
+    init = function(self)
       local lnum, relnum, virtnum = v.lnum, v.relnum, v.virtnum
       local win = api.nvim_get_current_win()
       local buf = api.nvim_win_get_buf(win)
       local line_count = api.nvim_buf_line_count(buf)
-      return nr(win, lnum, relnum, virtnum, line_count)
-    end,
-    on_click = {
-      name = 'line_number_click',
-      callback = function(self, ...)
-        if self.handlers.line_number then self.handlers.line_number(self.click_args(self, ...)) end
-      end,
-    },
-  },
-  folds = {
-    condition = function() return v.virtnum == 0 end,
-    init = function(self)
-      self.lnum = v.lnum
-      self.folded = fn.foldlevel(self.lnum) > fn.foldlevel(self.lnum - 1)
-    end,
-    {
-      condition = function(self) return self.folded end,
-      {
-        provider = function(self)
-          if fn.foldclosed(self.lnum) == -1 then return fcs.foldopen end
-        end,
-      },
-      {
-        provider = function(self)
-          if fn.foldclosed(self.lnum) ~= -1 then return fcs.foldclose end
-        end,
-      },
-    },
-    {
-      condition = function(self) return not self.folded end,
-      provider = ' ',
-    },
-    on_click = {
-      name = 'fold_click',
-      callback = function(self, ...)
-        if self.handlers.fold then self.handlers.fold(self.click_args(self, ...)) end
-      end,
-    },
-  },
-  signs = {
-    init = function(self)
-      local lnum = v.lnum
-      local win = api.nvim_get_current_win()
-      local buf = api.nvim_win_get_buf(win)
 
-      local sns = signplaced_signs(buf, lnum)
-      local _, other_sns = extmark_signs(buf, lnum)
-
-      if #sns > 0 then
-        vim.list_extend(sns, other_sns)
-        self.sign = unpack(sns)
-      elseif #other_sns > 0 then
-        self.sign = unpack(other_sns)
-      else
-        self.sign = nil
-      end
-      self.has_sign = self.sign ~= nil
+      self.ln = nr(win, lnum, relnum, virtnum, line_count)
+      self.sns = signplaced_signs(buf, lnum)
+      self.g_sns, self.other_sns = extmark_signs(buf, lnum)
+      vim.list_extend(self.sns, self.other_sns)
     end,
-    provider = function(self)
-      if self.has_sign then return self.sign[1] end
-      return ' '
-    end,
-    hl = function(self)
-      if self.has_sign then return self.sign[2] end
-      return 'HeirlineStatusColumn'
-    end,
-    on_click = {
-      name = 'sign_click',
-      callback = function(self, ...)
-        if self.handlers.signs then self.handlers.signs(self.click_args(self, ...)) end
-      end,
-    },
-  },
-  git_signs = {
     {
-      condition = function() return not conditions.is_git_repo() or v.virtnum ~= 0 end,
-      provider = ' ',
-      hl = 'HeirlineStatusColumn',
-    },
-    {
-      condition = function() return conditions.is_git_repo() and v.virtnum == 0 end,
       init = function(self)
-        local lnum = v.lnum
-        local win = api.nvim_get_current_win()
-        local buf = api.nvim_win_get_buf(win)
-
-        local gitsign, _ = extmark_signs(buf, lnum)
-
-        if #gitsign == 0 then
-          self.sign = nil
+        if #self.sns > 0 then
+          self.sign = unpack(self.sns)
+        elseif #self.other_sns > 0 then
+          self.sign = unpack(self.other_sns)
         else
-          self.sign = unpack(gitsign)
+          self.sign = nil
         end
         self.has_sign = self.sign ~= nil
       end,
@@ -236,11 +163,96 @@ return {
         return 'HeirlineStatusColumn'
       end,
       on_click = {
-        name = 'gitsigns_click',
+        name = 'sign_click',
         callback = function(self, ...)
-          if self.handlers.git_signs then self.handlers.git_signs(self.click_args(self, ...)) end
+          if self.handlers.signs then self.handlers.signs(self.click_args(self, ...)) end
         end,
       },
     },
+    align,
+    spacer,
+    {
+      provider = function(self) return self.ln end,
+      on_click = {
+        name = 'line_number_click',
+        callback = function(self, ...)
+          if self.handlers.line_number then
+            self.handlers.line_number(self.click_args(self, ...))
+          end
+        end,
+      },
+    },
+    spacer,
+    {
+      {
+        condition = function() return not conditions.is_git_repo() or v.virtnum ~= 0 end,
+        provider = ' ',
+        hl = 'HeirlineStatusColumn',
+      },
+      {
+        condition = function() return conditions.is_git_repo() and v.virtnum == 0 end,
+        init = function(self)
+          if #self.g_sns == 0 then
+            self.gitsign = nil
+          else
+            self.gitsign = unpack(self.g_sns)
+          end
+          self.has_gitsign = self.gitsign ~= nil
+        end,
+        provider = function(self)
+          if self.has_gitsign then return self.gitsign[1] end
+          return ' '
+        end,
+        hl = function(self)
+          if self.has_gitsign then return self.gitsign[2] end
+          return 'HeirlineStatusColumn'
+        end,
+        on_click = {
+          name = 'gitsigns_click',
+          callback = function(self, ...)
+            if self.handlers.git_signs then self.handlers.git_signs(self.click_args(self, ...)) end
+          end,
+        },
+      },
+    },
+    {
+      init = function(self) self.is_wrap = self.ln:gsub('^%s*(.-)%s*$', '%1') == '' end,
+      provider = function(self)
+        if not self.is_wrap then return separator end
+        return ''
+      end,
+      hl = 'LineNr',
+    },
+    {
+      condition = function() return v.virtnum == 0 end,
+      init = function(self)
+        self.lnum = v.lnum
+        self.folded = fn.foldlevel(self.lnum) > fn.foldlevel(self.lnum - 1)
+      end,
+      {
+        condition = function(self) return self.folded end,
+        {
+          provider = function(self)
+            if fn.foldclosed(self.lnum) == -1 then return fcs.foldopen end
+          end,
+        },
+        {
+          provider = function(self)
+            if fn.foldclosed(self.lnum) ~= -1 then return fcs.foldclose end
+          end,
+        },
+      },
+      {
+        condition = function(self) return not self.folded end,
+        provider = ' ',
+      },
+      on_click = {
+        name = 'fold_click',
+        callback = function(self, ...)
+          if self.handlers.fold then self.handlers.fold(self.click_args(self, ...)) end
+        end,
+      },
+    },
+    spacer,
   },
 }
