@@ -272,7 +272,7 @@ return {
       callback = vim.schedule_wrap(function() vim.cmd('redrawstatus') end),
     },
     {
-      provider = block,
+      provider = function() return block() .. ' ' end,
       hl = function(self) return { fg = self.mode_color, bg = bg } end,
     },
   },
@@ -283,7 +283,7 @@ return {
       {
         provider = function(self)
           if self.status_dict then
-            return '  ' --
+            return ' ' --
               .. (self.status_dict.head == '' and 'main' or self.status_dict.head)
               .. ' '
           end
@@ -569,6 +569,10 @@ return {
     hl = { fg = colors.comment, bg = bg, bold = true },
   },
   scroll_bar = {
+    init = function(self)
+      self.mode = vim.fn.mode(1)
+      self.mode_color = mode_colors[self.mode:sub(1, 1)]
+    end,
     provider = function()
       local current_line = vim.fn.line('.')
       local total_lines = vim.fn.line('$')
@@ -577,6 +581,6 @@ return {
       local index = math.ceil(line_ratio * #chars)
       return '  ' .. chars[index]
     end,
-    hl = { fg = colors.pale_red, bg = bg },
+    hl = function(self) return { fg = self.mode_color, bg = bg } end,
   },
 }
