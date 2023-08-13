@@ -167,6 +167,7 @@ local save_excluded = {
   'lua.luapad',
   'gitcommit',
   'NeogitCommitMessage',
+  'DiffviewFiles',
 }
 local function can_save()
   return falsy(vim.bo.buftype)
@@ -228,7 +229,7 @@ rvim.augroup('Utilities', {
   event = { 'DirChanged', 'VimEnter' },
   command = function()
     if fn.getcwd() == vim.fn.stdpath('config') then
-      vim.keymap.set('n', 'gx', function()
+      map('n', 'gx', function()
         local file = fn.expand('<cfile>')
         if not file or fn.isdirectory(file) > 0 then return vim.cmd.edit(file) end
         if file:match('http[s]?://') then return rvim.open(file) end
@@ -238,6 +239,19 @@ rvim.augroup('Utilities', {
         local link = string.match(file, plugin_url_regex)
         if link then return rvim.open(fmt('https://www.github.com/%s', link)) end
       end)
+    end
+  end,
+}, {
+  event = { 'BufEnter' },
+  command = function(args)
+    if vim.bo[args.buf].filetype ~= 'DiffviewFiles' then
+      map(
+        'n',
+        'Q',
+        function()
+          vim.cmd('lua require("neogit.integrations.diffview").diffview_mappings["close"]()')
+        end
+      )
     end
   end,
 })

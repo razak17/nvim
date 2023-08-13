@@ -1,5 +1,7 @@
 local cwd = vim.fn.getcwd()
-local icons = rvim.ui.icons.separators
+local icons = rvim.ui.icons
+local border = rvim.ui.current.border
+local left_block = icons.separators.left_block
 
 return {
   {
@@ -107,21 +109,22 @@ return {
     event = { 'BufReadPre', 'BufNewFile' },
     opts = {
       signs = {
-        add = { highlight = 'GitSignsAdd', text = icons.left_block },
-        change = { highlight = 'GitSignsChange', text = icons.left_block },
-        delete = { highlight = 'GitSignsDelete', text = rvim.ui.icons.misc.triangle_short },
-        topdelete = { highlight = 'GitSignsChangeDelete', text = icons.left_block },
-        changedelete = { highlight = 'GitSignsChange', text = icons.left_block },
-        untracked = { highlight = 'GitSignsAdd', text = icons.left_block },
+        add = { highlight = 'GitSignsAdd', text = left_block },
+        change = { highlight = 'GitSignsChange', text = left_block },
+        delete = { highlight = 'GitSignsDelete', text = icons.misc.triangle_short },
+        topdelete = { highlight = 'GitSignsChangeDelete', text = left_block },
+        changedelete = { highlight = 'GitSignsChange', text = left_block },
+        untracked = { highlight = 'GitSignsAdd', text = left_block },
       },
       _threaded_diff = true,
       _extmark_signs = true,
       _signs_staged_enable = true,
       word_diff = false,
       numhl = false,
+      ---@diagnostic disable-next-line: need-check-nil
       current_line_blame = not cwd:match('personal') and not cwd:match('dots'),
       current_line_blame_formatter = ' <author>, <author_time> · <summary>',
-      preview_config = { border = rvim.ui.current.border },
+      preview_config = { border = border },
       on_attach = function(bufnr)
         local gs = package.loaded.gitsigns
 
