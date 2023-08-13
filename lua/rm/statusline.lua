@@ -179,6 +179,18 @@ local file_type = {
   hl = { fg = fg, bg = bg },
 }
 
+local function progress()
+  local cur = vim.fn.line('.')
+  local total = vim.fn.line('$')
+  if cur == 1 then
+    return 'Top'
+  elseif cur == total then
+    return 'Bot'
+  else
+    return string.format('%2d%%%%', math.floor(cur / total * 100))
+  end
+end
+
 local function ts_active()
   local b = api.nvim_get_current_buf()
   if next(vim.treesitter.highlighter.active[b]) then return ' ' end
@@ -384,7 +396,7 @@ return {
   },
   package_info = {
     condition = function() return fn.expand('%') == 'package.json' end,
-    provider = function() return stl_package_info() end,
+    provider = stl_package_info,
     hl = { fg = colors.comment, bg = bg },
     on_click = {
       callback = function() require('package_info').toggle() end,
@@ -430,7 +442,7 @@ return {
     },
   },
   lazy_updates = {
-    provider = function() return lazy_updates() end,
+    provider = lazy_updates,
     hl = { fg = colors.orange, bg = bg },
     on_click = {
       callback = function() require('lazy').update() end,
@@ -491,12 +503,12 @@ return {
       local session = require('dap').session()
       return session ~= nil
     end,
-    provider = function() return '  ' end,
+    provider = '  ',
     on_click = {
       callback = function() require('dap').continue() end,
       name = 'dap_continue',
     },
-    hl = { fg = colors.red },
+    hl = { fg = colors.red, bg = bg },
   },
   file_type = utils.insert(file_block, file_icon, file_type),
   file_encoding = {
@@ -565,8 +577,8 @@ return {
     },
   },
   ruler = {
-    provider = '  %7(%l/%3L%):%2c %P',
-    hl = { fg = colors.comment, bg = bg, bold = true },
+    provider = function() return '  %7(%l/%3L%):%2c ' .. progress() end,
+    hl = { fg = colors.fg, bg = bg },
   },
   scroll_bar = {
     init = function(self)
@@ -576,10 +588,10 @@ return {
     provider = function()
       local current_line = vim.fn.line('.')
       local total_lines = vim.fn.line('$')
-      local chars = { '█', '▇', '▆', '▅', '▄', '▃', '▂', '▁' }
+      local chars = { '▁', '▂', '▃', '▄', '▅', '▆', '▇', '█' }
       local line_ratio = current_line / total_lines
       local index = math.ceil(line_ratio * #chars)
-      return '  ' .. chars[index]
+      return ' ' .. chars[index]
     end,
     hl = function(self) return { fg = self.mode_color, bg = bg } end,
   },
