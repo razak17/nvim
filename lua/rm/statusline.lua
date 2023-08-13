@@ -566,7 +566,7 @@ return {
   },
   ruler = {
     provider = '  %7(%l/%3L%):%2c %P',
-    hl = { fg = colors.pale_red, bg = bg, bold = true },
+    hl = { fg = colors.comment, bg = bg, bold = true },
   },
   scroll_bar = {
     provider = function()
