@@ -484,6 +484,27 @@ return {
     },
   },
   {
+    'razak17/executor.nvim',
+    keys = {
+      { '<localleader>xc', '<cmd>ExecutorRun<CR>', desc = 'executor: start' },
+      { '<localleader>xs', '<cmd>ExecutorSetCommand<CR>', desc = 'executor: set command' },
+      { '<localleader>xd', '<cmd>ExecutorToggleDetail<CR>', desc = 'executor: toggle detail' },
+      { '<localleader>xr', '<cmd>ExecutorReset<CR>', desc = 'executor: reset status' },
+      { '<localleader>xp', '<cmd>ExecutorShowPresets<CR>', desc = 'executor: show presets' },
+    },
+    opts = {
+      notifications = {
+        task_started = true,
+        task_completed = true,
+      },
+      preset_commands = {
+        ['custom-website'] = {
+          'npm run dev',
+        },
+      },
+    },
+  },
+  {
     'ahmedkhalf/project.nvim',
     enabled = not rvim.plugins.minimal,
     event = 'VimEnter',
