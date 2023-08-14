@@ -505,6 +505,10 @@ return {
     },
   },
   {
+    'ThePrimeagen/vim-be-good',
+    cmd = 'VimBeGood',
+  },
+  {
     'ahmedkhalf/project.nvim',
     enabled = not rvim.plugins.minimal,
     event = 'VimEnter',
