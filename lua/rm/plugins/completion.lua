@@ -80,6 +80,7 @@ return {
         },
         sorting = {
           comparators = {
+            require('copilot_cmp.comparators').prioritize,
             cmp.config.compare.offset,
             cmp.config.compare.exact,
             cmp.config.compare.score,
@@ -142,6 +143,9 @@ return {
             if entry.source.name == 'crates' then
               vim_item.kind = format_icon(ui.codicons.misc.package)
             end
+            if entry.source.name == 'copilot' then
+              vim_item.kind = format_icon(ui.codicons.misc.octoface)
+            end
 
             if vim_item.kind == 'Color' then
               if entry.completion_item.documentation then
@@ -171,6 +175,7 @@ return {
               rg = '[RG]',
               norg = '[NORG]',
               cmdline = '[CMD]',
+              copilot = '[CPL]',
               cmdline_history = '[HIST]',
               crates = '[CRT]',
               treesitter = '[TS]',
@@ -182,7 +187,16 @@ return {
           end,
         },
         sources = {
-          { name = 'nvim_lsp', priority = 10, group_index = 1 },
+          {
+            name = 'copilot',
+            priority = 11,
+            group_index = 1,
+          },
+          {
+            name = 'nvim_lsp',
+            priority = 10,
+            group_index = 1,
+          },
           { name = 'luasnip', priority = 9, group_index = 1 },
           {
             name = 'rg',
@@ -295,6 +309,23 @@ return {
           })
         end,
       },
+      {
+        'zbirenbaum/copilot-cmp',
+        dependencies = 'copilot.lua',
+        event = 'LspAttach',
+        opts = {},
+        config = function(_, opts)
+          local copilot_cmp = require('copilot_cmp')
+          copilot_cmp.setup(opts)
+
+          vim.api.nvim_create_autocmd('LspAttach', {
+            callback = function(args)
+              local client = vim.lsp.get_client_by_id(args.data.client_id)
+              if client and client.name == 'copilot' then copilot_cmp._on_insert_enter({}) end
+            end,
+          })
+        end,
+      },
     },
   },
   {
@@ -306,8 +337,10 @@ return {
       { '<leader>at', '<Cmd>Copilot toggle<CR>', desc = 'copilot: toggle' },
     },
     opts = {
+      panel = { enabled = false },
       suggestion = {
-        auto_trigger = true,
+        enabled = true,
+        auto_trigger = false,
         keymap = {
           accept_word = '<M-w>',
           accept_line = '<M-l>',
