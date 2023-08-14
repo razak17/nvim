@@ -74,6 +74,18 @@ return {
     },
   },
   {
+    'tjdevries/sPoNGe-BoB.NvIm',
+    keys = {
+      { '<localleader>ab', '<cmd>SpOnGeBoBtOgGlE<CR>', desc = 'SpOnGeBoB: toggle' },
+      {
+        '<localleader>ab',
+        '<cmd>SpOnGeBoBiFy<CR>',
+        mode = { 'v' },
+        desc = 'SpOnGeBoB: SpOnGeBoBiFy',
+      },
+    },
+  },
+  {
     'tamton-aquib/zone.nvim',
     enabled = false,
     event = 'VeryLazy',
