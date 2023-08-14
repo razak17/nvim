@@ -216,8 +216,12 @@ return {
       },
     },
     {
-      init = function(self) self.is_wrap = self.ln:gsub('^%s*(.-)%s*$', '%1') == '' end,
+      init = function(self)
+        self.is_wrap = self.ln:gsub('^%s*(.-)%s*$', '%1') == ''
+        self.is_shade = self.ln:gsub('^%s*(.-)%s*$', '%1') == shade
+      end,
       provider = function(self)
+        if self.is_shade then return '' end
         if not self.is_wrap then return separator end
         return ''
       end,
