@@ -44,6 +44,7 @@ return {
         w = { name = 'Winbar' },
       },
       ['<localleader>'] = {
+        a = { name = 'Actions' },
         c = { name = 'Conceal' },
         d = { name = 'Dap' },
         db = { name = 'Breakpoint' },
@@ -54,6 +55,8 @@ return {
         n = { name = 'Neorg' },
         o = { name = 'Obsidian' },
         r = { name = 'Rest' },
+        t = { name = 'Slime' },
+        x = { name = 'Executor' },
         z = { name = 'Zen' },
       },
     })
