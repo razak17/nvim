@@ -520,6 +520,20 @@ return {
     },
   },
   {
+    'chrisgrieser/nvim-genghis',
+    dependencies = 'stevearc/dressing.nvim',
+    event = { 'BufReadPost', 'BufNewFile' },
+    config = function()
+      local g = require('genghis')
+      map('n', '<localleader>fp', g.copyFilepath, { desc = 'genghis: yank filepath' })
+      map('n', '<localleader>fn', g.copyFilename, { desc = 'genghis: yank filename' })
+      map('n', '<localleader>fr', g.renameFile, { desc = 'genghis: rename file' })
+      map('n', '<localleader>fm', g.moveAndRenameFile, { desc = 'genghis: move and rename' })
+      map('n', '<localleader>fc', g.createNewFile, { desc = 'genghis: create new file' })
+      map('n', '<localleader>fd', g.duplicateFile, { desc = 'genghis: duplicate current file' })
+    end,
+  },
+  {
     'razak17/lab.nvim',
     enabled = not rvim.plugins.minimal,
     event = { 'BufReadPre', 'BufNewFile' },

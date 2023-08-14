@@ -48,6 +48,7 @@ return {
         d = { name = 'Dap' },
         db = { name = 'Breakpoint' },
         g = { name = 'Git' },
+        f = { name = 'Genghis' },
         h = { name = 'Harpoon' },
         l = { name = 'Lsp' },
         n = { name = 'Neorg' },
