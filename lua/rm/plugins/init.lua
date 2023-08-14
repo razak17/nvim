@@ -289,18 +289,34 @@ return {
     },
   },
   {
+    'folke/twilight.nvim',
+    enabled = rvim.treesitter.enable and not rvim.plugins.minimal,
+    cmd = 'Twilight',
+    keys = {
+      { '<localleader>zt', '<cmd>Twilight<CR>', desc = 'Twilight toggle' },
+    },
+    opts = {
+      dimming = {
+        alpha = 0.45,
+        inactive = true,
+      },
+      context = 40,
+      exclude = { 'alpha', 'git' },
+    },
+  },
+  {
     'echasnovski/mini.surround',
     keys = { { 'ys', desc = 'add surrounding' }, 'ds', { 'yr', desc = 'delete surrounding' } },
     config = function()
       require('mini.surround').setup({
         mappings = {
-          add = 'ys', -- Add surrounding in Normal and Visual modes
-          delete = 'ds', -- Delete surrounding
-          find = 'yf', -- Find surrounding (to the right)
-          find_left = 'yF', -- Find surrounding (to the left)
-          highlight = 'yh', -- Highlight surrounding
-          replace = 'yr', -- Replace surrounding
-          update_n_lines = 'yn', -- Update `n_lines`
+          add = 'ys',
+          delete = 'ds',
+          find = 'yf',
+          find_left = 'yF',
+          highlight = 'yh',
+          replace = 'yr',
+          update_n_lines = 'yn',
         },
       })
     end,
