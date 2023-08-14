@@ -211,7 +211,6 @@ return {
           fzf_opts = {
             ['--keep-right'] = '',
           },
-          rg_opts = '--column --line-number --no-heading --color=always --smart-case --hidden --max-columns=4096 -e',
         },
         lsp = {
           cwd_only = true,
