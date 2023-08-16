@@ -22,9 +22,9 @@ local api, notify, fmt, augroup = vim.api, vim.notify, string.format, rvim.augro
 
 ---@class HLArgs
 ---@field blend integer?
----@field fg string | HLAttrs?
----@field bg string | HLAttrs?
----@field sp string | HLAttrs?
+---@field fg (string | HLAttrs)?
+---@field bg (string | HLAttrs)?
+---@field sp (string | HLAttrs)?
 ---@field bold boolean?
 ---@field italic boolean?
 ---@field undercurl boolean?
