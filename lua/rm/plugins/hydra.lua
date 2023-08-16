@@ -1,5 +1,5 @@
 return {
-  'anuvyklack/hydra.nvim',
+  'smoka7/hydra.nvim',
   enabled = not rvim.plugins.minimal,
   event = 'VeryLazy',
   config = function()
