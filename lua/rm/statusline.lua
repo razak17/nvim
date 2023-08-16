@@ -479,7 +479,7 @@ return {
   },
   copilot_attached = {
     condition = function() return rvim.ai.enable and not rvim.plugins.minimal end,
-    provider = '  ',
+    provider = ' ' .. codicons.misc.octoface .. ' ',
     hl = { fg = colors.forest_green, bg = bg },
     on_click = {
       callback = function()
@@ -504,7 +504,7 @@ return {
       local session = require('dap').session()
       return session ~= nil
     end,
-    provider = '  ',
+    provider = ' ' .. codicons.misc.bug .. ' ',
     on_click = {
       callback = function() require('dap').continue() end,
       name = 'dap_continue',
