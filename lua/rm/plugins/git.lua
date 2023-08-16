@@ -71,6 +71,11 @@ return {
       { '<localleader>gd', '<Cmd>DiffviewOpen<CR>', desc = 'diffview: open' },
       { 'gh', [[:'<'>DiffviewFileHistory<CR>]], desc = 'diffview: file history', mode = 'v' },
       { '<localleader>gh', '<Cmd>DiffviewFileHistory<CR>', desc = 'diffview: file history' },
+      {
+        '<localleader>gx',
+        '<cmd>set hidden<cr><cmd>DiffviewClose<cr><cmd>set nohidden<cr>',
+        desc = 'diffview: close all buffers',
+      },
     },
     opts = {
       default_args = { DiffviewFileHistory = { '%' } },
