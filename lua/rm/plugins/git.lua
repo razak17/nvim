@@ -3,6 +3,16 @@ local icons = rvim.ui.icons
 local border = rvim.ui.current.border
 local left_block = icons.separators.left_block
 
+---@generic T:table<string, any>
+---@param t T the object to format
+---@param k string the key to format
+---@return T?
+local function format_text(t, k)
+  local txt = t[k] and t[k]:gsub('%s', '') or ''
+  if #txt < 1 then return end
+  t[k] = txt
+  return t
+end
 return {
   {
     'NeogitOrg/neogit',
@@ -167,6 +177,39 @@ return {
         map('n', '<leader>hx', '<Cmd>Gitsigns refresh<CR>', { desc = 'refresh' })
       end,
     },
+    config = function(_, opts)
+      rvim.augroup('GitSignsRefreshCustom', {
+        event = { 'FocusGained', 'InsertEnter', 'BufEnter' },
+        command = function(args)
+          local decs = rvim.ui.decorations.get({
+            ft = vim.bo.ft,
+            bt = vim.bo.bt,
+            setting = 'statuscolumn',
+          })
+          if decs and decs.ft == false or decs and decs.bt == false then return end
+
+          local lnum = vim.v.lnum
+          local signs = vim.api.nvim_buf_get_extmarks(
+            args.buf,
+            -1,
+            { lnum, 0 },
+            { lnum, -1 },
+            { details = true, type = 'sign' }
+          )
+          local sns = vim
+            .iter(signs)
+            :map(function(item) return format_text(item[4], 'sign_text') end)
+            :fold({}, function(_, item) return item.sign_hl_group end)
+          if sns ~= 'GitSignsStagedAdd' then return end
+
+          vim.defer_fn(function()
+            vim.cmd('silent! lua require("gitsigns").refresh()')
+            vim.notify('gitsigns refreshed', 'info', { title = 'gitsigns' })
+          end, 100)
+        end,
+      })
+      require('gitsigns').setup(opts)
+    end,
   },
   {
     'almo7aya/openingh.nvim',
