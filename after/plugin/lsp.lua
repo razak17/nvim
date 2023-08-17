@@ -391,7 +391,7 @@ diagnostic.config({
     title = { { '  ', 'DiagnosticFloatTitleIcon' }, { 'Problems  ', 'DiagnosticFloatTitle' } },
     focusable = false,
     scope = 'cursor',
-    source = 'if_many',
+    source = 'always',
     prefix = function(diag)
       local level = diagnostic.severity[diag.severity]
       local prefix = fmt('%s ', icons[level:lower()])
