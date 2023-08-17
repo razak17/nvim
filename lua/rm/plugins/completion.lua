@@ -220,7 +220,7 @@ return {
             name = 'buffer',
             priority = 3,
             options = { get_bufnrs = function() return vim.api.nvim_list_bufs() end },
-            group_index = 2,
+            group_index = 1,
           },
           {
             name = 'spell',
@@ -341,7 +341,7 @@ return {
       panel = { enabled = false },
       suggestion = {
         enabled = true,
-        auto_trigger = false,
+        auto_trigger = true,
         keymap = {
           accept_word = '<M-w>',
           accept_line = '<M-l>',
