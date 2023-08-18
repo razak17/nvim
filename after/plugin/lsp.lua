@@ -86,21 +86,11 @@ end
 ---@param client lsp.Client
 ---@param bufnr integer
 local function setup_mappings(client, bufnr)
-  local function prev_diagnostic(lvl)
-    return function()
-      diagnostic.goto_prev({
-        float = not rvim.lsp.hover_diagnostics.enable,
-        severity = { min = lvl },
-      })
-    end
+  local function prev_diagnostic()
+    return function() diagnostic.goto_prev({ float = not rvim.lsp.hover_diagnostics.enable }) end
   end
-  local function next_diagnostic(lvl)
-    return function()
-      diagnostic.goto_next({
-        float = not rvim.lsp.hover_diagnostics.enable,
-        severity = { min = lvl },
-      })
-    end
+  local function next_diagnostic()
+    return function() diagnostic.goto_next({ float = not rvim.lsp.hover_diagnostics.enable }) end
   end
   local function line_diagnostic()
     return function()
