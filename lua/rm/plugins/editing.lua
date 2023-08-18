@@ -278,8 +278,8 @@ return {
       vim.api.nvim_create_autocmd('User', {
         pattern = {
           'www.reddit.com',
-          'www.stackoverflow.com',
           'www.github.com',
+          'www.protectedtext.com',
           '*github.com',
         },
         command = 'setfiletype markdown',
