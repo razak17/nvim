@@ -465,6 +465,11 @@ return {
       hl = function() return { bg = bg, fg = fg } end,
     },
   },
+  word_count = {
+    condition = function() return vim.bo.filetype == 'markdown' end,
+    provider = function() return tostring(vim.fn.wordcount().words) .. ' words' end,
+    hl = { fg = fg, bg = bg },
+  },
   lsp_clients = {
     condition = conditions.lsp_attached,
     update = { 'LspAttach', 'LspDetach', 'WinEnter' },

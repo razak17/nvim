@@ -36,6 +36,7 @@ return {
           statusline.git_diff,
           statusline.lazy_updates,
           statusline.search_results,
+          statusline.word_count,
           statusline.lsp_clients,
           statusline.copilot_attached,
           statusline.copilot_status,
@@ -68,7 +69,6 @@ return {
           init = statuscolumn.init,
           statuscolumn.render,
         },
-
       })
     end,
   },
