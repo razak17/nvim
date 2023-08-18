@@ -269,4 +269,22 @@ return {
       'nvim-telescope/telescope.nvim',
     },
   },
+  {
+    'subnut/nvim-ghost.nvim',
+    lazy = false,
+    event = { 'BufReadPost', 'BufNewFile' },
+    config = function()
+      vim.api.nvim_create_augroup('nvim_ghost_user_autocommands', { clear = false })
+      vim.api.nvim_create_autocmd('User', {
+        pattern = {
+          'www.reddit.com',
+          'www.stackoverflow.com',
+          'www.github.com',
+          '*github.com',
+        },
+        command = 'setfiletype markdown',
+        group = 'nvim_ghost_user_autocommands',
+      })
+    end,
+  },
 }
