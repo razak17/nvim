@@ -32,6 +32,7 @@
   "diagflow.nvim": { "branch": "main", "commit": "dafd9d4a76bd97a17dc7ea6d2f1a2675c65324e5" },
   "dial.nvim": { "branch": "master", "commit": "c6657df5453a6cbe4e8356e1675e9652cadc332f" },
   "diffview.nvim": { "branch": "main", "commit": "db97e667e03294bfa9f15e544e78f3082247bf79" },
+  "dmap.nvim": { "branch": "main", "commit": "d2fba6bcf2594c89cd91026ed132db44709fa8a5" },
   "dressing.nvim": { "branch": "master", "commit": "6bde51adabba06f7fd4a469885a85f36d78a5f52" },
   "dropbar.nvim": { "branch": "master", "commit": "b00ede8cbde4129249ce2476fed657fe3293edb7" },
   "flash.nvim": { "branch": "main", "commit": "967117690bd677cb7b6a87f0bc0077d2c0be3a27" },

@@ -220,6 +220,7 @@ return {
       toggle_event = { 'InsertEnter' },
     },
   },
+  { 'doums/dmap.nvim', event = 'LspAttach', opts = { win_h_offset = 4 } },
   -- }}}
   ----------------------------------------------------------------------------------------------------
   -- Utilities {{{1
