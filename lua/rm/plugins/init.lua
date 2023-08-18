@@ -242,7 +242,7 @@ return {
   },
   {
     'smoka7/multicursors.nvim',
-    enabled = not rvim.plugins.minimal,
+    enabled = not rvim.plugins.minimal and rvim.treesitter.enable,
     event = 'VeryLazy',
     dependencies = { 'nvim-treesitter/nvim-treesitter', 'smoka7/hydra.nvim' },
     opts = {
