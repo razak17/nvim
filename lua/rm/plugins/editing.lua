@@ -333,6 +333,19 @@ return {
         ['<localleader>qp'] = 'neocomposer: cycle prev',
         ['<localleader>qm'] = 'neocomposer: toggle menu',
       })
+      require('which-key').register({
+        qq = 'neocomposer: play macro',
+      }, { mode = 'x', prefix = '<localleader>' })
     end,
+  },
+  {
+    'haolian9/nag.nvim',
+    event = 'VeryLazy',
+    dependencies = { 'haolian9/infra.nvim' },
+    keys = {
+      { mode = 'x', '<localleader>nv', ":lua require'nag'.vsplit()<CR>", desc = 'nag: vsplit' },
+      { mode = 'x', '<localleader>ns', ":lua require'nag'.split()<CR>", desc = 'nag: split' },
+      { mode = 'x', '<localleader>nt', ":lua require'nag'.tab()<CR>", desc = 'nag: tab' },
+    },
   },
 }
