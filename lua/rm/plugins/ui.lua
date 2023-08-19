@@ -379,8 +379,21 @@ return {
     end,
   },
   {
+    'echasnovski/mini.indentscope',
+    event = 'BufRead',
+    version = '*',
+    init = function()
+      highlight.plugin('mini-indentscope', {
+        { MiniIndentscopeSymbol = { inherit = 'IndentBlanklineContextChar' } },
+        { MiniIndentscopeSymbolOff = { inherit = 'IndentBlanklineChar' } },
+      })
+    end,
+    opts = { symbol = separators.left_thin_block },
+  },
+  {
     'lukas-reineke/indent-blankline.nvim',
-    enabled = rvim.treesitter.enable and not rvim.plugins.minimal,
+    -- enabled = rvim.treesitter.enable and not rvim.plugins.minimal,
+    enabled = false,
     event = 'BufRead',
     opts = {
       char = separators.left_thin_block,
