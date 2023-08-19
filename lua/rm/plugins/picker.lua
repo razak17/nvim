@@ -95,6 +95,7 @@ return {
   {
     'ibhagwan/fzf-lua',
     cmd = 'FzfLua',
+    enabled = false,
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     keys = {
       { '<c-p>', git_files_cwd_aware, desc = 'find files' },
@@ -118,7 +119,7 @@ return {
       { '<leader>fgc', fzf_lua.git_commits, desc = 'commits' },
       { '<leader>ld', fzf_lua.lsp_document_symbols, desc = 'document symbols' },
       { '<leader>lI', fzf_lua.lsp_implementations, desc = 'search implementation' },
-      { '<leader>lR', fzf_lua.lsp_references, desc = 'show reference' },
+      { '<leader>lR', fzf_lua.lsp_references, desc = 'show references' },
       { '<leader>ls', fzf_lua.lsp_live_workspace_symbols, desc = 'workspace symbols' },
       { '<leader>le', fzf_lua.diagnostics_document, desc = 'document diagnostics' },
       { '<leader>lw', fzf_lua.diagnostics_workspace, desc = 'workspace diagnostics' },

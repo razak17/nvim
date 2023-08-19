@@ -34,6 +34,45 @@ rvim.telescope = {
 
 local function extensions(name) return require('telescope').extensions[name] end
 
+local function delta_opts(opts, is_buf)
+  local previewers = require('telescope.previewers')
+  local delta = previewers.new_termopen_previewer({
+    get_command = function(entry)
+      local args = {
+        'git',
+        '-c',
+        'core.pager=delta',
+        '-c',
+        'delta.side-by-side=false',
+        'diff',
+        entry.value .. '^!',
+      }
+      if is_buf then vim.list_extend(args, { '--', entry.current_file }) end
+      return args
+    end,
+  })
+  opts = opts or {}
+  opts.previewer = { delta, previewers.git_commit_message.new(opts) }
+  return opts
+end
+
+local function live_grep(opts) return extensions('menufacture').live_grep(opts) end
+local function find_files(opts) return extensions('menufacture').find_files(opts) end
+local function git_files(opts) return extensions('menufacture').git_files(opts) end
+
+local function nvim_config()
+  find_files({
+    prompt_title = '~ rVim config ~',
+    cwd = vim.fn.stdpath('config'),
+    file_ignore_patterns = { '.git/.*', 'dotbot/.*', 'zsh/plugins/.*' },
+  })
+end
+
+local function project_files()
+  if not pcall(git_files, { show_untracked = true }) then find_files() end
+end
+
+local function frecency() extensions('frecency').frecency(dropdown(rvim.telescope.minimal_ui())) end
 local function luasnips() extensions('luasnip').luasnip(dropdown()) end
 local function notifications() extensions('notify').notify(dropdown()) end
 local function undo() extensions('undo').undo() end
@@ -43,6 +82,18 @@ local function harpoon()
 end
 local function textcase()
   extensions('textcase').normal_mode(rvim.telescope.minimal_ui({ prompt_title = 'Text Case' }))
+end
+
+local function builtin() return require('telescope.builtin') end
+
+local function delta_git_commits(opts) builtin().git_commits(delta_opts(opts)) end
+local function delta_git_bcommits(opts) builtin().git_bcommits(delta_opts(opts, true)) end
+
+---@param opts? table
+---@return function
+local function b(picker, opts)
+  opts = opts or {}
+  return function() require('telescope.builtin')[picker](opts) end
 end
 
 local function stopinsert(callback)
@@ -72,12 +123,40 @@ return {
     'nvim-telescope/telescope.nvim',
     cmd = 'Telescope',
     keys = {
+      { '<c-p>', find_files, desc = 'find files' },
+      { '<leader>f?', b('help_tags'), desc = 'help tags' },
+      { '<leader>fa', b('builtin', { include_extensions = true }), desc = 'builtins' },
+      { '<leader>fb', b('current_buffer_fuzzy_find'), desc = 'find in current buffer' },
+      { '<leader>fc', nvim_config, desc = 'nvim config' },
+      { '<leader>ff', project_files, desc = 'project files' },
+      { '<leader>fh', frecency, desc = 'Most (f)recently used files' },
       { '<leader>fL', luasnips, desc = 'luasnip: available snippets' },
       { '<leader>fn', notifications, desc = 'notify: notifications' },
+      { '<leader>fo', b('buffers'), desc = 'buffers' },
       { '<leader>fp', projects, desc = 'projects' },
+      { '<leader>fr', b('resume'), desc = 'resume last picker' },
+      { '<leader>fs', live_grep, desc = 'find string' },
       { '<leader>fu', undo, desc = 'undo' },
       -- { '<leader>fH', harpoon, desc = 'harpoon' },
       -- { '<leader>ft', textcase, desc = 'textcase', mode = { 'n', 'v' } },
+      { '<leader>fw', b('grep_string'), desc = 'find word' },
+      { '<leader>fva', b('autocommands'), desc = 'autocommands' },
+      { '<leader>fvh', b('highlights'), desc = 'highlights' },
+      { '<leader>fvk', b('keymaps'), desc = 'autocommands' },
+      { '<leader>fvo', b('vim_options'), desc = 'vim options' },
+      { '<leader>fvr', b('registers'), desc = 'registers' },
+      -- Git
+      { '<leader>gs', b('git_status'), desc = 'git status' },
+      { '<leader>fgb', b('git_branches'), desc = 'git branches' },
+      { '<leader>fgB', delta_git_bcommits, desc = 'buffer commits' },
+      { '<leader>fgc', delta_git_commits, desc = 'commits' },
+      -- LSP
+      { '<leader>ld', b('lsp_document_symbols'), desc = 'telescope: document symbols' },
+      { '<leader>lI', b('lsp_implementations'), desc = 'telescope: search implementation' },
+      { '<leader>lR', b('lsp_references'), desc = 'telescope: show references' },
+      { '<leader>ls', b('lsp_dynamic_workspace_symbols'), desc = 'telescope: workspace symbols' },
+      { '<leader>le', b('diagnostics', { bufnr = 0 }), desc = 'telescope: document diagnostics' },
+      { '<leader>lw', b('diagnostics'), desc = 'telescope: workspace diagnostics' },
     },
     config = function()
       local previewers = require('telescope.previewers')
@@ -89,7 +168,7 @@ return {
       require('telescope').setup({
         defaults = {
           prompt_prefix = fmt(' %s  ', ui.codicons.misc.search_alt),
-          selection_caret = ' ▶ ',
+          selection_caret = fmt(' %s ', ui.codicons.misc.pick),
           cycle_layout_list = { 'flex', 'horizontal', 'vertical', 'bottom_pane', 'center' },
           sorting_strategy = 'ascending',
           layout_strategy = 'flex',
@@ -204,6 +283,7 @@ return {
       require('telescope').load_extension('undo')
       require('telescope').load_extension('menufacture')
       require('telescope').load_extension('notify')
+      require('telescope').load_extension('file_browser')
       -- require('telescope').load_extension('textcase')
       if not rvim.plugins.minimal then
         require('telescope').load_extension('persisted')
@@ -218,6 +298,7 @@ return {
       'nvim-telescope/telescope-frecency.nvim',
       'debugloop/telescope-undo.nvim',
       'molecule-man/telescope-menufacture',
+      'nvim-telescope/telescope-file-browser.nvim',
     },
   },
 }
