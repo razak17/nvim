@@ -18,7 +18,7 @@ return {
         },
         context_commentstring = { enable = true, enable_autocmd = false },
         incremental_selection = {
-          enable = true,
+          enable = false,
           disable = { 'help' },
           keymaps = {
             init_selection = '<CR>', -- maps in normal mode to init the node/scope selection
@@ -129,5 +129,11 @@ return {
         { MatchParenOffscreen = { link = 'CursorLineNr' } },
       })
     end,
+  },
+  {
+    'sustech-data/wildfire.nvim',
+    event = 'VeryLazy',
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
+    opts = {},
   },
 }
