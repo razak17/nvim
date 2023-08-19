@@ -51,7 +51,6 @@
   "hydra.nvim": { "branch": "master", "commit": "ceb1fb7e3b4916676674e8a4253deea5a19ab01f" },
   "inc-rename.nvim": { "branch": "main", "commit": "ed0f6f2b917cac4eb3259f907da0a481b27a3b7e" },
   "indent-blankline.nvim": { "branch": "master", "commit": "4541d690816cb99a7fc248f1486aa87f3abce91c" },
-  "inline-fold.nvim": { "branch": "main", "commit": "d0a24dd55c2fe9477e2636a589499fb7d530e9a3" },
   "iswap.nvim": { "branch": "master", "commit": "8213a12857de8d757311b7edc0bf1578e9a58b27" },
   "jaq-nvim": { "branch": "master", "commit": "236296aae555657487d1bb4d066cbde9d79d8cd4" },
   "lazy.nvim": { "branch": "main", "commit": "dac844ed617dda4f9ec85eb88e9629ad2add5e05" },
