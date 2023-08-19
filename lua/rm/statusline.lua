@@ -582,6 +582,13 @@ return {
       hl = { bg = bg, fg = colors.blue },
     },
   },
+  macro_rec = {
+    condition = function() return require('NeoComposer.state') end,
+    init = function(self) self.rec = require('NeoComposer.ui').status_recording() end,
+    provider = function(self)
+      if self.rec ~= '' then return '  ' .. self.rec end
+    end,
+  },
   ruler = {
     provider = function() return '  %7(%l/%3L%):%2c ' .. progress() end,
     hl = { fg = colors.fg, bg = bg },

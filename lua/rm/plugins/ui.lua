@@ -105,6 +105,7 @@ return {
   },
   {
     'tzachar/highlight-undo.nvim',
+    enabled = not rvim.plugins.minimal,
     event = 'BufRead',
     opts = {
       undo = { hlgroup = 'Search' },
@@ -380,6 +381,7 @@ return {
   },
   {
     'echasnovski/mini.indentscope',
+    enabled = not rvim.plugins.minimal,
     event = 'BufRead',
     version = false,
     init = function()
