@@ -771,13 +771,10 @@ return {
     end,
   },
   {
-    'malbertzard/inline-fold.nvim', -- Optional
-    enabled = rvim.treesitter.enable and not rvim.plugins.minimal,
+    'razak17/tailwind-fold.nvim',
+    opts = { min_chars = 2 },
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
     ft = { 'html', 'svelte', 'astro', 'vue', 'typescriptreact' },
-    keys = { { '<leader>of', '<Cmd>InlineFoldToggle<CR>', desc = 'toggle css fold' } },
-    opts = {
-      placeholder = '…',
-    },
   },
   {
     'MaximilianLloyd/tw-values.nvim',
