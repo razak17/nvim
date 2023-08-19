@@ -380,7 +380,7 @@ return {
     end,
   },
   {
-    'echasnovski/mini.indentscope',
+    'razak17/mini.indentscope',
     enabled = not rvim.plugins.minimal,
     event = 'BufRead',
     version = false,
@@ -393,6 +393,25 @@ return {
     opts = {
       symbol = separators.left_thin_block,
       draw = { delay = 200 },
+      filetype_exclude = {
+        'lazy',
+        'alpha',
+        'dbout',
+        'neo-tree-popup',
+        'log',
+        'gitcommit',
+        'txt',
+        'help',
+        'NvimTree',
+        'git',
+        'flutterToolsOutline',
+        'undotree',
+        'markdown',
+        'norg',
+        'org',
+        'orgagenda',
+        '', -- for all buffers without a file type
+      },
     },
   },
   {
