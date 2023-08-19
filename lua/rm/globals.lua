@@ -137,6 +137,67 @@ end
 local LATEST_NIGHTLY_MINOR = 10
 function rvim.nightly() return vim.version().minor >= LATEST_NIGHTLY_MINOR end
 
+local projects_file = vim.fn.stdpath('data') .. '/project_nvim/project_history'
+
+-- Get project info for all (de)activated projects
+local get_projects = function()
+  local projects = {}
+  for line in io.lines(projects_file) do
+    table.insert(projects, line)
+  end
+  return projects
+end
+
+function rvim.escape_pattern(text) return text:gsub('([^%w])', '%%%1') end
+
+-- if you have a git project that has subfolders..
+-- in a subfolder there is a package.json.. then vim-rooter
+-- will set the cwd to that subfolder -- not the git repo root.
+-- with this we get the actual git repo root.
+function rvim.cur_file_project_root()
+  local full_path = fn.expand('%:p')
+  for _, project in pairs(get_projects()) do
+    if
+      full_path:match('^' .. rvim.escape_pattern(project) .. '/')
+      and fn.isdirectory(project .. '/.git') ~= 0
+    then
+      return project
+    end
+  end
+  -- no project that matches, return the current folder
+  return fn.getcwd()
+end
+
+function rvim.run_command(command, params, cb)
+  local Job = require('plenary.job')
+  local error_msg = nil
+  Job:new({
+    command = command,
+    args = params,
+    on_stderr = function(error, data, self)
+      if error_msg == nil then error_msg = data end
+    end,
+    on_exit = function(self, code, signal)
+      vim.schedule_wrap(function()
+        if code == 0 then
+          vim.notify(command .. ' executed successfully', vim.log.levels.INFO)
+          if cb then cb() end
+        else
+          local info = { command .. ' failed!' }
+          if error_msg ~= nil then
+            table.insert(info, error_msg)
+            print(error_msg)
+          end
+          vim.notify(info, vim.log.levels.ERROR)
+        end
+      end)()
+    end,
+  }):start()
+  vim.notify(command .. ' launched...', vim.log.levels.INFO)
+end
+
+function rvim.reload_all() vim.cmd('checktime') end
+
 ----------------------------------------------------------------------------------------------------
 --  FILETYPE HELPERS
 ----------------------------------------------------------------------------------------------------
@@ -389,7 +450,6 @@ function rvim.command(name, rhs, opts)
   api.nvim_create_user_command(name, rhs, opts)
 end
 
-
 ---A terser proxy for `nvim_replace_termcodes`
 ---@param str string
 ---@return string
@@ -455,7 +515,7 @@ end
 function rvim.bool2str(bool) return bool and 'on' or 'off' end
 
 function rvim.change_filetype()
-  vim.ui.input({ prompt = "Change filetype to: " }, function(new_ft)
+  vim.ui.input({ prompt = 'Change filetype to: ' }, function(new_ft)
     if new_ft ~= nil then vim.bo.filetype = new_ft end
   end)
 end

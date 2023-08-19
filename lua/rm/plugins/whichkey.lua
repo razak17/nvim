@@ -31,6 +31,7 @@ return {
         fg = { name = 'Git' },
         fv = { name = 'Vim' },
         g = { name = 'Git' },
+        go = { name = 'Open' },
         h = { name = 'Gitsigns' },
         i = { name = 'Toggler' },
         l = { name = 'Lsp' },

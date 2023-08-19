@@ -133,6 +133,7 @@ return {
   },
   {
     'sustech-data/wildfire.nvim',
+    enabled = rvim.treesitter.enable and not rvim.plugins.minimal,
     event = 'VeryLazy',
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
     opts = {},
