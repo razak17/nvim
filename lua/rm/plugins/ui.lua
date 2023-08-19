@@ -381,14 +381,17 @@ return {
   {
     'echasnovski/mini.indentscope',
     event = 'BufRead',
-    version = '*',
+    version = false,
     init = function()
       highlight.plugin('mini-indentscope', {
         { MiniIndentscopeSymbol = { inherit = 'IndentBlanklineContextChar' } },
         { MiniIndentscopeSymbolOff = { inherit = 'IndentBlanklineChar' } },
       })
     end,
-    opts = { symbol = separators.left_thin_block },
+    opts = {
+      symbol = separators.left_thin_block,
+      draw = { delay = 200 },
+    },
   },
   {
     'lukas-reineke/indent-blankline.nvim',
