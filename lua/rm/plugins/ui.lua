@@ -55,7 +55,6 @@ return {
         tmux = { enabled = true },
       },
     },
-    keys = { { '<localleader>zz', '<Cmd>ZenMode<CR>', desc = 'zen-mode: toggle' } },
   },
   {
     'eandrju/cellular-automaton.nvim',
@@ -76,7 +75,6 @@ return {
   {
     'tjdevries/sPoNGe-BoB.NvIm',
     keys = {
-      { '<localleader>ab', '<cmd>SpOnGeBoBtOgGlE<CR>', desc = 'SpOnGeBoB: toggle' },
       {
         '<localleader>ab',
         '<cmd>SpOnGeBoBiFy<CR>',
@@ -255,10 +253,7 @@ return {
   },
   {
     'uga-rosa/ccc.nvim',
-    keys = {
-      { '<leader>oc', '<cmd>CccHighlighterToggle<CR>', desc = 'toggle ccc' },
-      { '<localleader>cp', '<cmd>CccPick<CR>', desc = 'ccc: pick' },
-    },
+    keys = { { '<localleader>cp', '<cmd>CccPick<CR>', desc = 'ccc: pick' } },
     opts = function()
       local ccc = require('ccc')
       local p = ccc.picker

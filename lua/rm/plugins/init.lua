@@ -62,22 +62,22 @@ return {
       { '<C-l>', function() require('smart-splits').move_cursor_right() end },
       -- swapping buffers between windows
       {
-        '<leader><leader>h',
+        '<leader>sh',
         function() require('smart-splits').swap_buf_left() end,
         desc = 'swap left',
       },
       {
-        '<leader><leader>j',
+        '<leader>sj',
         function() require('smart-splits').swap_buf_down() end,
         desc = 'swap down',
       },
       {
-        '<leader><leader>k',
+        '<leader>sk',
         function() require('smart-splits').swap_buf_up() end,
         desc = 'swap up',
       },
       {
-        '<leader><leader>l',
+        '<leader>sl',
         function() require('smart-splits').swap_buf_right() end,
         desc = 'swap right',
       },
@@ -684,14 +684,7 @@ return {
   ----------------------------------------------------------------------------------------------------
   { 'razak17/slides.nvim', ft = 'slide' },
   { 'fladson/vim-kitty', ft = 'kitty' },
-  {
-    'laytan/cloak.nvim',
-    event = 'VeryLazy',
-    keys = {
-      { '<localleader>cc', '<Cmd>CloakToggle<CR>', 'cloak: toggle' },
-    },
-    opts = {},
-  },
+  { 'laytan/cloak.nvim', event = 'VeryLazy', opts = {} },
   {
     'dmmulroy/tsc.nvim',
     enabled = rvim.lsp.enable,
