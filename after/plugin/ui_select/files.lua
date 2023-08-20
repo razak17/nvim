@@ -106,6 +106,9 @@ local file_options = {
   ['5. Change Filetype'] = quick_set_ft,
   ['6. Search Code Deps'] = search_code_deps,
   ['7. Toggle Diff'] = toggle_diff,
+  ['8. Toggle Diff'] = toggle_diff,
+  ['8. Re-open File With Sudo Permissions'] = 'SudaRead',
+  ['8. Write File With Sudo Permissions'] = 'SudaWrite',
 }
 
 local file_menu = function()
