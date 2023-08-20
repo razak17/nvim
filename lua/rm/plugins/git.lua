@@ -250,6 +250,7 @@ return {
   },
   {
     'emmanueltouzery/agitator.nvim',
+    enabled = not rvim.plugins.minimal,
     event = 'VeryLazy',
     keys = {
       {

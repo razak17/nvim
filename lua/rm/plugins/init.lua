@@ -656,13 +656,6 @@ return {
     enabled = rvim.treesitter.enable,
     ft = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
-    keys = {
-      {
-        '<leader>ltf',
-        ':lua require("nvim-js-actions/js-arrow-fn").toggle()<CR>',
-        desc = 'js-actions: toggle arrow function',
-      },
-    },
   },
   {
     'jpalardy/vim-slime',

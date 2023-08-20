@@ -36,7 +36,6 @@ return {
         h = { name = 'Gitsigns' },
         i = { name = 'Toggler' },
         l = { name = 'Lsp' },
-        lt = { name = 'Toggle' },
         m = { name = 'Marks' },
         n = { name = 'Notify' },
         r = { name = 'Run' },

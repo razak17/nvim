@@ -35,10 +35,6 @@ local function lsp_check_capabilities(feature, bufnr)
 end
 
 local function display_lsp_references()
-  -- first try incoming_calls... if it would return results, display incoming calls
-  -- otherwise display lsp references.
-  -- incoming calls won't work for constants, or functions which may be refered to by
-  -- name or function pointer instead of being directly called.
   if lsp_check_capabilities('callHierarchyProvider', 0) then
     vim.lsp.buf_request(
       0,
@@ -53,21 +49,16 @@ local function display_lsp_references()
             { item = call_hierarchy_item },
             function(_, res, _, _)
               if #res > 0 then
-                -- incoming calls will return values, use that
                 require('telescope.builtin').lsp_incoming_calls({ path_display = { 'tail' } })
-              else
-                -- cannot use incoming_calls, fallback to references
-                require('telescope.builtin').lsp_references({ path_display = { 'tail' } })
+                return
               end
             end
           )
         end
       end
     )
-  else
-    -- cannot use incoming_calls, fallback to references
-    require('telescope.builtin').lsp_references({ path_display = { 'tail' } })
   end
+  require('telescope.builtin').lsp_references({ path_display = { 'tail' } })
 end
 
 local function lsp_restart_all()
@@ -256,6 +247,7 @@ local lsp_options = {
   ['7. Toggle Virtual Lines'] = toggle_virtual_lines,
   ['7. Toggle Diagnostic Signs'] = toggle_signs,
   ['7. Toggle Hover Diagnostics'] = toggle_hover_diagnostics,
+  ['7. Toggle JS Arrow Function'] = 'lua require("nvim-js-actions/js-arrow-fn").toggle()',
 }
 
 local lsp_menu = function()
