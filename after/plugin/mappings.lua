@@ -110,12 +110,12 @@ nnoremap('<leader>y', '"+y', { desc = 'yank' })
 vnoremap('<leader>y', '"+y', { desc = 'yank' })
 nnoremap('<leader>dd', '"_d', { desc = 'delete' })
 vnoremap('<leader>dd', '"_d', { desc = 'delete' })
-nnoremap('<leader>vc', ':let @+=@:<cr>', { desc = 'yank last ex command text' })
-nnoremap(
-  '<leader>vm',
-  [[:let @+=substitute(execute('messages'), '\n\+', '\n', 'g')<cr>]],
-  { desc = 'yank vim messages output' }
-)
+-- nnoremap('<localleader>vc', ':let @+=@:<cr>', { desc = 'yank last ex command text' })
+-- nnoremap(
+--   '<localleader>vm',
+--   [[:let @+=substitute(execute('messages'), '\n\+', '\n', 'g')<cr>]],
+--   { desc = 'yank vim messages output' }
+-- )
 ----------------------------------------------------------------------------------------------------
 -- Yank / Select / Delete All
 nnoremap('<leader>Y', 'gg"+VGy<C-o>', { desc = 'yank all' })

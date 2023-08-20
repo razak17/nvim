@@ -100,10 +100,12 @@ local file_options = {
   ['2. Open File From Current Dir And Children'] = function() open_file_cur_dir(true) end,
   ['3. Reload All Files From Disk'] = 'lua rvim.reload_all()',
   ['4. Copy File Path'] = copy_file_path,
-  ['5. Copy Full File Path'] = 'let @+ = expand("%:p")',
-  ['6. Change Filetype'] = quick_set_ft,
-  ['7. Search Code Deps'] = search_code_deps,
-  ['8. Toggle Diff'] = toggle_diff,
+  ['4. Copy Full File Path'] = 'let @+ = expand("%:p")',
+  ['4. Yank Last Ex Command'] = 'let @+=@:',
+  ['4. Yank Last Message'] = [[let @+=substitute(execute('messages'), '\n\+', '\n', 'g')]],
+  ['5. Change Filetype'] = quick_set_ft,
+  ['6. Search Code Deps'] = search_code_deps,
+  ['7. Toggle Diff'] = toggle_diff,
 }
 
 local file_menu = function()
