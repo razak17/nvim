@@ -25,13 +25,6 @@ local function cursor(opts)
   }))
 end
 
-rvim.telescope = {
-  cursor = cursor,
-  dropdown = dropdown,
-  adaptive_dropdown = function(_) return dropdown({ height = fit_to_available_height }) end,
-  minimal_ui = function(_) return dropdown({ previewer = false }) end,
-}
-
 local function extensions(name) return require('telescope').extensions[name] end
 
 local function delta_opts(opts, is_buf)
@@ -84,11 +77,6 @@ local function textcase()
   extensions('textcase').normal_mode(rvim.telescope.minimal_ui({ prompt_title = 'Text Case' }))
 end
 
-local function builtin() return require('telescope.builtin') end
-
-local function delta_git_commits(opts) builtin().git_commits(delta_opts(opts)) end
-local function delta_git_bcommits(opts) builtin().git_bcommits(delta_opts(opts, true)) end
-
 ---@param opts? table
 ---@return function
 local function b(picker, opts)
@@ -118,6 +106,14 @@ end
 
 local function multi_selection_open(prompt_bufnr) multiopen(prompt_bufnr, 'edit') end
 
+rvim.telescope = {
+  cursor = cursor,
+  dropdown = dropdown,
+  adaptive_dropdown = function(_) return dropdown({ height = fit_to_available_height }) end,
+  minimal_ui = function(_) return dropdown({ previewer = false }) end,
+  delta_opts = delta_opts
+}
+
 return {
   {
     'nvim-telescope/telescope.nvim',
@@ -137,19 +133,14 @@ return {
       { '<leader>fr', b('resume'), desc = 'resume last picker' },
       { '<leader>fs', live_grep, desc = 'find string' },
       { '<leader>fu', undo, desc = 'undo' },
-      -- { '<leader>fH', harpoon, desc = 'harpoon' },
-      -- { '<leader>ft', textcase, desc = 'textcase', mode = { 'n', 'v' } },
+      { '<leader>fH', harpoon, desc = 'harpoon' },
+      { '<leader>ft', textcase, desc = 'textcase', mode = { 'n', 'v' } },
       { '<leader>fw', b('grep_string'), desc = 'find word' },
       { '<leader>fva', b('autocommands'), desc = 'autocommands' },
       { '<leader>fvh', b('highlights'), desc = 'highlights' },
       { '<leader>fvk', b('keymaps'), desc = 'autocommands' },
       { '<leader>fvo', b('vim_options'), desc = 'vim options' },
       { '<leader>fvr', b('registers'), desc = 'registers' },
-      -- Git
-      { '<leader>gs', b('git_status'), desc = 'git status' },
-      { '<leader>fgb', b('git_branches'), desc = 'git branches' },
-      { '<leader>fgB', delta_git_bcommits, desc = 'buffer commits' },
-      { '<leader>fgc', delta_git_commits, desc = 'commits' },
       -- LSP
       { '<leader>ld', b('lsp_document_symbols'), desc = 'telescope: document symbols' },
       { '<leader>lI', b('lsp_implementations'), desc = 'telescope: search implementation' },
@@ -168,7 +159,7 @@ return {
       require('telescope').setup({
         defaults = {
           prompt_prefix = fmt(' %s  ', ui.codicons.misc.search_alt),
-          selection_caret = fmt(' %s ', ui.codicons.misc.pick),
+          selection_caret = fmt(' %s ', ui.icons.misc.triangle_short),
           cycle_layout_list = { 'flex', 'horizontal', 'vertical', 'bottom_pane', 'center' },
           sorting_strategy = 'ascending',
           layout_strategy = 'flex',

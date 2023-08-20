@@ -31,6 +31,7 @@ return {
         fg = { name = 'Git' },
         fv = { name = 'Vim' },
         g = { name = 'Git' },
+        gb = { name = 'Blame' },
         go = { name = 'Open' },
         h = { name = 'Gitsigns' },
         i = { name = 'Toggler' },
@@ -42,6 +43,7 @@ return {
         r = { name = 'Run' },
         s = { name = 'Session' },
         t = { name = 'Test' },
+        v = { name = 'Vim' },
         w = { name = 'Winbar' },
       },
       ['<localleader>'] = {

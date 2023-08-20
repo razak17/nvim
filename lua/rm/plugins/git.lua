@@ -155,7 +155,7 @@ return {
         map('n', '<leader>hp', gs.preview_hunk_inline, { desc = 'preview hunk' })
         map('n', '<leader>hb', gs.toggle_current_line_blame, { desc = 'toggle line blame' })
 
-        map('n', '<leader>gb', gs.blame_line, { desc = 'blame line' })
+        map('n', '<leader>gbl', gs.blame_line, { desc = 'blame line' })
         map('n', '<leader>gr', gs.reset_buffer, { desc = 'reset entire buffer' })
         map('n', '<leader>gw', gs.stage_buffer, { desc = 'stage entire buffer' })
 
@@ -212,77 +212,52 @@ return {
     end,
   },
   {
+    'almo7aya/openingh.nvim',
+    enabled = not rvim.plugins.minimal,
+    event = 'VeryLazy',
+    keys = {
+      {
+        '<leader>gof',
+        function()
+          require('openingh').open_file()
+          vim.notify('opening file in github', 'info', { title = 'openingh' })
+        end,
+        desc = 'openingh: open file',
+      },
+      {
+        '<leader>gor',
+        function()
+          require('openingh').open_repo()
+          vim.notify('opening repo in github', 'info', { title = 'openingh' })
+        end,
+        desc = 'openingh: open repo',
+      },
+      {
+        '<leader>gol',
+        function()
+          require('openingh').open_file_lines()
+          vim.notify('opening file line in github', 'info', { title = 'openingh' })
+        end,
+        desc = 'openingh: open to line',
+        mode = { 'n', 'x' },
+      },
+    },
+  },
+  {
     'yutkat/git-rebase-auto-diff.nvim',
     ft = { 'gitrebase' },
     opts = {},
   },
   {
     'emmanueltouzery/agitator.nvim',
-    dependencies = { 'sindrets/diffview.nvim' },
     event = 'VeryLazy',
-    config = function()
-      local function show_commit(commit_sha)
-        vim.cmd(
-          'DiffviewOpen '
-            .. commit_sha
-            .. '^..'
-            .. commit_sha
-            .. '  --selected-file='
-            .. vim.fn.expand('%:p')
-        )
-      end
-
-      local function show_commit_at_line()
-        local commit_sha = require('agitator').git_blame_commit_for_line()
-        show_commit(commit_sha)
-      end
-
-      local function display_git_commit()
-        vim.ui.input({ prompt = 'Enter git commit id:', kind = 'center_win' }, function(input)
-          if input ~= nil then vim.cmd(':DiffviewOpen ' .. input .. '^..' .. input) end
-        end)
-      end
-      map('n', '<leader>gO', display_git_commit, { desc = 'git: display commit' })
-
-      map('n', '<leader>gv', show_commit_at_line, { desc = 'git: view commit for line' })
-      map(
-        'n',
-        '<leader>gt',
-        "<cmd>lua require'agitator'.git_time_machine({use_current_win=true})<cr>",
-        { desc = 'agitator: time machine' }
-      )
-      map(
-        'n',
-        '<leader>gB',
+    keys = {
+      {
+        '<leader>gbo',
         "<cmd>lua require'agitator'.git_blame_toggle()<cr>",
-        { desc = 'agitator: git blame' }
-      )
-    end,
-    map(
-      'n',
-      '<leader>gf',
-      "<cmd>lua require'agitator'.open_file_git_branch()<cr>",
-      { desc = 'agitator: open file from branch' }
-    ),
-    map(
-      'n',
-      '<leader>gs',
-      "<cmd>lua require'agitator'.search_git_branch()<cr>",
-      { desc = 'agitator: search in another branch' }
-    ),
-    map(
-      'n',
-      '<leader>gL',
-      "<cmd>lua vim.cmd('DiffviewFileHistory ' .. rvim.cur_file_project_root())<cr>",
-      { desc = 'diffview: project history' }
-    ),
-
-    map(
-      'n',
-      '<leader>gH',
-      '<cmd>:DiffviewFileHistory %<cr>',
-      { desc = 'diffview: file_history' }
-    ),
+        desc = 'agitator: toggle blame',
+      },
+    },
   },
   {
     'akinsho/git-conflict.nvim',

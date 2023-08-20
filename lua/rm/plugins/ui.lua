@@ -190,10 +190,40 @@ return {
     opts = {
       input = { insert_only = false, border = border },
       select = {
-        telescope = rvim.telescope.adaptive_dropdown(),
-        get_config = function()
-          return { backend = 'telescope', telescope = rvim.telescope.cursor() }
+        builtin = {
+          border = border,
+          min_height = 10,
+          win_options = { winblend = 10 },
+          mappings = { n = { ['q'] = 'Close' } },
+        },
+        get_config = function(opts)
+          opts.prompt = opts.prompt and opts.prompt:gsub(':', '')
+          if opts.kind == 'codeaction' then
+            return {
+              backend = 'fzf_lua',
+              fzf_lua = rvim.fzf.cursor_dropdown({
+                winopts = { title = opts.prompt },
+              }),
+            }
+          end
+          return {
+            backend = 'fzf_lua',
+            fzf_lua = rvim.fzf.dropdown({
+              winopts = { title = opts.prompt, height = 0.33, row = 0.5 },
+            }),
+          }
         end,
+        nui = {
+          min_height = 10,
+          win_options = {
+            winhighlight = table.concat({
+              'Normal:Italic',
+              'FloatBorder:PickerBorder',
+              'FloatTitle:Title',
+              'CursorLine:Visual',
+            }, ','),
+          },
+        },
       },
     },
   },
@@ -354,6 +384,7 @@ return {
       draw = { delay = 200 },
       filetype_exclude = {
         'lazy',
+        'fzf',
         'alpha',
         'dbout',
         'neo-tree-popup',

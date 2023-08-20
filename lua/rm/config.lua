@@ -20,6 +20,7 @@ local namespace = {
     hover_diagnostics = { enable = true, scope = 'cursor' },
   },
   mappings = {},
+  git = {},
   none = env.RVIM_NONE == '1',
   plugins = {
     enable = env.RVIM_PLUGINS_ENABLED == '1',

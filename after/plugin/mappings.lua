@@ -83,9 +83,9 @@ xnoremap('J', ":m '>+1<CR>gv=gv")
 -- Windows
 ----------------------------------------------------------------------------------------------------
 -- change two vertically split windows to horizontal splits
-nnoremap('<leader>wv', '<C-W>t <C-W>H<C-W>=', { desc = 'vertical to horizontal' })
+nnoremap('<leader>wv', '<C-W>t <C-W>H<C-W>=', { desc = 'horizontal to vertical' })
 -- change two horizontally split windows to vertical splits
-nnoremap('<leader>wh', '<C-W>t <C-W>K<C-W>=', { desc = 'horizontal to vertical' })
+nnoremap('<leader>wh', '<C-W>t <C-W>K<C-W>=', { desc = 'vertical to horizontal' })
 -- make . work with visually selected lines
 vnoremap('.', ':norm.<CR>')
 -- when going to the end of the line in visual mode ignore whitespace characters
@@ -100,6 +100,9 @@ nnoremap('<C-h>', '<C-w>h')
 nnoremap('<C-j>', '<C-w>j')
 nnoremap('<C-k>', '<C-w>k')
 nnoremap('<C-l>', '<C-w>l')
+----------------------------------------------------------------------------------------------------
+-- Clipboard
+----------------------------------------------------------------------------------------------------
 -- Greatest remap ever
 vnoremap('<leader>p', '"_dP', { desc = 'greatest remap' })
 -- Next greatest remap ever : asbjornHaland
@@ -107,6 +110,12 @@ nnoremap('<leader>y', '"+y', { desc = 'yank' })
 vnoremap('<leader>y', '"+y', { desc = 'yank' })
 nnoremap('<leader>dd', '"_d', { desc = 'delete' })
 vnoremap('<leader>dd', '"_d', { desc = 'delete' })
+nnoremap('<leader>vc', ':let @+=@:<cr>', { desc = 'yank last ex command text' })
+nnoremap(
+  '<leader>vm',
+  [[:let @+=substitute(execute('messages'), '\n\+', '\n', 'g')<cr>]],
+  { desc = 'yank vim messages output' }
+)
 ----------------------------------------------------------------------------------------------------
 -- Yank / Select / Delete All
 nnoremap('<leader>Y', 'gg"+VGy<C-o>', { desc = 'yank all' })

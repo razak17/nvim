@@ -137,36 +137,7 @@ end
 local LATEST_NIGHTLY_MINOR = 10
 function rvim.nightly() return vim.version().minor >= LATEST_NIGHTLY_MINOR end
 
-local projects_file = vim.fn.stdpath('data') .. '/project_nvim/project_history'
-
--- Get project info for all (de)activated projects
-local get_projects = function()
-  local projects = {}
-  for line in io.lines(projects_file) do
-    table.insert(projects, line)
-  end
-  return projects
-end
-
-function rvim.escape_pattern(text) return text:gsub('([^%w])', '%%%1') end
-
--- if you have a git project that has subfolders..
--- in a subfolder there is a package.json.. then vim-rooter
--- will set the cwd to that subfolder -- not the git repo root.
--- with this we get the actual git repo root.
-function rvim.cur_file_project_root()
-  local full_path = fn.expand('%:p')
-  for _, project in pairs(get_projects()) do
-    if
-      full_path:match('^' .. rvim.escape_pattern(project) .. '/')
-      and fn.isdirectory(project .. '/.git') ~= 0
-    then
-      return project
-    end
-  end
-  -- no project that matches, return the current folder
-  return fn.getcwd()
-end
+function rvim.reload_all() vim.cmd('checktime') end
 
 function rvim.run_command(command, params, cb)
   local Job = require('plenary.job')
@@ -196,7 +167,52 @@ function rvim.run_command(command, params, cb)
   vim.notify(command .. ' launched...', vim.log.levels.INFO)
 end
 
-function rvim.reload_all() vim.cmd('checktime') end
+function rvim.escape_pattern(text) return text:gsub('([^%w])', '%%%1') end
+
+function rvim.copy_to_clipboard(to_copy) vim.fn.setreg('+', to_copy) end
+
+--[[ create_select_menu()
+-- Create a menu to execute a Vim command or Lua function using vim.ui.select()
+-- Example usage:
+-- local options = {
+--   [1. Onedark ] = "colo onedark"
+--   [2. Tokyonight ] = function() vim.cmd("colo tokyonight") end
+-- }
+-- local colo_picker = util.create_select_menu("Choose a colorscheme", options)
+-- vim.api.nvim_create_user_command("ColoPicker", colo_picker, { nargs = 0 })
+--
+-- @arg prompt: the prompt to display
+-- @arg options_table: Table of the form { [n. Display name] = lua-function/vim-cmd, ... }
+--                    The number is used for the sorting purpose and will be replaced by vim.ui.select() numbering
+--]]
+-- Ref: https://github.com/theopn/theovim/blob/main/lua/util.lua#L12
+function rvim.create_select_menu(prompt, options_table)
+  -- Given the table of options, populate an array with option display names
+  local option_names = {}
+  local n = 0
+  for i, _ in pairs(options_table) do
+    n = n + 1
+    option_names[n] = i
+  end
+  table.sort(option_names)
+  -- Return the prompt function. These global function var will be used when assigning keybindings
+  local menu = function()
+    vim.ui.select(option_names, {
+      prompt = prompt,
+      format_item = function(item) return item:gsub('%d. ', '') end,
+    }, function(choice)
+      local action = options_table[choice]
+      if action ~= nil then
+        if type(action) == 'string' then
+          vim.cmd(action)
+        elseif type(action) == 'function' then
+          action()
+        end
+      end
+    end)
+  end
+  return menu
+end
 
 ----------------------------------------------------------------------------------------------------
 --  FILETYPE HELPERS
