@@ -57,6 +57,7 @@ return {
           disable = { 'c', 'python' },
         },
         autotag = { enable = true },
+        tree_setter = { enable = true },
         query_linter = {
           enable = true,
           use_virtual_text = false,
@@ -136,5 +137,11 @@ return {
     event = 'VeryLazy',
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
     opts = {},
+  },
+  {
+    'filNaj/tree-setter',
+    enabled = rvim.treesitter.enable and not rvim.plugins.minimal,
+    event = 'VeryLazy',
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
   },
 }

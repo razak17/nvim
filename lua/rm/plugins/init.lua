@@ -95,6 +95,7 @@ return {
   -- LSP,Completion & Debugger {{{1
   ----------------------------------------------------------------------------------------------------
   'b0o/schemastore.nvim',
+  { 'lambdalisue/suda.vim', lazy = false },
   {
     'razak17/lspkind.nvim',
     config = function() require('lspkind').init({ preset = 'codicons' }) end,
@@ -713,7 +714,6 @@ return {
       wrap = true,
     },
   },
-  { 'lambdalisue/suda.vim', lazy = false },
   -- }}}
   ----------------------------------------------------------------------------------------------------
   -- Filetype Plugins {{{1
