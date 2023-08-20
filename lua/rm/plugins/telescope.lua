@@ -70,6 +70,7 @@ local function luasnips() extensions('luasnip').luasnip(dropdown()) end
 local function notifications() extensions('notify').notify(dropdown()) end
 local function undo() extensions('undo').undo() end
 local function projects() extensions('projects').projects() end
+local function aerial() extensions('aerial').aerial() end
 local function harpoon()
   extensions('harpoon').marks(rvim.telescope.minimal_ui({ prompt_title = 'Harpoon Marks' }))
 end
@@ -121,10 +122,11 @@ return {
     cmd = 'Telescope',
     keys = {
       { '<c-p>', find_files, desc = 'find files' },
+      { '<leader>.', file_browser, desc = 'file browser' },
       { '<leader>f?', b('help_tags'), desc = 'help tags' },
       { '<leader>fa', b('builtin', { include_extensions = true }), desc = 'builtins' },
       { '<leader>fb', b('current_buffer_fuzzy_find'), desc = 'find in current buffer' },
-      { '<leader>.', file_browser, desc = 'file browser' },
+      { '<leader>fd', aerial, desc = 'aerial' },
       { '<leader>fc', nvim_config, desc = 'nvim config' },
       { '<leader>ff', project_files, desc = 'project files' },
       { '<leader>fh', frecency, desc = 'Most (f)recently used files' },
@@ -277,6 +279,7 @@ return {
       require('telescope').load_extension('menufacture')
       require('telescope').load_extension('notify')
       require('telescope').load_extension('file_browser')
+      require('telescope').load_extension('aerial')
       -- require('telescope').load_extension('textcase')
       if not rvim.plugins.minimal then
         require('telescope').load_extension('persisted')
