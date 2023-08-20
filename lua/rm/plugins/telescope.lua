@@ -61,6 +61,22 @@ local function nvim_config()
   })
 end
 
+local function notes()
+  find_files({
+    prompt_title = '~ Obsidian ~',
+    cwd = vim.env.HOME .. '/Sync/notes/obsidian',
+    file_ignore_patterns = { '.git/.*', 'dotbot/.*', 'zsh/plugins/.*' },
+  })
+end
+
+local function plugins()
+  find_files({
+    prompt_title = '~ Plugins ~',
+    cwd = vim.fn.stdpath('data') .. '/lazy',
+    file_ignore_patterns = { '.git/.*', 'dotbot/.*', 'zsh/plugins/.*' },
+  })
+end
+
 local function project_files()
   if not pcall(git_files, { show_untracked = true }) then find_files() end
 end
@@ -132,8 +148,10 @@ return {
       { '<leader>fh', frecency, desc = 'Most (f)recently used files' },
       { '<leader>fL', luasnips, desc = 'luasnip: available snippets' },
       { '<leader>fn', notifications, desc = 'notify: notifications' },
+      { '<leader>fN', notes, desc = 'notes' },
       { '<leader>fo', b('buffers'), desc = 'buffers' },
       { '<leader>fp', projects, desc = 'projects' },
+      { '<leader>fP', plugins, desc = 'plugins' },
       { '<leader>fr', b('resume'), desc = 'resume last picker' },
       { '<leader>fs', live_grep, desc = 'find string' },
       { '<leader>fu', undo, desc = 'undo' },
