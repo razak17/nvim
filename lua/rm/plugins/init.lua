@@ -87,8 +87,24 @@ return {
   ----------------------------------------------------------------------------------------------------
   -- Themes {{{1
   ----------------------------------------------------------------------------------------------------
-  { 'razak17/onedark.nvim', lazy = false, priority = 1000 },
-  { 'LunarVim/horizon.nvim', lazy = false, priority = 1000 },
+  {
+    'razak17/onedark.nvim',
+    lazy = false,
+    priority = 1000,
+    config = function() rvim.load_colorscheme('onedark') end,
+  },
+  {
+    'LunarVim/horizon.nvim',
+    lazy = false,
+    priority = 1000,
+    -- config = function() rvim.load_colorscheme('horizon') end,
+  },
+  {
+    'dotsilas/darcubox-nvim',
+    lazy = false,
+    priority = 1000,
+    -- config = function() rvim.load_colorscheme('darcubox') end,
+  },
   -- }}}
   ----------------------------------------------------------------------------------------------------
   -- LSP,Completion & Debugger {{{1

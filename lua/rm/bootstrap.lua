@@ -97,8 +97,4 @@ map('n', '<localleader>L', '<cmd>Lazy<CR>', { desc = 'toggle lazy ui' })
 ----------------------------------------------------------------------------------------------------
 -- Color Scheme
 ----------------------------------------------------------------------------------------------------
-if plugins_enabled then
-  rvim.pcall('theme failed to load because', vim.cmd.colorscheme, 'onedark')
-else
-  rvim.pcall('theme failed to load because', vim.cmd.colorscheme, 'habamax')
-end
+if not plugins_enabled then rvim.load_colorscheme('habamax') end

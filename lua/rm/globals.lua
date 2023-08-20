@@ -171,6 +171,10 @@ function rvim.escape_pattern(text) return text:gsub('([^%w])', '%%%1') end
 
 function rvim.copy_to_clipboard(to_copy) vim.fn.setreg('+', to_copy) end
 
+function rvim.load_colorscheme(name)
+  rvim.pcall('theme failed to load because', vim.cmd.colorscheme, name)
+end
+
 --[[ create_select_menu()
 -- Create a menu to execute a Vim command or Lua function using vim.ui.select()
 -- Example usage:
