@@ -28,6 +28,7 @@ local format_exclusions = {
     typescript = { 'tsserver', 'typescript-tools' },
     typescriptreact = { 'tsserver', 'typescript-tools' },
     javascriptreact = { 'tsserver', 'typescript-tools' },
+    svelte = { 'svelte' },
   },
 }
 
