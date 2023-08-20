@@ -287,7 +287,7 @@ return {
         end
         return true
       end,
-      get_highlight = function(symbol, is_icon)
+      get_highlight = function(symbol, _)
         if symbol.scope == 'private' then return 'AerialPrivate' end
       end,
     },
@@ -405,19 +405,19 @@ return {
     enabled = rvim.treesitter.enable,
     keys = {
       {
-        '<leader>dp',
+        '<leader>pp',
         function() return require('debugprint').debugprint({ variable = true }) end,
         expr = true,
         desc = 'debugprint: cursor',
       },
       {
-        '<leader>dP',
+        '<leader>pP',
         function() return require('debugprint').debugprint({ above = true, variable = true }) end,
         expr = true,
         desc = 'debugprint: cursor (above)',
       },
       {
-        '<leader>di',
+        '<leader>pi',
         function()
           return require('debugprint').debugprint({ ignore_treesitter = true, variable = true })
         end,
@@ -425,7 +425,7 @@ return {
         desc = 'debugprint: prompt',
       },
       {
-        '<leader>dI',
+        '<leader>pI',
         function()
           return require('debugprint').debugprint({
             ignore_treesitter = true,
@@ -437,13 +437,13 @@ return {
         desc = 'debugprint:prompt (above)',
       },
       {
-        '<leader>do',
+        '<leader>po',
         function() return require('debugprint').debugprint({ motion = true }) end,
         expr = true,
         desc = 'debugprint: operator',
       },
       {
-        '<leader>dO',
+        '<leader>pO',
         function() return require('debugprint').debugprint({ above = true, motion = true }) end,
         expr = true,
         desc = 'debugprint: operator (above)',
@@ -713,6 +713,30 @@ return {
       },
       wrap = true,
     },
+  },
+  {
+    'kristijanhusak/vim-dadbod-ui',
+    dependencies = {
+      'tpope/vim-dadbod',
+      'kristijanhusak/vim-dadbod-completion',
+    },
+    keys = {
+      { '<leader>dt', '<Cmd>DBUIToggle<CR>', desc = 'dadbod: toggle' },
+      { '<leader>da', '<Cmd>DBUIAddConnection<CR>', desc = 'dadbod: add connection' },
+    },
+    cmd = {
+      'DBUI',
+      'DBUIAddConnection',
+      'DBUIClose',
+      'DBUIToggle',
+      'DBUIFindBuffer',
+      'DBUIRenameBuffer',
+      'DBUILastQueryInfo',
+    },
+    config = function()
+      vim.g.db_ui_notification_width = 1
+      vim.g.db_ui_debug = 1
+    end,
   },
   -- }}}
   ----------------------------------------------------------------------------------------------------
