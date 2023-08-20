@@ -54,6 +54,7 @@ local toggle_options = {
   ['4. Toggle Spell'] = function() toggle_opt('spell') end,
   ['5. Toggle Statusline'] = toggle_statusline,
   ['6. Toggle Ccc'] = 'CccHighlighterToggle',
+  ['6. Toggle Pick'] = 'CccPick',
   ['7. Toggle Cloak'] = 'CloakToggle',
   ['8. Toggle SpOnGeBoB'] = 'SpOnGeBoBtOgGlE',
   ['9. Toggle ZenMode'] = 'ZenMode',
