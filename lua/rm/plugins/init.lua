@@ -613,6 +613,32 @@ return {
     end,
   },
   {
+    'michaelb/sniprun',
+    build = 'sh install.sh',
+    cmd = { 'SnipRun', 'SnipInfo' },
+    keys = {
+      { mode = 'v', '<localleader>rr', ':SnipRun<CR>', desc = 'sniprun: run code' },
+      { '<localleader>rr', ':SnipRun<CR>', desc = 'sniprun: run code' },
+      { '<localleader>ri', ':SnipInfo<CR>', desc = 'sniprun: info' },
+      { '<localleader>rc', ':SnipReset<CR>', desc = 'sniprun: reset' },
+      { '<localleader>rq', ':SnipClose<CR>', desc = 'sniprun: close' },
+    },
+    opts = {},
+    config = function(_, opts)
+      highlight.plugin('lab', {
+        theme = {
+          ['onedark'] = {
+            { SniprunVirtualTextOk = { link = 'DiagnosticVirtualTextInfo' } },
+            { SniprunFloatingWinOk = { link = 'DiagnosticVirtualTextInfo' } },
+            { SniprunVirtualTextErr = { link = 'DiffDelete' } },
+            { SniprunFloatingWinErr = { link = 'DiffDelete' } },
+          },
+        },
+      })
+      require('sniprun').setup(opts)
+    end,
+  },
+  {
     'razak17/lab.nvim',
     enabled = not rvim.plugins.minimal,
     event = { 'BufReadPre', 'BufNewFile' },
@@ -625,7 +651,9 @@ return {
     config = function()
       highlight.plugin('lab', {
         theme = {
-          ['onedark'] = { { LabCodeRun = { link = 'DiagnosticVirtualTextInfo' } } },
+          ['onedark'] = {
+            { LabCodeRun = { link = 'DiagnosticVirtualTextInfo' } },
+          },
         },
       })
       require('lab').setup()
