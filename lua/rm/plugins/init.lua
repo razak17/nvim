@@ -687,6 +687,11 @@ return {
       vim.g.alime_no_mappings = 1
     end,
   },
+  {
+    'TrevorS/uuid-nvim',
+    event = 'VeryLazy',
+    opts = { case = 'lower', quotes = 'single' },
+  },
   -- }}}
   ----------------------------------------------------------------------------------------------------
   -- Filetype Plugins {{{1

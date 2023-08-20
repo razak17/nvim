@@ -49,15 +49,19 @@ map('n', '<localleader>cc', toggle_conceal_cursor, { desc = 'toggle concealcurso
 
 local toggle_options = {
   ['1. Toggle Aerial'] = 'AerialToggle',
-  ['2. Toggle Wrap'] = function() toggle_opt('wrap') end,
-  ['3. Toggle Cursorline'] = function() toggle_opt('cursorline') end,
-  ['4. Toggle Spell'] = function() toggle_opt('spell') end,
-  ['5. Toggle Statusline'] = toggle_statusline,
-  ['6. Toggle Ccc'] = 'CccHighlighterToggle',
-  ['6. Toggle Pick'] = 'CccPick',
-  ['7. Toggle Cloak'] = 'CloakToggle',
-  ['8. Toggle SpOnGeBoB'] = 'SpOnGeBoBtOgGlE',
-  ['9. Toggle ZenMode'] = 'ZenMode',
+  ['1. Toggle Wrap'] = function() toggle_opt('wrap') end,
+  ['1. Toggle Cursorline'] = function() toggle_opt('cursorline') end,
+  ['1. Toggle Spell'] = function() toggle_opt('spell') end,
+  ['1. Toggle Statusline'] = toggle_statusline,
+  ['2. Toggle Ccc'] = 'CccHighlighterToggle',
+  ['3. Toggle Pick'] = 'CccPick',
+  ['4. Toggle Cloak'] = 'CloakToggle',
+  ['4. Toggle SpOnGeBoB'] = 'SpOnGeBoBtOgGlE',
+  ['4. Toggle ZenMode'] = 'ZenMode',
+  ['5. Insert UUID'] = function()
+    require('uuid-nvim').toggle_highlighting()
+    require('uuid-nvim').insert_v4()
+  end,
 }
 
 local toggle_menu = function()
