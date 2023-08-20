@@ -87,24 +87,9 @@ return {
   ----------------------------------------------------------------------------------------------------
   -- Themes {{{1
   ----------------------------------------------------------------------------------------------------
-  {
-    'razak17/onedark.nvim',
-    lazy = false,
-    priority = 1000,
-    config = function() rvim.load_colorscheme('onedark') end,
-  },
-  {
-    'LunarVim/horizon.nvim',
-    lazy = false,
-    priority = 1000,
-    -- config = function() rvim.load_colorscheme('horizon') end,
-  },
-  {
-    'dotsilas/darcubox-nvim',
-    lazy = false,
-    priority = 1000,
-    -- config = function() rvim.load_colorscheme('darcubox') end,
-  },
+  { 'razak17/onedark.nvim', lazy = false, priority = 1000 },
+  { 'LunarVim/horizon.nvim', lazy = false, priority = 1000 },
+  { 'dotsilas/darcubox-nvim', lazy = false, priority = 1000 },
   -- }}}
   ----------------------------------------------------------------------------------------------------
   -- LSP,Completion & Debugger {{{1
@@ -690,6 +675,43 @@ return {
     'TrevorS/uuid-nvim',
     event = 'VeryLazy',
     opts = { case = 'lower', quotes = 'single' },
+  },
+  {
+    'luckasRanarison/nvim-devdocs',
+    event = 'VeryLazy',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'nvim-telescope/telescope.nvim',
+      'nvim-treesitter/nvim-treesitter',
+    },
+    keys = {
+      { '<localleader>vf', '<cmd>DevdocsOpenFloat<CR>', desc = 'devdocs: open float' },
+      { '<localleader>vb', '<cmd>DevdocsOpen<CR>', desc = 'devdocs: open in buffer' },
+      { '<localleader>vo', ':DevdocsOpenFloat ', desc = 'devdocs: open documentation' },
+      { '<localleader>vi', ':DevdocsInstall ', desc = 'devdocs: install' },
+      { '<localleader>vu', ':DevdocsUninstall ', desc = 'devdocs: uninstall' },
+    },
+    opts = {
+      ensure_installed = {
+        'git',
+        'bash',
+        'lua-5.4',
+        'html',
+        'css',
+        'javascript',
+        'typescript',
+        'react',
+        'svelte',
+        'web_extensions',
+        'postgresql-15',
+        'python-3.11',
+        'go',
+        'docker',
+        'tailwindcss',
+        'astro',
+      },
+      wrap = true,
+    },
   },
   -- }}}
   ----------------------------------------------------------------------------------------------------
