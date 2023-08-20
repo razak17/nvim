@@ -14,7 +14,6 @@ return {
         auto_install = true,
         highlight = {
           enable = true,
-          disable = { 'lua' },
           additional_vim_regex_highlighting = { 'org', 'sql' },
         },
         context_commentstring = { enable = true, enable_autocmd = false },
