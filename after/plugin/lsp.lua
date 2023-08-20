@@ -10,12 +10,10 @@ local disabled = not rvim.lsp.enable
 if disabled then return end
 
 local lsp, fn, api, fmt = vim.lsp, vim.fn, vim.api, string.format
-local command = rvim.command
 local L = vim.lsp.log_levels
 local M = vim.lsp.protocol.Methods
 
 local diagnostic = vim.diagnostic
-local bool2str = rvim.bool2str
 local augroup, icons, border = rvim.augroup, rvim.ui.codicons.lsp, rvim.ui.current.border
 
 local format_exclusions = {
@@ -160,11 +158,6 @@ local function setup_mappings(client, bufnr)
     { 'n', '<leader>lr', lsp.buf.rename, desc = 'rename', capability = M.textDocument_rename },
     -- TODO: loclist is broken
     -- { 'n', '<leader>lL', vim.diagnostic.setloclist, desc = 'toggle loclist diagnostics' },
-    { 'n', '<leader>li', '<Cmd>LspInfo<CR>', desc = 'lsp info' },
-    { 'n', '<leader>ltv', '<Cmd>ToggleVirtualText<CR>', desc = 'toggle virtual text' },
-    { 'n', '<leader>ltl', '<Cmd>ToggleVirtualLines<CR>', desc = 'toggle virtual lines' },
-    { 'n', '<leader>lts', '<Cmd>ToggleSigns<CR>', desc = 'toggle signs' },
-    { 'n', '<leader>lth', '<Cmd>ToggleHoverDiagnostics<CR>', desc = 'toggle hover diagnostic' },
     {
       'n',
       '<localleader>li',
@@ -393,70 +386,3 @@ diagnostic.config({
 function rvim.lsp.notify(msg, type)
   vim.schedule(function() vim.notify(msg, type, { title = 'Diagnostic Toggles' }) end)
 end
-
-local function toggle_virtual_text()
-  local config = diagnostic.config()
-  if type(config.virtual_text) == 'boolean' then
-    config = vim.tbl_extend('force', config, {
-      virtual_text = {
-        spacing = 1,
-        prefix = function(d)
-          local level = diagnostic.severity[d.severity]
-          return icons[level:lower()]
-        end,
-      },
-    })
-    if type(config.virtual_lines) == 'table' then
-      config = vim.tbl_extend('force', config, { virtual_lines = false })
-    end
-  else
-    config = vim.tbl_extend('force', config, { virtual_text = false })
-  end
-  diagnostic.config(config)
-  rvim.lsp.notify(
-    string.format('virtual text %s', bool2str(type(diagnostic.config().virtual_text) ~= 'boolean'))
-  )
-end
-command('ToggleVirtualText', toggle_virtual_text)
-
-local function toggle_virtual_lines()
-  local config = diagnostic.config()
-  if type(config.virtual_lines) == 'boolean' then
-    config = vim.tbl_extend('force', config, { virtual_lines = { only_current_line = true } })
-    if type(config.virtual_text) == 'table' then
-      config = vim.tbl_extend('force', config, { virtual_text = false })
-    end
-  else
-    config = vim.tbl_extend('force', config, { virtual_lines = false })
-  end
-  diagnostic.config(config)
-  rvim.lsp.notify(
-    string.format(
-      'virtual lines %s',
-      bool2str(type(diagnostic.config().virtual_lines) ~= 'boolean')
-    )
-  )
-end
-command('ToggleVirtualLines', toggle_virtual_lines)
-
-local function toggle_signs()
-  local config = diagnostic.config()
-  if type(config.signs) == 'boolean' then
-    config = vim.tbl_extend('force', config, { signs = { severity_limit = 'Error' } })
-  else
-    config = vim.tbl_extend('force', config, { signs = false })
-  end
-  rvim.lsp.signs.enable = not rvim.lsp.signs.enable
-  diagnostic.config(config)
-  vim.cmd('edit | silent! wall') -- Redraw
-  rvim.lsp.notify(string.format('signs %s', bool2str(type(diagnostic.config().signs) ~= 'boolean')))
-end
-rvim.command('ToggleSigns', toggle_signs)
-
-local function toggle_hover_diagnostics()
-  rvim.lsp.hover_diagnostics.enable = not rvim.lsp.hover_diagnostics.enable
-  rvim.lsp.notify(
-    string.format('hover diagnostics %s', bool2str(rvim.lsp.hover_diagnostics.enable))
-  )
-end
-command('ToggleHoverDiagnostics', toggle_hover_diagnostics)

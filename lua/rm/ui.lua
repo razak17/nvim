@@ -234,6 +234,7 @@ local filetypes = rvim.p_table({
   ['neotest.*'] = presets.tool_panel,
   ['^Neogit.*'] = presets.tool_panel,
   ['agitator'] = presets.tool_panel,
+  ['aerial'] = presets.tool_panel,
   ['blame'] = presets.tool_panel,
   ['query'] = presets.tool_panel,
   ['DiffviewFiles'] = presets.tool_panel,
