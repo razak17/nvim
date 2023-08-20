@@ -105,7 +105,7 @@ return {
   {
     'lewis6991/gitsigns.nvim',
     enabled = not rvim.plugins.minimal,
-    event = { 'BufReadPre', 'BufNewFile' },
+    event = { 'VeryLazy' },
     opts = {
       signs = {
         add = { highlight = 'GitSignsAdd', text = left_block },
@@ -163,7 +163,7 @@ return {
     },
     config = function(_, opts)
       rvim.augroup('GitSignsRefreshCustom', {
-        event = { 'FocusGained', 'InsertEnter', 'BufEnter' },
+        event = { 'FocusGained', 'InsertEnter', 'BufEnter', 'CursorMoved' },
         command = function(args)
           local decs = rvim.ui.decorations.get({
             ft = vim.bo.ft,
