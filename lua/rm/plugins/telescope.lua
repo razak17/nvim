@@ -76,6 +76,7 @@ end
 local function textcase()
   extensions('textcase').normal_mode(rvim.telescope.minimal_ui({ prompt_title = 'Text Case' }))
 end
+local function file_browser() extensions('file_browser').file_browser({ hidden = true }) end
 
 ---@param opts? table
 ---@return function
@@ -111,7 +112,7 @@ rvim.telescope = {
   dropdown = dropdown,
   adaptive_dropdown = function(_) return dropdown({ height = fit_to_available_height }) end,
   minimal_ui = function(_) return dropdown({ previewer = false }) end,
-  delta_opts = delta_opts
+  delta_opts = delta_opts,
 }
 
 return {
@@ -123,6 +124,7 @@ return {
       { '<leader>f?', b('help_tags'), desc = 'help tags' },
       { '<leader>fa', b('builtin', { include_extensions = true }), desc = 'builtins' },
       { '<leader>fb', b('current_buffer_fuzzy_find'), desc = 'find in current buffer' },
+      { '<leader>.', file_browser, desc = 'file browser' },
       { '<leader>fc', nvim_config, desc = 'nvim config' },
       { '<leader>ff', project_files, desc = 'project files' },
       { '<leader>fh', frecency, desc = 'Most (f)recently used files' },
