@@ -1,3 +1,5 @@
+if not rvim then return end
+
 local function telescope_stash_mappings(prompt_bufnr, map)
   local actions = require('telescope.actions')
   map('i', '<C-v>', function(nr)

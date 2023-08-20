@@ -3,7 +3,7 @@ if not rvim then return end
 local function open_file_cur_dir(with_children)
   local folder = vim.fn.expand('%:h')
   local params = {
-    path_display = function(opts, p) return string.gsub(p, rvim.escape_pattern(folder .. '/'), '') end,
+    path_display = function(_, p) return string.gsub(p, rvim.escape_pattern(folder .. '/'), '') end,
   }
   if with_children then
     params.search_dirs = { folder }
@@ -73,7 +73,7 @@ local function toggle_diff()
   -- => check if any window is in diff mode
   local has_diff = false
   local wins = vim.api.nvim_list_wins()
-  for i, win in pairs(wins) do
+  for _, win in pairs(wins) do
     has_diff = has_diff or vim.api.nvim_win_call(win, function() return vim.opt.diff:get() end)
   end
 
@@ -81,8 +81,7 @@ local function toggle_diff()
     vim.cmd('windo diffoff')
   else
     -- used to do a plain 'windo diffthis', but i want to exclude some window types
-    local wins = vim.api.nvim_list_wins()
-    for i, win in pairs(wins) do
+    for _, win in pairs(wins) do
       local buf = vim.api.nvim_win_get_buf(win)
       local buf_ft = vim.api.nvim_buf_get_option(buf, 'ft')
       if

@@ -1,3 +1,5 @@
+if not rvim then return end
+
 local pickers = require('telescope.pickers')
 local entry_display = require('telescope.pickers.entry_display')
 local finders = require('telescope.finders')

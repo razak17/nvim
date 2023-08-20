@@ -1,3 +1,5 @@
+if not rvim then return end
+
 function rvim.git.show_commit(commit_sha)
   vim.cmd(
     'DiffviewOpen '

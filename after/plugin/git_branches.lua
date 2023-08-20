@@ -1,3 +1,5 @@
+if not rvim then return end
+
 local fn = vim.fn
 
 -- forked from https://github.com/nvim-telescope/telescope.nvim/blob/master/lua/telescope/builtin/__git.lua#L197 as of 9f50168
