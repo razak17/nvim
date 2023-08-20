@@ -61,8 +61,6 @@ return {
       rvim.highlight.plugin('neogit', {
         theme = {
           ['onedark'] = {
-            { NeogitDiffAdd = { inherit = 'DiffAdd' } },
-            { NeogitDiffDelete = { inherit = 'DiffDelete' } },
             { NeogitHunkHeader = { inherit = 'Headline2', bold = true } },
             { NeogitDiffHeader = { inherit = 'Headline2', bold = true } },
             { NeogitFold = { bg = { from = 'CursorLine', alter = -0.25 } } },
@@ -103,20 +101,6 @@ return {
         file_history_panel = { q = '<Cmd>DiffviewClose<CR>' },
       },
     },
-    config = function(_, opts)
-      rvim.highlight.plugin('diffview', {
-        { DiffAddedChar = { bg = 'NONE', fg = { from = 'DiffAdd', attr = 'bg', alter = 0.3 } } },
-        {
-          DiffChangedChar = { bg = 'NONE', fg = { from = 'DiffChange', attr = 'bg', alter = 0.3 } },
-        },
-        { DiffviewStatusAdded = { link = 'DiffAddedChar' } },
-        { DiffviewStatusModified = { link = 'DiffChangedChar' } },
-        { DiffviewStatusRenamed = { link = 'DiffChangedChar' } },
-        { DiffviewStatusUnmerged = { link = 'DiffChangedChar' } },
-        { DiffviewStatusUntracked = { link = 'DiffAddedChar' } },
-      })
-      require('diffview').setup(opts)
-    end,
   },
   {
     'lewis6991/gitsigns.nvim',
@@ -270,11 +254,11 @@ return {
         {
           theme = {
             ['onedark'] = {
-              { GitConflictCurrent = { bg = { from = 'DiffAdd', alter = -0.5 } } },
+              { GitConflictCurrent = { inherit = 'DiffAdd' } },
               { GitConflictCurrentLabel = { inherit = 'DiffAdd' } },
-              { GitConflictIncoming = { bg = { from = 'DiffDelete', alter = -0.5 } } },
+              { GitConflictIncoming = { inherit = 'DiffDelete' } },
               { GitConflictIncomingLabel = { inherit = 'DiffDelete' } },
-              { GitConflictAncestor = { bg = { from = 'DiffText', alter = -0.5 } } },
+              { GitConflictAncestor = { inherit = 'DiffText' } },
               { GitConflictAncestorLabel = { inherit = 'DiffText' } },
             },
           },
