@@ -27,7 +27,7 @@ return {
       { '[n', next_failed, desc = 'jump to next failed test' },
       { ']n', prev_failed, desc = 'jump to previous failed test' },
     },
-    config = function()
+    config = function(_, opts)
       local neotest_ns = vim.api.nvim_create_namespace('neotest')
       vim.diagnostic.config({
         virtual_text = {
@@ -65,5 +65,43 @@ return {
       'nvim-neotest/neotest-python',
       { 'rcarriga/neotest-plenary', dependencies = { 'nvim-lua/plenary.nvim' } },
     },
+  },
+  {
+    'andythigpen/nvim-coverage',
+    keys = {
+      { '<localleader>tl', function() require('coverage').load(true) end, desc = 'coverage: load' },
+      { '<localleader>tc', function() require('coverage').clear() end, desc = 'coverage: clear' },
+      { '<localleader>tt', function() require('coverage').toggle() end, desc = 'coverage: toggle' },
+      {
+        '<localleader>ts',
+        function() require('coverage').summary() end,
+        desc = 'coverage: summary',
+      },
+      {
+        ']u',
+        function() require('coverage').jump_next('uncovered') end,
+        'coverage: jump next uncovered',
+      },
+      {
+        '[u',
+        function() require('coverage').jump_prev('uncovered') end,
+        'coverage: jump prev uncovered',
+      },
+    },
+    opts = {
+      auto_reload = true,
+      load_coverage_cb = function(ftype)
+        require('notify')(
+          'Loaded ' .. ftype .. ' coverage',
+          vim.log.levels.INFO,
+          { render = 'minimal', timeout = 1000, hide_from_history = true }
+        )
+      end,
+      highlights = {
+        summary_normal = { link = 'Normal' },
+        summary_cursor_line = { link = 'NormalFloat' },
+      },
+    },
+    dependencies = 'nvim-lua/plenary.nvim',
   },
 }

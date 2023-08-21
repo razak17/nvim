@@ -690,9 +690,10 @@ return {
     'jpalardy/vim-slime',
     event = 'VeryLazy',
     keys = {
-      { '<localleader>tt', '<Plug>SlimeParagraphSend', desc = 'slime: paragraph' },
-      { '<localleader>tt', '<Plug>SlimeRegionSend', mode = { 'x' }, desc = 'slime: region' },
-      { '<localleader>tc', '<Plug>SlimeConfig', desc = 'slime: config' },
+      { '<localleader>st', '<Plug>SlimeParagraphSend', desc = 'slime: paragraph' },
+      { '<localleader>st', '<Plug>SlimeRegionSend', mode = { 'x' }, desc = 'slime: region' },
+      { '<localleader>sc', '<Plug>SlimeConfig', desc = 'slime: config' },
+
     },
     config = function()
       vim.g.slime_target = 'tmux'

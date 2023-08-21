@@ -154,7 +154,7 @@ return {
     },
     config = function(_, opts)
       rvim.augroup('GitSignsRefreshCustom', {
-        event = { 'FocusGained', 'InsertEnter', 'BufEnter', 'CursorMoved' },
+        event = { 'InsertEnter', 'CursorMoved' },
         command = function(args)
           local decs = rvim.ui.decorations.get({
             ft = vim.bo.ft,
@@ -226,7 +226,6 @@ return {
   {
     'emmanueltouzery/agitator.nvim',
     enabled = not rvim.plugins.minimal,
-    event = 'VeryLazy',
     keys = {
       {
         '<leader>gbo',
