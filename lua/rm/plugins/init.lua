@@ -774,6 +774,7 @@ return {
   { 'razak17/slides.nvim', ft = 'slide' },
   { 'fladson/vim-kitty', ft = 'kitty' },
   { 'laytan/cloak.nvim', event = 'VeryLazy', opts = {} },
+  { 'raimon49/requirements.txt.vim', ft = 'requirements' },
   {
     'dmmulroy/tsc.nvim',
     enabled = rvim.lsp.enable,
