@@ -271,7 +271,7 @@ return {
   },
   {
     'subnut/nvim-ghost.nvim',
-    enabled = not rvim.plugins.minimal,
+    enabled = not rvim.plugins.minimal and rvim.plugins.overrides.ghost_text.enable,
     lazy = false,
     event = { 'BufReadPost', 'BufNewFile' },
     config = function()
