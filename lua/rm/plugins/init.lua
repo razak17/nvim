@@ -150,7 +150,7 @@ return {
                 experimental = { pathStrict = true },
                 library = {
                   runtime = join_paths(vim.env.HOME, 'neovim', 'share', 'nvim', 'runtime'),
-                  plugins = { 'neotest' },
+                  plugins = {},
                   types = true,
                 },
               },

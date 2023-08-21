@@ -2,17 +2,8 @@ local cwd = vim.fn.getcwd()
 local icons = rvim.ui.icons
 local border = rvim.ui.current.border
 local left_block = icons.separators.left_block
+local format_text = rvim.format_text
 
----@generic T:table<string, any>
----@param t T the object to format
----@param k string the key to format
----@return T?
-local function format_text(t, k)
-  local txt = t[k] and t[k]:gsub('%s', '') or ''
-  if #txt < 1 then return end
-  t[k] = txt
-  return t
-end
 return {
   {
     'NeogitOrg/neogit',

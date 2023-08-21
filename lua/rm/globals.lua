@@ -175,6 +175,17 @@ function rvim.load_colorscheme(name)
   rvim.pcall('theme failed to load because', vim.cmd.colorscheme, name)
 end
 
+---@generic T:table<string, any>
+---@param t T the object to format
+---@param k string the key to format
+---@return T?
+function rvim.format_text(t, k)
+  local txt = t[k] and t[k]:gsub('%s', '') or ''
+  if #txt < 1 then return end
+  t[k] = txt
+  return t
+end
+
 --[[ create_select_menu()
 -- Create a menu to execute a Vim command or Lua function using vim.ui.select()
 -- Example usage:
