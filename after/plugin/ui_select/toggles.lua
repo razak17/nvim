@@ -58,6 +58,7 @@ local toggle_options = {
   ['4. Toggle Cloak'] = 'CloakToggle',
   ['4. Toggle SpOnGeBoB'] = 'SpOnGeBoBtOgGlE',
   ['4. Toggle ZenMode'] = 'ZenMode',
+  ['4. Toggle Lengthmatters'] = 'LengthmattersToggle',
   ['5. Insert UUID'] = function()
     require('uuid-nvim').toggle_highlighting()
     require('uuid-nvim').insert_v4()

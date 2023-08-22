@@ -771,10 +771,22 @@ return {
   ----------------------------------------------------------------------------------------------------
   -- Filetype Plugins {{{1
   ----------------------------------------------------------------------------------------------------
+  {
+    'whatyouhide/vim-lengthmatters',
+    lazy = false,
+    config = function()
+      vim.g.lengthmatters_excluded = { 'packer' }
+      vim.g.lengthmatters_linked_to = 'CursorLine'
+    end,
+  },
   { 'razak17/slides.nvim', ft = 'slide' },
   { 'fladson/vim-kitty', ft = 'kitty' },
-  { 'laytan/cloak.nvim', event = 'VeryLazy', opts = {} },
-  { 'raimon49/requirements.txt.vim', ft = 'requirements' },
+  { 'raimon49/requirements.txt.vim', lazy = false },
+  {
+    'laytan/cloak.nvim',
+    event = 'VeryLazy',
+    opts = {},
+  },
   {
     'dmmulroy/tsc.nvim',
     enabled = rvim.lsp.enable,
