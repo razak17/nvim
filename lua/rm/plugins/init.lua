@@ -693,7 +693,6 @@ return {
       { '<localleader>st', '<Plug>SlimeParagraphSend', desc = 'slime: paragraph' },
       { '<localleader>st', '<Plug>SlimeRegionSend', mode = { 'x' }, desc = 'slime: region' },
       { '<localleader>sc', '<Plug>SlimeConfig', desc = 'slime: config' },
-
     },
     config = function()
       vim.g.slime_target = 'tmux'
