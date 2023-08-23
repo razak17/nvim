@@ -226,8 +226,6 @@ return {
   {
     'stevearc/aerial.nvim',
     enabled = not rvim.plugins.minimal and rvim.treesitter.enable,
-    event = 'LspAttach',
-    keys = {},
     opts = {
       lazy_load = false,
       backends = {
@@ -294,6 +292,7 @@ return {
     config = function(_, opts)
       vim.api.nvim_set_hl(0, 'AerialPrivate', { default = true, italic = true })
       require('aerial').setup(opts)
+      require('telescope').load_extension('aerial')
     end,
     dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' },
   },

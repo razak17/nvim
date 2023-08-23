@@ -297,7 +297,6 @@ return {
       require('telescope').load_extension('menufacture')
       require('telescope').load_extension('notify')
       require('telescope').load_extension('file_browser')
-      if rvim.lsp.enable then require('telescope').load_extension('aerial') end
       -- require('telescope').load_extension('textcase')
       if not rvim.plugins.minimal then
         require('telescope').load_extension('persisted')

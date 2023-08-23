@@ -340,7 +340,6 @@ return {
   },
   {
     'haolian9/nag.nvim',
-    event = 'VeryLazy',
     dependencies = { 'haolian9/infra.nvim' },
     keys = {
       { mode = 'x', '<localleader>nv', ":lua require'nag'.vsplit()<CR>", desc = 'nag: vsplit' },
