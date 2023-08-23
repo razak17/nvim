@@ -29,7 +29,7 @@ return {
 
       require('neo-tree').setup({
         close_if_last_window = true,
-        sources = { 'filesystem', 'git_status', 'document_symbols' },
+        sources = { 'filesystem' },
         enable_opened_markers = true,
         source_selector = {
           winbar = true,
