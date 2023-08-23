@@ -33,7 +33,10 @@ return {
         },
       },
       hover = { enabled = true },
-      progress = { throttle = 1000 / 800 },
+      progress = {
+        enabled = false,
+        throttle = 1000 / 800,
+      },
       override = {
         ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
         ['vim.lsp.util.stylize_markdown'] = true,
