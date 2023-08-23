@@ -296,6 +296,20 @@ return {
     end,
     dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' },
   },
+  {
+    'roobert/action-hints.nvim',
+    enabled = rvim.lsp.enable,
+    event = 'LspAttach',
+    config = function()
+      require('action-hints').setup({
+        template = {
+          definition = { text = ' ⊛', color = '#add8e6' },
+          references = { text = ' ↱%s', color = '#ff6666' },
+        },
+        use_virtual_text = true,
+      })
+    end,
+  },
   -- }}}
   ----------------------------------------------------------------------------------------------------
   -- Utilities {{{1
