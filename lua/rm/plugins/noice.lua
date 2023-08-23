@@ -10,6 +10,7 @@ return {
     cmdline = {
       format = {
         IncRename = { title = 'Rename' },
+        cmdline = { pattern = "^:", icon = " ", lang = "vim" },
         substitute = { pattern = '^:%%?s/', icon = ' ', ft = 'regex', title = '' },
         input = { icon = ' ', lang = 'text', view = 'cmdline_popup', title = '' },
       },
