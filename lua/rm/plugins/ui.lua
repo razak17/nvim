@@ -365,7 +365,8 @@ return {
   },
   {
     'razak17/mini.indentscope',
-    enabled = not rvim.plugins.minimal,
+    -- enabled = not rvim.plugins.minimal,
+    enabled = false,
     event = 'BufRead',
     version = false,
     init = function()
@@ -401,8 +402,7 @@ return {
   },
   {
     'lukas-reineke/indent-blankline.nvim',
-    -- enabled = rvim.treesitter.enable and not rvim.plugins.minimal,
-    enabled = false,
+    enabled = rvim.treesitter.enable and not rvim.plugins.minimal,
     event = 'BufRead',
     opts = {
       char = separators.left_thin_block,
