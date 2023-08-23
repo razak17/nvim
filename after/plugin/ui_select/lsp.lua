@@ -241,6 +241,7 @@ local lsp_options = {
   ['2. Eslint Fix'] = eslint_fix,
   ['3. LSP references'] = display_lsp_references,
   ['4. Call Heirarchy'] = 'lua rvim.telescope_display_call_hierarchy()',
+  ['5. Remove Unused Imports'] = 'lua rvim.remove_unused_imports()',
   ['5. Restart All LSPs'] = lsp_restart_all,
   ['6. Toggle Diagnostics Sources for Buffer'] = telescope_enable_disable_diagnostics,
   ['7. Toggle Virtual Text'] = toggle_virtual_text,
