@@ -64,9 +64,9 @@ local git_options = {
   ['4. File History'] = 'DiffviewFileHistory %',
   ['5. Pull Latest Changes'] = git_pull,
   ['5. Fetch Orign'] = git_fetch_origin,
-  ['6. Conflict Show Base'] = 'lua diffview_conflict_view_commit("base")',
-  ['6. Conflict Show Ours'] = 'lua diffview_conflict_view_commit("ours")',
-  ['6. Conflict Show Theirs'] = 'lua diffview_conflict_view_commit("theirs")',
+  ['6. Conflict Show Base'] = 'lua rvim.git.diffview_conflict_view_commit("base")',
+  ['6. Conflict Show Ours'] = 'lua rvim.git.diffview_conflict_view_commit("ours")',
+  ['6. Conflict Show Theirs'] = 'lua rvim.git.diffview_conflict_view_commit("theirs")',
 }
 
 local git_menu = function()
