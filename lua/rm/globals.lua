@@ -244,7 +244,6 @@ end
 ---@param buf integer
 local function apply_ft_mappings(args, buf)
   vim.iter(args):each(function(m)
-    print('DEBUGPRINT[1]: globals.lua:154: m=' .. vim.inspect(m))
     -- assert(#m == 3, 'map args must be a table with at least 3 items')
     local opts = vim.iter(m):fold({ buffer = buf }, function(acc, key, item)
       if type(key) == 'string' then acc[key] = item end

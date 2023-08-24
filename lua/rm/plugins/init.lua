@@ -96,6 +96,7 @@ return {
   ----------------------------------------------------------------------------------------------------
   'b0o/schemastore.nvim',
   { 'lambdalisue/suda.vim', lazy = false },
+  { 'doums/dmap.nvim', event = 'LspAttach', opts = { win_h_offset = 4 } },
   {
     'razak17/lspkind.nvim',
     config = function() require('lspkind').init({ preset = 'codicons' }) end,
@@ -222,7 +223,6 @@ return {
       toggle_event = { 'InsertEnter' },
     },
   },
-  { 'doums/dmap.nvim', event = 'LspAttach', opts = { win_h_offset = 4 } },
   {
     'stevearc/aerial.nvim',
     enabled = not rvim.plugins.minimal and rvim.treesitter.enable,
@@ -1098,6 +1098,13 @@ return {
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
     ft = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
     opts = { remove_template_string = true },
+  },
+  {
+    'roobert/f-string-toggle.nvim',
+    enabled = rvim.treesitter.enable,
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
+    ft = { 'python' },
+    opts = {},
   },
   {
     'marilari88/twoslash-queries.nvim',
