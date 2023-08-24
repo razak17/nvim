@@ -73,7 +73,7 @@ local git_menu = function()
   if not is_git_repo() then
     vim.notify_once('Not a git directory')
   else
-    rvim.create_select_menu('Git Commands', git_options)() --> Extra paren to execute!
+    rvim.create_select_menu('Git Commands', git_options)()
   end
 end
 

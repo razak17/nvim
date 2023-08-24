@@ -112,7 +112,7 @@ local file_options = {
 }
 
 local file_menu = function()
-  rvim.create_select_menu('code action to perform at the current cursor', file_options)() --> extra paren to execute!
+  rvim.create_select_menu('File actions', file_options)()
 end
 
 map('n', '<leader>fl', file_menu, { desc = '[f]ile [a]ctions: open menu for file actions' })

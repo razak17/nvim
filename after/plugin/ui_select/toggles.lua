@@ -66,7 +66,7 @@ local toggle_options = {
 }
 
 local toggle_menu = function()
-  rvim.create_select_menu('code action to perform at the current cursor', toggle_options)() --> extra paren to execute!
+  rvim.create_select_menu('Toggle actions', toggle_options)() --> extra paren to execute!
 end
 
 map('n', '<leader>o', toggle_menu, { desc = '[t]oggle [a]ctions: open menu for toggle actions' })

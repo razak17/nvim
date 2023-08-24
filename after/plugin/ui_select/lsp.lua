@@ -255,7 +255,7 @@ local lsp_menu = function()
   if #lsp_clients(0) == 0 then
     vim.notify_once('there is no lsp server attached to the current buffer')
   else
-    rvim.create_select_menu('code action to perform at the current cursor', lsp_options)() --> extra paren to execute!
+    rvim.create_select_menu('Code/LSP actions', lsp_options)() --> extra paren to execute!
   end
 end
 
