@@ -130,9 +130,8 @@ return {
       vim.g.matchup_matchparen_deferred = 1
       highlight.plugin('vim-matchup', {
         { MatchWord = { inherit = 'LspReferenceText', underline = true } },
-        { MatchParen = { link = 'CursorLineNr' } },
-        { MatchParenCursor = { link = 'CursorLineNr' } },
-        { MatchParenOffscreen = { link = 'CursorLineNr' } },
+        { MatchParenCursor = { link = 'MatchParen' } },
+        { MatchParenOffscreen = { link = 'MatchParen' } },
       })
     end,
   },

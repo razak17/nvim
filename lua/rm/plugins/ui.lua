@@ -46,6 +46,12 @@ return {
     },
   },
   {
+    'utilyre/sentiment.nvim',
+    version = '*',
+    event = 'VeryLazy',
+    opts = {},
+  },
+  {
     'folke/zen-mode.nvim',
     cmd = 'ZenMode',
     opts = {
