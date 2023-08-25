@@ -4,7 +4,6 @@ local function sync(path) return fmt('%s/notes/%s', fn.expand('$SYNC_DIR'), path
 return {
   {
     'epwalsh/obsidian.nvim',
-    event = { 'BufReadPre ' .. sync('obsidian/**.md') },
     keys = {
       { '<localleader>ob', '<Cmd>ObsidianBacklinks<CR>', desc = 'obsidian: buffer backlinks' },
       { '<localleader>od', '<Cmd>ObsidianToday<CR>', desc = 'obsidian: open daily note' },
@@ -18,7 +17,11 @@ return {
       dir = sync('obsidian'),
       notes_subdir = 'Zettelkasten',
       daily_notes = { folder = 'Daily Notes' },
-      templates = { subdir = 'Templates' },
+      templates = {
+        subdir = 'Templates',
+        date_format = '%Y-%m-%d-%a',
+        time_format = '%H:%M',
+      },
       finder = 'fzf-lua',
       mappings = {},
     },
