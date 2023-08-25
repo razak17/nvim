@@ -219,6 +219,20 @@ return {
     },
   },
   {
+    '9seconds/repolink.nvim',
+    cmd = { 'RepoLink' },
+    keys = {
+      {
+        '<leader>gog',
+        '<Cmd>RepoLink<CR>',
+        desc = 'repolink: generate link',
+        mode = { 'n', 'x' },
+      },
+    },
+    opts = {},
+    dependencies = { 'nvim-lua/plenary.nvim' },
+  },
+  {
     'yutkat/git-rebase-auto-diff.nvim',
     ft = { 'gitrebase' },
     opts = {},
