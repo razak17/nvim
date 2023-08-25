@@ -159,6 +159,7 @@ local function setup_mappings(client, bufnr)
     { 'n', '<leader>lr', lsp.buf.rename, desc = 'rename', capability = M.textDocument_rename },
     -- TODO: loclist is broken
     -- { 'n', '<leader>lL', vim.diagnostic.setloclist, desc = 'toggle loclist diagnostics' },
+    { 'n', '<leader>li', '<Cmd>LspInfo<CR>', desc = 'lsp info' },
     {
       'n',
       '<localleader>li',
