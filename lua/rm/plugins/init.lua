@@ -95,7 +95,6 @@ return {
   -- LSP,Completion & Debugger {{{1
   ----------------------------------------------------------------------------------------------------
   'b0o/schemastore.nvim',
-  { 'lambdalisue/suda.vim', lazy = false },
   { 'doums/dmap.nvim', event = 'LspAttach', opts = { win_h_offset = 4 } },
   {
     'razak17/lspkind.nvim',
@@ -324,6 +323,7 @@ return {
   -- Utilities {{{1
   ----------------------------------------------------------------------------------------------------
   { 'sQVe/sort.nvim', cmd = { 'Sort' } },
+  { 'lambdalisue/suda.vim', lazy = false },
   {
     'itchyny/vim-highlighturl',
     event = 'ColorScheme',
