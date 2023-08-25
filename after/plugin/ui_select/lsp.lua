@@ -249,6 +249,7 @@ local lsp_options = {
   ['7. Toggle Diagnostic Signs'] = toggle_signs,
   ['7. Toggle Hover Diagnostics'] = toggle_hover_diagnostics,
   ['7. Toggle JS Arrow Function'] = 'lua require("nvim-js-actions/js-arrow-fn").toggle()',
+  ['8. Preview Code Actions'] = 'lua require("actions-preview").code_actions()',
 }
 
 local lsp_menu = function()
