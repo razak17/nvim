@@ -448,9 +448,9 @@ return {
       })
     end,
     keys = {
-      { 'zR', function() require('ufo').openAllFolds() end, 'open all folds' },
-      { 'zM', function() require('ufo').closeAllFolds() end, 'close all folds' },
-      { 'zP', function() require('ufo').peekFoldedLinesUnderCursor() end, 'preview fold' },
+      { 'zR', function() require('ufo').openAllFolds() end, 'ufo: open all folds' },
+      { 'zM', function() require('ufo').closeAllFolds() end, 'ufo: close all folds' },
+      { 'zP', function() require('ufo').peekFoldedLinesUnderCursor() end, 'ufo: preview fold' },
     },
     opts = function()
       local ft_map = { rust = 'lsp' }
