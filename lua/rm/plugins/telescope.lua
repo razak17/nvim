@@ -25,6 +25,21 @@ local function cursor(opts)
   }))
 end
 
+local function vertical(opts)
+  opts = vim.tbl_extend('keep', opts or {}, {
+    sorting_strategy = 'ascending',
+    layout_strategy = 'vertical',
+    layout_config = {
+      width = 0.5,
+      height = 0.7,
+      prompt_position = 'top',
+      preview_cutoff = 20,
+      preview_height = function(_, _, max_lines) return max_lines - 20 end,
+    },
+  })
+  return opts
+end
+
 local function extensions(name) return require('telescope').extensions[name] end
 
 local function delta_opts(opts, is_buf)
@@ -83,7 +98,7 @@ end
 
 local function frecency() extensions('frecency').frecency(dropdown(rvim.telescope.minimal_ui())) end
 local function luasnips() extensions('luasnip').luasnip(dropdown()) end
-local function notifications() extensions('notify').notify(dropdown()) end
+local function notifications() extensions('notify').notify(vertical()) end
 local function undo() extensions('undo').undo() end
 local function projects() extensions('projects').projects() end
 local function aerial() extensions('aerial').aerial() end
@@ -127,6 +142,7 @@ local function multi_selection_open(prompt_bufnr) multiopen(prompt_bufnr, 'edit'
 rvim.telescope = {
   cursor = cursor,
   dropdown = dropdown,
+  vertical = vertical,
   adaptive_dropdown = function(_) return dropdown({ height = fit_to_available_height }) end,
   minimal_ui = function(_) return dropdown({ previewer = false }) end,
   delta_opts = delta_opts,
