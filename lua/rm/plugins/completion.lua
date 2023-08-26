@@ -324,8 +324,8 @@ return {
       },
       {
         'zbirenbaum/copilot-cmp',
-        enabled = rvim.lsp.enable,
-        event = 'LspAttach',
+        -- enabled = rvim.lsp.enable,
+        -- event = 'LspAttach',
         opts = {},
         config = function(_, opts)
           local copilot_cmp = require('copilot_cmp')

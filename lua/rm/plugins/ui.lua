@@ -288,7 +288,6 @@ return {
   },
   {
     'Bekaboo/dropbar.nvim',
-    commit = 'b00ede8',
     event = 'VeryLazy',
     enabled = not rvim.plugins.minimal,
     keys = {
