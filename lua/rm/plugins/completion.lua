@@ -324,7 +324,7 @@ return {
       },
       {
         'zbirenbaum/copilot-cmp',
-        dependencies = 'copilot.lua',
+        enabled = rvim.lsp.enable,
         event = 'LspAttach',
         opts = {},
         config = function(_, opts)
@@ -338,6 +338,7 @@ return {
             end,
           })
         end,
+        dependencies = 'copilot.lua',
       },
     },
   },

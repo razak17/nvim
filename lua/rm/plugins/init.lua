@@ -95,7 +95,6 @@ return {
   -- LSP,Completion & Debugger {{{1
   ----------------------------------------------------------------------------------------------------
   'b0o/schemastore.nvim',
-  { 'doums/dmap.nvim', event = 'LspAttach', opts = { win_h_offset = 4 } },
   {
     'razak17/lspkind.nvim',
     config = function() require('lspkind').init({ preset = 'codicons' }) end,
@@ -207,6 +206,7 @@ return {
   },
   {
     'kosayoda/nvim-lightbulb',
+    enabled = rvim.lsp.enable,
     event = 'LspAttach',
     opts = {
       autocmd = { enabled = true },
@@ -217,10 +217,17 @@ return {
   },
   {
     'dgagn/diagflow.nvim',
+    enabled = rvim.lsp.enable,
     event = 'LspAttach',
     opts = {
       toggle_event = { 'InsertEnter' },
     },
+  },
+  {
+    'doums/dmap.nvim',
+    enabled = rvim.lsp.enable,
+    event = 'LspAttach',
+    opts = { win_h_offset = 4 },
   },
   {
     'stevearc/aerial.nvim',
@@ -984,7 +991,7 @@ return {
   },
   {
     'olexsmir/gopher.nvim',
-    enabled = not rvim.plugins.minimal,
+    enabled = rvim.lsp.enable and not rvim.plugins.minimal,
     ft = 'go',
     dependencies = { 'nvim-lua/plenary.nvim', 'nvim-treesitter/nvim-treesitter' },
   },
