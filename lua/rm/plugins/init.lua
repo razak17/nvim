@@ -799,6 +799,9 @@ return {
   ----------------------------------------------------------------------------------------------------
   -- Filetype Plugins {{{1
   ----------------------------------------------------------------------------------------------------
+  { 'razak17/slides.nvim', ft = 'slide' },
+  { 'fladson/vim-kitty', ft = 'kitty' },
+  { 'raimon49/requirements.txt.vim', lazy = false },
   {
     'whatyouhide/vim-lengthmatters',
     lazy = false,
@@ -807,9 +810,6 @@ return {
       vim.g.lengthmatters_linked_to = 'CursorLine'
     end,
   },
-  { 'razak17/slides.nvim', ft = 'slide' },
-  { 'fladson/vim-kitty', ft = 'kitty' },
-  { 'raimon49/requirements.txt.vim', lazy = false },
   {
     'laytan/cloak.nvim',
     event = 'VeryLazy',
