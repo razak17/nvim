@@ -35,6 +35,9 @@ return {
           { CmpItemAbbrMatchFuzzy = { fg = { from = 'Search' } } },
           { CmpItemMenu = { fg = { from = 'Comment' }, italic = true, bold = true } },
           { CmpItemKindCopilot = { fg = { from = 'DiffAdd', attr = 'bg' } } },
+          { CmpItemKindNerdFont = { fg = { from = 'Directory' } } },
+          { CmpItemKindLab = { fg = { from = 'DiagnosticWarn' } } },
+          { CmpItemKindDynamic = { fg = { from = 'Directory' } } },
         })
       )
 
@@ -149,15 +152,22 @@ return {
             end
             if entry.source.name == 'lab.quick_data' then
               vim_item.kind = format_icon(codicons.misc.robot)
+              vim_item.kind_hl_group = 'CmpItemKindLab'
             end
             if entry.source.name == 'dynamic' then
               vim_item.kind = format_icon(codicons.misc.calendar)
+              vim_item.kind_hl_group = 'CmpItemKindDynamic'
             end
             if entry.source.name == 'crates' then
               vim_item.kind = format_icon(ui.codicons.misc.package)
             end
             if entry.source.name == 'copilot' then
               vim_item.kind = format_icon(ui.codicons.misc.octoface)
+            end
+
+            if entry.source.name == 'nerdfonts' then
+              vim_item.kind = format_icon('')
+              vim_item.kind_hl_group = 'CmpItemKindNerdFont'
             end
 
             if vim_item.kind == 'Color' then
@@ -195,6 +205,7 @@ return {
               ['buffer-lines'] = '[BUFL]',
               dynamic = '[DYN]',
               ['lab.quick_data'] = '[LAB]',
+              nerdfonts = '[NF]',
             })[entry.source.name]
             return vim_item
           end,
@@ -240,6 +251,7 @@ return {
             max_item_count = 10,
             group_index = 2,
           },
+          { name = 'nerdfonts', priority = 3, group_index = 2 },
           { name = 'norg', priority = 3, group_index = 2 },
         },
       })
@@ -282,6 +294,7 @@ return {
       'hrsh7th/cmp-buffer',
       'hrsh7th/cmp-emoji',
       'lukas-reineke/cmp-rg',
+      'fazibear/cmp-nerdfonts',
       { 'hrsh7th/cmp-nvim-lsp', enabled = rvim.lsp.enable },
       { 'hrsh7th/cmp-cmdline', config = function() vim.o.wildmode = '' end },
       { 'hrsh7th/cmp-nvim-lsp-document-symbol', enabled = rvim.lsp.enable },
