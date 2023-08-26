@@ -465,6 +465,11 @@ return {
       hl = function() return { bg = bg, fg = fg } end,
     },
   },
+  word_count = {
+    condition = function() return vim.bo.filetype == 'markdown' end,
+    provider = function() return ' ' .. tostring(vim.fn.wordcount().words) .. ' words' end,
+    hl = { fg = fg, bg = bg },
+  },
   lsp_clients = {
     condition = conditions.lsp_attached,
     update = { 'LspAttach', 'LspDetach', 'WinEnter' },
@@ -479,7 +484,7 @@ return {
   },
   copilot_attached = {
     condition = function() return rvim.ai.enable and not rvim.plugins.minimal end,
-    provider = '  ',
+    provider = ' ' .. codicons.misc.octoface .. ' ',
     hl = { fg = colors.forest_green, bg = bg },
     on_click = {
       callback = function()
@@ -504,7 +509,7 @@ return {
       local session = require('dap').session()
       return session ~= nil
     end,
-    provider = '  ',
+    provider = ' ' .. codicons.misc.bug .. ' ',
     on_click = {
       callback = function() require('dap').continue() end,
       name = 'dap_continue',
@@ -576,6 +581,13 @@ return {
       provider = function() return ' ' .. vim.fn.reg_recording() .. ' ' end,
       hl = { bg = bg, fg = colors.blue },
     },
+  },
+  macro_rec = {
+    condition = function() return require('NeoComposer.state') end,
+    init = function(self) self.rec = require('NeoComposer.ui').status_recording() end,
+    provider = function(self)
+      if self.rec ~= '' then return '  ' .. self.rec end
+    end,
   },
   ruler = {
     provider = function() return '  %7(%l/%3L%):%2c ' .. progress() end,

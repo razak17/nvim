@@ -83,9 +83,9 @@ xnoremap('J', ":m '>+1<CR>gv=gv")
 -- Windows
 ----------------------------------------------------------------------------------------------------
 -- change two vertically split windows to horizontal splits
-nnoremap('<leader>wv', '<C-W>t <C-W>H<C-W>=', { desc = 'vertical to horizontal' })
+nnoremap('<leader>wv', '<C-W>t <C-W>H<C-W>=', { desc = 'horizontal to vertical' })
 -- change two horizontally split windows to vertical splits
-nnoremap('<leader>wh', '<C-W>t <C-W>K<C-W>=', { desc = 'horizontal to vertical' })
+nnoremap('<leader>wh', '<C-W>t <C-W>K<C-W>=', { desc = 'vertical to horizontal' })
 -- make . work with visually selected lines
 vnoremap('.', ':norm.<CR>')
 -- when going to the end of the line in visual mode ignore whitespace characters
@@ -100,6 +100,9 @@ nnoremap('<C-h>', '<C-w>h')
 nnoremap('<C-j>', '<C-w>j')
 nnoremap('<C-k>', '<C-w>k')
 nnoremap('<C-l>', '<C-w>l')
+----------------------------------------------------------------------------------------------------
+-- Clipboard
+----------------------------------------------------------------------------------------------------
 -- Greatest remap ever
 vnoremap('<leader>p', '"_dP', { desc = 'greatest remap' })
 -- Next greatest remap ever : asbjornHaland
@@ -107,6 +110,12 @@ nnoremap('<leader>y', '"+y', { desc = 'yank' })
 vnoremap('<leader>y', '"+y', { desc = 'yank' })
 nnoremap('<leader>dd', '"_d', { desc = 'delete' })
 vnoremap('<leader>dd', '"_d', { desc = 'delete' })
+-- nnoremap('<localleader>vc', ':let @+=@:<cr>', { desc = 'yank last ex command text' })
+-- nnoremap(
+--   '<localleader>vm',
+--   [[:let @+=substitute(execute('messages'), '\n\+', '\n', 'g')<cr>]],
+--   { desc = 'yank vim messages output' }
+-- )
 ----------------------------------------------------------------------------------------------------
 -- Yank / Select / Delete All
 nnoremap('<leader>Y', 'gg"+VGy<C-o>', { desc = 'yank all' })
@@ -179,9 +188,10 @@ if not is_available('close-buffers.nvim') then
 end
 if not is_available('neo-tree.nvim') then nnoremap('<C-n>', ':Ex<CR>', { desc = 'explorer' }) end
 nnoremap('<leader>x', ':q<CR>', { desc = 'quit' })
-nnoremap('<leader>q', ':q<CR>', { desc = 'quit' })
+nnoremap('<leader>X', ':wqall<CR>', { desc = 'save all and quit' })
+nnoremap('<leader>q', ':q<CR>', { desc = 'quit all' })
 nnoremap('<leader>Q', ':qa!<CR>', { desc = 'quit' })
-nnoremap('<localleader>q', ':cq<CR>', { desc = 'smart quit' })
+nnoremap('<localleader>Q', ':cq<CR>', { desc = 'smart quit' })
 ----------------------------------------------------------------------------------------------------
 -- ?ie | entire object
 ----------------------------------------------------------------------------------------------------
@@ -283,58 +293,6 @@ nnoremap(
   function() vim.treesitter.inspect_tree({ command = 'botright 60vnew' }) end,
   { desc = 'open ts tree for current buffer' }
 )
-----------------------------------------------------------------------------------------------------
--- UI Toggles
-----------------------------------------------------------------------------------------------------
-function rvim.mappings.notify(msg, type)
-  vim.schedule(function() vim.notify(msg, type, { title = 'UI Toggles' }) end)
-end
----@param opt string
-local function toggle_opt(opt)
-  local prev = api.nvim_get_option_value(opt, {})
-  local value
-  if type(prev) == 'boolean' then value = not prev end
-  vim.wo[opt] = value
-  rvim.mappings.notify(string.format('%s %s', opt, rvim.bool2str(vim.wo[opt])))
-end
-nnoremap('<leader>ow', function() toggle_opt('wrap') end, { desc = 'toggle wrap' })
-nnoremap('<leader>oL', function() toggle_opt('cursorline') end, { desc = 'toggle cursorline' })
-nnoremap('<leader>os', function() toggle_opt('spell') end, { desc = 'toggle spell' })
-
---- Toggle laststatus=3|2|0
-local function toggle_statusline()
-  local laststatus = vim.opt.laststatus:get()
-  local status
-  if laststatus == 0 then
-    vim.opt.laststatus = 2
-    status = 'local'
-  elseif laststatus == 2 then
-    vim.opt.laststatus = 3
-    status = 'global'
-  elseif laststatus == 3 then
-    vim.opt.laststatus = 0
-    status = 'off'
-  end
-  rvim.mappings.notify(string.format('statusline %s', status))
-end
-nnoremap('<leader>ol', toggle_statusline, { desc = 'toggle statusline' })
-
---- Toggle conceal=2|0
-local function toggle_conceal()
-  vim.opt_local.conceallevel = vim.opt_local.conceallevel:get() == 0 and 2 or 0
-  rvim.mappings.notify(
-    string.format('conceal %s', rvim.bool2str(vim.opt_local.conceallevel:get() == 2))
-  )
-end
---- Toggle conceal cursor=n|''
-local function toggle_conceal_cursor()
-  vim.opt_local.concealcursor = vim.opt_local.concealcursor:get() == 'n' and '' or 'n'
-  rvim.mappings.notify(
-    string.format('conceal cursor %s', rvim.bool2str(vim.opt_local.concealcursor:get() == ''))
-  )
-end
-nnoremap('<localleader>cl', toggle_conceal, { desc = 'toggle conceallevel' })
-nnoremap('<localleader>cL', toggle_conceal_cursor, { desc = 'toggle concealcursor' })
 -----------------------------------------------------------------------------//
 -- Commands
 -----------------------------------------------------------------------------//

@@ -14,11 +14,16 @@ return {
         auto_install = true,
         highlight = {
           enable = true,
+          disable = function(_, buf)
+            local max_filesize = 100 * 1024 -- 100 KB
+            local ok, stats = pcall(vim.uv.fs_stat, vim.api.nvim_buf_get_name(buf))
+            if ok and stats and stats.size > max_filesize then return true end
+          end,
           additional_vim_regex_highlighting = { 'org', 'sql' },
         },
         context_commentstring = { enable = true, enable_autocmd = false },
         incremental_selection = {
-          enable = true,
+          enable = false,
           disable = { 'help' },
           keymaps = {
             init_selection = '<CR>', -- maps in normal mode to init the node/scope selection
@@ -57,6 +62,7 @@ return {
           disable = { 'c', 'python' },
         },
         autotag = { enable = true },
+        tree_setter = { enable = true },
         query_linter = {
           enable = true,
           use_virtual_text = false,
@@ -124,10 +130,22 @@ return {
       vim.g.matchup_matchparen_deferred = 1
       highlight.plugin('vim-matchup', {
         { MatchWord = { inherit = 'LspReferenceText', underline = true } },
-        { MatchParen = { link = 'CursorLineNr' } },
-        { MatchParenCursor = { link = 'CursorLineNr' } },
-        { MatchParenOffscreen = { link = 'CursorLineNr' } },
+        { MatchParenCursor = { link = 'MatchParen' } },
+        { MatchParenOffscreen = { link = 'MatchParen' } },
       })
     end,
+  },
+  {
+    'sustech-data/wildfire.nvim',
+    enabled = rvim.treesitter.enable and not rvim.plugins.minimal,
+    event = 'VeryLazy',
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
+    opts = {},
+  },
+  {
+    'filNaj/tree-setter',
+    enabled = rvim.treesitter.enable and not rvim.plugins.minimal,
+    event = 'VeryLazy',
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
   },
 }

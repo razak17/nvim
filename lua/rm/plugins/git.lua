@@ -2,6 +2,7 @@ local cwd = vim.fn.getcwd()
 local icons = rvim.ui.icons
 local border = rvim.ui.current.border
 local left_block = icons.separators.left_block
+local format_text = rvim.format_text
 
 return {
   {
@@ -12,7 +13,7 @@ return {
     keys = {
       {
         '<localleader>gs',
-        function() require('neogit').open({ kind = 'split' }) end,
+        function() require('neogit').open() end,
         desc = 'open status buffer',
       },
       {
@@ -51,8 +52,6 @@ return {
       rvim.highlight.plugin('neogit', {
         theme = {
           ['onedark'] = {
-            { NeogitDiffAdd = { inherit = 'DiffAdd' } },
-            { NeogitDiffDelete = { inherit = 'DiffDelete' } },
             { NeogitHunkHeader = { inherit = 'Headline2', bold = true } },
             { NeogitDiffHeader = { inherit = 'Headline2', bold = true } },
             { NeogitFold = { bg = { from = 'CursorLine', alter = -0.25 } } },
@@ -71,6 +70,11 @@ return {
       { '<localleader>gd', '<Cmd>DiffviewOpen<CR>', desc = 'diffview: open' },
       { 'gh', [[:'<'>DiffviewFileHistory<CR>]], desc = 'diffview: file history', mode = 'v' },
       { '<localleader>gh', '<Cmd>DiffviewFileHistory<CR>', desc = 'diffview: file history' },
+      {
+        '<localleader>gx',
+        '<cmd>set hidden<cr><cmd>DiffviewClose<cr><cmd>set nohidden<cr>',
+        desc = 'diffview: close all buffers',
+      },
     },
     opts = {
       default_args = { DiffviewFileHistory = { '%' } },
@@ -88,25 +92,11 @@ return {
         file_history_panel = { q = '<Cmd>DiffviewClose<CR>' },
       },
     },
-    config = function(_, opts)
-      rvim.highlight.plugin('diffview', {
-        { DiffAddedChar = { bg = 'NONE', fg = { from = 'DiffAdd', attr = 'bg', alter = 0.3 } } },
-        {
-          DiffChangedChar = { bg = 'NONE', fg = { from = 'DiffChange', attr = 'bg', alter = 0.3 } },
-        },
-        { DiffviewStatusAdded = { link = 'DiffAddedChar' } },
-        { DiffviewStatusModified = { link = 'DiffChangedChar' } },
-        { DiffviewStatusRenamed = { link = 'DiffChangedChar' } },
-        { DiffviewStatusUnmerged = { link = 'DiffChangedChar' } },
-        { DiffviewStatusUntracked = { link = 'DiffAddedChar' } },
-      })
-      require('diffview').setup(opts)
-    end,
   },
   {
     'lewis6991/gitsigns.nvim',
     enabled = not rvim.plugins.minimal,
-    event = { 'BufReadPre', 'BufNewFile' },
+    event = { 'VeryLazy' },
     opts = {
       signs = {
         add = { highlight = 'GitSignsAdd', text = left_block },
@@ -140,7 +130,7 @@ return {
         map('n', '<leader>hp', gs.preview_hunk_inline, { desc = 'preview hunk' })
         map('n', '<leader>hb', gs.toggle_current_line_blame, { desc = 'toggle line blame' })
 
-        map('n', '<leader>gb', gs.blame_line, { desc = 'blame line' })
+        map('n', '<leader>gbl', gs.blame_line, { desc = 'blame line' })
         map('n', '<leader>gr', gs.reset_buffer, { desc = 'reset entire buffer' })
         map('n', '<leader>gw', gs.stage_buffer, { desc = 'stage entire buffer' })
 
@@ -162,6 +152,39 @@ return {
         map('n', '<leader>hx', '<Cmd>Gitsigns refresh<CR>', { desc = 'refresh' })
       end,
     },
+    config = function(_, opts)
+      rvim.augroup('GitSignsRefreshCustom', {
+        event = { 'InsertEnter', 'CursorMoved' },
+        command = function(args)
+          local decs = rvim.ui.decorations.get({
+            ft = vim.bo.ft,
+            bt = vim.bo.bt,
+            setting = 'statuscolumn',
+          })
+          if decs and decs.ft == false or decs and decs.bt == false then return end
+
+          local lnum = vim.v.lnum
+          local signs = vim.api.nvim_buf_get_extmarks(
+            args.buf,
+            -1,
+            { lnum, 0 },
+            { lnum, -1 },
+            { details = true, type = 'sign' }
+          )
+          local sns = vim
+            .iter(signs)
+            :map(function(item) return format_text(item[4], 'sign_text') end)
+            :fold({}, function(_, item) return item.sign_hl_group end)
+          if sns ~= 'GitSignsStagedAdd' then return end
+
+          vim.defer_fn(function()
+            vim.cmd('silent! lua require("gitsigns").refresh()')
+            vim.notify('gitsigns refreshed', 'info', { title = 'gitsigns' })
+          end, 20)
+        end,
+      })
+      require('gitsigns').setup(opts)
+    end,
   },
   {
     'almo7aya/openingh.nvim',
@@ -169,7 +192,7 @@ return {
     event = 'VeryLazy',
     keys = {
       {
-        '<localleader>gf',
+        '<leader>gof',
         function()
           require('openingh').open_file()
           vim.notify('opening file in github', 'info', { title = 'openingh' })
@@ -177,7 +200,7 @@ return {
         desc = 'openingh: open file',
       },
       {
-        '<localleader>gr',
+        '<leader>gor',
         function()
           require('openingh').open_repo()
           vim.notify('opening repo in github', 'info', { title = 'openingh' })
@@ -185,7 +208,7 @@ return {
         desc = 'openingh: open repo',
       },
       {
-        '<localleader>gL',
+        '<leader>gol',
         function()
           require('openingh').open_file_lines()
           vim.notify('opening file line in github', 'info', { title = 'openingh' })
@@ -196,9 +219,34 @@ return {
     },
   },
   {
+    '9seconds/repolink.nvim',
+    cmd = { 'RepoLink' },
+    keys = {
+      {
+        '<leader>gog',
+        '<Cmd>RepoLink<CR>',
+        desc = 'repolink: generate link',
+        mode = { 'n', 'x' },
+      },
+    },
+    opts = {},
+    dependencies = { 'nvim-lua/plenary.nvim' },
+  },
+  {
     'yutkat/git-rebase-auto-diff.nvim',
     ft = { 'gitrebase' },
     opts = {},
+  },
+  {
+    'emmanueltouzery/agitator.nvim',
+    enabled = not rvim.plugins.minimal,
+    keys = {
+      {
+        '<leader>gbo',
+        "<cmd>lua require'agitator'.git_blame_toggle()<cr>",
+        desc = 'agitator: toggle blame',
+      },
+    },
   },
   {
     'akinsho/git-conflict.nvim',
@@ -210,11 +258,11 @@ return {
         {
           theme = {
             ['onedark'] = {
-              { GitConflictCurrent = { bg = { from = 'DiffAdd', alter = -0.5 } } },
+              { GitConflictCurrent = { inherit = 'DiffAdd' } },
               { GitConflictCurrentLabel = { inherit = 'DiffAdd' } },
-              { GitConflictIncoming = { bg = { from = 'DiffDelete', alter = -0.5 } } },
+              { GitConflictIncoming = { inherit = 'DiffDelete' } },
               { GitConflictIncomingLabel = { inherit = 'DiffDelete' } },
-              { GitConflictAncestor = { bg = { from = 'DiffText', alter = -0.5 } } },
+              { GitConflictAncestor = { inherit = 'DiffText' } },
               { GitConflictAncestorLabel = { inherit = 'DiffText' } },
             },
           },

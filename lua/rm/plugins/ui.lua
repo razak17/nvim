@@ -46,6 +46,12 @@ return {
     },
   },
   {
+    'utilyre/sentiment.nvim',
+    version = '*',
+    event = 'VeryLazy',
+    opts = {},
+  },
+  {
     'folke/zen-mode.nvim',
     cmd = 'ZenMode',
     opts = {
@@ -55,7 +61,6 @@ return {
         tmux = { enabled = true },
       },
     },
-    keys = { { '<localleader>zz', '<Cmd>ZenMode<CR>', desc = 'zen-mode: toggle' } },
   },
   {
     'eandrju/cellular-automaton.nvim',
@@ -70,6 +75,17 @@ return {
         '<localleader>am',
         '<Cmd>CellularAutomaton make_it_rain<CR>',
         desc = 'automaton: make it rain',
+      },
+    },
+  },
+  {
+    'tjdevries/sPoNGe-BoB.NvIm',
+    keys = {
+      {
+        '<localleader>ab',
+        '<cmd>SpOnGeBoBiFy<CR>',
+        mode = { 'v' },
+        desc = 'SpOnGeBoB: SpOnGeBoBiFy',
       },
     },
   },
@@ -93,6 +109,7 @@ return {
   },
   {
     'tzachar/highlight-undo.nvim',
+    enabled = not rvim.plugins.minimal,
     event = 'BufRead',
     opts = {
       undo = { hlgroup = 'Search' },
@@ -177,7 +194,6 @@ return {
     opts = {
       input = { insert_only = false, border = border },
       select = {
-        backend = { 'fzf_lua', 'builtin' },
         builtin = {
           border = border,
           min_height = 10,
@@ -192,16 +208,6 @@ return {
               fzf_lua = rvim.fzf.cursor_dropdown({
                 winopts = { title = opts.prompt },
               }),
-            }
-          end
-          if opts.kind == 'orgmode' then
-            return {
-              backend = 'nui',
-              nui = {
-                position = '97%',
-                border = { style = ui.border.rectangle },
-                min_width = vim.o.columns - 2,
-              },
             }
           end
           return {
@@ -253,10 +259,7 @@ return {
   },
   {
     'uga-rosa/ccc.nvim',
-    keys = {
-      { '<leader>oc', '<cmd>CccHighlighterToggle<CR>', desc = 'toggle ccc' },
-      { '<localleader>cp', '<cmd>CccPick<CR>', desc = 'ccc: pick' },
-    },
+    cmd = { 'CccHighlighterToggle', 'CccHighlighterEnable', 'CccPick' },
     opts = function()
       local ccc = require('ccc')
       local p = ccc.picker
@@ -367,6 +370,43 @@ return {
     end,
   },
   {
+    'razak17/mini.indentscope',
+    -- enabled = not rvim.plugins.minimal,
+    enabled = false,
+    event = 'BufRead',
+    version = false,
+    init = function()
+      highlight.plugin('mini-indentscope', {
+        { MiniIndentscopeSymbol = { inherit = 'IndentBlanklineContextChar' } },
+        { MiniIndentscopeSymbolOff = { inherit = 'IndentBlanklineChar' } },
+      })
+    end,
+    opts = {
+      symbol = separators.left_thin_block,
+      draw = { delay = 200 },
+      filetype_exclude = {
+        'lazy',
+        'fzf',
+        'alpha',
+        'dbout',
+        'neo-tree-popup',
+        'log',
+        'gitcommit',
+        'txt',
+        'help',
+        'NvimTree',
+        'git',
+        'flutterToolsOutline',
+        'undotree',
+        'markdown',
+        'norg',
+        'org',
+        'orgagenda',
+        '', -- for all buffers without a file type
+      },
+    },
+  },
+  {
     'lukas-reineke/indent-blankline.nvim',
     enabled = rvim.treesitter.enable and not rvim.plugins.minimal,
     event = 'BufRead',
@@ -408,9 +448,9 @@ return {
       })
     end,
     keys = {
-      { 'zR', function() require('ufo').openAllFolds() end, 'open all folds' },
-      { 'zM', function() require('ufo').closeAllFolds() end, 'close all folds' },
-      { 'zP', function() require('ufo').peekFoldedLinesUnderCursor() end, 'preview fold' },
+      { 'zR', function() require('ufo').openAllFolds() end, 'ufo: open all folds' },
+      { 'zM', function() require('ufo').closeAllFolds() end, 'ufo: close all folds' },
+      { 'zP', function() require('ufo').peekFoldedLinesUnderCursor() end, 'ufo: preview fold' },
     },
     opts = function()
       local ft_map = { rust = 'lsp' }

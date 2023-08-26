@@ -20,11 +20,15 @@ local namespace = {
     hover_diagnostics = { enable = true, scope = 'cursor' },
   },
   mappings = {},
+  git = {},
   none = env.RVIM_NONE == '1',
   plugins = {
     enable = env.RVIM_PLUGINS_ENABLED == '1',
     disabled = {},
     minimal = env.RVIM_PLUGINS_MINIMAL == '1',
+    overrides = {
+      ghost_text = { enable = env.RVIM_GHOST_ENABLED == '1' },
+    },
   },
   treesitter = {
     enable = env.RVIM_PLUGINS_MINIMAL == '0' and env.RVIM_TREESITTER_ENABLED == '1',

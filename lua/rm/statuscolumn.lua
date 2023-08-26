@@ -1,5 +1,6 @@
 local fn, v, api, opt, cmd = vim.fn, vim.v, vim.api, vim.opt, vim.cmd
 local ui, sep, falsy = rvim.ui, rvim.ui.icons.separators, rvim.falsy
+local format_text = rvim.format_text
 
 local separator = sep.left_thin_block
 local space = ' '
@@ -32,17 +33,6 @@ local function nr(win, lnum, relnum, virtnum, line_count)
   local num_width = col_width - api.nvim_strwidth(ln)
   if num_width == 0 then return ln end
   return string.rep(space, num_width) .. ln
-end
-
----@generic T:table<string, any>
----@param t T the object to format
----@param k string the key to format
----@return T?
-local function format_text(t, k)
-  local txt = t[k] and t[k]:gsub('%s', '') or ''
-  if #txt < 1 then return end
-  t[k] = txt
-  return t
 end
 
 ---@param curbuf integer
@@ -216,8 +206,12 @@ return {
       },
     },
     {
-      init = function(self) self.is_wrap = self.ln:gsub('^%s*(.-)%s*$', '%1') == '' end,
+      init = function(self)
+        self.is_wrap = self.ln:gsub('^%s*(.-)%s*$', '%1') == ''
+        self.is_shade = self.ln:gsub('^%s*(.-)%s*$', '%1') == shade
+      end,
       provider = function(self)
+        if self.is_shade then return '' end
         if not self.is_wrap then return separator end
         return ''
       end,

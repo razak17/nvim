@@ -3,13 +3,14 @@ local highlight, L = rvim.highlight, vim.log.levels
 
 return {
   'folke/noice.nvim',
-  enabled = not rvim.plugins.minimal,
+  enabled = not rvim.plugins.minimal and not rvim.find_string(rvim.plugins.disabled, 'noice.nvim'),
   event = 'VeryLazy',
   dependencies = { 'MunifTanjim/nui.nvim' },
   opts = {
     cmdline = {
       format = {
         IncRename = { title = 'Rename' },
+        cmdline = { pattern = "^:", icon = " ", lang = "vim" },
         substitute = { pattern = '^:%%?s/', icon = ' ', ft = 'regex', title = '' },
         input = { icon = ' ', lang = 'text', view = 'cmdline_popup', title = '' },
       },
@@ -33,7 +34,10 @@ return {
         },
       },
       hover = { enabled = true },
-      progress = { throttle = 1000 / 800, },
+      progress = {
+        enabled = false,
+        throttle = 1000 / 800,
+      },
       override = {
         ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
         ['vim.lsp.util.stylize_markdown'] = true,
@@ -47,21 +51,54 @@ return {
       vsplit = { size = { width = 'auto' } },
       split = { win_options = { winhighlight = { Normal = 'Normal' } } },
       popup = {
-        border = { style = 'single', padding = { 0, 1 } },
+        border = {
+          style = 'single',
+          padding = {
+            top = 1,
+            bottom = 1,
+            left = 1,
+            right = 1,
+          },
+        },
       },
       cmdline_popup = {
         position = { row = 5, col = '50%' },
         size = { width = 'auto', height = 'auto' },
-        border = { style = 'single', padding = { 0, 1 } },
+        border = {
+          style = 'single',
+          padding = {
+            top = 1,
+            bottom = 1,
+            left = 1,
+            right = 1,
+          },
+        },
       },
       confirm = {
-        border = { style = 'single', padding = { 0, 1 }, text = { top = '' } },
+        border = {
+          style = 'single',
+          padding = {
+            top = 1,
+            bottom = 1,
+            left = 1,
+            right = 1,
+          },
+          text = { top = '' },
+        },
       },
       popupmenu = {
         relative = 'editor',
         position = { row = 9, col = '50%' },
         size = { width = 60, height = 10 },
-        border = { style = 'single', padding = { 0, 1 } },
+        border = {
+          style = 'single',
+          padding = {
+            top = 1,
+            bottom = 1,
+            left = 1,
+            right = 1,
+          },
+        },
         win_options = { winhighlight = { Normal = 'NormalFloat', FloatBorder = 'FloatBorder' } },
       },
     },

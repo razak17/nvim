@@ -36,6 +36,7 @@ return {
           statusline.git_diff,
           statusline.lazy_updates,
           statusline.search_results,
+          statusline.word_count,
           statusline.lsp_clients,
           statusline.copilot_attached,
           statusline.copilot_status,
@@ -46,7 +47,8 @@ return {
           statusline.spell,
           -- statusline.treesitter,
           -- statusline.session,
-          statusline.macro_recording,
+          -- statusline.macro_recording,
+          statusline.macro_rec,
           statusline.ruler,
           statusline.scroll_bar,
           -- statusline.vim_mode,
@@ -68,7 +70,6 @@ return {
           init = statuscolumn.init,
           statuscolumn.render,
         },
-
       })
     end,
   },

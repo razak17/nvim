@@ -3,35 +3,6 @@ local icons = rvim.ui.icons
 local codicons = rvim.ui.codicons
 local highlight = rvim.highlight
 
----@param data { old_name: string, new_name: string }
-local function make_rename_params(data)
-  local clients = vim.lsp.get_clients()
-  clients = vim.tbl_filter(function(client) return client.name ~= 'copilot' end, clients)
-  for _, client in ipairs(clients) do
-    local will_rename =
-      vim.tbl_get(client, 'server_capabilities', 'workspace', 'fileOperations', 'willRename')
-    if not will_rename then
-      return vim.notify(fmt('%s does not LSP file rename', client.name), 'info', { title = 'LSP' })
-    end
-    local params = {
-      files = {
-        {
-          oldUri = vim.uri_from_fname(data.old_name),
-          newUri = vim.uri_from_fname(data.new_name),
-        },
-      },
-    }
-    local resp = client.request_sync('workspace/willRenameFiles', params, 1000)
-    if resp and resp.result ~= nil then
-      vim.lsp.util.apply_workspace_edit(resp.result, client.offset_encoding)
-    end
-  end
-end
-
-local function will_rename_handler(data)
-  make_rename_params({ old_name = data.source, new_name = data.destination })
-end
-
 return {
   {
     'nvim-neo-tree/neo-tree.nvim',
@@ -58,7 +29,7 @@ return {
 
       require('neo-tree').setup({
         close_if_last_window = true,
-        sources = { 'filesystem', 'git_status', 'document_symbols' },
+        sources = { 'filesystem' },
         enable_opened_markers = true,
         source_selector = {
           winbar = true,
@@ -77,7 +48,6 @@ return {
           ['dart'] = { 'freezed.dart', 'g.dart' },
         },
         event_handlers = {
-          { event = 'file_renamed', handler = will_rename_handler },
           {
             event = 'neo_tree_buffer_enter',
             handler = function() highlight.set('Cursor', { blend = 100 }) end,

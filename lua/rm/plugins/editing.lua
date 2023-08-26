@@ -269,4 +269,82 @@ return {
       'nvim-telescope/telescope.nvim',
     },
   },
+  {
+    'subnut/nvim-ghost.nvim',
+    enabled = not rvim.plugins.minimal and rvim.plugins.overrides.ghost_text.enable,
+    lazy = false,
+    event = { 'BufReadPost', 'BufNewFile' },
+    config = function()
+      vim.api.nvim_create_augroup('nvim_ghost_user_autocommands', { clear = false })
+      vim.api.nvim_create_autocmd('User', {
+        pattern = {
+          'www.reddit.com',
+          'www.github.com',
+          'www.protectedtext.com',
+          '*github.com',
+        },
+        command = 'setfiletype markdown',
+        group = 'nvim_ghost_user_autocommands',
+      })
+    end,
+  },
+
+  {
+    'ecthelionvi/NeoComposer.nvim',
+    enabled = not rvim.plugins.minimal,
+    event = { 'BufReadPost', 'BufNewFile' },
+    dependencies = { 'kkharji/sqlite.lua' },
+    keys = {
+      {
+        '<localleader>qe',
+        "<cmd>lua require('NeoComposer.ui').edit_macros()<cr>",
+        desc = 'neocomposer: edit macro ',
+      },
+      {
+        '<localleader>qt',
+        "<cmd>lua require('NeoComposer.macro').toggle_delay()<cr>",
+        desc = 'neocomposer: delay macro toggle',
+      },
+      {
+        '<localleader>qd',
+        "<cmd>lua require('NeoComposer.store').clear_macros()<cr>",
+        desc = 'neocomposer: delete all macros',
+      },
+    },
+    config = function()
+      require('NeoComposer').setup({
+        notify = false,
+        keymaps = {
+          toggle_record = '<localleader>qr',
+          play_macro = '<localleader>qq',
+          yank_macro = '<localleader>qy',
+          stop_macro = '<localleader>qs',
+          cycle_next = '<localleader>qn',
+          cycle_prev = '<localleader>qp',
+          toggle_macro_menu = '<localleader>qm',
+        },
+      })
+      require('which-key').register({
+        ['<localleader>qr'] = 'neocomposer: toggle record',
+        ['<localleader>qq'] = 'neocomposer: play macro',
+        ['<localleader>qy'] = 'neocomposer: yank macro',
+        ['<localleader>qs'] = 'neocomposer: stop macro',
+        ['<localleader>qn'] = 'neocomposer: cycle next',
+        ['<localleader>qp'] = 'neocomposer: cycle prev',
+        ['<localleader>qm'] = 'neocomposer: toggle menu',
+      })
+      require('which-key').register({
+        qq = 'neocomposer: play macro',
+      }, { mode = 'x', prefix = '<localleader>' })
+    end,
+  },
+  {
+    'haolian9/nag.nvim',
+    dependencies = { 'haolian9/infra.nvim' },
+    keys = {
+      { mode = 'x', '<localleader>nv', ":lua require'nag'.vsplit()<CR>", desc = 'nag: vsplit' },
+      { mode = 'x', '<localleader>ns', ":lua require'nag'.split()<CR>", desc = 'nag: split' },
+      { mode = 'x', '<localleader>nt', ":lua require'nag'.tab()<CR>", desc = 'nag: tab' },
+    },
+  },
 }

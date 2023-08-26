@@ -107,24 +107,7 @@ local function colorscheme_overrides()
       { Dim = { inherit = 'VertSplit' } },
       { NeorgContext = { inherit = 'Normal' } },
       -- { ['@variable'] = { fg = { from = '@none' } } },
-      {
-        Headline = {
-          bold = true,
-          italic = true,
-          bg = { from = 'Normal', alter = 0.2 },
-        },
-      },
-      { Headline1 = { bg = '#003c30' } },
-      { Headline2 = { bg = '#00441b' } },
-      { Headline3 = { bg = '#084081' } },
-      { Dash = { bg = '#0b60a1', bold = true } },
-      {
-        CodeBlock = {
-          bold = true,
-          italic = true,
-          bg = { from = 'CursorLine', alter = -0.35 },
-        },
-      },
+      { dmapWin = { inherit = 'Normal' } },
     },
   }
   local hls = overrides[vim.g.colors_name]

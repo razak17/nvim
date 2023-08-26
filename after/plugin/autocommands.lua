@@ -244,13 +244,14 @@ rvim.augroup('Utilities', {
 }, {
   event = { 'BufEnter' },
   command = function(args)
-    if vim.bo[args.buf].filetype ~= 'DiffviewFiles' then
+    if vim.bo[args.buf].filetype == 'DiffviewFiles' then
       map(
         'n',
         'Q',
         function()
           vim.cmd('lua require("neogit.integrations.diffview").diffview_mappings["close"]()')
-        end
+        end,
+        { buffer = args.buf }
       )
     end
   end,

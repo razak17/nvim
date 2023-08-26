@@ -34,6 +34,7 @@ return {
           { CmpItemAbbrMatch = { fg = { from = 'Search' }, bold = true } },
           { CmpItemAbbrMatchFuzzy = { fg = { from = 'Search' } } },
           { CmpItemMenu = { fg = { from = 'Comment' }, italic = true, bold = true } },
+          { CmpItemKindCopilot = { fg = { from = 'DiffAdd', attr = 'bg' } } },
         })
       )
 
@@ -80,13 +81,26 @@ return {
         },
         sorting = {
           comparators = {
+            require('copilot_cmp.comparators').prioritize,
+            cmp.config.compare.locality,
             cmp.config.compare.offset,
+            cmp.config.compare.recently_used,
             cmp.config.compare.exact,
-            cmp.config.compare.score,
+            cmp.config.compare.order,
+            cmp.config.compare.length,
+            function(entry1, entry2)
+              local _, entry1_under = entry1.completion_item.label:find('^_+')
+              local _, entry2_under = entry2.completion_item.label:find('^_+')
+              entry1_under = entry1_under or 0
+              entry2_under = entry2_under or 0
+              if entry1_under > entry2_under then
+                return false
+              elseif entry1_under < entry2_under then
+                return true
+              end
+            end,
             cmp.config.compare.kind,
             cmp.config.compare.sort_text,
-            cmp.config.compare.length,
-            cmp.config.compare.order,
           },
         },
         matching = {
@@ -142,6 +156,9 @@ return {
             if entry.source.name == 'crates' then
               vim_item.kind = format_icon(ui.codicons.misc.package)
             end
+            if entry.source.name == 'copilot' then
+              vim_item.kind = format_icon(ui.codicons.misc.octoface)
+            end
 
             if vim_item.kind == 'Color' then
               if entry.completion_item.documentation then
@@ -171,6 +188,7 @@ return {
               rg = '[RG]',
               norg = '[NORG]',
               cmdline = '[CMD]',
+              copilot = '[CPL]',
               cmdline_history = '[HIST]',
               crates = '[CRT]',
               treesitter = '[TS]',
@@ -182,7 +200,16 @@ return {
           end,
         },
         sources = {
-          { name = 'nvim_lsp', priority = 10, group_index = 1 },
+          {
+            name = 'copilot',
+            priority = 11,
+            group_index = 1,
+          },
+          {
+            name = 'nvim_lsp',
+            priority = 10,
+            group_index = 1,
+          },
           { name = 'luasnip', priority = 9, group_index = 1 },
           {
             name = 'rg',
@@ -205,7 +232,7 @@ return {
             name = 'buffer',
             priority = 3,
             options = { get_bufnrs = function() return vim.api.nvim_list_bufs() end },
-            group_index = 2,
+            group_index = 1,
           },
           {
             name = 'spell',
@@ -295,6 +322,24 @@ return {
           })
         end,
       },
+      {
+        'zbirenbaum/copilot-cmp',
+        enabled = rvim.lsp.enable,
+        event = 'LspAttach',
+        opts = {},
+        config = function(_, opts)
+          local copilot_cmp = require('copilot_cmp')
+          copilot_cmp.setup(opts)
+          rvim.augroup('CopilotCmpAttach', {
+            event = 'LspAttach',
+            command = function(args)
+              local client = vim.lsp.get_client_by_id(args.data.client_id)
+              if client and client.name == 'copilot' then copilot_cmp._on_insert_enter({}) end
+            end,
+          })
+        end,
+        dependencies = 'copilot.lua',
+      },
     },
   },
   {
@@ -306,7 +351,9 @@ return {
       { '<leader>at', '<Cmd>Copilot toggle<CR>', desc = 'copilot: toggle' },
     },
     opts = {
+      panel = { enabled = false },
       suggestion = {
+        enabled = true,
         auto_trigger = true,
         keymap = {
           accept_word = '<M-w>',

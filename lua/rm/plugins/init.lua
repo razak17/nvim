@@ -62,22 +62,22 @@ return {
       { '<C-l>', function() require('smart-splits').move_cursor_right() end },
       -- swapping buffers between windows
       {
-        '<leader><leader>h',
+        '<leader>sh',
         function() require('smart-splits').swap_buf_left() end,
         desc = 'swap left',
       },
       {
-        '<leader><leader>j',
+        '<leader>sj',
         function() require('smart-splits').swap_buf_down() end,
         desc = 'swap down',
       },
       {
-        '<leader><leader>k',
+        '<leader>sk',
         function() require('smart-splits').swap_buf_up() end,
         desc = 'swap up',
       },
       {
-        '<leader><leader>l',
+        '<leader>sl',
         function() require('smart-splits').swap_buf_right() end,
         desc = 'swap right',
       },
@@ -89,6 +89,7 @@ return {
   ----------------------------------------------------------------------------------------------------
   { 'razak17/onedark.nvim', lazy = false, priority = 1000 },
   { 'LunarVim/horizon.nvim', lazy = false, priority = 1000 },
+  { 'dotsilas/darcubox-nvim', lazy = false, priority = 1000 },
   -- }}}
   ----------------------------------------------------------------------------------------------------
   -- LSP,Completion & Debugger {{{1
@@ -148,7 +149,7 @@ return {
                 experimental = { pathStrict = true },
                 library = {
                   runtime = join_paths(vim.env.HOME, 'neovim', 'share', 'nvim', 'runtime'),
-                  plugins = { 'neotest' },
+                  plugins = {},
                   types = true,
                 },
               },
@@ -205,6 +206,7 @@ return {
   },
   {
     'kosayoda/nvim-lightbulb',
+    enabled = rvim.lsp.enable,
     event = 'LspAttach',
     opts = {
       autocmd = { enabled = true },
@@ -215,16 +217,120 @@ return {
   },
   {
     'dgagn/diagflow.nvim',
+    enabled = rvim.lsp.enable,
     event = 'LspAttach',
     opts = {
       toggle_event = { 'InsertEnter' },
     },
+  },
+  {
+    'doums/dmap.nvim',
+    enabled = rvim.lsp.enable,
+    event = 'LspAttach',
+    opts = { win_h_offset = 4 },
+  },
+  {
+    'stevearc/aerial.nvim',
+    enabled = not rvim.plugins.minimal and rvim.treesitter.enable,
+    opts = {
+      lazy_load = false,
+      backends = {
+        ['_'] = { 'treesitter', 'lsp', 'markdown', 'man' },
+        elixir = { 'treesitter' },
+        typescript = { 'treesitter' },
+        typescriptreact = { 'treesitter' },
+      },
+      filter_kind = false,
+      icons = {
+        Field = ' 󰙅 ',
+        Type = '󰊄 ',
+      },
+      treesitter = {
+        experimental_selection_range = true,
+      },
+      k = 2,
+      post_parse_symbol = function(bufnr, item, ctx)
+        if ctx.backend_name == 'treesitter' and (ctx.lang == 'typescript' or ctx.lang == 'tsx') then
+          local utils = require('nvim-treesitter.utils')
+          local value_node = (utils.get_at_path(ctx.match, 'var_type') or {}).node
+          -- don't want to display in-function items
+          local cur_parent = value_node and value_node:parent()
+          while cur_parent do
+            if
+              cur_parent:type() == 'arrow_function'
+              or cur_parent:type() == 'function_declaration'
+              or cur_parent:type() == 'method_definition'
+            then
+              return false
+            end
+            cur_parent = cur_parent:parent()
+          end
+        elseif
+          ctx.backend_name == 'lsp'
+          and ctx.symbol
+          and ctx.symbol.location
+          and string.match(ctx.symbol.location.uri, '%.graphql$')
+        then
+          -- for graphql it was easier to go with LSP. Use the symbol kind to keep only the toplevel queries/mutations
+          return ctx.symbol.kind == 5
+        elseif
+          ctx.backend_name == 'treesitter'
+          and ctx.lang == 'html'
+          and vim.fn.expand('%:e') == 'ui'
+        then
+          -- in GTK UI files only display 'object' items (widgets), and display their
+          -- class instead of the tag name (which is always 'object')
+          if item.name == 'object' then
+            local line = vim.api.nvim_buf_get_lines(bufnr, item.lnum - 1, item.lnum, false)[1]
+            local _, _, class = string.find(line, [[class=.([^'"]+)]])
+            item.name = class
+            return true
+          else
+            return false
+          end
+        end
+        return true
+      end,
+      get_highlight = function(symbol, _)
+        if symbol.scope == 'private' then return 'AerialPrivate' end
+      end,
+    },
+    config = function(_, opts)
+      vim.api.nvim_set_hl(0, 'AerialPrivate', { default = true, italic = true })
+      require('aerial').setup(opts)
+      require('telescope').load_extension('aerial')
+    end,
+    dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' },
+  },
+  {
+    'roobert/action-hints.nvim',
+    enabled = rvim.lsp.enable,
+    event = 'LspAttach',
+    config = function()
+      require('action-hints').setup({
+        template = {
+          definition = { text = ' ⊛', color = '#add8e6' },
+          references = { text = ' ↱%s', color = '#ff6666' },
+        },
+        use_virtual_text = true,
+      })
+    end,
+  },
+  {
+    'aznhe21/actions-preview.nvim',
+    opts = {},
+    config = function()
+      require('actions-preview').setup({
+        telescope = rvim.telescope.vertical(),
+      })
+    end,
   },
   -- }}}
   ----------------------------------------------------------------------------------------------------
   -- Utilities {{{1
   ----------------------------------------------------------------------------------------------------
   { 'sQVe/sort.nvim', cmd = { 'Sort' } },
+  { 'lambdalisue/suda.vim', lazy = false },
   {
     'itchyny/vim-highlighturl',
     event = 'ColorScheme',
@@ -241,20 +347,22 @@ return {
     },
   },
   {
-    'mg979/vim-visual-multi',
-    enabled = not rvim.plugins.minimal,
-    lazy = false,
-    init = function()
-      vim.g.VM_highlight_matches = 'underline'
-      vim.g.VM_theme = 'codedark'
-      vim.g.VM_maps = {
-        ['Find Word'] = '<M-n>',
-        ['Find Under'] = '<M-n>',
-        ['Find Subword Under'] = '<M-n>',
-        ['Select Cursor Down'] = '\\j',
-        ['Select Cursor Up'] = '\\k',
-      }
-    end,
+    'smoka7/multicursors.nvim',
+    enabled = not rvim.plugins.minimal and rvim.treesitter.enable,
+    event = 'VeryLazy',
+    dependencies = { 'nvim-treesitter/nvim-treesitter', 'smoka7/hydra.nvim' },
+    opts = {
+      hint_config = { border = border },
+    },
+    cmd = { 'MCstart', 'MCvisual', 'MCclear', 'MCpattern', 'MCvisualPattern', 'MCunderCursor' },
+    keys = {
+      {
+        '<M-e>',
+        '<cmd>MCstart<cr>',
+        mode = { 'v', 'n' },
+        desc = 'Create a selection for selected text or word under the cursor',
+      },
+    },
   },
   {
     'kazhala/close-buffers.nvim',
@@ -289,18 +397,34 @@ return {
     },
   },
   {
+    'folke/twilight.nvim',
+    enabled = rvim.treesitter.enable and not rvim.plugins.minimal,
+    cmd = 'Twilight',
+    keys = {
+      { '<localleader>zt', '<cmd>Twilight<CR>', desc = 'Twilight toggle' },
+    },
+    opts = {
+      dimming = {
+        alpha = 0.45,
+        inactive = true,
+      },
+      context = 40,
+      exclude = { 'alpha', 'git' },
+    },
+  },
+  {
     'echasnovski/mini.surround',
     keys = { { 'ys', desc = 'add surrounding' }, 'ds', { 'yr', desc = 'delete surrounding' } },
     config = function()
       require('mini.surround').setup({
         mappings = {
-          add = 'ys', -- Add surrounding in Normal and Visual modes
-          delete = 'ds', -- Delete surrounding
-          find = 'yf', -- Find surrounding (to the right)
-          find_left = 'yF', -- Find surrounding (to the left)
-          highlight = 'yh', -- Highlight surrounding
-          replace = 'yr', -- Replace surrounding
-          update_n_lines = 'yn', -- Update `n_lines`
+          add = 'ys',
+          delete = 'ds',
+          find = 'yf',
+          find_left = 'yF',
+          highlight = 'yh',
+          replace = 'yr',
+          update_n_lines = 'yn',
         },
       })
     end,
@@ -310,19 +434,19 @@ return {
     enabled = rvim.treesitter.enable,
     keys = {
       {
-        '<leader>dp',
+        '<leader>pp',
         function() return require('debugprint').debugprint({ variable = true }) end,
         expr = true,
         desc = 'debugprint: cursor',
       },
       {
-        '<leader>dP',
+        '<leader>pP',
         function() return require('debugprint').debugprint({ above = true, variable = true }) end,
         expr = true,
         desc = 'debugprint: cursor (above)',
       },
       {
-        '<leader>di',
+        '<leader>pi',
         function()
           return require('debugprint').debugprint({ ignore_treesitter = true, variable = true })
         end,
@@ -330,7 +454,7 @@ return {
         desc = 'debugprint: prompt',
       },
       {
-        '<leader>dI',
+        '<leader>pI',
         function()
           return require('debugprint').debugprint({
             ignore_treesitter = true,
@@ -342,13 +466,13 @@ return {
         desc = 'debugprint:prompt (above)',
       },
       {
-        '<leader>do',
+        '<leader>po',
         function() return require('debugprint').debugprint({ motion = true }) end,
         expr = true,
         desc = 'debugprint: operator',
       },
       {
-        '<leader>dO',
+        '<leader>pO',
         function() return require('debugprint').debugprint({ above = true, motion = true }) end,
         expr = true,
         desc = 'debugprint: operator (above)',
@@ -468,6 +592,31 @@ return {
     },
   },
   {
+    'razak17/executor.nvim',
+    keys = {
+      { '<localleader>xc', '<cmd>ExecutorRun<CR>', desc = 'executor: start' },
+      { '<localleader>xs', '<cmd>ExecutorSetCommand<CR>', desc = 'executor: set command' },
+      { '<localleader>xd', '<cmd>ExecutorToggleDetail<CR>', desc = 'executor: toggle detail' },
+      { '<localleader>xr', '<cmd>ExecutorReset<CR>', desc = 'executor: reset status' },
+      { '<localleader>xp', '<cmd>ExecutorShowPresets<CR>', desc = 'executor: show presets' },
+    },
+    opts = {
+      notifications = {
+        task_started = true,
+        task_completed = true,
+      },
+      preset_commands = {
+        ['custom-website'] = {
+          'npm run dev',
+        },
+      },
+    },
+  },
+  {
+    'ThePrimeagen/vim-be-good',
+    cmd = 'VimBeGood',
+  },
+  {
     'ahmedkhalf/project.nvim',
     enabled = not rvim.plugins.minimal,
     event = 'VimEnter',
@@ -477,6 +626,46 @@ return {
       ignore_lsp = { 'null-ls' },
       patterns = { '.git' },
     },
+  },
+  {
+    'chrisgrieser/nvim-genghis',
+    dependencies = 'stevearc/dressing.nvim',
+    event = { 'BufReadPost', 'BufNewFile' },
+    config = function()
+      local g = require('genghis')
+      map('n', '<localleader>fp', g.copyFilepath, { desc = 'genghis: yank filepath' })
+      map('n', '<localleader>fn', g.copyFilename, { desc = 'genghis: yank filename' })
+      map('n', '<localleader>fr', g.renameFile, { desc = 'genghis: rename file' })
+      map('n', '<localleader>fm', g.moveAndRenameFile, { desc = 'genghis: move and rename' })
+      map('n', '<localleader>fc', g.createNewFile, { desc = 'genghis: create new file' })
+      map('n', '<localleader>fd', g.duplicateFile, { desc = 'genghis: duplicate current file' })
+    end,
+  },
+  {
+    'michaelb/sniprun',
+    build = 'sh install.sh',
+    cmd = { 'SnipRun', 'SnipInfo' },
+    keys = {
+      { mode = 'v', '<localleader>rr', ':SnipRun<CR>', desc = 'sniprun: run code' },
+      { '<localleader>rr', ':SnipRun<CR>', desc = 'sniprun: run code' },
+      { '<localleader>ri', ':SnipInfo<CR>', desc = 'sniprun: info' },
+      { '<localleader>rc', ':SnipReset<CR>', desc = 'sniprun: reset' },
+      { '<localleader>rq', ':SnipClose<CR>', desc = 'sniprun: close' },
+    },
+    opts = {},
+    config = function(_, opts)
+      highlight.plugin('lab', {
+        theme = {
+          ['onedark'] = {
+            { SniprunVirtualTextOk = { link = 'DiagnosticVirtualTextInfo' } },
+            { SniprunFloatingWinOk = { link = 'DiagnosticVirtualTextInfo' } },
+            { SniprunVirtualTextErr = { link = 'DiffDelete' } },
+            { SniprunFloatingWinErr = { link = 'DiffDelete' } },
+          },
+        },
+      })
+      require('sniprun').setup(opts)
+    end,
   },
   {
     'razak17/lab.nvim',
@@ -491,7 +680,9 @@ return {
     config = function()
       highlight.plugin('lab', {
         theme = {
-          ['onedark'] = { { LabCodeRun = { link = 'DiagnosticVirtualTextInfo' } } },
+          ['onedark'] = {
+            { LabCodeRun = { link = 'DiagnosticVirtualTextInfo' } },
+          },
         },
       })
       require('lab').setup()
@@ -523,21 +714,14 @@ return {
     enabled = rvim.treesitter.enable,
     ft = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
-    keys = {
-      {
-        '<leader>ltf',
-        ':lua require("nvim-js-actions/js-arrow-fn").toggle()<CR>',
-        desc = 'js-actions: toggle arrow function',
-      },
-    },
   },
   {
     'jpalardy/vim-slime',
     event = 'VeryLazy',
     keys = {
-      { '<localleader>tt', '<Plug>SlimeParagraphSend', desc = 'slime: paragraph' },
-      { '<localleader>tt', '<Plug>SlimeRegionSend', mode = { 'x' }, desc = 'slime: region' },
-      { '<localleader>tc', '<Plug>SlimeConfig', desc = 'slime: config' },
+      { '<localleader>st', '<Plug>SlimeParagraphSend', desc = 'slime: paragraph' },
+      { '<localleader>st', '<Plug>SlimeRegionSend', mode = { 'x' }, desc = 'slime: region' },
+      { '<localleader>sc', '<Plug>SlimeConfig', desc = 'slime: config' },
     },
     config = function()
       vim.g.slime_target = 'tmux'
@@ -545,18 +729,90 @@ return {
       vim.g.alime_no_mappings = 1
     end,
   },
+  {
+    'TrevorS/uuid-nvim',
+    event = 'VeryLazy',
+    opts = { case = 'lower', quotes = 'single' },
+  },
+  {
+    'luckasRanarison/nvim-devdocs',
+    event = 'VeryLazy',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'nvim-telescope/telescope.nvim',
+      'nvim-treesitter/nvim-treesitter',
+    },
+    keys = {
+      { '<localleader>vf', '<cmd>DevdocsOpenFloat<CR>', desc = 'devdocs: open float' },
+      { '<localleader>vb', '<cmd>DevdocsOpen<CR>', desc = 'devdocs: open in buffer' },
+      { '<localleader>vo', ':DevdocsOpenFloat ', desc = 'devdocs: open documentation' },
+      { '<localleader>vi', ':DevdocsInstall ', desc = 'devdocs: install' },
+      { '<localleader>vu', ':DevdocsUninstall ', desc = 'devdocs: uninstall' },
+    },
+    opts = {
+      ensure_installed = {
+        'git',
+        'bash',
+        'lua-5.4',
+        'html',
+        'css',
+        'javascript',
+        'typescript',
+        'react',
+        'svelte',
+        'web_extensions',
+        'postgresql-15',
+        'python-3.11',
+        'go',
+        'docker',
+        'tailwindcss',
+        'astro',
+      },
+      wrap = true,
+    },
+  },
+  {
+    'kristijanhusak/vim-dadbod-ui',
+    dependencies = {
+      'tpope/vim-dadbod',
+      'kristijanhusak/vim-dadbod-completion',
+    },
+    keys = {
+      { '<leader>dt', '<Cmd>DBUIToggle<CR>', desc = 'dadbod: toggle' },
+      { '<leader>da', '<Cmd>DBUIAddConnection<CR>', desc = 'dadbod: add connection' },
+    },
+    cmd = {
+      'DBUI',
+      'DBUIAddConnection',
+      'DBUIClose',
+      'DBUIToggle',
+      'DBUIFindBuffer',
+      'DBUIRenameBuffer',
+      'DBUILastQueryInfo',
+    },
+    config = function()
+      vim.g.db_ui_notification_width = 1
+      vim.g.db_ui_debug = 1
+    end,
+  },
   -- }}}
   ----------------------------------------------------------------------------------------------------
   -- Filetype Plugins {{{1
   ----------------------------------------------------------------------------------------------------
+  {
+    'whatyouhide/vim-lengthmatters',
+    lazy = false,
+    config = function()
+      vim.g.lengthmatters_excluded = { 'packer' }
+      vim.g.lengthmatters_linked_to = 'CursorLine'
+    end,
+  },
   { 'razak17/slides.nvim', ft = 'slide' },
   { 'fladson/vim-kitty', ft = 'kitty' },
+  { 'raimon49/requirements.txt.vim', lazy = false },
   {
     'laytan/cloak.nvim',
     event = 'VeryLazy',
-    keys = {
-      { '<localleader>cc', '<Cmd>CloakToggle<CR>', 'cloak: toggle' },
-    },
     opts = {},
   },
   {
@@ -713,13 +969,11 @@ return {
     end,
   },
   {
-    'malbertzard/inline-fold.nvim', -- Optional
-    enabled = rvim.treesitter.enable and not rvim.plugins.minimal,
+    'razak17/tailwind-fold.nvim',
+    enabled = false,
+    opts = { min_chars = 2 },
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
     ft = { 'html', 'svelte', 'astro', 'vue', 'typescriptreact' },
-    keys = { { '<leader>of', '<Cmd>InlineFoldToggle<CR>', desc = 'toggle css fold' } },
-    opts = {
-      placeholder = '…',
-    },
   },
   {
     'MaximilianLloyd/tw-values.nvim',
@@ -737,7 +991,7 @@ return {
   },
   {
     'olexsmir/gopher.nvim',
-    enabled = not rvim.plugins.minimal,
+    enabled = rvim.lsp.enable and not rvim.plugins.minimal,
     ft = 'go',
     dependencies = { 'nvim-lua/plenary.nvim', 'nvim-treesitter/nvim-treesitter' },
   },
@@ -860,6 +1114,13 @@ return {
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
     ft = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
     opts = { remove_template_string = true },
+  },
+  {
+    'roobert/f-string-toggle.nvim',
+    enabled = rvim.treesitter.enable,
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
+    ft = { 'python' },
+    opts = {},
   },
   {
     'marilari88/twoslash-queries.nvim',

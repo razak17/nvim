@@ -33,6 +33,7 @@ return {
     },
     config = function()
       require('buffer_manager').setup({
+        highlight = 'Normal',
         select_menu_item_commands = {
           v = { key = '<C-v>', command = 'vsplit' },
           h = { key = '<C-h>', command = 'split' },

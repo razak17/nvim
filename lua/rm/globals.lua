@@ -137,6 +137,98 @@ end
 local LATEST_NIGHTLY_MINOR = 10
 function rvim.nightly() return vim.version().minor >= LATEST_NIGHTLY_MINOR end
 
+function rvim.reload_all() vim.cmd('checktime') end
+
+function rvim.run_command(command, params, cb)
+  local Job = require('plenary.job')
+  local error_msg = nil
+  Job:new({
+    command = command,
+    args = params,
+    on_stderr = function(error, data, self)
+      if error_msg == nil then error_msg = data end
+    end,
+    on_exit = function(self, code, signal)
+      vim.schedule_wrap(function()
+        if code == 0 then
+          vim.notify(command .. ' executed successfully', vim.log.levels.INFO)
+          if cb then cb() end
+        else
+          local info = { command .. ' failed!' }
+          if error_msg ~= nil then
+            table.insert(info, error_msg)
+            print(error_msg)
+          end
+          vim.notify(info, vim.log.levels.ERROR)
+        end
+      end)()
+    end,
+  }):start()
+  vim.notify(command .. ' launched...', vim.log.levels.INFO)
+end
+
+function rvim.escape_pattern(text) return text:gsub('([^%w])', '%%%1') end
+
+function rvim.copy_to_clipboard(to_copy) vim.fn.setreg('+', to_copy) end
+
+function rvim.load_colorscheme(name)
+  rvim.pcall('theme failed to load because', vim.cmd.colorscheme, name)
+end
+
+---@generic T:table<string, any>
+---@param t T the object to format
+---@param k string the key to format
+---@return T?
+function rvim.format_text(t, k)
+  local txt = t[k] and t[k]:gsub('%s', '') or ''
+  if #txt < 1 then return end
+  t[k] = txt
+  return t
+end
+
+--[[ create_select_menu()
+-- Create a menu to execute a Vim command or Lua function using vim.ui.select()
+-- Example usage:
+-- local options = {
+--   [1. Onedark ] = "colo onedark"
+--   [2. Tokyonight ] = function() vim.cmd("colo tokyonight") end
+-- }
+-- local colo_picker = util.create_select_menu("Choose a colorscheme", options)
+-- vim.api.nvim_create_user_command("ColoPicker", colo_picker, { nargs = 0 })
+--
+-- @arg prompt: the prompt to display
+-- @arg options_table: Table of the form { [n. Display name] = lua-function/vim-cmd, ... }
+--                    The number is used for the sorting purpose and will be replaced by vim.ui.select() numbering
+--]]
+-- Ref: https://github.com/theopn/theovim/blob/main/lua/util.lua#L12
+function rvim.create_select_menu(prompt, options_table)
+  -- Given the table of options, populate an array with option display names
+  local option_names = {}
+  local n = 0
+  for i, _ in pairs(options_table) do
+    n = n + 1
+    option_names[n] = i
+  end
+  table.sort(option_names)
+  -- Return the prompt function. These global function var will be used when assigning keybindings
+  local menu = function()
+    vim.ui.select(option_names, {
+      prompt = prompt,
+      format_item = function(item) return item:gsub('%d. ', '') end,
+    }, function(choice)
+      local action = options_table[choice]
+      if action ~= nil then
+        if type(action) == 'string' then
+          vim.cmd(action)
+        elseif type(action) == 'function' then
+          action()
+        end
+      end
+    end)
+  end
+  return menu
+end
+
 ----------------------------------------------------------------------------------------------------
 --  FILETYPE HELPERS
 ----------------------------------------------------------------------------------------------------
@@ -152,7 +244,6 @@ function rvim.nightly() return vim.version().minor >= LATEST_NIGHTLY_MINOR end
 ---@param buf integer
 local function apply_ft_mappings(args, buf)
   vim.iter(args):each(function(m)
-    print('DEBUGPRINT[1]: globals.lua:154: m=' .. vim.inspect(m))
     -- assert(#m == 3, 'map args must be a table with at least 3 items')
     local opts = vim.iter(m):fold({ buffer = buf }, function(acc, key, item)
       if type(key) == 'string' then acc[key] = item end
@@ -341,8 +432,8 @@ end
 
 ---@class Autocommand
 ---@field desc string?
----@field event  string | string[] list of autocommand events
----@field pattern string | string[]? list of autocommand patterns
+---@field event  (string | string[])? list of autocommand events
+---@field pattern (string | string[])? list of autocommand patterns
 ---@field command string | fun(args: AutocmdArgs): boolean?
 ---@field nested  boolean?
 ---@field once    boolean?
@@ -388,7 +479,6 @@ function rvim.command(name, rhs, opts)
   opts = opts or {}
   api.nvim_create_user_command(name, rhs, opts)
 end
-
 
 ---A terser proxy for `nvim_replace_termcodes`
 ---@param str string
@@ -455,7 +545,7 @@ end
 function rvim.bool2str(bool) return bool and 'on' or 'off' end
 
 function rvim.change_filetype()
-  vim.ui.input({ prompt = "Change filetype to: " }, function(new_ft)
+  vim.ui.input({ prompt = 'Change filetype to: ' }, function(new_ft)
     if new_ft ~= nil then vim.bo.filetype = new_ft end
   end)
 end
