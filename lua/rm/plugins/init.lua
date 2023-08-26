@@ -730,11 +730,6 @@ return {
     end,
   },
   {
-    'TrevorS/uuid-nvim',
-    event = 'VeryLazy',
-    opts = { case = 'lower', quotes = 'single' },
-  },
-  {
     'luckasRanarison/nvim-devdocs',
     event = 'VeryLazy',
     dependencies = {
