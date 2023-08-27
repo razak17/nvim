@@ -228,7 +228,7 @@ rvim.augroup('Utilities', {
 }, {
   event = { 'DirChanged', 'VimEnter' },
   command = function()
-    if fn.getcwd() == vim.fn.stdpath('config') then
+    if vim.fn.isdirectory(fn.getcwd() .. '/lua') then
       map('n', 'gx', function()
         local file = fn.expand('<cfile>')
         if not file or fn.isdirectory(file) > 0 then return vim.cmd.edit(file) end
