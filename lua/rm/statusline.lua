@@ -263,6 +263,10 @@ local function lsp_client_names()
     .iter(ipairs(stl_lsp_clients(curbuf)))
     :map(function(_, c) return c.name end)
     :totable()
+
+  if client_names[1] and string.sub(client_names[1], 2, 2) == '' then
+    return 'No Active LSP ' .. table.concat(client_names, fmt(' %s ', separator)) .. ' ' .. separator
+  end
   return 'î« ' .. table.concat(client_names, fmt(' %s ', separator)) .. ' ' .. separator
 end
 
