@@ -120,6 +120,7 @@
   "rest.nvim": { "branch": "main", "commit": "22673c848768ff25517154a5aebfebc0c77d0b4f" },
   "sPoNGe-BoB.NvIm": { "branch": "master", "commit": "9e82bdc101b2ce4149f8700847bb6bad87427cd0" },
   "schemastore.nvim": { "branch": "main", "commit": "c7c6353db3208608786503cbade1e9f8d3531f15" },
+  "scrollEOF.nvim": { "branch": "master", "commit": "158f1302b06af2e17a2b713dc330947d790b08f8" },
   "sentiment.nvim": { "branch": "main", "commit": "54a6db15b630eccfa98c32a76baf90f21c6f1e40" },
   "smart-splits.nvim": { "branch": "master", "commit": "7aad6019dee974a01333523a5b8e122b7e7da454" },
   "sniprun": { "branch": "master", "commit": "1c4bc063522946676dd178d01d6fc130d3e41da5" },

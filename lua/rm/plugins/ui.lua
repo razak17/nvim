@@ -6,6 +6,11 @@ local separators, decorations = ui.icons.separators, ui.decorations
 
 return {
   {
+    'Aasim-A/scrollEOF.nvim',
+    event = 'VeryLazy',
+    opts = {},
+  },
+  {
     'tomiis4/BufferTabs.nvim',
     enabled = false,
     dependencies = { 'nvim-tree/nvim-web-devicons' },
