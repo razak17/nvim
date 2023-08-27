@@ -797,6 +797,7 @@ return {
   { 'razak17/slides.nvim', ft = 'slide' },
   { 'fladson/vim-kitty', ft = 'kitty' },
   { 'raimon49/requirements.txt.vim', lazy = false },
+  { 'gennaro-tedesco/nvim-jqx', ft = { 'json', 'yaml' } },
   {
     'whatyouhide/vim-lengthmatters',
     lazy = false,
