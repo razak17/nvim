@@ -347,6 +347,12 @@ return {
     },
   },
   {
+    'kevinhwang91/nvim-fundo',
+    event = 'VeryLazy',
+    build = function() require('fundo').install() end,
+    dependencies = { 'kevinhwang91/promise-async' },
+  },
+  {
     'smoka7/multicursors.nvim',
     enabled = not rvim.plugins.minimal and rvim.treesitter.enable,
     event = 'VeryLazy',
