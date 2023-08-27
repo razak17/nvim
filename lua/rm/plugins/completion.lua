@@ -140,7 +140,8 @@ return {
               vim_item.abbr = vim_item.abbr:sub(1, MAX_MENU_WIDTH) .. ellipsis
             end
 
-            local custom_sources = { 'emoji', 'lab.quick_data', 'dynamic', 'crates' }
+            local custom_sources =
+              { 'emoji', 'lab.quick_data', 'dynamic', 'crates', 'copilot', 'nerdfonts' }
 
             if
               not rvim.find_string(custom_sources, entry.source.name) and vim_item.kind ~= 'Color'

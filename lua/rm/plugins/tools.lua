@@ -34,12 +34,13 @@ return {
           black = function()
             null_ls.register(null_ls.builtins.formatting.black.with({ extra_args = { '--fast' } }))
           end,
-          eslint_d = function()
-            null_ls.register(
-              null_ls.builtins.diagnostics.eslint_d.with({ filetypes = { 'svelte' } })
-            )
-          end,
+          -- eslint_d = function()
+          --   null_ls.register(
+          --     null_ls.builtins.diagnostics.eslint_d.with({ filetypes = { 'svelte' } })
+          --   )
+          -- end,
           prettier = function() end,
+          eslint_d = function() end,
           prettierd = function()
             null_ls.register(null_ls.builtins.formatting.prettierd.with({
               filetypes = {
