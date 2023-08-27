@@ -304,7 +304,7 @@ return {
   },
   {
     'roobert/action-hints.nvim',
-    enabled = rvim.lsp.enable,
+    enabled = false,
     event = 'LspAttach',
     config = function()
       require('action-hints').setup({
