@@ -126,12 +126,12 @@ return {
   {
     'Wansmer/treesj',
     enabled = rvim.treesitter.enable,
-    dependencies = { 'nvim-treesitter/nvim-treesitter' },
     keys = {
       { 'gS', '<cmd>TSJSplit<CR>', desc = 'split to multiple lines' },
       { 'gJ', '<cmd>TSJJoin<CR>', desc = 'join to single line' },
     },
     opts = { use_default_keymaps = false, max_join_length = 150 },
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
   },
   {
     'mizlan/iswap.nvim',
@@ -140,6 +140,28 @@ return {
       { '<leader>ia', '<cmd>ISwap<CR>', desc = 'iswap: swap' },
       { '<leader>iw', '<cmd>ISwapWith<CR>', desc = 'iswap: swap with' },
     },
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
+  },
+  {
+    'Wansmer/sibling-swap.nvim',
+    enabled = rvim.treesitter.enable,
+    keys = {
+      {
+        '<leader>ih',
+        function() require('sibling-swap').swap_with_left() end,
+        desc = 'sibling-swap: swap left',
+      },
+      {
+        '<leader>il',
+        function() require('sibling-swap').swap_with_right() end,
+        desc = 'sibling-swap: swap right',
+      },
+    },
+    opts = {
+      use_default_keymaps = false,
+      highlight_node_at_cursor = true,
+    },
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
   },
   {
     'ThePrimeagen/refactoring.nvim',
