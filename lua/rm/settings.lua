@@ -123,7 +123,8 @@ opt.wildignore = {
   'tags.lock',
 }
 opt.wildoptions = { 'pum', 'fuzzy' }
--- o.pumblend = 3 -- Make popup window translucent, NOTE: causes codicons to be rendered funny
+-- NOTE: causes codicons to be rendered funny in cmp window
+o.pumblend = 0 -- Make popup window translucent,
 ----------------------------------------------------------------------------------------------------
 -- Display {{{1
 ----------------------------------------------------------------------------------------------------

@@ -129,65 +129,8 @@ return {
         formatting = {
           deprecated = true,
           fields = { 'abbr', 'kind', 'menu' },
-          format = function(entry, vim_item)
-            local label, length = vim_item.abbr, api.nvim_strwidth(vim_item.abbr)
-            local function format_icon(icon) return fmt('%s ', icon) end
-
-            if length < MIN_MENU_WIDTH then
-              vim_item.abbr = label .. string.rep(' ', MIN_MENU_WIDTH - length)
-            end
-            if #vim_item.abbr >= MAX_MENU_WIDTH then
-              vim_item.abbr = vim_item.abbr:sub(1, MAX_MENU_WIDTH) .. ellipsis
-            end
-
-            local custom_sources =
-              { 'emoji', 'lab.quick_data', 'dynamic', 'crates', 'copilot', 'nerdfonts' }
-
-            if
-              not rvim.find_string(custom_sources, entry.source.name) and vim_item.kind ~= 'Color'
-            then
-              vim_item.kind = format_icon(symbols[vim_item.kind])
-            end
-            if entry.source.name == 'emoji' then
-              vim_item.kind = format_icon(codicons.misc.smiley)
-            end
-            if entry.source.name == 'lab.quick_data' then
-              vim_item.kind = format_icon(codicons.misc.robot)
-              vim_item.kind_hl_group = 'CmpItemKindLab'
-            end
-            if entry.source.name == 'dynamic' then
-              vim_item.kind = format_icon(codicons.misc.calendar)
-              vim_item.kind_hl_group = 'CmpItemKindDynamic'
-            end
-            if entry.source.name == 'crates' then
-              vim_item.kind = format_icon(ui.codicons.misc.package)
-            end
-            if entry.source.name == 'copilot' then
-              vim_item.kind = format_icon(ui.codicons.misc.octoface)
-            end
-
-            if entry.source.name == 'nerdfonts' then
-              vim_item.kind = format_icon('')
-              vim_item.kind_hl_group = 'CmpItemKindNerdFont'
-            end
-
-            if vim_item.kind == 'Color' then
-              if entry.completion_item.documentation then
-                local _, _, r, g, b =
-                  string.find(entry.completion_item.documentation, '^rgb%((%d+), (%d+), (%d+)')
-                if r then
-                  local color = fmt('%s%s%s', fmt('%02x', r), fmt('%02x', g), fmt('%02x', b))
-                  local group = fmt('CmpItemKind_%s', color)
-                  if fn.hlID(group) < 1 then
-                    api.nvim_set_hl(0, group, { bg = fmt('#%s', color) })
-                  end
-                  vim_item.kind_hl_group = group
-                end
-              end
-              vim_item.kind = string.rep(' ', 2)
-            end
-
-            vim_item.menu = ({
+          format = function(entry, item)
+            item.menu = ({
               nvim_lsp = '[LSP]',
               luasnip = '[SNIP]',
               emoji = '[EMOJI]',
@@ -208,7 +151,52 @@ return {
               ['lab.quick_data'] = '[LAB]',
               nerdfonts = '[NF]',
             })[entry.source.name]
-            return vim_item
+
+            local label, length = item.abbr, api.nvim_strwidth(item.abbr)
+            local function format_icon(icon) return fmt('%s ', icon) end
+            vim.o.pumblend = 0
+
+            if length < MIN_MENU_WIDTH then
+              item.abbr = label .. string.rep(' ', MIN_MENU_WIDTH - length)
+            end
+            if #item.abbr >= MAX_MENU_WIDTH then
+              item.abbr = item.abbr:sub(1, MAX_MENU_WIDTH) .. ellipsis
+            end
+
+            local custom_sources =
+              { 'emoji', 'lab.quick_data', 'dynamic', 'crates', 'copilot', 'nerdfonts' }
+
+            if not rvim.find_string(custom_sources, entry.source.name) and item.kind ~= 'Color' then
+              item.kind = format_icon(symbols[item.kind])
+            end
+            if entry.source.name == 'emoji' then item.kind = format_icon(codicons.misc.smiley) end
+            if entry.source.name == 'lab.quick_data' then
+              item.kind = format_icon(codicons.misc.robot)
+              item.kind_hl_group = 'CmpItemKindLab'
+            end
+            if entry.source.name == 'dynamic' then
+              item.kind = format_icon(codicons.misc.calendar)
+              item.kind_hl_group = 'CmpItemKindDynamic'
+            end
+            if entry.source.name == 'crates' then
+              item.kind = format_icon(ui.codicons.misc.package)
+            end
+            if entry.source.name == 'copilot' then
+              item.kind = format_icon(ui.codicons.misc.octoface)
+            end
+
+            if entry.source.name == 'nerdfonts' then
+              item.kind = format_icon('')
+              item.kind_hl_group = 'CmpItemKindNerdFont'
+            end
+
+            if item.kind == 'Color' then
+              vim.o.pumblend = 3
+              item = require('cmp-tailwind-colors').format(entry, item)
+              item.menu = '[COLOR]'
+              if item.kind == 'Color' then item.kind = format_icon(symbols[item.kind]) end
+            end
+            return item
           end,
         },
         sources = {
@@ -296,6 +284,7 @@ return {
       'hrsh7th/cmp-emoji',
       'lukas-reineke/cmp-rg',
       'fazibear/cmp-nerdfonts',
+      { 'js-everts/cmp-tailwind-colors', opts = {} },
       { 'hrsh7th/cmp-nvim-lsp', enabled = rvim.lsp.enable },
       { 'hrsh7th/cmp-cmdline', config = function() vim.o.wildmode = '' end },
       { 'hrsh7th/cmp-nvim-lsp-document-symbol', enabled = rvim.lsp.enable },
