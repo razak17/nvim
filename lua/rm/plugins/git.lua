@@ -175,7 +175,6 @@ return {
             .iter(signs)
             :map(function(item) return format_text(item[4], 'sign_text') end)
             :fold({}, function(_, item) return item.sign_hl_group end)
-print('DEBUGPRINT[1]: git.lua:178: sns=' .. vim.inspect(sns))
           if sns ~= 'GitSignsStagedAdd' then return end
 
           vim.defer_fn(function()
@@ -195,7 +194,7 @@ print('DEBUGPRINT[1]: git.lua:178: sns=' .. vim.inspect(sns))
       {
         '<leader>gof',
         function()
-          require('openingh').open_file()
+          vim.cmd('OpenInGHFile')
           vim.notify('opening file in github', 'info', { title = 'openingh' })
         end,
         desc = 'openingh: open file',
@@ -203,7 +202,7 @@ print('DEBUGPRINT[1]: git.lua:178: sns=' .. vim.inspect(sns))
       {
         '<leader>gor',
         function()
-          require('openingh').open_repo()
+          vim.cmd('OpenInGHRepo')
           vim.notify('opening repo in github', 'info', { title = 'openingh' })
         end,
         desc = 'openingh: open repo',
@@ -211,7 +210,7 @@ print('DEBUGPRINT[1]: git.lua:178: sns=' .. vim.inspect(sns))
       {
         '<leader>gol',
         function()
-          require('openingh').open_file_lines()
+          vim.cmd('OpenInGHFileLines')
           vim.notify('opening file line in github', 'info', { title = 'openingh' })
         end,
         desc = 'openingh: open to line',
