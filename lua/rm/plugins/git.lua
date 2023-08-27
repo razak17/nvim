@@ -154,7 +154,7 @@ return {
     },
     config = function(_, opts)
       rvim.augroup('GitSignsRefreshCustom', {
-        event = { 'InsertEnter', 'CursorMoved' },
+        event = { 'InsertEnter', 'CursorHold' },
         command = function(args)
           local decs = rvim.ui.decorations.get({
             ft = vim.bo.ft,
@@ -175,6 +175,7 @@ return {
             .iter(signs)
             :map(function(item) return format_text(item[4], 'sign_text') end)
             :fold({}, function(_, item) return item.sign_hl_group end)
+print('DEBUGPRINT[1]: git.lua:178: sns=' .. vim.inspect(sns))
           if sns ~= 'GitSignsStagedAdd' then return end
 
           vim.defer_fn(function()
