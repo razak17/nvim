@@ -272,7 +272,7 @@ return {
     keys = {
       { '<leader>aa', '<cmd>ChatGPTActAs<CR>', desc = 'chatgpt: act as' },
       { '<leader>ae', '<cmd>ChatGPTEditWithInstructions<CR>', desc = 'chatgpt: edit' },
-      { '<leader>ag', '<cmd>ChatGPT<CR>', desc = 'chatgpt: open' },
+      { '<leader>an', '<cmd>ChatGPT<CR>', desc = 'chatgpt: open' },
     },
     config = function()
       local border = { style = rvim.ui.border.rectangle, highlight = 'FloatBorder' }
@@ -290,6 +290,16 @@ return {
       'nvim-lua/plenary.nvim',
       'nvim-telescope/telescope.nvim',
     },
+  },
+  {
+    'piersolenski/wtf.nvim',
+    event = 'VeryLazy',
+    opts = {},
+    keys = {
+      { '<leader>ao', function() require('wtf').ai() end, desc = 'wtf: debug diagnostic with AI' },
+      { '<leader>ag', function() require('wtf').search() end, desc = 'wtf: google diagnostic' },
+    },
+    dependencies = { 'MunifTanjim/nui.nvim' },
   },
   {
     'subnut/nvim-ghost.nvim',

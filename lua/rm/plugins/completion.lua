@@ -1,4 +1,4 @@
-local fn, api, fmt, k = vim.fn, vim.api, string.format, vim.keycode
+local api, fmt, k = vim.api, string.format, vim.keycode
 local ui = rvim.ui
 local border, lsp_hls, ellipsis = ui.current.border, ui.lsp.highlights, ui.icons.misc.ellipsis
 
