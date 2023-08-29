@@ -406,15 +406,9 @@ return {
     'folke/twilight.nvim',
     enabled = rvim.treesitter.enable and not rvim.plugins.minimal,
     cmd = 'Twilight',
-    keys = {
-      { '<localleader>zt', '<cmd>Twilight<CR>', desc = 'twilight: toggle' },
-    },
     opts = {
-      dimming = {
-        alpha = 0.45,
-        inactive = true,
-      },
       context = 40,
+      dimming = { alpha = 0.45, inactive = true },
       exclude = { 'alpha', 'git' },
     },
   },

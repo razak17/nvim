@@ -54,19 +54,17 @@ local toggle_options = {
   ['1. Toggle Spell'] = function() toggle_opt('spell') end,
   ['1. Toggle Statusline'] = toggle_statusline,
   ['2. Toggle Ccc'] = 'CccHighlighterToggle',
-  ['3. Toggle Pick'] = 'CccPick',
-  ['4. Toggle Cloak'] = 'CloakToggle',
-  ['4. Toggle SpOnGeBoB'] = 'SpOnGeBoBtOgGlE',
+  ['2. Toggle Pick'] = 'CccPick',
+  ['3. Toggle Cloak'] = 'CloakToggle',
+  ['3. Toggle SpOnGeBoB'] = 'SpOnGeBoBtOgGlE',
+  ['3. Toggle Lengthmatters'] = 'LengthmattersToggle',
+  ['4. Toggle Twilight'] = 'Twilight',
   ['4. Toggle ZenMode'] = 'ZenMode',
-  ['4. Toggle Lengthmatters'] = 'LengthmattersToggle',
-  ['5. Insert UUID'] = function()
-    require('uuid-nvim').toggle_highlighting()
-    require('uuid-nvim').insert_v4()
-  end,
+  ['4. Toggle Zoom'] = 'lua require("mini.misc").zoom()',
 }
 
 local toggle_menu = function()
   rvim.create_select_menu('Toggle actions', toggle_options)() --> extra paren to execute!
 end
 
-map('n', '<leader>o', toggle_menu, { desc = '[t]oggle [a]ctions: open menu for toggle actions' })
+map('n', '<leader>oo', toggle_menu, { desc = '[t]oggle [a]ctions: open menu for toggle actions' })
