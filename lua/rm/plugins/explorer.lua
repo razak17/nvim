@@ -196,9 +196,4 @@ return {
     opts = { skip_confirm_for_simple_edits = true },
     dependencies = { 'nvim-tree/nvim-web-devicons' },
   },
-  {
-    'echasnovski/mini.files',
-    keys = { { '<leader>e', '<cmd>lua MiniFiles.open()<CR>', desc = 'mini.files' } },
-    opts = {},
-  },
 }

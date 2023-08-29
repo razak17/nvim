@@ -419,23 +419,6 @@ return {
     },
   },
   {
-    'echasnovski/mini.surround',
-    keys = { { 'ys', desc = 'add surrounding' }, 'ds', { 'yr', desc = 'delete surrounding' } },
-    config = function()
-      require('mini.surround').setup({
-        mappings = {
-          add = 'ys',
-          delete = 'ds',
-          find = 'yf',
-          find_left = 'yF',
-          highlight = 'yh',
-          replace = 'yr',
-          update_n_lines = 'yn',
-        },
-      })
-    end,
-  },
-  {
     'andrewferrier/debugprint.nvim',
     enabled = rvim.treesitter.enable,
     keys = {
@@ -607,6 +590,17 @@ return {
       { '<localleader>xp', '<cmd>ExecutorShowPresets<CR>', desc = 'executor: show presets' },
     },
     opts = {
+      input = {
+        border = {
+          style = 'single',
+          padding = {
+            top = 1,
+            bottom = 1,
+            left = 1,
+            right = 1,
+          },
+        },
+      },
       notifications = {
         task_started = true,
         task_completed = true,

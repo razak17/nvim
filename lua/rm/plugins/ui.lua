@@ -374,43 +374,6 @@ return {
     end,
   },
   {
-    'razak17/mini.indentscope',
-    -- enabled = not rvim.plugins.minimal,
-    enabled = false,
-    event = 'BufRead',
-    version = false,
-    init = function()
-      highlight.plugin('mini-indentscope', {
-        { MiniIndentscopeSymbol = { inherit = 'IndentBlanklineContextChar' } },
-        { MiniIndentscopeSymbolOff = { inherit = 'IndentBlanklineChar' } },
-      })
-    end,
-    opts = {
-      symbol = separators.left_thin_block,
-      draw = { delay = 200 },
-      filetype_exclude = {
-        'lazy',
-        'fzf',
-        'alpha',
-        'dbout',
-        'neo-tree-popup',
-        'log',
-        'gitcommit',
-        'txt',
-        'help',
-        'NvimTree',
-        'git',
-        'flutterToolsOutline',
-        'undotree',
-        'markdown',
-        'norg',
-        'org',
-        'orgagenda',
-        '', -- for all buffers without a file type
-      },
-    },
-  },
-  {
     'lukas-reineke/indent-blankline.nvim',
     enabled = rvim.treesitter.enable and not rvim.plugins.minimal,
     event = 'BufRead',
