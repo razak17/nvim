@@ -2,36 +2,6 @@ local separators = rvim.ui.icons.separators
 
 return {
   {
-    'echasnovski/mini.ai',
-    enabled = rvim.treesitter.enable and not rvim.plugins.minimal,
-    event = 'VeryLazy',
-    config = function()
-      require('mini.ai').setup({ mappings = { around_last = '', inside_last = '' } })
-    end,
-  },
-  {
-    'echasnovski/mini.files',
-    keys = { { '<leader>e', '<cmd>lua MiniFiles.open()<CR>', desc = 'mini.files' } },
-    opts = {},
-  },
-  {
-    'echasnovski/mini.surround',
-    keys = { { 'ys', desc = 'add surrounding' }, 'ds', { 'yr', desc = 'delete surrounding' } },
-    config = function()
-      require('mini.surround').setup({
-        mappings = {
-          add = 'ys',
-          delete = 'ds',
-          find = 'yf',
-          find_left = 'yF',
-          highlight = 'yh',
-          replace = 'yr',
-          update_n_lines = 'yn',
-        },
-      })
-    end,
-  },
-  {
     'razak17/mini.indentscope',
     -- enabled = not rvim.plugins.minimal,
     enabled = false,
@@ -67,5 +37,35 @@ return {
         '', -- for all buffers without a file type
       },
     },
+  },
+  {
+    'echasnovski/mini.ai',
+    enabled = rvim.treesitter.enable and not rvim.plugins.minimal,
+    event = 'VeryLazy',
+    config = function()
+      require('mini.ai').setup({ mappings = { around_last = '', inside_last = '' } })
+    end,
+  },
+  {
+    'echasnovski/mini.files',
+    keys = { { '<leader>e', '<cmd>lua MiniFiles.open()<CR>', desc = 'mini.files' } },
+    opts = {},
+  },
+  {
+    'echasnovski/mini.surround',
+    keys = { { 'ys', desc = 'add surrounding' }, 'ds', { 'yr', desc = 'delete surrounding' } },
+    config = function()
+      require('mini.surround').setup({
+        mappings = {
+          add = 'ys',
+          delete = 'ds',
+          find = 'yf',
+          find_left = 'yF',
+          highlight = 'yh',
+          replace = 'yr',
+          update_n_lines = 'yn',
+        },
+      })
+    end,
   },
 }
