@@ -38,6 +38,8 @@ return {
         l = { name = 'Lsp' },
         m = { name = 'Marks' },
         n = { name = 'Notify' },
+        o = { name = 'Toggles' },
+        p = { name = 'Debugprint' },
         r = { name = 'Run' },
         s = { name = 'Splits' },
         tn = { name = 'Neotest' },

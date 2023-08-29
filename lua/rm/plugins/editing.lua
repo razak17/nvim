@@ -348,18 +348,20 @@ return {
           toggle_macro_menu = '<localleader>qm',
         },
       })
-      require('which-key').register({
-        ['<localleader>qr'] = 'neocomposer: toggle record',
-        ['<localleader>qq'] = 'neocomposer: play macro',
-        ['<localleader>qy'] = 'neocomposer: yank macro',
-        ['<localleader>qs'] = 'neocomposer: stop macro',
-        ['<localleader>qn'] = 'neocomposer: cycle next',
-        ['<localleader>qp'] = 'neocomposer: cycle prev',
-        ['<localleader>qm'] = 'neocomposer: toggle menu',
-      })
-      require('which-key').register({
-        qq = 'neocomposer: play macro',
-      }, { mode = 'x', prefix = '<localleader>' })
+      if rvim.is_available('which-key.nvim') then
+        require('which-key').register({
+          ['<localleader>qr'] = 'neocomposer: toggle record',
+          ['<localleader>qq'] = 'neocomposer: play macro',
+          ['<localleader>qy'] = 'neocomposer: yank macro',
+          ['<localleader>qs'] = 'neocomposer: stop macro',
+          ['<localleader>qn'] = 'neocomposer: cycle next',
+          ['<localleader>qp'] = 'neocomposer: cycle prev',
+          ['<localleader>qm'] = 'neocomposer: toggle menu',
+        })
+        require('which-key').register({
+          qq = 'neocomposer: play macro',
+        }, { mode = 'x', prefix = '<localleader>' })
+      end
     end,
   },
   {

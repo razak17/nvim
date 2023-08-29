@@ -9,7 +9,9 @@ vim.opt_local.iskeyword:append('-')
 
 if not rvim or not rvim.lsp.enable or not rvim.plugins.enable then return end
 
-require('which-key').register({ ['<localleader>g'] = { name = 'Gopher' } })
+if rvim.is_available('which-key.nvim') then
+  require('which-key').register({ ['<localleader>g'] = { name = 'Gopher' } })
+end
 
 local function with_desc(desc) return { buffer = 0, desc = fmt('gopher: %s', desc) } end
 
