@@ -242,14 +242,14 @@ return {
     event = 'BufReadPre',
     cmd = { 'TodoTelescope', 'TodoTrouble', 'TodoQuickFix', 'TodoDots' },
     keys = {
-      { '<leader>tt', '<cmd>TodoDots<CR>', desc = 'todo: dotfiles todos' },
+      { '<localleader>tt', '<cmd>TodoDots<CR>', desc = 'todo: dotfiles todos' },
       {
-        '<leader>tj',
+        '<localleader>tj',
         function() require('todo-comments').jump_next() end,
         desc = 'todo-comments: next todo',
       },
       {
-        '<leader>tk',
+        '<localleader>tk',
         function() require('todo-comments').jump_prev() end,
         desc = 'todo-comments: prev todo',
       },

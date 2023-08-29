@@ -55,8 +55,9 @@ return {
     opts = {},
   },
   {
-    "echasnovski/mini.animate",
-    event = "VeryLazy",
+    'echasnovski/mini.animate',
+    enabled = false,
+    event = 'VeryLazy',
     opts = {},
   },
   {

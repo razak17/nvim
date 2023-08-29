@@ -7,23 +7,22 @@ local function next_failed() neotest().jump.prev({ status = 'failed' }) end
 local function prev_failed() neotest().jump.next({ status = 'failed' }) end
 local function toggle_summary() neotest().summary.toggle() end
 local function cancel() neotest().run.stop({ interactive = true }) end
+local function run_last() neotest().run.run_last() end
+local function debug_nearest() require('neotest').run.run({ strategy = 'dap' }) end
 
 return {
   {
     'nvim-neotest/neotest',
     enabled = not rvim.plugins.minimal,
     keys = {
-      { '<leader>ts', toggle_summary, desc = 'neotest: toggle summary' },
-      { '<leader>to', open, desc = 'neotest: output' },
-      { '<leader>tn', nearest, desc = 'neotest: run' },
-      {
-        '<leader>td',
-        function() require('neotest').run.run({ strategy = 'dap' }) end,
-        desc = 'neotest: debug nearest',
-      },
-      { '<leader>tf', run_file, desc = 'neotest: run file' },
-      { '<leader>tF', run_file_sync, desc = 'neotest: run file synchronously' },
-      { '<leader>tc', cancel, desc = 'neotest: cancel' },
+      { '<leader>tns', toggle_summary, desc = 'neotest: toggle summary' },
+      { '<leader>tno', open, desc = 'neotest: output' },
+      { '<leader>tnn', nearest, desc = 'neotest: run' },
+      { '<leader>tnl', run_last, desc = 'neotest: run last' },
+      { '<leader>tnd', debug_nearest, desc = 'neotest: debug nearest' },
+      { '<leader>tnf', run_file, desc = 'neotest: run file' },
+      { '<leader>tnF', run_file_sync, desc = 'neotest: run file synchronously' },
+      { '<leader>tnc', cancel, desc = 'neotest: cancel' },
       { '[n', next_failed, desc = 'jump to next failed test' },
       { ']n', prev_failed, desc = 'jump to previous failed test' },
     },
@@ -55,6 +54,16 @@ return {
             jestCommand = 'npm test --',
             jestConfigFile = 'jest.config.js',
           }),
+          require('neotest-vim-test')({
+            ignore_file_types = { 'python', 'vim', 'lua' },
+          }),
+        },
+        consumers = {
+          overseer = require('neotest.consumers.overseer'),
+        },
+        overseer = {
+          enabled = true,
+          force_default = true,
         },
       })
     end,
@@ -63,8 +72,43 @@ return {
       'nvim-neotest/neotest-go',
       'haydenmeade/neotest-jest',
       'nvim-neotest/neotest-python',
+      'nvim-neotest/neotest-vim-test',
       { 'rcarriga/neotest-plenary', dependencies = { 'nvim-lua/plenary.nvim' } },
     },
+  },
+  {
+    'vim-test/vim-test',
+    keys = {
+      { '<leader>tvc', '<cmd>TestClass<cr>', desc = 'vim-test: class' },
+      { '<leader>tvf', '<cmd>TestFile<cr>', desc = 'vim-test: file' },
+      { '<leader>tvl', '<cmd>TestLast<cr>', desc = 'vim-test: last' },
+      { '<leader>tvn', '<cmd>TestNearest<cr>', desc = 'vim-test: nearest' },
+      { '<leader>tvs', '<cmd>TestSuite<cr>', desc = 'vim-test: suite' },
+      { '<leader>tvv', '<cmd>TestVisit<cr>', desc = 'vim-test: visit' },
+    },
+    config = function()
+      vim.g['test#strategy'] = 'neovim'
+      vim.g['test#neovim#term_position'] = 'belowright'
+      vim.g['test#neovim#preserve_screen'] = 1
+      vim.g['test#python#runner'] = 'pyunit' -- pytest
+    end,
+  },
+  {
+    'stevearc/overseer.nvim',
+    keys = {
+      { '<leader>toR', '<cmd>OverseerRunCmd<cr>', desc = 'overseer: run command' },
+      { '<leader>toa', '<cmd>OverseerTaskAction<cr>', desc = 'overseer: task action' },
+      { '<leader>tob', '<cmd>OverseerBuild<cr>', desc = 'overseer: build' },
+      { '<leader>toc', '<cmd>OverseerClose<cr>', desc = 'overseer: close' },
+      { '<leader>tod', '<cmd>OverseerDeleteBundle<cr>', desc = 'overseer: delete bundle' },
+      { '<leader>tol', '<cmd>OverseerLoadBundle<cr>', desc = 'overseer: load bundle' },
+      { '<leader>too', '<cmd>OverseerOpen<cr>', desc = 'overseer: open' },
+      { '<leader>toq', '<cmd>OverseerQuickAction<cr>', desc = 'overseer: quick action' },
+      { '<leader>tor', '<cmd>OverseerRun<cr>', desc = 'overseer: run' },
+      { '<leader>tos', '<cmd>OverseerSaveBundle<cr>', desc = 'overseer: save bundle' },
+      { '<leader>tot', '<cmd>OverseerToggle<cr>', desc = 'overseer: toggle' },
+    },
+    opts = {},
   },
   {
     'andythigpen/nvim-coverage',
