@@ -50,6 +50,16 @@ return {
     opts = {},
   },
   {
+    'echasnovski/mini.bracketed',
+    event = 'VeryLazy',
+    opts = {},
+  },
+  {
+    "echasnovski/mini.animate",
+    event = "VeryLazy",
+    opts = {},
+  },
+  {
     'echasnovski/mini.ai',
     enabled = rvim.treesitter.enable and not rvim.plugins.minimal,
     event = 'VeryLazy',
