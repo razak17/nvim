@@ -39,6 +39,17 @@ return {
     },
   },
   {
+    'echasnovski/mini.misc',
+    keys = {
+      {
+        '<localleader>zz',
+        function() require('mini.misc').zoom() end,
+        desc = 'mini.misc: toggle Zoom',
+      },
+    },
+    opts = {},
+  },
+  {
     'echasnovski/mini.ai',
     enabled = rvim.treesitter.enable and not rvim.plugins.minimal,
     event = 'VeryLazy',

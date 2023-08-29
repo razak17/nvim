@@ -98,8 +98,7 @@ return {
       dap.listeners.before.event_exited['dapui_config'] = function() dapui.close() end
       dap.listeners.before.event_terminated['dapui_config'] = function() dapui.close() end
 
-      local mason_registry = require('mason-registry')
-      local js_debug = mason_registry.get_package('js-debug-adapter')
+      local js_debug = require('mason-registry').get_package('js-debug-adapter')
       local debug_server_path = js_debug:get_install_path() .. '/js-debug/src/dapDebugServer.js'
 
       require('dap').adapters['pwa-node'] = {
@@ -166,7 +165,11 @@ return {
             request = 'launch',
             name = 'Launch test current file (pwa-node with jest)',
             cwd = vim.fn.getcwd(),
-            runtimeArgs = { '${workspaceFolder}/node_modules/.bin/jest' },
+            runtimeArgs = {
+              -- '${workspaceFolder}/node_modules/.bin/jest',
+              './node_modules/jest/bin/jest.js',
+              '--runInBand',
+            },
             runtimeExecutable = 'node',
             args = { '${file}', '--coverage', 'false' },
             rootPath = '${workspaceFolder}',

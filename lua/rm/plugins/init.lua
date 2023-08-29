@@ -407,7 +407,7 @@ return {
     enabled = rvim.treesitter.enable and not rvim.plugins.minimal,
     cmd = 'Twilight',
     keys = {
-      { '<localleader>zt', '<cmd>Twilight<CR>', desc = 'Twilight toggle' },
+      { '<localleader>zt', '<cmd>Twilight<CR>', desc = 'twilight: toggle' },
     },
     opts = {
       dimming = {
