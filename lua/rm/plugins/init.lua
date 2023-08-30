@@ -460,7 +460,7 @@ return {
         expr = true,
         desc = 'debugprint: operator (above)',
       },
-      { '<leader>dx', '<Cmd>DeleteDebugPrints<CR>', desc = 'debugprint: clear all' },
+      { '<leader>px', '<Cmd>DeleteDebugPrints<CR>', desc = 'debugprint: clear all' },
     },
     opts = {
       create_keymaps = false,
