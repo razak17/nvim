@@ -26,7 +26,7 @@ return {
       { '[n', next_failed, desc = 'jump to next failed test' },
       { ']n', prev_failed, desc = 'jump to previous failed test' },
     },
-    config = function(_, opts)
+    config = function()
       local neotest_ns = vim.api.nvim_create_namespace('neotest')
       vim.diagnostic.config({
         virtual_text = {
@@ -113,11 +113,11 @@ return {
   {
     'andythigpen/nvim-coverage',
     keys = {
-      { '<localleader>tl', function() require('coverage').load(true) end, desc = 'coverage: load' },
-      { '<localleader>tc', function() require('coverage').clear() end, desc = 'coverage: clear' },
-      { '<localleader>tt', function() require('coverage').toggle() end, desc = 'coverage: toggle' },
+      { '<leader>tl', function() require('coverage').load(true) end, desc = 'coverage: load' },
+      { '<leader>tc', function() require('coverage').clear() end, desc = 'coverage: clear' },
+      { '<leader>tt', function() require('coverage').toggle() end, desc = 'coverage: toggle' },
       {
-        '<localleader>ts',
+        '<leader>ts',
         function() require('coverage').summary() end,
         desc = 'coverage: summary',
       },
