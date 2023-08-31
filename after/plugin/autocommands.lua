@@ -260,6 +260,7 @@ rvim.augroup('Utilities', {
   event = { 'VimEnter' },
   desc = 'Start Alpha when vim is opened with no arguments',
   command = function()
+    if rvim.plugins.minimal then return end
     local should_skip = false
     if vim.fn.argc() > 0 or vim.fn.line2byte(vim.fn.line('$')) ~= -1 or not vim.o.modifiable then
       should_skip = true
