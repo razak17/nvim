@@ -337,14 +337,12 @@ return {
     config = function() vim.g.highlighturl_guifg = highlight.get('URL', 'fg') end,
   },
   {
-    'razak17/swenv.nvim',
-    keys = {
-      {
-        '<localleader>le',
-        '<Cmd>lua require("swenv.api").pick_venv()<CR>',
-        desc = 'swenv: pick env',
-      },
+    'linux-cultist/venv-selector.nvim',
+    cmd = 'VenvSelect',
+    opts = {
+      name = { 'venv', '.venv', 'env', '.env' },
     },
+    keys = { { '<localleader>le', '<cmd>:VenvSelect<cr>', desc = 'Select VirtualEnv' } },
   },
   {
     'kevinhwang91/nvim-fundo',
