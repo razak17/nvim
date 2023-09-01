@@ -97,7 +97,7 @@ return {
     cmd = 'FzfLua',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     keys = {
-      { '<c-p>', git_files_cwd_aware, desc = 'find files' },
+      -- { '<c-p>', git_files_cwd_aware, desc = 'find files' },
       -- { '<leader>f?', fzf_lua.help_tags, desc = 'help' },
       -- { '<leader>fa', '<Cmd>FzfLua<CR>', desc = 'builtins' },
       -- { '<leader>fb', fzf_lua.grep_curbuf, desc = 'current buffer fuzzy find' },

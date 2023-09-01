@@ -153,7 +153,7 @@ return {
     'nvim-telescope/telescope.nvim',
     cmd = 'Telescope',
     keys = {
-      -- { '<c-p>', find_files, desc = 'find files' },
+      { '<c-p>', find_files, desc = 'find files' },
       { '<leader>.', file_browser, desc = 'file browser' },
       { '<leader>f?', b('help_tags'), desc = 'help tags' },
       { '<leader>fa', b('builtin', { include_extensions = true }), desc = 'builtins' },
