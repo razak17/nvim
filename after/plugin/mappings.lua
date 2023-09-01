@@ -29,9 +29,24 @@ vim.cmd([[
   endfunction
 ]])
 xnoremap('@', ':<C-u>call ExecuteMacroOverVisualRange()<CR>', { silent = false })
+-----------------------------------------------------------------------------//
+-- Add Empty space above and below
+-----------------------------------------------------------------------------//
+nnoremap('[<space>', [[<cmd>put! =repeat(nr2char(10), v:count1)<cr>'[]], {
+  desc = 'add space above',
+})
+nnoremap(']<space>', [[<cmd>put =repeat(nr2char(10), v:count1)<cr>]], {
+  desc = 'add space below',
+})
 ----------------------------------------------------------------------------------------------------
 -- Credit: JGunn Choi ?il | inner line
 ----------------------------------------------------------------------------------------------------
+-- Yank all
+nnoremap('<leader>Y', 'gg"+VGy<C-o>', { desc = 'yank all' })
+-- Select all
+nnoremap('<leader>A', 'gg"+VG', { desc = 'select all' })
+-- Delete All
+nnoremap('<leader>D', 'gg"+VGd', { desc = 'delete all' })
 -- Paste in visual mode multiple times
 xnoremap('p', 'pgvy')
 -- search visual selection
@@ -116,11 +131,6 @@ vnoremap('<leader>dd', '"_d', { desc = 'delete' })
 --   [[:let @+=substitute(execute('messages'), '\n\+', '\n', 'g')<cr>]],
 --   { desc = 'yank vim messages output' }
 -- )
-----------------------------------------------------------------------------------------------------
--- Yank / Select / Delete All
-nnoremap('<leader>Y', 'gg"+VGy<C-o>', { desc = 'yank all' })
-nnoremap('<leader>A', 'gg"+VG', { desc = 'select all' })
-nnoremap('<leader>D', 'gg"+VGd', { desc = 'delete all' })
 ----------------------------------------------------------------------------------------------------
 -- Quick find/replace
 nnoremap('<leader>[', [[:%s/\<<C-r>=expand("<cword>")<CR>\>/]], { desc = 'replace all' })

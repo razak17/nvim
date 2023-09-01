@@ -15,14 +15,6 @@ return {
     })
 
     which_key.register({
-      [']'] = {
-        name = 'next',
-        ['<space>'] = 'add space below',
-      },
-      ['['] = {
-        name = 'prev',
-        ['<space>'] = 'add space above',
-      },
       ['<leader>'] = {
         a = { name = 'A.I.' },
         d = { name = 'Dadbod' },
