@@ -198,6 +198,13 @@ local function ts_active()
   return ''
 end
 
+local function is_pipfile_root()
+  return not vim.tbl_isempty(vim.fs.find({ 'Pipfile', 'Pipfile.lock' }, {
+    path = fn.expand('%:p'),
+    upward = true,
+  }))
+end
+
 local function env_cleanup(venv)
   local final_venv = venv
   if string.find(venv, '/') then
@@ -205,7 +212,7 @@ local function env_cleanup(venv)
       final_venv = w
     end
   end
-  if conditions.is_pipfile_root() then return final_venv:match('^([^%-]*)') end
+  if is_pipfile_root() then return final_venv:match('^([^%-]*)') end
   return final_venv
 end
 
@@ -265,7 +272,10 @@ local function lsp_client_names()
     :totable()
 
   if client_names[1] and string.sub(client_names[1], 2, 2) == '�' then
-    return 'No Active LSP ' .. table.concat(client_names, fmt(' %s ', separator)) .. ' ' .. separator
+    return 'No Active LSP '
+      .. table.concat(client_names, fmt(' %s ', separator))
+      .. ' '
+      .. separator
   end
   return ' ' .. table.concat(client_names, fmt(' %s ', separator)) .. ' ' .. separator
 end
@@ -349,7 +359,7 @@ return {
   file_name_block = utils.insert(file_block, utils.insert(file_name, file_flags)),
   python_env = {
     condition = function() return vim.bo.filetype == 'python' end,
-    provider = function() return python_env() end,
+    provider = function() return python_env() .. ' ' end,
     hl = { fg = colors.yellowgreen, bg = bg },
     on_click = {
       callback = function() require('swenv.api').pick_venv() end,
@@ -605,7 +615,8 @@ return {
     provider = function()
       local current_line = vim.fn.line('.')
       local total_lines = vim.fn.line('$')
-      local chars = { '▁', '▂', '▃', '▄', '▅', '▆', '▇', '█' }
+      local chars =
+        { '▁', '▂', '▃', '▄', '▅', '▆', '▇', '█' }
       local line_ratio = current_line / total_lines
       local index = math.ceil(line_ratio * #chars)
       return ' ' .. chars[index]
