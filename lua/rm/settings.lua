@@ -169,7 +169,7 @@ o.smartindent = true
 ----------------------------------------------------------------------------------------------------
 o.pumheight = 15
 o.confirm = true -- make vim prompt me to save before doing destructive things
-opt.completeopt = { 'menuone', 'noselect' }
+opt.completeopt = { 'menuone' }
 o.hlsearch = true
 o.autowriteall = true -- automatically :write before running commands and changing files
 opt.clipboard = { 'unnamedplus' }
