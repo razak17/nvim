@@ -107,7 +107,6 @@ return {
     'nvim-treesitter/nvim-treesitter-context',
     enabled = rvim.treesitter.enable and not rvim.plugins.minimal,
     event = { 'BufRead', 'BufNewFile' },
-    commit = '64828e2',
     config = function()
       highlight.plugin('treesitter-context', {
         { TreesitterContextSeparator = { link = 'VertSplit' } },
