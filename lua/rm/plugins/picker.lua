@@ -178,6 +178,7 @@ return {
           },
           fzf = {
             ['esc'] = 'abort',
+            ['ctrl-q'] = 'select-all+accept',
           },
         },
         highlights = {
