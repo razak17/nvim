@@ -28,6 +28,7 @@ local namespace = {
     minimal = env.RVIM_PLUGINS_MINIMAL == '1',
     overrides = {
       ghost_text = { enable = env.RVIM_GHOST_ENABLED == '1' },
+      copilot_cmp = { enable = false },
     },
   },
   treesitter = {

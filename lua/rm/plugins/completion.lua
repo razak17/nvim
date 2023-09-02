@@ -34,7 +34,6 @@ return {
           { CmpItemAbbrMatch = { fg = { from = 'Search' }, bold = true } },
           { CmpItemAbbrMatchFuzzy = { fg = { from = 'Search' } } },
           { CmpItemMenu = { fg = { from = 'Comment' }, italic = true, bold = true } },
-          { CmpItemKindCopilot = { fg = { from = 'DiffAdd', attr = 'bg' } } },
           { CmpItemKindNerdFont = { fg = { from = 'Directory' } } },
           { CmpItemKindLab = { fg = { from = 'DiagnosticWarn' } } },
           { CmpItemKindDynamic = { fg = { from = 'Directory' } } },
@@ -84,25 +83,16 @@ return {
         },
         sorting = {
           comparators = {
-            require('copilot_cmp.comparators').prioritize,
+            rvim.is_available('copilot-cmp') and require('copilot_cmp.comparators').prioritize
+              or nil,
             cmp.config.compare.locality,
             cmp.config.compare.offset,
             cmp.config.compare.recently_used,
             cmp.config.compare.exact,
+            cmp.config.compare.score,
+            cmp.config.compare.kind,
             cmp.config.compare.order,
             cmp.config.compare.length,
-            function(entry1, entry2)
-              local _, entry1_under = entry1.completion_item.label:find('^_+')
-              local _, entry2_under = entry2.completion_item.label:find('^_+')
-              entry1_under = entry1_under or 0
-              entry2_under = entry2_under or 0
-              if entry1_under > entry2_under then
-                return false
-              elseif entry1_under < entry2_under then
-                return true
-              end
-            end,
-            cmp.config.compare.kind,
             cmp.config.compare.sort_text,
           },
         },
@@ -131,6 +121,7 @@ return {
           fields = { 'abbr', 'kind', 'menu' },
           format = function(entry, item)
             item.menu = ({
+              copilot = '[CPL]',
               nvim_lsp = '[LSP]',
               luasnip = '[SNIP]',
               emoji = '[EMOJI]',
@@ -142,7 +133,6 @@ return {
               rg = '[RG]',
               norg = '[NORG]',
               cmdline = '[CMD]',
-              copilot = '[CPL]',
               cmdline_history = '[HIST]',
               crates = '[CRT]',
               treesitter = '[TS]',
@@ -200,25 +190,9 @@ return {
           end,
         },
         sources = {
-          {
-            name = 'copilot',
-            priority = 11,
-            group_index = 1,
-          },
-          {
-            name = 'nvim_lsp',
-            priority = 10,
-            group_index = 1,
-          },
+          { name = 'copilot', priority = 11, group_index = 1 },
+          { name = 'nvim_lsp', priority = 10, group_index = 1 },
           { name = 'luasnip', priority = 9, group_index = 1 },
-          {
-            name = 'rg',
-            priority = 8,
-            keyword_length = 3,
-            max_item_count = 10,
-            option = { additional_arguments = '--max-depth 8' },
-            group_index = 1,
-          },
           {
             name = 'lab.quick_data',
             priority = 6,
@@ -229,8 +203,16 @@ return {
           { name = 'emoji', priority = 3, group_index = 1 },
           { name = 'dynamic', priority = 3, group_index = 1 },
           {
+            name = 'rg',
+            priority = 3,
+            keyword_length = 4,
+            option = { additional_arguments = '--max-depth 8' },
+            group_index = 1,
+          },
+          {
             name = 'buffer',
             priority = 3,
+            keyword_length = 4,
             options = { get_bufnrs = function() return vim.api.nvim_list_bufs() end },
             group_index = 1,
           },
@@ -327,20 +309,8 @@ return {
       },
       {
         'zbirenbaum/copilot-cmp',
-        -- enabled = rvim.lsp.enable,
-        -- event = 'LspAttach',
+        enabled = rvim.ai.enable and rvim.plugins.overrides.copilot_cmp.enable,
         opts = {},
-        config = function(_, opts)
-          local copilot_cmp = require('copilot_cmp')
-          copilot_cmp.setup(opts)
-          rvim.augroup('CopilotCmpAttach', {
-            event = 'LspAttach',
-            command = function(args)
-              local client = vim.lsp.get_client_by_id(args.data.client_id)
-              if client and client.name == 'copilot' then copilot_cmp._on_insert_enter({}) end
-            end,
-          })
-        end,
         dependencies = 'copilot.lua',
       },
     },
@@ -357,7 +327,7 @@ return {
       panel = { enabled = false },
       suggestion = {
         enabled = true,
-        auto_trigger = true,
+        auto_trigger = not rvim.plugins.overrides.copilot_cmp.enable,
         keymap = {
           accept_word = '<M-w>',
           accept_line = '<M-l>',
