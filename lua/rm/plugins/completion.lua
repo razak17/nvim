@@ -311,7 +311,7 @@ return {
       },
       {
         'zbirenbaum/copilot-cmp',
-        enabled = rvim.ai.enable and rvim.plugins.overrides.copilot_cmp.enable,
+        enabled = rvim.ai.enable and not rvim.plugins.minimal,
         opts = {},
         dependencies = 'copilot.lua',
       },
