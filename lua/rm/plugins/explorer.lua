@@ -120,6 +120,9 @@ return {
               conflict = icons.git.branch,
             },
           },
+          file_size = {
+            required_width = 50,
+          },
           diagnostics = {
             highlights = {
               hint = 'DiagnosticHint',
