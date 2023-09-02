@@ -375,7 +375,7 @@ return {
   },
   {
     'lukas-reineke/indent-blankline.nvim',
-    enabled = rvim.treesitter.enable and not rvim.plugins.minimal,
+    enabled = rvim.treesitter.enable,
     event = 'BufRead',
     opts = {
       char = separators.left_thin_block,
@@ -407,7 +407,7 @@ return {
   },
   {
     'kevinhwang91/nvim-ufo',
-    enabled = rvim.treesitter.enable and not rvim.plugins.minimal,
+    enabled = rvim.treesitter.enable,
     event = 'VeryLazy',
     config = function()
       highlight.plugin('ufo', {

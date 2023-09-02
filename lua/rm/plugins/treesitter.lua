@@ -105,7 +105,7 @@ return {
   },
   {
     'nvim-treesitter/nvim-treesitter-context',
-    enabled = rvim.treesitter.enable and not rvim.plugins.minimal,
+    enabled = rvim.treesitter.enable,
     event = { 'BufRead', 'BufNewFile' },
     config = function()
       highlight.plugin('treesitter-context', {
@@ -123,7 +123,7 @@ return {
   {
     'andymass/vim-matchup',
     event = 'BufReadPost',
-    enabled = rvim.treesitter.enable and not rvim.plugins.minimal,
+    enabled = rvim.treesitter.enable,
     keys = { { '<localleader>lw', ':<c-u>MatchupWhereAmI?<CR>', desc = 'matchup: where am i' } },
     config = function()
       vim.g.matchup_matchparen_offscreen = { method = 'status_manual' }
@@ -137,14 +137,14 @@ return {
   },
   {
     'sustech-data/wildfire.nvim',
-    enabled = rvim.treesitter.enable and not rvim.plugins.minimal,
+    enabled = rvim.treesitter.enable,
     event = { 'BufRead', 'BufNewFile' },
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
     opts = {},
   },
   {
     'filNaj/tree-setter',
-    enabled = rvim.treesitter.enable and not rvim.plugins.minimal,
+    enabled = rvim.treesitter.enable,
     event = 'VeryLazy',
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
   },

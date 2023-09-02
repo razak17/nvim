@@ -48,7 +48,7 @@ return {
   },
   {
     'echasnovski/mini.ai',
-    enabled = rvim.treesitter.enable and not rvim.plugins.minimal,
+    enabled = rvim.treesitter.enable,
     event = 'VeryLazy',
     config = function()
       require('mini.ai').setup({ mappings = { around_last = '', inside_last = '' } })

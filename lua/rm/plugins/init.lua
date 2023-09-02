@@ -402,7 +402,7 @@ return {
   },
   {
     'folke/twilight.nvim',
-    enabled = rvim.treesitter.enable and not rvim.plugins.minimal,
+    enabled = rvim.treesitter.enable,
     cmd = 'Twilight',
     opts = {
       context = 40,
@@ -1112,7 +1112,7 @@ return {
   },
   {
     'marilari88/twoslash-queries.nvim',
-    enabled = rvim.treesitter.enable and not rvim.plugins.minimal,
+    enabled = rvim.treesitter.enable,
     ft = { 'typescript', 'typescriptreact' },
     config = function()
       highlight.plugin('twoslash-queries', {
