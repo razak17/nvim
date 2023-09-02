@@ -22,14 +22,24 @@ local function cur_file_project_root()
   return fn.getcwd()
 end
 
-local function is_git_repo() return fn.isdirectory(fn.expand('%:p:h') .. '/.git') end
+local function is_git_repo()
+  return fn.isdirectory(fn.expand('%:p:h') .. '/.git')
+end
 
-local function project_history() vim.cmd('DiffviewFileHistory ' .. cur_file_project_root()) end
+local function project_history()
+  vim.cmd('DiffviewFileHistory ' .. cur_file_project_root())
+end
 
-local function time_machine() require('agitator').git_time_machine({ use_current_win = true }) end
+local function time_machine()
+  require('agitator').git_time_machine({ use_current_win = true })
+end
 
 local function git_pull()
-  rvim.run_command('git', { 'pull', '--rebase', '--autostash' }, rvim.reload_all)
+  rvim.run_command(
+    'git',
+    { 'pull', '--rebase', '--autostash' },
+    rvim.reload_all
+  )
 end
 
 local function git_fetch_origin() rvim.run_command('git', { 'fetch', 'origin' }) end
@@ -77,4 +87,9 @@ local git_menu = function()
   end
 end
 
-map('n', '<leader>ga', git_menu, { desc = '[g]it [a]ctions: open menu for git commands' })
+map(
+  'n',
+  '<leader>ga',
+  git_menu,
+  { desc = '[g]it [a]ctions: open menu for git commands' }
+)

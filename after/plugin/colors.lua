@@ -27,7 +27,12 @@ local function general_overrides()
     { ['@lsp.type.variable'] = { clear = true } },
     { ['@lsp.type.variable'] = { link = '@variable' } },
     { ['@lsp.typemod.method'] = { link = '@method' } },
-    { ['@lsp.typemod.variable.global'] = { bold = true, inherit = '@constant.builtin' } },
+    {
+      ['@lsp.typemod.variable.global'] = {
+        bold = true,
+        inherit = '@constant.builtin',
+      },
+    },
     { ['@lsp.typemod.variable.defaultLibrary'] = { italic = true } },
     { ['@lsp.type.type.lua'] = { clear = true } },
     { ['@lsp.typemod.number.injected'] = { link = '@number' } },
@@ -58,10 +63,21 @@ local function general_overrides()
       },
     },
     { LspReferenceRead = { link = 'LspReferenceText' } },
-    { LspReferenceWrite = { inherit = 'LspReferenceText', bold = true, underline = true } },
+    {
+      LspReferenceWrite = {
+        inherit = 'LspReferenceText',
+        bold = true,
+        underline = true,
+      },
+    },
     { LspSignatureActiveParameter = { link = 'Visual' } },
     { DiagnosticFloatTitle = { inherit = 'FloatTitle', bold = true } },
-    { DiagnosticFloatTitleIcon = { inherit = 'FloatTitle', fg = { from = '@character' } } },
+    {
+      DiagnosticFloatTitleIcon = {
+        inherit = 'FloatTitle',
+        fg = { from = '@character' },
+      },
+    },
     { ['@illuminate'] = { link = 'LspReferenceText' } },
   })
 end
@@ -72,9 +88,24 @@ local function set_sidebar_highlight()
     { PanelDarkHeading = { inherit = 'PanelDarkBackground', bold = true } },
     { PanelBackground = { bg = { from = 'Normal', alter = -0.08 } } },
     { PanelHeading = { inherit = 'PanelBackground', bold = true } },
-    { PanelVertSplit = { inherit = 'PanelBackground', fg = { from = 'WinSeparator' } } },
-    { PanelVertSplitAlt = { inherit = 'PanelBackground', fg = { from = 'WinSeparator' } } },
-    { PanelWinSeparator = { inherit = 'PanelBackground', fg = { from = 'WinSeparator' } } },
+    {
+      PanelVertSplit = {
+        inherit = 'PanelBackground',
+        fg = { from = 'WinSeparator' },
+      },
+    },
+    {
+      PanelVertSplitAlt = {
+        inherit = 'PanelBackground',
+        fg = { from = 'WinSeparator' },
+      },
+    },
+    {
+      PanelWinSeparator = {
+        inherit = 'PanelBackground',
+        fg = { from = 'WinSeparator' },
+      },
+    },
     { PanelStNC = { link = 'PanelWinSeparator' } },
     { PanelSt = { bg = { from = 'Visual', alter = -0.1 } } },
   })

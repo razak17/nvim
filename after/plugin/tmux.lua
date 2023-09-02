@@ -13,7 +13,9 @@ local function set_statusline(reset)
   fn.jobstart(fmt('tmux set-option -g status-style bg=%s', bg))
 end
 
-local function clear_pane_title() fn.jobstart('tmux set-window-option automatic-rename on') end
+local function clear_pane_title()
+  fn.jobstart('tmux set-window-option automatic-rename on')
+end
 
 local function set_window_title()
   local session = fn.fnamemodify(vim.uv.cwd(), ':t') or 'Neovim'

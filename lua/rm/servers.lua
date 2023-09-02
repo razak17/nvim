@@ -1,6 +1,6 @@
-----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- Language servers
-----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 local servers = {
   astro = {},
   bashls = {},
@@ -43,11 +43,15 @@ local servers = {
   -- },
   denols = {
     root_dir = function(fname)
-      return require('lspconfig/util').root_pattern('deno.json', 'deno.jsonc')(fname)
+      return require('lspconfig/util').root_pattern('deno.json', 'deno.jsonc')(
+        fname
+      )
     end,
   },
   emmet_ls = {
-    root_dir = function(fname) return require('lspconfig/util').root_pattern('package.json')(fname) end,
+    root_dir = function(fname)
+      return require('lspconfig/util').root_pattern('package.json')(fname)
+    end,
   },
   emmet_language_server = {},
   --- https://github.com/golang/tools/blob/master/gopls/doc/settings.md
@@ -55,7 +59,12 @@ local servers = {
     settings = {
       gopls = {
         gofumpt = true,
-        codelenses = { generate = true, gc_details = false, test = true, tidy = true },
+        codelenses = {
+          generate = true,
+          gc_details = false,
+          test = true,
+          tidy = true,
+        },
         hints = {
           assignVariableTypes = false,
           compositeLiteralFields = true,
@@ -114,7 +123,15 @@ local servers = {
         },
         format = { enable = false },
         diagnostics = {
-          globals = { 'vim', 'describe', 'it', 'before_each', 'after_each', 'rvim', 'join_paths' },
+          globals = {
+            'vim',
+            'describe',
+            'it',
+            'before_each',
+            'after_each',
+            'rvim',
+            'join_paths',
+          },
         },
         completion = { keywordSnippet = 'Replace', callSnippet = 'Replace' },
         workspace = { checkThirdParty = false },
@@ -125,9 +142,10 @@ local servers = {
   tailwindcss = {
     -- cmd = { '/home/razak/.bun/bin/tailwindcss-language-server', '--stdio' },
     root_dir = function(fname)
-      return require('lspconfig/util').root_pattern('tailwind.config.js', 'tailwind.config.cjs')(
-        fname
-      )
+      return require('lspconfig/util').root_pattern(
+        'tailwind.config.js',
+        'tailwind.config.cjs'
+      )(fname)
     end,
   },
 }
@@ -145,7 +163,9 @@ return function(name)
     textDocument = {
       colorProvider = { dynamicRegistration = true },
       foldingRange = { dynamicRegistration = false, lineFoldingOnly = true },
-      completion = { completionItem = { documentationFormat = { 'markdown', 'plaintext' } } },
+      completion = {
+        completionItem = { documentationFormat = { 'markdown', 'plaintext' } },
+      },
       codeAction = {
         dynamicRegistration = false,
         codeActionLiteralSupport = {

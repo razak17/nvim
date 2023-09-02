@@ -3,12 +3,14 @@ if not rvim then return end
 local function telescope_stash_mappings(prompt_bufnr, map)
   local actions = require('telescope.actions')
   map('i', '<C-v>', function(nr)
-    local stash_key = require('telescope.actions.state').get_selected_entry(prompt_bufnr).value
+    local stash_key =
+      require('telescope.actions.state').get_selected_entry(prompt_bufnr).value
     actions.close(prompt_bufnr)
     vim.cmd(':DiffviewOpen ' .. stash_key .. '^..' .. stash_key)
   end)
   map('i', '<C-Del>', function(nr)
-    local stash_key = require('telescope.actions.state').get_selected_entry(prompt_bufnr).value
+    local stash_key =
+      require('telescope.actions.state').get_selected_entry(prompt_bufnr).value
     local action_state = require('telescope.actions.state')
     local current_picker = action_state.get_current_picker(prompt_bufnr)
     current_picker:delete_selection(function()
@@ -33,8 +35,13 @@ local function telescope_stash_mappings(prompt_bufnr, map)
       return
     end
     actions.close(prompt_bufnr)
-    local _, ret, stderr =
-      utils.get_os_command_output({ 'git', 'stash', 'pop', '--index', selection.value })
+    local _, ret, stderr = utils.get_os_command_output({
+      'git',
+      'stash',
+      'pop',
+      '--index',
+      selection.value,
+    })
     if ret == 0 then
       rvim.reload_all()
       -- utils.notify("actions.git_apply_stash", {
@@ -64,7 +71,8 @@ function rvim.git.list_stashes(opts)
   local conf = require('telescope.config').values
 
   opts.show_branch = vim.F.if_nil(opts.show_branch, true)
-  opts.entry_maker = vim.F.if_nil(opts.entry_maker, make_entry.gen_from_git_stash(opts))
+  opts.entry_maker =
+    vim.F.if_nil(opts.entry_maker, make_entry.gen_from_git_stash(opts))
 
   pickers
     .new(opts, {
@@ -99,9 +107,16 @@ function rvim.git.list_stashes(opts)
 end
 
 function rvim.git.do_stash()
-  vim.ui.input({ prompt = 'Enter a name for the stash: ', kind = 'center_win' }, function(input)
-    if input ~= nil then
-      rvim.run_command('git', { 'stash', 'push', '-m', input, '-u' }, rvim.reload_all)
+  vim.ui.input(
+    { prompt = 'Enter a name for the stash: ', kind = 'center_win' },
+    function(input)
+      if input ~= nil then
+        rvim.run_command(
+          'git',
+          { 'stash', 'push', '-m', input, '-u' },
+          rvim.reload_all
+        )
+      end
     end
-  end)
+  )
 end

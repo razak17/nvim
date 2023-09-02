@@ -3,13 +3,37 @@ return {
     'gbprod/yanky.nvim',
     cmd = { 'YankyRingHistory' },
     keys = {
-      { 'p', '<Plug>(YankyPutAfter)', mode = { 'n', 'x' }, desc = 'yanky: put after' },
-      { 'P', '<Plug>(YankyPutBefore)', mode = { 'n', 'x' }, desc = 'yanky: put before' },
-      { 'gp', '<Plug>(YankyGPutAfter)', mode = { 'n', 'x' }, desc = 'yanky: gput after' },
-      { 'gP', '<Plug>(YankyGPutBefore)', mode = { 'n', 'x' }, desc = 'yanky: gput before' },
+      {
+        'p',
+        '<Plug>(YankyPutAfter)',
+        mode = { 'n', 'x' },
+        desc = 'yanky: put after',
+      },
+      {
+        'P',
+        '<Plug>(YankyPutBefore)',
+        mode = { 'n', 'x' },
+        desc = 'yanky: put before',
+      },
+      {
+        'gp',
+        '<Plug>(YankyGPutAfter)',
+        mode = { 'n', 'x' },
+        desc = 'yanky: gput after',
+      },
+      {
+        'gP',
+        '<Plug>(YankyGPutBefore)',
+        mode = { 'n', 'x' },
+        desc = 'yanky: gput before',
+      },
       -- { '<m-n>', '<Plug>(YankyCycleForward)', desc = 'yanky: cycle forward' },
       -- { '<m-p>', '<Plug>(YankyCycleBackward)', desc = 'yanky: cycle backward' },
-      { '<localleader>y', '<Cmd>YankyRingHistory<CR>', desc = 'yanky: open yank history' },
+      {
+        '<localleader>y',
+        '<Cmd>YankyRingHistory<CR>',
+        desc = 'yanky: open yank history',
+      },
     },
     opts = { ring = { storage = 'sqlite' } },
     dependencies = { 'kkharji/sqlite.lua' },
@@ -43,9 +67,16 @@ return {
       })
 
       config.augends:on_filetype({
-        go = { augend.integer.alias.decimal, augend.integer.alias.hex, operators },
+        go = {
+          augend.integer.alias.decimal,
+          augend.integer.alias.hex,
+          operators,
+        },
         typescript = { augend.integer.alias.decimal, augend.integer.alias.hex },
-        markdown = { augend.integer.alias.decimal, augend.misc.alias.markdown_header },
+        markdown = {
+          augend.integer.alias.decimal,
+          augend.misc.alias.markdown_header,
+        },
         yaml = {
           augend.integer.alias.decimal,
           augend.semver.alias.semver,
@@ -166,7 +197,10 @@ return {
   {
     'ThePrimeagen/refactoring.nvim',
     enabled = rvim.treesitter.enable,
-    dependencies = { 'nvim-lua/plenary.nvim', 'nvim-treesitter/nvim-treesitter' },
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'nvim-treesitter/nvim-treesitter',
+    },
     keys = {
       {
         '<leader>r',
@@ -235,7 +269,8 @@ return {
     'numToStr/Comment.nvim',
     keys = { 'gcc', { 'gc', mode = { 'x', 'n', 'o' } } },
     opts = function(_, opts)
-      local ok, integration = pcall(require, 'ts_context_commentstring.integrations.comment_nvim')
+      local ok, integration =
+        pcall(require, 'ts_context_commentstring.integrations.comment_nvim')
       if ok then opts.pre_hook = integration.create_pre_hook() end
     end,
   },
@@ -243,17 +278,67 @@ return {
     'robitx/gp.nvim',
     keys = {
       -- Chat commands
-      { '<c-g>n', '<Cmd>GpChatNew<CR>', desc = 'gp: new chat', mode = { 'n', 'i', 'v' } },
-      { '<c-g>f', '<Cmd>GpChatFinder<CR>', desc = 'gp: find chat', mode = { 'n', 'i' } },
-      { '<c-g><c-g>', '<Cmd>GpChatRespond<CR>', desc = 'gp: respond', mode = { 'n', 'i' } },
-      { '<c-g>d', '<Cmd>GpChatDeleteCR>', desc = 'gp: delete chat', mode = { 'n', 'i' } },
+      {
+        '<c-g>n',
+        '<Cmd>GpChatNew<CR>',
+        desc = 'gp: new chat',
+        mode = { 'n', 'i', 'v' },
+      },
+      {
+        '<c-g>f',
+        '<Cmd>GpChatFinder<CR>',
+        desc = 'gp: find chat',
+        mode = { 'n', 'i' },
+      },
+      {
+        '<c-g><c-g>',
+        '<Cmd>GpChatRespond<CR>',
+        desc = 'gp: respond',
+        mode = { 'n', 'i' },
+      },
+      {
+        '<c-g>d',
+        '<Cmd>GpChatDeleteCR>',
+        desc = 'gp: delete chat',
+        mode = { 'n', 'i' },
+      },
       -- Prompt commands
-      { '<c-g>i', '<Cmd>GpInline<CR>', desc = 'gp: inline', mode = { 'n', 'i' } },
-      { '<c-g>r', '<Cmd>GpRewrite<CR>', desc = 'gp: rewrite', mode = { 'n', 'i', 'v' } },
-      { '<c-g>a', '<Cmd>GpAppend<CR>', desc = 'gp: append', mode = { 'n', 'i', 'v' } },
-      { '<c-g>b', '<Cmd>GpPrepend<CR>', desc = 'gp: prepend', mode = { 'n', 'i', 'v' } },
-      { '<c-g>e', '<Cmd>GpEnew<CR>', desc = 'gp: enew', mode = { 'n', 'i', 'v' } },
-      { '<c-g>p', '<Cmd>GpPopup<CR>', desc = 'gp: popup', mode = { 'n', 'i', 'v' } },
+      {
+        '<c-g>i',
+        '<Cmd>GpInline<CR>',
+        desc = 'gp: inline',
+        mode = { 'n', 'i' },
+      },
+      {
+        '<c-g>r',
+        '<Cmd>GpRewrite<CR>',
+        desc = 'gp: rewrite',
+        mode = { 'n', 'i', 'v' },
+      },
+      {
+        '<c-g>a',
+        '<Cmd>GpAppend<CR>',
+        desc = 'gp: append',
+        mode = { 'n', 'i', 'v' },
+      },
+      {
+        '<c-g>b',
+        '<Cmd>GpPrepend<CR>',
+        desc = 'gp: prepend',
+        mode = { 'n', 'i', 'v' },
+      },
+      {
+        '<c-g>e',
+        '<Cmd>GpEnew<CR>',
+        desc = 'gp: enew',
+        mode = { 'n', 'i', 'v' },
+      },
+      {
+        '<c-g>p',
+        '<Cmd>GpPopup<CR>',
+        desc = 'gp: popup',
+        mode = { 'n', 'i', 'v' },
+      },
     },
     opts = {},
   },
@@ -263,11 +348,16 @@ return {
     cmd = { 'ChatGPT', 'ChatGPTActAs', 'ChatGPTEditWithInstructions' },
     keys = {
       { '<leader>aa', '<cmd>ChatGPTActAs<CR>', desc = 'chatgpt: act as' },
-      { '<leader>ae', '<cmd>ChatGPTEditWithInstructions<CR>', desc = 'chatgpt: edit' },
+      {
+        '<leader>ae',
+        '<cmd>ChatGPTEditWithInstructions<CR>',
+        desc = 'chatgpt: edit',
+      },
       { '<leader>an', '<cmd>ChatGPT<CR>', desc = 'chatgpt: open' },
     },
     config = function()
-      local border = { style = rvim.ui.border.rectangle, highlight = 'FloatBorder' }
+      local border =
+        { style = rvim.ui.border.rectangle, highlight = 'FloatBorder' }
       require('chatgpt').setup({
         popup_window = { border = border },
         popup_input = { border = border, submit = '<C-s>' },
@@ -288,18 +378,30 @@ return {
     event = 'VeryLazy',
     opts = {},
     keys = {
-      { '<leader>ao', function() require('wtf').ai() end, desc = 'wtf: debug diagnostic with AI' },
-      { '<leader>ag', function() require('wtf').search() end, desc = 'wtf: google diagnostic' },
+      {
+        '<leader>ao',
+        function() require('wtf').ai() end,
+        desc = 'wtf: debug diagnostic with AI',
+      },
+      {
+        '<leader>ag',
+        function() require('wtf').search() end,
+        desc = 'wtf: google diagnostic',
+      },
     },
     dependencies = { 'MunifTanjim/nui.nvim' },
   },
   {
     'subnut/nvim-ghost.nvim',
-    enabled = not rvim.plugins.minimal and rvim.plugins.overrides.ghost_text.enable,
+    enabled = not rvim.plugins.minimal
+      and rvim.plugins.overrides.ghost_text.enable,
     lazy = false,
     event = { 'BufReadPost', 'BufNewFile' },
     config = function()
-      vim.api.nvim_create_augroup('nvim_ghost_user_autocommands', { clear = false })
+      vim.api.nvim_create_augroup(
+        'nvim_ghost_user_autocommands',
+        { clear = false }
+      )
       vim.api.nvim_create_autocmd('User', {
         pattern = {
           'www.reddit.com',
@@ -368,9 +470,24 @@ return {
     'haolian9/nag.nvim',
     dependencies = { 'haolian9/infra.nvim' },
     keys = {
-      { mode = 'x', '<localleader>nv', ":lua require'nag'.vsplit()<CR>", desc = 'nag: vsplit' },
-      { mode = 'x', '<localleader>ns', ":lua require'nag'.split()<CR>", desc = 'nag: split' },
-      { mode = 'x', '<localleader>nt', ":lua require'nag'.tab()<CR>", desc = 'nag: tab' },
+      {
+        mode = 'x',
+        '<localleader>nv',
+        ":lua require'nag'.vsplit()<CR>",
+        desc = 'nag: vsplit',
+      },
+      {
+        mode = 'x',
+        '<localleader>ns',
+        ":lua require'nag'.split()<CR>",
+        desc = 'nag: split',
+      },
+      {
+        mode = 'x',
+        '<localleader>nt',
+        ":lua require'nag'.tab()<CR>",
+        desc = 'nag: tab',
+      },
     },
   },
 }

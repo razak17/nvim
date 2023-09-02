@@ -135,23 +135,36 @@ local git_foresta_branch_log = defaulter(function(opts)
     define_preview = function(self, entry, status)
       local args = {
         '-c',
-        'git-foresta ' .. entry.name .. ' --style=10 --no-status | head -n 1500',
+        'git-foresta '
+          .. entry.name
+          .. ' --style=10 --no-status | head -n 1500',
         entry.value,
       }
 
-      Job:new({
-        command = 'sh',
-        args = args,
-        cwd = opts.cwd,
-        on_exit = vim.schedule_wrap(function(j)
-          if not vim.api.nvim_buf_is_valid(self.state.bufnr) then return end
-          local output = j:result()
-          local fields = vim.tbl_map(get_ansi_escape_cols, output)
-          local clean_output = vim.tbl_map(function(cols) return table.concat(cols) end, fields)
-          vim.api.nvim_buf_set_lines(self.state.bufnr, 0, -1, false, clean_output)
-          highlight_buffer(self.state.bufnr, clean_output, fields)
-        end),
-      }):start()
+      Job
+        :new({
+          command = 'sh',
+          args = args,
+          cwd = opts.cwd,
+          on_exit = vim.schedule_wrap(function(j)
+            if not vim.api.nvim_buf_is_valid(self.state.bufnr) then return end
+            local output = j:result()
+            local fields = vim.tbl_map(get_ansi_escape_cols, output)
+            local clean_output = vim.tbl_map(
+              function(cols) return table.concat(cols) end,
+              fields
+            )
+            vim.api.nvim_buf_set_lines(
+              self.state.bufnr,
+              0,
+              -1,
+              false,
+              clean_output
+            )
+            highlight_buffer(self.state.bufnr, clean_output, fields)
+          end),
+        })
+        :start()
     end,
   })
 end, {})
@@ -165,7 +178,8 @@ local function telescope_branches_mappings(prompt_bufnr, map)
   local diffspec
   local action_state = require('telescope.actions.state')
   map('i', '<C-f>', function(nr)
-    local branch = require('telescope.actions.state').get_selected_entry(prompt_bufnr).value
+    local branch =
+      require('telescope.actions.state').get_selected_entry(prompt_bufnr).value
     actions.close(prompt_bufnr)
     -- heuristics.. will see if it works out
     if
@@ -183,30 +197,41 @@ local function telescope_branches_mappings(prompt_bufnr, map)
     vim.cmd(':DiffviewOpen ' .. diffspec)
   end)
   map('i', '<C-p>', function(nr) -- mnemonic Compare
-    local branch = require('telescope.actions.state').get_selected_entry(prompt_bufnr).value
+    local branch =
+      require('telescope.actions.state').get_selected_entry(prompt_bufnr).value
     actions.close(prompt_bufnr)
     vim.cmd(':DiffviewOpen ' .. branch)
   end)
-  map('i', '<C-enter>', function(nr) -- create a local branch to track an origin branch
-    local branch = require('telescope.actions.state').get_selected_entry(prompt_bufnr).value
-    local cmd_output = {}
-    if string.match(branch, '^origin/') then
-      actions.close(prompt_bufnr)
-      fn.jobstart('git checkout ' .. branch:gsub('^origin/', ''), {
-        stdout_buffered = true,
-        on_stdout = vim.schedule_wrap(function(j, output)
-          for _, line in ipairs(output) do
-            if #line > 0 then table.insert(cmd_output, line) end
-          end
-        end),
-        on_exit = vim.schedule_wrap(function(j, output) vim.notify(cmd_output) end),
-      })
+  map(
+    'i',
+    '<C-enter>',
+    function(nr) -- create a local branch to track an origin branch
+      local branch = require('telescope.actions.state').get_selected_entry(
+        prompt_bufnr
+      ).value
+      local cmd_output = {}
+      if string.match(branch, '^origin/') then
+        actions.close(prompt_bufnr)
+        fn.jobstart('git checkout ' .. branch:gsub('^origin/', ''), {
+          stdout_buffered = true,
+          on_stdout = vim.schedule_wrap(function(j, output)
+            for _, line in ipairs(output) do
+              if #line > 0 then table.insert(cmd_output, line) end
+            end
+          end),
+          on_exit = vim.schedule_wrap(
+            function(j, output) vim.notify(cmd_output) end
+          ),
+        })
+      end
     end
-  end)
+  )
   map('i', '<C-Del>', function(nr) -- delete
     local current_picker = action_state.get_current_picker(prompt_bufnr)
     current_picker:delete_selection(function(selection)
-      local branch = require('telescope.actions.state').get_selected_entry(selection.bufnr).value
+      local branch = require('telescope.actions.state').get_selected_entry(
+        selection.bufnr
+      ).value
       Job:new({
         command = 'git',
         args = { 'branch', '-D', branch },
@@ -218,7 +243,8 @@ local function telescope_branches_mappings(prompt_bufnr, map)
     end)
   end)
   map('i', '<C-c>', function(nr) -- commits
-    local branch = require('telescope.actions.state').get_selected_entry(prompt_bufnr).value
+    local branch =
+      require('telescope.actions.state').get_selected_entry(prompt_bufnr).value
     actions.close(prompt_bufnr)
     require('telescope.builtin').git_commits({
       attach_mappings = rvim.git.telescope_commits_mappings,
@@ -237,12 +263,19 @@ local function telescope_branches_mappings(prompt_bufnr, map)
     })
   end)
   map('i', '<C-h>', function(nr) -- history
-    local branch = require('telescope.actions.state').get_selected_entry(prompt_bufnr).value
+    local branch =
+      require('telescope.actions.state').get_selected_entry(prompt_bufnr).value
     actions.close(prompt_bufnr)
-    vim.cmd('DiffviewFileHistory ' .. rvim.cur_file_project_root() .. ' --range=' .. branch)
+    vim.cmd(
+      'DiffviewFileHistory '
+        .. rvim.cur_file_project_root()
+        .. ' --range='
+        .. branch
+    )
   end)
   map('i', '<C-g>', function(nr) -- copy branch name
-    local branch = require('telescope.actions.state').get_selected_entry(prompt_bufnr).value
+    local branch =
+      require('telescope.actions.state').get_selected_entry(prompt_bufnr).value
     rvim.copy_to_clipboard(branch)
   end)
   return true
@@ -257,11 +290,18 @@ local function git_branches_with_base(base, opts)
     .. '%(authorname)'
     .. '%(upstream:lstrip=2)'
     .. '%(committerdate:format-local:%Y/%m/%d %H:%M:%S)'
-  local output = utils.get_os_command_output(
-    { 'git', 'for-each-ref', '--perl', '--format', format, '--sort', '-authordate', opts.pattern },
-    opts.cwd
-  )
-  local show_remote_tracking_branches = vim.F.if_nil(opts.show_remote_tracking_branches, true)
+  local output = utils.get_os_command_output({
+    'git',
+    'for-each-ref',
+    '--perl',
+    '--format',
+    format,
+    '--sort',
+    '-authordate',
+    opts.pattern,
+  }, opts.cwd)
+  local show_remote_tracking_branches =
+    vim.F.if_nil(opts.show_remote_tracking_branches, true)
 
   local results = {}
   local widths = {
@@ -272,7 +312,9 @@ local function git_branches_with_base(base, opts)
     ahead = 0,
     behind = 0,
   }
-  local unescape_single_quote = function(v) return string.gsub(v, "\\([\\'])", '%1') end
+  local unescape_single_quote = function(v)
+    return string.gsub(v, "\\([\\'])", '%1')
+  end
   local parse_line = function(line)
     local fields = vim.split(string.sub(line, 2, -2), "''", true)
     local entry = {

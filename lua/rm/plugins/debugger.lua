@@ -16,18 +16,26 @@ return {
       {
         '<localleader>dbc',
         -- function() require('dap').set_breakpoint(input('Breakpoint condition: ')) end,
-        function() require('persistent-breakpoints.api').set_breakpoint('Breakpoint condition: ') end,
+        function()
+          require('persistent-breakpoints.api').set_breakpoint(
+            'Breakpoint condition: '
+          )
+        end,
         desc = 'dap: set conditional breakpoint',
       },
       {
         '<localleader>dbm',
-        function() require('dap').set_breakpoint(nil, nil, input('Log point message: ')) end,
+        function()
+          require('dap').set_breakpoint(nil, nil, input('Log point message: '))
+        end,
         desc = 'dap: log breakpoint',
       },
       {
         '<localleader>dbx',
         -- function() require('dap').clear_breakpoints() end,
-        function() require('persistent-breakpoints.api').clear_all_breakpoints() end,
+        function()
+          require('persistent-breakpoints.api').clear_all_breakpoints()
+        end,
         desc = 'dap: clear breakpoint',
       },
       {
@@ -35,13 +43,41 @@ return {
         function() require('dap').continue() end,
         desc = 'dap: continue or start debugging',
       },
-      { '<localleader>dh', function() require('dap').step_back() end, desc = 'dap: step back' },
-      { '<localleader>di', function() require('dap').step_into() end, desc = 'dap: step into' },
-      { '<localleader>do', function() require('dap').step_over() end, desc = 'dap: step over' },
-      { '<localleader>dO', function() require('dap').step_out() end, desc = 'dap: step out' },
-      { '<localleader>dr', function() require('dap').repl.toggle() end, desc = 'dap: toggle repl' },
-      { '<localleader>dw', function() require('dap.ui.widgets').hover() end, desc = 'dap: hover' },
-      { '<localleader>dx', function() require('dap').terminate() end, desc = 'dap: terminate' },
+      {
+        '<localleader>dh',
+        function() require('dap').step_back() end,
+        desc = 'dap: step back',
+      },
+      {
+        '<localleader>di',
+        function() require('dap').step_into() end,
+        desc = 'dap: step into',
+      },
+      {
+        '<localleader>do',
+        function() require('dap').step_over() end,
+        desc = 'dap: step over',
+      },
+      {
+        '<localleader>dO',
+        function() require('dap').step_out() end,
+        desc = 'dap: step out',
+      },
+      {
+        '<localleader>dr',
+        function() require('dap').repl.toggle() end,
+        desc = 'dap: toggle repl',
+      },
+      {
+        '<localleader>dw',
+        function() require('dap.ui.widgets').hover() end,
+        desc = 'dap: hover',
+      },
+      {
+        '<localleader>dx',
+        function() require('dap').terminate() end,
+        desc = 'dap: terminate',
+      },
       {
         '<localleader>du',
         function() require('dapui').toggle({ reset = true }) end,
@@ -95,11 +131,16 @@ return {
       dap.listeners.after.event_initialized['dapui_config'] = function()
         dapui.open(rvim.debugger.layout.ft[vim.bo.ft])
       end
-      dap.listeners.before.event_exited['dapui_config'] = function() dapui.close() end
-      dap.listeners.before.event_terminated['dapui_config'] = function() dapui.close() end
+      dap.listeners.before.event_exited['dapui_config'] = function()
+        dapui.close()
+      end
+      dap.listeners.before.event_terminated['dapui_config'] = function()
+        dapui.close()
+      end
 
       local js_debug = require('mason-registry').get_package('js-debug-adapter')
-      local debug_server_path = js_debug:get_install_path() .. '/js-debug/src/dapDebugServer.js'
+      local debug_server_path = js_debug:get_install_path()
+        .. '/js-debug/src/dapDebugServer.js'
 
       require('dap').adapters['pwa-node'] = {
         type = 'server',
@@ -111,7 +152,12 @@ return {
         },
       }
 
-      for _, language in ipairs({ 'typescript', 'typescriptreact', 'javascript', 'svelte' }) do
+      for _, language in ipairs({
+        'typescript',
+        'typescriptreact',
+        'javascript',
+        'svelte',
+      }) do
         require('dap').configurations[language] = {
           {
             type = 'pwa-node',
@@ -127,8 +173,14 @@ return {
             cwd = '${workspaceFolder}/src',
             processId = require('dap.utils').pick_process,
             sourceMaps = true,
-            resolveSourceMapLocations = { '${workspaceFolder}/**', '!**/node_modules/**' },
-            skipFiles = { '<node_internals>/**', '${workspaceFolder}/node_modules/**/*.js' },
+            resolveSourceMapLocations = {
+              '${workspaceFolder}/**',
+              '!**/node_modules/**',
+            },
+            skipFiles = {
+              '<node_internals>/**',
+              '${workspaceFolder}/node_modules/**/*.js',
+            },
           },
           {
             type = 'pwa-node',
@@ -209,7 +261,12 @@ return {
             port = 9222,
             webRoot = '${workspaceFolder}/src',
             -- skip files from vite's hmr
-            skipFiles = { '**/node_modules/**/*', '**/@vite/*', '**/src/client/*', '**/src/*' },
+            skipFiles = {
+              '**/node_modules/**/*',
+              '**/@vite/*',
+              '**/src/client/*',
+              '**/src/*',
+            },
           },
         }
       end

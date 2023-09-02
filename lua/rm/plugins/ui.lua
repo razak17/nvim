@@ -15,7 +15,13 @@ return {
     enabled = false,
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     event = 'VeryLazy',
-    keys = { { '<leader>ob', '<Cmd>BufferTabsToggle<CR>', desc = 'buffer-tabs: toggle' } },
+    keys = {
+      {
+        '<leader>ob',
+        '<Cmd>BufferTabsToggle<CR>',
+        desc = 'buffer-tabs: toggle',
+      },
+    },
     config = function()
       require('buffertabs').setup({
         border = 'single',
@@ -36,7 +42,9 @@ return {
         command = function(args)
           decorations.set_colorcolumn(
             args.buf,
-            function(colorcolumn) require('smartcolumn').setup_buffer({ colorcolumn = colorcolumn }) end
+            function(colorcolumn)
+              require('smartcolumn').setup_buffer({ colorcolumn = colorcolumn })
+            end
           )
         end,
       })
@@ -163,7 +171,8 @@ return {
               sfw ~= (relIdx > 1) and icons.misc.up or icons.misc.down
             )
           elseif absRelIdx == 1 then
-            indicator = sfw ~= (relIdx == 1) and icons.misc.up or icons.misc.down
+            indicator = sfw ~= (relIdx == 1) and icons.misc.up
+              or icons.misc.down
           else
             indicator = icons.misc.dot
           end
@@ -258,7 +267,10 @@ return {
       require('todo-comments').setup({ highlight = { after = '' } })
       rvim.command(
         'TodoDots',
-        string.format('TodoTelescope cwd=%s keywords=TODO,FIXME', vim.fn.stdpath('config'))
+        string.format(
+          'TodoTelescope cwd=%s keywords=TODO,FIXME',
+          vim.fn.stdpath('config')
+        )
       )
     end,
   },
@@ -286,7 +298,14 @@ return {
         },
         highlighter = {
           auto_enable = true,
-          excludes = { 'dart', 'lazy', 'orgagenda', 'org', 'NeogitStatus', 'toggleterm' },
+          excludes = {
+            'dart',
+            'lazy',
+            'orgagenda',
+            'org',
+            'NeogitStatus',
+            'toggleterm',
+          },
         },
       })
     end,
@@ -296,7 +315,11 @@ return {
     event = 'VeryLazy',
     enabled = not rvim.plugins.minimal,
     keys = {
-      { '<leader>wp', function() require('dropbar.api').pick() end, desc = 'winbar: pick' },
+      {
+        '<leader>wp',
+        function() require('dropbar.api').pick() end,
+        desc = 'winbar: pick',
+      },
     },
     config = function()
       require('dropbar').setup({
@@ -304,7 +327,8 @@ return {
           update_interval = 100,
           enable = function(buf, win)
             local b, w = vim.bo[buf], vim.wo[win]
-            local decor = ui.decorations.get({ ft = b.ft, bt = b.bt, setting = 'winbar' })
+            local decor =
+              ui.decorations.get({ ft = b.ft, bt = b.bt, setting = 'winbar' })
             return decor
               and decor.ft ~= false
               and decor.bt ~= false
@@ -327,7 +351,8 @@ return {
           win_configs = {
             border = border,
             col = function(menu)
-              return menu.prev_menu and menu.prev_menu._win_configs.width + 1 or 0
+              return menu.prev_menu and menu.prev_menu._win_configs.width + 1
+                or 0
             end,
           },
         },
@@ -365,7 +390,10 @@ return {
             left_bottom = '└',
             right_arrow = '─',
           },
-          style = highlight.tint(highlight.get('IndentBlanklineContextChar', 'fg'), -0.2),
+          style = highlight.tint(
+            highlight.get('IndentBlanklineContextChar', 'fg'),
+            -0.2
+          ),
         },
         line_num = {
           style = highlight.get('CursorLineNr', 'fg'),
@@ -411,13 +439,31 @@ return {
     event = 'VeryLazy',
     config = function()
       highlight.plugin('ufo', {
-        { Folded = { bold = false, italic = false, bg = { from = 'CursorLine', alter = -0.15 } } },
+        {
+          Folded = {
+            bold = false,
+            italic = false,
+            bg = { from = 'CursorLine', alter = -0.15 },
+          },
+        },
       })
     end,
     keys = {
-      { 'zR', function() require('ufo').openAllFolds() end, 'ufo: open all folds' },
-      { 'zM', function() require('ufo').closeAllFolds() end, 'ufo: close all folds' },
-      { 'zP', function() require('ufo').peekFoldedLinesUnderCursor() end, 'ufo: preview fold' },
+      {
+        'zR',
+        function() require('ufo').openAllFolds() end,
+        'ufo: open all folds',
+      },
+      {
+        'zM',
+        function() require('ufo').closeAllFolds() end,
+        'ufo: close all folds',
+      },
+      {
+        'zP',
+        function() require('ufo').peekFoldedLinesUnderCursor() end,
+        'ufo: preview fold',
+      },
     },
     opts = function()
       local ft_map = { rust = 'lsp' }
@@ -431,7 +477,9 @@ return {
         },
         enable_get_fold_virt_text = true,
         close_fold_kinds = { 'imports', 'comment' },
-        provider_selector = function(_, ft) return ft_map[ft] or { 'treesitter', 'indent' } end,
+        provider_selector = function(_, ft)
+          return ft_map[ft] or { 'treesitter', 'indent' }
+        end,
       })
     end,
     dependencies = { 'kevinhwang91/promise-async' },

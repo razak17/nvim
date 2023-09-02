@@ -49,7 +49,9 @@ local function display_lsp_references()
             { item = call_hierarchy_item },
             function(_, res, _, _)
               if #res > 0 then
-                require('telescope.builtin').lsp_incoming_calls({ path_display = { 'tail' } })
+                require('telescope.builtin').lsp_incoming_calls({
+                  path_display = { 'tail' },
+                })
                 return
               end
             end
@@ -68,11 +70,17 @@ local function lsp_restart_all()
   -- first restart the existing clients
   for _, client in ipairs(require('lspconfig.util').get_managed_clients()) do
     client.stop()
-    vim.defer_fn(function() require('lspconfig.configs')[client.name].launch() end, 500)
+    vim.defer_fn(
+      function() require('lspconfig.configs')[client.name].launch() end,
+      500
+    )
   end
   -- now restart those that were not connected
   for _, client in ipairs(other_matching_configs) do
-    vim.defer_fn(function() require('lspconfig.configs')[client.name].launch() end, 500)
+    vim.defer_fn(
+      function() require('lspconfig.configs')[client.name].launch() end,
+      500
+    )
   end
   -- handle null-ls separately as it's not managed by lspconfig
   local nullls_client = require('null-ls.client').get_client()
@@ -193,14 +201,21 @@ local function toggle_virtual_text()
   end
   diagnostic.config(config)
   rvim.lsp.notify(
-    string.format('virtual text %s', bool2str(type(diagnostic.config().virtual_text) ~= 'boolean'))
+    string.format(
+      'virtual text %s',
+      bool2str(type(diagnostic.config().virtual_text) ~= 'boolean')
+    )
   )
 end
 
 local function toggle_virtual_lines()
   local config = diagnostic.config()
   if type(config.virtual_lines) == 'boolean' then
-    config = vim.tbl_extend('force', config, { virtual_lines = { only_current_line = true } })
+    config = vim.tbl_extend(
+      'force',
+      config,
+      { virtual_lines = { only_current_line = true } }
+    )
     if type(config.virtual_text) == 'table' then
       config = vim.tbl_extend('force', config, { virtual_text = false })
     end
@@ -219,20 +234,29 @@ end
 local function toggle_signs()
   local config = diagnostic.config()
   if type(config.signs) == 'boolean' then
-    config = vim.tbl_extend('force', config, { signs = { severity_limit = 'Error' } })
+    config =
+      vim.tbl_extend('force', config, { signs = { severity_limit = 'Error' } })
   else
     config = vim.tbl_extend('force', config, { signs = false })
   end
   rvim.lsp.signs.enable = not rvim.lsp.signs.enable
   diagnostic.config(config)
   vim.cmd('edit | silent! wall') -- Redraw
-  rvim.lsp.notify(string.format('signs %s', bool2str(type(diagnostic.config().signs) ~= 'boolean')))
+  rvim.lsp.notify(
+    string.format(
+      'signs %s',
+      bool2str(type(diagnostic.config().signs) ~= 'boolean')
+    )
+  )
 end
 
 local function toggle_hover_diagnostics()
   rvim.lsp.hover_diagnostics.enable = not rvim.lsp.hover_diagnostics.enable
   rvim.lsp.notify(
-    string.format('hover diagnostics %s', bool2str(rvim.lsp.hover_diagnostics.enable))
+    string.format(
+      'hover diagnostics %s',
+      bool2str(rvim.lsp.hover_diagnostics.enable)
+    )
   )
 end
 
@@ -260,4 +284,9 @@ local lsp_menu = function()
   end
 end
 
-map('n', '<leader>ll', lsp_menu, { desc = '[l]sp [a]ctions: open menu for lsp features' })
+map(
+  'n',
+  '<leader>ll',
+  lsp_menu,
+  { desc = '[l]sp [a]ctions: open menu for lsp features' }
+)

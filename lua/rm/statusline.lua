@@ -24,7 +24,9 @@ local function listBranches()
 
     if choice == new_branch_prompt then
       vim.ui.input({ prompt = 'New branch name:' }, function(branch)
-        if branch ~= nil then vim.fn.systemlist('git checkout -b ' .. branch) end
+        if branch ~= nil then
+          vim.fn.systemlist('git checkout -b ' .. branch)
+        end
       end)
     else
       vim.fn.systemlist('git checkout ' .. choice)
@@ -33,7 +35,9 @@ local function listBranches()
 end
 
 local function git_remote_sync()
-  if not _G.GitStatus then _G.GitStatus = { ahead = 0, behind = 0, status = nil } end
+  if not _G.GitStatus then
+    _G.GitStatus = { ahead = 0, behind = 0, status = nil }
+  end
 
   -- Fetch the remote repository
   local git_fetch = Job:new({
@@ -50,7 +54,9 @@ local function git_remote_sync()
     on_start = function()
       GitStatus.status = 'pending'
       vim.schedule(
-        function() vim.api.nvim_exec_autocmds('User', { pattern = 'GitStatusChanged' }) end
+        function()
+          vim.api.nvim_exec_autocmds('User', { pattern = 'GitStatusChanged' })
+        end
       )
     end,
     on_exit = function(job, _)
@@ -61,9 +67,12 @@ local function git_remote_sync()
       end
       local _, ahead, behind = pcall(string.match, res, '(%d+)%s*(%d+)')
 
-      GitStatus = { ahead = tonumber(ahead), behind = tonumber(behind), status = 'done' }
+      GitStatus =
+        { ahead = tonumber(ahead), behind = tonumber(behind), status = 'done' }
       vim.schedule(
-        function() vim.api.nvim_exec_autocmds('User', { pattern = 'GitStatusChanged' }) end
+        function()
+          vim.api.nvim_exec_autocmds('User', { pattern = 'GitStatusChanged' })
+        end
       )
     end,
   })
@@ -158,9 +167,11 @@ local file_flags = {
 
 local file_icon = {
   init = function(self)
-    self.icon, self.icon_color = require('nvim-web-devicons').get_icon(vim.fn.expand('%:t'))
+    self.icon, self.icon_color =
+      require('nvim-web-devicons').get_icon(vim.fn.expand('%:t'))
     if falsy(self.icon) or falsy(self.icon_color) then
-      self.icon, self.icon_color = codicons.documents.default_file, 'DevIconDefault'
+      self.icon, self.icon_color =
+        codicons.documents.default_file, 'DevIconDefault'
     end
   end,
   provider = function(self) return self.icon and (' ' .. self.icon) end,
@@ -168,7 +179,9 @@ local file_icon = {
     callback = function() rvim.change_filetype() end,
     name = 'change_ft',
   },
-  hl = function(self) return { fg = rvim.highlight.get(self.icon_color, 'fg'), bg = bg } end,
+  hl = function(self)
+    return { fg = rvim.highlight.get(self.icon_color, 'fg'), bg = bg }
+  end,
 }
 
 local file_type = {
@@ -243,7 +256,10 @@ end
 
 local function stl_lsp_clients(bufnum)
   local clients = vim.lsp.get_clients({ bufnr = bufnum })
-  clients = vim.tbl_filter(function(client) return client.name ~= 'copilot' end, clients)
+  clients = vim.tbl_filter(
+    function(client) return client.name ~= 'copilot' end,
+    clients
+  )
   -- local lsp_clients = vim.tbl_filter(function(client) return client.name ~= 'null-ls' end, clients)
   if falsy(clients) then return { { name = 'No Active LSP' } } end
 
@@ -255,9 +271,13 @@ local function stl_lsp_clients(bufnum)
 
   return vim.tbl_map(function(client)
     if client.name:match('null') then
-      local sources = require('null-ls.sources').get_available(vim.bo[bufnum].filetype)
+      local sources =
+        require('null-ls.sources').get_available(vim.bo[bufnum].filetype)
       local source_names = vim.tbl_map(function(s) return s.name end, sources)
-      return { name = '␀ ' .. table.concat(source_names, ', '), priority = 7 }
+      return {
+        name = '␀ ' .. table.concat(source_names, ', '),
+        priority = 7,
+      }
     end
     return { name = client.name, priority = 4 }
   end, clients)
@@ -277,7 +297,10 @@ local function lsp_client_names()
       .. ' '
       .. separator
   end
-  return ' ' .. table.concat(client_names, fmt(' %s ', separator)) .. ' ' .. separator
+  return ' '
+    .. table.concat(client_names, fmt(' %s ', separator))
+    .. ' '
+    .. separator
 end
 
 local function stl_copilot_indicator()
@@ -323,7 +346,10 @@ return {
       },
       {
         condition = function()
-          return (GitStatus ~= nil and (GitStatus.ahead ~= 0 or _G.GitStatus.behind ~= 0))
+          return (
+            GitStatus ~= nil
+            and (GitStatus.ahead ~= 0 or _G.GitStatus.behind ~= 0)
+          )
         end,
         update = { 'User', pattern = 'GitStatusChanged' },
         {
@@ -333,7 +359,12 @@ return {
         },
         {
           provider = function() return GitStatus.behind .. '⇣ ' end,
-          hl = function() return { fg = GitStatus.behind == 0 and fg or colors.pale_red, bg = bg } end,
+          hl = function()
+            return {
+              fg = GitStatus.behind == 0 and fg or colors.pale_red,
+              bg = bg,
+            }
+          end,
           on_click = {
             callback = function()
               if GitStatus.behind > 0 then git_pull() end
@@ -344,7 +375,10 @@ return {
         {
           provider = function() return GitStatus.ahead .. '⇡ ' end,
           hl = function()
-            return { fg = GitStatus.ahead == 0 and fg or colors.yellowgreen, bg = bg }
+            return {
+              fg = GitStatus.ahead == 0 and fg or colors.yellowgreen,
+              bg = bg,
+            }
           end,
           on_click = {
             callback = function()
@@ -356,7 +390,10 @@ return {
       },
     },
   },
-  file_name_block = utils.insert(file_block, utils.insert(file_name, file_flags)),
+  file_name_block = utils.insert(
+    file_block,
+    utils.insert(file_name, file_flags)
+  ),
   python_env = {
     condition = function() return vim.bo.filetype == 'python' end,
     provider = function() return python_env() .. ' ' end,
@@ -376,13 +413,19 @@ return {
     },
     update = { 'LspAttach', 'DiagnosticChanged', 'BufEnter' },
     init = function(self)
-      self.errors = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.ERROR })
-      self.warnings = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.WARN })
-      self.hints = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.HINT })
-      self.info = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.INFO })
+      self.errors =
+        #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.ERROR })
+      self.warnings =
+        #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.WARN })
+      self.hints =
+        #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.HINT })
+      self.info =
+        #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.INFO })
     end,
     {
-      provider = function(self) return self.errors > 0 and (self.error_icon .. self.errors .. ' ') end,
+      provider = function(self)
+        return self.errors > 0 and (self.error_icon .. self.errors .. ' ')
+      end,
       hl = { fg = colors.error_red, bg = bg },
     },
     {
@@ -392,11 +435,15 @@ return {
       hl = { fg = colors.dark_orange, bg = bg },
     },
     {
-      provider = function(self) return self.info > 0 and (self.info_icon .. self.info .. ' ') end,
+      provider = function(self)
+        return self.info > 0 and (self.info_icon .. self.info .. ' ')
+      end,
       hl = { fg = colors.blue, bg = bg },
     },
     {
-      provider = function(self) return self.hints > 0 and (self.hint_icon .. self.hints .. ' ') end,
+      provider = function(self)
+        return self.hints > 0 and (self.hint_icon .. self.hints .. ' ')
+      end,
       hl = { fg = colors.darker_green, bg = bg },
     },
     on_click = {
@@ -474,14 +521,20 @@ return {
       provider = function(self)
         local search = self.search
         return ' '
-          .. string.format(' %d/%d ', search.current, math.min(search.total, search.maxcount))
+          .. string.format(
+            ' %d/%d ',
+            search.current,
+            math.min(search.total, search.maxcount)
+          )
       end,
       hl = function() return { bg = bg, fg = fg } end,
     },
   },
   word_count = {
     condition = function() return vim.bo.filetype == 'markdown' end,
-    provider = function() return ' ' .. tostring(vim.fn.wordcount().words) .. ' words' end,
+    provider = function()
+      return ' ' .. tostring(vim.fn.wordcount().words) .. ' words'
+    end,
     hl = { fg = fg, bg = bg },
   },
   lsp_clients = {
@@ -554,7 +607,8 @@ return {
     condition = function()
       local curwin = api.nvim_get_current_win()
       local curbuf = api.nvim_win_get_buf(curwin)
-      return vim.b[curbuf].formatting_disabled == true or vim.g.formatting_disabled == true
+      return vim.b[curbuf].formatting_disabled == true
+        or vim.g.formatting_disabled == true
     end,
     provider = function() return '  ' .. codicons.misc.shaded_lock end,
     hl = { fg = colors.blue, bg = bg, bold = true },
@@ -598,7 +652,9 @@ return {
   },
   macro_rec = {
     condition = function() return require('NeoComposer.state') end,
-    init = function(self) self.rec = require('NeoComposer.ui').status_recording() end,
+    init = function(self)
+      self.rec = require('NeoComposer.ui').status_recording()
+    end,
     provider = function(self)
       if self.rec ~= '' then return '  ' .. self.rec end
     end,
@@ -615,8 +671,16 @@ return {
     provider = function()
       local current_line = vim.fn.line('.')
       local total_lines = vim.fn.line('$')
-      local chars =
-        { '▁', '▂', '▃', '▄', '▅', '▆', '▇', '█' }
+      local chars = {
+        '▁',
+        '▂',
+        '▃',
+        '▄',
+        '▅',
+        '▆',
+        '▇',
+        '█',
+      }
       local line_ratio = current_line / total_lines
       local index = math.ceil(line_ratio * #chars)
       return ' ' .. chars[index]

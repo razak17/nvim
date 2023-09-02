@@ -5,7 +5,8 @@ return {
   config = function()
     local Hydra = require('hydra')
     local pcmd = require('hydra.keymap-util').pcmd
-    local hint_opts = { position = 'bottom', border = rvim.ui.current.border, type = 'window' }
+    local hint_opts =
+      { position = 'bottom', border = rvim.ui.current.border, type = 'window' }
 
     local splits = rvim.reqcall('smart-splits')
     local fold_cycle = rvim.reqcall('fold-cycle')
@@ -123,24 +124,56 @@ return {
         invoke_on_body = true,
       },
       heads = {
-        { 'u', function() textcase.current_word('to_upper_case') end, { desc = 'to uppercase' } },
-        { 'l', function() textcase.current_word('to_lower_case') end, { desc = 'to lowercase' } },
-        { 's', function() textcase.current_word('to_snake_case') end, { desc = 'to snakecase' } },
-        { 'c', function() textcase.current_word('to_camel_case') end, { desc = 'to camelcase' } },
+        {
+          'u',
+          function() textcase.current_word('to_upper_case') end,
+          { desc = 'to uppercase' },
+        },
+        {
+          'l',
+          function() textcase.current_word('to_lower_case') end,
+          { desc = 'to lowercase' },
+        },
+        {
+          's',
+          function() textcase.current_word('to_snake_case') end,
+          { desc = 'to snakecase' },
+        },
+        {
+          'c',
+          function() textcase.current_word('to_camel_case') end,
+          { desc = 'to camelcase' },
+        },
         {
           'p',
           function() textcase.current_word('to_pascal_case') end,
           { desc = 'to pascalcase' },
         },
-        { 't', function() textcase.current_word('to_title_case') end, { desc = 'to titlecase' } },
+        {
+          't',
+          function() textcase.current_word('to_title_case') end,
+          { desc = 'to titlecase' },
+        },
         {
           'C',
           function() textcase.current_word('to_constant_case') end,
           { desc = 'to constantcase' },
         },
-        { '-', function() textcase.current_word('to_dash_case') end, { desc = 'to dashcase' } },
-        { '/', function() textcase.current_word('to_path_case') end, { desc = 'to pathcase' } },
-        { '.', function() textcase.current_word('to_dot_case') end, { desc = 'to dotcase' } },
+        {
+          '-',
+          function() textcase.current_word('to_dash_case') end,
+          { desc = 'to dashcase' },
+        },
+        {
+          '/',
+          function() textcase.current_word('to_path_case') end,
+          { desc = 'to pathcase' },
+        },
+        {
+          '.',
+          function() textcase.current_word('to_dot_case') end,
+          { desc = 'to dotcase' },
+        },
         { '<Esc>', nil, { exit = true, desc = 'Quit' } },
       },
     })

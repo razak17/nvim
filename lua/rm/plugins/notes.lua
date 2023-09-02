@@ -1,17 +1,39 @@
 local fmt, fn = string.format, vim.fn
-local function sync(path) return fmt('%s/notes/%s', fn.expand('$SYNC_DIR'), path) end
+local function sync(path)
+  return fmt('%s/notes/%s', fn.expand('$SYNC_DIR'), path)
+end
 
 return {
   {
     'epwalsh/obsidian.nvim',
     keys = {
-      { '<localleader>ob', '<Cmd>ObsidianBacklinks<CR>', desc = 'obsidian: buffer backlinks' },
-      { '<localleader>od', '<Cmd>ObsidianToday<CR>', desc = 'obsidian: open daily note' },
+      {
+        '<localleader>ob',
+        '<Cmd>ObsidianBacklinks<CR>',
+        desc = 'obsidian: buffer backlinks',
+      },
+      {
+        '<localleader>od',
+        '<Cmd>ObsidianToday<CR>',
+        desc = 'obsidian: open daily note',
+      },
       { '<localleader>on', ':ObsidianNew ', desc = 'obsidian: new note' },
-      { '<localleader>oy', '<Cmd>ObsidianYesterday<CR>', desc = 'obsidian: previous daily note' },
+      {
+        '<localleader>oy',
+        '<Cmd>ObsidianYesterday<CR>',
+        desc = 'obsidian: previous daily note',
+      },
       { '<localleader>oo', ':ObsidianOpen ', desc = 'obsidian: open in app' },
-      { '<localleader>os', '<Cmd>ObsidianSearch<CR>', desc = 'obsidian: search' },
-      { '<localleader>ot', '<Cmd>ObsidianTemplate<CR>', desc = 'obsidian: insert template' },
+      {
+        '<localleader>os',
+        '<Cmd>ObsidianSearch<CR>',
+        desc = 'obsidian: search',
+      },
+      {
+        '<localleader>ot',
+        '<Cmd>ObsidianTemplate<CR>',
+        desc = 'obsidian: insert template',
+      },
     },
     opts = {
       dir = sync('obsidian'),
@@ -53,7 +75,12 @@ return {
             neorg_leader = '<localleader>',
             hook = function(keybinds)
               keybinds.unmap('norg', 'n', '<C-s>')
-              keybinds.map_event('norg', 'n', '<C-x>', 'core.integrations.telescope.find_linkable')
+              keybinds.map_event(
+                'norg',
+                'n',
+                '<C-x>',
+                'core.integrations.telescope.find_linkable'
+              )
             end,
           },
         },
@@ -80,7 +107,10 @@ return {
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
     opts = {
       org = { headline_highlights = false },
-      norg = { headline_highlights = { 'Headline' }, codeblock_highlight = false },
+      norg = {
+        headline_highlights = { 'Headline' },
+        codeblock_highlight = false,
+      },
       markdown = { headline_highlights = { 'Headline1' } },
     },
   },

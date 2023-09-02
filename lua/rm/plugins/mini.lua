@@ -51,17 +51,25 @@ return {
     enabled = rvim.treesitter.enable,
     event = 'VeryLazy',
     config = function()
-      require('mini.ai').setup({ mappings = { around_last = '', inside_last = '' } })
+      require('mini.ai').setup({
+        mappings = { around_last = '', inside_last = '' },
+      })
     end,
   },
   {
     'echasnovski/mini.files',
-    keys = { { '<leader>e', '<cmd>lua MiniFiles.open()<CR>', desc = 'mini.files' } },
+    keys = {
+      { '<leader>e', '<cmd>lua MiniFiles.open()<CR>', desc = 'mini.files' },
+    },
     opts = {},
   },
   {
     'echasnovski/mini.surround',
-    keys = { { 'ys', desc = 'add surrounding' }, 'ds', { 'yr', desc = 'delete surrounding' } },
+    keys = {
+      { 'ys', desc = 'add surrounding' },
+      'ds',
+      { 'yr', desc = 'delete surrounding' },
+    },
     config = function()
       require('mini.surround').setup({
         mappings = {

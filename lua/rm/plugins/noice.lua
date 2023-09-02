@@ -3,16 +3,27 @@ local highlight, L = rvim.highlight, vim.log.levels
 
 return {
   'folke/noice.nvim',
-  enabled = not rvim.plugins.minimal and not rvim.find_string(rvim.plugins.disabled, 'noice.nvim'),
+  enabled = not rvim.plugins.minimal
+    and not rvim.find_string(rvim.plugins.disabled, 'noice.nvim'),
   event = 'VeryLazy',
   dependencies = { 'MunifTanjim/nui.nvim' },
   opts = {
     cmdline = {
       format = {
         IncRename = { title = 'Rename' },
-        cmdline = { pattern = "^:", icon = " ", lang = "vim" },
-        substitute = { pattern = '^:%%?s/', icon = ' ', ft = 'regex', title = '' },
-        input = { icon = ' ', lang = 'text', view = 'cmdline_popup', title = '' },
+        cmdline = { pattern = '^:', icon = ' ', lang = 'vim' },
+        substitute = {
+          pattern = '^:%%?s/',
+          icon = ' ',
+          ft = 'regex',
+          title = '',
+        },
+        input = {
+          icon = ' ',
+          lang = 'text',
+          view = 'cmdline_popup',
+          title = '',
+        },
       },
     },
     messages = {
@@ -99,7 +110,9 @@ return {
             right = 1,
           },
         },
-        win_options = { winhighlight = { Normal = 'NormalFloat', FloatBorder = 'FloatBorder' } },
+        win_options = {
+          winhighlight = { Normal = 'NormalFloat', FloatBorder = 'FloatBorder' },
+        },
       },
     },
     redirect = { view = 'popup', filter = { event = 'msg_show' } },
@@ -160,11 +173,21 @@ return {
             { event = 'msg_show', find = '^No hunks$' },
           },
         },
-        opts = { title = 'Warning', level = L.WARN, merge = false, replace = false },
+        opts = {
+          title = 'Warning',
+          level = L.WARN,
+          merge = false,
+          replace = false,
+        },
       },
       {
         view = 'notify',
-        opts = { title = 'Error', level = L.ERROR, merge = true, replace = false },
+        opts = {
+          title = 'Error',
+          level = L.ERROR,
+          merge = true,
+          replace = false,
+        },
         filter = {
           any = {
             { error = true },
@@ -193,9 +216,24 @@ return {
 
     highlight.plugin('noice', {
       { NoiceMini = { inherit = 'MsgArea', bg = { from = 'Normal' } } },
-      { NoicePopupBaseGroup = { inherit = 'NormalFloat', fg = { from = 'CursorLineNr' } } },
-      { NoicePopupWarnBaseGroup = { inherit = 'NormalFloat', fg = { from = 'Directory' } } },
-      { NoicePopupInfoBaseGroup = { inherit = 'NormalFloat', fg = { from = 'Conditional' } } },
+      {
+        NoicePopupBaseGroup = {
+          inherit = 'NormalFloat',
+          fg = { from = 'CursorLineNr' },
+        },
+      },
+      {
+        NoicePopupWarnBaseGroup = {
+          inherit = 'NormalFloat',
+          fg = { from = 'Directory' },
+        },
+      },
+      {
+        NoicePopupInfoBaseGroup = {
+          inherit = 'NormalFloat',
+          fg = { from = 'Conditional' },
+        },
+      },
       { NoiceCmdlinePopup = { bg = { from = 'NormalFloat' } } },
       { NoiceCmdlinePopupBorder = { link = 'FloatBorder' } },
       { NoiceCmdlinePopupTitle = { link = 'Normal' } },
@@ -203,8 +241,12 @@ return {
       { NoiceCmdlinePopupBorderSearch = { link = 'NoicePopupWarnBaseGroup' } },
       { NoiceCmdlinePopupBorderFilter = { link = 'NoicePopupWarnBaseGroup' } },
       { NoiceCmdlinePopupBorderHelp = { link = 'NoicePopupInfoBaseGroup' } },
-      { NoiceCmdlinePopupBorderSubstitute = { link = 'NoicePopupWarnBaseGroup' } },
-      { NoiceCmdlinePopupBorderIncRename = { link = 'NoicePopupWarnBaseGroup' } },
+      {
+        NoiceCmdlinePopupBorderSubstitute = { link = 'NoicePopupWarnBaseGroup' },
+      },
+      {
+        NoiceCmdlinePopupBorderIncRename = { link = 'NoicePopupWarnBaseGroup' },
+      },
       { NoiceCmdlinePopupBorderInput = { link = 'NoicePopupBaseGroup' } },
       { NoiceCmdlinePopupBorderLua = { link = 'NoicePopupBaseGroup' } },
       { NoiceCmdlineIconCmdline = { link = 'NoicePopupBaseGroup' } },
@@ -227,8 +269,13 @@ return {
       if not require('noice.lsp').scroll(-4) then return '<c-b>' end
     end, { silent = true, expr = true })
 
-    map('c', '<M-CR>', function() require('noice').redirect(fn.getcmdline()) end, {
-      desc = 'redirect Cmdline',
-    })
+    map(
+      'c',
+      '<M-CR>',
+      function() require('noice').redirect(fn.getcmdline()) end,
+      {
+        desc = 'redirect Cmdline',
+      }
+    )
   end,
 }

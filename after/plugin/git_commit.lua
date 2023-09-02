@@ -52,10 +52,13 @@ function rvim.git.custom_make_entry_gen_from_git_commits(opts)
     -- no optional regex groups in lua https://stackoverflow.com/questions/26044905
     -- no repeat count... https://stackoverflow.com/questions/32884090/
     -- can't hardcode the number of chars in the author due to lua regex multibyte snafu
-    local sha, auth, date, refs, msg =
-      string.match(entry, '([^ ]+) (.+) (%d%d%d%d%-%d%d%-%d%d) (%([^)]+%)) (.+)')
+    local sha, auth, date, refs, msg = string.match(
+      entry,
+      '([^ ]+) (.+) (%d%d%d%d%-%d%d%-%d%d) (%([^)]+%)) (.+)'
+    )
     if sha == nil then
-      sha, auth, date, msg = string.match(entry, '([^ ]+) (.+) (%d%d%d%d%-%d%d%-%d%d) (.+)')
+      sha, auth, date, msg =
+        string.match(entry, '([^ ]+) (.+) (%d%d%d%d%-%d%d%-%d%d) (.+)')
     end
 
     if not msg then
@@ -79,11 +82,13 @@ end
 function rvim.git.telescope_commits_mappings(prompt_bufnr, map)
   local actions = require('telescope.actions')
   map('i', '<C-r>i', function(nr)
-    local commit = require('telescope.actions.state').get_selected_entry(prompt_bufnr).value
+    local commit =
+      require('telescope.actions.state').get_selected_entry(prompt_bufnr).value
     vim.cmd(':term! git rebase -i ' .. commit .. '~')
   end)
   map('i', '<C-v>', function(nr)
-    local commit = require('telescope.actions.state').get_selected_entry(prompt_bufnr).value
+    local commit =
+      require('telescope.actions.state').get_selected_entry(prompt_bufnr).value
     actions.close(prompt_bufnr)
     vim.cmd(':DiffviewOpen ' .. commit .. '^..' .. commit)
   end)
@@ -96,9 +101,14 @@ function rvim.git.show_commit_at_line()
 end
 
 function rvim.git.display_git_commit()
-  vim.ui.input({ prompt = 'Enter git commit id:', kind = 'center_win' }, function(input)
-    if input ~= nil then vim.cmd(':DiffviewOpen ' .. input .. '^..' .. input) end
-  end)
+  vim.ui.input(
+    { prompt = 'Enter git commit id:', kind = 'center_win' },
+    function(input)
+      if input ~= nil then
+        vim.cmd(':DiffviewOpen ' .. input .. '^..' .. input)
+      end
+    end
+  )
 end
 
 local opts = {
@@ -116,6 +126,10 @@ local opts = {
   previewer = rvim.telescope.delta_opts().previewer,
 }
 
-function rvim.git.browse_commits() require('telescope.builtin').git_commits(opts) end
+function rvim.git.browse_commits()
+  require('telescope.builtin').git_commits(opts)
+end
 
-function rvim.git.browse_bcommits() require('telescope.builtin').git_bcommits(opts) end
+function rvim.git.browse_bcommits()
+  require('telescope.builtin').git_bcommits(opts)
+end

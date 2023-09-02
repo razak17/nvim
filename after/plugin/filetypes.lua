@@ -90,7 +90,11 @@ settings({
     function()
       vim.schedule(function()
         -- Schedule this call rvim highlights are not set correctly if there is not a delay
-        highlight.set_winhl('gitcommit', 0, { { VirtColumn = { fg = { from = 'Variable' } } } })
+        highlight.set_winhl(
+          'gitcommit',
+          0,
+          { { VirtColumn = { fg = { from = 'Variable' } } } }
+        )
       end)
     end,
   },
@@ -120,8 +124,18 @@ settings({
       winfixheight = true,
     },
     mappings = {
-      { 'n', 'dd', rvim.list.qf.delete, { buffer = 0, desc = 'delete current quickfix entry' } },
-      { 'v', 'd', rvim.list.qf.delete, { buffer = 0, desc = 'delete selected quickfix entry' } },
+      {
+        'n',
+        'dd',
+        rvim.list.qf.delete,
+        { buffer = 0, desc = 'delete current quickfix entry' },
+      },
+      {
+        'v',
+        'd',
+        rvim.list.qf.delete,
+        { buffer = 0, desc = 'delete selected quickfix entry' },
+      },
       { 'n', 'H', ':colder<CR>', { buffer = 0 } },
       { 'n', 'L', ':cnewer<CR>', { buffer = 0 } },
     },

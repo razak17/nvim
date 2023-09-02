@@ -7,7 +7,11 @@ return {
     event = 'BufReadPost',
     build = ':TSUpdate',
     keys = {
-      { 'R', '<cmd>edit | TSBufEnable highlight<CR>', desc = 'treesitter: enable highlight' },
+      {
+        'R',
+        '<cmd>edit | TSBufEnable highlight<CR>',
+        desc = 'treesitter: enable highlight',
+      },
     },
     config = function()
       require('nvim-treesitter.configs').setup({
@@ -16,7 +20,8 @@ return {
           enable = true,
           disable = function(_, buf)
             local max_filesize = 100 * 1024 -- 100 KB
-            local ok, stats = pcall(vim.uv.fs_stat, vim.api.nvim_buf_get_name(buf))
+            local ok, stats =
+              pcall(vim.uv.fs_stat, vim.api.nvim_buf_get_name(buf))
             if ok and stats and stats.size > max_filesize then return true end
           end,
           additional_vim_regex_highlighting = { 'org', 'sql' },
@@ -38,20 +43,41 @@ return {
             include_surrounding_whitespace = true,
             keymaps = {
               ['af'] = { query = '@function.outer', desc = 'ts: all function' },
-              ['if'] = { query = '@function.inner', desc = 'ts: inner function' },
+              ['if'] = {
+                query = '@function.inner',
+                desc = 'ts: inner function',
+              },
               ['ac'] = { query = '@class.outer', desc = 'ts: all class' },
               ['ic'] = { query = '@class.inner', desc = 'ts: inner class' },
-              ['aC'] = { query = '@conditional.outer', desc = 'ts: all conditional' },
-              ['iC'] = { query = '@conditional.inner', desc = 'ts: inner conditional' },
-              ['aH'] = { query = '@assignment.lhs', desc = 'ts: assignment lhs' },
-              ['aL'] = { query = '@assignment.rhs', desc = 'ts: assignment rhs' },
+              ['aC'] = {
+                query = '@conditional.outer',
+                desc = 'ts: all conditional',
+              },
+              ['iC'] = {
+                query = '@conditional.inner',
+                desc = 'ts: inner conditional',
+              },
+              ['aH'] = {
+                query = '@assignment.lhs',
+                desc = 'ts: assignment lhs',
+              },
+              ['aL'] = {
+                query = '@assignment.rhs',
+                desc = 'ts: assignment rhs',
+              },
             },
           },
           move = {
             enable = true,
             set_jumps = true, -- whether to set jumps in the jumplist
-            goto_next_start = { [']m'] = '@function.outer', [']c'] = '@class.outer' },
-            goto_previous_start = { ['[m'] = '@function.outer', ['[c'] = '@class.outer' },
+            goto_next_start = {
+              [']m'] = '@function.outer',
+              [']c'] = '@class.outer',
+            },
+            goto_previous_start = {
+              ['[m'] = '@function.outer',
+              ['[c'] = '@class.outer',
+            },
           },
           lsp_interop = { enable = false },
         },
@@ -95,7 +121,14 @@ return {
   {
     'windwp/nvim-ts-autotag',
     enabled = rvim.treesitter.enable,
-    ft = { 'typescriptreact', 'javascript', 'javascriptreact', 'html', 'vue', 'svelte' },
+    ft = {
+      'typescriptreact',
+      'javascript',
+      'javascriptreact',
+      'html',
+      'vue',
+      'svelte',
+    },
   },
   {
     'nvim-treesitter/playground',
@@ -124,7 +157,13 @@ return {
     'andymass/vim-matchup',
     event = 'BufReadPost',
     enabled = rvim.treesitter.enable,
-    keys = { { '<localleader>lw', ':<c-u>MatchupWhereAmI?<CR>', desc = 'matchup: where am i' } },
+    keys = {
+      {
+        '<localleader>lw',
+        ':<c-u>MatchupWhereAmI?<CR>',
+        desc = 'matchup: where am i',
+      },
+    },
     config = function()
       vim.g.matchup_matchparen_offscreen = { method = 'status_manual' }
       vim.g.matchup_matchparen_deferred = 1

@@ -3,7 +3,7 @@ local api, opt, f = vim.api, vim.opt_local, string.format
 return {
   'goolord/alpha-nvim',
   enabled = not rvim.plugins.minimal,
-  cmd = "Alpha",
+  cmd = 'Alpha',
   config = function()
     local alpha = require('alpha')
     local dashboard = require('alpha.themes.dashboard')
@@ -71,14 +71,25 @@ return {
     local v = vim.version()
     local version = {
       type = 'text',
-      val = f('Neovim v%d.%d.%d %s', v.major, v.minor, v.patch, v.prerelease and '(nightly)' or ''),
+      val = f(
+        'Neovim v%d.%d.%d %s',
+        v.major,
+        v.minor,
+        v.patch,
+        v.prerelease and '(nightly)' or ''
+      ),
       opts = { position = 'center', hl = 'NonText' },
     }
 
     dashboard.section.buttons.val = {
       button('Directory', 'r', '  Restore session', '<Cmd>SessionLoad<CR>'),
       button('Todo', 's', '󰋇  Pick a session', '<Cmd>ListSessions<CR>'),
-      button('Directory', 'p', '  Recent projects', '<Cmd>Telescope projects<CR>'),
+      button(
+        'Directory',
+        'p',
+        '  Recent projects',
+        '<Cmd>Telescope projects<CR>'
+      ),
       button('String', 'f', '  Find file', '<Cmd>FzfLua files<CR>'),
       button('Define', 'w', '󰈭  Find text', '<Cmd>FzfLua live_grep<CR>'),
       -- button('Keyword', 'n', '  New file', ':ene | startinsert<CR>'),

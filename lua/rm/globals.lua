@@ -12,9 +12,9 @@ function join_paths(...)
   return result
 end
 
-----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- Utils
-----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 --- Checks whether a given path exists and is a directory
 --@param path (string) path to check
@@ -61,7 +61,9 @@ function rvim.mergeTables(destination, source)
         ::continue::
       end
     elseif type(v) == 'table' then
-      if destination[k] == nil or type(destination[k]) ~= 'table' then destination[k] = {} end
+      if destination[k] == nil or type(destination[k]) ~= 'table' then
+        destination[k] = {}
+      end
       rvim.mergeTables(destination[k], v)
     else
       destination[k] = v
@@ -88,7 +90,10 @@ end
 ---@param minheight number
 ---@param maxheight number
 function rvim.adjust_split_height(minheight, maxheight)
-  api.nvim_win_set_height(0, math.max(math.min(fn.line('$'), maxheight), minheight))
+  api.nvim_win_set_height(
+    0,
+    math.max(math.min(fn.line('$'), maxheight), minheight)
+  )
 end
 
 --- Call the given function and use `vim.notify` to notify of any errors
@@ -107,7 +112,9 @@ function rvim.pcall(msg, func, ...)
   end
   return xpcall(func, function(err)
     if rvim.debug.enable then
-      msg = debug.traceback(msg and fmt('%s:\n%s\n%s', msg, vim.inspect(args), err) or err)
+      msg = debug.traceback(
+        msg and fmt('%s:\n%s\n%s', msg, vim.inspect(args), err) or err
+      )
       vim.schedule(function() vim.notify(msg, l.ERROR, { title = 'ERROR' }) end)
     end
   end, unpack(args))
@@ -142,28 +149,30 @@ function rvim.reload_all() vim.cmd('checktime') end
 function rvim.run_command(command, params, cb)
   local Job = require('plenary.job')
   local error_msg = nil
-  Job:new({
-    command = command,
-    args = params,
-    on_stderr = function(error, data, self)
-      if error_msg == nil then error_msg = data end
-    end,
-    on_exit = function(self, code, signal)
-      vim.schedule_wrap(function()
-        if code == 0 then
-          vim.notify(command .. ' executed successfully', vim.log.levels.INFO)
-          if cb then cb() end
-        else
-          local info = { command .. ' failed!' }
-          if error_msg ~= nil then
-            table.insert(info, error_msg)
-            print(error_msg)
+  Job
+    :new({
+      command = command,
+      args = params,
+      on_stderr = function(error, data, self)
+        if error_msg == nil then error_msg = data end
+      end,
+      on_exit = function(self, code, signal)
+        vim.schedule_wrap(function()
+          if code == 0 then
+            vim.notify(command .. ' executed successfully', vim.log.levels.INFO)
+            if cb then cb() end
+          else
+            local info = { command .. ' failed!' }
+            if error_msg ~= nil then
+              table.insert(info, error_msg)
+              print(error_msg)
+            end
+            vim.notify(info, vim.log.levels.ERROR)
           end
-          vim.notify(info, vim.log.levels.ERROR)
-        end
-      end)()
-    end,
-  }):start()
+        end)()
+      end,
+    })
+    :start()
   vim.notify(command .. ' launched...', vim.log.levels.INFO)
 end
 
@@ -229,9 +238,9 @@ function rvim.create_select_menu(prompt, options_table)
   return menu
 end
 
-----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 --  FILETYPE HELPERS
-----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 ---@class FiletypeSettings
 ---@field g table<string, any>
@@ -293,10 +302,14 @@ function rvim.filetype_settings(map)
       command = function(args)
         vim.iter(settings):each(function(key, value)
           if key == 'opt' then key = 'opt_local' end
-          if key == 'mappings' then return apply_ft_mappings(value, args.buf) end
+          if key == 'mappings' then
+            return apply_ft_mappings(value, args.buf)
+          end
           if key == 'plugins' then return rvim.ftplugin_conf(value) end
           if type(key) == 'function' then return rvim.pcall(key, args) end
-          vim.iter(value):each(function(option, setting) vim[key][option] = setting end)
+          vim
+            .iter(value)
+            :each(function(option, setting) vim[key][option] = setting end)
         end)
       end,
     }
@@ -309,7 +322,8 @@ end
 ---@return string
 function rvim.truncate(str, max_len)
   assert(str and max_len, 'string and max_len must be provided')
-  return api.nvim_strwidth(str) > max_len and str:sub(1, max_len) .. rvim.ui.icons.misc.ellipsis
+  return api.nvim_strwidth(str) > max_len
+      and str:sub(1, max_len) .. rvim.ui.icons.misc.ellipsis
     or str
 end
 
@@ -337,8 +351,9 @@ rvim.list = { qf = {}, loc = {} }
 ---@param list_type "loclist" | "quickfix"
 ---@return boolean
 local function is_list_open(list_type)
-  return vim.iter(fn.getwininfo()):find(function(win) return not rvim.falsy(win[list_type]) end)
-    ~= nil
+  return vim
+    .iter(fn.getwininfo())
+    :find(function(win) return not rvim.falsy(win[list_type]) end) ~= nil
 end
 
 local silence = { mods = { silent = true, emsg_silent = true } }
@@ -376,7 +391,9 @@ function rvim.list.qf.delete(buf)
   if mode:match('[vV]') then
     local first_line = fn.getpos("'<")[2]
     local last_line = fn.getpos("'>")[2]
-    list = vim.iter(ipairs(list)):filter(function(i) return i < first_line or i > last_line end)
+    list = vim
+      .iter(ipairs(list))
+      :filter(function(i) return i < first_line or i > last_line end)
   else
     table.remove(list, line)
   end
@@ -399,12 +416,13 @@ function rvim.falsy(item)
   return item ~= nil
 end
 
-----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- API Wrappers
-----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- Thin wrappers over API functions to make their usage easier/terser
 
-local autocmd_keys = { 'event', 'buffer', 'pattern', 'desc', 'command', 'group', 'once', 'nested' }
+local autocmd_keys =
+  { 'event', 'buffer', 'pattern', 'desc', 'command', 'group', 'once', 'nested' }
 --- Validate the keys passed to rvim.augroup are valid
 ---@param name string
 ---@param command Autocommand
@@ -447,7 +465,10 @@ end
 function rvim.augroup(name, ...)
   local commands = { ... }
   assert(name ~= 'User', 'The name of an augroup CANNOT be User')
-  assert(#commands > 0, fmt('You must specify at least one autocommand for %s', name))
+  assert(
+    #commands > 0,
+    fmt('You must specify at least one autocommand for %s', name)
+  )
   local id = api.nvim_create_augroup(name, { clear = true })
   for _, autocmd in ipairs(commands) do
     validate_autocmd(name, autocmd)
@@ -483,7 +504,9 @@ end
 ---A terser proxy for `nvim_replace_termcodes`
 ---@param str string
 ---@return string
-function rvim.replace_termcodes(str) return api.nvim_replace_termcodes(str, true, true, true) end
+function rvim.replace_termcodes(str)
+  return api.nvim_replace_termcodes(str, true, true, true)
+end
 
 ---@generic T
 ---Given a table return a new table which if the key is not found will search

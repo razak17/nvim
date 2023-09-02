@@ -33,19 +33,31 @@ end
 local function toggle_conceal()
   vim.opt_local.conceallevel = vim.opt_local.conceallevel:get() == 0 and 2 or 0
   rvim.mappings.notify(
-    string.format('conceal %s', rvim.bool2str(vim.opt_local.conceallevel:get() == 2))
+    string.format(
+      'conceal %s',
+      rvim.bool2str(vim.opt_local.conceallevel:get() == 2)
+    )
   )
 end
 
 --- Toggle conceal cursor=n|''
 local function toggle_conceal_cursor()
-  vim.opt_local.concealcursor = vim.opt_local.concealcursor:get() == 'n' and '' or 'n'
+  vim.opt_local.concealcursor = vim.opt_local.concealcursor:get() == 'n' and ''
+    or 'n'
   rvim.mappings.notify(
-    string.format('conceal cursor %s', rvim.bool2str(vim.opt_local.concealcursor:get() == ''))
+    string.format(
+      'conceal cursor %s',
+      rvim.bool2str(vim.opt_local.concealcursor:get() == '')
+    )
   )
 end
 map('n', '<localleader>cl', toggle_conceal, { desc = 'toggle conceallevel' })
-map('n', '<localleader>cc', toggle_conceal_cursor, { desc = 'toggle concealcursor' })
+map(
+  'n',
+  '<localleader>cc',
+  toggle_conceal_cursor,
+  { desc = 'toggle concealcursor' }
+)
 
 local toggle_options = {
   ['1. Toggle Aerial'] = 'AerialToggle',
@@ -67,4 +79,9 @@ local toggle_menu = function()
   rvim.create_select_menu('Toggle actions', toggle_options)() --> extra paren to execute!
 end
 
-map('n', '<leader>oo', toggle_menu, { desc = '[t]oggle [a]ctions: open menu for toggle actions' })
+map(
+  'n',
+  '<leader>oo',
+  toggle_menu,
+  { desc = '[t]oggle [a]ctions: open menu for toggle actions' }
+)

@@ -21,10 +21,15 @@ local function is_ignored() return is_floating_win() end
 local function is_blocked()
   local win_type = fn.win_gettype()
 
-  if not api.nvim_buf_is_valid(0) and not api.nvim_buf_is_loaded(0) then return true end
-  if win_type == 'command' or vim.wo.diff or vim.wo.previewwindow then return true end
+  if not api.nvim_buf_is_valid(0) and not api.nvim_buf_is_loaded(0) then
+    return true
+  end
+  if win_type == 'command' or vim.wo.diff or vim.wo.previewwindow then
+    return true
+  end
 
-  local decs = ui.decorations.get({ ft = vim.bo.ft, bt = vim.bo.bt, setting = 'number' })
+  local decs =
+    ui.decorations.get({ ft = vim.bo.ft, bt = vim.bo.bt, setting = 'number' })
   return decs.ft == false or decs.bt == false
 end
 

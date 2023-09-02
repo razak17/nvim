@@ -7,13 +7,19 @@ bo.softtabstop = 4
 bo.shiftwidth = 4
 opt.spell = true
 
-if not rvim or not rvim.lsp.enable or not rvim.plugins.enable or rvim.plugins.minimal then
+if
+  not rvim
+  or not rvim.lsp.enable
+  or not rvim.plugins.enable
+  or rvim.plugins.minimal
+then
   return
 end
 
 local dap = require('dap')
 local mason_registry = require('mason-registry')
-local debugpy_path = mason_registry.get_package('debugpy'):get_install_path() .. '/venv/bin/python'
+local debugpy_path = mason_registry.get_package('debugpy'):get_install_path()
+  .. '/venv/bin/python'
 
 dap.adapters.python = function(cb, config)
   if config.request == 'attach' then
@@ -21,7 +27,10 @@ dap.adapters.python = function(cb, config)
     local host = (config.connect or config).host or '127.0.0.1'
     cb({
       type = 'server',
-      port = assert(port, '`connect.port` is required for a python `attach` configuration'),
+      port = assert(
+        port,
+        '`connect.port` is required for a python `attach` configuration'
+      ),
       host = host,
       options = { source_filetype = 'python' },
     })

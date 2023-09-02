@@ -4,12 +4,17 @@ local fn, api, env, v, cmd = vim.fn, vim.api, vim.env, vim.v, vim.cmd
 local fmt = string.format
 local falsy = rvim.falsy
 
-----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- HLSEARCH
-----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- ref:https://github.com/akinsho/dotfiles/blob/main/.config/nvim/plugin/autocommands.lua
 
-map({ 'n', 'v', 'o', 'i', 'c' }, '<Plug>(StopHL)', 'execute("nohlsearch")[-1]', { expr = true })
+map(
+  { 'n', 'v', 'o', 'i', 'c' },
+  '<Plug>(StopHL)',
+  'execute("nohlsearch")[-1]',
+  { expr = true }
+)
 
 local function stop_hl()
   if v.hlsearch == 0 or api.nvim_get_mode().mode ~= 'n' then return end
@@ -88,13 +93,22 @@ rvim.augroup('SmartClose', {
       or vim.wo.previewwindow
       or smart_close_filetypes[buf.ft]
       or smart_close_buftypes[buf.bt]
-    if is_eligible then map('n', 'q', smart_close, { buffer = args.buf, nowait = true }) end
+    if is_eligible then
+      map('n', 'q', smart_close, { buffer = args.buf, nowait = true })
+    end
   end,
 })
 
 rvim.augroup('CheckOutsideTime', {
   -- automatically check for changed files outside vim
-  event = { 'WinEnter', 'BufWinEnter', 'BufWinLeave', 'BufRead', 'BufEnter', 'FocusGained' },
+  event = {
+    'WinEnter',
+    'BufWinEnter',
+    'BufWinLeave',
+    'BufRead',
+    'BufEnter',
+    'FocusGained',
+  },
   command = 'silent! checktime',
 })
 
@@ -111,7 +125,9 @@ rvim.augroup('ClearCommandLineMessages', {
 
 rvim.augroup('TextYankHighlight', {
   event = { 'TextYankPost' },
-  command = function() vim.highlight.on_yank({ timeout = 177, higroup = 'Search' }) end,
+  command = function()
+    vim.highlight.on_yank({ timeout = 177, higroup = 'Search' })
+  end,
 })
 
 rvim.augroup('UpdateVim', {
@@ -133,7 +149,9 @@ rvim.augroup('WinBehavior', {
 }, {
   event = { 'TermOpen' },
   command = function()
-    if falsy(vim.bo.filetype) or not falsy(vim.bo.buftype) == '' then vim.cmd.startinsert() end
+    if falsy(vim.bo.filetype) or not falsy(vim.bo.buftype) == '' then
+      vim.cmd.startinsert()
+    end
   end,
 }, {
   event = { 'BufWinLeave' },
@@ -142,7 +160,8 @@ rvim.augroup('WinBehavior', {
   end,
 })
 
-local cursorline_exclusions = { 'alpha', 'TelescopePrompt', 'CommandTPrompt', 'DressingInput' }
+local cursorline_exclusions =
+  { 'alpha', 'TelescopePrompt', 'CommandTPrompt', 'DressingInput' }
 ---@param buf number
 ---@return boolean
 local function should_show_cursorline(buf)
@@ -231,13 +250,17 @@ rvim.augroup('Utilities', {
     if vim.fn.isdirectory(fn.getcwd() .. '/lua') then
       map('n', 'gx', function()
         local file = fn.expand('<cfile>')
-        if not file or fn.isdirectory(file) > 0 then return vim.cmd.edit(file) end
+        if not file or fn.isdirectory(file) > 0 then
+          return vim.cmd.edit(file)
+        end
         if file:match('http[s]?://') then return rvim.open(file) end
 
         -- consider anything that looks like string/string a github link
         local plugin_url_regex = '[%a%d%-%.%_]*%/[%a%d%-%.%_]*'
         local link = string.match(file, plugin_url_regex)
-        if link then return rvim.open(fmt('https://www.github.com/%s', link)) end
+        if link then
+          return rvim.open(fmt('https://www.github.com/%s', link))
+        end
       end)
     end
   end,
@@ -249,7 +272,9 @@ rvim.augroup('Utilities', {
         'n',
         'Q',
         function()
-          vim.cmd('lua require("neogit.integrations.diffview").diffview_mappings["close"]()')
+          vim.cmd(
+            'lua require("neogit.integrations.diffview").diffview_mappings["close"]()'
+          )
         end,
         { buffer = args.buf }
       )
@@ -262,11 +287,20 @@ rvim.augroup('Utilities', {
   command = function()
     if rvim.plugins.minimal then return end
     local should_skip = false
-    if vim.fn.argc() > 0 or vim.fn.line2byte(vim.fn.line('$')) ~= -1 or not vim.o.modifiable then
+    if
+      vim.fn.argc() > 0
+      or vim.fn.line2byte(vim.fn.line('$')) ~= -1
+      or not vim.o.modifiable
+    then
       should_skip = true
     else
       for _, arg in pairs(vim.v.argv) do
-        if arg == '-b' or arg == '-c' or vim.startswith(arg, '+') or arg == '-S' then
+        if
+          arg == '-b'
+          or arg == '-c'
+          or vim.startswith(arg, '+')
+          or arg == '-S'
+        then
           should_skip = true
           break
         end

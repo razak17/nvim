@@ -17,9 +17,9 @@ local function float_resize_autocmd(autocmd_name, ft, command)
 end
 
 return {
-  ----------------------------------------------------------------------------------------------------
+  ------------------------------------------------------------------------------
   -- Core {{{3
-  ----------------------------------------------------------------------------------------------------
+  ------------------------------------------------------------------------------
   'nvim-lua/plenary.nvim',
   'nvim-tree/nvim-web-devicons',
   {
@@ -84,16 +84,16 @@ return {
     },
   },
   -- }}}
-  ----------------------------------------------------------------------------------------------------
+  ------------------------------------------------------------------------------
   -- Themes {{{1
-  ----------------------------------------------------------------------------------------------------
+  ------------------------------------------------------------------------------
   { 'razak17/onedark.nvim', lazy = false, priority = 1000 },
   { 'LunarVim/horizon.nvim', lazy = false, priority = 1000 },
   { 'dotsilas/darcubox-nvim', lazy = false, priority = 1000 },
   -- }}}
-  ----------------------------------------------------------------------------------------------------
+  ------------------------------------------------------------------------------
   -- LSP,Completion & Debugger {{{1
-  ----------------------------------------------------------------------------------------------------
+  ------------------------------------------------------------------------------
   'b0o/schemastore.nvim',
   {
     'razak17/lspkind.nvim',
@@ -105,7 +105,10 @@ return {
       keys = { { '<leader>lm', '<cmd>Mason<CR>', desc = 'mason info' } },
       build = ':MasonUpdate',
       opts = {
-        registries = { 'lua:mason-registry.index', 'github:mason-org/mason-registry' },
+        registries = {
+          'lua:mason-registry.index',
+          'github:mason-org/mason-registry',
+        },
         providers = { 'mason.providers.registry-api', 'mason.providers.client' },
         ui = { border = border, height = 0.8 },
       },
@@ -122,8 +125,10 @@ return {
             if not rvim.falsy(rvim.lsp.override) then
               if not rvim.find_string(rvim.lsp.override, name) then return end
             else
-              local directory_disabled = rvim.dirs_match(rvim.lsp.disabled.directories, cwd)
-              local server_disabled = rvim.find_string(rvim.lsp.disabled.servers, name)
+              local directory_disabled =
+                rvim.dirs_match(rvim.lsp.disabled.directories, cwd)
+              local server_disabled =
+                rvim.find_string(rvim.lsp.disabled.servers, name)
               if directory_disabled or server_disabled then return end
             end
             local config = require('rm.servers')(name)
@@ -148,7 +153,13 @@ return {
                 debug = true,
                 experimental = { pathStrict = true },
                 library = {
-                  runtime = join_paths(vim.env.HOME, 'neovim', 'share', 'nvim', 'runtime'),
+                  runtime = join_paths(
+                    vim.env.HOME,
+                    'neovim',
+                    'share',
+                    'nvim',
+                    'runtime'
+                  ),
                   plugins = {},
                   types = true,
                 },
@@ -158,7 +169,10 @@ return {
               'folke/neoconf.nvim',
               enabled = rvim.lsp.enable,
               cmd = { 'Neoconf' },
-              opts = { local_settings = '.nvim.json', global_settings = 'nvim.json' },
+              opts = {
+                local_settings = '.nvim.json',
+                global_settings = 'nvim.json',
+              },
             },
           },
         },
@@ -177,13 +191,36 @@ return {
     },
     keys = {
       { '<leader>lo', '<cmd>Lspsaga outline<CR>', 'lspsaga: outline' },
-      { '<localleader>lf', '<cmd>Lspsaga lsp_finder<cr>', desc = 'lspsaga: finder' },
-      { '<localleader>la', '<cmd>Lspsaga code_action<cr>', desc = 'lspsaga: code action' },
-      { '<M-p>', '<cmd>Lspsaga peek_type_definition<cr>', desc = 'lspsaga: type definition' },
-      { '<M-i>', '<cmd>Lspsaga incoming_calls<cr>', desc = 'lspsaga: incoming calls' },
-      { '<M-o>', '<cmd>Lspsaga outgoing_calls<cr>', desc = 'lspsaga: outgoing calls' },
+      {
+        '<localleader>lf',
+        '<cmd>Lspsaga lsp_finder<cr>',
+        desc = 'lspsaga: finder',
+      },
+      {
+        '<localleader>la',
+        '<cmd>Lspsaga code_action<cr>',
+        desc = 'lspsaga: code action',
+      },
+      {
+        '<M-p>',
+        '<cmd>Lspsaga peek_type_definition<cr>',
+        desc = 'lspsaga: type definition',
+      },
+      {
+        '<M-i>',
+        '<cmd>Lspsaga incoming_calls<cr>',
+        desc = 'lspsaga: incoming calls',
+      },
+      {
+        '<M-o>',
+        '<cmd>Lspsaga outgoing_calls<cr>',
+        desc = 'lspsaga: outgoing calls',
+      },
     },
-    dependencies = { 'nvim-tree/nvim-web-devicons', 'nvim-treesitter/nvim-treesitter' },
+    dependencies = {
+      'nvim-tree/nvim-web-devicons',
+      'nvim-treesitter/nvim-treesitter',
+    },
   },
   {
     'smjonas/inc-rename.nvim',
@@ -211,8 +248,16 @@ return {
     opts = {
       autocmd = { enabled = true },
       sign = { enabled = false },
-      virtual_text = { enabled = true, text = ui.icons.misc.lightbulb, hl_mode = 'blend' },
-      float = { text = ui.icons.misc.lightbulb, enabled = false, win_opts = { border = 'none' } },
+      virtual_text = {
+        enabled = true,
+        text = ui.icons.misc.lightbulb,
+        hl_mode = 'blend',
+      },
+      float = {
+        text = ui.icons.misc.lightbulb,
+        enabled = false,
+        win_opts = { border = 'none' },
+      },
     },
   },
   {
@@ -250,7 +295,10 @@ return {
       },
       k = 2,
       post_parse_symbol = function(bufnr, item, ctx)
-        if ctx.backend_name == 'treesitter' and (ctx.lang == 'typescript' or ctx.lang == 'tsx') then
+        if
+          ctx.backend_name == 'treesitter'
+          and (ctx.lang == 'typescript' or ctx.lang == 'tsx')
+        then
           local utils = require('nvim-treesitter.utils')
           local value_node = (utils.get_at_path(ctx.match, 'var_type') or {}).node
           -- don't want to display in-function items
@@ -281,7 +329,12 @@ return {
           -- in GTK UI files only display 'object' items (widgets), and display their
           -- class instead of the tag name (which is always 'object')
           if item.name == 'object' then
-            local line = vim.api.nvim_buf_get_lines(bufnr, item.lnum - 1, item.lnum, false)[1]
+            local line = vim.api.nvim_buf_get_lines(
+              bufnr,
+              item.lnum - 1,
+              item.lnum,
+              false
+            )[1]
             local _, _, class = string.find(line, [[class=.([^'"]+)]])
             item.name = class
             return true
@@ -300,7 +353,10 @@ return {
       require('aerial').setup(opts)
       require('telescope').load_extension('aerial')
     end,
-    dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' },
+    dependencies = {
+      'nvim-treesitter/nvim-treesitter',
+      'nvim-tree/nvim-web-devicons',
+    },
   },
   {
     'roobert/action-hints.nvim',
@@ -326,9 +382,9 @@ return {
     end,
   },
   -- }}}
-  ----------------------------------------------------------------------------------------------------
+  ------------------------------------------------------------------------------
   -- Utilities {{{1
-  ----------------------------------------------------------------------------------------------------
+  ------------------------------------------------------------------------------
   { 'sQVe/sort.nvim', cmd = { 'Sort' } },
   { 'lambdalisue/suda.vim', lazy = false },
   {
@@ -342,7 +398,9 @@ return {
     opts = {
       name = { 'venv', '.venv', 'env', '.env' },
     },
-    keys = { { '<localleader>le', '<cmd>:VenvSelect<cr>', desc = 'Select VirtualEnv' } },
+    keys = {
+      { '<localleader>le', '<cmd>:VenvSelect<cr>', desc = 'Select VirtualEnv' },
+    },
   },
   {
     'kevinhwang91/nvim-fundo',
@@ -358,7 +416,14 @@ return {
     opts = {
       hint_config = { border = border },
     },
-    cmd = { 'MCstart', 'MCvisual', 'MCclear', 'MCpattern', 'MCvisualPattern', 'MCunderCursor' },
+    cmd = {
+      'MCstart',
+      'MCvisual',
+      'MCclear',
+      'MCpattern',
+      'MCvisualPattern',
+      'MCunderCursor',
+    },
     keys = {
       {
         '<M-e>',
@@ -384,8 +449,17 @@ return {
     },
     keys = {
       { 's', function() require('flash').jump() end, mode = { 'n', 'x', 'o' } },
-      { 'S', function() require('flash').treesitter() end, mode = { 'o', 'x' } },
-      { 'r', function() require('flash').remote() end, mode = 'o', desc = 'Remote Flash' },
+      {
+        'S',
+        function() require('flash').treesitter() end,
+        mode = { 'o', 'x' },
+      },
+      {
+        'r',
+        function() require('flash').remote() end,
+        mode = 'o',
+        desc = 'Remote Flash',
+      },
       {
         '<c-s>',
         function() require('flash').toggle() end,
@@ -422,14 +496,22 @@ return {
       },
       {
         '<leader>pP',
-        function() return require('debugprint').debugprint({ above = true, variable = true }) end,
+        function()
+          return require('debugprint').debugprint({
+            above = true,
+            variable = true,
+          })
+        end,
         expr = true,
         desc = 'debugprint: cursor (above)',
       },
       {
         '<leader>pi',
         function()
-          return require('debugprint').debugprint({ ignore_treesitter = true, variable = true })
+          return require('debugprint').debugprint({
+            ignore_treesitter = true,
+            variable = true,
+          })
         end,
         expr = true,
         desc = 'debugprint: prompt',
@@ -454,11 +536,20 @@ return {
       },
       {
         '<leader>pO',
-        function() return require('debugprint').debugprint({ above = true, motion = true }) end,
+        function()
+          return require('debugprint').debugprint({
+            above = true,
+            motion = true,
+          })
+        end,
         expr = true,
         desc = 'debugprint: operator (above)',
       },
-      { '<leader>px', '<Cmd>DeleteDebugPrints<CR>', desc = 'debugprint: clear all' },
+      {
+        '<leader>px',
+        '<Cmd>DeleteDebugPrints<CR>',
+        desc = 'debugprint: clear all',
+      },
     },
     opts = {
       create_keymaps = false,
@@ -476,7 +567,9 @@ return {
   {
     'chrisgrieser/nvim-origami',
     event = 'BufReadPost',
-    keys = { { '<BS>', function() require('origami').h() end, desc = 'toggle fold' } },
+    keys = {
+      { '<BS>', function() require('origami').h() end, desc = 'toggle fold' },
+    },
     enabled = rvim.lsp.enable,
     opts = { setupFoldKeymaps = false },
   },
@@ -520,7 +613,9 @@ return {
   {
     'mbbill/undotree',
     cmd = 'UndotreeToggle',
-    keys = { { '<leader>u', '<cmd>UndotreeToggle<CR>', desc = 'undotree: toggle' } },
+    keys = {
+      { '<leader>u', '<cmd>UndotreeToggle<CR>', desc = 'undotree: toggle' },
+    },
     config = function()
       vim.g.undotree_TreeNodeShape = '◦' -- Alternative: '◉'
       vim.g.undotree_SetFocusWhenToggle = 1
@@ -576,10 +671,26 @@ return {
     'razak17/executor.nvim',
     keys = {
       { '<localleader>xc', '<cmd>ExecutorRun<CR>', desc = 'executor: start' },
-      { '<localleader>xs', '<cmd>ExecutorSetCommand<CR>', desc = 'executor: set command' },
-      { '<localleader>xd', '<cmd>ExecutorToggleDetail<CR>', desc = 'executor: toggle detail' },
-      { '<localleader>xr', '<cmd>ExecutorReset<CR>', desc = 'executor: reset status' },
-      { '<localleader>xp', '<cmd>ExecutorShowPresets<CR>', desc = 'executor: show presets' },
+      {
+        '<localleader>xs',
+        '<cmd>ExecutorSetCommand<CR>',
+        desc = 'executor: set command',
+      },
+      {
+        '<localleader>xd',
+        '<cmd>ExecutorToggleDetail<CR>',
+        desc = 'executor: toggle detail',
+      },
+      {
+        '<localleader>xr',
+        '<cmd>ExecutorReset<CR>',
+        desc = 'executor: reset status',
+      },
+      {
+        '<localleader>xp',
+        '<cmd>ExecutorShowPresets<CR>',
+        desc = 'executor: show presets',
+      },
     },
     opts = {
       input = {
@@ -625,12 +736,42 @@ return {
     event = { 'BufReadPost', 'BufNewFile' },
     config = function()
       local g = require('genghis')
-      map('n', '<localleader>fp', g.copyFilepath, { desc = 'genghis: yank filepath' })
-      map('n', '<localleader>fn', g.copyFilename, { desc = 'genghis: yank filename' })
-      map('n', '<localleader>fr', g.renameFile, { desc = 'genghis: rename file' })
-      map('n', '<localleader>fm', g.moveAndRenameFile, { desc = 'genghis: move and rename' })
-      map('n', '<localleader>fc', g.createNewFile, { desc = 'genghis: create new file' })
-      map('n', '<localleader>fd', g.duplicateFile, { desc = 'genghis: duplicate current file' })
+      map(
+        'n',
+        '<localleader>fp',
+        g.copyFilepath,
+        { desc = 'genghis: yank filepath' }
+      )
+      map(
+        'n',
+        '<localleader>fn',
+        g.copyFilename,
+        { desc = 'genghis: yank filename' }
+      )
+      map(
+        'n',
+        '<localleader>fr',
+        g.renameFile,
+        { desc = 'genghis: rename file' }
+      )
+      map(
+        'n',
+        '<localleader>fm',
+        g.moveAndRenameFile,
+        { desc = 'genghis: move and rename' }
+      )
+      map(
+        'n',
+        '<localleader>fc',
+        g.createNewFile,
+        { desc = 'genghis: create new file' }
+      )
+      map(
+        'n',
+        '<localleader>fd',
+        g.duplicateFile,
+        { desc = 'genghis: duplicate current file' }
+      )
     end,
   },
   {
@@ -638,7 +779,12 @@ return {
     build = 'sh install.sh',
     cmd = { 'SnipRun', 'SnipInfo' },
     keys = {
-      { mode = 'v', '<localleader>rr', ':SnipRun<CR>', desc = 'sniprun: run code' },
+      {
+        mode = 'v',
+        '<localleader>rr',
+        ':SnipRun<CR>',
+        desc = 'sniprun: run code',
+      },
       { '<localleader>rr', ':SnipRun<CR>', desc = 'sniprun: run code' },
       { '<localleader>ri', ':SnipInfo<CR>', desc = 'sniprun: info' },
       { '<localleader>rc', ':SnipReset<CR>', desc = 'sniprun: reset' },
@@ -711,8 +857,17 @@ return {
     'jpalardy/vim-slime',
     event = 'VeryLazy',
     keys = {
-      { '<localleader>st', '<Plug>SlimeParagraphSend', desc = 'slime: paragraph' },
-      { '<localleader>st', '<Plug>SlimeRegionSend', mode = { 'x' }, desc = 'slime: region' },
+      {
+        '<localleader>st',
+        '<Plug>SlimeParagraphSend',
+        desc = 'slime: paragraph',
+      },
+      {
+        '<localleader>st',
+        '<Plug>SlimeRegionSend',
+        mode = { 'x' },
+        desc = 'slime: region',
+      },
       { '<localleader>sc', '<Plug>SlimeConfig', desc = 'slime: config' },
     },
     config = function()
@@ -730,9 +885,21 @@ return {
       'nvim-treesitter/nvim-treesitter',
     },
     keys = {
-      { '<localleader>vf', '<cmd>DevdocsOpenFloat<CR>', desc = 'devdocs: open float' },
-      { '<localleader>vb', '<cmd>DevdocsOpen<CR>', desc = 'devdocs: open in buffer' },
-      { '<localleader>vo', ':DevdocsOpenFloat ', desc = 'devdocs: open documentation' },
+      {
+        '<localleader>vf',
+        '<cmd>DevdocsOpenFloat<CR>',
+        desc = 'devdocs: open float',
+      },
+      {
+        '<localleader>vb',
+        '<cmd>DevdocsOpen<CR>',
+        desc = 'devdocs: open in buffer',
+      },
+      {
+        '<localleader>vo',
+        ':DevdocsOpenFloat ',
+        desc = 'devdocs: open documentation',
+      },
       { '<localleader>vi', ':DevdocsInstall ', desc = 'devdocs: install' },
       { '<localleader>vu', ':DevdocsUninstall ', desc = 'devdocs: uninstall' },
     },
@@ -766,7 +933,11 @@ return {
     },
     keys = {
       { '<leader>dt', '<Cmd>DBUIToggle<CR>', desc = 'dadbod: toggle' },
-      { '<leader>da', '<Cmd>DBUIAddConnection<CR>', desc = 'dadbod: add connection' },
+      {
+        '<leader>da',
+        '<Cmd>DBUIAddConnection<CR>',
+        desc = 'dadbod: add connection',
+      },
     },
     cmd = {
       'DBUI',
@@ -783,9 +954,9 @@ return {
     end,
   },
   -- }}}
-  ----------------------------------------------------------------------------------------------------
+  ------------------------------------------------------------------------------
   -- Filetype Plugins {{{1
-  ----------------------------------------------------------------------------------------------------
+  ------------------------------------------------------------------------------
   { 'razak17/slides.nvim', ft = 'slide' },
   { 'fladson/vim-kitty', ft = 'kitty' },
   { 'raimon49/requirements.txt.vim', lazy = false },
@@ -834,7 +1005,8 @@ return {
   {
     'simrat39/rust-tools.nvim',
     event = { 'BufReadPre', 'BufNewFile' },
-    enabled = rvim.lsp.enable and not rvim.find_string(rvim.plugins.disabled, 'rust-tools.nvim'),
+    enabled = rvim.lsp.enable
+      and not rvim.find_string(rvim.plugins.disabled, 'rust-tools.nvim'),
     dependencies = { 'neovim/nvim-lspconfig' },
     config = function()
       local rt = require('rust-tools')
@@ -878,12 +1050,25 @@ return {
           end,
         },
         dap = {
-          adapter = require('rust-tools.dap').get_codelldb_adapter(codelldb_path, liblldb_path),
+          adapter = require('rust-tools.dap').get_codelldb_adapter(
+            codelldb_path,
+            liblldb_path
+          ),
         },
         server = {
           on_attach = function(_, bufnr)
-            map('n', 'K', rt.hover_actions.hover_actions, { desc = 'hover', buffer = bufnr })
-            map('n', '<localleader>rhe', rt.inlay_hints.set, { desc = 'set hints', buffer = bufnr })
+            map(
+              'n',
+              'K',
+              rt.hover_actions.hover_actions,
+              { desc = 'hover', buffer = bufnr }
+            )
+            map(
+              'n',
+              '<localleader>rhe',
+              rt.inlay_hints.set,
+              { desc = 'set hints', buffer = bufnr }
+            )
             map(
               'n',
               '<localleader>rhd',
@@ -967,7 +1152,11 @@ return {
     'MaximilianLloyd/tw-values.nvim',
     enabled = rvim.treesitter.enable and rvim.lsp.enable,
     keys = {
-      { '<localleader>lt', '<cmd>TWValues<cr>', desc = 'tw-values: show values' },
+      {
+        '<localleader>lt',
+        '<cmd>TWValues<cr>',
+        desc = 'tw-values: show values',
+      },
     },
     opts = { border = border, show_unknown_classes = true },
   },
@@ -981,7 +1170,10 @@ return {
     'olexsmir/gopher.nvim',
     enabled = rvim.lsp.enable and not rvim.plugins.minimal,
     ft = 'go',
-    dependencies = { 'nvim-lua/plenary.nvim', 'nvim-treesitter/nvim-treesitter' },
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'nvim-treesitter/nvim-treesitter',
+    },
   },
   {
     'ellisonleao/glow.nvim',
@@ -1002,8 +1194,16 @@ return {
     cmd = { 'MarkdownHeaders', 'MarkdownHeadersClosest' },
     dependencies = { 'nvim-lua/plenary.nvim' },
     keys = {
-      { '<leader>mdh', '<cmd>MarkdownHeaders<CR>', desc = 'md-header: headers' },
-      { '<leader>mdc', '<cmd>MarkdownHeadersClosest<CR>', desc = 'md-header: closest' },
+      {
+        '<leader>mdh',
+        '<cmd>MarkdownHeaders<CR>',
+        desc = 'md-header: headers',
+      },
+      {
+        '<leader>mdc',
+        '<cmd>MarkdownHeadersClosest<CR>',
+        desc = 'md-header: closest',
+      },
     },
     opts = { borderchars = ui.border.common },
   },
@@ -1023,8 +1223,18 @@ return {
     ft = { 'http', 'json' },
     keys = {
       { '<localleader>rs', '<Plug>RestNvim', desc = 'rest: run', buffer = 0 },
-      { '<localleader>rp', '<Plug>RestNvimPreview', desc = 'rest: preview', buffer = 0 },
-      { '<localleader>rl', '<Plug>RestNvimLast', desc = 'rest: run last', buffer = 0 },
+      {
+        '<localleader>rp',
+        '<Plug>RestNvimPreview',
+        desc = 'rest: preview',
+        buffer = 0,
+      },
+      {
+        '<localleader>rl',
+        '<Plug>RestNvimLast',
+        desc = 'rest: run last',
+        buffer = 0,
+      },
     },
     opts = { skip_ssl_verification = true },
   },
@@ -1037,8 +1247,16 @@ return {
       highlight.plugin('package-info', {
         theme = {
           ['onedark'] = {
-            { PackageInfoUpToDateVersion = { link = 'DiagnosticVirtualTextInfo' } },
-            { PackageInfoOutdatedVersion = { link = 'DiagnosticVirtualTextWarn' } },
+            {
+              PackageInfoUpToDateVersion = {
+                link = 'DiagnosticVirtualTextInfo',
+              },
+            },
+            {
+              PackageInfoOutdatedVersion = {
+                link = 'DiagnosticVirtualTextWarn',
+              },
+            },
           },
         },
       })
@@ -1077,7 +1295,13 @@ return {
   },
   {
     'bennypowers/nvim-regexplainer',
-    keys = { { '<localleader>rx', '<Cmd>RegexplainerToggle<CR>', desc = 'regexplainer: toggle' } },
+    keys = {
+      {
+        '<localleader>rx',
+        '<Cmd>RegexplainerToggle<CR>',
+        desc = 'regexplainer: toggle',
+      },
+    },
     opts = {
       display = 'popup',
       popup = {
@@ -1092,7 +1316,14 @@ return {
     'tomiis4/Hypersonic.nvim',
     event = 'CmdlineEnter',
     cmd = 'Hypersonic',
-    keys = { { mode = 'v', '<localleader>rx', '<Cmd>Hypersonic<CR>', desc = 'hypersonic: toggle' } },
+    keys = {
+      {
+        mode = 'v',
+        '<localleader>rx',
+        '<Cmd>Hypersonic<CR>',
+        desc = 'hypersonic: toggle',
+      },
+    },
     opts = { border = border },
   },
   {
@@ -1117,7 +1348,9 @@ return {
     config = function()
       highlight.plugin('twoslash-queries', {
         theme = {
-          ['onedark'] = { { TypeVirtualText = { link = 'DiagnosticVirtualTextInfo' } } },
+          ['onedark'] = {
+            { TypeVirtualText = { link = 'DiagnosticVirtualTextInfo' } },
+          },
         },
       })
       augroup('TwoSlashQueriesSetup', {
@@ -1134,9 +1367,9 @@ return {
     end,
   },
   -- }}}
-  ----------------------------------------------------------------------------------------------------
+  ------------------------------------------------------------------------------
   -- Syntax {{{1
-  ----------------------------------------------------------------------------------------------------
+  ------------------------------------------------------------------------------
   {
     'psliwka/vim-dirtytalk',
     enabled = not rvim.plugins.minimal,

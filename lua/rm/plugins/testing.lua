@@ -1,7 +1,9 @@
 local function neotest() return require('neotest') end
 local function open() neotest().output.open({ enter = true, short = false }) end
 local function run_file() neotest().run.run(vim.fn.expand('%')) end
-local function run_file_sync() neotest().run.run({ vim.fn.expand('%'), concurrent = false }) end
+local function run_file_sync()
+  neotest().run.run({ vim.fn.expand('%'), concurrent = false })
+end
 local function nearest() neotest().run.run() end
 local function next_failed() neotest().jump.prev({ status = 'failed' }) end
 local function prev_failed() neotest().jump.next({ status = 'failed' }) end
@@ -21,7 +23,11 @@ return {
       { '<leader>tnl', run_last, desc = 'neotest: run last' },
       { '<leader>tnd', debug_nearest, desc = 'neotest: debug nearest' },
       { '<leader>tnf', run_file, desc = 'neotest: run file' },
-      { '<leader>tnF', run_file_sync, desc = 'neotest: run file synchronously' },
+      {
+        '<leader>tnF',
+        run_file_sync,
+        desc = 'neotest: run file synchronously',
+      },
       { '<leader>tnc', cancel, desc = 'neotest: cancel' },
       { '[n', next_failed, desc = 'jump to next failed test' },
       { ']n', prev_failed, desc = 'jump to previous failed test' },
@@ -31,8 +37,11 @@ return {
       vim.diagnostic.config({
         virtual_text = {
           format = function(diagnostic)
-            local message =
-              diagnostic.message:gsub('\n', ' '):gsub('\t', ' '):gsub('%s+', ' '):gsub('^%s+', '')
+            local message = diagnostic.message
+              :gsub('\n', ' ')
+              :gsub('\t', ' ')
+              :gsub('%s+', ' ')
+              :gsub('^%s+', '')
             return message
           end,
         },
@@ -73,7 +82,10 @@ return {
       'haydenmeade/neotest-jest',
       'nvim-neotest/neotest-python',
       'nvim-neotest/neotest-vim-test',
-      { 'rcarriga/neotest-plenary', dependencies = { 'nvim-lua/plenary.nvim' } },
+      {
+        'rcarriga/neotest-plenary',
+        dependencies = { 'nvim-lua/plenary.nvim' },
+      },
     },
   },
   {
@@ -96,16 +108,40 @@ return {
   {
     'stevearc/overseer.nvim',
     keys = {
-      { '<leader>toR', '<cmd>OverseerRunCmd<cr>', desc = 'overseer: run command' },
-      { '<leader>toa', '<cmd>OverseerTaskAction<cr>', desc = 'overseer: task action' },
+      {
+        '<leader>toR',
+        '<cmd>OverseerRunCmd<cr>',
+        desc = 'overseer: run command',
+      },
+      {
+        '<leader>toa',
+        '<cmd>OverseerTaskAction<cr>',
+        desc = 'overseer: task action',
+      },
       { '<leader>tob', '<cmd>OverseerBuild<cr>', desc = 'overseer: build' },
       { '<leader>toc', '<cmd>OverseerClose<cr>', desc = 'overseer: close' },
-      { '<leader>tod', '<cmd>OverseerDeleteBundle<cr>', desc = 'overseer: delete bundle' },
-      { '<leader>tol', '<cmd>OverseerLoadBundle<cr>', desc = 'overseer: load bundle' },
+      {
+        '<leader>tod',
+        '<cmd>OverseerDeleteBundle<cr>',
+        desc = 'overseer: delete bundle',
+      },
+      {
+        '<leader>tol',
+        '<cmd>OverseerLoadBundle<cr>',
+        desc = 'overseer: load bundle',
+      },
       { '<leader>too', '<cmd>OverseerOpen<cr>', desc = 'overseer: open' },
-      { '<leader>toq', '<cmd>OverseerQuickAction<cr>', desc = 'overseer: quick action' },
+      {
+        '<leader>toq',
+        '<cmd>OverseerQuickAction<cr>',
+        desc = 'overseer: quick action',
+      },
       { '<leader>tor', '<cmd>OverseerRun<cr>', desc = 'overseer: run' },
-      { '<leader>tos', '<cmd>OverseerSaveBundle<cr>', desc = 'overseer: save bundle' },
+      {
+        '<leader>tos',
+        '<cmd>OverseerSaveBundle<cr>',
+        desc = 'overseer: save bundle',
+      },
       { '<leader>tot', '<cmd>OverseerToggle<cr>', desc = 'overseer: toggle' },
     },
     opts = {},
@@ -113,9 +149,21 @@ return {
   {
     'andythigpen/nvim-coverage',
     keys = {
-      { '<leader>tl', function() require('coverage').load(true) end, desc = 'coverage: load' },
-      { '<leader>tc', function() require('coverage').clear() end, desc = 'coverage: clear' },
-      { '<leader>tt', function() require('coverage').toggle() end, desc = 'coverage: toggle' },
+      {
+        '<leader>tl',
+        function() require('coverage').load(true) end,
+        desc = 'coverage: load',
+      },
+      {
+        '<leader>tc',
+        function() require('coverage').clear() end,
+        desc = 'coverage: clear',
+      },
+      {
+        '<leader>tt',
+        function() require('coverage').toggle() end,
+        desc = 'coverage: toggle',
+      },
       {
         '<leader>ts',
         function() require('coverage').summary() end,

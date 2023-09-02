@@ -3,9 +3,9 @@ local codicons, lsp_hls = ui.codicons, ui.lsp.highlights
 local prompt = ' ' .. codicons.misc.search_alt .. '  '
 
 local fzf_lua = reqcall('fzf-lua') ---@module 'fzf-lua'
-------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- FZF-LUA HELPERS
-------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 local function format_title(str, icon, icon_hl)
   return {
     { ' ' },
@@ -34,7 +34,9 @@ end
 local function dropdown(opts)
   opts = opts or { winopts = {} }
   local title = vim.tbl_get(opts, 'winopts', 'title') ---@type string?
-  if title and type(title) == 'string' then opts.winopts.title = format_title(title) end
+  if title and type(title) == 'string' then
+    opts.winopts.title = format_title(title)
+  end
   return vim.tbl_deep_extend('force', {
     prompt = prompt,
     fzf_opts = { ['--layout'] = 'reverse' },
@@ -67,17 +69,25 @@ local function list_sessions()
   fzf.fzf_exec(
     vim.tbl_map(function(s) return s.name end, sessions),
     dropdown({
-      winopts = { title = format_title('Sessions', '󰆔'), height = 0.33, row = 0.5 },
+      winopts = {
+        title = format_title('Sessions', '󰆔'),
+        height = 0.33,
+        row = 0.5,
+      },
       previewer = false,
       actions = {
         ['default'] = function(selected)
-          local session = vim.iter(sessions):find(function(s) return s.name == selected[1] end)
+          local session = vim
+            .iter(sessions)
+            :find(function(s) return s.name == selected[1] end)
           if not session then return end
           persisted.load({ session = session.file_path })
         end,
         ['ctrl-d'] = {
           function(selected)
-            local session = vim.iter(sessions):find(function(s) return s.name == selected[1] end)
+            local session = vim
+              .iter(sessions)
+              :find(function(s) return s.name == selected[1] end)
             if not session then return end
             fn.delete(vim.fn.expand(session.file_path))
           end,
@@ -89,7 +99,7 @@ local function list_sessions()
 end
 
 rvim.fzf = { dropdown = dropdown, cursor_dropdown = cursor_dropdown }
-------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 return {
   {
@@ -225,14 +235,22 @@ return {
           }),
         },
         jumps = dropdown({
-          winopts = { title = format_title('Jumps', ''), preview = { hidden = 'nohidden' } },
+          winopts = {
+            title = format_title('Jumps', ''),
+            preview = { hidden = 'nohidden' },
+          },
         }),
         changes = dropdown({
           prompt = '',
-          winopts = { title = format_title('Changes', '⟳'), preview = { hidden = 'nohidden' } },
+          winopts = {
+            title = format_title('Changes', '⟳'),
+            preview = { hidden = 'nohidden' },
+          },
         }),
         diagnostics = dropdown({
-          winopts = { title = format_title('Diagnostics', '', 'DiagnosticError') },
+          winopts = {
+            title = format_title('Diagnostics', '', 'DiagnosticError'),
+          },
         }),
         git = {
           files = dropdown({
@@ -241,7 +259,11 @@ return {
             winopts = { title = format_title('Git Files', '') },
           }),
           branches = dropdown({
-            winopts = { title = format_title('Branches', ''), height = 0.3, row = 0.4 },
+            winopts = {
+              title = format_title('Branches', ''),
+              height = 0.3,
+              row = 0.4,
+            },
           }),
           status = {
             prompt = '',

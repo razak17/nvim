@@ -18,9 +18,9 @@ local inoremap = function(...) map('i', ...) end
 local onoremap = function(...) map('o', ...) end
 local cnoremap = function(...) map('c', ...) end
 
-----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- MACROS {{{
-----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- repeat macros across a visual range
 vim.cmd([[
   function! ExecuteMacroOverVisualRange()
@@ -28,7 +28,11 @@ vim.cmd([[
     execute ":'<,'>normal @".nr2char(getchar())
   endfunction
 ]])
-xnoremap('@', ':<C-u>call ExecuteMacroOverVisualRange()<CR>', { silent = false })
+xnoremap(
+  '@',
+  ':<C-u>call ExecuteMacroOverVisualRange()<CR>',
+  { silent = false }
+)
 -----------------------------------------------------------------------------//
 -- Add Empty space above and below
 -----------------------------------------------------------------------------//
@@ -38,9 +42,9 @@ nnoremap('[<space>', [[<cmd>put! =repeat(nr2char(10), v:count1)<cr>'[]], {
 nnoremap(']<space>', [[<cmd>put =repeat(nr2char(10), v:count1)<cr>]], {
   desc = 'add space below',
 })
-----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- Credit: JGunn Choi ?il | inner line
-----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- Yank all
 nnoremap('<leader>Y', 'gg"+VGy<C-o>', { desc = 'yank all' })
 -- Select all
@@ -54,15 +58,19 @@ vnoremap('//', [[y/<C-R>"<CR>]])
 -- show message history
 nnoremap('g>', [[<cmd>set nomore<bar>40messages<bar>set more<CR>]])
 -- Enter key should repeat the last macro recorded or just act as enter
-nnoremap('<leader><CR>', [[empty(&buftype) ? '@@':'<CR>']], { expr = true, desc = 'repeat macro' })
+nnoremap(
+  '<leader><CR>',
+  [[empty(&buftype) ? '@@':'<CR>']],
+  { expr = true, desc = 'repeat macro' }
+)
 -- Evaluates whether there is a fold on the current line if so unfold it else return a normal space
 -- nnoremap('<space><space>', [[@=(foldlevel('.')?'za':"\<Space>")<CR>]], { desc = 'toggle fold' })
 -- Make zO recursively open whatever top level fold we're in, no matter where the
 -- cursor happens to be.
 nnoremap('zO', [[zCzO]])
-----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- Delimiters
-----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- TLDR: Conditionally modify character at end of line (add, remove or modify)
 ---@param character string
 ---@return function
@@ -83,24 +91,40 @@ local function modify_line_end_delimiter(character)
   end
 end
 
-nnoremap('<localleader>,', modify_line_end_delimiter(','), { desc = 'append comma' })
-nnoremap('<localleader>;', modify_line_end_delimiter(';'), { desc = 'append semi colon' })
-----------------------------------------------------------------------------------------------------
+nnoremap(
+  '<localleader>,',
+  modify_line_end_delimiter(','),
+  { desc = 'append comma' }
+)
+nnoremap(
+  '<localleader>;',
+  modify_line_end_delimiter(';'),
+  { desc = 'append semi colon' }
+)
+--------------------------------------------------------------------------------
 nnoremap('<leader>I', '<cmd>Inspect<CR>', { desc = 'inspect' })
-----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- Capitalize
 nnoremap('<leader>U', 'gUiw`]', { desc = 'capitalize word' })
-----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- Moving lines/visual block
 xnoremap('K', ":m '<-2<CR>gv=gv")
 xnoremap('J', ":m '>+1<CR>gv=gv")
-----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- Windows
-----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- change two vertically split windows to horizontal splits
-nnoremap('<leader>wv', '<C-W>t <C-W>H<C-W>=', { desc = 'horizontal to vertical' })
+nnoremap(
+  '<leader>wv',
+  '<C-W>t <C-W>H<C-W>=',
+  { desc = 'horizontal to vertical' }
+)
 -- change two horizontally split windows to vertical splits
-nnoremap('<leader>wh', '<C-W>t <C-W>K<C-W>=', { desc = 'vertical to horizontal' })
+nnoremap(
+  '<leader>wh',
+  '<C-W>t <C-W>K<C-W>=',
+  { desc = 'vertical to horizontal' }
+)
 -- make . work with visually selected lines
 vnoremap('.', ':norm.<CR>')
 -- when going to the end of the line in visual mode ignore whitespace characters
@@ -115,9 +139,9 @@ nnoremap('<C-h>', '<C-w>h')
 nnoremap('<C-j>', '<C-w>j')
 nnoremap('<C-k>', '<C-w>k')
 nnoremap('<C-l>', '<C-w>l')
-----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- Clipboard
-----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- Greatest remap ever
 vnoremap('<leader>p', '"_dP', { desc = 'greatest remap' })
 -- Next greatest remap ever : asbjornHaland
@@ -131,20 +155,36 @@ vnoremap('<leader>dd', '"_d', { desc = 'delete' })
 --   [[:let @+=substitute(execute('messages'), '\n\+', '\n', 'g')<cr>]],
 --   { desc = 'yank vim messages output' }
 -- )
-----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- Quick find/replace
-nnoremap('<leader>[', [[:%s/\<<C-r>=expand("<cword>")<CR>\>/]], { desc = 'replace all' })
-nnoremap('<leader>]', [[:s/\<<C-r>=expand("<cword>")<CR>\>/]], { desc = 'replace in line' })
+nnoremap(
+  '<leader>[',
+  [[:%s/\<<C-r>=expand("<cword>")<CR>\>/]],
+  { desc = 'replace all' }
+)
+nnoremap(
+  '<leader>]',
+  [[:s/\<<C-r>=expand("<cword>")<CR>\>/]],
+  { desc = 'replace in line' }
+)
 vnoremap('<leader>[', [["zy:%s/<C-r><C-o>"/]], { desc = 'replace all' })
 -- Visual shifting (does not exit Visual mode)
 vnoremap('<', '<gv')
 vnoremap('>', '>gv')
-----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- open a new file in the same directory
-nnoremap('<leader>no', [[:e <C-R>=expand("%:p:h") . "/" <CR>]], { desc = 'open file' })
+nnoremap(
+  '<leader>no',
+  [[:e <C-R>=expand("%:p:h") . "/" <CR>]],
+  { desc = 'open file' }
+)
 -- create a new file in the same directory
-nnoremap('<leader>nf', [[:vsp <C-R>=expand("%:p:h") . "/" <CR>]], { desc = 'create new file' })
-----------------------------------------------------------------------------------------------------
+nnoremap(
+  '<leader>nf',
+  [[:vsp <C-R>=expand("%:p:h") . "/" <CR>]],
+  { desc = 'create new file' }
+)
+--------------------------------------------------------------------------------
 -- Arrows
 nnoremap('<down>', '<nop>')
 nnoremap('<up>', '<nop>')
@@ -154,9 +194,9 @@ inoremap('<up>', '<nop>')
 inoremap('<down>', '<nop>')
 inoremap('<left>', '<nop>')
 inoremap('<right>', '<nop>')
-----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- Commandline mappings
-----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- https://github.com/tpope/vim-rsi/blob/master/plugin/rsi.vim
 -- c-a / c-e everywhere - RSI.vim provides these
 cnoremap('<C-n>', '<Down>')
@@ -177,14 +217,19 @@ cnoremap('<C-d>', '<Del>')
 -- to these would swallow up a tab mapping
 local function search(direction_key, default)
   local c_type = fn.getcmdtype()
-  return (c_type == '/' or c_type == '?') and fmt('<CR>%s<C-r>/', direction_key) or default
+  return (c_type == '/' or c_type == '?') and fmt('<CR>%s<C-r>/', direction_key)
+    or default
 end
 cnoremap('<Tab>', function() return search('/', '<Tab>') end, { expr = true })
-cnoremap('<S-Tab>', function() return search('?', '<S-Tab>') end, { expr = true })
+cnoremap(
+  '<S-Tab>',
+  function() return search('?', '<S-Tab>') end,
+  { expr = true }
+)
 -- insert path of current file into a command
 cnoremap('%%', "<C-r>=fnameescape(expand('%'))<cr>")
 cnoremap('::', "<C-r>=fnameescape(expand('%:p:h'))<cr>/")
-----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- NOTE: this uses write specifically because we need to trigger a filesystem event
 -- even if the file isn't changed so that things like hot reload work
 nnoremap('<c-s>', '<Cmd>silent! write ++p<CR>')
@@ -196,24 +241,30 @@ end
 if not is_available('close-buffers.nvim') then
   nnoremap('<leader>c', ':bdel<CR>', { desc = 'delete buffer' })
 end
-if not is_available('neo-tree.nvim') then nnoremap('<C-n>', ':Ex<CR>', { desc = 'explorer' }) end
+if not is_available('neo-tree.nvim') then
+  nnoremap('<C-n>', ':Ex<CR>', { desc = 'explorer' })
+end
 nnoremap('<leader>x', ':q<CR>', { desc = 'quit' })
 nnoremap('<leader>X', ':wqall<CR>', { desc = 'save all and quit' })
 nnoremap('<leader>q', ':q<CR>', { desc = 'quit all' })
 nnoremap('<leader>Q', ':qa!<CR>', { desc = 'quit' })
 nnoremap('<localleader>Q', ':cq<CR>', { desc = 'smart quit' })
-----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- ?ie | entire object
-----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 xnoremap('ie', [[gg0oG$]])
 onoremap('ie', [[<cmd>execute "normal! m`"<Bar>keepjumps normal! ggVG<CR>]])
-----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- Core navigation
-----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- Zero should go to the first non-blank character not to the first column (which could be blank)
 -- but if already at the first character then jump to the beginning
 --@see: https://github.com/yuki-yano/zero.nvim/blob/main/lua/zero.lua
-nnoremap('0', "getline('.')[0 : col('.') - 2] =~# '^\\s\\+$' ? '0' : '^'", { expr = true })
+nnoremap(
+  '0',
+  "getline('.')[0 : col('.') - 2] =~# '^\\s\\+$' ? '0' : '^'",
+  { expr = true }
+)
 -- when going to the end of the line in visual mode ignore whitespace characters
 vnoremap('$', 'g_')
 -- jk is escape, THEN move to the right to preserve the cursor position, unless
@@ -228,11 +279,15 @@ nmap(
 )
 -- Escape
 nnoremap('<C-c>', '<Esc>')
-----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- Web Search
-----------------------------------------------------------------------------------------------------
-function rvim.mappings.ddg(path) rvim.web_search(path, 'https://html.duckduckgo.com/html?q=') end
-function rvim.mappings.gh(path) rvim.web_search(path, 'https://github.com/search?q=') end
+--------------------------------------------------------------------------------
+function rvim.mappings.ddg(path)
+  rvim.web_search(path, 'https://html.duckduckgo.com/html?q=')
+end
+function rvim.mappings.gh(path)
+  rvim.web_search(path, 'https://github.com/search?q=')
+end
 
 -- Search DuckDuckGo
 nnoremap(
@@ -256,9 +311,9 @@ xnoremap(
   [["gy:lua rvim.mappings.gh(vim.api.nvim_eval("@g"))<CR>gv]],
   { desc = 'gh search word' }
 )
-----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- GX - replicate netrw functionality
-----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- nnoremap('gx', function()
 --   local file = fn.expand('<cfile>')
 --   if not file or fn.isdirectory(file) > 0 then return vim.cmd.edit(file) end
@@ -269,26 +324,26 @@ xnoremap(
 --   local link = string.match(file, plugin_url_regex)
 --   if link then return rvim.open(fmt('https://www.github.com/%s', link)) end
 -- end)
-----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 nnoremap('<leader>lq', rvim.list.qf.toggle, { desc = 'toggle quickfix list' })
 -- TODO: loclist is broken
 -- nnoremap('<leader>ll', rvim.list.loc.toggle, { desc = 'toggle location list' })
-----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- Completion
-----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- cycle the completion menu with <TAB>
 inoremap('<tab>', [[pumvisible() ? "\<C-n>" : "\<Tab>"]], { expr = true })
 inoremap('<s-tab>', [[pumvisible() ? "\<C-p>" : "\<S-Tab>"]], { expr = true })
-----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- Help
 nnoremap('<leader>ah', ':h <C-R>=expand("<cword>")<CR><CR>', { desc = 'help' })
-----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- Undo
 nnoremap('<C-z>', '<cmd>undo<CR>')
 vnoremap('<C-z>', '<cmd>undo<CR><Esc>')
 xnoremap('<C-z>', '<cmd>undo<CR><Esc>')
 inoremap('<c-z>', [[<Esc>:undo<CR>]])
-----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- Reverse Line
 function rvim.rev_str(str) return string.reverse(str) end
 vnoremap(
@@ -296,7 +351,7 @@ vnoremap(
   [[:s/\%V.\+\%V./\=v:lua.rvim.rev_str(submatch(0))<CR>gv<ESC>]],
   { desc = 'reverse line' }
 )
-----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- Inspect treesitter tree
 nnoremap(
   '<leader>E',
@@ -309,7 +364,8 @@ nnoremap(
 local command = rvim.command
 
 command('ClearRegisters', function()
-  local regs = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/-'
+  local regs =
+    'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/-'
   for r in regs:gmatch('.') do
     fn.setreg(r, {})
   end

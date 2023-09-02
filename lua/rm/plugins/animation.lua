@@ -53,7 +53,13 @@ local redraw_buffer = function()
     end
     insertLine = insertLine .. char
     i = i + 1
-    api.nvim_buf_set_lines(temp_buffer, line_nr - 1, line_nr, true, { insertLine })
+    api.nvim_buf_set_lines(
+      temp_buffer,
+      line_nr - 1,
+      line_nr,
+      true,
+      { insertLine }
+    )
 
     if insertLine == lines[line_nr] then
       line_nr = line_nr + 1

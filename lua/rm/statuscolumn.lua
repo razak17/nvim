@@ -27,9 +27,11 @@ local function nr(win, lnum, relnum, virtnum, line_count)
   if virtnum and virtnum ~= 0 then
     return space:rep(col_width - 1) .. (virtnum < 0 and shade or space)
   end -- virtual line
-  local num = vim.wo[win].relativenumber and not falsy(relnum) and relnum or lnum
+  local num = vim.wo[win].relativenumber and not falsy(relnum) and relnum
+    or lnum
   if line_count > 999 then col_width = col_width + 1 end
-  local ln = tostring(num):reverse():gsub('(%d%d%d)', '%1,'):reverse():gsub('^,', '')
+  local ln =
+    tostring(num):reverse():gsub('(%d%d%d)', '%1,'):reverse():gsub('^,', '')
   local num_width = col_width - api.nvim_strwidth(ln)
   if num_width == 0 then return ln end
   return string.rep(space, num_width) .. ln
@@ -89,9 +91,13 @@ return {
         mods = mods,
         mousepos = fn.getmousepos(),
       }
-      local sign = fn.screenstring(args.mousepos.screenrow, args.mousepos.screencol)
+      local sign =
+        fn.screenstring(args.mousepos.screenrow, args.mousepos.screencol)
       if sign == ' ' then
-        sign = vim.fn.screenstring(args.mousepos.screenrow, args.mousepos.screencol - 1)
+        sign = vim.fn.screenstring(
+          args.mousepos.screenrow,
+          args.mousepos.screencol - 1
+        )
       end
       args.sign = self.signs[sign]
       api.nvim_set_current_win(args.mousepos.winid)
@@ -104,7 +110,9 @@ return {
   init = function(self)
     self.signs = {}
 
-    self.handlers.signs = function(_) return vim.schedule(vim.diagnostic.open_float) end
+    self.handlers.signs = function(_)
+      return vim.schedule(vim.diagnostic.open_float)
+    end
 
     self.handlers.line_number = function(_)
       local dap_avail, dap = pcall(require, 'dap')
@@ -118,7 +126,13 @@ return {
     self.handlers.fold = function(args)
       local lnum = args.mousepos.line
       if fn.foldlevel(lnum) <= fn.foldlevel(lnum - 1) then return end
-      cmd.execute("'" .. lnum .. 'fold' .. (fn.foldclosed(lnum) == -1 and 'close' or 'open') .. "'")
+      cmd.execute(
+        "'"
+          .. lnum
+          .. 'fold'
+          .. (fn.foldclosed(lnum) == -1 and 'close' or 'open')
+          .. "'"
+      )
     end
   end,
   render = {
@@ -155,7 +169,9 @@ return {
       on_click = {
         name = 'sign_click',
         callback = function(self, ...)
-          if self.handlers.signs then self.handlers.signs(self.click_args(self, ...)) end
+          if self.handlers.signs then
+            self.handlers.signs(self.click_args(self, ...))
+          end
         end,
       },
     },
@@ -175,12 +191,16 @@ return {
     spacer,
     {
       {
-        condition = function() return not conditions.is_git_repo() or v.virtnum ~= 0 end,
+        condition = function()
+          return not conditions.is_git_repo() or v.virtnum ~= 0
+        end,
         provider = ' ',
         hl = 'HeirlineStatusColumn',
       },
       {
-        condition = function() return conditions.is_git_repo() and v.virtnum == 0 end,
+        condition = function()
+          return conditions.is_git_repo() and v.virtnum == 0
+        end,
         init = function(self)
           if #self.g_sns == 0 then
             self.gitsign = nil
@@ -200,7 +220,9 @@ return {
         on_click = {
           name = 'gitsigns_click',
           callback = function(self, ...)
-            if self.handlers.git_signs then self.handlers.git_signs(self.click_args(self, ...)) end
+            if self.handlers.git_signs then
+              self.handlers.git_signs(self.click_args(self, ...))
+            end
           end,
         },
       },
@@ -243,7 +265,9 @@ return {
       on_click = {
         name = 'fold_click',
         callback = function(self, ...)
-          if self.handlers.fold then self.handlers.fold(self.click_args(self, ...)) end
+          if self.handlers.fold then
+            self.handlers.fold(self.click_args(self, ...))
+          end
         end,
       },
     },

@@ -21,21 +21,32 @@ map('n', 'o', function()
   return 'o'
 end, { buffer = 0, expr = true })
 
-if not rvim.lsp.enable or not rvim.plugins.enable or rvim.plugins.minimal then return end
+if not rvim.lsp.enable or not rvim.plugins.enable or rvim.plugins.minimal then
+  return
+end
 
 if vim.fn.expand('%:t') == 'package.json' then
   local fmt = string.format
 
   if rvim.is_available('which-key.nvim') then
-    require('which-key').register({ ['<localleader>'] = { p = { name = 'Package Info' } } })
+    require('which-key').register({
+      ['<localleader>'] = { p = { name = 'Package Info' } },
+    })
   end
 
-  local function with_desc(desc) return { buffer = 0, desc = fmt('package-info: %s', desc) } end
+  local function with_desc(desc)
+    return { buffer = 0, desc = fmt('package-info: %s', desc) }
+  end
   local package_info = require('package-info')
 
   map('n', '<localleader>pt', package_info.toggle, with_desc('toggle'))
   map('n', '<localleader>pu', package_info.update, with_desc('update'))
   map('n', '<localleader>pd', package_info.delete, with_desc('delete'))
   map('n', '<localleader>pi', package_info.install, with_desc('install new'))
-  map('n', '<localleader>pc', package_info.change_version, with_desc('change version'))
+  map(
+    'n',
+    '<localleader>pc',
+    package_info.change_version,
+    with_desc('change version')
+  )
 end

@@ -42,7 +42,10 @@ return {
         },
       })
 
-      rvim.command('LuaSnipEdit', function() require('luasnip.loaders').edit_snippet_files() end)
+      rvim.command(
+        'LuaSnipEdit',
+        function() require('luasnip.loaders').edit_snippet_files() end
+      )
 
       -- <c-l> is selecting within a list of options.
       vim.keymap.set({ 's', 'i' }, '<c-l>', function()
@@ -70,7 +73,12 @@ return {
       ls.filetype_extend('typescriptreact', { 'javascript', 'typescript' })
       ls.filetype_extend('NeogitCommitMessage', { 'gitcommit' })
 
-      map('n', '<leader>S', '<cmd>LuaSnipEdit<CR>', { desc = 'LuaSnip: edit snippet' })
+      map(
+        'n',
+        '<leader>S',
+        '<cmd>LuaSnipEdit<CR>',
+        { desc = 'LuaSnip: edit snippet' }
+      )
     end,
   },
   {

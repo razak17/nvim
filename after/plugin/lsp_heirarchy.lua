@@ -8,16 +8,21 @@ local conf = require('telescope.config').values
 local function get_call_hierarchy_for_item(call_hierarchy_item)
   local call_tree = {}
   -- https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#callHierarchy_incomingCalls
-  local by_lsp =
-    vim.lsp.buf_request_sync(0, 'callHierarchy/incomingCalls', { item = call_hierarchy_item })
+  local by_lsp = vim.lsp.buf_request_sync(
+    0,
+    'callHierarchy/incomingCalls',
+    { item = call_hierarchy_item }
+  )
   if #by_lsp >= 1 and by_lsp then
     local result = by_lsp[vim.tbl_keys(by_lsp)[1]].result
     if #result >= 1 then
       for _, item in ipairs(result) do
         -- "group by" URL, because two calling classes/functions could have the same name,
         -- but different URIs/being distinct. If we grouped by name, we'd merge them.
-        call_tree[item.from.uri] =
-          { item = item, nested_hierarchy = get_call_hierarchy_for_item(item.from) }
+        call_tree[item.from.uri] = {
+          item = item,
+          nested_hierarchy = get_call_hierarchy_for_item(item.from),
+        }
       end
     end
   end
@@ -30,7 +35,10 @@ local function print_hierarchy(item, depth, res)
   for _, nested_h in pairs(item.nested_hierarchy) do
     print_hierarchy(nested_h, depth + 1, res)
   end
-  table.insert(res, { item = item, desc = prefix .. item.item.from.name, depth = depth })
+  table.insert(
+    res,
+    { item = item, desc = prefix .. item.item.from.name, depth = depth }
+  )
 end
 
 -- https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_prepareCallHierarchy

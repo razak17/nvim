@@ -7,7 +7,9 @@ return {
     keys = {
       {
         '<leader>ln',
-        function() require('null-ls.info').show_window({ height = 0.7, border = border }) end,
+        function()
+          require('null-ls.info').show_window({ height = 0.7, border = border })
+        end,
         desc = 'null-ls info',
       },
     },
@@ -32,7 +34,9 @@ return {
         automatic_installation = false,
         handlers = {
           black = function()
-            null_ls.register(null_ls.builtins.formatting.black.with({ extra_args = { '--fast' } }))
+            null_ls.register(null_ls.builtins.formatting.black.with({
+              extra_args = { '--fast' },
+            }))
           end,
           -- eslint_d = function()
           --   null_ls.register(

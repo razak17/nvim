@@ -7,7 +7,9 @@ local strings = require('plenary.strings')
 
 local function add_comma_node(node)
   local comma_node = node:next_sibling()
-  if comma_node ~= nil and comma_node:type() == ',' then return node, comma_node end
+  if comma_node ~= nil and comma_node:type() == ',' then
+    return node, comma_node
+  end
   comma_node = node:prev_sibling()
   if comma_node:type() == ',' then return comma_node, node end
   print('ERROR EXPECTED COMMA NODE, GOT ' .. comma_node:type())
@@ -36,10 +38,13 @@ local function can_wipe_eol(node)
   return can_wipe
 end
 
-local function delete_lines(lstart, lend) vim.api.nvim_buf_set_lines(0, lstart, lend + 1, false, {}) end
+local function delete_lines(lstart, lend)
+  vim.api.nvim_buf_set_lines(0, lstart, lend + 1, false, {})
+end
 
 local function delete_range(start_row, start_col, end_row, end_col)
-  local start_line = vim.api.nvim_buf_get_lines(0, start_row, start_row + 1, false)[1]
+  local start_line =
+    vim.api.nvim_buf_get_lines(0, start_row, start_row + 1, false)[1]
   local end_line = vim.api.nvim_buf_get_lines(0, end_row, end_row + 1, false)[1]
   local new_start = strings.strcharpart(start_line, 0, start_col)
   local new_end = strings.strcharpart(end_line, end_col)
@@ -77,7 +82,8 @@ local function typescript_remove_unused_import(diag)
   if diag.code == '@typescript-eslint/no-unused-vars' then
     local parser = require('nvim-treesitter.parsers').get_parser(0)
     parser:parse()
-    local ts_node = parser:named_node_for_range({ diag.lnum, diag.col, diag.lnum, diag.col })
+    local ts_node =
+      parser:named_node_for_range({ diag.lnum, diag.col, diag.lnum, diag.col })
     local parent1 = ts_node:parent()
     local parent2 = parent1 and parent1:parent()
     local parent3 = parent2 and parent2:parent()
@@ -127,9 +133,14 @@ function rvim.remove_unused_imports()
     local sorted_diags = vim.diagnostic.get(0)
     table.sort(
       sorted_diags,
-      function(a, b) return a.lnum > b.lnum or (a.lnum == b.lnum and a.col > b.col) end
+      function(a, b)
+        return a.lnum > b.lnum or (a.lnum == b.lnum and a.col > b.col)
+      end
     )
-    print('DEBUGPRINT[1]: ts_unused_imports.lua:136: sorted_diags=' .. vim.inspect(sorted_diags))
+    print(
+      'DEBUGPRINT[1]: ts_unused_imports.lua:136: sorted_diags='
+        .. vim.inspect(sorted_diags)
+    )
     for _, diag in ipairs(sorted_diags) do
       typescript_remove_unused_import(diag)
     end

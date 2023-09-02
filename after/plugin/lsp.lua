@@ -14,7 +14,8 @@ local L = vim.lsp.log_levels
 local M = vim.lsp.protocol.Methods
 
 local diagnostic = vim.diagnostic
-local augroup, icons, border = rvim.augroup, rvim.ui.codicons.lsp, rvim.ui.current.border
+local augroup, icons, border =
+  rvim.augroup, rvim.ui.codicons.lsp, rvim.ui.current.border
 
 local format_exclusions = {
   format_on_save = { 'zsh' },
@@ -34,9 +35,9 @@ local format_exclusions = {
 
 if vim.env.DEVELOPING then lsp.set_log_level(L.DEBUG) end
 
-----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- Autocommands
-----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 local function formatting_filter(client)
   local exceptions = (format_exclusions.servers)[vim.bo.filetype]
   if not exceptions then return true end
@@ -46,12 +47,16 @@ end
 ---@param opts {bufnr: integer, async: boolean, filter: fun(lsp.Client): boolean}
 local function format(opts)
   opts = opts or {}
-  lsp.buf.format({ bufnr = opts.bufnr, async = opts.async, filter = formatting_filter })
+  lsp.buf.format({
+    bufnr = opts.bufnr,
+    async = opts.async,
+    filter = formatting_filter,
+  })
 end
 
-----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 --  Related Locations
-----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- This relates to https://github.com/neovim/neovim/issues/19649#issuecomment-1327287313
 -- neovim does not currently correctly report the related locations for diagnostics.
 -- TODO: once a PR for this is merged delete this workaround
@@ -73,23 +78,32 @@ end
 
 local handler = lsp.handlers['textDocument/publishDiagnostics']
 ---@diagnostic disable-next-line: duplicate-set-field
-lsp.handlers['textDocument/publishDiagnostics'] = function(err, result, ctx, config)
+lsp.handlers['textDocument/publishDiagnostics'] = function(
+  err,
+  result,
+  ctx,
+  config
+)
   result.diagnostics = vim.tbl_map(show_related_locations, result.diagnostics)
   handler(err, result, ctx, config)
 end
 
-----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- Mappings
-----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 ---Setup mapping when an lsp attaches to a buffer
 ---@param client lsp.Client
 ---@param bufnr integer
 local function setup_mappings(client, bufnr)
   local function prev_diagnostic()
-    return function() diagnostic.goto_prev({ float = not rvim.lsp.hover_diagnostics.enable }) end
+    return function()
+      diagnostic.goto_prev({ float = not rvim.lsp.hover_diagnostics.enable })
+    end
   end
   local function next_diagnostic()
-    return function() diagnostic.goto_next({ float = not rvim.lsp.hover_diagnostics.enable }) end
+    return function()
+      diagnostic.goto_next({ float = not rvim.lsp.hover_diagnostics.enable })
+    end
   end
   local function line_diagnostic()
     return function()
@@ -111,7 +125,13 @@ local function setup_mappings(client, bufnr)
       desc = 'code action',
       capability = M.textDocument_codeAction,
     },
-    { 'n', '<leader>lf', format, desc = 'format buffer', capability = M.textDocument_formatting },
+    {
+      'n',
+      '<leader>lf',
+      format,
+      desc = 'format buffer',
+      capability = M.textDocument_formatting,
+    },
     {
       'n',
       'gd',
@@ -127,7 +147,13 @@ local function setup_mappings(client, bufnr)
       desc = 'line diagnostics',
       capability = M.textDocument_hover,
     },
-    { 'n', 'gr', lsp.buf.references, desc = 'references', capability = M.textDocument_references },
+    {
+      'n',
+      'gr',
+      lsp.buf.references,
+      desc = 'references',
+      capability = M.textDocument_references,
+    },
     {
       'n',
       'gi',
@@ -156,7 +182,13 @@ local function setup_mappings(client, bufnr)
       desc = 'run code lens',
       capability = M.textDocument_codeLens,
     },
-    { 'n', '<leader>lr', lsp.buf.rename, desc = 'rename', capability = M.textDocument_rename },
+    {
+      'n',
+      '<leader>lr',
+      lsp.buf.rename,
+      desc = 'rename',
+      capability = M.textDocument_rename,
+    },
     -- TODO: loclist is broken
     -- { 'n', '<leader>lL', vim.diagnostic.setloclist, desc = 'toggle loclist diagnostics' },
     { 'n', '<leader>li', '<Cmd>LspInfo<CR>', desc = 'lsp info' },
@@ -171,7 +203,10 @@ local function setup_mappings(client, bufnr)
   vim.iter(mappings):each(function(m)
     if
       (not m.exclude or not vim.tbl_contains(m.exclude, vim.bo[bufnr].ft))
-      and (not m.exclude_ft or not vim.tbl_contains(m.exclude_ft, vim.bo[bufnr].ft))
+      and (not m.exclude_ft or not vim.tbl_contains(
+        m.exclude_ft,
+        vim.bo[bufnr].ft
+      ))
       and (not m.capability or client.supports_method(m.capability))
     then
       map(m[1], m[2], m[3], { buffer = bufnr, desc = fmt('lsp: %s', m.desc) })
@@ -179,9 +214,9 @@ local function setup_mappings(client, bufnr)
   end)
 end
 
-----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- LSP SETUP/TEARDOWN
-----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 ---@alias ClientOverrides {on_attach: fun(client: lsp.Client, bufnr: number), semantic_tokens: fun(bufnr: number, client: lsp.Client, token: table)}
 
@@ -192,7 +227,11 @@ end
 local client_overrides = {
   tsserver = {
     semantic_tokens = function(bufnr, client, token)
-      if token.type == 'variable' and token.modifiers['local'] and not token.modifiers.readonly then
+      if
+        token.type == 'variable'
+        and token.modifiers['local']
+        and not token.modifiers.readonly
+      then
         lsp.semantic_tokens.highlight_token(token, bufnr, client.id, '@danger')
       end
     end,
@@ -208,7 +247,9 @@ local function setup_semantic_tokens(client, bufnr)
     event = 'LspTokenUpdate',
     buffer = bufnr,
     desc = fmt('Configure the semantic tokens for the %s', client.name),
-    command = function(args) overrides.semantic_tokens(args.buf, client, args.data.token) end,
+    command = function(args)
+      overrides.semantic_tokens(args.buf, client, args.data.token)
+    end,
   })
 end
 
@@ -222,7 +263,11 @@ local function setup_autocommands(client, buf)
       desc = 'LSP: Show diagnostics',
       command = function()
         if not rvim.lsp.hover_diagnostics.enable then return end
-        if vim.b.lsp_hover_win and api.nvim_win_is_valid(vim.b.lsp_hover_win) then return end
+        if
+          vim.b.lsp_hover_win and api.nvim_win_is_valid(vim.b.lsp_hover_win)
+        then
+          return
+        end
         vim.diagnostic.open_float({ scope = rvim.lsp.hover_diagnostics.scope })
       end,
     })
@@ -247,7 +292,9 @@ local function setup_autocommands(client, buf)
             function(c) return c.supports_method(M.textDocument_formatting) end,
             lsp.get_clients({ buffer = buf })
           )
-          if #clients >= 1 then format({ bufnr = args.buf, async = #clients == 1 }) end
+          if #clients >= 1 then
+            format({ bufnr = args.buf, async = #clients == 1 })
+          end
         end
       end,
     })
@@ -308,9 +355,9 @@ augroup('LspSetupCommands', {
     if #args.data.diagnostics == 0 then vim.cmd('silent! lclose') end
   end,
 })
-----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- Signs
-----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 ---@param opts {highlight: string, icon: string}
 local function sign(opts)
   fn.sign_define(opts.highlight, {
@@ -342,11 +389,13 @@ local ns = api.nvim_create_namespace('severe-diagnostics')
 ---@return fun(namespace: integer, bufnr: integer, diagnostics: table, opts: table)
 local function max_diagnostic(callback)
   return function(_, bufnr, diagnostics, opts)
-    local max_severity_per_line = vim.iter(diagnostics):fold({}, function(diag_map, d)
-      local m = diag_map[d.lnum]
-      if not m or d.severity < m.severity then diag_map[d.lnum] = d end
-      return diag_map
-    end)
+    local max_severity_per_line = vim
+      .iter(diagnostics)
+      :fold({}, function(diag_map, d)
+        local m = diag_map[d.lnum]
+        if not m or d.severity < m.severity then diag_map[d.lnum] = d end
+        return diag_map
+      end)
     callback(ns, bufnr, vim.tbl_values(max_severity_per_line), opts)
   end
 end
@@ -356,9 +405,9 @@ diagnostic.handlers.signs = vim.tbl_extend('force', signs_handler, {
   show = max_diagnostic(signs_handler.show),
   hide = function(_, bufnr) signs_handler.hide(ns, bufnr) end,
 })
-----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- Diagnostic Configuration
-----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 local max_width = math.min(math.floor(vim.o.columns * 0.7), 100)
 local max_height = math.min(math.floor(vim.o.lines * 0.3), 30)
 
@@ -373,7 +422,10 @@ diagnostic.config({
     max_width = max_width,
     max_height = max_height,
     border = border,
-    title = { { '  ', 'DiagnosticFloatTitleIcon' }, { 'Problems  ', 'DiagnosticFloatTitle' } },
+    title = {
+      { '  ', 'DiagnosticFloatTitleIcon' },
+      { 'Problems  ', 'DiagnosticFloatTitle' },
+    },
     focusable = false,
     scope = 'cursor',
     source = 'always',
@@ -386,5 +438,7 @@ diagnostic.config({
 })
 
 function rvim.lsp.notify(msg, type)
-  vim.schedule(function() vim.notify(msg, type, { title = 'Diagnostic Toggles' }) end)
+  vim.schedule(
+    function() vim.notify(msg, type, { title = 'Diagnostic Toggles' }) end
+  )
 end

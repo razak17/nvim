@@ -151,9 +151,9 @@ rvim.ui.lsp = {
     EnumMember = '@field',
   },
 }
-----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- UI Settings
-----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 ---@class Decorations {
 ---@field winbar boolean
 ---@field number 'ignore' | boolean
@@ -201,7 +201,8 @@ local presets = {
   }),
 }
 
-local commit_buffer = presets.minimal_editing:with({ colorcolumn = '50,72', winbar = false })
+local commit_buffer =
+  presets.minimal_editing:with({ colorcolumn = '50,72', winbar = false })
 local buftypes = {
   ['terminal'] = presets.tool_panel,
   ['quickfix'] = presets.tool_panel,
@@ -282,15 +283,24 @@ end
 ---@param fn fun(colorcolumn: string | boolean)
 function rvim.ui.decorations.set_colorcolumn(bufnr, fn)
   local buf = vim.bo[bufnr]
-  local decor = rvim.ui.decorations.get({ ft = buf.ft, bt = buf.bt, setting = 'colorcolumn' })
+  local decor = rvim.ui.decorations.get({
+    ft = buf.ft,
+    bt = buf.bt,
+    setting = 'colorcolumn',
+  })
   local ccol = decor and decor.ft or decor and decor.bt or ''
   local colorcolumn = not rvim.falsy(ccol) and ccol or '+1'
-  if buf.ft == '' or buf.bt ~= '' or decor and decor.ft == false or decor and decor.bt == false then
+  if
+    buf.ft == ''
+    or buf.bt ~= ''
+    or decor and decor.ft == false
+    or decor and decor.bt == false
+  then
     colorcolumn = ''
   end
   if vim.is_callable(fn) then fn(colorcolumn) end
 end
 
-----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- The current styles for various UI elements
 rvim.ui.current = { border = rvim.ui.border.line }

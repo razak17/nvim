@@ -1,9 +1,13 @@
 local api, fmt, k = vim.api, string.format, vim.keycode
 local ui = rvim.ui
-local border, lsp_hls, ellipsis = ui.current.border, ui.lsp.highlights, ui.icons.misc.ellipsis
+local border, lsp_hls, ellipsis =
+  ui.current.border, ui.lsp.highlights, ui.icons.misc.ellipsis
 
 return {
-  { 'f3fora/cmp-spell', ft = { 'gitcommit', 'NeogitCommitMessage', 'markdown', 'norg', 'org' } },
+  {
+    'f3fora/cmp-spell',
+    ft = { 'gitcommit', 'NeogitCommitMessage', 'markdown', 'norg', 'org' },
+  },
   { 'rcarriga/cmp-dap', ft = { 'dap-repl', 'dapui_watches' } },
   {
     'hrsh7th/nvim-cmp',
@@ -13,7 +17,8 @@ return {
       local luasnip = require('luasnip')
       local symbols = require('lspkind').symbol_map
       local codicons = ui.codicons
-      local MIN_MENU_WIDTH, MAX_MENU_WIDTH = 25, math.min(50, math.floor(vim.o.columns * 0.5))
+      local MIN_MENU_WIDTH, MAX_MENU_WIDTH =
+        25, math.min(50, math.floor(vim.o.columns * 0.5))
 
       local hl_defs = vim
         .iter(lsp_hls)
@@ -30,10 +35,21 @@ return {
         'Cmp',
         vim.tbl_extend('force', hl_defs, {
           { CmpItemAbbr = { fg = { from = 'MsgSeparator' } } },
-          { CmpItemAbbrDeprecated = { strikethrough = true, inherit = 'Comment' } },
+          {
+            CmpItemAbbrDeprecated = {
+              strikethrough = true,
+              inherit = 'Comment',
+            },
+          },
           { CmpItemAbbrMatch = { fg = { from = 'Search' }, bold = true } },
           { CmpItemAbbrMatchFuzzy = { fg = { from = 'Search' } } },
-          { CmpItemMenu = { fg = { from = 'Comment' }, italic = true, bold = true } },
+          {
+            CmpItemMenu = {
+              fg = { from = 'Comment' },
+              italic = true,
+              bold = true,
+            },
+          },
           { CmpItemKindNerdFont = { fg = { from = 'Directory' } } },
           { CmpItemKindLab = { fg = { from = 'DiagnosticWarn' } } },
           { CmpItemKindDynamic = { fg = { from = 'Directory' } } },
@@ -85,8 +101,9 @@ return {
         },
         sorting = {
           comparators = {
-            rvim.is_available('copilot-cmp') and require('copilot_cmp.comparators').prioritize
-              or nil,
+            rvim.is_available('copilot-cmp') and require(
+              'copilot_cmp.comparators'
+            ).prioritize or nil,
             cmp.config.compare.locality,
             cmp.config.compare.offset,
             cmp.config.compare.recently_used,
@@ -114,7 +131,10 @@ return {
           ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
           ['<Tab>'] = cmp.mapping(tab, { 'i', 's', 'c' }),
           ['<S-Tab>'] = cmp.mapping(shift_tab, { 'i', 's', 'c' }),
-          ['<C-q>'] = cmp.mapping({ i = cmp.mapping.abort(), c = cmp.mapping.close() }),
+          ['<C-q>'] = cmp.mapping({
+            i = cmp.mapping.abort(),
+            c = cmp.mapping.close(),
+          }),
           ['<C-space>'] = cmp.mapping.complete(),
           ['<CR>'] = cmp.mapping.confirm({ select = false }), -- If nothing is selected don't complete
         },
@@ -155,13 +175,24 @@ return {
               item.abbr = item.abbr:sub(1, MAX_MENU_WIDTH) .. ellipsis
             end
 
-            local custom_sources =
-              { 'emoji', 'lab.quick_data', 'dynamic', 'crates', 'copilot', 'nerdfonts' }
+            local custom_sources = {
+              'emoji',
+              'lab.quick_data',
+              'dynamic',
+              'crates',
+              'copilot',
+              'nerdfonts',
+            }
 
-            if not rvim.find_string(custom_sources, entry.source.name) and item.kind ~= 'Color' then
+            if
+              not rvim.find_string(custom_sources, entry.source.name)
+              and item.kind ~= 'Color'
+            then
               item.kind = format_icon(symbols[item.kind])
             end
-            if entry.source.name == 'emoji' then item.kind = format_icon(codicons.misc.smiley) end
+            if entry.source.name == 'emoji' then
+              item.kind = format_icon(codicons.misc.smiley)
+            end
             if entry.source.name == 'lab.quick_data' then
               item.kind = format_icon(codicons.misc.robot)
               item.kind_hl_group = 'CmpItemKindLab'
@@ -186,7 +217,9 @@ return {
               vim.o.pumblend = 3
               item = require('cmp-tailwind-colors').format(entry, item)
               item.menu = '[COLOR]'
-              if item.kind == 'Color' then item.kind = format_icon(symbols[item.kind]) end
+              if item.kind == 'Color' then
+                item.kind = format_icon(symbols[item.kind])
+              end
             end
             return item
           end,
@@ -215,7 +248,9 @@ return {
             name = 'buffer',
             priority = 3,
             keyword_length = 4,
-            options = { get_bufnrs = function() return vim.api.nvim_list_bufs() end },
+            options = {
+              get_bufnrs = function() return vim.api.nvim_list_bufs() end,
+            },
             group_index = 1,
           },
           {
@@ -229,8 +264,14 @@ return {
         },
       })
 
-      cmp.event:on('menu_opened', function() vim.b.copilot_suggestion_hidden = true end)
-      cmp.event:on('menu_closed', function() vim.b.copilot_suggestion_hidden = false end)
+      cmp.event:on(
+        'menu_opened',
+        function() vim.b.copilot_suggestion_hidden = true end
+      )
+      cmp.event:on(
+        'menu_closed',
+        function() vim.b.copilot_suggestion_hidden = false end
+      )
 
       cmp.setup.cmdline({ '/', '?' }, {
         mapping = cmp.mapping.preset.cmdline(),
@@ -278,7 +319,8 @@ return {
         'uga-rosa/cmp-dictionary',
         enabled = not rvim.plugins.minimal,
         config = function()
-          local en_dict = join_paths(vim.fn.stdpath('data'), 'site', 'spell', 'en.dict')
+          local en_dict =
+            join_paths(vim.fn.stdpath('data'), 'site', 'spell', 'en.dict')
           require('cmp_dictionary').switcher({
             filetype = {
               markdown = en_dict,
@@ -295,7 +337,10 @@ return {
           local Date = require('cmp_dynamic.utils.date')
           require('cmp_dynamic').register({
             { label = 'today', insertText = os.date('%Y/%m/%d') },
-            { label = 'tomorrow', insertText = Date.new():add_date(1):format('%Y/%m/%d') },
+            {
+              label = 'tomorrow',
+              insertText = Date.new():add_date(1):format('%Y/%m/%d'),
+            },
             {
               label = 'next Week',
               insertText = Date.new():add_date(7):format('%Y/%m/%d'),
@@ -322,7 +367,11 @@ return {
     enabled = rvim.ai.enable and not rvim.plugins.minimal,
     event = 'InsertEnter',
     keys = {
-      { '<leader>ap', '<Cmd>Copilot panel<CR>', desc = 'copilot: toggle panel' },
+      {
+        '<leader>ap',
+        '<Cmd>Copilot panel<CR>',
+        desc = 'copilot: toggle panel',
+      },
       { '<leader>at', '<Cmd>Copilot toggle<CR>', desc = 'copilot: toggle' },
     },
     opts = {

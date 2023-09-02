@@ -19,10 +19,12 @@ local function dropdown(opts)
 end
 
 local function cursor(opts)
-  return require('telescope.themes').get_cursor(vim.tbl_extend('keep', opts or {}, {
-    layout_config = { width = 0.4, height = fit_to_available_height },
-    borderchars = border.ui_select,
-  }))
+  return require('telescope.themes').get_cursor(
+    vim.tbl_extend('keep', opts or {}, {
+      layout_config = { width = 0.4, height = fit_to_available_height },
+      borderchars = border.ui_select,
+    })
+  )
 end
 
 local function vertical(opts)
@@ -65,7 +67,9 @@ local function delta_opts(opts, is_buf)
 end
 
 local function live_grep(opts) return extensions('menufacture').live_grep(opts) end
-local function find_files(opts) return extensions('menufacture').find_files(opts) end
+local function find_files(opts)
+  return extensions('menufacture').find_files(opts)
+end
 local function git_files(opts) return extensions('menufacture').git_files(opts) end
 
 local function nvim_config()
@@ -96,19 +100,27 @@ local function project_files()
   if not pcall(git_files, { show_untracked = true }) then find_files() end
 end
 
-local function frecency() extensions('frecency').frecency(dropdown(rvim.telescope.minimal_ui())) end
+local function frecency()
+  extensions('frecency').frecency(dropdown(rvim.telescope.minimal_ui()))
+end
 local function luasnips() extensions('luasnip').luasnip(dropdown()) end
 local function notifications() extensions('notify').notify(vertical()) end
 local function undo() extensions('undo').undo() end
 local function projects() extensions('projects').projects() end
 local function aerial() extensions('aerial').aerial() end
 local function harpoon()
-  extensions('harpoon').marks(rvim.telescope.minimal_ui({ prompt_title = 'Harpoon Marks' }))
+  extensions('harpoon').marks(
+    rvim.telescope.minimal_ui({ prompt_title = 'Harpoon Marks' })
+  )
 end
 local function textcase()
-  extensions('textcase').normal_mode(rvim.telescope.minimal_ui({ prompt_title = 'Text Case' }))
+  extensions('textcase').normal_mode(
+    rvim.telescope.minimal_ui({ prompt_title = 'Text Case' })
+  )
 end
-local function file_browser() extensions('file_browser').file_browser({ hidden = true }) end
+local function file_browser()
+  extensions('file_browser').file_browser({ hidden = true })
+end
 
 ---@param opts? table
 ---@return function
@@ -132,18 +144,24 @@ local function multiopen(prompt_bufnr, open_cmd)
   local action_state = require('telescope.actions.state')
   local picker = action_state.get_current_picker(prompt_bufnr)
   local num_selections = #picker:get_multi_selection()
-  if not num_selections or num_selections <= 1 then actions.add_selection(prompt_bufnr) end
+  if not num_selections or num_selections <= 1 then
+    actions.add_selection(prompt_bufnr)
+  end
   actions.send_selected_to_qflist(prompt_bufnr)
   vim.cmd('cfdo ' .. open_cmd)
 end
 
-local function multi_selection_open(prompt_bufnr) multiopen(prompt_bufnr, 'edit') end
+local function multi_selection_open(prompt_bufnr)
+  multiopen(prompt_bufnr, 'edit')
+end
 
 rvim.telescope = {
   cursor = cursor,
   dropdown = dropdown,
   vertical = vertical,
-  adaptive_dropdown = function(_) return dropdown({ height = fit_to_available_height }) end,
+  adaptive_dropdown = function(_)
+    return dropdown({ height = fit_to_available_height })
+  end,
   minimal_ui = function(_) return dropdown({ previewer = false }) end,
   delta_opts = delta_opts,
 }
@@ -156,8 +174,16 @@ return {
       { '<c-p>', find_files, desc = 'find files' },
       { '<leader>.', file_browser, desc = 'file browser' },
       { '<leader>f?', b('help_tags'), desc = 'help tags' },
-      { '<leader>fa', b('builtin', { include_extensions = true }), desc = 'builtins' },
-      { '<leader>fb', b('current_buffer_fuzzy_find'), desc = 'find in current buffer' },
+      {
+        '<leader>fa',
+        b('builtin', { include_extensions = true }),
+        desc = 'builtins',
+      },
+      {
+        '<leader>fb',
+        b('current_buffer_fuzzy_find'),
+        desc = 'find in current buffer',
+      },
       { '<leader>fd', aerial, desc = 'aerial' },
       { '<leader>fc', nvim_config, desc = 'nvim config' },
       -- { '<leader>ff', project_files, desc = 'project files' },
@@ -180,12 +206,36 @@ return {
       { '<leader>fvo', b('vim_options'), desc = 'vim options' },
       { '<leader>fvr', b('registers'), desc = 'registers' },
       -- LSP
-      { '<leader>ld', b('lsp_document_symbols'), desc = 'telescope: document symbols' },
-      { '<leader>lI', b('lsp_implementations'), desc = 'telescope: search implementation' },
-      { '<leader>lR', b('lsp_references'), desc = 'telescope: show references' },
-      { '<leader>ls', b('lsp_dynamic_workspace_symbols'), desc = 'telescope: workspace symbols' },
-      { '<leader>le', b('diagnostics', { bufnr = 0 }), desc = 'telescope: document diagnostics' },
-      { '<leader>lw', b('diagnostics'), desc = 'telescope: workspace diagnostics' },
+      {
+        '<leader>ld',
+        b('lsp_document_symbols'),
+        desc = 'telescope: document symbols',
+      },
+      {
+        '<leader>lI',
+        b('lsp_implementations'),
+        desc = 'telescope: search implementation',
+      },
+      {
+        '<leader>lR',
+        b('lsp_references'),
+        desc = 'telescope: show references',
+      },
+      {
+        '<leader>ls',
+        b('lsp_dynamic_workspace_symbols'),
+        desc = 'telescope: workspace symbols',
+      },
+      {
+        '<leader>le',
+        b('diagnostics', { bufnr = 0 }),
+        desc = 'telescope: document diagnostics',
+      },
+      {
+        '<leader>lw',
+        b('diagnostics'),
+        desc = 'telescope: workspace diagnostics',
+      },
     },
     config = function()
       local previewers = require('telescope.previewers')
@@ -198,7 +248,13 @@ return {
         defaults = {
           prompt_prefix = fmt(' %s  ', ui.codicons.misc.search_alt),
           selection_caret = fmt(' %s ', ui.icons.misc.triangle_short),
-          cycle_layout_list = { 'flex', 'horizontal', 'vertical', 'bottom_pane', 'center' },
+          cycle_layout_list = {
+            'flex',
+            'horizontal',
+            'vertical',
+            'bottom_pane',
+            'center',
+          },
           sorting_strategy = 'ascending',
           layout_strategy = 'flex',
           set_env = { ['TERM'] = vim.env.TERM },
@@ -261,9 +317,16 @@ return {
           find_files = { hidden = true },
           colorscheme = { enable_preview = true },
           keymaps = dropdown({ layout_config = { height = 18, width = 0.5 } }),
-          git_commits = { layout_config = { horizontal = { preview_width = 0.55 } } },
-          git_bcommits = { layout_config = { horizontal = { preview_width = 0.55 } } },
-          current_buffer_fuzzy_find = dropdown({ previewer = false, shorten_path = false }),
+          git_commits = {
+            layout_config = { horizontal = { preview_width = 0.55 } },
+          },
+          git_bcommits = {
+            layout_config = { horizontal = { preview_width = 0.55 } },
+          },
+          current_buffer_fuzzy_find = dropdown({
+            previewer = false,
+            shorten_path = false,
+          }),
           diagnostics = themes.get_ivy({
             wrap_results = true,
             borderchars = { preview = border.ivy },
@@ -274,11 +337,19 @@ return {
             show_all_buffers = true,
             ignore_current_buffer = true,
             previewer = false,
-            mappings = { i = { ['<c-x>'] = 'delete_buffer' }, n = { ['<c-x>'] = 'delete_buffer' } },
+            mappings = {
+              i = { ['<c-x>'] = 'delete_buffer' },
+              n = { ['<c-x>'] = 'delete_buffer' },
+            },
           }),
           live_grep = themes.get_ivy({
             borderchars = { preview = border.ivy },
-            file_ignore_patterns = { '%.svg', '%.lock', '%-lock.yaml', '%-lock.json' },
+            file_ignore_patterns = {
+              '%.svg',
+              '%.lock',
+              '%-lock.yaml',
+              '%-lock.json',
+            },
             max_results = 2000,
             additional_args = { '--trim' },
           }),
@@ -289,8 +360,16 @@ return {
             db_root = join_paths(data, 'databases'),
             default_workspace = 'CWD',
             show_unindexed = false, -- Show all files or only those that have been indexed
-            ignore_patterns = { '*.git/*', '*/tmp/*', '*node_modules/*', '*vendor/*' },
-            workspaces = { conf = vim.env.DOTFILES, project = vim.g.projects_dir },
+            ignore_patterns = {
+              '*.git/*',
+              '*/tmp/*',
+              '*node_modules/*',
+              '*vendor/*',
+            },
+            workspaces = {
+              conf = vim.env.DOTFILES,
+              project = vim.g.projects_dir,
+            },
           },
           undo = {
             mappings = {
@@ -320,7 +399,10 @@ return {
       end
       -- if rvim.is_available('harpoon') then require('telescope').load_extension('harpoon') end
 
-      vim.api.nvim_exec_autocmds('User', { pattern = 'TelescopeConfigComplete', modeline = false })
+      vim.api.nvim_exec_autocmds(
+        'User',
+        { pattern = 'TelescopeConfigComplete', modeline = false }
+      )
     end,
     dependencies = {
       'natecraddock/telescope-zf-native.nvim',

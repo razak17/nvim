@@ -1,4 +1,9 @@
-if not rvim or not rvim.lsp.enable or not rvim.plugins.enable or rvim.plugins.minimal then
+if
+  not rvim
+  or not rvim.lsp.enable
+  or not rvim.plugins.enable
+  or rvim.plugins.minimal
+then
   return
 end
 
@@ -22,7 +27,11 @@ for _, language in ipairs({ 'c', 'cpp' }) do
       type = 'codelldb',
       request = 'launch',
       program = function()
-        return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+        return vim.fn.input(
+          'Path to executable: ',
+          vim.fn.getcwd() .. '/',
+          'file'
+        )
       end,
       cwd = '${workspaceFolder}',
       stopOnEntry = false,
