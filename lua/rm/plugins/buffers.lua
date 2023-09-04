@@ -23,6 +23,11 @@ return {
     },
   },
   {
+    'kazhala/close-buffers.nvim',
+    cmd = { 'BDelete', 'BWipeout' },
+    keys = { { '<leader>c', '<Cmd>BDelete this<CR>', desc = 'buffer delete' } },
+  },
+  {
     'razak17/buffer_manager.nvim',
     keys = {
       {

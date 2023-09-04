@@ -435,11 +435,6 @@ return {
     },
   },
   {
-    'kazhala/close-buffers.nvim',
-    cmd = { 'BDelete', 'BWipeout' },
-    keys = { { '<leader>c', '<Cmd>BDelete this<CR>', desc = 'buffer delete' } },
-  },
-  {
     'folke/flash.nvim',
     opts = {
       modes = {
