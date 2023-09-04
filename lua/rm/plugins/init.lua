@@ -265,6 +265,7 @@ return {
     enabled = rvim.lsp.enable,
     event = 'LspAttach',
     opts = {
+      padding_top = 2,
       toggle_event = { 'InsertEnter' },
     },
   },
@@ -272,7 +273,7 @@ return {
     'doums/dmap.nvim',
     enabled = rvim.lsp.enable,
     event = 'LspAttach',
-    opts = { win_h_offset = 4 },
+    opts = { win_h_offset = 6 },
   },
   {
     'stevearc/aerial.nvim',
