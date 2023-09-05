@@ -1327,7 +1327,7 @@ return {
     enabled = rvim.treesitter.enable,
     event = 'BufRead',
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
-    ft = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
+    ft = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact', 'svelte' },
     opts = { remove_template_string = true },
   },
   {
