@@ -2,7 +2,13 @@ if not rvim or not rvim.plugins.enable or vim.env.TMUX == nil then return end
 
 local fn, fmt = vim.fn, string.format
 
-local ignored = { 'TelescopePrompt', 'buffer_manager', 'harpoon', '' }
+local ignored = {
+  'TelescopePrompt',
+  'buffer_manager',
+  'harpoon',
+  'buffalo',
+  '',
+}
 
 --- Get the color of the current vim background and update tmux accordingly
 ---@param reset boolean?

@@ -659,6 +659,14 @@ return {
       if self.rec ~= '' then return '  ' .. self.rec end
     end,
   },
+  buffers = {
+    provider = function(self)
+      local buffers = require('buffalo').buffers()
+      local tabpages = require('buffalo').tabpages()
+      return ' ¿ ' .. buffers .. ' ¿ ' .. tabpages -- ¿
+    end,
+    hl = { fg = '#ffaa00', bg = '#24273a' },
+  },
   ruler = {
     provider = function() return '  %7(%l/%3L%):%2c ' .. progress() end,
     hl = { fg = colors.fg, bg = bg },
