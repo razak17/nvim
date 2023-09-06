@@ -16,14 +16,6 @@ end
 -- Utils
 --------------------------------------------------------------------------------
 
---- Checks whether a given path exists and is a directory
---@param path (string) path to check
---@returns (bool)
-function rvim.is_directory(path)
-  local stat = uv.fs_stat(path)
-  return stat and stat.type == 'directory' or false
-end
-
 --  find string in list
 function rvim.find_string(table, string)
   local found = false
