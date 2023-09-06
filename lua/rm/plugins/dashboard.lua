@@ -4,6 +4,7 @@ return {
   'goolord/alpha-nvim',
   enabled = not rvim.plugins.minimal,
   cmd = 'Alpha',
+  keys = { { '<leader>;', '<cmd>Alpha<CR>', desc = 'alpha' } },
   config = function()
     local alpha = require('alpha')
     local dashboard = require('alpha.themes.dashboard')
@@ -128,8 +129,6 @@ return {
       },
       opts = { margin = 5 },
     })
-
-    map('n', '<leader>;', '<cmd>Alpha<CR>', { desc = 'alpha' })
 
     rvim.augroup('AlphaSettings', {
       event = { 'User ' },

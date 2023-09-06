@@ -280,35 +280,45 @@ rvim.augroup('Utilities', {
       )
     end
   end,
-}, {
-  -- ref: https://github.com/AstroNvim/AstroNvim/blob/main/lua/astronvim/autocmds.lua#L191
-  event = { 'VimEnter' },
-  desc = 'Start Alpha when vim is opened with no arguments',
-  command = function()
-    if rvim.plugins.minimal then return end
-    local should_skip = false
-    if
-      vim.fn.argc() > 0
-      or vim.fn.line2byte(vim.fn.line('$')) ~= -1
-      or not vim.o.modifiable
-    then
-      should_skip = true
-    else
-      for _, arg in pairs(vim.v.argv) do
-        if
-          arg == '-b'
-          or arg == '-c'
-          or vim.startswith(arg, '+')
-          or arg == '-S'
-        then
-          should_skip = true
-          break
+})
+
+if rvim.is_available('alpha-nvim') or not rvim.plugins.minimal then
+  rvim.augroup('AlphaAutoStart', {
+    -- ref: https://github.com/AstroNvim/AstroNvim/blob/main/lua/astronvim/autocmds.lua#L191
+    event = { 'VimEnter' },
+    desc = 'Start Alpha when vim is opened with no arguments',
+    command = function()
+      local should_skip = false
+      local lines = vim.api.nvim_buf_get_lines(0, 0, 2, false)
+      if
+        vim.fn.argc() > 0
+        or #lines > 1 -- don't open if current buffer has more than 1 line
+        or (#lines == 1 and lines[1]:len() > 0) -- don't open the current buffer if it has anything on the first line
+        or #vim.tbl_filter(
+            function(bufnr) return vim.bo[bufnr].buflisted end,
+            vim.api.nvim_list_bufs()
+          )
+          > 1 -- don't open if any listed buffers
+        or not vim.o.modifiable -- don't open if not modifiable
+      then
+        should_skip = true
+      else
+        for _, arg in pairs(vim.v.argv) do
+          if
+            arg == '-b'
+            or arg == '-c'
+            or vim.startswith(arg, '+')
+            or arg == '-S'
+          then
+            should_skip = true
+            break
+          end
         end
       end
-    end
-    if not should_skip then
-      require('alpha').start(true, require('alpha').default_config)
-      vim.schedule(function() vim.cmd.doautocmd('FileType') end)
-    end
-  end,
-})
+      if not should_skip then
+        require('alpha').start(true, require('alpha').default_config)
+        vim.schedule(function() vim.cmd.doautocmd('FileType') end)
+      end
+    end,
+  })
+end
