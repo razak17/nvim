@@ -281,6 +281,18 @@ augroup('Utilities', {
       )
     end
   end,
+}, {
+  event = { 'BufHidden' },
+  desc = 'Delete [No Name] buffers',
+  command = function(event)
+    if
+      event.file == ''
+      and vim.bo[event.buf].buftype == ''
+      and not vim.bo[event.buf].modified
+    then
+      vim.schedule(function() pcall(vim.api.nvim_buf_delete, event.buf, {}) end)
+    end
+  end,
 })
 
 if is_available('alpha-nvim') then
