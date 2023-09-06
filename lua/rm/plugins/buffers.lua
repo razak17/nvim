@@ -41,7 +41,6 @@ return {
         edit = { key = '<CR>', command = 'edit' },
         split = { key = 's', command = 'split' },
         vsplit = { key = 'v', command = 'vsplit' },
-        buffer_delete = { key = 'd', command = 'bd' },
       },
     },
     config = function(_, _opts)
