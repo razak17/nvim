@@ -362,6 +362,82 @@ nnoremap(
   function() vim.treesitter.inspect_tree({ command = 'botright 60vnew' }) end,
   { desc = 'open ts tree for current buffer' }
 )
+--------------------------------------------------------------------------------
+-- Smart Tilde
+--------------------------------------------------------------------------------
+local toggleSigns = {
+  ['|'] = '&',
+  [','] = ';',
+  ["'"] = '"',
+  ['^'] = '$',
+  ['/'] = '*',
+  ['+'] = '-',
+  ['('] = ')',
+  ['['] = ']',
+  ['{'] = '}',
+  ['<'] = '>',
+}
+map({ 'n', 'x' }, '~', function()
+  local col = vim.fn.col('.') -- fn.col correctly considers tab-indentation
+  local charUnderCursor = vim.api.nvim_get_current_line():sub(col, col)
+  local isLetter = charUnderCursor:find('^%a$')
+  local function normal(cmd) vim.cmd.normal({ cmd, bang = true }) end
+  if isLetter then
+    normal('~h')
+    return
+  end
+  for left, right in pairs(toggleSigns) do
+    if charUnderCursor == left then normal('r' .. right) end
+    if charUnderCursor == right then normal('r' .. left) end
+  end
+end, { desc = 'smart tilde' })
+--------------------------------------------------------------------------------
+-- Smart Splits
+--------------------------------------------------------------------------------
+--[[ move_or_create_win()
+-- Move to a window (one of hjkl) or create a split if a window does not exist in the direction
+-- Vimscript translation of:
+-- https://www.reddit.com/r/vim/comments/166a3ij/comment/jyivcnl/?utm_source=share&utm_medium=web2x&context=3
+-- Usage: vim.keymap("n", "<C-h>", function() move_or_create_win("h") end, {})
+--
+-- @arg key: One of h, j, k, l, a direction to move or create a split
+--]]
+-- ref: https://github.com/theopn/theovim/blob/main/lua/core.lua#L207
+local function move_or_create_win(key)
+  local curr_win = fn.winnr()
+  vim.cmd('wincmd ' .. key) --> attempt to move
+
+  if curr_win == fn.winnr() then --> didn't move, so create a split
+    if key == 'h' or key == 'l' then
+      vim.cmd('wincmd v')
+    else
+      vim.cmd('wincmd s')
+    end
+    vim.cmd('wincmd ' .. key)
+  end
+end
+
+map('n', '<C-h>', function() move_or_create_win('h') end, {
+  desc = '[h]: Move to window on the left or create a split',
+})
+map(
+  'n',
+  '<C-j>',
+  function() move_or_create_win('j') end,
+  { desc = '[j]: Move to window below or create a vertical split' }
+)
+map(
+  'n',
+  '<C-k>',
+  function() move_or_create_win('k') end,
+  { desc = '[k]: Move to window above or create a vertical split' }
+)
+map(
+  'n',
+  '<C-l>',
+  function() move_or_create_win('l') end,
+  { desc = '[l]: Move to window on the right or create a split' }
+)
 -----------------------------------------------------------------------------//
 -- Commands
 -----------------------------------------------------------------------------//
@@ -392,32 +468,3 @@ command('ConvertGitUrl', function()
   vim.fn.setpos('.', save_pos)
 end, { force = true })
 map('n', '<leader>gu', '<Cmd>ConvertGitUrl<CR>', { desc = 'convert git url' })
-
-local toggleSigns = {
-  ['|'] = '&',
-  [','] = ';',
-  ["'"] = '"',
-  ['^'] = '$',
-  ['/'] = '*',
-  ['+'] = '-',
-  ['('] = ')',
-  ['['] = ']',
-  ['{'] = '}',
-  ['<'] = '>',
-}
-
-command('SmartTilde', function()
-  local col = vim.fn.col('.') -- fn.col correctly considers tab-indentation
-  local charUnderCursor = vim.api.nvim_get_current_line():sub(col, col)
-  local isLetter = charUnderCursor:find('^%a$')
-  local function normal(cmd) vim.cmd.normal({ cmd, bang = true }) end
-  if isLetter then
-    normal('~h')
-    return
-  end
-  for left, right in pairs(toggleSigns) do
-    if charUnderCursor == left then normal('r' .. right) end
-    if charUnderCursor == right then normal('r' .. left) end
-  end
-end)
-map({ 'n', 'x' }, '~', '<Cmd>SmartTilde<CR>', { desc = 'smart tilde' })
