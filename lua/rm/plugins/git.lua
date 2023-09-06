@@ -349,4 +349,10 @@ return {
       require('git-conflict').setup(opts)
     end,
   },
+  {
+    '2kabhishek/co-author.nvim',
+    enabled = not rvim.plugins.minimal,
+    cmd = 'GitCoAuthors',
+    dependencies = { 'stevearc/dressing.nvim' },
+  },
 }

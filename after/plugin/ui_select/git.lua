@@ -69,6 +69,7 @@ local git_options = {
   ['2. Display Commit From Hash'] = 'lua rvim.git.display_git_commit()',
   ['3. Open File From Branch'] = "lua require'agitator'.open_file_git_branch()",
   ['3. Search In Another Branch'] = "lua require'agitator'.search_git_branch()",
+  ['3. Open Co Authors'] = 'GitCoAuthors',
   ['4. Time Machine'] = time_machine,
   ['4. Project History'] = project_history,
   ['4. File History'] = 'DiffviewFileHistory %',
