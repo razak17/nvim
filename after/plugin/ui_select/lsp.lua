@@ -260,18 +260,26 @@ local function toggle_hover_diagnostics()
   )
 end
 
+local function toggle_format_on_save()
+  rvim.lsp.format_on_save.enable = not rvim.lsp.format_on_save.enable
+  rvim.lsp.notify(
+    string.format('format on save %s', bool2str(rvim.lsp.format_on_save.enable))
+  )
+end
+
 local lsp_options = {
   ['1. Code Format'] = format_buf,
   ['2. Eslint Fix'] = eslint_fix,
   ['3. LSP references'] = display_lsp_references,
-  ['4. Call Heirarchy'] = 'lua rvim.telescope_display_call_hierarchy()',
-  ['5. Remove Unused Imports'] = 'lua rvim.remove_unused_imports()',
-  ['5. Restart All LSPs'] = lsp_restart_all,
-  ['6. Toggle Diagnostics Sources for Buffer'] = telescope_enable_disable_diagnostics,
-  ['7. Toggle Virtual Text'] = toggle_virtual_text,
-  ['7. Toggle Virtual Lines'] = toggle_virtual_lines,
-  ['7. Toggle Diagnostic Signs'] = toggle_signs,
+  ['3. Call Heirarchy'] = 'lua rvim.telescope_display_call_hierarchy()',
+  ['4. Remove Unused Imports'] = 'lua rvim.remove_unused_imports()',
+  ['4. Restart All LSPs'] = lsp_restart_all,
+  ['5. Toggle Diagnostics Sources for Buffer'] = telescope_enable_disable_diagnostics,
+  ['6. Toggle Virtual Text'] = toggle_virtual_text,
+  ['6. Toggle Virtual Lines'] = toggle_virtual_lines,
+  ['6. Toggle Diagnostic Signs'] = toggle_signs,
   ['7. Toggle Hover Diagnostics'] = toggle_hover_diagnostics,
+  ['7. Toggle Format On Save'] = toggle_format_on_save,
   ['7. Toggle JS Arrow Function'] = 'lua require("nvim-js-actions/js-arrow-fn").toggle()',
   ['8. Preview Code Actions'] = 'lua require("actions-preview").code_actions()',
 }
