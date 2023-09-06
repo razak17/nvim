@@ -55,12 +55,6 @@ return {
     opts = {},
     build = './kitty/install-kittens.bash',
     keys = {
-      -- moving between splits
-      { '<C-h>', function() require('smart-splits').move_cursor_left() end },
-      { '<C-j>', function() require('smart-splits').move_cursor_down() end },
-      { '<C-k>', function() require('smart-splits').move_cursor_up() end },
-      { '<C-l>', function() require('smart-splits').move_cursor_right() end },
-      -- swapping buffers between windows
       {
         '<leader>sh',
         function() require('smart-splits').swap_buf_left() end,
