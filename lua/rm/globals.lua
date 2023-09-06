@@ -144,7 +144,10 @@ end
 local LATEST_NIGHTLY_MINOR = 10
 function rvim.nightly() return vim.version().minor >= LATEST_NIGHTLY_MINOR end
 
-function rvim.reload_all() vim.cmd('checktime') end
+function rvim.reload_all()
+  vim.cmd('checktime')
+  vim.cmd('Gitsigns refresh')
+end
 
 function rvim.run_command(command, params, cb)
   local Job = require('plenary.job')
