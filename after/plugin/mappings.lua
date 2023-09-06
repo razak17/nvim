@@ -404,6 +404,8 @@ end, { desc = 'smart tilde' })
 --]]
 -- ref: https://github.com/theopn/theovim/blob/main/lua/core.lua#L207
 local function move_or_create_win(key)
+  local exclusions = { 'alpha', 'neo-tree' }
+  if rvim.find_string(exclusions, vim.bo.ft) then return end
   local curr_win = fn.winnr()
   vim.cmd('wincmd ' .. key) --> attempt to move
 
