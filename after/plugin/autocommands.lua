@@ -1,4 +1,5 @@
 if not rvim or rvim and rvim.none then return end
+local augroup, is_available = rvim.augroup, rvim.is_available
 
 local fn, api, env, v, cmd = vim.fn, vim.api, vim.env, vim.v, vim.cmd
 local fmt = string.format
@@ -31,7 +32,7 @@ local function hl_search()
   if col < p_start or col > p_end then stop_hl() end
 end
 
-rvim.augroup('VimrcIncSearchHighlight', {
+augroup('VimrcIncSearchHighlight', {
   event = { 'CursorMoved' },
   command = function() hl_search() end,
 }, {
@@ -77,7 +78,7 @@ local function smart_close()
   if fn.winnr('$') ~= 1 then api.nvim_win_close(0, true) end
 end
 
-rvim.augroup('SmartClose', {
+augroup('SmartClose', {
   -- Auto open grep quickfix window
   event = { 'QuickFixCmdPost' },
   pattern = { '*grep*' },
@@ -99,7 +100,7 @@ rvim.augroup('SmartClose', {
   end,
 })
 
-rvim.augroup('CheckOutsideTime', {
+augroup('CheckOutsideTime', {
   -- automatically check for changed files outside vim
   event = {
     'WinEnter',
@@ -114,7 +115,7 @@ rvim.augroup('CheckOutsideTime', {
 
 --- automatically clear commandline messages after a few seconds delay
 --- source: https://unix.stackexchange.com/a/613645
-rvim.augroup('ClearCommandLineMessages', {
+augroup('ClearCommandLineMessages', {
   event = { 'CursorHold' },
   command = function()
     vim.defer_fn(function()
@@ -123,14 +124,14 @@ rvim.augroup('ClearCommandLineMessages', {
   end,
 })
 
-rvim.augroup('TextYankHighlight', {
+augroup('TextYankHighlight', {
   event = { 'TextYankPost' },
   command = function()
     vim.highlight.on_yank({ timeout = 177, higroup = 'Search' })
   end,
 })
 
-rvim.augroup('UpdateVim', {
+augroup('UpdateVim', {
   event = { 'FocusLost', 'InsertLeave' },
   command = function()
     if rvim.autosave.enable then vim.cmd('silent! wall') end
@@ -141,7 +142,7 @@ rvim.augroup('UpdateVim', {
   command = 'wincmd =', -- Make windows equal size when vim resizes
 })
 
-rvim.augroup('WinBehavior', {
+augroup('WinBehavior', {
   event = { 'BufWinEnter' },
   command = function(args)
     if vim.wo.diff then vim.diagnostic.disable(args.buf) end
@@ -172,7 +173,7 @@ local function should_show_cursorline(buf)
     and not vim.tbl_contains(cursorline_exclusions, vim.bo[buf].filetype)
 end
 
-rvim.augroup('Cursorline', {
+augroup('Cursorline', {
   event = { 'BufEnter', 'InsertLeave' },
   command = function(args) vim.wo.cursorline = should_show_cursorline(args.buf) end,
 }, {
@@ -195,7 +196,7 @@ local function can_save()
     and not vim.tbl_contains(save_excluded, vim.bo.filetype)
 end
 
-rvim.augroup('Utilities', {
+augroup('Utilities', {
   ---@source: https://vim.fandom.com/wiki/Use_gf_to_open_a_file_via_its_URL
   event = { 'BufReadCmd' },
   pattern = { 'file:///*' },
@@ -282,8 +283,8 @@ rvim.augroup('Utilities', {
   end,
 })
 
-if rvim.is_available('alpha-nvim') or not rvim.plugins.minimal then
-  rvim.augroup('AlphaAutoStart', {
+if is_available('alpha-nvim') then
+  augroup('AlphaAutoStart', {
     -- ref: https://github.com/AstroNvim/AstroNvim/blob/main/lua/astronvim/autocmds.lua#L191
     event = { 'VimEnter' },
     desc = 'Start Alpha when vim is opened with no arguments',
@@ -318,6 +319,24 @@ if rvim.is_available('alpha-nvim') or not rvim.plugins.minimal then
       if not should_skip then
         require('alpha').start(true, require('alpha').default_config)
         vim.schedule(function() vim.cmd.doautocmd('FileType') end)
+      end
+    end,
+  })
+end
+
+if is_available('neo-tree.nvim') then
+  augroup('NeoTreeStart', {
+    event = { 'BufEnter' },
+    desc = 'Open Neo-Tree on startup with directory',
+    command = function()
+      if package.loaded['neo-tree'] then
+        vim.api.nvim_del_augroup_by_name('NeoTreeStart')
+      else
+        local stats = (vim.uv or vim.loop).fs_stat(vim.api.nvim_buf_get_name(0)) -- TODO: REMOVE vim.loop WHEN DROPPING SUPPORT FOR Neovim v0.9
+        if stats and stats.type == 'directory' then
+          vim.api.nvim_del_augroup_by_name('NeoTreeStart')
+          require('neo-tree')
+        end
       end
     end,
   })
