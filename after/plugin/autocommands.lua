@@ -246,26 +246,6 @@ augroup('Utilities', {
     vim.opt_local.formatoptions:remove('o')
   end,
 }, {
-  event = { 'DirChanged', 'VimEnter' },
-  command = function()
-    if vim.fn.isdirectory(fn.getcwd() .. '/lua') then
-      map('n', 'gx', function()
-        local file = fn.expand('<cfile>')
-        if not file or fn.isdirectory(file) > 0 then
-          return vim.cmd.edit(file)
-        end
-        if file:match('http[s]?://') then return rvim.open(file) end
-
-        -- consider anything that looks like string/string a github link
-        local plugin_url_regex = '[%a%d%-%.%_]*%/[%a%d%-%.%_]*'
-        local link = string.match(file, plugin_url_regex)
-        if link then
-          return rvim.open(fmt('https://www.github.com/%s', link))
-        end
-      end)
-    end
-  end,
-}, {
   event = { 'BufEnter' },
   command = function(args)
     if vim.bo[args.buf].filetype == 'DiffviewFiles' then
