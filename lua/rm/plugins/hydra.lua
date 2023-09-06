@@ -10,6 +10,7 @@ return {
 
     local splits = rvim.reqcall('smart-splits')
     local fold_cycle = rvim.reqcall('fold-cycle')
+    local close_buffers = rvim.reqcall('close_buffers')
     local textcase = rvim.reqcall('textcase')
 
     local base_config = function(opts)
@@ -41,9 +42,27 @@ return {
       color = 'teal',
       config = base_config(),
       heads = {
-        { 'a', '<Cmd>BWipeout! all<CR>', { desc = 'close all' } },
-        { 'c', '<Cmd>BWipeout other<CR>', { desc = 'delete others' } },
-        { 'd', '<Cmd>BDelete this<CR>', { desc = 'delete buffer' } },
+        {
+          'a',
+          function()
+            close_buffers.delete({ type = 'all' })
+            vim.cmd([[redraw!]])
+          end,
+          { desc = 'close all' },
+        },
+        {
+          'o',
+          function()
+            close_buffers.delete({ type = 'other' })
+            vim.cmd([[redraw!]])
+          end,
+          { desc = 'delete others' },
+        },
+        {
+          'd',
+          function() close_buffers.delete({ type = 'this' }) end,
+          { desc = 'delete buffer' },
+        },
         { 'p', '<Plug>(CybuPrev)', { desc = 'prev buffer' } },
         { 'n', '<Plug>(CybuNext)', { desc = 'next buffer' } },
         { '<Esc>', nil, { exit = true, desc = 'Quit' } },

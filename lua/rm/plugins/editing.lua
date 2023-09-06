@@ -386,7 +386,7 @@ return {
       {
         '<leader>ag',
         function() require('wtf').search() end,
-        desc = 'wtf: google diagnostic',
+        desc = 'wtf: google search diagnostic',
       },
     },
     dependencies = { 'MunifTanjim/nui.nvim' },
