@@ -51,31 +51,34 @@ return {
     },
   },
   {
+    'sindrets/winshift.nvim',
+    cmd = { 'WinShift' },
+    keys = {
+      {
+        '<leader>sw',
+        '<Cmd>WinShift<CR>',
+        desc = 'winshift: start winshift mode',
+      },
+      {
+        '<leader>ss',
+        '<Cmd>WinShift swap<CR>',
+        desc = 'winshift: swap two window',
+      },
+      { '<leader>sh', '<Cmd>WinShift left<CR>', desc = 'winshift: swap left' },
+      { '<leader>sj', '<Cmd>WinShift down<CR>', desc = 'winshift: swap down' },
+      { '<leader>sk', '<Cmd>WinShift up<CR>', desc = 'winshift: swap up' },
+      {
+        '<leader>sl',
+        '<Cmd>WinShift right<CR>',
+        desc = 'winshift: swap right',
+      },
+    },
+    opts = {},
+  },
+  {
     'mrjones2014/smart-splits.nvim',
     opts = {},
     build = './kitty/install-kittens.bash',
-    keys = {
-      {
-        '<leader>sh',
-        function() require('smart-splits').swap_buf_left() end,
-        desc = 'swap left',
-      },
-      {
-        '<leader>sj',
-        function() require('smart-splits').swap_buf_down() end,
-        desc = 'swap down',
-      },
-      {
-        '<leader>sk',
-        function() require('smart-splits').swap_buf_up() end,
-        desc = 'swap up',
-      },
-      {
-        '<leader>sl',
-        function() require('smart-splits').swap_buf_right() end,
-        desc = 'swap right',
-      },
-    },
   },
   -- }}}
   ------------------------------------------------------------------------------

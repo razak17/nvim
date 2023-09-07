@@ -342,7 +342,10 @@ if is_available('indent-blankline.nvim') then
     desc = 'Refresh indent blankline on window scroll',
     command = function()
       -- TODO: remove neovim version check when dropping support for Neovim 0.8
-      if vim.fn.has('nvim-0.9') ~= 1 or vim.v.event.all.leftcol ~= 0 then
+      if
+        vim.fn.has('nvim-0.9') ~= 1
+        or (vim.v.event.all and vim.v.event.all.leftcol ~= 0)
+      then
         pcall(vim.cmd.IndentBlanklineRefresh)
       end
     end,
