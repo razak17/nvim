@@ -566,6 +566,7 @@ return {
     enabled = rvim.lsp.enable,
     opts = { setupFoldKeymaps = false },
   },
+  { 'will133/vim-dirdiff', cmd = 'DirDiff' },
   {
     'AndrewRadev/linediff.vim',
     cmd = 'Linediff',
