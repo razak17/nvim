@@ -53,7 +53,7 @@ return {
   },
   {
     'echasnovski/mini.cursorword',
-    enabled = not rvim.plugins.minimal,
+    enabled = false,
     event = { 'BufRead', 'BufNewFile' },
     opts = {},
   },

@@ -71,6 +71,12 @@ return {
     opts = {},
   },
   {
+    'tzachar/local-highlight.nvim',
+    enabled = not rvim.plugins.minimal,
+    event = 'VeryLazy',
+    opts = { hlgroup = 'Visual' },
+  },
+  {
     'folke/zen-mode.nvim',
     cmd = 'ZenMode',
     opts = {
