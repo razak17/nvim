@@ -284,7 +284,7 @@ if is_available('alpha-nvim') then
       local should_skip = false
       local lines = vim.api.nvim_buf_get_lines(0, 0, 2, false)
       if
-        vim.fn.argc() > 0
+        vim.fn.argc() > 0 -- don't start when opening a file
         or #lines > 1 -- don't open if current buffer has more than 1 line
         or (#lines == 1 and lines[1]:len() > 0) -- don't open the current buffer if it has anything on the first line
         or #vim.tbl_filter(
@@ -308,10 +308,9 @@ if is_available('alpha-nvim') then
           end
         end
       end
-      if not should_skip then
-        require('alpha').start(true, require('alpha').default_config)
-        vim.schedule(function() vim.cmd.doautocmd('FileType') end)
-      end
+      if should_skip then return end
+      require('alpha').start(true, require('alpha').default_config)
+      vim.schedule(function() vim.cmd.doautocmd('FileType') end)
     end,
   })
 end
