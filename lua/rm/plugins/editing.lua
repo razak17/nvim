@@ -388,6 +388,7 @@ return {
   },
   {
     'piersolenski/wtf.nvim',
+    enabled = rvim.lsp.enable,
     event = 'VeryLazy',
     opts = {},
     keys = {

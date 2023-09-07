@@ -60,8 +60,14 @@ return {
   },
   {
     'utilyre/sentiment.nvim',
-    version = '*',
+    enabled = not rvim.plugins.minimal,
     event = 'VeryLazy',
+    opts = {},
+  },
+  {
+    'aaron-p1/match-visual.nvim',
+    enabled = not rvim.plugins.minimal,
+    event = { 'BufRead', 'BufNewFile' },
     opts = {},
   },
   {
