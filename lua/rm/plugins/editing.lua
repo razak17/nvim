@@ -156,6 +156,7 @@ return {
   },
   {
     'ckolkey/ts-node-action',
+    enabled = rvim.treesitter.enable,
     dependencies = { 'nvim-treesitter' },
     keys = {
       {
