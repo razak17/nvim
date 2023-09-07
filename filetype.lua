@@ -10,6 +10,7 @@ vim.filetype.add({
   },
   pattern = {
     ['.*%.theme'] = 'conf',
+    ['.*%.service'] = 'systemd',
     ['.*%.gradle'] = 'groovy',
     ['^.env%..*'] = 'bash',
     ['req.*.txt'] = 'config',
