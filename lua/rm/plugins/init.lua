@@ -266,7 +266,7 @@ return {
   {
     'doums/dmap.nvim',
     enabled = rvim.lsp.enable,
-    event = 'LspAttach',
+    -- event = 'LspAttach',
     opts = { win_h_offset = 6 },
   },
   {
@@ -952,6 +952,30 @@ return {
   { 'raimon49/requirements.txt.vim', lazy = false },
   { 'gennaro-tedesco/nvim-jqx', ft = { 'json', 'yaml' } },
   {
+    'AckslD/nvim-FeMaco.lua',
+    cmd = { 'FeMaco' },
+    opts = {
+      float_opts = function(code_block)
+        local clip_val = require('femaco.utils').clip_val
+        return {
+          relative = 'cursor',
+          width = clip_val(5, 120, vim.api.nvim_win_get_width(0) - 10),
+          height = clip_val(
+            5,
+            #code_block.lines,
+            vim.api.nvim_win_get_height(0) - 6
+          ),
+          anchor = 'NW',
+          row = 0,
+          col = 0,
+          style = 'minimal',
+          border = ui.current.border,
+          zindex = 1,
+        }
+      end,
+    },
+  },
+  {
     'whatyouhide/vim-lengthmatters',
     lazy = false,
     config = function()
@@ -1321,7 +1345,13 @@ return {
     enabled = rvim.treesitter.enable,
     event = 'BufRead',
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
-    ft = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact', 'svelte' },
+    ft = {
+      'javascript',
+      'javascriptreact',
+      'typescript',
+      'typescriptreact',
+      'svelte',
+    },
     opts = { remove_template_string = true },
   },
   {
