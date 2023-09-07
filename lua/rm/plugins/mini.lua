@@ -39,11 +39,22 @@ return {
     },
   },
   { 'echasnovski/mini.misc', opts = {} },
-  { 'echasnovski/mini.bracketed', event = 'VeryLazy', opts = {} },
+  {
+    'echasnovski/mini.bracketed',
+    enabled = not rvim.plugins.minimal,
+    event = 'VeryLazy',
+    opts = {},
+  },
   {
     'echasnovski/mini.animate',
     enabled = false,
     event = 'VeryLazy',
+    opts = {},
+  },
+  {
+    'echasnovski/mini.cursorword',
+    enabled = not rvim.plugins.minimal,
+    event = { 'BufRead', 'BufNewFile' },
     opts = {},
   },
   {

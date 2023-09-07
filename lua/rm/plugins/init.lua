@@ -596,7 +596,6 @@ return {
   },
   {
     'karb94/neoscroll.nvim',
-    enabled = not rvim.plugins.minimal,
     event = 'BufRead',
     opts = {
       mappings = { '<C-d>', '<C-u>', '<C-y>', 'zt', 'zz', 'zb' },
@@ -871,6 +870,7 @@ return {
   },
   {
     'luckasRanarison/nvim-devdocs',
+    enabled = not rvim.plugins.minimal,
     event = 'VeryLazy',
     dependencies = {
       'nvim-lua/plenary.nvim',

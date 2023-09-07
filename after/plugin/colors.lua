@@ -63,13 +63,7 @@ local function general_overrides()
       },
     },
     { LspReferenceRead = { link = 'LspReferenceText' } },
-    {
-      LspReferenceWrite = {
-        inherit = 'LspReferenceText',
-        bold = true,
-        underline = true,
-      },
-    },
+    { LspReferenceWrite = { inherit = 'LspReferenceText', bold = true } },
     { LspSignatureActiveParameter = { link = 'Visual' } },
     { DiagnosticFloatTitle = { inherit = 'FloatTitle', bold = true } },
     {
