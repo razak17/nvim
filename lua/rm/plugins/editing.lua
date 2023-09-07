@@ -155,6 +155,18 @@ return {
     opts = { snippet_engine = 'luasnip' },
   },
   {
+    'ckolkey/ts-node-action',
+    dependencies = { 'nvim-treesitter' },
+    keys = {
+      {
+        '<leader>k',
+        function() require('ts-node-action').node_action() end,
+        desc = 'ts-node-action: run',
+      },
+    },
+    opts = {},
+  },
+  {
     'Wansmer/treesj',
     enabled = rvim.treesitter.enable,
     keys = {
