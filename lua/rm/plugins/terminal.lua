@@ -5,7 +5,6 @@ return {
   {
     'akinsho/toggleterm.nvim',
     event = 'VeryLazy',
-    commit = '09fa002',
     opts = {
       open_mapping = [[<c-\>]],
       shade_filetypes = { 'none' },
