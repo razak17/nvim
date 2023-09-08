@@ -43,6 +43,7 @@ return {
         r = { name = 'Run' },
         s = { name = 'Splits' },
         t = { name = 'Testing' },
+        tc = { name = 'Coverage' },
         tn = { name = 'Neotest' },
         to = { name = 'Overseer' },
         tv = { name = 'Vim-test' },

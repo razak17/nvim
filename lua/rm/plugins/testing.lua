@@ -150,22 +150,22 @@ return {
     'andythigpen/nvim-coverage',
     keys = {
       {
-        '<leader>tl',
+        '<leader>tcl',
         function() require('coverage').load(true) end,
         desc = 'coverage: load',
       },
       {
-        '<leader>tc',
+        '<leader>tcc',
         function() require('coverage').clear() end,
         desc = 'coverage: clear',
       },
       {
-        '<leader>tt',
+        '<leader>tct',
         function() require('coverage').toggle() end,
         desc = 'coverage: toggle',
       },
       {
-        '<leader>ts',
+        '<leader>tcs',
         function() require('coverage').summary() end,
         desc = 'coverage: summary',
       },
