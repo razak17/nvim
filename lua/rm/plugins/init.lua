@@ -1,20 +1,7 @@
 local api, cmd, fn = vim.api, vim.cmd, vim.fn
 local fmt = string.format
-local ui, highlight, augroup = rvim.ui, rvim.highlight, rvim.augroup
+local ui, highlight = rvim.ui, rvim.highlight
 local border = ui.current.border
-
-local function float_resize_autocmd(autocmd_name, ft, command)
-  augroup(autocmd_name, {
-    event = 'VimResized',
-    pattern = '*',
-    command = function()
-      if vim.bo.ft == ft then
-        vim.api.nvim_win_close(0, true)
-        vim.cmd(command)
-      end
-    end,
-  })
-end
 
 return {
   ------------------------------------------------------------------------------
@@ -26,22 +13,7 @@ return {
     'olimorris/persisted.nvim',
     enabled = not rvim.plugins.minimal,
     lazy = false,
-    init = function()
-      rvim.command('ListSessions', 'Telescope persisted')
-      augroup('PersistedEvents', {
-        event = 'User',
-        pattern = 'PersistedTelescopeLoadPre',
-        command = function()
-          vim.schedule(function() cmd('%bd') end)
-        end,
-      }, {
-        event = 'User',
-        pattern = 'PersistedSavePre',
-        -- Arguments are always persisted in a session and can't be removed using 'sessionoptions'
-        -- so remove them when saving a session
-        command = function() cmd('%argdelete') end,
-      })
-    end,
+    init = function() rvim.command('ListSessions', 'Telescope persisted') end,
     opts = {
       use_git_branch = true,
       save_dir = fn.expand(vim.fn.stdpath('cache') .. '/sessions/'),
@@ -139,7 +111,6 @@ return {
           'neovim/nvim-lspconfig',
           config = function()
             require('lspconfig.ui.windows').default_options.border = border
-            float_resize_autocmd('LspInfoResize', 'lspinfo', 'LspInfo')
           end,
           dependencies = {
             {
@@ -1198,13 +1169,10 @@ return {
     enabled = not rvim.plugins.minimal,
     cmd = 'Glow',
     ft = 'markdown',
-    config = function()
-      require('glow').setup({
-        border = 'single',
-        width = 120,
-      })
-      float_resize_autocmd('GlowResize', 'glowpreview', 'Glow')
-    end,
+    opts = {
+      border = 'single',
+      width = 120,
+    },
   },
   {
     'razak17/md-headers.nvim',
@@ -1292,18 +1260,6 @@ return {
       popup = { autofocus = true, border = border },
       null_ls = { enabled = true, name = 'crates' },
     },
-    config = function(_, opts)
-      augroup('CmpSourceCargo', {
-        event = 'BufRead',
-        pattern = 'Cargo.toml',
-        command = function()
-          require('cmp').setup.buffer({
-            sources = { { name = 'crates', priority = 3, group_index = 1 } },
-          })
-        end,
-      })
-      require('crates').setup(opts)
-    end,
   },
   {
     'bennypowers/template-literal-comments.nvim',
@@ -1376,17 +1332,6 @@ return {
             { TypeVirtualText = { link = 'DiagnosticVirtualTextInfo' } },
           },
         },
-      })
-      augroup('TwoSlashQueriesSetup', {
-        event = 'LspAttach',
-        command = function(args)
-          local id = vim.tbl_get(args, 'data', 'client_id')
-          if not id then return end
-          local client = vim.lsp.get_client_by_id(id)
-          if client and client.name == 'tsserver' then
-            require('twoslash-queries').attach(client, args.buf)
-          end
-        end,
       })
     end,
   },

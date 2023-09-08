@@ -36,19 +36,6 @@ return {
     'razak17/smartcolumn.nvim',
     enabled = not rvim.plugins.minimal,
     event = 'VeryLazy',
-    init = function()
-      rvim.augroup('SmartCol', {
-        event = { 'VimEnter', 'BufEnter', 'WinEnter' },
-        command = function(args)
-          decorations.set_colorcolumn(
-            args.buf,
-            function(colorcolumn)
-              require('smartcolumn').setup_buffer({ colorcolumn = colorcolumn })
-            end
-          )
-        end,
-      })
-    end,
     opts = {},
     dependencies = {
       {

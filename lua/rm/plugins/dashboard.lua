@@ -1,4 +1,4 @@
-local api, opt, f = vim.api, vim.opt_local, string.format
+local f = string.format
 
 return {
   'goolord/alpha-nvim',
@@ -128,22 +128,6 @@ return {
         version,
       },
       opts = { margin = 5 },
-    })
-
-    rvim.augroup('AlphaSettings', {
-      event = { 'User ' },
-      pattern = { 'AlphaReady' },
-      command = function(args)
-        opt.foldenable = false
-        opt.colorcolumn = ''
-        vim.o.laststatus = 0
-        map('n', 'q', '<Cmd>Alpha<CR>', { buffer = args.buf, nowait = true })
-
-        api.nvim_create_autocmd('BufUnload', {
-          buffer = args.buf,
-          callback = function() vim.o.laststatus = 3 end,
-        })
-      end,
     })
   end,
 }

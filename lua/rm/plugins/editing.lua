@@ -411,22 +411,6 @@ return {
       and rvim.plugins.overrides.ghost_text.enable,
     lazy = false,
     event = { 'BufReadPost', 'BufNewFile' },
-    config = function()
-      vim.api.nvim_create_augroup(
-        'nvim_ghost_user_autocommands',
-        { clear = false }
-      )
-      vim.api.nvim_create_autocmd('User', {
-        pattern = {
-          'www.reddit.com',
-          'www.github.com',
-          'www.protectedtext.com',
-          '*github.com',
-        },
-        command = 'setfiletype markdown',
-        group = 'nvim_ghost_user_autocommands',
-      })
-    end,
   },
 
   {

@@ -1,8 +1,9 @@
 if not rvim or rvim and rvim.none then return end
-local augroup, is_available = rvim.augroup, rvim.is_available
+local augroup, is_available, format_text =
+  rvim.augroup, rvim.is_available, rvim.format_text
 
-local fn, api, env, v, cmd = vim.fn, vim.api, vim.env, vim.v, vim.cmd
-local fmt = string.format
+local fn, api, env, v, cmd, opt =
+  vim.fn, vim.api, vim.env, vim.v, vim.cmd, vim.opt
 local falsy = rvim.falsy
 
 --------------------------------------------------------------------------------
@@ -274,7 +275,9 @@ augroup('Utilities', {
     end
   end,
 })
-
+--------------------------------------------------------------------------------
+-- Plugin specific
+--------------------------------------------------------------------------------
 if is_available('alpha-nvim') then
   augroup('AlphaAutoStart', {
     -- ref: https://github.com/AstroNvim/AstroNvim/blob/main/lua/astronvim/autocmds.lua#L191
@@ -313,6 +316,21 @@ if is_available('alpha-nvim') then
       vim.schedule(function() vim.cmd.doautocmd('FileType') end)
     end,
   })
+  augroup('AlphaSettings', {
+    event = { 'User ' },
+    pattern = { 'AlphaReady' },
+    command = function(args)
+      opt.foldenable = false
+      opt.colorcolumn = ''
+      vim.o.laststatus = 0
+      map('n', 'q', '<Cmd>Alpha<CR>', { buffer = args.buf, nowait = true })
+
+      api.nvim_create_autocmd('BufUnload', {
+        buffer = args.buf,
+        callback = function() vim.o.laststatus = 3 end,
+      })
+    end,
+  })
 end
 
 if is_available('neo-tree.nvim') then
@@ -349,4 +367,134 @@ if is_available('indent-blankline.nvim') then
       end
     end,
   })
+end
+
+if is_available('gitsigns.nvim') then
+  augroup('GitSignsRefreshCustom', {
+    event = { 'InsertEnter', 'CursorHold' },
+    command = function(args)
+      local decs = rvim.ui.decorations.get({
+        ft = vim.bo.ft,
+        bt = vim.bo.bt,
+        setting = 'statuscolumn',
+      })
+      if decs and decs.ft == false or decs and decs.bt == false then return end
+
+      local lnum = vim.v.lnum
+      local signs = vim.api.nvim_buf_get_extmarks(
+        args.buf,
+        -1,
+        { lnum, 0 },
+        { lnum, -1 },
+        { details = true, type = 'sign' }
+      )
+      local function get_signs()
+        return vim
+          .iter(signs)
+          :map(function(item) return format_text(item[4], 'sign_text') end)
+          :fold({}, function(_, item) return item.sign_hl_group end)
+      end
+
+      local sns = get_signs()
+      if sns ~= 'GitSignsStagedAdd' then return end
+
+      vim.defer_fn(function()
+        local inner_sns = get_signs()
+        if inner_sns ~= 'GitSignsStagedAdd' then return end
+        vim.cmd('silent! lua require("gitsigns").refresh()')
+        vim.notify('gitsigns refreshed', 'info', { title = 'gitsigns' })
+      end, 500)
+    end,
+  })
+end
+
+if is_available('crates.nvim') then
+  augroup('CmpSourceCargo', {
+    event = 'BufRead',
+    pattern = 'Cargo.toml',
+    command = function()
+      require('cmp').setup.buffer({
+        sources = { { name = 'crates', priority = 3, group_index = 1 } },
+      })
+    end,
+  })
+end
+
+if is_available('twoslash-queries.nvim') then
+  augroup('TwoSlashQueriesSetup', {
+    event = 'LspAttach',
+    command = function(args)
+      local id = vim.tbl_get(args, 'data', 'client_id')
+      if not id then return end
+      local client = vim.lsp.get_client_by_id(id)
+      if client and client.name == 'tsserver' then
+        require('twoslash-queries').attach(client, args.buf)
+      end
+    end,
+  })
+end
+
+if is_available('persisted.nvim') then
+  augroup('PersistedEvents', {
+    event = 'User',
+    pattern = 'PersistedTelescopeLoadPre',
+    command = function()
+      vim.schedule(function() cmd('%bd') end)
+    end,
+  }, {
+    event = 'User',
+    pattern = 'PersistedSavePre',
+    -- Arguments are always persisted in a session and can't be removed using 'sessionoptions'
+    -- so remove them when saving a session
+    command = function() cmd('%argdelete') end,
+  })
+end
+
+if is_available('nvim-ghost.nvim') then
+  api.nvim_create_augroup('NvimGhostUserAutocommands', { clear = false })
+  api.nvim_create_autocmd('User', {
+    group = 'NvimGhostUserAutocommands',
+    pattern = {
+      'www.reddit.com',
+      'www.github.com',
+      'www.protectedtext.com',
+      '*github.com',
+    },
+    command = 'setfiletype markdown',
+  })
+end
+
+if is_available('smartcolumn.nvim') then
+  rvim.augroup('SmartCol', {
+    event = { 'VimEnter', 'BufEnter', 'WinEnter' },
+    command = function(args)
+      rvim.ui.decorations.set_colorcolumn(
+        args.buf,
+        function(colorcolumn)
+          require('smartcolumn').setup_buffer({ colorcolumn = colorcolumn })
+        end
+      )
+    end,
+  })
+end
+
+local function float_resize_autocmd(autocmd_name, ft, command)
+  augroup(autocmd_name, {
+    event = 'VimResized',
+    pattern = '*',
+    command = function()
+      if vim.bo.ft == ft then
+        vim.api.nvim_win_close(0, true)
+        vim.cmd(command)
+      end
+    end,
+  })
+end
+
+if is_available('nvim-lspconfig') then
+  float_resize_autocmd('LspInfoResize', 'lspinfo', 'LspInfo')
+end
+
+if is_available('glow.nvim') then
+  float_resize_autocmd('GlowResize', 'glowpreview', 'Glow')
 end
