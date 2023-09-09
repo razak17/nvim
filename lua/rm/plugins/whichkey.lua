@@ -72,11 +72,21 @@ return {
     })
 
     which_key.register({
-      l = 'lsp',
+      d = { name = 'Delete' },
+      f = { name = 'File' },
+      g = { name = 'Git' },
+      go = { name = 'Open' },
+      l = { name = 'Lsp' },
     }, { mode = 'x', prefix = '<leader>' })
 
     which_key.register({
-      g = 'git',
+      a = { name = 'A.I.' },
+      g = { name = 'Git' },
+      h = { name = 'Gitsigns' },
+      n = { name = 'Nag' },
+      q = { name = 'NeoComposer' },
+      r = { name = 'Run' },
+      s = { name = 'Slime' },
     }, { mode = 'x', prefix = '<localleader>' })
 
     rvim.augroup('WhichKeyMode', {
