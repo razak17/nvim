@@ -259,7 +259,6 @@ local function telescope_branches_mappings(prompt_bufnr, map)
         '.',
       },
       layout_config = { width = 0.9, horizontal = { preview_width = 0.5 } },
-      previewer = rvim.delta_opts.previewer,
     })
   end)
   map('i', '<C-h>', function(nr) -- history

@@ -436,13 +436,13 @@ end
 
 if is_available('persisted.nvim') then
   augroup('PersistedEvents', {
-    event = 'User',
+    event = { 'User' },
     pattern = 'PersistedTelescopeLoadPre',
     command = function()
       vim.schedule(function() cmd('%bd') end)
     end,
   }, {
-    event = 'User',
+    event = { 'User' },
     pattern = 'PersistedSavePre',
     -- Arguments are always persisted in a session and can't be removed using 'sessionoptions'
     -- so remove them when saving a session
