@@ -42,6 +42,7 @@ return {
         split = { key = 's', command = 'split' },
         vsplit = { key = 'v', command = 'vsplit' },
       },
+      go_to = { enabled = false },
     },
     config = function(_, _opts)
       rvim.highlight.plugin('buffalo', {
