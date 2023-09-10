@@ -1,4 +1,4 @@
-if not rvim or not rvim.plugins.enable or rvim.plugins.minimal then return end
+if not rvim or not rvim.plugins.enable then return end
 
 local ui = rvim.ui
 
@@ -47,6 +47,7 @@ end
 
 rvim.command('ToggleRelativeNumber', function()
   is_enabled = not is_enabled
+  print('DEBUGPRINT[2]: numbers.lua:49: is_enabled=' .. vim.inspect(is_enabled))
   if is_enabled then
     enable_relative_number()
   else
