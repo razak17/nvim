@@ -30,11 +30,12 @@ local function is_blocked()
 
   local decs =
     ui.decorations.get({ ft = vim.bo.ft, bt = vim.bo.bt, setting = 'number' })
+  if not decs or rvim.falsy(decs) then return true end
   return decs.ft == false or decs.bt == false
 end
 
 local function enable_relative_number()
-  if not is_enabled then return end
+  if not is_enabled or is_blocked() then return end
   if is_ignored() then return end
   local enabled = not is_blocked()
   vim.wo.number, vim.wo.relativenumber = enabled, enabled
@@ -47,7 +48,6 @@ end
 
 rvim.command('ToggleRelativeNumber', function()
   is_enabled = not is_enabled
-  print('DEBUGPRINT[2]: numbers.lua:49: is_enabled=' .. vim.inspect(is_enabled))
   if is_enabled then
     enable_relative_number()
   else
