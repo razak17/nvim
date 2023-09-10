@@ -30,7 +30,7 @@ local function is_blocked()
 
   local decs =
     ui.decorations.get({ ft = vim.bo.ft, bt = vim.bo.bt, setting = 'number' })
-  if not decs or rvim.falsy(decs) then return true end
+  if not decs or vim.bo.ft == '' then return true end
   return decs.ft == false or decs.bt == false
 end
 
