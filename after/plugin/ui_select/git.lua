@@ -90,7 +90,7 @@ end
 
 map(
   'n',
-  '<leader>ga',
+  '<leader>gg',
   git_menu,
   { desc = '[g]it [a]ctions: open menu for git commands' }
 )
