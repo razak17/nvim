@@ -69,7 +69,7 @@ return {
     opts = {
       window = { width = 90 },
       plugins = {
-        kitty = { enabled = true, font = '+2' },
+        kitty = { enabled = true, font = '+0' },
         tmux = { enabled = true },
       },
     },
