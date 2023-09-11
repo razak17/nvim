@@ -118,6 +118,12 @@ local function textcase()
     rvim.telescope.minimal_ui({ prompt_title = 'Text Case' })
   )
 end
+local function import()
+  extensions('import').import(
+    -- vertical()
+    rvim.telescope.minimal_ui({ prompt_title = 'Harpoon Marks' })
+  )
+end
 local function file_browser()
   extensions('file_browser').file_browser({ hidden = true })
 end
@@ -188,6 +194,7 @@ return {
       { '<leader>fc', nvim_config, desc = 'nvim config' },
       -- { '<leader>ff', project_files, desc = 'project files' },
       { '<leader>fh', frecency, desc = 'Most (f)recently used files' },
+      { '<leader>fi', import, desc = 'import' },
       { '<leader>fL', luasnips, desc = 'luasnip: available snippets' },
       { '<leader>fn', notifications, desc = 'notify: notifications' },
       { '<leader>fN', notes, desc = 'notes' },
@@ -392,12 +399,13 @@ return {
       require('telescope').load_extension('menufacture')
       require('telescope').load_extension('notify')
       require('telescope').load_extension('file_browser')
-      -- require('telescope').load_extension('textcase')
+      require('telescope').load_extension('textcase')
+      require('telescope').load_extension('harpoon')
+      require('telescope').load_extension('import')
       if not rvim.plugins.minimal then
         require('telescope').load_extension('persisted')
         require('telescope').load_extension('projects')
       end
-      -- if rvim.is_available('harpoon') then require('telescope').load_extension('harpoon') end
 
       vim.api.nvim_exec_autocmds(
         'User',
@@ -410,6 +418,7 @@ return {
       'debugloop/telescope-undo.nvim',
       'molecule-man/telescope-menufacture',
       'nvim-telescope/telescope-file-browser.nvim',
+      'razak17/telescope-import.nvim',
     },
   },
 }
