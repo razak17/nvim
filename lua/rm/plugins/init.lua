@@ -356,6 +356,7 @@ return {
   ------------------------------------------------------------------------------
   { 'sQVe/sort.nvim', cmd = { 'Sort' } },
   { 'lambdalisue/suda.vim', lazy = false },
+  { 'will133/vim-dirdiff', cmd = 'DirDiff' },
   {
     'itchyny/vim-highlighturl',
     event = 'ColorScheme',
@@ -537,7 +538,6 @@ return {
     enabled = rvim.lsp.enable,
     opts = { setupFoldKeymaps = false },
   },
-  { 'will133/vim-dirdiff', cmd = 'DirDiff' },
   {
     'AndrewRadev/linediff.vim',
     cmd = 'Linediff',
@@ -917,6 +917,11 @@ return {
       vim.g.db_ui_notification_width = 1
       vim.g.db_ui_debug = 1
     end,
+  },
+  {
+    'NStefan002/speedtyper.nvim',
+    cmd = 'Speedtyper',
+    opts = {},
   },
   -- }}}
   ------------------------------------------------------------------------------
