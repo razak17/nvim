@@ -294,7 +294,7 @@ end
 
 map(
   'n',
-  '<leader>ll',
+  '<localleader>ll',
   lsp_menu,
   { desc = '[l]sp [a]ctions: open menu for lsp features' }
 )

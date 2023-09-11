@@ -142,7 +142,7 @@ end
 
 map(
   'n',
-  '<leader>fl',
+  '<localleader>ff',
   file_menu,
   { desc = '[f]ile [a]ctions: open menu for file actions' }
 )
