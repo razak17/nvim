@@ -90,7 +90,7 @@ return {
   },
   {
     'stevearc/stickybuf.nvim',
-    event = 'VeryLazy',
+    cmd = { 'PinBuffer', 'PinBuftype', 'PinFiletype', 'Unpin' },
     opts = {},
   },
   {
