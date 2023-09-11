@@ -8,7 +8,6 @@ local servers = {
   cmake = {},
   cssls = {},
   dockerls = {},
-  eslint = {},
   lemminx = {},
   marksman = {},
   prismals = {},
@@ -16,6 +15,12 @@ local servers = {
   yamlls = {},
   vimls = {},
   volar = {},
+  eslint = {
+    settings = {
+      -- helps eslint find the eslintrc when it's placed in a subfolder instead of the cwd root
+      workingDirectory = { mode = 'auto' },
+    },
+  },
   docker_compose_language_service = function()
     local lspconfig = require('lspconfig')
     return {
