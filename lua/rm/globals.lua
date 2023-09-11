@@ -326,7 +326,7 @@ end
 --- replicate netrw functionality
 ---@param path string
 function rvim.open(path)
-  fn.jobstart({ rvim.open_command, path }, { detach = true })
+  vim.system({ rvim.open_command, path }, { detach = true })
   vim.notify(fmt('Opening %s', path))
 end
 
