@@ -38,6 +38,7 @@ local namespace = {
   ui = {
     statuscolumn = { enable = true },
   },
+  interceptor = { enable = true },
 }
 
 _G.rvim = rvim or namespace
