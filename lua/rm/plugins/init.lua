@@ -542,7 +542,7 @@ return {
     'AndrewRadev/linediff.vim',
     cmd = 'Linediff',
     keys = {
-      { '<localleader>ll', '<cmd>Linediff<CR>', desc = 'linediff: toggle' },
+      { '<localleader>lL', '<cmd>Linediff<CR>', desc = 'linediff: toggle' },
     },
   },
   {

@@ -189,8 +189,12 @@ local function setup_mappings(client, bufnr)
       desc = 'rename',
       capability = M.textDocument_rename,
     },
-    -- TODO: loclist is broken
-    -- { 'n', '<leader>lL', vim.diagnostic.setloclist, desc = 'toggle loclist diagnostics' },
+    {
+      'n',
+      '<leader>ll',
+      vim.diagnostic.setloclist,
+      desc = 'toggle loclist diagnostics',
+    },
     { 'n', '<leader>li', '<Cmd>LspInfo<CR>', desc = 'lsp info' },
     {
       'n',
@@ -234,6 +238,11 @@ local client_overrides = {
       then
         lsp.semantic_tokens.highlight_token(token, bufnr, client.id, '@danger')
       end
+    end,
+    on_attach = function(client)
+      -- this is important, otherwise tsserver will format ts/js
+      -- files which we *really* don't want.
+      client.server_capabilities.documentFormattingProvider = false
     end,
   },
 }

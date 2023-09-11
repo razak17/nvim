@@ -331,8 +331,7 @@ map('n', 'gx', function()
 end, { desc = 'open link' })
 --------------------------------------------------------------------------------
 nnoremap('<leader>lq', rvim.list.qf.toggle, { desc = 'toggle quickfix list' })
--- TODO: loclist is broken
--- nnoremap('<leader>ll', rvim.list.loc.toggle, { desc = 'toggle location list' })
+nnoremap('<leader>lL', rvim.list.loc.toggle, { desc = 'toggle location list' })
 --------------------------------------------------------------------------------
 -- Completion
 --------------------------------------------------------------------------------
