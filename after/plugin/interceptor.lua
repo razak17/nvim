@@ -1,6 +1,22 @@
 if not rvim then return end
 
+local api, fn = vim.api, vim.fn
+
+rvim.interceptor = { enable = true }
+
 -- ref: https://www.reddit.com/r/neovim/comments/16b0n3a/whats_your_new_favorite_functions_share_em/
+
+---@param msg string The notification message
+---@param title string The notification title
+local function notify(msg, title)
+  vim.notify(msg, vim.lsp.log_levels.INFO, {
+    title = title,
+    ---@param win integer The window handle
+    on_open = function(win)
+      api.nvim_buf_set_option(api.nvim_win_get_buf(win), 'filetype', 'markdown')
+    end,
+  })
+end
 
 ---Open a given file path in a given program and remove the buffer for the file.
 ---@param buf integer The buffer handle for the opening buffer
@@ -8,54 +24,26 @@ if not rvim then return end
 ---@param fname string The file name used in notifications
 -- TODO: when disabled then enabled again, causes errors with deleting buffer
 local function open_in_prog(buf, fpath, fname)
-  vim.notify(string.format('Opening `%s`', fname), vim.log.levels.INFO, {
-    title = 'Open File in External Program',
-    ---@param win integer The window handle
-    on_open = function(win)
-      vim.api.nvim_buf_set_option(
-        vim.api.nvim_win_get_buf(win),
-        'filetype',
-        'markdown'
-      )
-    end,
-  })
+  notify(string.format('Opening `%s`', fname), 'Open File in External Program')
   vim.system({ rvim.open_command, fpath }, { detach = true })
-  print('DEBUGPRINT[1]: interceptor.lua:54: buf=' .. vim.inspect(buf))
-  vim.api.nvim_buf_delete(buf, { force = true })
+  api.nvim_buf_delete(buf, { force = true })
 end
 
 rvim.command('InterceptToggle', function()
   rvim.interceptor.enable = not rvim.interceptor.enable
-  local intercept_state = '`Enabled`'
-  if not rvim.interceptor.enable then intercept_state = '`Disabled`' end
-  vim.notify(
-    'Intercept file open set to ' .. intercept_state,
-    vim.log.levels.INFO,
-    {
-      title = 'Intercept File Open',
-      ---@param win integer The window handle
-      on_open = function(win)
-        vim.api.nvim_buf_set_option(
-          vim.api.nvim_win_get_buf(win),
-          'filetype',
-          'markdown'
-        )
-      end,
-    }
-  )
+  local state = '`Enabled`'
+  if not rvim.interceptor.enable then state = '`Disabled`' end
+  notify('Intercept file open set to ' .. state, 'Intercept File Open')
 end, { desc = 'Toggles intercepting BufNew to open files in custom programs' })
 
 rvim.augroup('InterceptToggle', {
   event = { 'BufNew', 'BufReadPre' },
-  pattern = { '*.jpg', '*.png', '*.pdf', '*.mp3', '*.mp4', '*.gif' },
+  pattern = { '**.png', '*.pdf', '*.mp3', '*.mp4', '*.gif' },
   command = function(args)
     if not rvim.interceptor.enable then return end
-
-    local path = args.match
-    local bufnr = args.buf
-    local extension = vim.fn.fnamemodify(path, ':e')
-    local filename = vim.fn.fnamemodify(path, ':t')
-
+    local path, bufnr = args.match, args.buf
+    local extension = fn.fnamemodify(path, ':e')
+    local filename = fn.fnamemodify(path, ':t')
     if
       filename
       and type(path) == 'string'
