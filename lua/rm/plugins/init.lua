@@ -357,6 +357,7 @@ return {
   { 'sQVe/sort.nvim', cmd = { 'Sort' } },
   { 'lambdalisue/suda.vim', lazy = false },
   { 'will133/vim-dirdiff', cmd = 'DirDiff' },
+  { "godlygeek/tabular", cmd = { "Tabularize" } },
   {
     'itchyny/vim-highlighturl',
     event = 'ColorScheme',

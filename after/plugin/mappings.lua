@@ -229,7 +229,7 @@ cnoremap(
 )
 -- insert path of current file into a command
 cnoremap('%%', "<C-r>=fnameescape(expand('%'))<cr>")
-cnoremap('::', "<C-r>=fnameescape(expand('%:p:h'))<cr>/")
+-- cnoremap('::', "<C-r>=fnameescape(expand('%:p:h'))<cr>/")
 --------------------------------------------------------------------------------
 -- NOTE: this uses write specifically because we need to trigger a filesystem event
 -- even if the file isn't changed so that things like hot reload work
