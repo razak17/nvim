@@ -38,7 +38,7 @@ function rvim.toggle_notepad()
 
     -- Keymaps
     local keymaps_opts = { silent = true, buffer = rvim.notepad.buf }
-    map('n', '<ESC>', rvim.toggle_notepad, keymaps_opts)
+    -- map('n', '<ESC>', rvim.toggle_notepad, keymaps_opts)
     map('n', 'q', rvim.toggle_notepad, keymaps_opts)
   else
     api.nvim_win_hide(rvim.notepad.win)
