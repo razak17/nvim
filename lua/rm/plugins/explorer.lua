@@ -175,18 +175,42 @@ return {
     end,
   },
   {
-    'razak17/oil.nvim',
-    keys = {
-      {
-        '-',
-        function()
-          vim.cmd('vsplit | wincmd l | vertical resize 40')
-          require('oil').open()
-        end,
-        desc = 'open parent directory',
+    'stevearc/oil.nvim',
+    event = 'VeryLazy',
+    opts = {
+      delete_to_trash = true,
+      skip_confirm_for_simple_edits = true,
+      restore_win_options = false,
+      prompt_save_on_select_new_entry = false,
+      keymaps = {
+        ['`'] = 'actions.tcd',
+        ['~'] = '<cmd>edit $HOME<CR>',
+        ['<leader>q'] = 'actions.close',
+        ['<leader>t'] = 'actions.open_terminal',
+        ['gd'] = {
+          desc = 'Toggle detail view',
+          callback = function()
+            local oil = require('oil')
+            local config = require('oil.config')
+            if #config.columns == 1 then
+              oil.set_columns({ 'icon', 'permissions', 'size', 'mtime' })
+            else
+              oil.set_columns({ 'icon' })
+            end
+          end,
+        },
       },
     },
-    opts = { skip_confirm_for_simple_edits = true },
-    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    config = function(_, opts)
+      local oil = require('oil')
+      oil.setup(opts)
+      map('n', '-', oil.open, { desc = 'Open parent directory' })
+      map(
+        'n',
+        '_',
+        function() oil.open(vim.fn.getcwd()) end,
+        { desc = 'Open cwd' }
+      )
+    end,
   },
 }
