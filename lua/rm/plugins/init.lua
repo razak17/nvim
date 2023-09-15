@@ -357,7 +357,7 @@ return {
   { 'sQVe/sort.nvim', cmd = { 'Sort' } },
   { 'lambdalisue/suda.vim', lazy = false },
   { 'will133/vim-dirdiff', cmd = 'DirDiff' },
-  { "godlygeek/tabular", cmd = { "Tabularize" } },
+  { 'godlygeek/tabular', cmd = { 'Tabularize' } },
   {
     'itchyny/vim-highlighturl',
     event = 'ColorScheme',
@@ -588,23 +588,30 @@ return {
   },
   {
     'willothy/flatten.nvim',
-    -- enabled = not rvim.plugins.minimal,
-    -- TODO: Causes weird bug where only one instance of nvim can run at a time
-    enabled = false,
     lazy = false,
     priority = 1001,
     opts = {
-      window = { open = 'current' },
-      callbacks = {
-        block_end = function() require('toggleterm').toggle() end,
-        post_open = function(_, winnr, _, is_blocking)
-          if is_blocking then
-            require('toggleterm').toggle()
-          else
-            api.nvim_set_current_win(winnr)
-          end
-        end,
+      window = { open = 'tab' },
+      block_for = {
+        gitcommit = true,
+        gitrebase = true,
       },
+      post_open = function(bufnr, winnr, ft, is_blocking)
+        vim.w[winnr].is_remote = true
+        if is_blocking then
+          vim.bo.bufhidden = 'wipe'
+          vim.api.nvim_create_autocmd('BufHidden', {
+            desc = 'Close window when buffer is hidden',
+            callback = function()
+              if vim.api.nvim_win_is_valid(winnr) then
+                vim.api.nvim_win_close(winnr, true)
+              end
+            end,
+            buffer = bufnr,
+            once = true,
+          })
+        end
+      end,
     },
   },
   {
