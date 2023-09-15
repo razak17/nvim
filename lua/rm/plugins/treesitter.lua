@@ -155,9 +155,11 @@ return {
   },
   {
     'andymass/vim-matchup',
-    event = 'BufReadPost',
+    event = { 'BufReadPre', 'BufNewFile' },
     enabled = rvim.treesitter.enable,
     keys = {
+      { '[[', '<plug>(matchup-[%)', mode = { 'n', 'x' } },
+      { ']]', '<plug>(matchup-]%)', mode = { 'n', 'x' } },
       {
         '<localleader>lw',
         ':<c-u>MatchupWhereAmI?<CR>',
@@ -165,13 +167,17 @@ return {
       },
     },
     config = function()
-      vim.g.matchup_matchparen_offscreen = { method = 'status_manual' }
-      vim.g.matchup_matchparen_deferred = 1
       highlight.plugin('vim-matchup', {
         { MatchWord = { inherit = 'LspReferenceText', underline = true } },
         { MatchParenCursor = { link = 'MatchParen' } },
         { MatchParenOffscreen = { link = 'MatchParen' } },
       })
+      vim.g.matchup_surround_enabled = 1
+      vim.g.matchup_matchparen_nomode = 'i'
+      vim.g.matchup_matchparen_deferred = 1
+      vim.g.matchup_matchparen_deferred_show_delay = 400
+      vim.g.matchup_matchparen_deferred_hide_delay = 400
+      vim.g.matchup_matchparen_offscreen = {}
     end,
   },
   {
