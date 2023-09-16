@@ -144,14 +144,35 @@ return {
     keys = {
       {
         'n',
-        "<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>",
+        [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]],
+        mode = 'n',
       },
       {
         'N',
-        "<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>",
+        [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]],
+        mode = 'n',
       },
-      { '*', "*<Cmd>lua require('hlslens').start()<CR>" },
-      { '#', "#<Cmd>lua require('hlslens').start()<CR>" },
+      -- Fix * and # behavior to respect smartcase
+      {
+        '*',
+        [[:let @/='\v<'.expand('<cword>').'>'<CR>:let v:searchforward=1<CR>:lua require('hlslens').start()<CR>nzv]],
+        mode = 'n',
+      },
+      {
+        '#',
+        [[:let @/='\v<'.expand('<cword>').'>'<CR>:let v:searchforward=0<CR>:lua require('hlslens').start()<CR>nzv]],
+        mode = 'n',
+      },
+      {
+        'g*',
+        [[:let @/='\v'.expand('<cword>')<CR>:let v:searchforward=1<CR>:lua require('hlslens').start()<CR>nzv]],
+        mode = 'n',
+      },
+      {
+        'g#',
+        [[:let @/='\v'.expand('<cword>')<CR>:let v:searchforward=0<CR>:lua require('hlslens').start()<CR>nzv]],
+        mode = 'n',
+      },
     },
     config = function()
       highlight.plugin('nvim-hlslens', {
@@ -243,6 +264,22 @@ return {
         },
       },
     },
+    config = function(_, opts)
+      require('dressing').setup(opts)
+      map('n', 'z=', function()
+        local word = vim.fn.expand('<cword>')
+        local suggestions = vim.fn.spellsuggest(word)
+        vim.ui.select(
+          suggestions,
+          {},
+          vim.schedule_wrap(function(selected)
+            if selected then
+              vim.cmd.normal({ args = { 'ciw' .. selected }, bang = true })
+            end
+          end)
+        )
+      end)
+    end,
   },
   {
     'folke/todo-comments.nvim',
@@ -527,6 +564,7 @@ return {
         '[LSP] Format request failed, no matching language servers.',
       }
 
+      ---@diagnostic disable-next-line: duplicate-set-field
       vim.notify = function(msg, level, opts)
         if vim.tbl_contains(ignored, msg) then return end
         return notify(msg, level, opts)
