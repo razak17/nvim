@@ -138,6 +138,15 @@ return {
         dapui.close()
       end
 
+      vim.schedule(function()
+        require('dap.ext.vscode').json_decode = require('overseer.json').decode
+        require('dap.ext.vscode').load_launchjs(
+          nil,
+          { node = { 'typescript', 'javascript' } }
+        )
+        require('overseer').patch_dap(true)
+      end)
+
       local js_debug = require('mason-registry').get_package('js-debug-adapter')
       local debug_server_path = js_debug:get_install_path()
         .. '/js-debug/src/dapDebugServer.js'
