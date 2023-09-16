@@ -299,6 +299,12 @@ return {
           { name = 'buffer-lines' },
         },
       })
+
+      vim.api.nvim_create_user_command(
+        'CmpInfo',
+        function() cmp.status() end,
+        {}
+      )
     end,
     dependencies = {
       'dmitmel/cmp-cmdline-history',
