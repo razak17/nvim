@@ -176,7 +176,21 @@ return {
   },
   {
     'stevearc/oil.nvim',
-    event = 'VeryLazy',
+    keys = {
+      {
+        '-',
+        function()
+          vim.cmd('vsplit | wincmd l | vertical resize 40')
+          require('oil').open()
+        end,
+        desc = 'open parent directory',
+      },
+      {
+        '_',
+        function() require('oil').open(vim.fn.getcwd()) end,
+        desc = 'Open cwd',
+      },
+    },
     opts = {
       delete_to_trash = true,
       skip_confirm_for_simple_edits = true,
@@ -201,16 +215,5 @@ return {
         },
       },
     },
-    config = function(_, opts)
-      local oil = require('oil')
-      oil.setup(opts)
-      map('n', '-', oil.open, { desc = 'Open parent directory' })
-      map(
-        'n',
-        '_',
-        function() oil.open(vim.fn.getcwd()) end,
-        { desc = 'Open cwd' }
-      )
-    end,
   },
 }
