@@ -52,6 +52,22 @@ return {
     opts = {},
   },
   {
+    'echasnovski/mini.trailspace',
+    keys = {
+      {
+        '<leader>wx',
+        '<Cmd>lua MiniTrailspace.trim()<CR>',
+        desc = 'trailspace: trim all',
+      },
+      {
+        '<leader>wl',
+        '<Cmd>lua MiniTrailspace.trim_last_lines()<CR>',
+        desc = 'trailspace: trim last lines',
+      },
+    },
+    opts = {},
+  },
+  {
     'echasnovski/mini.cursorword',
     enabled = false,
     event = { 'BufRead', 'BufNewFile' },

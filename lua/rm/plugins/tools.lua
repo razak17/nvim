@@ -93,7 +93,6 @@ return {
         -- typescriptreact = { 'eslint_d' },
         lua = { 'luacheck' },
         python = { 'flake8' },
-        rst = { 'rstlint' },
         sh = { 'shellcheck' },
         vim = { 'vint' },
         yaml = { 'yamllint' },
