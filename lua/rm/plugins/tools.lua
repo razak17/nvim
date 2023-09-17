@@ -3,7 +3,42 @@ local prettier = { 'prettierd', 'prettier' }
 
 return {
   {
+    'WhoIsSethDaniel/mason-tool-installer.nvim',
+    enabled = rvim.lsp.enable,
+    cmd = { 'MasonToolsInstall', 'MasonToolsUpdate' },
+    config = function()
+      local packages = {}
+      -- Add linters (from nvim-lint)
+      local lint_ok, lint = pcall(require, 'lint')
+      if lint_ok then
+        vim
+          .iter(pairs(lint.linters_by_ft))
+          :map(function(_, l)
+            if type(l) == 'table' then
+              table.insert(packages, table.concat(l, ','))
+            end
+            if type(l) == 'string' then table.insert(packages, l) end
+          end)
+          :totable()
+      end
+      -- Add formatters (from conform.nvim)
+      local conform_ok, conform = pcall(require, 'conform')
+      if conform_ok then
+        vim
+          .iter(pairs(conform.list_all_formatters()))
+          :map(function(_, f) table.insert(packages, f.name) end)
+          :totable()
+      end
+      require('mason-tool-installer').setup({
+        ensure_installed = packages,
+        run_on_start = false,
+      })
+    end,
+    dependencies = { 'stevearc/conform.nvim', 'mfussenegger/nvim-lint' },
+  },
+  {
     'stevearc/conform.nvim',
+    enabled = rvim.lsp.enable,
     event = { 'BufReadPre', 'BufNewFile' },
     cmd = 'ConformInfo',
     keys = {
@@ -24,7 +59,7 @@ return {
         markdown = { prettier },
         graphql = { prettier },
         lua = { 'stylua' },
-        go = { 'goimports', 'gofmt' },
+        go = { 'goimports' },
         sh = { 'shfmt' },
         python = { 'isort', 'black', 'yapf' },
       },
@@ -69,6 +104,7 @@ return {
   },
   {
     'mfussenegger/nvim-lint',
+    enabled = rvim.lsp.enable,
     ft = {
       'javascript',
       'javascript.jsx',
@@ -91,12 +127,12 @@ return {
         -- typescript = { 'eslint_d' },
         -- ['typescript.tsx'] = { 'eslint_d' },
         -- typescriptreact = { 'eslint_d' },
-        lua = { 'luacheck' },
+        -- lua = { 'luacheck' },
         python = { 'flake8' },
         sh = { 'shellcheck' },
         vim = { 'vint' },
         yaml = { 'yamllint' },
-        go = { 'golangci_lint' },
+        go = { 'golangci-lint' },
       },
       linters = {},
     },

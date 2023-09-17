@@ -307,6 +307,7 @@ return {
       )
     end,
     dependencies = {
+      'razak17/lspkind.nvim',
       'dmitmel/cmp-cmdline-history',
       'hrsh7th/cmp-path',
       'hrsh7th/cmp-buffer',
