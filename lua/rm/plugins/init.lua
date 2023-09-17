@@ -1,4 +1,4 @@
-local api, cmd, fn = vim.api, vim.cmd, vim.fn
+local cmd, fn = vim.cmd, vim.fn
 local fmt = string.format
 local ui, highlight = rvim.ui, rvim.highlight
 local border = ui.current.border
@@ -95,6 +95,7 @@ return {
               if not rvim.find_string(rvim.lsp.override, name) then return end
             else
               local directory_disabled =
+                ---@diagnostic disable-next-line: param-type-mismatch
                 rvim.dirs_match(rvim.lsp.disabled.directories, cwd)
               local server_disabled =
                 rvim.find_string(rvim.lsp.disabled.servers, name)
@@ -596,7 +597,7 @@ return {
         gitcommit = true,
         gitrebase = true,
       },
-      post_open = function(bufnr, winnr, ft, is_blocking)
+      post_open = function(bufnr, winnr, _, is_blocking)
         vim.w[winnr].is_remote = true
         if is_blocking then
           vim.bo.bufhidden = 'wipe'

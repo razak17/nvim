@@ -5,13 +5,14 @@ local cwd = vim.fn.getcwd()
 local disabled = not rvim.lsp.enable
   or not rvim.plugins.enable
   or rvim.plugins.minimal
-  or rvim.dirs_match(rvim.lsp.disabled.directories, cwd)
+  or (cwd and rvim.dirs_match(rvim.lsp.disabled.directories, cwd))
 
 if disabled then return end
 
 local lsp, fn, api, fmt = vim.lsp, vim.fn, vim.api, string.format
 local L = vim.lsp.log_levels
 local M = vim.lsp.protocol.Methods
+local conform = rvim.is_available('conform.nvim')
 
 local diagnostic = vim.diagnostic
 local augroup, icons, border =
@@ -46,6 +47,10 @@ end
 
 ---@param opts {bufnr: integer, async: boolean, filter: fun(lsp.Client): boolean}
 local function format(opts)
+  if conform then
+    require('conform').format({ async = true, lsp_fallback = true })
+    return
+  end
   opts = opts or {}
   lsp.buf.format({
     bufnr = opts.bufnr,
@@ -108,10 +113,12 @@ local function setup_mappings(client, bufnr)
   local function line_diagnostic()
     return function()
       local config = diagnostic.config().float
-      return vim.diagnostic.open_float(vim.tbl_extend('force', config, {
-        focusable = true,
-        scope = 'line',
-      }))
+      if type(config) == 'table' then
+        return vim.diagnostic.open_float(vim.tbl_extend('force', config, {
+          focusable = true,
+          scope = 'line',
+        }))
+      end
     end
   end
 
@@ -130,7 +137,7 @@ local function setup_mappings(client, bufnr)
       '<leader>lf',
       format,
       desc = 'format buffer',
-      capability = M.textDocument_formatting,
+      capability = conform and M.textDocument_formatting or nil,
     },
     {
       'n',
@@ -287,6 +294,7 @@ local function setup_autocommands(client, buf)
   end
 
   if client.supports_method(M.textDocument_formatting) then
+    if conform then return end
     augroup(('LspFormatting%d'):format(buf), {
       event = 'BufWritePre',
       buffer = buf,
