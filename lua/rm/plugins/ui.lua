@@ -1,8 +1,7 @@
 local api = vim.api
 local ui, highlight = rvim.ui, rvim.highlight
 local icons, codicons = ui.icons, ui.codicons
-local border = ui.current.border
-local separators, decorations = ui.icons.separators, ui.decorations
+local border, separators = ui.current.border, ui.icons.separators
 
 return {
   {
@@ -61,7 +60,7 @@ return {
     'tzachar/local-highlight.nvim',
     enabled = not rvim.plugins.minimal,
     event = 'VeryLazy',
-    opts = { hlgroup = 'Visual' },
+    opts = { hlgroup = 'Search' },
   },
   {
     'folke/zen-mode.nvim',
@@ -155,8 +154,8 @@ return {
     },
     config = function()
       highlight.plugin('nvim-hlslens', {
-        { HlSearchNear = { fg = { from = 'Search' }, bg = 'NONE' } },
-        { HlSearchLens = { fg = { from = 'Search' }, bg = 'NONE' } },
+        { HlSearchNear = { fg = { from = 'WildMenu' }, bg = 'NONE' } },
+        { HlSearchLens = { fg = { from = 'WildMenu' }, bg = 'NONE' } },
       })
       require('hlslens').setup({
         nearest_float_when = false,

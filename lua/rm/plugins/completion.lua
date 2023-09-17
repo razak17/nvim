@@ -41,8 +41,8 @@ return {
               inherit = 'Comment',
             },
           },
-          { CmpItemAbbrMatch = { fg = { from = 'Search' }, bold = true } },
-          { CmpItemAbbrMatchFuzzy = { fg = { from = 'Search' } } },
+          { CmpItemAbbrMatch = { fg = { from = 'WildMenu' }, bold = true } },
+          { CmpItemAbbrMatchFuzzy = { fg = { from = 'WildMenu' } } },
           {
             CmpItemMenu = {
               fg = { from = 'Comment' },
