@@ -407,12 +407,9 @@ return {
   },
   {
     'subnut/nvim-ghost.nvim',
-    enabled = not rvim.plugins.minimal
-      and rvim.plugins.overrides.ghost_text.enable,
-    lazy = false,
-    event = { 'BufReadPost', 'BufNewFile' },
+    enabled = not rvim.plugins.minimal,
+    lazy = not rvim.plugins.overrides.ghost_text.enable,
   },
-
   {
     'ecthelionvi/NeoComposer.nvim',
     enabled = not rvim.plugins.minimal,
