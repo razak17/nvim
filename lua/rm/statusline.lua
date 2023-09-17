@@ -15,6 +15,7 @@ local function block() return icons.separators.bar end
 local function listBranches()
   local branches = vim.fn.systemlist([[git branch 2>/dev/null]])
   local new_branch_prompt = 'Create new branch'
+  ---@diagnostic disable-next-line: param-type-mismatch
   table.insert(branches, 1, new_branch_prompt)
 
   vim.ui.select(branches, {
@@ -291,6 +292,7 @@ local function lsp_client_names()
     :map(function(_, c) return c.name end)
     :totable()
 
+  -- No LSP client but null-ls sources
   if client_names[1] and string.sub(client_names[1], 2, 2) == 'ê' then
     return 'No Active LSP '
       .. table.concat(client_names, fmt(' %s ', separator))
@@ -301,6 +303,31 @@ local function lsp_client_names()
     .. table.concat(client_names, fmt(' %s ', separator))
     .. ' '
     .. separator
+end
+
+-- Add linters (from nvim-lint)
+local function get_linters()
+  local ft = vim.bo.filetype
+  local lint_ok, lint = pcall(require, 'lint')
+  if not lint_ok or rvim.falsy(lint.linters_by_ft[ft]) then return false end
+  local linters = vim
+    .iter(pairs(lint.linters_by_ft[ft]))
+    :map(function(_, l) return l end)
+    :totable()
+  return table.concat(linters, ', ') .. ' ' .. separator
+end
+
+-- Add formatters (from conform.nvim)
+local function get_formatters(curbuf)
+  local conform_ok, conform = pcall(require, 'conform')
+  if not conform_ok or rvim.falsy(conform.list_formatters(curbuf)) then
+    return false
+  end
+  local formatters = vim
+    .iter(ipairs(conform.list_formatters(curbuf)))
+    :map(function(_, f) return f.name end)
+    :totable()
+  return table.concat(formatters, ', ') .. ' ' .. separator
 end
 
 local function stl_copilot_indicator()
@@ -549,6 +576,107 @@ return {
       name = 'lsp_clients',
     },
   },
+  attached_clients = {
+    condition = conditions.lsp_attached,
+    init = function(self)
+      local curwin = api.nvim_get_current_win()
+      local curbuf = api.nvim_win_get_buf(curwin)
+      self.active = true
+      self.clients = vim.lsp.get_clients({ bufnr = curbuf })
+      local copilot = vim.tbl_filter(
+        function(client) return client.name == 'copilot' end,
+        self.clients
+      )
+      self.copilot = copilot[1]
+      if self.copilot ~= nil then
+        self.copilot.requests = copilot[1].requests
+      end
+      self.clients = vim.tbl_filter(
+        function(client) return client.name ~= 'copilot' end,
+        self.clients
+      )
+      if falsy(self.clients) then self.active = false end
+      self.linters = get_linters()
+      self.formatters = get_formatters(curbuf)
+    end,
+    {
+      condition = conditions.lsp_attached,
+      init = function(self)
+        if self.active then
+          local lsp_servers = vim.tbl_map(
+            function(client) return { name = client.name } end,
+            self.clients
+          )
+          local client_names = vim
+            .iter(ipairs(lsp_servers))
+            :map(function(_, c) return c.name end)
+            :totable()
+          self.servers = 'Ó´ê '
+            .. table.concat(client_names, fmt(' %s ', separator))
+            .. ' '
+            .. separator
+        end
+      end,
+      provider = function(self)
+        if not self.active then
+          return ' Ó´ê ' .. 'No Active LSP ' .. separator
+        end
+        return ' ' .. self.servers
+      end,
+      hl = { fg = fg, bg = bg, bold = true },
+    },
+    {
+      condition = function(self) return self.active end,
+      provider = function(self)
+        if not rvim.falsy(self.linters) then return ' ' .. self.linters end
+      end,
+      hl = { fg = fg, bg = bg, bold = true },
+    },
+    {
+      condition = function(self) return self.active end,
+      provider = function(self)
+        if not rvim.falsy(self.formatters) then
+          return ' ' .. self.formatters
+        end
+      end,
+      hl = { fg = fg, bg = bg, bold = true },
+      on_click = {
+        callback = function()
+          vim.defer_fn(function() vim.cmd('ConformInfo') end, 100)
+        end,
+        name = 'formatters',
+      },
+    },
+    {
+      provider = ' ' .. codicons.misc.octoface .. ' ',
+      hl = { fg = colors.forest_green, bg = bg },
+      on_click = {
+        callback = function()
+          vim.defer_fn(function() vim.cmd('copilot status') end, 100)
+        end,
+        name = 'copilot_attached',
+      },
+    },
+    {
+      provider = function(self)
+        if self.copilot == nil then return fmt(' inactive %s', separator) end
+        if
+          self.copilot.requests ~= nil
+          and vim.tbl_isempty(self.copilot.requests)
+        then
+          return fmt(' idle %s', separator)
+        end
+        return fmt(' working %s', separator)
+      end,
+      hl = { fg = fg, bg = bg, bold = true },
+      on_click = {
+        callback = function()
+          vim.defer_fn(function() vim.cmd('copilot panel') end, 100)
+        end,
+        name = 'copilot_status',
+      },
+    },
+  },
   copilot_attached = {
     condition = function() return rvim.ai.enable and not rvim.plugins.minimal end,
     provider = ' ' .. codicons.misc.octoface .. ' ',
@@ -660,7 +788,7 @@ return {
     end,
   },
   buffers = {
-    provider = function(self)
+    provider = function()
       local buffers = require('buffalo').buffers()
       local tabpages = require('buffalo').tabpages()
       return ' ø ' .. buffers .. ' ø ' .. tabpages -- ø

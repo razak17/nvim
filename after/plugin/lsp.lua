@@ -137,7 +137,7 @@ local function setup_mappings(client, bufnr)
       '<leader>lf',
       format,
       desc = 'format buffer',
-      capability = conform and M.textDocument_formatting or nil,
+      capability = not conform and M.textDocument_formatting or nil,
     },
     {
       'n',
