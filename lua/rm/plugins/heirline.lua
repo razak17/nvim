@@ -37,7 +37,7 @@ return {
           statusline.lazy_updates,
           statusline.search_results,
           statusline.word_count,
-          -- statusline.lsp_clients,
+          statusline.lsp_clients,
           statusline.attached_clients,
           -- statusline.copilot_attached,
           -- statusline.copilot_status,

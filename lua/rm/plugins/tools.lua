@@ -1,7 +1,78 @@
 local uv = vim.uv
 local prettier = { 'prettierd', 'prettier' }
+local border = rvim.ui.current.border
 
 return {
+  {
+    'nvimtools/none-ls.nvim',
+    enabled = rvim.lsp.enable and rvim.lsp.null_ls.enable,
+    keys = {
+      {
+        '<leader>ln',
+        function()
+          require('null-ls.info').show_window({
+            height = 0.7,
+            border = border,
+          })
+        end,
+        desc = 'null-ls info',
+      },
+    },
+  },
+  {
+    'jay-babu/mason-null-ls.nvim',
+    enabled = rvim.lsp.enable and rvim.lsp.null_ls.enable,
+    event = { 'BufReadPre', 'BufNewFile' },
+    config = function()
+      local null_ls = require('null-ls')
+      require('mason-null-ls').setup({
+        automatic_setup = true,
+        automatic_installation = false,
+        ensure_installed = {
+          'goimports',
+          'golangci_lint',
+          'stylua',
+          'prettierd',
+          'zsh',
+          'flake8',
+          'black',
+        },
+        handlers = {
+          black = function()
+            null_ls.register(null_ls.builtins.formatting.black.with({
+              extra_args = { '--fast' },
+            }))
+          end,
+          -- eslint_d = function()
+          --   null_ls.register(
+          --     null_ls.builtins.diagnostics.eslint_d.with({ filetypes = { 'svelte' } })
+          --   )
+          -- end,
+          prettier = function() end,
+          eslint_d = function() end,
+          prettierd = function()
+            null_ls.register(null_ls.builtins.formatting.prettierd.with({
+              filetypes = {
+                'javascript',
+                'typescript',
+                'typescriptreact',
+                'json',
+                'yaml',
+                'markdown',
+                'svelte',
+              },
+            }))
+          end,
+          shellcheck = function()
+            null_ls.register(null_ls.builtins.diagnostics.shellcheck.with({
+              extra_args = { '--severity', 'warning' },
+            }))
+          end,
+        },
+      })
+      null_ls.setup({ debug = rvim.debug.enable })
+    end,
+  },
   {
     'WhoIsSethDaniel/mason-tool-installer.nvim',
     enabled = rvim.lsp.enable,
@@ -9,36 +80,37 @@ return {
     config = function()
       local packages = {}
       -- Add linters (from nvim-lint)
-      local lint_ok, lint = pcall(require, 'lint')
-      if lint_ok then
-        vim
-          .iter(pairs(lint.linters_by_ft))
-          :map(function(_, l)
-            if type(l) == 'table' then
-              table.insert(packages, table.concat(l, ','))
-            end
-            if type(l) == 'string' then table.insert(packages, l) end
-          end)
-          :totable()
-      end
-      -- Add formatters (from conform.nvim)
-      local conform_ok, conform = pcall(require, 'conform')
-      if conform_ok then
-        vim
-          .iter(pairs(conform.list_all_formatters()))
-          :map(function(_, f) table.insert(packages, f.name) end)
-          :totable()
+      if not rvim.lsp.null_ls.enable then
+        local lint_ok, lint = pcall(require, 'lint')
+        if lint_ok then
+          vim
+            .iter(pairs(lint.linters_by_ft))
+            :map(function(_, l)
+              if type(l) == 'table' then
+                table.insert(packages, table.concat(l, ','))
+              end
+              if type(l) == 'string' then table.insert(packages, l) end
+            end)
+            :totable()
+        end
+        -- Add formatters (from conform.nvim)
+        local conform_ok, conform = pcall(require, 'conform')
+        if conform_ok then
+          vim
+            .iter(pairs(conform.list_all_formatters()))
+            :map(function(_, f) table.insert(packages, f.name) end)
+            :totable()
+        end
       end
       require('mason-tool-installer').setup({
         ensure_installed = packages,
         run_on_start = false,
       })
     end,
-    dependencies = { 'stevearc/conform.nvim', 'mfussenegger/nvim-lint' },
   },
   {
     'stevearc/conform.nvim',
-    enabled = rvim.lsp.enable,
+    cond = rvim.lsp.enable and not rvim.lsp.null_ls.enable,
     event = { 'BufReadPre', 'BufNewFile' },
     cmd = 'ConformInfo',
     keys = {
@@ -78,7 +150,7 @@ return {
   },
   {
     'mfussenegger/nvim-lint',
-    enabled = rvim.lsp.enable,
+    cond = rvim.lsp.enable and not rvim.lsp.null_ls.enable,
     ft = {
       'javascript',
       'javascript.jsx',

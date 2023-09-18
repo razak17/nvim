@@ -565,7 +565,9 @@ return {
     hl = { fg = fg, bg = bg },
   },
   lsp_clients = {
-    condition = conditions.lsp_attached,
+    condition = function()
+      return conditions.lsp_attached and rvim.lsp.null_ls.enable
+    end,
     update = { 'LspAttach', 'LspDetach', 'WinEnter' },
     provider = function() return ' ' .. lsp_client_names() end,
     hl = { fg = fg, bg = bg, bold = true },
@@ -577,7 +579,9 @@ return {
     },
   },
   attached_clients = {
-    condition = conditions.lsp_attached,
+    condition = function()
+      return conditions.lsp_attached and not rvim.lsp.null_ls.enable
+    end,
     init = function(self)
       local curwin = api.nvim_get_current_win()
       local curbuf = api.nvim_win_get_buf(curwin)
