@@ -56,9 +56,26 @@ return {
   ------------------------------------------------------------------------------
   -- Themes {{{1
   ------------------------------------------------------------------------------
-  { 'razak17/onedark.nvim', lazy = false, priority = 1000 },
+  {
+    'razak17/onedark.nvim',
+    lazy = false,
+    priority = 1000,
+    opts = {
+      variant = 'fill', -- 'outline' | 'fill'
+    },
+    config = function(_, opts)
+      require('onedark').setup(opts)
+      rvim.load_colorscheme('onedark')
+    end,
+  },
   { 'LunarVim/horizon.nvim', lazy = false, priority = 1000 },
   { 'dotsilas/darcubox-nvim', lazy = false, priority = 1000 },
+  {
+    'Wansmer/serenity.nvim',
+    lazy = false,
+    priority = 1000,
+    -- config = function() rvim.load_colorscheme('serenity') end,
+  },
   -- }}}
   ------------------------------------------------------------------------------
   -- LSP,Completion & Debugger {{{1

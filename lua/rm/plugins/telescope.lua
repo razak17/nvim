@@ -254,7 +254,7 @@ return {
       require('telescope').setup({
         defaults = {
           prompt_prefix = fmt(' %s  ', ui.codicons.misc.search_alt),
-          selection_caret = fmt(' %s ', ui.icons.misc.triangle_short),
+          selection_caret = fmt(' %s', ui.icons.misc.triangle_short),
           cycle_layout_list = {
             'flex',
             'horizontal',
@@ -368,7 +368,7 @@ return {
             default_workspace = 'CWD',
             show_unindexed = false, -- Show all files or only those that have been indexed
             ignore_patterns = {
-              '*.git/*',
+              '**',
               '*/tmp/*',
               '*node_modules/*',
               '*vendor/*',
