@@ -1,4 +1,4 @@
-if not rvim then return end
+if not rvim or not rvim.plugins.enable then return end
 
 function rvim.git.show_commit(commit_sha)
   vim.cmd(

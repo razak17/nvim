@@ -1,4 +1,4 @@
-if not rvim then return end
+if not rvim or not rvim.plugins.enable then return end
 
 local pickers = require('telescope.pickers')
 local entry_display = require('telescope.pickers.entry_display')

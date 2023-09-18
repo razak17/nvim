@@ -1,3 +1,5 @@
+if not rvim or not rvim.plugins.enable then return end
+
 -- alternative options:
 -- * using tsserver LSP support (but wants to remove the react import,
 --   want to reorganize imports except from TS 4.9+, is a little slow).
