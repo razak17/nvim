@@ -47,11 +47,28 @@ end
 
 ---@param opts {bufnr: integer, async: boolean, filter: fun(lsp.Client): boolean}
 local function format(opts)
+  opts = opts or {}
   if conform then
-    require('conform').format({ async = true, lsp_fallback = true })
+    local client_names = vim.tbl_map(
+      function(client) return client.name end,
+      vim.lsp.get_clients({ bufnr = opts.bufnr })
+    )
+    local lsp_fallback
+    local lsp_fallback_inclusions = { 'eslint' }
+    for _, c in pairs(client_names) do
+      if rvim.find_string(lsp_fallback_inclusions, c) then
+        lsp_fallback = 'always'
+        break
+      end
+    end
+    require('conform').format({
+      bufnr = opts.bufnr,
+      async = true,
+      timeout_ms = 500,
+      lsp_fallback = lsp_fallback or true,
+    })
     return
   end
-  opts = opts or {}
   lsp.buf.format({
     bufnr = opts.bufnr,
     async = opts.async,
@@ -294,7 +311,6 @@ local function setup_autocommands(client, buf)
   end
 
   if client.supports_method(M.textDocument_formatting) then
-    if conform then return end
     augroup(('LspFormatting%d'):format(buf), {
       event = 'BufWritePre',
       buffer = buf,

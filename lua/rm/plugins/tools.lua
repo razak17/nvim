@@ -64,19 +64,7 @@ return {
         python = { 'isort', 'black', 'yapf' },
       },
       log_level = vim.log.levels.DEBUG,
-      format_on_save = function(bufnr)
-        local async_format =
-          vim.g.async_format_filetypes[vim.bo[bufnr].filetype]
-        if
-          async_format
-          or vim.g.formatting_disabled
-          or vim.b[bufnr].formatting_disabled
-          or not rvim.lsp.format_on_save.enable
-        then
-          return
-        end
-        return { timeout_ms = 500, lsp_fallback = true }
-      end,
+      format_on_save = false,
       format_after_save = function(bufnr)
         local async_format =
           vim.g.async_format_filetypes[vim.bo[bufnr].filetype]
@@ -89,9 +77,6 @@ return {
         end
         return { lsp_fallback = true }
       end,
-      user_async_format_filetypes = {
-        python = true,
-      },
     },
     config = function(_, opts)
       if vim.g.started_by_firenvim then
@@ -127,6 +112,7 @@ return {
         -- typescript = { 'eslint_d' },
         -- ['typescript.tsx'] = { 'eslint_d' },
         -- typescriptreact = { 'eslint_d' },
+        -- svelte = { 'eslint_d' },
         -- lua = { 'luacheck' },
         python = { 'flake8' },
         sh = { 'shellcheck' },
