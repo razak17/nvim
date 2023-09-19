@@ -140,10 +140,6 @@ return {
       format_after_save = false,
     },
     config = function(_, opts)
-      if vim.g.started_by_firenvim then
-        opts.format_on_save = false
-        opts.format_after_save = false
-      end
       vim.g.async_format_filetypes = opts.user_async_format_filetypes
       require('conform').setup(opts)
     end,
