@@ -39,7 +39,7 @@ return {
       disable_insert_on_commit = false,
       disable_context_highlighting = true,
       signs = {
-        section = { '', '' }, -- "", ""
+        section = { '', '󰘕' }, -- "󰁙", "󰁊"
         item = { '▸', '▾' },
         hunk = { '樂', '' },
       },
