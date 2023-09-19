@@ -10,9 +10,9 @@ local function general_overrides()
     { ErrorMsg = { bg = 'NONE' } },
     { Cursor = { fg = 'NONE' } },
     { UnderlinedTitle = { bold = true, underline = true } },
-    ------------------------------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
     -- colorscheme overrides
-    ------------------------------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
     { QuickFixLine = { bg = { from = 'Cursorline' }, fg = 'NONE' } },
     -- Neither the sign column or end of buffer highlights require an explicit bg
     -- they should both just use the bg that is in the window they are in.
@@ -21,9 +21,9 @@ local function general_overrides()
     { EndOfBuffer = { bg = 'NONE' } },
     { GitSignsCurrentLineBlame = { link = 'Comment' } },
     { StatusColSep = { link = 'Comment' } },
-    ------------------------------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
     --  Semantic tokens
-    ------------------------------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
     { ['@lsp.type.variable'] = { clear = true } },
     { ['@lsp.type.variable'] = { link = '@variable' } },
     { ['@lsp.typemod.method'] = { link = '@method' } },
@@ -40,9 +40,9 @@ local function general_overrides()
     { ['@lsp.typemod.keyword.injected'] = { link = '@keyword' } },
     { ['@lsp.typemod.string.injected'] = { link = '@string' } },
     { ['@lsp.typemod.variable.injected'] = { link = '@variable' } },
-    ------------------------------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
     -- Treesitter
-    ------------------------------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
     { ['@keyword.return'] = { italic = true, fg = { from = 'Keyword' } } },
     { ['@type.qualifier'] = { inherit = '@keyword', italic = true } },
     { ['@parameter'] = { italic = true, bold = true, fg = 'NONE' } },
@@ -50,9 +50,9 @@ local function general_overrides()
     { ['@text.diff.delete'] = { link = 'DiffDelete' } },
     { ['@text.title.markdown'] = { underdouble = true } },
     { ['@text.literal.markdown'] = { bg = { from = 'Normal', alter = 0.15 } } },
-    ------------------------------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
     -- LSP
-    ------------------------------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
     { LspCodeLens = { inherit = 'Comment', bold = true, italic = false } },
     { LspCodeLensSeparator = { bold = false, italic = false } },
     {

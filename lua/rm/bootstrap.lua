@@ -103,3 +103,4 @@ map('n', '<localleader>L', '<cmd>Lazy<CR>', { desc = 'toggle lazy ui' })
 -- Color Scheme
 --------------------------------------------------------------------------------
 if not plugins_enabled then rvim.load_colorscheme('habamax') end
+if plugins_enabled then rvim.load_colorscheme('onedark') end

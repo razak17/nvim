@@ -63,10 +63,7 @@ return {
     opts = {
       variant = 'fill', -- 'outline' | 'fill'
     },
-    config = function(_, opts)
-      require('onedark').setup(opts)
-      rvim.load_colorscheme('onedark')
-    end,
+    config = function(_, opts) require('onedark').setup(opts) end,
   },
   { 'LunarVim/horizon.nvim', lazy = false, priority = 1000 },
   { 'dotsilas/darcubox-nvim', lazy = false, priority = 1000 },
