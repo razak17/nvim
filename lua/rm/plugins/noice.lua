@@ -1,5 +1,4 @@
-local fn = vim.fn
-local highlight, L = rvim.highlight, vim.log.levels
+local fn, L = vim.fn, vim.log.levels
 
 return {
   'folke/noice.nvim',
@@ -213,53 +212,6 @@ return {
   },
   config = function(_, opts)
     require('noice').setup(opts)
-
-    highlight.plugin('noice', {
-      { NoiceMini = { inherit = 'MsgArea', bg = { from = 'Normal' } } },
-      {
-        NoicePopupBaseGroup = {
-          inherit = 'NormalFloat',
-          fg = { from = 'CursorLineNr' },
-        },
-      },
-      {
-        NoicePopupWarnBaseGroup = {
-          inherit = 'NormalFloat',
-          fg = { from = 'Directory' },
-        },
-      },
-      {
-        NoicePopupInfoBaseGroup = {
-          inherit = 'NormalFloat',
-          fg = { from = 'Conditional' },
-        },
-      },
-      { NoiceCmdlinePopup = { bg = { from = 'NormalFloat' } } },
-      { NoiceCmdlinePopupBorder = { link = 'FloatBorder' } },
-      { NoiceCmdlinePopupTitle = { link = 'Normal' } },
-      { NoiceCmdlinePopupBorderCmdline = { link = 'NoicePopupBaseGroup' } },
-      { NoiceCmdlinePopupBorderSearch = { link = 'NoicePopupWarnBaseGroup' } },
-      { NoiceCmdlinePopupBorderFilter = { link = 'NoicePopupWarnBaseGroup' } },
-      { NoiceCmdlinePopupBorderHelp = { link = 'NoicePopupInfoBaseGroup' } },
-      {
-        NoiceCmdlinePopupBorderSubstitute = { link = 'NoicePopupWarnBaseGroup' },
-      },
-      {
-        NoiceCmdlinePopupBorderIncRename = { link = 'NoicePopupWarnBaseGroup' },
-      },
-      { NoiceCmdlinePopupBorderInput = { link = 'NoicePopupBaseGroup' } },
-      { NoiceCmdlinePopupBorderLua = { link = 'NoicePopupBaseGroup' } },
-      { NoiceCmdlineIconCmdline = { link = 'NoicePopupBaseGroup' } },
-      { NoiceCmdlineIconSearch = { link = 'NoicePopupWarnBaseGroup' } },
-      { NoiceCmdlineIconFilter = { link = 'NoicePopupWarnBaseGroup' } },
-      { NoiceCmdlineIconHelp = { link = 'NoicePopupInfoBaseGroup' } },
-      { NoiceCmdlineIconIncRename = { link = 'NoicePopupWarnBaseGroup' } },
-      { NoiceCmdlineIconSubstitute = { link = 'NoicePopupWarnBaseGroup' } },
-      { NoiceCmdlineIconInput = { link = 'NoicePopupBaseGroup' } },
-      { NoiceCmdlineIconLua = { link = 'NoicePopupBaseGroup' } },
-      { NoiceConfirm = { bg = { from = 'NormalFloat' } } },
-      { NoiceConfirmBorder = { link = 'NoicePopupBaseGroup' } },
-    })
 
     map({ 'n', 'i', 's' }, '<c-f>', function()
       if not require('noice.lsp').scroll(4) then return '<c-f>' end
