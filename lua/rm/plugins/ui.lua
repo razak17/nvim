@@ -428,6 +428,8 @@ return {
       show_current_context_start = true,
       show_current_context_start_on_current_line = false,
       show_first_indent_level = true,
+      show_trailing_blankline_indent = false,
+      buftype_exclude = { 'nofile', 'terminal' },
       filetype_exclude = {
         'dbout',
         'neo-tree-popup',
