@@ -449,9 +449,9 @@ map(
   function() move_or_create_win('l') end,
   { desc = '[l]: Move to window on the right or create a split' }
 )
------------------------------------------------------------------------------//
+--------------------------------------------------------------------------------
 -- Commands
------------------------------------------------------------------------------//
+--------------------------------------------------------------------------------
 local command = rvim.command
 
 command('ClearRegisters', function()
@@ -479,3 +479,18 @@ command('ConvertGitUrl', function()
   vim.fn.setpos('.', save_pos)
 end, { force = true })
 map('n', '<leader>gu', '<Cmd>ConvertGitUrl<CR>', { desc = 'convert git url' })
+--------------------------------------------------------------------------------
+-- Abbreviations
+--------------------------------------------------------------------------------
+vim.cmd("iabbrev <expr> ,d strftime('%Y-%m-%d')")
+vim.cmd("iabbrev <expr> ,t strftime('%Y-%m-%dT%TZ')")
+vim.cmd("inoreabbrev <expr> ,u system('uuidgen')->trim()->tolower()")
+vim.cmd('inoreabbrev fucntion function')
+vim.cmd('inoreabbrev cosnt const')
+vim.cmd('cnoreabbrev W! w!')
+vim.cmd('cnoreabbrev Q! q!')
+vim.cmd('cnoreabbrev Wq wq')
+vim.cmd('cnoreabbrev wQ wq')
+vim.cmd('cnoreabbrev WQ wq')
+vim.cmd('cnoreabbrev W w')
+vim.cmd('cnoreabbrev Q q')
