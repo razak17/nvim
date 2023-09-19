@@ -128,7 +128,7 @@ return {
   },
   {
     'm4xshen/hardtime.nvim',
-    enabled = false,
+    cond = false,
     event = 'VeryLazy',
     opts = {
       disabled_filetypes = {
@@ -144,7 +144,7 @@ return {
   },
   {
     'chrisgrieser/nvim-spider',
-    enabled = not rvim.plugins.minimal,
+    cond = not rvim.plugins.minimal,
     event = 'VeryLazy',
     keys = {
       {

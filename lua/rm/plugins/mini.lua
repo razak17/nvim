@@ -3,8 +3,8 @@ local separators = rvim.ui.icons.separators
 return {
   {
     'razak17/mini.indentscope',
-    -- enabled = not rvim.plugins.minimal,
-    enabled = false,
+    -- cond = not rvim.plugins.minimal,
+    cond = false,
     event = 'BufRead',
     version = false,
     init = function()
@@ -41,13 +41,13 @@ return {
   { 'echasnovski/mini.misc', opts = {} },
   {
     'echasnovski/mini.bracketed',
-    enabled = not rvim.plugins.minimal,
+    cond = not rvim.plugins.minimal,
     event = 'VeryLazy',
     opts = {},
   },
   {
     'echasnovski/mini.animate',
-    enabled = false,
+    cond = false,
     event = 'VeryLazy',
     opts = {},
   },
@@ -69,13 +69,13 @@ return {
   },
   {
     'echasnovski/mini.cursorword',
-    enabled = false,
+    cond = false,
     event = { 'BufRead', 'BufNewFile' },
     opts = {},
   },
   {
     'echasnovski/mini.ai',
-    enabled = rvim.treesitter.enable,
+    cond = rvim.treesitter.enable,
     event = 'VeryLazy',
     config = function()
       require('mini.ai').setup({

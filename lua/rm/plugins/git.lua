@@ -6,7 +6,7 @@ local left_block = icons.separators.left_block
 return {
   {
     'NeogitOrg/neogit',
-    enabled = not rvim.plugins.minimal,
+    cond = not rvim.plugins.minimal,
     cmd = 'Neogit',
     dependencies = { 'nvim-lua/plenary.nvim', 'sindrets/diffview.nvim' },
     keys = {
@@ -68,7 +68,7 @@ return {
   },
   {
     'sindrets/diffview.nvim',
-    enabled = not rvim.plugins.minimal,
+    cond = not rvim.plugins.minimal,
     cmd = {
       'DiffviewOpen',
       'DiffviewFileHistory',
@@ -113,7 +113,7 @@ return {
   },
   {
     'lewis6991/gitsigns.nvim',
-    enabled = not rvim.plugins.minimal,
+    cond = not rvim.plugins.minimal,
     event = { 'VeryLazy' },
     opts = {
       signs = {
@@ -225,7 +225,7 @@ return {
   },
   {
     'almo7aya/openingh.nvim',
-    enabled = not rvim.plugins.minimal,
+    cond = not rvim.plugins.minimal,
     event = 'VeryLazy',
     keys = {
       {
@@ -280,7 +280,7 @@ return {
   },
   {
     'emmanueltouzery/agitator.nvim',
-    enabled = not rvim.plugins.minimal,
+    cond = not rvim.plugins.minimal,
     keys = {
       {
         '<leader>gbo',
@@ -291,7 +291,7 @@ return {
   },
   {
     'akinsho/git-conflict.nvim',
-    enabled = not rvim.plugins.minimal,
+    cond = not rvim.plugins.minimal,
     event = 'VeryLazy',
     opts = { disable_diagnostics = true },
     config = function(_, opts)
@@ -314,7 +314,7 @@ return {
   },
   {
     '2kabhishek/co-author.nvim',
-    enabled = not rvim.plugins.minimal,
+    cond = not rvim.plugins.minimal,
     cmd = 'GitCoAuthors',
     dependencies = { 'stevearc/dressing.nvim' },
   },

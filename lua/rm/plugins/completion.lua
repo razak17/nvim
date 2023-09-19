@@ -315,14 +315,14 @@ return {
       'lukas-reineke/cmp-rg',
       'fazibear/cmp-nerdfonts',
       { 'js-everts/cmp-tailwind-colors', opts = {} },
-      { 'hrsh7th/cmp-nvim-lsp', enabled = rvim.lsp.enable },
+      { 'hrsh7th/cmp-nvim-lsp', cond = rvim.lsp.enable },
       { 'hrsh7th/cmp-cmdline', config = function() vim.o.wildmode = '' end },
-      { 'hrsh7th/cmp-nvim-lsp-document-symbol', enabled = rvim.lsp.enable },
+      { 'hrsh7th/cmp-nvim-lsp-document-symbol', cond = rvim.lsp.enable },
       'saadparwaiz1/cmp_luasnip',
       { 'amarakon/nvim-cmp-buffer-lines', ft = { 'c', 'cpp' } },
       {
         'uga-rosa/cmp-dictionary',
-        enabled = not rvim.plugins.minimal,
+        cond = not rvim.plugins.minimal,
         config = function()
           local en_dict =
             join_paths(vim.fn.stdpath('data'), 'site', 'spell', 'en.dict')
@@ -361,7 +361,7 @@ return {
       },
       {
         'zbirenbaum/copilot-cmp',
-        enabled = rvim.ai.enable and not rvim.plugins.minimal,
+        cond = rvim.ai.enable and not rvim.plugins.minimal,
         opts = {},
         dependencies = 'copilot.lua',
       },
@@ -369,7 +369,7 @@ return {
   },
   {
     'zbirenbaum/copilot.lua',
-    enabled = rvim.ai.enable and not rvim.plugins.minimal,
+    cond = rvim.ai.enable and not rvim.plugins.minimal,
     event = 'InsertEnter',
     keys = {
       {

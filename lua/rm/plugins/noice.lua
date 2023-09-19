@@ -3,7 +3,7 @@ local highlight, L = rvim.highlight, vim.log.levels
 
 return {
   'folke/noice.nvim',
-  enabled = not rvim.plugins.minimal
+  cond = not rvim.plugins.minimal
     and not rvim.find_string(rvim.plugins.disabled, 'noice.nvim'),
   event = 'VeryLazy',
   dependencies = { 'MunifTanjim/nui.nvim' },

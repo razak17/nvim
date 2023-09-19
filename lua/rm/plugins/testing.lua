@@ -15,7 +15,7 @@ local function debug_nearest() require('neotest').run.run({ strategy = 'dap' }) 
 return {
   {
     'nvim-neotest/neotest',
-    enabled = not rvim.plugins.minimal,
+    cond = not rvim.plugins.minimal,
     keys = {
       { '<leader>tns', toggle_summary, desc = 'neotest: toggle summary' },
       { '<leader>tno', open, desc = 'neotest: output' },

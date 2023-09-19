@@ -5,7 +5,7 @@ local border = rvim.ui.current.border
 return {
   {
     'nvimtools/none-ls.nvim',
-    enabled = rvim.lsp.enable and rvim.lsp.null_ls.enable,
+    cond = rvim.lsp.enable and rvim.lsp.null_ls.enable,
     keys = {
       {
         '<leader>ln',
@@ -21,7 +21,7 @@ return {
   },
   {
     'jay-babu/mason-null-ls.nvim',
-    enabled = rvim.lsp.enable and rvim.lsp.null_ls.enable,
+    cond = rvim.lsp.enable and rvim.lsp.null_ls.enable,
     event = { 'BufReadPre', 'BufNewFile' },
     config = function()
       local null_ls = require('null-ls')
@@ -75,7 +75,7 @@ return {
   },
   {
     'WhoIsSethDaniel/mason-tool-installer.nvim',
-    enabled = rvim.lsp.enable,
+    cond = rvim.lsp.enable,
     cmd = { 'MasonToolsInstall', 'MasonToolsUpdate' },
     config = function()
       local packages = {}

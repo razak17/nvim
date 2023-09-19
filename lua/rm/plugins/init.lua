@@ -11,7 +11,7 @@ return {
   'nvim-tree/nvim-web-devicons',
   {
     'olimorris/persisted.nvim',
-    enabled = not rvim.plugins.minimal,
+    cond = not rvim.plugins.minimal,
     lazy = false,
     init = function() rvim.command('ListSessions', 'Telescope persisted') end,
     opts = {
@@ -101,7 +101,7 @@ return {
     },
     {
       'williamboman/mason-lspconfig.nvim',
-      enabled = rvim.lsp.enable,
+      cond = rvim.lsp.enable,
       event = { 'BufReadPre', 'BufNewFile' },
       opts = {
         automatic_installation = true,
@@ -127,13 +127,14 @@ return {
         'mason.nvim',
         {
           'neovim/nvim-lspconfig',
+          cond = rvim.lsp.enable,
           config = function()
             require('lspconfig.ui.windows').default_options.border = border
           end,
           dependencies = {
             {
               'folke/neodev.nvim',
-              enabled = rvim.lsp.enable,
+              cond = rvim.lsp.enable,
               ft = 'lua',
               opts = {
                 debug = true,
@@ -153,7 +154,7 @@ return {
             },
             {
               'folke/neoconf.nvim',
-              enabled = rvim.lsp.enable,
+              cond = rvim.lsp.enable,
               cmd = { 'Neoconf' },
               opts = {
                 local_settings = '.nvim.json',
@@ -167,7 +168,7 @@ return {
   },
   {
     'glepnir/lspsaga.nvim',
-    enabled = rvim.lsp.enable,
+    cond = rvim.lsp.enable,
     event = 'LspAttach',
     opts = {
       ui = { border = border },
@@ -223,13 +224,13 @@ return {
   },
   {
     'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
-    enabled = rvim.lsp.enable,
+    cond = rvim.lsp.enable,
     event = 'LspAttach',
     config = function() require('lsp_lines').setup() end,
   },
   {
     'kosayoda/nvim-lightbulb',
-    enabled = rvim.lsp.enable,
+    cond = rvim.lsp.enable,
     event = 'LspAttach',
     opts = {
       autocmd = { enabled = true },
@@ -248,7 +249,7 @@ return {
   },
   {
     'dgagn/diagflow.nvim',
-    enabled = rvim.lsp.enable,
+    cond = rvim.lsp.enable,
     event = 'LspAttach',
     opts = {
       padding_top = 2,
@@ -257,13 +258,13 @@ return {
   },
   {
     'doums/dmap.nvim',
-    enabled = rvim.lsp.enable,
+    cond = rvim.lsp.enable,
     -- event = 'LspAttach',
     opts = { win_h_offset = 6 },
   },
   {
     'stevearc/aerial.nvim',
-    enabled = not rvim.plugins.minimal and rvim.treesitter.enable,
+    cond = not rvim.plugins.minimal and rvim.treesitter.enable,
     opts = {
       lazy_load = false,
       backends = {
@@ -347,7 +348,7 @@ return {
   },
   {
     'roobert/action-hints.nvim',
-    enabled = false,
+    cond = false,
     event = 'LspAttach',
     config = function()
       require('action-hints').setup({
@@ -399,7 +400,7 @@ return {
   },
   {
     'smoka7/multicursors.nvim',
-    enabled = not rvim.plugins.minimal and rvim.treesitter.enable,
+    cond = not rvim.plugins.minimal and rvim.treesitter.enable,
     event = 'VeryLazy',
     dependencies = { 'nvim-treesitter/nvim-treesitter', 'smoka7/hydra.nvim' },
     opts = {
@@ -460,7 +461,7 @@ return {
   },
   {
     'folke/twilight.nvim',
-    enabled = rvim.treesitter.enable,
+    cond = rvim.treesitter.enable,
     cmd = 'Twilight',
     opts = {
       context = 40,
@@ -470,7 +471,7 @@ return {
   },
   {
     'andrewferrier/debugprint.nvim',
-    enabled = rvim.treesitter.enable,
+    cond = rvim.treesitter.enable,
     keys = {
       {
         '<leader>pp',
@@ -710,7 +711,7 @@ return {
   },
   {
     'ahmedkhalf/project.nvim',
-    enabled = not rvim.plugins.minimal,
+    cond = not rvim.plugins.minimal,
     event = 'VimEnter',
     name = 'project_nvim',
     opts = {
@@ -796,7 +797,7 @@ return {
   },
   {
     'razak17/lab.nvim',
-    enabled = not rvim.plugins.minimal,
+    cond = not rvim.plugins.minimal,
     event = { 'BufReadPre', 'BufNewFile' },
     keys = {
       { '<leader>rl', ':Lab code run<CR>', desc = 'lab: run' },
@@ -838,7 +839,7 @@ return {
   },
   {
     'llllvvuu/nvim-js-actions',
-    enabled = rvim.treesitter.enable,
+    cond = rvim.treesitter.enable,
     ft = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
   },
@@ -867,7 +868,7 @@ return {
   },
   {
     'luckasRanarison/nvim-devdocs',
-    enabled = not rvim.plugins.minimal,
+    cond = not rvim.plugins.minimal,
     event = 'VeryLazy',
     dependencies = {
       'nvim-lua/plenary.nvim',
@@ -995,7 +996,7 @@ return {
   },
   {
     'dmmulroy/tsc.nvim',
-    enabled = rvim.lsp.enable,
+    cond = rvim.lsp.enable,
     cmd = 'TSC',
     opts = {},
     ft = { 'typescript', 'typescriptreact' },
@@ -1003,7 +1004,7 @@ return {
   {
     'pmizio/typescript-tools.nvim',
     event = { 'BufReadPre', 'BufNewFile' },
-    enabled = rvim.lsp.enable
+    cond = rvim.lsp.enable
       and not rvim.find_string(rvim.plugins.disabled, 'typescript-tools.nvim'),
     dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
     opts = {
@@ -1024,7 +1025,7 @@ return {
   {
     'simrat39/rust-tools.nvim',
     event = { 'BufReadPre', 'BufNewFile' },
-    enabled = rvim.lsp.enable
+    cond = rvim.lsp.enable
       and not rvim.find_string(rvim.plugins.disabled, 'rust-tools.nvim'),
     dependencies = { 'neovim/nvim-lspconfig' },
     config = function()
@@ -1162,14 +1163,14 @@ return {
   },
   {
     'razak17/tailwind-fold.nvim',
-    enabled = false,
+    cond = false,
     opts = { min_chars = 2 },
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
     ft = { 'html', 'svelte', 'astro', 'vue', 'typescriptreact' },
   },
   {
     'MaximilianLloyd/tw-values.nvim',
-    enabled = rvim.treesitter.enable and rvim.lsp.enable,
+    cond = rvim.treesitter.enable and rvim.lsp.enable,
     keys = {
       {
         '<localleader>lt',
@@ -1181,13 +1182,13 @@ return {
   },
   {
     'turbio/bracey.vim',
-    enabled = not rvim.plugins.minimal,
+    cond = not rvim.plugins.minimal,
     ft = 'html',
     build = 'npm install --prefix server',
   },
   {
     'olexsmir/gopher.nvim',
-    enabled = rvim.lsp.enable and not rvim.plugins.minimal,
+    cond = rvim.lsp.enable and not rvim.plugins.minimal,
     ft = 'go',
     dependencies = {
       'nvim-lua/plenary.nvim',
@@ -1196,7 +1197,7 @@ return {
   },
   {
     'ellisonleao/glow.nvim',
-    enabled = not rvim.plugins.minimal,
+    cond = not rvim.plugins.minimal,
     cmd = 'Glow',
     ft = 'markdown',
     opts = {
@@ -1225,7 +1226,7 @@ return {
   },
   {
     'iamcco/markdown-preview.nvim',
-    enabled = not rvim.plugins.minimal,
+    cond = not rvim.plugins.minimal,
     build = function() fn['mkdp#util#install']() end,
     ft = 'markdown',
     config = function()
@@ -1235,7 +1236,7 @@ return {
   },
   {
     'NTBBloodbath/rest.nvim',
-    enabled = not rvim.plugins.minimal,
+    cond = not rvim.plugins.minimal,
     ft = { 'http', 'json' },
     keys = {
       { '<localleader>rs', '<Plug>RestNvim', desc = 'rest: run', buffer = 0 },
@@ -1256,7 +1257,7 @@ return {
   },
   {
     'razak17/package-info.nvim',
-    enabled = not rvim.plugins.minimal,
+    cond = not rvim.plugins.minimal,
     event = 'BufRead package.json',
     dependencies = { 'MunifTanjim/nui.nvim' },
     config = function()
@@ -1284,7 +1285,7 @@ return {
   },
   {
     'Saecki/crates.nvim',
-    enabled = not rvim.plugins.minimal,
+    cond = not rvim.plugins.minimal,
     event = 'BufRead Cargo.toml',
     opts = {
       popup = { autofocus = true, border = border },
@@ -1293,7 +1294,7 @@ return {
   },
   {
     'bennypowers/template-literal-comments.nvim',
-    enabled = rvim.treesitter.enable,
+    cond = rvim.treesitter.enable,
     ft = { 'javascript', 'typescript' },
     opts = {},
   },
@@ -1332,7 +1333,7 @@ return {
   },
   {
     'axelvc/template-string.nvim',
-    enabled = rvim.treesitter.enable,
+    cond = rvim.treesitter.enable,
     event = 'BufRead',
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
     ft = {
@@ -1346,14 +1347,14 @@ return {
   },
   {
     'roobert/f-string-toggle.nvim',
-    enabled = rvim.treesitter.enable,
+    cond = rvim.treesitter.enable,
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
     ft = { 'python' },
     opts = {},
   },
   {
     'marilari88/twoslash-queries.nvim',
-    enabled = rvim.treesitter.enable,
+    cond = rvim.treesitter.enable,
     ft = { 'typescript', 'typescriptreact' },
     config = function()
       highlight.plugin('twoslash-queries', {
@@ -1371,7 +1372,7 @@ return {
   ------------------------------------------------------------------------------
   {
     'psliwka/vim-dirtytalk',
-    enabled = not rvim.plugins.minimal,
+    cond = not rvim.plugins.minimal,
     lazy = false,
     build = ':DirtytalkUpdate',
     init = function() vim.opt.spelllang:append('programming') end,

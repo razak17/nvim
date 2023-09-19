@@ -11,7 +11,7 @@ return {
   },
   {
     'tomiis4/BufferTabs.nvim',
-    enabled = false,
+    cond = false,
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     event = 'VeryLazy',
     keys = {
@@ -33,7 +33,7 @@ return {
   },
   {
     'razak17/smartcolumn.nvim',
-    enabled = not rvim.plugins.minimal,
+    cond = not rvim.plugins.minimal,
     event = 'VeryLazy',
     opts = {},
     dependencies = {
@@ -46,19 +46,19 @@ return {
   },
   {
     'utilyre/sentiment.nvim',
-    enabled = not rvim.plugins.minimal,
+    cond = not rvim.plugins.minimal,
     event = 'VeryLazy',
     opts = {},
   },
   {
     'aaron-p1/match-visual.nvim',
-    enabled = not rvim.plugins.minimal,
+    cond = not rvim.plugins.minimal,
     event = { 'BufRead', 'BufNewFile' },
     opts = {},
   },
   {
     'tzachar/local-highlight.nvim',
-    enabled = not rvim.plugins.minimal,
+    cond = not rvim.plugins.minimal,
     event = 'VeryLazy',
     opts = { hlgroup = 'Search' },
   },
@@ -102,7 +102,7 @@ return {
   },
   {
     'tamton-aquib/zone.nvim',
-    enabled = false,
+    cond = false,
     event = 'VeryLazy',
     opts = {
       style = 'epilepsy',
@@ -114,13 +114,13 @@ return {
   },
   {
     'tamton-aquib/flirt.nvim',
-    enabled = false,
+    cond = false,
     event = 'VeryLazy',
     opts = {},
   },
   {
     'tzachar/highlight-undo.nvim',
-    enabled = not rvim.plugins.minimal,
+    cond = not rvim.plugins.minimal,
     event = 'BufRead',
     opts = {
       undo = { hlgroup = 'Search' },
@@ -138,7 +138,7 @@ return {
   },
   {
     'kevinhwang91/nvim-hlslens',
-    enabled = not rvim.plugins.minimal,
+    cond = not rvim.plugins.minimal,
     lazy = false,
     keys = {
       {
@@ -194,7 +194,7 @@ return {
   },
   {
     'stevearc/dressing.nvim',
-    enabled = not rvim.plugins.minimal,
+    cond = not rvim.plugins.minimal,
     event = 'BufRead',
     init = function()
       ---@diagnostic disable-next-line: duplicate-set-field
@@ -261,7 +261,7 @@ return {
   },
   {
     'folke/todo-comments.nvim',
-    enabled = not rvim.plugins.minimal,
+    cond = not rvim.plugins.minimal,
     event = 'BufReadPre',
     cmd = { 'TodoTelescope', 'TodoTrouble', 'TodoQuickFix', 'TodoDots' },
     keys = {
@@ -327,7 +327,7 @@ return {
   {
     'Bekaboo/dropbar.nvim',
     event = 'VeryLazy',
-    enabled = not rvim.plugins.minimal,
+    cond = not rvim.plugins.minimal,
     keys = {
       {
         '<leader>wp',
@@ -385,7 +385,7 @@ return {
   },
   {
     'shellRaining/hlchunk.nvim',
-    enabled = false,
+    cond = false,
     event = 'BufRead',
     config = function()
       require('hlchunk').setup({
@@ -417,7 +417,7 @@ return {
   },
   {
     'lukas-reineke/indent-blankline.nvim',
-    enabled = rvim.treesitter.enable,
+    cond = rvim.treesitter.enable,
     event = 'BufRead',
     opts = {
       char = separators.left_thin_block,
@@ -449,7 +449,7 @@ return {
   },
   {
     'kevinhwang91/nvim-ufo',
-    enabled = rvim.treesitter.enable,
+    cond = rvim.treesitter.enable,
     event = 'VeryLazy',
     config = function()
       highlight.plugin('ufo', {

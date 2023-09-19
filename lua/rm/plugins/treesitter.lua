@@ -3,7 +3,7 @@ local highlight = rvim.highlight
 return {
   {
     'nvim-treesitter/nvim-treesitter',
-    enabled = rvim.treesitter.enable,
+    cond = rvim.treesitter.enable,
     event = 'BufReadPost',
     build = ':TSUpdate',
     keys = {
@@ -120,7 +120,7 @@ return {
   },
   {
     'windwp/nvim-ts-autotag',
-    enabled = rvim.treesitter.enable,
+    cond = rvim.treesitter.enable,
     ft = {
       'typescriptreact',
       'javascript',
@@ -132,13 +132,13 @@ return {
   },
   {
     'nvim-treesitter/playground',
-    enabled = rvim.treesitter.enable,
+    cond = rvim.treesitter.enable,
     cmd = { 'TSPlaygroundToggle', 'TSHighlightCapturesUnderCursor' },
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
   },
   {
     'nvim-treesitter/nvim-treesitter-context',
-    enabled = rvim.treesitter.enable,
+    cond = rvim.treesitter.enable,
     event = { 'BufRead', 'BufNewFile' },
     config = function()
       highlight.plugin('treesitter-context', {
@@ -156,7 +156,7 @@ return {
   {
     'andymass/vim-matchup',
     event = { 'BufReadPre', 'BufNewFile' },
-    enabled = rvim.treesitter.enable,
+    cond = rvim.treesitter.enable,
     keys = {
       { '[[', '<plug>(matchup-[%)', mode = { 'n', 'x' } },
       { ']]', '<plug>(matchup-]%)', mode = { 'n', 'x' } },
@@ -182,14 +182,14 @@ return {
   },
   {
     'sustech-data/wildfire.nvim',
-    enabled = rvim.treesitter.enable,
+    cond = rvim.treesitter.enable,
     event = { 'BufRead', 'BufNewFile' },
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
     opts = {},
   },
   {
     'filNaj/tree-setter',
-    enabled = rvim.treesitter.enable,
+    cond = rvim.treesitter.enable,
     event = 'VeryLazy',
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
   },

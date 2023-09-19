@@ -90,7 +90,7 @@ return {
   },
   {
     'mfussenegger/nvim-treehopper',
-    enabled = rvim.treesitter.enable,
+    cond = rvim.treesitter.enable,
     keys = {
       {
         'u',
@@ -156,7 +156,7 @@ return {
   },
   {
     'ckolkey/ts-node-action',
-    enabled = rvim.treesitter.enable,
+    cond = rvim.treesitter.enable,
     dependencies = { 'nvim-treesitter' },
     keys = {
       {
@@ -169,7 +169,7 @@ return {
   },
   {
     'Wansmer/treesj',
-    enabled = rvim.treesitter.enable,
+    cond = rvim.treesitter.enable,
     keys = {
       { 'gS', '<cmd>TSJSplit<CR>', desc = 'split to multiple lines' },
       { 'gJ', '<cmd>TSJJoin<CR>', desc = 'join to single line' },
@@ -179,7 +179,7 @@ return {
   },
   {
     'mizlan/iswap.nvim',
-    enabled = rvim.treesitter.enable,
+    cond = rvim.treesitter.enable,
     keys = {
       { '<leader>ia', '<cmd>ISwap<CR>', desc = 'iswap: swap' },
       { '<leader>iw', '<cmd>ISwapWith<CR>', desc = 'iswap: swap with' },
@@ -188,7 +188,7 @@ return {
   },
   {
     'Wansmer/sibling-swap.nvim',
-    enabled = rvim.treesitter.enable,
+    cond = rvim.treesitter.enable,
     keys = {
       {
         '<leader>ih',
@@ -209,7 +209,7 @@ return {
   },
   {
     'ThePrimeagen/refactoring.nvim',
-    enabled = rvim.treesitter.enable,
+    cond = rvim.treesitter.enable,
     dependencies = {
       'nvim-lua/plenary.nvim',
       'nvim-treesitter/nvim-treesitter',
@@ -262,7 +262,7 @@ return {
   },
   {
     'HiPhish/rainbow-delimiters.nvim',
-    enabled = not rvim.plugins.minimal,
+    cond = not rvim.plugins.minimal,
     event = 'VeryLazy',
     config = function()
       local rainbow_delimiters = require('rainbow-delimiters')
@@ -357,7 +357,7 @@ return {
   },
   {
     'jackMort/ChatGPT.nvim',
-    enabled = rvim.ai.enable and not rvim.plugins.minimal,
+    cond = rvim.ai.enable and not rvim.plugins.minimal,
     cmd = { 'ChatGPT', 'ChatGPTActAs', 'ChatGPTEditWithInstructions' },
     keys = {
       { '<leader>aa', '<cmd>ChatGPTActAs<CR>', desc = 'chatgpt: act as' },
@@ -388,7 +388,7 @@ return {
   },
   {
     'piersolenski/wtf.nvim',
-    enabled = rvim.lsp.enable,
+    cond = rvim.lsp.enable,
     event = 'VeryLazy',
     opts = {},
     keys = {
@@ -407,12 +407,12 @@ return {
   },
   {
     'subnut/nvim-ghost.nvim',
-    enabled = not rvim.plugins.minimal,
+    cond = not rvim.plugins.minimal,
     lazy = not rvim.plugins.overrides.ghost_text.enable,
   },
   {
     'ecthelionvi/NeoComposer.nvim',
-    enabled = not rvim.plugins.minimal,
+    cond = not rvim.plugins.minimal,
     event = { 'BufReadPost', 'BufNewFile' },
     dependencies = { 'kkharji/sqlite.lua' },
     keys = {

@@ -56,7 +56,7 @@ return {
   },
   {
     'nvim-neorg/neorg',
-    enabled = false,
+    cond = false,
     ft = 'norg',
     keys = {
       { '<localleader>nx', '<cmd>Neorg return<CR>', 'neorg: return' },
@@ -102,7 +102,7 @@ return {
   },
   {
     'lukas-reineke/headlines.nvim',
-    enabled = rvim.treesitter.enable,
+    cond = rvim.treesitter.enable,
     ft = { 'org', 'norg', 'markdown', 'yaml' },
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
     opts = {

@@ -1,10 +1,11 @@
 local ui = rvim.ui
+local fmt = string.format
 
 return {
   {
     'chrisgrieser/nvim-early-retirement',
-    enabled = false,
-    -- enabled = not rvim.plugins.minimal,
+    cond = false,
+    -- cond = not rvim.plugins.minimal,
     event = 'VeryLazy',
     opts = {
       minimumBufferNum = 4,
@@ -14,7 +15,7 @@ return {
   {
 
     'razak17/cybu.nvim',
-    enabled = not rvim.plugins.minimal,
+    cond = not rvim.plugins.minimal,
     event = { 'BufRead', 'BufNewFile' },
     opts = {
       position = { relative_to = 'win', anchor = 'topright' },
@@ -58,7 +59,7 @@ return {
   },
   {
     'razak17/buffer_manager.nvim',
-    enabled = false,
+    cond = false,
     keys = {
       {
         '<M-Space>',

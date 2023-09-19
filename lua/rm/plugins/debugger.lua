@@ -5,7 +5,7 @@ rvim.debugger = { layout = { ft = { dart = 2 } } }
 return {
   {
     'mfussenegger/nvim-dap',
-    enabled = not rvim.plugins.minimal,
+    cond = not rvim.plugins.minimal,
     keys = {
       {
         '<localleader>dbp',
