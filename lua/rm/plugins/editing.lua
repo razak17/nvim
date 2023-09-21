@@ -262,6 +262,7 @@ return {
   },
   {
     'HiPhish/rainbow-delimiters.nvim',
+    branch = "use-children",
     cond = not rvim.plugins.minimal,
     event = 'VeryLazy',
     config = function()
