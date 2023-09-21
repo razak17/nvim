@@ -418,7 +418,7 @@ return {
   {
     'lukas-reineke/indent-blankline.nvim',
     cond = rvim.treesitter.enable,
-    event = 'BufRead',
+    event = 'UIEnter',
     opts = {
       char = separators.left_thin_block,
       show_foldtext = false,
