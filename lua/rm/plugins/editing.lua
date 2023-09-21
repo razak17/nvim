@@ -289,6 +289,7 @@ return {
   },
   {
     'robitx/gp.nvim',
+    cond = rvim.ai.enable and not rvim.plugins.minimal,
     keys = {
       -- Chat commands
       {
