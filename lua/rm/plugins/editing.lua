@@ -124,6 +124,19 @@ return {
     end,
   },
   {
+    'moozd/aidoc.nvim',
+    cond = not rvim.plugins.minimal,
+    keys = {
+      {
+        mode = 'x',
+        '<leader>do',
+        '<cmd>lua require("aidoc.api").generate({width = 65})<CR>',
+        desc = 'aidoc: generate',
+      },
+    },
+    opts = {},
+  },
+  {
     'danymat/neogen',
     keys = {
       {
@@ -262,7 +275,7 @@ return {
   },
   {
     'HiPhish/rainbow-delimiters.nvim',
-    branch = "use-children",
+    branch = 'use-children',
     cond = not rvim.plugins.minimal,
     event = 'VeryLazy',
     config = function()
