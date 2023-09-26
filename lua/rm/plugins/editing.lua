@@ -266,6 +266,7 @@ return {
         ['column'] = 'row',
         ['before'] = 'after',
         ['end'] = 'start',
+        ['high'] = 'low',
       },
     },
   },
