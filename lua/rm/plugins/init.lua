@@ -60,19 +60,13 @@ return {
     'razak17/onedark.nvim',
     lazy = false,
     priority = 1000,
-    opts = {
-      variant = 'fill', -- 'outline' | 'fill'
-    },
+    opts = { variant = 'fill' },
     config = function(_, opts) require('onedark').setup(opts) end,
   },
   { 'LunarVim/horizon.nvim', lazy = false, priority = 1000 },
   { 'dotsilas/darcubox-nvim', lazy = false, priority = 1000 },
-  {
-    'Wansmer/serenity.nvim',
-    lazy = false,
-    priority = 1000,
-    -- config = function() rvim.load_colorscheme('serenity') end,
-  },
+  { 'Wansmer/serenity.nvim', priority = 1000, opts = {} },
+  { 'judaew/ronny.nvim', priority = 1000, opts = {} },
   -- }}}
   ------------------------------------------------------------------------------
   -- LSP,Completion & Debugger {{{1
