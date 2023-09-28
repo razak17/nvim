@@ -1,6 +1,8 @@
+---@diagnostic disable: missing-fields
 --------------------------------------------------------------------------------
 -- Language servers
 --------------------------------------------------------------------------------
+---@type lspconfig.options
 local servers = {
   astro = {},
   bashls = {},
