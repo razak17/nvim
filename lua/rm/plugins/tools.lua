@@ -116,6 +116,9 @@ return {
     keys = {
       { '<localleader>lc', '<Cmd>ConformInfo<CR>', desc = 'conform info' },
     },
+    init = function()
+      vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
+    end,
     opts = {
       formatters_by_ft = {
         javascript = { prettier },
