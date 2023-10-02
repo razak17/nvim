@@ -115,10 +115,14 @@ return {
     cmd = 'ConformInfo',
     keys = {
       { '<localleader>lc', '<Cmd>ConformInfo<CR>', desc = 'conform info' },
+      {
+        '<localleader>lF',
+        function() require('conform').format({ formatters = { 'injected' } }) end,
+        mode = { 'n', 'v' },
+        desc = 'Format Injected Langs',
+      },
     },
-    init = function()
-      vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
-    end,
+    init = function() vim.o.formatexpr = "v:lua.require'conform'.formatexpr()" end,
     opts = {
       formatters_by_ft = {
         javascript = { prettier },
