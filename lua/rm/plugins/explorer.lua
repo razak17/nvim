@@ -2,6 +2,29 @@ local icons, codicons = rvim.ui.icons, rvim.ui.codicons
 local highlight, lsp_hls = rvim.highlight, rvim.ui.lsp.highlights
 local lspkind = require('lspkind')
 
+---@param from string
+---@param to string
+local function on_rename(from, to)
+  local clients = vim.lsp.get_active_clients()
+  for _, client in ipairs(clients) do
+    ---@diagnostic disable-next-line: param-type-mismatch
+    if client:supports_method('workspace/willRenameFiles') then
+      ---@diagnostic disable-next-line: missing-parameter
+      local resp = client.request_sync('workspace/willRenameFiles', {
+        files = {
+          {
+            oldUri = vim.uri_from_fname(from),
+            newUri = vim.uri_from_fname(to),
+          },
+        },
+      }, 1000)
+      if resp and resp.result ~= nil then
+        vim.lsp.util.apply_workspace_edit(resp.result, client.offset_encoding)
+      end
+    end
+  end
+end
+
 return {
   {
     'nvim-neo-tree/neo-tree.nvim',
@@ -145,6 +168,15 @@ return {
           },
         },
       })
+
+      local function on_move(data) on_rename(data.source, data.destination) end
+
+      local events = require('neo-tree.events')
+      opts.event_handlers = opts.event_handlers or {}
+      vim.list_extend(opts.event_handlers, {
+        { event = events.FILE_MOVED, handler = on_move },
+        { event = events.FILE_RENAMED, handler = on_move },
+      })
       require('neo-tree').setup(opts)
     end,
     dependencies = {
@@ -152,6 +184,43 @@ return {
       'MunifTanjim/nui.nvim',
       'nvim-tree/nvim-web-devicons',
     },
+  },
+  {
+    'echasnovski/mini.files',
+    keys = {
+      {
+        '<leader>ee',
+        function()
+          require('mini.files').open(vim.api.nvim_buf_get_name(0), true)
+        end,
+        desc = 'open mini.files (directory of current file)',
+      },
+      {
+        '<leader>ew',
+        function() require('mini.files').open(vim.loop.cwd(), true) end,
+        desc = 'open mini.files (cwd)',
+      },
+    },
+    opts = {
+      windows = {
+        preview = true,
+        width_focus = 30,
+        width_preview = 30,
+      },
+      options = {
+        -- Whether to use for editing directories
+        -- Disabled by default in LazyVim because neo-tree is used for that
+        use_as_default_explorer = false,
+      },
+    },
+    config = function(_, opts)
+      require('mini.files').setup(opts)
+
+      vim.api.nvim_create_autocmd('User', {
+        pattern = 'MiniFilesActionRename',
+        callback = function(event) on_rename(event.data.from, event.data.to) end,
+      })
+    end,
   },
   {
     's1n7ax/nvim-window-picker',

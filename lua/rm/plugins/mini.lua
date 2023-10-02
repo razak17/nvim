@@ -84,13 +84,6 @@ return {
     end,
   },
   {
-    'echasnovski/mini.files',
-    keys = {
-      { '<leader>e', '<cmd>lua MiniFiles.open()<CR>', desc = 'mini.files' },
-    },
-    opts = {},
-  },
-  {
     'echasnovski/mini.surround',
     keys = {
       { 'ys', desc = 'add surrounding' },
