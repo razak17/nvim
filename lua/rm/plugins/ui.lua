@@ -34,7 +34,7 @@ return {
   {
     'razak17/smartcolumn.nvim',
     cond = not rvim.plugins.minimal,
-    event = 'VeryLazy',
+    event = 'UIEnter',
     opts = {},
     dependencies = {
       {
