@@ -40,8 +40,8 @@ o.eadirection = 'hor'
 o.switchbuf = 'useopen,uselast'
 opt.fillchars = {
   fold = ' ',
-  foldopen = '▽', -- '▼'
-  foldclose = '▷', -- '▶'
+  foldopen = '▽', -- ▼ 
+  foldclose = '▷', -- ▶ 
   eob = ' ', -- suppress ~ at EndOfBuffer
   diff = '╱', -- alternatives = ⣿ ░ ─
   msgsep = ' ', -- alternatives: ‾ ─
@@ -82,6 +82,16 @@ opt.formatoptions = {
 -- Folds {{{1
 --------------------------------------------------------------------------------
 o.foldlevelstart = 999
+if vim.treesitter.foldexpr then
+  opt.foldmethod = "expr"
+  opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+else
+  opt.foldmethod = "indent"
+end
+---@diagnostic disable-next-line: undefined-field
+if vim.treesitter.foldtext then
+  opt.foldtext = "v:lua.vim.treesitter.foldtext()"
+end
 --------------------------------------------------------------------------------
 -- Grepprg {{{1
 --------------------------------------------------------------------------------
@@ -256,6 +266,7 @@ opt.spellsuggest:prepend({ 12 })
 opt.spelloptions:append({ 'camel', 'noplainbuffer' })
 opt.spellcapcheck = '' -- don't check for capital letters at start of sentence
 -- https://vi.stackexchange.com/questions/15051/how-can-i-use-multiple-spell-files-at-the-same-time
+---@diagnostic disable-next-line: assign-type-mismatch
 opt.spellfile = join_paths(vim.fn.stdpath('config'), 'spell', 'en.utf-8.add')
 --------------------------------------------------------------------------------
 -- Mouse {{{1
