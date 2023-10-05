@@ -194,4 +194,24 @@ return {
     event = 'VeryLazy',
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
   },
+  {
+    'andersevenrud/nvim_context_vt',
+    cond = rvim.treesitter.enable,
+    cmd = 'NvimContextVtToggle',
+    keys = {
+      {
+        '<localleader>lb',
+        '<cmd>NvimContextVtToggle<CR>',
+        desc = 'toggle context visualizer',
+      },
+    },
+    opts = {
+      highlight = 'Comment',
+    },
+    config = function(_, opts)
+      require('nvim_context_vt').setup(opts)
+      vim.cmd([[NvimContextVtToggle]])
+    end,
+    dependencies = 'nvim-treesitter',
+  },
 }
