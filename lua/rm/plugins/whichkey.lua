@@ -25,6 +25,10 @@ return {
 
     which_key.register({
       ['<leader>'] = {
+        ['<leader>'] = {
+          name = 'Advanced',
+          t = 'translate',
+        },
         a = { name = 'A.I.' },
         d = { name = 'Dadbod' },
         f = { name = 'Telescope' },
