@@ -3,6 +3,28 @@ local ui = rvim.ui
 
 local align = { provider = '%=' }
 
+local buftypes = {
+  'nofile',
+  'prompt',
+  'help',
+  'quickfix',
+}
+
+-- Filetypes which force the statusline to be inactive
+local force_inactive_filetypes = {
+  '^aerial$',
+  '^alpha$',
+  '^chatgpt$',
+  '^DressingInput$',
+  '^frecency$',
+  '^lazy$',
+  '^lazyterm$',
+  '^netrw$',
+  '^oil$',
+  '^TelescopePrompt$',
+  '^undotree$',
+}
+
 return {
   {
     'rebelot/heirline.nvim',
@@ -12,6 +34,7 @@ return {
     config = function()
       local statuscolumn = require('rm.statuscolumn')
       local statusline = require('rm.statusline')
+      local conditions = require('heirline.conditions')
 
       require('heirline').setup({
         statusline = {
@@ -64,8 +87,13 @@ return {
               fname = fn.bufname(buf),
               setting = 'statuscolumn',
             })
-            -- if not rvim.ui.statuscolumn.enable then return false end
-            if rvim.falsy(d) then return true end
+            if not rvim.ui.statuscolumn.enable then return false end
+            if rvim.falsy(d) then
+              return not conditions.buffer_matches({
+                buftype = buftypes,
+                filetype = force_inactive_filetypes,
+              })
+            end
             return d and d.ft == true or d and d.fname == true
           end,
           static = statuscolumn.static,

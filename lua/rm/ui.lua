@@ -205,6 +205,7 @@ local commit_buffer =
   presets.minimal_editing:with({ colorcolumn = '50,72', winbar = false })
 local buftypes = {
   ['terminal'] = presets.tool_panel,
+  ['prompt'] = presets.tool_panel,
   ['quickfix'] = presets.tool_panel,
   ['nofile'] = presets.tool_panel,
   ['nowrite'] = presets.tool_panel,
