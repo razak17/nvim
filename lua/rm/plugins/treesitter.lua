@@ -85,6 +85,7 @@ return {
         matchup = {
           enable = true,
           enable_quotes = true,
+          disable_virtual_text = true,
           disable = { 'c', 'python' },
         },
         autotag = { enable = true },
