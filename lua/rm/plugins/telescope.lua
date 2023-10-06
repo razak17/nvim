@@ -195,6 +195,7 @@ return {
       -- { '<leader>ff', project_files, desc = 'project files' },
       { '<leader>fh', frecency, desc = 'Most (f)recently used files' },
       { '<leader>fi', import, desc = 'import' },
+      { '<leader>fl', '<cmd>Telescope lazy<CR>', desc = 'surf plugins' },
       { '<leader>fL', luasnips, desc = 'luasnip: available snippets' },
       { '<leader>fn', notifications, desc = 'notify: notifications' },
       { '<leader>fN', notes, desc = 'notes' },
@@ -397,11 +398,13 @@ return {
       require('telescope').load_extension('frecency')
       require('telescope').load_extension('undo')
       require('telescope').load_extension('menufacture')
-      require('telescope').load_extension('notify')
       require('telescope').load_extension('file_browser')
       require('telescope').load_extension('textcase')
       require('telescope').load_extension('harpoon')
       require('telescope').load_extension('import')
+      if not rvim.is_available('nvim-notify') then
+        require('telescope').load_extension('notify')
+      end
       if not rvim.plugins.minimal then
         require('telescope').load_extension('persisted')
         require('telescope').load_extension('projects')
@@ -419,6 +422,30 @@ return {
       'molecule-man/telescope-menufacture',
       'nvim-telescope/telescope-file-browser.nvim',
       'razak17/telescope-import.nvim',
+      {
+        'tsakirist/telescope-lazy.nvim',
+        opts = {
+          extensions = {
+            lazy = {
+              -- Optional theme (the extension doesn't set a default theme)
+              theme = 'ivy',
+              -- Whether or not to show the icon in the first column
+              show_icon = true,
+              -- Mappings for the actions
+              mappings = {
+                open_in_browser = '<C-o>',
+                open_in_file_browser = '<M-b>',
+                open_in_find_files = '<C-f>',
+                open_in_live_grep = '<C-g>',
+                open_plugins_picker = '<C-b>', -- Works only after having called first another action
+                open_lazy_root_find_files = '<C-r>f',
+                open_lazy_root_live_grep = '<C-r>g',
+              },
+              -- Other telescope configuration options
+            },
+          },
+        },
+      },
     },
   },
 }
