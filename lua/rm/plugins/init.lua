@@ -1434,6 +1434,18 @@ return {
       })
     end,
   },
+  {
+    'nfrid/markdown-togglecheck',
+    ft = { 'markdown' },
+    keys = {
+      {
+        '<leader>ol',
+        function() require('markdown-togglecheck').toggle() end,
+        desc = 'toggle markdown checkbox',
+      },
+    },
+    dependencies = { 'nfrid/treesitter-utils' },
+  },
   -- }}}
   ------------------------------------------------------------------------------
   -- Syntax {{{1
