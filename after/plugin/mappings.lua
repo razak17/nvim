@@ -266,7 +266,17 @@ nnoremap(
   "getline('.')[0 : col('.') - 2] =~# '^\\s\\+$' ? '0' : '^'",
   { expr = true }
 )
+xnoremap(
+  '0',
+  "getline('.')[0 : col('.') - 2] =~# '^\\s\\+$' ? '0' : '^'",
+  { expr = true, desc = 'go to start of line' }
+)
 nnoremap(
+  'gh',
+  "getline('.')[0 : col('.') - 2] =~# '^\\s\\+$' ? '0' : '^'",
+  { expr = true, desc = 'go to start of line' }
+)
+xnoremap(
   'gh',
   "getline('.')[0 : col('.') - 2] =~# '^\\s\\+$' ? '0' : '^'",
   { expr = true, desc = 'go to start of line' }
