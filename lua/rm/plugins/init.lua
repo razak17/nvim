@@ -1424,6 +1424,13 @@ return {
     'marilari88/twoslash-queries.nvim',
     cond = rvim.treesitter.enable,
     ft = { 'typescript', 'typescriptreact' },
+    keys = {
+      {
+        '<localleader>li',
+        '<Cmd>TwoslashQueriesInspect<CR>',
+        desc = 'twoslash-queries: inspect',
+      },
+    },
     config = function()
       highlight.plugin('twoslash-queries', {
         theme = {
