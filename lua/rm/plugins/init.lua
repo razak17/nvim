@@ -1431,15 +1431,7 @@ return {
         desc = 'twoslash-queries: inspect',
       },
     },
-    config = function()
-      highlight.plugin('twoslash-queries', {
-        theme = {
-          ['onedark'] = {
-            { TypeVirtualText = { link = 'DiagnosticVirtualTextInfo' } },
-          },
-        },
-      })
-    end,
+    opts = { highlight = 'DiagnosticVirtualTextInfo' },
   },
   {
     'nfrid/markdown-togglecheck',
