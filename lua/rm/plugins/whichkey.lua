@@ -27,6 +27,7 @@ return {
       ['<leader>'] = {
         ['<leader>'] = {
           name = 'Advanced',
+          b = 'Comment-box',
           t = 'translate',
         },
         a = { name = 'A.I.' },
