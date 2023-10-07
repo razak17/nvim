@@ -295,7 +295,11 @@ local function setup_autocommands(client, buf)
       buffer = buf,
       desc = 'LSP: Show diagnostics',
       command = function()
-        if not rvim.lsp.hover_diagnostics.enable then return end
+        if
+          not rvim.lsp.hover_diagnostics.enable or not rvim.lsp.timeout.enable
+        then
+          return
+        end
         if
           vim.b.lsp_hover_win and api.nvim_win_is_valid(vim.b.lsp_hover_win)
         then
@@ -367,6 +371,7 @@ local function on_attach(client, bufnr)
   setup_autocommands(client, bufnr)
   setup_mappings(client, bufnr)
   setup_semantic_tokens(client, bufnr)
+  require('rm.lsp_timeout')
 end
 
 augroup('LspSetupCommands', {
