@@ -316,6 +316,7 @@ if is_available('alpha-nvim') then
       vim.schedule(function() vim.cmd.doautocmd('FileType') end)
     end,
   })
+
   augroup('AlphaSettings', {
     event = { 'User ' },
     pattern = { 'AlphaReady' },
@@ -408,31 +409,31 @@ if is_available('gitsigns.nvim') then
   })
 end
 
-if is_available('crates.nvim') then
-  augroup('CmpSourceCargo', {
-    event = 'BufRead',
-    pattern = 'Cargo.toml',
-    command = function()
+augroup('CmpSourceCargo', {
+  event = 'BufRead',
+  pattern = 'Cargo.toml',
+  command = function()
+    if is_available('crates.nvim') then
       require('cmp').setup.buffer({
         sources = { { name = 'crates', priority = 3, group_index = 1 } },
       })
-    end,
-  })
-end
+    end
+  end,
+})
 
-if is_available('twoslash-queries.nvim') then
-  augroup('TwoSlashQueriesSetup', {
-    event = 'LspAttach',
-    command = function(args)
-      local id = vim.tbl_get(args, 'data', 'client_id')
-      if not id then return end
-      local client = vim.lsp.get_client_by_id(id)
-      if client and client.name == 'tsserver' then
+augroup('TwoSlashQueriesSetup', {
+  event = 'LspAttach',
+  command = function(args)
+    local id = vim.tbl_get(args, 'data', 'client_id')
+    if not id then return end
+    local client = vim.lsp.get_client_by_id(id)
+    if is_available('twoslash-queries.nvim') then
+      if client and client.name == 'typescript-tools' then
         require('twoslash-queries').attach(client, args.buf)
       end
-    end,
-  })
-end
+    end
+  end,
+})
 
 if is_available('persisted.nvim') then
   augroup('PersistedEvents', {
@@ -464,19 +465,19 @@ if is_available('nvim-ghost.nvim') then
   })
 end
 
-if is_available('smartcolumn.nvim') then
-  rvim.augroup('SmartCol', {
-    event = { 'VimEnter', 'BufEnter', 'WinEnter' },
-    command = function(args)
+rvim.augroup('SmartCol', {
+  event = { 'VimEnter', 'BufEnter', 'WinEnter' },
+  command = function(args)
+    if is_available('smartcolumn.nvim') then
       rvim.ui.decorations.set_colorcolumn(
         args.buf,
         function(colorcolumn)
           require('smartcolumn').setup_buffer({ colorcolumn = colorcolumn })
         end
       )
-    end,
-  })
-end
+    end
+  end,
+})
 
 local function float_resize_autocmd(autocmd_name, ft, command)
   augroup(autocmd_name, {
