@@ -8,7 +8,7 @@ local function on_rename(from, to)
   local clients = vim.lsp.get_active_clients()
   for _, client in ipairs(clients) do
     ---@diagnostic disable-next-line: param-type-mismatch
-    if client:supports_method('workspace/willRenameFiles') then
+    if client.supports_method('workspace/willRenameFiles') then
       ---@diagnostic disable-next-line: missing-parameter
       local resp = client.request_sync('workspace/willRenameFiles', {
         files = {
