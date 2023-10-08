@@ -132,16 +132,45 @@ augroup('TextYankHighlight', {
   end,
 })
 
-augroup('UpdateVim', {
-  event = { 'FocusLost', 'InsertLeave' },
-  command = function()
-    if rvim.autosave.enable then vim.cmd('silent! wall') end
-  end,
-}, {
-  event = { 'VimResized' },
-  pattern = { '*' },
-  command = 'wincmd =', -- Make windows equal size when vim resizes
-})
+local save_excluded = {
+  'neo-tree',
+  'neo-tree-popup',
+  'lua.luapad',
+  'gitcommit',
+  'NeogitCommitMessage',
+  'DiffviewFiles',
+}
+local function can_save()
+  return falsy(vim.bo.buftype)
+    and not falsy(vim.bo.filetype)
+    and vim.bo.modifiable
+    and not vim.tbl_contains(save_excluded, vim.bo.filetype)
+end
+
+augroup(
+  'UpdateVim',
+  {
+    event = { 'FocusLost', 'InsertLeave', 'CursorMoved' },
+    command = function(args)
+      if not vim.bo[args.buf].modified or not rvim.autosave.enable then
+        return
+      end
+      if can_save() then vim.cmd('silent! wall') end
+    end,
+  },
+  --   {
+  --   event = { 'BufLeave' },
+  --   command = function()
+  --     if not rvim.autosave.enable then return end
+  --     if can_save() then vim.cmd('silent! write ++p') end
+  --   end,
+  -- },
+  {
+    event = { 'VimResized' },
+    pattern = { '*' },
+    command = 'wincmd =', -- Make windows equal size when vim resizes
+  }
+)
 
 augroup('WinBehavior', {
   event = { 'BufWinEnter' },
@@ -182,21 +211,6 @@ augroup('Cursorline', {
   command = function() vim.wo.cursorline = false end,
 })
 
-local save_excluded = {
-  'neo-tree',
-  'neo-tree-popup',
-  'lua.luapad',
-  'gitcommit',
-  'NeogitCommitMessage',
-  'DiffviewFiles',
-}
-local function can_save()
-  return falsy(vim.bo.buftype)
-    and not falsy(vim.bo.filetype)
-    and vim.bo.modifiable
-    and not vim.tbl_contains(save_excluded, vim.bo.filetype)
-end
-
 augroup('Utilities', {
   ---@source: https://vim.fandom.com/wiki/Use_gf_to_open_a_file_via_its_URL
   event = { 'BufReadCmd' },
@@ -214,17 +228,11 @@ augroup('Utilities', {
     local match = vim.iter(paths):find(function(dir)
       local path = api.nvim_buf_get_name(args.buf)
       -- HACK: Disable for my config dir manually
-      if vim.startswith(path, vim.fn.stdpath('config')) then return false end
+      if vim.startswith(path, fn.stdpath('config')) then return false end
       if vim.startswith(path, env.VIMRUNTIME) then return true end
       return vim.startswith(path, dir)
     end)
     vim.b[args.buf].formatting_disabled = match ~= nil
-  end,
-}, {
-  event = { 'BufLeave' },
-  command = function()
-    if not rvim.autosave.enable then return end
-    if can_save() then vim.cmd('silent! write ++p') end
   end,
 }, {
   event = { 'BufWritePost' },
