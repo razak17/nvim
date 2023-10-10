@@ -326,7 +326,7 @@ if is_available('alpha-nvim') then
   })
 
   augroup('AlphaSettings', {
-    event = { 'User ' },
+    event = { 'User' },
     pattern = { 'AlphaReady' },
     command = function(args)
       opt.foldenable = false
