@@ -81,17 +81,9 @@ opt.formatoptions = {
 --------------------------------------------------------------------------------
 -- Folds {{{1
 --------------------------------------------------------------------------------
-o.foldlevelstart = 999
-if vim.treesitter.foldexpr then
-  opt.foldmethod = "expr"
-  opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
-else
-  opt.foldmethod = "indent"
-end
----@diagnostic disable-next-line: undefined-field
-if vim.treesitter.foldtext then
-  opt.foldtext = "v:lua.vim.treesitter.foldtext()"
-end
+o.foldlevelstart = 3
+opt.foldmethod = 'expr'
+opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 --------------------------------------------------------------------------------
 -- Grepprg {{{1
 --------------------------------------------------------------------------------
