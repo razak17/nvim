@@ -66,14 +66,15 @@ return {
     event = 'VeryLazy',
     opts = { hlgroup = 'Search' },
   },
-  -- {
-  --   'whatyouhide/vim-lengthmatters',
-  --   lazy = false,
-  --   config = function()
-  --     vim.g.lengthmatters_excluded = { 'packer' }
-  --     vim.g.lengthmatters_linked_to = 'CursorLine'
-  --   end,
-  -- },
+  {
+    'whatyouhide/vim-lengthmatters',
+    cond = false,
+    lazy = false,
+    config = function()
+      vim.g.lengthmatters_excluded = { 'packer' }
+      vim.g.lengthmatters_linked_to = 'CursorLine'
+    end,
+  },
   {
     'laytan/cloak.nvim',
     event = 'VeryLazy',
