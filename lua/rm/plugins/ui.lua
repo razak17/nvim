@@ -37,16 +37,15 @@ return {
     config = function() vim.g.highlighturl_guifg = highlight.get('URL', 'fg') end,
   },
   {
+    'lukas-reineke/virt-column.nvim',
+    event = 'UIEnter',
+    opts = { char = separators.right_thin_block },
+  },
+  {
     'razak17/smartcolumn.nvim',
     cond = not rvim.plugins.minimal,
     event = 'UIEnter',
     opts = {},
-    dependencies = {
-      {
-        'lukas-reineke/virt-column.nvim',
-        opts = { char = separators.right_thin_block },
-      },
-    },
   },
   {
     'utilyre/sentiment.nvim',
@@ -557,46 +556,45 @@ return {
         '<leader><leader>bb',
         function() require('comment-box').ccbox() end,
         mode = { 'n', 'v' },
-        desc = 'Comment Box',
+        desc = 'comment Box',
       },
       {
         '<leader><leader>be',
         function()
-          -- take an input:
           local input = vim.fn.input('Catalog: ')
           require('comment-box').ccbox(input)
         end,
         mode = { 'n', 'v' },
-        desc = 'Left Comment Box',
+        desc = 'Left comment box',
       },
       {
         '<leader><leader>bc',
         function() require('comment-box').lbox() end,
         mode = { 'n', 'v' },
-        desc = 'Left Comment Box',
+        desc = 'left comment box',
       },
       {
         '<leader><leader>bx',
         function() require('comment-box').catalog() end,
         mode = { 'n', 'v' },
-        desc = 'Comment Catalog',
+        desc = 'comment catalog',
       },
     },
     opts = {
-      doc_width = 80, -- width of the document
-      box_width = 60, -- width of the boxes
-      borders = { -- symbols used to draw a box
+      doc_width = 80,
+      box_width = 60,
+      borders = {
         top = '─',
         bottom = '─',
         left = '│',
         right = '│',
-        top_left = '╭',
-        top_right = '╮',
-        bottom_left = '╰',
-        bottom_right = '╯',
+        top_left = '┌',
+        top_right = '┐',
+        bottom_left = '└',
+        bottom_right = '┘',
       },
-      line_width = 70, -- width of the lines
-      line = { -- symbols used to draw a line
+      line_width = 70,
+      line = {
         line = '─',
         line_start = '─',
         line_end = '─',
