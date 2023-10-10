@@ -32,6 +32,11 @@ return {
     end,
   },
   {
+    'itchyny/vim-highlighturl',
+    event = 'ColorScheme',
+    config = function() vim.g.highlighturl_guifg = highlight.get('URL', 'fg') end,
+  },
+  {
     'razak17/smartcolumn.nvim',
     cond = not rvim.plugins.minimal,
     event = 'UIEnter',
@@ -39,7 +44,6 @@ return {
     dependencies = {
       {
         'lukas-reineke/virt-column.nvim',
-        event = 'BufReadPre',
         opts = { char = separators.right_thin_block },
       },
     },
@@ -61,6 +65,29 @@ return {
     cond = not rvim.plugins.minimal,
     event = 'VeryLazy',
     opts = { hlgroup = 'Search' },
+  },
+  -- {
+  --   'whatyouhide/vim-lengthmatters',
+  --   lazy = false,
+  --   config = function()
+  --     vim.g.lengthmatters_excluded = { 'packer' }
+  --     vim.g.lengthmatters_linked_to = 'CursorLine'
+  --   end,
+  -- },
+  {
+    'laytan/cloak.nvim',
+    event = 'VeryLazy',
+    opts = {},
+  },
+  {
+    'folke/twilight.nvim',
+    cond = rvim.treesitter.enable,
+    cmd = 'Twilight',
+    opts = {
+      context = 40,
+      dimming = { alpha = 0.45, inactive = true },
+      exclude = { 'alpha', 'git' },
+    },
   },
   {
     'folke/zen-mode.nvim',
@@ -332,7 +359,7 @@ return {
   {
     'Bekaboo/dropbar.nvim',
     event = 'VeryLazy',
-    cond = not rvim.plugins.minimal,
+    cond = not rvim.plugins.minimal and false,
     keys = {
       {
         '<leader>wp',

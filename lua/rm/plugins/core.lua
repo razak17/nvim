@@ -354,21 +354,6 @@ return {
   { 'will133/vim-dirdiff', cmd = 'DirDiff' },
   { 'godlygeek/tabular', cmd = { 'Tabularize' } },
   {
-    'itchyny/vim-highlighturl',
-    event = 'ColorScheme',
-    config = function() vim.g.highlighturl_guifg = highlight.get('URL', 'fg') end,
-  },
-  {
-    'linux-cultist/venv-selector.nvim',
-    cmd = 'VenvSelect',
-    opts = {
-      name = { 'venv', '.venv', 'env', '.env' },
-    },
-    keys = {
-      { '<localleader>le', '<cmd>:VenvSelect<cr>', desc = 'Select VirtualEnv' },
-    },
-  },
-  {
     'kevinhwang91/nvim-fundo',
     event = 'VeryLazy',
     build = function() require('fundo').install() end,
@@ -433,16 +418,6 @@ return {
         mode = { 'o', 'x' },
         desc = 'Flash Treesitter Search',
       },
-    },
-  },
-  {
-    'folke/twilight.nvim',
-    cond = rvim.treesitter.enable,
-    cmd = 'Twilight',
-    opts = {
-      context = 40,
-      dimming = { alpha = 0.45, inactive = true },
-      exclude = { 'alpha', 'git' },
     },
   },
   {
@@ -541,27 +516,6 @@ return {
     },
   },
   {
-    'windwp/nvim-autopairs',
-    event = 'InsertEnter',
-    dependencies = { 'hrsh7th/nvim-cmp' },
-    config = function()
-      local autopairs = require('nvim-autopairs')
-      local cmp_autopairs = require('nvim-autopairs.completion.cmp')
-      require('cmp').event:on('confirm_done', cmp_autopairs.on_confirm_done())
-      autopairs.setup({
-        close_triple_quotes = true,
-        disable_filetype = { 'neo-tree-popup' },
-        check_ts = true,
-        fast_wrap = { map = '<c-e>' },
-        ts_config = {
-          lua = { 'string' },
-          dart = { 'string' },
-          javascript = { 'template_string' },
-        },
-      })
-    end,
-  },
-  {
     'karb94/neoscroll.nvim',
     event = 'BufRead',
     opts = {
@@ -611,30 +565,6 @@ return {
     },
   },
   {
-    'is0n/jaq-nvim',
-    cmd = 'Jaq',
-    keys = {
-      { '<leader>rr', ':silent only | Jaq<CR>', desc = 'jaq: run' },
-    },
-    opts = {
-      cmds = {
-        external = {
-          markdown = 'glow %',
-          typescript = 'ts-node %',
-          javascript = 'node %',
-          python = 'python %',
-          rust = 'cargo run',
-          cpp = 'g++ % -o $fileBase && ./$fileBase',
-          go = 'go run %',
-          lua = 'lua %',
-        },
-      },
-      behavior = { default = 'float', startinsert = true },
-      ui = { float = { border = border } },
-      terminal = { position = 'vert', size = 60 },
-    },
-  },
-  {
     'google/executor.nvim',
     keys = {
       { '<localleader>xc', '<cmd>ExecutorRun<CR>', desc = 'executor: start' },
@@ -681,10 +611,6 @@ return {
         },
       },
     },
-  },
-  {
-    'ThePrimeagen/vim-be-good',
-    cmd = 'VimBeGood',
   },
   {
     'ahmedkhalf/project.nvim',
@@ -773,52 +699,9 @@ return {
     end,
   },
   {
-    'razak17/lab.nvim',
-    cond = not rvim.plugins.minimal,
-    event = { 'BufReadPre', 'BufNewFile' },
-    keys = {
-      { '<leader>rl', ':Lab code run<CR>', desc = 'lab: run' },
-      { '<leader>rx', ':Lab code stop<CR>', desc = 'lab: stop' },
-      { '<leader>rp', ':Lab code panel<CR>', desc = 'lab: panel' },
-    },
-    build = 'cd js && npm ci',
-    config = function()
-      highlight.plugin('lab', {
-        theme = {
-          ['onedark'] = {
-            { LabCodeRun = { link = 'DiagnosticVirtualTextInfo' } },
-          },
-        },
-      })
-      require('lab').setup()
-    end,
-    dependencies = { 'nvim-lua/plenary.nvim' },
-  },
-  {
-    'TobinPalmer/rayso.nvim',
-    cmd = { 'Rayso' },
-    opts = {},
-  },
-  {
-    'ellisonleao/carbon-now.nvim',
-    cmd = 'CarbonNow',
-    opts = {},
-  },
-  {
-    'Sanix-Darker/snips.nvim',
-    cmd = { 'SnipsCreate' },
-    opts = {},
-  },
-  {
     'AckslD/muren.nvim',
     cmd = { 'MurenToggle', 'MurenUnique', 'MurenFresh' },
     opts = {},
-  },
-  {
-    'llllvvuu/nvim-js-actions',
-    cond = rvim.treesitter.enable,
-    ft = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
-    dependencies = { 'nvim-treesitter/nvim-treesitter' },
   },
   {
     'jpalardy/vim-slime',
@@ -921,11 +804,56 @@ return {
       vim.g.db_ui_debug = 1
     end,
   },
+  -- Code Runner
+  --------------------------------------------------------------------------------
   {
-    'NStefan002/speedtyper.nvim',
-    cmd = 'Speedtyper',
-    opts = {},
+    'is0n/jaq-nvim',
+    cmd = 'Jaq',
+    keys = {
+      { '<leader>rr', ':silent only | Jaq<CR>', desc = 'jaq: run' },
+    },
+    opts = {
+      cmds = {
+        external = {
+          markdown = 'glow %',
+          typescript = 'ts-node %',
+          javascript = 'node %',
+          python = 'python %',
+          rust = 'cargo run',
+          cpp = 'g++ % -o $fileBase && ./$fileBase',
+          go = 'go run %',
+          lua = 'lua %',
+        },
+      },
+      behavior = { default = 'float', startinsert = true },
+      ui = { float = { border = border } },
+      terminal = { position = 'vert', size = 60 },
+    },
   },
+  {
+    'razak17/lab.nvim',
+    cond = not rvim.plugins.minimal,
+    event = { 'BufReadPre', 'BufNewFile' },
+    keys = {
+      { '<leader>rl', ':Lab code run<CR>', desc = 'lab: run' },
+      { '<leader>rx', ':Lab code stop<CR>', desc = 'lab: stop' },
+      { '<leader>rp', ':Lab code panel<CR>', desc = 'lab: panel' },
+    },
+    build = 'cd js && npm ci',
+    config = function()
+      highlight.plugin('lab', {
+        theme = {
+          ['onedark'] = {
+            { LabCodeRun = { link = 'DiagnosticVirtualTextInfo' } },
+          },
+        },
+      })
+      require('lab').setup()
+    end,
+    dependencies = { 'nvim-lua/plenary.nvim' },
+  },
+  -- Translate
+  --------------------------------------------------------------------------------
   {
     'potamides/pantran.nvim',
     keys = {
@@ -973,6 +901,69 @@ return {
       })
     end,
   },
+  -- Games
+  --------------------------------------------------------------------------------
+  {
+    'ThePrimeagen/vim-be-good',
+    cmd = 'VimBeGood',
+  },
+  {
+    'NStefan002/speedtyper.nvim',
+    cmd = 'Speedtyper',
+    opts = {},
+  },
+  -- Share Code
+  --------------------------------------------------------------------------------
+  {
+    'TobinPalmer/rayso.nvim',
+    cmd = { 'Rayso' },
+    opts = {},
+  },
+  {
+    'ellisonleao/carbon-now.nvim',
+    cmd = 'CarbonNow',
+    opts = {},
+  },
+  {
+    'Sanix-Darker/snips.nvim',
+    cmd = { 'SnipsCreate' },
+    opts = {},
+  },
+  -- Regex
+  --------------------------------------------------------------------------------
+  {
+    'bennypowers/nvim-regexplainer',
+    keys = {
+      {
+        '<localleader>rx',
+        '<Cmd>RegexplainerToggle<CR>',
+        desc = 'regexplainer: toggle',
+      },
+    },
+    opts = {
+      display = 'popup',
+      popup = {
+        border = {
+          padding = { 1, 2 },
+          style = border,
+        },
+      },
+    },
+  },
+  {
+    'tomiis4/Hypersonic.nvim',
+    event = 'CmdlineEnter',
+    cmd = 'Hypersonic',
+    keys = {
+      {
+        mode = 'v',
+        '<localleader>rx',
+        '<Cmd>Hypersonic<CR>',
+        desc = 'hypersonic: toggle',
+      },
+    },
+    opts = { border = border },
+  },
   -- }}}
   ------------------------------------------------------------------------------
   -- Filetype Plugins {{{1
@@ -981,43 +972,8 @@ return {
   { 'fladson/vim-kitty', ft = 'kitty' },
   { 'raimon49/requirements.txt.vim', lazy = false },
   { 'gennaro-tedesco/nvim-jqx', ft = { 'json', 'yaml' } },
-  {
-    'AckslD/nvim-FeMaco.lua',
-    cmd = { 'FeMaco' },
-    opts = {
-      float_opts = function(code_block)
-        local clip_val = require('femaco.utils').clip_val
-        return {
-          relative = 'cursor',
-          width = clip_val(5, 120, vim.api.nvim_win_get_width(0) - 10),
-          height = clip_val(
-            5,
-            #code_block.lines,
-            vim.api.nvim_win_get_height(0) - 6
-          ),
-          anchor = 'NW',
-          row = 0,
-          col = 0,
-          style = 'minimal',
-          border = ui.current.border,
-          zindex = 1,
-        }
-      end,
-    },
-  },
-  {
-    'whatyouhide/vim-lengthmatters',
-    lazy = false,
-    config = function()
-      vim.g.lengthmatters_excluded = { 'packer' }
-      vim.g.lengthmatters_linked_to = 'CursorLine'
-    end,
-  },
-  {
-    'laytan/cloak.nvim',
-    event = 'VeryLazy',
-    opts = {},
-  },
+  -- Web Dev (Typescript)
+  --------------------------------------------------------------------------------
   {
     'dmmulroy/tsc.nvim',
     cond = rvim.lsp.enable,
@@ -1075,6 +1031,123 @@ return {
       },
     },
   },
+  {
+    'razak17/package-info.nvim',
+    cond = not rvim.plugins.minimal,
+    event = 'BufRead package.json',
+    dependencies = { 'MunifTanjim/nui.nvim' },
+    config = function()
+      highlight.plugin('package-info', {
+        theme = {
+          ['onedark'] = {
+            {
+              PackageInfoUpToDateVersion = {
+                link = 'DiagnosticVirtualTextInfo',
+              },
+            },
+            {
+              PackageInfoOutdatedVersion = {
+                link = 'DiagnosticVirtualTextWarn',
+              },
+            },
+          },
+        },
+      })
+      require('package-info').setup({
+        autostart = false,
+        hide_up_to_date = true,
+      })
+    end,
+  },
+  {
+    'bennypowers/template-literal-comments.nvim',
+    cond = rvim.treesitter.enable,
+    ft = { 'javascript', 'typescript' },
+    opts = {},
+  },
+  {
+    'llllvvuu/nvim-js-actions',
+    cond = rvim.treesitter.enable,
+    ft = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
+  },
+  {
+    'marilari88/twoslash-queries.nvim',
+    cond = rvim.treesitter.enable,
+    ft = { 'typescript', 'typescriptreact' },
+    keys = {
+      {
+        '<localleader>li',
+        '<Cmd>TwoslashQueriesInspect<CR>',
+        desc = 'twoslash-queries: inspect',
+      },
+    },
+    opts = { highlight = 'DiagnosticVirtualTextInfo' },
+  },
+  {
+    'axelvc/template-string.nvim',
+    cond = rvim.treesitter.enable,
+    event = 'BufRead',
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
+    ft = {
+      'javascript',
+      'javascriptreact',
+      'typescript',
+      'typescriptreact',
+      'svelte',
+    },
+    opts = { remove_template_string = true },
+  },
+  {
+    'turbio/bracey.vim',
+    cond = not rvim.plugins.minimal,
+    ft = 'html',
+    build = 'npm install --prefix server',
+  },
+  {
+    'NTBBloodbath/rest.nvim',
+    cond = not rvim.plugins.minimal,
+    ft = { 'http', 'json' },
+    keys = {
+      { '<localleader>rs', '<Plug>RestNvim', desc = 'rest: run', buffer = 0 },
+      {
+        '<localleader>rp',
+        '<Plug>RestNvimPreview',
+        desc = 'rest: preview',
+        buffer = 0,
+      },
+      {
+        '<localleader>rl',
+        '<Plug>RestNvimLast',
+        desc = 'rest: run last',
+        buffer = 0,
+      },
+    },
+    opts = { skip_ssl_verification = true },
+  },
+  -- Tailwind
+  --------------------------------------------------------------------------------
+  {
+    'razak17/tailwind-fold.nvim',
+    cond = false,
+    opts = { min_chars = 2 },
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
+    ft = { 'html', 'svelte', 'astro', 'vue', 'typescriptreact' },
+  },
+  {
+    'MaximilianLloyd/tw-values.nvim',
+    cond = rvim.treesitter.enable and rvim.lsp.enable,
+    keys = {
+      {
+        '<localleader>lt',
+        '<cmd>TWValues<cr>',
+        desc = 'tw-values: show values',
+      },
+    },
+    opts = { border = border, show_unknown_classes = true },
+  },
+  -- Rust
+  --------------------------------------------------------------------------------
   {
     'simrat39/rust-tools.nvim',
     event = { 'BufReadPre', 'BufNewFile' },
@@ -1215,30 +1288,35 @@ return {
     end,
   },
   {
-    'razak17/tailwind-fold.nvim',
-    cond = false,
-    opts = { min_chars = 2 },
-    dependencies = { 'nvim-treesitter/nvim-treesitter' },
-    ft = { 'html', 'svelte', 'astro', 'vue', 'typescriptreact' },
-  },
-  {
-    'MaximilianLloyd/tw-values.nvim',
-    cond = rvim.treesitter.enable and rvim.lsp.enable,
-    keys = {
-      {
-        '<localleader>lt',
-        '<cmd>TWValues<cr>',
-        desc = 'tw-values: show values',
-      },
-    },
-    opts = { border = border, show_unknown_classes = true },
-  },
-  {
-    'turbio/bracey.vim',
+    'Saecki/crates.nvim',
     cond = not rvim.plugins.minimal,
-    ft = 'html',
-    build = 'npm install --prefix server',
+    event = 'BufRead Cargo.toml',
+    opts = {
+      popup = { autofocus = true, border = border },
+      null_ls = { enabled = true, name = 'crates' },
+    },
   },
+  -- Python
+  --------------------------------------------------------------------------------
+  {
+    'roobert/f-string-toggle.nvim',
+    cond = rvim.treesitter.enable,
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
+    ft = { 'python' },
+    opts = {},
+  },
+  {
+    'linux-cultist/venv-selector.nvim',
+    cmd = 'VenvSelect',
+    opts = {
+      name = { 'venv', '.venv', 'env', '.env' },
+    },
+    keys = {
+      { '<localleader>le', '<cmd>:VenvSelect<cr>', desc = 'Select VirtualEnv' },
+    },
+  },
+  -- Golang
+  --------------------------------------------------------------------------------
   {
     'olexsmir/gopher.nvim',
     cond = rvim.lsp.enable and not rvim.plugins.minimal,
@@ -1248,6 +1326,8 @@ return {
       'nvim-treesitter/nvim-treesitter',
     },
   },
+  -- Markdown
+  --------------------------------------------------------------------------------
   {
     'ellisonleao/glow.nvim',
     cond = not rvim.plugins.minimal,
@@ -1288,135 +1368,28 @@ return {
     end,
   },
   {
-    'NTBBloodbath/rest.nvim',
-    cond = not rvim.plugins.minimal,
-    ft = { 'http', 'json' },
-    keys = {
-      { '<localleader>rs', '<Plug>RestNvim', desc = 'rest: run', buffer = 0 },
-      {
-        '<localleader>rp',
-        '<Plug>RestNvimPreview',
-        desc = 'rest: preview',
-        buffer = 0,
-      },
-      {
-        '<localleader>rl',
-        '<Plug>RestNvimLast',
-        desc = 'rest: run last',
-        buffer = 0,
-      },
-    },
-    opts = { skip_ssl_verification = true },
-  },
-  {
-    'razak17/package-info.nvim',
-    cond = not rvim.plugins.minimal,
-    event = 'BufRead package.json',
-    dependencies = { 'MunifTanjim/nui.nvim' },
-    config = function()
-      highlight.plugin('package-info', {
-        theme = {
-          ['onedark'] = {
-            {
-              PackageInfoUpToDateVersion = {
-                link = 'DiagnosticVirtualTextInfo',
-              },
-            },
-            {
-              PackageInfoOutdatedVersion = {
-                link = 'DiagnosticVirtualTextWarn',
-              },
-            },
-          },
-        },
-      })
-      require('package-info').setup({
-        autostart = false,
-        hide_up_to_date = true,
-      })
-    end,
-  },
-  {
-    'Saecki/crates.nvim',
-    cond = not rvim.plugins.minimal,
-    event = 'BufRead Cargo.toml',
+    'AckslD/nvim-FeMaco.lua',
+    cmd = { 'FeMaco' },
     opts = {
-      popup = { autofocus = true, border = border },
-      null_ls = { enabled = true, name = 'crates' },
+      float_opts = function(code_block)
+        local clip_val = require('femaco.utils').clip_val
+        return {
+          relative = 'cursor',
+          width = clip_val(5, 120, vim.api.nvim_win_get_width(0) - 10),
+          height = clip_val(
+            5,
+            #code_block.lines,
+            vim.api.nvim_win_get_height(0) - 6
+          ),
+          anchor = 'NW',
+          row = 0,
+          col = 0,
+          style = 'minimal',
+          border = ui.current.border,
+          zindex = 1,
+        }
+      end,
     },
-  },
-  {
-    'bennypowers/template-literal-comments.nvim',
-    cond = rvim.treesitter.enable,
-    ft = { 'javascript', 'typescript' },
-    opts = {},
-  },
-  {
-    'bennypowers/nvim-regexplainer',
-    keys = {
-      {
-        '<localleader>rx',
-        '<Cmd>RegexplainerToggle<CR>',
-        desc = 'regexplainer: toggle',
-      },
-    },
-    opts = {
-      display = 'popup',
-      popup = {
-        border = {
-          padding = { 1, 2 },
-          style = border,
-        },
-      },
-    },
-  },
-  {
-    'tomiis4/Hypersonic.nvim',
-    event = 'CmdlineEnter',
-    cmd = 'Hypersonic',
-    keys = {
-      {
-        mode = 'v',
-        '<localleader>rx',
-        '<Cmd>Hypersonic<CR>',
-        desc = 'hypersonic: toggle',
-      },
-    },
-    opts = { border = border },
-  },
-  {
-    'axelvc/template-string.nvim',
-    cond = rvim.treesitter.enable,
-    event = 'BufRead',
-    dependencies = { 'nvim-treesitter/nvim-treesitter' },
-    ft = {
-      'javascript',
-      'javascriptreact',
-      'typescript',
-      'typescriptreact',
-      'svelte',
-    },
-    opts = { remove_template_string = true },
-  },
-  {
-    'roobert/f-string-toggle.nvim',
-    cond = rvim.treesitter.enable,
-    dependencies = { 'nvim-treesitter/nvim-treesitter' },
-    ft = { 'python' },
-    opts = {},
-  },
-  {
-    'marilari88/twoslash-queries.nvim',
-    cond = rvim.treesitter.enable,
-    ft = { 'typescript', 'typescriptreact' },
-    keys = {
-      {
-        '<localleader>li',
-        '<Cmd>TwoslashQueriesInspect<CR>',
-        desc = 'twoslash-queries: inspect',
-      },
-    },
-    opts = { highlight = 'DiagnosticVirtualTextInfo' },
   },
   {
     'nfrid/markdown-togglecheck',

@@ -140,6 +140,7 @@ return {
 
       vim.schedule(function()
         require('dap.ext.vscode').json_decode = require('overseer.json').decode
+        -- require('dap.ext.vscode').load_launchjs('.vscode/launch.json')
         require('dap.ext.vscode').load_launchjs(
           nil,
           { node = { 'typescript', 'javascript' } }
