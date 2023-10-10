@@ -143,6 +143,13 @@ local function setup_mappings(client, bufnr)
     { 'n', '<leader>lk', prev_diagnostic(), desc = 'go to prev diagnostic' },
     { 'n', '<leader>lj', next_diagnostic(), desc = 'go to next diagnostic' },
     {
+      'n',
+      '<leader>lh',
+      function() lsp.inlay_hint(0) end,
+      desc = 'toggle inlay hints',
+      M.textDocument_inlayHint,
+    },
+    {
       { 'n', 'x' },
       '<leader>la',
       lsp.buf.code_action,
