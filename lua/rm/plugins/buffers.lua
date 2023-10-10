@@ -44,6 +44,11 @@ return {
         vsplit = { key = 'v', command = 'vsplit' },
       },
       go_to = { enabled = false },
+      filter = {
+        enabled = true,
+        filter_tabs = '<M-t>',
+        filter_buffers = '<M-z>',
+      },
     },
     config = function(_, _opts)
       rvim.highlight.plugin('buffalo', {
