@@ -1,3 +1,4 @@
+local api = vim.api
 local fmt, ui = string.format, rvim.ui
 local border = ui.border
 local data = vim.fn.stdpath('data')
@@ -256,6 +257,18 @@ return {
         defaults = {
           prompt_prefix = fmt(' %s  ', ui.codicons.misc.search_alt),
           selection_caret = fmt(' %s', ui.icons.misc.triangle_short),
+          -- ref: LazyVim
+          -- open files in the first window that is an actual file.
+          -- use the current window if no other window is available.
+          get_selection_window = function()
+            local wins = api.nvim_list_wins()
+            table.insert(wins, 1, api.nvim_get_current_win())
+            for _, win in ipairs(wins) do
+              local buf = api.nvim_win_get_buf(win)
+              if vim.bo[buf].buftype == '' then return win end
+            end
+            return 0
+          end,
           cycle_layout_list = {
             'flex',
             'horizontal',
@@ -402,7 +415,7 @@ return {
       require('telescope').load_extension('textcase')
       require('telescope').load_extension('harpoon')
       require('telescope').load_extension('import')
-      if not rvim.is_available('nvim-notify') then
+      if rvim.is_available('nvim-notify') then
         require('telescope').load_extension('notify')
       end
       if not rvim.plugins.minimal then
@@ -410,7 +423,7 @@ return {
         require('telescope').load_extension('projects')
       end
 
-      vim.api.nvim_exec_autocmds(
+      api.nvim_exec_autocmds(
         'User',
         { pattern = 'TelescopeConfigComplete', modeline = false }
       )
