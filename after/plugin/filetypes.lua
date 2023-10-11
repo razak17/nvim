@@ -136,6 +136,27 @@ settings({
         rvim.list.qf.delete,
         { buffer = 0, desc = 'delete selected quickfix entry' },
       },
+      {
+        'n',
+        'w',
+        function()
+          local success, picker = pcall(require, 'window-picker')
+          if not success then
+            vim.notify('window-picker is not installed', vim.log.levels.ERROR)
+            return
+          end
+          local picked_window_id = picker.pick_window()
+          if picked_window_id then
+            local qf_list = vim.fn.getqflist()
+            local line = api.nvim_win_get_cursor(0)
+            local qf_entry = qf_list[line[1]]
+
+            api.nvim_set_current_win(picked_window_id)
+            cmd.edit(qf_entry.text)
+          end
+        end,
+        { buffer = 0, desc = 'open entry with window picker' },
+      },
       { 'n', 'H', ':colder<CR>', { buffer = 0 } },
       { 'n', 'L', ':cnewer<CR>', { buffer = 0 } },
     },
