@@ -230,7 +230,7 @@ local function setup_mappings(client, bufnr)
     {
       'n',
       '<localleader>lc',
-      '<Cmd>lua =vim.lsp.get_active_clients()[1].server_capabilities<CR>',
+      '<Cmd>lua =vim.lsp.get_clients()[1].server_capabilities<CR>',
       desc = 'server capabilities',
     },
   }

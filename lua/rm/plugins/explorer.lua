@@ -5,7 +5,7 @@ local lspkind = require('lspkind')
 ---@param from string
 ---@param to string
 local function on_rename(from, to)
-  local clients = vim.lsp.get_active_clients()
+  local clients = vim.lsp.get_clients()
   for _, client in ipairs(clients) do
     ---@diagnostic disable-next-line: param-type-mismatch
     if client.supports_method('workspace/willRenameFiles') then
