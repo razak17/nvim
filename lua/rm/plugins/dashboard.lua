@@ -76,10 +76,15 @@ return {
     end
 
     local stats = require('lazy').stats()
+    local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
 
     local installed_plugins = {
       type = 'text',
-      val = f(' %d plugins loaded', stats.count),
+      val = f(
+        ' %s plugins loaded in %s',
+        stats.loaded .. ' of ' .. stats.count,
+        ms .. 'ms'
+      ),
       opts = { position = 'center', hl = 'GitSignsAdd' },
     }
 
