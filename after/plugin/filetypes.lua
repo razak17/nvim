@@ -142,7 +142,7 @@ settings({
     function()
       -- force quickfix to open beneath all other splits
       cmd.wincmd('J')
-      rvim.adjust_split_height(3, 10)
+      rvim.adjust_split_height(5, 10)
     end,
   },
   oil = {
