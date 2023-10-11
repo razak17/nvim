@@ -10,7 +10,7 @@
 (("elseif"   @keyword) (#set! conceal "¿"))
 (("function" @keyword) (#set! conceal "󰘧"))
 (("function" @keyword) (#set! conceal "󰊕"))
-(("for"      @keyword) (#set! conceal ""))
+(("for"      @keyword) (#set! conceal "")) ;;
 
 (("and"      @keyword) (#set! conceal "▼"))
 (("end"      @keyword) (#set! conceal "–"))
