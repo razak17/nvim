@@ -40,7 +40,7 @@ return {
   {
     'echasnovski/mini.bracketed',
     cond = not rvim.plugins.minimal,
-    event = 'VeryLazy',
+    event = { 'BufRead', 'BufNewFile' },
     opts = {},
   },
   {
@@ -74,7 +74,7 @@ return {
   {
     'echasnovski/mini.ai',
     cond = rvim.treesitter.enable,
-    event = 'VeryLazy',
+    event = { 'BufRead', 'BufNewFile' },
     config = function()
       require('mini.ai').setup({
         mappings = { around_last = '', inside_last = '' },

@@ -6,7 +6,7 @@ local border, separators = ui.current.border, ui.icons.separators
 return {
   {
     'Aasim-A/scrollEOF.nvim',
-    event = 'VeryLazy',
+    event = { 'BufRead', 'BufNewFile' },
     opts = {},
   },
   {
@@ -38,19 +38,19 @@ return {
   },
   {
     'lukas-reineke/virt-column.nvim',
-    event = 'UIEnter',
+    event = { 'BufRead', 'BufNewFile' },
     opts = { char = separators.right_thin_block },
   },
   {
     'razak17/smartcolumn.nvim',
     cond = not rvim.plugins.minimal,
-    event = 'UIEnter',
+    event = { 'BufRead', 'BufNewFile' },
     opts = {},
   },
   {
     'utilyre/sentiment.nvim',
     cond = not rvim.plugins.minimal,
-    event = 'VeryLazy',
+    event = { 'BufRead', 'BufNewFile' },
     opts = {},
   },
   {
@@ -62,7 +62,7 @@ return {
   {
     'tzachar/local-highlight.nvim',
     cond = not rvim.plugins.minimal,
-    event = 'VeryLazy',
+    event = { 'BufRead', 'BufNewFile' },
     opts = { hlgroup = 'Search' },
   },
   {
@@ -293,7 +293,7 @@ return {
   },
   {
     'folke/todo-comments.nvim',
-    cond = not rvim.plugins.minimal,
+    cond = rvim.treesitter.enable,
     event = 'BufReadPre',
     cmd = { 'TodoTelescope', 'TodoTrouble', 'TodoQuickFix', 'TodoDots' },
     keys = {
@@ -358,8 +358,8 @@ return {
   },
   {
     'Bekaboo/dropbar.nvim',
-    event = 'VeryLazy',
-    cond = not rvim.plugins.minimal,
+    event = { 'BufRead', 'BufNewFile' },
+    cond = rvim.treesitter.enable,
     keys = {
       {
         '<leader>wp',
@@ -551,7 +551,6 @@ return {
   {
     'LudoPinelli/comment-box.nvim',
     cond = not rvim.plugins.minimal,
-    event = 'UIEnter',
     config = function(_, opts) require('comment-box').setup(opts) end,
     keys = {
       {

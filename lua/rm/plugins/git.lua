@@ -114,7 +114,7 @@ return {
   {
     'lewis6991/gitsigns.nvim',
     cond = not rvim.plugins.minimal,
-    event = { 'VeryLazy' },
+    event = { 'BufRead', 'BufNewFile' },
     opts = {
       signs = {
         add = { highlight = 'GitSignsAdd', text = left_block },
@@ -226,7 +226,6 @@ return {
   {
     'almo7aya/openingh.nvim',
     cond = not rvim.plugins.minimal,
-    event = 'VeryLazy',
     keys = {
       {
         '<leader>gof',

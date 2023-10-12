@@ -298,8 +298,8 @@ return {
   {
     'HiPhish/rainbow-delimiters.nvim',
     branch = 'use-children',
-    cond = not rvim.plugins.minimal,
-    event = 'VeryLazy',
+    cond = rvim.treesitter.enable,
+    event = { 'BufRead', 'BufNewFile' },
     config = function()
       local rainbow_delimiters = require('rainbow-delimiters')
 

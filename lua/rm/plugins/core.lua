@@ -370,7 +370,7 @@ return {
   { 'godlygeek/tabular', cmd = { 'Tabularize' } },
   {
     'kevinhwang91/nvim-fundo',
-    event = 'VeryLazy',
+    event = { 'BufRead', 'BufNewFile' },
     build = function() require('fundo').install() end,
     dependencies = { 'kevinhwang91/promise-async' },
   },
@@ -744,7 +744,6 @@ return {
   {
     'luckasRanarison/nvim-devdocs',
     cond = not rvim.plugins.minimal,
-    event = 'VeryLazy',
     dependencies = {
       'nvim-lua/plenary.nvim',
       'nvim-telescope/telescope.nvim',
@@ -848,7 +847,6 @@ return {
   {
     'razak17/lab.nvim',
     cond = not rvim.plugins.minimal,
-    event = { 'BufReadPre', 'BufNewFile' },
     keys = {
       { '<leader>rl', ':Lab code run<CR>', desc = 'lab: run' },
       { '<leader>rx', ':Lab code stop<CR>', desc = 'lab: stop' },
