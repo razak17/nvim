@@ -345,6 +345,21 @@ return {
       })
     end,
   },
+  {
+    'chrisgrieser/nvim-rulebook',
+    keys = {
+      {
+        '<localleader>lri',
+        function() require('rulebook').ignoreRule() end,
+        desc = 'rulebook: ignore rule',
+      },
+      {
+        '<localleader>lrl',
+        function() require('rulebook').lookupRule() end,
+        desc = 'rulebook: lookup rule',
+      },
+    },
+  },
   -- }}}
   ------------------------------------------------------------------------------
   -- Utilities {{{1
