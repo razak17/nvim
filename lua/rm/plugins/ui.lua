@@ -39,7 +39,10 @@ return {
   {
     'lukas-reineke/virt-column.nvim',
     event = { 'BufRead', 'BufNewFile' },
-    opts = { char = separators.right_thin_block },
+    opts = {
+      char = separators.right_thin_block,
+      highlight = 'IndentBlanklineContextChar',
+    },
   },
   {
     'razak17/smartcolumn.nvim',
