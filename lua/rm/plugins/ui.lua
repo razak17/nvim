@@ -359,7 +359,7 @@ return {
   {
     'Bekaboo/dropbar.nvim',
     event = 'VeryLazy',
-    cond = not rvim.plugins.minimal and false,
+    cond = not rvim.plugins.minimal,
     keys = {
       {
         '<leader>wp',
@@ -449,7 +449,7 @@ return {
   },
   {
     'lukas-reineke/indent-blankline.nvim',
-    cond = rvim.treesitter.enable,
+    cond = rvim.treesitter.enable and false,
     event = 'UIEnter',
     main = 'ibl',
     opts = {
@@ -459,6 +459,8 @@ return {
         highlight = 'IndentBlanklineChar',
       },
       scope = {
+        char = separators.left_thin_block,
+        show_start = false,
         show_end = false,
         include = {
           node_type = {

@@ -3,9 +3,8 @@ local separators = rvim.ui.icons.separators
 return {
   {
     'razak17/mini.indentscope',
-    cond = not rvim.plugins.minimal and false,
+    cond = not rvim.plugins.minimal,
     event = 'BufRead',
-    version = false,
     init = function()
       rvim.highlight.plugin('mini-indentscope', {
         { MiniIndentscopeSymbol = { inherit = 'IndentBlanklineContextChar' } },
@@ -14,7 +13,7 @@ return {
     end,
     opts = {
       symbol = separators.left_thin_block,
-      draw = { delay = 200 },
+      draw = { delay = 100 },
       filetype_exclude = {
         'lazy',
         'fzf',
