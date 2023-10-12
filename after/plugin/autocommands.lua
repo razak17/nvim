@@ -429,20 +429,6 @@ augroup('CmpSourceCargo', {
   end,
 })
 
-augroup('TwoSlashQueriesSetup', {
-  event = 'LspAttach',
-  command = function(args)
-    local id = vim.tbl_get(args, 'data', 'client_id')
-    if not id then return end
-    local client = vim.lsp.get_client_by_id(id)
-    if is_available('twoslash-queries.nvim') then
-      if client and client.name == 'typescript-tools' then
-        require('twoslash-queries').attach(client, args.buf)
-      end
-    end
-  end,
-})
-
 if is_available('persisted.nvim') then
   augroup('PersistedEvents', {
     event = { 'User' },

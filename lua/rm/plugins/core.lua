@@ -990,8 +990,32 @@ return {
       'nvim-lua/plenary.nvim',
       'neovim/nvim-lspconfig',
       'davidosomething/format-ts-errors.nvim',
+      {
+        'marilari88/twoslash-queries.nvim',
+        keys = {
+          {
+            '<localleader>li',
+            '<Cmd>TwoslashQueriesInspect<CR>',
+            desc = 'twoslash-queries: inspect',
+          },
+        },
+        opts = {},
+        config = function(_, opts)
+          highlight.plugin('twoslash-queries', {
+            theme = {
+              ['onedark'] = {
+                { TypeVirtualText = { link = 'DiagnosticVirtualTextInfo' } },
+              },
+            },
+          })
+          require('twoslash-queries').setup(opts)
+        end,
+      },
     },
     opts = {
+      on_attach = function(client, bufnr)
+        require('twoslash-queries').attach(client, bufnr)
+      end,
       settings = {
         tsserver_file_preferences = {
           includeInlayParameterNameHints = 'literal',
@@ -1070,19 +1094,6 @@ return {
     cond = rvim.treesitter.enable,
     ft = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
-  },
-  {
-    'marilari88/twoslash-queries.nvim',
-    cond = rvim.treesitter.enable,
-    ft = { 'typescript', 'typescriptreact' },
-    keys = {
-      {
-        '<localleader>li',
-        '<Cmd>TwoslashQueriesInspect<CR>',
-        desc = 'twoslash-queries: inspect',
-      },
-    },
-    opts = { highlight = 'DiagnosticVirtualTextInfo' },
   },
   {
     'axelvc/template-string.nvim',
