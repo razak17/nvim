@@ -64,7 +64,7 @@ return {
           statusline.attached_clients,
           statusline.copilot_attached,
           statusline.copilot_status,
-          statusline.dap,
+          -- statusline.dap,
           statusline.file_type,
           -- statusline.buffers,
           -- statusline.file_encoding,
