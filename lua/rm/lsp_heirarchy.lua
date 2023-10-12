@@ -5,6 +5,8 @@ local entry_display = require('telescope.pickers.entry_display')
 local finders = require('telescope.finders')
 local conf = require('telescope.config').values
 
+local M = {}
+
 local function get_call_hierarchy_for_item(call_hierarchy_item)
   local call_tree = {}
   -- https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#callHierarchy_incomingCalls
@@ -42,7 +44,7 @@ local function print_hierarchy(item, depth, res)
 end
 
 -- https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_prepareCallHierarchy
-function rvim.telescope_display_call_hierarchy()
+function M.display_call_hierarchy()
   local displayer = entry_display.create({
     separator = ' ',
     items = {
@@ -106,3 +108,5 @@ function rvim.telescope_display_call_hierarchy()
     end
   end
 end
+
+return M

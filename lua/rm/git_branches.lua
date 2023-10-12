@@ -16,6 +16,7 @@ local strings = require('plenary.strings')
 local defaulter = utils.make_default_callable
 local ns_previewer = vim.api.nvim_create_namespace('telescope.previewers')
 local Job = require('plenary.job')
+local util = require('rm.utils')
 
 local function get_ansi_escape_cols_handle_escape(line, idx, res)
   local second = string.sub(line, idx + 2, idx + 2)
@@ -176,7 +177,6 @@ end
 
 local function telescope_branches_mappings(prompt_bufnr, map)
   local diffspec
-  local action_state = require('telescope.actions.state')
   map('i', '<C-f>', function(nr)
     local branch =
       require('telescope.actions.state').get_selected_entry(prompt_bufnr).value
@@ -227,7 +227,8 @@ local function telescope_branches_mappings(prompt_bufnr, map)
     end
   )
   map('i', '<C-Del>', function(nr) -- delete
-    local current_picker = action_state.get_current_picker(prompt_bufnr)
+    local current_picker =
+      require('telescope.actions.state').get_current_picker(prompt_bufnr)
     current_picker:delete_selection(function(selection)
       local branch = require('telescope.actions.state').get_selected_entry(
         selection.bufnr
@@ -247,8 +248,8 @@ local function telescope_branches_mappings(prompt_bufnr, map)
       require('telescope.actions.state').get_selected_entry(prompt_bufnr).value
     actions.close(prompt_bufnr)
     require('telescope.builtin').git_commits({
-      attach_mappings = rvim.git.telescope_commits_mappings,
-      entry_maker = rvim.git.custom_make_entry_gen_from_git_commits(),
+      attach_mappings = util.telescope_commits_mappings,
+      entry_maker = util.custom_make_entry_gen_from_git_commits(),
       git_command = {
         'git',
         'log',
@@ -438,9 +439,13 @@ local function git_branches(opts)
   })
 end
 
-function rvim.git.browse_branches()
+local M = {}
+
+function M.browse_branches()
   git_branches({
     attach_mappings = telescope_branches_mappings,
     pattern = '--sort=-committerdate',
   })
 end
+
+return M

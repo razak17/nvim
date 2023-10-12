@@ -1,6 +1,6 @@
-if not rvim or not rvim.plugins.enable then return end
+local M = {}
 
-function rvim.git.show_commit(commit_sha)
+function M.show_commit(commit_sha)
   vim.cmd(
     'DiffviewOpen '
       .. commit_sha
@@ -11,9 +11,31 @@ function rvim.git.show_commit(commit_sha)
   )
 end
 
+function M.show_commit_at_line()
+  local commit_sha = require('agitator').git_blame_commit_for_line()
+  if commit_sha == nil then return end
+  M.show_commit(commit_sha)
+end
+
+function M.telescope_commits_mappings(prompt_bufnr, _)
+  local actions = require('telescope.actions')
+  map('i', '<C-r>i', function()
+    local commit =
+      require('telescope.actions.state').get_selected_entry(prompt_bufnr).value
+    vim.cmd(':term! git rebase -i ' .. commit .. '~')
+  end)
+  map('i', '<C-v>', function()
+    local commit =
+      require('telescope.actions.state').get_selected_entry(prompt_bufnr).value
+    actions.close(prompt_bufnr)
+    vim.cmd(':DiffviewOpen ' .. commit .. '^..' .. commit)
+  end)
+  return true
+end
+
 -- pasted and modified from telescope's lua/telescope/make_entry.lua
 -- make_entry.gen_from_git_commits
-function rvim.git.custom_make_entry_gen_from_git_commits(opts)
+function M.custom_make_entry_gen_from_git_commits(opts)
   local entry_display = require('telescope.pickers.entry_display')
   opts = opts or {}
 
@@ -79,57 +101,4 @@ function rvim.git.custom_make_entry_gen_from_git_commits(opts)
   end
 end
 
-function rvim.git.telescope_commits_mappings(prompt_bufnr, map)
-  local actions = require('telescope.actions')
-  map('i', '<C-r>i', function(nr)
-    local commit =
-      require('telescope.actions.state').get_selected_entry(prompt_bufnr).value
-    vim.cmd(':term! git rebase -i ' .. commit .. '~')
-  end)
-  map('i', '<C-v>', function(nr)
-    local commit =
-      require('telescope.actions.state').get_selected_entry(prompt_bufnr).value
-    actions.close(prompt_bufnr)
-    vim.cmd(':DiffviewOpen ' .. commit .. '^..' .. commit)
-  end)
-  return true
-end
-
-function rvim.git.show_commit_at_line()
-  local commit_sha = require('agitator').git_blame_commit_for_line()
-  rvim.git.show_commit(commit_sha)
-end
-
-function rvim.git.display_git_commit()
-  vim.ui.input(
-    { prompt = 'Enter git commit id:', kind = 'center_win' },
-    function(input)
-      if input ~= nil then
-        vim.cmd(':DiffviewOpen ' .. input .. '^..' .. input)
-      end
-    end
-  )
-end
-
-local opts = {
-  attach_mappings = rvim.git.telescope_commits_mappings,
-  entry_maker = rvim.git.custom_make_entry_gen_from_git_commits(),
-  git_command = {
-    'git',
-    'log',
-    '--pretty=tformat:%<(10)%h%<(16,trunc)%an %ad%d %s',
-    '--date=short',
-    '--',
-    '.',
-  },
-  layout_config = { width = 0.9, horizontal = { preview_width = 0.5 } },
-  previewer = rvim.telescope.delta_opts().previewer,
-}
-
-function rvim.git.browse_commits()
-  require('telescope.builtin').git_commits(opts)
-end
-
-function rvim.git.browse_bcommits()
-  require('telescope.builtin').git_bcommits(opts)
-end
+return M

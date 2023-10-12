@@ -1,5 +1,7 @@
 if not rvim or not rvim.plugins.enable then return end
 
+local M = {}
+
 -- alternative options:
 -- * using tsserver LSP support (but wants to remove the react import,
 --   want to reorganize imports except from TS 4.9+, is a little slow).
@@ -129,7 +131,7 @@ local function typescript_remove_unused_import(diag)
   end
 end
 
-function rvim.remove_unused_imports()
+function M.remove_unused_imports()
   local filetypes = { 'typescript', 'typescriptreact' }
   if vim.tbl_contains(filetypes, vim.bo.filetype) then
     local sorted_diags = vim.diagnostic.get(0)
@@ -150,3 +152,5 @@ function rvim.remove_unused_imports()
     print('Not supported for this file type!')
   end
 end
+
+return M

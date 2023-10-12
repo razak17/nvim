@@ -271,8 +271,12 @@ local lsp_options = {
   ['1. Code Format'] = format_buf,
   ['2. Eslint Fix'] = eslint_fix,
   ['3. LSP references'] = display_lsp_references,
-  ['3. Call Heirarchy'] = 'lua rvim.telescope_display_call_hierarchy()',
-  ['4. Remove Unused Imports'] = 'lua rvim.remove_unused_imports()',
+  ['3. Call Heirarchy'] = function()
+    require('rm.lsp_heirarchy').display_call_hierarchy()
+  end,
+  ['4. Remove Unused Imports'] = function()
+    require('rm.ts_unused_imports').remove_unused_imports()
+  end,
   ['4. Restart All LSPs'] = lsp_restart_all,
   ['5. Toggle Diagnostics Sources for Buffer'] = telescope_enable_disable_diagnostics,
   ['6. Toggle Virtual Text'] = toggle_virtual_text,
