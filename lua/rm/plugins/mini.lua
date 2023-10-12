@@ -5,12 +5,6 @@ return {
     'razak17/mini.indentscope',
     cond = not rvim.plugins.minimal,
     event = 'BufRead',
-    init = function()
-      rvim.highlight.plugin('mini-indentscope', {
-        { MiniIndentscopeSymbol = { inherit = 'IndentBlanklineContextChar' } },
-        { MiniIndentscopeSymbolOff = { inherit = 'IndentBlanklineChar' } },
-      })
-    end,
     opts = {
       symbol = separators.left_thin_block,
       draw = { delay = 100 },
@@ -35,6 +29,12 @@ return {
         '', -- for all buffers without a file type
       },
     },
+    init = function()
+      rvim.highlight.plugin('mini-indentscope', {
+        { MiniIndentscopeSymbol = { inherit = 'IndentBlanklineContextChar' } },
+        { MiniIndentscopeSymbolOff = { inherit = 'IndentBlanklineChar' } },
+      })
+    end,
   },
   { 'echasnovski/mini.misc', opts = {} },
   {

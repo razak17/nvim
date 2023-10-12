@@ -98,25 +98,25 @@ local servers = {
       client.server_capabilities.workspaceSymbolProvider = false
     end,
   },
-  ruff_lsp = {},
-  -- pyright = {
-  --   settings = {
-  --     pyright = {
-  --       disableLanguageServices = false,
-  --       disableOrganizeImports = false,
-  --     },
-  --     python = {
-  --       analysis = {
-  --         autoImportCompletions = true,
-  --         typeCheckingMode = 'basic',
-  --         autoSearchPaths = true,
-  --         diagnosticMode = 'workspace',
-  --         useLibraryCodeForTypes = true,
-  --         diagnosticSeverityOverrides = { reportUndefinedVariable = 'none' },
-  --       },
-  --     },
-  --   },
-  -- },
+  -- ruff_lsp = {},
+  pyright = {
+    settings = {
+      pyright = {
+        disableLanguageServices = false,
+        disableOrganizeImports = false,
+      },
+      python = {
+        analysis = {
+          autoImportCompletions = true,
+          typeCheckingMode = 'basic',
+          autoSearchPaths = true,
+          diagnosticMode = 'workspace',
+          useLibraryCodeForTypes = true,
+          diagnosticSeverityOverrides = { reportUndefinedVariable = 'none' },
+        },
+      },
+    },
+  },
   lua_ls = {
     settings = {
       Lua = {
