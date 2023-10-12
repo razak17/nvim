@@ -99,7 +99,7 @@ return {
     opts = {},
     config = function()
       require('stickybuf').setup({
-      get_auto_pin = function(bufnr)
+        get_auto_pin = function(bufnr)
           local buf_ft = vim.api.nvim_buf_get_option(bufnr, 'ft')
           if buf_ft == 'DiffviewFiles' then
             -- this is a diffview tab, disable creating new windows

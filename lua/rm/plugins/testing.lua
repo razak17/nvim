@@ -126,6 +126,11 @@ return {
         desc = 'overseer: delete bundle',
       },
       {
+        '<leader>tok',
+        '<cmd>OverseerClearCache<cr>',
+        desc = 'overseer: clear cache',
+      },
+      {
         '<leader>tol',
         '<cmd>OverseerLoadBundle<cr>',
         desc = 'overseer: load bundle',
@@ -135,6 +140,23 @@ return {
         '<leader>toq',
         '<cmd>OverseerQuickAction<cr>',
         desc = 'overseer: quick action',
+      },
+      {
+        '<leader>tox',
+        function()
+          local overseer = require('overseer')
+          local tasks = overseer.list_tasks({
+            status = {
+              overseer.STATUS.SUCCESS,
+              overseer.STATUS.CANCELED,
+              overseer.STATUS.FAILURE,
+            },
+          })
+          for i, task in ipairs(tasks) do
+            task:dispose()
+          end
+        end,
+        desc = 'overseer: dispose completed jobs',
       },
       { '<leader>tor', '<cmd>OverseerRun<cr>', desc = 'overseer: run' },
       {
