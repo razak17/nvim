@@ -1,9 +1,9 @@
-local f = string.format
+local fmt = string.format
 
 return {
   'goolord/alpha-nvim',
   cond = not rvim.plugins.minimal,
-  cmd = 'Alpha',
+  event = 'VimEnter',
   keys = { { '<leader>;', '<cmd>Alpha<CR>', desc = 'alpha' } },
   config = function()
     local alpha = require('alpha')
@@ -80,7 +80,7 @@ return {
 
     local installed_plugins = {
       type = 'text',
-      val = f(
+      val = fmt(
         ' %s plugins loaded in %s',
         stats.loaded .. ' of ' .. stats.count,
         ms .. 'ms'
@@ -91,7 +91,7 @@ return {
     local v = vim.version()
     local version = {
       type = 'text',
-      val = f(
+      val = fmt(
         'Neovim v%d.%d.%d %s',
         v.major,
         v.minor,
@@ -114,7 +114,7 @@ return {
       button('Define', 'w', '󰈭  Find text', '<Cmd>FzfLua live_grep<CR>'),
       -- button('Keyword', 'n', '  New file', ':ene | startinsert<CR>'),
       button('Ignore', 'l', '󰒲  Lazy', '<Cmd>Lazy<CR>'),
-      button('ErrorMsg', 'q', '  Quit', ':qa<CR>'),
+      button('ErrorMsg', 'q', '  Quit', '<cmd> qa <cr>'),
     }
 
     dashboard.section.footer.val = fortune()
