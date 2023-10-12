@@ -1006,7 +1006,7 @@ return {
       'neovim/nvim-lspconfig',
       'davidosomething/format-ts-errors.nvim',
       {
-        'marilari88/twoslash-queries.nvim',
+        'razak17/twoslash-queries.nvim',
         keys = {
           {
             '<localleader>li',
