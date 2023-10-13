@@ -62,6 +62,27 @@ return {
     end,
   },
   {
+    'dzfrias/arena.nvim',
+    cmd = { 'ArenaToggle', 'ArenaOpen', 'ArenaClose' },
+    keys = { { '<a-a>', '<Cmd>ArenaToggle<CR>', desc = 'arena: toggle' } },
+    opts = {
+      max_items = nil,
+      window = { border = 'single' },
+      keybinds = {
+        ['w'] = function()
+          local success, picker = pcall(require, 'window-picker')
+          if not success then
+            vim.notify('window-picker is not installed', vim.log.levels.ERROR)
+            return
+          end
+          local picked_window_id = picker.pick_window()
+          -- if picked_window_id then
+          -- end
+        end,
+      },
+    },
+  },
+  {
     'razak17/buffer_manager.nvim',
     cond = false,
     keys = {
