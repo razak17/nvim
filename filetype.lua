@@ -12,7 +12,7 @@ vim.filetype.add({
     ['.*%.theme'] = 'conf',
     ['.*%.service'] = 'systemd',
     ['.*%.gradle'] = 'groovy',
-    ['^.env%..*'] = 'bash',
+    ['.*%.env%..*'] = 'config',
     ['req.*.txt'] = 'config',
   },
 })
