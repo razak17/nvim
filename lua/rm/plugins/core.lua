@@ -1494,6 +1494,29 @@ return {
       require('due_nvim').setup(opts)
     end,
   },
+  -- CSV
+  --------------------------------------------------------------------------------
+  {
+    'vidocqh/data-viewer.nvim',
+    ft = { 'csv', 'tsv', 'sqlite' },
+    opts = {},
+    config = function(_, opts)
+      highlight.plugin('lab', {
+        theme = {
+          ['onedark'] = {
+            { DataViewerColumn0 = { link = 'Keyword' } },
+            { DataViewerColumn1 = { link = 'String' } },
+            { DataViewerColumn2 = { link = 'Function' } },
+          },
+        },
+      })
+      require('data-viewer').setup(opts)
+    end,
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'kkharji/sqlite.lua', -- Optional, sqlite support
+    },
+  },
   -- }}}
   ------------------------------------------------------------------------------
   -- Syntax {{{1
