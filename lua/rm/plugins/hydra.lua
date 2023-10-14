@@ -9,7 +9,6 @@ return {
       { position = 'bottom', border = rvim.ui.current.border, type = 'window' }
 
     local splits = rvim.reqcall('smart-splits')
-    local fold_cycle = rvim.reqcall('fold-cycle')
     local close_buffers = rvim.reqcall('close_buffers')
     local textcase = rvim.reqcall('textcase')
 
@@ -29,8 +28,8 @@ return {
       heads = {
         { 'j', 'zj', { desc = 'next fold' } },
         { 'k', 'zk', { desc = 'previous fold' } },
-        { 'l', fold_cycle.open_all, { desc = 'open folds underneath' } },
-        { 'h', fold_cycle.close_all, { desc = 'close folds underneath' } },
+        { 'l', 'za', { desc = 'open folds underneath' } },
+        { 'h', 'za', { desc = 'close folds underneath' } },
         { '<Esc>', nil, { exit = true, desc = 'Quit' } },
       },
     })
