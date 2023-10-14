@@ -1512,10 +1512,7 @@ return {
       })
       require('data-viewer').setup(opts)
     end,
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-      'kkharji/sqlite.lua', -- Optional, sqlite support
-    },
+    dependencies = { 'nvim-lua/plenary.nvim', 'kkharji/sqlite.lua' },
   },
   -- }}}
   ------------------------------------------------------------------------------

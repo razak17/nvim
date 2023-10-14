@@ -157,9 +157,9 @@ return {
               crates = '[CRT]',
               treesitter = '[TS]',
               ['buffer-lines'] = '[BUFL]',
-              dynamic = '[DYN]',
               ['lab.quick_data'] = '[LAB]',
               nerdfonts = '[NF]',
+              natdat = '[NATDAT]',
             })[entry.source.name]
 
             local label, length = item.abbr, api.nvim_strwidth(item.abbr)
@@ -176,7 +176,7 @@ return {
             local custom_sources = {
               'emoji',
               'lab.quick_data',
-              'dynamic',
+              'natdat',
               'crates',
               'copilot',
               'nerdfonts',
@@ -195,7 +195,7 @@ return {
               item.kind = format_icon(codicons.misc.robot)
               item.kind_hl_group = 'CmpItemKindLab'
             end
-            if entry.source.name == 'dynamic' then
+            if entry.source.name == 'natdat' then
               item.kind = format_icon(codicons.misc.calendar)
               item.kind_hl_group = 'CmpItemKindDynamic'
             end
@@ -234,7 +234,12 @@ return {
           },
           { name = 'path', priority = 4, group_index = 1 },
           { name = 'emoji', priority = 3, group_index = 1 },
-          { name = 'dynamic', priority = 3, group_index = 1 },
+          {
+            name = 'natdat',
+            priority = 3,
+            keyword_length = 3,
+            group_index = 1,
+          },
           {
             name = 'rg',
             priority = 3,
@@ -315,12 +320,13 @@ return {
       'hrsh7th/cmp-emoji',
       'lukas-reineke/cmp-rg',
       'fazibear/cmp-nerdfonts',
+      'saadparwaiz1/cmp_luasnip',
+      { 'Gelio/cmp-natdat', opts = {} },
       { 'js-everts/cmp-tailwind-colors', opts = {} },
       { 'hrsh7th/cmp-nvim-lsp', cond = rvim.lsp.enable },
+      { 'amarakon/nvim-cmp-buffer-lines', ft = { 'c', 'cpp' } },
       { 'hrsh7th/cmp-cmdline', config = function() vim.o.wildmode = '' end },
       { 'hrsh7th/cmp-nvim-lsp-document-symbol', cond = rvim.lsp.enable },
-      'saadparwaiz1/cmp_luasnip',
-      { 'amarakon/nvim-cmp-buffer-lines', ft = { 'c', 'cpp' } },
       {
         'uga-rosa/cmp-dictionary',
         cond = not rvim.plugins.minimal,
@@ -333,29 +339,6 @@ return {
               NeogitCommitMessage = en_dict,
               norg = en_dict,
               slide = en_dict,
-            },
-          })
-        end,
-      },
-      {
-        'uga-rosa/cmp-dynamic',
-        config = function()
-          local Date = require('cmp_dynamic.utils.date')
-          require('cmp_dynamic').register({
-            { label = 'today', insertText = os.date('%Y/%m/%d') },
-            {
-              label = 'tomorrow',
-              insertText = Date.new():add_date(1):format('%Y/%m/%d'),
-            },
-            {
-              label = 'next Week',
-              insertText = Date.new():add_date(7):format('%Y/%m/%d'),
-              resolve = true,
-            },
-            {
-              label = 'next Monday',
-              insertText = Date.new():add_date(7):day(1):format('%Y/%m/%d'),
-              resolve = true,
             },
           })
         end,
