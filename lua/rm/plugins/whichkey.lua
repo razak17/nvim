@@ -32,7 +32,8 @@ return {
         },
         a = { name = 'A.I.' },
         d = { name = 'Dadbod' },
-        f = { name = 'Telescope' },
+        e = { name = 'Explorer' },
+        f = { name = 'Picker' },
         fg = { name = 'Git' },
         fv = { name = 'Vim' },
         g = { name = 'Git' },
@@ -53,7 +54,7 @@ return {
         to = { name = 'Overseer' },
         tv = { name = 'Vim-test' },
         v = { name = 'Vim' },
-        w = { name = 'Winbar' },
+        w = { name = 'Window' },
       },
       ['<localleader>'] = {
         a = { name = 'Actions' },

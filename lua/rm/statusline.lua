@@ -694,7 +694,7 @@ return {
   },
   copilot_status = {
     condition = function() return rvim.ai.enable and not rvim.plugins.minimal end,
-    provider = function() return ' ' .. stl_copilot_indicator() end,
+    provider = function() return stl_copilot_indicator() end,
     hl = { fg = fg, bg = bg, bold = true },
     on_click = {
       callback = function()
