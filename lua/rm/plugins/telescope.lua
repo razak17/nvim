@@ -125,8 +125,9 @@ local function import()
     rvim.telescope.minimal_ui({ prompt_title = 'Harpoon Marks' })
   )
 end
-local function file_browser()
-  extensions('file_browser').file_browser({ hidden = true })
+local function file_browser(opts)
+  opts = opts or { hidden = true }
+  extensions('file_browser').file_browser(opts)
 end
 
 ---@param opts? table
@@ -179,7 +180,12 @@ return {
     cmd = 'Telescope',
     keys = {
       { '<c-p>', find_files, desc = 'find files' },
-      { '<leader>.', file_browser, desc = 'file browser' },
+      { '<leader>f,', file_browser, desc = 'file browser' },
+      {
+        '<leader>f.',
+        function() file_browser({ path = '%:p:h', select_buffer = 'true' }) end,
+        desc = 'file browser',
+      },
       { '<leader>f?', b('help_tags'), desc = 'help tags' },
       {
         '<leader>fa',

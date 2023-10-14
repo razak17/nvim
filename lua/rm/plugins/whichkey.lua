@@ -65,6 +65,7 @@ return {
         f = { name = 'Genghis' },
         h = { name = 'Harpoon' },
         l = { name = 'Lsp' },
+        lr = { name = 'Rulebook' },
         n = { name = 'Neorg' },
         o = { name = 'Obsidian' },
         q = { name = 'NeoComposer' },
