@@ -48,7 +48,10 @@ return {
     'razak17/smartcolumn.nvim',
     cond = not rvim.plugins.minimal,
     event = { 'BufRead', 'BufNewFile' },
-    opts = {},
+    opts = {
+      colorcolumn = '0',
+      custom_autocommand = true,
+    },
   },
   {
     'utilyre/sentiment.nvim',

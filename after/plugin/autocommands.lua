@@ -5,6 +5,7 @@ local augroup, is_available, format_text =
 local fn, api, env, v, cmd, opt =
   vim.fn, vim.api, vim.env, vim.v, vim.cmd, vim.opt
 local falsy = rvim.falsy
+local decorations = rvim.ui.decorations
 
 --------------------------------------------------------------------------------
 -- HLSEARCH
@@ -349,7 +350,9 @@ if is_available('gitsigns.nvim') then
         bt = vim.bo.bt,
         setting = 'statuscolumn',
       })
-      if decs and decs.ft == false or decs and decs.bt == false then return end
+      if not decs or decs.ft == false or decs and decs.bt == false then
+        return
+      end
 
       local lnum = vim.v.lnum
       local signs = vim.api.nvim_buf_get_extmarks(
@@ -421,19 +424,37 @@ if is_available('nvim-ghost.nvim') then
   })
 end
 
-rvim.augroup('SmartCol', {
-  event = { 'VimEnter', 'BufEnter', 'WinEnter' },
-  command = function(args)
-    if is_available('smartcolumn.nvim') then
-      rvim.ui.decorations.set_colorcolumn(
+if is_available('smartcolumn.nvim') then
+  rvim.augroup('SmartCol', {
+    event = { 'BufEnter', 'CursorMoved', 'CursorMovedI', 'WinScrolled' },
+    command = function(args)
+      decorations.set_colorcolumn(
         args.buf,
         function(colorcolumn)
-          require('smartcolumn').setup_buffer({ colorcolumn = colorcolumn })
+          require('smartcolumn').setup_buffer(
+            args.buf,
+            { colorcolumn = colorcolumn }
+          )
         end
       )
-    end
-  end,
-})
+    end,
+  })
+elseif is_available('virt-column.nvim') then
+  rvim.augroup('VirtCol', {
+    event = { 'VimEnter', 'BufEnter', 'WinEnter' },
+    command = function(args)
+      decorations.set_colorcolumn(
+        args.buf,
+        function(colorcolumn)
+          require('virt-column').setup_buffer(
+            args.buf,
+            { virtcolumn = colorcolumn }
+          )
+        end
+      )
+    end,
+  })
+end
 
 local function float_resize_autocmd(autocmd_name, ft, command)
   augroup(autocmd_name, {
