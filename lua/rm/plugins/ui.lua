@@ -104,6 +104,21 @@ return {
     },
   },
   {
+    'lewis6991/whatthejump.nvim',
+    event = { 'BufRead', 'BufNewFile' },
+    config = function()
+      map('n', '<M-k>', function()
+        require('whatthejump').show_jumps(false)
+        return '<C-o>'
+      end, { expr = true })
+
+      map('n', '<M-j>', function()
+        require('whatthejump').show_jumps(true)
+        return '<C-i>'
+      end, { expr = true })
+    end,
+  },
+  {
     'eandrju/cellular-automaton.nvim',
     cmd = 'CellularAutomaton',
     keys = {
