@@ -73,8 +73,9 @@ return {
     cond = false,
     lazy = false,
     config = function()
+      vim.g.lengthmatters_highlight_one_column = 1
       vim.g.lengthmatters_excluded = { 'packer' }
-      vim.g.lengthmatters_linked_to = 'CursorLine'
+      vim.g.lengthmatters_linked_to = 'WhichKeyGroup'
     end,
   },
   {
