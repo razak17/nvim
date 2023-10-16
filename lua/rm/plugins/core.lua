@@ -369,6 +369,12 @@ return {
         show_count = false,
         show_label = true,
         combine = true,
+        icons = {
+          combined = ui.icons.misc.lightbulb,
+        },
+        highlights = {
+          combined = 'CodeActionIcon',
+        },
       },
       popup = { border = border },
       mappings = {
