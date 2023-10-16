@@ -206,7 +206,7 @@ return {
   },
   {
     'kosayoda/nvim-lightbulb',
-    cond = rvim.lsp.enable,
+    cond = rvim.lsp.enable and false,
     event = 'LspAttach',
     opts = {
       autocmd = { enabled = true },
