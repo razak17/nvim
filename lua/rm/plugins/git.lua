@@ -317,4 +317,17 @@ return {
     cmd = 'GitCoAuthors',
     dependencies = { 'stevearc/dressing.nvim' },
   },
+  {
+    'niuiic/git-log.nvim',
+    cond = not rvim.plugins.minimal,
+    keys = {
+      {
+        '<leader>gL',
+        "<Cmd>lua require'git-log'.check_log()<CR>",
+        mode = { 'n', 'x' },
+        desc = 'git-log: show log',
+      },
+    },
+    dependencies = { 'niuiic/core.nvim' },
+  },
 }
