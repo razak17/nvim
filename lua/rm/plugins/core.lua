@@ -360,6 +360,50 @@ return {
       },
     },
   },
+  {
+    'luckasRanarison/clear-action.nvim',
+    cond = rvim.lsp.enable,
+    event = 'LspAttach',
+    opts = {
+      signs = {
+        show_count = false,
+        show_label = true,
+        combine = true,
+      },
+      popup = { border = border },
+      mappings = {
+        code_action = { '<leader><leader>la', 'code action' },
+        apply_first = { '<leader><leader>aa', 'apply first' },
+        quickfix = { '<leader><leader>aq', 'quickfix' },
+        quickfix_next = { '<leader><leader>an', 'quickfix next' },
+        quickfix_prev = { '<leader><leader>ap', 'quickfix prev' },
+        refactor = { '<leader><leader>ar', 'refactor' },
+        refactor_inline = { '<leader><leader>aR', 'refactor inline' },
+        actions = {
+          ['rust_analyzer'] = {
+            ['Import'] = { '<leader><leader>ai', 'import' },
+            ['Replace if'] = {
+              '<leader><leader>am',
+              'replace if with match',
+            },
+            ['Fill match'] = { '<leader><leader>af', 'fill match arms' },
+            ['Wrap'] = { '<leader><leader>aw', 'Wrap' },
+            ['Insert `mod'] = { '<leader><leader>aM', 'insert mod' },
+            ['Insert `pub'] = { '<leader><leader>aP', 'insert pub mod' },
+            ['Add braces'] = { '<leader><leader>ab', 'add braces' },
+          },
+        },
+      },
+      quickfix_filters = {
+        ['rust_analyzer'] = {
+          ['E0412'] = 'Import',
+          ['E0425'] = 'Import',
+          ['E0433'] = 'Import',
+          ['unused_imports'] = 'remove',
+        },
+      },
+    },
+  },
   -- }}}
   ------------------------------------------------------------------------------
   -- Utilities {{{1

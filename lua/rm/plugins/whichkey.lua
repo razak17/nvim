@@ -27,7 +27,9 @@ return {
       ['<leader>'] = {
         ['<leader>'] = {
           name = 'Advanced',
-          b = { name = 'Comment Box'},
+        a = 'Actions',
+        b = { name = 'Comment Box' },
+        l = 'LSP',
           t = { name = 'Translate' },
         },
         a = { name = 'A.I.' },
