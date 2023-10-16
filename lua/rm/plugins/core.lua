@@ -829,27 +829,32 @@ return {
   -- Code Runner
   --------------------------------------------------------------------------------
   {
-    'is0n/jaq-nvim',
-    cmd = 'Jaq',
+    'trimclain/builder.nvim',
+    cmd = 'Build',
     keys = {
-      { '<leader>rr', ':silent only | Jaq<CR>', desc = 'jaq: run' },
+      {
+        '<leader>rr',
+        '<Cmd>lua require("builder").build()<CR>',
+        desc = 'builder: run',
+      },
     },
     opts = {
-      cmds = {
-        external = {
-          markdown = 'glow %',
-          typescript = 'ts-node %',
-          javascript = 'node %',
-          python = 'python %',
-          rust = 'cargo run',
-          cpp = 'g++ % -o $fileBase && ./$fileBase',
-          go = 'go run %',
-          lua = 'lua %',
-        },
+      type = 'float',
+      float_border = border,
+      commands = {
+        c = 'gcc % -o $basename.out && ./$basename.out',
+        cpp = 'g++ % -o $basename.out && ./$basename.out',
+        go = 'go run %',
+        java = 'java %',
+        javascript = 'node %',
+        -- lua = "lua %", -- this will override the default `:source %` for lua files
+        markdown = 'glow %',
+        python = 'python %',
+        rust = 'cargo run',
+        sh = 'sh %',
+        typescript = 'ts-node %',
+        zsh = 'zsh %',
       },
-      behavior = { default = 'float', startinsert = true },
-      ui = { float = { border = border } },
-      terminal = { position = 'vert', size = 60 },
     },
   },
   {
