@@ -179,6 +179,10 @@ function rvim.load_colorscheme(name)
   rvim.pcall('theme failed to load because', vim.cmd.colorscheme, name)
 end
 
+function rvim.is_git_repo()
+    return vim.b.gitsigns_head or vim.b.gitsigns_status_dict
+end
+
 ---@generic T:table<string, any>
 ---@param t T the object to format
 ---@param k string the key to format
