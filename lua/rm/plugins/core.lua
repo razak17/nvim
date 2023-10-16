@@ -818,6 +818,14 @@ return {
       vim.g.db_ui_debug = 1
     end,
   },
+  {
+    '2kabhishek/nerdy.nvim',
+    dependencies = {
+      'stevearc/dressing.nvim',
+      'nvim-telescope/telescope.nvim',
+    },
+    cmd = 'Nerdy',
+  },
   -- Code Runner
   --------------------------------------------------------------------------------
   {
