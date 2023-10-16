@@ -241,16 +241,18 @@ return {
     keys = {
       {
         '-',
-        function()
-          vim.cmd('vsplit | wincmd l | vertical resize 40')
-          require('oil').open()
-        end,
-        desc = 'open parent directory',
+        "<Cmd>lua require('oil').open()<CR>",
+        desc = 'oil: open parent directory',
       },
       {
         '_',
         function() require('oil').open(vim.fn.getcwd()) end,
-        desc = 'Open cwd',
+        desc = 'oil: open cwd',
+      },
+      {
+        '<leader>oi',
+        "<Cmd>lua require('oil').open_float('.')<CR>",
+        desc = 'oil: open float',
       },
     },
     opts = {
