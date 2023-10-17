@@ -183,8 +183,8 @@ return {
             ['<c-/>'] = 'toggle-help',
             ['<c-e>'] = 'toggle-preview',
             ['<c-=>'] = 'toggle-fullscreen',
-            ['<c-f>'] = 'preview-page-down',
-            ['<c-b>'] = 'preview-page-up',
+            ['<c-d>'] = 'preview-page-down',
+            ['<c-u>'] = 'preview-page-up',
           },
           fzf = {
             ['esc'] = 'abort',
