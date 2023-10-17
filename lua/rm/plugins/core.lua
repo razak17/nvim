@@ -54,7 +54,7 @@ return {
   },
   -- }}}
   ------------------------------------------------------------------------------
-  -- LSP,Completion & Debugger {{{1
+  -- LSP {{{1
   ------------------------------------------------------------------------------
   'b0o/schemastore.nvim',
   {
@@ -409,6 +409,19 @@ return {
         },
       },
     },
+  },
+  {
+    'hinell/lsp-timeout.nvim',
+    cond = rvim.lsp.enable and false,
+    event = 'LspAttach',
+    init = function()
+      vim.g['lsp-timeout-config'] = {
+        stopTimeout = 1000 * 60 * 1, -- Stop unused lsp servers after 10 min.
+        startTimeout = 2000, -- Force server restart if nvim can't in 2s.
+        silent = true, -- Notifications disabled
+      }
+    end,
+    dependencies = { 'neovim/nvim-lspconfig' },
   },
   -- }}}
   ------------------------------------------------------------------------------
