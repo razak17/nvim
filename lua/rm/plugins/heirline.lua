@@ -28,7 +28,8 @@ local force_inactive_filetypes = {
 return {
   {
     'rebelot/heirline.nvim',
-    event = { 'BufRead', 'BufNewFile' },
+    priority = 500,
+    lazy = false,
     cond = not rvim.plugins.minimal,
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = function()
