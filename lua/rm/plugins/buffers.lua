@@ -76,8 +76,11 @@ return {
             return
           end
           local picked_window_id = picker.pick_window()
-          -- if picked_window_id then
-          -- end
+          if picked_window_id then
+            local line = vim.fn.getline('.')
+            vim.api.nvim_set_current_win(picked_window_id)
+            vim.cmd.edit(line)
+          end
         end,
       },
     },
