@@ -107,7 +107,13 @@ end
 local function luasnips() extensions('luasnip').luasnip(dropdown()) end
 local function notifications() extensions('notify').notify(vertical()) end
 local function undo() extensions('undo').undo() end
-local function projects() extensions('projects').projects() end
+local function projects()
+  extensions('projects').projects(rvim.telescope.minimal_ui())
+end
+local function smart_open()
+  extensions('smart_open').smart_open(rvim.telescope.minimal_ui())
+end
+local function lazy() extensions('lazy').lazy() end
 local function aerial() extensions('aerial').aerial() end
 local function harpoon()
   extensions('harpoon').marks(
@@ -202,11 +208,12 @@ return {
       -- { '<leader>ff', project_files, desc = 'project files' },
       { '<leader>fh', frecency, desc = 'Most (f)recently used files' },
       { '<leader>fi', import, desc = 'import' },
-      { '<leader>fl', '<cmd>Telescope lazy<CR>', desc = 'surf plugins' },
+      { '<leader>fl', lazy, desc = 'surf plugins' },
       { '<leader>fL', luasnips, desc = 'luasnip: available snippets' },
       { '<leader>fn', notifications, desc = 'notify: notifications' },
       { '<leader>fN', notes, desc = 'notes' },
-      { '<leader>fo', b('buffers'), desc = 'buffers' },
+      { '<leader>fo', b('buffers', { sort_mru = true }), desc = 'buffers' },
+      { '<leader>fk', smart_open, desc = 'smart open' },
       { '<leader>fp', projects, desc = 'projects' },
       { '<leader>fP', plugins, desc = 'plugins' },
       { '<leader>fr', b('resume'), desc = 'resume last picker' },
@@ -413,19 +420,19 @@ return {
         },
       })
 
-      require('telescope').load_extension('zf-native')
-      require('telescope').load_extension('frecency')
-      require('telescope').load_extension('undo')
-      require('telescope').load_extension('menufacture')
-      require('telescope').load_extension('file_browser')
-      require('telescope').load_extension('textcase')
-      require('telescope').load_extension('harpoon')
-      require('telescope').load_extension('import')
+      if rvim.is_available('text-case.nvim') then
+        require('telescope').load_extension('textcase')
+      end
+      if rvim.is_available('harpoon') then
+        require('telescope').load_extension('harpoon')
+      end
       if rvim.is_available('nvim-notify') then
         require('telescope').load_extension('notify')
       end
-      if not rvim.plugins.minimal then
+      if rvim.is_available('persisted.nvim') then
         require('telescope').load_extension('persisted')
+      end
+      if rvim.is_available('project.nvim') then
         require('telescope').load_extension('projects')
       end
 
@@ -435,34 +442,57 @@ return {
       )
     end,
     dependencies = {
-      'natecraddock/telescope-zf-native.nvim',
-      'nvim-telescope/telescope-frecency.nvim',
-      'debugloop/telescope-undo.nvim',
-      'molecule-man/telescope-menufacture',
-      'nvim-telescope/telescope-file-browser.nvim',
-      'razak17/telescope-import.nvim',
+      {
+        'natecraddock/telescope-zf-native.nvim',
+        config = function() require('telescope').load_extension('zf-native') end,
+      },
+      {
+        'nvim-telescope/telescope-frecency.nvim',
+        config = function() require('telescope').load_extension('frecency') end,
+      },
+      {
+        'debugloop/telescope-undo.nvim',
+        config = function() require('telescope').load_extension('undo') end,
+      },
+      {
+        'molecule-man/telescope-menufacture',
+        config = function() require('telescope').load_extension('menufacture') end,
+      },
+      {
+        'nvim-telescope/telescope-file-browser.nvim',
+        config = function() require('telescope').load_extension('file_browser') end,
+      },
+      {
+        'razak17/telescope-import.nvim',
+        config = function() require('telescope').load_extension('import') end,
+      },
       {
         'tsakirist/telescope-lazy.nvim',
         opts = {
           extensions = {
             lazy = {
-              -- Optional theme (the extension doesn't set a default theme)
               theme = 'ivy',
-              -- Whether or not to show the icon in the first column
               show_icon = true,
-              -- Mappings for the actions
               mappings = {
                 open_in_browser = '<C-o>',
                 open_in_file_browser = '<M-b>',
                 open_in_find_files = '<C-f>',
                 open_in_live_grep = '<C-g>',
-                open_plugins_picker = '<C-b>', -- Works only after having called first another action
+                open_plugins_picker = '<C-b>',
                 open_lazy_root_find_files = '<C-r>f',
                 open_lazy_root_live_grep = '<C-r>g',
               },
-              -- Other telescope configuration options
             },
           },
+        },
+      },
+      {
+        'danielfalk/smart-open.nvim',
+        branch = '0.2.x',
+        config = function() require('telescope').load_extension('smart_open') end,
+        dependencies = {
+          'kkharji/sqlite.lua',
+          'nvim-telescope/telescope-fzy-native.nvim',
         },
       },
     },
