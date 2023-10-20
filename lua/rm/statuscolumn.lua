@@ -25,7 +25,7 @@ local spacer = { provider = space, hl = 'HeirlineStatusColumn' }
 local function nr(win, lnum, relnum, virtnum, line_count)
   local col_width = api.nvim_strwidth(tostring(line_count))
   if virtnum and virtnum ~= 0 then
-    return space:rep(col_width - 1) .. (virtnum < 0 and shade or space)
+    return space:rep(col_width - 1) .. (virtnum < 0 and '' or space)
   end -- virtual line
   local num = vim.wo[win].relativenumber and not falsy(relnum) and relnum
     or lnum
