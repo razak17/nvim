@@ -10,11 +10,6 @@ local shade = sep.light_shade_block
 local align = { provider = '%=' }
 local spacer = { provider = space, hl = 'HeirlineStatusColumn' }
 
----@class StringComponent
----@field component string
----@field length integer,
----@field priority integer
-
 ---@alias ExtmarkSign {[1]: number, [2]: number, [3]: number, [4]: {sign_text: string, sign_hl_group: string}}
 
 ---@param line_count integer
@@ -38,8 +33,7 @@ local function nr(win, lnum, relnum, virtnum, line_count)
 end
 
 ---@param curbuf integer
----@param lnum integer
----@return StringComponent[]
+---@return table
 local function signplaced_signs(curbuf, lnum)
   return vim
     .iter(fn.sign_getplaced(curbuf, { group = '*', lnum = lnum })[1].signs)
@@ -51,7 +45,6 @@ local function signplaced_signs(curbuf, lnum)
 end
 
 ---@param curbuf integer
----@return StringComponent[], StringComponent[]
 local function extmark_signs(curbuf, lnum)
   lnum = lnum - 1
   ---@type ExtmarkSign[]
@@ -147,6 +140,7 @@ return {
       self.g_sns, self.other_sns = extmark_signs(buf, lnum)
       vim.list_extend(self.sns, self.other_sns)
     end,
+    -- Signs
     {
       init = function(self)
         if #self.sns > 0 then
@@ -177,6 +171,7 @@ return {
     },
     align,
     spacer,
+    -- Line numbers
     {
       provider = function(self) return self.ln end,
       on_click = {
@@ -197,6 +192,7 @@ return {
         provider = ' ',
         hl = 'HeirlineStatusColumn',
       },
+      -- Git signs
       {
         condition = function()
           return conditions.is_git_repo() and v.virtnum == 0
@@ -227,6 +223,7 @@ return {
         },
       },
     },
+    -- Virtual lines
     {
       init = function(self)
         self.is_wrap = self.ln:gsub('^%s*(.-)%s*$', '%1') == ''
@@ -239,6 +236,7 @@ return {
       end,
       hl = 'LineNr',
     },
+    -- Folds
     {
       condition = function() return v.virtnum == 0 end,
       init = function(self)

@@ -281,7 +281,7 @@ xnoremap(
   "getline('.')[0 : col('.') - 2] =~# '^\\s\\+$' ? '0' : '^'",
   { expr = true, desc = 'go to start of line' }
 )
-nmap('gl', '$', { desc = 'go to end of line' })
+-- nmap('gl', '$', { desc = 'go to end of line' })
 -- when going to the end of the line in visual mode ignore whitespace characters
 vnoremap('$', 'g_')
 -- jk is escape, THEN move to the right to preserve the cursor position, unless

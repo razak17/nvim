@@ -81,6 +81,7 @@ return {
         },
         statuscolumn = {
           condition = function()
+            if not rvim.ui.statuscolumn.enable then return false end
             local win = api.nvim_get_current_win()
             local buf = api.nvim_win_get_buf(win)
             local d = ui.decorations.get({
@@ -88,7 +89,6 @@ return {
               fname = fn.bufname(buf),
               setting = 'statuscolumn',
             })
-            if not rvim.ui.statuscolumn.enable then return false end
             if rvim.falsy(d) then
               return not conditions.buffer_matches({
                 buftype = buftypes,
