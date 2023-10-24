@@ -33,7 +33,7 @@ return {
     cond = not rvim.plugins.minimal,
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = function()
-      local statuscolumn = require('rm.statuscolumn')
+      -- local statuscolumn = require('rm.statuscolumn')
       local statusline = require('rm.statusline')
       local conditions = require('heirline.conditions')
 
@@ -47,7 +47,12 @@ return {
               fname = fn.bufname(buf),
               setting = 'statusline',
             })
-            if rvim.falsy(d) then return true end
+            if rvim.falsy(d) then
+              return not conditions.buffer_matches({
+                buftype = buftypes,
+                filetype = force_inactive_filetypes,
+              })
+            end
             return d and d.ft == true or d and d.fname == true
           end,
           statusline.vim_mode,
@@ -79,28 +84,28 @@ return {
           statusline.scroll_bar,
           -- statusline.vim_mode,
         },
-        statuscolumn = {
-          condition = function()
-            if not rvim.ui.statuscolumn.enable then return false end
-            local win = api.nvim_get_current_win()
-            local buf = api.nvim_win_get_buf(win)
-            local d = ui.decorations.get({
-              ft = vim.bo[buf].ft,
-              fname = fn.bufname(buf),
-              setting = 'statuscolumn',
-            })
-            if rvim.falsy(d) then
-              return not conditions.buffer_matches({
-                buftype = buftypes,
-                filetype = force_inactive_filetypes,
-              })
-            end
-            return d and d.ft == true or d and d.fname == true
-          end,
-          static = statuscolumn.static,
-          init = statuscolumn.init,
-          statuscolumn.render,
-        },
+        -- statuscolumn = {
+        --   condition = function()
+        --     if not rvim.ui.statuscolumn.enable then return false end
+        --     local win = api.nvim_get_current_win()
+        --     local buf = api.nvim_win_get_buf(win)
+        --     local d = ui.decorations.get({
+        --       ft = vim.bo[buf].ft,
+        --       fname = fn.bufname(buf),
+        --       setting = 'statuscolumn',
+        --     })
+        --     if rvim.falsy(d) then
+        --       return not conditions.buffer_matches({
+        --         buftype = buftypes,
+        --         filetype = force_inactive_filetypes,
+        --       })
+        --     end
+        --     return d and d.ft == true or d and d.fname == true
+        --   end,
+        --   static = statuscolumn.static,
+        --   init = statuscolumn.init,
+        --   statuscolumn.render,
+        -- },
       })
     end,
   },
