@@ -3,7 +3,8 @@ if not rvim or not rvim.ui.statuscolumn.enable then return end
 if rvim and rvim.none then return end
 
 local fn, v, api, opt, wo = vim.fn, vim.v, vim.api, vim.opt, vim.wo
-local sp = rvim.ui.icons.separators
+local ui = rvim.ui
+local sp = ui.icons.separators
 
 local separator = sp.left_thin_block
 local fcs = opt.fillchars:get()
@@ -126,3 +127,19 @@ function rvim.ui.statuscolumn()
 end
 
 opt.statuscolumn = [[%!v:lua.rvim.ui.statuscolumn()]]
+
+rvim.augroup('StatusCol', {
+  event = { 'BufEnter', 'FileType', 'CursorHold' },
+  command = function(args)
+    local buf = args.buf
+    local d = ui.decorations.get({
+      ft = vim.bo[buf].ft,
+      fname = fn.bufname(buf),
+      setting = 'statuscolumn',
+    })
+    if not d then return end
+    if d.ft == false or d.fname == false then
+      vim.opt_local.statuscolumn = ''
+    end
+  end,
+})
