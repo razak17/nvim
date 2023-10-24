@@ -311,6 +311,8 @@ return {
             '%.git/',
             'node%_modules/',
             'dist/',
+            'env/',
+            'venv/',
             'build/',
             'site-packages/',
             '%.yarn/',
