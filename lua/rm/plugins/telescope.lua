@@ -132,8 +132,18 @@ local function import()
   )
 end
 local function file_browser(opts)
-  opts = opts or { hidden = true }
+  opts = opts
+    or {
+      hidden = true,
+      sort_mru = true,
+      sort_lastused = true,
+    }
   extensions('file_browser').file_browser(opts)
+end
+
+local function buffers(opts)
+  opts = opts or { sort_mru = true, sort_lastused = true }
+  require('telescope.builtin')['buffers'](opts)
 end
 
 ---@param opts? table
@@ -212,7 +222,7 @@ return {
       { '<leader>fL', luasnips, desc = 'luasnip: available snippets' },
       { '<leader>fn', notifications, desc = 'notify: notifications' },
       { '<leader>fN', notes, desc = 'notes' },
-      { '<leader>fo', b('buffers', { sort_mru = true }), desc = 'buffers' },
+      { '<leader>fo', buffers, desc = 'buffers' },
       { '<leader>fk', smart_open, desc = 'smart open' },
       { '<leader>fp', projects, desc = 'projects' },
       { '<leader>fP', plugins, desc = 'plugins' },
