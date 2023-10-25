@@ -82,7 +82,7 @@ opt.formatoptions = {
 --------------------------------------------------------------------------------
 o.foldlevelstart = 3
 opt.foldmethod = 'expr'
-opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+-- opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 --------------------------------------------------------------------------------
 -- Grepprg {{{1
 --------------------------------------------------------------------------------

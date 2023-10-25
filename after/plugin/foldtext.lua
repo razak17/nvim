@@ -1,4 +1,4 @@
-local ts, api = vim.treesitter, vim.api
+local ts, api, opt = vim.treesitter, vim.api, vim.opt
 
 -- Copied from https://www.reddit.com/r/neovim/comments/16sqyjz/finally_we_can_have_highlighted_folds/
 function rvim.ui.foldtext()
@@ -43,4 +43,35 @@ function rvim.ui.foldtext()
   return result
 end
 
-vim.opt.foldtext = 'v:lua.rvim.ui.foldtext()'
+local skip_foldexpr = {} ---@type table<number,boolean>
+local skip_check = assert(vim.loop.new_check())
+
+function rvim.ui.foldexpr()
+  local buf = vim.api.nvim_get_current_buf()
+
+  -- still in the same tick and no parser
+  if skip_foldexpr[buf] then return '0' end
+
+  -- don't use treesitter folds for non-file buffers
+  if vim.bo[buf].buftype ~= '' then return '0' end
+
+  -- as long as we don't have a filetype, don't bother
+  -- checking if treesitter is available (it won't)
+  if vim.bo[buf].filetype == '' then return '0' end
+
+  local ok = pcall(vim.treesitter.get_parser, buf)
+
+  if ok then return vim.treesitter.foldexpr() end
+
+  -- no parser available, so mark it as skip
+  -- in the next tick, all skip marks will be reset
+  skip_foldexpr[buf] = true
+  skip_check:start(function()
+    skip_foldexpr = {}
+    skip_check:stop()
+  end)
+  return '0'
+end
+
+opt.foldtext = 'v:lua.rvim.ui.foldtext()'
+opt.foldexpr = 'v:lua.rvim.ui.foldexpr()'
