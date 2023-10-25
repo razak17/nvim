@@ -131,6 +131,9 @@ local function import()
     rvim.telescope.minimal_ui({ prompt_title = 'Harpoon Marks' })
   )
 end
+local function whop()
+  extensions('whop').whop(rvim.telescope.minimal_ui({ prompt_title = 'Whop' }))
+end
 local function file_browser(opts)
   opts = opts
     or {
@@ -218,6 +221,7 @@ return {
       -- { '<leader>ff', project_files, desc = 'project files' },
       { '<leader>fh', frecency, desc = 'Most (f)recently used files' },
       { '<leader>fi', import, desc = 'import' },
+      { '<leader>fj', whop, desc = 'whop' },
       { '<leader>fl', lazy, desc = 'surf plugins' },
       { '<leader>fL', luasnips, desc = 'luasnip: available snippets' },
       { '<leader>fn', notifications, desc = 'notify: notifications' },
@@ -447,6 +451,9 @@ return {
       if rvim.is_available('project.nvim') then
         require('telescope').load_extension('projects')
       end
+      if rvim.is_available('whop.nvim') then
+        require('telescope').load_extension('whop')
+      end
 
       api.nvim_exec_autocmds(
         'User',
@@ -454,6 +461,7 @@ return {
       )
     end,
     dependencies = {
+      { 'biozz/whop.nvim', opts = {} },
       {
         'natecraddock/telescope-zf-native.nvim',
         config = function() require('telescope').load_extension('zf-native') end,
