@@ -582,6 +582,7 @@ return {
     condition = function()
       return conditions.lsp_attached and not rvim.lsp.null_ls.enable
     end,
+    update = { 'LspAttach', 'LspDetach', 'WinEnter' },
     init = function(self)
       local curwin = api.nvim_get_current_win()
       local curbuf = api.nvim_win_get_buf(curwin)
@@ -604,7 +605,6 @@ return {
       self.formatters = get_formatters(curbuf)
     end,
     {
-      condition = conditions.lsp_attached,
       init = function(self)
         if self.active then
           local lsp_servers = vim.tbl_map(
@@ -622,6 +622,10 @@ return {
         end
       end,
       provider = function(self)
+        print(
+          'DEBUGPRINT[3]: statusline.lua:625: self.active='
+            .. vim.inspect(self.active)
+        )
         if not self.active then
           return '  ' .. 'No Active LSP ' .. separator
         end
@@ -652,7 +656,7 @@ return {
       },
     },
     {
-      provider = ' ' .. codicons.misc.octoface .. ' ',
+      provider = ' ' .. codicons.misc.octoface,
       hl = { fg = colors.forest_green, bg = bg },
       on_click = {
         callback = function()
@@ -682,7 +686,11 @@ return {
     },
   },
   copilot_attached = {
-    condition = function() return rvim.ai.enable and not rvim.plugins.minimal end,
+    condition = function()
+      return rvim.ai.enable
+        and not rvim.plugins.minimal
+        and rvim.lsp.null_ls.enable
+    end,
     provider = ' ' .. codicons.misc.octoface .. ' ',
     hl = { fg = colors.forest_green, bg = bg },
     on_click = {
@@ -693,7 +701,11 @@ return {
     },
   },
   copilot_status = {
-    condition = function() return rvim.ai.enable and not rvim.plugins.minimal end,
+    condition = function()
+      return rvim.ai.enable
+        and not rvim.plugins.minimal
+        and rvim.lsp.null_ls.enable
+    end,
     provider = function() return stl_copilot_indicator() end,
     hl = { fg = fg, bg = bg, bold = true },
     on_click = {
