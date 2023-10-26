@@ -160,6 +160,7 @@ return {
               ['lab.quick_data'] = '[LAB]',
               nerdfonts = '[NF]',
               natdat = '[NATDAT]',
+              nvim_px_to_rem = '[PX2REM]',
             })[entry.source.name]
 
             local label, length = item.abbr, api.nvim_strwidth(item.abbr)
@@ -180,6 +181,7 @@ return {
               'crates',
               'copilot',
               'nerdfonts',
+              'nvim_px_to_rem',
             }
 
             if
@@ -205,9 +207,13 @@ return {
             if entry.source.name == 'copilot' then
               item.kind = format_icon(ui.codicons.misc.octoface)
             end
-
+            --
             if entry.source.name == 'nerdfonts' then
               item.kind = format_icon('')
+              item.kind_hl_group = 'CmpItemKindNerdFont'
+            end
+            if entry.source.name == 'nvim_px_to_rem' then
+              item.kind = format_icon('')
               item.kind_hl_group = 'CmpItemKindNerdFont'
             end
 
@@ -224,6 +230,7 @@ return {
         },
         sources = {
           { name = 'copilot', priority = 11, group_index = 1 },
+          { name = 'nvim_px_to_rem', priority = 11, group_index = 1 },
           { name = 'nvim_lsp', priority = 10, group_index = 1 },
           { name = 'luasnip', priority = 9, group_index = 1 },
           {
@@ -327,6 +334,7 @@ return {
       { 'amarakon/nvim-cmp-buffer-lines', ft = { 'c', 'cpp' } },
       { 'hrsh7th/cmp-cmdline', config = function() vim.o.wildmode = '' end },
       { 'hrsh7th/cmp-nvim-lsp-document-symbol', cond = rvim.lsp.enable },
+      { 'jsongerber/nvim-px-to-rem', ft = { 'css', 'scss' }, opts = {} },
       {
         'uga-rosa/cmp-dictionary',
         cond = not rvim.plugins.minimal,
