@@ -622,10 +622,6 @@ return {
         end
       end,
       provider = function(self)
-        print(
-          'DEBUGPRINT[3]: statusline.lua:625: self.active='
-            .. vim.inspect(self.active)
-        )
         if not self.active then
           return '  ' .. 'No Active LSP ' .. separator
         end
