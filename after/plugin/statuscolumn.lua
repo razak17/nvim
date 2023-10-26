@@ -10,6 +10,8 @@ local separator = sp.left_thin_block
 local fcs = opt.fillchars:get()
 local space = ' '
 
+local sep = { text = separator, texthl = 'LineNr' }
+
 ---@alias Sign {name:string, text:string, texthl:string, priority:number}
 
 -- Returns a list of regular and extmark signs sorted by priority (low to high)
@@ -35,10 +37,13 @@ local function get_signs(buf, lnum)
     { details = true, type = 'sign' }
   )
   for _, extmark in pairs(extmarks) do
+    local texthl = extmark[4].sign_hl_group
+    local text = extmark[4].sign_text
+
     signs[#signs + 1] = {
       name = extmark[4].sign_hl_group or '',
-      text = extmark[4].sign_text,
-      texthl = extmark[4].sign_hl_group,
+      text = texthl:match('^Trail') and ui.codicons.misc.bookmark or text,
+      texthl = texthl,
       priority = extmark[4].priority,
     }
   end
@@ -82,19 +87,44 @@ end
 function rvim.ui.statuscolumn()
   local win = vim.g.statusline_winid
   if wo[win].signcolumn == 'no' then return '' end
+
+  local lnum = v.lnum
   local buf = api.nvim_win_get_buf(win)
 
   ---@type Sign?,Sign?,Sign?
   local left, gitsigns, fold
-  for _, s in ipairs(get_signs(buf, v.lnum)) do
-    if s.name and s.name:find('GitSign') then
-      gitsigns = s
-    else
-      left = s
+
+  local signs = vim
+    .iter(get_signs(buf, lnum))
+    :fold({ git = {}, other = {} }, function(acc, item)
+      local txt, hl = item.text, item.texthl
+      if hl:match('^Trail') then txt = ui.codicons.misc.bookmark end
+      local target = hl:match('^Git') and acc.git or acc.other
+      table.insert(target, { text = txt, texthl = hl })
+      return acc
+    end)
+
+  if #signs.git > 0 then gitsigns = signs.git end
+
+  if #signs.other > 0 then left = signs.other end
+
+  local marks = get_mark(buf, lnum)
+
+  local sns = nil
+  if left then
+    if #left == 1 then sns = icon(left[1], 1) end
+    if #left > 1 then
+      sns = vim.iter(left):fold('', function(acc, item)
+        if acc == '' then
+          acc = acc .. icon(item, 2)
+        else
+          acc = acc .. icon(item, 2)
+        end
+        return acc
+      end)
     end
   end
 
-  local lnum = v.lnum
   api.nvim_win_call(win, function()
     local folded = fn.foldlevel(lnum) > fn.foldlevel(lnum - 1)
 
@@ -114,32 +144,34 @@ function rvim.ui.statuscolumn()
     nu = wo[win].relativenumber and v.relnum ~= 0 and v.relnum or lnum
   end
 
-  local sep = { text = separator, texthl = 'LineNr' }
-
   return table.concat({
-    icon(get_mark(buf, lnum) or left),
+    sns and space .. sns or space,
+    marks and icon(marks) or space,
     [[%=]],
     nu .. space,
-    icon(gitsigns, 1),
+    gitsigns and icon(gitsigns[1], 1) or space,
     icon(sep, 1),
     icon(fold),
   }, '')
 end
 
-opt.statuscolumn = [[%!v:lua.rvim.ui.statuscolumn()]]
+-- opt.statuscolumn = [[%!v:lua.rvim.ui.statuscolumn()]]
 
 rvim.augroup('StatusCol', {
-  event = { 'BufEnter', 'FileType', 'CursorHold' },
+  event = { 'BufEnter', 'FileType', 'CursorMoved' },
   command = function(args)
     local buf = args.buf
+    local ft = vim.bo[buf].ft
     local d = ui.decorations.get({
-      ft = vim.bo[buf].ft,
+      ft = ft,
       fname = fn.bufname(buf),
       setting = 'statuscolumn',
     })
     if not d then return end
     if d.ft == false or d.fname == false then
       vim.opt_local.statuscolumn = ''
+    else
+      opt.statuscolumn = [[%!v:lua.rvim.ui.statuscolumn()]]
     end
   end,
 })
