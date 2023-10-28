@@ -119,21 +119,21 @@ local function toggle_diff()
 end
 -- 'stevearc/aerial.nvim'
 local file_options = {
-  ['1. Open File From Current Dir'] = function() open_file_cur_dir(false) end,
-  ['2. Open File From Current Dir And Children'] = function()
+  ['Open File From Current Dir'] = function() open_file_cur_dir(false) end,
+  ['Open File From Current Dir And Children'] = function()
     open_file_cur_dir(true)
   end,
-  ['3. Reload All Files From Disk'] = 'lua rvim.reload_all()',
-  ['4. Copy File Path'] = copy_file_path,
-  ['4. Copy Full File Path'] = 'let @+ = expand("%:p")',
-  ['4. Yank Last Ex Command'] = 'let @+=@:',
-  ['4. Yank Last Message'] = [[let @+=substitute(execute('messages'), '\n\+', '\n', 'g')]],
-  ['5. Change Filetype'] = quick_set_ft,
-  ['6. Search Code Deps'] = search_code_deps,
-  ['7. Toggle Diff'] = toggle_diff,
-  ['8. Toggle Interceptor'] = 'InterceptToggle',
-  ['8. Re-open File With Sudo Permissions'] = 'SudaRead',
-  ['8. Write File With Sudo Permissions'] = 'SudaWrite',
+  ['Reload All Files From Disk'] = 'lua rvim.reload_all()',
+  ['Copy File Path'] = copy_file_path,
+  ['Copy Full File Path'] = 'let @+ = expand("%:p")',
+  ['Yank Last Ex Command'] = 'let @+=@:',
+  ['Yank Last Message'] = [[let @+=substitute(execute('messages'), '\n\+', '\n', 'g')]],
+  ['Change Filetype'] = quick_set_ft,
+  ['Search Code Deps'] = search_code_deps,
+  ['Toggle Diff'] = toggle_diff,
+  ['Toggle Interceptor'] = 'InterceptToggle',
+  ['Re-open File With Sudo Permissions'] = 'SudaRead',
+  ['Write File With Sudo Permissions'] = 'SudaWrite',
 }
 
 local file_menu = function()
@@ -142,7 +142,7 @@ end
 
 map(
   'n',
-  '<localleader>ff',
+  '<leader>of',
   file_menu,
   { desc = '[f]ile [a]ctions: open menu for file actions' }
 )

@@ -52,7 +52,7 @@ return {
       l = { name = 'LSP' },
       m = { name = 'Marks' },
       n = { name = 'Notify' },
-      o = { name = 'UI Toggles' },
+      o = { name = 'UI select' },
       p = { name = 'Debugprint' },
       r = { name = 'Run' },
       s = { name = 'Splits' },

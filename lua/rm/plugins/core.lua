@@ -1598,7 +1598,7 @@ return {
     ft = { 'markdown' },
     keys = {
       {
-        '<leader>ol',
+        '<leader>om',
         function() require('markdown-togglecheck').toggle() end,
         desc = 'toggle markdown checkbox',
       },

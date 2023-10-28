@@ -60,19 +60,19 @@ map(
 )
 
 local toggle_options = {
-  ['1. Toggle Aerial'] = 'AerialToggle',
-  ['1. Toggle Wrap'] = function() toggle_opt('wrap') end,
-  ['1. Toggle Cursorline'] = function() toggle_opt('cursorline') end,
-  ['1. Toggle Spell'] = function() toggle_opt('spell') end,
-  ['1. Toggle Statusline'] = toggle_statusline,
-  ['2. Toggle Ccc'] = 'CccHighlighterToggle',
-  ['2. Toggle Pick'] = 'CccPick',
-  ['3. Toggle Cloak'] = 'CloakToggle',
-  ['3. Toggle SpOnGeBoB'] = 'SpOnGeBoBtOgGlE',
-  ['3. Toggle Lengthmatters'] = 'LengthmattersToggle',
-  ['4. Toggle Twilight'] = 'Twilight',
-  ['4. Toggle ZenMode'] = 'ZenMode',
-  ['4. Toggle Zoom'] = 'lua require("mini.misc").zoom()',
+  ['Toggle Aerial'] = 'AerialToggle',
+  ['Toggle Wrap'] = function() toggle_opt('wrap') end,
+  ['Toggle Cursorline'] = function() toggle_opt('cursorline') end,
+  ['Toggle Spell'] = function() toggle_opt('spell') end,
+  ['Toggle Statusline'] = toggle_statusline,
+  ['Toggle Ccc'] = 'CccHighlighterToggle',
+  ['Toggle Pick'] = 'CccPick',
+  ['Toggle Cloak'] = 'CloakToggle',
+  ['Toggle SpOnGeBoB'] = 'SpOnGeBoBtOgGlE',
+  ['Toggle Lengthmatters'] = 'LengthmattersToggle',
+  ['Toggle Twilight'] = 'Twilight',
+  ['Toggle ZenMode'] = 'ZenMode',
+  ['Toggle Zoom'] = 'lua require("mini.misc").zoom()',
 }
 
 local toggle_menu = function()

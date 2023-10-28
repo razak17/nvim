@@ -268,24 +268,24 @@ local function toggle_format_on_save()
 end
 
 local lsp_options = {
-  ['1. Code Format'] = format_buf,
-  ['2. Eslint Fix'] = eslint_fix,
-  ['3. LSP references'] = display_lsp_references,
-  ['3. Call Heirarchy'] = function()
+  ['Code Format'] = format_buf,
+  ['Eslint Fix'] = eslint_fix,
+  ['LSP references'] = display_lsp_references,
+  ['Call Heirarchy'] = function()
     require('rm.lsp_heirarchy').display_call_hierarchy()
   end,
-  ['4. Remove Unused Imports'] = function()
+  ['Remove Unused Imports'] = function()
     require('rm.ts_unused_imports').remove_unused_imports()
   end,
-  ['4. Restart All LSPs'] = lsp_restart_all,
-  ['5. Toggle Diagnostics Sources for Buffer'] = telescope_enable_disable_diagnostics,
-  ['6. Toggle Virtual Text'] = toggle_virtual_text,
-  ['6. Toggle Virtual Lines'] = toggle_virtual_lines,
-  ['6. Toggle Diagnostic Signs'] = toggle_signs,
-  ['7. Toggle Hover Diagnostics'] = toggle_hover_diagnostics,
-  ['7. Toggle Format On Save'] = toggle_format_on_save,
-  ['7. Toggle JS Arrow Function'] = 'lua require("nvim-js-actions/js-arrow-fn").toggle()',
-  ['8. Preview Code Actions'] = 'lua require("actions-preview").code_actions()',
+  ['Restart All LSPs'] = lsp_restart_all,
+  ['Toggle Diagnostics Sources for Buffer'] = telescope_enable_disable_diagnostics,
+  ['Toggle Virtual Text'] = toggle_virtual_text,
+  ['Toggle Virtual Lines'] = toggle_virtual_lines,
+  ['Toggle Diagnostic Signs'] = toggle_signs,
+  ['Toggle Hover Diagnostics'] = toggle_hover_diagnostics,
+  ['Toggle Format On Save'] = toggle_format_on_save,
+  ['Toggle JS Arrow Function'] = 'lua require("nvim-js-actions/js-arrow-fn").toggle()',
+  ['Preview Code Actions'] = 'lua require("actions-preview").code_actions()',
 }
 
 local lsp_menu = function()
@@ -298,7 +298,7 @@ end
 
 map(
   'n',
-  '<localleader>ll',
+  '<leader>ol',
   lsp_menu,
   { desc = '[l]sp [a]ctions: open menu for lsp features' }
 )

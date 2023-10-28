@@ -59,33 +59,33 @@ local function diffview_conflict(which)
 end
 
 local git_options = {
-  ['1. Show Branches'] = "lua require'telescope.builtin'.git_branches()",
-  ['1. Browse Branches'] = function()
+  ['Show Branches'] = "lua require'telescope.builtin'.git_branches()",
+  ['Browse Branches'] = function()
     require('rm.git_branches').browse_branches()
   end,
-  ['1. Stash Changes'] = function() require('rm.git_stash').do_stash() end,
-  ['1. Browse Stashes'] = function() require('rm.git_stash').list_stashes() end,
-  ['2. Browse Commits'] = function() require('rm.git_commits').browse_commits() end,
-  ['2. Show Buffer Commits'] = function()
+  ['Stash Changes'] = function() require('rm.git_stash').do_stash() end,
+  ['Browse Stashes'] = function() require('rm.git_stash').list_stashes() end,
+  ['Browse Commits'] = function() require('rm.git_commits').browse_commits() end,
+  ['Show Buffer Commits'] = function()
     require('rm.git_commits').browse_bcommits()
   end,
-  ['2. Show Commit At Line'] = function()
+  ['Show Commit At Line'] = function()
     require('rm.utils').show_commit_at_line()
   end,
-  ['2. Display Commit From Hash'] = function()
+  ['Display Commit From Hash'] = function()
     require('rm.git_commits').display_commit_from_hash()
   end,
-  ['3. Open File From Branch'] = "lua require'agitator'.open_file_git_branch()",
-  ['3. Search In Another Branch'] = "lua require'agitator'.search_git_branch()",
-  ['3. Open Co Authors'] = 'GitCoAuthors',
-  ['4. Time Machine'] = time_machine,
-  ['4. Project History'] = project_history,
-  ['4. File History'] = 'DiffviewFileHistory %',
-  ['5. Pull Latest Changes'] = git_pull,
-  ['5. Fetch Orign'] = git_fetch_origin,
-  ['6. Conflict Show Base'] = function() diffview_conflict('base') end,
-  ['6. Conflict Show Ours'] = function() diffview_conflict('ours') end,
-  ['6. Conflict Show Theirs'] = function() diffview_conflict('theirs') end,
+  ['Open File From Branch'] = "lua require'agitator'.open_file_git_branch()",
+  ['Search In Another Branch'] = "lua require'agitator'.search_git_branch()",
+  ['Open Co Authors'] = 'GitCoAuthors',
+  ['Time Machine'] = time_machine,
+  ['Project History'] = project_history,
+  ['File History'] = 'DiffviewFileHistory %',
+  ['Pull Latest Changes'] = git_pull,
+  ['Fetch Orign'] = git_fetch_origin,
+  ['Conflict Show Base'] = function() diffview_conflict('base') end,
+  ['Conflict Show Ours'] = function() diffview_conflict('ours') end,
+  ['Conflict Show Theirs'] = function() diffview_conflict('theirs') end,
 }
 
 local git_menu = function()
@@ -98,7 +98,7 @@ end
 
 map(
   'n',
-  '<leader>gg',
+  '<leader>og',
   git_menu,
   { desc = '[g]it [a]ctions: open menu for git commands' }
 )
