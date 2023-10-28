@@ -75,6 +75,7 @@ return {
       h = { name = 'Harpoon' },
       l = { name = 'LSP' },
       lr = { name = 'Rulebook' },
+      m = { name = 'Markdown' },
       n = { name = 'Neorg' },
       o = { name = 'Obsidian' },
       q = { name = 'NeoComposer' },

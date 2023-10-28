@@ -1547,12 +1547,12 @@ return {
     dependencies = { 'nvim-lua/plenary.nvim' },
     keys = {
       {
-        '<leader>mdh',
+        '<localleader>mh',
         '<cmd>MarkdownHeaders<CR>',
         desc = 'md-header: headers',
       },
       {
-        '<leader>mdc',
+        '<localleader>mn',
         '<cmd>MarkdownHeadersClosest<CR>',
         desc = 'md-header: closest',
       },
