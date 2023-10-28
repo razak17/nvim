@@ -25,7 +25,7 @@ end
 -- TODO: when disabled then enabled again, causes errors with deleting buffer
 local function open_in_prog(buf, fpath, fname)
   notify(string.format('Opening `%s`', fname), 'Open File in External Program')
-  vim.system({ rvim.open_command, fpath }, { detach = true })
+  vim.ui.open(fpath)
   api.nvim_buf_delete(buf, { force = true })
 end
 

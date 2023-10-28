@@ -15,11 +15,6 @@ if file then rvim.project_config(file) end
 g.mapleader = ' '
 g.maplocalleader = ','
 --------------------------------------------------------------------------------
--- Set Open Command
---------------------------------------------------------------------------------
-g.os = vim.uv.os_uname().sysname
-rvim.open_command = g.os == 'Darwin' and 'open' or 'xdg-open'
---------------------------------------------------------------------------------
 -- Set Providers
 --------------------------------------------------------------------------------
 vim.g.python3_host_prog = join_paths(data, 'venv', 'bin', 'python3')

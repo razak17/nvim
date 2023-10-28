@@ -180,7 +180,7 @@ function rvim.load_colorscheme(name)
 end
 
 function rvim.is_git_repo()
-    return vim.b.gitsigns_head or vim.b.gitsigns_status_dict
+  return vim.b.gitsigns_head or vim.b.gitsigns_status_dict
 end
 
 ---@generic T:table<string, any>
@@ -330,7 +330,7 @@ end
 --- replicate netrw functionality
 ---@param path string
 function rvim.open(path)
-  vim.system({ rvim.open_command, path }, { detach = true })
+  vim.ui.open(path)
   vim.notify(fmt('Opening %s', path))
 end
 
