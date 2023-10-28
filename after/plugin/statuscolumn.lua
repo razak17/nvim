@@ -10,7 +10,7 @@ local separator = sp.left_thin_block
 local fcs = opt.fillchars:get()
 local space = ' '
 
-local sep = { text = separator, texthl = 'LineNr' }
+local sep = { text = separator, texthl = 'IndentBlanklineContextChar' }
 
 ---@alias Sign {name:string, text:string, texthl:string, priority:number}
 
@@ -84,7 +84,7 @@ local function icon(sign, len)
   return sign.texthl and ('%#' .. sign.texthl .. '#' .. text .. '%*') or text
 end
 
-function rvim.ui.statuscolumn()
+function rvim.ui.statuscolumn.render()
   local win = vim.g.statusline_winid
   if wo[win].signcolumn == 'no' then return '' end
 
@@ -128,14 +128,15 @@ function rvim.ui.statuscolumn()
   api.nvim_win_call(win, function()
     local folded = fn.foldlevel(lnum) > fn.foldlevel(lnum - 1)
 
-    if not folded then fold = { text = ' ' } end
+    if not folded then fold = { text = space } end
 
-    if folded and fn.foldclosed(lnum) == -1 then
-      fold = { text = fcs.foldopen or '', texthl = 'Folded' }
+    if folded and fn.foldclosed(lnum) < 0 then
+      fold =
+        { text = fcs.foldopen or '', texthl = 'IndentBlanklineContextChar' }
     end
 
-    if folded and fn.foldclosed(lnum) ~= -1 then
-      fold = { text = fcs.foldclose or '', texthl = 'Folded' }
+    if folded and fn.foldclosed(lnum) >= 0 then
+      fold = { text = fcs.foldclose or '', texthl = 'Comment' }
     end
   end)
 
@@ -147,6 +148,7 @@ function rvim.ui.statuscolumn()
   return table.concat({
     sns and space .. sns or space,
     marks and icon(marks) or space,
+    space,
     [[%=]],
     nu .. space,
     gitsigns and icon(gitsigns[1], 1) or space,
@@ -155,7 +157,7 @@ function rvim.ui.statuscolumn()
   }, '')
 end
 
--- opt.statuscolumn = [[%!v:lua.rvim.ui.statuscolumn()]]
+opt.statuscolumn = [[%!v:lua.rvim.ui.statuscolumn.render()]]
 
 rvim.augroup('StatusCol', {
   event = { 'BufEnter', 'FileType', 'CursorMoved' },
@@ -170,8 +172,8 @@ rvim.augroup('StatusCol', {
     if not d then return end
     if d.ft == false or d.fname == false then
       vim.opt_local.statuscolumn = ''
-    else
-      opt.statuscolumn = [[%!v:lua.rvim.ui.statuscolumn()]]
+      -- else
+-- opt.statuscolumn = [[%!v:lua.rvim.ui.statuscolumn.render()]]
     end
   end,
 })
