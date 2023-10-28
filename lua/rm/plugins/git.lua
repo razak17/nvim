@@ -332,4 +332,12 @@ return {
     },
     dependencies = { 'niuiic/core.nvim' },
   },
+  {
+    'rbong/vim-flog',
+    cond = enabled,
+    cmd = { 'Flog', 'Flogsplit', 'Floggit' },
+    dependencies = {
+      'tpope/vim-fugitive',
+    },
+  },
 }
