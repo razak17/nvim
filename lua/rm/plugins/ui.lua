@@ -58,7 +58,11 @@ return {
     'utilyre/sentiment.nvim',
     cond = not rvim.plugins.minimal,
     event = { 'BufRead', 'BufNewFile' },
-    opts = {},
+    opts = {
+      excluded_filetypes = {
+        [''] = true,
+      },
+    },
   },
   {
     'aaron-p1/match-visual.nvim',
