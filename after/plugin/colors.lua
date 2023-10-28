@@ -160,3 +160,5 @@ rvim.augroup('UserHighlights', {
   pattern = sidebar_fts,
   command = function() on_sidebar_enter() end,
 })
+
+rvim.load_colorscheme('onedark')
