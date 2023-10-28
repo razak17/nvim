@@ -60,9 +60,7 @@ end
 
 local git_options = {
   ['Show Branches'] = "lua require'telescope.builtin'.git_branches()",
-  ['Browse Branches'] = function()
-    require('rm.git_branches').browse_branches()
-  end,
+  ['Browse Branches'] = function() require('rm.git_branches').browse_branches() end,
   ['Stash Changes'] = function() require('rm.git_stash').do_stash() end,
   ['Browse Stashes'] = function() require('rm.git_stash').list_stashes() end,
   ['Browse Commits'] = function() require('rm.git_commits').browse_commits() end,
@@ -72,15 +70,15 @@ local git_options = {
   ['Show Commit At Line'] = function()
     require('rm.utils').show_commit_at_line()
   end,
-  ['Display Commit From Hash'] = function()
+  ['Show Commit From Hash'] = function()
     require('rm.git_commits').display_commit_from_hash()
   end,
   ['Open File From Branch'] = "lua require'agitator'.open_file_git_branch()",
   ['Search In Another Branch'] = "lua require'agitator'.search_git_branch()",
   ['Open Co Authors'] = 'GitCoAuthors',
   ['Time Machine'] = time_machine,
-  ['Project History'] = project_history,
-  ['File History'] = 'DiffviewFileHistory %',
+  ['Browse Project History'] = project_history,
+  ['Browse Commit History'] = 'DiffviewFileHistory %',
   ['Pull Latest Changes'] = git_pull,
   ['Fetch Orign'] = git_fetch_origin,
   ['Conflict Show Base'] = function() diffview_conflict('base') end,
