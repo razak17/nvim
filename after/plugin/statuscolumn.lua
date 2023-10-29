@@ -126,18 +126,16 @@ function rvim.ui.statuscolumn.render()
   end
 
   api.nvim_win_call(win, function()
-    local folded = fn.foldlevel(lnum) > fn.foldlevel(lnum - 1)
-
-    if not folded then fold = { text = space } end
-
-    if folded and fn.foldclosed(lnum) < 0 then
-      fold =
-        { text = fcs.foldopen or '', texthl = 'IndentBlanklineContextChar' }
-    end
-
-    if folded and fn.foldclosed(lnum) >= 0 then
+    if fn.foldclosed(lnum) >= 0 then
       fold = { text = fcs.foldclose or '', texthl = 'Comment' }
     end
+    -- if fn.foldclosed(lnum) == -1 then
+    --   fold =
+    --     { text = fcs.foldopen or '', texthl = 'IndentBlanklineContextChar' }
+    -- else
+    --   fold = { text = fcs.foldclose or '', texthl = 'Comment' }
+    -- end
+    -- fold = { text = space }
   end)
 
   local nu = ''
