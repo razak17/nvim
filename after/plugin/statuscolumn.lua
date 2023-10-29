@@ -10,7 +10,7 @@ local separator = sp.left_thin_block
 local fcs = opt.fillchars:get()
 local space = ' '
 
-local sep = { text = separator, texthl = 'IndentBlanklineContextChar' }
+local sep = { text = separator, texthl = 'IndentBlanklineChar' }
 
 ---@alias Sign {name:string, text:string, texthl:string, priority:number}
 
@@ -173,7 +173,7 @@ rvim.augroup('StatusCol', {
     if d.ft == false or d.fname == false then
       vim.opt_local.statuscolumn = ''
       -- else
--- opt.statuscolumn = [[%!v:lua.rvim.ui.statuscolumn.render()]]
+      --   opt.statuscolumn = [[%!v:lua.rvim.ui.statuscolumn.render()]]
     end
   end,
 })
