@@ -45,7 +45,7 @@ return {
   },
   {
     'echasnovski/mini.animate',
-    cond = false,
+    cond = not rvim.plugins.minimal and false,
     event = 'VeryLazy',
     opts = {},
   },

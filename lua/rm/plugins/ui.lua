@@ -11,7 +11,7 @@ return {
   },
   {
     'tomiis4/BufferTabs.nvim',
-    cond = false,
+    cond = not rvim.plugins.minimal and false,
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     event = 'VeryLazy',
     keys = {
@@ -78,7 +78,7 @@ return {
   },
   {
     'whatyouhide/vim-lengthmatters',
-    cond = false,
+    cond = not rvim.plugins.minimal and false,
     lazy = false,
     config = function()
       vim.g.lengthmatters_highlight_one_column = 1
@@ -156,7 +156,7 @@ return {
   },
   {
     'tamton-aquib/zone.nvim',
-    cond = false,
+    cond = not rvim.plugins.minimal and false,
     event = 'VeryLazy',
     opts = {
       style = 'epilepsy',
@@ -168,7 +168,7 @@ return {
   },
   {
     'tamton-aquib/flirt.nvim',
-    cond = false,
+    cond = not rvim.plugins.minimal and false,
     event = 'VeryLazy',
     opts = {},
   },
@@ -444,7 +444,7 @@ return {
   },
   {
     'shellRaining/hlchunk.nvim',
-    cond = false,
+    cond = not rvim.plugins.minimal and false,
     event = 'BufRead',
     config = function()
       require('hlchunk').setup({
@@ -569,6 +569,7 @@ return {
         enable_get_fold_virt_text = true,
         close_fold_kinds = { 'imports', 'comment' },
         provider_selector = function(_, ft)
+          -- lsp better?
           return ft_map[ft] or { 'treesitter', 'indent' }
         end,
       })
