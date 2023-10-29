@@ -14,13 +14,18 @@ rvim.notepad = {
 -- If window is not active, display a small floating window with the scratch buffer
 --]]
 -- ref: https://github.com/theopn/theovim/blob/main/lua/ui/notepad.lua#L28
-function rvim.toggle_notepad()
+function rvim.notepad.toggle()
   if not rvim.notepad.loaded or not api.nvim_win_is_valid(rvim.notepad.win) then
     if not rvim.notepad.buf or not api.nvim_buf_is_valid(rvim.notepad.buf) then
       -- Create a buffer if it none existed
       rvim.notepad.buf = api.nvim_create_buf(false, true)
       api.nvim_buf_set_option(rvim.notepad.buf, 'bufhidden', 'hide')
       api.nvim_buf_set_option(rvim.notepad.buf, 'filetype', 'markdown')
+      api.nvim_buf_set_lines(rvim.notepad.buf, 0, 1, false, {
+        '# Warning',
+        '',
+        '> Notepad clears when the current Neovim session closes',
+      })
     end
     -- Create a window
     rvim.notepad.win = api.nvim_open_win(rvim.notepad.buf, true, {
@@ -38,8 +43,8 @@ function rvim.toggle_notepad()
 
     -- Keymaps
     local keymaps_opts = { silent = true, buffer = rvim.notepad.buf }
-    -- map('n', '<ESC>', rvim.toggle_notepad, keymaps_opts)
-    map('n', 'q', rvim.toggle_notepad, keymaps_opts)
+    -- map('n', '<ESC>', rvim.notepad.toggle, keymaps_opts)
+    map('n', 'q', rvim.notepad.toggle, keymaps_opts)
   else
     api.nvim_win_hide(rvim.notepad.win)
   end
@@ -47,5 +52,5 @@ function rvim.toggle_notepad()
 end
 
 -- Creates an autocommand to launch the notepad
-rvim.command('Notepad', rvim.toggle_notepad, { nargs = 0 })
-map('n', '<localleader>no', rvim.toggle_notepad, { desc = 'toggle notepad' })
+rvim.command('Notepad', rvim.notepad.toggle, { nargs = 0 })
+map('n', '<localleader>no', rvim.notepad.toggle, { desc = 'toggle notepad' })
