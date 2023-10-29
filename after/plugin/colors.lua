@@ -133,13 +133,6 @@ local function colorscheme_overrides()
       { NeorgContext = { inherit = 'Normal' } },
       -- { ['@variable'] = { fg = { from = '@none' } } },
       { dmapWin = { inherit = 'Normal' } },
-      {
-        Folded = {
-          bold = false,
-          italic = false,
-          bg = { from = 'CursorLine', alter = -0.15 },
-        },
-      },
     },
   }
   local hls = overrides[vim.g.colors_name]
