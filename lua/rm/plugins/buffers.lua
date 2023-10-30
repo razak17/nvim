@@ -27,7 +27,7 @@ return {
     keys = { { '<leader>c', '<Cmd>BDelete this<CR>', desc = 'buffer delete' } },
   },
   {
-    'Pheon-Dev/buffalo-nvim',
+    'razak17/buffalo-nvim',
     keys = {
       {
         '<M-Space>',
@@ -52,6 +52,7 @@ return {
     config = function(_, _opts)
       rvim.highlight.plugin('buffalo', {
         { BuffaloBorder = { inherit = 'FloatBorder' } },
+        { BuffaloTitle = { inherit = 'FloatTitle' } },
       })
       require('buffalo').setup(_opts)
       local opts = { noremap = true }
