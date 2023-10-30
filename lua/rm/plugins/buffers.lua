@@ -49,12 +49,8 @@ return {
         filter_buffers = '<M-z>',
       },
     },
-    config = function(_, opts)
-      rvim.highlight.plugin('buffalo', {
-        { BuffaloBorder = { inherit = 'FloatBorder' } },
-        { BuffaloTitle = { inherit = 'FloatTitle' } },
-      })
-      require('buffalo').setup(opts)
+    config = function(_, _opts)
+      require('buffalo').setup(_opts)
       local opts = { noremap = true }
       local bui = require('buffalo.ui')
       map('n', '<s-l>', bui.nav_buf_next, opts)
@@ -130,7 +126,7 @@ return {
             -- this is a diffview tab, disable creating new windows
             -- (which would be the default behavior of handle_foreign_buffer)
             return {
-              handle_foreign_buffer = function(bufnr) end,
+              handle_foreign_buffer = function(buf) end,
             }
           end
           return require('stickybuf').should_auto_pin(bufnr)
