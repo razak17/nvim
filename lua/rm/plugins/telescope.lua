@@ -230,6 +230,14 @@ return {
       { '<leader>fk', smart_open, desc = 'smart open' },
       { '<leader>fp', projects, desc = 'projects' },
       { '<leader>fP', plugins, desc = 'plugins' },
+      {
+        '<leader>fq',
+        function()
+          b('quickfix')()
+          vim.cmd(':cclose')
+        end,
+        desc = 'quickfix list',
+      },
       { '<leader>fr', b('resume'), desc = 'resume last picker' },
       -- { '<leader>fs', live_grep, desc = 'find string' },
       { '<leader>fu', undo, desc = 'undo' },
