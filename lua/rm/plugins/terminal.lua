@@ -7,7 +7,7 @@ return {
     event = 'VeryLazy',
     opts = {
       open_mapping = [[<c-\>]],
-      shade_filetypes = { 'none' },
+      -- shade_filetypes = { 'none' },
       direction = 'float',
       autochdir = true,
       persist_mode = true,

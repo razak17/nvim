@@ -8,10 +8,10 @@ local fzf_lua = reqcall('fzf-lua') ---@module 'fzf-lua'
 --------------------------------------------------------------------------------
 local function format_title(str, icon, icon_hl)
   return {
-    { ' ' },
+    { ' ', 'FloatTitle' },
     { (icon and icon .. ' ' or ''), icon_hl or 'DevIconDefault' },
-    { str, 'Bold' },
-    { ' ' },
+    { str, 'FloatTitle' },
+    { ' ', 'FloatTitle' },
   }
 end
 
@@ -105,7 +105,6 @@ return {
   {
     'ibhagwan/fzf-lua',
     cmd = 'FzfLua',
-    dependencies = { 'nvim-tree/nvim-web-devicons' },
     keys = {
       -- { '<c-p>', git_files_cwd_aware, desc = 'find files' },
       -- { '<leader>f?', fzf_lua.help_tags, desc = 'help' },
@@ -156,19 +155,19 @@ return {
           ['--ellipsis'] = ui.icons.misc.ellipsis,
         },
         fzf_colors = {
-          ['fg'] = { 'fg', 'CursorLine' },
-          ['bg'] = { 'bg', 'Normal' },
-          ['hl'] = { 'fg', 'Comment' },
-          ['fg+'] = { 'fg', 'Normal' },
-          ['bg+'] = { 'bg', 'CursorLine' },
-          ['hl+'] = { 'fg', 'CursorLineNr', 'italic' },
-          ['info'] = { 'fg', 'Comment', 'italic' },
+          ['fg'] = { 'fg', 'FzfLuaCursorLine' },
+          ['bg'] = { 'bg', 'FzfLuaNormal' },
+          ['hl'] = { 'fg', 'CursorLineNr' },
+          ['fg+'] = { 'fg', 'FzfLuaNormal' },
+          ['bg+'] = { 'bg', 'FzfLuaCursorLine' },
+          ['hl+'] = { 'fg', 'FzfLuaCursorLineNr', 'italic' },
+          ['info'] = { 'fg', 'CursorLineNr', 'italic' },
           ['prompt'] = { 'fg', 'Underlined' },
           ['pointer'] = { 'fg', 'Exception' },
           ['marker'] = { 'fg', '@character' },
           ['spinner'] = { 'fg', 'DiagnosticOk' },
           ['header'] = { 'fg', 'Comment' },
-          ['gutter'] = { 'bg', 'Normal' },
+          ['gutter'] = { 'bg', 'FzfLuaNormal' },
           ['separator'] = { 'fg', 'Comment' },
         },
         previewers = {
@@ -176,7 +175,10 @@ return {
         },
         winopts = {
           border = ui.border.rectangle,
-          hl = { border = 'PickerBorder', preview_border = 'PickerBorder' },
+          hl = {
+            border = 'PickerBorder',
+            preview_border = 'FzfLuaPreviewBorder',
+          },
         },
         keymap = {
           builtin = {
@@ -294,5 +296,6 @@ return {
 
       rvim.command('SessionList', list_sessions)
     end,
+    dependencies = { 'razak17/lspkind.nvim', 'nvim-tree/nvim-web-devicons' },
   },
 }
