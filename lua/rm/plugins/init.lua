@@ -1543,6 +1543,7 @@ return {
   -- https://github.com/AntonVanAssche/md-headers.nvim
   {
     'AntonVanAssche/md-headers.nvim',
+    cond = rvim.treesitter.enable,
     ft = 'markdown',
     cmd = { 'MarkdownHeaders', 'MarkdownHeadersClosest' },
     dependencies = { 'nvim-lua/plenary.nvim' },
