@@ -197,6 +197,10 @@ return {
           prompt = prompt,
           winopts = { title = format_title('Highlights') },
         },
+        files = {
+          prompt = prompt,
+          winopts = { title = format_title('Files', '') },
+        },
         helptags = {
           prompt = prompt,
           winopts = { title = format_title('Help', '󰋖') },
@@ -204,9 +208,6 @@ return {
         oldfiles = dropdown({
           cwd_only = true,
           winopts = { title = format_title('History', '') },
-        }),
-        files = dropdown({
-          winopts = { title = format_title('Files', '') },
         }),
         buffers = dropdown({
           fzf_opts = { ['--delimiter'] = "' '", ['--with-nth'] = '-1..' },
