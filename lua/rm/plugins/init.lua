@@ -865,7 +865,7 @@ return {
     },
     opts = {},
     config = function(_, opts)
-      highlight.plugin('lab', {
+      highlight.plugin('sniprun', {
         theme = {
           ['onedark'] = {
             { SniprunVirtualTextOk = { link = 'DiagnosticVirtualTextInfo' } },
@@ -1540,8 +1540,9 @@ return {
       width = 120,
     },
   },
+  -- https://github.com/AntonVanAssche/md-headers.nvim
   {
-    'razak17/md-headers.nvim',
+    'AntonVanAssche/md-headers.nvim',
     ft = 'markdown',
     cmd = { 'MarkdownHeaders', 'MarkdownHeadersClosest' },
     dependencies = { 'nvim-lua/plenary.nvim' },
@@ -1558,6 +1559,13 @@ return {
       },
     },
     opts = { borderchars = ui.border.common },
+    config = function(_, opts)
+      highlight.plugin('md-headers', {
+        { MarkdownHeadersBorder = { inherit = 'FloatBorder' } },
+        { MarkdownHeadersTitle = { inherit = 'FloatTitle' } },
+      })
+      require('md-headers').setup(opts)
+    end,
   },
   {
     'iamcco/markdown-preview.nvim',
@@ -1679,7 +1687,7 @@ return {
     ft = { 'csv', 'tsv', 'sqlite' },
     opts = {},
     config = function(_, opts)
-      highlight.plugin('lab', {
+      highlight.plugin('data-viewer', {
         theme = {
           ['onedark'] = {
             { DataViewerColumn0 = { link = 'Keyword' } },

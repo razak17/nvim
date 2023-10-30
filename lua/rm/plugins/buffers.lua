@@ -49,12 +49,12 @@ return {
         filter_buffers = '<M-z>',
       },
     },
-    config = function(_, _opts)
+    config = function(_, opts)
       rvim.highlight.plugin('buffalo', {
         { BuffaloBorder = { inherit = 'FloatBorder' } },
         { BuffaloTitle = { inherit = 'FloatTitle' } },
       })
-      require('buffalo').setup(_opts)
+      require('buffalo').setup(opts)
       local opts = { noremap = true }
       local bui = require('buffalo.ui')
       map('n', '<s-l>', bui.nav_buf_next, opts)
