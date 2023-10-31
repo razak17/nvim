@@ -1,0 +1,69 @@
+local border = rvim.ui.current.border
+
+return {
+  'stevearc/dressing.nvim',
+  cond = not rvim.plugins.minimal,
+  event = 'BufRead',
+  init = function()
+    ---@diagnostic disable-next-line: duplicate-set-field
+    vim.ui.select = function(...)
+      require('lazy').load({ plugins = { 'dressing.nvim' } })
+      return vim.ui.select(...)
+    end
+  end,
+  opts = {
+    input = { insert_only = false, border = border },
+    select = {
+      builtin = {
+        border = border,
+        min_height = 10,
+        win_options = { winblend = 10 },
+        mappings = { n = { ['q'] = 'Close' } },
+      },
+      get_config = function(opts)
+        opts.prompt = opts.prompt and opts.prompt:gsub(':', '')
+        if opts.kind == 'codeaction' then
+          return {
+            backend = 'fzf_lua',
+            fzf_lua = rvim.fzf.cursor_dropdown({
+              winopts = { title = opts.prompt },
+            }),
+          }
+        end
+        return {
+          backend = 'fzf_lua',
+          fzf_lua = rvim.fzf.dropdown({
+            winopts = { title = opts.prompt, height = 0.33, row = 0.5 },
+          }),
+        }
+      end,
+      nui = {
+        min_height = 10,
+        win_options = {
+          winhighlight = table.concat({
+            'Normal:Italic',
+            'FloatBorder:PickerBorder',
+            'FloatTitle:Title',
+            'CursorLine:Visual',
+          }, ','),
+        },
+      },
+    },
+  },
+  config = function(_, opts)
+    require('dressing').setup(opts)
+    map('n', 'z=', function()
+      local word = vim.fn.expand('<cword>')
+      local suggestions = vim.fn.spellsuggest(word)
+      vim.ui.select(
+        suggestions,
+        {},
+        vim.schedule_wrap(function(selected)
+          if selected then
+            vim.cmd.normal({ args = { 'ciw' .. selected }, bang = true })
+          end
+        end)
+      )
+    end)
+  end,
+}
