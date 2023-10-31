@@ -30,7 +30,6 @@ return {
     'rebelot/heirline.nvim',
     priority = 500,
     lazy = false,
-    cond = not rvim.plugins.minimal,
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = function()
       -- local statuscolumn = require('rm.statuscolumn')

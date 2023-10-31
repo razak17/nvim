@@ -330,10 +330,10 @@ return {
       'saadparwaiz1/cmp_luasnip',
       { 'Gelio/cmp-natdat', opts = {} },
       { 'js-everts/cmp-tailwind-colors', opts = {} },
-      { 'hrsh7th/cmp-nvim-lsp', cond = rvim.lsp.enable },
+      { 'hrsh7th/cmp-nvim-lsp' },
       { 'amarakon/nvim-cmp-buffer-lines', ft = { 'c', 'cpp' } },
       { 'hrsh7th/cmp-cmdline', config = function() vim.o.wildmode = '' end },
-      { 'hrsh7th/cmp-nvim-lsp-document-symbol', cond = rvim.lsp.enable },
+      { 'hrsh7th/cmp-nvim-lsp-document-symbol' },
       { 'jsongerber/nvim-px-to-rem', ft = { 'css', 'scss' }, opts = {} },
       {
         'uga-rosa/cmp-dictionary',
@@ -353,7 +353,6 @@ return {
       },
       {
         'zbirenbaum/copilot-cmp',
-        cond = rvim.ai.enable and not rvim.plugins.minimal,
         opts = {},
         dependencies = 'copilot.lua',
       },
@@ -361,7 +360,6 @@ return {
   },
   {
     'zbirenbaum/copilot.lua',
-    cond = rvim.ai.enable and not rvim.plugins.minimal,
     event = 'InsertEnter',
     keys = {
       {

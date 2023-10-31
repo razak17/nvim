@@ -4,7 +4,6 @@ local fmt = string.format
 return {
   {
     'chrisgrieser/nvim-early-retirement',
-    cond = not rvim.plugins.minimal and false,
     event = 'VeryLazy',
     opts = {
       minimumBufferNum = 4,
@@ -14,7 +13,6 @@ return {
   {
 
     'razak17/cybu.nvim',
-    cond = not rvim.plugins.minimal,
     event = { 'BufRead', 'BufNewFile' },
     opts = {
       position = { relative_to = 'win', anchor = 'topright' },

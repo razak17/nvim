@@ -2,8 +2,6 @@ local fn, L = vim.fn, vim.log.levels
 
 return {
   'folke/noice.nvim',
-  cond = not rvim.plugins.minimal
-    and not rvim.find_string(rvim.plugins.disabled, 'noice.nvim'),
   event = 'VeryLazy',
   dependencies = { 'MunifTanjim/nui.nvim' },
   opts = {

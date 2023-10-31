@@ -2,7 +2,6 @@ local fmt = string.format
 
 return {
   'goolord/alpha-nvim',
-  cond = not rvim.plugins.minimal,
   event = 'VimEnter',
   keys = { { '<leader>;', '<cmd>Alpha<CR>', desc = 'alpha' } },
   config = function()

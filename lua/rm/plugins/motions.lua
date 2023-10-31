@@ -144,7 +144,6 @@ return {
   },
   {
     'chrisgrieser/nvim-spider',
-    cond = not rvim.plugins.minimal,
     event = { 'BufRead', 'BufNewFile' },
     keys = {
       {

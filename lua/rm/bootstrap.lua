@@ -45,9 +45,8 @@ end
 vim.opt.rtp:prepend(lazy_path)
 require('lazy').setup({
   spec = {
-    {
-      import = plugins_enabled and 'rm.plugins' or nil,
-    },
+    require('rm.flex'),
+    { import = 'rm.plugins' },
   },
   defaults = { lazy = true },
   change_detection = { notify = false },
@@ -67,31 +66,13 @@ require('lazy').setup({
   performance = {
     rtp = {
       paths = { join_paths(data, 'site'), join_paths(data, 'site', 'after') },
-      disabled_plugins = plugins_enabled and {
-        '2html_plugin',
-        'gzip',
-        'matchit',
-        'rrhelper',
-        'netrw',
-        'netrwPlugin',
-        'netrwSettings',
-        'netrwFileHandlers',
-        'zip',
-        'zipPlugin',
-        'tar',
-        'tarPlugin',
-        'getscript',
-        'getscriptPlugin',
-        'vimball',
-        'vimballPlugin',
-        'logipat',
-        'spellfile_plugin',
+      -- stylua: ignore
+      disabled_plugins = plugins_enabled and { '2html_plugin', 'gzip', 'matchit',
+        'rrhelper', 'netrw', 'netrwPlugin', 'netrwSettings', 'netrwFileHandlers',
+        'zip', 'zipPlugin', 'tar', 'tarPlugin', 'getscript', 'getscriptPlugin',
+        'vimball', 'vimballPlugin', 'logipat', 'spellfile_plugin'
       } or {},
     },
   },
 })
 map('n', '<localleader>L', '<cmd>Lazy<CR>', { desc = 'toggle lazy ui' })
---------------------------------------------------------------------------------
--- Color Scheme
---------------------------------------------------------------------------------
-if not plugins_enabled then rvim.load_colorscheme('habamax') end

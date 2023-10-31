@@ -102,7 +102,6 @@ return {
   },
   {
     'lukas-reineke/headlines.nvim',
-    cond = rvim.treesitter.enable,
     ft = { 'org', 'norg', 'markdown', 'yaml' },
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
     opts = {

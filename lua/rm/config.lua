@@ -26,7 +26,7 @@ local namespace = {
   none = env.RVIM_NONE == '1',
   plugins = {
     enable = env.RVIM_PLUGINS_ENABLED == '1',
-    disabled = {},
+    disabled = require('rm.plugin_config'),
     minimal = env.RVIM_PLUGINS_MINIMAL == '1',
     overrides = {
       ghost_text = { enable = env.RVIM_GHOST_ENABLED == '1' },

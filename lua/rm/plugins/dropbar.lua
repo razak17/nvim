@@ -5,7 +5,6 @@ local border = ui.current.border
 return {
   'Bekaboo/dropbar.nvim',
   event = { 'BufRead', 'BufNewFile' },
-  cond = rvim.treesitter.enable,
   keys = {
     {
       '<leader>wp',

@@ -1,7 +1,7 @@
 if
   not rvim
   or rvim.none
-  or rvim.plugins.disabled
+  or not rvim.plugins.enable
   or rvim.plugins.minimal
   or not rvim.ui.statuscolumn.enable
 then

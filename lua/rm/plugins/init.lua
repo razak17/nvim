@@ -11,7 +11,6 @@ return {
   'nvim-tree/nvim-web-devicons',
   {
     'olimorris/persisted.nvim',
-    cond = not rvim.plugins.minimal,
     lazy = false,
     init = function() rvim.command('ListSessions', 'Telescope persisted') end,
     opts = {
@@ -77,7 +76,6 @@ return {
     },
     {
       'williamboman/mason-lspconfig.nvim',
-      cond = rvim.lsp.enable,
       event = { 'BufReadPre', 'BufNewFile' },
       opts = {
         automatic_installation = true,
@@ -103,14 +101,12 @@ return {
         'mason.nvim',
         {
           'neovim/nvim-lspconfig',
-          cond = rvim.lsp.enable,
           config = function()
             require('lspconfig.ui.windows').default_options.border = border
           end,
           dependencies = {
             {
               'folke/neodev.nvim',
-              cond = rvim.lsp.enable,
               ft = 'lua',
               opts = {
                 debug = true,
@@ -130,7 +126,6 @@ return {
             },
             {
               'folke/neoconf.nvim',
-              cond = rvim.lsp.enable,
               cmd = { 'Neoconf' },
               opts = {
                 local_settings = '.nvim.json',
@@ -144,7 +139,6 @@ return {
   },
   {
     'glepnir/lspsaga.nvim',
-    cond = rvim.lsp.enable,
     event = 'LspAttach',
     opts = {
       ui = { border = border },
@@ -200,13 +194,11 @@ return {
   },
   {
     'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
-    cond = rvim.lsp.enable,
     event = 'LspAttach',
     config = function() require('lsp_lines').setup() end,
   },
   {
     'kosayoda/nvim-lightbulb',
-    cond = rvim.lsp.enable and false,
     event = 'LspAttach',
     opts = {
       autocmd = { enabled = true },
@@ -225,7 +217,6 @@ return {
   },
   {
     'dgagn/diagflow.nvim',
-    cond = rvim.lsp.enable,
     event = 'LspAttach',
     opts = {
       padding_top = 2,
@@ -234,13 +225,11 @@ return {
   },
   {
     'doums/dmap.nvim',
-    cond = rvim.lsp.enable,
     -- event = 'LspAttach',
     opts = { win_h_offset = 6 },
   },
   {
     'stevearc/aerial.nvim',
-    cond = not rvim.plugins.minimal and rvim.treesitter.enable,
     opts = {
       lazy_load = false,
       backends = {
@@ -362,7 +351,6 @@ return {
   },
   {
     'luckasRanarison/clear-action.nvim',
-    cond = rvim.lsp.enable,
     event = 'LspAttach',
     opts = {
       signs = {
@@ -412,7 +400,6 @@ return {
   },
   {
     'hinell/lsp-timeout.nvim',
-    cond = rvim.lsp.enable and false,
     event = 'LspAttach',
     init = function()
       vim.g['lsp-timeout-config'] = {
@@ -425,7 +412,6 @@ return {
   },
   {
     'Wansmer/symbol-usage.nvim',
-    cond = rvim.lsp.enable,
     event = 'LspAttach',
     config = function()
       highlight.plugin('symbol-usage', {
@@ -534,14 +520,7 @@ return {
   { 'will133/vim-dirdiff', cmd = 'DirDiff' },
   { 'godlygeek/tabular', cmd = { 'Tabularize' } },
   {
-    'kevinhwang91/nvim-fundo',
-    event = { 'BufRead', 'BufNewFile' },
-    build = function() require('fundo').install() end,
-    dependencies = { 'kevinhwang91/promise-async' },
-  },
-  {
     'smoka7/multicursors.nvim',
-    cond = not rvim.plugins.minimal and rvim.treesitter.enable,
     event = 'VeryLazy',
     dependencies = { 'nvim-treesitter/nvim-treesitter', 'smoka7/hydra.nvim' },
     opts = {
@@ -564,6 +543,123 @@ return {
       },
     },
   },
+  {
+    'AndrewRadev/linediff.vim',
+    cmd = 'Linediff',
+    keys = {
+      { '<localleader>lL', '<cmd>Linediff<CR>', desc = 'linediff: toggle' },
+    },
+  },
+  {
+    'willothy/flatten.nvim',
+    lazy = false,
+    cond = false,
+    priority = 1001,
+    opts = {
+      window = { open = 'tab' },
+      block_for = {
+        gitcommit = true,
+        gitrebase = true,
+      },
+      post_open = function(bufnr, winnr, _, is_blocking)
+        vim.w[winnr].is_remote = true
+        if is_blocking then
+          vim.bo.bufhidden = 'wipe'
+          vim.api.nvim_create_autocmd('BufHidden', {
+            desc = 'Close window when buffer is hidden',
+            callback = function()
+              if vim.api.nvim_win_is_valid(winnr) then
+                vim.api.nvim_win_close(winnr, true)
+              end
+            end,
+            buffer = bufnr,
+            once = true,
+          })
+        end
+      end,
+    },
+  },
+  {
+    'ahmedkhalf/project.nvim',
+    event = 'VimEnter',
+    name = 'project_nvim',
+    opts = {
+      detection_methods = { 'pattern', 'lsp' },
+      ignore_lsp = { 'null-ls' },
+      patterns = { '.git' },
+    },
+  },
+  {
+    'jpalardy/vim-slime',
+    event = 'VeryLazy',
+    keys = {
+      {
+        '<localleader>st',
+        '<Plug>SlimeParagraphSend',
+        desc = 'slime: paragraph',
+      },
+      {
+        '<localleader>st',
+        '<Plug>SlimeRegionSend',
+        mode = { 'x' },
+        desc = 'slime: region',
+      },
+      { '<localleader>sc', '<Plug>SlimeConfig', desc = 'slime: config' },
+    },
+    config = function()
+      vim.g.slime_target = 'tmux'
+      vim.g.slime_paste_file = vim.fn.stdpath('data') .. '/.slime_paste'
+      vim.g.alime_no_mappings = 1
+    end,
+  },
+  -- File Operations
+  --------------------------------------------------------------------------------
+  {
+    'chrisgrieser/nvim-genghis',
+    dependencies = 'stevearc/dressing.nvim',
+    event = { 'BufReadPost', 'BufNewFile' },
+    config = function()
+      local g = require('genghis')
+      map(
+        'n',
+        '<localleader>fp',
+        g.copyFilepath,
+        { desc = 'genghis: yank filepath' }
+      )
+      map(
+        'n',
+        '<localleader>fn',
+        g.copyFilename,
+        { desc = 'genghis: yank filename' }
+      )
+      map(
+        'n',
+        '<localleader>fr',
+        g.renameFile,
+        { desc = 'genghis: rename file' }
+      )
+      map(
+        'n',
+        '<localleader>fm',
+        g.moveAndRenameFile,
+        { desc = 'genghis: move and rename' }
+      )
+      map(
+        'n',
+        '<localleader>fc',
+        g.createNewFile,
+        { desc = 'genghis: create new file' }
+      )
+      map(
+        'n',
+        '<localleader>fd',
+        g.duplicateFile,
+        { desc = 'genghis: duplicate current file' }
+      )
+    end,
+  },
+  -- Enhanced Code Navigation
+  --------------------------------------------------------------------------------
   {
     'folke/flash.nvim',
     opts = {
@@ -600,9 +696,10 @@ return {
       },
     },
   },
+  -- Pretty Print
+  --------------------------------------------------------------------------------
   {
     'andrewferrier/debugprint.nvim',
-    cond = rvim.treesitter.enable,
     keys = {
       {
         '<leader>pp',
@@ -680,6 +777,8 @@ return {
     },
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
   },
+  -- Fold
+  --------------------------------------------------------------------------------
   {
     'chrisgrieser/nvim-origami',
     event = 'BufReadPost',
@@ -688,13 +787,8 @@ return {
     },
     opts = { setupFoldKeymaps = false },
   },
-  {
-    'AndrewRadev/linediff.vim',
-    cmd = 'Linediff',
-    keys = {
-      { '<localleader>lL', '<cmd>Linediff<CR>', desc = 'linediff: toggle' },
-    },
-  },
+  -- Scroll
+  --------------------------------------------------------------------------------
   {
     'karb94/neoscroll.nvim',
     event = 'BufRead',
@@ -703,6 +797,8 @@ return {
       hide_cursor = true,
     },
   },
+  -- Undo
+  --------------------------------------------------------------------------------
   {
     'mbbill/undotree',
     cmd = 'UndotreeToggle',
@@ -716,34 +812,13 @@ return {
     end,
   },
   {
-    'willothy/flatten.nvim',
-    lazy = false,
-    cond = false,
-    priority = 1001,
-    opts = {
-      window = { open = 'tab' },
-      block_for = {
-        gitcommit = true,
-        gitrebase = true,
-      },
-      post_open = function(bufnr, winnr, _, is_blocking)
-        vim.w[winnr].is_remote = true
-        if is_blocking then
-          vim.bo.bufhidden = 'wipe'
-          vim.api.nvim_create_autocmd('BufHidden', {
-            desc = 'Close window when buffer is hidden',
-            callback = function()
-              if vim.api.nvim_win_is_valid(winnr) then
-                vim.api.nvim_win_close(winnr, true)
-              end
-            end,
-            buffer = bufnr,
-            once = true,
-          })
-        end
-      end,
-    },
+    'kevinhwang91/nvim-fundo',
+    event = { 'BufRead', 'BufNewFile' },
+    build = function() require('fundo').install() end,
+    dependencies = { 'kevinhwang91/promise-async' },
   },
+  -- Execute Commands
+  --------------------------------------------------------------------------------
   {
     'google/executor.nvim',
     keys = {
@@ -792,61 +867,8 @@ return {
       },
     },
   },
-  {
-    'ahmedkhalf/project.nvim',
-    cond = not rvim.plugins.minimal,
-    event = 'VimEnter',
-    name = 'project_nvim',
-    opts = {
-      detection_methods = { 'pattern', 'lsp' },
-      ignore_lsp = { 'null-ls' },
-      patterns = { '.git' },
-    },
-  },
-  {
-    'chrisgrieser/nvim-genghis',
-    dependencies = 'stevearc/dressing.nvim',
-    event = { 'BufReadPost', 'BufNewFile' },
-    config = function()
-      local g = require('genghis')
-      map(
-        'n',
-        '<localleader>fp',
-        g.copyFilepath,
-        { desc = 'genghis: yank filepath' }
-      )
-      map(
-        'n',
-        '<localleader>fn',
-        g.copyFilename,
-        { desc = 'genghis: yank filename' }
-      )
-      map(
-        'n',
-        '<localleader>fr',
-        g.renameFile,
-        { desc = 'genghis: rename file' }
-      )
-      map(
-        'n',
-        '<localleader>fm',
-        g.moveAndRenameFile,
-        { desc = 'genghis: move and rename' }
-      )
-      map(
-        'n',
-        '<localleader>fc',
-        g.createNewFile,
-        { desc = 'genghis: create new file' }
-      )
-      map(
-        'n',
-        '<localleader>fd',
-        g.duplicateFile,
-        { desc = 'genghis: duplicate current file' }
-      )
-    end,
-  },
+  -- Run code snippets
+  --------------------------------------------------------------------------------
   {
     'michaelb/sniprun',
     build = 'sh install.sh',
@@ -878,37 +900,17 @@ return {
       require('sniprun').setup(opts)
     end,
   },
+  -- Find and Replace
+  --------------------------------------------------------------------------------
   {
     'AckslD/muren.nvim',
     cmd = { 'MurenToggle', 'MurenUnique', 'MurenFresh' },
     opts = {},
   },
-  {
-    'jpalardy/vim-slime',
-    event = 'VeryLazy',
-    keys = {
-      {
-        '<localleader>st',
-        '<Plug>SlimeParagraphSend',
-        desc = 'slime: paragraph',
-      },
-      {
-        '<localleader>st',
-        '<Plug>SlimeRegionSend',
-        mode = { 'x' },
-        desc = 'slime: region',
-      },
-      { '<localleader>sc', '<Plug>SlimeConfig', desc = 'slime: config' },
-    },
-    config = function()
-      vim.g.slime_target = 'tmux'
-      vim.g.slime_paste_file = vim.fn.stdpath('data') .. '/.slime_paste'
-      vim.g.alime_no_mappings = 1
-    end,
-  },
+  -- Docs
+  --------------------------------------------------------------------------------
   {
     'luckasRanarison/nvim-devdocs',
-    cond = not rvim.plugins.minimal,
     dependencies = {
       'nvim-lua/plenary.nvim',
       'nvim-telescope/telescope.nvim',
@@ -955,6 +957,8 @@ return {
       wrap = true,
     },
   },
+  -- Database
+  --------------------------------------------------------------------------------
   {
     'kristijanhusak/vim-dadbod-ui',
     dependencies = {
@@ -983,6 +987,8 @@ return {
       vim.g.db_ui_debug = 1
     end,
   },
+  -- Nerd Fonts
+  --------------------------------------------------------------------------------
   {
     '2kabhishek/nerdy.nvim',
     dependencies = {
@@ -1024,7 +1030,6 @@ return {
   },
   {
     'razak17/lab.nvim',
-    cond = not rvim.plugins.minimal,
     keys = {
       { '<leader>rl', ':Lab code run<CR>', desc = 'lab: run' },
       { '<leader>rx', ':Lab code stop<CR>', desc = 'lab: stop' },
@@ -1162,21 +1167,61 @@ return {
   { 'razak17/slides.nvim', ft = 'slide' },
   { 'fladson/vim-kitty', ft = 'kitty' },
   { 'raimon49/requirements.txt.vim', lazy = false },
-  { 'gennaro-tedesco/nvim-jqx', ft = { 'json', 'yaml' } },
-  -- Web Dev (Typescript)
+  -- JSON
   --------------------------------------------------------------------------------
+  { 'gennaro-tedesco/nvim-jqx', ft = { 'json', 'yaml' } },
   {
-    'dmmulroy/tsc.nvim',
-    cond = rvim.lsp.enable,
-    cmd = 'TSC',
-    opts = {},
-    ft = { 'typescript', 'typescriptreact' },
+    'razak17/package-info.nvim',
+    event = 'BufRead package.json',
+    dependencies = { 'MunifTanjim/nui.nvim' },
+    config = function()
+      highlight.plugin('package-info', {
+        theme = {
+          ['onedark'] = {
+            {
+              PackageInfoUpToDateVersion = {
+                link = 'DiagnosticVirtualTextInfo',
+              },
+            },
+            {
+              PackageInfoOutdatedVersion = {
+                link = 'DiagnosticVirtualTextWarn',
+              },
+            },
+          },
+        },
+      })
+      require('package-info').setup({
+        autostart = false,
+        hide_up_to_date = true,
+      })
+    end,
   },
+  {
+    'NTBBloodbath/rest.nvim',
+    ft = { 'http', 'json' },
+    keys = {
+      { '<localleader>rs', '<Plug>RestNvim', desc = 'rest: run', buffer = 0 },
+      {
+        '<localleader>rp',
+        '<Plug>RestNvimPreview',
+        desc = 'rest: preview',
+        buffer = 0,
+      },
+      {
+        '<localleader>rl',
+        '<Plug>RestNvimLast',
+        desc = 'rest: run last',
+        buffer = 0,
+      },
+    },
+    opts = { skip_ssl_verification = true },
+  },
+  -- JS / TS
+  --------------------------------------------------------------------------------
   {
     'pmizio/typescript-tools.nvim',
     event = { 'BufReadPre', 'BufNewFile' },
-    cond = rvim.lsp.enable
-      and not rvim.find_string(rvim.plugins.disabled, 'typescript-tools.nvim'),
     dependencies = {
       'nvim-lua/plenary.nvim',
       'neovim/nvim-lspconfig',
@@ -1247,48 +1292,23 @@ return {
     },
   },
   {
-    'razak17/package-info.nvim',
-    cond = not rvim.plugins.minimal,
-    event = 'BufRead package.json',
-    dependencies = { 'MunifTanjim/nui.nvim' },
-    config = function()
-      highlight.plugin('package-info', {
-        theme = {
-          ['onedark'] = {
-            {
-              PackageInfoUpToDateVersion = {
-                link = 'DiagnosticVirtualTextInfo',
-              },
-            },
-            {
-              PackageInfoOutdatedVersion = {
-                link = 'DiagnosticVirtualTextWarn',
-              },
-            },
-          },
-        },
-      })
-      require('package-info').setup({
-        autostart = false,
-        hide_up_to_date = true,
-      })
-    end,
+    'dmmulroy/tsc.nvim',
+    cmd = 'TSC',
+    opts = {},
+    ft = { 'typescript', 'typescriptreact' },
   },
   {
     'bennypowers/template-literal-comments.nvim',
-    cond = rvim.treesitter.enable,
     ft = { 'javascript', 'typescript' },
     opts = {},
   },
   {
     'llllvvuu/nvim-js-actions',
-    cond = rvim.treesitter.enable,
     ft = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
   },
   {
     'axelvc/template-string.nvim',
-    cond = rvim.treesitter.enable,
     event = 'BufRead',
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
     ft = {
@@ -1300,32 +1320,12 @@ return {
     },
     opts = { remove_template_string = true },
   },
+  -- HTML
+  --------------------------------------------------------------------------------
   {
     'turbio/bracey.vim',
-    cond = not rvim.plugins.minimal,
     ft = 'html',
     build = 'npm install --prefix server',
-  },
-  {
-    'NTBBloodbath/rest.nvim',
-    cond = not rvim.plugins.minimal,
-    ft = { 'http', 'json' },
-    keys = {
-      { '<localleader>rs', '<Plug>RestNvim', desc = 'rest: run', buffer = 0 },
-      {
-        '<localleader>rp',
-        '<Plug>RestNvimPreview',
-        desc = 'rest: preview',
-        buffer = 0,
-      },
-      {
-        '<localleader>rl',
-        '<Plug>RestNvimLast',
-        desc = 'rest: run last',
-        buffer = 0,
-      },
-    },
-    opts = { skip_ssl_verification = true },
   },
   -- Tailwind
   --------------------------------------------------------------------------------
@@ -1338,7 +1338,6 @@ return {
   },
   {
     'MaximilianLloyd/tw-values.nvim',
-    cond = rvim.treesitter.enable and rvim.lsp.enable,
     keys = {
       {
         '<localleader>lt',
@@ -1353,8 +1352,6 @@ return {
   {
     'simrat39/rust-tools.nvim',
     event = { 'BufReadPre', 'BufNewFile' },
-    cond = rvim.lsp.enable
-      and not rvim.find_string(rvim.plugins.disabled, 'rust-tools.nvim'),
     dependencies = { 'neovim/nvim-lspconfig' },
     config = function()
       local rt = require('rust-tools')
@@ -1491,7 +1488,6 @@ return {
   },
   {
     'Saecki/crates.nvim',
-    cond = not rvim.plugins.minimal,
     event = 'BufRead Cargo.toml',
     opts = {
       popup = { autofocus = true, border = border },
@@ -1502,7 +1498,6 @@ return {
   --------------------------------------------------------------------------------
   {
     'roobert/f-string-toggle.nvim',
-    cond = rvim.treesitter.enable,
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
     ft = { 'python' },
     opts = {},
@@ -1521,7 +1516,6 @@ return {
   --------------------------------------------------------------------------------
   {
     'olexsmir/gopher.nvim',
-    cond = rvim.lsp.enable and not rvim.plugins.minimal,
     ft = 'go',
     dependencies = {
       'nvim-lua/plenary.nvim',
@@ -1532,7 +1526,6 @@ return {
   --------------------------------------------------------------------------------
   {
     'ellisonleao/glow.nvim',
-    cond = not rvim.plugins.minimal,
     cmd = 'Glow',
     ft = 'markdown',
     opts = {
@@ -1543,7 +1536,6 @@ return {
   -- https://github.com/AntonVanAssche/md-headers.nvim
   {
     'AntonVanAssche/md-headers.nvim',
-    cond = rvim.treesitter.enable,
     ft = 'markdown',
     cmd = { 'MarkdownHeaders', 'MarkdownHeadersClosest' },
     dependencies = { 'nvim-lua/plenary.nvim' },
@@ -1570,7 +1562,6 @@ return {
   },
   {
     'iamcco/markdown-preview.nvim',
-    cond = not rvim.plugins.minimal,
     build = function() fn['mkdp#util#install']() end,
     ft = 'markdown',
     config = function()
@@ -1707,7 +1698,6 @@ return {
   ------------------------------------------------------------------------------
   {
     'psliwka/vim-dirtytalk',
-    cond = not rvim.plugins.minimal,
     lazy = false,
     build = ':DirtytalkUpdate',
     init = function() vim.opt.spelllang:append('programming') end,

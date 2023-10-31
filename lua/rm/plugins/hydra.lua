@@ -1,6 +1,5 @@
 return {
   'smoka7/hydra.nvim',
-  cond = not rvim.plugins.minimal,
   event = 'VeryLazy',
   config = function()
     local Hydra = require('hydra')

@@ -11,7 +11,6 @@ return {
   },
   {
     'tomiis4/BufferTabs.nvim',
-    cond = not rvim.plugins.minimal and false,
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     event = 'VeryLazy',
     keys = {
@@ -38,7 +37,6 @@ return {
   },
   {
     'lukas-reineke/virt-column.nvim',
-    cond = not rvim.plugins.minimal and false,
     event = { 'BufRead', 'BufNewFile' },
     opts = {
       char = separators.right_thin_block,
@@ -47,7 +45,6 @@ return {
   },
   {
     'razak17/smartcolumn.nvim',
-    cond = not rvim.plugins.minimal,
     event = { 'BufRead', 'BufNewFile' },
     opts = {
       colorcolumn = '0',
@@ -56,7 +53,6 @@ return {
   },
   {
     'utilyre/sentiment.nvim',
-    cond = not rvim.plugins.minimal,
     event = { 'BufRead', 'BufNewFile' },
     opts = {
       excluded_filetypes = {
@@ -66,19 +62,16 @@ return {
   },
   {
     'aaron-p1/match-visual.nvim',
-    cond = not rvim.plugins.minimal,
     event = { 'BufRead', 'BufNewFile' },
     opts = {},
   },
   {
     'tzachar/local-highlight.nvim',
-    cond = not rvim.plugins.minimal,
     event = { 'BufRead', 'BufNewFile' },
     opts = { hlgroup = 'Search' },
   },
   {
     'whatyouhide/vim-lengthmatters',
-    cond = not rvim.plugins.minimal and false,
     lazy = false,
     config = function()
       vim.g.lengthmatters_highlight_one_column = 1
@@ -93,7 +86,6 @@ return {
   },
   {
     'folke/twilight.nvim',
-    cond = rvim.treesitter.enable,
     cmd = 'Twilight',
     opts = {
       context = 40,
@@ -156,7 +148,6 @@ return {
   },
   {
     'tamton-aquib/zone.nvim',
-    cond = not rvim.plugins.minimal and false,
     event = 'VeryLazy',
     opts = {
       style = 'epilepsy',
@@ -168,13 +159,11 @@ return {
   },
   {
     'tamton-aquib/flirt.nvim',
-    cond = not rvim.plugins.minimal and false,
     event = 'VeryLazy',
     opts = {},
   },
   {
     'tzachar/highlight-undo.nvim',
-    cond = not rvim.plugins.minimal,
     event = 'BufRead',
     opts = {
       undo = { hlgroup = 'Search' },
@@ -197,7 +186,6 @@ return {
   },
   {
     'kevinhwang91/nvim-hlslens',
-    cond = not rvim.plugins.minimal,
     lazy = false,
     keys = {
       {
@@ -253,7 +241,6 @@ return {
   },
   {
     'folke/todo-comments.nvim',
-    cond = rvim.treesitter.enable,
     event = 'BufReadPre',
     cmd = { 'TodoTelescope', 'TodoTrouble', 'TodoQuickFix', 'TodoDots' },
     keys = {
@@ -318,7 +305,6 @@ return {
   },
   {
     'shellRaining/hlchunk.nvim',
-    cond = not rvim.plugins.minimal and false,
     event = 'BufRead',
     config = function()
       require('hlchunk').setup({
@@ -350,7 +336,6 @@ return {
   },
   {
     'LudoPinelli/comment-box.nvim',
-    cond = not rvim.plugins.minimal,
     config = function(_, opts) require('comment-box').setup(opts) end,
     keys = {
       {

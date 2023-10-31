@@ -2,7 +2,6 @@ local border = rvim.ui.current.border
 
 return {
   'stevearc/dressing.nvim',
-  cond = not rvim.plugins.minimal,
   event = 'BufRead',
   init = function()
     ---@diagnostic disable-next-line: duplicate-set-field

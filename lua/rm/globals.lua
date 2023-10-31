@@ -42,6 +42,13 @@ function rvim.remove_duplicates(table)
     :totable()
 end
 
+function rvim.smart_extend(list, new)
+  for _, v in ipairs(new) do
+    if rvim.falsy(rvim.find_string(list, v)) then
+      vim.list_extend(list, { v })
+    end
+  end
+end
 function rvim.mergeTables(destination, source)
   for k, v in pairs(source) do
     if type(v) == 'table' and type(v[1]) == 'string' then

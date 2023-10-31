@@ -2,7 +2,6 @@ local highlight = rvim.highlight
 
 return {
   'kevinhwang91/nvim-ufo',
-  cond = rvim.treesitter.enable and false,
   event = 'VeryLazy',
   config = function()
     highlight.plugin('ufo', {

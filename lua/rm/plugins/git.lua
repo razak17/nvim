@@ -2,13 +2,11 @@ local cwd = vim.fn.getcwd()
 local icons = rvim.ui.icons
 local border = rvim.ui.current.border
 local left_block = icons.separators.left_block
-
-local enabled = not rvim.plugins.minimal and rvim.is_git_repo()
+local L = vim.lsp.log_levels
 
 return {
   {
     'NeogitOrg/neogit',
-    cond = enabled,
     cmd = 'Neogit',
     dependencies = { 'nvim-lua/plenary.nvim', 'sindrets/diffview.nvim' },
     keys = {
@@ -70,7 +68,6 @@ return {
   },
   {
     'sindrets/diffview.nvim',
-    cond = enabled,
     cmd = {
       'DiffviewOpen',
       'DiffviewFileHistory',
@@ -115,7 +112,6 @@ return {
   },
   {
     'lewis6991/gitsigns.nvim',
-    cond = enabled,
     event = { 'BufRead', 'BufNewFile' },
     opts = {
       signs = {
@@ -227,13 +223,12 @@ return {
   },
   {
     'almo7aya/openingh.nvim',
-    cond = enabled,
     keys = {
       {
         '<leader>gof',
         function()
           vim.cmd('OpenInGHFile')
-          vim.notify('opening file in github', 'info', { title = 'openingh' })
+          vim.notify('opening file in github', L.INFO, { title = 'openingh' })
         end,
         desc = 'openingh: open file',
       },
@@ -241,7 +236,7 @@ return {
         '<leader>gor',
         function()
           vim.cmd('OpenInGHRepo')
-          vim.notify('opening repo in github', 'info', { title = 'openingh' })
+          vim.notify('opening repo in github', L.INFO, { title = 'openingh' })
         end,
         desc = 'openingh: open repo',
       },
@@ -251,7 +246,7 @@ return {
           vim.cmd('OpenInGHFileLines')
           vim.notify(
             'opening file line in github',
-            'info',
+            L.INFO,
             { title = 'openingh' }
           )
         end,
@@ -281,7 +276,6 @@ return {
   },
   {
     'emmanueltouzery/agitator.nvim',
-    cond = enabled,
     keys = {
       {
         '<leader>gbo',
@@ -292,7 +286,6 @@ return {
   },
   {
     'akinsho/git-conflict.nvim',
-    cond = enabled,
     event = 'VeryLazy',
     opts = { disable_diagnostics = true },
     config = function(_, opts)
@@ -315,13 +308,11 @@ return {
   },
   {
     '2kabhishek/co-author.nvim',
-    cond = enabled,
     cmd = 'GitCoAuthors',
     dependencies = { 'stevearc/dressing.nvim' },
   },
   {
     'niuiic/git-log.nvim',
-    cond = enabled,
     keys = {
       {
         '<leader>gL',
@@ -334,7 +325,6 @@ return {
   },
   {
     'rbong/vim-flog',
-    cond = enabled,
     cmd = { 'Flog', 'Flogsplit', 'Floggit' },
     dependencies = {
       'tpope/vim-fugitive',
