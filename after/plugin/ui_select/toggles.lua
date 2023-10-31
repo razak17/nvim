@@ -1,4 +1,4 @@
-if not rvim then return end
+if not rvim or rvim.none then return end
 
 function rvim.mappings.notify(msg, type)
   vim.schedule(function() vim.notify(msg, type, { title = 'UI Toggles' }) end)

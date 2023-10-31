@@ -1,4 +1,5 @@
-if not rvim or rvim and rvim.none then return end
+if not rvim or rvim.none then return end
+
 local augroup, is_available, format_text =
   rvim.augroup, rvim.is_available, rvim.format_text
 

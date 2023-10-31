@@ -1,4 +1,4 @@
-if not rvim then return end
+if not rvim or rvim.none then return end
 
 local settings, highlight = rvim.filetype_settings, rvim.highlight
 local cmd, api, opt_l = vim.cmd, vim.api, vim.opt_local

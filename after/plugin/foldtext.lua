@@ -1,3 +1,5 @@
+if not rvim or rvim.none then return end
+
 local ts, api, opt = vim.treesitter, vim.api, vim.opt
 
 -- Copied from https://www.reddit.com/r/neovim/comments/16sqyjz/finally_we_can_have_highlighted_folds/

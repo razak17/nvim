@@ -1,4 +1,4 @@
-if not rvim or rvim and rvim.none then return end
+if not rvim or rvim.none then return end
 
 local fn, api, fmt = vim.fn, vim.api, string.format
 local is_available = rvim.is_available

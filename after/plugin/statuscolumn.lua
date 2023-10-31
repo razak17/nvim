@@ -1,6 +1,12 @@
-if not rvim or not rvim.ui.statuscolumn.enable then return end
-
-if rvim and rvim.none then return end
+if
+  not rvim
+  or rvim.none
+  or rvim.plugins.disabled
+  or rvim.plugins.minimal
+  or not rvim.ui.statuscolumn.enable
+then
+  return
+end
 
 local fn, v, api, opt, wo = vim.fn, vim.v, vim.api, vim.opt, vim.wo
 local ui = rvim.ui

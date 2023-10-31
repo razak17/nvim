@@ -1,4 +1,6 @@
-if not rvim or not rvim.plugins.enable or vim.env.TMUX == nil then return end
+if not rvim or rvim.none or not rvim.plugins.enable or vim.env.TMUX == nil then
+  return
+end
 
 local fn, fmt = vim.fn, string.format
 

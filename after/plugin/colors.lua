@@ -1,4 +1,4 @@
-if not rvim or rvim and rvim.none then return end
+if not rvim then return end
 
 local highlight = rvim.highlight
 

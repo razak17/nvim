@@ -1,4 +1,4 @@
-if rvim and rvim.none then return end
+if not rvim or rvim.none then return end
 
 ----------------------------------------------------------------------------------
 --  Whitespace highlighting

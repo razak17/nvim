@@ -1,4 +1,4 @@
-if not rvim then return end
+if not rvim or rvim.none then return end
 
 local function open_file_cur_dir(with_children)
   local folder = vim.fn.expand('%:h')

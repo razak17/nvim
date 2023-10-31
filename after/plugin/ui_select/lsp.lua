@@ -1,4 +1,6 @@
-if not rvim or not rvim.plugins.enable or not rvim.lsp.enable then return end
+if not rvim or rvim.none or not rvim.plugins.enable or not rvim.lsp.enable then
+  return
+end
 
 local function lsp_clients(bufnr) return vim.lsp.get_clients({ bufnr = bufnr }) end
 
