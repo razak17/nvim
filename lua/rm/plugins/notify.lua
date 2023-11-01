@@ -1,6 +1,6 @@
 local api = vim.api
 local ui = rvim.ui
-local codicons = ui.icons
+local codicons = ui.codicons
 
 return {
   'rcarriga/nvim-notify',
