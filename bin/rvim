@@ -8,14 +8,26 @@ export RVIM_PLUGINS_MINIMAL='0'
 export RVIM_NONE='0'
 export RVIM_GHOST_ENABLED='0'
 
+ui='nvim'
+
 launch_nvim() {
-	NVIM_APPNAME=rvim nvim "$@"
+	arg="$1"
+	shift
+	if [ "$arg" = "neovide" ]; then
+		NVIM_APPNAME=rvim neovide "$@"
+	elif [ "$arg" = "nvim" ]; then
+		NVIM_APPNAME=rvim nvim "$@"
+	fi
 }
 
 while [ "$#" -gt 0 ]; do
 	arg=$1
 
 	case "$arg" in
+	--neovide)
+		ui='neovide'
+		shift
+		;;
 	--no-plugins)
 		export RVIM_PLUGINS_ENABLED='0'
 		shift
@@ -48,7 +60,7 @@ while [ "$#" -gt 0 ]; do
 		;;
 
 	*)
-		launch_nvim "$@"
+		launch_nvim "$ui" "$@"
 		exit 0
 		;;
 	esac
@@ -56,7 +68,7 @@ done
 
 # ref: https://www.reddit.com/r/neovim/comments/15gihnd/neat_trick_for_restarting_neovim_fast_when_using/
 while true; do
-	launch_nvim "$@"
+	launch_nvim "$ui" "$@"
 	if [ $? -ne 1 ]; then
 		break
 	fi
