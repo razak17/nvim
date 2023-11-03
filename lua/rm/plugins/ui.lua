@@ -91,6 +91,13 @@ return {
     opts = { hlgroup = 'Search' },
   },
   {
+    'winston0410/range-highlight.nvim',
+    event = { 'BufRead', 'BufNewFile' },
+    cond = not rvim.plugins.minimal,
+    dependencies = { 'winston0410/cmd-parser.nvim' },
+    opts = {},
+  },
+  {
     'whatyouhide/vim-lengthmatters',
     cond = not rvim.plugins.minimal and false,
     lazy = false,
