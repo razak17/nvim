@@ -101,6 +101,7 @@ local function project_files()
   if not pcall(git_files, { show_untracked = true }) then find_files() end
 end
 
+local function egrepify() extensions('egrepify').egrepify() end
 local function frecency()
   extensions('frecency').frecency(dropdown(rvim.telescope.minimal_ui()))
 end
@@ -216,8 +217,9 @@ return {
         b('current_buffer_fuzzy_find'),
         desc = 'find in current buffer',
       },
-      { '<leader>fd', aerial, desc = 'aerial' },
       { '<leader>fc', nvim_config, desc = 'nvim config' },
+      { '<leader>fd', aerial, desc = 'aerial' },
+      { '<leader>fe', egrepify, desc = 'aerial' },
       -- { '<leader>ff', project_files, desc = 'project files' },
       { '<leader>fh', frecency, desc = 'Most (f)recently used files' },
       { '<leader>fi', import, desc = 'import' },
@@ -470,6 +472,10 @@ return {
     end,
     dependencies = {
       { 'biozz/whop.nvim', opts = {} },
+      {
+        'fdschmidt93/telescope-egrepify.nvim',
+        config = function() require('telescope').load_extension('egrepify') end,
+      },
       {
         'natecraddock/telescope-zf-native.nvim',
         config = function() require('telescope').load_extension('zf-native') end,
