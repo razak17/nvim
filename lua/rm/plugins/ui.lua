@@ -65,9 +65,9 @@ return {
     },
   },
   {
-    "HampusHauffman/block.nvim",
+    'HampusHauffman/block.nvim',
     cond = not rvim.plugins.minimal,
-    cmd = { "Block", "BlockOn", "BlockOff" },
+    cmd = { 'Block', 'BlockOn', 'BlockOff' },
     opts = {
       percent = 0.7,
       depth = 4,
@@ -76,7 +76,7 @@ return {
       --   "green",
       --   "yellow",
       -- },
-    }
+    },
   },
   {
     'aaron-p1/match-visual.nvim',
@@ -234,9 +234,22 @@ return {
     },
     config = function()
       highlight.plugin('nvim-hlslens', {
-        { HlSearchNear = { fg = { from = 'WildMenu' }, bg = 'NONE' } },
-        { HlSearchLens = { fg = { from = 'WildMenu' }, bg = 'NONE' } },
+        { HlSearchNear = { bg = { from = 'CursorLine' } } },
+        { HlSearchLens = { bg = { from = 'CursorLine' } } },
+        { HlSearchLensNear = { bg = { from = 'CursorLine' } } },
+        {
+          HlSearchLensSurround = {
+            fg = { from = 'CursorLine', attr = 'bg' },
+          },
+        },
+        {
+          HlSearchLensNearSurround = {
+            fg = { from = 'CursorLine', attr = 'bg' },
+          },
+        },
+        { HlSearchLensNearIcon = { fg = { from = 'Comment' } } },
       })
+
       require('hlslens').setup({
         nearest_float_when = false,
         override_lens = function(render, posList, nearest, idx, relIdx)
@@ -262,10 +275,22 @@ return {
             else
               text = ('[%d/%d]'):format(idx, cnt)
             end
-            chunks = { { ' ', 'Ignore' }, { text, 'HlSearchLensNear' } }
+            -- chunks = { { ' ', 'Ignore' }, { text, 'HlSearchLensNear' } }
+            chunks = {
+              { ' ', 'Ignore' },
+              { '', 'HlSearchLensNearSurround' },
+              { text, 'HlSearchLensNear' },
+              { ' ', 'HlSearchLensNearSurround' },
+            }
           else
             text = ('[%s %d]'):format(indicator, idx)
-            chunks = { { ' ', 'Ignore' }, { text, 'HlSearchLens' } }
+            -- chunks = { { ' ', 'Ignore' }, { text, 'HlSearchLens' } }
+            chunks = {
+              { ' ', 'Ignore' },
+              { '', 'HlSearchLensSurround' },
+              { text, 'HlSearchLens' },
+              { '', 'HlSearchLensSurround' },
+            }
           end
           render.setVirt(0, lnum - 1, col - 1, chunks, nearest)
         end,
