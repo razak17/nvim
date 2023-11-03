@@ -65,6 +65,20 @@ return {
     },
   },
   {
+    "HampusHauffman/block.nvim",
+    cond = not rvim.plugins.minimal,
+    cmd = { "Block", "BlockOn", "BlockOff" },
+    opts = {
+      percent = 0.7,
+      depth = 4,
+      -- colors = {
+      --   "red",
+      --   "green",
+      --   "yellow",
+      -- },
+    }
+  },
+  {
     'aaron-p1/match-visual.nvim',
     cond = not rvim.plugins.minimal,
     event = { 'BufRead', 'BufNewFile' },
