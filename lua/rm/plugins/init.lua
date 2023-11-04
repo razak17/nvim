@@ -1118,6 +1118,15 @@ return {
       })
     end,
   },
+  {
+    'coffebar/crowtranslate.nvim',
+    cmd = { 'CrowTranslate' },
+    opts = {
+      language = 'es',
+      default = 'en',
+      engine = 'google',
+    },
+  },
   -- Games
   --------------------------------------------------------------------------------
   {
