@@ -582,7 +582,6 @@ return {
     condition = function()
       return conditions.lsp_attached and not rvim.lsp.null_ls.enable
     end,
-    update = { 'LspAttach', 'LspDetach', 'WinEnter' },
     init = function(self)
       local curwin = api.nvim_get_current_win()
       local curbuf = api.nvim_win_get_buf(curwin)
@@ -605,6 +604,7 @@ return {
       self.formatters = get_formatters(curbuf)
     end,
     {
+      update = { 'LspAttach', 'LspDetach', 'WinEnter' },
       init = function(self)
         if self.active then
           local lsp_servers = vim.tbl_map(
@@ -630,6 +630,7 @@ return {
       hl = { fg = fg, bg = bg, bold = true },
     },
     {
+      update = { 'LspAttach', 'LspDetach', 'WinEnter' },
       condition = function(self) return self.active end,
       provider = function(self)
         if not rvim.falsy(self.linters) then return ' ' .. self.linters end
@@ -637,6 +638,7 @@ return {
       hl = { fg = fg, bg = bg, bold = true },
     },
     {
+      update = { 'LspAttach', 'LspDetach', 'WinEnter' },
       condition = function(self) return self.active end,
       provider = function(self)
         if not rvim.falsy(self.formatters) then
@@ -665,10 +667,12 @@ return {
       provider = function(self)
         if self.copilot == nil then return fmt(' inactive %s', separator) end
         if
-          self.copilot.requests ~= nil
-          and vim.tbl_isempty(self.copilot.requests)
+          vim.tbl_isempty(self.copilot.requests)
+          or self.copilot.requests.type == 'pending'
         then
           return fmt(' idle %s', separator)
+        elseif self.copilot.requests.type == 'cancel' then
+          return fmt(' working %s', separator)
         end
         return fmt(' working %s', separator)
       end,
