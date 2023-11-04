@@ -102,9 +102,9 @@ return {
             rvim.is_available('copilot-cmp') and require(
               'copilot_cmp.comparators'
             ).prioritize or nil,
+            cmp.config.compare.recently_used,
             cmp.config.compare.locality,
             cmp.config.compare.offset,
-            cmp.config.compare.recently_used,
             cmp.config.compare.exact,
             cmp.config.compare.score,
             cmp.config.compare.kind,
@@ -334,7 +334,11 @@ return {
       { 'amarakon/nvim-cmp-buffer-lines', ft = { 'c', 'cpp' } },
       { 'hrsh7th/cmp-cmdline', config = function() vim.o.wildmode = '' end },
       { 'hrsh7th/cmp-nvim-lsp-document-symbol', cond = rvim.lsp.enable },
-      { 'jsongerber/nvim-px-to-rem', ft = { 'css', 'scss' }, opts = {} },
+      {
+        'jsongerber/nvim-px-to-rem',
+        ft = { 'css', 'scss' },
+        opts = { disable_keymaps = true },
+      },
       {
         'uga-rosa/cmp-dictionary',
         cond = not rvim.plugins.minimal,
