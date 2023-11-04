@@ -37,34 +37,41 @@ return {
           },
         },
         textobjects = {
-          lookahead = true,
           select = {
             enable = true,
+            lookahead = true,
             include_surrounding_whitespace = true,
+            -- stylua: ignore
             keymaps = {
-              ['af'] = { query = '@function.outer', desc = 'ts: all function' },
-              ['if'] = {
-                query = '@function.inner',
-                desc = 'ts: inner function',
-              },
-              ['ac'] = { query = '@class.outer', desc = 'ts: all class' },
-              ['ic'] = { query = '@class.inner', desc = 'ts: inner class' },
-              ['aC'] = {
-                query = '@conditional.outer',
-                desc = 'ts: all conditional',
-              },
-              ['iC'] = {
-                query = '@conditional.inner',
-                desc = 'ts: inner conditional',
-              },
-              ['aH'] = {
-                query = '@assignment.lhs',
-                desc = 'ts: assignment lhs',
-              },
-              ['aL'] = {
-                query = '@assignment.rhs',
-                desc = 'ts: assignment rhs',
-              },
+              -- You can use the capture groups defined in textobjects.scm
+              ["a="] = { query = "@assignment.outer", desc = "Select outer part of an assignment" },
+              ["i="] = { query = "@assignment.inner", desc = "Select inner part of an assignment" },
+              ["l="] = { query = "@assignment.lhs", desc = "Select left hand side of an assignment" },
+              ["r="] = { query = "@assignment.rhs", desc = "Select right hand side of an assignment" },
+
+              -- works for javascript/typescript files (custom capture I created in after/queries/ecma/textobjects.scm)
+              ["a:"] = { query = "@property.outer", desc = "Select outer part of an object property" },
+              ["i:"] = { query = "@property.inner", desc = "Select inner part of an object property" },
+              ["l:"] = { query = "@property.lhs", desc = "Select left part of an object property" },
+              ["r:"] = { query = "@property.rhs", desc = "Select right part of an object property" },
+
+              ["aa"] = { query = "@parameter.outer", desc = "Select outer part of a parameter/argument" },
+              ["ia"] = { query = "@parameter.inner", desc = "Select inner part of a parameter/argument" },
+
+              ["ai"] = { query = "@conditional.outer", desc = "Select outer part of a conditional" },
+              ["ii"] = { query = "@conditional.inner", desc = "Select inner part of a conditional" },
+
+              ["al"] = { query = "@loop.outer", desc = "Select outer part of a loop" },
+              ["il"] = { query = "@loop.inner", desc = "Select inner part of a loop" },
+
+              ["af"] = { query = "@call.outer", desc = "Select outer part of a function call" },
+              ["if"] = { query = "@call.inner", desc = "Select inner part of a function call" },
+
+              ["am"] = { query = "@function.outer", desc = "Select outer part of a method/function definition" },
+              ["im"] = { query = "@function.inner", desc = "Select inner part of a method/function definition" },
+
+              ["ac"] = { query = "@class.outer", desc = "Select outer part of a class" },
+              ["ic"] = { query = "@class.inner", desc = "Select inner part of a class" },
             },
           },
           move = {
