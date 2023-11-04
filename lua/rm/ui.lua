@@ -38,6 +38,7 @@ rvim.ui.icons = {
     left_thin_block = '▏',
     right_thin_block = '▕',
     dotted_thin_block = '',
+    dotted_block = '┊',
     left_block = '▎',
     middle_block = '│',
     right_bold_block = '🮉',

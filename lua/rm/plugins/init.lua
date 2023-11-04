@@ -144,7 +144,7 @@ return {
   },
   {
     'glepnir/lspsaga.nvim',
-    cond = rvim.lsp.enable,
+    cond = rvim.lsp.enable and false,
     event = 'LspAttach',
     opts = {
       ui = { border = border },
@@ -200,7 +200,7 @@ return {
   },
   {
     'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
-    cond = rvim.lsp.enable,
+    cond = rvim.lsp.enable and false,
     event = 'LspAttach',
     config = function() require('lsp_lines').setup() end,
   },
@@ -225,7 +225,7 @@ return {
   },
   {
     'dgagn/diagflow.nvim',
-    cond = rvim.lsp.enable,
+    cond = rvim.lsp.enable and false,
     event = 'LspAttach',
     opts = {
       padding_top = 2,
@@ -324,7 +324,8 @@ return {
   },
   {
     'roobert/action-hints.nvim',
-    cond = false,
+    -- cond = false,
+    cond = rvim.lsp.enable and false,
     event = 'LspAttach',
     config = function()
       require('action-hints').setup({
@@ -338,6 +339,7 @@ return {
   },
   {
     'aznhe21/actions-preview.nvim',
+    cond = rvim.lsp.enable and false,
     opts = {},
     config = function()
       require('actions-preview').setup({
@@ -346,6 +348,7 @@ return {
     end,
   },
   {
+    cond = rvim.lsp.enable and false,
     'chrisgrieser/nvim-rulebook',
     keys = {
       {
@@ -362,7 +365,7 @@ return {
   },
   {
     'luckasRanarison/clear-action.nvim',
-    cond = rvim.lsp.enable,
+    cond = rvim.lsp.enable and false,
     event = 'LspAttach',
     opts = {
       signs = {
@@ -425,7 +428,7 @@ return {
   },
   {
     'Wansmer/symbol-usage.nvim',
-    cond = rvim.lsp.enable,
+    cond = rvim.lsp.enable and false,
     event = 'LspAttach',
     config = function()
       highlight.plugin('symbol-usage', {
@@ -960,6 +963,10 @@ return {
     dependencies = {
       'tpope/vim-dadbod',
       'kristijanhusak/vim-dadbod-completion',
+      {
+        'kristijanhusak/vim-dadbod-completion',
+        ft = { 'sql', 'mysql', 'plsql' },
+      },
     },
     keys = {
       { '<leader>dt', '<Cmd>DBUIToggle<CR>', desc = 'dadbod: toggle' },
@@ -981,6 +988,25 @@ return {
     config = function()
       vim.g.db_ui_notification_width = 1
       vim.g.db_ui_debug = 1
+      vim.g.db_ui_save_location = join_paths(vim.fn.stdpath('data'), 'db_ui')
+
+      rvim.augroup('dad-bod', {
+        event = { 'FileType' },
+        pattern = { 'sql' },
+        command = [[setlocal omnifunc=vim_dadbod_completion#omni]],
+      }, {
+        event = { 'FileType' },
+        pattern = { 'sql', 'mysql', 'plsql' },
+        command = function()
+          vim.schedule(
+            function()
+              require('cmp').setup.buffer({
+                sources = { { name = 'vim-dadbod-completion' } },
+              })
+            end
+          )
+        end,
+      })
     end,
   },
   {

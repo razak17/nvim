@@ -336,8 +336,6 @@ return {
     'rbong/vim-flog',
     cond = enabled,
     cmd = { 'Flog', 'Flogsplit', 'Floggit' },
-    dependencies = {
-      'tpope/vim-fugitive',
-    },
+    dependencies = { 'tpope/vim-fugitive' },
   },
 }
