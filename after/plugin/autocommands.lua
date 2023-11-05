@@ -486,3 +486,10 @@ augroup('MiniIndentscopeDisable', {
     .. "|| index(['nofile', 'terminal'], &bt) >= 0 "
     .. '| let b:miniindentscope_disable=v:true | endif',
 })
+
+-- auto-delete fugitive buffers
+augroup('Fugitive', {
+  event = 'BufReadPost',
+  pattern = 'fugitive://*',
+  command = 'set bufhidden=delete',
+})
