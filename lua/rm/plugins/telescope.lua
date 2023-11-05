@@ -1,4 +1,4 @@
-local api = vim.api
+local api, env, fn = vim.api, vim.env, vim.fn
 local fmt, ui = string.format, rvim.ui
 local border = ui.border
 local data = vim.fn.stdpath('data')
@@ -76,7 +76,7 @@ local function git_files(opts) return extensions('menufacture').git_files(opts) 
 local function nvim_config()
   find_files({
     prompt_title = '~ rVim config ~',
-    cwd = vim.fn.stdpath('config'),
+    cwd = fn.stdpath('config'),
     file_ignore_patterns = { '.git/.*', 'dotbot/.*', 'zsh/plugins/.*' },
   })
 end
@@ -84,7 +84,7 @@ end
 local function notes()
   find_files({
     prompt_title = '~ Obsidian ~',
-    cwd = vim.env.HOME .. '/Sync/notes/obsidian',
+    cwd = env.HOME .. '/Sync/notes/obsidian',
     file_ignore_patterns = { '.git/.*', 'dotbot/.*', 'zsh/plugins/.*' },
   })
 end
@@ -92,7 +92,7 @@ end
 local function plugins()
   find_files({
     prompt_title = '~ Plugins ~',
-    cwd = vim.fn.stdpath('data') .. '/lazy',
+    cwd = fn.stdpath('data') .. '/lazy',
     file_ignore_patterns = { '.git/.*', 'dotbot/.*', 'zsh/plugins/.*' },
   })
 end
@@ -102,6 +102,7 @@ local function project_files()
 end
 
 local function egrepify() extensions('egrepify').egrepify() end
+local function helpgrep() extensions('helpgrep').helpgrep() end
 local function frecency()
   extensions('frecency').frecency(dropdown(rvim.telescope.minimal_ui()))
 end
@@ -222,6 +223,7 @@ return {
       { '<leader>fe', egrepify, desc = 'aerial' },
       -- { '<leader>ff', project_files, desc = 'project files' },
       -- { '<leader>fh', frecency, desc = 'Most (f)recently used files' },
+      { '<leader>fH', helpgrep, desc = 'helpgrep' },
       { '<leader>fi', import, desc = 'import' },
       { '<leader>fj', whop, desc = 'whop' },
       { '<leader>fl', lazy, desc = 'surf plugins' },
@@ -243,7 +245,7 @@ return {
       { '<leader>fr', b('resume'), desc = 'resume last picker' },
       -- { '<leader>fs', live_grep, desc = 'find string' },
       { '<leader>fu', undo, desc = 'undo' },
-      { '<leader>fH', harpoon, desc = 'harpoon' },
+      { '<leader>fm', harpoon, desc = 'harpoon' },
       { '<leader>ft', textcase, desc = 'textcase', mode = { 'n', 'v' } },
       { '<leader>fw', b('grep_string'), desc = 'find word' },
       { '<leader>fva', b('autocommands'), desc = 'autocommands' },
@@ -315,7 +317,7 @@ return {
           },
           sorting_strategy = 'ascending',
           layout_strategy = 'flex',
-          set_env = { ['TERM'] = vim.env.TERM },
+          set_env = { ['TERM'] = env.TERM },
           borderchars = border.common,
           file_browser = { hidden = true },
           color_devicons = true,
@@ -403,6 +405,7 @@ return {
             },
           }),
           live_grep = themes.get_ivy({
+            layout_config = { height = 0.8 },
             borderchars = { preview = border.ivy },
             file_ignore_patterns = {
               '%.svg',
@@ -427,7 +430,7 @@ return {
               '*vendor/*',
             },
             workspaces = {
-              conf = vim.env.DOTFILES,
+              conf = env.DOTFILES,
               project = vim.g.projects_dir,
             },
           },
@@ -442,6 +445,11 @@ return {
           },
           menufacture = {
             mappings = { main_menu = { [{ 'i', 'n' }] = '<C-;>' } },
+          },
+          helpgrep = {
+            ignore_paths = {
+              fn.stdpath('state') .. '/lazy/readme',
+            },
           },
         },
       })
@@ -500,6 +508,10 @@ return {
       {
         'razak17/telescope-import.nvim',
         config = function() require('telescope').load_extension('import') end,
+      },
+      {
+        'catgoose/telescope-helpgrep.nvim',
+        config = function() require('telescope').load_extension('helpgrep') end,
       },
       {
         'tsakirist/telescope-lazy.nvim',
