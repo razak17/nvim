@@ -200,7 +200,7 @@ return {
   },
   {
     'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
-    cond = rvim.lsp.enable and false,
+    cond = rvim.lsp.enable,
     event = 'LspAttach',
     config = function() require('lsp_lines').setup() end,
   },
@@ -225,7 +225,7 @@ return {
   },
   {
     'dgagn/diagflow.nvim',
-    cond = rvim.lsp.enable and false,
+    cond = rvim.lsp.enable,
     event = 'LspAttach',
     opts = {
       padding_top = 2,
@@ -325,7 +325,7 @@ return {
   {
     'roobert/action-hints.nvim',
     -- cond = false,
-    cond = rvim.lsp.enable and false,
+    cond = rvim.lsp.enable,
     event = 'LspAttach',
     config = function()
       require('action-hints').setup({
@@ -339,7 +339,7 @@ return {
   },
   {
     'aznhe21/actions-preview.nvim',
-    cond = rvim.lsp.enable and false,
+    cond = rvim.lsp.enable,
     opts = {},
     config = function()
       require('actions-preview').setup({
@@ -348,8 +348,8 @@ return {
     end,
   },
   {
-    cond = rvim.lsp.enable and false,
     'chrisgrieser/nvim-rulebook',
+    cond = rvim.lsp.enable,
     keys = {
       {
         '<localleader>lri',
@@ -365,7 +365,7 @@ return {
   },
   {
     'luckasRanarison/clear-action.nvim',
-    cond = rvim.lsp.enable and false,
+    cond = rvim.lsp.enable,
     event = 'LspAttach',
     opts = {
       signs = {
@@ -428,7 +428,7 @@ return {
   },
   {
     'Wansmer/symbol-usage.nvim',
-    cond = rvim.lsp.enable and false,
+    cond = rvim.lsp.enable,
     event = 'LspAttach',
     config = function()
       highlight.plugin('symbol-usage', {
@@ -673,10 +673,10 @@ return {
     opts = { create_keymaps = false },
     config = function(opts)
       local svelte = {
-          left = 'console.log("',
-          right = '")',
-          mid_var = '", ',
-          right_var = ')',
+        left = 'console.log("',
+        right = '")',
+        mid_var = '", ',
+        right_var = ')',
       }
       local python = {
         left = 'print(f"',
