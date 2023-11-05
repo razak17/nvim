@@ -251,11 +251,12 @@ augroup('Utilities', {
   end,
 }, {
   event = 'FileType',
-  command = function()
-    vim.opt_local.formatoptions:remove('c')
-    vim.opt_local.formatoptions:remove('r')
-    vim.opt_local.formatoptions:remove('o')
-  end,
+  -- command = function()
+  --   vim.opt_local.formatoptions:remove('c')
+  --   vim.opt_local.formatoptions:remove('r')
+  --   vim.opt_local.formatoptions:remove('o')
+  -- end,
+  command = 'setlocal formatoptions-=o',
 }, {
   event = { 'BufEnter' },
   command = function(args)
