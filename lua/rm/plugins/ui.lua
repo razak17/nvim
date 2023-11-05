@@ -1,6 +1,5 @@
-local api = vim.api
 local ui, highlight = rvim.ui, rvim.highlight
-local icons, codicons = ui.icons, ui.codicons
+local icons = ui.icons
 local border, separators = ui.current.border, ui.icons.separators
 
 return {

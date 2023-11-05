@@ -197,12 +197,27 @@ return {
           prompt = prompt,
           winopts = { title = format_title('Highlights') },
         },
+        actions = {
+          files = {
+            ['default'] = fzf.actions.file_edit_or_qf,
+            ['ctrl-l'] = fzf.actions.arg_add,
+            ['ctrl-s'] = fzf.actions.file_split,
+            ['ctrl-v'] = fzf.actions.file_vsplit,
+            ['ctrl-t'] = fzf.actions.file_tabedit,
+            ['ctrl-q'] = fzf.actions.file_sel_to_qf,
+            ['alt-q'] = fzf.actions.file_sel_to_ll,
+          },
+        },
         files = {
           prompt = prompt,
           -- find_opts = [[-type f -not -path '*/\.git/*' '*/\node_modules/*' -printf '%P\n']],
           -- rg_opts = "--color=never --files --hidden --follow -g '!.git' -g '!node_modules'",
           fd_opts = "--color=never --type f --hidden --follow --exclude '.git' --exclude 'node_modules'",
           winopts = { title = format_title('Files', '') },
+          fzf_opts = {
+            ['--tiebreak'] = 'end',
+            ['--no-separator'] = false,
+          },
         },
         helptags = {
           prompt = prompt,
@@ -215,6 +230,7 @@ return {
         buffers = dropdown({
           fzf_opts = { ['--delimiter'] = "' '", ['--with-nth'] = '-1..' },
           winopts = { title = format_title('Buffers', '󰈙') },
+          no_action_zz = true,
         }),
         keymaps = dropdown({
           winopts = { title = format_title('Keymaps', ''), width = 0.7 },
@@ -225,8 +241,18 @@ return {
         grep = {
           prompt = ' ',
           winopts = { title = format_title('Grep', '󰈭') },
+          -- fzf_opts = {
+          --   ['--keep-right'] = '',
+          -- },
+          debug = false,
+          rg_glob = true,
+          rg_opts = '--hidden --column --line-number --no-heading'
+            .. " --color=always --smart-case -g '!.git' -e",
           fzf_opts = {
-            ['--keep-right'] = '',
+            ['--no-separator'] = false,
+            ['--history'] = vim.fn.shellescape(
+              vim.fn.stdpath('data') .. '/fzf_search_hist'
+            ),
           },
         },
         lsp = {
