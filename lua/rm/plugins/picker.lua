@@ -9,7 +9,7 @@ local fzf_lua = reqcall('fzf-lua') ---@module 'fzf-lua'
 local function format_title(str, icon, icon_hl)
   return {
     { ' ', 'FloatTitle' },
-    { (icon and icon .. ' ' or ''), icon_hl or 'DevIconDefault' },
+    { (icon and icon .. ' ' or ''), icon_hl or 'FloatTitle' },
     { str, 'FloatTitle' },
     { ' ', 'FloatTitle' },
   }
@@ -199,6 +199,9 @@ return {
         },
         files = {
           prompt = prompt,
+          -- find_opts = [[-type f -not -path '*/\.git/*' '*/\node_modules/*' -printf '%P\n']],
+          -- rg_opts = "--color=never --files --hidden --follow -g '!.git' -g '!node_modules'",
+          fd_opts = "--color=never --type f --hidden --follow --exclude '.git' --exclude 'node_modules'",
           winopts = { title = format_title('Files', '') },
         },
         helptags = {
