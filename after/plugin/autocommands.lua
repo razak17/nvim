@@ -477,3 +477,12 @@ end
 if is_available('glow.nvim') then
   float_resize_autocmd('GlowResize', 'glowpreview', 'Glow')
 end
+
+-- disable mini.indentscope for certain filetype|buftype
+augroup('MiniIndentscopeDisable', {
+  event = { 'FileType', 'BufEnter' },
+  pattern = '*',
+  command = "if index(['fzf', 'help'], &ft) >= 0 "
+    .. "|| index(['nofile', 'terminal'], &bt) >= 0 "
+    .. '| let b:miniindentscope_disable=v:true | endif',
+})
