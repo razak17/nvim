@@ -758,7 +758,7 @@ return {
     },
   },
   {
-    'google/executor.nvim',
+    'razak17/executor.nvim',
     keys = {
       { '<localleader>xc', '<cmd>ExecutorRun<CR>', desc = 'executor: start' },
       {
