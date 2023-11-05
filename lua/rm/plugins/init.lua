@@ -534,7 +534,7 @@ return {
   ------------------------------------------------------------------------------
   { 'sQVe/sort.nvim', cmd = { 'Sort' } },
   { 'lambdalisue/suda.vim', lazy = false },
-  { 'will133/vim-dirdiff', cmd = 'DirDiff' },
+  { 'will133/vim-dirdiff', cmd = { 'DirDiff' } },
   { 'godlygeek/tabular', cmd = { 'Tabularize' } },
   {
     'kevinhwang91/nvim-fundo',
@@ -670,17 +670,27 @@ return {
         desc = 'debugprint: clear all',
       },
     },
-    opts = {
-      create_keymaps = false,
-      filetypes = {
-        svelte = {
+    opts = { create_keymaps = false },
+    config = function(opts)
+      local svelte = {
           left = 'console.log("',
           right = '")',
           mid_var = '", ',
           right_var = ')',
-        },
-      },
-    },
+      }
+      local python = {
+        left = 'print(f"',
+        right = '"',
+        mid_var = '{',
+        right_var = '}"',
+      }
+
+      require('debugprint').setup(opts)
+      require('debugprint').add_custom_filetypes({
+        python = python,
+        svelte = svelte,
+      })
+    end,
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
   },
   {
