@@ -234,7 +234,7 @@ return {
   },
   {
     'doums/dmap.nvim',
-    cond = rvim.lsp.enable,
+    cond = rvim.lsp.enable and false,
     -- event = 'LspAttach',
     opts = { win_h_offset = 6 },
   },
@@ -324,8 +324,7 @@ return {
   },
   {
     'roobert/action-hints.nvim',
-    -- cond = false,
-    cond = rvim.lsp.enable,
+    cond = rvim.lsp.enable and false,
     event = 'LspAttach',
     config = function()
       require('action-hints').setup({
