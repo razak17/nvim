@@ -55,7 +55,7 @@ dap.configurations.python = {
       for _, dir in ipairs(dirs) do
         if fn.executable(join_paths(cwd, dir, 'bin', 'python')) == 1 then
           return join_paths(cwd, dir, 'bin', 'python')
-      end
+        end
       end
       return debugpy_path
     end,
