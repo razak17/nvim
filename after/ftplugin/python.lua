@@ -1,6 +1,6 @@
 if rvim and rvim.none then return end
 
-local bo, opt = vim.bo, vim.opt_local
+local bo, opt, fn = vim.bo, vim.opt_local, vim.fn
 
 bo.tabstop = 4
 bo.softtabstop = 4
@@ -50,13 +50,12 @@ dap.configurations.python = {
     name = 'Launch file',
     program = '${file}',
     pythonPath = function()
-      local fn = vim.fn
       local cwd = fn.getcwd()
-      if fn.executable(join_paths(cwd, 'venv', 'bin', 'python')) == 1 then
-        return join_paths(cwd, '/venv', 'bin', 'python')
+      local dirs = { 'venv', '.venv', 'env', '.env' }
+      for _, dir in ipairs(dirs) do
+        if fn.executable(join_paths(cwd, dir, 'bin', 'python')) == 1 then
+          return join_paths(cwd, dir, 'bin', 'python')
       end
-      if fn.executable(join_paths(cwd, '.venv', 'bin', 'python')) == 1 then
-        return join_paths(cwd, '.venv', 'bin', 'python')
       end
       return debugpy_path
     end,
