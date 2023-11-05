@@ -64,8 +64,8 @@ return {
         border = {
           style = 'single',
           padding = {
-            top = 1,
-            bottom = 1,
+            top = 0,
+            bottom = 0,
             left = 1,
             right = 1,
           },
@@ -77,8 +77,8 @@ return {
         border = {
           style = 'single',
           padding = {
-            top = 1,
-            bottom = 1,
+            top = 0,
+            bottom = 0,
             left = 1,
             right = 1,
           },
@@ -88,8 +88,8 @@ return {
         border = {
           style = 'single',
           padding = {
-            top = 1,
-            bottom = 1,
+            top = 0,
+            bottom = 0,
             left = 1,
             right = 1,
           },
@@ -103,8 +103,8 @@ return {
         border = {
           style = 'single',
           padding = {
-            top = 1,
-            bottom = 1,
+            top = 0,
+            bottom = 0,
             left = 1,
             right = 1,
           },
