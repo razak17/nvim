@@ -213,6 +213,7 @@ return {
     opts = {
       preview = {
         border = { '┌', '─', '┐', '│', '┘', '─', '└', '│' },
+        winblend = 0,
       },
     },
   },
