@@ -228,6 +228,13 @@ return {
     cond = rvim.lsp.enable,
     event = 'LspAttach',
     opts = {
+      format = function(diagnostic)
+        local disabled = { 'lazy' }
+        for _, v in ipairs(disabled) do
+          if vim.bo.ft == v then return '' end
+        end
+        return diagnostic.message
+      end,
       padding_top = 2,
       toggle_event = { 'InsertEnter' },
     },
@@ -235,7 +242,7 @@ return {
   {
     'doums/dmap.nvim',
     cond = rvim.lsp.enable and false,
-    -- event = 'LspAttach',
+    event = 'LspAttach',
     opts = { win_h_offset = 6 },
   },
   {
