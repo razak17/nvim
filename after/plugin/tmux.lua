@@ -9,6 +9,7 @@ local ignored = {
   'buffer_manager',
   'harpoon',
   'buffalo',
+  'fzf',
   '',
 }
 
