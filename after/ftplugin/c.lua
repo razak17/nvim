@@ -1,3 +1,12 @@
+local bo, wo = vim.bo, vim.wo
+
+wo.spell = false
+bo.shiftwidth = 4
+bo.tabstop = 4
+bo.softtabstop = 4
+bo.commentstring = '// %s'
+vim.cmd([[setlocal path+=/usr/include/**,/usr/local/include/**]])
+
 if
   not rvim
   or not rvim.lsp.enable
