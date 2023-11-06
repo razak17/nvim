@@ -9,6 +9,15 @@ return {
     opts = {},
   },
   {
+    'karb94/neoscroll.nvim',
+    cond = not rvim.plugins.minimal,
+    event = 'BufRead',
+    opts = {
+      mappings = { '<C-d>', '<C-u>', '<C-y>', 'zt', 'zz', 'zb' },
+      hide_cursor = true,
+    },
+  },
+  {
     'tomiis4/BufferTabs.nvim',
     cond = not rvim.plugins.minimal and false,
     dependencies = { 'nvim-tree/nvim-web-devicons' },

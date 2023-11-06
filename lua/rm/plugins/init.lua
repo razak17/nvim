@@ -9,6 +9,7 @@ return {
   ------------------------------------------------------------------------------
   'nvim-lua/plenary.nvim',
   'nvim-tree/nvim-web-devicons',
+  'b0o/schemastore.nvim',
   {
     'olimorris/persisted.nvim',
     cond = not rvim.plugins.minimal,
@@ -21,6 +22,15 @@ return {
       on_autoload_no_session = function() cmd.Alpha() end,
       should_autosave = function() return vim.bo.filetype ~= 'alpha' end,
     },
+  },
+  {
+    'mrjones2014/smart-splits.nvim',
+    opts = {},
+    build = './kitty/install-kittens.bash',
+  },
+  {
+    'razak17/lspkind.nvim',
+    config = function() require('lspkind').init({ preset = 'codicons' }) end,
   },
   {
     'sindrets/winshift.nvim',
@@ -47,20 +57,10 @@ return {
     },
     opts = {},
   },
-  {
-    'mrjones2014/smart-splits.nvim',
-    opts = {},
-    build = './kitty/install-kittens.bash',
-  },
   -- }}}
   ------------------------------------------------------------------------------
   -- LSP {{{1
   ------------------------------------------------------------------------------
-  'b0o/schemastore.nvim',
-  {
-    'razak17/lspkind.nvim',
-    config = function() require('lspkind').init({ preset = 'codicons' }) end,
-  },
   {
     {
       'williamboman/mason.nvim',
@@ -424,7 +424,7 @@ return {
     cond = rvim.lsp.enable,
     event = 'BufEnter',
     opts = {
-      grace_period = 60 * 1,
+      grace_period = 60 * 15,
       notifications = true,
       excluded_languages = { 'java', 'markdown' },
     },
@@ -697,26 +697,10 @@ return {
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
   },
   {
-    'chrisgrieser/nvim-origami',
-    event = 'BufReadPost',
-    keys = {
-      { '<BS>', function() require('origami').h() end, desc = 'toggle fold' },
-    },
-    opts = { setupFoldKeymaps = false },
-  },
-  {
     'AndrewRadev/linediff.vim',
     cmd = 'Linediff',
     keys = {
       { '<localleader>lL', '<cmd>Linediff<CR>', desc = 'linediff: toggle' },
-    },
-  },
-  {
-    'karb94/neoscroll.nvim',
-    event = 'BufRead',
-    opts = {
-      mappings = { '<C-d>', '<C-u>', '<C-y>', 'zt', 'zz', 'zb' },
-      hide_cursor = true,
     },
   },
   {
@@ -758,54 +742,6 @@ return {
           })
         end
       end,
-    },
-  },
-  {
-    'razak17/executor.nvim',
-    keys = {
-      { '<localleader>xc', '<cmd>ExecutorRun<CR>', desc = 'executor: start' },
-      {
-        '<localleader>xs',
-        '<cmd>ExecutorSetCommand<CR>',
-        desc = 'executor: set command',
-      },
-      {
-        '<localleader>xd',
-        '<cmd>ExecutorToggleDetail<CR>',
-        desc = 'executor: toggle detail',
-      },
-      {
-        '<localleader>xr',
-        '<cmd>ExecutorReset<CR>',
-        desc = 'executor: reset status',
-      },
-      {
-        '<localleader>xp',
-        '<cmd>ExecutorShowPresets<CR>',
-        desc = 'executor: show presets',
-      },
-    },
-    opts = {
-      input = {
-        border = {
-          style = 'single',
-          padding = {
-            top = 0,
-            bottom = 0,
-            left = 1,
-            right = 1,
-          },
-        },
-      },
-      notifications = {
-        task_started = true,
-        task_completed = true,
-      },
-      preset_commands = {
-        ['custom-website'] = {
-          'npm run dev',
-        },
-      },
     },
   },
   {
@@ -861,37 +797,6 @@ return {
         g.duplicateFile,
         { desc = 'genghis: duplicate current file' }
       )
-    end,
-  },
-  {
-    'michaelb/sniprun',
-    build = 'sh install.sh',
-    cmd = { 'SnipRun', 'SnipInfo' },
-    keys = {
-      {
-        mode = 'v',
-        '<localleader>rr',
-        ':SnipRun<CR>',
-        desc = 'sniprun: run code',
-      },
-      { '<localleader>rr', ':SnipRun<CR>', desc = 'sniprun: run code' },
-      { '<localleader>ri', ':SnipInfo<CR>', desc = 'sniprun: info' },
-      { '<localleader>rc', ':SnipReset<CR>', desc = 'sniprun: reset' },
-      { '<localleader>rq', ':SnipClose<CR>', desc = 'sniprun: close' },
-    },
-    opts = {},
-    config = function(_, opts)
-      highlight.plugin('sniprun', {
-        theme = {
-          ['onedark'] = {
-            { SniprunVirtualTextOk = { link = 'DiagnosticVirtualTextInfo' } },
-            { SniprunFloatingWinOk = { link = 'DiagnosticVirtualTextInfo' } },
-            { SniprunVirtualTextErr = { link = 'DiffDelete' } },
-            { SniprunFloatingWinErr = { link = 'DiffDelete' } },
-          },
-        },
-      })
-      require('sniprun').setup(opts)
     end,
   },
   {
@@ -972,173 +877,12 @@ return {
     },
   },
   {
-    'kristijanhusak/vim-dadbod-ui',
-    dependencies = {
-      'tpope/vim-dadbod',
-      'kristijanhusak/vim-dadbod-completion',
-      {
-        'kristijanhusak/vim-dadbod-completion',
-        ft = { 'sql', 'mysql', 'plsql' },
-      },
-    },
-    keys = {
-      { '<leader>dt', '<Cmd>DBUIToggle<CR>', desc = 'dadbod: toggle' },
-      {
-        '<leader>da',
-        '<Cmd>DBUIAddConnection<CR>',
-        desc = 'dadbod: add connection',
-      },
-    },
-    cmd = {
-      'DBUI',
-      'DBUIAddConnection',
-      'DBUIClose',
-      'DBUIToggle',
-      'DBUIFindBuffer',
-      'DBUIRenameBuffer',
-      'DBUILastQueryInfo',
-    },
-    config = function()
-      vim.g.db_ui_notification_width = 1
-      vim.g.db_ui_debug = 1
-      vim.g.db_ui_save_location = join_paths(vim.fn.stdpath('data'), 'db_ui')
-
-      rvim.augroup('dad-bod', {
-        event = { 'FileType' },
-        pattern = { 'sql' },
-        command = [[setlocal omnifunc=vim_dadbod_completion#omni]],
-      }, {
-        event = { 'FileType' },
-        pattern = { 'sql', 'mysql', 'plsql' },
-        command = function()
-          vim.schedule(
-            function()
-              require('cmp').setup.buffer({
-                sources = { { name = 'vim-dadbod-completion' } },
-              })
-            end
-          )
-        end,
-      })
-    end,
-  },
-  {
     '2kabhishek/nerdy.nvim',
     dependencies = {
       'stevearc/dressing.nvim',
       'nvim-telescope/telescope.nvim',
     },
     cmd = 'Nerdy',
-  },
-  -- Code Runner
-  --------------------------------------------------------------------------------
-  {
-    'trimclain/builder.nvim',
-    cmd = 'Build',
-    keys = {
-      {
-        '<leader>rr',
-        '<Cmd>lua require("builder").build()<CR>',
-        desc = 'builder: run',
-      },
-    },
-    opts = {
-      type = 'float',
-      float_border = border,
-      commands = {
-        c = 'gcc % -o $basename.out && ./$basename.out',
-        cpp = 'g++ % -o $basename.out && ./$basename.out',
-        go = 'go run %',
-        java = 'java %',
-        javascript = 'node %',
-        -- lua = "lua %", -- this will override the default `:source %` for lua files
-        markdown = 'glow %',
-        python = 'python %',
-        rust = 'cargo run',
-        sh = 'sh %',
-        typescript = 'ts-node %',
-        zsh = 'zsh %',
-      },
-    },
-  },
-  {
-    'razak17/lab.nvim',
-    cond = not rvim.plugins.minimal,
-    keys = {
-      { '<leader>rl', ':Lab code run<CR>', desc = 'lab: run' },
-      { '<leader>rx', ':Lab code stop<CR>', desc = 'lab: stop' },
-      { '<leader>rp', ':Lab code panel<CR>', desc = 'lab: panel' },
-    },
-    build = 'cd js && npm ci',
-    config = function()
-      highlight.plugin('lab', {
-        theme = {
-          ['onedark'] = {
-            { LabCodeRun = { link = 'DiagnosticVirtualTextInfo' } },
-          },
-        },
-      })
-      require('lab').setup()
-    end,
-    dependencies = { 'nvim-lua/plenary.nvim' },
-  },
-  -- Translate
-  --------------------------------------------------------------------------------
-  {
-    'potamides/pantran.nvim',
-    keys = {
-      {
-        '<leader><leader>tm',
-        function() return require('pantran').motion_translate() end,
-        mode = { 'n', 'x' },
-        expr = true,
-        desc = 'motion',
-      },
-      {
-        '<leader><leader>tp',
-        '<cmd>Pantran<CR>',
-        mode = { 'n', 'v' },
-        desc = 'prompt',
-      },
-    },
-    config = function()
-      rvim.highlight.plugin('pantran', {
-        { PantranBorder = { inherit = 'FloatBorder' } },
-      })
-
-      local default_source = 'auto'
-      local default_target = 'es'
-      require('pantran').setup({
-        default_engine = 'argos',
-        engines = {
-          argos = {
-            default_source = default_source,
-            default_target = default_target,
-          },
-          apertium = {
-            default_source = default_source,
-            default_target = default_target,
-          },
-          yandex = {
-            default_source = default_source,
-            default_target = default_target,
-          },
-          google = {
-            default_source = default_source,
-            default_target = default_target,
-          },
-        },
-      })
-    end,
-  },
-  {
-    'coffebar/crowtranslate.nvim',
-    cmd = { 'CrowTranslate' },
-    opts = {
-      language = 'es',
-      default = 'en',
-      engine = 'google',
-    },
   },
   -- Games
   --------------------------------------------------------------------------------
