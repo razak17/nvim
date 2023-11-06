@@ -1,21 +1,8 @@
-local highlight = rvim.highlight
-
 return {
   {
     'kevinhwang91/nvim-ufo',
     cond = rvim.treesitter.enable and false,
     event = 'VeryLazy',
-    config = function()
-      highlight.plugin('ufo', {
-        {
-          Folded = {
-            bold = false,
-            italic = false,
-            bg = { from = 'CursorLine', alter = -0.15 },
-          },
-        },
-      })
-    end,
     keys = {
       {
         'zR',
@@ -28,7 +15,7 @@ return {
         'ufo: close all folds',
       },
       {
-        'zP',
+        'zK',
         function() require('ufo').peekFoldedLinesUnderCursor() end,
         'ufo: preview fold',
       },
@@ -40,7 +27,7 @@ return {
         preview = {
           win_config = {
             border = rvim.ui.current.border,
-            winhighlight = 'Normal:VertSplit,FloatBorder:VertSplit',
+            winhighlight = 'NormalFloat:FloatBorder,FloatBorder:FloatBorder',
           },
         },
         enable_get_fold_virt_text = true,
@@ -49,6 +36,21 @@ return {
           -- lsp better?
           return ft_map[ft] or { 'treesitter', 'indent' }
         end,
+      })
+    end,
+    config = function()
+      rvim.highlight.plugin('ufo', {
+        theme = {
+          ['onedark'] = {
+            {
+              Folded = {
+                bold = false,
+                italic = false,
+                bg = { from = 'CursorLine', alter = -0.15 },
+              },
+            },
+          },
+        },
       })
     end,
     dependencies = { 'kevinhwang91/promise-async' },
