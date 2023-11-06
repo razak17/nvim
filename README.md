@@ -37,13 +37,3 @@ Command to install
 ```bash
 bash <(curl -s https://raw.githubusercontent.com/razak17/nvim/main/bin/install) --all
 ```
-
-### LSP
-
-Run
-
-```
-:LspGenerateTemplates
-```
-
-and restart nvim for changes to lsp config (i.e. rvim.lsp) to take effect.
