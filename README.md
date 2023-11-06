@@ -9,6 +9,18 @@ Dashboard:
 ![2022-10-25_164954_656381045](https://user-images.githubusercontent.com/52210954/197835184-956b3d30-3335-4ca5-99c0-f8052de1e763.png)
 -->
 
+Git:
+
+![2023-11-06_233102_644733208](https://github.com/razak17/onedark.nvim/assets/52210954/08f089cd-a7eb-45fb-987e-a6276b1749f1)
+
+Completion:
+
+![2023-11-06_233148_164870900](https://github.com/razak17/onedark.nvim/assets/52210954/f6624aab-e7a6-4abe-8a8f-a45307d0d28c)
+
+LSP Diagnostics:
+
+![2023-11-06_233410_985401918](https://github.com/razak17/onedark.nvim/assets/52210954/5c7247e2-14a2-4110-a03d-b101927ba7f7)
+
 LSP Hover:
 
 ![2023-11-06_231510_327531471](https://github.com/razak17/onedark.nvim/assets/52210954/ab415fc0-6300-4fe6-98ce-4b1f7808f102)
