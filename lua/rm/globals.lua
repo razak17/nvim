@@ -290,7 +290,7 @@ end
 --- One future idea is to generate the ftplugin files from this function, so the settings are still
 --- centralized but the curation of these files is automated. Although I'm not sure this actually
 --- has value over autocommands, unless ftplugin files specifically have that value
----@param map {[string|string[]]: FiletypeSettings | {[integer]: fun(args: AutocmdArgs)}}
+---@param map {[string|string[]]: FiletypeSettings | {[integer]: fun(args: AutocmdArgs) | string}}
 function rvim.filetype_settings(map)
   local commands = vim.iter(map):map(function(ft, settings)
     local name = type(ft) == 'table' and table.concat(ft, ',') or ft

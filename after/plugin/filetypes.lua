@@ -6,6 +6,22 @@ local cmd, api, opt_l = vim.cmd, vim.api, vim.opt_local
 vim.treesitter.language.register('gitcommit', 'NeogitCommitMessage')
 
 settings({
+  config = {
+    bo = {
+      textwidth = 0,
+      wrapmargin = 0,
+    },
+  },
+  cpp = {
+    bo = {
+      shiftwidth = 4,
+      tabstop = 4,
+      softtabstop = 4,
+      commentstring = '// %s',
+    },
+    wo = { spell = false },
+    function() cmd([[setlocal path+=/usr/include/**,/usr/local/include/**]]) end,
+  },
   ['dap-repl'] = {
     opt = {
       buflisted = false,
@@ -221,6 +237,10 @@ settings({
         }
       )
     end,
+  },
+  text = {
+    bo = { textwidth = 78 },
+    wo = { spell = false },
   },
   typescript = {
     bo = { textwidth = 100 },
