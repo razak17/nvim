@@ -499,6 +499,17 @@ return {
     end,
   },
   {
+    'ej-shafran/compile-mode.nvim',
+    cmd = { 'Compile', 'Recompile' },
+    opts = {
+      default_command = '',
+    },
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      { 'm00qek/baleia.nvim', tag = 'v1.3.0' },
+    },
+  },
+  {
     'dawsers/edit-code-block.nvim',
     cmd = { 'EditCodeBlock', 'EditCodeBlockOrg', 'EditCodeBlockSelection' },
     name = 'ecb',

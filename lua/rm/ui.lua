@@ -246,6 +246,7 @@ local filetypes = rvim.p_table({
   ['agitator'] = presets.tool_panel,
   ['aerial'] = presets.tool_panel,
   ['blame'] = presets.tool_panel,
+  ['compile'] = presets.statusline_only,
   ['query'] = presets.tool_panel,
   ['DiffviewFiles'] = presets.tool_panel,
   ['DiffviewFileHistory'] = presets.tool_panel,
