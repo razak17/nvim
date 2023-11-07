@@ -59,6 +59,21 @@ map(
   { desc = 'toggle concealcursor' }
 )
 
+local function toggle_sunglasses()
+  local success, _ = pcall(require, 'sunglasses')
+  if not success then return end
+  local is_shaded
+  for _, winnr in ipairs(vim.api.nvim_list_wins()) do
+    is_shaded = require('sunglasses.window').get(winnr):is_shaded()
+    if is_shaded then
+      vim.cmd('SunglassesDisable')
+      return
+    end
+  end
+  vim.cmd('SunglassesEnable')
+  vim.cmd('SunglassesOff')
+end
+
 local toggle_options = {
   ['Toggle Aerial'] = 'AerialToggle',
   ['Toggle Wrap'] = function() toggle_opt('wrap') end,
@@ -72,6 +87,7 @@ local toggle_options = {
   ['Toggle Lengthmatters'] = 'LengthmattersToggle',
   ['Toggle Twilight'] = 'Twilight',
   ['Toggle ZenMode'] = 'ZenMode',
+  ['Toggle Sunglasses'] = toggle_sunglasses,
   ['Toggle Zoom'] = 'lua require("mini.misc").zoom()',
 }
 
