@@ -341,6 +341,21 @@ function rvim.open(path, notify)
   end
 end
 
+--- open file in window picker
+---@param buf integer
+function rvim.open_with_window_picker(buf)
+  local success, picker = pcall(require, 'window-picker')
+  if not success then
+    vim.notify('window-picker is not installed', vim.log.levels.ERROR)
+    return
+  end
+  local picked_window_id = picker.pick_window()
+  if picked_window_id then
+    api.nvim_set_current_win(picked_window_id)
+    api.nvim_set_current_buf(buf)
+  end
+end
+
 --- search current word in website. see usage below
 ---@param path string
 ---@param url string
