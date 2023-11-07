@@ -145,19 +145,6 @@ return {
     end,
   },
   {
-    'moozd/aidoc.nvim',
-    cond = not rvim.plugins.minimal,
-    keys = {
-      {
-        mode = 'x',
-        '<leader>do',
-        '<cmd>lua require("aidoc.api").generate({width = 65})<CR>',
-        desc = 'aidoc: generate',
-      },
-    },
-    opts = {},
-  },
-  {
     'danymat/neogen',
     keys = {
       {
@@ -324,179 +311,9 @@ return {
     end,
   },
   {
-    'robitx/gp.nvim',
-    cond = rvim.ai.enable and not rvim.plugins.minimal,
-    keys = {
-      -- Chat commands
-      {
-        '<c-g>n',
-        '<Cmd>GpChatNew<CR>',
-        desc = 'gp: new chat',
-        mode = { 'n', 'i', 'v' },
-      },
-      {
-        '<c-g>f',
-        '<Cmd>GpChatFinder<CR>',
-        desc = 'gp: find chat',
-        mode = { 'n', 'i' },
-      },
-      {
-        '<c-g><c-g>',
-        '<Cmd>GpChatRespond<CR>',
-        desc = 'gp: respond',
-        mode = { 'n', 'i' },
-      },
-      {
-        '<c-g>d',
-        '<Cmd>GpChatDeleteCR>',
-        desc = 'gp: delete chat',
-        mode = { 'n', 'i' },
-      },
-      -- Prompt commands
-      {
-        '<c-g>i',
-        '<Cmd>GpInline<CR>',
-        desc = 'gp: inline',
-        mode = { 'n', 'i' },
-      },
-      {
-        '<c-g>r',
-        '<Cmd>GpRewrite<CR>',
-        desc = 'gp: rewrite',
-        mode = { 'n', 'i', 'v' },
-      },
-      {
-        '<c-g>a',
-        '<Cmd>GpAppend<CR>',
-        desc = 'gp: append',
-        mode = { 'n', 'i', 'v' },
-      },
-      {
-        '<c-g>b',
-        '<Cmd>GpPrepend<CR>',
-        desc = 'gp: prepend',
-        mode = { 'n', 'i', 'v' },
-      },
-      {
-        '<c-g>e',
-        '<Cmd>GpEnew<CR>',
-        desc = 'gp: enew',
-        mode = { 'n', 'i', 'v' },
-      },
-      {
-        '<c-g>p',
-        '<Cmd>GpPopup<CR>',
-        desc = 'gp: popup',
-        mode = { 'n', 'i', 'v' },
-      },
-    },
-    opts = {},
-  },
-  {
-    'jackMort/ChatGPT.nvim',
-    cond = rvim.ai.enable and not rvim.plugins.minimal,
-    cmd = { 'ChatGPT', 'ChatGPTActAs', 'ChatGPTEditWithInstructions' },
-    keys = {
-      { '<leader>aa', '<cmd>ChatGPTActAs<CR>', desc = 'chatgpt: act as' },
-      {
-        '<leader>ae',
-        '<cmd>ChatGPTEditWithInstructions<CR>',
-        desc = 'chatgpt: edit',
-      },
-      { '<leader>an', '<cmd>ChatGPT<CR>', desc = 'chatgpt: open' },
-    },
-    config = function()
-      local border =
-        { style = rvim.ui.border.rectangle, highlight = 'FloatBorder' }
-      require('chatgpt').setup({
-        popup_window = { border = border },
-        popup_input = { border = border, submit = '<C-s>' },
-        settings_window = { border = border },
-        chat = {
-          keymaps = { close = { '<Esc>' } },
-        },
-      })
-    end,
-    dependencies = {
-      'MunifTanjim/nui.nvim',
-      'nvim-lua/plenary.nvim',
-      'nvim-telescope/telescope.nvim',
-    },
-  },
-  {
-    'piersolenski/wtf.nvim',
-    cond = rvim.lsp.enable,
-    event = 'VeryLazy',
-    opts = {},
-    keys = {
-      {
-        '<leader>ao',
-        function() require('wtf').ai() end,
-        desc = 'wtf: debug diagnostic with AI',
-      },
-      {
-        '<leader>ag',
-        function() require('wtf').search() end,
-        desc = 'wtf: google search diagnostic',
-      },
-    },
-    dependencies = { 'MunifTanjim/nui.nvim' },
-  },
-  {
     'subnut/nvim-ghost.nvim',
     cond = not rvim.plugins.minimal,
     lazy = not rvim.plugins.overrides.ghost_text.enable,
-  },
-  {
-    'ecthelionvi/NeoComposer.nvim',
-    cond = not rvim.plugins.minimal,
-    event = { 'BufReadPost', 'BufNewFile' },
-    dependencies = { 'kkharji/sqlite.lua' },
-    keys = {
-      {
-        '<localleader>qe',
-        "<cmd>lua require('NeoComposer.ui').edit_macros()<cr>",
-        desc = 'neocomposer: edit macro ',
-      },
-      {
-        '<localleader>qt',
-        "<cmd>lua require('NeoComposer.macro').toggle_delay()<cr>",
-        desc = 'neocomposer: delay macro toggle',
-      },
-      {
-        '<localleader>qd',
-        "<cmd>lua require('NeoComposer.store').clear_macros()<cr>",
-        desc = 'neocomposer: delete all macros',
-      },
-    },
-    config = function()
-      require('NeoComposer').setup({
-        notify = false,
-        keymaps = {
-          toggle_record = '<localleader>qr',
-          play_macro = '<localleader>qq',
-          yank_macro = '<localleader>qy',
-          stop_macro = '<localleader>qs',
-          cycle_next = '<localleader>qn',
-          cycle_prev = '<localleader>qp',
-          toggle_macro_menu = '<localleader>qm',
-        },
-      })
-      if rvim.is_available('which-key.nvim') then
-        require('which-key').register({
-          ['<localleader>qr'] = 'neocomposer: toggle record',
-          ['<localleader>qq'] = 'neocomposer: play macro',
-          ['<localleader>qy'] = 'neocomposer: yank macro',
-          ['<localleader>qs'] = 'neocomposer: stop macro',
-          ['<localleader>qn'] = 'neocomposer: cycle next',
-          ['<localleader>qp'] = 'neocomposer: cycle prev',
-          ['<localleader>qm'] = 'neocomposer: toggle menu',
-        })
-        require('which-key').register({
-          qq = 'neocomposer: play macro',
-        }, { mode = 'x', prefix = '<localleader>' })
-      end
-    end,
   },
   {
     's1n7ax/nvim-comment-frame',
@@ -529,17 +346,6 @@ return {
       },
     },
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
-  },
-  {
-    'ej-shafran/compile-mode.nvim',
-    cmd = { 'Compile', 'Recompile' },
-    opts = {
-      default_command = '',
-    },
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-      { 'm00qek/baleia.nvim', tag = 'v1.3.0' },
-    },
   },
   {
     'dawsers/edit-code-block.nvim',
