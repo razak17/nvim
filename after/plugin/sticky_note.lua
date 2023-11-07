@@ -1,5 +1,7 @@
 if not rvim or rvim.none then return end
 
+local api = vim.api
+
 local M = {}
 
 rvim.stickyNote = {
@@ -37,12 +39,14 @@ local function change_win_hl(win, hl)
     for hn, hs in pairs(hl) do
       table.insert(temp, hn .. ':' .. hs)
     end
-    vim.api.nvim_win_set_option(win, 'winhl', table.concat(temp, ','))
+    api.nvim_set_option_value('winhl', table.concat(temp, ','), {
+      win = win,
+    })
   end
 end
 
 local function update_float(win, config)
-  vim.api.nvim_win_set_config(win, clean_config(config))
+  api.nvim_win_set_config(win, clean_config(config))
 end
 
 --[[
@@ -63,10 +67,10 @@ local function create_float(config)
   local row = 0
 
   local container = (
-    config.relative == 'editor' and vim.api.nvim_list_uis()[1]
+    config.relative == 'editor' and api.nvim_list_uis()[1]
     or config.relative == 'win' and {
-      width = vim.api.nvim_win_get_width(config.win or 0),
-      height = vim.api.nvim_win_get_height(config.win or 0),
+      width = api.nvim_win_get_width(config.win or 0),
+      height = api.nvim_win_get_height(config.win or 0),
     }
     or {}
   )
@@ -82,9 +86,9 @@ local function create_float(config)
   config.container = container
 
   -- make the window and buffer
-  local buf = vim.api.nvim_create_buf(false, true)
+  local buf = api.nvim_create_buf(false, true)
   -- pass in all the relevant info cus i can't be bother to clean it
-  local win = vim.api.nvim_open_win(buf, true, clean_config(config))
+  local win = api.nvim_open_win(buf, true, clean_config(config))
 
   -- change window hl group
   change_win_hl(win, config.highlight)
@@ -93,7 +97,7 @@ local function create_float(config)
   ---@diagnostic disable-next-line: need-check-nil
   config.ogTitle = config.title
   config.title = config.titleFunc == nil
-      and vim.api.nvim_win_get_number(win) .. ': ' .. config.ogTitle
+      and api.nvim_win_get_number(win) .. ': ' .. config.ogTitle
     or config.titleFunc
   update_float(win, config)
 
@@ -159,7 +163,7 @@ rvim.augroup('stickyNote', {
     end
     for win, config in pairs(rvim.stickyNote.floatData) do
       config.title = config.titleFunc == nil
-          and vim.api.nvim_win_get_number(win) .. ': ' .. config.ogTitle
+          and api.nvim_win_get_number(win) .. ': ' .. config.ogTitle
         or config.titleFunc
       update_float(win, config)
     end
@@ -191,11 +195,11 @@ end, { desc = 'new [w]indow [s]ticky note' })
 map('n', '<Leader>ww', '<C-w>w', { desc = 'switch [[w]]indow' })
 
 map('n', '<leader><leader>nK', function()
-  local config = vim.api.nvim_win_get_config(0)
-  local win = vim.api.nvim_get_current_win()
+  local config = api.nvim_win_get_config(0)
+  local win = api.nvim_get_current_win()
   if config.relative == '' then
-    vim.api.nvim_feedkeys(
-      vim.api.nvim_replace_termcodes('<C-w>-', true, false, true),
+    api.nvim_feedkeys(
+      api.nvim_replace_termcodes('<C-w>-', true, false, true),
       't',
       false
     )
@@ -204,11 +208,11 @@ map('n', '<leader><leader>nK', function()
   end
 end, { desc = 'resize [w]indow [up]' })
 map('n', '<leader><leader>nJ', function()
-  local config = vim.api.nvim_win_get_config(0)
-  local win = vim.api.nvim_get_current_win()
+  local config = api.nvim_win_get_config(0)
+  local win = api.nvim_get_current_win()
   if config.relative == '' then
-    vim.api.nvim_feedkeys(
-      vim.api.nvim_replace_termcodes('<C-w>+', true, false, true),
+    api.nvim_feedkeys(
+      api.nvim_replace_termcodes('<C-w>+', true, false, true),
       't',
       false
     )
@@ -217,11 +221,11 @@ map('n', '<leader><leader>nJ', function()
   end
 end, { desc = 'resize [w]indow [down]' })
 map('n', '<leader><leader>nH', function()
-  local config = vim.api.nvim_win_get_config(0)
-  local win = vim.api.nvim_get_current_win()
+  local config = api.nvim_win_get_config(0)
+  local win = api.nvim_get_current_win()
   if config.relative == '' then
-    vim.api.nvim_feedkeys(
-      vim.api.nvim_replace_termcodes('<C-w>>', true, false, true),
+    api.nvim_feedkeys(
+      api.nvim_replace_termcodes('<C-w>>', true, false, true),
       't',
       false
     )
@@ -230,11 +234,11 @@ map('n', '<leader><leader>nH', function()
   end
 end, { desc = 'resize [w]indow [left]' })
 map('n', '<leader><leader>nL', function()
-  local config = vim.api.nvim_win_get_config(0)
-  local win = vim.api.nvim_get_current_win()
+  local config = api.nvim_win_get_config(0)
+  local win = api.nvim_get_current_win()
   if config.relative == '' then
-    vim.api.nvim_feedkeys(
-      vim.api.nvim_replace_termcodes('<C-w><', true, false, true),
+    api.nvim_feedkeys(
+      api.nvim_replace_termcodes('<C-w><', true, false, true),
       't',
       false
     )
@@ -244,11 +248,11 @@ map('n', '<leader><leader>nL', function()
 end, { desc = 'resize [w]indow [right]' })
 
 map('n', '<leader><leader>nk', function()
-  local config = vim.api.nvim_win_get_config(0)
-  local win = vim.api.nvim_get_current_win()
+  local config = api.nvim_win_get_config(0)
+  local win = api.nvim_get_current_win()
   if config.relative == '' then
-    vim.api.nvim_feedkeys(
-      vim.api.nvim_replace_termcodes('<C-w><Up>', true, false, true),
+    api.nvim_feedkeys(
+      api.nvim_replace_termcodes('<C-w><Up>', true, false, true),
       't',
       false
     )
@@ -257,11 +261,11 @@ map('n', '<leader><leader>nk', function()
   end
 end, { desc = 'switch to up window' })
 map('n', '<leader><leader>nj', function()
-  local config = vim.api.nvim_win_get_config(0)
-  local win = vim.api.nvim_get_current_win()
+  local config = api.nvim_win_get_config(0)
+  local win = api.nvim_get_current_win()
   if config.relative == '' then
-    vim.api.nvim_feedkeys(
-      vim.api.nvim_replace_termcodes('<C-w><Down>', true, false, true),
+    api.nvim_feedkeys(
+      api.nvim_replace_termcodes('<C-w><Down>', true, false, true),
       't',
       false
     )
@@ -270,11 +274,11 @@ map('n', '<leader><leader>nj', function()
   end
 end, { desc = 'switch to down window' })
 map('n', '<leader><leader>nh', function()
-  local config = vim.api.nvim_win_get_config(0)
-  local win = vim.api.nvim_get_current_win()
+  local config = api.nvim_win_get_config(0)
+  local win = api.nvim_get_current_win()
   if config.relative == '' then
-    vim.api.nvim_feedkeys(
-      vim.api.nvim_replace_termcodes('<C-w><Left>', true, false, true),
+    api.nvim_feedkeys(
+      api.nvim_replace_termcodes('<C-w><Left>', true, false, true),
       't',
       false
     )
@@ -283,11 +287,11 @@ map('n', '<leader><leader>nh', function()
   end
 end, { desc = 'switch to left window' })
 map('n', '<leader><leader>nl', function()
-  local config = vim.api.nvim_win_get_config(0)
-  local win = vim.api.nvim_get_current_win()
+  local config = api.nvim_win_get_config(0)
+  local win = api.nvim_get_current_win()
   if config.relative == '' then
-    vim.api.nvim_feedkeys(
-      vim.api.nvim_replace_termcodes('<C-w><Right>', true, false, true),
+    api.nvim_feedkeys(
+      api.nvim_replace_termcodes('<C-w><Right>', true, false, true),
       't',
       false
     )
