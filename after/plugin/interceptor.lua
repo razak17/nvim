@@ -13,7 +13,9 @@ local function notify(msg, title)
     title = title,
     ---@param win integer The window handle
     on_open = function(win)
-      api.nvim_buf_set_option(api.nvim_win_get_buf(win), 'filetype', 'markdown')
+      api.nvim_set_option_value('filetype', 'markdown', {
+        buf = api.nvim_win_get_buf(win),
+      })
     end,
   })
 end
@@ -26,6 +28,7 @@ end
 local function open_in_prog(buf, fpath, fname)
   notify(string.format('Opening `%s`', fname), 'Open File in External Program')
   vim.ui.open(fpath)
+  vim.system({ 'sxiv', fpath }, { detach = true })
   api.nvim_buf_delete(buf, { force = true })
 end
 

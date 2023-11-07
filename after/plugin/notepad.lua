@@ -19,8 +19,12 @@ function rvim.notepad.toggle()
     if not rvim.notepad.buf or not api.nvim_buf_is_valid(rvim.notepad.buf) then
       -- Create a buffer if it none existed
       rvim.notepad.buf = api.nvim_create_buf(false, true)
-      api.nvim_buf_set_option(rvim.notepad.buf, 'bufhidden', 'hide')
-      api.nvim_buf_set_option(rvim.notepad.buf, 'filetype', 'markdown')
+      api.nvim_set_option_value('bufhidden', 'hide', {
+        buf = rvim.notepad.buf,
+      })
+      api.nvim_set_option_value('filetype', 'markdown', {
+        buf = rvim.notepad.buf,
+      })
       api.nvim_buf_set_lines(rvim.notepad.buf, 0, 1, false, {
         '# Warning',
         '',
