@@ -1,3 +1,4 @@
+local api, fn = vim.api, vim.fn
 local ui = rvim.ui
 local fmt = string.format
 
@@ -39,6 +40,13 @@ return {
       borderchars = ui.border.common,
       buffer_commands = {
         edit = { key = '<CR>', command = 'edit' },
+        pick = {
+          key = 'w',
+          command = function()
+            local idx = vim.fn.line('.')
+            rvim.open_with_window_picker(idx + 1)
+          end,
+        },
         split = { key = 's', command = 'split' },
         vsplit = { key = 'v', command = 'vsplit' },
       },
@@ -62,25 +70,20 @@ return {
     'dzfrias/arena.nvim',
     cmd = { 'ArenaToggle', 'ArenaOpen', 'ArenaClose' },
     keys = { { '<a-a>', '<Cmd>ArenaToggle<CR>', desc = 'arena: toggle' } },
-    opts = {
-      max_items = nil,
-      window = { border = 'single' },
-      keybinds = {
-        ['w'] = function()
-          local success, picker = pcall(require, 'window-picker')
-          if not success then
-            vim.notify('window-picker is not installed', vim.log.levels.ERROR)
-            return
-          end
-          local picked_window_id = picker.pick_window()
-          if picked_window_id then
-            local line = vim.fn.getline('.')
-            vim.api.nvim_set_current_win(picked_window_id)
-            vim.cmd.edit(line)
-          end
-        end,
-      },
-    },
+    config = function()
+      local action = require('arena').action
+
+      require('arena').setup({
+        max_items = nil,
+        window = { border = 'single' },
+        keybinds = {
+          ['w'] = action(function(buf, info)
+            rvim.open_with_window_picker(buf)
+            fn.cursor(info.lnum, 0)
+          end),
+        },
+      })
+    end,
   },
   {
     'razak17/buffer_manager.nvim',
@@ -121,7 +124,7 @@ return {
     config = function()
       require('stickybuf').setup({
         get_auto_pin = function(bufnr)
-          local buf_ft = vim.api.nvim_buf_get_option(bufnr, 'ft')
+          local buf_ft = api.nvim_get_option_value('filetype', { buf = bufnr })
           if buf_ft == 'DiffviewFiles' then
             -- this is a diffview tab, disable creating new windows
             -- (which would be the default behavior of handle_foreign_buffer)

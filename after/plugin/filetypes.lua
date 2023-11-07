@@ -1,7 +1,7 @@
 if not rvim or rvim.none then return end
 
 local settings, highlight = rvim.filetype_settings, rvim.highlight
-local cmd, api, opt_l = vim.cmd, vim.api, vim.opt_local
+local cmd, api, fn, opt_l = vim.cmd, vim.api, vim.fn, vim.opt_local
 
 vim.treesitter.language.register('gitcommit', 'NeogitCommitMessage')
 
@@ -73,7 +73,7 @@ settings({
   },
   jsonc = {
     function()
-      local extension = vim.fn.expand('%:e')
+      local extension = fn.expand('%:e')
       if extension == 'jsonschema' then
         vim.bo.shiftwidth = 2
         vim.bo.softtabstop = 2
@@ -156,20 +156,10 @@ settings({
         'n',
         'w',
         function()
-          local success, picker = pcall(require, 'window-picker')
-          if not success then
-            vim.notify('window-picker is not installed', vim.log.levels.ERROR)
-            return
-          end
-          local picked_window_id = picker.pick_window()
-          if picked_window_id then
-            local qf_list = vim.fn.getqflist()
-            local line = api.nvim_win_get_cursor(0)
-            local qf_entry = qf_list[line[1]]
-
-            api.nvim_set_current_win(picked_window_id)
-            cmd.edit(qf_entry.text)
-          end
+          local qf_list = fn.getqflist()
+          local line = api.nvim_win_get_cursor(0)
+          local qf_entry = qf_list[line[1]]
+          rvim.open_with_window_picker(qf_entry.bufnr)
         end,
         { buffer = 0, desc = 'open entry with window picker' },
       },
