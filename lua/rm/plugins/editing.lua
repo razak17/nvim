@@ -499,6 +499,12 @@ return {
     end,
   },
   {
+    'dawsers/edit-code-block.nvim',
+    cmd = { 'EditCodeBlock', 'EditCodeBlockOrg', 'EditCodeBlockSelection' },
+    name = 'ecb',
+    opts = { wincmd = 'split' },
+  },
+  {
     'haolian9/nag.nvim',
     dependencies = { 'haolian9/infra.nvim' },
     keys = {
