@@ -10,7 +10,9 @@ local redraw_buffer = function()
 
   -- Create a new temporary buffer and set its filetype
   local temp_buffer = api.nvim_create_buf(false, true)
-  local original_filetype = api.nvim_buf_get_option(current_buffer, 'filetype')
+  local original_filetype =
+    api.nvim_get_option_value('filetype', { buf = current_buffer }
+)
   api.nvim_set_option_value('filetype', original_filetype, {
     buf = temp_buffer,
   })
