@@ -329,9 +329,16 @@ end
 --- search current word or go to file
 --- replicate netrw functionality
 ---@param path string
-function rvim.open(path)
-  vim.ui.open(path)
-  vim.notify(fmt('Opening %s', path))
+---@param notify? boolean
+function rvim.open(path, notify)
+  notify = notify or false
+  if not path then return end
+  if notify then vim.notify(fmt('Opening %s', path)) end
+  local res = vim.ui.open(path)
+  if not res or res.code ~= 0 then
+    local open_command = vim.g.os == 'Darwin' and 'open' or 'xdg-open'
+    fn.jobstart({ open_command, path }, { detach = true })
+  end
 end
 
 --- search current word in website. see usage below
@@ -339,7 +346,7 @@ end
 ---@param url string
 function rvim.web_search(path, url)
   local query = '"' .. fn.substitute(path, '["\n]', ' ', 'g') .. '"'
-  rvim.open(fmt('%s%s', url, query))
+  rvim.open(fmt('%s%s', url, query), true)
 end
 
 ---------------------------------------------------------------------------------

@@ -12,6 +12,7 @@ local g, fn, env = vim.g, vim.fn, vim.env
 
 if vim.loader then vim.loader.enable() end
 
+g.os = vim.uv.os_uname().sysname
 g.dotfiles = env.DOTFILES or fn.expand('~/.dots')
 g.projects_dir = env.DEV_HOME or fn.expand('~/personal/workspace/coding')
 --------------------------------------------------------------------------------
