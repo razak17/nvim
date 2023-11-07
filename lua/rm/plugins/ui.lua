@@ -131,6 +131,20 @@ return {
     },
   },
   {
+    'miversen33/sunglasses.nvim',
+    cond = not rvim.plugins.minimal,
+    event = 'UIEnter',
+    cmd = { 'SunglassesEnable', 'SunglassesDisable' },
+    opts = {
+      filter_type = 'SHADE', -- TINT, NOSYNTAX, SHADE
+      filter_percent = 0.35,
+    },
+    config = function(_, opts)
+      require('sunglasses').setup(opts)
+      vim.cmd('SunglassesDisable')
+    end,
+  },
+  {
     'folke/zen-mode.nvim',
     cmd = 'ZenMode',
     opts = {
