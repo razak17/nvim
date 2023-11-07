@@ -499,6 +499,38 @@ return {
     end,
   },
   {
+    's1n7ax/nvim-comment-frame',
+    keys = {
+      {
+        '<localleader>cf',
+        '<Cmd>lua require("nvim-comment-frame").add_comment()<CR>',
+        desc = 'comment-frame: add',
+      },
+      {
+        '<localleader>cm',
+        '<Cmd>lua require("nvim-comment-frame").add_multiline_comment()<CR>',
+        desc = 'comment-frame: add multiline',
+      },
+    },
+    opts = {
+      disable_default_keymap = false,
+      frame_width = 80,
+      fill_char = '-',
+      languages = {
+        lua = {
+          start_str = '--[[',
+          end_str = ']]--',
+          fill_char = '*',
+          frame_width = 80,
+          line_wrap_len = 60,
+          auto_indent = false,
+          add_comment_above = false,
+        },
+      },
+    },
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
+  },
+  {
     'ej-shafran/compile-mode.nvim',
     cmd = { 'Compile', 'Recompile' },
     opts = {
