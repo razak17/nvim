@@ -27,8 +27,7 @@ local function clear_pane_title()
 end
 
 local function set_window_title()
-  local session = fn.fnamemodify(vim.uv.cwd(), ':t') or 'Neovim'
-  local window_title = fmt('%s', session)
+  local window_title = fn.fnamemodify(vim.uv.cwd(), ':t') or 'Neovim'
   fn.jobstart(fmt("tmux rename-window '%s'", window_title))
 end
 
@@ -37,7 +36,10 @@ rvim.augroup('TmuxUtils', {
   command = function() set_window_title() end,
 }, {
   event = { 'VimLeave' },
-  command = function() clear_pane_title() end,
+  command = function()
+    set_window_title()
+    clear_pane_title()
+  end,
 }, {
   event = { 'VimLeave', 'VimLeavePre', 'FocusLost' },
   command = function() set_statusline(true) end,
