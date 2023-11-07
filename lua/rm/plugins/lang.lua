@@ -527,6 +527,13 @@ return {
       require('due_nvim').setup(opts)
     end,
   },
+  {
+    'Zeioth/markmap.nvim',
+    ft = { 'markdown' },
+    build = 'yarn global add markmap-cli',
+    cmd = { 'MarkmapOpen', 'MarkmapSave', 'MarkmapWatch', 'MarkmapWatchStop' },
+    opts = {},
+  },
   -- CSV
   --------------------------------------------------------------------------------
   {
