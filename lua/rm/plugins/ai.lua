@@ -82,14 +82,50 @@ return {
       { '<leader>an', '<cmd>ChatGPT<CR>', desc = 'chatgpt: open' },
     },
     config = function()
-      local border =
-        { style = rvim.ui.border.rectangle, highlight = 'FloatBorder' }
+      rvim.highlight.plugin('ChatGPT.nvim', {
+        theme = {
+          ['onedark'] = {
+            { ChatGPTSelectedMessage = { link = 'FloatTitle' } },
+            -- { ChatGPTTotalTokensBorder = { link = 'FloatTitle' } },
+            { ChatGPTCompletion = { link = 'FloatTitle' } },
+          },
+        },
+      })
+
+      local border = {
+        style = rvim.ui.border.rectangle,
+        highlight = 'FloatBorder',
+      }
       require('chatgpt').setup({
-        popup_window = { border = border },
-        popup_input = { border = border, submit = '<C-s>' },
-        settings_window = { border = border },
+        popup_window = {
+          border = border,
+          win_options = {
+            winhighlight = 'NormalFloat:NormalFloat,FloatBorder:FloatBorder',
+          },
+        },
+        popup_input = {
+          border = border,
+          prompt = ' > ',
+          submit = '<C-s>',
+          win_options = {
+            winhighlight = 'NormalFloat:NormalFloat,FloatBorder:FloatBorder',
+          },
+        },
+        settings_window = {
+          border = border,
+          win_options = {
+            winhighlight = 'Normal:Normal,FloatTitle:FloatTitle',
+          },
+        },
         chat = {
+          loading_text = 'Cooking ...',
           keymaps = { close = { '<Esc>' } },
+          sessions_window = {
+            border = border,
+            win_options = {
+              winhighlight = 'Normal:Normal,FloatTitle:FloatTitle',
+            },
+          },
         },
       })
     end,

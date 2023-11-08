@@ -1,6 +1,6 @@
 if not rvim then return end
 
-local g = vim.g
+local g, fn = vim.g, vim.fn
 local data = vim.fn.stdpath('data')
 
 --------------------------------------------------------------------------------
@@ -33,7 +33,7 @@ require('rm.ui')
 local lazy_path = join_paths(data, 'lazy', 'lazy.nvim')
 local plugins_enabled = rvim.plugins.enable
 if not vim.uv.fs_stat(lazy_path) then
-  vim.fn.system({
+  fn.system({
     'git',
     'clone',
     '--filter=blob:none',
