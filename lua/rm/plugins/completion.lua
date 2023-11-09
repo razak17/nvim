@@ -329,16 +329,9 @@ return {
       'fazibear/cmp-nerdfonts',
       'saadparwaiz1/cmp_luasnip',
       { 'Gelio/cmp-natdat', opts = {} },
-      { 'js-everts/cmp-tailwind-colors', opts = {} },
       { 'hrsh7th/cmp-nvim-lsp', cond = rvim.lsp.enable },
-      { 'amarakon/nvim-cmp-buffer-lines', ft = { 'c', 'cpp' } },
       { 'hrsh7th/cmp-cmdline', config = function() vim.o.wildmode = '' end },
       { 'hrsh7th/cmp-nvim-lsp-document-symbol', cond = rvim.lsp.enable },
-      {
-        'jsongerber/nvim-px-to-rem',
-        ft = { 'css', 'scss' },
-        opts = { disable_keymaps = true },
-      },
       {
         'uga-rosa/cmp-dictionary',
         cond = not rvim.plugins.minimal,
@@ -403,5 +396,16 @@ return {
         },
       },
     },
+  },
+  { 'amarakon/nvim-cmp-buffer-lines', ft = { 'c', 'cpp' } },
+  {
+    'js-everts/cmp-tailwind-colors',
+    ft = { 'css', 'html', 'vue', 'javascriptreact', 'typescriptreact' },
+    opts = {},
+  },
+  {
+    'jsongerber/nvim-px-to-rem',
+    ft = { 'css', 'scss' },
+    opts = { disable_keymaps = true },
   },
 }
