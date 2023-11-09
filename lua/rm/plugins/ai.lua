@@ -157,16 +157,9 @@ return {
     },
   },
   {
-    'razak17/wtf.nvim',
+    'piersolenski/wtf.nvim',
     cond = rvim.lsp.enable and rvim.ai.enable,
     event = 'VeryLazy',
-    opts = {
-      openai_api_key = vim.g.openai_api_key,
-      popup_type = 'popup', -- | 'horizontal' | 'vertical',
-      language = 'english',
-      search_engine = 'google', -- | 'duck_duck_go' | 'stack_overflow' | 'github',
-      winhighlight = 'NormalFloat:NormalFloat,FloatBorder:FloatBorder',
-    },
     keys = {
       {
         '<leader>ao',
@@ -178,6 +171,13 @@ return {
         function() require('wtf').search() end,
         desc = 'wtf: google search diagnostic',
       },
+    },
+    opts = {
+      openai_api_key = vim.g.openai_api_key,
+      popup_type = 'horizontal', -- | 'popup' | 'horizontal' | 'vertical',
+      language = 'english',
+      search_engine = 'google', -- 'google' | 'duck_duck_go' | 'stack_overflow' | 'github',
+      winhighlight = 'NormalFloat:NormalFloat,FloatBorder:FloatBorder',
     },
     dependencies = { 'MunifTanjim/nui.nvim' },
   },
