@@ -86,9 +86,7 @@ return {
         mode = { 'n', 'i', 'v' },
       },
     },
-    opts = {
-      openai_api_key = vim.g.openai_api_key,
-    },
+    opts = { openai_api_key = vim.g.openai_api_key },
   },
   {
     'jackMort/ChatGPT.nvim',
@@ -159,6 +157,31 @@ return {
     },
   },
   {
+    'razak17/wtf.nvim',
+    cond = rvim.lsp.enable and rvim.ai.enable,
+    event = 'VeryLazy',
+    opts = {
+      openai_api_key = vim.g.openai_api_key,
+      popup_type = 'popup', -- | 'horizontal' | 'vertical',
+      language = 'english',
+      search_engine = 'google', -- | 'duck_duck_go' | 'stack_overflow' | 'github',
+      winhighlight = 'NormalFloat:NormalFloat,FloatBorder:FloatBorder',
+    },
+    keys = {
+      {
+        '<leader>ao',
+        function() require('wtf').ai() end,
+        desc = 'wtf: debug diagnostic with AI',
+      },
+      {
+        '<leader>ag',
+        function() require('wtf').search() end,
+        desc = 'wtf: google search diagnostic',
+      },
+    },
+    dependencies = { 'MunifTanjim/nui.nvim' },
+  },
+  {
     'moozd/aidoc.nvim',
     cond = not rvim.plugins.minimal,
     keys = {
@@ -169,6 +192,6 @@ return {
         desc = 'aidoc: generate',
       },
     },
-    opts = {},
+    opts = { keymap = '' },
   },
 }

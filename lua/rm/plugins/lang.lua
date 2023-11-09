@@ -135,7 +135,6 @@ return {
   {
     'axelvc/template-string.nvim',
     cond = rvim.treesitter.enable,
-    event = 'BufRead',
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
     ft = {
       'javascript',
@@ -143,6 +142,7 @@ return {
       'typescript',
       'typescriptreact',
       'svelte',
+      'python',
     },
     opts = { remove_template_string = true },
   },

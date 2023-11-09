@@ -478,25 +478,6 @@ return {
     end,
   },
   {
-    'piersolenski/wtf.nvim',
-    cond = rvim.lsp.enable,
-    event = 'VeryLazy',
-    opts = {},
-    keys = {
-      {
-        '<leader>ao',
-        function() require('wtf').ai() end,
-        desc = 'wtf: debug diagnostic with AI',
-      },
-      {
-        '<leader>ag',
-        function() require('wtf').search() end,
-        desc = 'wtf: google search diagnostic',
-      },
-    },
-    dependencies = { 'MunifTanjim/nui.nvim' },
-  },
-  {
     'stevanmilic/nvim-lspimport',
     cond = rvim.lsp.enable,
     ft = { 'python' },
