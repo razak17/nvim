@@ -496,5 +496,17 @@ return {
     },
     dependencies = { 'MunifTanjim/nui.nvim' },
   },
+  {
+    'stevanmilic/nvim-lspimport',
+    cond = rvim.lsp.enable,
+    ft = { 'python' },
+    keys = {
+      {
+        '<localleader>la',
+        function() require('lspimport').import() end,
+        desc = 'lsp-import: import',
+      },
+    },
+  },
   -- }}}
 }

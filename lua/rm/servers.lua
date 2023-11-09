@@ -112,7 +112,8 @@ local servers = {
           autoSearchPaths = true,
           diagnosticMode = 'workspace',
           useLibraryCodeForTypes = true,
-          diagnosticSeverityOverrides = { reportUndefinedVariable = 'none' },
+          -- NOTE: disable to get nvim-lspimport working
+          -- diagnosticSeverityOverrides = { reportUndefinedVariable = 'none' },
         },
       },
     },
