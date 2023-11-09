@@ -10,7 +10,7 @@ return {
     cmdline = {
       format = {
         IncRename = { title = 'Rename' },
-        cmdline = { pattern = '^:', icon = ' ', lang = 'vim' },
+        cmdline = { pattern = '^:', icon = '>', lang = 'vim' },
         substitute = {
           pattern = '^:%%?s/',
           icon = ' ',
@@ -225,9 +225,7 @@ return {
       'c',
       '<M-CR>',
       function() require('noice').redirect(fn.getcmdline()) end,
-      {
-        desc = 'redirect Cmdline',
-      }
+      { desc = 'redirect Cmdline' }
     )
   end,
 }
