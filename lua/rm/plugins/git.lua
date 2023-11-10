@@ -338,4 +338,24 @@ return {
     cmd = { 'Flog', 'Flogsplit', 'Floggit' },
     dependencies = { 'tpope/vim-fugitive' },
   },
+  {
+    'ldelossa/gh.nvim',
+    cond = enabled,
+    -- stylua: ignore
+    cmd = {
+      'GHCloseCommit', 'GHExpandCommit', 'GHOpenToCommit', 'GHPopOutCommit',
+      'GHCollapseCommit', 'GHPreviewIssue', 'LTPanel', 'GHStartReview',
+      'GHCloseReview', 'GHDeleteReview', 'GHExpandReview', 'GHSubmitReview',
+      'GHCollapseReview', 'GHClosePR', 'GHPRDetails', 'GHExpandPR', 'GHOpenPR',
+      'GHPopOutPR', 'GHRefreshPR', 'GHOpenToPR', 'GHCollapsePR', 'GHCreateThread',
+      'GHNextThread', 'GHToggleThread',
+    },
+    dependencies = {
+      {
+        'ldelossa/litee.nvim',
+        config = function() require('litee.lib').setup() end,
+      },
+    },
+    config = function() require('litee.gh').setup() end,
+  },
 }
