@@ -194,4 +194,9 @@ return {
     },
     opts = { keymap = '' },
   },
+  {
+    'David-Kunz/gen.nvim',
+    cond = not rvim.plugins.minimal and rvim.ai.enable,
+    cmd = { 'Gen' },
+  },
 }
