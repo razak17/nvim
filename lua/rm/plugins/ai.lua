@@ -240,4 +240,23 @@ return {
     cond = not rvim.plugins.minimal and rvim.ai.enable,
     cmd = { 'Gen' },
   },
+  {
+    'razak17/backseat.nvim',
+    cmd = {
+      'Backseat',
+      'BackseatAsk',
+      'BackseatClear',
+      'BackseatClearLine',
+    },
+    opts = {
+      openai_api_key = vim.g.openai_api_key,
+      highlight = {
+        icon = '',
+        group = 'DiagnosticVirtualTextInfo',
+      },
+      popup_type = 'popup', -- | 'popup' | 'horizontal' | 'vertical',
+      winhighlight = 'NormalFloat:NormalFloat,FloatBorder:FloatBorder',
+    },
+  },
+  dependencies = { 'MunifTanjim/nui.nvim' },
 }
