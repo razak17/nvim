@@ -8,7 +8,23 @@ return {
     'f3fora/cmp-spell',
     ft = { 'gitcommit', 'NeogitCommitMessage', 'markdown', 'norg', 'org' },
   },
-  { 'rcarriga/cmp-dap', ft = { 'dap-repl', 'dapui_watches' } },
+  {
+    'rcarriga/cmp-dap',
+    ft = { 'dap-repl', 'dapui_watches' },
+  },
+  {
+    'amarakon/nvim-cmp-buffer-lines',
+    ft = { 'c', 'cpp' },
+  },
+  {
+    'js-everts/cmp-tailwind-colors',
+    ft = { 'css', 'html', 'vue', 'javascriptreact', 'typescriptreact' },
+  },
+  {
+    'jsongerber/nvim-px-to-rem',
+    ft = { 'css', 'scss' },
+    opts = { disable_keymaps = true },
+  },
   {
     'hrsh7th/nvim-cmp',
     event = 'InsertEnter',
@@ -355,57 +371,5 @@ return {
         dependencies = 'copilot.lua',
       },
     },
-  },
-  {
-    'zbirenbaum/copilot.lua',
-    cond = rvim.ai.enable and not rvim.plugins.minimal,
-    event = 'InsertEnter',
-    keys = {
-      {
-        '<leader>ap',
-        '<Cmd>Copilot panel<CR>',
-        desc = 'copilot: toggle panel',
-      },
-      { '<leader>at', '<Cmd>Copilot toggle<CR>', desc = 'copilot: toggle' },
-    },
-    opts = {
-      panel = { enabled = false },
-      suggestion = {
-        enabled = true,
-        auto_trigger = not rvim.plugins.overrides.copilot_cmp.enable,
-        keymap = {
-          accept_word = '<M-w>',
-          accept_line = '<M-l>',
-          accept = '<M-u>',
-          next = '<M-]>',
-          prev = '<M-[>',
-          dismiss = '<C-\\>',
-        },
-      },
-      filetypes = {
-        gitcommit = false,
-        NeogitCommitMessage = false,
-        DressingInput = false,
-        TelescopePrompt = false,
-        ['neo-tree-popup'] = false,
-        ['dap-repl'] = false,
-      },
-      server_opts_overrides = {
-        settings = {
-          advanced = { inlineSuggestCount = 3 },
-        },
-      },
-    },
-  },
-  { 'amarakon/nvim-cmp-buffer-lines', ft = { 'c', 'cpp' } },
-  {
-    'js-everts/cmp-tailwind-colors',
-    ft = { 'css', 'html', 'vue', 'javascriptreact', 'typescriptreact' },
-    opts = {},
-  },
-  {
-    'jsongerber/nvim-px-to-rem',
-    ft = { 'css', 'scss' },
-    opts = { disable_keymaps = true },
   },
 }
