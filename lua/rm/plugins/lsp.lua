@@ -489,5 +489,15 @@ return {
       },
     },
   },
+  {
+    'antosha417/nvim-lsp-file-operations',
+    cond = rvim.lsp.enable,
+    event = 'LspAttach',
+    opts = {},
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'nvim-neo-tree/neo-tree.nvim',
+    },
+  },
   -- }}}
 }
