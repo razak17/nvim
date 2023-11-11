@@ -380,7 +380,7 @@ return {
     'ellisonleao/glow.nvim',
     cond = not rvim.plugins.minimal,
     cmd = 'Glow',
-    ft = 'markdown',
+    -- ft = 'markdown',
     opts = {
       border = 'single',
       width = 120,
@@ -401,7 +401,7 @@ return {
   {
     'AntonVanAssche/md-headers.nvim',
     cond = rvim.treesitter.enable,
-    ft = 'markdown',
+    -- ft = 'markdown',
     cmd = { 'MarkdownHeaders', 'MarkdownHeadersClosest' },
     dependencies = { 'nvim-lua/plenary.nvim' },
     keys = {
@@ -429,7 +429,12 @@ return {
     'iamcco/markdown-preview.nvim',
     cond = not rvim.plugins.minimal,
     build = function() vim.fn['mkdp#util#install']() end,
-    ft = 'markdown',
+    cmd = {
+      'MarkdownPreview',
+      'MarkdownPreviewStop',
+      'MarkdownPreviewToggle',
+    },
+    -- ft = 'markdown',
     config = function()
       vim.g.mkdp_auto_start = 0
       vim.g.mkdp_auto_close = 1
@@ -461,7 +466,7 @@ return {
   },
   {
     'nfrid/markdown-togglecheck',
-    ft = { 'markdown' },
+    -- ft = { 'markdown' },
     keys = {
       {
         '<leader>om',
@@ -473,7 +478,7 @@ return {
   },
   {
     'NFrid/due.nvim',
-    ft = { 'markdown' },
+    -- ft = { 'markdown' },
     keys = {
       {
         '<localleader>mc',
@@ -540,7 +545,7 @@ return {
   },
   {
     'Zeioth/markmap.nvim',
-    ft = { 'markdown' },
+    -- ft = { 'markdown' },
     build = 'yarn global add markmap-cli',
     cmd = { 'MarkmapOpen', 'MarkmapSave', 'MarkmapWatch', 'MarkmapWatchStop' },
     opts = {},
@@ -549,7 +554,8 @@ return {
   --------------------------------------------------------------------------------
   {
     'vidocqh/data-viewer.nvim',
-    ft = { 'csv', 'tsv', 'sqlite' },
+    -- ft = { 'csv', 'tsv', 'sqlite' },
+    cmd = { 'DataViewer', 'DataViewerClose' },
     opts = {},
     config = function(_, opts)
       highlight.plugin('data-viewer', {
