@@ -386,6 +386,17 @@ return {
       width = 120,
     },
   },
+  {
+    'wallpants/github-preview.nvim',
+    cond = not rvim.plugins.minimal,
+    -- ft = 'markdown',
+    cmd = {
+      'GithubPreviewStart',
+      'GithubPreviewStop',
+      'GithubPreviewToggle',
+    },
+    opts = {},
+  },
   -- https://github.com/AntonVanAssche/md-headers.nvim
   {
     'AntonVanAssche/md-headers.nvim',
