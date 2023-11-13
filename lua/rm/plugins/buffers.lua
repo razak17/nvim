@@ -28,7 +28,7 @@ return {
     keys = { { '<leader>c', '<Cmd>BDelete this<CR>', desc = 'buffer delete' } },
   },
   {
-    'razak17/buffalo-nvim',
+    'Pheon-Dev/buffalo-nvim',
     keys = {
       {
         '<M-Space>',
