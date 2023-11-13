@@ -209,7 +209,7 @@ return {
         left = 'print(f"',
         right = '"',
         mid_var = '{',
-        right_var = '}"',
+        right_var = '}")',
       }
 
       require('debugprint').setup(opts)
