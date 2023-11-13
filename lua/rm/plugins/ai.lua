@@ -257,6 +257,6 @@ return {
       popup_type = 'popup', -- | 'popup' | 'horizontal' | 'vertical',
       winhighlight = 'NormalFloat:NormalFloat,FloatBorder:FloatBorder',
     },
+    dependencies = { 'MunifTanjim/nui.nvim' },
   },
-  dependencies = { 'MunifTanjim/nui.nvim' },
 }
