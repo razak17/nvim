@@ -5,7 +5,7 @@ return {
     'kristijanhusak/vim-dadbod-completion',
     {
       'kristijanhusak/vim-dadbod-completion',
-      ft = { 'sql', 'mysql', 'plsql' },
+      ft = { 'sql', 'mysql', 'psql' },
     },
   },
   keys = {
