@@ -351,7 +351,7 @@ return {
   },
   {
     'Wansmer/symbol-usage.nvim',
-    cond = rvim.lsp.enable,
+    cond = rvim.lsp.enable and false,
     event = 'LspAttach',
     config = function()
       highlight.plugin('symbol-usage', {

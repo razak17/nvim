@@ -20,7 +20,8 @@ return {
   },
   {
     'pmizio/typescript-tools.nvim',
-    event = { 'BufReadPre', 'BufNewFile' },
+    -- event = { 'BufReadPre', 'BufNewFile' },
+    ft = { 'typescript', 'typescriptreact', 'javascript', 'javascriptreact' },
     cond = rvim.lsp.enable
       and not rvim.find_string(rvim.plugins.disabled, 'typescript-tools.nvim'),
     dependencies = {
