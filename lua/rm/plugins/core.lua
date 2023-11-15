@@ -55,6 +55,11 @@ return {
     },
     opts = {},
   },
+  {
+    'carbon-steel/detour.nvim',
+    cmd = { 'Detour' },
+    keys = { { '<c-w><enter>', ':Detour<cr>', desc = 'detour: toggle' } },
+  },
   -- }}}
   ------------------------------------------------------------------------------
   -- Utilities {{{1
