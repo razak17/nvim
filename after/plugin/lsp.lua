@@ -318,7 +318,7 @@ local function setup_autocommands(client, buf)
   end
 
   if client.supports_method('textDocument/inlayHint', { bufnr = buf }) then
-    vim.lsp.inlay_hint(buf, true)
+    vim.lsp.inlay_hint.enable(buf, true)
   end
 
   if client.supports_method(M.textDocument_formatting) then
