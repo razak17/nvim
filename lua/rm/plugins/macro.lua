@@ -14,22 +14,11 @@ return {
     cond = not rvim.plugins.minimal,
     event = { 'BufReadPost', 'BufNewFile' },
     dependencies = { 'kkharji/sqlite.lua' },
+    -- stylua: ignore
     keys = {
-      {
-        '<localleader>qe',
-        "<cmd>lua require('NeoComposer.ui').edit_macros()<cr>",
-        desc = 'neocomposer: edit macro ',
-      },
-      {
-        '<localleader>qt',
-        "<cmd>lua require('NeoComposer.macro').toggle_delay()<cr>",
-        desc = 'neocomposer: delay macro toggle',
-      },
-      {
-        '<localleader>qd',
-        "<cmd>lua require('NeoComposer.store').clear_macros()<cr>",
-        desc = 'neocomposer: delete all macros',
-      },
+      { '<localleader>qe', "<cmd>lua require('NeoComposer.ui').edit_macros()<cr>", desc = 'neocomposer: edit macro ', },
+      { '<localleader>qt', "<cmd>lua require('NeoComposer.macro').toggle_delay()<cr>", desc = 'neocomposer: delay macro toggle', },
+      { '<localleader>qd', "<cmd>lua require('NeoComposer.store').clear_macros()<cr>", desc = 'neocomposer: delete all macros', },
     },
     config = function()
       require('NeoComposer').setup({

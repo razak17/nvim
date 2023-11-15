@@ -11,27 +11,12 @@ return {
     cond = enabled,
     cmd = 'Neogit',
     dependencies = { 'nvim-lua/plenary.nvim', 'sindrets/diffview.nvim' },
+    -- stylua: ignore
     keys = {
-      {
-        '<localleader>gs',
-        function() require('neogit').open() end,
-        desc = 'open status buffer',
-      },
-      {
-        '<localleader>gc',
-        function() require('neogit').open({ 'commit' }) end,
-        desc = 'open commit buffer',
-      },
-      {
-        '<localleader>gl',
-        function() require('neogit.popups.pull').create() end,
-        desc = 'open pull popup',
-      },
-      {
-        '<localleader>gp',
-        function() require('neogit.popups.push').create() end,
-        desc = 'open push popup',
-      },
+      { '<localleader>gs', function() require('neogit').open() end, desc = 'open status buffer', },
+      { '<localleader>gc', function() require('neogit').open({ 'commit' }) end, desc = 'open commit buffer', },
+      { '<localleader>gl', function() require('neogit.popups.pull').create() end, desc = 'open pull popup', },
+      { '<localleader>gp', function() require('neogit.popups.push').create() end, desc = 'open push popup', },
     },
     opts = {
       disable_signs = false,
@@ -77,24 +62,12 @@ return {
       'DiffviewToggleFiles',
       'DiffviewFocusFiles',
     },
+    -- stylua: ignore
     keys = {
       { '<localleader>gd', '<Cmd>DiffviewOpen<CR>', desc = 'diffview: open' },
-      {
-        'gh',
-        [[:'<'>DiffviewFileHistory<CR>]],
-        desc = 'diffview: file history',
-        mode = 'v',
-      },
-      {
-        '<localleader>gh',
-        '<Cmd>DiffviewFileHistory<CR>',
-        desc = 'diffview: file history',
-      },
-      {
-        '<localleader>gx',
-        '<cmd>set hidden<cr><cmd>DiffviewClose<cr><cmd>set nohidden<cr>',
-        desc = 'diffview: close all buffers',
-      },
+      { 'gh', [[:'<'>DiffviewFileHistory<CR>]], desc = 'diffview: file history', mode = 'v', },
+      { '<localleader>gh', '<Cmd>DiffviewFileHistory<CR>', desc = 'diffview: file history', },
+      { '<localleader>gx', '<cmd>set hidden<cr><cmd>DiffviewClose<cr><cmd>set nohidden<cr>', desc = 'diffview: close all buffers', },
     },
     opts = {
       default_args = { DiffviewFileHistory = { '%' } },
@@ -138,6 +111,7 @@ return {
       current_line_blame = not cwd:match('personal') and not cwd:match('dots'),
       current_line_blame_formatter = ' <author>, <author_time> · <summary>',
       preview_config = { border = border },
+      -- stylua: ignore
       on_attach = function(bufnr)
         local gs = package.loaded.gitsigns
 
@@ -149,62 +123,17 @@ return {
 
         map('n', '<leader>hu', gs.undo_stage_hunk, { desc = 'undo stage' })
         -- map('n', '<leader>hw', gs.toggle_word_diff, { desc = 'toggle word diff' })
-        map(
-          'n',
-          '<leader>hd',
-          gs.toggle_deleted,
-          { desc = 'show deleted lines' }
-        )
-        map(
-          'n',
-          '<leader>hp',
-          gs.preview_hunk_inline,
-          { desc = 'preview hunk' }
-        )
-        map(
-          'n',
-          '<leader>hb',
-          gs.toggle_current_line_blame,
-          { desc = 'toggle line blame' }
-        )
+        map('n', '<leader>hd', gs.toggle_deleted, { desc = 'show deleted lines' })
+        map('n', '<leader>hp', gs.preview_hunk_inline, { desc = 'preview hunk' })
+        map('n', '<leader>hb', gs.toggle_current_line_blame, { desc = 'toggle line blame' })
 
         map('n', '<leader>gbl', gs.blame_line, { desc = 'blame line' })
-        map(
-          'n',
-          '<leader>gr',
-          gs.reset_buffer,
-          { desc = 'reset entire buffer' }
-        )
-        map(
-          'n',
-          '<leader>gw',
-          gs.stage_buffer,
-          { desc = 'stage entire buffer' }
-        )
-        map(
-          'n',
-          '<leader>gl',
-          function() gs.setqflist('all') end,
-          { desc = 'list modified in qf' }
-        )
-        bmap(
-          { 'n', 'v' },
-          '<leader>hs',
-          '<Cmd>Gitsigns stage_hunk<CR>',
-          { desc = 'stage hunk' }
-        )
-        bmap(
-          { 'n', 'v' },
-          '<leader>hr',
-          '<Cmd>Gitsigns reset_hunk<CR>',
-          { desc = 'reset hunk' }
-        )
-        bmap(
-          { 'o', 'x' },
-          'ih',
-          ':<C-U>Gitsigns select_hunk<CR>',
-          { desc = 'select hunk' }
-        )
+        map('n', '<leader>gr', gs.reset_buffer, { desc = 'reset entire buffer' })
+        map('n', '<leader>gw', gs.stage_buffer, { desc = 'stage entire buffer' })
+        map('n', '<leader>gl', function() gs.setqflist('all') end, { desc = 'list modified in qf' })
+        bmap({ 'n', 'v' }, '<leader>hs', '<Cmd>Gitsigns stage_hunk<CR>', { desc = 'stage hunk' })
+        bmap({ 'n', 'v' }, '<leader>hr', '<Cmd>Gitsigns reset_hunk<CR>', { desc = 'reset hunk' })
+        bmap({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>', { desc = 'select hunk' })
 
         map('n', '[h', function()
           vim.schedule(function() gs.next_hunk() end)
@@ -216,12 +145,7 @@ return {
           return '<Ignore>'
         end, { expr = true, desc = 'previous hunk' })
 
-        map(
-          'n',
-          '<leader>hx',
-          '<Cmd>Gitsigns refresh<CR>',
-          { desc = 'refresh' }
-        )
+        map('n', '<leader>hx', '<Cmd>Gitsigns refresh<CR>', { desc = 'refresh' })
       end,
     },
   },
@@ -322,13 +246,9 @@ return {
   {
     'niuiic/git-log.nvim',
     cond = enabled,
+    -- stylua: ignore
     keys = {
-      {
-        '<leader>gL',
-        "<Cmd>lua require'git-log'.check_log()<CR>",
-        mode = { 'n', 'x' },
-        desc = 'git-log: show log',
-      },
+      { '<leader>gL', "<Cmd>lua require'git-log'.check_log()<CR>", mode = { 'n', 'x' }, desc = 'git-log: show log', },
     },
     dependencies = { 'niuiic/core.nvim' },
   },

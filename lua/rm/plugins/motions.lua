@@ -61,29 +61,14 @@ end
 return {
   {
     'LeonHeidelbach/trailblazer.nvim',
+    -- stylua: ignore
     keys = {
       '<a-l>',
       { '<leader>ma', add_trail_mark_stack, desc = 'trailblazer: add stack' },
-      {
-        '<leader>md',
-        delete_trail_mark_stack,
-        desc = 'trailblazer: delete stack',
-      },
-      {
-        '<leader>mg',
-        function() get_available_stacks(true) end,
-        desc = 'trailblazer: get stacks',
-      },
-      {
-        '<leader>ms',
-        '<Cmd>TrailBlazerSaveSession<CR>',
-        desc = 'trailblazer: save session',
-      },
-      {
-        '<leader>ml',
-        '<Cmd>TrailBlazerLoadSession<CR>',
-        desc = 'trailblazer: load session',
-      },
+      { '<leader>md', delete_trail_mark_stack, desc = 'trailblazer: delete stack', },
+      { '<leader>mg', function() get_available_stacks(true) end, desc = 'trailblazer: get stacks', },
+      { '<leader>ms', '<Cmd>TrailBlazerSaveSession<CR>', desc = 'trailblazer: save session', },
+      { '<leader>ml', '<Cmd>TrailBlazerLoadSession<CR>', desc = 'trailblazer: load session', },
     },
     opts = {
       auto_save_trailblazer_state_on_exit = true,
@@ -113,17 +98,10 @@ return {
   {
     'xiyaowong/accelerated-jk.nvim',
     event = 'VeryLazy',
+    -- stylua: ignore
     keys = {
-      {
-        'j',
-        "<cmd>lua require'accelerated-jk'.command('gj')<CR>",
-        mode = { 'x', 'n' },
-      },
-      {
-        'k',
-        "<cmd>lua require'accelerated-jk'.command('gk')<CR>",
-        mode = { 'x', 'n' },
-      },
+      { 'j', "<cmd>lua require'accelerated-jk'.command('gj')<CR>", mode = { 'x', 'n' }, },
+      { 'k', "<cmd>lua require'accelerated-jk'.command('gk')<CR>", mode = { 'x', 'n' }, },
     },
   },
   {
@@ -146,27 +124,12 @@ return {
     'chrisgrieser/nvim-spider',
     cond = not rvim.plugins.minimal,
     event = { 'BufRead', 'BufNewFile' },
+    -- stylua: ignore
     keys = {
-      {
-        'w',
-        "<cmd>lua require('spider').motion('w')<CR>",
-        mode = { 'x', 'n', 'o' },
-      },
-      {
-        'e',
-        "<cmd>lua require('spider').motion('e')<CR>",
-        mode = { 'x', 'n', 'o' },
-      },
-      {
-        'b',
-        "<cmd>lua require('spider').motion('b')<CR>",
-        mode = { 'x', 'n', 'o' },
-      },
-      {
-        'ge',
-        "<cmd>lua require('spider').motion('ge')<CR>",
-        mode = { 'x', 'n', 'o' },
-      },
+      { 'w', "<cmd>lua require('spider').motion('w')<CR>", mode = { 'x', 'n', 'o' }, },
+      { 'e', "<cmd>lua require('spider').motion('e')<CR>", mode = { 'x', 'n', 'o' }, },
+      { 'b', "<cmd>lua require('spider').motion('b')<CR>", mode = { 'x', 'n', 'o' }, },
+      { 'ge', "<cmd>lua require('spider').motion('ge')<CR>", mode = { 'x', 'n', 'o' }, },
     },
   },
 }

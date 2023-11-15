@@ -5,13 +5,10 @@ local codicons = ui.codicons
 return {
   'rcarriga/nvim-notify',
   event = 'BufRead',
+  -- stylua: ignore
   keys = {
     { '<leader>nn', '<cmd>Notifications<CR>', desc = 'notify: show' },
-    {
-      '<leader>nx',
-      function() require('notify').dismiss({ silent = true, pending = true }) end,
-      desc = 'notify: dismiss notifications',
-    },
+    { '<leader>nx', function() require('notify').dismiss({ silent = true, pending = true }) end, desc = 'notify: dismiss notifications', },
   },
   init = function()
     local notify = require('notify')

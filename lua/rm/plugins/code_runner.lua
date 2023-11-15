@@ -7,12 +7,9 @@ return {
   {
     'trimclain/builder.nvim',
     cmd = 'Build',
+    -- stylua: ignore
     keys = {
-      {
-        '<leader>rr',
-        '<Cmd>lua require("builder").build()<CR>',
-        desc = 'builder: run',
-      },
+      { '<leader>rr', '<Cmd>lua require("builder").build()<CR>', desc = 'builder: run', },
     },
     opts = {
       type = 'float',
@@ -56,28 +53,13 @@ return {
   },
   {
     'razak17/executor.nvim',
+    -- stylua: ignore
     keys = {
       { '<localleader>xc', '<cmd>ExecutorRun<CR>', desc = 'executor: start' },
-      {
-        '<localleader>xs',
-        '<cmd>ExecutorSetCommand<CR>',
-        desc = 'executor: set command',
-      },
-      {
-        '<localleader>xd',
-        '<cmd>ExecutorToggleDetail<CR>',
-        desc = 'executor: toggle detail',
-      },
-      {
-        '<localleader>xr',
-        '<cmd>ExecutorReset<CR>',
-        desc = 'executor: reset status',
-      },
-      {
-        '<localleader>xp',
-        '<cmd>ExecutorShowPresets<CR>',
-        desc = 'executor: show presets',
-      },
+      { '<localleader>xs', '<cmd>ExecutorSetCommand<CR>', desc = 'executor: set command', },
+      { '<localleader>xd', '<cmd>ExecutorToggleDetail<CR>', desc = 'executor: toggle detail', },
+      { '<localleader>xr', '<cmd>ExecutorReset<CR>', desc = 'executor: reset status', },
+      { '<localleader>xp', '<cmd>ExecutorShowPresets<CR>', desc = 'executor: show presets', },
     },
     opts = {
       input = {

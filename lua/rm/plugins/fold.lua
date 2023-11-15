@@ -57,7 +57,7 @@ return {
   },
   {
     'chrisgrieser/nvim-origami',
-    cond = rvim.treesitter.enable,
+    cond = rvim.treesitter.enable and false,
     event = 'BufReadPost',
     keys = {
       { '<BS>', function() require('origami').h() end, desc = 'toggle fold' },

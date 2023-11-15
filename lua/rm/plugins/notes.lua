@@ -6,34 +6,15 @@ end
 return {
   {
     'epwalsh/obsidian.nvim',
+    -- stylua: ignore
     keys = {
-      {
-        '<localleader>ob',
-        '<Cmd>ObsidianBacklinks<CR>',
-        desc = 'obsidian: buffer backlinks',
-      },
-      {
-        '<localleader>od',
-        '<Cmd>ObsidianToday<CR>',
-        desc = 'obsidian: open daily note',
-      },
+      { '<localleader>ob', '<Cmd>ObsidianBacklinks<CR>', desc = 'obsidian: buffer backlinks', },
+      { '<localleader>od', '<Cmd>ObsidianToday<CR>', desc = 'obsidian: open daily note', },
       { '<localleader>on', ':ObsidianNew ', desc = 'obsidian: new note' },
-      {
-        '<localleader>oy',
-        '<Cmd>ObsidianYesterday<CR>',
-        desc = 'obsidian: previous daily note',
-      },
+      { '<localleader>oy', '<Cmd>ObsidianYesterday<CR>', desc = 'obsidian: previous daily note', },
       { '<localleader>oo', ':ObsidianOpen ', desc = 'obsidian: open in app' },
-      {
-        '<localleader>os',
-        '<Cmd>ObsidianSearch<CR>',
-        desc = 'obsidian: search',
-      },
-      {
-        '<localleader>ot',
-        '<Cmd>ObsidianTemplate<CR>',
-        desc = 'obsidian: insert template',
-      },
+      { '<localleader>os', '<Cmd>ObsidianSearch<CR>', desc = 'obsidian: search', },
+      { '<localleader>ot', '<Cmd>ObsidianTemplate<CR>', desc = 'obsidian: insert template', },
     },
     opts = {
       dir = sync('obsidian'),

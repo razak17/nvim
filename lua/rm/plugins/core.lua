@@ -9,6 +9,12 @@ return {
   'nvim-tree/nvim-web-devicons',
   'b0o/schemastore.nvim',
   {
+    'romainl/vim-cool',
+    cond = false,
+    event = 'BufReadPre',
+    config = function() vim.g.CoolTotalMatches = 1 end,
+  },
+  {
     'olimorris/persisted.nvim',
     cond = not rvim.plugins.minimal,
     lazy = false,
@@ -33,25 +39,14 @@ return {
   {
     'sindrets/winshift.nvim',
     cmd = { 'WinShift' },
+    -- stylua: ignore
     keys = {
-      {
-        '<leader>sw',
-        '<Cmd>WinShift<CR>',
-        desc = 'winshift: start winshift mode',
-      },
-      {
-        '<leader>ss',
-        '<Cmd>WinShift swap<CR>',
-        desc = 'winshift: swap two window',
-      },
+      { '<leader>sw', '<Cmd>WinShift<CR>', desc = 'winshift: start winshift mode', },
+      { '<leader>ss', '<Cmd>WinShift swap<CR>', desc = 'winshift: swap two window', },
       { '<leader>sh', '<Cmd>WinShift left<CR>', desc = 'winshift: swap left' },
       { '<leader>sj', '<Cmd>WinShift down<CR>', desc = 'winshift: swap down' },
       { '<leader>sk', '<Cmd>WinShift up<CR>', desc = 'winshift: swap up' },
-      {
-        '<leader>sl',
-        '<Cmd>WinShift right<CR>',
-        desc = 'winshift: swap right',
-      },
+      { '<leader>sl', '<Cmd>WinShift right<CR>', desc = 'winshift: swap right', },
     },
     opts = {},
   },
@@ -108,31 +103,13 @@ return {
         },
       },
     },
+    -- stylua: ignore
     keys = {
       { 's', function() require('flash').jump() end, mode = { 'n', 'x', 'o' } },
-      {
-        'S',
-        function() require('flash').treesitter() end,
-        mode = { 'o', 'x' },
-      },
-      {
-        'r',
-        function() require('flash').remote() end,
-        mode = 'o',
-        desc = 'Remote Flash',
-      },
-      {
-        '<c-s>',
-        function() require('flash').toggle() end,
-        mode = { 'c' },
-        desc = 'Toggle Flash Search',
-      },
-      {
-        'R',
-        function() require('flash').treesitter_search() end,
-        mode = { 'o', 'x' },
-        desc = 'Flash Treesitter Search',
-      },
+      { 'S', function() require('flash').treesitter() end, mode = { 'o', 'x' }, },
+      { 'r', function() require('flash').remote() end, mode = 'o', desc = 'Remote Flash', },
+      { '<c-s>', function() require('flash').toggle() end, mode = { 'c' }, desc = 'Toggle Flash Search', },
+      { 'R', function() require('flash').treesitter_search() end, mode = { 'o', 'x' }, desc = 'Flash Treesitter Search', },
     },
   },
   {
@@ -288,44 +265,15 @@ return {
     'chrisgrieser/nvim-genghis',
     dependencies = 'stevearc/dressing.nvim',
     event = { 'BufReadPost', 'BufNewFile' },
+    -- stylua: ignore
     config = function()
       local g = require('genghis')
-      map(
-        'n',
-        '<localleader>fp',
-        g.copyFilepath,
-        { desc = 'genghis: yank filepath' }
-      )
-      map(
-        'n',
-        '<localleader>fn',
-        g.copyFilename,
-        { desc = 'genghis: yank filename' }
-      )
-      map(
-        'n',
-        '<localleader>fr',
-        g.renameFile,
-        { desc = 'genghis: rename file' }
-      )
-      map(
-        'n',
-        '<localleader>fm',
-        g.moveAndRenameFile,
-        { desc = 'genghis: move and rename' }
-      )
-      map(
-        'n',
-        '<localleader>fc',
-        g.createNewFile,
-        { desc = 'genghis: create new file' }
-      )
-      map(
-        'n',
-        '<localleader>fd',
-        g.duplicateFile,
-        { desc = 'genghis: duplicate current file' }
-      )
+      map('n', '<localleader>fp', g.copyFilepath, { desc = 'genghis: yank filepath' })
+      map('n', '<localleader>fn', g.copyFilename, { desc = 'genghis: yank filename' })
+      map('n', '<localleader>fr', g.renameFile, { desc = 'genghis: rename file' })
+      map('n', '<localleader>fm', g.moveAndRenameFile, { desc = 'genghis: move and rename' })
+      map('n', '<localleader>fc', g.createNewFile, { desc = 'genghis: create new file' })
+      map('n', '<localleader>fd', g.duplicateFile, { desc = 'genghis: duplicate current file' })
     end,
   },
   {
@@ -336,18 +284,10 @@ return {
   {
     'jpalardy/vim-slime',
     event = 'VeryLazy',
+    -- stylua: ignore
     keys = {
-      {
-        '<localleader>st',
-        '<Plug>SlimeParagraphSend',
-        desc = 'slime: paragraph',
-      },
-      {
-        '<localleader>st',
-        '<Plug>SlimeRegionSend',
-        mode = { 'x' },
-        desc = 'slime: region',
-      },
+      { '<localleader>st', '<Plug>SlimeParagraphSend', desc = 'slime: paragraph', },
+      { '<localleader>st', '<Plug>SlimeRegionSend', mode = { 'x' }, desc = 'slime: region', },
       { '<localleader>sc', '<Plug>SlimeConfig', desc = 'slime: config' },
     },
     config = function()
@@ -364,43 +304,20 @@ return {
       'nvim-telescope/telescope.nvim',
       'nvim-treesitter/nvim-treesitter',
     },
+    -- stylua: ignore
     keys = {
-      {
-        '<localleader>vf',
-        '<cmd>DevdocsOpenFloat<CR>',
-        desc = 'devdocs: open float',
-      },
-      {
-        '<localleader>vb',
-        '<cmd>DevdocsOpen<CR>',
-        desc = 'devdocs: open in buffer',
-      },
-      {
-        '<localleader>vo',
-        ':DevdocsOpenFloat ',
-        desc = 'devdocs: open documentation',
-      },
+      { '<localleader>vf', '<cmd>DevdocsOpenFloat<CR>', desc = 'devdocs: open float', },
+      { '<localleader>vb', '<cmd>DevdocsOpen<CR>', desc = 'devdocs: open in buffer', },
+      { '<localleader>vo', ':DevdocsOpenFloat ', desc = 'devdocs: open documentation', },
       { '<localleader>vi', ':DevdocsInstall ', desc = 'devdocs: install' },
       { '<localleader>vu', ':DevdocsUninstall ', desc = 'devdocs: uninstall' },
     },
     opts = {
+      -- stylua: ignore
       ensure_installed = {
-        'git',
-        'bash',
-        'lua-5.4',
-        'html',
-        'css',
-        'javascript',
-        'typescript',
-        'react',
-        'svelte',
-        'web_extensions',
-        'postgresql-15',
-        'python-3.11',
-        'go',
-        'docker',
-        'tailwindcss',
-        'astro',
+        'git', 'bash', 'lua-5.4', 'html', 'css', 'javascript', 'typescript',
+        'react', 'svelte', 'web_extensions', 'postgresql-15', 'python-3.11',
+        'go', 'docker', 'tailwindcss', 'astro',
       },
       wrap = true,
     },

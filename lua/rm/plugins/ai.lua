@@ -1,22 +1,22 @@
 local fn = vim.fn
 
-local function get_openai_key()
-  if not fn.executable('pass') then
-    vim.notify(
-      'Pass not found. Environment variables may not be loaded',
-      vim.log.levels.ERROR
-    )
-    return
-  end
-  local key = fn.system('pass show api/tokens/openai-work')
-  if not key or vim.v.shell_error ~= 0 then
-    vim.notify('OpenAI key not found', vim.log.levels.ERROR)
-    return
-  end
-  return vim.trim(key)
-end
-
-vim.g.openai_api_key = get_openai_key()
+-- local function get_openai_key()
+--   if not fn.executable('pass') then
+--     vim.notify(
+--       'Pass not found. Environment variables may not be loaded',
+--       vim.log.levels.ERROR
+--     )
+--     return
+--   end
+--   local key = fn.system('pass show api/tokens/openai-work')
+--   if not key or vim.v.shell_error ~= 0 then
+--     vim.notify('OpenAI key not found', vim.log.levels.ERROR)
+--     return
+--   end
+--   return vim.trim(key)
+-- end
+--
+-- vim.g.openai_api_key = get_openai_key()
 
 return {
   {
@@ -86,7 +86,7 @@ return {
         mode = { 'n', 'i', 'v' },
       },
     },
-    opts = { openai_api_key = vim.g.openai_api_key },
+    opts = {},
   },
   {
     'jackMort/ChatGPT.nvim',
@@ -117,7 +117,6 @@ return {
         highlight = 'FloatBorder',
       }
       require('chatgpt').setup({
-        api_key_cmd = vim.g.openai_api_key,
         popup_window = {
           border = border,
           win_options = {
@@ -173,7 +172,6 @@ return {
       },
     },
     opts = {
-      openai_api_key = vim.g.openai_api_key,
       popup_type = 'horizontal', -- | 'popup' | 'horizontal' | 'vertical',
       language = 'english',
       search_engine = 'google', -- 'google' | 'duck_duck_go' | 'stack_overflow' | 'github',
@@ -249,7 +247,6 @@ return {
       'BackseatClearLine',
     },
     opts = {
-      openai_api_key = vim.g.openai_api_key,
       highlight = {
         icon = '',
         group = 'DiagnosticVirtualTextInfo',

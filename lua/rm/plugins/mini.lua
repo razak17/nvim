@@ -8,24 +8,11 @@ return {
     opts = {
       symbol = separators.left_thin_block,
       draw = { delay = 100 },
+      -- stylua: ignore
       filetype_exclude = {
-        'lazy',
-        'fzf',
-        'alpha',
-        'dbout',
-        'neo-tree-popup',
-        'log',
-        'gitcommit',
-        'txt',
-        'help',
-        'NvimTree',
-        'git',
-        'flutterToolsOutline',
-        'undotree',
-        'markdown',
-        'norg',
-        'org',
-        'orgagenda',
+        'lazy', 'fzf', 'alpha', 'dbout', 'neo-tree-popup', 'log', 'gitcommit',
+        'txt', 'help', 'NvimTree', 'git', 'flutterToolsOutline', 'undotree',
+        'markdown', 'norg', 'org', 'orgagenda',
         '', -- for all buffers without a file type
       },
     },
@@ -51,17 +38,10 @@ return {
   },
   {
     'echasnovski/mini.trailspace',
+    -- stylua: ignore
     keys = {
-      {
-        '<leader>wx',
-        '<Cmd>lua MiniTrailspace.trim()<CR>',
-        desc = 'trailspace: trim all',
-      },
-      {
-        '<leader>wl',
-        '<Cmd>lua MiniTrailspace.trim_last_lines()<CR>',
-        desc = 'trailspace: trim last lines',
-      },
+      { '<leader>wx', '<Cmd>lua MiniTrailspace.trim()<CR>', desc = 'trailspace: trim all', },
+      { '<leader>wl', '<Cmd>lua MiniTrailspace.trim_last_lines()<CR>', desc = 'trailspace: trim last lines', },
     },
     opts = {},
   },
@@ -84,8 +64,8 @@ return {
   {
     'echasnovski/mini.surround',
     keys = {
-      { 'ys', desc = 'add surrounding' },
       'ds',
+      { 'ys', desc = 'add surrounding' },
       { 'yr', desc = 'delete surrounding' },
     },
     config = function()

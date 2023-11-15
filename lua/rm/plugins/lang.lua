@@ -29,12 +29,9 @@ return {
       'davidosomething/format-ts-errors.nvim',
       {
         'razak17/twoslash-queries.nvim',
+        -- stylua: ignore
         keys = {
-          {
-            '<localleader>li',
-            '<Cmd>TwoslashQueriesInspect<CR>',
-            desc = 'twoslash-queries: inspect',
-          },
+          { '<localleader>li', '<Cmd>TwoslashQueriesInspect<CR>', desc = 'twoslash-queries: inspect', },
         },
         opts = {},
         config = function(_, opts)
@@ -100,17 +97,10 @@ return {
     config = function()
       highlight.plugin('package-info', {
         theme = {
+          -- stylua: ignore
           ['onedark'] = {
-            {
-              PackageInfoUpToDateVersion = {
-                link = 'DiagnosticVirtualTextInfo',
-              },
-            },
-            {
-              PackageInfoOutdatedVersion = {
-                link = 'DiagnosticVirtualTextWarn',
-              },
-            },
+            { PackageInfoUpToDateVersion = { link = 'DiagnosticVirtualTextInfo', }, },
+            { PackageInfoOutdatedVersion = { link = 'DiagnosticVirtualTextWarn', }, },
           },
         },
       })
@@ -156,20 +146,11 @@ return {
     'NTBBloodbath/rest.nvim',
     cond = not rvim.plugins.minimal,
     ft = { 'http', 'json' },
+    -- stylua: ignore
     keys = {
       { '<localleader>rs', '<Plug>RestNvim', desc = 'rest: run', buffer = 0 },
-      {
-        '<localleader>rp',
-        '<Plug>RestNvimPreview',
-        desc = 'rest: preview',
-        buffer = 0,
-      },
-      {
-        '<localleader>rl',
-        '<Plug>RestNvimLast',
-        desc = 'rest: run last',
-        buffer = 0,
-      },
+      { '<localleader>rp', '<Plug>RestNvimPreview', desc = 'rest: preview', buffer = 0, },
+      { '<localleader>rl', '<Plug>RestNvimLast', desc = 'rest: run last', buffer = 0, },
     },
     opts = { skip_ssl_verification = true },
   },
@@ -185,12 +166,9 @@ return {
   {
     'MaximilianLloyd/tw-values.nvim',
     cond = rvim.treesitter.enable and rvim.lsp.enable,
+    -- stylua: ignore
     keys = {
-      {
-        '<localleader>lt',
-        '<cmd>TWValues<cr>',
-        desc = 'tw-values: show values',
-      },
+      { '<localleader>lt', '<cmd>TWValues<cr>', desc = 'tw-values: show values', },
     },
     opts = { border = border, show_unknown_classes = true },
   },
@@ -250,79 +228,20 @@ return {
           ),
         },
         server = {
+        -- stylua: ignore
           on_attach = function(_, bufnr)
-            map(
-              'n',
-              'K',
-              rt.hover_actions.hover_actions,
-              { desc = 'hover', buffer = bufnr }
-            )
-            map(
-              'n',
-              '<localleader>rhe',
-              rt.inlay_hints.set,
-              { desc = 'set hints', buffer = bufnr }
-            )
-            map(
-              'n',
-              '<localleader>rhd',
-              rt.inlay_hints.unset,
-              { desc = 'unset hints', buffer = bufnr }
-            )
-            map(
-              'n',
-              '<localleader>rr',
-              rt.runnables.runnables,
-              { desc = 'runnables', buffer = bufnr }
-            )
-            map(
-              'n',
-              '<localleader>rc',
-              rt.open_cargo_toml.open_cargo_toml,
-              { desc = 'open cargo', buffer = bufnr }
-            )
-            map(
-              'n',
-              '<localleader>rd',
-              rt.debuggables.debuggables,
-              { desc = 'debuggables', buffer = bufnr }
-            )
-            map(
-              'n',
-              '<localleader>rm',
-              rt.expand_macro.expand_macro,
-              { desc = 'expand macro', buffer = bufnr }
-            )
-            map(
-              'n',
-              '<localleader>ro',
-              rt.external_docs.open_external_docs,
-              { desc = 'open external docs', buffer = bufnr }
-            )
-            map(
-              'n',
-              '<localleader>rp',
-              rt.parent_module.parent_module,
-              { desc = 'parent module', buffer = bufnr }
-            )
-            map(
-              'n',
-              '<localleader>rs',
-              rt.workspace_refresh.reload_workspace,
-              { desc = 'reload workspace', buffer = bufnr }
-            )
-            map(
-              'n',
-              '<localleader>rg',
-              '<Cmd>RustViewCrateGraph<CR>',
-              { desc = 'view crate graph', buffer = bufnr }
-            )
-            map(
-              'n',
-              '<localleader>ra',
-              rt.code_action_group.code_action_group,
-              { desc = 'code action', buffer = bufnr }
-            )
+            map('n', 'K', rt.hover_actions.hover_actions, { desc = 'hover', buffer = bufnr })
+            map('n', '<localleader>rhe', rt.inlay_hints.set, { desc = 'set hints', buffer = bufnr })
+            map('n', '<localleader>rhd', rt.inlay_hints.unset, { desc = 'unset hints', buffer = bufnr })
+            map('n', '<localleader>rr', rt.runnables.runnables, { desc = 'runnables', buffer = bufnr })
+            map('n', '<localleader>rc', rt.open_cargo_toml.open_cargo_toml, { desc = 'open cargo', buffer = bufnr })
+            map('n', '<localleader>rd', rt.debuggables.debuggables, { desc = 'debuggables', buffer = bufnr })
+            map('n', '<localleader>rm', rt.expand_macro.expand_macro, { desc = 'expand macro', buffer = bufnr })
+            map('n', '<localleader>ro', rt.external_docs.open_external_docs, { desc = 'open external docs', buffer = bufnr })
+            map('n', '<localleader>rp', rt.parent_module.parent_module, { desc = 'parent module', buffer = bufnr })
+            map('n', '<localleader>rs', rt.workspace_refresh.reload_workspace, { desc = 'reload workspace', buffer = bufnr })
+            map('n', '<localleader>rg', '<Cmd>RustViewCrateGraph<CR>', { desc = 'view crate graph', buffer = bufnr })
+            map('n', '<localleader>ra', rt.code_action_group.code_action_group, { desc = 'code action', buffer = bufnr })
           end,
           standalone = false,
           settings = {
@@ -404,17 +323,10 @@ return {
     -- ft = 'markdown',
     cmd = { 'MarkdownHeaders', 'MarkdownHeadersClosest' },
     dependencies = { 'nvim-lua/plenary.nvim' },
+    -- stylua: ignore
     keys = {
-      {
-        '<localleader>mh',
-        '<cmd>MarkdownHeaders<CR>',
-        desc = 'md-header: headers',
-      },
-      {
-        '<localleader>mn',
-        '<cmd>MarkdownHeadersClosest<CR>',
-        desc = 'md-header: closest',
-      },
+      { '<localleader>mh', '<cmd>MarkdownHeaders<CR>', desc = 'md-header: headers', },
+      { '<localleader>mn', '<cmd>MarkdownHeadersClosest<CR>', desc = 'md-header: closest', },
     },
     opts = { borderchars = ui.border.common },
     config = function(_, opts)
@@ -467,43 +379,21 @@ return {
   {
     'nfrid/markdown-togglecheck',
     -- ft = { 'markdown' },
+    -- stylua: ignore
     keys = {
-      {
-        '<leader>om',
-        function() require('markdown-togglecheck').toggle() end,
-        desc = 'toggle markdown checkbox',
-      },
+      { '<leader>om', function() require('markdown-togglecheck').toggle() end, desc = 'toggle markdown checkbox', },
     },
     dependencies = { 'nfrid/treesitter-utils' },
   },
   {
     'NFrid/due.nvim',
     -- ft = { 'markdown' },
+    -- stylua: ignore
     keys = {
-      {
-        '<localleader>mc',
-        function() require('due_nvim').draw(0) end,
-        mode = 'n',
-        desc = 'due: mode',
-      },
-      {
-        '<localleader>md',
-        function() require('due_nvim').clean(0) end,
-        mode = 'n',
-        desc = 'due: clean',
-      },
-      {
-        '<localleader>mr',
-        function() require('due_nvim').redraw(0) end,
-        mode = 'n',
-        desc = 'due: redraw',
-      },
-      {
-        '<localleader>mu',
-        function() require('due_nvim').async_update(0) end,
-        mode = 'n',
-        desc = 'due: async update',
-      },
+      { '<localleader>mc', function() require('due_nvim').draw(0) end, desc = 'due: mode', },
+      { '<localleader>md', function() require('due_nvim').clean(0) end, desc = 'due: clean', },
+      { '<localleader>mr', function() require('due_nvim').redraw(0) end, desc = 'due: redraw', },
+      { '<localleader>mu', function() require('due_nvim').async_update(0) end, desc = 'due: async update', },
     },
     opts = {
       prescript = 'due: ', -- prescript to due data

@@ -2,38 +2,15 @@ return {
   {
     'gbprod/yanky.nvim',
     cmd = { 'YankyRingHistory' },
+    -- stylua: ignore
     keys = {
-      {
-        'p',
-        '<Plug>(YankyPutAfter)',
-        mode = { 'n', 'x' },
-        desc = 'yanky: put after',
-      },
-      {
-        'P',
-        '<Plug>(YankyPutBefore)',
-        mode = { 'n', 'x' },
-        desc = 'yanky: put before',
-      },
-      {
-        'gp',
-        '<Plug>(YankyGPutAfter)',
-        mode = { 'n', 'x' },
-        desc = 'yanky: gput after',
-      },
-      {
-        'gP',
-        '<Plug>(YankyGPutBefore)',
-        mode = { 'n', 'x' },
-        desc = 'yanky: gput before',
-      },
+      { 'p', '<Plug>(YankyPutAfter)', mode = { 'n', 'x' }, desc = 'yanky: put after', },
+      { 'P', '<Plug>(YankyPutBefore)', mode = { 'n', 'x' }, desc = 'yanky: put before', },
+      { 'gp', '<Plug>(YankyGPutAfter)', mode = { 'n', 'x' }, desc = 'yanky: gput after', },
+      { 'gP', '<Plug>(YankyGPutBefore)', mode = { 'n', 'x' }, desc = 'yanky: gput before', },
       -- { '<m-n>', '<Plug>(YankyCycleForward)', desc = 'yanky: cycle forward' },
       -- { '<m-p>', '<Plug>(YankyCycleBackward)', desc = 'yanky: cycle backward' },
-      {
-        '<localleader>y',
-        '<Cmd>YankyRingHistory<CR>',
-        desc = 'yanky: open yank history',
-      },
+      { '<localleader>y', '<Cmd>YankyRingHistory<CR>', desc = 'yanky: open yank history', },
     },
     opts = { ring = { storage = 'sqlite' } },
     dependencies = { 'kkharji/sqlite.lua' },
@@ -146,32 +123,13 @@ return {
   },
   {
     'danymat/neogen',
+    -- stylua: ignore
     keys = {
-      {
-        '<localleader>nd',
-        function() require('neogen').generate() end,
-        desc = 'neogen: generate doc',
-      },
-      {
-        '<localleader>nf',
-        function() require('neogen').generate({ type = 'file' }) end,
-        desc = 'neogen: file doc',
-      },
-      {
-        '<localleader>nc',
-        function() require('neogen').generate({ type = 'class' }) end,
-        desc = 'neogen: class doc',
-      },
-      {
-        '<localleader>nf',
-        function() require('neogen').generate({ type = 'func' }) end,
-        desc = 'neogen: func doc',
-      },
-      {
-        '<localleader>nt',
-        function() require('neogen').generate({ type = 'type' }) end,
-        desc = 'neogen: type doc',
-      },
+      { '<localleader>nd', function() require('neogen').generate() end, desc = 'neogen: generate doc', },
+      { '<localleader>nf', function() require('neogen').generate({ type = 'file' }) end, desc = 'neogen: file doc', },
+      { '<localleader>nc', function() require('neogen').generate({ type = 'class' }) end, desc = 'neogen: class doc', },
+      { '<localleader>nf', function() require('neogen').generate({ type = 'func' }) end, desc = 'neogen: func doc', },
+      { '<localleader>nt', function() require('neogen').generate({ type = 'type' }) end, desc = 'neogen: type doc', },
     },
     opts = { snippet_engine = 'luasnip' },
   },
@@ -179,12 +137,9 @@ return {
     'ckolkey/ts-node-action',
     cond = rvim.treesitter.enable,
     dependencies = { 'nvim-treesitter' },
+    -- stylua: ignore
     keys = {
-      {
-        '<leader>k',
-        function() require('ts-node-action').node_action() end,
-        desc = 'ts-node-action: run',
-      },
+      { '<leader>k', function() require('ts-node-action').node_action() end, desc = 'ts-node-action: run', },
     },
     opts = {},
   },
@@ -210,17 +165,10 @@ return {
   {
     'Wansmer/sibling-swap.nvim',
     cond = rvim.treesitter.enable,
+    -- stylua: ignore
     keys = {
-      {
-        '<leader>ih',
-        function() require('sibling-swap').swap_with_left() end,
-        desc = 'sibling-swap: swap left',
-      },
-      {
-        '<leader>il',
-        function() require('sibling-swap').swap_with_right() end,
-        desc = 'sibling-swap: swap right',
-      },
+      { '<leader>ih', function() require('sibling-swap').swap_with_left() end, desc = 'sibling-swap: swap left', },
+      { '<leader>il', function() require('sibling-swap').swap_with_right() end, desc = 'sibling-swap: swap right', },
     },
     opts = {
       use_default_keymaps = false,
@@ -249,12 +197,9 @@ return {
   },
   {
     'nguyenvukhang/nvim-toggler',
+    -- stylua: ignore
     keys = {
-      {
-        '<leader>ii',
-        '<cmd>lua require("nvim-toggler").toggle()<CR>',
-        desc = 'nvim-toggler: toggle',
-      },
+      { '<leader>ii', '<cmd>lua require("nvim-toggler").toggle()<CR>', desc = 'nvim-toggler: toggle', },
     },
     opts = {
       remove_default_keybinds = true,
@@ -317,17 +262,10 @@ return {
   },
   {
     's1n7ax/nvim-comment-frame',
+    -- stylua: ignore
     keys = {
-      {
-        '<localleader>cf',
-        '<Cmd>lua require("nvim-comment-frame").add_comment()<CR>',
-        desc = 'comment-frame: add',
-      },
-      {
-        '<localleader>cm',
-        '<Cmd>lua require("nvim-comment-frame").add_multiline_comment()<CR>',
-        desc = 'comment-frame: add multiline',
-      },
+      { '<localleader>cf', '<Cmd>lua require("nvim-comment-frame").add_comment()<CR>', desc = 'comment-frame: add', },
+      { '<localleader>cm', '<Cmd>lua require("nvim-comment-frame").add_multiline_comment()<CR>', desc = 'comment-frame: add multiline', },
     },
     opts = {
       disable_default_keymap = false,
@@ -356,25 +294,11 @@ return {
   {
     'haolian9/nag.nvim',
     dependencies = { 'haolian9/infra.nvim' },
+    -- stylua: ignore
     keys = {
-      {
-        mode = 'x',
-        '<localleader>nv',
-        ":lua require'nag'.split('right')<CR>",
-        desc = 'nag: split right',
-      },
-      {
-        mode = 'x',
-        '<localleader>ns',
-        ":lua require'nag'.split('below')<CR>",
-        desc = 'nag: split below',
-      },
-      {
-        mode = 'x',
-        '<localleader>nt',
-        ":lua require'nag'.tab()<CR>",
-        desc = 'nag: split tab',
-      },
+      { mode = 'x', '<localleader>nv', ":lua require'nag'.split('right')<CR>", desc = 'nag: split right', },
+      { mode = 'x', '<localleader>ns', ":lua require'nag'.split('below')<CR>", desc = 'nag: split below', },
+      { mode = 'x', '<localleader>nt', ":lua require'nag'.tab()<CR>", desc = 'nag: split tab', },
     },
   },
 }

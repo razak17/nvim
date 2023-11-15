@@ -98,33 +98,14 @@ return {
       lightbulb = { enable = false },
       symbol_in_winbar = { enable = false },
     },
+    -- stylua: ignore
     keys = {
       { '<leader>lo', '<cmd>Lspsaga outline<CR>', 'lspsaga: outline' },
-      {
-        '<localleader>lf',
-        '<cmd>Lspsaga lsp_finder<cr>',
-        desc = 'lspsaga: finder',
-      },
-      {
-        '<localleader>la',
-        '<cmd>Lspsaga code_action<cr>',
-        desc = 'lspsaga: code action',
-      },
-      {
-        '<M-p>',
-        '<cmd>Lspsaga peek_type_definition<cr>',
-        desc = 'lspsaga: type definition',
-      },
-      {
-        '<M-i>',
-        '<cmd>Lspsaga incoming_calls<cr>',
-        desc = 'lspsaga: incoming calls',
-      },
-      {
-        '<M-o>',
-        '<cmd>Lspsaga outgoing_calls<cr>',
-        desc = 'lspsaga: outgoing calls',
-      },
+      { '<localleader>lf', '<cmd>Lspsaga lsp_finder<cr>', desc = 'lspsaga: finder', },
+      { '<localleader>la', '<cmd>Lspsaga code_action<cr>', desc = 'lspsaga: code action', },
+      { '<M-p>', '<cmd>Lspsaga peek_type_definition<cr>', desc = 'lspsaga: type definition', },
+      { '<M-i>', '<cmd>Lspsaga incoming_calls<cr>', desc = 'lspsaga: incoming calls', },
+      { '<M-o>', '<cmd>Lspsaga outgoing_calls<cr>', desc = 'lspsaga: outgoing calls', },
     },
     dependencies = {
       'nvim-tree/nvim-web-devicons',
@@ -302,17 +283,10 @@ return {
   {
     'chrisgrieser/nvim-rulebook',
     cond = rvim.lsp.enable,
+    -- stylua: ignore
     keys = {
-      {
-        '<localleader>lri',
-        function() require('rulebook').ignoreRule() end,
-        desc = 'rulebook: ignore rule',
-      },
-      {
-        '<localleader>lrl',
-        function() require('rulebook').lookupRule() end,
-        desc = 'rulebook: lookup rule',
-      },
+      { '<localleader>lri', function() require('rulebook').ignoreRule() end, desc = 'rulebook: ignore rule', },
+      { '<localleader>lrl', function() require('rulebook').lookupRule() end, desc = 'rulebook: lookup rule', },
     },
   },
   {
@@ -368,7 +342,7 @@ return {
   {
     'zeioth/garbage-day.nvim',
     cond = rvim.lsp.enable,
-    event = 'BufEnter',
+    event = 'LspAttach',
     opts = {
       grace_period = 60 * 15,
       notifications = true,
@@ -381,50 +355,15 @@ return {
     event = 'LspAttach',
     config = function()
       highlight.plugin('symbol-usage', {
+        -- stylua: ignore
         theme = {
           ['onedark'] = {
-            {
-              SymbolUsageRounding = {
-                italic = true,
-                fg = { from = 'CursorLine', attr = 'bg' },
-              },
-            },
-            {
-              SymbolUsageContent = {
-                italic = true,
-                bg = { from = 'CursorLine' },
-                fg = { from = 'Comment' },
-              },
-            },
-            {
-              SymbolUsageRef = {
-                italic = true,
-                bg = { from = 'CursorLine' },
-                fg = { from = 'Function' },
-              },
-            },
-            {
-              SymbolUsageDef = {
-                italic = true,
-                bg = { from = 'CursorLine' },
-                fg = { from = 'Type' },
-              },
-            },
-            {
-              SymbolUsageImpl = {
-                italic = true,
-                bg = { from = 'CursorLine' },
-                fg = { from = '@keyword' },
-              },
-            },
-            {
-              SymbolUsageContent = {
-                bold = false,
-                italic = true,
-                bg = { from = 'CursorLine' },
-                fg = { from = 'Comment' },
-              },
-            },
+            { SymbolUsageRounding = { italic = true, fg = { from = 'CursorLine', attr = 'bg' }, }, },
+            { SymbolUsageContent = { italic = true, bg = { from = 'CursorLine' }, fg = { from = 'Comment' }, }, },
+            { SymbolUsageRef = { italic = true, bg = { from = 'CursorLine' }, fg = { from = 'Function' }, }, },
+            { SymbolUsageDef = { italic = true, bg = { from = 'CursorLine' }, fg = { from = 'Type' }, }, },
+            { SymbolUsageImpl = { italic = true, bg = { from = 'CursorLine' }, fg = { from = '@keyword' }, }, },
+            { SymbolUsageContent = { bold = false, italic = true, bg = { from = 'CursorLine' }, fg = { from = 'Comment' }, }, },
           },
         },
       })

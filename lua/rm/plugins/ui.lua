@@ -22,12 +22,9 @@ return {
     cond = not rvim.plugins.minimal and false,
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     event = 'VeryLazy',
+    -- stylua: ignore
     keys = {
-      {
-        '<leader>ob',
-        '<Cmd>BufferTabsToggle<CR>',
-        desc = 'buffer-tabs: toggle',
-      },
+      { '<leader>ob', '<Cmd>BufferTabsToggle<CR>', desc = 'buffer-tabs: toggle', },
     },
     config = function()
       require('buffertabs').setup({
@@ -173,28 +170,17 @@ return {
   {
     'eandrju/cellular-automaton.nvim',
     cmd = 'CellularAutomaton',
+    -- stylua: ignore
     keys = {
-      {
-        '<localleader>ag',
-        '<Cmd>CellularAutomaton game_of_life<CR>',
-        desc = 'automaton: game of life',
-      },
-      {
-        '<localleader>am',
-        '<Cmd>CellularAutomaton make_it_rain<CR>',
-        desc = 'automaton: make it rain',
-      },
+      { '<localleader>ag', '<Cmd>CellularAutomaton game_of_life<CR>', desc = 'automaton: game of life', },
+      { '<localleader>am', '<Cmd>CellularAutomaton make_it_rain<CR>', desc = 'automaton: make it rain', },
     },
   },
   {
     'tjdevries/sPoNGe-BoB.NvIm',
+    -- stylua: ignore
     keys = {
-      {
-        '<localleader>ab',
-        '<cmd>SpOnGeBoBiFy<CR>',
-        mode = { 'v' },
-        desc = 'SpOnGeBoB: SpOnGeBoBiFy',
-      },
+      { '<localleader>ab', '<cmd>SpOnGeBoBiFy<CR>', mode = { 'v' }, desc = 'SpOnGeBoB: SpOnGeBoBiFy', },
     },
   },
   {
@@ -325,18 +311,11 @@ return {
     cond = rvim.treesitter.enable,
     event = 'BufReadPre',
     cmd = { 'TodoTelescope', 'TodoTrouble', 'TodoQuickFix', 'TodoDots' },
+    -- stylua: ignore
     keys = {
       { '<localleader>tt', '<cmd>TodoDots<CR>', desc = 'todo: dotfiles todos' },
-      {
-        '<localleader>tj',
-        function() require('todo-comments').jump_next() end,
-        desc = 'todo-comments: next todo',
-      },
-      {
-        '<localleader>tk',
-        function() require('todo-comments').jump_prev() end,
-        desc = 'todo-comments: prev todo',
-      },
+      { '<localleader>tj', function() require('todo-comments').jump_next() end, desc = 'todo-comments: next todo', },
+      { '<localleader>tk', function() require('todo-comments').jump_prev() end, desc = 'todo-comments: prev todo', },
     },
     config = function()
       require('todo-comments').setup({ highlight = { after = '' } })

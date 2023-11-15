@@ -2,12 +2,6 @@ return {
   ------------------------------------------------------------------------------
   -- Themes {{{1
   ------------------------------------------------------------------------------
-
-  {
-    'romainl/vim-cool',
-    event = 'BufReadPre',
-    config = function() vim.g.CoolTotalMatches = 1 end,
-  },
   {
     'LunarVim/horizon.nvim',
     cond = false,

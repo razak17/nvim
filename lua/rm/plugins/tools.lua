@@ -154,19 +154,10 @@ return {
   {
     'mfussenegger/nvim-lint',
     cond = rvim.lsp.enable and not rvim.lsp.null_ls.enable,
+    -- stylua: ignore
     ft = {
-      'javascript',
-      'javascript.jsx',
-      'javascriptreact',
-      'lua',
-      'python',
-      'rst',
-      'sh',
-      'typescript',
-      'typescript.tsx',
-      'typescriptreact',
-      'vim',
-      'yaml',
+      'javascript', 'javascript.jsx', 'javascriptreact', 'lua', 'python', 'rst',
+      'sh', 'typescript', 'typescript.tsx', 'typescriptreact', 'vim', 'yaml',
     },
     opts = {
       linters_by_ft = {
