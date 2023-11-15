@@ -438,5 +438,16 @@ return {
       'nvim-neo-tree/neo-tree.nvim',
     },
   },
+  {
+    'pechorin/any-jump.vim',
+    cond = rvim.lsp.enable,
+    cmd = { 'AnyJump', 'AnyJumpArg', 'AnyJumpLastResults' },
+    -- stylua: ignore
+    keys = {
+      { '<leader>jj', '<Cmd>AnyJump<CR>', desc = 'any-jump: jump' },
+      { '<leader>ja', '<Cmd>AnyJumpArg<CR>', desc = 'any-jump: arg' },
+      { '<leader>jp', '<Cmd>AnyJumpLastResults<CR>', desc = 'any-jump: resume' },
+    },
+  },
   -- }}}
 }
