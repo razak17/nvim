@@ -58,6 +58,7 @@ return {
       r = { name = 'Run' },
       s = { name = 'Splits' },
       t = { name = 'Testing' },
+      u = { name = 'URL' },
       tc = { name = 'Coverage' },
       tn = { name = 'Neotest' },
       to = { name = 'Overseer' },

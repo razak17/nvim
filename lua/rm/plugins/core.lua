@@ -55,6 +55,25 @@ return {
     cmd = { 'Detour' },
     keys = { { '<c-w><enter>', ':Detour<cr>', desc = 'detour: toggle' } },
   },
+  {
+    'axieax/urlview.nvim',
+    cmd = { 'UrlView' },
+    keys = {
+      { '<leader>ub', '<cmd>UrlView buffer<cr>', desc = 'urlview: buffers' },
+      { '<leader>ul', '<cmd>UrlView lazy<cr>', desc = 'urlview: lazy' },
+      {
+        '<leader>uc',
+        '<cmd>UrlView buffer action=clipboard<cr>',
+        desc = 'urlview: copy links',
+      },
+    },
+    opts = {
+      default_title = 'Links:',
+      default_picker = 'native',
+      default_prefix = 'https://',
+      default_action = 'system',
+    },
+  },
   -- }}}
   ------------------------------------------------------------------------------
   -- Utilities {{{1
@@ -213,7 +232,7 @@ return {
     'mbbill/undotree',
     cmd = 'UndotreeToggle',
     keys = {
-      { '<leader>u', '<cmd>UndotreeToggle<CR>', desc = 'undotree: toggle' },
+      { '<leader>U', '<cmd>UndotreeToggle<CR>', desc = 'undotree: toggle' },
     },
     config = function()
       vim.g.undotree_TreeNodeShape = '◦' -- Alternative: '◉'

@@ -106,7 +106,7 @@ nnoremap(
 nnoremap('<leader>I', '<cmd>Inspect<CR>', { desc = 'inspect' })
 --------------------------------------------------------------------------------
 -- Capitalize
-nnoremap('<leader>U', 'gUiw`]', { desc = 'capitalize word' })
+nnoremap('<leader>uu', 'gUiw', { desc = 'capitalize word' })
 --------------------------------------------------------------------------------
 -- Moving lines/visual block
 xnoremap('K', ":m '<-2<CR>gv=gv")
