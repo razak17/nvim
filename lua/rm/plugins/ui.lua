@@ -84,6 +84,20 @@ return {
     },
   },
   {
+    'sindrets/winshift.nvim',
+    cmd = { 'WinShift' },
+    -- stylua: ignore
+    keys = {
+      { '<leader>sw', '<Cmd>WinShift<CR>', desc = 'winshift: start winshift mode', },
+      { '<leader>ss', '<Cmd>WinShift swap<CR>', desc = 'winshift: swap two window', },
+      { '<leader>sh', '<Cmd>WinShift left<CR>', desc = 'winshift: swap left' },
+      { '<leader>sj', '<Cmd>WinShift down<CR>', desc = 'winshift: swap down' },
+      { '<leader>sk', '<Cmd>WinShift up<CR>', desc = 'winshift: swap up' },
+      { '<leader>sl', '<Cmd>WinShift right<CR>', desc = 'winshift: swap right', },
+    },
+    opts = {},
+  },
+  {
     'anuvyklack/windows.nvim',
     cond = not rvim.plugins.minimal,
     event = { 'BufReadPre', 'BufNewFile' },
