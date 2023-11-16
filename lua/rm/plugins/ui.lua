@@ -84,6 +84,16 @@ return {
     },
   },
   {
+    'anuvyklack/windows.nvim',
+    cond = not rvim.plugins.minimal,
+    event = { 'BufReadPre', 'BufNewFile' },
+    opts = {},
+    dependencies = {
+      'anuvyklack/middleclass',
+      'anuvyklack/animation.nvim',
+    },
+  },
+  {
     'aaron-p1/match-visual.nvim',
     cond = not rvim.plugins.minimal,
     event = { 'BufRead', 'BufNewFile' },
