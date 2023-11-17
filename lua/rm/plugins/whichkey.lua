@@ -65,6 +65,7 @@ return {
       tv = { name = 'Vim-test' },
       v = { name = 'Vim' },
       w = { name = 'Window' },
+      wm = { name = 'Maximizer' },
     }, { mode = 'n', prefix = '<leader>' })
 
     which_key.register({

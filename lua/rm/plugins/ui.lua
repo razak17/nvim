@@ -101,6 +101,13 @@ return {
     'anuvyklack/windows.nvim',
     cond = not rvim.plugins.minimal,
     event = { 'BufReadPre', 'BufNewFile' },
+    -- stylua: ignore
+    keys = {
+      { '<leader>wmh', '<Cmd>WindowsMaximizeHorizontally<CR>', desc = 'maximize horizontally' },
+      { '<leader>wmv', '<Cmd>WindowsMaximizeVertically<CR>', desc = 'maximize vertically' },
+      { '<leader>wm=', '<Cmd>WindowsEqualize<CR>', desc = 'equalize' },
+      { '<leader>wmt', '<Cmd>WindowsToggleAutowidth<CR>', desc = 'toggle' },
+    },
     opts = {},
     dependencies = {
       'anuvyklack/middleclass',
