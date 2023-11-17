@@ -295,9 +295,10 @@ return {
     event = 'LspAttach',
     opts = {
       signs = {
+        enable = false,
+        combine = true,
         show_count = false,
         show_label = true,
-        combine = true,
         icons = {
           combined = ui.icons.misc.lightbulb,
         },

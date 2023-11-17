@@ -152,7 +152,14 @@ local function setup_mappings(client, bufnr)
     {
       { 'n', 'x' },
       '<leader>la',
-      lsp.buf.code_action,
+      -- lsp.buf.code_action,
+      function()
+        vim.lsp.buf.code_action({
+          context = {
+            diagnostics = rvim.lsp.get_diagnostic_at_cursor(),
+          },
+        })
+      end,
       desc = 'code action',
       capability = M.textDocument_codeAction,
     },
@@ -486,12 +493,14 @@ diagnostic.config({
 -- ref: https://github.com/rockyzhang24/dotfiles/blob/master/.config/nvim/lua/rockyz/lsp/progress.lua
 
 -- Buffer number and window id for the floating window
-local bufnr
-local winid
-local spinner = { '⣾', '⣽', '⣻', '⢿', '⡿', '⣟', '⣯', '⣷' }
-local idx = 0
--- Progress is done or not
-local is_done = true
+
+rvim.lsp.progess = {
+  bufnr = nil,
+  winid = nil,
+  spinner = { '⣾', '⣽', '⣻', '⢿', '⡿', '⣟', '⣯', '⣷' },
+  idx = 0,
+  is_done = true,
+}
 
 -- Get the progress message for all clients. The format is
 -- "65%: [lua_ls] Loading Workspace: 123/1500 | [client2] xxx | [client3] xxx"
@@ -500,13 +509,13 @@ local function get_lsp_progress_msg()
   -- Ref: https://github.com/neovim/neovim/blob/master/runtime/lua/vim/lsp.lua
   local percentage = nil
   local all_messages = {}
-  is_done = true
+  rvim.lsp.progess.is_done = true
   for _, client in ipairs(vim.lsp.get_clients()) do
     local messages = {}
     for progress in client.progress do
       local value = progress.value
       if type(value) == 'table' and value.kind then
-        if value.kind ~= 'end' then is_done = false end
+        if value.kind ~= 'end' then rvim.lsp.progess.is_done = false end
         local message = value.message and (value.title .. ': ' .. value.message)
           or value.title
         messages[#messages + 1] = message
@@ -528,8 +537,11 @@ local function get_lsp_progress_msg()
     message = string.format('%3d%%: %s', percentage, message)
   end
   -- Show spinner
-  idx = idx == #spinner * 4 and 1 or idx + 1
-  message = spinner[math.ceil(idx / 4)] .. message
+  rvim.lsp.progess.idx = rvim.lsp.progess.idx == #rvim.lsp.progess.spinner * 4
+      and 1
+    or rvim.lsp.progess.idx + 1
+  message = rvim.lsp.progess.spinner[math.ceil(rvim.lsp.progess.idx / 4)]
+    .. message
   return message
 end
 
@@ -541,38 +553,242 @@ rvim.augroup('CustomLspProgress', {
     local win_row = vim.o.lines - vim.o.cmdheight - 4
     local message = get_lsp_progress_msg()
     if
-      winid == nil
-      or not api.nvim_win_is_valid(winid)
-      or api.nvim_win_get_tabpage(winid) ~= api.nvim_get_current_tabpage()
+      rvim.lsp.progess.winid == nil
+      or not api.nvim_win_is_valid(rvim.lsp.progess.winid)
+      or api.nvim_win_get_tabpage(rvim.lsp.progess.winid)
+        ~= api.nvim_get_current_tabpage()
     then
-      bufnr = api.nvim_create_buf(false, true)
-      winid = api.nvim_open_win(bufnr, false, {
-        relative = 'editor',
-        width = #message,
-        height = 1,
-        row = win_row,
-        col = vim.o.columns - #message,
-        style = 'minimal',
-        noautocmd = true,
-        border = border,
-      })
+      rvim.lsp.progess.bufnr = api.nvim_create_buf(false, true)
+      rvim.lsp.progess.winid =
+        api.nvim_open_win(rvim.lsp.progess.bufnr, false, {
+          relative = 'editor',
+          width = #message,
+          height = 1,
+          row = win_row,
+          col = vim.o.columns - #message,
+          style = 'minimal',
+          noautocmd = true,
+          border = border,
+        })
     else
-      api.nvim_win_set_config(winid, {
+      api.nvim_win_set_config(rvim.lsp.progess.winid, {
         relative = 'editor',
         width = #message,
         row = win_row,
         col = vim.o.columns - #message,
       })
     end
-    vim.wo[winid].winhl = 'NormalFloat:NormalFloat'
-    api.nvim_buf_set_lines(bufnr, 0, 1, false, { message })
-    if is_done then
-      if api.nvim_win_is_valid(winid) then api.nvim_win_close(winid, true) end
-      if api.nvim_buf_is_valid(bufnr) then
-        api.nvim_buf_delete(bufnr, { force = true })
+    vim.wo[rvim.lsp.progess.winid].winhl = 'NormalFloat:NormalFloat'
+    api.nvim_buf_set_lines(rvim.lsp.progess.bufnr, 0, 1, false, { message })
+    if rvim.lsp.progess.is_done then
+      if api.nvim_win_is_valid(rvim.lsp.progess.winid) then
+        api.nvim_win_close(rvim.lsp.progess.winid, true)
       end
-      winid = nil
-      idx = 0
+      if api.nvim_buf_is_valid(rvim.lsp.progess.bufnr) then
+        api.nvim_buf_delete(rvim.lsp.progess.bufnr, { force = true })
+      end
+      rvim.lsp.progess.winid = nil
+      rvim.lsp.progess.idx = 0
     end
   end,
+})
+--------------------------------------------------------------------------------
+-- Code Action
+--------------------------------------------------------------------------------
+-- ref: https://github.com/rockyzhang24/dotfiles/blob/master/.config/nvim/lua/rockyz/lsp/lightbulb.lua
+
+--- Get diagnostics (LSP Diagnostic) at the cursor
+---
+--- Grab the code from https://github.com/neovim/neovim/issues/21985
+---
+--- TODO:
+--- This PR (https://github.com/neovim/neovim/pull/22883) extends
+--- vim.diagnostic.get to return diagnostics at cursor directly and even with
+--- LSP Diagnostic structure. If it gets merged, simplify this funciton (the
+--- code for filter and build can be removed).
+---
+---@return table # A table of LSP Diagnostic
+function rvim.lsp.get_diagnostic_at_cursor()
+  local cur_bufnr = api.nvim_get_current_buf()
+  local line, col = unpack(api.nvim_win_get_cursor(0)) -- line is 1-based indexing
+  -- Get a table of diagnostics at the current line. The structure of the
+  -- diagnostic item is defined by nvim (see :h diagnostic-structure) to
+  -- describe the information of a diagnostic.
+  local diagnostics = diagnostic.get(cur_bufnr, { lnum = line - 1 }) -- lnum is 0-based indexing
+  -- Filter out the diagnostics at the cursor position. And then use each to
+  -- build a LSP Diagnostic (see
+  -- https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#diagnostic)
+  local lsp_diagnostics = {}
+  for _, diag in pairs(diagnostics) do
+    if diag.col <= col and diag.end_col >= col then
+      table.insert(lsp_diagnostics, {
+        range = {
+          ['start'] = {
+            line = diag.lnum,
+            character = diag.col,
+          },
+          ['end'] = {
+            line = diag.end_lnum,
+            character = diag.end_col,
+          },
+        },
+        severity = diag.severity,
+        code = diag.code,
+        source = diag.source or nil,
+        message = diag.message,
+      })
+    end
+  end
+  return lsp_diagnostics
+end
+--------------------------------------------------------------------------------
+-- Light Bulb
+--------------------------------------------------------------------------------
+-- Show a lightbulb when code actions are available at the cursor
+--
+-- It is shown at the beginning (the first column) of the same line, or the
+-- previous line if the space is not enough.
+--
+
+rvim.lsp.lightbulb = {
+  bulb_buffer = nil,
+  prev_lnum = nil,
+  prev_topline_num = nil,
+  prev_bufnr = nil,
+  code_action_support = false,
+}
+
+local function remove_bulb()
+  if rvim.lsp.lightbulb.bulb_buffer ~= nil then
+    vim.cmd(('noautocmd bwipeout %d'):format(rvim.lsp.lightbulb.bulb_buffer))
+    rvim.lsp.lightbulb.bulb_buffer = nil
+  end
+end
+
+local function show_lightbulb()
+  -- Check if the method textDocument/codeAction is supported
+  local cur_bufnr = vim.api.nvim_get_current_buf()
+  if cur_bufnr ~= rvim.lsp.lightbulb.prev_bufnr then -- when entering to another buffer
+    rvim.lsp.lightbulb.prev_bufnr = cur_bufnr
+    rvim.lsp.lightbulb.code_action_support = false
+  end
+  if rvim.lsp.lightbulb.code_action_support == false then
+    for _, client in pairs(vim.lsp.get_clients({ bufnr = cur_bufnr })) do
+      if client then
+        if client.supports_method('textDocument/codeAction') then
+          rvim.lsp.lightbulb.code_action_support = true
+        end
+      end
+    end
+  end
+  if rvim.lsp.lightbulb.code_action_support == false then
+    remove_bulb()
+    return
+  end
+  local context = {
+    -- Get the diagnostics at the cursor
+    diagnostics = rvim.lsp.get_diagnostic_at_cursor(),
+  }
+  local params = vim.lsp.util.make_range_params()
+  params.context = context
+  -- Send request to the server to check if a code action is available at the
+  -- cursor
+  vim.lsp.buf_request_all(
+    0,
+    'textDocument/codeAction',
+    params,
+    function(results)
+      local has_actions = false
+      for _, result in pairs(results) do
+        for _, action in pairs(result.result or {}) do
+          if action then
+            has_actions = true
+            break
+          end
+        end
+      end
+      if has_actions then
+        -- Avoid bulb icon flashing when move the cursor in a line
+        --
+        -- When code actions are available in different positions within a line,
+        -- the bulb will be shown in the same place, so no need to remove the
+        -- previous bulb and create a new one.
+        -- Check if the first line of the screen is changed in order to update the
+        -- bulb when scroll the window (e.g., C-y, C-e, zz, etc)
+        local cur_lnum = vim.fn.line('.')
+        local cur_topline_num = vim.fn.line('w0')
+        if
+          cur_lnum == rvim.lsp.lightbulb.prev_lnum
+          and cur_topline_num == rvim.lsp.lightbulb.prev_topline_num
+          and rvim.lsp.lightbulb.bulb_buffer ~= nil
+        then
+          return
+        end
+        -- Remove the old bulb if necessary, and then create a new bulb
+        remove_bulb()
+        rvim.lsp.lightbulb.prev_lnum = cur_lnum
+        rvim.lsp.lightbulb.prev_topline_num = cur_topline_num
+        local icon = rvim.ui.icons.misc.lightbulb
+        -- Calculate the row position of the lightbulb relative to the cursor
+        local row = 0
+        local cur_indent = vim.fn.indent('.')
+        if cur_indent <= 2 then
+          if vim.fn.line('.') == vim.fn.line('w0') then
+            row = 1
+          else
+            row = -1
+          end
+        end
+        -- Calculate the col position of the lightbulb relative to the cursor
+        --
+        -- NOTE: We want to get how many columns (characters) before the cursor
+        -- that will be the offset for placing the bulb. If the indent is TAB,
+        -- each indent level is counted as a single one character no matter how
+        -- many spaces the TAB has. We need to convert it to the number of spaces.
+        local cursor_col = vim.fn.col('.')
+        local col = -cursor_col + 1
+        if not vim.api.nvim_get_option_value('expandtab', {}) then
+          local tabstop = vim.api.nvim_get_option_value('tabstop', {})
+          local tab_cnt = cur_indent / tabstop
+          if cursor_col <= tab_cnt then
+            col = -(cursor_col - 1) * tabstop
+          else
+            col = -(cursor_col - tab_cnt + cur_indent) + 1
+          end
+        end
+        rvim.lsp.lightbulb.bulb_buffer = vim.api.nvim_create_buf(false, true)
+        local winid =
+          vim.api.nvim_open_win(rvim.lsp.lightbulb.bulb_buffer, false, {
+            relative = 'cursor',
+            width = 1,
+            height = 1,
+            row = row,
+            col = col,
+            style = 'minimal',
+            noautocmd = true,
+          })
+        vim.wo[winid].winhl = 'Normal:LightBulb'
+        vim.api.nvim_buf_set_lines(
+          rvim.lsp.lightbulb.bulb_buffer,
+          0,
+          1,
+          false,
+          { icon }
+        )
+        return
+      end
+      -- If no actions, remove the bulb if it is existing
+      if has_actions == false then remove_bulb() end
+    end
+  )
+end
+
+rvim.augroup('code_action', {
+  event = { 'CursorHold', 'CursorHoldI', 'WinScrolled' },
+  pattern = '*',
+  command = show_lightbulb,
+}, {
+  event = { 'TermEnter' },
+  pattern = '*',
+  command = remove_bulb,
 })
