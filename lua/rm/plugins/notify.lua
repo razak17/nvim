@@ -22,7 +22,7 @@ return {
         end
       end,
       top_down = false,
-      timeout = 70,
+      timeout = 10,
       stages = 'fade_in_slide_out',
       render = function(...)
         local notif = select(2, ...)
