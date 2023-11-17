@@ -4,6 +4,12 @@ end
 
 local function lsp_clients(bufnr) return vim.lsp.get_clients({ bufnr = bufnr }) end
 
+local function lsp_notify(msg, type)
+  vim.schedule(
+    function() vim.notify(msg, type, { title = 'Diagnostic Toggles' }) end
+  )
+end
+
 local function format_buf()
   if #lsp_clients(0) > 0 then
     vim.lsp.buf.format()
@@ -202,7 +208,7 @@ local function toggle_virtual_text()
     config = vim.tbl_extend('force', config, { virtual_text = false })
   end
   diagnostic.config(config)
-  rvim.lsp.notify(
+  lsp_notify(
     string.format(
       'virtual text %s',
       bool2str(type(diagnostic.config().virtual_text) ~= 'boolean')
@@ -225,7 +231,7 @@ local function toggle_virtual_lines()
     config = vim.tbl_extend('force', config, { virtual_lines = false })
   end
   diagnostic.config(config)
-  rvim.lsp.notify(
+  lsp_notify(
     string.format(
       'virtual lines %s',
       bool2str(type(diagnostic.config().virtual_lines) ~= 'boolean')
@@ -244,7 +250,7 @@ local function toggle_signs()
   rvim.lsp.signs.enable = not rvim.lsp.signs.enable
   diagnostic.config(config)
   vim.cmd('edit | silent! wall') -- Redraw
-  rvim.lsp.notify(
+  lsp_notify(
     string.format(
       'signs %s',
       bool2str(type(diagnostic.config().signs) ~= 'boolean')
@@ -254,7 +260,7 @@ end
 
 local function toggle_hover_diagnostics()
   rvim.lsp.hover_diagnostics.enable = not rvim.lsp.hover_diagnostics.enable
-  rvim.lsp.notify(
+  lsp_notify(
     string.format(
       'hover diagnostics %s',
       bool2str(rvim.lsp.hover_diagnostics.enable)
@@ -264,7 +270,7 @@ end
 
 local function toggle_format_on_save()
   rvim.lsp.format_on_save.enable = not rvim.lsp.format_on_save.enable
-  rvim.lsp.notify(
+  lsp_notify(
     string.format('format on save %s', bool2str(rvim.lsp.format_on_save.enable))
   )
 end
