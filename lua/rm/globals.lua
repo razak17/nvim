@@ -342,7 +342,7 @@ function rvim.open(path, notify)
 end
 
 --- open file in window picker
----@param buf integer
+---@param buf? integer
 function rvim.open_with_window_picker(buf)
   local success, picker = pcall(require, 'window-picker')
   if not success then
@@ -352,7 +352,7 @@ function rvim.open_with_window_picker(buf)
   local picked_window_id = picker.pick_window()
   if picked_window_id then
     api.nvim_set_current_win(picked_window_id)
-    api.nvim_set_current_buf(buf)
+    if buf then api.nvim_set_current_buf(buf) end
   end
 end
 

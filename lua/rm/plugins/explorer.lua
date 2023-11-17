@@ -225,6 +225,13 @@ return {
   {
     's1n7ax/nvim-window-picker',
     version = '2.*',
+    keys = {
+      {
+        '<C-w>p',
+        function() rvim.open_with_window_picker() end,
+        desc = 'open with window picker',
+      },
+    },
     opts = {
       hint = 'floating-big-letter',
       filter_rules = {
