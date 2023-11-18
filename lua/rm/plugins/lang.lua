@@ -441,6 +441,21 @@ return {
     cmd = { 'MarkmapOpen', 'MarkmapSave', 'MarkmapWatch', 'MarkmapWatchStop' },
     opts = {},
   },
+  {
+    '3rd/image.nvim',
+    cond = not rvim.plugins.minimal,
+    ft = { 'markdown', 'vimwiki' },
+    opts = {
+      backend = 'kitty',
+      max_width = 50,
+      max_height = 50,
+      integrations = {
+        markdown = {
+          only_render_image_at_cursor = true,
+        },
+      },
+    },
+  },
   -- CSV
   --------------------------------------------------------------------------------
   {
