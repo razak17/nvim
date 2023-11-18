@@ -37,11 +37,6 @@ return {
     config = function() require('lspkind').init({ preset = 'codicons' }) end,
   },
   {
-    'carbon-steel/detour.nvim',
-    cmd = { 'Detour' },
-    keys = { { '<c-w><enter>', ':Detour<cr>', desc = 'detour: toggle' } },
-  },
-  {
     'axieax/urlview.nvim',
     cmd = { 'UrlView' },
     keys = {

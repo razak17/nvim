@@ -18,6 +18,11 @@ return {
     },
   },
   {
+    'carbon-steel/detour.nvim',
+    cmd = { 'Detour' },
+    keys = { { '<c-w><enter>', ':Detour<cr>', desc = 'detour: toggle' } },
+  },
+  {
     'tomiis4/BufferTabs.nvim',
     cond = not rvim.plugins.minimal and false,
     dependencies = { 'nvim-tree/nvim-web-devicons' },
