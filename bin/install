@@ -62,7 +62,11 @@ npm_deps() {
 }
 
 archExtra() {
-	sudo pacman -S ripgrep xsel fd lazygit unzip curl sqlite3 btop glow
+	sudo pacman -S ripgrep xsel fd lazygit unzip curl sqlite3 btop glow curl ueberzugpp
+}
+
+rocks() {
+  luarocks --local install magick
 }
 
 importRvim() {
@@ -130,6 +134,10 @@ install_deps() {
 	printf "Would you like to install extra arch packages now (y/n)? "
 	read -r answer
 	[ "$answer" != "${answer#[Yy]}" ] && archExtra
+
+	printf "Would you like to install luarocks packages now (y/n)? "
+	read -r answer
+	[ "$answer" != "${answer#[Yy]}" ] && rocks
 
 	printf "Would you like to initialize python now (y/n)? "
 	read -r answer
