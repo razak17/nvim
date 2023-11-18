@@ -110,14 +110,12 @@ return {
     keys = {
       { '<leader>wmh', '<Cmd>WindowsMaximizeHorizontally<CR>', desc = 'maximize horizontally' },
       { '<leader>wmv', '<Cmd>WindowsMaximizeVertically<CR>', desc = 'maximize vertically' },
+      { '<leader>wmm', '<Cmd>WindowsMaximize<CR>', desc = 'maximize' },
       { '<leader>wm=', '<Cmd>WindowsEqualize<CR>', desc = 'equalize' },
       { '<leader>wmt', '<Cmd>WindowsToggleAutowidth<CR>', desc = 'toggle' },
     },
     opts = {},
-    dependencies = {
-      'anuvyklack/middleclass',
-      'anuvyklack/animation.nvim',
-    },
+    dependencies = { 'anuvyklack/middleclass', 'anuvyklack/animation.nvim' },
   },
   {
     'aaron-p1/match-visual.nvim',
