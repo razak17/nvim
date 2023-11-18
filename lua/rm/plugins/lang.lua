@@ -462,6 +462,41 @@ return {
     end,
     dependencies = { 'nvim-lua/plenary.nvim', 'kkharji/sqlite.lua' },
   },
+  -- Regex
+  --------------------------------------------------------------------------------
+  {
+    'bennypowers/nvim-regexplainer',
+    keys = {
+      {
+        '<localleader>rx',
+        '<Cmd>RegexplainerToggle<CR>',
+        desc = 'regexplainer: toggle',
+      },
+    },
+    opts = {
+      display = 'popup',
+      popup = {
+        border = {
+          padding = { 1, 2 },
+          style = border,
+        },
+      },
+    },
+  },
+  {
+    'tomiis4/Hypersonic.nvim',
+    event = 'CmdlineEnter',
+    cmd = 'Hypersonic',
+    keys = {
+      {
+        mode = 'v',
+        '<localleader>rx',
+        '<Cmd>Hypersonic<CR>',
+        desc = 'hypersonic: toggle',
+      },
+    },
+    opts = { border = border },
+  },
   -- }}}
   ------------------------------------------------------------------------------
   -- Syntax {{{1
