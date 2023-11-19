@@ -61,6 +61,7 @@ return {
   ------------------------------------------------------------------------------
   {
     'assistcontrol/readline.nvim',
+    -- stylua: ignore
     keys = {
       { '<M-f>', function() require('readline').forward_word() end, mode = '!' },
       { '<M-b>', function() require('readline').backward_word() end, mode = '!' },

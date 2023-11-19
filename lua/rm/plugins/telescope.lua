@@ -158,6 +158,25 @@ local function b(picker, opts)
   return function() require('telescope.builtin')[picker](opts) end
 end
 
+local function vtext()
+  local a_orig = vim.fn.getreg('a')
+  local mode = vim.fn.mode()
+  if mode ~= 'v' and mode ~= 'V' then vim.cmd([[normal! gv]]) end
+
+  vim.cmd([[normal! "aygv]])
+  local text = vim.fn.getreg('a')
+  vim.fn.setreg('a', a_orig)
+  return text
+end
+
+local function visual_grep_string()
+  local search = vtext()
+  b('grep_string')({
+    search = search,
+    prompt_title = 'Searh: ' .. string.sub(search, 0, 20),
+  })
+end
+
 local function stopinsert(callback)
   return function(prompt_bufnr)
     vim.cmd.stopinsert()
@@ -199,25 +218,14 @@ return {
   {
     'nvim-telescope/telescope.nvim',
     cmd = 'Telescope',
+    -- stylua: ignore
     keys = {
       { '<c-p>', find_files, desc = 'find files' },
       { '<leader>f,', file_browser, desc = 'file browser' },
-      {
-        '<leader>f.',
-        function() file_browser({ path = '%:p:h', select_buffer = 'true' }) end,
-        desc = 'file browser',
-      },
+      { '<leader>f.', function() file_browser({ path = '%:p:h', select_buffer = 'true' }) end, desc = 'file browser', },
       { '<leader>f?', b('help_tags'), desc = 'help tags' },
-      {
-        '<leader>fa',
-        b('builtin', { include_extensions = true }),
-        desc = 'builtins',
-      },
-      {
-        '<leader>fb',
-        b('current_buffer_fuzzy_find'),
-        desc = 'find in current buffer',
-      },
+      { '<leader>fa', b('builtin', { include_extensions = true }), desc = 'builtins', },
+      { '<leader>fb', b('current_buffer_fuzzy_find'), desc = 'find in current buffer', },
       { '<leader>fc', nvim_config, desc = 'nvim config' },
       { '<leader>fd', aerial, desc = 'aerial' },
       { '<leader>fe', egrepify, desc = 'aerial' },
@@ -248,42 +256,19 @@ return {
       { '<leader>fm', harpoon, desc = 'harpoon' },
       { '<leader>ft', textcase, desc = 'textcase', mode = { 'n', 'v' } },
       { '<leader>fw', b('grep_string'), desc = 'find word' },
+      { mode = 'x', '<leader>fw', visual_grep_string, desc = 'find word' },
       { '<leader>fva', b('autocommands'), desc = 'autocommands' },
       { '<leader>fvh', b('highlights'), desc = 'highlights' },
       { '<leader>fvk', b('keymaps'), desc = 'autocommands' },
       { '<leader>fvo', b('vim_options'), desc = 'vim options' },
       { '<leader>fvr', b('registers'), desc = 'registers' },
       -- LSP
-      {
-        '<leader>ld',
-        b('lsp_document_symbols'),
-        desc = 'telescope: document symbols',
-      },
-      {
-        '<leader>lI',
-        b('lsp_implementations'),
-        desc = 'telescope: search implementation',
-      },
-      {
-        '<leader>lR',
-        b('lsp_references'),
-        desc = 'telescope: show references',
-      },
-      {
-        '<leader>ls',
-        b('lsp_dynamic_workspace_symbols'),
-        desc = 'telescope: workspace symbols',
-      },
-      {
-        '<leader>le',
-        b('diagnostics', { bufnr = 0 }),
-        desc = 'telescope: document diagnostics',
-      },
-      {
-        '<leader>lw',
-        b('diagnostics'),
-        desc = 'telescope: workspace diagnostics',
-      },
+      { '<leader>ld', b('lsp_document_symbols'), desc = 'telescope: document symbols', },
+      { '<leader>lI', b('lsp_implementations'), desc = 'telescope: search implementation', },
+      { '<leader>lR', b('lsp_references'), desc = 'telescope: show references', },
+      { '<leader>ls', b('lsp_dynamic_workspace_symbols'), desc = 'telescope: workspace symbols', },
+      { '<leader>le', b('diagnostics', { bufnr = 0 }), desc = 'telescope: document diagnostics', },
+      { '<leader>lw', b('diagnostics'), desc = 'telescope: workspace diagnostics', },
     },
     config = function()
       local previewers = require('telescope.previewers')
@@ -507,6 +492,7 @@ return {
       },
       {
         'razak17/telescope-import.nvim',
+        -- 'piersolenski/telescope-import.nvim',
         config = function() require('telescope').load_extension('import') end,
       },
       {
