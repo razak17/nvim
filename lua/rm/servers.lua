@@ -98,26 +98,6 @@ local servers = {
       client.server_capabilities.workspaceSymbolProvider = false
     end,
   },
-  -- ruff_lsp = {},
-  pyright = {
-    settings = {
-      pyright = {
-        disableLanguageServices = false,
-        disableOrganizeImports = false,
-      },
-      python = {
-        analysis = {
-          autoImportCompletions = true,
-          typeCheckingMode = 'basic',
-          autoSearchPaths = true,
-          diagnosticMode = 'workspace',
-          useLibraryCodeForTypes = true,
-          -- NOTE: disable to get nvim-lspimport working
-          -- diagnosticSeverityOverrides = { reportUndefinedVariable = 'none' },
-        },
-      },
-    },
-  },
   lua_ls = {
     settings = {
       Lua = {
@@ -147,6 +127,26 @@ local servers = {
       },
     },
   },
+  pyright = {
+    settings = {
+      pyright = {
+        disableLanguageServices = false,
+        disableOrganizeImports = false,
+      },
+      python = {
+        analysis = {
+          autoImportCompletions = true,
+          typeCheckingMode = 'basic',
+          autoSearchPaths = true,
+          diagnosticMode = 'workspace',
+          useLibraryCodeForTypes = true,
+          -- NOTE: disable to get nvim-lspimport working
+          -- diagnosticSeverityOverrides = { reportUndefinedVariable = 'none' },
+        },
+      },
+    },
+  },
+  -- ruff_lsp = {},
   tailwindcss = {
     -- cmd = { '/home/razak/.bun/bin/tailwindcss-language-server', '--stdio' },
     root_dir = function(fname)

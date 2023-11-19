@@ -309,7 +309,6 @@ end
 ---@param client lsp.Client
 ---@param buf integer
 local function setup_autocommands(client, buf)
-  print(client.supports_method(M.textDocument_hover))
   if client.supports_method(M.textDocument_hover) then
     augroup(('LspHoverDiagnostics%d'):format(buf), {
       event = { 'CursorHold' },

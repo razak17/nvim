@@ -268,6 +268,16 @@ local function toggle_hover_diagnostics()
   )
 end
 
+local function toggle_hover_diagnostics_go_to()
+  rvim.lsp.hover_diagnostics.go_to = not rvim.lsp.hover_diagnostics.go_to
+  lsp_notify(
+    string.format(
+      'hover diagnostics (go_to) %s',
+      bool2str(rvim.lsp.hover_diagnostics.go_to)
+    )
+  )
+end
+
 local function toggle_format_on_save()
   rvim.lsp.format_on_save.enable = not rvim.lsp.format_on_save.enable
   lsp_notify(
@@ -291,6 +301,7 @@ local lsp_options = {
   ['Toggle Virtual Lines'] = toggle_virtual_lines,
   ['Toggle Diagnostic Signs'] = toggle_signs,
   ['Toggle Hover Diagnostics'] = toggle_hover_diagnostics,
+  ['Toggle Hover Diagnostics (go_to)'] = toggle_hover_diagnostics_go_to,
   ['Toggle Format On Save'] = toggle_format_on_save,
   ['Toggle JS Arrow Function'] = 'lua require("nvim-js-actions/js-arrow-fn").toggle()',
   ['Preview Code Actions'] = 'lua require("actions-preview").code_actions()',
