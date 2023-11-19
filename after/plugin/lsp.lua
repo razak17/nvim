@@ -289,6 +289,12 @@ local client_overrides = {
       client.server_capabilities.documentFormattingProvider = false
     end,
   },
+  ruff_lsp = {
+    on_attach = function(client)
+      -- Disable hover in favor of Pyright
+      client.server_capabilities.hoverProvider = false
+    end,
+  },
 }
 
 ---@param client lsp.Client
