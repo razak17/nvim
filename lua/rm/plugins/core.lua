@@ -359,6 +359,12 @@ return {
     cmd = 'Speedtyper',
     opts = {},
   },
+  {
+    'Febri-i/snake.nvim',
+    opts = {},
+    cmd = { 'SnakeStart' },
+    dependencies = { 'Febri-i/fscreen.nvim' },
+  },
   -- Share Code
   --------------------------------------------------------------------------------
   {
