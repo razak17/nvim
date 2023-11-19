@@ -119,12 +119,18 @@ end
 local function setup_mappings(client, bufnr)
   local function prev_diagnostic()
     return function()
-      diagnostic.goto_prev({ float = not rvim.lsp.hover_diagnostics.enable })
+      diagnostic.goto_prev({
+        float = rvim.lsp.hover_diagnostics.go_to
+          and not rvim.lsp.hover_diagnostics.enable,
+      })
     end
   end
   local function next_diagnostic()
     return function()
-      diagnostic.goto_next({ float = not rvim.lsp.hover_diagnostics.enable })
+      diagnostic.goto_next({
+        float = rvim.lsp.hover_diagnostics.go_to
+          and not rvim.lsp.hover_diagnostics.enable,
+      })
     end
   end
   local function line_diagnostic()
@@ -303,7 +309,8 @@ end
 ---@param client lsp.Client
 ---@param buf integer
 local function setup_autocommands(client, buf)
-  if not client.supports_method(M.textDocument_hover) then
+  print(client.supports_method(M.textDocument_hover))
+  if client.supports_method(M.textDocument_hover) then
     augroup(('LspHoverDiagnostics%d'):format(buf), {
       event = { 'CursorHold' },
       buffer = buf,

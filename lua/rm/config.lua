@@ -17,7 +17,7 @@ local namespace = {
     },
     format_on_save = { enable = true },
     signs = { enable = false },
-    hover_diagnostics = { enable = true, scope = 'cursor' },
+    hover_diagnostics = { enable = false, go_to = false, scope = 'cursor' },
     null_ls = { enable = false },
     timeout = { enable = true },
   },
