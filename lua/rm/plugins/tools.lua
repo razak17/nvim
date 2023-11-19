@@ -169,7 +169,7 @@ return {
         -- typescriptreact = { 'eslint_d' },
         -- svelte = { 'eslint_d' },
         -- lua = { 'luacheck' },
-        python = { 'flake8' },
+        -- python = { 'flake8' },
         sh = { 'shellcheck' },
         vim = { 'vint' },
         yaml = { 'yamllint' },
