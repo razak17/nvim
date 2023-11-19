@@ -295,7 +295,7 @@ return {
     event = 'LspAttach',
     opts = {
       signs = {
-        enable = false,
+        enable = true,
         combine = true,
         show_count = false,
         show_label = true,
