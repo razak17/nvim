@@ -26,7 +26,6 @@ return {
           end,
           additional_vim_regex_highlighting = { 'org', 'sql' },
         },
-        context_commentstring = { enable = true, enable_autocmd = false },
         incremental_selection = {
           enable = false,
           disable = { 'help' },
@@ -123,7 +122,14 @@ return {
     end,
     dependencies = {
       'nvim-treesitter/nvim-treesitter-textobjects',
-      'JoosepAlviste/nvim-ts-context-commentstring',
+      {
+        'JoosepAlviste/nvim-ts-context-commentstring',
+        opts = { enable_autocmd = false },
+        config = function(_, opts)
+          vim.g.skip_ts_context_commentstring_module = true
+          require('ts_context_commentstring').setup(opts)
+        end,
+      },
     },
   },
   {
