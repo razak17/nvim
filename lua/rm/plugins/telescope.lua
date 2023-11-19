@@ -542,6 +542,16 @@ return {
           'nvim-telescope/telescope-fzy-native.nvim',
         },
       },
+      {
+        'aznhe21/actions-preview.nvim',
+        cond = rvim.lsp.enable,
+        opts = {},
+        config = function()
+          require('actions-preview').setup({
+            telescope = rvim.telescope.vertical(),
+          })
+        end,
+      },
     },
   },
 }
