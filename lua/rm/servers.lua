@@ -190,6 +190,7 @@ local servers = {
     root_dir = function(fname)
       return require('lspconfig/util').root_pattern(
         'tailwind.config.js',
+        'tailwind.config.ts',
         'tailwind.config.cjs'
       )(fname)
     end,
