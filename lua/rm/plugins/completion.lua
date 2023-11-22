@@ -67,8 +67,9 @@ return {
             },
           },
           { CmpItemKindNerdFont = { fg = { from = 'Directory' } } },
-          { CmpItemKindLab = { fg = { from = 'DiagnosticWarn' } } },
+          { CmpItemKindLab = { fg = { from = 'Directory' } } },
           { CmpItemKindDynamic = { fg = { from = 'Directory' } } },
+          { CmpItemKindCodeium = { link = 'CmpItemKindCopilot' } },
         })
       )
 
@@ -158,6 +159,7 @@ return {
           format = function(entry, item)
             item.menu = ({
               copilot = '[CPL]',
+              codeium = '[CM]',
               nvim_lsp = '[LSP]',
               luasnip = '[SNIP]',
               emoji = '[EMOJI]',
@@ -223,6 +225,10 @@ return {
             if entry.source.name == 'copilot' then
               item.kind = format_icon(ui.codicons.misc.octoface)
             end
+            if entry.source.name == 'codeium' then
+              item.kind = format_icon('')
+              item.kind_hl_group = 'CmpItemKindCodeium'
+            end
             --
             if entry.source.name == 'nerdfonts' then
               item.kind = format_icon('')
@@ -246,6 +252,7 @@ return {
         },
         sources = {
           { name = 'copilot', priority = 11, group_index = 1 },
+          { name = "codeium", priority = 11, group_index = 1 },
           { name = 'nvim_px_to_rem', priority = 11, group_index = 1 },
           { name = 'nvim_lsp', priority = 10, group_index = 1 },
           { name = 'luasnip', priority = 9, group_index = 1 },
@@ -369,6 +376,11 @@ return {
         cond = rvim.ai.enable and not rvim.plugins.minimal,
         opts = {},
         dependencies = 'copilot.lua',
+      },
+      {
+        "Exafunction/codeium.nvim",
+        cond = rvim.ai.enable and not rvim.plugins.minimal and rvim.plugins.overrides.codeium.enable,
+        opts = {},
       },
     },
   },

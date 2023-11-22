@@ -31,6 +31,7 @@ local namespace = {
     overrides = {
       ghost_text = { enable = env.RVIM_GHOST_ENABLED == '1' },
       copilot_cmp = { enable = false },
+      codeium = { enable = false },
     },
   },
   treesitter = {

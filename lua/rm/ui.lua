@@ -104,6 +104,7 @@ rvim.ui.codicons = {
     pick = '󰋇',
     project = '',
     robot = '󰚩', -- 
+    lab = '󰙨',
     search = '󰍉',
     search_alt = '',
     shaded_lock = '',
