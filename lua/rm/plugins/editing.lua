@@ -220,6 +220,7 @@ return {
         ['before'] = 'after',
         ['end'] = 'start',
         ['high'] = 'low',
+        ['open'] = 'close',
       },
     },
   },
