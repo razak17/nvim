@@ -343,6 +343,25 @@ if is_available('indent-blankline.nvim') then
   })
 end
 
+if is_available('mini.indentscope') then
+  augroup('IndentscopeDisable', {
+    event = { 'FileType' },
+    desc = 'Disable indentscope for certain files',
+    command = function()
+      -- stylua: ignore
+      local ignore_filetypes = {
+        'aerial', 'dashboard', 'help', 'lazy', 'leetcode.nvim', 'mason', 'neo-tree',
+        'NvimTree', 'neogitstatus', 'notify', 'startify', 'toggleterm', 'Trouble',
+        'fzf', 'alpha', 'dbout', 'neo-tree-popup', 'log', 'gitcommit', 'txt', 'git',
+        'flutterToolsOutline', 'undotree', 'markdown', 'norg', 'org', 'orgagenda',
+      }
+      if vim.tbl_contains(ignore_filetypes, vim.bo.filetype) then
+        vim.b.miniindentscope_disable = true
+      end
+    end,
+  })
+end
+
 if is_available('gitsigns.nvim') then
   augroup('GitSignsRefreshCustom', {
     event = { 'InsertEnter', 'CursorHold' },

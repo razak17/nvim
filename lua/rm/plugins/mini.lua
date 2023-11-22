@@ -2,7 +2,7 @@ local separators = rvim.ui.icons.separators
 
 return {
   {
-    'razak17/mini.indentscope',
+    'echasnovski/mini.indentscope',
     cond = not rvim.plugins.minimal,
     event = 'BufRead',
     opts = {
