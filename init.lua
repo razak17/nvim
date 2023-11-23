@@ -15,11 +15,11 @@ if vim.loader then vim.loader.enable() end
 g.os = vim.uv.os_uname().sysname
 g.dotfiles = env.DOTFILES or fn.expand('~/.dots')
 g.projects_dir = env.DEV_HOME or fn.expand('~/personal/workspace/coding')
-g.rocks_dir = env.HOME .. '/.luarocks/share/lua/5.1'
 
 -- Example for configuring Neovim to load user-installed installed Lua rocks:
-package.path = package.path .. ';' .. g.rocks_dir .. '/?/init.lua;'
-package.path = package.path .. ';' .. g.rocks_dir .. '/?.lua;'
+local rocks_dir = env.HOME .. '/.luarocks/share/lua/5.1'
+package.path = package.path .. ';' .. rocks_dir .. '/?/init.lua;'
+package.path = package.path .. ';' .. rocks_dir .. '/?.lua;'
 --------------------------------------------------------------------------------
 -- Load Modules
 --------------------------------------------------------------------------------
