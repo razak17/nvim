@@ -10,6 +10,7 @@ local namespace = {
   lsp = {
     enable = env.RVIM_LSP_ENABLED == '1' and env.RVIM_PLUGINS_MINIMAL == '0',
     override = {},
+    omnifunc = { enable = true },
     disabled = {
       filetypes = {},
       directories = { vim.fn.stdpath('data') },

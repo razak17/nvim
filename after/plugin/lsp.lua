@@ -409,12 +409,17 @@ augroup('LspSetupCommands', {
     local overrides = client_overrides[client.name]
     if not overrides or not overrides.on_attach then return end
     overrides.on_attach(client, args.buf)
+    api.nvim_set_option_value('omnifunc', 'v:lua.vim.lsp.omnifunc', {
+      buf = args.buf,
+    })
   end,
 }, {
   event = 'DiagnosticChanged',
   desc = 'Update the diagnostic locations',
   command = function(args)
-    diagnostic.setloclist({ open = false })
+    if not rvim.lsp.omnifunc.enable then
+      diagnostic.setloclist({ open = false })
+    end
     if #args.data.diagnostics == 0 then vim.cmd('silent! lclose') end
   end,
 })
