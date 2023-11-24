@@ -342,7 +342,7 @@ return {
   },
   {
     'zeioth/garbage-day.nvim',
-    cond = rvim.lsp.enable,
+    cond = rvim.lsp.enable and rvim.plugins.overrides.garbage_day.enable,
     event = 'LspAttach',
     opts = {
       grace_period = 60 * 15,

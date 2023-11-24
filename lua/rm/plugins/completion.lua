@@ -252,7 +252,7 @@ return {
         },
         sources = {
           { name = 'copilot', priority = 11, group_index = 1 },
-          { name = "codeium", priority = 11, group_index = 1 },
+          { name = 'codeium', priority = 11, group_index = 1 },
           { name = 'nvim_px_to_rem', priority = 11, group_index = 1 },
           { name = 'nvim_lsp', priority = 10, group_index = 1 },
           { name = 'luasnip', priority = 9, group_index = 1 },
@@ -378,8 +378,10 @@ return {
         dependencies = 'copilot.lua',
       },
       {
-        "Exafunction/codeium.nvim",
-        cond = rvim.ai.enable and not rvim.plugins.minimal and rvim.plugins.overrides.codeium.enable,
+        'Exafunction/codeium.nvim',
+        cond = rvim.ai.enable
+          and not rvim.plugins.minimal
+          and rvim.plugins.overrides.codeium.enable,
         opts = {},
       },
     },
