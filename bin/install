@@ -15,10 +15,6 @@ asktoinstallnode() {
 	echo "Please install node before continuing with install" && exit
 }
 
-asktoinstallvirtualenv() {
-	echo "Please install virtualenv before continuing with install" && exit
-}
-
 asktoinstallpip() {
 	echo "Please install pip3 before continuing with install" && exit
 }
@@ -39,12 +35,11 @@ createDirs() {
 
 setup_venv() {
   if [ ! -d "$RV_DATA_DIR/venv" ]; then
-    virtualenv -p python3 "$RV_DATA_DIR/venv"
+    python -m venv "$RV_DATA_DIR/venv"
   fi
 }
 
 python_packages() {
-  echo "Activating virtualenv"
   "$RV_DATA_DIR/venv/bin/python3" -m pip install -U setuptools pynvim neovim-remote
 }
 
@@ -149,8 +144,6 @@ clone_config() {
 
 	(command -v go >/dev/null && echo "go installed, moving on...") || asktoinstallgo
 
-  (command -v virtualenv >/dev/null && echo "virtualenv installed, moving on...") || asktoinstallvirtualenv
-
 	(command -v pip >/dev/null && echo "pip installed, moving on...") || asktoinstallpip
 
 	# check existing config
@@ -173,8 +166,8 @@ while [ "$#" -gt 0 ]; do
 	shift
 
 	case "$curr" in
+  -venv) setup_venv ;;
 	-py) python_packages ;;
-	-venv) setup_venv ;;
 	-npm) install_nodejs_deps ;;
 	-deps) install_deps ;;
 	-dict) generate_dict ;;
