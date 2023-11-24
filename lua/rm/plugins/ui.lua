@@ -105,7 +105,7 @@ return {
   {
     'anuvyklack/windows.nvim',
     cond = not rvim.plugins.minimal,
-    event = { 'BufReadPre', 'BufNewFile' },
+    -- event = { 'BufReadPre', 'BufNewFile' },
     -- stylua: ignore
     keys = {
       { '<leader>wmh', '<Cmd>WindowsMaximizeHorizontally<CR>', desc = 'maximize horizontally' },
@@ -113,9 +113,18 @@ return {
       { '<leader>wmm', '<Cmd>WindowsMaximize<CR>', desc = 'maximize' },
       { '<leader>wm=', '<Cmd>WindowsEqualize<CR>', desc = 'equalize' },
       { '<leader>wmt', '<Cmd>WindowsToggleAutowidth<CR>', desc = 'toggle' },
+      { "<leader>wmz", function() require("neo-zoom").neo_zoom({}) end, desc = "zoom window", },
     },
     opts = {},
-    dependencies = { 'anuvyklack/middleclass', 'anuvyklack/animation.nvim' },
+    config = function(_, opts)
+      require('neo-zoom').setup({})
+      require('windows').setup(opts)
+    end,
+    dependencies = {
+      'anuvyklack/middleclass',
+      'nyngwang/NeoZoom.lua',
+      'anuvyklack/animation.nvim',
+    },
   },
   {
     'aaron-p1/match-visual.nvim',

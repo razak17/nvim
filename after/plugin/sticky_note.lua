@@ -192,7 +192,7 @@ map('n', '<leader><leader>no', function()
   vim.cmd.startinsert()
 end, { desc = 'new [w]indow [s]ticky note' })
 
-map('n', '<Leader>ww', '<C-w>w', { desc = 'switch [[w]]indow' })
+map('n', '<leader>ww', '<C-w>w', { desc = 'switch [[w]]indow' })
 
 map('n', '<leader><leader>nK', function()
   local config = api.nvim_win_get_config(0)
