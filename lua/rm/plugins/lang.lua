@@ -500,6 +500,7 @@ return {
   },
   {
     'tomiis4/Hypersonic.nvim',
+    cond = not rvim.plugins.minimal,
     event = 'CmdlineEnter',
     cmd = 'Hypersonic',
     keys = {

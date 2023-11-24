@@ -188,6 +188,7 @@ return {
   },
   {
     'lewis6991/whatthejump.nvim',
+    cond = not rvim.plugins.minimal,
     event = { 'BufRead', 'BufNewFile' },
     config = function()
       map('n', '<M-k>', function()
