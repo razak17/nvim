@@ -2,30 +2,11 @@ return {
   ------------------------------------------------------------------------------
   -- Themes {{{1
   ------------------------------------------------------------------------------
-  {
-    'LunarVim/horizon.nvim',
-    cond = false,
-    lazy = false,
-    priority = 1000,
-  },
-  {
-    'dotsilas/darcubox-nvim',
-    cond = false,
-    lazy = false,
-    priority = 1000,
-  },
-  {
-    'Wansmer/serenity.nvim',
-    cond = false,
-    priority = 1000,
-    opts = {},
-  },
-  {
-    'judaew/ronny.nvim',
-    cond = false,
-    priority = 1000,
-    opts = {},
-  },
+  { 'LunarVim/horizon.nvim', lazy = false, priority = 1000 },
+  { 'dotsilas/darcubox-nvim', lazy = false, priority = 1000 },
+  { 'Wansmer/serenity.nvim', priority = 1000, opts = {} },
+  { 'judaew/ronny.nvim', priority = 1000, opts = {} },
+  { 'oxfist/night-owl.nvim', lazy = false, priority = 1000 },
   {
     'razak17/onedark.nvim',
     lazy = false,
@@ -35,7 +16,6 @@ return {
   },
   {
     'NTBBloodbath/doom-one.nvim',
-    cond = false,
     lazy = false,
     config = function()
       vim.g.doom_one_pumblend_enable = true
