@@ -151,7 +151,10 @@ local function setup_mappings(client, bufnr)
     {
       'n',
       '<leader>lh',
-      function() lsp.inlay_hint(0) end,
+      function()
+        local enabled = lsp.inlay_hint.is_enabled(0)
+        lsp.inlay_hint.enable(0, not enabled)
+      end,
       desc = 'toggle inlay hints',
       M.textDocument_inlayHint,
     },
