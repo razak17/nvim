@@ -611,12 +611,12 @@ return {
             function(client) return { name = client.name } end,
             self.clients
           )
-          local client_names = vim
+          self.client_names = vim
             .iter(ipairs(lsp_servers))
             :map(function(_, c) return c.name end)
             :totable()
           self.servers = ' '
-            .. table.concat(client_names, fmt(' %s ', separator))
+            .. table.concat(self.client_names, fmt(' %s ', separator))
             .. ' '
             .. separator
         end
@@ -624,6 +624,9 @@ return {
       provider = function(self)
         if not self.active then
           return '  ' .. 'No Active LSP ' .. separator
+        end
+        if #self.client_names > 2 then
+          return ' ' .. self.client_names[1] .. ' and 2 others'
         end
         return ' ' .. self.servers
       end,

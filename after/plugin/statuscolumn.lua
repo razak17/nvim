@@ -4,6 +4,7 @@ if
   or not rvim.plugins.enable
   or rvim.plugins.minimal
   or not rvim.ui.statuscolumn.enable
+  or not rvim.ui.statuscolumn.custom
 then
   return
 end

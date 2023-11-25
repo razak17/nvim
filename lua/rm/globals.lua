@@ -188,7 +188,7 @@ end
 ---@param k string the key to format
 ---@return T?
 function rvim.format_text(t, k)
-  local txt = t[k] and t[k]:gsub('%s', '') or ''
+  local txt = (t and t[k]) and t[k]:gsub('%s', '') or ''
   if #txt < 1 then return end
   t[k] = txt
   return t

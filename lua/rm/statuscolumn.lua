@@ -33,18 +33,6 @@ local function nr(win, lnum, relnum, virtnum, line_count)
 end
 
 ---@param curbuf integer
----@return table
-local function signplaced_signs(curbuf, lnum)
-  return vim
-    .iter(fn.sign_getplaced(curbuf, { group = '*', lnum = lnum })[1].signs)
-    :map(function(s)
-      local sign = format_text(fn.sign_getdefined(s.name)[1], 'text')
-      return { sign.text, sign.texthl }
-    end)
-    :totable()
-end
-
----@param curbuf integer
 local function extmark_signs(curbuf, lnum)
   lnum = lnum - 1
   ---@type ExtmarkSign[]
@@ -136,17 +124,13 @@ return {
       local line_count = api.nvim_buf_line_count(buf)
 
       self.ln = nr(win, lnum, relnum, virtnum, line_count)
-      self.sns = signplaced_signs(buf, lnum)
-      self.g_sns, self.other_sns = extmark_signs(buf, lnum)
-      vim.list_extend(self.sns, self.other_sns)
+      self.g_sns, self.sns = extmark_signs(buf, lnum)
     end,
     -- Signs
     {
       init = function(self)
         if #self.sns > 0 then
           self.sign = unpack(self.sns)
-        elseif #self.other_sns > 0 then
-          self.sign = unpack(self.other_sns)
         else
           self.sign = nil
         end
