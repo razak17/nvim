@@ -41,10 +41,7 @@ local namespace = {
       and env.RVIM_TREESITTER_ENABLED == '1',
   },
   ui = {
-    statuscolumn = {
-      enable = true,
-      custom = false,
-    },
+    statuscolumn = { enable = true, custom = true },
   },
 }
 

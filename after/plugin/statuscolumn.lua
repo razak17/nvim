@@ -22,7 +22,7 @@ local sep = { text = separator, texthl = 'IndentBlanklineChar' }
 ---@alias Sign {name:string, text:string, texthl:string, priority:number}
 
 -- Returns a list of regular and extmark signs sorted by priority (low to high)
----@return Sign[]
+---@return Sign[],Sign[]
 ---@param buf number
 ---@param lnum number
 local function get_signs(buf, lnum)
@@ -31,7 +31,7 @@ local function get_signs(buf, lnum)
   local signs = vim.tbl_map(function(sign)
     ---@type Sign
     local ret = fn.sign_getdefined(sign.name)[1]
-    ret.priority = sign.priority
+    -- ret.priority = sign.priority
     return ret
   end, fn.sign_getplaced(buf, { group = '*', lnum = lnum })[1].signs)
 
@@ -43,25 +43,19 @@ local function get_signs(buf, lnum)
     { lnum - 1, -1 },
     { details = true, type = 'sign' }
   )
-  for _, extmark in pairs(extmarks) do
-    local texthl = extmark[4].sign_hl_group
-    local text = extmark[4].sign_text
 
-    signs[#signs + 1] = {
-      name = extmark[4].sign_hl_group or '',
-      text = texthl:match('^Trail') and ui.codicons.misc.bookmark or text,
-      texthl = texthl,
-      priority = extmark[4].priority,
-    }
-  end
+  local sns = vim
+    .iter(extmarks)
+    :map(function(item) return rvim.format_text(item[4], 'sign_text') end)
+    :fold({ git = {}, other = {} }, function(acc, item)
+      local txt, hl = item.sign_text, item.sign_hl_group
+      if hl:match('^Trail') then txt = ui.codicons.misc.bookmark end
+      local target = hl:match('^Git') and acc.git or acc.other
+      table.insert(target, { text = txt, texthl = hl })
+      return acc
+    end)
 
-  -- Sort by priority
-  table.sort(
-    signs,
-    function(a, b) return (a.priority or 0) < (b.priority or 0) end
-  )
-
-  return signs
+  return sns.git, sns.other
 end
 
 ---@return Sign?
@@ -84,10 +78,13 @@ end
 ---@param sign? Sign
 ---@param len? number
 local function icon(sign, len)
+  local spaces = len or 0
   sign = sign or {}
-  len = len or 2
-  local text = fn.strcharpart(sign.text or '', 0, len) ---@type string
-  text = text .. string.rep(space, len - fn.strchars(text))
+  local text = sign.text
+  if spaces > 0 then
+    text = fn.strcharpart(sign.text or '', 0, spaces) ---@type string
+    text = text .. string.rep(space, spaces - fn.strchars(text))
+  end
   return sign.texthl and ('%#' .. sign.texthl .. '#' .. text .. '%*') or text
 end
 
@@ -97,41 +94,18 @@ function rvim.ui.statuscolumn.render()
 
   local lnum = v.lnum
   local buf = api.nvim_win_get_buf(win)
-
-  ---@type Sign?,Sign?,Sign?
-  local left, gitsigns, fold
-
-  local signs = vim
-    .iter(get_signs(buf, lnum))
-    :fold({ git = {}, other = {} }, function(acc, item)
-      local txt, hl = item.text, item.texthl
-      if hl:match('^Trail') then txt = ui.codicons.misc.bookmark end
-      local target = hl:match('^Git') and acc.git or acc.other
-      table.insert(target, { text = txt, texthl = hl })
-      return acc
-    end)
-
-  if #signs.git > 0 then gitsigns = signs.git end
-
-  if #signs.other > 0 then left = signs.other end
-
   local marks = get_mark(buf, lnum)
+  local gitsigns, other_sns = get_signs(buf, lnum)
 
-  local sns = nil
-  if left then
-    if #left == 1 then sns = icon(left[1], 1) end
-    if #left > 1 then
-      sns = vim.iter(left):fold('', function(acc, item)
-        if acc == '' then
-          acc = acc .. icon(item, 2)
-        else
-          acc = acc .. icon(item, 2)
-        end
-        return acc
-      end)
-    end
+  local left = {}
+  if marks then left[#left + 1] = icon(marks, 2) end
+  if #other_sns > 0 then
+    vim
+      .iter(other_sns)
+      :fold('', function(_, item) left[#left + 1] = icon(item, 2) end)
   end
 
+  local fold
   api.nvim_win_call(win, function()
     if fn.foldclosed(lnum) >= 0 then
       fold = { text = fcs.foldclose or '', texthl = 'Comment' }
@@ -151,14 +125,13 @@ function rvim.ui.statuscolumn.render()
   end
 
   return table.concat({
-    sns and space .. sns or space,
-    marks and icon(marks) or space,
-    space,
+    #left > 0 and table.concat(left, '') or '',
+    -- space,
     [[%=]],
     nu .. space,
     gitsigns and icon(gitsigns[1], 1) or space,
     icon(sep, 1),
-    icon(fold),
+    icon(fold, 2),
   }, '')
 end
 

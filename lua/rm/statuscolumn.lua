@@ -129,11 +129,8 @@ return {
     -- Signs
     {
       init = function(self)
-        if #self.sns > 0 then
-          self.sign = unpack(self.sns)
-        else
-          self.sign = nil
-        end
+        self.sign = nil
+        if #self.sns > 0 then self.sign = unpack(self.sns) end
         self.has_sign = self.sign ~= nil
       end,
       provider = function(self)
