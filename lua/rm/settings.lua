@@ -1,6 +1,6 @@
 if not rvim then return end
 
-local o, opt, fn = vim.o, vim.opt, vim.fn
+local o, opt, fn, v = vim.o, vim.opt, vim.fn, vim.v
 --------------------------------------------------------------------------------
 -- Neovim Directories {{{1
 --------------------------------------------------------------------------------
@@ -82,7 +82,14 @@ opt.formatoptions = {
 --------------------------------------------------------------------------------
 o.foldlevelstart = 3
 opt.foldmethod = 'expr'
--- opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+function rvim.ui.foldtext()
+  local fold = vim.treesitter.foldtext() --[=[@as string[][]]=]
+  local c = v.foldend - v.foldstart + 1
+  fold[#fold + 1] = { (' ⋯ [%d Lines]'):format(c), 'Comment' }
+  return fold
+end
+opt.foldtext = 'v:lua.rvim.ui.foldtext()'
 --------------------------------------------------------------------------------
 -- Grepprg {{{1
 --------------------------------------------------------------------------------
