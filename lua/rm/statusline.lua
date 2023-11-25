@@ -626,7 +626,7 @@ return {
           return '  ' .. 'No Active LSP ' .. separator
         end
         if #self.client_names > 2 then
-          return ' ' .. self.client_names[1] .. ' and 2 others'
+          return ' ' .. self.client_names[1] .. ' and 2 others' .. separator
         end
         return ' ' .. self.servers
       end,

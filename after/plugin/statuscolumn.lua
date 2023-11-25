@@ -126,7 +126,7 @@ function rvim.ui.statuscolumn.render()
 
   return table.concat({
     #left > 0 and table.concat(left, '') or '',
-    -- space,
+    space,
     [[%=]],
     nu .. space,
     gitsigns and icon(gitsigns[1], 1) or space,
