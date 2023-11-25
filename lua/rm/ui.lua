@@ -33,6 +33,8 @@ rvim.ui.icons = {
     up = '󰁝',
     separator = '➤',
     dot = '',
+    dot_alt = '',
+    play = '',
   },
   separators = {
     left_thin_block = '▏',

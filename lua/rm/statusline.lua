@@ -790,21 +790,25 @@ return {
     },
   },
   macro_recording = {
-    condition = function() return vim.fn.reg_recording() ~= '' end,
+    condition = function()
+      return vim.fn.reg_recording() ~= '' or vim.fn.reg_executing() ~= ''
+    end,
     update = { 'RecordingEnter', 'RecordingLeave' },
     {
-      provider = function() return ' ' .. vim.fn.reg_recording() .. ' ' end,
-      hl = { bg = bg, fg = colors.blue },
+      init = function(self)
+        self.rec = vim.fn.reg_recording()
+        self.exec = vim.fn.reg_executing()
+      end,
+      provider = function(self)
+        if not rvim.falsy(self.rec) then
+          return '  ' .. icons.misc.dot_alt .. ' ' .. 'REC'
+        end
+        if not rvim.falsy(self.exec) then
+          return '  ' .. icons.misc.play .. ' ' .. 'PLAY'
+        end
+      end,
+      hl = { bg = bg, fg = colors.red },
     },
-  },
-  macro_rec = {
-    condition = function() return require('NeoComposer.state') end,
-    init = function(self)
-      self.rec = require('NeoComposer.ui').status_recording()
-    end,
-    provider = function(self)
-      if self.rec ~= '' then return '  ' .. self.rec end
-    end,
   },
   buffers = {
     provider = function()
@@ -812,7 +816,7 @@ return {
       local tabpages = require('buffalo').tabpages()
       return ' ¿ ' .. buffers .. ' ¿ ' .. tabpages -- ¿
     end,
-    hl = { fg = '#ffaa00', bg = '#24273a' },
+    hl = { fg = '#ffaa00', bg = bg },
   },
   ruler = {
     provider = function() return '  %7(%l/%3L%):%2c ' .. progress() end,
