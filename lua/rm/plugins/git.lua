@@ -96,7 +96,7 @@ return {
         change = { highlight = 'GitSignsChange', text = left_block },
         delete = {
           highlight = 'GitSignsDelete',
-          text = icons.misc.triangle_short,
+          text = icons.misc.separator,
         },
         topdelete = { highlight = 'GitSignsChangeDelete', text = left_block },
         changedelete = { highlight = 'GitSignsChange', text = left_block },
