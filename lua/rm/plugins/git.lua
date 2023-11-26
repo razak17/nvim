@@ -26,7 +26,7 @@ return {
       disable_insert_on_commit = false,
       disable_context_highlighting = true,
       signs = {
-        section = { '󰁙', '󰁊' }, -- "", "󰘕"
+        section = { icons.misc.chevron_right, icons.misc.chevron_down }, -- "", "󰘕"
         item = { '▸', '▾' },
         hunk = { '樂', '' },
       },

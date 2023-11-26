@@ -14,7 +14,9 @@ rvim.ui.border = {
 rvim.ui.icons = {
   git = { branch = '', untracked = '' },
   misc = {
-    chevron_right = '',
+    chevron_right = '',
+    chevron_down = '',
+    chevron_right_alt = '',
     checkmark = '✓',
     dap_green = '🟢',
     dap_red = '🛑',
