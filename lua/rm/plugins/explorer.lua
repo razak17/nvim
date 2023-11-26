@@ -206,7 +206,7 @@ return {
       },
       {
         '<leader>ew',
-        function() require('mini.files').open(vim.loop.cwd(), true) end,
+        function() require('mini.files').open(vim.uv.cwd(), true) end,
         desc = 'open mini.files (cwd)',
       },
     },
