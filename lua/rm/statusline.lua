@@ -657,35 +657,52 @@ return {
       },
     },
     {
-      provider = ' ' .. codicons.misc.octoface,
-      hl = { fg = colors.forest_green, bg = bg },
-      on_click = {
-        callback = function()
-          vim.defer_fn(function() vim.cmd('copilot status') end, 100)
+      {
+        provider = ' ' .. codicons.misc.octoface,
+        hl = function(self)
+          if self.copilot == nil then
+            return { fg = colors.comment, bg = bg }
+          end
+          if
+            vim.tbl_isempty(self.copilot.requests)
+            or self.copilot.requests.type == 'pending'
+          then
+            return { fg = colors.comment, bg = bg }
+          end
+          return { fg = colors.forest_green, bg = bg }
         end,
-        name = 'copilot_attached',
+        on_click = {
+          callback = function()
+            vim.defer_fn(function() vim.cmd('copilot status') end, 100)
+          end,
+          name = 'copilot_attached',
+        },
       },
-    },
-    {
-      provider = function(self)
-        if self.copilot == nil then return fmt(' inactive %s', separator) end
-        if
-          vim.tbl_isempty(self.copilot.requests)
-          or self.copilot.requests.type == 'pending'
-        then
-          return fmt(' idle %s', separator)
-        elseif self.copilot.requests.type == 'cancel' then
-          return fmt(' working %s', separator)
-        end
-        return fmt(' working %s', separator)
-      end,
-      hl = { fg = fg, bg = bg, bold = true },
-      on_click = {
-        callback = function()
-          vim.defer_fn(function() vim.cmd('copilot panel') end, 100)
-        end,
-        name = 'copilot_status',
+      {
+        provider = ' ' .. separator,
+        hl = { fg = fg, bg = bg, bold = true },
       },
+      -- {
+      --   provider = function(self)
+      --     if self.copilot == nil then return fmt(' inactive %s', separator) end
+      --     if
+      --       vim.tbl_isempty(self.copilot.requests)
+      --       or self.copilot.requests.type == 'pending'
+      --     then
+      --       return fmt(' idle %s', separator)
+      --     elseif self.copilot.requests.type == 'cancel' then
+      --       return fmt(' working %s', separator)
+      --     end
+      --     return fmt(' working %s', separator)
+      --   end,
+      --   hl = { fg = fg, bg = bg, bold = true },
+      --   on_click = {
+      --     callback = function()
+      --       vim.defer_fn(function() vim.cmd('copilot panel') end, 100)
+      --     end,
+      --     name = 'copilot_status',
+      --   },
+      -- },
     },
   },
   copilot_attached = {
