@@ -1,31 +1,24 @@
 if not rvim or rvim.none or not rvim.plugins.enable then return end
 
-local fn = vim.fn
-
 local file_select = require('rm.files_select')
 local git_select = require('rm.git_select')
 local lsp_select = require('rm.lsp_select')
 local toggles_select = require('rm.toggles_select')
 
-function rvim.mappings.notify(msg, type)
-  vim.schedule(function() vim.notify(msg, type, { title = 'UI Toggles' }) end)
-end
+--------------------------------------------------------------------------------
+-- Toggles
+--------------------------------------------------------------------------------
 ---@param opt string
 local function toggle_opt(opt)
   local prev = vim.api.nvim_get_option_value(opt, {})
   local value
   if type(prev) == 'boolean' then value = not prev end
   vim.wo[opt] = value
-  rvim.mappings.notify(string.format('%s %s', opt, rvim.bool2str(vim.wo[opt])))
+  toggles_select.mappings_notify(
+    string.format('%s %s', opt, rvim.bool2str(vim.wo[opt]))
+  )
 end
 
-local function is_git_repo()
-  return fn.isdirectory(fn.expand('%:p:h') .. '/.git')
-end
-
---------------------------------------------------------------------------------
--- Toggles
---------------------------------------------------------------------------------
 local toggle_options = {
   ['Toggle Aerial'] = 'AerialToggle',
   ['Toggle Wrap'] = function() toggle_opt('wrap') end,

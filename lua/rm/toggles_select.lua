@@ -1,6 +1,10 @@
 local M = {}
 
 --- Toggle laststatus=3|2|0
+function M.mappings_notify(msg, type)
+  vim.schedule(function() vim.notify(msg, type, { title = 'UI Toggles' }) end)
+end
+
 function M.toggle_statusline()
   local laststatus = vim.opt.laststatus:get()
   local status
@@ -14,13 +18,13 @@ function M.toggle_statusline()
     vim.opt.laststatus = 0
     status = 'off'
   end
-  rvim.mappings.notify(string.format('statusline %s', status))
+  M.mappings_notify(string.format('statusline %s', status))
 end
 
 --- Toggle conceal=2|0
 local function toggle_conceal()
   vim.opt_local.conceallevel = vim.opt_local.conceallevel:get() == 0 and 2 or 0
-  rvim.mappings.notify(
+  M.mappings_notify(
     string.format(
       'conceal %s',
       rvim.bool2str(vim.opt_local.conceallevel:get() == 2)
@@ -32,7 +36,7 @@ end
 local function toggle_conceal_cursor()
   vim.opt_local.concealcursor = vim.opt_local.concealcursor:get() == 'n' and ''
     or 'n'
-  rvim.mappings.notify(
+  M.mappings_notify(
     string.format(
       'conceal cursor %s',
       rvim.bool2str(vim.opt_local.concealcursor:get() == '')
