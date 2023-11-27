@@ -93,7 +93,7 @@ map(
 --------------------------------------------------------------------------------
 -- Git
 --------------------------------------------------------------------------------
-if not is_git_repo() then
+if is_git_repo() then
   local git_options = {
     ['Show Branches'] = "lua require'telescope.builtin'.git_branches()",
     ['Browse Branches'] = function()
