@@ -1,4 +1,4 @@
-if not rvim or rvim.none then return end
+if not rvim or rvim.none or not rvim.plugins.enable then return end
 
 local fn = vim.fn
 
@@ -47,12 +47,8 @@ local toggle_menu = function()
   rvim.create_select_menu('Toggle actions', toggle_options)() --> extra paren to execute!
 end
 
-map(
-  'n',
-  '<leader>oo',
-  toggle_menu,
-  { desc = '[t]oggle [a]ctions: open menu for toggle actions' }
-)
+-- stylua: ignore
+map( 'n', '<leader>oo', toggle_menu, { desc = '[t]oggle [a]ctions: open menu for toggle actions' })
 
 if not rvim.plugins.enable then return end
 
@@ -83,12 +79,8 @@ local file_menu = function()
   rvim.create_select_menu('File actions', file_options)()
 end
 
-map(
-  'n',
-  '<leader>of',
-  file_menu,
-  { desc = '[f]ile [a]ctions: open menu for file actions' }
-)
+-- stylua: ignore
+map( 'n', '<leader>of', file_menu, { desc = '[f]ile [a]ctions: open menu for file actions' })
 
 --------------------------------------------------------------------------------
 -- Git
@@ -96,21 +88,13 @@ map(
 if is_git_repo() then
   local git_options = {
     ['Show Branches'] = "lua require'telescope.builtin'.git_branches()",
-    ['Browse Branches'] = function()
-      require('rm.git_branches').browse_branches()
-    end,
-    ['Stash Changes'] = function() require('rm.git_stash').do_stash() end,
-    ['Browse Stashes'] = function() require('rm.git_stash').list_stashes() end,
-    ['Browse Commits'] = function() require('rm.git_commits').browse_commits() end,
-    ['Show Buffer Commits'] = function()
-      require('rm.git_commits').browse_bcommits()
-    end,
-    ['Show Commit At Line'] = function()
-      require('rm.utils').show_commit_at_line()
-    end,
-    ['Show Commit From Hash'] = function()
-      require('rm.git_commits').display_commit_from_hash()
-    end,
+    ['Browse Branches'] = git_select.browse_branches,
+    ['Stash Changes'] = git_select.do_stash,
+    ['Browse Stashes'] = git_select.list_stashes,
+    ['Browse Commits'] = git_select.browse_commits,
+    ['Show Buffer Commits'] = git_select.browse_bcommits,
+    ['Show Commit At Line'] = git_select.show_commit_at_line,
+    ['Show Commit From Hash'] = git_select.display_commit_from_hash,
     ['Open File From Branch'] = "lua require'agitator'.open_file_git_branch()",
     ['Search In Another Branch'] = "lua require'agitator'.search_git_branch()",
     ['Open Co Authors'] = 'GitCoAuthors',
@@ -118,7 +102,7 @@ if is_git_repo() then
     ['Browse Project History'] = git_select.project_history,
     ['Browse File Commit History'] = 'DiffviewFileHistory %',
     ['Pull Latest Changes'] = git_select.git_pull,
-    ['Fetch Orign'] = git_select.git_fetch_origin,
+    ['Fetch Orign'] = git_select.fetch_origin,
     ['Conflict Show Base'] = function() git_select.diffview_conflict('base') end,
     ['Conflict Show Ours'] = function() git_select.diffview_conflict('ours') end,
     ['Conflict Show Theirs'] = function()
@@ -130,30 +114,21 @@ if is_git_repo() then
     rvim.create_select_menu('Git Commands', git_options)()
   end
 
-  map(
-    'n',
-    '<leader>og',
-    git_menu,
-    { desc = '[g]it [a]ctions: open menu for git commands' }
-  )
+  -- stylua: ignore
+  map( 'n', '<leader>og', git_menu, { desc = '[g]it [a]ctions: open menu for git commands' })
 end
 
 --------------------------------------------------------------------------------
 -- LSP
 --------------------------------------------------------------------------------
-if not rvim.lsp.enable then
+if rvim.lsp.enable then
   local lsp_options = {
     ['Code Format'] = lsp_select.format_buf,
     ['Eslint Fix'] = lsp_select.eslint_fix,
     ['LSP references'] = lsp_select.display_lsp_references,
-    ['Call Heirarchy'] = function()
-      require('rm.lsp_heirarchy').display_call_hierarchy()
-    end,
-    ['Remove Unused Imports'] = function()
-      require('rm.ts_unused_imports').remove_unused_imports()
-    end,
+    ['Call Heirarchy'] = lsp_select.display_call_hierarchy,
     ['Restart All LSPs'] = lsp_select.lsp_restart_all,
-    ['Toggle Diagnostics Sources for Buffer'] = lsp_select.telescope_enable_disable_diagnostics,
+    ['Toggle Linting Globally'] = lsp_select.toggle_linting,
     ['Toggle Virtual Text'] = lsp_select.toggle_virtual_text,
     ['Toggle Virtual Lines'] = lsp_select.toggle_virtual_lines,
     ['Toggle Diagnostic Signs'] = lsp_select.toggle_signs,
@@ -172,10 +147,6 @@ if not rvim.lsp.enable then
     end
   end
 
-  map(
-    'n',
-    '<leader>ol',
-    lsp_menu,
-    { desc = '[l]sp [a]ctions: open menu for lsp features' }
-  )
+  -- stylua: ignore
+  map( 'n', '<leader>ol', lsp_menu, { desc = '[l]sp [a]ctions: open menu for lsp features' })
 end

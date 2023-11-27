@@ -1,4 +1,12 @@
-local strings = require('plenary.strings')
+local api, fn = vim.api, vim.fn
+local diagnostic = vim.diagnostic
+local pickers = require('telescope.pickers')
+local entry_display = require('telescope.pickers.entry_display')
+local finders = require('telescope.finders')
+local conf = require('telescope.config').values
+
+local bool2str = rvim.bool2str
+local icons = rvim.ui.codicons
 
 local M = {}
 
@@ -27,8 +35,8 @@ function M.format_buf()
 end
 
 function M.eslint_fix()
-  if vim.fn.executable('eslint_d') > 0 then
-    vim.cmd('!eslint_d --fix ' .. vim.fn.expand('%:p'))
+  if fn.executable('eslint_d') > 0 then
+    vim.cmd('!eslint_d --fix ' .. fn.expand('%:p'))
   else
     vim.notify('eslint_d is not installed')
   end
@@ -94,8 +102,8 @@ function M.lsp_restart_all()
   local nullls_client = require('null-ls.client').get_client()
   if nullls_client ~= nil then nullls_client.stop() end
   vim.defer_fn(function() require('null-ls.client').try_add() end, 500)
-  local current_top_line = vim.fn.line('w0')
-  local current_line = vim.fn.line('.')
+  local current_top_line = fn.line('w0')
+  local current_line = fn.line('.')
   if vim.bo.modified then
     vim.cmd(
       [[echohl ErrorMsg | echo "Reload will work better if you save the file & re-trigger" | echohl None]]
@@ -109,84 +117,60 @@ function M.lsp_restart_all()
   vim.cmd(':' .. current_line)
 end
 
-local function enable_diagnostics(diag)
-  for i, ns in pairs(vim.diagnostic.get_namespaces()) do
-    if ns.name == diag then
-      vim.diagnostic.enable(0, i)
-      ---@diagnostic disable-next-line: assign-type-mismatch
-      vim.b['disabled_dg_' .. i] = false
-    end
-  end
-end
-
-local function disable_diagnostics(diag)
-  for i, ns in pairs(vim.diagnostic.get_namespaces()) do
-    if ns.name == diag then
-      vim.diagnostic.disable(0, i)
-      ---@diagnostic disable-next-line: assign-type-mismatch
-      vim.b['disabled_dg_' .. i] = true
-    end
-  end
-end
-
-function M.telescope_enable_disable_diagnostics()
-  local pickers = require('telescope.pickers')
-  local finders = require('telescope.finders')
-  local actions = require('telescope.actions')
-  local action_state = require('telescope.actions.state')
-
-  local buf_lsp_client_ids = {}
-  for _, cl in pairs(vim.lsp.get_clients()) do
-    buf_lsp_client_ids[cl.id] = true
-  end
-
-  local diagnostic_signs = {}
-  for i, ns in pairs(vim.diagnostic.get_namespaces()) do
-    if ns.user_data.sign_group then
-      local id = tonumber(ns.name:gmatch('%d+$')()) -- extract the LSP id ... xxx.yy.123 -- id is 123
-      if buf_lsp_client_ids[id] ~= nil then
-        if vim.b['disabled_dg_' .. i] then
-          table.insert(diagnostic_signs, 'Enable ' .. ns.name)
-        else
-          table.insert(diagnostic_signs, 'Disable ' .. ns.name)
-        end
-      end
-    end
-  end
-
-  local opts = {
-    layout_config = {
-      height = 0.3,
-      width = 0.3,
-    },
-  }
-
-  pickers
-    .new(opts, {
-      prompt_title = 'LSP Diagnostics toggle',
-      finder = finders.new_table({
-        results = diagnostic_signs,
-      }),
-      attach_mappings = function(prompt_bufnr, _)
-        actions.select_default:replace(function()
-          actions.close(prompt_bufnr)
-          local selection = action_state.get_selected_entry()
-          local action_txt = selection[1]
-          if action_txt:sub(1, #'Enable') == 'Enable' then
-            enable_diagnostics(strings.strcharpart(action_txt, #'Enable '))
-          else
-            disable_diagnostics(strings.strcharpart(action_txt, #'Disable '))
+local function nvim_lint_create_autocmds()
+  local lint = require('lint')
+  -- lifted from https://github.com/stevearc/dotfiles/blob/master/.config/nvim/lua/plugins/lint.lua
+  -- also see https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/plugins/linting.lua
+  -- ref: https://github.com/emmanueltouzery/nvim_config/blob/main/init.lua#L32
+  local uv = vim.uv or vim.loop
+  local timer = assert(uv.new_timer())
+  local DEBOUNCE_MS = 500
+  rvim.augroup('Lint', {
+    event = { 'BufEnter', 'BufWritePost', 'TextChanged', 'InsertLeave' },
+    command = function()
+      local bufnr = api.nvim_get_current_buf()
+      timer:stop()
+      timer:start(
+        DEBOUNCE_MS,
+        0,
+        vim.schedule_wrap(function()
+          if api.nvim_buf_is_valid(bufnr) then
+            api.nvim_buf_call(
+              bufnr,
+              function() lint.try_lint(nil, { ignore_errors = true }) end
+            )
           end
         end)
-        return true
-      end,
-    })
-    :find()
+      )
+    end,
+  })
 end
 
-local diagnostic = vim.diagnostic
-local bool2str = rvim.bool2str
-local icons = rvim.ui.codicons
+function M.toggle_linting()
+  local lint_aucmds = api.nvim_get_autocmds({ group = 'Lint' })
+  local is_disable = lint_aucmds ~= nil and #lint_aucmds > 0
+  if is_disable then
+    vim.notify('Disabling linting')
+  else
+    vim.notify('Enabling linting')
+  end
+
+  if is_disable then
+    -- the reason i do app-wide and not buffer-wide is because of this,
+    -- can't disable autocmds only for the current buffer that i can see.
+    -- probably should use nvim_del_augroup_by_name() as well, but for now this works
+    vim.cmd('au! Lint')
+    for i, ns in pairs(vim.diagnostic.get_namespaces()) do
+      if not string.match(ns.name, 'vim.lsp') then
+        -- https://github.com/neovim/neovim/issues/25131
+        vim.diagnostic.reset(i)
+      end
+    end
+  else
+    nvim_lint_create_autocmds()
+    api.nvim_exec_autocmds('BufEnter', { group = 'Lint' })
+  end
+end
 
 function M.toggle_virtual_text()
   local config = diagnostic.config()
@@ -282,6 +266,111 @@ function M.toggle_format_on_save()
   lsp_notify(
     string.format('format on save %s', bool2str(rvim.lsp.format_on_save.enable))
   )
+end
+
+--------------------------------------------------------------------------------
+-- Call Hierarchy
+--------------------------------------------------------------------------------
+local function get_call_hierarchy_for_item(call_hierarchy_item)
+  local call_tree = {}
+  -- https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#callHierarchy_incomingCalls
+  local by_lsp = vim.lsp.buf_request_sync(
+    0,
+    'callHierarchy/incomingCalls',
+    { item = call_hierarchy_item }
+  )
+  if #by_lsp >= 1 and by_lsp then
+    local result = by_lsp[vim.tbl_keys(by_lsp)[1]].result
+    if #result >= 1 then
+      for _, item in ipairs(result) do
+        -- "group by" URL, because two calling classes/functions could have the same name,
+        -- but different URIs/being distinct. If we grouped by name, we'd merge them.
+        call_tree[item.from.uri] = {
+          item = item,
+          nested_hierarchy = get_call_hierarchy_for_item(item.from),
+        }
+      end
+    end
+  end
+  return call_tree
+end
+
+local function print_hierarchy(item, depth, res)
+  local prefix = string.rep(' ', depth)
+  if depth > 0 then prefix = prefix .. '󰘍 ' end
+  for _, nested_h in pairs(item.nested_hierarchy) do
+    print_hierarchy(nested_h, depth + 1, res)
+  end
+  table.insert(
+    res,
+    { item = item, desc = prefix .. item.item.from.name, depth = depth }
+  )
+end
+
+-- https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_prepareCallHierarchy
+function M.display_call_hierarchy()
+  local displayer = entry_display.create({
+    separator = ' ',
+    items = {
+      { width = 35 },
+      { remaining = true },
+    },
+  })
+
+  local make_display = function(entry)
+    return displayer({
+      { entry.name, 'TelescopeResultsIdentifier' },
+      { entry.path:match('[^/]+/[^/]+$'), 'Special' },
+    })
+  end
+
+  local make_display_nested = function(entry)
+    return displayer({
+      { entry.name, 'TelescopeResultsFunction' },
+      { entry.path:match('[^/]+/[^/]+$'), 'Special' },
+    })
+  end
+
+  local by_lsp = vim.lsp.buf_request_sync(
+    0,
+    'textDocument/prepareCallHierarchy',
+    vim.lsp.util.make_position_params()
+  )
+  if by_lsp ~= nil and #by_lsp >= 1 then
+    local result = by_lsp[vim.tbl_keys(by_lsp)[1]].result
+    if #result >= 1 then
+      local call_hierarchy_item = result[1]
+      local call_tree = get_call_hierarchy_for_item(call_hierarchy_item)
+
+      local data = {}
+      for _, caller_info in pairs(call_tree) do
+        print_hierarchy(caller_info, 0, data)
+      end
+
+      pickers
+        .new({}, {
+          prompt_title = 'Incoming calls: ' .. call_hierarchy_item.name,
+          finder = finders.new_table({
+            results = data,
+            entry_maker = function(entry)
+              -- print(vim.inspect(entry))
+              entry.name = entry.desc
+              entry.ordinal = entry.desc
+              if entry.depth ~= nil and entry.depth > 0 then
+                entry.display = make_display_nested
+              else
+                entry.display = make_display
+              end
+              entry.path = entry.item.item.from.uri:gsub('^file:..', '')
+              entry.lnum = entry.item.item.fromRanges[1].start.line + 1
+              return entry
+            end,
+          }),
+          previewer = conf.grep_previewer({}),
+        })
+        :find()
+    end
+  end
 end
 
 return M
