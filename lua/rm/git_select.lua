@@ -2,15 +2,16 @@ local fn = vim.fn
 
 local M = {}
 
-local projects_file = fn.stdpath('data') .. '/project_nvim/project_history'
-
 -- if you have a git project that has subfolders..
 -- in a subfolder there is a package.json.. then vim-rooter
 -- will set the cwd to that subfolder -- not the git repo root.
 -- with this we get the actual git repo root.
 local function cur_file_project_root()
+  local projects = rvim.get_projects()
   local full_path = fn.expand('%:p')
-  for _, project in pairs(rvim.get_projects()) do
+  if projects == nil then return end
+
+  for _, project in pairs(projects) do
     if
       ---@diagnostic disable-next-line: param-type-mismatch
       full_path:match('^' .. rvim.escape_pattern(project) .. '/')
@@ -41,18 +42,15 @@ end
 
 function M.git_fetch_origin() rvim.run_command('git', { 'fetch', 'origin' }) end
 
--- Get project info for all (de)activated projects
-function rvim.get_projects()
-  local projects = {}
-  for line in io.lines(projects_file) do
-    table.insert(projects, line)
-  end
-  return projects
-end
-
 function M.diffview_conflict(which)
   local merge_ctx = require('diffview.lib').get_current_view().merge_ctx
   if merge_ctx then require('rm.utils').show_commit(merge_ctx[which].hash) end
+end
+
+function M.show_commit_at_line()
+  local commit_sha = require('agitator').git_blame_commit_for_line()
+  if commit_sha == nil then return end
+  require('rm.utils').show_commit(commit_sha)
 end
 
 return M

@@ -17,7 +17,10 @@ function M.open_file_cur_dir(with_children)
 end
 
 local function to_file_path_in_project(full_path)
-  for _, project in pairs(rvim.get_projects()) do
+  local projects = rvim.get_projects()
+  if projects == nil then return end
+
+  for _, project in pairs(projects) do
     if full_path:match('^' .. rvim.escape_pattern(project)) then
       return {
         project,
