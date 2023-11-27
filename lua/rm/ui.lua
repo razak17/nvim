@@ -105,6 +105,7 @@ rvim.ui.codicons = {
     lightbulb = '󰌵',
     package = '',
     octoface = '',
+    copilot = '',
     pick = '󰋇',
     project = '',
     robot = '󰚩', -- 

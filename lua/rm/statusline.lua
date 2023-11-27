@@ -658,7 +658,7 @@ return {
     },
     {
       {
-        provider = ' ' .. codicons.misc.octoface,
+        provider = ' ' .. codicons.misc.copilot,
         hl = function(self)
           if self.copilot == nil then
             return { fg = colors.comment, bg = bg }
