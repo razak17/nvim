@@ -1,8 +1,8 @@
-if not rvim or rvim.none or not rvim.plugins.enable or not rvim.lsp.enable then
-  return
-end
+local strings = require('plenary.strings')
 
-local function lsp_clients(bufnr) return vim.lsp.get_clients({ bufnr = bufnr }) end
+local M = {}
+
+function M.lsp_clients(bufnr) return vim.lsp.get_clients({ bufnr = bufnr }) end
 
 local function lsp_notify(msg, type)
   vim.schedule(
@@ -10,8 +10,8 @@ local function lsp_notify(msg, type)
   )
 end
 
-local function format_buf()
-  if #lsp_clients(0) > 0 then
+function M.format_buf()
+  if #M.lsp_clients(0) > 0 then
     vim.lsp.buf.format()
   elseif vim.bo.filetype == 'json' then
     vim.cmd(':%!prettier --parser json')
@@ -26,7 +26,7 @@ local function format_buf()
   end
 end
 
-local function eslint_fix()
+function M.eslint_fix()
   if vim.fn.executable('eslint_d') > 0 then
     vim.cmd('!eslint_d --fix ' .. vim.fn.expand('%:p'))
   else
@@ -35,14 +35,14 @@ local function eslint_fix()
 end
 
 local function lsp_check_capabilities(feature, bufnr)
-  local clients = lsp_clients(bufnr)
+  local clients = M.lsp_clients(bufnr)
   for _, client in pairs(clients) do
     if client.server_capabilities[feature] then return true end
   end
   return false
 end
 
-local function display_lsp_references()
+function M.display_lsp_references()
   if lsp_check_capabilities('callHierarchyProvider', 0) then
     vim.lsp.buf_request(
       0,
@@ -71,7 +71,7 @@ local function display_lsp_references()
   require('telescope.builtin').lsp_references({ path_display = { 'tail' } })
 end
 
-local function lsp_restart_all()
+function M.lsp_restart_all()
   -- get clients that would match this buffer but aren't connected
   local other_matching_configs =
     require('lspconfig.util').get_other_matching_providers(vim.bo.filetype)
@@ -129,8 +129,7 @@ local function disable_diagnostics(diag)
   end
 end
 
-local strings = require('plenary.strings')
-local function telescope_enable_disable_diagnostics()
+function M.telescope_enable_disable_diagnostics()
   local pickers = require('telescope.pickers')
   local finders = require('telescope.finders')
   local actions = require('telescope.actions')
@@ -189,7 +188,7 @@ local diagnostic = vim.diagnostic
 local bool2str = rvim.bool2str
 local icons = rvim.ui.codicons
 
-local function toggle_virtual_text()
+function M.toggle_virtual_text()
   local config = diagnostic.config()
   if type(config.virtual_text) == 'boolean' then
     config = vim.tbl_extend('force', config, {
@@ -216,7 +215,7 @@ local function toggle_virtual_text()
   )
 end
 
-local function toggle_virtual_lines()
+function M.toggle_virtual_lines()
   local config = diagnostic.config()
   if type(config.virtual_lines) == 'boolean' then
     config = vim.tbl_extend(
@@ -239,7 +238,7 @@ local function toggle_virtual_lines()
   )
 end
 
-local function toggle_signs()
+function M.toggle_signs()
   local config = diagnostic.config()
   if type(config.signs) == 'boolean' then
     config =
@@ -258,7 +257,7 @@ local function toggle_signs()
   )
 end
 
-local function toggle_hover_diagnostics()
+function M.toggle_hover_diagnostics()
   rvim.lsp.hover_diagnostics.enable = not rvim.lsp.hover_diagnostics.enable
   lsp_notify(
     string.format(
@@ -268,7 +267,7 @@ local function toggle_hover_diagnostics()
   )
 end
 
-local function toggle_hover_diagnostics_go_to()
+function M.toggle_hover_diagnostics_go_to()
   rvim.lsp.hover_diagnostics.go_to = not rvim.lsp.hover_diagnostics.go_to
   lsp_notify(
     string.format(
@@ -278,46 +277,11 @@ local function toggle_hover_diagnostics_go_to()
   )
 end
 
-local function toggle_format_on_save()
+function M.toggle_format_on_save()
   rvim.lsp.format_on_save.enable = not rvim.lsp.format_on_save.enable
   lsp_notify(
     string.format('format on save %s', bool2str(rvim.lsp.format_on_save.enable))
   )
 end
 
-local lsp_options = {
-  ['Code Format'] = format_buf,
-  ['Eslint Fix'] = eslint_fix,
-  ['LSP references'] = display_lsp_references,
-  ['Call Heirarchy'] = function()
-    require('rm.lsp_heirarchy').display_call_hierarchy()
-  end,
-  ['Remove Unused Imports'] = function()
-    require('rm.ts_unused_imports').remove_unused_imports()
-  end,
-  ['Restart All LSPs'] = lsp_restart_all,
-  ['Toggle Diagnostics Sources for Buffer'] = telescope_enable_disable_diagnostics,
-  ['Toggle Virtual Text'] = toggle_virtual_text,
-  ['Toggle Virtual Lines'] = toggle_virtual_lines,
-  ['Toggle Diagnostic Signs'] = toggle_signs,
-  ['Toggle Hover Diagnostics'] = toggle_hover_diagnostics,
-  ['Toggle Hover Diagnostics (go_to)'] = toggle_hover_diagnostics_go_to,
-  ['Toggle Format On Save'] = toggle_format_on_save,
-  ['Toggle JS Arrow Function'] = 'lua require("nvim-js-actions/js-arrow-fn").toggle()',
-  ['Preview Code Actions'] = 'lua require("actions-preview").code_actions()',
-}
-
-local lsp_menu = function()
-  if #lsp_clients(0) == 0 then
-    vim.notify_once('there is no lsp server attached to the current buffer')
-  else
-    rvim.create_select_menu('Code/LSP actions', lsp_options)() --> extra paren to execute!
-  end
-end
-
-map(
-  'n',
-  '<leader>ol',
-  lsp_menu,
-  { desc = '[l]sp [a]ctions: open menu for lsp features' }
-)
+return M
