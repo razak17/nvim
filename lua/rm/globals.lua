@@ -180,8 +180,9 @@ function rvim.load_colorscheme(name)
 end
 
 function rvim.is_git_repo()
-  -- return fn.isdirectory(fn.expand('%:p:h') .. '/.git')
-  return vim.b.gitsigns_head or vim.b.gitsigns_status_dict
+  return fn.isdirectory(fn.expand('%:p:h') .. '/.git')
+    or vim.b.gitsigns_head
+    or vim.b.gitsigns_status_dict
 end
 
 ---@generic T:table<string, any>
