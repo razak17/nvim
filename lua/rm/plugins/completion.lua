@@ -212,7 +212,7 @@ return {
               item.kind = format_icon(codicons.misc.smiley)
             end
             if entry.source.name == 'lab.quick_data' then
-              item.kind = format_icon(codicons.misc.lab)
+              item.kind = format_icon(ui.icons.misc.beaker)
               item.kind_hl_group = 'CmpItemKindLab'
             end
             if entry.source.name == 'natdat' then
