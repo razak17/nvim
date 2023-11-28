@@ -170,10 +170,10 @@ return {
             { NeoTreeNormalNC = { link = 'PanelBackground' } },
             { NeoTreeRootName = { bold = false, italic = false } },
             { NeoTreeStatusLine = { link = 'PanelBackground' } },
-            { NeoTreeTabActive = { bg = { from = 'PanelBackground' } } },
+            { NeoTreeTabActive = { bg = { from = 'FloatTitle' } } },
             { NeoTreeTabInactive = { inherit = 'Comment', italic = false } },
 
-            { NeoTreeTabSeparatorInactive = { link = 'WinSeparator' } },
+            -- { NeoTreeTabSeparatorInactive = { link = 'WinSeparator' } },
           },
         },
       })
