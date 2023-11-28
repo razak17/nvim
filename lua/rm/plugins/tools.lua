@@ -79,6 +79,13 @@ return {
     cmd = { 'MasonToolsInstall', 'MasonToolsUpdate' },
     config = function()
       local packages = {}
+      -- Add LSP servers
+      local servers = require('rm.servers').list
+      vim.iter(servers):fold({}, function(_, name)
+        local server_mapping = require('mason-lspconfig.mappings.server')
+        local pkg_name = server_mapping.lspconfig_to_package[name]
+        table.insert(packages, pkg_name)
+      end)
       -- Add linters (from nvim-lint)
       if not rvim.lsp.null_ls.enable then
         local lint_ok, lint = pcall(require, 'lint')
@@ -102,6 +109,7 @@ return {
             :totable()
         end
       end
+
       require('mason-tool-installer').setup({
         ensure_installed = packages,
         run_on_start = false,

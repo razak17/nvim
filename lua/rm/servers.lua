@@ -10,6 +10,7 @@ local servers = {
   cmake = {},
   cssls = {},
   dockerls = {},
+  -- golangci_lint_ls = {},
   lemminx = {},
   marksman = {},
   prismals = {},
@@ -48,18 +49,18 @@ local servers = {
   --     },
   --   },
   -- },
-  denols = {
-    root_dir = function(fname)
-      return require('lspconfig/util').root_pattern('deno.json', 'deno.jsonc')(
-        fname
-      )
-    end,
-  },
-  emmet_ls = {
-    root_dir = function(fname)
-      return require('lspconfig/util').root_pattern('package.json')(fname)
-    end,
-  },
+  -- denols = {
+  --   root_dir = function(fname)
+  --     return require('lspconfig/util').root_pattern('deno.json', 'deno.jsonc')(
+  --       fname
+  --     )
+  --   end,
+  -- },
+  -- emmet_ls = {
+  --   root_dir = function(fname)
+  --     return require('lspconfig/util').root_pattern('package.json')(fname)
+  --   end,
+  -- },
   emmet_language_server = {},
   --- https://github.com/golang/tools/blob/master/gopls/doc/settings.md
   gopls = {
@@ -186,7 +187,6 @@ local servers = {
     },
   },
   tailwindcss = {
-    -- cmd = { '/home/razak/.bun/bin/tailwindcss-language-server', '--stdio' },
     root_dir = function(fname)
       return require('lspconfig/util').root_pattern(
         'tailwind.config.js',
@@ -200,7 +200,7 @@ local servers = {
 ---Get the configuration for a specific language server
 ---@param name string?
 ---@return table<string, any>?
-return function(name)
+local function get(name)
   local config = servers[name]
   if not config then return nil end
   if type(config) == 'function' then config = config() end
@@ -232,3 +232,8 @@ return function(name)
   })
   return config
 end
+
+return {
+  list = servers,
+  get = get,
+}
