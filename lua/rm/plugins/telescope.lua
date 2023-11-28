@@ -85,7 +85,13 @@ local function notes()
   find_files({
     prompt_title = '~ Obsidian ~',
     cwd = env.HOME .. '/Sync/notes/obsidian',
-    file_ignore_patterns = { '.git/.*', 'dotbot/.*', 'zsh/plugins/.*' },
+    file_ignore_patterns = {
+      '.git/.*',
+      'dotbot/.*',
+      'zsh/plugins/.*',
+      '.obsidian',
+      '.trash',
+    },
   })
 end
 
@@ -328,6 +334,7 @@ return {
             'site-packages/',
             '%.yarn/',
             '__pycache__/',
+            '.obsidian'
           },
           path_display = { 'truncate' },
           file_sorter = sorters.get_fzy_sorter,
