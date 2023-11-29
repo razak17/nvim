@@ -31,6 +31,7 @@ createDirs() {
 	mkdir -p "$HOME/.local/share/rvim"
 	mkdir -p "$HOME/.local/share/rvim/site"
 	mkdir -p "$HOME/.local/share/rvim/site/spell"
+	mkdir -p "$HOME/.local/share/rvim/site/prompts"
 }
 
 setup_venv() {
@@ -62,6 +63,11 @@ archExtra() {
 
 rocks() {
   luarocks --local --lua-version=5.1 install magick
+}
+
+get_prompts() {
+	mkdir -p "$HOME/.local/share/rvim/site/prompts"
+  curl -o "$RV_DATA_DIR/site/prompts/prompts.csv" https://raw.githubusercontent.com/f/awesome-chatgpt-prompts/main/prompts.csv
 }
 
 importRvim() {
@@ -137,6 +143,10 @@ install_deps() {
 	printf "Would you like to initialize python now (y/n)? "
 	read -r answer
 	[ "$answer" != "${answer#[Yy]}" ] && pythonPackages
+
+  printf "Would you like to download chat gpt prompts now (y/n)? "
+  read -r answer
+  [ "$answer" != "${answer#[Yy]}" ] && get_prompts
 }
 
 clone_config() {
@@ -171,6 +181,8 @@ while [ "$#" -gt 0 ]; do
 	-npm) install_nodejs_deps ;;
 	-deps) install_deps ;;
 	-dict) generate_dict ;;
+  -rocks) rocks ;;
+  -prompts) get_prompts ;;
 	*--all*)
 		clone_config
     install_deps
