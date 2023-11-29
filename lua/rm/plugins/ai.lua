@@ -1,5 +1,3 @@
-local fn = vim.fn
-
 -- local function get_openai_key()
 --   if not fn.executable('pass') then
 --     vim.notify(
@@ -22,88 +20,89 @@ return {
   {
     'robitx/gp.nvim',
     cond = rvim.ai.enable and not rvim.plugins.minimal,
+    -- stylua: ignore
     keys = {
       -- Chat commands
-      {
-        '<c-g>n',
-        '<Cmd>GpChatNew<CR>',
-        desc = 'gp: new chat',
-        mode = { 'n', 'i', 'v' },
-      },
-      {
-        '<c-g>f',
-        '<Cmd>GpChatFinder<CR>',
-        desc = 'gp: find chat',
-        mode = { 'n', 'i' },
-      },
-      {
-        '<c-g><c-g>',
-        '<Cmd>GpChatRespond<CR>',
-        desc = 'gp: respond',
-        mode = { 'n', 'i' },
-      },
-      {
-        '<c-g>d',
-        '<Cmd>GpChatDeleteCR>',
-        desc = 'gp: delete chat',
-        mode = { 'n', 'i' },
-      },
+      { '<c-g>n', '<Cmd>GpChatNew<CR>', desc = 'gp: new chat', mode = { 'n', 'i', 'v' }, },
+      { '<c-g>f', '<Cmd>GpChatFinder<CR>', desc = 'gp: find chat', mode = { 'n', 'i' }, },
+      { '<c-g><c-g>', '<Cmd>GpChatRespond<CR>', desc = 'gp: respond', mode = { 'n', 'i' }, },
+      { '<c-g>d', '<Cmd>GpChatDeleteCR>', desc = 'gp: delete chat', mode = { 'n', 'i' }, },
       -- Prompt commands
-      {
-        '<c-g>i',
-        '<Cmd>GpInline<CR>',
-        desc = 'gp: inline',
-        mode = { 'n', 'i' },
-      },
-      {
-        '<c-g>r',
-        '<Cmd>GpRewrite<CR>',
-        desc = 'gp: rewrite',
-        mode = { 'n', 'i', 'v' },
-      },
-      {
-        '<c-g>a',
-        '<Cmd>GpAppend<CR>',
-        desc = 'gp: append',
-        mode = { 'n', 'i', 'v' },
-      },
-      {
-        '<c-g>b',
-        '<Cmd>GpPrepend<CR>',
-        desc = 'gp: prepend',
-        mode = { 'n', 'i', 'v' },
-      },
-      {
-        '<c-g>e',
-        '<Cmd>GpEnew<CR>',
-        desc = 'gp: enew',
-        mode = { 'n', 'i', 'v' },
-      },
-      {
-        '<c-g>p',
-        '<Cmd>GpPopup<CR>',
-        desc = 'gp: popup',
-        mode = { 'n', 'i', 'v' },
+      { '<c-g>i', '<Cmd>GpInline<CR>', desc = 'gp: inline', mode = { 'n', 'i' }, },
+      { '<c-g>r', '<Cmd>GpRewrite<CR>', desc = 'gp: rewrite', mode = { 'n', 'i', 'v' }, },
+      { '<c-g>a', '<Cmd>GpAppend<CR>', desc = 'gp: append', mode = { 'n', 'i', 'v' }, },
+      { '<c-g>b', '<Cmd>GpPrepend<CR>', desc = 'gp: prepend', mode = { 'n', 'i', 'v' }, },
+      { '<c-g>e', '<Cmd>GpEnew<CR>', desc = 'gp: enew', mode = { 'n', 'i', 'v' }, },
+      { '<c-g>p', '<Cmd>GpPopup<CR>', desc = 'gp: popup', mode = { 'n', 'i', 'v' }, },
+    },
+    cmd = {
+      'GpUnitTests',
+      'GpExplain',
+      'GpCodeReview',
+      'GpBufferChatNew',
+    },
+    opts = {
+      hooks = {
+        -- example of adding command which writes unit tests for the selected code
+        UnitTests = function(gp, params)
+          local template = 'I have the following code from {{filename}}:\n\n'
+            .. '```{{filetype}}\n{{selection}}\n```\n\n'
+            .. 'Please respond by writing table driven unit tests for the code above.'
+          gp.Prompt(
+            params,
+            gp.Target.enew,
+            nil,
+            gp.config.command_model,
+            template,
+            gp.config.command_system_prompt
+          )
+        end,
+        -- example of adding command which explains the selected code
+        Explain = function(gp, params)
+          local template = 'I have the following code from {{filename}}:\n\n'
+            .. '```{{filetype}}\n{{selection}}\n```\n\n'
+            .. 'Please respond by explaining the code above.'
+          gp.Prompt(
+            params,
+            gp.Target.popup,
+            nil,
+            gp.config.command_model,
+            template,
+            gp.config.chat_system_prompt
+          )
+        end,
+        -- example of usig enew as a function specifying type for the new buffer
+        CodeReview = function(gp, params)
+          local template = 'I have the following code from {{filename}}:\n\n'
+            .. '```{{filetype}}\n{{selection}}\n```\n\n'
+            .. 'Please analyze for code smells and suggest improvements.'
+          gp.Prompt(
+            params,
+            gp.Target.enew('markdown'),
+            nil,
+            gp.config.command_model,
+            template,
+            gp.config.command_system_prompt
+          )
+        end,
+        -- example of making :%GpChatNew a dedicated command which
+        -- opens new chat with the entire current buffer as a context
+        BufferChatNew = function(gp, _)
+          -- call GpChatNew command in range mode on whole buffer
+          vim.api.nvim_command('%' .. gp.config.cmd_prefix .. 'ChatNew')
+        end,
       },
     },
-    opts = {},
   },
   {
     'jackMort/ChatGPT.nvim',
     cond = rvim.ai.enable and not rvim.plugins.minimal,
-    cmd = {
-      'ChatGPT',
-      'ChatGPTActAs',
-      'ChatGPTRun',
-      'ChatGPTEditWithInstructions',
-    },
+    -- stylua: ignore
+    cmd = { 'ChatGPT', 'ChatGPTActAs', 'ChatGPTRun', 'ChatGPTEditWithInstructions', },
+    -- stylua: ignore
     keys = {
       { '<leader>aa', '<cmd>ChatGPTActAs<CR>', desc = 'chatgpt: act as' },
-      {
-        '<leader>ae',
-        '<cmd>ChatGPTEditWithInstructions<CR>',
-        desc = 'chatgpt: edit',
-      },
+      { '<leader>ae', '<cmd>ChatGPTEditWithInstructions<CR>', desc = 'chatgpt: edit', },
       { '<leader>an', '<cmd>ChatGPT<CR>', desc = 'chatgpt: open' },
     },
     config = function()
@@ -121,6 +120,7 @@ return {
         style = rvim.ui.border.rectangle,
         highlight = 'FloatBorder',
       }
+
       require('chatgpt').setup({
         popup_window = {
           border = border,
@@ -164,17 +164,10 @@ return {
     'piersolenski/wtf.nvim',
     cond = rvim.lsp.enable and rvim.ai.enable,
     event = 'VeryLazy',
+    -- stylua: ignore
     keys = {
-      {
-        '<leader>ao',
-        function() require('wtf').ai() end,
-        desc = 'wtf: debug diagnostic with AI',
-      },
-      {
-        '<leader>ag',
-        function() require('wtf').search() end,
-        desc = 'wtf: google search diagnostic',
-      },
+      { '<leader>ao', function() require('wtf').ai() end, desc = 'wtf: debug diagnostic with AI', },
+      { '<leader>ag', function() require('wtf').search() end, desc = 'wtf: google search diagnostic', },
     },
     opts = {
       popup_type = 'horizontal', -- | 'popup' | 'horizontal' | 'vertical',
@@ -201,12 +194,9 @@ return {
     'zbirenbaum/copilot.lua',
     cond = rvim.ai.enable and not rvim.plugins.minimal,
     event = 'InsertEnter',
+    -- stylua: ignore
     keys = {
-      {
-        '<leader>ap',
-        '<Cmd>Copilot panel<CR>',
-        desc = 'copilot: toggle panel',
-      },
+      { '<leader>ap', '<Cmd>Copilot panel<CR>', desc = 'copilot: toggle panel', },
       { '<leader>at', '<Cmd>Copilot toggle<CR>', desc = 'copilot: toggle' },
     },
     opts = {
@@ -245,17 +235,9 @@ return {
   },
   {
     'razak17/backseat.nvim',
-    cmd = {
-      'Backseat',
-      'BackseatAsk',
-      'BackseatClear',
-      'BackseatClearLine',
-    },
+    cmd = { 'Backseat', 'BackseatAsk', 'BackseatClear', 'BackseatClearLine' },
     opts = {
-      highlight = {
-        icon = '',
-        group = 'DiagnosticVirtualTextInfo',
-      },
+      highlight = { icon = '', group = 'DiagnosticVirtualTextInfo' },
       popup_type = 'popup', -- | 'popup' | 'horizontal' | 'vertical',
       winhighlight = 'NormalFloat:NormalFloat,FloatBorder:FloatBorder',
     },
