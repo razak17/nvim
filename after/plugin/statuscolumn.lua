@@ -11,91 +11,28 @@ end
 
 local fn, v, api, opt, wo = vim.fn, vim.v, vim.api, vim.opt, vim.wo
 local ui = rvim.ui
-local sp = ui.icons.separators
+local separators = ui.icons.separators
 
-local separator = sp.left_thin_block
+local left_thin_block = separators.left_thin_block
 local fcs = opt.fillchars:get()
 local space = ' '
 
-local sep = { text = separator, texthl = 'IndentBlanklineChar' }
-
----@alias Sign {name:string, text:string, texthl:string, priority:number}
-
--- Returns a list of regular and extmark signs sorted by priority (low to high)
----@return Sign[],Sign[]
----@param buf number
----@param lnum number
-local function get_signs(buf, lnum)
-  -- Get regular signs
-  ---@type Sign[]
-  local signs = vim.tbl_map(function(sign)
-    ---@type Sign
-    local ret = fn.sign_getdefined(sign.name)[1]
-    -- ret.priority = sign.priority
-    return ret
-  end, fn.sign_getplaced(buf, { group = '*', lnum = lnum })[1].signs)
-
-  -- Get extmark signs
-  local extmarks = api.nvim_buf_get_extmarks(
-    buf,
-    -1,
-    { lnum - 1, 0 },
-    { lnum - 1, -1 },
-    { details = true, type = 'sign' }
-  )
-
-  local sns = vim
-    .iter(extmarks)
-    :map(function(item) return rvim.format_text(item[4], 'sign_text') end)
-    :fold({ git = {}, other = {} }, function(acc, item)
-      local txt, hl = item.sign_text, item.sign_hl_group
-      if hl:match('^Trail') then txt = ui.codicons.misc.bookmark end
-      local target = hl:match('^Git') and acc.git or acc.other
-      table.insert(target, { text = txt, texthl = hl })
-      return acc
-    end)
-
-  return sns.git, sns.other
-end
-
----@return Sign?
----@param buf number
----@param lnum number
-local function get_mark(buf, lnum)
-  local marks = fn.getmarklist(buf)
-  vim.list_extend(marks, fn.getmarklist())
-  for _, mark in ipairs(marks) do
-    if
-      mark.pos[1] == buf
-      and mark.pos[2] == lnum
-      and mark.mark:match('[a-zA-Z]')
-    then
-      return { text = mark.mark:sub(2), texthl = 'DiagnosticHint' }
-    end
-  end
-end
-
----@param sign? Sign
----@param len? number
-local function icon(sign, len)
-  local spaces = len or 0
-  sign = sign or {}
-  local text = sign.text
-  if spaces > 0 then
-    text = fn.strcharpart(sign.text or '', 0, spaces) ---@type string
-    text = text .. string.rep(space, spaces - fn.strchars(text))
-  end
-  return sign.texthl and ('%#' .. sign.texthl .. '#' .. text .. '%*') or text
-end
+local sep = { text = left_thin_block, texthl = 'IndentBlanklineChar' }
 
 function rvim.ui.statuscolumn.render()
   local win = vim.g.statusline_winid
+
   if wo[win].signcolumn == 'no' then return '' end
 
-  local lnum = v.lnum
+  local lnum, relnum, virtnum = v.lnum, v.relnum, v.virtnum
+  local statuscol = require('rm.statuscolumn').utils
   local buf = api.nvim_win_get_buf(win)
-  local marks = get_mark(buf, lnum)
-  local gitsigns, other_sns = get_signs(buf, lnum)
+  local line_count = api.nvim_buf_line_count(buf)
+
+  local icon = statuscol.icon
+  local nr = statuscol.nr(win, lnum, relnum, virtnum, line_count)
+  local marks = statuscol.get_mark(buf, lnum)
+  local gitsigns, other_sns = statuscol.extmark_signs(buf, lnum)
 
   local left = {}
   if marks then left[#left + 1] = icon(marks, 2) end
@@ -110,25 +47,13 @@ function rvim.ui.statuscolumn.render()
     if fn.foldclosed(lnum) >= 0 then
       fold = { text = fcs.foldclose or '', texthl = 'Comment' }
     end
-    -- if fn.foldclosed(lnum) == -1 then
-    --   fold =
-    --     { text = fcs.foldopen or '', texthl = 'IndentBlanklineContextChar' }
-    -- else
-    --   fold = { text = fcs.foldclose or '', texthl = 'Comment' }
-    -- end
-    -- fold = { text = space }
   end)
-
-  local nu = ''
-  if wo[win].number and v.virtnum == 0 then
-    nu = wo[win].relativenumber and v.relnum ~= 0 and v.relnum or lnum
-  end
 
   return table.concat({
     #left > 0 and table.concat(left, '') or space,
-    space,
     [[%=]],
-    nu .. space,
+    -- space,
+    nr .. space,
     gitsigns and icon(gitsigns[1], 1) or space,
     icon(sep, 1),
     icon(fold, 2),
