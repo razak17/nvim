@@ -286,7 +286,7 @@ return {
       require('telescope').setup({
         defaults = {
           prompt_prefix = fmt(' %s  ', ui.codicons.misc.search_alt),
-          selection_caret = fmt(' %s', ui.icons.misc.triangle_short),
+          selection_caret = fmt(' %s', ui.icons.misc.separator),
           -- ref: LazyVim
           -- open files in the first window that is an actual file.
           -- use the current window if no other window is available.
@@ -334,7 +334,7 @@ return {
             'site-packages/',
             '%.yarn/',
             '__pycache__/',
-            '.obsidian'
+            '.obsidian',
           },
           path_display = { 'truncate' },
           file_sorter = sorters.get_fzy_sorter,
