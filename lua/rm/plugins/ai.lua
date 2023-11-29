@@ -34,6 +34,10 @@ return {
       { '<c-g>b', '<Cmd>GpPrepend<CR>', desc = 'gp: prepend', mode = { 'n', 'i', 'v' }, },
       { '<c-g>e', '<Cmd>GpEnew<CR>', desc = 'gp: enew', mode = { 'n', 'i', 'v' }, },
       { '<c-g>p', '<Cmd>GpPopup<CR>', desc = 'gp: popup', mode = { 'n', 'i', 'v' }, },
+      { '<c-g>u', '<Cmd>GpUnitTests<CR>', desc = 'gp: unit tests', mode = { 'n', 'i', 'v' }, },
+      { '<c-g>x', '<Cmd>GpExplain<CR>', desc = 'gp: explain', mode = { 'n', 'i', 'v' }, },
+      { '<c-g>c', '<Cmd>GpCodeReview<CR>', desc = 'gp: code review', mode = { 'n', 'i', 'v' }, },
+      { '<c-g>N', '<Cmd>GpBufferChatNew<CR>', desc = 'gp: buffer chat new', mode = { 'n', 'i', 'v' }, },
     },
     cmd = {
       'GpUnitTests',
