@@ -102,7 +102,7 @@ return {
         Translate = function(gp, params)
           -- stylua: ignore
           local languages = {
-            'English', 'Spanish', 'French', 'German', 'Italian', 'Portuguese'
+            'Spanish', 'French', 'German', 'Italian', 'Portuguese', 'Dutch',
           }
 
           local pickers = require('telescope.pickers')
