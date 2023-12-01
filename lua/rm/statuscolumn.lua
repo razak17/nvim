@@ -38,22 +38,12 @@ end
 ---@param curbuf integer
 ---@param lnum number
 local function extmark_signs(curbuf, lnum)
-  -- Get regular signs
-  ---@type Sign[]
-  -- local signs = vim.tbl_map(function(sign)
-  --   ---@type Sign
-  --   local ret = fn.sign_getdefined(sign.name)[1]
-  --   -- ret.priority = sign.priority
-  --   return ret
-  -- end, fn.sign_getplaced(buf, { group = '*', lnum = lnum })[1].signs)
-
-  lnum = lnum - 1
   ---@type ExtmarkSign[]
   local signs = api.nvim_buf_get_extmarks(
     curbuf,
     -1,
-    { lnum, 0 },
-    { lnum, -1 },
+    { lnum - 1, 0 },
+    { lnum, -1 - 1 },
     { details = true, type = 'sign' }
   )
   local sns = vim
