@@ -33,6 +33,7 @@ return {
       { '<c-g>a', '<Cmd>GpAppend<CR>', desc = 'gp: append', mode = { 'n', 'i', 'v' }, },
       { '<c-g>b', '<Cmd>GpPrepend<CR>', desc = 'gp: prepend', mode = { 'n', 'i', 'v' }, },
       { '<c-g>e', '<Cmd>GpEnew<CR>', desc = 'gp: enew', mode = { 'n', 'i', 'v' }, },
+      { '<c-g>I', '<Cmd>GpInputRole<CR>', desc = 'gp: input role', mode = { 'n', 'i', 'v' }, },
       { '<c-g>p', '<Cmd>GpPopup<CR>', desc = 'gp: popup', mode = { 'n', 'i', 'v' }, },
       { '<c-g>u', '<Cmd>GpUnitTests<CR>', desc = 'gp: unit tests', mode = { 'n', 'i', 'v' }, },
       { '<c-g>x', '<Cmd>GpExplain<CR>', desc = 'gp: explain', mode = { 'n', 'i', 'v' }, },
@@ -47,6 +48,7 @@ return {
       'GpCodeReview',
       'GpBufferChatNew',
       'GpActAs',
+      'GpInputRole',
       'GpTranslate',
     },
     opts = {
@@ -98,6 +100,13 @@ return {
         BufferChatNew = function(gp, _)
           -- call GpChatNew command in range mode on whole buffer
           vim.api.nvim_command('%' .. gp.config.cmd_prefix .. 'ChatNew')
+        end,
+        InputRole = function(gp, params)
+          vim.ui.input({ prompt = 'Input Role:' }, function(input)
+            if input then
+              gp.cmd.ChatNew(params, gp.config.command_model, input)
+            end
+          end)
         end,
         Translate = function(gp, params)
           -- stylua: ignore
