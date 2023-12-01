@@ -17,6 +17,13 @@ local left_thin_block = separators.left_thin_block
 local fcs = opt.fillchars:get()
 local space = ' '
 
+---@param num? integer
+---@return string
+local function spacer(num)
+  num = num or 1
+  return string.rep(space, num)
+end
+
 local sep = { text = left_thin_block, texthl = 'IndentBlanklineChar' }
 
 function rvim.ui.statuscolumn.render()
@@ -35,11 +42,21 @@ function rvim.ui.statuscolumn.render()
   local gitsigns, other_sns = statuscol.extmark_signs(buf, lnum)
 
   local left = {}
-  if marks then left[#left + 1] = icon(marks, 2) end
+  if marks then
+    if #other_sns == 0 then
+      left[#left + 1] = icon(marks, 2)
+    else
+      left[#left + 1] = icon(marks, 1)
+    end
+  end
   if #other_sns > 0 then
-    vim
-      .iter(other_sns)
-      :fold('', function(_, item) left[#left + 1] = icon(item, 2) end)
+    vim.iter(other_sns):fold('', function(_, item)
+      if #left == 0 then
+        left[#left + 1] = icon(item, 1)
+      else
+        left[#left + 1] = ' ' .. icon(item, 0)
+      end
+    end)
   end
 
   local fold
@@ -50,11 +67,11 @@ function rvim.ui.statuscolumn.render()
   end)
 
   return table.concat({
-    #left > 0 and table.concat(left, '') or space,
+    #left > 0 and table.concat(left, '') or spacer(2),
     [[%=]],
-    -- space,
-    nr .. space,
-    gitsigns and icon(gitsigns[1], 1) or space,
+    space,
+    nr .. spacer(),
+    gitsigns and icon(gitsigns[1], 1) or spacer(),
     icon(sep, 1),
     icon(fold, 2),
   }, '')
