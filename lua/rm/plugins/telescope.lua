@@ -471,6 +471,7 @@ return {
       )
     end,
     dependencies = {
+      'nvim-lua/plenary.nvim',
       { 'biozz/whop.nvim', opts = {} },
       {
         'fdschmidt93/telescope-egrepify.nvim',

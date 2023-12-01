@@ -1,6 +1,5 @@
 return {
   'pmizio/typescript-tools.nvim',
-  -- event = { 'BufReadPre', 'BufNewFile' },
   ft = { 'typescript', 'typescriptreact', 'javascript', 'javascriptreact' },
   cond = rvim.lsp.enable
     and not rvim.find_string(rvim.plugins.disabled, 'typescript-tools.nvim'),
@@ -25,6 +24,13 @@ return {
         })
         require('twoslash-queries').setup(opts)
       end,
+    },
+    {
+      'dmmulroy/tsc.nvim',
+      cond = rvim.lsp.enable,
+      cmd = 'TSC',
+      opts = {},
+      ft = { 'typescript', 'typescriptreact' },
     },
   },
   opts = {

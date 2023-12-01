@@ -12,13 +12,6 @@ return {
   -- Web Dev (Typescript)
   --------------------------------------------------------------------------------
   {
-    'dmmulroy/tsc.nvim',
-    cond = rvim.lsp.enable,
-    cmd = 'TSC',
-    opts = {},
-    ft = { 'typescript', 'typescriptreact' },
-  },
-  {
     'razak17/package-info.nvim',
     cond = not rvim.plugins.minimal,
     event = 'BufRead package.json',
@@ -100,15 +93,6 @@ return {
       { '<localleader>lt', '<cmd>TWValues<cr>', desc = 'tw-values: show values', },
     },
     opts = { border = border, show_unknown_classes = true },
-  },
-  {
-    'Saecki/crates.nvim',
-    cond = not rvim.plugins.minimal,
-    event = 'BufRead Cargo.toml',
-    opts = {
-      popup = { autofocus = true, border = border },
-      null_ls = { enabled = true, name = 'crates' },
-    },
   },
   -- Python
   --------------------------------------------------------------------------------
