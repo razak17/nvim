@@ -6,8 +6,8 @@ local data = vim.fn.stdpath('data')
 --------------------------------------------------------------------------------
 -- Project local config
 --------------------------------------------------------------------------------
-local file = io.open(vim.fn.expand('%:p:h') .. '/.rvim.json', 'r')
-if file then rvim.project_config(file) end
+local local_config = io.open(vim.fn.expand('%:p:h') .. '/.rvim.json', 'r')
+if local_config then rvim.project_config(local_config) end
 --------------------------------------------------------------------------------
 -- Set leader keys
 --------------------------------------------------------------------------------
@@ -63,7 +63,7 @@ require('lazy').setup({
   performance = {
     rtp = {
       paths = { join_paths(data, 'site'), join_paths(data, 'site', 'after') },
-      -- stylua: ignore
+        -- stylua: ignore
       disabled_plugins = plugins_enabled and {
         '2html_plugin', 'gzip', 'matchit', 'rrhelper', 'netrw', 'netrwPlugin',
         'netrwSettings', 'netrwFileHandlers', 'zip', 'zipPlugin', 'tar', 'tarPlugin',

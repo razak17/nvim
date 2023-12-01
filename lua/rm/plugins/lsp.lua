@@ -435,10 +435,7 @@ return {
     cond = rvim.lsp.enable,
     event = 'LspAttach',
     opts = {},
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-      'nvim-neo-tree/neo-tree.nvim',
-    },
+    dependencies = { 'nvim-lua/plenary.nvim', 'nvim-neo-tree/neo-tree.nvim' },
   },
   {
     'pechorin/any-jump.vim',
