@@ -98,10 +98,12 @@ return {
   --------------------------------------------------------------------------------
   {
     'roobert/f-string-toggle.nvim',
-    cond = rvim.treesitter.enable,
+    cond = rvim.treesitter.enable and false,
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
     ft = { 'python' },
-    opts = {},
+    opts = {
+      key_binding = '<localleader>ls',
+    },
   },
   {
     'linux-cultist/venv-selector.nvim',
