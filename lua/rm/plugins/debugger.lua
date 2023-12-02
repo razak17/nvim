@@ -148,6 +148,31 @@ return {
         require('overseer').patch_dap(true)
       end)
 
+      dap.adapters.nlua = function(callback, config)
+        callback({
+          type = 'server',
+          host = config.host or '127.0.0.1',
+          port = config.port or 8086,
+        })
+      end
+
+      dap.configurations.lua = {
+        {
+          type = 'nlua',
+          request = 'attach',
+          name = 'Attach to running Neovim instance',
+          host = function()
+            local value = vim.fn.input('Host [127.0.0.1]: ')
+            return value ~= '' and value or '127.0.0.1'
+          end,
+          port = function()
+            local val = tonumber(vim.fn.input('Port: '))
+            assert(val, 'Please provide a port number')
+            return val
+          end,
+        },
+      }
+
       local js_debug = require('mason-registry').get_package('js-debug-adapter')
       local debug_server_path = js_debug:get_install_path()
         .. '/js-debug/src/dapDebugServer.js'
