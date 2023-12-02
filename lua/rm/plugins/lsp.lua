@@ -175,6 +175,7 @@ return {
   },
   {
     'stevearc/aerial.nvim',
+    cmd = { 'AerialToggle' },
     cond = not rvim.plugins.minimal and rvim.treesitter.enable,
     opts = {
       lazy_load = false,
