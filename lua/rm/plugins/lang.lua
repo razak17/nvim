@@ -275,7 +275,7 @@ return {
   },
   {
     '3rd/image.nvim',
-    cond = not rvim.plugins.minimal,
+    cond = not rvim.plugins.minimal and rvim.plugins.niceties.enable,
     ft = { 'markdown', 'vimwiki' },
     opts = {
       backend = 'kitty',
@@ -332,7 +332,7 @@ return {
   },
   {
     'tomiis4/Hypersonic.nvim',
-    cond = not rvim.plugins.minimal,
+    cond = not rvim.plugins.minimal and rvim.plugins.niceties.enable,
     event = 'CmdlineEnter',
     cmd = 'Hypersonic',
     keys = {

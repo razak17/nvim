@@ -19,6 +19,7 @@ return {
   },
   {
     'carbon-steel/detour.nvim',
+    cond = rvim.plugins.niceties.enable,
     cmd = { 'Detour' },
     keys = { { '<c-w><enter>', ':Detour<cr>', desc = 'detour: toggle' } },
   },
@@ -57,13 +58,13 @@ return {
   },
   {
     'razak17/smartcolumn.nvim',
-    cond = not rvim.plugins.minimal,
+    cond = not rvim.plugins.minimal and rvim.plugins.niceties.enable,
     event = { 'BufRead', 'BufNewFile' },
     opts = { colorcolumn = '0', custom_autocommand = true },
   },
   {
     'utilyre/sentiment.nvim',
-    cond = not rvim.plugins.minimal,
+    cond = not rvim.plugins.minimal and rvim.plugins.niceties.enable,
     event = { 'BufRead', 'BufNewFile' },
     opts = {
       excluded_filetypes = {
@@ -73,7 +74,7 @@ return {
   },
   {
     'HampusHauffman/block.nvim',
-    cond = not rvim.plugins.minimal,
+    cond = not rvim.plugins.minimal and rvim.plugins.niceties.enable,
     cmd = { 'Block', 'BlockOn', 'BlockOff' },
     opts = {
       percent = 0.7,
@@ -101,7 +102,7 @@ return {
   },
   {
     'anuvyklack/windows.nvim',
-    cond = not rvim.plugins.minimal,
+    cond = not rvim.plugins.minimal and rvim.plugins.niceties.enable,
     -- event = { 'BufReadPre', 'BufNewFile' },
     -- stylua: ignore
     keys = {
@@ -125,20 +126,20 @@ return {
   },
   {
     'aaron-p1/match-visual.nvim',
-    cond = not rvim.plugins.minimal,
+    cond = not rvim.plugins.minimal and rvim.plugins.niceties.enable,
     event = { 'BufRead', 'BufNewFile' },
     opts = {},
   },
   {
     'tzachar/local-highlight.nvim',
-    cond = not rvim.plugins.minimal,
+    cond = not rvim.plugins.minimal and rvim.plugins.niceties.enable,
     event = { 'BufRead', 'BufNewFile' },
     opts = { hlgroup = 'Search' },
   },
   {
     'winston0410/range-highlight.nvim',
+    cond = not rvim.plugins.minimal and rvim.plugins.niceties.enable,
     event = { 'BufRead', 'BufNewFile' },
-    cond = not rvim.plugins.minimal,
     dependencies = { 'winston0410/cmd-parser.nvim' },
     opts = {},
   },
@@ -159,7 +160,7 @@ return {
   },
   {
     'folke/twilight.nvim',
-    cond = rvim.treesitter.enable,
+    cond = rvim.treesitter.enable and rvim.plugins.niceties.enable,
     cmd = 'Twilight',
     opts = {
       context = 40,
@@ -169,7 +170,7 @@ return {
   },
   {
     'miversen33/sunglasses.nvim',
-    cond = not rvim.plugins.minimal,
+    cond = not rvim.plugins.minimal and rvim.plugins.niceties.enable,
     event = 'UIEnter',
     cmd = { 'SunglassesEnable', 'SunglassesDisable' },
     opts = {
@@ -194,7 +195,7 @@ return {
   },
   {
     'lewis6991/whatthejump.nvim',
-    cond = not rvim.plugins.minimal,
+    cond = not rvim.plugins.minimal and rvim.plugins.niceties.enable,
     event = { 'BufRead', 'BufNewFile' },
     config = function()
       map('n', '<M-k>', function()
@@ -244,7 +245,7 @@ return {
   },
   {
     'tzachar/highlight-undo.nvim',
-    cond = not rvim.plugins.minimal,
+    cond = not rvim.plugins.minimal and rvim.plugins.niceties.enable,
     event = 'BufRead',
     opts = {
       undo = { hlgroup = 'Search' },
@@ -268,7 +269,7 @@ return {
   },
   {
     'kevinhwang91/nvim-hlslens',
-    cond = not rvim.plugins.minimal,
+    cond = not rvim.plugins.minimal and rvim.plugins.niceties.enable,
     lazy = false,
     keys = {
       {
@@ -349,7 +350,7 @@ return {
   },
   {
     'folke/todo-comments.nvim',
-    cond = rvim.treesitter.enable,
+    cond = rvim.treesitter.enable and rvim.plugins.niceties.enable,
     event = 'BufReadPre',
     cmd = { 'TodoTelescope', 'TodoTrouble', 'TodoQuickFix', 'TodoDots' },
     -- stylua: ignore
@@ -439,7 +440,7 @@ return {
   },
   {
     'LudoPinelli/comment-box.nvim',
-    cond = not rvim.plugins.minimal,
+    cond = not rvim.plugins.minimal and rvim.plugins.niceties.enable,
     config = function(_, opts) require('comment-box').setup(opts) end,
     keys = {
       {

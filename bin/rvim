@@ -4,6 +4,7 @@ export RVIM_PLUGINS_ENABLED='1'
 export RVIM_LSP_ENABLED='1'
 export RVIM_TREESITTER_ENABLED='1'
 export RVIM_AI_ENABLED='1'
+export RVIM_NICETIES_ENABLED='1'
 export RVIM_PLUGINS_MINIMAL='0'
 export RVIM_NONE='0'
 export RVIM_GHOST_ENABLED='0'
@@ -48,6 +49,10 @@ while [ "$#" -gt 0 ]; do
 		export RVIM_PLUGINS_MINIMAL='1'
 		shift
 		;;
+  --no-niceties)
+    export RVIM_NICETIES_ENABLED='0'
+    shift
+    ;;
 	--none)
 		export RVIM_PLUGINS_ENABLED='0'
 		export RVIM_LSP_ENABLED='0'

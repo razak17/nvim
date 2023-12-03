@@ -231,7 +231,7 @@ return {
   {
     'HiPhish/rainbow-delimiters.nvim',
     branch = 'use-children',
-    cond = rvim.treesitter.enable,
+    cond = rvim.treesitter.enable and rvim.plugins.niceties.enable,
     event = { 'BufRead', 'BufNewFile' },
     config = function()
       local rainbow_delimiters = require('rainbow-delimiters')

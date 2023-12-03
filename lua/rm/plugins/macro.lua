@@ -1,7 +1,7 @@
 return {
   {
     'jake-stewart/recursive-macro.nvim',
-    cond = not rvim.plugins.minimal,
+    cond = not rvim.plugins.minimal and rvim.plugins.niceties.enable,
     event = 'VeryLazy',
     opts = {
       registers = { 'q', 'w', 'e', 'r', 't', 'y' },
@@ -11,7 +11,7 @@ return {
   },
   {
     'ecthelionvi/NeoComposer.nvim',
-    cond = not rvim.plugins.minimal,
+    cond = not rvim.plugins.minimal and false,
     event = { 'BufReadPost', 'BufNewFile' },
     dependencies = { 'kkharji/sqlite.lua' },
     -- stylua: ignore

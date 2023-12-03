@@ -153,7 +153,7 @@ return {
   },
   {
     'dgagn/diagflow.nvim',
-    cond = rvim.lsp.enable,
+    cond = rvim.lsp.enable and rvim.plugins.niceties.enable,
     event = 'LspAttach',
     opts = {
       format = function(diagnostic)
@@ -274,7 +274,7 @@ return {
   },
   {
     'aznhe21/actions-preview.nvim',
-    cond = rvim.lsp.enable,
+    cond = rvim.lsp.enable and rvim.plugins.niceties.enable,
     opts = {},
     config = function()
       require('actions-preview').setup({
@@ -293,7 +293,7 @@ return {
   },
   {
     'luckasRanarison/clear-action.nvim',
-    cond = rvim.lsp.enable,
+    cond = rvim.lsp.enable and rvim.plugins.niceties.enable,
     event = 'LspAttach',
     opts = {
       signs = {
