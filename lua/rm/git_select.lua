@@ -281,16 +281,26 @@ local function telescope_branches_mappings(prompt_bufnr, map)
       ).value
       if string.match(branch, '^origin/') then
         -- remote branch
-        Job:new({
-          command = 'git',
-          args = {
-            'push',
-            'origin',
-            '--delete',
-            string.gsub(branch, '^origin/', ''),
-          },
-          on_exit = function(j, _) print(vim.inspect(j:result())) end,
-        }):sync()
+        vim.ui.select({ 'Yes', 'No' }, {
+          prompt = "Are you sure to delete the remote branch '"
+            .. string.gsub(branch, '^origin/', '')
+            .. "'?",
+        }, function(choice)
+          if choice == 'Yes' then
+            Job
+              :new({
+                command = 'git',
+                args = {
+                  'push',
+                  'origin',
+                  '--delete',
+                  string.gsub(branch, '^origin/', ''),
+                },
+                on_exit = function(j, _) print(vim.inspect(j:result())) end,
+              })
+              :sync()
+          end
+        end)
       else
         -- local branch
         Job:new({
