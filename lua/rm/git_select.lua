@@ -279,14 +279,29 @@ local function telescope_branches_mappings(prompt_bufnr, map)
       local branch = require('telescope.actions.state').get_selected_entry(
         selection.bufnr
       ).value
-      Job:new({
-        command = 'git',
-        args = { 'branch', '-D', branch },
-        on_exit = function(j, _)
-          -- prints the sha of the tip of the deleted branch, useful for a manual undo
-          print(vim.inspect(j:result()))
-        end,
-      }):sync()
+      if string.match(branch, '^origin/') then
+        -- remote branch
+        Job:new({
+          command = 'git',
+          args = {
+            'push',
+            'origin',
+            '--delete',
+            string.gsub(branch, '^origin/', ''),
+          },
+          on_exit = function(j, _) print(vim.inspect(j:result())) end,
+        }):sync()
+      else
+        -- local branch
+        Job:new({
+          command = 'git',
+          args = { 'branch', '-D', branch },
+          on_exit = function(j, _)
+            -- prints the sha of the tip of the deleted branch, useful for a manual undo
+            print(vim.inspect(j:result()))
+          end,
+        }):sync()
+      end
     end)
   end)
   map('i', '<C-c>', function() -- commits
