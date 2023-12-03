@@ -43,7 +43,7 @@ local function extmark_signs(curbuf, lnum)
     curbuf,
     -1,
     { lnum - 1, 0 },
-    { lnum, -1 - 1 },
+    { lnum - 1, -1 },
     { details = true, type = 'sign' }
   )
   local sns = vim
