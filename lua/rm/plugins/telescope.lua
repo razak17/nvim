@@ -236,7 +236,7 @@ return {
       { '<leader>fd', aerial, desc = 'aerial' },
       { '<leader>fe', egrepify, desc = 'aerial' },
       -- { '<leader>ff', project_files, desc = 'project files' },
-      -- { '<leader>fh', frecency, desc = 'Most (f)recently used files' },
+      { '<leader>fh', frecency, desc = 'Most (f)recently used files' },
       { '<leader>fH', helpgrep, desc = 'helpgrep' },
       { '<leader>fi', import, desc = 'import' },
       { '<leader>fj', whop, desc = 'whop' },
@@ -483,7 +483,6 @@ return {
       },
       {
         'nvim-telescope/telescope-frecency.nvim',
-        cond = false,
         config = function() require('telescope').load_extension('frecency') end,
       },
       {
