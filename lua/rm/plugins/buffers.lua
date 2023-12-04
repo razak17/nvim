@@ -139,22 +139,19 @@ return {
   },
   {
     'razak17/harpoon',
-    -- stylua: ignore
-    keys = {
-      { '<a-;>', '<Cmd>lua require("harpoon.ui").toggle_quick_menu()<CR>', desc = 'harpoon: toggle menu', },
-      { '<localleader>ha', '<Cmd>lua require("harpoon.mark").add_file()<CR>', desc = 'harpoon: add file', },
-      { '<localleader>hn', '<Cmd>lua require("harpoon.ui").nav_next()<CR>', desc = 'harpoon: next file', },
-      { '<localleader>hp', '<Cmd>lua require("harpoon.ui").nav_prev()<CR>', desc = 'harpoon: prev file', },
-      { '<a-1>', '<Cmd>lua require("harpoon.ui").nav_file(1)<CR>', desc = 'harpoon: navigate to file 1', },
-      { '<a-2>', '<Cmd>lua require("harpoon.ui").nav_file(2)<CR>', desc = 'harpoon: navigate to file 2', },
-      { '<a-3>', '<Cmd>lua require("harpoon.ui").nav_file(3)<CR>', desc = 'harpoon: navigate to file 3', },
-      { '<a-4>', '<Cmd>lua require("harpoon.ui").nav_file(4)<CR>', desc = 'harpoon: navigate to file 4', },
-    },
-    opts = {
-      menu = {
-        width = 60,
-        borderchars = ui.border.common,
-      },
-    },
+    branch = 'harpoon2',
+    config = function()
+      local harpoon = require('harpoon')
+      harpoon:setup({ borderchars = ui.border.common })
+      -- stylua: ignore
+      map("n", "<a-;>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
+      map('n', '<localleader>ha', function() harpoon:list():append() end)
+      map('n', '<localleader>hn', function() harpoon:list():next() end)
+      map('n', '<localleader>hp', function() harpoon:list():prev() end)
+      map('n', '<a-1>', function() harpoon:list():select(1) end)
+      map('n', '<a-2>', function() harpoon:list():select(2) end)
+      map('n', '<a-3>', function() harpoon:list():select(3) end)
+      map('n', '<a-4>', function() harpoon:list():select(4) end)
+    end,
   },
 }
