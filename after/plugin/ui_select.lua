@@ -21,6 +21,7 @@ local toggle_options = {
   ['Toggle ZenMode'] = 'ZenMode',
   ['Toggle Sunglasses'] = 'lua require"rm.toggle_select".toggle_sunglasses()',
   ['Toggle Zoom'] = 'lua require("mini.misc").zoom()',
+  ['Open Local Postgres DB'] = 'lua require("rm.toggle_select").pick_local_pg_db()',
 }
 
 local toggle_menu = function()
