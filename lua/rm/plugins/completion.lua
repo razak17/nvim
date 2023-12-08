@@ -179,6 +179,7 @@ return {
               nerdfonts = '[NF]',
               natdat = '[NATDAT]',
               nvim_px_to_rem = '[PX2REM]',
+              ['vim-dadbod-completion'] = '[DB]',
             })[entry.source.name]
 
             local label, length = item.abbr, api.nvim_strwidth(item.abbr)
@@ -288,12 +289,11 @@ return {
           },
           {
             name = 'spell',
-            priority = 3,
             max_item_count = 10,
             group_index = 2,
           },
-          { name = 'nerdfonts', priority = 3, group_index = 2 },
-          { name = 'norg', priority = 3, group_index = 2 },
+          { name = 'nerdfonts', group_index = 2 },
+          { name = 'norg', group_index = 2 },
         },
       })
 
