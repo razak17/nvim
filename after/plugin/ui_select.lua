@@ -2,10 +2,6 @@ if not rvim or rvim.none or rvim.plugins.minimal or not rvim.plugins.enable then
   return
 end
 
-local file_select = require('rm.files_select')
-local git_select = require('rm.git_select')
-local lsp_select = require('rm.lsp_select')
-
 --------------------------------------------------------------------------------
 -- Toggles
 --------------------------------------------------------------------------------
@@ -112,16 +108,16 @@ if not rvim.plugins.enable then return end
 --------------------------------------------------------------------------------
 -- stylua: ignore
 local file_options = {
-  ['Open File From Current Dir'] = function() file_select.open_file_cur_dir(false) end,
-  ['Open File From Current Dir And Children'] = function() file_select.open_file_cur_dir(true) end,
+  ['Open File From Current Dir'] = "lua require'rm.file_select'.open_file_cur_dir(false)",
+  ['Open File From Current Dir And Children'] = "lua require'rm.file_select'.open_file_cur_dir(true)",
   ['Reload All Files From Disk'] = 'lua rvim.reload_all()',
-  ['Copy File Path'] = file_select.copy_file_path,
+  ['Copy File Path'] = "lua require'rm.file_select'.copy_file_path()",
   ['Copy Full File Path'] = 'let @+ = expand("%:p")',
   ['Yank Last Ex Command'] = 'let @+=@:',
   ['Yank Last Message'] = [[let @+=substitute(execute('messages'), '\n\+', '\n', 'g')]],
-  ['Change Filetype'] = file_select.quick_set_ft,
-  ['Search Code Deps'] = file_select.search_code_deps,
-  ['Toggle Diff'] = file_select.toggle_diff,
+  ['Change Filetype'] = "lua require'rm.file_select'.quick_set_ft()",
+  ['Search Code Deps'] = "lua require'rm.file_select'.search_code_deps()",
+  ['Toggle Diff'] = "lua require'rm.file_select'.toggle_diff()",
   ['Toggle Interceptor'] = 'InterceptToggle',
   ['Re-open File With Sudo Permissions'] = 'SudaRead',
   ['Write File With Sudo Permissions'] = 'SudaWrite',
@@ -140,26 +136,24 @@ map( 'n', '<leader>of', file_menu, { desc = '[f]ile [a]ctions: open menu for fil
 if rvim.is_git_repo() then
   local git_options = {
     ['Show Branches'] = "lua require'telescope.builtin'.git_branches()",
-    ['Browse Branches'] = git_select.browse_branches,
-    ['Stash Changes'] = git_select.do_stash,
-    ['Browse Stashes'] = git_select.list_stashes,
-    ['Browse Commits'] = git_select.browse_commits,
-    ['Show Buffer Commits'] = git_select.browse_bcommits,
-    ['Show Commit At Line'] = git_select.show_commit_at_line,
-    ['Show Commit From Hash'] = git_select.display_commit_from_hash,
-    ['Open File From Branch'] = "lua require'agitator'.open_file_git_branch()",
-    ['Search In Another Branch'] = "lua require'agitator'.search_git_branch()",
+    ['Browse Branches'] = "lua require'rm.git_select'.browse_branches()",
+    ['Stash Changes'] = "lua require'rm.git_select'.do_stash()",
+    ['Browse Stashes'] = "lua require'rm.git_select'.list_stashes()",
+    ['Browse Commits'] = "lua require'rm.git_select'.browse_commits()",
+    ['Show Buffer Commits'] = "lua require'rm.git_select'.browse_bcommits()",
+    ['Show Commit At Line'] = "lua require'rm.git_select'.show_commit_at_line()",
+    ['Show Commit From Hash'] = "lua require'rm.git_select'.display_commit_from_hash()",
+    ['Open File From Branch'] = "lua require'rm.git_select'.open_file_git_branch()",
+    ['Search In Another Branch'] = "lua require'rm.git_select'.search_git_branch()",
     ['Open Co Authors'] = 'GitCoAuthors',
-    ['Time Machine'] = git_select.time_machine,
-    ['Browse Project History'] = git_select.project_history,
+    ['Time Machine'] = "lua require'rm.git_select'.time_machine()",
+    ['Browse Project History'] = "lua require'rm.git_select'.project_history()",
     ['Browse File Commit History'] = 'DiffviewFileHistory %',
-    ['Pull Latest Changes'] = git_select.git_pull,
-    ['Fetch Orign'] = git_select.fetch_origin,
-    ['Conflict Show Base'] = function() git_select.diffview_conflict('base') end,
-    ['Conflict Show Ours'] = function() git_select.diffview_conflict('ours') end,
-    ['Conflict Show Theirs'] = function()
-      git_select.diffview_conflict('theirs')
-    end,
+    ['Pull Latest Changes'] = "lua require'rm.git_select'.git_pull()",
+    ['Fetch Orign'] = "lua require'rm.git_select'.fetch_origin()",
+    ['Conflict Show Base'] = "lua require'rm.git_select'.diffview_conflict('base')",
+    ['Conflict Show Ours'] = "lua require'rm.git_select'.diffview_conflict('ours')",
+    ['Conflict Show Theirs'] = "lua require'rm.git_select'.diffview_conflict('theirs')",
   }
 
   local git_menu = function()
@@ -175,24 +169,24 @@ end
 --------------------------------------------------------------------------------
 if rvim.lsp.enable then
   local lsp_options = {
-    ['Code Format'] = lsp_select.format_buf,
-    ['Eslint Fix'] = lsp_select.eslint_fix,
-    ['LSP references'] = lsp_select.display_lsp_references,
-    ['Call Heirarchy'] = lsp_select.display_call_hierarchy,
-    ['Restart All LSPs'] = lsp_select.lsp_restart_all,
-    ['Toggle Linting Globally'] = lsp_select.toggle_linting,
-    ['Toggle Virtual Text'] = lsp_select.toggle_virtual_text,
-    ['Toggle Virtual Lines'] = lsp_select.toggle_virtual_lines,
-    ['Toggle Diagnostic Signs'] = lsp_select.toggle_signs,
-    ['Toggle Hover Diagnostics'] = lsp_select.toggle_hover_diagnostics,
-    ['Toggle Hover Diagnostics (go_to)'] = lsp_select.toggle_hover_diagnostics_go_to,
-    ['Toggle Format On Save'] = lsp_select.toggle_format_on_save,
+    ['Code Format'] = "lua require'rm.lsp_select'.format_buf()",
+    ['Eslint Fix'] = "lua require'rm.lsp_select'.eslint_fix()",
+    ['LSP references'] = "lua require'rm.lsp_select'.display_lsp_references()",
+    ['Call Heirarchy'] = "lua require'rm.lsp_select'.display_call_hierarchy()",
+    ['Restart All LSPs'] = "lua require'rm.lsp_select'.lsp_restart_all()",
+    ['Toggle Linting Globally'] = "lua require'rm.lsp_select'.toggle_linting()",
+    ['Toggle Virtual Text'] = "lua require'rm.lsp_select'.toggle_virtual_text()",
+    ['Toggle Virtual Lines'] = "lua require'rm.lsp_select'.toggle_virtual_lines()",
+    ['Toggle Diagnostic Signs'] = "lua require'rm.lsp_select'.toggle_signs()",
+    ['Toggle Hover Diagnostics'] = "lua require'rm.lsp_select'.toggle_hover_diagnostics()",
+    ['Toggle Hover Diagnostics (go_to)'] = "lua require'rm.lsp_select'.toggle_hover_diagnostics_go_to()",
+    ['Toggle Format On Save'] = "lua require'rm.lsp_select'.toggle_format_on_save()",
     ['Toggle JS Arrow Function'] = 'lua require("nvim-js-actions/js-arrow-fn").toggle()',
     ['Preview Code Actions'] = 'lua require("actions-preview").code_actions()',
   }
 
   local lsp_menu = function()
-    if #lsp_select.lsp_clients(0) == 0 then
+    if #vim.lsp.get_clients({ bufnr = 0 }) == 0 then
       vim.notify_once('there is no lsp server attached to the current buffer')
     else
       rvim.create_select_menu('Code/LSP actions', lsp_options)() --> extra paren to execute!
