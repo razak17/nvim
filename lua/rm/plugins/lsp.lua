@@ -168,6 +168,16 @@ return {
     },
   },
   {
+    'cseickel/diagnostic-window.nvim',
+    cond = rvim.lsp.enable and rvim.plugins.niceties.enable,
+    event = 'LspAttach',
+    cmd = { 'DiagWindowShow' },
+    keys = {
+      { 'gL', '<Cmd>DiagWindowShow<CR>', desc = 'diagnostic window: show' },
+    },
+    dependencies = { 'MunifTanjim/nui.nvim' },
+  },
+  {
     'doums/dmap.nvim',
     cond = rvim.lsp.enable and false,
     event = 'LspAttach',

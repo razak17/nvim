@@ -272,6 +272,7 @@ local filetypes = rvim.p_table({
   ['gitcommit'] = commit_buffer,
   ['NeogitCommitMessage'] = commit_buffer,
   ['slide'] = presets.tool_panel:with({ winbar = 'ignore' }),
+  ['diagmsg'] = presets.tool_panel,
 })
 
 local filenames = rvim.p_table({
