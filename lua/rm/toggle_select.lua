@@ -1,3 +1,4 @@
+local opt_l = vim.opt_local
 local M = {}
 
 local function mappings_notify(msg, type)
@@ -31,31 +32,24 @@ function M.toggle_statusline()
 end
 
 --- Toggle conceal=2|0
-function M.toggle_conceal()
-  vim.opt_local.conceallevel = vim.opt_local.conceallevel:get() == 0 and 2 or 0
+function M.toggle_conceal_level()
+  vim.opt_local.conceallevel = opt_l.conceallevel:get() == 0 and 2 or 0
   mappings_notify(
-    string.format(
-      'conceal %s',
-      rvim.bool2str(vim.opt_local.conceallevel:get() == 2)
-    )
+    string.format('conceal %s', rvim.bool2str(opt_l.conceallevel:get() == 2))
   )
 end
--- stylua: ignore
-map('n', '<localleader>cl', ':lua require"rm.toggle_select".toggle_conceal()', { desc = 'toggle conceallevel' })
 
 --- Toggle conceal cursor=n|''
 function M.toggle_conceal_cursor()
-  vim.opt_local.concealcursor = vim.opt_local.concealcursor:get() == 'n' and ''
-    or 'n'
+  vim.opt_local.concealcursor = rvim.falsy(opt_l.concealcursor:get()) and 'nv'
+    or ''
   mappings_notify(
     string.format(
       'conceal cursor %s',
-      rvim.bool2str(vim.opt_local.concealcursor:get() == '')
+      rvim.bool2str(opt_l.concealcursor:get() == '')
     )
   )
 end
--- stylua: ignore
-map( 'n', '<localleader>cc', ':lua require"rm.toggle_select".toggle_conceal_cursor()', { desc = 'toggle concealcursor' })
 
 function Mtoggle_sunglasses()
   local success, _ = pcall(require, 'sunglasses')
