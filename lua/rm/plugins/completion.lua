@@ -5,6 +5,32 @@ local border, lsp_hls, ellipsis =
 
 return {
   {
+    'f3fora/cmp-spell',
+    cond = rvim.completion.enable,
+    ft = { 'gitcommit', 'NeogitCommitMessage', 'markdown', 'norg', 'org' },
+  },
+  {
+    'rcarriga/cmp-dap',
+    cond = rvim.completion.enable,
+    ft = { 'dap-repl', 'dapui_watches' },
+  },
+  {
+    'amarakon/nvim-cmp-buffer-lines',
+    cond = rvim.completion.enable,
+    ft = { 'c', 'cpp' },
+  },
+  {
+    'js-everts/cmp-tailwind-colors',
+    cond = rvim.completion.enable,
+    ft = { 'css', 'html', 'vue', 'javascriptreact', 'typescriptreact' },
+  },
+  {
+    'jsongerber/nvim-px-to-rem',
+    cond = rvim.completion.enable,
+    ft = { 'css', 'scss' },
+    opts = { disable_keymaps = true },
+  },
+  {
     'hrsh7th/nvim-cmp',
     cond = rvim.completion.enable,
     event = 'InsertEnter',
@@ -335,27 +361,6 @@ return {
       { 'hrsh7th/cmp-nvim-lsp', cond = rvim.lsp.enable },
       { 'hrsh7th/cmp-cmdline', config = function() vim.o.wildmode = '' end },
       { 'hrsh7th/cmp-nvim-lsp-document-symbol', cond = rvim.lsp.enable },
-      {
-        'f3fora/cmp-spell',
-        ft = { 'gitcommit', 'NeogitCommitMessage', 'markdown', 'norg', 'org' },
-      },
-      {
-        'rcarriga/cmp-dap',
-        ft = { 'dap-repl', 'dapui_watches' },
-      },
-      {
-        'amarakon/nvim-cmp-buffer-lines',
-        ft = { 'c', 'cpp' },
-      },
-      {
-        'js-everts/cmp-tailwind-colors',
-        ft = { 'css', 'html', 'vue', 'javascriptreact', 'typescriptreact' },
-      },
-      {
-        'jsongerber/nvim-px-to-rem',
-        ft = { 'css', 'scss' },
-        opts = { disable_keymaps = true },
-      },
       {
         'uga-rosa/cmp-dictionary',
         cond = not rvim.plugins.minimal,
