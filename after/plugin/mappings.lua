@@ -383,6 +383,18 @@ nnoremap(
   { desc = 'open ts tree for current buffer' }
 )
 --------------------------------------------------------------------------------
+-- Conceal Level & Cursor
+nnoremap(
+  '<localleader>cl',
+  ':lua require"rm.toggle_select".toggle_conceal_level()<CR>',
+  { desc = 'toggle conceallevel' }
+)
+nnoremap(
+  '<localleader>cc',
+  ':lua require"rm.toggle_select".toggle_conceal_cursor()<CR>',
+  { desc = 'toggle concealcursor' }
+)
+--------------------------------------------------------------------------------
 -- Commands
 --------------------------------------------------------------------------------
 local command = rvim.command
