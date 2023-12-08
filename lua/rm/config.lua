@@ -37,6 +37,7 @@ local namespace = {
       garbage_day = { enable = false },
     },
   },
+  completion = { enable = true },
   treesitter = {
     enable = env.RVIM_PLUGINS_MINIMAL == '0'
       and env.RVIM_TREESITTER_ENABLED == '1',

@@ -71,8 +71,10 @@ return {
     dependencies = { 'hrsh7th/nvim-cmp' },
     config = function()
       local autopairs = require('nvim-autopairs')
-      local cmp_autopairs = require('nvim-autopairs.completion.cmp')
-      require('cmp').event:on('confirm_done', cmp_autopairs.on_confirm_done())
+      if rvim.completion.enable then
+        local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+        require('cmp').event:on('confirm_done', cmp_autopairs.on_confirm_done())
+      end
       autopairs.setup({
         close_triple_quotes = true,
         disable_filetype = { 'neo-tree-popup' },
