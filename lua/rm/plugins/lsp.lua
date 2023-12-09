@@ -153,7 +153,7 @@ return {
   },
   {
     'dgagn/diagflow.nvim',
-    cond = rvim.lsp.enable and rvim.plugins.niceties.enable,
+    cond = rvim.lsp.enable and rvim.plugins.niceties,
     event = 'LspAttach',
     opts = {
       format = function(diagnostic)
@@ -169,7 +169,7 @@ return {
   },
   {
     'cseickel/diagnostic-window.nvim',
-    cond = rvim.lsp.enable and rvim.plugins.niceties.enable,
+    cond = rvim.lsp.enable and rvim.plugins.niceties,
     event = 'LspAttach',
     cmd = { 'DiagWindowShow' },
     keys = {
@@ -284,7 +284,7 @@ return {
   },
   {
     'aznhe21/actions-preview.nvim',
-    cond = rvim.lsp.enable and rvim.plugins.niceties.enable,
+    cond = rvim.lsp.enable and rvim.plugins.niceties,
     opts = {},
     config = function()
       require('actions-preview').setup({
@@ -303,7 +303,7 @@ return {
   },
   {
     'luckasRanarison/clear-action.nvim',
-    cond = rvim.lsp.enable and rvim.plugins.niceties.enable,
+    cond = rvim.lsp.enable and rvim.plugins.niceties,
     event = 'LspAttach',
     opts = {
       signs = {

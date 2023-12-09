@@ -1,7 +1,7 @@
 return {
   {
     'jake-stewart/recursive-macro.nvim',
-    cond = not rvim.plugins.minimal and rvim.plugins.niceties.enable,
+    cond = not rvim.plugins.minimal and rvim.plugins.niceties,
     event = 'VeryLazy',
     opts = {
       registers = { 'q', 'w', 'e', 'r', 't', 'y' },

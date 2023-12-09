@@ -148,10 +148,10 @@ function rvim.run_command(command, params, cb)
     :new({
       command = command,
       args = params,
-      on_stderr = function(error, data, self)
+      on_stderr = function(_, data, _)
         if error_msg == nil then error_msg = data end
       end,
-      on_exit = function(self, code, signal)
+      on_exit = function(_, code, _)
         vim.schedule_wrap(function()
           if code == 0 then
             vim.notify(command .. ' executed successfully', vim.log.levels.INFO)
