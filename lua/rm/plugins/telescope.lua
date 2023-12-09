@@ -127,12 +127,14 @@ local function textcase()
 end
 local function import() extensions('import').import(rvim.telescope.minimal_ui()) end
 local function whop() extensions('whop').whop(rvim.telescope.minimal_ui()) end
-local function file_browser()
-  extensions('file_browser').file_browser({
-    hidden = true,
-    sort_mru = true,
-    sort_lastused = true,
-  })
+local function file_browser(opts)
+  opts = opts
+    or {
+      hidden = true,
+      sort_mru = true,
+      sort_lastused = true,
+    }
+  extensions('file_browser').file_browser(opts)
 end
 
 local function buffers(opts)
