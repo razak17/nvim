@@ -35,7 +35,7 @@ local function vertical(opts)
     layout_config = {
       width = 0.5,
       height = 0.7,
-      prompt_position = 'top',
+      -- prompt_position = 'top',
       preview_cutoff = 20,
       preview_height = function(_, _, max_lines) return max_lines - 20 end,
     },
@@ -109,39 +109,24 @@ end
 
 local function egrepify() extensions('egrepify').egrepify() end
 local function helpgrep() extensions('helpgrep').helpgrep() end
-local function frecency()
-  extensions('frecency').frecency(dropdown(rvim.telescope.minimal_ui()))
-end
-local function luasnips() extensions('luasnip').luasnip(dropdown()) end
+local function frecency() extensions('frecency').frecency(vertical()) end
+local function luasnips() extensions('luasnip').luasnip(vertical()) end
 local function notifications() extensions('notify').notify(vertical()) end
 local function undo() extensions('undo').undo() end
 local function projects()
   extensions('projects').projects(rvim.telescope.minimal_ui())
 end
-local function smart_open()
-  extensions('smart_open').smart_open(rvim.telescope.minimal_ui())
-end
+local function smart_open() extensions('smart_open').smart_open(vertical()) end
 local function lazy() extensions('lazy').lazy() end
 local function aerial() extensions('aerial').aerial() end
 local function harpoon()
-  extensions('harpoon').marks(
-    rvim.telescope.minimal_ui({ prompt_title = 'Harpoon Marks' })
-  )
+  extensions('harpoon').marks(vertical({ prompt_title = 'Harpoon Marks' }))
 end
 local function textcase()
-  extensions('textcase').normal_mode(
-    rvim.telescope.minimal_ui({ prompt_title = 'Text Case' })
-  )
+  extensions('textcase').normal_mode(rvim.telescope.minimal_ui())
 end
-local function import()
-  extensions('import').import(
-    -- vertical()
-    rvim.telescope.minimal_ui({ prompt_title = 'Harpoon Marks' })
-  )
-end
-local function whop()
-  extensions('whop').whop(rvim.telescope.minimal_ui({ prompt_title = 'Whop' }))
-end
+local function import() extensions('import').import(rvim.telescope.minimal_ui()) end
+local function whop() extensions('whop').whop(rvim.telescope.minimal_ui()) end
 local function file_browser(opts)
   opts = opts
     or {
@@ -212,11 +197,18 @@ end
 rvim.telescope = {
   cursor = cursor,
   dropdown = dropdown,
-  vertical = vertical,
-  adaptive_dropdown = function(_)
+  vertical = function(opts)
+    opts = opts or {}
+    return vertical(opts)
+  end,
+  adaptive_dropdown = function()
     return dropdown({ height = fit_to_available_height })
   end,
-  minimal_ui = function(_) return dropdown({ previewer = false }) end,
+  minimal_ui = function(opts)
+    opts = opts or {}
+    vim.tbl_extend('keep', opts, { previewer = false })
+    return dropdown(opts)
+  end,
   delta_opts = delta_opts,
 }
 
@@ -345,6 +337,8 @@ return {
             i = {
               ['<C-w>'] = actions.send_selected_to_qflist,
               ['<c-c>'] = function() vim.cmd.stopinsert() end,
+              ['<c-j>'] = actions.move_selection_next,
+              ['<c-k>'] = actions.move_selection_previous,
               ['<esc>'] = actions.close,
               ['<C-q>'] = actions.smart_send_to_qflist + actions.open_qflist,
               ['<c-s>'] = actions.select_horizontal,
@@ -360,6 +354,12 @@ return {
               ['<C-k>'] = actions.move_selection_previous,
               ['<C-q>'] = actions.smart_send_to_qflist + actions.open_qflist,
               ['<C-a>'] = multi_selection_open,
+              ['<c-n>'] = actions.select_horizontal,
+              ['<c-e>'] = layout_actions.toggle_preview,
+              ['<c-l>'] = layout_actions.cycle_layout_next,
+              ['<c-r>'] = actions.to_fuzzy_refine,
+              ['<Tab>'] = actions.toggle_selection,
+              ['<CR>'] = actions.select_default,
             },
           },
         },
