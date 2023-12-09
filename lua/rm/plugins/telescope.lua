@@ -127,14 +127,12 @@ local function textcase()
 end
 local function import() extensions('import').import(rvim.telescope.minimal_ui()) end
 local function whop() extensions('whop').whop(rvim.telescope.minimal_ui()) end
-local function file_browser(opts)
-  opts = opts
-    or {
-      hidden = true,
-      sort_mru = true,
-      sort_lastused = true,
-    }
-  extensions('file_browser').file_browser(opts)
+local function file_browser()
+  extensions('file_browser').file_browser({
+    hidden = true,
+    sort_mru = true,
+    sort_lastused = true,
+  })
 end
 
 local function buffers(opts)
@@ -472,7 +470,7 @@ return {
     end,
     dependencies = {
       'nvim-lua/plenary.nvim',
-      { 'biozz/whop.nvim', opts = {} },
+      { 'razak17/whop.nvim', opts = {} },
       {
         'fdschmidt93/telescope-egrepify.nvim',
         config = function() require('telescope').load_extension('egrepify') end,
