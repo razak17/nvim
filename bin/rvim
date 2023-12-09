@@ -5,6 +5,7 @@ export RVIM_LSP_ENABLED='1'
 export RVIM_TREESITTER_ENABLED='1'
 export RVIM_AI_ENABLED='1'
 export RVIM_NICETIES_ENABLED='1'
+export RVIM_COMPLETION_ENABLED='1'
 export RVIM_PLUGINS_MINIMAL='0'
 export RVIM_NONE='0'
 export RVIM_GHOST_ENABLED='0'
@@ -51,6 +52,10 @@ while [ "$#" -gt 0 ]; do
 		;;
   --no-niceties)
     export RVIM_NICETIES_ENABLED='0'
+    shift
+    ;;
+  --no-completion)
+    export RVIM_COMPLETION_ENABLED='0'
     shift
     ;;
 	--none)
