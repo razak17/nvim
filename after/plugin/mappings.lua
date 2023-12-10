@@ -424,6 +424,12 @@ command('ConvertGitUrl', function()
   vim.fn.setpos('.', save_pos)
 end, { force = true })
 map('n', '<leader>gu', '<Cmd>ConvertGitUrl<CR>', { desc = 'convert git url' })
+map(
+  'n',
+  '<leader>wr',
+  '<Cmd>vertical resize 110<CR>',
+  { desc = 'increase vertical spacing' }
+)
 --------------------------------------------------------------------------------
 -- Abbreviations
 --------------------------------------------------------------------------------
