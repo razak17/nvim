@@ -1,7 +1,7 @@
 return {
   {
     'kevinhwang91/nvim-ufo',
-    cond = rvim.treesitter.enable and false,
+    cond = rvim.treesitter.enable,
     event = 'VeryLazy',
     keys = {
       {
@@ -58,7 +58,7 @@ return {
   {
     'chrisgrieser/nvim-origami',
     cond = rvim.treesitter.enable,
-    event = 'BufReadPost',
+    -- event = 'BufReadPost',
     keys = {
       { '<BS>', function() require('origami').h() end, desc = 'toggle fold' },
     },
