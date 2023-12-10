@@ -46,11 +46,11 @@ nnoremap(']<space>', [[<cmd>put =repeat(nr2char(10), v:count1)<cr>]], {
 -- Credit: JGunn Choi ?il | inner line
 --------------------------------------------------------------------------------
 -- Yank all
-nnoremap('<leader>Y', 'gg"+VGy<C-o>', { desc = 'yank all' })
+nnoremap('<leader>Y', ':%y+<CR>', { desc = 'yank all' })
 -- Select all
 nnoremap('<leader>A', 'gg"+VG', { desc = 'select all' })
 -- Delete All
-nnoremap('<leader>D', 'gg"+VGd', { desc = 'delete all' })
+nnoremap('<leader>D', ':%d<CR>', { desc = 'delete all' })
 -- Paste in visual mode multiple times
 xnoremap('p', 'pgvy')
 -- search visual selection
