@@ -33,9 +33,9 @@ local function vertical(opts)
     sorting_strategy = 'ascending',
     layout_strategy = 'vertical',
     layout_config = {
-      width = 0.5,
-      height = 0.7,
-      -- prompt_position = 'top',
+      width = 0.7,
+      height = 0.9,
+      prompt_position = 'bottom',
       preview_cutoff = 20,
       preview_height = function(_, _, max_lines) return max_lines - 20 end,
     },
@@ -67,11 +67,11 @@ local function delta_opts(opts, is_buf)
   return opts
 end
 
-local function live_grep(opts) return extensions('menufacture').live_grep(opts) end
+-- local function live_grep(opts) return extensions('menufacture').live_grep(opts) end
 local function find_files(opts)
   return extensions('menufacture').find_files(opts)
 end
-local function git_files(opts) return extensions('menufacture').git_files(opts) end
+-- local function git_files(opts) return extensions('menufacture').git_files(opts) end
 
 local function nvim_config()
   find_files({
@@ -103,8 +103,27 @@ local function plugins()
   })
 end
 
-local function project_files()
-  if not pcall(git_files, { show_untracked = true }) then find_files() end
+-- local function project_files()
+--   if not pcall(git_files, { show_untracked = true }) then find_files() end
+-- end
+
+local function file_browser(opts)
+  opts = opts
+    or {
+      hidden = true,
+      sort_mru = true,
+      sort_lastused = true,
+    }
+  extensions('file_browser').file_browser(opts)
+end
+
+local function buffers(opts)
+  opts = opts or { sort_mru = true, sort_lastused = true }
+  require('telescope.builtin')['buffers'](opts)
+end
+
+local function oldfiles(opts)
+  require('telescope.builtin')['oldfiles'](vertical(opts))
 end
 
 local function egrepify() extensions('egrepify').egrepify() end
@@ -127,20 +146,6 @@ local function textcase()
 end
 local function import() extensions('import').import(rvim.telescope.minimal_ui()) end
 local function whop() extensions('whop').whop(rvim.telescope.minimal_ui()) end
-local function file_browser(opts)
-  opts = opts
-    or {
-      hidden = true,
-      sort_mru = true,
-      sort_lastused = true,
-    }
-  extensions('file_browser').file_browser(opts)
-end
-
-local function buffers(opts)
-  opts = opts or { sort_mru = true, sort_lastused = true }
-  require('telescope.builtin')['buffers'](opts)
-end
 
 ---@param opts? table
 ---@return function
@@ -162,10 +167,12 @@ end
 
 local function visual_grep_string()
   local search = vtext()
-  b('grep_string')({
-    search = search,
-    prompt_title = 'Searh: ' .. string.sub(search, 0, 20),
-  })
+  if type(search) == 'string' then
+    b('grep_string')({
+      search = search,
+      prompt_title = 'Searh: ' .. string.sub(search, 0, 20),
+    })
+  end
 end
 
 local function stopinsert(callback)
@@ -237,6 +244,7 @@ return {
       { '<leader>fn', notifications, desc = 'notify: notifications' },
       { '<leader>fN', notes, desc = 'notes' },
       { '<leader>fo', buffers, desc = 'buffers' },
+      { '<leader>fO', oldfiles, desc = 'oldfiles' },
       { '<leader>fk', smart_open, desc = 'smart open' },
       { '<leader>fp', projects, desc = 'projects' },
       { '<leader>fP', plugins, desc = 'plugins' },
@@ -254,7 +262,7 @@ return {
       { '<leader>fm', harpoon, desc = 'harpoon' },
       { '<leader>ft', textcase, desc = 'textcase', mode = { 'n', 'v' } },
       { '<leader>fw', b('grep_string'), desc = 'find word' },
-      { mode = 'x', '<leader>fw', visual_grep_string, desc = 'find word' },
+      { '<leader>fw', visual_grep_string, desc = 'find word', mode = 'x' },
       { '<leader>fva', b('autocommands'), desc = 'autocommands' },
       { '<leader>fvh', b('highlights'), desc = 'highlights' },
       { '<leader>fvk', b('keymaps'), desc = 'autocommands' },
