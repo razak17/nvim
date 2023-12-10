@@ -140,7 +140,7 @@ return {
     opts = { hlgroup = 'Search' },
   },
   {
-    'winston0410/range-highlight.nvim',
+    'razak17/range-highlight.nvim',
     cond = not minimal and niceties,
     event = { 'BufRead', 'BufNewFile' },
     dependencies = { 'winston0410/cmd-parser.nvim' },
