@@ -21,15 +21,6 @@ return {
         mappings = { n = { ['q'] = 'Close' } },
       },
       get_config = function(opts)
-        opts.prompt = opts.prompt and opts.prompt:gsub(':', '')
-        if opts.kind == 'codeaction' then
-          return {
-            backend = 'fzf_lua',
-            fzf_lua = rvim.fzf.cursor_dropdown({
-              winopts = { title = opts.prompt },
-            }),
-          }
-        end
         return {
           backend = 'fzf_lua',
           fzf_lua = rvim.fzf.dropdown({

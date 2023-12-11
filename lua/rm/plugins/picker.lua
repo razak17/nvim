@@ -105,6 +105,7 @@ return {
   {
     'ibhagwan/fzf-lua',
     cmd = 'FzfLua',
+    -- stylua: ignore
     keys = {
       -- { '<c-p>', git_files_cwd_aware, desc = 'find files' },
       -- { '<leader>f?', fzf_lua.help_tags, desc = 'help' },
@@ -132,16 +133,8 @@ return {
       -- { '<leader>le', fzf_lua.diagnostics_document, desc = 'document diagnostics' },
       -- { '<leader>lw', fzf_lua.diagnostics_workspace, desc = 'workspace diagnostics' },
       -- { '<leader>fc', function() file_picker(vim.fn.stdpath('config')) end, desc = 'nvim config' },
-      {
-        '<localleader>of',
-        function() file_picker(env.HOME .. '/Sync/notes/obsidian') end,
-        desc = 'obsidian: find notes',
-      },
-      {
-        '<leader>fP',
-        function() file_picker(vim.fn.stdpath('data') .. '/lazy') end,
-        desc = 'plugins',
-      },
+      { '<localleader>of', function() file_picker(env.HOME .. '/Sync/notes/obsidian') end, desc = 'obsidian: find notes' },
+      { '<leader>fP', function() file_picker(vim.fn.stdpath('data') .. '/lazy') end, desc = 'plugins' },
     },
     config = function()
       local lsp_kind = require('lspkind')
@@ -262,9 +255,20 @@ return {
             symbol_icons = lsp_kind.symbols,
             symbol_hl = function(s) return lsp_hls[s] end,
           },
-          code_actions = cursor_dropdown({
-            winopts = { title = format_title('Code Actions', '󰌵', '@type') },
-          }),
+          code_actions = {
+            winopts = {
+              width = 0.7,
+              height = 0.8,
+              preview = {
+                layout = 'vertical',
+                height = 0.5,
+                vertical = 'up:65%',
+              },
+              title = format_title('Code Actions', '󰌵'),
+            },
+            previewer = 'codeaction_native',
+            preview_pager = "delta --side-by-side --width=$FZF_PREVIEW_COLUMNS --hunk-header-style='omit' --file-style='omit'",
+          },
         },
         jumps = dropdown({
           winopts = {
