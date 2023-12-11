@@ -172,8 +172,7 @@ return {
             { NeoTreeStatusLine = { link = 'PanelBackground' } },
             { NeoTreeTabActive = { bg = { from = 'FloatTitle' } } },
             { NeoTreeTabInactive = { inherit = 'Comment', italic = false } },
-
-            -- { NeoTreeTabSeparatorInactive = { link = 'WinSeparator' } },
+            { NeoTreeTabSeparatorInactive = { link = 'WinSeparator' } },
           },
         },
       })
