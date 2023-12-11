@@ -229,7 +229,6 @@ return {
       { '<leader>f,', file_browser, desc = 'file browser' },
       { '<leader>f.', function() file_browser({ path = '%:p:h', select_buffer = 'true' }) end, desc = 'file browser', },
       { '<leader>f?', b('help_tags'), desc = 'help tags' },
-      { '<leader>fa', b('builtin', { include_extensions = true }), desc = 'builtins', },
       { '<leader>fb', b('current_buffer_fuzzy_find'), desc = 'find in current buffer', },
       { '<leader>fc', nvim_config, desc = 'nvim config' },
       { '<leader>fd', aerial, desc = 'aerial' },
@@ -238,6 +237,7 @@ return {
       { '<leader>fh', frecency, desc = 'Most (f)recently used files' },
       { '<leader>fH', helpgrep, desc = 'helpgrep' },
       { '<leader>fi', import, desc = 'import' },
+      { '<leader>fI', b('builtin', { include_extensions = true }), desc = 'builtins', },
       { '<leader>fj', whop, desc = 'whop' },
       { '<leader>fl', lazy, desc = 'surf plugins' },
       { '<leader>fL', luasnips, desc = 'luasnip: available snippets' },
@@ -491,6 +491,7 @@ return {
       },
       {
         'nvim-telescope/telescope-frecency.nvim',
+        cond = false,
         config = function() require('telescope').load_extension('frecency') end,
       },
       {
