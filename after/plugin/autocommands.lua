@@ -362,46 +362,46 @@ if is_available('mini.indentscope') then
   })
 end
 
-if is_available('gitsigns.nvim') then
-  augroup('GitSignsRefreshCustom', {
-    event = { 'InsertEnter', 'CursorHold' },
-    command = function(args)
-      local decs = rvim.ui.decorations.get({
-        ft = vim.bo.ft,
-        bt = vim.bo.bt,
-        setting = 'statuscolumn',
-      })
-      if not decs or decs.ft == false or decs and decs.bt == false then
-        return
-      end
-
-      local lnum = vim.v.lnum
-      local signs = vim.api.nvim_buf_get_extmarks(
-        args.buf,
-        -1,
-        { lnum, 0 },
-        { lnum, -1 },
-        { details = true, type = 'sign' }
-      )
-      local function get_signs()
-        return vim
-          .iter(signs)
-          :map(function(item) return format_text(item[4], 'sign_text') end)
-          :fold({}, function(_, item) return item.sign_hl_group end)
-      end
-
-      local sns = get_signs()
-      if sns ~= 'GitSignsStagedAdd' then return end
-
-      vim.defer_fn(function()
-        local inner_sns = get_signs()
-        if inner_sns ~= 'GitSignsStagedAdd' then return end
-        vim.cmd('silent! lua require("gitsigns").refresh()')
-        vim.notify('gitsigns refreshed', 'info', { title = 'gitsigns' })
-      end, 500)
-    end,
-  })
-end
+-- if is_available('gitsigns.nvim') then
+--   augroup('GitSignsRefreshCustom', {
+--     event = { 'InsertEnter', 'CursorHold' },
+--     command = function(args)
+--       local decs = rvim.ui.decorations.get({
+--         ft = vim.bo.ft,
+--         bt = vim.bo.bt,
+--         setting = 'statuscolumn',
+--       })
+--       if not decs or decs.ft == false or decs and decs.bt == false then
+--         return
+--       end
+--
+--       local lnum = vim.v.lnum
+--       local signs = vim.api.nvim_buf_get_extmarks(
+--         args.buf,
+--         -1,
+--         { lnum, 0 },
+--         { lnum, -1 },
+--         { details = true, type = 'sign' }
+--       )
+--       local function get_signs()
+--         return vim
+--           .iter(signs)
+--           :map(function(item) return format_text(item[4], 'sign_text') end)
+--           :fold({}, function(_, item) return item.sign_hl_group end)
+--       end
+--
+--       local sns = get_signs()
+--       if sns ~= 'GitSignsStagedAdd' then return end
+--
+--       vim.defer_fn(function()
+--         local inner_sns = get_signs()
+--         if inner_sns ~= 'GitSignsStagedAdd' then return end
+--         vim.cmd('silent! lua require("gitsigns").refresh()')
+--         vim.notify('gitsigns refreshed', 'info', { title = 'gitsigns' })
+--       end, 500)
+--     end,
+--   })
+-- end
 
 augroup('CmpSourceCargo', {
   event = 'BufRead',
