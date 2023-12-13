@@ -8,6 +8,7 @@ local enabled = not rvim.plugins.minimal and rvim.is_git_repo()
 return {
   {
     'NeogitOrg/neogit',
+    commit = '2d2a98fd2e7d2715e1825b45c8e7f49fbca6ee94',
     cond = enabled,
     cmd = 'Neogit',
     dependencies = { 'nvim-lua/plenary.nvim', 'sindrets/diffview.nvim' },
