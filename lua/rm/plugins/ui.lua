@@ -173,7 +173,7 @@ return {
   },
   {
     'miversen33/sunglasses.nvim',
-    cond = not minimal and niceties,
+    cond = not minimal and niceties and false,
     event = 'UIEnter',
     cmd = { 'SunglassesEnable', 'SunglassesDisable' },
     opts = {
