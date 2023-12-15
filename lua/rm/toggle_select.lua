@@ -74,7 +74,8 @@ function M.open_local_postgres_db(db_name)
   vim.cmd([[tabnew]])
   vim.fn['db_ui#reset_state']()
   vim.b.dbui_db_key_name = db_name .. '_g:dbs'
-  vim.cmd([[DBUIFindBuffer]])
+
+  pcall(vim.cmd, 'DBUIFindBuffer') -- pcall, for nice error handling if the DB does not exist
   vim.cmd('DBUI')
   -- open the tables list and get back where i was
   vim.cmd('norm jjojjjjokkkkkk')
