@@ -17,7 +17,7 @@ return {
       { '<localleader>gs', function() require('neogit').open() end, desc = 'open status buffer', },
       { '<localleader>gc', function() require('neogit').open({ 'commit' }) end, desc = 'open commit buffer', },
       { '<localleader>gl', function() require('neogit.popups.pull').create() end, desc = 'open pull popup', },
-      { '<localleader>gp', function() require('neogit.popups.push').create() end, desc = 'open push popup', },
+      { '<localleader>gp', function() require('neogit.popups.push').create({}) end, desc = 'open push popup', },
     },
     opts = {
       disable_signs = false,
