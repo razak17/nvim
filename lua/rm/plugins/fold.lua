@@ -3,22 +3,11 @@ return {
     'kevinhwang91/nvim-ufo',
     cond = rvim.treesitter.enable,
     event = 'VeryLazy',
+    -- stylua: ignore
     keys = {
-      {
-        'zR',
-        function() require('ufo').openAllFolds() end,
-        'ufo: open all folds',
-      },
-      {
-        'zM',
-        function() require('ufo').closeAllFolds() end,
-        'ufo: close all folds',
-      },
-      {
-        'zK',
-        function() require('ufo').peekFoldedLinesUnderCursor() end,
-        'ufo: preview fold',
-      },
+      { 'zR', '<Cmd>lua require("ufo").openAllFolds()<CR>', 'ufo: open all folds' },
+      { 'zM', '<Cmd>lua require("ufo").closeAllFolds()<CR>', 'ufo: close all folds' },
+      { 'zK', '<Cmd>lua require("ufo").peekFoldedLinesUnderCursor()<CR>', 'ufo: preview fold' },
     },
     opts = function()
       local ft_map = { rust = 'lsp' }
