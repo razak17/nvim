@@ -236,7 +236,7 @@ return {
   {
     'akinsho/git-conflict.nvim',
     cond = enabled,
-    event = 'VeryLazy',
+    event = 'BufReadPre',
     opts = { disable_diagnostics = true },
     config = function(_, opts)
       rvim.highlight.plugin('git-conflict', {
