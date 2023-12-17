@@ -55,6 +55,23 @@ return {
     end,
   },
   {
+    'chrisgrieser/nvim-tinygit',
+    cond = enabled,
+    -- stylua: ignore
+    keys = {
+      { '<leader>ga', '<Cmd>lua require("tinygit").amendOnlyMsg()<CR>', desc = 'amend commit' },
+      -- { '<leader>gc', '<Cmd>lua require("tinygit").smartCommit()<CR>', desc = 'smart commit' },
+      -- { '<leader>gp', '<Cmd>lua require("tinygit").push()<CR>', desc = 'smart push' },
+      { '<leader>gg', '<Cmd>lua require("tinygit").createGitHubPr()<CR>', desc = 'create pr' },
+      { '<leader>gii', '<Cmd>lua require("tinygit").issuesAndPrs()<CR>', desc = 'issues and prs' },
+      { '<leader>gio', '<Cmd>lua require("tinygit").openIssueUnderCursor()<CR>', desc = 'open issue under cursor' },
+      { '<leader>gsP', '<Cmd>lua require("tinygit").stashPush()<CR>', desc = 'stash push' },
+      { '<leader>gsp', '<Cmd>lua require("tinygit").stashPop()<CR>', desc = 'stash pop' },
+    },
+    ft = { 'gitrebase', 'gitcommit' },
+    dependencies = { 'stevearc/dressing.nvim', 'rcarriga/nvim-notify' },
+  },
+  {
     'sindrets/diffview.nvim',
     cond = enabled,
     cmd = {
