@@ -308,6 +308,7 @@ return {
   },
   {
     'jpalardy/vim-slime',
+    cond = rvim.plugins.niceties,
     event = 'VeryLazy',
     -- stylua: ignore
     keys = {
@@ -324,11 +325,6 @@ return {
   {
     'luckasRanarison/nvim-devdocs',
     cond = not rvim.plugins.minimal,
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-      'nvim-telescope/telescope.nvim',
-      'nvim-treesitter/nvim-treesitter',
-    },
     -- stylua: ignore
     keys = {
       { '<localleader>vf', '<cmd>DevdocsOpenFloat<CR>', desc = 'devdocs: open float', },
@@ -346,14 +342,19 @@ return {
       },
       wrap = true,
     },
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'nvim-telescope/telescope.nvim',
+      'nvim-treesitter/nvim-treesitter',
+    },
   },
   {
     '2kabhishek/nerdy.nvim',
+    cmd = 'Nerdy',
     dependencies = {
       'stevearc/dressing.nvim',
       'nvim-telescope/telescope.nvim',
     },
-    cmd = 'Nerdy',
   },
   -- Games
   --------------------------------------------------------------------------------

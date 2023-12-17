@@ -351,7 +351,7 @@ return {
   ------------------------------------------------------------------------------
   {
     'psliwka/vim-dirtytalk',
-    cond = not rvim.plugins.minimal,
+    cond = not rvim.plugins.minimal and rvim.plugins.niceties,
     lazy = false,
     build = ':DirtytalkUpdate',
     init = function() vim.opt.spelllang:append('programming') end,
