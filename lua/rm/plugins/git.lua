@@ -31,9 +31,7 @@ return {
         item = { '▸', '▾' },
         hunk = { '樂', '' },
       },
-      integrations = {
-        diffview = true,
-      },
+      integrations = { diffview = true },
     },
     config = function(_, opts)
       rvim.highlight.plugin('neogit', {
