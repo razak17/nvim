@@ -295,4 +295,35 @@ return {
       },
     },
   },
+  {
+    'rolv-apneseth/tfm.nvim',
+    opts = { file_manager = 'yazi' },
+    keys = {
+      { '<leader>ej', function() require('tfm').open() end, desc = 'TFM' },
+      {
+        '<leader>eh',
+        function()
+          local tfm = require('tfm')
+          tfm.open(nil, tfm.OPEN_MODE.split)
+        end,
+        desc = 'TFM - horizonal split',
+      },
+      {
+        '<leader>ev',
+        function()
+          local tfm = require('tfm')
+          tfm.open(nil, tfm.OPEN_MODE.vsplit)
+        end,
+        desc = 'TFM - vertical split',
+      },
+      {
+        '<leader>et',
+        function()
+          local tfm = require('tfm')
+          tfm.open(nil, tfm.OPEN_MODE.tabedit)
+        end,
+        desc = 'TFM - new tab',
+      },
+    },
+  },
 }
