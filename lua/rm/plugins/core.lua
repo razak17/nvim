@@ -356,6 +356,10 @@ return {
       'nvim-telescope/telescope.nvim',
     },
   },
+  {
+    'ragnarok22/whereami.nvim',
+    cmd = 'Whereami',
+  },
   -- Games
   --------------------------------------------------------------------------------
   {
