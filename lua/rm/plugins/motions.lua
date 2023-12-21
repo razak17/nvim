@@ -123,7 +123,6 @@ return {
   {
     'chrisgrieser/nvim-spider',
     cond = not rvim.plugins.minimal,
-    event = { 'BufRead', 'BufNewFile' },
     -- stylua: ignore
     keys = {
       { 'w', "<cmd>lua require('spider').motion('w')<CR>", mode = { 'x', 'n', 'o' }, },
