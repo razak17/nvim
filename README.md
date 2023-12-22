@@ -28,6 +28,10 @@ LSP Hover:
 ![2022-10-25_165009_680433782](https://user-images.githubusercontent.com/52210954/197835195-010f2097-b3df-4ca8-b492-659cbc208234.png)
 -->
 
+LSP Code Actions:
+
+![2023-12-22_182324_174454105](https://github.com/razak17/nvim/assets/52210954/f1a1c5c7-b338-4932-bfc0-1751272ed1d3)
+
 Find Files:
 
 ![2023-11-06_231524_073773457](https://github.com/razak17/onedark.nvim/assets/52210954/3b16123a-97b4-47b9-8f9e-e380bb7fc9b3)
