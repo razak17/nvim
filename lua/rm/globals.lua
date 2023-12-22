@@ -374,6 +374,13 @@ function rvim.open_with_window_picker(buf)
   end
 end
 
+--- Copy `text` to system clipboard
+---@param text string
+function rvim.copy(text)
+  vim.fn.setreg('+', text)
+  vim.notify('Copied to clipboard', vim.log.levels.INFO)
+end
+
 --- search current word in website. see usage below
 ---@param path string
 ---@param url string
