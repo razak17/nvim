@@ -181,12 +181,12 @@ return {
         mappings = {
           ['<esc>'] = 'revert_preview',
           ['<CR>'] = 'open_with_window_picker',
-          ['<c-s>'] = 'split_with_window_picker',
           ['l'] = 'open',
           ['o'] = 'toggle_node',
           ['P'] = { 'toggle_preview', config = { use_float = false } },
           ['v'] = 'vsplit_with_window_picker',
           ['O'] = 'expand_all_nodes',
+          ['Z'] = 'close_all_nodes',
         },
       },
     },
