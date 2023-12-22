@@ -97,6 +97,34 @@ return {
           hide_gitignored = true,
           never_show = { '.DS_Store' },
         },
+        window = {
+          mappings = {
+            ['i'] = 'run_command',
+            ['<space>'] = 'none',
+            ['Y'] = 'copy_filepath',
+            ['F'] = 'fuzzy_finder',
+            ['o'] = 'open_media',
+          },
+        },
+        commands = {
+          run_command = function(state)
+            vim.api.nvim_input(': ' .. state.tree:get_node().path .. '<Home>')
+          end,
+          copy_filepath = function(state) rvim.copy(state.tree:get_node().path) end,
+          open_media = function(state)
+            local node = state.tree:get_node()
+            -- stylua: ignore
+            if
+              vim.list_contains({
+                'jpg', 'png', 'jpeg', 'ico', 'gif', 'mp3', 'mp4', 'm4a', 'pdf',
+              }, node.ext)
+            then
+              rvim.open(node.path)
+            else
+              vim.cmd.edit(node.path)
+            end
+          end,
+        },
       },
       default_component_configs = {
         indent = {
