@@ -97,7 +97,6 @@ return {
   },
   {
     'xiyaowong/accelerated-jk.nvim',
-    event = 'VeryLazy',
     -- stylua: ignore
     keys = {
       { 'j', "<cmd>lua require'accelerated-jk'.command('gj')<CR>", mode = { 'x', 'n' }, },
