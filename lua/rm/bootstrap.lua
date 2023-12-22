@@ -33,12 +33,23 @@ require('rm.ui')
 local lazy_path = join_paths(data, 'lazy', 'lazy.nvim')
 local plugins_enabled = rvim.plugins.enable
 if not vim.uv.fs_stat(lazy_path) then
-      -- stylua: ignore
+  -- stylua: ignore
   fn.system({ 'git', 'clone', '--filter=blob:none', '--single-branch',
     'https://github.com/folke/lazy.nvim.git', lazy_path,
   })
 end
 vim.opt.rtp:prepend(lazy_path)
+-- local path = vim.fn.stdpath('config') .. '/lua/rm/plugins'
+-- local plugin_list = vim.fs.find(
+--   function(name, _) return name:match('.*.lua$') end,
+--   { path = path, limit = math.huge, type = 'file' }
+-- )
+-- local modules = {}
+-- for _, f in pairs(plugin_list) do
+--   local _, pos = f:find(path)
+--   f = f:sub(pos + 2, #f - 4)
+--   modules[#modules + 1] = { import = 'rm.plugins.' .. f }
+-- end
 require('lazy').setup({
   spec = {
     {
