@@ -13,11 +13,12 @@
 (("for"      @keyword) (#set! conceal "")) ;;
 
 (("and"      @keyword) (#set! conceal "▼"))
-(("end"      @keyword) (#set! conceal "–"))
+; (("end"      @keyword) (#set! conceal "–"))
+(("end"      @keyword) (#set! conceal "⏹"))
 (("then"     @keyword) (#set! conceal "󰁂"))
 (("do"       @keyword) (#set! conceal ""))
 
-;;(("comment_start"    @comment) (#set! conceal ""))
+; (("comment_start"    @comment) (#set! conceal ""))
 
 ;; Function names
 ((function_call name: (identifier) @TSNote (#eq? @TSNote "require"   )) (#set! conceal "󰇚"))
@@ -32,6 +33,7 @@
 (((break_statement) @keyword) (#set! conceal "󰑟"))
 
 ;; vim.*
+(((identifier) @field (#eq? @field "vim")) (#set! conceal ""))
 (((dot_index_expression) @field (#eq? @field "vim.cmd"     )) (#set! conceal ""))
 (((dot_index_expression) @field (#eq? @field "vim.api"     )) (#set! conceal ""))
 (((dot_index_expression) @field (#eq? @field "vim.fn"      )) (#set! conceal "#"))
