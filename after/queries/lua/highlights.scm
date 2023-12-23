@@ -1,7 +1,7 @@
 ;; extends
 ;; source: https://github.com/ziontee113/yt-tutorials/tree/treesitter_conceal
 
-(("return"   @keyword) (#set! conceal "󰜴"))
+(("return"   @keyword) (#set! conceal "")) ;;󰜴
 
 (("local"    @keyword) (#set! conceal "~"))
 
@@ -12,9 +12,10 @@
 (("function" @keyword) (#set! conceal "󰊕"))
 (("for"      @keyword) (#set! conceal "")) ;;
 
-(("and"      @keyword) (#set! conceal "▼"))
-; (("end"      @keyword) (#set! conceal "–"))
-(("end"      @keyword) (#set! conceal "⏹"))
+(("and"      @keyword) (#set! conceal "󰣡")) ;;▼
+(("or"       @keyword) (#set! conceal "󰣥"))
+(("not"      @keyword) (#set! conceal "󰣤"))
+(("end"      @keyword) (#set! conceal "⏹")) ;;–
 (("then"     @keyword) (#set! conceal "󰁂"))
 (("do"       @keyword) (#set! conceal ""))
 
