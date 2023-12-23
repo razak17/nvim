@@ -13,6 +13,13 @@ return {
   --------------------------------------------------------------------------------
   {
     'razak17/package-info.nvim',
+    init = function()
+      if rvim.is_available('which-key.nvim') then
+        require('which-key').register({
+          ['<localleader>'] = { p = { name = 'Package Info' } },
+        })
+      end
+    end,
     cond = not rvim.plugins.minimal,
     event = 'BufRead package.json',
     dependencies = { 'MunifTanjim/nui.nvim' },
@@ -107,6 +114,14 @@ return {
   },
   {
     'linux-cultist/venv-selector.nvim',
+    init = function()
+      if rvim.is_available('which-key.nvim') then
+        require('which-key').register({
+          ['<localleader>lv'] = { name = 'Venv Selector' },
+        })
+      end
+    end,
+    cond = rvim.lsp.enable,
     cmd = 'VenvSelect',
     opts = {
       name = { 'venv', '.venv', 'env', '.env' },
@@ -121,6 +136,13 @@ return {
   --------------------------------------------------------------------------------
   {
     'olexsmir/gopher.nvim',
+    init = function()
+      if rvim.is_available('which-key.nvim') then
+        require('which-key').register({
+          ['<localleader>g'] = { name = 'Gopher' },
+        })
+      end
+    end,
     cond = rvim.lsp.enable and not rvim.plugins.minimal,
     ft = 'go',
     dependencies = {

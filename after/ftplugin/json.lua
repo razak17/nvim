@@ -28,12 +28,6 @@ end
 if vim.fn.expand('%:t') == 'package.json' then
   local fmt = string.format
 
-  if rvim.is_available('which-key.nvim') then
-    require('which-key').register({
-      ['<localleader>'] = { p = { name = 'Package Info' } },
-    })
-  end
-
   local function with_desc(desc)
     return { buffer = 0, desc = fmt('package-info: %s', desc) }
   end

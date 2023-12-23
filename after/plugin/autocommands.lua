@@ -446,7 +446,7 @@ if is_available('nvim-ghost.nvim') then
 end
 
 if is_available('smartcolumn.nvim') then
-  rvim.augroup('SmartCol', {
+  augroup('SmartCol', {
     event = { 'BufEnter', 'CursorMoved', 'CursorMovedI', 'WinScrolled' },
     command = function(args)
       decorations.set_colorcolumn(
@@ -461,7 +461,7 @@ if is_available('smartcolumn.nvim') then
     end,
   })
 elseif is_available('virt-column.nvim') then
-  rvim.augroup('VirtCol', {
+  augroup('VirtCol', {
     event = { 'VimEnter', 'BufEnter', 'WinEnter' },
     command = function(args)
       decorations.set_colorcolumn(

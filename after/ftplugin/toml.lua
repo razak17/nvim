@@ -10,9 +10,6 @@ end
 if vim.fn.expand('%:t') == 'Cargo.toml' then
   local fmt = string.format
 
-  if rvim.is_available('which-key.nvim') then
-    require('which-key').register({ ['<localleader>c'] = { name = 'Crates' } })
-  end
   require('cmp').setup.buffer({ sources = { { name = 'crates' } } })
 
   local function with_desc(desc)

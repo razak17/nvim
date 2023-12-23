@@ -3,6 +3,13 @@ local border = rvim.ui.current.border
 return {
   {
     'simrat39/rust-tools.nvim',
+    init = function()
+      if rvim.is_available('which-key.nvim') then
+        require('which-key').register({
+          ['<localleader>r'] = { name = 'Rust Tools', h = 'Inlay Hints' },
+        })
+      end
+    end,
     ft = { 'rust' },
     cond = rvim.lsp.enable
       and not rvim.find_string(rvim.plugins.disabled, 'rust-tools.nvim'),
@@ -15,10 +22,6 @@ return {
       local extension_path = codelldb:get_install_path() .. '/extension'
       local codelldb_path = extension_path .. '/adapter/codelldb'
       local liblldb_path = extension_path .. '/lldb/lib/liblldb.so'
-
-      require('which-key').register({
-        ['<localleader>r'] = { name = 'Rust Tools', h = 'Inlay Hints' },
-      })
 
       rt.setup({
         tools = {
@@ -83,6 +86,13 @@ return {
   },
   {
     'Saecki/crates.nvim',
+    init = function()
+      if rvim.is_available('which-key.nvim') then
+        require('which-key').register({
+          ['<localleader>c'] = { name = 'Crates' },
+        })
+      end
+    end,
     cond = not rvim.plugins.minimal,
     event = 'BufRead Cargo.toml',
     opts = {
