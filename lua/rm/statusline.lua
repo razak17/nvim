@@ -425,10 +425,6 @@ return {
     condition = function() return vim.bo.filetype == 'python' end,
     provider = function() return python_env() .. ' ' end,
     hl = { fg = colors.yellowgreen, bg = bg },
-    on_click = {
-      callback = function() require('swenv.api').pick_venv() end,
-      name = 'update_plugins',
-    },
   },
   lsp_diagnostics = {
     condition = conditions.has_diagnostics,
