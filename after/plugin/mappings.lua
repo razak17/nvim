@@ -246,7 +246,9 @@ end
 if not is_available('neo-tree.nvim') then
   nnoremap('<C-n>', ':Ex<CR>', { desc = 'explorer' })
 end
-nnoremap('<leader>x', ':q<CR>', { desc = 'quit' })
+if not is_available('close-buffers.nvim') then
+  nnoremap('<leader>x', ':q<CR>', { desc = 'quit' })
+end
 nnoremap('<leader>X', ':wqall<CR>', { desc = 'save all and quit' })
 nnoremap('<leader>q', ':q<CR>', { desc = 'quit all' })
 nnoremap('<leader>Q', ':qa!<CR>', { desc = 'quit' })

@@ -25,7 +25,10 @@ return {
   {
     'kazhala/close-buffers.nvim',
     cmd = { 'BDelete', 'BWipeout' },
-    keys = { { '<leader>c', '<Cmd>BDelete this<CR>', desc = 'buffer delete' } },
+    keys = {
+      { '<leader>c', '<Cmd>BDelete this<CR>', desc = 'buffer delete' },
+      { '<leader>x', '<Cmd>BDelete this<CR><Cmd>q<CR>', desc = 'close & exit' },
+    },
   },
   {
     'Pheon-Dev/buffalo-nvim',
