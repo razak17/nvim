@@ -111,8 +111,10 @@ return {
     opts = {
       name = { 'venv', '.venv', 'env', '.env' },
     },
+    -- stylua: ignore
     keys = {
-      { '<localleader>le', '<cmd>:VenvSelect<cr>', desc = 'Select VirtualEnv' },
+      { '<localleader>lvo', '<Cmd>VenvSelect<cr>', desc = 'venv-selector: select env' },
+      { '<localleader>lvc', '<Cmd>VenvSelectCached<cr>', desc = 'venv-selector: select cached env' },
     },
   },
   -- Golang
