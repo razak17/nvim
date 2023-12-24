@@ -201,7 +201,7 @@ return {
     'nguyenvukhang/nvim-toggler',
     -- stylua: ignore
     keys = {
-      { '<leader>ii', '<cmd>lua require("nvim-toggler").toggle()<CR>', desc = 'nvim-toggler: toggle', },
+      { '<leader>ii', function() require("nvim-toggler").toggle() end, desc = 'nvim-toggler: toggle', },
     },
     opts = {
       remove_default_keybinds = true,
@@ -224,6 +224,37 @@ return {
         ['high'] = 'low',
         ['open'] = 'close',
       },
+    },
+  },
+  {
+    'al-ce/opptogg.nvim',
+    cond = false,
+    cmd = { 'OppTogg' },
+    keys = {
+      { '<leader>io', '<cmd>OppTogg<CR>', desc = 'opptogg: toggle' },
+    },
+    opts = {},
+    opp_table = {
+      ['true'] = 'false',
+      ['yes'] = 'no',
+      ['foo'] = 'bar',
+      ['vim'] = 'emacs',
+      ['let'] = 'const',
+      ['margin'] = 'padding',
+      ['-'] = '+',
+      ['onClick'] = 'onSubmit',
+      ['public'] = 'private',
+      ['string'] = 'int',
+      ['leader'] = 'localleader',
+      ['chore'] = 'feat',
+      ['double'] = 'single',
+      ['config'] = 'opts',
+      ['pre'] = 'post',
+      ['column'] = 'row',
+      ['before'] = 'after',
+      ['end'] = 'start',
+      ['high'] = 'low',
+      ['open'] = 'close',
     },
   },
   {
