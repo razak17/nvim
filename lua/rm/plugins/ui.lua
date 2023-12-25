@@ -353,8 +353,8 @@ return {
   },
   {
     'folke/todo-comments.nvim',
-    cond = rvim.treesitter.enable and niceties,
-    event = 'BufReadPre',
+    cond = niceties,
+    event = 'BufReadPost',
     cmd = { 'TodoTelescope', 'TodoTrouble', 'TodoQuickFix', 'TodoDots' },
     -- stylua: ignore
     keys = {
