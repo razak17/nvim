@@ -32,6 +32,16 @@ return {
       opts = {},
       ft = { 'typescript', 'typescriptreact' },
     },
+    {
+      'OlegGulevskyy/better-ts-errors.nvim',
+      config = {
+        keymaps = {
+          toggle = '<localleader>lo',
+          go_to_definition = '<localleader>ld',
+        },
+      },
+      dependencies = { 'MunifTanjim/nui.nvim' },
+    },
   },
   opts = {
     on_attach = function(client, bufnr)
