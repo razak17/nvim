@@ -325,24 +325,6 @@ if is_available('neo-tree.nvim') then
   })
 end
 
--- HACK: indent blankline doesn't properly refresh when scrolling the window
--- remove when fixed upstream: https://github.com/lukas-reineke/indent-blankline.nvim/issues/489
-if is_available('indent-blankline.nvim') then
-  augroup('IndentBlanklineRefresh', {
-    event = { 'WinScrolled' },
-    desc = 'Refresh indent blankline on window scroll',
-    command = function()
-      -- TODO: remove neovim version check when dropping support for Neovim 0.8
-      if
-        vim.fn.has('nvim-0.9') ~= 1
-        or (vim.v.event.all and vim.v.event.all.leftcol ~= 0)
-      then
-        pcall(vim.cmd.IndentBlanklineRefresh)
-      end
-    end,
-  })
-end
-
 if is_available('mini.indentscope') then
   augroup('IndentscopeDisable', {
     event = { 'FileType' },
