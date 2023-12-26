@@ -43,9 +43,9 @@ function rvim.notepad.toggle()
       row = 1, --> Top of the window
       col = math.ceil(vim.o.columns * 0.5), --> Far right; should add up to 1 with win_width
     })
-    api.nvim_set_option_value('winblend', 10, {
-      win = rvim.notepad.win,
-    })
+    -- api.nvim_set_option_value('winblend', 10, {
+    --   win = rvim.notepad.win,
+    -- })
 
     -- Keymaps
     local keymaps_opts = { silent = true, buffer = rvim.notepad.buf }
