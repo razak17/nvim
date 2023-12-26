@@ -257,7 +257,7 @@ map('n', '<leader><leader>nk', function()
       false
     )
   else
-    move_float(win, 'up', 5)
+    move_float(win, 'up', 15)
   end
 end, { desc = 'switch to up window' })
 map('n', '<leader><leader>nj', function()
@@ -270,7 +270,7 @@ map('n', '<leader><leader>nj', function()
       false
     )
   else
-    move_float(win, 'down', 5)
+    move_float(win, 'down', 15)
   end
 end, { desc = 'switch to down window' })
 map('n', '<leader><leader>nh', function()
@@ -283,7 +283,7 @@ map('n', '<leader><leader>nh', function()
       false
     )
   else
-    move_float(win, 'left', 5)
+    move_float(win, 'left', 15)
   end
 end, { desc = 'switch to left window' })
 map('n', '<leader><leader>nl', function()
@@ -296,7 +296,7 @@ map('n', '<leader><leader>nl', function()
       false
     )
   else
-    move_float(win, 'right', 5)
+    move_float(win, 'right', 15)
   end
 end, { desc = 'switch to right window' })
 
