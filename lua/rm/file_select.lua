@@ -105,7 +105,7 @@ function M.toggle_diff()
     -- used to do a plain 'windo diffthis', but i want to exclude some window types
     for _, win in pairs(wins) do
       local buf = vim.api.nvim_win_get_buf(win)
-      local buf_ft = vim.api.nvim_get_option_value('ft', { buffer = buf })
+      local buf_ft = vim.api.nvim_get_option_value('ft', { buf = buf })
       if
         not vim.tbl_contains({
           'NvimTree',
