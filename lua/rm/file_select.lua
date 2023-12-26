@@ -85,7 +85,7 @@ function M.search_code_deps()
   end
 end
 
-function M.toggle_diff()
+function M.toggle_file_diff()
   -- remember which is the current window
   local cur_win = vim.api.nvim_get_current_win()
 

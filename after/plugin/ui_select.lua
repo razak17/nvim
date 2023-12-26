@@ -47,7 +47,7 @@ local file_options = {
   ['Yank Last Message'] = [[let @+=substitute(execute('messages'), '\n\+', '\n', 'g')]],
   ['Change Filetype'] = "lua require'rm.file_select'.quick_set_ft()",
   ['Search Code Deps'] = "lua require'rm.file_select'.search_code_deps()",
-  ['Toggle Diff'] = "lua require'rm.file_select'.toggle_diff()",
+  ['Toggle File Diff'] = "lua require'rm.file_select'.toggle_file_diff()",
   ['Toggle Interceptor'] = 'InterceptToggle',
   ['Re-open File With Sudo Permissions'] = 'SudaRead',
   ['Write File With Sudo Permissions'] = 'SudaWrite',
