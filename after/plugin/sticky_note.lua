@@ -180,7 +180,7 @@ map('n', '<leader><leader>no', function()
     style = 'minimal',
     border = 'single',
     highlight = {
-      Normal = 'Normal',
+      Normal = 'NormalFloat',
       FloatTitle = 'FloatTitle',
       FloatBorder = 'FloatBorder',
     },
