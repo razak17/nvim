@@ -397,6 +397,9 @@ nnoremap(
   { desc = 'toggle concealcursor' }
 )
 --------------------------------------------------------------------------------
+-- File Diff
+nnoremap('<localleader>ff', ":lua require'rm.file_select'.toggle_diff()<CR>", { desc = 'toggle file diff'})
+--------------------------------------------------------------------------------
 -- Commands
 --------------------------------------------------------------------------------
 local command = rvim.command
