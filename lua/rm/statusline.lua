@@ -7,7 +7,7 @@ local utils = require('heirline.utils')
 local Job = require('plenary.job')
 
 local colors = require('onedark.palette')
-local bg = rvim.highlight.tint(colors.bg_dark, 0.1)
+local bg = rvim.highlight.tint(colors.bg_dark, -0.1)
 local fg = colors.base8
 
 local function block() return icons.separators.bar end
