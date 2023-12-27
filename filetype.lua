@@ -6,6 +6,7 @@ vim.filetype.add({
     ['NEOGIT_COMMIT_EDITMSG'] = 'NeogitCommitMessage',
     ['launch.json'] = 'jsonc',
     Podfile = 'ruby',
+    Spacefile = 'yaml',
     ['.env'] = 'config',
   },
   pattern = {
