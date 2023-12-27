@@ -246,35 +246,6 @@ return {
     end,
   },
   {
-    'willothy/flatten.nvim',
-    lazy = false,
-    cond = false,
-    priority = 1001,
-    opts = {
-      window = { open = 'tab' },
-      block_for = {
-        gitcommit = true,
-        gitrebase = true,
-      },
-      post_open = function(bufnr, winnr, _, is_blocking)
-        vim.w[winnr].is_remote = true
-        if is_blocking then
-          vim.bo.bufhidden = 'wipe'
-          vim.api.nvim_create_autocmd('BufHidden', {
-            desc = 'Close window when buffer is hidden',
-            callback = function()
-              if vim.api.nvim_win_is_valid(winnr) then
-                vim.api.nvim_win_close(winnr, true)
-              end
-            end,
-            buffer = bufnr,
-            once = true,
-          })
-        end
-      end,
-    },
-  },
-  {
     'ahmedkhalf/project.nvim',
     cond = not rvim.plugins.minimal,
     event = 'VimEnter',
@@ -360,17 +331,39 @@ return {
     'ragnarok22/whereami.nvim',
     cmd = 'Whereami',
   },
+  {
+    'willothy/flatten.nvim',
+    lazy = false,
+    cond = false,
+    priority = 1001,
+    opts = {
+      window = { open = 'tab' },
+      block_for = {
+        gitcommit = true,
+        gitrebase = true,
+      },
+      post_open = function(bufnr, winnr, _, is_blocking)
+        vim.w[winnr].is_remote = true
+        if is_blocking then
+          vim.bo.bufhidden = 'wipe'
+          vim.api.nvim_create_autocmd('BufHidden', {
+            desc = 'Close window when buffer is hidden',
+            callback = function()
+              if vim.api.nvim_win_is_valid(winnr) then
+                vim.api.nvim_win_close(winnr, true)
+              end
+            end,
+            buffer = bufnr,
+            once = true,
+          })
+        end
+      end,
+    },
+  },
   -- Games
   --------------------------------------------------------------------------------
-  {
-    'ThePrimeagen/vim-be-good',
-    cmd = 'VimBeGood',
-  },
-  {
-    'NStefan002/speedtyper.nvim',
-    cmd = 'Speedtyper',
-    opts = {},
-  },
+  { 'ThePrimeagen/vim-be-good', cmd = 'VimBeGood' },
+  { 'NStefan002/speedtyper.nvim', cmd = 'Speedtyper', opts = {} },
   {
     'Febri-i/snake.nvim',
     opts = {},
@@ -379,20 +372,8 @@ return {
   },
   -- Share Code
   --------------------------------------------------------------------------------
-  {
-    'TobinPalmer/rayso.nvim',
-    cmd = { 'Rayso' },
-    opts = {},
-  },
-  {
-    'ellisonleao/carbon-now.nvim',
-    cmd = 'CarbonNow',
-    opts = {},
-  },
-  {
-    'Sanix-Darker/snips.nvim',
-    cmd = { 'SnipsCreate' },
-    opts = {},
-  },
+  { 'TobinPalmer/rayso.nvim', cmd = { 'Rayso' }, opts = {} },
+  { 'ellisonleao/carbon-now.nvim', cmd = 'CarbonNow', opts = {} },
+  { 'Sanix-Darker/snips.nvim', cmd = { 'SnipsCreate' }, opts = {} },
   -- }}}
 }
