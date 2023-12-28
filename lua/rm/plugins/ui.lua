@@ -160,7 +160,7 @@ return {
     'benlubas/wrapping-paper.nvim',
     -- stylua: ignore
     keys = {
-      { '<leader>ww', function() require('wrapping-paper').wrap_line() end, desc = 'wrapping-paper: wrap line' },
+      { '<leader>ww', function() require('wrapping-paper').wrap_line() end, desc = 'wrapping-paper: wrap line', },
     },
     dependencies = { 'MunifTanjim/nui.nvim' },
   },
