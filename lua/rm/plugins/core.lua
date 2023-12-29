@@ -1,5 +1,6 @@
 local cmd, fn = vim.cmd, vim.fn
 local border = rvim.ui.current.border
+local fmt = string.format
 
 return {
   ------------------------------------------------------------------------------
@@ -359,6 +360,21 @@ return {
         end
       end,
     },
+  },
+  {
+    'bgaillard/readonly.nvim',
+    cond = not rvim.plugins.minimal and rvim.plugins.niceties,
+    lazy = false,
+    opts = {
+      secured_files = {
+        '~/%.aws/config',
+        '~/%.aws/credentials',
+        '~/%.ssh/.',
+        '~/%.secrets.yaml',
+        '~/%.vault-crypt-files/.',
+      },
+    },
+    dependencies = { 'rcarriga/nvim-notify' },
   },
   -- Games
   --------------------------------------------------------------------------------
