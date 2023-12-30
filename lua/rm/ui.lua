@@ -12,8 +12,15 @@ rvim.ui.border = {
 }
 
 rvim.ui.icons = {
+  scrollbars = {
+    -- stylua: ignore
+    wide = { '__', '▁▁', '▂▂', '▃▃', '▄▄', '▅▅', '▆▆', '▇▇', '██', },
+    thin = { '▁', '▂', '▃', '▄', '▅', '▆', '▇', '█' },
+  },
   git = { branch = '', untracked = '' },
   misc = {
+    arrow_up = '', -- ⇡
+    arrow_down = '', -- ⇣
     beaker = '',
     chevron_right = '',
     chevron_down = '',
@@ -98,18 +105,22 @@ rvim.ui.codicons = {
   },
   misc = {
     bookmark = '', --  ⚑
+    buffers = '󱂬',
     bug = '',
     calendar = '',
     circle = '',
     circuit_board = '',
     code = '',
+    connect = '󱘖',
+    copilot = '',
     clock = '',
     comment = '󰅺',
+    disconnect = '',
     lightbulb = '󰌵',
-    package = '',
-    octoface = '',
-    copilot = '',
     gpt = '🤖',
+    null_ls = '␀ ',
+    octoface = '',
+    package = '',
     pick = '󰋇',
     project = '',
     robot = '󰚩', -- 
@@ -119,7 +130,9 @@ rvim.ui.codicons = {
     smiley = '',
     squirrel = '',
     table = '',
+    tabs = '󰓩',
     tag = '',
+    tree = '', -- 󰁳
   },
 }
 

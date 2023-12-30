@@ -161,7 +161,7 @@ local file_flags = {
   },
   {
     condition = function() return not vim.bo.modifiable or vim.bo.readonly end,
-    provider = '  ',
+    provider = codicons.shaded_lock,
     hl = { fg = fg },
   },
 }
@@ -208,7 +208,9 @@ end
 
 local function ts_active()
   local b = api.nvim_get_current_buf()
-  if next(vim.treesitter.highlighter.active[b]) then return ' ' end
+  if next(vim.treesitter.highlighter.active[b]) then
+    return codicons.misc.tree
+  end
   return ''
 end
 
@@ -276,7 +278,7 @@ local function stl_lsp_clients(bufnum)
         require('null-ls.sources').get_available(vim.bo[bufnum].filetype)
       local source_names = vim.tbl_map(function(s) return s.name end, sources)
       return {
-        name = '␀ ' .. table.concat(source_names, ', '),
+        name = codicons.misc.null_ls .. table.concat(source_names, ', '),
         priority = 7,
       }
     end
@@ -296,12 +298,11 @@ local function lsp_client_names()
   if client_names[1] and string.sub(client_names[1], 2, 2) == '�' then
     return 'No Active LSP '
       .. table.concat(client_names, fmt(' %s ', separator))
-      .. ' '
       .. separator
   end
-  return ' '
-    .. table.concat(client_names, fmt(' %s ', separator))
+  return codicons.misc.disconnect
     .. ' '
+    .. table.concat(client_names, fmt('%s ', separator))
     .. separator
 end
 
@@ -314,7 +315,7 @@ local function get_linters()
     .iter(pairs(lint.linters_by_ft[ft]))
     :map(function(_, l) return l end)
     :totable()
-  return table.concat(linters, ', ') .. ' ' .. separator
+  return table.concat(linters, ', ') .. separator
 end
 
 -- Add formatters (from conform.nvim)
@@ -327,14 +328,14 @@ local function get_formatters(curbuf)
     .iter(ipairs(conform.list_formatters(curbuf)))
     :map(function(_, f) return f.name end)
     :totable()
-  return table.concat(formatters, ', ') .. ' ' .. separator
+  return table.concat(formatters, ', ') .. separator
 end
 
 local function stl_copilot_indicator()
   local client = vim.lsp.get_clients({ name = 'copilot' })[1]
-  if client == nil then return fmt('inactive %s', separator) end
-  if vim.tbl_isempty(client.requests) then return fmt('idle %s', separator) end
-  return fmt('working %s', separator)
+  if client == nil then return 'inactive' end
+  if vim.tbl_isempty(client.requests) then return 'idle' end
+  return 'working'
 end
 
 return {
@@ -385,7 +386,7 @@ return {
           hl = { fg = fg, bg = bg },
         },
         {
-          provider = function() return GitStatus.behind .. '⇣ ' end,
+          provider = function() return GitStatus.behind .. icons.arrow_down end,
           hl = function()
             return {
               fg = GitStatus.behind == 0 and fg or colors.pale_red,
@@ -400,7 +401,7 @@ return {
           },
         },
         {
-          provider = function() return GitStatus.ahead .. '⇡ ' end,
+          provider = function() return GitStatus.ahead .. icons.arrow_up end,
           hl = function()
             return {
               fg = GitStatus.ahead == 0 and fg or colors.yellowgreen,
@@ -611,9 +612,9 @@ return {
             .iter(ipairs(lsp_servers))
             :map(function(_, c) return c.name end)
             :totable()
-          self.servers = ' '
-            .. table.concat(self.client_names, fmt(' %s ', separator))
+          self.servers = codicons.misc.disconnect
             .. ' '
+            .. table.concat(self.client_names, fmt('%s ', separator))
             .. separator
         end
       end,
@@ -827,7 +828,7 @@ return {
     provider = function()
       local buffers = require('buffalo').buffers()
       local tabpages = require('buffalo').tabpages()
-      return ' � ' .. buffers .. ' � ' .. tabpages -- �
+      return codicons.misc.buffers .. buffers .. codicons.misc.tabs .. tabpages -- �
     end,
     hl = { fg = '#ffaa00', bg = bg },
   },
@@ -844,14 +845,14 @@ return {
       local current_line = vim.fn.line('.')
       local total_lines = vim.fn.line('$')
       local chars = {
-        '▁',
-        '▂',
-        '▃',
-        '▄',
-        '▅',
-        '▆',
-        '▇',
-        '█',
+        'â',
+        'â',
+        'â',
+        'â',
+        'â',
+        'â',
+        'â',
+        'â',
       }
       local line_ratio = current_line / total_lines
       local index = math.ceil(line_ratio * #chars)
