@@ -702,34 +702,46 @@ return {
       -- },
     },
   },
-  copilot_attached = {
-    condition = function()
-      return rvim.ai.enable
-        and not rvim.plugins.minimal
-        and rvim.lsp.null_ls.enable
-    end,
-    provider = ' ' .. codicons.misc.octoface .. ' ',
-    hl = { fg = colors.forest_green, bg = bg },
-    on_click = {
-      callback = function()
-        vim.defer_fn(function() vim.cmd('copilot status') end, 100)
-      end,
-      name = 'copilot_attached',
-    },
-  },
+  -- copilot_attached = {
+  --   condition = function()
+  --     return rvim.ai.enable
+  --       and not rvim.plugins.minimal
+  --       and rvim.lsp.null_ls.enable
+  --   end,
+  --   provider = ' ' .. codicons.misc.octoface .. ' ',
+  --   hl = { fg = colors.forest_green, bg = bg },
+  --   on_click = {
+  --     callback = function()
+  --       vim.defer_fn(function() vim.cmd('copilot status') end, 100)
+  --     end,
+  --     name = 'copilot_attached',
+  --   },
+  -- },
   copilot_status = {
     condition = function()
       return rvim.ai.enable
         and not rvim.plugins.minimal
         and rvim.lsp.null_ls.enable
     end,
-    provider = function() return stl_copilot_indicator() end,
-    hl = { fg = fg, bg = bg, bold = true },
-    on_click = {
-      callback = function()
-        vim.defer_fn(function() vim.cmd('copilot panel') end, 100)
+    {
+      provider = ' ' .. codicons.misc.copilot,
+      hl = function()
+        local status = stl_copilot_indicator()
+        if status == 'working' then
+          return { fg = colors.forest_green, bg = bg }
+        end
+        return { fg = colors.comment, bg = bg }
       end,
-      name = 'copilot_status',
+      on_click = {
+        callback = function()
+          vim.defer_fn(function() vim.cmd('copilot panel') end, 100)
+        end,
+        name = 'copilot_status',
+      },
+    },
+    {
+      provider = ' ' .. separator,
+      hl = { fg = fg, bg = bg, bold = true },
     },
   },
   dap = {
@@ -844,16 +856,7 @@ return {
     provider = function()
       local current_line = vim.fn.line('.')
       local total_lines = vim.fn.line('$')
-      local chars = {
-        'â',
-        'â',
-        'â',
-        'â',
-        'â',
-        'â',
-        'â',
-        'â',
-      }
+      local chars = icons.scrollbars.thin
       local line_ratio = current_line / total_lines
       local index = math.ceil(line_ratio * #chars)
       return ' ' .. chars[index]

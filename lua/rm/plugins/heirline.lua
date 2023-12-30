@@ -68,7 +68,7 @@ return {
           statusline.word_count,
           statusline.lsp_clients,
           statusline.attached_clients,
-          statusline.copilot_attached,
+          -- statusline.copilot_attached,
           statusline.copilot_status,
           -- statusline.dap,
           statusline.file_type,
