@@ -222,7 +222,9 @@ rvim.telescope = {
 return {
   {
     'nvim-telescope/telescope.nvim',
-    cmd = 'Telescope',
+    -- NOTE: usind cmd causes issues with dressing and frecency
+    -- cmd = 'Telescope',
+    event = 'VeryLazy',
     -- stylua: ignore
     keys = {
       { '<c-p>', find_files, desc = 'find files' },
@@ -491,7 +493,6 @@ return {
       },
       {
         'nvim-telescope/telescope-frecency.nvim',
-        cond = false,
         config = function() require('telescope').load_extension('frecency') end,
       },
       {
