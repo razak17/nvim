@@ -550,13 +550,8 @@ return {
       },
       {
         'aznhe21/actions-preview.nvim',
-        cond = rvim.lsp.enable,
-        opts = {},
-        config = function()
-          require('actions-preview').setup({
-            telescope = rvim.telescope.vertical(),
-          })
-        end,
+        cond = rvim.lsp.enable and false,
+        opts = { telescope = rvim.telescope.vertical() },
       },
     },
   },
