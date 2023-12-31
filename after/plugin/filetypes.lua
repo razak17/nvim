@@ -41,10 +41,10 @@ settings({
     opt = { spell = true },
   },
   graphql = {
-    opt = {
-      formatoptions = vim.opt.formatoptions:remove('t'),
-      iskeyword = vim.opt.iskeyword:append('$,@-@'),
-    },
+    function()
+      vim.opt.iskeyword:append('$,@-@')
+      vim.opt.formatoptions:remove('t')
+    end,
   },
   html = {
     bo = {
@@ -52,12 +52,11 @@ settings({
       softtabstop = 2,
       shiftwidth = 2,
     },
-    opt = {
-      matchpairs = vim.opt.matchpairs:append('<:>'),
-      indentkeys = vim.opt.indentkeys:remove('*<Return>'),
-    },
     function()
       cmd([[setlocal tw=120 linebreak textwidth=0]]) -- Make lines longer, and don't break them automatically
+
+      vim.opt.matchpairs:append('<:>')
+      vim.opt.indentkeys:remove('*<Return>')
     end,
   },
   httpResult = {
@@ -139,19 +138,10 @@ settings({
       buflisted = false,
       winfixheight = true,
     },
+    -- stylua: ignore
     mappings = {
-      {
-        'n',
-        'dd',
-        rvim.list.qf.delete,
-        { buffer = 0, desc = 'delete current quickfix entry' },
-      },
-      {
-        'v',
-        'd',
-        rvim.list.qf.delete,
-        { buffer = 0, desc = 'delete selected quickfix entry' },
-      },
+      { 'n', 'dd', rvim.list.qf.delete, { buffer = 0, desc = 'delete current quickfix entry' } },
+      { 'v', 'd', rvim.list.qf.delete, { buffer = 0, desc = 'delete selected quickfix entry' } },
       {
         'n',
         'w',
@@ -187,19 +177,17 @@ settings({
   vim = {
     bo = { syntax = 'off' },
     wo = { foldmethod = 'marker' },
-    opt = {
-      spell = true,
-      iskeyword = vim.opt.iskeyword:append(':,#'),
-    },
+    opt = { spell = true },
     function()
       vim.schedule(function() opt_l.syntax = 'off' end) -- FIXME: if the syntax isn't delayed it still gets enabled
+      vim.opt.iskeyword:append(':,#')
     end,
   },
   yaml = {
-    opt = {
-      foldlevel = 99,
-      iskeyword = vim.opt.iskeyword:append('-,$,#'),
-      indentkeys = vim.opt.indentkeys:remove('<:>'),
-    },
+    opt = { foldlevel = 99 },
+    function()
+      vim.opt.iskeyword:append('-,$,#')
+      vim.opt.indentkeys:append('<:>')
+    end,
   },
 })
