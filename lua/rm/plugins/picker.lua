@@ -98,6 +98,10 @@ local function list_sessions()
   )
 end
 
+local function obsidian_open() file_picker(env.HOME .. '/Sync/notes/obsidian') end
+
+rvim.command('ObsidianFind', obsidian_open)
+
 rvim.fzf = { dropdown = dropdown, cursor_dropdown = cursor_dropdown }
 --------------------------------------------------------------------------------
 
@@ -133,7 +137,7 @@ return {
       -- { '<leader>le', fzf_lua.diagnostics_document, desc = 'document diagnostics' },
       -- { '<leader>lw', fzf_lua.diagnostics_workspace, desc = 'workspace diagnostics' },
       -- { '<leader>fc', function() file_picker(vim.fn.stdpath('config')) end, desc = 'nvim config' },
-      { '<localleader>of', function() file_picker(env.HOME .. '/Sync/notes/obsidian') end, desc = 'obsidian: find notes' },
+      { '<localleader>of', obsidian_open, desc = 'obsidian: find notes' },
       { '<leader>fP', function() file_picker(vim.fn.stdpath('data') .. '/lazy') end, desc = 'plugins' },
     },
     config = function()
