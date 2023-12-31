@@ -135,7 +135,7 @@ return {
   },
   {
     'tzachar/local-highlight.nvim',
-    cond = not minimal and niceties,
+    cond = not minimal and niceties and not rvim.lsp.enable,
     event = { 'BufRead', 'BufNewFile' },
     opts = { hlgroup = 'Search' },
   },
