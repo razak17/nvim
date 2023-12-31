@@ -471,9 +471,6 @@ return {
       if rvim.is_available('project.nvim') then
         require('telescope').load_extension('projects')
       end
-      if rvim.is_available('whop.nvim') then
-        require('telescope').load_extension('whop')
-      end
 
       api.nvim_exec_autocmds(
         'User',
@@ -482,7 +479,13 @@ return {
     end,
     dependencies = {
       'nvim-lua/plenary.nvim',
-      { 'razak17/whop.nvim', opts = {} },
+      {
+        'razak17/whop.nvim',
+        config = function()
+          require('whop').setup({})
+          require('telescope').load_extension('whop')
+        end,
+      },
       {
         'fdschmidt93/telescope-egrepify.nvim',
         config = function() require('telescope').load_extension('egrepify') end,
