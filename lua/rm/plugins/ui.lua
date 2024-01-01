@@ -21,12 +21,6 @@ return {
     },
   },
   {
-    'carbon-steel/detour.nvim',
-    cond = niceties,
-    cmd = { 'Detour' },
-    keys = { { '<c-w><enter>', ':Detour<cr>', desc = 'detour: toggle' } },
-  },
-  {
     'tomiis4/BufferTabs.nvim',
     cond = not minimal and false,
     dependencies = { 'nvim-tree/nvim-web-devicons' },
@@ -68,6 +62,10 @@ return {
   {
     'utilyre/sentiment.nvim',
     cond = not minimal and niceties,
+    init = function()
+      -- `matchparen.vim` needs to be disabled manually in case of lazy loading
+      vim.g.loaded_matchparen = 1
+    end,
     event = { 'BufRead', 'BufNewFile' },
     opts = {
       excluded_filetypes = {
