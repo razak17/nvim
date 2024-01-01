@@ -120,13 +120,9 @@ return {
         char = {
           keys = { 'f', 'F', 't', 'T', ';' }, -- remove "," from keys
         },
-        search = {
-          enabled = false,
-        },
+        search = { enabled = false },
       },
-      jump = {
-        nohlsearch = true,
-      },
+      jump = { nohlsearch = true },
     },
     -- stylua: ignore
     keys = {

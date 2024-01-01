@@ -295,7 +295,11 @@ local function lsp_client_names()
     :totable()
 
   -- No LSP client but null-ls sources
-  if client_names[1] and string.sub(client_names[1], 2, 2) == '�' then
+  if
+    client_names[1]
+    -- check string is not alphabetic
+    and string.match(string.sub(client_names[1], 2, 2), '[^%a]')
+  then
     return 'No Active LSP '
       .. table.concat(client_names, fmt(' %s ', separator))
       .. separator
@@ -361,7 +365,8 @@ return {
       {
         provider = function(self)
           if self.status_dict then
-            return ' ' --
+            return codicons.git.branch
+              .. ' '
               .. (self.status_dict.head == '' and 'main' or self.status_dict.head)
               .. ' '
           end
@@ -382,7 +387,7 @@ return {
         update = { 'User', pattern = 'GitStatusChanged' },
         {
           condition = function() return GitStatus.status == 'pending' end,
-          provider = ' ',
+          provider = codicons.git.pending,
           hl = { fg = fg, bg = bg },
         },
         {
@@ -620,7 +625,7 @@ return {
       end,
       provider = function(self)
         if not self.active then
-          return '  ' .. 'No Active LSP ' .. separator
+          return codicons.misc.disconnect .. 'No Active LSP ' .. separator
         end
         if #self.client_names > 2 then
           return ' ' .. self.client_names[1] .. ' and 2 others' .. separator
@@ -802,9 +807,9 @@ return {
       {
         provider = function()
           if vim.g.persisting then
-            return ' 󰅠 '
+            return codicons.misc.cloud_check
           else
-            return ' 󰅣 '
+            return codicons.misc.cloud_outline
           end
         end,
         hl = { fg = colors.blue, bg = bg },
@@ -840,7 +845,7 @@ return {
     provider = function()
       local buffers = require('buffalo').buffers()
       local tabpages = require('buffalo').tabpages()
-      return codicons.misc.buffers .. buffers .. codicons.misc.tabs .. tabpages -- �
+      return codicons.misc.buffers .. buffers .. codicons.misc.tabs .. tabpages
     end,
     hl = { fg = '#ffaa00', bg = bg },
   },
