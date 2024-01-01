@@ -122,7 +122,7 @@ return {
     event = { 'BufReadPre', 'BufNewFile' },
     cmd = 'ConformInfo',
     keys = {
-      { '<localleader>lc', '<Cmd>ConformInfo<CR>', desc = 'conform info' },
+      { '<localleader>lC', '<Cmd>ConformInfo<CR>', desc = 'conform info' },
       {
         '<localleader>lF',
         function() require('conform').format({ formatters = { 'injected' } }) end,
