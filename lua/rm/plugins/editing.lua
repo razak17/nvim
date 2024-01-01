@@ -281,6 +281,14 @@ return {
     end,
   },
   {
+    'subnut/nvim-ghost.nvim',
+    cond = not rvim.plugins.minimal,
+    lazy = not rvim.plugins.overrides.ghost_text.enable,
+  },
+  ------------------------------------------------------------------------------
+  -- Comment
+  ------------------------------------------------------------------------------
+  {
     'numToStr/Comment.nvim',
     keys = { 'gcc', { 'gc', mode = { 'x', 'n', 'o' } } },
     opts = function(_, opts)
@@ -288,11 +296,6 @@ return {
         pcall(require, 'ts_context_commentstring.integrations.comment_nvim')
       if ok then opts.pre_hook = integration.create_pre_hook() end
     end,
-  },
-  {
-    'subnut/nvim-ghost.nvim',
-    cond = not rvim.plugins.minimal,
-    lazy = not rvim.plugins.overrides.ghost_text.enable,
   },
   {
     's1n7ax/nvim-comment-frame',
@@ -318,6 +321,15 @@ return {
       },
     },
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
+  },
+  ------------------------------------------------------------------------------
+  -- Scratch Pads
+  ------------------------------------------------------------------------------
+  {
+    'carbon-steel/detour.nvim',
+    cond = rvim.plugins.niceties,
+    cmd = { 'Detour' },
+    keys = { { '<c-w><enter>', ':Detour<cr>', desc = 'detour: toggle' } },
   },
   ------------------------------------------------------------------------------
   -- Edit Code Blocks
