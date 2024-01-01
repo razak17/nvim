@@ -319,6 +319,9 @@ return {
     },
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
   },
+  ------------------------------------------------------------------------------
+  -- Edit Code Blocks
+  ------------------------------------------------------------------------------
   {
     'dawsers/edit-code-block.nvim',
     cmd = { 'EditCodeBlock', 'EditCodeBlockOrg', 'EditCodeBlockSelection' },

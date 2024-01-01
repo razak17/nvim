@@ -6,6 +6,7 @@ end
 return {
   {
     'epwalsh/obsidian.nvim',
+    event = 'BufRead ' .. sync('obsidian') .. '/*.md',
     -- stylua: ignore
     keys = {
       { '<localleader>ob', '<Cmd>ObsidianBacklinks<CR>', desc = 'obsidian: buffer backlinks', },
