@@ -1,4 +1,5 @@
 return {
+  { 'johmsalas/text-case.nvim', opts = {} },
   {
     'gbprod/yanky.nvim',
     cmd = { 'YankyRingHistory' },
@@ -258,12 +259,7 @@ return {
     },
   },
   {
-    'johmsalas/text-case.nvim',
-    opts = {},
-  },
-  {
     'HiPhish/rainbow-delimiters.nvim',
-    branch = 'use-children',
     cond = rvim.treesitter.enable and rvim.plugins.niceties,
     event = { 'BufRead', 'BufNewFile' },
     config = function()
