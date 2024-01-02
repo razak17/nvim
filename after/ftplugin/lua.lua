@@ -4,7 +4,6 @@ local opt = vim.opt_local
 
 opt.textwidth = 80
 opt.spell = true
-opt.iskeyword:append('-')
 
 if not rvim or not rvim.lsp.enable or not rvim.plugins.enable then return end
 

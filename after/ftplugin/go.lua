@@ -5,7 +5,6 @@ local bo, fmt = vim.bo, string.format
 bo.tabstop = 4
 bo.shiftwidth = 4
 bo.expandtab = false
-vim.opt_local.iskeyword:append('-')
 
 if not rvim or not rvim.lsp.enable or not rvim.plugins.enable then return end
 
