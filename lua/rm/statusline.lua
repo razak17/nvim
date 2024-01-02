@@ -625,7 +625,10 @@ return {
       end,
       provider = function(self)
         if not self.active then
-          return codicons.misc.disconnect .. 'No Active LSP ' .. separator
+          return ' '
+            .. codicons.misc.disconnect
+            .. ' No Active LSP '
+            .. separator
         end
         if #self.client_names > 2 then
           return ' ' .. self.client_names[1] .. ' and 2 others' .. separator
