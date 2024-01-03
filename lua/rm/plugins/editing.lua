@@ -322,6 +322,11 @@ return {
   -- Scratch Pads
   ------------------------------------------------------------------------------
   {
+    'LintaoAmons/scratch.nvim',
+    cmd = { 'Scratch', 'ScratchPad', 'ScratchOpen' },
+    keys = { { '<c-w>O', ':Scratch<cr>', desc = 'scratch: new' } },
+  },
+  {
     'carbon-steel/detour.nvim',
     cond = rvim.plugins.niceties,
     cmd = { 'Detour' },
