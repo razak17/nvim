@@ -59,7 +59,7 @@ local function general_overrides()
       LspReferenceText = {
         bg = 'NONE',
         underline = true,
-        sp = { from = 'CursorLineNr', attr = 'fg', alter = -0.3 },
+        sp = { from = 'CursorLineNr', attr = 'fg', alter = -0.4 },
       },
     },
     { LspReferenceRead = { link = 'LspReferenceText' } },
