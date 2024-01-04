@@ -1,6 +1,7 @@
 local ui, highlight = rvim.ui, rvim.highlight
 local icons = ui.icons
 local border, separators = ui.current.border, ui.icons.separators
+local P = require('onedark.palette')
 
 local minimal = rvim.plugins.minimal
 local niceties = rvim.plugins.niceties
@@ -153,6 +154,17 @@ return {
       vim.g.lengthmatters_excluded = { 'packer' }
       vim.g.lengthmatters_linked_to = 'WhichKeyGroup'
     end,
+  },
+  {
+    "nvim-zh/colorful-winsep.nvim",
+    cond = not minimal and niceties,
+    event = { "WinNew" },
+    opts = {
+      highlight = {
+        bg = rvim.highlight.get('Normal', 'bg'),
+        fg = P.cursor
+      },
+    },
   },
   {
     'benlubas/wrapping-paper.nvim',
