@@ -65,7 +65,6 @@ map( 'n', '<leader>of', file_menu, { desc = '[f]ile [a]ctions: open menu for fil
 --------------------------------------------------------------------------------
 if rvim.is_git_repo() then
   local git_options = {
-    ['Show Branches'] = "lua require'telescope.builtin'.git_branches()",
     ['Browse Branches'] = "lua require'rm.git_select'.browse_branches()",
     ['Stash Changes'] = "lua require'rm.git_select'.do_stash()",
     ['Browse Stashes'] = "lua require'rm.git_select'.list_stashes()",
