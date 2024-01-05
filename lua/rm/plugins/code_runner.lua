@@ -9,7 +9,7 @@ return {
     cmd = 'Build',
     -- stylua: ignore
     keys = {
-      { '<leader>rr', '<Cmd>lua require("builder").build()<CR>', desc = 'builder: run', },
+      { '<leader>rb', '<Cmd>lua require("builder").build()<CR>', desc = 'builder: run', },
     },
     opts = {
       type = 'float',
@@ -35,7 +35,7 @@ return {
     cond = not rvim.plugins.minimal,
     keys = {
       { '<leader>rl', ':Lab code run<CR>', desc = 'lab: run' },
-      { '<leader>rx', ':Lab code stop<CR>', desc = 'lab: stop' },
+      { '<leader>rq', ':Lab code stop<CR>', desc = 'lab: stop' },
       { '<leader>rp', ':Lab code panel<CR>', desc = 'lab: panel' },
     },
     build = 'cd js && npm ci',
@@ -78,9 +78,7 @@ return {
         task_completed = true,
       },
       preset_commands = {
-        ['custom-website'] = {
-          'npm run dev',
-        },
+        ['custom-website'] = { 'npm run dev' },
       },
     },
   },
@@ -89,16 +87,11 @@ return {
     build = 'sh install.sh',
     cmd = { 'SnipRun', 'SnipInfo' },
     keys = {
-      {
-        mode = 'v',
-        '<localleader>rr',
-        ':SnipRun<CR>',
-        desc = 'sniprun: run code',
-      },
-      { '<localleader>rr', ':SnipRun<CR>', desc = 'sniprun: run code' },
-      { '<localleader>ri', ':SnipInfo<CR>', desc = 'sniprun: info' },
-      { '<localleader>rc', ':SnipReset<CR>', desc = 'sniprun: reset' },
-      { '<localleader>rq', ':SnipClose<CR>', desc = 'sniprun: close' },
+      { mode = 'v', '<leader>rr', ':SnipRun<CR>', desc = 'sniprun: run code' },
+      { '<leader>rsr', ':SnipRun<CR>', desc = 'sniprun: run code' },
+      { '<leader>rsi', ':SnipInfo<CR>', desc = 'sniprun: info' },
+      { '<leader>rsc', ':SnipReset<CR>', desc = 'sniprun: reset' },
+      { '<leader>rsq', ':SnipClose<CR>', desc = 'sniprun: close' },
     },
     opts = {},
     config = function(_, opts)
@@ -118,9 +111,7 @@ return {
   {
     'ej-shafran/compile-mode.nvim',
     cmd = { 'Compile', 'Recompile' },
-    opts = {
-      default_command = '',
-    },
+    opts = { default_command = '' },
     dependencies = {
       'nvim-lua/plenary.nvim',
       { 'm00qek/baleia.nvim', tag = 'v1.3.0' },

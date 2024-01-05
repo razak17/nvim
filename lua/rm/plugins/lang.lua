@@ -77,9 +77,9 @@ return {
     ft = { 'http', 'json' },
     -- stylua: ignore
     keys = {
-      { '<localleader>rs', '<Plug>RestNvim', desc = 'rest: run', buffer = 0 },
-      { '<localleader>rp', '<Plug>RestNvimPreview', desc = 'rest: preview', buffer = 0, },
-      { '<localleader>rl', '<Plug>RestNvimLast', desc = 'rest: run last', buffer = 0, },
+      { '<leader>rrs', '<Plug>RestNvim', desc = 'rest: run', buffer = 0 },
+      { '<leader>rrp', '<Plug>RestNvimPreview', desc = 'rest: preview', buffer = 0, },
+      { '<leader>rrl', '<Plug>RestNvimLast', desc = 'rest: run last', buffer = 0, },
     },
     opts = { skip_ssl_verification = true },
   },
@@ -338,7 +338,7 @@ return {
     'bennypowers/nvim-regexplainer',
     keys = {
       {
-        '<localleader>rx',
+        '<leader>rx',
         '<Cmd>RegexplainerToggle<CR>',
         desc = 'regexplainer: toggle',
       },
