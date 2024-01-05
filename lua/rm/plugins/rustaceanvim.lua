@@ -1,37 +1,25 @@
 local border = rvim.ui.current.border
 
+local enabled = rvim.lsp.enable
+  and not rvim.find_string(rvim.plugins.disabled, 'rustaceanvim')
+
 return {
   {
     'mrcjkb/rustaceanvim',
     version = '^3', -- Recommended
     ft = { 'rust' },
-    cond = rvim.lsp.enable
-      and not rvim.find_string(rvim.plugins.disabled, 'rustaceanvim'),
+    cond = enabled,
     init = function()
       require('which-key').register({
         ['<localleader>r'] = { name = 'Rustaceanvim' },
       })
     end,
     config = function()
-      local mason_registry = require('mason-registry')
-
-      local codelldb = mason_registry.get_package('codelldb')
-      local extension_path = codelldb:get_install_path() .. '/extension'
-      local codelldb_path = extension_path .. '/adapter/codelldb'
-      local liblldb_path = extension_path .. '/lldb/lib/liblldb.so'
-
-      local rlsp = vim.cmd.RustLsp
-
       vim.g.rustaceanvim = {
         tools = {
           executor = require('rustaceanvim/executors').termopen, -- can be quickfix or termopen
           reload_workspace_from_cargo_toml = true,
           runnables = { use_telescope = false },
-          inlay_hints = {
-            auto = false,
-            show_parameter_hints = false,
-            parameter_hints_prefix = ' ',
-          },
           hover_actions = {
             border = rvim.ui.border.rectangle,
             auto_focus = true,
@@ -51,14 +39,24 @@ return {
           end,
         },
         dap = {
-          adapter = require('rustaceanvim.config').get_codelldb_adapter(
-            codelldb_path,
-            liblldb_path
-          ),
+          adapter = function()
+            local mason_registry = require('mason-registry')
+            local codelldb = mason_registry.get_package('codelldb')
+            local extension_path = codelldb:get_install_path() .. '/extension'
+            local codelldb_path = extension_path .. '/adapter/codelldb'
+            local liblldb_path = extension_path .. '/lldb/lib/liblldb.so'
+
+            return require('rustaceanvim.config').get_codelldb_adapter(
+              codelldb_path,
+              liblldb_path
+            )
+          end,
         },
         server = {
         -- stylua: ignore
           on_attach = function(_, bufnr)
+            local rlsp = vim.cmd.RustLsp
+
             map('n', 'K', function() rlsp({ 'hover', 'actions' }) end, { desc = 'hover', buffer = bufnr })
             map('n', '<localleader>rr', function() rlsp({'runnables', 'last' }) end, { desc = 'runnables', buffer = bufnr })
             map('n', '<localleader>rc', function() rlsp('openCargo') end, { desc = 'open cargo', buffer = bufnr })
