@@ -148,9 +148,9 @@ return {
       harpoon:setup({ borderchars = ui.border.common })
       -- stylua: ignore
       map("n", "<a-;>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
-      map('n', '<localleader>ha', function() harpoon:list():append() end)
-      map('n', '<localleader>hn', function() harpoon:list():next() end)
-      map('n', '<localleader>hp', function() harpoon:list():prev() end)
+      map('n', '<localleader>ha', function() harpoon:list():append() end, { desc = 'harpoon: add'})
+      map('n', '<localleader>hn', function() harpoon:list():next() end, { desc = 'harpoon: next'})
+      map('n', '<localleader>hp', function() harpoon:list():prev() end, { desc = 'harpoon: prev'})
       map('n', '<a-1>', function() harpoon:list():select(1) end)
       map('n', '<a-2>', function() harpoon:list():select(2) end)
       map('n', '<a-3>', function() harpoon:list():select(3) end)
