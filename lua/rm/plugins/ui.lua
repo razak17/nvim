@@ -156,13 +156,13 @@ return {
     end,
   },
   {
-    "nvim-zh/colorful-winsep.nvim",
+    'nvim-zh/colorful-winsep.nvim',
     cond = not minimal and niceties,
-    event = { "WinNew" },
+    event = { 'WinNew' },
     opts = {
       highlight = {
         bg = rvim.highlight.get('Normal', 'bg'),
-        fg = P.cursor
+        fg = P.cursor,
       },
     },
   },

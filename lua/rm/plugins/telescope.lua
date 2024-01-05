@@ -508,10 +508,6 @@ return {
         config = function() require('telescope').load_extension('zf-native') end,
       },
       {
-        'nvim-telescope/telescope-frecency.nvim',
-        config = function() require('telescope').load_extension('frecency') end,
-      },
-      {
         'debugloop/telescope-undo.nvim',
         config = function() require('telescope').load_extension('undo') end,
       },
@@ -551,5 +547,10 @@ return {
         opts = { telescope = rvim.telescope.vertical() },
       },
     },
+  },
+  {
+    'nvim-telescope/telescope-frecency.nvim',
+    cmd = 'Telescope',
+    config = function() require('telescope').load_extension('frecency') end,
   },
 }
