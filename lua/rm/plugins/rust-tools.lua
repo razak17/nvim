@@ -2,20 +2,17 @@ local border = rvim.ui.current.border
 
 return {
   {
-    'simrat39/rust-tools.nvim',
-    init = function()
-      if rvim.is_available('which-key.nvim') then
-        require('which-key').register({
-          ['<localleader>r'] = { name = 'Rust Tools', h = 'Inlay Hints' },
-        })
-      end
-    end,
+    'mrcjkb/rustaceanvim',
+    version = '^3', -- Recommended
     ft = { 'rust' },
     cond = rvim.lsp.enable
-      and not rvim.find_string(rvim.plugins.disabled, 'rust-tools.nvim'),
-    dependencies = { 'neovim/nvim-lspconfig' },
+      and not rvim.find_string(rvim.plugins.disabled, 'rustaceanvim'),
+    init = function()
+      require('which-key').register({
+        ['<localleader>r'] = { name = 'Rustaceanvim' },
+      })
+    end,
     config = function()
-      local rt = require('rust-tools')
       local mason_registry = require('mason-registry')
 
       local codelldb = mason_registry.get_package('codelldb')
@@ -23,9 +20,11 @@ return {
       local codelldb_path = extension_path .. '/adapter/codelldb'
       local liblldb_path = extension_path .. '/lldb/lib/liblldb.so'
 
-      rt.setup({
+      local rlsp = vim.cmd.RustLsp
+
+      vim.g.rustaceanvim = {
         tools = {
-          executor = require('rust-tools/executors').termopen, -- can be quickfix or termopen
+          executor = require('rustaceanvim/executors').termopen, -- can be quickfix or termopen
           reload_workspace_from_cargo_toml = true,
           runnables = { use_telescope = false },
           inlay_hints = {
@@ -52,7 +51,7 @@ return {
           end,
         },
         dap = {
-          adapter = require('rust-tools.dap').get_codelldb_adapter(
+          adapter = require('rustaceanvim.config').get_codelldb_adapter(
             codelldb_path,
             liblldb_path
           ),
@@ -60,18 +59,17 @@ return {
         server = {
         -- stylua: ignore
           on_attach = function(_, bufnr)
-            map('n', 'K', rt.hover_actions.hover_actions, { desc = 'hover', buffer = bufnr })
-            map('n', '<localleader>rhe', rt.inlay_hints.set, { desc = 'set hints', buffer = bufnr })
-            map('n', '<localleader>rhd', rt.inlay_hints.unset, { desc = 'unset hints', buffer = bufnr })
-            map('n', '<localleader>rr', rt.runnables.runnables, { desc = 'runnables', buffer = bufnr })
-            map('n', '<localleader>rc', rt.open_cargo_toml.open_cargo_toml, { desc = 'open cargo', buffer = bufnr })
-            map('n', '<localleader>rd', rt.debuggables.debuggables, { desc = 'debuggables', buffer = bufnr })
-            map('n', '<localleader>rm', rt.expand_macro.expand_macro, { desc = 'expand macro', buffer = bufnr })
-            map('n', '<localleader>ro', rt.external_docs.open_external_docs, { desc = 'open external docs', buffer = bufnr })
-            map('n', '<localleader>rp', rt.parent_module.parent_module, { desc = 'parent module', buffer = bufnr })
-            map('n', '<localleader>rs', rt.workspace_refresh.reload_workspace, { desc = 'reload workspace', buffer = bufnr })
-            map('n', '<localleader>rg', '<Cmd>RustViewCrateGraph<CR>', { desc = 'view crate graph', buffer = bufnr })
-            map('n', '<localleader>ra', rt.code_action_group.code_action_group, { desc = 'code action', buffer = bufnr })
+            map('n', 'K', function() rlsp({ 'hover', 'actions' }) end, { desc = 'hover', buffer = bufnr })
+            map('n', '<localleader>rr', function() rlsp({'runnables', 'last' }) end, { desc = 'runnables', buffer = bufnr })
+            map('n', '<localleader>rc', function() rlsp('openCargo') end, { desc = 'open cargo', buffer = bufnr })
+            map('n', '<localleader>rd', function() rlsp({'debuggables', 'last' }) end, { desc = 'debuggables', buffer = bufnr })
+            map('n', '<localleader>rm', function() rlsp('expandMacro') end, { desc = 'expand macro', buffer = bufnr })
+            map('n', '<localleader>ro', function() rlsp('externalDocs') end, { desc = 'open external docs', buffer = bufnr })
+            map('n', '<localleader>rp', function() rlsp('parentModule') end, { desc = 'parent module', buffer = bufnr })
+            map('n', '<localleader>rs', function() rlsp('reloadWorkspace') end, { desc = 'reload workspace', buffer = bufnr })
+            map('n', '<localleader>rg', function() rlsp({ 'crateGraph', '[backend]', '[output]' }) end, { desc = 'view crate graph', buffer = bufnr })
+            map('n', '<localleader>ra', function() rlsp('codeAction') end, { desc = 'code action', buffer = bufnr })
+            map('n', '<localleader>rx', function() rlsp('explainError') end, { desc = 'explain error', buffer = bufnr })
           end,
           standalone = false,
           settings = {
@@ -81,17 +79,15 @@ return {
             },
           },
         },
-      })
+      }
     end,
   },
   {
     'Saecki/crates.nvim',
     init = function()
-      if rvim.is_available('which-key.nvim') then
-        require('which-key').register({
-          ['<localleader>c'] = { name = 'Crates' },
-        })
-      end
+      require('which-key').register({
+        ['<localleader>c'] = { name = 'Crates' },
+      })
     end,
     cond = not rvim.plugins.minimal,
     event = 'BufRead Cargo.toml',
