@@ -14,11 +14,9 @@ return {
   {
     'razak17/package-info.nvim',
     init = function()
-      if rvim.is_available('which-key.nvim') then
-        require('which-key').register({
-          ['<localleader>'] = { p = { name = 'Package Info' } },
-        })
-      end
+      require('which-key').register({
+        ['<localleader>'] = { p = { name = 'Package Info' } },
+      })
     end,
     cond = not rvim.plugins.minimal,
     event = 'BufRead package.json',
@@ -75,6 +73,9 @@ return {
     'NTBBloodbath/rest.nvim',
     cond = not rvim.plugins.minimal,
     ft = { 'http', 'json' },
+    init = function()
+      require('which-key').register({ ['<leader>rr'] = { name = 'Rest' } })
+    end,
     -- stylua: ignore
     keys = {
       { '<leader>rrs', '<Plug>RestNvim', desc = 'rest: run', buffer = 0 },
@@ -114,11 +115,9 @@ return {
   {
     'linux-cultist/venv-selector.nvim',
     init = function()
-      if rvim.is_available('which-key.nvim') then
-        require('which-key').register({
-          ['<localleader>lv'] = { name = 'Venv Selector' },
-        })
-      end
+      require('which-key').register({
+        ['<localleader>lv'] = { name = 'Venv Selector' },
+      })
     end,
     cond = rvim.lsp.enable,
     cmd = 'VenvSelect',
@@ -136,11 +135,9 @@ return {
   {
     'olexsmir/gopher.nvim',
     init = function()
-      if rvim.is_available('which-key.nvim') then
-        require('which-key').register({
-          ['<localleader>g'] = { name = 'Gopher' },
-        })
-      end
+      require('which-key').register({
+        ['<localleader>g'] = { name = 'Gopher' },
+      })
     end,
     cond = rvim.lsp.enable and not rvim.plugins.minimal,
     ft = 'go',

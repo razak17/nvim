@@ -86,6 +86,11 @@ return {
     'michaelb/sniprun',
     build = 'sh install.sh',
     cmd = { 'SnipRun', 'SnipInfo' },
+    init = function()
+      require('which-key').register({
+        ['<leader>rs'] = { name = 'SnipRun' },
+      })
+    end,
     keys = {
       { mode = 'v', '<leader>rr', ':SnipRun<CR>', desc = 'sniprun: run code' },
       { '<leader>rsr', ':SnipRun<CR>', desc = 'sniprun: run code' },
