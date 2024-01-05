@@ -72,8 +72,22 @@ return {
           standalone = false,
           settings = {
             ['rust-analyzer'] = {
+              assist = {
+                importEnforceGranularity = true,
+                importPrefix = 'create',
+              },
+              cargo = { allFeatures = true },
+              checkOnSave = {
+                command = 'clippy',
+                allFeatures = true,
+              },
+              inlayHints = {
+                lifetimeElisionHints = {
+                  enable = true,
+                  useParameterNames = true,
+                },
+              },
               lens = { enable = true },
-              checkOnSave = { enable = true, command = 'clippy' },
             },
           },
         },

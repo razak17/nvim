@@ -52,9 +52,7 @@ vim.opt.rtp:prepend(lazy_path)
 -- end
 require('lazy').setup({
   spec = {
-    {
-      import = plugins_enabled and 'rm.plugins' or nil,
-    },
+    { import = plugins_enabled and 'rm.plugins' or nil },
   },
   defaults = { lazy = true },
   change_detection = { notify = false },
