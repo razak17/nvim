@@ -133,6 +133,29 @@ return {
     config = function() require('lsp_lines').setup() end,
   },
   {
+    -- 'razak17/glance.nvim',
+    'dnlhc/glance.nvim',
+    cond = rvim.lsp.enable,
+    -- stylua: ignore
+    keys = {
+      { 'gD', '<Cmd>Glance definitions<CR>', desc = 'lsp: glance definitions' },
+      { 'gR', '<Cmd>Glance references<CR>', desc = 'lsp: glance references' },
+      { 'gY', '<Cmd>Glance type_definitions<CR>', desc = 'lsp: glance type definitions' },
+      { 'gM', '<Cmd>Glance implementations<CR>', desc = 'lsp: glance implementations' },
+    },
+    config = function()
+      require('glance').setup({
+        preview_win_opts = { relativenumber = false },
+      })
+
+      highlight.plugin('glance', {
+        { GlancePreviewNormal = { link = 'NormalFloat' } },
+        -- { GlancePreviewMatch = { link = 'Comment' } },
+        { GlanceListMatch = { link = 'Search' } },
+      })
+    end,
+  },
+  {
     'kosayoda/nvim-lightbulb',
     cond = rvim.lsp.enable and false,
     event = 'LspAttach',
