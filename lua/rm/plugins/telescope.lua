@@ -493,55 +493,6 @@ return {
     dependencies = {
       'nvim-lua/plenary.nvim',
       {
-        'razak17/whop.nvim',
-        config = function()
-          require('whop').setup({})
-          require('telescope').load_extension('whop')
-        end,
-      },
-      {
-        'fdschmidt93/telescope-egrepify.nvim',
-        config = function() require('telescope').load_extension('egrepify') end,
-      },
-      {
-        'natecraddock/telescope-zf-native.nvim',
-        config = function() require('telescope').load_extension('zf-native') end,
-      },
-      {
-        'debugloop/telescope-undo.nvim',
-        config = function() require('telescope').load_extension('undo') end,
-      },
-      {
-        'molecule-man/telescope-menufacture',
-        config = function() require('telescope').load_extension('menufacture') end,
-      },
-      {
-        'nvim-telescope/telescope-file-browser.nvim',
-        config = function() require('telescope').load_extension('file_browser') end,
-      },
-      {
-        'razak17/telescope-import.nvim',
-        -- 'piersolenski/telescope-import.nvim',
-        config = function() require('telescope').load_extension('import') end,
-      },
-      {
-        'catgoose/telescope-helpgrep.nvim',
-        config = function() require('telescope').load_extension('helpgrep') end,
-      },
-      {
-        'tsakirist/telescope-lazy.nvim',
-        config = function() require('telescope').load_extension('lazy') end,
-      },
-      {
-        'danielfalk/smart-open.nvim',
-        branch = '0.2.x',
-        config = function() require('telescope').load_extension('smart_open') end,
-        dependencies = {
-          'kkharji/sqlite.lua',
-          'nvim-telescope/telescope-fzy-native.nvim',
-        },
-      },
-      {
         'aznhe21/actions-preview.nvim',
         cond = rvim.lsp.enable and false,
         opts = { telescope = rvim.telescope.vertical() },
@@ -549,8 +500,67 @@ return {
     },
   },
   {
+    'razak17/whop.nvim',
+    cmd = 'Telescope',
+    config = function()
+      require('whop').setup({})
+      require('telescope').load_extension('whop')
+    end,
+  },
+  {
+    'danielfalk/smart-open.nvim',
+    branch = '0.2.x',
+    cmd = 'Telescope',
+    config = function() require('telescope').load_extension('smart_open') end,
+    dependencies = {
+      'kkharji/sqlite.lua',
+      'nvim-telescope/telescope-fzy-native.nvim',
+    },
+  },
+  {
     'nvim-telescope/telescope-frecency.nvim',
     cmd = 'Telescope',
     config = function() require('telescope').load_extension('frecency') end,
+  },
+  {
+    'fdschmidt93/telescope-egrepify.nvim',
+    cmd = 'Telescope',
+    config = function() require('telescope').load_extension('egrepify') end,
+  },
+  {
+    'natecraddock/telescope-zf-native.nvim',
+    cmd = 'Telescope',
+    config = function() require('telescope').load_extension('zf-native') end,
+  },
+  {
+    'debugloop/telescope-undo.nvim',
+    cmd = 'Telescope',
+    config = function() require('telescope').load_extension('undo') end,
+  },
+  {
+    'molecule-man/telescope-menufacture',
+    cmd = 'Telescope',
+    config = function() require('telescope').load_extension('menufacture') end,
+  },
+  {
+    'nvim-telescope/telescope-file-browser.nvim',
+    cmd = 'Telescope',
+    config = function() require('telescope').load_extension('file_browser') end,
+  },
+  {
+    'razak17/telescope-import.nvim',
+    -- 'piersolenski/telescope-import.nvim',
+    cmd = 'Telescope',
+    config = function() require('telescope').load_extension('import') end,
+  },
+  {
+    'catgoose/telescope-helpgrep.nvim',
+    cmd = 'Telescope',
+    config = function() require('telescope').load_extension('helpgrep') end,
+  },
+  {
+    'tsakirist/telescope-lazy.nvim',
+    cmd = 'Telescope',
+    config = function() require('telescope').load_extension('lazy') end,
   },
 }
