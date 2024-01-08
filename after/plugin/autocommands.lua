@@ -1,7 +1,6 @@
 if not rvim or rvim.none then return end
 
-local augroup, is_available, format_text =
-  rvim.augroup, rvim.is_available, rvim.format_text
+local augroup, is_available = rvim.augroup, rvim.is_available
 
 local fn, api, env, v, cmd, opt =
   vim.fn, vim.api, vim.env, vim.v, vim.cmd, vim.opt
@@ -251,12 +250,7 @@ augroup('Utilities', {
   end,
 }, {
   event = 'FileType',
-  -- command = function()
-  --   vim.opt_local.formatoptions:remove('c')
-  --   vim.opt_local.formatoptions:remove('r')
-  --   vim.opt_local.formatoptions:remove('o')
-  -- end,
-  command = 'setlocal formatoptions-=o',
+  command = 'setlocal formatoptions-=cro',
 }, {
   event = { 'BufEnter' },
   command = function(args)
