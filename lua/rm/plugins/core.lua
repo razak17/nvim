@@ -1,6 +1,5 @@
 local cmd, fn = vim.cmd, vim.fn
 local border = rvim.ui.current.border
-local fmt = string.format
 
 return {
   ------------------------------------------------------------------------------
@@ -202,6 +201,8 @@ return {
     },
     opts = { create_keymaps = false },
     config = function(opts)
+      require('debugprint').setup(opts)
+
       local svelte = {
         left = 'console.log("',
         right = '")',
@@ -214,11 +215,19 @@ return {
         mid_var = '{',
         right_var = '}")',
       }
-
-      require('debugprint').setup(opts)
+      local js = {
+        left = 'console.log("',
+        right = '")',
+        mid_var = '", ',
+        right_var = ')',
+      }
       require('debugprint').add_custom_filetypes({
         python = python,
         svelte = svelte,
+        javascript = js,
+        javascriptreact = js,
+        typescript = js,
+        typescriptreact = js,
       })
     end,
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
