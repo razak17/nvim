@@ -1,6 +1,4 @@
-if not rvim or rvim.none or rvim.plugins.minimal or not rvim.plugins.enable then
-  return
-end
+if not rvim or rvim.none or not rvim.plugins.enable then return end
 
 --------------------------------------------------------------------------------
 -- Toggles
