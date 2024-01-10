@@ -3,45 +3,8 @@ return {
   ft = { 'typescript', 'typescriptreact', 'javascript', 'javascriptreact' },
   cond = rvim.lsp.enable
     and not rvim.find_string(rvim.plugins.disabled, 'typescript-tools.nvim'),
-  dependencies = {
-    'nvim-lua/plenary.nvim',
-    'neovim/nvim-lspconfig',
-    'davidosomething/format-ts-errors.nvim',
-    {
-      'razak17/twoslash-queries.nvim',
-        -- stylua: ignore
-        keys = {
-          { '<localleader>li', '<Cmd>TwoslashQueriesInspect<CR>', desc = 'twoslash-queries: inspect', },
-        },
-      opts = {},
-      config = function(_, opts)
-        rvim.highlight.plugin('twoslash-queries', {
-          theme = {
-            ['onedark'] = {
-              { TypeVirtualText = { link = 'DiagnosticVirtualTextInfo' } },
-            },
-          },
-        })
-        require('twoslash-queries').setup(opts)
-      end,
-    },
-    {
-      'dmmulroy/tsc.nvim',
-      cond = rvim.lsp.enable,
-      cmd = 'TSC',
-      opts = {},
-      ft = { 'typescript', 'typescriptreact' },
-    },
-    {
-      'OlegGulevskyy/better-ts-errors.nvim',
-      config = {
-        keymaps = {
-          toggle = '<localleader>lo',
-          go_to_definition = '<localleader>ld',
-        },
-      },
-      dependencies = { 'MunifTanjim/nui.nvim' },
-    },
+  keys = {
+    { '<localleader>li', '<Cmd>TSToolsAddMissingImports<CR>', desc = 'add missing imports', }
   },
   opts = {
     on_attach = function(client, bufnr)
@@ -83,6 +46,47 @@ return {
 
         vim.lsp.diagnostic.on_publish_diagnostics(_, result, ctx, config)
       end,
+    },
+  },
+  dependencies = {
+    'nvim-lua/plenary.nvim',
+    'neovim/nvim-lspconfig',
+    'davidosomething/format-ts-errors.nvim',
+    {
+      'razak17/twoslash-queries.nvim',
+        -- stylua: ignore
+        keys = {
+          { '<localleader>lI', '<Cmd>TwoslashQueriesInspect<CR>', desc = 'twoslash-queries: inspect', },
+        },
+      opts = {},
+      config = function(_, opts)
+        require('twoslash-queries').setup(opts)
+
+        rvim.highlight.plugin('twoslash-queries', {
+          theme = {
+            ['onedark'] = {
+              { TypeVirtualText = { link = 'DiagnosticVirtualTextInfo' } },
+            },
+          },
+        })
+      end,
+    },
+    {
+      'dmmulroy/tsc.nvim',
+      cond = rvim.lsp.enable,
+      cmd = 'TSC',
+      opts = {},
+      ft = { 'typescript', 'typescriptreact' },
+    },
+    {
+      'OlegGulevskyy/better-ts-errors.nvim',
+      config = {
+        keymaps = {
+          toggle = '<localleader>lo',
+          go_to_definition = '<localleader>ld',
+        },
+      },
+      dependencies = { 'MunifTanjim/nui.nvim' },
     },
   },
 }
