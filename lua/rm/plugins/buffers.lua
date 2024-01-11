@@ -143,10 +143,10 @@ return {
   {
     'razak17/harpoon',
     branch = 'harpoon2',
+    -- stylua: ignore
     config = function()
       local harpoon = require('harpoon')
       harpoon:setup({ borderchars = ui.border.common })
-      -- stylua: ignore
       map("n", "<a-;>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
       map('n', '<localleader>ha', function() harpoon:list():append() end, { desc = 'harpoon: add'})
       map('n', '<localleader>hn', function() harpoon:list():next() end, { desc = 'harpoon: next'})

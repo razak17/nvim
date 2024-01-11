@@ -3,8 +3,9 @@ return {
   ft = { 'typescript', 'typescriptreact', 'javascript', 'javascriptreact' },
   cond = rvim.lsp.enable
     and not rvim.find_string(rvim.plugins.disabled, 'typescript-tools.nvim'),
+  -- stylua: ignore
   keys = {
-    { '<localleader>li', '<Cmd>TSToolsAddMissingImports<CR>', desc = 'add missing imports', }
+    { '<localleader>li', '<Cmd>TSToolsAddMissingImports<CR>', desc = 'add missing imports' },
   },
   opts = {
     on_attach = function(client, bufnr)
