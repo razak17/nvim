@@ -565,7 +565,7 @@ local function get_lsp_progress_msg()
   return message
 end
 
-rvim.augroup('CustomLspProgress', {
+augroup('CustomLspProgress', {
   event = 'LspProgress',
   pattern = '*',
   command = function()
