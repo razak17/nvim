@@ -1,4 +1,4 @@
-if rvim and rvim.none then return end
+if not rvim or rvim.none then return end
 
 local bo, wo = vim.bo, vim.wo
 
@@ -12,8 +12,6 @@ bo.tabstop = 2
 wo.conceallevel = 0
 wo.foldmethod = 'syntax'
 
-if not rvim then return end
-
 map('n', 'o', function()
   local line = vim.api.nvim_get_current_line()
   local should_add_comma = string.find(line, '[^,{[]$')
@@ -21,9 +19,7 @@ map('n', 'o', function()
   return 'o'
 end, { buffer = 0, expr = true })
 
-if not rvim.lsp.enable or not rvim.plugins.enable or rvim.plugins.minimal then
-  return
-end
+if not rvim.plugins.enable or rvim.plugins.minimal then return end
 
 if vim.fn.expand('%:t') == 'package.json' then
   local fmt = string.format

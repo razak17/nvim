@@ -1,3 +1,5 @@
+if not rvim or rvim.none then return end
+
 local opt = vim.opt
 
 opt.conceallevel = 3

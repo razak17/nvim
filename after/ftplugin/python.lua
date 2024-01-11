@@ -1,4 +1,4 @@
-if rvim and rvim.none then return end
+if not rvim or rvim.none then return end
 
 local bo, opt, fn = vim.bo, vim.opt_local, vim.fn
 
@@ -7,14 +7,7 @@ bo.softtabstop = 4
 bo.shiftwidth = 4
 opt.spell = true
 
-if
-  not rvim
-  or not rvim.lsp.enable
-  or not rvim.plugins.enable
-  or rvim.plugins.minimal
-then
-  return
-end
+if not rvim.plugins.enable or rvim.plugins.minimal then return end
 
 local dap = require('dap')
 local mason_registry = require('mason-registry')

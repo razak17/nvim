@@ -1,4 +1,4 @@
-if rvim and rvim.none then return end
+if not rvim or rvim.none then return end
 
 local opt = vim.opt_local
 
@@ -23,7 +23,7 @@ else
   map('n', '<leader>ml', 'maGovim:tw=78:ts=8:noet:ft=help:norl:<esc>`a', opts)
 end
 
-if not rvim or not rvim.lsp.enable or not rvim.plugins.enable then return end
+if not rvim.plugins.enable or rvim.plugins.minimal then return end
 
 rvim.ftplugin_conf({
   ['virt-column'] = function(col)
