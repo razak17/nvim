@@ -3,7 +3,11 @@ return {
     'L3MON4D3/LuaSnip',
     event = 'InsertEnter',
     build = 'make install_jsregexp',
-    dependencies = { 'rafamadriz/friendly-snippets' },
+    dependencies = {
+      'rafamadriz/friendly-snippets',
+      's1n7ax/nvim-ts-utils',
+      { 's1n7ax/nvim-snips', name = 'snips' },
+    },
     config = function()
       local ls = require('luasnip')
       local types = require('luasnip.util.types')
