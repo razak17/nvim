@@ -59,6 +59,9 @@ return {
         filter_tabs = '<M-t>',
         filter_buffers = '<M-z>',
       },
+      ui = {
+        width = 100
+      }
     },
     config = function(_, _opts)
       require('buffalo').setup(_opts)
