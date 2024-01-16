@@ -37,6 +37,7 @@ return {
         b = { name = 'Comment Box' },
         l = 'LSP',
         n = { name = 'Sticky Note' },
+        r = { name = 'Run' },
         t = { name = 'Translate' },
       },
       a = { name = 'A.I.' },

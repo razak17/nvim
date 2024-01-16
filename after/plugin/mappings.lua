@@ -404,6 +404,23 @@ nnoremap(
   { desc = 'toggle file diff' }
 )
 --------------------------------------------------------------------------------
+-- Ruslings
+nnoremap('<leader><leader>rd', function()
+  vim.cmd([[%s/\n\n\/\/ I AM NOT DONE//]])
+  vim.cmd.w()
+end, { desc = 'rustlings: done' })
+nnoremap('<leader><leader>rn', function()
+  local cur = vim.fn.expand('%')
+  local num = cur:sub(-4, -4)
+  local next = cur:sub(1, -5) .. (num + 1) .. '.rs'
+  if vim.fn.filereadable(next) == 1 then
+    vim.cmd('bd')
+    vim.cmd('edit ' .. next)
+  else
+    print('All problems solved for this topic.')
+  end
+end, { desc = 'rustlings: next' })
+--------------------------------------------------------------------------------
 -- Commands
 --------------------------------------------------------------------------------
 local command = rvim.command
