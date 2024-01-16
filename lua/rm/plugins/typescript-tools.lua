@@ -81,7 +81,7 @@ return {
     },
     {
       'OlegGulevskyy/better-ts-errors.nvim',
-      config = {
+      opts = {
         keymaps = {
           toggle = '<localleader>lo',
           go_to_definition = '<localleader>ld',
