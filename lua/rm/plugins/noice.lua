@@ -45,7 +45,7 @@ return {
       },
       hover = { enabled = true },
       progress = {
-        enabled = false,
+        enabled = true,
         throttle = 1000 / 800,
       },
       override = {

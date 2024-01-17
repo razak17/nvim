@@ -565,53 +565,53 @@ local function get_lsp_progress_msg()
   return message
 end
 
-augroup('CustomLspProgress', {
-  event = 'LspProgress',
-  pattern = '*',
-  command = function()
-    -- The row position of the floating window. Just right above the status line.
-    local win_row = vim.o.lines - vim.o.cmdheight - 4
-    local message = get_lsp_progress_msg()
-    if
-      rvim.lsp.progess.winid == nil
-      or not api.nvim_win_is_valid(rvim.lsp.progess.winid)
-      or api.nvim_win_get_tabpage(rvim.lsp.progess.winid)
-        ~= api.nvim_get_current_tabpage()
-    then
-      rvim.lsp.progess.bufnr = api.nvim_create_buf(false, true)
-      rvim.lsp.progess.winid =
-        api.nvim_open_win(rvim.lsp.progess.bufnr, false, {
-          relative = 'editor',
-          width = #message,
-          height = 1,
-          row = win_row,
-          col = vim.o.columns - #message,
-          style = 'minimal',
-          noautocmd = true,
-          border = border,
-        })
-    else
-      api.nvim_win_set_config(rvim.lsp.progess.winid, {
-        relative = 'editor',
-        width = #message,
-        row = win_row,
-        col = vim.o.columns - #message,
-      })
-    end
-    vim.wo[rvim.lsp.progess.winid].winhl = 'NormalFloat:NormalFloat'
-    api.nvim_buf_set_lines(rvim.lsp.progess.bufnr, 0, 1, false, { message })
-    if rvim.lsp.progess.is_done then
-      if api.nvim_win_is_valid(rvim.lsp.progess.winid) then
-        api.nvim_win_close(rvim.lsp.progess.winid, true)
-      end
-      if api.nvim_buf_is_valid(rvim.lsp.progess.bufnr) then
-        api.nvim_buf_delete(rvim.lsp.progess.bufnr, { force = true })
-      end
-      rvim.lsp.progess.winid = nil
-      rvim.lsp.progess.idx = 0
-    end
-  end,
-})
+-- augroup('CustomLspProgress', {
+--   event = 'LspProgress',
+--   pattern = '*',
+--   command = function()
+--     -- The row position of the floating window. Just right above the status line.
+--     local win_row = vim.o.lines - vim.o.cmdheight - 4
+--     local message = get_lsp_progress_msg()
+--     if
+--       rvim.lsp.progess.winid == nil
+--       or not api.nvim_win_is_valid(rvim.lsp.progess.winid)
+--       or api.nvim_win_get_tabpage(rvim.lsp.progess.winid)
+--         ~= api.nvim_get_current_tabpage()
+--     then
+--       rvim.lsp.progess.bufnr = api.nvim_create_buf(false, true)
+--       rvim.lsp.progess.winid =
+--         api.nvim_open_win(rvim.lsp.progess.bufnr, false, {
+--           relative = 'editor',
+--           width = #message,
+--           height = 1,
+--           row = win_row,
+--           col = vim.o.columns - #message,
+--           style = 'minimal',
+--           noautocmd = true,
+--           border = border,
+--         })
+--     else
+--       api.nvim_win_set_config(rvim.lsp.progess.winid, {
+--         relative = 'editor',
+--         width = #message,
+--         row = win_row,
+--         col = vim.o.columns - #message,
+--       })
+--     end
+--     vim.wo[rvim.lsp.progess.winid].winhl = 'NormalFloat:NormalFloat'
+--     api.nvim_buf_set_lines(rvim.lsp.progess.bufnr, 0, 1, false, { message })
+--     if rvim.lsp.progess.is_done then
+--       if api.nvim_win_is_valid(rvim.lsp.progess.winid) then
+--         api.nvim_win_close(rvim.lsp.progess.winid, true)
+--       end
+--       if api.nvim_buf_is_valid(rvim.lsp.progess.bufnr) then
+--         api.nvim_buf_delete(rvim.lsp.progess.bufnr, { force = true })
+--       end
+--       rvim.lsp.progess.winid = nil
+--       rvim.lsp.progess.idx = 0
+--     end
+--   end,
+-- })
 --------------------------------------------------------------------------------
 -- Code Action
 --------------------------------------------------------------------------------
