@@ -198,7 +198,7 @@ end
 
 -- Get project info for all (de)activated projects
 function rvim.get_projects()
-  if not rvim.is_available('project.nvim') then
+  if not rvim.is_available('project_nvim') then
     vim.notify('project.nvim is not installed')
     return
   end
