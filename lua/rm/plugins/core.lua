@@ -8,6 +8,12 @@ return {
   'nvim-lua/plenary.nvim',
   'nvim-tree/nvim-web-devicons',
   'b0o/schemastore.nvim',
+  -- { 'axlebedev/vim-footprints', lazy = false },
+  {
+    'CodingdAwn/vim-choosewin',
+    keys = { { '<leader>ow', '<Plug>(choosewin)', desc = 'choose window' } },
+    config = function() vim.g.choosewin_overlay_enable = 1 end,
+  },
   {
     'romainl/vim-cool',
     cond = false,
