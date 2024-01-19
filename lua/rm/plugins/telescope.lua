@@ -231,7 +231,7 @@ return {
       { '<leader>f,', file_browser, desc = 'file browser' },
       { '<leader>f.', function() file_browser({ path = '%:p:h', select_buffer = 'true' }) end, desc = 'file browser', },
       { '<leader>f?', b('help_tags'), desc = 'help tags' },
-      { '<leader>fb', b('current_buffer_fuzzy_find'), desc = 'find in current buffer', },
+      -- { '<leader>fb', b('current_buffer_fuzzy_find'), desc = 'find in current buffer', },
       { '<leader>fc', nvim_config, desc = 'nvim config' },
       { '<leader>fd', aerial, desc = 'aerial' },
       { '<leader>fe', egrepify, desc = 'aerial' },
@@ -245,7 +245,8 @@ return {
       { '<leader>fL', luasnips, desc = 'luasnip: available snippets' },
       { '<leader>fn', notifications, desc = 'notify: notifications' },
       { '<leader>fN', notes, desc = 'notes' },
-      { '<leader>fo', buffers, desc = 'buffers' },
+      { '<leader>fb', buffers, desc = 'buffers' },
+      { '<leader>fo', b('pickers'), desc = 'pickers' },
       { '<leader>fO', oldfiles, desc = 'oldfiles' },
       { '<leader>fk', smart_open, desc = 'smart open' },
       { '<leader>fp', projects, desc = 'projects' },
@@ -320,6 +321,7 @@ return {
           history = {
             path = join_paths(data, 'databases', 'telescope_history.sqlite3'),
           },
+          cache_picker = { num_pickers = 3 },
           file_ignore_patterns = {
             '%.jpg',
             '%.jpeg',
