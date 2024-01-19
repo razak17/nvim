@@ -14,6 +14,17 @@ local mason_registry = require('mason-registry')
 local debugpy_path = mason_registry.get_package('debugpy'):get_install_path()
   .. '/venv/bin/python'
 
+local pythonPath = function()
+  local cwd = fn.getcwd()
+  local dirs = { 'venv', '.venv', 'env', '.env' }
+  for _, dir in ipairs(dirs) do
+    if fn.executable(join_paths(cwd, dir, 'bin', 'python')) == 1 then
+      return join_paths(cwd, dir, 'bin', 'python')
+    end
+  end
+  return debugpy_path
+end
+
 dap.adapters.python = function(cb, config)
   if config.request == 'attach' then
     local port = (config.connect or config).port
@@ -30,7 +41,7 @@ dap.adapters.python = function(cb, config)
   else
     cb({
       type = 'executable',
-      command = debugpy_path,
+      command = pythonPath(),
       args = { '-m', 'debugpy.adapter' },
       options = { source_filetype = 'python' },
     })
@@ -42,15 +53,39 @@ dap.configurations.python = {
     request = 'launch',
     name = 'Launch file',
     program = '${file}',
-    pythonPath = function()
-      local cwd = fn.getcwd()
-      local dirs = { 'venv', '.venv', 'env', '.env' }
-      for _, dir in ipairs(dirs) do
-        if fn.executable(join_paths(cwd, dir, 'bin', 'python')) == 1 then
-          return join_paths(cwd, dir, 'bin', 'python')
-        end
-      end
-      return debugpy_path
+    pythonPath = pythonPath(),
+  },
+  {
+    type = 'python',
+    request = 'launch',
+    name = 'DAP Django',
+    program = vim.loop.cwd() .. '/manage.py',
+    args = { 'runserver', '--noreload' },
+    justMyCode = true,
+    django = true,
+    console = 'integratedTerminal',
+  },
+  {
+    type = 'python',
+    request = 'attach',
+    name = 'Attach remote',
+    connect = function()
+      return {
+        host = '127.0.0.1',
+        port = 5678,
+      }
     end,
+  },
+  {
+    type = 'python',
+    request = 'launch',
+    name = 'Launch file with arguments',
+    program = '${file}',
+    args = function()
+      local args_string = vim.fn.input('Arguments: ')
+      return vim.split(args_string, ' +')
+    end,
+    console = 'integratedTerminal',
+    pythonPath = pythonPath(),
   },
 }
