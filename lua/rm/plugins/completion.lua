@@ -188,6 +188,7 @@ return {
               natdat = '[NATDAT]',
               nvim_px_to_rem = '[PX2REM]',
               ['vim-dadbod-completion'] = '[DB]',
+              dotenv = '[DOTENV]',
             })[entry.source.name]
 
             local label, length = item.abbr, api.nvim_strwidth(item.abbr)
@@ -301,8 +302,9 @@ return {
             max_item_count = 10,
             group_index = 2,
           },
-          { name = 'nerdfonts', group_index = 2 },
           { name = 'norg', group_index = 2 },
+          { name = 'nerdfonts', group_index = 3 },
+          { name = 'dotenv', group_index = 4 },
         },
       })
 
@@ -361,6 +363,7 @@ return {
       'lukas-reineke/cmp-rg',
       'fazibear/cmp-nerdfonts',
       'saadparwaiz1/cmp_luasnip',
+      'SergioRibera/cmp-dotenv',
       { 'Gelio/cmp-natdat', opts = {} },
       { 'hrsh7th/cmp-nvim-lsp', cond = rvim.lsp.enable },
       { 'hrsh7th/cmp-cmdline', config = function() vim.o.wildmode = '' end },
