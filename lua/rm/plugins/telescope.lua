@@ -502,7 +502,7 @@ return {
     },
   },
   {
-    'razak17/whop.nvim',
+    'biozz/whop.nvim',
     cmd = 'Telescope',
     config = function()
       require('whop').setup({})
