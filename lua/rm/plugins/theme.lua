@@ -15,7 +15,7 @@ return {
     opts = { variant = 'fill' },
   },
   {
-    cond = false,
+    'NTBBloodbath/doom-one.nvim',
     lazy = false,
     config = function()
       vim.g.doom_one_pumblend_enable = true
