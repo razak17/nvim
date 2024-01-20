@@ -34,7 +34,7 @@ while [ "$#" -gt 0 ]; do
 		export RVIM_PLUGINS_ENABLED='0'
 		shift
 		;;
-	--no-treesitter)
+	--no-treesitter | -no-ts)
 		export RVIM_TREESITTER_ENABLED='0'
 		shift
 		;;
@@ -46,7 +46,7 @@ while [ "$#" -gt 0 ]; do
 		export RVIM_AI_ENABLED='0'
 		shift
 		;;
-	--minimal)
+	--minimal | -min)
 		export RVIM_PLUGINS_MINIMAL='1'
 		shift
 		;;
@@ -54,7 +54,7 @@ while [ "$#" -gt 0 ]; do
     export RVIM_NICETIES_ENABLED='0'
     shift
     ;;
-  --no-completion)
+  --no-completion | -no-cmp)
     export RVIM_COMPLETION_ENABLED='0'
     shift
     ;;
