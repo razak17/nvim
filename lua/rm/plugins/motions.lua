@@ -96,7 +96,7 @@ return {
     },
   },
   {
-    'xiyaowong/accelerated-jk.nvim',
+    'razak17/accelerated-jk.nvim',
     -- stylua: ignore
     keys = {
       { 'j', "<cmd>lua require'accelerated-jk'.command('gj')<CR>", mode = { 'x', 'n' }, },
