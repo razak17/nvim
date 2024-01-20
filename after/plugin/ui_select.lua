@@ -20,11 +20,7 @@ local toggle_options = {
   ['Toggle ZenMode'] = 'ZenMode',
   ['Toggle Sunglasses'] = 'lua require"rm.toggle_select".toggle_sunglasses()',
   ['Toggle Zoom'] = 'lua require("mini.misc").zoom()',
-  ['Turn Off Filetype'] = function() vim.cmd.filetype('off') end,
   ['Toggle Relative Number'] = 'ToggleRelativeNumber',
-  ['Open Local Postgres DB'] = 'lua require("rm.database").pick_local_pg_db()',
-  ['Open Saved Query'] = 'lua require("rm.database").open_saved_query()',
-  ['Open Json'] = 'lua require("rm.database").open_json()',
 }
 
 local toggle_menu = function()
@@ -33,6 +29,22 @@ end
 
 -- stylua: ignore
 map( 'n', '<leader>oo', toggle_menu, { desc = '[t]oggle [a]ctions: open menu for toggle actions' })
+
+--------------------------------------------------------------------------------
+-- Custom
+--------------------------------------------------------------------------------
+local custom_options = {
+  ['Open Local Postgres DB'] = 'lua require("rm.database").pick_local_pg_db()',
+  ['Open Saved Query'] = 'lua require("rm.database").open_saved_query()',
+  ['Open Json'] = 'lua require("rm.database").open_json()',
+}
+
+local custom_menu = function()
+  rvim.create_select_menu('Custom actions', custom_options)() --> extra paren to execute!
+end
+
+-- stylua: ignore
+map( 'n', '<leader>oc', custom_menu, { desc = '[c]ustom [a]ctions: open menu for custom actions' })
 
 if not rvim.plugins.enable then return end
 
