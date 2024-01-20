@@ -8,13 +8,10 @@ return {
       ft = { 'sql', 'mysql', 'psql' },
     },
   },
+  -- stylua: ignore
   keys = {
     { '<leader>dt', '<Cmd>DBUIToggle<CR>', desc = 'dadbod: toggle' },
-    {
-      '<leader>da',
-      '<Cmd>DBUIAddConnection<CR>',
-      desc = 'dadbod: add connection',
-    },
+    { '<leader>da', '<Cmd>DBUIAddConnection<CR>', desc = 'dadbod: add connection' },
   },
   -- stylua: ignore
   cmd = {

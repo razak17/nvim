@@ -66,44 +66,4 @@ function Mtoggle_sunglasses()
   vim.cmd('SunglassesOff')
 end
 
----@param db_name string
-function M.open_local_postgres_db(db_name)
-  vim.g.dbs = {
-    [db_name] = 'postgresql://postgres@localhost/' .. db_name,
-  }
-  vim.cmd([[tabnew]])
-  vim.fn['db_ui#reset_state']()
-  vim.b.dbui_db_key_name = db_name .. '_g:dbs'
-
-  pcall(vim.cmd, 'DBUIFindBuffer') -- pcall, for nice error handling if the DB does not exist
-  vim.cmd('DBUI')
-  -- open the tables list and get back where i was
-  vim.cmd('norm jjojjjjokkkkkk')
-  -- go twice up and select "new buffer". didn't find a nicer way
-  vim.cmd('norm kko')
-end
-
-function M.pick_local_pg_db()
-  local db_names = {}
-  vim.fn.jobstart(
-    { 'sh', '-c', "psql -l | grep $(whoami) | awk '{print $1}'" },
-    {
-      on_stdout = vim.schedule_wrap(function(_, output)
-        for _, line in ipairs(output) do
-          table.insert(db_names, line)
-        end
-      end),
-      on_exit = vim.schedule_wrap(function()
-        vim.ui.select(
-          db_names,
-          { prompt = 'Pick the database to open', kind = 'center_win' },
-          function(choice)
-            if choice ~= nil then M.open_local_postgres_db(choice) end
-          end
-        )
-      end),
-    }
-  )
-end
-
 return M
