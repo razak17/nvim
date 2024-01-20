@@ -6,6 +6,7 @@ local left_block = icons.separators.left_block
 local enabled = not rvim.plugins.minimal and rvim.is_git_repo()
 
 return {
+  { 'yutkat/git-rebase-auto-diff.nvim', ft = { 'gitrebase' }, opts = {} },
   {
     'NeogitOrg/neogit',
     cond = enabled,
@@ -213,11 +214,6 @@ return {
     },
     opts = {},
     dependencies = { 'nvim-lua/plenary.nvim' },
-  },
-  {
-    'yutkat/git-rebase-auto-diff.nvim',
-    ft = { 'gitrebase' },
-    opts = {},
   },
   {
     'emmanueltouzery/agitator.nvim',

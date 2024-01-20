@@ -205,7 +205,9 @@ end
 -- Diff
 --------------------------------------------------------------------------------
 function M.project_history()
-  vim.cmd('DiffviewFileHistory ' .. cur_file_project_root())
+  local project_root = cur_file_project_root()
+  if rvim.falsy(project_root) then return end
+  vim.cmd('DiffviewFileHistory ' .. project_root)
 end
 
 function M.diffview_conflict(which)
