@@ -49,6 +49,8 @@ return {
       g = { name = 'Git' },
       gb = { name = 'Blame' },
       go = { name = 'Open' },
+      gi = { name = 'Issues' },
+      gs = { name = 'Stash' },
       h = { name = 'Gitsigns' },
       i = { name = 'Toggler' },
       l = { name = 'LSP' },
