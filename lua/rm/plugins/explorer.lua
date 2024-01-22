@@ -123,7 +123,7 @@ return {
             then
               rvim.open(node.path)
             else
-              vim.cmd.edit(node.path)
+              vim.notify('Not a media file')
             end
           end,
         },
