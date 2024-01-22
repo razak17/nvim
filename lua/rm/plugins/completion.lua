@@ -385,14 +385,7 @@ return {
         config = function()
           local en_dict =
             join_paths(vim.fn.stdpath('data'), 'site', 'spell', 'en.dict')
-          require('cmp_dictionary').switcher({
-            filetype = {
-              markdown = en_dict,
-              NeogitCommitMessage = en_dict,
-              norg = en_dict,
-              slide = en_dict,
-            },
-          })
+          require('cmp_dictionary').setup({ paths = { en_dict } })
         end,
       },
       {
