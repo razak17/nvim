@@ -99,47 +99,39 @@ return {
         },
         window = {
           mappings = {
-            ['i'] = 'run_command',
             ['<space>'] = 'none',
-            ['Y'] = 'copy_file_name',
-            ['P'] = 'copy_file_path',
-            ['F'] = 'find_files_in_dir',
-            ['o'] = 'open_media',
-          },
-        },
-        commands = {
-          run_command = function(state)
-            vim.api.nvim_input(': ' .. state.tree:get_node().path .. '<Home>')
-          end,
-          copy_file_path = function(state) copy(state.tree:get_node().path) end,
-          copy_file_name = function(state) copy(state.tree:get_node().name) end,
-          open_media = function(state)
-            local node = state.tree:get_node()
-            -- stylua: ignore
-            if
-              vim.list_contains({
-                'jpg', 'png', 'jpeg', 'ico', 'gif', 'mp3', 'mp4', 'm4a', 'pdf',
-              }, node.ext)
-            then
-              rvim.open(node.path)
-            else
-              vim.notify('Not a media file')
-            end
-          end,
-          find_files_in_dir = function(state)
-            local node = state.tree:get_node()
-            local cwd = node.path
-            if node.type == 'file' then cwd = node._parent_id end
+            ['F'] = function(state)
+              local node = state.tree:get_node()
+              local cwd = node.path
+              if node.type == 'file' then cwd = node._parent_id end
 
-            if not rvim.is_available('telescope.nvim') then
-              vim.notify('telescope.nvim is not available')
-              return
-            end
-            require('telescope.builtin').find_files({
-              cwd = cwd,
-              hidden = true,
-            })
-          end,
+              if not rvim.is_available('telescope.nvim') then
+                vim.notify('telescope.nvim is not available')
+                return
+              end
+              require('telescope.builtin').find_files({
+                cwd = cwd,
+                hidden = true,
+              })
+            end,
+            ['i'] = function(state)
+              vim.api.nvim_input(': ' .. state.tree:get_node().path .. '<Home>')
+            end,
+            ['o'] = function(state)
+              local node = state.tree:get_node()
+              -- stylua: ignore
+              local media_files = {
+                'jpg', 'png', 'jpeg', 'ico', 'gif', 'mp3', 'mp4', 'm4a', 'pdf',
+              }
+              if vim.list_contains(media_files, node.ext) then
+                rvim.open(node.path)
+              else
+                vim.notify('Not a media file')
+              end
+            end,
+            ['P'] = function(state) copy(state.tree:get_node().path) end,
+            ['Y'] = function(state) copy(state.tree:get_node().name) end,
+          },
         },
       },
       default_component_configs = {
