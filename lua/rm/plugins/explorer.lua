@@ -103,7 +103,7 @@ return {
             ['<space>'] = 'none',
             ['Y'] = 'copy_file_name',
             ['P'] = 'copy_file_path',
-            ['F'] = 'fuzzy_finder',
+            ['F'] = 'find_files_in_dir',
             ['o'] = 'open_media',
           },
         },
@@ -125,6 +125,20 @@ return {
             else
               vim.notify('Not a media file')
             end
+          end,
+          find_files_in_dir = function(state)
+            local node = state.tree:get_node()
+            local cwd = node.path
+            if node.type == 'file' then cwd = node._parent_id end
+
+            if not rvim.is_available('telescope.nvim') then
+              vim.notify('telescope.nvim is not available')
+              return
+            end
+            require('telescope.builtin').find_files({
+              cwd = cwd,
+              hidden = true,
+            })
           end,
         },
       },
