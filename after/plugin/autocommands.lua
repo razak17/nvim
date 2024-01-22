@@ -112,7 +112,9 @@ augroup('CheckOutsideTime', {
     'BufEnter',
     'FocusGained',
   },
-  command = 'silent! checktime',
+  command = function()
+    if vim.o.buftype ~= 'nofile' then vim.cmd('checktime') end
+  end,
 })
 
 --- automatically clear commandline messages after a few seconds delay
