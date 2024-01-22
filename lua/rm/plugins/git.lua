@@ -140,7 +140,7 @@ return {
         map('n', '<leader>hu', gs.undo_stage_hunk, { desc = 'undo stage' })
         -- map('n', '<leader>hw', gs.toggle_word_diff, { desc = 'toggle word diff' })
         map('n', '<leader>hd', gs.toggle_deleted, { desc = 'show deleted lines' })
-        map('n', '<leader>hp', gs.preview_hunk_inline, { desc = 'preview hunk' })
+        map('n', '<leader>hp', gs.preview_hunk_inline, { desc = 'preview hunk inline' })
         map('n', '<leader>hb', gs.toggle_current_line_blame, { desc = 'toggle line blame' })
 
         map('n', '<leader>gbl', gs.blame_line, { desc = 'blame line' })
