@@ -1,4 +1,4 @@
-local icons, codicons = rvim.ui.icons, rvim.ui.codicons
+local icons, codicons, copy = rvim.ui.icons, rvim.ui.codicons, rvim.copy
 local highlight, lsp_hls = rvim.highlight, rvim.ui.lsp.highlights
 local lspkind = require('lspkind')
 
@@ -101,7 +101,8 @@ return {
           mappings = {
             ['i'] = 'run_command',
             ['<space>'] = 'none',
-            ['Y'] = 'copy_filepath',
+            ['Y'] = 'copy_file_name',
+            ['P'] = 'copy_file_path',
             ['F'] = 'fuzzy_finder',
             ['o'] = 'open_media',
           },
@@ -110,7 +111,8 @@ return {
           run_command = function(state)
             vim.api.nvim_input(': ' .. state.tree:get_node().path .. '<Home>')
           end,
-          copy_filepath = function(state) rvim.copy(state.tree:get_node().path) end,
+          copy_file_path = function(state) copy(state.tree:get_node().path) end,
+          copy_file_name = function(state) copy(state.tree:get_node().name) end,
           open_media = function(state)
             local node = state.tree:get_node()
             -- stylua: ignore
