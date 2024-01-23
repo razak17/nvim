@@ -98,7 +98,7 @@ local function show_related_locations(diag)
   return diag
 end
 
-local handler = lsp.handlers['textDocument/publishDiagnostics']
+local publish_handler = lsp.handlers['textDocument/publishDiagnostics']
 ---@diagnostic disable-next-line: duplicate-set-field
 lsp.handlers['textDocument/publishDiagnostics'] = function(
   err,
@@ -107,7 +107,38 @@ lsp.handlers['textDocument/publishDiagnostics'] = function(
   config
 )
   result.diagnostics = vim.tbl_map(show_related_locations, result.diagnostics)
-  handler(err, result, ctx, config)
+  publish_handler(err, result, ctx, config)
+end
+
+--------------------------------------------------------------------------------
+--  Smart Definitions
+--------------------------------------------------------------------------------
+-- jump to the first definition automatically if the multiple defs are on the same line
+-- otherwise show a telescope selector
+-- from https://github.com/seblj/dotfiles/blob/014fd736413945c888d7258b298a37c93d5e97da/nvim/lua/config/lspconfig/handlers.lua
+
+local function jump_to_first_definition(result, client)
+  if vim.tbl_islist(result) then
+    local results = lsp.util.locations_to_items(result, client.offset_encoding)
+    local lnum, filename = results[1].lnum, results[1].filename
+    for _, val in pairs(results) do
+      if val.lnum ~= lnum or val.filename ~= filename then
+        return require('telescope.builtin').lsp_definitions()
+      end
+    end
+    lsp.util.jump_to_location(result[1], client.offset_encoding, false)
+  else
+    lsp.util.jump_to_location(result, client.offset_encoding, false)
+  end
+end
+
+lsp.handlers['textDocument/definition'] = function(_, result, ctx)
+  local client = vim.lsp.get_client_by_id(ctx.client_id)
+  if client then jump_to_first_definition(result, client) end
+end
+
+lsp.handlers['textDocument/references'] = function(_, _, _)
+  require('telescope.builtin').lsp_references()
 end
 
 --------------------------------------------------------------------------------
@@ -524,46 +555,46 @@ rvim.lsp.progess = {
 
 -- Get the progress message for all clients. The format is
 -- "65%: [lua_ls] Loading Workspace: 123/1500 | [client2] xxx | [client3] xxx"
-local function get_lsp_progress_msg()
-  -- Most code is grabbed from the source of vim.lsp.status()
-  -- Ref: https://github.com/neovim/neovim/blob/master/runtime/lua/vim/lsp.lua
-  local percentage = nil
-  local all_messages = {}
-  rvim.lsp.progess.is_done = true
-  for _, client in ipairs(vim.lsp.get_clients()) do
-    local messages = {}
-    for progress in client.progress do
-      local value = progress.value
-      if type(value) == 'table' and value.kind then
-        if value.kind ~= 'end' then rvim.lsp.progess.is_done = false end
-        local message = value.message and (value.title .. ': ' .. value.message)
-          or value.title
-        messages[#messages + 1] = message
-        if value.percentage then
-          percentage = math.max(percentage or 0, value.percentage)
-        end
-      end
-    end
-    if next(messages) ~= nil then
-      table.insert(
-        all_messages,
-        '[' .. client.name .. '] ' .. table.concat(messages, ', ')
-      )
-    end
-  end
-  local message = table.concat(all_messages, ' | ')
-  -- Show percentage
-  if percentage then
-    message = string.format('%3d%%: %s', percentage, message)
-  end
-  -- Show spinner
-  rvim.lsp.progess.idx = rvim.lsp.progess.idx == #rvim.lsp.progess.spinner * 4
-      and 1
-    or rvim.lsp.progess.idx + 1
-  message = rvim.lsp.progess.spinner[math.ceil(rvim.lsp.progess.idx / 4)]
-    .. message
-  return message
-end
+-- local function get_lsp_progress_msg()
+--   -- Most code is grabbed from the source of vim.lsp.status()
+--   -- Ref: https://github.com/neovim/neovim/blob/master/runtime/lua/vim/lsp.lua
+--   local percentage = nil
+--   local all_messages = {}
+--   rvim.lsp.progess.is_done = true
+--   for _, client in ipairs(vim.lsp.get_clients()) do
+--     local messages = {}
+--     for progress in client.progress do
+--       local value = progress.value
+--       if type(value) == 'table' and value.kind then
+--         if value.kind ~= 'end' then rvim.lsp.progess.is_done = false end
+--         local message = value.message and (value.title .. ': ' .. value.message)
+--           or value.title
+--         messages[#messages + 1] = message
+--         if value.percentage then
+--           percentage = math.max(percentage or 0, value.percentage)
+--         end
+--       end
+--     end
+--     if next(messages) ~= nil then
+--       table.insert(
+--         all_messages,
+--         '[' .. client.name .. '] ' .. table.concat(messages, ', ')
+--       )
+--     end
+--   end
+--   local message = table.concat(all_messages, ' | ')
+--   -- Show percentage
+--   if percentage then
+--     message = string.format('%3d%%: %s', percentage, message)
+--   end
+--   -- Show spinner
+--   rvim.lsp.progess.idx = rvim.lsp.progess.idx == #rvim.lsp.progess.spinner * 4
+--       and 1
+--     or rvim.lsp.progess.idx + 1
+--   message = rvim.lsp.progess.spinner[math.ceil(rvim.lsp.progess.idx / 4)]
+--     .. message
+--   return message
+-- end
 
 -- augroup('CustomLspProgress', {
 --   event = 'LspProgress',
