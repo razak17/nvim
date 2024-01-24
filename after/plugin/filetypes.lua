@@ -6,6 +6,23 @@ local cmd, api, fn, opt_l = vim.cmd, vim.api, vim.fn, vim.opt_local
 vim.treesitter.language.register('gitcommit', 'NeogitCommitMessage')
 
 settings({
+  bash = {
+    opt = { spell = true },
+    function()
+      if rvim.is_available('LuaSnip') then
+        local ls = require('luasnip')
+        local bash = require('snips.bash')
+
+        local s = ls.s
+
+        ls.add_snippets('sh', {
+          s('set', bash.primitives.default_flags()),
+          s('f', bash.primitives.func()),
+          s('v', bash.choices.variable()),
+        })
+      end
+    end,
+  },
   config = {
     bo = {
       textwidth = 0,
@@ -67,8 +84,75 @@ settings({
       })
     end,
   },
-  javascript = {
+  [{ 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' }] = {
+    bo = { textwidth = 100 },
     opt = { spell = true },
+    function()
+      if rvim.is_available('LuaSnip') then
+        local ls = require('luasnip')
+        local js = require('snips.javascript')
+
+        local s = ls.s
+        local i = ls.insert_node
+
+        local snippets = function()
+          return {
+            s('f', js.dynamic.func(), {
+              stored = {
+                name = i(1, 'name'),
+                param = i(1),
+                body = i(1),
+              },
+            }),
+            s('o', js.choices.stdout(), {
+              stored = {
+                value = i(1, 'value'),
+              },
+            }),
+            s('con', js.primitives.constructor()),
+            s('c', js.primitives.class()),
+          }
+        end
+
+        ls.add_snippets('javascript', snippets())
+        ls.add_snippets('typescript', snippets())
+        ls.add_snippets('javascriptreact', snippets())
+        ls.add_snippets('typescriptreact', snippets())
+      end
+    end,
+  },
+  [{ 'javascriptreact', 'typescriptreact' }] = {
+    bo = { textwidth = 100 },
+    opt = { spell = true },
+    function()
+      if rvim.is_available('LuaSnip') then
+        local ls = require('luasnip')
+        local jsr = require('snips.javascriptreact')
+
+        local s = ls.s
+
+        local snippets = function()
+          return {
+            s('c', jsr.primitives.component()),
+            s('hs', jsr.primitives.use_state()),
+            s('he', jsr.primitives.use_effect()),
+          }
+        end
+
+        ls.add_snippets('javascriptreact', snippets())
+        ls.add_snippets('typescriptreact', snippets())
+      end
+
+      local function toggle_use_client()
+        local first_line = vim.api.nvim_buf_get_lines(0, 0, 1, false)[1]
+        if string.match(first_line, 'use client') then
+          vim.api.nvim_buf_set_lines(0, 0, 1, false, {})
+        else
+          vim.api.nvim_buf_set_lines(0, 0, 1, false, { '"use client";' })
+        end
+      end
+      map('n', '<localleader>lu', toggle_use_client, { buffer = 0 })
+    end,
   },
   jsonc = {
     function()
@@ -162,17 +246,27 @@ settings({
       rvim.adjust_split_height(5, 10)
     end,
   },
+  rust = {
+    function()
+      if rvim.is_available('LuaSnip') then
+        local ls = require('luasnip')
+        local rust = require('snips.rust')
+        local common = require('snips.common')
+
+        local s = ls.s
+
+        ls.add_snippets('rust', {
+          s('o', rust.dynamic.stdout()),
+          s('v', rust.primitives.variable()),
+          s('r', common.primitives.returns()),
+          s('vec', rust.primitives.vector_struct()),
+        })
+      end
+    end,
+  },
   text = {
     bo = { textwidth = 78 },
     wo = { spell = false },
-  },
-  typescript = {
-    bo = { textwidth = 100 },
-    opt = { spell = true },
-  },
-  typescriptreact = {
-    bo = { textwidth = 100 },
-    opt = { spell = true },
   },
   vim = {
     bo = { syntax = 'off' },
@@ -188,6 +282,20 @@ settings({
     function()
       vim.opt.iskeyword:append('-,$,#')
       vim.opt.indentkeys:append('<:>')
+
+      local ls = require('luasnip')
+      local kubernetes = require('snips.kubernetes')
+
+      if rvim.is_available('LuaSnip') then
+        local s = ls.s
+
+        ls.add_snippets('yaml', {
+          s('pod', kubernetes.primitives.pod()),
+          s('rs', kubernetes.primitives.replicaset()),
+          s('dep', kubernetes.primitives.deployment()),
+          s('ser', kubernetes.primitives.service()),
+        })
+      end
     end,
   },
 })
