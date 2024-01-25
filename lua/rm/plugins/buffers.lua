@@ -19,7 +19,10 @@ return {
     event = { 'BufRead', 'BufNewFile' },
     opts = {
       position = { relative_to = 'win', anchor = 'topright' },
-      style = { border = 'single', hide_buffer_id = true },
+      style = {
+        hide_buffer_id = true,
+        highlights = { background = 'NormalFloat' },
+      },
     },
   },
   {
