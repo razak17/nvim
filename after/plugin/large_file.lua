@@ -9,7 +9,7 @@ rvim.augroup('LargeFileAutocmds', {
       vim.wo.wrap = false
       -- vim.o.eventignore = 'FileType'
       vim.bo.bufhidden = 'unload'
-      vim.bo.buftype = 'nowrite'
+      -- vim.bo.buftype = 'nowrite'
       vim.bo.undolevels = -1
       vim.cmd.filetype('off')
     else
