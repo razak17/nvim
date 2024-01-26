@@ -226,10 +226,11 @@ local match_whole = function(word)
 end
 
 local function telescope_branches_mappings(prompt_bufnr, map)
+  local action_state = require('telescope.actions.state')
+
   local diffspec
   map('i', '<C-f>', function()
-    local branch =
-      require('telescope.actions.state').get_selected_entry(prompt_bufnr).value
+    local branch = action_state.get_selected_entry(prompt_bufnr).value
     actions.close(prompt_bufnr)
     -- heuristics.. will see if it works out
     if
@@ -247,8 +248,7 @@ local function telescope_branches_mappings(prompt_bufnr, map)
     vim.cmd(':DiffviewOpen ' .. diffspec)
   end)
   map('i', '<C-p>', function() -- mnemonic Compare
-    local branch =
-      require('telescope.actions.state').get_selected_entry(prompt_bufnr).value
+    local branch = action_state.get_selected_entry(prompt_bufnr).value
     actions.close(prompt_bufnr)
     vim.cmd(':DiffviewOpen ' .. branch)
   end)
@@ -256,9 +256,7 @@ local function telescope_branches_mappings(prompt_bufnr, map)
     'i',
     '<C-enter>',
     function() -- create a local branch to track an origin branch
-      local branch = require('telescope.actions.state').get_selected_entry(
-        prompt_bufnr
-      ).value
+      local branch = action_state.get_selected_entry(prompt_bufnr).value
       local cmd_output = {}
       if string.match(branch, '^origin/') then
         actions.close(prompt_bufnr)
@@ -274,13 +272,10 @@ local function telescope_branches_mappings(prompt_bufnr, map)
       end
     end
   )
-  map('i', '<C-Del>', function() -- delete
-    local current_picker =
-      require('telescope.actions.state').get_current_picker(prompt_bufnr)
+  map({ 'n', 'i' }, '<a-d>', function() -- delete
+    local current_picker = action_state.get_current_picker(prompt_bufnr)
     current_picker:delete_selection(function(selection)
-      local branch = require('telescope.actions.state').get_selected_entry(
-        selection.bufnr
-      ).value
+      local branch = action_state.get_selected_entry(selection.bufnr).value
       if string.match(branch, '^origin/') then
         -- remote branch
         vim.ui.select({ 'Yes', 'No' }, {
@@ -317,8 +312,7 @@ local function telescope_branches_mappings(prompt_bufnr, map)
     end)
   end)
   map('i', '<C-c>', function() -- commits
-    local branch =
-      require('telescope.actions.state').get_selected_entry(prompt_bufnr).value
+    local branch = action_state.get_selected_entry(prompt_bufnr).value
     actions.close(prompt_bufnr)
     require('telescope.builtin').git_commits({
       attach_mappings = telescope_commits_mappings,
@@ -336,19 +330,14 @@ local function telescope_branches_mappings(prompt_bufnr, map)
     })
   end)
   map('i', '<C-h>', function() -- history
-    local branch =
-      require('telescope.actions.state').get_selected_entry(prompt_bufnr).value
+    local branch = action_state.get_selected_entry(prompt_bufnr).value
     actions.close(prompt_bufnr)
     vim.cmd(
-      'DiffviewFileHistory '
-        .. rvim.cur_file_project_root()
-        .. ' --range='
-        .. branch
+      'DiffviewFileHistory ' .. cur_file_project_root() .. ' --range=' .. branch
     )
   end)
   map('i', '<C-g>', function() -- copy branch name
-    local branch =
-      require('telescope.actions.state').get_selected_entry(prompt_bufnr).value
+    local branch = action_state.get_selected_entry(prompt_bufnr).value
     rvim.copy_to_clipboard(branch)
   end)
   return true
@@ -522,6 +511,8 @@ end
 -- Stash
 --------------------------------------------------------------------------------
 local function telescope_stash_mappings(prompt_bufnr, map)
+  local action_state = require('telescope.actions.state')
+
   map('i', '<C-f>', function()
     local stash_key =
       require('telescope.actions.state').get_selected_entry(prompt_bufnr).value
@@ -531,7 +522,6 @@ local function telescope_stash_mappings(prompt_bufnr, map)
   map('i', '<C-Del>', function()
     local stash_key =
       require('telescope.actions.state').get_selected_entry(prompt_bufnr).value
-    local action_state = require('telescope.actions.state')
     local current_picker = action_state.get_current_picker(prompt_bufnr)
     current_picker:delete_selection(function()
       Job:new({
