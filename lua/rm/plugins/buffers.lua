@@ -20,7 +20,6 @@ return {
     opts = {
       position = { relative_to = 'win', anchor = 'topright' },
       style = {
-        hide_buffer_id = true,
         highlights = { background = 'NormalFloat' },
       },
     },
@@ -63,8 +62,8 @@ return {
         filter_buffers = '<M-z>',
       },
       ui = {
-        width = 100
-      }
+        width = 100,
+      },
     },
     config = function(_, _opts)
       require('buffalo').setup(_opts)
