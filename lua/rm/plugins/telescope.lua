@@ -408,9 +408,7 @@ return {
               n = { ['<c-x>'] = 'delete_buffer' },
             },
           }),
-          live_grep = themes.get_ivy({
-            layout_config = { height = 0.8 },
-            borderchars = { preview = border.ivy },
+          live_grep = {
             file_ignore_patterns = {
               '%.svg',
               '%.lock',
@@ -419,7 +417,7 @@ return {
             },
             max_results = 2000,
             additional_args = { '--trim' },
-          }),
+          },
         },
         extensions = {
           persisted = dropdown(),
