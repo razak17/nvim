@@ -528,11 +528,6 @@ return {
     config = function() require('telescope').load_extension('egrepify') end,
   },
   {
-    'natecraddock/telescope-zf-native.nvim',
-    cmd = 'Telescope',
-    config = function() require('telescope').load_extension('zf-native') end,
-  },
-  {
     'debugloop/telescope-undo.nvim',
     cmd = 'Telescope',
     config = function() require('telescope').load_extension('undo') end,
