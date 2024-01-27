@@ -135,7 +135,7 @@ local function undo() extensions('undo').undo() end
 local function projects()
   extensions('projects').projects(rvim.telescope.minimal_ui())
 end
-local function smart_open() extensions('smart_open').smart_open(vertical()) end
+local function smart_open() extensions('smart_open').smart_open() end
 local function lazy() extensions('lazy').lazy() end
 local function aerial() extensions('aerial').aerial() end
 local function harpoon()
@@ -227,7 +227,8 @@ return {
     event = 'VeryLazy',
     -- stylua: ignore
     keys = {
-      { '<c-p>', find_files, desc = 'find files' },
+      -- { '<c-p>', find_files, desc = 'find files' },
+      { '<c-p>', smart_open, desc = 'find files' },
       { '<leader>f,', file_browser, desc = 'file browser' },
       { '<leader>f.', function() file_browser({ path = '%:p:h', select_buffer = 'true' }) end, desc = 'file browser', },
       { '<leader>f?', b('help_tags'), desc = 'help tags' },
