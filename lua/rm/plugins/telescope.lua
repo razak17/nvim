@@ -471,21 +471,12 @@ return {
         },
       })
 
-      if rvim.is_available('text-case.nvim') then
-        require('telescope').load_extension('textcase')
-      end
-      if rvim.is_available('harpoon') then
-        require('telescope').load_extension('harpoon')
-      end
-      if rvim.is_available('nvim-notify') then
-        require('telescope').load_extension('notify')
-      end
-      if rvim.is_available('persisted.nvim') then
-        require('telescope').load_extension('persisted')
-      end
-      if rvim.is_available('project.nvim') then
-        require('telescope').load_extension('projects')
-      end
+      local l = require('telescope').load_extension
+      if rvim.is_available('text-case.nvim') then l('textcase') end
+      if rvim.is_available('harpoon') then l('harpoon') end
+      if rvim.is_available('nvim-notify') then l('notify') end
+      if rvim.is_available('persisted.nvim') then l('persisted') end
+      if rvim.is_available('project.nvim') then l('projects') end
 
       api.nvim_exec_autocmds(
         'User',
