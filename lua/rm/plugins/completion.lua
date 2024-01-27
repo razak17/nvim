@@ -125,7 +125,6 @@ return {
             rvim.is_available('copilot-cmp') and require(
               'copilot_cmp.comparators'
             ).prioritize or nil,
-            require('cmp_fuzzy_path.compare'),
             cmp.config.compare.recently_used,
             cmp.config.compare.locality,
             cmp.config.compare.offset,
@@ -171,7 +170,6 @@ return {
               luasnip = '[SNIP]',
               emoji = '[EMOJI]',
               path = '[PATH]',
-              fuzzy_path = '[FPATH]',
               neorg = '[NEORG]',
               buffer = '[BUF]',
               spell = '[SPELL]',
@@ -272,7 +270,6 @@ return {
             max_item_count = 10,
             group_index = 1,
           },
-          -- { name = 'fuzzy_path', priority = 4, group_index = 1 },
           { name = 'path', priority = 4, group_index = 1 },
           { name = 'emoji', priority = 3, group_index = 1 },
           {
@@ -333,7 +330,6 @@ return {
           { name = 'cmdline', keyword_pattern = [=[[^[:blank:]\!]*]=] },
           { name = 'path' },
           { name = 'cmdline_history', priority = 10, max_item_count = 5 },
-          { name = 'fuzzy_path', option = { fd_timeout_msec = 1500 } },
         }),
       })
 
@@ -357,7 +353,6 @@ return {
       'razak17/lab.nvim',
       'razak17/lspkind.nvim',
       'dmitmel/cmp-cmdline-history',
-      'hrsh7th/cmp-path',
       'hrsh7th/cmp-emoji',
       'hrsh7th/cmp-buffer',
       'lukas-reineke/cmp-rg',
@@ -365,20 +360,10 @@ return {
       'saadparwaiz1/cmp_luasnip',
       'SergioRibera/cmp-dotenv',
       { 'Gelio/cmp-natdat', opts = {} },
+      { 'hrsh7th/cmp-path', event = { 'CmdlineEnter' } },
       { 'hrsh7th/cmp-nvim-lsp', cond = rvim.lsp.enable },
       { 'hrsh7th/cmp-cmdline', config = function() vim.o.wildmode = '' end },
       { 'hrsh7th/cmp-nvim-lsp-document-symbol', cond = rvim.lsp.enable },
-      {
-        'tzachar/cmp-fuzzy-path',
-        event = { 'CmdlineEnter' },
-        dependencies = {
-          'tzachar/fuzzy.nvim',
-          {
-            'nvim-telescope/telescope-fzf-native.nvim',
-            build = 'make',
-          },
-        },
-      },
       {
         'uga-rosa/cmp-dictionary',
         cond = not rvim.plugins.minimal,
