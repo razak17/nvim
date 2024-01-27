@@ -44,6 +44,7 @@ return {
       d = { name = 'Dadbod' },
       e = { name = 'Explorer' },
       f = { name = 'Picker' },
+      F = { name = 'Picker (Current Dir)' },
       fg = { name = 'Git' },
       fv = { name = 'Vim' },
       g = { name = 'Git' },

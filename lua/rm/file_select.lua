@@ -1,6 +1,6 @@
 local M = {}
 
-function M.open_file_cur_dir(with_children)
+local function get_params(with_children)
   local folder = vim.fn.expand('%:h')
   local params = {
     path_display = function(_, p)
@@ -13,7 +13,22 @@ function M.open_file_cur_dir(with_children)
     params.find_command =
       { 'rg', '--files', '--max-depth', '1', '--files', folder }
   end
+  return params
+end
+
+function M.open_file_cur_dir(with_children)
+  local params = get_params(with_children)
   require('telescope.builtin').find_files(params)
+end
+
+function M.live_grep_in_cur_dir(with_children)
+  local params = get_params(with_children)
+  require('telescope.builtin').live_grep(params)
+end
+
+function M.find_word_in_cur_dir(with_children)
+  local params = get_params(with_children)
+  require('telescope.builtin').grep_string(params)
 end
 
 local function to_file_path_in_project(full_path)

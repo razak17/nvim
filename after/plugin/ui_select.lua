@@ -72,7 +72,25 @@ local file_menu = function()
 end
 
 -- stylua: ignore
-map( 'n', '<leader>of', file_menu, { desc = '[f]ile [a]ctions: open menu for file actions' })
+map('n', '<leader>of', file_menu, { desc = '[f]ile [a]ctions: open menu for file actions' })
+map(
+  'n',
+  '<leader>Ff',
+  ":lua require'rm.file_select'.open_file_cur_dir(true)<CR>",
+  {desc = "find files"}
+)
+map(
+  'n',
+  '<leader>Fs',
+  ":lua require'rm.file_select'.live_grep_in_cur_dir(true)<CR>",
+  {desc = "live grep"}
+)
+map(
+  'n',
+  '<leader>Fw',
+  ":lua require'rm.file_select'.find_word_in_cur_dir(true)<CR>",
+  {desc = "find word"}
+)
 
 --------------------------------------------------------------------------------
 -- Git
