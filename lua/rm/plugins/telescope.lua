@@ -135,7 +135,9 @@ local function undo() extensions('undo').undo() end
 local function projects()
   extensions('projects').projects(rvim.telescope.minimal_ui())
 end
-local function smart_open() extensions('smart_open').smart_open() end
+local function smart_open()
+  extensions('smart_open').smart_open({ cwd_only = true })
+end
 local function lazy() extensions('lazy').lazy() end
 local function aerial() extensions('aerial').aerial() end
 local function harpoon()
