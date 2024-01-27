@@ -188,7 +188,7 @@ return {
     },
     keys = {
       {
-        '<leader>r',
+        '<localleader>r',
         function() require('refactoring').select_refactor() end,
         mode = 'v',
         noremap = true,

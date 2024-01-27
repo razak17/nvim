@@ -31,6 +31,21 @@ return {
     },
   },
   {
+    'jellydn/quick-code-runner.nvim',
+    opts = { debug = true },
+    cmd = { 'QuickCodeRunner', 'QuickCodePad' },
+    keys = {
+      {
+        mode = 'v',
+        '<leader>rc',
+        ':QuickCodeRunner<CR>',
+        desc = 'quick-runner: run selection',
+      },
+      { '<leader>rP', ':QuickCodePad<CR>', desc = 'quick-runner: open pad' },
+    },
+    dependencies = { 'MunifTanjim/nui.nvim' },
+  },
+  {
     'razak17/lab.nvim',
     cond = not rvim.plugins.minimal,
     keys = {

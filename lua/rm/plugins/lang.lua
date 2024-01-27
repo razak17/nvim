@@ -358,8 +358,8 @@ return {
     keys = {
       {
         mode = 'v',
-        '<localleader>rx',
-        '<Cmd>Hypersonic<CR>',
+        '<localleader>rh',
+        '<Cmd>HypersonichCR>',
         desc = 'hypersonic: toggle',
       },
     },
