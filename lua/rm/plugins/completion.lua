@@ -5,32 +5,6 @@ local border, lsp_hls, ellipsis =
 
 return {
   {
-    'f3fora/cmp-spell',
-    cond = rvim.completion.enable,
-    ft = { 'gitcommit', 'NeogitCommitMessage', 'markdown', 'norg', 'org' },
-  },
-  {
-    'rcarriga/cmp-dap',
-    cond = rvim.completion.enable,
-    ft = { 'dap-repl', 'dapui_watches' },
-  },
-  {
-    'amarakon/nvim-cmp-buffer-lines',
-    cond = rvim.completion.enable,
-    ft = { 'c', 'cpp' },
-  },
-  {
-    'js-everts/cmp-tailwind-colors',
-    cond = rvim.completion.enable,
-    ft = { 'css', 'html', 'vue', 'javascriptreact', 'typescriptreact' },
-  },
-  {
-    'jsongerber/nvim-px-to-rem',
-    cond = rvim.completion.enable,
-    ft = { 'css', 'scss' },
-    opts = { disable_keymaps = true },
-  },
-  {
     'hrsh7th/nvim-cmp',
     cond = rvim.completion.enable,
     event = 'InsertEnter',
@@ -353,6 +327,7 @@ return {
       'razak17/lab.nvim',
       'razak17/lspkind.nvim',
       'dmitmel/cmp-cmdline-history',
+      'hrsh7th/cmp-path',
       'hrsh7th/cmp-emoji',
       'hrsh7th/cmp-buffer',
       'lukas-reineke/cmp-rg',
@@ -360,7 +335,6 @@ return {
       'saadparwaiz1/cmp_luasnip',
       'SergioRibera/cmp-dotenv',
       { 'Gelio/cmp-natdat', opts = {} },
-      { 'hrsh7th/cmp-path', event = { 'CmdlineEnter' } },
       { 'hrsh7th/cmp-nvim-lsp', cond = rvim.lsp.enable },
       { 'hrsh7th/cmp-cmdline', config = function() vim.o.wildmode = '' end },
       { 'hrsh7th/cmp-nvim-lsp-document-symbol', cond = rvim.lsp.enable },
@@ -387,5 +361,31 @@ return {
         opts = {},
       },
     },
+  },
+  {
+    'f3fora/cmp-spell',
+    cond = rvim.completion.enable,
+    ft = { 'gitcommit', 'NeogitCommitMessage', 'markdown', 'norg', 'org' },
+  },
+  {
+    'rcarriga/cmp-dap',
+    cond = rvim.completion.enable,
+    ft = { 'dap-repl', 'dapui_watches' },
+  },
+  {
+    'amarakon/nvim-cmp-buffer-lines',
+    cond = rvim.completion.enable,
+    ft = { 'c', 'cpp' },
+  },
+  {
+    'js-everts/cmp-tailwind-colors',
+    cond = rvim.completion.enable,
+    ft = { 'css', 'html', 'vue', 'javascriptreact', 'typescriptreact' },
+  },
+  {
+    'jsongerber/nvim-px-to-rem',
+    cond = rvim.completion.enable,
+    ft = { 'css', 'scss' },
+    opts = { disable_keymaps = true },
   },
 }
