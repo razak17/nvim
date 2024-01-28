@@ -303,7 +303,7 @@ return {
         sources = cmp.config.sources({
           { name = 'cmdline', keyword_pattern = [=[[^[:blank:]\!]*]=] },
           { name = 'path' },
-          { name = 'cmdline_history', priority = 10, max_item_count = 5 },
+          -- { name = 'cmdline_history', priority = 10, max_item_count = 5 },
         }),
       })
 
@@ -326,7 +326,7 @@ return {
     dependencies = {
       'razak17/lab.nvim',
       'razak17/lspkind.nvim',
-      'dmitmel/cmp-cmdline-history',
+      -- 'dmitmel/cmp-cmdline-history',
       'hrsh7th/cmp-path',
       'hrsh7th/cmp-emoji',
       'hrsh7th/cmp-buffer',
