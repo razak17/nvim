@@ -21,7 +21,7 @@ asktoinstallpip() {
 
 moveoldrvim() {
 	echo "rvim not installed"
-  echo "Please remove '$RV_CONFIG_DIR' path before installing" && exit
+	echo "Please remove '$RV_CONFIG_DIR' path before installing" && exit
 }
 
 createDirs() {
@@ -35,26 +35,26 @@ createDirs() {
 }
 
 setup_venv() {
-  if [ ! -d "$RV_DATA_DIR/venv" ]; then
-    python -m venv "$RV_DATA_DIR/venv"
-  fi
+	if [ ! -d "$RV_DATA_DIR/venv" ]; then
+		python -m venv "$RV_DATA_DIR/venv"
+	fi
 }
 
 python_packages() {
-  "$RV_DATA_DIR/venv/bin/python3" -m pip install -U setuptools pynvim neovim-remote
+	"$RV_DATA_DIR/venv/bin/python3" -m pip install -U setuptools neovim-remote python-dotenv requests pynvim==0.5.0 prompt-toolkit
 }
 
 npm_deps() {
-  pkg_manager="$1"
-  if [ "$pkg_manager" = "npm" ]; then
-    npm install -g tree-sitter-cli neovim
-  fi
-  if [ "$pkg_manager" = "pnpm" ]; then
-    pnpm install -g tree-sitter-cli neovim
-  fi
-  if [ "$pkg_manager" = "yarn" ]; then
-    yarn global add tree-sitter-cli neovim
-  fi
+	pkg_manager="$1"
+	if [ "$pkg_manager" = "npm" ]; then
+		npm install -g tree-sitter-cli neovim
+	fi
+	if [ "$pkg_manager" = "pnpm" ]; then
+		pnpm install -g tree-sitter-cli neovim
+	fi
+	if [ "$pkg_manager" = "yarn" ]; then
+		yarn global add tree-sitter-cli neovim
+	fi
 }
 
 archExtra() {
@@ -62,69 +62,69 @@ archExtra() {
 }
 
 rocks() {
-  luarocks --local --lua-version=5.1 install magick
+	luarocks --local --lua-version=5.1 install magick
 }
 
 get_prompts() {
 	mkdir -p "$HOME/.local/share/rvim/site/prompts"
-  curl -o "$RV_DATA_DIR/site/prompts/prompts.csv" https://raw.githubusercontent.com/f/awesome-chatgpt-prompts/main/prompts.csv
+	curl -o "$RV_DATA_DIR/site/prompts/prompts.csv" https://raw.githubusercontent.com/f/awesome-chatgpt-prompts/main/prompts.csv
 }
 
 importRvim() {
-  echo "Cloning rVim configuration"
-  git clone "https://github.com/razak17/nvim" "$RV_CONFIG_DIR"
+	echo "Cloning rVim configuration"
+	git clone "https://github.com/razak17/nvim" "$RV_CONFIG_DIR"
 }
 
 validate_node_installation() {
-  pkg_manager="$1"
+	pkg_manager="$1"
 
-  if [ "$pkg_manager" = "npm" ]; then
-    manager_home="$(npm config get prefix 2>/dev/null)"
-  fi
-  if [ "$pkg_manager" = "pnpm" ]; then
-    manager_home="$(pnpm config get prefix 2>/dev/null)"
-  fi
-  if [ "$pkg_manager" = "yarn" ]; then
-    manager_home="$(yarn global bin 2>/dev/null)"
-  fi
+	if [ "$pkg_manager" = "npm" ]; then
+		manager_home="$(npm config get prefix 2>/dev/null)"
+	fi
+	if [ "$pkg_manager" = "pnpm" ]; then
+		manager_home="$(pnpm config get prefix 2>/dev/null)"
+	fi
+	if [ "$pkg_manager" = "yarn" ]; then
+		manager_home="$(yarn global bin 2>/dev/null)"
+	fi
 
-  if [ ! -d "$manager_home" ] || [ ! -w "$manager_home" ]; then
-    echo "[$pkg_manager] not found."
-    return 1
-  fi
+	if [ ! -d "$manager_home" ] || [ ! -w "$manager_home" ]; then
+		echo "[$pkg_manager] not found."
+		return 1
+	fi
 
-  return 0
+	return 0
 }
 
 install_nodejs_deps() {
 	printf "Which package manager would you like to use (pnpm, yarn, npm)? "
-  pkg_managers=("pnpm" "yarn" "npm")
-
-	read -r answer
-  for pkg_manager in "${pkg_managers[@]}"; do
-    if [ "$answer" = "$pkg_manager" ]; then
-      if validate_node_installation "$pkg_manager"; then
-        echo "Proceed to Install"
-        npm_deps "$pkg_manager"
-        return
-      fi
-      return
-    fi
-  done
-  echo "Unknown package manager"
+	#  pkg_managers=("pnpm" "yarn" "npm")
+	#
+	# read -r answer
+	#  for pkg_manager in "${pkg_managers[@]}"; do
+	#    if [ "$answer" = "$pkg_manager" ]; then
+	#      if validate_node_installation "$pkg_manager"; then
+	#        echo "Proceed to Install"
+	#        npm_deps "$pkg_manager"
+	#        return
+	#      fi
+	#      return
+	#    fi
+	#  done
+	echo "Unknown package manager"
 }
 
 generate_dict() {
-  dicwords="$RV_DATA_DIR/site/spell/en.dict"
-  if [ ! -x "$(command -v aspell)" ]; then
-    echo "aspell not found, please install aspell and aspell-en" && exit
-  fi
-  if [ -e "$dicwords" ]; then
-    echo "en.dict already exists, skipping..." && exit
-  fi
-  echo 'Generating en.dict...'
-  aspell -d en dump master | aspell -l en expand >"$dicwords"
-  echo "done."
+	dicwords="$RV_DATA_DIR/site/spell/en.dict"
+	if [ ! -x "$(command -v aspell)" ]; then
+		echo "aspell not found, please install aspell and aspell-en" && exit
+	fi
+	if [ -e "$dicwords" ]; then
+		echo "en.dict already exists, skipping..." && exit
+	fi
+	echo 'Generating en.dict...'
+	aspell -d en dump master | aspell -l en expand >"$dicwords"
+	echo "done."
 }
 
 install_deps() {
@@ -144,9 +144,9 @@ install_deps() {
 	read -r answer
 	[ "$answer" != "${answer#[Yy]}" ] && pythonPackages
 
-  printf "Would you like to download chat gpt prompts now (y/n)? "
-  read -r answer
-  [ "$answer" != "${answer#[Yy]}" ] && get_prompts
+	printf "Would you like to download chat gpt prompts now (y/n)? "
+	read -r answer
+	[ "$answer" != "${answer#[Yy]}" ] && get_prompts
 }
 
 clone_config() {
@@ -165,8 +165,8 @@ clone_config() {
 	echo "Installing rvim"
 	importRvim
 
-  echo "Creating virtualenv"
-  setup_venv
+	echo "Creating virtualenv"
+	setup_venv
 
 	sudo cp --force "$RV_CONFIG_DIR/bin/rvim" "$HOME/.local/bin"
 }
@@ -176,17 +176,17 @@ while [ "$#" -gt 0 ]; do
 	shift
 
 	case "$curr" in
-  -venv) setup_venv ;;
+	-venv) setup_venv ;;
 	-py) python_packages ;;
 	-npm) install_nodejs_deps ;;
 	-deps) install_deps ;;
 	-dict) generate_dict ;;
-  -rocks) rocks ;;
-  -prompts) get_prompts ;;
+	-rocks) rocks ;;
+	-prompts) get_prompts ;;
 	*--all*)
 		clone_config
-    install_deps
-    generate_dict
+		install_deps
+		generate_dict
 		;;
 	*) echo "Unavailable command... $curr" ;;
 	esac
