@@ -2,6 +2,7 @@ if not rvim or rvim.none then return end
 
 local settings, highlight = rvim.filetype_settings, rvim.highlight
 local cmd, api, fn, opt_l = vim.cmd, vim.api, vim.fn, vim.opt_local
+local is_available = rvim.is_available
 
 vim.treesitter.language.register('gitcommit', 'NeogitCommitMessage')
 
@@ -9,7 +10,7 @@ settings({
   bash = {
     opt = { spell = true },
     function()
-      if rvim.is_available('LuaSnip') then
+      if is_available('LuaSnip') and is_available('nvim-ts-utils') then
         local ls = require('luasnip')
         local bash = require('snips.bash')
 
@@ -88,7 +89,7 @@ settings({
     bo = { textwidth = 100 },
     opt = { spell = true },
     function()
-      if rvim.is_available('LuaSnip') then
+      if is_available('LuaSnip') and is_available('nvim-ts-utils') then
         local ls = require('luasnip')
         local js = require('snips.javascript')
 
@@ -125,7 +126,7 @@ settings({
     bo = { textwidth = 100 },
     opt = { spell = true },
     function()
-      if rvim.is_available('LuaSnip') then
+      if is_available('LuaSnip') and is_available('nvim-ts-utils') then
         local ls = require('luasnip')
         local jsr = require('snips.javascriptreact')
 
@@ -248,7 +249,7 @@ settings({
   },
   rust = {
     function()
-      if rvim.is_available('LuaSnip') then
+      if is_available('LuaSnip') and is_available('nvim-ts-utils') then
         local ls = require('luasnip')
         local rust = require('snips.rust')
         local common = require('snips.common')
@@ -283,10 +284,10 @@ settings({
       vim.opt.iskeyword:append('-,$,#')
       vim.opt.indentkeys:append('<:>')
 
+      if is_available('LuaSnip') and is_available('nvim-ts-utils') then
       local ls = require('luasnip')
       local kubernetes = require('snips.kubernetes')
 
-      if rvim.is_available('LuaSnip') then
         local s = ls.s
 
         ls.add_snippets('yaml', {

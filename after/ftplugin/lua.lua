@@ -12,7 +12,9 @@ opt.spellfile:prepend(
 )
 opt.spelllang = { 'en_gb', 'programming' }
 
-if rvim.is_available('LuaSnip') then
+local is_available = rvim.is_available
+
+if is_available('LuaSnip') and is_available('nvim-treesitter') then
   local ls = require('luasnip')
   local s = ls.s
   local lua = require('snips.lua')
