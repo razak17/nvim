@@ -1,4 +1,6 @@
-if not rvim then return end
+local enabled = rvim.plugin.smart_splits.enable
+
+if not rvim or rvim.none or not enabled then return end
 
 local fn = vim.fn
 

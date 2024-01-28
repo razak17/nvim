@@ -1,4 +1,8 @@
-if not rvim or rvim.none or not rvim.plugins.enable then return end
+local enabled = rvim.plugin.ui_select.enable
+
+if not rvim or rvim.none or not rvim.plugins.enable or not enabled then
+  return
+end
 
 --------------------------------------------------------------------------------
 -- Toggles
@@ -77,19 +81,19 @@ map(
   'n',
   '<leader>Ff',
   ":lua require'rm.file_select'.open_file_cur_dir(true)<CR>",
-  {desc = "find files"}
+  { desc = 'find files' }
 )
 map(
   'n',
   '<leader>Fs',
   ":lua require'rm.file_select'.live_grep_in_cur_dir(true)<CR>",
-  {desc = "live grep"}
+  { desc = 'live grep' }
 )
 map(
   'n',
   '<leader>Fw',
   ":lua require'rm.file_select'.find_word_in_cur_dir(true)<CR>",
-  {desc = "find word"}
+  { desc = 'find word' }
 )
 
 --------------------------------------------------------------------------------

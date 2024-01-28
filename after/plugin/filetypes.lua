@@ -285,8 +285,8 @@ settings({
       vim.opt.indentkeys:append('<:>')
 
       if is_available('LuaSnip') and is_available('nvim-ts-utils') then
-      local ls = require('luasnip')
-      local kubernetes = require('snips.kubernetes')
+        local ls = require('luasnip')
+        local kubernetes = require('snips.kubernetes')
 
         local s = ls.s
 

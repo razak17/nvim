@@ -1,4 +1,6 @@
-if not rvim or rvim.none then return end
+local enabled = rvim.plugin.env.enable
+
+if not rvim or rvim.none or not enabled then return end
 
 local api, fn, fs = vim.api, vim.fn, vim.fs
 local fmt = string.format

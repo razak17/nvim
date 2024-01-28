@@ -1,4 +1,6 @@
-if not rvim or rvim.none or not rvim.plugins.enable or vim.env.TMUX == nil then
+local enabled = rvim.plugin.tmux.enable
+
+if not rvim or rvim.none or not enabled or vim.env.TMUX == nil then
   return
 end
 

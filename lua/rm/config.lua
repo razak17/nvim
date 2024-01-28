@@ -25,6 +25,18 @@ local namespace = {
   mappings = {},
   git = {},
   none = env.RVIM_NONE == '1',
+  plugin = {
+    env = { enable = true },
+    interceptor = { enable = false },
+    large_file = { enable = true },
+    notepad = { enable = false },
+    smart_splits = { enable = true },
+    smart_tilde = { enable = true },
+    sticky_note = { enable = false },
+    tmux = { enable = true },
+    ui_select = { enable = true },
+    whitespace = { enable = true },
+  },
   plugins = {
     enable = env.RVIM_PLUGINS_ENABLED == '1',
     disabled = {},

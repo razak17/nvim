@@ -1,3 +1,7 @@
+local enabled = rvim.plugin.large_file.enable
+
+if not rvim or rvim.none or not enabled then return end
+
 local largefile_opened = false
 
 rvim.augroup('LargeFileAutocmds', {
