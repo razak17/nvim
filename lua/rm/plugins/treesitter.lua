@@ -3,7 +3,7 @@ local highlight = rvim.highlight
 return {
   {
     'nvim-treesitter/nvim-treesitter',
-    cond = rvim.treesitter.enable,
+    -- cond = rvim.treesitter.enable,
     event = 'BufReadPost',
     build = ':TSUpdate',
     keys = {
@@ -19,6 +19,9 @@ return {
         highlight = {
           enable = true,
           disable = function(_, buf)
+            local enable = rvim.treesitter.enable
+            if not enable and vim.bo.ft ~= 'lua' then return true end
+
             local max_filesize = 100 * 1024 -- 100 KB
             local ok, stats =
               pcall(vim.uv.fs_stat, vim.api.nvim_buf_get_name(buf))
