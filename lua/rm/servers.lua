@@ -215,6 +215,7 @@ local function get(name)
       foldingRange = { dynamicRegistration = false, lineFoldingOnly = true },
       completion = {
         completionItem = { documentationFormat = { 'markdown', 'plaintext' } },
+        editsNearCursor = true,
       },
       codeAction = {
         dynamicRegistration = false,
@@ -228,6 +229,12 @@ local function get(name)
           },
         },
       },
+    },
+    --- Setup capabilities to support utf-16, since copilot.lua only works with utf-16
+    --- this is a workaround to the limitations of copilot language server
+    offsetEncoding = 'utf-16',
+    general = {
+      positionEncodings = { 'utf-16' },
     },
   })
   return config
