@@ -86,7 +86,8 @@ return {
       o = { name = 'Obsidian' },
       q = { name = 'NeoComposer' },
       r = { name = 'Rest' },
-      s = { name = 'Slime' },
+      s = { name = 'Strict' },
+      S = { name = 'Slime' },
       t = { name = 'TODO' },
       v = { name = 'Devdocs' },
       x = { name = 'Executor' },
@@ -108,7 +109,7 @@ return {
       n = { name = 'Nag' },
       q = { name = 'NeoComposer' },
       r = { name = 'Run' },
-      s = { name = 'Slime' },
+      S = { name = 'Slime' },
     }, { mode = 'x', prefix = '<localleader>' })
 
     rvim.augroup('WhichKeyMode', {

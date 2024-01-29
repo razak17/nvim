@@ -103,6 +103,30 @@ return {
     opts = {},
   },
   {
+    'emileferreira/nvim-strict',
+    cond = not rvim.plugins.minimal,
+    name = 'strict',
+    event = { 'BufReadPost', 'BufNewFile' },
+    -- stylua: ignore
+    keys = {
+      { '<localleader>sx', '<cmd>call clearmatches()<CR>', desc = 'strict: clear' },
+      { '<localleader>sw', '<cmd>lua require("strict").remove_trailing_whitespace()<CR>', desc = 'strict: remove trailing whitespace' },
+      { '<localleader>sl', '<cmd>lua require("strict").remove_trailing_empty_lines()<CR>', desc = 'strict: remove trailing empty lines' },
+      { '<localleader>st', '<cmd>lua require("strict").convert_spaces_to_tabs()<CR>', desc = 'strict: convert spaces to tabs' },
+      { '<localleader>ss', '<cmd>lua require("strict").convert_tabs_to_spaces()<CR>', desc = 'strict: convert tabs to spaces' },
+      { '<localleader>sl', '<cmd>lua require("strict").split_overlong_lines()<CR>', desc = 'strict: split overlong lines' },
+    },
+    opts = {
+      deep_nesting = {
+        depth_limit = 4,
+        ignored_trailing_characters = ',',
+        ignored_leading_characters = '.',
+      },
+      overlong_lines = { length_limit = 100 },
+      todos = { highlight = false },
+    },
+  },
+  {
     'anuvyklack/windows.nvim',
     cond = not minimal and niceties,
     -- event = { 'BufReadPre', 'BufNewFile' },
