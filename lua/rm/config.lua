@@ -20,7 +20,6 @@ local namespace = {
     signs = { enable = false },
     hover_diagnostics = { enable = false, go_to = false, scope = 'cursor' },
     null_ls = { enable = false },
-    timeout = { enable = true },
   },
   mappings = {},
   git = {},
