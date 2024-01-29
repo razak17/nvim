@@ -9,7 +9,7 @@ local function on_rename(from, to)
   for _, client in ipairs(clients) do
     ---@diagnostic disable-next-line: param-type-mismatch
     if client.supports_method('workspace/willRenameFiles') then
-      ---@diagnostic disable-next-line: missing-parameter
+      ---@diagnostic disable-next-line: missing-parameter, invisible
       local resp = client.request_sync('workspace/willRenameFiles', {
         files = {
           {
@@ -43,13 +43,14 @@ return {
         tabs_layout = 'center',
         sources = {
           { source = 'filesystem' },
-          { source = 'git_status' },
+          -- { source = 'git_status' },
           { source = 'document_symbols' },
         },
       },
-      enable_git_status = true,
+      enable_git_status = false,
+      enable_diagnostics = false,
       enable_normal_mode_for_inputs = true,
-      git_status_async = true,
+      git_status_async = false,
       nesting_rules = {
         ['dart'] = { 'freezed.dart', 'g.dart' },
         ['go'] = {
@@ -114,10 +115,10 @@ return {
                 hidden = true,
               })
             end,
-            ['i'] = function(state)
+            ['oi'] = function(state)
               vim.api.nvim_input(': ' .. state.tree:get_node().path .. '<Home>')
             end,
-            ['o'] = function(state)
+            ['oM'] = function(state)
               local node = state.tree:get_node()
               -- stylua: ignore
               local media_files = {
@@ -129,8 +130,8 @@ return {
                 vim.notify('Not a media file')
               end
             end,
-            ['P'] = function(state) copy(state.tree:get_node().path) end,
-            ['Y'] = function(state) copy(state.tree:get_node().name) end,
+            ['oP'] = function(state) copy(state.tree:get_node().path) end,
+            ['oY'] = function(state) copy(state.tree:get_node().name) end,
           },
         },
       },
