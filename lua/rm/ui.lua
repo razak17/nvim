@@ -280,6 +280,7 @@ local filetypes = rvim.p_table({
   ['diff'] = presets.statusline_only,
   ['qf'] = presets.tool_panel,
   ['alpha'] = presets.tool_panel:with({ statusline = false }),
+  ['startup'] = presets.tool_panel:with({ statusline = false }),
   ['fugitive'] = presets.statusline_only,
   ['startify'] = presets.statusline_only,
   ['man'] = presets.minimal_editing,
