@@ -124,7 +124,7 @@ return {
       },
       overlong_lines = {
         length_limit = 100,
-        split_on_save = false
+        split_on_save = false,
       },
       todos = { highlight = false },
     },
