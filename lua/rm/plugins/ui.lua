@@ -103,9 +103,8 @@ return {
     opts = {},
   },
   {
-    'emileferreira/nvim-strict',
+    'razak17/nvim-strict',
     cond = not rvim.plugins.minimal,
-    name = 'strict',
     event = { 'BufReadPost', 'BufNewFile' },
     -- stylua: ignore
     keys = {
@@ -117,14 +116,19 @@ return {
       { '<localleader>sl', '<cmd>lua require("strict").split_overlong_lines()<CR>', desc = 'strict: split overlong lines' },
     },
     opts = {
+      format_on_save = false,
       deep_nesting = {
         depth_limit = 4,
         ignored_trailing_characters = ',',
         ignored_leading_characters = '.',
       },
-      overlong_lines = { length_limit = 100 },
+      overlong_lines = {
+        length_limit = 100,
+        split_on_save = false
+      },
       todos = { highlight = false },
     },
+    config = function(_, opts) require('strict').setup(opts) end,
   },
   {
     'anuvyklack/windows.nvim',
