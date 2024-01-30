@@ -31,8 +31,12 @@ local toggle_menu = function()
   rvim.create_select_menu('Toggle actions', toggle_options)() --> extra paren to execute!
 end
 
--- stylua: ignore
-map( 'n', '<leader>oo', toggle_menu, { desc = '[t]oggle [a]ctions: open menu for toggle actions' })
+map(
+  'n',
+  '<leader>oo',
+  toggle_menu,
+  { desc = '[t]oggle [a]ctions: open menu for toggle actions' }
+)
 
 --------------------------------------------------------------------------------
 -- Custom
@@ -47,8 +51,12 @@ local custom_menu = function()
   rvim.create_select_menu('Custom actions', custom_options)() --> extra paren to execute!
 end
 
--- stylua: ignore
-map( 'n', '<leader>oc', custom_menu, { desc = '[c]ustom [a]ctions: open menu for custom actions' })
+map(
+  'n',
+  '<leader>oc',
+  custom_menu,
+  { desc = '[c]ustom [a]ctions: open menu for custom actions' }
+)
 
 if not rvim.plugins.enable then return end
 
@@ -75,8 +83,12 @@ local file_menu = function()
   rvim.create_select_menu('File actions', file_options)()
 end
 
--- stylua: ignore
-map('n', '<leader>of', file_menu, { desc = '[f]ile [a]ctions: open menu for file actions' })
+map(
+  'n',
+  '<leader>of',
+  file_menu,
+  { desc = '[f]ile [a]ctions: open menu for file actions' }
+)
 map(
   'n',
   '<leader>Ff',
@@ -125,8 +137,12 @@ if rvim.is_git_repo() then
     rvim.create_select_menu('Git Commands', git_options)()
   end
 
-  -- stylua: ignore
-  map( 'n', '<leader>og', git_menu, { desc = '[g]it [a]ctions: open menu for git commands' })
+  map(
+    'n',
+    '<leader>og',
+    git_menu,
+    { desc = '[g]it [a]ctions: open menu for git commands' }
+  )
 end
 
 --------------------------------------------------------------------------------
@@ -157,6 +173,41 @@ if rvim.lsp.enable then
     end
   end
 
-  -- stylua: ignore
-  map( 'n', '<leader>ol', lsp_menu, { desc = '[l]sp [a]ctions: open menu for lsp features' })
+  map(
+    'n',
+    '<leader>ol',
+    lsp_menu,
+    { desc = '[l]sp [a]ctions: open menu for lsp features' }
+  )
+end
+
+--------------------------------------------------------------------------------
+-- ChatGPTRun
+--------------------------------------------------------------------------------
+if rvim.is_available('ChatGPT.nvim') then
+  local gpt_options = {
+    ['Grammar Correct'] = 'chatGPTRun grammar_correction',
+    ['Translate'] = 'ChatGPTRun translate',
+    ['Keywords'] = 'ChatGPTRun keywords',
+    ['Docstring'] = 'ChatGPTRun docstring',
+    ['Add Tests'] = 'ChatGPTRun add_tests',
+    ['Optmize Code'] = 'ChatGPTRun optmimize_code',
+    ['Summarize'] = 'ChatGPTRun summarize',
+    ['Fix Bugs'] = 'ChatGPTRun fix_bugs',
+    ['Explain Code'] = 'ChatGPTRun explain_code',
+    ['Roxygen Edit'] = 'ChatGPTRun roxygen_edit',
+    ['Readability Analysis'] = 'ChatGPTRun code_readability_analysis',
+    ['Complete Code'] = 'ChatGPTRun complete_code',
+  }
+
+  local gpt_menu = function()
+    rvim.create_select_menu('ChatGPTRun actions', gpt_options)() --> extra paren to execute!
+  end
+
+  map(
+    { 'n', 'x' },
+    '<leader>ar',
+    gpt_menu,
+    { desc = '[c]hatGPTRun [a]ctions: open menu for chatGPTRun actions' }
+  )
 end
