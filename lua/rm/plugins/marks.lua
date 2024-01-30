@@ -1,3 +1,4 @@
+local ui = rvim.ui
 local fmt = string.format
 local bookmark = rvim.ui.codicons.misc.bookmark
 
@@ -94,5 +95,22 @@ return {
         },
       },
     },
+  },
+  {
+    'razak17/harpoon',
+    branch = 'harpoon2',
+    -- stylua: ignore
+    config = function()
+      local harpoon = require('harpoon')
+      harpoon:setup({ borderchars = ui.border.common })
+      map("n", "<M-;>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
+      map('n', '<localleader>ha', function() harpoon:list():append() end, { desc = 'harpoon: add'})
+      map('n', '<localleader>hn', function() harpoon:list():next() end, { desc = 'harpoon: next'})
+      map('n', '<localleader>hp', function() harpoon:list():prev() end, { desc = 'harpoon: prev'})
+      map('n', '<M-1>', function() harpoon:list():select(1) end)
+      map('n', '<M-2>', function() harpoon:list():select(2) end)
+      map('n', '<M-3>', function() harpoon:list():select(3) end)
+      map('n', '<M-4>', function() harpoon:list():select(4) end)
+    end,
   },
 }
