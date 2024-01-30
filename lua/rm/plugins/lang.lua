@@ -44,9 +44,12 @@ return {
     opts = {},
   },
   {
-    'llllvvuu/nvim-js-actions',
-    cond = rvim.treesitter.enable,
-    ft = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
+    'jdrupal-dev/code-refactor.nvim',
+    -- stylua: ignore
+    keys = {
+      { '<localleader>la', '<cmd>CodeActions all<CR>', desc = 'Show code-refactor.nvim (not LSP code actions)' },
+    },
+    opts = {},
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
   },
   {
