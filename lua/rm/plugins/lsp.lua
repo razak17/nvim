@@ -457,12 +457,9 @@ return {
     'stevanmilic/nvim-lspimport',
     cond = rvim.lsp.enable,
     ft = { 'python' },
+    -- stylua: ignore
     keys = {
-      {
-        '<localleader>la',
-        function() require('lspimport').import() end,
-        desc = 'lsp-import: import',
-      },
+      { '<localleader>ll', function() require('lspimport').import() end, desc = 'lsp-import: import (python)' },
     },
   },
   {
