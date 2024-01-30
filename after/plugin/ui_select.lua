@@ -146,7 +146,6 @@ if rvim.lsp.enable then
     ['Toggle Hover Diagnostics'] = "lua require'rm.lsp_select'.toggle_hover_diagnostics()",
     ['Toggle Hover Diagnostics (go_to)'] = "lua require'rm.lsp_select'.toggle_hover_diagnostics_go_to()",
     ['Toggle Format On Save'] = "lua require'rm.lsp_select'.toggle_format_on_save()",
-    ['Toggle JS Arrow Function'] = 'lua require("nvim-js-actions/js-arrow-fn").toggle()',
     ['Preview Code Actions'] = 'lua require("actions-preview").code_actions()',
   }
 
