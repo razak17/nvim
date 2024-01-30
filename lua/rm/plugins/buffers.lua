@@ -33,14 +33,98 @@ return {
     },
   },
   {
-    'Pheon-Dev/buffalo-nvim',
-    keys = {
+    'dzfrias/arena.nvim',
+    event = 'VeryLazy',
+    cmd = { 'ArenaToggle', 'ArenaOpen', 'ArenaClose' },
+    keys = { { '<M-space>', '<Cmd>ArenaToggle<CR>', desc = 'arena: toggle' } },
+    config = function()
+      local action = require('arena').action
+
+      require('arena').setup({
+        max_items = nil,
+        window = { Border = 'single' },
+        keybinds = {
+          ['w'] = action(function(buf, info)
+            rvim.open_with_window_picker(buf)
+            fn.cursor(info.lnum, 0)
+          end),
+        },
+      })
+    end,
+  },
       {
-        '<M-Space>',
-        '<Cmd>lua require("buffalo.ui").toggle_buf_menu()<CR>',
-        desc = 'buffalo: toggle',
+    'stevearc/stickybuf.nvim',
+    cmd = { 'PinBuffer', 'PinBuftype', 'PinFiletype', 'Unpin' },
+    opts = {},
+    config = function()
+      require('stickybuf').setup({
+        get_auto_pin = function(bufnr)
+          local buf_ft = api.nvim_get_option_value('filetype', { buf = bufnr })
+          if buf_ft == 'DiffviewFiles' then
+            -- this is a diffview tab, disable creating new windows
+            -- (which would be the default behavior of handle_foreign_buffer)
+            return {
+              handle_foreign_buffer = function(buf) end,
+            }
+          end
+          return require('stickybuf').should_auto_pin(bufnr)
+        end,
+      })
+    end,
       },
+  {
+    'razak17/harpoon',
+    branch = 'harpoon2',
+    -- stylua: ignore
+    config = function()
+      local harpoon = require('harpoon')
+      harpoon:setup({ borderchars = ui.border.common })
+      map("n", "<M-;>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
+      map('n', '<localleader>ha', function() harpoon:list():append() end, { desc = 'harpoon: add'})
+      map('n', '<localleader>hn', function() harpoon:list():next() end, { desc = 'harpoon: next'})
+      map('n', '<localleader>hp', function() harpoon:list():prev() end, { desc = 'harpoon: prev'})
+      map('n', '<M-1>', function() harpoon:list():select(1) end)
+      map('n', '<M-2>', function() harpoon:list():select(2) end)
+      map('n', '<M-3>', function() harpoon:list():select(3) end)
+      map('n', '<M-4>', function() harpoon:list():select(4) end)
+    end,
     },
+  {
+    'razak17/buffer_manager.nvim',
+    cond = false,
+    -- stylua: ignore
+    -- keys = {
+    --   { '<M-Space>', '<Cmd>lua require("buffer_manager.ui").toggle_quick_menu()<CR>', desc = 'buffer manager: toggle' },
+    -- },
+    config = function()
+      require('buffer_manager').setup({
+        highlight = 'Normal',
+        select_menu_item_commands = {
+          v = { key = '<C-v>', command = 'vsplit' },
+          h = { key = '<C-h>', command = 'split' },
+        },
+        borderchars = ui.border.common,
+      })
+      local bmui = require('buffer_manager.ui')
+      local keys = '1234'
+      for i = 1, #keys do
+        local key = keys:sub(i, i)
+        map(
+          'n',
+          fmt('<leader>%s', key),
+          function() bmui.nav_file(i) end,
+          { noremap = true, desc = 'buffer ' .. key }
+        )
+      end
+    end,
+  },
+  {
+    'Pheon-Dev/buffalo-nvim',
+    cond = false,
+    -- stylua: ignore
+    -- keys = {
+    --   { '<M-Space>', '<Cmd>lua require("buffalo.ui").toggle_buf_menu()<CR>', desc = 'buffalo: toggle' },
+    -- },
     opts = {
       borderchars = ui.border.common,
       buffer_commands = {
@@ -72,94 +156,6 @@ return {
       map('n', '<s-l>', bui.nav_buf_next, opts)
       map('n', '<s-h>', bui.nav_buf_prev, opts)
       map({ 't', 'n' }, '<M-\\>', bui.toggle_tab_menu, opts)
-    end,
-  },
-  {
-    'dzfrias/arena.nvim',
-    cmd = { 'ArenaToggle', 'ArenaOpen', 'ArenaClose' },
-    keys = { { '<a-a>', '<Cmd>ArenaToggle<CR>', desc = 'arena: toggle' } },
-    config = function()
-      local action = require('arena').action
-
-      require('arena').setup({
-        max_items = nil,
-        window = { border = 'single' },
-        keybinds = {
-          ['w'] = action(function(buf, info)
-            rvim.open_with_window_picker(buf)
-            fn.cursor(info.lnum, 0)
-          end),
-        },
-      })
-    end,
-  },
-  {
-    'razak17/buffer_manager.nvim',
-    cond = false,
-    keys = {
-      {
-        '<M-Space>',
-        '<Cmd>lua require("buffer_manager.ui").toggle_quick_menu()<CR>',
-        desc = 'buffer manager: toggle',
-      },
-    },
-    config = function()
-      require('buffer_manager').setup({
-        highlight = 'Normal',
-        select_menu_item_commands = {
-          v = { key = '<C-v>', command = 'vsplit' },
-          h = { key = '<C-h>', command = 'split' },
-        },
-        borderchars = ui.border.common,
-      })
-      local bmui = require('buffer_manager.ui')
-      local keys = '1234'
-      for i = 1, #keys do
-        local key = keys:sub(i, i)
-        map(
-          'n',
-          fmt('<leader>%s', key),
-          function() bmui.nav_file(i) end,
-          { noremap = true, desc = 'buffer ' .. key }
-        )
-      end
-    end,
-  },
-  {
-    'stevearc/stickybuf.nvim',
-    cmd = { 'PinBuffer', 'PinBuftype', 'PinFiletype', 'Unpin' },
-    opts = {},
-    config = function()
-      require('stickybuf').setup({
-        get_auto_pin = function(bufnr)
-          local buf_ft = api.nvim_get_option_value('filetype', { buf = bufnr })
-          if buf_ft == 'DiffviewFiles' then
-            -- this is a diffview tab, disable creating new windows
-            -- (which would be the default behavior of handle_foreign_buffer)
-            return {
-              handle_foreign_buffer = function(buf) end,
-            }
-          end
-          return require('stickybuf').should_auto_pin(bufnr)
-        end,
-      })
-    end,
-  },
-  {
-    'razak17/harpoon',
-    branch = 'harpoon2',
-    -- stylua: ignore
-    config = function()
-      local harpoon = require('harpoon')
-      harpoon:setup({ borderchars = ui.border.common })
-      map("n", "<a-;>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
-      map('n', '<localleader>ha', function() harpoon:list():append() end, { desc = 'harpoon: add'})
-      map('n', '<localleader>hn', function() harpoon:list():next() end, { desc = 'harpoon: next'})
-      map('n', '<localleader>hp', function() harpoon:list():prev() end, { desc = 'harpoon: prev'})
-      map('n', '<a-1>', function() harpoon:list():select(1) end)
-      map('n', '<a-2>', function() harpoon:list():select(2) end)
-      map('n', '<a-3>', function() harpoon:list():select(3) end)
-      map('n', '<a-4>', function() harpoon:list():select(4) end)
     end,
   },
 }
