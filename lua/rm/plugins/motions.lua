@@ -63,7 +63,7 @@ return {
     'LeonHeidelbach/trailblazer.nvim',
     -- stylua: ignore
     keys = {
-      '<a-l>',
+      '<M-l>',
       { '<leader>ma', add_trail_mark_stack, desc = 'trailblazer: add stack' },
       { '<leader>md', delete_trail_mark_stack, desc = 'trailblazer: delete stack', },
       { '<leader>mg', function() get_available_stacks(true) end, desc = 'trailblazer: get stacks', },
@@ -88,8 +88,8 @@ return {
       mappings = {
         nv = {
           motions = {
-            peek_move_next_down = '<a-k>',
-            peek_move_previous_up = '<a-j>',
+            peek_move_next_down = '<M-k>',
+            peek_move_previous_up = '<M-j>',
           },
         },
       },
