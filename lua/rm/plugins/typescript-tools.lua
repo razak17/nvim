@@ -6,6 +6,7 @@ return {
   -- stylua: ignore
   keys = {
     { '<localleader>li', '<Cmd>TSToolsAddMissingImports<CR>', desc = 'add missing imports' },
+    { '<localleader>lx', '<Cmd>TSToolsRemoveUnusedImports<CR>', desc = 'remove unused missing imports' },
   },
   opts = {
     on_attach = function(client, bufnr)
