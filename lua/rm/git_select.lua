@@ -286,6 +286,11 @@ local function telescope_branches_mappings(prompt_bufnr, map)
               if #line > 0 then table.insert(cmd_output, line) end
             end
           end),
+          on_stderr = vim.schedule_wrap(function(j, output)
+            for _, line in ipairs(output) do
+              if #line > 0 then table.insert(cmd_output, line) end
+            end
+          end),
           on_exit = vim.schedule_wrap(function() vim.notify(cmd_output) end),
         })
       end
