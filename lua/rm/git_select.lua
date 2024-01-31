@@ -52,7 +52,7 @@ local function telescope_commits_mappings(prompt_bufnr, _)
     vim.cmd(':DiffviewOpen ' .. commit .. '^..' .. commit)
   end)
   map('i', '<C-f>', function(nr)
-    local action_state = require "telescope.actions.state"
+    local action_state = require('telescope.actions.state')
     local picker = action_state.get_current_picker(nr)
 
     local commits = {}
@@ -60,14 +60,16 @@ local function telescope_commits_mappings(prompt_bufnr, _)
       table.insert(commits, entry.value)
     end
     if #commits == 0 then
-      commit = require("telescope.actions.state").get_selected_entry(prompt_bufnr).value
+      local commit = require('telescope.actions.state').get_selected_entry(
+        prompt_bufnr
+      ).value
       actions.close(prompt_bufnr)
-      vim.cmd(":DiffviewOpen " .. commit .. "^.." .. commit)
+      vim.cmd(':DiffviewOpen ' .. commit .. '^..' .. commit)
     elseif #commits ~= 2 then
-      print("Must select two commits for diff")
+      print('Must select two commits for diff')
     else
       actions.close(prompt_bufnr)
-      vim.cmd(":DiffviewOpen " .. commits[1] .. "^.." .. commits[2])
+      vim.cmd(':DiffviewOpen ' .. commits[1] .. '^..' .. commits[2])
     end
   end)
   return true
@@ -286,7 +288,7 @@ local function telescope_branches_mappings(prompt_bufnr, map)
               if #line > 0 then table.insert(cmd_output, line) end
             end
           end),
-          on_stderr = vim.schedule_wrap(function(j, output)
+          on_stderr = vim.schedule_wrap(function(_, output)
             for _, line in ipairs(output) do
               if #line > 0 then table.insert(cmd_output, line) end
             end
@@ -402,6 +404,7 @@ local function git_branches_with_base(base, opts)
     return string.gsub(v, "\\([\\'])", '%1')
   end
   local parse_line = function(line)
+    ---@diagnostic disable-next-line: param-type-mismatch
     local fields = vim.split(string.sub(line, 2, -2), "''", true)
     local entry = {
       head = fields[1],
@@ -559,8 +562,6 @@ local function telescope_stash_mappings(prompt_bufnr, map)
   end)
   actions.select_default:replace(function(prompt)
     -- copy-pasted from telescope actions.git_apply_stash + added the reload_all() and changed apply to pop
-    local action_state = require('telescope.actions.state')
-
     local selection = action_state.get_selected_entry()
     if selection == nil then
       utils.__warn_no_selection('actions.git_apply_stash')
@@ -615,7 +616,7 @@ function M.list_stashes(opts)
       ),
       previewer = previewers.new_termopen_previewer({
         get_command = function(entry, _)
-          export = entry.contents
+          -- export = entry.contents
           return {
             'sh',
             '-c',
