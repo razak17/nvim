@@ -76,9 +76,9 @@ return {
     'razak17/buffer_manager.nvim',
     cond = false,
     -- stylua: ignore
-    -- keys = {
-    --   { '<M-Space>', '<Cmd>lua require("buffer_manager.ui").toggle_quick_menu()<CR>', desc = 'buffer manager: toggle' },
-    -- },
+    keys = {
+      { '<M-Space>', '<Cmd>lua require("buffer_manager.ui").toggle_quick_menu()<CR>', desc = 'buffer manager: toggle' },
+    },
     config = function()
       require('buffer_manager').setup({
         highlight = 'Normal',
@@ -105,9 +105,9 @@ return {
     'Pheon-Dev/buffalo-nvim',
     cond = false,
     -- stylua: ignore
-    -- keys = {
-    --   { '<M-Space>', '<Cmd>lua require("buffalo.ui").toggle_buf_menu()<CR>', desc = 'buffalo: toggle' },
-    -- },
+    keys = {
+      { '<M-Space>', '<Cmd>lua require("buffalo.ui").toggle_buf_menu()<CR>', desc = 'buffalo: toggle' },
+    },
     opts = {
       borderchars = ui.border.common,
       buffer_commands = {
