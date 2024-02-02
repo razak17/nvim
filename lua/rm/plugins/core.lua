@@ -313,9 +313,9 @@ return {
     keys = {
       { '<localleader>vf', '<cmd>DevdocsOpenFloat<CR>', desc = 'devdocs: open float', },
       { '<localleader>vb', '<cmd>DevdocsOpen<CR>', desc = 'devdocs: open in buffer', },
-      { '<localleader>vo', ':DevdocsOpenFloat ', desc = 'devdocs: open documentation', },
-      { '<localleader>vi', ':DevdocsInstall ', desc = 'devdocs: install' },
-      { '<localleader>vu', ':DevdocsUninstall ', desc = 'devdocs: uninstall' },
+      { '<localleader>vo', '<cmd>DevdocsOpenFloat ', desc = 'devdocs: open documentation', },
+      { '<localleader>vi', '<cmd>DevdocsInstall ', desc = 'devdocs: install' },
+      { '<localleader>vu', '<cmd>DevdocsUninstall ', desc = 'devdocs: uninstall' },
     },
     opts = {
       -- stylua: ignore
