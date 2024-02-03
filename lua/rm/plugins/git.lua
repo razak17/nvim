@@ -230,7 +230,17 @@ return {
     'akinsho/git-conflict.nvim',
     cond = enabled,
     event = 'BufReadPre',
-    opts = { disable_diagnostics = true },
+    opts = {
+      disable_diagnostics = true,
+      default_mappings = {
+        ours = 'c<',
+        theirs = 'c>',
+        none = 'co',
+        both = 'c.',
+        next = ']x',
+        prev = '[x',
+      },
+    },
     config = function(_, opts)
       rvim.highlight.plugin('git-conflict', {
         {
