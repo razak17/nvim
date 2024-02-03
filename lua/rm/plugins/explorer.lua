@@ -36,10 +36,10 @@ local function find_or_search_in_dir(cwd, find_or_search)
       hidden = true,
     })
   elseif find_or_search == 'search' then
-      require('telescope.builtin').live_grep({
-        cwd = cwd,
-        hidden = true,
-      })
+    require('telescope.builtin').live_grep({
+      cwd = cwd,
+      hidden = true,
+    })
   end
 end
 
@@ -124,14 +124,14 @@ return {
               local cwd = node.path
               if node.type == 'file' then cwd = node._parent_id end
 
-              find_or_search_in_dir(cwd, "find")
+              find_or_search_in_dir(cwd, 'find')
             end,
             ['G'] = function(state)
               local node = state.tree:get_node()
               local cwd = node.path
               if node.type == 'file' then cwd = node._parent_id end
 
-              find_or_search_in_dir(cwd, "search")
+              find_or_search_in_dir(cwd, 'search')
             end,
             ['oi'] = function(state)
               vim.api.nvim_input(': ' .. state.tree:get_node().path .. '<Home>')
