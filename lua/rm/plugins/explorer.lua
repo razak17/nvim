@@ -25,6 +25,24 @@ local function on_rename(from, to)
   end
 end
 
+local function find_or_search_in_dir(cwd, find_or_search)
+  if not rvim.is_available('telescope.nvim') then
+    vim.notify('telescope.nvim is not available')
+    return
+  end
+  if find_or_search == 'find' then
+    require('telescope.builtin').find_files({
+      cwd = cwd,
+      hidden = true,
+    })
+  elseif find_or_search == 'search' then
+      require('telescope.builtin').live_grep({
+        cwd = cwd,
+        hidden = true,
+      })
+  end
+end
+
 return {
   {
     'nvim-neo-tree/neo-tree.nvim',
@@ -106,14 +124,14 @@ return {
               local cwd = node.path
               if node.type == 'file' then cwd = node._parent_id end
 
-              if not rvim.is_available('telescope.nvim') then
-                vim.notify('telescope.nvim is not available')
-                return
-              end
-              require('telescope.builtin').find_files({
-                cwd = cwd,
-                hidden = true,
-              })
+              find_or_search_in_dir(cwd, "find")
+            end,
+            ['G'] = function(state)
+              local node = state.tree:get_node()
+              local cwd = node.path
+              if node.type == 'file' then cwd = node._parent_id end
+
+              find_or_search_in_dir(cwd, "search")
             end,
             ['oi'] = function(state)
               vim.api.nvim_input(': ' .. state.tree:get_node().path .. '<Home>')
