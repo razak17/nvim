@@ -311,6 +311,12 @@ return {
       },
     },
   },
+  {
+    "https://git.sr.ht/~swaits/thethethe.nvim",
+    cond = not rvim.plugins.minimal and rvim.plugins.niceties and false,
+    event = "VeryLazy",
+    opts = {},
+  },
   -- CSV
   --------------------------------------------------------------------------------
   {
