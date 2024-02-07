@@ -25,6 +25,7 @@ local function move_or_create_win(key)
     'oil',
     'gitcommit',
     'NeogitCommitMessage',
+    'DiffviewFileHistory'
   }
   if rvim.find_string(exclusions, vim.bo.ft) then
     vim.cmd('wincmd ' .. key)
