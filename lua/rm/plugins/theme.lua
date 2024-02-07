@@ -22,5 +22,15 @@ return {
       vim.g.doom_one_pumblend_transparency = 3
     end,
   },
+  {
+    "sontungexpt/witch",
+    cond = false,
+    priority = 1000,
+    lazy = false,
+    opts = { style = "dark" },
+    config = function(_, opts)
+      require("witch").setup(opts)
+    end,
+  },
   -- }}}
 }
