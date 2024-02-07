@@ -138,6 +138,17 @@ end
 local function smart_open()
   extensions('smart_open').smart_open({ cwd_only = true })
 end
+local function directory_files()
+  extensions('directory').directory({ feature = 'find_files' })
+end
+local function directory_search()
+  extensions('directory').directory({
+    feature = 'live_grep',
+    feature_opts = { hidden = true, no_ignore = true },
+    hidden = true,
+    no_ignore = true,
+  })
+end
 local function lazy() extensions('lazy').lazy() end
 local function aerial() extensions('aerial').aerial() end
 local function harpoon()
@@ -239,6 +250,8 @@ return {
       -- { '<leader>fb', b('current_buffer_fuzzy_find'), desc = 'find in current buffer', },
       { '<leader>fc', nvim_config, desc = 'nvim config' },
       { '<leader>fd', aerial, desc = 'aerial' },
+      { '<leader>fgf', directory_files, desc = 'directory for find files' },
+      { '<leader>fgg', directory_search, desc = 'directory for live grep' },
       { '<leader>fe', egrepify, desc = 'aerial' },
       -- { '<leader>ff', project_files, desc = 'project files' },
       { '<leader>fh', frecency, desc = 'Most (f)recently used files' },
@@ -552,5 +565,11 @@ return {
     'tsakirist/telescope-lazy.nvim',
     cmd = 'Telescope',
     config = function() require('telescope').load_extension('lazy') end,
+  },
+  {
+    'fbuchlak/telescope-directory.nvim',
+    cmd = 'Telescope',
+    config = function() require('telescope').load_extension('directory') end,
+    opts = {},
   },
 }
