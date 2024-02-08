@@ -43,7 +43,10 @@ return {
           position = { row = 2 },
         },
       },
-      hover = { enabled = true },
+      hover = {
+        enabled = true,
+        silent = true,
+      },
       progress = {
         enabled = true,
         throttle = 1000 / 800,
