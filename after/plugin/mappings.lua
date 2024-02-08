@@ -394,7 +394,7 @@ nnoremap(
 --------------------------------------------------------------------------------
 -- File Diff
 nnoremap(
-  '<localleader>ff',
+  '<localleader>fd',
   ":lua require'rm.file_select'.toggle_file_diff()<CR>",
   { desc = 'toggle file diff' }
 )
