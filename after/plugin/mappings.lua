@@ -22,17 +22,12 @@ local cnoremap = function(...) map('c', ...) end
 -- MACROS {{{
 --------------------------------------------------------------------------------
 -- repeat macros across a visual range
-vim.cmd([[
-  function! ExecuteMacroOverVisualRange()
-    echo "@".getcmdline()
-    execute ":'<,'>normal @".nr2char(getchar())
-  endfunction
-]])
-xnoremap(
-  '@',
-  ':<C-u>call ExecuteMacroOverVisualRange()<CR>',
-  { silent = false }
-)
+xnoremap('@', function()
+  vim.ui.input(
+    { prompt = 'Macro Register: ' },
+    function(reg) vim.cmd([['<,'>normal @]] .. reg) end
+  )
+end, { silent = false })
 -----------------------------------------------------------------------------//
 -- Add Empty space above and below
 -----------------------------------------------------------------------------//
