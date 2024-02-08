@@ -10,7 +10,8 @@ local disabled = not rvim.lsp.enable
 if disabled then return end
 
 local lsp, fn, api, fmt = vim.lsp, vim.fn, vim.api, string.format
-local L = vim.lsp.log_levels
+-- local L = vim.lsp.log_levels
+local L, S = vim.lsp.log_levels, vim.diagnostic.severity
 local M = vim.lsp.protocol.Methods
 local conform = rvim.is_available('conform.nvim')
 
@@ -458,26 +459,8 @@ augroup('LspSetupCommands', {
   end,
 })
 --------------------------------------------------------------------------------
--- Signs
---------------------------------------------------------------------------------
----@param opts {highlight: string, icon: string}
-local function sign(opts)
-  fn.sign_define(opts.highlight, {
-    text = opts.icon,
-    texthl = opts.highlight,
-    numhl = opts.highlight .. 'Nr' or nil,
-    culhl = opts.highlight .. 'CursorNr' or nil,
-    linehl = opts.highlight .. 'Line' or nil,
-  })
-end
-
-sign({ highlight = 'DiagnosticSignError', icon = icons.error })
-sign({ highlight = 'DiagnosticSignWarn', icon = icons.warn })
-sign({ highlight = 'DiagnosticSignInfo', icon = icons.info })
-sign({ highlight = 'DiagnosticSignHint', icon = icons.hint })
------------------------------------------------------------------------------//
 -- Handler Overrides
------------------------------------------------------------------------------//
+--------------------------------------------------------------------------------
 -- This section overrides the default diagnostic handlers for signs and virtual text so that only
 -- the most severe diagnostic is shown per line
 
@@ -513,8 +496,27 @@ diagnostic.handlers.signs = vim.tbl_extend('force', signs_handler, {
 local max_width = math.min(math.floor(vim.o.columns * 0.7), 100)
 local max_height = math.min(math.floor(vim.o.lines * 0.3), 30)
 
-diagnostic.config({
-  signs = rvim.lsp.signs.enable,
+--------------------------------------------------------------------------------
+-- Signs
+--------------------------------------------------------------------------------
+---@param kind? string
+local function get_signs(kind)
+  return {
+    [S.WARN] = kind and fmt('DiagnosticSignWarn%s', kind) or icons.warn,
+    [S.INFO] = kind and fmt('DiagnosticSignInfo%s', kind) or icons.info,
+    [S.HINT] = kind and fmt('DiagnosticSignHint%s', kind) or icons.hint,
+    [S.ERROR] = kind and fmt('DiagnosticSignError%s', kind) or icons.error,
+  }
+end
+
+rvim.diagnostic_config = {
+  signs = rvim.lsp.signs.enable and {
+    text = get_signs(),
+    texthl = get_signs(''),
+    numhl = get_signs('Nr'),
+    culhl = get_signs('CursorNr'),
+    linehl = get_signs('Line'),
+  } or false,
   underline = true,
   update_in_insert = false,
   severity_sort = true,
@@ -537,7 +539,9 @@ diagnostic.config({
       return prefix, 'Diagnostic' .. level:gsub('^%l', string.upper)
     end,
   },
-})
+}
+
+diagnostic.config(rvim.diagnostic_config)
 --------------------------------------------------------------------------------
 -- LSP Progress
 --------------------------------------------------------------------------------

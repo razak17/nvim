@@ -225,8 +225,7 @@ end
 function M.toggle_signs()
   local config = diagnostic.config()
   if type(config.signs) == 'boolean' then
-    config =
-      vim.tbl_extend('force', config, { signs = { severity_limit = 'Error' } })
+    config = rvim.diagnostic_config
   else
     config = vim.tbl_extend('force', config, { signs = false })
   end
