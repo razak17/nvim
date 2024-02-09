@@ -88,6 +88,7 @@ return {
           'DressingInput',
           'NvimSeparator',
           'TelescopePrompt',
+          'toggleterm',
           'Trouble',
         },
         cursorcolumn = {},
