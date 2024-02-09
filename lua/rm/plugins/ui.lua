@@ -58,7 +58,11 @@ return {
     'razak17/smartcolumn.nvim',
     cond = not minimal and niceties,
     event = { 'BufRead', 'BufNewFile' },
-    opts = { colorcolumn = '0', custom_autocommand = true },
+    opts = {
+      disabled_filetypes = { 'quickfix' },
+      colorcolumn = '0',
+      custom_autocommand = true,
+    },
   },
   {
     'utilyre/sentiment.nvim',
