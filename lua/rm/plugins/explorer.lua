@@ -119,14 +119,14 @@ return {
         window = {
           mappings = {
             ['<space>'] = 'none',
-            ['F'] = function(state)
+            ['<C-p>'] = function(state)
               local node = state.tree:get_node()
               local cwd = node.path
               if node.type == 'file' then cwd = node._parent_id end
 
               find_or_search_in_dir(cwd, 'find')
             end,
-            ['G'] = function(state)
+            ['<C-g>'] = function(state)
               local node = state.tree:get_node()
               local cwd = node.path
               if node.type == 'file' then cwd = node._parent_id end
