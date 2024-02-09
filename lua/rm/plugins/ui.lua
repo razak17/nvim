@@ -298,6 +298,7 @@ return {
   },
   {
     'tjdevries/sPoNGe-BoB.NvIm',
+    cmd = { 'SpOnGeBoBiFy' },
     -- stylua: ignore
     keys = {
       { '<localleader>ab', '<cmd>SpOnGeBoBiFy<CR>', mode = { 'v' }, desc = 'SpOnGeBoB: SpOnGeBoBiFy', },
