@@ -75,6 +75,22 @@ return {
     },
   },
   {
+    'tummetott/reticle.nvim',
+    event = 'VeryLazy',
+    opts = {
+      ignore = {
+        cursorline = {
+          'alpha',
+          'DressingInput',
+          'NvimSeparator',
+          'TelescopePrompt',
+          'Trouble',
+        },
+        cursorcolumn = {},
+      },
+    },
+  },
+  {
     'HampusHauffman/block.nvim',
     cond = not minimal and niceties,
     cmd = { 'Block', 'BlockOn', 'BlockOff' },
