@@ -257,24 +257,24 @@ local function telescope_branches_mappings(prompt_bufnr, map)
       table.insert(branches, entry.value)
     end
 
-  local diffspec
+    local diffspec
     if #branches == 0 then
-    local branch = action_state.get_selected_entry(prompt_bufnr).value
-    actions.close(prompt_bufnr)
-    -- heuristics.. will see if it works out
-    if
-      string.match(branch, 'develop')
-      or string.match(branch, 'master')
-      or string.match(branch, 'main')
-    then
-      -- i want to compare to develop. presumably i'm ahead, comparing behind
-      diffspec = branch .. '...'
-    else
-      -- i want to compare with another branch which isn't develop. i'm probably
-      -- on develop => presumably i'm behind, comparing ahead
-      diffspec = '...' .. branch
-    end
-    vim.cmd(':DiffviewOpen ' .. diffspec)
+      local branch = action_state.get_selected_entry(prompt_bufnr).value
+      actions.close(prompt_bufnr)
+      -- heuristics.. will see if it works out
+      if
+        string.match(branch, 'develop')
+        or string.match(branch, 'master')
+        or string.match(branch, 'main')
+      then
+        -- i want to compare to develop. presumably i'm ahead, comparing behind
+        diffspec = branch .. '...'
+      else
+        -- i want to compare with another branch which isn't develop. i'm probably
+        -- on develop => presumably i'm behind, comparing ahead
+        diffspec = '...' .. branch
+      end
+      vim.cmd(':DiffviewOpen ' .. diffspec)
     else
       actions.close(prompt_bufnr)
       vim.cmd(':DiffviewOpen ' .. branches[1] .. '...' .. branches[2])
@@ -282,24 +282,24 @@ local function telescope_branches_mappings(prompt_bufnr, map)
   end)
   map('i', '<C-enter>', function() -- local branch to track an origin branch
     local branch = get_selected_entry(prompt_bufnr).value
-      local cmd_output = {}
-      if string.match(branch, '^origin/') then
-        actions.close(prompt_bufnr)
-        fn.jobstart('git checkout ' .. branch:gsub('^origin/', ''), {
-          stdout_buffered = true,
-          on_stdout = vim.schedule_wrap(function(_, output)
-            for _, line in ipairs(output) do
-              if #line > 0 then table.insert(cmd_output, line) end
-            end
-          end),
-          on_stderr = vim.schedule_wrap(function(_, output)
-            for _, line in ipairs(output) do
-              if #line > 0 then table.insert(cmd_output, line) end
-            end
-          end),
-          on_exit = vim.schedule_wrap(function() vim.notify(cmd_output) end),
-        })
-      end
+    local cmd_output = {}
+    if string.match(branch, '^origin/') then
+      actions.close(prompt_bufnr)
+      fn.jobstart('git checkout ' .. branch:gsub('^origin/', ''), {
+        stdout_buffered = true,
+        on_stdout = vim.schedule_wrap(function(_, output)
+          for _, line in ipairs(output) do
+            if #line > 0 then table.insert(cmd_output, line) end
+          end
+        end),
+        on_stderr = vim.schedule_wrap(function(_, output)
+          for _, line in ipairs(output) do
+            if #line > 0 then table.insert(cmd_output, line) end
+          end
+        end),
+        on_exit = vim.schedule_wrap(function() vim.notify(cmd_output) end),
+      })
+    end
   end)
   map('i', '<C-b>', function() -- rebase on another branch
     local branch = get_selected_entry(prompt_bufnr).value
@@ -310,7 +310,7 @@ local function telescope_branches_mappings(prompt_bufnr, map)
       on_stdout = vim.schedule_wrap(function(_, output)
         for _, line in ipairs(output) do
           if #line > 0 then table.insert(cmd_output, line) end
-    end
+        end
       end),
       on_stderr = vim.schedule_wrap(function(_, output)
         for _, line in ipairs(output) do
