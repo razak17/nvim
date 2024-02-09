@@ -137,6 +137,14 @@ return {
     },
     opts = {
       format_on_save = false,
+      excluded_filetypes = { 'help' },
+      excluded_buftypes = {
+        'help',
+        'nofile',
+        'terminal',
+        'prompt',
+        'quickfix',
+      },
       deep_nesting = {
         depth_limit = 4,
         ignored_trailing_characters = ',',
