@@ -25,7 +25,7 @@ local function add_trail_mark_stack()
         'warn',
         { title = 'TrailBlazer' }
       )
-      return
+     return
     end
     local tb = require('trailblazer')
     tb.add_trail_mark_stack(name)
@@ -112,5 +112,20 @@ return {
       map('n', '<M-3>', function() harpoon:list():select(3) end)
       map('n', '<M-4>', function() harpoon:list():select(4) end)
     end,
+  },
+  {
+    'otavioschwanck/arrow.nvim',
+    event = { 'BufRead', 'BufNewFile' },
+    -- stylua: ignore
+    keys = {
+      { '<M-s>', '<Cmd>lua require("arrow.persist").toggle()<CR>', desc = 'arrow: toggle' },
+      { '<M-n>', '<Cmd>lua require("arrow.persist").next()<CR>', desc = 'arrow: next'},
+      { '<M-p>', '<Cmd>lua require("arrow.persist").previous()<CR>', desc = 'arrow: prev'}
+    },
+    opts = { show_icons = true, leader_key = '\\' },
+    config = function(_, opts)
+      require('arrow').setup(opts)
+      require("arrow.persist").toggle()
+    end
   },
 }
