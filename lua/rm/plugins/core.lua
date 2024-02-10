@@ -408,8 +408,8 @@ return {
     dependencies = { 'Febri-i/fscreen.nvim' },
   },
   {
-      "NStefan002/2048.nvim",
-      cmd = "Play2048",
+    'NStefan002/2048.nvim',
+    cmd = 'Play2048',
       opts = {},
   },
   -- Share Code
