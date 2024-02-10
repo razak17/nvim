@@ -1,6 +1,7 @@
 local fn = vim.fn
 local fmt = string.format
 local ui, highlight = rvim.ui, rvim.highlight
+local icons, codicons = rvim.ui.icons, rvim.ui.codicons
 local falsy, find_string = rvim.falsy, rvim.find_string
 local border = ui.current.border
 
@@ -480,6 +481,23 @@ return {
       { '<leader>ja', '<Cmd>AnyJumpArg<CR>', desc = 'any-jump: arg' },
       { '<leader>jp', '<Cmd>AnyJumpLastResults<CR>', desc = 'any-jump: resume' },
     },
+  },
+  {
+    'folke/trouble.nvim',
+    cond = rvim.lsp.enable,
+    cmd = { 'Trouble', 'TroubleToggle', 'ToggleClose', 'ToggleRefresh' },
+    opts = {
+      fold_open = icons.misc.chevron_down,
+      fold_closed = icons.misc.chevron_right,
+      signs = {
+        error = codicons.lsp.error,
+        warning = codicons.lsp.warn,
+        hint = codicons.lsp.hint,
+        information = codicons.lsp.info,
+        other = codicons.lsp.trace,
+      },
+    },
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
   },
   -- }}}
 }
