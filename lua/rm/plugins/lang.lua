@@ -155,7 +155,6 @@ return {
     'ellisonleao/glow.nvim',
     cond = not rvim.plugins.minimal,
     cmd = 'Glow',
-    -- ft = 'markdown',
     opts = {
       border = 'single',
       width = 120,
@@ -164,7 +163,6 @@ return {
   {
     'wallpants/github-preview.nvim',
     cond = not rvim.plugins.minimal,
-    -- ft = 'markdown',
     cmd = {
       'GithubPreviewStart',
       'GithubPreviewStop',
@@ -176,7 +174,6 @@ return {
   {
     'AntonVanAssche/md-headers.nvim',
     cond = rvim.treesitter.enable,
-    -- ft = 'markdown',
     cmd = { 'MarkdownHeaders', 'MarkdownHeadersClosest' },
     dependencies = { 'nvim-lua/plenary.nvim' },
     -- stylua: ignore
@@ -202,7 +199,6 @@ return {
       'MarkdownPreviewStop',
       'MarkdownPreviewToggle',
     },
-    -- ft = 'markdown',
     config = function()
       vim.g.mkdp_auto_start = 0
       vim.g.mkdp_auto_close = 1
@@ -234,7 +230,6 @@ return {
   },
   {
     'nfrid/markdown-togglecheck',
-    -- ft = { 'markdown' },
     -- stylua: ignore
     keys = {
       { '<leader>om', function() require('markdown-togglecheck').toggle() end, desc = 'toggle markdown checkbox', },
@@ -291,7 +286,6 @@ return {
   },
   {
     'Zeioth/markmap.nvim',
-    -- ft = { 'markdown' },
     build = 'yarn global add markmap-cli',
     cmd = { 'MarkmapOpen', 'MarkmapSave', 'MarkmapWatch', 'MarkmapWatchStop' },
     opts = {},
@@ -312,11 +306,20 @@ return {
     },
   },
   {
-    "https://git.sr.ht/~swaits/thethethe.nvim",
+    'https://git.sr.ht/~swaits/thethethe.nvim',
     cond = not rvim.plugins.minimal and rvim.plugins.niceties and false,
-    event = "VeryLazy",
+    event = 'VeryLazy',
     opts = {},
   },
+  {
+    'HakonHarnes/img-clip.nvim',
+    -- stylua: ignore
+    keys = {
+      { '<localleader>p', '<Cmd>PasteImage<cr>', desc = 'Paste clipboard image' },
+    },
+    opts = {},
+  },
+
   -- CSV
   --------------------------------------------------------------------------------
   {
