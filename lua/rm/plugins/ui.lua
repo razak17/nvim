@@ -217,6 +217,14 @@ return {
     cond = not minimal and niceties,
     event = { 'WinNew' },
     opts = {
+      no_exec_files = {
+        'NeogitCommitMessage',
+        'TelescopePrompt',
+        'Trouble',
+        'mason',
+        'neo-tree',
+        'packer',
+      },
       highlight = {
         bg = rvim.highlight.get('Normal', 'bg'),
         fg = P.cursor,
