@@ -115,6 +115,7 @@ return {
   },
   {
     'smjonas/inc-rename.nvim',
+    cond = rvim.lsp.enable,
     opts = { hl_group = 'Visual', preview_empty_name = true },
     keys = {
       {
