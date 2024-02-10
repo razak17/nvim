@@ -33,6 +33,14 @@ return {
     },
   },
   {
+    'sathishmanohar/quick-buffer-jump',
+    cmd = { 'QuickBufferJump' },
+    keys = {
+      { '<M-u>', '<Cmd>QuickBufferJump<CR>', desc = 'quick buffer jump' },
+    },
+    config = function() require('quick_buffer_jump') end,
+  },
+  {
     'dzfrias/arena.nvim',
     event = 'VeryLazy',
     cmd = { 'ArenaToggle', 'ArenaOpen', 'ArenaClose' },
