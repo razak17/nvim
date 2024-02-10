@@ -70,6 +70,8 @@ local smart_close_filetypes = rvim.p_table({
   ['copilot.*'] = true,
   ['tsplayground'] = true,
   ['oil'] = true,
+  ['readup'] = true,
+  ['telescope-lazy'] = true,
 })
 
 local smart_close_buftypes = rvim.p_table({
