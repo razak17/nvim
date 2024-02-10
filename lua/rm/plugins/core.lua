@@ -398,6 +398,11 @@ return {
     cmd = { 'SnakeStart' },
     dependencies = { 'Febri-i/fscreen.nvim' },
   },
+  {
+      "NStefan002/2048.nvim",
+      cmd = "Play2048",
+      opts = {},
+  },
   -- Share Code
   --------------------------------------------------------------------------------
   { 'TobinPalmer/rayso.nvim', cmd = { 'Rayso' }, opts = {} },
