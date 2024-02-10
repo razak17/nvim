@@ -52,6 +52,22 @@ return {
       })
     end,
   },
+  {
+    'razak17/antelope',
+    keys = {
+      { '<M-o>', ':Antelope buffers<CR>', 'antelope: buffers' },
+      { '<M-m>', ':Antelope marks<CR>', 'antelope: marks' },
+    },
+    opts = { notifications = false },
+    config = function(_, opts)
+      require('antelope').setup(opts)
+
+      rvim.highlight.plugin('antelope', {
+        { AntelopeBorder = { inherit = 'FloatBorder' } },
+        { AntelopeNormal = { inherit = 'NormalFloat' } },
+      })
+    end,
+  },
       {
     'stevearc/stickybuf.nvim',
     cmd = { 'PinBuffer', 'PinBuftype', 'PinFiletype', 'Unpin' },
