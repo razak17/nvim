@@ -4,6 +4,7 @@ local ui, highlight = rvim.ui, rvim.highlight
 local icons, codicons = rvim.ui.icons, rvim.ui.codicons
 local falsy, find_string = rvim.falsy, rvim.find_string
 local border = ui.current.border
+local lsp_icons = codicons.lsp
 
 return {
   ------------------------------------------------------------------------------
@@ -178,6 +179,16 @@ return {
     },
   },
   {
+    'cseickel/diagnostic-window.nvim',
+    cond = rvim.lsp.enable and rvim.plugins.niceties,
+    event = 'LspAttach',
+    cmd = { 'DiagWindowShow' },
+    keys = {
+      { 'gL', '<Cmd>DiagWindowShow<CR>', desc = 'diagnostic window: show' },
+    },
+    dependencies = { 'MunifTanjim/nui.nvim' },
+  },
+  {
     'dgagn/diagflow.nvim',
     cond = rvim.lsp.enable and rvim.plugins.niceties,
     event = 'LspAttach',
@@ -189,25 +200,28 @@ return {
         end
         return diagnostic.message
       end,
-      padding_top = 2,
+      padding_top = 1,
       toggle_event = { 'InsertEnter' },
     },
   },
   {
-    'cseickel/diagnostic-window.nvim',
+    'doums/dmap.nvim',
     cond = rvim.lsp.enable and rvim.plugins.niceties,
     event = 'LspAttach',
-    cmd = { 'DiagWindowShow' },
-    keys = {
-      { 'gL', '<Cmd>DiagWindowShow<CR>', desc = 'diagnostic window: show' },
-    },
-    dependencies = { 'MunifTanjim/nui.nvim' },
+    opts = { win_h_offset = 5 },
   },
   {
-    'doums/dmap.nvim',
-    cond = rvim.lsp.enable and false,
+    'ivanjermakov/troublesum.nvim',
+    cond = rvim.lsp.enable and rvim.plugins.niceties,
     event = 'LspAttach',
-    opts = { win_h_offset = 6 },
+    opts = {
+      severity_format = {
+        lsp_icons.error,
+        lsp_icons.warn,
+        lsp_icons.info,
+        lsp_icons.hint,
+      },
+    },
   },
   {
     'stevearc/aerial.nvim',
@@ -490,11 +504,11 @@ return {
       fold_open = icons.misc.chevron_down,
       fold_closed = icons.misc.chevron_right,
       signs = {
-        error = codicons.lsp.error,
-        warning = codicons.lsp.warn,
-        hint = codicons.lsp.hint,
-        information = codicons.lsp.info,
-        other = codicons.lsp.trace,
+        error = lsp_icons.error,
+        warning = lsp_icons.warn,
+        hint = lsp_icons.hint,
+        information = lsp_icons.info,
+        other = lsp_icons.trace,
       },
     },
     dependencies = { 'nvim-tree/nvim-web-devicons' },
