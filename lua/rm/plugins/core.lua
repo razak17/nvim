@@ -62,6 +62,15 @@ return {
       default_action = 'system',
     },
   },
+  {
+    'razak17/readup.nvim',
+    cmd = { 'Readup', 'ReadupBrowser' },
+    config = function()
+      require('readup').setup({
+        plugins_path = vim.fn.stdpath('data') .. '/lazy',
+      })
+    end,
+  },
   -- }}}
   ------------------------------------------------------------------------------
   -- Editing {{{1
