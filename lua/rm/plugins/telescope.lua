@@ -471,7 +471,6 @@ return {
             },
           },
           lazy = {
-            theme = 'ivy',
             show_icon = true,
             mappings = {
               open_in_browser = '<C-o>',
