@@ -350,13 +350,26 @@ end
 ---@param notify? boolean
 function rvim.open(path, notify)
   notify = notify or false
-  if not path then return end
   if notify then vim.notify(fmt('Opening %s', path)) end
   local res = vim.ui.open(path)
   if not res or res.code ~= 0 then
     local open_command = vim.g.os == 'Darwin' and 'open' or 'xdg-open'
-    fn.jobstart({ open_command, path }, { detach = true })
+    vim.system({ open_command, path }, { detach = true })
   end
+end
+
+--- open / play media file
+---@param path string
+---@param notify? boolean
+function rvim.open_media(path, notify)
+  local file_extension = path:match('^.+%.(.+)$')
+  local ext = { 'mp3', 'm4a', 'mp4', 'mkv' }
+  if vim.list_contains(ext, file_extension) then
+    vim.system({ 'mpv', path }, { detach = true })
+    return
+  end
+
+  rvim.open(path, notify)
 end
 
 --- open file in window picker

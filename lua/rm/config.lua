@@ -9,7 +9,7 @@ local namespace = {
   autosave = { enable = true },
   -- stylua: ignore
   media_files = {
-    'jpg', 'png', 'jpeg', 'ico', 'gif', 'mp3', 'mp4', 'm4a', 'pdf',
+    'jpg', 'png', 'jpeg', 'ico', 'gif', 'pdf', 'mp3', 'm4a', 'mp4', 'mkv',
   },
   lsp = {
     enable = env.RVIM_LSP_ENABLED == '1' and env.RVIM_PLUGINS_MINIMAL == '0',
@@ -30,7 +30,7 @@ local namespace = {
   none = env.RVIM_NONE == '1',
   plugin = {
     env = { enable = true },
-    interceptor = { enable = false },
+    interceptor = { enable = true },
     large_file = { enable = true },
     notepad = { enable = false },
     smart_splits = { enable = true },

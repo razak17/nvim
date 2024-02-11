@@ -136,14 +136,11 @@ return {
             ['oi'] = function(state)
               vim.api.nvim_input(': ' .. state.tree:get_node().path .. '<Home>')
             end,
-            ['oM'] = function(state)
+            ['<C-o>'] = function(state)
               local node = state.tree:get_node()
-              -- stylua: ignore
-              local media_files = {
-                'jpg', 'png', 'jpeg', 'ico', 'gif', 'mp3', 'mp4', 'm4a', 'pdf',
-              }
+              local media_files = rvim.media_files
               if vim.list_contains(media_files, node.ext) then
-                rvim.open(node.path)
+                rvim.open_media(node.path)
               else
                 vim.notify('Not a media file')
               end
