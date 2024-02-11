@@ -59,6 +59,7 @@ return {
       n = { name = 'Notify' },
       o = { name = 'UI select' },
       p = { name = 'Debugprint' },
+      r = { name = 'Run' },
       s = { name = 'Splits' },
       t = { name = 'Testing' },
       u = { name = 'URL' },
@@ -108,7 +109,6 @@ return {
       h = { name = 'Gitsigns' },
       n = { name = 'Nag' },
       q = { name = 'NeoComposer' },
-      r = { name = 'Run' },
       S = { name = 'Slime' },
     }, { mode = 'x', prefix = '<localleader>' })
 
