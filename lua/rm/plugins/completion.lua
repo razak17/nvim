@@ -1,4 +1,4 @@
-local api, fmt, k = vim.api, string.format, vim.keycode
+local api, fn, fmt, k = vim.api, vim.fn, string.format, vim.keycode
 local ui = rvim.ui
 local border, lsp_hls, ellipsis =
   ui.current.border, ui.lsp.highlights, ui.icons.misc.ellipsis
@@ -340,10 +340,10 @@ return {
       { 'hrsh7th/cmp-nvim-lsp-document-symbol', cond = rvim.lsp.enable },
       {
         'uga-rosa/cmp-dictionary',
-        cond = not rvim.plugins.minimal,
+        cond = not rvim.plugins.minimal and rvim.plugins.overrides.dict.enable,
         config = function()
           local en_dict =
-            join_paths(vim.fn.stdpath('data'), 'site', 'spell', 'en.dict')
+            join_paths(fn.stdpath('data'), 'site', 'spell', 'en.dict')
           require('cmp_dictionary').setup({ paths = { en_dict } })
         end,
       },

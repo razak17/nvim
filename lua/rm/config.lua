@@ -46,6 +46,7 @@ local namespace = {
     minimal = env.RVIM_PLUGINS_MINIMAL == '1',
     niceties = env.RVIM_NICETIES_ENABLED == '1',
     overrides = {
+      dict = { enable = env.RVIM_DICT_ENABLED == '1' },
       ghost_text = { enable = env.RVIM_GHOST_ENABLED == '1' },
       copilot_cmp = { enable = false },
       codeium = { enable = false },
