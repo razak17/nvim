@@ -214,6 +214,18 @@ local function multi_selection_open(prompt_bufnr)
   multiopen(prompt_bufnr, 'edit')
 end
 
+local function open_media_files(prompt_bufnr)
+  local action_state = require('telescope.actions.state')
+  local file_path = action_state.get_selected_entry(prompt_bufnr).path
+  local media_files = rvim.media_files
+  local file_extension = file_path:match('^.+%.(.+)$')
+  if vim.list_contains(media_files, file_extension) then
+    rvim.open_media(file_path)
+  else
+    vim.notify('Not a media file')
+  end
+end
+
 rvim.telescope = {
   cursor = cursor,
   dropdown = dropdown,
@@ -377,6 +389,7 @@ return {
               ['<c-r>'] = actions.to_fuzzy_refine,
               ['<Tab>'] = actions.toggle_selection,
               ['<CR>'] = stopinsert(actions.select_default),
+              ['<C-o>'] = open_media_files,
             },
             n = {
               ['<C-j>'] = actions.move_selection_next,
@@ -389,6 +402,7 @@ return {
               ['<c-r>'] = actions.to_fuzzy_refine,
               ['<Tab>'] = actions.toggle_selection,
               ['<CR>'] = actions.select_default,
+              ['<C-o>'] = open_media_files,
             },
           },
         },
