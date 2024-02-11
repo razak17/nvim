@@ -76,7 +76,7 @@ return {
       })
     end,
   },
-      {
+  {
     'stevearc/stickybuf.nvim',
     cmd = { 'PinBuffer', 'PinBuftype', 'PinFiletype', 'Unpin' },
     opts = {},
@@ -95,7 +95,7 @@ return {
         end,
       })
     end,
-      },
+  },
   {
     'razak17/buffer_manager.nvim',
     cond = false,
