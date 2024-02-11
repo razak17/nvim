@@ -7,6 +7,10 @@ local namespace = {
   ai = { enable = env.RVIM_AI_ENABLED == '1' },
   debug = { enable = false },
   autosave = { enable = true },
+  -- stylua: ignore
+  media_files = {
+    'jpg', 'png', 'jpeg', 'ico', 'gif', 'mp3', 'mp4', 'm4a', 'pdf',
+  },
   lsp = {
     enable = env.RVIM_LSP_ENABLED == '1' and env.RVIM_PLUGINS_MINIMAL == '0',
     override = {},

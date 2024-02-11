@@ -219,7 +219,8 @@ local function plugin(name, opts)
     opts = add_theme_overrides(opts.theme)
     if not next(opts) then return end
   end
-  vim.schedule(function() all(opts) end)
+  all(opts)
+  -- vim.schedule(function() all(opts) end)
   augroup(fmt('%sHighlightOverrides', name:gsub('^%l', string.upper)), {
     event = { 'ColorScheme' },
     command = function()
