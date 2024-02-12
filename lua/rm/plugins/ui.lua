@@ -224,6 +224,7 @@ return {
         'mason',
         'neo-tree',
         'packer',
+        'DiffviewFileHistory'
       },
       highlight = {
         bg = rvim.highlight.get('Normal', 'bg'),
