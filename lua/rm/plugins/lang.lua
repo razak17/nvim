@@ -315,10 +315,7 @@ return {
   },
   {
     'HakonHarnes/img-clip.nvim',
-    -- stylua: ignore
-    keys = {
-      { '<localleader>p', '<Cmd>PasteImage<cr>', desc = 'Paste clipboard image' },
-    },
+    cmd = { 'PasteImage' },
     opts = {},
   },
 

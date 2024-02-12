@@ -15,9 +15,16 @@ if not rvim.plugins.enable or rvim.plugins.minimal then return end
 
 map(
   'n',
-  '<localleader>P',
+  '<localleader>Pm',
   '<Cmd>Glow<CR>',
   { desc = 'markdown preview', buffer = 0 }
+)
+
+map(
+  'n',
+  '<localleader>Pi',
+  '<Cmd>PasteImage<CR>',
+  { desc = 'paste clipboard image', buffer = 0 }
 )
 
 rvim.ftplugin_conf({
