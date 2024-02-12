@@ -86,6 +86,9 @@ return {
       { '<leader>rrl', '<Plug>RestNvimLast', desc = 'rest: run last', buffer = 0, },
     },
     opts = { skip_ssl_verification = true },
+    config = function(_, opts)
+      require('rest-nvim').setup(opts)
+    end
   },
   -- Tailwind
   --------------------------------------------------------------------------------
