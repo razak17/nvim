@@ -13,15 +13,13 @@ return {
   --------------------------------------------------------------------------------
   {
     'razak17/package-info.nvim',
-    init = function()
-      require('which-key').register({
-        ['<localleader>'] = { p = { name = 'Package Info' } },
-      })
-    end,
     cond = not rvim.plugins.minimal,
     event = 'BufRead package.json',
-    dependencies = { 'MunifTanjim/nui.nvim' },
     config = function()
+      require('which-key').register({
+        ['<localleader>'] = { p = 'Package Info' },
+      })
+
       highlight.plugin('package-info', {
         theme = {
           -- stylua: ignore
@@ -36,6 +34,7 @@ return {
         hide_up_to_date = true,
       })
     end,
+    dependencies = { 'MunifTanjim/nui.nvim' },
   },
   {
     'bennypowers/template-literal-comments.nvim',
