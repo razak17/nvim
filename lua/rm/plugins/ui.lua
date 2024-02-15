@@ -228,6 +228,7 @@ return {
         'packer',
         'DiffviewFileHistory',
         'NeogitPopup',
+        'NeogitConsole',
         'noice'
       },
       highlight = {
