@@ -147,11 +147,13 @@ return {
         'quickfix',
       },
       deep_nesting = {
+        highlight_group = 'Strict',
         depth_limit = 4,
         ignored_trailing_characters = ',',
         ignored_leading_characters = '.',
       },
       overlong_lines = {
+        highlight_group = 'Strict',
         length_limit = 100,
         split_on_save = false,
       },
@@ -225,7 +227,8 @@ return {
         'neo-tree',
         'packer',
         'DiffviewFileHistory',
-        'NeogitPopup'
+        'NeogitPopup',
+        'noice'
       },
       highlight = {
         bg = rvim.highlight.get('Normal', 'bg'),

@@ -10,6 +10,7 @@ local function general_overrides()
     { ErrorMsg = { bg = 'NONE' } },
     { Cursor = { fg = 'NONE' } },
     { UnderlinedTitle = { bold = true, underline = true } },
+    { Strict = { link = 'DiffDelete' } },
     ----------------------------------------------------------------------------
     -- colorscheme overrides
     ----------------------------------------------------------------------------
@@ -133,6 +134,7 @@ local function colorscheme_overrides()
       { NeorgContext = { inherit = 'Normal' } },
       -- { ['@variable'] = { fg = { from = '@none' } } },
       { dmapWin = { inherit = 'Normal' } },
+      { Strict = { link = 'DiffDeleteAlt' } },
     },
   }
   local hls = overrides[vim.g.colors_name]
