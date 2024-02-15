@@ -509,14 +509,18 @@ local function get_signs(kind)
   }
 end
 
-rvim.diagnostic_config = {
-  signs = rvim.lsp.signs.enable and {
+function rvim.get_lsp_signs()
+  return {
     text = get_signs(),
     texthl = get_signs(''),
     numhl = get_signs('Nr'),
     culhl = get_signs('CursorNr'),
     linehl = get_signs('Line'),
-  } or false,
+  }
+end
+
+diagnostic.config({
+  signs = rvim.lsp.signs.enable and rvim.get_lsp_signs() or false,
   underline = true,
   update_in_insert = false,
   severity_sort = true,
@@ -539,9 +543,7 @@ rvim.diagnostic_config = {
       return prefix, 'Diagnostic' .. level:gsub('^%l', string.upper)
     end,
   },
-}
-
-diagnostic.config(rvim.diagnostic_config)
+})
 --------------------------------------------------------------------------------
 -- LSP Progress
 --------------------------------------------------------------------------------
