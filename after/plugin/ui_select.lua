@@ -191,7 +191,7 @@ if rvim.is_available('ChatGPT.nvim') then
     ['Keywords'] = 'ChatGPTRun keywords',
     ['Docstring'] = 'ChatGPTRun docstring',
     ['Add Tests'] = 'ChatGPTRun add_tests',
-    ['Optmize Code'] = 'ChatGPTRun optmimize_code',
+    ['Optmize Code'] = 'ChatGPTRun optimize_code',
     ['Summarize'] = 'ChatGPTRun summarize',
     ['Fix Bugs'] = 'ChatGPTRun fix_bugs',
     ['Explain Code'] = 'ChatGPTRun explain_code',
