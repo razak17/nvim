@@ -220,7 +220,7 @@ return {
   },
   {
     'doums/dmap.nvim',
-    cond = rvim.lsp.enable and rvim.plugins.niceties,
+    cond = rvim.lsp.enable and rvim.plugins.niceties and false,
     event = 'LspAttach',
     opts = { win_h_offset = 5 },
   },
