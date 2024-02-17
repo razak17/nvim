@@ -205,6 +205,20 @@ return {
     },
   },
   {
+    'RaafatTurki/corn.nvim',
+    cond = rvim.lsp.enable and rvim.plugins.niceties and false,
+    event = 'LspAttach',
+    cmd = { 'Corn' },
+    opts = {
+      icons = {
+        error = lsp_icons.error,
+        warn = lsp_icons.warn,
+        hint = lsp_icons.hint,
+        info = lsp_icons.info,
+      },
+    },
+  },
+  {
     'doums/dmap.nvim',
     cond = rvim.lsp.enable and rvim.plugins.niceties,
     event = 'LspAttach',
