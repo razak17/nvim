@@ -226,7 +226,7 @@ return {
   },
   {
     'ivanjermakov/troublesum.nvim',
-    cond = rvim.lsp.enable and rvim.plugins.niceties,
+    cond = rvim.lsp.enable and rvim.plugins.niceties and false,
     event = 'LspAttach',
     opts = {
       severity_format = {
