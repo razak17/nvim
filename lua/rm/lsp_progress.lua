@@ -98,4 +98,3 @@ rvim.augroup('CustomLspProgress', {
     end
   end,
 })
--- if rvim.lsp.progress.enable then require('rm.lsp_progress') end

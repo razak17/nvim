@@ -200,7 +200,7 @@ return {
         end
         return diagnostic.message
       end,
-      padding_top = 1,
+      padding_top = 0,
       toggle_event = { 'InsertEnter' },
     },
   },
