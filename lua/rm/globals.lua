@@ -82,10 +82,11 @@ end
 ---@param minheight number
 ---@param maxheight number
 function rvim.adjust_split_height(minheight, maxheight)
-  api.nvim_win_set_height(
-    0,
-    math.max(math.min(fn.line('$'), maxheight), minheight)
-  )
+  local line = fn.line('$') -- Assuming fn.line('$') returns an integer or nil
+
+  if not line then line = 0 end
+
+  api.nvim_win_set_height(0, math.max(math.min(line, maxheight), minheight))
 end
 
 --- Call the given function and use `vim.notify` to notify of any errors
@@ -323,7 +324,7 @@ function rvim.filetype_settings(map)
             return apply_ft_mappings(value, args.buf)
           end
           if key == 'plugins' then return rvim.ftplugin_conf(value) end
-          if type(key) == 'function' then return rvim.pcall(key, args) end
+          if type(key) == 'function' then rvim.pcall(key, args) end
           vim
             .iter(value)
             :each(function(option, setting) vim[key][option] = setting end)
