@@ -64,13 +64,9 @@ return {
     },
   },
   {
-    'razak17/readup.nvim',
+    'neuromaancer/readup.nvim',
     cmd = { 'Readup', 'ReadupBrowser' },
-    config = function()
-      require('readup').setup({
-        plugins_path = vim.fn.stdpath('data') .. '/lazy',
-      })
-    end,
+    opts = { float = true },
   },
   -- }}}
   ------------------------------------------------------------------------------
