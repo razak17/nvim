@@ -244,6 +244,10 @@ augroup('Utilities', {
   pattern = { '*' },
   nested = true,
   command = function()
+    if rvim.large_file_opened then return end
+
+    print('autocommands.lua:247: rvim.large_file_opened=' .. vim.inspect(rvim.large_file_opened))
+
     if falsy(vim.bo.filetype) or fn.exists('b:ftdetect') == 1 then
       vim.cmd([[
         unlet! b:ftdetect

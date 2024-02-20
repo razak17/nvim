@@ -2,13 +2,11 @@ local enabled = rvim.plugin.large_file.enable
 
 if not rvim or rvim.none or not enabled then return end
 
-local largefile_opened = false
-
 rvim.augroup('LargeFileAutocmds', {
   event = { 'BufReadPre' },
   command = function()
     if vim.fn.getfsize(vim.fn.expand('%')) > 100 * 1024 then -- 100 KB
-      largefile_opened = true
+      rvim.large_file_opened = true
 
       vim.wo.wrap = false
       -- vim.o.eventignore = 'FileType'
@@ -22,13 +20,14 @@ rvim.augroup('LargeFileAutocmds', {
       vim.bo.buftype = ''
       vim.bo.undolevels = 1000
       vim.cmd.filetype('on')
+      rvim.large_file_opened = false
     end
   end,
 }, {
   event = { 'BufWinEnter' },
   command = function()
-    if largefile_opened then
-      largefile_opened = false
+    if rvim.large_file_opened then
+      -- rvim.large_file_opened = false
       vim.o.eventignore = nil
     end
   end,
