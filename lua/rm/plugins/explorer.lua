@@ -287,9 +287,23 @@ return {
     version = '2.*',
     keys = {
       {
-        '<C-w>p',
-        function() rvim.open_with_window_picker() end,
-        desc = 'open with window picker',
+        "<leader>wp",
+        function()
+          local picked_window_id = require("window-picker").pick_window({ include_current_win = true })
+            or vim.api.nvim_get_current_win()
+          vim.api.nvim_set_current_win(picked_window_id)
+        end,
+        desc = "pick window",
+      },
+      {
+        "<leader>ws",
+        function()
+          local window = require("window-picker").pick_window({ include_current_win = false })
+          local target_buffer = vim.fn.winbufnr(window)
+          vim.api.nvim_win_set_buf(window, 0)
+          vim.api.nvim_win_set_buf(0, target_buffer)
+        end,
+        desc = "swap window",
       },
     },
     opts = {
