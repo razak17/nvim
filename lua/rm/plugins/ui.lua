@@ -229,7 +229,7 @@ return {
         'DiffviewFileHistory',
         'NeogitPopup',
         'NeogitConsole',
-        'noice'
+        'noice',
       },
       highlight = {
         bg = rvim.highlight.get('Normal', 'bg'),

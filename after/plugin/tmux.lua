@@ -1,8 +1,6 @@
 local enabled = rvim.plugin.tmux.enable
 
-if not rvim or rvim.none or not enabled or vim.env.TMUX == nil then
-  return
-end
+if not rvim or rvim.none or not enabled or vim.env.TMUX == nil then return end
 
 local fn, fmt = vim.fn, string.format
 

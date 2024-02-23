@@ -27,7 +27,7 @@ local function move_or_create_win(key)
     'NeogitCommitMessage',
     'DiffviewFileHistory',
     'qf',
-    'Trouble'
+    'Trouble',
   }
   if rvim.find_string(exclusions, vim.bo.ft) then
     vim.cmd('wincmd ' .. key)

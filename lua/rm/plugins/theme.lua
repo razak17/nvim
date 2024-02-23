@@ -23,14 +23,12 @@ return {
     end,
   },
   {
-    "sontungexpt/witch",
+    'sontungexpt/witch',
     cond = false,
     priority = 1000,
     lazy = false,
-    opts = { style = "dark" },
-    config = function(_, opts)
-      require("witch").setup(opts)
-    end,
+    opts = { style = 'dark' },
+    config = function(_, opts) require('witch').setup(opts) end,
   },
   -- }}}
 }

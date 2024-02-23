@@ -100,7 +100,6 @@ local function show_related_locations(diag)
 end
 
 local publish_handler = lsp.handlers['textDocument/publishDiagnostics']
----@diagnostic disable-next-line: duplicate-set-field
 lsp.handlers['textDocument/publishDiagnostics'] = function(
   err,
   result,

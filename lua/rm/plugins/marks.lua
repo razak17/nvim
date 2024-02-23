@@ -25,7 +25,7 @@ local function add_trail_mark_stack()
         'warn',
         { title = 'TrailBlazer' }
       )
-     return
+      return
     end
     local tb = require('trailblazer')
     tb.add_trail_mark_stack(name)
@@ -125,7 +125,7 @@ return {
     opts = { show_icons = true, leader_key = '\\' },
     config = function(_, opts)
       require('arrow').setup(opts)
-      require("arrow.persist").toggle()
-    end
+      require('arrow.persist').toggle()
+    end,
   },
 }

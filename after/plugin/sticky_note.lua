@@ -94,7 +94,6 @@ local function create_float(config)
   change_win_hl(win, config.highlight)
 
   -- set the title and id so it easier to go to
-  ---@diagnostic disable-next-line: need-check-nil
   config.ogTitle = config.title
   config.title = config.titleFunc == nil
       and api.nvim_win_get_number(win) .. ': ' .. config.ogTitle
