@@ -1,4 +1,5 @@
-local cwd = vim.fn.getcwd()
+local fmt = string.format
+local cwd = fmt('%s', vim.fn.getcwd())
 local icons = rvim.ui.icons
 local border = rvim.ui.current.border
 local left_block = icons.separators.left_block
@@ -123,7 +124,6 @@ return {
       _signs_staged_enable = true,
       word_diff = false,
       numhl = false,
-      ---@diagnostic disable-next-line: need-check-nil
       current_line_blame = not cwd:match('personal') and not cwd:match('dots'),
       current_line_blame_formatter = ' <author>, <author_time> · <summary>',
       preview_config = { border = border },
