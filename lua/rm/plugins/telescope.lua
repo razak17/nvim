@@ -498,6 +498,18 @@ return {
               open_lazy_root_live_grep = '<C-r>g',
             },
           },
+          smart_open = {
+            show_scores = false,
+            ignore_patterns = {
+              '*.git/*',
+              '*/tmp/*',
+              '*vendor/*',
+              '*node_modules/*',
+            },
+            match_algorithm = 'fzy',
+            disable_devicons = false,
+            open_buffer_indicators = { previous = '👀', others = '🙈' },
+          },
         },
       })
 
