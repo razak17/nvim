@@ -37,8 +37,7 @@ return {
               if not find_string(rvim.lsp.override, name) then return end
             else
               local directory_disabled =
-                ---@diagnostic disable-next-line: param-type-mismatch
-                rvim.dirs_match(rvim.lsp.disabled.directories, cwd)
+                rvim.dirs_match(rvim.lsp.disabled.directories, fmt('%s', cwd))
               local server_disabled =
                 find_string(rvim.lsp.disabled.servers, name)
               if directory_disabled or server_disabled then return end

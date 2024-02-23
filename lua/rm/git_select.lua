@@ -28,7 +28,6 @@ local function cur_file_project_root()
 
   for _, project in pairs(projects) do
     if
-      ---@diagnostic disable-next-line: param-type-mismatch
       full_path:match('^' .. rvim.escape_pattern(project) .. '/')
       and fn.isdirectory(project .. '/.git') ~= 0
     then
@@ -445,8 +444,7 @@ local function git_branches_with_base(base, opts)
     return string.gsub(v, "\\([\\'])", '%1')
   end
   local parse_line = function(line)
-    ---@diagnostic disable-next-line: param-type-mismatch
-    local fields = vim.split(string.sub(line, 2, -2), "''", true)
+    local fields = vim.split(string.sub(line, 2, -2), "''", {})
     local entry = {
       head = fields[1],
       refname = unescape_single_quote(fields[2]),

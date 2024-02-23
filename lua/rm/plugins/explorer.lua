@@ -7,7 +7,6 @@ local lspkind = require('lspkind')
 local function on_rename(from, to)
   local clients = vim.lsp.get_clients()
   for _, client in ipairs(clients) do
-    ---@diagnostic disable-next-line: param-type-mismatch
     if client.supports_method('workspace/willRenameFiles') then
       ---@diagnostic disable-next-line: missing-parameter, invisible
       local resp = client.request_sync('workspace/willRenameFiles', {
@@ -287,23 +286,28 @@ return {
     version = '2.*',
     keys = {
       {
-        "<leader>wp",
+        '<leader>wp',
         function()
-          local picked_window_id = require("window-picker").pick_window({ include_current_win = true })
-            or vim.api.nvim_get_current_win()
+          local picked_window_id = require('window-picker').pick_window({
+            include_current_win = true,
+          }) or vim.api.nvim_get_current_win()
           vim.api.nvim_set_current_win(picked_window_id)
         end,
-        desc = "pick window",
+        desc = 'pick window',
       },
       {
-        "<leader>ws",
+        '<leader>ws',
         function()
-          local window = require("window-picker").pick_window({ include_current_win = false })
+          local window = require('window-picker').pick_window({
+            include_current_win = false,
+          })
           local target_buffer = vim.fn.winbufnr(window)
           vim.api.nvim_win_set_buf(window, 0)
-          vim.api.nvim_win_set_buf(0, target_buffer)
+          if target_buffer ~= 0 then
+            vim.api.nvim_win_set_buf(0, target_buffer)
+          end
         end,
-        desc = "swap window",
+        desc = 'swap window',
       },
     },
     opts = {

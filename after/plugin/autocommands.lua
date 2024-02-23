@@ -4,6 +4,7 @@ local augroup, is_available = rvim.augroup, rvim.is_available
 
 local fn, api, env, v, cmd, opt =
   vim.fn, vim.api, vim.env, vim.v, vim.cmd, vim.opt
+local fmt = string.format
 local falsy = rvim.falsy
 local decorations = rvim.ui.decorations
 
@@ -233,7 +234,8 @@ augroup('Utilities', {
     local match = vim.iter(paths):find(function(dir)
       local path = api.nvim_buf_get_name(args.buf)
       -- HACK: Disable for my config dir manually
-      if vim.startswith(path, fn.stdpath('config')) then return false end
+      local config_path = fmt('%s', fn.stdpath('config'))
+      if vim.startswith(path, config_path) then return false end
       if vim.startswith(path, env.VIMRUNTIME) then return true end
       return vim.startswith(path, dir)
     end)
@@ -246,7 +248,10 @@ augroup('Utilities', {
   command = function()
     if rvim.large_file_opened then return end
 
-    print('autocommands.lua:247: rvim.large_file_opened=' .. vim.inspect(rvim.large_file_opened))
+    print(
+      'autocommands.lua:247: rvim.large_file_opened='
+        .. vim.inspect(rvim.large_file_opened)
+    )
 
     if falsy(vim.bo.filetype) or fn.exists('b:ftdetect') == 1 then
       vim.cmd([[
