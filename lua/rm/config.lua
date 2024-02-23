@@ -5,8 +5,9 @@ local env = vim.env
 
 local namespace = {
   ai = { enable = env.RVIM_AI_ENABLED == '1' },
-  debug = { enable = false },
   autosave = { enable = true },
+  debug = { enable = false },
+  large_file_opened = false,
   -- stylua: ignore
   media_files = {
     'jpg', 'png', 'jpeg', 'ico', 'gif', 'pdf', 'mp3', 'm4a', 'mp4', 'mkv',
