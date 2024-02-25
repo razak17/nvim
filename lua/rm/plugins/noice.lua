@@ -48,7 +48,7 @@ return {
         silent = true,
       },
       progress = {
-        enabled = true,
+        enabled = false,
         throttle = 1000 / 800,
       },
       override = {
