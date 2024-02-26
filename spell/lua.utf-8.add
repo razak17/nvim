@@ -14,3 +14,4 @@ nvim
 filetype
 statuscolumn
 ftplugin
+pcall
