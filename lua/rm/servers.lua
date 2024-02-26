@@ -5,7 +5,14 @@
 ---@type lspconfig.options
 local servers = {
   astro = {},
-  bashls = {},
+  bashls = {
+    settings = {
+        bashIde = {
+          -- Disable shellcheck in bash-language-server. It conflicts with linter settings.
+          shellcheckPath = "",
+        },
+      },
+  },
   clangd = {},
   cmake = {},
   cssls = {},
