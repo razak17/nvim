@@ -247,9 +247,7 @@ return {
             .. " --color=always --smart-case -g '!.git' -e",
           fzf_opts = {
             ['--no-separator'] = false,
-            ['--history'] = vim.fn.shellescape(
-              vim.fn.stdpath('data') .. '/fzf_search_hist'
-            ),
+            ['--history'] = vim.fn.stdpath('data') .. '/fzf_search_hist',
           },
         },
         lsp = {
