@@ -61,6 +61,45 @@ return {
     end,
   },
   {
+    'Pheon-Dev/buffalo-nvim',
+    -- stylua: ignore
+    keys = {
+      { '<M-y>', '<Cmd>lua require("buffalo.ui").toggle_buf_menu()<CR>', desc = 'buffalo: toggle' },
+    },
+    opts = {
+      borderchars = ui.border.common,
+      buffer_commands = {
+        edit = { key = '<CR>', command = 'edit' },
+        pick = {
+          key = 'w',
+          command = function()
+            local idx = vim.fn.line('.')
+            rvim.open_with_window_picker(idx + 1)
+          end,
+        },
+        split = { key = 's', command = 'split' },
+        vsplit = { key = 'v', command = 'vsplit' },
+      },
+      go_to = { enabled = false },
+      filter = {
+        enabled = true,
+        filter_tabs = '<M-t>',
+        filter_buffers = '<M-z>',
+      },
+      ui = {
+        width = 100,
+      },
+    },
+    config = function(_, _opts)
+      require('buffalo').setup(_opts)
+      local opts = { noremap = true }
+      local bui = require('buffalo.ui')
+      map('n', '<s-l>', bui.nav_buf_next, opts)
+      map('n', '<s-h>', bui.nav_buf_prev, opts)
+      map({ 't', 'n' }, '<M-\\>', bui.toggle_tab_menu, opts)
+    end,
+  },
+  {
     'razak17/antelope',
     keys = {
       { '<M-o>', ':Antelope buffers<CR>', 'antelope: buffers' },
@@ -123,46 +162,6 @@ return {
           { noremap = true, desc = 'buffer ' .. key }
         )
       end
-    end,
-  },
-  {
-    'Pheon-Dev/buffalo-nvim',
-    cond = false,
-    -- stylua: ignore
-    keys = {
-      { '<M-Space>', '<Cmd>lua require("buffalo.ui").toggle_buf_menu()<CR>', desc = 'buffalo: toggle' },
-    },
-    opts = {
-      borderchars = ui.border.common,
-      buffer_commands = {
-        edit = { key = '<CR>', command = 'edit' },
-        pick = {
-          key = 'w',
-          command = function()
-            local idx = vim.fn.line('.')
-            rvim.open_with_window_picker(idx + 1)
-          end,
-        },
-        split = { key = 's', command = 'split' },
-        vsplit = { key = 'v', command = 'vsplit' },
-      },
-      go_to = { enabled = false },
-      filter = {
-        enabled = true,
-        filter_tabs = '<M-t>',
-        filter_buffers = '<M-z>',
-      },
-      ui = {
-        width = 100,
-      },
-    },
-    config = function(_, _opts)
-      require('buffalo').setup(_opts)
-      local opts = { noremap = true }
-      local bui = require('buffalo.ui')
-      map('n', '<s-l>', bui.nav_buf_next, opts)
-      map('n', '<s-h>', bui.nav_buf_prev, opts)
-      map({ 't', 'n' }, '<M-\\>', bui.toggle_tab_menu, opts)
     end,
   },
 }
