@@ -64,6 +64,8 @@ return {
         },
         { 'p', '<Plug>(CybuPrev)', { desc = 'prev buffer' } },
         { 'n', '<Plug>(CybuNext)', { desc = 'next buffer' } },
+        { 'P', '<Cmd>BufSurfBack<CR>', { desc = 'prev buffer (in history)' } },
+        { 'N', '<Cmd>BufSurfForward<CR>', { desc = 'next buffer (in history)' } },
         { '<Esc>', nil, { exit = true, desc = 'Quit' } },
       },
     })
