@@ -24,7 +24,7 @@ local namespace = {
     null_ls = { enable = false },
     omnifunc = { enable = true },
     override = {},
-    progress = { enable = true },
+    progress = { enable = false },
     signs = { enable = false },
   },
   mappings = {},
