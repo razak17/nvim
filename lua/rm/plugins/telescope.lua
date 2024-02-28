@@ -293,7 +293,7 @@ return {
       { '<leader>fu', undo, desc = 'undo' },
       { '<leader>fm', harpoon, desc = 'harpoon' },
       { '<leader>ft', textcase, desc = 'textcase', mode = { 'n', 'v' } },
-      { '<leader>fw', b('grep_string'), desc = 'find word' },
+      -- { '<leader>fw', b('grep_string'), desc = 'find word' },
       { '<leader>fw', visual_grep_string, desc = 'find word', mode = 'x' },
       { '<leader>fvc', b('commands'), desc = 'commands' },
       { '<leader>fvh', b('highlights'), desc = 'highlights' },
