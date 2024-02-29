@@ -121,7 +121,7 @@ return {
       -- { '<leader>fo', fzf_lua.buffers, desc = 'buffers' },
       -- { '<leader>fr', fzf_lua.resume, desc = 'resume picker' },
       { '<leader>fs', fzf_lua.live_grep, desc = 'live grep' },
-      { '<leader>fw', fzf_lua.grep_cword, desc = 'grep cword' },
+      -- { '<leader>fw', fzf_lua.grep_cword, desc = 'grep cword' },
       -- { '<leader>fva', fzf_lua.autocmds, desc = 'autocommands' },
       -- { '<leader>fvh', fzf_lua.highlights, desc = 'highlights' },
       -- { '<leader>fvk', fzf_lua.keymaps, desc = 'keymaps' },

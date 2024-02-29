@@ -293,7 +293,7 @@ return {
       { '<leader>fu', undo, desc = 'undo' },
       { '<leader>fm', harpoon, desc = 'harpoon' },
       { '<leader>ft', textcase, desc = 'textcase', mode = { 'n', 'v' } },
-      -- { '<leader>fw', b('grep_string'), desc = 'find word' },
+      { '<leader>fw', b('grep_string'), desc = 'find word' },
       { '<leader>fw', visual_grep_string, desc = 'find word', mode = 'x' },
       { '<leader>fvc', b('commands'), desc = 'commands' },
       { '<leader>fvh', b('highlights'), desc = 'highlights' },
@@ -599,5 +599,32 @@ return {
     cmd = 'Telescope',
     config = function() require('telescope').load_extension('directory') end,
     opts = {},
+  },
+  {
+    'catgoose/do-the-needful',
+    cmd = 'Telescope',
+    opts = {
+      tasks = {
+        {
+          name = 'exa', -- name of task
+          cmd = 'exa', -- command to run
+          cwd = '~', -- working directory
+          tags = { 'exa', 'home', 'files' }, -- task metadata used for searching
+          window = { -- all window options are optional
+            name = 'Exa ~', -- name of tmux window
+            close = false, -- close window after execution
+            keep_current = false, -- switch to window when running task
+            open_relative = true, -- open window after/before current window
+            relative = 'after', -- relative direction
+          },
+        },
+      },
+      config = '.tasks.json', -- name of config file for project/global config
+    },
+    config = function(_, opts)
+      require('do-the-needful').setup(opts)
+      require('telescope').load_extension('do-the-needful')
+    end,
+    dependencies = 'nvim-lua/plenary.nvim',
   },
 }
