@@ -230,6 +230,7 @@ return {
         'NeogitPopup',
         'NeogitConsole',
         'noice',
+        'qf',
       },
       highlight = {
         bg = rvim.highlight.get('Normal', 'bg'),
