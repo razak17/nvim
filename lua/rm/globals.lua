@@ -228,6 +228,9 @@ end
 --                    The number is used for the sorting purpose and will be replaced by vim.ui.select() numbering
 --]]
 -- Ref: https://github.com/theopn/theovim/blob/main/lua/util.lua#L12
+---@param prompt string
+---@param options_table table
+---@return function
 function rvim.create_select_menu(prompt, options_table)
   -- Given the table of options, populate an array with option display names
   local option_names = {}

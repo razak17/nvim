@@ -187,18 +187,18 @@ end
 --------------------------------------------------------------------------------
 if rvim.is_available('ChatGPT.nvim') then
   local gpt_options = {
-    ['Grammar Correct'] = 'chatGPTRun grammar_correction',
-    ['Translate'] = 'ChatGPTRun translate',
-    ['Keywords'] = 'ChatGPTRun keywords',
-    ['Docstring'] = 'ChatGPTRun docstring',
     ['Add Tests'] = 'ChatGPTRun add_tests',
-    ['Optmize Code'] = 'ChatGPTRun optimize_code',
-    ['Summarize'] = 'ChatGPTRun summarize',
-    ['Fix Bugs'] = 'ChatGPTRun fix_bugs',
-    ['Explain Code'] = 'ChatGPTRun explain_code',
-    ['Roxygen Edit'] = 'ChatGPTRun roxygen_edit',
-    ['Readability Analysis'] = 'ChatGPTRun code_readability_analysis',
     ['Complete Code'] = 'ChatGPTRun complete_code',
+    ['Docstring'] = 'ChatGPTRun docstring',
+    ['Explain Code'] = 'ChatGPTRun explain_code',
+    ['Fix Bugs'] = 'ChatGPTRun fix_bugs',
+    ['Grammar Correct'] = 'chatGPTRun grammar_correction',
+    ['Keywords'] = 'ChatGPTRun keywords',
+    ['Optmize Code'] = 'ChatGPTRun optimize_code',
+    ['Readability Analysis'] = 'ChatGPTRun code_readability_analysis',
+    ['Roxygen Edit'] = 'ChatGPTRun roxygen_edit',
+    ['Summarize'] = 'ChatGPTRun summarize',
+    ['Translate'] = 'ChatGPTRun translate',
   }
 
   local gpt_menu = function()
