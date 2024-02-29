@@ -5,6 +5,8 @@ local icons, codicons = rvim.ui.icons, rvim.ui.codicons
 local falsy, find_string = rvim.falsy, rvim.find_string
 local border = ui.current.border
 local lsp_icons = codicons.lsp
+local detour = rvim.reqidx('detour')
+local features = rvim.reqidx('detour.features')
 
 return {
   ------------------------------------------------------------------------------
@@ -92,7 +94,7 @@ return {
   },
   {
     'glepnir/lspsaga.nvim',
-    cond = rvim.lsp.enable and false,
+    cond = rvim.lsp.enable,
     event = 'LspAttach',
     opts = {
       ui = { border = border },
@@ -100,14 +102,86 @@ return {
       lightbulb = { enable = false },
       symbol_in_winbar = { enable = false },
     },
-    -- stylua: ignore
     keys = {
       { '<leader>lo', '<cmd>Lspsaga outline<CR>', 'lspsaga: outline' },
-      { '<localleader>lf', '<cmd>Lspsaga lsp_finder<cr>', desc = 'lspsaga: finder', },
-      { '<localleader>la', '<cmd>Lspsaga code_action<cr>', desc = 'lspsaga: code action', },
-      { '<M-p>', '<cmd>Lspsaga peek_type_definition<cr>', desc = 'lspsaga: type definition', },
-      { '<M-i>', '<cmd>Lspsaga incoming_calls<cr>', desc = 'lspsaga: incoming calls', },
-      { '<M-o>', '<cmd>Lspsaga outgoing_calls<cr>', desc = 'lspsaga: outgoing calls', },
+      {
+        '<localleader>lf',
+        '<cmd>Lspsaga finder<cr>',
+        desc = 'lspsaga: finder',
+      },
+      {
+        'gD',
+        function()
+          local popup_id = detour.Detour()
+          if popup_id then
+            require('lspsaga.definition'):init(1, 2, {})
+            features.ShowPathInTitle(popup_id)
+          end
+        end,
+        desc = 'Goto Definition <gd>',
+      },
+      {
+        'gR',
+        function()
+          local popup_id = detour.Detour()
+          if popup_id then
+            require('lspsaga.finder'):new({ 'ref', '++float' })
+            features.ShowPathInTitle(popup_id)
+          end
+        end,
+        desc = 'Goto References <gr>',
+      },
+      {
+        'gI',
+        function()
+          local popup_id = detour.Detour()
+          if popup_id then
+            require('lspsaga.finder'):new({ 'imp', '++float' })
+            features.ShowPathInTitle(popup_id)
+          end
+        end,
+        desc = 'Goto Implementation <gI>',
+      },
+      {
+        'gY',
+        function()
+          local popup_id = detour.Detour()
+          if popup_id then
+            require('lspsaga.definition'):init(2, 2, {})
+            features.ShowPathInTitle(popup_id)
+          end
+        end,
+        desc = 'Goto Type Definition <gy>',
+      },
+      {
+        '<localleader>lci',
+        function()
+          local popup_id = detour.Detour()
+          if popup_id then
+            vim.bo.bufhidden = 'delete'
+            require('lspsaga.callhierarchy'):send_method(2, { '++float' })
+            features.ShowPathInTitle(popup_id)
+          end
+        end,
+        desc = 'Incoming Calls [ci]',
+      },
+      {
+        '<localleader>lco',
+        function()
+          local popup_id = detour.Detour()
+          if popup_id then
+            vim.bo.bufhidden = 'delete'
+            require('lspsaga.callhierarchy'):send_method(3, { '++float' })
+            features.ShowPathInTitle(popup_id)
+          end
+        end,
+        desc = 'Outgoing Calls [co]',
+      },
+      {
+        '<localleader>lp',
+        '<cmd>Lspsaga peek_type_definition<cr>',
+        desc = 'lspsaga: type definition',
+      },
     },
     dependencies = {
       'nvim-tree/nvim-web-devicons',
@@ -140,12 +214,12 @@ return {
     'dnlhc/glance.nvim',
     cond = rvim.lsp.enable,
     -- stylua: ignore
-    keys = {
-      { 'gD', '<Cmd>Glance definitions<CR>', desc = 'lsp: glance definitions' },
-      { 'gR', '<Cmd>Glance references<CR>', desc = 'lsp: glance references' },
-      { 'gY', '<Cmd>Glance type_definitions<CR>', desc = 'lsp: glance type definitions' },
-      { 'gM', '<Cmd>Glance implementations<CR>', desc = 'lsp: glance implementations' },
-    },
+    -- keys = {
+    --   { 'gD', '<Cmd>Glance definitions<CR>', desc = 'lsp: glance definitions' },
+    --   { 'gR', '<Cmd>Glance references<CR>', desc = 'lsp: glance references' },
+    --   { 'gY', '<Cmd>Glance type_definitions<CR>', desc = 'lsp: glance type definitions' },
+    --   { 'gM', '<Cmd>Glance implementations<CR>', desc = 'lsp: glance implementations' },
+    -- },
     config = function()
       require('glance').setup({
         preview_win_opts = { relativenumber = false },
