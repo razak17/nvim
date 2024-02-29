@@ -245,6 +245,7 @@ local function setup_mappings(client, bufnr)
       lsp.buf.incoming_calls,
       desc = 'incoming calls',
       capability = M.textDocument_references,
+      disabled = rvim.is_available('lspsaga.nvim'),
     },
     {
       'n',
@@ -279,6 +280,7 @@ local function setup_mappings(client, bufnr)
       '<localleader>lc',
       '<Cmd>lua =vim.lsp.get_clients()[1].server_capabilities<CR>',
       desc = 'server capabilities',
+      disabled = rvim.is_available('lspsaga.nvim'),
     },
   }
 
@@ -290,6 +292,7 @@ local function setup_mappings(client, bufnr)
         vim.bo[bufnr].ft
       ))
       and (not m.capability or client.supports_method(m.capability))
+      and not m.disabled
     then
       map(m[1], m[2], m[3], { buffer = bufnr, desc = fmt('lsp: %s', m.desc) })
     end
