@@ -54,6 +54,7 @@ local function general_overrides()
     ----------------------------------------------------------------------------
     -- LSP
     ----------------------------------------------------------------------------
+    { LspInlayHint = { inherit = 'Comment', italic = true } },
     { LspCodeLens = { inherit = 'Comment', bold = true, italic = false } },
     { LspCodeLensSeparator = { bold = false, italic = false } },
     {
