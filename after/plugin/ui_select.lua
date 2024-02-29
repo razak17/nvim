@@ -25,6 +25,7 @@ local toggle_options = {
   ['Toggle Sunglasses'] = 'lua require"rm.toggle_select".toggle_sunglasses()',
   ['Toggle Zoom'] = 'lua require("mini.misc").zoom()',
   ['Toggle Relative Number'] = 'ToggleRelativeNumber',
+  ['Toggle Undo Tree'] = 'UndotreeToggle',
 }
 
 local toggle_menu = function()
@@ -211,3 +212,39 @@ if rvim.is_available('ChatGPT.nvim') then
     { desc = '[c]hatGPTRun [a]ctions: open menu for chatGPTRun actions' }
   )
 end
+
+--------------------------------------------------------------------------------
+-- Command Palette
+--------------------------------------------------------------------------------
+local command_palette_options = {
+  ['Command History'] = 'Telescope command_history',
+  ['Commands'] = 'Telescope commands',
+  ['Find Files'] = 'Telescope find_files',
+  ['Git Branches'] = 'Telescope branches',
+  ['Git Commits'] = 'Telescope git_commits',
+  ['Git Status'] = 'Telescope status',
+  ['Keymaps'] = 'Telescope keymaps',
+  ['Live Grep'] = 'Telescope live_grep',
+  ['Maximize Window'] = 'lua require("windows.commands").maximize()',
+  ['Recently Closed Buffers'] = 'Telescope oldfiles cwd_only=true',
+  ['Seach History'] = 'Telescope search_history',
+  ['Telescope Buffers'] = 'Telescope buffers',
+  ['Telescope Marks'] = 'Telescope marks',
+  ['Telescope Projects'] = 'Telescope projects',
+  ['Telescope Resume'] = 'Telescope resume',
+  ['Telescope Undo'] = 'Telescope undo',
+  ['Trouble Diagnostics'] = 'TroubleToggle',
+  ['Nerdy'] = 'Nerdy',
+  ['Restart Editor'] = 'cq',
+}
+
+local command_palette_menu = function()
+  rvim.create_select_menu('Command Palette actions', command_palette_options)()
+end
+
+map(
+  'n',
+  '<leader>op',
+  command_palette_menu,
+  { desc = '[c]ommand [p]alette: open menu for command palette actions' }
+)
