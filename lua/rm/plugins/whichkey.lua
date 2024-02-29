@@ -81,6 +81,7 @@ return {
       f = { name = 'Genghis' },
       h = { name = 'Harpoon' },
       l = { name = 'LSP' },
+      lc = { name = 'Call Hierarchy' },
       lr = { name = 'Rulebook' },
       m = { name = 'Markdown' },
       n = { name = 'Neorg' },
