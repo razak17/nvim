@@ -27,17 +27,18 @@ return {
         },
       },
       handlers = {
-        ['textDocument/publishDiagnostics'] = function(_, result, ctx, config)
+        ['textDocument/publishDiagnostics'] = function(
+          err,
+          result,
+          ctx,
+          config
+        )
           if result.diagnostics == nil then return end
 
           -- ignore some tsserver diagnostics
           local idx = 1
           while idx <= #result.diagnostics do
             local entry = result.diagnostics[idx]
-
-            local translate = require('ts-error-translator').translate
-            entry.message = translate and translate(entry.code, entry.message)
-              or entry.message
 
             -- codes: https://github.com/microsoft/TypeScript/blob/main/src/compiler/diagnosticMessages.json
             if entry.code == 80001 then
@@ -48,7 +49,13 @@ return {
             end
           end
 
-          vim.lsp.diagnostic.on_publish_diagnostics(_, result, ctx, config)
+          require('ts-error-translator').translate_diagnostics(
+            err,
+            result,
+            ctx,
+            config
+          )
+          vim.lsp.diagnostic.on_publish_diagnostics(err, result, ctx, config)
         end,
       },
     },
