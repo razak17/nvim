@@ -189,7 +189,7 @@ return {
       { '[[', '<plug>(matchup-[%)', mode = { 'n', 'x' } },
       { ']]', '<plug>(matchup-]%)', mode = { 'n', 'x' } },
       {
-        '<localleader>lw',
+        '<localleader>lW',
         ':<c-u>MatchupWhereAmI?<CR>',
         desc = 'matchup: where am i',
       },
