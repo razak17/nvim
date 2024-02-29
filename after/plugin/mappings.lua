@@ -247,7 +247,7 @@ end
 nnoremap('<leader>X', ':wqall<CR>', { desc = 'save all and quit' })
 nnoremap('<leader>q', ':q<CR>', { desc = 'quit all' })
 nnoremap('<leader>Q', ':qa!<CR>', { desc = 'quit' })
-nnoremap('<localleader>Q', ':cq<CR>', { desc = 'smart quit' })
+nnoremap('<localleader>Q', ':cq<CR>', { desc = 'restart editor' })
 --------------------------------------------------------------------------------
 -- ?ie | entire object
 --------------------------------------------------------------------------------
