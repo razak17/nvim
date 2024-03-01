@@ -37,8 +37,18 @@ return {
 
           -- ignore some tsserver diagnostics
           local idx = 1
+          local translate = require('ts-error-translator').translate
+
           while idx <= #result.diagnostics do
             local entry = result.diagnostics[idx]
+
+            if translate then
+              local translatedMessage = translate({
+                code = entry.code,
+                message = entry.message,
+              })
+              entry.message = translatedMessage.message
+            end
 
             -- codes: https://github.com/microsoft/TypeScript/blob/main/src/compiler/diagnosticMessages.json
             if entry.code == 80001 then
@@ -49,12 +59,6 @@ return {
             end
           end
 
-          require('ts-error-translator').translate_diagnostics(
-            err,
-            result,
-            ctx,
-            config
-          )
           vim.lsp.diagnostic.on_publish_diagnostics(err, result, ctx, config)
         end,
       },

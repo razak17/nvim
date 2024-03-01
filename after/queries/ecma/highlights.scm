@@ -3,7 +3,7 @@
 ;; Keywords
 (("import"   @keyword) (#set! conceal "󰋺"))
 (("export"   @keyword) (#set! conceal "󰈇"))
-(("default"  @keyword) (#set! conceal ""))
+; (("default"  @keyword) (#set! conceal ""))
 (("function" @keyword) (#set! conceal "󰊕"))
 (("for"      @keyword) (#set! conceal ""))
 (("return"   @keyword) (#set! conceal ""))
