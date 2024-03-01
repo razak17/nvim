@@ -119,9 +119,9 @@ end
 
 local function egrepify() extensions('egrepify').egrepify() end
 local function helpgrep() extensions('helpgrep').helpgrep() end
-local function frecency() extensions('frecency').frecency(vertical()) end
-local function luasnips() extensions('luasnip').luasnip(vertical()) end
-local function notifications() extensions('notify').notify(vertical()) end
+local function frecency() extensions('frecency').frecency() end
+local function luasnips() extensions('luasnip').luasnip() end
+local function notifications() extensions('notify').notify() end
 local function undo() extensions('undo').undo() end
 local function projects()
   extensions('projects').projects(rvim.telescope.minimal_ui())
@@ -143,7 +143,7 @@ end
 local function lazy() extensions('lazy').lazy() end
 local function aerial() extensions('aerial').aerial() end
 local function harpoon()
-  extensions('harpoon').marks(vertical({ prompt_title = 'Harpoon Marks' }))
+  extensions('harpoon').marks({ prompt_title = 'Harpoon Marks' })
 end
 local function textcase()
   extensions('textcase').normal_mode(rvim.telescope.minimal_ui())
@@ -592,32 +592,5 @@ return {
     cmd = 'Telescope',
     config = function() require('telescope').load_extension('directory') end,
     opts = {},
-  },
-  {
-    'catgoose/do-the-needful',
-    cmd = 'Telescope',
-    opts = {
-      tasks = {
-        {
-          name = 'exa', -- name of task
-          cmd = 'exa', -- command to run
-          cwd = '~', -- working directory
-          tags = { 'exa', 'home', 'files' }, -- task metadata used for searching
-          window = { -- all window options are optional
-            name = 'Exa ~', -- name of tmux window
-            close = false, -- close window after execution
-            keep_current = false, -- switch to window when running task
-            open_relative = true, -- open window after/before current window
-            relative = 'after', -- relative direction
-          },
-        },
-      },
-      config = '.tasks.json', -- name of config file for project/global config
-    },
-    config = function(_, opts)
-      require('do-the-needful').setup(opts)
-      require('telescope').load_extension('do-the-needful')
-    end,
-    dependencies = 'nvim-lua/plenary.nvim',
   },
 }
