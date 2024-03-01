@@ -117,15 +117,6 @@ local function file_browser(opts)
   extensions('file_browser').file_browser(opts)
 end
 
-local function buffers(opts)
-  opts = opts or { sort_mru = true, sort_lastused = true }
-  require('telescope.builtin')['buffers'](opts)
-end
-
-local function oldfiles(opts)
-  require('telescope.builtin')['oldfiles'](vertical(opts))
-end
-
 local function egrepify() extensions('egrepify').egrepify() end
 local function helpgrep() extensions('helpgrep').helpgrep() end
 local function frecency() extensions('frecency').frecency(vertical()) end
@@ -258,7 +249,7 @@ return {
       { '<leader>f.', function() file_browser({ path = '%:p:h', select_buffer = 'true' }) end, desc = 'file browser', },
       { '<leader>f?', b('help_tags'), desc = 'help tags' },
       { '<leader>fa', b('autocommands'), desc = 'autocommands' },
-      { '<leader>fb', buffers, desc = 'buffers' },
+      { '<leader>fb', b('buffers'), desc = 'buffers' },
       -- { '<leader>fb', b('current_buffer_fuzzy_find'), desc = 'find in current buffer', },
       { '<leader>fc', nvim_config, desc = 'nvim config' },
       { '<leader>fd', aerial, desc = 'aerial' },
@@ -277,7 +268,7 @@ return {
       { '<leader>fn', notifications, desc = 'notify: notifications' },
       { '<leader>fN', notes, desc = 'notes' },
       { '<leader>fo', b('pickers'), desc = 'pickers' },
-      { '<leader>fO', oldfiles, desc = 'oldfiles' },
+      { '<leader>fO', b('oldfiles'), desc = 'oldfiles' },
       { '<leader>fp', projects, desc = 'projects' },
       { '<leader>fP', plugins, desc = 'plugins' },
       {
@@ -299,6 +290,7 @@ return {
       { '<leader>fvh', b('highlights'), desc = 'highlights' },
       { '<leader>fvo', b('vim_options'), desc = 'vim options' },
       { '<leader>fvr', b('registers'), desc = 'registers' },
+      { '<leader>fy', b('spell_suggest'), desc = 'spell suggest' },
       -- LSP
       { '<leader>ld', b('lsp_document_symbols'), desc = 'telescope: document symbols', },
       { '<leader>lI', b('lsp_implementations'), desc = 'telescope: search implementation', },
@@ -410,8 +402,9 @@ return {
         pickers = {
           registers = cursor(),
           reloader = dropdown(),
-          oldfiles = dropdown(),
           git_branches = dropdown(),
+          oldfiles = dropdown({ previewer = false }),
+          spell_suggest = dropdown({ previewer = false }),
           find_files = { hidden = true },
           colorscheme = { enable_preview = true },
           keymaps = dropdown({ layout_config = { height = 18, width = 0.5 } }),
