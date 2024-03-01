@@ -236,6 +236,7 @@ local command_palette_options = {
   ['Trouble Diagnostics'] = 'TroubleToggle',
   ['Nerdy'] = 'Nerdy',
   ['Restart Editor'] = 'cq',
+  ['Toggle Context Visualizer'] = 'NvimContextVtToggle',
 }
 
 local command_palette_menu = function()
