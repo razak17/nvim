@@ -198,7 +198,7 @@ augroup('WinBehavior', {
 })
 
 local cursorline_exclusions =
-  { 'alpha', 'TelescopePrompt', 'CommandTPrompt', 'DressingInput' }
+  { 'alpha', 'startup', 'TelescopePrompt', 'CommandTPrompt', 'DressingInput' }
 ---@param buf number
 ---@return boolean
 local function should_show_cursorline(buf)

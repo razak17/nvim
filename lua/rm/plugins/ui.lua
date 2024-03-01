@@ -85,6 +85,7 @@ return {
       ignore = {
         cursorline = {
           'alpha',
+          'startup',
           'DressingInput',
           'NvimSeparator',
           'TelescopePrompt',
