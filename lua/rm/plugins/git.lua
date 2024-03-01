@@ -262,7 +262,7 @@ return {
   {
     '2kabhishek/co-author.nvim',
     cond = enabled,
-    cmd = 'GitCoAuthors',
+    cmd = 'CoAuthor',
     dependencies = { 'stevearc/dressing.nvim' },
   },
   {

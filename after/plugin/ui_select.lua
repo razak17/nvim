@@ -123,7 +123,7 @@ if rvim.is_git_repo() then
     ['Show Commit From Hash'] = "lua require'rm.git_select'.display_commit_from_hash()",
     ['Open File From Branch'] = "lua require'rm.git_select'.open_file_git_branch()",
     ['Search In Another Branch'] = "lua require'rm.git_select'.search_git_branch()",
-    ['Open Co Authors'] = 'GitCoAuthors',
+    ['List Authors'] = 'CoAuthor',
     ['Time Machine'] = "lua require'rm.git_select'.time_machine()",
     ['Browse Project History'] = "lua require'rm.git_select'.project_history()",
     ['Browse File Commit History'] = 'DiffviewFileHistory %',
