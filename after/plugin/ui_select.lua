@@ -132,6 +132,16 @@ if rvim.is_git_repo() then
     ['Conflict Show Base'] = "lua require'rm.git_select'.diffview_conflict('base')",
     ['Conflict Show Ours'] = "lua require'rm.git_select'.diffview_conflict('ours')",
     ['Conflict Show Theirs'] = "lua require'rm.git_select'.diffview_conflict('theirs')",
+    ['Conflict Choose Ours'] = 'GitConflictChooseOurs',
+    ['Conflict Choose Theirs'] = 'GitConflictChooseTheirs',
+    ['Conflict Choose None'] = 'GitConflictChooseNone',
+    ['Conflict Choose Both'] = 'GitConflictChooseBoth',
+    ['Toggle Current Line Blame'] = 'Gitsigns toggle_current_line_blame',
+    ['Reset Buffer'] = 'Gitsigns reset_buffer',
+    ['Open File In GitHub'] = 'OpenInGHFile',
+    ['Open Line In GitHub'] = 'OpenInGHFileLines',
+    ['Open Repo In GitHub'] = 'OpenInGHRepo',
+    ['View Branch Graph'] = 'Flog',
   }
 
   local git_menu = function()
