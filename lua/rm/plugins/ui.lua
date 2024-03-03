@@ -232,6 +232,7 @@ return {
         'NeogitConsole',
         'noice',
         'qf',
+        'fzf',
       },
       highlight = {
         bg = rvim.highlight.get('Normal', 'bg'),
