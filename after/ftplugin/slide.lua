@@ -17,6 +17,12 @@ map(
 map(
   'n',
   '<localleader>ab',
+  '<Cmd>SlideAscii smblock<CR>',
+  with_desc('ascii smblock')
+)
+map(
+  'n',
+  '<localleader>aB',
   '<Cmd>SlideAscii bfraktur<CR>',
   with_desc('ascii bfraktur')
 )
@@ -43,6 +49,12 @@ map(
   '<localleader>am',
   '<Cmd>SlideAscii bigmono12<CR>',
   with_desc('ascii bigmono12')
+)
+map(
+  'n',
+  '<localleader>as',
+  '<Cmd>SlideAscii smmono12<CR>',
+  with_desc('ascii smmono12')
 )
 map(
   'n',
