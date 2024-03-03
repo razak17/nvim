@@ -6,7 +6,7 @@ return {
   { 'dotsilas/darcubox-nvim', lazy = false, priority = 1000 },
   { 'Wansmer/serenity.nvim', priority = 1000, opts = {} },
   { 'judaew/ronny.nvim', priority = 1000, opts = {} },
-  { 'oxfist/night-owl.nvim', lazy = false, priority = 1000 },
+  -- { 'oxfist/night-owl.nvim', lazy = false, priority = 1000 },
   { 'kvrohit/rasmus.nvim', lazy = false, priority = 1000 },
   {
     'razak17/onedark.nvim',
