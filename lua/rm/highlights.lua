@@ -96,9 +96,9 @@ end
 local err_warn = vim.schedule_wrap(function(group, attribute)
   notify(
     fmt(
-      'failed to get highlight %s for attribute %s\n%s',
-      group,
+      'failed to get attribute %s for highlight %s\n%s',
       attribute,
+      group,
       debug.traceback()
     ),
     'ERROR',
