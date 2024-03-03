@@ -74,6 +74,7 @@ return {
 
     which_key.register({
       a = { name = 'Actions' },
+      A = { name = 'Animations' },
       c = { name = 'Conceal' },
       d = { name = 'Dap' },
       db = { name = 'Breakpoint' },

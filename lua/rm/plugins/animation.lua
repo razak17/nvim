@@ -81,7 +81,7 @@ return {
   {
     'anuvyklack/animation.nvim',
     cond = not rvim.plugins.minimal,
-    keys = { { '<localleader>aa', redraw_buffer, desc = 'animation: start' } },
+    keys = { { '<localleader>Aa', redraw_buffer, desc = 'animation: start' } },
     dependencies = { 'anuvyklack/middleclass' },
   },
 }

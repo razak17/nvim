@@ -308,8 +308,8 @@ return {
     cmd = 'CellularAutomaton',
     -- stylua: ignore
     keys = {
-      { '<localleader>ag', '<Cmd>CellularAutomaton game_of_life<CR>', desc = 'automaton: game of life', },
-      { '<localleader>am', '<Cmd>CellularAutomaton make_it_rain<CR>', desc = 'automaton: make it rain', },
+      { '<localleader>Ag', '<Cmd>CellularAutomaton game_of_life<CR>', desc = 'automaton: game of life', },
+      { '<localleader>Am', '<Cmd>CellularAutomaton make_it_rain<CR>', desc = 'automaton: make it rain', },
     },
   },
   {
