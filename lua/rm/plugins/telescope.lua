@@ -71,7 +71,6 @@ end
 local function find_files(opts)
   return extensions('menufacture').find_files(opts)
 end
--- local function git_files(opts) return extensions('menufacture').git_files(opts) end
 
 local function nvim_config()
   find_files({
@@ -102,18 +101,19 @@ local function plugins()
     file_ignore_patterns = { '.git/.*', 'dotbot/.*', 'zsh/plugins/.*' },
   })
 end
+-- local function git_files(opts) return extensions('menufacture').git_files(opts) end
 
 -- local function project_files()
 --   if not pcall(git_files, { show_untracked = true }) then find_files() end
 -- end
 
 local function file_browser(opts)
-  opts = opts
-    or {
-      hidden = true,
-      sort_mru = true,
-      sort_lastused = true,
-    }
+  opts = vim.tbl_extend('keep', opts or {}, {
+    hidden = true,
+    no_ignore = true,
+    sort_mru = true,
+    sort_lastused = true,
+  })
   extensions('file_browser').file_browser(opts)
 end
 
@@ -127,7 +127,7 @@ local function projects()
   extensions('projects').projects(rvim.telescope.minimal_ui())
 end
 local function smart_open()
-  extensions('smart_open').smart_open({ cwd_only = true })
+  extensions('smart_open').smart_open({ cwd_only = true, no_ignore = true })
 end
 local function directory_files()
   extensions('directory').directory({ feature = 'find_files' })
@@ -405,7 +405,7 @@ return {
           git_branches = dropdown(),
           oldfiles = dropdown({ previewer = false }),
           spell_suggest = dropdown({ previewer = false }),
-          find_files = { hidden = true },
+          find_files = { hidden = true, no_ignore = true },
           colorscheme = { enable_preview = true },
           keymaps = dropdown({ layout_config = { height = 18, width = 0.5 } }),
           git_commits = {
