@@ -12,15 +12,16 @@ rvim.augroup('LargeFileAutocmds', {
       -- vim.o.eventignore = 'FileType'
       vim.bo.bufhidden = 'unload'
       -- vim.bo.buftype = 'nowrite'
-      vim.bo.undolevels = -1
+      -- vim.bo.undolevels = -1
       vim.cmd.filetype('off')
     else
-      vim.o.eventignore = nil
-      vim.bo.bufhidden = ''
-      vim.bo.buftype = ''
-      vim.bo.undolevels = 1000
-      vim.cmd.filetype('on')
       rvim.large_file_opened = false
+
+      -- vim.o.eventignore = nil
+      vim.bo.bufhidden = ''
+      -- vim.bo.buftype = ''
+      -- vim.bo.undolevels = 1000
+      vim.cmd.filetype('on')
     end
   end,
 }, {
@@ -40,6 +41,11 @@ rvim.augroup('LargeFileAutocmds', {
     )
     if byte_size > 100 * 1024 then
       if vim.g.loaded_matchparen then vim.cmd('NoMatchParen') end
+
+      if rvim.is_available('mini.indentscope') then
+        -- vim.api.nvim_del_augroup_by_name('MiniIndentscope')
+        vim.api.nvim_clear_autocmds({ group = 'MiniIndentscope' })
+      end
     else
       if not vim.g.loaded_matchparen then vim.cmd('DoMatchParen') end
     end
