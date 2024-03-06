@@ -102,7 +102,7 @@ return {
   {
     'razak17/antelope',
     keys = {
-      { '<M-o>', ':Antelope buffers<CR>', 'antelope: buffers' },
+      { '<M-a>', ':Antelope buffers<CR>', 'antelope: buffers' },
       { '<M-m>', ':Antelope marks<CR>', 'antelope: marks' },
     },
     opts = { notifications = false },

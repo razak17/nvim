@@ -128,4 +128,19 @@ return {
       require('arrow.persist').toggle()
     end,
   },
+  {
+    'lewis6991/whatthejump.nvim',
+    event = { 'BufRead', 'BufNewFile' },
+    config = function()
+      map('n', '<M-i>', function()
+        require('whatthejump').show_jumps(false)
+        return '<C-o>'
+      end, { expr = true })
+
+      map('n', '<M-o>', function()
+        require('whatthejump').show_jumps(true)
+        return '<C-i>'
+      end, { expr = true })
+    end,
+  },
 }

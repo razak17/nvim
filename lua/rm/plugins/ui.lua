@@ -65,6 +65,23 @@ return {
     },
   },
   {
+    'Pocco81/HighStr.nvim',
+    cond = not minimal and niceties,
+    cmd = { 'HSHighlight', 'HSRmHighlight', 'HSImport' },
+    opts = {},
+    config = function(_, opts) require('high-str').setup(opts) end,
+  },
+  {
+    'AndrewRadev/discotheque.vim',
+    cond = not minimal and niceties and false,
+    cmd = { 'Disco' },
+  },
+  {
+    'koron/nyancat-vim',
+    cond = not minimal and niceties,
+    cmd = { 'Nyancat', 'Nyancat2' },
+  },
+  {
     'utilyre/sentiment.nvim',
     cond = not minimal and niceties,
     init = function()
@@ -287,22 +304,6 @@ return {
         tmux = { enabled = true },
       },
     },
-  },
-  {
-    'lewis6991/whatthejump.nvim',
-    cond = not minimal and niceties,
-    event = { 'BufRead', 'BufNewFile' },
-    config = function()
-      map('n', '<M-k>', function()
-        require('whatthejump').show_jumps(false)
-        return '<C-o>'
-      end, { expr = true })
-
-      map('n', '<M-j>', function()
-        require('whatthejump').show_jumps(true)
-        return '<C-i>'
-      end, { expr = true })
-    end,
   },
   {
     'eandrju/cellular-automaton.nvim',
