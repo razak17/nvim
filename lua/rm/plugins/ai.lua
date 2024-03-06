@@ -18,7 +18,7 @@
 
 return {
   {
-    'razak17/copilot.lua',
+    'zbirenbaum/copilot.lua',
     cond = rvim.ai.enable and not rvim.plugins.minimal,
     event = 'InsertEnter',
     -- stylua: ignore
