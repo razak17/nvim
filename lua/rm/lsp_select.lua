@@ -174,7 +174,7 @@ end
 
 function M.toggle_virtual_text()
   local config = diagnostic.config()
-  if type(config.virtual_text) == 'boolean' then
+  if config and type(config.virtual_text) == 'boolean' then
     config = vim.tbl_extend('force', config, {
       virtual_text = {
         spacing = 1,
@@ -201,7 +201,7 @@ end
 
 function M.toggle_virtual_lines()
   local config = diagnostic.config()
-  if type(config.virtual_lines) == 'boolean' then
+  if type(config and config.virtual_lines) == 'boolean' then
     config = vim.tbl_extend(
       'force',
       config,
@@ -222,9 +222,25 @@ function M.toggle_virtual_lines()
   )
 end
 
+function M.toggle_diagnostics()
+  local enabled = true
+  if vim.diagnostic.is_disabled then
+    enabled = not vim.diagnostic.is_disabled()
+  end
+  enabled = not enabled
+
+  if enabled then
+    vim.diagnostic.enable()
+  else
+    vim.diagnostic.disable()
+  end
+
+  lsp_notify(string.format('diagnostics %s', bool2str(enabled)))
+end
+
 function M.toggle_signs()
   local config = diagnostic.config()
-  if type(config.signs) == 'boolean' then
+  if type(config and config.signs) == 'boolean' then
     config = vim.tbl_extend('force', config, {
       signs = rvim.get_lsp_signs(),
     })

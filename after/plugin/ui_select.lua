@@ -170,6 +170,7 @@ if rvim.lsp.enable then
     ['Toggle Virtual Text'] = "lua require'rm.lsp_select'.toggle_virtual_text()",
     ['Toggle Virtual Lines'] = "lua require'rm.lsp_select'.toggle_virtual_lines()",
     ['Toggle Diagnostic Signs'] = "lua require'rm.lsp_select'.toggle_signs()",
+    ['Toggle Diagnostics'] = "lua require'rm.lsp_select'.toggle_diagnostics()",
     ['Toggle Hover Diagnostics'] = "lua require'rm.lsp_select'.toggle_hover_diagnostics()",
     ['Toggle Hover Diagnostics (go_to)'] = "lua require'rm.lsp_select'.toggle_hover_diagnostics_go_to()",
     ['Toggle Format On Save'] = "lua require'rm.lsp_select'.toggle_format_on_save()",
