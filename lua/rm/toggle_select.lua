@@ -51,7 +51,7 @@ function M.toggle_conceal_cursor()
   )
 end
 
-function Mtoggle_sunglasses()
+function M.toggle_sunglasses()
   local success, _ = pcall(require, 'sunglasses')
   if not success then return end
   local is_shaded
