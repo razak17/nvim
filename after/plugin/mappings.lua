@@ -232,8 +232,8 @@ cnoremap('%%', "<C-r>=fnameescape(expand('%'))<cr>")
 nnoremap('<c-s>', '<Cmd>silent! write ++p<CR>')
 -- Buffer Management
 if not is_available('cybu.nvim') then
-  nnoremap('H', '<cmd>bprevious<CR>', { desc = 'previous buffer' })
-  nnoremap('L', '<cmd>bnext<CR>', { desc = 'next buffer' })
+  nnoremap('gB', '<cmd>bprevious<CR>', { desc = 'previous buffer' })
+  nnoremap('gP', '<cmd>bnext<CR>', { desc = 'next buffer' })
 end
 if not is_available('close-buffers.nvim') then
   nnoremap('<leader>c', ':bdel<CR>', { desc = 'delete buffer' })

@@ -94,6 +94,7 @@ return {
       t = { name = 'TODO' },
       v = { name = 'Devdocs' },
       x = { name = 'Executor' },
+      y = { name = 'Yanky' },
       z = { name = 'Zen' },
     }, { mode = 'n', prefix = '<localleader>' })
 
