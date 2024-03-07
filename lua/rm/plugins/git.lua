@@ -169,6 +169,7 @@ return {
   {
     'almo7aya/openingh.nvim',
     cond = enabled,
+    cmd = { 'OpenInGHFile', 'OpenInGHRepo', 'OpenInGHFileLines' },
     keys = {
       {
         '<leader>gof',
