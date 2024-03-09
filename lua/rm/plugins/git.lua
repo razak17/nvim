@@ -228,6 +228,28 @@ return {
     },
   },
   {
+    'dlvhdr/gh-blame.nvim',
+    cond = enabled and false,
+    -- stylua: ignore
+    keys = {
+      { '<leader>gbp', '<Cmd>GhBlameCurrentLine<CR>', desc = 'blame current line (PR)' },
+    },
+    dependencies = { 'nvim-lua/plenary.nvim', 'MunifTanjim/nui.nvim' },
+  },
+  {
+    'dlvhdr/gh-addressed.nvim',
+    cmd = 'GhReviewComments',
+    -- stylua: ignore
+    keys = {
+      { '<leader>gc', '<Cmd>GhReviewComments<CR>', desc = 'github review comments' },
+    },
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'MunifTanjim/nui.nvim',
+      'folke/trouble.nvim',
+    },
+  },
+  {
     'akinsho/git-conflict.nvim',
     cond = enabled,
     event = 'BufReadPre',
