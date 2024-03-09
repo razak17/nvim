@@ -99,11 +99,14 @@ return {
     }, { mode = 'n', prefix = '<localleader>' })
 
     which_key.register({
+      a = { name = 'Actions' },
       d = { name = 'Delete' },
       f = { name = 'File' },
       g = { name = 'Git' },
       go = { name = 'Open' },
+      h = { name = 'Hunk' },
       l = { name = 'LSP' },
+      r = { name = 'Run' },
     }, { mode = 'x', prefix = '<leader>' })
 
     which_key.register({
