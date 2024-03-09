@@ -66,7 +66,6 @@ return {
       },
       enable_git_status = false,
       enable_diagnostics = false,
-      enable_normal_mode_for_inputs = true,
       git_status_async = false,
       nesting_rules = {
         ['dart'] = { 'freezed.dart', 'g.dart' },
@@ -100,6 +99,10 @@ return {
         {
           event = 'neo_tree_window_after_close',
           handler = function() highlight.set('Cursor', { blend = 0 }) end,
+        },
+        {
+          event = 'neo_tree_popup_input_ready',
+          handler = function(input) vim.cmd('stopinsert') end,
         },
       },
       filesystem = {
