@@ -2,6 +2,7 @@ if not rvim or rvim.none then return end
 
 local fn, api, fmt = vim.fn, vim.api, string.format
 local is_available = rvim.is_available
+local command = rvim.command
 
 local recursive_map = function(mode, lhs, rhs, opts)
   opts = opts or {}
@@ -418,8 +419,6 @@ end, { desc = 'rustlings: next' })
 --------------------------------------------------------------------------------
 -- Commands
 --------------------------------------------------------------------------------
-local command = rvim.command
-
 command('ClearRegisters', function()
   local regs =
     'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/-'
@@ -451,6 +450,35 @@ map(
   '<Cmd>vertical resize 110<CR>',
   { desc = 'increase vertical spacing' }
 )
+--------------------------------------------------------------------------------
+-- Share Code
+---> Share the file or a range of lines over https://0x0.st .
+function rvim.null_pointer()
+  local from = vim.api.nvim_buf_get_mark(0, '<')[1]
+  local to = vim.api.nvim_buf_get_mark(0, '>')[1]
+  local file = fn.tempname()
+  vim.cmd(
+    ':silent! ' .. (from == to and '' or from .. ',' .. to) .. 'w ' .. file
+  )
+
+  vim.fn.jobstart({ 'curl', '-sF', 'file=@' .. file .. '', 'https://0x0.st' }, {
+    stdout_buffered = true,
+    on_stdout = function(_, data)
+      vim.fn.setreg('+', data[1])
+      vim.notify('Copied ' .. data[1] .. ' to clipboard!')
+    end,
+    on_stderr = function(_, data)
+      if data then print(table.concat(data)) end
+    end,
+  })
+end
+nnoremap('<localleader>pp', rvim.null_pointer, { desc = 'share code url' })
+vnoremap(
+  '<localleader>pp',
+  ':lua rvim.null_pointer()<CR>gv<Esc>',
+  { desc = 'share code url' }
+)
+command('NullPointer', rvim.null_pointer)
 --------------------------------------------------------------------------------
 -- Abbreviations
 --------------------------------------------------------------------------------

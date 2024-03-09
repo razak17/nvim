@@ -248,6 +248,7 @@ local command_palette_options = {
   ['Nerdy'] = 'Nerdy',
   ['Restart Editor'] = 'cq',
   ['Toggle Context Visualizer'] = 'NvimContextVtToggle',
+  ['Share Code URL'] = 'NullPointer',
 }
 
 local command_palette_menu = function()
