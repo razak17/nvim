@@ -190,7 +190,7 @@ local servers = {
   },
   ruff_lsp = {
     settings = {
-      args = {},
+      args = { '--select', 'ALL', '--ignore', 'D100' },
     },
   },
   tailwindcss = {
