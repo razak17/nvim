@@ -99,6 +99,7 @@ return {
     }, { mode = 'n', prefix = '<localleader>' })
 
     which_key.register({
+      ['<leader>'] = { name = 'Advanced' },
       a = { name = 'Actions' },
       d = { name = 'Delete' },
       f = { name = 'File' },
@@ -113,9 +114,12 @@ return {
       a = { name = 'A.I.' },
       g = { name = 'Git' },
       h = { name = 'Gitsigns' },
+      l = { name = 'LSP' },
       n = { name = 'Nag' },
+      p = { name = 'Share' },
       q = { name = 'NeoComposer' },
       S = { name = 'Slime' },
+      y = { name = 'Yanky' },
     }, { mode = 'x', prefix = '<localleader>' })
 
     rvim.augroup('WhichKeyMode', {
