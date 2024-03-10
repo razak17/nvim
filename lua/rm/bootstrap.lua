@@ -72,12 +72,7 @@ require('lazy').setup({
   performance = {
     rtp = {
       paths = { join_paths(data, 'site'), join_paths(data, 'site', 'after') },
-        -- stylua: ignore
-      disabled_plugins = plugins_enabled and {
-        '2html_plugin', 'gzip', 'matchit', 'rrhelper', 'netrw', 'netrwPlugin',
-        'netrwSettings', 'netrwFileHandlers', 'zip', 'zipPlugin', 'tar', 'tarPlugin',
-        'getscript', 'getscriptPlugin', 'vimball', 'vimballPlugin', 'logipat', 'spellfile_plugin',
-      } or {},
+      disabled_plugins = plugins_enabled and rvim.rtp.disabled or {},
     },
   },
 })

@@ -7,6 +7,7 @@ local namespace = {
   ai = { enable = env.RVIM_AI_ENABLED == '1' },
   autosave = { enable = true },
   debug = { enable = false },
+  git = {},
   large_file_opened = false,
   -- stylua: ignore
   media_files = {
@@ -28,7 +29,6 @@ local namespace = {
     signs = { enable = false },
   },
   mappings = {},
-  git = {},
   none = env.RVIM_NONE == '1',
   plugin = {
     env = { enable = true },
@@ -64,6 +64,36 @@ local namespace = {
   },
   ui = {
     statuscolumn = { enable = true, custom = true },
+  },
+  rtp = {
+    disabled = {
+      '2html_plugin',
+      'bugreport',
+      'compiler',
+      'getscript',
+      'getscriptPlugin',
+      'gzip',
+      'logipat',
+      'matchit',
+      'netrw',
+      'netrwFileHandlers',
+      'netrwPlugin',
+      'netrwSettings',
+      'optwin',
+      'rplugin',
+      'rrhelper',
+      'spellfile_plugin',
+      'synmenu',
+      'syntax',
+      'tar',
+      'tarPlugin',
+      'tohtml',
+      'tutor',
+      'vimball',
+      'vimballPlugin',
+      'zip',
+      'zipPlugin',
+    },
   },
 }
 
