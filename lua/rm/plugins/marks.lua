@@ -143,4 +143,15 @@ return {
       end, { expr = true })
     end,
   },
+  {
+    'bloznelis/before.nvim',
+    event = { 'BufRead', 'BufNewFile' },
+    -- stylua: ignore
+    keys = {
+      { 'H', '<Cmd>lua require("before").jump_to_last_edit()<CR>', desc = 'before: jump to last edit' },
+      { 'L', '<Cmd>lua require("before").jump_to_next_edit()<CR>', desc = 'before: jump to next edit' },
+    },
+    opts = {},
+    config = function(_, opts) require('before').setup(opts) end,
+  },
 }
