@@ -7,11 +7,11 @@ local servers = {
   astro = {},
   bashls = {
     settings = {
-        bashIde = {
-          -- Disable shellcheck in bash-language-server. It conflicts with linter settings.
-          shellcheckPath = "",
-        },
+      bashIde = {
+        -- Disable shellcheck in bash-language-server. It conflicts with linter settings.
+        shellcheckPath = '',
       },
+    },
   },
   clangd = {},
   cmake = {},
