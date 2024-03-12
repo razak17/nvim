@@ -92,6 +92,17 @@ function rvim.ui.foldtext()
   return fold
 end
 opt.foldtext = 'v:lua.rvim.ui.foldtext()'
+function rvim.ui.simple_fold()
+  local fs, fe = vim.v.foldstart, vim.v.foldend
+  local start_line = vim.fn.getline(fs):gsub('\t', ('\t'):rep(vim.opt.ts:get()))
+  local end_line = vim.trim(vim.fn.getline(fe))
+  local spaces = (' '):rep(
+    vim.o.columns - start_line:len() - end_line:len() - 7
+  )
+
+  return start_line .. ' ⋯ ' .. end_line .. spaces
+end
+-- opt.foldtext = 'v:lua.rvim.ui.simple_fold()'
 --------------------------------------------------------------------------------
 -- Grepprg {{{1
 --------------------------------------------------------------------------------
