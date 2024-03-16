@@ -98,7 +98,7 @@ local function list_sessions()
   )
 end
 
-local function obsidian_open() file_picker(env.HOME .. '/Sync/notes/obsidian') end
+local function obsidian_open() file_picker(rvim.sync('obsidian')) end
 
 rvim.command('ObsidianFind', obsidian_open)
 

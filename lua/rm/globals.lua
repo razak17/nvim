@@ -12,6 +12,10 @@ function join_paths(...)
   return result
 end
 
+function rvim.sync(path)
+  return fmt('%s/Notes/%s', fn.expand('$SYNC_DIR'), path)
+end
+
 --------------------------------------------------------------------------------
 -- Utils
 --------------------------------------------------------------------------------

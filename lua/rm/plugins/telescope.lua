@@ -83,7 +83,7 @@ end
 local function notes()
   find_files({
     prompt_title = '~ Obsidian ~',
-    cwd = env.HOME .. '/Sync/notes/obsidian',
+    cwd = rvim.sync('obsidian'),
     file_ignore_patterns = {
       '.git/.*',
       'dotbot/.*',

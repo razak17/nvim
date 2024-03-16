@@ -1,7 +1,5 @@
 local fmt, fn = string.format, vim.fn
-local function sync(path)
-  return fmt('%s/notes/%s', fn.expand('$SYNC_DIR'), path)
-end
+local sync = rvim.sync
 
 return {
   {
