@@ -137,16 +137,19 @@ local servers = {
   },
   pyright = {
     settings = {
+      verboseOutput = true,
+      autoImportCompletion = true,
       pyright = {
         disableLanguageServices = false,
         disableOrganizeImports = false,
       },
       python = {
         analysis = {
+          indexing = true,
           autoImportCompletions = true,
-          typeCheckingMode = 'basic',
+          typeCheckingMode = 'basic', -- strict
           autoSearchPaths = true,
-          diagnosticMode = 'workspace',
+          diagnosticMode = 'openFilesOnly', -- workspace
           useLibraryCodeForTypes = true,
           diagnosticSeverityOverrides = {
             -- NOTE: enable to get nvim-lspimport working
