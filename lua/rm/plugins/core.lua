@@ -413,6 +413,11 @@ return {
     cmd = 'Play2048',
     opts = {},
   },
+  {
+    'NStefan002/15puzzle.nvim',
+    cmd = 'Play15puzzle',
+    opts = {},
+  },
   -- Share Code
   --------------------------------------------------------------------------------
   { 'TobinPalmer/rayso.nvim', cmd = { 'Rayso' }, opts = {} },
