@@ -140,6 +140,9 @@ local function directory_search()
     no_ignore = true,
   })
 end
+local function git_file_history()
+  extensions('git_file_history').git_file_history()
+end
 local function lazy() extensions('lazy').lazy() end
 local function aerial() extensions('aerial').aerial() end
 local function harpoon()
@@ -255,6 +258,7 @@ return {
       { '<leader>fd', aerial, desc = 'aerial' },
       { '<leader>fgf', directory_files, desc = 'directory for find files' },
       { '<leader>fgg', directory_search, desc = 'directory for live grep' },
+      { '<leader>fgh', git_file_history, desc = 'git file history' },
       { '<leader>fe', egrepify, desc = 'aerial' },
       -- { '<leader>ff', project_files, desc = 'project files' },
       { '<leader>fh', frecency, desc = 'Most (f)recently used files' },
@@ -592,5 +596,11 @@ return {
     cmd = 'Telescope',
     config = function() require('telescope').load_extension('directory') end,
     opts = {},
+  },
+  {
+    'isak102/telescope-git-file-history.nvim',
+    cmd = 'Telescope',
+    config = function() require('telescope').load_extension('git_file_history') end,
+    dependencies = { 'tpope/vim-fugitive' },
   },
 }
