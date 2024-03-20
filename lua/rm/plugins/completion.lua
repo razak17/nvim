@@ -99,6 +99,14 @@ return {
             rvim.is_available('copilot-cmp') and require(
               'copilot_cmp.comparators'
             ).prioritize or nil,
+            -- deprioritize `.box`, `.mut`, etc.
+            require('cmp-rust').deprioritize_postfix,
+            -- deprioritize `Borrow::borrow` and `BorrowMut::borrow_mut`
+            require('cmp-rust').deprioritize_borrow,
+            -- deprioritize `Deref::deref` and `DerefMut::deref_mut`
+            require('cmp-rust').deprioritize_deref,
+            -- deprioritize `Into::into`, `Clone::clone`, etc.
+            require('cmp-rust').deprioritize_common_traits,
             cmp.config.compare.recently_used,
             cmp.config.compare.locality,
             cmp.config.compare.offset,
@@ -334,6 +342,7 @@ return {
       'fazibear/cmp-nerdfonts',
       'saadparwaiz1/cmp_luasnip',
       'SergioRibera/cmp-dotenv',
+      'ryo33/nvim-cmp-rust',
       { 'Gelio/cmp-natdat', opts = {} },
       { 'hrsh7th/cmp-nvim-lsp', cond = rvim.lsp.enable },
       { 'hrsh7th/cmp-cmdline', config = function() vim.o.wildmode = '' end },
