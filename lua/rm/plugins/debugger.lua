@@ -338,6 +338,9 @@ return {
           windows = { indent = 2 },
           floating = { border = rvim.ui.current.border },
         },
+        dependencies = {
+          { 'nvim-neotest/nvim-nio' },
+        },
       },
       { 'theHamsta/nvim-dap-virtual-text', opts = { all_frames = true } },
       {

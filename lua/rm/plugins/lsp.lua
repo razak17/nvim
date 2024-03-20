@@ -73,7 +73,7 @@ return {
                     'nvim',
                     'runtime'
                   ),
-                  plugins = {},
+                  plugins = { 'nvim-dap-ui' },
                   types = true,
                 },
               },
