@@ -72,7 +72,7 @@ return {
     build = 'npm install --prefix server',
   },
   {
-    'NTBBloodbath/rest.nvim',
+    'rest-nvim/rest.nvim',
     cond = not rvim.plugins.minimal,
     ft = { 'http', 'json' },
     init = function()
@@ -86,6 +86,9 @@ return {
     },
     opts = { skip_ssl_verification = true },
     config = function(_, opts) require('rest-nvim').setup(opts) end,
+    dependencies = {
+      { 'vhyrro/luarocks.nvim', opts = {} },
+    },
   },
   -- Tailwind
   --------------------------------------------------------------------------------
