@@ -98,6 +98,13 @@ return {
   { 'lambdalisue/suda.vim', lazy = false },
   { 'will133/vim-dirdiff', cmd = { 'DirDiff' } },
   { 'godlygeek/tabular', cmd = { 'Tabularize' } },
+  { 'sammce/fleeting.nvim', lazy = false },
+  { 'ton/vim-bufsurf', lazy = false },
+  {
+    'CodingdAwn/vim-choosewin',
+    keys = { { '<leader>ow', '<Plug>(choosewin)', desc = 'choose window' } },
+    config = function() vim.g.choosewin_overlay_enable = 1 end,
+  },
   {
     'kevinhwang91/nvim-fundo',
     event = { 'BufRead', 'BufNewFile' },
