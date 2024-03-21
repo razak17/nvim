@@ -99,6 +99,7 @@ return {
   { 'will133/vim-dirdiff', cmd = { 'DirDiff' } },
   { 'godlygeek/tabular', cmd = { 'Tabularize' } },
   { 'sammce/fleeting.nvim', lazy = false },
+  { 'mrquantumcodes/configpulse', lazy = false },
   { 'ton/vim-bufsurf', lazy = false },
   {
     'CodingdAwn/vim-choosewin',
