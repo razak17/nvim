@@ -315,7 +315,7 @@ return {
     },
     opts = {
       hint = 'floating-big-letter',
-      selection_chars = 'OLJKP;IFDSACMRUEWQ',
+      selection_chars = 'OJKLP;IFDSACMRUEWQ',
       filter_rules = {
         autoselect_one = true,
         bo = {
