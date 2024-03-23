@@ -653,15 +653,20 @@ function M.list_stashes(opts)
       ),
       previewer = previewers.new_termopen_previewer({
         get_command = function(entry, _)
-          -- export = entry.contents
+          export = entry.contents
+          -- show stash, ignoring gitignored files, and including untracked files
+          -- https://stackoverflow.com/a/76662742/516188
+          -- https://stackoverflow.com/a/12681856/516188
           return {
             'sh',
             '-c',
-            'git -c color.ui=always diff '
+            '(git -c color.ui=always diff '
               .. entry.value
               .. '^..'
               .. entry.value
-              .. ' | less -RS +0 --tilde',
+              .. '; git -c color.ui=always show '
+              .. entry.value
+              .. '^3) | less -RS +0 --tilde',
           }
         end,
       }),
