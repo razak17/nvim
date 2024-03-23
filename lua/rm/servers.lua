@@ -99,27 +99,27 @@ local servers = {
       },
     },
   },
-  -- vtsls = {
-  --   -- NOTE: only works with vtsls
-  --   -- TODO: figure out how to do this with typescript-tools
-  --   settings = {
-  --     ['js/ts'] = {
-  --       implicitProjectConfig = { checkJs = true },
-  --     },
-  --   },
-  -- },
-  -- denols = {
-  --   root_dir = function(fname)
-  --     return require('lspconfig/util').root_pattern('deno.json', 'deno.jsonc')(
-  --       fname
-  --     )
-  --   end,
-  -- },
-  -- emmet_ls = {
-  --   root_dir = function(fname)
-  --     return require('lspconfig/util').root_pattern('package.json')(fname)
-  --   end,
-  -- },
+  vtsls = {
+    -- NOTE: only works with vtsls
+    -- TODO: figure out how to do this with typescript-tools
+    settings = {
+      ['js/ts'] = {
+        implicitProjectConfig = { checkJs = true },
+      },
+    },
+  },
+  denols = {
+    root_dir = function(fname)
+      return require('lspconfig/util').root_pattern('deno.json', 'deno.jsonc')(
+        fname
+      )
+    end,
+  },
+  emmet_ls = {
+    root_dir = function(fname)
+      return require('lspconfig/util').root_pattern('package.json')(fname)
+    end,
+  },
   emmet_language_server = {},
   --- https://github.com/golang/tools/blob/master/gopls/doc/settings.md
   gopls = {

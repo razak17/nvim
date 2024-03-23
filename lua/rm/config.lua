@@ -17,7 +17,7 @@ local namespace = {
     disabled = {
       filetypes = {},
       directories = { vim.fn.stdpath('data') },
-      servers = { 'emmet_ls', 'pyright' },
+      servers = { 'denols', 'emmet_ls', 'pyright', 'vtsls' },
     },
     enable = env.RVIM_LSP_ENABLED == '1' and env.RVIM_PLUGINS_MINIMAL == '0',
     format_on_save = { enable = true },
