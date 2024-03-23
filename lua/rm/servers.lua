@@ -2,9 +2,61 @@
 --------------------------------------------------------------------------------
 -- Language servers
 --------------------------------------------------------------------------------
+
+local pyright_analysis = {
+  indexing = true,
+  autoImportCompletions = true,
+  typeCheckingMode = 'basic', -- strict, standard
+  autoSearchPaths = true,
+  diagnosticMode = 'openFilesOnly', -- workspace
+  useLibraryCodeForTypes = true,
+  diagnosticSeverityOverrides = {
+    -- NOTE: enable to get nvim-lspimport working
+    reportUndefinedVariable = 'error',
+    reportPropertyTypeMismatch = 'warning',
+    reportImportCycles = 'warning',
+    reportUnusedFunction = 'warning',
+    reportDuplicateImport = 'warning',
+    reportPrivateUsage = 'warning',
+    reportTypeCommentUsage = 'warning',
+    reportConstantRedefinition = 'error',
+    reportDeprecated = 'warning',
+    reportIncompatibleMethodOverride = 'warning',
+    reportIncompatibleVariableOverride = 'error',
+    reportInconsistentConstructor = 'error',
+    reportOverlappingOverload = 'error',
+    reportMissingSuperCall = 'error',
+    reportUnititializedInstanceVariable = 'error',
+    -- reportUnknownParameterType = 'warning',
+    -- reportUnknownArgumentType = 'warning',
+    reportUnknownLambdaType = 'warning',
+    -- reportUnknownVariableType = 'warning',
+    -- reportUnknownMemberType = 'warning',
+    reportMissingParameterType = 'warning',
+    -- reportMissingTypeArgument = 'warning',
+    reportUnnecessaryIsInstance = 'warning',
+    reportUnnecessaryCast = 'warning',
+    reportUnnecessaryComparison = 'warning',
+    reportUnnecessaryContains = 'warning',
+    reportAssertAlwaysTrue = 'warning',
+    reportSelfClsParameterName = 'error',
+    reportImplicitStringConcatenation = 'warning',
+    reportUnusedExpression = 'warning',
+    reportUnnecessaryTypeIgnoreComment = 'warning',
+    reportMatchNotExhaustive = 'error',
+    reportShadowedImports = 'error',
+  },
+}
 ---@type lspconfig.options
 local servers = {
   astro = {},
+  basedpyright = {
+    settings = {
+      basedpyright = {
+        analysis = pyright_analysis,
+      },
+    },
+  },
   bashls = {
     settings = {
       bashIde = {
@@ -144,50 +196,7 @@ local servers = {
         disableOrganizeImports = false,
       },
       python = {
-        analysis = {
-          indexing = true,
-          autoImportCompletions = true,
-          typeCheckingMode = 'basic', -- strict
-          autoSearchPaths = true,
-          diagnosticMode = 'openFilesOnly', -- workspace
-          useLibraryCodeForTypes = true,
-          diagnosticSeverityOverrides = {
-            -- NOTE: enable to get nvim-lspimport working
-            reportUndefinedVariable = 'error',
-            reportPropertyTypeMismatch = 'warning',
-            reportImportCycles = 'warning',
-            reportUnusedFunction = 'warning',
-            reportDuplicateImport = 'warning',
-            reportPrivateUsage = 'warning',
-            reportTypeCommentUsage = 'warning',
-            reportConstantRedefinition = 'error',
-            reportDeprecated = 'warning',
-            reportIncompatibleMethodOverride = 'warning',
-            reportIncompatibleVariableOverride = 'error',
-            reportInconsistentConstructor = 'error',
-            reportOverlappingOverload = 'error',
-            reportMissingSuperCall = 'error',
-            reportUnititializedInstanceVariable = 'error',
-            -- reportUnknownParameterType = 'warning',
-            -- reportUnknownArgumentType = 'warning',
-            reportUnknownLambdaType = 'warning',
-            -- reportUnknownVariableType = 'warning',
-            -- reportUnknownMemberType = 'warning',
-            reportMissingParameterType = 'warning',
-            -- reportMissingTypeArgument = 'warning',
-            reportUnnecessaryIsInstance = 'warning',
-            reportUnnecessaryCast = 'warning',
-            reportUnnecessaryComparison = 'warning',
-            reportUnnecessaryContains = 'warning',
-            reportAssertAlwaysTrue = 'warning',
-            reportSelfClsParameterName = 'error',
-            reportImplicitStringConcatenation = 'warning',
-            reportUnusedExpression = 'warning',
-            reportUnnecessaryTypeIgnoreComment = 'warning',
-            reportMatchNotExhaustive = 'error',
-            reportShadowedImports = 'error',
-          },
-        },
+        analysis = pyright_analysis,
       },
     },
   },
