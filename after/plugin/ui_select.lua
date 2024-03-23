@@ -175,6 +175,8 @@ if rvim.lsp.enable then
     ['Toggle Hover Diagnostics (go_to)'] = "lua require'rm.menus.lsp_select'.toggle_hover_diagnostics_go_to()",
     ['Toggle Format On Save'] = "lua require'rm.menus.lsp_select'.toggle_format_on_save()",
     ['Preview Code Actions'] = 'lua require("actions-preview").code_actions()',
+    ['Add Missing Imports'] = 'TSToolsAddMissingImports',
+    ['Remove Unused Imports'] = 'TSToolsRemoveUnusedImports',
   }
 
   local lsp_menu = function()
@@ -249,6 +251,8 @@ local command_palette_options = {
   ['Restart Editor'] = 'cq',
   ['Toggle Context Visualizer'] = 'NvimContextVtToggle',
   ['Share Code URL'] = 'NullPointer',
+  ['Time Spent In Neovim'] = 'Fleeting',
+  ['Time Since Neovim Config'] = 'lua require"configpulse".find_time()',
 }
 
 local command_palette_menu = function()
