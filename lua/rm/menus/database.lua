@@ -55,18 +55,18 @@ function M.pick_local_pg_db()
 end
 
 function M.open_saved_query()
-  local folder =
-    string.gsub(vim.g.db_ui_save_location, '~', vim.loop.os_homedir())
-  local sd = vim.loop.fs_scandir(folder)
+  local uv = vim.uv
+  local folder = string.gsub(vim.g.db_ui_save_location, '~', uv.os_homedir())
+  local sd = uv.fs_scandir(folder)
   local saved_queries = {}
   while true do
-    local name, type = vim.loop.fs_scandir_next(sd)
+    local name, type = uv.fs_scandir_next(sd)
     if name == nil then break end
     if type == 'directory' then
       local nested_path = folder .. '/' .. name
-      local nested_sd = vim.loop.fs_scandir(nested_path)
+      local nested_sd = uv.fs_scandir(nested_path)
       while true do
-        local nested_name, _ = vim.loop.fs_scandir_next(nested_sd)
+        local nested_name, _ = uv.fs_scandir_next(nested_sd)
         if nested_name == nil then break end
         table.insert(saved_queries, name .. '/' .. nested_name)
       end

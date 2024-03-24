@@ -122,8 +122,7 @@ local function nvim_lint_create_autocmds()
   -- lifted from https://github.com/stevearc/dotfiles/blob/master/.config/nvim/lua/plugins/lint.lua
   -- also see https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/plugins/linting.lua
   -- ref: https://github.com/emmanueltouzery/nvim_config/blob/main/init.lua#L32
-  local uv = vim.uv or vim.loop
-  local timer = assert(uv.new_timer())
+  local timer = assert(vim.uv.new_timer())
   local DEBOUNCE_MS = 500
   rvim.augroup('Lint', {
     event = { 'BufEnter', 'BufWritePost', 'TextChanged', 'InsertLeave' },
