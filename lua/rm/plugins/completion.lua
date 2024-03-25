@@ -219,7 +219,6 @@ return {
               item.kind = format_icon('')
               item.kind_hl_group = 'CmpItemKindCodeium'
             end
-            --
             if entry.source.name == 'nerdfonts' then
               item.kind = format_icon('')
               item.kind_hl_group = 'CmpItemKindNerdFont'
