@@ -54,7 +54,6 @@ return {
   {
     'axelvc/template-string.nvim',
     cond = rvim.treesitter.enable,
-    dependencies = { 'nvim-treesitter/nvim-treesitter' },
     ft = {
       'javascript',
       'javascriptreact',
@@ -64,6 +63,7 @@ return {
       'python',
     },
     opts = { remove_template_string = true },
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
   },
   {
     'turbio/bracey.vim',
@@ -94,9 +94,10 @@ return {
   --------------------------------------------------------------------------------
   {
     'razak17/tailwind-fold.nvim',
+    cond = rvim.treesitter.enable and false,
     opts = { min_chars = 5 },
-    dependencies = { 'nvim-treesitter/nvim-treesitter' },
     ft = { 'html', 'svelte', 'astro', 'vue', 'typescriptreact' },
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
   },
   {
     'MaximilianLloyd/tw-values.nvim',
@@ -106,6 +107,23 @@ return {
       { '<localleader>lt', '<cmd>TWValues<cr>', desc = 'tw-values: show values', },
     },
     opts = { border = border, show_unknown_classes = true },
+  },
+  {
+    'luckasRanarison/tailwind-tools.nvim',
+    cond = rvim.treesitter.enable and rvim.lsp.enable,
+    ft = { 'html', 'svelte', 'astro', 'vue', 'typescriptreact' },
+    cmd = {
+      'TailwindConcealToggle',
+      'TailwindColorToggle',
+      'TailwindSort',
+      'TailwindSortSelection',
+    },
+    opts = {
+      document_color = { enabled = true, inline_symbol = '󰝤 ' },
+      conceal = { enabled = true, symbol = '󱏿' },
+      custom_filetypes = {},
+    },
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
   },
   -- Python
   --------------------------------------------------------------------------------

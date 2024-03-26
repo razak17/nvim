@@ -177,6 +177,9 @@ if rvim.lsp.enable then
     ['Preview Code Actions'] = 'lua require("actions-preview").code_actions()',
     ['Add Missing Imports'] = 'TSToolsAddMissingImports',
     ['Remove Unused Imports'] = 'TSToolsRemoveUnusedImports',
+    ['Toggle Tailwind Conceal'] = 'TailwindConcealEnable',
+    ['Toggle Tailwind Colors'] = 'TailwindColorToggle',
+    ['Sort Tailwind Classes'] = 'TailwindSort',
   }
 
   local lsp_menu = function()
