@@ -9,6 +9,7 @@ local namespace = {
   debug = { enable = false },
   git = {},
   large_file_opened = false,
+  remote_sync = { enable = false },
   -- stylua: ignore
   media_files = {
     'jpg', 'png', 'jpeg', 'ico', 'gif', 'pdf', 'mp3', 'm4a', 'mp4', 'mkv',
