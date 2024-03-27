@@ -10,7 +10,13 @@ local icons = rvim.ui.codicons
 
 local M = {}
 
-function M.lsp_clients(bufnr) return vim.lsp.get_clients({ bufnr = bufnr }) end
+function M.lsp_clients(bufnr)
+  local clients = vim.lsp.get_clients({ bufnr = bufnr })
+  return vim.tbl_filter(
+    function(client) return client.name ~= 'copilot' end,
+    clients
+  )
+end
 
 local function lsp_notify(msg, type)
   vim.schedule(
@@ -19,18 +25,28 @@ local function lsp_notify(msg, type)
 end
 
 function M.format_buf()
+  if rvim.falsy(fn.executable('prettier')) then
+    vim.notify('prettier executable was not found!')
+    return
+  end
+
+  local ft = vim.bo.filetype
+  local parser = {
+    json = '--parser json',
+    typescript = '--parser typescript',
+    typescriptreact = '--parser typescript',
+    html = '--parser html',
+  }
+
   if #M.lsp_clients(0) > 0 then
     vim.lsp.buf.format()
-  elseif vim.bo.filetype == 'json' then
-    vim.cmd(':%!prettier --parser json')
-  elseif vim.bo.filetype == 'typescript' then
-    vim.cmd(':%!prettier --parser typescript')
-  elseif vim.bo.filetype == 'html' then
-    vim.cmd(':%!prettier --parser html')
-  elseif vim.bo.filetype == 'sql' then
+    return
+  elseif ft == 'sql' then
     vim.cmd(':%!npx sql-formatter --language postgresql')
+  elseif parser[ft] then
+    vim.cmd(':%!prettier ' .. parser[ft])
   else
-    print('No LSP and unhandled filetype ' .. vim.bo.filetype)
+    print('No LSP and unhandled filetype ' .. ft)
   end
 end
 

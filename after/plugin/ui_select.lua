@@ -256,6 +256,7 @@ local command_palette_options = {
   ['Share Code URL'] = 'NullPointer',
   ['Time Spent In Neovim'] = 'Fleeting',
   ['Time Since Neovim Config'] = 'lua require"configpulse".find_time()',
+    ['Format Code'] = "lua require'rm.menus.lsp_select'.format_buf()",
 }
 
 local command_palette_menu = function()
