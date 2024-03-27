@@ -153,6 +153,19 @@ local function textcase()
 end
 local function import() extensions('import').import(rvim.telescope.minimal_ui()) end
 local function whop() extensions('whop').whop(rvim.telescope.minimal_ui()) end
+local function live_grep_args()
+  extensions('live_grep_args').live_grep_args({
+    vimgrep_arguments = {
+      'rg',
+      '--color=never',
+      '--no-heading',
+      '--with-filename',
+      '--line-number',
+      '--column',
+      '--smart-case',
+    },
+  })
+end
 
 ---@param opts? table
 ---@return function
@@ -256,6 +269,7 @@ return {
       -- { '<leader>fb', b('current_buffer_fuzzy_find'), desc = 'find in current buffer', },
       { '<leader>fc', nvim_config, desc = 'nvim config' },
       { '<leader>fd', aerial, desc = 'aerial' },
+      { '<leader>fga', live_grep_args, desc = 'live grep args' },
       { '<leader>fgf', directory_files, desc = 'directory for find files' },
       { '<leader>fgg', directory_search, desc = 'directory for live grep' },
       { '<leader>fgh', git_file_history, desc = 'git file history' },
@@ -507,6 +521,28 @@ return {
             disable_devicons = false,
             open_buffer_indicators = { previous = '👀', others = '🙈' },
           },
+          live_grep_args = {
+            auto_quoting = true, -- enable/disable auto-quoting
+            -- define mappings, e.g.
+            mappings = { -- extend mappings
+              i = {
+                ['<M-y>'] = require('telescope-live-grep-args.actions').quote_prompt(),
+                ['<M-u>'] = require('telescope-live-grep-args.actions').quote_prompt({
+                  postfix = ' --iglob ',
+                }),
+              },
+              n = {
+                ['<M-y>'] = require('telescope-live-grep-args.actions').quote_prompt(),
+                ['<M-u>'] = require('telescope-live-grep-args.actions').quote_prompt({
+                  postfix = ' --iglob ',
+                }),
+              },
+            },
+            -- ... also accepts theme settings, for example:
+            -- theme = "dropdown", -- use dropdown theme
+            -- theme = { }, -- use own theme spec
+            -- layout_config = { mirror=true }, -- mirror preview pane
+          },
         },
       })
 
@@ -602,5 +638,11 @@ return {
     cmd = 'Telescope',
     config = function() require('telescope').load_extension('git_file_history') end,
     dependencies = { 'tpope/vim-fugitive' },
+  },
+  {
+    'nvim-telescope/telescope-live-grep-args.nvim',
+    cmd = 'Telescope',
+    version = '^1.0.0',
+    config = function() require('telescope').load_extension('live_grep_args') end,
   },
 }
