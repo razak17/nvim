@@ -8,12 +8,12 @@ end
 -- Toggles
 --------------------------------------------------------------------------------
 local toggle_options = {
-  ['Toggle Wrap'] = 'lua require"rm.menus.toggle_select".toggle_opt("wrap")',
-  ['Toggle Cursorline'] = 'lua require"rm.menus.toggle_select".toggle_opt("cursorline")',
-  ['Toggle Spell'] = 'lua require"rm.menus.toggle_select".toggle_opt("spell")',
-  ['Toggle Conceal Level'] = 'lua require"rm.menus.toggle_select".toggle_conceal_level()',
-  ['Toggle Conceal Cursor'] = 'lua require"rm.menus.toggle_select".toggle_conceal_cursor()',
-  ['Toggle Statusline'] = 'lua require"rm.menus.toggle_select".toggle_statusline()',
+  ['Toggle Wrap'] = 'lua require"rm.menus.toggle".toggle_opt("wrap")',
+  ['Toggle Cursorline'] = 'lua require"rm.menus.toggle".toggle_opt("cursorline")',
+  ['Toggle Spell'] = 'lua require"rm.menus.toggle".toggle_opt("spell")',
+  ['Toggle Conceal Level'] = 'lua require"rm.menus.toggle".toggle_conceal_level()',
+  ['Toggle Conceal Cursor'] = 'lua require"rm.menus.toggle".toggle_conceal_cursor()',
+  ['Toggle Statusline'] = 'lua require"rm.menus.toggle".toggle_statusline()',
   ['Toggle Aerial'] = 'AerialToggle',
   ['Toggle Ccc'] = 'CccHighlighterToggle',
   ['Toggle Pick'] = 'CccPick',
@@ -22,7 +22,7 @@ local toggle_options = {
   ['Toggle Lengthmatters'] = 'LengthmattersToggle',
   ['Toggle Twilight'] = 'Twilight',
   ['Toggle ZenMode'] = 'ZenMode',
-  ['Toggle Sunglasses'] = 'lua require"rm.toggle_select".toggle_sunglasses()',
+  ['Toggle Sunglasses'] = 'lua require"rm.toggle".toggle_sunglasses()',
   ['Toggle Zoom'] = 'lua require("mini.misc").zoom()',
   ['Toggle Relative Number'] = 'ToggleRelativeNumber',
   ['Toggle Undo Tree'] = 'UndotreeToggle',
@@ -65,16 +65,16 @@ if not rvim.plugins.enable then return end
 -- Files
 --------------------------------------------------------------------------------
 local file_options = {
-  ['Open File From Current Dir'] = "lua require'rm.menus.file_select'.open_file_cur_dir(false)",
-  ['Open File From Current Dir And Children'] = "lua require'rm.file_select'.open_file_cur_dir(true)",
+  ['Open File From Current Dir'] = "lua require'rm.menus.file'.open_file_cur_dir(false)",
+  ['Open File From Current Dir And Children'] = "lua require'rm.file'.open_file_cur_dir(true)",
   ['Reload All Files From Disk'] = 'lua rvim.reload_all()',
-  ['Copy File Path'] = "lua require'rm.menus.file_select'.copy_file_path()",
+  ['Copy File Path'] = "lua require'rm.menus.file'.copy_file_path()",
   ['Copy Full File Path'] = 'let @+ = expand("%:p")',
   ['Yank Last Ex Command'] = 'let @+=@:',
   ['Yank Last Message'] = [[let @+=substitute(execute('messages'), '\n\+', '\n', 'g')]],
-  ['Change Filetype'] = "lua require'rm.menus.file_select'.quick_set_ft()",
-  ['Search Code Deps'] = "lua require'rm.menus.file_select'.search_code_deps()",
-  ['Toggle File Diff'] = "lua require'rm.menus.file_select'.toggle_file_diff()",
+  ['Change Filetype'] = "lua require'rm.menus.file'.quick_set_ft()",
+  ['Search Code Deps'] = "lua require'rm.menus.file'.search_code_deps()",
+  ['Toggle File Diff'] = "lua require'rm.menus.file'.toggle_file_diff()",
   ['Toggle Interceptor'] = 'InterceptToggle',
   ['Re-open File With Sudo Permissions'] = 'SudaRead',
   ['Write File With Sudo Permissions'] = 'SudaWrite',
@@ -93,19 +93,19 @@ map(
 map(
   'n',
   '<leader>Ff',
-  ":lua require'rm.menus.file_select'.open_file_cur_dir(true)<CR>",
+  ":lua require'rm.menus.file'.open_file_cur_dir(true)<CR>",
   { desc = 'find files' }
 )
 map(
   'n',
   '<leader>Fs',
-  ":lua require'rm.menus.file_select'.live_grep_in_cur_dir(true)<CR>",
+  ":lua require'rm.menus.file'.live_grep_in_cur_dir(true)<CR>",
   { desc = 'live grep' }
 )
 map(
   'n',
   '<leader>Fw',
-  ":lua require'rm.menus.file_select'.find_word_in_cur_dir(true)<CR>",
+  ":lua require'rm.menus.file'.find_word_in_cur_dir(true)<CR>",
   { desc = 'find word' }
 )
 
@@ -114,24 +114,24 @@ map(
 --------------------------------------------------------------------------------
 if rvim.is_git_repo() then
   local git_options = {
-    ['Browse Branches'] = "lua require'rm.menus.git_select'.browse_branches()",
-    ['Stash Changes'] = "lua require'rm.menus.git_select'.do_stash()",
-    ['Browse Stashes'] = "lua require'rm.menus.git_select'.list_stashes()",
-    ['Browse Commits'] = "lua require'rm.menus.git_select'.browse_commits()",
-    ['Show Buffer Commits'] = "lua require'rm.menus.git_select'.browse_bcommits()",
-    ['Show Commit At Line'] = "lua require'rm.menus.git_select'.show_commit_at_line()",
-    ['Show Commit From Hash'] = "lua require'rm.menus.git_select'.display_commit_from_hash()",
-    ['Open File From Branch'] = "lua require'rm.menus.git_select'.open_file_git_branch()",
-    ['Search In Another Branch'] = "lua require'rm.menus.git_select'.search_git_branch()",
+    ['Browse Branches'] = "lua require'rm.menus.git'.browse_branches()",
+    ['Stash Changes'] = "lua require'rm.menus.git'.do_stash()",
+    ['Browse Stashes'] = "lua require'rm.menus.git'.list_stashes()",
+    ['Browse Commits'] = "lua require'rm.menus.git'.browse_commits()",
+    ['Show Buffer Commits'] = "lua require'rm.menus.git'.browse_bcommits()",
+    ['Show Commit At Line'] = "lua require'rm.menus.git'.show_commit_at_line()",
+    ['Show Commit From Hash'] = "lua require'rm.menus.git'.display_commit_from_hash()",
+    ['Open File From Branch'] = "lua require'rm.menus.git'.open_file_git_branch()",
+    ['Search In Another Branch'] = "lua require'rm.menus.git'.search_git_branch()",
     ['List Authors'] = 'CoAuthor',
-    ['Time Machine'] = "lua require'rm.menus.git_select'.time_machine()",
-    ['Browse Project History'] = "lua require'rm.menus.git_select'.project_history()",
+    ['Time Machine'] = "lua require'rm.menus.git'.time_machine()",
+    ['Browse Project History'] = "lua require'rm.menus.git'.project_history()",
     ['Browse File Commit History'] = 'DiffviewFileHistory %',
-    ['Pull Latest Changes'] = "lua require'rm.menus.git_select'.git_pull()",
-    ['Fetch Orign'] = "lua require'rm.menus.git_select'.fetch_origin()",
-    ['Conflict Show Base'] = "lua require'rm.menus.git_select'.diffview_conflict('base')",
-    ['Conflict Show Ours'] = "lua require'rm.menus.git_select'.diffview_conflict('ours')",
-    ['Conflict Show Theirs'] = "lua require'rm.menus.git_select'.diffview_conflict('theirs')",
+    ['Pull Latest Changes'] = "lua require'rm.menus.git'.git_pull()",
+    ['Fetch Orign'] = "lua require'rm.menus.git'.fetch_origin()",
+    ['Conflict Show Base'] = "lua require'rm.menus.git'.diffview_conflict('base')",
+    ['Conflict Show Ours'] = "lua require'rm.menus.git'.diffview_conflict('ours')",
+    ['Conflict Show Theirs'] = "lua require'rm.menus.git'.diffview_conflict('theirs')",
     ['Conflict Choose Ours'] = 'GitConflictChooseOurs',
     ['Conflict Choose Theirs'] = 'GitConflictChooseTheirs',
     ['Conflict Choose None'] = 'GitConflictChooseNone',
@@ -161,19 +161,19 @@ end
 --------------------------------------------------------------------------------
 if rvim.lsp.enable then
   local lsp_options = {
-    ['Format Code'] = "lua require'rm.menus.lsp_select'.format_buf()",
-    ['Eslint Fix'] = "lua require'rm.menus.lsp_select'.eslint_fix()",
-    ['LSP references'] = "lua require'rm.menus.lsp_select'.display_lsp_references()",
-    ['Call Heirarchy'] = "lua require'rm.menus.lsp_select'.display_call_hierarchy()",
-    ['Restart All LSPs'] = "lua require'rm.menus.lsp_select'.lsp_restart_all()",
-    ['Toggle Linting Globally'] = "lua require'rm.menus.lsp_select'.toggle_linting()",
-    ['Toggle Virtual Text'] = "lua require'rm.menus.lsp_select'.toggle_virtual_text()",
-    ['Toggle Virtual Lines'] = "lua require'rm.menus.lsp_select'.toggle_virtual_lines()",
-    ['Toggle Diagnostic Signs'] = "lua require'rm.menus.lsp_select'.toggle_signs()",
-    ['Toggle Diagnostics'] = "lua require'rm.menus.lsp_select'.toggle_diagnostics()",
-    ['Toggle Hover Diagnostics'] = "lua require'rm.menus.lsp_select'.toggle_hover_diagnostics()",
-    ['Toggle Hover Diagnostics (go_to)'] = "lua require'rm.menus.lsp_select'.toggle_hover_diagnostics_go_to()",
-    ['Toggle Format On Save'] = "lua require'rm.menus.lsp_select'.toggle_format_on_save()",
+    ['Format Code'] = "lua require'rm.menus.lsp'.format_buf()",
+    ['Eslint Fix'] = "lua require'rm.menus.lsp'.eslint_fix()",
+    ['LSP references'] = "lua require'rm.menus.lsp'.display_lsp_references()",
+    ['Call Heirarchy'] = "lua require'rm.menus.lsp'.display_call_hierarchy()",
+    ['Restart All LSPs'] = "lua require'rm.menus.lsp'.lsp_restart_all()",
+    ['Toggle Linting Globally'] = "lua require'rm.menus.lsp'.toggle_linting()",
+    ['Toggle Virtual Text'] = "lua require'rm.menus.lsp'.toggle_virtual_text()",
+    ['Toggle Virtual Lines'] = "lua require'rm.menus.lsp'.toggle_virtual_lines()",
+    ['Toggle Diagnostic Signs'] = "lua require'rm.menus.lsp'.toggle_signs()",
+    ['Toggle Diagnostics'] = "lua require'rm.menus.lsp'.toggle_diagnostics()",
+    ['Toggle Hover Diagnostics'] = "lua require'rm.menus.lsp'.toggle_hover_diagnostics()",
+    ['Toggle Hover Diagnostics (go_to)'] = "lua require'rm.menus.lsp'.toggle_hover_diagnostics_go_to()",
+    ['Toggle Format On Save'] = "lua require'rm.menus.lsp'.toggle_format_on_save()",
     ['Preview Code Actions'] = 'lua require("actions-preview").code_actions()',
     ['Add Missing Imports'] = 'TSToolsAddMissingImports',
     ['Remove Unused Imports'] = 'TSToolsRemoveUnusedImports',
@@ -256,7 +256,7 @@ local command_palette_options = {
   ['Share Code URL'] = 'NullPointer',
   ['Time Spent In Neovim'] = 'Fleeting',
   ['Time Since Neovim Config'] = 'lua require"configpulse".find_time()',
-    ['Format Code'] = "lua require'rm.menus.lsp_select'.format_buf()",
+  ['Format Code'] = "lua require'rm.menus.lsp'.format_buf()",
 }
 
 local command_palette_menu = function()
