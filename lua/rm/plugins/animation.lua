@@ -84,4 +84,10 @@ return {
     keys = { { '<localleader>Aa', redraw_buffer, desc = 'animation: start' } },
     dependencies = { 'anuvyklack/middleclass' },
   },
+  {
+    'letieu/hacker.nvim',
+    cond = not rvim.plugins.minimal and rvim.treesitter.enable,
+    event = 'VeryLazy',
+    cmd = { 'Hack', 'HackAuto', 'HackFollow' },
+  },
 }
