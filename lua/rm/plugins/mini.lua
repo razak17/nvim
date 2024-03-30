@@ -82,4 +82,10 @@ return {
       })
     end,
   },
+  {
+    'echasnovski/mini.diff',
+    event = { 'BufRead', 'BufNewFile' },
+    cond = false,
+    opts = {},
+  },
 }
