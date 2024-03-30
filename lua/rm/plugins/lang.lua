@@ -67,9 +67,19 @@ return {
   },
   {
     'turbio/bracey.vim',
-    cond = not rvim.plugins.minimal,
+    cond = not rvim.plugins.minimal and false,
     ft = 'html',
     build = 'npm install --prefix server',
+  },
+  {
+    'Diogo-ss/five-server.nvim',
+    cmd = { 'FiveServer' },
+    build = function() require('fs.utils.install')() end,
+    opts = {
+      notify = true,
+      bin = 'five-server',
+    },
+    config = function(_, opts) require('fs').setup(opts) end,
   },
   {
     'rest-nvim/rest.nvim',

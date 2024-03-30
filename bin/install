@@ -47,13 +47,13 @@ python_packages() {
 npm_deps() {
 	pkg_manager="$1"
 	if [ "$pkg_manager" = "npm" ]; then
-		npm install -g tree-sitter-cli neovim
+		npm install -g tree-sitter-cli neovim five-server
 	fi
 	if [ "$pkg_manager" = "pnpm" ]; then
-		pnpm install -g tree-sitter-cli neovim
+		pnpm install -g tree-sitter-cli neovim five-server
 	fi
 	if [ "$pkg_manager" = "yarn" ]; then
-		yarn global add tree-sitter-cli neovim
+		yarn global add tree-sitter-cli neovim five-server
 	fi
 }
 
