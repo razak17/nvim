@@ -10,13 +10,6 @@ return {
   'b0o/schemastore.nvim',
   -- { 'lewis6991/fileline.nvim', lazy = false },
   -- { 'axlebedev/vim-footprints', lazy = false },
-  { 'sammce/fleeting.nvim', lazy = false },
-  { 'ton/vim-bufsurf', lazy = false },
-  {
-    'CodingdAwn/vim-choosewin',
-    keys = { { '<leader>ow', '<Plug>(choosewin)', desc = 'choose window' } },
-    config = function() vim.g.choosewin_overlay_enable = 1 end,
-  },
   {
     'romainl/vim-cool',
     cond = false,
@@ -252,6 +245,7 @@ return {
         javascriptreact = js,
         typescript = js,
         typescriptreact = js,
+        tsx = js,
       })
     end,
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
