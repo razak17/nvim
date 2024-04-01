@@ -95,6 +95,11 @@ return {
   { 'mrquantumcodes/configpulse', lazy = false },
   { 'ton/vim-bufsurf', lazy = false },
   {
+    'blumaa/ohne-accidents',
+    cmd = { 'OhneAccidents' },
+    opts = { welcomeOnStartup = false },
+  },
+  {
     'CodingdAwn/vim-choosewin',
     keys = { { '<leader>ow', '<Plug>(choosewin)', desc = 'choose window' } },
     config = function() vim.g.choosewin_overlay_enable = 1 end,
