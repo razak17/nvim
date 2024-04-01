@@ -552,6 +552,9 @@ return {
       if rvim.is_available('nvim-notify') then l('notify') end
       if rvim.is_available('persisted.nvim') then l('persisted') end
       if rvim.is_available('project.nvim') then l('projects') end
+      if rvim.is_available('advanced-git-search.nvim') then
+        l('advanced_git_search')
+      end
 
       api.nvim_exec_autocmds(
         'User',
