@@ -58,7 +58,10 @@ return {
       m = { name = 'Marks' },
       n = { name = 'Notify' },
       o = { name = 'UI select' },
-      p = { name = 'Debugprint' },
+      p = {
+        name = 'Debugprint',
+        l = { name = 'Chainsaw' },
+      },
       r = { name = 'Run' },
       s = { name = 'Splits' },
       t = { name = 'Testing' },
