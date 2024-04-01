@@ -20,7 +20,11 @@ return {
           },
         },
         enable_get_fold_virt_text = true,
-        close_fold_kinds = { 'imports', 'comment' },
+        close_fold_kinds_for_ft = {
+          default = { 'imports', 'comment' },
+          json = { 'array' },
+          c = { 'comment', 'region' },
+        },
         provider_selector = function(_, ft)
           -- lsp better?
           return ft_map[ft] or { 'treesitter', 'indent' }
