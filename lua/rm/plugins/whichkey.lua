@@ -90,6 +90,7 @@ return {
       m = { name = 'Markdown' },
       n = { name = 'Neorg' },
       o = { name = 'Obsidian' },
+      p = { name = 'Null Pointer' },
       q = { name = 'NeoComposer' },
       r = { name = 'Rest' },
       s = { name = 'Strict' },
