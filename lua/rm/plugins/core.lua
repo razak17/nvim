@@ -150,6 +150,39 @@ return {
     },
   },
   {
+    'chrisgrieser/nvim-chainsaw',
+    config = function()
+      require('chainsaw').setup({ marker = '[🪲 chainsaw]' })
+    end,
+    keys = {
+      {
+        '<leader>pll',
+        function() require('chainsaw').messageLog() end,
+        desc = 'Message Log',
+      },
+      {
+        '<leader>plo',
+        function() require('chainsaw').objectLog() end,
+        desc = 'Object Log',
+      },
+      {
+        '<leader>plv',
+        function() require('chainsaw').variableLog() end,
+        desc = 'Variable Log',
+      },
+      {
+        '<leader>plb',
+        function() require('chainsaw').beepLog() end,
+        desc = 'Beep Log',
+      },
+      {
+        '<leader>plr',
+        function() require('chainsaw').removeLogs() end,
+        desc = 'Remove Logs',
+      },
+    },
+  },
+  {
     'kungfusheep/randomword.nvim',
     event = 'VeryLazy',
     config = function()
