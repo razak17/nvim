@@ -100,6 +100,11 @@ return {
     opts = { welcomeOnStartup = false },
   },
   {
+    'nmac427/guess-indent.nvim',
+    event = 'BufReadPost',
+    config = function() require('guess-indent').setup({}) end,
+  },
+  {
     'CodingdAwn/vim-choosewin',
     keys = { { '<leader>ow', '<Plug>(choosewin)', desc = 'choose window' } },
     config = function() vim.g.choosewin_overlay_enable = 1 end,

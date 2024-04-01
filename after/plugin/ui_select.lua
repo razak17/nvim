@@ -255,6 +255,7 @@ local command_palette_options = {
   ['Toggle Context Visualizer'] = 'NvimContextVtToggle',
   ['Share Code URL'] = 'NullPointer',
   ['Time Spent In Neovim'] = 'Fleeting',
+  ['Days Without Configuring Neovim'] = 'OhneAccidents',
   ['Time Since Neovim Config'] = 'lua require"configpulse".find_time()',
   ['Format Code'] = "lua require'rm.menus.lsp'.format_buf()",
 }
