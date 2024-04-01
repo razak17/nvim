@@ -150,6 +150,40 @@ return {
     },
   },
   {
+    'kungfusheep/randomword.nvim',
+    event = 'VeryLazy',
+    config = function()
+      local js = {
+        default = 'console.log("<word>", <cursor>)',
+        line = 'console.log("<word>")',
+      }
+      require('randomword').setup({
+        templates = {
+          lua = {
+            default = 'print(string.format("<word> %s", <cursor>))',
+            line = "print('<word>')",
+          },
+          go = {
+            default = 'fmt.Printf("<word>: %v \\n", <cursor>)',
+            line = 'fmt.Println("<word>")',
+          },
+          python = {
+            default = 'print(string.format("<word> %s", <cursor>))',
+            line = "print('<word>')",
+          },
+          javascript = js,
+          javascriptreact = js,
+          typescript = js,
+          typescriptreact = js,
+        },
+        keybinds = {
+          default = '<leader>pd',
+          line = '<leader>pl',
+        },
+      })
+    end,
+  },
+  {
     'andrewferrier/debugprint.nvim',
     cond = rvim.treesitter.enable,
     keys = {
