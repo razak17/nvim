@@ -331,22 +331,24 @@ xnoremap(
 --------------------------------------------------------------------------------
 -- GX - replicate netrw functionality
 --------------------------------------------------------------------------------
-map('n', 'gx', function()
-  -- ref: https://github.com/theopn/theovim/blob/main/lua/core.lua#L178
-  -- Find the URL in the current line and open it in a browser
-  local line = vim.fn.getline('.')
-  local url = string.match(line, '[a-z]*://[^ >,;)"\']*')
-  if url then return rvim.open(url, true) end
-  local file = fn.expand('<cfile>')
-  if not file or fn.isdirectory(file) > 0 then return vim.cmd.edit(file) end
-  if file:match('http[s]?://') then return rvim.open(file, true) end
-  -- consider anything that looks like string/string a github link
-  local plugin_url_regex = '[%a%d%-%.%_]*%/[%a%d%-%.%_]*'
-  local link = string.match(file, plugin_url_regex)
-  if link then
-    return rvim.open(fmt('https://www.github.com/%s', link), true)
-  end
-end, { desc = 'open link' })
+if rvim.use_local_gx then
+  map('n', 'gx', function()
+    -- ref: https://github.com/theopn/theovim/blob/main/lua/core.lua#L178
+    -- Find the URL in the current line and open it in a browser
+    local line = vim.fn.getline('.')
+    local url = string.match(line, '[a-z]*://[^ >,;)"\']*')
+    if url then return rvim.open(url, true) end
+    local file = fn.expand('<cfile>')
+    if not file or fn.isdirectory(file) > 0 then return vim.cmd.edit(file) end
+    if file:match('http[s]?://') then return rvim.open(file, true) end
+    -- consider anything that looks like string/string a github link
+    local plugin_url_regex = '[%a%d%-%.%_]*%/[%a%d%-%.%_]*'
+    local link = string.match(file, plugin_url_regex)
+    if link then
+      return rvim.open(fmt('https://www.github.com/%s', link), true)
+    end
+  end, { desc = 'open link' })
+end
 --------------------------------------------------------------------------------
 nnoremap('<leader>lq', rvim.list.qf.toggle, { desc = 'toggle quickfix list' })
 nnoremap('<leader>lL', rvim.list.loc.toggle, { desc = 'toggle location list' })

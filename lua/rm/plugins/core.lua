@@ -105,6 +105,16 @@ return {
     config = function() vim.g.choosewin_overlay_enable = 1 end,
   },
   {
+    'chrishrb/gx.nvim',
+    cond = not rvim.use_local_gx,
+    keys = { { 'gx', '<cmd>Browse<cr>', mode = { 'n', 'x' } } },
+    cmd = { 'Browse' },
+    init = function() vim.g.netrw_nogx = 1 end,
+    opts = {},
+    submodules = false,
+    dependencies = { 'nvim-lua/plenary.nvim' },
+  },
+  {
     'kevinhwang91/nvim-fundo',
     event = { 'BufRead', 'BufNewFile' },
     build = function() require('fundo').install() end,
