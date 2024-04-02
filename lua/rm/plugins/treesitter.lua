@@ -248,6 +248,32 @@ return {
       require('nvim_context_vt').setup(opts)
       vim.cmd([[NvimContextVtToggle]])
     end,
-    dependencies = 'nvim-treesitter',
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
+  },
+  {
+    'drybalka/tree-climber.nvim',
+    keys = {
+      {
+        '<localleader>pK',
+        function(opts) require('tree-climber').goto_parent(opts) end,
+        mode = { 'n', 'o' },
+      },
+      {
+        '<localleader>pL',
+        function(opts) require('tree-climber').goto_next(opts) end,
+        mode = { 'n', 'o' },
+      },
+      {
+        '<localleader>pH',
+        function(opts) require('tree-climber').goto_prev(opts) end,
+        mode = { 'n', 'o' },
+      },
+      {
+        '<localleader>pJ',
+        function(opts) require('tree-climber').goto_child(opts) end,
+        mode = { 'n', 'o' },
+      },
+    },
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
   },
 }
