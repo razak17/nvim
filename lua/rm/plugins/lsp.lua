@@ -603,6 +603,38 @@ return {
     'folke/trouble.nvim',
     cond = rvim.lsp.enable,
     cmd = { 'Trouble', 'TroubleToggle', 'ToggleClose', 'ToggleRefresh' },
+    keys = {
+      {
+        '<leader>xx',
+        '<cmd>TroubleToggle<cr>',
+        { silent = true, desc = 'Toggle Trouble' },
+      },
+      {
+        '<leader>xw',
+        '<cmd>Trouble workspace_diagnostics<cr>',
+        { silent = true, desc = 'Workspace Diagnostics' },
+      },
+      {
+        '<leader>xd',
+        '<cmd>Trouble document_diagnostics<cr>',
+        { silent = true, desc = 'Document Diagnostics' },
+      },
+      {
+        '<leader>xl',
+        '<cmd>Trouble loclist<cr>',
+        { silent = true, desc = 'Loclist' },
+      },
+      {
+        '<leader>xq',
+        '<cmd>Trouble quickfix<cr>',
+        { silent = true, desc = 'Quickfix' },
+      },
+      {
+        '<leader>xr',
+        '<cmd>Trouble lsp_references<cr>',
+        { silent = true, desc = 'LSP References' },
+      },
+    },
     opts = {
       fold_open = icons.misc.chevron_down,
       fold_closed = icons.misc.chevron_right,

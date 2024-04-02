@@ -29,7 +29,7 @@ return {
     cmd = { 'BDelete', 'BWipeout' },
     keys = {
       { '<leader>c', '<Cmd>BDelete this<CR>', desc = 'buffer delete' },
-      { '<leader>x', '<Cmd>BDelete this<CR><Cmd>q<CR>', desc = 'close & exit' },
+      -- { '<leader>x', '<Cmd>BDelete this<CR><Cmd>q<CR>', desc = 'close & exit' },
     },
   },
   {
