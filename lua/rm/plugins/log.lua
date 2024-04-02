@@ -8,27 +8,27 @@ return {
       {
         '<leader>pll',
         function() require('chainsaw').messageLog() end,
-        desc = 'Message Log',
+        desc = 'message log',
       },
       {
         '<leader>plo',
         function() require('chainsaw').objectLog() end,
-        desc = 'Object Log',
+        desc = 'object log',
       },
       {
-        '<leader>plv',
+        '<leader>plp',
         function() require('chainsaw').variableLog() end,
-        desc = 'Variable Log',
+        desc = 'variable log',
       },
       {
         '<leader>plb',
         function() require('chainsaw').beepLog() end,
-        desc = 'Beep Log',
+        desc = 'beep log',
       },
       {
         '<leader>plr',
         function() require('chainsaw').removeLogs() end,
-        desc = 'Remove Logs',
+        desc = 'remove logs',
       },
     },
   },
