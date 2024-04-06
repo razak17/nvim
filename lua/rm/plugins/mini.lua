@@ -88,4 +88,9 @@ return {
     cond = false,
     opts = {},
   },
+  {
+    'echasnovski/mini.move',
+    event = 'VeryLazy',
+    opts = {},
+  },
 }
