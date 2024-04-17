@@ -143,6 +143,7 @@ if rvim.is_git_repo() then
     ['Open Repo In GitHub'] = 'OpenInGHRepo',
     ['View Branch Graph'] = 'Flog',
     ['Git Search'] = 'AdvancedGitSearch',
+    ['Toggle Blame'] = 'BlameToggle',
   }
 
   local git_menu = function()

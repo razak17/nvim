@@ -12,7 +12,7 @@ return {
     'NeogitOrg/neogit',
     cond = enabled,
     cmd = 'Neogit',
-    branch =  'nightly',
+    branch = 'nightly',
     dependencies = { 'nvim-lua/plenary.nvim', 'sindrets/diffview.nvim' },
     -- stylua: ignore
     keys = {
@@ -299,6 +299,11 @@ return {
       { '<leader>gbp', '<Cmd>GhBlameCurrentLine<CR>', desc = 'blame current line (PR)' },
     },
     dependencies = { 'nvim-lua/plenary.nvim', 'MunifTanjim/nui.nvim' },
+  },
+  {
+    'FabijanZulj/blame.nvim',
+    cmd = { 'BlameToggle' },
+    config = function() require('blame').setup() end,
   },
   {
     'dlvhdr/gh-addressed.nvim',
