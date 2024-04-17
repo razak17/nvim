@@ -233,6 +233,8 @@ end
 --------------------------------------------------------------------------------
 -- Command Palette
 --------------------------------------------------------------------------------
+local setreg = vim.fn.setreg
+local expand = vim.fn.expand
 local command_palette_options = {
   ['Command History'] = 'Telescope command_history',
   ['Commands'] = 'Telescope commands',
@@ -259,6 +261,12 @@ local command_palette_options = {
   ['Days Without Configuring Neovim'] = 'OhneAccidents',
   ['Time Since Neovim Config'] = 'lua require"configpulse".find_time()',
   ['Format Code'] = "lua require'rm.menus.lsp'.format_buf()",
+  ['Copy File Name'] = function() setreg('+', vim.fn.expand('%:t')) end,
+  ['Copy File Absolute Path'] = function() setreg('+', vim.fn.expand('%:p')) end,
+  ['Copy File Absolute Path (No File Name)'] = function()
+    setreg('+', expand('%:p:h'))
+  end,
+  ['Copy File Home Path'] = function() setreg('+', expand('%:~')) end,
 }
 
 local command_palette_menu = function()
