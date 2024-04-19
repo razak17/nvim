@@ -339,6 +339,12 @@ return {
     cmd = 'Play15puzzle',
     opts = {},
   },
+ {
+    "willothy/strat-hero.nvim",
+    opts = {},
+    cmd = "StratHero",
+    dependencies = { "MunifTanjim/nui.nvim" },
+  },
   -- Share Code
   --------------------------------------------------------------------------------
   { 'TobinPalmer/rayso.nvim', cmd = { 'Rayso' }, opts = {} },
