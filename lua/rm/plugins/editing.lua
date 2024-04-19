@@ -291,7 +291,7 @@ return {
       local ok, integration =
         pcall(require, 'ts_context_commentstring.integrations.comment_nvim')
       if ok then opts.pre_hook = integration.create_pre_hook() end
-    end,
+	end,
   },
   {
     's1n7ax/nvim-comment-frame',

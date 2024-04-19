@@ -3,7 +3,7 @@ local fmt = string.format
 return {
   {
     'goolord/alpha-nvim',
-    cond = not rvim.plugins.minimal,
+    cond = not rvim.plugins.minimal and rvim.treesitter.enable,
     event = 'VimEnter',
     keys = { { '<leader>;', '<cmd>Alpha<CR>', desc = 'alpha' } },
     config = function()
@@ -144,8 +144,14 @@ return {
   },
   {
     'startup-nvim/startup.nvim',
-    cond = rvim.plugins.minimal,
+    cond = rvim.plugins.minimal or not rvim.treesitter.enable and false,
     lazy = false,
     config = function() require('startup').setup({ theme = 'linguini' }) end,
+  },
+  {
+    'letieu/btw.nvim',
+    cond = rvim.plugins.minimal or not rvim.treesitter.enable,
+    lazy = false,
+    config = function() require('btw').setup() end,
   },
 }
