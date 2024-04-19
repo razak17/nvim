@@ -148,8 +148,8 @@ return {
     event = { 'BufRead', 'BufNewFile' },
     -- stylua: ignore
     keys = {
-      { 'H', '<Cmd>lua require("before").jump_to_last_edit()<CR>', desc = 'before: jump to last edit' },
-      { 'L', '<Cmd>lua require("before").jump_to_next_edit()<CR>', desc = 'before: jump to next edit' },
+      { '<localleader>bh', '<Cmd>lua require("before").jump_to_last_edit()<CR>', desc = 'before: jump to last edit' },
+      { '<localleader>bl', '<Cmd>lua require("before").jump_to_next_edit()<CR>', desc = 'before: jump to next edit' },
     },
     opts = {},
     config = function(_, opts) require('before').setup(opts) end,
