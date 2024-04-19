@@ -504,6 +504,12 @@ return {
     end,
   },
   {
+    'brenoprata10/nvim-highlight-colors',
+    event = { 'BufRead' },
+    cmd = { 'HighlightColors' },
+    opts = {},
+  },
+  {
     'shellRaining/hlchunk.nvim',
     cond = not minimal and false,
     event = 'BufRead',
