@@ -308,7 +308,8 @@ return {
       { '<leader>fvh', b('highlights'), desc = 'highlights' },
       { '<leader>fvo', b('vim_options'), desc = 'vim options' },
       { '<leader>fvr', b('registers'), desc = 'registers' },
-      { '<leader>fy', b('spell_suggest'), desc = 'spell suggest' },
+      { '<leader>fY', b('spell_suggest'), desc = 'spell suggest' },
+      { '<leader>fy', '<Cmd>Telescope telescope-yaml<CR>', desc = 'yaml' },
       -- LSP
       { '<leader>ld', b('lsp_document_symbols'), desc = 'telescope: document symbols', },
       { '<leader>lI', b('lsp_implementations'), desc = 'telescope: search implementation', },
@@ -647,5 +648,10 @@ return {
     cmd = 'Telescope',
     version = '^1.0.0',
     config = function() require('telescope').load_extension('live_grep_args') end,
+  },
+  {
+    'dapc11/telescope-yaml.nvim',
+    cmd = 'Telescope',
+    config = function() require('telescope').load_extension('telescope-yaml') end,
   },
 }
