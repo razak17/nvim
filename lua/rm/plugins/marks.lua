@@ -99,19 +99,36 @@ return {
   {
     'razak17/harpoon',
     branch = 'harpoon2',
-    -- stylua: ignore
-    config = function()
-      local harpoon = require('harpoon')
-      harpoon:setup({ borderchars = ui.border.common })
-      map("n", "<M-;>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
-      map('n', '<localleader>ha', function() harpoon:list():append() end, { desc = 'harpoon: add'})
-      map('n', '<localleader>hn', function() harpoon:list():next() end, { desc = 'harpoon: next'})
-      map('n', '<localleader>hp', function() harpoon:list():prev() end, { desc = 'harpoon: prev'})
-      map('n', '<M-1>', function() harpoon:list():select(1) end)
-      map('n', '<M-2>', function() harpoon:list():select(2) end)
-      map('n', '<M-3>', function() harpoon:list():select(3) end)
-      map('n', '<M-4>', function() harpoon:list():select(4) end)
+    keys = function()
+      local keys = {
+        {
+          '<M-;>',
+          function()
+            local harpoon = require('harpoon')
+            harpoon.ui:toggle_quick_menu(harpoon:list())
+          end,
+          desc = 'toggle quick menu',
+        },
+        -- stylua: ignore
+        { '<localleader>ha', function() require('harpoon'):list():append() end, desc = 'harpoon: add' },
+        { '<localleader>hn', function() require('harpoon').list():next() end, desc = 'harpoon: next' },
+        { '<localleader>hp', function() require('harpoon').list():prev() end, desc = 'harpoon: prev' },
+      }
+
+      for i = 1, 5 do
+        table.insert(keys, {
+          '<localleader>h' .. i,
+          function() require('harpoon'):list():select(i) end,
+          desc = 'harpoon to file ' .. i,
+        })
+      end
+      return keys
     end,
+    opts = {
+      menu = {
+        width = vim.api.nvim_win_get_width(0) - 4,
+      },
+    },
   },
   {
     'otavioschwanck/arrow.nvim',
