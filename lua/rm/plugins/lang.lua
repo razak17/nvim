@@ -66,6 +66,17 @@ return {
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
   },
   {
+    'joeldotdias/jsdoc-switch.nvim',
+    ft = { 'javascript', 'javascriptreact' },
+    -- stylua: ignore
+    keys = {
+      { '<leader>jds', '<cmd>JsdocSwitchStart<CR>', desc = 'jsdoc-switch: start' },
+      { '<leader>jdt', '<cmd>JsdocSwitchToggle<CR>', desc = 'jsdoc-switch: toggle' },
+      { '<leader>jdn', '<cmd>JsdocSwitchStop<CR>', desc = 'jsdoc-switch: stop' },
+    },
+    opts = { auto_set_keys = false, notify = false },
+  },
+  {
     'turbio/bracey.vim',
     cond = not rvim.plugins.minimal and false,
     ft = 'html',
