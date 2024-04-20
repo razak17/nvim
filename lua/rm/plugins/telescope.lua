@@ -279,7 +279,7 @@ return {
       { '<leader>fH', helpgrep, desc = 'helpgrep' },
       { '<leader>fi', import, desc = 'import' },
       { '<leader>fI', b('builtin', { include_extensions = true }), desc = 'builtins', },
-      { '<leader>fj', whop, desc = 'whop' },
+      { '<leader>fJ', whop, desc = 'whop' },
       { '<leader>fk', b('keymaps'), desc = 'autocommands' },
       { '<leader>fl', lazy, desc = 'surf plugins' },
       { '<leader>fL', luasnips, desc = 'luasnip: available snippets' },
@@ -653,5 +653,14 @@ return {
     'dapc11/telescope-yaml.nvim',
     cmd = 'Telescope',
     config = function() require('telescope').load_extension('telescope-yaml') end,
+  },
+  {
+    'Myzel394/jsonfly.nvim',
+    cond = rvim.lsp.enable,
+    cmd = 'Telescope',
+    ft = { 'json' },
+    keys = {
+      { '<leader>fj', '<Cmd>Telescope jsonfly<cr>', desc = 'Open json(fly)' },
+    },
   },
 }
