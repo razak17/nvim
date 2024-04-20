@@ -16,8 +16,8 @@ local M = vim.lsp.protocol.Methods
 local conform = rvim.is_available('conform.nvim')
 
 local diagnostic = vim.diagnostic
-local augroup, icons, border =
-  rvim.augroup, rvim.ui.codicons.lsp, rvim.ui.current.border
+local augroup, icons, lsp_icons, border =
+  rvim.augroup, rvim.ui.icons, rvim.ui.codicons.lsp, rvim.ui.current.border
 
 local format_exclusions = {
   format_on_save = { 'zsh' },
@@ -139,6 +139,28 @@ end
 
 lsp.handlers['textDocument/references'] = function(_, _, _)
   require('telescope.builtin').lsp_references()
+end
+
+--------------------------------------------------------------------------------
+--  Truncate typescript inlay hints
+--------------------------------------------------------------------------------
+-- Workaround for truncating long TypeScript inlay hints.
+-- TODO: Remove this if https://github.com/neovim/neovim/issues/27240 gets addressed.
+local inlay_hint_handler = lsp.handlers[M.textDocument_inlayHint]
+lsp.handlers[M.textDocument_inlayHint] = function(err, result, ctx, config)
+  local client = lsp.get_client_by_id(ctx.client_id)
+  if client and client.name == 'typescript-tools' then
+    result = vim.iter.map(function(hint)
+      local label = hint.label ---@type string
+      if label:len() >= 30 then
+        label = label:sub(1, 29) .. icons.misc.ellipsis
+      end
+      hint.label = label
+      return hint
+    end, result)
+  end
+
+  inlay_hint_handler(err, result, ctx, config)
 end
 
 --------------------------------------------------------------------------------
@@ -512,10 +534,10 @@ local max_height = math.min(math.floor(vim.o.lines * 0.3), 30)
 ---@param kind? string
 local function get_signs(kind)
   return {
-    [S.WARN] = kind and fmt('DiagnosticSignWarn%s', kind) or icons.warn,
-    [S.INFO] = kind and fmt('DiagnosticSignInfo%s', kind) or icons.info,
-    [S.HINT] = kind and fmt('DiagnosticSignHint%s', kind) or icons.hint,
-    [S.ERROR] = kind and fmt('DiagnosticSignError%s', kind) or icons.error,
+    [S.WARN] = kind and fmt('DiagnosticSignWarn%s', kind) or lsp_icons.warn,
+    [S.INFO] = kind and fmt('DiagnosticSignInfo%s', kind) or lsp_icons.info,
+    [S.HINT] = kind and fmt('DiagnosticSignHint%s', kind) or lsp_icons.hint,
+    [S.ERROR] = kind and fmt('DiagnosticSignError%s', kind) or lsp_icons.error,
   }
 end
 
@@ -549,7 +571,7 @@ diagnostic.config({
     source = true,
     prefix = function(diag)
       local level = diagnostic.severity[diag.severity]
-      local prefix = fmt('%s ', icons[level:lower()])
+      local prefix = fmt('%s ', lsp_icons[level:lower()])
       return prefix, 'Diagnostic' .. level:gsub('^%l', string.upper)
     end,
   },
