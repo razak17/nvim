@@ -115,9 +115,10 @@ return {
   --------------------------------------------------------------------------------
   {
     'razak17/tailwind-fold.nvim',
-    cond = rvim.treesitter.enable and false,
+    branch = 'nightly',
+    cond = rvim.treesitter.enable,
     opts = { min_chars = 5 },
-    ft = { 'html', 'svelte', 'astro', 'vue', 'typescriptreact' },
+    ft = { 'html', 'svelte', 'astro', 'vue', 'typescriptreact', 'php', 'blade' },
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
   },
   {
@@ -131,8 +132,9 @@ return {
   },
   {
     'luckasRanarison/tailwind-tools.nvim',
-    cond = rvim.treesitter.enable and rvim.lsp.enable,
-    ft = { 'html', 'svelte', 'astro', 'vue', 'typescriptreact' },
+    cond = rvim.treesitter.enable and rvim.lsp.enable and false,
+    ft = { 'html', 'svelte', 'astro', 'vue', 'typescriptreact', 'php', 'blade' },
+    event = { 'BufRead' },
     cmd = {
       'TailwindConcealToggle',
       'TailwindColorToggle',
