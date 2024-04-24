@@ -16,6 +16,7 @@ local toggle_options = {
   ['Toggle Statusline'] = 'lua require"rm.menus.toggle".toggle_statusline()',
   ['Toggle Aerial'] = 'AerialToggle',
   ['Toggle Ccc'] = 'CccHighlighterToggle',
+  ['Toggle Colors'] = 'HighlightColors Toggle',
   ['Toggle Pick'] = 'CccPick',
   ['Toggle Cloak'] = 'CloakToggle',
   ['Toggle SpOnGeBoB'] = 'SpOnGeBoBiFy',
