@@ -198,7 +198,7 @@ augroup('WinBehavior', {
 })
 
 local cursorline_exclusions =
-  { 'alpha', 'startup', 'TelescopePrompt', 'CommandTPrompt', 'DressingInput' }
+  { 'alpha', 'startup', 'starter', 'TelescopePrompt', 'CommandTPrompt', 'DressingInput' }
 ---@param buf number
 ---@return boolean
 local function should_show_cursorline(buf)
@@ -336,7 +336,7 @@ if is_available('mini.indentscope') then
       local ignore_filetypes = {
         'aerial', 'dashboard', 'help', 'lazy', 'leetcode.nvim', 'mason', 'neo-tree',
         'NvimTree', 'neogitstatus', 'notify', 'startify', 'toggleterm', 'Trouble',
-        'fzf', 'alpha', 'dbout', 'neo-tree-popup', 'log', 'gitcommit', 'txt', 'git',
+        'fzf', 'alpha', 'starter', 'dbout', 'neo-tree-popup', 'log', 'gitcommit', 'txt', 'git',
         'flutterToolsOutline', 'undotree', 'markdown', 'norg', 'org', 'orgagenda',
       }
       if vim.tbl_contains(ignore_filetypes, vim.bo.filetype) then
