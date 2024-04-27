@@ -119,7 +119,7 @@ return {
       -- { '<leader>fh', fzf_lua.oldfiles, desc = 'Most (f)recently used files' },
       -- { '<leader>fm', fzf_lua.changes, desc = 'changes' },
       -- { '<leader>fo', fzf_lua.buffers, desc = 'buffers' },
-      -- { '<leader>fr', fzf_lua.resume, desc = 'resume picker' },
+      { '<leader>f<', fzf_lua.resume, desc = 'resume picker' },
       { '<leader>fs', fzf_lua.live_grep, desc = 'live grep' },
       -- { '<leader>fw', fzf_lua.grep_cword, desc = 'grep cword' },
       -- { '<leader>fva', fzf_lua.autocmds, desc = 'autocommands' },
