@@ -13,6 +13,7 @@ return {
     cond = enabled,
     cmd = 'Neogit',
     branch = 'nightly',
+    commit = '023a515fa33904e140f3f20a83e6fb1c7b9ffffe',
     dependencies = { 'nvim-lua/plenary.nvim', 'sindrets/diffview.nvim' },
     -- stylua: ignore
     keys = {
