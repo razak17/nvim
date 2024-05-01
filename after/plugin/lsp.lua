@@ -118,7 +118,7 @@ end
 -- from https://github.com/seblj/dotfiles/blob/014fd736413945c888d7258b298a37c93d5e97da/nvim/lua/config/lspconfig/handlers.lua
 
 local function jump_to_first_definition(result, client)
-  if vim.tbl_islist(result) then
+  if vim.islist(result) then
     local results = lsp.util.locations_to_items(result, client.offset_encoding)
     local lnum, filename = results[1].lnum, results[1].filename
     for _, val in pairs(results) do
@@ -214,7 +214,7 @@ local function setup_mappings(client, bufnr)
       '<leader>lh',
       function()
         local enabled = lsp.inlay_hint.is_enabled(0)
-        lsp.inlay_hint.enable(0, not enabled)
+        lsp.inlay_hint.enable(not enabled, { bufnr = 0 })
       end,
       desc = 'toggle inlay hints',
       M.textDocument_inlayHint,
@@ -404,7 +404,7 @@ local function setup_autocommands(client, buf)
   end
 
   if client.supports_method('textDocument/inlayHint', { bufnr = buf }) then
-    vim.lsp.inlay_hint.enable(buf, false)
+    lsp.inlay_hint.enable(false, { bufnr = 0 })
   end
 
   if client.supports_method(M.textDocument_formatting) then
