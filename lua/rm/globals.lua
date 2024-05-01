@@ -12,9 +12,7 @@ function join_paths(...)
   return result
 end
 
-function rvim.sync(path)
-  return fmt('%s/Notes/%s', fn.expand('$SYNC_DIR'), path)
-end
+function rvim.sync(path) return fmt('%s/Notes/%s', fn.expand('$SYNC_DIR'), path) end
 
 --------------------------------------------------------------------------------
 -- Utils
@@ -360,7 +358,7 @@ function rvim.open(path, notify)
   notify = notify or false
   if notify then vim.notify(fmt('Opening %s', path)) end
   local res = vim.ui.open(path)
-  if not res or res.code ~= 0 then
+  if not res ~= 0 then
     local open_command = vim.g.os == 'Darwin' and 'open' or 'xdg-open'
     vim.system({ open_command, path }, { detach = true })
   end
@@ -371,9 +369,17 @@ end
 ---@param notify? boolean
 function rvim.open_media(path, notify)
   local file_extension = path:match('^.+%.(.+)$')
-  local ext = { 'mp3', 'm4a', 'mp4', 'mkv' }
-  if vim.list_contains(ext, file_extension) then
-    vim.system({ 'mpv', path }, { detach = true })
+  local is_audio_or_video =
+    vim.list_contains({ 'mp3', 'm4a', 'mp4', 'mkv' }, file_extension)
+  local is_doc = vim.list_contains({ 'pdf' }, file_extension)
+  local is_img =
+    vim.list_contains({ 'jpg', 'png', 'jpeg', 'ico', 'gif' }, file_extension)
+  local exe = nil
+  if is_audio_or_video then exe = 'mpv' end
+  if is_doc then exe = 'zathura' end
+  if is_img then exe = 'sxiv' end
+  if exe and fn.executable(exe) then
+    vim.system({ exe, path }, { detach = true })
     return
   end
 

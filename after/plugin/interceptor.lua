@@ -30,7 +30,7 @@ end
 -- TODO: when disabled then enabled again, causes errors with deleting buffer
 local function open_in_prog(buf, fpath, fname, prog)
   notify(string.format('Opening `%s`', fname), 'Open File in External Program')
-  if prog == nil then rvim.open(fpath) end
+  if prog == nil then rvim.open_media(fpath) end
   if prog ~= nil then vim.system({ prog, fpath }, { detach = true }) end
   api.nvim_buf_delete(buf, { force = true })
 end
@@ -56,10 +56,6 @@ rvim.augroup('InterceptToggle', {
       and extension ~= nil
       and not extension:match('^%s*$')
     then
-      if extension == 'ico' then
-        open_in_prog(bufnr, path, filename, 'sxiv')
-        return
-      end
       open_in_prog(bufnr, path, filename)
     end
   end,
