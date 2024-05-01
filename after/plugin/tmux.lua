@@ -10,6 +10,7 @@ local ignored = {
   'harpoon',
   'buffalo',
   'fzf',
+  'NeogitStatus',
   '',
 }
 
@@ -27,8 +28,11 @@ local function clear_pane_title()
 end
 
 local function set_window_title()
-  local window_title = fn.fnamemodify(vim.uv.cwd(), ':t') or 'Neovim'
-  fn.jobstart(fmt("tmux rename-window '%s'", window_title))
+  local cwd = vim.uv.cwd()
+  if cwd then
+    local window_title = fn.fnamemodify(cwd, ':t') or 'Neovim'
+    fn.jobstart(fmt("tmux rename-window '%s'", window_title))
+  end
 end
 
 rvim.augroup('TmuxUtils', {
