@@ -47,6 +47,7 @@ return {
   },
   {
     'razak17/lab.nvim',
+    event = { 'BufRead', 'BufNewFile' },
     cond = not rvim.plugins.minimal,
     keys = {
       { '<leader>rl', ':Lab code run<CR>', desc = 'lab: run' },
