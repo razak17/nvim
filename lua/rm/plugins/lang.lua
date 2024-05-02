@@ -37,6 +37,13 @@ return {
     dependencies = { 'MunifTanjim/nui.nvim' },
   },
   {
+    'jdrupal-dev/parcel.nvim',
+    cond = not rvim.plugins.minimal,
+    event = 'BufRead package.json',
+    opts = {},
+    dependencies = { 'phelipetls/jsonpath.nvim' },
+  },
+  {
     'bennypowers/template-literal-comments.nvim',
     cond = rvim.treesitter.enable,
     ft = { 'javascript', 'typescript' },
