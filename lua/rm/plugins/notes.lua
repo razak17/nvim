@@ -20,7 +20,7 @@ return {
       notes_subdir = 'Zettelkasten',
       daily_notes = { folder = 'Daily Notes' },
       templates = {
-        subdir = 'Templates',
+        folder = sync('obsidian') .. '/99 - Meta/00 - Templates',
         date_format = '%Y-%m-%d-%a',
         time_format = '%H:%M',
       },
