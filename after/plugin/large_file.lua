@@ -2,6 +2,8 @@ local enabled = rvim.plugin.large_file.enable
 
 if not rvim or rvim.none or not enabled then return end
 
+local exclusions = { 'NeogitCommitMessage' }
+
 rvim.augroup('LargeFileAutocmds', {
   event = { 'BufReadPre' },
   command = function()
@@ -34,7 +36,9 @@ rvim.augroup('LargeFileAutocmds', {
   end,
 }, {
   event = { 'BufEnter' },
-  command = function()
+  command = function(args)
+    if vim.tbl_contains(exclusions, vim.bo[args.buf].filetype) then return end
+
     local byte_size = vim.api.nvim_buf_get_offset(
       vim.api.nvim_get_current_buf(),
       vim.api.nvim_buf_line_count(vim.api.nvim_get_current_buf())
