@@ -42,6 +42,7 @@ return {
             { NeogitHunkHeader = { inherit = 'Headline2', bold = true } },
             { NeogitDiffHeader = { inherit = 'Headline2', bold = true } },
             { NeogitFold = { bg = { from = 'CursorLine', alter = -0.25 } } },
+            { NeogitWinSeparator = { link = 'WinSeparator' } },
             {
               NeogitCursorLine = {
                 bg = { from = 'CursorLine' },
