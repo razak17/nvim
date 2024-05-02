@@ -4,7 +4,6 @@ local codicons = ui.codicons
 
 return {
   'rcarriga/nvim-notify',
-  cond = not rvim.plugins.minimal and rvim.plugins.niceties,
   event = 'BufRead',
   -- stylua: ignore
   keys = {
