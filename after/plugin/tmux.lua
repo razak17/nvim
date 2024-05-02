@@ -11,6 +11,7 @@ local ignored = {
   'buffalo',
   'fzf',
   'NeogitStatus',
+  'NeogitPopup',
   '',
 }
 
