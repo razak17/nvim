@@ -28,6 +28,7 @@ local namespace = {
     omnifunc = { enable = true },
     override = {},
     progress = { enable = false },
+    semantic_tokens = { enable = false },
     signs = { enable = false },
   },
   mappings = {},

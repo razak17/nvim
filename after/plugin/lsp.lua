@@ -472,7 +472,9 @@ end
 local function on_attach(client, bufnr)
   setup_autocommands(client, bufnr)
   setup_mappings(client, bufnr)
-  setup_semantic_tokens(client, bufnr)
+  if rvim.lsp.semantic_tokens.enable then
+    setup_semantic_tokens(client, bufnr)
+  end
 end
 
 augroup('LspSetupCommands', {

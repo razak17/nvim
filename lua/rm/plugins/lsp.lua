@@ -57,6 +57,15 @@ return {
           cond = rvim.lsp.enable,
           config = function()
             require('lspconfig.ui.windows').default_options.border = border
+            if rvim.lsp.semantic_tokens.enable then
+              local lspconfig = require('lspconfig')
+              lspconfig.util.default_config =
+                vim.tbl_extend('force', lspconfig.util.default_config, {
+                  on_attach = function(client)
+                    client.server_capabilities.semanticTokensProvider = nil
+                  end,
+                })
+            end
           end,
           dependencies = {
             {
