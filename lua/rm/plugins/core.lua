@@ -10,6 +10,7 @@ return {
   'b0o/schemastore.nvim',
   -- { 'lewis6991/fileline.nvim', lazy = false },
   -- { 'axlebedev/vim-footprints', lazy = false },
+  { 'stevearc/profile.nvim', lazy = false },
   {
     'romainl/vim-cool',
     cond = false,

@@ -265,6 +265,7 @@ local command_palette_options = {
   ['Format Code'] = "lua require'rm.menus.lsp'.format_buf()",
   ['Generate Gitignore'] = 'Gitignore',
   ['Generate License'] = 'Licenses',
+  ['Toggle Profile'] = 'lua require"rm.menus.command_palette".toggle_profile()',
   ['Copy File Name'] = function() setreg('+', vim.fn.expand('%:t')) end,
   ['Copy File Absolute Path'] = function() setreg('+', vim.fn.expand('%:p')) end,
   ['Copy File Absolute Path (No File Name)'] = function()
