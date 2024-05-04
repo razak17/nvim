@@ -29,4 +29,45 @@ function M.toggle_profile()
   end
 end
 
+function M.generate_plugins()
+  local plugins = require('lazy.core.config').plugins
+  local file_content = {
+    '## 💤 Plugin manager',
+    '',
+    '- [lazy.nvim](https://github.com/folke/lazy.nvim)',
+    '',
+    '## 🔌 Plugins',
+    '',
+  }
+  local plugins_md = {}
+  for plugin, spec in pairs(plugins) do
+    if spec.url then
+      table.insert(
+        plugins_md,
+        ('- [%s](%s)'):format(plugin, spec.url:gsub('%.git$', ''))
+      )
+    end
+  end
+  table.sort(plugins_md, function(a, b) return a:lower() < b:lower() end)
+
+  for _, p in ipairs(plugins_md) do
+    table.insert(file_content, p)
+  end
+
+  table.insert(file_content, '')
+  table.insert(file_content, '## 🗃️ Version manager')
+  table.insert(file_content, '')
+  table.insert(file_content, '- [bob](https://github.com/MordechaiHadad/bob)')
+  table.insert(file_content, '')
+  table.insert(file_content, '## ✨ GUI')
+  table.insert(file_content, '')
+  table.insert(file_content, '- [Neovide](https://neovide.dev/)')
+
+  local file, err = io.open(vim.fn.stdpath('config') .. '/PLUGINS.md', 'w')
+  if not file then error(err) end
+  file:write(table.concat(file_content, '\n'))
+  file:close()
+  vim.notify('PLUGINS.md generated.')
+end
+
 return M
