@@ -68,6 +68,7 @@ return {
     dependencies = { 'nvim-lua/plenary.nvim' },
   },
   {
+    -- 'google/executor.nvim',
     'razak17/executor.nvim',
     -- stylua: ignore
     keys = {

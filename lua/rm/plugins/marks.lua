@@ -97,7 +97,8 @@ return {
     },
   },
   {
-    'razak17/harpoon',
+    -- 'razak17/harpoon',
+    'ThePrimeagen/harpoon',
     branch = 'harpoon2',
     keys = function()
       local keys = {
