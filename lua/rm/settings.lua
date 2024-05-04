@@ -220,7 +220,7 @@ function rvim.modified_icon()
 end
 -- titlestring = ' ❐ %{fnamemodify(getcwd(), ":t")} %m'
 o.titlestring = '%<%F%=%l/%L - nvim'
-o.titleold = fn.fnamemodify(vim.uv.os_getenv('SHELL'), ':t')
+-- o.titleold = fn.fnamemodify(vim.uv.os_getenv('SHELL'), ':t')
 o.title = true
 o.titlelen = 70
 --------------------------------------------------------------------------------
