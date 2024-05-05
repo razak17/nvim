@@ -183,6 +183,7 @@ if rvim.lsp.enable then
     ['Toggle Tailwind Conceal'] = 'TailwindConcealEnable',
     ['Toggle Tailwind Colors'] = 'TailwindColorToggle',
     ['Sort Tailwind Classes'] = 'TailwindSort',
+    ['TSC'] = 'TSC',
   }
 
   local lsp_menu = function()
