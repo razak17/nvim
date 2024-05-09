@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 RV_CONFIG_DIR="${RV_CONFIG_DIR:-"$XDG_CONFIG_HOME/rvim"}"
 RV_DATA_DIR="${RV_DATA_DIR:-"$XDG_DATA_HOME/rvim"}"
@@ -98,19 +98,19 @@ validate_node_installation() {
 
 install_nodejs_deps() {
 	printf "Which package manager would you like to use (pnpm, yarn, npm)? "
-	#  pkg_managers=("pnpm" "yarn" "npm")
-	#
-	# read -r answer
-	#  for pkg_manager in "${pkg_managers[@]}"; do
-	#    if [ "$answer" = "$pkg_manager" ]; then
-	#      if validate_node_installation "$pkg_manager"; then
-	#        echo "Proceed to Install"
-	#        npm_deps "$pkg_manager"
-	#        return
-	#      fi
-	#      return
-	#    fi
-	#  done
+	 pkg_managers=("pnpm" "yarn" "npm")
+
+	read -r answer
+	 for pkg_manager in "${pkg_managers[@]}"; do
+	   if [ "$answer" = "$pkg_manager" ]; then
+	     if validate_node_installation "$pkg_manager"; then
+	       echo "Proceed to Install"
+	       npm_deps "$pkg_manager"
+	       return
+	     fi
+	     return
+	   fi
+	 done
 	echo "Unknown package manager"
 }
 
