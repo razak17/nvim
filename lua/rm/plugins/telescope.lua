@@ -174,19 +174,8 @@ local function b(picker, opts)
   return function() require('telescope.builtin')[picker](opts) end
 end
 
-local function vtext()
-  local a_orig = vim.fn.getreg('a')
-  local mode = vim.fn.mode()
-  if mode ~= 'v' and mode ~= 'V' then vim.cmd([[normal! gv]]) end
-
-  vim.cmd([[normal! "aygv]])
-  local text = vim.fn.getreg('a')
-  vim.fn.setreg('a', a_orig)
-  return text
-end
-
 local function visual_grep_string()
-  local search = vtext()
+  local search = rvim.get_visual_text()
   if type(search) == 'string' then
     b('grep_string')({
       search = search,
