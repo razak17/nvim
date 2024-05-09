@@ -59,7 +59,6 @@ return {
     cond = not minimal and niceties,
     event = { 'BufRead', 'BufNewFile' },
     opts = {
-      disabled_filetypes = { 'quickfix' },
       colorcolumn = '0',
       custom_autocommand = true,
     },
