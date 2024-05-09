@@ -361,6 +361,12 @@ inoremap('<s-tab>', [[pumvisible() ? "\<C-p>" : "\<S-Tab>"]], { expr = true })
 --------------------------------------------------------------------------------
 -- Help
 nnoremap('<leader>ah', ':h <C-R>=expand("<cword>")<CR><CR>', { desc = 'help' })
+-- Visual mode help
+local function visual_help()
+  local text = rvim.get_visual_text()
+  vim.cmd('help ' .. text)
+end
+xnoremap('<leader>ah', visual_help, { desc = 'visual help' })
 --------------------------------------------------------------------------------
 -- Undo
 nnoremap('<C-z>', '<cmd>undo<CR>')
