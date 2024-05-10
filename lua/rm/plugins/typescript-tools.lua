@@ -26,50 +26,10 @@ return {
           includeInlayEnumMemberValueHints = true,
         },
       },
-      handlers = {
-        ['textDocument/publishDiagnostics'] = function(
-          err,
-          result,
-          ctx,
-          config
-        )
-          if result.diagnostics == nil then return end
-
-          local idx = 1
-          local translate = require('ts-error-translator').translate
-
-          while idx <= #result.diagnostics do
-            local entry = result.diagnostics[idx]
-
-            if translate then
-              local translatedMessage = translate({
-                code = entry.code,
-                message = entry.message,
-              })
-              entry.message = translatedMessage.message
-            end
-
-            -- codes: https://github.com/microsoft/TypeScript/blob/main/src/compiler/diagnosticMessages.json
-            if
-              vim.tbl_contains({
-                80001, -- File is a CommonJS module; it may be converted to an ES module.
-                80006, -- This may be converted to an async function
-              }, entry.code)
-            then
-              table.remove(result.diagnostics, idx)
-            else
-              idx = idx + 1
-            end
-          end
-
-          vim.lsp.diagnostic.on_publish_diagnostics(err, result, ctx, config)
-        end,
-      },
     },
     dependencies = {
       'nvim-lua/plenary.nvim',
       'neovim/nvim-lspconfig',
-      'dmmulroy/ts-error-translator.nvim',
       {
         'OlegGulevskyy/better-ts-errors.nvim',
         opts = {
@@ -131,4 +91,5 @@ return {
     },
     opts = { highlight = 'DiagnosticVirtualTextInfo' },
   },
+  'dmmulroy/ts-error-translator.nvim',
 }

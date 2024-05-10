@@ -107,6 +107,43 @@ lsp.handlers[M.textDocument_publishDiagnostics] = function(
   config
 )
   result.diagnostics = vim.tbl_map(show_related_locations, result.diagnostics)
+
+  local client = lsp.get_client_by_id(ctx.client_id)
+  if
+    client and (client.name == 'typescript-tools' or client.name == 'tsserver')
+  then
+    if result.diagnostics == nil then return end
+    local idx = 1
+
+    while idx <= #result.diagnostics do
+      local entry = result.diagnostics[idx]
+
+      if rvim.is_available('ts-error-translator.nvim') then
+        local translate = require('ts-error-translator').translate
+
+        if translate then
+          local translatedMessage = translate({
+            code = entry.code,
+            message = entry.message,
+          })
+          entry.message = translatedMessage.message
+        end
+      end
+
+      -- codes: https://github.com/microsoft/TypeScript/blob/main/src/compiler/diagnosticMessages.json
+      if
+        vim.tbl_contains({
+          80001, -- File is a CommonJS module; it may be converted to an ES module.
+          80006, -- This may be converted to an async function
+        }, entry.code)
+      then
+        table.remove(result.diagnostics, idx)
+      else
+        idx = idx + 1
+      end
+    end
+  end
+
   publish_handler(err, result, ctx, config)
 end
 
