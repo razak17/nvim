@@ -1,11 +1,13 @@
+local enabled = rvim.lsp.enable
+  and not rvim.plugin_disabled('typescript-tools.nvim')
+  and rvim.lsp.typescript_tools.enable
+
 return {
   {
 
     'pmizio/typescript-tools.nvim',
     ft = { 'typescript', 'typescriptreact', 'javascript', 'javascriptreact' },
-    cond = rvim.lsp.enable
-      and not rvim.find_string(rvim.plugins.disabled, 'typescript-tools.nvim')
-      and rvim.lsp.typescript_tools.enable,
+    cond = enabled,
     -- stylua: ignore
     keys = {
       { '<localleader>li', '<Cmd>TSToolsAddMissingImports<CR>', desc = 'add missing imports' },

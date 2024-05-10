@@ -146,6 +146,13 @@ function rvim.is_available(plugin)
   return lazy_config_avail and lazy_config.plugins[plugin] ~= nil
 end
 
+-- Check if a plugin is disabled
+---@param plugin string The plugin to search for.
+---@return boolean disabled # Whether the plugin is disabled.
+function rvim.plugin_disabled(plugin)
+  return rvim.find_string(rvim.plugins.disabled, plugin)
+end
+
 ---Get whether using nightly version of neovim
 local LATEST_NIGHTLY_MINOR = 10
 function rvim.nightly() return vim.version().minor >= LATEST_NIGHTLY_MINOR end

@@ -1,7 +1,6 @@
 local border = rvim.ui.current.border
 
-local enabled = rvim.lsp.enable
-  and not rvim.find_string(rvim.plugins.disabled, 'rustaceanvim')
+local enabled = rvim.lsp.enable and not rvim.plugin_disabled('rustaceanvim')
 
 return {
   {
