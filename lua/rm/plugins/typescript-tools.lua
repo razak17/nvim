@@ -81,25 +81,6 @@ return {
         dependencies = { 'MunifTanjim/nui.nvim' },
       },
       {
-        'razak17/twoslash-queries.nvim',
-        -- stylua: ignore
-        keys = {
-          { '<localleader>lI', '<Cmd>TwoslashQueriesInspect<CR>', desc = 'twoslash-queries: inspect', },
-        },
-        opts = {},
-        config = function(_, opts)
-          require('twoslash-queries').setup(opts)
-
-          rvim.highlight.plugin('twoslash-queries', {
-            theme = {
-              ['onedark'] = {
-                { TypeVirtualText = { link = 'DiagnosticVirtualTextInfo' } },
-              },
-            },
-          })
-        end,
-      },
-      {
         'dmmulroy/tsc.nvim',
         cond = rvim.lsp.enable,
         cmd = 'TSC',
@@ -141,5 +122,13 @@ return {
         end,
       },
     },
+  },
+  {
+    'razak17/twoslash-queries.nvim',
+    -- stylua: ignore
+    keys = {
+      { '<localleader>lI', '<Cmd>TwoslashQueriesInspect<CR>', desc = 'twoslash-queries: inspect', },
+    },
+    opts = { highlight = 'DiagnosticVirtualTextInfo' },
   },
 }
