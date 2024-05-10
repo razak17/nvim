@@ -380,6 +380,7 @@ local client_overrides = {
       -- this is important, otherwise tsserver will format ts/js
       -- files which we *really* don't want.
       client.server_capabilities.documentFormattingProvider = false
+      client.server_capabilities.documentRangeFormattingProvider = false
     end,
   },
   ruff_lsp = {
@@ -503,7 +504,7 @@ local function on_attach(client, bufnr)
   end
 end
 
-augroup('LspSetupCommands', {
+augroup('LspSetupAutoCommands', {
   event = { 'LspAttach' },
   desc = 'setup the language server autocommands',
   command = function(args)
