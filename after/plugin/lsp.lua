@@ -172,22 +172,25 @@ end
 --------------------------------------------------------------------------------
 -- Workaround for truncating long TypeScript inlay hints.
 -- TODO: Remove this if https://github.com/neovim/neovim/issues/27240 gets addressed.
-local inlay_hint_handler = lsp.handlers[M.textDocument_inlayHint]
-lsp.handlers[M.textDocument_inlayHint] = function(err, result, ctx, config)
-  local client = lsp.get_client_by_id(ctx.client_id)
-  if client and client.name == 'typescript-tools' then
-    result = vim.iter.map(function(hint)
-      local label = hint.label ---@type string
-      if label:len() >= 30 then
-        label = label:sub(1, 29) .. icons.misc.ellipsis
-      end
-      hint.label = label
-      return hint
-    end, result)
-  end
-
-  inlay_hint_handler(err, result, ctx, config)
-end
+-- local inlay_hint_handler = lsp.handlers[M.textDocument_inlayHint]
+-- lsp.handlers[M.textDocument_inlayHint] = function(err, result, ctx, config)
+--   local client = lsp.get_client_by_id(ctx.client_id)
+--   if not client then return end
+--   if client.name == 'typescript-tools' or client.name == 'tsserver' then
+--     result = vim
+--       .iter(result)
+--       :map(function(hint)
+--         local label = hint.label ---@type string
+--         if label:len() >= 30 then
+--           label = label:sub(1, 29) .. icons.misc.ellipsis
+--         end
+--         hint.label = label
+--         return hint
+--       end)
+--       :totable()
+--   end
+--   inlay_hint_handler(err, result, ctx, config)
+-- end
 
 --------------------------------------------------------------------------------
 -- Mappings
