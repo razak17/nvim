@@ -214,6 +214,77 @@ local servers = {
       )(fname)
     end,
   },
+  tsserver = {
+    init_options = {
+      documentFormatting = false,
+      hostInfo = 'neovim',
+    },
+    commands = {
+      OrganizeImports = {
+        function()
+          vim.lsp.buf.code_action({
+            apply = true,
+            context = {
+              only = { 'source.organizeImports' },
+              diagnostics = {},
+            },
+          })
+        end,
+        description = 'Organize Imports',
+      },
+      RemoveUnusedImports = {
+        function()
+          vim.lsp.buf.code_action({
+            apply = true,
+            context = {
+              ---@diagnostic disable-next-line: assign-type-mismatch
+              only = { 'source.removeUnused' },
+              diagnostics = {},
+            },
+          })
+        end,
+        function()
+          vim.lsp.buf.code_action({
+            apply = true,
+            context = {
+              only = { 'source.organizeImports' },
+              diagnostics = {},
+            },
+          })
+        end,
+        description = 'Organize Imports',
+      },
+    },
+    settings = {
+      completions = {
+        completeFunctionCalls = true,
+      },
+      javascript = {
+        inlayHints = {
+          includeInlayParameterNameHints = 'literal', -- 'none' | 'literals' | 'all';
+          includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+          includeInlayVariableTypeHintsWhenTypeMatchesName = false,
+          includeInlayFunctionParameterTypeHints = true,
+          includeInlayVariableTypeHints = true,
+          includeInlayFunctionLikeReturnTypeHints = false,
+          includeInlayPropertyDeclarationTypeHints = true,
+          includeInlayEnumMemberValueHints = true,
+        },
+      },
+      typescript = {
+        inlayHints = {
+          includeInlayParameterNameHints = 'literal', -- 'none' | 'literals' | 'all';
+          includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+          includeInlayVariableTypeHintsWhenTypeMatchesName = false,
+          includeInlayFunctionParameterTypeHints = true,
+          includeInlayVariableTypeHints = true,
+          includeInlayFunctionLikeReturnTypeHints = false,
+          includeInlayPropertyDeclarationTypeHints = true,
+          includeInlayEnumMemberValueHints = true,
+        },
+      },
+    },
+  },
 }
 
 ---Get the configuration for a specific language server

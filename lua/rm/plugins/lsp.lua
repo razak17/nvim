@@ -43,7 +43,15 @@ return {
                 rvim.dirs_match(rvim.lsp.disabled.directories, fmt('%s', cwd))
               local server_disabled =
                 find_string(rvim.lsp.disabled.servers, name)
-              if directory_disabled or server_disabled then return end
+              local typescript_tools_enabled = name == 'tsserver'
+                and rvim.lsp.typescript_tools.enable
+              if
+                directory_disabled
+                or server_disabled
+                or typescript_tools_enabled
+              then
+                return
+              end
             end
             local config = require('rm.servers').get(name)
             if config then require('lspconfig')[name].setup(config) end

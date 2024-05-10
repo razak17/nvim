@@ -178,8 +178,24 @@ if rvim.lsp.enable then
     ['Toggle Hover Diagnostics (go_to)'] = "lua require'rm.menus.lsp'.toggle_hover_diagnostics_go_to()",
     ['Toggle Format On Save'] = "lua require'rm.menus.lsp'.toggle_format_on_save()",
     ['Preview Code Actions'] = 'lua require("actions-preview").code_actions()',
-    ['Add Missing Imports'] = 'TSToolsAddMissingImports',
-    ['Remove Unused Imports'] = 'TSToolsRemoveUnusedImports',
+    ['Add Missing Imports'] = function()
+      if rvim.is_available('typescript-tools.nvim') then
+        vim.cmd('TSToolsAddMissingImports')
+        return
+      end
+      vim.notify(
+        'typescript-tools.nvim is not available',
+        'error',
+        { title = 'Error' }
+      )
+    end,
+    ['Remove Unused Imports'] = function()
+      if rvim.is_available('typescript-tools.nvim') then
+        vim.cmd('TSToolsRemoveUnusedImports')
+      else
+        vim.cmd('RemoveUnusedImports')
+      end
+    end,
     ['Toggle Tailwind Conceal'] = 'TailwindConcealEnable',
     ['Toggle Tailwind Colors'] = 'TailwindColorToggle',
     ['Sort Tailwind Classes'] = 'TailwindSort',
