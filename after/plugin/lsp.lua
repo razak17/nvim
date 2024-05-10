@@ -361,6 +361,26 @@ end
 --------------------------------------------------------------------------------
 -- LSP SETUP/TEARDOWN
 --------------------------------------------------------------------------------
+local ts_overrides = {
+  semantic_tokens = function(bufnr, client, token)
+    if
+      token.type == 'variable'
+      and token.modifiers['local']
+      and not token.modifiers.readonly
+    then
+      lsp.semantic_tokens.highlight_token(token, bufnr, client.id, '@danger')
+    end
+  end,
+  on_attach = function(client, bufnr)
+    if rvim.is_available('twoslash-queries.nvim') then
+      require('twoslash-queries').attach(client, bufnr)
+    end
+    -- this is important, otherwise tsserver will format ts/js
+    -- files which we *really* don't want.
+    client.server_capabilities.documentFormattingProvider = false
+    client.server_capabilities.documentRangeFormattingProvider = false
+  end,
+}
 
 ---@alias ClientOverrides {on_attach: fun(client: vim.lsp.Client, bufnr: number), semantic_tokens: fun(bufnr: number, client: vim.lsp.Client, token: table)}
 
@@ -369,23 +389,8 @@ end
 --- without putting all this logic in the general on_attach function
 ---@type {[string]: ClientOverrides}
 local client_overrides = {
-  tsserver = {
-    semantic_tokens = function(bufnr, client, token)
-      if
-        token.type == 'variable'
-        and token.modifiers['local']
-        and not token.modifiers.readonly
-      then
-        lsp.semantic_tokens.highlight_token(token, bufnr, client.id, '@danger')
-      end
-    end,
-    on_attach = function(client)
-      -- this is important, otherwise tsserver will format ts/js
-      -- files which we *really* don't want.
-      client.server_capabilities.documentFormattingProvider = false
-      client.server_capabilities.documentRangeFormattingProvider = false
-    end,
-  },
+  tsserver = ts_overrides,
+  ['typescript-tools'] = ts_overrides,
   ruff_lsp = {
     on_attach = function(client)
       -- Disable hover in favor of Pyright

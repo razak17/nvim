@@ -14,9 +14,6 @@ return {
       { '<localleader>lx', '<Cmd>TSToolsRemoveUnusedImports<CR>', desc = 'remove unused missing imports' },
     },
     opts = {
-      on_attach = function(client, bufnr)
-        require('twoslash-queries').attach(client, bufnr)
-      end,
       settings = {
         tsserver_file_preferences = {
           includeInlayParameterNameHints = 'literal',
