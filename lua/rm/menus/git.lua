@@ -670,12 +670,15 @@ function M.list_stashes(opts)
     .new(opts, {
       prompt_title = 'Git Stash',
       finder = finders.new_oneshot_job(
-        vim.tbl_flatten({
-          'git',
-          '--no-pager',
-          'stash',
-          'list',
-        }),
+        vim
+          .iter({
+            'git',
+            '--no-pager',
+            'stash',
+            'list',
+          })
+          :flatten()
+          :totable(),
         opts
       ),
       previewer = previewers.new_termopen_previewer({
