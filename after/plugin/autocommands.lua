@@ -181,7 +181,7 @@ augroup(
 augroup('WinBehavior', {
   event = { 'BufWinEnter' },
   command = function(args)
-    if vim.wo.diff then vim.diagnostic.disable(args.buf) end
+    if vim.wo.diff then vim.diagnostic.enable(true, { buf = args.buf }) end
   end,
 }, {
   event = { 'TermOpen' },
@@ -193,12 +193,18 @@ augroup('WinBehavior', {
 }, {
   event = { 'BufWinLeave' },
   command = function(args)
-    if vim.wo.diff then vim.diagnostic.enable(args.buf) end
+    if vim.wo.diff then vim.diagnostic.enable(true, { buf = args.buf }) end
   end,
 })
 
-local cursorline_exclusions =
-  { 'alpha', 'startup', 'starter', 'TelescopePrompt', 'CommandTPrompt', 'DressingInput' }
+local cursorline_exclusions = {
+  'alpha',
+  'startup',
+  'starter',
+  'TelescopePrompt',
+  'CommandTPrompt',
+  'DressingInput',
+}
 ---@param buf number
 ---@return boolean
 local function should_show_cursorline(buf)
