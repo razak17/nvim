@@ -117,24 +117,50 @@ end
 -- otherwise show a telescope selector
 -- from https://github.com/seblj/dotfiles/blob/014fd736413945c888d7258b298a37c93d5e97da/nvim/lua/config/lspconfig/handlers.lua
 
+-- jump to the first definition automatically if the multiple defs are on the same line
+-- otherwise show a telescope selector or qf list
+---@param result table # A list of Location
+---@param client vim.lsp.Client
 local function jump_to_first_definition(result, client)
-  if vim.islist(result) then
-    local results = lsp.util.locations_to_items(result, client.offset_encoding)
-    local lnum, filename = results[1].lnum, results[1].filename
-    for _, val in pairs(results) do
-      if val.lnum ~= lnum or val.filename ~= filename then
-        return require('telescope.builtin').lsp_definitions()
-      end
+  if #result == 1 then
+    lsp.util.jump_to_location(result[1], client.offset_encoding)
+    return
+  end
+
+  if not rvim.is_available('telescope.nvim') then
+    -- show in qf if telescope is not available
+    fn.setqflist({}, ' ', {
+      title = 'LSP locations',
+      items = lsp.util.locations_to_items(result, client.offset_encoding),
+    })
+    api.nvim_command('botright copen')
+    return
+  end
+
+  local results = lsp.util.locations_to_items(result, client.offset_encoding)
+  local lnum, filename = results[1].lnum, results[1].filename
+
+  for _, val in pairs(results) do
+    if val.lnum ~= lnum or val.filename ~= filename then
+      return require('telescope.builtin').lsp_definitions()
     end
-    lsp.util.jump_to_location(result[1], client.offset_encoding, false)
-  else
-    lsp.util.jump_to_location(result, client.offset_encoding, false)
   end
 end
 
-lsp.handlers['textDocument/definition'] = function(_, result, ctx)
+lsp.handlers['textDocument/definition'] = function(_, result, ctx, _)
   local client = vim.lsp.get_client_by_id(ctx.client_id)
-  if client then jump_to_first_definition(result, client) end
+  if client then
+    if result == nil or vim.tbl_isempty(result) then
+      local _ = lsp.log.info() and lsp.log.info(ctx.method, 'No location found')
+      return nil
+    end
+
+    if vim.islist(result) then
+      jump_to_first_definition(result, client)
+    else
+      lsp.util.jump_to_location(result, client.offset_encoding)
+    end
+  end
 end
 
 lsp.handlers['textDocument/references'] = function(_, _, _)
