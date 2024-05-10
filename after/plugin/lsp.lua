@@ -99,8 +99,8 @@ local function show_related_locations(diag)
   return diag
 end
 
-local publish_handler = lsp.handlers['textDocument/publishDiagnostics']
-lsp.handlers['textDocument/publishDiagnostics'] = function(
+local publish_handler = lsp.handlers[M.textDocument_publishDiagnostics]
+lsp.handlers[M.textDocument_publishDiagnostics] = function(
   err,
   result,
   ctx,
@@ -147,7 +147,7 @@ local function jump_to_first_definition(result, client)
   end
 end
 
-lsp.handlers['textDocument/definition'] = function(_, result, ctx, _)
+lsp.handlers[M.textDocument_definition] = function(_, result, ctx, _)
   local client = vim.lsp.get_client_by_id(ctx.client_id)
   if client then
     if result == nil or vim.tbl_isempty(result) then
@@ -163,7 +163,8 @@ lsp.handlers['textDocument/definition'] = function(_, result, ctx, _)
   end
 end
 
-lsp.handlers['textDocument/references'] = function(_, _, _)
+-- References handler
+lsp.handlers[M.textDocument_references] = function(_, _, _)
   require('telescope.builtin').lsp_references()
 end
 
@@ -438,7 +439,7 @@ local function setup_autocommands(client, buf)
     })
   end
 
-  if client.supports_method('textDocument/inlayHint', { bufnr = buf }) then
+  if client.supports_method(M.textDocument_inlayHint, { bufnr = buf }) then
     lsp.inlay_hint.enable(false, { bufnr = 0 })
   end
 

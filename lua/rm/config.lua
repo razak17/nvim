@@ -30,7 +30,7 @@ local namespace = {
     progress = { enable = false },
     semantic_tokens = { enable = false },
     signs = { enable = false },
-    typescript_tools = { enable = true },
+    typescript_tools = { enable = false },
   },
   mappings = {},
   none = env.RVIM_NONE == '1',
