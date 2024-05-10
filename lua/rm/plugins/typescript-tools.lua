@@ -50,8 +50,12 @@ return {
             end
 
             -- codes: https://github.com/microsoft/TypeScript/blob/main/src/compiler/diagnosticMessages.json
-            if entry.code == 80001 then
-              -- { message = "File is a CommonJS module; it may be converted to an ES module.", }
+            if
+              vim.tbl_contains({
+                80001, -- File is a CommonJS module; it may be converted to an ES module.
+                80006, -- This may be converted to an async function
+              }, entry.code)
+            then
               table.remove(result.diagnostics, idx)
             else
               idx = idx + 1
