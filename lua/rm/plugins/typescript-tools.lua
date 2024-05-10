@@ -31,16 +31,6 @@ return {
       'nvim-lua/plenary.nvim',
       'neovim/nvim-lspconfig',
       {
-        'OlegGulevskyy/better-ts-errors.nvim',
-        opts = {
-          keymaps = {
-            toggle = '<localleader>lo',
-            go_to_definition = '<localleader>ld',
-          },
-        },
-        dependencies = { 'MunifTanjim/nui.nvim' },
-      },
-      {
         'dmmulroy/tsc.nvim',
         cond = rvim.lsp.enable,
         cmd = 'TSC',
@@ -91,5 +81,16 @@ return {
     },
     opts = { highlight = 'DiagnosticVirtualTextInfo' },
   },
-  'dmmulroy/ts-error-translator.nvim',
+  {
+    'OlegGulevskyy/better-ts-errors.nvim',
+    event = 'LspAttach',
+    ft = { 'typescript', 'typescriptreact', 'javascript', 'javascriptreact' },
+    opts = {
+      keymaps = {
+        toggle = '<localleader>lo',
+        go_to_definition = '<localleader>ld',
+      },
+    },
+    dependencies = { 'MunifTanjim/nui.nvim' },
+  },
 }
