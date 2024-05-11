@@ -111,6 +111,19 @@ return {
     config = function() vim.g.choosewin_overlay_enable = 1 end,
   },
   {
+    'MagicDuck/grug-far.nvim',
+    lazy = false,
+    cmd = { 'GrugFar' },
+    opts = {
+      keymaps = {
+        replace = '<C-[>',
+        qflist = '<C-q>',
+        gotoLocation = '<enter>',
+        close = '<C-x>',
+      },
+    },
+  },
+  {
     'chrishrb/gx.nvim',
     cond = not rvim.use_local_gx,
     keys = { { 'gx', '<cmd>Browse<cr>', mode = { 'n', 'x' } } },

@@ -290,6 +290,7 @@ local command_palette_options = {
     setreg('+', expand('%:p:h'))
   end,
   ['Copy File Home Path'] = function() setreg('+', expand('%:~')) end,
+  ['Find And Replace'] = 'GrugFar',
 }
 
 local command_palette_menu = function()
