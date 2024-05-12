@@ -287,7 +287,7 @@ end
 ---@field g table<string, any>
 ---@field bo vim.bo
 ---@field wo vim.wo
----@field opt vim.opt
+---@field opt vim.Option
 ---@field plugins {[string]: fun(module: table)}
 
 ---@param args {[1]: string, [2]: string, [3]: string, [string]: boolean | integer}[]
@@ -407,12 +407,11 @@ end
 --- open file in window picker
 ---@param buf? integer
 function rvim.open_with_window_picker(buf)
-  local success, picker = pcall(require, 'window-picker')
-  if not success then
+  if not rvim.is_available('nvim-window-picker') then
     vim.notify('window-picker is not installed', vim.log.levels.ERROR)
     return
   end
-  local picked_window_id = picker.pick_window()
+  local picked_window_id = require('window-picker').pick_window()
   if picked_window_id then
     api.nvim_set_current_win(picked_window_id)
     if buf then api.nvim_set_current_buf(buf) end
@@ -569,6 +568,7 @@ function rvim.augroup(name, ...)
       pattern = autocmd.pattern,
       desc = autocmd.desc,
       callback = is_callback and autocmd.command or nil,
+      ---@diagnostic disable-next-line: assign-type-mismatch
       command = not is_callback and autocmd.command or nil,
       once = autocmd.once,
       nested = autocmd.nested,
