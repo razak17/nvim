@@ -313,6 +313,12 @@ return {
       local actions = require('telescope.actions')
       local layout_actions = require('telescope.actions.layout')
       local themes = require('telescope.themes')
+      local config = require('telescope.config')
+      local vimgrep_arguments = { unpack(config.values.vimgrep_arguments) }
+
+      table.insert(vimgrep_arguments, '--hidden')
+      table.insert(vimgrep_arguments, '--glob')
+      table.insert(vimgrep_arguments, '!**/.git/*')
 
       require('telescope').setup({
         defaults = {
@@ -337,6 +343,7 @@ return {
             'bottom_pane',
             'center',
           },
+          vimgrep_arguments = vimgrep_arguments,
           sorting_strategy = 'ascending',
           layout_strategy = 'flex',
           set_env = { ['TERM'] = env.TERM },
@@ -413,7 +420,17 @@ return {
           git_branches = dropdown(),
           oldfiles = dropdown({ previewer = false }),
           spell_suggest = dropdown({ previewer = false }),
-          find_files = { hidden = true, no_ignore = true },
+          find_files = {
+            -- https://github.com/nvim-telescope/telescope.nvim/wiki/Configuration-Recipes#file-and-text-search-in-hidden-files-and-directories
+            find_command = {
+              'rg',
+              '--files',
+              '--hidden',
+              '--glob',
+              '!**/.git/*',
+            },
+            no_ignore = true,
+          },
           colorscheme = { enable_preview = true },
           keymaps = dropdown({ layout_config = { height = 18, width = 0.5 } }),
           git_commits = {
