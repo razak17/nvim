@@ -413,6 +413,9 @@ return {
               ['<C-o>'] = open_media_files,
             },
           },
+          preview = {
+            filesize_limit = 0.1, -- MB
+          },
         },
         pickers = {
           registers = cursor(),
