@@ -428,7 +428,6 @@ return {
           qflist_previewer = previewers.vim_buffer_qflist.new,
           mappings = {
             i = {
-              ['<C-w>'] = actions.send_selected_to_qflist,
               ['<c-c>'] = function() vim.cmd.stopinsert() end,
               ['<c-j>'] = actions.move_selection_next,
               ['<c-k>'] = actions.move_selection_previous,
