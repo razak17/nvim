@@ -1,7 +1,7 @@
 local api, env, fn = vim.api, vim.env, vim.fn
 local fmt, ui = string.format, rvim.ui
 local border = ui.border
-local data = vim.fn.stdpath('data')
+local datapath = vim.fn.stdpath('data')
 
 -- A helper function to limit the size of a telescope window to fit the maximum available
 -- space on the screen. This is useful for dropdowns e.g. the cursor or dropdown theme
@@ -394,7 +394,11 @@ return {
           layout_config = { horizontal = { preview_width = 0.55 } },
           winblend = 0,
           history = {
-            path = join_paths(data, 'databases', 'telescope_history.sqlite3'),
+            path = join_paths(
+              datapath,
+              'databases',
+              'telescope_history.sqlite3'
+            ),
           },
           cache_picker = { num_pickers = 3 },
           file_ignore_patterns = {
@@ -515,7 +519,7 @@ return {
         extensions = {
           persisted = dropdown(),
           frecency = {
-            db_root = join_paths(data, 'databases'),
+            db_root = join_paths(datapath, 'databases'),
             default_workspace = 'CWD',
             show_unindexed = false, -- Show all files or only those that have been indexed
             ignore_patterns = {
