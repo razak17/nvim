@@ -324,6 +324,11 @@ return {
       local previewer_maker = function(filepath, bufnr, opts)
         opts = opts or {}
         opts.use_ft_detect = opts.use_ft_detect or true
+        local max_filesize = 100 * 1024 -- 100 KB
+        local ok, stats = pcall(vim.uv.fs_stat, filepath)
+        if ok and stats and stats.size > max_filesize then
+          opts.use_ft_detect = false
+        end
         vim.iter(ignore_preview):map(function(item)
           if filepath:match(item) then
             opts.use_ft_detect = false
