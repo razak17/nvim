@@ -320,6 +320,19 @@ return {
       table.insert(vimgrep_arguments, '--glob')
       table.insert(vimgrep_arguments, '!**/.git/*')
 
+      local ignore_preview = { '.*%.csv', '.*%.java' }
+      local previewer_maker = function(filepath, bufnr, opts)
+        opts = opts or {}
+        opts.use_ft_detect = opts.use_ft_detect or true
+        vim.iter(ignore_preview):map(function(item)
+          if filepath:match(item) then
+            opts.use_ft_detect = false
+            return
+          end
+        end)
+        previewers.buffer_previewer_maker(filepath, bufnr, opts)
+      end
+
       require('telescope').setup({
         defaults = {
           prompt_prefix = fmt(' %s  ', ui.codicons.misc.search_alt),
@@ -344,6 +357,7 @@ return {
             'center',
           },
           vimgrep_arguments = vimgrep_arguments,
+          buffer_previewer_maker = previewer_maker,
           sorting_strategy = 'ascending',
           layout_strategy = 'flex',
           set_env = { ['TERM'] = env.TERM },
