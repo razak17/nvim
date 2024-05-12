@@ -315,6 +315,7 @@ return {
       local themes = require('telescope.themes')
       local config = require('telescope.config')
       local vimgrep_arguments = { unpack(config.values.vimgrep_arguments) }
+      local Job = require('plenary.job')
 
       table.insert(vimgrep_arguments, '--hidden')
       table.insert(vimgrep_arguments, '--glob')
@@ -324,18 +325,38 @@ return {
       local previewer_maker = function(filepath, bufnr, opts)
         opts = opts or {}
         opts.use_ft_detect = opts.use_ft_detect or true
+        -- if the file is too large, don't use the ft detect
         local max_filesize = 100 * 1024 -- 100 KB
         local ok, stats = pcall(vim.uv.fs_stat, filepath)
         if ok and stats and stats.size > max_filesize then
           opts.use_ft_detect = false
         end
+        -- if the file is in the ignore list, don't use the ft detect
         vim.iter(ignore_preview):map(function(item)
           if filepath:match(item) then
             opts.use_ft_detect = false
             return
           end
         end)
-        previewers.buffer_previewer_maker(filepath, bufnr, opts)
+        -- Don't preview binary files
+        filepath = vim.fn.expand(filepath)
+        Job:new({
+          command = 'file',
+          args = { '--mime-type', '-b', filepath },
+          on_exit = function(j)
+            local mime_type = vim.split(j:result()[1], '/')[1]
+            if mime_type == 'text' then
+              previewers.buffer_previewer_maker(filepath, bufnr, opts)
+            else
+              -- maybe we want to write something to the buffer here
+              vim.schedule(
+                function()
+                  vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, { 'BINARY' })
+                end
+              )
+            end
+          end,
+        }):sync()
       end
 
       require('telescope').setup({
