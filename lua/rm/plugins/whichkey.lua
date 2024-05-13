@@ -94,7 +94,6 @@ return {
       q = { name = 'NeoComposer' },
       r = { name = 'Rest' },
       s = { name = 'Strict' },
-      S = { name = 'Slime' },
       t = { name = 'TODO' },
       v = { name = 'Devdocs' },
       x = { name = 'Executor' },
@@ -122,7 +121,7 @@ return {
       n = { name = 'Nag' },
       p = { name = 'Share' },
       q = { name = 'NeoComposer' },
-      S = { name = 'Slime' },
+      S = { name = 'Sort' },
       y = { name = 'Yanky' },
     }, { mode = 'x', prefix = '<localleader>' })
 
