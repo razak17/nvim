@@ -258,22 +258,24 @@ return {
         desc = 'open mini.files (directory of current file)',
       },
       {
+        '<leader>ep',
+        function()
+          local mf = require('mini.files')
+          if not mf.close() then
+            mf.open(vim.api.nvim_buf_get_name(0))
+            mf.reveal_cwd()
+          end
+        end,
+        desc = 'mini.files: full path',
+      },
+      {
         '<leader>ew',
         function() require('mini.files').open(vim.uv.cwd(), true) end,
         desc = 'open mini.files (cwd)',
       },
     },
     opts = {
-      windows = {
-        preview = true,
-        width_focus = 30,
-        width_preview = 30,
-      },
-      options = {
-        -- Whether to use for editing directories
-        -- Disabled by default in LazyVim because neo-tree is used for that
-        use_as_default_explorer = false,
-      },
+      options = { use_as_default_explorer = false },
     },
     config = function(_, opts)
       require('mini.files').setup(opts)
