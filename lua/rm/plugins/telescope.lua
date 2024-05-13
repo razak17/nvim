@@ -345,13 +345,18 @@ return {
           args = { '--mime-type', '-b', filepath },
           on_exit = function(j)
             local mime_type = vim.split(j:result()[1], '/')[1]
-            if mime_type == 'text' then
+            local text_mime_types = {
+              'text',
+              'inode',
+              'application',
+            }
+            if rvim.find_string(text_mime_types, mime_type) then
               previewers.buffer_previewer_maker(filepath, bufnr, opts)
             else
               -- maybe we want to write something to the buffer here
               vim.schedule(
                 function()
-                  vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, { 'BINARY' })
+                  api.nvim_buf_set_lines(bufnr, 0, -1, false, { 'BINARY' })
                 end
               )
             end
