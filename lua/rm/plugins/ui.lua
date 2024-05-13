@@ -91,7 +91,7 @@ return {
     opts = {
       excluded_filetypes = {
         [''] = true,
-        fugitive = true
+        fugitive = true,
       },
     },
   },
@@ -156,7 +156,7 @@ return {
     },
     opts = {
       format_on_save = false,
-      excluded_filetypes = { 'help' },
+      excluded_filetypes = { 'help', 'minifiles', 'oil' },
       excluded_buftypes = {
         'help',
         'nofile',
@@ -250,7 +250,7 @@ return {
         'noice',
         'qf',
         'fzf',
-        'fugitive'
+        'fugitive',
       },
       highlight = {
         bg = rvim.highlight.get('Normal', 'bg'),
