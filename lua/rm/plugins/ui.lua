@@ -307,15 +307,6 @@ return {
     },
   },
   {
-    'eandrju/cellular-automaton.nvim',
-    cmd = 'CellularAutomaton',
-    -- stylua: ignore
-    keys = {
-      { '<localleader>Ag', '<Cmd>CellularAutomaton game_of_life<CR>', desc = 'automaton: game of life', },
-      { '<localleader>Am', '<Cmd>CellularAutomaton make_it_rain<CR>', desc = 'automaton: make it rain', },
-    },
-  },
-  {
     'tjdevries/sPoNGe-BoB.NvIm',
     cmd = { 'SpOnGeBoBiFy' },
     -- stylua: ignore
