@@ -241,9 +241,9 @@ return {
     event = 'VeryLazy',
     -- stylua: ignore
     keys = {
-      { '<localleader>St', '<Plug>SlimeParagraphSend', desc = 'slime: paragraph', },
-      { '<localleader>St', '<Plug>SlimeRegionSend', mode = { 'x' }, desc = 'slime: region', },
-      { '<localleader>Sc', '<Plug>SlimeConfig', desc = 'slime: config' },
+      { '<localleader>sp', '<Plug>SlimeParagraphSend', desc = 'slime: paragraph', },
+      { '<localleader>ur', '<Plug>SlimeRegionSend', mode = { 'x' }, desc = 'slime: region', },
+      { '<localleader>sc', '<Plug>SlimeConfig', desc = 'slime: config' },
     },
     config = function()
       vim.g.slime_target = 'tmux'
