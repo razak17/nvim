@@ -1,7 +1,10 @@
+---@diagnostic disable: undefined-field
 local opt_l = vim.opt_local
+local l = vim.log.levels
 local M = {}
 
 local function mappings_notify(msg, type)
+  type = type or l.INFO
   vim.schedule(function() vim.notify(msg, type, { title = 'UI Toggles' }) end)
 end
 
