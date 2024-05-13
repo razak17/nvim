@@ -20,17 +20,17 @@ return {
   {
     'zbirenbaum/copilot.lua',
     cond = rvim.ai.enable and not rvim.plugins.minimal,
-    event = 'InsertEnter',
-    -- stylua: ignore
+    event = 'VeryLazy',
     keys = {
-      { '<leader>ap', '<Cmd>Copilot panel<CR>', desc = 'copilot: toggle panel', },
+      { '<leader>ap', '<Cmd>Copilot panel<CR>', desc = 'copilot: panel' },
       { '<leader>at', '<Cmd>Copilot toggle<CR>', desc = 'copilot: toggle' },
     },
     opts = {
       panel = { enabled = false },
       suggestion = {
         enabled = true,
-        auto_trigger = not rvim.plugins.overrides.copilot_cmp.enable,
+        -- If copilot-cmp is disabled, set this to true
+        auto_trigger = false,
         keymap = {
           accept_word = '<M-w>',
           accept_line = '<M-l>',

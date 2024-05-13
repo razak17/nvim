@@ -357,15 +357,13 @@ return {
       },
       {
         'zbirenbaum/copilot-cmp',
-        cond = rvim.ai.enable and not rvim.plugins.minimal,
+        cond = rvim.ai.enable and not rvim.plugins.minimal and false,
         opts = {},
         dependencies = 'copilot.lua',
       },
       {
         'Exafunction/codeium.nvim',
-        cond = rvim.ai.enable
-          and not rvim.plugins.minimal
-          and rvim.plugins.overrides.codeium.enable,
+        cond = rvim.ai.enable and not rvim.plugins.minimal and false,
         opts = {},
       },
     },

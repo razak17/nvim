@@ -54,8 +54,6 @@ local namespace = {
     overrides = {
       dict = { enable = env.RVIM_DICT_ENABLED == '1' },
       ghost_text = { enable = env.RVIM_GHOST_ENABLED == '1' },
-      copilot_cmp = { enable = false },
-      codeium = { enable = false },
       garbage_day = { enable = false },
     },
   },
