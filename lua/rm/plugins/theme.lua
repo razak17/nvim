@@ -23,6 +23,12 @@ return {
     end,
   },
   {
+    'dgox16/oldworld.nvim',
+    lazy = false,
+    priority = 1000,
+    opts = {},
+  },
+  {
     'sontungexpt/witch',
     cond = false,
     priority = 1000,
