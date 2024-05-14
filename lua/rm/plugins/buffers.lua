@@ -49,7 +49,7 @@ return {
       local action = require('arena').action
 
       require('arena').setup({
-        max_items = 50,
+        max_items = 20,
         window = { Border = 'single' },
         keybinds = {
           ['w'] = action(function(buf, info)
