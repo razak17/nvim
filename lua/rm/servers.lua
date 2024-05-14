@@ -2,6 +2,27 @@
 --------------------------------------------------------------------------------
 -- Language servers
 --------------------------------------------------------------------------------
+local fmt = string.format
+
+local function get_clangd_cmd()
+  local cmd = 'clangd'
+  if rvim.is_available('mason.nvim') then
+    local clangd = require('mason-registry').get_package('clangd')
+    local path = clangd:get_install_path()
+    clangd:get_installed_version(function(success, version_or_err)
+      if success then
+        cmd = fmt('%s/clangd_%s/bin/clangd', path, version_or_err)
+      end
+    end)
+  end
+  return {
+    cmd,
+    '--all-scopes-completion',
+    '--background-index',
+    '--cross-file-rename',
+    '--header-insertion=never',
+  }
+end
 
 local pyright_analysis = {
   indexing = true,
@@ -65,7 +86,7 @@ local servers = {
       },
     },
   },
-  clangd = {},
+  clangd = { cmd = get_clangd_cmd() },
   cmake = {},
   cssls = {},
   dockerls = {},
