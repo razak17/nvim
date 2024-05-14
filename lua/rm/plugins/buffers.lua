@@ -41,7 +41,7 @@ return {
     config = function() require('quick_buffer_jump') end,
   },
   {
-    'dzfrias/arena.nvim',
+    'razak17/arena.nvim',
     event = 'VeryLazy',
     cmd = { 'ArenaToggle', 'ArenaOpen', 'ArenaClose' },
     keys = { { '<M-space>', '<Cmd>ArenaToggle<CR>', desc = 'arena: toggle' } },
