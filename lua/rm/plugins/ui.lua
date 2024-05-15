@@ -13,6 +13,12 @@ return {
     opts = {},
   },
   {
+    'ObserverOfTime/notifications.nvim',
+    cond = false,
+    event = 'VeryLazy',
+    opts = {},
+  },
+  {
     'karb94/neoscroll.nvim',
     cond = not minimal,
     event = 'BufRead',
