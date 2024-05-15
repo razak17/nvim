@@ -41,9 +41,16 @@ return {
     end,
   },
   {
-    'itchyny/vim-highlighturl',
+    'rubiin/highlighturl.nvim',
     event = 'ColorScheme',
-    config = function() vim.g.highlighturl_guifg = highlight.get('URL', 'fg') end,
+    config = function()
+      vim.g.highlighturl = true
+      highlight.plugin('highlighturl', {
+        theme = {
+          ['onedark'] = { { HighlightURL = { link = 'URL' } } },
+        },
+      })
+    end,
   },
   {
     'lukas-reineke/virt-column.nvim',
