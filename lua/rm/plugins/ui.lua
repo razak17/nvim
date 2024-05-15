@@ -156,20 +156,24 @@ return {
     },
     opts = {
       format_on_save = false,
-      excluded_filetypes = { 'help', 'minifiles', 'oil' },
-      excluded_buftypes = {
+      excluded_filetypes = {
         'buffalo',
         'buffer_manager',
         'fzf',
         'harpoon',
-        'help',
+        'minifiles',
         'NeogitPopup',
         'NeogitStatus',
+        'oil',
+        'TelescopePrompt',
+        'qf',
+      },
+      excluded_buftypes = {
+        'help',
         'nofile',
+        'terminal',
         'prompt',
         'quickfix',
-        'TelescopePrompt',
-        'terminal',
       },
       deep_nesting = {
         highlight_group = 'Strict',
