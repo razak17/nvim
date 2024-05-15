@@ -252,6 +252,7 @@ return {
   },
   {
     'drybalka/tree-climber.nvim',
+    cond = rvim.treesitter.enable and false,
     keys = {
       {
         '<localleader>pK',
