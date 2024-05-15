@@ -49,6 +49,7 @@ return {
       local action = require('arena').action
 
       require('arena').setup({
+        per_project = true,
         max_items = 20,
         window = { Border = 'single' },
         keybinds = {
