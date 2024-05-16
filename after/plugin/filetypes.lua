@@ -152,7 +152,12 @@ settings({
           vim.api.nvim_buf_set_lines(0, 0, 1, false, { '"use client";' })
         end
       end
-      map('n', '<localleader>lu', toggle_use_client, { buffer = 0 })
+      map(
+        'n',
+        '<localleader>lu',
+        toggle_use_client,
+        { buffer = 0, desc = 'toggle use client' }
+      )
     end,
   },
   jsonc = {
