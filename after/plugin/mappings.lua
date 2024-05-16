@@ -480,7 +480,7 @@ function rvim.null_pointer()
     end,
   })
 end
-nnoremap('<localleader>pp', rvim.null_pointer, { desc = 'share code url' })
+nnoremap('<localleader>pu', rvim.null_pointer, { desc = 'share code url' })
 vnoremap(
   '<localleader>pp',
   ':lua rvim.null_pointer()<CR>gv<Esc>',
