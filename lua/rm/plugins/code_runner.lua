@@ -36,10 +36,10 @@ return {
     cmd = { 'QuickCodeRunner', 'QuickCodePad' },
     keys = {
       {
-        mode = 'v',
         '<leader>rc',
         ':QuickCodeRunner<CR>',
         desc = 'quick-runner: run selection',
+        mode = 'v',
       },
       { '<leader>rP', ':QuickCodePad<CR>', desc = 'quick-runner: open pad' },
     },

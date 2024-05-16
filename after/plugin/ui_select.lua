@@ -291,6 +291,8 @@ local command_palette_options = {
   end,
   ['Copy File Home Path'] = function() setreg('+', expand('%:~')) end,
   ['Find And Replace'] = 'GrugFar',
+  ['Code Pad'] = 'QuickCodePad',
+  ['Run Code'] = 'Build',
 }
 
 local command_palette_menu = function()
