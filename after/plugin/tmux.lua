@@ -12,6 +12,7 @@ local ignored = {
   'fzf',
   'NeogitStatus',
   'NeogitPopup',
+  'NeogitRebaseTodo',
   '',
 }
 
