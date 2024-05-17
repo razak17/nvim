@@ -226,7 +226,7 @@ return {
   },
   {
     'filNaj/tree-setter',
-    cond = rvim.treesitter.enable,
+    cond = rvim.treesitter.enable and false,
     event = 'VeryLazy',
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
   },
