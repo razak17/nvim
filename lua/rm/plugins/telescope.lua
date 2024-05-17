@@ -426,7 +426,7 @@ return {
             '^__pycache__/',
             '.obsidian',
           },
-          path_display = { 'truncate' },
+          path_display = { 'filename_first' },
           file_sorter = sorters.get_fzy_sorter,
           file_previewer = previewers.vim_buffer_cat.new,
           grep_previewer = previewers.vim_buffer_vimgrep.new,
