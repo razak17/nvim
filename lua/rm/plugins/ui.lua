@@ -1,6 +1,6 @@
 local ui, highlight = rvim.ui, rvim.highlight
 local icons = ui.icons
-local border, separators = ui.current.border, ui.icons.separators
+local separators = ui.icons.separators
 local P = require('onedark.palette')
 
 local minimal = rvim.plugins.minimal
@@ -482,51 +482,6 @@ return {
         )
       )
     end,
-  },
-  {
-    'uga-rosa/ccc.nvim',
-    cmd = { 'CccHighlighterToggle', 'CccHighlighterEnable', 'CccPick' },
-    opts = function()
-      local ccc = require('ccc')
-      local p = ccc.picker
-      p.hex.pattern = {
-        [=[\v%(^|[^[:keyword:]])\zs#(\x\x)(\x\x)(\x\x)>]=],
-        [=[\v%(^|[^[:keyword:]])\zs#(\x\x)(\x\x)(\x\x)(\x\x)>]=],
-      }
-      ccc.setup({
-        win_opts = { border = border },
-        pickers = {
-          p.hex,
-          p.css_rgb,
-          p.css_hsl,
-          p.css_hwb,
-          p.css_lab,
-          p.css_lch,
-          p.css_oklab,
-          p.css_oklch,
-        },
-        highlighter = {
-          auto_enable = true,
-          excludes = {
-            'dart',
-            'lazy',
-            'orgagenda',
-            'org',
-            'NeogitStatus',
-            'toggleterm',
-          },
-        },
-      })
-    end,
-  },
-  {
-    'brenoprata10/nvim-highlight-colors',
-    event = { 'BufRead' },
-    cmd = { 'HighlightColors' },
-    opts = {
-      render = 'virtual',
-      enable_tailwind = true
-    },
   },
   {
     'shellRaining/hlchunk.nvim',
