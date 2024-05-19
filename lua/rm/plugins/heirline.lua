@@ -55,6 +55,7 @@ return {
             end
             return d and d.ft == true or d and d.fname == true
           end,
+          hl = statusline.hl,
           statusline.vim_mode,
           statusline.git_branch,
           statusline.file_name_block,

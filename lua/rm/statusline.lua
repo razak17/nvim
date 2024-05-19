@@ -343,6 +343,7 @@ local function stl_copilot_indicator()
 end
 
 return {
+  hl = { bg = bg, fg = fg },
   vim_mode = {
     init = function(self)
       self.mode = vim.fn.mode(1)
