@@ -57,7 +57,7 @@ return {
     'dmmulroy/tsc.nvim',
     cond = rvim.lsp.enable,
     cmd = 'TSC',
-    ft = { 'typescript', 'typescriptreact' },
+    ft = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
     opts = {
       enable_progress_notifications = true,
       auto_open_qflist = true,
