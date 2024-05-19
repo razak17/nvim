@@ -523,7 +523,10 @@ return {
     'brenoprata10/nvim-highlight-colors',
     event = { 'BufRead' },
     cmd = { 'HighlightColors' },
-    opts = {},
+    opts = {
+      render = 'virtual',
+      enable_tailwind = true
+    },
   },
   {
     'shellRaining/hlchunk.nvim',
