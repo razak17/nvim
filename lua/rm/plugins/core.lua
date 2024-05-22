@@ -291,7 +291,6 @@ return {
   {
     'chrisgrieser/nvim-genghis',
     cond = not rvim.plugins.minimal,
-    commit = 'b045df8264e549434a4e1dd5a27d09893f12695e',
     dependencies = 'stevearc/dressing.nvim',
     event = { 'BufReadPost', 'BufNewFile' },
     -- stylua: ignore
