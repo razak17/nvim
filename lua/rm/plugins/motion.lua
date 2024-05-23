@@ -2,6 +2,7 @@ return {
   {
     'razak17/accelerated-jk.nvim',
     -- stylua: ignore
+    event = 'VeryLazy',
     keys = {
       { 'j', "<cmd>lua require'accelerated-jk'.command('gj')<CR>", mode = { 'x', 'n' }, },
       { 'k', "<cmd>lua require'accelerated-jk'.command('gk')<CR>", mode = { 'x', 'n' }, },
