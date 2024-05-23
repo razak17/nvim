@@ -30,7 +30,7 @@ return {
       suggestion = {
         enabled = true,
         -- If copilot-cmp is disabled, set this to true
-        auto_trigger = false,
+        auto_trigger = true,
         keymap = {
           accept_word = '<M-w>',
           accept_line = '<M-l>',
