@@ -477,7 +477,7 @@ local function setup_autocommands(client, buf)
   end
 
   if client.supports_method(M.textDocument_inlayHint, { bufnr = buf }) then
-    lsp.inlay_hint.enable(false, { bufnr = 0 })
+    lsp.inlay_hint.enable(rvim.lsp.inlay_hint.enable, { bufnr = buf })
   end
 
   if client.supports_method(M.textDocument_formatting) then

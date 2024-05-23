@@ -24,6 +24,7 @@ local namespace = {
     enable = env.RVIM_LSP_ENABLED == '1' and env.RVIM_PLUGINS_MINIMAL == '0',
     format_on_save = { enable = true },
     hover_diagnostics = { enable = false, go_to = false, scope = 'cursor' },
+    inlay_hint = { enable = false },
     null_ls = { enable = false },
     omnifunc = { enable = true },
     override = {},
