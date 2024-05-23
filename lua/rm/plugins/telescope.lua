@@ -556,7 +556,6 @@ return {
             },
             match_algorithm = 'fzy',
             disable_devicons = false,
-            open_buffer_indicators = { previous = '👀', others = '🙈' },
           },
           live_grep_args = {
             auto_quoting = true, -- enable/disable auto-quoting
