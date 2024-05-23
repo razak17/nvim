@@ -445,6 +445,10 @@ return {
   {
     'aznhe21/actions-preview.nvim',
     cond = rvim.lsp.enable and rvim.plugins.niceties,
+    -- stylua: ignore
+    keys = {
+      { '<leader>lA', function() require('actions-preview').code_actions() end, desc = 'code action preview' },
+    },
     opts = {},
     config = function()
       require('actions-preview').setup({

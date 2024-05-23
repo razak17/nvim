@@ -598,14 +598,7 @@ return {
         { pattern = 'TelescopeConfigComplete', modeline = false }
       )
     end,
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-      {
-        'aznhe21/actions-preview.nvim',
-        cond = rvim.lsp.enable and false,
-        opts = { telescope = rvim.telescope.vertical() },
-      },
-    },
+    dependencies = { 'nvim-lua/plenary.nvim' },
   },
   {
     'biozz/whop.nvim',
