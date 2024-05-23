@@ -144,13 +144,13 @@ return {
   },
   {
     'startup-nvim/startup.nvim',
-    cond = rvim.plugins.minimal or not rvim.treesitter.enable and false,
+    cond = rvim.plugins.minimal and not rvim.treesitter.enable,
     lazy = false,
     config = function() require('startup').setup({ theme = 'linguini' }) end,
   },
   {
     'letieu/btw.nvim',
-    cond = rvim.plugins.minimal or not rvim.treesitter.enable,
+    cond = not rvim.plugins.minimal and not rvim.treesitter.enable,
     lazy = false,
     config = function() require('btw').setup() end,
   },
