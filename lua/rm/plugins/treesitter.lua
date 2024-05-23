@@ -138,6 +138,7 @@ return {
       },
       {
         'JoosepAlviste/nvim-ts-context-commentstring',
+        cond = false,
         opts = { enable_autocmd = false },
         config = function(_, opts)
           vim.g.skip_ts_context_commentstring_module = true
