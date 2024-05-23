@@ -156,7 +156,7 @@ return {
   },
   {
     'razak17/nvim-strict',
-    cond = not rvim.plugins.minimal,
+    cond = not minimal and niceties,
     event = { 'BufReadPost', 'BufNewFile' },
     -- stylua: ignore
     keys = {
