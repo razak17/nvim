@@ -95,7 +95,7 @@ return {
   },
   {
     'utilyre/sentiment.nvim',
-    cond = not minimal and niceties,
+    cond = not minimal and niceties and false,
     init = function()
       -- `matchparen.vim` needs to be disabled manually in case of lazy loading
       vim.g.loaded_matchparen = 1
