@@ -286,6 +286,7 @@ return {
   ------------------------------------------------------------------------------
   {
     'numToStr/Comment.nvim',
+    cond = false,
     keys = { 'gcc', { 'gc', mode = { 'x', 'n', 'o' } } },
     opts = function(_, opts)
       local ok, integration =
