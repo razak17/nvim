@@ -1,8 +1,8 @@
 return {
   {
     'razak17/accelerated-jk.nvim',
-    -- stylua: ignore
     event = 'VeryLazy',
+    -- stylua: ignore
     keys = {
       { 'j', "<cmd>lua require'accelerated-jk'.command('gj')<CR>", mode = { 'x', 'n' }, },
       { 'k', "<cmd>lua require'accelerated-jk'.command('gk')<CR>", mode = { 'x', 'n' }, },
@@ -23,6 +23,12 @@ return {
         'null-ls-info',
       },
     },
+  },
+  {
+    'tris203/precognition.nvim',
+    cond = false,
+    event = { 'BufRead', 'BufNewFile' },
+    opts = {},
   },
   {
     'chrisgrieser/nvim-spider',
