@@ -316,7 +316,6 @@ return {
       local themes = require('telescope.themes')
       local config = require('telescope.config')
       local vimgrep_arguments = { unpack(config.values.vimgrep_arguments) }
-      local Job = require('plenary.job')
 
       table.insert(vimgrep_arguments, '--hidden')
       table.insert(vimgrep_arguments, '--glob')
@@ -339,30 +338,8 @@ return {
             return
           end
         end)
-        -- Don't preview binary files
         filepath = vim.fn.expand(filepath)
-        Job:new({
-          command = 'file',
-          args = { '--mime-type', '-b', filepath },
-          on_exit = function(j)
-            local mime_type = vim.split(j:result()[1], '/')[1]
-            local text_mime_types = {
-              'text',
-              'inode',
-              'application',
-            }
-            if rvim.find_string(text_mime_types, mime_type) then
-              previewers.buffer_previewer_maker(filepath, bufnr, opts)
-            else
-              -- maybe we want to write something to the buffer here
-              vim.schedule(
-                function()
-                  api.nvim_buf_set_lines(bufnr, 0, -1, false, { 'BINARY' })
-                end
-              )
-            end
-          end,
-        }):sync()
+        previewers.buffer_previewer_maker(filepath, bufnr, opts)
       end
 
       require('telescope').setup({
