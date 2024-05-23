@@ -1,13 +1,13 @@
+local minimal = rvim.plugins.minimal
+
 return {
   ------------------------------------------------------------------------------
   -- Themes {{{1
   ------------------------------------------------------------------------------
-  { 'LunarVim/horizon.nvim', lazy = false, priority = 1000 },
-  { 'dotsilas/darcubox-nvim', lazy = false, priority = 1000 },
-  { 'Wansmer/serenity.nvim', priority = 1000, opts = {} },
-  { 'judaew/ronny.nvim', priority = 1000, opts = {} },
+  { 'Wansmer/serenity.nvim', priority = 1000, cond = not minimal, opts = {} },
+  { 'judaew/ronny.nvim', priority = 1000, cond = not minimal, opts = {} },
   -- { 'oxfist/night-owl.nvim', lazy = false, priority = 1000 },
-  { 'kvrohit/rasmus.nvim', lazy = false, priority = 1000 },
+  { 'kvrohit/rasmus.nvim', lazy = false, cond = not minimal, priority = 1000 },
   {
     'razak17/onedark.nvim',
     lazy = false,
@@ -15,7 +15,20 @@ return {
     opts = { variant = 'fill' },
   },
   {
+    'LunarVim/horizon.nvim',
+    lazy = false,
+    cond = not minimal,
+    priority = 1000,
+  },
+  {
+    'dotsilas/darcubox-nvim',
+    lazy = false,
+    cond = not minimal,
+    priority = 1000,
+  },
+  {
     'NTBBloodbath/doom-one.nvim',
+    cond = not minimal,
     lazy = false,
     config = function()
       vim.g.doom_one_pumblend_enable = true
@@ -24,13 +37,14 @@ return {
   },
   {
     'dgox16/oldworld.nvim',
+    cond = not minimal,
     lazy = false,
     priority = 1000,
     opts = {},
   },
   {
     'sontungexpt/witch',
-    cond = false,
+    cond = not minimal and false,
     priority = 1000,
     lazy = false,
     opts = { style = 'dark' },
@@ -38,7 +52,7 @@ return {
     -- Using lazy.nvim
     {
       'cdmill/neomodern.nvim',
-      cond = false,
+      cond = not minimal and false,
       lazy = false,
       priority = 1000,
       config = function()

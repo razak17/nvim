@@ -1,4 +1,8 @@
+local minimal = rvim.plugins.minimal
+local niceties = rvim.plugins.niceties
+
 return {
+
   {
     'chrisgrieser/nvim-chainsaw',
     config = function()
@@ -34,6 +38,7 @@ return {
   },
   {
     'kungfusheep/randomword.nvim',
+    cond = not minimal and niceties,
     event = 'VeryLazy',
     config = function()
       local js = {

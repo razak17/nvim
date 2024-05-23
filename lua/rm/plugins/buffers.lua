@@ -1,11 +1,12 @@
 local api, fn = vim.api, vim.fn
 local ui = rvim.ui
 local fmt = string.format
+local minimal, niceties = rvim.plugins.minimal, rvim.plugins.niceties
 
 return {
   {
     'chrisgrieser/nvim-early-retirement',
-    cond = not rvim.plugins.minimal and false,
+    cond = not minimal and false,
     event = 'VeryLazy',
     opts = {
       minimumBufferNum = 4,
@@ -15,7 +16,7 @@ return {
   {
 
     'razak17/cybu.nvim',
-    cond = not rvim.plugins.minimal,
+    cond = not minimal and niceties,
     event = { 'BufRead', 'BufNewFile' },
     opts = {
       position = { relative_to = 'win', anchor = 'topright' },
@@ -34,6 +35,7 @@ return {
   },
   {
     'sathishmanohar/quick-buffer-jump',
+    cond = not minimal and niceties,
     cmd = { 'QuickBufferJump' },
     keys = {
       { '<M-u>', '<Cmd>QuickBufferJump<CR>', desc = 'quick buffer jump' },
@@ -102,6 +104,7 @@ return {
   },
   {
     'razak17/antelope',
+    cond = not minimal and niceties,
     keys = {
       { '<M-a>', '<Cmd>Antelope buffers<CR>', 'antelope: buffers' },
       { '<M-m>', '<Cmd>Antelope marks<CR>', 'antelope: marks' },
@@ -118,6 +121,7 @@ return {
   },
   {
     'stevearc/stickybuf.nvim',
+    cond = not minimal and niceties,
     cmd = { 'PinBuffer', 'PinBuftype', 'PinFiletype', 'Unpin' },
     opts = {},
     config = function()

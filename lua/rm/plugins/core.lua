@@ -1,5 +1,6 @@
 local cmd, fn = vim.cmd, vim.fn
 local border = rvim.ui.current.border
+local minimal, niceties = rvim.plugins.minimal, rvim.plugins.niceties
 
 return {
   ------------------------------------------------------------------------------
@@ -10,7 +11,7 @@ return {
   'b0o/schemastore.nvim',
   -- { 'lewis6991/fileline.nvim', lazy = false },
   -- { 'axlebedev/vim-footprints', lazy = false },
-  { 'stevearc/profile.nvim', lazy = false },
+  { 'stevearc/profile.nvim', cond = not minimal, lazy = false },
   {
     'romainl/vim-cool',
     cond = false,
@@ -19,7 +20,7 @@ return {
   },
   {
     'olimorris/persisted.nvim',
-    cond = not rvim.plugins.minimal and rvim.treesitter.enable,
+    cond = not minimal and rvim.treesitter.enable,
     lazy = false,
     init = function() rvim.command('ListSessions', 'Telescope persisted') end,
     opts = {
@@ -133,9 +134,13 @@ return {
   { 'lambdalisue/suda.vim', lazy = false },
   { 'will133/vim-dirdiff', cmd = { 'DirDiff' } },
   { 'godlygeek/tabular', cmd = { 'Tabularize' } },
-  { 'sammce/fleeting.nvim', lazy = false },
-  { 'mrquantumcodes/configpulse', lazy = false },
-  { 'ton/vim-bufsurf', lazy = false },
+  { 'sammce/fleeting.nvim', cond = not minimal and niceties, lazy = false },
+  { 'ton/vim-bufsurf', cond = not minimal, lazy = false },
+  {
+    'mrquantumcodes/configpulse',
+    cond = not minimal and niceties,
+    lazy = false,
+  },
   {
     'blumaa/ohne-accidents',
     cmd = { 'OhneAccidents' },
@@ -143,6 +148,7 @@ return {
   },
   {
     'nmac427/guess-indent.nvim',
+    cond = not minimal and niceties,
     event = 'BufReadPost',
     config = function() require('guess-indent').setup({}) end,
   },
@@ -153,6 +159,7 @@ return {
   },
   {
     'MagicDuck/grug-far.nvim',
+    cond = not minimal,
     lazy = false,
     cmd = { 'GrugFar' },
     opts = {
@@ -182,7 +189,7 @@ return {
   },
   {
     'smoka7/multicursors.nvim',
-    cond = not rvim.plugins.minimal and rvim.treesitter.enable,
+    cond = not minimal and rvim.treesitter.enable,
     dependencies = { 'nvim-treesitter/nvim-treesitter', 'smoka7/hydra.nvim' },
     opts = {
       hint_config = { border = border },
@@ -279,7 +286,7 @@ return {
   },
   {
     'ahmedkhalf/project.nvim',
-    cond = not rvim.plugins.minimal,
+    cond = not minimal,
     event = 'VimEnter',
     name = 'project_nvim',
     opts = {
@@ -290,7 +297,7 @@ return {
   },
   {
     'chrisgrieser/nvim-genghis',
-    cond = not rvim.plugins.minimal,
+    cond = not minimal,
     dependencies = 'stevearc/dressing.nvim',
     event = { 'BufReadPost', 'BufNewFile' },
     -- stylua: ignore
@@ -311,7 +318,7 @@ return {
   },
   {
     'jpalardy/vim-slime',
-    cond = rvim.plugins.niceties,
+    cond = not minimal and rvim.plugins.niceties,
     event = 'VeryLazy',
     -- stylua: ignore
     keys = {
@@ -327,7 +334,7 @@ return {
   },
   {
     'luckasRanarison/nvim-devdocs',
-    cond = not rvim.plugins.minimal,
+    cond = not minimal,
     -- stylua: ignore
     keys = {
       { '<localleader>vf', '<cmd>DevdocsOpenFloat<CR>', desc = 'devdocs: open float', },
@@ -394,7 +401,7 @@ return {
   },
   {
     'bgaillard/readonly.nvim',
-    cond = not rvim.plugins.minimal and rvim.plugins.niceties,
+    cond = not minimal and rvim.plugins.niceties,
     lazy = false,
     opts = {
       secured_files = {

@@ -35,6 +35,7 @@ return {
   },
   {
     'razak17/twoslash-queries.nvim',
+    cond = enabled,
     -- stylua: ignore
     keys = {
       { '<localleader>lI', '<Cmd>TwoslashQueriesInspect<CR>', desc = 'twoslash-queries: inspect', },
@@ -43,6 +44,7 @@ return {
   },
   {
     'OlegGulevskyy/better-ts-errors.nvim',
+    cond = enabled,
     event = 'LspAttach',
     ft = { 'typescript', 'typescriptreact', 'javascript', 'javascriptreact' },
     opts = {
@@ -55,7 +57,7 @@ return {
   },
   {
     'dmmulroy/tsc.nvim',
-    cond = rvim.lsp.enable,
+    cond = enabled,
     cmd = 'TSC',
     ft = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
     opts = {

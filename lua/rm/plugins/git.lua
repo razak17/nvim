@@ -11,7 +11,6 @@ return {
   { 'yutkat/git-rebase-auto-diff.nvim', ft = { 'gitrebase' }, opts = {} },
   {
     'NeogitOrg/neogit',
-    cond = enabled,
     cmd = 'Neogit',
     dependencies = { 'nvim-lua/plenary.nvim', 'sindrets/diffview.nvim' },
     -- stylua: ignore
@@ -321,6 +320,7 @@ return {
   },
   {
     'aaronhallaert/advanced-git-search.nvim',
+    cond = enabled,
     dependencies = {
       'nvim-telescope/telescope.nvim',
       'tpope/vim-fugitive',

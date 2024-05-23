@@ -3,12 +3,12 @@ local icons = ui.icons
 local separators = ui.icons.separators
 local P = require('onedark.palette')
 
-local minimal = rvim.plugins.minimal
-local niceties = rvim.plugins.niceties
+local minimal, niceties = rvim.plugins.minimal, rvim.plugins.niceties
 
 return {
   {
     'Aasim-A/scrollEOF.nvim',
+    cond = not minimal and niceties,
     event = { 'BufRead', 'BufNewFile' },
     opts = {},
   },
@@ -48,6 +48,7 @@ return {
   },
   {
     'rubiin/highlighturl.nvim',
+    cond = not minimal and niceties,
     event = 'ColorScheme',
     config = function()
       vim.g.highlighturl = true
@@ -110,6 +111,7 @@ return {
   },
   {
     'tummetott/reticle.nvim',
+    cond = not minimal and niceties,
     event = 'VeryLazy',
     opts = {
       ignore = {
@@ -463,7 +465,7 @@ return {
   },
   {
     'folke/todo-comments.nvim',
-    cond = niceties,
+    cond = not minimal and niceties,
     event = 'BufReadPost',
     cmd = { 'TodoTelescope', 'TodoTrouble', 'TodoQuickFix', 'TodoDots' },
     -- stylua: ignore

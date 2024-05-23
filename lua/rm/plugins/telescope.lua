@@ -2,6 +2,7 @@ local api, env, fn = vim.api, vim.env, vim.fn
 local fmt, ui = string.format, rvim.ui
 local border = ui.border
 local datapath = vim.fn.stdpath('data')
+local minimal = rvim.plugins.minimal
 
 -- A helper function to limit the size of a telescope window to fit the maximum available
 -- space on the screen. This is useful for dropdowns e.g. the cursor or dropdown theme
@@ -608,6 +609,7 @@ return {
   },
   {
     'biozz/whop.nvim',
+    cond = not minimal,
     cmd = 'Telescope',
     config = function()
       require('whop').setup({})
@@ -626,6 +628,7 @@ return {
   },
   {
     'nvim-telescope/telescope-frecency.nvim',
+    cond = not minimal,
     cmd = 'Telescope',
     config = function() require('telescope').load_extension('frecency') end,
   },
@@ -641,6 +644,7 @@ return {
   },
   {
     'molecule-man/telescope-menufacture',
+    cond = not minimal,
     cmd = 'Telescope',
     config = function() require('telescope').load_extension('menufacture') end,
   },
@@ -652,17 +656,20 @@ return {
   {
     -- 'piersolenski/telescope-import.nvim',
     'razak17/telescope-import.nvim',
+    cond = not minimal,
     cmd = 'Telescope',
     config = function() require('telescope').load_extension('import') end,
   },
   {
     'catgoose/telescope-helpgrep.nvim',
+    cond = not minimal,
     cmd = 'Telescope',
     config = function() require('telescope').load_extension('helpgrep') end,
   },
   {
     -- 'tsakirist/telescope-lazy.nvim',
     'razak17/telescope-lazy.nvim',
+    cond = not minimal,
     cmd = 'Telescope',
     config = function() require('telescope').load_extension('lazy') end,
   },
@@ -674,6 +681,7 @@ return {
   },
   {
     'isak102/telescope-git-file-history.nvim',
+    cond = not minimal,
     cmd = 'Telescope',
     config = function() require('telescope').load_extension('git_file_history') end,
     dependencies = { 'tpope/vim-fugitive' },
@@ -686,12 +694,13 @@ return {
   },
   {
     'dapc11/telescope-yaml.nvim',
+    cond = not minimal,
     cmd = 'Telescope',
     config = function() require('telescope').load_extension('telescope-yaml') end,
   },
   {
     'Myzel394/jsonfly.nvim',
-    cond = rvim.lsp.enable,
+    cond = rvim.lsp.enable and not minimal,
     cmd = 'Telescope',
     ft = { 'json' },
     keys = {

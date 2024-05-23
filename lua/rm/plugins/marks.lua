@@ -1,6 +1,6 @@
-local ui = rvim.ui
 local fmt = string.format
 local bookmark = rvim.ui.codicons.misc.bookmark
+local minimal = rvim.plugins.minimal
 
 local function get_available_stacks(notify)
   local available_stacks =
@@ -100,6 +100,7 @@ return {
     -- 'razak17/harpoon',
     'ThePrimeagen/harpoon',
     branch = 'harpoon2',
+    -- stylua: ignore
     keys = function()
       local keys = {
         {
@@ -110,7 +111,6 @@ return {
           end,
           desc = 'toggle quick menu',
         },
-        -- stylua: ignore
         { '<localleader>ha', function() require('harpoon'):list():append() end, desc = 'harpoon: add' },
         { '<localleader>hn', function() require('harpoon').list():next() end, desc = 'harpoon: next' },
         { '<localleader>hp', function() require('harpoon').list():prev() end, desc = 'harpoon: prev' },
@@ -133,6 +133,7 @@ return {
   },
   {
     'otavioschwanck/arrow.nvim',
+    cond = not minimal,
     event = { 'BufRead', 'BufNewFile' },
     -- stylua: ignore
     keys = {
@@ -148,6 +149,7 @@ return {
   },
   {
     'lewis6991/whatthejump.nvim',
+    cond = not minimal,
     event = { 'BufRead', 'BufNewFile' },
     config = function()
       map('n', '<M-o>', function()
@@ -163,6 +165,7 @@ return {
   },
   {
     'bloznelis/before.nvim',
+    cond = not minimal,
     event = { 'BufRead', 'BufNewFile' },
     -- stylua: ignore
     keys = {

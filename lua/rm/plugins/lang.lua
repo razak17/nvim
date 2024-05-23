@@ -1,5 +1,6 @@
 local ui, highlight = rvim.ui, rvim.highlight
 local border = ui.current.border
+local minimal, niceties = rvim.plugins.minimal, rvim.plugins.niceties
 
 return {
   ------------------------------------------------------------------------------
@@ -7,13 +8,17 @@ return {
   ------------------------------------------------------------------------------
   { 'razak17/slides.nvim', ft = 'slide' },
   { 'fladson/vim-kitty', ft = 'kitty' },
-  { 'raimon49/requirements.txt.vim', lazy = false },
+  {
+    'raimon49/requirements.txt.vim',
+    cond = not minimal and niceties,
+    lazy = false,
+  },
   { 'gennaro-tedesco/nvim-jqx', ft = { 'json', 'yaml' } },
   -- Web Dev (Typescript)
   --------------------------------------------------------------------------------
   {
     'razak17/package-info.nvim',
-    cond = not rvim.plugins.minimal,
+    cond = not minimal,
     event = 'BufRead package.json',
     config = function()
       require('which-key').register({
@@ -38,7 +43,7 @@ return {
   },
   {
     'jdrupal-dev/parcel.nvim',
-    cond = not rvim.plugins.minimal,
+    cond = not minimal,
     event = 'BufRead package.json',
     opts = {},
     dependencies = { 'phelipetls/jsonpath.nvim' },
@@ -74,7 +79,7 @@ return {
   },
   {
     'joeldotdias/jsdoc-switch.nvim',
-    ft = { 'javascript', 'javascriptreact' },
+    -- ft = { 'javascript', 'javascriptreact' },
     -- stylua: ignore
     keys = {
       { '<leader>jds', '<cmd>JsdocSwitchStart<CR>', desc = 'jsdoc-switch: start' },
