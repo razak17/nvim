@@ -394,6 +394,33 @@ return {
     end,
     dependencies = { 'nvim-lua/plenary.nvim', 'kkharji/sqlite.lua' },
   },
+  {
+    'emmanueltouzery/decisive.nvim',
+    ft = { 'csv' },
+    keys = {
+      {
+        '<localleader>ca',
+        "<Cmd>lua require('decisive').align_csv({})<CR>",
+        desc = 'align CSV',
+      },
+      {
+        '<localleader>cA',
+        "<Cmd>lua require('decisive').align_csv_clear({})<CR>",
+        desc = 'align CSV clear',
+      },
+      {
+        '<localleader>cj',
+        "<Cmd>lua require('decisive').align_csv_prev_col()<CR>",
+        desc = 'align CSV prev col',
+      },
+      {
+        '<localleader>caK',
+        "<Cmd>lua require('decisive').align_csv_next_col()<CR>",
+        desc = 'align CSV next col',
+        silent = true,
+      },
+    },
+  },
   -- Regex
   --------------------------------------------------------------------------------
   {
