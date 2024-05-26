@@ -2,6 +2,7 @@ local api, fn, fmt, k = vim.api, vim.fn, string.format, vim.keycode
 local ui = rvim.ui
 local border, lsp_hls, ellipsis =
   ui.current.border, ui.lsp.highlights, ui.icons.misc.ellipsis
+local minimal = rvim.plugins.minimal
 
 return {
   {
@@ -99,14 +100,15 @@ return {
             rvim.is_available('copilot-cmp') and require(
               'copilot_cmp.comparators'
             ).prioritize or nil,
-            -- deprioritize `.box`, `.mut`, etc.
-            require('cmp-rust').deprioritize_postfix,
-            -- deprioritize `Borrow::borrow` and `BorrowMut::borrow_mut`
-            require('cmp-rust').deprioritize_borrow,
-            -- deprioritize `Deref::deref` and `DerefMut::deref_mut`
-            require('cmp-rust').deprioritize_deref,
-            -- deprioritize `Into::into`, `Clone::clone`, etc.
-            require('cmp-rust').deprioritize_common_traits,
+              -- deprioritize `.box`, `.mut`, etc.
+            not minimal and require('cmp-rust').deprioritize_postfix or nil,
+              -- deprioritize `Borrow::borrow` and `BorrowMut::borrow_mut`
+            not minimal and require('cmp-rust').deprioritize_borrow or nil,
+              -- deprioritize `Deref::deref` and `DerefMut::deref_mut`
+            not minimal and require('cmp-rust').deprioritize_deref or nil,
+              -- deprioritize `Into::into`, `Clone::clone`, etc.
+            not minimal and require('cmp-rust').deprioritize_common_traits
+              or nil,
             cmp.config.compare.recently_used,
             cmp.config.compare.locality,
             cmp.config.compare.offset,
@@ -335,20 +337,20 @@ return {
       'razak17/lspkind.nvim',
       -- 'dmitmel/cmp-cmdline-history',
       'hrsh7th/cmp-path',
-      'hrsh7th/cmp-emoji',
       'hrsh7th/cmp-buffer',
       'lukas-reineke/cmp-rg',
-      'fazibear/cmp-nerdfonts',
       'saadparwaiz1/cmp_luasnip',
-      'SergioRibera/cmp-dotenv',
-      'ryo33/nvim-cmp-rust',
-      { 'Gelio/cmp-natdat', opts = {} },
+      { 'hrsh7th/cmp-emoji', cond = not minimal },
+      { 'fazibear/cmp-nerdfonts', cond = not minimal },
+      { 'SergioRibera/cmp-dotenv', cond = not minimal },
+      { 'ryo33/nvim-cmp-rust', cond = not minimal },
+      { 'Gelio/cmp-natdat', cond = not minimal, opts = {} },
       { 'hrsh7th/cmp-nvim-lsp', cond = rvim.lsp.enable },
       { 'hrsh7th/cmp-cmdline', config = function() vim.o.wildmode = '' end },
       { 'hrsh7th/cmp-nvim-lsp-document-symbol', cond = rvim.lsp.enable },
       {
         'uga-rosa/cmp-dictionary',
-        cond = not rvim.plugins.minimal and rvim.plugins.overrides.dict.enable,
+        cond = not minimal and rvim.plugins.overrides.dict.enable,
         config = function()
           local en_dict =
             join_paths(fn.stdpath('data'), 'site', 'spell', 'en.dict')
@@ -357,25 +359,25 @@ return {
       },
       {
         'zbirenbaum/copilot-cmp',
-        cond = rvim.ai.enable and not rvim.plugins.minimal and false,
+        cond = rvim.ai.enable and not minimal and false,
         opts = {},
         dependencies = 'copilot.lua',
       },
       {
         'Exafunction/codeium.nvim',
-        cond = rvim.ai.enable and not rvim.plugins.minimal and false,
+        cond = rvim.ai.enable and not minimal and false,
         opts = {},
       },
     },
   },
   {
     'f3fora/cmp-spell',
-    cond = rvim.completion.enable,
+    cond = rvim.completion.enable and not minimal,
     ft = { 'gitcommit', 'NeogitCommitMessage', 'markdown', 'norg', 'org' },
   },
   {
     'rcarriga/cmp-dap',
-    cond = rvim.completion.enable,
+    cond = rvim.completion.enable and not minimal,
     ft = { 'dap-repl', 'dapui_watches' },
   },
   {
@@ -385,12 +387,12 @@ return {
   },
   {
     'js-everts/cmp-tailwind-colors',
-    cond = rvim.completion.enable,
+    cond = rvim.completion.enable and not minimal,
     ft = { 'css', 'html', 'vue', 'javascriptreact', 'typescriptreact' },
   },
   {
     'jsongerber/nvim-px-to-rem',
-    cond = rvim.completion.enable,
+    cond = rvim.completion.enable and not minimal,
     ft = { 'css', 'scss' },
     opts = { disable_keymaps = true },
   },
