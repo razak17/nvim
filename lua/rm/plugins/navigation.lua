@@ -13,9 +13,9 @@ return {
     -- stylua: ignore
     keys = {
       { 's', function() require('flash').jump() end, mode = { 'n', 'x', 'o' } },
-      { 'S', function() require('flash').treesitter() end, mode = { 'o', 'x' }, },
-      { 'r', function() require('flash').remote() end, mode = 'o', desc = 'Remote Flash', },
-      { '<c-s>', function() require('flash').toggle() end, mode = { 'c' }, desc = 'Toggle Flash Search', },
+      { 'S', function() require('flash').treesitter() end, mode = { 'n' }, },
+      { 'r', function() require('flash').remote() end, mode = 'o', desc = 'remote flash', },
+      { '<c-s>', function() require('flash').toggle() end, mode = { 'c' }, desc = 'toggle flash search', },
       { 'R', function() require('flash').treesitter_search() end, mode = { 'o', 'x' }, desc = 'Flash Treesitter Search', },
     },
   },

@@ -66,18 +66,18 @@ return {
     'echasnovski/mini.surround',
     keys = {
       'ds',
-      { 'ys', desc = 'add surrounding' },
-      { 'yr', desc = 'delete surrounding' },
+      { 'ym', desc = 'add surrounding' },
+      { 'yo', desc = 'replace surrounding' },
     },
     config = function()
       require('mini.surround').setup({
         mappings = {
-          add = 'ys',
+          add = 'ym',
           delete = 'ds',
           find = 'yf',
           find_left = 'yF',
           highlight = 'yh',
-          replace = 'yr',
+          replace = 'yo',
           update_n_lines = 'yn',
         },
       })
