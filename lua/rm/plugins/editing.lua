@@ -283,6 +283,43 @@ return {
     lazy = not rvim.plugins.overrides.ghost_text.enable,
   },
   ------------------------------------------------------------------------------
+  -- Sort
+  ------------------------------------------------------------------------------
+  {
+    'sQVe/sort.nvim',
+    cmd = { 'Sort' },
+    keys = {
+      {
+        '<localleader>Ss',
+        '<Cmd>Sort<CR>',
+        desc = 'sort: selection',
+        mode = { 'x' },
+        silent = true,
+      },
+      {
+        '<localleader>SS',
+        '<Cmd>Sort!<CR>',
+        desc = 'sort: selection (reverse)',
+        mode = { 'x' },
+        silent = true,
+      },
+      {
+        '<localleader>Si',
+        '<Cmd>Sort i<CR>',
+        desc = 'sort: ignore case',
+        mode = { 'x' },
+        silent = true,
+      },
+      {
+        '<localleader>SI',
+        '<Cmd>Sort! i<CR>',
+        desc = 'sort: ignore case (reverse)',
+        mode = { 'x' },
+        silent = true,
+      },
+    },
+  },
+  ------------------------------------------------------------------------------
   -- Comment
   ------------------------------------------------------------------------------
   {
