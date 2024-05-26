@@ -97,7 +97,6 @@ return {
           disable_virtual_text = true,
           disable = { 'c', 'python' },
         },
-        autotag = { enable = true },
         tree_setter = { enable = true },
         query_linter = {
           enable = true,
@@ -158,6 +157,7 @@ return {
       'vue',
       'svelte',
     },
+    opts = {},
   },
   {
     'nvim-treesitter/playground',
