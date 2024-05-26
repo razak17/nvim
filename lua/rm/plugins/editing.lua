@@ -158,6 +158,51 @@ return {
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
   },
   {
+    'ThePrimeagen/refactoring.nvim',
+    cond = rvim.treesitter.enable,
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'nvim-treesitter/nvim-treesitter',
+    },
+    keys = {
+      {
+        '<localleader>r',
+        function() require('refactoring').select_refactor() end,
+        mode = 'v',
+        noremap = true,
+        silent = true,
+        expr = false,
+        desc = 'refactor',
+      },
+    },
+  },
+  {
+    'HiPhish/rainbow-delimiters.nvim',
+    cond = rvim.treesitter.enable and rvim.plugins.niceties,
+    event = { 'BufRead', 'BufNewFile' },
+    config = function()
+      local rainbow_delimiters = require('rainbow-delimiters')
+
+      vim.g.rainbow_delimiters = {
+        blacklist = { 'svelte' },
+        strategy = {
+          [''] = rainbow_delimiters.strategy['global'],
+        },
+        query = {
+          [''] = 'rainbow-delimiters',
+        },
+      }
+    end,
+  },
+  {
+    'subnut/nvim-ghost.nvim',
+    cond = not rvim.plugins.minimal,
+    lazy = not rvim.plugins.overrides.ghost_text.enable,
+  },
+  ------------------------------------------------------------------------------
+  -- Swap Text
+  ------------------------------------------------------------------------------
+  {
     'mizlan/iswap.nvim',
     cond = rvim.treesitter.enable,
     keys = {
@@ -180,25 +225,9 @@ return {
     },
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
   },
-  {
-    'ThePrimeagen/refactoring.nvim',
-    cond = rvim.treesitter.enable,
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-      'nvim-treesitter/nvim-treesitter',
-    },
-    keys = {
-      {
-        '<localleader>r',
-        function() require('refactoring').select_refactor() end,
-        mode = 'v',
-        noremap = true,
-        silent = true,
-        expr = false,
-        desc = 'refactor',
-      },
-    },
-  },
+  ------------------------------------------------------------------------------
+  -- Toggle Text
+  ------------------------------------------------------------------------------
   {
     'nguyenvukhang/nvim-toggler',
     -- stylua: ignore
@@ -258,29 +287,6 @@ return {
       ['high'] = 'low',
       ['open'] = 'close',
     },
-  },
-  {
-    'HiPhish/rainbow-delimiters.nvim',
-    cond = rvim.treesitter.enable and rvim.plugins.niceties,
-    event = { 'BufRead', 'BufNewFile' },
-    config = function()
-      local rainbow_delimiters = require('rainbow-delimiters')
-
-      vim.g.rainbow_delimiters = {
-        blacklist = { 'svelte' },
-        strategy = {
-          [''] = rainbow_delimiters.strategy['global'],
-        },
-        query = {
-          [''] = 'rainbow-delimiters',
-        },
-      }
-    end,
-  },
-  {
-    'subnut/nvim-ghost.nvim',
-    cond = not rvim.plugins.minimal,
-    lazy = not rvim.plugins.overrides.ghost_text.enable,
   },
   ------------------------------------------------------------------------------
   -- Sort

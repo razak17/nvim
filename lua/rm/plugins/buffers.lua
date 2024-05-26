@@ -53,7 +53,7 @@ return {
       require('arena').setup({
         per_project = true,
         max_items = 20,
-        window = { Border = 'single' },
+        window = { border = 'single' },
         keybinds = {
           ['w'] = action(function(buf, info)
             rvim.open_with_window_picker(buf)
