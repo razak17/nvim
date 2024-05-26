@@ -88,11 +88,25 @@ return {
   {
     'yujinyuz/gitpad.nvim',
     opts = {
+      title = 'Notes',
+      default_text = '',
       on_attach = function(bufnr)
         -- stylua: ignore
         vim.api.nvim_buf_set_keymap(bufnr, 'n', 'q', '<Cmd>wq<CR>', { noremap = true, silent = true })
       end,
     },
+    config = function(_, opts)
+      rvim.highlight.plugin('neogit', {
+        theme = {
+          ['onedark'] = {
+            { GitpadFloat = { inherit = 'NormalFloat' } },
+            { GitpadFloatBorder = { inherit = 'FloatBorder' } },
+            { GitpadFloatTitle = { inherit = 'FloatTitle' } },
+          },
+        },
+      })
+      require('gitpad').setup(opts)
+    end,
     keys = {
       {
         '<localleader>pp',
