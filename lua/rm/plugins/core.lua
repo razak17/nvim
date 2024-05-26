@@ -173,7 +173,7 @@ return {
   },
   {
     'chrishrb/gx.nvim',
-    cond = not rvim.use_local_gx,
+    cond = not rvim.use_local_gx and not minimal,
     keys = { { 'gx', '<cmd>Browse<cr>', mode = { 'n', 'x' } } },
     cmd = { 'Browse' },
     init = function() vim.g.netrw_nogx = 1 end,

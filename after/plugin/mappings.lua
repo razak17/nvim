@@ -331,7 +331,7 @@ xnoremap(
 --------------------------------------------------------------------------------
 -- GX - replicate netrw functionality
 --------------------------------------------------------------------------------
-if rvim.use_local_gx then
+if rvim.use_local_gx or rvim.plugins.minimal then
   map('n', 'gx', function()
     -- ref: https://github.com/theopn/theovim/blob/main/lua/core.lua#L178
     -- Find the URL in the current line and open it in a browser
