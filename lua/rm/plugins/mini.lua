@@ -1,4 +1,5 @@
 local separators = rvim.ui.icons.separators
+local minimal = rvim.plugins.minimal
 
 return {
   {
@@ -90,6 +91,7 @@ return {
   },
   {
     'echasnovski/mini.move',
+    cond = not minimal and false,
     event = 'VeryLazy',
     opts = {
       mappings = {
