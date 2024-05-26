@@ -53,7 +53,7 @@ return {
     cond = rvim.treesitter.enable,
     -- event = 'BufReadPost',
     keys = {
-      { '<BS>', function() require('origami').h() end, desc = 'toggle fold' },
+      { '<BS>', function() require('origami').h() end, desc = 'close fold' },
     },
     opts = { setupFoldKeymaps = false },
   },
