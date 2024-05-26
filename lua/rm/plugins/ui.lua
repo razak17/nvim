@@ -7,6 +7,16 @@ local minimal, niceties = rvim.plugins.minimal, rvim.plugins.niceties
 
 return {
   {
+    'razak17/lspkind.nvim',
+    config = function() require('lspkind').init({ preset = 'codicons' }) end,
+  },
+  {
+    'nmac427/guess-indent.nvim',
+    cond = not minimal and niceties,
+    event = 'BufReadPost',
+    config = function() require('guess-indent').setup({}) end,
+  },
+  {
     'Aasim-A/scrollEOF.nvim',
     cond = not minimal and niceties,
     event = { 'BufRead', 'BufNewFile' },
@@ -141,6 +151,17 @@ return {
       --   "yellow",
       -- },
     },
+  },
+  {
+    'CodingdAwn/vim-choosewin',
+    cond = false,
+    keys = { { '<leader>ow', '<Plug>(choosewin)', desc = 'choose window' } },
+    config = function() vim.g.choosewin_overlay_enable = 1 end,
+  },
+  {
+    'mrjones2014/smart-splits.nvim',
+    opts = {},
+    build = './kitty/install-kittens.bash',
   },
   {
     'sindrets/winshift.nvim',

@@ -4,7 +4,7 @@ local minimal, niceties = rvim.plugins.minimal, rvim.plugins.niceties
 
 return {
   ------------------------------------------------------------------------------
-  -- Core {{{3
+  -- Core {{{1
   ------------------------------------------------------------------------------
   'nvim-lua/plenary.nvim',
   'nvim-tree/nvim-web-devicons',
@@ -34,42 +34,10 @@ return {
     },
   },
   {
-    'mrjones2014/smart-splits.nvim',
-    opts = {},
-    build = './kitty/install-kittens.bash',
-  },
-  {
-    'razak17/lspkind.nvim',
-    config = function() require('lspkind').init({ preset = 'codicons' }) end,
-  },
-  {
-    'axieax/urlview.nvim',
-    cmd = { 'UrlView' },
-    keys = {
-      { '<leader>ub', '<cmd>UrlView buffer<cr>', desc = 'urlview: buffers' },
-      { '<leader>ul', '<cmd>UrlView lazy<cr>', desc = 'urlview: lazy' },
-      {
-        '<leader>uc',
-        '<cmd>UrlView buffer action=clipboard<cr>',
-        desc = 'urlview: copy links',
-      },
-    },
-    opts = {
-      default_title = 'Links:',
-      default_picker = 'native',
-      default_prefix = 'https://',
-      default_action = 'system',
-    },
-  },
-  {
     'neuromaancer/readup.nvim',
     cmd = { 'Readup', 'ReadupBrowser' },
     opts = { float = true },
   },
-  -- }}}
-  ------------------------------------------------------------------------------
-  -- Editing {{{1
-  ------------------------------------------------------------------------------
   {
     'assistcontrol/readline.nvim',
     -- stylua: ignore
@@ -85,24 +53,10 @@ return {
       { '<C-u>', function() require('readline').backward_kill_line() end, mode = '!' },
     },
   },
-  {
-    'gabrielpoca/replacer.nvim',
-    opts = { rename_files = false },
-    -- stylua: ignore
-    keys = {
-      { '<leader>oh', function() require('replacer').run() end, desc = 'replacer: run' },
-      { '<leader>os', function() require('replacer').save() end, desc = 'replacer: save' },
-    },
-  },
   -- }}}
   ------------------------------------------------------------------------------
-  -- Utilities {{{1
-  ------------------------------------------------------------------------------
-  { 'lambdalisue/suda.vim', lazy = false },
-  { 'will133/vim-dirdiff', cmd = { 'DirDiff' } },
-  { 'godlygeek/tabular', cmd = { 'Tabularize' } },
+  -- Config Time
   { 'sammce/fleeting.nvim', cond = not minimal and niceties, lazy = false },
-  { 'ton/vim-bufsurf', cond = not minimal, lazy = false },
   {
     'mrquantumcodes/configpulse',
     cond = not minimal and niceties,
@@ -110,20 +64,12 @@ return {
   },
   {
     'blumaa/ohne-accidents',
+    cond = not minimal and niceties,
     cmd = { 'OhneAccidents' },
     opts = { welcomeOnStartup = false },
   },
-  {
-    'nmac427/guess-indent.nvim',
-    cond = not minimal and niceties,
-    event = 'BufReadPost',
-    config = function() require('guess-indent').setup({}) end,
-  },
-  {
-    'CodingdAwn/vim-choosewin',
-    keys = { { '<leader>ow', '<Plug>(choosewin)', desc = 'choose window' } },
-    config = function() vim.g.choosewin_overlay_enable = 1 end,
-  },
+  ------------------------------------------------------------------------------
+  -- Find And Replace
   {
     'MagicDuck/grug-far.nvim',
     cond = not minimal,
@@ -139,6 +85,17 @@ return {
     },
   },
   {
+    'AckslD/muren.nvim',
+    cmd = { 'MurenToggle', 'MurenUnique', 'MurenFresh' },
+    opts = {},
+  },
+  ------------------------------------------------------------------------------
+  -- Utilities {{{2
+  ------------------------------------------------------------------------------
+  { 'lambdalisue/suda.vim', lazy = false },
+  { 'will133/vim-dirdiff', cmd = { 'DirDiff' } },
+  { 'godlygeek/tabular', cmd = { 'Tabularize' } },
+  {
     'chrishrb/gx.nvim',
     cond = not rvim.use_local_gx and not minimal,
     keys = { { 'gx', '<cmd>Browse<cr>', mode = { 'n', 'x' } } },
@@ -153,50 +110,6 @@ return {
     event = { 'BufRead', 'BufNewFile' },
     build = function() require('fundo').install() end,
     dependencies = { 'kevinhwang91/promise-async' },
-  },
-  {
-    'smoka7/multicursors.nvim',
-    cond = not minimal and rvim.treesitter.enable,
-    dependencies = { 'nvim-treesitter/nvim-treesitter', 'smoka7/hydra.nvim' },
-    opts = {
-      hint_config = { border = border },
-    },
-    cmd = {
-      'MCstart',
-      'MCvisual',
-      'MCclear',
-      'MCpattern',
-      'MCvisualPattern',
-      'MCunderCursor',
-    },
-    keys = {
-      {
-        '<M-e>',
-        '<cmd>MCstart<cr>',
-        mode = { 'v', 'n' },
-        desc = 'Create a selection for selected text or word under the cursor',
-      },
-    },
-  },
-  {
-    'folke/flash.nvim',
-    opts = {
-      modes = {
-        char = {
-          keys = { 'f', 'F', 't', 'T', ';' }, -- remove "," from keys
-        },
-        search = { enabled = false },
-      },
-      jump = { nohlsearch = true },
-    },
-    -- stylua: ignore
-    keys = {
-      { 's', function() require('flash').jump() end, mode = { 'n', 'x', 'o' } },
-      { 'S', function() require('flash').treesitter() end, mode = { 'o', 'x' }, },
-      { 'r', function() require('flash').remote() end, mode = 'o', desc = 'Remote Flash', },
-      { '<c-s>', function() require('flash').toggle() end, mode = { 'c' }, desc = 'Toggle Flash Search', },
-      { 'R', function() require('flash').treesitter_search() end, mode = { 'o', 'x' }, desc = 'Flash Treesitter Search', },
-    },
   },
   {
     'AndrewRadev/linediff.vim',
@@ -216,6 +129,25 @@ return {
       vim.g.undotree_SetFocusWhenToggle = 1
       vim.g.undotree_SplitWidth = 35
     end,
+  },
+  {
+    'axieax/urlview.nvim',
+    cmd = { 'UrlView' },
+    keys = {
+      { '<leader>ub', '<cmd>UrlView buffer<cr>', desc = 'urlview: buffers' },
+      { '<leader>ul', '<cmd>UrlView lazy<cr>', desc = 'urlview: lazy' },
+      {
+        '<leader>uc',
+        '<cmd>UrlView buffer action=clipboard<cr>',
+        desc = 'urlview: copy links',
+      },
+    },
+    opts = {
+      default_title = 'Links:',
+      default_picker = 'native',
+      default_prefix = 'https://',
+      default_action = 'system',
+    },
   },
   {
     'ahmedkhalf/project.nvim',
@@ -243,11 +175,6 @@ return {
       map('n', '<localleader>fc', g.createNewFile, { desc = 'genghis: create new file' })
       map('n', '<localleader>fd', g.duplicateFile, { desc = 'genghis: duplicate current file' })
     end,
-  },
-  {
-    'AckslD/muren.nvim',
-    cmd = { 'MurenToggle', 'MurenUnique', 'MurenFresh' },
-    opts = {},
   },
   {
     'jpalardy/vim-slime',
@@ -347,11 +274,11 @@ return {
     },
     dependencies = { 'rcarriga/nvim-notify' },
   },
-  -- Share Code
+  -- }}}
   --------------------------------------------------------------------------------
+  -- Share Code
   { 'TobinPalmer/rayso.nvim', cmd = { 'Rayso' }, opts = {} },
   { 'ellisonleao/carbon-now.nvim', cmd = 'CarbonNow', opts = {} },
   { 'Sanix-Darker/snips.nvim', cmd = { 'SnipsCreate' }, opts = {} },
   { 'ethanholz/freeze.nvim', cmd = 'Freeze', opts = {} },
-  -- }}}
 }

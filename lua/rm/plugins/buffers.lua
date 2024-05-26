@@ -4,6 +4,7 @@ local fmt = string.format
 local minimal, niceties = rvim.plugins.minimal, rvim.plugins.niceties
 
 return {
+  { 'ton/vim-bufsurf', cond = not minimal, lazy = false },
   {
     'chrisgrieser/nvim-early-retirement',
     cond = not minimal and false,

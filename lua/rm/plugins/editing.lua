@@ -1,3 +1,6 @@
+local border = rvim.ui.current.border
+local minimal, niceties = rvim.plugins.minimal, rvim.plugins.niceties
+
 return {
   { 'johmsalas/text-case.nvim', opts = {} },
   {
@@ -143,7 +146,7 @@ return {
     dependencies = { 'nvim-treesitter' },
     -- stylua: ignore
     keys = {
-      { '<leader>k', function() require('ts-node-action').node_action() end, desc = 'ts-node-action: run', },
+      { '<leader>K', function() require('ts-node-action').node_action() end, desc = 'ts-node-action: run', },
     },
     opts = {},
   },
@@ -151,7 +154,11 @@ return {
     'Wansmer/treesj',
     cond = rvim.treesitter.enable,
     keys = {
-      { 'gS', '<cmd>TSJSplit<CR>', desc = 'split to multiple lines' },
+      {
+        'gS',
+        '<cmd>TSJSplit<CR>',
+        desc = 'split to multiple lines',
+      },
       { 'gJ', '<cmd>TSJJoin<CR>', desc = 'join to single line' },
     },
     opts = { use_default_keymaps = false, max_join_length = 150 },
@@ -178,7 +185,7 @@ return {
   },
   {
     'HiPhish/rainbow-delimiters.nvim',
-    cond = rvim.treesitter.enable and rvim.plugins.niceties,
+    cond = rvim.treesitter.enable and niceties,
     event = { 'BufRead', 'BufNewFile' },
     config = function()
       local rainbow_delimiters = require('rainbow-delimiters')
@@ -196,8 +203,41 @@ return {
   },
   {
     'subnut/nvim-ghost.nvim',
-    cond = not rvim.plugins.minimal,
+    cond = not minimal,
     lazy = not rvim.plugins.overrides.ghost_text.enable,
+  },
+  {
+    'smoka7/multicursors.nvim',
+    cond = not minimal and rvim.treesitter.enable,
+    dependencies = { 'nvim-treesitter/nvim-treesitter', 'smoka7/hydra.nvim' },
+    opts = {
+      hint_config = { border = border },
+    },
+    cmd = {
+      'MCstart',
+      'MCvisual',
+      'MCclear',
+      'MCpattern',
+      'MCvisualPattern',
+      'MCunderCursor',
+    },
+    keys = {
+      {
+        '<M-e>',
+        '<cmd>MCstart<cr>',
+        mode = { 'v', 'n' },
+        desc = 'Create a selection for selected text or word under the cursor',
+      },
+    },
+  },
+  {
+    'gabrielpoca/replacer.nvim',
+    opts = { rename_files = false },
+    -- stylua: ignore
+    keys = {
+      { '<leader>oh', function() require('replacer').run() end, desc = 'replacer: run' },
+      { '<leader>os', function() require('replacer').save() end, desc = 'replacer: save' },
+    },
   },
   ------------------------------------------------------------------------------
   -- Swap Text
@@ -378,7 +418,7 @@ return {
   },
   {
     'carbon-steel/detour.nvim',
-    cond = rvim.plugins.niceties,
+    cond = niceties,
     cmd = { 'Detour' },
     keys = { { '<c-w><enter>', ':Detour<cr>', desc = 'detour: toggle' } },
   },
