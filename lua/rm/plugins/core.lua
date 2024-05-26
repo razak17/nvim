@@ -127,6 +127,15 @@ return {
       },
     },
   },
+  {
+    'gabrielpoca/replacer.nvim',
+    opts = { rename_files = false },
+    -- stylua: ignore
+    keys = {
+      { '<leader>oh', function() require('replacer').run() end, desc = 'replacer: run' },
+      { '<leader>os', function() require('replacer').save() end, desc = 'replacer: save' },
+    },
+  },
   -- }}}
   ------------------------------------------------------------------------------
   -- Utilities {{{1
