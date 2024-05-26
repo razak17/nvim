@@ -293,6 +293,18 @@ local command_palette_options = {
   ['Find And Replace'] = 'GrugFar',
   ['Code Pad'] = 'QuickCodePad',
   ['Run Code'] = 'Build',
+  ['Toggle Auto Paris'] = function()
+    if not rvim.is_available('mini.pairs') then
+      vim.notify('mini.pairs is not available', 'error', { title = 'Error' })
+      return
+    end
+    vim.g.minipairs_disable = not vim.g.minipairs_disable
+    if vim.g.minipairs_disable then
+      vim.notify('Disabled auto pairs')
+    else
+      vim.notify('Enabled auto pairs')
+    end
+  end,
 }
 
 local command_palette_menu = function()
