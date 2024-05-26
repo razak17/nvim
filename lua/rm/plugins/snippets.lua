@@ -3,6 +3,9 @@ return {
     'L3MON4D3/LuaSnip',
     event = 'InsertEnter',
     build = 'make install_jsregexp',
+    keys = {
+      { '<leader>S', '<cmd>LuaSnipEdit<CR>', desc = 'LuaSnip: edit snippet' },
+    },
     dependencies = {
       'rafamadriz/friendly-snippets',
       's1n7ax/nvim-ts-utils',
@@ -76,13 +79,6 @@ return {
 
       ls.filetype_extend('typescriptreact', { 'javascript', 'typescript' })
       ls.filetype_extend('NeogitCommitMessage', { 'gitcommit' })
-
-      map(
-        'n',
-        '<leader>S',
-        '<cmd>LuaSnipEdit<CR>',
-        { desc = 'LuaSnip: edit snippet' }
-      )
     end,
   },
   {
