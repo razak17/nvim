@@ -90,7 +90,7 @@ return {
           },
           lsp_interop = { enable = false },
         },
-        indent = { enable = { 'javascriptreact' } },
+        indent = { enable = true },
         matchup = {
           enable = true,
           enable_quotes = true,
