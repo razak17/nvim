@@ -271,6 +271,10 @@ end
 local setreg = vim.fn.setreg
 local expand = vim.fn.expand
 M.options.command_palette = {
+  ['Format Code'] = "lua require'ar.menus.lsp'.format_buf()",
+  ['Toggle Profile'] = 'lua require"ar.menus.command_palette".toggle_profile()',
+  ['Generate Plugins'] = 'lua require"ar.menus.command_palette".generate_plugins()',
+  ['Open Buffer in Float'] = 'lua require"ar.menus.command_palette".open_in_centered_popup()',
   ['Command History'] = 'Telescope command_history',
   ['Commands'] = 'Telescope commands',
   ['Find Files'] = 'Telescope find_files',
@@ -295,11 +299,8 @@ M.options.command_palette = {
   ['Time Spent In Neovim'] = 'Fleeting',
   ['Days Without Configuring Neovim'] = 'OhneAccidents',
   ['Time Since Neovim Config'] = 'lua require"configpulse".find_time()',
-  ['Format Code'] = "lua require'ar.menus.lsp'.format_buf()",
   ['Generate Gitignore'] = 'Gitignore',
   ['Generate License'] = 'Licenses',
-  ['Toggle Profile'] = 'lua require"ar.menus.command_palette".toggle_profile()',
-  ['Generate Plugins'] = 'lua require"ar.menus.command_palette".generate_plugins()',
   ['Copy File Name'] = function() setreg('+', vim.fn.expand('%:t')) end,
   ['Copy File Absolute Path'] = function() setreg('+', vim.fn.expand('%:p')) end,
   ['Copy File Absolute Path (No File Name)'] = function()
@@ -309,7 +310,7 @@ M.options.command_palette = {
   ['Find And Replace'] = 'GrugFar',
   ['Code Pad'] = 'QuickCodePad',
   ['Run Code'] = 'Build',
-  ['Toggle Auto Paris'] = function()
+  ['Toggle Auto Pairs'] = function()
     if not rvim.is_available('mini.pairs') then
       vim.notify('mini.pairs is not available', 'error', { title = 'Error' })
       return
