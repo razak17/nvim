@@ -10,12 +10,6 @@ local config = {
   frequency_factor = 1,
 }
 
---- Get the current frecency config.
---- @return table
-function M.get_config()
-  return config
-end
-
 --- Update an item for the frecency algorithm.
 --- @param item string
 --- @param meta table
@@ -60,17 +54,13 @@ function M.top_items(filter, n)
   local frecencies = {}
   local i = 1
   for name, data in pairs(usages) do
-    if filter and not filter(name, data.meta) then
-      goto continue
+    if filter and filter(name, data.meta) then
+      local score = M.calc_frecency(name)
+      table.insert(frecencies, { name = name, score = score, meta = data.meta })
+      i = i + 1
     end
-    local score = M.calc_frecency(name)
-    table.insert(frecencies, { name = name, score = score, meta = data.meta })
-    i = i + 1
-    ::continue::
   end
-  table.sort(frecencies, function(a, b)
-    return a.score > b.score
-  end)
+  table.sort(frecencies, function(a, b) return a.score > b.score end)
 
   if n then
     local new = {}
