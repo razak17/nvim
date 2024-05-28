@@ -20,7 +20,7 @@ return {
   },
   {
     'olimorris/persisted.nvim',
-    cond = not minimal and rvim.treesitter.enable,
+    cond = not minimal,
     lazy = false,
     init = function() rvim.command('ListSessions', 'Telescope persisted') end,
     opts = {
