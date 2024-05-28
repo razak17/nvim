@@ -50,12 +50,13 @@ function rvim.ui.statuscolumn.render()
     end
   end
   if #other_sns > 0 then
-    vim.iter(other_sns):fold('', function(_, item)
-      if #left == 0 then
-        left[#left + 1] = icon(item, 1)
+    vim.iter(other_sns):fold(left, function(acc, key)
+      if #acc == 0 then
+        acc[#acc + 1] = icon(key, 1)
       else
-        left[#left + 1] = ' ' .. icon(item, 0)
+        acc[#acc + 1] = ' ' .. icon(key, 0)
       end
+      return acc
     end)
   end
 
