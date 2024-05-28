@@ -80,7 +80,7 @@ return {
     config = function()
       local packages = {}
       -- Add LSP servers
-      local servers = require('rm.servers').list
+      local servers = require('ar.servers').list
       vim.iter(servers):fold({}, function(_, name)
         local server_mapping = require('mason-lspconfig.mappings.server')
         local pkg_name = server_mapping.lspconfig_to_package[name]

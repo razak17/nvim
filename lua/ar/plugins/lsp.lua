@@ -53,7 +53,7 @@ return {
                 return
               end
             end
-            local config = require('rm.servers').get(name)
+            local config = require('ar.servers').get(name)
             if config then require('lspconfig')[name].setup(config) end
           end,
         },

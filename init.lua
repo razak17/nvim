@@ -24,6 +24,6 @@ package.path = package.path .. ';' .. rocks_dir .. '/?.lua;'
 -- Load Modules
 --------------------------------------------------------------------------------
 -- Order matters here as config and globals need to be instantiated first etc.
-require('rm.config')
-require('rm.globals')
-require('rm.bootstrap')
+require('ar.config')
+require('ar.globals')
+require('ar.bootstrap')

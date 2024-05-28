@@ -24,9 +24,9 @@ end
 --------------------------------------------------------------------------------
 -- Settings
 --------------------------------------------------------------------------------
-require('rm.settings')
-require('rm.highlights')
-require('rm.ui')
+require('ar.settings')
+require('ar.highlights')
+require('ar.ui')
 --------------------------------------------------------------------------------
 -- Plugins
 --------------------------------------------------------------------------------
@@ -39,7 +39,7 @@ if not vim.uv.fs_stat(lazy_path) then
   })
 end
 vim.opt.rtp:prepend(lazy_path)
--- local path = vim.fn.stdpath('config') .. '/lua/rm/plugins'
+-- local path = vim.fn.stdpath('config') .. '/lua/ar/plugins'
 -- local plugin_list = vim.fs.find(
 --   function(name, _) return name:match('.*.lua$') end,
 --   { path = path, limit = math.huge, type = 'file' }
@@ -48,11 +48,11 @@ vim.opt.rtp:prepend(lazy_path)
 -- for _, f in pairs(plugin_list) do
 --   local _, pos = f:find(path)
 --   f = f:sub(pos + 2, #f - 4)
---   modules[#modules + 1] = { import = 'rm.plugins.' .. f }
+--   modules[#modules + 1] = { import = 'ar.plugins.' .. f }
 -- end
 require('lazy').setup({
   spec = {
-    { import = plugins_enabled and 'rm.plugins' or nil },
+    { import = plugins_enabled and 'ar.plugins' or nil },
   },
   defaults = { lazy = true },
   change_detection = { notify = false },
@@ -82,4 +82,4 @@ map('n', '<localleader>L', '<cmd>Lazy<CR>', { desc = 'toggle lazy ui' })
 --------------------------------------------------------------------------------
 if not plugins_enabled then rvim.load_colorscheme('habamax') end
 
-if vim.g.neovide then require('rm.neovide') end
+if vim.g.neovide then require('ar.neovide') end

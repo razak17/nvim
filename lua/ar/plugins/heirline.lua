@@ -33,8 +33,8 @@ return {
     cond = not rvim.plugins.minimal,
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = function()
-      local statuscolumn = require('rm.statuscolumn').components
-      local statusline = require('rm.statusline')
+      local statuscolumn = require('ar.statuscolumn').components
+      local statusline = require('ar.statusline')
       local conditions = require('heirline.conditions')
 
       require('heirline').setup({

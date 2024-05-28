@@ -396,19 +396,19 @@ nnoremap(
 -- Conceal Level & Cursor
 nnoremap(
   '<localleader>cl',
-  ':lua require"rm.menus.toggle".toggle_conceal_level()<CR>',
+  ':lua require"ar.menus.toggle".toggle_conceal_level()<CR>',
   { desc = 'toggle conceallevel' }
 )
 nnoremap(
   '<localleader>cc',
-  ':lua require"rm.menus.toggle".toggle_conceal_cursor()<CR>',
+  ':lua require"ar.menus.toggle".toggle_conceal_cursor()<CR>',
   { desc = 'toggle concealcursor' }
 )
 --------------------------------------------------------------------------------
 -- File Diff
 nnoremap(
   '<localleader>fd',
-  ":lua require'rm.menus.file_select'.toggle_file_diff()<CR>",
+  ":lua require'ar.menus.file_select'.toggle_file_diff()<CR>",
   { desc = 'toggle file diff' }
 )
 --------------------------------------------------------------------------------

@@ -2,7 +2,7 @@ if not rvim then return end
 
 local fn, api, cmd, uv, fmt = vim.fn, vim.api, vim.cmd, vim.uv, string.format
 local l = vim.log.levels
-local frecency = require('rm.frecency')
+local frecency = require('ar.frecency')
 
 ---Join path segments that were passed rvim input
 ---@return string

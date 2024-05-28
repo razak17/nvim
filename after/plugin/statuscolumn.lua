@@ -32,7 +32,7 @@ function rvim.ui.statuscolumn.render()
   if wo[win].signcolumn == 'no' then return '' end
 
   local lnum, relnum, virtnum = v.lnum, v.relnum, v.virtnum
-  local statuscol = require('rm.statuscolumn').utils
+  local statuscol = require('ar.statuscolumn').utils
   local buf = api.nvim_win_get_buf(win)
   local line_count = api.nvim_buf_line_count(buf)
 
