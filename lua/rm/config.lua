@@ -7,6 +7,7 @@ local namespace = {
   ai = { enable = env.RVIM_AI_ENABLED == '1' },
   autosave = { enable = true },
   debug = { enable = false },
+  frecency = { enable = true },
   git = {},
   large_file_opened = false,
   remote_sync = { enable = false },

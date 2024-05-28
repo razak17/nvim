@@ -4,10 +4,25 @@ if not rvim or rvim.none or not rvim.plugins.enable or not enabled then
   return
 end
 
+local frecency = require('rm.frecency')
+
+local M = {
+  options = {},
+  prompts = {
+    toggles = 'Toggle actions',
+    custom = 'Custom actions',
+    files = 'File actions',
+    git = 'Git commands',
+    lsp = 'Code/LSP actions',
+    gpt = 'ChatGPTRun actions',
+    command_palette = 'Command Palette actions',
+  },
+}
+
 --------------------------------------------------------------------------------
 -- Toggles
 --------------------------------------------------------------------------------
-local toggle_options = {
+M.options.toggles = {
   ['Toggle Wrap'] = 'lua require"rm.menus.toggle".toggle_opt("wrap")',
   ['Toggle Cursorline'] = 'lua require"rm.menus.toggle".toggle_opt("cursorline")',
   ['Toggle Spell'] = 'lua require"rm.menus.toggle".toggle_opt("spell")',
@@ -30,7 +45,7 @@ local toggle_options = {
 }
 
 local toggle_menu = function()
-  rvim.create_select_menu('Toggle actions', toggle_options)() --> extra paren to execute!
+  rvim.create_select_menu(M.prompts['toggles'], M.options.toggles)()
 end
 
 map(
@@ -43,14 +58,14 @@ map(
 --------------------------------------------------------------------------------
 -- Custom
 --------------------------------------------------------------------------------
-local custom_options = {
+M.options.custom = {
   ['Open Local Postgres DB'] = 'lua require("rm.menus.database").pick_local_pg_db()',
   ['Open Saved Query'] = 'lua require("rm.menus.database").open_saved_query()',
   ['Open Json'] = 'lua require("rm.menus.database").open_json()',
 }
 
 local custom_menu = function()
-  rvim.create_select_menu('Custom actions', custom_options)() --> extra paren to execute!
+  rvim.create_select_menu(M.prompts['custom'], M.options.custom)() --> extra paren to execute!
 end
 
 map(
@@ -65,7 +80,7 @@ if not rvim.plugins.enable then return end
 --------------------------------------------------------------------------------
 -- Files
 --------------------------------------------------------------------------------
-local file_options = {
+M.options.file = {
   ['Open File From Current Dir'] = "lua require'rm.menus.file'.open_file_cur_dir(false)",
   ['Open File From Current Dir And Children'] = "lua require'rm.file'.open_file_cur_dir(true)",
   ['Reload All Files From Disk'] = 'lua rvim.reload_all()',
@@ -82,7 +97,7 @@ local file_options = {
 }
 
 local file_menu = function()
-  rvim.create_select_menu('File actions', file_options)()
+  rvim.create_select_menu(M.prompts['file'], M.options.file)()
 end
 
 map(
@@ -91,6 +106,7 @@ map(
   file_menu,
   { desc = '[f]ile [a]ctions: open menu for file actions' }
 )
+-- TODO: Figure out what to do with these
 map(
   'n',
   '<leader>Ff',
@@ -114,7 +130,7 @@ map(
 -- Git
 --------------------------------------------------------------------------------
 if rvim.is_git_repo() then
-  local git_options = {
+  M.options.git = {
     ['Browse Branches'] = "lua require'rm.menus.git'.browse_branches()",
     ['Stash Changes'] = "lua require'rm.menus.git'.do_stash()",
     ['Browse Stashes'] = "lua require'rm.menus.git'.list_stashes()",
@@ -148,7 +164,7 @@ if rvim.is_git_repo() then
   }
 
   local git_menu = function()
-    rvim.create_select_menu('Git Commands', git_options)()
+    rvim.create_select_menu(M.prompts['git'], M.options.git)()
   end
 
   map(
@@ -163,7 +179,7 @@ end
 -- LSP
 --------------------------------------------------------------------------------
 if rvim.lsp.enable then
-  local lsp_options = {
+  M.options.lsp = {
     ['Format Code'] = "lua require'rm.menus.lsp'.format_buf()",
     ['Eslint Fix'] = "lua require'rm.menus.lsp'.eslint_fix()",
     ['LSP references'] = "lua require'rm.menus.lsp'.display_lsp_references()",
@@ -206,7 +222,7 @@ if rvim.lsp.enable then
     if #vim.lsp.get_clients({ bufnr = 0 }) == 0 then
       vim.notify_once('there is no lsp server attached to the current buffer')
     else
-      rvim.create_select_menu('Code/LSP actions', lsp_options)() --> extra paren to execute!
+      rvim.create_select_menu(M.prompts['lsp'], M.options.lsp)() --> extra paren to execute!
     end
   end
 
@@ -222,7 +238,7 @@ end
 -- ChatGPTRun
 --------------------------------------------------------------------------------
 if rvim.is_available('ChatGPT.nvim') then
-  local gpt_options = {
+  M.options.gpt = {
     ['Add Tests'] = 'ChatGPTRun add_tests',
     ['Complete Code'] = 'ChatGPTRun complete_code',
     ['Docstring'] = 'ChatGPTRun docstring',
@@ -238,7 +254,7 @@ if rvim.is_available('ChatGPT.nvim') then
   }
 
   local gpt_menu = function()
-    rvim.create_select_menu('ChatGPTRun actions', gpt_options)() --> extra paren to execute!
+    rvim.create_select_menu(M.prompts['gpt'], M.options.gpt)() --> extra paren to execute!
   end
 
   map(
@@ -254,7 +270,7 @@ end
 --------------------------------------------------------------------------------
 local setreg = vim.fn.setreg
 local expand = vim.fn.expand
-local command_palette_options = {
+M.options.command_palette = {
   ['Command History'] = 'Telescope command_history',
   ['Commands'] = 'Telescope commands',
   ['Find Files'] = 'Telescope find_files',
@@ -308,7 +324,10 @@ local command_palette_options = {
 }
 
 local command_palette_menu = function()
-  rvim.create_select_menu('Command Palette actions', command_palette_options)()
+  rvim.create_select_menu(
+    M.prompts['command_palette'],
+    M.options.command_palette
+  )()
 end
 
 map(
@@ -317,3 +336,9 @@ map(
   command_palette_menu,
   { desc = '[c]ommand [p]alette: open menu for command palette actions' }
 )
+
+for name, option in pairs(M.options) do
+  for key, _ in pairs(option) do
+    frecency.update_item(key, { prompt = M.prompts[name] })
+  end
+end

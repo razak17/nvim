@@ -1,8 +1,8 @@
 if not rvim then return end
 
-local uv = vim.uv
-local fn, api, cmd, fmt = vim.fn, vim.api, vim.cmd, string.format
+local fn, api, cmd, uv, fmt = vim.fn, vim.api, vim.cmd, vim.uv, string.format
 local l = vim.log.levels
+local frecency = require('rm.frecency')
 
 ---Join path segments that were passed rvim input
 ---@return string
@@ -254,20 +254,32 @@ end
 function rvim.create_select_menu(prompt, options_table)
   -- Given the table of options, populate an array with option display names
   local option_names = {}
-  local n = 0
-  for i, _ in pairs(options_table) do
-    n = n + 1
-    option_names[n] = i
-  end
   table.sort(option_names)
+  if rvim.frecency.enable then
+    local top_items = frecency.top_items(
+      function(_, data) return data.prompt == prompt end
+    )
+    for _, item in ipairs(top_items) do
+      table.insert(option_names, item.name)
+    end
+  else
+    local n = 0
+    for i, _ in pairs(options_table) do
+      n = n + 1
+      option_names[n] = i
+    end
+  end
   -- Return the prompt function. These global function var will be used when assigning keybindings
   local menu = function()
     vim.ui.select(option_names, {
       prompt = prompt,
       format_item = function(item) return item:gsub('%d. ', '') end,
-    }, function(choice)
+    }, function(choice, item)
       local action = options_table[choice]
       if action ~= nil then
+        if rvim.frecency.enable then
+          frecency.update_item(option_names[item], { prompt = prompt })
+        end
         if type(action) == 'string' then
           vim.cmd(action)
         elseif type(action) == 'function' then
