@@ -91,4 +91,22 @@ function M.open_in_centered_popup()
   api.nvim_open_win(bufnr, true, opts)
 end
 
+function M.close_nonvisible_buffers()
+  local visible_bufs = {}
+  for _, w in pairs(api.nvim_list_wins()) do
+    local buf = api.nvim_win_get_buf(w)
+    table.insert(visible_bufs, buf)
+  end
+  local deleted_count = 0
+  for _, b in pairs(api.nvim_list_bufs()) do
+    if api.nvim_buf_is_loaded(b) and not vim.tbl_contains(visible_bufs, b) then
+      local force = api.nvim_get_option_value('buftype', { buf = b })
+        == 'terminal'
+      local ok = pcall(api.nvim_buf_delete, b, { force = force })
+      if ok then deleted_count = deleted_count + 1 end
+    end
+  end
+  print('Deleted ' .. deleted_count .. ' buffers')
+end
+
 return M

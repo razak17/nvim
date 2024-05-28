@@ -4,6 +4,7 @@ if not rvim or rvim.none or not rvim.plugins.enable or not enabled then
   return
 end
 
+local fn = vim.fn
 local frecency = require('ar.frecency')
 
 local M = {
@@ -268,13 +269,14 @@ end
 --------------------------------------------------------------------------------
 -- Command Palette
 --------------------------------------------------------------------------------
-local setreg = vim.fn.setreg
-local expand = vim.fn.expand
+local setreg = fn.setreg
+local expand = fn.expand
 M.options.command_palette = {
   ['Format Code'] = "lua require'ar.menus.lsp'.format_buf()",
   ['Toggle Profile'] = 'lua require"ar.menus.command_palette".toggle_profile()',
   ['Generate Plugins'] = 'lua require"ar.menus.command_palette".generate_plugins()',
   ['Open Buffer in Float'] = 'lua require"ar.menus.command_palette".open_in_centered_popup()',
+  ['Close Invalid Buffers'] = 'lua require"ar.menus.command_palette".close_nonvisible_buffers()',
   ['Command History'] = 'Telescope command_history',
   ['Commands'] = 'Telescope commands',
   ['Find Files'] = 'Telescope find_files',
@@ -301,8 +303,8 @@ M.options.command_palette = {
   ['Time Since Neovim Config'] = 'lua require"configpulse".find_time()',
   ['Generate Gitignore'] = 'Gitignore',
   ['Generate License'] = 'Licenses',
-  ['Copy File Name'] = function() setreg('+', vim.fn.expand('%:t')) end,
-  ['Copy File Absolute Path'] = function() setreg('+', vim.fn.expand('%:p')) end,
+  ['Copy File Name'] = function() setreg('+', fn.expand('%:t')) end,
+  ['Copy File Absolute Path'] = function() setreg('+', fn.expand('%:p')) end,
   ['Copy File Absolute Path (No File Name)'] = function()
     setreg('+', expand('%:p:h'))
   end,
