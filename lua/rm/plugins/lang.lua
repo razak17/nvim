@@ -399,7 +399,7 @@ return {
     ft = { 'csv' },
     keys = {
       {
-        '<localleader>ca',
+        '<localleader>ci',
         "<Cmd>lua require('decisive').align_csv({})<CR>",
         desc = 'align CSV',
       },
