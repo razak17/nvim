@@ -378,6 +378,7 @@ return {
           layout_config = { horizontal = { preview_width = 0.55 } },
           winblend = 0,
           history = {
+            limit = 100,
             path = join_paths(
               datapath,
               'databases',
@@ -583,13 +584,17 @@ return {
       })
 
       local l = require('telescope').load_extension
-      if rvim.is_available('text-case.nvim') then l('textcase') end
-      if rvim.is_available('harpoon') then l('harpoon') end
-      if rvim.is_available('nvim-notify') then l('notify') end
-      if rvim.is_available('persisted.nvim') then l('persisted') end
-      if rvim.is_available('project.nvim') then l('projects') end
-      if rvim.is_available('advanced-git-search.nvim') then
-        l('advanced_git_search')
+      local exts = {
+        ['text-case.nvim'] = 'textcase',
+        ['harpoon'] = 'harpoon',
+        ['nvim-notify'] = 'notify',
+        ['persisted.nvim'] = 'persisted',
+        ['project.nvim'] = 'projects',
+        ['advanced-git-search.nvim'] = 'advanced_git_search',
+      }
+
+      for ext, name in pairs(exts) do
+        if rvim.is_available(ext) then l(name) end
       end
 
       api.nvim_exec_autocmds(
@@ -617,6 +622,13 @@ return {
       'kkharji/sqlite.lua',
       'nvim-telescope/telescope-fzy-native.nvim',
     },
+  },
+  {
+    'nvim-telescope/telescope-smart-history.nvim',
+    cond = not minimal,
+    cmd = 'Telescope',
+    config = function() require('telescope').load_extension('smart_history') end,
+    dependencies = 'kkharji/sqlite.lua',
   },
   {
     'nvim-telescope/telescope-frecency.nvim',
