@@ -216,6 +216,7 @@ end
 
 function M.toggle_virtual_lines()
   local config = diagnostic.config()
+  ---@diagnostic disable-next-line: undefined-field
   if type(config and config.virtual_lines) == 'boolean' then
     config = vim.tbl_extend(
       'force',
@@ -229,25 +230,24 @@ function M.toggle_virtual_lines()
     config = vim.tbl_extend('force', config, { virtual_lines = false })
   end
   diagnostic.config(config)
-  lsp_notify(
-    string.format(
-      'virtual lines %s',
-      bool2str(type(diagnostic.config().virtual_lines) ~= 'boolean')
-    )
-  )
+  lsp_notify(string.format(
+    'virtual lines %s',
+    ---@diagnostic disable-next-line: undefined-field
+    bool2str(type(diagnostic.config().virtual_lines) ~= 'boolean')
+  ))
 end
 
 function M.toggle_diagnostics()
   local enabled = true
-  if vim.diagnostic.is_disabled then
-    enabled = not vim.diagnostic.is_disabled()
+  if not vim.diagnostic.is_enabled() then
+    enabled = vim.diagnostic.is_enabled()
   end
   enabled = not enabled
 
   if enabled then
-    vim.diagnostic.enable()
+    vim.diagnostic.enable(true)
   else
-    vim.diagnostic.disable()
+    vim.diagnostic.enable(false)
   end
 
   lsp_notify(string.format('diagnostics %s', bool2str(enabled)))
@@ -403,6 +403,31 @@ function M.display_call_hierarchy()
         :find()
     end
   end
+end
+
+local function filter_lsp_symbols(query)
+  if #vim.lsp.get_clients() == 0 then
+    -- no LSP clients. I'm probably in a floating window.
+    -- close it so we focus on the parent window that has a LSP
+    if api.nvim_win_get_config(0).zindex > 0 then
+      api.nvim_win_close(0, false)
+    end
+  end
+  require('telescope.builtin').lsp_workspace_symbols({ query = query })
+end
+
+function M.filter_lsp_workspace_symbols()
+  vim.ui.input(
+    { prompt = 'Enter LSP symbol filter please: ', kind = 'center_win' },
+    function(word)
+      if word ~= nil then filter_lsp_symbols(word) end
+    end
+  )
+end
+
+function M.ws_symbol_under_cursor()
+  local word = fn.expand('<cword>')
+  filter_lsp_symbols(word)
 end
 
 return M

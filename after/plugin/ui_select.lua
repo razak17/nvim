@@ -194,6 +194,8 @@ if rvim.lsp.enable then
     ['Toggle Hover Diagnostics'] = "lua require'ar.menus.lsp'.toggle_hover_diagnostics()",
     ['Toggle Hover Diagnostics (go_to)'] = "lua require'ar.menus.lsp'.toggle_hover_diagnostics_go_to()",
     ['Toggle Format On Save'] = "lua require'ar.menus.lsp'.toggle_format_on_save()",
+    ['Goto Workspace Symbol'] = "lua require'ar.menus.lsp'.filter_lsp_workspace_symbols()",
+    ['Goto Workspace Symbol Under Cursor'] = "lua require'ar.menus.lsp'.ws_symbol_under_cursor()",
     ['Preview Code Actions'] = 'lua require("actions-preview").code_actions()',
     ['Add Missing Imports'] = function()
       if rvim.is_available('typescript-tools.nvim') then
