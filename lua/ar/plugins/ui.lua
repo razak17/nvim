@@ -1,4 +1,4 @@
-local ui, highlight = rvim.ui, rvim.highlight
+local augroup, ui, highlight = rvim.augroup, rvim.ui, rvim.highlight
 local icons = ui.icons
 local separators = ui.icons.separators
 local P = require('onedark.palette')
@@ -80,11 +80,46 @@ return {
   },
   {
     'razak17/smartcolumn.nvim',
-    cond = not minimal and niceties,
+    cond = not minimal,
     event = { 'BufRead', 'BufNewFile' },
     opts = {
       colorcolumn = '0',
       custom_autocommand = true,
+    },
+  },
+  {
+    'delphinus/auto-cursorline.nvim',
+    cond = not minimal and niceties,
+    event = { 'BufRead', 'CursorMoved', 'CursorMovedI', 'WinEnter', 'WinLeave' },
+    init = function()
+      augroup('auto-cursorline', {
+        event = 'FileType',
+        pattern = 'TelescopePrompt',
+        command = function()
+          require('auto-cursorline').disable({ buffer = true })
+          vim.wo.cursorline = false
+        end,
+      })
+    end,
+    opts = { wait_ms = '300' },
+  },
+  {
+    'tummetott/reticle.nvim',
+    cond = not minimal and not niceties, -- auto-cursorline kinda does this already
+    event = 'VeryLazy',
+    opts = {
+      ignore = {
+        cursorline = {
+          'alpha',
+          'startup',
+          'DressingInput',
+          'NvimSeparator',
+          'TelescopePrompt',
+          'toggleterm',
+          'Trouble',
+        },
+        cursorcolumn = {},
+      },
     },
   },
   {
@@ -116,25 +151,6 @@ return {
       excluded_filetypes = {
         [''] = true,
         fugitive = true,
-      },
-    },
-  },
-  {
-    'tummetott/reticle.nvim',
-    cond = not minimal and niceties,
-    event = 'VeryLazy',
-    opts = {
-      ignore = {
-        cursorline = {
-          'alpha',
-          'startup',
-          'DressingInput',
-          'NvimSeparator',
-          'TelescopePrompt',
-          'toggleterm',
-          'Trouble',
-        },
-        cursorcolumn = {},
       },
     },
   },
