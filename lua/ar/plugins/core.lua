@@ -96,6 +96,33 @@ return {
   { 'will133/vim-dirdiff', cmd = { 'DirDiff' } },
   { 'godlygeek/tabular', cmd = { 'Tabularize' } },
   {
+    '4513ECHO/nvim-keycastr',
+    cond = not minimal,
+    init = function()
+      local enabled = false
+      local config_set = false
+      rvim.command('KeyCastrToggle', function()
+        local keycastr = require('keycastr')
+        if not config_set then
+          keycastr.config.set({
+            win_config = { border = 'single' },
+            position = 'SE',
+          })
+          config_set = true
+        end
+        keycastr[enabled and 'disable' or 'enable']()
+        enabled = not enabled
+        vim.notify(('Keycastr %s'):format(enabled and 'disabled' or 'enabled'))
+      end, {})
+      vim.keymap.set(
+        'n',
+        '<leader>ok',
+        '<Cmd>KeyCastrToggle<CR>',
+        { desc = 'keycastr: toggle' }
+      )
+    end,
+  },
+  {
     'chrishrb/gx.nvim',
     cond = not rvim.use_local_gx and not minimal,
     keys = { { 'gx', '<cmd>Browse<cr>', mode = { 'n', 'x' } } },
