@@ -312,6 +312,7 @@ M.options.command_palette = {
   end,
   ['Copy File Home Path'] = function() setreg('+', expand('%:~')) end,
   ['Find And Replace'] = 'GrugFar',
+  ['RenderMarkdown Toggle'] = 'RenderMarkdownToggle',
   ['Code Pad'] = 'QuickCodePad',
   ['Run Code'] = 'Build',
   ['Toggle Auto Pairs'] = function()

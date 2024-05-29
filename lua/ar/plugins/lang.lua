@@ -372,7 +372,43 @@ return {
     cmd = { 'PasteImage' },
     opts = {},
   },
-
+  {
+    'MeanderingProgrammer/markdown.nvim',
+    cond = not rvim.treesitter.enable and not rvim.plugins.niceties,
+    name = 'render-markdown',
+    cmd = { 'RenderMarkdownToggle' },
+    ft = { 'markdown' },
+    init = function()
+      highlight.plugin('render-markdown', {
+        theme = {
+          ['onedark'] = {
+            { MarkdownCodeBlock = { link = 'CodeBlock' } },
+          },
+        },
+      })
+    end,
+    opts = {
+      start_enabled = false,
+      highlights = {
+        code = 'MarkdownCodeBlock',
+        heading = {
+          backgrounds = { 'Headline1', 'Headline2', 'Headline3' },
+          foregrounds = {
+            'markdownH1',
+            'markdownH2',
+            'markdownH3',
+            'markdownH4',
+            'markdownH5',
+            'markdownH6',
+          },
+        },
+      },
+      headings = { '󰲡 ', '󰲣 ', '󰲥 ', '󰲧 ', '󰲩 ', '󰲫 ' },
+      checkbox = { unchecked = '󰄱', checked = '' },
+      conceal = { rendered = 2 },
+      bullets = { '●', '○', '▶', '▷' },
+    },
+  },
   -- CSV
   --------------------------------------------------------------------------------
   {
