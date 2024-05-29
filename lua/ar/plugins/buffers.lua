@@ -17,7 +17,7 @@ return {
   {
 
     'razak17/cybu.nvim',
-    cond = not minimal and niceties,
+    cond = not minimal,
     event = { 'BufRead', 'BufNewFile' },
     opts = {
       position = { relative_to = 'win', anchor = 'topright' },
@@ -133,7 +133,7 @@ return {
             -- this is a diffview tab, disable creating new windows
             -- (which would be the default behavior of handle_foreign_buffer)
             return {
-              handle_foreign_buffer = function(buf) end,
+              handle_foreign_buffer = function(_) end,
             }
           end
           return require('stickybuf').should_auto_pin(bufnr)
