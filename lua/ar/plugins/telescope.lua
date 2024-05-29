@@ -120,7 +120,10 @@ end
 
 local function egrepify() extensions('egrepify').egrepify() end
 local function helpgrep() extensions('helpgrep').helpgrep() end
-local function frecency() extensions('frecency').frecency() end
+local function frecency(opts)
+  opts = opts or {}
+  extensions('frecency').frecency(opts)
+end
 local function luasnips() extensions('luasnip').luasnip() end
 local function notifications() extensions('notify').notify() end
 local function undo() extensions('undo').undo() end
@@ -602,7 +605,13 @@ return {
         { pattern = 'TelescopeConfigComplete', modeline = false }
       )
     end,
-    dependencies = { 'nvim-lua/plenary.nvim' },
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      {
+        'nvim-telescope/telescope-frecency.nvim',
+        config = function() require('telescope').load_extension('frecency') end,
+      },
+    },
   },
   {
     'biozz/whop.nvim',
@@ -629,12 +638,6 @@ return {
     cmd = 'Telescope',
     config = function() require('telescope').load_extension('smart_history') end,
     dependencies = 'kkharji/sqlite.lua',
-  },
-  {
-    'nvim-telescope/telescope-frecency.nvim',
-    cond = not minimal,
-    cmd = 'Telescope',
-    config = function() require('telescope').load_extension('frecency') end,
   },
   {
     'fdschmidt93/telescope-egrepify.nvim',
