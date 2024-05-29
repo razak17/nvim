@@ -152,7 +152,7 @@ return {
   },
   {
     'Wansmer/treesj',
-    cond = rvim.treesitter.enable,
+    -- cond = rvim.treesitter.enable,
     keys = {
       {
         'gS',
