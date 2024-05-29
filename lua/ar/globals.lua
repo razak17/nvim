@@ -2,7 +2,6 @@ if not rvim then return end
 
 local fn, api, cmd, uv, fmt = vim.fn, vim.api, vim.cmd, vim.uv, string.format
 local l = vim.log.levels
-local frecency = require('ar.frecency')
 
 ---Join path segments that were passed rvim input
 ---@return string
@@ -252,9 +251,9 @@ end
 ---@param options_table table
 ---@return function
 function rvim.create_select_menu(prompt, options_table)
+  local frecency = require('ar.frecency')
   -- Given the table of options, populate an array with option display names
   local option_names = {}
-  table.sort(option_names)
   if rvim.frecency.enable then
     local top_items = frecency.top_items(
       function(_, data) return data.prompt == prompt end
@@ -268,6 +267,7 @@ function rvim.create_select_menu(prompt, options_table)
       n = n + 1
       option_names[n] = i
     end
+    table.sort(option_names)
   end
   -- Return the prompt function. These global function var will be used when assigning keybindings
   local menu = function()
