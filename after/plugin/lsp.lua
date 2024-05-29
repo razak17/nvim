@@ -16,8 +16,8 @@ local M = vim.lsp.protocol.Methods
 local conform = rvim.is_available('conform.nvim')
 
 local diagnostic = vim.diagnostic
-local augroup, icons, lsp_icons, border =
-  rvim.augroup, rvim.ui.icons, rvim.ui.codicons.lsp, rvim.ui.current.border
+local augroup, lsp_icons, border =
+  rvim.augroup, rvim.ui.codicons.lsp, rvim.ui.current.border
 
 local format_exclusions = {
   format_on_save = { 'zsh' },
@@ -242,7 +242,6 @@ local function setup_mappings(client, bufnr)
       diagnostic.goto_prev({
         float = rvim.lsp.hover_diagnostics.go_to
           and not rvim.lsp.hover_diagnostics.enable,
-        ---@diagnostic disable-next-line: assign-type-mismatch
         severity = {
           min = vim.diagnostic.severity.HINT,
         },
@@ -254,7 +253,6 @@ local function setup_mappings(client, bufnr)
       diagnostic.goto_next({
         float = rvim.lsp.hover_diagnostics.go_to
           and not rvim.lsp.hover_diagnostics.enable,
-        ---@diagnostic disable-next-line: assign-type-mismatch
         severity = {
           min = vim.diagnostic.severity.HINT,
         },
@@ -280,8 +278,8 @@ local function setup_mappings(client, bufnr)
       'n',
       '<leader>lh',
       function()
-        local enabled = lsp.inlay_hint.is_enabled(0)
-        lsp.inlay_hint.enable(not enabled, { bufnr = 0 })
+        local enabled = lsp.inlay_hint.is_enabled({ bufnr = bufnr })
+        lsp.inlay_hint.enable(not enabled, { bufnr = bufnr })
       end,
       desc = 'toggle inlay hints',
       M.textDocument_inlayHint,
@@ -645,6 +643,7 @@ diagnostic.config({
   float = {
     max_width = max_width,
     max_height = max_height,
+    ---@diagnostic disable-next-line: assign-type-mismatch
     border = border,
     title = {
       { '  ', 'DiagnosticFloatTitleIcon' },
@@ -663,7 +662,7 @@ diagnostic.config({
 --------------------------------------------------------------------------------
 -- LSP Progress
 --------------------------------------------------------------------------------
-if rvim.lsp.progress.enable then require('arm.lsp_progress') end
+if rvim.lsp.progress.enable then require('ar.lsp_progress') end
 --------------------------------------------------------------------------------
 -- Code Action
 --------------------------------------------------------------------------------
