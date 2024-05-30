@@ -249,8 +249,8 @@ return {
   {
     'nvim-telescope/telescope.nvim',
     -- NOTE: usind cmd causes issues with dressing and frecency
-    -- cmd = 'Telescope',
-    event = 'VeryLazy',
+    cmd = { 'Telescope' },
+    -- event = 'VeryLazy',
     -- stylua: ignore
     keys = {
       -- { '<c-p>', find_files, desc = 'find files' },
