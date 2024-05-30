@@ -157,6 +157,7 @@ local function textcase()
 end
 local function import() extensions('import').import(rvim.telescope.minimal_ui()) end
 local function whop() extensions('whop').whop(rvim.telescope.minimal_ui()) end
+local function node_modules() extensions('node_modules').list() end
 local function live_grep_args()
   extensions('live_grep_args').live_grep_args({
     vimgrep_arguments = {
@@ -277,9 +278,10 @@ return {
       { '<leader>fl', lazy, desc = 'surf plugins' },
       { '<leader>fL', luasnips, desc = 'luasnip: available snippets' },
       { '<leader>fn', notifications, desc = 'notify: notifications' },
-      { '<leader>fN', notes, desc = 'notes' },
+      { '<leader>fN', node_modules, desc = 'node_modules' },
+      { '<leader>fO', notes, desc = 'notes' },
       { '<leader>fo', b('pickers'), desc = 'pickers' },
-      { '<leader>fO', b('oldfiles'), desc = 'oldfiles' },
+      -- { '<leader>fO', b('oldfiles'), desc = 'oldfiles' },
       { '<leader>fp', projects, desc = 'projects' },
       { '<leader>fP', plugins, desc = 'plugins' },
       {
@@ -640,6 +642,12 @@ return {
       'kkharji/sqlite.lua',
       'nvim-telescope/telescope-fzy-native.nvim',
     },
+  },
+  {
+    'nvim-telescope/telescope-node-modules.nvim',
+    cond = not minimal,
+    cmd = 'Telescope',
+    config = function() require('telescope').load_extension('node_modules') end,
   },
   {
     'nvim-telescope/telescope-smart-history.nvim',
