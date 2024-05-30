@@ -644,6 +644,15 @@ return {
     },
   },
   {
+    'jonarrien/telescope-cmdline.nvim',
+    cond = not minimal and false,
+    cmd = 'Telescope',
+    keys = {
+      { ':', '<cmd>Telescope cmdline<cr>', desc = 'Cmdline' },
+    },
+    config = function() require('telescope').load_extension('cmdline') end,
+  },
+  {
     'nvim-telescope/telescope-node-modules.nvim',
     cond = not minimal,
     cmd = 'Telescope',
