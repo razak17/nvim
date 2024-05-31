@@ -94,7 +94,15 @@ return {
     init = function()
       augroup('auto-cursorline', {
         event = 'FileType',
-        pattern = 'TelescopePrompt',
+        pattern = {
+          'alpha',
+          'startup',
+          'DressingInput',
+          'NvimSeparator',
+          'TelescopePrompt',
+          'toggleterm',
+          'Trouble',
+        },
         command = function()
           require('auto-cursorline').disable({ buffer = true })
           vim.wo.cursorline = false
@@ -502,7 +510,7 @@ return {
   },
   {
     'folke/todo-comments.nvim',
-    cond = not minimal and niceties,
+    cond = not minimal,
     event = 'BufReadPost',
     cmd = { 'TodoTelescope', 'TodoTrouble', 'TodoQuickFix', 'TodoDots' },
     -- stylua: ignore
