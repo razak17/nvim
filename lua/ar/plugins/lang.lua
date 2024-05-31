@@ -374,7 +374,7 @@ return {
   },
   {
     'MeanderingProgrammer/markdown.nvim',
-    cond = not rvim.treesitter.enable and not rvim.plugins.niceties,
+    cond = rvim.treesitter.enable and not rvim.plugins.niceties,
     name = 'render-markdown',
     cmd = { 'RenderMarkdownToggle' },
     ft = { 'markdown' },
