@@ -217,6 +217,102 @@ return {
     dependencies = { 'nvim-lua/plenary.nvim' },
   },
   {
+    url = 'https://git.sr.ht/~tomleb/repo-url.nvim',
+    config = function()
+      local ru = require('repo-url')
+      require('repo-url').setup({})
+
+      map(
+        { 'n', 'v' },
+        '<localleader>gyb',
+        ru.copy_blob_url,
+        { desc = 'Copy blob URL' }
+      )
+      map(
+        { 'n', 'v' },
+        '<localleader>gob',
+        ru.open_blob_url,
+        { desc = 'Open blob URL' }
+      )
+      map(
+        { 'n', 'v' },
+        '<leader>gyu',
+        ru.copy_blame_url,
+        { desc = 'Copy blame URL' }
+      )
+      map(
+        { 'n', 'v' },
+        '<localleader>gou',
+        ru.open_blame_url,
+        { desc = 'Open blame URL' }
+      )
+      map(
+        { 'n', 'v' },
+        '<localleader>gyh',
+        ru.copy_history_url,
+        { desc = 'Copy history URL' }
+      )
+      map(
+        { 'n', 'v' },
+        '<localleader>goh',
+        ru.open_history_url,
+        { desc = 'Open history URL' }
+      )
+      map(
+        { 'n', 'v' },
+        '<localleader>gyr',
+        ru.copy_raw_url,
+        { desc = 'Copy raw URL' }
+      )
+      map(
+        { 'n', 'v' },
+        '<localleader>gor',
+        ru.open_raw_url,
+        { desc = 'Open raw URL' }
+      )
+
+      -- For Go's go.mod file, generate permalinks to the dependency under the
+      -- cursor and copy to the clipboard or open in the default browser.
+      rvim.augroup('repo-url', {
+        event = { 'FileType' },
+        pattern = 'gomod',
+        command = function(args)
+          map(
+            'n',
+            '<localleader>gyg',
+            function() ru.copy_gomod_tree_url() end,
+            { desc = 'copy gomod URL', buffer = args.buf }
+          )
+          map(
+            'n',
+            '<localleader>gog',
+            function() ru.open_gomod_tree_url() end,
+            { desc = 'open gomod URL', buffer = args.buf }
+          )
+        end,
+      }, {
+        -- For Go's go.sum file, generate permalinks to the dependency under the
+        -- cursor and copy to the clipboard or open in the default browser.
+        event = { 'FileType' },
+        pattern = 'gosum',
+        command = function(args)
+          map(
+            'n',
+            '<localleader>gyg',
+            function() ru.copy_gosum_tree_url() end,
+            { desc = 'copy gosum URL', buffer = args.buf }
+          )
+          map(
+            'n',
+            '<localleader>gog',
+            function() ru.open_gosum_tree_url() end,
+            { desc = 'open gosum URL', buffer = args.buf }
+          )
+        end,
+      })
+    end,
+  },
+  {
     'linrongbin16/gitlinker.nvim',
     config = function()
       require('gitlinker').setup({
