@@ -294,6 +294,7 @@ return {
         ['end'] = 'start',
         ['high'] = 'low',
         ['open'] = 'close',
+        ['and'] = 'or',
       },
     },
   },
