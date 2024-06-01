@@ -35,7 +35,11 @@ local function is_blocked()
 end
 
 local function enable_relative_number()
-  if not is_enabled or is_blocked() then return end
+  if not is_enabled then return end
+  if is_blocked() then
+    vim.wo.number, vim.wo.relativenumber = false, false
+    return
+  end
   if is_ignored() then return end
   local enabled = not is_blocked()
   vim.wo.number, vim.wo.relativenumber = enabled, enabled
