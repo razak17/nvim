@@ -217,59 +217,21 @@ return {
     dependencies = { 'nvim-lua/plenary.nvim' },
   },
   {
-    url = 'https://git.sr.ht/~tomleb/repo-url.nvim',
-    config = function()
+    'https://git.sr.ht/~tomleb/repo-url.nvim',
+    -- stylua: ignore
+    keys= {
+      {  mode = { 'n', 'v' }, '<localleader>gyb', ':lua require("repo-url").copy_blob_url()<CR>', desc= 'copy blob URL' },
+      {  mode = { 'n', 'v' }, '<localleader>gob', ':lua require("repo-url").open_blob_url()<CR>', desc= 'open blob URL' },
+      {  mode = { 'n', 'v' }, '<leader>gyu', ':lua require("repo-url").copy_blame_url()<CR>', desc= 'copy blame URL' },
+      {  mode = { 'n', 'v' }, '<localleader>gou', ':lua require("repo-url").open_blame_url()<CR>', desc= 'open blame URL' },
+      {  mode= { 'n', 'v' }, '<localleader>gyh', ':lua require("repo-url").copy_history_url()<CR>', desc= 'copy history URL' },
+      {  mode= { 'n', 'v' }, '<localleader>goh', ':lua require("repo-url").open_history_url()<CR>', desc= 'open history URL' },
+      {  mode= { 'n', 'v' }, '<localleader>gyr', ':lua require("repo-url").copy_raw_url()<CR>', desc= 'copy raw URL' },
+      {  mode= { 'n', 'v' }, '<localleader>gor', ':lua require("repo-url").open_raw_url()<CR>', desc= 'open raw URL' },
+    },
+    opts = {},
+    init = function()
       local ru = require('repo-url')
-      require('repo-url').setup({})
-
-      map(
-        { 'n', 'v' },
-        '<localleader>gyb',
-        ru.copy_blob_url,
-        { desc = 'Copy blob URL' }
-      )
-      map(
-        { 'n', 'v' },
-        '<localleader>gob',
-        ru.open_blob_url,
-        { desc = 'Open blob URL' }
-      )
-      map(
-        { 'n', 'v' },
-        '<leader>gyu',
-        ru.copy_blame_url,
-        { desc = 'Copy blame URL' }
-      )
-      map(
-        { 'n', 'v' },
-        '<localleader>gou',
-        ru.open_blame_url,
-        { desc = 'Open blame URL' }
-      )
-      map(
-        { 'n', 'v' },
-        '<localleader>gyh',
-        ru.copy_history_url,
-        { desc = 'Copy history URL' }
-      )
-      map(
-        { 'n', 'v' },
-        '<localleader>goh',
-        ru.open_history_url,
-        { desc = 'Open history URL' }
-      )
-      map(
-        { 'n', 'v' },
-        '<localleader>gyr',
-        ru.copy_raw_url,
-        { desc = 'Copy raw URL' }
-      )
-      map(
-        { 'n', 'v' },
-        '<localleader>gor',
-        ru.open_raw_url,
-        { desc = 'Open raw URL' }
-      )
 
       -- For Go's go.mod file, generate permalinks to the dependency under the
       -- cursor and copy to the clipboard or open in the default browser.
