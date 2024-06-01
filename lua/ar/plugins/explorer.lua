@@ -356,6 +356,15 @@ return {
         ['~'] = '<cmd>edit $HOME<CR>',
         ['<leader>q'] = 'actions.close',
         ['<leader>t'] = 'actions.open_terminal',
+        ['<C-g>'] = {
+          desc = 'Grep in dir',
+          callback = function()
+            require('fzf-lua').files({
+              cmd = 'fd -t=d',
+              cwd = require('oil').get_current_dir(),
+            })
+          end,
+        },
         ['gd'] = {
           desc = 'Toggle detail view',
           callback = function()
