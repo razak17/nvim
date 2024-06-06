@@ -6,6 +6,7 @@ local P = require('onedark.palette')
 local minimal, niceties = rvim.plugins.minimal, rvim.plugins.niceties
 
 return {
+  { 'lewis6991/spaceless.nvim', lazy = false, cond = not minimal },
   {
     'razak17/lspkind.nvim',
     config = function() require('lspkind').init({ preset = 'codicons' }) end,
