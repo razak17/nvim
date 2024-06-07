@@ -40,6 +40,10 @@ return {
         r = { name = 'Run' },
         t = { name = 'Translate' },
       },
+      [','] = {
+        name = 'Advanced',
+        f = { name = 'Genghis' },
+      },
       a = { name = 'A.I.' },
       d = { name = 'Dadbod' },
       e = { name = 'Explorer' },
@@ -82,7 +86,6 @@ return {
       d = { name = 'Dap' },
       db = { name = 'Breakpoint' },
       g = { name = 'Git' },
-      f = { name = 'Genghis' },
       h = { name = 'Harpoon' },
       l = { name = 'LSP' },
       lc = { name = 'Call Hierarchy' },
