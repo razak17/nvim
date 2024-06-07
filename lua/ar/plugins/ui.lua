@@ -447,14 +447,17 @@ return {
     config = function()
       highlight.plugin('nvim-hlslens', {
         -- stylua: ignore
-        ['onedark'] = {
-          { HlSearchNear = { bg = { from = 'CursorLine' } } },
-          { HlSearchLens = { bg = { from = 'CursorLine' } } },
-          { HlSearchLensNear = { bg = { from = 'CursorLine' } } },
-          { HlSearchLensSurround = { fg = { from = 'CursorLine', attr = 'bg' } } },
-          { HlSearchLensNearSurround = { fg = { from = 'CursorLine', attr = 'bg' } } },
-          { HlSearchLensNearIcon = { fg = { from = 'Comment' } } },
-        },
+        theme = {
+          ['onedark'] = {
+            { HlSearchNear = { bg = { from = 'CursorLine' } } },
+            { HlSearchLens = { bg = { from = 'CursorLine' } } },
+            { HlSearchLensNear = { bg = { from = 'CursorLine' } } },
+            { HlSearchLensSurround = { fg = { from = 'CursorLine', attr = 'bg' } } },
+            { HlSearchLensNearSurround = { fg = { from = 'CursorLine', attr = 'bg' } } },
+            { HlSearchLensNearIcon = { fg = { from = 'Comment' } } },
+          },
+        }
+,
       })
 
       require('hlslens').setup({
