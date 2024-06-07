@@ -70,7 +70,14 @@ return {
     end,
   },
   {
+    'altermo/ultimate-autopair.nvim',
+    cond = not minimal,
+    event = { 'InsertEnter', 'CmdlineEnter' },
+    opts = {},
+  },
+  {
     'windwp/nvim-autopairs',
+    cond = false,
     event = 'InsertEnter',
     dependencies = { 'hrsh7th/nvim-cmp' },
     config = function()

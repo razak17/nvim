@@ -115,6 +115,7 @@ return {
   },
   {
     'echasnovski/mini.pairs',
+    cond = minimal,
     event = 'VeryLazy',
     opts = {
       mappings = {
