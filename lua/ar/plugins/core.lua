@@ -134,6 +134,7 @@ return {
   },
   {
     'kevinhwang91/nvim-fundo',
+    cond = not minimal,
     event = { 'BufRead', 'BufNewFile' },
     build = function() require('fundo').install() end,
     dependencies = { 'kevinhwang91/promise-async' },
