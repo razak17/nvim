@@ -2,7 +2,7 @@ local border = rvim.ui.current.border
 local minimal, niceties = rvim.plugins.minimal, rvim.plugins.niceties
 
 return {
-  { 'johmsalas/text-case.nvim', opts = {} },
+  { 'johmsalas/text-case.nvim', cond = not minimal, opts = {} },
   {
     'gbprod/yanky.nvim',
     cmd = { 'YankyRingHistory' },
@@ -71,7 +71,6 @@ return {
   },
   {
     'windwp/nvim-autopairs',
-    cond = false,
     event = 'InsertEnter',
     dependencies = { 'hrsh7th/nvim-cmp' },
     config = function()

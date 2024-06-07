@@ -4,7 +4,8 @@ local icons = rvim.ui.icons
 local border = rvim.ui.current.border
 local left_block = icons.separators.left_block
 
-local enabled = not rvim.plugins.minimal and rvim.is_git_repo()
+local minimal = rvim.plugins.minimal
+local enabled = not minimal and rvim.is_git_repo()
 
 return {
   { 'kilavila/nvim-gitignore', cmd = { 'Gitignore', 'Licenses' } },
@@ -218,6 +219,7 @@ return {
   },
   {
     'https://git.sr.ht/~tomleb/repo-url.nvim',
+    cond = not minimal,
     -- stylua: ignore
     keys= {
       {  mode = { 'n', 'v' }, '<localleader>gyb', ':lua require("repo-url").copy_blob_url()<CR>', desc= 'copy blob URL' },

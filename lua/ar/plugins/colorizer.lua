@@ -1,6 +1,9 @@
+local minimal = rvim.plugins.minimal
+
 return {
   {
     'brenoprata10/nvim-highlight-colors',
+    cond = not minimal,
     event = { 'BufRead' },
     cmd = { 'HighlightColors' },
     opts = {
@@ -10,6 +13,7 @@ return {
   },
   {
     'uga-rosa/ccc.nvim',
+    cond = not minimal,
     cmd = { 'CccHighlighterToggle', 'CccHighlighterEnable', 'CccPick' },
     opts = function()
       local ccc = require('ccc')

@@ -1,6 +1,7 @@
 return {
   {
     'L3MON4D3/LuaSnip',
+    cond = not rvim.plugins.minimal,
     event = 'InsertEnter',
     build = 'make install_jsregexp',
     keys = {

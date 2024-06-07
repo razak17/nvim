@@ -4,7 +4,7 @@ local minimal, niceties = rvim.plugins.minimal, rvim.plugins.niceties
 return {
   {
     'goolord/alpha-nvim',
-    cond = not minimal,
+    cond = not minimal and niceties,
     event = 'VimEnter',
     keys = { { '<leader>;', '<cmd>Alpha<CR>', desc = 'alpha' } },
     config = function()
@@ -145,13 +145,13 @@ return {
   },
   {
     'startup-nvim/startup.nvim',
-    cond = minimal,
+    cond = not minimal and not niceties,
     lazy = false,
     config = function() require('startup').setup({ theme = 'linguini' }) end,
   },
   {
     'letieu/btw.nvim',
-    cond = not minimal and not niceties,
+    cond = minimal,
     lazy = false,
     config = function() require('btw').setup() end,
   },

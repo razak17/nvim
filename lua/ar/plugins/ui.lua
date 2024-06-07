@@ -338,6 +338,7 @@ return {
   },
   {
     'laytan/cloak.nvim',
+    cond = not minimal,
     event = 'VeryLazy',
     opts = {},
   },
@@ -413,6 +414,7 @@ return {
   },
   {
     'yorickpeterse/nvim-pqf',
+    cond = not minimal,
     event = 'BufRead',
     opts = {},
   },
