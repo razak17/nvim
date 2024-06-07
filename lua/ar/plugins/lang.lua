@@ -29,8 +29,8 @@ return {
         theme = {
           -- stylua: ignore
           ['onedark'] = {
-            { PackageInfoUpToDateVersion = { link = 'DiagnosticVirtualTextInfo', }, },
-            { PackageInfoOutdatedVersion = { link = 'DiagnosticVirtualTextWarn', }, },
+            { PackageInfoUpToDateVersion = { link = 'DiagnosticVirtualTextInfo' } },
+            { PackageInfoOutdatedVersion = { link = 'DiagnosticVirtualTextWarn' } },
           },
         },
       })
@@ -240,8 +240,12 @@ return {
     opts = { borderchars = ui.border.common },
     config = function(_, opts)
       highlight.plugin('md-headers', {
-        { MarkdownHeadersBorder = { inherit = 'FloatBorder' } },
-        { MarkdownHeadersTitle = { inherit = 'FloatTitle' } },
+        theme = {
+          ['onedark'] = {
+            { MarkdownHeadersBorder = { inherit = 'FloatBorder' } },
+            { MarkdownHeadersTitle = { inherit = 'FloatTitle' } },
+          },
+        },
       })
       require('md-headers').setup(opts)
     end,
@@ -381,9 +385,7 @@ return {
     init = function()
       highlight.plugin('render-markdown', {
         theme = {
-          ['onedark'] = {
-            { MarkdownCodeBlock = { link = 'CodeBlock' } },
-          },
+          ['onedark'] = { { MarkdownCodeBlock = { link = 'CodeBlock' } } },
         },
       })
     end,

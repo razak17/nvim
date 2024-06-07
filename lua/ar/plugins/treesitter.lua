@@ -171,9 +171,13 @@ return {
     event = { 'BufRead', 'BufNewFile' },
     config = function()
       highlight.plugin('treesitter-context', {
-        { TreesitterContextSeparator = { link = 'VertSplit' } },
-        { TreesitterContext = { inherit = 'Normal' } },
-        { TreesitterContextLineNumber = { inherit = 'LineNr' } },
+        theme = {
+          ['onedark'] = {
+            { TreesitterContextSeparator = { link = 'VertSplit' } },
+            { TreesitterContext = { inherit = 'Normal' } },
+            { TreesitterContextLineNumber = { inherit = 'LineNr' } },
+          },
+        },
       })
       require('treesitter-context').setup({
         multiline_threshold = 4,
@@ -206,9 +210,13 @@ return {
     end,
     config = function()
       highlight.plugin('vim-matchup', {
-        { MatchWord = { inherit = 'LspReferenceText', underline = true } },
-        { MatchParenCursor = { link = 'MatchParen' } },
-        { MatchParenOffscreen = { link = 'MatchParen' } },
+        theme = {
+          ['onedark'] = {
+            { MatchWord = { inherit = 'LspReferenceText', underline = true } },
+            { MatchParenCursor = { link = 'MatchParen' } },
+            { MatchParenOffscreen = { link = 'MatchParen' } },
+          },
+        },
       })
       vim.g.matchup_surround_enabled = 1
       vim.g.matchup_matchparen_nomode = 'i'

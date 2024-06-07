@@ -34,13 +34,9 @@ return {
     config = function()
       rvim.highlight.plugin('ufo', {
         theme = {
+          -- stylua: ignore
           ['onedark'] = {
-            {
-              Folded = {
-                bold = false,
-                italic = false,
-                bg = { from = 'CursorLine', alter = -0.15 },
-              },
+            { Folded = { bold = false, italic = false, bg = { from = 'CursorLine', alter = -0.15 } },
             },
           },
         },

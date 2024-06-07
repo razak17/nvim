@@ -64,9 +64,7 @@ return {
     config = function()
       vim.g.highlighturl = true
       highlight.plugin('highlighturl', {
-        theme = {
-          ['onedark'] = { { HighlightURL = { link = 'URL' } } },
-        },
+        theme = { ['onedark'] = { { HighlightURL = { link = 'URL' } } } },
       })
     end,
   },
@@ -446,20 +444,15 @@ return {
     },
     config = function()
       highlight.plugin('nvim-hlslens', {
-        { HlSearchNear = { bg = { from = 'CursorLine' } } },
-        { HlSearchLens = { bg = { from = 'CursorLine' } } },
-        { HlSearchLensNear = { bg = { from = 'CursorLine' } } },
-        {
-          HlSearchLensSurround = {
-            fg = { from = 'CursorLine', attr = 'bg' },
-          },
+        -- stylua: ignore
+        ['onedark'] = {
+          { HlSearchNear = { bg = { from = 'CursorLine' } } },
+          { HlSearchLens = { bg = { from = 'CursorLine' } } },
+          { HlSearchLensNear = { bg = { from = 'CursorLine' } } },
+          { HlSearchLensSurround = { fg = { from = 'CursorLine', attr = 'bg' } } },
+          { HlSearchLensNearSurround = { fg = { from = 'CursorLine', attr = 'bg' } } },
+          { HlSearchLensNearIcon = { fg = { from = 'Comment' } } },
         },
-        {
-          HlSearchLensNearSurround = {
-            fg = { from = 'CursorLine', attr = 'bg' },
-          },
-        },
-        { HlSearchLensNearIcon = { fg = { from = 'Comment' } } },
       })
 
       require('hlslens').setup({

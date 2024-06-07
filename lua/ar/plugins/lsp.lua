@@ -259,9 +259,13 @@ return {
       })
 
       highlight.plugin('glance', {
-        { GlancePreviewNormal = { link = 'NormalFloat' } },
-        -- { GlancePreviewMatch = { link = 'Comment' } },
-        { GlanceListMatch = { link = 'Search' } },
+        theme = {
+          ['onedark'] = {
+            { GlancePreviewNormal = { link = 'NormalFloat' } },
+            -- { GlancePreviewMatch = { link = 'Comment' } },
+            { GlanceListMatch = { link = 'Search' } },
+          },
+        },
       })
     end,
   },
@@ -532,8 +536,8 @@ return {
     event = 'LspAttach',
     config = function()
       highlight.plugin('symbol-usage', {
-        -- stylua: ignore
         theme = {
+          -- stylua: ignore
           ['onedark'] = {
             { SymbolUsageRounding = { italic = true, fg = { from = 'CursorLine', attr = 'bg' }, }, },
             { SymbolUsageContent = { italic = true, bg = { from = 'CursorLine' }, fg = { from = 'Comment' }, }, },
@@ -675,6 +679,21 @@ return {
     enabled = false,
     cmd = 'OutputPanel',
     config = function() require('output_panel').setup() end,
+  },
+  {
+    'SmiteshP/nvim-navbuddy',
+    keys = {
+      {
+        '<leader>nv',
+        '<cmd>Navbuddy<cr>',
+        desc = 'navbuddy: toggle',
+      },
+    },
+    dependencies = {
+      'SmiteshP/nvim-navic',
+      'MunifTanjim/nui.nvim',
+    },
+    opts = { lsp = { auto_attach = true } },
   },
   -- }}}
 }

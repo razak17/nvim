@@ -20,7 +20,9 @@ return {
     },
     config = function()
       rvim.highlight.plugin('pantran', {
-        { PantranBorder = { inherit = 'FloatBorder' } },
+        theme = {
+          ['onedark'] = { { PantranBorder = { inherit = 'FloatBorder' } } },
+        },
       })
 
       local default_source = 'auto'

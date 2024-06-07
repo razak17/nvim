@@ -19,8 +19,13 @@ return {
     },
     init = function()
       rvim.highlight.plugin('mini-indentscope', {
-        { MiniIndentscopeSymbol = { inherit = 'IndentBlanklineContextChar' } },
-        { MiniIndentscopeSymbolOff = { inherit = 'IndentBlanklineChar' } },
+        theme = {
+          -- stylua: ignore
+          ['onedark'] = {
+            { MiniIndentscopeSymbol = { inherit = 'IndentBlanklineContextChar' } },
+            { MiniIndentscopeSymbolOff = { inherit = 'IndentBlanklineChar' } },
+          },
+        },
       })
     end,
   },

@@ -28,31 +28,32 @@ return {
         )
         :totable()
 
-      rvim.highlight.plugin(
-        'Cmp',
-        vim.tbl_extend('force', hl_defs, {
-          { CmpItemAbbr = { fg = { from = 'MsgSeparator' } } },
-          {
-            CmpItemAbbrDeprecated = {
-              strikethrough = true,
-              inherit = 'Comment',
+      rvim.highlight.plugin('Cmp', {
+        theme = {
+          ['onedark'] = vim.tbl_extend('force', hl_defs, {
+            { CmpItemAbbr = { fg = { from = 'MsgSeparator' } } },
+            {
+              CmpItemAbbrDeprecated = {
+                strikethrough = true,
+                inherit = 'Comment',
+              },
             },
-          },
-          { CmpItemAbbrMatch = { fg = { from = 'WildMenu' }, bold = true } },
-          { CmpItemAbbrMatchFuzzy = { fg = { from = 'WildMenu' } } },
-          {
-            CmpItemMenu = {
-              fg = { from = 'Comment' },
-              italic = true,
-              bold = true,
+            { CmpItemAbbrMatch = { fg = { from = 'WildMenu' }, bold = true } },
+            { CmpItemAbbrMatchFuzzy = { fg = { from = 'WildMenu' } } },
+            {
+              CmpItemMenu = {
+                fg = { from = 'Comment' },
+                italic = true,
+                bold = true,
+              },
             },
-          },
-          { CmpItemKindNerdFont = { fg = { from = 'Directory' } } },
-          { CmpItemKindLab = { fg = { from = 'Directory' } } },
-          { CmpItemKindDynamic = { fg = { from = 'Directory' } } },
-          { CmpItemKindCodeium = { link = 'CmpItemKindCopilot' } },
-        })
-      )
+            { CmpItemKindNerdFont = { fg = { from = 'Directory' } } },
+            { CmpItemKindLab = { fg = { from = 'Directory' } } },
+            { CmpItemKindDynamic = { fg = { from = 'Directory' } } },
+            { CmpItemKindCodeium = { link = 'CmpItemKindCopilot' } },
+          }),
+        },
+      })
 
       local window_opts = {
         border = border,

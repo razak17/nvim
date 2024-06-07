@@ -115,8 +115,12 @@ return {
       require('antelope').setup(opts)
 
       rvim.highlight.plugin('antelope', {
-        { AntelopeBorder = { inherit = 'FloatBorder' } },
-        { AntelopeNormal = { inherit = 'NormalFloat' } },
+        theme = {
+          ['onedark'] = {
+            { AntelopeBorder = { inherit = 'FloatBorder' } },
+            { AntelopeNormal = { inherit = 'NormalFloat' } },
+          },
+        },
       })
     end,
   },
