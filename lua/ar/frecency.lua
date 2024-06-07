@@ -1,3 +1,5 @@
+-- Ref: https://github.com/razak17/arena.nvim/blob/04136f2a75000b5e6e858d74dca0f8ebca6e9ce6/lua/arena/frecency.lua#L1
+
 local M = {}
 
 --- @type table<string, { count: number, last_used: number, meta: table }>
