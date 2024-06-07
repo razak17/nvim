@@ -399,6 +399,8 @@ end
 --------------------------------------------------------------------------------
 local ts_overrides = {
   semantic_tokens = function(bufnr, client, token)
+    if not rvim.lsp.semantic_tokens.enable then return end
+
     if
       token.type == 'variable'
       and token.modifiers['local']
