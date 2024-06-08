@@ -11,6 +11,11 @@ return {
   { 'kilavila/nvim-gitignore', cmd = { 'Gitignore', 'Licenses' } },
   { 'yutkat/git-rebase-auto-diff.nvim', ft = { 'gitrebase' }, opts = {} },
   {
+    'tpope/vim-fugitive',
+    cond = enabled,
+    keys = { { '<localleader>gg', '<Cmd>G<CR>', desc = 'fugitive' } },
+  },
+  {
     'NeogitOrg/neogit',
     cmd = 'Neogit',
     dependencies = { 'nvim-lua/plenary.nvim', 'sindrets/diffview.nvim' },
