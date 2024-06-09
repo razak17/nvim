@@ -227,6 +227,17 @@ local function open_media_files(prompt_bufnr)
   end
 end
 
+-- Ref; https://www.reddit.com/r/neovim/comments/1dajad0/find_files_live_grep_in_telescope/
+local send_find_files_to_live_grep = function()
+  local results = {}
+  local prompt_bufnr = vim.api.nvim_get_current_buf()
+  require('telescope.actions.utils').map_entries(
+    prompt_bufnr,
+    function(entry, _, _) table.insert(results, entry[0] or entry[1]) end
+  )
+  require('telescope.builtin').live_grep({ search_dirs = results })
+end
+
 rvim.telescope = {
   cursor = cursor,
   dropdown = dropdown,
@@ -441,6 +452,7 @@ return {
               ['<A-l>'] = actions.preview_scrolling_right,
               ['<A-u>'] = actions.results_scrolling_up,
               ['<A-d>'] = actions.results_scrolling_down,
+              ['<c-f>'] = send_find_files_to_live_grep,
             },
             n = {
               ['<c-n>'] = actions.move_selection_next,
