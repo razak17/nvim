@@ -254,28 +254,27 @@ return {
             max_item_count = 10,
             group_index = 1,
           },
-          { name = 'path', priority = 4, group_index = 1 },
+          {
+            name = 'buffer',
+            priority = 6,
+            options = {
+              get_bufnrs = function() return api.nvim_list_bufs() end,
+            },
+            group_index = 1,
+          },
+          { name = 'path', priority = 5, group_index = 1 },
+          {
+            name = 'rg',
+            priority = 4,
+            keyword_length = 4,
+            option = { additional_arguments = '--max-depth 8' },
+            group_index = 1,
+          },
           { name = 'emoji', priority = 3, group_index = 1 },
           {
             name = 'natdat',
             priority = 3,
             keyword_length = 3,
-            group_index = 1,
-          },
-          {
-            name = 'rg',
-            priority = 3,
-            keyword_length = 4,
-            option = { additional_arguments = '--max-depth 8' },
-            group_index = 1,
-          },
-          {
-            name = 'buffer',
-            priority = 3,
-            keyword_length = 4,
-            options = {
-              get_bufnrs = function() return vim.api.nvim_list_bufs() end,
-            },
             group_index = 1,
           },
           {
