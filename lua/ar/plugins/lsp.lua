@@ -77,25 +77,18 @@ return {
           end,
           dependencies = {
             {
-              'folke/neodev.nvim',
-              cond = rvim.lsp.enable,
+              'folke/lazydev.nvim',
               ft = 'lua',
+              cmd = 'LazyDev',
               opts = {
-                debug = true,
-                experimental = { pathStrict = true },
                 library = {
-                  runtime = join_paths(
-                    vim.env.HOME,
-                    'neovim',
-                    'share',
-                    'nvim',
-                    'runtime'
-                  ),
-                  plugins = { 'nvim-dap-ui' },
-                  types = true,
+                  'lazy.nvim',
+                  { path = 'luvit-meta/library', words = { 'vim%.uv' } },
                 },
               },
             },
+            -- Manage libuv types with lazy. Plugin will never be loaded
+            { 'Bilal2453/luvit-meta', lazy = true },
             {
               'folke/neoconf.nvim',
               cond = rvim.lsp.enable,

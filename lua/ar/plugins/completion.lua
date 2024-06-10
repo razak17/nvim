@@ -285,6 +285,7 @@ return {
           { name = 'norg', group_index = 2 },
           { name = 'nerdfonts', group_index = 3 },
           { name = 'dotenv', group_index = 4 },
+          { name = "lazydev", group_index = 0 }
         },
       })
 
