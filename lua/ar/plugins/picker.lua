@@ -1,4 +1,4 @@
-local fn, env, ui, reqcall = vim.fn, vim.env, rvim.ui, rvim.reqcall
+local fn, ui, reqcall = vim.fn, rvim.ui, rvim.reqcall
 local codicons, lsp_hls = ui.codicons, ui.lsp.highlights
 local prompt = ' ' .. codicons.misc.search_alt .. '  '
 
@@ -89,7 +89,6 @@ local function obsidian_open() file_picker(rvim.sync('obsidian')) end
 rvim.command('ObsidianFind', obsidian_open)
 
 rvim.fzf = { dropdown = dropdown, cursor_dropdown = cursor_dropdown }
---------------------------------------------------------------------------------
 
 return {
   {
@@ -98,33 +97,33 @@ return {
     -- stylua: ignore
     keys = {
       -- { '<c-p>', fzf_lua.git_files, desc = 'find files' },
-      -- { '<leader>f?', fzf_lua.help_tags, desc = 'help' },
-      -- { '<leader>fa', '<Cmd>FzfLua<CR>', desc = 'builtins' },
-      -- { '<leader>fb', fzf_lua.grep_curbuf, desc = 'current buffer fuzzy find' },
-      { '<leader>ff', file_picker, desc = 'find files' },
-      -- { '<leader>fh', fzf_lua.oldfiles, desc = 'Most (f)recently used files' },
-      -- { '<leader>fm', fzf_lua.changes, desc = 'changes' },
-      -- { '<leader>fo', fzf_lua.buffers, desc = 'buffers' },
-      { '<leader>f<', fzf_lua.resume, desc = 'resume picker' },
-      { '<leader>fs', fzf_lua.live_grep, desc = 'live grep' },
-      -- { '<leader>fw', fzf_lua.grep_cword, desc = 'grep cword' },
-      -- { '<leader>fva', fzf_lua.autocmds, desc = 'autocommands' },
-      -- { '<leader>fvh', fzf_lua.highlights, desc = 'highlights' },
-      -- { '<leader>fvk', fzf_lua.keymaps, desc = 'keymaps' },
-      -- { '<leader>fvr', fzf_lua.registers, desc = 'Registers' },
-      -- { '<leader>fvc', fzf_lua.commands, desc = 'Commands' },
-      -- { '<leader>fgb', fzf_lua.git_branches, desc = 'branches' },
-      -- { '<leader>fgB', fzf_lua.git_bcommits, desc = 'buffer commits' },
-      -- { '<leader>fgc', fzf_lua.git_commits, desc = 'commits' },
-      -- { '<leader>ld', fzf_lua.lsp_document_symbols, desc = 'document symbols' },
-      -- { '<leader>lI', fzf_lua.lsp_implementations, desc = 'search implementation' },
-      -- { '<leader>lR', fzf_lua.lsp_references, desc = 'show references' },
-      -- { '<leader>ls', fzf_lua.lsp_live_workspace_symbols, desc = 'workspace symbols' },
-      -- { '<leader>le', fzf_lua.diagnostics_document, desc = 'document diagnostics' },
-      -- { '<leader>lw', fzf_lua.diagnostics_workspace, desc = 'workspace diagnostics' },
-      -- { '<leader>fc', function() file_picker(vim.fn.stdpath('config')) end, desc = 'nvim config' },
-      { '<localleader>of', obsidian_open, desc = 'obsidian: find notes' },
-      { '<leader>fP', function() file_picker(vim.fn.stdpath('data') .. '/lazy') end, desc = 'plugins' },
+      { '<localleader>f?', fzf_lua.help_tags, desc = 'help' },
+      { '<localleader>fa', '<Cmd>FzfLua<CR>', desc = 'builtins' },
+      { '<localleader>fb', fzf_lua.grep_curbuf, desc = 'current buffer fuzzy find' },
+      { '<localleader>ff', file_picker, desc = 'find files' },
+      { '<localleader>fh', fzf_lua.oldfiles, desc = 'Most (f)recently used files' },
+      { '<localleader>fm', fzf_lua.changes, desc = 'changes' },
+      { '<localleader>fo', fzf_lua.buffers, desc = 'buffers' },
+      { '<localleader>fr', fzf_lua.resume, desc = 'resume picker' },
+      { '<localleader>fs', fzf_lua.live_grep, desc = 'live grep' },
+      { '<localleader>fw', fzf_lua.grep_cword, desc = 'grep cword' },
+      { '<localleader>fva', fzf_lua.autocmds, desc = 'autocommands' },
+      { '<localleader>fvh', fzf_lua.highlights, desc = 'highlights' },
+      { '<localleader>fvk', fzf_lua.keymaps, desc = 'keymaps' },
+      { '<localleader>fvr', fzf_lua.registers, desc = 'Registers' },
+      { '<localleader>fvc', fzf_lua.commands, desc = 'Commands' },
+      { '<localleader>fgb', fzf_lua.git_branches, desc = 'branches' },
+      { '<localleader>fgB', fzf_lua.git_bcommits, desc = 'buffer commits' },
+      { '<localleader>fgc', fzf_lua.git_commits, desc = 'commits' },
+      { '<localleader>ld', fzf_lua.lsp_document_symbols, desc = 'document symbols' },
+      { '<localleader>lI', fzf_lua.lsp_implementations, desc = 'search implementation' },
+      { '<localleader>lR', fzf_lua.lsp_references, desc = 'show references' },
+      { '<localleader>ls', fzf_lua.lsp_live_workspace_symbols, desc = 'workspace symbols' },
+      { '<localleader>le', fzf_lua.diagnostics_document, desc = 'document diagnostics' },
+      { '<localleader>lw', fzf_lua.diagnostics_workspace, desc = 'workspace diagnostics' },
+      { '<localleader>fc', function() file_picker(fn.stdpath('config')) end, desc = 'nvim config' },
+      { '<localleader>fO', obsidian_open, desc = 'find notes' },
+      { '<localleader>fP', function() file_picker(fn.stdpath('data') .. '/lazy') end, desc = 'plugins' },
     },
     config = function()
       local lsp_kind = require('lspkind')
@@ -319,5 +318,33 @@ return {
       rvim.command('SessionList', list_sessions)
     end,
     dependencies = { 'razak17/lspkind.nvim', 'nvim-tree/nvim-web-devicons' },
+  },
+  {
+    'camspiers/snap',
+    config = function()
+      rvim.highlight.plugin('snap', {
+        theme = {
+          ['onedark'] = {
+            { SnapNormal = { link = 'NormalFloat' } },
+            { SnapBorder = { link = 'FloatBorder' } },
+          },
+        },
+      })
+    end,
+    keys = function()
+      local snap = require('snap')
+      return {
+        {
+          '<leader><leader>ff',
+          snap.config.file({ producer = 'ripgrep.file' }),
+          desc = 'snap: find files',
+        },
+        {
+          '<leader><leader>fg',
+          snap.config.vimgrep({}),
+          desc = 'snap: grep string',
+        },
+      }
+    end,
   },
 }

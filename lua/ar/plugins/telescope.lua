@@ -68,7 +68,7 @@ local function delta_opts(opts, is_buf)
   return opts
 end
 
--- local function live_grep(opts) return extensions('menufacture').live_grep(opts) end
+local function live_grep(opts) return extensions('menufacture').live_grep(opts) end
 local function find_files(opts)
   return extensions('menufacture').find_files(opts)
 end
@@ -102,11 +102,11 @@ local function plugins()
     file_ignore_patterns = { '.git/.*', 'dotbot/.*', 'zsh/plugins/.*' },
   })
 end
--- local function git_files(opts) return extensions('menufacture').git_files(opts) end
+local function git_files(opts) return extensions('menufacture').git_files(opts) end
 
--- local function project_files()
---   if not pcall(git_files, { show_untracked = true }) then find_files() end
--- end
+local function project_files()
+  if not pcall(git_files, { show_untracked = true }) then find_files() end
+end
 
 local function file_browser(opts)
   opts = vim.tbl_extend('keep', opts or {}, {
@@ -215,9 +215,9 @@ local function multi_selection_open(prompt_bufnr)
   multiopen(prompt_bufnr, 'edit')
 end
 
-local function open_media_files(prompt_bufnr)
+local function open_media_files()
   local action_state = require('telescope.actions.state')
-  local file_path = action_state.get_selected_entry(prompt_bufnr).path
+  local file_path = action_state.get_selected_entry().path
   local media_files = rvim.media_files
   local file_extension = file_path:match('^.+%.(.+)$')
   if vim.list_contains(media_files, file_extension) then
@@ -269,7 +269,6 @@ return {
       { '<leader>f,', file_browser, desc = 'file browser' },
       { '<leader>f.', function() file_browser({ path = '%:p:h', select_buffer = 'true' }) end, desc = 'file browser', },
       { '<leader>f?', b('help_tags'), desc = 'help tags' },
-      { '<leader>fa', b('autocommands'), desc = 'autocommands' },
       { '<leader>fb', b('buffers'), desc = 'buffers' },
       -- { '<leader>fb', b('current_buffer_fuzzy_find'), desc = 'find in current buffer', },
       { '<leader>fc', nvim_config, desc = 'nvim config' },
@@ -279,7 +278,7 @@ return {
       { '<leader>fgf', directory_files, desc = 'directory for find files' },
       { '<leader>fgg', directory_search, desc = 'directory for live grep' },
       { '<leader>fgh', git_file_history, desc = 'git file history' },
-      -- { '<leader>ff', project_files, desc = 'project files' },
+      { '<leader>ff', project_files, desc = 'project files' },
       { '<leader>fh', frecency, desc = 'Most (f)recently used files' },
       { '<leader>fH', helpgrep, desc = 'helpgrep' },
       { '<leader>fi', import, desc = 'import' },
@@ -290,8 +289,8 @@ return {
       { '<leader>fL', luasnips, desc = 'luasnip: available snippets' },
       { '<leader>fn', notifications, desc = 'notify: notifications' },
       { '<leader>fN', node_modules, desc = 'node_modules' },
-      { '<leader>fO', notes, desc = 'notes' },
       { '<leader>fo', b('pickers'), desc = 'pickers' },
+      { '<leader>fO', notes, desc = 'notes' },
       -- { '<leader>fO', b('oldfiles'), desc = 'oldfiles' },
       { '<leader>fp', projects, desc = 'projects' },
       { '<leader>fP', plugins, desc = 'plugins' },
@@ -304,13 +303,14 @@ return {
         desc = 'quickfix list',
       },
       { '<leader>fr', b('resume'), desc = 'resume last picker' },
-      -- { '<leader>fs', live_grep, desc = 'find string' },
+      { '<leader>fs', live_grep, desc = 'find string' },
       { '<leader>fs', visual_grep_string, desc = 'find word', mode = 'x' },
       { '<leader>fu', undo, desc = 'undo' },
       { '<leader>fm', harpoon, desc = 'harpoon' },
       { '<leader>ft', textcase, desc = 'textcase', mode = { 'n', 'v' } },
       { '<leader>fw', b('grep_string'), desc = 'find word' },
       { '<leader>fW', whop, desc = 'whop' },
+      { '<leader>fva', b('autocommands'), desc = 'autocommands' },
       { '<leader>fvc', b('commands'), desc = 'commands' },
       { '<leader>fvh', b('highlights'), desc = 'highlights' },
       { '<leader>fvo', b('vim_options'), desc = 'vim options' },

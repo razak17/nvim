@@ -38,7 +38,7 @@ return {
     cond = not rvim.plugins.minimal,
     init = function()
       local instance
-      vim.keymap.set('n', '<leader><leader>f', function()
+      vim.keymap.set('n', '<leader>fa', function()
         if not instance then
           instance = require('telescope-any').create_telescope_any({
             pickers = {
@@ -104,7 +104,7 @@ return {
           })
         end
         instance()
-      end, { desc = 'telescope-any: open' })
+      end, { desc = 'any' })
     end,
   },
 }
