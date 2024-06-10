@@ -43,6 +43,7 @@ M.options.toggles = {
   ['Toggle Zoom'] = 'lua require("mini.misc").zoom()',
   ['Toggle Relative Number'] = 'ToggleRelativeNumber',
   ['Toggle Undo Tree'] = 'UndotreeToggle',
+  ['Toggle Precognition'] = 'Precognition toggle',
 }
 
 local toggle_menu = function()

@@ -27,6 +27,7 @@ return {
   {
     'tris203/precognition.nvim',
     cond = false,
+    cmd = { 'Precognition' },
     event = { 'BufRead', 'BufNewFile' },
     opts = {},
   },
