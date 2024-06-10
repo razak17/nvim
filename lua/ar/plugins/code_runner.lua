@@ -63,7 +63,11 @@ return {
           },
         },
       })
-      require('lab').setup()
+      require('lab').setup({
+        quick_data = {
+          enabled = rvim.completion.enable,
+        },
+      })
     end,
     dependencies = { 'nvim-lua/plenary.nvim' },
   },
