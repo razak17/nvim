@@ -736,6 +736,12 @@ return {
     config = function() require('telescope').load_extension('telescope-yaml') end,
   },
   {
+    'crispgm/telescope-heading.nvim',
+    cond = not minimal,
+    cmd = 'Telescope',
+    config = function() require('telescope').load_extension('heading') end,
+  },
+  {
     'Myzel394/jsonfly.nvim',
     cond = rvim.lsp.enable and not minimal,
     cmd = 'Telescope',
