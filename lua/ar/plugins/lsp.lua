@@ -127,7 +127,7 @@ return {
   },
   {
     'glepnir/lspsaga.nvim',
-    cond = rvim.lsp.enable,
+    cond = rvim.lsp.enable and false,
     event = 'LspAttach',
     opts = {
       ui = { border = border },
