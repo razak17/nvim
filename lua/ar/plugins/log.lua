@@ -73,7 +73,6 @@ return {
   },
   {
     'andrewferrier/debugprint.nvim',
-    cond = rvim.treesitter.enable,
     keys = {
       {
         '<leader>pp',
