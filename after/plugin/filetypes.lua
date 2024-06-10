@@ -10,7 +10,7 @@ settings({
   bash = {
     opt = { spell = true },
     function()
-      if is_available('LuaSnip') and is_available('nvim-ts-utils') then
+      if is_available('LuaSnip') and is_available('snips') then
         local ls = require('luasnip')
         local bash = require('snips.bash')
 
@@ -89,7 +89,7 @@ settings({
     bo = { textwidth = 100 },
     opt = { spell = true },
     function()
-      if is_available('LuaSnip') and is_available('nvim-ts-utils') then
+      if is_available('LuaSnip') and is_available('snips') then
         local ls = require('luasnip')
         local js = require('snips.javascript')
 
@@ -126,7 +126,7 @@ settings({
     bo = { textwidth = 100 },
     opt = { spell = true },
     function()
-      if is_available('LuaSnip') and is_available('nvim-ts-utils') then
+      if is_available('LuaSnip') and is_available('snips') then
         local ls = require('luasnip')
         local jsr = require('snips.javascriptreact')
 
@@ -134,7 +134,6 @@ settings({
 
         local snippets = function()
           return {
-            s('c', jsr.primitives.component()),
             s('hs', jsr.primitives.use_state()),
             s('he', jsr.primitives.use_effect()),
           }
@@ -254,7 +253,7 @@ settings({
   },
   rust = {
     function()
-      if is_available('LuaSnip') and is_available('nvim-ts-utils') then
+      if is_available('LuaSnip') and is_available('snips') then
         local ls = require('luasnip')
         local rust = require('snips.rust')
         local common = require('snips.common')
@@ -289,7 +288,7 @@ settings({
       vim.opt.iskeyword:append('-,$,#')
       vim.opt.indentkeys:append('<:>')
 
-      if is_available('LuaSnip') and is_available('nvim-ts-utils') then
+      if is_available('LuaSnip') and is_available('snips') then
         local ls = require('luasnip')
         local kubernetes = require('snips.kubernetes')
 
