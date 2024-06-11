@@ -121,7 +121,9 @@ end
 local function egrepify() extensions('egrepify').egrepify() end
 local function helpgrep() extensions('helpgrep').helpgrep() end
 local function frecency(opts)
-  opts = opts or {}
+  opts = vim.tbl_extend('keep', opts or {}, {
+    workspace = 'CWD',
+  })
   extensions('frecency').frecency(opts)
 end
 local function luasnips() extensions('luasnip').luasnip() end
@@ -531,7 +533,7 @@ return {
               '*vendor/*',
             },
             workspaces = {
-              conf = env.DOTFILES,
+              conf = vim.g.dotfiles,
               project = vim.g.projects_dir,
             },
           },
