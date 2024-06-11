@@ -637,7 +637,6 @@ return {
   {
     'biozz/whop.nvim',
     cond = not minimal,
-    cmd = 'Telescope',
     config = function()
       require('whop').setup({})
       require('telescope').load_extension('whop')
@@ -646,7 +645,6 @@ return {
   {
     'danielfalk/smart-open.nvim',
     branch = '0.2.x',
-    cmd = 'Telescope',
     config = function() require('telescope').load_extension('smart_open') end,
     dependencies = {
       'kkharji/sqlite.lua',
@@ -656,7 +654,6 @@ return {
   {
     'jonarrien/telescope-cmdline.nvim',
     cond = not minimal and false,
-    cmd = 'Telescope',
     keys = {
       { ':', '<cmd>Telescope cmdline<cr>', desc = 'Cmdline' },
     },
@@ -664,87 +661,72 @@ return {
   },
   {
     'nvim-telescope/telescope-node-modules.nvim',
-    cond = not minimal,
-    cmd = 'Telescope',
     config = function() require('telescope').load_extension('node_modules') end,
   },
   {
     'nvim-telescope/telescope-smart-history.nvim',
     cond = not minimal,
-    cmd = 'Telescope',
     config = function() require('telescope').load_extension('smart_history') end,
     dependencies = 'kkharji/sqlite.lua',
   },
   {
     'fdschmidt93/telescope-egrepify.nvim',
-    cmd = 'Telescope',
     config = function() require('telescope').load_extension('egrepify') end,
   },
   {
     'debugloop/telescope-undo.nvim',
-    cmd = 'Telescope',
     config = function() require('telescope').load_extension('undo') end,
   },
   {
     'nvim-telescope/telescope-file-browser.nvim',
-    cmd = 'Telescope',
     config = function() require('telescope').load_extension('file_browser') end,
   },
   {
     -- 'piersolenski/telescope-import.nvim',
     'razak17/telescope-import.nvim',
     cond = not minimal,
-    cmd = 'Telescope',
     config = function() require('telescope').load_extension('import') end,
   },
   {
     'catgoose/telescope-helpgrep.nvim',
     cond = not minimal,
-    cmd = 'Telescope',
     config = function() require('telescope').load_extension('helpgrep') end,
   },
   {
     -- 'tsakirist/telescope-lazy.nvim',
     'razak17/telescope-lazy.nvim',
     cond = not minimal,
-    cmd = 'Telescope',
     config = function() require('telescope').load_extension('lazy') end,
   },
   {
     'fbuchlak/telescope-directory.nvim',
-    cmd = 'Telescope',
     config = function() require('telescope').load_extension('directory') end,
     opts = {},
   },
   {
     'isak102/telescope-git-file-history.nvim',
     cond = not minimal,
-    cmd = 'Telescope',
     config = function() require('telescope').load_extension('git_file_history') end,
     dependencies = { 'tpope/vim-fugitive' },
   },
   {
     'nvim-telescope/telescope-live-grep-args.nvim',
-    cmd = 'Telescope',
     version = '^1.0.0',
     config = function() require('telescope').load_extension('live_grep_args') end,
   },
   {
     'dapc11/telescope-yaml.nvim',
     cond = not minimal,
-    cmd = 'Telescope',
     config = function() require('telescope').load_extension('telescope-yaml') end,
   },
   {
     'crispgm/telescope-heading.nvim',
     cond = not minimal,
-    cmd = 'Telescope',
     config = function() require('telescope').load_extension('heading') end,
   },
   {
     'Myzel394/jsonfly.nvim',
     cond = rvim.lsp.enable and not minimal,
-    cmd = 'Telescope',
     ft = { 'json' },
     keys = {
       { '<leader>fj', '<Cmd>Telescope jsonfly<cr>', desc = 'Open json(fly)' },
