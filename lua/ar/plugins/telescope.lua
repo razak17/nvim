@@ -626,6 +626,10 @@ return {
         'nvim-telescope/telescope-frecency.nvim',
         config = function() require('telescope').load_extension('frecency') end,
       },
+      {
+        'molecule-man/telescope-menufacture',
+        config = function() require('telescope').load_extension('menufacture') end,
+      },
     },
   },
   {
@@ -678,12 +682,6 @@ return {
     'debugloop/telescope-undo.nvim',
     cmd = 'Telescope',
     config = function() require('telescope').load_extension('undo') end,
-  },
-  {
-    'molecule-man/telescope-menufacture',
-    cond = not minimal,
-    cmd = 'Telescope',
-    config = function() require('telescope').load_extension('menufacture') end,
   },
   {
     'nvim-telescope/telescope-file-browser.nvim',
