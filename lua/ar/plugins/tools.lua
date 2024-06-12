@@ -165,7 +165,7 @@ return {
     -- stylua: ignore
     ft = {
       'javascript', 'javascript.jsx', 'javascriptreact', 'lua', 'python', 'rst',
-      'sh', 'typescript', 'typescript.tsx', 'typescriptreact', 'vim', 'yaml',
+      'sh', 'typescript', 'typescript.tsx', 'typescriptreact', 'vim', 'yaml', 'go'
     },
     opts = {
       linters_by_ft = {
@@ -181,7 +181,7 @@ return {
         sh = { 'shellcheck' },
         vim = { 'vint' },
         yaml = { 'yamllint' },
-        go = { 'golangci-lint' },
+        go = { 'golangcilint' },
       },
       linters = {},
     },
