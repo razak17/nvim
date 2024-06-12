@@ -239,7 +239,8 @@ end
 local function setup_mappings(client, bufnr)
   local function prev_diagnostic()
     return function()
-      diagnostic.goto_prev({
+      diagnostic.jump({
+        count = -1,
         float = rvim.lsp.hover_diagnostics.go_to
           and not rvim.lsp.hover_diagnostics.enable,
         severity = {
@@ -250,7 +251,8 @@ local function setup_mappings(client, bufnr)
   end
   local function next_diagnostic()
     return function()
-      diagnostic.goto_next({
+      diagnostic.jump({
+        count = 1,
         float = rvim.lsp.hover_diagnostics.go_to
           and not rvim.lsp.hover_diagnostics.enable,
         severity = {
@@ -461,11 +463,7 @@ local function setup_autocommands(client, buf)
       buffer = buf,
       desc = 'LSP: Show diagnostics',
       command = function()
-        if
-          not rvim.lsp.hover_diagnostics.enable or not rvim.lsp.timeout.enable
-        then
-          return
-        end
+        if not rvim.lsp.hover_diagnostics.enable then return end
         if
           vim.b.lsp_hover_win and api.nvim_win_is_valid(vim.b.lsp_hover_win)
         then
