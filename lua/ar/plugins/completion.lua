@@ -97,6 +97,7 @@ return {
           documentation = cmp.config.window.bordered(window_opts),
         },
         sorting = {
+          priority_weight = 2,
           comparators = {
             rvim.is_available('copilot-cmp') and require(
               'copilot_cmp.comparators'
@@ -122,6 +123,7 @@ return {
           },
         },
         matching = {
+          disallow_symbol_nonprefix_matching = true,
           disallow_fuzzy_matching = false,
           disallow_fullfuzzy_matching = true,
           disallow_partial_fuzzy_matching = true,
@@ -145,6 +147,7 @@ return {
           ['<CR>'] = cmp.mapping.confirm({ select = false }), -- If nothing is selected don't complete
         },
         formatting = {
+          expandable_indicator = true,
           deprecated = true,
           fields = { 'abbr', 'kind', 'menu' },
           format = function(entry, item)
@@ -285,7 +288,7 @@ return {
           { name = 'norg', group_index = 2 },
           { name = 'nerdfonts', group_index = 3 },
           { name = 'dotenv', group_index = 4 },
-          { name = "lazydev", group_index = 0 }
+          { name = 'lazydev', group_index = 0 },
         },
       })
 
