@@ -189,7 +189,7 @@ return {
   {
     'andymass/vim-matchup',
     event = { 'BufReadPre', 'BufNewFile' },
-    cond = rvim.treesitter.enable,
+    -- cond = rvim.treesitter.enable,
     keys = {
       { '[[', '<plug>(matchup-[%)', mode = { 'n', 'x' } },
       { ']]', '<plug>(matchup-]%)', mode = { 'n', 'x' } },
