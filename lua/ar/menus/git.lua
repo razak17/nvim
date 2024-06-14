@@ -157,6 +157,15 @@ local function telescope_commits_mappings(prompt_bufnr, map)
       end,
       desc = 'diff two commits',
     },
+    {
+      'i',
+      '<C-k>',
+      function()
+        local commit = action_state.get_selected_entry(prompt_bufnr).value
+        vim.cmd(':term! git cherry-pick ' .. commit)
+      end,
+      desc = 'cherry-pick commit',
+    },
   }
 
   create_mappings(mappings, map)
