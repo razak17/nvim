@@ -6,6 +6,7 @@ return {
   --------------------------------------------------------------------------------
   {
     'trimclain/builder.nvim',
+    cond = false,
     cmd = 'Build',
     -- stylua: ignore
     keys = {
@@ -28,6 +29,30 @@ return {
         typescript = 'ts-node %',
         zsh = 'zsh %',
       },
+    },
+  },
+  {
+    'is0n/jaq-nvim',
+    cmd = 'Jaq',
+    keys = {
+      { '<leader>rb', ':silent only | Jaq<CR>', desc = 'jaq: run' },
+    },
+    opts = {
+      cmds = {
+        external = {
+          markdown = 'glow %',
+          typescript = 'ts-node %',
+          javascript = 'node %',
+          python = 'python %',
+          rust = 'cargo run',
+          cpp = 'g++ % -o $fileBase && ./$fileBase',
+          go = 'go run %',
+          lua = 'lua %',
+        },
+      },
+      behavior = { default = 'float', startinsert = true },
+      ui = { float = { border = border } },
+      terminal = { position = 'vert', size = 60 },
     },
   },
   {
