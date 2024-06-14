@@ -102,11 +102,13 @@ local function telescope_commits_mappings(prompt_bufnr, map)
         if ret == -1 then
           vim.notify('Reset to HEAD: ' .. selection.value, vim.log.levels.INFO)
         else
+          local error = ''
+          if stderr then error = table.concat(stderr, ' ') end
           vim.notify(
             string.format(
               'Error when applying: %s. Git returned: "%s"',
               selection.value,
-              table.concat(stderr, '  ')
+              error
             ),
             vim.log.levels.ERROR
           )
@@ -119,7 +121,7 @@ local function telescope_commits_mappings(prompt_bufnr, map)
       'i',
       '<C-r>i',
       function()
-        local commit = action_state.get_selected_entry(prompt_bufnr).value
+        local commit = action_state.get_selected_entry().value
         vim.cmd(':term! git rebase -i ' .. commit .. '~')
       end,
       desc = 'rebase selected commit',
@@ -128,7 +130,7 @@ local function telescope_commits_mappings(prompt_bufnr, map)
       'i',
       '<C-v>',
       function()
-        local commit = action_state.get_selected_entry(prompt_bufnr).value
+        local commit = action_state.get_selected_entry().value
         actions.close(prompt_bufnr)
         vim.cmd(':DiffviewOpen ' .. commit .. '^..' .. commit)
       end,
@@ -145,7 +147,7 @@ local function telescope_commits_mappings(prompt_bufnr, map)
           table.insert(commits, entry.value)
         end
         if #commits == 0 then
-          local commit = action_state.get_selected_entry(prompt_bufnr).value
+          local commit = action_state.get_selected_entry().value
           actions.close(prompt_bufnr)
           vim.cmd(':DiffviewOpen ' .. commit .. '^..' .. commit)
         elseif #commits ~= 2 then
@@ -161,7 +163,7 @@ local function telescope_commits_mappings(prompt_bufnr, map)
       'i',
       '<C-k>',
       function()
-        local commit = action_state.get_selected_entry(prompt_bufnr).value
+        local commit = action_state.get_selected_entry().value
         vim.cmd(':term! git cherry-pick ' .. commit)
       end,
       desc = 'cherry-pick commit',
@@ -364,7 +366,7 @@ local function telescope_branches_mappings(prompt_bufnr, map)
 
         local diffspec
         if #branches == 0 then
-          local branch = action_state.get_selected_entry(prompt_bufnr).value
+          local branch = action_state.get_selected_entry().value
           actions.close(prompt_bufnr)
           -- heuristics.. will see if it works out
           if
@@ -391,7 +393,7 @@ local function telescope_branches_mappings(prompt_bufnr, map)
       'i',
       '<C-enter>',
       function()
-        local branch = get_selected_entry(prompt_bufnr).value
+        local branch = get_selected_entry().value
         local cmd_output = {}
         if string.match(branch, '^origin/') then
           actions.close(prompt_bufnr)
@@ -417,7 +419,7 @@ local function telescope_branches_mappings(prompt_bufnr, map)
       'i',
       '<C-b>',
       function()
-        local branch = get_selected_entry(prompt_bufnr).value
+        local branch = get_selected_entry().value
         local cmd_output = {}
         actions.close(prompt_bufnr)
         vim.fn.jobstart('git rebase ' .. branch, {
@@ -441,7 +443,7 @@ local function telescope_branches_mappings(prompt_bufnr, map)
       'i',
       '<A-m>',
       function()
-        local branch = action_state.get_selected_entry(prompt_bufnr).value
+        local branch = action_state.get_selected_entry().value
         local cmd_output = {}
         actions.close(prompt_bufnr)
         vim.fn.jobstart('git merge ' .. branch, {
@@ -466,8 +468,8 @@ local function telescope_branches_mappings(prompt_bufnr, map)
       '<A-d>',
       function()
         local current_picker = action_state.get_current_picker(prompt_bufnr)
-        current_picker:delete_selection(function(selection)
-          local branch = get_selected_entry(selection.bufnr).value
+        current_picker:delete_selection(function()
+          local branch = get_selected_entry().value
           if string.match(branch, '^origin/') then
             -- remote branch
             vim.ui.select({ 'Yes', 'No' }, {
@@ -509,7 +511,7 @@ local function telescope_branches_mappings(prompt_bufnr, map)
       'i',
       '<C-c>',
       function()
-        local branch = get_selected_entry(prompt_bufnr).value
+        local branch = get_selected_entry().value
         actions.close(prompt_bufnr)
         require('telescope.builtin').git_commits({
           attach_mappings = telescope_commits_mappings,
@@ -532,7 +534,7 @@ local function telescope_branches_mappings(prompt_bufnr, map)
       'i',
       '<C-h>',
       function()
-        local branch = get_selected_entry(prompt_bufnr).value
+        local branch = get_selected_entry().value
         actions.close(prompt_bufnr)
         vim.cmd(
           'DiffviewFileHistory '
@@ -547,7 +549,7 @@ local function telescope_branches_mappings(prompt_bufnr, map)
       'i',
       '<C-g>',
       function()
-        local branch = get_selected_entry(prompt_bufnr).value
+        local branch = get_selected_entry().value
         rvim.copy_to_clipboard(branch)
       end,
       desc = 'copy branch name',
@@ -732,7 +734,7 @@ local function telescope_stash_mappings(prompt_bufnr, map)
       'i',
       'C-f',
       function()
-        local stash_key = action_state.get_selected_entry(prompt_bufnr).value
+        local stash_key = action_state.get_selected_entry().value
         actions.close(prompt_bufnr)
         -- are there untracked files?
         local stdout, _, _ = utils.get_os_command_output({
@@ -769,7 +771,7 @@ local function telescope_stash_mappings(prompt_bufnr, map)
       'i',
       'C-Del',
       function()
-        local stash_key = action_state.get_selected_entry(prompt_bufnr).value
+        local stash_key = action_state.get_selected_entry().value
         local current_picker = action_state.get_current_picker(prompt_bufnr)
         current_picker:delete_selection(function()
           Job:new({
@@ -809,11 +811,13 @@ local function telescope_stash_mappings(prompt_bufnr, map)
         level = 'INFO',
       })
     else
+      local error = ''
+      if stderr then error = table.concat(stderr, ' ') end
       utils.notify('actions.git_apply_stash', {
         msg = string.format(
           "Error when applying: %s. Git returned: '%s'",
           selection.value,
-          table.concat(stderr, ' ')
+          error
         ),
         level = 'ERROR',
       })
