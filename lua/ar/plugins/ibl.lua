@@ -2,7 +2,7 @@ local left_thin_block = rvim.ui.icons.separators.left_thin_block
 
 return {
   'lukas-reineke/indent-blankline.nvim',
-  cond = rvim.treesitter.enable and false,
+  cond = false,
   event = 'UIEnter',
   main = 'ibl',
   opts = {

@@ -148,7 +148,7 @@ return {
   },
   {
     'windwp/nvim-ts-autotag',
-    cond = rvim.treesitter.enable,
+    cond = not minimal,
     ft = {
       'typescriptreact',
       'javascript',
@@ -161,7 +161,7 @@ return {
   },
   {
     'nvim-treesitter/playground',
-    cond = rvim.treesitter.enable,
+    cond = not minimal,
     cmd = { 'TSPlaygroundToggle', 'TSHighlightCapturesUnderCursor' },
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
   },
@@ -192,7 +192,7 @@ return {
   {
     'andymass/vim-matchup',
     event = { 'BufReadPre', 'BufNewFile' },
-    -- cond = rvim.treesitter.enable,
+    cond = not minimal,
     keys = {
       { '[[', '<plug>(matchup-[%)', mode = { 'n', 'x' } },
       { ']]', '<plug>(matchup-]%)', mode = { 'n', 'x' } },
@@ -231,20 +231,20 @@ return {
   },
   {
     'sustech-data/wildfire.nvim',
-    cond = rvim.treesitter.enable,
+    cond = not minimal,
     event = { 'BufRead', 'BufNewFile' },
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
     opts = {},
   },
   {
     'filNaj/tree-setter',
-    cond = rvim.treesitter.enable and false,
+    cond = not minimal and false,
     event = 'VeryLazy',
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
   },
   {
     'andersevenrud/nvim_context_vt',
-    cond = rvim.treesitter.enable,
+    cond = not minimal,
     cmd = 'NvimContextVtToggle',
     keys = {
       {
@@ -264,7 +264,7 @@ return {
   },
   {
     'drybalka/tree-climber.nvim',
-    cond = rvim.treesitter.enable and false,
+    cond = not minimal and false,
     keys = {
       {
         '<localleader>pK',

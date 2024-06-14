@@ -86,7 +86,7 @@ return {
   },
   {
     'letieu/hacker.nvim',
-    cond = not rvim.plugins.minimal and rvim.treesitter.enable,
+    cond = not rvim.plugins.minimal,
     event = 'VeryLazy',
     cmd = { 'Hack', 'HackAuto', 'HackFollow' },
   },

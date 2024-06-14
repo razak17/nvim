@@ -101,7 +101,6 @@ return {
   },
   {
     'mfussenegger/nvim-treehopper',
-    cond = rvim.treesitter.enable,
     keys = {
       {
         'u',
@@ -148,7 +147,6 @@ return {
   },
   {
     'ckolkey/ts-node-action',
-    cond = rvim.treesitter.enable,
     dependencies = { 'nvim-treesitter' },
     -- stylua: ignore
     keys = {
@@ -158,7 +156,6 @@ return {
   },
   {
     'Wansmer/treesj',
-    -- cond = rvim.treesitter.enable,
     keys = {
       {
         'gS',
@@ -172,7 +169,6 @@ return {
   },
   {
     'ThePrimeagen/refactoring.nvim',
-    cond = rvim.treesitter.enable,
     dependencies = {
       'nvim-lua/plenary.nvim',
       'nvim-treesitter/nvim-treesitter',
@@ -191,7 +187,7 @@ return {
   },
   {
     'HiPhish/rainbow-delimiters.nvim',
-    cond = rvim.treesitter.enable and niceties,
+    cond = niceties,
     event = { 'BufRead', 'BufNewFile' },
     config = function()
       local rainbow_delimiters = require('rainbow-delimiters')
@@ -214,7 +210,7 @@ return {
   },
   {
     'smoka7/multicursors.nvim',
-    cond = not minimal and rvim.treesitter.enable,
+    cond = not minimal,
     dependencies = { 'nvim-treesitter/nvim-treesitter', 'smoka7/hydra.nvim' },
     opts = {
       hint_config = { border = border },
@@ -250,7 +246,6 @@ return {
   ------------------------------------------------------------------------------
   {
     'mizlan/iswap.nvim',
-    cond = rvim.treesitter.enable,
     keys = {
       { '<leader>ia', '<cmd>ISwap<CR>', desc = 'iswap: swap' },
       { '<leader>iw', '<cmd>ISwapWith<CR>', desc = 'iswap: swap with' },
@@ -259,7 +254,6 @@ return {
   },
   {
     'Wansmer/sibling-swap.nvim',
-    cond = rvim.treesitter.enable,
     -- stylua: ignore
     keys = {
       { '<leader>ih', function() require('sibling-swap').swap_with_left() end, desc = 'sibling-swap: swap left', },

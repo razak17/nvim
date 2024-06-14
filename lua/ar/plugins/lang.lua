@@ -50,7 +50,6 @@ return {
   },
   {
     'bennypowers/template-literal-comments.nvim',
-    cond = rvim.treesitter.enable,
     ft = { 'javascript', 'typescript' },
     opts = {},
   },
@@ -65,7 +64,6 @@ return {
   },
   {
     'axelvc/template-string.nvim',
-    cond = rvim.treesitter.enable,
     ft = {
       'javascript',
       'javascriptreact',
@@ -128,14 +126,13 @@ return {
   {
     'razak17/tailwind-fold.nvim',
     branch = 'nightly',
-    cond = rvim.treesitter.enable,
     opts = { min_chars = 5 },
     ft = { 'html', 'svelte', 'astro', 'vue', 'typescriptreact', 'php', 'blade' },
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
   },
   {
     'MaximilianLloyd/tw-values.nvim',
-    cond = rvim.treesitter.enable and rvim.lsp.enable,
+    cond = rvim.lsp.enable,
     -- stylua: ignore
     keys = {
       { '<localleader>lt', '<cmd>TWValues<cr>', desc = 'tw-values: show values', },
@@ -144,7 +141,7 @@ return {
   },
   {
     'luckasRanarison/tailwind-tools.nvim',
-    cond = rvim.treesitter.enable and rvim.lsp.enable and false,
+    cond = rvim.lsp.enable and false,
     ft = { 'html', 'svelte', 'astro', 'vue', 'typescriptreact', 'php', 'blade' },
     event = { 'BufRead' },
     cmd = {
@@ -164,7 +161,7 @@ return {
   --------------------------------------------------------------------------------
   {
     'roobert/f-string-toggle.nvim',
-    cond = rvim.treesitter.enable and false,
+    cond = false,
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
     ft = { 'python' },
     opts = {
@@ -229,7 +226,6 @@ return {
   -- https://github.com/AntonVanAssche/md-headers.nvim
   {
     'AntonVanAssche/md-headers.nvim',
-    cond = rvim.treesitter.enable,
     cmd = { 'MarkdownHeaders', 'MarkdownHeadersClosest' },
     dependencies = { 'nvim-lua/plenary.nvim' },
     -- stylua: ignore
@@ -378,7 +374,7 @@ return {
   },
   {
     'MeanderingProgrammer/markdown.nvim',
-    cond = rvim.treesitter.enable and not rvim.plugins.niceties,
+    cond = not rvim.plugins.niceties,
     name = 'render-markdown',
     cmd = { 'RenderMarkdownToggle' },
     ft = { 'markdown' },

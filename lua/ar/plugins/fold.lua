@@ -1,7 +1,6 @@
 return {
   {
     'kevinhwang91/nvim-ufo',
-    cond = rvim.treesitter.enable,
     event = 'VeryLazy',
     -- stylua: ignore
     keys = {
@@ -46,7 +45,6 @@ return {
   },
   {
     'chrisgrieser/nvim-origami',
-    cond = rvim.treesitter.enable,
     -- event = 'BufReadPost',
     keys = {
       { '<BS>', function() require('origami').h() end, desc = 'close fold' },

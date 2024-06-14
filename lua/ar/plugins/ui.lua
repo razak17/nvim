@@ -344,7 +344,7 @@ return {
   },
   {
     'folke/twilight.nvim',
-    cond = rvim.treesitter.enable and niceties,
+    cond = niceties,
     cmd = 'Twilight',
     opts = {
       context = 40,

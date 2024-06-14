@@ -59,7 +59,6 @@ return {
   },
   {
     'echasnovski/mini.ai',
-    cond = rvim.treesitter.enable,
     event = { 'BufRead', 'BufNewFile' },
     config = function()
       require('mini.ai').setup({
