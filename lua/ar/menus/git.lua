@@ -292,10 +292,10 @@ end
 local git_command = {
   'git',
   'log',
-  '--pretty=tformat:%<(10)%h%<(16,trunc)%an %ad%d %s',
+  '--pretty=tformat:%<(10)%h %<(16,trunc)%an %ad%d %s',
   '--date=short',
   '--',
-  '.',
+  vim.fs.root(0, '.git'),
 }
 
 local layout_config = { width = 0.9, horizontal = { preview_width = 0.5 } }
@@ -520,10 +520,10 @@ local function telescope_branches_mappings(prompt_bufnr, map)
             'git',
             'log',
             branch,
-            '--pretty=tformat:%<(10)%h%<(16,trunc)%an %ad%d %s',
+            '--pretty=tformat:%<(10)%h %<(16,trunc)%an %ad%d %s',
             '--date=short',
             '--',
-            '.',
+            vim.fs.root(0, '.git'),
           },
           layout_config = { width = 0.9, horizontal = { preview_width = 0.5 } },
         })
