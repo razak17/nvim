@@ -128,7 +128,6 @@ return {
     'stevearc/stickybuf.nvim',
     cond = not minimal and niceties,
     cmd = { 'PinBuffer', 'PinBuftype', 'PinFiletype', 'Unpin' },
-    opts = {},
     config = function()
       require('stickybuf').setup({
         get_auto_pin = function(bufnr)

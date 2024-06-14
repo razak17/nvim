@@ -99,27 +99,16 @@ return {
         sorting = {
           priority_weight = 2,
           comparators = {
-            rvim.is_available('copilot-cmp') and require(
-              'copilot_cmp.comparators'
-            ).prioritize or nil,
-              -- deprioritize `.box`, `.mut`, etc.
-            not minimal and require('cmp-rust').deprioritize_postfix or nil,
-              -- deprioritize `Borrow::borrow` and `BorrowMut::borrow_mut`
-            not minimal and require('cmp-rust').deprioritize_borrow or nil,
-              -- deprioritize `Deref::deref` and `DerefMut::deref_mut`
-            not minimal and require('cmp-rust').deprioritize_deref or nil,
-              -- deprioritize `Into::into`, `Clone::clone`, etc.
-            not minimal and require('cmp-rust').deprioritize_common_traits
-              or nil,
-            cmp.config.compare.recently_used,
-            cmp.config.compare.locality,
             cmp.config.compare.offset,
             cmp.config.compare.exact,
+            -- cmp.config.compare.scopes,
             cmp.config.compare.score,
+            cmp.config.compare.recently_used,
+            cmp.config.compare.locality,
             cmp.config.compare.kind,
-            cmp.config.compare.order,
+            -- cmp.config.compare.sort_text,
             cmp.config.compare.length,
-            cmp.config.compare.sort_text,
+            cmp.config.compare.order,
           },
         },
         matching = {
