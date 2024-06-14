@@ -127,7 +127,6 @@ return {
         untracked = { highlight = 'GitSignsAdd', text = left_block },
       },
       _threaded_diff = true,
-      _signs_staged_enable = true,
       word_diff = false,
       numhl = false,
       current_line_blame = not cwd:match('personal') and not cwd:match('dots'),
