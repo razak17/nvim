@@ -352,8 +352,21 @@ return {
       },
       {
         'zbirenbaum/copilot-cmp',
-        cond = rvim.ai.enable and not minimal and false,
+        cond = rvim.ai.enable and not minimal,
         opts = {},
+        config = function(_, opts)
+          require('copilot_cmp').setup(opts)
+
+          rvim.ftplugin_conf({
+            cmp = function(cmp)
+              cmp.setup.filetype('norg', {
+                sorting = {
+                  require('copilot_cmp.comparators').prioritize,
+                },
+              })
+            end,
+          })
+        end,
         dependencies = 'copilot.lua',
       },
       {
