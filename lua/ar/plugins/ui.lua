@@ -431,7 +431,7 @@ return {
   {
     'kevinhwang91/nvim-hlslens',
     cond = not minimal and niceties,
-    lazy = false,
+    event = { 'BufRead', 'BufNewFile' },
     keys = {
       {
         'n',

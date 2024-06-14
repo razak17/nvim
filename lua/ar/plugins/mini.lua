@@ -17,16 +17,17 @@ return {
         '', -- for all buffers without a file type
       },
     },
-    init = function()
+    config = function(_, opts)
       rvim.highlight.plugin('mini-indentscope', {
         theme = {
           -- stylua: ignore
           ['onedark'] = {
-            { MiniIndentscopeSymbol = { inherit = 'IndentBlanklineContextChar' } },
-            { MiniIndentscopeSymbolOff = { inherit = 'IndentBlanklineChar' } },
+            { MiniIndentscopeSymbol = { link = 'IndentBlanklineContextChar' } },
+            { MiniIndentscopeSymbolOff = { link = 'IndentBlanklineChar' } },
           },
         },
       })
+      require('mini.indentscope').setup(opts)
     end,
   },
   { 'echasnovski/mini.misc', opts = {} },
