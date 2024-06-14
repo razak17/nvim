@@ -55,9 +55,6 @@ settings({
       spelllang = { 'en_gb', 'programming' },
     },
   },
-  [{ 'rust', 'org' }] = {
-    opt = { spell = true },
-  },
   graphql = {
     function()
       vim.opt.iskeyword:append('$,@-@')
@@ -219,6 +216,9 @@ settings({
       { 'n', 'o', '<CR>' },
     },
   },
+  org = {
+    opt = { spell = true },
+  },
   qf = {
     opt = {
       wrap = false,
@@ -252,7 +252,25 @@ settings({
     end,
   },
   rust = {
+    opt = { spell = true },
     function()
+      rvim.ftplugin_conf({
+        cmp = function(cmp)
+          cmp.setup.filetype('norg', {
+            sorting = {
+              -- deprioritize `.box`, `.mut`, etc.
+              require('cmp-rust').deprioritize_postfix,
+              -- deprioritize `Borrow::borrow` and `BorrowMut::borrow_mut`
+              require('cmp-rust').deprioritize_borrow,
+              -- deprioritize `Deref::deref` and `DerefMut::deref_mut`
+              require('cmp-rust').deprioritize_deref,
+              -- deprioritize `Into::into`, `Clone::clone`, etc.
+              require('cmp-rust').deprioritize_common_traits,
+            },
+          })
+        end,
+      })
+
       if is_available('LuaSnip') and is_available('snips') then
         local ls = require('luasnip')
         local rust = require('snips.rust')

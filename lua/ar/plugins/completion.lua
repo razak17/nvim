@@ -269,7 +269,7 @@ return {
           {
             name = 'rg',
             priority = 4,
-            keyword_length = 4,
+            keyword_length = rvim.lsp.enable and 8 or 4,
             option = { additional_arguments = '--max-depth 8' },
             group_index = 1,
           },
@@ -347,7 +347,7 @@ return {
       { 'hrsh7th/cmp-emoji', cond = not minimal },
       { 'fazibear/cmp-nerdfonts', cond = not minimal },
       { 'SergioRibera/cmp-dotenv', cond = not minimal },
-      { 'ryo33/nvim-cmp-rust', cond = not minimal },
+      { 'ryo33/nvim-cmp-rust', ft = { 'rust' } },
       { 'Gelio/cmp-natdat', cond = not minimal, opts = {} },
       { 'hrsh7th/cmp-nvim-lsp', cond = rvim.lsp.enable },
       { 'hrsh7th/cmp-cmdline', config = function() vim.o.wildmode = '' end },
