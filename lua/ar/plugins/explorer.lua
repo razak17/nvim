@@ -347,6 +347,7 @@ return {
       },
     },
     opts = {
+      default_file_explorer = true,
       delete_to_trash = true,
       skip_confirm_for_simple_edits = true,
       restore_win_options = false,
@@ -378,6 +379,7 @@ return {
           end,
         },
       },
+      win_options = { wrap = true },
     },
   },
   {
