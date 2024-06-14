@@ -1,9 +1,9 @@
 local highlight = rvim.highlight
+local minimal = rvim.plugins.minimal
 
 return {
   {
     'nvim-treesitter/nvim-treesitter',
-    -- cond = rvim.treesitter.enable,
     event = 'BufReadPost',
     build = ':TSUpdate',
     keys = {
@@ -167,8 +167,9 @@ return {
   },
   {
     'nvim-treesitter/nvim-treesitter-context',
-    cond = rvim.treesitter.enable,
+    cond = not minimal,
     event = { 'BufRead', 'BufNewFile' },
+    cmd = { 'TSContextEnable', 'TSContextDisable', 'TSContextToggle' },
     config = function()
       highlight.plugin('treesitter-context', {
         theme = {
@@ -179,11 +180,13 @@ return {
           },
         },
       })
-      require('treesitter-context').setup({
+      local ts_ctx = require('treesitter-context')
+      ts_ctx.setup({
         multiline_threshold = 4,
         separator = '─', -- alternatives: ▁ ─ ▄
         mode = 'cursor',
       })
+      map('n', '[k', function() ts_ctx.go_to_context(vim.v.count1) end)
     end,
   },
   {

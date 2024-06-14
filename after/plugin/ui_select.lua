@@ -44,6 +44,7 @@ M.options.toggles = {
   ['Toggle Relative Number'] = 'ToggleRelativeNumber',
   ['Toggle Undo Tree'] = 'UndotreeToggle',
   ['Toggle Precognition'] = 'Precognition toggle',
+  ['Toggle TS Context'] = 'TSContextToggle',
 }
 
 local toggle_menu = function()
