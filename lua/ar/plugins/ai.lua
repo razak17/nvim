@@ -57,33 +57,6 @@ return {
     },
   },
   {
-    'jellydn/CopilotChat.nvim',
-    cmd = {
-      'CopilotChat',
-      'CopilotChatExplain',
-      'CopilotChatRefactor',
-      'CopilotChatReview',
-      'CopilotChatTests',
-    },
-    build = function()
-      vim.defer_fn(function()
-        vim.cmd('UpdateRemotePlugins')
-        vim.notify(
-          'CopilotChat - Updated remote plugins. Please restart Neovim.'
-        )
-      end, 3000)
-    end,
-    opts = {
-      mode = 'split',
-      prompts = {
-        Explain = 'What does this code do?',
-        Review = 'Review the following code and provide concise suggestions.',
-        Tests = 'Briefly explain how the selected code works, then generate unit tests.',
-        Refactor = 'Refactor the code to improve clarity and readability.',
-      },
-    },
-  },
-  {
     'piersolenski/wtf.nvim',
     cond = rvim.lsp.enable and rvim.ai.enable,
     event = 'VeryLazy',

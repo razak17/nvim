@@ -45,7 +45,12 @@ return {
         name = 'Advanced',
         f = { name = 'Genghis' },
       },
-      a = { name = 'A.I.' },
+      a = {
+        name = 'A.I.',
+        c = {
+          name = 'CopilotChat',
+        },
+      },
       d = { name = 'Dadbod' },
       e = { name = 'Explorer' },
       f = { name = 'Telescope' },
