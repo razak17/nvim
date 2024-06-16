@@ -24,11 +24,11 @@ map({ 'n', 'x' }, '~', function()
   local isLetter = charUnderCursor:find('^%a$')
   local function normal(cmd) vim.cmd.normal({ cmd, bang = true }) end
   if isLetter then
-    normal('~h')
+    normal('~')
     return
   end
   for left, right in pairs(toggleSigns) do
-    if charUnderCursor == left then normal('r' .. right) end
-    if charUnderCursor == right then normal('r' .. left) end
+    if charUnderCursor == left then normal('r' .. right .. 'l') end
+    if charUnderCursor == right then normal('r' .. left .. 'l') end
   end
 end, { desc = 'smart tilde' })
