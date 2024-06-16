@@ -337,7 +337,7 @@ return {
       { 'fazibear/cmp-nerdfonts', cond = not minimal },
       { 'SergioRibera/cmp-dotenv', cond = not minimal },
       { 'ryo33/nvim-cmp-rust', ft = { 'rust' } },
-      { 'Gelio/cmp-natdat', cond = not minimal, opts = {} },
+      { 'Gelio/cmp-natdat', opts = {} },
       { 'hrsh7th/cmp-nvim-lsp', cond = rvim.lsp.enable },
       { 'hrsh7th/cmp-cmdline', config = function() vim.o.wildmode = '' end },
       { 'hrsh7th/cmp-nvim-lsp-document-symbol', cond = rvim.lsp.enable },
