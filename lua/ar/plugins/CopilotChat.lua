@@ -37,6 +37,49 @@ return {
       auto_follow_cursor = false, -- Don't follow the cursor after getting response
       show_help = true, -- Show help in virtual text, set to true if that's 1st time using Copilot Chat
       allow_insecure = false, -- Allow insecure server connections
+      mappings = {
+        -- Use tab for completion
+        complete = {
+          detail = 'Use @<Tab> or /<Tab> for options.',
+          insert = '<Tab>',
+        },
+        -- Close the chat
+        close = {
+          normal = 'q',
+          insert = '<C-c>',
+        },
+        -- Reset the chat buffer
+        reset = {
+          normal = '<C-x>',
+          insert = '<C-x>',
+        },
+        -- Submit the prompt to Copilot
+        submit_prompt = {
+          normal = '<CR>',
+          insert = '<C-s>',
+        },
+        -- Accept the diff
+        accept_diff = {
+          normal = '<C-y>',
+          insert = '<C-y>',
+        },
+        -- Yank the diff in the response to register
+        yank_diff = {
+          normal = 'gmy',
+        },
+        -- Show the diff
+        show_diff = {
+          normal = 'gmd',
+        },
+        -- Show the prompt
+        show_system_prompt = {
+          normal = 'gmp',
+        },
+        -- Show the user selection
+        show_user_selection = {
+          normal = 'gms',
+        },
+      },
     },
     config = function(_, opts)
       local chat = require('CopilotChat')
