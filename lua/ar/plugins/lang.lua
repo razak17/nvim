@@ -34,7 +34,7 @@ return {
   },
   {
     'razak17/package-info.nvim',
-    cond = not minimal,
+    cond = not minimal and false,
     event = 'BufRead package.json',
     config = function()
       require('which-key').register({
