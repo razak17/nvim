@@ -17,6 +17,22 @@ return {
   -- Web Dev (Typescript)
   --------------------------------------------------------------------------------
   {
+    'razak17/json-to-types.nvim',
+    build = 'sh install.sh npm',
+    keys = {
+      {
+        '<leader>tju',
+        '<Cmd>ConvertJSONtoLang typescript<CR>',
+        desc = 'Convert JSON to TS',
+      },
+      {
+        '<leader>tjt',
+        '<Cmd>ConvertJSONtoLangBuffer typescript<CR>',
+        desc = 'Convert JSON to TS in buffer',
+      },
+    },
+  },
+  {
     'razak17/package-info.nvim',
     cond = not minimal,
     event = 'BufRead package.json',
