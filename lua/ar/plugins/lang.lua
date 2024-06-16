@@ -17,7 +17,7 @@ return {
   -- Web Dev (Typescript)
   --------------------------------------------------------------------------------
   {
-    'razak17/json-to-types.nvim',
+    'Redoxahmii/json-to-types.nvim',
     build = 'sh install.sh npm',
     keys = {
       {
