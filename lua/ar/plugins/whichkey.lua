@@ -36,6 +36,10 @@ return {
         a = 'Actions',
         b = { name = 'Comment Box' },
         f = 'Snap',
+        j = {
+          name = 'jSdoc Switch',
+          d = 'doc switch',
+        },
         l = 'LSP',
         n = { name = 'Sticky Note' },
         r = { name = 'Run' },
