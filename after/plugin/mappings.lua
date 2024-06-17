@@ -139,6 +139,8 @@ nnoremap('<C-l>', '<C-w>l')
 --------------------------------------------------------------------------------
 -- Clipboard
 --------------------------------------------------------------------------------
+-- Delete a single character without copying into register:
+nnoremap('<localleader>xx', '"_x', { desc = 'delete char (no copy)' })
 -- Greatest remap ever
 vnoremap('<leader>p', '"_dP', { desc = 'greatest remap' })
 -- Next greatest remap ever : asbjornHaland
