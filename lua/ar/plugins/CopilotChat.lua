@@ -22,7 +22,7 @@ local prompts = {
 return {
   {
     'CopilotC-Nvim/CopilotChat.nvim',
-    lazy = false,
+    event = 'VimEnter',
     branch = 'canary',
     build = function()
       vim.defer_fn(function()
