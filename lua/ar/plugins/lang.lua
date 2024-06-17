@@ -141,9 +141,17 @@ return {
   --------------------------------------------------------------------------------
   {
     'razak17/tailwind-fold.nvim',
-    branch = 'nightly',
     opts = { min_chars = 5 },
-    ft = { 'html', 'svelte', 'astro', 'vue', 'typescriptreact', 'php', 'blade' },
+    ft = {
+      'html',
+      'svelte',
+      'astro',
+      'vue',
+      'typescriptreact',
+      'php',
+      'blade',
+      'eruby'
+    },
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
   },
   {
