@@ -546,6 +546,7 @@ local function on_attach(client, bufnr)
   if rvim.lsp.semantic_tokens.enable then
     setup_semantic_tokens(client, bufnr)
   end
+  if not rvim.completion.enable then require('ar.compl')(client, bufnr) end
 end
 
 augroup('LspSetupAutoCommands', {
