@@ -172,6 +172,14 @@ return {
         end,
         desc = 'CopilotChat: prompt actions',
       },
+      {
+        '<leader>acs',
+        function()
+          local date = os.date('%Y-%m-%d_%H-%M-%S')
+          vim.cmd('CopilotChatSave ' .. date)
+        end,
+        desc = 'CopilotChat: save prompt',
+      },
       { mode = 'x', '<leader>acp', ":lua require('CopilotChat.integrations.telescope').pick(require('CopilotChat.actions').prompt_actions({selection = require('CopilotChat.select').visual}))<CR>", desc = 'CopilotChat: prompt actions' },
       -- Code related commands
       { '<leader>ace', '<Cmd>CopilotChatExplain<CR>', desc = 'CopilotChat: prompt actions' },
