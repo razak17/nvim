@@ -27,6 +27,15 @@ return {
     },
   },
   {
+    'rachartier/tiny-buffers-switcher.nvim',
+    cond = not minimal,
+    -- stylua: ignore
+    keys = {
+      { '<localleader>bb', ':lua require("tiny-buffers-switcher").switcher()<CR>', desc = 'buffer switch' },
+    },
+    opts = {},
+  },
+  {
     'kazhala/close-buffers.nvim',
     cmd = { 'BDelete', 'BWipeout' },
     keys = {
@@ -38,9 +47,8 @@ return {
     'sathishmanohar/quick-buffer-jump',
     cond = not minimal and niceties,
     cmd = { 'QuickBufferJump' },
-    keys = {
-      { '<M-u>', '<Cmd>QuickBufferJump<CR>', desc = 'quick buffer jump' },
-    },
+    -- stylua: ignore
+    keys = { { '<M-u>', '<Cmd>QuickBufferJump<CR>', desc = 'quick buffer jump' } },
     config = function() require('quick_buffer_jump') end,
   },
   {
