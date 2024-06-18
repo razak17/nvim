@@ -16,6 +16,7 @@ local M = {
     git = 'Git commands',
     lsp = 'Code/LSP actions',
     gpt = 'ChatGPTRun actions',
+    copilot_chat = 'CopilotChat actions',
     command_palette = 'Command Palette actions',
   },
 }
@@ -267,6 +268,58 @@ if rvim.is_available('ChatGPT.nvim') then
     '<leader>ar',
     gpt_menu,
     { desc = '[c]hatGPTRun [a]ctions: open menu for chatGPTRun actions' }
+  )
+end
+
+--------------------------------------------------------------------------------
+-- CopilotChat
+--------------------------------------------------------------------------------
+if rvim.is_available('CopilotChat.nvim') then
+  M.options.copilot_chat = {
+    ['Clear Buffer and Chat History'] = 'CopilotChatReset',
+    ['Toggle Copilot Chat Vsplit'] = 'CopilotChatToggle',
+    ['Help Actions'] = function()
+      local actions = require('CopilotChat.actions')
+      local integrations = require('CopilotChat.integrations.telescope')
+      integrations.pick(actions.help_actions())
+    end,
+    ['Prompt Actions'] = function()
+      local actions = require('CopilotChat.actions')
+      local integrations = require('CopilotChat.integrations.telescope')
+      integrations.pick(actions.prompt_actions())
+    end,
+    ['Save Chat'] = function()
+      local date = os.date('%Y-%m-%d_%H-%M-%S')
+      vim.cmd('CopilotChatSave ' .. date)
+    end,
+    ['Explain Code'] = 'CopilotChatExplain',
+    ['Generate Tests'] = 'CopilotChatTests',
+    ['Review Code'] = 'CopilotChatReview',
+    ['Refactor Code'] = 'CopilotChatRefactor',
+    ['Better Naming'] = 'CopilotChatBetterNamings',
+    ['Quick Chat'] = function()
+      local input = vim.fn.input('Quick Chat: ')
+      if input ~= '' then vim.cmd('CopilotChatBuffer ' .. input) end
+    end,
+    ['Ask Input'] = function()
+      local input = vim.fn.input('Ask Copilot: ')
+      if input ~= '' then vim.cmd('CopilotChat ' .. input) end
+    end,
+    ['Generate Commit Message'] = 'CopilotChatCommit',
+    ['Generate Commit Message For Staged Changes'] = 'CopilotChatCommitStaged',
+    ['Debug Info'] = 'CopilotChatDebugInfo',
+    ['Fix Diagnostic'] = 'CopilotChatFixDiagnostic',
+  }
+
+  local copilot_chat_menu = function()
+    rvim.create_select_menu(M.prompts['copilot_chat'], M.options.copilot_chat)()
+  end
+
+  map(
+    'n',
+    '<leader>acc',
+    copilot_chat_menu,
+    { desc = '[c]opilotChat [a]ctions: open menu for copilotChat actions' }
   )
 end
 
