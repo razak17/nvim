@@ -104,7 +104,7 @@ return {
   },
   {
     'turbio/bracey.vim',
-    cond = not rvim.plugins.minimal and false,
+    cond = not minimal and false,
     ft = 'html',
     build = 'npm install --prefix server',
   },
@@ -120,7 +120,7 @@ return {
   },
   {
     'rest-nvim/rest.nvim',
-    cond = not rvim.plugins.minimal,
+    cond = not minimal,
     ft = { 'http', 'json' },
     init = function()
       require('which-key').register({ ['<leader>rr'] = { name = 'Rest' } })
@@ -219,7 +219,7 @@ return {
         ['<localleader>g'] = { name = 'Gopher' },
       })
     end,
-    cond = rvim.lsp.enable and not rvim.plugins.minimal,
+    cond = rvim.lsp.enable and not minimal,
     ft = 'go',
     dependencies = {
       'nvim-lua/plenary.nvim',
@@ -230,7 +230,7 @@ return {
   --------------------------------------------------------------------------------
   {
     'ellisonleao/glow.nvim',
-    cond = not rvim.plugins.minimal,
+    cond = not minimal,
     cmd = 'Glow',
     opts = {
       border = 'single',
@@ -239,7 +239,7 @@ return {
   },
   {
     'wallpants/github-preview.nvim',
-    cond = not rvim.plugins.minimal,
+    cond = not minimal,
     cmd = {
       'GithubPreviewStart',
       'GithubPreviewStop',
@@ -272,7 +272,7 @@ return {
   },
   {
     'iamcco/markdown-preview.nvim',
-    cond = not rvim.plugins.minimal,
+    cond = not minimal,
     build = function() vim.fn['mkdp#util#install']() end,
     cmd = {
       'MarkdownPreview',
@@ -372,7 +372,7 @@ return {
   },
   {
     '3rd/image.nvim',
-    cond = not rvim.plugins.minimal and rvim.plugins.niceties,
+    cond = not minimal and niceties,
     ft = { 'markdown', 'vimwiki' },
     opts = {
       backend = 'kitty',
@@ -387,7 +387,7 @@ return {
   },
   {
     'https://git.sr.ht/~swaits/thethethe.nvim',
-    cond = not rvim.plugins.minimal and rvim.plugins.niceties and false,
+    cond = not minimal and niceties and false,
     event = 'VeryLazy',
     opts = {},
   },
@@ -398,7 +398,7 @@ return {
   },
   {
     'MeanderingProgrammer/markdown.nvim',
-    cond = not rvim.plugins.niceties,
+    cond = niceties,
     name = 'render-markdown',
     cmd = { 'RenderMarkdownToggle' },
     ft = { 'markdown' },
@@ -502,7 +502,7 @@ return {
   },
   {
     'tomiis4/Hypersonic.nvim',
-    cond = not rvim.plugins.minimal and rvim.plugins.niceties,
+    cond = not minimal and niceties,
     event = 'CmdlineEnter',
     cmd = 'Hypersonic',
     keys = {
@@ -521,7 +521,7 @@ return {
   ------------------------------------------------------------------------------
   {
     'psliwka/vim-dirtytalk',
-    cond = not rvim.plugins.minimal and rvim.plugins.niceties,
+    cond = not minimal and niceties,
     lazy = false,
     build = ':DirtytalkUpdate',
     init = function() vim.opt.spelllang:append('programming') end,
