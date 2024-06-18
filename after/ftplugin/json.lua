@@ -21,6 +21,8 @@ end, { buffer = 0, expr = true })
 
 if not rvim.plugins.enable or rvim.plugins.minimal then return end
 
+if not rvim.is_available('package-info.nvim') then return end
+
 if vim.fn.expand('%:t') == 'package.json' then
   local fmt = string.format
 
