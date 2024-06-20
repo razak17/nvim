@@ -1,6 +1,7 @@
 return {
   {
     'kevinhwang91/nvim-ufo',
+    cond = not rvim.plugins.minimal,
     event = 'VeryLazy',
     -- stylua: ignore
     keys = {
@@ -45,6 +46,7 @@ return {
   },
   {
     'chrisgrieser/nvim-origami',
+    cond = not rvim.plugins.minimal,
     -- event = 'BufReadPost',
     keys = {
       { '<BS>', function() require('origami').h() end, desc = 'close fold' },
