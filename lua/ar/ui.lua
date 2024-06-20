@@ -48,6 +48,7 @@ rvim.ui.icons = {
     dot_alt = '',
     play = '',
   },
+  -- ┃, ┆, ┇, ┊, ┋, ╎, ╏, ║, ╽, ╿)
   separators = {
     left_thin_block = '▏',
     right_thin_block = '▕',
