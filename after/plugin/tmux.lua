@@ -21,7 +21,12 @@ local ignored = {
 local function set_statusline(reset)
   if rvim.find_string(ignored, vim.bo.ft) then return end
   local tmux_bg = '#20222f'
-  local bg = reset and tmux_bg or rvim.highlight.get('Normal', 'bg')
+  local bg = tmux_bg
+  if rvim.ui.transparent.enable then
+    bg = 'default'
+  elseif not reset then
+    bg = rvim.highlight.get('Normal', 'bg')
+  end
   fn.jobstart(fmt('tmux set-option -g status-style bg=%s', bg))
 end
 

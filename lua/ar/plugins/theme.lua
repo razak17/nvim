@@ -70,5 +70,11 @@ return {
       end,
     },
   },
+  {
+    'tribela/transparent.nvim',
+    cond = rvim.ui.transparent.enable,
+    event = 'VimEnter',
+    opts = {},
+  },
   -- }}}
 }
