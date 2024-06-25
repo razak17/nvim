@@ -120,7 +120,7 @@ return {
   },
   {
     'rest-nvim/rest.nvim',
-    cond = not minimal,
+    cond = not minimal and false, -- archived
     ft = { 'http', 'json' },
     init = function()
       require('which-key').register({ ['<leader>rr'] = { name = 'Rest' } })
