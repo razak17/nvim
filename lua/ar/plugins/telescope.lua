@@ -286,7 +286,7 @@ return {
       { '<leader>fi', import, desc = 'import' },
       { '<leader>fI', b('builtin', { include_extensions = true }), desc = 'builtins', },
       { '<leader>fJ', b('jumplist'), desc = 'jumplist', },
-      { '<leader>fk', b('keymaps'), desc = 'autocommands' },
+      { '<leader>fk', b('keymaps'), desc = 'keymaps' },
       { '<leader>fl', lazy, desc = 'surf plugins' },
       { '<leader>fL', luasnips, desc = 'luasnip: available snippets' },
       { '<leader>fn', notifications, desc = 'notify: notifications' },
