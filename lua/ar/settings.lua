@@ -252,6 +252,7 @@ o.sidescrolloff = 10
 o.sidescroll = 1
 o.infercase = true
 o.incsearch = true
+o.inccommand = 'split'
 o.showmatch = true
 o.matchtime = 1
 --------------------------------------------------------------------------------
