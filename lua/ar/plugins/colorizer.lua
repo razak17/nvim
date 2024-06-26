@@ -15,7 +15,7 @@ return {
     'uga-rosa/ccc.nvim',
     cond = not minimal,
     cmd = { 'CccHighlighterToggle', 'CccHighlighterEnable', 'CccPick' },
-    opts = function()
+    config = function()
       local ccc = require('ccc')
       local p = ccc.picker
       p.hex.pattern = {
