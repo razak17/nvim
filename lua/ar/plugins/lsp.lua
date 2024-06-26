@@ -41,8 +41,7 @@ return {
             else
               local directory_disabled =
                 rvim.dirs_match(rvim.lsp.disabled.directories, fmt('%s', cwd))
-              local server_disabled =
-                find_string(rvim.lsp.disabled.servers, name)
+              local server_disabled = rvim.lsp_disabled(name)
               local typescript_tools_enabled = name == 'tsserver'
                 and rvim.lsp.typescript_tools.enable
               if

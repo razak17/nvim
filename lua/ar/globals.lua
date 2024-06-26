@@ -152,6 +152,20 @@ function rvim.plugin_disabled(plugin)
   return rvim.find_string(rvim.plugins.disabled, plugin)
 end
 
+-- Check if a module is disabled
+---@param module string The module to search for.
+---@return boolean disabled # Whether the module is disabled.
+function rvim.module_disabled(module)
+  return rvim.find_string(rvim.plugins.modules.disabled, module)
+end
+
+-- Check if a lsp is disabled
+---@param lsp string The lsp to search for.
+---@return boolean disabled # Whether the lsp is disabled.
+function rvim.lsp_disabled(lsp)
+  return rvim.find_string(rvim.lsp.disabled.servers, lsp)
+end
+
 ---Get whether using nightly version of neovim
 local LATEST_NIGHTLY_MINOR = 10
 function rvim.nightly() return vim.version().minor >= LATEST_NIGHTLY_MINOR end

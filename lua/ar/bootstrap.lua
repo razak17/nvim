@@ -39,21 +39,18 @@ if not vim.uv.fs_stat(lazy_path) then
   })
 end
 vim.opt.rtp:prepend(lazy_path)
--- local path = vim.fn.stdpath('config') .. '/lua/ar/plugins'
--- local plugin_list = vim.fs.find(
---   function(name, _) return name:match('.*.lua$') end,
---   { path = path, limit = math.huge, type = 'file' }
--- )
--- local modules = {}
--- for _, f in pairs(plugin_list) do
---   local _, pos = f:find(path)
---   f = f:sub(pos + 2, #f - 4)
---   modules[#modules + 1] = { import = 'ar.plugins.' .. f }
--- end
+local plugins_path = fn.stdpath('config') .. '/lua/ar/plugins'
+local plugins_list = vim.fs.find(function(name, _)
+  local filename = name:match('(.+)%.lua$')
+  return name:match('.*.lua$') and not rvim.module_disabled(filename)
+end, { path = plugins_path, limit = math.huge, type = 'file' })
+local spec = vim.iter(plugins_list):fold({}, function(acc, path)
+  local _, pos = path:find(plugins_path)
+  acc[#acc + 1] = { import = 'ar.plugins.' .. path:sub(pos + 2, #path - 4) }
+  return acc
+end)
 require('lazy').setup({
-  spec = {
-    { import = plugins_enabled and 'ar.plugins' or nil },
-  },
+  spec = plugins_enabled and spec or {},
   defaults = { lazy = true },
   change_detection = { notify = false },
   git = { timeout = 720 },
@@ -66,7 +63,7 @@ require('lazy').setup({
   checker = {
     enabled = true,
     concurrency = 30,
-    notify = false,
+    notify = true,
     frequency = 3600,
   },
   performance = {
