@@ -290,24 +290,24 @@ return {
         function() vim.b.copilot_suggestion_hidden = false end
       )
 
-      -- cmp.setup.cmdline({ '/', '?' }, {
-      --   mapping = cmp.mapping.preset.cmdline(),
-      --   sources = {
-      --     sources = cmp.config.sources(
-      --       { { name = 'nvim_lsp_document_symbol' } },
-      --       { { name = 'buffer' } },
-      --       { { name = 'buffer-lines' } }
-      --     ),
-      --   },
-      -- })
-      --
-      -- cmp.setup.cmdline(':', {
-      --   sources = cmp.config.sources({
-      --     { name = 'cmdline', keyword_pattern = [=[[^[:blank:]\!]*]=] },
-      --     { name = 'path' },
-      --     -- { name = 'cmdline_history', priority = 10, max_item_count = 5 },
-      --   }),
-      -- })
+      cmp.setup.cmdline({ '/', '?' }, {
+        mapping = cmp.mapping.preset.cmdline(),
+        sources = {
+          sources = cmp.config.sources(
+            { { name = 'nvim_lsp_document_symbol' } },
+            { { name = 'buffer' } },
+            { { name = 'buffer-lines' } }
+          ),
+        },
+      })
+
+      cmp.setup.cmdline(':', {
+        sources = cmp.config.sources({
+          { name = 'cmdline', keyword_pattern = [=[[^[:blank:]\!]*]=] },
+          { name = 'path' },
+          -- { name = 'cmdline_history', priority = 10, max_item_count = 5 },
+        }),
+      })
 
       cmp.setup.filetype({ 'dap-repl', 'dapui_watches' }, {
         sources = { { name = 'dap' } },
