@@ -402,4 +402,60 @@ return {
     ft = { 'css', 'scss' },
     opts = { disable_keymaps = true },
   },
+  {
+    'razak17/wilder.nvim',
+    cond = not minimal and false,
+    build = ':UpdateRemotePlugins',
+    event = { 'CmdlineEnter', 'CmdlineLeave' },
+    config = function()
+      -- wilder
+      local wilder = require('wilder')
+      wilder.setup({ modes = { ':', '/', '?' } })
+      wilder.set_option('pipeline', {
+        wilder.branch(
+          wilder.python_file_finder_pipeline({
+            file_command = function(_, arg)
+              if string.find(arg, '.') ~= nil then
+                return { 'fd', '-tf', '-H' }
+              else
+                return { 'fd', '-tf' }
+              end
+            end,
+            dir_command = { 'fd', '-td' },
+            filters = { 'fuzzy_filter', 'difflib_sorter' },
+          }),
+          wilder.cmdline_pipeline(),
+          wilder.python_search_pipeline()
+        ),
+      })
+
+      highlight.plugin('wilder', {
+        theme = {
+          ['onedark'] = {
+            { WilderMenu = { fg = { from = 'WildMenu' } } },
+            { WilderAccent = { link = 'Directory' } },
+          },
+        },
+      })
+
+      wilder.set_option(
+        'renderer',
+        wilder.popupmenu_renderer({
+          highlighter = wilder.basic_highlighter(),
+          left = { ' ', wilder.popupmenu_devicons() },
+          right = { ' ', wilder.popupmenu_scrollbar({ thumb_char = ' ' }) },
+          highlights = {
+            default = 'WilderMenu',
+            -- accent = 'Variable',
+            selected_accent = 'PmenuSel',
+            accent = wilder.make_hl(
+              'WilderAccent',
+              'Pmenu',
+              { { a = 1 }, { a = 1 }, { foreground = '#f4468f' } }
+            ),
+          },
+        })
+      )
+    end,
+  }, -- : autocomplete
 }
