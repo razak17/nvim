@@ -332,14 +332,12 @@ return {
       end
     end,
     dependencies = {
+      'nvim-neotest/nvim-nio',
       {
         'rcarriga/nvim-dap-ui',
         opts = {
           windows = { indent = 2 },
           floating = { border = rvim.ui.current.border },
-        },
-        dependencies = {
-          { 'nvim-neotest/nvim-nio' },
         },
       },
       { 'theHamsta/nvim-dap-virtual-text', opts = { all_frames = true } },

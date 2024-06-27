@@ -58,7 +58,6 @@ return {
         },
       },
       dependencies = {
-        'mason.nvim',
         {
           'neovim/nvim-lspconfig',
           cond = rvim.lsp.enable,
@@ -207,10 +206,6 @@ return {
         '<cmd>Lspsaga peek_type_definition<cr>',
         desc = 'lspsaga: type definition',
       },
-    },
-    dependencies = {
-      'nvim-tree/nvim-web-devicons',
-      'nvim-treesitter/nvim-treesitter',
     },
   },
   {
@@ -419,10 +414,6 @@ return {
       require('aerial').setup(opts)
       require('telescope').load_extension('aerial')
     end,
-    dependencies = {
-      'nvim-treesitter/nvim-treesitter',
-      'nvim-tree/nvim-web-devicons',
-    },
   },
   {
     'roobert/action-hints.nvim',
@@ -603,7 +594,6 @@ return {
     cond = rvim.lsp.enable,
     event = 'LspAttach',
     opts = {},
-    dependencies = { 'nvim-lua/plenary.nvim', 'nvim-neo-tree/neo-tree.nvim' },
   },
   {
     'pechorin/any-jump.vim',
@@ -663,7 +653,6 @@ return {
         other = lsp_icons.trace,
       },
     },
-    dependencies = { 'nvim-tree/nvim-web-devicons' },
   },
   {
     'mhanberg/output-panel.nvim',
@@ -681,10 +670,7 @@ return {
         desc = 'navbuddy: toggle',
       },
     },
-    dependencies = {
-      'SmiteshP/nvim-navic',
-      'MunifTanjim/nui.nvim',
-    },
+    dependencies = { 'SmiteshP/nvim-navic' },
     opts = { lsp = { auto_attach = true } },
   },
   -- }}}

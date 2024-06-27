@@ -82,10 +82,7 @@ return {
       'haydenmeade/neotest-jest',
       'nvim-neotest/neotest-python',
       'nvim-neotest/neotest-vim-test',
-      {
-        'rcarriga/neotest-plenary',
-        dependencies = { 'nvim-lua/plenary.nvim' },
-      },
+      'rcarriga/neotest-plenary',
     },
   },
   {
@@ -216,6 +213,5 @@ return {
         summary_cursor_line = { link = 'NormalFloat' },
       },
     },
-    dependencies = 'nvim-lua/plenary.nvim',
   },
 }

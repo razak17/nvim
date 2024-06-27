@@ -23,6 +23,5 @@ return {
     'willothy/strat-hero.nvim',
     opts = {},
     cmd = 'StratHero',
-    dependencies = { 'MunifTanjim/nui.nvim' },
   },
 }

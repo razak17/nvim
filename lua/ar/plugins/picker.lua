@@ -317,7 +317,6 @@ return {
 
       rvim.command('SessionList', list_sessions)
     end,
-    dependencies = { 'razak17/lspkind.nvim', 'nvim-tree/nvim-web-devicons' },
   },
   {
     'camspiers/snap',

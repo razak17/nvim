@@ -41,7 +41,6 @@ return {
   {
     'tomiis4/BufferTabs.nvim',
     cond = not minimal and false,
-    dependencies = { 'nvim-tree/nvim-web-devicons' },
     event = 'VeryLazy',
     -- stylua: ignore
     keys = {
@@ -270,7 +269,6 @@ return {
     dependencies = {
       'anuvyklack/middleclass',
       'nyngwang/NeoZoom.lua',
-      'anuvyklack/animation.nvim',
     },
   },
   {
@@ -334,7 +332,6 @@ return {
     keys = {
       { '<leader>ww', function() require('wrapping-paper').wrap_line() end, desc = 'wrapping-paper: wrap line', },
     },
-    dependencies = { 'MunifTanjim/nui.nvim' },
   },
   {
     'laytan/cloak.nvim',

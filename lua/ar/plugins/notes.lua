@@ -26,12 +26,6 @@ return {
       finder = 'fzf-lua',
       mappings = {},
     },
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-      'hrsh7th/nvim-cmp',
-      'nvim-telescope/telescope.nvim',
-      'ibhagwan/fzf-lua',
-    },
   },
   {
     'nvim-neorg/neorg',

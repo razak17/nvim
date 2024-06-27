@@ -42,7 +42,6 @@ return {
         },
       })
     end,
-    dependencies = { 'kevinhwang91/promise-async' },
   },
   {
     'chrisgrieser/nvim-origami',

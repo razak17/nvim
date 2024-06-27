@@ -28,10 +28,6 @@ return {
         },
       },
     },
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-      'neovim/nvim-lspconfig',
-    },
   },
   {
     'razak17/twoslash-queries.nvim',
@@ -53,7 +49,6 @@ return {
         go_to_definition = '<localleader>ld',
       },
     },
-    dependencies = { 'MunifTanjim/nui.nvim' },
   },
   {
     'dmmulroy/tsc.nvim',

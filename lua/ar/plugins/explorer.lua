@@ -241,11 +241,6 @@ return {
       })
       require('neo-tree').setup(opts)
     end,
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-      'MunifTanjim/nui.nvim',
-      'nvim-tree/nvim-web-devicons',
-    },
   },
   {
     'echasnovski/mini.files',

@@ -55,7 +55,6 @@ return {
         hide_up_to_date = true,
       })
     end,
-    dependencies = { 'MunifTanjim/nui.nvim' },
   },
   {
     'jdrupal-dev/parcel.nvim',
@@ -76,7 +75,6 @@ return {
       { '<localleader>la', '<cmd>CodeActions all<CR>', desc = 'Show code-refactor.nvim (not LSP code actions)' },
     },
     opts = {},
-    dependencies = { 'nvim-treesitter/nvim-treesitter' },
   },
   {
     'axelvc/template-string.nvim',
@@ -89,7 +87,6 @@ return {
       'python',
     },
     opts = { remove_template_string = true },
-    dependencies = { 'nvim-treesitter/nvim-treesitter' },
   },
   {
     'joeldotdias/jsdoc-switch.nvim',
@@ -152,7 +149,6 @@ return {
       'blade',
       'eruby'
     },
-    dependencies = { 'nvim-treesitter/nvim-treesitter' },
   },
   {
     'MaximilianLloyd/tw-values.nvim',
@@ -179,14 +175,12 @@ return {
       conceal = { enabled = true, symbol = '󱏿' },
       custom_filetypes = {},
     },
-    dependencies = { 'nvim-treesitter/nvim-treesitter' },
   },
   -- Python
   --------------------------------------------------------------------------------
   {
     'roobert/f-string-toggle.nvim',
     cond = false,
-    dependencies = { 'nvim-treesitter/nvim-treesitter' },
     ft = { 'python' },
     opts = {
       key_binding = '<localleader>ls',
@@ -221,10 +215,6 @@ return {
     end,
     cond = rvim.lsp.enable and not minimal,
     ft = 'go',
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-      'nvim-treesitter/nvim-treesitter',
-    },
   },
   -- Markdown
   --------------------------------------------------------------------------------
@@ -251,7 +241,6 @@ return {
   {
     'AntonVanAssche/md-headers.nvim',
     cmd = { 'MarkdownHeaders', 'MarkdownHeadersClosest' },
-    dependencies = { 'nvim-lua/plenary.nvim' },
     -- stylua: ignore
     keys = {
       { '<localleader>mh', '<cmd>MarkdownHeaders<CR>', desc = 'md-header: headers', },
@@ -450,7 +439,6 @@ return {
       })
       require('data-viewer').setup(opts)
     end,
-    dependencies = { 'nvim-lua/plenary.nvim', 'kkharji/sqlite.lua' },
   },
   {
     'emmanueltouzery/decisive.nvim',

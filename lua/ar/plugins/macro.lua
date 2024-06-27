@@ -27,7 +27,6 @@ return {
     end,
     cond = not rvim.plugins.minimal and false,
     event = { 'BufReadPost', 'BufNewFile' },
-    dependencies = { 'kkharji/sqlite.lua' },
     -- stylua: ignore
     keys = {
       { '<localleader>qe', "<cmd>lua require('NeoComposer.ui').edit_macros()<cr>", desc = 'neocomposer: edit macro ', },

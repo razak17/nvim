@@ -1,5 +1,5 @@
 local api, fn, fmt, k = vim.api, vim.fn, string.format, vim.keycode
-local ui = rvim.ui
+local ui, highlight = rvim.ui, rvim.highlight
 local border, lsp_hls, ellipsis =
   ui.current.border, ui.lsp.highlights, ui.icons.misc.ellipsis
 local minimal = rvim.plugins.minimal
@@ -28,7 +28,7 @@ return {
         )
         :totable()
 
-      rvim.highlight.plugin('Cmp', {
+      highlight.plugin('Cmp', {
         theme = {
           ['onedark'] = vim.tbl_extend('force', hl_defs, {
             { CmpItemAbbr = { fg = { from = 'MsgSeparator' } } },
@@ -290,24 +290,24 @@ return {
         function() vim.b.copilot_suggestion_hidden = false end
       )
 
-      cmp.setup.cmdline({ '/', '?' }, {
-        mapping = cmp.mapping.preset.cmdline(),
-        sources = {
-          sources = cmp.config.sources(
-            { { name = 'nvim_lsp_document_symbol' } },
-            { { name = 'buffer' } },
-            { { name = 'buffer-lines' } }
-          ),
-        },
-      })
-
-      cmp.setup.cmdline(':', {
-        sources = cmp.config.sources({
-          { name = 'cmdline', keyword_pattern = [=[[^[:blank:]\!]*]=] },
-          { name = 'path' },
-          -- { name = 'cmdline_history', priority = 10, max_item_count = 5 },
-        }),
-      })
+      -- cmp.setup.cmdline({ '/', '?' }, {
+      --   mapping = cmp.mapping.preset.cmdline(),
+      --   sources = {
+      --     sources = cmp.config.sources(
+      --       { { name = 'nvim_lsp_document_symbol' } },
+      --       { { name = 'buffer' } },
+      --       { { name = 'buffer-lines' } }
+      --     ),
+      --   },
+      -- })
+      --
+      -- cmp.setup.cmdline(':', {
+      --   sources = cmp.config.sources({
+      --     { name = 'cmdline', keyword_pattern = [=[[^[:blank:]\!]*]=] },
+      --     { name = 'path' },
+      --     -- { name = 'cmdline_history', priority = 10, max_item_count = 5 },
+      --   }),
+      -- })
 
       cmp.setup.filetype({ 'dap-repl', 'dapui_watches' }, {
         sources = { { name = 'dap' } },
@@ -367,7 +367,6 @@ return {
             end,
           })
         end,
-        dependencies = 'copilot.lua',
       },
       {
         'Exafunction/codeium.nvim',

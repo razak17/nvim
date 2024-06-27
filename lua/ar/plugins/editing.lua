@@ -17,7 +17,6 @@ return {
       { '<localleader>yo', '<Cmd>YankyRingHistory<CR>', desc = 'yanky: open yank history', },
     },
     opts = { ring = { storage = 'sqlite' } },
-    dependencies = { 'kkharji/sqlite.lua' },
   },
   {
     'monaqa/dial.nvim',
@@ -79,7 +78,6 @@ return {
     'windwp/nvim-autopairs',
     cond = false,
     event = 'InsertEnter',
-    dependencies = { 'hrsh7th/nvim-cmp' },
     config = function()
       local autopairs = require('nvim-autopairs')
       if rvim.completion.enable then
@@ -147,7 +145,6 @@ return {
   },
   {
     'ckolkey/ts-node-action',
-    dependencies = { 'nvim-treesitter' },
     -- stylua: ignore
     keys = {
       { '<leader>K', function() require('ts-node-action').node_action() end, desc = 'ts-node-action: run', },
@@ -165,14 +162,9 @@ return {
       { 'gJ', '<cmd>TSJJoin<CR>', desc = 'join to single line' },
     },
     opts = { use_default_keymaps = false, max_join_length = 150 },
-    dependencies = { 'nvim-treesitter/nvim-treesitter' },
   },
   {
     'ThePrimeagen/refactoring.nvim',
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-      'nvim-treesitter/nvim-treesitter',
-    },
     keys = {
       {
         '<localleader>r',
@@ -211,7 +203,6 @@ return {
   {
     'smoka7/multicursors.nvim',
     cond = not minimal,
-    dependencies = { 'nvim-treesitter/nvim-treesitter', 'smoka7/hydra.nvim' },
     opts = {
       hint_config = { border = border },
     },
@@ -250,7 +241,6 @@ return {
       { '<leader>ia', '<cmd>ISwap<CR>', desc = 'iswap: swap' },
       { '<leader>iw', '<cmd>ISwapWith<CR>', desc = 'iswap: swap with' },
     },
-    dependencies = { 'nvim-treesitter/nvim-treesitter' },
   },
   {
     'Wansmer/sibling-swap.nvim',
@@ -263,7 +253,6 @@ return {
       use_default_keymaps = false,
       highlight_node_at_cursor = true,
     },
-    dependencies = { 'nvim-treesitter/nvim-treesitter' },
   },
   ------------------------------------------------------------------------------
   -- Toggle Text

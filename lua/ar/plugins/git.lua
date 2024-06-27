@@ -18,7 +18,6 @@ return {
   {
     'NeogitOrg/neogit',
     cmd = 'Neogit',
-    dependencies = { 'nvim-lua/plenary.nvim', 'sindrets/diffview.nvim' },
     -- stylua: ignore
     keys = {
       { '<localleader>gs', function() require('neogit').open() end, desc = 'open status buffer', },
@@ -75,7 +74,6 @@ return {
       { '<leader>gsp', '<Cmd>lua require("tinygit").stashPop()<CR>', desc = 'stash pop' },
     },
     ft = { 'gitrebase', 'gitcommit' },
-    dependencies = { 'stevearc/dressing.nvim', 'rcarriga/nvim-notify' },
   },
   {
     'sindrets/diffview.nvim',
@@ -219,7 +217,6 @@ return {
       },
     },
     opts = {},
-    dependencies = { 'nvim-lua/plenary.nvim' },
   },
   {
     'https://git.sr.ht/~tomleb/repo-url.nvim',
@@ -341,7 +338,6 @@ return {
         mode = { 'v', 'n' },
       },
     },
-    dependencies = { 'nvim-lua/plenary.nvim' },
   },
   {
     'emmanueltouzery/agitator.nvim',
@@ -361,7 +357,6 @@ return {
     keys = {
       { '<leader>gbp', '<Cmd>GhBlameCurrentLine<CR>', desc = 'blame current line (PR)' },
     },
-    dependencies = { 'nvim-lua/plenary.nvim', 'MunifTanjim/nui.nvim' },
   },
   {
     'FabijanZulj/blame.nvim',
@@ -375,21 +370,10 @@ return {
     keys = {
       { '<leader>gc', '<Cmd>GhReviewComments<CR>', desc = 'github review comments' },
     },
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-      'MunifTanjim/nui.nvim',
-      'folke/trouble.nvim',
-    },
   },
   {
     'aaronhallaert/advanced-git-search.nvim',
     cond = enabled,
-    dependencies = {
-      'nvim-telescope/telescope.nvim',
-      'tpope/vim-fugitive',
-      'tpope/vim-rhubarb',
-      'sindrets/diffview.nvim',
-    },
   },
   {
     'akinsho/git-conflict.nvim',
@@ -428,7 +412,6 @@ return {
     '2kabhishek/co-author.nvim',
     cond = enabled,
     cmd = 'CoAuthor',
-    dependencies = { 'stevearc/dressing.nvim' },
   },
   {
     'niuiic/git-log.nvim',
@@ -443,7 +426,6 @@ return {
     'rbong/vim-flog',
     cond = enabled,
     cmd = { 'Flog', 'Flogsplit', 'Floggit' },
-    dependencies = { 'tpope/vim-fugitive' },
   },
   {
     'ldelossa/gh.nvim',

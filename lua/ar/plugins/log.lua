@@ -170,6 +170,5 @@ return {
         tsx = js,
       })
     end,
-    dependencies = { 'nvim-treesitter/nvim-treesitter' },
   },
 }

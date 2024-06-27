@@ -7,8 +7,12 @@ return {
   -- Core {{{1
   ------------------------------------------------------------------------------
   'nvim-lua/plenary.nvim',
+  'MunifTanjim/nui.nvim',
   'nvim-tree/nvim-web-devicons',
   'b0o/schemastore.nvim',
+  'kevinhwang91/promise-async',
+  'kkharji/sqlite.lua',
+  'tpope/vim-rhubarb',
   -- { 'lewis6991/fileline.nvim', lazy = false },
   -- { 'axlebedev/vim-footprints', lazy = false },
   { 'stevearc/profile.nvim', cond = not minimal, lazy = false },
@@ -130,14 +134,12 @@ return {
     init = function() vim.g.netrw_nogx = 1 end,
     opts = {},
     submodules = false,
-    dependencies = { 'nvim-lua/plenary.nvim' },
   },
   {
     'kevinhwang91/nvim-fundo',
     cond = not minimal,
     event = { 'BufRead', 'BufNewFile' },
     build = function() require('fundo').install() end,
-    dependencies = { 'kevinhwang91/promise-async' },
   },
   {
     'AndrewRadev/linediff.vim',
@@ -191,7 +193,6 @@ return {
   {
     'chrisgrieser/nvim-genghis',
     cond = not minimal,
-    dependencies = 'stevearc/dressing.nvim',
     event = { 'BufReadPost', 'BufNewFile' },
     -- stylua: ignore
     config = function()
@@ -240,19 +241,10 @@ return {
       },
       wrap = true,
     },
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-      'nvim-telescope/telescope.nvim',
-      'nvim-treesitter/nvim-treesitter',
-    },
   },
   {
     '2kabhishek/nerdy.nvim',
     cmd = 'Nerdy',
-    dependencies = {
-      'stevearc/dressing.nvim',
-      'nvim-telescope/telescope.nvim',
-    },
   },
   {
     'ragnarok22/whereami.nvim',
@@ -300,7 +292,6 @@ return {
         '~/%.vault-crypt-files/.',
       },
     },
-    dependencies = { 'rcarriga/nvim-notify' },
   },
   -- }}}
   --------------------------------------------------------------------------------

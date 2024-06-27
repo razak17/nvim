@@ -164,7 +164,6 @@ return {
     'nvim-treesitter/playground',
     cond = not minimal,
     cmd = { 'TSPlaygroundToggle', 'TSHighlightCapturesUnderCursor' },
-    dependencies = { 'nvim-treesitter/nvim-treesitter' },
   },
   {
     'nvim-treesitter/nvim-treesitter-context',
@@ -234,14 +233,12 @@ return {
     'sustech-data/wildfire.nvim',
     cond = not minimal,
     event = { 'BufRead', 'BufNewFile' },
-    dependencies = { 'nvim-treesitter/nvim-treesitter' },
     opts = {},
   },
   {
     'filNaj/tree-setter',
     cond = not minimal and false,
     event = 'VeryLazy',
-    dependencies = { 'nvim-treesitter/nvim-treesitter' },
   },
   {
     'andersevenrud/nvim_context_vt',
@@ -261,7 +258,6 @@ return {
       require('nvim_context_vt').setup(opts)
       vim.cmd([[NvimContextVtToggle]])
     end,
-    dependencies = { 'nvim-treesitter/nvim-treesitter' },
   },
   {
     'drybalka/tree-climber.nvim',
@@ -288,6 +284,5 @@ return {
         mode = { 'n', 'o' },
       },
     },
-    dependencies = { 'nvim-treesitter/nvim-treesitter' },
   },
 }

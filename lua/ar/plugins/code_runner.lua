@@ -68,7 +68,6 @@ return {
       },
       { '<leader>rP', ':QuickCodePad<CR>', desc = 'quick-runner: open pad' },
     },
-    dependencies = { 'MunifTanjim/nui.nvim' },
   },
   {
     'razak17/lab.nvim',
@@ -94,7 +93,6 @@ return {
         },
       })
     end,
-    dependencies = { 'nvim-lua/plenary.nvim' },
   },
   {
     -- 'google/executor.nvim',
@@ -164,7 +162,6 @@ return {
     cmd = { 'Compile', 'Recompile' },
     opts = { default_command = '' },
     dependencies = {
-      'nvim-lua/plenary.nvim',
       { 'm00qek/baleia.nvim', tag = 'v1.3.0' },
     },
   },

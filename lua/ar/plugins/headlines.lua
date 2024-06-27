@@ -3,7 +3,6 @@ return {
     'lukas-reineke/headlines.nvim',
     cond = rvim.plugins.niceties,
     ft = { 'org', 'norg', 'markdown', 'yaml' },
-    dependencies = { 'nvim-treesitter/nvim-treesitter' },
     opts = {
       org = { headline_highlights = false },
       norg = {

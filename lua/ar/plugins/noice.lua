@@ -4,7 +4,6 @@ return {
   'folke/noice.nvim',
   cond = not rvim.plugins.minimal and not rvim.plugin_disabled('noice.nvim'),
   event = 'VeryLazy',
-  dependencies = { 'MunifTanjim/nui.nvim' },
   opts = {
     cmdline = {
       format = {

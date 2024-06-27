@@ -41,12 +41,4 @@ return {
     -- https://pastebin.com/raw/aQXjpLuE
     lang = 'typescript',
   },
-  dependencies = {
-    'nvim-treesitter/nvim-treesitter',
-    'nvim-telescope/telescope.nvim',
-    'nvim-lua/plenary.nvim',
-    'MunifTanjim/nui.nvim',
-    'nvim-tree/nvim-web-devicons',
-    'rcarriga/nvim-notify',
-  },
 }

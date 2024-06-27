@@ -71,7 +71,6 @@ return {
       search_engine = 'google', -- 'google' | 'duck_duck_go' | 'stack_overflow' | 'github',
       winhighlight = 'NormalFloat:NormalFloat,FloatBorder:FloatBorder',
     },
-    dependencies = { 'MunifTanjim/nui.nvim' },
   },
   {
     'razak17/backseat.nvim',
@@ -81,7 +80,6 @@ return {
       popup_type = 'popup', -- | 'popup' | 'horizontal' | 'vertical',
       winhighlight = 'NormalFloat:NormalFloat,FloatBorder:FloatBorder',
     },
-    dependencies = { 'MunifTanjim/nui.nvim' },
   },
   {
     'moozd/aidoc.nvim',

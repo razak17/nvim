@@ -623,16 +623,15 @@ return {
       )
     end,
     dependencies = {
-      'nvim-lua/plenary.nvim',
       {
         'nvim-telescope/telescope-frecency.nvim',
         config = function() require('telescope').load_extension('frecency') end,
       },
-      {
-        'molecule-man/telescope-menufacture',
-        config = function() require('telescope').load_extension('menufacture') end,
-      },
     },
+  },
+  {
+    'molecule-man/telescope-menufacture',
+    config = function() require('telescope').load_extension('menufacture') end,
   },
   {
     'biozz/whop.nvim',
@@ -647,7 +646,6 @@ return {
     branch = '0.2.x',
     config = function() require('telescope').load_extension('smart_open') end,
     dependencies = {
-      'kkharji/sqlite.lua',
       'nvim-telescope/telescope-fzy-native.nvim',
     },
   },
@@ -667,7 +665,6 @@ return {
     'nvim-telescope/telescope-smart-history.nvim',
     cond = not minimal,
     config = function() require('telescope').load_extension('smart_history') end,
-    dependencies = 'kkharji/sqlite.lua',
   },
   {
     'fdschmidt93/telescope-egrepify.nvim',
@@ -707,7 +704,6 @@ return {
     'isak102/telescope-git-file-history.nvim',
     cond = not minimal,
     config = function() require('telescope').load_extension('git_file_history') end,
-    dependencies = { 'tpope/vim-fugitive' },
   },
   {
     'nvim-telescope/telescope-live-grep-args.nvim',
