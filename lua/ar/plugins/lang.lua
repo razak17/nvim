@@ -134,6 +134,13 @@ return {
       { 'vhyrro/luarocks.nvim', opts = {} },
     },
   },
+  {
+    'mistweaverco/kulala.nvim',
+    -- stylua: ignore
+    keys = {
+      { '<leader>rk', ':lua require("kulala").run()<CR>', desc = 'kulala: run' },
+    },
+  },
   -- Tailwind
   --------------------------------------------------------------------------------
   {
@@ -147,7 +154,7 @@ return {
       'typescriptreact',
       'php',
       'blade',
-      'eruby'
+      'eruby',
     },
   },
   {
