@@ -19,7 +19,7 @@ return {
   },
   {
     'Aasim-A/scrollEOF.nvim',
-    cond = not minimal and niceties,
+    cond = not minimal,
     event = { 'BufRead', 'BufNewFile' },
     opts = {},
   },
