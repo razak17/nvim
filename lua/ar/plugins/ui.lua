@@ -68,6 +68,12 @@ return {
     end,
   },
   {
+    'mei28/luminate.nvim',
+    cond = not minimal and niceties,
+    event = { 'VeryLazy' },
+    opts = {},
+  },
+  {
     'lukas-reineke/virt-column.nvim',
     cond = not minimal and false,
     event = { 'BufRead', 'BufNewFile' },
