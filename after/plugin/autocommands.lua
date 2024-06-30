@@ -360,7 +360,7 @@ end
 --         ft = vim.bo.ft,
 --         bt = vim.bo.bt,
 --         setting = 'statuscolumn',
---       })
+-- })
 --       if not decs or decs.ft == false or decs and decs.bt == false then
 --         return
 --       end
@@ -372,13 +372,13 @@ end
 --         { lnum, 0 },
 --         { lnum, -1 },
 --         { details = true, type = 'sign' }
---       )
+-- )
 --       local function get_signs()
 --         return vim
 --           .iter(signs)
 --           :map(function(item) return format_text(item[4], 'sign_text') end)
 --           :fold({}, function(_, item) return item.sign_hl_group end)
---       end
+-- end
 --
 --       local sns = get_signs()
 --       if sns ~= 'GitSignsStagedAdd' then return end

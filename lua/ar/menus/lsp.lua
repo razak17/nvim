@@ -33,6 +33,8 @@ function M.format_buf()
   local ft = vim.bo.filetype
   local parser = {
     json = '--parser json',
+    javascript = '--parser babel',
+    javascriptreact = '--parser babel',
     typescript = '--parser typescript',
     typescriptreact = '--parser typescript',
     html = '--parser html',
