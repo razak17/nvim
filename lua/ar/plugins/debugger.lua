@@ -64,9 +64,32 @@ return {
         desc = 'dap: step out',
       },
       {
-        '<localleader>dr',
+        '<localleader>drc',
+        function() require('dap').run_to_cursor() end,
+        desc = 'dap: run to cursor',
+      },
+      {
+        '<localleader>drl',
+        function() require('dap').run_last() end,
+        desc = 'dap: run last',
+      },
+      {
+        '<localleader>drr',
         function() require('dap').repl.toggle() end,
         desc = 'dap: toggle repl',
+      },
+      {
+        '<localleader>drs',
+        function() require('dap').restart() end,
+        desc = 'dap: restart',
+      },
+      {
+        '<localleader>ds',
+        function()
+          local widgets = require('dap.ui.widgets')
+          widgets.centered_float(widgets.scopes, { border = 'rounded' })
+        end,
+        desc = 'DAP Scopes',
       },
       {
         '<localleader>dw',
