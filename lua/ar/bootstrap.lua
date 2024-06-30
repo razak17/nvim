@@ -63,7 +63,7 @@ require('lazy').setup({
   checker = {
     enabled = true,
     concurrency = 30,
-    notify = true,
+    notify = false,
     frequency = 3600,
   },
   performance = {
