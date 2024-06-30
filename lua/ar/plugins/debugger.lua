@@ -42,14 +42,6 @@ return {
         desc = 'dap: log breakpoint',
       },
       {
-        '<localleader>dbx',
-        -- function() require('dap').clear_breakpoints() end,
-        function()
-          require('persistent-breakpoints.api').clear_all_breakpoints()
-        end,
-        desc = 'dap: clear breakpoint',
-      },
-      {
         '<localleader>dc',
         function() require('dap').continue() end,
         desc = 'dap: continue or start debugging',
@@ -369,6 +361,34 @@ return {
       { 'theHamsta/nvim-dap-virtual-text', opts = { all_frames = true } },
       {
         'Weissle/persistent-breakpoints.nvim',
+        keys = {
+          {
+            '<localleader>dbp',
+            -- function() require('dap').toggle_breakpoint() end,
+            function()
+              require('persistent-breakpoints.api').toggle_breakpoint()
+            end,
+            desc = 'dap: toggle breakpoint',
+          },
+          {
+            '<localleader>dbc',
+            -- function() require('dap').set_breakpoint(input('Breakpoint condition: ')) end,
+            function()
+              require('persistent-breakpoints.api').set_breakpoint(
+                'Breakpoint condition: '
+              )
+            end,
+            desc = 'dap: set conditional breakpoint',
+          },
+          {
+            '<localleader>dbx',
+            -- function() require('dap').clear_breakpoints() end,
+            function()
+              require('persistent-breakpoints.api').clear_all_breakpoints()
+            end,
+            desc = 'dap: clear breakpoint',
+          },
+        },
         opts = { load_breakpoints_event = { 'BufReadPost' } },
       },
     },
