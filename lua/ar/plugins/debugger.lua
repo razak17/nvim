@@ -2,6 +2,30 @@ local fn, ui = vim.fn, rvim.ui
 local input = vim.fn.input
 local codicons = ui.codicons
 
+-- Config inspired from https://github.com/nikolovlazar/dotfiles/blob/main/.config/nvim/lua/plugins/dap.lua
+-- and Lazyvim's https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/plugins/extras/dap/core.lua
+-- For further explanation, see https://www.youtube.com/watch?v=Ul_WPhS2bis
+
+-- stylua: ignore
+local js_based_languages = { 'typescript', 'javascript', 'typescriptreact', 'javascriptreact', 'vue', 'svelte' }
+
+---@param config {args?:string[]|fun():string[]?}
+local function get_args(config)
+  local args = type(config.args) == 'function' and (config.args() or {})
+    or config.args
+    or {}
+  config = vim.deepcopy(config)
+
+  ---@cast args string[]
+  config.args = function()
+    ---@diagnostic disable-next-line: redundant-parameter
+    local new_args = fn.input('Run with args: ', table.concat(args, ' ')) --[[@as string]]
+    return vim.split(fn.expand(new_args) --[[@as string]], ' ')
+  end
+
+  return config
+end
+
 rvim.debugger = {
   layout = { ft = { dart = 2 } },
   icons = {
@@ -19,20 +43,22 @@ return {
     cond = not rvim.plugins.minimal,
     keys = {
       {
-        '<localleader>dbp',
-        -- function() require('dap').toggle_breakpoint() end,
-        function() require('persistent-breakpoints.api').toggle_breakpoint() end,
-        desc = 'dap: toggle breakpoint',
-      },
-      {
-        '<localleader>dbc',
-        -- function() require('dap').set_breakpoint(input('Breakpoint condition: ')) end,
+        '<leader>da',
         function()
-          require('persistent-breakpoints.api').set_breakpoint(
-            'Breakpoint condition: '
-          )
+          if vim.fn.filereadable('.vscode/launch.json') then
+            local dap_vscode = require('dap.ext.vscode')
+            dap_vscode.json_decode = require('overseer.json').decode
+            dap_vscode.load_launchjs(nil, {
+              ['chrome'] = js_based_languages,
+              ['node'] = js_based_languages,
+              ['pwa-node'] = js_based_languages,
+              ['pwa-chrome'] = js_based_languages,
+              ['node-terminal'] = js_based_languages,
+            })
+          end
+          require('dap').continue({ before = get_args })
         end,
-        desc = 'dap: set conditional breakpoint',
+        desc = 'dap: run with args',
       },
       {
         '<localleader>dbm',
@@ -104,11 +130,6 @@ return {
         function() require('dap').terminate() end,
         desc = 'dap: terminate',
       },
-      {
-        '<localleader>du',
-        function() require('dapui').toggle({ reset = true }) end,
-        desc = 'dap-ui: toggle',
-      },
     },
     config = function()
       local dap = require('dap')
@@ -177,12 +198,7 @@ return {
         },
       }
 
-      for _, language in ipairs({
-        'typescript',
-        'typescriptreact',
-        'javascript',
-        'svelte',
-      }) do
+      for _, language in ipairs(js_based_languages) do
         require('dap').configurations[language] = {
           {
             type = 'pwa-node',
@@ -190,6 +206,7 @@ return {
             name = 'Launch current file (pwa-node)',
             program = '${file}',
             cwd = '${workspaceFolder}',
+            sourceMaps = true,
           },
           {
             type = 'pwa-node',
@@ -317,6 +334,26 @@ return {
             protocol = 'inspector',
             webRoot = vim.fn.getcwd(),
             userDataDir = false,
+            resolveSourceMapLocations = {
+              '${workspaceFolder}/**',
+              '!**/node_modules/**',
+            },
+
+            -- From https://github.com/lukas-reineke/dotfiles/blob/master/vim/lua/plugins/dap.lua
+            -- To test how it behaves
+            rootPath = '${workspaceFolder}',
+            cwd = '${workspaceFolder}',
+            console = 'integratedTerminal',
+            internalConsoleOptions = 'neverOpen',
+            sourceMapPathOverrides = {
+              ['./*'] = '${workspaceFolder}/src/*',
+            },
+          },
+          -- Divider for the launch.json derived configs
+          {
+            name = '----- ↓ launch.json configs (if available) ↓ -----',
+            type = '',
+            request = 'launch',
           },
         }
       end
@@ -329,7 +366,12 @@ return {
           {
             '<localleader>d?',
             function() require('dapui').eval(nil, { enter = true }) end,
-            desc = 'dapui: eval',
+            desc = 'dap-ui: eval',
+          },
+          {
+            '<localleader>du',
+            function() require('dapui').toggle({ reset = true }) end,
+            desc = 'dap-ui: toggle',
           },
         },
         opts = {
