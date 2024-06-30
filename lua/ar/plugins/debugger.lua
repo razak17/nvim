@@ -128,9 +128,9 @@ return {
         fn.sign_define('Dap' .. name, {
           text = sign[1],
           texthl = sign[2],
-        linehl = '',
-        numhl = '',
-      })
+          linehl = '',
+          numhl = '',
+        })
       end
 
       local vscode = require('dap.ext.vscode')
@@ -333,10 +333,38 @@ return {
       'nvim-neotest/nvim-nio',
       {
         'rcarriga/nvim-dap-ui',
+        keys = {
+          {
+            '<localleader>d?',
+            function() require('dapui').eval(nil, { enter = true }) end,
+            desc = 'dapui: eval',
+          },
+        },
         opts = {
           windows = { indent = 2 },
+          layouts = {
+            {
+              elements = { 'scopes', 'breakpoints', 'stacks', 'watches' },
+              size = 60,
+              position = 'left',
+            },
+            {
+              elements = { 'repl', 'console' },
+              size = 0.25,
+              position = 'bottom',
+            },
+          },
           floating = { border = rvim.ui.current.border },
         },
+        config = function(_, opts)
+          local dap = require('dap')
+          local dapui = require('dapui')
+          dapui.setup(opts)
+          local l = dap.listeners
+          l.after.event_initialized['dapui_config'] = function() dapui.open() end
+          l.before.event_exited['dapui_config'] = function() dapui.close() end
+          l.before.event_terminated['dapui_config'] = function() dapui.close() end
+        end,
       },
       { 'theHamsta/nvim-dap-virtual-text', opts = { all_frames = true } },
       {
