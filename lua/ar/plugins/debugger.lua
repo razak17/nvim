@@ -133,14 +133,17 @@ return {
       })
       end
 
+      local vscode = require('dap.ext.vscode')
+      local _filetypes = require('mason-nvim-dap.mappings.filetypes')
+      -- stylua: ignore
+      local filetypes = vim.tbl_deep_extend("force", _filetypes, {
+        ["node"] = { "javascriptreact", "typescriptreact", "typescript", "javascript" },
+        ["pwa-node"] = { "javascriptreact", "typescriptreact", "typescript", "javascript" },
+      })
+
       vim.schedule(function()
-        require('dap.ext.vscode').json_decode = require('overseer.json').decode
-        -- require('dap.ext.vscode').load_launchjs('.vscode/launch.json')
-        require('dap.ext.vscode').load_launchjs(
-          nil,
-          { node = { 'typescript', 'javascript' } }
-        )
-        require('overseer').patch_dap(true)
+        vscode.json_decode = require('overseer.json').decode
+        vscode.load_launchjs(nil, filetypes)
       end)
 
       dap.adapters.nlua = function(callback, config)
@@ -341,5 +344,11 @@ return {
         opts = { load_breakpoints_event = { 'BufReadPost' } },
       },
     },
+  },
+  {
+    'jay-babu/mason-nvim-dap.nvim',
+    dependencies = 'mason.nvim',
+    cmd = { 'DapInstall', 'DapUninstall' },
+    opts = {},
   },
 }
