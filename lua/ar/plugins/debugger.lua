@@ -1,6 +1,17 @@
+local fn, ui = vim.fn, rvim.ui
 local input = vim.fn.input
+local codicons = ui.codicons
 
-rvim.debugger = { layout = { ft = { dart = 2 } } }
+rvim.debugger = {
+  layout = { ft = { dart = 2 } },
+  icons = {
+    Breakpoint = { codicons.misc.bug, 'DapBreakpoint' }, -- 
+    BreakpointRejected = { codicons.misc.bug, 'DapBreakpointRejected' },
+    Stopped = { ui.icons.misc.dap_green, 'DapStopped' }, -- 󰁕
+    BreakpointCondition = { ' ', 'DiagnosticError' },
+    LogPoint = { '󰃷', 'DiagnosticInfo' },
+  },
+}
 
 return {
   {
@@ -108,57 +119,18 @@ return {
       },
     },
     config = function()
-      local fn, ui = vim.fn, rvim.ui
       local dap = require('dap')
 
       -- DON'T automatically stop at exceptions
       dap.defaults.fallback.exception_breakpoints = {}
 
-      fn.sign_define('DapBreakpoint', {
-        text = ui.codicons.misc.bug,
-        texthl = 'DapBreakpoint',
+      for name, sign in pairs(rvim.debugger.icons) do
+        fn.sign_define('Dap' .. name, {
+          text = sign[1],
+          texthl = sign[2],
         linehl = '',
         numhl = '',
       })
-
-      fn.sign_define('DapBreakpointRejected', {
-        text = ui.codicons.misc.bug,
-        texthl = 'DapBreakpointRejected',
-        linehl = '',
-        numhl = '',
-      })
-
-      fn.sign_define('DapStopped', {
-        text = ui.icons.misc.dap_green,
-        texthl = 'DapStopped',
-        linehl = '',
-        numhl = '',
-      })
-
-      fn.sign_define('DapBreakpointCondition', {
-        text = '󰙧',
-        texthl = 'DapStopped',
-        linehl = '',
-        numhl = '',
-      })
-
-      fn.sign_define('DapLogPoint', {
-        text = '󰃷',
-        texthl = 'DapStopped',
-        linehl = '',
-        numhl = '',
-      })
-
-      local ui_ok, dapui = pcall(require, 'dapui')
-      if not ui_ok then return end
-      dap.listeners.after.event_initialized['dapui_config'] = function()
-        dapui.open(rvim.debugger.layout.ft[vim.bo.ft])
-      end
-      dap.listeners.before.event_exited['dapui_config'] = function()
-        dapui.close()
-      end
-      dap.listeners.before.event_terminated['dapui_config'] = function()
-        dapui.close()
       end
 
       vim.schedule(function()
