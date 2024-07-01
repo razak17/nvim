@@ -57,7 +57,7 @@ return {
 
       local window_opts = {
         border = border,
-        winhighlight = 'FloatBorder:FloatBorder',
+        winhighlight = 'NormalFloat:FloatBorder',
       }
 
       local function tab(fallback)
