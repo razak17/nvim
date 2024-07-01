@@ -26,6 +26,7 @@ local function move_or_create_win(key)
     'gitcommit',
     'NeogitCommitMessage',
     'DiffviewFileHistory',
+    'DiffviewFiles',
     'qf',
     'Trouble',
   }
