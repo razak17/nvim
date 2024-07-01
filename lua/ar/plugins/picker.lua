@@ -194,7 +194,8 @@ return {
           prompt = prompt,
           -- find_opts = [[-type f -not -path '*/\.git/*' '*/\node_modules/*' -printf '%P\n']],
           -- rg_opts = "--color=never --files --hidden --follow -g '!.git' -g '!node_modules'",
-          fd_opts = "--color=never --type f --hidden --follow --exclude '.git' --exclude 'node_modules' --exclude '.obsidian'",
+          rg_opts = '--column --hidden --line-number --no-heading --color=always --smart-case --max-columns=4096 -e',
+          -- fd_opts = "--color=never --type f --hidden --follow --exclude '.git' --exclude 'node_modules' --exclude '.obsidian'",
           winopts = { title = format_title('Files', '') },
           fzf_opts = {
             ['--tiebreak'] = 'end',
