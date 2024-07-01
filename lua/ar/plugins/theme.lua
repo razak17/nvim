@@ -15,6 +15,12 @@ return {
     opts = { variant = 'fill' },
   },
   {
+    'projekt0n/github-nvim-theme',
+    lazy = false,
+    cond = not minimal,
+    priority = 1000,
+  },
+  {
     'LunarVim/horizon.nvim',
     lazy = false,
     cond = not minimal,
