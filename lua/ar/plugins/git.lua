@@ -102,8 +102,64 @@ return {
         end,
       },
       keymaps = {
-        view = { q = '<Cmd>DiffviewClose<CR>' },
-        file_panel = { q = '<Cmd>DiffviewClose<CR>' },
+        view = {
+          q = '<Cmd>DiffviewClose<CR>',
+          ['cp'] = function()
+            require('diffview.config').actions.prev_conflict()
+            vim.cmd('norm! zz') -- center on screen
+          end,
+          ['cn'] = function()
+            require('diffview.config').actions.next_conflict()
+            vim.cmd('norm! zz') -- center on screen
+          end,
+        },
+        file_panel = {
+          q = '<Cmd>DiffviewClose<CR>',
+          {
+            'n',
+            'cp',
+            function() require('diffview.config').actions.prev_conflict() end,
+            { desc = 'go to previous conflict' },
+          },
+          {
+            'n',
+            'cn',
+            function() require('diffview.config').actions.next_conflict() end,
+            { desc = 'go to next conflict' },
+          },
+          {
+            'n',
+            'F',
+            function() -- jump to first file in the diff
+              local view = require('diffview.lib').get_current_view()
+              if view then
+                view:set_file(view.panel:ordered_file_list()[1], false, true)
+              end
+            end,
+            { desc = 'jump to first file' },
+          },
+          {
+            'n',
+            'L',
+            function()
+              if vim.w.orig_width == nil then
+                local bufnr = vim.api.nvim_win_get_buf(0)
+                local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
+                local maxcols = 0
+                for _, line in ipairs(lines) do
+                  local cols = #line
+                  if cols > maxcols then maxcols = cols end
+                end
+                vim.w.orig_width = vim.api.nvim_win_get_width(0)
+                vim.api.nvim_win_set_width(0, maxcols)
+              else
+                vim.api.nvim_win_set_width(0, vim.w.orig_width)
+                vim.w.orig_width = nil
+              end
+            end,
+            { desc = 'toggle expansion of file panel to fit' },
+          },
+        },
         file_history_panel = { q = '<Cmd>DiffviewClose<CR>' },
       },
     },
