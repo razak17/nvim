@@ -76,7 +76,7 @@ end
 
 --- Change the brightness of a color, negative numbers darken and positive ones brighten
 ---@param color string A hex color
----@param percent float a negative number darkens and a positive one brightens
+---@param percent number a negative number darkens and a positive one brightens
 local function tint(color, percent)
   assert(
     color and percent,
@@ -165,7 +165,10 @@ local function set(ns, name, opts)
     ns = { ns, 'number' },
   })
 
-  local hl = opts.clear and {} or get_hl_as_hex({ name = opts.inherit or name })
+  local hl = opts.clear and {}
+    or get_hl_as_hex({
+      name = opts.inherit or name --[[@as string]],
+    })
   for attribute, hl_data in pairs(opts) do
     local new_data = resolve_from_attribute(hl_data, attribute)
     if attrs[attribute] then hl[attribute] = new_data end
