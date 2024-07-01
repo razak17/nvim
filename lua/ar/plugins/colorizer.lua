@@ -18,14 +18,10 @@ return {
     config = function()
       local ccc = require('ccc')
       local p = ccc.picker
-      p.hex.pattern = {
-        [=[\v%(^|[^[:keyword:]])\zs#(\x\x)(\x\x)(\x\x)>]=],
-        [=[\v%(^|[^[:keyword:]])\zs#(\x\x)(\x\x)(\x\x)(\x\x)>]=],
-      }
       ccc.setup({
         win_opts = { border = rvim.ui.current.border },
         pickers = {
-          p.hex,
+          p.hex_long,
           p.css_rgb,
           p.css_hsl,
           p.css_hwb,
