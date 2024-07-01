@@ -94,7 +94,18 @@ return {
             .iter(pairs(lint.linters_by_ft))
             :map(function(_, l)
               if type(l) == 'table' then
-                table.insert(packages, table.concat(l, ','))
+                if vim.tbl_contains(l, 'golangcilint') then
+                  table.insert(packages, 'golangci-lint')
+                  local others = vim.tbl_filter(
+                    function(v) return v ~= 'golangcilint' end,
+                    l
+                  )
+                  if #others > 0 then
+                    table.insert(packages, table.concat(others, ','))
+                  end
+                else
+                  table.insert(packages, table.concat(l, ','))
+                end
               end
               if type(l) == 'string' then table.insert(packages, l) end
             end)
