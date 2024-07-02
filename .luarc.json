@@ -15,6 +15,7 @@
     "it",
     "before_each",
     "after_each",
+    "join_paths",
     "packer_plugins",
     "pending",
     "hs",

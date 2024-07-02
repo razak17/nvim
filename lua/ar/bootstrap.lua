@@ -39,16 +39,7 @@ if not vim.uv.fs_stat(lazy_path) then
   })
 end
 vim.opt.rtp:prepend(lazy_path)
-local plugins_path = fn.stdpath('config') .. '/lua/ar/plugins'
-local plugins_list = vim.fs.find(function(name, _)
-  local filename = name:match('(.+)%.lua$')
-  return name:match('.*.lua$') and not rvim.module_disabled(filename)
-end, { path = plugins_path, limit = math.huge, type = 'file' })
-local spec = vim.iter(plugins_list):fold({}, function(acc, path)
-  local _, pos = path:find(plugins_path)
-  acc[#acc + 1] = { import = 'ar.plugins.' .. path:sub(pos + 2, #path - 4) }
-  return acc
-end)
+local spec = rvim.plugins_spec()
 require('lazy').setup({
   spec = plugins_enabled and spec or {},
   defaults = { lazy = true },

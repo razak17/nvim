@@ -136,6 +136,20 @@ function rvim.dirs_match(dirs_table, dir)
   return false
 end
 
+--- Get plugins spec
+function rvim.plugins_spec()
+  local plugins_path = fn.stdpath('config') .. '/lua/ar/plugins'
+  local plugins_list = vim.fs.find(function(name, _)
+    local filename = name:match('(.+)%.lua$')
+    return name:match('.*.lua$') and not rvim.module_disabled(filename)
+  end, { path = plugins_path, limit = math.huge, type = 'file' })
+  return vim.iter(plugins_list):fold({}, function(acc, path)
+    local _, pos = path:find(plugins_path)
+    acc[#acc + 1] = { import = 'ar.plugins.' .. path:sub(pos + 2, #path - 4) }
+    return acc
+  end)
+end
+
 --- Check if a plugin is defined in lazy. Useful with lazy loading
 --- when a plugin is not necessarily loaded yet.
 ---@param plugin string The plugin to search for.
