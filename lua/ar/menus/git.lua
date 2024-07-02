@@ -32,23 +32,6 @@ local function create_mappings(mappings, map)
   )
 end
 
-local function cur_file_project_root()
-  local projects = rvim.get_projects()
-  local full_path = fn.expand('%:p')
-  if projects == nil then return end
-
-  for _, project in pairs(projects) do
-    if
-      full_path:match('^' .. rvim.escape_pattern(project) .. '/')
-      and fn.isdirectory(project .. '/.git') ~= 0
-    then
-      return project
-    end
-  end
-  -- no project that matches, return the current folder
-  return fn.getcwd()
-end
-
 -- https://github.com/emmanueltouzery/nvim_config/blob/main/lua/leader_shortcuts.lua#L331
 local function telescope_commits_mappings(prompt_bufnr, map)
   local mappings = {
@@ -82,7 +65,7 @@ local function telescope_commits_mappings(prompt_bufnr, map)
         local value = action_state.get_selected_entry().value
         local rev = utils.get_os_command_output(
           { 'git', 'rev-parse', 'upstream/master' },
-          vim.loop.cwd()
+          vim.uv.cwd()
         )[1]
         vim.cmd('DiffviewOpen ' .. rev .. ' ' .. value)
       end,
@@ -325,7 +308,7 @@ end
 -- Diff
 --------------------------------------------------------------------------------
 function M.project_history()
-  local project_root = cur_file_project_root()
+  local project_root = vim.fs.root(0, '.git')
   if rvim.falsy(project_root) then return end
   vim.cmd('DiffviewFileHistory ' .. project_root)
 end
@@ -538,7 +521,7 @@ local function telescope_branches_mappings(prompt_bufnr, map)
         actions.close(prompt_bufnr)
         vim.cmd(
           'DiffviewFileHistory '
-            .. cur_file_project_root()
+            .. vim.fs.root(0, '.git')
             .. ' --range='
             .. branch
         )
