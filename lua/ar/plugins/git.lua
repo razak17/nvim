@@ -211,12 +211,12 @@ return {
         bmap({ 'n', 'v' }, '<leader>hr', '<Cmd>Gitsigns reset_hunk<CR>', { desc = 'reset hunk' })
         bmap({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>', { desc = 'select hunk' })
 
-        map('n', '[h', function()
+        map('n', ']h', function()
           vim.schedule(function() gs.next_hunk() end)
           return '<Ignore>'
         end, { expr = true, desc = 'next hunk' })
 
-        map('n', ']h', function()
+        map('n', '[h', function()
           vim.schedule(function() gs.prev_hunk() end)
           return '<Ignore>'
         end, { expr = true, desc = 'previous hunk' })
