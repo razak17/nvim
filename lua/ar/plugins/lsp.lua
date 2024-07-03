@@ -673,5 +673,15 @@ return {
     dependencies = { 'SmiteshP/nvim-navic' },
     opts = { lsp = { auto_attach = true } },
   },
+  {
+    'chrisgrieser/nvim-lsp-endhints',
+    cond = rvim.lsp.enable,
+    event = 'LspAttach',
+    opts = {
+      icons = { type = '󰜁 ', parameter = '󰏪 ' },
+      label = { padding = 1, marginLeft = 0 },
+      autoEnableHints = rvim.lsp.inlay_hint.enable,
+    },
+  },
   -- }}}
 }
