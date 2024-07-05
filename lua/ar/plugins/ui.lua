@@ -115,8 +115,10 @@ return {
     end,
     opts = { wait_ms = '300' },
   },
+  -- use fork until PR is merged: https://github.com/tummetott/reticle.nvim/pull/13
   {
-    'tummetott/reticle.nvim',
+    -- 'tummetott/reticle.nvim',
+    'btmxh/reticle.nvim',
     cond = not minimal and not niceties, -- auto-cursorline kinda does this already
     event = 'VeryLazy',
     opts = {
