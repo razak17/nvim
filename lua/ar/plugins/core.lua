@@ -8,13 +8,13 @@ return {
   ------------------------------------------------------------------------------
   'nvim-lua/plenary.nvim',
   'MunifTanjim/nui.nvim',
-  'nvim-tree/nvim-web-devicons',
   'b0o/schemastore.nvim',
   'kevinhwang91/promise-async',
   'kkharji/sqlite.lua',
   'tpope/vim-rhubarb',
   -- { 'lewis6991/fileline.nvim', lazy = false },
   -- { 'axlebedev/vim-footprints', lazy = false },
+  { 'nvim-tree/nvim-web-devicons', cond = false },
   { 'stevearc/profile.nvim', cond = not minimal, lazy = false },
   {
     'romainl/vim-cool',

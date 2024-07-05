@@ -4,6 +4,16 @@ local minimal = ar.plugins.minimal
 return {
   'echasnovski/mini.hipatterns',
   {
+    'echasnovski/mini.icons',
+    opts = {},
+    init = function()
+      package.preload['nvim-web-devicons'] = function()
+        require('mini.icons').mock_nvim_web_devicons()
+        return package.loaded['nvim-web-devicons']
+      end
+    end,
+  },
+  {
     'echasnovski/mini.indentscope',
     cond = not ar.plugins.minimal and ar.plugins.niceties,
     event = 'BufRead',
