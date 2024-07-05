@@ -1,16 +1,16 @@
 return {
   'smoka7/hydra.nvim',
-  cond = not rvim.plugins.minimal,
+  cond = not ar.plugins.minimal,
   event = 'VeryLazy',
   config = function()
     local Hydra = require('hydra')
     local pcmd = require('hydra.keymap-util').pcmd
     local hint_opts =
-      { position = 'bottom', border = rvim.ui.current.border, type = 'window' }
+      { position = 'bottom', border = ar.ui.current.border, type = 'window' }
 
-    local splits = rvim.reqcall('smart-splits')
-    local close_buffers = rvim.reqcall('close_buffers')
-    local textcase = rvim.reqcall('textcase')
+    local splits = ar.reqcall('smart-splits')
+    local close_buffers = ar.reqcall('close_buffers')
+    local textcase = ar.reqcall('textcase')
 
     local base_config = function(opts)
       return vim.tbl_extend('force', {

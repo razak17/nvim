@@ -1,6 +1,6 @@
-local enabled = rvim.plugin.env.enable
+local enabled = ar.plugin.env.enable
 
-if not rvim or rvim.none or not enabled then return end
+if not ar or ar.none or not enabled then return end
 
 local api, fn, fs = vim.api, vim.fn, vim.fs
 local fmt = string.format

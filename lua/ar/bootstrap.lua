@@ -1,4 +1,4 @@
-if not rvim then return end
+if not ar then return end
 
 local g, fn = vim.g, vim.fn
 local data = vim.fn.stdpath('data')
@@ -7,7 +7,7 @@ local data = vim.fn.stdpath('data')
 -- Project local config
 --------------------------------------------------------------------------------
 local local_config = io.open(vim.fn.expand('%:p:h') .. '/.rvim.json', 'r')
-if local_config then rvim.project_config(local_config) end
+if local_config then ar.project_config(local_config) end
 --------------------------------------------------------------------------------
 -- Set leader keys
 --------------------------------------------------------------------------------
@@ -31,7 +31,7 @@ require('ar.ui')
 -- Plugins
 --------------------------------------------------------------------------------
 local lazy_path = join_paths(data, 'lazy', 'lazy.nvim')
-local plugins_enabled = rvim.plugins.enable
+local plugins_enabled = ar.plugins.enable
 if not vim.uv.fs_stat(lazy_path) then
   -- stylua: ignore
   fn.system({ 'git', 'clone', '--filter=blob:none', '--single-branch',
@@ -39,7 +39,7 @@ if not vim.uv.fs_stat(lazy_path) then
   })
 end
 vim.opt.rtp:prepend(lazy_path)
-local spec = rvim.plugins_spec()
+local spec = ar.plugins_spec()
 require('lazy').setup({
   spec = plugins_enabled and spec or {},
   defaults = { lazy = true },
@@ -50,7 +50,7 @@ require('lazy').setup({
     patterns = { 'razak17' },
     fallback = true,
   },
-  ui = { border = rvim.ui.current.border },
+  ui = { border = ar.ui.current.border },
   checker = {
     enabled = true,
     concurrency = 30,
@@ -60,7 +60,7 @@ require('lazy').setup({
   performance = {
     rtp = {
       paths = { join_paths(data, 'site'), join_paths(data, 'site', 'after') },
-      disabled_plugins = plugins_enabled and rvim.rtp.disabled or {},
+      disabled_plugins = plugins_enabled and ar.rtp.disabled or {},
     },
   },
 })
@@ -68,6 +68,6 @@ map('n', '<localleader>L', '<cmd>Lazy<CR>', { desc = 'toggle lazy ui' })
 --------------------------------------------------------------------------------
 -- Color Scheme
 --------------------------------------------------------------------------------
-if not plugins_enabled then rvim.load_colorscheme('habamax') end
+if not plugins_enabled then ar.load_colorscheme('habamax') end
 
 if vim.g.neovide then require('ar.neovide') end

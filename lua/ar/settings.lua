@@ -1,4 +1,4 @@
-if not rvim then return end
+if not ar then return end
 
 local o, opt, fn, v = vim.o, vim.opt, vim.fn, vim.v
 --------------------------------------------------------------------------------
@@ -34,7 +34,7 @@ o.splitkeep = 'screen'
 o.splitbelow = true
 o.splitright = true
 o.eadirection = 'hor'
--- exclude usetab rvim we do not want to jump to buffers in already open tabs
+-- exclude usetab as we do not want to jump to buffers in already open tabs
 -- do not use split or vsplit to ensure we don't open any new windows
 o.switchbuf = 'useopen,uselast'
 opt.fillchars = {
@@ -91,13 +91,13 @@ opt.foldnestmax = 10
 -- Grepprg {{{1
 --------------------------------------------------------------------------------
 -- Use faster grep alternatives if possible
-if rvim and not rvim.falsy(fn.executable('rg')) then
+if ar and not ar.falsy(fn.executable('rg')) then
   vim.o.grepprg = [[rg --glob "!.git" --no-heading --vimgrep --follow $*]]
   vim.o.grepprg =
     [[rg --hidden --glob "!.git" --no-heading --smart-case --vimgrep --follow $*]]
   opt.grepformat = opt.grepformat ^ { '%f:%l:%c:%m' }
   goto continue
-elseif rvim and not rvim.falsy(fn.executable('ag')) then
+elseif ar and not ar.falsy(fn.executable('ag')) then
   vim.o.grepprg = [[ag --nogroup --nocolor --vimgrep]]
   opt.grepformat = opt.grepformat ^ { '%f:%l:%c:%m' }
 end
@@ -106,7 +106,7 @@ end
 -- Wild and file globbing stuff in command mode {{{1
 --------------------------------------------------------------------------------
 o.wildcharm = ('\t'):byte()
-o.wildmode = 'list:full' -- Shows a menu bar rvim opposed to an enormous list
+o.wildmode = 'list:full' -- Shows a menu bar as opposed to an enormous list
 o.wildignorecase = true -- Ignore case when completing file names and directories
 opt.wildignore = {
   '*.o',
@@ -179,14 +179,14 @@ opt.completeopt = { 'menuone', 'noselect' }
 o.hlsearch = true
 o.autowriteall = true -- automatically :write before running commands and changing files
 opt.clipboard = { 'unnamedplus' }
-o.laststatus = rvim.plugins.minimal and 0 or 3
+o.laststatus = ar.plugins.minimal and 0 or 3
 o.showtabline = 0
 o.termguicolors = true
 opt.diffopt:append('linematch:50')
 --------------------------------------------------------------------------------
 -- Emoji {{{1
 --------------------------------------------------------------------------------
--- emoji is true by default but makes (n)vim treat all emoji rvim double width
+-- emoji is true by default but makes (n)vim treat all emoji as double width
 -- which breaks rendering so we turn this off.
 -- CREDIT: https://www.youtube.com/watch?v=F91VWOelFNE
 o.emoji = false
@@ -199,8 +199,8 @@ opt.cursorlineopt = { 'both' }
 --------------------------------------------------------------------------------
 -- Title {{{1
 --------------------------------------------------------------------------------
-function rvim.modified_icon()
-  return vim.bo.modified and rvim.ui.codicons.misc.circle or ''
+function ar.modified_icon()
+  return vim.bo.modified and ar.ui.codicons.misc.circle or ''
 end
 -- titlestring = ' ❐ %{fnamemodify(getcwd(), ":t")} %m'
 o.titlestring = '%<%F%=%l/%L - nvim'
@@ -228,7 +228,7 @@ opt.sessionoptions = {
 -- What to save for views and sessions:
 opt.viewoptions = { 'cursor', 'folds' } -- save/restore just these (with `:{mk,load}view`)
 o.virtualedit = 'block' -- allow cursor to move where there is no text in visual block mode
--- opt.shadafile = join_paths(vim.fn.stdpath('cache'), 'shada', 'rvim.shada')
+-- opt.shadafile = join_paths(vim.fn.stdpath('cache'), 'shada', 'as.shada')
 --------------------------------------------------------------------------------
 -- Jumplist
 --------------------------------------------------------------------------------
@@ -271,4 +271,4 @@ o.mousefocus = true
 o.mousemoveevent = true
 opt.mousescroll = { 'ver:1', 'hor:6' }
 --------------------------------------------------------------------------------
-o.exrc = rvim.has('nvim-0.9')
+o.exrc = ar.has('nvim-0.9')

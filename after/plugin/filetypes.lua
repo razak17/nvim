@@ -1,8 +1,8 @@
-if not rvim or rvim.none then return end
+if not ar or ar.none then return end
 
-local settings, highlight = rvim.filetype_settings, rvim.highlight
+local settings, highlight = ar.filetype_settings, ar.highlight
 local cmd, api, fn, opt_l = vim.cmd, vim.api, vim.fn, vim.opt_local
-local is_available = rvim.is_available
+local is_available = ar.is_available
 
 vim.treesitter.language.register('gitcommit', 'NeogitCommitMessage')
 
@@ -190,7 +190,7 @@ settings({
     },
     function()
       vim.schedule(function()
-        -- Schedule this call rvim highlights are not set correctly if there is not a delay
+        -- Schedule this call as highlights are not set correctly if there is not a delay
         highlight.set_winhl(
           'gitcommit',
           0,
@@ -229,8 +229,8 @@ settings({
     },
     -- stylua: ignore
     mappings = {
-      { 'n', 'dd', rvim.list.qf.delete, { buffer = 0, desc = 'delete current quickfix entry' } },
-      { 'v', 'd', rvim.list.qf.delete, { buffer = 0, desc = 'delete selected quickfix entry' } },
+      { 'n', 'dd', ar.list.qf.delete, { buffer = 0, desc = 'delete current quickfix entry' } },
+      { 'v', 'd', ar.list.qf.delete, { buffer = 0, desc = 'delete selected quickfix entry' } },
       {
         'n',
         'w',
@@ -238,7 +238,7 @@ settings({
           local qf_list = fn.getqflist()
           local line = api.nvim_win_get_cursor(0)
           local qf_entry = qf_list[line[1]]
-          rvim.open_with_window_picker(qf_entry.bufnr)
+          ar.open_with_window_picker(qf_entry.bufnr)
         end,
         { buffer = 0, desc = 'open entry with window picker' },
       },
@@ -248,13 +248,13 @@ settings({
     function()
       -- force quickfix to open beneath all other splits
       cmd.wincmd('J')
-      rvim.adjust_split_height(5, 10)
+      ar.adjust_split_height(5, 10)
     end,
   },
   rust = {
     opt = { spell = true },
     function()
-      rvim.ftplugin_conf({
+      ar.ftplugin_conf({
         cmp = function(cmp)
           cmp.setup.filetype('norg', {
             sorting = {

@@ -1,11 +1,11 @@
-if not rvim or rvim.none then return end
+if not ar or ar.none then return end
 
 local cwd = vim.fn.getcwd()
 
-local disabled = not rvim.lsp.enable
-  or not rvim.plugins.enable
-  or rvim.plugins.minimal
-  or (cwd and rvim.dirs_match(rvim.lsp.disabled.directories, cwd))
+local disabled = not ar.lsp.enable
+  or not ar.plugins.enable
+  or ar.plugins.minimal
+  or (cwd and ar.dirs_match(ar.lsp.disabled.directories, cwd))
 
 if disabled then return end
 
@@ -13,11 +13,11 @@ local lsp, fn, api, fmt = vim.lsp, vim.fn, vim.api, string.format
 -- local L = vim.lsp.log_levels
 local L, S = vim.lsp.log_levels, vim.diagnostic.severity
 local M = vim.lsp.protocol.Methods
-local conform = rvim.is_available('conform.nvim')
+local conform = ar.is_available('conform.nvim')
 
 local diagnostic = vim.diagnostic
 local augroup, lsp_icons, border =
-  rvim.augroup, rvim.ui.codicons.lsp, rvim.ui.current.border
+  ar.augroup, ar.ui.codicons.lsp, ar.ui.current.border
 
 local format_exclusions = {
   format_on_save = { 'zsh' },
@@ -57,7 +57,7 @@ local function format(opts)
     local lsp_fallback
     local lsp_fallback_inclusions = { 'eslint' }
     for _, c in pairs(client_names) do
-      if rvim.find_string(lsp_fallback_inclusions, c) then
+      if ar.find_string(lsp_fallback_inclusions, c) then
         lsp_fallback = 'always'
         break
       end
@@ -93,7 +93,7 @@ local function show_related_locations(diag)
       fn.fnamemodify(vim.uri_to_fname(info.location.uri), ':p:.'),
       info.location.range.start.line + 1,
       info.location.range.start.character + 1,
-      not rvim.falsy(info.message) and (': %s'):format(info.message) or ''
+      not ar.falsy(info.message) and (': %s'):format(info.message) or ''
     )
   end
   return diag
@@ -118,7 +118,7 @@ lsp.handlers[M.textDocument_publishDiagnostics] = function(
     while idx <= #result.diagnostics do
       local entry = result.diagnostics[idx]
 
-      if rvim.is_available('ts-error-translator.nvim') then
+      if ar.is_available('ts-error-translator.nvim') then
         local translate = require('ts-error-translator').translate
 
         if translate then
@@ -164,7 +164,7 @@ local function jump_to_first_definition(result, client)
     return
   end
 
-  if not rvim.is_available('telescope.nvim') then
+  if not ar.is_available('telescope.nvim') then
     -- show in qf if telescope is not available
     fn.setqflist({}, ' ', {
       title = 'LSP locations',
@@ -241,8 +241,8 @@ local function setup_mappings(client, bufnr)
     return function()
       diagnostic.jump({
         count = -1,
-        float = rvim.lsp.hover_diagnostics.go_to
-          and not rvim.lsp.hover_diagnostics.enable,
+        float = ar.lsp.hover_diagnostics.go_to
+          and not ar.lsp.hover_diagnostics.enable,
         severity = {
           min = vim.diagnostic.severity.HINT,
         },
@@ -253,8 +253,8 @@ local function setup_mappings(client, bufnr)
     return function()
       diagnostic.jump({
         count = 1,
-        float = rvim.lsp.hover_diagnostics.go_to
-          and not rvim.lsp.hover_diagnostics.enable,
+        float = ar.lsp.hover_diagnostics.go_to
+          and not ar.lsp.hover_diagnostics.enable,
         severity = {
           min = vim.diagnostic.severity.HINT,
         },
@@ -292,12 +292,22 @@ local function setup_mappings(client, bufnr)
       -- lsp.buf.code_action,
       function()
         vim.lsp.buf.code_action({
-          context = {
-            diagnostics = rvim.lsp.get_diagnostic_at_cursor(),
-          },
+          context = { diagnostics = ar.lsp.get_diagnostic_at_cursor() },
         })
       end,
       desc = 'code action',
+      capability = M.textDocument_codeAction,
+    },
+    {
+      { 'n', 'x' },
+      '<leader>lA',
+      function()
+        vim.lsp.buf.code_action({
+          apply = true,
+          context = { only = { 'source' }, diagnostics = {} },
+        })
+      end,
+      desc = 'source action',
       capability = M.textDocument_codeAction,
     },
     {
@@ -342,7 +352,7 @@ local function setup_mappings(client, bufnr)
       lsp.buf.incoming_calls,
       desc = 'incoming calls',
       capability = M.textDocument_references,
-      disabled = rvim.is_available('lspsaga.nvim'),
+      disabled = ar.is_available('lspsaga.nvim'),
     },
     {
       'n',
@@ -377,7 +387,7 @@ local function setup_mappings(client, bufnr)
       '<localleader>lc',
       '<Cmd>lua =vim.lsp.get_clients()[1].server_capabilities<CR>',
       desc = 'server capabilities',
-      disabled = rvim.is_available('lspsaga.nvim'),
+      disabled = ar.is_available('lspsaga.nvim'),
     },
   }
 
@@ -401,7 +411,7 @@ end
 --------------------------------------------------------------------------------
 local ts_overrides = {
   semantic_tokens = function(bufnr, client, token)
-    if not rvim.lsp.semantic_tokens.enable then return end
+    if not ar.lsp.semantic_tokens.enable then return end
 
     if
       token.type == 'variable'
@@ -412,7 +422,7 @@ local ts_overrides = {
     end
   end,
   on_attach = function(client, bufnr)
-    if rvim.is_available('twoslash-queries.nvim') then
+    if ar.is_available('twoslash-queries.nvim') then
       require('twoslash-queries').attach(client, bufnr)
     end
     -- this is important, otherwise tsserver will format ts/js
@@ -463,19 +473,19 @@ local function setup_autocommands(client, buf)
       buffer = buf,
       desc = 'LSP: Show diagnostics',
       command = function()
-        if not rvim.lsp.hover_diagnostics.enable then return end
+        if not ar.lsp.hover_diagnostics.enable then return end
         if
           vim.b.lsp_hover_win and api.nvim_win_is_valid(vim.b.lsp_hover_win)
         then
           return
         end
-        vim.diagnostic.open_float({ scope = rvim.lsp.hover_diagnostics.scope })
+        vim.diagnostic.open_float({ scope = ar.lsp.hover_diagnostics.scope })
       end,
     })
   end
 
   if client.supports_method(M.textDocument_inlayHint, { bufnr = buf }) then
-    lsp.inlay_hint.enable(rvim.lsp.inlay_hint.enable, { bufnr = buf })
+    lsp.inlay_hint.enable(ar.lsp.inlay_hint.enable, { bufnr = buf })
   end
 
   if client.supports_method(M.textDocument_formatting) then
@@ -487,7 +497,7 @@ local function setup_autocommands(client, buf)
         if
           not vim.g.formatting_disabled
           and not vim.b[buf].formatting_disabled
-          and rvim.lsp.format_on_save.enable
+          and ar.lsp.format_on_save.enable
         then
           local clients = vim.tbl_filter(
             function(c) return c.supports_method(M.textDocument_formatting) end,
@@ -543,10 +553,8 @@ end
 local function on_attach(client, bufnr)
   setup_autocommands(client, bufnr)
   setup_mappings(client, bufnr)
-  if rvim.lsp.semantic_tokens.enable then
-    setup_semantic_tokens(client, bufnr)
-  end
-  if not rvim.completion.enable then require('ar.compl')(client, bufnr) end
+  if ar.lsp.semantic_tokens.enable then setup_semantic_tokens(client, bufnr) end
+  if not ar.completion.enable then require('ar.compl')(client, bufnr) end
 end
 
 augroup('LspSetupAutoCommands', {
@@ -567,7 +575,7 @@ augroup('LspSetupAutoCommands', {
   event = 'DiagnosticChanged',
   desc = 'Update the diagnostic locations',
   command = function(args)
-    if not rvim.lsp.omnifunc.enable then
+    if not ar.lsp.omnifunc.enable then
       diagnostic.setloclist({ open = false })
     end
     if #args.data.diagnostics == 0 then vim.cmd('silent! lclose') end
@@ -624,7 +632,7 @@ local function get_signs(kind)
   }
 end
 
-function rvim.get_lsp_signs()
+function ar.get_lsp_signs()
   return {
     text = get_signs(),
     texthl = get_signs(''),
@@ -635,7 +643,7 @@ function rvim.get_lsp_signs()
 end
 
 diagnostic.config({
-  signs = rvim.lsp.signs.enable and rvim.get_lsp_signs() or false,
+  signs = ar.lsp.signs.enable and ar.get_lsp_signs() or false,
   underline = true,
   update_in_insert = false,
   severity_sort = true,
@@ -663,7 +671,7 @@ diagnostic.config({
 --------------------------------------------------------------------------------
 -- LSP Progress
 --------------------------------------------------------------------------------
-if rvim.lsp.progress.enable then require('ar.lsp_progress') end
+if ar.lsp.progress.enable then require('ar.lsp_progress') end
 --------------------------------------------------------------------------------
 -- Code Action
 --------------------------------------------------------------------------------
@@ -680,7 +688,7 @@ if rvim.lsp.progress.enable then require('ar.lsp_progress') end
 --- code for filter and build can be removed).
 ---
 ---@return table # A table of LSP Diagnostic
-function rvim.lsp.get_diagnostic_at_cursor()
+function ar.lsp.get_diagnostic_at_cursor()
   local cur_bufnr = api.nvim_get_current_buf()
   local line, col = unpack(api.nvim_win_get_cursor(0)) -- line is 1-based indexing
   -- Get a table of diagnostics at the current line. The structure of the

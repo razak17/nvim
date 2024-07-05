@@ -3,7 +3,7 @@
 -- Buffer number and window id for the floating window
 
 local api = vim.api
-local border = rvim.ui.current.border
+local border = ar.ui.current.border
 
 local M = {
   bufnr = nil,
@@ -53,7 +53,7 @@ local function get_lsp_progress_msg()
   return message
 end
 
-rvim.augroup('CustomLspProgress', {
+ar.augroup('CustomLspProgress', {
   event = 'LspProgress',
   pattern = '*',
   command = function()

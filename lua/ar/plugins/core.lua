@@ -1,6 +1,6 @@
 local cmd, fn = vim.cmd, vim.fn
-local border = rvim.ui.current.border
-local minimal, niceties = rvim.plugins.minimal, rvim.plugins.niceties
+local border = ar.ui.current.border
+local minimal, niceties = ar.plugins.minimal, ar.plugins.niceties
 
 return {
   ------------------------------------------------------------------------------
@@ -26,7 +26,7 @@ return {
     'olimorris/persisted.nvim',
     cond = not minimal,
     lazy = false,
-    init = function() rvim.command('ListSessions', 'Telescope persisted') end,
+    init = function() ar.command('ListSessions', 'Telescope persisted') end,
     opts = {
       use_git_branch = true,
       save_dir = fn.expand(vim.fn.stdpath('cache') .. '/sessions/'),
@@ -105,7 +105,7 @@ return {
     init = function()
       local enabled = false
       local config_set = false
-      rvim.command('KeyCastrToggle', function()
+      ar.command('KeyCastrToggle', function()
         local keycastr = require('keycastr')
         if not config_set then
           keycastr.config.set({
@@ -128,7 +128,7 @@ return {
   },
   {
     'chrishrb/gx.nvim',
-    cond = not rvim.use_local_gx and not minimal,
+    cond = not ar.use_local_gx and not minimal,
     keys = { { 'gx', '<cmd>Browse<cr>', mode = { 'n', 'x' } } },
     cmd = { 'Browse' },
     init = function() vim.g.netrw_nogx = 1 end,
@@ -207,7 +207,7 @@ return {
   },
   {
     'jpalardy/vim-slime',
-    cond = not minimal and rvim.plugins.niceties,
+    cond = not minimal and ar.plugins.niceties,
     event = 'VeryLazy',
     -- stylua: ignore
     keys = {
@@ -281,7 +281,7 @@ return {
   },
   {
     'bgaillard/readonly.nvim',
-    cond = not minimal and rvim.plugins.niceties,
+    cond = not minimal and ar.plugins.niceties,
     lazy = false,
     opts = {
       secured_files = {

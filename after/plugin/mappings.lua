@@ -1,8 +1,8 @@
-if not rvim or rvim.none then return end
+if not ar or ar.none then return end
 
 local fn, api, fmt = vim.fn, vim.api, string.format
-local is_available = rvim.is_available
-local command = rvim.command
+local is_available = ar.is_available
+local command = ar.command
 
 local recursive_map = function(mode, lhs, rhs, opts)
   opts = opts or {}
@@ -301,59 +301,59 @@ nnoremap('<C-c>', '<Esc>')
 --------------------------------------------------------------------------------
 -- Web Search
 --------------------------------------------------------------------------------
-function rvim.mappings.ddg(path)
-  rvim.web_search(path, 'https://html.duckduckgo.com/html?q=')
+function ar.mappings.ddg(path)
+  ar.web_search(path, 'https://html.duckduckgo.com/html?q=')
 end
-function rvim.mappings.gh(path)
-  rvim.web_search(path, 'https://github.com/search?q=')
+function ar.mappings.gh(path)
+  ar.web_search(path, 'https://github.com/search?q=')
 end
 
 -- Search DuckDuckGo
 nnoremap(
   '<localleader>?',
-  [[:lua rvim.mappings.ddg(vim.fn.expand("<cword>"))<CR>]],
+  [[:lua ar.mappings.ddg(vim.fn.expand("<cword>"))<CR>]],
   { desc = 'search word' }
 )
 xnoremap(
   '<localleader>?',
-  [["gy:lua rvim.mappings.ddg(vim.api.nvim_eval("@g"))<CR>gv]],
+  [["gy:lua ar.mappings.ddg(vim.api.nvim_eval("@g"))<CR>gv]],
   { desc = 'search word' }
 )
 -- Search Github
 nnoremap(
   '<localleader>!',
-  [[:lua rvim.mappings.gh(vim.fn.expand("<cword>"))<CR>]],
+  [[:lua ar.mappings.gh(vim.fn.expand("<cword>"))<CR>]],
   { desc = 'gh search word' }
 )
 xnoremap(
   '<localleader>!',
-  [["gy:lua rvim.mappings.gh(vim.api.nvim_eval("@g"))<CR>gv]],
+  [["gy:lua ar.mappings.gh(vim.api.nvim_eval("@g"))<CR>gv]],
   { desc = 'gh search word' }
 )
 --------------------------------------------------------------------------------
 -- GX - replicate netrw functionality
 --------------------------------------------------------------------------------
-if rvim.use_local_gx or rvim.plugins.minimal then
+if ar.use_local_gx or ar.plugins.minimal then
   map('n', 'gx', function()
     -- ref: https://github.com/theopn/theovim/blob/main/lua/core.lua#L178
     -- Find the URL in the current line and open it in a browser
     local line = vim.fn.getline('.')
     local url = string.match(line, '[a-z]*://[^ >,;)"\']*')
-    if url then return rvim.open(url, true) end
+    if url then return ar.open(url, true) end
     local file = fn.expand('<cfile>')
     if not file or fn.isdirectory(file) > 0 then return vim.cmd.edit(file) end
-    if file:match('http[s]?://') then return rvim.open(file, true) end
+    if file:match('http[s]?://') then return ar.open(file, true) end
     -- consider anything that looks like string/string a github link
     local plugin_url_regex = '[%a%d%-%.%_]*%/[%a%d%-%.%_]*'
     local link = string.match(file, plugin_url_regex)
     if link then
-      return rvim.open(fmt('https://www.github.com/%s', link), true)
+      return ar.open(fmt('https://www.github.com/%s', link), true)
     end
   end, { desc = 'open link' })
 end
 --------------------------------------------------------------------------------
-nnoremap('<leader>lq', rvim.list.qf.toggle, { desc = 'toggle quickfix list' })
-nnoremap('<leader>lL', rvim.list.loc.toggle, { desc = 'toggle location list' })
+nnoremap('<leader>lq', ar.list.qf.toggle, { desc = 'toggle quickfix list' })
+nnoremap('<leader>lL', ar.list.loc.toggle, { desc = 'toggle location list' })
 nnoremap('<leader>k', '<Cmd>cnext<CR>', { desc = 'qflist next' })
 nnoremap('<leader>j', '<Cmd>cprev<CR>', { desc = 'qflist previous' })
 nnoremap('<localleader>k', '<Cmd>lnext<CR>', { desc = 'loclist next' })
@@ -369,7 +369,7 @@ inoremap('<s-tab>', [[pumvisible() ? "\<C-p>" : "\<S-Tab>"]], { expr = true })
 nnoremap('<leader>ah', ':h <C-R>=expand("<cword>")<CR><CR>', { desc = 'help' })
 -- Visual mode help
 local function visual_help()
-  local text = rvim.get_visual_text()
+  local text = ar.get_visual_text()
   vim.cmd('help ' .. text)
 end
 xnoremap('<leader>ah', visual_help, { desc = 'visual help' })
@@ -381,10 +381,10 @@ xnoremap('<C-z>', '<cmd>undo<CR><Esc>')
 inoremap('<c-z>', [[<Esc>:undo<CR>]])
 --------------------------------------------------------------------------------
 -- Reverse Line
-function rvim.rev_str(str) return string.reverse(str) end
+function ar.rev_str(str) return string.reverse(str) end
 vnoremap(
   '<leader>R',
-  [[:s/\%V.\+\%V./\=v:lua.rvim.rev_str(submatch(0))<CR>gv<ESC>]],
+  [[:s/\%V.\+\%V./\=v:lua.ar.rev_str(submatch(0))<CR>gv<ESC>]],
   { desc = 'reverse line' }
 )
 --------------------------------------------------------------------------------
@@ -467,7 +467,7 @@ map(
 --------------------------------------------------------------------------------
 -- Share Code
 ---> Share the file or a range of lines over https://0x0.st .
-function rvim.null_pointer()
+function ar.null_pointer()
   local from = vim.api.nvim_buf_get_mark(0, '<')[1]
   local to = vim.api.nvim_buf_get_mark(0, '>')[1]
   local file = fn.tempname()
@@ -486,13 +486,13 @@ function rvim.null_pointer()
     end,
   })
 end
-nnoremap('<localleader>pu', rvim.null_pointer, { desc = 'share code url' })
+nnoremap('<localleader>pu', ar.null_pointer, { desc = 'share code url' })
 vnoremap(
   '<localleader>pp',
-  ':lua rvim.null_pointer()<CR>gv<Esc>',
+  ':lua ar.null_pointer()<CR>gv<Esc>',
   { desc = 'share code url' }
 )
-command('NullPointer', rvim.null_pointer)
+command('NullPointer', ar.null_pointer)
 --------------------------------------------------------------------------------
 -- Abbreviations
 --------------------------------------------------------------------------------

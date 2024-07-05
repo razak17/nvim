@@ -1,7 +1,7 @@
 return {
   {
     'lukas-reineke/headlines.nvim',
-    cond = rvim.plugins.niceties,
+    cond = ar.plugins.niceties,
     ft = { 'org', 'norg', 'markdown', 'yaml' },
     opts = {
       org = { headline_highlights = false },

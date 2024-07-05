@@ -1,14 +1,14 @@
-local enabled = rvim.plugin.large_file.enable
+local enabled = ar.plugin.large_file.enable
 
-if not rvim or rvim.none or not enabled then return end
+if not ar or ar.none or not enabled then return end
 
 local exclusions = { 'NeogitCommitMessage' }
 
-rvim.augroup('LargeFileAutocmds', {
+ar.augroup('LargeFileAutocmds', {
   event = { 'BufReadPre' },
   command = function()
     if vim.fn.getfsize(vim.fn.expand('%')) > 100 * 1024 then -- 100 KB
-      rvim.large_file_opened = true
+      ar.large_file_opened = true
 
       vim.wo.wrap = false
       -- vim.o.eventignore = 'FileType'
@@ -17,7 +17,7 @@ rvim.augroup('LargeFileAutocmds', {
       -- vim.bo.undolevels = -1
       vim.cmd.filetype('off')
     else
-      rvim.large_file_opened = false
+      ar.large_file_opened = false
 
       -- vim.o.eventignore = nil
       vim.bo.bufhidden = ''
@@ -29,8 +29,8 @@ rvim.augroup('LargeFileAutocmds', {
 }, {
   event = { 'BufWinEnter' },
   command = function()
-    if rvim.large_file_opened then
-      -- rvim.large_file_opened = false
+    if ar.large_file_opened then
+      -- ar.large_file_opened = false
       vim.o.eventignore = nil
     end
   end,
@@ -46,7 +46,7 @@ rvim.augroup('LargeFileAutocmds', {
     if byte_size > 100 * 1024 then
       if vim.g.loaded_matchparen then vim.cmd('NoMatchParen') end
 
-      if rvim.is_available('mini.indentscope') then
+      if ar.is_available('mini.indentscope') then
         -- vim.api.nvim_del_augroup_by_name('MiniIndentscope')
         vim.api.nvim_clear_autocmds({ group = 'MiniIndentscope' })
       end

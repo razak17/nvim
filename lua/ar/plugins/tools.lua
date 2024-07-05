@@ -1,11 +1,11 @@
 local uv = vim.uv
 local prettier = { 'prettierd', 'prettier' }
-local border = rvim.ui.current.border
+local border = ar.ui.current.border
 
 return {
   {
     'nvimtools/none-ls.nvim',
-    cond = rvim.lsp.enable and rvim.lsp.null_ls.enable,
+    cond = ar.lsp.enable and ar.lsp.null_ls.enable,
     keys = {
       {
         '<leader>ln',
@@ -21,7 +21,7 @@ return {
   },
   {
     'jay-babu/mason-null-ls.nvim',
-    cond = rvim.lsp.enable and rvim.lsp.null_ls.enable,
+    cond = ar.lsp.enable and ar.lsp.null_ls.enable,
     event = { 'BufReadPre', 'BufNewFile' },
     config = function()
       local null_ls = require('null-ls')
@@ -70,12 +70,12 @@ return {
           end,
         },
       })
-      null_ls.setup({ debug = rvim.debug.enable })
+      null_ls.setup({ debug = ar.debug.enable })
     end,
   },
   {
     'WhoIsSethDaniel/mason-tool-installer.nvim',
-    cond = rvim.lsp.enable,
+    cond = ar.lsp.enable,
     cmd = { 'MasonToolsInstall', 'MasonToolsUpdate' },
     config = function()
       -- Add LSP servers
@@ -87,7 +87,7 @@ return {
         return acc
       end)
       -- Add linters (from nvim-lint)
-      if not rvim.lsp.null_ls.enable then
+      if not ar.lsp.null_ls.enable then
         local lint_ok, lint = pcall(require, 'lint')
         if lint_ok then
           vim
@@ -129,7 +129,7 @@ return {
   },
   {
     'stevearc/conform.nvim',
-    cond = rvim.lsp.enable and not rvim.lsp.null_ls.enable,
+    cond = ar.lsp.enable and not ar.lsp.null_ls.enable,
     event = { 'BufReadPre', 'BufNewFile' },
     cmd = 'ConformInfo',
     keys = {
@@ -184,7 +184,7 @@ return {
   },
   {
     'mfussenegger/nvim-lint',
-    cond = rvim.lsp.enable and not rvim.lsp.null_ls.enable,
+    cond = ar.lsp.enable and not ar.lsp.null_ls.enable,
     -- stylua: ignore
     ft = {
       'javascript', 'javascript.jsx', 'javascriptreact', 'lua', 'python', 'rst',

@@ -1,4 +1,4 @@
-local left_thin_block = rvim.ui.icons.separators.left_thin_block
+local left_thin_block = ar.ui.icons.separators.left_thin_block
 
 return {
   'lukas-reineke/indent-blankline.nvim',

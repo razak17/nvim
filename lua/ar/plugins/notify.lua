@@ -1,5 +1,5 @@
 local api = vim.api
-local ui = rvim.ui
+local ui = ar.ui
 local codicons = ui.codicons
 
 return {

@@ -1,6 +1,6 @@
-local enabled = rvim.plugin.smart_splits.enable
+local enabled = ar.plugin.smart_splits.enable
 
-if not rvim or rvim.none or not enabled then return end
+if not ar or ar.none or not enabled then return end
 
 local fn = vim.fn
 
@@ -30,7 +30,7 @@ local function move_or_create_win(key)
     'qf',
     'Trouble',
   }
-  if rvim.find_string(exclusions, vim.bo.ft) then
+  if ar.find_string(exclusions, vim.bo.ft) then
     vim.cmd('wincmd ' .. key)
     return
   end

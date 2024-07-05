@@ -1,6 +1,6 @@
 local fmt = string.format
-local bookmark = rvim.ui.codicons.misc.bookmark
-local minimal = rvim.plugins.minimal
+local bookmark = ar.ui.codicons.misc.bookmark
+local minimal = ar.plugins.minimal
 
 local function get_available_stacks(notify)
   local available_stacks =
@@ -19,7 +19,7 @@ local function add_trail_mark_stack()
   vim.ui.input({ prompt = 'stack name: ' }, function(name)
     if not name then return end
     local available_stacks = get_available_stacks()
-    if rvim.find_string(available_stacks, name) then
+    if ar.find_string(available_stacks, name) then
       vim.notify(
         fmt('"%s" stack already exists.', name),
         'warn',
@@ -41,7 +41,7 @@ local function delete_trail_mark_stack()
   vim.ui.input({ prompt = 'stack name: ' }, function(name)
     if not name then return end
     local available_stacks = get_available_stacks()
-    if not rvim.find_string(available_stacks, name) then
+    if not ar.find_string(available_stacks, name) then
       vim.notify(
         fmt('"%s" stack does not exist.', name),
         'warn',

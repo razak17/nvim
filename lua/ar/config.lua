@@ -106,5 +106,5 @@ local namespace = {
   },
 }
 
-_G.rvim = rvim or namespace
+_G.ar = ar or namespace
 _G.map = vim.keymap.set

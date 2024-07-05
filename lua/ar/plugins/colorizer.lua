@@ -1,4 +1,4 @@
-local minimal = rvim.plugins.minimal
+local minimal = ar.plugins.minimal
 
 return {
   {
@@ -19,7 +19,7 @@ return {
       local ccc = require('ccc')
       local p = ccc.picker
       ccc.setup({
-        win_opts = { border = rvim.ui.current.border },
+        win_opts = { border = ar.ui.current.border },
         pickers = {
           p.hex_long,
           p.css_rgb,

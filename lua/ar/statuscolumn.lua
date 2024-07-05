@@ -1,6 +1,6 @@
 local fn, v, api, opt, cmd = vim.fn, vim.v, vim.api, vim.opt, vim.cmd
-local ui, sep, falsy = rvim.ui, rvim.ui.icons.separators, rvim.falsy
-local format_text = rvim.format_text
+local ui, sep, falsy = ar.ui, ar.ui.icons.separators, ar.falsy
+local format_text = ar.format_text
 
 local separator = sep.left_thin_block
 local space = ' '
@@ -90,7 +90,7 @@ local function icon(sign, len)
   return sign.texthl and ('%#' .. sign.texthl .. '#' .. text .. '%*') or text
 end
 
-local conditions = rvim.reqidx('heirline.conditions')
+local conditions = ar.reqidx('heirline.conditions')
 local gitsigns_avail, gitsigns = pcall(require, 'gitsigns')
 
 return {

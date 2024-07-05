@@ -1,10 +1,10 @@
-if not rvim then return end
+if not ar then return end
 local fn = vim.fn
 -- adapted from https://github.com/ethanholz/nvim-lastplace/blob/main/lua/nvim-lastplace/init.lua
 local ignore_buftype = { 'quickfix', 'nofile', 'help', 'terminal' }
 local ignore_filetype = { 'gitcommit', 'gitrebase', 'svn', 'hgcommit' }
 
-rvim.augroup('LastPlace', {
+ar.augroup('LastPlace', {
   event = { 'BufWinEnter', 'FileType' },
   command = function()
     if vim.tbl_contains(ignore_buftype, vim.bo.buftype) then return end
@@ -25,7 +25,7 @@ rvim.augroup('LastPlace', {
     if last_line > 0 and last_line <= buff_last_line then
       local win_last_line = fn.line('w$')
       local win_first_line = fn.line('w0')
-      -- Check if the last line of the buffer is the same rvim the win
+      -- Check if the last line of the buffer is the same as the win
       if win_last_line == buff_last_line then
         vim.cmd('normal! g`"') -- Set line to last line edited
       -- Try to center

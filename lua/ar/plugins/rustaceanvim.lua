@@ -1,6 +1,6 @@
-local border = rvim.ui.current.border
+local border = ar.ui.current.border
 
-local enabled = rvim.lsp.enable and not rvim.plugin_disabled('rustaceanvim')
+local enabled = ar.lsp.enable and not ar.plugin_disabled('rustaceanvim')
 
 return {
   {
@@ -20,7 +20,7 @@ return {
           reload_workspace_from_cargo_toml = true,
           runnables = { use_telescope = false },
           hover_actions = {
-            border = rvim.ui.border.rectangle,
+            border = ar.ui.border.rectangle,
             auto_focus = true,
             max_width = math.min(math.floor(vim.o.columns * 0.7), 100),
             max_height = math.min(math.floor(vim.o.lines * 0.3), 30),
@@ -100,7 +100,7 @@ return {
         ['<localleader>c'] = { name = 'Crates' },
       })
     end,
-    cond = not rvim.plugins.minimal,
+    cond = not ar.plugins.minimal,
     event = 'BufRead Cargo.toml',
     opts = {
       popup = { autofocus = true, border = border },

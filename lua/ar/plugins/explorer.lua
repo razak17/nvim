@@ -1,5 +1,5 @@
-local icons, codicons, copy = rvim.ui.icons, rvim.ui.codicons, rvim.copy
-local highlight, lsp_hls = rvim.highlight, rvim.ui.lsp.highlights
+local icons, codicons, copy = ar.ui.icons, ar.ui.codicons, ar.copy
+local highlight, lsp_hls = ar.highlight, ar.ui.lsp.highlights
 local lspkind = require('lspkind')
 
 ---@param from string
@@ -25,7 +25,7 @@ local function on_rename(from, to)
 end
 
 local function find_or_search_in_dir(cwd, find_or_search)
-  if not rvim.is_available('telescope.nvim') then
+  if not ar.is_available('telescope.nvim') then
     vim.notify('telescope.nvim is not available')
     return
   end
@@ -140,9 +140,8 @@ return {
             end,
             ['<C-o>'] = function(state)
               local node = state.tree:get_node()
-              local media_files = rvim.media_files
-              if vim.list_contains(media_files, node.ext) then
-                rvim.open_media(node.path)
+              if vim.list_contains(ar.media_files, node.ext) then
+                ar.open_media(node.path)
               else
                 vim.notify('Not a media file')
               end

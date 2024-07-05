@@ -1,10 +1,10 @@
-local enabled = rvim.plugin.interceptor.enable
+local enabled = ar.plugin.interceptor.enable
 
-if not rvim or rvim.none or not enabled then return end
+if not ar or ar.none or not enabled then return end
 
 local api, fn = vim.api, vim.fn
 
-rvim.interceptor = { enable = true }
+ar.interceptor = { enable = true }
 
 -- ref: https://www.reddit.com/r/neovim/comments/16b0n3a/whats_your_new_favorite_functions_share_em/
 
@@ -30,23 +30,23 @@ end
 -- TODO: when disabled then enabled again, causes errors with deleting buffer
 local function open_in_prog(buf, fpath, fname, prog)
   notify(string.format('Opening `%s`', fname), 'Open File in External Program')
-  if prog == nil then rvim.open_media(fpath) end
+  if prog == nil then ar.open_media(fpath) end
   if prog ~= nil then vim.system({ prog, fpath }, { detach = true }) end
   api.nvim_buf_delete(buf, { force = true })
 end
 
-rvim.command('InterceptToggle', function()
-  rvim.interceptor.enable = not rvim.interceptor.enable
+ar.command('InterceptToggle', function()
+  ar.interceptor.enable = not ar.interceptor.enable
   local state = '`Enabled`'
-  if not rvim.interceptor.enable then state = '`Disabled`' end
+  if not ar.interceptor.enable then state = '`Disabled`' end
   notify('Intercept file open set to ' .. state, 'Intercept File Open')
 end, { desc = 'Toggles intercepting BufNew to open files in custom programs' })
 
-rvim.augroup('InterceptToggle', {
+ar.augroup('InterceptToggle', {
   event = { 'BufNew', 'BufReadPre' },
   pattern = { '*.png', '*.jpg', '*.ico', '*.pdf', '*.mp3', '*.mp4', '*.gif' },
   command = function(args)
-    if not rvim.interceptor.enable then return end
+    if not ar.interceptor.enable then return end
     local path, bufnr = args.match, args.buf
     local extension = fn.fnamemodify(path, ':e')
     local filename = fn.fnamemodify(path, ':t')

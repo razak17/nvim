@@ -1,4 +1,4 @@
-rvim.ui.border = {
+ar.ui.border = {
   common = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
   line = { '🭽', '▔', '🭾', '▕', '🭿', '▁', '🭼', '▏' },
   rectangle = { '┌', '─', '┐', '│', '┘', '─', '└', '│' },
@@ -11,7 +11,7 @@ rvim.ui.border = {
   },
 }
 
-rvim.ui.icons = {
+ar.ui.icons = {
   scrollbars = {
     -- stylua: ignore
     wide = { '__', '▁▁', '▂▂', '▃▃', '▄▄', '▅▅', '▆▆', '▇▇', '██', },
@@ -63,7 +63,7 @@ rvim.ui.icons = {
   },
 }
 
-rvim.ui.codicons = {
+ar.ui.codicons = {
   documents = {
     new_file = '',
     default_file = '',
@@ -142,7 +142,7 @@ rvim.ui.codicons = {
   },
 }
 
-rvim.ui.lsp = {
+ar.ui.lsp = {
   --- LSP Kinds come via the LSP spec
   --- see: https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#symbolKind
   highlights = {
@@ -244,7 +244,7 @@ local buftypes = {
 --- When searching through the filetypes table if a match can't be found then search
 --- again but check if there is matching lua pattern. This is useful for filetypes for
 --- plugins like Neogit which have a filetype of Neogit<something>.
-local filetypes = rvim.p_table({
+local filetypes = ar.p_table({
   ['^Neogit.*'] = presets.tool_panel,
   ['^copilot.*'] = presets.tool_panel,
   ['aerial'] = presets.tool_panel,
@@ -297,18 +297,18 @@ local filetypes = rvim.p_table({
   ['undotree'] = presets.tool_panel,
 })
 
-local filenames = rvim.p_table({
+local filenames = ar.p_table({
   ['option-window'] = presets.tool_panel,
 })
 
-rvim.ui.decorations = {}
+ar.ui.decorations = {}
 
 ---@alias ui.OptionValue (boolean | string)
 
 ---Get the UI setting for a particular filetype
 ---@param opts {ft: string?, bt: string?, fname: string?, setting: DecorationType}
 ---@return {ft: ui.OptionValue?, bt: ui.OptionValue?, fname: ui.OptionValue?} | nil
-function rvim.ui.decorations.get(opts)
+function ar.ui.decorations.get(opts)
   local ft, bt, fname, setting = opts.ft, opts.bt, opts.fname, opts.setting
   if (not ft and not bt and not fname) or not setting then return nil end
   return {
@@ -319,19 +319,19 @@ function rvim.ui.decorations.get(opts)
 end
 
 ---A helper to set the value of the colorcolumn option, to my preferences, this can be used
----in an autocommand to set the `vim.opt_local.colorcolumn` or by a plugin such rvim `virtcolumn.nvim`
+---in an autocommand to set the `vim.opt_local.colorcolumn` or by a plugin such as `virtcolumn.nvim`
 ---to set it's virtual column
 ---@param bufnr integer
 ---@param fn fun(colorcolumn: string | boolean)
-function rvim.ui.decorations.set_colorcolumn(bufnr, fn)
+function ar.ui.decorations.set_colorcolumn(bufnr, fn)
   local buf = vim.bo[bufnr]
-  local decor = rvim.ui.decorations.get({
+  local decor = ar.ui.decorations.get({
     ft = buf.ft,
     bt = buf.bt,
     setting = 'colorcolumn',
   })
   local ccol = decor and decor.ft or decor and decor.bt or ''
-  local colorcolumn = not rvim.falsy(ccol) and ccol or '+1'
+  local colorcolumn = not ar.falsy(ccol) and ccol or '+1'
   if
     buf.ft == ''
     or buf.bt ~= ''
@@ -345,4 +345,4 @@ end
 
 --------------------------------------------------------------------------------
 -- The current styles for various UI elements
-rvim.ui.current = { border = rvim.ui.border.line }
+ar.ui.current = { border = ar.ui.border.line }

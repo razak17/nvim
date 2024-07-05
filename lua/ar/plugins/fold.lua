@@ -1,7 +1,7 @@
 return {
   {
     'kevinhwang91/nvim-ufo',
-    cond = not rvim.plugins.minimal,
+    cond = not ar.plugins.minimal,
     event = 'VeryLazy',
     -- stylua: ignore
     keys = {
@@ -15,7 +15,7 @@ return {
         open_fold_hl_timeout = 0,
         preview = {
           win_config = {
-            border = rvim.ui.current.border,
+            border = ar.ui.current.border,
             winhighlight = 'NormalFloat:FloatBorder,FloatBorder:FloatBorder',
           },
         },
@@ -32,7 +32,7 @@ return {
       })
     end,
     config = function()
-      rvim.highlight.plugin('ufo', {
+      ar.highlight.plugin('ufo', {
         theme = {
           -- stylua: ignore
           ['onedark'] = {
@@ -45,7 +45,7 @@ return {
   },
   {
     'chrisgrieser/nvim-origami',
-    cond = not rvim.plugins.minimal,
+    cond = not ar.plugins.minimal,
     -- event = 'BufReadPost',
     keys = {
       { '<BS>', function() require('origami').h() end, desc = 'close fold' },
@@ -57,7 +57,7 @@ return {
     cond = false,
     event = 'VeryLazy',
     config = function()
-      rvim.highlight.plugin('fold_line', {
+      ar.highlight.plugin('fold_line', {
         theme = {
           ['onedark'] = { { FoldLine = { link = 'IndentBlanklineChar' } } },
         },

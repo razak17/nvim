@@ -1,12 +1,12 @@
 local fn = vim.fn
 local fmt = string.format
-local ui, highlight = rvim.ui, rvim.highlight
-local icons, codicons = rvim.ui.icons, rvim.ui.codicons
-local falsy, find_string = rvim.falsy, rvim.find_string
+local ui, highlight = ar.ui, ar.highlight
+local icons, codicons = ar.ui.icons, ar.ui.codicons
+local falsy, find_string = ar.falsy, ar.find_string
 local border = ui.current.border
 local lsp_icons = codicons.lsp
-local detour = rvim.reqidx('detour')
-local features = rvim.reqidx('detour.features')
+local detour = ar.reqidx('detour')
+local features = ar.reqidx('detour.features')
 
 return {
   ------------------------------------------------------------------------------
@@ -29,21 +29,21 @@ return {
     },
     {
       'williamboman/mason-lspconfig.nvim',
-      cond = rvim.lsp.enable,
+      cond = ar.lsp.enable,
       event = { 'BufReadPre', 'BufNewFile' },
       opts = {
         automatic_installation = true,
         handlers = {
           function(name)
             local cwd = vim.fn.getcwd()
-            if not falsy(rvim.lsp.override) then
-              if not find_string(rvim.lsp.override, name) then return end
+            if not falsy(ar.lsp.override) then
+              if not find_string(ar.lsp.override, name) then return end
             else
               local directory_disabled =
-                rvim.dirs_match(rvim.lsp.disabled.directories, fmt('%s', cwd))
-              local server_disabled = rvim.lsp_disabled(name)
+                ar.dirs_match(ar.lsp.disabled.directories, fmt('%s', cwd))
+              local server_disabled = ar.lsp_disabled(name)
               local typescript_tools_enabled = name == 'tsserver'
-                and rvim.lsp.typescript_tools.enable
+                and ar.lsp.typescript_tools.enable
               if
                 directory_disabled
                 or server_disabled
@@ -60,10 +60,10 @@ return {
       dependencies = {
         {
           'neovim/nvim-lspconfig',
-          cond = rvim.lsp.enable,
+          cond = ar.lsp.enable,
           config = function()
             require('lspconfig.ui.windows').default_options.border = border
-            if rvim.lsp.semantic_tokens.enable then
+            if ar.lsp.semantic_tokens.enable then
               local lspconfig = require('lspconfig')
               lspconfig.util.default_config =
                 vim.tbl_extend('force', lspconfig.util.default_config, {
@@ -89,7 +89,7 @@ return {
             { 'Bilal2453/luvit-meta', lazy = true },
             {
               'folke/neoconf.nvim',
-              cond = rvim.lsp.enable,
+              cond = ar.lsp.enable,
               cmd = { 'Neoconf' },
               opts = {
                 local_settings = '.nvim.json',
@@ -118,7 +118,7 @@ return {
   },
   {
     'glepnir/lspsaga.nvim',
-    cond = rvim.lsp.enable and false,
+    cond = ar.lsp.enable and false,
     event = 'LspAttach',
     opts = {
       ui = { border = border },
@@ -210,7 +210,7 @@ return {
   },
   {
     'smjonas/inc-rename.nvim',
-    cond = rvim.lsp.enable,
+    cond = ar.lsp.enable,
     opts = { hl_group = 'Visual', preview_empty_name = true },
     keys = {
       {
@@ -225,14 +225,14 @@ return {
   {
     'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
     -- 'ErichDonGubler/lsp_lines.nvim',
-    cond = rvim.lsp.enable,
+    cond = ar.lsp.enable,
     event = 'LspAttach',
     config = function() require('lsp_lines').setup() end,
   },
   {
     -- 'razak17/glance.nvim',
     'dnlhc/glance.nvim',
-    cond = rvim.lsp.enable,
+    cond = ar.lsp.enable,
     -- stylua: ignore
     -- keys = {
     --   { 'gD', '<Cmd>Glance definitions<CR>', desc = 'lsp: glance definitions' },
@@ -258,7 +258,7 @@ return {
   },
   {
     'kosayoda/nvim-lightbulb',
-    cond = rvim.lsp.enable and false,
+    cond = ar.lsp.enable and false,
     event = 'LspAttach',
     opts = {
       autocmd = { enabled = true },
@@ -277,7 +277,7 @@ return {
   },
   {
     'cseickel/diagnostic-window.nvim',
-    cond = rvim.lsp.enable and rvim.plugins.niceties,
+    cond = ar.lsp.enable and ar.plugins.niceties,
     event = 'LspAttach',
     cmd = { 'DiagWindowShow' },
     keys = {
@@ -287,7 +287,7 @@ return {
   },
   {
     'dgagn/diagflow.nvim',
-    cond = rvim.lsp.enable and rvim.plugins.niceties,
+    cond = ar.lsp.enable and ar.plugins.niceties,
     event = 'LspAttach',
     opts = {
       format = function(diagnostic)
@@ -303,7 +303,7 @@ return {
   },
   {
     'RaafatTurki/corn.nvim',
-    cond = rvim.lsp.enable and rvim.plugins.niceties and false,
+    cond = ar.lsp.enable and ar.plugins.niceties and false,
     event = 'LspAttach',
     cmd = { 'Corn' },
     opts = {
@@ -317,13 +317,13 @@ return {
   },
   {
     'doums/dmap.nvim',
-    cond = rvim.lsp.enable and rvim.plugins.niceties and false,
+    cond = ar.lsp.enable and ar.plugins.niceties and false,
     event = 'LspAttach',
     opts = { win_h_offset = 5 },
   },
   {
     'ivanjermakov/troublesum.nvim',
-    cond = rvim.lsp.enable and rvim.plugins.niceties and false,
+    cond = ar.lsp.enable and ar.plugins.niceties and false,
     event = 'LspAttach',
     opts = {
       severity_format = {
@@ -337,7 +337,7 @@ return {
   {
     'stevearc/aerial.nvim',
     cmd = { 'AerialToggle' },
-    cond = not rvim.plugins.minimal and rvim.treesitter.enable,
+    cond = not ar.plugins.minimal and ar.treesitter.enable,
     opts = {
       lazy_load = false,
       backends = {
@@ -417,7 +417,7 @@ return {
   },
   {
     'roobert/action-hints.nvim',
-    cond = rvim.lsp.enable and false,
+    cond = ar.lsp.enable and false,
     event = 'LspAttach',
     config = function()
       require('action-hints').setup({
@@ -431,7 +431,7 @@ return {
   },
   {
     'aznhe21/actions-preview.nvim',
-    cond = rvim.lsp.enable and rvim.plugins.niceties,
+    cond = ar.lsp.enable and ar.plugins.niceties,
     -- stylua: ignore
     keys = {
       { '<leader>lA', function() require('actions-preview').code_actions() end, desc = 'code action preview' },
@@ -439,13 +439,13 @@ return {
     opts = {},
     config = function()
       require('actions-preview').setup({
-        telescope = rvim.telescope.vertical(),
+        telescope = ar.telescope.vertical(),
       })
     end,
   },
   {
     'chrisgrieser/nvim-rulebook',
-    cond = rvim.lsp.enable,
+    cond = ar.lsp.enable,
     -- stylua: ignore
     keys = {
       { '<localleader>lri', function() require('rulebook').ignoreRule() end, desc = 'rulebook: ignore rule', },
@@ -454,7 +454,7 @@ return {
   },
   {
     'luckasRanarison/clear-action.nvim',
-    cond = rvim.lsp.enable and rvim.plugins.niceties,
+    cond = ar.lsp.enable and ar.plugins.niceties,
     event = 'LspAttach',
     opts = {
       signs = {
@@ -505,7 +505,7 @@ return {
   },
   {
     'zeioth/garbage-day.nvim',
-    cond = rvim.lsp.enable and rvim.plugins.overrides.garbage_day.enable,
+    cond = ar.lsp.enable and ar.plugins.overrides.garbage_day.enable,
     event = 'LspAttach',
     opts = {
       grace_period = 60 * 15,
@@ -515,7 +515,7 @@ return {
   },
   {
     'Wansmer/symbol-usage.nvim',
-    cond = rvim.lsp.enable and false,
+    cond = ar.lsp.enable and false,
     event = 'LspAttach',
     config = function()
       highlight.plugin('symbol-usage', {
@@ -582,7 +582,7 @@ return {
   },
   {
     'stevanmilic/nvim-lspimport',
-    cond = rvim.lsp.enable,
+    cond = ar.lsp.enable,
     ft = { 'python' },
     -- stylua: ignore
     keys = {
@@ -591,13 +591,13 @@ return {
   },
   {
     'antosha417/nvim-lsp-file-operations',
-    cond = rvim.lsp.enable,
+    cond = ar.lsp.enable,
     event = 'LspAttach',
     opts = {},
   },
   {
     'pechorin/any-jump.vim',
-    cond = rvim.lsp.enable,
+    cond = ar.lsp.enable,
     cmd = { 'AnyJump', 'AnyJumpArg', 'AnyJumpLastResults' },
     -- stylua: ignore
     keys = {
@@ -608,7 +608,7 @@ return {
   },
   {
     'folke/trouble.nvim',
-    cond = rvim.lsp.enable,
+    cond = ar.lsp.enable,
     cmd = { 'Trouble', 'TroubleToggle', 'ToggleClose', 'ToggleRefresh' },
     keys = {
       {
@@ -675,12 +675,12 @@ return {
   },
   {
     'chrisgrieser/nvim-lsp-endhints',
-    cond = rvim.lsp.enable,
+    cond = ar.lsp.enable,
     event = 'LspAttach',
     opts = {
       icons = { type = '󰜁 ', parameter = '󰏪 ' },
       label = { padding = 1, marginLeft = 0 },
-      autoEnableHints = rvim.lsp.inlay_hint.enable,
+      autoEnableHints = ar.lsp.inlay_hint.enable,
     },
   },
   -- }}}

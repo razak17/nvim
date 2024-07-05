@@ -1,17 +1,17 @@
 if
-  not rvim
-  or rvim.none
-  or not rvim.plugins.enable
-  or rvim.plugins.minimal
-  or not rvim.ui.statuscolumn.enable
-  or not rvim.ui.statuscolumn.custom
+  not ar
+  or ar.none
+  or not ar.plugins.enable
+  or ar.plugins.minimal
+  or not ar.ui.statuscolumn.enable
+  or not ar.ui.statuscolumn.custom
 then
   return
 end
 
 local fn, v, api, opt, wo = vim.fn, vim.v, vim.api, vim.opt, vim.wo
-local ui = rvim.ui
-local separators = ui.icons.separators
+local ui = ar.ui
+local icons, separators = ui.icons, ui.icons.separators
 
 local left_thin_block = separators.left_thin_block
 local fcs = opt.fillchars:get()
@@ -26,7 +26,7 @@ end
 
 local sep = { text = left_thin_block, texthl = 'IndentBlanklineChar' }
 
-function rvim.ui.statuscolumn.render()
+function ar.ui.statuscolumn.render()
   local win = vim.g.statusline_winid
 
   if wo[win].signcolumn == 'no' then return '' end
@@ -65,9 +65,6 @@ function rvim.ui.statuscolumn.render()
     -- https://www.reddit.com/r/neovim/comments/1djjc6q/statuscolumn_a_beginers_guide/
     local foldlevel = vim.fn.foldlevel(lnum)
     local foldlevel_before = fn.foldlevel((lnum - 1) >= 1 and lnum - 1 or 1)
-    -- if fn.foldclosed(lnum) >= 0 then
-    --   fold = { text = fcs.foldclose or '', texthl = 'Comment' }
-    -- end
     local foldlevel_after =
       fn.foldlevel((lnum + 1) <= fn.line('$') and (lnum + 1) or fn.line('$'))
 
@@ -105,9 +102,9 @@ function rvim.ui.statuscolumn.render()
   }, '')
 end
 
-opt.statuscolumn = [[%!v:lua.rvim.ui.statuscolumn.render()]]
+opt.statuscolumn = [[%!v:lua.ar.ui.statuscolumn.render()]]
 
-rvim.augroup('StatusCol', {
+ar.augroup('StatusCol', {
   event = { 'BufEnter', 'FileType', 'CursorMoved' },
   command = function(args)
     local buf = args.buf
@@ -121,7 +118,7 @@ rvim.augroup('StatusCol', {
     if d.ft == false or d.fname == false then
       vim.opt_local.statuscolumn = ''
       -- else
-      --   opt.statuscolumn = [[%!v:lua.rvim.ui.statuscolumn.render()]]
+      --   opt.statuscolumn = [[%!v:lua.ar.ui.statuscolumn.render()]]
     end
   end,
 })

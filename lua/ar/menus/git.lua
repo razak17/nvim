@@ -228,14 +228,10 @@ end
 -- Pull / Fetch
 --------------------------------------------------------------------------------
 function M.git_pull()
-  rvim.run_command(
-    'git',
-    { 'pull', '--rebase', '--autostash' },
-    rvim.reload_all
-  )
+  ar.run_command('git', { 'pull', '--rebase', '--autostash' }, ar.reload_all)
 end
 
-function M.fetch_origin() rvim.run_command('git', { 'fetch', 'origin' }) end
+function M.fetch_origin() ar.run_command('git', { 'fetch', 'origin' }) end
 
 --------------------------------------------------------------------------------
 -- Commits
@@ -282,7 +278,7 @@ local git_command = {
 }
 
 local layout_config = { width = 0.9, horizontal = { preview_width = 0.5 } }
-local previewer = rvim.telescope.delta_opts().previewer
+local previewer = ar.telescope.delta_opts().previewer
 
 function M.browse_commits()
   require('telescope.builtin').git_commits({
@@ -309,7 +305,7 @@ end
 --------------------------------------------------------------------------------
 function M.project_history()
   local project_root = vim.fs.root(0, '.git')
-  if rvim.falsy(project_root) then return end
+  if ar.falsy(project_root) then return end
   vim.cmd('DiffviewFileHistory ' .. project_root)
 end
 
@@ -533,7 +529,7 @@ local function telescope_branches_mappings(prompt_bufnr, map)
       '<C-g>',
       function()
         local branch = get_selected_entry().value
-        rvim.copy_to_clipboard(branch)
+        ar.copy_to_clipboard(branch)
       end,
       desc = 'copy branch name',
     },
@@ -788,7 +784,7 @@ local function telescope_stash_mappings(prompt_bufnr, map)
       selection.value,
     })
     if ret == 0 then
-      rvim.reload_all()
+      ar.reload_all()
       utils.notify('actions.git_apply_stash', {
         msg = string.format("applied: '%s' ", selection.value),
         level = 'INFO',
@@ -860,10 +856,10 @@ function M.do_stash()
     { prompt = 'Enter a name for the stash: ', kind = 'center_win' },
     function(input)
       if input ~= nil then
-        rvim.run_command(
+        ar.run_command(
           'git',
           { 'stash', 'push', '-m', input, '-u' },
-          rvim.reload_all
+          ar.reload_all
         )
       end
     end

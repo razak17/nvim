@@ -11,9 +11,9 @@ return {
       spelling = { enabled = true },
     },
     icons = {
-      breadcrumb = rvim.ui.icons.misc.double_chevron_right,
+      breadcrumb = ar.ui.icons.misc.double_chevron_right,
     },
-    window = { border = rvim.ui.current.border },
+    window = { border = ar.ui.current.border },
     layout = { align = 'center' },
     hidden = {
       '<silent>',
@@ -144,7 +144,7 @@ return {
       y = { name = 'Yanky' },
     }, { mode = 'x', prefix = '<localleader>' })
 
-    rvim.augroup('WhichKeyMode', {
+    ar.augroup('WhichKeyMode', {
       event = { 'FileType' },
       pattern = { 'which_key' },
       command = 'set laststatus=0 noshowmode | autocmd BufLeave <buffer> set laststatus=2',

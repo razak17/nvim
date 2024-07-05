@@ -80,13 +80,13 @@ end
 return {
   {
     'anuvyklack/animation.nvim',
-    cond = not rvim.plugins.minimal,
+    cond = not ar.plugins.minimal,
     keys = { { '<localleader>Aa', redraw_buffer, desc = 'animation: start' } },
     dependencies = { 'anuvyklack/middleclass' },
   },
   {
     'letieu/hacker.nvim',
-    cond = not rvim.plugins.minimal,
+    cond = not ar.plugins.minimal,
     event = 'VeryLazy',
     cmd = { 'Hack', 'HackAuto', 'HackFollow' },
   },

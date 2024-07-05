@@ -11,7 +11,7 @@ return {
   },
   {
     'folke/ts-comments.nvim',
-    cond = not rvim.plugins.minimal,
+    cond = not ar.plugins.minimal,
     event = 'VeryLazy',
     opts = {},
   },

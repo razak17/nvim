@@ -1,7 +1,7 @@
 local api, fn = vim.api, vim.fn
-local ui = rvim.ui
+local ui = ar.ui
 local fmt = string.format
-local minimal, niceties = rvim.plugins.minimal, rvim.plugins.niceties
+local minimal, niceties = ar.plugins.minimal, ar.plugins.niceties
 
 return {
   { 'ton/vim-bufsurf', cond = not minimal, lazy = false },
@@ -65,7 +65,7 @@ return {
         window = { border = 'single' },
         keybinds = {
           ['w'] = action(function(buf, info)
-            rvim.open_with_window_picker(buf)
+            ar.open_with_window_picker(buf)
             fn.cursor(info.lnum, 0)
           end),
         },
@@ -86,7 +86,7 @@ return {
           key = 'w',
           command = function()
             local idx = vim.fn.line('.')
-            rvim.open_with_window_picker(idx + 1)
+            ar.open_with_window_picker(idx + 1)
           end,
         },
         split = { key = 's', command = 'split' },
@@ -122,7 +122,7 @@ return {
     config = function(_, opts)
       require('antelope').setup(opts)
 
-      rvim.highlight.plugin('antelope', {
+      ar.highlight.plugin('antelope', {
         theme = {
           ['onedark'] = {
             { AntelopeBorder = { inherit = 'FloatBorder' } },

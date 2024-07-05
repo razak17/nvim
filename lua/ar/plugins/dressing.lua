@@ -1,8 +1,8 @@
-local border = rvim.ui.current.border
+local border = ar.ui.current.border
 
 return {
   'stevearc/dressing.nvim',
-  -- cond = not rvim.plugins.minimal and rvim.plugins.niceties,
+  -- cond = not ar.plugins.minimal and ar.plugins.niceties,
   event = 'BufRead',
   init = function()
     ---@diagnostic disable-next-line: duplicate-set-field
@@ -23,7 +23,7 @@ return {
       get_config = function(opts)
         return {
           backend = 'fzf_lua',
-          fzf_lua = rvim.fzf.dropdown({
+          fzf_lua = ar.fzf.dropdown({
             winopts = { title = opts.prompt, height = 0.33, row = 0.5 },
           }),
         }

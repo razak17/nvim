@@ -1,4 +1,4 @@
-if not rvim or rvim.none then return end
+if not ar or ar.none then return end
 
 local opt = vim.opt_local
 
@@ -23,9 +23,9 @@ else
   map('n', '<leader>ml', 'maGovim:tw=78:ts=8:noet:ft=help:norl:<esc>`a', opts)
 end
 
-if not rvim.plugins.enable or rvim.plugins.minimal then return end
+if not ar.plugins.enable or ar.plugins.minimal then return end
 
-rvim.ftplugin_conf({
+ar.ftplugin_conf({
   ['virt-column'] = function(col)
     if vim.bo.modifiable then col.setup_buffer({ virtcolumn = '+1' }) end
   end,

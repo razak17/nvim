@@ -2,7 +2,7 @@ local fn, L = vim.fn, vim.log.levels
 
 return {
   'folke/noice.nvim',
-  cond = not rvim.plugins.minimal and not rvim.plugin_disabled('noice.nvim'),
+  cond = not ar.plugins.minimal and not ar.plugin_disabled('noice.nvim'),
   event = 'VeryLazy',
   opts = {
     cmdline = {

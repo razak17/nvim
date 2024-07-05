@@ -1,4 +1,4 @@
-local fn, ui = vim.fn, rvim.ui
+local fn, ui = vim.fn, ar.ui
 local input = vim.fn.input
 local codicons = ui.codicons
 
@@ -26,7 +26,7 @@ local function get_args(config)
   return config
 end
 
-rvim.debugger = {
+ar.debugger = {
   layout = { ft = { dart = 2 } },
   icons = {
     Breakpoint = { codicons.misc.bug, 'DapBreakpoint' }, -- 
@@ -40,7 +40,7 @@ rvim.debugger = {
 return {
   {
     'mfussenegger/nvim-dap',
-    cond = not rvim.plugins.minimal,
+    cond = not ar.plugins.minimal,
     keys = {
       {
         '<leader>da',
@@ -137,7 +137,7 @@ return {
       -- DON'T automatically stop at exceptions
       dap.defaults.fallback.exception_breakpoints = {}
 
-      for name, sign in pairs(rvim.debugger.icons) do
+      for name, sign in pairs(ar.debugger.icons) do
         fn.sign_define('Dap' .. name, {
           text = sign[1],
           texthl = sign[2],
@@ -388,7 +388,7 @@ return {
               position = 'bottom',
             },
           },
-          floating = { border = rvim.ui.current.border },
+          floating = { border = ar.ui.current.border },
         },
         config = function(_, opts)
           local dap = require('dap')

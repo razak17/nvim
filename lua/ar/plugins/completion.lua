@@ -1,13 +1,13 @@
 local api, fn, fmt, k = vim.api, vim.fn, string.format, vim.keycode
-local ui, highlight = rvim.ui, rvim.highlight
+local ui, highlight = ar.ui, ar.highlight
 local border, lsp_hls, ellipsis =
   ui.current.border, ui.lsp.highlights, ui.icons.misc.ellipsis
-local minimal = rvim.plugins.minimal
+local minimal = ar.plugins.minimal
 
 return {
   {
     'hrsh7th/nvim-cmp',
-    cond = rvim.completion.enable,
+    cond = ar.completion.enable,
     event = 'InsertEnter',
     config = function()
       local cmp = require('cmp')
@@ -188,7 +188,7 @@ return {
             }
 
             if
-              not rvim.find_string(custom_sources, entry.source.name)
+              not ar.find_string(custom_sources, entry.source.name)
               and item.kind ~= 'Color'
             then
               item.kind = format_icon(symbols[item.kind])
@@ -258,7 +258,7 @@ return {
           {
             name = 'rg',
             priority = 4,
-            keyword_length = rvim.lsp.enable and 8 or 4,
+            keyword_length = ar.lsp.enable and 8 or 4,
             option = { additional_arguments = '--max-depth 8' },
             group_index = 1,
           },
@@ -338,12 +338,12 @@ return {
       { 'SergioRibera/cmp-dotenv', cond = not minimal },
       { 'ryo33/nvim-cmp-rust', ft = { 'rust' } },
       { 'Gelio/cmp-natdat', opts = {} },
-      { 'hrsh7th/cmp-nvim-lsp', cond = rvim.lsp.enable },
+      { 'hrsh7th/cmp-nvim-lsp', cond = ar.lsp.enable },
       { 'hrsh7th/cmp-cmdline', config = function() vim.o.wildmode = '' end },
-      { 'hrsh7th/cmp-nvim-lsp-document-symbol', cond = rvim.lsp.enable },
+      { 'hrsh7th/cmp-nvim-lsp-document-symbol', cond = ar.lsp.enable },
       {
         'uga-rosa/cmp-dictionary',
-        cond = not minimal and rvim.plugins.overrides.dict.enable,
+        cond = not minimal and ar.plugins.overrides.dict.enable,
         config = function()
           local en_dict =
             join_paths(fn.stdpath('data'), 'site', 'spell', 'en.dict')
@@ -352,12 +352,12 @@ return {
       },
       {
         'zbirenbaum/copilot-cmp',
-        cond = rvim.ai.enable and not minimal,
+        cond = ar.ai.enable and not minimal,
         opts = {},
         config = function(_, opts)
           require('copilot_cmp').setup(opts)
 
-          rvim.ftplugin_conf({
+          ar.ftplugin_conf({
             cmp = function(cmp)
               cmp.setup.filetype('norg', {
                 sorting = {
@@ -370,34 +370,34 @@ return {
       },
       {
         'Exafunction/codeium.nvim',
-        cond = rvim.ai.enable and not minimal and false,
+        cond = ar.ai.enable and not minimal and false,
         opts = {},
       },
     },
   },
   {
     'f3fora/cmp-spell',
-    cond = rvim.completion.enable and not minimal,
+    cond = ar.completion.enable and not minimal,
     ft = { 'gitcommit', 'NeogitCommitMessage', 'markdown', 'norg', 'org' },
   },
   {
     'rcarriga/cmp-dap',
-    cond = rvim.completion.enable and not minimal,
+    cond = ar.completion.enable and not minimal,
     ft = { 'dap-repl', 'dapui_watches' },
   },
   {
     'amarakon/nvim-cmp-buffer-lines',
-    cond = rvim.completion.enable,
+    cond = ar.completion.enable,
     ft = { 'c', 'cpp' },
   },
   {
     'js-everts/cmp-tailwind-colors',
-    cond = rvim.completion.enable and not minimal,
+    cond = ar.completion.enable and not minimal,
     ft = { 'css', 'html', 'vue', 'javascriptreact', 'typescriptreact' },
   },
   {
     'jsongerber/nvim-px-to-rem',
-    cond = rvim.completion.enable and not minimal,
+    cond = ar.completion.enable and not minimal,
     ft = { 'css', 'scss' },
     opts = { disable_keymaps = true },
   },

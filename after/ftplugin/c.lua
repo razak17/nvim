@@ -1,4 +1,4 @@
-if not rvim or rvim.none then return end
+if not ar or ar.none then return end
 
 local bo, wo = vim.bo, vim.wo
 
@@ -9,7 +9,7 @@ bo.softtabstop = 4
 bo.commentstring = '// %s'
 vim.cmd([[setlocal path+=/usr/include/**,/usr/local/include/**]])
 
-if not rvim.plugins.enable or rvim.plugins.minimal then return end
+if not ar.plugins.enable or ar.plugins.minimal then return end
 
 local mason_registry = require('mason-registry')
 local codelldb_path = mason_registry.get_package('codelldb'):get_install_path()

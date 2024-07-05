@@ -10,7 +10,7 @@ return {
       end,
     },
     config = function(_, opts)
-      rvim.highlight.plugin('neogit', {
+      ar.highlight.plugin('neogit', {
         theme = {
           ['onedark'] = {
             { GitpadFloat = { inherit = 'NormalFloat' } },

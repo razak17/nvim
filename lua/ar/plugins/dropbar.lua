@@ -1,5 +1,5 @@
 local api = vim.api
-local ui, highlight = rvim.ui, rvim.highlight
+local ui, highlight = ar.ui, ar.highlight
 local border = ui.current.border
 
 return {

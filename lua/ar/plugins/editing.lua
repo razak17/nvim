@@ -1,5 +1,5 @@
-local border = rvim.ui.current.border
-local minimal, niceties = rvim.plugins.minimal, rvim.plugins.niceties
+local border = ar.ui.current.border
+local minimal, niceties = ar.plugins.minimal, ar.plugins.niceties
 
 return {
   { 'johmsalas/text-case.nvim', cond = not minimal, opts = {} },
@@ -80,7 +80,7 @@ return {
     event = 'InsertEnter',
     config = function()
       local autopairs = require('nvim-autopairs')
-      if rvim.completion.enable then
+      if ar.completion.enable then
         local cmp_autopairs = require('nvim-autopairs.completion.cmp')
         require('cmp').event:on('confirm_done', cmp_autopairs.on_confirm_done())
       end
@@ -117,7 +117,7 @@ return {
       },
     },
     config = function()
-      rvim.highlight.plugin('treehopper', {
+      ar.highlight.plugin('treehopper', {
         theme = {
           ['onedark'] = {
             {
@@ -198,7 +198,7 @@ return {
   {
     'subnut/nvim-ghost.nvim',
     cond = not minimal,
-    lazy = not rvim.plugins.overrides.ghost_text.enable,
+    lazy = not ar.plugins.overrides.ghost_text.enable,
   },
   {
     'smoka7/multicursors.nvim',

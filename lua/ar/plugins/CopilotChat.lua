@@ -22,7 +22,7 @@ local prompts = {
 return {
   {
     'CopilotC-Nvim/CopilotChat.nvim',
-    cond = rvim.ai.enable and not rvim.plugins.minimal,
+    cond = ar.ai.enable and not ar.plugins.minimal,
     event = 'VimEnter',
     branch = 'canary',
     build = function()
@@ -110,7 +110,7 @@ return {
       )
 
       -- Inline chat with Copilot
-      rvim.command(
+      ar.command(
         'CopilotChatInline',
         function(args)
           chat.ask(args.args, {
@@ -128,14 +128,14 @@ return {
       )
 
       -- Restore CopilotChatBuffer
-      rvim.command(
+      ar.command(
         'CopilotChatBuffer',
         function(args) chat.ask(args.args, { selection = select.buffer }) end,
         { nargs = '*', range = true }
       )
 
       -- Custom buffer for CopilotChat
-      rvim.augroup('CopilotChat', {
+      ar.augroup('CopilotChat', {
         event = 'BufEnter',
         pattern = 'copilot-*',
         command = function()

@@ -1,9 +1,9 @@
-local augroup, ui, highlight = rvim.augroup, rvim.ui, rvim.highlight
+local augroup, ui, highlight = ar.augroup, ar.ui, ar.highlight
 local icons = ui.icons
 local separators = ui.icons.separators
 local P = require('onedark.palette')
 
-local minimal, niceties = rvim.plugins.minimal, rvim.plugins.niceties
+local minimal, niceties = ar.plugins.minimal, ar.plugins.niceties
 
 return {
   { 'lewis6991/spaceless.nvim', lazy = false, cond = not minimal },
@@ -285,7 +285,7 @@ return {
   },
   {
     'tzachar/local-highlight.nvim',
-    cond = not minimal and niceties and not rvim.lsp.enable,
+    cond = not minimal and niceties and not ar.lsp.enable,
     event = { 'BufRead', 'BufNewFile' },
     opts = { hlgroup = 'Search' },
   },
@@ -327,7 +327,7 @@ return {
         'fugitive',
       },
       highlight = {
-        bg = rvim.highlight.get('Normal', 'bg'),
+        bg = ar.highlight.get('Normal', 'bg'),
         fg = P.cursor,
       },
     },
@@ -523,7 +523,7 @@ return {
     },
     config = function()
       require('todo-comments').setup({ highlight = { after = '' } })
-      rvim.command(
+      ar.command(
         'TodoDots',
         string.format(
           'TodoTelescope cwd=%s keywords=TODO,FIXME',

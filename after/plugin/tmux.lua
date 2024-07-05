@@ -1,6 +1,6 @@
-local enabled = rvim.plugin.tmux.enable
+local enabled = ar.plugin.tmux.enable
 
-if not rvim or rvim.none or not enabled or vim.env.TMUX == nil then return end
+if not ar or ar.none or not enabled or vim.env.TMUX == nil then return end
 
 local fn, fmt = vim.fn, string.format
 
@@ -19,13 +19,13 @@ local ignored = {
 --- Get the color of the current vim background and update tmux accordingly
 ---@param reset boolean?
 local function set_statusline(reset)
-  if rvim.find_string(ignored, vim.bo.ft) then return end
+  if ar.find_string(ignored, vim.bo.ft) then return end
   local tmux_bg = '#20222f'
   local bg = tmux_bg
-  if rvim.ui.transparent.enable then
+  if ar.ui.transparent.enable then
     bg = 'default'
   elseif not reset then
-    bg = rvim.highlight.get('Normal', 'bg')
+    bg = ar.highlight.get('Normal', 'bg')
   end
   fn.jobstart(fmt('tmux set-option -g status-style bg=%s', bg))
 end
@@ -42,7 +42,7 @@ local function set_window_title()
   end
 end
 
-rvim.augroup('TmuxUtils', {
+ar.augroup('TmuxUtils', {
   event = { 'FocusGained', 'BufReadPost', 'BufEnter' },
   command = function() set_window_title() end,
 }, {

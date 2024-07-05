@@ -1,4 +1,4 @@
-if not rvim or rvim.none then return end
+if not ar or ar.none then return end
 
 local opt = vim.opt
 
@@ -8,7 +8,7 @@ opt.list = false
 opt.wrap = false
 opt.signcolumn = 'no'
 
-if not rvim.is_available('oil.nvim') then return end
+if not ar.is_available('oil.nvim') then return end
 
 local oil = require('oil')
 local function find_files()

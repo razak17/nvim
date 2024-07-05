@@ -1,12 +1,12 @@
-if not rvim or rvim.none then return end
+if not ar or ar.none then return end
 
-local augroup, is_available = rvim.augroup, rvim.is_available
+local augroup, is_available = ar.augroup, ar.is_available
 
 local fn, api, env, v, cmd, opt =
   vim.fn, vim.api, vim.env, vim.v, vim.cmd, vim.opt
 local fmt = string.format
-local falsy = rvim.falsy
-local decorations = rvim.ui.decorations
+local falsy = ar.falsy
+local decorations = ar.ui.decorations
 
 --------------------------------------------------------------------------------
 -- HLSEARCH
@@ -22,7 +22,7 @@ map(
 
 local function stop_hl()
   if v.hlsearch == 0 or api.nvim_get_mode().mode ~= 'n' then return end
-  api.nvim_feedkeys(rvim.replace_termcodes('<Plug>(StopHL)'), 'm', false)
+  api.nvim_feedkeys(ar.replace_termcodes('<Plug>(StopHL)'), 'm', false)
 end
 
 local function hl_search()
@@ -55,7 +55,7 @@ augroup('VimrcIncSearchHighlight', {
   command = function() vim.o.hlsearch = true end,
 })
 
-local smart_close_filetypes = rvim.p_table({
+local smart_close_filetypes = ar.p_table({
   ['qf'] = true,
   ['log'] = true,
   ['help'] = true,
@@ -75,7 +75,7 @@ local smart_close_filetypes = rvim.p_table({
   ['telescope-lazy'] = true,
 })
 
-local smart_close_buftypes = rvim.p_table({
+local smart_close_buftypes = ar.p_table({
   ['nofile'] = true,
 })
 
@@ -158,16 +158,14 @@ augroup(
   {
     event = { 'FocusLost', 'InsertLeave', 'CursorMoved' },
     command = function(args)
-      if not vim.bo[args.buf].modified or not rvim.autosave.enable then
-        return
-      end
+      if not vim.bo[args.buf].modified or not ar.autosave.enable then return end
       if can_save() then vim.cmd('silent! wall') end
     end,
   },
   --   {
   --   event = { 'BufLeave' },
   --   command = function()
-  --     if not rvim.autosave.enable then return end
+  --     if not ar.autosave.enable then return end
   --     if can_save() then vim.cmd('silent! write ++p') end
   --   end,
   -- },
@@ -252,7 +250,7 @@ augroup('Utilities', {
   pattern = { '*' },
   nested = true,
   command = function()
-    if rvim.large_file_opened then return end
+    if ar.large_file_opened then return end
 
     if falsy(vim.bo.filetype) or fn.exists('b:ftdetect') == 1 then
       vim.cmd([[
@@ -356,7 +354,7 @@ end
 --   augroup('GitSignsRefreshCustom', {
 --     event = { 'InsertEnter', 'CursorHold' },
 --     command = function(args)
---       local decs = rvim.ui.decorations.get({
+--       local decs = ar.ui.decorations.get({
 --         ft = vim.bo.ft,
 --         bt = vim.bo.bt,
 --         setting = 'statuscolumn',

@@ -1,6 +1,6 @@
-if not rvim then return end
+if not ar then return end
 
-local highlight = rvim.highlight
+local highlight = ar.highlight
 
 local function general_overrides()
   highlight.all({
@@ -148,7 +148,7 @@ local function user_highlights()
   set_sidebar_highlight()
 end
 
-rvim.augroup('UserHighlights', {
+ar.augroup('UserHighlights', {
   event = { 'ColorScheme' },
   command = function() user_highlights() end,
 }, {
@@ -157,4 +157,4 @@ rvim.augroup('UserHighlights', {
   command = function() on_sidebar_enter() end,
 })
 
-rvim.load_colorscheme('onedark')
+ar.load_colorscheme('onedark')

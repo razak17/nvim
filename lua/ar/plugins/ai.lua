@@ -19,7 +19,7 @@
 return {
   {
     'zbirenbaum/copilot.lua',
-    cond = rvim.ai.enable and not rvim.plugins.minimal,
+    cond = ar.ai.enable and not ar.plugins.minimal,
     cmd = 'Copilot',
     event = 'InsertEnter',
     keys = {
@@ -58,7 +58,7 @@ return {
   },
   {
     'piersolenski/wtf.nvim',
-    cond = rvim.lsp.enable and rvim.ai.enable,
+    cond = ar.lsp.enable and ar.ai.enable,
     event = 'VeryLazy',
     -- stylua: ignore
     keys = {
@@ -83,7 +83,7 @@ return {
   },
   {
     'moozd/aidoc.nvim',
-    cond = not rvim.plugins.minimal,
+    cond = not ar.plugins.minimal,
     keys = {
       {
         mode = 'x',
@@ -96,7 +96,7 @@ return {
   },
   {
     'David-Kunz/gen.nvim',
-    cond = not rvim.plugins.minimal and rvim.ai.enable and false,
+    cond = not ar.plugins.minimal and ar.ai.enable and false,
     cmd = { 'Gen' },
   },
 }

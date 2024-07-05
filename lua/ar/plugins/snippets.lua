@@ -49,7 +49,7 @@ return {
         },
       })
 
-      rvim.command(
+      ar.command(
         'LuaSnipEdit',
         function() require('luasnip.loaders').edit_snippet_files() end
       )

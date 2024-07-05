@@ -1,4 +1,4 @@
-local minimal = rvim.plugins.minimal
+local minimal = ar.plugins.minimal
 
 return {
   {
@@ -22,7 +22,7 @@ return {
       jump = { nohlsearch = true },
     },
     init = function()
-      rvim.highlight.plugin('flash', {
+      ar.highlight.plugin('flash', {
         theme = {
           ['onedark'] = {
             { FlashMatch = { link = 'Debug' } },

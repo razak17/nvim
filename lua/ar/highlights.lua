@@ -1,5 +1,4 @@
-local api, notify, fmt, augroup =
-  vim.api, vim.notify, string.format, rvim.augroup
+local api, notify, fmt, augroup = vim.api, vim.notify, string.format, ar.augroup
 
 ---@alias ErrorMsg {msg: string}
 
@@ -174,7 +173,7 @@ local function set(ns, name, opts)
     if attrs[attribute] then hl[attribute] = new_data end
   end
 
-  rvim.pcall(fmt('setting highlight "%s"', name), api.nvim_set_hl, ns, name, hl)
+  ar.pcall(fmt('setting highlight "%s"', name), api.nvim_set_hl, ns, name, hl)
 end
 
 ---Apply a list of highlights
@@ -217,7 +216,7 @@ end
 ---@param opts HLArgs[] | { theme: table<string, HLArgs[]> }
 local function plugin(name, opts)
   -- Options can be specified by theme name so check if they have been or there is a general
-  -- definition otherwise use the opts rvim is
+  -- definition otherwise use the opts as is
   if opts.theme then
     opts = add_theme_overrides(opts.theme)
     if not next(opts) then return end
@@ -232,7 +231,7 @@ local function plugin(name, opts)
   })
 end
 
-rvim.highlight = {
+ar.highlight = {
   get = get,
   set = set,
   all = all,

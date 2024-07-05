@@ -14,7 +14,7 @@ function M.toggle_opt(opt)
   local value
   if type(prev) == 'boolean' then value = not prev end
   vim.wo[opt] = value
-  mappings_notify(string.format('%s %s', opt, rvim.bool2str(vim.wo[opt])))
+  mappings_notify(string.format('%s %s', opt, ar.bool2str(vim.wo[opt])))
 end
 
 --- Toggle laststatus=3|2|0
@@ -38,18 +38,18 @@ end
 function M.toggle_conceal_level()
   vim.opt_local.conceallevel = opt_l.conceallevel:get() == 0 and 2 or 0
   mappings_notify(
-    string.format('conceal %s', rvim.bool2str(opt_l.conceallevel:get() == 2))
+    string.format('conceal %s', ar.bool2str(opt_l.conceallevel:get() == 2))
   )
 end
 
 --- Toggle conceal cursor=n|''
 function M.toggle_conceal_cursor()
-  vim.opt_local.concealcursor = rvim.falsy(opt_l.concealcursor:get()) and 'nv'
+  vim.opt_local.concealcursor = ar.falsy(opt_l.concealcursor:get()) and 'nv'
     or ''
   mappings_notify(
     string.format(
       'conceal cursor %s',
-      rvim.bool2str(opt_l.concealcursor:get() == '')
+      ar.bool2str(opt_l.concealcursor:get() == '')
     )
   )
 end

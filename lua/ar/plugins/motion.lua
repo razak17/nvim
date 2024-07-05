@@ -33,7 +33,7 @@ return {
   },
   {
     'chrisgrieser/nvim-spider',
-    cond = not rvim.plugins.minimal and rvim.plugins.niceties,
+    cond = not ar.plugins.minimal and ar.plugins.niceties,
     -- stylua: ignore
     keys = {
       { 'w', "<cmd>lua require('spider').motion('w')<CR>", mode = { 'x', 'n', 'o' }, },

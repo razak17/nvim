@@ -1,4 +1,4 @@
-local fn, ui, reqcall = vim.fn, rvim.ui, rvim.reqcall
+local fn, ui, reqcall = vim.fn, ar.ui, ar.reqcall
 local codicons, lsp_hls = ui.codicons, ui.lsp.highlights
 local prompt = ' ' .. codicons.misc.search_alt .. '  '
 
@@ -49,7 +49,7 @@ end
 
 local function list_sessions()
   local fzf = require('fzf-lua')
-  local ok, persisted = rvim.pcall(require, 'persisted')
+  local ok, persisted = ar.pcall(require, 'persisted')
   if not ok then return end
   local sessions = persisted.list()
   fzf.fzf_exec(
@@ -84,11 +84,11 @@ local function list_sessions()
   )
 end
 
-local function obsidian_open() file_picker(rvim.sync('obsidian')) end
+local function obsidian_open() file_picker(ar.sync('obsidian')) end
 
-rvim.command('ObsidianFind', obsidian_open)
+ar.command('ObsidianFind', obsidian_open)
 
-rvim.fzf = { dropdown = dropdown, cursor_dropdown = cursor_dropdown }
+ar.fzf = { dropdown = dropdown, cursor_dropdown = cursor_dropdown }
 
 return {
   {
@@ -316,13 +316,13 @@ return {
         },
       })
 
-      rvim.command('SessionList', list_sessions)
+      ar.command('SessionList', list_sessions)
     end,
   },
   {
     'camspiers/snap',
     config = function()
-      rvim.highlight.plugin('snap', {
+      ar.highlight.plugin('snap', {
         theme = {
           ['onedark'] = {
             { SnapNormal = { link = 'NormalFloat' } },

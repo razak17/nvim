@@ -1,4 +1,4 @@
-local sync = rvim.sync
+local sync = ar.sync
 
 return {
   {

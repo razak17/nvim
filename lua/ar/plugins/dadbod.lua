@@ -24,7 +24,7 @@ return {
     vim.g.db_ui_save_location = join_paths(vim.fn.stdpath('data'), 'db_ui')
     vim.g.db_ui_use_nerd_fonts = 1
 
-    rvim.augroup('dad-bod', {
+    ar.augroup('dad-bod', {
       event = { 'FileType' },
       pattern = { 'sql' },
       command = [[setlocal omnifunc=vim_dadbod_completion#omni]],

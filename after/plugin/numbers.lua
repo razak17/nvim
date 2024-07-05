@@ -1,6 +1,6 @@
-if not rvim then return end
+if not ar then return end
 
-local ui = rvim.ui
+local ui = ar.ui
 
 -- Inspiration
 -- 1. vim-relativity
@@ -50,7 +50,7 @@ local function disable_relative_number()
   vim.wo.number, vim.wo.relativenumber = not is_blocked(), false
 end
 
-rvim.command('ToggleRelativeNumber', function()
+ar.command('ToggleRelativeNumber', function()
   is_enabled = not is_enabled
   if is_enabled then
     enable_relative_number()
@@ -59,7 +59,7 @@ rvim.command('ToggleRelativeNumber', function()
   end
 end)
 
-rvim.augroup('ToggleRelativeLineNumbers', {
+ar.augroup('ToggleRelativeLineNumbers', {
   event = { 'BufEnter', 'FileType', 'FocusGained', 'InsertLeave' },
   command = enable_relative_number,
 }, {

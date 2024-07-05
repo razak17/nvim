@@ -1,9 +1,9 @@
-if not rvim then return end
+if not ar then return end
 
 local fn, api, cmd, uv, fmt = vim.fn, vim.api, vim.cmd, vim.uv, string.format
 local l = vim.log.levels
 
----Join path segments that were passed rvim input
+---Join path segments that were passed as input
 ---@return string
 function join_paths(...)
   local path_sep = uv.os_uname().version:match('Windows') and '\\' or '/'
@@ -11,14 +11,14 @@ function join_paths(...)
   return result
 end
 
-function rvim.sync(path) return fmt('%s/Notes/%s', fn.expand('$SYNC_DIR'), path) end
+function ar.sync(path) return fmt('%s/Notes/%s', fn.expand('$SYNC_DIR'), path) end
 
 --------------------------------------------------------------------------------
 -- Utils
 --------------------------------------------------------------------------------
 
 --  find string in list
-function rvim.find_string(table, string)
+function ar.find_string(table, string)
   local found = false
   for _, v in pairs(table) do
     if v == string then
@@ -29,7 +29,7 @@ function rvim.find_string(table, string)
   return found
 end
 
-function rvim.get_visual_text()
+function ar.get_visual_text()
   local a_orig = vim.fn.getreg('a')
   local mode = vim.fn.mode()
   if mode ~= 'v' and mode ~= 'V' then vim.cmd([[normal! gv]]) end
@@ -40,7 +40,7 @@ function rvim.get_visual_text()
   return text
 end
 
-function rvim.remove_duplicates(table)
+function ar.remove_duplicates(table)
   local seen = {}
   return vim
     .iter(table)
@@ -54,7 +54,7 @@ function rvim.remove_duplicates(table)
     :totable()
 end
 
-function rvim.mergeTables(destination, source)
+function ar.mergeTables(destination, source)
   for k, v in pairs(source) do
     if type(v) == 'table' and type(v[1]) == 'string' then
       for _, item in ipairs(v) do
@@ -68,7 +68,7 @@ function rvim.mergeTables(destination, source)
       if destination[k] == nil or type(destination[k]) ~= 'table' then
         destination[k] = {}
       end
-      rvim.mergeTables(destination[k], v)
+      ar.mergeTables(destination[k], v)
     else
       destination[k] = v
     end
@@ -76,7 +76,7 @@ function rvim.mergeTables(destination, source)
 end
 
 --- check for project local config
-function rvim.project_config(file)
+function ar.project_config(file)
   if not file then return end
   local json = file:read('*a')
   local status, table = pcall(vim.fn.json_decode, json)
@@ -86,14 +86,14 @@ function rvim.project_config(file)
     -- vim.notify('Invalid json found in .rvim.json', 'error')
     return
   end
-  rvim.mergeTables(rvim, table)
+  ar.mergeTables(ar, table)
 end
 
 --- Autosize horizontal split to match its minimum content
 --- https://vim.fandom.com/wiki/Automatically_fitting_a_quickfix_window_height
 ---@param minheight number
 ---@param maxheight number
-function rvim.adjust_split_height(minheight, maxheight)
+function ar.adjust_split_height(minheight, maxheight)
   local line = fn.line('$') -- Assuming fn.line('$') returns an integer or nil
 
   if not line then line = 0 end
@@ -109,14 +109,14 @@ end
 ---@param ... any
 ---@return boolean, any
 ---@overload fun(func: function, ...): boolean, any
-function rvim.pcall(msg, func, ...)
+function ar.pcall(msg, func, ...)
   local args = { ... }
   if type(msg) == 'function' then
     local arg = func
     args, func, msg = { arg, unpack(args) }, msg, nil
   end
   return xpcall(func, function(err)
-    if rvim.debug.enable then
+    if ar.debug.enable then
       msg = debug.traceback(
         msg and fmt('%s:\n%s\n%s', msg, vim.inspect(args), err) or err
       )
@@ -129,7 +129,7 @@ end
 ---@param dir string
 ---@param dirs_table table
 ---@return boolean
-function rvim.dirs_match(dirs_table, dir)
+function ar.dirs_match(dirs_table, dir)
   for _, v in ipairs(dirs_table) do
     if dir:match(v) then return true end
   end
@@ -137,11 +137,11 @@ function rvim.dirs_match(dirs_table, dir)
 end
 
 --- Get plugins spec
-function rvim.plugins_spec()
+function ar.plugins_spec()
   local plugins_path = fn.stdpath('config') .. '/lua/ar/plugins'
   local plugins_list = vim.fs.find(function(name, _)
     local filename = name:match('(.+)%.lua$')
-    return name:match('.*.lua$') and not rvim.module_disabled(filename)
+    return name:match('.*.lua$') and not ar.module_disabled(filename)
   end, { path = plugins_path, limit = math.huge, type = 'file' })
   return vim.iter(plugins_list):fold({}, function(acc, path)
     local _, pos = path:find(plugins_path)
@@ -154,7 +154,7 @@ end
 --- when a plugin is not necessarily loaded yet.
 ---@param plugin string The plugin to search for.
 ---@return boolean available # Whether the plugin is available.
-function rvim.is_available(plugin)
+function ar.is_available(plugin)
   local lazy_config_avail, lazy_config = pcall(require, 'lazy.core.config')
   return lazy_config_avail and lazy_config.plugins[plugin] ~= nil
 end
@@ -162,34 +162,34 @@ end
 -- Check if a plugin is disabled
 ---@param plugin string The plugin to search for.
 ---@return boolean disabled # Whether the plugin is disabled.
-function rvim.plugin_disabled(plugin)
-  return rvim.find_string(rvim.plugins.disabled, plugin)
+function ar.plugin_disabled(plugin)
+  return ar.find_string(ar.plugins.disabled, plugin)
 end
 
 -- Check if a module is disabled
 ---@param module string The module to search for.
 ---@return boolean disabled # Whether the module is disabled.
-function rvim.module_disabled(module)
-  return rvim.find_string(rvim.plugins.modules.disabled, module)
+function ar.module_disabled(module)
+  return ar.find_string(ar.plugins.modules.disabled, module)
 end
 
 -- Check if a lsp is disabled
 ---@param lsp string The lsp to search for.
 ---@return boolean disabled # Whether the lsp is disabled.
-function rvim.lsp_disabled(lsp)
-  return rvim.find_string(rvim.lsp.disabled.servers, lsp)
+function ar.lsp_disabled(lsp)
+  return ar.find_string(ar.lsp.disabled.servers, lsp)
 end
 
 ---Get whether using nightly version of neovim
 local LATEST_NIGHTLY_MINOR = 10
-function rvim.nightly() return vim.version().minor >= LATEST_NIGHTLY_MINOR end
+function ar.nightly() return vim.version().minor >= LATEST_NIGHTLY_MINOR end
 
-function rvim.reload_all()
+function ar.reload_all()
   vim.cmd('checktime')
   vim.cmd('Gitsigns refresh')
 end
 
-function rvim.run_command(command, params, cb)
+function ar.run_command(command, params, cb)
   local Job = require('plenary.job')
   local error_msg = nil
   Job
@@ -219,15 +219,15 @@ function rvim.run_command(command, params, cb)
   vim.notify(command .. ' launched...', vim.log.levels.INFO)
 end
 
-function rvim.escape_pattern(text) return text:gsub('([^%w])', '%%%1') end
+function ar.escape_pattern(text) return text:gsub('([^%w])', '%%%1') end
 
-function rvim.copy_to_clipboard(to_copy) vim.fn.setreg('+', to_copy) end
+function ar.copy_to_clipboard(to_copy) vim.fn.setreg('+', to_copy) end
 
-function rvim.load_colorscheme(name)
-  rvim.pcall('theme failed to load because', vim.cmd.colorscheme, name)
+function ar.load_colorscheme(name)
+  ar.pcall('theme failed to load because', vim.cmd.colorscheme, name)
 end
 
-function rvim.is_git_repo()
+function ar.is_git_repo()
   return fn.isdirectory(fn.expand('%:p:h') .. '/.git')
     or vim.b.gitsigns_head
     or vim.b.gitsigns_status_dict
@@ -237,7 +237,7 @@ end
 ---@param t T the object to format
 ---@param k string the key to format
 ---@return T?
-function rvim.format_text(t, k)
+function ar.format_text(t, k)
   local txt = (t and t[k]) and t[k]:gsub('%s', '') or ''
   if #txt < 1 then return end
   t[k] = txt
@@ -245,8 +245,8 @@ function rvim.format_text(t, k)
 end
 
 -- Get project info for all (de)activated projects
-function rvim.get_projects()
-  if not rvim.is_available('project_nvim') then
+function ar.get_projects()
+  if not ar.is_available('project_nvim') then
     vim.notify('project.nvim is not installed')
     return
   end
@@ -278,11 +278,11 @@ end
 ---@param prompt string
 ---@param options_table table
 ---@return function
-function rvim.create_select_menu(prompt, options_table)
+function ar.create_select_menu(prompt, options_table)
   local frecency = require('ar.frecency')
   -- Given the table of options, populate an array with option display names
   local option_names = {}
-  if rvim.frecency.enable then
+  if ar.frecency.enable then
     local top_items = frecency.top_items(
       function(_, data) return data.prompt == prompt end
     )
@@ -305,7 +305,7 @@ function rvim.create_select_menu(prompt, options_table)
     }, function(choice, item)
       local action = options_table[choice]
       if action ~= nil then
-        if rvim.frecency.enable then
+        if ar.frecency.enable then
           frecency.update_item(option_names[item], { prompt = prompt })
         end
         if type(action) == 'string' then
@@ -346,10 +346,10 @@ end
 --- A convenience wrapper that calls the ftplugin config for a plugin if it exists
 --- and warns me if the plugin is not installed
 ---@param configs table<string, fun(module: table)>
-function rvim.ftplugin_conf(configs)
+function ar.ftplugin_conf(configs)
   if type(configs) ~= 'table' then return end
   for name, callback in pairs(configs) do
-    local ok, plugin = rvim.pcall(require, name)
+    local ok, plugin = ar.pcall(require, name)
     if ok then callback(plugin) end
   end
 end
@@ -359,7 +359,7 @@ end
 ---
 --- e.g.
 --- ```lua
----   rvim.filetype_settings({
+---   ar.filetype_settings({
 ---     lua = {
 ---      opt = {foldmethod = 'expr' },
 ---      bo = { shiftwidth = 2 }
@@ -373,7 +373,7 @@ end
 --- centralized but the curation of these files is automated. Although I'm not sure this actually
 --- has value over autocommands, unless ftplugin files specifically have that value
 ---@param map {[string|string[]]: FiletypeSettings | {[integer]: fun(args: AutocmdArgs) | string}}
-function rvim.filetype_settings(map)
+function ar.filetype_settings(map)
   local commands = vim.iter(map):map(function(ft, settings)
     local name = type(ft) == 'table' and table.concat(ft, ',') or ft
     return {
@@ -386,8 +386,8 @@ function rvim.filetype_settings(map)
           if key == 'mappings' then
             return apply_ft_mappings(value, args.buf)
           end
-          if key == 'plugins' then return rvim.ftplugin_conf(value) end
-          if type(key) == 'function' then rvim.pcall(key, args) end
+          if key == 'plugins' then return ar.ftplugin_conf(value) end
+          if type(key) == 'function' then ar.pcall(key, args) end
           vim
             .iter(value)
             :each(function(option, setting) vim[key][option] = setting end)
@@ -395,16 +395,16 @@ function rvim.filetype_settings(map)
       end,
     }
   end)
-  rvim.augroup('filetype-settings', unpack(commands:totable()))
+  ar.augroup('filetype-settings', unpack(commands:totable()))
 end
 
 ---@param str string
 ---@param max_len integer
 ---@return string
-function rvim.truncate(str, max_len)
+function ar.truncate(str, max_len)
   assert(str and max_len, 'string and max_len must be provided')
   return api.nvim_strwidth(str) > max_len
-      and str:sub(1, max_len) .. rvim.ui.icons.misc.ellipsis
+      and str:sub(1, max_len) .. ar.ui.icons.misc.ellipsis
     or str
 end
 
@@ -412,7 +412,7 @@ end
 --- replicate netrw functionality
 ---@param path string
 ---@param notify? boolean
-function rvim.open(path, notify)
+function ar.open(path, notify)
   notify = notify or false
   if notify then vim.notify(fmt('Opening %s', path)) end
   local res = vim.ui.open(path)
@@ -425,7 +425,7 @@ end
 --- open / play media file
 ---@param path string
 ---@param notify? boolean
-function rvim.open_media(path, notify)
+function ar.open_media(path, notify)
   local file_extension = path:match('^.+%.(.+)$')
   local is_audio_or_video =
     vim.list_contains({ 'mp3', 'm4a', 'mp4', 'mkv' }, file_extension)
@@ -441,13 +441,13 @@ function rvim.open_media(path, notify)
     return
   end
 
-  rvim.open(path, notify)
+  ar.open(path, notify)
 end
 
 --- open file in window picker
 ---@param buf? integer
-function rvim.open_with_window_picker(buf)
-  if not rvim.is_available('nvim-window-picker') then
+function ar.open_with_window_picker(buf)
+  if not ar.is_available('nvim-window-picker') then
     vim.notify('window-picker is not installed', vim.log.levels.ERROR)
     return
   end
@@ -460,7 +460,7 @@ end
 
 --- Copy `text` to system clipboard
 ---@param text string
-function rvim.copy(text)
+function ar.copy(text)
   vim.fn.setreg('+', text)
   vim.notify('Copied to clipboard', vim.log.levels.INFO)
 end
@@ -468,22 +468,22 @@ end
 --- search current word in website. see usage below
 ---@param path string
 ---@param url string
-function rvim.web_search(path, url)
+function ar.web_search(path, url)
   local query = '"' .. fn.substitute(path, '["\n]', ' ', 'g') .. '"'
-  rvim.open(fmt('%s%s', url, query), true)
+  ar.open(fmt('%s%s', url, query), true)
 end
 
 ---------------------------------------------------------------------------------
 -- Quickfix and Location List
 ---------------------------------------------------------------------------------
-rvim.list = { qf = {}, loc = {} }
+ar.list = { qf = {}, loc = {} }
 
 ---@param list_type "loclist" | "quickfix"
 ---@return boolean
 local function is_list_open(list_type)
   return vim
     .iter(fn.getwininfo())
-    :find(function(win) return not rvim.falsy(win[list_type]) end) ~= nil
+    :find(function(win) return not ar.falsy(win[list_type]) end) ~= nil
 end
 
 local silence = { mods = { silent = true, emsg_silent = true } }
@@ -495,7 +495,7 @@ local function preserve_window(callback, ...)
   if win ~= api.nvim_get_current_win() then cmd.wincmd('p') end
 end
 
-function rvim.list.qf.toggle()
+function ar.list.qf.toggle()
   if is_list_open('quickfix') then
     cmd.cclose(silence)
   elseif #fn.getqflist() > 0 then
@@ -503,7 +503,7 @@ function rvim.list.qf.toggle()
   end
 end
 
-function rvim.list.loc.toggle()
+function ar.list.loc.toggle()
   if is_list_open('loclist') then
     cmd.lclose(silence)
   elseif #fn.getloclist(0) > 0 then
@@ -513,7 +513,7 @@ end
 
 -- @see: https://vi.stackexchange.com/a/21255
 -- using range-aware function
-function rvim.list.qf.delete(buf)
+function ar.list.qf.delete(buf)
   buf = buf or api.nvim_get_current_buf()
   local list = fn.getqflist()
   local line = api.nvim_win_get_cursor(0)[1]
@@ -536,7 +536,7 @@ end
 ---Determine if a value of any type is empty
 ---@param item any
 ---@return boolean
-function rvim.falsy(item)
+function ar.falsy(item)
   if not item then return true end
   local item_type = type(item)
   if item_type == 'boolean' then return not item end
@@ -553,7 +553,7 @@ end
 
 local autocmd_keys =
   { 'event', 'buffer', 'pattern', 'desc', 'command', 'group', 'once', 'nested' }
---- Validate the keys passed to rvim.augroup are valid
+--- Validate the keys passed to ar.augroup are valid
 ---@param name string
 ---@param command Autocommand
 local function validate_autocmd(name, command)
@@ -592,7 +592,7 @@ end
 ---@param name string The name of the autocommand group
 ---@param ... Autocommand A list of autocommands to create
 ---@return number
-function rvim.augroup(name, ...)
+function ar.augroup(name, ...)
   local commands = { ... }
   assert(name ~= 'User', 'The name of an augroup CANNOT be User')
   assert(
@@ -627,7 +627,7 @@ end
 ---@param name string
 ---@param rhs string | fun(args: CommandArgs)
 ---@param opts? table
-function rvim.command(name, rhs, opts)
+function ar.command(name, rhs, opts)
   opts = opts or {}
   api.nvim_create_user_command(name, rhs, opts)
 end
@@ -635,7 +635,7 @@ end
 ---A terser proxy for `nvim_replace_termcodes`
 ---@param str string
 ---@return string
-function rvim.replace_termcodes(str)
+function ar.replace_termcodes(str)
   return api.nvim_replace_termcodes(str, true, true, true)
 end
 
@@ -644,7 +644,7 @@ end
 ---all the table's keys for a match using `string.match`
 ---@param map T
 ---@return T
-function rvim.p_table(map)
+function ar.p_table(map)
   return setmetatable(map, {
     __index = function(tbl, key)
       if not key then return end
@@ -661,7 +661,7 @@ end
 ---
 --- Will only require the module after the first index of a module.
 --- Only works for modules that export a table.
-function rvim.reqidx(require_path)
+function ar.reqidx(require_path)
   return setmetatable({}, {
     __index = function(_, key) return require(require_path)[key] end,
     __newindex = function(_, key, value) require(require_path)[key] = value end,
@@ -671,13 +671,13 @@ end
 ---check if a certain feature/version/commit exists in nvim
 ---@param feature string
 ---@return boolean
-function rvim.has(feature) return vim.fn.has(feature) > 0 end
+function ar.has(feature) return vim.fn.has(feature) > 0 end
 
 --- Find the first entry for which the predicate returns true.
 -- @param t The table
 -- @param predicate The function called for each entry of t
 -- @return The entry for which the predicate returned True or nil
-function rvim.find_first(t, predicate)
+function ar.find_first(t, predicate)
   for _, entry in pairs(t) do
     if predicate(entry) then return entry end
   end
@@ -686,7 +686,7 @@ end
 
 ---@param require_path string
 ---@return table<string, fun(...): any>
-function rvim.reqcall(require_path)
+function ar.reqcall(require_path)
   return setmetatable({}, {
     __index = function(_, k)
       return function(...) return require(require_path)[k](...) end
@@ -696,9 +696,9 @@ end
 
 ---@param bool boolean
 ---@return string
-function rvim.bool2str(bool) return bool and 'on' or 'off' end
+function ar.bool2str(bool) return bool and 'on' or 'off' end
 
-function rvim.change_filetype()
+function ar.change_filetype()
   vim.ui.input({ prompt = 'Change filetype to: ' }, function(new_ft)
     if new_ft ~= nil then vim.bo.filetype = new_ft end
   end)

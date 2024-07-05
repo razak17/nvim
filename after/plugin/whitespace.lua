@@ -1,6 +1,6 @@
-local enabled = rvim.plugin.whitespace.enable
+local enabled = ar.plugin.whitespace.enable
 
-if not rvim or rvim.none or not enabled then return end
+if not ar or ar.none or not enabled then return end
 
 ----------------------------------------------------------------------------------
 --  Whitespace highlighting
@@ -8,7 +8,7 @@ if not rvim or rvim.none or not enabled then return end
 --@source: https://vim.fandom.com/wiki/Highlight_unwanted_spaces (comment at the bottom)
 --@implementation: https://github.com/inkarkat/vim-ShowTrailingWhitespace
 
-if not rvim then return end
+if not ar then return end
 
 local fn = vim.fn
 
@@ -33,13 +33,13 @@ local function toggle_trailing(mode)
   vim.w.whitespace_match_number = fn.matchadd('ExtraWhitespace', pattern)
 end
 
-rvim.highlight.set('ExtraWhitespace', { fg = 'red' })
+ar.highlight.set('ExtraWhitespace', { fg = 'red' })
 
-rvim.augroup('WhitespaceMatch', {
+ar.augroup('WhitespaceMatch', {
   event = { 'ColorScheme' },
   desc = 'Add extra whitespace highlight',
   pattern = { '*' },
-  command = function() rvim.highlight.set('ExtraWhitespace', { fg = 'red' }) end,
+  command = function() ar.highlight.set('ExtraWhitespace', { fg = 'red' }) end,
 }, {
   event = { 'BufEnter', 'FileType', 'InsertLeave' },
   pattern = { '*' },

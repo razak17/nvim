@@ -1,4 +1,4 @@
-local minimal = rvim.plugins.minimal
+local minimal = ar.plugins.minimal
 
 return {
   ------------------------------------------------------------------------------
@@ -78,7 +78,7 @@ return {
   },
   {
     'tribela/transparent.nvim',
-    cond = rvim.ui.transparent.enable,
+    cond = ar.ui.transparent.enable,
     event = 'VimEnter',
     opts = {},
   },

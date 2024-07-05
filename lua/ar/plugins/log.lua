@@ -1,6 +1,6 @@
 ---@diagnostic disable: missing-fields
-local minimal = rvim.plugins.minimal
-local niceties = rvim.plugins.niceties
+local minimal = ar.plugins.minimal
+local niceties = ar.plugins.niceties
 
 return {
 

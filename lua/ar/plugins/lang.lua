@@ -1,6 +1,6 @@
-local ui, highlight = rvim.ui, rvim.highlight
+local ui, highlight = ar.ui, ar.highlight
 local border = ui.current.border
-local minimal, niceties = rvim.plugins.minimal, rvim.plugins.niceties
+local minimal, niceties = ar.plugins.minimal, ar.plugins.niceties
 
 return {
   ------------------------------------------------------------------------------
@@ -159,7 +159,7 @@ return {
   },
   {
     'MaximilianLloyd/tw-values.nvim',
-    cond = rvim.lsp.enable,
+    cond = ar.lsp.enable,
     -- stylua: ignore
     keys = {
       { '<localleader>lt', '<cmd>TWValues<cr>', desc = 'tw-values: show values', },
@@ -168,7 +168,7 @@ return {
   },
   {
     'luckasRanarison/tailwind-tools.nvim',
-    cond = rvim.lsp.enable and false,
+    cond = ar.lsp.enable and false,
     ft = { 'html', 'svelte', 'astro', 'vue', 'typescriptreact', 'php', 'blade' },
     event = { 'BufRead' },
     cmd = {
@@ -200,7 +200,7 @@ return {
         ['<localleader>lv'] = { name = 'Venv Selector' },
       })
     end,
-    cond = rvim.lsp.enable,
+    cond = ar.lsp.enable,
     cmd = 'VenvSelect',
     opts = {
       name = { 'venv', '.venv', 'env', '.env' },
@@ -220,7 +220,7 @@ return {
         ['<localleader>g'] = { name = 'Gopher' },
       })
     end,
-    cond = rvim.lsp.enable and not minimal,
+    cond = ar.lsp.enable and not minimal,
     ft = 'go',
   },
   -- Markdown

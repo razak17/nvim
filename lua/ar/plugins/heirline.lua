@@ -1,5 +1,5 @@
 local api, fn = vim.api, vim.fn
-local ui = rvim.ui
+local ui = ar.ui
 
 local align = { provider = '%=' }
 
@@ -30,7 +30,7 @@ return {
     'rebelot/heirline.nvim',
     priority = 500,
     lazy = false,
-    cond = not rvim.plugins.minimal,
+    cond = not ar.plugins.minimal,
     config = function()
       local statuscolumn = require('ar.statuscolumn').components
       local statusline = require('ar.statusline')
@@ -46,7 +46,7 @@ return {
               fname = fn.bufname(buf),
               setting = 'statusline',
             })
-            if rvim.falsy(d) then
+            if ar.falsy(d) then
               return not conditions.buffer_matches({
                 buftype = buftypes,
                 filetype = force_inactive_filetypes,
@@ -85,9 +85,7 @@ return {
         },
         statuscolumn = {
           condition = function()
-            if
-              not rvim.ui.statuscolumn.enable or rvim.ui.statuscolumn.custom
-            then
+            if not ar.ui.statuscolumn.enable or ar.ui.statuscolumn.custom then
               return false
             end
             local win = api.nvim_get_current_win()
@@ -97,7 +95,7 @@ return {
               fname = fn.bufname(buf),
               setting = 'statuscolumn',
             })
-            if rvim.falsy(d) then
+            if ar.falsy(d) then
               return not conditions.buffer_matches({
                 buftype = buftypes,
                 filetype = force_inactive_filetypes,

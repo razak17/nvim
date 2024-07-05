@@ -1,4 +1,4 @@
-local fn, ui = vim.fn, rvim.ui
+local fn, ui = vim.fn, ar.ui
 local border = ui.current.border
 
 return {
@@ -30,7 +30,7 @@ return {
 
       local float_handler = function(term)
         vim.wo.sidescrolloff = 0
-        if not rvim.falsy(fn.mapcheck('jk', 't')) then
+        if not ar.falsy(fn.mapcheck('jk', 't')) then
           vim.keymap.del('t', 'jk', { buffer = term.bufnr })
           vim.keymap.del('t', '<esc>', { buffer = term.bufnr })
         end

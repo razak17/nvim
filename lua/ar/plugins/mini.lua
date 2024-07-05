@@ -1,11 +1,11 @@
-local separators = rvim.ui.icons.separators
-local minimal = rvim.plugins.minimal
+local separators = ar.ui.icons.separators
+local minimal = ar.plugins.minimal
 
 return {
   'echasnovski/mini.hipatterns',
   {
     'echasnovski/mini.indentscope',
-    cond = not rvim.plugins.minimal and rvim.plugins.niceties,
+    cond = not ar.plugins.minimal and ar.plugins.niceties,
     event = 'BufRead',
     opts = {
       symbol = separators.left_thin_block,
@@ -19,7 +19,7 @@ return {
       },
     },
     config = function(_, opts)
-      rvim.highlight.plugin('mini-indentscope', {
+      ar.highlight.plugin('mini-indentscope', {
         theme = {
           -- stylua: ignore
           ['onedark'] = {
@@ -34,13 +34,13 @@ return {
   { 'echasnovski/mini.misc', opts = {} },
   {
     'echasnovski/mini.bracketed',
-    cond = not rvim.plugins.minimal,
+    cond = not ar.plugins.minimal,
     event = { 'BufRead', 'BufNewFile' },
     opts = {},
   },
   {
     'echasnovski/mini.animate',
-    cond = not rvim.plugins.minimal and false,
+    cond = not ar.plugins.minimal and false,
     event = 'VeryLazy',
     opts = {},
   },

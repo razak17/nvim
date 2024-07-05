@@ -1,10 +1,10 @@
-if not rvim or rvim.none then return end
+if not ar or ar.none then return end
 
 local api = vim.api
 
 local M = {}
 
-rvim.stickyNote = {
+ar.stickyNote = {
   loaded = false,
   floatData = {},
 }
@@ -100,13 +100,13 @@ local function create_float(config)
     or config.titleFunc
   update_float(win, config)
 
-  rvim.stickyNote.floatData[vim.fn.win_getid()] = config
+  ar.stickyNote.floatData[vim.fn.win_getid()] = config
 
   return { win = win, buf = buf }
 end
 
 local function move_float(win, direction, amount)
-  local config = rvim.stickyNote.floatData[win]
+  local config = ar.stickyNote.floatData[win]
   -- calculate the amount base on which direction and moveCount
   amount = (amount or config.moveCount or 1)
     * (
@@ -130,7 +130,7 @@ local function move_float(win, direction, amount)
 end
 
 local function resize_float(win, opt)
-  local config = rvim.stickyNote.floatData[win]
+  local config = ar.stickyNote.floatData[win]
   if opt.width and opt.height then
     config.width = opt.width
     config.height = opt.height
@@ -153,14 +153,14 @@ local function resize_float(win, opt)
   update_float(win, config)
 end
 
-rvim.augroup('stickyNote', {
+ar.augroup('stickyNote', {
   event = { 'WinNew', 'WinEnter', 'WinClosed' },
   pattern = '*',
   command = function(data)
     if data.event == 'WinClosed' then
-      rvim.stickyNote.floatData[tonumber(data.match)] = nil
+      ar.stickyNote.floatData[tonumber(data.match)] = nil
     end
-    for win, config in pairs(rvim.stickyNote.floatData) do
+    for win, config in pairs(ar.stickyNote.floatData) do
       config.title = config.titleFunc == nil
           and api.nvim_win_get_number(win) .. ': ' .. config.ogTitle
         or config.titleFunc

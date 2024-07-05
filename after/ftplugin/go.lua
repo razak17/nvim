@@ -1,4 +1,4 @@
-if not rvim or rvim.none then return end
+if not ar or ar.none then return end
 
 local bo, fmt = vim.bo, string.format
 
@@ -6,9 +6,9 @@ bo.tabstop = 4
 bo.shiftwidth = 4
 bo.expandtab = false
 
-if not rvim.plugins.enable or rvim.plugins.minimal then return end
+if not ar.plugins.enable or ar.plugins.minimal then return end
 
-if rvim.lsp.enable then
+if ar.lsp.enable then
   local function with_desc(desc)
     return { buffer = 0, desc = fmt('gopher: %s', desc) }
   end

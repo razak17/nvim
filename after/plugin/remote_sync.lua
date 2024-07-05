@@ -1,5 +1,5 @@
-if rvim.remote_sync.enable then
-  rvim.augroup('remote_sync', {
+if ar.remote_sync.enable then
+  ar.augroup('remote_sync', {
     event = 'BufWritePost',
     pattern = {
       '*/<project dir>/*',

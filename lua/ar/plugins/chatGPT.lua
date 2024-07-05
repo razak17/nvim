@@ -1,7 +1,7 @@
 return {
   {
     'jackMort/ChatGPT.nvim',
-    cond = rvim.ai.enable and not rvim.plugins.minimal,
+    cond = ar.ai.enable and not ar.plugins.minimal,
     cmd = {
       'ChatGPT',
       'ChatGPTActAs',
@@ -15,7 +15,7 @@ return {
       { '<leader>an', '<cmd>ChatGPT<CR>', desc = 'chatgpt: open' },
     },
     config = function()
-      rvim.highlight.plugin('ChatGPT.nvim', {
+      ar.highlight.plugin('ChatGPT.nvim', {
         theme = {
           ['onedark'] = {
             { ChatGPTSelectedMessage = { link = 'FloatTitle' } },
@@ -26,7 +26,7 @@ return {
       })
 
       local border = {
-        style = rvim.ui.border.rectangle,
+        style = ar.ui.border.rectangle,
         highlight = 'FloatBorder',
       }
 

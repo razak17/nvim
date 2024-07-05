@@ -1,6 +1,6 @@
-local enabled = rvim.lsp.enable
-  and not rvim.plugin_disabled('typescript-tools.nvim')
-  and rvim.lsp.typescript_tools.enable
+local enabled = ar.lsp.enable
+  and not ar.plugin_disabled('typescript-tools.nvim')
+  and ar.lsp.typescript_tools.enable
 
 return {
   'dmmulroy/ts-error-translator.nvim',
@@ -84,7 +84,7 @@ return {
         end
       end
 
-      rvim.augroup('ReplaceQuickfixWithTrouble', {
+      ar.augroup('ReplaceQuickfixWithTrouble', {
         event = { 'BufWinEnter' },
         pattern = 'quickfix',
         command = replace_quickfix_with_trouble,

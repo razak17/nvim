@@ -4,7 +4,7 @@ local function get_params(with_children)
   local folder = vim.fn.expand('%:h')
   local params = {
     path_display = function(_, p)
-      return string.gsub(p, rvim.escape_pattern(folder .. '/'), '')
+      return string.gsub(p, ar.escape_pattern(folder .. '/'), '')
     end,
   }
   if with_children then
@@ -32,14 +32,14 @@ function M.find_word_in_cur_dir(with_children)
 end
 
 local function to_file_path_in_project(full_path)
-  local projects = rvim.get_projects()
+  local projects = ar.get_projects()
   if projects == nil then return end
 
   for _, project in pairs(projects) do
-    if full_path:match('^' .. rvim.escape_pattern(project)) then
+    if full_path:match('^' .. ar.escape_pattern(project)) then
       return {
         project,
-        full_path:gsub('^' .. rvim.escape_pattern(project .. '/'), ''),
+        full_path:gsub('^' .. ar.escape_pattern(project .. '/'), ''),
       }
     end
   end
@@ -53,7 +53,7 @@ local function cur_file_path_in_project()
   return project_info and project_info[2] or vim.fn.expand('%')
 end
 
-function M.copy_file_path() rvim.copy_to_clipboard(cur_file_path_in_project()) end
+function M.copy_file_path() ar.copy_to_clipboard(cur_file_path_in_project()) end
 
 function M.quick_set_ft()
   local filetypes = {

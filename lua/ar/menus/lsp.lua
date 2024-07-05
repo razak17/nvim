@@ -5,8 +5,8 @@ local entry_display = require('telescope.pickers.entry_display')
 local finders = require('telescope.finders')
 local conf = require('telescope.config').values
 
-local bool2str = rvim.bool2str
-local icons = rvim.ui.codicons
+local bool2str = ar.bool2str
+local icons = ar.ui.codicons
 
 local M = {}
 
@@ -25,7 +25,7 @@ local function lsp_notify(msg, type)
 end
 
 function M.format_buf()
-  if rvim.falsy(fn.executable('prettier')) then
+  if ar.falsy(fn.executable('prettier')) then
     vim.notify('prettier executable was not found!')
     return
   end
@@ -142,7 +142,7 @@ local function nvim_lint_create_autocmds()
   -- ref: https://github.com/emmanueltouzery/nvim_config/blob/main/init.lua#L32
   local timer = assert(vim.uv.new_timer())
   local DEBOUNCE_MS = 500
-  rvim.augroup('Lint', {
+  ar.augroup('Lint', {
     event = { 'BufEnter', 'BufWritePost', 'TextChanged', 'InsertLeave' },
     command = function()
       local bufnr = api.nvim_get_current_buf()
@@ -259,12 +259,12 @@ function M.toggle_signs()
   local config = diagnostic.config()
   if type(config and config.signs) == 'boolean' then
     config = vim.tbl_extend('force', config, {
-      signs = rvim.get_lsp_signs(),
+      signs = ar.get_lsp_signs(),
     })
   else
     config = vim.tbl_extend('force', config, { signs = false })
   end
-  rvim.lsp.signs.enable = not rvim.lsp.signs.enable
+  ar.lsp.signs.enable = not ar.lsp.signs.enable
   diagnostic.config(config)
   vim.cmd('edit | silent! wall') -- Redraw
   lsp_notify(
@@ -276,29 +276,29 @@ function M.toggle_signs()
 end
 
 function M.toggle_hover_diagnostics()
-  rvim.lsp.hover_diagnostics.enable = not rvim.lsp.hover_diagnostics.enable
+  ar.lsp.hover_diagnostics.enable = not ar.lsp.hover_diagnostics.enable
   lsp_notify(
     string.format(
       'hover diagnostics %s',
-      bool2str(rvim.lsp.hover_diagnostics.enable)
+      bool2str(ar.lsp.hover_diagnostics.enable)
     )
   )
 end
 
 function M.toggle_hover_diagnostics_go_to()
-  rvim.lsp.hover_diagnostics.go_to = not rvim.lsp.hover_diagnostics.go_to
+  ar.lsp.hover_diagnostics.go_to = not ar.lsp.hover_diagnostics.go_to
   lsp_notify(
     string.format(
       'hover diagnostics (go_to) %s',
-      bool2str(rvim.lsp.hover_diagnostics.go_to)
+      bool2str(ar.lsp.hover_diagnostics.go_to)
     )
   )
 end
 
 function M.toggle_format_on_save()
-  rvim.lsp.format_on_save.enable = not rvim.lsp.format_on_save.enable
+  ar.lsp.format_on_save.enable = not ar.lsp.format_on_save.enable
   lsp_notify(
-    string.format('format on save %s', bool2str(rvim.lsp.format_on_save.enable))
+    string.format('format on save %s', bool2str(ar.lsp.format_on_save.enable))
   )
 end
 

@@ -1,6 +1,6 @@
 return {
   'robitx/gp.nvim',
-  cond = rvim.ai.enable and not rvim.plugins.minimal,
+  cond = ar.ai.enable and not ar.plugins.minimal,
   -- stylua: ignore
   keys = {
     -- Chat commands
@@ -105,7 +105,7 @@ return {
         local action_state = require('telescope.actions.state')
 
         pickers
-          .new(rvim.telescope.minimal_ui(), {
+          .new(ar.telescope.minimal_ui(), {
             prompt_title = 'Select target language',
             finder = finders.new_table({
               results = languages,

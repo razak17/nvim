@@ -1,8 +1,8 @@
 local api, env, fn = vim.api, vim.env, vim.fn
-local fmt, ui = string.format, rvim.ui
+local fmt, ui = string.format, ar.ui
 local border = ui.border
 local datapath = vim.fn.stdpath('data')
-local minimal = rvim.plugins.minimal
+local minimal = ar.plugins.minimal
 
 -- A helper function to limit the size of a telescope window to fit the maximum available
 -- space on the screen. This is useful for dropdowns e.g. the cursor or dropdown theme
@@ -84,7 +84,7 @@ end
 local function notes()
   find_files({
     prompt_title = '~ Obsidian ~',
-    cwd = rvim.sync('obsidian'),
+    cwd = ar.sync('obsidian'),
     file_ignore_patterns = {
       '.git/.*',
       'dotbot/.*',
@@ -130,7 +130,7 @@ local function luasnips() extensions('luasnip').luasnip() end
 local function notifications() extensions('notify').notify() end
 local function undo() extensions('undo').undo() end
 local function projects()
-  extensions('projects').projects(rvim.telescope.minimal_ui())
+  extensions('projects').projects(ar.telescope.minimal_ui())
 end
 local function smart_open()
   extensions('smart_open').smart_open({ cwd_only = true, no_ignore = true })
@@ -155,10 +155,10 @@ local function harpoon()
   extensions('harpoon').marks({ prompt_title = 'Harpoon Marks' })
 end
 local function textcase()
-  extensions('textcase').normal_mode(rvim.telescope.minimal_ui())
+  extensions('textcase').normal_mode(ar.telescope.minimal_ui())
 end
-local function import() extensions('import').import(rvim.telescope.minimal_ui()) end
-local function whop() extensions('whop').whop(rvim.telescope.minimal_ui()) end
+local function import() extensions('import').import(ar.telescope.minimal_ui()) end
+local function whop() extensions('whop').whop(ar.telescope.minimal_ui()) end
 local function node_modules() extensions('node_modules').list() end
 local function live_grep_args()
   extensions('live_grep_args').live_grep_args({
@@ -182,7 +182,7 @@ local function b(picker, opts)
 end
 
 local function visual_grep_string()
-  local search = rvim.get_visual_text()
+  local search = ar.get_visual_text()
   if type(search) == 'string' then
     b('grep_string')({
       search = search,
@@ -220,10 +220,10 @@ end
 local function open_media_files()
   local action_state = require('telescope.actions.state')
   local file_path = action_state.get_selected_entry().path
-  local media_files = rvim.media_files
+  local media_files = ar.media_files
   local file_extension = file_path:match('^.+%.(.+)$')
   if vim.list_contains(media_files, file_extension) then
-    rvim.open_media(file_path)
+    ar.open_media(file_path)
   else
     vim.notify('Not a media file')
   end
@@ -240,7 +240,7 @@ local send_find_files_to_live_grep = function()
   require('telescope.builtin').live_grep({ search_dirs = results })
 end
 
-rvim.telescope = {
+ar.telescope = {
   cursor = cursor,
   dropdown = dropdown,
   vertical = function(opts)
@@ -614,7 +614,7 @@ return {
       }
 
       for ext, name in pairs(exts) do
-        if rvim.is_available(ext) then l(name) end
+        if ar.is_available(ext) then l(name) end
       end
 
       api.nvim_exec_autocmds(
@@ -722,7 +722,7 @@ return {
   },
   {
     'Myzel394/jsonfly.nvim',
-    cond = rvim.lsp.enable and not minimal,
+    cond = ar.lsp.enable and not minimal,
     ft = { 'json' },
     keys = {
       { '<leader>fj', '<Cmd>Telescope jsonfly<cr>', desc = 'Open json(fly)' },

@@ -1,5 +1,5 @@
 local fmt = string.format
-local minimal, niceties = rvim.plugins.minimal, rvim.plugins.niceties
+local minimal, niceties = ar.plugins.minimal, ar.plugins.niceties
 
 return {
   {
@@ -21,7 +21,7 @@ return {
         return btn
       end
 
-      rvim.highlight.plugin('alpha', {
+      ar.highlight.plugin('alpha', {
         { StartLogo1 = { fg = '#1C506B' } },
         { StartLogo2 = { fg = '#1D5D68' } },
         { StartLogo3 = { fg = '#1E6965' } },

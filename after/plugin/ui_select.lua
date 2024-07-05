@@ -1,8 +1,6 @@
-local enabled = rvim.plugin.ui_select.enable
+local enabled = ar.plugin.ui_select.enable
 
-if not rvim or rvim.none or not rvim.plugins.enable or not enabled then
-  return
-end
+if not ar or ar.none or not ar.plugins.enable or not enabled then return end
 
 local fn = vim.fn
 local frecency = require('ar.frecency')
@@ -49,7 +47,7 @@ M.options.toggles = {
 }
 
 local toggle_menu = function()
-  rvim.create_select_menu(M.prompts['toggles'], M.options.toggles)()
+  ar.create_select_menu(M.prompts['toggles'], M.options.toggles)()
 end
 
 map(
@@ -69,7 +67,7 @@ M.options.custom = {
 }
 
 local custom_menu = function()
-  rvim.create_select_menu(M.prompts['custom'], M.options.custom)() --> extra paren to execute!
+  ar.create_select_menu(M.prompts['custom'], M.options.custom)() --> extra paren to execute!
 end
 
 map(
@@ -79,7 +77,7 @@ map(
   { desc = '[c]ustom [a]ctions: open menu for custom actions' }
 )
 
-if not rvim.plugins.enable then return end
+if not ar.plugins.enable then return end
 
 --------------------------------------------------------------------------------
 -- Files
@@ -90,7 +88,7 @@ M.options.file = {
   ['Change Filetype'] = "lua require'ar.menus.file'.quick_set_ft()",
   ['Search Code Deps'] = "lua require'ar.menus.file'.search_code_deps()",
   ['Toggle File Diff'] = "lua require'ar.menus.file'.toggle_file_diff()",
-  ['Reload All Files From Disk'] = 'lua rvim.reload_all()',
+  ['Reload All Files From Disk'] = 'lua ar.reload_all()',
   ['Copy File Path'] = "lua require'ar.menus.file'.copy_file_path()",
   ['Copy Full File Path'] = 'let @+ = expand("%:p")',
   ['Yank Last Ex Command'] = 'let @+=@:',
@@ -101,7 +99,7 @@ M.options.file = {
 }
 
 local file_menu = function()
-  rvim.create_select_menu(M.prompts['file'], M.options.file)()
+  ar.create_select_menu(M.prompts['file'], M.options.file)()
 end
 
 map(
@@ -133,7 +131,7 @@ map(
 --------------------------------------------------------------------------------
 -- Git
 --------------------------------------------------------------------------------
-if rvim.is_git_repo() then
+if ar.is_git_repo() then
   M.options.git = {
     ['Browse Branches'] = "lua require'ar.menus.git'.browse_branches()",
     ['Stash Changes'] = "lua require'ar.menus.git'.do_stash()",
@@ -168,7 +166,7 @@ if rvim.is_git_repo() then
   }
 
   local git_menu = function()
-    rvim.create_select_menu(M.prompts['git'], M.options.git)()
+    ar.create_select_menu(M.prompts['git'], M.options.git)()
   end
 
   map(
@@ -182,7 +180,7 @@ end
 --------------------------------------------------------------------------------
 -- LSP
 --------------------------------------------------------------------------------
-if rvim.lsp.enable then
+if ar.lsp.enable then
   M.options.lsp = {
     ['Format Code'] = "lua require'ar.menus.lsp'.format_buf()",
     ['Eslint Fix'] = "lua require'ar.menus.lsp'.eslint_fix()",
@@ -201,7 +199,7 @@ if rvim.lsp.enable then
     ['Goto Workspace Symbol Under Cursor'] = "lua require'ar.menus.lsp'.ws_symbol_under_cursor()",
     ['Preview Code Actions'] = 'lua require("actions-preview").code_actions()',
     ['Add Missing Imports'] = function()
-      if rvim.is_available('typescript-tools.nvim') then
+      if ar.is_available('typescript-tools.nvim') then
         vim.cmd('TSToolsAddMissingImports')
         return
       end
@@ -212,7 +210,7 @@ if rvim.lsp.enable then
       )
     end,
     ['Remove Unused Imports'] = function()
-      if rvim.is_available('typescript-tools.nvim') then
+      if ar.is_available('typescript-tools.nvim') then
         vim.cmd('TSToolsRemoveUnusedImports')
       else
         vim.cmd('RemoveUnusedImports')
@@ -228,7 +226,7 @@ if rvim.lsp.enable then
     if #vim.lsp.get_clients({ bufnr = 0 }) == 0 then
       vim.notify_once('there is no lsp server attached to the current buffer')
     else
-      rvim.create_select_menu(M.prompts['lsp'], M.options.lsp)() --> extra paren to execute!
+      ar.create_select_menu(M.prompts['lsp'], M.options.lsp)() --> extra paren to execute!
     end
   end
 
@@ -243,7 +241,7 @@ end
 --------------------------------------------------------------------------------
 -- ChatGPTRun
 --------------------------------------------------------------------------------
-if rvim.is_available('ChatGPT.nvim') then
+if ar.is_available('ChatGPT.nvim') then
   M.options.gpt = {
     ['Add Tests'] = 'ChatGPTRun add_tests',
     ['Complete Code'] = 'ChatGPTRun complete_code',
@@ -260,7 +258,7 @@ if rvim.is_available('ChatGPT.nvim') then
   }
 
   local gpt_menu = function()
-    rvim.create_select_menu(M.prompts['gpt'], M.options.gpt)() --> extra paren to execute!
+    ar.create_select_menu(M.prompts['gpt'], M.options.gpt)() --> extra paren to execute!
   end
 
   map(
@@ -274,7 +272,7 @@ end
 --------------------------------------------------------------------------------
 -- CopilotChat
 --------------------------------------------------------------------------------
-if rvim.is_available('CopilotChat.nvim') then
+if ar.is_available('CopilotChat.nvim') then
   M.options.copilot_chat = {
     ['Clear Buffer and Chat History'] = 'CopilotChatReset',
     ['Toggle Copilot Chat Vsplit'] = 'CopilotChatToggle',
@@ -312,7 +310,7 @@ if rvim.is_available('CopilotChat.nvim') then
   }
 
   local copilot_chat_menu = function()
-    rvim.create_select_menu(M.prompts['copilot_chat'], M.options.copilot_chat)()
+    ar.create_select_menu(M.prompts['copilot_chat'], M.options.copilot_chat)()
   end
 
   map(
@@ -371,7 +369,7 @@ M.options.command_palette = {
   ['Code Pad'] = 'QuickCodePad',
   ['Run Code'] = 'Build',
   ['Toggle Auto Pairs'] = function()
-    if not rvim.is_available('mini.pairs') then
+    if not ar.is_available('mini.pairs') then
       vim.notify('mini.pairs is not available', 'error', { title = 'Error' })
       return
     end
@@ -385,10 +383,7 @@ M.options.command_palette = {
 }
 
 local command_palette_menu = function()
-  rvim.create_select_menu(
-    M.prompts['command_palette'],
-    M.options.command_palette
-  )()
+  ar.create_select_menu(M.prompts['command_palette'], M.options.command_palette)()
 end
 
 map(

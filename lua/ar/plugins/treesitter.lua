@@ -1,5 +1,5 @@
-local highlight = rvim.highlight
-local minimal = rvim.plugins.minimal
+local highlight = ar.highlight
+local minimal = ar.plugins.minimal
 
 return {
   {
@@ -20,7 +20,7 @@ return {
         highlight = {
           enable = true,
           disable = function(_, buf)
-            local enable = rvim.treesitter.enable
+            local enable = ar.treesitter.enable
             if not enable and vim.bo.ft ~= 'lua' then return true end
 
             local max_filesize = 100 * 1024 -- 100 KB

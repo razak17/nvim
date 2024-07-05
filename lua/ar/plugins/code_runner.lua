@@ -1,4 +1,4 @@
-local ui, highlight = rvim.ui, rvim.highlight
+local ui, highlight = ar.ui, ar.highlight
 local border = ui.current.border
 
 return {
@@ -72,7 +72,7 @@ return {
   {
     'razak17/lab.nvim',
     event = { 'BufRead', 'BufNewFile' },
-    cond = not rvim.plugins.minimal,
+    cond = not ar.plugins.minimal,
     keys = {
       { '<leader>rl', ':Lab code run<CR>', desc = 'lab: run' },
       { '<leader>rq', ':Lab code stop<CR>', desc = 'lab: stop' },
@@ -89,7 +89,7 @@ return {
       })
       require('lab').setup({
         quick_data = {
-          enabled = rvim.completion.enable,
+          enabled = ar.completion.enable,
         },
       })
     end,

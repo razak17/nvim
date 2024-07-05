@@ -6,7 +6,7 @@ local fmt = string.format
 
 local function get_clangd_cmd()
   local cmd = 'clangd'
-  if rvim.is_available('mason.nvim') then
+  if ar.is_available('mason.nvim') then
     local clangd = require('mason-registry').get_package('clangd')
     local path = clangd:get_install_path()
     clangd:get_installed_version(function(success, version_or_err)
@@ -198,7 +198,7 @@ local servers = {
             'it',
             'before_each',
             'after_each',
-            'rvim',
+            'ar',
             'join_paths',
           },
         },
@@ -315,7 +315,7 @@ local function get(name)
   local config = servers[name]
   if not config then return nil end
   if type(config) == 'function' then config = config() end
-  local ok, cmp_nvim_lsp = rvim.pcall(require, 'cmp_nvim_lsp')
+  local ok, cmp_nvim_lsp = ar.pcall(require, 'cmp_nvim_lsp')
   if ok then config.capabilities = cmp_nvim_lsp.default_capabilities() end
   config.capabilities = vim.tbl_deep_extend('keep', config.capabilities or {}, {
     workspace = {

@@ -1,6 +1,6 @@
-local enabled = rvim.plugin.smart_tilde.enable
+local enabled = ar.plugin.smart_tilde.enable
 
-if not rvim or rvim.none or not enabled then return end
+if not ar or ar.none or not enabled then return end
 
 --------------------------------------------------------------------------------
 -- Smart Tilde

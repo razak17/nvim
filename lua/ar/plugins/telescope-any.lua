@@ -35,7 +35,7 @@ end
 return {
   {
     'd00h/telescope-any',
-    cond = not rvim.plugins.minimal,
+    cond = not ar.plugins.minimal,
     init = function()
       local instance
       vim.keymap.set('n', '<leader>fa', function()

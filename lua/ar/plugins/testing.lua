@@ -15,7 +15,7 @@ local function debug_nearest() require('neotest').run.run({ strategy = 'dap' }) 
 return {
   {
     'nvim-neotest/neotest',
-    cond = not rvim.plugins.minimal,
+    cond = not ar.plugins.minimal,
     keys = {
       { '<leader>tns', toggle_summary, desc = 'neotest: toggle summary' },
       { '<leader>tno', open, desc = 'neotest: output' },
@@ -49,8 +49,8 @@ return {
       require('neotest').setup({
         discovery = { enabled = true },
         diagnostic = { enabled = true },
-        icons = { running = rvim.ui.codicons.misc.clock },
-        floating = { border = rvim.ui.current.border },
+        icons = { running = ar.ui.codicons.misc.clock },
+        floating = { border = ar.ui.current.border },
         quickfix = { enabled = false, open = true },
         adapters = {
           require('neotest-plenary'),

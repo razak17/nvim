@@ -1,5 +1,5 @@
 local fn, api, env, fmt = vim.fn, vim.api, vim.env, string.format
-local falsy, icons, codicons = rvim.falsy, rvim.ui.icons, rvim.ui.codicons
+local falsy, icons, codicons = ar.falsy, ar.ui.icons, ar.ui.codicons
 local separator = icons.separators.dotted_thin_block
 
 local conditions = require('heirline.conditions')
@@ -7,7 +7,7 @@ local utils = require('heirline.utils')
 local Job = require('plenary.job')
 
 local colors = require('onedark.palette')
-local bg = rvim.highlight.tint(colors.bg_dark, -0.1)
+local bg = ar.highlight.tint(colors.bg_dark, -0.1)
 local fg = colors.base8
 
 local function block() return icons.separators.bar end
@@ -81,7 +81,7 @@ local function git_remote_sync()
   git_fetch:start()
   git_upstream:start()
 end
-rvim.command('GitRemoteSync', git_remote_sync)
+ar.command('GitRemoteSync', git_remote_sync)
 
 local function git_push_pull(action, _)
   local branch = vim.fn.systemlist('git rev-parse --abbrev-ref HEAD')[1]
@@ -97,7 +97,7 @@ local function git_push_pull(action, _)
       Job:new({
         command = 'git',
         args = { action },
-        on_exit = function() rvim.GitRemoteSync() end,
+        on_exit = function() ar.GitRemoteSync() end,
       }):start()
     end
   end)
@@ -177,18 +177,18 @@ local file_icon = {
   end,
   provider = function(self) return self.icon and (' ' .. self.icon) end,
   on_click = {
-    callback = function() rvim.change_filetype() end,
+    callback = function() ar.change_filetype() end,
     name = 'change_ft',
   },
   hl = function(self)
-    return { fg = rvim.highlight.get(self.icon_color, 'fg'), bg = bg }
+    return { fg = ar.highlight.get(self.icon_color, 'fg'), bg = bg }
   end,
 }
 
 local file_type = {
   provider = function() return ' ' .. string.lower(vim.bo.filetype) end,
   on_click = {
-    callback = function() rvim.change_filetype() end,
+    callback = function() ar.change_filetype() end,
     name = 'change_ft',
   },
   hl = { fg = fg, bg = bg },
@@ -314,7 +314,7 @@ end
 local function get_linters()
   local ft = vim.bo.filetype
   local lint_ok, lint = pcall(require, 'lint')
-  if not lint_ok or rvim.falsy(lint.linters_by_ft[ft]) then return false end
+  if not lint_ok or ar.falsy(lint.linters_by_ft[ft]) then return false end
   local linters = vim
     .iter(pairs(lint.linters_by_ft[ft]))
     :map(function(_, l) return l end)
@@ -325,7 +325,7 @@ end
 -- Add formatters (from conform.nvim)
 local function get_formatters(curbuf)
   local conform_ok, conform = pcall(require, 'conform')
-  if not conform_ok or rvim.falsy(conform.list_formatters(curbuf)) then
+  if not conform_ok or ar.falsy(conform.list_formatters(curbuf)) then
     return false
   end
   local formatters = vim
@@ -568,7 +568,7 @@ return {
   },
   lsp_clients = {
     condition = function()
-      return conditions.lsp_attached and rvim.lsp.null_ls.enable
+      return conditions.lsp_attached and ar.lsp.null_ls.enable
     end,
     update = { 'LspAttach', 'LspDetach', 'WinEnter' },
     provider = function() return ' ' .. lsp_client_names() end,
@@ -582,7 +582,7 @@ return {
   },
   attached_clients = {
     condition = function()
-      return conditions.lsp_attached and not rvim.lsp.null_ls.enable
+      return conditions.lsp_attached and not ar.lsp.null_ls.enable
     end,
     init = function(self)
       local curwin = api.nvim_get_current_win()
@@ -641,7 +641,7 @@ return {
       update = { 'LspAttach', 'LspDetach', 'WinEnter' },
       condition = function(self) return self.active end,
       provider = function(self)
-        if not rvim.falsy(self.linters) then return ' ' .. self.linters end
+        if not ar.falsy(self.linters) then return ' ' .. self.linters end
       end,
       hl = { fg = fg, bg = bg, bold = true },
     },
@@ -649,9 +649,7 @@ return {
       update = { 'LspAttach', 'LspDetach', 'WinEnter' },
       condition = function(self) return self.active end,
       provider = function(self)
-        if not rvim.falsy(self.formatters) then
-          return ' ' .. self.formatters
-        end
+        if not ar.falsy(self.formatters) then return ' ' .. self.formatters end
       end,
       hl = { fg = fg, bg = bg, bold = true },
       on_click = {
@@ -712,9 +710,9 @@ return {
   },
   -- copilot_attached = {
   --   condition = function()
-  --     return rvim.ai.enable
-  --       and not rvim.plugins.minimal
-  --       and rvim.lsp.null_ls.enable
+  --     return ar.ai.enable
+  --       and not ar.plugins.minimal
+  --       and ar.lsp.null_ls.enable
   --   end,
   --   provider = ' ' .. codicons.misc.octoface .. ' ',
   --   hl = { fg = colors.forest_green, bg = bg },
@@ -727,9 +725,7 @@ return {
   -- },
   copilot_status = {
     condition = function()
-      return rvim.ai.enable
-        and not rvim.plugins.minimal
-        and rvim.lsp.null_ls.enable
+      return ar.ai.enable and not ar.plugins.minimal and ar.lsp.null_ls.enable
     end,
     {
       provider = ' ' .. codicons.misc.copilot,
@@ -795,7 +791,7 @@ return {
     hl = { fg = colors.blue, bg = bg, bold = true },
   },
   treesitter = {
-    condition = function() return rvim.treesitter.enable end,
+    condition = function() return ar.treesitter.enable end,
     provider = function() return '  ' .. ts_active() end,
     hl = { fg = colors.forest_green, bg = bg },
   },
@@ -834,10 +830,10 @@ return {
         self.exec = vim.fn.reg_executing()
       end,
       provider = function(self)
-        if not rvim.falsy(self.rec) then
+        if not ar.falsy(self.rec) then
           return '  ' .. icons.misc.dot_alt .. ' ' .. 'REC'
         end
-        if not rvim.falsy(self.exec) then
+        if not ar.falsy(self.exec) then
           return '  ' .. icons.misc.play .. ' ' .. 'PLAY'
         end
       end,

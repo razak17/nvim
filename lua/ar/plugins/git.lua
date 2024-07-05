@@ -1,11 +1,11 @@
 local fmt = string.format
 local cwd = fmt('%s', vim.fn.getcwd())
-local icons = rvim.ui.icons
-local border = rvim.ui.current.border
+local icons = ar.ui.icons
+local border = ar.ui.current.border
 local left_block = icons.separators.left_block
 
-local minimal = rvim.plugins.minimal
-local enabled = not minimal and rvim.is_git_repo()
+local minimal = ar.plugins.minimal
+local enabled = not minimal and ar.is_git_repo()
 
 return {
   { 'kilavila/nvim-gitignore', cmd = { 'Gitignore', 'Licenses' } },
@@ -40,7 +40,7 @@ return {
       integrations = { diffview = true },
     },
     config = function(_, opts)
-      rvim.highlight.plugin('neogit', {
+      ar.highlight.plugin('neogit', {
         theme = {
           ['onedark'] = {
             { NeogitHunkHeader = { inherit = 'Headline2', bold = true } },
@@ -294,7 +294,7 @@ return {
 
       -- For Go's go.mod file, generate permalinks to the dependency under the
       -- cursor and copy to the clipboard or open in the default browser.
-      rvim.augroup('repo-url', {
+      ar.augroup('repo-url', {
         event = { 'FileType' },
         pattern = 'gomod',
         command = function(args)
@@ -447,7 +447,7 @@ return {
       },
     },
     config = function(_, opts)
-      rvim.highlight.plugin('git-conflict', {
+      ar.highlight.plugin('git-conflict', {
         {
           theme = {
             ['onedark'] = {
