@@ -82,5 +82,19 @@ return {
     event = 'VimEnter',
     opts = {},
   },
+  {
+    'scottmckendry/cyberdream.nvim',
+    cond = not minimal,
+    lazy = false,
+    priority = 1000,
+    opts = {},
+  },
+  {
+    'folke/tokyonight.nvim',
+    cond = not minimal,
+    lazy = false,
+    priority = 1000,
+    opts = {},
+  },
   -- }}}
 }
