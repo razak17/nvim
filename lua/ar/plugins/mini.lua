@@ -2,6 +2,7 @@ local separators = rvim.ui.icons.separators
 local minimal = rvim.plugins.minimal
 
 return {
+  'echasnovski/mini.hipatterns',
   {
     'echasnovski/mini.indentscope',
     cond = not rvim.plugins.minimal and rvim.plugins.niceties,
