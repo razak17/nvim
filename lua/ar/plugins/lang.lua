@@ -226,6 +226,13 @@ return {
     cond = ar.lsp.enable and not minimal,
     ft = 'go',
   },
+  {
+    'jack-rabe/impl.nvim',
+    cond = false,
+    ft = 'go',
+    cmd = { 'ImplGenerate', 'ImplSearch' },
+    opts = {}
+  },
   -- Markdown
   --------------------------------------------------------------------------------
   {
