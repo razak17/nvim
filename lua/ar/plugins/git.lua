@@ -78,7 +78,16 @@ return {
       { '<leader><leader>ghf', '<Cmd>lua require("tinygit").functionHistory()<CR>', desc = 'tinygit: function history' },
       { '<leader><leader>ghl', '<Cmd>lua require("tinygit").lineHistory()<CR>', desc = 'tinygit: line history' },
     },
-    ft = { 'gitrebase', 'gitcommit' },
+    -- ft = { 'gitrebase', 'gitcommit' },
+  },
+  {
+    'SuperBo/fugit2.nvim',
+    cond = enabled,
+    cmd = { 'Fugit2', 'Fugit2Diff', 'Fugit2Graph' },
+    keys = {
+      { '<leader><localleader>F', '<Cmd>Fugit2<CR>', desc = 'fugit2: open' },
+    },
+    opts = { width = 100 },
   },
   {
     'sindrets/diffview.nvim',

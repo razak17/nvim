@@ -461,8 +461,7 @@ return {
             { HlSearchLensNearSurround = { fg = { from = 'CursorLine', attr = 'bg' } } },
             { HlSearchLensNearIcon = { fg = { from = 'Comment' } } },
           },
-        }
-,
+        },
       })
 
       require('hlslens').setup({
