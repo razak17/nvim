@@ -62,9 +62,36 @@ function rvim.ui.statuscolumn.render()
 
   local fold
   api.nvim_win_call(win, function()
-    if fn.foldclosed(lnum) >= 0 then
-      fold = { text = fcs.foldclose or '', texthl = 'Comment' }
+    -- https://www.reddit.com/r/neovim/comments/1djjc6q/statuscolumn_a_beginers_guide/
+    local foldlevel = vim.fn.foldlevel(lnum)
+    local foldlevel_before = fn.foldlevel((lnum - 1) >= 1 and lnum - 1 or 1)
+    -- if fn.foldclosed(lnum) >= 0 then
+    --   fold = { text = fcs.foldclose or '', texthl = 'Comment' }
+    -- end
+    local foldlevel_after =
+      fn.foldlevel((lnum + 1) <= fn.line('$') and (lnum + 1) or fn.line('$'))
+
+    local foldclosed = fn.foldclosed(lnum)
+
+    -- Line has nothing to do with folds so we will skip it
+    if foldlevel == 0 then
+      fold = { text = ' ', texthl = 'Comment' }
+    -- Line is a closed fold(I know second condition feels unnecessary but I will still add it)
+    elseif foldclosed ~= -1 and foldclosed == lnum then
+      fold = { text = fcs.foldclose or icons.chevron_right, texthl = 'Comment' }
+    -- I didn't use ~= because it couldn't make a nested fold have a lower level than it's parent fold and it's not something I would use
+    elseif foldlevel > foldlevel_before then
+      fold = { text = fcs.foldopen or icons.chevron_down, texthl = 'Comment' }
+    -- The line is the last line in the fold
+    elseif foldlevel > foldlevel_after then
+      fold = { text = ' ', texthl = 'IndentBlanklineChar' } --  ╰
+      -- Line is in the middle of an open fold
+    else
+      fold = { text = ' ', texthl = 'IndentBlanklineChar' } -- │
     end
+    -- if fn.foldclosed(lnum) >= 0 then
+    --   fold = { text = fcs.foldclose or '', texthl = 'Comment' }
+    -- end
   end)
 
   return table.concat({
