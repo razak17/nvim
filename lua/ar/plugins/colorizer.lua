@@ -44,4 +44,8 @@ return {
       })
     end,
   },
+  {
+    'cjodo/convert.nvim',
+    cmd = { 'ConvertFindNext', 'ConvertFindCurrent' },
+  },
 }
