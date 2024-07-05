@@ -288,8 +288,10 @@ vnoremap('$', 'g_')
 -- jk is escape, THEN move to the right to preserve the cursor position, unless
 -- at the first column.  <esc> will continue to work the default way.
 -- NOTE: this is a recursive mapping so anything bound (by a plugin) to <esc> still works
-imap('jk', [[col('.') == 1 ? '<esc>' : '<esc>l']], { expr = true })
-imap('kj', [[col('.') == 1 ? '<esc>' : '<esc>l']], { expr = true })
+if ar.plugins.minimal then
+  imap('jk', [[col('.') == 1 ? '<esc>' : '<esc>l']], { expr = true })
+  imap('kj', [[col('.') == 1 ? '<esc>' : '<esc>l']], { expr = true })
+end
 -- Toggle top/center/bottom
 nmap(
   'zz',

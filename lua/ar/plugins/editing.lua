@@ -232,6 +232,35 @@ return {
       { '<leader>os', function() require('replacer').save() end, desc = 'replacer: save' },
     },
   },
+  {
+    'max397574/better-escape.nvim',
+    cond = not minimal,
+    event = { 'InsertEnter' },
+    opts = {
+      mappings = {
+        i = {
+          h = { h = '<esc>0i' },
+          j = { k = '<Esc>', j = '<Esc>' },
+          [' '] = {
+            ['<TAB>'] = function()
+              vim.defer_fn(function()
+                vim.o.ul = vim.o.ul
+                require('luasnip').expand_or_jump()
+              end, 1)
+            end,
+            ['<S-TAB>'] = function()
+              vim.defer_fn(function()
+                vim.o.ul = vim.o.ul
+                require('luasnip').jump(-1)
+              end, 1)
+            end,
+            [' '] = '<left>',
+          },
+        },
+      },
+    },
+    config = function(_, opts) require('better_escape').setup() end,
+  },
   ------------------------------------------------------------------------------
   -- Swap Text
   ------------------------------------------------------------------------------
