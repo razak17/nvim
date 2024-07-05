@@ -61,12 +61,12 @@ return {
     cmd = { 'QuickCodeRunner', 'QuickCodePad' },
     keys = {
       {
-        '<leader>rc',
+        mode = 'v',
+        '<leader>rs',
         ':QuickCodeRunner<CR>',
         desc = 'quick-runner: run selection',
-        mode = 'v',
       },
-      { '<leader>rP', ':QuickCodePad<CR>', desc = 'quick-runner: open pad' },
+      -- { '<leader>rP', ':QuickCodePad<CR>', desc = 'quick-runner: open pad' },
     },
   },
   {
@@ -76,7 +76,7 @@ return {
     keys = {
       { '<leader>rl', ':Lab code run<CR>', desc = 'lab: run' },
       { '<leader>rq', ':Lab code stop<CR>', desc = 'lab: stop' },
-      { '<leader>rp', ':Lab code panel<CR>', desc = 'lab: panel' },
+      -- { '<leader>rp', ':Lab code panel<CR>', desc = 'lab: panel' },
     },
     build = 'cd js && npm ci',
     config = function()
