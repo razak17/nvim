@@ -1,15 +1,13 @@
 return {
+  'rafamadriz/friendly-snippets',
+  's1n7ax/nvim-ts-utils',
+  { 's1n7ax/nvim-snips', name = 'snips' },
   {
     'L3MON4D3/LuaSnip',
     event = 'InsertEnter',
     build = 'make install_jsregexp',
     keys = {
       { '<leader>S', '<cmd>LuaSnipEdit<CR>', desc = 'LuaSnip: edit snippet' },
-    },
-    dependencies = {
-      'rafamadriz/friendly-snippets',
-      's1n7ax/nvim-ts-utils',
-      { 's1n7ax/nvim-snips', name = 'snips' },
     },
     config = function()
       local ls = require('luasnip')
