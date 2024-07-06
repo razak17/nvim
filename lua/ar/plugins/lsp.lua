@@ -654,5 +654,10 @@ return {
       autoEnableHints = ar.lsp.inlay_hint.enable,
     },
   },
+  {
+    'razak17/workspace-diagnostics.nvim',
+    cond = ar.lsp.enable,
+    opts = {},
+  },
   -- }}}
 }

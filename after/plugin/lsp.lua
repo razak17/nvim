@@ -555,6 +555,12 @@ local function on_attach(client, bufnr)
   setup_mappings(client, bufnr)
   if ar.lsp.semantic_tokens.enable then setup_semantic_tokens(client, bufnr) end
   if not ar.completion.enable then require('ar.compl')(client, bufnr) end
+  if ar.is_available('workspace-diagnostics.nvim') then
+    require('workspace-diagnostics').populate_workspace_diagnostics(
+      client,
+      bufnr
+    )
+  end
 end
 
 augroup('LspSetupAutoCommands', {
