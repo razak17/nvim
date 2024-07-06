@@ -395,6 +395,17 @@ return {
     ft = { 'markdown' },
     opts = {},
   },
+  {
+    'arminveres/md-pdf.nvim',
+    keys = {
+      {
+        '<localleader>mp',
+        function() require('md-pdf').convert_md_to_pdf() end,
+        desc = 'md-pdf: convert to pdf',
+      },
+    },
+    opts = {},
+  },
   -- CSV
   --------------------------------------------------------------------------------
   {
