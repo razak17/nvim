@@ -84,7 +84,7 @@ end
 local function notes()
   find_files({
     prompt_title = '~ Obsidian ~',
-    cwd = ar.sync('obsidian'),
+    cwd = ar.sync_dir('obsidian'),
     file_ignore_patterns = {
       '.git/.*',
       'dotbot/.*',

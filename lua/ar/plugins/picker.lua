@@ -84,7 +84,7 @@ local function list_sessions()
   )
 end
 
-local function obsidian_open() file_picker(ar.sync('obsidian')) end
+local function obsidian_open() file_picker(ar.sync_dir('obsidian')) end
 
 ar.command('ObsidianFind', obsidian_open)
 

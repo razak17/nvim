@@ -11,7 +11,7 @@ function join_paths(...)
   return result
 end
 
-function ar.sync(path) return fmt('%s/Notes/%s', fn.expand('$SYNC_DIR'), path) end
+function ar.sync_dir(path) return fmt('%s/Notes/%s', fn.expand('$SYNC_DIR'), path) end
 
 --------------------------------------------------------------------------------
 -- Utils

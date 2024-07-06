@@ -1,4 +1,4 @@
-local sync = ar.sync
+local sync = ar.sync_dir
 
 return {
   {
