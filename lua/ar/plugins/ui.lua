@@ -434,6 +434,11 @@ return {
     },
   },
   {
+    'mei28/qfc.nvim',
+    ft = 'qf',
+    opts = { timeout = 5000, autoclose = true },
+  },
+  {
     'kevinhwang91/nvim-hlslens',
     cond = not minimal and niceties,
     event = { 'BufRead', 'BufNewFile' },
