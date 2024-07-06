@@ -11,7 +11,7 @@ return {
     event = 'InsertEnter',
     config = function()
       local cmp = require('cmp')
-      local luasnip = require('luasnip')
+      local luasnip_available = ar.is_available('LuaSnip')
       local symbols = require('lspkind').symbol_map
       local codicons = ui.codicons
       local MIN_MENU_WIDTH, MAX_MENU_WIDTH =
@@ -65,7 +65,12 @@ return {
           cmp.select_next_item()
           return
         end
-        if luasnip.expand_or_locally_jumpable() then
+        if luasnip_available then
+          local luasnip = require('luasnip')
+          if luasnip.expand_or_locally_jumpable() then
+            luasnip.expand_or_jump()
+            return
+          end
           luasnip.expand_or_jump()
           return
         end
@@ -77,9 +82,12 @@ return {
           cmp.select_prev_item()
           return
         end
-        if luasnip.jumpable(-1) then
-          luasnip.jump(-1)
-          return
+        if luasnip_available then
+          local luasnip = require('luasnip')
+          if luasnip_available and luasnip.jumpable(-1) then
+            luasnip.jump(-1)
+            return
+          end
         end
         fallback()
       end
@@ -119,7 +127,16 @@ return {
           disallow_partial_matching = true,
           disallow_prefix_unmatching = false,
         },
-        snippet = { expand = function(args) luasnip.lsp_expand(args.body) end },
+        snippet = {
+          expand = function(args)
+            if luasnip_available then
+              local luasnip = require('luasnip')
+              luasnip.lsp_expand(args.body)
+            else
+              vim.snippet.expand(args.body)
+            end
+          end,
+        },
         mapping = {
           ['<C-]>'] = cmp.mapping(copilot),
           ['<C-k>'] = cmp.mapping.select_prev_item(),
