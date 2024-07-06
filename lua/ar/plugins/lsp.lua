@@ -609,50 +609,21 @@ return {
   {
     'folke/trouble.nvim',
     cond = ar.lsp.enable,
-    cmd = { 'Trouble', 'TroubleToggle', 'ToggleClose', 'ToggleRefresh' },
+    cmd = { 'Trouble' },
+    -- stylua: ignore
     keys = {
-      {
-        '<leader>xx',
-        '<cmd>TroubleToggle<cr>',
-        { silent = true, desc = 'Toggle Trouble' },
-      },
-      {
-        '<leader>xw',
-        '<cmd>Trouble workspace_diagnostics<cr>',
-        { silent = true, desc = 'Workspace Diagnostics' },
-      },
-      {
-        '<leader>xd',
-        '<cmd>Trouble document_diagnostics<cr>',
-        { silent = true, desc = 'Document Diagnostics' },
-      },
+      { '<leader>xd', '<Cmd>Trouble diagnostics toggle<CR>', desc = 'trouble: toggle diagnostics' },
       {
         '<leader>xl',
-        '<cmd>Trouble loclist<cr>',
-        { silent = true, desc = 'Loclist' },
+        "<Cmd>Trouble lsp toggle focus=false win.position=right<cr>",
+        desc = 'trouble: lsp references',
       },
-      {
-        '<leader>xq',
-        '<cmd>Trouble quickfix<cr>',
-        { silent = true, desc = 'Quickfix' },
-      },
-      {
-        '<leader>xr',
-        '<cmd>Trouble lsp_references<cr>',
-        { silent = true, desc = 'LSP References' },
-      },
+      { '<leader>xL', '<Cmd>Trouble loclist toggle<CR>', desc = 'trouble: toggle loclist' },
+      { '<leader>xq', '<Cmd>Trouble qflist toggle<CR>', desc  = 'trouble: toggle qflist' },
+      { '<leader>xt', '<Cmd>Trouble todo toggle<CR>', desc = 'trouble: toggle todo' },
+      { '<leader>xx', '<Cmd>Trouble diagnostics toggle filter.buf=0<CR>', desc = 'trouble: toggle buffer diagnostics' },
     },
-    opts = {
-      fold_open = icons.misc.chevron_down,
-      fold_closed = icons.misc.chevron_right,
-      signs = {
-        error = lsp_icons.error,
-        warning = lsp_icons.warn,
-        hint = lsp_icons.hint,
-        information = lsp_icons.info,
-        other = lsp_icons.trace,
-      },
-    },
+    opts = {},
   },
   {
     'mhanberg/output-panel.nvim',

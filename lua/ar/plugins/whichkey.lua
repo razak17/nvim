@@ -92,6 +92,7 @@ return {
       v = { name = 'Vim' },
       w = { name = 'Window' },
       wm = { name = 'Maximizer' },
+      x = { name = 'Trouble' },
     }, { mode = 'n', prefix = '<leader>' })
 
     which_key.register({
