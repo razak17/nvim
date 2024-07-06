@@ -57,6 +57,39 @@ return {
       { '<C-u>', function() require('readline').backward_kill_line() end, mode = '!' },
     },
   },
+  {
+    'pogyomo/submode.nvim',
+    cond = false,
+    event = 'VeryLazy',
+    config = function()
+      local submode = require('submode')
+
+      submode.create('WinMove', {
+        mode = 'n',
+        enter = '<C-w>',
+        leave = { 'q', '<ESC>' },
+        default = function(register)
+          register('h', '<C-w>h')
+          register('j', '<C-w>j')
+          register('k', '<C-w>k')
+          register('l', '<C-w>l')
+        end,
+      })
+
+      submode.create('LspOperator', {
+        mode = 'n',
+        enter = '<Space>lo',
+        leave = { 'q', '<ESC>' },
+        default = function(register)
+          register('d', vim.lsp.buf.definition)
+          register('D', vim.lsp.buf.declaration)
+          register('H', vim.lsp.buf.hover)
+          register('i', vim.lsp.buf.implementation)
+          register('r', vim.lsp.buf.references)
+        end,
+      })
+    end,
+  },
   -- }}}
   ------------------------------------------------------------------------------
   -- Config Time
