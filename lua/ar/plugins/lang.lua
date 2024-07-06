@@ -231,7 +231,7 @@ return {
     cond = false,
     ft = 'go',
     cmd = { 'ImplGenerate', 'ImplSearch' },
-    opts = {}
+    opts = {},
   },
   -- Markdown
   --------------------------------------------------------------------------------
@@ -436,6 +436,12 @@ return {
       conceal = { rendered = 2 },
       bullets = { '●', '○', '▶', '▷' },
     },
+  },
+  {
+    'OXY2DEV/markview.nvim',
+    cmd = { 'Markview' },
+    ft = { 'markdown' },
+    opts = {},
   },
   -- CSV
   --------------------------------------------------------------------------------
