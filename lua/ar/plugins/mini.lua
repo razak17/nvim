@@ -83,7 +83,7 @@ return {
     keys = {
       'ds',
       { 'ym', desc = 'add surrounding' },
-      { 'yo', desc = 'replace surrounding' },
+      { 'ys', desc = 'replace surrounding' },
     },
     config = function()
       require('mini.surround').setup({
@@ -93,7 +93,7 @@ return {
           find = 'yf',
           find_left = 'yF',
           highlight = 'yh',
-          replace = 'yo',
+          replace = 'ys',
           update_n_lines = 'yn',
         },
       })
