@@ -706,6 +706,15 @@ return {
     config = function() require('telescope').load_extension('git_file_history') end,
   },
   {
+    'mrloop/telescope-git-branch.nvim',
+    cond = not minimal,
+    -- stylua: ignore
+    keys = {
+      { mode = { 'n', 'v' }, '<leader>gf', function() require('git_branch').files() end, desc = 'git branch' },
+    },
+    config = function() require('telescope').load_extension('git_branch') end,
+  },
+  {
     'nvim-telescope/telescope-live-grep-args.nvim',
     version = '^1.0.0',
     config = function() require('telescope').load_extension('live_grep_args') end,
