@@ -380,6 +380,7 @@ M.options.command_palette = {
       vim.notify('Enabled auto pairs')
     end
   end,
+  ['Toggle Markview'] = 'Markview'
 }
 
 local command_palette_menu = function()
