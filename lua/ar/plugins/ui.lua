@@ -329,7 +329,8 @@ return {
         'fugitive',
       },
       highlight = {
-        bg = ar.highlight.get('Normal', 'bg'),
+        bg = ar.ui.transparent.enable and 'NONE'
+          or ar.highlight.get('Normal', 'bg'),
         fg = P.cursor,
       },
     },

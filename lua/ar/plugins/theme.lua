@@ -80,7 +80,19 @@ return {
     'tribela/transparent.nvim',
     cond = ar.ui.transparent.enable,
     event = 'VimEnter',
-    opts = {},
+    opts = {
+      extra_groups = {
+        'NeoTreeTabInactive',
+        'BqfPreviewFloat',
+        'NoiceMini',
+        'NoiceFormatProgressDone',
+        'NoiceFormatProgressTodo',
+        'NoiceLspProgressClient',
+        'NoiceLspProgressSpinner',
+        'NoiceLspProgressTitle',
+        'NoiceFormatEvent',
+      },
+    },
   },
   {
     'scottmckendry/cyberdream.nvim',

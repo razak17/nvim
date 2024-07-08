@@ -1,6 +1,7 @@
 if not ar then return end
 
 local highlight = ar.highlight
+local transparent = ar.ui.transparent.enable
 
 local function general_overrides()
   highlight.all({
@@ -50,7 +51,11 @@ local function general_overrides()
     { ['@text.diff.add'] = { link = 'DiffAdd' } },
     { ['@text.diff.delete'] = { link = 'DiffDelete' } },
     { ['@text.title.markdown'] = { underdouble = true } },
-    { ['@text.literal.markdown'] = { bg = { from = 'Normal', alter = 0.15 } } },
+    {
+      ['@text.literal.markdown'] = {
+        bg = transparent and 'NONE' or { from = 'Normal', alter = 0.15 },
+      },
+    },
     ----------------------------------------------------------------------------
     -- LSP
     ----------------------------------------------------------------------------
@@ -80,9 +85,17 @@ end
 
 local function set_sidebar_highlight()
   highlight.all({
-    { PanelDarkBackground = { bg = { from = 'Normal', alter = -0.53 } } },
+    {
+      PanelDarkBackground = {
+        bg = transparent and 'NONE' or { from = 'Normal', alter = -0.53 },
+      },
+    },
     { PanelDarkHeading = { inherit = 'PanelDarkBackground', bold = true } },
-    { PanelBackground = { bg = { from = 'Normal', alter = -0.13 } } },
+    {
+      PanelBackground = {
+        bg = transparent and 'NONE' or { from = 'Normal', alter = -0.13 },
+      },
+    },
     { PanelHeading = { inherit = 'PanelBackground', bold = true } },
     {
       PanelVertSplit = {
@@ -145,7 +158,7 @@ end
 local function user_highlights()
   general_overrides()
   colorscheme_overrides()
-  set_sidebar_highlight()
+  if not transparent then set_sidebar_highlight() end
 end
 
 ar.augroup('UserHighlights', {
@@ -154,7 +167,9 @@ ar.augroup('UserHighlights', {
 }, {
   event = { 'FileType' },
   pattern = sidebar_fts,
-  command = function() on_sidebar_enter() end,
+  command = function()
+    if not transparent then on_sidebar_enter() end
+  end,
 })
 
 ar.load_colorscheme('onedark')
