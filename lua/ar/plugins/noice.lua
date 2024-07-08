@@ -58,6 +58,7 @@ return {
     views = {
       mini = {
         position = { row = 1, col = '100%' },
+        win_options = { winblend = 0 },
       },
       vsplit = { size = { width = 'auto' } },
       split = { win_options = { winhighlight = { Normal = 'Normal' } } },
