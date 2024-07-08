@@ -418,27 +418,6 @@ return {
     },
   },
   {
-    'yorickpeterse/nvim-pqf',
-    cond = not minimal,
-    event = 'BufRead',
-    opts = {},
-  },
-  {
-    'kevinhwang91/nvim-bqf',
-    ft = 'qf',
-    opts = {
-      preview = {
-        border = { '┌', '─', '┐', '│', '┘', '─', '└', '│' },
-        winblend = 0,
-      },
-    },
-  },
-  {
-    'mei28/qfc.nvim',
-    ft = 'qf',
-    opts = { timeout = 5000, autoclose = true },
-  },
-  {
     'kevinhwang91/nvim-hlslens',
     cond = not minimal and niceties,
     event = { 'BufRead', 'BufNewFile' },
