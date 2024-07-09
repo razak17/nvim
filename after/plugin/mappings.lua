@@ -433,6 +433,27 @@ nnoremap('<leader><leader>rn', function()
   end
 end, { desc = 'rustlings: next' })
 --------------------------------------------------------------------------------
+-- Dump messages in buffer
+-- https://www.reddit.com/r/neovim/comments/1dyngff/a_lua_script_to_dump_messages_to_a_buffer_for/
+local function dump()
+  local tmpname = vim.fn.tempname()
+  vim.g._messages = ''
+  vim.schedule(function()
+    vim.cmd('redir => g:_messages')
+    vim.cmd('silent! messages')
+    vim.cmd('redir END')
+    local file = io.open(tmpname, 'w')
+    if file then
+      file:write(vim.trim(vim.g._messages))
+      file:close()
+    end
+    vim.cmd('vsp ' .. tmpname)
+    vim.cmd('wincmd l')
+    vim.g._messages = nil
+  end)
+end
+nnoremap('<localleader>mm', dump, { desc = 'dump messages' })
+--------------------------------------------------------------------------------
 -- Commands
 --------------------------------------------------------------------------------
 command('ClearRegisters', function()
