@@ -143,6 +143,7 @@ return {
       { '<leader>rp', ':lua require("kulala").jump_prev()<CR>', desc = 'kulala: prev' },
       { '<leader>rt', ':lua require("kulala").toggle_view()<CR>', desc = 'kulala: toggle view' },
     },
+    opts = {}
   },
   -- Tailwind
   --------------------------------------------------------------------------------
