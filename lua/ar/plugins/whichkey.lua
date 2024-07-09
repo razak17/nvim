@@ -116,7 +116,7 @@ return {
       o = { name = 'Obsidian' },
       p = { name = 'Null Pointer' },
       q = { name = 'NeoComposer' },
-      r = { name = 'Rest' },
+      r = { name = 'Monorepo' },
       s = { name = 'Strict' },
       t = { name = 'TODO' },
       v = { name = 'Devdocs' },

@@ -160,6 +160,7 @@ end
 local function import() extensions('import').import(ar.telescope.minimal_ui()) end
 local function whop() extensions('whop').whop(ar.telescope.minimal_ui()) end
 local function node_modules() extensions('node_modules').list() end
+local function monorepo() extensions('monorepo').monorepo() end
 local function live_grep_args()
   extensions('live_grep_args').live_grep_args({
     vimgrep_arguments = {
@@ -327,6 +328,7 @@ return {
       { '<leader>ls', b('lsp_dynamic_workspace_symbols'), desc = 'telescope: workspace symbols', },
       { '<leader>le', b('diagnostics', { bufnr = 0 }), desc = 'telescope: document diagnostics', },
       { '<leader>lw', b('diagnostics'), desc = 'telescope: workspace diagnostics', },
+      { '<localleader>ro', monorepo, desc = 'monorepo' },
     },
     config = function()
       local previewers = require('telescope.previewers')
@@ -735,6 +737,18 @@ return {
     ft = { 'json' },
     keys = {
       { '<leader>fj', '<Cmd>Telescope jsonfly<cr>', desc = 'Open json(fly)' },
+    },
+  },
+  {
+    'imNel/monorepo.nvim',
+    opts = {},
+    -- stylua: ignore
+    keys = {
+      { '<localleader>ra', ':lua require("monorepo").add_project()<CR>', desc = 'monorepo: add' },
+      { '<localleader>rr', ':lua require("monorepo").remove_project()<CR>', desc = 'monorepo: remove' },
+      { '<localleader>rt', ':lua require("monorepo").toggle_project()<CR>', desc = 'monorepo: toggle' },
+      { '<localleader>rp', ':lua require("monorepo").previous_project()<CR>', desc = 'monorepo: previous' },
+      { '<localleader>rn', ':lua require("monorepo").next_project()<CR>', desc = 'monorepo: next' },
     },
   },
 }
