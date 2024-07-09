@@ -31,7 +31,7 @@ return {
           p.css_oklch,
         },
         highlighter = {
-          auto_enable = true,
+          auto_enable = false,
           excludes = {
             'dart',
             'lazy',
