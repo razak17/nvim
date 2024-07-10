@@ -108,5 +108,11 @@ return {
     priority = 1000,
     opts = {},
   },
+  {
+    'atmosuwiryo/vim-winteriscoming',
+    cond = not minimal,
+    lazy = false,
+    priority = 1000,
+  },
   -- }}}
 }
