@@ -25,11 +25,23 @@ local force_inactive_filetypes = {
   '^undotree$',
 }
 
+local function setup_colors()
+  local P = require('onedark.palette')
+  return P
+end
+
+ar.augroup('Heirline', {
+  event = 'ColorScheme',
+  command = function()
+    local utils = require('heirline.utils')
+    utils.on_colorscheme(setup_colors)
+  end,
+})
+
 return {
   {
     'rebelot/heirline.nvim',
-    priority = 500,
-    lazy = false,
+    event = 'BufWinEnter',
     cond = not ar.plugins.minimal,
     config = function()
       local statuscolumn = require('ar.statuscolumn').components
@@ -108,6 +120,7 @@ return {
           statuscolumn.render,
           statuscolumn.folds,
         },
+        colors = setup_colors,
       })
     end,
   },

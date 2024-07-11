@@ -6,9 +6,8 @@ local conditions = require('heirline.conditions')
 local utils = require('heirline.utils')
 local Job = require('plenary.job')
 
-local colors = require('onedark.palette')
-local bg = ar.highlight.tint(colors.bg_dark, -0.1)
-local fg = colors.base8
+local bg = 'bg_dark'
+local fg = 'fg'
 
 local function block() return icons.separators.bar end
 
@@ -108,26 +107,26 @@ local function git_pull() git_push_pull('pull', 'from') end
 local function git_push() git_push_pull('push', 'to') end
 
 local mode_colors = {
-  n = colors.blue,
-  i = colors.yellowgreen,
-  v = colors.magenta,
-  [''] = colors.pale_blue,
-  V = colors.pink,
-  c = colors.yellow,
-  no = colors.pale_red,
-  s = colors.orange,
-  S = colors.orange,
-  [''] = colors.orange,
-  ic = colors.yellowgreen,
-  R = colors.violet,
-  Rv = colors.violet,
-  cv = colors.pale_red,
-  ce = colors.pale_red,
-  r = colors.cyan,
-  rm = colors.cyan,
-  ['r?'] = colors.cyan,
-  ['!'] = colors.pale_red,
-  t = colors.red,
+  n = 'blue',
+  i = 'yellowgreen',
+  v = 'magenta',
+  [''] = 'pale_blue',
+  V = 'pink',
+  c = 'yellow',
+  no = 'pale_red',
+  s = 'orange',
+  S = 'orange',
+  [''] = 'orange',
+  ic = 'yellowgreen',
+  R = 'violet',
+  Rv = 'violet',
+  cv = 'pale_red',
+  ce = 'pale_red',
+  r = 'cyan',
+  rm = 'cyan',
+  ['r?'] = 'cyan',
+  ['!'] = 'pale_red',
+  t = 'red',
 }
 
 ---Return the filename of the current buffer
@@ -150,7 +149,6 @@ local file_name = {
     callback = function() vim.cmd('Telescope find_files') end,
     name = 'find_files',
   },
-  hl = { fg = fg, bg = bg },
 }
 
 local file_flags = {
@@ -180,9 +178,7 @@ local file_icon = {
     callback = function() ar.change_filetype() end,
     name = 'change_ft',
   },
-  hl = function(self)
-    return { fg = ar.highlight.get(self.icon_color, 'fg'), bg = bg }
-  end,
+  hl = function(self) return { fg = ar.highlight.get(self.icon_color, 'fg') } end,
 }
 
 local file_type = {
@@ -191,7 +187,7 @@ local file_type = {
     callback = function() ar.change_filetype() end,
     name = 'change_ft',
   },
-  hl = { fg = fg, bg = bg },
+  hl = { fg = fg },
 }
 
 local function progress()
@@ -356,7 +352,7 @@ return {
     },
     {
       provider = function() return block() .. ' ' end,
-      hl = function(self) return { fg = self.mode_color, bg = bg } end,
+      hl = function(self) return { fg = self.mode_color } end,
     },
   },
   git_branch = {
@@ -376,7 +372,7 @@ return {
           callback = function() listBranches() end,
           name = 'git_change_branch',
         },
-        hl = { fg = colors.yellowgreen, bg = bg },
+        hl = { fg = 'yellowgreen' },
       },
       {
         condition = function()
@@ -389,14 +385,12 @@ return {
         {
           condition = function() return GitStatus.status == 'pending' end,
           provider = codicons.git.pending,
-          hl = { fg = fg, bg = bg },
         },
         {
           provider = function() return GitStatus.behind .. icons.arrow_down end,
           hl = function()
             return {
-              fg = GitStatus.behind == 0 and fg or colors.pale_red,
-              bg = bg,
+              fg = GitStatus.behind == 0 and fg or 'pale_red',
             }
           end,
           on_click = {
@@ -410,8 +404,7 @@ return {
           provider = function() return GitStatus.ahead .. icons.arrow_up end,
           hl = function()
             return {
-              fg = GitStatus.ahead == 0 and fg or colors.yellowgreen,
-              bg = bg,
+              fg = GitStatus.ahead == 0 and fg or 'yellowgreen',
             }
           end,
           on_click = {
@@ -431,7 +424,7 @@ return {
   python_env = {
     condition = function() return vim.bo.filetype == 'python' end,
     provider = function() return python_env() .. ' ' end,
-    hl = { fg = colors.yellowgreen, bg = bg },
+    hl = { fg = 'yellowgreen' },
   },
   lsp_diagnostics = {
     condition = conditions.has_diagnostics,
@@ -456,25 +449,25 @@ return {
       provider = function(self)
         return self.errors > 0 and (self.error_icon .. self.errors .. ' ')
       end,
-      hl = { fg = colors.error_red, bg = bg },
+      hl = { fg = 'error_red' },
     },
     {
       provider = function(self)
         return self.warnings > 0 and (self.warn_icon .. self.warnings .. ' ')
       end,
-      hl = { fg = colors.dark_orange, bg = bg },
+      hl = { fg = 'dark_orange' },
     },
     {
       provider = function(self)
         return self.info > 0 and (self.info_icon .. self.info .. ' ')
       end,
-      hl = { fg = colors.blue, bg = bg },
+      hl = { fg = 'blue' },
     },
     {
       provider = function(self)
         return self.hints > 0 and (self.hint_icon .. self.hints .. ' ')
       end,
-      hl = { fg = colors.darker_green, bg = bg },
+      hl = { fg = 'forest_green' },
     },
     on_click = {
       callback = function()
@@ -489,7 +482,7 @@ return {
   package_info = {
     condition = function() return fn.expand('%') == 'package.json' end,
     provider = stl_package_info,
-    hl = { fg = colors.comment, bg = bg },
+    hl = { fg = 'comment' },
     on_click = {
       callback = function() require('package_info').toggle() end,
       name = 'update_plugins',
@@ -503,27 +496,27 @@ return {
         or self.status_dict.removed ~= 0
         or self.status_dict.changed ~= 0
     end,
-    hl = { fg = colors.dark_orange },
+    hl = { fg = 'dark_orange' },
     {
       provider = function(self)
         local count = self.status_dict.added or 0
         return count > 0 and (' ' .. codicons.git.added .. ' ' .. count)
       end,
-      hl = { fg = colors.yellowgreen, bg = bg },
+      hl = { fg = 'yellowgreen' },
     },
     {
       provider = function(self)
         local count = self.status_dict.removed or 0
         return count > 0 and (' ' .. codicons.git.removed .. ' ' .. count)
       end,
-      hl = { fg = colors.error_red, bg = bg },
+      hl = { fg = 'error_red' },
     },
     {
       provider = function(self)
         local count = self.status_dict.changed or 0
         return count > 0 and (' ' .. codicons.git.mod .. ' ' .. count)
       end,
-      hl = { fg = colors.dark_orange, bg = bg },
+      hl = { fg = 'dark_orange' },
     },
     on_click = {
       callback = function()
@@ -534,7 +527,7 @@ return {
   },
   lazy_updates = {
     provider = lazy_updates,
-    hl = { fg = colors.orange, bg = bg },
+    hl = { fg = 'dark_orange' },
     on_click = {
       callback = function() require('lazy').update() end,
       name = 'update_plugins',
@@ -556,7 +549,6 @@ return {
             math.min(search.total, search.maxcount)
           )
       end,
-      hl = function() return { bg = bg, fg = fg } end,
     },
   },
   word_count = {
@@ -564,7 +556,6 @@ return {
     provider = function()
       return ' ' .. tostring(vim.fn.wordcount().words) .. ' words'
     end,
-    hl = { fg = fg, bg = bg },
   },
   lsp_clients = {
     condition = function()
@@ -572,7 +563,7 @@ return {
     end,
     update = { 'LspAttach', 'LspDetach', 'WinEnter' },
     provider = function() return ' ' .. lsp_client_names() end,
-    hl = { fg = fg, bg = bg, bold = true },
+    hl = { bold = true },
     on_click = {
       callback = function()
         vim.defer_fn(function() vim.cmd('LspInfo') end, 100)
@@ -635,7 +626,7 @@ return {
         end
         return ' ' .. self.servers
       end,
-      hl = { fg = fg, bg = bg, bold = true },
+      hl = { bold = true },
     },
     {
       update = { 'LspAttach', 'LspDetach', 'WinEnter' },
@@ -643,7 +634,7 @@ return {
       provider = function(self)
         if not ar.falsy(self.linters) then return ' ' .. self.linters end
       end,
-      hl = { fg = fg, bg = bg, bold = true },
+      hl = { bold = true },
     },
     {
       update = { 'LspAttach', 'LspDetach', 'WinEnter' },
@@ -651,7 +642,7 @@ return {
       provider = function(self)
         if not ar.falsy(self.formatters) then return ' ' .. self.formatters end
       end,
-      hl = { fg = fg, bg = bg, bold = true },
+      hl = { bold = true },
       on_click = {
         callback = function()
           vim.defer_fn(function() vim.cmd('ConformInfo') end, 100)
@@ -663,16 +654,14 @@ return {
       {
         provider = ' ' .. codicons.misc.copilot,
         hl = function(self)
-          if self.copilot == nil then
-            return { fg = colors.comment, bg = bg }
-          end
+          if self.copilot == nil then return { fg = 'comment' } end
           if
             vim.tbl_isempty(self.copilot.requests)
             or self.copilot.requests.type == 'pending'
           then
-            return { fg = colors.comment, bg = bg }
+            return { fg = 'comment' }
           end
-          return { fg = colors.forest_green, bg = bg }
+          return { fg = 'forest_green' }
         end,
         on_click = {
           callback = function()
@@ -683,7 +672,7 @@ return {
       },
       {
         provider = ' ' .. separator,
-        hl = { fg = fg, bg = bg, bold = true },
+        hl = { bold = true },
       },
       -- {
       --   provider = function(self)
@@ -698,7 +687,7 @@ return {
       --     end
       --     return fmt(' working %s', separator)
       --   end,
-      --   hl = { fg = fg, bg = bg, bold = true },
+      --   hl = { bold = true },
       --   on_click = {
       --     callback = function()
       --       vim.defer_fn(function() vim.cmd('copilot panel') end, 100)
@@ -715,7 +704,7 @@ return {
   --       and ar.lsp.null_ls.enable
   --   end,
   --   provider = ' ' .. codicons.misc.octoface .. ' ',
-  --   hl = { fg = colors.forest_green, bg = bg },
+  --   hl = { fg = colors.forest_green },
   --   on_click = {
   --     callback = function()
   --       vim.defer_fn(function() vim.cmd('copilot status') end, 100)
@@ -731,10 +720,8 @@ return {
       provider = ' ' .. codicons.misc.copilot,
       hl = function()
         local status = stl_copilot_indicator()
-        if status == 'working' then
-          return { fg = colors.forest_green, bg = bg }
-        end
-        return { fg = colors.comment, bg = bg }
+        if status == 'working' then return { fg = 'forest_green' } end
+        return { fg = 'comment' }
       end,
       on_click = {
         callback = function()
@@ -745,7 +732,7 @@ return {
     },
     {
       provider = ' ' .. separator,
-      hl = { fg = fg, bg = bg, bold = true },
+      hl = { bold = true },
     },
   },
   dap = {
@@ -758,7 +745,7 @@ return {
       callback = function() require('dap').continue() end,
       name = 'dap_continue',
     },
-    hl = { fg = colors.red, bg = bg },
+    hl = { fg = 'red' },
   },
   file_type = utils.insert(file_block, file_icon, file_type),
   file_encoding = {
@@ -772,13 +759,12 @@ return {
         local enc = (vim.bo.fenc ~= '' and vim.bo.fenc) or vim.o.enc -- :h 'enc'
         return ' ' .. enc
       end,
-      hl = { fg = fg, bg = bg },
     },
   },
   spell = {
     condition = function() return vim.wo.spell end,
     provider = function() return '  ' .. icons.misc.spell_check end,
-    hl = { fg = colors.blue, bg = bg },
+    hl = { fg = 'blue' },
   },
   formatting = {
     condition = function()
@@ -788,12 +774,12 @@ return {
         or vim.g.formatting_disabled == true
     end,
     provider = function() return '  ' .. codicons.misc.shaded_lock end,
-    hl = { fg = colors.blue, bg = bg, bold = true },
+    hl = { fg = 'blue', bold = true },
   },
   treesitter = {
     condition = function() return ar.treesitter.enable end,
     provider = function() return '  ' .. ts_active() end,
-    hl = { fg = colors.forest_green, bg = bg },
+    hl = { fg = 'forest_green' },
   },
   session = {
     update = { 'User', pattern = 'PersistedStateChange' },
@@ -811,7 +797,7 @@ return {
             return codicons.misc.cloud_outline
           end
         end,
-        hl = { fg = colors.blue, bg = bg },
+        hl = { fg = 'blue' },
         on_click = {
           callback = function() vim.cmd('SessionToggle') end,
           name = 'toggle_session',
@@ -837,7 +823,7 @@ return {
           return '  ' .. icons.misc.play .. ' ' .. 'PLAY'
         end
       end,
-      hl = { bg = bg, fg = colors.red },
+      hl = { fg = 'red' },
     },
   },
   buffers = {
@@ -846,11 +832,10 @@ return {
       local tabpages = require('buffalo').tabpages()
       return codicons.misc.buffers .. buffers .. codicons.misc.tabs .. tabpages
     end,
-    hl = { fg = '#ffaa00', bg = bg },
+    hl = { fg = 'yellow' },
   },
   ruler = {
     provider = function() return '  %7(%l/%3L%):%2c ' .. progress() end,
-    hl = { fg = colors.fg, bg = bg },
   },
   scroll_bar = {
     init = function(self)
@@ -865,6 +850,6 @@ return {
       local index = math.ceil(line_ratio * #chars)
       return ' ' .. chars[index]
     end,
-    hl = function(self) return { fg = self.mode_color, bg = bg } end,
+    hl = function(self) return { fg = self.mode_color } end,
   },
 }
