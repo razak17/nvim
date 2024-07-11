@@ -517,4 +517,12 @@ return {
     },
     config = function() require('litee.gh').setup() end,
   },
+  {
+    'ejrichards/baredot.nvim',
+    cond = not minimal,
+    event = { 'VeryLazy' },
+    opts = {
+      git_dir = '~/.dots/dotfiles', -- Change this path
+    },
+  },
 }

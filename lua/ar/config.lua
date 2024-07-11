@@ -72,7 +72,7 @@ local namespace = {
   },
   ui = {
     statuscolumn = { enable = true, custom = true },
-    transparent = { enable = false },
+    transparent = { enable = true },
   },
   rtp = {
     disabled = {
