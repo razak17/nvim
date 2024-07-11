@@ -144,7 +144,7 @@ local function telescope_commits_mappings(prompt_bufnr, map)
     },
     {
       'i',
-      '<C-[>',
+      '<C-\\>',
       function()
         local commit = action_state.get_selected_entry().value
         vim.cmd(':term! git cherry-pick ' .. commit)
