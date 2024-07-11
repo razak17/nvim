@@ -240,7 +240,7 @@ return {
       mappings = {
         i = {
           h = { h = '<esc>0i' },
-          j = { k = '<Esc>', j = '<Esc>' },
+          j = { k = '<Esc>', --[[j = '<Esc>']]  },
           [' '] = {
             ['<TAB>'] = function()
               vim.defer_fn(function()
