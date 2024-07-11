@@ -110,6 +110,7 @@ ar.ui.codicons = {
     bookmark = '', --  ⚑
     buffers = '󱂬',
     bug = '',
+    bug_alt = "",
     calendar = '',
     circle = '',
     circuit_board = '',
