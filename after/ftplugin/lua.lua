@@ -15,6 +15,7 @@ opt.spelllang = { 'en_gb', 'programming' }
 local is_available = ar.is_available
 
 if is_available('LuaSnip') and is_available('nvim-treesitter') then
+  -- https://github.com/s1n7ax/lazyvim-dotnvim/blob/main/lua/plugins/luasnip/snippets/lua.lua
   local ls = require('luasnip')
   local s = ls.s
   local lua = require('snips.lua')
