@@ -53,6 +53,7 @@ return {
       [','] = {
         name = 'Advanced',
         f = { name = 'Genghis' },
+        r = { name = 'Rustlings' },
       },
       a = {
         name = 'A.I.',

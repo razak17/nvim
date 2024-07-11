@@ -417,11 +417,11 @@ nnoremap(
 )
 --------------------------------------------------------------------------------
 -- Ruslings
-nnoremap('<leader><leader>rd', function()
+nnoremap('<leader><localleader>rd', function()
   vim.cmd([[%s/\n\n\/\/ I AM NOT DONE//]])
   vim.cmd.w()
 end, { desc = 'rustlings: done' })
-nnoremap('<leader><leader>rn', function()
+nnoremap('<leader><localleader>rn', function()
   local cur = vim.fn.expand('%')
   local num = cur:sub(-4, -4)
   local next = cur:sub(1, -5) .. (num + 1) .. '.rs'
