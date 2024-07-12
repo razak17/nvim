@@ -153,28 +153,24 @@ local function can_save()
     and not vim.tbl_contains(save_excluded, vim.bo.filetype)
 end
 
-augroup(
-  'UpdateVim',
-  {
-    event = { 'FocusLost', 'InsertLeave', 'CursorMoved' },
-    command = function(args)
-      if not vim.bo[args.buf].modified or not ar.autosave.enable then return end
-      if can_save() then vim.cmd('silent! wall') end
-    end,
-  },
-  --   {
-  --   event = { 'BufLeave' },
-  --   command = function()
-  --     if not ar.autosave.enable then return end
-  --     if can_save() then vim.cmd('silent! write ++p') end
-  --   end,
-  -- },
-  {
-    event = { 'VimResized' },
-    pattern = { '*' },
-    command = 'wincmd =', -- Make windows equal size when vim resizes
-  }
-)
+augroup('UpdateVim', {
+  event = { 'FocusLost' },
+  command = function(args)
+    if not vim.bo[args.buf].modified or not ar.autosave.enable then return end
+    if can_save() then vim.cmd('silent! wall') end
+  end,
+}, {
+  event = { 'BufLeave' },
+  command = function(args)
+    if not ar.autosave.enable then return end
+    if api.nvim_buf_line_count(args.buf) <= 1 then return end
+    if can_save() then vim.cmd('silent! write ++p') end
+  end,
+}, {
+  event = { 'VimResized' },
+  pattern = { '*' },
+  command = 'wincmd =', -- Make windows equal size when vim resizes
+})
 
 augroup('WinBehavior', {
   event = { 'BufWinEnter' },
@@ -353,7 +349,7 @@ end
 -- if is_available('gitsigns.nvim') then
 --   augroup('GitSignsRefreshCustom', {
 --     event = { 'InsertEnter', 'CursorHold' },
---     command = function(args)
+--   command = function(args)
 --       local decs = ar.ui.decorations.get({
 --         ft = vim.bo.ft,
 --         bt = vim.bo.bt,
@@ -361,7 +357,7 @@ end
 -- })
 --       if not decs or decs.ft == false or decs and decs.bt == false then
 --         return
---       end
+--     end
 --
 --       local lnum = vim.v.lnum
 --       local signs = vim.api.nvim_buf_get_extmarks(
@@ -387,8 +383,8 @@ end
 --         vim.cmd('silent! lua require("gitsigns").refresh()')
 --         vim.notify('gitsigns refreshed', 'info', { title = 'gitsigns' })
 --       end, 500)
---     end,
---   })
+--   end,
+-- })
 -- end
 
 augroup('CmpSourceCargo', {
