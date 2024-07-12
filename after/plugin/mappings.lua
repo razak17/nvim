@@ -39,14 +39,31 @@ nnoremap(']<space>', [[<cmd>put =repeat(nr2char(10), v:count1)<cr>]], {
   desc = 'add space below',
 })
 --------------------------------------------------------------------------------
--- Credit: JGunn Choi ?il | inner line
+-- Clipboard
 --------------------------------------------------------------------------------
+-- Delete a single character without copying into register:
+nnoremap('<leader>x', '"_x', { desc = 'delete char (no copy)' })
+-- Greatest remap ever
+vnoremap('<leader>p', '"_dP', { desc = 'greatest remap' })
+-- Next greatest remap ever : asbjornHaland
+map({ 'n', 'x' }, '<leader>y', '"+y', { desc = 'yank' })
+map({ 'n', 'x' }, '<leader>d', '"_d', { desc = 'delete' })
+map({ 'n', 'x' }, '<leader>D', '"_D', { desc = 'Delete' })
+-- nnoremap('<localleader>vc', ':let @+=@:<cr>', { desc = 'yank last ex command text' })
+-- nnoremap(
+--  '<localleader>vm',
+--   [[:let @+=substitute(execute('messages'), '\n\+', '\n', 'g')<cr>]],
+--   { desc = 'yank vim messages output' }
+-- )
+--------------------------------------------------------------------------------
+-- Credit: JGunn Choi ?il | inner line
+----------------------------------------------------------------------------
 -- Yank all
-nnoremap('<leader>Y', ':%y+<CR>', { desc = 'yank all' })
+nnoremap('<localleader>Y', ':%y+<CR>', { desc = 'yank all' })
 -- Select all
-nnoremap('<leader>A', 'gg"+VG', { desc = 'select all' })
+nnoremap('<localleader>A', 'gg"+VG', { desc = 'select all' })
 -- Delete All
-nnoremap('<leader>D', ':%d<CR>', { desc = 'delete all' })
+nnoremap('<localleader>D', ':%d<CR>', { desc = 'delete all' })
 -- Paste in visual mode multiple times
 xnoremap('p', 'pgvy')
 -- search visual selection
@@ -136,24 +153,6 @@ nnoremap('<C-h>', '<C-w>h')
 nnoremap('<C-j>', '<C-w>j')
 nnoremap('<C-k>', '<C-w>k')
 nnoremap('<C-l>', '<C-w>l')
---------------------------------------------------------------------------------
--- Clipboard
---------------------------------------------------------------------------------
--- Delete a single character without copying into register:
-nnoremap('<localleader>xx', '"_x', { desc = 'delete char (no copy)' })
--- Greatest remap ever
-vnoremap('<leader>p', '"_dP', { desc = 'greatest remap' })
--- Next greatest remap ever : asbjornHaland
-nnoremap('<leader>y', '"+y', { desc = 'yank' })
-vnoremap('<leader>y', '"+y', { desc = 'yank' })
-nnoremap('<leader>dd', '"_d', { desc = 'delete' })
-vnoremap('<leader>dd', '"_d', { desc = 'delete' })
--- nnoremap('<localleader>vc', ':let @+=@:<cr>', { desc = 'yank last ex command text' })
--- nnoremap(
---   '<localleader>vm',
---   [[:let @+=substitute(execute('messages'), '\n\+', '\n', 'g')<cr>]],
---   { desc = 'yank vim messages output' }
--- )
 --------------------------------------------------------------------------------
 -- Quick find/replace
 nnoremap(
@@ -474,9 +473,9 @@ command('ConvertGitUrl', function()
   local save_pos = vim.fn.getpos('.')
   local cur = vim.fn.expand('<cWORD>')
   if string.match(cur, '^git@') then
-    vim.cmd([[s#git@\(.\{-}\).com:#https://\1.com/#]])
+    vim.cmd([[s#git@\(.\{-\).com:#https://\1.com/#]])
   elseif string.match(cur, '^http') then
-    vim.cmd([[s#https://\(.\{-}\).com/#git@\1.com:#]])
+    vim.cmd([[s#https://\(.\{-\).com/#git@\1.com:#]])
   end
   vim.fn.setpos('.', save_pos)
 end, { force = true })
