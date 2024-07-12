@@ -60,6 +60,7 @@ return {
         winhighlight = 'NormalFloat:FloatBorder',
       }
 
+      -- https://github.com/simifalaye/dotfiles/blob/main/roles/neovim/dots/.config/nvim/lua/plugins/cmp.lua#L35
       local function has_words_before()
         local line, col = (unpack or table.unpack)(api.nvim_win_get_cursor(0))
         return col ~= 0
