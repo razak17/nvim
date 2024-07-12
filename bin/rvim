@@ -71,7 +71,8 @@ while [ "$#" -gt 0 ]; do
 		;;
 	--ghost)
 		export RVIM_GHOST_ENABLED='1'
-		shift
+		export RVIM_PLUGINS_MINIMAL='1'
+		shift,
 		;;
 	--dict)
 		export RVIM_DICT_ENABLED='1'
