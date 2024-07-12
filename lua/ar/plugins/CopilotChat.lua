@@ -22,7 +22,7 @@ local prompts = {
 return {
   {
     'CopilotC-Nvim/CopilotChat.nvim',
-    cond = ar.ai.enable and not ar.plugins.minimal,
+    cond = ar.ai.enable and not ar.plugins.minimal and ar.completion.enable,
     event = 'VimEnter',
     branch = 'canary',
     build = function()
