@@ -357,7 +357,7 @@ return {
   },
   {
     'MeanderingProgrammer/markdown.nvim',
-    cond = niceties,
+    cond = niceties and false,
     name = 'render-markdown',
     cmd = { 'RenderMarkdownToggle' },
     ft = { 'markdown' },
@@ -392,6 +392,7 @@ return {
   },
   {
     'OXY2DEV/markview.nvim',
+    cond = not minimal and not niceties,
     cmd = { 'Markview' },
     ft = { 'markdown' },
     opts = {},
