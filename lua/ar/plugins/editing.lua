@@ -5,6 +5,7 @@ return {
   { 'johmsalas/text-case.nvim', cond = not minimal, opts = {} },
   {
     'gbprod/yanky.nvim',
+    cond = not minimal,
     cmd = { 'YankyRingHistory' },
     -- stylua: ignore
     keys = {
@@ -20,13 +21,17 @@ return {
   },
   {
     'monaqa/dial.nvim',
+    cond = not minimal,
+    -- stylua: ignore
     keys = {
-      { '<C-a>', '<Plug>(dial-increment)', mode = 'n' },
-      { '<C-x>', '<Plug>(dial-decrement)', mode = 'n' },
-      { '<C-a>', '<Plug>(dial-increment)', mode = 'v' },
-      { '<C-x>', '<Plug>(dial-decrement)', mode = 'v' },
-      { 'g<C-a>', 'g<Plug>(dial-increment)', mode = 'v' },
-      { 'g<C-x>', 'g<Plug>(dial-decrement)', mode = 'v' },
+      { 'n', '<C-a>', '<Cmd>lua require("dial").manipulate("increment", "normal")<CR>', desc = 'dial: increment' },
+      { 'n', '<C-x>', '<Cmd>lua require("dial").manipulate("decrement", "normal")<CR>', desc = 'dial: decrement' },
+      { 'n', 'g<C-a>', '<Cmd>lua require("dial").manipulate("increment", "gnormal")<CR>', desc = 'dial: gincrement' },
+      { 'n', 'g<C-x>', '<Cmd>lua require("dial").manipulate("decrement", "gnormal")<CR>', desc = 'dial: gdecrement' },
+      { 'x', '<C-a>', '<Cmd>lua require("dial").manipulate("increment", "visual")<CR>', desc = 'dial: vincrement' },
+      { 'x', '<C-x>', '<Cmd>lua require("dial").manipulate("decrement", "visual")<CR>', desc = 'dial: vdecrement' },
+      { 'x', 'g<C-a>', '<Cmd>lua require("dial").manipulate("increment", "gvisual")<CR>', desc = 'dial: gvincrement' },
+      { 'x', 'g<C-x>', '<Cmd>lua require("dial").manipulate("decrement", "gvisual")<CR>', desc = 'dial: gvdecrement' },
     },
     config = function()
       local augend = require('dial.augend')
@@ -99,6 +104,7 @@ return {
   },
   {
     'mfussenegger/nvim-treehopper',
+    cond = not minimal,
     keys = {
       {
         'u',
@@ -133,6 +139,7 @@ return {
   },
   {
     'danymat/neogen',
+    cond = not minimal,
     -- stylua: ignore
     keys = {
       { '<localleader>nd', function() require('neogen').generate() end, desc = 'neogen: generate doc', },
@@ -145,6 +152,7 @@ return {
   },
   {
     'ckolkey/ts-node-action',
+    cond = not minimal,
     -- stylua: ignore
     keys = {
       { '<leader>K', function() require('ts-node-action').node_action() end, desc = 'ts-node-action: run', },
@@ -240,7 +248,9 @@ return {
       mappings = {
         i = {
           h = { h = '<esc>0i' },
-          j = { k = '<Esc>', --[[j = '<Esc>']]  },
+          j = {
+            k = '<Esc>', --[[j = '<Esc>']]
+          },
           [' '] = {
             ['<TAB>'] = function()
               vim.defer_fn(function()
