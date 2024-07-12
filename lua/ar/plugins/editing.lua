@@ -197,7 +197,7 @@ return {
   },
   {
     'subnut/nvim-ghost.nvim',
-    cond = not minimal,
+    cond = ar.plugins.overrides.ghost_text.enable,
     lazy = not ar.plugins.overrides.ghost_text.enable,
   },
   {

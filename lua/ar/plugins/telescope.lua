@@ -259,9 +259,12 @@ ar.telescope = {
   delta_opts = delta_opts,
 }
 
+local telescope_enabled = not ar.plugin_disabled('telescope.nvim')
+
 return {
   {
     'nvim-telescope/telescope.nvim',
+    cond = telescope_enabled,
     -- NOTE: usind cmd causes issues with dressing and frecency
     cmd = { 'Telescope' },
     -- event = 'VeryLazy',
@@ -633,11 +636,12 @@ return {
   },
   {
     'molecule-man/telescope-menufacture',
+    cond = telescope_enabled,
     config = function() require('telescope').load_extension('menufacture') end,
   },
   {
     'biozz/whop.nvim',
-    cond = not minimal,
+    cond = telescope_enabled and not minimal,
     config = function()
       require('whop').setup({})
       require('telescope').load_extension('whop')
@@ -645,6 +649,7 @@ return {
   },
   {
     'danielfalk/smart-open.nvim',
+    cond = telescope_enabled,
     branch = '0.2.x',
     config = function() require('telescope').load_extension('smart_open') end,
     dependencies = {
@@ -653,7 +658,7 @@ return {
   },
   {
     'jonarrien/telescope-cmdline.nvim',
-    cond = not minimal and false,
+    cond = telescope_enabled and not minimal and false,
     keys = {
       { ':', '<cmd>Telescope cmdline<cr>', desc = 'Cmdline' },
     },
@@ -661,55 +666,60 @@ return {
   },
   {
     'nvim-telescope/telescope-node-modules.nvim',
+    cond = telescope_enabled,
     config = function() require('telescope').load_extension('node_modules') end,
   },
   {
     'nvim-telescope/telescope-smart-history.nvim',
-    cond = not minimal,
+    cond = telescope_enabled and not minimal,
     config = function() require('telescope').load_extension('smart_history') end,
   },
   {
     'fdschmidt93/telescope-egrepify.nvim',
+    cond = telescope_enabled,
     config = function() require('telescope').load_extension('egrepify') end,
   },
   {
     'debugloop/telescope-undo.nvim',
+    cond = telescope_enabled,
     config = function() require('telescope').load_extension('undo') end,
   },
   {
     'nvim-telescope/telescope-file-browser.nvim',
+    cond = telescope_enabled,
     config = function() require('telescope').load_extension('file_browser') end,
   },
   {
     -- 'piersolenski/telescope-import.nvim',
     'razak17/telescope-import.nvim',
-    cond = not minimal,
+    cond = telescope_enabled and not minimal,
     config = function() require('telescope').load_extension('import') end,
   },
   {
     'catgoose/telescope-helpgrep.nvim',
-    cond = not minimal,
+    cond = telescope_enabled and not minimal,
     config = function() require('telescope').load_extension('helpgrep') end,
   },
   {
     -- 'tsakirist/telescope-lazy.nvim',
     'razak17/telescope-lazy.nvim',
-    cond = not minimal,
+    cond = telescope_enabled and not minimal,
     config = function() require('telescope').load_extension('lazy') end,
   },
   {
     'fbuchlak/telescope-directory.nvim',
+    cond = telescope_enabled,
     config = function() require('telescope').load_extension('directory') end,
     opts = {},
   },
   {
     'isak102/telescope-git-file-history.nvim',
-    cond = not minimal,
+    cond = telescope_enabled and not minimal,
     config = function() require('telescope').load_extension('git_file_history') end,
   },
   {
     'mrloop/telescope-git-branch.nvim',
-    cond = not minimal,
+    cond = telescope_enabled and not minimal,
     -- stylua: ignore
     keys = {
       { mode = { 'n', 'v' }, '<leader>gf', function() require('git_branch').files() end, desc = 'git branch' },
@@ -718,22 +728,23 @@ return {
   },
   {
     'nvim-telescope/telescope-live-grep-args.nvim',
+    cond = telescope_enabled,
     version = '^1.0.0',
     config = function() require('telescope').load_extension('live_grep_args') end,
   },
   {
     'dapc11/telescope-yaml.nvim',
-    cond = not minimal,
+    cond = telescope_enabled and not minimal,
     config = function() require('telescope').load_extension('telescope-yaml') end,
   },
   {
     'crispgm/telescope-heading.nvim',
-    cond = not minimal,
+    cond = telescope_enabled and not minimal,
     config = function() require('telescope').load_extension('heading') end,
   },
   {
     'Myzel394/jsonfly.nvim',
-    cond = ar.lsp.enable and not minimal,
+    cond = telescope_enabled and not minimal,
     ft = { 'json' },
     keys = {
       { '<leader>fj', '<Cmd>Telescope jsonfly<cr>', desc = 'Open json(fly)' },
@@ -741,6 +752,7 @@ return {
   },
   {
     'imNel/monorepo.nvim',
+    cond = telescope_enabled,
     opts = {},
     -- stylua: ignore
     keys = {

@@ -54,7 +54,6 @@ local namespace = {
     minimal = env.RVIM_PLUGINS_MINIMAL == '1',
     modules = {
       disabled = {},
-      -- disabled = { 'ui', 'lang', 'lsp', 'tools' },
     },
     niceties = env.RVIM_NICETIES_ENABLED == '1',
     overrides = {
