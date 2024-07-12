@@ -60,9 +60,27 @@ return {
         winhighlight = 'NormalFloat:FloatBorder',
       }
 
+      local function has_words_before()
+        local line, col = (unpack or table.unpack)(api.nvim_win_get_cursor(0))
+        return col ~= 0
+          and api
+              .nvim_buf_get_lines(0, line - 1, line, true)[1]
+              :sub(col, col)
+              :match('%s')
+            == nil
+      end
+
       local function tab(fallback)
+        if vim.snippet.active({ direction = 1 }) then
+          vim.snippet.jump(1)
+          return
+        end
         if cmp.visible() then
           cmp.select_next_item()
+          return
+        end
+        if has_words_before() then
+          cmp.complete()
           return
         end
         if luasnip_available then
@@ -78,8 +96,16 @@ return {
       end
 
       local function shift_tab(fallback)
+        if vim.snippet.active({ direction = -1 }) then
+          vim.snippet.jump(-1)
+          return
+        end
         if cmp.visible() then
           cmp.select_prev_item()
+          return
+        end
+        if has_words_before() then
+          cmp.complete()
           return
         end
         if luasnip_available then
@@ -162,6 +188,7 @@ return {
               codeium = '[CM]',
               nvim_lsp = '[LSP]',
               luasnip = '[SNIP]',
+              snippets = '[SNIP]',
               emoji = '[EMOJI]',
               path = '[PATH]',
               neorg = '[NEORG]',
@@ -257,6 +284,7 @@ return {
           { name = 'nvim_px_to_rem', priority = 11, group_index = 1 },
           { name = 'nvim_lsp', priority = 10, group_index = 1 },
           { name = 'luasnip', priority = 9, group_index = 1 },
+          { name = 'snippets', priority = 9, group_index = 1 },
           {
             name = 'lab.quick_data',
             priority = 6,

@@ -3,6 +3,23 @@ return {
   's1n7ax/nvim-ts-utils',
   { 's1n7ax/nvim-snips', name = 'snips' },
   {
+    'garymjr/nvim-snippets',
+    cond = ar.completion.enable and false,
+    event = 'InsertEnter',
+    opts = {
+      friendly_snippets = true,
+      extended_filetypes = {
+        typescript = { 'javascript', 'javascriptreact', 'jsdoc' },
+        typescriptreact = { 'javascript', 'javascriptreact', 'jsdoc' },
+      },
+      search_paths = {
+        join_paths(vim.fn.stdpath('config'), 'snippets', 'textmate'),
+        -- join_paths(vim.fn.stdpath('data'), 'lazy', 'friendly-snippets'),
+      },
+    },
+    dependencies = { 'rafamadriz/friendly-snippets' },
+  },
+  {
     'L3MON4D3/LuaSnip',
     event = 'InsertEnter',
     build = 'make install_jsregexp',
@@ -53,9 +70,9 @@ return {
       )
 
       -- <c-l> is selecting within a list of options.
-      vim.keymap.set({ 's', 'i' }, '<c-l>', function()
-        if ls.choice_active() then ls.change_choice(1) end
-      end)
+      -- vim.keymap.set({ 's', 'i' }, '<c-l>', function()
+      --   if ls.choice_active() then ls.change_choice(1) end
+      -- end)
 
       vim.keymap.set({ 's', 'i' }, '<c-l>', function()
         if ls.expand_or_jumpable() then ls.expand_or_jump() end
