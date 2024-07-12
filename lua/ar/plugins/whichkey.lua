@@ -35,8 +35,9 @@ return {
         name = 'Advanced',
         a = 'Actions',
         b = { name = 'Comment Box' },
-        f = 'Snap',
-        g = 'Git',
+        d = { name = 'Dadbod' },
+        f = { name = 'Snap' },
+        g = { name = 'Git' },
         gh = { name = 'History' },
         gi = { name = 'Issues' },
         go = { name = 'Open' },
@@ -49,6 +50,7 @@ return {
         n = { name = 'Sticky Note' },
         r = { name = 'Run' },
         t = { name = 'Translate' },
+        x = { name = 'Executor' },
       },
       [','] = {
         name = 'Advanced',
@@ -61,7 +63,7 @@ return {
           name = 'CopilotChat',
         },
       },
-      d = { name = 'Dadbod' },
+      A = { name = 'Animations' },
       e = { name = 'Explorer' },
       f = { name = 'Telescope' },
       F = { name = 'Picker (Current Dir)' },
@@ -93,12 +95,11 @@ return {
       v = { name = 'Vim' },
       w = { name = 'Window' },
       wm = { name = 'Maximizer' },
-      x = { name = 'Trouble' },
     }, { mode = 'n', prefix = '<leader>' })
 
     which_key.register({
       a = { name = 'Actions' },
-      A = { name = 'Animations' },
+        b = { name = 'Buffer' },
       c = { name = 'Conceal' },
       d = { name = 'Dap' },
       db = { name = 'Breakpoint' },
@@ -121,7 +122,7 @@ return {
       s = { name = 'Strict' },
       t = { name = 'TODO' },
       v = { name = 'Devdocs' },
-      x = { name = 'Executor' },
+      x = { name = 'Trouble' },
       y = { name = 'Yanky' },
       z = { name = 'Zen' },
     }, { mode = 'n', prefix = '<localleader>' })

@@ -87,7 +87,7 @@ return {
     keys = {
       {
         mode = 'x',
-        '<leader>do',
+        '<localleader>do',
         '<cmd>lua require("aidoc.api").generate({width = 65})<CR>',
         desc = 'aidoc: generate',
       },

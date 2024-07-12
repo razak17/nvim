@@ -10,8 +10,8 @@ return {
   },
   -- stylua: ignore
   keys = {
-    { '<leader>dt', '<Cmd>DBUIToggle<CR>', desc = 'dadbod: toggle' },
-    { '<leader>da', '<Cmd>DBUIAddConnection<CR>', desc = 'dadbod: add connection' },
+    { '<leader><leader>dt', '<Cmd>DBUIToggle<CR>', desc = 'dadbod: toggle' },
+    { '<leader><leader>da', '<Cmd>DBUIAddConnection<CR>', desc = 'dadbod: add connection' },
   },
   -- stylua: ignore
   cmd = {

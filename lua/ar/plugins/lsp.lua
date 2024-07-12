@@ -612,16 +612,16 @@ return {
     cmd = { 'Trouble' },
     -- stylua: ignore
     keys = {
-      { '<leader>xd', '<Cmd>Trouble diagnostics toggle<CR>', desc = 'trouble: toggle diagnostics' },
+      { '<localleader>xd', '<Cmd>Trouble diagnostics toggle<CR>', desc = 'trouble: toggle diagnostics' },
       {
-        '<leader>xl',
+        '<localleader>xl',
         "<Cmd>Trouble lsp toggle focus=false win.position=right<cr>",
         desc = 'trouble: lsp references',
       },
-      { '<leader>xL', '<Cmd>Trouble loclist toggle<CR>', desc = 'trouble: toggle loclist' },
-      { '<leader>xq', '<Cmd>Trouble qflist toggle<CR>', desc  = 'trouble: toggle qflist' },
-      { '<leader>xt', '<Cmd>Trouble todo toggle<CR>', desc = 'trouble: toggle todo' },
-      { '<leader>xx', '<Cmd>Trouble diagnostics toggle filter.buf=0<CR>', desc = 'trouble: toggle buffer diagnostics' },
+      { '<localleader>xL', '<Cmd>Trouble loclist toggle<CR>', desc = 'trouble: toggle loclist' },
+      { '<localleader>xq', '<Cmd>Trouble qflist toggle<CR>', desc  = 'trouble: toggle qflist' },
+      { '<localleader>xt', '<Cmd>Trouble todo toggle<CR>', desc = 'trouble: toggle todo' },
+      { '<localleader>xx', '<Cmd>Trouble diagnostics toggle filter.buf=0<CR>', desc = 'trouble: toggle buffer diagnostics' },
     },
     opts = {},
   },

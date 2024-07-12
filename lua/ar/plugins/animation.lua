@@ -81,7 +81,7 @@ return {
   {
     'anuvyklack/animation.nvim',
     cond = not ar.plugins.minimal,
-    keys = { { '<localleader>Aa', redraw_buffer, desc = 'animation: start' } },
+    keys = { { '<leader>Aa', redraw_buffer, desc = 'animation: start' } },
     dependencies = { 'anuvyklack/middleclass' },
   },
   {
@@ -95,8 +95,8 @@ return {
     cmd = 'CellularAutomaton',
     -- stylua: ignore
     keys = {
-      { '<localleader>Ag', '<Cmd>CellularAutomaton game_of_life<CR>', desc = 'automaton: game of life', },
-      { '<localleader>Am', '<Cmd>CellularAutomaton make_it_rain<CR>', desc = 'automaton: make it rain', },
+      { '<leader>Ag', '<Cmd>CellularAutomaton game_of_life<CR>', desc = 'automaton: game of life', },
+      { '<leader>Am', '<Cmd>CellularAutomaton make_it_rain<CR>', desc = 'automaton: make it rain', },
     },
   },
 }
