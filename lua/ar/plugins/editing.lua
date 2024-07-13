@@ -2,7 +2,11 @@ local border = ar.ui.current.border
 local minimal, niceties = ar.plugins.minimal, ar.plugins.niceties
 
 return {
-  { 'johmsalas/text-case.nvim', cond = not minimal, opts = {} },
+  {
+    'johmsalas/text-case.nvim',
+    cond = not minimal,
+    opts = { default_keymappings_enabled = false },
+  },
   {
     'gbprod/yanky.nvim',
     cond = not minimal,
