@@ -96,8 +96,8 @@ return {
   {
     'Saecki/crates.nvim',
     init = function()
-      require('which-key').register({
-        ['<localleader>c'] = { name = 'Crates' },
+      require('which-key').add({
+        { '<leader><localleader>c', group = 'Crates' },
       })
     end,
     cond = not ar.plugins.minimal,

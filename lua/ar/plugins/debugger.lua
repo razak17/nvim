@@ -43,7 +43,7 @@ return {
     cond = not ar.plugins.minimal,
     keys = {
       {
-        '<leader>da',
+        '<localleader>da',
         function()
           if vim.fn.filereadable('.vscode/launch.json') then
             local dap_vscode = require('dap.ext.vscode')

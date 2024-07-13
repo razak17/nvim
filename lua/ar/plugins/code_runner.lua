@@ -132,8 +132,8 @@ return {
     build = 'sh install.sh',
     cmd = { 'SnipRun', 'SnipInfo' },
     init = function()
-      require('which-key').register({
-        ['<leader>rs'] = { name = 'SnipRun' },
+      require('which-key').add({
+        { '<leader>rs', group = 'SnipRun' },
       })
     end,
     keys = {
