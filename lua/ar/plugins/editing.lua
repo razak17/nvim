@@ -26,16 +26,55 @@ return {
   {
     'monaqa/dial.nvim',
     cond = not minimal,
-    -- stylua: ignore
     keys = {
-      { 'n', '<C-a>', '<Cmd>lua require("dial").manipulate("increment", "normal")<CR>', desc = 'dial: increment' },
-      { 'n', '<C-x>', '<Cmd>lua require("dial").manipulate("decrement", "normal")<CR>', desc = 'dial: decrement' },
-      { 'n', 'g<C-a>', '<Cmd>lua require("dial").manipulate("increment", "gnormal")<CR>', desc = 'dial: gincrement' },
-      { 'n', 'g<C-x>', '<Cmd>lua require("dial").manipulate("decrement", "gnormal")<CR>', desc = 'dial: gdecrement' },
-      { 'x', '<C-a>', '<Cmd>lua require("dial").manipulate("increment", "visual")<CR>', desc = 'dial: vincrement' },
-      { 'x', '<C-x>', '<Cmd>lua require("dial").manipulate("decrement", "visual")<CR>', desc = 'dial: vdecrement' },
-      { 'x', 'g<C-a>', '<Cmd>lua require("dial").manipulate("increment", "gvisual")<CR>', desc = 'dial: gvincrement' },
-      { 'x', 'g<C-x>', '<Cmd>lua require("dial").manipulate("decrement", "gvisual")<CR>', desc = 'dial: gvdecrement' },
+      {
+        mode = { 'n' },
+        '<C-a>',
+        function() require('dial.map').manipulate('increment', 'normal') end,
+        desc = 'dial: increment',
+      },
+      {
+        mode = { 'n' },
+        '<C-x>',
+        function() require('dial.map').manipulate('decrement', 'normal') end,
+        desc = 'dial: decrement',
+      },
+      {
+        mode = { 'n' },
+        'g<C-a>',
+        function() require('dial.map').manipulate('increment', 'gnormal') end,
+        desc = 'dial: gincrement',
+      },
+      {
+        mode = { 'n' },
+        'g<C-x>',
+        function() require('dial.map').manipulate('decrement', 'gnormal') end,
+        desc = 'dial: gdecrement',
+      },
+      {
+        mode = { 'x' },
+        '<C-a>',
+        function() require('dial.map').manipulate('increment', 'visual') end,
+        desc = 'dial: vincrement',
+      },
+      {
+        mode = { 'x' },
+        '<C-x>',
+        function() require('dial.map').manipulate('decrement', 'visual') end,
+        desc = 'dial: vdecrement',
+      },
+      {
+        mode = { 'x' },
+        'g<C-a>',
+        function() require('dial.map').manipulate('increment', 'gvisual') end,
+        desc = 'dial: gvincrement',
+      },
+      {
+        mode = { 'x' },
+        'g<C-x>',
+        function() require('dial.map').manipulate('decrement', 'gvisual') end,
+        desc = 'dial: gvdecrement',
+      },
     },
     config = function()
       local augend = require('dial.augend')
