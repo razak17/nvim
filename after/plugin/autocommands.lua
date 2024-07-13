@@ -154,7 +154,7 @@ local function can_save()
 end
 
 augroup('UpdateVim', {
-  event = { 'FocusLost' },
+  event = { 'FocusLost', 'InsertLeave', 'CursorHold' },
   command = function(args)
     if not vim.bo[args.buf].modified or not ar.autosave.enable then return end
     if can_save() then vim.cmd('silent! wall') end
