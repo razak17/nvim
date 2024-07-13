@@ -31,10 +31,10 @@ if vim.fn.expand('%:t') == 'package.json' then
   end
   local package_info = require('package-info')
 
-  map('n', '<localleader>pt', package_info.toggle, with_desc('toggle'))
-  map('n', '<localleader>pu', package_info.update, with_desc('update'))
-  map('n', '<localleader>pd', package_info.delete, with_desc('delete'))
-  map('n', '<localleader>pi', package_info.install, with_desc('install new'))
+  map('n', '<localleader>Pt', package_info.toggle, with_desc('toggle'))
+  map('n', '<localleader>Pu', package_info.update, with_desc('update'))
+  map('n', '<localleader>Pd', package_info.delete, with_desc('delete'))
+  map('n', '<localleader>Pi', package_info.install, with_desc('install new'))
   map(
     'n',
     '<localleader>pc',

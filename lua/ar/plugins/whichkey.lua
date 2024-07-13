@@ -8,6 +8,7 @@ return {
       keys = { CR = '↪', TAB = '→', Space = '󱁐 ' },
     },
     win = {
+      height = { min = 10, max = 25 },
       border = ar.ui.current.border,
       wo = {
         winblend = 10, -- value between 0-100 0 for fully opaque and 100 for fully transparent
@@ -90,7 +91,6 @@ return {
         { '<leader><leader>jd', desc = 'doc switch' },
         { '<leader><leader>l', desc = 'LSP' },
         { '<leader><leader>n', group = 'Sticky Note' },
-        { '<leader><leader>r', group = 'Run' },
         { '<leader><leader>t', group = 'Translate' },
         { '<leader><leader>x', group = 'Executor' },
         { '<leader>,', group = 'Advanced' },

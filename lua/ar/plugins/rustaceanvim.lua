@@ -9,8 +9,8 @@ return {
     ft = { 'rust' },
     cond = enabled,
     init = function()
-      require('which-key').register({
-        ['<localleader>r'] = { name = 'Rustaceanvim' },
+      require('which-key').add({
+        { '<leader><leader>r', group = 'Rustaceanvim'}
       })
     end,
     config = function()
@@ -57,16 +57,16 @@ return {
             local rlsp = vim.cmd.RustLsp
 
             map('n', 'K', function() rlsp({ 'hover', 'actions' }) end, { desc = 'hover', buffer = bufnr })
-            map('n', '<localleader>rr', function() rlsp({'runnables', 'last' }) end, { desc = 'runnables', buffer = bufnr })
-            map('n', '<localleader>rc', function() rlsp('openCargo') end, { desc = 'open cargo', buffer = bufnr })
-            map('n', '<localleader>rd', function() rlsp({'debuggables', 'last' }) end, { desc = 'debuggables', buffer = bufnr })
-            map('n', '<localleader>rm', function() rlsp('expandMacro') end, { desc = 'expand macro', buffer = bufnr })
-            map('n', '<localleader>ro', function() rlsp('externalDocs') end, { desc = 'open external docs', buffer = bufnr })
-            map('n', '<localleader>rp', function() rlsp('parentModule') end, { desc = 'parent module', buffer = bufnr })
-            map('n', '<localleader>rs', function() rlsp('reloadWorkspace') end, { desc = 'reload workspace', buffer = bufnr })
-            map('n', '<localleader>rg', function() rlsp({ 'crateGraph', '[backend]', '[output]' }) end, { desc = 'view crate graph', buffer = bufnr })
-            map('n', '<localleader>ra', function() rlsp('codeAction') end, { desc = 'code action', buffer = bufnr })
-            map('n', '<localleader>rx', function() rlsp('explainError') end, { desc = 'explain error', buffer = bufnr })
+            map('n', '<leader><leader>rr', function() rlsp({'runnables', 'last' }) end, { desc = 'runnables', buffer = bufnr })
+            map('n', '<leader><leader>rc', function() rlsp('openCargo') end, { desc = 'open cargo', buffer = bufnr })
+            map('n', '<leader><leader>rd', function() rlsp({'debuggables', 'last' }) end, { desc = 'debuggables', buffer = bufnr })
+            map('n', '<leader><leader>rm', function() rlsp('expandMacro') end, { desc = 'expand macro', buffer = bufnr })
+            map('n', '<leader><leader>ro', function() rlsp('externalDocs') end, { desc = 'open external docs', buffer = bufnr })
+            map('n', '<leader><leader>rp', function() rlsp('parentModule') end, { desc = 'parent module', buffer = bufnr })
+            map('n', '<leader><leader>rs', function() rlsp('reloadWorkspace') end, { desc = 'reload workspace', buffer = bufnr })
+            map('n', '<leader><leader>rg', function() rlsp({ 'crateGraph', '[backend]', '[output]' }) end, { desc = 'view crate graph', buffer = bufnr })
+            map('n', '<leader><leader>ra', function() rlsp('codeAction') end, { desc = 'code action', buffer = bufnr })
+            map('n', '<leader><leader>rx', function() rlsp('explainError') end, { desc = 'explain error', buffer = bufnr })
           end,
           standalone = false,
           settings = {

@@ -600,10 +600,15 @@ return {
     cond = ar.lsp.enable,
     cmd = { 'AnyJump', 'AnyJumpArg', 'AnyJumpLastResults' },
     -- stylua: ignore
+    init = function()
+      require('which-key').add({
+        { '<leader><localleader>j',group =  'Any Jump' },
+      })
+    end,
     keys = {
-      { '<leader>jj', '<Cmd>AnyJump<CR>', desc = 'any-jump: jump' },
-      { '<leader>ja', '<Cmd>AnyJumpArg<CR>', desc = 'any-jump: arg' },
-      { '<leader>jp', '<Cmd>AnyJumpLastResults<CR>', desc = 'any-jump: resume' },
+      { '<leader><localleader>jj', '<Cmd>AnyJump<CR>', desc = 'any-jump: jump' },
+      { '<leader><localleader>ja', '<Cmd>AnyJumpArg<CR>', desc = 'any-jump: arg' },
+      { '<leader><localleader>jp', '<Cmd>AnyJumpLastResults<CR>', desc = 'any-jump: resume' },
     },
   },
   {

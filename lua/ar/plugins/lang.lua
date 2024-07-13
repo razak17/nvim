@@ -37,8 +37,8 @@ return {
     cond = not minimal and false,
     event = 'BufRead package.json',
     config = function()
-      require('which-key').register({
-        ['<localleader>'] = { p = 'Package Info' },
+      require('which-key').add({
+        { '<localleader>P', group = 'Package Info' },
       })
 
       highlight.plugin('package-info', {
@@ -120,7 +120,9 @@ return {
     cond = not minimal and false, -- archived
     ft = { 'http', 'json' },
     init = function()
-      require('which-key').register({ ['<leader>rr'] = { name = 'Rest' } })
+      require('which-key').add({
+        { '<leader>rr', group = 'Rest' },
+      })
     end,
     -- stylua: ignore
     keys = {
@@ -143,7 +145,7 @@ return {
       { '<leader>rp', ':lua require("kulala").jump_prev()<CR>', desc = 'kulala: prev' },
       { '<leader>rt', ':lua require("kulala").toggle_view()<CR>', desc = 'kulala: toggle view' },
     },
-    opts = {}
+    opts = {},
   },
   -- Tailwind
   --------------------------------------------------------------------------------
@@ -200,8 +202,8 @@ return {
   {
     'linux-cultist/venv-selector.nvim',
     init = function()
-      require('which-key').register({
-        ['<localleader>lv'] = { name = 'Venv Selector' },
+      require('which-key').add({
+        { '<localleader>lv', group = 'Venv Selector' },
       })
     end,
     cond = ar.lsp.enable,
@@ -219,11 +221,6 @@ return {
   --------------------------------------------------------------------------------
   {
     'olexsmir/gopher.nvim',
-    init = function()
-      require('which-key').register({
-        ['<localleader>g'] = { name = 'Gopher' },
-      })
-    end,
     cond = ar.lsp.enable and not minimal,
     ft = 'go',
   },
@@ -484,7 +481,7 @@ return {
     keys = {
       {
         mode = 'v',
-        '<localleader>rh',
+        '<leader><localleader>rh',
         '<Cmd>HypersonichCR>',
         desc = 'hypersonic: toggle',
       },
