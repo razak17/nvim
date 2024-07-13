@@ -29,7 +29,7 @@ M.options.toggles = {
   ['Toggle Conceal Level'] = 'lua require"ar.menus.toggle".toggle_conceal_level()',
   ['Toggle Conceal Cursor'] = 'lua require"ar.menus.toggle".toggle_conceal_cursor()',
   ['Toggle Statusline'] = 'lua require"ar.menus.toggle".toggle_statusline()',
-  ['Toggle Sunglasses'] = 'lua require"rm.toggle".toggle_sunglasses()',
+  ['Toggle Sunglasses'] = 'lua require"ar.menus.toggle".toggle_sunglasses()',
   ['Toggle Aerial'] = 'AerialToggle',
   ['Toggle Ccc'] = 'CccHighlighterToggle',
   ['Toggle Colors'] = 'HighlightColors Toggle',
@@ -44,6 +44,7 @@ M.options.toggles = {
   ['Toggle Undo Tree'] = 'UndotreeToggle',
   ['Toggle Precognition'] = 'Precognition toggle',
   ['Toggle TS Context'] = 'TSContextToggle',
+  ['Toggle Minipairs'] = 'lua require"ar.menus.toggle".toggle_minipairs()',
 }
 
 local toggle_menu = function()
@@ -380,7 +381,7 @@ M.options.command_palette = {
       vim.notify('Enabled auto pairs')
     end
   end,
-  ['Toggle Markview'] = 'Markview'
+  ['Toggle Markview'] = 'Markview',
 }
 
 local command_palette_menu = function()
