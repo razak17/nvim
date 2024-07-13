@@ -253,8 +253,8 @@ nnoremap('<localleader>Q', ':cq<CR>', { desc = 'restart editor' })
 --------------------------------------------------------------------------------
 -- ?ie | entire object
 --------------------------------------------------------------------------------
-xnoremap('ie', [[gg0oG$]])
-onoremap('ie', [[<cmd>execute "normal! m`"<Bar>keepjumps normal! ggVG<CR>]])
+-- xnoremap('ie', [[gg0oG$]])
+-- onoremap('ie', [[<cmd>execute "normal! m`"<Bar>keepjumps normal! ggVG<CR>]])
 --------------------------------------------------------------------------------
 -- Core navigation
 --------------------------------------------------------------------------------
