@@ -69,7 +69,7 @@ return {
   },
   {
     'mei28/luminate.nvim',
-    cond = not minimal and niceties,
+    cond = not minimal and niceties and false,
     event = { 'VeryLazy' },
     opts = {},
   },
