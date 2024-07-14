@@ -290,29 +290,11 @@ return {
     opts = {
       mappings = {
         i = {
-          h = { h = '<esc>0i' },
-          j = {
-            k = '<Esc>', --[[j = '<Esc>']]
-          },
-          [' '] = {
-            ['<TAB>'] = function()
-              vim.defer_fn(function()
-                vim.o.ul = vim.o.ul
-                require('luasnip').expand_or_jump()
-              end, 1)
-            end,
-            ['<S-TAB>'] = function()
-              vim.defer_fn(function()
-                vim.o.ul = vim.o.ul
-                require('luasnip').jump(-1)
-              end, 1)
-            end,
-            [' '] = '<left>',
-          },
+          j = { k = '<Esc>' },
         },
       },
     },
-    config = function(_, opts) require('better_escape').setup() end,
+    config = function(_, opts) require('better_escape').setup(opts) end,
   },
   ------------------------------------------------------------------------------
   -- Swap Text
