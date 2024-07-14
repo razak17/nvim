@@ -214,7 +214,7 @@ return {
   },
   {
     'ahmedkhalf/project.nvim',
-    cond = not minimal,
+    cond = not minimal and false,
     event = 'VimEnter',
     name = 'project_nvim',
     opts = {
