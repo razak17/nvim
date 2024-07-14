@@ -15,14 +15,6 @@ local icons, separators = ui.icons, ui.icons.separators
 
 local left_thin_block = separators.left_thin_block
 local fcs = opt.fillchars:get()
-local space = ' '
-
----@param num? integer
----@return string
-local function spacer(num)
-  num = num or 1
-  return string.rep(space, num)
-end
 
 local sep = { text = left_thin_block, texthl = 'IndentBlanklineChar' }
 
@@ -32,33 +24,13 @@ function ar.ui.statuscolumn.render()
   if wo[win].signcolumn == 'no' then return '' end
 
   local lnum, relnum, virtnum = v.lnum, v.relnum, v.virtnum
-  local statuscol = require('ar.statuscolumn').utils
   local buf = api.nvim_win_get_buf(win)
   local line_count = api.nvim_buf_line_count(buf)
+  local statuscol = require('ar.statuscolumn')
+  local icon, spacer = statuscol.icon, statuscol.space
 
-  local icon = statuscol.icon
+  local left, gitsigns = statuscol.get_left(buf, lnum)
   local nr = statuscol.nr(win, lnum, relnum, virtnum, line_count)
-  local marks = statuscol.get_mark(buf, lnum)
-  local gitsigns, other_sns = statuscol.extmark_signs(buf, lnum)
-
-  local left = {}
-  if marks then
-    if #other_sns == 0 then
-      left[#left + 1] = icon(marks, 2)
-    else
-      left[#left + 1] = icon(marks, 1)
-    end
-  end
-  if #other_sns > 0 then
-    vim.iter(other_sns):fold(left, function(acc, key)
-      if #acc == 0 then
-        acc[#acc + 1] = icon(key, 1)
-      else
-        acc[#acc + 1] = ' ' .. icon(key, 0)
-      end
-      return acc
-    end)
-  end
 
   local fold
   api.nvim_win_call(win, function()
@@ -92,9 +64,9 @@ function ar.ui.statuscolumn.render()
   end)
 
   return table.concat({
-    #left > 0 and table.concat(left, '') or spacer(2),
+    left,
     [[%=]],
-    space,
+    spacer(),
     nr .. spacer(),
     gitsigns and icon(gitsigns[1], 1) or spacer(),
     icon(sep, 1),
