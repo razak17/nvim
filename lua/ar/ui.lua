@@ -110,7 +110,7 @@ ar.ui.codicons = {
     bookmark = '', --  ⚑
     buffers = '󱂬',
     bug = '',
-    bug_alt = "",
+    bug_alt = '',
     calendar = '',
     circle = '',
     circuit_board = '',
@@ -296,6 +296,7 @@ local filetypes = ar.p_table({
   ['Trouble'] = presets.tool_panel,
   ['tsplayground'] = presets.tool_panel,
   ['undotree'] = presets.tool_panel,
+  ['w3m'] = presets.tool_panel:with({ statusline = false }),
 })
 
 local filenames = ar.p_table({

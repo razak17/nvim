@@ -16,6 +16,7 @@ local M = {
     gpt = 'ChatGPTRun actions',
     copilot_chat = 'CopilotChat actions',
     command_palette = 'Command Palette actions',
+    w3m = 'W3M actions',
   },
 }
 
@@ -323,6 +324,41 @@ if ar.is_available('CopilotChat.nvim') then
 end
 
 --------------------------------------------------------------------------------
+-- w3m
+--------------------------------------------------------------------------------
+if ar.is_available('w3m.vim') then
+  local function w3m_input(cmd)
+    vim.ui.input({ prompt = 'Enter url:', kind = 'center_win' }, function(input)
+      if input ~= nil then vim.cmd(cmd .. ' ' .. input) end
+    end)
+  end
+
+  M.options.w3m = {
+    ['Search in vsplit'] = function() w3m_input('W3mVSplit') end,
+    ['Search in split'] = function() w3m_input('W3mVSplit') end,
+    ['DuckDuckGo Search'] = function() w3m_input('W3m duck') end,
+    ['Google Search'] = function() w3m_input('W3m google') end,
+    ['Copy URL'] = 'W3mCopyUrl',
+    ['Reload Page'] = 'W3mReload',
+    ['Change URL'] = 'W3mAddressBar',
+    ['Search History'] = 'W3mHistory',
+    ['Open In External Browser'] = 'W3mShowExtenalBrowser',
+    ['Clear Search History'] = 'W3mHistoryClear',
+  }
+
+  local w3m_menu = function()
+    ar.create_select_menu(M.prompts['w3m'], M.options.w3m)()
+  end
+
+  map(
+    'n',
+    '<leader>ow',
+    w3m_menu,
+    { desc = '[w]3m [a]ctions: open menu for w3m actions' }
+  )
+end
+
+--------------------------------------------------------------------------------
 -- Command Palette
 --------------------------------------------------------------------------------
 local setreg = fn.setreg
@@ -394,6 +430,10 @@ map(
   command_palette_menu,
   { desc = '[c]ommand [p]alette: open menu for command palette actions' }
 )
+
+--------------------------------------------------------------------------------
+-- Setup
+--------------------------------------------------------------------------------
 
 for name, option in pairs(M.options) do
   for key, _ in pairs(option) do

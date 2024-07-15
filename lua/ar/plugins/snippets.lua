@@ -79,7 +79,8 @@ return {
       end)
 
       vim.keymap.set({ 's', 'i' }, '<c-b>', function()
-        if ls.jumpable(-1) then ls.jump(-1) end
+        if not ls.jumpable(-1) then return '<S-Tab>' end
+        ls.jump(-1)
       end)
 
       require('luasnip').config.setup({ store_selection_keys = '<C-x>' })

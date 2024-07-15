@@ -14,6 +14,12 @@ return {
   'tpope/vim-rhubarb',
   -- { 'lewis6991/fileline.nvim', lazy = false },
   -- { 'axlebedev/vim-footprints', lazy = false },
+  {
+    'yuratomo/w3m.vim',
+    cond = not minimal,
+    event = 'VeryLazy',
+    config = function() vim.g['w3m#external_browser'] = 'firefox' end,
+  },
   { 'nvim-tree/nvim-web-devicons', cond = false },
   { 'stevearc/profile.nvim', cond = not minimal, lazy = false },
   {
