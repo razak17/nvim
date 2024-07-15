@@ -263,6 +263,11 @@ local telescope_enabled = not ar.plugin_disabled('telescope.nvim')
 
 return {
   {
+    'nvim-telescope/telescope-frecency.nvim',
+    lazy = false,
+    config = function() require('telescope').load_extension('frecency') end,
+  },
+  {
     'nvim-telescope/telescope.nvim',
     cond = telescope_enabled,
     -- NOTE: usind cmd causes issues with dressing and frecency
@@ -627,12 +632,6 @@ return {
         { pattern = 'TelescopeConfigComplete', modeline = false }
       )
     end,
-    dependencies = {
-      {
-        'nvim-telescope/telescope-frecency.nvim',
-        config = function() require('telescope').load_extension('frecency') end,
-      },
-    },
   },
   {
     'molecule-man/telescope-menufacture',
