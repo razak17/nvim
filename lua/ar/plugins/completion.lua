@@ -99,7 +99,9 @@ return {
       end
 
       cmp.setup({
-        preselect = cmp.PreselectMode.None,
+        completion = {
+          completeopt = 'menu,menuone,noinsert',
+        },
         window = {
           completion = cmp.config.window.bordered({
             border = border,
@@ -135,8 +137,7 @@ return {
         },
         snippet = {
           expand = function(args)
-            if luasnip_available then
-              local luasnip = require('luasnip')
+            if luasnip_avail then
               luasnip.lsp_expand(args.body)
             else
               vim.snippet.expand(args.body)
