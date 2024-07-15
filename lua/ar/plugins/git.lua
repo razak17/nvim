@@ -45,7 +45,7 @@ return {
           ['onedark'] = {
             { NeogitHunkHeader = { inherit = 'Headline2', bold = true } },
             { NeogitDiffHeader = { inherit = 'Headline2', bold = true } },
-            { NeogitFold = { bg = { from = 'CursorLine', alter = -0.25 } } },
+            { NeogitFold = { link = "Comment" } },
             { NeogitWinSeparator = { link = 'WinSeparator' } },
             {
               NeogitCursorLine = {

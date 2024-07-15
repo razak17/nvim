@@ -34,10 +34,8 @@ return {
     config = function()
       ar.highlight.plugin('ufo', {
         theme = {
-          -- stylua: ignore
           ['onedark'] = {
-            { Folded = { bold = false, italic = false, bg = { from = 'CursorLine', alter = -0.15 } },
-            },
+            { UfoCursorFoldedLine = { link = 'Folded' } },
           },
         },
       })
