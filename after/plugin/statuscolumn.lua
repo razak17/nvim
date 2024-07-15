@@ -77,7 +77,7 @@ end
 opt.statuscolumn = [[%!v:lua.ar.ui.statuscolumn.render()]]
 
 ar.augroup('StatusCol', {
-  event = { 'BufEnter', 'FileType', 'CursorMoved' },
+  event = { 'BufEnter', 'FileType', 'FocusGained' },
   command = function(args)
     local buf = args.buf
     local ft = vim.bo[buf].ft
