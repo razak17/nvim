@@ -148,58 +148,54 @@ return {
     cond = not minimal,
     event = { 'VeryLazy' },
     config = function()
-      local base = {
-        { '<space>', desc = 'Whitespace' },
-        { '"', desc = 'Balanced "' },
-        { "'", desc = "Balanced '" },
-        { '`', desc = 'Balanced `' },
-        { '(', desc = 'Balanced (' },
-        { ')', desc = 'Balanced ) including white-space' },
-        { '>', desc = 'Balanced > including white-space' },
-        { '<lt>', desc = 'Balanced <' },
-        { ']', desc = 'Balanced ] including white-space' },
-        { '[', desc = 'Balanced [' },
-        { '}', desc = 'Balanced } including white-space' },
-        { '{', desc = 'Balanced {' },
-        { '?', desc = 'User Prompt' },
-        { '_', desc = 'Underscore' },
-        { 'a', desc = 'Argument' },
-        { 'b', desc = 'Balanced ), ], }' },
-        { 'c', desc = 'Class' },
-        { 'd', desc = 'Digit(s)' },
-        { 'e', desc = 'Word in CamelCase & snake_case' },
-        { 'f', desc = 'Function' },
-        { 'g', desc = 'Entire file' },
-        { 'i', desc = 'Indent' },
-        { 'o', desc = 'Block, conditional, loop' },
-        { 'q', desc = 'Quote `, ", \'' },
-        { 't', desc = 'Tag' },
-        { 'u', desc = 'Use/call function & method' },
-        { 'U', desc = 'Use/call without dot in name' },
+      -- https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/util/mini.lua?plain=1#L64
+      local objects = {
+        { ' ', desc = 'whitespace' },
+        { '"', desc = '" string' },
+        { "'", desc = "' string" },
+        { '(', desc = '() block' },
+        { ')', desc = '() block with ws' },
+        { '<', desc = '<> block' },
+        { '>', desc = '<> block with ws' },
+        { '?', desc = 'user prompt' },
+        { 'U', desc = 'use/call without dot' },
+        { '[', desc = '[] block' },
+        { ']', desc = '[] block with ws' },
+        { '_', desc = 'underscore' },
+        { '`', desc = '` string' },
+        { 'a', desc = 'argument' },
+        { 'b', desc = ')]} block' },
+        { 'c', desc = 'class' },
+        { 'd', desc = 'digit(s)' },
+        { 'e', desc = 'CamelCase / snake_case' },
+        { 'f', desc = 'function' },
+        { 'g', desc = 'entire file' },
+        { 'i', desc = 'indent' },
+        { 'o', desc = 'block, conditional, loop' },
+        { 'q', desc = 'quote `"\'' },
+        { 't', desc = 'tag' },
+        { 'u', desc = 'use/call' },
+        { '{', desc = '{} block' },
+        { '}', desc = '{} with ws' },
       }
 
-      local i = deepcopy_with_prefix(base, 'i')
-      local a = deepcopy_with_prefix(base, 'a', true)
-      local ic = deepcopy_with_prefix(base, 'in')
-      local il = deepcopy_with_prefix(base, 'il')
-      local ac = deepcopy_with_prefix(base, 'an', true)
-      local al = deepcopy_with_prefix(base, 'al', true)
-
-      require('which-key').add({
-        mode = { 'o', 'x' },
-        { 'a', group = 'around' },
-        { 'i', group = 'inside' },
-        { 'in', group = 'Inside next textobject' },
-        { 'il', group = 'Inside last textobject' },
-        { 'an', group = 'Around next textobject' },
-        { 'al', group = 'Around last textobject' },
-        i,
-        a,
-        ic,
-        il,
-        ac,
-        al,
-      })
+      local ret = { mode = { 'o', 'x' } }
+      for prefix, name in pairs({
+        i = 'inside',
+        a = 'around',
+        il = 'last',
+        ['in'] = 'next',
+        al = 'last',
+        an = 'next',
+      }) do
+        ret[#ret + 1] = { prefix, group = name }
+        for _, obj in ipairs(objects) do
+          local desc = obj.desc
+          if prefix:sub(1, 1) == 'i' then desc = desc:gsub(' with ws', '') end
+          ret[#ret + 1] = { prefix .. obj[1], desc = obj.desc }
+        end
+      end
+      require('which-key').add(ret, { notify = false })
 
       local ai = require('mini.ai')
 

@@ -363,7 +363,7 @@ return {
             return
           end
         end)
-        filepath = vim.fn.expand(filepath)
+        filepath = fn.expand(filepath)
         previewers.buffer_previewer_maker(filepath, bufnr, opts)
       end
 
