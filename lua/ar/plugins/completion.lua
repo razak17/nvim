@@ -10,8 +10,9 @@ return {
     cond = ar.completion.enable,
     event = 'InsertEnter',
     config = function()
+      local snippet = vim.snippet
       local cmp = require('cmp')
-      local luasnip_available = ar.is_available('LuaSnip')
+      local luasnip_avail, luasnip = pcall(require, 'luasnip')
       local symbols = require('lspkind').symbol_map
       local codicons = ui.codicons
       local MIN_MENU_WIDTH, MAX_MENU_WIDTH =
@@ -55,11 +56,6 @@ return {
         },
       })
 
-      local window_opts = {
-        border = border,
-        winhighlight = 'NormalFloat:FloatBorder',
-      }
-
       -- https://github.com/simifalaye/dotfiles/blob/main/roles/neovim/dots/.config/nvim/lua/plugins/cmp.lua#L35
       local function has_words_before()
         local line, col = (unpack or table.unpack)(api.nvim_win_get_cursor(0))
@@ -72,51 +68,28 @@ return {
       end
 
       local function tab(fallback)
-        if vim.snippet.active({ direction = 1 }) then
-          vim.snippet.jump(1)
-          return
+        if snippet.active({ direction = 1 }) then return snippet.jump(1) end
+        if has_words_before() and not cmp.visible() then
+          return cmp.complete()
         end
-        if cmp.visible() then
-          cmp.select_next_item()
-          return
+        if not cmp.visible() then return fallback() end
+        if cmp.visible() then return cmp.select_next_item() end
+        if luasnip_avail and luasnip.expand_or_jumpable() then
+          return luasnip.expand_or_jump()
         end
-        if has_words_before() then
-          cmp.complete()
-          return
-        end
-        if luasnip_available then
-          local luasnip = require('luasnip')
-          if luasnip.expand_or_locally_jumpable() then
-            luasnip.expand_or_jump()
-            return
-          end
-          luasnip.expand_or_jump()
-          return
-        end
-        fallback()
+        cmp.confirm()
       end
 
       local function shift_tab(fallback)
-        if vim.snippet.active({ direction = -1 }) then
-          vim.snippet.jump(-1)
-          return
+        if snippet.active({ direction = -1 }) then return snippet.jump(-1) end
+        if has_words_before() and not cmp.visible() then
+          return cmp.complete()
         end
-        if cmp.visible() then
-          cmp.select_prev_item()
-          return
+        if not cmp.visible() then return fallback() end
+        if cmp.visible() then return cmp.select_prev_item() end
+        if luasnip_avail and luasnip.jumpable(-1) then
+          return luasnip.jump(-1)
         end
-        if has_words_before() then
-          cmp.complete()
-          return
-        end
-        if luasnip_available then
-          local luasnip = require('luasnip')
-          if luasnip_available and luasnip.jumpable(-1) then
-            luasnip.jump(-1)
-            return
-          end
-        end
-        fallback()
       end
 
       local function copilot()
