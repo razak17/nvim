@@ -1,6 +1,7 @@
 local fn, ui = vim.fn, ar.ui
 local input = vim.fn.input
 local codicons = ui.codicons
+local minimal = ar.plugins.minimal
 
 -- Config inspired from https://github.com/nikolovlazar/dotfiles/blob/main/.config/nvim/lua/plugins/dap.lua
 -- and Lazyvim's https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/plugins/extras/dap/core.lua
@@ -35,83 +36,43 @@ ar.debugger = {
     BreakpointCondition = { ' ', 'DiagnosticError' },
     LogPoint = { '󰃷', 'DiagnosticInfo' },
   },
+  filetypes = {
+    ['chrome'] = js_based_languages,
+    ['node'] = js_based_languages,
+    ['pwa-node'] = js_based_languages,
+    ['pwa-chrome'] = js_based_languages,
+    ['node-terminal'] = js_based_languages,
+  },
 }
 
 return {
   {
     'mfussenegger/nvim-dap',
-    cond = not ar.plugins.minimal,
+    cond = not minimal,
+    -- stylua: ignore
     keys = {
       {
         '<localleader>da',
         function()
-          if vim.fn.filereadable('.vscode/launch.json') then
+          if fn.filereadable('.vscode/launch.json') then
             local dap_vscode = require('dap.ext.vscode')
             dap_vscode.json_decode = require('overseer.json').decode
-            dap_vscode.load_launchjs(nil, {
-              ['chrome'] = js_based_languages,
-              ['node'] = js_based_languages,
-              ['pwa-node'] = js_based_languages,
-              ['pwa-chrome'] = js_based_languages,
-              ['node-terminal'] = js_based_languages,
-            })
+            dap_vscode.load_launchjs(nil, ar.debugger.filetypes)
           end
           require('dap').continue({ before = get_args })
         end,
         desc = 'dap: run with args',
       },
-      {
-        '<localleader>dbm',
-        function()
-          require('dap').set_breakpoint(nil, nil, input('Log point message: '))
-        end,
-        desc = 'dap: log breakpoint',
-      },
-      {
-        '<localleader>dc',
-        function() require('dap').continue() end,
-        desc = 'dap: continue or start debugging',
-      },
-      {
-        '<localleader>dh',
-        function() require('dap').step_back() end,
-        desc = 'dap: step back',
-      },
-      {
-        '<localleader>di',
-        function() require('dap').step_into() end,
-        desc = 'dap: step into',
-      },
-      {
-        '<localleader>do',
-        function() require('dap').step_over() end,
-        desc = 'dap: step over',
-      },
-      {
-        '<localleader>dO',
-        function() require('dap').step_out() end,
-        desc = 'dap: step out',
-      },
-      {
-        '<localleader>drc',
-        function() require('dap').run_to_cursor() end,
-        desc = 'dap: run to cursor',
-      },
-      {
-        '<localleader>drl',
-        function() require('dap').run_last() end,
-        desc = 'dap: run last',
-      },
-      {
-        '<localleader>drr',
-        function() require('dap').repl.toggle() end,
-        desc = 'dap: toggle repl',
-      },
-      {
-        '<localleader>drs',
-        function() require('dap').restart() end,
-        desc = 'dap: restart',
-      },
+      { '<localleader>dbm', function() require('dap').set_breakpoint(nil, nil, input('Log point message: ')) end, desc = 'dap: log breakpoint', },
+      { '<localleader>dc', function() require('dap').continue() end, desc = 'dap: continue or start debugging' },
+      { '<localleader>dh', function() require('dap').step_back() end, desc = 'dap: step back' },
+      { '<localleader>di', function() require('dap').step_into() end, desc = 'dap: step into' },
+      { '<localleader>do', function() require('dap').step_over() end, desc = 'dap: step over' },
+      { '<localleader>dO', function() require('dap').step_out() end, desc = 'dap: step out' },
+      { '<localleader>drc', function() require('dap').run_to_cursor() end, desc = 'dap: run to cursor' },
+      { '<localleader>drl', function() require('dap').run_last() end, desc = 'dap: run last' },
+      { '<localleader>drr', function() require('dap').repl.toggle() end, desc = 'dap: toggle repl' },
+      { '<localleader>drs', function() require('dap').restart() end, desc = 'dap: restart' },
       {
         '<localleader>ds',
         function()
@@ -120,16 +81,8 @@ return {
         end,
         desc = 'DAP Scopes',
       },
-      {
-        '<localleader>dw',
-        function() require('dap.ui.widgets').hover() end,
-        desc = 'dap: hover',
-      },
-      {
-        '<localleader>dx',
-        function() require('dap').terminate() end,
-        desc = 'dap: terminate',
-      },
+      { '<localleader>dw', function() require('dap.ui.widgets').hover() end, desc = 'dap: hover' },
+      { '<localleader>dx', function() require('dap').terminate() end, desc = 'dap: terminate' },
     },
     config = function()
       local dap = require('dap')
@@ -148,11 +101,8 @@ return {
 
       local vscode = require('dap.ext.vscode')
       local _filetypes = require('mason-nvim-dap.mappings.filetypes')
-      -- stylua: ignore
-      local filetypes = vim.tbl_deep_extend("force", _filetypes, {
-        ["node"] = { "javascriptreact", "typescriptreact", "typescript", "javascript" },
-        ["pwa-node"] = { "javascriptreact", "typescriptreact", "typescript", "javascript" },
-      })
+      local filetypes =
+        vim.tbl_deep_extend('force', _filetypes, ar.debugger.filetypes)
 
       vim.schedule(function()
         vscode.json_decode = require('overseer.json').decode
@@ -173,11 +123,11 @@ return {
           request = 'attach',
           name = 'Attach to running Neovim instance',
           host = function()
-            local value = vim.fn.input('Host [127.0.0.1]: ')
+            local value = fn.input('Host [127.0.0.1]: ')
             return value ~= '' and value or '127.0.0.1'
           end,
           port = function()
-            local val = tonumber(vim.fn.input('Port: '))
+            local val = tonumber(fn.input('Port: '))
             assert(val, 'Please provide a port number')
             return val
           end,
@@ -228,7 +178,7 @@ return {
             type = 'pwa-node',
             request = 'launch',
             name = 'Launch current file (pwa-node with ts-node)',
-            cwd = vim.fn.getcwd(),
+            cwd = fn.getcwd(),
             runtimeArgs = { '--loader', 'ts-node/esm' },
             runtimeExecutable = 'node',
             args = { '${file}' },
@@ -258,7 +208,7 @@ return {
             type = 'pwa-node',
             request = 'launch',
             name = 'Launch test current file (pwa-node with jest)',
-            cwd = vim.fn.getcwd(),
+            cwd = fn.getcwd(),
             runtimeArgs = {
               -- '${workspaceFolder}/node_modules/.bin/jest',
               './node_modules/jest/bin/jest.js',
@@ -276,7 +226,7 @@ return {
             type = 'pwa-node',
             request = 'launch',
             name = 'Launch test current file (pwa-node with vitest)',
-            cwd = vim.fn.getcwd(),
+            cwd = fn.getcwd(),
             program = '${workspaceFolder}/node_modules/vitest/vitest.mjs',
             args = { '--inspect-brk', '--threads', 'false', 'run', '${file}' },
             autoAttachChildProcesses = true,
@@ -288,7 +238,7 @@ return {
             type = 'pwa-node',
             request = 'launch',
             name = 'Launch test current file (pwa-node with deno)',
-            cwd = vim.fn.getcwd(),
+            cwd = fn.getcwd(),
             runtimeArgs = { 'test', '--inspect-brk', '--allow-all', '${file}' },
             runtimeExecutable = 'deno',
             attachSimplePort = 9229,
@@ -332,7 +282,7 @@ return {
             end,
             sourceMaps = true,
             protocol = 'inspector',
-            webRoot = vim.fn.getcwd(),
+            webRoot = fn.getcwd(),
             userDataDir = false,
             resolveSourceMapLocations = {
               '${workspaceFolder}/**',
@@ -362,17 +312,10 @@ return {
       'nvim-neotest/nvim-nio',
       {
         'rcarriga/nvim-dap-ui',
+        -- stylua: ignore
         keys = {
-          {
-            '<localleader>d?',
-            function() require('dapui').eval(nil, { enter = true }) end,
-            desc = 'dap-ui: eval',
-          },
-          {
-            '<localleader>du',
-            function() require('dapui').toggle({ reset = true }) end,
-            desc = 'dap-ui: toggle',
-          },
+          { '<localleader>d?', function() require('dapui').eval(nil, { enter = true }) end, desc = 'dap-ui: eval' },
+          { '<localleader>du', function() require('dapui').toggle({ reset = true }) end, desc = 'dap-ui: toggle' },
         },
         opts = {
           windows = { indent = 2 },
@@ -403,6 +346,7 @@ return {
       { 'theHamsta/nvim-dap-virtual-text', opts = { all_frames = true } },
       {
         'Weissle/persistent-breakpoints.nvim',
+        event = { 'BufReadPost' },
         keys = {
           {
             '<localleader>dbp',
@@ -437,6 +381,7 @@ return {
   },
   {
     'jay-babu/mason-nvim-dap.nvim',
+    cond = not minimal,
     dependencies = 'mason.nvim',
     cmd = { 'DapInstall', 'DapUninstall' },
     opts = {},
