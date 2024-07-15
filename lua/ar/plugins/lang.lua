@@ -138,12 +138,14 @@ return {
   },
   {
     'mistweaverco/kulala.nvim',
+    ft = { 'http' },
     -- stylua: ignore
     keys = {
-      { '<leader>rk', ':lua require("kulala").run()<CR>', desc = 'kulala: run' },
-      { '<leader>rn', ':lua require("kulala").jump_next()<CR>', desc = 'kulala: next' },
-      { '<leader>rp', ':lua require("kulala").jump_prev()<CR>', desc = 'kulala: prev' },
-      { '<leader>rt', ':lua require("kulala").toggle_view()<CR>', desc = 'kulala: toggle view' },
+      { '<leader>rke', ':lua require("kulala").set_selected_env()<CR>', desc = 'kulala: select env' },
+      { '<leader>rkk', ':lua require("kulala").run()<CR>', desc = 'kulala: run' },
+      { '<leader>rkn', ':lua require("kulala").jump_next()<CR>', desc = 'kulala: next' },
+      { '<leader>rkp', ':lua require("kulala").jump_prev()<CR>', desc = 'kulala: prev' },
+      { '<leader>rkt', ':lua require("kulala").toggle_view()<CR>', desc = 'kulala: toggle view' },
     },
     opts = {},
   },

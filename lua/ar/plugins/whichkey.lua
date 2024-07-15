@@ -8,12 +8,14 @@ return {
       keys = { CR = '↪', TAB = '→', Space = '󱁐 ' },
     },
     win = {
+      col = 0.5,
       height = { min = 10, max = 25 },
       border = ar.ui.current.border,
       wo = {
         winblend = 10, -- value between 0-100 0 for fully opaque and 100 for fully transparent
       },
     },
+    preset = 'classic',
     layout = { align = 'center' },
     spec = {
       {
@@ -40,6 +42,7 @@ return {
         { '<leader>p', group = 'Debugprint' },
         { '<leader>pl', group = 'Chainsaw' },
         { '<leader>r', group = 'Run' },
+        { '<leader>rk', group = 'Kulala' },
         { '<leader>s', group = 'Splits' },
         { '<leader>t', group = 'Testing' },
         { '<leader>tc', group = 'Coverage' },
@@ -55,6 +58,7 @@ return {
         { '<localleader>c', group = 'Conceal' },
         { '<localleader>d', group = 'Dap' },
         { '<localleader>db', group = 'Breakpoint' },
+        { '<localleader>dr', group = 'Run' },
         { '<localleader>f', group = 'Picker' },
         { '<localleader>fg', group = 'Git' },
         { '<localleader>fv', group = 'Vim' },
