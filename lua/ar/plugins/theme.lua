@@ -97,13 +97,18 @@ return {
     priority = 1000,
   },
   {
+    'https://git.sr.ht/~p00f/alabaster.nvim',
+    cond = not minimal,
+    lazy = false,
+    priority = 1000,
+  },
+  {
     'tribela/transparent.nvim',
     cond = ar.ui.transparent.enable,
     event = 'VimEnter',
     opts = {
       extra_groups = {
         'NeoTreeTabInactive',
-        'BqfPreviewFloat',
         'NoiceMini',
         'NoiceFormatProgressDone',
         'NoiceFormatProgressTodo',
