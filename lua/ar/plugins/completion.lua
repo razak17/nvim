@@ -101,8 +101,14 @@ return {
       cmp.setup({
         preselect = cmp.PreselectMode.None,
         window = {
-          completion = cmp.config.window.bordered(window_opts),
-          documentation = cmp.config.window.bordered(window_opts),
+          completion = cmp.config.window.bordered({
+            border = border,
+            winhighlight = 'NormalFloat:NormalFloat,CursorLine:PmenuSel,NormalFloat:NormalFloat',
+          }),
+          documentation = cmp.config.window.bordered({
+            border = border,
+            winhighlight = 'NormalFloat:NormalFloat',
+          }),
         },
         sorting = {
           priority_weight = 2,
