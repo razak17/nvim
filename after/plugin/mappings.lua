@@ -367,7 +367,7 @@ inoremap('<tab>', [[pumvisible() ? "\<C-n>" : "\<Tab>"]], { expr = true })
 inoremap('<s-tab>', [[pumvisible() ? "\<C-p>" : "\<S-Tab>"]], { expr = true })
 --------------------------------------------------------------------------------
 -- Help
-nnoremap('<leader>ah', ':h <C-R>=expand("<cword>")<CR><CR>', { desc = 'help' })
+nnoremap('<leader>H', ':h <C-R>=expand("<cword>")<CR><CR>', { desc = 'help' })
 -- Visual mode help
 local function visual_help()
   local text = ar.get_visual_text()
