@@ -13,9 +13,21 @@ return {
     opts = {
       preview = {
         border = { '┌', '─', '┐', '│', '┘', '─', '└', '│' },
-        winblend = 0,
+        winblend = ar.ui.transparent.enable and 11 or 0,
       },
     },
+    config = function(_, opts)
+      ar.highlight.plugin('bqf', {
+        theme = {
+          ['onedark'] = {
+            { BqfPreviewFloat = { link = 'NormalFloat' } },
+            { BqfPreviewBorder = { link = 'FloatBorder' } },
+          },
+        },
+      })
+
+      require('bqf').setup(opts)
+    end,
   },
   {
     'mei28/qfc.nvim',
