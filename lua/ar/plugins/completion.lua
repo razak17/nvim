@@ -450,6 +450,7 @@ return {
   {
     'razak17/wilder.nvim',
     cond = not minimal and false,
+    keys = { '/', '?', ':' },
     build = ':UpdateRemotePlugins',
     event = { 'CmdlineEnter', 'CmdlineLeave' },
     config = function()
