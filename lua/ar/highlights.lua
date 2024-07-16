@@ -129,10 +129,14 @@ local function get(group, attribute, fallback)
       api.nvim_create_autocmd('User', {
         pattern = 'LazyDone',
         once = true,
-        callback = function() err_warn(group, attribute) end,
+        callback = function()
+          if ar.debug.enable then err_warn(group, attribute) end
+        end,
       })
     else
-      vim.schedule(function() err_warn(group, attribute) end)
+      vim.schedule(function()
+        if ar.debug.enable then err_warn(group, attribute) end
+      end)
     end
     return 'NONE'
   end
