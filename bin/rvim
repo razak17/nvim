@@ -4,7 +4,7 @@ export RVIM_PLUGINS_ENABLED='1'
 export RVIM_LSP_ENABLED='1'
 export RVIM_TREESITTER_ENABLED='1'
 export RVIM_AI_ENABLED='1'
-export RVIM_NICETIES_ENABLED='1'
+export RVIM_NICETIES_ENABLED='0'
 export RVIM_COMPLETION_ENABLED='1'
 export RVIM_PLUGINS_MINIMAL='1'
 export RVIM_NONE='0'
@@ -14,82 +14,86 @@ export RVIM_DICT_ENABLED='0'
 ui='nvim'
 
 launch_nvim() {
-	arg="$1"
-	shift
-	if [ "$arg" = "neovide" ]; then
-		NVIM_APPNAME=rvim neovide "$@"
-	elif [ "$arg" = "nvim" ]; then
-		NVIM_APPNAME=rvim nvim "$@"
-	fi
+  arg="$1"
+  shift
+  if [ "$arg" = "neovide" ]; then
+    NVIM_APPNAME=rvim neovide "$@"
+  elif [ "$arg" = "nvim" ]; then
+    NVIM_APPNAME=rvim nvim "$@"
+  fi
 }
 
 while [ "$#" -gt 0 ]; do
-	arg=$1
+  arg=$1
 
-	case "$arg" in
-	--neovide)
-		ui='neovide'
-		shift
-		;;
-	--no-plugins)
-		export RVIM_PLUGINS_ENABLED='0'
-		shift
-		;;
-	--no-treesitter | -no-ts)
-		export RVIM_TREESITTER_ENABLED='0'
-		shift
-		;;
-	--no-lsp)
-		export RVIM_LSP_ENABLED='0'
-		shift
-		;;
-	--no-ai)
-		export RVIM_AI_ENABLED='0'
-		shift
-		;;
-	--minimal | -min)
-		export RVIM_PLUGINS_MINIMAL='1'
-		shift
-		;;
-	--no-minimal | -no-min)
-		export RVIM_PLUGINS_MINIMAL='0'
-		shift
-		;;
-	--no-niceties)
-		export RVIM_NICETIES_ENABLED='0'
-		shift
-		;;
-	--no-completion | -no-cmp)
-		export RVIM_COMPLETION_ENABLED='0'
-		shift
-		;;
-	--none)
-		export RVIM_PLUGINS_ENABLED='0'
-		export RVIM_LSP_ENABLED='0'
-		export RVIM_NONE='1'
-		shift
-		;;
-	--ghost)
-		export RVIM_GHOST_ENABLED='1'
-		export RVIM_PLUGINS_MINIMAL='1'
-		shift,
-		;;
-	--dict)
-		export RVIM_DICT_ENABLED='1'
-		shift
-		;;
+  case "$arg" in
+  --neovide)
+    ui='neovide'
+    shift
+    ;;
+  --no-plugins)
+    export RVIM_PLUGINS_ENABLED='0'
+    shift
+    ;;
+  --no-treesitter | -no-ts)
+    export RVIM_TREESITTER_ENABLED='0'
+    shift
+    ;;
+  --no-lsp)
+    export RVIM_LSP_ENABLED='0'
+    shift
+    ;;
+  --no-ai)
+    export RVIM_AI_ENABLED='0'
+    shift
+    ;;
+  --minimal | -min)
+    export RVIM_PLUGINS_MINIMAL='1'
+    shift
+    ;;
+  --no-minimal | -no-min)
+    export RVIM_PLUGINS_MINIMAL='0'
+    shift
+    ;;
+  --niceties | -nice)
+    export RVIM_NICETIES_ENABLED='1'
+    shift
+    ;;
+  --no-niceties)
+    export RVIM_NICETIES_ENABLED='0'
+    shift
+    ;;
+  --no-completion | -no-cmp)
+    export RVIM_COMPLETION_ENABLED='0'
+    shift
+    ;;
+  --none)
+    export RVIM_PLUGINS_ENABLED='0'
+    export RVIM_LSP_ENABLED='0'
+    export RVIM_NONE='1'
+    shift
+    ;;
+  --ghost)
+    export RVIM_GHOST_ENABLED='1'
+    export RVIM_PLUGINS_MINIMAL='1'
+    shift
+    ;;
+  --dict)
+    export RVIM_DICT_ENABLED='1'
+    shift
+    ;;
 
-	*)
-		launch_nvim "$ui" "$@"
-		exit 0
-		;;
-	esac
+  *)
+    launch_nvim "$ui" "$@"
+    exit 0
+    ;;
+  esac
 done
 
 # ref: https://www.reddit.com/r/neovim/comments/15gihnd/neat_trick_for_restarting_neovim_fast_when_using/
 while true; do
-	launch_nvim "$ui" "$@"
-	if [ $? -ne 1 ]; then
-		break
-	fi
+  launch_nvim "$ui" "$@"
+  if [ $? -ne 1 ]; then
+    break
+  fi
 done
