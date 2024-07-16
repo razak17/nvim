@@ -8,7 +8,7 @@ return {
     build = ':TSUpdate',
     keys = {
       {
-        'R',
+        '<localleader>R',
         '<cmd>edit | TSBufEnable highlight<CR>',
         desc = 'treesitter: enable highlight',
       },
@@ -54,7 +54,7 @@ return {
           },
           lsp_interop = { enable = false },
         },
-        indent = { enable = true },
+        indent = { enable = false },
         matchup = {
           enable = true,
           enable_quotes = true,
