@@ -14,6 +14,7 @@ return {
   'tpope/vim-rhubarb',
   -- { 'lewis6991/fileline.nvim', lazy = false },
   -- { 'axlebedev/vim-footprints', lazy = false },
+  { 'altermo/nwm', branch = 'x11', cond = not minimal, lazy = false },
   {
     'yuratomo/w3m.vim',
     cond = not minimal,
