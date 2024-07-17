@@ -100,9 +100,6 @@ return {
 
       cmp.setup({
         preselect = cmp.PreselectMode.None,
-        completion = {
-          completeopt = 'menu,menuone,noinsert',
-        },
         window = {
           completion = cmp.config.window.bordered({
             border = border,
