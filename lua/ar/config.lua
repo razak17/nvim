@@ -33,6 +33,7 @@ local namespace = {
     semantic_tokens = { enable = false },
     signs = { enable = false },
     typescript_tools = { enable = true },
+    workspace_diagnostics = { enable = false },
   },
   mappings = {},
   none = env.RVIM_NONE == '1',

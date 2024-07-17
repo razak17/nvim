@@ -661,7 +661,7 @@ return {
   },
   {
     'razak17/workspace-diagnostics.nvim',
-    cond = ar.lsp.enable,
+    cond = ar.lsp.enable and ar.lsp.workspace_diagnostics.enable,
     opts = {},
   },
   -- }}}
