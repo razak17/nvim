@@ -1,6 +1,7 @@
 if not ar then return end
 
-local o, opt, fn, v = vim.o, vim.opt, vim.fn, vim.v
+local ui = ar.ui
+local o, opt, fn = vim.o, vim.opt, vim.fn
 --------------------------------------------------------------------------------
 -- Neovim Directories {{{1
 --------------------------------------------------------------------------------
@@ -128,6 +129,7 @@ opt.wildignore = {
   '.DS_Store',
   'tags.lock',
 }
+opt.wildignore = vim.tbl_extend('force', opt.wildignore, ui.colorscheme.disable)
 opt.wildoptions = { 'pum', 'fuzzy' }
 -- NOTE: causes codicons to be rendered funny in cmp window
 o.pumblend = 0 -- Make popup window translucent,
@@ -200,7 +202,7 @@ opt.cursorlineopt = { 'both' }
 -- Title {{{1
 --------------------------------------------------------------------------------
 function ar.modified_icon()
-  return vim.bo.modified and ar.ui.codicons.misc.circle or ''
+  return vim.bo.modified and ui.codicons.misc.circle or ''
 end
 -- titlestring = ' ❐ %{fnamemodify(getcwd(), ":t")} %m'
 o.titlestring = '%<%F%=%l/%L - nvim'
