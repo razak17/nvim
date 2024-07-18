@@ -538,6 +538,20 @@ return {
             name = 'copilot_attached',
           },
         },
+        -- Kulala env
+        {
+          condition = function() return vim.bo.ft == 'http' end,
+          {
+            provider = function()
+              local env = vim.g.kulala_selected_env
+              return ' ' .. icons.misc.right_arrow .. ' ' .. env
+            end,
+          },
+          {
+            provider = ' ' .. separator,
+            hl = { bold = true },
+          },
+        },
         -- Copilot Status
         {
           condition = function()
