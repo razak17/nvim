@@ -38,19 +38,52 @@ return {
         },
       },
       textobjects = {
-        move = {
+        select = {
           enable = true,
-          set_jumps = true, -- whether to set jumps in the jumplist
-          goto_next_start = {
-            [']m'] = '@function.outer',
-            [']c'] = '@class.outer',
-          },
-          goto_previous_start = {
-            ['[m'] = '@function.outer',
-            ['[c'] = '@class.outer',
+          lookahead = true,
+          include_surrounding_whitespace = true,
+          -- stylua: ignore
+          keymaps = {
+            -- You can use the capture groups defined in textobjects.scm
+            ["a="] = { query = "@assignment.outer", desc = "Select outer part of an assignment" },
+            ["i="] = { query = "@assignment.inner", desc = "Select inner part of an assignment" },
+            ["L="] = { query = "@assignment.lhs", desc = "Select left hand side of an assignment" },
+            ["R="] = { query = "@assignment.rhs", desc = "Select right hand side of an assignment" },
+
+            -- works for javascript/typescript files (custom capture I created in after/queries/ecma/textobjects.scm)
+            ["a:"] = { query = "@property.outer", desc = "Select outer part of an object property" },
+            ["i:"] = { query = "@property.inner", desc = "Select inner part of an object property" },
+            ["L:"] = { query = "@property.lhs", desc = "Select left part of an object property" },
+            ["R:"] = { query = "@property.rhs", desc = "Select right part of an object property" },
+
+            -- NOTE: mii.ai does same things
+            -- ["aa"] = { query = "@parameter.outer", desc = "Select outer part of a parameter/argument" },
+            -- ["ia"] = { query = "@parameter.inner", desc = "Select inner part of a parameter/argument" },
+
+            -- ["ao"] = { query = "@conditional.outer", desc = "Select outer part of a conditional" },
+            -- ["io"] = { query = "@conditional.inner", desc = "Select inner part of a conditional" },
+
+            -- ["al"] = { query = "@loop.outer", desc = "Select outer part of a loop" },
+            -- ["il"] = { query = "@loop.inner", desc = "Select inner part of a loop" },
+
+            -- ["au"] = { query = "@call.outer", desc = "Select outer part of a function call" },
+            -- ["iu"] = { query = "@call.inner", desc = "Select inner part of a function call" },
+
+            -- ["af"] = { query = "@function.outer", desc = "Select outer part of a method/function definition" },
+            -- ["if"] = { query = "@function.inner", desc = "Select inner part of a method/function definition" },
+
+            -- ["ac"] = { query = "@class.outer", desc = "Select outer part of a class" },
+            -- ["ic"] = { query = "@class.inner", desc = "Select inner part of a class" },
           },
         },
-        lsp_interop = { enable = false },
+        -- stylua: ignore
+        move = {
+          enable = true,
+          goto_next_start = { ["]f"] = "@function.outer", ["]c"] = "@class.outer", ["]a"] = "@parameter.inner" },
+          goto_next_end = { ["]F"] = "@function.outer", ["]C"] = "@class.outer", ["]A"] = "@parameter.inner" },
+          goto_previous_start = { ["[f"] = "@function.outer", ["[c"] = "@class.outer", ["[a"] = "@parameter.inner" },
+          goto_previous_end = { ["[F"] = "@function.outer", ["[C"] = "@class.outer", ["[A"] = "@parameter.inner" },
+        },
       },
       indent = { enable = false },
       matchup = {
