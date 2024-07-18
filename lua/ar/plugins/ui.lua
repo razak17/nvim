@@ -611,7 +611,7 @@ return {
   {
     'gregorias/toggle.nvim',
     cond = not minimal and niceties,
-    event = { 'BufRead', 'BufNewFile' },
+    event = { 'VeryLazy' },
     opts = {
       keymaps = {
         toggle_option_prefix = 'yp',
