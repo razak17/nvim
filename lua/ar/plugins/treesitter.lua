@@ -13,68 +13,66 @@ return {
         desc = 'treesitter: enable highlight',
       },
     },
-    config = function()
-      ---@diagnostic disable: missing-fields
-      require('nvim-treesitter.configs').setup({
-        auto_install = true,
-        highlight = {
-          enable = true,
-          disable = function(_, buf)
-            local enable = ar.treesitter.enable
-            if not enable and vim.bo.ft ~= 'lua' then return true end
+    opts = {
+      auto_install = true,
+      highlight = {
+        enable = true,
+        disable = function(_, buf)
+          local enable = ar.treesitter.enable
+          if not enable and vim.bo.ft ~= 'lua' then return true end
 
-            local max_filesize = 100 * 1024 -- 100 KB
-            local ok, stats =
-              pcall(vim.uv.fs_stat, vim.api.nvim_buf_get_name(buf))
-            if ok and stats and stats.size > max_filesize then return true end
-          end,
-          additional_vim_regex_highlighting = { 'org', 'sql' },
+          local max_filesize = 100 * 1024 -- 100 KB
+          local ok, stats =
+            pcall(vim.uv.fs_stat, vim.api.nvim_buf_get_name(buf))
+          if ok and stats and stats.size > max_filesize then return true end
+        end,
+        additional_vim_regex_highlighting = { 'org', 'sql' },
+      },
+      incremental_selection = {
+        enable = false,
+        disable = { 'help' },
+        keymaps = {
+          init_selection = '<CR>', -- maps in normal mode to init the node/scope selection
+          node_incremental = '<CR>', -- increment to the upper named parent
+          node_decremental = '<C-CR>', -- decrement to the previous node
         },
-        incremental_selection = {
-          enable = false,
-          disable = { 'help' },
-          keymaps = {
-            init_selection = '<CR>', -- maps in normal mode to init the node/scope selection
-            node_incremental = '<CR>', -- increment to the upper named parent
-            node_decremental = '<C-CR>', -- decrement to the previous node
+      },
+      textobjects = {
+        move = {
+          enable = true,
+          set_jumps = true, -- whether to set jumps in the jumplist
+          goto_next_start = {
+            [']m'] = '@function.outer',
+            [']c'] = '@class.outer',
+          },
+          goto_previous_start = {
+            ['[m'] = '@function.outer',
+            ['[c'] = '@class.outer',
           },
         },
-        textobjects = {
-          move = {
-            enable = true,
-            set_jumps = true, -- whether to set jumps in the jumplist
-            goto_next_start = {
-              [']m'] = '@function.outer',
-              [']c'] = '@class.outer',
-            },
-            goto_previous_start = {
-              ['[m'] = '@function.outer',
-              ['[c'] = '@class.outer',
-            },
-          },
-          lsp_interop = { enable = false },
-        },
-        indent = { enable = false },
-        matchup = {
-          enable = true,
-          enable_quotes = true,
-          disable_virtual_text = true,
-          disable = { 'c', 'python' },
-        },
-        tree_setter = { enable = true },
-        query_linter = {
-          enable = true,
-          use_virtual_text = false,
-          lint_events = { 'BufWrite', 'CursorHold' },
-        },
-        playground = { persist_queries = true },
+        lsp_interop = { enable = false },
+      },
+      indent = { enable = false },
+      matchup = {
+        enable = true,
+        enable_quotes = true,
+        disable_virtual_text = true,
+        disable = { 'c', 'python' },
+      },
+      tree_setter = { enable = true },
+      query_linter = {
+        enable = true,
+        use_virtual_text = false,
+        lint_events = { 'BufWrite', 'CursorHold' },
+      },
+      playground = { persist_queries = true },
         -- stylua: ignore
         ensure_installed = {
           'c', 'vim', 'vimdoc', 'query', 'lua', 'luadoc', 'luap', 'diff', 'regex',
           'gitcommit', 'git_config', 'git_rebase', 'markdown', 'markdown_inline',
         },
-      })
-    end,
+    },
+    config = function(_, opts) require('nvim-treesitter.configs').setup(opts) end,
     dependencies = {
       {
         'nvim-treesitter/nvim-treesitter-textobjects',
