@@ -11,7 +11,9 @@ function join_paths(...)
   return result
 end
 
-function ar.sync_dir(path) return fmt('%s/Notes/%s', fn.expand('$SYNC_DIR'), path) end
+function ar.sync_dir(path)
+  return fmt('%s/Notes/%s', fn.expand('$SYNC_DIR'), path)
+end
 
 --------------------------------------------------------------------------------
 -- Utils
@@ -150,15 +152,6 @@ function ar.plugins_spec()
   end)
 end
 
---- Check if a plugin is defined in lazy. Useful with lazy loading
---- when a plugin is not necessarily loaded yet.
----@param plugin string The plugin to search for.
----@return boolean available # Whether the plugin is available.
-function ar.is_available(plugin)
-  local lazy_config_avail, lazy_config = pcall(require, 'lazy.core.config')
-  return lazy_config_avail and lazy_config.plugins[plugin] ~= nil
-end
-
 -- Check if a plugin is disabled
 ---@param plugin string The plugin to search for.
 ---@return boolean disabled # Whether the plugin is disabled.
@@ -171,6 +164,25 @@ end
 ---@return boolean disabled # Whether the module is disabled.
 function ar.module_disabled(module)
   return ar.find_string(ar.plugins.modules.disabled, module)
+end
+
+--- Check if a plugin is defined in lazy. Useful with lazy loading
+--- when a plugin is not necessarily loaded yet.
+---@param plugin string The plugin to search for.
+---@return boolean available # Whether the plugin is available.
+function ar.is_available(plugin)
+  local lazy_config_avail, lazy_config = pcall(require, 'lazy.core.config')
+  if not lazy_config_avail then return false end
+  return lazy_config.plugins[plugin] ~= nil
+end
+
+--- Check if a plugin is loaded
+---@param plugin string The plugin to search for.
+---@return boolean loaded # Whether the plugin is loaded.
+function ar.is_loaded(plugin)
+  local lazy_config_avail, lazy_config = pcall(require, 'lazy.core.config')
+  if not lazy_config_avail then return false end
+  return lazy_config.plugins[plugin] and lazy_config.plugins[plugin]._.loaded
 end
 
 -- Check if a lsp is disabled
