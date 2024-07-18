@@ -147,7 +147,7 @@ return {
       { '<leader>rkp', ':lua require("kulala").jump_prev()<CR>', desc = 'kulala: prev' },
       { '<leader>rkt', ':lua require("kulala").toggle_view()<CR>', desc = 'kulala: toggle view' },
     },
-    opts = {},
+    opts = { default_env = 'local' },
   },
   -- Tailwind
   --------------------------------------------------------------------------------
