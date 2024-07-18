@@ -96,19 +96,21 @@ return {
     cond = not minimal and niceties,
     event = { 'BufRead', 'CursorMoved', 'CursorMovedI', 'WinEnter', 'WinLeave' },
     init = function()
-      augroup('auto-cursorline', {
+      augroup('auto_cursorline', {
         event = 'FileType',
         pattern = {
           'alpha',
-          'startup',
           'DressingInput',
+          'neo-tree',
           'NvimSeparator',
+          'starter',
+          'startup',
           'TelescopePrompt',
           'toggleterm',
           'Trouble',
         },
-        command = function()
-          require('auto-cursorline').disable({ buffer = true })
+        command = function(args)
+          require('auto-cursorline').disable({ buffer = args.buf })
           vim.wo.cursorline = false
         end,
       })
