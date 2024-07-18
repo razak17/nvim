@@ -22,7 +22,7 @@ local namespace = {
       directories = { vim.fn.stdpath('data') },
       servers = { 'denols', 'emmet_ls', 'pyright', 'vtsls' },
     },
-    enable = env.RVIM_LSP_ENABLED == '1' and env.RVIM_PLUGINS_MINIMAL == '0',
+    enable = env.RVIM_LSP_ENABLED == '1',
     format_on_save = { enable = true },
     hover_diagnostics = { enable = false, go_to = false, scope = 'cursor' },
     inlay_hint = { enable = false },
@@ -67,8 +67,7 @@ local namespace = {
     enable = env.RVIM_COMPLETION_ENABLED == '1',
   },
   treesitter = {
-    enable = env.RVIM_PLUGINS_MINIMAL == '0'
-      and env.RVIM_TREESITTER_ENABLED == '1',
+    enable = env.RVIM_TREESITTER_ENABLED == '1',
   },
   ui = {
     statuscolumn = { enable = true, custom = true },
