@@ -24,6 +24,17 @@ return {
     opts = { ring = { storage = 'sqlite' } },
   },
   {
+    'hinell/duplicate.nvim',
+    event = 'VeryLazy',
+    -- stylua: ignore
+    keys = {
+      { '<leader>j', '<Cmd>LineDuplicate -1<CR>', desc = 'duplicate: line up' },
+      { '<leader>k', '<Cmd>LineDuplicate +1<CR>', desc = 'duplicate: line down' },
+      { mode = 'x', '<leader>j', '<Cmd>VisualDuplicate -1<CR>', desc = 'duplicate: selection down' },
+      {  mode = 'x','<leader>k', '<Cmd>VisualDuplicate +1<CR>', desc = 'duplicate: selection down' },
+    },
+  },
+  {
     'monaqa/dial.nvim',
     cond = not minimal,
     keys = {
