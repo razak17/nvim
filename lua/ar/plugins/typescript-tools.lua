@@ -30,7 +30,7 @@ return {
     },
   },
   {
-    'razak17/twoslash-queries.nvim',
+    'marilari88/twoslash-queries.nvim',
     cond = enabled,
     -- stylua: ignore
     keys = {
