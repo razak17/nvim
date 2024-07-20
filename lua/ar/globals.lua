@@ -427,8 +427,8 @@ end
 function ar.open(path, notify)
   notify = notify or false
   if notify then vim.notify(fmt('Opening %s', path)) end
-  local res = vim.ui.open(path)
-  if not res ~= 0 then
+  local _, err = vim.ui.open(path)
+  if err ~= nil then
     local open_command = vim.g.os == 'Darwin' and 'open' or 'xdg-open'
     vim.system({ open_command, path }, { detach = true })
   end
