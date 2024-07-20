@@ -176,6 +176,9 @@ local function live_grep_args()
     },
   })
 end
+local function software_licenses()
+  extensions('software-licenses').find(ar.telescope.vertical())
+end
 
 ---@param opts? table
 ---@return function
@@ -335,6 +338,7 @@ return {
       { '<leader>le', b('diagnostics', { bufnr = 0 }), desc = 'telescope: document diagnostics', },
       { '<leader>lw', b('diagnostics'), desc = 'telescope: workspace diagnostics', },
       { '<localleader>ro', monorepo, desc = 'monorepo' },
+      { '<leader>fL', software_licenses, desc = 'software licenses' },
     },
     config = function()
       local previewers = require('telescope.previewers')
@@ -759,5 +763,12 @@ return {
       { '<localleader>rp', ':lua require("monorepo").previous_project()<CR>', desc = 'monorepo: previous' },
       { '<localleader>rn', ':lua require("monorepo").next_project()<CR>', desc = 'monorepo: next' },
     },
+  },
+  {
+    'chip/telescope-software-licenses.nvim',
+    cond = telescope_enabled and not minimal,
+    config = function()
+      require('telescope').load_extension('software-licenses')
+    end,
   },
 }
