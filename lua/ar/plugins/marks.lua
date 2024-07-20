@@ -97,7 +97,6 @@ return {
     },
   },
   {
-    -- 'razak17/harpoon',
     'ThePrimeagen/harpoon',
     cond = not minimal,
     branch = 'harpoon2',
