@@ -252,7 +252,7 @@ return {
     -- stylua: ignore
     keys = {
       { '<localleader>sp', '<Plug>SlimeParagraphSend', desc = 'slime: paragraph', },
-      { '<localleader>ur', '<Plug>SlimeRegionSend', mode = { 'x' }, desc = 'slime: region', },
+      { '<localleader>sr', '<Plug>SlimeRegionSend', mode = { 'x' }, desc = 'slime: region', },
       { '<localleader>sc', '<Plug>SlimeConfig', desc = 'slime: config' },
     },
     config = function()
