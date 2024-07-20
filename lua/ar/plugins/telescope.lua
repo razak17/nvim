@@ -31,6 +31,17 @@ local function cursor(opts)
   )
 end
 
+local function horizontal(opts)
+  opts = vim.tbl_extend('keep', opts or {}, {
+    sorting_strategy = 'ascending',
+    layout_strategy = 'horizontal',
+    layout_config = {
+      prompt_position = 'bottom',
+    },
+  })
+  return opts
+end
+
 local function vertical(opts)
   opts = vim.tbl_extend('keep', opts or {}, {
     sorting_strategy = 'ascending',
@@ -177,7 +188,7 @@ local function live_grep_args()
   })
 end
 local function software_licenses()
-  extensions('software-licenses').find(ar.telescope.vertical())
+  extensions('software-licenses').find(ar.telescope.horizontal())
 end
 
 ---@param opts? table
@@ -246,6 +257,10 @@ end
 ar.telescope = {
   cursor = cursor,
   dropdown = dropdown,
+  horizontal = function(opts)
+    opts = opts or {}
+    return horizontal(opts)
+  end,
   vertical = function(opts)
     opts = opts or {}
     return vertical(opts)
