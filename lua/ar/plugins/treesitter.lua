@@ -39,7 +39,7 @@ return {
       },
       textobjects = {
         select = {
-          enable = true,
+          enable = not minimal,
           lookahead = true,
           include_surrounding_whitespace = true,
           -- stylua: ignore
@@ -109,6 +109,7 @@ return {
     dependencies = {
       {
         'nvim-treesitter/nvim-treesitter-textobjects',
+        cond = not minimal,
         event = 'VeryLazy',
         config = function()
           -- ref: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/plugins/treesitter.lua?plain=1#L108
