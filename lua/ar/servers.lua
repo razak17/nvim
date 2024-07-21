@@ -221,6 +221,12 @@ local servers = {
       },
     },
   },
+  ruff = {
+    cmd_env = { RUFF_TRACE = 'messages' },
+    init_options = {
+      settings = { logLevel = 'error' },
+    },
+  },
   ruff_lsp = {
     settings = {
       args = { '--select', 'ALL', '--ignore', 'D100' },
@@ -264,16 +270,7 @@ local servers = {
             },
           })
         end,
-        function()
-          vim.lsp.buf.code_action({
-            apply = true,
-            context = {
-              only = { 'source.organizeImports' },
-              diagnostics = {},
-            },
-          })
-        end,
-        description = 'Organize Imports',
+        description = 'organize imports',
       },
     },
     settings = {
