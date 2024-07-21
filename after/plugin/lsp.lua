@@ -237,45 +237,34 @@ end
 ---@param client vim.lsp.Client
 ---@param bufnr integer
 local function setup_mappings(client, bufnr)
-  local function prev_diagnostic()
-    return function()
-      diagnostic.jump({
-        count = -1,
-        float = ar.lsp.hover_diagnostics.go_to
-          and not ar.lsp.hover_diagnostics.enable,
-        severity = {
-          min = vim.diagnostic.severity.HINT,
-        },
-      })
-    end
+  --- Diagnostic go_to
+  ---@param next boolean
+  ---@param severity string
+  ---@return function
+  local diagnostic_goto = function(next, severity)
+    local go = next and diagnostic.goto_next or vim.diagnostic.goto_prev
+    severity = severity and vim.diagnostic.severity[severity] or nil
+    local float = ar.lsp.hover_diagnostics.go_to
+      and not ar.lsp.hover_diagnostics.enable
+    return function() go({ severity = severity, float = float }) end
   end
-  local function next_diagnostic()
-    return function()
-      diagnostic.jump({
-        count = 1,
-        float = ar.lsp.hover_diagnostics.go_to
-          and not ar.lsp.hover_diagnostics.enable,
-        severity = {
-          min = vim.diagnostic.severity.HINT,
-        },
-      })
-    end
-  end
-  local function line_diagnostic()
-    return function()
-      local config = diagnostic.config().float
-      if type(config) == 'table' then
-        return vim.diagnostic.open_float(vim.tbl_extend('force', config, {
-          focusable = true,
-          scope = 'line',
-        }))
-      end
-    end
+  local function diagnostic_float(line)
+    local config = diagnostic.config().float or {}
+    config.scope = line and 'line' or 'cursor'
+    ---@diagnostic disable-next-line: inject-field
+    config.focusable = true
+    return function() return vim.diagnostic.open_float(config) end
   end
 
   local mappings = {
-    { 'n', '<leader>lk', prev_diagnostic(), desc = 'go to prev diagnostic' },
-    { 'n', '<leader>lj', next_diagnostic(), desc = 'go to next diagnostic' },
+    { 'n', '<leader>lk', diagnostic_goto(false), desc = 'prev diagnostic' },
+    { 'n', '<leader>lj', diagnostic_goto(true), desc = 'next diagnostic' },
+    { 'n', ']d', diagnostic_goto(true), desc = 'next diagnostic' },
+    { 'n', '[d', diagnostic_goto(false), desc = 'prev diagnostic' },
+    { 'n', ']e', diagnostic_goto(true, 'ERROR'), desc = 'next error' },
+    { 'n', '[e', diagnostic_goto(false, 'ERROR'), desc = 'prev error' },
+    { 'n', ']w', diagnostic_goto(true, 'WARN'), desc = 'next warning' },
+    { 'n', '[w', diagnostic_goto(false, 'WARN'), desc = 'prev warning' },
     {
       'n',
       '<leader>lh',
@@ -325,13 +314,8 @@ local function setup_mappings(client, bufnr)
       capability = M.textDocument_definition,
       exclude = { 'tsserver' },
     },
-    {
-      'n',
-      'gl',
-      line_diagnostic(),
-      desc = 'line diagnostics',
-      capability = M.textDocument_hover,
-    },
+    { 'n', 'gl', diagnostic_float(), desc = 'cursor diagnostics' },
+    { 'n', 'gL', diagnostic_float(true), desc = 'line diagnostics' },
     {
       'n',
       'gr',
