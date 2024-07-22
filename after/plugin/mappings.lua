@@ -384,10 +384,13 @@ inoremap('<c-z>', [[<Esc>:undo<CR>]])
 -- Reverse Line
 function ar.rev_str(str) return string.reverse(str) end
 vnoremap(
-  '<leader>R',
+  '<localleader>rr',
   [[:s/\%V.\+\%V./\=v:lua.ar.rev_str(submatch(0))<CR>gv<ESC>]],
   { desc = 'reverse line' }
 )
+--------------------------------------------------------------------------------
+-- Remove empty lines
+xnoremap( '<localleader>rl', [[:g/\v^ *$/d<CR>]], { desc = 'remove empty lines' })
 --------------------------------------------------------------------------------
 -- Inspect treesitter tree
 nnoremap(
