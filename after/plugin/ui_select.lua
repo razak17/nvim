@@ -401,7 +401,7 @@ M.options.command_palette = {
     setreg('+', expand('%:p:h'))
   end,
   ['Copy File Home Path'] = function() setreg('+', expand('%:~')) end,
-  ['Find And Replace'] = 'GrugFar',
+  ['Search And Replace'] = 'GrugFar',
   ['RenderMarkdown Toggle'] = 'RenderMarkdownToggle',
   ['Code Pad'] = 'QuickCodePad',
   ['Run Code'] = 'Build',

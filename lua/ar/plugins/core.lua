@@ -119,7 +119,26 @@ return {
     cond = not minimal,
     lazy = false,
     cmd = { 'GrugFar' },
+    keys = {
+      {
+        mode = { 'n', 'v' },
+        '<leader>sr',
+        function()
+          local grug = require('grug-far')
+          local ext = vim.bo.buftype == '' and vim.fn.expand('%:e')
+          grug.grug_far({
+            transient = true,
+            prefills = {
+              filesFilter = ext and ext ~= '' and '*.' .. ext or nil,
+            },
+          })
+        end,
+        desc = 'grug_far: search and replace',
+      },
+    },
     opts = {
+      startInInsertMode = false,
+      transient = false,
       keymaps = {
         replace = '<C-[>',
         qflist = '<C-q>',
