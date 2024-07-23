@@ -297,7 +297,7 @@ return {
   {
     'max397574/better-escape.nvim',
     cond = not minimal,
-    event = { 'InsertEnter' },
+    event = { 'VeryLazy' },
     opts = {
       mappings = {
         i = {
