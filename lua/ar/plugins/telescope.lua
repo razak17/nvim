@@ -786,4 +786,14 @@ return {
       require('telescope').load_extension('software-licenses')
     end,
   },
+  {
+    'dimaportenko/project-cli-commands.nvim',
+    cond = telescope_enabled and not minimal,
+    -- stylua: ignore
+    keys = {
+      { '<localleader>Po', ':Telescope project_cli_commands open<CR>', desc = 'project-cli-commands: open' },
+      { '<localleader>Ps', ':Telescope project_cli_commands running<CR>', desc = 'project-cli-commands: running' },
+    },
+    config = function() require('project_cli_commands').setup({}) end,
+  },
 }

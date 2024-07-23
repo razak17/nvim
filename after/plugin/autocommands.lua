@@ -74,6 +74,7 @@ local smart_close_filetypes = ar.p_table({
   ['readup'] = true,
   ['telescope-lazy'] = true,
   ['grug-far'] = true,
+  ['toggleterm'] = true,
 })
 
 local smart_close_buftypes = ar.p_table({
