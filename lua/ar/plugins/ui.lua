@@ -301,16 +301,6 @@ return {
     opts = {},
   },
   {
-    'whatyouhide/vim-lengthmatters',
-    cond = not minimal and false,
-    lazy = false,
-    config = function()
-      vim.g.lengthmatters_highlight_one_column = 1
-      vim.g.lengthmatters_excluded = { 'packer' }
-      vim.g.lengthmatters_linked_to = 'WhichKeyGroup'
-    end,
-  },
-  {
     'nvim-zh/colorful-winsep.nvim',
     cond = not minimal and niceties,
     event = { 'WinNew' },
