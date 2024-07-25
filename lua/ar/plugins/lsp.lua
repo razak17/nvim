@@ -265,7 +265,7 @@ return {
       sign = { enabled = false },
       virtual_text = {
         enabled = true,
-        text = ui.icons.misc.lightbulb,
+        text = icons.misc.lightbulb,
         hl_mode = 'blend',
       },
       float = {
@@ -463,7 +463,7 @@ return {
         show_count = false,
         show_label = true,
         icons = {
-          combined = ui.icons.misc.lightbulb,
+          combined = icons.misc.lightbulb,
         },
         highlights = {
           combined = 'CodeActionIcon',
@@ -599,12 +599,12 @@ return {
     'pechorin/any-jump.vim',
     cond = ar.lsp.enable,
     cmd = { 'AnyJump', 'AnyJumpArg', 'AnyJumpLastResults' },
-    -- stylua: ignore
     init = function()
       require('which-key').add({
-        { '<leader><localleader>j',group =  'Any Jump' },
+        { '<leader><localleader>j', group = 'Any Jump' },
       })
     end,
+    -- stylua: ignore
     keys = {
       { '<leader><localleader>jj', '<Cmd>AnyJump<CR>', desc = 'any-jump: jump' },
       { '<leader><localleader>ja', '<Cmd>AnyJumpArg<CR>', desc = 'any-jump: arg' },
