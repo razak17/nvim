@@ -240,8 +240,7 @@ return {
   },
   {
     'ahmedkhalf/project.nvim',
-    cond = not minimal and false,
-    event = 'VimEnter',
+    cond = not minimal,
     name = 'project_nvim',
     opts = {
       detection_methods = { 'pattern', 'lsp' },
