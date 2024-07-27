@@ -56,21 +56,19 @@ return {
     event = 'VeryLazy',
     cmd = { 'ArenaToggle', 'ArenaOpen', 'ArenaClose' },
     keys = { { '<M-space>', '<Cmd>ArenaToggle<CR>', desc = 'arena: toggle' } },
-    config = function()
-      local action = require('arena').action
-
-      require('arena').setup({
-        per_project = true,
-        max_items = 20,
-        window = { border = 'single' },
-        keybinds = {
-          ['w'] = action(function(buf, info)
-            ar.open_with_window_picker(buf)
-            fn.cursor(info.lnum, 0)
-          end),
-        },
-      })
-    end,
+    opts = {
+      per_project = true,
+      max_items = 20,
+      window = { border = 'single' },
+      keybinds = {
+        ['w'] = function(win)
+          local current = win:current()
+          local info = vim.fn.getbufinfo(current.bufnr)[1]
+          ar.open_with_window_picker(current.bufnr)
+          fn.cursor(info.lnum, 0)
+        end,
+      },
+    },
   },
   {
     'Pheon-Dev/buffalo-nvim',
