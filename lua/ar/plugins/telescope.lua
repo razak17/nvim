@@ -215,6 +215,12 @@ local function stopinsert(callback)
   end
 end
 
+local function toggle_selection_and_next(prompt_bufnr)
+  local actions = require('telescope.actions')
+  actions.toggle_selection(prompt_bufnr)
+  actions.move_selection_next(prompt_bufnr)
+end
+
 -- @see: https://github.com/nvim-telescope/telescope.nvim/issues/1048
 -- @see: https://github.com/whatsthatsmell/dots/blob/master/public%20dots/vim-nvim/lua/joel/telescope/init.lua
 -- Open multiple files at once
@@ -471,7 +477,7 @@ return {
               ['<A-]>'] = layout_actions.cycle_layout_next,
               ['<C-a>'] = multi_selection_open,
               ['<c-r>'] = actions.to_fuzzy_refine,
-              ['<Tab>'] = actions.toggle_selection,
+              ['<Tab>'] = toggle_selection_and_next,
               ['<CR>'] = stopinsert(actions.select_default),
               ['<C-o>'] = open_media_files,
               ['<A-q>'] = actions.send_to_loclist + actions.open_loclist,
