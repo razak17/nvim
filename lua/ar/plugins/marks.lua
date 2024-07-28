@@ -132,9 +132,9 @@ return {
     },
   },
   {
-    'otavioschwanck/arrow.nvim',
+    'razak17/arrow.nvim',
     cond = not minimal,
-    event = { 'BufRead', 'BufNewFile' },
+    event = 'VeryLazy',
     -- stylua: ignore
     keys = {
       { '<M-s>', '<Cmd>lua require("arrow.persist").toggle()<CR>', desc = 'arrow: toggle' },

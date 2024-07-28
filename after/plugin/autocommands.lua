@@ -7,7 +7,7 @@ local fn, api, env, v, cmd, opt =
 local fmt = string.format
 local falsy = ar.falsy
 local decorations = ar.ui.decorations
-
+local config_path = fn.stdpath('config')
 --------------------------------------------------------------------------------
 -- HLSEARCH
 --------------------------------------------------------------------------------
@@ -236,7 +236,6 @@ augroup('Utilities', {
     local match = vim.iter(paths):find(function(dir)
       local path = api.nvim_buf_get_name(args.buf)
       -- HACK: Disable for my config dir manually
-      local config_path = fmt('%s', fn.stdpath('config'))
       if vim.startswith(path, config_path) then return false end
       if vim.startswith(path, env.VIMRUNTIME) then return true end
       return vim.startswith(path, dir)
@@ -319,7 +318,7 @@ if is_available('neo-tree.nvim') then
       if package.loaded['neo-tree'] then
         vim.api.nvim_del_augroup_by_name('NeoTreeStart')
       else
-        local stats = vim.uv.fs_stat(vim.api.nvim_buf_get_name(0))
+        local stats = vim.uv.fs_stat(api.nvim_buf_get_name(0))
         if stats and stats.type == 'directory' then
           vim.api.nvim_del_augroup_by_name('NeoTreeStart')
           require('neo-tree')
@@ -351,15 +350,15 @@ end
 -- if is_available('gitsigns.nvim') then
 --   augroup('GitSignsRefreshCustom', {
 --     event = { 'InsertEnter', 'CursorHold' },
---   command = function(args)
+--     command = function(args)
 --       local decs = ar.ui.decorations.get({
 --         ft = vim.bo.ft,
 --         bt = vim.bo.bt,
 --         setting = 'statuscolumn',
--- })
+--       })
 --       if not decs or decs.ft == false or decs and decs.bt == false then
 --         return
---     end
+--       end
 --
 --       local lnum = vim.v.lnum
 --       local signs = vim.api.nvim_buf_get_extmarks(
@@ -368,13 +367,13 @@ end
 --         { lnum, 0 },
 --         { lnum, -1 },
 --         { details = true, type = 'sign' }
--- )
+--       )
 --       local function get_signs()
 --         return vim
 --           .iter(signs)
---           :map(function(item) return format_text(item[4], 'sign_text') end)
+--           :map(function(item) return ar.format_text(item[4], 'sign_text') end)
 --           :fold({}, function(_, item) return item.sign_hl_group end)
--- end
+--       end
 --
 --       local sns = get_signs()
 --       if sns ~= 'GitSignsStagedAdd' then return end
@@ -385,8 +384,8 @@ end
 --         vim.cmd('silent! lua require("gitsigns").refresh()')
 --         vim.notify('gitsigns refreshed', 'info', { title = 'gitsigns' })
 --       end, 500)
---   end,
--- })
+--     end,
+--   })
 -- end
 
 augroup('CmpSourceCargo', {
