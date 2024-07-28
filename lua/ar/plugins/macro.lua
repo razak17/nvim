@@ -12,18 +12,19 @@ return {
   {
     'ecthelionvi/NeoComposer.nvim',
     init = function()
-      require('which-key').register({
-        ['<localleader>qr'] = 'neocomposer: toggle record',
-        ['<localleader>qq'] = 'neocomposer: play macro',
-        ['<localleader>qy'] = 'neocomposer: yank macro',
-        ['<localleader>qs'] = 'neocomposer: stop macro',
-        ['<localleader>qn'] = 'neocomposer: cycle next',
-        ['<localleader>qp'] = 'neocomposer: cycle prev',
-        ['<localleader>qm'] = 'neocomposer: toggle menu',
+      require('which-key').add({
+        { '<localleader>qr', desc = 'neocomposer: toggle record' },
+        { '<localleader>qq', desc = 'neocomposer: play macro' },
+        { '<localleader>qy', desc = 'neocomposer: yank macro' },
+        { '<localleader>qs', desc = 'neocomposer: stop macro' },
+        { '<localleader>qn', desc = 'neocomposer: cycle next' },
+        { '<localleader>qp', desc = 'neocomposer: cycle prev' },
+        { '<localleader>qm', desc = 'neocomposer: toggle menu' },
       })
-      require('which-key').register({
-        qq = 'neocomposer: play macro',
-      }, { mode = 'x', prefix = '<localleader>' })
+      require('which-key').add({
+        mode = { 'x' },
+        { '<localleader>qq', desc = 'neocomposer: play macro' },
+      })
     end,
     cond = not ar.plugins.minimal and false,
     event = { 'BufReadPost', 'BufNewFile' },
