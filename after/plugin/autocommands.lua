@@ -136,7 +136,7 @@ augroup('ClearCommandLineMessages', {
 augroup('TextYankHighlight', {
   event = { 'TextYankPost' },
   command = function()
-    vim.highlight.on_yank({ timeout = 177, higroup = 'Search' })
+    vim.highlight.on_yank({ timeout = 177, higroup = 'CursorLineNr' })
   end,
 })
 
