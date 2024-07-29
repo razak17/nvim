@@ -286,7 +286,7 @@ ar.telescope = {
 return {
   {
     'nvim-telescope/telescope-frecency.nvim',
-    cond = telescope_enabled,
+    cond = telescope_enabled and not minimal,
     lazy = false,
     config = function() require('telescope').load_extension('frecency') end,
   },
