@@ -693,7 +693,7 @@ return {
   },
   {
     'nvim-telescope/telescope-smart-history.nvim',
-    cond = telescope_enabled and not minimal,
+    cond = telescope_enabled,
     config = function() require('telescope').load_extension('smart_history') end,
   },
   {
