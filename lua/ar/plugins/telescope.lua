@@ -3,6 +3,7 @@ local fmt, ui = string.format, ar.ui
 local border = ui.border
 local datapath = vim.fn.stdpath('data')
 local minimal = ar.plugins.minimal
+local is_available = ar.is_available
 
 local telescope_enabled = not ar.plugin_disabled('telescope.nvim')
 
@@ -395,7 +396,7 @@ return {
         previewers.buffer_previewer_maker(filepath, bufnr, opts)
       end
 
-      require('telescope').setup({
+      local opts = {
         defaults = {
           prompt_prefix = fmt(' %s  ', ui.codicons.misc.search_alt),
           selection_caret = fmt(' %s', ui.icons.misc.separator),
@@ -611,30 +612,25 @@ return {
             match_algorithm = 'fzy',
             disable_devicons = false,
           },
-          live_grep_args = {
-            auto_quoting = true, -- enable/disable auto-quoting
-            -- define mappings, e.g.
-            mappings = { -- extend mappings
+        },
+      }
+
+      if is_available('telescope-live-grep-args.nvim') then
+        opts.extensions['live_grep_args'] = {
+          auto_quoting = true,
+          mappings = {
               i = {
-                ['<M-y>'] = require('telescope-live-grep-args.actions').quote_prompt(),
-                ['<M-u>'] = require('telescope-live-grep-args.actions').quote_prompt({
+              ['<c-k>'] = require('telescope-live-grep-args.actions').quote_prompt(),
+              ['<c-i>'] = require('telescope-live-grep-args.actions').quote_prompt({
                   postfix = ' --iglob ',
                 }),
-              },
-              n = {
-                ['<M-y>'] = require('telescope-live-grep-args.actions').quote_prompt(),
-                ['<M-u>'] = require('telescope-live-grep-args.actions').quote_prompt({
-                  postfix = ' --iglob ',
-                }),
+              ['<C-r>'] = require('telescope-live-grep-args.actions').to_fuzzy_refine,
               },
             },
-            -- ... also accepts theme settings, for example:
-            -- theme = "dropdown", -- use dropdown theme
-            -- theme = { }, -- use own theme spec
-            -- layout_config = { mirror=true }, -- mirror preview pane
-          },
-        },
-      })
+        }
+      end
+
+      require('telescope').setup(opts)
 
       local l = require('telescope').load_extension
       local exts = {
@@ -644,10 +640,11 @@ return {
         ['persisted.nvim'] = 'persisted',
         ['project.nvim'] = 'projects',
         ['advanced-git-search.nvim'] = 'advanced_git_search',
+        ['telescope-live-grep-args.nvim'] = 'live_grep_args',
       }
 
       for ext, name in pairs(exts) do
-        if ar.is_available(ext) then l(name) end
+        if is_available(ext) then l(name) end
       end
 
       api.nvim_exec_autocmds(
@@ -750,9 +747,8 @@ return {
   },
   {
     'nvim-telescope/telescope-live-grep-args.nvim',
-    cond = telescope_enabled,
+    cond = telescope_enabled and not minimal,
     version = '^1.0.0',
-    config = function() require('telescope').load_extension('live_grep_args') end,
   },
   {
     'dapc11/telescope-yaml.nvim',
