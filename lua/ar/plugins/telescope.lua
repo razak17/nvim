@@ -188,6 +188,22 @@ local function live_grep_args()
     },
   })
 end
+local function live_grep_args_word()
+  local ok, lga_shortcuts = pcall(require, 'telescope-live-grep-args.shortcuts')
+  if not ok then
+    vim.notify('telescope-live-grep-args.nvim is not installed')
+    return
+  end
+  lga_shortcuts.grep_word_under_cursor()
+end
+local function live_grep_args_selection()
+  local ok, lga_shortcuts = pcall(require, 'telescope-live-grep-args.shortcuts')
+  if not ok then
+    vim.notify('telescope-live-grep-args.nvim is not installed')
+    return
+  end
+  lga_shortcuts.grep_visual_selection()
+end
 local function software_licenses()
   extensions('software-licenses').find(ar.telescope.horizontal())
 end
@@ -308,7 +324,9 @@ return {
       { '<leader>fc', nvim_config, desc = 'nvim config' },
       { '<leader>fd', aerial, desc = 'aerial' },
       { '<leader>fe', egrepify, desc = 'egrepify' },
-      { '<leader>fga', live_grep_args, desc = 'live grep args' },
+      { '<leader>fga', live_grep_args, desc = 'live-grep-args: grep' },
+      { '<leader>fgw', live_grep_args_word, desc = 'live-grep-args: word' },
+      { '<leader>fgs', live_grep_args_selection, desc = 'live-grep-args: selection', mode = { 'x' } },
       { '<leader>fgf', directory_files, desc = 'directory for find files' },
       { '<leader>fgg', directory_search, desc = 'directory for live grep' },
       { '<leader>fgh', git_file_history, desc = 'git file history' },
