@@ -321,6 +321,7 @@ return {
   },
   {
     'camspiers/snap',
+    cond = not ar.plugins.minimal,
     config = function()
       ar.highlight.plugin('snap', {
         theme = {
