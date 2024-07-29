@@ -4,8 +4,7 @@ local border = ui.border
 local datapath = vim.fn.stdpath('data')
 local minimal = ar.plugins.minimal
 local is_available = ar.is_available
-
-local telescope_enabled = not ar.plugin_disabled('telescope.nvim')
+local enabled = not ar.plugin_disabled('telescope.nvim')
 
 -- A helper function to limit the size of a telescope window to fit the maximum available
 -- space on the screen. This is useful for dropdowns e.g. the cursor or dropdown theme
@@ -23,6 +22,8 @@ local function dropdown(opts)
   return require('telescope.themes').get_dropdown(opts)
 end
 
+---@param opts? table
+---@return table
 local function cursor(opts)
   return require('telescope.themes').get_cursor(
     vim.tbl_extend('keep', opts or {}, {
@@ -32,6 +33,8 @@ local function cursor(opts)
   )
 end
 
+---@param opts? table
+---@return table
 local function horizontal(opts)
   opts = vim.tbl_extend('keep', opts or {}, {
     sorting_strategy = 'ascending',
@@ -43,6 +46,8 @@ local function horizontal(opts)
   return opts
 end
 
+---@param opts? table
+---@return table
 local function vertical(opts)
   opts = vim.tbl_extend('keep', opts or {}, {
     sorting_strategy = 'ascending',
@@ -58,7 +63,35 @@ local function vertical(opts)
   return opts
 end
 
-local function extensions(name) return require('telescope').extensions[name] end
+---@param name string
+---@return string
+local function extension_to_plugin(name)
+  return ar.telescope.extension_to_plugin[name]
+end
+
+---@param opts? table
+---@return function
+local function b(picker, opts)
+  opts = opts or {}
+  return function() require('telescope.builtin')[picker](opts) end
+end
+
+-- https://github.com/delphinus/dotfiles/blob/master/.config/nvim/lua/core/telescope/init.lua#L15
+---@param name string
+---@param prop string?
+---@return fun(opts: table?): function
+local function extensions(name, prop)
+  return function(opts)
+    return function(more_opts)
+      local o = vim.tbl_extend('force', opts or {}, more_opts or {})
+      if not is_available(extension_to_plugin(name)) then
+        vim.notify(fmt('%s is not available.', extension_to_plugin(name)))
+        return
+      end
+      require('telescope').extensions[name][prop or name](o)
+    end
+  end
+end
 
 local function delta_opts(opts, is_buf)
   local previewers = require('telescope.previewers')
@@ -82,10 +115,7 @@ local function delta_opts(opts, is_buf)
   return opts
 end
 
-local function live_grep(opts) return extensions('menufacture').live_grep(opts) end
-local function find_files(opts)
-  return extensions('menufacture').find_files(opts)
-end
+local function find_files(opts) extensions('menufacture', 'find_files')(opts)() end
 
 local function nvim_config()
   find_files({
@@ -116,7 +146,8 @@ local function plugins()
     file_ignore_patterns = { '.git/.*', 'dotbot/.*', 'zsh/plugins/.*' },
   })
 end
-local function git_files(opts) return extensions('menufacture').git_files(opts) end
+
+local function git_files(opts) extensions('menufacture', 'git_files')(opts)() end
 
 local function project_files()
   if not pcall(git_files, { show_untracked = true }) then find_files() end
@@ -129,54 +160,51 @@ local function file_browser(opts)
     sort_mru = true,
     sort_lastused = true,
   })
-  extensions('file_browser').file_browser(opts)
+  extensions('file_browser')(opts)()
 end
 
-local function egrepify() extensions('egrepify').egrepify() end
-local function helpgrep() extensions('helpgrep').helpgrep() end
+local function egrepify() extensions('egrepify')({})() end
+local function helpgrep() extensions('helpgrep')({})() end
 local function frecency(opts)
-  opts = vim.tbl_extend('keep', opts or {}, {
-    workspace = 'CWD',
-  })
-  extensions('frecency').frecency(opts)
+  opts = vim.tbl_extend('keep', opts or {}, { workspace = 'CWD' })
+  extensions('frecency')(opts)()
 end
-local function luasnips() extensions('luasnip').luasnip() end
-local function notifications() extensions('notify').notify() end
-local function undo() extensions('undo').undo() end
-local function projects()
-  extensions('projects').projects(ar.telescope.minimal_ui())
-end
+local function luasnips() extensions('luasnip')({})() end
+local function notifications() extensions('notify')({})() end
+local function undo() extensions('undo')({})() end
+local function projects() extensions('projects')(ar.telescope.minimal_ui())() end
 local function smart_open()
-  extensions('smart_open').smart_open({ cwd_only = true, no_ignore = true })
+  extensions('smart_open')({ cwd_only = true, no_ignore = true })()
 end
 local function directory_files()
-  extensions('directory').directory({ feature = 'find_files' })
+  extensions('directory')({ feature = 'find_files' })()
 end
 local function directory_search()
-  extensions('directory').directory({
+  extensions('directory')({
     feature = 'live_grep',
     feature_opts = { hidden = true, no_ignore = true },
     hidden = true,
     no_ignore = true,
-  })
+  })()
 end
-local function git_file_history()
-  extensions('git_file_history').git_file_history()
-end
-local function lazy() extensions('lazy').lazy() end
-local function aerial() extensions('aerial').aerial() end
+local function git_file_history() extensions('git_file_history')({})() end
+local function lazy() extensions('lazy')({})() end
+local function aerial() extensions('aerial')({})() end
 local function harpoon()
-  extensions('harpoon').marks({ prompt_title = 'Harpoon Marks' })
+  extensions('harpoon', 'marks')({ prompt_title = 'Harpoon Marks' })()
 end
 local function textcase()
-  extensions('textcase').normal_mode(ar.telescope.minimal_ui())
+  extensions('textcase', 'normal_mode')(ar.telescope.minimal_ui())()
 end
-local function import() extensions('import').import(ar.telescope.minimal_ui()) end
-local function whop() extensions('whop').whop(ar.telescope.minimal_ui()) end
-local function node_modules() extensions('node_modules').list() end
-local function monorepo() extensions('monorepo').monorepo() end
+local function import() extensions('import')(ar.telescope.minimal_ui())() end
+local function whop() extensions('whop')(ar.telescope.minimal_ui())() end
+local function node_modules() extensions('node_modules', 'list')({})() end
+local function monorepo() extensions('monorepo')({})() end
+local function live_grep(opts)
+  return extensions('menufacture', 'live_grep')(opts)()
+end
 local function live_grep_args()
-  extensions('live_grep_args').live_grep_args({
+  extensions('live_grep_args')({
     vimgrep_arguments = {
       'rg',
       '--color=never',
@@ -186,7 +214,7 @@ local function live_grep_args()
       '--column',
       '--smart-case',
     },
-  })
+  })()
 end
 local function live_grep_args_word()
   local ok, lga_shortcuts = pcall(require, 'telescope-live-grep-args.shortcuts')
@@ -205,14 +233,7 @@ local function live_grep_args_selection()
   lga_shortcuts.grep_visual_selection()
 end
 local function software_licenses()
-  extensions('software-licenses').find(ar.telescope.horizontal())
-end
-
----@param opts? table
----@return function
-local function b(picker, opts)
-  opts = opts or {}
-  return function() require('telescope.builtin')[picker](opts) end
+  extensions('software-licenses', 'find')(ar.telescope.horizontal())()
 end
 
 local function visual_grep_string()
@@ -278,6 +299,37 @@ local send_find_files_to_live_grep = function()
 end
 
 ar.telescope = {
+  extension_to_plugin = {
+    ['advanced_git_search'] = 'advanced-git-search.nvim',
+    ['aerial'] = 'aerial.nvim',
+    ['cmdline'] = 'telescope-cmdline.nvim',
+    ['directory'] = 'telescope-directory.nvim',
+    ['egrepify'] = 'telescope-egrepify.nvim',
+    ['file_browser'] = 'telescope-file-browser.nvim',
+    ['frecency'] = 'telescope-frecency.nvim',
+    ['git_branch'] = 'telescope-git-branch.nvim',
+    ['git_file_history'] = 'git_file_history',
+    ['harpoon'] = 'harpoon',
+    ['heading'] = 'telescope-heading.nvim',
+    ['helpgrep'] = 'telescope-helpgrep.nvim',
+    ['lazy'] = 'telescope-lazy.nvim',
+    ['live_grep_args'] = 'telescope-live-grep-args.nvim',
+    ['luasnip'] = 'LuaSnip',
+    ['menufacture'] = 'telescope-menufacture',
+    ['monorepo'] = 'monorepo.nvim',
+    ['node_modules'] = 'telescope-node-modules.nvim',
+    ['notify'] = 'nvim-notify',
+    ['persisted'] = 'persisted.nvim',
+    ['projects'] = 'project.nvim',
+    -- ['smart_history'] = 'telescope-smart-history.nvim',
+    ['smart_open'] = 'smart-open.nvim',
+    ['software-licenses'] = 'telescope-software-licenses.nvim',
+    ['telescope-yaml'] = 'telescope-yaml.nvim',
+    ['textcase'] = 'text-case.nvim',
+    ['undo'] = 'telescope-undo.nvim',
+    ['whop'] = 'whop.nvim',
+    ['import'] = 'telescope-import.nvim',
+  },
   cursor = cursor,
   dropdown = dropdown,
   horizontal = function(opts)
@@ -302,13 +354,13 @@ ar.telescope = {
 return {
   {
     'nvim-telescope/telescope-frecency.nvim',
-    cond = telescope_enabled and not minimal,
+    cond = enabled and not minimal,
     lazy = false,
     config = function() require('telescope').load_extension('frecency') end,
   },
   {
     'nvim-telescope/telescope.nvim',
-    cond = telescope_enabled,
+    cond = enabled,
     -- NOTE: usind cmd causes issues with dressing and frecency
     cmd = { 'Telescope' },
     -- event = 'VeryLazy',
@@ -589,15 +641,6 @@ return {
               project = vim.g.projects_dir,
             },
           },
-          undo = {
-            mappings = {
-              i = {
-                ['<C-a>'] = require('telescope-undo.actions').yank_additions,
-                ['<C-d>'] = require('telescope-undo.actions').yank_deletions,
-                ['<C-u>'] = require('telescope-undo.actions').restore,
-              },
-            },
-          },
           menufacture = {
             mappings = { main_menu = { [{ 'i', 'n' }] = '<C-;>' } },
           },
@@ -619,50 +662,58 @@ return {
               open_lazy_root_live_grep = '<C-r>g',
             },
           },
-          smart_open = {
-            show_scores = false,
-            ignore_patterns = {
-              '*.git/*',
-              '*/tmp/*',
-              '*vendor/*',
-              '*node_modules/*',
-            },
-            match_algorithm = 'fzy',
-            disable_devicons = false,
-          },
         },
       }
 
-      if is_available('telescope-live-grep-args.nvim') then
+      if is_available(extension_to_plugin('live_grep_args')) then
         opts.extensions['live_grep_args'] = {
           auto_quoting = true,
           mappings = {
-              i = {
+            i = {
               ['<c-k>'] = require('telescope-live-grep-args.actions').quote_prompt(),
               ['<c-i>'] = require('telescope-live-grep-args.actions').quote_prompt({
-                  postfix = ' --iglob ',
-                }),
+                postfix = ' --iglob ',
+              }),
               ['<C-r>'] = require('telescope-live-grep-args.actions').to_fuzzy_refine,
-              },
             },
+          },
+        }
+      end
+
+      if is_available(extension_to_plugin('smart_open')) then
+        opts.extensions['smart_open'] = {
+          show_scores = false,
+          ignore_patterns = {
+            '*.git/*',
+            '*/tmp/*',
+            '*vendor/*',
+            '*node_modules/*',
+          },
+          match_algorithm = 'fzy',
+          disable_devicons = false,
+        }
+      end
+
+      if is_available(extension_to_plugin('undo')) then
+        opts.extensions['undo'] = {
+          mappings = {
+            i = {
+              ['<C-a>'] = require('telescope-undo.actions').yank_additions,
+              ['<C-d>'] = require('telescope-undo.actions').yank_deletions,
+              ['<C-u>'] = require('telescope-undo.actions').restore,
+            },
+          },
         }
       end
 
       require('telescope').setup(opts)
 
       local l = require('telescope').load_extension
-      local exts = {
-        ['text-case.nvim'] = 'textcase',
-        ['harpoon'] = 'harpoon',
-        ['nvim-notify'] = 'notify',
-        ['persisted.nvim'] = 'persisted',
-        ['project.nvim'] = 'projects',
-        ['advanced-git-search.nvim'] = 'advanced_git_search',
-        ['telescope-live-grep-args.nvim'] = 'live_grep_args',
-      }
 
-      for ext, name in pairs(exts) do
-        if is_available(ext) then l(name) end
+      for name, ext in pairs(ar.telescope.extension_to_plugin) do
+        if name ~= 'frecency' then
+          if is_available(ext) then l(name) end
+        end
       end
 
       api.nvim_exec_autocmds(
@@ -671,116 +722,53 @@ return {
       )
     end,
   },
+  { 'molecule-man/telescope-menufacture', cond = enabled },
+  { 'biozz/whop.nvim', cond = enabled and not minimal, opts = {} },
+  { 'nvim-telescope/telescope-node-modules.nvim', cond = enabled },
+  { 'nvim-telescope/telescope-smart-history.nvim', cond = enabled },
+  { 'fdschmidt93/telescope-egrepify.nvim', cond = enabled },
+  { 'debugloop/telescope-undo.nvim', cond = enabled },
+  { 'nvim-telescope/telescope-file-browser.nvim', cond = enabled },
+  { 'razak17/telescope-import.nvim', cond = enabled and not minimal },
+  { 'catgoose/telescope-helpgrep.nvim', cond = enabled and not minimal },
+  { 'razak17/telescope-lazy.nvim', cond = enabled and not minimal },
+  { 'fbuchlak/telescope-directory.nvim', cond = enabled, opts = {} },
+  { 'dapc11/telescope-yaml.nvim', cond = enabled and not minimal },
+  { 'crispgm/telescope-heading.nvim', cond = enabled and not minimal },
+  { 'chip/telescope-software-licenses.nvim', cond = enabled and not minimal },
   {
-    'molecule-man/telescope-menufacture',
-    cond = telescope_enabled,
-    config = function() require('telescope').load_extension('menufacture') end,
-  },
-  {
-    'biozz/whop.nvim',
-    cond = telescope_enabled and not minimal,
-    config = function()
-      require('whop').setup({})
-      require('telescope').load_extension('whop')
-    end,
+    'isak102/telescope-git-file-history.nvim',
+    cond = enabled and not minimal,
   },
   {
     'danielfalk/smart-open.nvim',
-    cond = telescope_enabled,
+    cond = enabled,
     branch = '0.2.x',
-    config = function() require('telescope').load_extension('smart_open') end,
-    dependencies = {
-      'nvim-telescope/telescope-fzy-native.nvim',
-    },
+    dependencies = { 'nvim-telescope/telescope-fzy-native.nvim' },
   },
   {
     'jonarrien/telescope-cmdline.nvim',
-    cond = telescope_enabled and not minimal and false,
+    cond = enabled and not minimal and false,
     keys = {
       { ':', '<cmd>Telescope cmdline<cr>', desc = 'Cmdline' },
     },
-    config = function() require('telescope').load_extension('cmdline') end,
-  },
-  {
-    'nvim-telescope/telescope-node-modules.nvim',
-    cond = telescope_enabled,
-    config = function() require('telescope').load_extension('node_modules') end,
-  },
-  {
-    'nvim-telescope/telescope-smart-history.nvim',
-    cond = telescope_enabled,
-    config = function() require('telescope').load_extension('smart_history') end,
-  },
-  {
-    'fdschmidt93/telescope-egrepify.nvim',
-    cond = telescope_enabled,
-    config = function() require('telescope').load_extension('egrepify') end,
-  },
-  {
-    'debugloop/telescope-undo.nvim',
-    cond = telescope_enabled,
-    config = function() require('telescope').load_extension('undo') end,
-  },
-  {
-    'nvim-telescope/telescope-file-browser.nvim',
-    cond = telescope_enabled,
-    config = function() require('telescope').load_extension('file_browser') end,
-  },
-  {
-    -- 'piersolenski/telescope-import.nvim',
-    'razak17/telescope-import.nvim',
-    cond = telescope_enabled and not minimal,
-    config = function() require('telescope').load_extension('import') end,
-  },
-  {
-    'catgoose/telescope-helpgrep.nvim',
-    cond = telescope_enabled and not minimal,
-    config = function() require('telescope').load_extension('helpgrep') end,
-  },
-  {
-    -- 'tsakirist/telescope-lazy.nvim',
-    'razak17/telescope-lazy.nvim',
-    cond = telescope_enabled and not minimal,
-    config = function() require('telescope').load_extension('lazy') end,
-  },
-  {
-    'fbuchlak/telescope-directory.nvim',
-    cond = telescope_enabled,
-    config = function() require('telescope').load_extension('directory') end,
-    opts = {},
-  },
-  {
-    'isak102/telescope-git-file-history.nvim',
-    cond = telescope_enabled and not minimal,
-    config = function() require('telescope').load_extension('git_file_history') end,
   },
   {
     'mrloop/telescope-git-branch.nvim',
-    cond = telescope_enabled and not minimal,
+    cond = enabled and not minimal,
     -- stylua: ignore
     keys = {
       { mode = { 'n', 'v' }, '<leader>gf', function() require('git_branch').files() end, desc = 'git branch' },
     },
-    config = function() require('telescope').load_extension('git_branch') end,
   },
   {
     'nvim-telescope/telescope-live-grep-args.nvim',
-    cond = telescope_enabled and not minimal,
+    cond = enabled and not minimal,
     version = '^1.0.0',
   },
   {
-    'dapc11/telescope-yaml.nvim',
-    cond = telescope_enabled and not minimal,
-    config = function() require('telescope').load_extension('telescope-yaml') end,
-  },
-  {
-    'crispgm/telescope-heading.nvim',
-    cond = telescope_enabled and not minimal,
-    config = function() require('telescope').load_extension('heading') end,
-  },
-  {
     'Myzel394/jsonfly.nvim',
-    cond = telescope_enabled and not minimal,
+    cond = enabled and not minimal,
     ft = { 'json' },
     keys = {
       { '<leader>fj', '<Cmd>Telescope jsonfly<cr>', desc = 'Open json(fly)' },
@@ -788,7 +776,7 @@ return {
   },
   {
     'imNel/monorepo.nvim',
-    cond = telescope_enabled,
+    cond = enabled,
     opts = {},
     -- stylua: ignore
     keys = {
@@ -800,15 +788,8 @@ return {
     },
   },
   {
-    'chip/telescope-software-licenses.nvim',
-    cond = telescope_enabled and not minimal,
-    config = function()
-      require('telescope').load_extension('software-licenses')
-    end,
-  },
-  {
     'dimaportenko/project-cli-commands.nvim',
-    cond = telescope_enabled and not minimal,
+    cond = enabled and not minimal,
     -- stylua: ignore
     keys = {
       { '<localleader>Po', ':Telescope project_cli_commands open<CR>', desc = 'project-cli-commands: open' },
