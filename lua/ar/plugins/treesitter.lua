@@ -1,5 +1,6 @@
 local highlight = ar.highlight
 local minimal = ar.plugins.minimal
+local ts_enabled = ar.treesitter.enable
 
 return {
   {
@@ -168,7 +169,7 @@ return {
   },
   {
     'windwp/nvim-ts-autotag',
-    cond = not minimal,
+    cond = not minimal and ts_enabled,
     ft = {
       'typescriptreact',
       'javascript',
@@ -181,12 +182,12 @@ return {
   },
   {
     'nvim-treesitter/playground',
-    cond = not minimal,
+    cond = not minimal and ts_enabled,
     cmd = { 'TSPlaygroundToggle', 'TSHighlightCapturesUnderCursor' },
   },
   {
     'nvim-treesitter/nvim-treesitter-context',
-    cond = not minimal,
+    cond = not minimal and ts_enabled,
     event = { 'BufRead', 'BufNewFile' },
     cmd = { 'TSContextEnable', 'TSContextDisable', 'TSContextToggle' },
     config = function()
@@ -211,7 +212,7 @@ return {
   {
     'andymass/vim-matchup',
     event = { 'BufReadPre', 'BufNewFile' },
-    cond = not minimal,
+    cond = not minimal and ts_enabled,
     keys = {
       { '[[', '<plug>(matchup-[%)', mode = { 'n', 'x' } },
       { ']]', '<plug>(matchup-]%)', mode = { 'n', 'x' } },
@@ -250,7 +251,7 @@ return {
   },
   {
     'sustech-data/wildfire.nvim',
-    cond = not minimal,
+    cond = not minimal and ts_enabled,
     event = { 'BufRead', 'BufNewFile' },
     opts = {},
   },
@@ -261,7 +262,7 @@ return {
   },
   {
     'andersevenrud/nvim_context_vt',
-    cond = not minimal,
+    cond = not minimal and ts_enabled,
     cmd = 'NvimContextVtToggle',
     keys = {
       {
