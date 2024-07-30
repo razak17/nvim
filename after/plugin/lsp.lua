@@ -13,7 +13,8 @@ local lsp, fn, api, fmt = vim.lsp, vim.fn, vim.api, string.format
 -- local L = vim.lsp.log_levels
 local L, S = vim.lsp.log_levels, vim.diagnostic.severity
 local M = vim.lsp.protocol.Methods
-local conform = ar.is_available('conform.nvim')
+local is_available = ar.is_available
+local conform = is_available('conform.nvim')
 
 local diagnostic = vim.diagnostic
 local augroup, lsp_icons, border =
@@ -118,7 +119,7 @@ lsp.handlers[M.textDocument_publishDiagnostics] = function(
     while idx <= #result.diagnostics do
       local entry = result.diagnostics[idx]
 
-      if ar.is_available('ts-error-translator.nvim') then
+      if is_available('ts-error-translator.nvim') then
         local translate = require('ts-error-translator').translate
 
         if translate then
@@ -150,8 +151,6 @@ end
 --------------------------------------------------------------------------------
 --  Smart Definitions
 --------------------------------------------------------------------------------
--- jump to the first definition automatically if the multiple defs are on the same line
--- otherwise show a telescope selector
 -- from https://github.com/seblj/dotfiles/blob/014fd736413945c888d7258b298a37c93d5e97da/nvim/lua/config/lspconfig/handlers.lua
 
 -- jump to the first definition automatically if the multiple defs are on the same line
@@ -164,7 +163,7 @@ local function jump_to_first_definition(result, client)
     return
   end
 
-  if not ar.is_available('telescope.nvim') then
+  if not is_available('telescope.nvim') then
     -- show in qf if telescope is not available
     fn.setqflist({}, ' ', {
       title = 'LSP locations',
@@ -336,7 +335,7 @@ local function setup_mappings(client, bufnr)
       lsp.buf.incoming_calls,
       desc = 'incoming calls',
       capability = M.textDocument_references,
-      disabled = ar.is_available('lspsaga.nvim'),
+      disabled = is_available('lspsaga.nvim'),
     },
     {
       'n',
@@ -371,7 +370,7 @@ local function setup_mappings(client, bufnr)
       '<localleader>lc',
       '<Cmd>lua =vim.lsp.get_clients()[1].server_capabilities<CR>',
       desc = 'server capabilities',
-      disabled = ar.is_available('lspsaga.nvim'),
+      disabled = is_available('lspsaga.nvim'),
     },
   }
 
@@ -406,7 +405,7 @@ local ts_overrides = {
     end
   end,
   on_attach = function(client, bufnr)
-    if ar.is_available('twoslash-queries.nvim') then
+    if is_available('twoslash-queries.nvim') then
       require('twoslash-queries').attach(client, bufnr)
     end
     -- this is important, otherwise tsserver will format ts/js
@@ -539,7 +538,7 @@ local function on_attach(client, bufnr)
   setup_mappings(client, bufnr)
   if ar.lsp.semantic_tokens.enable then setup_semantic_tokens(client, bufnr) end
   if not ar.completion.enable then require('ar.compl')(client, bufnr) end
-  if ar.is_available('workspace-diagnostics.nvim') then
+  if is_available('workspace-diagnostics.nvim') then
     require('workspace-diagnostics').populate_workspace_diagnostics(
       client,
       bufnr
