@@ -5,6 +5,7 @@ local datapath = vim.fn.stdpath('data')
 local minimal = ar.plugins.minimal
 local is_available = ar.is_available
 local enabled = not ar.plugin_disabled('telescope.nvim')
+local min_enabled = enabled and not minimal
 
 -- A helper function to limit the size of a telescope window to fit the maximum available
 -- space on the screen. This is useful for dropdowns e.g. the cursor or dropdown theme
@@ -354,7 +355,7 @@ ar.telescope = {
 return {
   {
     'nvim-telescope/telescope-frecency.nvim',
-    cond = enabled and not minimal,
+    cond = min_enabled,
     lazy = false,
     config = function() require('telescope').load_extension('frecency') end,
   },
@@ -722,24 +723,21 @@ return {
       )
     end,
   },
-  { 'molecule-man/telescope-menufacture', cond = enabled },
-  { 'biozz/whop.nvim', cond = enabled and not minimal, opts = {} },
-  { 'nvim-telescope/telescope-node-modules.nvim', cond = enabled },
-  { 'nvim-telescope/telescope-smart-history.nvim', cond = enabled },
-  { 'fdschmidt93/telescope-egrepify.nvim', cond = enabled },
-  { 'debugloop/telescope-undo.nvim', cond = enabled },
-  { 'nvim-telescope/telescope-file-browser.nvim', cond = enabled },
-  { 'razak17/telescope-import.nvim', cond = enabled and not minimal },
-  { 'catgoose/telescope-helpgrep.nvim', cond = enabled and not minimal },
-  { 'razak17/telescope-lazy.nvim', cond = enabled and not minimal },
-  { 'fbuchlak/telescope-directory.nvim', cond = enabled, opts = {} },
-  { 'dapc11/telescope-yaml.nvim', cond = enabled and not minimal },
-  { 'crispgm/telescope-heading.nvim', cond = enabled and not minimal },
-  { 'chip/telescope-software-licenses.nvim', cond = enabled and not minimal },
-  {
-    'isak102/telescope-git-file-history.nvim',
-    cond = enabled and not minimal,
-  },
+  { 'molecule-man/telescope-menufacture', cond = min_enabled },
+  { 'biozz/whop.nvim', cond = min_enabled, opts = {} },
+  { 'nvim-telescope/telescope-node-modules.nvim', cond = min_enabled },
+  { 'nvim-telescope/telescope-smart-history.nvim', cond = min_enabled },
+  { 'fdschmidt93/telescope-egrepify.nvim', cond = min_enabled },
+  { 'debugloop/telescope-undo.nvim', cond = min_enabled },
+  { 'nvim-telescope/telescope-file-browser.nvim', cond = min_enabled },
+  { 'razak17/telescope-import.nvim', cond = min_enabled },
+  { 'catgoose/telescope-helpgrep.nvim', cond = min_enabled },
+  { 'razak17/telescope-lazy.nvim', cond = min_enabled },
+  { 'fbuchlak/telescope-directory.nvim', cond = min_enabled, opts = {} },
+  { 'dapc11/telescope-yaml.nvim', cond = min_enabled },
+  { 'crispgm/telescope-heading.nvim', cond = min_enabled },
+  { 'chip/telescope-software-licenses.nvim', cond = min_enabled },
+  { 'isak102/telescope-git-file-history.nvim', cond = min_enabled },
   {
     'danielfalk/smart-open.nvim',
     cond = enabled,
@@ -748,14 +746,14 @@ return {
   },
   {
     'jonarrien/telescope-cmdline.nvim',
-    cond = enabled and not minimal and false,
+    cond = min_enabled and false,
     keys = {
       { ':', '<cmd>Telescope cmdline<cr>', desc = 'Cmdline' },
     },
   },
   {
     'mrloop/telescope-git-branch.nvim',
-    cond = enabled and not minimal,
+    cond = min_enabled,
     -- stylua: ignore
     keys = {
       { mode = { 'n', 'v' }, '<leader>gf', function() require('git_branch').files() end, desc = 'git branch' },
@@ -763,12 +761,12 @@ return {
   },
   {
     'nvim-telescope/telescope-live-grep-args.nvim',
-    cond = enabled and not minimal,
+    cond = min_enabled,
     version = '^1.0.0',
   },
   {
     'Myzel394/jsonfly.nvim',
-    cond = enabled and not minimal,
+    cond = min_enabled,
     ft = { 'json' },
     keys = {
       { '<leader>fj', '<Cmd>Telescope jsonfly<cr>', desc = 'Open json(fly)' },
@@ -789,7 +787,7 @@ return {
   },
   {
     'dimaportenko/project-cli-commands.nvim',
-    cond = enabled and not minimal,
+    cond = min_enabled,
     -- stylua: ignore
     keys = {
       { '<localleader>Po', ':Telescope project_cli_commands open<CR>', desc = 'project-cli-commands: open' },
