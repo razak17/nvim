@@ -152,6 +152,7 @@ local function can_save()
   return falsy(vim.bo.buftype)
     and not falsy(vim.bo.filetype)
     and vim.bo.modifiable
+    and not vim.bo.readonly
     and not vim.tbl_contains(save_excluded, vim.bo.filetype)
 end
 
