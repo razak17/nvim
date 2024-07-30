@@ -1,4 +1,4 @@
-if not ar then return end
+if not ar or ar.none then return end
 
 local g, fn = vim.g, vim.fn
 local data = vim.fn.stdpath('data')
@@ -28,8 +28,14 @@ require('ar.settings')
 require('ar.highlights')
 require('ar.ui')
 --------------------------------------------------------------------------------
+-- Neovide
+--------------------------------------------------------------------------------
+if vim.g.neovide then require('ar.neovide') end
+--------------------------------------------------------------------------------
 -- Plugins
 --------------------------------------------------------------------------------
+if not ar.plugins.enable then return end
+
 local lazy_path = join_paths(data, 'lazy', 'lazy.nvim')
 local plugins_enabled = ar.plugins.enable
 if not vim.uv.fs_stat(lazy_path) then
@@ -65,9 +71,3 @@ require('lazy').setup({
   },
 })
 map('n', '<localleader>L', '<cmd>Lazy<CR>', { desc = 'toggle lazy ui' })
---------------------------------------------------------------------------------
--- Color Scheme
---------------------------------------------------------------------------------
-if not plugins_enabled then ar.load_colorscheme('habamax') end
-
-if vim.g.neovide then require('ar.neovide') end

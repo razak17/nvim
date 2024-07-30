@@ -1,4 +1,4 @@
-if not ar then return end
+if not ar or ar.none then return end
 
 local highlight = ar.highlight
 local transparent = ar.ui.transparent.enable
