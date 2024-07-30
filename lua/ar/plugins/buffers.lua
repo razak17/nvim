@@ -71,6 +71,21 @@ return {
     },
   },
   {
+    'leath-dub/snipe.nvim',
+    cond = not minimal,
+    event = 'VeryLazy',
+    config = function()
+      local snipe = require('snipe')
+      snipe.setup()
+      map(
+        'n',
+        '<M-[>',
+        snipe.create_buffer_menu_toggler(),
+        { desc = 'snipe: open' }
+      )
+    end,
+  },
+  {
     'Pheon-Dev/buffalo-nvim',
     -- stylua: ignore
     keys = {
