@@ -67,13 +67,13 @@ return {
             fname = fn.bufname(buf),
             setting = 'statusline',
           })
-          if ar.falsy(d) then
+          if not d or ar.falsy(d) then
             return not conditions.buffer_matches({
               buftype = buftypes,
               filetype = force_inactive_filetypes,
             })
           end
-          return d and d.ft == true or d and d.fname == true
+          return d.ft == true or d.fname == true
         end,
         hl = { bg = bg, fg = fg },
         -- Mode
