@@ -193,8 +193,9 @@ ar.ui.lsp = {
 ---@field statusline 'minimal' | boolean
 ---@field statuscolumn boolean
 ---@field colorcolumn boolean | string
+---@field cursorline boolean | string
 
----@alias DecorationType 'statuscolumn'|'winbar'|'statusline'|'number'|'colorcolumn'
+---@alias DecorationType 'statuscolumn'|'winbar'|'statusline'|'number'|'colorcolumn'|'cursorline'
 
 ---@class Decorations
 local Preset = {}
@@ -231,6 +232,7 @@ local presets = {
     colorcolumn = false,
     statusline = 'minimal',
     statuscolumn = false,
+    cursorline = false,
   }),
 }
 

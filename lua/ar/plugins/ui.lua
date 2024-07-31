@@ -98,45 +98,34 @@ return {
     init = function()
       augroup('auto_cursorline', {
         event = 'FileType',
-        pattern = {
-          'alpha',
-          'DressingInput',
-          'neo-tree',
-          'NvimSeparator',
-          'starter',
-          'startup',
-          'TelescopePrompt',
-          'toggleterm',
-          'Trouble',
-        },
         command = function(args)
-          require('auto-cursorline').disable({ buffer = args.buf })
-          vim.wo.cursorline = false
+          if not ui.show_cursorline(args.buf) then
+            require('auto-cursorline').disable({ buffer = args.buf })
+          end
         end,
       })
     end,
     opts = { wait_ms = '300' },
   },
-  -- use fork until PR is merged: https://github.com/tummetott/reticle.nvim/pull/13
+  -- NOTE::use fork until PR is merged: https://github.com/tummetott/reticle.nvim/pull/13
   {
     -- 'tummetott/reticle.nvim',
     'razak17/reticle.nvim',
     cond = not minimal and not niceties, -- auto-cursorline kinda does this already
-    event = 'VeryLazy',
-    opts = {
-      ignore = {
-        cursorline = {
-          'alpha',
-          'startup',
-          'DressingInput',
-          'NvimSeparator',
-          'TelescopePrompt',
-          'toggleterm',
-          'Trouble',
-        },
-        cursorcolumn = {},
-      },
-    },
+    event = { 'BufRead', 'CursorMoved', 'CursorMovedI', 'WinEnter', 'WinLeave' },
+    init = function()
+      ar.augroup('reticle', {
+        event = { 'VimEnter', 'BufRead', 'WinEnter' },
+        command = function(args)
+          if not ui.show_cursorline(args.buf) then
+            require('reticle').set_cursorline(false)
+            return
+          end
+          require('reticle').set_cursorline(true)
+        end,
+      })
+    end,
+    opts = {},
   },
   {
     'Pocco81/HighStr.nvim',

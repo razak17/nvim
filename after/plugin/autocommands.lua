@@ -194,27 +194,31 @@ augroup('WinBehavior', {
   end,
 })
 
-local cursorline_exclusions = {
-  'alpha',
-  'startup',
-  'starter',
-  'TelescopePrompt',
-  'CommandTPrompt',
-  'DressingInput',
-}
 ---@param buf number
 ---@return boolean
-local function should_show_cursorline(buf)
+function ar.ui.show_cursorline(buf)
+  local show = false
+  local decs = ar.ui.decorations.get({
+    ft = vim.bo.ft,
+    bt = vim.bo.bt,
+    setting = 'cursorline',
+  })
+  if not decs or ar.falsy(decs) then
+    show = true
+  else
+    show = decs.ft == true or decs.bt == true
+  end
+
   return vim.bo[buf].buftype ~= 'terminal'
     and not vim.wo.previewwindow
-    -- and vim.wo.winhighlight == ''
+    and vim.wo.winhighlight == ''
     and vim.bo[buf].filetype ~= ''
-    and not vim.tbl_contains(cursorline_exclusions, vim.bo[buf].filetype)
+    and show
 end
 
 augroup('Cursorline', {
   event = { 'BufEnter', 'InsertLeave' },
-  command = function(args) vim.wo.cursorline = should_show_cursorline(args.buf) end,
+  command = function(args) vim.wo.cursorline = ar.ui.show_cursorline(args.buf) end,
 }, {
   event = { 'BufLeave', 'InsertEnter' },
   command = function() vim.wo.cursorline = false end,
