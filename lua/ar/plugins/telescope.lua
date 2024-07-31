@@ -627,44 +627,33 @@ return {
         },
         extensions = {
           persisted = dropdown(),
-          frecency = {
-            db_root = join_paths(datapath, 'databases'),
-            default_workspace = 'CWD',
-            show_unindexed = false, -- Show all files or only those that have been indexed
-            ignore_patterns = {
-              '**',
-              '*/tmp/*',
-              '*node_modules/*',
-              '*vendor/*',
-            },
-            workspaces = {
-              conf = vim.g.dotfiles,
-              project = vim.g.projects_dir,
-            },
-          },
           menufacture = {
             mappings = { main_menu = { [{ 'i', 'n' }] = '<C-;>' } },
           },
           helpgrep = {
-            ignore_paths = {
-              fn.stdpath('state') .. '/lazy/readme',
-            },
-          },
-          lazy = {
-            show_icon = true,
-            mappings = {
-              open_in_float = '<C-o>',
-              open_in_browser = '<C-b>',
-              open_in_file_browser = '<M-b>',
-              open_in_find_files = '<C-f>',
-              open_in_live_grep = '<C-g>',
-              -- open_plugins_picker = '<C-b>',
-              open_lazy_root_find_files = '<C-r>f',
-              open_lazy_root_live_grep = '<C-r>g',
-            },
+            ignore_paths = { fn.stdpath('state') .. '/lazy/readme' },
           },
         },
       }
+
+      if is_available(extension_to_plugin('frecency')) then
+        opts.extensions['frecency'] = {
+          db_root = join_paths(datapath, 'databases'),
+          default_workspace = 'CWD',
+          show_filter_column = false,
+          show_scores = true,
+          show_unindexed = true,
+          ignore_patterns = {
+            '*/tmp/*',
+            '*node_modules/*',
+            '*vendor/*',
+          },
+          workspaces = {
+            conf = vim.g.dotfiles,
+            project = vim.g.projects_dir,
+          },
+        }
+      end
 
       if is_available(extension_to_plugin('live_grep_args')) then
         opts.extensions['live_grep_args'] = {
@@ -703,6 +692,22 @@ return {
               ['<C-d>'] = require('telescope-undo.actions').yank_deletions,
               ['<C-u>'] = require('telescope-undo.actions').restore,
             },
+          },
+        }
+      end
+
+      if is_available(extension_to_plugin('lazy')) then
+        opts.extensions['lazy'] = {
+          show_icon = true,
+          mappings = {
+            open_in_float = '<C-o>',
+            open_in_browser = '<C-b>',
+            open_in_file_browser = '<M-b>',
+            open_in_find_files = '<C-f>',
+            open_in_live_grep = '<C-g>',
+            -- open_plugins_picker = '<C-b>',
+            open_lazy_root_find_files = '<C-r>f',
+            open_lazy_root_live_grep = '<C-r>g',
           },
         }
       end
