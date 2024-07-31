@@ -17,7 +17,10 @@ return {
         FloatBorder = { link = 'FloatBorder' },
         NormalFloat = { link = 'NormalFloat' },
       },
-      float_opts = { winblend = 3, border = border },
+      float_opts = {
+        winblend = ui.transparent.enable and 0 or 3,
+        border = border,
+      },
       size = function(term)
         if term.direction == 'horizontal' then return 15 end
         if term.direction == 'vertical' then
