@@ -154,7 +154,7 @@ return {
             i = cmp.mapping.abort(),
             c = cmp.mapping.close(),
           }),
-          ['<C-space>'] = cmp.mapping.complete(),
+          ['<C-u>'] = cmp.mapping.complete(),
           ['<CR>'] = cmp.mapping.confirm({ select = false }), -- If nothing is selected don't complete
         },
         formatting = {
