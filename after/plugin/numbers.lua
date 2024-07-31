@@ -1,6 +1,7 @@
 if not ar or ar.none then return end
 
 local ui = ar.ui
+local decor = ui.decorations
 
 -- Inspiration
 -- 1. vim-relativity
@@ -28,9 +29,8 @@ local function is_blocked()
     return true
   end
 
-  local decs =
-    ui.decorations.get({ ft = vim.bo.ft, bt = vim.bo.bt, setting = 'number' })
-  if not decs or vim.bo.ft == '' then return true end
+  local decs = decor.get({ ft = vim.bo.ft, bt = vim.bo.bt, setting = 'number' })
+  if not decs or ar.falsy(decs) or vim.bo.ft == '' then return true end
   return decs.ft == false or decs.bt == false
 end
 

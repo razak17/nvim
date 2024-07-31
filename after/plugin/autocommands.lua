@@ -6,7 +6,7 @@ local fn, api, env, v, cmd, opt =
   vim.fn, vim.api, vim.env, vim.v, vim.cmd, vim.opt
 local fmt = string.format
 local falsy = ar.falsy
-local decorations = ar.ui.decorations
+local decor = ar.ui.decorations
 local config_path = fn.stdpath('config')
 --------------------------------------------------------------------------------
 -- HLSEARCH
@@ -198,11 +198,8 @@ augroup('WinBehavior', {
 ---@return boolean
 function ar.ui.show_cursorline(buf)
   local show = false
-  local decs = ar.ui.decorations.get({
-    ft = vim.bo.ft,
-    bt = vim.bo.bt,
-    setting = 'cursorline',
-  })
+  local decs =
+    decor.get({ ft = vim.bo.ft, bt = vim.bo.bt, setting = 'cursorline' })
   if not decs or ar.falsy(decs) then
     show = true
   else
@@ -439,7 +436,7 @@ if is_available('smartcolumn.nvim') then
   augroup('SmartCol', {
     event = { 'BufEnter', 'CursorMoved', 'CursorMovedI', 'WinScrolled' },
     command = function(args)
-      decorations.set_colorcolumn(
+      decor.set_colorcolumn(
         args.buf,
         function(colorcolumn)
           require('smartcolumn').setup_buffer(
@@ -454,7 +451,7 @@ elseif is_available('virt-column.nvim') then
   augroup('VirtCol', {
     event = { 'VimEnter', 'BufEnter', 'WinEnter' },
     command = function(args)
-      decorations.set_colorcolumn(
+      decor.set_colorcolumn(
         args.buf,
         function(colorcolumn)
           require('virt-column').setup_buffer(

@@ -2,6 +2,7 @@ local fn, v, api, opt, cmd = vim.fn, vim.v, vim.api, vim.opt, vim.cmd
 local bo, o, wo = vim.bo, vim.o, vim.wo
 local sep = ar.ui.icons.separators
 local icons, codicons = ar.ui.icons, ar.ui.codicons
+local decor = ar.ui.decorations
 local falsy = ar.falsy
 local fmt = string.format
 
@@ -62,18 +63,18 @@ return {
         condition = function()
           local win = api.nvim_get_current_win()
           local buf = api.nvim_win_get_buf(win)
-          local d = ar.ui.decorations.get({
+          local decs = decor.get({
             ft = bo[buf].ft,
             fname = fn.bufname(buf),
             setting = 'statusline',
           })
-          if not d or ar.falsy(d) then
+          if not decs or ar.falsy(decs) then
             return not conditions.buffer_matches({
               buftype = buftypes,
               filetype = force_inactive_filetypes,
             })
           end
-          return d.ft == true or d.fname == true
+          return decs.ft == true or decs.fname == true
         end,
         hl = { bg = bg, fg = fg },
         -- Mode
@@ -717,18 +718,18 @@ return {
           end
           local win = api.nvim_get_current_win()
           local buf = api.nvim_win_get_buf(win)
-          local d = ar.ui.decorations.get({
+          local decs = decor.get({
             ft = bo[buf].ft,
             fname = fn.bufname(buf),
             setting = 'statuscolumn',
           })
-          if ar.falsy(d) then
+          if not decs or ar.falsy(decs) then
             return not conditions.buffer_matches({
               buftype = buftypes,
               filetype = force_inactive_filetypes,
             })
           end
-          return d and d.ft == true or d and d.fname == true
+          return decs.ft == true or decs.fname == true
         end,
         static = {
           click_args = function(self, minwid, clicks, button, mods)

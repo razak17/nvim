@@ -1,6 +1,8 @@
 local api = vim.api
+local fmt = string.format
 local ui, highlight = ar.ui, ar.highlight
 local border = ui.current.border
+local decor = ui.decorations
 
 return {
   'Bekaboo/dropbar.nvim',
@@ -18,11 +20,15 @@ return {
       update_interval = 100,
       enable = function(buf, win)
         local b, w = vim.bo[buf], vim.wo[win]
-        local decor =
-          ui.decorations.get({ ft = b.ft, bt = b.bt, setting = 'winbar' })
-        return decor
-          and decor.ft ~= false
-          and decor.bt ~= false
+        local decs = decor.get({ ft = b.ft, bt = b.bt, setting = 'winbar' })
+
+        local show = false
+        if not decs or ar.falsy(decs) then
+          show = true
+        else
+          show = decs.ft == true or decs.bt == true
+        end
+        return show
           and b.bt == ''
           and not w.diff
           and not api.nvim_win_get_config(win).zindex
@@ -30,7 +36,7 @@ return {
       end,
     },
     icons = {
-      ui = { bar = { separator = ' ' .. ui.icons.misc.chevron_right .. ' ' } },
+      ui = { bar = { separator = fmt(' %s ', ui.icons.misc.chevron_right) } },
       kinds = {
         symbols = vim.tbl_map(
           function(value) return value .. ' ' end,

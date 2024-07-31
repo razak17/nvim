@@ -337,16 +337,10 @@ function ar.ui.decorations.set_colorcolumn(bufnr, fn)
     bt = buf.bt,
     setting = 'colorcolumn',
   })
-  local ccol = decor and decor.ft or decor and decor.bt or ''
+  local ccol = ''
+  if decor and not ar.falsy(decor) then ccol = decor.ft or decor.bt or '' end
   local colorcolumn = not ar.falsy(ccol) and ccol or '+1'
-  if
-    buf.ft == ''
-    or buf.bt ~= ''
-    or decor and decor.ft == false
-    or decor and decor.bt == false
-  then
-    colorcolumn = ''
-  end
+  if buf.ft == '' or buf.bt ~= '' then colorcolumn = '' end
   if vim.is_callable(fn) then fn(colorcolumn) end
 end
 
