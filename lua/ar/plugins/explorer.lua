@@ -82,7 +82,10 @@ return {
       event_handlers = {
         {
           event = 'neo_tree_buffer_enter',
-          handler = function() highlight.set('Cursor', { blend = 100 }) end,
+          handler = function()
+            highlight.set('Cursor', { blend = 100 })
+            vim.cmd('setlocal nocursorline')
+          end,
         },
         {
           event = 'neo_tree_popup_buffer_enter',
