@@ -6,7 +6,7 @@ return {
     cond = not minimal,
     -- stylua: ignore
     keys = {
-      { 's', function() require('flash').jump() end, mode = { 'n', 'x', 'o' } },
+      { 's', function() require('flash').jump() end, mode = { 'n', 'x' } },
       { 'S', function() require('flash').treesitter() end, mode = { 'n' }, },
       { 'r', function() require('flash').remote() end, mode = 'o', desc = 'remote flash', },
       { '<c-s>', function() require('flash').toggle() end, mode = { 'c' }, desc = 'toggle flash search', },
