@@ -357,42 +357,92 @@ return {
   },
   {
     'MeanderingProgrammer/markdown.nvim',
-    cond = niceties and false,
-    name = 'render-markdown',
+    cond = not minimal and niceties,
     cmd = { 'RenderMarkdownToggle' },
     ft = { 'markdown' },
-    init = function()
+    opts = {
+      heading = {
+        sign = false,
+        -- signs = { '󰫎 ' },
+        enabled = not ar.treesitter.enable,
+        icons = { '󰎤 ', '󰎧 ', '󰎪 ', '󰎭 ', '󰎱 ', '󰎳 ' },
+        backgrounds = {
+          'Headline1Bg',
+          'Headline2Bg',
+          'Headline3Bg',
+          'Headline4Bg',
+          'Headline5Bg',
+          'Headline6Bg',
+        },
+        foregrounds = {
+          'Headline1Fg',
+          'Headline2Fg',
+          'Headline3Fg',
+          'Headline4Fg',
+          'Headline5Fg',
+          'Headline6Fg',
+        },
+      },
+      checkbox = {
+        enabled = not ar.treesitter.enable,
+        unchecked = {
+          icon = '🔲',
+          highlight = '@markup.list.unchecked',
+        },
+        checked = {
+          icon = '✅',
+          highlight = '@markup.heading',
+        },
+      },
+      bullets = {
+        enabled = false,
+        icons = { '▶', '○', '●', '▷' }, --  '◆', '◇'
+        highlight = 'Directory',
+      },
+      code = {
+        enabled = true,
+        style = 'normal',
+        highlight = 'ColorColumn',
+      },
+    },
+    config = function(_, opts)
+      require('render-markdown').setup(opts)
+
+      local color1_bg = '#f265b5'
+      local color2_bg = '#37f499'
+      local color3_bg = '#04d1f9'
+      local color4_bg = '#a48cf2'
+      local color5_bg = '#f1fc79'
+      local color6_bg = '#f7c67f'
+      local color_fg = '#323449'
+
       highlight.plugin('render-markdown', {
         theme = {
-          ['onedark'] = { { MarkdownCodeBlock = { link = 'CodeBlock' } } },
+          ['onedark'] = {
+            { MarkdownCodeBlock = { link = 'CodeBlock' } },
+            -- Heading colors (when not hovered over), extends through the entire line
+            { Headline1Bg = { fg = color_fg, bg = color1_bg } },
+            { Headline2Bg = { fg = color_fg, bg = color2_bg } },
+            { Headline3Bg = { fg = color_fg, bg = color3_bg } },
+            { Headline4Bg = { fg = color_fg, bg = color4_bg } },
+            { Headline5Bg = { fg = color_fg, bg = color5_bg } },
+            { Headline6Bg = { fg = color_fg, bg = color6_bg } },
+            -- Highlight for the heading and sign icons (symbol on the left)
+            -- I have the sign disabled for now, so this makes no effect
+            { Headline1Fg = { fg = color1_bg, cterm = 'bold', gui = 'bold' } },
+            { Headline2Fg = { fg = color2_bg, cterm = 'bold', gui = 'bold' } },
+            { Headline3Fg = { fg = color3_bg, cterm = 'bold', gui = 'bold' } },
+            { Headline4Fg = { fg = color4_bg, cterm = 'bold', gui = 'bold' } },
+            { Headline5Fg = { fg = color5_bg, cterm = 'bold', gui = 'bold' } },
+            { Headline6Fg = { fg = color6_bg, cterm = 'bold', gui = 'bold' } },
+          },
         },
       })
     end,
-    opts = {
-      start_enabled = false,
-      highlights = {
-        code = 'MarkdownCodeBlock',
-        heading = {
-          backgrounds = { 'Headline1', 'Headline2', 'Headline3' },
-          foregrounds = {
-            'markdownH1',
-            'markdownH2',
-            'markdownH3',
-            'markdownH4',
-            'markdownH5',
-            'markdownH6',
-          },
-        },
-      },
-      headings = { '󰲡 ', '󰲣 ', '󰲥 ', '󰲧 ', '󰲩 ', '󰲫 ' },
-      checkbox = { unchecked = '󰄱', checked = '' },
-      conceal = { rendered = 2 },
-      bullets = { '●', '○', '▶', '▷' },
-    },
   },
   {
     'OXY2DEV/markview.nvim',
-    cond = not minimal and not niceties,
+    cond = not minimal and niceties and false,
     cmd = { 'Markview' },
     ft = { 'markdown' },
     opts = {},
