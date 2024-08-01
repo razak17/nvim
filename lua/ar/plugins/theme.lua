@@ -108,16 +108,43 @@ return {
     event = 'VimEnter',
     opts = {
       extra_groups = {
+        'NormalFloat',
+        'FloatBorder',
         'NeoTreeTabInactive',
         'NoiceMini',
+        'NoicePopupBaseGroup',
+        'NoicePopupWarnBaseGroup',
+        'NoicePopupInfoBaseGroup',
+        'NoiceCmdlinePopup',
+        'NoiceCmdlinePopupBorder',
         'NoiceFormatProgressDone',
         'NoiceFormatProgressTodo',
         'NoiceLspProgressClient',
         'NoiceLspProgressSpinner',
         'NoiceLspProgressTitle',
         'NoiceFormatEvent',
+        'NoiceConfirm',
+        'NoiceConfirmBorder',
       },
     },
+    config = function(_, opts)
+      require('transparent').setup(opts)
+
+      ar.highlight.plugin('transparent', {
+        theme = {
+          ['onedark'] = {
+            { FloatBorder = { link = 'WinSeparator' } },
+            {
+              NoicePopupBaseGroup = {
+                fg = { from = 'Directory', alter = -0.25 },
+              },
+            },
+            { NoicePopupWarnBaseGroup = { link = 'NoicePopupBaseGroup' } },
+            { NoicePopupInfoBaseGroup = { link = 'NoicePopupBaseGroup' } },
+          },
+        },
+      })
+    end,
   },
   -- }}}
 }
