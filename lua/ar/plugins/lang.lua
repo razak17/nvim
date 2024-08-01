@@ -235,6 +235,7 @@ return {
   },
   -- Markdown
   --------------------------------------------------------------------------------
+  { 'bullets-vim/bullets.vim', ft = { 'markdown' } },
   {
     'ellisonleao/glow.nvim',
     cond = not minimal,
