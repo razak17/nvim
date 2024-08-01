@@ -1,7 +1,7 @@
 return {
   {
     'lukas-reineke/headlines.nvim',
-    cond = ar.plugins.niceties,
+    cond = not ar.plugins.minimal and ar.plugins.niceties and false,
     ft = { 'org', 'norg', 'markdown', 'yaml' },
     opts = {
       org = { headline_highlights = false },
@@ -36,23 +36,37 @@ return {
           'Headline5',
           'Headline6',
         },
+        bullets = { '󰎤', '󰎧', '󰎪', '󰎭', '󰎱', '󰎳' },
       },
     },
     config = function(_, opts)
-      -- PERF: schedule to prevent headlines slowing down opening a file
-      -- Define custom highlight groups using Vimscript
-      vim.cmd([[highlight Headline1 guibg=#295715 guifg=white]])
-      vim.cmd([[highlight Headline2 guibg=#8d8200 guifg=white]])
-      vim.cmd([[highlight Headline3 guibg=#a56106 guifg=white]])
-      vim.cmd([[highlight Headline4 guibg=#7e0000 guifg=white]])
-      vim.cmd([[highlight Headline5 guibg=#1e0b7b guifg=white]])
-      vim.cmd([[highlight Headline6 guibg=#560b7b guifg=white]])
-      -- Defines the codeblock background color to something darker
-      -- vim.cmd([[highlight CodeBlock guibg=#09090d]])
-      -- When you add a line of dashes with --- this specifies the color, I'm not
-      -- adding a "guibg" but you can do so if you want to add a background color
-      -- vim.cmd([[highlight Dash guifg=white]])
+      local color1_bg = '#f265b5'
+      local color2_bg = '#37f499'
+      local color3_bg = '#04d1f9'
+      local color4_bg = '#a48cf2'
+      local color5_bg = '#f1fc79'
+      local color6_bg = '#f7c67f'
+      local color_fg = 'white'
+      -- local color_fg = '#323449'
+      -- local color_block = '#09090d'
 
+      -- Define custom highlight groups using Vimscript
+      ar.highlight.plugin('render-markdown', {
+        theme = {
+          ['onedark'] = {
+            { Headline1 = { fg = color_fg, bg = color1_bg } },
+            { Headline2 = { fg = color_fg, bg = color2_bg } },
+            { Headline3 = { fg = color_fg, bg = color3_bg } },
+            { Headline4 = { fg = color_fg, bg = color4_bg } },
+            { Headline5 = { fg = color_fg, bg = color5_bg } },
+            { Headline6 = { fg = color_fg, bg = color6_bg } },
+            -- { CodeBlock = { bg = color_block } },
+            -- { Dash = { fg = color_fg } },
+          },
+        },
+      })
+
+      -- PERF: schedule to prevent headlines slowing down opening a file
       vim.schedule(function()
         require('headlines').setup(opts)
         require('headlines').refresh()
