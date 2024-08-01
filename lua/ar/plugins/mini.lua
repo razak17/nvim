@@ -233,24 +233,38 @@ return {
   },
   {
     'echasnovski/mini.surround',
-    keys = {
-      'ds',
-      { 'ym', desc = 'add surrounding' },
-      { 'ys', desc = 'replace surrounding' },
-    },
-    config = function()
-      require('mini.surround').setup({
-        mappings = {
-          add = 'ym',
-          delete = 'ds',
-          find = 'yf',
-          find_left = 'yF',
-          highlight = 'yh',
-          replace = 'ys',
-          update_n_lines = 'yn',
+    keys = function(_, keys)
+      -- https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/plugins/extras/coding/mini-surround.lua#L9
+      local opts = ar.opts('mini.surround')
+      local mappings = {
+        { opts.mappings.add, desc = 'Add Surrounding', mode = { 'n', 'v' } },
+        { opts.mappings.delete, desc = 'Delete Surrounding' },
+        { opts.mappings.find, desc = 'Find Right Surrounding' },
+        { opts.mappings.find_left, desc = 'Find Left Surrounding' },
+        { opts.mappings.highlight, desc = 'Highlight Surrounding' },
+        { opts.mappings.replace, desc = 'Replace Surrounding' },
+        {
+          opts.mappings.update_n_lines,
+          desc = 'Update `MiniSurround.config.n_lines`',
         },
-      })
+      }
+      mappings = vim.tbl_filter(
+        function(m) return m[1] and #m[1] > 0 end,
+        mappings
+      )
+      return vim.list_extend(mappings, keys)
     end,
+    opts = {
+      mappings = {
+        add = 'gsa', -- Add surrounding in Normal and Visual modes
+        delete = 'gsd', -- Delete surrounding
+        find = 'gsf', -- Find surrounding (to the right)
+        find_left = 'gsF', -- Find surrounding (to the left)
+        highlight = 'gsh', -- Highlight surrounding
+        replace = 'gsr', -- Replace surrounding
+        update_n_lines = 'gsn', -- Update `n_lines`
+      },
+    },
   },
   {
     'echasnovski/mini.diff',

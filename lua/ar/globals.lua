@@ -152,6 +152,19 @@ function ar.plugins_spec()
   end)
 end
 
+---@param name string
+function ar.get_plugin(name)
+  return require('lazy.core.config').spec.plugins[name]
+end
+
+---@param name string
+function ar.opts(name)
+  local plugin = ar.get_plugin(name)
+  if not plugin then return {} end
+  local Plugin = require('lazy.core.plugin')
+  return Plugin.values(plugin, 'opts', false)
+end
+
 -- Check if a plugin is disabled
 ---@param plugin string The plugin to search for.
 ---@return boolean disabled # Whether the plugin is disabled.
