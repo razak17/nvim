@@ -280,7 +280,7 @@ local filetypes = ar.p_table({
   ['log'] = presets.tool_panel,
   ['man'] = presets.minimal_editing,
   ['markdown'] = presets.minimal_editing,
-  ['neo-tree'] = presets.tool_panel:with({ winbar = 'ignore' }),
+  ['neo-tree'] = presets.tool_panel:with({ winbar = 'ignore', cursorline = true }),
   ['NeogitCommitMessage'] = commit_buffer,
   ['neotest.*'] = presets.tool_panel,
   ['netrw'] = presets.tool_panel,

@@ -198,8 +198,11 @@ augroup('WinBehavior', {
 ---@return boolean
 function ar.ui.show_cursorline(buf)
   local show = false
-  local decs =
-    decor.get({ ft = vim.bo.ft, bt = vim.bo.bt, setting = 'cursorline' })
+  local decs = decor.get({
+    ft = vim.bo[buf].ft,
+    bt = vim.bo[buf].bt,
+    setting = 'cursorline',
+  })
   if not decs or ar.falsy(decs) then
     show = true
   else
@@ -208,7 +211,7 @@ function ar.ui.show_cursorline(buf)
 
   return vim.bo[buf].buftype ~= 'terminal'
     and not vim.wo.previewwindow
-    and vim.wo.winhighlight == ''
+    -- and vim.wo.winhighlight == '' -- NOTE: enable this if you want to disable cursorline in floating windows (neo-tree)
     and vim.bo[buf].filetype ~= ''
     and show
 end
