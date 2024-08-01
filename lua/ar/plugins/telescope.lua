@@ -559,6 +559,8 @@ return {
               ['<A-l>'] = actions.preview_scrolling_right,
               ['<A-u>'] = actions.results_scrolling_up,
               ['<A-d>'] = actions.results_scrolling_down,
+              ['<A-j>'] = actions.cycle_history_next,
+              ['<A-k>'] = actions.cycle_history_prev,
               ['<c-f>'] = send_find_files_to_live_grep,
             },
             n = {
