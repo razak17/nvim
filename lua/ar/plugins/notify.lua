@@ -13,6 +13,7 @@ return {
   init = function()
     local notify = require('notify')
     notify.setup({
+      background_colour = ar.highlight.get('Normal', 'bg') or '#000000',
       top_down = false,
       render = 'wrapped-compact',
       stages = 'fade_in_slide_out',
