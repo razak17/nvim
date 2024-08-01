@@ -12,6 +12,15 @@ return {
     config = function() require('lspkind').init({ preset = 'codicons' }) end,
   },
   {
+    'arnamak/stay-centered.nvim',
+    event = 'BufReadPost',
+    -- stylua: ignore
+    keys = {
+      { '<leader>o;', '<Cmd>lua require("stay-centered").toggle()<CR>', desc = 'stay-centered: toggle' },
+    },
+    opts = {},
+  },
+  {
     'nmac427/guess-indent.nvim',
     cond = not minimal and niceties,
     event = 'BufReadPost',
@@ -19,7 +28,7 @@ return {
   },
   {
     'Aasim-A/scrollEOF.nvim',
-    cond = not minimal,
+    cond = not minimal, -- stay-centered kinda makes this redundant, Keep for when it is toggled off
     event = { 'BufRead', 'BufNewFile' },
     opts = {},
   },
