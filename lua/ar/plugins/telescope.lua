@@ -672,7 +672,7 @@ return {
 
       if is_available(extension_to_plugin('smart_open')) then
         opts.extensions['smart_open'] = {
-          show_scores = false,
+          show_scores = true,
           ignore_patterns = {
             '*.git/*',
             '*/tmp/*',
@@ -744,9 +744,8 @@ return {
   { 'chip/telescope-software-licenses.nvim', cond = min_enabled },
   { 'isak102/telescope-git-file-history.nvim', cond = min_enabled },
   {
-    'danielfalk/smart-open.nvim',
+    'danielfalk/smart-open.nvim', -- use fork to get show_scores working
     cond = enabled,
-    branch = '0.2.x',
     dependencies = { 'nvim-telescope/telescope-fzy-native.nvim' },
   },
   {
