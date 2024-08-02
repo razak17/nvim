@@ -148,10 +148,13 @@ return {
     end,
   },
   {
-    'lewis6991/whatthejump.nvim',
+    'razak17/whatthejump.nvim',
     cond = not minimal,
     event = { 'BufRead', 'BufNewFile' },
-    config = function()
+    opts = { winblend = 0 },
+    config = function(_, opts)
+      require('whatthejump').setup(opts)
+
       map('n', '<M-o>', function()
         require('whatthejump').show_jumps(false)
         return '<C-o>'
