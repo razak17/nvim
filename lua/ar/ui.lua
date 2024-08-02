@@ -256,7 +256,7 @@ local filetypes = ar.p_table({
   ['aerial'] = presets.tool_panel,
   ['agitator'] = presets.tool_panel,
   ['alpha'] = presets.tool_panel:with({ statusline = false }),
-  ['arena'] = presets.tool_panel,
+  ['arena'] = presets.tool_panel:with({ number = true }),
   ['blame'] = presets.tool_panel,
   ['buffalo'] = presets.tool_panel,
   ['checkhealth'] = presets.tool_panel,
