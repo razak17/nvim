@@ -67,7 +67,7 @@ return {
     keys = { { '<M-space>', '<Cmd>ArenaToggle<CR>', desc = 'arena: toggle' } },
     opts = {
       per_project = true,
-      max_items = 20,
+      max_items = 50,
       window = { border = 'single' },
       keybinds = {
         ['w'] = function(win)
