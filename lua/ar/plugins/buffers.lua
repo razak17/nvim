@@ -35,6 +35,15 @@ return {
     },
     opts = {},
   },
+
+  {
+    'jlanzarotta/bufexplorer',
+    cond = not minimal,
+    config = function() vim.g.bufExplorerShowRelativePath = 1 end,
+    keys = {
+      { '<localleader>be', '<cmd>BufExplorer<cr>', desc = 'bufexplorer: open' },
+    },
+  },
   {
     'kazhala/close-buffers.nvim',
     cmd = { 'BDelete', 'BWipeout' },
