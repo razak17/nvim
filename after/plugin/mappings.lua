@@ -116,8 +116,6 @@ nnoremap(
   { desc = 'append semi colon' }
 )
 --------------------------------------------------------------------------------
-nnoremap('<leader>I', '<cmd>Inspect<CR>', { desc = 'inspect' })
---------------------------------------------------------------------------------
 -- Capitalize
 nnoremap('<leader>uu', 'gUiw', { desc = 'capitalize word' })
 --------------------------------------------------------------------------------
@@ -244,9 +242,20 @@ if not is_available('neo-tree.nvim') then
   nnoremap('<C-n>', ':Ex<CR>', { desc = 'explorer' })
 end
 nnoremap('<leader>X', ':wqall<CR>', { desc = 'save all and quit' })
-nnoremap('<leader>q', ':q<CR>', { desc = 'quit all' })
-nnoremap('<leader>Q', ':qa!<CR>', { desc = 'quit' })
+nnoremap('<leader>qq', ':q<CR>', { desc = 'quit' })
+nnoremap('<leader>Q', ':qa!<CR>', { desc = 'force quit all' })
 nnoremap('<localleader>Q', ':cq<CR>', { desc = 'restart editor' })
+-- commenting
+nnoremap(
+  'gco',
+  'o<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>',
+  { desc = 'add comment below' }
+)
+nnoremap(
+  'gcO',
+  'O<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>',
+  { desc = 'add comment above' }
+)
 --------------------------------------------------------------------------------
 -- ?ie | entire object
 --------------------------------------------------------------------------------
@@ -381,19 +390,22 @@ inoremap('<c-z>', [[<Esc>:undo<CR>]])
 -- Reverse Line
 function ar.rev_str(str) return string.reverse(str) end
 vnoremap(
-  '<localleader>rr',
+  '<localleader>ur',
   [[:s/\%V.\+\%V./\=v:lua.ar.rev_str(submatch(0))<CR>gv<ESC>]],
   { desc = 'reverse line' }
 )
 --------------------------------------------------------------------------------
 -- Remove empty lines
-xnoremap( '<localleader>rl', [[:g/\v^ *$/d<CR>]], { desc = 'remove empty lines' })
+xnoremap('<leader>ul', [[:g/\v^ *$/d<CR>]], { desc = 'remove empty lines' })
+--------------------------------------------------------------------------------
+nnoremap('<leader>ui', vim.show_pos, { desc = 'inspect pos' })
+nnoremap('<leader>uI', '<cmd>Inspect<CR>', { desc = 'inspect tree' })
 --------------------------------------------------------------------------------
 -- Inspect treesitter tree
 nnoremap(
-  '<leader>E',
+  '<leader>ut',
   function() vim.treesitter.inspect_tree({ command = 'botright 60vnew' }) end,
-  { desc = 'open ts tree for current buffer' }
+  { desc = 'inspect tree' }
 )
 --------------------------------------------------------------------------------
 -- Conceal Level & Cursor
