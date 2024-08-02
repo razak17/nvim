@@ -32,6 +32,7 @@ local function is_blocked()
   local decs = decor.get({ ft = vim.bo.ft, bt = vim.bo.bt, setting = 'number' })
   if vim.bo.ft == '' then return true end
   if not decs or ar.falsy(decs) then return false end
+  if decs.ft == true then return false end
   return decs.ft == false or decs.bt == false
 end
 
@@ -41,7 +42,7 @@ local function enable_relative_number()
     vim.wo.number, vim.wo.relativenumber = false, false
     return
   end
-  if is_ignored() then return end
+  if is_ignored() and is_blocked() then return end
   local enabled = not is_blocked()
   vim.wo.number, vim.wo.relativenumber = enabled, enabled
 end
