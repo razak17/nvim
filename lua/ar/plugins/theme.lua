@@ -108,6 +108,8 @@ return {
     event = 'VimEnter',
     opts = {
       extra_groups = {
+        'PopupNormal',
+        'PopupBorder',
         'NormalFloat',
         'FloatBorder',
         'NeoTreeTabInactive',
@@ -134,6 +136,7 @@ return {
         theme = {
           ['onedark'] = {
             { FloatBorder = { link = 'WinSeparator' } },
+            { PopupBorder = { link = 'FloatBorder' } },
             {
               NoicePopupBaseGroup = {
                 fg = { from = 'Directory', alter = -0.25 },
