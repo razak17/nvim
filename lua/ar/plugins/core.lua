@@ -31,9 +31,15 @@ return {
   },
   {
     'olimorris/persisted.nvim',
-    cond = not minimal,
+    -- cond = not minimal,
     lazy = false,
     init = function() ar.command('ListSessions', 'Telescope persisted') end,
+    keys = {
+      { '<leader>qs', ':SessionLoad<CR>', desc = 'restore session' },
+      { '<leader>ql', ':SessionLoadLast<CR>', desc = 'restore last session' },
+      { '<leader>qL', ':ListSessions<CR>', desc = 'list session' },
+      { '<leader>qd', ':SessionStop<CR>', desc = "don't save current session" },
+    },
     opts = {
       use_git_branch = true,
       save_dir = fn.expand(vim.fn.stdpath('cache') .. '/sessions/'),
@@ -222,14 +228,11 @@ return {
   {
     'axieax/urlview.nvim',
     cmd = { 'UrlView' },
+    -- stylua: ignore
     keys = {
-      { '<leader>ub', '<cmd>UrlView buffer<cr>', desc = 'urlview: buffers' },
-      { '<leader>ul', '<cmd>UrlView lazy<cr>', desc = 'urlview: lazy' },
-      {
-        '<leader>uc',
-        '<cmd>UrlView buffer action=clipboard<cr>',
-        desc = 'urlview: copy links',
-      },
+      { '<localleader>ub', '<cmd>UrlView buffer<cr>', desc = 'urlview: buffers' },
+      { '<localleader>ul', '<cmd>UrlView lazy<cr>', desc = 'urlview: lazy' },
+      { '<localleader>uc', '<cmd>UrlView buffer action=clipboard<cr>', desc = 'urlview: copy links' },
     },
     opts = {
       default_title = 'Links:',
