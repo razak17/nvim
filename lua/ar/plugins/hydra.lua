@@ -62,6 +62,7 @@ return {
           function() close_buffers.delete({ type = 'this' }) end,
           { desc = 'delete buffer' },
         },
+        { 'l', '<Cmd>e #<CR>', { desc = 'last buffer' } },
         { 'p', '<Plug>(CybuPrev)', { desc = 'prev buffer' } },
         { 'n', '<Plug>(CybuNext)', { desc = 'next buffer' } },
         { 'P', '<Plug>(buf-surf-back)', { desc = 'prev buffer (in history)' } },
