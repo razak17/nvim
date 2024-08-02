@@ -218,6 +218,7 @@ local presets = {
     colorcolumn = false,
     statusline = true,
     statuscolumn = false,
+    cursorline = false,
   }),
   minimal_editing = Preset:new({
     number = false,
@@ -225,6 +226,7 @@ local presets = {
     colorcolumn = false,
     statusline = true,
     statuscolumn = false,
+    cursorline = true,
   }),
   tool_panel = Preset:new({
     number = false,
@@ -279,7 +281,7 @@ local filetypes = ar.p_table({
   ['list'] = presets.tool_panel,
   ['log'] = presets.tool_panel,
   ['man'] = presets.minimal_editing,
-  ['markdown'] = presets.minimal_editing,
+  -- ['markdown'] = presets.minimal_editing,
   ['neo-tree'] = presets.tool_panel:with({ winbar = 'ignore', cursorline = true }),
   ['NeogitCommitMessage'] = commit_buffer,
   ['neotest.*'] = presets.tool_panel,
