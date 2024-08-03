@@ -299,6 +299,33 @@ local send_find_files_to_live_grep = function()
   require('telescope.builtin').live_grep({ search_dirs = results })
 end
 
+-- https://github.com/nvim-telescope/telescope.nvim/issues/2778#issuecomment-2202572413
+local focus_preview = function(prompt_bufnr)
+  local action_state = require('telescope.actions.state')
+  local picker = action_state.get_current_picker(prompt_bufnr)
+  local prompt_win = picker.prompt_win
+  local previewer = picker.previewer
+  local winid = previewer.state.winid
+  local bufnr = previewer.state.bufnr
+  map(
+    'n',
+    '<S-Tab>',
+    function()
+      vim.cmd(
+        string.format(
+          'noautocmd lua vim.api.nvim_set_current_win(%s)',
+          prompt_win
+        )
+      )
+    end,
+    { buffer = bufnr }
+  )
+  vim.cmd(
+    string.format('noautocmd lua vim.api.nvim_set_current_win(%s)', winid)
+  )
+  -- api.nvim_set_current_win(winid)
+end
+
 ar.telescope = {
   extension_to_plugin = {
     ['advanced_git_search'] = 'advanced-git-search.nvim',
@@ -562,6 +589,7 @@ return {
               ['<A-j>'] = actions.cycle_history_next,
               ['<A-k>'] = actions.cycle_history_prev,
               ['<c-f>'] = send_find_files_to_live_grep,
+              ['<A-;>'] = focus_preview,
             },
             n = {
               ['<c-n>'] = actions.move_selection_next,
