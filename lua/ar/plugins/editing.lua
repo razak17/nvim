@@ -299,6 +299,7 @@ return {
     cond = not minimal,
     event = { 'VeryLazy' },
     opts = {
+      default_mappings = false,
       mappings = {
         i = {
           j = { k = '<Esc>' },
