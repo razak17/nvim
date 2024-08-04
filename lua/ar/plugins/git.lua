@@ -83,7 +83,7 @@ return {
   },
   {
     'SuperBo/fugit2.nvim',
-    cond = enabled,
+    cond = enabled and false,
     cmd = { 'Fugit2', 'Fugit2Diff', 'Fugit2Graph' },
     keys = {
       { '<leader><localleader>F', '<Cmd>Fugit2<CR>', desc = 'fugit2: open' },
