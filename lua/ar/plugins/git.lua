@@ -525,4 +525,28 @@ return {
       git_dir = '~/.dots/dotfiles', -- Change this path
     },
   },
+  {
+    'isakbm/gitgraph.nvim',
+    cond = enabled,
+    opts = {
+      symbols = {
+        merge_commit = 'M',
+        commit = '*',
+      },
+      format = {
+        timestamp = '%H:%M:%S %d-%m-%Y',
+        fields = { 'hash', 'timestamp', 'author', 'branch_name', 'tag' },
+      },
+    },
+    init = function()
+      map(
+        'n',
+        '<leader>gg',
+        function()
+          require('gitgraph').draw({}, { all = true, max_count = 5000 })
+        end,
+        { desc = 'git graph: draw' }
+      )
+    end,
+  },
 }
