@@ -1,4 +1,5 @@
 local api = vim.api
+local minimal, niceties = ar.plugins.minimal, ar.plugins.niceties
 
 local redraw_buffer = function()
   local Animation = require('animation')
@@ -80,13 +81,13 @@ end
 return {
   {
     'anuvyklack/animation.nvim',
-    cond = not ar.plugins.minimal,
+    cond = not minimal and niceties,
     keys = { { '<leader>Aa', redraw_buffer, desc = 'animation: start' } },
     dependencies = { 'anuvyklack/middleclass' },
   },
   {
     'letieu/hacker.nvim',
-    cond = not ar.plugins.minimal,
+    cond = not minimal and niceties,
     event = 'VeryLazy',
     cmd = { 'Hack', 'HackAuto', 'HackFollow' },
   },
@@ -98,5 +99,11 @@ return {
       { '<leader>Ag', '<Cmd>CellularAutomaton game_of_life<CR>', desc = 'automaton: game of life', },
       { '<leader>Am', '<Cmd>CellularAutomaton make_it_rain<CR>', desc = 'automaton: make it rain', },
     },
+  },
+  {
+    'tamton-aquib/flirt.nvim',
+    -- cond = not minimal and niceties,
+    event = 'VeryLazy',
+    opts = { speed = 100 },
   },
 }

@@ -394,12 +394,6 @@ return {
     },
   },
   {
-    'tamton-aquib/flirt.nvim',
-    cond = not minimal and false,
-    event = 'VeryLazy',
-    opts = {},
-  },
-  {
     'tzachar/highlight-undo.nvim',
     cond = not minimal and niceties,
     event = 'BufRead',
