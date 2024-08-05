@@ -115,6 +115,12 @@ nnoremap(
   modify_line_end_delimiter(';'),
   { desc = 'append semi colon' }
 )
+-- @see: https://castel.dev/post/lecture-notes-1/#correcting-spelling-mistakes-on-the-fly
+inoremap(
+  '<C-s>',
+  '<C-g>u<ESC>[s1z=`]a<C-g>u',
+  { desc = 'fix nearest spelling error and put the cursor back' }
+)
 --------------------------------------------------------------------------------
 -- Capitalize
 nnoremap('<leader>uu', 'gUiw', { desc = 'capitalize word' })
