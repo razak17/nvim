@@ -3,6 +3,7 @@ local enabled = ar.plugin.ui_select.enable
 if not ar or ar.none or not ar.plugins.enable or not enabled then return end
 
 local fn = vim.fn
+local fmt = string.format
 local frecency = require('ar.frecency')
 
 local M = {
@@ -419,6 +420,11 @@ M.options.command_palette = {
   end,
   ['Toggle Markview'] = 'Markview',
   ['Open Messages'] = 'MsgsToFileAndOpen',
+  ['Toggle Autosave'] = function()
+    ar.autosave.enable = not ar.autosave.enable
+    local status = ar.autosave.enable and 'enabled' or 'disabled'
+    vim.notify(fmt('Autosave has been %s', status))
+  end,
 }
 
 local command_palette_menu = function()
