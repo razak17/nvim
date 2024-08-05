@@ -1,4 +1,4 @@
-local api = vim.api
+local api, fn, o = vim.api, vim.fn, vim.o
 local M = {}
 
 local should_profile = os.getenv('NVIM_PROFILE')
@@ -71,13 +71,19 @@ function M.generate_plugins()
   vim.notify('PLUGINS.md generated.')
 end
 
-function M.open_in_centered_popup()
+function M.open_in_centered_popup(path)
   local bufnr = api.nvim_win_get_buf(0)
+  if path then
+    local lines = fn.readfile(path)
+    local buf = api.nvim_create_buf(false, true)
+    bufnr = buf
+    api.nvim_buf_set_lines(buf, 0, -1, false, lines)
+  end
 
-  local width = math.ceil(vim.o.columns * 0.8)
-  local height = math.ceil(vim.o.lines * 0.8)
-  local col = math.ceil((vim.o.columns - width) / 2)
-  local row = math.ceil((vim.o.lines - height) / 2)
+  local width = math.ceil(o.columns * 0.8)
+  local height = math.ceil(o.lines * 0.8)
+  local col = math.ceil((o.columns - width) / 2)
+  local row = math.ceil((o.lines - height) / 2)
 
   local opts = {
     relative = 'editor',

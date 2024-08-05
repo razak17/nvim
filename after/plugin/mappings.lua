@@ -498,6 +498,16 @@ map(
   '<Cmd>vertical resize 110<CR>',
   { desc = 'increase vertical spacing' }
 )
+
+-- Redirect messages to a file
+-- @see: https://github.com/rockyzhang24/dotfiles/blob/master/.config/nvim/lua/rockyz/commands.lua#L50
+local messages_file = '$HOME/docs/messages.txt'
+ar.command('MsgsToFileAndOpen', function()
+  vim.cmd('redir >> ' .. messages_file .. ' | silent messages | redir END')
+  require('ar.menus.command_palette').open_in_centered_popup(
+    vim.env.HOME .. '/docs/messages.txt'
+  )
+end)
 --------------------------------------------------------------------------------
 -- Share Code
 ---> Share the file or a range of lines over https://0x0.st .

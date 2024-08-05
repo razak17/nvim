@@ -418,6 +418,7 @@ M.options.command_palette = {
     end
   end,
   ['Toggle Markview'] = 'Markview',
+  ['Open Messages'] = 'MsgsToFileAndOpen',
 }
 
 local command_palette_menu = function()
