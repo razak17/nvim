@@ -36,7 +36,7 @@ function ar.notepad.toggle()
     ar.notepad.win = api.nvim_open_win(ar.notepad.buf, true, {
       title = 'Notepad',
       title_pos = 'center',
-      border = ar.ui.current.border,
+      border = 'single',
       relative = 'editor',
       style = 'minimal',
       height = math.ceil(vim.o.lines * 0.5),
