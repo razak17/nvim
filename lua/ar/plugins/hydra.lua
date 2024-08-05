@@ -1,6 +1,8 @@
+local minimal, niceties = ar.plugins.minimal, ar.plugins.niceties
+
 return {
   'smoka7/hydra.nvim',
-  cond = not ar.plugins.minimal,
+  cond = not minimal,
   event = 'VeryLazy',
   config = function()
     local Hydra = require('hydra')
@@ -91,7 +93,7 @@ return {
     local window_hint = [[
       ^^^^^^^^^^^^     Move      ^^    Size   ^^   ^^     Split
       ^^^^^^^^^^^^-------------  ^^-----------^^   ^^---------------
-      ^ ^ _k_ ^ ^  ^ ^ _K_ ^ ^   ^   _<C-k>_   ^   _s_: horizontally 
+      ^ ^ _k_ ^ ^  ^ ^ _K_ ^ ^   ^   _<C-k>_   ^   _s_: horizontally
       _h_ ^ ^ _l_  _H_ ^ ^ _L_   _<C-h>_ _<C-l>_   _v_: vertically
       ^ ^ _j_ ^ ^  ^ ^ _J_ ^ ^   ^   _<C-j>_   ^   _q_, _c_: close
       focus^^^^^^  window^^^^^^  ^_=_: equalize^   _o_: remain only
@@ -224,5 +226,27 @@ return {
         { '<Esc>', nil, { exit = true, desc = 'Quit' } },
       },
     })
+
+    if not minimal and niceties then
+      local flirt = require('flirt')
+      Hydra({
+        name = 'Flirt',
+        mode = 'n',
+        body = '<leader>wf',
+        color = 'lime',
+        config = {
+          hint = hint_opts,
+          invoke_on_body = true,
+        },
+        heads = {
+          { 'k', function() flirt.move('up') end, { desc = 'move up' } },
+          { 'j', function() flirt.move('down') end, { desc = 'move down' } },
+          { 'h', function() flirt.move('left') end, { desc = 'move left' } },
+          { 'l', function() flirt.move('right') end, { desc = 'move right' } },
+          { '<Esc>', nil, { exit = true, desc = 'Quit' } },
+          { 'q', nil, { exit = true, desc = 'Quit' } },
+        },
+      })
+    end
   end,
 }
