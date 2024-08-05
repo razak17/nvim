@@ -9,7 +9,6 @@ ar.stickyNote = {
   floatData = {},
 }
 
--- ref: https://github.com/Mouthless-Stoat/Nvim-config/blob/master/lua/helper/float.lua
 function math.clamp(val, min, max) return math.max(math.min(max, val), min) end
 
 local function clean_config(config)
