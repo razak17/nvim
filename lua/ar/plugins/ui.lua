@@ -124,7 +124,7 @@ return {
     event = { 'BufRead', 'CursorMoved', 'CursorMovedI', 'WinEnter', 'WinLeave' },
     init = function()
       ar.augroup('reticle', {
-        event = { 'VimEnter', 'BufRead', 'WinEnter' },
+        event = { 'VimEnter', 'BufRead', 'WinEnter', 'FileType' },
         command = function(args)
           if not ui.show_cursorline(args.buf) then
             require('reticle').set_cursorline(false)
