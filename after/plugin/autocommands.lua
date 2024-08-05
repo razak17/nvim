@@ -154,12 +154,13 @@ local function can_save()
     and vim.bo.modifiable
     and not vim.bo.readonly
     and not vim.tbl_contains(save_excluded, vim.bo.filetype)
+    and ar.autosave.enable
 end
 
 augroup('UpdateVim', {
   event = { 'FocusLost', 'InsertLeave', 'TextChanged' },
   command = function(args)
-    if not vim.bo[args.buf].modified or not ar.autosave.enable then return end
+    if not vim.bo[args.buf].modified then return end
     if can_save() then vim.cmd('silent! wall') end
   end,
 }, {
