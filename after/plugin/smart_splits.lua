@@ -4,35 +4,36 @@ if not ar or ar.none or not enabled then return end
 
 local fn = vim.fn
 
+ar.smart_splits = {
+  exclusions = {
+    'alpha',
+    'DiffviewFileHistory',
+    'DiffviewFiles',
+    'gitcommit',
+    'lazy',
+    'neo-tree',
+    'NeogitCommitMessage',
+    'NeogitStatus',
+    'oil',
+    'qf',
+    'starter',
+    'startup',
+    'Trouble',
+  },
+}
+
 --------------------------------------------------------------------------------
 -- Smart Splits
 --------------------------------------------------------------------------------
---[[ move_or_create_win()
 -- Move to a window (one of hjkl) or create a split if a window does not exist in the direction
 -- Vimscript translation of:
 -- https://www.reddit.com/r/vim/comments/166a3ij/comment/jyivcnl/?utm_source=share&utm_medium=web2x&context=3
 -- Usage: vim.keymap("n", "<C-h>", function() move_or_create_win("h") end, {})
---
 -- @arg key: One of h, j, k, l, a direction to move or create a split
 --]]
 -- ref: https://github.com/theopn/theovim/blob/main/lua/core.lua#L207
 local function move_or_create_win(key)
-  local exclusions = {
-    'alpha',
-    'neo-tree',
-    'lazy',
-    'NeogitStatus',
-    'oil',
-    'gitcommit',
-    'NeogitCommitMessage',
-    'DiffviewFileHistory',
-    'DiffviewFiles',
-    'qf',
-    'Trouble',
-    'startup',
-    'starter'
-  }
-  if ar.find_string(exclusions, vim.bo.ft) then
+  if ar.find_string(ar.smart_splits.exclusions, vim.bo.ft) then
     vim.cmd('wincmd ' .. key)
     return
   end
@@ -49,24 +50,12 @@ local function move_or_create_win(key)
   end
 end
 
-map('n', '<C-h>', function() move_or_create_win('h') end, {
-  desc = '[h]: Move to window on the left or create a split',
-})
-map(
-  'n',
-  '<C-j>',
-  function() move_or_create_win('j') end,
-  { desc = '[j]: Move to window below or create a vertical split' }
-)
-map(
-  'n',
-  '<C-k>',
-  function() move_or_create_win('k') end,
-  { desc = '[k]: Move to window above or create a vertical split' }
-)
-map(
-  'n',
-  '<C-l>',
-  function() move_or_create_win('l') end,
-  { desc = '[l]: Move to window on the right or create a split' }
-)
+local function create_map(direction, key, description)
+    -- stylua: ignore
+  map('n', key, function() move_or_create_win(direction) end, { desc = description })
+end
+
+create_map('h', '<C-h>', '[h]: Move to window on the left or create a split')
+create_map('j', '<C-j>', '[j]: Move to window below or create a vertical split')
+create_map('k', '<C-k>', '[k]: Move to window above or create a vertical split')
+create_map('l', '<C-l>', '[l]: Move to window on the right or create a split')
