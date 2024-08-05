@@ -41,7 +41,7 @@ local namespace = {
     env = { enable = true },
     interceptor = { enable = true },
     large_file = { enable = true },
-    notepad = { enable = false },
+    notepad = { enable = true },
     smart_splits = { enable = true },
     smart_tilde = { enable = true },
     sticky_note = { enable = false },
