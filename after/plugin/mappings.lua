@@ -508,6 +508,20 @@ ar.command('MsgsToFileAndOpen', function()
     vim.env.HOME .. '/docs/messages.txt'
   )
 end)
+
+-- Reorder numbered list
+-- Works for the list where the numbers are followed by ". ", "). ", or "]. "
+-- '<,'>s/\d\+\(\(\.\|)\.\|\]\.\)\s\)\@=/\=line('.')-line("'<")+1/
+--                             ^
+--                             |
+--                             ----- add more cases here
+--                             E.g., "\|>\." for the list like "1>. foobar"
+-- @see: https://github.com/rockyzhang24/dotfiles/blob/master/.config/nvim/lua/rockyz/commands.lua#L85
+ar.command(
+  'ReorderList',
+  [['<,'>s/\d\+\(\(\.\|)\.\|\]\.\)\s\)\@=/\=line('.')-line("'<")+1/]],
+  { range = true }
+)
 --------------------------------------------------------------------------------
 -- Share Code
 ---> Share the file or a range of lines over https://0x0.st .
