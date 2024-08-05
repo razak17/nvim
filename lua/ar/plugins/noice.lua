@@ -62,8 +62,16 @@ return {
         position = { row = 1, col = '100%' },
         win_options = { winblend = 0 },
       },
-      vsplit = { size = { width = 'auto' } },
-      split = { win_options = { winhighlight = { Normal = 'Normal' } } },
+      vsplit = {
+        size = { width = 'auto' },
+        win_options = { winblend = 0 },
+      },
+      split = {
+        win_options = {
+          winblend = 0,
+          winhighlight = { Normal = 'Normal' },
+        },
+      },
       popup = {
         border = {
           style = 'single',
@@ -74,6 +82,7 @@ return {
             right = 1,
           },
         },
+        win_options = { winblend = 0 },
       },
       cmdline_popup = {
         position = { row = 5, col = '50%' },
@@ -87,6 +96,7 @@ return {
             right = 1,
           },
         },
+        win_options = { winblend = 0 },
       },
       confirm = {
         border = {
@@ -99,6 +109,7 @@ return {
           },
           text = { top = '' },
         },
+        win_options = { winblend = 0 },
       },
       popupmenu = {
         relative = 'editor',
@@ -114,6 +125,7 @@ return {
           },
         },
         win_options = {
+          winblend = 0,
           winhighlight = { Normal = 'NormalFloat', FloatBorder = 'FloatBorder' },
         },
       },
