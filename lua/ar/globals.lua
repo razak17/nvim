@@ -536,25 +536,26 @@ function ar.list.loc.toggle()
   end
 end
 
--- @see: https://vi.stackexchange.com/a/21255
+-- @see: https://github.com/rockyzhang24/dotfiles/blob/master/.config/nvim/after/ftplugin/qf.lua#L13
 -- using range-aware function
-function ar.list.qf.delete(buf)
-  buf = buf or api.nvim_get_current_buf()
-  local list = fn.getqflist()
-  local line = api.nvim_win_get_cursor(0)[1]
-  local mode = api.nvim_get_mode().mode
-  if mode:match('[vV]') then
-    local first_line = fn.getpos("'<")[2]
-    local last_line = fn.getpos("'>")[2]
-    list = vim
-      .iter(ipairs(list))
-      :filter(function(i) return i < first_line or i > last_line end)
-  else
-    table.remove(list, line)
+function ar.list.qf.delete(opts)
+  local winid = api.nvim_get_current_win()
+  local is_loclist = fn.win_gettype(winid) == 'loclist'
+  local what = { items = 0, title = 0 }
+  local list = is_loclist and fn.getloclist(0, what) or vim.fn.getqflist(what)
+  if #list.items > 0 then
+    local row, col = unpack(api.nvim_win_get_cursor(0))
+    for pos = opts.line2, opts.line1, -1 do
+      table.remove(list.items, pos)
+    end
+    if is_loclist then
+      fn.setloclist(0, {}, 'r', { items = list.items, title = list.title })
+    else
+      fn.setqflist({}, 'r', { items = list.items, title = list.title })
+    end
+    -- stylua: ignore
+    api.nvim_win_set_cursor(0, { row > fn.line('$') and fn.line('$') or row, col })
   end
-  -- replace items in the current list, do not make a new copy of it; this also preserves the list title
-  fn.setqflist({}, 'r', { items = list })
-  fn.setpos('.', { buf, line, 1, 0 }) -- restore current line
 end
 ---------------------------------------------------------------------------------
 

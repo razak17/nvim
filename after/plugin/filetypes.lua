@@ -229,8 +229,8 @@ settings({
     },
     -- stylua: ignore
     mappings = {
-      { 'n', 'dd', ar.list.qf.delete, { buffer = 0, desc = 'delete current quickfix entry' } },
-      { 'v', 'd', ar.list.qf.delete, { buffer = 0, desc = 'delete selected quickfix entry' } },
+      { 'n', 'dd', '<Cmd>QfListDelete<CR>', { buffer = 0, desc = 'delete current quickfix entry' } },
+      { 'x', 'd', ':QfListDelete<CR>', { buffer = 0, desc = 'delete selected quickfix entry' } },
       {
         'n',
         'w',
@@ -249,6 +249,8 @@ settings({
       -- force quickfix to open beneath all other splits
       cmd.wincmd('J')
       ar.adjust_split_height(5, 10)
+      -- stylua: ignore
+      api.nvim_buf_create_user_command(0, 'QfListDelete', ar.list.qf.delete, { range = true })
     end,
   },
   rust = {
