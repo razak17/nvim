@@ -101,7 +101,7 @@ return {
     },
   },
   {
-    'tamton-aquib/flirt.nvim',
+    'razak17/flirt.nvim',
     cond = not minimal and niceties,
     event = 'VeryLazy',
     opts = { speed = 100 },
