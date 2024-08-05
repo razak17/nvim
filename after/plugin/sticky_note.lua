@@ -1,8 +1,6 @@
 if not ar or ar.none then return end
 
-local api = vim.api
-
-local M = {}
+local api, opt_l = vim.api, vim.opt_local
 
 ar.stickyNote = {
   loaded = false,
@@ -152,24 +150,29 @@ local function resize_float(win, opt)
   update_float(win, config)
 end
 
-ar.augroup('stickyNote', {
-  event = { 'WinNew', 'WinEnter', 'WinClosed' },
-  pattern = '*',
-  command = function(data)
-    if data.event == 'WinClosed' then
-      ar.stickyNote.floatData[tonumber(data.match)] = nil
+local function action(key, direction, symbol, amount, desc, resize)
+  map('n', key, function()
+    local config = api.nvim_win_get_config(0)
+    local win = api.nvim_get_current_win()
+    if config.relative == '' then
+      local feedkey = '<C-w>' .. symbol
+      api.nvim_feedkeys(
+        api.nvim_replace_termcodes('<C-w>' .. symbol, true, false, true),
+        't',
+        false
+      )
+    else
+      if resize then
+        resize_float(win, { direction = direction, amount = amount })
+      else
+        move_float(win, direction, amount)
+      end
     end
-    for win, config in pairs(ar.stickyNote.floatData) do
-      config.title = config.titleFunc == nil
-          and api.nvim_win_get_number(win) .. ': ' .. config.ogTitle
-        or config.titleFunc
-      update_float(win, config)
-    end
-  end,
-})
+  end, { desc = desc, buffer = 0 })
+end
 
 map('n', '<leader><leader>no', function()
-  create_float({
+  local float = create_float({
     relative = 'editor',
     position = 'center',
     title = 'Sticky',
@@ -185,117 +188,38 @@ map('n', '<leader><leader>no', function()
     moveCount = 5,
     shiftCount = 2,
   })
-  vim.opt_local.wrap = true
-  vim.opt_local.linebreak = true
+  api.nvim_set_option_value('filetype', 'sticky', { buf = float.buf })
+  api.nvim_set_option_value('winblend', 0, { win = float.win })
+  opt_l.wrap = true
+  opt_l.linebreak = true
   vim.cmd.startinsert()
+
+  -- Resize mappings
+  action('<A-k>', 'up', '-', 5, 'resize [w]indow [up]', true)
+  action('<A-j>', 'down', '+', 5, 'resize [w]indow [down]', true)
+  action('<A-h>', 'left', '>', 5, 'resize [w]indow [left]', true)
+  action('<A-l>', 'right', '<', 5, 'resize [w]indow [right]', true)
+  -- Move mappings
+  action('<leader>K', 'up', '<Up>', 15, 'switch to up window', false)
+  action('<leader>J', 'down', '<Down>', 15, 'switch to down window', false)
+  action('<leader>H', 'left', '<Left>', 15, 'switch to left window', false)
+  action('<leader>L', 'right', '<Right>', 15, 'switch to right window', false)
 end, { desc = 'new [w]indow [s]ticky note' })
 
 -- map('n', '<leader>ww', '<C-w>w', { desc = 'switch [[w]]indow' })
 
-map('n', '<leader><leader>nK', function()
-  local config = api.nvim_win_get_config(0)
-  local win = api.nvim_get_current_win()
-  if config.relative == '' then
-    api.nvim_feedkeys(
-      api.nvim_replace_termcodes('<C-w>-', true, false, true),
-      't',
-      false
-    )
-  else
-    resize_float(win, { direction = 'up', amount = 5 })
-  end
-end, { desc = 'resize [w]indow [up]' })
-map('n', '<leader><leader>nJ', function()
-  local config = api.nvim_win_get_config(0)
-  local win = api.nvim_get_current_win()
-  if config.relative == '' then
-    api.nvim_feedkeys(
-      api.nvim_replace_termcodes('<C-w>+', true, false, true),
-      't',
-      false
-    )
-  else
-    resize_float(win, { direction = 'down', amount = 5 })
-  end
-end, { desc = 'resize [w]indow [down]' })
-map('n', '<leader><leader>nH', function()
-  local config = api.nvim_win_get_config(0)
-  local win = api.nvim_get_current_win()
-  if config.relative == '' then
-    api.nvim_feedkeys(
-      api.nvim_replace_termcodes('<C-w>>', true, false, true),
-      't',
-      false
-    )
-  else
-    resize_float(win, { direction = 'left', amount = 5 })
-  end
-end, { desc = 'resize [w]indow [left]' })
-map('n', '<leader><leader>nL', function()
-  local config = api.nvim_win_get_config(0)
-  local win = api.nvim_get_current_win()
-  if config.relative == '' then
-    api.nvim_feedkeys(
-      api.nvim_replace_termcodes('<C-w><', true, false, true),
-      't',
-      false
-    )
-  else
-    resize_float(win, { direction = 'right', amount = 5 })
-  end
-end, { desc = 'resize [w]indow [right]' })
-
-map('n', '<leader><leader>nk', function()
-  local config = api.nvim_win_get_config(0)
-  local win = api.nvim_get_current_win()
-  if config.relative == '' then
-    api.nvim_feedkeys(
-      api.nvim_replace_termcodes('<C-w><Up>', true, false, true),
-      't',
-      false
-    )
-  else
-    move_float(win, 'up', 15)
-  end
-end, { desc = 'switch to up window' })
-map('n', '<leader><leader>nj', function()
-  local config = api.nvim_win_get_config(0)
-  local win = api.nvim_get_current_win()
-  if config.relative == '' then
-    api.nvim_feedkeys(
-      api.nvim_replace_termcodes('<C-w><Down>', true, false, true),
-      't',
-      false
-    )
-  else
-    move_float(win, 'down', 15)
-  end
-end, { desc = 'switch to down window' })
-map('n', '<leader><leader>nh', function()
-  local config = api.nvim_win_get_config(0)
-  local win = api.nvim_get_current_win()
-  if config.relative == '' then
-    api.nvim_feedkeys(
-      api.nvim_replace_termcodes('<C-w><Left>', true, false, true),
-      't',
-      false
-    )
-  else
-    move_float(win, 'left', 15)
-  end
-end, { desc = 'switch to left window' })
-map('n', '<leader><leader>nl', function()
-  local config = api.nvim_win_get_config(0)
-  local win = api.nvim_get_current_win()
-  if config.relative == '' then
-    api.nvim_feedkeys(
-      api.nvim_replace_termcodes('<C-w><Right>', true, false, true),
-      't',
-      false
-    )
-  else
-    move_float(win, 'right', 15)
-  end
-end, { desc = 'switch to right window' })
-
-return M
+ar.augroup('stickyNote', {
+  event = { 'WinNew', 'WinEnter', 'WinClosed' },
+  pattern = '*',
+  command = function(data)
+    if data.event == 'WinClosed' then
+      ar.stickyNote.floatData[tonumber(data.match)] = nil
+    end
+    for win, config in pairs(ar.stickyNote.floatData) do
+      config.title = config.titleFunc == nil
+          and api.nvim_win_get_number(win) .. ': ' .. config.ogTitle
+        or config.titleFunc
+      update_float(win, config)
+    end
+  end,
+})

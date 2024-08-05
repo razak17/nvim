@@ -75,6 +75,7 @@ local smart_close_filetypes = ar.p_table({
   ['telescope-lazy'] = true,
   ['grug-far'] = true,
   ['toggleterm'] = true,
+  ['sticky'] = true,
 })
 
 local smart_close_buftypes = ar.p_table({
@@ -166,7 +167,6 @@ augroup('UpdateVim', {
 }, {
   event = { 'BufLeave' },
   command = function(args)
-    if not ar.autosave.enable then return end
     if api.nvim_buf_line_count(args.buf) <= 1 then return end
     if can_save() then vim.cmd('silent! write ++p') end
   end,
