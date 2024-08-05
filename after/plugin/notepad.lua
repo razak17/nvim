@@ -15,7 +15,6 @@ ar.notepad = {
 -- then checks if notepad buffer has been initialized. If so, reuse the buffer, else, create a new scratch buffer
 -- If window is not active, display a small floating window with the scratch buffer
 --]]
--- ref: https://github.com/theopn/theovim/blob/main/lua/tools/notepad.lua
 function ar.notepad.toggle()
   if not ar.notepad.loaded or not api.nvim_win_is_valid(ar.notepad.win) then
     if not ar.notepad.buf or not api.nvim_buf_is_valid(ar.notepad.buf) then
