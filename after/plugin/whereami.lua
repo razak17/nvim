@@ -1,4 +1,4 @@
--- Ref:  https://github.com/OXY2DEV/nvim/blob/e7c4834daa63f6bb897c8564ae47cf59dfdbe4a4/lua/scripts/whereAmI.lua
+-- @see: https://github.com/OXY2DEV/nvim/blob/main/lua/scripts/beacon.lua
 
 local api = vim.api
 
