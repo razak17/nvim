@@ -145,6 +145,7 @@ return {
       { '<leader>rkk', ':lua require("kulala").run()<CR>', desc = 'kulala: run' },
       { '<leader>rkn', ':lua require("kulala").jump_next()<CR>', desc = 'kulala: next' },
       { '<leader>rkp', ':lua require("kulala").jump_prev()<CR>', desc = 'kulala: prev' },
+      { '<leader>rks', ':lua require("kulala").scratchpad()<CR>', desc = 'kulala: scratchpad' },
       { '<leader>rkt', ':lua require("kulala").toggle_view()<CR>', desc = 'kulala: toggle view' },
     },
     opts = { default_env = 'local' },
