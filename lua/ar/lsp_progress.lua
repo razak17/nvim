@@ -1,100 +1,220 @@
 -- ref: https://github.com/rockyzhang24/dotfiles/blob/master/.config/nvim/lua/rockyz/lsp/progress.lua
 
--- Buffer number and window id for the floating window
-
-local api = vim.api
+local api, o = vim.api, vim.o
 local border = ar.ui.current.border
 
 local M = {
-  bufnr = nil,
-  winid = nil,
-  spinner = { '⣾', '⣽', '⣻', '⢿', '⡿', '⣟', '⣯', '⣷' },
-  idx = 0,
-  is_done = true,
+  icons = {
+    spinner = { '⣾', '⣽', '⣻', '⢿', '⡿', '⣟', '⣯', '⣷' },
+    done = ' ',
+  },
+  -- Maintain the total number of current windows
+  total_wins = 0,
+  clients = {},
 }
 
--- Get the progress message for all clients. The format is
--- "65%: [lua_ls] Loading Workspace: 123/1500 | [client2] xxx | [client3] xxx"
-local function get_lsp_progress_msg()
-  -- Most code is grabbed from the source of vim.lsp.status()
-  -- Ref: https://github.com/neovim/neovim/blob/master/runtime/lua/vim/lsp.lua
-  local percentage = nil
-  local all_messages = {}
-  M.is_done = true
-  for _, client in ipairs(vim.lsp.get_clients()) do
-    local messages = {}
-    for progress in client.progress do
-      local value = progress.value
-      if type(value) == 'table' and value.kind then
-        if value.kind ~= 'end' then M.is_done = false end
-        local message = value.message and (value.title .. ': ' .. value.message)
-          or value.title
-        messages[#messages + 1] = message
-        if value.percentage then
-          percentage = math.max(percentage or 0, value.percentage)
-        end
-      end
-    end
-    if next(messages) ~= nil then
-      table.insert(
-        all_messages,
-        '[' .. client.name .. '] ' .. table.concat(messages, ', ')
-      )
-    end
+-- Suppress errors that may occur while render windows. E.g., nvim_buf_set_lines() will throw E565
+-- when textlock is active. I encounter this issue when I use quick-scope in visual mode and its
+-- getchar() brings about textlock.
+-- All other errors will be re-thrown.
+-- Adapted from j-hui/fidget.nvim
+---@param callable function
+---@return boolean # If the callable executes successfully or not
+local function guard(callable)
+  local whitelist = {
+    'E11: Invalid in command%-line window',
+    'E523: Not allowed here',
+    'E565: Not allowed to change',
+  }
+  local ok, err = pcall(callable)
+  if ok then return true end
+  if type(err) ~= 'string' then error(err) end
+  for _, msg in ipairs(whitelist) do
+    if string.find(err, msg) then return false end
   end
-  local message = table.concat(all_messages, ' | ')
-  -- Show percentage
-  if percentage then
-    message = string.format('%3d%%: %s', percentage, message)
+  error(err)
+end
+
+-- Initialize or reset the properties of the given client
+local function init_or_reset(client)
+  client.is_done = false
+  client.spinner_idx = 0
+  client.winid = nil
+  client.bufnr = nil
+  client.message = nil
+  client.pos = M.total_wins + 1
+  client.timer = nil
+end
+
+-- Get the row position of the current floating window. If it is the first one, it is placed just
+-- right above the statuslien; if not, it is placed on top of others.
+local function get_win_row(pos) return o.lines - o.cmdheight - 1 - pos * 3 end
+
+-- Update the window config
+local function win_update_config(client)
+  api.nvim_win_set_config(client.winid, {
+    relative = 'editor',
+    width = #client.message,
+    height = 1,
+    row = get_win_row(client.pos),
+    col = o.columns - #client.message,
+  })
+end
+
+-- Close the window and delete the associated buffer
+local function close_window(winid, bufnr)
+  if api.nvim_win_is_valid(winid) then api.nvim_win_close(winid, true) end
+  if api.nvim_buf_is_valid(bufnr) then
+    api.nvim_buf_delete(bufnr, { force = true })
   end
-  -- Show spinner
-  M.idx = M.idx == #M.spinner * 4 and 1 or M.idx + 1
-  message = M.spinner[math.ceil(M.idx / 4)] .. message
+end
+
+-- Assemble the output progress message and set the flag to mark if it's completed.
+-- * General: ⣾ [client_name] title: message ( 5%)
+-- * Done:     [client_name] title: DONE!
+local function process_message(client, name, params)
+  local message = ''
+  message = '[' .. name .. ']'
+  local kind = params.value.kind
+  local title = params.value.title
+  if title then message = message .. ' ' .. title .. ':' end
+  if kind == 'end' then
+    client.is_done = true
+    message = M.icons.done .. ' ' .. message .. ' DONE!'
+  else
+    client.is_done = false
+    local raw_msg = params.value.message
+    local pct = params.value.percentage
+    if raw_msg then message = message .. ' ' .. raw_msg end
+    if pct then message = string.format('%s (%3d%%)', message, pct) end
+    -- Spinner
+    local idx = client.spinner_idx
+    idx = idx == #M.icons.spinner * 4 and 1 or idx + 1
+    message = M.icons.spinner[math.ceil(idx / 4)] .. ' ' .. message
+    client.spinner_idx = idx
+  end
   return message
 end
 
-ar.augroup('CustomLspProgress', {
-  event = 'LspProgress',
-  pattern = '*',
-  command = function()
-    -- The row position of the floating window. Just right above the status line.
-    local win_row = vim.o.lines - vim.o.cmdheight - 4
-    local message = get_lsp_progress_msg()
-    if
-      M.winid == nil
-      or not api.nvim_win_is_valid(M.winid)
-      or api.nvim_win_get_tabpage(M.winid) ~= api.nvim_get_current_tabpage()
-    then
-      M.bufnr = api.nvim_create_buf(false, true)
-      M.winid = api.nvim_open_win(M.bufnr, false, {
-        relative = 'editor',
-        width = #message,
-        height = 1,
-        row = win_row,
-        col = vim.o.columns - #message,
-        style = 'minimal',
-        noautocmd = true,
-        border = border,
-      })
-    else
-      api.nvim_win_set_config(M.winid, {
-        relative = 'editor',
-        width = #message,
-        row = win_row,
-        col = vim.o.columns - #message,
-      })
+-- Show the progress message in floating window
+local function show_message(client)
+  local winid = client.winid
+  -- Create a new window or update the existing one
+  if
+    winid == nil
+    or not api.nvim_win_is_valid(winid)
+    or api.nvim_win_get_tabpage(winid) ~= api.nvim_get_current_tabpage() -- Switch to another tab
+  then
+    local success = guard(
+      function()
+        winid = api.nvim_open_win(client.bufnr, false, {
+          relative = 'editor',
+          width = #client.message,
+          height = 1,
+          row = get_win_row(client.pos),
+          col = o.columns - #client.message,
+          focusable = false,
+          style = 'minimal',
+          noautocmd = true,
+          border = border,
+        })
+      end
+    )
+    if not success then return end
+    client.winid = winid
+    M.total_wins = M.total_wins + 1
+  else
+    win_update_config(client)
+  end
+  -- Write the message into the buffer
+  vim.wo[winid].winhl = 'Normal:Normal'
+  guard(
+    function()
+      api.nvim_buf_set_lines(client.bufnr, 0, 1, false, { client.message })
     end
-    vim.wo[M.winid].winhl = 'NormalFloat:NormalFloat'
-    api.nvim_buf_set_lines(M.bufnr, 0, 1, false, { message })
-    if M.is_done then
-      if api.nvim_win_is_valid(M.winid) then
-        api.nvim_win_close(M.winid, true)
-      end
-      if api.nvim_buf_is_valid(M.bufnr) then
-        api.nvim_buf_delete(M.bufnr, { force = true })
-      end
-      M.winid = nil
-      M.idx = 0
+  )
+end
+
+-- Display the progress message
+local function handler(args)
+  local client_id = args.data.client_id
+
+  -- Initialize the properties
+  if M.clients[client_id] == nil then
+    M.clients[client_id] = {}
+    init_or_reset(M.clients[client_id])
+  end
+  local cur_client = M.clients[client_id]
+
+  -- Create buffer for the floating window showing the progress message and the timer used to close
+  -- the window when progress report is done.
+  if cur_client.bufnr == nil then
+    cur_client.bufnr = api.nvim_create_buf(false, true)
+  end
+  if cur_client.timer == nil then cur_client.timer = vim.uv.new_timer() end
+
+  -- Get the formatted progress message
+  cur_client.message = process_message(
+    cur_client,
+    vim.lsp.get_client_by_id(client_id).name,
+    args.data.params
+  )
+
+  -- Show progress message in floating window
+  show_message(cur_client)
+
+  -- Close the window when finished and adjust the positions of other windows if they exist.
+  -- Let the window stay briefly on the screen before closing it (say 2s). When closing, attempt to
+  -- close at intervals (say 100ms) to handle the potential textlock. We can use uv.timer to
+  -- implement it.
+  if cur_client.is_done then
+    cur_client.timer:start(
+      2000,
+      100,
+      vim.schedule_wrap(function()
+        -- To handle the scenario 1
+        if not cur_client.is_done and cur_client.winid ~= nil then
+          cur_client.timer:stop()
+          return
+        end
+        local success = false
+        -- Close the window if it has not been closed yet
+        if cur_client.winid ~= nil and cur_client.bufnr ~= nil then
+          success = guard(
+            function() close_window(cur_client.winid, cur_client.bufnr) end
+          )
+        end
+        -- If the window is closed successfully, stop the timer, adjust the positions of other windows
+        -- and reset properties of the client
+        if success then
+          cur_client.timer:stop()
+          cur_client.timer:close()
+          M.total_wins = M.total_wins - 1
+          -- Move all windows above this closed window down by one position
+          for _, c in ipairs(M.clients) do
+            if c.winid ~= nil and c.pos > cur_client.pos then
+              c.pos = c.pos - 1
+              win_update_config(c)
+            end
+          end
+          -- Reset the properties
+          init_or_reset(cur_client)
+        end
+      end)
+    )
+  end
+end
+
+ar.augroup('lsp_progress', {
+  event = { 'LspProgress' },
+  pattern = { '*' },
+  command = function(args) handler(args) end,
+}, {
+  event = { 'VimResized', 'TermLeave' },
+  pattern = { '*' },
+  command = function()
+    for _, c in ipairs(M.clients) do
+      if c.is_done then win_update_config(c) end
     end
   end,
 })

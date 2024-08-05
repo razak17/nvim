@@ -29,7 +29,7 @@ local namespace = {
     null_ls = { enable = false },
     omnifunc = { enable = true },
     override = {},
-    progress = { enable = false },
+    progress = { enable = true },
     semantic_tokens = { enable = false },
     signs = { enable = false },
     typescript_tools = { enable = true },
