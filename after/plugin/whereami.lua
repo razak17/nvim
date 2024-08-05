@@ -1,5 +1,7 @@
 -- Ref:  https://github.com/OXY2DEV/nvim/blob/e7c4834daa63f6bb897c8564ae47cf59dfdbe4a4/lua/scripts/whereAmI.lua
 
+local api = vim.api
+
 local beaconSpace = vim.api.nvim_create_namespace('beacon')
 local beaconTimer = vim.uv.new_timer()
 
@@ -105,7 +107,7 @@ local gradient = function(
     local G = ease(gradientEase, from.g, to.g, i * add)
     local B = ease(gradientEase, from.b, to.b, i * add)
 
-    vim.api.nvim_set_hl(
+    api.nvim_set_hl(
       0,
       'Beacon_' .. i,
       { bg = string.format('#%x%x%x', R, G, B) }
@@ -134,7 +136,8 @@ local gradient = function(
 end
 
 local colCount = 5
-local normalBg = vim.api.nvim_get_hl(0, { name = 'Normal' }).bg
+local bg = ar.ui.transparent.enable and 'Cursorline' or 'Normal'
+local normalBg = api.nvim_get_hl(0, { name = bg }).bg
 local color = { r = 203, g = 166, b = 247 }
 
 local startDelay = 750
@@ -147,11 +150,11 @@ local animationEase = 'ease-out-sine'
 
 local startColors, animationValues
 
-vim.api.nvim_create_user_command('Beacon', function(options)
+api.nvim_create_user_command('Beacon', function(options)
   local posY, posX =
-    vim.api.nvim_win_get_cursor(0)[1] - 1, vim.api.nvim_win_get_cursor(0)[2]
+    api.nvim_win_get_cursor(0)[1] - 1, api.nvim_win_get_cursor(0)[2]
   local availableWidth =
-    #table.concat(vim.api.nvim_buf_get_lines(0, posY, posY + 1, false))
+    #table.concat(api.nvim_buf_get_lines(0, posY, posY + 1, false))
 
   if availableWidth < 1 then return end
 
@@ -162,9 +165,9 @@ vim.api.nvim_create_user_command('Beacon', function(options)
   end
 
   if vim.o.cursorline == true then
-    normalBg = vim.api.nvim_get_hl(0, { name = 'CursorLine' }).bg
+    normalBg = api.nvim_get_hl(0, { name = 'CursorLine' }).bg
   else
-    normalBg = vim.api.nvim_get_hl(0, { name = 'Normal' }).bg
+    normalBg = api.nvim_get_hl(0, { name = 'Normal' }).bg
   end
 
   if options.fargs[2] ~= nil then
@@ -216,7 +219,7 @@ vim.api.nvim_create_user_command('Beacon', function(options)
   for n = 0, colCount - 1 do
     if posX < 0 or posX > availableWidth then break end
 
-    vim.api.nvim_buf_set_extmark(0, beaconSpace, posY, posX, {
+    api.nvim_buf_set_extmark(0, beaconSpace, posY, posX, {
       end_col = posX + 1,
       hl_group = 'Beacon_' .. n,
 
@@ -233,14 +236,14 @@ vim.api.nvim_create_user_command('Beacon', function(options)
     vim.schedule_wrap(function()
       for groupName, values in pairs(animationValues) do
         if values[currentFrame] == nil then
-          vim.api.nvim_buf_clear_namespace(0, beaconSpace, posY, posY + 1)
+          api.nvim_buf_clear_namespace(0, beaconSpace, posY, posY + 1)
 
           currentFrame = 1
           beaconTimer:stop()
           return
         end
 
-        vim.api.nvim_set_hl(0, groupName, { bg = values[currentFrame] })
+        api.nvim_set_hl(0, groupName, { bg = values[currentFrame] })
       end
 
       currentFrame = currentFrame + 1
