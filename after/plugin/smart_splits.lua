@@ -26,12 +26,7 @@ ar.smart_splits = {
 -- Smart Splits
 --------------------------------------------------------------------------------
 -- Move to a window (one of hjkl) or create a split if a window does not exist in the direction
--- Vimscript translation of:
--- https://www.reddit.com/r/vim/comments/166a3ij/comment/jyivcnl/?utm_source=share&utm_medium=web2x&context=3
--- Usage: vim.keymap("n", "<C-h>", function() move_or_create_win("h") end, {})
--- @arg key: One of h, j, k, l, a direction to move or create a split
---]]
--- ref: https://github.com/theopn/theovim/blob/main/lua/core.lua#L207
+-- @see: https://github.com/theopn/theovim/blob/main/lua/config/keymap.lua#L100
 local function move_or_create_win(key)
   if ar.find_string(ar.smart_splits.exclusions, vim.bo.ft) then
     vim.cmd('wincmd ' .. key)
