@@ -248,6 +248,7 @@ if not is_available('neo-tree.nvim') then
   nnoremap('<C-n>', ':Ex<CR>', { desc = 'explorer' })
 end
 nnoremap('<leader>X', ':wqall<CR>', { desc = 'save all and quit' })
+nnoremap('<leader>wq', '<cmd>:q<cr>', { desc = 'delete window' })
 nnoremap('<leader>qq', ':q<CR>', { desc = 'quit' })
 nnoremap('<leader>Q', ':qa!<CR>', { desc = 'force quit all' })
 nnoremap('<localleader>Q', ':cq<CR>', { desc = 'restart editor' })
