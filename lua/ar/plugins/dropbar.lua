@@ -6,7 +6,7 @@ local decor = ui.decorations
 
 return {
   'Bekaboo/dropbar.nvim',
-  event = { 'BufRead', 'BufNewFile' },
+  lazy = false,
   cond = not ar.plugins.minimal,
   keys = {
     {
@@ -17,7 +17,13 @@ return {
   },
   opts = {
     general = {
-      update_interval = 100,
+      update_interval = 0,
+      attach_events = {
+        'OptionSet',
+        'BufWinEnter',
+        'BufWritePost',
+        'BufEnter',
+      },
       enable = function(buf, win)
         local b, w = vim.bo[buf], vim.wo[win]
         local decs = decor.get({ ft = b.ft, bt = b.bt, setting = 'winbar' })
@@ -27,6 +33,10 @@ return {
           show = true
         else
           show = decs.ft == true or decs.bt == true
+        end
+        if not show then
+          vim.opt_local.winbar = ''
+          return false
         end
         return show
           and b.bt == ''
