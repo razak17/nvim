@@ -1,5 +1,7 @@
 local fn, api = vim.fn, vim.api
 local ui, falsy, format_text = ar.ui, ar.falsy, ar.format_text
+local icons = ui.icons
+local fcs = vim.opt.fillchars:get()
 
 local M = {}
 
@@ -87,6 +89,8 @@ function M.icon(sign, len)
   return sign.texthl and ('%#' .. sign.texthl .. '#' .. text .. '%*') or text
 end
 
+---@param buf integer
+---@param lnum integer
 function M.get_left(buf, lnum)
   local marks = M.get_mark(buf, lnum)
   local gitsigns, other_sns = M.extmark_signs(buf, lnum)
@@ -111,6 +115,36 @@ function M.get_left(buf, lnum)
   local signs = #left > 0 and table.concat(left, '') or M.space(2)
 
   return signs, gitsigns
+end
+
+---@param lnum integer
+---@return Sign?
+function M.get_fold(lnum)
+  -- https://www.reddit.com/r/neovim/comments/1djjc6q/statuscolumn_a_beginers_guide/
+  local foldlevel = fn.foldlevel(lnum)
+  local foldlevel_before = fn.foldlevel((lnum - 1) >= 1 and lnum - 1 or 1)
+  local foldlevel_after =
+    fn.foldlevel((lnum + 1) <= fn.line('$') and (lnum + 1) or fn.line('$'))
+
+  local foldclosed = fn.foldclosed(lnum)
+
+  -- Line is in the middle of an open fold
+  local fold = { text = M.space(), texthl = 'IndentBlanklineChar' } -- │
+  -- Line has nothing to do with folds so we will skip it
+  if foldlevel == 0 then
+    fold = { text = M.space(), texthl = 'Comment' }
+    -- Line is a closed fold (I know second condition feels unnecessary but I will still add it)
+  elseif foldclosed ~= -1 and foldclosed == lnum then
+    fold = { text = fcs.foldclose or icons.chevron_right, texthl = 'Comment' }
+    -- I didn't use ~= because it couldn't make a nested fold have a lower level than it's parent fold and it's not something I would use
+  elseif foldlevel > foldlevel_before then
+    fold = { text = fcs.foldopen or icons.chevron_down, texthl = 'Comment' }
+    -- The line is the last line in the fold
+  elseif foldlevel > foldlevel_after then
+    fold = { text = M.space(), texthl = 'IndentBlanklineChar' } --  ╰
+  end
+
+  return fold
 end
 
 return M

@@ -52,6 +52,7 @@ return {
       local separator = sep.dotted_thin_block
       local statusline = require('ar.statusline')
       local conditions = require('heirline.conditions')
+      local is_git_repo = conditions.is_git_repo
       local utils = require('heirline.utils')
       local align = { provider = '%=' }
 
@@ -97,7 +98,7 @@ return {
         },
         -- Git
         {
-          condition = function() return conditions.is_git_repo() end,
+          condition = function() return is_git_repo() end,
           init = function(self) self.status_dict = vim.b.gitsigns_status_dict end,
           {
             {
@@ -306,7 +307,7 @@ return {
         },
         -- Git Diff
         {
-          condition = conditions.is_git_repo,
+          condition = is_git_repo,
           init = function(self)
             self.status_dict = vim.b.gitsigns_status_dict
             self.has_changes = self.status_dict.added ~= 0
@@ -823,19 +824,15 @@ return {
             },
           },
           spacer,
+          -- Git signs
           {
             {
-              condition = function()
-                return not conditions.is_git_repo() or v.virtnum ~= 0
-              end,
+              condition = function() return not is_git_repo() or v.virtnum ~= 0 end,
               provider = space(),
               hl = 'HeirlineStatusColumn',
             },
-            -- Git signs
             {
-              condition = function()
-                return conditions.is_git_repo() and v.virtnum == 0
-              end,
+              condition = function() return is_git_repo() and v.virtnum == 0 end,
               init = function(self)
                 if #self.g_sns == 0 then
                   self.gitsign = nil
@@ -875,39 +872,24 @@ return {
             end,
             hl = 'IndentBlanklineChar',
           },
-        },
-        {
-          condition = function() return v.virtnum == 0 end,
-          init = function(self)
-            self.lnum = v.lnum
-            self.folded = fn.foldlevel(self.lnum) > fn.foldlevel(self.lnum - 1)
-          end,
+          -- Folds
           {
-            condition = function(self) return self.folded end,
+            condition = function() return v.virtnum == 0 end,
+            init = function(self) self.fold = statuscol.get_fold(v.lnum) end,
             {
-              provider = function(self)
-                if fn.foldclosed(self.lnum) == -1 then return fcs.foldopen end
+              provider = function(self) return self.fold.text end,
+              hl = function(self) return self.fold.texthl end,
+            },
+            on_click = {
+              name = 'fold_click',
+              callback = function(self, ...)
+                if self.handlers.fold then
+                  self.handlers.fold(self.click_args(self, ...))
+                end
               end,
             },
-            {
-              provider = function(self)
-                if fn.foldclosed(self.lnum) ~= -1 then return fcs.foldclose end
-              end,
-            },
+            spacer,
           },
-          {
-            condition = function(self) return not self.folded end,
-            provider = space(),
-          },
-          on_click = {
-            name = 'fold_click',
-            callback = function(self, ...)
-              if self.handlers.fold then
-                self.handlers.fold(self.click_args(self, ...))
-              end
-            end,
-          },
-          spacer,
         },
       }
 
