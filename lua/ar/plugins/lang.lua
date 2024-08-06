@@ -443,7 +443,7 @@ return {
   },
   {
     'OXY2DEV/markview.nvim',
-    cond = not minimal and niceties and false,
+    cond = not minimal and not niceties,
     cmd = { 'Markview' },
     ft = { 'markdown' },
     opts = {},
