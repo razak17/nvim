@@ -253,7 +253,7 @@ augroup('Utilities', {
   pattern = { '*' },
   nested = true,
   command = function()
-    if ar.large_file_opened then return end
+    if ar.large_file.active then return end
 
     if falsy(vim.bo.filetype) or fn.exists('b:ftdetect') == 1 then
       vim.cmd([[

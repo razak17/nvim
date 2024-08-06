@@ -9,7 +9,6 @@ local namespace = {
   debug = { enable = false },
   frecency = { enable = true },
   git = {},
-  large_file_opened = false,
   remote_sync = { enable = false },
   use_local_gx = false,
   -- stylua: ignore
