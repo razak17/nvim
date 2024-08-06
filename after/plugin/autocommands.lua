@@ -82,7 +82,7 @@ local smart_close_buftypes = ar.p_table({
   ['nofile'] = true,
 })
 
-local function smart_close()
+function ar.smart_close()
   if fn.winnr('$') ~= 1 then api.nvim_win_close(0, true) end
 end
 
@@ -103,7 +103,7 @@ augroup('SmartClose', {
       or smart_close_filetypes[buf.ft]
       or smart_close_buftypes[buf.bt]
     if is_eligible then
-      map('n', 'q', smart_close, { buffer = args.buf, nowait = true })
+      map('n', 'q', ar.smart_close, { buffer = args.buf, nowait = true })
     end
   end,
 })
