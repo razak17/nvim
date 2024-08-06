@@ -95,6 +95,7 @@ function M.open_in_centered_popup(path)
     style = 'minimal',
   }
   api.nvim_open_win(bufnr, true, opts)
+  map('n', 'q', ar.smart_close, { buffer = bufnr, nowait = true })
 end
 
 function M.close_nonvisible_buffers()
