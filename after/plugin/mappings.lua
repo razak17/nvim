@@ -480,12 +480,12 @@ command('ClearRegisters', function()
     fn.setreg(r, {})
   end
 end)
-
+--------------------------------------------------------------------------------
 command('Reverse', '<line1>,<line2>g/^/m<line1>-1', {
   range = '%',
   bar = true,
 })
-
+--------------------------------------------------------------------------------
 -- see: https://github.com/yutkat/convert-git-url.nvim
 command('ConvertGitUrl', function()
   local save_pos = vim.fn.getpos('.')
@@ -498,13 +498,15 @@ command('ConvertGitUrl', function()
   vim.fn.setpos('.', save_pos)
 end, { force = true })
 map('n', '<leader>gu', '<Cmd>ConvertGitUrl<CR>', { desc = 'convert git url' })
+--------------------------------------------------------------------------------
+-- 70/30 split for split windows
 map(
   'n',
   '<leader>wr',
   '<Cmd>vertical resize 110<CR>',
   { desc = 'increase vertical spacing' }
 )
-
+--------------------------------------------------------------------------------
 -- Redirect messages to a file
 -- @see: https://github.com/rockyzhang24/dotfiles/blob/master/.config/nvim/lua/rockyz/commands.lua#L50
 local messages_file = '$HOME/docs/messages.txt'
@@ -514,7 +516,7 @@ ar.command('MsgsToFileAndOpen', function()
     vim.env.HOME .. '/docs/messages.txt'
   )
 end)
-
+--------------------------------------------------------------------------------
 -- Reorder numbered list
 -- Works for the list where the numbers are followed by ". ", "). ", or "]. "
 -- '<,'>s/\d\+\(\(\.\|)\.\|\]\.\)\s\)\@=/\=line('.')-line("'<")+1/
