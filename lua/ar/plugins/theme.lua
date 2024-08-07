@@ -127,6 +127,8 @@ return {
         'NoiceFormatEvent',
         'NoiceConfirm',
         'NoiceConfirmBorder',
+        'MarkviewCode',
+        'MarkviewInlineCode',
       },
     },
     config = function(_, opts)
@@ -135,6 +137,8 @@ return {
       ar.highlight.plugin('transparent', {
         theme = {
           ['onedark'] = {
+            { MarkviewCode = { link = 'NormalFloat' } },
+            { MarkviewInlineCode = { link = 'NormalFloat' } },
             { FloatBorder = { link = 'WinSeparator' } },
             { PopupBorder = { link = 'FloatBorder' } },
             {
