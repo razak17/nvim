@@ -8,21 +8,20 @@ local bo, o, wo = vim.bo, vim.o, vim.wo
 ar.large_file = {
   active = false,
   exclusions = { 'NeogitCommitMessage' },
-  limit = 100 * 1024, -- 100 KB
-  line_count = 2000,
-  plugins = {
-    ['mini.indentscope'] = 'MiniIndentscope',
-  },
+  -- limit = 100 * 1024, -- 100 KB
+  limit = 100 * 1024 * 1.5, -- 1.5 MB
+  line_count = 2048,
 }
+
+local lf = ar.large_file
 
 ar.augroup('LargeFileAutocmds', {
   event = { 'BufEnter', 'BufReadPre', 'BufWritePre', 'TextChanged' },
   command = function(args)
-    local lf = ar.large_file
     local line_count = api.nvim_buf_line_count(args.buf)
     local filesize = fn.getfsize(fn.expand('%'))
     if line_count > lf.line_count or filesize > lf.limit then
-      lf.active = true
+      ar.large_file.active = true
 
       wo.wrap = false
       bo.bufhidden = 'unload'
@@ -31,9 +30,9 @@ ar.augroup('LargeFileAutocmds', {
       -- bo.undolevels = -1
       cmd.filetype('off')
     else
-      lf.active = false
+      ar.large_file.active = false
 
-      bo.bufhidden = ''
+      -- bo.bufhidden = ''
       -- o.eventignore = nil
       -- bo.buftype = ''
       -- bo.undolevels = 1000
@@ -48,7 +47,6 @@ ar.augroup('LargeFileAutocmds', {
 }, {
   event = { 'BufEnter' },
   command = function(args)
-    local lf = ar.large_file
     if vim.tbl_contains(lf.exclusions, bo[args.buf].filetype) then return end
 
     local byte_size = api.nvim_buf_get_offset(
@@ -58,11 +56,9 @@ ar.augroup('LargeFileAutocmds', {
     if byte_size > lf.limit then
       if g.loaded_matchparen then cmd('NoMatchParen') end
 
-      -- Handle plugins
-      for plugin, au in pairs(lf.plugins) do
-        if ar.is_available(plugin) then
-          api.nvim_clear_autocmds({ group = au })
-        end
+      if ar.is_available('mini.indentscope') then
+        -- vim.api.nvim_del_augroup_by_name('MiniIndentscope')
+        api.nvim_clear_autocmds({ group = 'MiniIndentscope' })
       end
     else
       if not g.loaded_matchparen then cmd('DoMatchParen') end
