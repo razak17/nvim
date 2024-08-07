@@ -159,15 +159,26 @@ nnoremap('<C-k>', '<C-w>k')
 nnoremap('<C-l>', '<C-w>l')
 --------------------------------------------------------------------------------
 -- Quick find/replace
+-- @see: https://github.com/linkarzu/dotfiles-latest/blob/main/neovim/neobean/lua/config/keymaps.lua?plain=1#L94
 nnoremap(
-  '<leader>[',
-  [[:%s/\<<C-r>=expand("<cword>")<CR>\>/]],
-  { desc = 'replace all' }
+  '<leader>[u',
+  [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
+  { desc = "replace all" }
 )
 nnoremap(
-  '<leader>]',
-  [[:s/\<<C-r>=expand("<cword>")<CR>\>/]],
-  { desc = 'replace in line' }
+  '<leader>[U',
+  [[:%s/\<<C-r><C-w>\>/<C-r>=toupper(expand('<cword>'))<CR>/gI<Left><Left><Left>]],
+  { desc = "replace all with UPPERCASE" }
+)
+nnoremap(
+  '<leader>]u',
+  [[:s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
+  { desc = "replace all in line" }
+)
+nnoremap(
+  '<leader>]U',
+  [[:s/\<<C-r><C-w>\>/<C-r>=toupper(expand('<cword>'))<CR>/gI<Left><Left><Left>]],
+  { desc = "replace all in line UPPERCASE" }
 )
 vnoremap('<leader>[', [["zy:%s/<C-r><C-o>"/]], { desc = 'replace all' })
 -- Visual shifting (does not exit Visual mode)
@@ -431,12 +442,12 @@ nnoremap(
 nnoremap(
   '<localleader>cl',
   ':lua require"ar.menus.toggle".toggle_conceal_level()<CR>',
-  { desc = 'toggle conceallevel' }
+  { desc = 'toggle conceallevel', silent = true }
 )
 nnoremap(
   '<localleader>cc',
   ':lua require"ar.menus.toggle".toggle_conceal_cursor()<CR>',
-  { desc = 'toggle concealcursor' }
+  { desc = 'toggle concealcursor', silent = true }
 )
 --------------------------------------------------------------------------------
 -- File Diff
