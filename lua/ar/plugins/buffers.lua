@@ -90,7 +90,7 @@ return {
         'n',
         '<M-[>',
         snipe.create_buffer_menu_toggler(),
-        { desc = 'snipe: open' }
+        { desc = 'snipe: toggle' }
       )
     end,
   },
