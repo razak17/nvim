@@ -49,7 +49,7 @@ end
 opt.statuscolumn = [[%!v:lua.ar.ui.statuscolumn.render()]]
 
 ar.augroup('StatusCol', {
-  event = { 'BufEnter', 'FileType', 'FocusGained' },
+  event = { 'BufEnter', 'FileType', 'FocusGained', 'TextChanged' },
   command = function(args)
     local d = decor.get({
       ft = bo[args.buf].ft,
