@@ -1,6 +1,34 @@
-local uv = vim.uv
-local prettier = { 'prettierd', 'prettier' }
+local fn, uv = vim.fn, vim.uv
 local border = ar.ui.current.border
+
+---@alias ConformCtx {buf: number, filename: string, dirname: string}
+
+local supported = ar.lsp.prettier.supported
+
+--- Checks if a Prettier config file exists for the given context
+---@param ctx ConformCtx
+local function has_config(ctx)
+  fn.system({ 'prettier', '--find-config-path', ctx.filename })
+  return vim.v.shell_error == 0
+end
+
+--- Checks if a parser can be inferred for the given context:
+---@param ctx ConformCtx
+local function has_parser(ctx)
+  local ft = vim.bo[ctx.buf].filetype --[[@as string]]
+  -- default filetypes are always supported
+  if vim.tbl_contains(supported, ft) then return true end
+  -- otherwise, check if a parser can be inferred
+  local ret = fn.system({ 'prettier', '--file-info', ctx.filename })
+  ---@type boolean, string?
+  local ok, parser = pcall(
+    function() return fn.json_decode(ret).inferredParser end
+  )
+  return ok and parser and parser ~= vim.NIL
+end
+
+has_config = ar.memoize(has_config)
+has_parser = ar.memoize(has_parser)
 
 return {
   {
@@ -153,21 +181,25 @@ return {
             end
           end,
         },
+        ['markdownlint-cli2'] = {
+          condition = function(_, ctx)
+            local diag = vim.tbl_filter(
+              function(d) return d.source == 'markdownlint' end,
+              vim.diagnostic.get(ctx.buf)
+            )
+            return #diag > 0
+          end,
+        },
+        prettier = {
+          condition = function(_, ctx)
+            return has_parser(ctx)
+              and (ar.lsp.prettier.needs_config ~= true or has_config(ctx))
+          end,
+        },
       },
       formatters_by_ft = {
-        javascript = prettier,
-        typescript = prettier,
-        javascriptreact = prettier,
-        typescriptreact = prettier,
-        css = prettier,
-        html = prettier,
-        json = prettier,
-        jsonc = prettier,
-        yaml = prettier,
-        svelte = prettier,
         ['markdown'] = { 'prettier', 'markdownlint-cli2', 'markdown-toc' },
         ['markdown.mdx'] = { 'prettier', 'markdownlint-cli2', 'markdown-toc' },
-        graphql = prettier,
         lua = { 'stylua' },
         go = { 'goimports' },
         sh = { 'shfmt' },
@@ -180,6 +212,11 @@ return {
     },
     config = function(_, opts)
       vim.g.async_format_filetypes = opts.user_async_format_filetypes
+
+      opts.formatters_by_ft = opts.formatters_by_ft or {}
+      for _, ft in ipairs(supported) do
+        opts.formatters_by_ft[ft] = { 'prettier' }
+      end
       require('conform').setup(opts)
     end,
   },

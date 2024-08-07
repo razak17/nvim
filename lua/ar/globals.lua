@@ -138,6 +138,19 @@ function ar.dirs_match(dirs_table, dir)
   return false
 end
 
+local cache = {} ---@type table<(fun()), table<string, any>>
+---@generic T: fun()
+---@param f T
+---@return T
+function ar.memoize(f)
+  return function(...)
+    local key = vim.inspect({ ... })
+    cache[f] = cache[f] or {}
+    if cache[f][key] == nil then cache[f][key] = f(...) end
+    return cache[f][key]
+  end
+end
+
 --- Get plugins spec
 function ar.plugins_spec()
   local plugins_path = fn.stdpath('config') .. '/lua/ar/plugins'
