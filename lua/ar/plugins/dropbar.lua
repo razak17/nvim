@@ -5,12 +5,14 @@ local border = ui.current.border
 local decor = ui.decorations
 
 return {
+  { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
+  {
   'Bekaboo/dropbar.nvim',
   lazy = false,
   cond = not ar.plugins.minimal,
   keys = {
     {
-      '<leader>wp',
+        '<leader>wo',
       function() require('dropbar.api').pick() end,
       desc = 'winbar: pick',
     },
@@ -77,4 +79,5 @@ return {
       },
     })
   end,
+  },
 }
