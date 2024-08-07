@@ -598,7 +598,7 @@ return {
             },
           },
           preview = {
-            filesize_limit = 0.5, -- MB
+            filesize_limit = 1.5, -- MB
           },
         },
         pickers = {
