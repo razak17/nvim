@@ -170,29 +170,11 @@ return {
     end,
   },
   {
-    'kevinhwang91/nvim-fundo',
-    cond = not minimal,
-    event = { 'BufRead', 'BufNewFile' },
-    build = function() require('fundo').install() end,
-  },
-  {
     'AndrewRadev/linediff.vim',
     cmd = 'Linediff',
     keys = {
       { '<localleader>lL', '<cmd>Linediff<CR>', desc = 'linediff: toggle' },
     },
-  },
-  {
-    'mbbill/undotree',
-    cmd = 'UndotreeToggle',
-    keys = {
-      { '<leader>U', '<cmd>UndotreeToggle<CR>', desc = 'undotree: toggle' },
-    },
-    config = function()
-      vim.g.undotree_TreeNodeShape = '◦' -- Alternative: '◉'
-      vim.g.undotree_SetFocusWhenToggle = 1
-      vim.g.undotree_SplitWidth = 35
-    end,
   },
   {
     'ahmedkhalf/project.nvim',
