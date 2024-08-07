@@ -1,4 +1,4 @@
-local fn, v, api, opt, cmd = vim.fn, vim.v, vim.api, vim.opt, vim.cmd
+local fn, v, api, cmd = vim.fn, vim.v, vim.api, vim.cmd
 local bo, o, wo = vim.bo, vim.o, vim.wo
 local sep = ar.ui.icons.separators
 local icons, codicons = ar.ui.icons, ar.ui.codicons
@@ -705,12 +705,11 @@ return {
         },
       }
 
-      local fcs = opt.fillchars:get()
-      local shade = sep.light_shade_block
 
       local statuscol = require('ar.statuscolumn')
       local space = statuscol.space
       local spacer = { provider = space(), hl = 'HeirlineStatusColumn' }
+      local shade = sep.light_shade_block
 
       opts.statuscolumn = {
         condition = function()
