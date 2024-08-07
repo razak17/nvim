@@ -97,51 +97,13 @@ return {
     opts = { welcomeOnStartup = false },
   },
   ------------------------------------------------------------------------------
-  -- Find And Replace
-  {
-    'MagicDuck/grug-far.nvim',
-    cond = not minimal,
-    lazy = false,
-    cmd = { 'GrugFar' },
-    keys = {
-      {
-        mode = { 'n', 'v' },
-        '<leader>sr',
-        function()
-          local grug = require('grug-far')
-          local ext = vim.bo.buftype == '' and vim.fn.expand('%:e')
-          grug.grug_far({
-            transient = true,
-            prefills = {
-              filesFilter = ext and ext ~= '' and '*.' .. ext or nil,
-            },
-          })
-        end,
-        desc = 'grug_far: search and replace',
-      },
-    },
-    opts = {
-      startInInsertMode = false,
-      transient = false,
-      keymaps = {
-        replace = '<C-[>',
-        qflist = '<C-q>',
-        gotoLocation = '<enter>',
-        close = '<C-x>',
-      },
-    },
-  },
-  {
-    'AckslD/muren.nvim',
-    cmd = { 'MurenToggle', 'MurenUnique', 'MurenFresh' },
-    opts = {},
-  },
-  ------------------------------------------------------------------------------
   -- Utilities {{{2
   ------------------------------------------------------------------------------
   { 'lambdalisue/suda.vim', lazy = false },
   { 'will133/vim-dirdiff', cmd = { 'DirDiff' } },
   { 'godlygeek/tabular', cmd = { 'Tabularize' } },
+  { '2kabhishek/nerdy.nvim', cmd = 'Nerdy' },
+  { 'ragnarok22/whereami.nvim', cmd = 'Whereami' },
   {
     '4513ECHO/nvim-keycastr',
     cond = not minimal,
@@ -239,14 +201,6 @@ return {
     },
   },
   {
-    '2kabhishek/nerdy.nvim',
-    cmd = 'Nerdy',
-  },
-  {
-    'ragnarok22/whereami.nvim',
-    cmd = 'Whereami',
-  },
-  {
     'willothy/flatten.nvim',
     lazy = false,
     cond = false,
@@ -277,7 +231,7 @@ return {
   },
   {
     'bgaillard/readonly.nvim',
-    cond = not minimal and ar.plugins.niceties,
+    cond = not minimal and niceties,
     lazy = false,
     opts = {
       secured_files = {
