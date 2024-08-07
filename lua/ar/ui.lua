@@ -276,6 +276,7 @@ local filetypes = ar.p_table({
   ['grug-far'] = presets.tool_panel,
   ['harpoon'] = presets.tool_panel,
   ['help'] = presets.tool_panel,
+  ['http'] = presets.tool_panel,
   ['httpResult'] = presets.tool_panel,
   ['lazy'] = presets.tool_panel,
   ['list'] = presets.tool_panel,
