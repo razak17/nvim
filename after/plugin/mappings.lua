@@ -208,6 +208,19 @@ nnoremap(
   { desc = 'create new file' }
 )
 --------------------------------------------------------------------------------
+-- Make the file you run the command on, executable, so you don't have to go out to the command line
+-- https://github.com/linkarzu/dotfiles-latest/blob/66c7304d34c713e8c7d6066d924ac2c3a9c0c9e8/neovim/neobean/lua/config/keymaps.lua?plain=1#L131
+nnoremap(
+  '<leader><leader>fx',
+  '<Cmd>!chmod +x "%"<CR>',
+  { silent = true, desc = 'make file executable' }
+)
+nnoremap(
+  '<leader><leader>fX',
+  '<Cmd>!chmod -x "%"<CR>',
+  { silent = true, desc = 'remove executable flag' }
+)
+--------------------------------------------------------------------------------
 -- Arrows
 nnoremap('<down>', '<nop>')
 nnoremap('<up>', '<nop>')
