@@ -6,6 +6,31 @@ bo.tabstop = 4
 bo.shiftwidth = 4
 bo.expandtab = false
 
+-- @see: https://github.com/linkarzu/dotfiles-latest/blob/main/neovim/neobean/lua/config/keymaps.lua?plain=1#L180
+local function run_file()
+  if vim.env.TMUX == nil then
+    vim.notify('Not in tmux.')
+    return
+  end
+  local file = vim.fn.expand('%')
+  if string.match(file, '%.go$') then
+    local file_dir = vim.fn.expand('%:p:h')
+    local command_to_run = 'go run *.go'
+    local cmd = "silent !tmux split-window -h -Z 'cd "
+      .. file_dir
+      .. ' && echo "'
+      .. command_to_run
+      .. '\\n" && bash -c "'
+      .. command_to_run
+      .. '; echo; echo Press enter to exit...; read _"\''
+    vim.cmd(cmd)
+  else
+    vim.cmd("echo 'Not a Go file.'")
+  end
+end
+
+map('n', '<leader>rr', run_file, { desc = 'execute file', buffer = 0 })
+
 if not ar.plugins.enable or ar.plugins.minimal then return end
 
 if ar.lsp.enable then
