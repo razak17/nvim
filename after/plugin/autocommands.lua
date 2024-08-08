@@ -119,7 +119,7 @@ augroup('CheckOutsideTime', {
     'FocusGained',
   },
   command = function()
-    if vim.o.buftype ~= 'nofile' then vim.cmd('checktime') end
+    if vim.o.buftype ~= 'nofile' then cmd('checktime') end
   end,
 })
 
@@ -129,7 +129,7 @@ augroup('ClearCommandLineMessages', {
   event = { 'CursorHold' },
   command = function()
     vim.defer_fn(function()
-      if fn.mode() == 'n' then vim.cmd.echon("''") end
+      if fn.mode() == 'n' then cmd.echon("''") end
     end, 3000)
   end,
 })
@@ -162,13 +162,13 @@ augroup('UpdateVim', {
   event = { 'FocusLost', 'InsertLeave', 'TextChanged' },
   command = function(args)
     if not vim.bo[args.buf].modified then return end
-    if can_save() then vim.cmd('silent! wall') end
+    if can_save() then cmd('silent! wall') end
   end,
 }, {
   event = { 'BufLeave' },
   command = function(args)
     if api.nvim_buf_line_count(args.buf) <= 1 then return end
-    if can_save() then vim.cmd('silent! write ++p') end
+    if can_save() then cmd('silent! write ++p') end
   end,
 }, {
   event = { 'VimResized' },
@@ -185,7 +185,7 @@ augroup('WinBehavior', {
   event = { 'TermOpen' },
   command = function()
     if falsy(vim.bo.filetype) or not falsy(vim.bo.buftype) == '' then
-      vim.cmd.startinsert()
+      cmd.startinsert()
     end
   end,
 }, {
@@ -231,8 +231,8 @@ augroup('Utilities', {
   pattern = { 'file:///*' },
   nested = true,
   command = function(args)
-    vim.cmd.bdelete({ bang = true })
-    vim.cmd.edit(vim.uri_to_fname(args.file))
+    cmd.bdelete({ bang = true })
+    cmd.edit(vim.uri_to_fname(args.file))
   end,
 }, {
   --- disable formatting in directories in third party repositories
@@ -256,7 +256,7 @@ augroup('Utilities', {
     if ar.large_file.active then return end
 
     if falsy(vim.bo.filetype) or fn.exists('b:ftdetect') == 1 then
-      vim.cmd([[
+      cmd([[
         unlet! b:ftdetect
         filetype detect
         call v:lua.vim.notify('Filetype set to ' . &ft, "info", {})
@@ -274,7 +274,7 @@ augroup('Utilities', {
         'n',
         'Q',
         function()
-          vim.cmd(
+          cmd(
             'lua require("neogit.integrations.diffview").diffview_mappings["close"]()'
           )
         end,
@@ -387,7 +387,7 @@ end
 --       vim.defer_fn(function()
 --         local inner_sns = get_signs()
 --         if inner_sns ~= 'GitSignsStagedAdd' then return end
---         vim.cmd('silent! lua require("gitsigns").refresh()')
+--         cmd('silent! lua require("gitsigns").refresh()')
 --         vim.notify('gitsigns refreshed', 'info', { title = 'gitsigns' })
 --       end, 500)
 --     end,
@@ -475,7 +475,7 @@ local function float_resize_autocmd(autocmd_name, ft, command)
     command = function()
       if vim.bo.ft == ft then
         vim.api.nvim_win_close(0, true)
-        vim.cmd(command)
+        cmd(command)
       end
     end,
   })
