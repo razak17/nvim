@@ -13,7 +13,8 @@ cmd.iabbrev(':sad:', '😔')
 
 if not ar.plugins.enable or ar.plugins.minimal then return end
 
--- @see: https://github.com/linkarzu/dotfiles-latest/blob/main/neovim/neobean/lua/config/keymaps.lua?plain=1#L359
+--- get the image path from the current line
+---@return string
 local function get_image_path()
   local line = api.nvim_get_current_line()
   local image_pattern = '%[.-%]%((.-)%)'
@@ -21,14 +22,27 @@ local function get_image_path()
   return image_path
 end
 
+--- check if the path is an http path
+---@param path string
+---@return boolean
+local function is_http_path(path) return string.sub(path, 1, 4) == 'http' end
+
+--- get absolute path
+---@param path string
+---@return string
+local function get_absolute_path(path)
+  local current_file_path = fn.expand('%:p:h')
+  return fmt('%s/%s', current_file_path, path)
+end
+
+-- @see: https://github.com/linkarzu/dotfiles-latest/blob/main/neovim/neobean/lua/config/keymaps.lua?plain=1#L359
 local function open_image_under_cursor()
   local image_path = get_image_path()
   if image_path then
-    if string.sub(image_path, 1, 4) == 'http' then
+    if is_http_path(image_path) then
       print("URL image, use 'gx' to open it in the default browser.")
     else
-      local current_file_path = fn.expand('%:p:h')
-      local absolute_image_path = fmt('%s/%s', current_file_path, image_path)
+      local absolute_image_path = get_absolute_path(image_path)
       ar.open(absolute_image_path, true)
     end
   else
@@ -48,11 +62,63 @@ local function paste_image_from_clipboard()
   end
 end
 
+-- @see: https://github.com/linkarzu/dotfiles-latest/blob/main/neovim/neobean/lua/config/keymaps.lua?plain=1#L449
+local function delete_image_under_cursor()
+  local image_path = get_image_path()
+  if image_path then
+    if is_http_path(image_path) then
+      api.nvim_echo({
+        { 'URL image cannot be deleted from disk.', 'WarningMsg' },
+      }, false, {})
+    else
+      local absolute_image_path = get_absolute_path(image_path)
+      if fn.executable('trash') == 0 then
+        api.nvim_echo({
+          { 'Trash utility not installed.', 'ErrorMsg' },
+        }, false, {})
+        return
+      end
+      vim.ui.input({
+        prompt = 'Delete image file? (y/n) ',
+      }, function(input)
+        if input == 'y' or input == 'Y' then
+          local success, _ = pcall(
+            function()
+              fn.system({ 'trash', fn.fnameescape(absolute_image_path) })
+            end
+          )
+          if success then
+            api.nvim_echo({
+              { 'Image file deleted from disk:\n', 'Normal' },
+              { absolute_image_path, 'Normal' },
+            }, false, {})
+            cmd([[lua require("image").clear()]])
+            cmd('edit!')
+          else
+            api.nvim_echo({
+              { 'Failed to delete image file:\n', 'ErrorMsg' },
+              { absolute_image_path, 'ErrorMsg' },
+            }, false, {})
+          end
+        else
+          api.nvim_echo({ { 'Image deletion canceled.', 'Normal' } }, false, {})
+        end
+      end)
+    end
+  else
+    api.nvim_echo(
+      { { 'No image found under the cursor', 'WarningMsg' } },
+      false,
+      {}
+    )
+  end
+end
+
 map(
-  { 'n', 'v', 'i' },
-  '<leader>ip',
-  paste_image_from_clipboard,
-  { desc = 'paste image from system clipboard, buffer = 0' }
+  'n',
+  '<leader>id',
+  delete_image_under_cursor,
+  { desc = 'delete image under cursor', buffer = 0 }
 )
 
 map(
@@ -60,6 +126,13 @@ map(
   '<leader>io',
   open_image_under_cursor,
   { desc = 'open image under cursor in preview', buffer = 0 }
+)
+
+map(
+  { 'n', 'v', 'i' },
+  '<leader>ip',
+  paste_image_from_clipboard,
+  { desc = 'paste image from system clipboard, buffer = 0' }
 )
 
 map(
