@@ -313,7 +313,7 @@ local function setup_mappings(client, bufnr)
       capability = M.textDocument_definition,
       exclude = { 'tsserver' },
     },
-    { 'n', 'gl', diagnostic_float(), desc = 'cursor diagnostics' },
+    { 'n', 'gk', diagnostic_float(), desc = 'cursor diagnostics' },
     { 'n', 'gL', diagnostic_float(true), desc = 'line diagnostics' },
     {
       'n',
