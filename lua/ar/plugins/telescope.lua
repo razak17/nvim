@@ -674,6 +674,9 @@ return {
           show_filter_column = false,
           show_scores = true,
           show_unindexed = true,
+          db_safe_mode = false,
+          auto_validate = true,
+          db_validate_threshold = 20,
           ignore_patterns = {
             '*/tmp/*',
             '*node_modules/*',
