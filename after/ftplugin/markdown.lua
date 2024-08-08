@@ -114,6 +114,13 @@ local function delete_image_under_cursor()
   end
 end
 
+-- @see: https://github.com/linkarzu/dotfiles-latest/blob/main/neovim/neobean/lua/config/keymaps.lua?plain=1#L524
+local function refresh_images()
+  cmd([[lua require("image").clear()]])
+  cmd('edit!')
+  print('Images refreshed')
+end
+
 map(
   'n',
   '<leader>id',
@@ -134,6 +141,8 @@ map(
   paste_image_from_clipboard,
   { desc = 'paste image from system clipboard, buffer = 0' }
 )
+
+map('n', '<leader>ir', refresh_images, { desc = 'refresh images', buffer = 0 })
 
 map(
   'n',
