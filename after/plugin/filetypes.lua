@@ -7,9 +7,40 @@ local is_available = ar.is_available
 vim.treesitter.language.register('gitcommit', 'NeogitCommitMessage')
 
 settings({
-  bash = {
-    opt = { spell = true },
+  [{ 'bash', 'sh' }] = {
+    opt = {
+      list = false,
+      spell = true,
+      spelllang = { 'en_gb', 'programming' },
+    },
     function()
+      -- @see: https://github.com/linkarzu/dotfiles-latest/blob/main/neovim/neobean/lua/config/keymaps.lua?plain=1#L141
+      local function run_bash_file()
+        if vim.env.TMUX == nil then
+          vim.notify('Not in tmux.')
+          return
+        end
+        local file = fn.expand('%')
+        local first_line = fn.getline(1)
+        if string.match(first_line, '^#!/') then
+          local escaped_file = fn.shellescape(file)
+          cmd(
+            'silent !tmux split-window -h -Z \'bash -c "'
+              .. escaped_file
+              .. '; echo; echo Press any key to exit...; read -n 1; exit"\''
+          )
+        else
+          cmd("echo 'Not a script. Shebang line not found.'")
+        end
+      end
+
+      map(
+        'n',
+        '<leader>rr',
+        run_bash_file,
+        { desc = 'execute file', buffer = 0 }
+      )
+
       if is_available('LuaSnip') and is_available('snips') then
         local ls = require('luasnip')
         local bash = require('snips.bash')
