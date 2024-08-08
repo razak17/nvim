@@ -163,22 +163,22 @@ nnoremap('<C-l>', '<C-w>l')
 nnoremap(
   '<leader>[u',
   [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
-  { desc = "replace all" }
+  { desc = 'replace all' }
 )
 nnoremap(
   '<leader>[U',
   [[:%s/\<<C-r><C-w>\>/<C-r>=toupper(expand('<cword>'))<CR>/gI<Left><Left><Left>]],
-  { desc = "replace all with UPPERCASE" }
+  { desc = 'replace all with UPPERCASE' }
 )
 nnoremap(
   '<leader>]u',
   [[:s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
-  { desc = "replace all in line" }
+  { desc = 'replace all in line' }
 )
 nnoremap(
   '<leader>]U',
   [[:s/\<<C-r><C-w>\>/<C-r>=toupper(expand('<cword>'))<CR>/gI<Left><Left><Left>]],
-  { desc = "replace all in line UPPERCASE" }
+  { desc = 'replace all in line UPPERCASE' }
 )
 vnoremap('<leader>[', [["zy:%s/<C-r><C-o>"/]], { desc = 'replace all' })
 -- Visual shifting (does not exit Visual mode)
@@ -298,22 +298,17 @@ nnoremap(
   "getline('.')[0 : col('.') - 2] =~# '^\\s\\+$' ? '0' : '^'",
   { expr = true }
 )
-xnoremap(
-  '0',
-  "getline('.')[0 : col('.') - 2] =~# '^\\s\\+$' ? '0' : '^'",
-  { expr = true, desc = 'go to start of line' }
-)
-nnoremap(
+-- use gh to move to the beginning of the line in normal mode
+-- use gl to move to the end of the line in normal mode
+map(
+  { 'n', 'x' },
   'gh',
   "getline('.')[0 : col('.') - 2] =~# '^\\s\\+$' ? '0' : '^'",
   { expr = true, desc = 'go to start of line' }
 )
-xnoremap(
-  'gh',
-  "getline('.')[0 : col('.') - 2] =~# '^\\s\\+$' ? '0' : '^'",
-  { expr = true, desc = 'go to start of line' }
-)
--- nmap('gl', '$', { desc = 'go to end of line' })
+map({ 'n', 'x' }, 'gl', '$', { desc = 'go to the end of the line' })
+-- In visual mode, after going to the end of the line, come back 1 character
+map({ 'x' }, 'gl', '$h', { desc = 'go to end of line' })
 -- when going to the end of the line in visual mode ignore whitespace characters
 vnoremap('$', 'g_')
 -- jk is escape, THEN move to the right to preserve the cursor position, unless
