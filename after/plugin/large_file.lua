@@ -8,8 +8,8 @@ local bo, o, wo = vim.bo, vim.o, vim.wo
 ar.large_file = {
   active = false,
   exclusions = { 'NeogitCommitMessage' },
-  -- 100KB if lsp is enabled else 1.5MB
-  limit = ar.lsp.enable and 100 * 1024 or 100 * 1024 * 1.5,
+  -- 100KB if lsp is enabled else 1MB
+  limit = ar.lsp.enable and 100 * 1024 or 100 * 1024 * 1,
   line_count = 2048,
 }
 
