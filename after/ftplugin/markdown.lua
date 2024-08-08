@@ -1,15 +1,45 @@
 if not ar or ar.none then return end
 
-local cmd = vim.cmd
+local api, cmd, fn, g = vim.api, vim.cmd, vim.fn, vim.g
+local fmt = string.format
 
 vim.opt.spell = true
-vim.b.formatting_disabled =
-  not vim.startswith(vim.fn.expand('%'), vim.g.projects_dir)
+vim.b.formatting_disabled = not vim.startswith(fn.expand('%'), g.projects_dir)
 
 cmd.iabbrev(':tup:', '👍')
 cmd.iabbrev(':tdo:', '👎')
 cmd.iabbrev(':smi:', '😊')
 cmd.iabbrev(':sad:', '😔')
+
+-- @see: https://github.com/linkarzu/dotfiles-latest/blob/main/neovim/neobean/lua/config/keymaps.lua?plain=1#L359
+local function get_image_path()
+  local line = api.nvim_get_current_line()
+  local image_pattern = '%[.-%]%((.-)%)'
+  local _, _, image_path = string.find(line, image_pattern)
+  return image_path
+end
+
+local function open_image_under_cursor()
+  local image_path = get_image_path()
+  if image_path then
+    if string.sub(image_path, 1, 4) == 'http' then
+      print("URL image, use 'gx' to open it in the default browser.")
+    else
+      local current_file_path = fn.expand('%:p:h')
+      local absolute_image_path = fmt('%s/%s', current_file_path, image_path)
+      ar.open(absolute_image_path, true)
+    end
+  else
+    vim.notify('No image found under the cursor')
+  end
+end
+
+map(
+  'n',
+  '<leader>io',
+  open_image_under_cursor,
+  { desc = 'open image under cursor in preview', buffer = 0 }
+)
 
 if not ar.plugins.enable or ar.plugins.minimal then return end
 
