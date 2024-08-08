@@ -21,7 +21,7 @@ return {
       {
         mode = { 'n' },
         { '<leader>[', group = 'Replace all' },
-        { '<leader>]', group = 'Replace line' },
+        { '<leader>]', group = 'Replace in line' },
         { '<leader>A', group = 'Animations' },
         { '<leader>F', group = 'Picker (Current Dir)' },
         { '<leader>a', group = 'A.I.' },
