@@ -172,6 +172,26 @@ local function toggle_bullets()
   )
 end
 
+--@see: https://github.com/linkarzu/dotfiles-latest/blob/main/neovim/neobean/lua/config/keymaps.lua?plain=1#L572
+local function delete_new_lines()
+  local start_row = fn.line('v')
+  local end_row = fn.line('.')
+  if start_row > end_row then
+    start_row, end_row = end_row, start_row
+  end
+  local current_row = start_row
+  while current_row <= end_row do
+    local line =
+      api.nvim_buf_get_lines(0, current_row - 1, current_row, false)[1]
+    if line == '' then
+      cmd(current_row .. 'delete')
+      end_row = end_row - 1
+    else
+      current_row = current_row + 1
+    end
+  end
+end
+
 map(
   'n',
   '<leader>id',
@@ -200,6 +220,13 @@ map(
   '<localleader>mb',
   toggle_bullets,
   { desc = 'toggle bullet point', buffer = 0 }
+)
+
+map(
+  'v',
+  '<localleader>mj',
+  delete_new_lines,
+  { desc = 'delete newlines in selected text', buffer = 0 }
 )
 
 map(
