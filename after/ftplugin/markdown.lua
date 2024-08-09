@@ -121,6 +121,57 @@ local function refresh_images()
   print('Images refreshed')
 end
 
+-- Toggle bullet point at the beginning of the current line in normal mode
+-- @see: https://github.com/linkarzu/dotfiles-latest/blob/main/neovim/neobean/lua/config/keymaps.lua?plain=1#L598
+local function toggle_bullets()
+  local cursor_pos = api.nvim_win_get_cursor(0)
+  local current_buffer = api.nvim_get_current_buf()
+  local start_row = cursor_pos[1] - 1
+  local col = cursor_pos[2]
+  local line =
+    api.nvim_buf_get_lines(current_buffer, start_row, start_row + 1, false)[1]
+  if line:match('^%s*%-') then
+    line = line:gsub('^%s*%-', '')
+    api.nvim_buf_set_lines(
+      current_buffer,
+      start_row,
+      start_row + 1,
+      false,
+      { line }
+    )
+    return
+  end
+  local left_text = line:sub(1, col)
+  local bullet_start = left_text:reverse():find('\n')
+  if bullet_start then bullet_start = col - bullet_start end
+  local right_text = line:sub(col + 1)
+  local bullet_end = right_text:find('\n')
+  local end_row = start_row
+  while
+    not bullet_end and end_row < api.nvim_buf_line_count(current_buffer) - 1
+  do
+    end_row = end_row + 1
+    local next_line =
+      api.nvim_buf_get_lines(current_buffer, end_row, end_row + 1, false)[1]
+    if next_line == '' then break end
+    right_text = right_text .. '\n' .. next_line
+    bullet_end = right_text:find('\n')
+  end
+  if bullet_end then bullet_end = col + bullet_end end
+  local text_lines =
+    api.nvim_buf_get_lines(current_buffer, start_row, end_row + 1, false)
+  local text = table.concat(text_lines, '\n')
+  local new_text = '- ' .. text
+  local new_lines = vim.split(new_text, '\n')
+  api.nvim_buf_set_lines(
+    current_buffer,
+    start_row,
+    end_row + 1,
+    false,
+    new_lines
+  )
+end
+
 map(
   'n',
   '<leader>id',
@@ -143,6 +194,13 @@ map(
 )
 
 map('n', '<leader>ir', refresh_images, { desc = 'refresh images', buffer = 0 })
+
+map(
+  'n',
+  '<localleader>mb',
+  toggle_bullets,
+  { desc = 'toggle bullet point', buffer = 0 }
+)
 
 map(
   'n',
