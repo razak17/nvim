@@ -192,6 +192,19 @@ local function delete_new_lines()
   end
 end
 
+local function bold_selection()
+  local start_row, start_col = unpack(fn.getpos("'<"), 2, 3)
+  local end_row, end_col = unpack(fn.getpos("'>"), 2, 3)
+  local lines = api.nvim_buf_get_lines(0, start_row - 1, end_row, false)
+  local selected_text =
+    table.concat(lines, '\n'):sub(start_col, #lines == 1 and end_col or -1)
+  if selected_text:match('^%*%*.*%*%*$') then
+    vim.notify('Text already bold', vim.log.levels.INFO)
+  else
+    cmd('normal 2gsa*')
+  end
+end
+
 map(
   'n',
   '<leader>id',
@@ -217,7 +230,7 @@ map('n', '<leader>ir', refresh_images, { desc = 'refresh images', buffer = 0 })
 
 map(
   'n',
-  '<localleader>mb',
+  '<leader><leader>md',
   toggle_bullets,
   { desc = 'toggle bullet point', buffer = 0 }
 )
@@ -235,6 +248,8 @@ map(
   '<Cmd>Glow<CR>',
   { desc = 'markdown preview', buffer = 0 }
 )
+
+map('v', '<leader><leader>mb', bold_selection, { desc = 'BOLD selection' })
 
 ar.ftplugin_conf({
   cmp = function(cmp)
