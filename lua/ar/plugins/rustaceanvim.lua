@@ -10,7 +10,7 @@ return {
     cond = enabled,
     init = function()
       require('which-key').add({
-        { '<leader><leader>r', group = 'Rustaceanvim'}
+        { '<leader><leader>r', group = 'Rustaceanvim' },
       })
     end,
     config = function()
