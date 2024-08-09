@@ -97,6 +97,7 @@ return {
         { '<leader><leader>j', group = 'jSdoc Switch' },
         { '<leader><leader>jd', desc = 'doc switch' },
         { '<leader><leader>l', desc = 'LSP' },
+        { '<leader><leader>m', desc = 'Markdown' },
         { '<leader><leader>n', group = 'Sticky Note' },
         { '<leader><leader>t', group = 'Translate' },
         { '<leader><leader>x', group = 'Executor' },
