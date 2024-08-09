@@ -139,7 +139,7 @@ map(
   { 'n', 'v', 'i' },
   '<leader>ip',
   paste_image_from_clipboard,
-  { desc = 'paste image from system clipboard, buffer = 0' }
+  { desc = 'paste image from system clipboard', buffer = 0 }
 )
 
 map('n', '<leader>ir', refresh_images, { desc = 'refresh images', buffer = 0 })
@@ -149,13 +149,6 @@ map(
   '<localleader>Pm',
   '<Cmd>Glow<CR>',
   { desc = 'markdown preview', buffer = 0 }
-)
-
-map(
-  'n',
-  '<localleader>Pi',
-  '<Cmd>PasteImage<CR>',
-  { desc = 'paste clipboard image', buffer = 0 }
 )
 
 ar.ftplugin_conf({
