@@ -122,6 +122,8 @@ return {
         { '<localleader>g', group = 'Git' },
         { '<localleader>h', group = 'Gitsigns' },
         { '<localleader>l', group = 'LSP' },
+        { '<leader><leader>m', desc = 'Markdown' },
+        { '<leader><leader>ml', desc = 'Link' },
         { '<localleader>n', group = 'Nag' },
         { '<localleader>p', group = 'Share' },
         { '<localleader>q', group = 'NeoComposer' },
