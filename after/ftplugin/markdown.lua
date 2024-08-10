@@ -388,6 +388,16 @@ local function open_in_finder()
   end
 end
 
+-- Open current file in Neovide
+local function open_in_neovide()
+  local file_path = fn.expand('%:p')
+  if file_path ~= '' then
+    fn.system({ 'neovide', file_path })
+  else
+    print('No file is currently open')
+  end
+end
+
 local function with_desc(desc) return { buffer = 0, desc = fmt('%s', desc) } end
 
 map(
@@ -451,6 +461,8 @@ map(
 )
 
 map('n', '<leader><leader>fo', open_in_finder, with_desc('open in finder'))
+
+map('n', '<leader><leader>fn', open_in_neovide, with_desc('open in neovide'))
 
 ar.ftplugin_conf({
   cmp = function(cmp)
