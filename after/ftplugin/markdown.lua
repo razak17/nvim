@@ -300,6 +300,14 @@ local function convert_to_link(new_tab)
   cmd('stopinsert')
 end
 
+-- Paste a github link and add it in this format
+-- [folke/noice.nvim](https://github.com/folke/noice.nvim){:target="\_blank"}
+local function paste_github_link()
+  cmd('normal! a[](){:target="_blank"} ')
+  cmd('normal! F(pv2F/lyF[p')
+  cmd('stopinsert')
+end
+
 local function with_desc(desc) return { buffer = 0, desc = fmt('%s', desc) } end
 
 map(
@@ -348,6 +356,8 @@ map(
   function() convert_to_link(true) end,
   with_desc('convert to link (new tab)')
 )
+
+map('i', '<C-g>', paste_github_link, with_desc('paste github link'))
 
 ar.ftplugin_conf({
   cmp = function(cmp)
