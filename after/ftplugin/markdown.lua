@@ -286,6 +286,20 @@ local function multiline_bold()
   end
 end
 
+-- In visual mode, surround the selected text with markdown link syntax
+local function convert_to_link(new_tab)
+  cmd("let @a = getreg('+')")
+  cmd('normal d')
+  cmd('startinsert')
+  if new_tab then
+    api.nvim_put({ '[](){:target="_blank"} ' }, 'c', true, true)
+  else
+    api.nvim_put({ '[]() ' }, 'c', true, true)
+  end
+  cmd('normal F[pf(')
+  cmd('stopinsert')
+end
+
 map(
   'n',
   '<leader>id',
@@ -330,9 +344,33 @@ map(
   { desc = 'markdown preview', buffer = 0 }
 )
 
-map('v', '<leader><leader>mb', bold_selection, { desc = 'BOLD selection' })
+map(
+  'v',
+  '<leader><leader>mb',
+  bold_selection,
+  { desc = 'BOLD selection', buffer = 0 }
+)
 
-map('n', '<leader><leader>mb', multiline_bold, { desc = 'toggle BOLD markers' })
+map(
+  'n',
+  '<leader><leader>mb',
+  multiline_bold,
+  { desc = 'toggle BOLD markers', buffer = 0 }
+)
+
+map(
+  'v',
+  '<leader><leader>mll',
+  convert_to_link,
+  { desc = 'convert to link', buffer = 0 }
+)
+
+map(
+  'v',
+  '<leader><leader>mlt',
+  function() convert_to_link(true) end,
+  { desc = 'convert to link (new tab)', buffer = 0 }
+)
 
 ar.ftplugin_conf({
   cmp = function(cmp)
