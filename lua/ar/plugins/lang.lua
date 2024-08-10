@@ -259,6 +259,7 @@ return {
   -- https://github.com/AntonVanAssche/md-headers.nvim
   {
     'AntonVanAssche/md-headers.nvim',
+    cond = ar.treesitter.enable,
     cmd = { 'MarkdownHeaders', 'MarkdownHeadersClosest' },
     -- stylua: ignore
     keys = {
