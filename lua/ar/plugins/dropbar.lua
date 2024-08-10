@@ -8,7 +8,7 @@ return {
   { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
   {
     'Bekaboo/dropbar.nvim',
-    lazy = false,
+    event = { 'BufRead', 'BufNewFile' },
     cond = not ar.plugins.minimal,
     keys = {
       {
