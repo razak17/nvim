@@ -332,7 +332,7 @@ return {
   },
   {
     '3rd/image.nvim',
-    cond = not minimal,
+    cond = not minimal and not vim.g.neovide,
     ft = { 'markdown', 'vimwiki' },
     opts = {
       backend = 'kitty',
