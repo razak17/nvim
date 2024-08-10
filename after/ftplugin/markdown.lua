@@ -357,6 +357,27 @@ local function generate_toc()
   cmd('loadview')
 end
 
+-- Save the cursor position globally to access it across different mappings
+ar.markdown = {
+  saved_positions = {},
+}
+
+-- Mapping to jump to the first line of the TOC
+local function go_to_toc()
+  ar.markdown.saved_positions['toc_return'] = api.nvim_win_get_cursor(0)
+  cmd('silent! /<!-- toc -->\\n\\n\\zs.*')
+  cmd('nohlsearch')
+  local cursor_pos = api.nvim_win_get_cursor(0)
+  local row = cursor_pos[1]
+  api.nvim_win_set_cursor(0, { row, 14 })
+end
+
+-- Mapping to return to the previously saved cursor position
+local function return_to_position()
+  local pos = ar.markdown.saved_positions['toc_return']
+  if pos then api.nvim_win_set_cursor(0, pos) end
+end
+
 local function with_desc(desc) return { buffer = 0, desc = fmt('%s', desc) } end
 
 map(
@@ -409,6 +430,15 @@ map(
 map('i', '<C-g>', paste_github_link, with_desc('paste github link'))
 
 map('n', '<leader><leader>mt', generate_toc, with_desc('insert/update TOC'))
+
+map('n', '<leader><leader>mm', go_to_toc, with_desc('jump to TOC'))
+
+map(
+  'n',
+  '<leader>mn',
+  return_to_position,
+  with_desc('return to position before jumping')
+)
 
 ar.ftplugin_conf({
   cmp = function(cmp)
