@@ -5,15 +5,37 @@ local env = vim.env
 
 local namespace = {
   ai = { enable = env.RVIM_AI_ENABLED == '1' },
+  apps = {
+    image = 'sxiv',
+    pdf = 'zathura',
+    audio = 'mpv',
+    video = 'mpv',
+    web = 'firefox',
+    explorer = 'thunar',
+  },
   autosave = { enable = true },
   debug = { enable = false },
   frecency = { enable = true },
   git = {},
   remote_sync = { enable = false },
   use_local_gx = false,
-  -- stylua: ignore
-  media_files = {
-    'jpg', 'png', 'jpeg', 'ico', 'gif', 'pdf', 'mp3', 'm4a', 'mp4', 'mkv',
+  media = {
+    all = {
+      'jpg',
+      'png',
+      'jpeg',
+      'ico',
+      'gif',
+      'pdf',
+      'mp3',
+      'm4a',
+      'mp4',
+      'mkv',
+    },
+    audio = { 'mp3', 'm4a' },
+    doc = { 'pdf' },
+    image = { 'jpg', 'png', 'jpeg', 'ico', 'gif' },
+    video = { 'mp4', 'mkv' },
   },
   lsp = {
     disabled = {

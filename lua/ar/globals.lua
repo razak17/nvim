@@ -465,15 +465,15 @@ end
 ---@param notify? boolean
 function ar.open_media(path, notify)
   local file_extension = path:match('^.+%.(.+)$')
-  local is_audio_or_video =
-    vim.list_contains({ 'mp3', 'm4a', 'mp4', 'mkv' }, file_extension)
-  local is_doc = vim.list_contains({ 'pdf' }, file_extension)
-  local is_img =
-    vim.list_contains({ 'jpg', 'png', 'jpeg', 'ico', 'gif' }, file_extension)
-  local exe = nil
-  if is_audio_or_video then exe = 'mpv' end
-  if is_doc then exe = 'zathura' end
-  if is_img then exe = 'sxiv' end
+  local apps, media = ar.apps, ar.media
+  local is_audio = vim.list_contains(media.audio, file_extension)
+  local is_video = vim.list_contains(media.video, file_extension)
+  local is_doc = vim.list_contains(media.doc, file_extension)
+  local is_img = vim.list_contains(media.image, file_extension)
+  local exe = apps.explorer
+  if is_audio or is_video then exe = apps.video end
+  if is_doc then exe = apps.doc end
+  if is_img then exe = apps.image end
   if exe and fn.executable(exe) then
     vim.system({ exe, path }, { detach = true })
     return

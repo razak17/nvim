@@ -140,7 +140,7 @@ return {
             end,
             ['<C-o>'] = function(state)
               local node = state.tree:get_node()
-              if vim.list_contains(ar.media_files, node.ext) then
+              if vim.list_contains(ar.media.all, node.ext) then
                 ar.open_media(node.path)
               else
                 vim.notify('Not a media file')

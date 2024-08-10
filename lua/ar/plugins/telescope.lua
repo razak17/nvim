@@ -279,7 +279,7 @@ end
 local function open_media_files()
   local action_state = require('telescope.actions.state')
   local file_path = action_state.get_selected_entry().path
-  local media_files = ar.media_files
+  local media_files = ar.media.all
   local file_extension = file_path:match('^.+%.(.+)$')
   if vim.list_contains(media_files, file_extension) then
     ar.open_media(file_path)
