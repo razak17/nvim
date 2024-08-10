@@ -12,11 +12,8 @@ return {
     opts = {
       use_git_branch = true,
       save_dir = vim.fn.expand(vim.fn.stdpath('cache') .. '/sessions/'),
-      ignored_dirs = { vim.fn.stdpath('data') },
       on_autoload_no_session = function() vim.cmd.Alpha() end,
-      should_autosave = function()
-        return vim.bo.filetype ~= 'alpha' --[[and vim.bo.filetype ~= 'markdown']]
-      end,
+      should_save = function() return vim.bo.filetype ~= 'alpha' end,
     },
   },
 }
