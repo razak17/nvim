@@ -542,7 +542,7 @@ return {
     init = function()
       map(
         'n',
-        '<leader>gg',
+        '<leader>gG',
         function()
           require('gitgraph').draw({}, { all = true, max_count = 5000 })
         end,
