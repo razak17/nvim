@@ -146,7 +146,19 @@ return {
       map('n', '<leader><localleader>fr', g.renameFile, { desc = 'genghis: rename file' })
       map('n', '<leader><localleader>fm', g.moveAndRenameFile, { desc = 'genghis: move and rename' })
       map('n', '<leader><localleader>fc', g.createNewFile, { desc = 'genghis: create new file' })
-      map('n', '<leader><localleader>fd', g.duplicateFile, { desc = 'genghis: duplicate current file' })
+      map('n', '<leader><localleader>fD', g.duplicateFile, { desc = 'genghis: duplicate current file' })
+      map(
+        'n',
+        '<leader><localleader>fd',
+        function ()
+          vim.ui.input({
+            prompt = 'Delete file? (y/n) ',
+          }, function(input)
+            if input == 'y' or input == 'Y' then g.trashFile() end
+          end)
+        end,
+        { desc = 'genghis: move to trash' }
+      )
     end,
   },
   {
