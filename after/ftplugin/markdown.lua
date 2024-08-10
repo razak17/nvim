@@ -1,6 +1,7 @@
 if not ar or ar.none then return end
 
 local api, cmd, fn, g = vim.api, vim.cmd, vim.fn, vim.g
+local L = vim.log.levels
 local fmt = string.format
 
 vim.opt.spell = true
@@ -199,7 +200,7 @@ local function bold_selection()
   local selected_text =
     table.concat(lines, '\n'):sub(start_col, #lines == 1 and end_col or -1)
   if selected_text:match('^%*%*.*%*%*$') then
-    vim.notify('Text already bold', vim.log.levels.INFO)
+    vim.notify('Text already bold', L.INFO)
   else
     cmd('normal 2gsa*')
   end
@@ -224,10 +225,7 @@ local function multiline_bold()
   )[1]
   -- Check if the cursor is on an asterisk
   if line:sub(col + 1, col + 1):match('%*') then
-    vim.notify(
-      'Cursor is on an asterisk, run inside the bold text',
-      vim.log.levels.WARN
-    )
+    vim.notify('Cursor is on an asterisk, run inside the bold text', L.WARN)
     return
   end
   -- Search for '**' to the left of the cursor position
@@ -239,11 +237,11 @@ local function multiline_bold()
   local bold_end = right_text:find('%*%*')
   local end_row = start_row
   while
-    not bold_end and end_row < vim.api.nvim_buf_line_count(current_buffer) - 1
+    not bold_end and end_row < api.nvim_buf_line_count(current_buffer) - 1
   do
     end_row = end_row + 1
     local next_line =
-      vim.api.nvim_buf_get_lines(current_buffer, end_row, end_row + 1, false)[1]
+      api.nvim_buf_get_lines(current_buffer, end_row, end_row + 1, false)[1]
     if next_line == '' then break end
     right_text = right_text .. '\n' .. next_line
     bold_end = right_text:find('%*%*')
@@ -253,7 +251,7 @@ local function multiline_bold()
   if bold_start and bold_end then
     -- Extract lines
     local text_lines =
-      vim.api.nvim_buf_get_lines(current_buffer, start_row, end_row + 1, false)
+      api.nvim_buf_get_lines(current_buffer, start_row, end_row + 1, false)
     local text = table.concat(text_lines, '\n')
     -- Calculate positions to correctly remove '**'
     -- vim.notify("bold_start: " .. bold_start .. ", bold_end: " .. bold_end)
@@ -262,14 +260,13 @@ local function multiline_bold()
       .. text:sub(bold_end + 2)
     local new_lines = vim.split(new_text, '\n')
     -- Set new lines in buffer
-    vim.api.nvim_buf_set_lines(
+    api.nvim_buf_set_lines(
       current_buffer,
       start_row,
       end_row + 1,
       false,
       new_lines
     )
-    -- vim.notify("Unbolded text", vim.log.levels.INFO)
   else
     -- Bold the word at the cursor position if no bold markers are found
     local before = line:sub(1, col)
@@ -277,12 +274,12 @@ local function multiline_bold()
     local inside_surround = before:match('%*%*[^%*]*$')
       and after:match('^[^%*]*%*%*')
     if inside_surround then
-      vim.cmd('normal gsd*.')
+      cmd('normal gsd*.')
     else
-      vim.cmd('normal viw')
-      vim.cmd('normal 2gsa*')
+      cmd('normal viw')
+      cmd('normal 2gsa*')
     end
-    vim.notify('Bolded current word', vim.log.levels.INFO)
+    vim.notify('Bolded current word', L.INFO)
   end
 end
 
@@ -306,6 +303,58 @@ local function paste_github_link()
   cmd('normal! a[](){:target="_blank"} ')
   cmd('normal! F(pv2F/lyF[p')
   cmd('stopinsert')
+end
+
+-- Generate/update a Markdown TOC
+local function generate_toc()
+  local path = fn.expand('%')
+  local bufnr = 0
+  cmd('mkview')
+  local lines = api.nvim_buf_get_lines(bufnr, 0, -1, false)
+  local toc_exists = false -- Flag to check if TOC marker exists
+  local frontmatter_end = 0 -- To store the end line number of frontmatter
+  for i, line in ipairs(lines) do
+    if i == 1 and line:match('^---$') then
+      for j = i + 1, #lines do
+        if lines[j]:match('^---$') then
+          frontmatter_end = j -- Save the end line of the frontmatter
+          break
+        end
+      end
+    end
+    if line:match('^%s*<!%-%-%s*toc%s*%-%->%s*$') then
+      toc_exists = true -- Sets the flag if TOC marker is found
+      break
+    end
+  end
+  -- Inserts H1 heading and <!-- toc --> at the appropriate position
+  if not toc_exists then
+    if frontmatter_end > 0 then
+      api.nvim_buf_set_lines(
+        bufnr,
+        frontmatter_end,
+        frontmatter_end,
+        false,
+        { '', '# Contents', '<!-- toc -->' }
+      )
+    else
+      -- Insert at the top if no frontmatter
+      api.nvim_buf_set_lines(
+        bufnr,
+        0,
+        0,
+        false,
+        { '# Contents', '<!-- toc -->' }
+      )
+    end
+  end
+  -- Silently save the file, in case TOC being created for first time (yes, you need the 2 saves)
+  cmd('silent write')
+  fn.system('markdown-toc -i ' .. path)
+  cmd('edit!')
+  cmd('silent write')
+  vim.notify('TOC updated and file saved', L.INFO)
+  cmd('loadview')
 end
 
 local function with_desc(desc) return { buffer = 0, desc = fmt('%s', desc) } end
@@ -358,6 +407,8 @@ map(
 )
 
 map('i', '<C-g>', paste_github_link, with_desc('paste github link'))
+
+map('n', '<leader><leader>mt', generate_toc, with_desc('insert/update TOC'))
 
 ar.ftplugin_conf({
   cmp = function(cmp)
