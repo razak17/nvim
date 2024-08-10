@@ -378,6 +378,16 @@ local function return_to_position()
   if pos then api.nvim_win_set_cursor(0, pos) end
 end
 
+-- Open current file in finder
+local function open_in_finder()
+  local file_path = fn.expand('%:p')
+  if file_path ~= '' then
+    ar.open_media(file_path, true)
+  else
+    print('No file is currently open')
+  end
+end
+
 local function with_desc(desc) return { buffer = 0, desc = fmt('%s', desc) } end
 
 map(
@@ -439,6 +449,8 @@ map(
   return_to_position,
   with_desc('return to position before jumping')
 )
+
+map('n', '<leader><leader>fo', open_in_finder, with_desc('open in finder'))
 
 ar.ftplugin_conf({
   cmp = function(cmp)
