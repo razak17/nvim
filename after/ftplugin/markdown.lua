@@ -300,76 +300,53 @@ local function convert_to_link(new_tab)
   cmd('stopinsert')
 end
 
+local function with_desc(desc) return { buffer = 0, desc = fmt('%s', desc) } end
+
 map(
   'n',
   '<leader>id',
   delete_image_under_cursor,
-  { desc = 'delete image under cursor', buffer = 0 }
+  with_desc('delete image under cursor')
 )
 
 map(
   'n',
   '<leader>io',
   open_image_under_cursor,
-  { desc = 'open image under cursor in preview', buffer = 0 }
+  with_desc('open image under cursor in preview')
 )
 
 map(
   { 'n', 'v', 'i' },
   '<leader>ip',
   paste_image_from_clipboard,
-  { desc = 'paste image from system clipboard', buffer = 0 }
+  with_desc('paste image from system clipboard')
 )
 
-map('n', '<leader>ir', refresh_images, { desc = 'refresh images', buffer = 0 })
+map('n', '<leader>ir', refresh_images, with_desc('refresh images'))
 
-map(
-  'n',
-  '<leader><leader>md',
-  toggle_bullets,
-  { desc = 'toggle bullet point', buffer = 0 }
-)
+map('n', '<leader><leader>md', toggle_bullets, with_desc('toggle bullet point'))
 
 map(
   'v',
   '<localleader>mj',
   delete_new_lines,
-  { desc = 'delete newlines in selected text', buffer = 0 }
+  with_desc('delete newlines in selected text')
 )
 
-map(
-  'n',
-  '<localleader>Pm',
-  '<Cmd>Glow<CR>',
-  { desc = 'markdown preview', buffer = 0 }
-)
+map('n', '<localleader>Pm', '<Cmd>Glow<CR>', with_desc('markdown preview'))
 
-map(
-  'v',
-  '<leader><leader>mb',
-  bold_selection,
-  { desc = 'BOLD selection', buffer = 0 }
-)
+map('v', '<leader><leader>mb', bold_selection, with_desc('BOLD selection'))
 
-map(
-  'n',
-  '<leader><leader>mb',
-  multiline_bold,
-  { desc = 'toggle BOLD markers', buffer = 0 }
-)
+map('n', '<leader><leader>mb', multiline_bold, with_desc('toggle BOLD markers'))
 
-map(
-  'v',
-  '<leader><leader>mll',
-  convert_to_link,
-  { desc = 'convert to link', buffer = 0 }
-)
+map('v', '<leader><leader>mll', convert_to_link, with_desc('convert to link'))
 
 map(
   'v',
   '<leader><leader>mlt',
   function() convert_to_link(true) end,
-  { desc = 'convert to link (new tab)', buffer = 0 }
+  with_desc('convert to link (new tab)')
 )
 
 ar.ftplugin_conf({
