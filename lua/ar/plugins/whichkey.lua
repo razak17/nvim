@@ -1,7 +1,6 @@
 return {
   'folke/which-key.nvim',
   event = 'VeryLazy',
-  -- TODO:align center is broken
   opts = {
     icons = {
       rules = false,
