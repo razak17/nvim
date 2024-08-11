@@ -20,6 +20,12 @@ return {
     event = 'VeryLazy',
     config = function() vim.g['w3m#external_browser'] = 'firefox' end,
   },
+  {
+    'r-cha/encourage.nvim',
+    cond = not minimal and niceties,
+    event = { 'BufReadPost', 'BufNewFile' },
+    opts = {},
+  },
   { 'nvim-tree/nvim-web-devicons', cond = false },
   { 'stevearc/profile.nvim', cond = not minimal, lazy = false },
   {
