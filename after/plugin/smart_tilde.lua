@@ -1,4 +1,4 @@
-local enabled = ar.plugin.smart_tilde.enable
+local enabled = not ar.noplugin and ar.plugin.smart_tilde.enable
 
 if not ar or ar.none or not enabled then return end
 

@@ -1,4 +1,4 @@
-local enabled = ar.plugin.ui_select.enable
+local enabled = ar.ui_select.enable
 
 if not ar or ar.none or not ar.plugins.enable or not enabled then return end
 

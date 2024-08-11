@@ -1,4 +1,6 @@
-if not ar or ar.none then return end
+local enabled = not ar.noplugin and ar.plugin.sticky_note.enable
+
+if not ar or ar.none or not enabled then return end
 
 local api, opt_l = vim.api, vim.opt_local
 

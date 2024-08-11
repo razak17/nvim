@@ -1,4 +1,6 @@
-if not ar or ar.none then return end
+local enabled = ar.mappings.enable
+
+if not ar or ar.none or not enabled then return end
 
 local fn, api, fmt = vim.fn, vim.api, string.format
 local is_available = ar.is_available

@@ -1,4 +1,6 @@
-if not ar or ar.none then return end
+local enabled = ar.colors.enable
+
+if not ar or ar.none or not enabled then return end
 
 local highlight = ar.highlight
 local transparent = ar.ui.transparent.enable

@@ -1,4 +1,7 @@
-if not ar then return end
+local enabled = not ar.noplugin and ar.plugin.last_place.enable
+
+if not ar or ar.none or not enabled then return end
+
 local fn = vim.fn
 -- adapted from https://github.com/ethanholz/nvim-lastplace/blob/main/lua/nvim-lastplace/init.lua
 local ignore_buftype = { 'quickfix', 'nofile', 'help', 'terminal' }

@@ -1,4 +1,7 @@
-if not ar then return end
+local enabled = ar.rooter.enable
+
+if not ar or ar.none or not enabled then return end
+
 local fn, fs, api = vim.fn, vim.fs, vim.api
 
 ----------------------------------------------------------------------------------------------------

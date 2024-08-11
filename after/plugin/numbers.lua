@@ -1,4 +1,6 @@
-if not ar or ar.none then return end
+local enabled = ar.numbers.enable
+
+if not ar or ar.none or not enabled then return end
 
 local ui = ar.ui
 local decor = ui.decorations

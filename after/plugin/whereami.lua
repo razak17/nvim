@@ -1,3 +1,7 @@
+local enabled = not ar.noplugin and ar.plugin.whereami.enable
+
+if not ar or ar.none or not enabled then return end
+
 -- @see: https://github.com/OXY2DEV/nvim/blob/main/lua/scripts/beacon.lua
 
 local api = vim.api

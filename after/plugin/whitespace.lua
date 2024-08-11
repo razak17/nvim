@@ -1,4 +1,4 @@
-local enabled = ar.plugin.whitespace.enable
+local enabled = not ar.noplugin and ar.plugin.whitespace.enable
 
 if not ar or ar.none or not enabled then return end
 

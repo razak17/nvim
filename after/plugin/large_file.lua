@@ -1,4 +1,4 @@
-local enabled = ar.plugin.large_file.enable
+local enabled = not ar.noplugin and ar.plugin.large_file.enable
 
 if not ar or ar.none or not enabled then return end
 

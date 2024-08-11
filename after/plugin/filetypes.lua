@@ -1,4 +1,6 @@
-if not ar or ar.none then return end
+local enabled = ar.filetypes.enable
+
+if not ar or ar.none or not enabled then return end
 
 local settings, highlight = ar.filetype_settings, ar.highlight
 local cmd, api, fn, opt_l = vim.cmd, vim.api, vim.fn, vim.opt_local
