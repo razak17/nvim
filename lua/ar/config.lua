@@ -89,7 +89,7 @@ local namespace = {
     sticky_note = { enable = false },
     tmux = { enable = true },
     ui_select = { enable = true },
-    whitespace = { enable = env.RVIM_PLUGINS_MINIMAL == '1' },
+    whitespace = { enable = true },
   },
   plugins = {
     enable = env.RVIM_PLUGINS_ENABLED == '1',
