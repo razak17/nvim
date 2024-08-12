@@ -153,6 +153,7 @@ if ar.is_git_repo() then
     ['Conflict Show Base'] = "lua require'ar.menus.git'.diffview_conflict('base')",
     ['Conflict Show Ours'] = "lua require'ar.menus.git'.diffview_conflict('ours')",
     ['Conflict Show Theirs'] = "lua require'ar.menus.git'.diffview_conflict('theirs')",
+    ['List Branches'] = "lua require'ar.menus.git'.list_branches()",
     ['Browse File Commit History'] = 'DiffviewFileHistory %',
     ['List Authors'] = 'CoAuthor',
     ['Conflict Choose Ours'] = 'GitConflictChooseOurs',

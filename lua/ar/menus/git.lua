@@ -866,4 +866,26 @@ function M.do_stash()
   )
 end
 
+-- https://github.com/olimorris/dotfiles/blob/main/.config/nvim/lua/config/functions.lua#L11
+function M.list_branches()
+  local branches = fn.systemlist([[git branch 2>/dev/null]])
+  local new_branch_prompt = 'Create new branch'
+  table.insert(branches, 1, new_branch_prompt)
+
+  vim.ui.select(branches, {
+    prompt = 'Git branches',
+  }, function(choice)
+    if choice == nil then return end
+
+    if choice == new_branch_prompt then
+      local new_branch = ''
+      vim.ui.input({ prompt = 'New branch name:' }, function(branch)
+        if branch ~= nil then fn.systemlist('git checkout -b ' .. branch) end
+      end)
+    else
+      fn.systemlist('git checkout ' .. choice)
+    end
+  end)
+end
+
 return M
