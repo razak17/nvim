@@ -11,6 +11,12 @@ return {
     config = function() require('lspkind').init({ preset = 'codicons' }) end,
   },
   {
+    'OXY2DEV/helpview.nvim',
+    cond = not minimal and niceties and ar.treesitter.enable,
+    lazy = false,
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
+  },
+  {
     'arnamak/stay-centered.nvim',
     event = 'BufReadPost',
     -- stylua: ignore
