@@ -46,6 +46,7 @@ M.options.toggles = {
   ['Toggle Undo Tree'] = 'UndotreeToggle',
   ['Toggle Precognition'] = 'Precognition toggle',
   ['Toggle TS Context'] = 'TSContextToggle',
+  ['Toggle Helpview'] = 'Helpview toggleAll',
   ['Toggle Minipairs'] = 'lua require"ar.menus.toggle".toggle_minipairs()',
 }
 
