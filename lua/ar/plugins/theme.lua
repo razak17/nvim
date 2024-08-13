@@ -8,6 +8,7 @@ return {
   { 'judaew/ronny.nvim', priority = 1000, cond = not minimal, opts = {} },
   -- { 'oxfist/night-owl.nvim', lazy = false, priority = 1000 },
   { 'kvrohit/rasmus.nvim', lazy = false, cond = not minimal, priority = 1000 },
+  { 'samharju/serene.nvim', lazy = false, cond = not minimal, priority = 1000 },
   {
     'razak17/onedark.nvim',
     lazy = false,
