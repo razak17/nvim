@@ -280,8 +280,29 @@ local git_command = {
 local layout_config = { width = 0.9, horizontal = { preview_width = 0.5 } }
 local previewer = ar.telescope.delta_opts().previewer
 
+local function telescope_commits(opts)
+  opts.entry_maker = custom_make_entry_gen_from_git_commits()
+  local prompt_title = 'Git Commits'
+  if opts.branch then prompt_title = fmt('Git Commits (%s)', opts.branch) end
+  pickers
+    .new(opts, {
+      prompt_title = prompt_title,
+      finder = finders.new_oneshot_job(opts.git_command, opts),
+      previewer = opts.previewer,
+      sorter = conf.file_sorter(opts),
+      attach_mappings = function(_, map)
+        actions.select_default:replace(actions.git_checkout)
+        map({ 'i', 'n' }, '<c-r>m', actions.git_reset_mixed)
+        map({ 'i', 'n' }, '<c-r>s', actions.git_reset_soft)
+        map({ 'i', 'n' }, '<c-r>h', actions.git_reset_hard)
+        return true
+      end,
+    })
+    :find()
+end
+
 function M.browse_commits()
-  require('telescope.builtin').git_commits({
+  telescope_commits({
     attach_mappings = telescope_commits_mappings,
     entry_maker = custom_make_entry_gen_from_git_commits(),
     git_command = git_command,
@@ -492,19 +513,13 @@ local function telescope_branches_mappings(prompt_bufnr, map)
       function()
         local branch = get_selected_entry().value
         actions.close(prompt_bufnr)
-        require('telescope.builtin').git_commits({
+        telescope_commits({
           attach_mappings = telescope_commits_mappings,
           entry_maker = custom_make_entry_gen_from_git_commits(),
-          git_command = {
-            'git',
-            'log',
-            branch,
-            '--pretty=tformat:%<(10)%h %<(16,trunc)%an %ad%d %s',
-            '--date=short',
-            '--',
-            vim.fs.root(vim.fn.getcwd(), '.git'),
-          },
-          layout_config = { width = 0.9, horizontal = { preview_width = 0.5 } },
+          git_command = git_command,
+          layout_config = layout_config,
+          branch = branch,
+          previewer = previewer,
         })
       end,
       desc = 'commits',
