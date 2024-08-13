@@ -159,14 +159,23 @@ nnoremap('<C-h>', '<C-w>h')
 nnoremap('<C-j>', '<C-w>j')
 nnoremap('<C-k>', '<C-w>k')
 nnoremap('<C-l>', '<C-w>l')
---------------------------------------------------------------------------------
+-----------------------------------------------------------------------------//
 -- Quick find/replace
--- @see: https://github.com/linkarzu/dotfiles-latest/blob/main/neovim/neobean/lua/config/keymaps.lua?plain=1#L94
+-----------------------------------------------------------------------------//
 nnoremap(
   '<leader>[[',
-  [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
+  [[:%s/\<<C-r><C-w>\>/<C-r>=<CR>/gI<Left><Left><Left>]],
   { desc = 'replace all' }
 )
+nnoremap(
+  '<leader>]]',
+  [[:s/\<<C-r><C-w>\>/<C-r>=<CR>/gI<Left><Left><Left>]],
+  { desc = 'replace in line' }
+)
+vnoremap('<leader>[[', [["zy:%s/<C-r><C-o>"/]], { desc = 'replace all' })
+--------------------------------------------------------------------------------
+-- Quick find/replace with
+-- @see: https://github.com/linkarzu/dotfiles-latest/blob/main/neovim/neobean/lua/config/keymaps.lua?plain=1#L94
 nnoremap(
   '<leader>[u',
   [[:%s/\<<C-r><C-w>\>/<C-r>=toupper(expand('<cword>'))<CR>/gI<Left><Left><Left>]],
@@ -178,11 +187,6 @@ nnoremap(
   { desc = 'replace all with lowercase' }
 )
 nnoremap(
-  '<leader>]]',
-  [[:s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
-  { desc = 'replace in line' }
-)
-nnoremap(
   '<leader>]u',
   [[:s/\<<C-r><C-w>\>/<C-r>=toupper(expand('<cword>'))<CR>/gI<Left><Left><Left>]],
   { desc = 'replace in line with UPPERCASE' }
@@ -192,7 +196,6 @@ nnoremap(
   [[:s/\<<C-r><C-w>\>/<C-r>=tolower(expand('<cword>'))<CR>/gI<Left><Left><Left>]],
   { desc = 'replace in line with lowercase' }
 )
-vnoremap('<leader>[', [["zy:%s/<C-r><C-o>"/]], { desc = 'replace all' })
 -- Visual shifting (does not exit Visual mode)
 vnoremap('<', '<gv')
 vnoremap('>', '>gv')
