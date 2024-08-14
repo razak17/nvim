@@ -472,7 +472,7 @@ function ar.open_media(path, notify)
   local is_img = vim.list_contains(media.image, file_extension)
   local exe = apps.explorer
   if is_audio or is_video then exe = apps.video end
-  if is_doc then exe = apps.doc end
+  if is_doc then exe = apps.pdf end
   if is_img then exe = apps.image end
   if exe and fn.executable(exe) then
     vim.system({ exe, path }, { detach = true })
