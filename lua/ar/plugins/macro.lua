@@ -1,7 +1,9 @@
+local minimal, niceties = ar.plugins.minimal, ar.plugins.niceties
+
 return {
   {
     'jake-stewart/recursive-macro.nvim',
-    cond = not ar.plugins.minimal,
+    cond = not minimal,
     event = 'VeryLazy',
     opts = {
       registers = { 'q', 'w', 'e', 'r', 't', 'y' },
@@ -26,7 +28,7 @@ return {
         { '<localleader>qq', desc = 'neocomposer: play macro' },
       })
     end,
-    cond = not ar.plugins.minimal and false,
+    cond = not minimal and niceties and false,
     event = { 'BufReadPost', 'BufNewFile' },
     -- stylua: ignore
     keys = {
