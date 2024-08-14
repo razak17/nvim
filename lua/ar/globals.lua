@@ -446,6 +446,14 @@ function ar.truncate(str, max_len)
     or str
 end
 
+function ar.get_media()
+  local media = ar.media
+  return vim
+    .iter({ media.audio, media.doc, media.image, media.video })
+    :flatten()
+    :totable()
+end
+
 --- search current word or go to file
 --- replicate netrw functionality
 ---@param path string

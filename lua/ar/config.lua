@@ -19,18 +19,6 @@ local namespace = {
   git = {},
   use_local_gx = false,
   media = {
-    all = {
-      'jpg',
-      'png',
-      'jpeg',
-      'ico',
-      'gif',
-      'pdf',
-      'mp3',
-      'm4a',
-      'mp4',
-      'mkv',
-    },
     audio = { 'mp3', 'm4a' },
     doc = { 'pdf' },
     image = { 'jpg', 'png', 'jpeg', 'ico', 'gif' },
