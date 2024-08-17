@@ -1,7 +1,7 @@
 if not ar then return end
 
 local fn, api, cmd, uv, fmt = vim.fn, vim.api, vim.cmd, vim.uv, string.format
-local l = vim.log.levels
+local L = vim.log.levels
 
 ---Join path segments that were passed as input
 ---@return string
@@ -122,7 +122,7 @@ function ar.pcall(msg, func, ...)
       msg = debug.traceback(
         msg and fmt('%s:\n%s\n%s', msg, vim.inspect(args), err) or err
       )
-      vim.schedule(function() vim.notify(msg, l.ERROR, { title = 'ERROR' }) end)
+      vim.schedule(function() vim.notify(msg, L.ERROR, { title = 'ERROR' }) end)
     end
   end, unpack(args))
 end
@@ -517,6 +517,23 @@ end
 function ar.web_search(path, url)
   local query = '"' .. fn.substitute(path, '["\n]', ' ', 'g') .. '"'
   ar.open(fmt('%s%s', url, query), true)
+end
+
+-- move file to trash
+---@param path string
+function ar.trash_file(path, notify)
+  if fn.executable('trash') == 0 then
+    vim.notify('Trash utility not installed', L.ERROR)
+    return
+  end
+  notify = notify or false
+  local success, _ = pcall(function() fn.system({ 'gio', 'trash', path }) end)
+  if not notify then return end
+  if success then
+    vim.notify(fmt('Moved %s to trash', path), L.INFO)
+  else
+    vim.notify('Failed to delete file', L.ERROR)
+  end
 end
 
 ---------------------------------------------------------------------------------

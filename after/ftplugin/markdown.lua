@@ -68,50 +68,25 @@ local function delete_image_under_cursor()
   local image_path = get_image_path()
   if image_path then
     if is_http_path(image_path) then
-      api.nvim_echo({
-        { 'URL image cannot be deleted from disk.', 'WarningMsg' },
-      }, false, {})
+      vim.notify('URL image cannot be deleted from disk', L.WARN)
     else
       local absolute_image_path = get_absolute_path(image_path)
-      if fn.executable('trash') == 0 then
-        api.nvim_echo({
-          { 'Trash utility not installed.', 'ErrorMsg' },
-        }, false, {})
-        return
-      end
       vim.ui.input({
         prompt = 'Delete image file? (y/n) ',
       }, function(input)
         if input == 'y' or input == 'Y' then
           local success, _ = pcall(
-            function()
-              fn.system({ 'trash', fn.fnameescape(absolute_image_path) })
-            end
+            function() ar.trash_file(fn.fnameescape(absolute_image_path)) end
           )
           if success then
-            api.nvim_echo({
-              { 'Image file deleted from disk:\n', 'Normal' },
-              { absolute_image_path, 'Normal' },
-            }, false, {})
             cmd([[lua require("image").clear()]])
             cmd('edit!')
-          else
-            api.nvim_echo({
-              { 'Failed to delete image file:\n', 'ErrorMsg' },
-              { absolute_image_path, 'ErrorMsg' },
-            }, false, {})
           end
-        else
-          api.nvim_echo({ { 'Image deletion canceled.', 'Normal' } }, false, {})
         end
       end)
     end
   else
-    api.nvim_echo(
-      { { 'No image found under the cursor', 'WarningMsg' } },
-      false,
-      {}
-    )
+    vim.notify('No image found under the cursor', L.WARN)
   end
 end
 
