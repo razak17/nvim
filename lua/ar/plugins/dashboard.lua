@@ -7,8 +7,7 @@ return {
     cond = not minimal,
     event = 'VimEnter',
     keys = { { '<leader>;', '<cmd>Alpha<CR>', desc = 'alpha' } },
-    config = function()
-      local alpha = require('alpha')
+    opts = function()
       local dashboard = require('alpha.themes.dashboard')
       local fortune = require('alpha.fortune')
 
@@ -138,20 +137,41 @@ return {
 
       dashboard.section.footer.val = fortune()
       dashboard.section.footer.opts.hl = 'TSEmphasis'
+      dashboard.opts.layout = {
+        { type = 'padding', val = 4 },
+        { type = 'group', val = neovim_header() },
+        { type = 'padding', val = 1 },
+        installed_plugins,
+        { type = 'padding', val = 2 },
+        dashboard.section.buttons,
+        dashboard.section.footer,
+        { type = 'padding', val = 2 },
+        version,
+      }
+      dashboard.opts.margin = 5
+      return dashboard
+    end,
+    config = function(_, dashboard)
+      require('alpha').setup(dashboard.opts)
 
-      alpha.setup({
-        layout = {
-          { type = 'padding', val = 4 },
-          { type = 'group', val = neovim_header() },
-          { type = 'padding', val = 1 },
-          installed_plugins,
-          { type = 'padding', val = 2 },
-          dashboard.section.buttons,
-          dashboard.section.footer,
-          { type = 'padding', val = 2 },
-          version,
-        },
-        opts = { margin = 5 },
+      ar.augroup('AlphaStats', {
+        event = 'User',
+        once = true,
+        pattern = 'LazyVimStarted',
+        command = function()
+          local stats = require('lazy').stats()
+          local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
+          dashboard.opts.layout[4] = {
+            type = 'text',
+            val = fmt(
+              ' %s plugins loaded in %s',
+              stats.loaded .. ' of ' .. stats.count,
+              ms .. 'ms'
+            ),
+            opts = { position = 'center', hl = 'GitSignsAdd' },
+          }
+          pcall(vim.cmd.AlphaRedraw)
+        end,
       })
     end,
   },
