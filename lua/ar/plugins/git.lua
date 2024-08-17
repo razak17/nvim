@@ -13,11 +13,10 @@ return {
   {
     'tpope/vim-fugitive',
     cond = enabled,
-    keys = { { '<localleader>gs', '<Cmd>G<CR>', desc = 'fugitive' } },
+    keys = { { '<localleader>gS', '<Cmd>G<CR>', desc = 'fugitive' } },
   },
   {
     'NeogitOrg/neogit',
-    cond=false,
     cmd = 'Neogit',
     -- stylua: ignore
     keys = {
