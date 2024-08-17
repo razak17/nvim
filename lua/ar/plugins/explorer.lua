@@ -171,7 +171,7 @@ return {
               find_or_search_in_dir(cwd, 'search')
             end,
             ['oi'] = function(state)
-              vim.api.nvim_input(': ' .. state.tree:get_node().path .. '<Home>')
+              api.nvim_input(': ' .. state.tree:get_node().path .. '<Home>')
             end,
             ['<C-o>'] = function(state)
               local node = state.tree:get_node()
@@ -283,9 +283,7 @@ return {
     keys = {
       {
         '<leader>ee',
-        function()
-          require('mini.files').open(vim.api.nvim_buf_get_name(0), true)
-        end,
+        function() require('mini.files').open(api.nvim_buf_get_name(0), true) end,
         desc = 'open mini.files (directory of current file)',
       },
       {
@@ -293,7 +291,7 @@ return {
         function()
           local mf = require('mini.files')
           if not mf.close() then
-            mf.open(vim.api.nvim_buf_get_name(0))
+            mf.open(api.nvim_buf_get_name(0))
             mf.reveal_cwd()
           end
         end,
@@ -306,12 +304,21 @@ return {
       },
     },
     opts = {
-      options = { use_as_default_explorer = false },
+      windows = {
+        preview = true,
+        width_focus = 30,
+        width_preview = 30,
+      },
+      mappings = { reset = ',', reveal_cwd = '.' },
+      options = {
+        use_as_default_explorer = true,
+        permanent_delete = false,
+      },
     },
     config = function(_, opts)
       require('mini.files').setup(opts)
 
-      vim.api.nvim_create_autocmd('User', {
+      api.nvim_create_autocmd('User', {
         pattern = 'MiniFilesActionRename',
         callback = function(event) on_rename(event.data.from, event.data.to) end,
       })
@@ -326,8 +333,8 @@ return {
         function()
           local picked_window_id = require('window-picker').pick_window({
             include_current_win = true,
-          }) or vim.api.nvim_get_current_win()
-          vim.api.nvim_set_current_win(picked_window_id)
+          }) or api.nvim_get_current_win()
+          api.nvim_set_current_win(picked_window_id)
         end,
         desc = 'pick window',
       },
@@ -338,10 +345,8 @@ return {
             include_current_win = false,
           })
           local target_buffer = vim.fn.winbufnr(window)
-          vim.api.nvim_win_set_buf(window, 0)
-          if target_buffer ~= 0 then
-            vim.api.nvim_win_set_buf(0, target_buffer)
-          end
+          api.nvim_win_set_buf(window, 0)
+          if target_buffer ~= 0 then api.nvim_win_set_buf(0, target_buffer) end
         end,
         desc = 'swap window',
       },
