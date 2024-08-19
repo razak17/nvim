@@ -545,7 +545,9 @@ return {
           condition = function() return vim.bo.ft == 'http' end,
           {
             provider = function()
-              local env = vim.g.kulala_selected_env
+              local CONFIG = require("kulala.config")
+              local env = vim.g.kulala_selected_env or CONFIG.get().default_env
+              if not env then return '' end
               return ' ' .. icons.misc.right_arrow .. ' ' .. env
             end,
           },
