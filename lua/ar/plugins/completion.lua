@@ -423,7 +423,7 @@ return {
     'jsongerber/nvim-px-to-rem',
     cond = ar.completion.enable and not minimal,
     ft = { 'css', 'scss' },
-    opts = { disable_keymaps = true },
+    opts = { show_virtual_text = true },
   },
   {
     'razak17/wilder.nvim',
