@@ -155,7 +155,7 @@ return {
     dependencies = { 'nfrid/treesitter-utils' },
   },
   {
-    'MeanderingProgrammer/markdown.nvim',
+    'MeanderingProgrammer/render-markdown.nvim',
     cond = not minimal and niceties,
     cmd = { 'RenderMarkdownToggle' },
     ft = { 'markdown' },
