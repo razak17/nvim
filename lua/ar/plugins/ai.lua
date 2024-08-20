@@ -96,6 +96,7 @@ return {
   },
   {
     'David-Kunz/gen.nvim',
+    enabled = false,
     cond = not ar.plugins.minimal and ar.ai.enable and false,
     cmd = { 'Gen' },
   },

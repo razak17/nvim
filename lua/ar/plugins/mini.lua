@@ -124,6 +124,7 @@ return {
   },
   {
     'echasnovski/mini.animate',
+    enabled = false,
     cond = not ar.plugins.minimal and false,
     event = 'VeryLazy',
     opts = {},
@@ -274,6 +275,7 @@ return {
   },
   {
     'echasnovski/mini.move',
+    enabled = false,
     cond = not minimal and false,
     event = 'VeryLazy',
     opts = {

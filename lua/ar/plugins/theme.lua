@@ -51,6 +51,7 @@ return {
   },
   {
     'sontungexpt/witch',
+    enabled = false,
     cond = not minimal and false,
     priority = 1000,
     lazy = false,
@@ -59,6 +60,7 @@ return {
     -- Using lazy.nvim
     {
       'cdmill/neomodern.nvim',
+      enabled = false,
       cond = not minimal and false,
       lazy = false,
       priority = 1000,

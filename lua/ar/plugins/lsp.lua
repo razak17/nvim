@@ -118,6 +118,7 @@ return {
   },
   {
     'glepnir/lspsaga.nvim',
+    enabled = false,
     cond = ar.lsp.enable and false,
     event = 'LspAttach',
     opts = {
@@ -258,6 +259,7 @@ return {
   },
   {
     'kosayoda/nvim-lightbulb',
+    enabled = false,
     cond = ar.lsp.enable and false,
     event = 'LspAttach',
     opts = {
@@ -303,6 +305,7 @@ return {
   },
   {
     'RaafatTurki/corn.nvim',
+    enabled = false,
     cond = ar.lsp.enable and ar.plugins.niceties and false,
     event = 'LspAttach',
     cmd = { 'Corn' },
@@ -317,12 +320,14 @@ return {
   },
   {
     'doums/dmap.nvim',
+    enabled = false,
     cond = ar.lsp.enable and ar.plugins.niceties and false,
     event = 'LspAttach',
     opts = { win_h_offset = 5 },
   },
   {
     'ivanjermakov/troublesum.nvim',
+    enabled = false,
     cond = ar.lsp.enable and ar.plugins.niceties and false,
     event = 'LspAttach',
     opts = {
@@ -417,6 +422,7 @@ return {
   },
   {
     'roobert/action-hints.nvim',
+    enabled = false,
     cond = ar.lsp.enable and false,
     event = 'LspAttach',
     config = function()
@@ -431,12 +437,12 @@ return {
   },
   {
     'aznhe21/actions-preview.nvim',
+    enabled = false,
     cond = ar.lsp.enable and ar.plugins.niceties,
     -- stylua: ignore
     keys = {
       { '<leader>lA', function() require('actions-preview').code_actions() end, desc = 'code action preview' },
     },
-    opts = {},
     config = function()
       require('actions-preview').setup({
         telescope = ar.telescope.vertical(),
@@ -515,6 +521,7 @@ return {
   },
   {
     'Wansmer/symbol-usage.nvim',
+    enabled = false,
     cond = ar.lsp.enable and false,
     event = 'LspAttach',
     config = function()

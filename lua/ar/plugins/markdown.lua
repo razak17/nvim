@@ -28,6 +28,7 @@ return {
   },
   {
     'https://git.sr.ht/~swaits/thethethe.nvim',
+    enabled = false,
     cond = not minimal and niceties and false,
     event = 'VeryLazy',
     opts = {},

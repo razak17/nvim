@@ -53,6 +53,7 @@ return {
   },
   {
     'tomiis4/BufferTabs.nvim',
+    enabled = false,
     cond = not minimal and false,
     event = 'VeryLazy',
     -- stylua: ignore
@@ -82,12 +83,14 @@ return {
   },
   {
     'mei28/luminate.nvim',
+    enabled = false,
     cond = not minimal and niceties and false,
     event = { 'VeryLazy' },
     opts = {},
   },
   {
     'lukas-reineke/virt-column.nvim',
+    enabled = false,
     cond = not minimal and false,
     event = { 'BufRead', 'BufNewFile' },
     opts = {
@@ -161,6 +164,7 @@ return {
   },
   {
     'AndrewRadev/discotheque.vim',
+    enabled = false,
     cond = not minimal and niceties and false,
     cmd = { 'Disco' },
   },
@@ -171,6 +175,7 @@ return {
   },
   {
     'utilyre/sentiment.nvim',
+    enabled = false,
     cond = not minimal and niceties and false,
     init = function()
       -- `matchparen.vim` needs to be disabled manually in case of lazy loading
@@ -249,6 +254,7 @@ return {
   },
   {
     'aaron-p1/match-visual.nvim',
+    enabled = false,
     cond = not minimal and niceties and false,
     event = { 'BufRead', 'BufNewFile' },
     opts = {},
@@ -291,6 +297,7 @@ return {
   },
   {
     'miversen33/sunglasses.nvim',
+    enabled = false,
     cond = not minimal and niceties and false,
     event = 'UIEnter',
     cmd = { 'SunglassesEnable', 'SunglassesDisable' },
@@ -324,6 +331,7 @@ return {
   },
   {
     'tamton-aquib/zone.nvim',
+    enabled = false,
     cond = not minimal and false,
     event = 'VeryLazy',
     opts = {
@@ -445,6 +453,7 @@ return {
   },
   {
     'shellRaining/hlchunk.nvim',
+    enabled = false,
     cond = not minimal and false,
     event = 'BufRead',
     config = function()

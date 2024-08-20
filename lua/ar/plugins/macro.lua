@@ -28,6 +28,7 @@ return {
         { '<localleader>qq', desc = 'neocomposer: play macro' },
       })
     end,
+    enabled = false,
     cond = not minimal and niceties and false,
     event = { 'BufReadPost', 'BufNewFile' },
     -- stylua: ignore

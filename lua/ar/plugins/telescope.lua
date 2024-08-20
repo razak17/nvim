@@ -783,6 +783,7 @@ return {
   },
   {
     'jonarrien/telescope-cmdline.nvim',
+    enabled = false,
     cond = min_enabled and false,
     keys = {
       { ':', '<cmd>Telescope cmdline<cr>', desc = 'Cmdline' },

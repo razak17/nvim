@@ -257,6 +257,7 @@ return {
   },
   {
     'filNaj/tree-setter',
+    enabled = false,
     cond = not minimal and false,
     event = 'VeryLazy',
   },
@@ -281,6 +282,7 @@ return {
   },
   {
     'drybalka/tree-climber.nvim',
+    enabled = false,
     cond = not minimal and false,
     keys = {
       {

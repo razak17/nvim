@@ -394,6 +394,7 @@ return {
       },
       {
         'Exafunction/codeium.nvim',
+        enabled = false,
         cond = ar.ai.enable and not minimal and false,
         opts = {},
       },
@@ -427,6 +428,7 @@ return {
   },
   {
     'razak17/wilder.nvim',
+    enabled = false,
     cond = not minimal and false,
     keys = { '/', '?', ':' },
     build = ':UpdateRemotePlugins',

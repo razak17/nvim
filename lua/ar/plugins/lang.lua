@@ -34,6 +34,7 @@ return {
   },
   {
     'razak17/package-info.nvim',
+    enabled = false,
     cond = not minimal and false,
     event = 'BufRead package.json',
     config = function()
@@ -101,6 +102,7 @@ return {
   },
   {
     'turbio/bracey.vim',
+    enabled = false,
     cond = not minimal and false,
     ft = 'html',
     build = 'npm install --prefix server',
@@ -117,6 +119,7 @@ return {
   },
   {
     'rest-nvim/rest.nvim',
+    enabled = false,
     cond = not minimal and false, -- archived
     ft = { 'http', 'json' },
     init = function()
@@ -177,6 +180,7 @@ return {
   },
   {
     'luckasRanarison/tailwind-tools.nvim',
+    enabled = false,
     cond = ar.lsp.enable and false,
     ft = { 'html', 'svelte', 'astro', 'vue', 'typescriptreact', 'php', 'blade' },
     event = { 'BufRead' },

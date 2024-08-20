@@ -7,6 +7,7 @@ return {
   { 'ton/vim-bufsurf', cond = not minimal, lazy = false },
   {
     'chrisgrieser/nvim-early-retirement',
+    enabled = false,
     cond = not minimal and false,
     event = 'VeryLazy',
     opts = {

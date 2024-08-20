@@ -4,6 +4,7 @@ return {
   { 's1n7ax/nvim-snips', name = 'snips' },
   {
     'garymjr/nvim-snippets',
+    enabled = false,
     cond = ar.completion.enable and false,
     event = 'InsertEnter',
     opts = {

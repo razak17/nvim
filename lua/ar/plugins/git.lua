@@ -83,6 +83,7 @@ return {
   },
   {
     'SuperBo/fugit2.nvim',
+    enabled = false,
     cond = enabled and false,
     cmd = { 'Fugit2', 'Fugit2Diff', 'Fugit2Graph' },
     keys = {
@@ -423,6 +424,7 @@ return {
   },
   {
     'dlvhdr/gh-blame.nvim',
+    enabled = false,
     cond = enabled and false,
     -- stylua: ignore
     keys = {
