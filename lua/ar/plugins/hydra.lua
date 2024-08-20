@@ -235,7 +235,7 @@ return {
       },
     })
 
-    if not minimal and niceties then
+    if not minimal and niceties and ar.is_available('flirt.nvim') then
       local flirt = require('flirt')
       Hydra({
         name = 'Flirt',
