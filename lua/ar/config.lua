@@ -5,6 +5,7 @@ local env = vim.env
 
 local namespace = {
   ai = { enable = env.RVIM_AI_ENABLED == '1' },
+  animation = { enable = false },
   apps = {
     image = 'sxiv',
     pdf = 'zathura',
