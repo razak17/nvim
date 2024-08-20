@@ -234,7 +234,7 @@ return {
     },
   },
   {
-    'bgaillard/readonly.nvim',
+    'razak17/readonly.nvim',
     cond = not minimal and niceties,
     lazy = false,
     opts = {
