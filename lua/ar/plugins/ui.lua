@@ -128,7 +128,15 @@ return {
     event = { 'BufRead', 'BufNewFile' },
     init = function()
       augroup('reticle', {
-        event = { 'BufRead', 'CmdlineLeave', 'WinEnter', 'FileType' },
+        event = {
+          'BufRead',
+          'BufEnter',
+          -- 'FocusGained',
+          -- 'CmdlineLeave',
+          -- 'InsertLeave',
+          'WinEnter',
+          -- 'FileType',
+        },
         command = function(args)
           if not ui.show_cursorline(args.buf) then
             require('reticle').set_cursorline(false)
