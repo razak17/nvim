@@ -1,6 +1,5 @@
 local augroup, ui, highlight = ar.augroup, ar.ui, ar.highlight
-local icons = ui.icons
-local separators = ui.icons.separators
+local icons, separators = ui.icons, ui.icons.separators
 
 local minimal, niceties = ar.plugins.minimal, ar.plugins.niceties
 
@@ -139,7 +138,11 @@ return {
         end,
       })
     end,
-    opts = {},
+    opts = {
+      ignore = {
+        cursorline = { 'neo-tree-popup' },
+      },
+    },
   },
   {
     'Pocco81/HighStr.nvim',
