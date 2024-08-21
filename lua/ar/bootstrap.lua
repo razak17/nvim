@@ -1,6 +1,6 @@
 if not ar or ar.none then return end
 
-local g, fn = vim.g, vim.fn
+local api, g, fn = vim.api, vim.g, vim.fn
 local data = vim.fn.stdpath('data')
 
 --------------------------------------------------------------------------------
@@ -39,10 +39,23 @@ if not ar.plugins.enable then return end
 local lazy_path = join_paths(data, 'lazy', 'lazy.nvim')
 local plugins_enabled = ar.plugins.enable
 if not vim.uv.fs_stat(lazy_path) then
-  -- stylua: ignore
-  fn.system({ 'git', 'clone', '--filter=blob:none', '--single-branch',
-    'https://github.com/folke/lazy.nvim.git', lazy_path,
+  local out = fn.system({
+    'git',
+    'clone',
+    '--filter=blob:none',
+    '--single-branch',
+    'https://github.com/folke/lazy.nvim.git',
+    lazy_path,
   })
+  if vim.v.shell_error ~= 0 then
+    api.nvim_echo({
+      { 'Failed to clone lazy.nvim:\n', 'ErrorMsg' },
+      { out, 'WarningMsg' },
+      { '\nPress any key to exit...' },
+    }, true, {})
+    fn.getchar()
+    os.exit(1)
+  end
 end
 vim.opt.rtp:prepend(lazy_path)
 local spec = ar.plugins_spec()
