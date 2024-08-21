@@ -318,9 +318,26 @@ return {
     config = function(_, opts)
       require('mini.files').setup(opts)
 
-      api.nvim_create_autocmd('User', {
+      ar.augroup('mini.files', {
+        event = { 'User' },
         pattern = 'MiniFilesActionRename',
-        callback = function(event) on_rename(event.data.from, event.data.to) end,
+        command = function(event) on_rename(event.data.from, event.data.to) end,
+      }, {
+        event = { 'User' },
+        pattern = 'MiniFilesBufferCreate',
+        command = function(args)
+          -- https://www.reddit.com/r/neovim/comments/1exg5ir/integration_minifiles_with_s1n7axnvimwindowpicker/
+          local buf_id = args.data.buf_id
+          local open_with_window_picker = function()
+            local fs_entry = MiniFiles.get_fs_entry()
+            if fs_entry ~= nil and fs_entry.fs_type == 'file' then
+              local picked_window_id = require('window-picker').pick_window()
+              MiniFiles.set_target_window(picked_window_id)
+            end
+            MiniFiles.go_in({ close_on_file = true })
+          end
+          map('n', 'W', open_with_window_picker, { buffer = buf_id })
+        end,
       })
     end,
   },
