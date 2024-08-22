@@ -265,10 +265,12 @@ function ar.load_colorscheme(name)
   ar.pcall('theme failed to load because', vim.cmd.colorscheme, name)
 end
 
+-- Check if root directory is a git repo
+---@return boolean
 function ar.is_git_repo()
-  return fn.isdirectory(fn.expand('%:p:h') .. '/.git')
-    or vim.b.gitsigns_head
-    or vim.b.gitsigns_status_dict
+  return not ar.falsy(fn.isdirectory(fmt('%s/.git', fn.expand('%:p:h'))))
+    or not ar.falsy(vim.b.gitsigns_head)
+    or not ar.falsy(vim.b.gitsigns_status_dict)
 end
 
 ---@generic T:table<string, any>
