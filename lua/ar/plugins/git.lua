@@ -522,6 +522,7 @@ return {
   },
   {
     'ejrichards/baredot.nvim',
+    cond = not ar.is_git_repo(),
     event = { 'VeryLazy' },
     opts = {
       git_dir = '~/.dots/dotfiles', -- Change this path
