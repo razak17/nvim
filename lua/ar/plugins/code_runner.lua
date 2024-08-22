@@ -72,7 +72,7 @@ return {
   },
   {
     'razak17/lab.nvim',
-    event = { 'BufRead', 'BufNewFile' },
+    event = { 'InsertEnter' },
     cond = not ar.plugins.minimal,
     keys = {
       { '<leader>rl', ':Lab code run<CR>', desc = 'lab: run' },
