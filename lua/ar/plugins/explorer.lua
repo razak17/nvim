@@ -107,7 +107,7 @@ return {
         },
       },
       filesystem = {
-        hijack_netrw_behavior = 'open_current',
+        hijack_netrw_behavior = 'disabled',
         use_libuv_file_watcher = true,
         follow_current_file = {
           enabled = false,
@@ -280,6 +280,7 @@ return {
   },
   {
     'echasnovski/mini.files',
+    lazy = false,
     keys = {
       {
         '<leader>ee',
