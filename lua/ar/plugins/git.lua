@@ -182,7 +182,6 @@ return {
   },
   {
     'lewis6991/gitsigns.nvim',
-    cond = enabled,
     event = { 'BufRead', 'BufNewFile' },
     opts = {
       signs = {
