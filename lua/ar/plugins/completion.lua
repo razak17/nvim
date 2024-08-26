@@ -9,7 +9,7 @@ return {
     'hrsh7th/nvim-cmp',
     cond = ar.completion.enable,
     event = 'InsertEnter',
-    config = function()
+    opts = function()
       local snippet = vim.snippet
       local cmp = require('cmp')
       local luasnip_avail, luasnip = pcall(require, 'luasnip')
@@ -98,7 +98,7 @@ return {
         api.nvim_feedkeys(k('<Tab>'), 'n', false)
       end
 
-      cmp.setup({
+      return {
         performance = { debounce = 0, throttle = 0 },
         preselect = cmp.PreselectMode.None,
         window = {
@@ -304,7 +304,12 @@ return {
           { name = 'dotenv', group_index = 4 },
           { name = 'lazydev', group_index = 0 },
         },
-      })
+      }
+    end,
+    config = function(_, opts)
+      local cmp = require('cmp')
+
+      cmp.setup(opts)
 
       cmp.event:on(
         'menu_opened',
