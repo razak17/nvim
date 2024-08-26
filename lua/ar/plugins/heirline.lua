@@ -476,18 +476,23 @@ return {
               name = 'formatters',
             },
           },
+          -- Copilot Status
           {
             {
+              init = function(self)
+                self.processing = false
+                if self.copilot ~= nil then
+                  if not vim.tbl_isempty(self.copilot.requests) then
+                    self.processing = true
+                  end
+                end
+              end,
               provider = ' ' .. codicons.misc.copilot,
               hl = function(self)
-                if self.copilot == nil then return { fg = 'comment' } end
-                if
-                  vim.tbl_isempty(self.copilot.requests)
-                  or self.copilot.requests.type == 'pending'
-                then
-                  return { fg = 'comment' }
+                if self.processing then
+                  return { fg = 'forest_green', bold = true }
                 end
-                return { fg = 'forest_green' }
+                return { fg = 'comment', bold = true }
               end,
               on_click = {
                 callback = function()
@@ -496,48 +501,7 @@ return {
                 name = 'copilot_attached',
               },
             },
-            {
-              provider = ' ' .. separator,
-              hl = { bold = true },
-            },
-            -- {
-            --   provider = function(self)
-            --     if self.copilot == nil then return fmt(' inactive %s', separator) end
-            --     if
-            --       vim.tbl_isempty(self.copilot.requests)
-            --       or self.copilot.requests.type == 'pending'
-            --     then
-            --       return fmt(' idle %s', separator)
-            --     elseif self.copilot.requests.type == 'cancel' then
-            --       return fmt(' working %s', separator)
-            --     end
-            --     return fmt(' working %s', separator)
-            --   end,
-            --   hl = { bold = true },
-            --   on_click = {
-            --     callback = function()
-            --       vim.defer_fn(function() vim.cmd('copilot panel') end, 100)
-            --     end,
-            --     name = 'copilot_status',
-            --   },
-            -- },
-          },
-        },
-        -- Copilot indicator
-        {
-          condition = function()
-            return ar.ai.enable
-              and not ar.plugins.minimal
-              and ar.lsp.null_ls.enable
-              and false
-          end,
-          provider = ' ' .. codicons.misc.octoface .. ' ',
-          hl = { fg = 'forest_green' },
-          on_click = {
-            callback = function()
-              vim.defer_fn(function() vim.cmd('copilot status') end, 100)
-            end,
-            name = 'copilot_attached',
+            { provider = ' ' .. separator, hl = { bold = true } },
           },
         },
         -- Kulala env
@@ -545,7 +509,7 @@ return {
           condition = function() return vim.bo.ft == 'http' end,
           {
             provider = function()
-              local CONFIG = require("kulala.config")
+              local CONFIG = require('kulala.config')
               local env = vim.g.kulala_selected_env or CONFIG.get().default_env
               if not env then return '' end
               return ' ' .. icons.misc.right_arrow .. ' ' .. env
@@ -563,12 +527,18 @@ return {
               and not ar.plugins.minimal
               and ar.lsp.null_ls.enable
           end,
+          init = function(self)
+            self.processing = false
+            local status = statusline.copilot_indicator()
+            if status == 'working' then self.processing = true end
+          end,
           {
             provider = ' ' .. codicons.misc.copilot,
-            hl = function()
-              local status = statusline.copilot_indicator()
-              if status == 'working' then return { fg = 'forest_green' } end
-              return { fg = 'comment' }
+            hl = function(self)
+              if self.processing then
+                return { fg = 'forest_green', bold = true }
+              end
+              return { fg = 'comment', bold = true }
             end,
             on_click = {
               callback = function()
@@ -577,10 +547,7 @@ return {
               name = 'copilot_status',
             },
           },
-          {
-            provider = ' ' .. separator,
-            hl = { bold = true },
-          },
+          { provider = ' ' .. separator, hl = { bold = true } },
         },
         -- File Type
         utils.insert(file_block, statusline.file_icon, statusline.file_type),
@@ -706,7 +673,6 @@ return {
           hl = function(self) return { fg = self.mode_color } end,
         },
       }
-
 
       local statuscol = require('ar.statuscolumn')
       local space = statuscol.space
