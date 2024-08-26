@@ -132,6 +132,14 @@ return {
         'NoiceConfirmBorder',
         'MarkviewCode',
         'MarkviewInlineCode',
+        'PickerBorder',
+        'PickerPromptNormal',
+        'PickerPromptBorder',
+        'PickerResultsNormal',
+        'PickerResultsBorder',
+        'PickerPreviewNormal',
+        'PickerPreviewBorder',
+        'PickerSelection',
       },
     },
     config = function(_, opts)
@@ -143,6 +151,10 @@ return {
             { MarkviewCode = { link = 'NormalFloat' } },
             { MarkviewInlineCode = { link = 'NormalFloat' } },
             { FloatBorder = { link = 'WinSeparator' } },
+            { PickerBorder = { link = 'WinSeparator' } },
+            { PickerPromptBorder = { link = 'WinSeparator' } },
+            { PickerResultsBorder = { link = 'WinSeparator' } },
+            { PickerPreviewBorder = { link = 'WinSeparator' } },
             { PopupBorder = { link = 'FloatBorder' } },
             {
               NoicePopupBaseGroup = {
