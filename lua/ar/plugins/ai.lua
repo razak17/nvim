@@ -18,6 +18,68 @@
 
 return {
   {
+    'olimorris/codecompanion.nvim',
+    cond = ar.ai.enable and not ar.plugins.minimal,
+    opts = {
+      adapters = {
+        gemini = function()
+          return require('codecompanion.adapters').extend('gemini', {
+            env = { api_key = vim.env.GEMINI_API_KEY },
+          })
+        end,
+      },
+      strategies = {
+        chat = {
+          adapter = 'gemini',
+          roles = { llm = '  CodeCompanion', user = 'razak17' },
+          keymaps = {
+            close = {
+              modes = {
+                n = 'q',
+                i = '<C-c>',
+              },
+              index = 2,
+              callback = 'keymaps.close',
+              description = 'Close Chat',
+            },
+            stop = {
+              modes = {
+                n = '<C-c>',
+              },
+              index = 3,
+              callback = 'keymaps.stop',
+              description = 'Stop Request',
+            },
+          },
+        },
+        inline = { adapter = 'gemini' },
+        agent = { adapter = 'gemini' },
+      },
+      display = {
+        chat = {
+          window = {
+            layout = 'vertical', -- float|vertical|horizontal|buffer
+          },
+        },
+        inline = {
+          diff = {
+            hl_groups = {
+              added = 'DiffAdd',
+            },
+          },
+        },
+      },
+      opts = { log_level = 'DEBUG' },
+    },
+    config = function(_, opts) require('codecompanion').setup(opts) end,
+    -- stylua: ignore
+    keys = {
+      { '<leader>akk', '<Cmd>CodeCompanionToggle<CR>', desc = 'codecompanion: toggle' },
+      { '<leader>aka', '<Cmd>CodeCompanionActions<CR>', desc = 'codecompanion: actions' },
+      { 'ga', '<Cmd>CodeCompanionAdd<CR>', desc = 'codecompanion: add' },
+    },
+  },
+  {
     'zbirenbaum/copilot.lua',
     cond = ar.ai.enable and not ar.plugins.minimal,
     cmd = 'Copilot',
