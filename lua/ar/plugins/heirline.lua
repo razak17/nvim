@@ -504,6 +504,30 @@ return {
             { provider = ' ' .. separator, hl = { bold = true } },
           },
         },
+        -- CodeCompanion
+        {
+          static = { processing = false },
+          update = {
+            'User',
+            pattern = 'CodeCompanionRequest*',
+            callback = function(self, args)
+              if args.match == 'CodeCompanionRequestStarted' then
+                self.processing = true
+              elseif args.match == 'CodeCompanionRequestFinished' then
+                self.processing = false
+              end
+              vim.cmd('redrawstatus')
+            end,
+          },
+          {
+            provider = ' ' .. codicons.misc.robot_alt,
+            hl = function(self)
+              if self.processing then return { fg = 'yellow', bold = true } end
+              return { fg = 'comment', bold = true }
+            end,
+          },
+          { provider = ' ' .. separator, hl = { bold = true } },
+        },
         -- Kulala env
         {
           condition = function() return vim.bo.ft == 'http' end,
