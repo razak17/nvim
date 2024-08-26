@@ -99,6 +99,7 @@ return {
       end
 
       cmp.setup({
+        performance = { debounce = 0, throttle = 0 },
         preselect = cmp.PreselectMode.None,
         window = {
           completion = cmp.config.window.bordered({
