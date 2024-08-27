@@ -1,3 +1,17 @@
+local api, fn = vim.api, vim.fn
+
+local templates = {
+  unit_tests = 'I have the following code from {{filename}}:\n\n'
+    .. '```{{filetype}}\n{{selection}}\n```\n\n'
+    .. 'Please respond by writing table driven unit tests for the code above.',
+  explain = 'I have the following code from {{filename}}:\n\n'
+    .. '```{{filetype}}\n{{selection}}\n```\n\n'
+    .. 'Please respond by explaining the code above.',
+  code_review = 'I have the following code from {{filename}}:\n\n'
+    .. '```{{filetype}}\n{{selection}}\n```\n\n'
+    .. 'Please analyze for code smells and suggest improvements.',
+}
+
 return {
   'robitx/gp.nvim',
   cond = ar.ai.enable and not ar.plugins.minimal,
@@ -8,6 +22,8 @@ return {
     { '<c-g>f', '<Cmd>GpChatFinder<CR>', desc = 'gp: find chat', mode = { 'n', 'i' }, },
     { '<c-g><c-g>', '<Cmd>GpChatRespond<CR>', desc = 'gp: respond', mode = { 'n', 'i' }, },
     { '<c-g>d', '<Cmd>GpChatDeleteCR>', desc = 'gp: delete chat', mode = { 'n', 'i' }, },
+    { '<c-g>s', '<Cmd>GpChatToggle split<CR>', desc = 'gp: toggle chat in horizontal split' },
+    { '<c-g>v', '<Cmd>GpChatToggle vsplit<CR>', desc = 'gp: toggle chat in vertical split' },
     -- Prompt commands
     { '<c-g>i', '<Cmd>GpInline<CR>', desc = 'gp: inline', mode = { 'n', 'i' }, },
     { '<c-g>r', '<Cmd>GpRewrite<CR>', desc = 'gp: rewrite', mode = { 'n', 'i', 'v' }, },
@@ -21,7 +37,6 @@ return {
     { '<c-g>c', '<Cmd>GpCodeReview<CR>', desc = 'gp: code review', mode = { 'n', 'i', 'v' }, },
     { '<c-g>N', '<Cmd>GpBufferChatNew<CR>', desc = 'gp: buffer chat new', mode = { 'n', 'i', 'v' }, },
     { '<c-g>o', '<Cmd>GpActAs<CR>', desc = 'gp: act as', mode = { 'n', 'i', 'v' }, },
-    { '<c-g>t', '<Cmd>GpTranslate<CR>', desc = 'gp: translate', mode = { 'n', 'i', 'v' }, },
   },
   cmd = {
     'GpUnitTests',
@@ -30,108 +45,43 @@ return {
     'GpBufferChatNew',
     'GpActAs',
     'GpInputRole',
-    'GpTranslate',
+    'GpChatNew',
   },
   opts = {
     hooks = {
-      -- example of adding command which writes unit tests for the selected code
       UnitTests = function(gp, params)
-        local template = 'I have the following code from {{filename}}:\n\n'
-          .. '```{{filetype}}\n{{selection}}\n```\n\n'
-          .. 'Please respond by writing table driven unit tests for the code above.'
         local agent = gp.get_command_agent()
-        gp.Prompt(
-          params,
-          gp.Target.enew,
-          nil,
-          agent.model,
-          template,
-          agent.system_prompt
-        )
+        gp.Prompt(params, gp.Target.vnew, agent, templates.unit_tests)
       end,
-      -- example of adding command which explains the selected code
       Explain = function(gp, params)
-        local template = 'I have the following code from {{filename}}:\n\n'
-          .. '```{{filetype}}\n{{selection}}\n```\n\n'
-          .. 'Please respond by explaining the code above.'
         local agent = gp.get_chat_agent()
-        gp.Prompt(
-          params,
-          gp.Target.popup,
-          nil,
-          agent.model,
-          template,
-          agent.system_prompt
-        )
+        gp.Prompt(params, gp.Target.vnew, agent, templates.explain)
       end,
-      -- example of usig enew as a function specifying type for the new buffer
       CodeReview = function(gp, params)
-        local template = 'I have the following code from {{filename}}:\n\n'
-          .. '```{{filetype}}\n{{selection}}\n```\n\n'
-          .. 'Please analyze for code smells and suggest improvements.'
         local agent = gp.get_chat_agent()
         gp.Prompt(
           params,
-          gp.Target.popup,
-          nil,
-          agent.model,
-          template,
-          agent.system_prompt
+          gp.Target.enew('markdown'),
+          agent,
+          templates.code_review
         )
       end,
-      -- example of usig enew as a function specifying type for the new buffer
-      -- example of making :%GpChatNew a dedicated command which
-      -- opens new chat with the entire current buffer as a context
       BufferChatNew = function(gp, _)
-        -- call GpChatNew command in range mode on whole buffer
-        vim.api.nvim_command('%' .. gp.config.cmd_prefix .. 'ChatNew')
+        api.nvim_command('%' .. gp.config.cmd_prefix .. 'ChatNew')
       end,
       InputRole = function(gp, params)
         vim.ui.input({ prompt = 'Input Role:' }, function(input)
-          if input then
-            gp.cmd.ChatNew(params, gp.config.command_model, input)
-          end
+          if not input then return end
+          local agent = gp.get_chat_agent()
+          gp.cmd.ChatNew(params, input, agent)
         end)
       end,
-      Translate = function(gp, params)
-          -- stylua: ignore
-          local languages = {
-            'Spanish', 'French', 'German', 'Italian', 'Portuguese', 'Dutch',
-          }
 
-        local pickers = require('telescope.pickers')
-        local finders = require('telescope.finders')
-        local actions = require('telescope.actions')
-        local action_state = require('telescope.actions.state')
-
-        pickers
-          .new(ar.telescope.minimal_ui(), {
-            prompt_title = 'Select target language',
-            finder = finders.new_table({
-              results = languages,
-              entry_maker = function(entry)
-                return { value = entry, ordinal = entry, display = entry }
-              end,
-            }),
-            attach_mappings = function(prompt_bufnr, _)
-              actions.select_default:replace(function()
-                actions.close(prompt_bufnr)
-                local selection = action_state.get_selected_entry()
-                local chat_system_prompt = 'You are a translator, please translate between English and '
-                  .. selection.value
-                local agent = gp.get_command_agent()
-                gp.cmd.ChatNew(params, agent.model, chat_system_prompt)
-              end)
-              return true
-            end,
-          })
-          :find()
-      end,
       ActAs = function(gp, params)
         local prompts =
-          join_paths(vim.fn.stdpath('data'), 'site', 'prompts', 'prompts.csv')
+          join_paths(fn.stdpath('data'), 'site', 'prompts', 'prompts.csv')
 
-        if not vim.fn.filereadable(prompts) then
+        if not fn.filereadable(prompts) then
           vim.notify('Prompts file not found', vim.log.levels.ERROR)
           return
         end
@@ -238,7 +188,7 @@ return {
           local results = {}
           local lines = {}
 
-          local items = table.concat(vim.fn.readfile(prompts), '\n')
+          local items = table.concat(fn.readfile(prompts), '\n')
           for line in string.gmatch(items, '[^\n]+') do
             local act, _prompt = string.match(line, '"(.*)","(.*)"')
             if act ~= 'act' and act ~= nil then
@@ -277,7 +227,7 @@ return {
                 actions.close(prompt_bufnr)
                 local selection = action_state.get_selected_entry()
                 local agent = gp.get_command_agent()
-                gp.cmd.ChatNew(params, agent.model, selection.value)
+                gp.cmd.ChatNew(params, selection.value, agent)
               end)
               return true
             end,
