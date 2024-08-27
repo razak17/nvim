@@ -20,6 +20,12 @@ return {
   {
     'olimorris/codecompanion.nvim',
     cond = ar.ai.enable and not ar.plugins.minimal,
+    cmd = {
+      'CodeCompanion',
+      'CodeCompanionAdd',
+      'CodeCompanionActions',
+      'CodeCompanionToggle',
+    },
     opts = {
       adapters = {
         gemini = function()

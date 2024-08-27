@@ -25,6 +25,7 @@ return {
         { '<leader>F', group = 'Picker (Current Dir)' },
         { '<leader>a', group = 'A.I.' },
         { '<leader>ac', group = 'CopilotChat' },
+        { '<leader>ac', group = 'Codecompanion' },
         { '<leader>e', group = 'Explorer' },
         { '<leader>f', group = 'Telescope' },
         { '<leader>fg', group = 'Git' },
