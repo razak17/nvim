@@ -229,15 +229,40 @@ return {
     'ThePrimeagen/refactoring.nvim',
     keys = {
       {
-        '<leader>rf',
+        '<leader><leader>ro',
+        function() require('telescope').extensions.refactoring.refactors() end,
+        desc = 'refactoring: open',
+        mode = { 'n', 'x' },
+      },
+      {
+        '<leader><leader>rk',
         function() require('refactoring').select_refactor() end,
-        mode = 'v',
-        noremap = true,
-        silent = true,
-        expr = false,
-        desc = 'refactor',
+        desc = 'refactoring: select refactor',
+        mode = { 'n', 'x' },
+      },
+      {
+        '<leader><leader>rf',
+        function() require('refactoring').debug.printf({ below = false }) end,
+        desc = 'refactoring: Insert printf statement',
+      },
+      {
+        '<leader><leader>rp',
+        function() require('refactoring').debug.print_var({ normal = true }) end,
+        desc = 'refactoring: insert print statement',
+      },
+      {
+        '<leader><leader>rp',
+        function() require('refactoring').debug.print_var({}) end,
+        desc = 'refactoring: insert print statement',
+        mode = { 'x' },
+      },
+      {
+        '<leader><leader>rc',
+        function() require('refactoring').debug.cleanup() end,
+        desc = 'refactoring: cleanup debug statements',
       },
     },
+    opts = {},
   },
   {
     'HiPhish/rainbow-delimiters.nvim',
