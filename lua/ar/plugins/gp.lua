@@ -25,7 +25,6 @@ return {
     { '<c-g>s', '<Cmd>GpChatToggle split<CR>', desc = 'gp: toggle chat in horizontal split' },
     { '<c-g>v', '<Cmd>GpChatToggle vsplit<CR>', desc = 'gp: toggle chat in vertical split' },
     -- Prompt commands
-    { '<c-g>i', '<Cmd>GpInline<CR>', desc = 'gp: inline', mode = { 'n', 'i' }, },
     { '<c-g>r', '<Cmd>GpRewrite<CR>', desc = 'gp: rewrite', mode = { 'n', 'i', 'v' }, },
     { '<c-g>a', '<Cmd>GpAppend<CR>', desc = 'gp: append', mode = { 'n', 'i', 'v' }, },
     { '<c-g>b', '<Cmd>GpPrepend<CR>', desc = 'gp: prepend', mode = { 'n', 'i', 'v' }, },
