@@ -14,7 +14,6 @@ local M = {
     files = 'File actions',
     git = 'Git commands',
     lsp = 'Code/LSP actions',
-    gpt = 'ChatGPTRun actions',
     copilot_chat = 'CopilotChat actions',
     command_palette = 'Command Palette actions',
     w3m = 'W3M actions',
@@ -244,37 +243,6 @@ if ar.lsp.enable then
 end
 
 --------------------------------------------------------------------------------
--- ChatGPTRun
---------------------------------------------------------------------------------
-if ar.is_available('ChatGPT.nvim') then
-  M.options.gpt = {
-    ['Add Tests'] = 'ChatGPTRun add_tests',
-    ['Complete Code'] = 'ChatGPTRun complete_code',
-    ['Docstring'] = 'ChatGPTRun docstring',
-    ['Explain Code'] = 'ChatGPTRun explain_code',
-    ['Fix Bugs'] = 'ChatGPTRun fix_bugs',
-    ['Grammar Correct'] = 'chatGPTRun grammar_correction',
-    ['Keywords'] = 'ChatGPTRun keywords',
-    ['Optmize Code'] = 'ChatGPTRun optimize_code',
-    ['Readability Analysis'] = 'ChatGPTRun code_readability_analysis',
-    ['Roxygen Edit'] = 'ChatGPTRun roxygen_edit',
-    ['Summarize'] = 'ChatGPTRun summarize',
-    ['Translate'] = 'ChatGPTRun translate',
-  }
-
-  local gpt_menu = function()
-    ar.create_select_menu(M.prompts['gpt'], M.options.gpt)() --> extra paren to execute!
-  end
-
-  map(
-    { 'n', 'x' },
-    '<leader>ar',
-    gpt_menu,
-    { desc = '[c]hatGPTRun [a]ctions: open menu for chatGPTRun actions' }
-  )
-end
-
---------------------------------------------------------------------------------
 -- CopilotChat
 --------------------------------------------------------------------------------
 if ar.is_available('CopilotChat.nvim') then
@@ -405,7 +373,7 @@ M.options.command_palette = {
   end,
   ['Copy File Home Path'] = function() setreg('+', expand('%:~')) end,
   ['Search And Replace'] = 'GrugFar',
-  ['RenderMarkdown Toggle'] = 'RenderMarkdownToggle',
+  ['RenderMarkdown Toggle'] = 'RenderMarkdown toggle',
   ['Code Pad'] = 'QuickCodePad',
   ['Run Code'] = 'Build',
   ['Toggle Auto Pairs'] = function()

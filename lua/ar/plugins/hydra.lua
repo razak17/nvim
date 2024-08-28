@@ -9,6 +9,15 @@ _p_: previous buffer   _P_: previous buffer in history   _r_: reload buffer
 ^ ^                 _<Esc>_: quit              _q_: exit
 ]]
 
+local chatgpt_hint = [[
+_a_: add tests      _c_: complete code    _d_: docstring
+_e_: explain code   _f_: fix bugs         _g_: grammar correction
+_k_: keywords       _o_: optimize code    _r_: code readability analysis
+_t_: translate
+^
+              _<Esc>_: quit              _q_: exit
+]]
+
 local fold_hint = [[
 _j_: next fold     _k_: previous fold
 _l_: toggle fold   _h_: toggle fold
@@ -57,6 +66,7 @@ return {
   event = 'VeryLazy',
   config = function()
     local Hydra = require('hydra')
+    local cmd = require('hydra.keymap-util').cmd
     local pcmd = require('hydra.keymap-util').pcmd
     local hint_opts = { position = 'bottom', border = border, type = 'window' }
 
@@ -271,6 +281,34 @@ return {
           { 'l', function() flirt.move('right') end, { desc = 'move right' } },
           { '<Esc>', nil, { exit = true, desc = 'Quit' } },
           { 'q', nil, { exit = true, desc = 'Quit' } },
+        },
+      })
+    end
+
+    if ar.is_available('ChatGPT.nvim') then
+      Hydra({
+        name = 'ChatGPT',
+        hint = chatgpt_hint,
+        mode = { 'n', 'x' },
+        body = '<leader>ar',
+        config = base_config({
+          color = 'teal',
+          hint = { position = 'middle' },
+        }),
+        -- stylua: ignore
+        heads = {
+          { 'a', cmd 'ChatGPTRun add_tests', { desc = 'add tests' } },
+          { 'c', cmd 'ChatGPTRun complete_code', { desc = 'complete code' } },
+          { 'd', cmd 'ChatGPTRun docstring', { desc = 'docstring' } },
+          { 'e', cmd 'ChatGPTRun explain_code', { desc = 'explain code' } },
+          { 'f', cmd 'ChatGPTRun fix_bugs', { desc = 'fix bugs' } },
+          { 'g', cmd 'ChatGPTRun grammar_correction', { desc = 'grammar correction' } },
+          { 'k', cmd 'ChatGPTRun keywords', { desc = 'keywords' } },
+          { 'o', cmd 'ChatGPTRun optimize_code', { desc = 'optimize code' } },
+          { 'r', cmd 'ChatGPTRun code_readability_analysis', { desc = 'code readability analysis' } },
+          { 't', cmd 'ChatGPTRun translate', { desc = 'translate' } },
+          { 'q', nil, { exit = true, nowait = true } },
+          { '<Esc>', nil, { exit = true, nowait = true } },
         },
       })
     end
