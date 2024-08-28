@@ -468,6 +468,7 @@ return {
   },
   {
     'luckasRanarison/clear-action.nvim',
+    enabled = false,
     cond = ar.lsp.enable and ar.plugins.niceties,
     event = 'LspAttach',
     opts = {
