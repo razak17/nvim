@@ -5,7 +5,11 @@ return {
   --------------------------------------------------------------------------------
   -- Markdown
   --------------------------------------------------------------------------------
-  { 'bullets-vim/bullets.vim', ft = { 'markdown' } },
+  {
+    'bullets-vim/bullets.vim',
+    cond = not minimal,
+    ft = { 'markdown' },
+  },
   {
     'HakonHarnes/img-clip.nvim',
     cmd = { 'PasteImage' },
@@ -59,6 +63,7 @@ return {
   },
   {
     'NFrid/due.nvim',
+    cond = not minimal,
     ft = 'markdown',
     opts = {
       use_clock_time = true,

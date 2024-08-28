@@ -3,6 +3,7 @@ local sync = ar.sync_dir
 return {
   {
     'epwalsh/obsidian.nvim',
+    cond = not ar.plugins.minimal,
     event = 'BufRead ' .. sync('obsidian') .. '/*.md',
     -- stylua: ignore
     keys = {

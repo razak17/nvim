@@ -25,6 +25,7 @@ return {
   },
   {
     'hinell/duplicate.nvim',
+    cond = not minimal,
     event = 'VeryLazy',
     -- stylua: ignore
     keys = {

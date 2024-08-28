@@ -100,6 +100,7 @@ return {
   },
   {
     'benfowler/telescope-luasnip.nvim',
+    cond = not ar.plugins.minimal,
     config = function() require('telescope').load_extension('luasnip') end,
   },
 }
