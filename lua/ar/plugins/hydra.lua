@@ -1,4 +1,46 @@
 local minimal, niceties = ar.plugins.minimal, ar.plugins.niceties
+local border = ar.ui.current.border
+
+local buffer_hint = [[
+_a_: close all         _d_: delete buffer                _l_: last buffer
+_n_: next buffer       _N_: next buffer in history       _o_: delete others
+_p_: previous buffer   _P_: previous buffer in history   _r_: reload buffer
+^
+^ ^                 _<Esc>_: quit              _q_: exit
+]]
+
+local fold_hint = [[
+_j_: next fold     _k_: previous fold
+_l_: toggle fold   _h_: toggle fold
+^
+^ ^   _<Esc>_: quit      _q_: exit
+]]
+
+local side_scroll_hint = [[
+_h_: left               _l_: right
+_H_: half screen left   _L_: half screen right
+^
+^ ^   _<Esc>_: quit            _q_: exit
+]]
+
+local wrap_hint = [[
+_"_: double quotes    _'_: single_quotes
+_`_: backticks        _|_: pipe
+_)_: parenthesis      _}_: curly bracket
+_]_: square bracket   _/_: slash
+^
+^ ^   _<Esc>_: quit        _q_: exit
+]]
+
+local window_hint = [[
+^^^^^^^^^^^^     Move      ^^    Size   ^^   ^^     Split
+^^^^^^^^^^^^-------------  ^^-----------^^   ^^---------------
+^ ^ _k_ ^ ^  ^ ^ _K_ ^ ^   ^   _<C-k>_   ^   _s_: horizontally
+_h_ ^ ^ _l_  _H_ ^ ^ _L_   _<C-h>_ _<C-l>_   _v_: vertically
+^ ^ _j_ ^ ^  ^ ^ _J_ ^ ^   ^   _<C-j>_   ^   _q_, _c_: close
+focus^^^^^^  window^^^^^^  ^_=_: equalize^   _o_: remain only
+^ ^ ^ ^ ^ ^  ^ ^ ^ ^ ^ ^   ^^ ^          ^
+]]
 
 return {
   'smoka7/hydra.nvim',
@@ -7,22 +49,27 @@ return {
   config = function()
     local Hydra = require('hydra')
     local pcmd = require('hydra.keymap-util').pcmd
-    local hint_opts =
-      { position = 'bottom', border = ar.ui.current.border, type = 'window' }
+    local hint_opts = { position = 'bottom', border = border, type = 'window' }
 
     local splits = ar.reqcall('smart-splits')
     local close_buffers = ar.reqcall('close_buffers')
     local textcase = ar.reqcall('textcase')
 
     local base_config = function(opts)
-      return vim.tbl_extend('force', {
+      opts = opts or {}
+      local default_opts = {
         invoke_on_body = true,
         hint = hint_opts,
-      }, opts or {})
+      }
+      if opts.hint then
+        opts.hint = vim.tbl_extend('force', hint_opts, opts.hint)
+      end
+      return vim.tbl_extend('force', default_opts, opts)
     end
 
     Hydra({
       name = 'Folds',
+      hint = fold_hint,
       mode = 'n',
       body = '<leader>z',
       color = 'teal',
@@ -30,18 +77,21 @@ return {
       heads = {
         { 'j', 'zj', { desc = 'next fold' } },
         { 'k', 'zk', { desc = 'previous fold' } },
-        { 'l', 'za', { desc = 'open folds underneath' } },
-        { 'h', 'za', { desc = 'close folds underneath' } },
+        { 'l', 'za', { desc = 'toggle folds underneath' } },
+        { 'h', 'za', { desc = 'toggle folds underneath' } },
+        { 'q', nil, { exit = true, desc = 'Quit' } },
         { '<Esc>', nil, { exit = true, desc = 'Quit' } },
       },
     })
 
     Hydra({
       name = 'Buffer management',
+      hint = buffer_hint,
       mode = 'n',
-      body = '<leader>b',
-      color = 'teal',
-      config = base_config(),
+      body = 'gb',
+      config = base_config({
+        hint = { position = 'top' },
+      }),
       heads = {
         {
           'a',
@@ -81,32 +131,28 @@ return {
           end,
           { desc = 'reload buffer' },
         },
+        { 'q', nil, { exit = true, desc = 'Quit' } },
         { '<Esc>', nil, { exit = true, desc = 'Quit' } },
       },
     })
 
     Hydra({
       name = 'Side scroll',
+      hint = side_scroll_hint,
       mode = 'n',
       body = 'z',
-      config = base_config({ invoke_on_body = false }),
+      config = base_config({
+        invoke_on_body = false,
+      }),
       heads = {
         { 'h', '5zh' },
         { 'l', '5zl', { desc = '←/→' } },
         { 'H', 'zH' },
         { 'L', 'zL', { desc = 'half screen ←/→' } },
+        { 'q', nil, { exit = true, desc = 'Quit' } },
+        { '<Esc>', nil, { exit = true, desc = 'Quit' } },
       },
     })
-
-    local window_hint = [[
-      ^^^^^^^^^^^^     Move      ^^    Size   ^^   ^^     Split
-      ^^^^^^^^^^^^-------------  ^^-----------^^   ^^---------------
-      ^ ^ _k_ ^ ^  ^ ^ _K_ ^ ^   ^   _<C-k>_   ^   _s_: horizontally
-      _h_ ^ ^ _l_  _H_ ^ ^ _L_   _<C-h>_ _<C-l>_   _v_: vertically
-      ^ ^ _j_ ^ ^  ^ ^ _J_ ^ ^   ^   _<C-j>_   ^   _q_, _c_: close
-      focus^^^^^^  window^^^^^^  ^_=_: equalize^   _o_: remain only
-      ^ ^ ^ ^ ^ ^  ^ ^ ^ ^ ^ ^   ^^ ^          ^
-      ]]
 
     Hydra({
       name = 'Window management',
@@ -144,8 +190,8 @@ return {
         { 'q', pcmd('close', 'E444'), { desc = 'close window' } },
         { '<C-c>', pcmd('close', 'E444'), { desc = false } },
         { '<C-q>', pcmd('close', 'E444'), { desc = false } },
-        --
         { '<Esc>', nil, { exit = true } },
+        { 'q', nil, { exit = true, desc = 'Quit' } },
       },
     })
 
@@ -153,7 +199,7 @@ return {
       name = 'TextCase',
       mode = 'n',
       body = '<localleader>w',
-      color = 'teal',
+      color = 'chartreuse',
       config = {
         hint = hint_opts,
         invoke_on_body = true,
@@ -215,13 +261,13 @@ return {
 
     Hydra({
       name = 'Wrap',
+      hint = wrap_hint,
       mode = 'n',
       body = '<localleader>W',
-      color = 'teal',
-      config = {
-        hint = hint_opts,
-        invoke_on_body = true,
-      },
+      color = 'yellow',
+      config = base_config({
+        hint = { position = 'middle' },
+      }),
       heads = {
         { '"', [[ciw"<c-r>""<esc>]], { desc = 'double quotes' } },
         { "'", [[ciw'<c-r>"'<esc>]], { desc = 'single quotes' } },
@@ -232,6 +278,7 @@ return {
         { ']', [[ciw[<c-r>"]<esc>]], { desc = 'square bracket' } },
         { '/', [[ciw/<c-r>"/<esc>]], { desc = 'square bracket' } },
         { '<Esc>', nil, { exit = true, desc = 'Quit' } },
+        { 'q', nil, { exit = true, desc = 'Quit' } },
       },
     })
 
