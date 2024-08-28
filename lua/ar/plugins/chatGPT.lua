@@ -14,23 +14,13 @@ return {
       { '<leader>ae', '<cmd>ChatGPTEditWithInstructions<CR>', desc = 'chatgpt: edit', },
       { '<leader>an', '<cmd>ChatGPT<CR>', desc = 'chatgpt: open' },
     },
-    config = function()
-      ar.highlight.plugin('ChatGPT.nvim', {
-        theme = {
-          ['onedark'] = {
-            { ChatGPTSelectedMessage = { link = 'FloatTitle' } },
-            -- { ChatGPTTotalTokensBorder = { link = 'FloatTitle' } },
-            { ChatGPTCompletion = { link = 'FloatTitle' } },
-          },
-        },
-      })
-
+    opts = function()
       local border = {
         style = ar.ui.border.rectangle,
         highlight = 'FloatBorder',
       }
 
-      require('chatgpt').setup({
+      return {
         edit_with_instructions = {
           keymaps = { close = '<Esc>' },
         },
@@ -64,7 +54,20 @@ return {
             },
           },
         },
+      }
+    end,
+    config = function(_, opts)
+      ar.highlight.plugin('ChatGPT.nvim', {
+        theme = {
+          ['onedark'] = {
+            { ChatGPTSelectedMessage = { link = 'FloatTitle' } },
+            -- { ChatGPTTotalTokensBorder = { link = 'FloatTitle' } },
+            { ChatGPTCompletion = { link = 'FloatTitle' } },
+          },
+        },
       })
+
+      require('chatgpt').setup(opts)
     end,
   },
 }
