@@ -18,13 +18,21 @@ return {
       keys = { { '<leader>lm', '<cmd>Mason<CR>', desc = 'mason info' } },
       build = ':MasonUpdate',
       opts = {
+        ui = {
+          border = border,
+          height = 0.8,
+          icons = {
+            package_pending = ' ',
+            package_installed = '󰄳 ',
+            package_uninstalled = ' 󰚌',
+          },
+        },
         registries = {
           'lua:mason-registry.index',
           'github:mason-org/mason-registry',
           'github:nvim-java/mason-registry',
         },
         providers = { 'mason.providers.registry-api', 'mason.providers.client' },
-        ui = { border = border, height = 0.8 },
       },
     },
     {
