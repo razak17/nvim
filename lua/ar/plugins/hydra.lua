@@ -23,6 +23,15 @@ _H_: half screen left   _L_: half screen right
 ^ ^   _<Esc>_: quit            _q_: exit
 ]]
 
+local text_case_hint = [[
+_-_: to dashcase      _/_: to pathcase       _._: to dotcase
+_c_: to camelcase     _C_: to constantcase   _l_: to lowercase
+_p_: to pascalcase    _s_: to snakecase      _t_: to titlecase
+_u_: to upper case
+^
+^ ^         _<Esc>_: quit            _q_: exit
+]]
+
 local wrap_hint = [[
 _"_: double quotes    _'_: single_quotes
 _`_: backticks        _|_: pipe
@@ -190,71 +199,34 @@ return {
         { 'q', pcmd('close', 'E444'), { desc = 'close window' } },
         { '<C-c>', pcmd('close', 'E444'), { desc = false } },
         { '<C-q>', pcmd('close', 'E444'), { desc = false } },
-        { '<Esc>', nil, { exit = true } },
         { 'q', nil, { exit = true, desc = 'Quit' } },
+        { '<Esc>', nil, { exit = true } },
       },
     })
 
+    local function change_case(word)
+      return function() textcase.current_word(word) end
+    end
+
     Hydra({
       name = 'TextCase',
+      hint = text_case_hint,
       mode = 'n',
       body = '<localleader>w',
       color = 'chartreuse',
-      config = {
-        hint = hint_opts,
-        invoke_on_body = true,
-      },
+      config = base_config({ invoke_on_body = false }),
       heads = {
-        {
-          'u',
-          function() textcase.current_word('to_upper_case') end,
-          { desc = 'to uppercase' },
-        },
-        {
-          'l',
-          function() textcase.current_word('to_lower_case') end,
-          { desc = 'to lowercase' },
-        },
-        {
-          's',
-          function() textcase.current_word('to_snake_case') end,
-          { desc = 'to snakecase' },
-        },
-        {
-          'c',
-          function() textcase.current_word('to_camel_case') end,
-          { desc = 'to camelcase' },
-        },
-        {
-          'p',
-          function() textcase.current_word('to_pascal_case') end,
-          { desc = 'to pascalcase' },
-        },
-        {
-          't',
-          function() textcase.current_word('to_title_case') end,
-          { desc = 'to titlecase' },
-        },
-        {
-          'C',
-          function() textcase.current_word('to_constant_case') end,
-          { desc = 'to constantcase' },
-        },
-        {
-          '-',
-          function() textcase.current_word('to_dash_case') end,
-          { desc = 'to dashcase' },
-        },
-        {
-          '/',
-          function() textcase.current_word('to_path_case') end,
-          { desc = 'to pathcase' },
-        },
-        {
-          '.',
-          function() textcase.current_word('to_dot_case') end,
-          { desc = 'to dotcase' },
-        },
+        { '-', change_case('to_dash_case'), { desc = 'to dashcase' } },
+        { '/', change_case('to_path_case'), { desc = 'to pathcase' } },
+        { '.', change_case('to_dot_case'), { desc = 'to dotcase' } },
+        { 'c', change_case('to_camel_case'), { desc = 'to camelcase' } },
+        { 'C', change_case('to_constant_case'), { desc = 'to constantcase' } },
+        { 'l', change_case('to_lower_case'), { desc = 'to lowercase' } },
+        { 'p', change_case('to_pascal_case'), { desc = 'to pascalcase' } },
+        { 's', change_case('to_snake_case'), { desc = 'to snakecase' } },
+        { 't', change_case('to_title_case'), { desc = 'to titlecase' } },
+        { 'u', change_case('to_upper_case'), { desc = 'to uppercase' } },
+        { 'q', nil, { exit = true, desc = 'Quit' } },
         { '<Esc>', nil, { exit = true, desc = 'Quit' } },
       },
     })
@@ -289,10 +261,9 @@ return {
         mode = 'n',
         body = '<leader>wf',
         color = 'lime',
-        config = {
-          hint = hint_opts,
-          invoke_on_body = true,
-        },
+        config = base_config({
+          hint = { position = 'middle' },
+        }),
         heads = {
           { 'k', function() flirt.move('up') end, { desc = 'move up' } },
           { 'j', function() flirt.move('down') end, { desc = 'move down' } },
