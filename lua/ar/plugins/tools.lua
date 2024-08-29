@@ -238,6 +238,7 @@ return {
         vim = { 'vint' },
         yaml = { 'yamllint' },
         go = { 'golangcilint' },
+        python = { 'mypy' },
       },
       linters = {},
     },
