@@ -1,4 +1,4 @@
-local fn, uv = vim.fn, vim.uv
+local api, fn, uv = vim.api, vim.fn, vim.uv
 local border = ar.ui.current.border
 
 ---@alias ConformCtx {buf: number, filename: string, dirname: string}
@@ -175,7 +175,7 @@ return {
         ['markdown-toc'] = {
           condition = function(_, ctx)
             for _, line in
-              ipairs(vim.api.nvim_buf_get_lines(ctx.buf, 0, -1, false))
+              ipairs(api.nvim_buf_get_lines(ctx.buf, 0, -1, false))
             do
               if line:find('<!%-%- toc %-%->') then return true end
             end
@@ -203,7 +203,11 @@ return {
         lua = { 'stylua' },
         go = { 'goimports' },
         sh = { 'shfmt' },
-        python = { 'isort', 'black', 'yapf' },
+        python = {
+          'isort',
+          'black',
+          --[[ 'yapf' ]]
+        },
       },
       log_level = vim.log.levels.DEBUG,
       format_on_save = false,
@@ -245,20 +249,20 @@ return {
       end
       local timer = assert(uv.new_timer())
       local DEBOUNCE_MS = 500
-      local aug = vim.api.nvim_create_augroup('Lint', { clear = true })
-      vim.api.nvim_create_autocmd(
+      local aug = api.nvim_create_augroup('Lint', { clear = true })
+      api.nvim_create_autocmd(
         { 'BufWritePost', 'TextChanged', 'InsertLeave' },
         {
           group = aug,
           callback = function()
-            local bufnr = vim.api.nvim_get_current_buf()
+            local bufnr = api.nvim_get_current_buf()
             timer:stop()
             timer:start(
               DEBOUNCE_MS,
               0,
               vim.schedule_wrap(function()
-                if vim.api.nvim_buf_is_valid(bufnr) then
-                  vim.api.nvim_buf_call(
+                if api.nvim_buf_is_valid(bufnr) then
+                  api.nvim_buf_call(
                     bufnr,
                     function() lint.try_lint(nil, { ignore_errors = true }) end
                   )
