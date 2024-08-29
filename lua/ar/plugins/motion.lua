@@ -11,7 +11,7 @@ return {
     },
   },
   {
-    'mawkler/demicolon.nvim',
+    'razak17/demicolon.nvim',
     cond = not minimal,
     lazy = false,
     dependencies = {
