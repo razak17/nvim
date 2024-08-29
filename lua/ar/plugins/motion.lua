@@ -1,3 +1,5 @@
+local minimal = ar.plugins.minimal
+
 return {
   {
     'razak17/accelerated-jk.nvim',
@@ -6,6 +8,24 @@ return {
     keys = {
       { 'j', "<cmd>lua require'accelerated-jk'.command('gj')<CR>", mode = { 'x', 'n' }, },
       { 'k', "<cmd>lua require'accelerated-jk'.command('gk')<CR>", mode = { 'x', 'n' }, },
+    },
+  },
+  {
+    'mawkler/demicolon.nvim',
+    cond = not minimal,
+    lazy = false,
+    dependencies = {
+      'nvim-treesitter/nvim-treesitter-textobjects',
+    },
+    opts = {
+      keymaps = {
+        horizontal_motions = false,
+        diagnostic_motions = false,
+        repeat_motions = true,
+      },
+      integrations = {
+        gitsigns = { enabled = false },
+      },
     },
   },
   {
