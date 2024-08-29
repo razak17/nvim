@@ -236,6 +236,7 @@ end
 local function software_licenses()
   extensions('software-licenses', 'find')(ar.telescope.horizontal())()
 end
+local function spell_errors() extensions('spell_errors')({})() end
 
 local function visual_grep_string()
   local search = ar.get_visual_text()
@@ -356,6 +357,7 @@ ar.telescope = {
     ['undo'] = 'telescope-undo.nvim',
     ['whop'] = 'whop.nvim',
     ['import'] = 'telescope-import.nvim',
+    ['spell_errors'] = 'telescope-spell-errors.nvim',
   },
   cursor = cursor,
   dropdown = dropdown,
@@ -459,6 +461,7 @@ return {
       { '<leader>lw', b('diagnostics'), desc = 'telescope: workspace diagnostics', },
       { '<localleader>ro', monorepo, desc = 'monorepo' },
       { '<leader>fL', software_licenses, desc = 'software licenses' },
+      { '<leader>fX', spell_errors, desc = 'spell errors' },
     },
     config = function()
       local previewers = require('telescope.previewers')
@@ -776,6 +779,7 @@ return {
   { 'crispgm/telescope-heading.nvim', cond = min_enabled },
   { 'chip/telescope-software-licenses.nvim', cond = min_enabled },
   { 'isak102/telescope-git-file-history.nvim', cond = min_enabled },
+  { 'matkrin/telescope-spell-errors.nvim', cond = min_enabled },
   {
     'danielfalk/smart-open.nvim', -- use fork to get show_scores working
     cond = enabled,
