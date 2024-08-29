@@ -206,7 +206,12 @@ return {
         separator = '─', -- alternatives: ▁ ─ ▄
         mode = 'cursor',
       })
-      map('n', '[k', function() ts_ctx.go_to_context(vim.v.count1) end)
+      map(
+        'n',
+        '[K',
+        function() ts_ctx.go_to_context(vim.v.count1) end,
+        { desc = 'goto context' }
+      )
     end,
   },
   {
