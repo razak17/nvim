@@ -177,6 +177,11 @@ vnoremap('<leader>[[', [["zy:%s/<C-r><C-o>"/]], { desc = 'replace all' })
 -- Quick find/replace with
 -- @see: https://github.com/linkarzu/dotfiles-latest/blob/main/neovim/neobean/lua/config/keymaps.lua?plain=1#L94
 nnoremap(
+  '<leader>[w',
+  [[:%s/\<<C-r><C-w>\>/<C-r>=expand('<cword>')<CR>/gI<Left><Left><Left>]],
+  { desc = 'replace all with' }
+)
+nnoremap(
   '<leader>[u',
   [[:%s/\<<C-r><C-w>\>/<C-r>=toupper(expand('<cword>'))<CR>/gI<Left><Left><Left>]],
   { desc = 'replace all with UPPERCASE' }
@@ -185,6 +190,11 @@ nnoremap(
   '<leader>[l',
   [[:%s/\<<C-r><C-w>\>/<C-r>=tolower(expand('<cword>'))<CR>/gI<Left><Left><Left>]],
   { desc = 'replace all with lowercase' }
+)
+nnoremap(
+  '<leader>]w',
+  [[:s/\<<C-r><C-w>\>/<C-r>=expand('<cword>')<CR>/gI<Left><Left><Left>]],
+  { desc = 'replace in line with' }
 )
 nnoremap(
   '<leader>]u',
