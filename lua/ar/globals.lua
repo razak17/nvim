@@ -273,6 +273,10 @@ function ar.is_git_repo()
     or not ar.falsy(vim.b.gitsigns_status_dict)
 end
 
+-- Check if git environment variables are set
+---@return boolean
+function ar.is_git_env() return vim.env.GIT_WORK_TREE and vim.env.GIT_DIR end
+
 ---@generic T:table<string, any>
 ---@param t T the object to format
 ---@param k string the key to format

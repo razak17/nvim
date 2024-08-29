@@ -134,7 +134,7 @@ map(
 --------------------------------------------------------------------------------
 -- Git
 --------------------------------------------------------------------------------
-if ar.is_git_repo() then
+if ar.is_git_repo() or ar.is_git_env() then
   M.options.git = {
     ['Browse Branches'] = "lua require'ar.menus.git'.browse_branches()",
     ['Stash Changes'] = "lua require'ar.menus.git'.do_stash()",

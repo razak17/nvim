@@ -6,6 +6,7 @@ local left_block = icons.separators.left_block
 
 local minimal = ar.plugins.minimal
 local enabled = not minimal and ar.is_git_repo()
+local is_git = ar.is_git_repo() or ar.is_git_env()
 
 return {
   { 'kilavila/nvim-gitignore', cmd = { 'Gitignore', 'Licenses' } },
@@ -17,6 +18,7 @@ return {
   },
   {
     'NeogitOrg/neogit',
+    cond = not minimal and is_git,
     cmd = 'Neogit',
     -- stylua: ignore
     keys = {
@@ -182,6 +184,7 @@ return {
   },
   {
     'lewis6991/gitsigns.nvim',
+    cond = not minimal and is_git,
     event = { 'BufRead', 'BufNewFile' },
     opts = {
       signs = {
@@ -521,8 +524,8 @@ return {
   },
   {
     'ejrichards/baredot.nvim',
-    cond = not ar.is_git_repo(),
-    event = { 'VeryLazy' },
+    cond = not minimal and not ar.is_git_repo(),
+    lazy = false,
     opts = {
       git_dir = '~/.dots/dotfiles', -- Change this path
     },
