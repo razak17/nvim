@@ -179,6 +179,7 @@ local servers = {
       client.server_capabilities.workspaceSymbolProvider = false
     end,
   },
+  jedi_language_server = {},
   lua_ls = {
     settings = {
       Lua = {
@@ -344,6 +345,12 @@ local function get(name)
     config.capabilities.general = {
       positionEncodings = { 'utf-16' },
     }
+  end
+  local lsp_flags = { debounce_text_changes = 150 }
+  if config.flags then
+    config.flags = vim.tbl_deep_extend('keep', config.flags, lsp_flags)
+  else
+    config.flags = lsp_flags
   end
   return config
 end
