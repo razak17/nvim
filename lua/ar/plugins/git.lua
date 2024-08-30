@@ -1,3 +1,4 @@
+local L = vim.log.levels
 local fmt = string.format
 local cwd = fmt('%s', vim.fn.getcwd())
 local icons = ar.ui.icons
@@ -219,6 +220,7 @@ return {
         map('n', '<leader>hd', gs.toggle_deleted, { desc = 'show deleted lines' })
         map('n', '<leader>hp', gs.preview_hunk_inline, { desc = 'preview hunk inline' })
         map('n', '<leader>hb', gs.toggle_current_line_blame, { desc = 'toggle line blame' })
+        map('n', '<leader>hx', gs.refresh, { desc = 'refresh' })
 
         map('n', '<leader>gbl', gs.blame_line, { desc = 'blame line' })
         map('n', '<leader>gr', gs.reset_buffer, { desc = 'reset entire buffer' })
@@ -229,17 +231,30 @@ return {
         bmap({ 'n', 'v' }, '<leader>hr', '<Cmd>Gitsigns reset_hunk<CR>', { desc = 'reset hunk' })
         bmap({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>', { desc = 'select hunk' })
 
-        map('n', ']h', function()
-          vim.schedule(function() gs.next_hunk() end)
-          return '<Ignore>'
-        end, { expr = true, desc = 'next hunk' })
+        ---@param callback function
+        ---@param opts { forward: boolean }
+        ---@return function
+        function ar.demicolon_jump(callback, opts)
+          if not ar.is_available('demicolon.nvim') then
+            return function()
+              vim.notify('demicolon.nvim is not available', L.WARN)
+            end
+          end
 
-        map('n', '[h', function()
-          vim.schedule(function() gs.prev_hunk() end)
-          return '<Ignore>'
-        end, { expr = true, desc = 'previous hunk' })
+          return function()
+            require('demicolon.jump').repeatably_do(callback, opts)
+          end
+        end
 
-        map('n', '<leader>hx', '<Cmd>Gitsigns refresh<CR>', { desc = 'refresh' })
+          local function jump(options)
+            return ar.demicolon_jump(function(opts)
+              local direction = opts.forward and 'next' or 'prev'
+              gs.nav_hunk(direction)
+            end, options)
+          end
+
+          map('n', ']h', jump({ forward = true }), { desc = 'next hunk' })
+          map('n', '[h', jump({ forward = false }), { desc = 'previous hunk' })
       end,
     },
   },
