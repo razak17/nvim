@@ -282,6 +282,9 @@ end
 if not is_available('neo-tree.nvim') then
   nnoremap('<C-n>', ':Ex<CR>', { desc = 'explorer' })
 end
+nnoremap('<leader>od', function()
+  if fn.confirm('Delete file?', '&Yes\n&No') == 1 then vim.cmd('Delete!') end
+end, { desc = 'delete file' })
 nnoremap(
   '<leader>X',
   ':wqall<CR>',
