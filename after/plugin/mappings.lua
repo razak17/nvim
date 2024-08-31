@@ -282,6 +282,14 @@ end
 if not is_available('neo-tree.nvim') then
   nnoremap('<C-n>', ':Ex<CR>', { desc = 'explorer' })
 end
+nnoremap('<localleader>bo', function()
+  local current_buffer = fn.bufnr('%')
+  for _, buffer in ipairs(fn.getbufinfo({ buflisted = 1 })) do
+    if buffer.bufnr ~= current_buffer then
+      api.nvim_buf_delete(buffer.bufnr, {})
+    end
+  end
+end, { desc = 'close other buffers' })
 nnoremap('<leader>od', function()
   if fn.confirm('Delete file?', '&Yes\n&No') == 1 then vim.cmd('Delete!') end
 end, { desc = 'delete file' })
