@@ -107,7 +107,7 @@ return {
       name = 'Buffer management',
       hint = buffer_hint,
       mode = 'n',
-      body = 'gb',
+      body = '<leader>b',
       config = base_config({
         hint = { position = 'top' },
       }),
