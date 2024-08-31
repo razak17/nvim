@@ -224,7 +224,7 @@ return {
       mode = 'n',
       body = '<localleader>w',
       color = 'chartreuse',
-      config = base_config({ invoke_on_body = false }),
+      config = base_config({ hint = { position = 'top' } }),
       heads = {
         { '-', change_case('to_dash_case'), { desc = 'to dashcase' } },
         { '/', change_case('to_path_case'), { desc = 'to pathcase' } },
