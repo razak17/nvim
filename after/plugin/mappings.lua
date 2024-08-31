@@ -162,50 +162,36 @@ nnoremap('<C-l>', '<C-w>l')
 -----------------------------------------------------------------------------//
 -- Quick find/replace
 -----------------------------------------------------------------------------//
+local function replace_word(transform_fn, prompt_suffix)
+  return function()
+    local value = fn.expand('<cword>')
+    local default_value = transform_fn(value)
+    vim.ui.input({
+      prompt = 'Replace word with ' .. prompt_suffix,
+      default = default_value,
+    }, function(new_value)
+      if not new_value then return end
+      vim.cmd('%s/' .. value .. '/' .. transform_fn(new_value) .. '/gI')
+    end)
+  end
+end
 nnoremap(
   '<leader>[[',
-  [[:%s/\<<C-r><C-w>\>/<C-r>=<CR>/gI<Left><Left><Left>]],
-  { desc = 'replace all' }
-)
-nnoremap(
-  '<leader>]]',
-  [[:s/\<<C-r><C-w>\>/<C-r>=<CR>/gI<Left><Left><Left>]],
-  { desc = 'replace in line' }
-)
-vnoremap('<leader>[[', [["zy:%s/<C-r><C-o>"/]], { desc = 'replace all' })
---------------------------------------------------------------------------------
--- Quick find/replace with
--- @see: https://github.com/linkarzu/dotfiles-latest/blob/main/neovim/neobean/lua/config/keymaps.lua?plain=1#L94
-nnoremap(
-  '<leader>[w',
-  [[:%s/\<<C-r><C-w>\>/<C-r>=expand('<cword>')<CR>/gI<Left><Left><Left>]],
-  { desc = 'replace all with' }
+  replace_word(function(x) return x end, ''),
+  { desc = 'replace word in file' }
 )
 nnoremap(
   '<leader>[u',
-  [[:%s/\<<C-r><C-w>\>/<C-r>=toupper(expand('<cword>'))<CR>/gI<Left><Left><Left>]],
-  { desc = 'replace all with UPPERCASE' }
+  replace_word(fn.toupper, 'UPPERCASE'),
+  { desc = 'replace word in file with UPPERCASE' }
 )
 nnoremap(
   '<leader>[l',
-  [[:%s/\<<C-r><C-w>\>/<C-r>=tolower(expand('<cword>'))<CR>/gI<Left><Left><Left>]],
-  { desc = 'replace all with lowercase' }
+  replace_word(fn.tolower, 'lowercase'),
+  { desc = 'replace word in file with lowercase' }
 )
-nnoremap(
-  '<leader>]w',
-  [[:s/\<<C-r><C-w>\>/<C-r>=expand('<cword>')<CR>/gI<Left><Left><Left>]],
-  { desc = 'replace in line with' }
-)
-nnoremap(
-  '<leader>]u',
-  [[:s/\<<C-r><C-w>\>/<C-r>=toupper(expand('<cword>'))<CR>/gI<Left><Left><Left>]],
-  { desc = 'replace in line with UPPERCASE' }
-)
-nnoremap(
-  '<leader>]l',
-  [[:s/\<<C-r><C-w>\>/<C-r>=tolower(expand('<cword>'))<CR>/gI<Left><Left><Left>]],
-  { desc = 'replace in line with lowercase' }
-)
+vnoremap('<leader>[[', [["zy:%s/<C-r><C-o>"/]], { desc = 'replace all' })
+--------------------------------------------------------------------------------
 -- Visual shifting (does not exit Visual mode)
 vnoremap('<', '<gv')
 vnoremap('>', '>gv')
