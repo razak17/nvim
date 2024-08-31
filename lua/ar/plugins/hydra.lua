@@ -247,9 +247,7 @@ return {
       mode = 'n',
       body = '<localleader>W',
       color = 'yellow',
-      config = base_config({
-        hint = { position = 'middle' },
-      }),
+      config = base_config({ hint = { position = 'top' } }),
       heads = {
         { '"', [[ciw"<c-r>""<esc>]], { desc = 'double quotes' } },
         { "'", [[ciw'<c-r>"'<esc>]], { desc = 'single quotes' } },
