@@ -442,7 +442,7 @@ end
 xnoremap('<leader>ah', visual_help, { desc = 'visual help' })
 --------------------------------------------------------------------------------
 -- Undo
-nnoremap('<C-z>', '<cmd>undo<CR>')
+-- nnoremap('<C-z>', '<cmd>undo<CR>')
 vnoremap('<C-z>', '<cmd>undo<CR><Esc>')
 xnoremap('<C-z>', '<cmd>undo<CR><Esc>')
 inoremap('<c-z>', [[<Esc>:undo<CR>]])
