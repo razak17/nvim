@@ -3,7 +3,6 @@ local minimal = ar.plugins.minimal
 return {
   {
     'brenoprata10/nvim-highlight-colors',
-    cond = not minimal,
     event = { 'BufRead' },
     cmd = { 'HighlightColors' },
     opts = {
