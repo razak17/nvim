@@ -832,8 +832,8 @@ return {
     cond = min_enabled,
     -- stylua: ignore
     keys = {
-      { '<localleader>Po', ':Telescope project_cli_commands open<CR>', desc = 'project-cli-commands: open' },
-      { '<localleader>Ps', ':Telescope project_cli_commands running<CR>', desc = 'project-cli-commands: running' },
+      { '<leader><localleader>Po', ':Telescope project_cli_commands open<CR>', desc = 'project-cli-commands: open' },
+      { '<leader><localleader>Ps', ':Telescope project_cli_commands running<CR>', desc = 'project-cli-commands: running' },
     },
     config = function() require('project_cli_commands').setup({}) end,
   },
