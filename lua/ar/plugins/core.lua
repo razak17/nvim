@@ -144,6 +144,11 @@ return {
     'chrisgrieser/nvim-genghis',
     cond = not minimal,
     event = { 'BufReadPost', 'BufNewFile' },
+    init = function()
+      require('which-key').add({
+        { '<leader><localleader>f', group = 'Genghis' },
+      })
+    end,
     -- stylua: ignore
     config = function()
       local g = require('genghis')
@@ -186,6 +191,9 @@ return {
   {
     'luckasRanarison/nvim-devdocs',
     cond = not minimal,
+    init = function()
+      require('which-key').add({ { '<localleader>v', group = 'Devdocs' } })
+    end,
     -- stylua: ignore
     keys = {
       { '<localleader>vf', '<cmd>DevdocsOpenFloat<CR>', desc = 'devdocs: open float', },

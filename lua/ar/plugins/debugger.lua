@@ -49,6 +49,13 @@ return {
   {
     'mfussenegger/nvim-dap',
     cond = not minimal,
+    init = function()
+      require('which-key').add({
+        { '<localleader>d', group = 'Dap' },
+        { '<localleader>db', group = 'Breakpoint' },
+        { '<localleader>dr', group = 'Run' },
+      })
+    end,
     -- stylua: ignore
     keys = {
       {

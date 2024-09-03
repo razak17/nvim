@@ -15,6 +15,7 @@ return {
     'ecthelionvi/NeoComposer.nvim',
     init = function()
       require('which-key').add({
+        { '<localleader>q', group = 'NeoComposer' },
         { '<localleader>qr', desc = 'neocomposer: toggle record' },
         { '<localleader>qq', desc = 'neocomposer: play macro' },
         { '<localleader>qy', desc = 'neocomposer: yank macro' },

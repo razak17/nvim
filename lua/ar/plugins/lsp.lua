@@ -629,6 +629,9 @@ return {
   },
   {
     'folke/trouble.nvim',
+    init = function()
+      require('which-key').add({ { '<localleader>x', group = 'Trouble' } })
+    end,
     cond = ar.lsp.enable,
     cmd = { 'Trouble' },
     -- stylua: ignore

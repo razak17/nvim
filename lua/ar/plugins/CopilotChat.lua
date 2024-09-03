@@ -25,6 +25,9 @@ return {
     cond = ar.ai.enable and not ar.plugins.minimal and ar.completion.enable,
     event = 'VimEnter',
     branch = 'canary',
+    init = function()
+      require('which-key').add({ { '<leader>ac', group = 'CopilotChat' } })
+    end,
     build = function()
       vim.defer_fn(function()
         vim.cmd('UpdateRemotePlugins')

@@ -98,6 +98,9 @@ return {
   {
     -- 'google/executor.nvim',
     'razak17/executor.nvim',
+    init = function()
+      require('which-key').add({ { '<leader><leader>x', group = 'Executor' } })
+    end,
     -- stylua: ignore
     keys = {
       { '<leader><leader>xc', '<cmd>ExecutorRun<CR>', desc = 'executor: start' },

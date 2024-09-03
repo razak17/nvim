@@ -4,6 +4,9 @@ return {
   {
     'epwalsh/obsidian.nvim',
     cond = not ar.plugins.minimal,
+    init = function()
+      require('which-key').add({ { '<localleader>o', group = 'Obsidian' } })
+    end,
     event = 'BufRead ' .. sync('obsidian') .. '/*.md',
     -- stylua: ignore
     keys = {
@@ -32,6 +35,9 @@ return {
     'nvim-neorg/neorg',
     cond = false,
     ft = 'norg',
+    init = function()
+      require('which-key').add({ { '<localleader>n', group = 'Neorg' } })
+    end,
     keys = {
       { '<localleader>nx', '<cmd>Neorg return<CR>', 'neorg: return' },
       { '<localleader>ni', '<cmd>Neorg index<CR>', 'neorg: open default' },

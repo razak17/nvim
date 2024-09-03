@@ -94,6 +94,13 @@ return {
   {
     'ibhagwan/fzf-lua',
     cmd = 'FzfLua',
+    init = function()
+      require('which-key').add({
+        { '<localleader>f', group = 'Picker' },
+        { '<localleader>fg', group = 'Git' },
+        { '<localleader>fv', group = 'Vim' },
+      })
+    end,
     -- stylua: ignore
     keys = {
       -- { '<c-p>', fzf_lua.git_files, desc = 'find files' },
@@ -322,6 +329,9 @@ return {
   {
     'camspiers/snap',
     cond = not ar.plugins.minimal,
+    init = function()
+      require('which-key').add({ { '<leader><leader>f', group = 'Snap' } })
+    end,
     config = function()
       ar.highlight.plugin('snap', {
         theme = {

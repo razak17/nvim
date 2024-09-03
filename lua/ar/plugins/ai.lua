@@ -20,6 +20,9 @@ return {
   {
     'olimorris/codecompanion.nvim',
     cond = ar.ai.enable and not ar.plugins.minimal,
+    init = function()
+      require('which-key').add({ { '<leader>ak', group = 'Codecompanion' } })
+    end,
     cmd = {
       'CodeCompanion',
       'CodeCompanionAdd',

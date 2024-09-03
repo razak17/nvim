@@ -1,6 +1,9 @@
 return {
   {
     'yujinyuz/gitpad.nvim',
+    init = function()
+      require('which-key').add({ { '<localleader>p', group = 'Pad' } })
+    end,
     opts = {
       title = 'Notes',
       default_text = '',

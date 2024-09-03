@@ -92,6 +92,12 @@ return {
   {
     'joeldotdias/jsdoc-switch.nvim',
     -- ft = { 'javascript', 'javascriptreact' },
+    init = function()
+      require('which-key').add({
+        { '<leader><leader>j', group = 'jSdoc Switch' },
+        { '<leader><leader>jd', desc = 'doc switch' },
+      })
+    end,
     -- stylua: ignore
     keys = {
       { '<leader><leader>jds', '<cmd>JsdocSwitchStart<CR>', desc = 'jsdoc-switch: start' },
@@ -142,6 +148,9 @@ return {
   {
     'mistweaverco/kulala.nvim',
     ft = { 'http' },
+    init = function()
+      require('which-key').add({ { '<leader>rk', group = 'Kulala' } })
+    end,
     -- stylua: ignore
     keys = {
       { '<leader>rke', ':lua require("kulala").set_selected_env()<CR>', desc = 'kulala: select env' },

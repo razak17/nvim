@@ -9,6 +9,9 @@ return {
     config = function()
       require('chainsaw').setup({ marker = '[🪲 chainsaw]' })
     end,
+    init = function()
+      require('which-key').add({ { '<leader>pl', group = 'Chainsaw' } })
+    end,
     keys = {
       {
         '<leader>pll',

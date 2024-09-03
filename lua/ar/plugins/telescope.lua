@@ -818,6 +818,9 @@ return {
     'imNel/monorepo.nvim',
     cond = enabled,
     opts = {},
+    init = function()
+      require('which-key').add({ { '<localleader>r', group = 'Monorepo' } })
+    end,
     -- stylua: ignore
     keys = {
       { '<localleader>ra', ':lua require("monorepo").add_project()<CR>', desc = 'monorepo: add' },
@@ -830,6 +833,11 @@ return {
   {
     'dimaportenko/project-cli-commands.nvim',
     cond = min_enabled,
+    init = function()
+      require('which-key').add({
+        { '<leader><localleader>P', group = 'Project cli commands' },
+      })
+    end,
     -- stylua: ignore
     keys = {
       { '<leader><localleader>Po', ':Telescope project_cli_commands open<CR>', desc = 'project-cli-commands: open' },

@@ -16,6 +16,9 @@ return {
   {
     'anuvyklack/windows.nvim',
     cond = not minimal,
+    init = function()
+      require('which-key').add({ { '<leader>wm', group = 'Maximizer' } })
+    end,
     -- stylua: ignore
     keys = {
       { '<leader>wmh', '<Cmd>WindowsMaximizeHorizontally<CR>', desc = 'maximize horizontally' },

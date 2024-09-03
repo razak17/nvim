@@ -14,6 +14,9 @@ return {
     'axieax/urlview.nvim',
     cmd = { 'UrlView' },
     cond = not minimal,
+    init = function()
+      require('which-key').add({ { '<localleader>u', group = 'URL' } })
+    end,
     -- stylua: ignore
     keys = {
       { '<localleader>ub', '<cmd>UrlView buffer<cr>', desc = 'urlview: buffers' },

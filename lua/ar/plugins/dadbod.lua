@@ -1,5 +1,8 @@
 return {
   'kristijanhusak/vim-dadbod-ui',
+  init = function()
+    require('which-key').add({ { '<leader><leader>d', group = 'Dadbod' } })
+  end,
   dependencies = {
     'tpope/vim-dadbod',
     'kristijanhusak/vim-dadbod-completion',

@@ -16,6 +16,15 @@ return {
   {
     'nvim-neotest/neotest',
     cond = not ar.plugins.minimal,
+    init = function()
+      require('which-key').add({
+        { '<leader>t', group = 'Testing' },
+        { '<leader>tc', group = 'Coverage' },
+        { '<leader>tn', group = 'Neotest' },
+        { '<leader>to', group = 'Overseer' },
+        { '<leader>tv', group = 'Vim-test' },
+      })
+    end,
     keys = {
       { '<leader>tns', toggle_summary, desc = 'neotest: toggle summary' },
       { '<leader>tno', open, desc = 'neotest: output' },

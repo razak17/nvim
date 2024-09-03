@@ -207,6 +207,9 @@ return {
     'razak17/nvim-strict',
     cond = not minimal and niceties,
     event = { 'BufReadPost', 'BufNewFile' },
+    init = function()
+      require('which-key').add({ { '<localleader>s', group = 'Strict' } })
+    end,
     -- stylua: ignore
     keys = {
       { '<localleader>sx', '<cmd>call clearmatches()<CR>', desc = 'strict: clear' },
@@ -312,6 +315,9 @@ return {
   },
   {
     'folke/zen-mode.nvim',
+    init = function()
+      require('which-key').add({ { '<localleader>z', group = 'Zen' } })
+    end,
     cmd = 'ZenMode',
     opts = {
       window = { width = 90 },
@@ -434,6 +440,9 @@ return {
     cond = not minimal,
     event = 'BufReadPost',
     cmd = { 'TodoTelescope', 'TodoTrouble', 'TodoQuickFix', 'TodoDots' },
+    init = function()
+      require('which-key').add({ { '<localleader>t', group = 'TODO' } })
+    end,
     -- stylua: ignore
     keys = {
       { '<localleader>tt', '<cmd>TodoDots<CR>', desc = 'todo: dotfiles todos' },
@@ -486,6 +495,11 @@ return {
   },
   {
     'LudoPinelli/comment-box.nvim',
+    init = function()
+      require('which-key').add({
+        { '<leader><leader>b', group = 'Comment Box' },
+      })
+    end,
     cond = not minimal and niceties,
     config = function(_, opts) require('comment-box').setup(opts) end,
     keys = {

@@ -9,6 +9,15 @@ return {
   },
   {
     'gbprod/yanky.nvim',
+    init = function()
+      require('which-key').add({
+        { '<localleader>y', group = 'Yanky' },
+      })
+      require('which-key').add({
+        mode = { 'x' },
+        { '<localleader>y', group = 'Yanky' },
+      })
+    end,
     cond = not minimal,
     cmd = { 'YankyRingHistory' },
     -- stylua: ignore
@@ -228,6 +237,15 @@ return {
   },
   {
     'ThePrimeagen/refactoring.nvim',
+    init = function()
+      require('which-key').add({
+        { '<leader><leader>r', group = 'Refactoring' },
+      })
+      require('which-key').add({
+        mode = { 'x' },
+        { '<leader><leader>r', group = 'Refactoring' },
+      })
+    end,
     keys = {
       {
         '<leader><leader>ro',
@@ -426,6 +444,12 @@ return {
   {
     'sQVe/sort.nvim',
     cmd = { 'Sort' },
+    init = function()
+      require('which-key').add({
+        mode = { 'x' },
+        { '<localleader>S', group = 'Sort' },
+      })
+    end,
     keys = {
       {
         '<localleader>Ss',
@@ -483,6 +507,12 @@ return {
   {
     'haolian9/nag.nvim',
     dependencies = { 'haolian9/infra.nvim' },
+    init = function()
+      require('which-key').add({
+        mode = { 'x' },
+        { '<localleader>n', group = 'Nag' },
+      })
+    end,
     -- stylua: ignore
     keys = {
       { mode = 'x', '<localleader>nv', ":lua require'nag'.split('right')<CR>", desc = 'nag: split right', },
