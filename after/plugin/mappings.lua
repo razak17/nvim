@@ -291,6 +291,15 @@ nnoremap('<localleader>bo', function()
   end
 end, { desc = 'close other buffers' })
 nnoremap('<leader>od', function()
+  if fn.confirm('Delete file?', '&Yes\n&No') == 1 then
+    ar.autosave.enable = not ar.autosave.enable
+    local file = fn.expand('%:p')
+    ar.trash_file(file, true)
+    vim.cmd('bdel')
+    ar.autosave.enable = not ar.autosave.enable
+  end
+end, { desc = 'trash file' })
+nnoremap('<leader>oD', function()
   if fn.confirm('Delete file?', '&Yes\n&No') == 1 then vim.cmd('Delete!') end
 end, { desc = 'delete file' })
 nnoremap(
