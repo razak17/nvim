@@ -233,6 +233,23 @@ return {
       { '<localleader>lvc', '<Cmd>VenvSelectCached<cr>', desc = 'venv-selector: select cached env' },
     },
   },
+  {
+    'alexpasmantier/pymple.nvim',
+    build = ':PympleBuild',
+    event = { 'BufEnter', 'BufNewFile' },
+    cond = ar.lsp.enable,
+    opts = {
+      resolve_import_under_cursor = {
+        desc = 'resolve import under cursor',
+        keys = '<leader><leader>li',
+      },
+      python = {
+        root_markers = { 'pyproject.toml', 'setup.py', '.git', 'manage.py' },
+        virtual_env_names = { 'env' },
+      },
+    },
+    dependencies = { 'stevearc/dressing.nvim' },
+  },
   -- Golang
   --------------------------------------------------------------------------------
   {
