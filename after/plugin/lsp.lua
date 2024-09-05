@@ -27,11 +27,11 @@ local format_exclusions = {
     go = { 'null-ls' },
     proto = { 'null-ls' },
     html = { 'html' },
-    javascript = { 'quick_lint_js', 'tsserver', 'typescript-tools' },
+    javascript = { 'quick_lint_js', 'ts_ls', 'typescript-tools' },
     json = { 'jsonls' },
-    typescript = { 'tsserver', 'typescript-tools' },
-    typescriptreact = { 'tsserver', 'typescript-tools' },
-    javascriptreact = { 'tsserver', 'typescript-tools' },
+    typescript = { 'ts_ls', 'typescript-tools' },
+    typescriptreact = { 'ts_ls', 'typescript-tools' },
+    javascriptreact = { 'ts_ls', 'typescript-tools' },
     svelte = { 'svelte' },
   },
 }
@@ -111,7 +111,7 @@ lsp.handlers[M.textDocument_publishDiagnostics] = function(
 
   local client = lsp.get_client_by_id(ctx.client_id)
   if
-    client and (client.name == 'typescript-tools' or client.name == 'tsserver')
+    client and (client.name == 'typescript-tools' or client.name == 'ts_ls')
   then
     if result.diagnostics == nil then return end
     local idx = 1
@@ -213,7 +213,7 @@ end
 -- lsp.handlers[M.textDocument_inlayHint] = function(err, result, ctx, config)
 --   local client = lsp.get_client_by_id(ctx.client_id)
 --   if not client then return end
---   if client.name == 'typescript-tools' or client.name == 'tsserver' then
+--   if client.name == 'typescript-tools' or client.name == 'ts_ls' then
 --     result = vim
 --       .iter(result)
 --       :map(function(hint)
@@ -311,7 +311,7 @@ local function setup_mappings(client, bufnr)
       lsp.buf.definition,
       desc = 'definition',
       capability = M.textDocument_definition,
-      exclude = { 'tsserver' },
+      exclude = { 'ts_ls' },
     },
     { 'n', 'gk', diagnostic_float(), desc = 'cursor diagnostics' },
     { 'n', 'gL', diagnostic_float(true), desc = 'line diagnostics' },
@@ -408,7 +408,7 @@ local ts_overrides = {
     if is_available('twoslash-queries.nvim') then
       require('twoslash-queries').attach(client, bufnr)
     end
-    -- this is important, otherwise tsserver will format ts/js
+    -- this is important, otherwise ts_ls will format ts/js
     -- files which we *really* don't want.
     client.server_capabilities.documentFormattingProvider = false
     client.server_capabilities.documentRangeFormattingProvider = false
@@ -422,7 +422,7 @@ local ts_overrides = {
 --- without putting all this logic in the general on_attach function
 ---@type {[string]: ClientOverrides}
 local client_overrides = {
-  tsserver = ts_overrides,
+  ts_ls = ts_overrides,
   ['typescript-tools'] = ts_overrides,
   ruff_lsp = {
     on_attach = function(client)

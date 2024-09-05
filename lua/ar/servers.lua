@@ -242,7 +242,7 @@ local servers = {
       )(fname)
     end,
   },
-  tsserver = {
+  ts_ls = {
     init_options = {
       documentFormatting = false,
       hostInfo = 'neovim',

@@ -43,14 +43,14 @@ return {
         automatic_installation = true,
         handlers = {
           function(name)
-            local cwd = vim.fn.getcwd()
+            local cwd = fn.getcwd()
             if not falsy(ar.lsp.override) then
               if not find_string(ar.lsp.override, name) then return end
             else
               local directory_disabled =
                 ar.dirs_match(ar.lsp.disabled.directories, fmt('%s', cwd))
               local server_disabled = ar.lsp_disabled(name)
-              local typescript_tools_enabled = name == 'tsserver'
+              local typescript_tools_enabled = name == 'ts_ls'
                 and ar.lsp.typescript_tools.enable
               if
                 directory_disabled
@@ -60,6 +60,9 @@ return {
                 return
               end
             end
+            -- override tsserver here until this is fixed
+            -- https://github.com/williamboman/mason-lspconfig.nvim/issues/458
+            if name == 'tsserver' then name = 'ts_ls' end
             local config = require('ar.servers').get(name)
             if config then require('lspconfig')[name].setup(config) end
           end,
