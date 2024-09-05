@@ -66,6 +66,8 @@ nnoremap('<localleader>Y', ':%y+<CR>', { desc = 'yank all' })
 nnoremap('<localleader>A', 'gg"+VG', { desc = 'select all' })
 -- Delete All
 nnoremap('<localleader>D', ':%d<CR>', { desc = 'delete all' })
+--- Paste commands
+map('n', '<localleader>P', 'ggVG"_dP', { desc = 'paste over entire file' })
 -- Paste in visual mode multiple times
 xnoremap('p', 'pgvy')
 -- search visual selection
