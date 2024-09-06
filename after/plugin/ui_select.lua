@@ -390,6 +390,7 @@ M.options.command_palette = {
   end,
   ['Toggle Markview'] = 'Markview',
   ['Open Messages'] = 'MsgsToFileAndOpen',
+  ['Clear Messages'] = function() vim.cmd('messages clear') end,
   ['Toggle Autosave'] = function()
     ar.autosave.enable = not ar.autosave.enable
     local status = ar.autosave.enable and 'enabled' or 'disabled'
