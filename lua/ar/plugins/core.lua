@@ -114,7 +114,7 @@ return {
   { 'lambdalisue/suda.vim', lazy = false },
   { 'will133/vim-dirdiff', cmd = { 'DirDiff' } },
   { 'godlygeek/tabular', cmd = { 'Tabularize' } },
-  { '2kabhishek/nerdy.nvim', cmd = 'Nerdy' },
+  { '2kabhishek/nerdy.nvim', cmd = 'Nerdy', cond = not minimal },
   { 'ragnarok22/whereami.nvim', cmd = 'Whereami' },
   {
     '4513ECHO/nvim-keycastr',
@@ -145,6 +145,7 @@ return {
   },
   {
     'AndrewRadev/linediff.vim',
+    cond = not minimal,
     cmd = 'Linediff',
     keys = {
       { '<localleader>lL', '<cmd>Linediff<CR>', desc = 'linediff: toggle' },

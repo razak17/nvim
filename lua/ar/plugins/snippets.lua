@@ -1,6 +1,8 @@
+local minimal = ar.plugins.minimal
+
 return {
-  'rafamadriz/friendly-snippets',
   's1n7ax/nvim-ts-utils',
+  { 'rafamadriz/friendly-snippets', cond = not minimal },
   { 's1n7ax/nvim-snips', name = 'snips' },
   {
     'garymjr/nvim-snippets',
@@ -22,6 +24,7 @@ return {
   },
   {
     'L3MON4D3/LuaSnip',
+    cond = not minimal,
     event = 'InsertEnter',
     build = 'make install_jsregexp',
     keys = {

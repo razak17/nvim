@@ -1,6 +1,7 @@
 local ui, highlight = ar.ui, ar.highlight
 local border = ui.current.border
 local preview_cmd = '/usr/bin/zathura'
+local minimal = ar.plugins.minimal
 
 return {
   -- Code Runner
@@ -34,6 +35,7 @@ return {
   },
   {
     'is0n/jaq-nvim',
+    cond = not minimal,
     cmd = 'Jaq',
     keys = {
       { '<leader>rb', ':silent only | Jaq<CR>', desc = 'jaq: run' },
@@ -60,6 +62,7 @@ return {
     'jellydn/quick-code-runner.nvim',
     opts = { debug = true },
     cmd = { 'QuickCodeRunner', 'QuickCodePad' },
+    cond = not minimal,
     keys = {
       {
         mode = 'v',
@@ -73,7 +76,7 @@ return {
   {
     'razak17/lab.nvim',
     event = { 'InsertEnter' },
-    cond = not ar.plugins.minimal,
+    cond = not minimal,
     keys = {
       { '<leader>rl', ':Lab code run<CR>', desc = 'lab: run' },
       { '<leader>rq', ':Lab code stop<CR>', desc = 'lab: stop' },
@@ -98,6 +101,7 @@ return {
   {
     -- 'google/executor.nvim',
     'razak17/executor.nvim',
+    cond = not minimal,
     init = function()
       require('which-key').add({ { '<leader><leader>x', group = 'Executor' } })
     end,
@@ -134,6 +138,7 @@ return {
     'michaelb/sniprun',
     build = 'sh install.sh',
     cmd = { 'SnipRun', 'SnipInfo' },
+    cond = not minimal,
     init = function()
       require('which-key').add({
         { '<leader>rs', group = 'SnipRun' },
@@ -163,6 +168,7 @@ return {
   },
   {
     'ej-shafran/compile-mode.nvim',
+    cond = not minimal,
     cmd = { 'Compile', 'Recompile' },
     opts = { default_command = '' },
     dependencies = {
@@ -172,6 +178,7 @@ return {
   -- https://github.com/CRAG666/dotfiles/blob/main/config/nvim/lua/plugins/dev/code_runner.lua
   {
     'CRAG666/code_runner.nvim',
+    cond = not minimal,
     -- stylua: ignore
     keys = {
       { '<leader>rc', function() require('code_runner').run_code() end, desc = 'code runner: run code' },

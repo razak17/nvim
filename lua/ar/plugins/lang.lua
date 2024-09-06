@@ -13,11 +13,16 @@ return {
     cond = not minimal and niceties,
     lazy = false,
   },
-  { 'gennaro-tedesco/nvim-jqx', ft = { 'json', 'yaml' } },
+  {
+    'gennaro-tedesco/nvim-jqx',
+    cond = not minimal,
+    ft = { 'json', 'yaml' },
+  },
   -- Web Dev (Typescript)
   --------------------------------------------------------------------------------
   {
     'Redoxahmii/json-to-types.nvim',
+    cond = not minimal,
     build = 'sh install.sh npm',
     keys = {
       {
@@ -71,6 +76,7 @@ return {
   },
   {
     'jdrupal-dev/code-refactor.nvim',
+    cond = not minimal,
     -- stylua: ignore
     keys = {
       { '<localleader>la', '<cmd>CodeActions all<CR>', desc = 'Show code-refactor.nvim (not LSP code actions)' },
@@ -91,6 +97,7 @@ return {
   },
   {
     'joeldotdias/jsdoc-switch.nvim',
+    cond = not minimal,
     -- ft = { 'javascript', 'javascriptreact' },
     init = function()
       require('which-key').add({
@@ -115,6 +122,7 @@ return {
   },
   {
     'Diogo-ss/five-server.nvim',
+    cond = not minimal,
     cmd = { 'FiveServer' },
     build = function() require('fs.utils.install')() end,
     opts = {
@@ -147,6 +155,7 @@ return {
   },
   {
     'mistweaverco/kulala.nvim',
+    cond = not minimal,
     ft = { 'http' },
     init = function()
       require('which-key').add({ { '<leader>rk', group = 'Kulala' } })
@@ -268,6 +277,7 @@ return {
   --------------------------------------------------------------------------------
   {
     'vidocqh/data-viewer.nvim',
+    cond = not minimal,
     -- ft = { 'csv', 'tsv', 'sqlite' },
     cmd = { 'DataViewer', 'DataViewerClose' },
     opts = {},
@@ -286,6 +296,7 @@ return {
   },
   {
     'emmanueltouzery/decisive.nvim',
+    cond = not minimal,
     ft = { 'csv' },
     keys = {
       {
@@ -315,6 +326,7 @@ return {
   --------------------------------------------------------------------------------
   {
     'bennypowers/nvim-regexplainer',
+    cond = not minimal,
     keys = {
       {
         '<leader>rx',

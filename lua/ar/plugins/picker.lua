@@ -1,6 +1,7 @@
 local fn, ui, reqcall = vim.fn, ar.ui, ar.reqcall
 local codicons, lsp_hls = ui.codicons, ui.lsp.highlights
 local prompt = ' ' .. codicons.misc.search_alt .. '  '
+local minimal = ar.plugins.minimal
 
 local fzf_lua = reqcall('fzf-lua') ---@module 'fzf-lua'
 --------------------------------------------------------------------------------
@@ -94,6 +95,7 @@ return {
   {
     'ibhagwan/fzf-lua',
     cmd = 'FzfLua',
+    cond = not minimal,
     init = function()
       require('which-key').add({
         { '<localleader>f', group = 'Picker' },
@@ -328,7 +330,7 @@ return {
   },
   {
     'camspiers/snap',
-    cond = not ar.plugins.minimal,
+    cond = not minimal,
     init = function()
       require('which-key').add({ { '<leader><leader>f', group = 'Snap' } })
     end,

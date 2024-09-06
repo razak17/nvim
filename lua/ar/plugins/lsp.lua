@@ -7,6 +7,7 @@ local border = ui.current.border
 local lsp_icons = codicons.lsp
 local detour = ar.reqidx('detour')
 local features = ar.reqidx('detour.features')
+local minimal = ar.plugins.minimal
 
 return {
   ------------------------------------------------------------------------------
@@ -655,12 +656,14 @@ return {
   {
     'mhanberg/output-panel.nvim',
     event = 'VeryLazy',
+    cond = not minimal,
     enabled = false,
     cmd = 'OutputPanel',
     config = function() require('output_panel').setup() end,
   },
   {
     'SmiteshP/nvim-navbuddy',
+    cond = not minimal,
     keys = {
       {
         '<leader>nv',

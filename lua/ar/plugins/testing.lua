@@ -1,3 +1,5 @@
+local minimal = ar.plugins.minimal
+
 local function neotest() return require('neotest') end
 local function open() neotest().output.open({ enter = true, short = false }) end
 local function run_file() neotest().run.run(vim.fn.expand('%')) end
@@ -15,7 +17,7 @@ local function debug_nearest() require('neotest').run.run({ strategy = 'dap' }) 
 return {
   {
     'nvim-neotest/neotest',
-    cond = not ar.plugins.minimal,
+    cond = not minimal,
     init = function()
       require('which-key').add({
         { '<leader>t', group = 'Testing' },
@@ -94,6 +96,7 @@ return {
   },
   {
     'vim-test/vim-test',
+    cond = not minimal,
     keys = {
       { '<leader>tvc', '<cmd>TestClass<cr>', desc = 'vim-test: class' },
       { '<leader>tvf', '<cmd>TestFile<cr>', desc = 'vim-test: file' },
@@ -111,6 +114,7 @@ return {
   },
   {
     'stevearc/overseer.nvim',
+    cond = not minimal,
     keys = {
       {
         '<leader>toR',
@@ -174,6 +178,7 @@ return {
   },
   {
     'andythigpen/nvim-coverage',
+    cond = not minimal,
     keys = {
       {
         '<leader>tcl',

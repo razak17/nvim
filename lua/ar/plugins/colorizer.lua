@@ -45,6 +45,7 @@ return {
   },
   {
     'cjodo/convert.nvim',
+    cond = not minimal,
     cmd = { 'ConvertFindNext', 'ConvertFindCurrent' },
   },
 }

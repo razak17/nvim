@@ -225,6 +225,7 @@ return {
   },
   {
     'Wansmer/treesj',
+    cond = not minimal,
     keys = {
       {
         'gS',
@@ -237,6 +238,7 @@ return {
   },
   {
     'ThePrimeagen/refactoring.nvim',
+    cond = not minimal,
     init = function()
       require('which-key').add({
         { '<leader><leader>r', group = 'Refactoring' },
@@ -357,6 +359,7 @@ return {
   ------------------------------------------------------------------------------
   {
     'mizlan/iswap.nvim',
+    cond = not minimal,
     keys = {
       { '<leader>ia', '<cmd>ISwap<CR>', desc = 'iswap: swap' },
       { '<leader>iw', '<cmd>ISwapWith<CR>', desc = 'iswap: swap with' },
@@ -379,6 +382,7 @@ return {
   ------------------------------------------------------------------------------
   {
     'nguyenvukhang/nvim-toggler',
+    cond = not minimal,
     -- stylua: ignore
     keys = {
       { '<leader>ii', function() require("nvim-toggler").toggle() end, desc = 'nvim-toggler: toggle', },
@@ -500,12 +504,14 @@ return {
   ------------------------------------------------------------------------------
   {
     'dawsers/edit-code-block.nvim',
+    cond = not minimal,
     cmd = { 'EditCodeBlock', 'EditCodeBlockOrg', 'EditCodeBlockSelection' },
     name = 'ecb',
     opts = { wincmd = 'split' },
   },
   {
     'haolian9/nag.nvim',
+    cond = not minimal,
     dependencies = { 'haolian9/infra.nvim' },
     init = function()
       require('which-key').add({

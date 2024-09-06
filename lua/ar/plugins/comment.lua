@@ -1,3 +1,5 @@
+local minimal = ar.plugins.minimal
+
 return {
   {
     'numToStr/Comment.nvim',
@@ -11,12 +13,13 @@ return {
   },
   {
     'folke/ts-comments.nvim',
-    cond = not ar.plugins.minimal,
+    cond = not minimal,
     event = 'VeryLazy',
     opts = {},
   },
   {
     's1n7ax/nvim-comment-frame',
+    cond = not minimal,
     keys = {
       {
         '<localleader>cf',

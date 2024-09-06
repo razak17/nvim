@@ -93,6 +93,7 @@ return {
   },
   {
     'eandrju/cellular-automaton.nvim',
+    cond = not minimal,
     cmd = 'CellularAutomaton',
     -- stylua: ignore
     keys = {

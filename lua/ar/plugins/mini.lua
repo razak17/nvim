@@ -76,7 +76,7 @@ local function deepcopy_with_prefix(base, prefix, desc_modify)
 end
 
 return {
-  'echasnovski/mini.hipatterns',
+  { 'echasnovski/mini.hipatterns', event = { 'BufRead', 'BufNewFile' } },
   {
     'echasnovski/mini.icons',
     opts = {},
@@ -269,13 +269,13 @@ return {
   },
   {
     'echasnovski/mini.completion',
-    cond = ar.plugins.minimal,
+    cond = minimal,
     event = { 'InsertEnter' },
     opts = {},
   },
   {
     'echasnovski/mini.pick',
-    cond = ar.plugins.minimal,
+    cond = minimal,
     keys = {
       { '<C-p>', '<Cmd>Pick files<CR>', desc = 'pick: open' },
       { '<leader>fb', '<Cmd>Pick buffers<CR>', desc = 'pick: buffers' },

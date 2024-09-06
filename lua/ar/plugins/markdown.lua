@@ -39,6 +39,7 @@ return {
   },
   {
     'Zeioth/markmap.nvim',
+    cond = not minimal,
     build = 'yarn global add markmap-cli',
     cmd = { 'MarkmapOpen', 'MarkmapSave', 'MarkmapWatch', 'MarkmapWatchStop' },
     opts = {},
@@ -52,6 +53,7 @@ return {
   },
   {
     'arminveres/md-pdf.nvim',
+    cond = not minimal,
     keys = {
       {
         '<localleader>mp',

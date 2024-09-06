@@ -389,7 +389,7 @@ return {
   },
   {
     'nvim-telescope/telescope.nvim',
-    cond = enabled,
+    cond = min_enabled,
     -- NOTE: usind cmd causes issues with dressing and frecency
     cmd = { 'Telescope' },
     -- event = 'VeryLazy',
@@ -782,7 +782,7 @@ return {
   { 'matkrin/telescope-spell-errors.nvim', cond = min_enabled },
   {
     'danielfalk/smart-open.nvim', -- use fork to get show_scores working
-    cond = enabled,
+    cond = min_enabled,
     dependencies = { 'nvim-telescope/telescope-fzy-native.nvim' },
   },
   {
@@ -816,7 +816,7 @@ return {
   },
   {
     'imNel/monorepo.nvim',
-    cond = enabled,
+    cond = min_enabled,
     opts = {},
     init = function()
       require('which-key').add({ { '<localleader>r', group = 'Monorepo' } })

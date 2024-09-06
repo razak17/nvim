@@ -15,11 +15,12 @@
 -- end
 --
 -- vim.g.openai_api_key = get_openai_key()
+local minimal = ar.plugins.minimal
 
 return {
   {
     'olimorris/codecompanion.nvim',
-    cond = ar.ai.enable and not ar.plugins.minimal,
+    cond = ar.ai.enable and not minimal,
     init = function()
       require('which-key').add({ { '<leader>ak', group = 'Codecompanion' } })
     end,
@@ -90,7 +91,7 @@ return {
   },
   {
     'zbirenbaum/copilot.lua',
-    cond = ar.ai.enable and not ar.plugins.minimal,
+    cond = ar.ai.enable and not minimal,
     cmd = 'Copilot',
     event = 'InsertEnter',
     keys = {
@@ -129,7 +130,7 @@ return {
   },
   {
     'piersolenski/wtf.nvim',
-    cond = ar.lsp.enable and ar.ai.enable,
+    cond = ar.lsp.enable and ar.ai.enable and not minimal,
     event = 'VeryLazy',
     -- stylua: ignore
     keys = {
@@ -145,6 +146,7 @@ return {
   },
   {
     'razak17/backseat.nvim',
+    cond = not minimal,
     cmd = { 'Backseat', 'BackseatAsk', 'BackseatClear', 'BackseatClearLine' },
     opts = {
       highlight = { icon = '', group = 'DiagnosticVirtualTextInfo' },
@@ -154,7 +156,7 @@ return {
   },
   {
     'moozd/aidoc.nvim',
-    cond = not ar.plugins.minimal,
+    cond = not minimal,
     keys = {
       {
         mode = 'x',
@@ -168,7 +170,7 @@ return {
   {
     'David-Kunz/gen.nvim',
     enabled = false,
-    cond = not ar.plugins.minimal and ar.ai.enable and false,
+    cond = not minimal and ar.ai.enable and false,
     cmd = { 'Gen' },
   },
 }

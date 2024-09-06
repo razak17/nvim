@@ -38,6 +38,7 @@ return {
   },
   {
     'AckslD/muren.nvim',
+    cond = not minimal,
     cmd = { 'MurenToggle', 'MurenUnique', 'MurenFresh' },
     opts = {},
   },

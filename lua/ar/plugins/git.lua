@@ -10,8 +10,17 @@ local enabled = not minimal and ar.is_git_repo()
 local is_git = ar.is_git_repo() or ar.is_git_env()
 
 return {
-  { 'kilavila/nvim-gitignore', cmd = { 'Gitignore', 'Licenses' } },
-  { 'yutkat/git-rebase-auto-diff.nvim', ft = { 'gitrebase' }, opts = {} },
+  {
+    'kilavila/nvim-gitignore',
+    cond = not minimal,
+    cmd = { 'Gitignore', 'Licenses' },
+  },
+  {
+    'yutkat/git-rebase-auto-diff.nvim',
+    cond = enabled,
+    ft = { 'gitrebase' },
+    opts = {},
+  },
   {
     'tpope/vim-fugitive',
     cond = enabled,
@@ -368,6 +377,7 @@ return {
   },
   {
     'linrongbin16/gitlinker.nvim',
+    cond = enabled,
     config = function()
       require('gitlinker').setup({
         router = {
@@ -450,12 +460,14 @@ return {
   },
   {
     'FabijanZulj/blame.nvim',
+    cond = enabled,
     cmd = { 'BlameToggle' },
     config = function() require('blame').setup() end,
   },
   {
     'dlvhdr/gh-addressed.nvim',
     cmd = 'GhReviewComments',
+    cond = enabled,
     -- stylua: ignore
     keys = {
       { '<leader>gc', '<Cmd>GhReviewComments<CR>', desc = 'github review comments' },

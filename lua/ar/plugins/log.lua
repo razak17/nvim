@@ -6,6 +6,7 @@ return {
 
   {
     'chrisgrieser/nvim-chainsaw',
+    cond = not minimal,
     config = function()
       require('chainsaw').setup({ marker = '[🪲 chainsaw]' })
     end,

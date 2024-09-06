@@ -1,8 +1,11 @@
+local minimal = ar.plugins.minimal
+
 return {
   -- Translate
   --------------------------------------------------------------------------------
   {
     'potamides/pantran.nvim',
+    cond = not minimal,
     keys = {
       {
         '<leader><leader>tm',
@@ -52,6 +55,7 @@ return {
   },
   {
     'coffebar/crowtranslate.nvim',
+    cond = not minimal,
     cmd = { 'CrowTranslate' },
     opts = {
       language = 'es',
