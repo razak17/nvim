@@ -274,6 +274,18 @@ return {
     opts = {},
   },
   {
+    'echasnovski/mini.pick',
+    cond = ar.plugins.minimal,
+    keys = {
+      { '<C-p>', '<Cmd>Pick files<CR>', desc = 'pick: open' },
+      { '<leader>fb', '<Cmd>Pick buffers<CR>', desc = 'pick: buffers' },
+      { '<leader>fw', '<Cmd>Pick grep<CR>', desc = 'pick: grep' },
+      { '<leader>fs', '<Cmd>Pick grep_live<CR>', desc = 'pick: live grep' },
+    },
+    cmd = { 'Pick' },
+    opts = {},
+  },
+  {
     'echasnovski/mini.diff',
     event = { 'BufRead', 'BufNewFile' },
     cond = false,
