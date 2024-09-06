@@ -6,7 +6,7 @@ local api, fn, cmd, g = vim.api, vim.fn, vim.cmd, vim.g
 local bo, o, wo = vim.bo, vim.o, vim.wo
 
 ar.large_file = {
-  enable = false,
+  enable = true,
   active = false,
   exclusions = { 'NeogitCommitMessage' },
   -- 100KB if lsp is enabled else 1MB
