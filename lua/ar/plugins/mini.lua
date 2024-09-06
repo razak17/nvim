@@ -76,7 +76,38 @@ local function deepcopy_with_prefix(base, prefix, desc_modify)
 end
 
 return {
-  { 'echasnovski/mini.hipatterns', event = { 'BufRead', 'BufNewFile' } },
+  {
+    'echasnovski/mini.hipatterns',
+    event = { 'BufRead', 'BufNewFile' },
+    opts = function()
+      local hipatterns = require('mini.hipatterns')
+      local opts = {}
+      if minimal then
+        opts = vim.tbl_extend('force', opts, {
+          highlighters = {
+            fixme = {
+              pattern = '%f[%w]()FIXME()%f[%W]',
+              group = 'MiniHipatternsFixme',
+            },
+            hack = {
+              pattern = '%f[%w]()HACK()%f[%W]',
+              group = 'MiniHipatternsHack',
+            },
+            todo = {
+              pattern = '%f[%w]()TODO()%f[%W]',
+              group = 'MiniHipatternsTodo',
+            },
+            note = {
+              pattern = '%f[%w]()NOTE()%f[%W]',
+              group = 'MiniHipatternsNote',
+            },
+            hex_color = hipatterns.gen_highlighter.hex_color(),
+          },
+        })
+      end
+      return opts
+    end,
+  },
   {
     'echasnovski/mini.icons',
     opts = {},
