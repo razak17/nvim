@@ -6,6 +6,7 @@ local api, fn, cmd, g = vim.api, vim.fn, vim.cmd, vim.g
 local bo, o, wo = vim.bo, vim.o, vim.wo
 
 ar.large_file = {
+  enable = false,
   active = false,
   exclusions = { 'NeogitCommitMessage' },
   -- 100KB if lsp is enabled else 1MB
@@ -18,6 +19,7 @@ local lf = ar.large_file
 ar.augroup('LargeFileAutocmds', {
   event = { 'BufEnter', 'BufReadPre', 'BufWritePre', 'TextChanged' },
   command = function(args)
+    if not ar.large_file.enable then return end
     local line_count = api.nvim_buf_line_count(args.buf)
     local filesize = fn.getfsize(fn.expand('%'))
     if line_count > lf.line_count or filesize > lf.limit then
@@ -42,11 +44,13 @@ ar.augroup('LargeFileAutocmds', {
 }, {
   event = { 'BufWinEnter' },
   command = function()
+    if not ar.large_file.enable then return end
     if ar.large_file.active then o.eventignore = nil end
   end,
 }, {
   event = { 'BufEnter' },
   command = function(args)
+    if not ar.large_file.enable then return end
     if vim.tbl_contains(lf.exclusions, bo[args.buf].filetype) then return end
 
     local byte_size = api.nvim_buf_get_offset(

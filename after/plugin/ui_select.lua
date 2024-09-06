@@ -395,6 +395,11 @@ M.options.command_palette = {
     local status = ar.autosave.enable and 'enabled' or 'disabled'
     vim.notify(fmt('Autosave has been %s', status))
   end,
+  ['Toggle Large File'] = function()
+    ar.large_file.enable = not ar.large_file.enable
+    local status = ar.large_file.enable and 'enabled' or 'disabled'
+    vim.notify(fmt('Large file has been %s', status))
+  end,
 }
 
 local command_palette_menu = function()
