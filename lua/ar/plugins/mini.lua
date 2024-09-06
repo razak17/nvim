@@ -268,6 +268,12 @@ return {
     },
   },
   {
+    'echasnovski/mini.completion',
+    cond = ar.plugins.minimal,
+    event = { 'InsertEnter' },
+    opts = {},
+  },
+  {
     'echasnovski/mini.diff',
     event = { 'BufRead', 'BufNewFile' },
     cond = false,
