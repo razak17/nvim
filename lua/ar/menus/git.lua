@@ -278,28 +278,33 @@ local git_command = {
 }
 
 local layout_config = { width = 0.9, horizontal = { preview_width = 0.5 } }
-local previewer = ar.telescope.delta_opts().previewer
 
 local function telescope_commits(opts)
   opts.entry_maker = custom_make_entry_gen_from_git_commits()
   local prompt_title = 'Git Commits'
   if opts.branch then prompt_title = fmt('Git Commits (%s)', opts.branch) end
+
+  local function attach_mappings(prompt_bufnr, _)
+    actions.close(prompt_bufnr)
+    actions.select_default:replace(actions.git_checkout)
+    map({ 'i', 'n' }, '<c-r>m', actions.git_reset_mixed)
+    map({ 'i', 'n' }, '<c-r>s', actions.git_reset_soft)
+    map({ 'i', 'n' }, '<c-r>h', actions.git_reset_hard)
+    return true
+  end
+
   pickers
     .new(opts, {
       prompt_title = prompt_title,
       finder = finders.new_oneshot_job(opts.git_command, opts),
       previewer = opts.previewer,
       sorter = conf.file_sorter(opts),
-      attach_mappings = function(_, map)
-        actions.select_default:replace(actions.git_checkout)
-        map({ 'i', 'n' }, '<c-r>m', actions.git_reset_mixed)
-        map({ 'i', 'n' }, '<c-r>s', actions.git_reset_soft)
-        map({ 'i', 'n' }, '<c-r>h', actions.git_reset_hard)
-        return true
-      end,
+      attach_mappings = attach_mappings,
     })
     :find()
 end
+
+local commits_previewer = ar.telescope.delta_opts().previewer
 
 function M.browse_commits()
   telescope_commits({
@@ -307,7 +312,7 @@ function M.browse_commits()
     entry_maker = custom_make_entry_gen_from_git_commits(),
     git_command = git_command,
     layout_config = layout_config,
-    previewer = previewer,
+    previewer = commits_previewer,
   })
 end
 
@@ -317,7 +322,7 @@ function M.browse_bcommits()
     entry_maker = custom_make_entry_gen_from_git_commits(),
     git_command = git_command,
     layout_config = layout_config,
-    previewer = previewer,
+    previewer = commits_previewer,
   })
 end
 
@@ -331,7 +336,13 @@ function M.project_history()
 end
 
 function M.diffview_conflict(which)
-  local merge_ctx = require('diffview.lib').get_current_view().merge_ctx
+  local view = require('diffview.lib').get_current_view()
+  if view == nil then
+    vim.notify('No diffview found', vim.log.levels.ERROR)
+    return
+  end
+  ---@diagnostic disable-next-line: undefined-field
+  local merge_ctx = view.merge_ctx
   if merge_ctx then show_commit(merge_ctx[which].hash) end
 end
 
@@ -519,7 +530,7 @@ local function telescope_branches_mappings(prompt_bufnr, map)
           git_command = git_command,
           layout_config = layout_config,
           branch = branch,
-          previewer = previewer,
+          previewer = commits_previewer,
         })
       end,
       desc = 'commits',
@@ -652,31 +663,38 @@ local function git_branches_with_base(base, opts)
       { entry.committerdate },
     })
   end
+  local function finder()
+    return finders.new_table({
+      results = results,
+      entry_maker = function(entry)
+        entry.value = entry.name
+        entry.ordinal = entry.name
+        entry.display = make_display
+        return make_entry.set_default_entry_mt(entry, opts)
+      end,
+    })
+  end
+
+  local function attach_mappings(prompt_bufnr, _)
+    actions.close(prompt_bufnr)
+    actions.select_default:replace(actions.git_checkout)
+    map({ 'i', 'n' }, '<c-t>', actions.git_track_branch)
+    map({ 'i', 'n' }, '<c-r>', actions.git_rebase_branch)
+    map({ 'i', 'n' }, '<c-a>', actions.git_create_branch)
+    map({ 'i', 'n' }, '<c-s>', actions.git_switch_branch)
+    map({ 'i', 'n' }, '<c-delete>', actions.git_delete_branch)
+    map({ 'i', 'n' }, '<c-y>', actions.git_merge_branch)
+    return true
+  end
 
   pickers
     .new(opts, {
-      prompt_title = 'Git Branches',
-      finder = finders.new_table({
-        results = results,
-        entry_maker = function(entry)
-          entry.value = entry.name
-          entry.ordinal = entry.name
-          entry.display = make_display
-          return make_entry.set_default_entry_mt(entry, opts)
-        end,
-      }),
-      previewer = previewers.git_branch_log.new(opts),
+      prompt_title = 'Search branche',
+      results_title = 'Git Branches',
+      finder = finder(),
       sorter = conf.file_sorter(opts),
-      attach_mappings = function(_, map)
-        actions.select_default:replace(actions.git_checkout)
-        map({ 'i', 'n' }, '<c-t>', actions.git_track_branch)
-        map({ 'i', 'n' }, '<c-r>', actions.git_rebase_branch)
-        map({ 'i', 'n' }, '<c-a>', actions.git_create_branch)
-        map({ 'i', 'n' }, '<c-s>', actions.git_switch_branch)
-        map({ 'i', 'n' }, '<c-delete>', actions.git_delete_branch)
-        map({ 'i', 'n' }, '<c-y>', actions.git_merge_branch)
-        return true
-      end,
+      previewer = previewers.git_branch_log.new(opts),
+      attach_mappings = attach_mappings,
     })
     :find()
 end
@@ -827,39 +845,48 @@ function M.list_stashes(opts)
   opts.entry_maker =
     vim.F.if_nil(opts.entry_maker, make_entry.gen_from_git_stash(opts))
 
+  local function finder()
+    return finders.new_oneshot_job(
+      vim
+        .iter({
+          'git',
+          '--no-pager',
+          'stash',
+          'list',
+        })
+        :flatten()
+        :totable(),
+      opts
+    )
+  end
+
+  local function previewer()
+    return previewers.new_buffer_previewer({
+      get_command = function(entry, _)
+        -- show stash, ignoring gitignored files, and including untracked files
+        -- https://stackoverflow.com/a/76662742/516188
+        -- https://stackoverflow.com/a/12681856/516188
+        return {
+          'sh',
+          '-c',
+          '(git -c color.ui=always diff '
+            .. entry.value
+            .. '^..'
+            .. entry.value
+            .. '; git -c color.ui=always show '
+            .. entry.value
+            .. '^3) | less -RS +0 --tilde',
+        }
+      end,
+    })
+  end
+
   pickers
     .new(opts, {
-      prompt_title = 'Git Stash',
-      finder = finders.new_oneshot_job(
-        vim
-          .iter({
-            'git',
-            '--no-pager',
-            'stash',
-            'list',
-          })
-          :flatten()
-          :totable(),
-        opts
-      ),
-      previewer = previewers.new_termopen_previewer({
-        get_command = function(entry, _)
-          -- show stash, ignoring gitignored files, and including untracked files
-          -- https://stackoverflow.com/a/76662742/516188
-          -- https://stackoverflow.com/a/12681856/516188
-          return {
-            'sh',
-            '-c',
-            '(git -c color.ui=always diff '
-              .. entry.value
-              .. '^..'
-              .. entry.value
-              .. '; git -c color.ui=always show '
-              .. entry.value
-              .. '^3) | less -RS +0 --tilde',
-          }
-        end,
-      }),
+      prompt_title = 'Search Stash',
+      results_title = 'Git Stashes',
+      finder = finder(),
+      previewer = previewer(),
       sorter = conf.file_sorter(opts),
       attach_mappings = telescope_stash_mappings,
     })
@@ -893,7 +920,6 @@ function M.list_branches()
     if choice == nil then return end
 
     if choice == new_branch_prompt then
-      local new_branch = ''
       vim.ui.input({ prompt = 'New branch name:' }, function(branch)
         if branch ~= nil then fn.systemlist('git checkout -b ' .. branch) end
       end)
