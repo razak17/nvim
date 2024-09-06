@@ -205,11 +205,16 @@ nnoremap(
   { desc = 'open file' }
 )
 -- create a new file in the same directory
-nnoremap(
-  '<leader>nf',
-  [[:vsp <C-R>=expand("%:p:h") . "/" <CR>]],
-  { desc = 'create new file' }
-)
+local function new_file_in_current_dir()
+  vim.ui.input({
+    prompt = 'New file name: ',
+    default = '',
+  }, function(file)
+    if not file or file == '' then return end
+    vim.cmd('e ' .. fn.expand('%:p:h') .. '/' .. file)
+  end)
+end
+nnoremap('<leader>nf', new_file_in_current_dir, { desc = 'create new file' })
 --------------------------------------------------------------------------------
 -- Make the file you run the command on, executable, so you don't have to go out to the command line
 -- https://github.com/linkarzu/dotfiles-latest/blob/66c7304d34c713e8c7d6066d924ac2c3a9c0c9e8/neovim/neobean/lua/config/keymaps.lua?plain=1#L131
