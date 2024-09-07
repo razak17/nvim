@@ -165,12 +165,6 @@ augroup('UpdateVim', {
     if can_save() then cmd('silent! wall') end
   end,
 }, {
-  event = { 'BufLeave' },
-  command = function(args)
-    if api.nvim_buf_line_count(args.buf) <= 1 then return end
-    if can_save() then cmd('silent! write ++p') end
-  end,
-}, {
   event = { 'VimResized' },
   pattern = { '*' },
   command = 'wincmd =', -- Make windows equal size when vim resizes
