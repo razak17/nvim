@@ -7,7 +7,7 @@ return {
     event = 'VeryLazy',
     opts = {
       registers = { 'q', 'w', 'e', 'r', 't', 'y' },
-      startMacro = 'q',
+      startMacro = ',q',
       replayMacro = 'Q',
     },
   },
