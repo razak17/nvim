@@ -485,6 +485,15 @@ return {
       },
     },
   },
+  {
+    'mtrajano/tssorter.nvim',
+    -- stylua: ignore
+    keys = {
+      { '<leader>is', function() require('tssorter').sort() end, desc = 'tssorter: sort' },
+      { '<leader>iS', function() require('tssorter').sort({ reverse = true }) end, desc = 'tssorter: reverse sort' },
+    },
+    opts = {},
+  },
   ------------------------------------------------------------------------------
   -- Scratch Pads
   ------------------------------------------------------------------------------
