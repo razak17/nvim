@@ -48,8 +48,8 @@ return {
         silent = true,
       },
       progress = {
-        enabled = false,
-        throttle = 1000 / 800,
+        enabled = true,
+        throttle = 1000 / 1000,
       },
       override = {
         ['vim.lsp.util.convert_input_to_markdown_lines'] = false,

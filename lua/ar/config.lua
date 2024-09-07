@@ -62,7 +62,7 @@ local namespace = {
         'yaml',
       },
     },
-    progress = { enable = true },
+    progress = { enable = false },
     semantic_tokens = { enable = false },
     signs = { enable = false },
     typescript_tools = { enable = true },

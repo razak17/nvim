@@ -16,7 +16,6 @@ return {
     },
   },
   {
-
     'razak17/cybu.nvim',
     cond = not minimal,
     event = { 'BufRead', 'BufNewFile' },
