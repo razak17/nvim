@@ -14,7 +14,10 @@ local namespace = {
     web = 'firefox',
     explorer = 'thunar',
   },
-  autosave = { enable = true },
+  autosave = {
+    enable = true,
+    current = true,
+  },
   debug = { enable = false },
   frecency = { enable = true },
   git = {},

@@ -105,6 +105,24 @@ return {
           event = 'neo_tree_popup_input_ready',
           handler = function(input) vim.cmd('stopinsert') end,
         },
+        {
+          event = 'before_file_rename',
+          handler = function()
+            ar.autosave.current = ar.autosave.enable
+            if ar.autosave.current then ar.autosave.enable = false end
+          end,
+        },
+        {
+          event = 'file_renamed',
+          handler = function() ar.autosave.enable = ar.autosave.current end,
+        },
+        {
+          event = 'before_file_delete',
+          handler = function()
+            ar.autosave.current = ar.autosave.enable
+            if ar.autosave.current then ar.autosave.enable = false end
+          end,
+        },
       },
       filesystem = {
         hijack_netrw_behavior = 'disabled',
