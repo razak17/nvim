@@ -13,6 +13,7 @@ return {
   {
     'HakonHarnes/img-clip.nvim',
     cmd = { 'PasteImage' },
+    cond = not minimal,
     opts = {},
   },
   {
@@ -132,6 +133,7 @@ return {
   },
   {
     'AckslD/nvim-FeMaco.lua',
+    cond = not minimal,
     cmd = { 'FeMaco' },
     opts = {
       float_opts = function(code_block)
