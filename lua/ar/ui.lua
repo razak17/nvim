@@ -269,6 +269,7 @@ local filetypes = ar.p_table({
   ['compile'] = presets.statusline_only,
   ['dap-repl'] = presets.tool_panel:with({ winbar = 'ignore' }),
   ['dapui'] = presets.tool_panel,
+  ['dbout'] = presets.tool_panel,
   ['diagmsg'] = presets.tool_panel,
   ['diff'] = presets.statusline_only,
   ['DiffviewFileHistory'] = presets.tool_panel,
