@@ -13,7 +13,7 @@ return {
   },
   -- stylua: ignore
   keys = {
-    { '<leader><leader>dt', '<Cmd>DBUIToggle<CR>', desc = 'dadbod: toggle' },
+    { '<leader><leader>du', '<Cmd>DBUIToggle<CR>', desc = 'dadbod: toggle' },
     { '<leader><leader>da', '<Cmd>DBUIAddConnection<CR>', desc = 'dadbod: add connection' },
   },
   -- stylua: ignore
@@ -38,7 +38,10 @@ return {
         vim.schedule(
           function()
             require('cmp').setup.buffer({
-              sources = { { name = 'vim-dadbod-completion' } },
+              sources = {
+                { name = 'vim-dadbod-completion' },
+                { name = 'buffer' },
+              },
             })
           end
         )
