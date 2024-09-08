@@ -1,11 +1,25 @@
 local enabled = ar.lsp.enable
 
+local filetypes = {
+  'javascript',
+  'javascriptreact',
+  'javascript.jsx',
+  'typescript',
+  'typescriptreact',
+  'typescript.tsx',
+}
+
 return {
   'dmmulroy/ts-error-translator.nvim',
   {
+    'yioneko/nvim-vtsls',
+    cond = ar.lsp.typescript_lsp == 'vtsls',
+    ft = filetypes,
+  },
+  {
 
     'pmizio/typescript-tools.nvim',
-    ft = { 'typescript', 'typescriptreact', 'javascript', 'javascriptreact' },
+    ft = filetypes,
     cond = enabled
       and not ar.plugin_disabled('typescript-tools.nvim')
       and ar.lsp.typescript_lsp == 'typescript-tools',
@@ -42,7 +56,7 @@ return {
     'OlegGulevskyy/better-ts-errors.nvim',
     cond = enabled,
     event = 'LspAttach',
-    ft = { 'typescript', 'typescriptreact', 'javascript', 'javascriptreact' },
+    ft = filetypes,
     opts = {
       keymaps = {
         toggle = '<localleader>lo',
@@ -54,7 +68,7 @@ return {
     'dmmulroy/tsc.nvim',
     cond = enabled,
     cmd = 'TSC',
-    ft = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
+    ft = filetypes,
     opts = {
       enable_progress_notifications = true,
       auto_open_qflist = true,
