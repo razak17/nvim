@@ -42,4 +42,15 @@ return {
     cmd = { 'MurenToggle', 'MurenUnique', 'MurenFresh' },
     opts = {},
   },
+  {
+    'gbprod/substitute.nvim',
+    cond = not minimal,
+    keys = {
+      { 'cx', "<cmd>lua require('substitute').operator()<cr>", mode = 'n' },
+      { 'cx', "<cmd>lua require('substitute').visual()<cr>", mode = 'x' },
+      { 'cxc', "<cmd>lua require('substitute').line()<cr>", mode = 'n' },
+      { 'cX', "<cmd>lua require('substitute').eol()<cr>", mode = 'n' },
+    },
+    opts = {},
+  },
 }
