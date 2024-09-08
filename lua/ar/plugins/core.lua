@@ -11,6 +11,7 @@ return {
   'kevinhwang91/promise-async',
   'kkharji/sqlite.lua',
   'tpope/vim-rhubarb',
+  { 'tyru/capture.vim', cmd = { 'Capture' } },
   {
     'tpope/vim-eunuch',
     cmd = {
