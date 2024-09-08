@@ -2,6 +2,12 @@ local minimal = ar.plugins.minimal
 
 return {
   {
+    'yutkat/wb-only-current-line.nvim',
+    cond = not minimal,
+    event = 'VeryLazy',
+    opts = {},
+  },
+  {
     'razak17/accelerated-jk.nvim',
     event = 'VeryLazy',
     -- stylua: ignore
