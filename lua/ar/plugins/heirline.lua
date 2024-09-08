@@ -187,47 +187,55 @@ return {
             hint_icon = codicons.lsp.hint .. ' ',
             info_icon = codicons.lsp.info .. ' ',
           },
-          update = { 'LspAttach', 'DiagnosticChanged', 'BufEnter' },
+          update = { 'LspAttach', 'LspDetach', 'DiagnosticChanged', 'BufEnter' },
           init = function(self)
-            self.errors = #vim.diagnostic.get(
-              0,
-              { severity = vim.diagnostic.severity.ERROR }
-            )
-            self.warnings = #vim.diagnostic.get(
-              0,
-              { severity = vim.diagnostic.severity.WARN }
-            )
-            self.hints = #vim.diagnostic.get(
-              0,
-              { severity = vim.diagnostic.severity.HINT }
-            )
-            self.info = #vim.diagnostic.get(
-              0,
-              { severity = vim.diagnostic.severity.INFO }
-            )
+            local bufnr = api.nvim_get_current_buf()
+            if not vim.b[bufnr].is_large_file then
+              self.errors = #vim.diagnostic.get(
+                0,
+                { severity = vim.diagnostic.severity.ERROR }
+              )
+              self.warnings = #vim.diagnostic.get(
+                0,
+                { severity = vim.diagnostic.severity.WARN }
+              )
+              self.hints = #vim.diagnostic.get(
+                0,
+                { severity = vim.diagnostic.severity.HINT }
+              )
+              self.info = #vim.diagnostic.get(
+                0,
+                { severity = vim.diagnostic.severity.INFO }
+              )
+            else
+              self.errors = 0
+              self.warnings = 0
+              self.hints = 0
+              self.info = 0
+            end
           end,
           {
             provider = function(self)
-              return self.errors > 0 and (self.error_icon .. self.errors .. ' ')
+              return self.errors > 0 and (' ' .. self.error_icon .. self.errors)
             end,
             hl = { fg = 'error_red' },
           },
           {
             provider = function(self)
               return self.warnings > 0
-                and (self.warn_icon .. self.warnings .. ' ')
+                and (' ' .. self.warn_icon .. self.warnings)
             end,
             hl = { fg = 'dark_orange' },
           },
           {
             provider = function(self)
-              return self.info > 0 and (self.info_icon .. self.info .. ' ')
+              return self.info > 0 and (' ' .. self.info_icon .. self.info)
             end,
             hl = { fg = 'blue' },
           },
           {
             provider = function(self)
-              return self.hints > 0 and (self.hint_icon .. self.hints .. ' ')
+              return self.hints > 0 and (' ' .. self.hint_icon .. self.hints)
             end,
             hl = { fg = 'forest_green' },
           },
