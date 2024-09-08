@@ -45,9 +45,6 @@ return {
         handlers = {
           function(name)
             local cwd = fn.getcwd()
-            -- override tsserver here until this is fixed
-            -- https://github.com/williamboman/mason-lspconfig.nvim/issues/458
-            if name == 'tsserver' then name = 'ts_ls' end
             if not falsy(ar.lsp.override) then
               if not find_string(ar.lsp.override, name) then return end
             else
