@@ -15,6 +15,14 @@ return {
   { 'jghauser/mkdir.nvim', lazy = false },
   { 'Rasukarusan/nvim-block-paste', cmd = { 'Block' } },
   {
+    'ryoppippi/nvim-reset',
+    cond = false,
+    opts = {
+      create_plugin_keymap = false,
+      ignore_maps = {},
+    },
+  },
+  {
     'smjonas/live-command.nvim',
     event = 'VeryLazy',
     opts = {
