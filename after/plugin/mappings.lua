@@ -149,8 +149,6 @@ nnoremap(
 )
 -- make . work with visually selected lines
 vnoremap('.', ':norm.<CR>')
--- when going to the end of the line in visual mode ignore whitespace characters
-vnoremap('$', 'g_')
 -- Maintain cursor position when joining lines
 nnoremap('J', 'mzJ`z')
 -- Keep search terms in the middle
