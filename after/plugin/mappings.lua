@@ -359,7 +359,7 @@ map({ 'n', 'x' }, 'gl', '$', { desc = 'go to the end of the line' })
 -- In visual mode, after going to the end of the line, come back 1 character
 map({ 'x' }, 'gl', '$h', { desc = 'go to end of line' })
 -- when going to the end of the line in visual mode ignore whitespace characters
-vnoremap('$', 'g_')
+-- vnoremap('$', 'g_')
 -- jk is escape, THEN move to the right to preserve the cursor position, unless
 -- at the first column.  <esc> will continue to work the default way.
 -- NOTE: this is a recursive mapping so anything bound (by a plugin) to <esc> still works
