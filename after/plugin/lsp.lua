@@ -550,6 +550,12 @@ augroup('LspSetupAutoCommands', {
   event = { 'LspAttach' },
   desc = 'setup the language server autocommands',
   command = function(args)
+    if vim.b[args.buf].is_large_file then
+      vim.schedule(
+        function() lsp.buf_detach_client(args.buf, args.data.client_id) end
+      )
+      return
+    end
     local client = lsp.get_client_by_id(args.data.client_id)
     if not client then return end
     on_attach(client, args.buf)

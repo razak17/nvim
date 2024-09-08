@@ -245,8 +245,8 @@ augroup('Utilities', {
   event = { 'BufWritePost' },
   pattern = { '*' },
   nested = true,
-  command = function()
-    if ar.large_file.active then return end
+  command = function(args)
+    if vim.b[args.buf].is_large_file then return end
 
     if falsy(vim.bo.filetype) or fn.exists('b:ftdetect') == 1 then
       cmd([[

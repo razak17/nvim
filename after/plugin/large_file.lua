@@ -2,70 +2,86 @@ local enabled = not ar.noplugin and ar.plugin.large_file.enable
 
 if not ar or ar.none or not enabled then return end
 
-local api, fn, cmd, g = vim.api, vim.fn, vim.cmd, vim.g
+local api, fn, cmd, go = vim.api, vim.fn, vim.cmd, vim.go
 local bo, o, wo = vim.bo, vim.o, vim.wo
 
 ar.large_file = {
   enable = true,
-  active = false,
   exclusions = { 'NeogitCommitMessage' },
-  -- 100KB if lsp is enabled else 1MB
-  limit = ar.lsp.enable and 100 * 1024 or 100 * 1024 * 1,
+  -- 1MB if lsp is enabled else 500KB
+  limit = ar.lsp.enable and 1024 or 500,
   line_count = 2048,
 }
 
 local lf = ar.large_file
 
+---@param bufnr number
+---@param unit? string
+---@return integer|nil size in unit or bytes
+local function get_buf_size(bufnr, unit)
+  local size = fn.getfsize(api.nvim_buf_get_name(bufnr))
+  unit = unit or 'bytes'
+  local kb = size / 1024
+  local mb = kb / 1024
+  local gb = mb / 1024
+  if unit == 'kb' then return math.floor(0.5 + kb) end
+  if unit == 'mb' then return math.floor(0.5 + mb) end
+  if unit == 'gb' then return math.floor(0.5 + gb) end
+  return size
+end
+
+---@param bufnr number
+local function handle_bigfile(bufnr)
+  ar.augroup('large_file', {
+    event = 'BufReadPost',
+    command = function()
+      cmd('syntax clear')
+      vim.opt_local.syntax = 'OFF'
+    end,
+    buffer = bufnr,
+  }, {
+    event = 'BufReadPost',
+    command = function() vim.bo.filetype = '' end,
+    buffer = bufnr,
+  })
+
+  wo.wrap = false
+  -- bo.bufhidden = 'unload'
+  bo.swapfile = false
+  wo.foldmethod = 'manual'
+  -- bo.undolevels = -1
+  go.undoreload = 0
+  wo.list = false
+  wo.spell = false
+end
+
+local function is_excluded(bufnr)
+  return vim.tbl_contains(lf.exclusions, bo[bufnr].filetype)
+end
+
 ar.augroup('LargeFileAutocmds', {
-  event = { 'BufEnter', 'BufReadPre', 'BufWritePre', 'TextChanged' },
+  event = { 'BufReadPre' },
   command = function(args)
     if not ar.large_file.enable then return end
+
+    if vim.b[args.buf].is_large_file == true then return end
+
     local line_count = api.nvim_buf_line_count(args.buf)
-    local filesize = fn.getfsize(fn.expand('%'))
-    if line_count > lf.line_count or filesize > lf.limit then
-      ar.large_file.active = true
+    local filesize = get_buf_size(args.buf, 'kb')
 
-      wo.wrap = false
-      bo.bufhidden = 'unload'
-      -- o.eventignore = 'FileType'
-      -- bo.buftype = 'nowrite'
-      -- bo.undolevels = -1
-      cmd.filetype('off')
-    else
-      ar.large_file.active = false
+    if is_excluded(args.buf) then return end
 
-      -- bo.bufhidden = ''
-      -- o.eventignore = nil
-      -- bo.buftype = ''
-      -- bo.undolevels = 1000
-      cmd.filetype('on')
-    end
+    local is_large_file = line_count > lf.line_count or filesize > lf.limit
+
+    vim.b[args.buf].is_large_file = is_large_file
+    if not is_large_file then return end
+
+    handle_bigfile(args.buf)
   end,
 }, {
   event = { 'BufWinEnter' },
-  command = function()
-    if not ar.large_file.enable then return end
-    if ar.large_file.active then o.eventignore = nil end
-  end,
-}, {
-  event = { 'BufEnter' },
   command = function(args)
     if not ar.large_file.enable then return end
-    if vim.tbl_contains(lf.exclusions, bo[args.buf].filetype) then return end
-
-    local byte_size = api.nvim_buf_get_offset(
-      api.nvim_get_current_buf(),
-      api.nvim_buf_line_count(api.nvim_get_current_buf())
-    )
-    if byte_size > lf.limit then
-      if g.loaded_matchparen then cmd('NoMatchParen') end
-
-      if ar.is_available('mini.indentscope') then
-        -- vim.api.nvim_del_augroup_by_name('MiniIndentscope')
-        api.nvim_clear_autocmds({ group = 'MiniIndentscope' })
-      end
-    else
-      if not g.loaded_matchparen then cmd('DoMatchParen') end
-    end
+    if vim.b[args.buf].is_large_file then o.eventignore = nil end
   end,
 })
