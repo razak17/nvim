@@ -389,7 +389,7 @@ return {
     },
     opts = {
       hint = 'floating-big-letter',
-      selection_chars = 'OJKLP;IFDSACMRUEWQ',
+      selection_chars = 'HJKLUIOPNMYTGBVCREWQSZAFD',
       filter_rules = {
         autoselect_one = true,
         bo = {
