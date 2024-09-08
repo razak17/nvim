@@ -12,6 +12,7 @@ return {
   'kkharji/sqlite.lua',
   'tpope/vim-rhubarb',
   { 'tyru/capture.vim', cmd = { 'Capture' } },
+  { 'jghauser/mkdir.nvim', lazy = false },
   {
     'tpope/vim-eunuch',
     cmd = {
