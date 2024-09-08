@@ -176,4 +176,4 @@ ar.augroup('UserHighlights', {
   end,
 })
 
-ar.load_colorscheme('onedark')
+ar.load_colorscheme(ar.colorscheme)

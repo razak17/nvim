@@ -1,5 +1,7 @@
 local minimal = ar.plugins.minimal
 
+local function is_colorscheme(name) return ar.colorscheme == name end
+
 return {
   ------------------------------------------------------------------------------
   -- Themes {{{1
@@ -14,6 +16,32 @@ return {
     lazy = false,
     priority = 1000,
     opts = { variant = 'fill' },
+  },
+  {
+    'slugbyte/lackluster.nvim',
+    priority = is_colorscheme('lackluster') and 1000 or 50,
+    event = is_colorscheme('lackluster') and { 'UiEnter' } or { 'VeryLazy' },
+    opts = function()
+      local lackluster = require('lackluster')
+      local color = lackluster.color
+      return {
+        tweek_syntax = { comment = color.gray4 },
+        tweek_background = {
+          normal = 'none',
+          telescope = 'none',
+          menu = color.gray3,
+          popup = 'default',
+        },
+      }
+    end,
+    config = function(_, opts)
+      require('lackluster').setup(opts)
+
+      if is_colorscheme('lackluster') then
+        vim.cmd.colorscheme('lackluster')
+        vim.g.colors_name = 'lackluster'
+      end
+    end,
   },
   {
     'projekt0n/github-nvim-theme',

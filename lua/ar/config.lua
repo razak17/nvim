@@ -18,6 +18,7 @@ local namespace = {
     enable = true,
     current = true,
   },
+  colorscheme = 'onedark',
   debug = { enable = false },
   frecency = { enable = true },
   git = {},
