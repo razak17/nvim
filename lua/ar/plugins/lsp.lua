@@ -352,6 +352,12 @@ return {
     },
   },
   {
+    'icholy/lsplinks.nvim',
+    event = 'LspAttach',
+    cond = ar.lsp.enable,
+    opts = {},
+  },
+  {
     'stevearc/aerial.nvim',
     cmd = { 'AerialToggle' },
     cond = not ar.plugins.minimal and ar.treesitter.enable,

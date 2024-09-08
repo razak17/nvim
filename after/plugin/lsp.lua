@@ -266,6 +266,17 @@ local function setup_mappings(client, bufnr)
     { 'n', '[w', diagnostic_goto(false, 'WARN'), desc = 'prev warning' },
     {
       'n',
+      'gx',
+      function()
+        if not is_available('lsplinks.nvim') then return end
+        vim.notify('here')
+        require('lsplinks').gx()
+      end,
+      desc = 'open lsp links',
+      capability = M.documentLinkProvider,
+    },
+    {
+      'n',
       '<leader>lh',
       function()
         local enabled = lsp.inlay_hint.is_enabled({ bufnr = bufnr })
