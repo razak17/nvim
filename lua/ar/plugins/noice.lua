@@ -227,6 +227,17 @@ return {
         },
         view = 'mini',
       },
+      -- ts-node-action spams a lot
+      {
+        filter = {
+          event = 'notify',
+          kind = 'info',
+          any = {
+            { find = 'No node found at cursor' },
+          },
+        },
+        opts = { skip = true },
+      },
     },
     commands = {
       history = { view = 'vsplit' },
