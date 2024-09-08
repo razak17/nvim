@@ -13,6 +13,7 @@ return {
   'tpope/vim-rhubarb',
   { 'tyru/capture.vim', cmd = { 'Capture' } },
   { 'jghauser/mkdir.nvim', lazy = false },
+  { 'Rasukarusan/nvim-block-paste', cmd = { 'Block' } },
   {
     'smjonas/live-command.nvim',
     event = 'VeryLazy',
