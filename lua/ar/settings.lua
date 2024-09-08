@@ -184,7 +184,7 @@ end
 o.hlsearch = true
 o.autowriteall = true -- automatically :write before running commands and changing files
 opt.clipboard = { 'unnamedplus' }
-o.laststatus = ar.plugins.minimal and 0 or 3
+o.laststatus = 3
 o.showtabline = 0
 o.termguicolors = true
 opt.diffopt:append('linematch:50')
