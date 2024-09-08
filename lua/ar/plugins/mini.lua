@@ -317,6 +317,11 @@ return {
     opts = {},
   },
   {
+    'echasnovski/mini.splitjoin',
+    event = 'VeryLazy',
+    opts = { mappings = { toggle = '<leader>J' } },
+  },
+  {
     'echasnovski/mini.diff',
     event = { 'BufRead', 'BufNewFile' },
     cond = false,
