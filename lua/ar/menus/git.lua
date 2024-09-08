@@ -284,8 +284,7 @@ local function telescope_commits(opts)
   local prompt_title = 'Git Commits'
   if opts.branch then prompt_title = fmt('Git Commits (%s)', opts.branch) end
 
-  local function attach_mappings(prompt_bufnr, _)
-    actions.close(prompt_bufnr)
+  local function attach_mappings(_, map)
     actions.select_default:replace(actions.git_checkout)
     map({ 'i', 'n' }, '<c-r>m', actions.git_reset_mixed)
     map({ 'i', 'n' }, '<c-r>s', actions.git_reset_soft)
@@ -675,8 +674,7 @@ local function git_branches_with_base(base, opts)
     })
   end
 
-  local function attach_mappings(prompt_bufnr, _)
-    actions.close(prompt_bufnr)
+  local function attach_mappings(_, map)
     actions.select_default:replace(actions.git_checkout)
     map({ 'i', 'n' }, '<c-t>', actions.git_track_branch)
     map({ 'i', 'n' }, '<c-r>', actions.git_rebase_branch)
