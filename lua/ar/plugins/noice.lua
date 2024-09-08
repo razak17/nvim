@@ -216,6 +216,17 @@ return {
         opts = { title = '' },
         filter = { kind = { 'emsg', 'echo', 'echomsg' } },
       },
+      {
+        filter = {
+          event = 'msg_show',
+          any = {
+            { find = '%d+L, %d+B' },
+            { find = '; after #%d+' },
+            { find = '; before #%d+' },
+          },
+        },
+        view = 'mini',
+      },
     },
     commands = {
       history = { view = 'vsplit' },
