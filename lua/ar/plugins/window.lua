@@ -8,6 +8,12 @@ return {
     build = './kitty/install-kittens.bash',
   },
   {
+    'kwkarlwang/bufresize.nvim',
+    cond = not minimal,
+    event = { 'WinNew' },
+    opts = {},
+  },
+  {
     'CodingdAwn/vim-choosewin',
     cond = false,
     keys = { { '<leader>ow', '<Plug>(choosewin)', desc = 'choose window' } },
