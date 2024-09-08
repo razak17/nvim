@@ -71,6 +71,19 @@ local pyright_analysis = {
 ---@type lspconfig.options
 local servers = {
   astro = {},
+  clangd = { cmd = get_clangd_cmd() },
+  cmake = {},
+  cssls = {},
+  dockerls = {},
+  -- golangci_lint_ls = {},
+  lemminx = {},
+  marksman = {},
+  prismals = {},
+  prosemd_lsp = {},
+  svelte = {},
+  yamlls = {},
+  vimls = {},
+  volar = {},
   basedpyright = {
     settings = {
       basedpyright = {
@@ -86,23 +99,12 @@ local servers = {
       },
     },
   },
-  clangd = { cmd = get_clangd_cmd() },
-  cmake = {},
-  cssls = {},
-  dockerls = {},
-  -- golangci_lint_ls = {},
-  lemminx = {},
-  marksman = {},
-  prismals = {},
-  svelte = {},
-  yamlls = {},
-  vimls = {},
-  volar = {},
-  eslint = {
-    settings = {
-      -- helps eslint find the eslintrc when it's placed in a subfolder instead of the cwd root
-      workingDirectories = { mode = 'auto' },
-    },
+  denols = {
+    root_dir = function(fname)
+      return require('lspconfig/util').root_pattern('deno.json', 'deno.jsonc')(
+        fname
+      )
+    end,
   },
   docker_compose_language_service = function()
     local lspconfig = require('lspconfig')
@@ -111,30 +113,11 @@ local servers = {
       filetypes = { 'yaml', 'dockerfile' },
     }
   end,
-  prosemd_lsp = {},
-  jsonls = {
+  eslint = {
     settings = {
-      json = {
-        schemas = require('schemastore').json.schemas(),
-        validate = { enable = true },
-      },
+      -- helps eslint find the eslintrc when it's placed in a subfolder instead of the cwd root
+      workingDirectories = { mode = 'auto' },
     },
-  },
-  vtsls = {
-    -- NOTE: only works with vtsls
-    -- TODO: figure out how to do this with typescript-tools
-    settings = {
-      ['js/ts'] = {
-        implicitProjectConfig = { checkJs = true },
-      },
-    },
-  },
-  denols = {
-    root_dir = function(fname)
-      return require('lspconfig/util').root_pattern('deno.json', 'deno.jsonc')(
-        fname
-      )
-    end,
   },
   emmet_ls = {
     root_dir = function(fname)
@@ -180,6 +163,14 @@ local servers = {
     end,
   },
   jedi_language_server = {},
+  jsonls = {
+    settings = {
+      json = {
+        schemas = require('schemastore').json.schemas(),
+        validate = { enable = true },
+      },
+    },
+  },
   lua_ls = {
     settings = {
       Lua = {
@@ -300,6 +291,54 @@ local servers = {
           includeInlayFunctionLikeReturnTypeHints = false,
           includeInlayPropertyDeclarationTypeHints = true,
           includeInlayEnumMemberValueHints = true,
+        },
+      },
+    },
+  },
+  vtsls = {
+    single_file_support = false,
+    settings = {
+      -- NOTE: only works with vtsls
+      -- TODO: figure out how to do this with typescript-tools
+      ['js/ts'] = {
+        implicitProjectConfig = { checkJs = true },
+      },
+      typescript = {
+        suggest = {
+          completionFunctionCalls = true,
+        },
+        inlayHints = {
+          parameterNames = {
+            enabled = 'literals', -- 'none' | 'literals' | 'all'
+            suppressWhenArgumentMatchesName = true,
+          },
+          parameterTypes = { enabled = false },
+          variableTypes = { enabled = false },
+          propertyDeclarationTypes = { enabled = true },
+          functionLikeReturnTypes = { enabled = false },
+          enumMemberValues = { enabled = true },
+        },
+        tsserver = {
+          pluginPaths = { '.' },
+          globalPlugins = {
+            {
+              name = 'typescript-svelte-plugin',
+              enableForWorkspaceTypeScriptVersions = true,
+            },
+          },
+        },
+      },
+      javascript = {
+        inlayHints = {
+          parameterNames = {
+            enabled = 'literals', -- 'none' | 'literals' | 'all'
+            suppressWhenArgumentMatchesName = true,
+          },
+          parameterTypes = { enabled = false },
+          variableTypes = { enabled = false },
+          propertyDeclarationTypes = { enabled = true },
+          functionLikeReturnTypes = { enabled = false },
+          enumMemberValues = { enabled = true },
         },
       },
     },

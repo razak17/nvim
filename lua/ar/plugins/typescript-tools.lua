@@ -1,6 +1,4 @@
 local enabled = ar.lsp.enable
-  and not ar.plugin_disabled('typescript-tools.nvim')
-  and ar.lsp.typescript_lsp == 'typescript-tools'
 
 return {
   'dmmulroy/ts-error-translator.nvim',
@@ -8,7 +6,9 @@ return {
 
     'pmizio/typescript-tools.nvim',
     ft = { 'typescript', 'typescriptreact', 'javascript', 'javascriptreact' },
-    cond = enabled,
+    cond = enabled
+      and not ar.plugin_disabled('typescript-tools.nvim')
+      and ar.lsp.typescript_lsp == 'typescript-tools',
     -- stylua: ignore
     keys = {
       { '<localleader>li', '<Cmd>TSToolsAddMissingImports<CR>', desc = 'add missing imports' },
