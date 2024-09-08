@@ -141,7 +141,7 @@ M.file_name = {
   provider = function(self)
     local filename = vim.fn.fnamemodify(self.filename, ':t')
     if filename == '' then return '[No Name]' end
-    return filename .. ' '
+    return ' ' .. filename
   end,
   on_click = {
     callback = function() vim.cmd('Telescope find_files') end,
@@ -151,19 +151,25 @@ M.file_name = {
 
 M.file_size = {
   provider = function()
+    local bufnr = api.nvim_get_current_buf()
+    local buf = api.nvim_buf_get_name(bufnr)
+
+    if string.len(buf) == 0 then return '' end
+
     local suffix = { 'b', 'k', 'M', 'G', 'T', 'P', 'E' }
-    local fsize = vim.fn.getfsize(vim.api.nvim_buf_get_name(0))
+    local fsize = vim.fn.getfsize(buf)
     fsize = (fsize < 0 and 0) or fsize
     if fsize < 1024 then return fsize .. suffix[1] end
     local i = math.floor((math.log(fsize) / math.log(1024)))
-    return string.format('%.1f%s', fsize / math.pow(1024, i), suffix[i + 1])
+
+    return string.format(' %.1f%s', fsize / math.pow(1024, i), suffix[i + 1])
   end,
 }
 
 M.file_flags = {
   {
     condition = function() return vim.bo.modified end,
-    provider = '[+] ',
+    provider = ' [+]',
   },
   {
     condition = function() return not vim.bo.modifiable or vim.bo.readonly end,

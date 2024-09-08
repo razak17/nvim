@@ -106,8 +106,10 @@ return {
                 if self.status_dict then
                   return codicons.git.branch
                     .. ' '
-                    .. (self.status_dict.head == '' and 'main' or self.status_dict.head)
-                    .. ' '
+                    .. (
+                      self.status_dict.head == '' and 'main'
+                      or self.status_dict.head
+                    )
                 end
               end,
               on_click = {
