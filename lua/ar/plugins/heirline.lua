@@ -164,7 +164,11 @@ return {
         -- Filename
         utils.insert(
           file_block,
-          utils.insert(statusline.file_name, statusline.file_flags)
+          utils.insert(
+            statusline.file_name,
+            statusline.file_flags,
+            statusline.file_size
+          )
         ),
         -- Python env
         {

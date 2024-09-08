@@ -4,7 +4,6 @@ local augroup, is_available = ar.augroup, ar.is_available
 
 local fn, api, env, v, cmd, opt =
   vim.fn, vim.api, vim.env, vim.v, vim.cmd, vim.opt
-local fmt = string.format
 local falsy = ar.falsy
 local decor = ar.ui.decorations
 local config_path = fn.stdpath('config')
