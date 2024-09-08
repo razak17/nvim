@@ -129,7 +129,7 @@ opt.wildignore = {
   '.DS_Store',
   'tags.lock',
 }
-opt.wildignore = vim.tbl_extend('force', opt.wildignore, ui.colorscheme.disable)
+opt.wildignore = vim.tbl_extend('force', opt.wildignore, ui.colorscheme.disabled)
 opt.wildoptions = { 'pum', 'fuzzy' }
 -- NOTE: causes codicons to be rendered funny in cmp window
 o.pumblend = 0 -- Make popup window translucent,

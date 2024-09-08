@@ -1,6 +1,6 @@
 local enabled = ar.lsp.enable
   and not ar.plugin_disabled('typescript-tools.nvim')
-  and ar.lsp.typescript_tools.enable
+  and ar.lsp.typescript_lsp == 'typescript-tools'
 
 return {
   'dmmulroy/ts-error-translator.nvim',

@@ -3,7 +3,7 @@ local minimal = ar.plugins.minimal
 return {
   {
     'chrishrb/gx.nvim',
-    cond = not ar.use_local_gx and not minimal,
+    cond = ar.gx == 'plugin' and not minimal,
     keys = { { 'gx', '<cmd>Browse<cr>', mode = { 'n', 'x' } } },
     cmd = { 'Browse' },
     init = function() vim.g.netrw_nogx = 1 end,

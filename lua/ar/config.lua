@@ -3,9 +3,119 @@
 --------------------------------------------------------------------------------
 local env = vim.env
 
+---@alias ArCond {enable: boolean,}
+
+---@class ArApps
+---@field image string
+---@field pdf string
+---@field audio string
+---@field video string
+---@field web string
+---@field explorer string
+
+---@alias ArGxMode 'local' | 'plugin'
+
+---@class ArMedia
+---@field audio table
+---@field doc table
+---@field image table
+---@field video table
+
+---@class ArLspDisabled
+---@field filetypes table
+---@field directories table
+---@field servers table
+
+---@alias ArLspProgress 'noice' | 'builtin'
+
+---@alias ArTypescriptLsp 'ts_ls' | 'typescript-tools' | 'vtsls'
+
+---@class ArLsp
+---@field disabled ArLspDisabled
+---@field enable boolean
+---@field format_on_save ArCond
+---@field hover_diagnostics table
+---@field inlay_hint ArCond
+---@field null_ls ArCond
+---@field omnifunc ArCond
+---@field override table
+---@field prettier table
+---@field progress ArLspProgress
+---@field semantic_tokens ArCond
+---@field signs ArCond
+---@field typescript_lsp ArTypescriptLsp
+---@field workspace_diagnostics ArCond
+
+---@class ArPlugin
+---@field env ArCond
+---@field interceptor ArCond
+---@field last_place ArCond
+---@field large_file ArCond
+---@field notepad ArCond
+---@field remote_sync ArCond
+---@field smart_splits ArCond
+---@field smart_tilde ArCond
+---@field sticky_note ArCond
+---@field tmux ArCond
+---@field whereami ArCond
+---@field whitespace ArCond
+
+---@class ArPluginsOverride
+---@field dict ArCond
+---@field ghost_text ArCond
+---@field garbage_day ArCond
+
+---@class ArPlugins
+---@field enable boolean
+---@field disabled table
+---@field minimal boolean
+---@field modules table
+---@field niceties boolean
+---@field overrides ArPluginsOverride
+
+---@class ArUIColorscheme
+---@field disabled table
+
+---@class ArUI
+---@field statuscolumn ArCond
+---@field transparent ArCond
+---@field colorscheme ArUIColorscheme
+
+---@class ArRTP
+---@field disabled table
+
+---@class ArConfig
+---@field ai table
+---@field animation table
+---@field apps ArApps
+---@field autosave table
+---@field colorscheme string
+---@field debug table
+---@field frecency table
+---@field git table
+---@field gx ArGxMode
+---@field media ArMedia
+---@field lsp ArLsp
+---@field autocommands ArCond
+---@field colors ArCond
+---@field filetypes ArCond
+---@field mappings ArCond
+---@field numbers ArCond
+---@field rooter ArCond
+---@field ui_select ArCond
+---@field none boolean
+---@field noplugin boolean
+---@field plugin ArPlugin
+---@field plugins ArPlugins
+---@field completion table
+---@field treesitter table
+---@field ui ArUI
+---@field rtp ArRTP
+
 local namespace = {
   ai = { enable = env.RVIM_AI_ENABLED == '1' },
   animation = { enable = false },
+  ---@type ArApps
   apps = {
     image = 'sxiv',
     pdf = 'zathura',
@@ -22,13 +132,16 @@ local namespace = {
   debug = { enable = false },
   frecency = { enable = true },
   git = {},
-  use_local_gx = false,
+  ---@type ArGxMode
+  gx = 'plugin',
+  ---@type ArMedia
   media = {
     audio = { 'mp3', 'm4a' },
     doc = { 'pdf' },
     image = { 'jpg', 'png', 'jpeg', 'ico', 'gif' },
     video = { 'mp4', 'mkv' },
   },
+  ---@type ArLsp
   lsp = {
     disabled = {
       filetypes = {},
@@ -63,10 +176,10 @@ local namespace = {
         'yaml',
       },
     },
-    progress = { enable = false },
+    progress = 'noice',
     semantic_tokens = { enable = false },
     signs = { enable = false },
-    typescript_tools = { enable = true },
+    typescript_lsp = 'typescript-tools',
     workspace_diagnostics = { enable = false },
   },
   autocommands = { enable = true },
@@ -78,6 +191,7 @@ local namespace = {
   ui_select = { enable = true },
   none = env.RVIM_NONE == '1',
   noplugin = false,
+  ---@type ArPlugin
   plugin = {
     env = { enable = true },
     interceptor = { enable = true },
@@ -92,6 +206,7 @@ local namespace = {
     whereami = { enable = true },
     whitespace = { enable = true },
   },
+  ---@type ArPlugins
   plugins = {
     enable = env.RVIM_PLUGINS_ENABLED == '1',
     disabled = {},
@@ -112,11 +227,12 @@ local namespace = {
   treesitter = {
     enable = env.RVIM_TREESITTER_ENABLED == '1',
   },
+  ---@type ArUI
   ui = {
     statuscolumn = { enable = true, custom = true },
     transparent = { enable = true },
     colorscheme = {
-      disable = {
+      disabled = {
         'blue.vim',
         'darkblue.vim',
         'delek.vim',
@@ -143,6 +259,7 @@ local namespace = {
       },
     },
   },
+  ---@type ArRTP
   rtp = {
     disabled = {
       '2html_plugin',

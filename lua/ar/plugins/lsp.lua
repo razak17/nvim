@@ -52,7 +52,7 @@ return {
                 ar.dirs_match(ar.lsp.disabled.directories, fmt('%s', cwd))
               local server_disabled = ar.lsp_disabled(name)
               local typescript_tools_enabled = name == 'ts_ls'
-                and ar.lsp.typescript_tools.enable
+                and ar.lsp.typescript_lsp == 'typescript-tools'
               if
                 directory_disabled
                 or server_disabled
