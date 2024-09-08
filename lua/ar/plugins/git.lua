@@ -10,6 +10,7 @@ local enabled = not minimal and ar.is_git_repo()
 local is_git = ar.is_git_repo() or ar.is_git_env()
 
 return {
+  { 'yyk/find-git-root.nvim', cond = enabled, cmd = { 'CdGitRoot' } },
   {
     'kilavila/nvim-gitignore',
     cond = not minimal,
