@@ -2,25 +2,57 @@ local minimal = ar.plugins.minimal
 
 local function is_colorscheme(name) return ar.colorscheme == name end
 
+local function get_priority(name) return is_colorscheme(name) and 1000 or 50 end
+
+local function get_event(name)
+  return is_colorscheme(name) and { 'UiEnter' } or { 'VeryLazy' }
+end
+
 return {
   ------------------------------------------------------------------------------
   -- Themes {{{1
   ------------------------------------------------------------------------------
-  { 'Wansmer/serenity.nvim', priority = 1000, cond = not minimal, opts = {} },
-  { 'judaew/ronny.nvim', priority = 1000, cond = not minimal, opts = {} },
-  -- { 'oxfist/night-owl.nvim', lazy = false, priority = 1000 },
-  { 'kvrohit/rasmus.nvim', lazy = false, cond = not minimal, priority = 1000 },
-  { 'samharju/serene.nvim', lazy = false, cond = not minimal, priority = 1000 },
   {
     'razak17/onedark.nvim',
-    lazy = false,
-    priority = 1000,
+    priority = get_priority('onedark'),
+    event = get_event('onedark'),
     opts = { variant = 'fill' },
   },
   {
+    'Wansmer/serenity.nvim',
+    cond = not minimal,
+    priority = get_priority('serenity'),
+    event = get_event('serenity'),
+    opts = {},
+  },
+  {
+    'oxfist/night-owl.nvim',
+    priority = get_priority('night-owl'),
+    event = get_event('night-owl'),
+  },
+  {
+    'judaew/ronny.nvim',
+    cond = not minimal,
+    priority = get_priority('ronny'),
+    -- event = get_event('ronny'),
+    opts = {},
+  },
+  {
+    'kvrohit/rasmus.nvim',
+    cond = not minimal,
+    priority = get_priority('rasmus'),
+    event = get_event('rasmus'),
+  },
+  {
+    'samharju/serene.nvim',
+    cond = not minimal,
+    priority = get_priority('serene'),
+    event = get_event('serene'),
+  },
+  {
     'slugbyte/lackluster.nvim',
-    priority = is_colorscheme('lackluster') and 1000 or 50,
-    event = is_colorscheme('lackluster') and { 'UiEnter' } or { 'VeryLazy' },
+    priority = get_priority('lackluster'),
+    event = get_event('lackluster'),
     opts = function()
       local lackluster = require('lackluster')
       local color = lackluster.color
@@ -45,26 +77,27 @@ return {
   },
   {
     'projekt0n/github-nvim-theme',
-    lazy = false,
     cond = not minimal,
-    priority = 1000,
+    priority = get_priority('github_dark'),
+    event = get_event('github_dark'),
   },
   {
     'LunarVim/horizon.nvim',
-    lazy = false,
     cond = not minimal,
-    priority = 1000,
+    priority = get_priority('horizon'),
+    event = get_event('horizon'),
   },
   {
     'dotsilas/darcubox-nvim',
-    lazy = false,
     cond = not minimal,
-    priority = 1000,
+    priority = get_priority('darcubox'),
+    event = get_event('darcubox'),
   },
   {
     'NTBBloodbath/doom-one.nvim',
     cond = not minimal,
-    lazy = false,
+    priority = get_priority('doom-one'),
+    event = get_event('doom-one'),
     config = function()
       vim.g.doom_one_pumblend_enable = true
       vim.g.doom_one_pumblend_transparency = 3
@@ -73,16 +106,16 @@ return {
   {
     'dgox16/oldworld.nvim',
     cond = not minimal,
-    lazy = false,
-    priority = 1000,
+    priority = get_priority('oldworld'),
+    event = get_event('oldworld'),
     opts = {},
   },
   {
     'sontungexpt/witch',
     enabled = false,
     cond = not minimal and false,
-    priority = 1000,
-    lazy = false,
+    priority = get_priority('witch'),
+    event = get_event('witch'),
     opts = { style = 'dark' },
     config = function(_, opts) require('witch').setup(opts) end,
     -- Using lazy.nvim
@@ -90,8 +123,8 @@ return {
       'cdmill/neomodern.nvim',
       enabled = false,
       cond = not minimal and false,
-      lazy = false,
-      priority = 1000,
+      priority = get_priority('neomodern'),
+      event = get_event('neomodern'),
       config = function()
         require('neomodern').setup({
           highlights = {
@@ -110,22 +143,22 @@ return {
   {
     'scottmckendry/cyberdream.nvim',
     cond = not minimal,
-    lazy = false,
-    priority = 1000,
+    priority = get_priority('cyberdream'),
+    event = get_event('cyberdream'),
     opts = {},
   },
   {
     'folke/tokyonight.nvim',
     cond = not minimal,
-    lazy = false,
-    priority = 1000,
+    priority = get_priority('tokyonight'),
+    event = get_event('tokyonight'),
     opts = {},
   },
   {
     'atmosuwiryo/vim-winteriscoming',
     cond = not minimal,
-    lazy = false,
-    priority = 1000,
+    priority = get_priority('WinterIsComing-dark-color-theme'),
+    event = get_event('WinterIsComing-dark-color-theme'),
   },
   {
     'https://git.sr.ht/~p00f/alabaster.nvim',
