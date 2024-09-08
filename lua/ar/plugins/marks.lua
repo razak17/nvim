@@ -148,6 +148,16 @@ return {
     end,
   },
   {
+    'cbochs/portal.nvim',
+    cond = not minimal,
+    -- stylua: ignore
+    keys = {
+      { 'g<c-i>', '<Cmd>Portal jumplist forward<CR>', desc = 'portal jump backward' },
+      { 'g<c-o>', '<Cmd>Portal jumplist backward<CR>', desc = 'portal jump forward' },
+    },
+    opts = {},
+  },
+  {
     'razak17/whatthejump.nvim',
     cond = not minimal,
     event = { 'BufRead', 'BufNewFile' },
