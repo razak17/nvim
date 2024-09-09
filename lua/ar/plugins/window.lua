@@ -1,5 +1,4 @@
 local minimal, niceties = ar.plugins.minimal, ar.plugins.niceties
-local P = require('onedark.palette')
 
 return {
   {
@@ -53,27 +52,30 @@ return {
     'nvim-zh/colorful-winsep.nvim',
     cond = not minimal and niceties,
     event = { 'WinNew' },
-    opts = {
-      no_exec_files = {
-        'NeogitCommitMessage',
-        'TelescopePrompt',
-        'Trouble',
-        'mason',
-        'neo-tree',
-        'packer',
-        'DiffviewFileHistory',
-        'NeogitPopup',
-        'NeogitConsole',
-        'noice',
-        'qf',
-        'fzf',
-        'fugitive',
-      },
-      highlight = {
-        bg = ar.ui.transparent.enable and 'NONE'
-          or ar.highlight.get('Normal', 'bg'),
-        fg = P.cursor,
-      },
-    },
+    opts = function()
+      local P = require('onedark.palette')
+      return {
+        no_exec_files = {
+          'NeogitCommitMessage',
+          'TelescopePrompt',
+          'Trouble',
+          'mason',
+          'neo-tree',
+          'packer',
+          'DiffviewFileHistory',
+          'NeogitPopup',
+          'NeogitConsole',
+          'noice',
+          'qf',
+          'fzf',
+          'fugitive',
+        },
+        highlight = {
+          bg = ar.ui.transparent.enable and 'NONE'
+            or ar.highlight.get('Normal', 'bg'),
+          fg = P.cursor,
+        },
+      }
+    end,
   },
 }
