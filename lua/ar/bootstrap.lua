@@ -69,7 +69,7 @@ require('lazy').setup({
     patterns = { 'razak17' },
     fallback = true,
   },
-  ui = { border = ar.ui.current.border },
+  -- ui = { border = ar.ui.current.border },
   checker = {
     enabled = true,
     concurrency = 30,
