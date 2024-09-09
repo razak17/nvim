@@ -38,6 +38,8 @@ function M.format_buf()
     typescript = '--parser typescript',
     typescriptreact = '--parser typescript',
     html = '--parser html',
+    css = '--parser css',
+    scss = '--parser scss',
   }
 
   if #M.lsp_clients(0) > 0 then
