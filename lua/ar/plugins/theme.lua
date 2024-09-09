@@ -14,13 +14,14 @@ return {
   ------------------------------------------------------------------------------
   {
     'razak17/onedark.nvim',
+    cond = ar.colorscheme == 'onedark',
     priority = get_priority('onedark'),
     event = get_event('onedark'),
     opts = { variant = 'fill' },
   },
   {
     'Wansmer/serenity.nvim',
-    cond = not minimal,
+    cond = ar.colorscheme == 'serenity',
     priority = get_priority('serenity'),
     event = get_event('serenity'),
     opts = {},
@@ -29,28 +30,30 @@ return {
     'oxfist/night-owl.nvim',
     priority = get_priority('night-owl'),
     event = get_event('night-owl'),
+    cond = ar.colorscheme == 'night-owl',
   },
   {
     'judaew/ronny.nvim',
-    cond = not minimal,
+    cond = ar.colorscheme == 'ronny',
     priority = get_priority('ronny'),
     -- event = get_event('ronny'),
     opts = {},
   },
   {
     'kvrohit/rasmus.nvim',
-    cond = not minimal,
+    cond = ar.colorscheme == 'rasmus',
     priority = get_priority('rasmus'),
     event = get_event('rasmus'),
   },
   {
     'samharju/serene.nvim',
-    cond = not minimal,
+    cond = ar.colorscheme == 'serene',
     priority = get_priority('serene'),
     event = get_event('serene'),
   },
   {
     'slugbyte/lackluster.nvim',
+    cond = ar.colorscheme == 'lackluster',
     priority = get_priority('lackluster'),
     event = get_event('lackluster'),
     opts = function()
@@ -77,25 +80,25 @@ return {
   },
   {
     'projekt0n/github-nvim-theme',
-    cond = not minimal,
+    cond = ar.colorscheme == 'github_dark',
     priority = get_priority('github_dark'),
     event = get_event('github_dark'),
   },
   {
     'LunarVim/horizon.nvim',
-    cond = not minimal,
+    cond = ar.colorscheme == 'horizon',
     priority = get_priority('horizon'),
     event = get_event('horizon'),
   },
   {
     'dotsilas/darcubox-nvim',
-    cond = not minimal,
+    cond = ar.colorscheme == 'darcubox',
     priority = get_priority('darcubox'),
     event = get_event('darcubox'),
   },
   {
     'NTBBloodbath/doom-one.nvim',
-    cond = not minimal,
+    cond = ar.colorscheme == 'doom-one',
     priority = get_priority('doom-one'),
     event = get_event('doom-one'),
     config = function()
@@ -105,7 +108,7 @@ return {
   },
   {
     'dgox16/oldworld.nvim',
-    cond = not minimal,
+    cond = ar.colorscheme == 'oldworld',
     priority = get_priority('oldworld'),
     event = get_event('oldworld'),
     opts = {},
@@ -113,7 +116,7 @@ return {
   {
     'sontungexpt/witch',
     enabled = false,
-    cond = not minimal and false,
+    cond = ar.colorscheme == 'witch',
     priority = get_priority('witch'),
     event = get_event('witch'),
     opts = { style = 'dark' },
@@ -122,7 +125,7 @@ return {
     {
       'cdmill/neomodern.nvim',
       enabled = false,
-      cond = not minimal and false,
+      cond = ar.colorscheme == 'neomodern',
       priority = get_priority('neomodern'),
       event = get_event('neomodern'),
       config = function()
@@ -142,27 +145,27 @@ return {
   },
   {
     'scottmckendry/cyberdream.nvim',
-    cond = not minimal,
+    cond = ar.colorscheme == 'cyberdream',
     priority = get_priority('cyberdream'),
     event = get_event('cyberdream'),
     opts = {},
   },
   {
     'folke/tokyonight.nvim',
-    cond = not minimal,
+    cond = ar.colorscheme == 'tokyonight',
     priority = get_priority('tokyonight'),
     event = get_event('tokyonight'),
     opts = {},
   },
   {
     'atmosuwiryo/vim-winteriscoming',
-    cond = not minimal,
+    cond = ar.colorscheme == 'WinterIsComing-dark-color-theme',
     priority = get_priority('WinterIsComing-dark-color-theme'),
     event = get_event('WinterIsComing-dark-color-theme'),
   },
   {
     'https://git.sr.ht/~p00f/alabaster.nvim',
-    cond = not minimal,
+    cond = ar.colorscheme == 'alabaster',
     lazy = false,
     priority = 1000,
   },
