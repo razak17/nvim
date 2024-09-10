@@ -431,10 +431,10 @@ end
 --------------------------------------------------------------------------------
 nnoremap('<leader>lq', ar.list.qf.toggle, { desc = 'toggle quickfix list' })
 nnoremap('<leader>lL', ar.list.loc.toggle, { desc = 'toggle location list' })
-nnoremap('<leader>k', '<Cmd>cnext<CR>', { desc = 'qflist next' })
-nnoremap('<leader>j', '<Cmd>cprev<CR>', { desc = 'qflist previous' })
-nnoremap('<localleader>k', '<Cmd>lnext<CR>', { desc = 'loclist next' })
-nnoremap('<localleader>j', '<Cmd>lprev<CR>', { desc = 'loclist previous' })
+nnoremap('<leader>j', '<Cmd>cnext<CR>', { desc = 'qflist next' })
+nnoremap('<leader>k', '<Cmd>cprev<CR>', { desc = 'qflist previous' })
+nnoremap('<localleader>j', '<Cmd>lnext<CR>', { desc = 'loclist next' })
+nnoremap('<localleader>k', '<Cmd>lprev<CR>', { desc = 'loclist previous' })
 --------------------------------------------------------------------------------
 -- Completion
 --------------------------------------------------------------------------------
