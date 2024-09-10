@@ -297,6 +297,13 @@ return {
         update_n_lines = 'gsn', -- Update `n_lines`
       },
     },
+    init = function()
+      -- https://www.reddit.com/r/neovim/comments/1fddxak/can_figure_out_how_to_turn_a_large_motion_into/
+      ar.command('AddSurroundingTag', function()
+        vim.cmd('normal vat')
+        vim.schedule(function() vim.cmd('normal gsat') end)
+      end, { desc = 'add surround HTML tag' })
+    end,
   },
   {
     'echasnovski/mini.completion',

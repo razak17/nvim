@@ -401,6 +401,7 @@ M.options.command_palette = {
     local status = ar.large_file.enable and 'enabled' or 'disabled'
     vim.notify(fmt('Large file has been %s', status))
   end,
+  ['Add surround HTML tag'] = 'AddSurroundingTag',
 }
 
 local command_palette_menu = function()
