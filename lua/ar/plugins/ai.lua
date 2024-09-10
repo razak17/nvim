@@ -32,15 +32,13 @@ return {
     },
     opts = {
       adapters = {
-        gemini = function()
-          return require('codecompanion.adapters').extend('gemini', {
-            env = { api_key = vim.env.GEMINI_API_KEY },
-          })
-        end,
+        gemini = "gemini",
+        anthropic = 'anthropic',
+        openai = 'openai',
       },
       strategies = {
         chat = {
-          adapter = 'gemini',
+          adapter = 'openai',
           roles = { llm = '  CodeCompanion', user = 'razak17' },
           keymaps = {
             close = {
@@ -81,7 +79,6 @@ return {
       },
       opts = { log_level = 'DEBUG' },
     },
-    config = function(_, opts) require('codecompanion').setup(opts) end,
     -- stylua: ignore
     keys = {
       { '<leader>akk', '<Cmd>CodeCompanionToggle<CR>', desc = 'codecompanion: toggle' },
