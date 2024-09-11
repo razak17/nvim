@@ -271,10 +271,9 @@ local function setup_mappings(client, bufnr)
     { 'n', '[w', diagnostic_goto(false, 'WARN'), desc = 'prev warning' },
     {
       'n',
-      'gx',
+      'gL',
       function()
         if not is_available('lsplinks.nvim') then return end
-        vim.notify('here')
         require('lsplinks').gx()
       end,
       desc = 'open lsp links',
