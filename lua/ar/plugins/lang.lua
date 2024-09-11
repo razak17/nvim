@@ -101,15 +101,15 @@ return {
     -- ft = { 'javascript', 'javascriptreact' },
     init = function()
       require('which-key').add({
-        { '<leader><leader>j', group = 'jSdoc Switch' },
-        { '<leader><leader>jd', desc = 'doc switch' },
+        { '<leader><leader>J', group = 'jSdoc Switch' },
+        { '<leader><leader>Jd', desc = 'doc switch' },
       })
     end,
     -- stylua: ignore
     keys = {
-      { '<leader><leader>jds', '<cmd>JsdocSwitchStart<CR>', desc = 'jsdoc-switch: start' },
-      { '<leader><leader>jdt', '<cmd>JsdocSwitchToggle<CR>', desc = 'jsdoc-switch: toggle' },
-      { '<leader><leader>jdn', '<cmd>JsdocSwitchStop<CR>', desc = 'jsdoc-switch: stop' },
+      { '<leader><leader>Jds', '<cmd>JsdocSwitchStart<CR>', desc = 'jsdoc-switch: start' },
+      { '<leader><leader>Jdt', '<cmd>JsdocSwitchToggle<CR>', desc = 'jsdoc-switch: toggle' },
+      { '<leader><leader>Jdn', '<cmd>JsdocSwitchStop<CR>', desc = 'jsdoc-switch: stop' },
     },
     opts = { auto_set_keys = false, notify = false },
   },
