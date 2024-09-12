@@ -3,6 +3,15 @@ local enabled = is_available('lazy.nvim') and is_available('telescope.nvim')
 
 if not ar or ar.none or not ar.plugins.enable or not enabled then return end
 
+---@class Plugin
+---@field path string
+---@field name string
+---@field readme string|nil
+---@field url string
+---@field lazy boolean
+---@field dev boolean
+---@field icon string
+
 local fmt = string.format
 local config = require('telescope.config').values
 local entry_display = require('telescope.pickers.entry_display')
