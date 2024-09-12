@@ -8,7 +8,7 @@ return {
   },
   {
     'kwkarlwang/bufresize.nvim',
-    cond = not minimal,
+    cond = not minimal and false,
     event = { 'WinNew' },
     opts = {},
   },
