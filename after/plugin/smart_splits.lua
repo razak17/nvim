@@ -18,7 +18,7 @@ ar.smart_splits = {
     'qf',
     'starter',
     'startup',
-    'Trouble',
+    'trouble',
   },
 }
 
