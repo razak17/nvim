@@ -175,7 +175,7 @@ return {
         -- Python env
         {
           condition = function() return vim.bo.filetype == 'python' end,
-          provider = function() return statusline.python_env() .. ' ' end,
+          provider = function() return ' ' ..  statusline.python_env() end,
           hl = { fg = 'yellowgreen' },
         },
         -- LSP Diagnostics
