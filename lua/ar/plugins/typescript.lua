@@ -16,7 +16,7 @@ local function typescript_tools_cond()
   then
     return false
   end
-  if ar.plugin_disabled('typescript-tools.nvim') then return false end
+  if ar.plugin_disabled('typescript-tools.nvim') or not ar.lsp.enable then return false end
   return ar.find_string(ar.lsp.lang.typescript, 'typescript-tools')
 end
 
