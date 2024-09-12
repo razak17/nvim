@@ -447,6 +447,8 @@ ar.ftplugin_conf({
         { name = 'spell', group_index = 1 },
         { name = 'emoji', group_index = 1 },
         { name = 'buffer', group_index = 2 },
+        { name = 'rg', group_index = 2 },
+        { name = 'natdat', group_index = 3 },
       },
     })
   end,
