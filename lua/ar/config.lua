@@ -78,6 +78,7 @@ local env = vim.env
 ---@field disabled table
 
 ---@class ArUI
+---@field decorations table
 ---@field statuscolumn ArCond
 ---@field transparent ArCond
 ---@field colorscheme ArUIColorscheme
@@ -233,7 +234,6 @@ local namespace = {
   treesitter = {
     enable = env.RVIM_TREESITTER_ENABLED == '1',
   },
-  ---@type ArUI
   ui = {
     statuscolumn = { enable = true, custom = true },
     transparent = { enable = true },
