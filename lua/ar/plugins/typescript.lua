@@ -9,20 +9,29 @@ local filetypes = {
   'typescript.tsx',
 }
 
+local function typescript_tools_cond()
+  if
+    not ar.falsy(ar.lsp.override)
+    and not ar.find_string(ar.lsp.override, 'typescript-tools')
+  then
+    return false
+  end
+  if ar.plugin_disabled('typescript-tools.nvim') then return false end
+  return ar.find_string(ar.lsp.lang.typescript, 'typescript-tools')
+end
+
 return {
   'dmmulroy/ts-error-translator.nvim',
   {
     'yioneko/nvim-vtsls',
-    cond = ar.lsp.typescript_lsp == 'vtsls',
+    cond = ar.find_string(ar.lsp.lang.typescript, 'vtsls'),
     ft = filetypes,
   },
   {
 
     'pmizio/typescript-tools.nvim',
     ft = filetypes,
-    cond = enabled
-      and not ar.plugin_disabled('typescript-tools.nvim')
-      and ar.lsp.typescript_lsp == 'typescript-tools',
+    cond = typescript_tools_cond(),
     -- stylua: ignore
     keys = {
       { '<localleader>li', '<Cmd>TSToolsAddMissingImports<CR>', desc = 'add missing imports' },

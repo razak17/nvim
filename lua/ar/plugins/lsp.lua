@@ -1,4 +1,5 @@
 local fn = vim.fn
+local cwd = fn.getcwd()
 local fmt = string.format
 local ui, highlight = ar.ui, ar.highlight
 local icons, codicons = ar.ui.icons, ar.ui.codicons
@@ -44,27 +45,37 @@ return {
         automatic_installation = true,
         handlers = {
           function(name)
-            local cwd = fn.getcwd()
-            if not falsy(ar.lsp.override) then
-              if not find_string(ar.lsp.override, name) then return end
-            else
-              local directory_disabled =
-                ar.dirs_match(ar.lsp.disabled.directories, fmt('%s', cwd))
-              local server_disabled = ar.lsp_disabled(name)
-              local is_ts_ls = ar.lsp.typescript_lsp == 'ts_ls'
-              local is_vtsls = ar.lsp.typescript_lsp == 'vtsls'
-              local is_ts_tools = (name == 'ts_ls' or name == 'vtsls')
-                and ar.lsp.typescript_lsp == 'typescript-tools'
-              if
-                directory_disabled
-                or server_disabled
-                or is_ts_tools
-                or (is_ts_ls and name == 'vtsls')
-                or (is_vtsls and name == 'ts_ls')
-              then
-                return
-              end
-            end
+            local is_override = not falsy(ar.lsp.override)
+              and not find_string(ar.lsp.override, name)
+            local directory_disabled =
+              ar.dirs_match(ar.lsp.disabled.directories, fmt('%s', cwd))
+            local server_disabled = ar.lsp_disabled(name)
+
+            local ts_lang = ar.lsp.lang.typescript
+            local py_lang = ar.lsp.lang.python
+
+            local ts_ls = find_string(ts_lang, 'ts_ls')
+            local vtsls = find_string(ts_lang, 'vtsls')
+            local ts_tools = (name == 'ts_ls' or name == 'vtsls')
+              and find_string(ts_lang, 'typescript-tools')
+
+            local pyright = find_string(py_lang, 'pyright')
+            local basedpyright = find_string(py_lang, 'basedpyright')
+            local jedi = find_string(py_lang, 'jedi_language_server')
+            local ruff = find_string(py_lang, 'ruff')
+
+            local should_skip = is_override
+              or directory_disabled
+              or server_disabled
+              or ts_tools
+              or (name == 'vtsls' and not vtsls)
+              or (name == 'ts_ls' and not ts_ls)
+              or (name == 'pyright' and not pyright)
+              or (name == 'basedpyright' and not basedpyright)
+              or (name == 'jedi_language_server' and not jedi)
+              or (name == 'ruff' and not ruff)
+
+            if should_skip then return end
             local config = require('ar.servers').get(name)
             if config then require('lspconfig')[name].setup(config) end
           end,

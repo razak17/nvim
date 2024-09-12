@@ -29,6 +29,7 @@ local env = vim.env
 ---@alias ArLspProgress 'noice' | 'builtin'
 
 ---@alias ArTypescriptLsp 'ts_ls' | 'typescript-tools' | 'vtsls'
+---@alias ArPythonLsp 'pyright' | 'ruff' | 'jedi_language_server' | 'basedpyright'
 
 ---@class ArLsp
 ---@field disabled ArLspDisabled
@@ -36,6 +37,7 @@ local env = vim.env
 ---@field format_on_save ArCond
 ---@field hover_diagnostics table
 ---@field inlay_hint ArCond
+---@field lang table
 ---@field null_ls ArCond
 ---@field omnifunc ArCond
 ---@field override table
@@ -43,7 +45,6 @@ local env = vim.env
 ---@field progress ArLspProgress
 ---@field semantic_tokens ArCond
 ---@field signs ArCond
----@field typescript_lsp ArTypescriptLsp
 ---@field workspace_diagnostics ArCond
 
 ---@class ArPlugin
@@ -152,6 +153,12 @@ local namespace = {
     format_on_save = { enable = true },
     hover_diagnostics = { enable = false, go_to = false, scope = 'cursor' },
     inlay_hint = { enable = false },
+    lang = {
+      ---@type table<ArPythonLsp>
+      python = { 'jedi_language_server', 'ruff' },
+      ---@type table<ArTypescriptLsp>
+      typescript = { 'typescript-tools' },
+    },
     null_ls = { enable = false },
     omnifunc = { enable = true },
     override = {},
@@ -179,7 +186,6 @@ local namespace = {
     progress = 'noice',
     semantic_tokens = { enable = false },
     signs = { enable = false },
-    typescript_lsp = 'typescript-tools',
     workspace_diagnostics = { enable = false },
   },
   autocommands = { enable = true },
