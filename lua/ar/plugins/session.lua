@@ -1,7 +1,6 @@
 return {
   {
     'olimorris/persisted.nvim',
-    lazy = false,
     init = function() ar.command('ListSessions', 'Telescope persisted') end,
     keys = {
       { '<leader>qs', ':SessionLoad<CR>', desc = 'restore session' },
