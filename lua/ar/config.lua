@@ -58,7 +58,6 @@ local env = vim.env
 ---@field smart_tilde ArCond
 ---@field sticky_note ArCond
 ---@field tmux ArCond
----@field whereami ArCond
 ---@field whitespace ArCond
 
 ---@class ArPluginsOverride
@@ -210,7 +209,6 @@ local namespace = {
     smart_tilde = { enable = true },
     sticky_note = { enable = false },
     tmux = { enable = true },
-    whereami = { enable = true },
     whitespace = { enable = true },
   },
   ---@type ArPlugins
