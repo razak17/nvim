@@ -13,13 +13,6 @@ if not ar or ar.none or not ar.plugins.enable or not enabled then return end
 ---@field icon string
 
 local fmt = string.format
-local config = require('telescope.config').values
-local entry_display = require('telescope.pickers.entry_display')
-local finders = require('telescope.finders')
-local pickers = require('telescope.pickers')
-local previewers = require('telescope.previewers')
-local actions = require('telescope.actions')
-local actions_state = require('telescope.actions.state')
 
 --------------------------------------------------------------------------------
 -- These function arre adapted from telescope-lazy.nvim
@@ -69,7 +62,15 @@ local function get_plugins()
   return plugins
 end
 
-local function reload_plugins_picker()
+map('n', '<leader>oL', function()
+  local config = require('telescope.config').values
+  local entry_display = require('telescope.pickers.entry_display')
+  local finders = require('telescope.finders')
+  local pickers = require('telescope.pickers')
+  local previewers = require('telescope.previewers')
+  local actions = require('telescope.actions')
+  local actions_state = require('telescope.actions.state')
+
   local telescope_lazy_plugins = get_plugins()
   local opts = {
     show_icon = true,
@@ -174,6 +175,4 @@ local function reload_plugins_picker()
       attach_mappings = attach_mappings,
     })
     :find()
-end
-
-map('n', '<leader>oL', reload_plugins_picker, { desc = 'lazy: reload plugins' })
+end, { desc = 'lazy: reload plugins' })
