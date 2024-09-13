@@ -2,7 +2,6 @@ return {
   {
     'kevinhwang91/nvim-ufo',
     cond = not ar.plugins.minimal,
-    event = 'VeryLazy',
     -- stylua: ignore
     keys = {
       { 'zR', '<Cmd>lua require("ufo").openAllFolds()<CR>', 'ufo: open all folds' },

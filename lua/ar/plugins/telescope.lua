@@ -385,7 +385,6 @@ return {
     'nvim-telescope/telescope-frecency.nvim',
     cond = min_enabled,
     lazy = false,
-    config = function() require('telescope').load_extension('frecency') end,
   },
   {
     'nvim-telescope/telescope.nvim',

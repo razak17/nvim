@@ -18,7 +18,7 @@ return {
   {
     'razak17/demicolon.nvim',
     cond = not minimal,
-    lazy = false,
+    keys = { ';' },
     dependencies = {
       'nvim-treesitter/nvim-treesitter-textobjects',
     },

@@ -344,20 +344,23 @@ return {
         },
       })
     end,
-    keys = function()
-      local snap = require('snap')
-      return {
-        {
-          '<leader><leader>ff',
-          snap.config.file({ producer = 'ripgrep.file' }),
-          desc = 'snap: find files',
-        },
-        {
-          '<leader><leader>fg',
-          snap.config.vimgrep({}),
-          desc = 'snap: grep string',
-        },
-      }
-    end,
+    keys = {
+      {
+        '<leader><leader>ff',
+        function()
+          local snap = require('snap')
+          snap.config.file({ producer = 'ripgrep.file' })()
+        end,
+        desc = 'snap: find files',
+      },
+      {
+        '<leader><leader>fg',
+        function()
+          local snap = require('snap')
+          snap.config.vimgrep({})()
+        end,
+        desc = 'snap: grep string',
+      },
+    },
   },
 }

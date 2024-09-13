@@ -35,7 +35,6 @@ return {
   {
     'hinell/duplicate.nvim',
     cond = not minimal,
-    event = 'VeryLazy',
     -- stylua: ignore
     keys = {
       { '<leader><leader>j', '<Cmd>LineDuplicate -1<CR>', desc = 'duplicate: line up' },
@@ -343,7 +342,7 @@ return {
   {
     'max397574/better-escape.nvim',
     cond = not minimal,
-    event = { 'VeryLazy' },
+    event = { 'InsertEnter' },
     opts = {
       default_mappings = false,
       mappings = {

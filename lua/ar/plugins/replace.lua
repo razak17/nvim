@@ -6,7 +6,6 @@ return {
   {
     'MagicDuck/grug-far.nvim',
     cond = not minimal,
-    lazy = false,
     cmd = { 'GrugFar' },
     keys = {
       {

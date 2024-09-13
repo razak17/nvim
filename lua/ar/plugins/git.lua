@@ -331,7 +331,9 @@ return {
       {  mode= { 'n', 'v' }, '<localleader>gor', ':lua require("repo-url").open_raw_url()<CR>', desc= 'open raw URL' },
     },
     opts = {},
-    init = function()
+    config = function(_, opts)
+      require('repo-url').setup(opts)
+
       local ru = require('repo-url')
 
       -- For Go's go.mod file, generate permalinks to the dependency under the

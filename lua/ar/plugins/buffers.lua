@@ -4,7 +4,11 @@ local fmt = string.format
 local minimal, niceties = ar.plugins.minimal, ar.plugins.niceties
 
 return {
-  { 'ton/vim-bufsurf', cond = not minimal, lazy = false },
+  {
+    'ton/vim-bufsurf',
+    cond = not minimal,
+    keys = { '[b', ']b' },
+  },
   {
     'chrisgrieser/nvim-early-retirement',
     enabled = false,
@@ -62,7 +66,6 @@ return {
   },
   {
     'razak17/arena.nvim',
-    event = 'VeryLazy',
     cmd = { 'ArenaToggle', 'ArenaOpen', 'ArenaClose' },
     keys = { { '<M-space>', '<Cmd>ArenaToggle<CR>', desc = 'arena: toggle' } },
     opts = {

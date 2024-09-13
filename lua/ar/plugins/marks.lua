@@ -134,9 +134,9 @@ return {
   {
     'razak17/arrow.nvim',
     cond = not minimal,
-    event = 'VeryLazy',
     -- stylua: ignore
     keys = {
+      '\\',
       { '<M-s>', '<Cmd>lua require("arrow.persist").toggle()<CR>', desc = 'arrow: toggle' },
       { '<M-n>', '<Cmd>lua require("arrow.persist").next()<CR>', desc = 'arrow: next'},
       { '<M-p>', '<Cmd>lua require("arrow.persist").previous()<CR>', desc = 'arrow: prev'}

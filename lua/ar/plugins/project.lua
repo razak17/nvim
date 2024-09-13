@@ -6,7 +6,6 @@ return {
     keys = {
       { '<leader>fF', '<Cmd>ProjectExplorer<CR>', desc = 'project-explorer: open' },
     },
-    lazy = false,
     opts = {
       paths = { vim.g.dotfiles, vim.g.projects_dir },
       newProjectPath = vim.g.projects_dir,

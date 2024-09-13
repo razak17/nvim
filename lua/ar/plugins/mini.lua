@@ -325,7 +325,7 @@ return {
   },
   {
     'echasnovski/mini.splitjoin',
-    event = 'VeryLazy',
+    keys = { { '<leader>J' } },
     opts = { mappings = { toggle = '<leader>J' } },
   },
   {
