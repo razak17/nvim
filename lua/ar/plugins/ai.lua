@@ -128,7 +128,6 @@ return {
   {
     'piersolenski/wtf.nvim',
     cond = ar.lsp.enable and ar.ai.enable and not minimal,
-    event = 'VeryLazy',
     -- stylua: ignore
     keys = {
       { '<leader>ao', function() require('wtf').ai() end, desc = 'wtf: debug diagnostic with AI', },
