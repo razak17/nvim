@@ -23,7 +23,7 @@ return {
   {
     'CopilotC-Nvim/CopilotChat.nvim',
     cond = ar.ai.enable and not ar.plugins.minimal and ar.completion.enable,
-    event = 'VimEnter',
+    cmd = { 'CopilotChat', 'CopilotChatInline' },
     branch = 'canary',
     init = function()
       require('which-key').add({ { '<leader>ac', group = 'CopilotChat' } })
@@ -48,41 +48,21 @@ return {
           insert = '<Tab>',
         },
         -- Close the chat
-        close = {
-          normal = 'q',
-          insert = '<C-c>',
-        },
+        close = { normal = 'q', insert = '<C-c>' },
         -- Reset the chat buffer
-        reset = {
-          normal = '<C-x>',
-          insert = '<C-x>',
-        },
+        reset = { normal = '<C-x>', insert = '<C-x>' },
         -- Submit the prompt to Copilot
-        submit_prompt = {
-          normal = '<CR>',
-          insert = '<C-s>',
-        },
+        submit_prompt = { normal = '<CR>', insert = '<C-s>' },
         -- Accept the diff
-        accept_diff = {
-          normal = '<C-y>',
-          insert = '<C-y>',
-        },
+        accept_diff = { normal = '<C-y>', insert = '<C-y>' },
         -- Yank the diff in the response to register
-        yank_diff = {
-          normal = 'gmy',
-        },
+        yank_diff = { normal = 'gmy' },
         -- Show the diff
-        show_diff = {
-          normal = 'gmd',
-        },
+        show_diff = { normal = 'gmd' },
         -- Show the prompt
-        show_system_prompt = {
-          normal = 'gmp',
-        },
+        show_system_prompt = { normal = 'gmp' },
         -- Show the user selection
-        show_user_selection = {
-          normal = 'gms',
-        },
+        show_user_selection = { normal = 'gms' },
       },
     },
     config = function(_, opts)
