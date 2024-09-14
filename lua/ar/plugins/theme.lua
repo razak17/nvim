@@ -1,5 +1,3 @@
-local minimal = ar.plugins.minimal
-
 local function is_colorscheme(name) return ar.colorscheme == name end
 
 local function get_priority(name) return is_colorscheme(name) and 1000 or 50 end
@@ -25,6 +23,13 @@ return {
     priority = get_priority('eldritch'),
     event = get_event('eldritch'),
     opts = {},
+  },
+  {
+    'ferdinandrau/lavish.nvim',
+    cond = ar.colorscheme == 'lavish',
+    priority = get_priority('lavish'),
+    event = get_event('lavish'),
+    config = function() require('lavish').apply() end,
   },
   {
     'Wansmer/serenity.nvim',
