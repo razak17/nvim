@@ -20,6 +20,13 @@ return {
     opts = { variant = 'fill' },
   },
   {
+    'eldritch-theme/eldritch.nvim',
+    cond = ar.colorscheme == 'eldritch',
+    priority = get_priority('eldritch'),
+    event = get_event('eldritch'),
+    opts = {},
+  },
+  {
     'Wansmer/serenity.nvim',
     cond = ar.colorscheme == 'serenity',
     priority = get_priority('serenity'),

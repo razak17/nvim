@@ -4,7 +4,7 @@ return {
   {
     'chrishrb/gx.nvim',
     cond = ar.gx == 'plugin' and not minimal,
-    keys = { { 'gx', '<cmd>Browse<cr>', mode = { 'n', 'x' } } },
+    keys = { { 'gx', '<Cmd>Browse<cr>', mode = { 'n', 'x' } } },
     cmd = { 'Browse' },
     init = function() vim.g.netrw_nogx = 1 end,
     opts = {},

@@ -29,8 +29,19 @@ local force_inactive_filetypes = {
 }
 
 local function setup_colors()
-  local P = require('onedark.palette')
-  return P
+  if ar.colorscheme == 'onedark' then
+    local P = require('onedark.palette')
+    return P
+  end
+  if ar.colorscheme == 'eldritch' then
+    local C = require('eldritch.colors').default
+    C = vim.tbl_extend('force', C, {
+      blue = C.cyan,
+      dark_orange = C.orange,
+      error_red = C.bright_red,
+    })
+    return C
+  end
 end
 
 ar.augroup('Heirline', {
