@@ -124,7 +124,11 @@ return {
     event = 'BufRead',
     opts = {
       symbol = separators.left_thin_block,
-      draw = { delay = 100 },
+      draw = {
+        delay = 100,
+        priority = 2,
+        animation = function(s, n) return s / n * 20 end,
+      },
       -- stylua: ignore
       filetype_exclude = {
         'lazy', 'fzf', 'alpha', 'dbout', 'neo-tree-popup', 'log', 'gitcommit',
