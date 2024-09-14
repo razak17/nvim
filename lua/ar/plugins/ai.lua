@@ -15,12 +15,14 @@
 -- end
 --
 -- vim.g.openai_api_key = get_openai_key()
+local find_string = ar.find_string
 local minimal = ar.plugins.minimal
+local models = ar.ai.models
 
 return {
   {
     'olimorris/codecompanion.nvim',
-    cond = ar.ai.enable and not minimal,
+    cond = not minimal and ar.ai.enable,
     init = function()
       require('which-key').add({ { '<leader>ak', group = 'Codecompanion' } })
     end,
@@ -30,55 +32,68 @@ return {
       'CodeCompanionActions',
       'CodeCompanionToggle',
     },
-    opts = {
-      adapters = {
-        gemini = "gemini",
-        anthropic = 'anthropic',
-        openai = 'openai',
-      },
-      strategies = {
-        chat = {
-          adapter = 'openai',
-          roles = { llm = '  CodeCompanion', user = 'razak17' },
-          keymaps = {
-            close = {
-              modes = {
-                n = 'q',
-                i = '<C-c>',
+    opts = function()
+      local opts = {
+        strategies = {
+          chat = {
+            roles = { llm = '  CodeCompanion', user = 'razak17' },
+            keymaps = {
+              close = {
+                modes = {
+                  n = 'q',
+                  i = '<C-c>',
+                },
+                index = 2,
+                callback = 'keymaps.close',
+                description = 'Close Chat',
               },
-              index = 2,
-              callback = 'keymaps.close',
-              description = 'Close Chat',
-            },
-            stop = {
-              modes = {
-                n = '<C-c>',
+              stop = {
+                modes = {
+                  n = '<C-c>',
+                },
+                index = 3,
+                callback = 'keymaps.stop',
+                description = 'Stop Request',
               },
-              index = 3,
-              callback = 'keymaps.stop',
-              description = 'Stop Request',
             },
           },
         },
-        inline = { adapter = 'gemini' },
-        agent = { adapter = 'gemini' },
-      },
-      display = {
-        chat = {
-          window = {
-            layout = 'vertical', -- float|vertical|horizontal|buffer
+        display = {
+          chat = {
+            window = {
+              layout = 'vertical', -- float|vertical|horizontal|buffer
+            },
           },
-        },
-        inline = {
-          diff = {
-            hl_groups = {
-              added = 'DiffAdd',
+          inline = {
+            diff = {
+              hl_groups = {
+                added = 'DiffAdd',
+              },
             },
           },
         },
-      },
-      opts = { log_level = 'DEBUG' },
-    },
+        opts = { log_level = 'DEBUG' },
+      }
+
+      local function set_adapter_and_strategy(model_name)
+        opts.adapters[model_name] = model_name
+        opts.strategies.chat.adapter = model_name
+        opts.strategies.chat.inline = model_name
+        opts.strategies.chat.agent = model_name
+      end
+
+      opts.adapters = {}
+
+      if find_string(models, 'anthropic') then
+        set_adapter_and_strategy('anthropic')
+      elseif find_string(models, 'openai') then
+        set_adapter_and_strategy('openai')
+      elseif find_string(models, 'gemini') then
+        set_adapter_and_strategy('gemini')
+      end
+
+      return opts
+    end,
     -- stylua: ignore
     keys = {
       { '<leader>akk', '<Cmd>CodeCompanionToggle<CR>', desc = 'codecompanion: toggle' },
@@ -88,7 +103,7 @@ return {
   },
   {
     'zbirenbaum/copilot.lua',
-    cond = ar.ai.enable and not minimal,
+    cond = not minimal and ar.ai.enable and find_string(models, 'copilot'),
     cmd = 'Copilot',
     event = 'InsertEnter',
     keys = {
@@ -127,7 +142,7 @@ return {
   },
   {
     'piersolenski/wtf.nvim',
-    cond = ar.lsp.enable and ar.ai.enable and not minimal,
+    cond = not minimal and ar.lsp.enable and ar.ai.enable,
     -- stylua: ignore
     keys = {
       { '<leader>ao', function() require('wtf').ai() end, desc = 'wtf: debug diagnostic with AI', },
@@ -142,7 +157,7 @@ return {
   },
   {
     'razak17/backseat.nvim',
-    cond = not minimal,
+    cond = not minimal and ar.ai.enable and find_string(models, 'openai'),
     cmd = { 'Backseat', 'BackseatAsk', 'BackseatClear', 'BackseatClearLine' },
     opts = {
       highlight = { icon = '', group = 'DiagnosticVirtualTextInfo' },
@@ -152,11 +167,11 @@ return {
   },
   {
     'moozd/aidoc.nvim',
-    cond = not minimal,
+    cond = not minimal and ar.ai.enable and false,
     keys = {
       {
         mode = 'x',
-        '<localleader>do',
+        '<leader>ad',
         '<cmd>lua require("aidoc.api").generate({width = 65})<CR>',
         desc = 'aidoc: generate',
       },

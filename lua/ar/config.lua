@@ -26,8 +26,8 @@ local env = vim.env
 ---@field directories table
 ---@field servers table
 
+---@alias ArAIModels 'anthropic' | 'gemini' | 'openai' | 'copilot'
 ---@alias ArLspProgress 'noice' | 'builtin'
-
 ---@alias ArTypescriptLsp 'ts_ls' | 'typescript-tools' | 'vtsls'
 ---@alias ArPythonLsp 'pyright' | 'ruff' | 'jedi_language_server' | 'basedpyright'
 
@@ -114,7 +114,11 @@ local env = vim.env
 ---@field rtp ArRTP
 
 local namespace = {
-  ai = { enable = env.RVIM_AI_ENABLED == '1' },
+  ai = {
+    enable = env.RVIM_AI_ENABLED == '1',
+    ---@type table<ArAIModels>
+    models = { 'copilot', 'gemini' },
+  },
   animation = { enable = false },
   ---@type ArApps
   apps = {

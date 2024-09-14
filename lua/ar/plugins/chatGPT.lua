@@ -1,7 +1,9 @@
 return {
   {
     'jackMort/ChatGPT.nvim',
-    cond = ar.ai.enable and not ar.plugins.minimal,
+    cond = not ar.plugins.minimal
+      and ar.ai.enable
+      and ar.find_string(ar.ai.models, 'openai'),
     cmd = {
       'ChatGPT',
       'ChatGPTActAs',

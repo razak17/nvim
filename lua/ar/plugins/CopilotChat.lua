@@ -22,7 +22,10 @@ local prompts = {
 return {
   {
     'CopilotC-Nvim/CopilotChat.nvim',
-    cond = ar.ai.enable and not ar.plugins.minimal and ar.completion.enable,
+    cond = not ar.plugins.minimal
+      and ar.ai.enable
+      and ar.completion.enable
+      and ar.find_string(ar.ai.models, 'copilot'),
     cmd = { 'CopilotChat', 'CopilotChatInline' },
     branch = 'canary',
     init = function()

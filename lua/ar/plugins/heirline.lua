@@ -175,7 +175,7 @@ return {
         -- Python env
         {
           condition = function() return vim.bo.filetype == 'python' end,
-          provider = function() return ' ' ..  statusline.python_env() end,
+          provider = function() return ' ' .. statusline.python_env() end,
           hl = { fg = 'yellowgreen' },
         },
         -- LSP Diagnostics
@@ -492,6 +492,11 @@ return {
           },
           -- Copilot Status
           {
+            cond = function()
+              return not ar.plugins.minimal
+                and ar.ai.enable
+                and ar.find_string(ar.ai.models, 'copilot')
+            end,
             {
               init = function(self)
                 self.processing = false
@@ -520,6 +525,7 @@ return {
         },
         -- CodeCompanion
         {
+          cond = function() return not ar.plugins.minimal and ar.ai.enable end,
           static = { processing = false },
           update = {
             'User',
@@ -561,9 +567,10 @@ return {
         -- Copilot Status
         {
           condition = function()
-            return ar.ai.enable
-              and not ar.plugins.minimal
+            return not ar.plugins.minimal
+              and ar.ai.enable
               and ar.lsp.null_ls.enable
+              and ar.find_string(ar.ai.models, 'copilot')
           end,
           init = function(self)
             self.processing = false

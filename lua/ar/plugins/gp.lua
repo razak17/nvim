@@ -14,7 +14,9 @@ local templates = {
 
 return {
   'robitx/gp.nvim',
-  cond = ar.ai.enable and not ar.plugins.minimal,
+  cond = not ar.plugins.minimal
+    and ar.ai.enable
+    and ar.find_string(ar.ai.models, 'openai'),
   -- stylua: ignore
   keys = {
     -- Chat commands
