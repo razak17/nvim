@@ -18,7 +18,7 @@ local nnoremap = function(...) map('n', ...) end
 local xnoremap = function(...) map('x', ...) end
 local vnoremap = function(...) map('v', ...) end
 local inoremap = function(...) map('i', ...) end
-local onoremap = function(...) map('o', ...) end
+-- local onoremap = function(...) map('o', ...) end
 local cnoremap = function(...) map('c', ...) end
 
 --------------------------------------------------------------------------------
@@ -355,7 +355,7 @@ map(
   "getline('.')[0 : col('.') - 2] =~# '^\\s\\+$' ? '0' : '^'",
   { expr = true, desc = 'go to start of line' }
 )
-map({ 'n', 'x' }, 'gl', '$', { desc = 'go to the end of the line' })
+-- map({ 'n', 'x' }, 'gl', '$', { desc = 'go to the end of the line' })
 -- In visual mode, after going to the end of the line, come back 1 character
 map({ 'x' }, 'gl', '$h', { desc = 'go to end of line' })
 -- when going to the end of the line in visual mode ignore whitespace characters
