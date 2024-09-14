@@ -29,19 +29,15 @@ local force_inactive_filetypes = {
 }
 
 local function setup_colors()
-  if ar.colorscheme == 'onedark' then
-    local P = require('onedark.palette')
-    return P
-  end
-  if ar.colorscheme == 'eldritch' then
-    local C = require('eldritch.colors').default
-    C = vim.tbl_extend('force', C, {
-      blue = C.cyan,
-      dark_orange = C.orange,
-      error_red = C.bright_red,
-    })
-    return C
-  end
+  local P = {
+    bg_dark = ar.highlight.get('Pmenu', 'bg'),
+    blue = ar.highlight.get('DiagnosticInfo', 'bg'),
+    dark_orange = ar.highlight.get('DiagnosticWarn', 'bg'),
+    error_red = ar.highlight.get('DiagnosticError', 'bg'),
+    comment = ar.highlight.get('Comment', 'fg'),
+  }
+  if ar.colorscheme == 'onedark' then P = require('onedark.palette') end
+  return P
 end
 
 ar.augroup('Heirline', {
