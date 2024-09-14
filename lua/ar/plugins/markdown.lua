@@ -52,7 +52,7 @@ return {
   },
   {
     'OXY2DEV/markview.nvim',
-    cond = not minimal and not niceties,
+    cond = not minimal and not niceties and false,
     cmd = { 'Markview' },
     ft = { 'markdown' },
     opts = {},
@@ -171,9 +171,9 @@ return {
   },
   {
     'MeanderingProgrammer/render-markdown.nvim',
-    cond = not minimal and niceties,
+    cond = not minimal,
     cmd = { 'RenderMarkdownToggle' },
-    ft = { 'markdown' },
+    ft = { 'markdown', 'Avante' },
     init = function()
       local color1_bg = '#f265b5'
       local color2_bg = '#37f499'
@@ -207,6 +207,7 @@ return {
       })
     end,
     opts = {
+      file_types = { 'markdown', 'Avante' },
       heading = {
         sign = false,
         -- signs = { '󰫎 ' },

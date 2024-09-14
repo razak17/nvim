@@ -21,6 +21,74 @@ local models = ar.ai.models
 
 return {
   {
+    'yetone/avante.nvim',
+    cond = not minimal and ar.ai.enable,
+    init = function()
+      require('which-key').add({ { '<leader>av', group = 'Avante' } })
+    end,
+    keys = { '<leader>ava', '<leader>avr', '<leader>avs' },
+    cmd = {
+      'Avante',
+      'AvanteAsk',
+      'AvanteBuild',
+      'AvanteChat',
+      'AvanteClear',
+      'AvanteEdit',
+      'AvanteRefresh',
+      'AvanteSwitchProvider',
+      'AvanteToggle',
+    },
+    opts = function()
+      local opts = {
+        behaviour = { auto_set_keymaps = true },
+        mappings = {
+          ask = '<leader>ava',
+          edit = '<leader>ave',
+          refresh = '<leader>avr',
+          toggle = {
+            default = '<leader>avt',
+            debug = '<leader>avd',
+            hint = '<leader>avh',
+            suggestion = '<leader>avs',
+          },
+        },
+      }
+
+      local function set_provider(model_name)
+        opts.provider = model_name
+        opts.auto_suggestions_provider = model_name
+      end
+
+      if find_string(models, 'claude') then
+        set_provider('claude')
+      elseif find_string(models, 'openai') then
+        set_provider('openai')
+      elseif find_string(models, 'gemini') then
+        set_provider('gemini')
+      elseif find_string(models, 'copilot') then
+        set_provider('copilot')
+      end
+      return opts
+    end,
+    build = 'make',
+    dependencies = {
+      {
+        'HakonHarnes/img-clip.nvim',
+        event = 'VeryLazy',
+        opts = {
+          default = {
+            embed_image_as_base64 = false,
+            prompt_for_file_name = false,
+            drag_and_drop = {
+              insert_mode = true,
+            },
+            use_absolute_path = true,
+          },
+        },
+      },
+    },
+  },
+  {
     'olimorris/codecompanion.nvim',
     cond = not minimal and ar.ai.enable,
     init = function()
