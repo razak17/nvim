@@ -10,11 +10,14 @@ return {
       'ChatGPTRun',
       'ChatGPTEditWithInstructions',
     },
+    init = function()
+      require('which-key').add({ { '<leader>ag', group = 'chatGPT' } })
+    end,
     -- stylua: ignore
     keys = {
-      { '<leader>aa', '<cmd>ChatGPTActAs<CR>', desc = 'chatgpt: act as' },
-      { '<leader>ae', '<cmd>ChatGPTEditWithInstructions<CR>', desc = 'chatgpt: edit', },
-      { '<leader>an', '<cmd>ChatGPT<CR>', desc = 'chatgpt: open' },
+      { '<leader>aga', '<cmd>ChatGPTActAs<CR>', desc = 'chatgpt: act as' },
+      { '<leader>age', '<cmd>ChatGPTEditWithInstructions<CR>', desc = 'chatgpt: edit', },
+      { '<leader>agn', '<cmd>ChatGPT<CR>', desc = 'chatgpt: open' },
     },
     opts = function()
       local border = {

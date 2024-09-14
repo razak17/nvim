@@ -288,7 +288,7 @@ return {
         name = 'ChatGPT',
         hint = chatgpt_hint,
         mode = { 'n', 'x' },
-        body = '<leader>ar',
+        body = '<leader>aa',
         config = base_config({
           color = 'teal',
           hint = { position = 'middle' },

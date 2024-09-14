@@ -84,12 +84,14 @@ return {
 
       opts.adapters = {}
 
-      if find_string(models, 'anthropic') then
-        set_adapter_and_strategy('anthropic')
+      if find_string(models, 'claude') then
+        set_adapter_and_strategy('claude')
       elseif find_string(models, 'openai') then
         set_adapter_and_strategy('openai')
       elseif find_string(models, 'gemini') then
         set_adapter_and_strategy('gemini')
+      elseif find_string(models, 'copilot') then
+        set_adapter_and_strategy('copilot')
       end
 
       return opts
@@ -106,9 +108,12 @@ return {
     cond = not minimal and ar.ai.enable and find_string(models, 'copilot'),
     cmd = 'Copilot',
     event = 'InsertEnter',
+    init = function()
+      require('which-key').add({ { '<leader>ap', group = 'Copilot' } })
+    end,
     keys = {
-      { '<leader>ap', '<Cmd>Copilot panel<CR>', desc = 'copilot: panel' },
-      { '<leader>at', '<Cmd>Copilot toggle<CR>', desc = 'copilot: toggle' },
+      { '<leader>app', '<Cmd>Copilot panel<CR>', desc = 'copilot: panel' },
+      { '<leader>apt', '<Cmd>Copilot toggle<CR>', desc = 'copilot: toggle' },
     },
     opts = {
       -- If copilot-cmp is enabled, set panel & suggestions to false
@@ -143,10 +148,13 @@ return {
   {
     'piersolenski/wtf.nvim',
     cond = not minimal and ar.lsp.enable and ar.ai.enable,
+    init = function()
+      require('which-key').add({ { '<leader>aw', group = 'wtf' } })
+    end,
     -- stylua: ignore
     keys = {
-      { '<leader>ao', function() require('wtf').ai() end, desc = 'wtf: debug diagnostic with AI', },
-      { '<leader>ag', function() require('wtf').search() end, desc = 'wtf: google search diagnostic', },
+      { '<leader>awo', function() require('wtf').ai() end, desc = 'wtf: debug diagnostic with AI', },
+      { '<leader>awg', function() require('wtf').search() end, desc = 'wtf: google search diagnostic', },
     },
     opts = {
       popup_type = 'horizontal', -- | 'popup' | 'horizontal' | 'vertical',
