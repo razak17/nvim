@@ -1,6 +1,6 @@
 ; extends
 
-; bullet points
+;; ; bullet points
 ([(list_marker_minus) (list_marker_star)] @punctuation.special (#offset! @punctuation.special 0 0 0 -1) (#set! conceal "•"))
 
 ; Checkbox list items
@@ -40,5 +40,5 @@
   (task_list_marker_unchecked)
   ))
 
-([(task_list_marker_checked)] @conceal (#set! conceal "✅"))
-([(task_list_marker_unchecked)] @conceal (#set! conceal "🔲"))
+([(task_list_marker_checked)] @conceal (#set! conceal "")) ;; ✅
+([(task_list_marker_unchecked)] @conceal (#set! conceal " ")) ;; 🔲

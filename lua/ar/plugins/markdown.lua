@@ -233,11 +233,11 @@ return {
       checkbox = {
         enabled = not ar.treesitter.enable,
         unchecked = {
-          icon = '🔲',
+          icon = '', -- 🔲
           highlight = '@markup.list.unchecked',
         },
         checked = {
-          icon = '✅',
+          icon = '', -- ✅
           highlight = '@markup.heading',
         },
       },
