@@ -153,7 +153,7 @@ return {
       opts.adapters = {}
 
       if find_string(models, 'claude') then
-        set_adapter_and_strategy('claude')
+        set_adapter_and_strategy('anthropic')
       elseif find_string(models, 'openai') then
         set_adapter_and_strategy('openai')
       elseif find_string(models, 'gemini') then
