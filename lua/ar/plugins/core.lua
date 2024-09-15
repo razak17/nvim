@@ -24,6 +24,7 @@ return {
   },
   {
     'smjonas/live-command.nvim',
+    cond = not minimal,
     event = 'VeryLazy',
     opts = {
       commands = {
