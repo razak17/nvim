@@ -237,33 +237,16 @@ if ar.is_available('CopilotChat.nvim') then
   M.options.copilot_chat = {
     ['Clear Buffer and Chat History'] = 'CopilotChatReset',
     ['Toggle Copilot Chat Vsplit'] = 'CopilotChatToggle',
-    ['Help Actions'] = function()
-      local actions = require('CopilotChat.actions')
-      local integrations = require('CopilotChat.integrations.telescope')
-      integrations.pick(actions.help_actions())
-    end,
-    ['Prompt Actions'] = function()
-      local actions = require('CopilotChat.actions')
-      local integrations = require('CopilotChat.integrations.telescope')
-      integrations.pick(actions.prompt_actions())
-    end,
-    ['Save Chat'] = function()
-      local date = os.date('%Y-%m-%d_%H-%M-%S')
-      vim.cmd('CopilotChatSave ' .. date)
-    end,
+    ['Help Actions'] = "lua require'ar.menus.ai'.help_actions()",
+    ['Prompt Actions'] = "lua require'ar.menus.ai'.prompt_actions()",
+    ['Save Chat'] = "lua require'ar.menus.ai'.save_chat()",
     ['Explain Code'] = 'CopilotChatExplain',
     ['Generate Tests'] = 'CopilotChatTests',
     ['Review Code'] = 'CopilotChatReview',
     ['Refactor Code'] = 'CopilotChatRefactor',
     ['Better Naming'] = 'CopilotChatBetterNamings',
-    ['Quick Chat'] = function()
-      local input = vim.fn.input('Quick Chat: ')
-      if input ~= '' then vim.cmd('CopilotChatBuffer ' .. input) end
-    end,
-    ['Ask Input'] = function()
-      local input = vim.fn.input('Ask Copilot: ')
-      if input ~= '' then vim.cmd('CopilotChat ' .. input) end
-    end,
+    ['Quick Chat'] = "lua require'ar.menus.ai'.quick_chat()",
+    ['Ask Input'] = "lua require'ar.menus.ai'.ask_input()",
     ['Generate Commit Message'] = 'CopilotChatCommit',
     ['Generate Commit Message For Staged Changes'] = 'CopilotChatCommitStaged',
     ['Debug Info'] = 'CopilotChatDebugInfo',
