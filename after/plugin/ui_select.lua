@@ -421,6 +421,17 @@ M.options.command_palette = {
     vim.notify(fmt('Large file has been %s', status))
   end,
   ['Add surround HTML tag'] = 'AddSurroundingTag',
+  ['Generate Types From JSON'] = function()
+    if not ar.is_available('nvim-quicktype') then
+      vim.notify(
+        'nvim-quicktype is not available',
+        'error',
+        { title = 'Error' }
+      )
+      return
+    end
+    vim.cmd('QuickType')
+  end,
 }
 
 local command_palette_menu = function()
