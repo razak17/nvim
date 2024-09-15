@@ -1,4 +1,5 @@
 local api, fn, o = vim.api, vim.fn, vim.o
+local fmt = string.format
 local M = {}
 
 local should_profile = os.getenv('NVIM_PROFILE')
@@ -114,6 +115,39 @@ function M.close_nonvisible_buffers()
     end
   end
   print('Deleted ' .. deleted_count .. ' buffers')
+end
+
+function M.toggle_minipairs()
+  if not ar.is_available('mini.pairs') then
+    vim.notify('mini.pairs is not available', 'error', { title = 'Error' })
+    return
+  end
+  vim.g.minipairs_disable = not vim.g.minipairs_disable
+  if vim.g.minipairs_disable then
+    vim.notify('Disabled auto pairs')
+  else
+    vim.notify('Enabled auto pairs')
+  end
+end
+
+function M.toggle_autosave()
+  ar.autosave.enable = not ar.autosave.enable
+  local status = ar.autosave.enable and 'enabled' or 'disabled'
+  vim.notify(fmt('Autosave has been %s', status))
+end
+
+function M.toggle_large_file()
+  ar.large_file.enable = not ar.large_file.enable
+  local status = ar.large_file.enable and 'enabled' or 'disabled'
+  vim.notify(fmt('Large file has been %s', status))
+end
+
+function M.generate_types()
+  if not ar.is_available('nvim-quicktype') then
+    vim.notify('nvim-quicktype is not available', 'error', { title = 'Error' })
+    return
+  end
+  vim.cmd('QuickType')
 end
 
 return M

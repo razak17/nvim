@@ -347,43 +347,14 @@ M.options.command_palette = {
   ['RenderMarkdown Toggle'] = 'RenderMarkdown toggle',
   ['Code Pad'] = 'QuickCodePad',
   ['Run Code'] = 'Build',
-  ['Toggle Auto Pairs'] = function()
-    if not ar.is_available('mini.pairs') then
-      vim.notify('mini.pairs is not available', 'error', { title = 'Error' })
-      return
-    end
-    vim.g.minipairs_disable = not vim.g.minipairs_disable
-    if vim.g.minipairs_disable then
-      vim.notify('Disabled auto pairs')
-    else
-      vim.notify('Enabled auto pairs')
-    end
-  end,
+  ['Toggle Auto Pairs'] = "lua require'ar.menus.command_palette'.toggle_minipairs()",
   ['Toggle Markview'] = 'Markview',
   ['Open Messages'] = 'MsgsToFileAndOpen',
   ['Clear Messages'] = function() vim.cmd('messages clear') end,
-  ['Toggle Autosave'] = function()
-    ar.autosave.enable = not ar.autosave.enable
-    local status = ar.autosave.enable and 'enabled' or 'disabled'
-    vim.notify(fmt('Autosave has been %s', status))
-  end,
-  ['Toggle Large File'] = function()
-    ar.large_file.enable = not ar.large_file.enable
-    local status = ar.large_file.enable and 'enabled' or 'disabled'
-    vim.notify(fmt('Large file has been %s', status))
-  end,
+  ['Toggle Autosave'] = "lua require'ar.menus.command_palette'.toggle_minipairs()",
+  ['Toggle Large File'] = "lua require'ar.menus.command_palette'.toggle_large_file()",
   ['Add surround HTML tag'] = 'AddSurroundingTag',
-  ['Generate Types From JSON'] = function()
-    if not ar.is_available('nvim-quicktype') then
-      vim.notify(
-        'nvim-quicktype is not available',
-        'error',
-        { title = 'Error' }
-      )
-      return
-    end
-    vim.cmd('QuickType')
-  end,
+  ['Generate Types From JSON'] = "lua require'ar.menus.command_palette'.generate_types()",
 }
 
 local command_palette_menu = function()
