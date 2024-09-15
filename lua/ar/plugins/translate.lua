@@ -6,16 +6,21 @@ return {
   {
     'potamides/pantran.nvim',
     cond = not minimal,
+    init = function()
+      require('which-key').add({
+        { '<leader><leader>tt', group = 'Translate' },
+      })
+    end,
     keys = {
       {
-        '<leader><leader>tm',
+        '<leader><leader>ttm',
         function() return require('pantran').motion_translate() end,
         mode = { 'n', 'x' },
         expr = true,
         desc = 'motion',
       },
       {
-        '<leader><leader>tp',
+        '<leader><leader>ttp',
         '<cmd>Pantran<CR>',
         mode = { 'n', 'v' },
         desc = 'prompt',

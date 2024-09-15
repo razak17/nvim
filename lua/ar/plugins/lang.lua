@@ -24,14 +24,19 @@ return {
     'Redoxahmii/json-to-types.nvim',
     cond = not minimal,
     build = 'sh install.sh npm',
+    init = function()
+      require('which-key').add({
+        { '<leader><leader>tj', group = 'JSON to types' },
+      })
+    end,
     keys = {
       {
-        '<leader>tju',
+        '<leader><leader>tju',
         '<Cmd>ConvertJSONtoLang typescript<CR>',
         desc = 'Convert JSON to TS',
       },
       {
-        '<leader>tjt',
+        '<leader><leader>tjt',
         '<Cmd>ConvertJSONtoLangBuffer typescript<CR>',
         desc = 'Convert JSON to TS in buffer',
       },

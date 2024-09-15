@@ -67,7 +67,6 @@ return {
         { '<leader><leader>l', desc = 'LSP' },
         { '<leader><leader>m', desc = 'Markdown' },
         { '<leader><leader>n', group = 'Sticky Note' },
-        { '<leader><leader>t', group = 'Translate' },
         { '<leader><localleader>', group = 'Advanced' },
         { '<leader><localleader>r', group = 'Rustlings' },
       },
