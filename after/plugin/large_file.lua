@@ -60,7 +60,7 @@ local function is_excluded(bufnr)
 end
 
 ar.augroup('LargeFileAutocmds', {
-  event = { 'BufReadPre' },
+  event = { 'BufReadPre', 'BufEnter' },
   command = function(args)
     if not ar.large_file.enable then return end
 
