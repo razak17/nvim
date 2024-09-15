@@ -112,6 +112,7 @@ map(
   { desc = '[f]ile [a]ctions: open menu for file actions' }
 )
 -- TODO: Figure out what to do with these
+-- FIX: these are not working
 map(
   'n',
   '<leader>Ff',
@@ -202,43 +203,11 @@ if ar.lsp.enable then
     ['Goto Workspace Symbol'] = "lua require'ar.menus.lsp'.filter_lsp_workspace_symbols()",
     ['Goto Workspace Symbol Under Cursor'] = "lua require'ar.menus.lsp'.ws_symbol_under_cursor()",
     ['Preview Code Actions'] = 'lua require("actions-preview").code_actions()',
-    ['Organize Imports'] = function()
-      if ar.is_available('typescript-tools.nvim') then
-        vim.cmd('TSToolsOrganizeImports')
-      elseif ar.is_available('nvim-vtsls') then
-        vim.cmd('VtsExec organize_imports')
-      elseif ar.find_string(ar.lsp.lang.typescript, 'ts_ls') then
-        vim.cmd('OrganizeImports')
-      end
-    end,
-    ['Add Missing Imports'] = function()
-      if ar.is_available('typescript-tools.nvim') then
-        vim.cmd('TSToolsAddMissingImports')
-      elseif ar.is_available('nvim-vtsls') then
-        vim.cmd('VtsExec add_missing_imports')
-      end
-    end,
-    ['Remove Unused Imports'] = function()
-      if ar.is_available('typescript-tools.nvim') then
-        vim.cmd('TSToolsRemoveUnusedImports')
-      elseif ar.is_available('nvim-vtsls') then
-        vim.cmd('VtsExec remove_unused_imports')
-      end
-    end,
-    ['Remove Unused'] = function()
-      if ar.is_available('typescript-tools.nvim') then
-        vim.cmd('TSToolsRemoveUnused')
-      elseif ar.is_available('nvim-vtsls') then
-        vim.cmd('VtsExec remove_unused')
-      end
-    end,
-    ['Fix All'] = function()
-      if ar.is_available('typescript-tools.nvim') then
-        vim.cmd('TSToolsFixAll')
-      elseif ar.is_available('nvim-vtsls') then
-        vim.cmd('VtsExec fix_all')
-      end
-    end,
+    ['Organize Imports'] = "lua require'ar.menus.lsp'.organize_imports()",
+    ['Add Missing Imports'] = "lua require'ar.menus.lsp'.add_missing_imports()",
+    ['Remove Unused Imports'] = "lua require'ar.menus.lsp'.remove_unused_imports()",
+    ['Remove Unused'] = "lua require'ar.menus.lsp'.remove_unused()",
+    ['Fix All'] = "lua require'ar.menus.lsp'.fix_all()",
     ['Toggle Tailwind Conceal'] = 'TailwindConcealEnable',
     ['Toggle Tailwind Colors'] = 'TailwindColorToggle',
     ['Sort Tailwind Classes'] = 'TailwindSort',
