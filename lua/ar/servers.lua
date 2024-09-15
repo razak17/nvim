@@ -220,7 +220,7 @@ local servers = {
       settings = {
         logLevel = 'error',
         lint = {
-          ignore = { 'D100' },  -- ignore missing module docstring
+          ignore = { 'D100' }, -- ignore missing module docstring
         },
       },
     },

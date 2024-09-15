@@ -6,7 +6,7 @@ local fn = vim.fn
 -- To use it, uncomment this, exit nvim and write "nvim leetcode.nvim"
 return {
   'kawre/leetcode.nvim',
-    cond = not ar.plugins.minimal,
+  cond = not ar.plugins.minimal,
   init = function(_, opts)
     if vim.tbl_contains(fn.argv(), 'leetcode.nvim') then
       require('leetcode').setup(opts)
