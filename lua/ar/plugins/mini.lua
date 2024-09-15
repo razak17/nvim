@@ -66,15 +66,6 @@ local function ai_buffer(ai_type)
   }
 end
 
-local function deepcopy_with_prefix(base, prefix, desc_modify)
-  local new_table = vim.deepcopy(base)
-  for _, v in pairs(new_table) do
-    v[1] = prefix .. v[1]
-    if desc_modify then v.desc = v.desc:gsub(' including.*', '') end
-  end
-  return new_table
-end
-
 return {
   {
     'echasnovski/mini.hipatterns',
