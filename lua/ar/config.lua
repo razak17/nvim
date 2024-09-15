@@ -30,6 +30,7 @@ local env = vim.env
 ---@alias ArLspProgress 'noice' | 'builtin'
 ---@alias ArTypescriptLsp 'ts_ls' | 'typescript-tools' | 'vtsls'
 ---@alias ArPythonLsp 'pyright' | 'ruff' | 'jedi_language_server' | 'basedpyright'
+---@alias ArCompletionIcons 'lspkind' | 'mini.icons'
 
 ---@class ArLsp
 ---@field disabled ArLspDisabled
@@ -232,6 +233,8 @@ local namespace = {
   },
   completion = {
     enable = env.RVIM_COMPLETION_ENABLED == '1',
+    ---@type ArCompletionIcons
+    icons = 'lspkind'
   },
   treesitter = {
     enable = env.RVIM_TREESITTER_ENABLED == '1',

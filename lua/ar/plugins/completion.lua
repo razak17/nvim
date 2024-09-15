@@ -13,6 +13,7 @@ return {
       local snippet = vim.snippet
       local cmp = require('cmp')
       local luasnip_avail, luasnip = pcall(require, 'luasnip')
+      local MiniIcons = require('mini.icons')
       local symbols = require('lspkind').symbol_map
       local codicons = ui.codicons
       local MIN_MENU_WIDTH, MAX_MENU_WIDTH =
@@ -215,7 +216,13 @@ return {
               not ar.find_string(custom_sources, entry.source.name)
               and item.kind ~= 'Color'
             then
-              item.kind = format_icon(symbols[item.kind])
+              if ar.completion.icons == 'mini.icons' then
+                local icon, hl = MiniIcons.get('lsp', item.kind)
+                item.kind = icon
+                item.kind_hl_group = hl
+              elseif ar.completion.icons == 'lspkind' then
+                item.kind = format_icon(symbols[item.kind])
+              end
             end
             if entry.source.name == 'emoji' then
               item.kind = format_icon(codicons.misc.smiley)
@@ -252,7 +259,13 @@ return {
               item = require('cmp-tailwind-colors').format(entry, item)
               item.menu = '[COLOR]'
               if item.kind == 'Color' then
-                item.kind = format_icon(symbols[item.kind])
+                if ar.completion.icons == 'mini.icons' then
+                  local icon, hl = MiniIcons.get('lsp', item.kind)
+                  item.kind = icon
+                  item.kind_hl_group = hl
+                elseif ar.completion.icons == 'lspkind' then
+                  item.kind = format_icon(symbols[item.kind])
+                end
               end
             end
             return item
