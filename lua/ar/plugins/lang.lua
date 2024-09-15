@@ -216,6 +216,12 @@ return {
         root_markers = { 'pyproject.toml', 'setup.py', '.git', 'manage.py' },
         virtual_env_names = { 'env' },
       },
+      keymaps = {
+        resolve_import_under_cursor = {
+          desc = 'resolve import under cursor',
+          keys = '<leader><leader>li',
+        },
+      },
     },
     dependencies = { 'stevearc/dressing.nvim' },
   },
