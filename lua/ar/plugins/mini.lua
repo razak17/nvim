@@ -1,3 +1,4 @@
+local api, fn = vim.api, vim.fn
 local separators = ar.ui.icons.separators
 local minimal = ar.plugins.minimal
 
@@ -7,7 +8,7 @@ local minimal = ar.plugins.minimal
 -- "a" is line-wise, "i" is character-wise.
 local function ai_indent(ai_type)
   local spaces = (' '):rep(vim.o.tabstop)
-  local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+  local lines = api.nvim_buf_get_lines(0, 0, -1, false)
   local indents = {} ---@type {line: number, indent: number, text: string}[]
 
   for l, line in ipairs(lines) do
@@ -47,11 +48,11 @@ end
 
 -- taken from MiniExtra.gen_ai_spec.buffer
 local function ai_buffer(ai_type)
-  local start_line, end_line = 1, vim.fn.line('$')
+  local start_line, end_line = 1, fn.line('$')
   if ai_type == 'i' then
     -- Skip first and last blank lines for `i` textobject
     local first_nonblank, last_nonblank =
-      vim.fn.nextnonblank(start_line), vim.fn.prevnonblank(end_line)
+      fn.nextnonblank(start_line), fn.prevnonblank(end_line)
     -- Do nothing for buffer with all blanks
     if first_nonblank == 0 or last_nonblank == 0 then
       return { from = { line = start_line, col = 1 } }
@@ -59,7 +60,7 @@ local function ai_buffer(ai_type)
     start_line, end_line = first_nonblank, last_nonblank
   end
 
-  local to_col = math.max(vim.fn.getline(end_line):len(), 1)
+  local to_col = math.max(fn.getline(end_line):len(), 1)
   return {
     from = { line = start_line, col = 1 },
     to = { line = end_line, col = to_col },
@@ -69,6 +70,9 @@ end
 return {
   {
     'echasnovski/mini.hipatterns',
+    cond = (
+      io.open(fn.expand('%:p:h') .. '/.lazy.lua', 'r') ~= nil and not minimal
+    ) or minimal,
     event = { 'BufRead', 'BufNewFile' },
     opts = function()
       local hipatterns = require('mini.hipatterns')
