@@ -119,6 +119,7 @@ local servers = {
       workingDirectories = { mode = 'auto' },
     },
   },
+  elixirls = {},
   emmet_ls = {
     root_dir = function(fname)
       return require('lspconfig/util').root_pattern('package.json')(fname)
