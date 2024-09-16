@@ -2,11 +2,7 @@ local M = {}
 
 local function get_params(with_children)
   local folder = vim.fn.expand('%:h')
-  local params = {
-    path_display = function(_, p)
-      return string.gsub(p, ar.escape_pattern(folder .. '/'), '')
-    end,
-  }
+  local params = {}
   if with_children then
     params.search_dirs = { folder }
   else

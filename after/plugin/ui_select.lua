@@ -112,7 +112,6 @@ map(
   { desc = '[f]ile [a]ctions: open menu for file actions' }
 )
 -- TODO: Figure out what to do with these
--- FIX: these are not working
 map(
   'n',
   '<leader>Ff',
