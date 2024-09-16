@@ -1,12 +1,12 @@
 ; extends
 
-;; ; bullet points
-([(list_marker_minus) (list_marker_star)] @punctuation.special (#offset! @punctuation.special 0 0 0 -1) (#set! conceal "•"))
+; bullet points
+; ([(list_marker_minus) (list_marker_star)] @punctuation.special (#offset! @punctuation.special 0 0 0 -1) (#set! conceal "•"))
 
 ; Checkbox list items
-((task_list_marker_unchecked) @punctuation.special (#offset! @punctuation.special 0 -2 0 0) (#set! conceal ""))
-((task_list_marker_checked) @comment (#offset! @comment 0 -2 0 0) (#set! conceal ""))
-(list_item (task_list_marker_checked)) @comment
+; ((task_list_marker_unchecked) @punctuation.special (#offset! @punctuation.special 0 -2 0 0) (#set! conceal ""))
+; ((task_list_marker_checked) @comment (#offset! @comment 0 -2 0 0) (#set! conceal ""))
+; (list_item (task_list_marker_checked)) @comment
 
 ; Use box drawing characters for tables
 (pipe_table_header ("|") @punctuation.special @conceal (#set! conceal "┃"))
@@ -28,17 +28,17 @@
 ; (fenced_code_block) @codeblock
 ; (indented_code_block) @codeblock
 
-(list
- (list_item
-  (list_marker_minus) @conceal (#set! conceal "")
-  (task_list_marker_checked)
-  ))
-
-(list
- (list_item
-  (list_marker_minus) @conceal (#set! conceal "")
-  (task_list_marker_unchecked)
-  ))
-
-([(task_list_marker_checked)] @conceal (#set! conceal "")) ;; ✅
-([(task_list_marker_unchecked)] @conceal (#set! conceal " ")) ;; 🔲
+; (list
+;  (list_item
+;   (list_marker_minus) @conceal (#set! conceal "")
+;   (task_list_marker_checked)
+;   ))
+;
+; (list
+;  (list_item
+;   (list_marker_minus) @conceal (#set! conceal "")
+;   (task_list_marker_unchecked)
+;   ))
+;
+; ([(task_list_marker_checked)] @conceal (#set! conceal "")) ;; ✅
+; ([(task_list_marker_unchecked)] @conceal (#set! conceal "")) ;; 🔲

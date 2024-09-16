@@ -231,7 +231,8 @@ return {
         },
       },
       checkbox = {
-        enabled = not ar.treesitter.enable,
+        enabled = true,
+		    position = "overlay",
         unchecked = {
           icon = '', -- 🔲
           highlight = '@markup.list.unchecked',
@@ -241,8 +242,8 @@ return {
           highlight = '@markup.heading',
         },
       },
-      bullets = {
-        enabled = false,
+      bullet = {
+        enabled = true,
         icons = { '▶', '○', '●', '▷' }, --  '◆', '◇'
         highlight = 'Directory',
       },
