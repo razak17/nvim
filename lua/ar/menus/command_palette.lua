@@ -117,19 +117,6 @@ function M.close_nonvisible_buffers()
   print('Deleted ' .. deleted_count .. ' buffers')
 end
 
-function M.toggle_minipairs()
-  if not ar.is_available('mini.pairs') then
-    vim.notify('mini.pairs is not available', 'error', { title = 'Error' })
-    return
-  end
-  vim.g.minipairs_disable = not vim.g.minipairs_disable
-  if vim.g.minipairs_disable then
-    vim.notify('Disabled auto pairs')
-  else
-    vim.notify('Enabled auto pairs')
-  end
-end
-
 function M.toggle_autosave()
   ar.autosave.enable = not ar.autosave.enable
   local status = ar.autosave.enable and 'enabled' or 'disabled'
