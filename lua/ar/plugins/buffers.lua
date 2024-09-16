@@ -39,7 +39,6 @@ return {
     },
     opts = {},
   },
-
   {
     'jlanzarotta/bufexplorer',
     cond = not minimal,
@@ -52,7 +51,7 @@ return {
     'kazhala/close-buffers.nvim',
     cmd = { 'BDelete', 'BWipeout' },
     keys = {
-      { '<leader>c', '<Cmd>BDelete this<CR>', desc = 'buffer delete' },
+      { '<leader>qb', '<Cmd>BDelete this<CR>', desc = 'buffer delete' },
       -- { '<leader>x', '<Cmd>BDelete this<CR><Cmd>q<CR>', desc = 'close & exit' },
     },
   },

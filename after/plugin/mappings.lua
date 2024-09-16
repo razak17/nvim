@@ -49,8 +49,11 @@ nnoremap('<leader>x', '"_x', { desc = 'delete char (no copy)' })
 vnoremap('<leader>p', '"_dP', { desc = 'greatest remap' })
 -- Next greatest remap ever : asbjornHaland
 map({ 'n', 'x' }, '<leader>y', '"+y', { desc = 'yank' })
+map({ 'n', 'x' }, '<leader>Y', '"_Y', { desc = 'yank' })
 map({ 'n', 'x' }, '<leader>d', '"_d', { desc = 'delete' })
 map({ 'n', 'x' }, '<leader>D', '"_D', { desc = 'Delete' })
+map({ 'n', 'x' }, '<leader>c', '"_c', { desc = 'cut' })
+map({ 'n', 'x' }, '<leader>C', '"_C', { desc = 'cut' })
 -- nnoremap('<localleader>vc', ':let @+=@:<cr>', { desc = 'yank last ex command text' })
 -- nnoremap(
 --  '<localleader>vm',
@@ -282,7 +285,7 @@ if not is_available('cybu.nvim') then
   nnoremap('gP', '<cmd>bnext<CR>', { desc = 'next buffer' })
 end
 if not is_available('close-buffers.nvim') then
-  nnoremap('<leader>c', ':bdel<CR>', { desc = 'delete buffer' })
+  nnoremap('<leader>qb', ':bdel<CR>', { desc = 'delete buffer' })
 end
 if not is_available('neo-tree.nvim') then
   nnoremap('<C-n>', ':Ex<CR>', { desc = 'explorer' })
