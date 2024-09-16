@@ -202,6 +202,20 @@ function ar.is_available(plugin)
   return lazy_config.plugins[plugin] ~= nil
 end
 
+---@param plugin string The plugin to search for.
+---@return boolean available # Whether the plugin is available.
+function ar.plugin_available(plugin)
+  if not ar.is_available(plugin) then
+    vim.notify(
+      fmt('%s is not available', plugin),
+      L.INFO,
+      { title = 'Plugins' }
+    )
+    return false
+  end
+  return true
+end
+
 --- Check if a plugin is loaded
 ---@param plugin string The plugin to search for.
 ---@return boolean loaded # Whether the plugin is loaded.

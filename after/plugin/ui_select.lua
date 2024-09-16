@@ -3,7 +3,6 @@ local enabled = ar.ui_select.enable
 if not ar or ar.none or not ar.plugins.enable or not enabled then return end
 
 local fn = vim.fn
-local fmt = string.format
 local frecency = require('ar.frecency')
 
 local M = {

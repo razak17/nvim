@@ -161,6 +161,7 @@ return {
             function() -- jump to first file in the diff
               local view = require('diffview.lib').get_current_view()
               if view then
+                ---@diagnostic disable-next-line: undefined-field
                 view:set_file(view.panel:ordered_file_list()[1], false, true)
               end
             end,
@@ -255,15 +256,15 @@ return {
           end
         end
 
-          local function jump(options)
-            return ar.demicolon_jump(function(opts)
-              local direction = opts.forward and 'next' or 'prev'
-              gs.nav_hunk(direction)
-            end, options)
-          end
+        local function jump(options)
+          return ar.demicolon_jump(function(opts)
+            local direction = opts.forward and 'next' or 'prev'
+            gs.nav_hunk(direction)
+          end, options)
+        end
 
-          map('n', ']h', jump({ forward = true }), { desc = 'next hunk' })
-          map('n', '[h', jump({ forward = false }), { desc = 'previous hunk' })
+        map('n', ']h', jump({ forward = true }), { desc = 'next hunk' })
+        map('n', '[h', jump({ forward = false }), { desc = 'previous hunk' })
       end,
     },
   },

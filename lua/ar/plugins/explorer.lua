@@ -26,10 +26,7 @@ local function on_rename(from, to)
 end
 
 local function find_or_search_in_dir(cwd, find_or_search)
-  if not ar.is_available('telescope.nvim') then
-    vim.notify('telescope.nvim is not available')
-    return
-  end
+  if not ar.plugin_available('telescope.nvim') then return end
   if find_or_search == 'find' then
     require('telescope.builtin').find_files({
       cwd = cwd,

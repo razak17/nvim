@@ -130,10 +130,7 @@ function M.toggle_large_file()
 end
 
 function M.generate_types()
-  if not ar.is_available('nvim-quicktype') then
-    vim.notify('nvim-quicktype is not available', 'error', { title = 'Error' })
-    return
-  end
+  if not ar.plugin_available('nvim-quicktype') then return end
   vim.cmd('QuickType')
 end
 

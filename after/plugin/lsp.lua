@@ -273,7 +273,7 @@ local function setup_mappings(client, bufnr)
       'n',
       'gL',
       function()
-        if not is_available('lsplinks.nvim') then return end
+        if not ar.plugin_available('lsplinks.nvim') then return end
         require('lsplinks').gx()
       end,
       desc = 'open lsp links',

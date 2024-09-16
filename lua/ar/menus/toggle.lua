@@ -55,7 +55,7 @@ function M.toggle_conceal_cursor()
 end
 
 function M.toggle_sunglasses()
-  if not ar.is_available('sunglasses.nvim') then return end
+  if not ar.plugin_available('sunglasses.nvim') then return end
   local is_shaded
   for _, winnr in ipairs(vim.api.nvim_list_wins()) do
     is_shaded = require('sunglasses.window').get(winnr):is_shaded()
@@ -69,7 +69,7 @@ function M.toggle_sunglasses()
 end
 
 function M.toggle_minipairs()
-  if not ar.is_available('mini.pairs') then return end
+  if not ar.plugin_available('mini.pairs') then return end
   vim.g.minipairs_disable = not vim.g.minipairs_disable
   if vim.g.minipairs_disable then
     vim.notify('Disabled auto pairs', 'warn', { title = 'Option' })
