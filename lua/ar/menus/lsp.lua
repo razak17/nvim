@@ -460,7 +460,7 @@ function M.remove_unused_imports()
   end
 end
 
-function M.remove_unuseds()
+function M.remove_unused()
   if ar.plugin_available('typescript-tools.nvim') then
     vim.cmd('TSToolsRemoveUnused')
   elseif ar.plugin_available('nvim-vtsls') then
