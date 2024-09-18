@@ -19,14 +19,14 @@ local function typescript_tools_cond()
   if ar.plugin_disabled('typescript-tools.nvim') or not ar.lsp.enable then
     return false
   end
-  return ar.find_string(ar.lsp.lang.typescript, 'typescript-tools')
+  return ar.lsp.lang.typescript == 'typescript-tools'
 end
 
 return {
   'dmmulroy/ts-error-translator.nvim',
   {
     'yioneko/nvim-vtsls',
-    cond = ar.find_string(ar.lsp.lang.typescript, 'vtsls'),
+    cond = ar.lsp.lang.typescript == 'vtsls',
     ft = filetypes,
   },
   {

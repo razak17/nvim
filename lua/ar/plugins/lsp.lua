@@ -54,10 +54,10 @@ return {
             local ts_lang = ar.lsp.lang.typescript
             local py_lang = ar.lsp.lang.python
 
-            local ts_ls = find_string(ts_lang, 'ts_ls')
-            local vtsls = find_string(ts_lang, 'vtsls')
+            local ts_ls = ts_lang == 'ts_ls'
+            local vtsls = ts_lang == 'vtsls'
             local ts_tools = (name == 'ts_ls' or name == 'vtsls')
-              and find_string(ts_lang, 'typescript-tools')
+              and ts_lang == 'typescript-tools'
 
             local pyright = find_string(py_lang, 'pyright')
             local basedpyright = find_string(py_lang, 'basedpyright')

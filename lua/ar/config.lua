@@ -161,8 +161,8 @@ local namespace = {
     lang = {
       ---@type table<ArPythonLsp>
       python = { 'jedi_language_server', 'ruff' },
-      ---@type table<ArTypescriptLsp>
-      typescript = { 'typescript-tools' },
+      ---@type ArTypescriptLsp
+      typescript = 'typescript-tools',
     },
     null_ls = { enable = false },
     omnifunc = { enable = true },
@@ -234,7 +234,7 @@ local namespace = {
   completion = {
     enable = env.RVIM_COMPLETION_ENABLED == '1',
     ---@type ArCompletionIcons
-    icons = 'lspkind'
+    icons = 'lspkind',
   },
   treesitter = {
     enable = env.RVIM_TREESITTER_ENABLED == '1',

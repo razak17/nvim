@@ -439,7 +439,7 @@ function M.organize_imports()
     vim.cmd('TSToolsOrganizeImports')
   elseif ar.plugin_available('nvim-vtsls') then
     vim.cmd('VtsExec organize_imports')
-  elseif ar.find_string(ar.lsp.lang.typescript, 'ts_ls') then
+  elseif ar.lsp.lang.typescript == 'ts_ls' then
     vim.cmd('OrganizeImports')
   end
 end
