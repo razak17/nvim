@@ -265,7 +265,9 @@ return {
             if client == 'lua_ls' then
               local content = vim.tbl_get(message.opts, 'progress', 'message')
               print('content=' .. vim.inspect(content))
-              return content ~= nil
+              local is_processing = string.match(content, '^lua/(.-)%.lua$')
+                ~= nil
+              return content ~= nil and not is_processing
             end
             return false
           end,
