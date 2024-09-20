@@ -435,9 +435,9 @@ function M.ws_symbol_under_cursor()
 end
 
 function M.organize_imports()
-  if ar.plugin_available('typescript-tools.nvim') then
+  if ar.is_available('typescript-tools.nvim') then
     vim.cmd('TSToolsOrganizeImports')
-  elseif ar.plugin_available('nvim-vtsls') then
+  elseif ar.is_available('nvim-vtsls') then
     vim.cmd('VtsExec organize_imports')
   elseif ar.lsp.lang.typescript == 'ts_ls' then
     vim.cmd('OrganizeImports')
@@ -445,33 +445,33 @@ function M.organize_imports()
 end
 
 function M.add_missing_imports()
-  if ar.plugin_available('typescript-tools.nvim') then
+  if ar.is_available('typescript-tools.nvim') then
     vim.cmd('TSToolsAddMissingImports')
-  elseif ar.plugin_available('nvim-vtsls') then
+  elseif ar.is_available('nvim-vtsls') then
     vim.cmd('VtsExec add_missing_imports')
   end
 end
 
 function M.remove_unused_imports()
-  if ar.plugin_available('typescript-tools.nvim') then
+  if ar.is_available('typescript-tools.nvim') then
     vim.cmd('TSToolsRemoveUnusedImports')
-  elseif ar.plugin_available('nvim-vtsls') then
+  elseif ar.is_available('nvim-vtsls') then
     vim.cmd('VtsExec remove_unused_imports')
   end
 end
 
 function M.remove_unused()
-  if ar.plugin_available('typescript-tools.nvim') then
+  if ar.is_available('typescript-tools.nvim') then
     vim.cmd('TSToolsRemoveUnused')
-  elseif ar.plugin_available('nvim-vtsls') then
+  elseif ar.is_available('nvim-vtsls') then
     vim.cmd('VtsExec remove_unused')
   end
 end
 
 function M.fix_all()
-  if ar.plugin_available('typescript-tools.nvim') then
+  if ar.is_available('typescript-tools.nvim') then
     vim.cmd('TSToolsFixAll')
-  elseif ar.plugin_available('nvim-vtsls') then
+  elseif ar.is_available('nvim-vtsls') then
     vim.cmd('VtsExec fix_all')
   end
 end
