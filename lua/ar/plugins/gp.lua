@@ -14,9 +14,7 @@ local templates = {
 
 return {
   'robitx/gp.nvim',
-  cond = not ar.plugins.minimal
-    and ar.ai.enable
-    and ar.find_string(ar.ai.models, 'openai'),
+  cond = not ar.plugins.minimal and ar.ai.enable and ar.ai.models.openai,
   -- stylua: ignore
   keys = {
     -- Chat commands
@@ -47,6 +45,7 @@ return {
     'GpActAs',
     'GpInputRole',
     'GpChatNew',
+    'GpChatToggle',
   },
   opts = {
     hooks = {

@@ -502,7 +502,7 @@ return {
             cond = function()
               return not ar.plugins.minimal
                 and ar.ai.enable
-                and ar.find_string(ar.ai.models, 'copilot')
+                and ar.ai.models.copilot
             end,
             {
               init = function(self)
@@ -577,7 +577,7 @@ return {
             return not ar.plugins.minimal
               and ar.ai.enable
               and ar.lsp.null_ls.enable
-              and ar.find_string(ar.ai.models, 'copilot')
+              and ar.ai.models.copilot
           end,
           init = function(self)
             self.processing = false

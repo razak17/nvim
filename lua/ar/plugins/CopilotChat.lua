@@ -25,8 +25,13 @@ return {
     cond = not ar.plugins.minimal
       and ar.ai.enable
       and ar.completion.enable
-      and ar.find_string(ar.ai.models, 'copilot'),
-    cmd = { 'CopilotChat', 'CopilotChatInline' },
+      and ar.ai.models.copilot,
+    cmd = {
+      'CopilotChat',
+      'CopilotChatInline',
+      'CopilotChatToggle',
+      'CopilotChatReset',
+    },
     branch = 'canary',
     init = function()
       require('which-key').add({ { '<leader>ac', group = 'CopilotChat' } })

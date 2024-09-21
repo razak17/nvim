@@ -15,7 +15,6 @@
 -- end
 --
 -- vim.g.openai_api_key = get_openai_key()
-local find_string = ar.find_string
 local minimal = ar.plugins.minimal
 local models = ar.ai.models
 
@@ -59,15 +58,16 @@ return {
         opts.auto_suggestions_provider = model_name
       end
 
-      if find_string(models, 'claude') then
+      if models.claude then
         set_provider('claude')
-      elseif find_string(models, 'openai') then
+      elseif models.openai then
         set_provider('openai')
-      elseif find_string(models, 'gemini') then
+      elseif models.gemini then
         set_provider('gemini')
-      elseif find_string(models, 'copilot') then
+      elseif models.copilot then
         set_provider('copilot')
       end
+
       return opts
     end,
     build = 'make',
@@ -152,13 +152,13 @@ return {
 
       opts.adapters = {}
 
-      if find_string(models, 'claude') then
+      if models.claude then
         set_adapter_and_strategy('anthropic')
-      elseif find_string(models, 'openai') then
+      elseif models.openai then
         set_adapter_and_strategy('openai')
-      elseif find_string(models, 'gemini') then
+      elseif models.gemini then
         set_adapter_and_strategy('gemini')
-      elseif find_string(models, 'copilot') then
+      elseif models.copilot then
         set_adapter_and_strategy('copilot')
       end
 
@@ -173,7 +173,7 @@ return {
   },
   {
     'zbirenbaum/copilot.lua',
-    cond = not minimal and ar.ai.enable and find_string(models, 'copilot'),
+    cond = not minimal and ar.ai.enable and models.copilot,
     cmd = 'Copilot',
     event = 'InsertEnter',
     init = function()
@@ -185,6 +185,7 @@ return {
     },
     opts = {
       -- If copilot-cmp is enabled, set panel & suggestions to false
+      -- require("copilot.suggestion").toggle_auto_trigger()
       panel = { enabled = false },
       suggestion = {
         enabled = true,
@@ -233,7 +234,7 @@ return {
   },
   {
     'razak17/backseat.nvim',
-    cond = not minimal and ar.ai.enable and find_string(models, 'openai'),
+    cond = not minimal and ar.ai.enable and models.copilot,
     cmd = { 'Backseat', 'BackseatAsk', 'BackseatClear', 'BackseatClearLine' },
     opts = {
       highlight = { icon = '', group = 'DiagnosticVirtualTextInfo' },
