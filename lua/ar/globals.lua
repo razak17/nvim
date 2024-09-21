@@ -271,6 +271,23 @@ function ar.run_command(command, params, cb)
   vim.notify(command .. ' launched...', vim.log.levels.INFO)
 end
 
+--- vim.cmd in visual mode
+---@param command string
+function ar.visual_cmd(command)
+  -- Save the current state of visual selection
+  local start_pos = fn.getpos("'<")
+  local end_pos = fn.getpos("'>")
+  -- Exit visual mode
+  api.nvim_feedkeys(
+    api.nvim_replace_termcodes('<Esc>', true, false, true),
+    'x',
+    false
+  )
+  local range = fmt('%d,%d', start_pos[2], end_pos[2])
+  local full_cmd = fmt(':%s%s', range, command)
+  vim.cmd(full_cmd)
+end
+
 function ar.escape_pattern(text) return text:gsub('([^%w])', '%%%1') end
 
 function ar.copy_to_clipboard(to_copy) vim.fn.setreg('+', to_copy) end
