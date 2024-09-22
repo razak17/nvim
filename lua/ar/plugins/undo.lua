@@ -1,4 +1,4 @@
-local minimal = ar.plugins.minimal
+local minimal, niceties = ar.plugins.minimal, ar.plugins.niceties
 
 return {
   {
@@ -21,5 +21,14 @@ return {
     cond = not minimal,
     event = { 'BufRead', 'BufNewFile' },
     build = function() require('fundo').install() end,
+  },
+  {
+    'tzachar/highlight-undo.nvim',
+    cond = not minimal and niceties,
+    event = 'BufRead',
+    opts = {
+      undo = { hlgroup = 'Search' },
+      redo = { hlgroup = 'Search' },
+    },
   },
 }

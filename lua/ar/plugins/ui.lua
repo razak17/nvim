@@ -304,15 +304,6 @@ return {
     },
   },
   {
-    'tzachar/highlight-undo.nvim',
-    cond = not minimal and niceties,
-    event = 'BufRead',
-    opts = {
-      undo = { hlgroup = 'Search' },
-      redo = { hlgroup = 'Search' },
-    },
-  },
-  {
     'kevinhwang91/nvim-hlslens',
     cond = not minimal and niceties,
     event = { 'BufRead', 'BufNewFile' },
