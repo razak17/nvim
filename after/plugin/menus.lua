@@ -63,32 +63,30 @@ end
 --------------------------------------------------------------------------------
 if ar.lsp.enable then
   ar.add_to_menu('lsp', {
-    ['Format Code'] = "lua require'ar.menus.lsp'.format_buf()",
     ['Eslint Fix'] = "lua require'ar.menus.lsp'.eslint_fix()",
-    ['LSP references'] = "lua require'ar.menus.lsp'.display_lsp_references()",
-    ['Call Heirarchy'] = "lua require'ar.menus.lsp'.display_call_hierarchy()",
-    ['Restart All LSPs'] = "lua require'ar.menus.lsp'.lsp_restart_all()",
-    ['Toggle Linting Globally'] = "lua require'ar.menus.lsp'.toggle_linting()",
     ['Toggle Virtual Text'] = "lua require'ar.menus.lsp'.toggle_virtual_text()",
     ['Toggle Virtual Lines'] = "lua require'ar.menus.lsp'.toggle_virtual_lines()",
     ['Toggle Diagnostic Signs'] = "lua require'ar.menus.lsp'.toggle_signs()",
     ['Toggle Diagnostics'] = "lua require'ar.menus.lsp'.toggle_diagnostics()",
     ['Toggle Hover Diagnostics'] = "lua require'ar.menus.lsp'.toggle_hover_diagnostics()",
     ['Toggle Hover Diagnostics (go_to)'] = "lua require'ar.menus.lsp'.toggle_hover_diagnostics_go_to()",
+    ['Toggle Linting Globally'] = "lua require'ar.menus.lsp'.toggle_linting()",
     ['Toggle Format On Save'] = "lua require'ar.menus.lsp'.toggle_format_on_save()",
-    ['Goto Workspace Symbol'] = "lua require'ar.menus.lsp'.filter_lsp_workspace_symbols()",
-    ['Goto Workspace Symbol Under Cursor'] = "lua require'ar.menus.lsp'.ws_symbol_under_cursor()",
-    ['Preview Code Actions'] = 'lua require("actions-preview").code_actions()',
     ['Organize Imports'] = "lua require'ar.menus.lsp'.organize_imports()",
     ['Add Missing Imports'] = "lua require'ar.menus.lsp'.add_missing_imports()",
     ['Remove Unused Imports'] = "lua require'ar.menus.lsp'.remove_unused_imports()",
     ['Remove Unused'] = "lua require'ar.menus.lsp'.remove_unused()",
     ['Fix All'] = "lua require'ar.menus.lsp'.fix_all()",
-    ['Toggle Tailwind Conceal'] = 'TailwindConcealEnable',
-    ['Toggle Tailwind Colors'] = 'TailwindColorToggle',
-    ['Sort Tailwind Classes'] = 'TailwindSort',
-    ['TSC'] = 'TSC',
+    ['Restart All LSPs'] = "lua require'ar.menus.lsp'.lsp_restart_all()",
   })
+  if ar.is_available('telescope.nvim') then
+    ar.add_to_menu('git', {
+      ['LSP references'] = "lua require'ar.menus.lsp'.display_lsp_references()",
+      ['Call Heirarchy'] = "lua require'ar.menus.lsp'.display_call_hierarchy()",
+      ['Goto Workspace Symbol'] = "lua require'ar.menus.lsp'.filter_lsp_workspace_symbols()",
+      ['Goto Workspace Symbol Under Cursor'] = "lua require'ar.menus.lsp'.ws_symbol_under_cursor()",
+    })
+  end
 
   local lsp_menu = function()
     if #vim.lsp.get_clients({ bufnr = 0 }) == 0 then

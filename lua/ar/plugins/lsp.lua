@@ -476,6 +476,11 @@ return {
     keys = {
       { '<leader>lA', function() require('actions-preview').code_actions() end, desc = 'code action preview' },
     },
+    init = function()
+      ar.add_to_menu('lsp', {
+        ['Preview Code Actions'] = 'lua require("actions-preview").code_actions()',
+      })
+    end,
     config = function()
       require('actions-preview').setup({
         telescope = ar.telescope.vertical(),

@@ -199,6 +199,13 @@ return {
       'TailwindSort',
       'TailwindSortSelection',
     },
+    init = function()
+      ar.add_to_menu('lsp', {
+        ['Toggle Tailwind Conceal'] = 'TailwindConcealEnable',
+        ['Toggle Tailwind Colors'] = 'TailwindColorToggle',
+        ['Sort Tailwind Classes'] = 'TailwindSort',
+      })
+    end,
     opts = {
       document_color = { enabled = true, inline_symbol = '󰝤 ' },
       conceal = { enabled = true, symbol = '󱏿' },

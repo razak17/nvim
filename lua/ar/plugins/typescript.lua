@@ -84,6 +84,7 @@ return {
       enable_progress_notifications = true,
       auto_open_qflist = true,
     },
+    init = function() ar.add_to_menu('lsp', { ['TSC'] = 'TSC' }) end,
     config = function(_, opts)
       require('tsc').setup(opts)
 
