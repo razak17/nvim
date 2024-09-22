@@ -213,14 +213,6 @@ local namespace = {
       title = 'Toggle actions',
       options = {},
     },
-    custom = {
-      title = 'Custom actions',
-      options = {},
-    },
-    file = {
-      title = 'File actions',
-      options = {},
-    },
     git = {
       title = 'Git commands',
       options = {},

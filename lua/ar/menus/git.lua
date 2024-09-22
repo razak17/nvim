@@ -1,5 +1,6 @@
 local fn = vim.fn
 local fmt = string.format
+local L = vim.log.levels
 
 local utils = require('telescope.utils')
 local pickers = require('telescope.pickers')
@@ -18,11 +19,6 @@ local M = {}
 --------------------------------------------------------------------------------
 -- Helpers
 --------------------------------------------------------------------------------
--- if you have a git project that has subfolders..
--- in a subfolder there is a package.json.. then vim-rooter
--- will set the cwd to that subfolder -- not the git repo root.
--- with this we get the actual git repo root.
-
 --- Create mappings
 ---@param mappings table
 ---@param map function
@@ -42,6 +38,7 @@ local function telescope_commits_mappings(prompt_bufnr, map)
       '<C-l>r',
       function()
         actions.close(prompt_bufnr)
+        if not ar.plugin_available('diffview.nvim') then return end
         local value = action_state.get_selected_entry().value
         vim.cmd('DiffviewOpen ' .. value .. '~1..' .. value)
       end,
@@ -52,6 +49,7 @@ local function telescope_commits_mappings(prompt_bufnr, map)
       '<C-l>a',
       function()
         actions.close(prompt_bufnr)
+        if not ar.plugin_available('diffview.nvim') then return end
         local value = action_state.get_selected_entry().value
         vim.cmd('DiffviewOpen ' .. value)
       end,
@@ -62,6 +60,7 @@ local function telescope_commits_mappings(prompt_bufnr, map)
       '<C-l>u',
       function()
         actions.close(prompt_bufnr)
+        if not ar.plugin_available('diffview.nvim') then return end
         local value = action_state.get_selected_entry().value
         local rev = utils.get_os_command_output(
           { 'git', 'rev-parse', 'upstream/master' },
@@ -83,7 +82,7 @@ local function telescope_commits_mappings(prompt_bufnr, map)
           selection.value,
         })
         if ret == -1 then
-          vim.notify('Reset to HEAD: ' .. selection.value, vim.log.levels.INFO)
+          vim.notify('Reset to HEAD: ' .. selection.value, L.INFO)
         else
           local error = ''
           if stderr then error = table.concat(stderr, ' ') end
@@ -93,7 +92,7 @@ local function telescope_commits_mappings(prompt_bufnr, map)
               selection.value,
               error
             ),
-            vim.log.levels.ERROR
+            L.ERROR
           )
         end
       end,
@@ -115,6 +114,7 @@ local function telescope_commits_mappings(prompt_bufnr, map)
       function()
         local commit = action_state.get_selected_entry().value
         actions.close(prompt_bufnr)
+        if not ar.plugin_available('diffview.nvim') then return end
         vim.cmd(':DiffviewOpen ' .. commit .. '^..' .. commit)
       end,
       desc = 'view commit',
@@ -129,9 +129,10 @@ local function telescope_commits_mappings(prompt_bufnr, map)
         for _, entry in ipairs(picker:get_multi_selection()) do
           table.insert(commits, entry.value)
         end
+        actions.close(prompt_bufnr)
+        if not ar.plugin_available('diffview.nvim') then return end
         if #commits == 0 then
           local commit = action_state.get_selected_entry().value
-          actions.close(prompt_bufnr)
           vim.cmd(':DiffviewOpen ' .. commit .. '^..' .. commit)
         elseif #commits ~= 2 then
           print('Must select two commits for diff')
@@ -144,7 +145,7 @@ local function telescope_commits_mappings(prompt_bufnr, map)
     },
     {
       'i',
-      '<C-\\>',
+      '<A-k>',
       function()
         local commit = action_state.get_selected_entry().value
         vim.cmd(':term! git cherry-pick ' .. commit)
@@ -225,7 +226,7 @@ local function custom_make_entry_gen_from_git_commits(opts)
 end
 
 --------------------------------------------------------------------------------
--- Pull / Fetch
+-- Builtin
 --------------------------------------------------------------------------------
 function M.git_pull()
   ar.run_command('git', { 'pull', '--rebase', '--autostash' }, ar.reload_all)
@@ -233,40 +234,49 @@ end
 
 function M.fetch_origin() ar.run_command('git', { 'fetch', 'origin' }) end
 
---------------------------------------------------------------------------------
--- Commits
---------------------------------------------------------------------------------
-local function show_commit(commit_sha)
-  vim.cmd(
-    'DiffviewOpen '
-      .. commit_sha
-      .. '^..'
-      .. commit_sha
-      .. '  --selected-file='
-      .. vim.fn.expand('%:p')
-  )
+function M.abort_merge() ar.run_command('git', { 'merge', '--abort' }) end
+
+function M.continue_merge() ar.run_command('git', { 'merge', '--continue' }) end
+
+-- https://github.com/olimorris/dotfiles/blob/main/.config/nvim/lua/config/functions.lua#L11
+function M.list_branches()
+  local branches = fn.systemlist([[git branch 2>/dev/null]])
+  local new_branch_prompt = 'Create new branch'
+  table.insert(branches, 1, new_branch_prompt)
+
+  vim.ui.select(branches, {
+    prompt = 'Git branches',
+  }, function(choice)
+    if choice == nil then return end
+
+    if choice == new_branch_prompt then
+      vim.ui.input({ prompt = 'New branch name:' }, function(branch)
+        if branch ~= nil then fn.systemlist('git checkout -b ' .. branch) end
+      end)
+    else
+      fn.systemlist('git checkout ' .. choice)
+    end
+  end)
 end
 
-function M.show_commit_at_line()
-  local commit_sha = require('agitator').git_blame_commit_for_line()
-  if commit_sha == nil then return end
-  show_commit(commit_sha)
-end
-
-function M.time_machine()
-  require('agitator').git_time_machine({ use_current_win = true })
-end
-
-function M.display_commit_from_hash()
+function M.do_stash()
   vim.ui.input(
-    { prompt = 'Enter git commit id:', kind = 'center_win' },
+    { prompt = 'Enter a name for the stash: ', kind = 'center_win' },
     function(input)
       if input ~= nil then
-        vim.cmd(':DiffviewOpen ' .. input .. '^..' .. input)
+        ar.run_command(
+          'git',
+          { 'stash', 'push', '-m', input, '-u' },
+          ar.reload_all
+        )
       end
     end
   )
 end
+
+--------------------------------------------------------------------------------
+-- Commits
+--------------------------------------------------------------------------------
 
 local git_command = {
   'git',
@@ -303,16 +313,16 @@ local function telescope_commits(opts)
     :find()
 end
 
-local commits_previewer = ar.telescope.delta_opts().previewer
-
-function M.browse_commits()
-  telescope_commits({
+function M.browse_commits(branch)
+  local opts = {
     attach_mappings = telescope_commits_mappings,
     entry_maker = custom_make_entry_gen_from_git_commits(),
     git_command = git_command,
     layout_config = layout_config,
-    previewer = commits_previewer,
-  })
+    previewer = ar.telescope.delta_opts().previewer,
+  }
+  if branch then opts.branch = branch end
+  telescope_commits(opts)
 end
 
 function M.browse_bcommits()
@@ -321,43 +331,17 @@ function M.browse_bcommits()
     entry_maker = custom_make_entry_gen_from_git_commits(),
     git_command = git_command,
     layout_config = layout_config,
-    previewer = commits_previewer,
+    previewer = ar.telescope.delta_opts().previewer,
   })
-end
-
---------------------------------------------------------------------------------
--- Diff
---------------------------------------------------------------------------------
-function M.project_history()
-  local project_root = vim.fs.root(0, '.git')
-  if ar.falsy(project_root) then return end
-  vim.cmd('DiffviewFileHistory ' .. project_root)
-end
-
-function M.diffview_conflict(which)
-  local view = require('diffview.lib').get_current_view()
-  if view == nil then
-    vim.notify('No diffview found', vim.log.levels.ERROR)
-    return
-  end
-  ---@diagnostic disable-next-line: undefined-field
-  local merge_ctx = view.merge_ctx
-  if merge_ctx then show_commit(merge_ctx[which].hash) end
 end
 
 --------------------------------------------------------------------------------
 -- Branches
 --------------------------------------------------------------------------------
-function M.open_file_from_branch() require('agitator').open_file_git_branch() end
-
-function M.search_in_another_branch() require('agitator').search_git_branch() end
-
 -- forked from https://github.com/nvim-telescope/telescope.nvim/blob/master/lua/telescope/builtin/__git.lua#L197 as of 9f50168
 
-local match_whole = function(word)
-  -- https://stackoverflow.com/a/32854326/516188
-  return '%f[%w_]' .. word .. '%f[^%w_]'
-end
+-- https://stackoverflow.com/a/32854326/516188
+local match_whole = function(word) return '%f[%w_]' .. word .. '%f[^%w_]' end
 
 -- https://github.com/emmanueltouzery/nvim_config/blob/main/lua/leader_shortcuts.lua#L364
 local function telescope_branches_mappings(prompt_bufnr, map)
@@ -378,6 +362,7 @@ local function telescope_branches_mappings(prompt_bufnr, map)
         if #branches == 0 then
           local branch = action_state.get_selected_entry().value
           actions.close(prompt_bufnr)
+          if not ar.plugin_available('diffview.nvim') then return end
           -- heuristics.. will see if it works out
           if
             string.match(branch, 'develop')
@@ -401,56 +386,6 @@ local function telescope_branches_mappings(prompt_bufnr, map)
     },
     {
       'i',
-      '<C-enter>',
-      function()
-        local branch = get_selected_entry().value
-        local cmd_output = {}
-        if string.match(branch, '^origin/') then
-          actions.close(prompt_bufnr)
-          fn.jobstart('git checkout ' .. branch:gsub('^origin/', ''), {
-            stdout_buffered = true,
-            on_stdout = vim.schedule_wrap(function(_, output)
-              for _, line in ipairs(output) do
-                if #line > 0 then table.insert(cmd_output, line) end
-              end
-            end),
-            on_stderr = vim.schedule_wrap(function(_, output)
-              for _, line in ipairs(output) do
-                if #line > 0 then table.insert(cmd_output, line) end
-              end
-            end),
-            on_exit = vim.schedule_wrap(function() vim.notify(cmd_output) end),
-          })
-        end
-      end,
-      desc = 'create local branch',
-    },
-    {
-      'i',
-      '<C-b>',
-      function()
-        local branch = get_selected_entry().value
-        local cmd_output = {}
-        actions.close(prompt_bufnr)
-        vim.fn.jobstart('git rebase ' .. branch, {
-          stdout_buffered = true,
-          on_stdout = vim.schedule_wrap(function(_, output)
-            for _, line in ipairs(output) do
-              if #line > 0 then table.insert(cmd_output, line) end
-            end
-          end),
-          on_stderr = vim.schedule_wrap(function(_, output)
-            for _, line in ipairs(output) do
-              if #line > 0 then table.insert(cmd_output, line) end
-            end
-          end),
-          on_exit = vim.schedule_wrap(function() vim.notify(cmd_output) end),
-        })
-      end,
-      desc = 'rebase on another branch',
-    },
-    {
-      'i',
       '<A-m>',
       function()
         local branch = action_state.get_selected_entry().value
@@ -468,51 +403,58 @@ local function telescope_branches_mappings(prompt_bufnr, map)
               if #line > 0 then table.insert(cmd_output, line) end
             end
           end),
-          on_exit = vim.schedule_wrap(function() vim.notify(cmd_output) end),
+          on_exit = vim.schedule_wrap(
+            function() vim.notify(cmd_output[3] or cmd_output[2]) end
+          ),
         })
       end,
       desc = 'merge another branch',
     },
     {
-      { 'n', 'i' },
+      'i',
       '<A-d>',
       function()
         local current_picker = action_state.get_current_picker(prompt_bufnr)
-        current_picker:delete_selection(function()
-          local branch = get_selected_entry().value
-          if string.match(branch, '^origin/') then
+        local branch = get_selected_entry().value
+        local prompt = "Are you sure you want to delete branch '"
+          .. branch
+          .. "'?"
+        if string.match(branch, '^origin/') then
+          prompt = "Are you sure you want to delete the remote branch '"
+            .. string.gsub(branch, '^origin/', '')
+            .. "'?"
+        end
+        vim.ui.select({ 'Yes', 'No' }, {
+          prompt = prompt,
+        }, function(choice)
+          if choice ~= 'Yes' then return end
+          current_picker:delete_selection(function()
             -- remote branch
-            vim.ui.select({ 'Yes', 'No' }, {
-              prompt = "Are you sure to delete the remote branch '"
-                .. string.gsub(branch, '^origin/', '')
-                .. "'?",
-            }, function(choice)
-              if choice == 'Yes' then
-                Job
-                  :new({
-                    command = 'git',
-                    args = {
-                      'push',
-                      'origin',
-                      '--delete',
-                      string.gsub(branch, '^origin/', ''),
-                    },
-                    on_exit = function(j, _) print(vim.inspect(j:result())) end,
-                  })
-                  :sync()
-              end
-            end)
-          else
-            -- local branch
-            Job:new({
-              command = 'git',
-              args = { 'branch', '-D', branch },
-              on_exit = function(j, _)
-                -- prints the sha of the tip of the deleted branch, useful for a manual undo
-                print(vim.inspect(j:result()))
-              end,
-            }):sync()
-          end
+            if string.match(branch, '^origin/') then
+              Job
+                :new({
+                  command = 'git',
+                  args = {
+                    'push',
+                    'origin',
+                    '--delete',
+                    string.gsub(branch, '^origin/', ''),
+                  },
+                  on_exit = function(j, _) print(vim.inspect(j:result())) end,
+                })
+                :sync()
+            else
+              -- local branch
+              Job:new({
+                command = 'git',
+                args = { 'branch', '-D', branch },
+                on_exit = function(j, _)
+                  -- prints the sha of the tip of the deleted branch, useful for a manual undo
+                  print(vim.inspect(j:result()))
+                end,
+              }):sync()
+            end
+          end)
         end)
       end,
       desc = 'delete branch (including remote)',
@@ -523,23 +465,17 @@ local function telescope_branches_mappings(prompt_bufnr, map)
       function()
         local branch = get_selected_entry().value
         actions.close(prompt_bufnr)
-        telescope_commits({
-          attach_mappings = telescope_commits_mappings,
-          entry_maker = custom_make_entry_gen_from_git_commits(),
-          git_command = git_command,
-          layout_config = layout_config,
-          branch = branch,
-          previewer = commits_previewer,
-        })
+        M.browse_commits(branch)
       end,
-      desc = 'commits',
+      desc = 'browse branch commits',
     },
     {
       'i',
-      '<C-h>',
+      '<C-o>',
       function()
         local branch = get_selected_entry().value
         actions.close(prompt_bufnr)
+        if not ar.plugin_available('diffview.nvim') then return end
         vim.cmd(
           'DiffviewFileHistory '
             .. vim.fs.root(vim.fn.getcwd(), '.git')
@@ -547,7 +483,7 @@ local function telescope_branches_mappings(prompt_bufnr, map)
             .. branch
         )
       end,
-      desc = 'history',
+      desc = 'branch history',
     },
     {
       'i',
@@ -555,6 +491,7 @@ local function telescope_branches_mappings(prompt_bufnr, map)
       function()
         local branch = get_selected_entry().value
         ar.copy_to_clipboard(branch)
+        vim.notify('Copied branch name: ' .. branch, L.INFO)
       end,
       desc = 'copy branch name',
     },
@@ -564,29 +501,85 @@ local function telescope_branches_mappings(prompt_bufnr, map)
   return true
 end
 
+local function get_base_output(base, opts)
+  local no_upstream = false
+
+  -- stylua: ignore
+  local function get_format_string(is_local)
+    if is_local then
+      return '%(HEAD)' .. '%(refname)' .. '%(authorname)' .. '%(upstream:lstrip=2)' .. '%(committerdate:format-local:%Y/%m/%d %H:%M:%S)'
+    else
+      return '%(HEAD)' .. '%(refname)' .. '%(ahead-behind:origin/' .. base .. ')' .. '%(authorname)' .. '%(upstream:lstrip=2)' .. '%(committerdate:format-local:%Y/%m/%d %H:%M:%S)'
+    end
+  end
+
+  local function get_output(format)
+    return utils.get_os_command_output({
+      'git',
+      'for-each-ref',
+      '--perl',
+      '--format',
+      format,
+      '--sort',
+      '-authordate',
+      opts.pattern,
+    }, opts.cwd)
+  end
+
+  local output = get_output(get_format_string(false))
+
+  if ar.falsy(output) then
+    no_upstream = true
+    output = get_output(get_format_string(true))
+  end
+
+  return output, no_upstream
+end
+
+local function get_line_entry(line, show_remote, no_upstream)
+  local function unescape_single_quote(v)
+    return string.gsub(v, "\\([\\'])", '%1')
+  end
+
+  local fields = vim.split(string.sub(line, 2, -2), "''", {})
+  local entry = {
+    head = fields[1],
+    refname = unescape_single_quote(fields[2]),
+    authorname = unescape_single_quote(fields[4]),
+    upstream = unescape_single_quote(fields[5]),
+    committerdate = fields[6],
+  }
+
+  if no_upstream then
+    entry = {
+      head = fields[1],
+      refname = unescape_single_quote(fields[2]),
+      authorname = unescape_single_quote(fields[3]),
+      upstream = unescape_single_quote(fields[4]),
+      committerdate = fields[5],
+    }
+  else
+    entry.ahead = unescape_single_quote(fields[3]):gsub(' .*$', '')
+    entry.behind = unescape_single_quote(fields[3]):gsub('^.* ', '')
+  end
+
+  local prefix
+  if vim.startswith(entry.refname, 'refs/remotes/') then
+    if show_remote then prefix = 'refs/remotes/' end
+  elseif vim.startswith(entry.refname, 'refs/heads/') then
+    prefix = 'refs/heads/'
+  end
+
+  if ar.falsy(prefix) then return nil end
+  return entry, prefix
+end
+
 local function git_branches_with_base(base, opts)
-  local format = '%(HEAD)'
-    .. '%(refname)'
-    .. '%(ahead-behind:origin/'
-    .. base
-    .. ')'
-    .. '%(authorname)'
-    .. '%(upstream:lstrip=2)'
-    .. '%(committerdate:format-local:%Y/%m/%d %H:%M:%S)'
-  local output = utils.get_os_command_output({
-    'git',
-    'for-each-ref',
-    '--perl',
-    '--format',
-    format,
-    '--sort',
-    '-authordate',
-    opts.pattern,
-  }, opts.cwd)
+  local output, no_upstream = get_base_output(base, opts)
+
   local show_remote_tracking_branches =
     vim.F.if_nil(opts.show_remote_tracking_branches, true)
 
-  local results = {}
   local widths = {
     name = 0,
     authorname = 0,
@@ -595,33 +588,14 @@ local function git_branches_with_base(base, opts)
     ahead = 0,
     behind = 0,
   }
-  local unescape_single_quote = function(v)
-    return string.gsub(v, "\\([\\'])", '%1')
-  end
-  local parse_line = function(line)
-    local fields = vim.split(string.sub(line, 2, -2), "''", {})
-    local entry = {
-      head = fields[1],
-      refname = unescape_single_quote(fields[2]),
-      ahead = unescape_single_quote(fields[3]):gsub(' .*$', ''),
-      behind = unescape_single_quote(fields[3]):gsub('^.* ', ''),
-      authorname = unescape_single_quote(fields[4]),
-      upstream = unescape_single_quote(fields[5]),
-      committerdate = fields[6],
-    }
-    local prefix
-    if vim.startswith(entry.refname, 'refs/remotes/') then
-      if show_remote_tracking_branches then
-        prefix = 'refs/remotes/'
-      else
-        return
-      end
-    elseif vim.startswith(entry.refname, 'refs/heads/') then
-      prefix = 'refs/heads/'
-    else
-      return
-    end
-    local index = 1
+
+  local results = {}
+  local index = 1
+
+  for _, line in ipairs(output) do
+    local entry, prefix =
+      get_line_entry(line, show_remote_tracking_branches, no_upstream)
+    if entry == nil or prefix == nil then goto continue end
     if entry.head ~= '*' then index = #results + 1 end
 
     entry.name = string.sub(entry.refname, string.len(prefix) + 1)
@@ -630,17 +604,21 @@ local function git_branches_with_base(base, opts)
     end
     if string.len(entry.upstream) > 0 then widths.upstream_indicator = 2 end
     table.insert(results, index, entry)
+    ::continue::
   end
-  for _, line in ipairs(output) do
-    parse_line(line)
-  end
+
   if #results == 0 then return end
 
   local name_width = widths.name
   if name_width > 35 then name_width = 35 end
   local displayer = entry_display.create({
     separator = ' ',
-    items = {
+    items = no_upstream and {
+      { width = 1 },
+      { width = name_width },
+      { width = widths.authorname },
+      { width = widths.committerdate },
+    } or {
       { width = 1 },
       { width = name_width },
       { width = 3 + widths.ahead + widths.behind },
@@ -652,6 +630,14 @@ local function git_branches_with_base(base, opts)
   })
 
   local make_display = function(entry)
+    if no_upstream then
+      return displayer({
+        { entry.head },
+        { entry.name, 'TelescopeResultsIdentifier' },
+        { entry.authorname },
+        { entry.committerdate },
+      })
+    end
     return displayer({
       { entry.head },
       { entry.name, 'TelescopeResultsIdentifier' },
@@ -662,6 +648,7 @@ local function git_branches_with_base(base, opts)
       { entry.committerdate },
     })
   end
+
   local function finder()
     return finders.new_table({
       results = results,
@@ -687,7 +674,7 @@ local function git_branches_with_base(base, opts)
 
   pickers
     .new(opts, {
-      prompt_title = 'Search branche',
+      prompt_title = 'Search branch',
       results_title = 'Git Branches',
       finder = finder(),
       sorter = conf.file_sorter(opts),
@@ -698,33 +685,37 @@ local function git_branches_with_base(base, opts)
 end
 
 local function git_branches(opts)
-  -- the base will be develop if a develop branch exists, otherwise master.
-  local develop_exists = false
-  local master_exists = false
-  local main_exists = false
-  vim.fn.jobstart({ 'git', 'branch', '--list', 'develop', 'master', 'main' }, {
-    stdout_buffered = true,
-    on_stdout = vim.schedule_wrap(function(_, output)
-      for _, line in ipairs(output) do
-        if string.match(line, match_whole('develop')) then
-          develop_exists = true
-        elseif string.match(line, match_whole('master')) then
-          master_exists = true
-        elseif string.match(line, match_whole('main')) then
-          main_exists = true
+  local branches = {
+    develop = false,
+    dev = false,
+    staging = false,
+    master = false,
+    main = false,
+  }
+
+  vim.fn.jobstart(
+    { 'git', 'branch', '--list', unpack(vim.tbl_keys(branches)) },
+    {
+      stdout_buffered = true,
+      on_stdout = vim.schedule_wrap(function(_, output)
+        for _, line in ipairs(output) do
+          for branch in pairs(branches) do
+            if string.match(line, match_whole(branch)) then
+              branches[branch] = true
+            end
+          end
         end
-      end
-    end),
-    on_exit = vim.schedule_wrap(function()
-      if develop_exists then
-        git_branches_with_base('develop', opts)
-      elseif master_exists then
-        git_branches_with_base('master', opts)
-      elseif main_exists then
-        git_branches_with_base('main', opts)
-      end
-    end),
-  })
+      end),
+      on_exit = vim.schedule_wrap(function()
+        for branch, exists in pairs(branches) do
+          if exists then
+            git_branches_with_base(branch, opts)
+            break
+          end
+        end
+      end),
+    }
+  )
 end
 
 function M.browse_branches()
@@ -742,10 +733,11 @@ local function telescope_stash_mappings(prompt_bufnr, map)
   local mappings = {
     {
       'i',
-      'C-f',
+      '<C-f>',
       function()
         local stash_key = action_state.get_selected_entry().value
         actions.close(prompt_bufnr)
+        if not ar.plugin_available('diffview.nvim') then return end
         -- are there untracked files?
         local stdout, _, _ = utils.get_os_command_output({
           'git',
@@ -775,11 +767,11 @@ local function telescope_stash_mappings(prompt_bufnr, map)
           vim.cmd(':DiffviewOpen ' .. stash_key .. '^..' .. stash_key)
         end
       end,
-      desc = 'stash',
+      desc = 'view stash diff',
     },
     {
       'i',
-      'C-Del',
+      '<A-d>',
       function()
         local stash_key = action_state.get_selected_entry().value
         local current_picker = action_state.get_current_picker(prompt_bufnr)
@@ -787,9 +779,9 @@ local function telescope_stash_mappings(prompt_bufnr, map)
           Job:new({
             command = 'git',
             args = { 'stash', 'drop', stash_key },
-            on_exit = function(j, return_val)
-              print(vim.inspect(j:result(), return_val))
-            end,
+            -- on_exit = function(j, return_val)
+            --   print(vim.inspect(j:result(), return_val))
+            -- end,
           }):sync()
         end)
       end,
@@ -859,7 +851,7 @@ function M.list_stashes(opts)
   end
 
   local function previewer()
-    return previewers.new_buffer_previewer({
+    return previewers.new_termopen_previewer({
       get_command = function(entry, _)
         -- show stash, ignoring gitignored files, and including untracked files
         -- https://stackoverflow.com/a/76662742/516188
@@ -889,42 +881,6 @@ function M.list_stashes(opts)
       attach_mappings = telescope_stash_mappings,
     })
     :find()
-end
-
-function M.do_stash()
-  vim.ui.input(
-    { prompt = 'Enter a name for the stash: ', kind = 'center_win' },
-    function(input)
-      if input ~= nil then
-        ar.run_command(
-          'git',
-          { 'stash', 'push', '-m', input, '-u' },
-          ar.reload_all
-        )
-      end
-    end
-  )
-end
-
--- https://github.com/olimorris/dotfiles/blob/main/.config/nvim/lua/config/functions.lua#L11
-function M.list_branches()
-  local branches = fn.systemlist([[git branch 2>/dev/null]])
-  local new_branch_prompt = 'Create new branch'
-  table.insert(branches, 1, new_branch_prompt)
-
-  vim.ui.select(branches, {
-    prompt = 'Git branches',
-  }, function(choice)
-    if choice == nil then return end
-
-    if choice == new_branch_prompt then
-      vim.ui.input({ prompt = 'New branch name:' }, function(branch)
-        if branch ~= nil then fn.systemlist('git checkout -b ' .. branch) end
-      end)
-    else
-      fn.systemlist('git checkout ' .. choice)
-    end
-  end)
 end
 
 return M

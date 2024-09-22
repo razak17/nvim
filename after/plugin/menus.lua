@@ -30,38 +30,21 @@ map(
 --------------------------------------------------------------------------------
 if ar.is_git_repo() or ar.is_git_env() then
   ar.add_to_menu('git', {
-    ['Browse Branches'] = "lua require'ar.menus.git'.browse_branches()",
     ['Stash Changes'] = "lua require'ar.menus.git'.do_stash()",
-    ['Browse Stashes'] = "lua require'ar.menus.git'.list_stashes()",
-    ['Browse Commits'] = "lua require'ar.menus.git'.browse_commits()",
-    ['Show Buffer Commits'] = "lua require'ar.menus.git'.browse_bcommits()",
-    ['Show Commit At Line'] = "lua require'ar.menus.git'.show_commit_at_line()",
-    ['Show Commit From Hash'] = "lua require'ar.menus.git'.display_commit_from_hash()",
-    ['Open File From Branch'] = "lua require'ar.menus.git'.open_file_from_branch()",
-    ['Search In Another Branch'] = "lua require'ar.menus.git'.search_in_another_branch()",
-    ['Time Machine'] = "lua require'ar.menus.git'.time_machine()",
-    ['Browse Project History'] = "lua require'ar.menus.git'.project_history()",
     ['Pull Latest Changes'] = "lua require'ar.menus.git'.git_pull()",
     ['Fetch Orign'] = "lua require'ar.menus.git'.fetch_origin()",
-    ['Conflict Show Base'] = "lua require'ar.menus.git'.diffview_conflict('base')",
-    ['Conflict Show Ours'] = "lua require'ar.menus.git'.diffview_conflict('ours')",
-    ['Conflict Show Theirs'] = "lua require'ar.menus.git'.diffview_conflict('theirs')",
+    ['Abort Merge'] = "lua require'ar.menus.git'.abort_merge()",
+    ['Continue Merge'] = "lua require'ar.menus.git'.continue_merge()",
     ['List Branches'] = "lua require'ar.menus.git'.list_branches()",
-    ['Browse File Commit History'] = 'DiffviewFileHistory %',
-    ['List Authors'] = 'CoAuthor',
-    ['Conflict Choose Ours'] = 'GitConflictChooseOurs',
-    ['Conflict Choose Theirs'] = 'GitConflictChooseTheirs',
-    ['Conflict Choose None'] = 'GitConflictChooseNone',
-    ['Conflict Choose Both'] = 'GitConflictChooseBoth',
-    ['Toggle Current Line Blame'] = 'Gitsigns toggle_current_line_blame',
-    ['Reset Buffer'] = 'Gitsigns reset_buffer',
-    ['Open File In GitHub'] = 'OpenInGHFile',
-    ['Open Line In GitHub'] = 'OpenInGHFileLines',
-    ['Open Repo In GitHub'] = 'OpenInGHRepo',
-    ['View Branch Graph'] = 'Flog',
-    ['Git Search'] = 'AdvancedGitSearch',
-    ['Toggle Blame'] = 'BlameToggle',
   })
+  if ar.is_available('telescope.nvim') then
+    ar.add_to_menu('git', {
+      ['Browse Branches'] = "lua require'ar.menus.git'.browse_branches()",
+      ['Browse Commits'] = "lua require'ar.menus.git'.browse_commits()",
+      ['Show Buffer Commits'] = "lua require'ar.menus.git'.browse_bcommits()",
+      ['Browse Stashes'] = "lua require'ar.menus.git'.list_stashes()",
+    })
+  end
 
   local git_menu = function()
     ar.create_select_menu(ar.menu['git'].title, ar.menu['git'].options)()

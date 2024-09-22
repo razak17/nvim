@@ -241,6 +241,10 @@ function ar.reload_all()
   vim.cmd('Gitsigns refresh')
 end
 
+--- Run a command
+---@param command string
+---@param params table
+---@param cb? function
 function ar.run_command(command, params, cb)
   local Job = require('plenary.job')
   local error_msg = nil

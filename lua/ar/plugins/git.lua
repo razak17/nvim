@@ -125,6 +125,63 @@ return {
       { '<localleader>gh', '<Cmd>DiffviewFileHistory<CR>', desc = 'diffview: file history', },
       { '<localleader>gx', '<cmd>set hidden<cr><cmd>DiffviewClose<cr><cmd>set nohidden<cr>', desc = 'diffview: close all buffers', },
     },
+    init = function()
+      local function show_commit(commit_sha)
+        vim.cmd(
+          'DiffviewOpen '
+            .. commit_sha
+            .. '^..'
+            .. commit_sha
+            .. '  --selected-file='
+            .. vim.fn.expand('%:p')
+        )
+      end
+
+      local function show_commit_at_line()
+        if not ar.plugin_available('agitator.nvim') then return end
+
+        local commit_sha = require('agitator').git_blame_commit_for_line()
+        if commit_sha == nil then return end
+        show_commit(commit_sha)
+      end
+
+      local function diffview_conflict(which)
+        local view = require('diffview.lib').get_current_view()
+        if view == nil then
+          vim.notify('No diffview found', vim.log.levels.ERROR)
+          return
+        end
+        ---@diagnostic disable-next-line: undefined-field
+        local merge_ctx = view.merge_ctx
+        if merge_ctx then show_commit(merge_ctx[which].hash) end
+      end
+      local function project_history()
+        local project_root = vim.fs.root(0, '.git')
+        if ar.falsy(project_root) then return end
+        vim.cmd('DiffviewFileHistory ' .. project_root)
+      end
+
+      local function display_commit_from_hash()
+        vim.ui.input(
+          { prompt = 'Enter git commit id:', kind = 'center_win' },
+          function(input)
+            if input ~= nil then
+              vim.cmd(':DiffviewOpen ' .. input .. '^..' .. input)
+            end
+          end
+        )
+      end
+
+      ar.add_to_menu('git', {
+        ['Browse File Commit History'] = 'DiffviewFileHistory %',
+        ['Conflict Show Base'] = function() diffview_conflict('base') end,
+        ['Conflict Show Ours'] = function() diffview_conflict('ours') end,
+        ['Conflict Show Theirs'] = function() diffview_conflict('theirs') end,
+        ['Show Commit At Line'] = function() show_commit_at_line() end,
+        ['Browse Project History'] = function() project_history() end,
+        ['Show Commit From Hash'] = function() display_commit_from_hash() end,
+      })
+    end,
     opts = {
       default_args = { DiffviewFileHistory = { '%' } },
       enhanced_diff_hl = true,
@@ -203,6 +260,12 @@ return {
     'lewis6991/gitsigns.nvim',
     cond = not minimal and is_git,
     event = { 'BufRead', 'BufNewFile' },
+    init = function()
+      ar.add_to_menu('git', {
+        ['Toggle Current Line Blame'] = 'Gitsigns toggle_current_line_blame',
+        ['Reset Buffer'] = 'Gitsigns reset_buffer',
+      })
+    end,
     opts = {
       signs = {
         add = { highlight = 'GitSignsAdd', text = left_block },
@@ -278,6 +341,13 @@ return {
     'almo7aya/openingh.nvim',
     cond = enabled,
     cmd = { 'OpenInGHFile', 'OpenInGHRepo', 'OpenInGHFileLines' },
+    init = function()
+      ar.add_to_menu('git', {
+        ['Open File In GitHub'] = 'OpenInGHFile',
+        ['Open Line In GitHub'] = 'OpenInGHFileLines',
+        ['Open Repo In GitHub'] = 'OpenInGHRepo',
+      })
+    end,
     keys = {
       {
         '<leader>gof',
@@ -450,6 +520,25 @@ return {
   {
     'emmanueltouzery/agitator.nvim',
     cond = enabled,
+    init = function()
+      local function time_machine()
+        require('agitator').git_time_machine({ use_current_win = true })
+      end
+
+      local function open_file_from_branch()
+        require('agitator').open_file_git_branch()
+      end
+
+      local function search_in_another_branch()
+        require('agitator').search_git_branch()
+      end
+
+      ar.add_to_menu('git', {
+        ['Time Machine'] = function() time_machine() end,
+        ['Search In Another Branch'] = function() search_in_another_branch() end,
+        ['Open File From Branch'] = function() open_file_from_branch() end,
+      })
+    end,
     keys = {
       {
         '<leader>gbo',
@@ -471,6 +560,9 @@ return {
     'FabijanZulj/blame.nvim',
     cond = enabled,
     cmd = { 'BlameToggle' },
+    init = function()
+      ar.add_to_menu('git', { ['Toggle Blame'] = 'BlameToggle' })
+    end,
     config = function() require('blame').setup() end,
   },
   {
@@ -485,11 +577,28 @@ return {
   {
     'aaronhallaert/advanced-git-search.nvim',
     cond = enabled,
+    init = function()
+      ar.add_to_menu('git', { ['Git Search'] = 'AdvancedGitSearch' })
+    end,
   },
   {
     'akinsho/git-conflict.nvim',
     cond = enabled,
     event = 'BufReadPre',
+    cmd = {
+      'GitConflictChooseOurs',
+      'GitConflictChooseTheirs',
+      'GitConflictChooseNone',
+      'GitConflictChooseBoth',
+    },
+    init = function()
+      ar.add_to_menu('git', {
+        ['Conflict Choose Ours'] = 'GitConflictChooseOurs',
+        ['Conflict Choose Theirs'] = 'GitConflictChooseTheirs',
+        ['Conflict Choose None'] = 'GitConflictChooseNone',
+        ['Conflict Choose Both'] = 'GitConflictChooseBoth',
+      })
+    end,
     opts = {
       disable_diagnostics = true,
       default_mappings = {
@@ -523,6 +632,7 @@ return {
     '2kabhishek/co-author.nvim',
     cond = enabled,
     cmd = 'CoAuthor',
+    init = function() ar.add_to_menu('git', { ['List Authors'] = 'CoAuthor' }) end,
   },
   {
     'niuiic/git-log.nvim',
@@ -536,6 +646,7 @@ return {
   {
     'rbong/vim-flog',
     cond = enabled,
+    init = function() ar.add_to_menu('git', { ['View Branch Graph'] = 'Flog' }) end,
     cmd = { 'Flog', 'Flogsplit', 'Floggit' },
   },
   {

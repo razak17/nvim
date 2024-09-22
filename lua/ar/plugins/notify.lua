@@ -35,6 +35,8 @@ return {
     local ignored = {
       'No information available',
       '[LSP] Format request failed, no matching language servers.',
+      -- TODO: fix where this is coming from and remove
+      'vim.diagnostic.disable() is deprecated. Feature will be removed in Nvim 0.12',
     }
 
     ---@diagnostic disable-next-line: duplicate-set-field
