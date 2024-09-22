@@ -292,6 +292,22 @@ local function open_media_files()
   end
 end
 
+local function open_with_window_picker(prompt_bufnr)
+  local actions = require('telescope.actions')
+  local action_state = require('telescope.actions.state')
+  local file_path = action_state.get_selected_entry().path
+  if not file_path then
+    vim.notify('No file selected')
+    return
+  end
+  actions.close(prompt_bufnr)
+  local picked_window_id = require('window-picker').pick_window({
+    include_current_win = true,
+  }) or api.nvim_get_current_win()
+  api.nvim_set_current_win(picked_window_id)
+  if picked_window_id then vim.cmd('e ' .. file_path) end
+end
+
 -- Ref; https://www.reddit.com/r/neovim/comments/1dajad0/find_files_live_grep_in_telescope/
 local send_find_files_to_live_grep = function()
   local results = {}
@@ -637,6 +653,7 @@ return {
               ['<Tab>'] = toggle_selection_and_next,
               ['<CR>'] = stopinsert(actions.select_default),
               ['<C-o>'] = open_media_files,
+              ['<C-w>'] = open_with_window_picker,
               ['<A-q>'] = actions.send_to_loclist + actions.open_loclist,
               ['<C-h>'] = actions.results_scrolling_left,
               ['<C-l>'] = actions.results_scrolling_right,
