@@ -137,7 +137,7 @@ return {
   },
   {
     'razak17/antelope',
-    cond = not minimal and niceties,
+    cond = not minimal and niceties and false,
     keys = {
       { '<M-a>', '<Cmd>Antelope buffers<CR>', 'antelope: buffers' },
       { '<M-m>', '<Cmd>Antelope marks<CR>', 'antelope: marks' },

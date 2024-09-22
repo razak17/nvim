@@ -65,7 +65,7 @@ return {
     -- stylua: ignore
     keys = {
       '<M-l>',
-      { '<leader>ma', add_trail_mark_stack, desc = 'trailblazer: add stack' },
+      -- { '<leader>ma', add_trail_mark_stack, desc = 'trailblazer: add stack' },
       { '<leader>md', delete_trail_mark_stack, desc = 'trailblazer: delete stack', },
       { '<leader>mg', function() get_available_stacks(true) end, desc = 'trailblazer: get stacks', },
       { '<leader>ms', '<Cmd>TrailBlazerSaveSession<CR>', desc = 'trailblazer: save session', },
@@ -94,6 +94,24 @@ return {
           },
         },
       },
+    },
+  },
+  {
+    'cbochs/grapple.nvim',
+    cond = not minimal,
+    opts = {
+      scope = 'git_branch',
+      default_scopes = {
+        git = { shown = true },
+        git_branch = { shown = true },
+        global = { shown = true },
+      },
+    },
+    event = { 'BufRead', 'BufNewFile' },
+    cmd = 'Grapple',
+    keys = {
+      { '<leader>ma', '<Cmd>Grapple toggle<CR>', desc = 'grapple: toggle tag' },
+      { '<M-m>', '<Cmd>Grapple toggle_tags<CR>', 'grapple: toggle tags' },
     },
   },
   {
@@ -133,7 +151,7 @@ return {
   },
   {
     'razak17/arrow.nvim',
-    cond = not minimal,
+    cond = not minimal and false,
     -- stylua: ignore
     keys = {
       '\\',

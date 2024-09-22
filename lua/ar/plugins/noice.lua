@@ -26,7 +26,7 @@ return {
       },
     },
     messages = {
-      enabled = false,
+      enabled = true,
       view = 'mini', -- minimise pattern not found messages
     },
     popupmenu = { backend = 'nui' },
