@@ -54,6 +54,12 @@ return {
     cond = false,
     cmd = { 'Precognition' },
     event = { 'BufRead', 'BufNewFile' },
+    init = function()
+      ar.add_to_menu(
+        'toggle',
+        { ['Toggle Precognition'] = 'Precognition toggle' }
+      )
+    end,
     opts = {},
   },
   {

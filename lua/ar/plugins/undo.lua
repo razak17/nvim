@@ -7,6 +7,9 @@ return {
     keys = {
       { '<leader>U', '<cmd>UndotreeToggle<CR>', desc = 'undotree: toggle' },
     },
+    init = function()
+      ar.add_to_menu('toggle', { ['Toggle Undo Tree'] = 'UndotreeToggle' })
+    end,
     config = function()
       vim.g.undotree_TreeNodeShape = '◦' -- Alternative: '◉'
       vim.g.undotree_SetFocusWhenToggle = 1

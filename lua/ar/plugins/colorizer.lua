@@ -5,6 +5,9 @@ return {
     'brenoprata10/nvim-highlight-colors',
     cond = not minimal,
     cmd = { 'HighlightColors' },
+    init = function()
+      ar.add_to_menu('toggle', { ['Toggle Colors'] = 'HighlightColors Toggle' })
+    end,
     opts = {
       render = 'virtual',
       enable_tailwind = true,
@@ -14,6 +17,12 @@ return {
     'uga-rosa/ccc.nvim',
     cond = not minimal,
     cmd = { 'CccHighlighterToggle', 'CccHighlighterEnable', 'CccPick' },
+    init = function()
+      ar.add_to_menu('toggle', {
+        ['Toggle Ccc'] = 'CccHighlighterToggle',
+        ['Toggle Pick'] = 'CccPick',
+      })
+    end,
     config = function()
       local ccc = require('ccc')
       local p = ccc.picker

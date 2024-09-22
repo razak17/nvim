@@ -13,6 +13,9 @@ return {
     'OXY2DEV/helpview.nvim',
     cond = not minimal and niceties and ar.treesitter.enable,
     lazy = false,
+    init = function()
+      ar.add_to_menu('toggle', { ['Toggle Helpview'] = 'Helpview toggleAll' })
+    end,
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
   },
   {
@@ -286,12 +289,18 @@ return {
     'laytan/cloak.nvim',
     cond = not minimal,
     event = 'VeryLazy',
+    init = function()
+      ar.add_to_menu('toggle', { ['Toggle Cloak'] = 'CloakToggle' })
+    end,
     opts = {},
   },
   {
     'folke/twilight.nvim',
     cond = niceties,
     cmd = 'Twilight',
+    init = function()
+      ar.add_to_menu('toggle', { ['Toggle Twilight'] = 'Twilight' })
+    end,
     opts = {
       context = 40,
       dimming = { alpha = 0.45, inactive = true },
@@ -308,6 +317,23 @@ return {
       filter_type = 'SHADE', -- TINT, NOSYNTAX, SHADE
       filter_percent = 0.35,
     },
+    init = function()
+      local function toggle_sunglasses()
+        if not ar.plugin_available('sunglasses.nvim') then return end
+        local is_shaded
+        for _, winnr in ipairs(vim.api.nvim_list_wins()) do
+          is_shaded = require('sunglasses.window').get(winnr):is_shaded()
+          if is_shaded then
+            vim.cmd('SunglassesDisable')
+            return
+          end
+        end
+        vim.cmd('SunglassesEnable')
+        vim.cmd('SunglassesOff')
+      end
+
+      ar.add_to_menu('toggle', { ['Toggle Sunglasses'] = toggle_sunglasses })
+    end,
     config = function(_, opts)
       require('sunglasses').setup(opts)
       vim.cmd('SunglassesDisable')
@@ -317,6 +343,7 @@ return {
     'folke/zen-mode.nvim',
     init = function()
       require('which-key').add({ { '<localleader>z', group = 'Zen' } })
+      ar.add_to_menu('toggle', { ['Toggle ZenMode'] = 'ZenMode' })
     end,
     cmd = 'ZenMode',
     opts = {
@@ -330,6 +357,9 @@ return {
   {
     'tjdevries/sPoNGe-BoB.NvIm',
     cmd = { 'SpOnGeBoBiFy' },
+    init = function()
+      ar.add_to_menu('toggle', { ['Toggle SpOnGeBoB'] = 'SpOnGeBoBiFy' })
+    end,
     -- stylua: ignore
     keys = {
       { '<localleader>ab', '<cmd>SpOnGeBoBiFy<CR>', mode = { 'v' }, desc = 'SpOnGeBoB: SpOnGeBoBiFy', },

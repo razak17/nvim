@@ -190,6 +190,9 @@ return {
     cond = not minimal and ts_enabled,
     event = { 'BufRead', 'BufNewFile' },
     cmd = { 'TSContextEnable', 'TSContextDisable', 'TSContextToggle' },
+    init = function()
+      ar.add_to_menu('toggle', { ['Toggle TS Context'] = 'TSContextToggle' })
+    end,
     config = function()
       highlight.plugin('treesitter-context', {
         theme = {

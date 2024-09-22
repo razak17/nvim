@@ -12,22 +12,6 @@ ar.add_to_menu('toggle', {
   ['Toggle Conceal Level'] = 'lua require"ar.menus.toggle".toggle_conceal_level()',
   ['Toggle Conceal Cursor'] = 'lua require"ar.menus.toggle".toggle_conceal_cursor()',
   ['Toggle Statusline'] = 'lua require"ar.menus.toggle".toggle_statusline()',
-  ['Toggle Sunglasses'] = 'lua require"ar.menus.toggle".toggle_sunglasses()',
-  ['Toggle Aerial'] = 'AerialToggle',
-  ['Toggle Ccc'] = 'CccHighlighterToggle',
-  ['Toggle Colors'] = 'HighlightColors Toggle',
-  ['Toggle Pick'] = 'CccPick',
-  ['Toggle Cloak'] = 'CloakToggle',
-  ['Toggle SpOnGeBoB'] = 'SpOnGeBoBiFy',
-  ['Toggle Lengthmatters'] = 'LengthmattersToggle',
-  ['Toggle Twilight'] = 'Twilight',
-  ['Toggle ZenMode'] = 'ZenMode',
-  ['Toggle Zoom'] = 'lua require("mini.misc").zoom()',
-  ['Toggle Relative Number'] = 'ToggleRelativeNumber',
-  ['Toggle Undo Tree'] = 'UndotreeToggle',
-  ['Toggle Precognition'] = 'Precognition toggle',
-  ['Toggle TS Context'] = 'TSContextToggle',
-  ['Toggle Helpview'] = 'Helpview toggleAll',
 })
 
 local toggle_menu = function()
@@ -40,28 +24,6 @@ map(
   toggle_menu,
   { desc = '[t]oggle [a]ctions: open menu for toggle actions' }
 )
-
---------------------------------------------------------------------------------
--- Custom
---------------------------------------------------------------------------------
-ar.add_to_menu('custom', {
-  ['Open Local Postgres DB'] = 'lua require("ar.menus.database").pick_local_pg_db()',
-  ['Open Saved Query'] = 'lua require("ar.menus.database").open_saved_query()',
-  ['Open Json'] = 'lua require("ar.menus.database").open_json()',
-})
-
-local custom_menu = function()
-  ar.create_select_menu(ar.menu['custom'].title, ar.menu['custom'].options)() --> extra paren to execute!
-end
-
-map(
-  'n',
-  '<leader>oc',
-  custom_menu,
-  { desc = '[c]ustom [a]ctions: open menu for custom actions' }
-)
-
-if not ar.plugins.enable then return end
 
 --------------------------------------------------------------------------------
 -- Files

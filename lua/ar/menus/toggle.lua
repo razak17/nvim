@@ -54,18 +54,4 @@ function M.toggle_conceal_cursor()
   )
 end
 
-function M.toggle_sunglasses()
-  if not ar.plugin_available('sunglasses.nvim') then return end
-  local is_shaded
-  for _, winnr in ipairs(vim.api.nvim_list_wins()) do
-    is_shaded = require('sunglasses.window').get(winnr):is_shaded()
-    if is_shaded then
-      vim.cmd('SunglassesDisable')
-      return
-    end
-  end
-  vim.cmd('SunglassesEnable')
-  vim.cmd('SunglassesOff')
-end
-
 return M

@@ -145,7 +145,16 @@ return {
       require('mini.indentscope').setup(opts)
     end,
   },
-  { 'echasnovski/mini.misc', opts = {} },
+  {
+    'echasnovski/mini.misc',
+    init = function()
+      ar.add_to_menu(
+        'toggle',
+        { ['Toggle Zoom'] = 'lua require("mini.misc").zoom()' }
+      )
+    end,
+    opts = {},
+  },
   {
     'echasnovski/mini.bracketed',
     cond = not ar.plugins.minimal,
