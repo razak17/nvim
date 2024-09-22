@@ -65,17 +65,6 @@ return {
     end,
   },
   {
-    'rubiin/highlighturl.nvim',
-    cond = not minimal and niceties,
-    event = 'ColorScheme',
-    config = function()
-      vim.g.highlighturl = true
-      highlight.plugin('highlighturl', {
-        theme = { ['onedark'] = { { HighlightURL = { link = 'URL' } } } },
-      })
-    end,
-  },
-  {
     'mei28/luminate.nvim',
     enabled = false,
     cond = not minimal and niceties and false,

@@ -1,4 +1,4 @@
-local minimal = ar.plugins.minimal
+local minimal, niceties = ar.plugins.minimal, ar.plugins.niceties
 
 return {
   {
@@ -29,5 +29,16 @@ return {
       default_prefix = 'https://',
       default_action = 'system',
     },
+  },
+  {
+    'rubiin/highlighturl.nvim',
+    cond = not minimal and niceties,
+    event = 'ColorScheme',
+    config = function()
+      vim.g.highlighturl = true
+      ar.highlight.plugin('highlighturl', {
+        theme = { ['onedark'] = { { HighlightURL = { link = 'URL' } } } },
+      })
+    end,
   },
 }
