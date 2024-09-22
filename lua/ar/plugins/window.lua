@@ -17,6 +17,9 @@ return {
     cond = not minimal,
     init = function()
       require('which-key').add({ { '<leader>wm', group = 'Maximizer' } })
+      ar.add_to_menu('command_palette', {
+        ['Maximize Window'] = 'lua require("windows.commands").maximize()',
+      })
     end,
     -- stylua: ignore
     keys = {

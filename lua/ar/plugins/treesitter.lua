@@ -280,6 +280,12 @@ return {
     opts = {
       highlight = 'Comment',
     },
+    init = function()
+      ar.add_to_menu(
+        'command_palette',
+        { ['Toggle Context Visualizer'] = 'NvimContextVtToggle' }
+      )
+    end,
     config = function(_, opts)
       require('nvim_context_vt').setup(opts)
       vim.cmd([[NvimContextVtToggle]])

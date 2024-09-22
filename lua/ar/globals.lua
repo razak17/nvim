@@ -288,6 +288,15 @@ function ar.visual_cmd(command)
   vim.cmd(full_cmd)
 end
 
+--- Add options to menu
+---@param name string
+---@param options table
+function ar.add_to_menu(name, options)
+  ar.menu[name].options = ar.menu[name].options or {}
+  ar.menu[name].options =
+    vim.tbl_extend('force', ar.menu[name].options, options)
+end
+
 function ar.escape_pattern(text) return text:gsub('([^%w])', '%%%1') end
 
 function ar.copy_to_clipboard(to_copy) vim.fn.setreg('+', to_copy) end
@@ -538,6 +547,28 @@ function ar.open_with_window_picker(buf)
     api.nvim_set_current_win(picked_window_id)
     if buf then api.nvim_set_current_buf(buf) end
   end
+end
+
+--- open in centered popup
+---@param bufnr integer
+function ar.open_buf_centered_popup(bufnr)
+  local o = vim.o
+  local width = math.ceil(o.columns * 0.8)
+  local height = math.ceil(o.lines * 0.8)
+  local col = math.ceil((o.columns - width) / 2)
+  local row = math.ceil((o.lines - height) / 2)
+
+  local opts = {
+    relative = 'editor',
+    width = width,
+    height = height,
+    col = col,
+    row = row,
+    border = 'single',
+    style = 'minimal',
+  }
+  api.nvim_open_win(bufnr, true, opts)
+  map('n', 'q', ar.smart_close, { buffer = bufnr, nowait = true })
 end
 
 --- Copy `text` to system clipboard

@@ -302,6 +302,11 @@ return {
         vim.cmd('normal vat')
         vim.schedule(function() vim.cmd('normal gsat') end)
       end, { desc = 'add surround HTML tag' })
+
+      ar.add_to_menu(
+        'command_palette',
+        { ['Add surround HTML tag'] = 'AddSurroundingTag' }
+      )
     end,
   },
   {
@@ -357,6 +362,22 @@ return {
     'echasnovski/mini.pairs',
     cond = minimal,
     event = 'VeryLazy',
+    init = function()
+      local function toggle_minipairs()
+        if not ar.plugin_available('mini.pairs') then return end
+        vim.g.minipairs_disable = not vim.g.minipairs_disable
+        if vim.g.minipairs_disable then
+          vim.notify('Disabled auto pairs', 'warn', { title = 'Option' })
+        else
+          vim.notify('Enabled auto pairs', 'info', { title = 'Option' })
+        end
+      end
+
+      ar.add_to_menu(
+        'command_palette',
+        { ['Toggle Minipairs'] = toggle_minipairs }
+      )
+    end,
     opts = {
       modes = { insert = true, command = true, terminal = false },
       skip_next = [=[[%w%%%'%[%"%.%`%$]]=],

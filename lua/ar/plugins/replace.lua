@@ -34,6 +34,9 @@ return {
         close = '<C-x>',
       },
     },
+    init = function()
+      ar.add_to_menu('command_palette', { ['Search And Replace'] = 'GrugFar' })
+    end,
   },
   {
     'AckslD/muren.nvim',

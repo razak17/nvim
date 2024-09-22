@@ -24,36 +24,6 @@ local function lsp_notify(msg, type)
   )
 end
 
-function M.format_buf()
-  if ar.falsy(fn.executable('prettier')) then
-    vim.notify('prettier executable was not found!')
-    return
-  end
-
-  local ft = vim.bo.filetype
-  local parser = {
-    json = '--parser json',
-    javascript = '--parser babel',
-    javascriptreact = '--parser babel',
-    typescript = '--parser typescript',
-    typescriptreact = '--parser typescript',
-    html = '--parser html',
-    css = '--parser css',
-    scss = '--parser scss',
-  }
-
-  if #M.lsp_clients(0) > 0 then
-    vim.lsp.buf.format()
-    return
-  elseif ft == 'sql' then
-    vim.cmd(':%!npx sql-formatter --language postgresql')
-  elseif parser[ft] then
-    vim.cmd(':%!prettier ' .. parser[ft])
-  else
-    print('No LSP and unhandled filetype ' .. ft)
-  end
-end
-
 function M.eslint_fix()
   if fn.executable('eslint_d') > 0 then
     vim.cmd('!eslint_d --fix ' .. fn.expand('%:p'))

@@ -2,36 +2,35 @@ local api, fn, o = vim.api, vim.fn, vim.o
 local fmt = string.format
 local M = {}
 
-local should_profile = os.getenv('NVIM_PROFILE')
-if should_profile then
-  require('profile').instrument_autocmds()
-  if should_profile:lower():match('^start') then
-    require('profile').start('*')
-  else
-    require('profile').instrument('*')
-  end
-end
+function M.format_buf()
+  local ft = vim.bo.filetype
+  local parser = {
+    json = '--parser json',
+    javascript = '--parser babel',
+    javascriptreact = '--parser babel',
+    typescript = '--parser typescript',
+    typescriptreact = '--parser typescript',
+    html = '--parser html',
+    css = '--parser css',
+    scss = '--parser scss',
+  }
 
-function M.toggle_profile()
-  local prof = require('profile')
-  if prof.is_recording() then
-    prof.stop()
-    vim.ui.input({
-      prompt = 'Save profile to:',
-      completion = 'file',
-      default = 'profile.json',
-    }, function(filename)
-      if filename then
-        prof.export(filename)
-        vim.notify(string.format('Wrote %s', filename))
-      end
-    end)
+  if ft ~= 'sql' and ar.falsy(fn.executable('prettier')) then
+    vim.notify('prettier executable was not found!')
+    return
+  end
+
+  if ft == 'sql' then
+    vim.cmd(':%!npx sql-formatter --language postgresql')
+  elseif parser[ft] then
+    vim.cmd(':%!prettier ' .. parser[ft])
   else
-    prof.start('*')
+    print('No LSP and unhandled filetype ' .. ft)
   end
 end
 
 function M.generate_plugins()
+  if not ar.plugin_available('lazy.nvim') then return end
   local plugins = require('lazy.core.config').plugins
   local file_content = {
     '## 💤 Plugin manager',
@@ -72,31 +71,9 @@ function M.generate_plugins()
   vim.notify('PLUGINS.md generated.')
 end
 
-function M.open_in_centered_popup(path)
+function M.open_file_in_centered_popup()
   local bufnr = api.nvim_win_get_buf(0)
-  if path then
-    local lines = fn.readfile(path)
-    local buf = api.nvim_create_buf(false, true)
-    bufnr = buf
-    api.nvim_buf_set_lines(buf, 0, -1, false, lines)
-  end
-
-  local width = math.ceil(o.columns * 0.8)
-  local height = math.ceil(o.lines * 0.8)
-  local col = math.ceil((o.columns - width) / 2)
-  local row = math.ceil((o.lines - height) / 2)
-
-  local opts = {
-    relative = 'editor',
-    width = width,
-    height = height,
-    col = col,
-    row = row,
-    border = 'single',
-    style = 'minimal',
-  }
-  api.nvim_open_win(bufnr, true, opts)
-  map('n', 'q', ar.smart_close, { buffer = bufnr, nowait = true })
+  ar.open_buf_centered_popup(bufnr)
 end
 
 function M.close_nonvisible_buffers()
@@ -129,9 +106,14 @@ function M.toggle_large_file()
   vim.notify(fmt('Large file has been %s', status))
 end
 
-function M.generate_types()
-  if not ar.plugin_available('nvim-quicktype') then return end
-  vim.cmd('QuickType')
+function M.copy_path(which)
+  local setreg = fn.setreg
+  if which == 'file_name' then setreg('+', fn.expand('%:t')) end
+  if which == 'absolute_path' then setreg('+', fn.expand('%:p')) end
+  if which == 'absolute_path_no_file_name' then
+    setreg('+', fn.expand('%:p:h'))
+  end
+  if which == 'home_path' then setreg('+', fn.expand('%:~')) end
 end
 
 return M

@@ -14,6 +14,9 @@ return {
     keys = {
       { '<leader>rb', '<Cmd>lua require("builder").build()<CR>', desc = 'builder: run', },
     },
+    init = function()
+      ar.add_to_menu('command_palette', { ['Run Code'] = 'Build' })
+    end,
     opts = {
       type = 'float',
       float_border = border,
@@ -61,6 +64,9 @@ return {
   {
     'jellydn/quick-code-runner.nvim',
     opts = { debug = true },
+    init = function()
+      ar.add_to_menu('command_palette', { ['Code Pad'] = 'QuickCodePad' })
+    end,
     cmd = { 'QuickCodeRunner', 'QuickCodePad' },
     cond = not minimal,
     keys = {

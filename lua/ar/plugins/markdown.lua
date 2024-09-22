@@ -73,6 +73,9 @@ return {
     cmd = { 'Markview' },
     ft = { 'markdown' },
     opts = {},
+    init = function()
+      ar.add_to_menu('command_palette', { ['Toggle Markview'] = 'Markview' })
+    end,
   },
   {
     'arminveres/md-pdf.nvim',
@@ -221,6 +224,10 @@ return {
             { Headline6Fg = { fg = color6_bg, cterm = 'bold', gui = 'bold' } },
           },
         },
+      })
+
+      ar.add_to_menu('command_palette', {
+        ['RenderMarkdown Toggle'] = 'RenderMarkdown toggle',
       })
     end,
     opts = {

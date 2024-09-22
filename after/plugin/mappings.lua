@@ -580,13 +580,14 @@ map(
 --------------------------------------------------------------------------------
 -- Redirect messages to a file
 -- @see: https://github.com/rockyzhang24/dotfiles/blob/master/.config/nvim/lua/rockyz/commands.lua#L50
-local messages_file = '$HOME/docs/messages.txt'
-ar.command('MsgsToFileAndOpen', function()
-  vim.cmd('redir >> ' .. messages_file .. ' | silent messages | redir END')
-  require('ar.menus.command_palette').open_in_centered_popup(
-    vim.env.HOME .. '/docs/messages.txt'
-  )
+ar.command('Redir', function()
+  vim.cmd('redir => msg_output | silent messages | redir END')
+  local output = fn.split(vim.g.msg_output, '\n')
+  local buf = api.nvim_create_buf(false, true)
+  api.nvim_buf_set_lines(buf, 0, -1, false, output)
+  ar.open_buf_centered_popup(buf)
 end)
+ar.add_to_menu('command_palette', { ['Open Messages'] = 'Redir' })
 --------------------------------------------------------------------------------
 -- Reorder numbered list
 -- Works for the list where the numbers are followed by ". ", "). ", or "]. "
@@ -630,6 +631,7 @@ xnoremap(
   { desc = 'share code url' }
 )
 command('NullPointer', ar.null_pointer)
+ar.add_to_menu('command_palette', { ['Share Code URL'] = 'NullPointer' })
 --------------------------------------------------------------------------------
 -- Abbreviations
 --------------------------------------------------------------------------------

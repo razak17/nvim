@@ -2,28 +2,10 @@ local enabled = ar.ui_select.enable
 
 if not ar or ar.none or not ar.plugins.enable or not enabled then return end
 
-local fn = vim.fn
-local frecency = require('ar.frecency')
-
-local M = {
-  options = {},
-  prompts = {
-    toggles = 'Toggle actions',
-    custom = 'Custom actions',
-    files = 'File actions',
-    git = 'Git commands',
-    lsp = 'Code/LSP actions',
-    copilot_chat = 'CopilotChat actions',
-    command_palette = 'Command Palette actions',
-    w3m = 'W3M actions',
-    ai = 'A.I. actions',
-  },
-}
-
 --------------------------------------------------------------------------------
 -- Toggles
 --------------------------------------------------------------------------------
-M.options.toggles = {
+ar.add_to_menu('toggle', {
   ['Toggle Wrap'] = 'lua require"ar.menus.toggle".toggle_opt("wrap")',
   ['Toggle Cursorline'] = 'lua require"ar.menus.toggle".toggle_opt("cursorline")',
   ['Toggle Spell'] = 'lua require"ar.menus.toggle".toggle_opt("spell")',
@@ -46,11 +28,10 @@ M.options.toggles = {
   ['Toggle Precognition'] = 'Precognition toggle',
   ['Toggle TS Context'] = 'TSContextToggle',
   ['Toggle Helpview'] = 'Helpview toggleAll',
-  ['Toggle Minipairs'] = 'lua require"ar.menus.toggle".toggle_minipairs()',
-}
+})
 
 local toggle_menu = function()
-  ar.create_select_menu(M.prompts['toggles'], M.options.toggles)()
+  ar.create_select_menu(ar.menu['toggle'].title, ar.menu['toggle'].options)()
 end
 
 map(
@@ -63,14 +44,14 @@ map(
 --------------------------------------------------------------------------------
 -- Custom
 --------------------------------------------------------------------------------
-M.options.custom = {
+ar.add_to_menu('custom', {
   ['Open Local Postgres DB'] = 'lua require("ar.menus.database").pick_local_pg_db()',
   ['Open Saved Query'] = 'lua require("ar.menus.database").open_saved_query()',
   ['Open Json'] = 'lua require("ar.menus.database").open_json()',
-}
+})
 
 local custom_menu = function()
-  ar.create_select_menu(M.prompts['custom'], M.options.custom)() --> extra paren to execute!
+  ar.create_select_menu(ar.menu['custom'].title, ar.menu['custom'].options)() --> extra paren to execute!
 end
 
 map(
@@ -85,7 +66,7 @@ if not ar.plugins.enable then return end
 --------------------------------------------------------------------------------
 -- Files
 --------------------------------------------------------------------------------
-M.options.file = {
+ar.add_to_menu('file', {
   ['Open File From Current Dir'] = "lua require'ar.menus.file'.open_file_cur_dir(false)",
   ['Open File From Current Dir And Children'] = "lua require'ar.menus.file'.open_file_cur_dir(true)",
   ['Change Filetype'] = "lua require'ar.menus.file'.quick_set_ft()",
@@ -99,10 +80,10 @@ M.options.file = {
   ['Toggle Interceptor'] = 'InterceptToggle',
   ['Re-open File With Sudo Permissions'] = 'SudaRead',
   ['Write File With Sudo Permissions'] = 'SudaWrite',
-}
+})
 
 local file_menu = function()
-  ar.create_select_menu(M.prompts['file'], M.options.file)()
+  ar.create_select_menu(ar.menu['file'].title, ar.menu['file'].options)()
 end
 
 map(
@@ -135,7 +116,7 @@ map(
 -- Git
 --------------------------------------------------------------------------------
 if ar.is_git_repo() or ar.is_git_env() then
-  M.options.git = {
+  ar.add_to_menu('git', {
     ['Browse Branches'] = "lua require'ar.menus.git'.browse_branches()",
     ['Stash Changes'] = "lua require'ar.menus.git'.do_stash()",
     ['Browse Stashes'] = "lua require'ar.menus.git'.list_stashes()",
@@ -167,10 +148,10 @@ if ar.is_git_repo() or ar.is_git_env() then
     ['View Branch Graph'] = 'Flog',
     ['Git Search'] = 'AdvancedGitSearch',
     ['Toggle Blame'] = 'BlameToggle',
-  }
+  })
 
   local git_menu = function()
-    ar.create_select_menu(M.prompts['git'], M.options.git)()
+    ar.create_select_menu(ar.menu['git'].title, ar.menu['git'].options)()
   end
 
   map(
@@ -185,7 +166,7 @@ end
 -- LSP
 --------------------------------------------------------------------------------
 if ar.lsp.enable then
-  M.options.lsp = {
+  ar.add_to_menu('lsp', {
     ['Format Code'] = "lua require'ar.menus.lsp'.format_buf()",
     ['Eslint Fix'] = "lua require'ar.menus.lsp'.eslint_fix()",
     ['LSP references'] = "lua require'ar.menus.lsp'.display_lsp_references()",
@@ -211,13 +192,13 @@ if ar.lsp.enable then
     ['Toggle Tailwind Colors'] = 'TailwindColorToggle',
     ['Sort Tailwind Classes'] = 'TailwindSort',
     ['TSC'] = 'TSC',
-  }
+  })
 
   local lsp_menu = function()
     if #vim.lsp.get_clients({ bufnr = 0 }) == 0 then
       vim.notify_once('there is no lsp server attached to the current buffer')
     else
-      ar.create_select_menu(M.prompts['lsp'], M.options.lsp)() --> extra paren to execute!
+      ar.create_select_menu(ar.menu['lsp'].title, ar.menu['lsp'].options)() --> extra paren to execute!
     end
   end
 
@@ -242,7 +223,7 @@ if ar.ai.enable then
     end
   end
 
-  M.options.ai = {
+  ar.add_to_menu('ai', {
     ['Toggle Copilot Auto Trigger'] = function()
       execute_if_available(
         'copilot.lua',
@@ -296,10 +277,10 @@ if ar.ai.enable then
     ['ChatGPT Optimize Code'] = function()
       execute_if_available('ChatGPT.nvim', 'ChatGPTRun optimize_code')
     end,
-  }
+  })
 
   local ai_menu = function()
-    ar.create_select_menu(M.prompts['ai'], M.options.ai)()
+    ar.create_select_menu(ar.menu['ai'].title, ar.menu['ai'].options)()
   end
 
   map(
@@ -314,7 +295,7 @@ end
 -- CopilotChat
 --------------------------------------------------------------------------------
 if ar.is_available('CopilotChat.nvim') then
-  M.options.copilot_chat = {
+  ar.add_to_menu('ai', {
     ['Clear Buffer and Chat History'] = 'CopilotChatReset',
     ['Toggle Copilot Chat Vsplit'] = 'CopilotChatToggle',
     ['Help Actions'] = "lua require'ar.menus.ai'.help_actions()",
@@ -331,10 +312,13 @@ if ar.is_available('CopilotChat.nvim') then
     ['Generate Commit Message For Staged Changes'] = 'CopilotChatCommitStaged',
     ['Debug Info'] = 'CopilotChatDebugInfo',
     ['Fix Diagnostic'] = 'CopilotChatFixDiagnostic',
-  }
+  })
 
   local copilot_chat_menu = function()
-    ar.create_select_menu(M.prompts['copilot_chat'], M.options.copilot_chat)()
+    ar.create_select_menu(
+      ar.menu['copilot_chat'].title,
+      ar.menu['copilot_chat'].options
+    )()
   end
 
   map(
@@ -355,7 +339,7 @@ if ar.is_available('w3m.vim') then
     end)
   end
 
-  M.options.w3m = {
+  ar.add_to_menu('ai', {
     ['Search in vsplit'] = function() w3m_input('W3mVSplit') end,
     ['Search in split'] = function() w3m_input('W3mVSplit') end,
     ['DuckDuckGo Search'] = function() w3m_input('W3m duck') end,
@@ -366,10 +350,10 @@ if ar.is_available('w3m.vim') then
     ['Search History'] = 'W3mHistory',
     ['Open In External Browser'] = 'W3mShowExtenalBrowser',
     ['Clear Search History'] = 'W3mHistoryClear',
-  }
+  })
 
   local w3m_menu = function()
-    ar.create_select_menu(M.prompts['w3m'], M.options.w3m)()
+    ar.create_select_menu(ar.menu['w3m'].title, ar.menu['w3m'].options)()
   end
 
   map(
@@ -383,64 +367,25 @@ end
 --------------------------------------------------------------------------------
 -- Command Palette
 --------------------------------------------------------------------------------
-local setreg = fn.setreg
-local expand = fn.expand
-M.options.command_palette = {
-  ['Format Code'] = "lua require'ar.menus.lsp'.format_buf()",
-  ['Toggle Profile'] = 'lua require"ar.menus.command_palette".toggle_profile()',
+ar.add_to_menu('command_palette', {
+  ['Copy File Name'] = "lua require'ar.menus.command_palette'.copy_path('file_name')",
+  ['Copy File Absolute Path'] = "lua require'ar.menus.command_palette'.copy_path('absolute_path')",
+  ['Copy File Absolute Path (No File Name)'] = "lua require'ar.menus.command_palette'.copy_path('absolute_path_no_file_name')",
+  ['Copy File Home Path'] = "lua require'ar.menus.command_palette'.copy_path('home_path')",
+  ['Format Code'] = "lua require'ar.menus.command_palette'.format_buf()",
   ['Generate Plugins'] = 'lua require"ar.menus.command_palette".generate_plugins()',
-  ['Open Buffer in Float'] = 'lua require"ar.menus.command_palette".open_in_centered_popup()',
+  ['Open Buffer in Float'] = 'lua require"ar.menus.command_palette".open_file_in_centered_popup()',
   ['Close Invalid Buffers'] = 'lua require"ar.menus.command_palette".close_nonvisible_buffers()',
-  ['Command History'] = 'Telescope command_history',
-  ['Commands'] = 'Telescope commands',
-  ['Find Files'] = 'Telescope find_files',
-  ['Autocommands'] = 'Telescope autocommands',
-  ['Highlights'] = 'Telescope highlights',
-  ['Vim Options'] = 'Telescope vim_options',
-  ['Registers'] = 'Telescope registers',
-  ['Colorschemes'] = 'Telescope colorscheme',
-  ['Keymaps'] = 'Telescope keymaps',
-  ['Live Grep'] = 'Telescope live_grep',
-  ['Seach History'] = 'Telescope search_history',
-  ['Telescope Buffers'] = 'Telescope buffers',
-  ['Telescope Marks'] = 'Telescope marks',
-  ['Telescope Projects'] = 'Telescope projects',
-  ['Telescope Resume'] = 'Telescope resume',
-  ['Telescope Undo'] = 'Telescope undo',
-  ['Maximize Window'] = 'lua require("windows.commands").maximize()',
-  ['Recently Closed Buffers'] = 'Telescope oldfiles cwd_only=true',
-  ['Trouble Diagnostics'] = 'TroubleToggle',
-  ['Nerdy'] = 'Nerdy',
-  ['Restart Editor'] = 'cq',
-  ['Toggle Context Visualizer'] = 'NvimContextVtToggle',
-  ['Share Code URL'] = 'NullPointer',
-  ['Time Spent In Neovim'] = 'Fleeting',
-  ['Days Without Configuring Neovim'] = 'OhneAccidents',
-  ['Time Since Neovim Config'] = 'lua require"configpulse".find_time()',
-  ['Generate Gitignore'] = 'Gitignore',
-  ['Generate License'] = 'Licenses',
-  ['Copy File Name'] = function() setreg('+', fn.expand('%:t')) end,
-  ['Copy File Absolute Path'] = function() setreg('+', fn.expand('%:p')) end,
-  ['Copy File Absolute Path (No File Name)'] = function()
-    setreg('+', expand('%:p:h'))
-  end,
-  ['Copy File Home Path'] = function() setreg('+', expand('%:~')) end,
-  ['Search And Replace'] = 'GrugFar',
-  ['RenderMarkdown Toggle'] = 'RenderMarkdown toggle',
-  ['Code Pad'] = 'QuickCodePad',
-  ['Run Code'] = 'Build',
-  ['Toggle Auto Pairs'] = "lua require'ar.menus.command_palette'.toggle_minipairs()",
-  ['Toggle Markview'] = 'Markview',
-  ['Open Messages'] = 'MsgsToFileAndOpen',
-  ['Clear Messages'] = function() vim.cmd('messages clear') end,
   ['Toggle Autosave'] = "lua require'ar.menus.command_palette'.toggle_minipairs()",
   ['Toggle Large File'] = "lua require'ar.menus.command_palette'.toggle_large_file()",
-  ['Add surround HTML tag'] = 'AddSurroundingTag',
-  ['Generate Types From JSON'] = "lua require'ar.menus.command_palette'.generate_types()",
-}
-
+  ['Clear Messages'] = function() vim.cmd('messages clear') end,
+  ['Restart Editor'] = 'cq',
+})
 local command_palette_menu = function()
-  ar.create_select_menu(M.prompts['command_palette'], M.options.command_palette)()
+  ar.create_select_menu(
+    ar.menu['command_palette'].title,
+    ar.menu['command_palette'].options
+  )()
 end
 
 map(
@@ -451,11 +396,11 @@ map(
 )
 
 --------------------------------------------------------------------------------
--- Setup
+-- Frecency Setup
 --------------------------------------------------------------------------------
-
-for name, option in pairs(M.options) do
-  for key, _ in pairs(option) do
-    frecency.update_item(key, { prompt = M.prompts[name] })
+local frecency = require('ar.frecency')
+for _, option in pairs(ar.menu) do
+  for key, _ in pairs(option.options) do
+    frecency.update_item(key, { prompt = option.title })
   end
 end

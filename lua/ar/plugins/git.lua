@@ -15,6 +15,12 @@ return {
     'kilavila/nvim-gitignore',
     cond = not minimal,
     cmd = { 'Gitignore', 'Licenses' },
+    init = function()
+      ar.add_to_menu('command_palette', {
+        ['Generate Gitignore'] = 'Gitignore',
+        ['Generate License'] = 'Licenses',
+      })
+    end,
   },
   {
     'yutkat/git-rebase-auto-diff.nvim',

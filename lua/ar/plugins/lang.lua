@@ -58,6 +58,14 @@ return {
       'kotlin',
       'typescriptreact',
     },
+    init = function()
+      ar.add_to_menu('command_palette', {
+        ['Generate Types From JSON'] = function()
+          if not ar.plugin_available('nvim-quicktype') then return end
+          vim.cmd('QuickType')
+        end,
+      })
+    end,
     opts = {},
   },
   {

@@ -204,6 +204,44 @@ local namespace = {
     signs = { enable = false },
     workspace_diagnostics = { enable = false },
   },
+  menu = {
+    command_palette = {
+      title = 'Command Palette actions',
+      options = {},
+    },
+    toggle = {
+      title = 'Toggle actions',
+      options = {},
+    },
+    custom = {
+      title = 'Custom actions',
+      options = {},
+    },
+    file = {
+      title = 'File actions',
+      options = {},
+    },
+    git = {
+      title = 'Git commands',
+      options = {},
+    },
+    lsp = {
+      title = 'Code/LSP actions',
+      options = {},
+    },
+    ai = {
+      title = 'A.I. actions',
+      options = {},
+    },
+    copilot_chat = {
+      title = 'CopilotChat actions',
+      options = {},
+    },
+    w3m = {
+      title = 'W3M actions',
+      options = {},
+    },
+  },
   autocommands = { enable = true },
   colors = { enable = true },
   filetypes = { enable = true },

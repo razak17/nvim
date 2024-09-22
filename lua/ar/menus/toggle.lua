@@ -68,14 +68,4 @@ function M.toggle_sunglasses()
   vim.cmd('SunglassesOff')
 end
 
-function M.toggle_minipairs()
-  if not ar.plugin_available('mini.pairs') then return end
-  vim.g.minipairs_disable = not vim.g.minipairs_disable
-  if vim.g.minipairs_disable then
-    vim.notify('Disabled auto pairs', 'warn', { title = 'Option' })
-  else
-    vim.notify('Enabled auto pairs', 'info', { title = 'Option' })
-  end
-end
-
 return M

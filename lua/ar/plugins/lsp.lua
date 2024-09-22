@@ -653,6 +653,9 @@ return {
     'folke/trouble.nvim',
     init = function()
       require('which-key').add({ { '<localleader>x', group = 'Trouble' } })
+      ar.add_to_menu('command_palette', {
+        ['Trouble Diagnostics'] = 'TroubleToggle',
+      })
     end,
     cond = ar.lsp.enable,
     cmd = { 'Trouble' },

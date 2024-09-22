@@ -1,4 +1,3 @@
-local border = ar.ui.current.border
 local minimal, niceties = ar.plugins.minimal, ar.plugins.niceties
 
 return {
@@ -69,7 +68,42 @@ return {
     opts = {},
   },
   { 'nvim-tree/nvim-web-devicons', cond = false },
-  { 'stevearc/profile.nvim', cond = not minimal, lazy = false },
+  {
+    'stevearc/profile.nvim',
+    cond = not minimal,
+    lazy = false,
+    init = function()
+      local should_profile = os.getenv('NVIM_PROFILE')
+      if should_profile then
+        require('profile').instrument_autocmds()
+        if should_profile:lower():match('^start') then
+          require('profile').start('*')
+        else
+          require('profile').instrument('*')
+        end
+      end
+
+      local function toggle_profile()
+        local prof = require('profile')
+        if prof.is_recording() then
+          prof.stop()
+          vim.ui.input({
+            prompt = 'Save profile to:',
+            completion = 'file',
+            default = 'profile.json',
+          }, function(filename)
+            if filename then
+              prof.export(filename)
+              vim.notify(string.format('Wrote %s', filename))
+            end
+          end)
+        else
+          prof.start('*')
+        end
+      end
+      ar.add_to_menu('command_palette', { ['Toggle Profile'] = toggle_profile })
+    end,
+  },
   {
     'romainl/vim-cool',
     cond = false,
@@ -136,8 +170,15 @@ return {
   { 'lambdalisue/suda.vim', lazy = false },
   { 'will133/vim-dirdiff', cmd = { 'DirDiff' } },
   { 'godlygeek/tabular', cmd = { 'Tabularize' } },
-  { '2kabhishek/nerdy.nvim', cmd = 'Nerdy', cond = not minimal },
   { 'ragnarok22/whereami.nvim', cmd = 'Whereami' },
+  {
+    '2kabhishek/nerdy.nvim',
+    cmd = 'Nerdy',
+    cond = not minimal,
+    init = function()
+      ar.add_to_menu('command_palette', { ['Nerdy'] = 'Nerdy' })
+    end,
+  },
   {
     '4513ECHO/nvim-keycastr',
     cond = not minimal,

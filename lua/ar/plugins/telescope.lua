@@ -392,6 +392,27 @@ return {
     -- NOTE: usind cmd causes issues with dressing and frecency
     cmd = { 'Telescope' },
     -- event = 'VeryLazy',
+    init = function()
+      ar.add_to_menu('command_palette', {
+        ['Command History'] = 'Telescope command_history',
+        ['Commands'] = 'Telescope commands',
+        ['Find Files'] = 'Telescope find_files',
+        ['Autocommands'] = 'Telescope autocommands',
+        ['Highlights'] = 'Telescope highlights',
+        ['Vim Options'] = 'Telescope vim_options',
+        ['Registers'] = 'Telescope registers',
+        ['Colorschemes'] = 'Telescope colorscheme',
+        ['Keymaps'] = 'Telescope keymaps',
+        ['Live Grep'] = 'Telescope live_grep',
+        ['Seach History'] = 'Telescope search_history',
+        ['Telescope Buffers'] = 'Telescope buffers',
+        ['Telescope Marks'] = 'Telescope marks',
+        ['Telescope Projects'] = 'Telescope projects',
+        ['Telescope Resume'] = 'Telescope resume',
+        ['Telescope Undo'] = 'Telescope undo',
+        ['Recently Closed Buffers'] = 'Telescope oldfiles cwd_only=true',
+      })
+    end,
     -- stylua: ignore
     keys = {
       -- { '<c-p>', find_files, desc = 'find files' },
