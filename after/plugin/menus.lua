@@ -26,55 +26,6 @@ map(
 )
 
 --------------------------------------------------------------------------------
--- Files
---------------------------------------------------------------------------------
-ar.add_to_menu('file', {
-  ['Open File From Current Dir'] = "lua require'ar.menus.file'.open_file_cur_dir(false)",
-  ['Open File From Current Dir And Children'] = "lua require'ar.menus.file'.open_file_cur_dir(true)",
-  ['Change Filetype'] = "lua require'ar.menus.file'.quick_set_ft()",
-  ['Search Code Deps'] = "lua require'ar.menus.file'.search_code_deps()",
-  ['Toggle File Diff'] = "lua require'ar.menus.file'.toggle_file_diff()",
-  ['Reload All Files From Disk'] = 'lua ar.reload_all()',
-  ['Copy File Path'] = "lua require'ar.menus.file'.copy_file_path()",
-  ['Copy Full File Path'] = 'let @+ = expand("%:p")',
-  ['Yank Last Ex Command'] = 'let @+=@:',
-  ['Yank Last Message'] = [[let @+=substitute(execute('messages'), '\n\+', '\n', 'g')]],
-  ['Toggle Interceptor'] = 'InterceptToggle',
-  ['Re-open File With Sudo Permissions'] = 'SudaRead',
-  ['Write File With Sudo Permissions'] = 'SudaWrite',
-})
-
-local file_menu = function()
-  ar.create_select_menu(ar.menu['file'].title, ar.menu['file'].options)()
-end
-
-map(
-  'n',
-  '<leader>of',
-  file_menu,
-  { desc = '[f]ile [a]ctions: open menu for file actions' }
-)
--- TODO: Figure out what to do with these
-map(
-  'n',
-  '<leader>Ff',
-  ":lua require'ar.menus.file'.open_file_cur_dir(true)<CR>",
-  { desc = 'find files' }
-)
-map(
-  'n',
-  '<leader>Fs',
-  ":lua require'ar.menus.file'.live_grep_in_cur_dir(true)<CR>",
-  { desc = 'live grep' }
-)
-map(
-  'n',
-  '<leader>Fw',
-  ":lua require'ar.menus.file'.find_word_in_cur_dir(true)<CR>",
-  { desc = 'find word' }
-)
-
---------------------------------------------------------------------------------
 -- Git
 --------------------------------------------------------------------------------
 if ar.is_git_repo() or ar.is_git_env() then
@@ -330,6 +281,7 @@ end
 -- Command Palette
 --------------------------------------------------------------------------------
 ar.add_to_menu('command_palette', {
+  ['Copy File Path'] = "lua require'ar.menus.command_palette'.copy_file_path()",
   ['Copy File Name'] = "lua require'ar.menus.command_palette'.copy_path('file_name')",
   ['Copy File Absolute Path'] = "lua require'ar.menus.command_palette'.copy_path('absolute_path')",
   ['Copy File Absolute Path (No File Name)'] = "lua require'ar.menus.command_palette'.copy_path('absolute_path_no_file_name')",
@@ -340,9 +292,15 @@ ar.add_to_menu('command_palette', {
   ['Close Invalid Buffers'] = 'lua require"ar.menus.command_palette".close_nonvisible_buffers()',
   ['Toggle Autosave'] = "lua require'ar.menus.command_palette'.toggle_minipairs()",
   ['Toggle Large File'] = "lua require'ar.menus.command_palette'.toggle_large_file()",
+  ['Change Filetype'] = "lua require'ar.menus.command_palette'.quick_set_ft()",
+  ['Search Code Deps'] = "lua require'ar.menus.command_palette'.search_code_deps()",
+  ['Toggle File Diff'] = "lua require'ar.menus.command_palette'.toggle_file_diff()",
+  ['Yank Last Message'] = [[let @+=substitute(execute('messages'), '\n\+', '\n', 'g')]],
   ['Clear Messages'] = function() vim.cmd('messages clear') end,
+  ['Yank Last Ex Command'] = 'let @+=@:',
   ['Restart Editor'] = 'cq',
 })
+
 local command_palette_menu = function()
   ar.create_select_menu(
     ar.menu['command_palette'].title,

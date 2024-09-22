@@ -167,7 +167,16 @@ return {
   ------------------------------------------------------------------------------
   -- Utilities {{{2
   ------------------------------------------------------------------------------
-  { 'lambdalisue/suda.vim', lazy = false },
+  {
+    'lambdalisue/suda.vim',
+    lazy = false,
+    init = function()
+      ar.add_to_menu('command_palette', {
+        ['Re-open File With Sudo Permissions'] = 'SudaRead',
+        ['Write File With Sudo Permissions'] = 'SudaWrite',
+      })
+    end,
+  },
   { 'will133/vim-dirdiff', cmd = { 'DirDiff' } },
   { 'godlygeek/tabular', cmd = { 'Tabularize' } },
   { 'ragnarok22/whereami.nvim', cmd = 'Whereami' },

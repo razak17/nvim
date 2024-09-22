@@ -299,6 +299,8 @@ end
 
 function ar.escape_pattern(text) return text:gsub('([^%w])', '%%%1') end
 
+--- copy some text to clipboard
+---@param to_copy string
 function ar.copy_to_clipboard(to_copy) vim.fn.setreg('+', to_copy) end
 
 function ar.load_colorscheme(name)
