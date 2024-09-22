@@ -215,8 +215,8 @@ settings({
             { name = 'git', group_index = 1 },
             { name = 'luasnip', group_index = 1 },
             { name = 'dictionary', max_item_count = 10, group_index = 1 },
-            { name = 'spell', group_index = 1 },
             { name = 'buffer', group_index = 1 },
+            { name = 'spell', group_index = 1 },
           },
         })
       end,
