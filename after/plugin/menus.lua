@@ -208,25 +208,6 @@ end
 -- CopilotChat
 --------------------------------------------------------------------------------
 if ar.is_available('CopilotChat.nvim') then
-  ar.add_to_menu('ai', {
-    ['Clear Buffer and Chat History'] = 'CopilotChatReset',
-    ['Toggle Copilot Chat Vsplit'] = 'CopilotChatToggle',
-    ['Help Actions'] = "lua require'ar.menus.ai'.help_actions()",
-    ['Prompt Actions'] = "lua require'ar.menus.ai'.prompt_actions()",
-    ['Save Chat'] = "lua require'ar.menus.ai'.save_chat()",
-    ['Explain Code'] = 'CopilotChatExplain',
-    ['Generate Tests'] = 'CopilotChatTests',
-    ['Review Code'] = 'CopilotChatReview',
-    ['Refactor Code'] = 'CopilotChatRefactor',
-    ['Better Naming'] = 'CopilotChatBetterNamings',
-    ['Quick Chat'] = "lua require'ar.menus.ai'.quick_chat()",
-    ['Ask Input'] = "lua require'ar.menus.ai'.ask_input()",
-    ['Generate Commit Message'] = 'CopilotChatCommit',
-    ['Generate Commit Message For Staged Changes'] = 'CopilotChatCommitStaged',
-    ['Debug Info'] = 'CopilotChatDebugInfo',
-    ['Fix Diagnostic'] = 'CopilotChatFixDiagnostic',
-  })
-
   local copilot_chat_menu = function()
     ar.create_select_menu(
       ar.menu['copilot_chat'].title,
@@ -246,25 +227,6 @@ end
 -- w3m
 --------------------------------------------------------------------------------
 if ar.is_available('w3m.vim') then
-  local function w3m_input(cmd)
-    vim.ui.input({ prompt = 'Enter url:', kind = 'center_win' }, function(input)
-      if input ~= nil then vim.cmd(cmd .. ' ' .. input) end
-    end)
-  end
-
-  ar.add_to_menu('ai', {
-    ['Search in vsplit'] = function() w3m_input('W3mVSplit') end,
-    ['Search in split'] = function() w3m_input('W3mVSplit') end,
-    ['DuckDuckGo Search'] = function() w3m_input('W3m duck') end,
-    ['Google Search'] = function() w3m_input('W3m google') end,
-    ['Copy URL'] = 'W3mCopyUrl',
-    ['Reload Page'] = 'W3mReload',
-    ['Change URL'] = 'W3mAddressBar',
-    ['Search History'] = 'W3mHistory',
-    ['Open In External Browser'] = 'W3mShowExtenalBrowser',
-    ['Clear Search History'] = 'W3mHistoryClear',
-  })
-
   local w3m_menu = function()
     ar.create_select_menu(ar.menu['w3m'].title, ar.menu['w3m'].options)()
   end

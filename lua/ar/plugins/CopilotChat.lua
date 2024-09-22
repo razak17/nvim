@@ -35,6 +35,25 @@ return {
     branch = 'canary',
     init = function()
       require('which-key').add({ { '<leader>ac', group = 'CopilotChat' } })
+
+      ar.add_to_menu('copilot_chat', {
+        ['Clear Buffer and Chat History'] = 'CopilotChatReset',
+        ['Toggle Copilot Chat Vsplit'] = 'CopilotChatToggle',
+        ['Help Actions'] = "lua require'ar.menus.ai'.help_actions()",
+        ['Prompt Actions'] = "lua require'ar.menus.ai'.prompt_actions()",
+        ['Save Chat'] = "lua require'ar.menus.ai'.save_chat()",
+        ['Explain Code'] = 'CopilotChatExplain',
+        ['Generate Tests'] = 'CopilotChatTests',
+        ['Review Code'] = 'CopilotChatReview',
+        ['Refactor Code'] = 'CopilotChatRefactor',
+        ['Better Naming'] = 'CopilotChatBetterNamings',
+        ['Quick Chat'] = "lua require'ar.menus.ai'.quick_chat()",
+        ['Ask Input'] = "lua require'ar.menus.ai'.ask_input()",
+        ['Generate Commit Message'] = 'CopilotChatCommit',
+        ['Generate Commit Message For Staged Changes'] = 'CopilotChatCommitStaged',
+        ['Debug Info'] = 'CopilotChatDebugInfo',
+        ['Fix Diagnostic'] = 'CopilotChatFixDiagnostic',
+      })
     end,
     build = function()
       vim.defer_fn(function()

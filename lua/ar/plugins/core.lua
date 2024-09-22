@@ -59,6 +59,29 @@ return {
     'yuratomo/w3m.vim',
     cond = not minimal,
     event = 'VeryLazy',
+    init = function()
+      local function w3m_input(cmd)
+        vim.ui.input(
+          { prompt = 'Enter url:', kind = 'center_win' },
+          function(input)
+            if input ~= nil then vim.cmd(cmd .. ' ' .. input) end
+          end
+        )
+      end
+
+      ar.add_to_menu('w3m', {
+        ['Search in vsplit'] = function() w3m_input('W3mVSplit') end,
+        ['Search in split'] = function() w3m_input('W3mVSplit') end,
+        ['DuckDuckGo Search'] = function() w3m_input('W3m duck') end,
+        ['Google Search'] = function() w3m_input('W3m google') end,
+        ['Copy URL'] = 'W3mCopyUrl',
+        ['Reload Page'] = 'W3mReload',
+        ['Change URL'] = 'W3mAddressBar',
+        ['Search History'] = 'W3mHistory',
+        ['Open In External Browser'] = 'W3mShowExtenalBrowser',
+        ['Clear Search History'] = 'W3mHistoryClear',
+      })
+    end,
     config = function() vim.g['w3m#external_browser'] = 'firefox' end,
   },
   {
