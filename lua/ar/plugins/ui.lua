@@ -598,5 +598,16 @@ return {
         status_dashboard = 'yos',
       },
     },
+    {
+      'rlychrisg/truncateline.nvim',
+      cmd = { 'ToggleTruncate', 'TemporaryToggle' },
+      init = function()
+        ar.add_to_menu('toggle', {
+          ['Toggle Truncate'] = 'ToggleTruncate',
+          ['Temporary Truncate'] = 'TemporaryToggle',
+        })
+      end,
+      opts = { line_start_length = 17 },
+    },
   },
 }

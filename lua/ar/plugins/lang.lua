@@ -160,7 +160,6 @@ return {
       notify = true,
       bin = 'five-server',
     },
-    config = function(_, opts) require('fs').setup(opts) end,
   },
   -- Tailwind
   --------------------------------------------------------------------------------
