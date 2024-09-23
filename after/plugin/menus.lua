@@ -80,7 +80,7 @@ if ar.lsp.enable then
     ['Restart All LSPs'] = "lua require'ar.menus.lsp'.lsp_restart_all()",
   })
   if ar.is_available('telescope.nvim') then
-    ar.add_to_menu('git', {
+    ar.add_to_menu('lsp', {
       ['LSP references'] = "lua require'ar.menus.lsp'.display_lsp_references()",
       ['Call Heirarchy'] = "lua require'ar.menus.lsp'.display_call_hierarchy()",
       ['Goto Workspace Symbol'] = "lua require'ar.menus.lsp'.filter_lsp_workspace_symbols()",
