@@ -417,7 +417,7 @@ if ar.gx == 'local' or ar.plugins.minimal then
   map('n', 'gx', function()
     -- ref: https://github.com/theopn/theovim/blob/main/lua/core.lua#L178
     -- Find the URL in the current line and open it in a browser
-    local line = vim.fn.getline('.')
+    local line = fn.getline('.')
     local url = string.match(line, '[a-z]*://[^ >,;)"\']*')
     if url then return ar.open(url, true) end
     local file = fn.expand('<cfile>')
@@ -510,10 +510,10 @@ nnoremap('<leader><localleader>rd', function()
   vim.cmd.w()
 end, { desc = 'rustlings: done' })
 nnoremap('<leader><localleader>rn', function()
-  local cur = vim.fn.expand('%')
+  local cur = fn.expand('%')
   local num = cur:sub(-4, -4)
   local next = cur:sub(1, -5) .. (num + 1) .. '.rs'
-  if vim.fn.filereadable(next) == 1 then
+  if fn.filereadable(next) == 1 then
     vim.cmd('bd')
     vim.cmd('edit ' .. next)
   else
@@ -524,7 +524,7 @@ end, { desc = 'rustlings: next' })
 -- Dump messages in buffer
 -- https://www.reddit.com/r/neovim/comments/1dyngff/a_lua_script_to_dump_messages_to_a_buffer_for/
 local function dump()
-  local tmpname = vim.fn.tempname()
+  local tmpname = fn.tempname()
   vim.g._messages = ''
   vim.schedule(function()
     vim.cmd('redir => g:_messages')
@@ -559,14 +559,14 @@ command('Reverse', '<line1>,<line2>g/^/m<line1>-1', {
 --------------------------------------------------------------------------------
 -- see: https://github.com/yutkat/convert-git-url.nvim
 command('ConvertGitUrl', function()
-  local save_pos = vim.fn.getpos('.')
-  local cur = vim.fn.expand('<cWORD>')
+  local save_pos = fn.getpos('.')
+  local cur = fn.expand('<cWORD>')
   if string.match(cur, '^git@') then
     vim.cmd([[s#git@\(.\{-\).com:#https://\1.com/#]])
   elseif string.match(cur, '^http') then
     vim.cmd([[s#https://\(.\{-\).com/#git@\1.com:#]])
   end
-  vim.fn.setpos('.', save_pos)
+  fn.setpos('.', save_pos)
 end, { force = true })
 map('n', '<leader>gu', '<Cmd>ConvertGitUrl<CR>', { desc = 'convert git url' })
 --------------------------------------------------------------------------------
@@ -606,17 +606,17 @@ ar.command(
 -- Share Code
 ---> Share the file or a range of lines over https://0x0.st .
 function ar.null_pointer()
-  local from = vim.api.nvim_buf_get_mark(0, '<')[1]
-  local to = vim.api.nvim_buf_get_mark(0, '>')[1]
+  local from = api.nvim_buf_get_mark(0, '<')[1]
+  local to = api.nvim_buf_get_mark(0, '>')[1]
   local file = fn.tempname()
   vim.cmd(
     ':silent! ' .. (from == to and '' or from .. ',' .. to) .. 'w ' .. file
   )
 
-  vim.fn.jobstart({ 'curl', '-sF', 'file=@' .. file .. '', 'https://0x0.st' }, {
+  fn.jobstart({ 'curl', '-sF', 'file=@' .. file .. '', 'https://0x0.st' }, {
     stdout_buffered = true,
     on_stdout = function(_, data)
-      vim.fn.setreg('+', data[1])
+      fn.setreg('+', data[1])
       vim.notify('Copied ' .. data[1] .. ' to clipboard!')
     end,
     on_stderr = function(_, data)
