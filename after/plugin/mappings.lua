@@ -571,12 +571,12 @@ end, { force = true })
 map('n', '<leader>gu', '<Cmd>ConvertGitUrl<CR>', { desc = 'convert git url' })
 --------------------------------------------------------------------------------
 -- 70/30 split for split windows
-map(
-  'n',
-  '<leader>wr',
-  '<Cmd>vertical resize 110<CR>',
-  { desc = 'increase vertical spacing' }
-)
+map('n', '<leader>wr', function()
+  vim.ui.input({ prompt = 'Enter win size: ', default = '120' }, function(input)
+    if not input or input == '' then return end
+    vim.cmd('vertical resize ' .. input)
+  end)
+end, { desc = 'increase vertical spacing' })
 --------------------------------------------------------------------------------
 -- Redirect messages to a file
 -- @see: https://github.com/rockyzhang24/dotfiles/blob/master/.config/nvim/lua/rockyz/commands.lua#L50
