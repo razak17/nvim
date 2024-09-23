@@ -47,6 +47,15 @@ return {
     'GpChatNew',
     'GpChatToggle',
   },
+  init = function()
+    ar.add_to_menu('ai', {
+      ['Toggle Gp Chat'] = 'GpChatToggle vsplit',
+      ['Clear Gp Chat'] = 'GpChatToggle vsplit',
+      ['New Gp Chat'] = 'GpChatNew',
+      ['New Gp Buffer Chat'] = 'GpBufferChatNew',
+      ['Gp Act As'] = 'GpActAs',
+    })
+  end,
   opts = {
     hooks = {
       UnitTests = function(gp, params)

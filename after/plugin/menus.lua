@@ -108,70 +108,16 @@ end
 -- A.I.
 --------------------------------------------------------------------------------
 if ar.ai.enable then
-  local function execute_if_available(plugin, command, visual)
-    if not ar.plugin_available(plugin) then return end
-    if visual then
-      ar.visual_cmd(command)
-    else
-      vim.cmd(command)
-    end
-  end
+  -- local function execute_if_available(plugin, command, visual)
+  --   if not ar.plugin_available(plugin) then return end
+  --   if visual then
+  --     ar.visual_cmd(command)
+  --   else
+  --     vim.cmd(command)
+  --   end
+  -- end
 
-  ar.add_to_menu('ai', {
-    ['Toggle Copilot Auto Trigger'] = function()
-      execute_if_available(
-        'copilot.lua',
-        'lua require("copilot.suggestion").toggle_auto_trigger()'
-      )
-    end,
-    ['Toggle Copilot Chat'] = function()
-      execute_if_available('CopilotChat.nvim', 'CopilotChatToggle')
-    end,
-    ['Clear Copilot Chat'] = function()
-      execute_if_available('CopilotChat.nvim', 'CopilotChatReset')
-    end,
-    ['Copilot Chat Inline'] = function()
-      execute_if_available('CopilotChat.nvim', 'CopilotChatInline', true)
-    end,
-    ['Toggle Avante Chat'] = function()
-      execute_if_available('avante.nvim', 'AvanteToggle')
-    end,
-    ['Clear Avante Chat'] = function()
-      execute_if_available('avante.nvim', 'AvanteClear')
-    end,
-    ['Toggle Codecompanion Chat'] = function()
-      execute_if_available('codecompanion.nvim', 'CodeCompanionToggle')
-    end,
-    ['Codecompanion Actions'] = function()
-      execute_if_available('codecompanion.nvim', 'CodeCompanionActions')
-    end,
-    ['Codecompanion Add Selection'] = function()
-      execute_if_available('codecompanion.nvim', 'CodeCompanionAdd', true)
-    end,
-    ['Toggle Gp Chat'] = function()
-      execute_if_available('gp.nvim', 'GpChatToggle vsplit')
-    end,
-    ['Clear Gp Chat'] = function()
-      execute_if_available('gp.nvim', 'GpChatToggle vsplit')
-    end,
-    ['New Gp Chat'] = function() execute_if_available('gp.nvim', 'GpChatNew') end,
-    ['New Gp Buffer Chat'] = function()
-      execute_if_available('gp.nvim', 'GpBufferChatNew')
-    end,
-    ['Gp Act As'] = function() execute_if_available('gp.nvim', 'GpActAs') end,
-    ['ChatGPT Prompt'] = function()
-      execute_if_available('ChatGPT.nvim', 'ChatGPT')
-    end,
-    ['ChatGPT Fix Bugs'] = function()
-      execute_if_available('ChatGPT.nvim', 'ChatGPTRun fix_bugs')
-    end,
-    ['ChatGPT Explain Code'] = function()
-      execute_if_available('ChatGPT.nvim', 'ChatGPTRun explain_code')
-    end,
-    ['ChatGPT Optimize Code'] = function()
-      execute_if_available('ChatGPT.nvim', 'ChatGPTRun optimize_code')
-    end,
-  })
+  -- ar.add_to_menu('ai', {})
 
   local ai_menu = function()
     ar.create_select_menu(ar.menu['ai'].title, ar.menu['ai'].options)()

@@ -54,6 +54,12 @@ return {
         ['Debug Info'] = 'CopilotChatDebugInfo',
         ['Fix Diagnostic'] = 'CopilotChatFixDiagnostic',
       })
+
+      ar.add_to_menu('ai', {
+        ['Toggle Copilot Chat'] = 'CopilotChatToggle',
+        ['Clear Copilot Chat'] = 'CopilotChatReset',
+        ['Copilot Chat Inline'] = function() ar.visual_cmd('CopilotChatInline') end,
+      })
     end,
     build = function()
       vim.defer_fn(function()

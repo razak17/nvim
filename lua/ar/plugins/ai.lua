@@ -24,6 +24,11 @@ return {
     cond = not minimal and ar.ai.enable,
     init = function()
       require('which-key').add({ { '<leader>av', group = 'Avante' } })
+
+      ar.add_to_menu('ai', {
+        ['Toggle Avante Chat'] = 'AvanteToggle',
+        ['Clear Avante Chat'] = 'AvanteClear',
+      })
     end,
     keys = { '<leader>ava', '<leader>avr', '<leader>avs' },
     cmd = {
@@ -93,6 +98,13 @@ return {
     cond = not minimal and ar.ai.enable,
     init = function()
       require('which-key').add({ { '<leader>ak', group = 'Codecompanion' } })
+      ar.add_to_menu('ai', {
+        ['Toggle Codecompanion Chat'] = 'CodeCompanionToggle',
+        ['Codecompanion Actions'] = 'CodeCompanionActions',
+        ['Codecompanion Add Selection'] = function()
+          ar.visual_cmd('CodeCompanionAdd')
+        end,
+      })
     end,
     cmd = {
       'CodeCompanion',
@@ -178,6 +190,10 @@ return {
     event = 'InsertEnter',
     init = function()
       require('which-key').add({ { '<leader>ap', group = 'Copilot' } })
+
+      ar.add_to_menu('ai', {
+        ['Toggle Copilot Auto Trigger'] = 'lua require("copilot.suggestion").toggle_auto_trigger()',
+      })
     end,
     keys = {
       { '<leader>app', '<Cmd>Copilot panel<CR>', desc = 'copilot: panel' },

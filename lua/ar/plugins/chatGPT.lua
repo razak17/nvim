@@ -10,6 +10,13 @@ return {
     },
     init = function()
       require('which-key').add({ { '<leader>ag', group = 'chatGPT' } })
+
+      ar.add_to_menu('ai', {
+        ['ChatGPT Prompt'] = 'ChatGPT',
+        ['ChatGPT Fix Bugs'] = 'ChatGPTRun fix_bugs',
+        ['ChatGPT Explain Code'] = 'ChatGPTRun explain_code',
+        ['ChatGPT Optimize Code'] = 'ChatGPTRun optimize_code',
+      })
     end,
     -- stylua: ignore
     keys = {
