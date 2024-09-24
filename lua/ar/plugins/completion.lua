@@ -12,6 +12,7 @@ return {
     opts = function()
       local snippet = vim.snippet
       local cmp = require('cmp')
+      local types = require('cmp.types')
       local luasnip_avail, luasnip = pcall(require, 'luasnip')
       local MiniIcons = require('mini.icons')
       local symbols = require('lspkind').symbol_map
@@ -99,6 +100,29 @@ return {
         api.nvim_feedkeys(k('<Tab>'), 'n', false)
       end
 
+      local priority_map = {
+        [types.lsp.CompletionItemKind.EnumMember] = 1,
+        [types.lsp.CompletionItemKind.Variable] = 2,
+        [types.lsp.CompletionItemKind.Text] = 100,
+      }
+
+      local kind = function(entry1, entry2)
+        local kind1 = entry1:get_kind()
+        local kind2 = entry2:get_kind()
+        kind1 = priority_map[kind1] or kind1
+        kind2 = priority_map[kind2] or kind2
+        if kind1 ~= kind2 then
+          if kind1 == types.lsp.CompletionItemKind.Snippet then return true end
+          if kind2 == types.lsp.CompletionItemKind.Snippet then return false end
+          local diff = kind1 - kind2
+          if diff < 0 then
+            return true
+          elseif diff > 0 then
+            return false
+          end
+        end
+      end
+
       return {
         performance = { debounce = 0, throttle = 0 },
         preselect = cmp.PreselectMode.None,
@@ -113,16 +137,15 @@ return {
           }),
         },
         sorting = {
-          priority_weight = 2,
+          priority_weight = 100,
           comparators = {
             cmp.config.compare.offset,
             cmp.config.compare.exact,
-            -- cmp.config.compare.scopes,
             cmp.config.compare.score,
+            kind,
             cmp.config.compare.recently_used,
             cmp.config.compare.locality,
-            cmp.config.compare.kind,
-            -- cmp.config.compare.sort_text,
+            cmp.config.compare.sort_text,
             cmp.config.compare.length,
             cmp.config.compare.order,
           },
