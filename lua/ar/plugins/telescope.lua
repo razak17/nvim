@@ -718,7 +718,11 @@ return {
             previewer = false,
             mappings = {
               i = { ['<c-x>'] = 'delete_buffer' },
-              n = { ['<c-x>'] = 'delete_buffer' },
+              n = {
+                ['<c-x>'] = 'delete_buffer',
+                ['d'] = actions.delete_buffer,
+                ['q'] = actions.close,
+              },
             },
           }),
           live_grep = {
