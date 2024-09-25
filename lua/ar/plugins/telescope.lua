@@ -486,7 +486,7 @@ return {
       { '<leader>fh', frecency, desc = 'Most (f)recently used files' },
       { '<leader>fH', helpgrep, desc = 'helpgrep' },
       { '<leader>fi', import, desc = 'import' },
-      { '<leader>fI', b('builtin', { include_extensions = true }), desc = 'builtins', },
+      { '<leader>fI', b('builtin'), desc = 'builtins', },
       { '<leader>fJ', b('jumplist'), desc = 'jumplist', },
       { '<leader>fk', b('keymaps'), desc = 'keymaps' },
       { '<leader>fl', lazy, desc = 'surf plugins' },
@@ -708,6 +708,7 @@ return {
             wrap_results = true,
             borderchars = { preview = border.ivy },
           }),
+          builtin = { include_extensions = true },
           buffers = dropdown({
             initial_mode = 'normal',
             sort_mru = true,
