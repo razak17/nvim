@@ -19,6 +19,7 @@ ar.smart_splits = {
     'starter',
     'startup',
     'trouble',
+    'AvanteInput'
   },
 }
 
