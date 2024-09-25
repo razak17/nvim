@@ -709,10 +709,11 @@ return {
             borderchars = { preview = border.ivy },
           }),
           buffers = dropdown({
+            initial_mode = 'normal',
             sort_mru = true,
             sort_lastused = true,
             show_all_buffers = true,
-            ignore_current_buffer = true,
+            ignore_current_buffer = false,
             previewer = false,
             mappings = {
               i = { ['<c-x>'] = 'delete_buffer' },
