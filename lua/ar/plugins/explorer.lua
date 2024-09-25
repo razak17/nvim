@@ -1,6 +1,5 @@
 local icons, codicons, copy = ar.ui.icons, ar.ui.codicons, ar.copy
 local highlight, lsp_hls = ar.highlight, ar.ui.lsp.highlights
-local lspkind = require('lspkind')
 local api, fn = vim.api, vim.fn
 
 ---@param from string
@@ -49,6 +48,7 @@ return {
       { '<c-n>', '<cmd>Neotree toggle reveal<CR>', desc = 'toggle tree' },
     },
     opts = function()
+      local lspkind = require('lspkind')
       local events = require('neo-tree.events')
 
       local function on_move(data) on_rename(data.source, data.destination) end
