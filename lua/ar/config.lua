@@ -171,7 +171,7 @@ local namespace = {
     inlay_hint = { enable = false },
     lang = {
       ---@type table<ArPythonLsp>
-      python = { 'jedi_language_server', 'ruff' },
+      python = { 'basedpyright', 'ruff' },
       ---@type ArTypescriptLsp
       typescript = 'typescript-tools',
     },
