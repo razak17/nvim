@@ -735,7 +735,7 @@ return {
         condition = function()
           if
             not ar.ui.statuscolumn.enable
-            or not ar.ui.statuscolumn.variant == 'plugin'
+            or ar.ui.statuscolumn.variant ~= 'plugin'
           then
             return false
           end

@@ -301,7 +301,7 @@ local namespace = {
     ---@type ArStatuscolumn
     statuscolumn = { enable = true, variant = 'local' },
     ---@type ArWinbar
-    winbar = { enable = true, variant = 'local' },
+    winbar = { enable = true, variant = 'plugin' },
     transparent = { enable = true },
     colorscheme = {
       disabled = {

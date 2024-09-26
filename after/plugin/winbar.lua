@@ -2,7 +2,7 @@ if
   not ar
   or ar.none
   or not ar.ui.winbar.enable
-  or not ar.ui.winbar.variant == 'local'
+  or ar.ui.winbar.variant ~= 'local'
 then
   return
 end
