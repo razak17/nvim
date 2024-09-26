@@ -471,7 +471,7 @@ return {
       { '<leader>f,', file_browser, desc = 'file browser' },
       { '<leader>f.', function() file_browser({ path = '%:p:h', select_buffer = 'true' }) end, desc = 'file browser', },
       { '<leader>f?', b('help_tags'), desc = 'help tags' },
-      { '<leader>fb', b('buffers'), desc = 'buffers' },
+      { '<M-space>', b('buffers'), desc = 'buffers' },
       -- { '<leader>fb', b('current_buffer_fuzzy_find'), desc = 'find in current buffer', },
       { '<leader>fc', nvim_config, desc = 'nvim config' },
       { '<leader>fd', aerial, desc = 'aerial' },
