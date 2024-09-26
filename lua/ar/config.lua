@@ -31,6 +31,7 @@ local env = vim.env
 ---@alias ArTypescriptLsp 'ts_ls' | 'typescript-tools' | 'vtsls'
 ---@alias ArPythonLsp 'pyright' | 'ruff' | 'jedi_language_server' | 'basedpyright'
 ---@alias ArCompletionIcons 'lspkind' | 'mini.icons'
+---@alias ArWhichStatuscolumn 'local' | 'plugin'
 ---@alias ArWhichWinbar 'local' | 'plugin'
 
 ---@class ArAIModels
@@ -92,6 +93,10 @@ local env = vim.env
 
 ---@class ArRTP
 ---@field disabled table
+
+---@class ArStatuscolumn
+---@field enable boolean
+---@field variant ArWhichStatuscolumn
 
 ---@class ArWinbar
 ---@field enable boolean
@@ -286,7 +291,8 @@ local namespace = {
     enable = env.RVIM_TREESITTER_ENABLED == '1',
   },
   ui = {
-    statuscolumn = { enable = true, custom = true },
+    ---@type ArStatuscolumn
+    statuscolumn = { enable = true, variant = 'local' },
     ---@type ArWinbar
     winbar = { enable = true, variant = 'local' },
     transparent = { enable = true },

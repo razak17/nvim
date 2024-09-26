@@ -733,7 +733,10 @@ return {
 
       opts.statuscolumn = {
         condition = function()
-          if not ar.ui.statuscolumn.enable or ar.ui.statuscolumn.custom then
+          if
+            not ar.ui.statuscolumn.enable
+            or not ar.ui.statuscolumn.variant == 'plugin'
+          then
             return false
           end
           local win = api.nvim_get_current_win()

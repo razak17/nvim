@@ -4,7 +4,7 @@ if
   or not ar.plugins.enable
   or ar.plugins.minimal
   or not ar.ui.statuscolumn.enable
-  or not ar.ui.statuscolumn.custom
+  or not ar.ui.statuscolumn.variant == 'local'
 then
   return
 end
