@@ -39,6 +39,18 @@ local env = vim.env
 ---@field openai boolean
 ---@field copilot boolean
 
+---@class ArGx
+---@field enable boolean
+---@field variant ArWhichGx
+
+---@class ArStatuscolumn
+---@field enable boolean
+---@field variant ArWhichStatuscolumn
+
+---@class ArWinbar
+---@field enable boolean
+---@field variant ArWhichWinbar
+
 ---@class ArLsp
 ---@field disabled ArLspDisabled
 ---@field enable boolean
@@ -92,18 +104,6 @@ local env = vim.env
 
 ---@class ArRTP
 ---@field disabled table
-
----@class ArGx
----@field enable boolean
----@field variant ArWhichGx
-
----@class ArStatuscolumn
----@field enable boolean
----@field variant ArWhichStatuscolumn
-
----@class ArWinbar
----@field enable boolean
----@field variant ArWhichWinbar
 
 ---@class ArConfig
 ---@field ai table
