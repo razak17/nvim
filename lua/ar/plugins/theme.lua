@@ -32,6 +32,12 @@ return {
     config = function() require('lavish').apply() end,
   },
   {
+    'savq/melange-nvim',
+    cond = ar.colorscheme == 'melange',
+    priority = get_priority('melange'),
+    event = get_event('melange'),
+  },
+  {
     'Wansmer/serenity.nvim',
     cond = ar.colorscheme == 'serenity',
     priority = get_priority('serenity'),
