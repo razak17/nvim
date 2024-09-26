@@ -9,15 +9,19 @@ end
 
 -- Ref: https://github.com/linkarzu/dotfiles-latest/blob/main/neovim/neobean/lua/config/options.lua?plain=1#L41
 
-local fn, api, opt, bo = vim.fn, vim.api, vim.opt, vim.bo
+local config = {
+  show_hostname = false,
+  show_buffer_count = false,
+}
+
+local fn, bo = vim.fn, vim.bo
 local decor = ar.ui.decorations
 
--- Function to get the full path and replace the home directory with ~
 local function get_winbar_path()
   local full_path = fn.expand('%:p')
   return full_path:gsub(fn.expand('$HOME'), '~')
 end
--- Function to get the number of open buffers using the :ls command
+
 local function get_buffer_count()
   local buffers = fn.execute('ls')
   local count = 0
@@ -27,33 +31,42 @@ local function get_buffer_count()
   end
   return count
 end
--- Function to update the winbar
+
 function ar.ui.winbar.render()
   local home_replaced = get_winbar_path()
   local buffer_count = get_buffer_count()
-  return '%#Debug#%m '
-    .. '%#Directory#('
-    .. buffer_count
-    .. ') '
-    .. '%#Normal#'
-    .. home_replaced
-    .. '%*%=%#Normal#'
-    .. fn.systemlist('hostname')[1]
+  local host = fn.systemlist('hostname')[1]
+
+  local left = '%#Debug#%m '
+  local buf_count = '%#Directory#(' .. buffer_count .. ') '
+  local file_path = '%#Normal#' .. home_replaced .. '%*%='
+  local hostname = '%#Normal#' .. host
+
+  return table.concat({
+    left,
+    config.show_buffer_count and buf_count or '',
+    file_path,
+    config.show_hostname and hostname or '',
+  }, '')
 end
 
-opt.winbar = [[%!v:lua.ar.ui.winbar.render()]]
+-- opt.winbar = ar.ui.winbar.render()
 
-api.nvim_create_autocmd({ 'BufEnter', 'WinEnter', 'FileType' }, {
-  callback = function(args)
+ar.augroup('Winbar', {
+  event = { 'BufEnter', 'WinEnter', 'FileType' },
+  command = function(args)
     local d = decor.get({
       ft = bo[args.buf].ft,
       bt = bo[args.buf].bt,
       fname = fn.bufname(args.buf),
       setting = 'winbar',
     })
-    if not d or ar.falsy(d) then return end
+    if not d or ar.falsy(d) then
+      vim.wo.winbar = ar.ui.winbar.render()
+      return
+    end
     if d.ft == false or d.bt == false or d.fname == false then
-      vim.opt_local.winbar = ' '
+      vim.wo.winbar = ''
     end
   end,
 })
