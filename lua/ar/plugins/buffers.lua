@@ -65,6 +65,7 @@ return {
   },
   {
     'razak17/arena.nvim',
+    cond = false,
     cmd = { 'ArenaToggle', 'ArenaOpen', 'ArenaClose' },
     keys = { { '<M-space>', '<Cmd>ArenaToggle<CR>', desc = 'arena: toggle' } },
     opts = {
