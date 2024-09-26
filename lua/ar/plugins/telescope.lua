@@ -712,9 +712,7 @@ return {
           buffers = dropdown({
             initial_mode = 'normal',
             sort_mru = true,
-            sort_lastused = true,
-            show_all_buffers = true,
-            ignore_current_buffer = false,
+            select_current = true,
             previewer = false,
             mappings = {
               i = { ['<c-x>'] = 'delete_buffer' },
