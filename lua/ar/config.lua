@@ -31,6 +31,7 @@ local env = vim.env
 ---@alias ArTypescriptLsp 'ts_ls' | 'typescript-tools' | 'vtsls'
 ---@alias ArPythonLsp 'pyright' | 'ruff' | 'jedi_language_server' | 'basedpyright'
 ---@alias ArCompletionIcons 'lspkind' | 'mini.icons'
+---@alias ArWhichWinbar 'local' | 'plugin'
 
 ---@class ArAIModels
 ---@field claude boolean
@@ -91,6 +92,10 @@ local env = vim.env
 
 ---@class ArRTP
 ---@field disabled table
+
+---@class ArWinbar
+---@field enable boolean
+---@field variant ArWhichWinbar
 
 ---@class ArConfig
 ---@field ai table
@@ -282,6 +287,8 @@ local namespace = {
   },
   ui = {
     statuscolumn = { enable = true, custom = true },
+    ---@type ArWinbar
+    winbar = { enable = true, variant = 'local' },
     transparent = { enable = true },
     colorscheme = {
       disabled = {
