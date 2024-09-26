@@ -418,7 +418,7 @@ xnoremap(
 --------------------------------------------------------------------------------
 -- GX - replicate netrw functionality
 --------------------------------------------------------------------------------
-if ar.gx == 'local' or ar.plugins.minimal then
+if (ar.gx.enable and ar.gx.variant == 'local') or ar.plugins.minimal then
   map('n', 'gx', function()
     -- ref: https://github.com/theopn/theovim/blob/main/lua/core.lua#L178
     -- Find the URL in the current line and open it in a browser

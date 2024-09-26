@@ -13,8 +13,6 @@ local env = vim.env
 ---@field web string
 ---@field explorer string
 
----@alias ArGxMode 'local' | 'plugin'
-
 ---@class ArMedia
 ---@field audio table
 ---@field doc table
@@ -31,6 +29,7 @@ local env = vim.env
 ---@alias ArTypescriptLsp 'ts_ls' | 'typescript-tools' | 'vtsls'
 ---@alias ArPythonLsp 'pyright' | 'ruff' | 'jedi_language_server' | 'basedpyright'
 ---@alias ArCompletionIcons 'lspkind' | 'mini.icons'
+---@alias ArWhichGx 'local' | 'plugin'
 ---@alias ArWhichStatuscolumn 'local' | 'plugin'
 ---@alias ArWhichWinbar 'local' | 'plugin'
 
@@ -94,6 +93,10 @@ local env = vim.env
 ---@class ArRTP
 ---@field disabled table
 
+---@class ArGx
+---@field enable boolean
+---@field variant ArWhichGx
+
 ---@class ArStatuscolumn
 ---@field enable boolean
 ---@field variant ArWhichStatuscolumn
@@ -111,7 +114,7 @@ local env = vim.env
 ---@field debug table
 ---@field frecency table
 ---@field git table
----@field gx ArGxMode
+---@field gx ArGx
 ---@field media ArMedia
 ---@field lsp ArLsp
 ---@field autocommands ArCond
@@ -159,8 +162,8 @@ local namespace = {
   debug = { enable = false },
   frecency = { enable = true },
   git = {},
-  ---@type ArGxMode
-  gx = 'plugin',
+  ---@type ArGx
+  gx = { enable = true, variant = 'plugin' },
   ---@type ArMedia
   media = {
     audio = { 'mp3', 'm4a' },
