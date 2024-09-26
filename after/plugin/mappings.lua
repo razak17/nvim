@@ -165,13 +165,13 @@ nnoremap('<C-l>', '<C-w>l')
 -----------------------------------------------------------------------------//
 -- Quick find/replace
 -----------------------------------------------------------------------------//
-local function replace_word(transform_fn, prompt_suffix)
+local function replace_word(transform_fn, prompt_suffix, edit)
   return function()
     local value = fn.expand('<cword>')
     local default_value = transform_fn(value)
     vim.ui.input({
       prompt = 'Replace word with ' .. prompt_suffix,
-      default = default_value,
+      default = edit and default_value or '',
     }, function(new_value)
       if not new_value then return end
       vim.cmd('%s/' .. value .. '/' .. transform_fn(new_value) .. '/gI')
@@ -182,6 +182,11 @@ nnoremap(
   '<leader>[[',
   replace_word(function(x) return x end, ''),
   { desc = 'replace word in file' }
+)
+nnoremap(
+  '<leader>[e',
+  replace_word(function(x) return x end, '', true),
+  { desc = 'edit word in file' }
 )
 nnoremap(
   '<leader>[u',
