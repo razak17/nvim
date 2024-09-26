@@ -48,7 +48,7 @@ return {
         silent = true,
       },
       progress = {
-        enabled = ar.lsp.progress == 'noice',
+        enabled = ar.lsp.progress.enable and ar.lsp.progress.variant == 'noice',
         throttle = 1000 / 1000,
       },
       override = {

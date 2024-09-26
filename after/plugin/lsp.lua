@@ -682,7 +682,9 @@ diagnostic.config({
 --------------------------------------------------------------------------------
 -- LSP Progress
 --------------------------------------------------------------------------------
-if ar.lsp.progress == 'builtin' then require('ar.lsp_progress') end
+if ar.lsp.progress.enable and ar.lsp.progress.variant == 'local' then
+  require('ar.lsp_progress')
+end
 --------------------------------------------------------------------------------
 -- Code Action
 --------------------------------------------------------------------------------

@@ -25,11 +25,11 @@ local env = vim.env
 ---@field servers table
 
 ---@alias ArAIModel 'claude' | 'gemini' | 'openai' | 'copilot'
----@alias ArLspProgress 'noice' | 'builtin'
 ---@alias ArTypescriptLsp 'ts_ls' | 'typescript-tools' | 'vtsls'
 ---@alias ArPythonLsp 'pyright' | 'ruff' | 'jedi_language_server' | 'basedpyright'
 ---@alias ArCompletionIcons 'lspkind' | 'mini.icons'
 ---@alias ArWhichGx 'local' | 'plugin'
+---@alias ArWhichLspProgress 'builtin' | 'noice'
 ---@alias ArWhichStatuscolumn 'local' | 'plugin'
 ---@alias ArWhichWinbar 'local' | 'plugin'
 
@@ -42,6 +42,10 @@ local env = vim.env
 ---@class ArGx
 ---@field enable boolean
 ---@field variant ArWhichGx
+
+---@class ArLspProgress
+---@field enable boolean
+---@field variant ArWhichLspProgress
 
 ---@class ArStatuscolumn
 ---@field enable boolean
@@ -212,7 +216,7 @@ local namespace = {
         'yaml',
       },
     },
-    progress = 'noice',
+    progress = { enable = true, variant = 'noice' },
     semantic_tokens = { enable = false },
     signs = { enable = false },
     workspace_diagnostics = { enable = false },
