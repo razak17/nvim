@@ -184,7 +184,7 @@ return {
   --------------------------------------------------------------------------------
   {
     'razak17/tailwind-fold.nvim',
-    opts = { min_chars = 5 },
+    opts = { min_chars = 5, symbol = '󱏿' },
     ft = {
       'html',
       'svelte',
