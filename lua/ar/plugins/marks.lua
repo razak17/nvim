@@ -150,8 +150,8 @@ return {
     },
   },
   {
-    'razak17/arrow.nvim',
-    cond = not minimal and false,
+    'otavioschwanck/arrow.nvim',
+    cond = not minimal,
     -- stylua: ignore
     keys = {
       '\\',
