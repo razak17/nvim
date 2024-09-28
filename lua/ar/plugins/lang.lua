@@ -161,6 +161,25 @@ return {
       bin = 'five-server',
     },
   },
+  {
+    'razak17/cronex.nvim',
+    cond = not minimal,
+    build = 'npm install -g cronstrue',
+    cmd = { 'CronExplainedEnable', 'CronExplainedDisable' },
+    event = { 'BufEnter', 'BufNewFile' },
+    opts = {
+      file_patterns = {
+        '*.yaml',
+        '*.yml',
+        '*.tf',
+        '*.cfg',
+        '*.config',
+        '*.conf',
+        '*.env',
+      },
+      highlight = 'DiagnosticVirtualTextInfo',
+    },
+  },
   -- Tailwind
   --------------------------------------------------------------------------------
   {
