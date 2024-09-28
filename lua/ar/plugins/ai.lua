@@ -99,7 +99,7 @@ return {
     init = function()
       require('which-key').add({ { '<leader>ak', group = 'Codecompanion' } })
       ar.add_to_menu('ai', {
-        ['Toggle Codecompanion Chat'] = 'CodeCompanionToggle',
+        ['Toggle Codecompanion Chat'] = 'CodeCompanionChat',
         ['Codecompanion Actions'] = 'CodeCompanionActions',
         ['Codecompanion Add Selection'] = function()
           ar.visual_cmd('CodeCompanionAdd')
@@ -110,7 +110,7 @@ return {
       'CodeCompanion',
       'CodeCompanionAdd',
       'CodeCompanionActions',
-      'CodeCompanionToggle',
+      'CodeCompanionChat',
     },
     opts = function()
       local opts = {
@@ -178,7 +178,7 @@ return {
     end,
     -- stylua: ignore
     keys = {
-      { '<leader>akk', '<Cmd>CodeCompanionToggle<CR>', desc = 'codecompanion: toggle' },
+      { '<leader>akk', '<Cmd>CodeCompanionChat<CR>', desc = 'codecompanion: toggle' },
       { '<leader>aka', '<Cmd>CodeCompanionActions<CR>', desc = 'codecompanion: actions' },
       { 'ga', '<Cmd>CodeCompanionAdd<CR>', desc = 'codecompanion: add' },
     },
