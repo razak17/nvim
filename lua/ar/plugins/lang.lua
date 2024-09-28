@@ -194,6 +194,8 @@ return {
       'php',
       'blade',
       'eruby',
+      'htmldjango',
+      'templ',
     },
   },
   {
