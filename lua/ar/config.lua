@@ -167,7 +167,7 @@ local namespace = {
   frecency = { enable = true },
   git = {},
   ---@type ArGx
-  gx = { enable = true, variant = 'plugin' },
+  gx = { enable = true, variant = 'local' },
   ---@type ArMedia
   media = {
     audio = { 'mp3', 'm4a' },
