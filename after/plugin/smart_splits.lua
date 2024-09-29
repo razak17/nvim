@@ -20,7 +20,8 @@ ar.smart_splits = {
     'startup',
     'trouble',
     'AvanteInput',
-    'TelescopePrompt'
+    'TelescopePrompt',
+    'noice'
   },
 }
 
