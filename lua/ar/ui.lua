@@ -309,6 +309,7 @@ local filetypes = ar.p_table({
   ['startify'] = presets.statusline_only,
   ['startup'] = presets.tool_panel:with({ statusline = false }),
   ['toggleterm'] = presets.tool_panel:with({ winbar = 'ignore' }),
+  ['TelescopePrompt'] = presets.tool_panel,
   ['Trouble'] = presets.tool_panel,
   ['tsplayground'] = presets.tool_panel,
   ['undotree'] = presets.tool_panel,
