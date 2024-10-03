@@ -11,8 +11,8 @@ return {
     event = 'VeryLazy',
     -- stylua: ignore
     keys = {
-      { 'j', "<cmd>lua require'accelerated-jk'.command('gj')<CR>", mode = { 'x', 'n' }, },
-      { 'k', "<cmd>lua require'accelerated-jk'.command('gk')<CR>", mode = { 'x', 'n' }, },
+      { 'j', "<Cmd>lua require'accelerated-jk'.command('gj')<CR>", mode = { 'x', 'n' }, },
+      { 'k', "<Cmd>lua require'accelerated-jk'.command('gk')<CR>", mode = { 'x', 'n' }, },
     },
   },
   {
