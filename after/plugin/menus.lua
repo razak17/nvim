@@ -73,11 +73,11 @@ if ar.lsp.enable then
     ['Toggle Linting Globally'] = "lua require'ar.menus.lsp'.toggle_linting()",
     ['Toggle Format On Save'] = "lua require'ar.menus.lsp'.toggle_format_on_save()",
     ['Organize Imports'] = "lua require'ar.menus.lsp'.organize_imports()",
-    ['Add Missing Imports'] = "lua require'ar.menus.lsp'.add_missing_imports()",
-    ['Remove Unused Imports'] = "lua require'ar.menus.lsp'.remove_unused_imports()",
-    ['Remove Unused'] = "lua require'ar.menus.lsp'.remove_unused()",
-    ['Fix All'] = "lua require'ar.menus.lsp'.fix_all()",
     ['Restart All LSPs'] = "lua require'ar.menus.lsp'.lsp_restart_all()",
+    ['Add Missing Imports (ts)'] = "lua require'ar.menus.lsp'.add_missing_imports()",
+    ['Remove Unused Imports (ts)'] = "lua require'ar.menus.lsp'.remove_unused_imports()",
+    ['Remove Unused (ts)'] = "lua require'ar.menus.lsp'.remove_unused()",
+    ['Fix All (ts)'] = "lua require'ar.menus.lsp'.fix_all()",
   })
   if ar.is_available('telescope.nvim') then
     ar.add_to_menu('lsp', {
