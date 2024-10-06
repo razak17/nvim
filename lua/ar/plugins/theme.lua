@@ -45,6 +45,13 @@ return {
     opts = {},
   },
   {
+    'aliqyan-21/darkvoid.nvim',
+    cond = ar.colorscheme == 'darkvoid',
+    priority = get_priority('darkvoid'),
+    event = get_event('darkvoid'),
+    opts = {},
+  },
+  {
     'Wansmer/serenity.nvim',
     cond = ar.colorscheme == 'serenity',
     priority = get_priority('serenity'),
