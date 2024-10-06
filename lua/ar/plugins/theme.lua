@@ -38,6 +38,13 @@ return {
     event = get_event('melange'),
   },
   {
+    'olivercederborg/poimandres.nvim',
+    cond = ar.colorscheme == 'poimandres',
+    priority = get_priority('poimandres'),
+    event = get_event('poimandres'),
+    opts = {},
+  },
+  {
     'Wansmer/serenity.nvim',
     cond = ar.colorscheme == 'serenity',
     priority = get_priority('serenity'),
