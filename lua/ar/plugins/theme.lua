@@ -139,27 +139,26 @@ return {
     event = get_event('witch'),
     opts = { style = 'dark' },
     config = function(_, opts) require('witch').setup(opts) end,
-    -- Using lazy.nvim
-    {
-      'cdmill/neomodern.nvim',
-      enabled = false,
-      cond = ar.colorscheme == 'neomodern',
-      priority = get_priority('neomodern'),
-      event = get_event('neomodern'),
-      config = function()
-        require('neomodern').setup({
-          highlights = {
-            ['@namespace'] = { fg = '$constant' },
-            ['@include'] = { fg = '$keyword' },
-            ['@method'] = { fg = '$func' },
-            ['@storageclass'] = { fg = '$constant' },
-            ['@preProc'] = { fg = '$preproc' },
-            ['@field'] = { fg = '$property' },
-          },
-        })
-        require('neomodern').load()
-      end,
-    },
+  },
+  {
+    'cdmill/neomodern.nvim',
+    enabled = false,
+    cond = ar.colorscheme == 'neomodern',
+    priority = get_priority('neomodern'),
+    event = get_event('neomodern'),
+    config = function()
+      require('neomodern').setup({
+        highlights = {
+          ['@namespace'] = { fg = '$constant' },
+          ['@include'] = { fg = '$keyword' },
+          ['@method'] = { fg = '$func' },
+          ['@storageclass'] = { fg = '$constant' },
+          ['@preProc'] = { fg = '$preproc' },
+          ['@field'] = { fg = '$property' },
+        },
+      })
+      require('neomodern').load()
+    end,
   },
   {
     'scottmckendry/cyberdream.nvim',
