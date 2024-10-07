@@ -201,7 +201,7 @@ return {
         lua = { 'stylua' },
         go = { 'goimports' },
         sh = { 'shfmt' },
-        python = {
+        python = ar.find_string(ar.lsp.lang.python, 'ruff') and {} or {
           'isort',
           'black',
           --[[ 'yapf' ]]
