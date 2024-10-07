@@ -236,7 +236,8 @@ return {
         vim = { 'vint' },
         yaml = { 'yamllint' },
         go = { 'golangcilint' },
-        python = { 'mypy' },
+        python = ar.find_string(ar.lsp.lang.python, 'ruff') and {}
+          or { 'mypy' },
       },
       linters = {},
     },
