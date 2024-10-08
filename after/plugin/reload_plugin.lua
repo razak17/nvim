@@ -1,7 +1,16 @@
 local is_available = ar.is_available
-local enabled = is_available('lazy.nvim') and is_available('telescope.nvim')
+local enabled = not ar.noplugin and ar.plugin.reload_plugin.enable
+local has_lazy_and_telescope = is_available('lazy.nvim')
+  and is_available('telescope.nvim')
 
-if not ar or ar.none or not ar.plugins.enable or not enabled then return end
+if
+  not ar
+  or ar.none
+  or not ar.plugins.enable
+  or not enabled and not has_lazy_and_telescope
+then
+  return
+end
 
 ---@class Plugin
 ---@field path string

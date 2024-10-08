@@ -267,6 +267,7 @@ local namespace = {
     last_place = { enable = true },
     large_file = { enable = true },
     notepad = { enable = true },
+    reload_plugin = { enable = true },
     remote_sync = { enable = true },
     smart_splits = { enable = true },
     smart_tilde = { enable = true },
