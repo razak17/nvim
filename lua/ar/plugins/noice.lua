@@ -99,6 +99,7 @@ return {
         win_options = { winblend = 0 },
       },
       confirm = {
+        position = { row = 20 },
         border = {
           style = 'single',
           padding = {
