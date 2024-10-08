@@ -6,7 +6,9 @@ local minimal = ar.plugins.minimal
 
 return {
   {
-    'hrsh7th/nvim-cmp',
+    -- 'hrsh7th/nvim-cmp',
+    "iguanacucumber/magazine.nvim",
+    name = "nvim-cmp",
     cond = ar.completion.enable,
     event = 'InsertEnter',
     opts = function()
