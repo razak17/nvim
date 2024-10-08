@@ -52,6 +52,13 @@ return {
     opts = {},
   },
   {
+    'lunarvim/lunar.nvim',
+    cond = ar.colorscheme == 'lunar',
+    priority = get_priority('lunar'),
+    event = get_event('lunar'),
+    opts = {},
+  },
+  {
     'Wansmer/serenity.nvim',
     cond = ar.colorscheme == 'serenity',
     priority = get_priority('serenity'),
