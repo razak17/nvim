@@ -115,7 +115,13 @@ return {
     opts = {},
   },
   {
-    'axelvc/template-string.nvim',
+    'razak17/template-string.nvim',
+    cmd = { 'TemplateString' },
+    init = function()
+      ar.add_to_menu('toggle', {
+        ['Toggle Template String'] = 'TemplateString toggle',
+      })
+    end,
     ft = {
       'javascript',
       'javascriptreact',
@@ -186,7 +192,7 @@ return {
     'razak17/tailwind-fold.nvim',
     init = function()
       ar.add_to_menu('toggle', {
-        ['Toggle Tailwind Fold'] = 'TailwindFoldToggle'
+        ['Toggle Tailwind Fold'] = 'TailwindFoldToggle',
       })
     end,
     cmd = {
