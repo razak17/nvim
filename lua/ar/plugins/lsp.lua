@@ -19,6 +19,20 @@ return {
       'williamboman/mason.nvim',
       keys = { { '<leader>lm', '<cmd>Mason<CR>', desc = 'mason info' } },
       build = ':MasonUpdate',
+      init = function()
+        ar.add_to_menu('command_palette', {
+          ['Update All Mason Packages'] = 'MasonUpdateAll',
+        })
+      end,
+      cmd = {
+        'Mason',
+        'MasonInstall',
+        'MasonUninstall',
+        'MasonUninstallAll',
+        'MasonLog',
+        'MasonUpdate',
+        'MasonUpdateAll', -- this cmd is provided by mason-extra-cmds
+      },
       opts = {
         ui = {
           border = border,
@@ -36,6 +50,7 @@ return {
         },
         providers = { 'mason.providers.registry-api', 'mason.providers.client' },
       },
+      dependencies = { 'Zeioth/mason-extra-cmds', opts = {} },
     },
     {
       'williamboman/mason-lspconfig.nvim',
