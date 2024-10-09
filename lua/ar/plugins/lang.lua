@@ -186,9 +186,7 @@ return {
     'razak17/tailwind-fold.nvim',
     init = function()
       ar.add_to_menu('toggle', {
-        ['Toggle Tailwind Fold'] = function()
-          vim.cmd('TailwindFoldToggle')
-        end,
+        ['Toggle Tailwind Fold'] = 'TailwindFoldToggle'
       })
     end,
     cmd = {
