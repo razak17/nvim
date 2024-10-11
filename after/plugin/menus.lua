@@ -179,7 +179,7 @@ ar.add_to_menu('command_palette', {
   ['Generate Plugins'] = 'lua require"ar.menus.command_palette".generate_plugins()',
   ['Open Buffer in Float'] = 'lua require"ar.menus.command_palette".open_file_in_centered_popup()',
   ['Close Invalid Buffers'] = 'lua require"ar.menus.command_palette".close_nonvisible_buffers()',
-  ['Toggle Autosave'] = "lua require'ar.menus.command_palette'.toggle_minipairs()",
+  ['Toggle Autosave'] = "lua require'ar.menus.command_palette'.toggle_autosave()",
   ['Toggle Large File'] = "lua require'ar.menus.command_palette'.toggle_large_file()",
   ['Change Filetype'] = "lua require'ar.menus.command_palette'.quick_set_ft()",
   ['Search Code Deps'] = "lua require'ar.menus.command_palette'.search_code_deps()",
