@@ -34,6 +34,7 @@ local function setup_colors()
     blue = ar.highlight.get('DiagnosticInfo', 'bg'),
     dark_orange = ar.highlight.get('DiagnosticWarn', 'bg'),
     error_red = ar.highlight.get('DiagnosticError', 'bg'),
+    pale_blue = ar.highlight.get('DiagnosticInfo', 'bg'),
     comment = ar.highlight.get('Comment', 'fg'),
   }
   if ar.colorscheme == 'onedark' then P = require('onedark.palette') end
