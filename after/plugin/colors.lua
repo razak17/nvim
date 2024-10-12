@@ -154,6 +154,12 @@ local function colorscheme_overrides()
       { dmapWin = { inherit = 'Normal' } },
       { Strict = { link = 'DiffDeleteAlt' } },
     },
+    ['lunar'] = {
+      { NeogitDiffAdd = { link = 'DiffAdd' } },
+      { NeogitDiffDelete = { link = 'DiffDelete' } },
+      { ColorColumn = { link = 'Cursorline' } },
+      { Todo = { link = 'Constant' } },
+    },
   }
   local hls = overrides[vim.g.colors_name]
   if hls then highlight.all(hls) end
