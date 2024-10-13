@@ -26,6 +26,7 @@ return {
       keymaps = {
         horizontal_motions = false,
         diagnostic_motions = false,
+        list_motions = true,
         repeat_motions = true,
       },
       integrations = {
