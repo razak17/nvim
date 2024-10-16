@@ -255,7 +255,7 @@ cnoremap('<C-p>', '<Up>')
 -- will insert all matching files e.g. :bd a.js b.js c.js
 cnoremap('<c-x><c-a>', '<c-a>')
 -- move cursor one character backwards unless at the end of the command line
-cnoremap('<C-f>', function()
+cnoremap('<M-f>', function()
   if fn.getcmdpos() == fn.strlen(fn.getcmdline()) then return '<c-f>' end
 
   return '<Right>'
