@@ -86,7 +86,7 @@ return {
           goto_previous_end = { ["[F"] = "@function.outer", ["[C"] = "@class.outer", ["[A"] = "@parameter.inner" },
         },
       },
-      indent = { enable = true },
+      indent = { enable = false },
       matchup = {
         enable = true,
         enable_quotes = true,
