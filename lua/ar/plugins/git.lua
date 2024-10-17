@@ -10,6 +10,36 @@ local enabled = not minimal and ar.is_git_repo()
 local is_git = ar.is_git_repo() or ar.is_git_env()
 
 return {
+  -- Lazy nvim
+  {
+    '2kabhishek/octohub.nvim',
+    cmd = {
+      'OctoRepos',
+      'OctoRepo',
+      'OctoStats',
+      'OctoActivityStats',
+      'OctoContributionStats',
+      'OctoRepoStats',
+      'OctoProfile',
+      'OctoRepoWeb',
+    },
+    -- stylua: ignore
+    keys = {
+      { '<leader><leader>goo', '<Cmd>OctoRepos<CR>', desc = 'octohub: all repos' },
+      { '<leader><leader>gos', '<Cmd>OctoRepos sort:stars<CR>', desc = 'octohub: top starred repos' },
+      { '<leader><leader>goi', '<Cmd>OctoRepos sort:issues<CR>', desc = 'octohub: repos with issues' },
+      { '<leader><leader>gou', '<Cmd>OctoRepos sort:updated<CR>', desc = 'octohub: recently updated repos' },
+      { '<leader><leader>gop', '<Cmd>OctoRepos type:private<CR>', desc = 'octohub: private repos' },
+      { '<leader><leader>gof', '<Cmd>OctoRepos type:fork<CR>', desc = 'octohub: forked repos' },
+      { '<leader><leader>goc', '<Cmd>OctoRepo<CR>', desc = 'octohub: open repo' },
+      { '<leader><leader>got', '<Cmd>OctoStats<CR>', desc = 'octohub: all stats' },
+      { '<leader><leader>goa', '<Cmd>OctoActivityStats<CR>', desc = 'octohub: activity stats' },
+      { '<leader><leader>gog', '<Cmd>OctoContributionStats<CR>', desc = 'octohub: contribution graph' },
+      { '<leader><leader>gor', '<Cmd>OctoRepoStats<CR>', desc = 'octohub: repo stats' },
+    },
+    dependencies = { '2kabhishek/utils.nvim', 'nvim-telescope/telescope.nvim' },
+    opts = { add_default_keybindings = false },
+  },
   { 'yyk/find-git-root.nvim', cond = enabled, cmd = { 'CdGitRoot' } },
   {
     'kilavila/nvim-gitignore',
@@ -91,8 +121,8 @@ return {
       { '<leader><leader>gii', '<Cmd>lua require("tinygit").issuesAndPrs()<CR>', desc = 'tinygit: issues and prs' },
       { '<leader><leader>gio', '<Cmd>lua require("tinygit").openIssueUnderCursor()<CR>', desc = 'tinygit: open issue under cursor' },
       { '<leader><leader>gsP', '<Cmd>lua require("tinygit").stashPush()<CR>', desc = 'tinygit: stash push' },
-      { '<leader><leader>gof', '<Cmd>lua require("tinygit").githubUrl("file")<CR>', desc = 'tinygit: open file' },
-      { '<leader><leader>gor', '<Cmd>lua require("tinygit").githubUrl("repo")<CR>', desc = 'tinygit: open repo' },
+      -- { '<leader><leader>gof', '<Cmd>lua require("tinygit").githubUrl("file")<CR>', desc = 'tinygit: open file' },
+      -- { '<leader><leader>gor', '<Cmd>lua require("tinygit").githubUrl("repo")<CR>', desc = 'tinygit: open repo' },
       { '<leader><leader>ghs', '<Cmd>lua require("tinygit").searchFileHistory()<CR>', desc = 'tinygit: search file history' },
       { '<leader><leader>ghf', '<Cmd>lua require("tinygit").functionHistory()<CR>', desc = 'tinygit: function history' },
       { '<leader><leader>ghl', '<Cmd>lua require("tinygit").lineHistory()<CR>', desc = 'tinygit: line history' },
