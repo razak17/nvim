@@ -390,7 +390,7 @@ map(
 )
 
 map(
-  { 'n', 'v', 'i' },
+  { 'n', 'v' },
   '<leader>ip',
   paste_image_from_clipboard,
   with_desc('paste image from system clipboard')
