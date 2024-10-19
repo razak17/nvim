@@ -3,12 +3,53 @@ local ui, highlight = ar.ui, ar.highlight
 local border, lsp_hls, ellipsis =
   ui.current.border, ui.lsp.highlights, ui.icons.misc.ellipsis
 local minimal = ar.plugins.minimal
+local codicons = ui.codicons
+
+ar.completion.config = {
+  format = {
+    ['emoji'] = { icon = codicons.misc.smiley, hl = 'CmpItemKindEmoji' },
+    ['lab.quick_data'] = { icon = ui.icons.misc.beaker, hl = 'CmpItemKindLab' },
+    ['natdat'] = { icon = codicons.misc.calendar, hl = 'CmpItemKindDynamic' },
+    ['crates'] = { icon = codicons.misc.package, hl = 'CmpItemKindDynamic' },
+    ['copilot'] = { icon = codicons.misc.octoface, hl = 'CmpItemKindCopilot' },
+    ['nerdfonts'] = { icon = '', hl = 'CmpItemKindNerdFont' },
+    ['nvim_px_to_rem'] = { icon = '', hl = 'CmpItemKindNerdFont' },
+    ['Color'] = { icon = '' },
+  },
+  menu = {
+    Color = '[COLOR]',
+    copilot = '[CPL]',
+    codeium = '[CM]',
+    nvim_lsp = '[LSP]',
+    luasnip = '[SNIP]',
+    snippets = '[SNIP]',
+    emoji = '[EMOJI]',
+    path = '[PATH]',
+    neorg = '[NEORG]',
+    buffer = '[BUF]',
+    spell = '[SPELL]',
+    dictionary = '[DICT]',
+    rg = '[RG]',
+    norg = '[NORG]',
+    cmdline = '[CMD]',
+    cmdline_history = '[HIST]',
+    crates = '[CRT]',
+    treesitter = '[TS]',
+    ['buffer-lines'] = '[BUFL]',
+    ['lab.quick_data'] = '[LAB]',
+    nerdfonts = '[NF]',
+    natdat = '[NATDAT]',
+    nvim_px_to_rem = '[PX2REM]',
+    ['vim-dadbod-completion'] = '[DB]',
+    dotenv = '[DOTENV]',
+  },
+}
 
 return {
   {
     -- 'hrsh7th/nvim-cmp',
-    "iguanacucumber/magazine.nvim",
-    name = "nvim-cmp",
+    'iguanacucumber/magazine.nvim',
+    name = 'nvim-cmp',
     cond = ar.completion.enable,
     event = 'InsertEnter',
     opts = function()
@@ -18,7 +59,6 @@ return {
       local luasnip_avail, luasnip = pcall(require, 'luasnip')
       local MiniIcons = require('mini.icons')
       local symbols = require('lspkind').symbol_map
-      local codicons = ui.codicons
       local MIN_MENU_WIDTH, MAX_MENU_WIDTH =
         25, math.min(50, math.floor(vim.o.columns * 0.5))
 
@@ -189,32 +229,7 @@ return {
           deprecated = true,
           fields = { 'abbr', 'kind', 'menu' },
           format = function(entry, item)
-            item.menu = ({
-              copilot = '[CPL]',
-              codeium = '[CM]',
-              nvim_lsp = '[LSP]',
-              luasnip = '[SNIP]',
-              snippets = '[SNIP]',
-              emoji = '[EMOJI]',
-              path = '[PATH]',
-              neorg = '[NEORG]',
-              buffer = '[BUF]',
-              spell = '[SPELL]',
-              dictionary = '[DICT]',
-              rg = '[RG]',
-              norg = '[NORG]',
-              cmdline = '[CMD]',
-              cmdline_history = '[HIST]',
-              crates = '[CRT]',
-              treesitter = '[TS]',
-              ['buffer-lines'] = '[BUFL]',
-              ['lab.quick_data'] = '[LAB]',
-              nerdfonts = '[NF]',
-              natdat = '[NATDAT]',
-              nvim_px_to_rem = '[PX2REM]',
-              ['vim-dadbod-completion'] = '[DB]',
-              dotenv = '[DOTENV]',
-            })[entry.source.name]
+            item.menu = (ar.completion.config.menu)[entry.source.name]
 
             local label, length = item.abbr, api.nvim_strwidth(item.abbr)
             local function format_icon(icon) return fmt('%s ', icon) end
@@ -249,49 +264,39 @@ return {
                 item.kind = format_icon(symbols[item.kind])
               end
             end
-            if entry.source.name == 'emoji' then
-              item.kind = format_icon(codicons.misc.smiley)
+
+            local format = ar.completion.config.format
+            local config = format[entry.source.name]
+
+            if config then
+              item.kind = format_icon(config.icon)
+              item.kind_hl_group = config.hl
             end
-            if entry.source.name == 'lab.quick_data' then
-              item.kind = format_icon(ui.icons.misc.beaker)
-              item.kind_hl_group = 'CmpItemKindLab'
-            end
-            if entry.source.name == 'natdat' then
-              item.kind = format_icon(codicons.misc.calendar)
-              item.kind_hl_group = 'CmpItemKindDynamic'
-            end
-            if entry.source.name == 'crates' then
-              item.kind = format_icon(ui.codicons.misc.package)
-            end
-            if entry.source.name == 'copilot' then
-              item.kind = format_icon(ui.codicons.misc.octoface)
-            end
-            if entry.source.name == 'codeium' then
-              item.kind = format_icon('')
-              item.kind_hl_group = 'CmpItemKindCodeium'
-            end
-            if entry.source.name == 'nerdfonts' then
-              item.kind = format_icon('')
-              item.kind_hl_group = 'CmpItemKindNerdFont'
-            end
-            if entry.source.name == 'nvim_px_to_rem' then
-              item.kind = format_icon('')
-              item.kind_hl_group = 'CmpItemKindNerdFont'
+
+            local function get_color(color_item, color_entry)
+              local entry_item = color_entry:get_completion_item()
+              local color = entry_item.documentation
+              if
+                color
+                and type(color) == 'string'
+                and color:match('^#%x%x%x%x%x%x$')
+              then
+                local hl = 'hex-' .. color:sub(2)
+                if #api.nvim_get_hl(0, { name = hl }) == 0 then
+                  api.nvim_set_hl(0, hl, { fg = color })
+                end
+                color_item.kind = format['Color'].icon
+                color_item.kind_hl_group = hl
+              else
+                color_item.kind = format_icon(symbols[item.kind])
+              end
+              return color_item
             end
 
             if item.kind == 'Color' then
               vim.o.pumblend = 3
-              item = require('cmp-tailwind-colors').format(entry, item)
               item.menu = '[COLOR]'
-              if item.kind == 'Color' then
-                if ar.completion.icons == 'mini.icons' then
-                  local icon, hl = MiniIcons.get('lsp', item.kind)
-                  item.kind = icon
-                  item.kind_hl_group = hl
-                elseif ar.completion.icons == 'lspkind' then
-                  item.kind = format_icon(symbols[item.kind])
-                end
-              end
+              if item.kind == 'Color' then item = get_color(item, entry) end
             end
             return item
           end,
@@ -458,11 +463,6 @@ return {
     'amarakon/nvim-cmp-buffer-lines',
     cond = ar.completion.enable,
     ft = { 'c', 'cpp' },
-  },
-  {
-    'js-everts/cmp-tailwind-colors',
-    cond = ar.completion.enable and not minimal,
-    ft = { 'css', 'html', 'vue', 'javascriptreact', 'typescriptreact' },
   },
   {
     'jsongerber/nvim-px-to-rem',
