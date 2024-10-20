@@ -179,8 +179,10 @@ M.file_flags = {
 
 M.file_icon = {
   init = function(self)
-    self.icon, self.icon_color =
-      require('nvim-web-devicons').get_icon(vim.fn.expand('%:t'))
+    if ar.is_available('nvim-web-devicons') then
+      self.icon, self.icon_color =
+        require('nvim-web-devicons').get_icon(vim.fn.expand('%:t'))
+    end
     if falsy(self.icon) or falsy(self.icon_color) then
       self.icon, self.icon_color =
         codicons.documents.default_file, 'DevIconDefault'

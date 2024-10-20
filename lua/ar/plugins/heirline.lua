@@ -261,6 +261,7 @@ return {
         -- Debug
         {
           condition = function()
+            if not ar.is_available('nvim-dap') then return false end
             local session = require('dap').session()
             return session ~= nil
           end,
