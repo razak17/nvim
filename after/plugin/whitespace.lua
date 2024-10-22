@@ -12,6 +12,16 @@ if not ar then return end
 
 local fn = vim.fn
 
+ar.plugin.whitespace.config = {
+  excluded_fts = {
+    'w3m',
+  },
+}
+
+local config = ar.plugin.whitespace.config
+
+if not config then return end
+
 local function is_floating_win() return fn.win_gettype() == 'popup' end
 
 local function is_invalid_buf()
@@ -33,6 +43,10 @@ local function toggle_trailing(mode)
   vim.w.whitespace_match_number = fn.matchadd('ExtraWhitespace', pattern)
 end
 
+local function is_excluded(bufnr)
+  return vim.tbl_contains(config.excluded_fts, vim.bo[bufnr].filetype)
+end
+
 ar.highlight.set('ExtraWhitespace', { fg = 'red' })
 
 ar.augroup('WhitespaceMatch', {
@@ -44,10 +58,16 @@ ar.augroup('WhitespaceMatch', {
   event = { 'BufEnter', 'FileType', 'InsertLeave' },
   pattern = { '*' },
   desc = 'Show extra whitespace on insert leave, buf enter or filetype',
-  command = function() toggle_trailing('n') end,
+  command = function(args)
+    if is_excluded(args.buf) then return end
+    toggle_trailing('n')
+  end,
 }, {
   event = { 'InsertEnter' },
   desc = 'Show extra whitespace on insert enter',
   pattern = { '*' },
-  command = function() toggle_trailing('i') end,
+  command = function(args)
+    if is_excluded(args.buf) then return end
+    toggle_trailing('i')
+  end,
 })
