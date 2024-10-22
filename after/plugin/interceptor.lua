@@ -4,7 +4,11 @@ if not ar or ar.none or not enabled then return end
 
 local api, fn = vim.api, vim.fn
 
-ar.interceptor = { enable = true }
+ar.plugin.interceptor.config = { enable = true }
+
+local config = ar.plugin.interceptor.config
+
+if not config then return end
 
 -- ref: https://www.reddit.com/r/neovim/comments/16b0n3a/whats_your_new_favorite_functions_share_em/
 
@@ -36,9 +40,9 @@ local function open_in_prog(buf, fpath, fname, prog)
 end
 
 ar.command('InterceptToggle', function()
-  ar.interceptor.enable = not ar.interceptor.enable
+  config.enable = not config.enable
   local state = '`Enabled`'
-  if not ar.interceptor.enable then state = '`Disabled`' end
+  if not config.enable then state = '`Disabled`' end
   notify('Intercept file open set to ' .. state, 'Intercept File Open')
 end, { desc = 'Toggles intercepting BufNew to open files in custom programs' })
 ar.add_to_menu(
@@ -50,7 +54,7 @@ ar.augroup('InterceptToggle', {
   event = { 'BufNew', 'BufReadPre' },
   pattern = { '*.png', '*.jpg', '*.ico', '*.pdf', '*.mp3', '*.mp4', '*.gif' },
   command = function(args)
-    if not ar.interceptor.enable then return end
+    if not config.enable then return end
     local path, bufnr = args.match, args.buf
     local extension = fn.fnamemodify(path, ':e')
     local filename = fn.fnamemodify(path, ':t')
