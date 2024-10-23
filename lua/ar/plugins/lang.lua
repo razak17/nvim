@@ -186,6 +186,16 @@ return {
       highlight = 'DiagnosticVirtualTextInfo',
     },
   },
+  {
+    '2nthony/sortjson.nvim',
+    cmd = {
+      'SortJSONByAlphaNum',
+      'SortJSONByAlphaNumReverse',
+      'SortJSONByKeyLength',
+      'SortJSONByKeyLengthReverse',
+    },
+    opts = {},
+  },
   -- Tailwind
   --------------------------------------------------------------------------------
   {
