@@ -71,18 +71,22 @@ local env = vim.env
 ---@field signs ArCond
 ---@field workspace_diagnostics ArCond
 
+---@class ArPluginItem
+---@field enable boolean
+---@field config? table
+
 ---@class ArPlugin
----@field env ArCond
----@field interceptor ArCond
----@field last_place ArCond
----@field large_file ArCond
----@field notepad ArCond
----@field remote_sync ArCond
----@field smart_splits ArCond
----@field smart_tilde ArCond
----@field sticky_note ArCond
----@field tmux ArCond
----@field whitespace ArCond
+---@field env ArPluginItem
+---@field interceptor ArPluginItem
+---@field last_place ArPluginItem
+---@field large_file ArPluginItem
+---@field notepad ArPluginItem
+---@field remote_sync ArPluginItem
+---@field smart_splits ArPluginItem
+---@field smart_tilde ArPluginItem
+---@field sticky_note ArPluginItem
+---@field tmux ArPluginItem
+---@field whitespace ArPluginItem
 
 ---@class ArPluginsOverride
 ---@field dict ArCond
