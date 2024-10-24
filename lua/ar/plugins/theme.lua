@@ -59,6 +59,13 @@ return {
     opts = {},
   },
   {
+    'aktersnurra/no-clown-fiesta.nvim',
+    cond = ar.colorscheme == 'no-clown-fiesta',
+    priority = get_priority('no-clown-fiesta'),
+    event = get_event('no-clown-fiesta'),
+    opts = {},
+  },
+  {
     'Wansmer/serenity.nvim',
     cond = ar.colorscheme == 'serenity',
     priority = get_priority('serenity'),
