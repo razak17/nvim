@@ -87,6 +87,7 @@ return {
         hunk = { '樂', '' },
       },
       integrations = { diffview = true },
+      graph_style = 'kitty',
     },
     config = function(_, opts)
       ar.highlight.plugin('neogit', {
