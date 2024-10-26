@@ -9,7 +9,9 @@ return {
   {
     'Bekaboo/dropbar.nvim',
     event = { 'BufRead', 'BufNewFile' },
-    cond = not ar.plugins.minimal and ar.ui.winbar.enable and ar.ui.winbar.variant == 'plugin',
+    cond = not ar.plugins.minimal
+      and ar.ui.winbar.enable
+      and ar.ui.winbar.variant == 'plugin',
     keys = {
       {
         '<leader>wo',
@@ -21,7 +23,7 @@ return {
       local symbol_map = require('lspkind').symbol_map
 
       return {
-        general = {
+        bar = {
           update_interval = 0,
           attach_events = {
             'OptionSet',
