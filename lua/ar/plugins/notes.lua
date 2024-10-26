@@ -5,18 +5,20 @@ return {
     'epwalsh/obsidian.nvim',
     cond = not ar.plugins.minimal,
     init = function()
-      require('which-key').add({ { '<localleader>o', group = 'Obsidian' } })
+      require('which-key').add({
+        { '<leader><localleader>o', group = 'Obsidian' },
+      })
     end,
-    event = 'BufRead ' .. sync('obsidian') .. '/*.md',
+    event = 'BufRead ' .. sync('obsi<leader>dian') .. '/*.md',
     -- stylua: ignore
     keys = {
-      { '<localleader>ob', '<Cmd>ObsidianBacklinks<CR>', desc = 'obsidian: buffer backlinks', },
-      { '<localleader>od', '<Cmd>ObsidianToday<CR>', desc = 'obsidian: open daily note', },
-      { '<localleader>on', ':ObsidianNew ', desc = 'obsidian: new note' },
-      { '<localleader>oy', '<Cmd>ObsidianYesterday<CR>', desc = 'obsidian: previous daily note', },
-      { '<localleader>oo', ':ObsidianOpen ', desc = 'obsidian: open in app' },
-      { '<localleader>os', '<Cmd>ObsidianSearch<CR>', desc = 'obsidian: search', },
-      { '<localleader>ot', '<Cmd>ObsidianTemplate<CR>', desc = 'obsidian: insert template', },
+      { '<leader><localleader>ob', '<leader><Cmd>ObsidianBacklinks<CR>', desc = 'obsidian: buffer backlinks', },
+      { '<leader><localleader>od', '<leader><Cmd>ObsidianToday<CR>', desc = 'obsidian: open daily note', },
+      { '<leader><localleader>on', ':ObsidianNew ', desc = 'obsidian: new note' },
+      { '<leader><localleader>oy', '<Cmd>ObsidianYesterday<CR>', desc = 'obsidian: previous daily note', },
+      { '<leader><localleader>oo', ':ObsidianOpen ', desc = 'obsidian: open in app' },
+      { '<leader><localleader>os', '<Cmd>ObsidianSearch<CR>', desc = 'obsidian: search', },
+      { '<leader><localleader>ot', '<Cmd>ObsidianTemplate<CR>', desc = 'obsidian: insert template', },
     },
     opts = {
       dir = sync('obsidian'),

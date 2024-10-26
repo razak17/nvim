@@ -8,19 +8,19 @@ return {
     cond = not minimal,
     init = function()
       require('which-key').add({
-        { '<leader><leader>tt', group = 'Translate' },
+        { '<leader><leader>T', group = 'Translate' },
       })
     end,
     keys = {
       {
-        '<leader><leader>ttm',
+        '<leader><leader>Tm',
         function() return require('pantran').motion_translate() end,
         mode = { 'n', 'x' },
         expr = true,
         desc = 'motion',
       },
       {
-        '<leader><leader>ttp',
+        '<leader><leader>Tp',
         '<cmd>Pantran<CR>',
         mode = { 'n', 'v' },
         desc = 'prompt',
