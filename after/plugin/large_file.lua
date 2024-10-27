@@ -33,7 +33,7 @@ end
 ---@param bufnr number
 local function handle_bigfile(bufnr)
   ar.augroup('large_file', {
-    event = 'BufReadPost',
+    event = { 'BufEnter', 'BufReadPre', 'BufWritePre', 'BufReadPost' },
     command = function()
       cmd('syntax clear')
       vim.opt_local.syntax = 'OFF'
