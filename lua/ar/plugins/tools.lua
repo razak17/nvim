@@ -194,6 +194,12 @@ return {
               and (ar.lsp.prettier.needs_config ~= true or has_config(ctx))
           end,
         },
+        -- https://github.com/mistweaverco/kulala-fmt
+        kulala = {
+          command = 'kulala-fmt',
+          args = { '$FILENAME' },
+          stdin = false,
+        },
       },
       formatters_by_ft = {
         ['markdown'] = { 'prettier', 'markdownlint-cli2', 'markdown-toc' },
@@ -206,6 +212,7 @@ return {
           'black',
           --[[ 'yapf' ]]
         },
+        http = { 'kulala' },
       },
       log_level = vim.log.levels.DEBUG,
       format_on_save = false,
