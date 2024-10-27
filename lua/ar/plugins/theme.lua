@@ -160,6 +160,36 @@ return {
     opts = {},
   },
   {
+    'scottmckendry/cyberdream.nvim',
+    cond = ar.colorscheme == 'cyberdream',
+    priority = get_priority('cyberdream'),
+    event = get_event('cyberdream'),
+    opts = {},
+  },
+  {
+    'folke/tokyonight.nvim',
+    cond = ar.colorscheme == 'tokyonight',
+    priority = get_priority('tokyonight'),
+    event = get_event('tokyonight'),
+    opts = {},
+  },
+  {
+    'atmosuwiryo/vim-winteriscoming',
+    cond = ar.colorscheme == 'WinterIsComing-dark-color-theme',
+    priority = get_priority('WinterIsComing-dark-color-theme'),
+    event = get_event('WinterIsComing-dark-color-theme'),
+  },
+  {
+    'https://git.sr.ht/~p00f/alabaster.nvim',
+    cond = ar.colorscheme == 'alabaster',
+    lazy = false,
+    priority = 1000,
+  },
+  -- }}}
+  --------------------------------------------------------------------------------
+  -- Disabled
+  --------------------------------------------------------------------------------
+  {
     'sontungexpt/witch',
     enabled = false,
     cond = ar.colorscheme == 'witch',
@@ -188,31 +218,4 @@ return {
       require('neomodern').load()
     end,
   },
-  {
-    'scottmckendry/cyberdream.nvim',
-    cond = ar.colorscheme == 'cyberdream',
-    priority = get_priority('cyberdream'),
-    event = get_event('cyberdream'),
-    opts = {},
-  },
-  {
-    'folke/tokyonight.nvim',
-    cond = ar.colorscheme == 'tokyonight',
-    priority = get_priority('tokyonight'),
-    event = get_event('tokyonight'),
-    opts = {},
-  },
-  {
-    'atmosuwiryo/vim-winteriscoming',
-    cond = ar.colorscheme == 'WinterIsComing-dark-color-theme',
-    priority = get_priority('WinterIsComing-dark-color-theme'),
-    event = get_event('WinterIsComing-dark-color-theme'),
-  },
-  {
-    'https://git.sr.ht/~p00f/alabaster.nvim',
-    cond = ar.colorscheme == 'alabaster',
-    lazy = false,
-    priority = 1000,
-  },
-  -- }}}
 }

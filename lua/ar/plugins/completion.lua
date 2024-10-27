@@ -441,12 +441,6 @@ return {
           })
         end,
       },
-      {
-        'Exafunction/codeium.nvim',
-        enabled = false,
-        cond = ar.ai.enable and not minimal and false,
-        opts = {},
-      },
     },
   },
   {
@@ -469,6 +463,15 @@ return {
     cond = ar.completion.enable and not minimal,
     ft = { 'css', 'scss' },
     opts = { show_virtual_text = true },
+  },
+  --------------------------------------------------------------------------------
+  -- Disabled
+  --------------------------------------------------------------------------------
+  {
+    'Exafunction/codeium.nvim',
+    enabled = false,
+    cond = ar.ai.enable and not minimal and false,
+    opts = {},
   },
   {
     'razak17/wilder.nvim',

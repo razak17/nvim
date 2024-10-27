@@ -2,6 +2,25 @@ local minimal, niceties = ar.plugins.minimal, ar.plugins.niceties
 
 return {
   {
+    'nvchad/showkeys',
+    cond = not minimal,
+    init = function()
+      ar.add_to_menu(
+        'command_palette',
+        { ['Toggle Screencaster'] = 'ShowkeysToggle' }
+      )
+    end,
+    cmd = 'ShowkeysToggle',
+    opts = {
+      position = 'top-right',
+      timeout = 1,
+      maxkeys = 17,
+    },
+  },
+  --------------------------------------------------------------------------------
+  -- Disabled
+  --------------------------------------------------------------------------------
+  {
     '4513ECHO/nvim-keycastr',
     cond = not minimal and niceties and false,
     init = function()
@@ -27,21 +46,5 @@ return {
         { desc = 'keycastr: toggle' }
       )
     end,
-  },
-  {
-    'nvchad/showkeys',
-    cond = not minimal,
-    init = function()
-      ar.add_to_menu(
-        'command_palette',
-        { ['Toggle Screencaster'] = 'ShowkeysToggle' }
-      )
-    end,
-    cmd = 'ShowkeysToggle',
-    opts = {
-      position = 'top-right',
-      timeout = 1,
-      maxkeys = 17,
-    },
   },
 }

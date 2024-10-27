@@ -46,42 +46,6 @@ return {
     },
   },
   {
-    'tomiis4/BufferTabs.nvim',
-    enabled = false,
-    cond = not minimal and false,
-    event = 'VeryLazy',
-    -- stylua: ignore
-    keys = {
-      { '<leader>ob', '<Cmd>BufferTabsToggle<CR>', desc = 'buffer-tabs: toggle', },
-    },
-    config = function()
-      require('buffertabs').setup({
-        border = 'single',
-        horizontal = 'right',
-        hl_group = 'BufferTabs',
-        hl_group_inactive = 'Dim',
-      })
-      require('buffertabs').toggle()
-    end,
-  },
-  {
-    'mei28/luminate.nvim',
-    enabled = false,
-    cond = not minimal and niceties and false,
-    event = { 'VeryLazy' },
-    opts = {},
-  },
-  {
-    'lukas-reineke/virt-column.nvim',
-    enabled = false,
-    cond = not minimal and false,
-    event = { 'BufRead', 'BufNewFile' },
-    opts = {
-      char = separators.right_thin_block,
-      highlight = 'IndentBlanklineContextChar',
-    },
-  },
-  {
     'razak17/smartcolumn.nvim',
     cond = not minimal,
     event = { 'BufRead', 'BufNewFile' },
@@ -98,31 +62,9 @@ return {
     config = function(_, opts) require('high-str').setup(opts) end,
   },
   {
-    'AndrewRadev/discotheque.vim',
-    enabled = false,
-    cond = not minimal and niceties and false,
-    cmd = { 'Disco' },
-  },
-  {
     'koron/nyancat-vim',
     cond = not minimal and niceties,
     cmd = { 'Nyancat', 'Nyancat2' },
-  },
-  {
-    'utilyre/sentiment.nvim',
-    enabled = false,
-    cond = not minimal and niceties and false,
-    init = function()
-      -- `matchparen.vim` needs to be disabled manually in case of lazy loading
-      vim.g.loaded_matchparen = 1
-    end,
-    event = { 'BufRead', 'BufNewFile' },
-    opts = {
-      excluded_filetypes = {
-        [''] = true,
-        fugitive = true,
-      },
-    },
   },
   {
     'HampusHauffman/block.nvim',
@@ -191,13 +133,6 @@ return {
     config = function(_, opts) require('strict').setup(opts) end,
   },
   {
-    'aaron-p1/match-visual.nvim',
-    enabled = false,
-    cond = not minimal and niceties and false,
-    event = { 'BufRead', 'BufNewFile' },
-    opts = {},
-  },
-  {
     'tzachar/local-highlight.nvim',
     cond = not minimal and niceties and not ar.lsp.enable,
     event = { 'BufRead', 'BufNewFile' },
@@ -233,38 +168,6 @@ return {
     },
   },
   {
-    'miversen33/sunglasses.nvim',
-    enabled = false,
-    cond = not minimal and niceties and false,
-    event = 'UIEnter',
-    cmd = { 'SunglassesEnable', 'SunglassesDisable' },
-    opts = {
-      filter_type = 'SHADE', -- TINT, NOSYNTAX, SHADE
-      filter_percent = 0.35,
-    },
-    init = function()
-      local function toggle_sunglasses()
-        if not ar.plugin_available('sunglasses.nvim') then return end
-        local is_shaded
-        for _, winnr in ipairs(vim.api.nvim_list_wins()) do
-          is_shaded = require('sunglasses.window').get(winnr):is_shaded()
-          if is_shaded then
-            vim.cmd('SunglassesDisable')
-            return
-          end
-        end
-        vim.cmd('SunglassesEnable')
-        vim.cmd('SunglassesOff')
-      end
-
-      ar.add_to_menu('toggle', { ['Toggle Sunglasses'] = toggle_sunglasses })
-    end,
-    config = function(_, opts)
-      require('sunglasses').setup(opts)
-      vim.cmd('SunglassesDisable')
-    end,
-  },
-  {
     'folke/zen-mode.nvim',
     init = function()
       require('which-key').add({ { '<localleader>z', group = 'Zen' } })
@@ -288,19 +191,6 @@ return {
     -- stylua: ignore
     keys = {
       { '<localleader>ab', '<cmd>SpOnGeBoBiFy<CR>', mode = { 'v' }, desc = 'SpOnGeBoB: SpOnGeBoBiFy', },
-    },
-  },
-  {
-    'tamton-aquib/zone.nvim',
-    enabled = false,
-    cond = not minimal and false,
-    event = 'VeryLazy',
-    opts = {
-      style = 'epilepsy',
-      exclude_filetypes = {
-        'NeogitStatus',
-        'NeogitCommitMessage',
-      },
     },
   },
   {
@@ -407,39 +297,6 @@ return {
     end,
   },
   {
-    'shellRaining/hlchunk.nvim',
-    enabled = false,
-    cond = not minimal and false,
-    event = 'BufRead',
-    config = function()
-      require('hlchunk').setup({
-        indent = {
-          chars = { '▏' },
-          style = {
-            { fg = highlight.get('IndentBlanklineChar', 'fg') },
-          },
-        },
-        blank = { enable = false },
-        chunk = {
-          chars = {
-            horizontal_line = '─',
-            vertical_line = '│',
-            left_top = '┌',
-            left_bottom = '└',
-            right_arrow = '─',
-          },
-          style = highlight.tint(
-            highlight.get('IndentBlanklineContextChar', 'fg'),
-            -0.2
-          ),
-        },
-        line_num = {
-          style = highlight.get('CursorLineNr', 'fg'),
-        },
-      })
-    end,
-  },
-  {
     'LudoPinelli/comment-box.nvim',
     init = function()
       require('which-key').add({
@@ -514,5 +371,151 @@ return {
         status_dashboard = 'yos',
       },
     },
+  },
+  --------------------------------------------------------------------------------
+  -- Disabled
+  --------------------------------------------------------------------------------
+  {
+    'tomiis4/BufferTabs.nvim',
+    enabled = false,
+    cond = not minimal and false,
+    event = 'VeryLazy',
+    -- stylua: ignore
+    keys = {
+      { '<leader>ob', '<Cmd>BufferTabsToggle<CR>', desc = 'buffer-tabs: toggle', },
+    },
+    config = function()
+      require('buffertabs').setup({
+        border = 'single',
+        horizontal = 'right',
+        hl_group = 'BufferTabs',
+        hl_group_inactive = 'Dim',
+      })
+      require('buffertabs').toggle()
+    end,
+  },
+  {
+    'mei28/luminate.nvim',
+    enabled = false,
+    cond = not minimal and niceties and false,
+    event = { 'VeryLazy' },
+    opts = {},
+  },
+  {
+    'lukas-reineke/virt-column.nvim',
+    enabled = false,
+    cond = not minimal and false,
+    event = { 'BufRead', 'BufNewFile' },
+    opts = {
+      char = separators.right_thin_block,
+      highlight = 'IndentBlanklineContextChar',
+    },
+  },
+  {
+    'AndrewRadev/discotheque.vim',
+    enabled = false,
+    cond = not minimal and niceties and false,
+    cmd = { 'Disco' },
+  },
+  {
+    'utilyre/sentiment.nvim',
+    enabled = false,
+    cond = not minimal and niceties and false,
+    init = function()
+      -- `matchparen.vim` needs to be disabled manually in case of lazy loading
+      vim.g.loaded_matchparen = 1
+    end,
+    event = { 'BufRead', 'BufNewFile' },
+    opts = {
+      excluded_filetypes = {
+        [''] = true,
+        fugitive = true,
+      },
+    },
+  },
+  {
+    'aaron-p1/match-visual.nvim',
+    enabled = false,
+    cond = not minimal and niceties and false,
+    event = { 'BufRead', 'BufNewFile' },
+    opts = {},
+  },
+  {
+    'miversen33/sunglasses.nvim',
+    enabled = false,
+    cond = not minimal and niceties and false,
+    event = 'UIEnter',
+    cmd = { 'SunglassesEnable', 'SunglassesDisable' },
+    opts = {
+      filter_type = 'SHADE', -- TINT, NOSYNTAX, SHADE
+      filter_percent = 0.35,
+    },
+    init = function()
+      local function toggle_sunglasses()
+        if not ar.plugin_available('sunglasses.nvim') then return end
+        local is_shaded
+        for _, winnr in ipairs(vim.api.nvim_list_wins()) do
+          is_shaded = require('sunglasses.window').get(winnr):is_shaded()
+          if is_shaded then
+            vim.cmd('SunglassesDisable')
+            return
+          end
+        end
+        vim.cmd('SunglassesEnable')
+        vim.cmd('SunglassesOff')
+      end
+
+      ar.add_to_menu('toggle', { ['Toggle Sunglasses'] = toggle_sunglasses })
+    end,
+    config = function(_, opts)
+      require('sunglasses').setup(opts)
+      vim.cmd('SunglassesDisable')
+    end,
+  },
+  {
+    'tamton-aquib/zone.nvim',
+    enabled = false,
+    cond = not minimal and false,
+    event = 'VeryLazy',
+    opts = {
+      style = 'epilepsy',
+      exclude_filetypes = {
+        'NeogitStatus',
+        'NeogitCommitMessage',
+      },
+    },
+  },
+  {
+    'shellRaining/hlchunk.nvim',
+    enabled = false,
+    cond = not minimal and false,
+    event = 'BufRead',
+    config = function()
+      require('hlchunk').setup({
+        indent = {
+          chars = { '▏' },
+          style = {
+            { fg = highlight.get('IndentBlanklineChar', 'fg') },
+          },
+        },
+        blank = { enable = false },
+        chunk = {
+          chars = {
+            horizontal_line = '─',
+            vertical_line = '│',
+            left_top = '┌',
+            left_bottom = '└',
+            right_arrow = '─',
+          },
+          style = highlight.tint(
+            highlight.get('IndentBlanklineContextChar', 'fg'),
+            -0.2
+          ),
+        },
+        line_num = {
+          style = highlight.get('CursorLineNr', 'fg'),
+        },
+      })
+    end,
   },
 }

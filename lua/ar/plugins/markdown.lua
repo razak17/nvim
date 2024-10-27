@@ -54,28 +54,11 @@ return {
     },
   },
   {
-    'https://git.sr.ht/~swaits/thethethe.nvim',
-    enabled = false,
-    cond = not minimal and niceties and false,
-    event = 'VeryLazy',
-    opts = {},
-  },
-  {
     'Zeioth/markmap.nvim',
     cond = not minimal,
     build = 'yarn global add markmap-cli',
     cmd = { 'MarkmapOpen', 'MarkmapSave', 'MarkmapWatch', 'MarkmapWatchStop' },
     opts = {},
-  },
-  {
-    'OXY2DEV/markview.nvim',
-    cond = not minimal and not niceties and false,
-    cmd = { 'Markview' },
-    ft = { 'markdown' },
-    opts = {},
-    init = function()
-      ar.add_to_menu('command_palette', { ['Toggle Markview'] = 'Markview' })
-    end,
   },
   {
     'arminveres/md-pdf.nvim',
@@ -277,5 +260,25 @@ return {
         highlight = 'ColorColumn',
       },
     },
+  },
+  --------------------------------------------------------------------------------
+  -- Disabled
+  --------------------------------------------------------------------------------
+  {
+    'https://git.sr.ht/~swaits/thethethe.nvim',
+    enabled = false,
+    cond = not minimal and niceties and false,
+    event = 'VeryLazy',
+    opts = {},
+  },
+  {
+    'OXY2DEV/markview.nvim',
+    cond = not minimal and not niceties and false,
+    cmd = { 'Markview' },
+    ft = { 'markdown' },
+    opts = {},
+    init = function()
+      ar.add_to_menu('command_palette', { ['Toggle Markview'] = 'Markview' })
+    end,
   },
 }

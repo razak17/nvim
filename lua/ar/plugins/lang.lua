@@ -69,31 +69,6 @@ return {
     opts = {},
   },
   {
-    'razak17/package-info.nvim',
-    enabled = false,
-    cond = not minimal and false,
-    event = 'BufRead package.json',
-    config = function()
-      require('which-key').add({
-        { '<localleader>P', group = 'Package Info' },
-      })
-
-      highlight.plugin('package-info', {
-        theme = {
-          -- stylua: ignore
-          ['onedark'] = {
-            { PackageInfoUpToDateVersion = { link = 'DiagnosticVirtualTextInfo' } },
-            { PackageInfoOutdatedVersion = { link = 'DiagnosticVirtualTextWarn' } },
-          },
-        },
-      })
-      require('package-info').setup({
-        autostart = false,
-        hide_up_to_date = true,
-      })
-    end,
-  },
-  {
     'jdrupal-dev/parcel.nvim',
     cond = not minimal,
     event = 'BufRead package.json',
@@ -149,13 +124,6 @@ return {
       { '<leader><leader>Jdn', '<cmd>JsdocSwitchStop<CR>', desc = 'jsdoc-switch: stop' },
     },
     opts = { auto_set_keys = false, notify = false },
-  },
-  {
-    'turbio/bracey.vim',
-    enabled = false,
-    cond = not minimal and false,
-    ft = 'html',
-    build = 'npm install --prefix server',
   },
   {
     'Diogo-ss/five-server.nvim',
@@ -233,40 +201,6 @@ return {
       { '<localleader>lt', '<cmd>TWValues<cr>', desc = 'tw-values: show values', },
     },
     opts = { border = border, show_unknown_classes = true },
-  },
-  {
-    'luckasRanarison/tailwind-tools.nvim',
-    enabled = false,
-    cond = ar.lsp.enable and false,
-    ft = {
-      'html',
-      'svelte',
-      'astro',
-      'vue',
-      'typescriptreact',
-      'javascriptreact',
-      'php',
-      'blade',
-    },
-    event = { 'BufRead' },
-    cmd = {
-      'TailwindConcealToggle',
-      'TailwindColorToggle',
-      'TailwindSort',
-      'TailwindSortSelection',
-    },
-    init = function()
-      ar.add_to_menu('lsp', {
-        ['Toggle Tailwind Conceal'] = 'TailwindConcealEnable',
-        ['Toggle Tailwind Colors'] = 'TailwindColorToggle',
-        ['Sort Tailwind Classes'] = 'TailwindSort',
-      })
-    end,
-    opts = {
-      document_color = { enabled = true, inline_symbol = '󰝤 ' },
-      conceal = { enabled = true, symbol = '󱏿' },
-      custom_filetypes = {},
-    },
   },
   -- Python
   --------------------------------------------------------------------------------
@@ -431,4 +365,73 @@ return {
     init = function() vim.opt.spelllang:append('programming') end,
   },
   ---}}}
+  --------------------------------------------------------------------------------
+  -- Disabled
+  --------------------------------------------------------------------------------
+  {
+    'razak17/package-info.nvim',
+    enabled = false,
+    cond = not minimal and false,
+    event = 'BufRead package.json',
+    config = function()
+      require('which-key').add({
+        { '<localleader>P', group = 'Package Info' },
+      })
+
+      highlight.plugin('package-info', {
+        theme = {
+          -- stylua: ignore
+          ['onedark'] = {
+            { PackageInfoUpToDateVersion = { link = 'DiagnosticVirtualTextInfo' } },
+            { PackageInfoOutdatedVersion = { link = 'DiagnosticVirtualTextWarn' } },
+          },
+        },
+      })
+      require('package-info').setup({
+        autostart = false,
+        hide_up_to_date = true,
+      })
+    end,
+  },
+  {
+    'turbio/bracey.vim',
+    enabled = false,
+    cond = not minimal and false,
+    ft = 'html',
+    build = 'npm install --prefix server',
+  },
+  {
+    'luckasRanarison/tailwind-tools.nvim',
+    enabled = false,
+    cond = ar.lsp.enable and false,
+    ft = {
+      'html',
+      'svelte',
+      'astro',
+      'vue',
+      'typescriptreact',
+      'javascriptreact',
+      'php',
+      'blade',
+    },
+    event = { 'BufRead' },
+    cmd = {
+      'TailwindConcealToggle',
+      'TailwindColorToggle',
+      'TailwindSort',
+      'TailwindSortSelection',
+    },
+    init = function()
+      ar.add_to_menu('lsp', {
+        ['Toggle Tailwind Conceal'] = 'TailwindConcealEnable',
+        ['Toggle Tailwind Colors'] = 'TailwindColorToggle',
+        ['Sort Tailwind Classes'] = 'TailwindSort',
+      })
+    end,
+    opts = {
+      document_color = { enabled = true, inline_symbol = '󰝤 ' },
+      conceal = { enabled = true, symbol = '󱏿' },
+      custom_filetypes = {},
+    },
+  },
 }

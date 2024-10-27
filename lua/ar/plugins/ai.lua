@@ -258,6 +258,9 @@ return {
       winhighlight = 'NormalFloat:NormalFloat,FloatBorder:FloatBorder',
     },
   },
+  --------------------------------------------------------------------------------
+  -- Disabled
+  --------------------------------------------------------------------------------
   {
     'moozd/aidoc.nvim',
     cond = not minimal and ar.ai.enable and false,

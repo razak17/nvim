@@ -7,12 +7,6 @@ return {
     build = './kitty/install-kittens.bash',
   },
   {
-    'kwkarlwang/bufresize.nvim',
-    cond = not minimal and false,
-    event = { 'WinNew' },
-    opts = {},
-  },
-  {
     'anuvyklack/windows.nvim',
     cond = not minimal,
     init = function()
@@ -80,5 +74,14 @@ return {
         },
       }
     end,
+  },
+  --------------------------------------------------------------------------------
+  -- Disabled
+  --------------------------------------------------------------------------------
+  {
+    'kwkarlwang/bufresize.nvim',
+    cond = not minimal and false,
+    event = { 'WinNew' },
+    opts = {},
   },
 }

@@ -10,16 +10,6 @@ return {
     keys = { '[b', ']b' },
   },
   {
-    'chrisgrieser/nvim-early-retirement',
-    enabled = false,
-    cond = not minimal and false,
-    event = 'VeryLazy',
-    opts = {
-      minimumBufferNum = 4,
-      notificationOnAutoClose = true,
-    },
-  },
-  {
     'razak17/cybu.nvim',
     cond = not minimal,
     event = { 'BufRead', 'BufNewFile' },
@@ -83,21 +73,6 @@ return {
     },
   },
   {
-    'leath-dub/snipe.nvim',
-    cond = not minimal and false,
-    event = 'VeryLazy',
-    config = function()
-      local snipe = require('snipe')
-      snipe.setup()
-      map(
-        'n',
-        '<M-[>',
-        snipe.create_buffer_menu_toggler(),
-        { desc = 'snipe: toggle' }
-      )
-    end,
-  },
-  {
     'Pheon-Dev/buffalo-nvim',
     -- stylua: ignore
     keys = {
@@ -134,27 +109,6 @@ return {
       map('n', '<s-l>', bui.nav_buf_next, opts)
       map('n', '<s-h>', bui.nav_buf_prev, opts)
       map({ 't', 'n' }, '<M-\\>', bui.toggle_tab_menu, opts)
-    end,
-  },
-  {
-    'razak17/antelope',
-    cond = not minimal and niceties and false,
-    keys = {
-      { '<M-a>', '<Cmd>Antelope buffers<CR>', 'antelope: buffers' },
-      { '<M-m>', '<Cmd>Antelope marks<CR>', 'antelope: marks' },
-    },
-    opts = { notifications = false },
-    config = function(_, opts)
-      require('antelope').setup(opts)
-
-      ar.highlight.plugin('antelope', {
-        theme = {
-          ['onedark'] = {
-            { AntelopeBorder = { inherit = 'FloatBorder' } },
-            { AntelopeNormal = { inherit = 'NormalFloat' } },
-          },
-        },
-      })
     end,
   },
   {
@@ -204,6 +158,55 @@ return {
           { noremap = true, desc = 'buffer ' .. key }
         )
       end
+    end,
+  },
+  --------------------------------------------------------------------------------
+  -- Disabled
+  --------------------------------------------------------------------------------
+  {
+    'chrisgrieser/nvim-early-retirement',
+    enabled = false,
+    cond = not minimal and false,
+    event = 'VeryLazy',
+    opts = {
+      minimumBufferNum = 4,
+      notificationOnAutoClose = true,
+    },
+  },
+  {
+    'leath-dub/snipe.nvim',
+    cond = not minimal and false,
+    event = 'VeryLazy',
+    config = function()
+      local snipe = require('snipe')
+      snipe.setup()
+      map(
+        'n',
+        '<M-[>',
+        snipe.create_buffer_menu_toggler(),
+        { desc = 'snipe: toggle' }
+      )
+    end,
+  },
+  {
+    'razak17/antelope',
+    cond = not minimal and niceties and false,
+    keys = {
+      { '<M-a>', '<Cmd>Antelope buffers<CR>', 'antelope: buffers' },
+      { '<M-m>', '<Cmd>Antelope marks<CR>', 'antelope: marks' },
+    },
+    opts = { notifications = false },
+    config = function(_, opts)
+      require('antelope').setup(opts)
+
+      ar.highlight.plugin('antelope', {
+        theme = {
+          ['onedark'] = {
+            { AntelopeBorder = { inherit = 'FloatBorder' } },
+            { AntelopeNormal = { inherit = 'NormalFloat' } },
+          },
+        },
+      })
     end,
   },
 }

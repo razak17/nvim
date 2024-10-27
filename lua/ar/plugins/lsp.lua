@@ -156,99 +156,6 @@ return {
     },
   },
   {
-    'glepnir/lspsaga.nvim',
-    enabled = false,
-    cond = ar.lsp.enable and false,
-    event = 'LspAttach',
-    opts = {
-      ui = { border = border },
-      code_action = { show_server_name = true },
-      lightbulb = { enable = false },
-      symbol_in_winbar = { enable = false },
-    },
-    keys = {
-      { '<leader>lo', '<cmd>Lspsaga outline<CR>', 'lspsaga: outline' },
-      {
-        '<localleader>lf',
-        '<cmd>Lspsaga finder<cr>',
-        desc = 'lspsaga: finder',
-      },
-      {
-        'gD',
-        function()
-          local popup_id = detour.Detour()
-          if popup_id then
-            require('lspsaga.definition'):init(1, 2, {})
-            features.ShowPathInTitle(popup_id)
-          end
-        end,
-        desc = 'Goto Definition <gd>',
-      },
-      {
-        'gR',
-        function()
-          local popup_id = detour.Detour()
-          if popup_id then
-            require('lspsaga.finder'):new({ 'ref', '++float' })
-            features.ShowPathInTitle(popup_id)
-          end
-        end,
-        desc = 'Goto References <gr>',
-      },
-      {
-        'gI',
-        function()
-          local popup_id = detour.Detour()
-          if popup_id then
-            require('lspsaga.finder'):new({ 'imp', '++float' })
-            features.ShowPathInTitle(popup_id)
-          end
-        end,
-        desc = 'Goto Implementation <gI>',
-      },
-      {
-        'gY',
-        function()
-          local popup_id = detour.Detour()
-          if popup_id then
-            require('lspsaga.definition'):init(2, 2, {})
-            features.ShowPathInTitle(popup_id)
-          end
-        end,
-        desc = 'Goto Type Definition <gy>',
-      },
-      {
-        '<localleader>lci',
-        function()
-          local popup_id = detour.Detour()
-          if popup_id then
-            vim.bo.bufhidden = 'delete'
-            require('lspsaga.callhierarchy'):send_method(2, { '++float' })
-            features.ShowPathInTitle(popup_id)
-          end
-        end,
-        desc = 'Incoming Calls [ci]',
-      },
-      {
-        '<localleader>lco',
-        function()
-          local popup_id = detour.Detour()
-          if popup_id then
-            vim.bo.bufhidden = 'delete'
-            require('lspsaga.callhierarchy'):send_method(3, { '++float' })
-            features.ShowPathInTitle(popup_id)
-          end
-        end,
-        desc = 'Outgoing Calls [co]',
-      },
-      {
-        '<localleader>lp',
-        '<cmd>Lspsaga peek_type_definition<cr>',
-        desc = 'lspsaga: type definition',
-      },
-    },
-  },
-  {
     'smjonas/inc-rename.nvim',
     cond = ar.lsp.enable,
     opts = { hl_group = 'Visual', preview_empty_name = true },
@@ -297,26 +204,6 @@ return {
     end,
   },
   {
-    'kosayoda/nvim-lightbulb',
-    enabled = false,
-    cond = ar.lsp.enable and false,
-    event = 'LspAttach',
-    opts = {
-      autocmd = { enabled = true },
-      sign = { enabled = false },
-      virtual_text = {
-        enabled = true,
-        text = icons.misc.lightbulb,
-        hl_mode = 'blend',
-      },
-      float = {
-        text = ui.icons.misc.lightbulb,
-        enabled = false,
-        win_opts = { border = 'none' },
-      },
-    },
-  },
-  {
     'cseickel/diagnostic-window.nvim',
     cond = ar.lsp.enable and ar.plugins.niceties,
     event = 'LspAttach',
@@ -340,42 +227,6 @@ return {
       end,
       padding_top = 0,
       toggle_event = { 'InsertEnter' },
-    },
-  },
-  {
-    'RaafatTurki/corn.nvim',
-    enabled = false,
-    cond = ar.lsp.enable and ar.plugins.niceties and false,
-    event = 'LspAttach',
-    cmd = { 'Corn' },
-    opts = {
-      icons = {
-        error = lsp_icons.error,
-        warn = lsp_icons.warn,
-        hint = lsp_icons.hint,
-        info = lsp_icons.info,
-      },
-    },
-  },
-  {
-    'doums/dmap.nvim',
-    enabled = false,
-    cond = ar.lsp.enable and ar.plugins.niceties and false,
-    event = 'LspAttach',
-    opts = { win_h_offset = 5 },
-  },
-  {
-    'ivanjermakov/troublesum.nvim',
-    enabled = false,
-    cond = ar.lsp.enable and ar.plugins.niceties and false,
-    event = 'LspAttach',
-    opts = {
-      severity_format = {
-        lsp_icons.error,
-        lsp_icons.warn,
-        lsp_icons.info,
-        lsp_icons.hint,
-      },
     },
   },
   {
@@ -485,6 +336,262 @@ return {
     opts = {},
   },
   {
+    'chrisgrieser/nvim-rulebook',
+    cond = ar.lsp.enable,
+    -- stylua: ignore
+    keys = {
+      { '<localleader>lri', function() require('rulebook').ignoreRule() end, desc = 'rulebook: ignore rule', },
+      { '<localleader>lrl', function() require('rulebook').lookupRule() end, desc = 'rulebook: lookup rule', },
+    },
+  },
+  {
+    'zeioth/garbage-day.nvim',
+    cond = ar.lsp.enable and ar.plugins.overrides.garbage_day.enable,
+    event = 'LspAttach',
+    opts = {
+      grace_period = 60 * 15,
+      notifications = true,
+      excluded_languages = { 'java', 'markdown' },
+    },
+  },
+  {
+    'stevanmilic/nvim-lspimport',
+    cond = ar.lsp.enable,
+    ft = { 'python' },
+    -- stylua: ignore
+    keys = {
+      { '<localleader>ll', function() require('lspimport').import() end, desc = 'lsp-import: import (python)' },
+    },
+  },
+  {
+    'antosha417/nvim-lsp-file-operations',
+    cond = ar.lsp.enable,
+    event = 'LspAttach',
+    opts = {},
+  },
+  {
+    'pechorin/any-jump.vim',
+    cond = ar.lsp.enable,
+    cmd = { 'AnyJump', 'AnyJumpArg', 'AnyJumpLastResults' },
+    init = function()
+      require('which-key').add({
+        { '<leader><localleader>j', group = 'Any Jump' },
+      })
+    end,
+    -- stylua: ignore
+    keys = {
+      { '<leader><localleader>jj', '<Cmd>AnyJump<CR>', desc = 'any-jump: jump' },
+      { '<leader><localleader>ja', '<Cmd>AnyJumpArg<CR>', desc = 'any-jump: arg' },
+      { '<leader><localleader>jp', '<Cmd>AnyJumpLastResults<CR>', desc = 'any-jump: resume' },
+    },
+  },
+  {
+    'folke/trouble.nvim',
+    init = function()
+      require('which-key').add({ { '<localleader>x', group = 'Trouble' } })
+      ar.add_to_menu('command_palette', {
+        ['Trouble Diagnostics'] = 'TroubleToggle',
+      })
+    end,
+    cond = ar.lsp.enable,
+    cmd = { 'Trouble' },
+    -- stylua: ignore
+    keys = {
+      { '<localleader>xd', '<Cmd>Trouble diagnostics toggle<CR>', desc = 'trouble: toggle diagnostics' },
+      {
+        '<localleader>xl',
+        "<Cmd>Trouble lsp toggle focus=false win.position=right<cr>",
+        desc = 'trouble: lsp references',
+      },
+      { '<localleader>xL', '<Cmd>Trouble loclist toggle<CR>', desc = 'trouble: toggle loclist' },
+      { '<localleader>xq', '<Cmd>Trouble qflist toggle<CR>', desc  = 'trouble: toggle qflist' },
+      { '<localleader>xt', '<Cmd>Trouble todo toggle<CR>', desc = 'trouble: toggle todo' },
+      { '<localleader>xx', '<Cmd>Trouble diagnostics toggle filter.buf=0<CR>', desc = 'trouble: toggle buffer diagnostics' },
+    },
+    opts = {},
+  },
+  {
+    'SmiteshP/nvim-navbuddy',
+    cond = not minimal,
+    keys = {
+      {
+        '<leader>nv',
+        '<cmd>Navbuddy<cr>',
+        desc = 'navbuddy: toggle',
+      },
+    },
+    dependencies = { 'SmiteshP/nvim-navic' },
+    opts = { lsp = { auto_attach = true } },
+  },
+  {
+    'chrisgrieser/nvim-lsp-endhints',
+    cond = ar.lsp.enable,
+    event = 'LspAttach',
+    opts = {
+      icons = { type = '󰜁 ', parameter = '󰏪 ' },
+      label = { padding = 1, marginLeft = 0 },
+      autoEnableHints = ar.lsp.inlay_hint.enable,
+    },
+  },
+  {
+    'artemave/workspace-diagnostics.nvim',
+    cond = ar.lsp.enable and ar.lsp.workspace_diagnostics.enable,
+    opts = {},
+  },
+  -- }}}
+  --------------------------------------------------------------------------------
+  -- Disabled
+  --------------------------------------------------------------------------------
+  {
+    'glepnir/lspsaga.nvim',
+    enabled = false,
+    cond = ar.lsp.enable and false,
+    event = 'LspAttach',
+    opts = {
+      ui = { border = border },
+      code_action = { show_server_name = true },
+      lightbulb = { enable = false },
+      symbol_in_winbar = { enable = false },
+    },
+    keys = {
+      { '<leader>lo', '<cmd>Lspsaga outline<CR>', 'lspsaga: outline' },
+      {
+        '<localleader>lf',
+        '<cmd>Lspsaga finder<cr>',
+        desc = 'lspsaga: finder',
+      },
+      {
+        'gD',
+        function()
+          local popup_id = detour.Detour()
+          if popup_id then
+            require('lspsaga.definition'):init(1, 2, {})
+            features.ShowPathInTitle(popup_id)
+          end
+        end,
+        desc = 'Goto Definition <gd>',
+      },
+      {
+        'gR',
+        function()
+          local popup_id = detour.Detour()
+          if popup_id then
+            require('lspsaga.finder'):new({ 'ref', '++float' })
+            features.ShowPathInTitle(popup_id)
+          end
+        end,
+        desc = 'Goto References <gr>',
+      },
+      {
+        'gI',
+        function()
+          local popup_id = detour.Detour()
+          if popup_id then
+            require('lspsaga.finder'):new({ 'imp', '++float' })
+            features.ShowPathInTitle(popup_id)
+          end
+        end,
+        desc = 'Goto Implementation <gI>',
+      },
+      {
+        'gY',
+        function()
+          local popup_id = detour.Detour()
+          if popup_id then
+            require('lspsaga.definition'):init(2, 2, {})
+            features.ShowPathInTitle(popup_id)
+          end
+        end,
+        desc = 'Goto Type Definition <gy>',
+      },
+      {
+        '<localleader>lci',
+        function()
+          local popup_id = detour.Detour()
+          if popup_id then
+            vim.bo.bufhidden = 'delete'
+            require('lspsaga.callhierarchy'):send_method(2, { '++float' })
+            features.ShowPathInTitle(popup_id)
+          end
+        end,
+        desc = 'Incoming Calls [ci]',
+      },
+      {
+        '<localleader>lco',
+        function()
+          local popup_id = detour.Detour()
+          if popup_id then
+            vim.bo.bufhidden = 'delete'
+            require('lspsaga.callhierarchy'):send_method(3, { '++float' })
+            features.ShowPathInTitle(popup_id)
+          end
+        end,
+        desc = 'Outgoing Calls [co]',
+      },
+      {
+        '<localleader>lp',
+        '<cmd>Lspsaga peek_type_definition<cr>',
+        desc = 'lspsaga: type definition',
+      },
+    },
+  },
+  {
+    'kosayoda/nvim-lightbulb',
+    enabled = false,
+    cond = ar.lsp.enable and false,
+    event = 'LspAttach',
+    opts = {
+      autocmd = { enabled = true },
+      sign = { enabled = false },
+      virtual_text = {
+        enabled = true,
+        text = icons.misc.lightbulb,
+        hl_mode = 'blend',
+      },
+      float = {
+        text = ui.icons.misc.lightbulb,
+        enabled = false,
+        win_opts = { border = 'none' },
+      },
+    },
+  },
+  {
+    'RaafatTurki/corn.nvim',
+    enabled = false,
+    cond = ar.lsp.enable and ar.plugins.niceties and false,
+    event = 'LspAttach',
+    cmd = { 'Corn' },
+    opts = {
+      icons = {
+        error = lsp_icons.error,
+        warn = lsp_icons.warn,
+        hint = lsp_icons.hint,
+        info = lsp_icons.info,
+      },
+    },
+  },
+  {
+    'doums/dmap.nvim',
+    enabled = false,
+    cond = ar.lsp.enable and ar.plugins.niceties and false,
+    event = 'LspAttach',
+    opts = { win_h_offset = 5 },
+  },
+  {
+    'ivanjermakov/troublesum.nvim',
+    enabled = false,
+    cond = ar.lsp.enable and ar.plugins.niceties and false,
+    event = 'LspAttach',
+    opts = {
+      severity_format = {
+        lsp_icons.error,
+        lsp_icons.warn,
+        lsp_icons.info,
+        lsp_icons.hint,
+      },
+    },
+  },
+  {
     'roobert/action-hints.nvim',
     enabled = false,
     cond = ar.lsp.enable and false,
@@ -498,96 +605,6 @@ return {
         use_virtual_text = true,
       })
     end,
-  },
-  {
-    'aznhe21/actions-preview.nvim',
-    enabled = false,
-    cond = ar.lsp.enable and ar.plugins.niceties,
-    -- stylua: ignore
-    keys = {
-      { '<leader>lA', function() require('actions-preview').code_actions() end, desc = 'code action preview' },
-    },
-    init = function()
-      ar.add_to_menu('lsp', {
-        ['Preview Code Actions'] = 'lua require("actions-preview").code_actions()',
-      })
-    end,
-    config = function()
-      require('actions-preview').setup({
-        telescope = ar.telescope.vertical(),
-      })
-    end,
-  },
-  {
-    'chrisgrieser/nvim-rulebook',
-    cond = ar.lsp.enable,
-    -- stylua: ignore
-    keys = {
-      { '<localleader>lri', function() require('rulebook').ignoreRule() end, desc = 'rulebook: ignore rule', },
-      { '<localleader>lrl', function() require('rulebook').lookupRule() end, desc = 'rulebook: lookup rule', },
-    },
-  },
-  {
-    'luckasRanarison/clear-action.nvim',
-    enabled = false,
-    cond = ar.lsp.enable and ar.plugins.niceties,
-    event = 'LspAttach',
-    opts = {
-      signs = {
-        enable = true,
-        combine = true,
-        show_count = false,
-        show_label = true,
-        icons = {
-          combined = icons.misc.lightbulb,
-        },
-        highlights = {
-          combined = 'CodeActionIcon',
-        },
-      },
-      popup = { border = border },
-      mappings = {
-        code_action = { '<leader><leader>la', 'code action' },
-        apply_first = { '<leader><leader>aa', 'apply first' },
-        quickfix = { '<leader><leader>aq', 'quickfix' },
-        quickfix_next = { '<leader><leader>an', 'quickfix next' },
-        quickfix_prev = { '<leader><leader>ap', 'quickfix prev' },
-        refactor = { '<leader><leader>ar', 'refactor' },
-        refactor_inline = { '<leader><leader>aR', 'refactor inline' },
-        actions = {
-          ['rust_analyzer'] = {
-            ['Import'] = { '<leader><leader>ai', 'import' },
-            ['Replace if'] = {
-              '<leader><leader>am',
-              'replace if with match',
-            },
-            ['Fill match'] = { '<leader><leader>af', 'fill match arms' },
-            ['Wrap'] = { '<leader><leader>aw', 'Wrap' },
-            ['Insert `mod'] = { '<leader><leader>aM', 'insert mod' },
-            ['Insert `pub'] = { '<leader><leader>aP', 'insert pub mod' },
-            ['Add braces'] = { '<leader><leader>ab', 'add braces' },
-          },
-        },
-      },
-      quickfix_filters = {
-        ['rust_analyzer'] = {
-          ['E0412'] = 'Import',
-          ['E0425'] = 'Import',
-          ['E0433'] = 'Import',
-          ['unused_imports'] = 'remove',
-        },
-      },
-    },
-  },
-  {
-    'zeioth/garbage-day.nvim',
-    cond = ar.lsp.enable and ar.plugins.overrides.garbage_day.enable,
-    event = 'LspAttach',
-    opts = {
-      grace_period = 60 * 15,
-      notifications = true,
-      excluded_languages = { 'java', 'markdown' },
-    },
   },
   {
     'Wansmer/symbol-usage.nvim',
@@ -658,60 +675,75 @@ return {
     end,
   },
   {
-    'stevanmilic/nvim-lspimport',
-    cond = ar.lsp.enable,
-    ft = { 'python' },
+    'aznhe21/actions-preview.nvim',
+    enabled = false,
+    cond = ar.lsp.enable and ar.plugins.niceties,
     -- stylua: ignore
     keys = {
-      { '<localleader>ll', function() require('lspimport').import() end, desc = 'lsp-import: import (python)' },
+      { '<leader>lA', function() require('actions-preview').code_actions() end, desc = 'code action preview' },
     },
+    init = function()
+      ar.add_to_menu('lsp', {
+        ['Preview Code Actions'] = 'lua require("actions-preview").code_actions()',
+      })
+    end,
+    config = function()
+      require('actions-preview').setup({
+        telescope = ar.telescope.vertical(),
+      })
+    end,
   },
   {
-    'antosha417/nvim-lsp-file-operations',
-    cond = ar.lsp.enable,
+    'luckasRanarison/clear-action.nvim',
+    enabled = false,
+    cond = ar.lsp.enable and ar.plugins.niceties,
     event = 'LspAttach',
-    opts = {},
-  },
-  {
-    'pechorin/any-jump.vim',
-    cond = ar.lsp.enable,
-    cmd = { 'AnyJump', 'AnyJumpArg', 'AnyJumpLastResults' },
-    init = function()
-      require('which-key').add({
-        { '<leader><localleader>j', group = 'Any Jump' },
-      })
-    end,
-    -- stylua: ignore
-    keys = {
-      { '<leader><localleader>jj', '<Cmd>AnyJump<CR>', desc = 'any-jump: jump' },
-      { '<leader><localleader>ja', '<Cmd>AnyJumpArg<CR>', desc = 'any-jump: arg' },
-      { '<leader><localleader>jp', '<Cmd>AnyJumpLastResults<CR>', desc = 'any-jump: resume' },
-    },
-  },
-  {
-    'folke/trouble.nvim',
-    init = function()
-      require('which-key').add({ { '<localleader>x', group = 'Trouble' } })
-      ar.add_to_menu('command_palette', {
-        ['Trouble Diagnostics'] = 'TroubleToggle',
-      })
-    end,
-    cond = ar.lsp.enable,
-    cmd = { 'Trouble' },
-    -- stylua: ignore
-    keys = {
-      { '<localleader>xd', '<Cmd>Trouble diagnostics toggle<CR>', desc = 'trouble: toggle diagnostics' },
-      {
-        '<localleader>xl',
-        "<Cmd>Trouble lsp toggle focus=false win.position=right<cr>",
-        desc = 'trouble: lsp references',
+    opts = {
+      signs = {
+        enable = true,
+        combine = true,
+        show_count = false,
+        show_label = true,
+        icons = {
+          combined = icons.misc.lightbulb,
+        },
+        highlights = {
+          combined = 'CodeActionIcon',
+        },
       },
-      { '<localleader>xL', '<Cmd>Trouble loclist toggle<CR>', desc = 'trouble: toggle loclist' },
-      { '<localleader>xq', '<Cmd>Trouble qflist toggle<CR>', desc  = 'trouble: toggle qflist' },
-      { '<localleader>xt', '<Cmd>Trouble todo toggle<CR>', desc = 'trouble: toggle todo' },
-      { '<localleader>xx', '<Cmd>Trouble diagnostics toggle filter.buf=0<CR>', desc = 'trouble: toggle buffer diagnostics' },
+      popup = { border = border },
+      mappings = {
+        code_action = { '<leader><leader>la', 'code action' },
+        apply_first = { '<leader><leader>aa', 'apply first' },
+        quickfix = { '<leader><leader>aq', 'quickfix' },
+        quickfix_next = { '<leader><leader>an', 'quickfix next' },
+        quickfix_prev = { '<leader><leader>ap', 'quickfix prev' },
+        refactor = { '<leader><leader>ar', 'refactor' },
+        refactor_inline = { '<leader><leader>aR', 'refactor inline' },
+        actions = {
+          ['rust_analyzer'] = {
+            ['Import'] = { '<leader><leader>ai', 'import' },
+            ['Replace if'] = {
+              '<leader><leader>am',
+              'replace if with match',
+            },
+            ['Fill match'] = { '<leader><leader>af', 'fill match arms' },
+            ['Wrap'] = { '<leader><leader>aw', 'Wrap' },
+            ['Insert `mod'] = { '<leader><leader>aM', 'insert mod' },
+            ['Insert `pub'] = { '<leader><leader>aP', 'insert pub mod' },
+            ['Add braces'] = { '<leader><leader>ab', 'add braces' },
+          },
+        },
+      },
+      quickfix_filters = {
+        ['rust_analyzer'] = {
+          ['E0412'] = 'Import',
+          ['E0425'] = 'Import',
+          ['E0433'] = 'Import',
+          ['unused_imports'] = 'remove',
+        },
+      },
     },
-    opts = {},
   },
   {
     'mhanberg/output-panel.nvim',
@@ -721,33 +753,4 @@ return {
     cmd = 'OutputPanel',
     config = function() require('output_panel').setup() end,
   },
-  {
-    'SmiteshP/nvim-navbuddy',
-    cond = not minimal,
-    keys = {
-      {
-        '<leader>nv',
-        '<cmd>Navbuddy<cr>',
-        desc = 'navbuddy: toggle',
-      },
-    },
-    dependencies = { 'SmiteshP/nvim-navic' },
-    opts = { lsp = { auto_attach = true } },
-  },
-  {
-    'chrisgrieser/nvim-lsp-endhints',
-    cond = ar.lsp.enable,
-    event = 'LspAttach',
-    opts = {
-      icons = { type = '󰜁 ', parameter = '󰏪 ' },
-      label = { padding = 1, marginLeft = 0 },
-      autoEnableHints = ar.lsp.inlay_hint.enable,
-    },
-  },
-  {
-    'artemave/workspace-diagnostics.nvim',
-    cond = ar.lsp.enable and ar.lsp.workspace_diagnostics.enable,
-    opts = {},
-  },
-  -- }}}
 }

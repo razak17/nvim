@@ -264,12 +264,6 @@ return {
     opts = {},
   },
   {
-    'filNaj/tree-setter',
-    enabled = false,
-    cond = not minimal and false,
-    event = 'VeryLazy',
-  },
-  {
     'andersevenrud/nvim_context_vt',
     cond = not minimal and ts_enabled,
     cmd = 'NvimContextVtToggle',
@@ -294,6 +288,9 @@ return {
       vim.cmd([[NvimContextVtToggle]])
     end,
   },
+  --------------------------------------------------------------------------------
+  -- Disabled
+  --------------------------------------------------------------------------------
   {
     'drybalka/tree-climber.nvim',
     enabled = false,
@@ -320,5 +317,11 @@ return {
         mode = { 'n', 'o' },
       },
     },
+  },
+  {
+    'filNaj/tree-setter',
+    enabled = false,
+    cond = not minimal and false,
+    event = 'VeryLazy',
   },
 }

@@ -131,16 +131,6 @@ return {
     -- ft = { 'gitrebase', 'gitcommit' },
   },
   {
-    'SuperBo/fugit2.nvim',
-    enabled = false,
-    cond = enabled and false,
-    cmd = { 'Fugit2', 'Fugit2Diff', 'Fugit2Graph' },
-    keys = {
-      { '<leader><localleader>F', '<Cmd>Fugit2<CR>', desc = 'fugit2: open' },
-    },
-    opts = { width = 100 },
-  },
-  {
     'sindrets/diffview.nvim',
     cond = enabled,
     cmd = {
@@ -579,15 +569,6 @@ return {
     },
   },
   {
-    'dlvhdr/gh-blame.nvim',
-    enabled = false,
-    cond = enabled and false,
-    -- stylua: ignore
-    keys = {
-      { '<leader>gbp', '<Cmd>GhBlameCurrentLine<CR>', desc = 'blame current line (PR)' },
-    },
-  },
-  {
     'FabijanZulj/blame.nvim',
     cond = enabled,
     cmd = { 'BlameToggle' },
@@ -731,5 +712,27 @@ return {
         { desc = 'git graph: draw' }
       )
     end,
+  },
+  --------------------------------------------------------------------------------
+  -- Disabled
+  --------------------------------------------------------------------------------
+  {
+    'SuperBo/fugit2.nvim',
+    enabled = false,
+    cond = enabled and false,
+    cmd = { 'Fugit2', 'Fugit2Diff', 'Fugit2Graph' },
+    keys = {
+      { '<leader><localleader>F', '<Cmd>Fugit2<CR>', desc = 'fugit2: open' },
+    },
+    opts = { width = 100 },
+  },
+  {
+    'dlvhdr/gh-blame.nvim',
+    enabled = false,
+    cond = enabled and false,
+    -- stylua: ignore
+    keys = {
+      { '<leader>gbp', '<Cmd>GhBlameCurrentLine<CR>', desc = 'blame current line (PR)' },
+    },
   },
 }
