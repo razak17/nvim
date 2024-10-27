@@ -477,20 +477,14 @@ return {
           },
           {
             update = { 'LspAttach', 'LspDetach', 'WinEnter' },
-            condition = function(self) return self.active end,
-            provider = function(self)
-              if not ar.falsy(self.linters) then return ' ' .. self.linters end
-            end,
+            condition = function(self) return not ar.falsy(self.linters) end,
+            provider = function(self) return ' ' .. self.linters end,
             hl = { bold = true },
           },
           {
             update = { 'LspAttach', 'LspDetach', 'WinEnter' },
-            condition = function(self) return self.active end,
-            provider = function(self)
-              if not ar.falsy(self.formatters) then
-                return ' ' .. self.formatters
-              end
-            end,
+            condition = function(self) return not ar.falsy(self.formatters) end,
+            provider = function(self) return ' ' .. self.formatters end,
             hl = { bold = true },
             on_click = {
               callback = function()
