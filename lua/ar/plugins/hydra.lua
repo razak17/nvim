@@ -5,6 +5,7 @@ local buffer_hint = [[
 _a_: close all         _d_: delete buffer                _l_: last buffer
 _n_: next buffer       _N_: next buffer in history       _o_: delete others
 _p_: previous buffer   _P_: previous buffer in history   _r_: reload buffer
+_H_: previous tab      _L_: next tab
 ^
 ^ ^                 _<Esc>_: quit              _q_: exit
 ]]
@@ -57,6 +58,7 @@ local window_hint = [[
 _h_ ^ ^ _l_  _H_ ^ ^ _L_   _<C-h>_ _<C-l>_   _v_: vertically
 ^ ^ _j_ ^ ^  ^ ^ _J_ ^ ^   ^   _<C-j>_   ^   _q_, _c_: close
 focus^^^^^^  window^^^^^^  ^_=_: equalize^   _o_: remain only
+^ ^ ^ ^ ^ ^  ^ ^ ^ ^ ^ ^   ^^ ^          ^   _t_: move to new tab
 ^ ^ ^ ^ ^ ^  ^ ^ ^ ^ ^ ^   ^^ ^          ^
 ]]
 
@@ -125,7 +127,9 @@ return {
           function() close_buffers.delete({ type = 'this' }) end,
           { desc = 'delete buffer' },
         },
+        { 'H', '<Cmd>tabprev<CR>', { desc = 'prev tab' } },
         { 'l', '<Cmd>e #<CR>', { desc = 'last buffer' } },
+        { 'L', '<Cmd>tabnext<CR>', { desc = 'next tab' } },
         { 'n', '<Plug>(CybuNext)', { desc = 'next buffer' } },
         {
           'N',
@@ -185,6 +189,7 @@ return {
         { 'j', '<C-w>j' },
         { 'k', pcmd('wincmd k', 'E11', 'close') },
         { 'l', '<C-w>l' },
+        { 't', '<C-w>T' },
 
         { 'o', '<C-w>o', { exit = true, desc = 'remain only' } },
         { '<C-o>', '<C-w>o', { exit = true, desc = false } },
