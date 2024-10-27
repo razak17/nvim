@@ -320,7 +320,8 @@ nnoremap(
   ':wqall<CR>',
   { desc = 'save all and quit', silent = true }
 )
-nnoremap('<leader>wq', '<cmd>:q<cr>', { desc = 'delete window', silent = true })
+nnoremap('<leader>wq', '<cmd>:q<cr>', { desc = 'close window', silent = true })
+nnoremap('<leader>wt', '<C-w>T', { desc = 'move to new tab' })
 nnoremap('<leader>qq', ':q<CR>', { desc = 'quit', silent = true })
 nnoremap('<leader>Q', ':qa!<CR>', { desc = 'force quit all', silent = true })
 nnoremap(
