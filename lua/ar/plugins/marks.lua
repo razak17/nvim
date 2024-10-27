@@ -65,7 +65,7 @@ return {
     -- stylua: ignore
     keys = {
       '<M-l>',
-      -- { '<leader>ma', add_trail_mark_stack, desc = 'trailblazer: add stack' },
+      { '<leader>mA', add_trail_mark_stack, desc = 'trailblazer: add stack' },
       { '<leader>md', delete_trail_mark_stack, desc = 'trailblazer: delete stack', },
       { '<leader>mg', function() get_available_stacks(true) end, desc = 'trailblazer: get stacks', },
       { '<leader>ms', '<Cmd>TrailBlazerSaveSession<CR>', desc = 'trailblazer: save session', },
@@ -111,7 +111,7 @@ return {
     cmd = 'Grapple',
     keys = {
       { '<leader>ma', '<Cmd>Grapple toggle<CR>', desc = 'grapple: toggle tag' },
-      { '<M-m>', '<Cmd>Grapple toggle_tags<CR>', 'grapple: toggle tags' },
+      { '<leader>M', '<Cmd>Grapple toggle_tags<CR>', 'grapple: toggle tags' },
     },
   },
   {
@@ -200,8 +200,10 @@ return {
     event = { 'BufRead', 'BufNewFile' },
     -- stylua: ignore
     keys = {
-      { '<localleader>bh', '<Cmd>lua require("before").jump_to_last_edit()<CR>', desc = 'before: jump to last edit' },
-      { '<localleader>bl', '<Cmd>lua require("before").jump_to_next_edit()<CR>', desc = 'before: jump to next edit' },
+      { '<localleader>oj', '<Cmd>lua require("before").jump_to_last_edit()<CR>', desc = 'before: jump to last edit' },
+      { '<localleader>ok', '<Cmd>lua require("before").jump_to_next_edit()<CR>', desc = 'before: jump to next edit' },
+      { '<localleader>oq', '<Cmd>lua require("before").show_edits_in_quickfix()<CR>', desc = 'before: show edits in qflist' },
+      { '<localleader>op', '<Cmd>lua require("before").show_edits_in_telescope()<CR>', desc = 'before: show edits in picker' },
     },
     opts = {},
     config = function(_, opts) require('before').setup(opts) end,
