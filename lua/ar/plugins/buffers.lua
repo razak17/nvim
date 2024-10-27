@@ -84,7 +84,7 @@ return {
   },
   {
     'leath-dub/snipe.nvim',
-    cond = not minimal,
+    cond = not minimal and false,
     event = 'VeryLazy',
     config = function()
       local snipe = require('snipe')
