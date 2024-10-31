@@ -28,8 +28,17 @@ function M.nr(win, lnum, relnum, virtnum, line_count)
   local ln =
     tostring(num):reverse():gsub('(%d%d%d)', '%1,'):reverse():gsub('^,', '')
   local num_width = col_width - api.nvim_strwidth(ln)
-  if num_width == 0 then return ln end
-  return string.rep(M.space(), num_width) .. ln
+
+  local v_hl = ''
+
+  local mode = fn.strtrans(fn.mode()):lower():gsub('%W', '')
+  if mode == 'v' then
+    local v_range = ar.get_visual_range()
+    local is_in_range = lnum >= v_range[1] and lnum <= v_range[3]
+    v_hl = is_in_range and '%#CursorLineNr#' or ''
+  end
+  if num_width == 0 then return v_hl .. ln end
+  return string.rep(M.space(), num_width) .. v_hl .. ln
 end
 
 -- Returns a list of regular and extmark signs sorted by priority (low to high)
