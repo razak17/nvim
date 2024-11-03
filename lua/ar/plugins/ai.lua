@@ -21,7 +21,7 @@ local models = ar.ai.models
 return {
   {
     'yetone/avante.nvim',
-    cond = not minimal and ar.ai.enable,
+    cond = not minimal and ar.ai.enable and false,
     init = function()
       require('which-key').add({ { '<leader>av', group = 'Avante' } })
 
