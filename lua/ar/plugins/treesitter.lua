@@ -259,7 +259,7 @@ return {
   },
   {
     'sustech-data/wildfire.nvim',
-    cond = not minimal and ts_enabled,
+    cond = not minimal and ts_enabled and false,
     event = { 'BufRead', 'BufNewFile' },
     opts = {},
   },

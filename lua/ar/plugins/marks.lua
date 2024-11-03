@@ -1,6 +1,6 @@
 local fmt = string.format
 local bookmark = ar.ui.codicons.misc.bookmark
-local minimal = ar.plugins.minimal
+local minimal, niceties = ar.plugins.minimal, ar.plugins.niceties
 
 local function get_available_stacks(notify)
   local available_stacks =
@@ -107,7 +107,6 @@ return {
         global = { shown = true },
       },
     },
-    event = { 'BufRead', 'BufNewFile' },
     cmd = 'Grapple',
     keys = {
       { '<leader>ma', '<Cmd>Grapple toggle<CR>', desc = 'grapple: toggle tag' },
@@ -178,7 +177,8 @@ return {
   {
     'razak17/whatthejump.nvim',
     cond = not minimal,
-    event = { 'BufRead', 'BufNewFile' },
+    keys = { '<C-o>', '<C-i>', '<M-o>', '<M-i>' },
+    -- event = { 'BufRead', 'BufNewFile' },
     opts = { winblend = 0 },
     config = function(_, opts)
       require('whatthejump').setup(opts)
@@ -196,7 +196,7 @@ return {
   },
   {
     'bloznelis/before.nvim',
-    cond = not minimal,
+    cond = not minimal and niceties,
     event = { 'BufRead', 'BufNewFile' },
     -- stylua: ignore
     keys = {

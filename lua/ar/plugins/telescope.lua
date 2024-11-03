@@ -348,8 +348,6 @@ end
 
 ar.telescope = {
   extension_to_plugin = {
-    ['advanced_git_search'] = 'advanced-git-search.nvim',
-    ['aerial'] = 'aerial.nvim',
     ['cmdline'] = 'telescope-cmdline.nvim',
     ['directory'] = 'telescope-directory.nvim',
     ['egrepify'] = 'telescope-egrepify.nvim',

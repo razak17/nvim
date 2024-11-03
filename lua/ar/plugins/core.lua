@@ -54,10 +54,15 @@ return {
   },
   -- { 'lewis6991/fileline.nvim', lazy = false },
   -- { 'axlebedev/vim-footprints', lazy = false },
-  { 'altermo/nwm', branch = 'x11', cond = not minimal, lazy = false },
+  {
+    'altermo/nwm',
+    branch = 'x11',
+    cond = not minimal and niceties,
+    lazy = false,
+  },
   {
     'yuratomo/w3m.vim',
-    cond = not minimal,
+    cond = not minimal and niceties,
     event = 'VeryLazy',
     init = function()
       local function w3m_input(cmd)

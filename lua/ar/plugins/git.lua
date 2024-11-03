@@ -573,9 +573,13 @@ return {
   },
   {
     'aaronhallaert/advanced-git-search.nvim',
+    cmd = { 'AdvancedGitSearch' },
     cond = enabled,
     init = function()
       ar.add_to_menu('git', { ['Git Search'] = 'AdvancedGitSearch' })
+    end,
+    config = function()
+      require('telescope').load_extension('advanced_git_search')
     end,
   },
   {

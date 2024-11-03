@@ -242,7 +242,7 @@ return {
   {
     'alexpasmantier/pymple.nvim',
     build = ':PympleBuild',
-    event = { 'BufEnter', 'BufNewFile' },
+    ft = { 'python' },
     cond = ar.lsp.enable,
     opts = {
       resolve_import_under_cursor = {
