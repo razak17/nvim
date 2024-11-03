@@ -88,6 +88,16 @@ function ar.get_visual_text()
   return text
 end
 
+---@param callback function
+---@param opts { forward: boolean }
+---@return function
+function ar.demicolon_jump(callback, opts)
+  if not ar.is_available('demicolon.nvim') then
+    return function() return callback(opts) end
+  end
+  return function() require('demicolon.jump').repeatably_do(callback, opts) end
+end
+
 function ar.remove_duplicates(table)
   local seen = {}
   return vim

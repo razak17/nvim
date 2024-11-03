@@ -331,21 +331,6 @@ return {
         bmap({ 'n', 'v' }, '<leader>hr', '<Cmd>Gitsigns reset_hunk<CR>', { desc = 'reset hunk' })
         bmap({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>', { desc = 'select hunk' })
 
-        ---@param callback function
-        ---@param opts { forward: boolean }
-        ---@return function
-        function ar.demicolon_jump(callback, opts)
-          if not ar.is_available('demicolon.nvim') then
-            return function()
-              vim.notify('demicolon.nvim is not available', L.WARN)
-            end
-          end
-
-          return function()
-            require('demicolon.jump').repeatably_do(callback, opts)
-          end
-        end
-
         local function jump(options)
           return ar.demicolon_jump(function(opts)
             local direction = opts.forward and 'next' or 'prev'
