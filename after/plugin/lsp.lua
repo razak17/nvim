@@ -246,11 +246,15 @@ local function setup_mappings(client, bufnr)
   ---@param severity string
   ---@return function
   local diagnostic_goto = function(next, severity)
-    local go = next and diagnostic.goto_next or vim.diagnostic.goto_prev
+    local go = diagnostic.jump
     severity = severity and vim.diagnostic.severity[severity] or nil
     local float = ar.lsp.hover_diagnostics.go_to
       and not ar.lsp.hover_diagnostics.enable
-    return function() go({ severity = severity, float = float }) end
+    return ar.demicolon_jump(function(opts)
+      local count = opts.forward and 1 or -1
+      count = count * vim.v.count1
+      go({ count = count, severity = severity, float = float })
+    end, { forward = next })
   end
   local function diagnostic_float(line)
     local config = diagnostic.config().float or {}
