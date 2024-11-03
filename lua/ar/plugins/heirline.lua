@@ -278,65 +278,65 @@ return {
           },
         },
         -- Debug
-        {
-          condition = function()
-            if not ar.is_available('nvim-dap') then return false end
-            local session = require('dap').session()
-            return session ~= nil
-          end,
-          provider = function()
-            return codicons.misc.bug_alt
-              .. ' '
-              .. require('dap').status()
-              .. ' '
-          end,
-          hl = { fg = 'red' },
-          {
-            provider = ' ',
-            on_click = {
-              callback = function() require('dap').step_into() end,
-              name = 'heirline_dap_step_into',
-            },
-          },
-          { provider = ' ' },
-          {
-            provider = ' ',
-            on_click = {
-              callback = function() require('dap').step_out() end,
-              name = 'heirline_dap_step_out',
-            },
-          },
-          { provider = ' ' },
-          {
-            provider = ' ',
-            on_click = {
-              callback = function() require('dap').step_over() end,
-              name = 'heirline_dap_step_over',
-            },
-          },
-          { provider = ' ' },
-          {
-            provider = ' ',
-            hl = { fg = 'green' },
-            on_click = {
-              callback = function() require('dap').run_last() end,
-              name = 'heirline_dap_run_last',
-            },
-          },
-          { provider = ' ' },
-          {
-            provider = ' ',
-            hl = { fg = 'red' },
-            on_click = {
-              callback = function()
-                require('dap').terminate()
-                require('dapui').close({})
-              end,
-              name = 'heirline_dap_close',
-            },
-          },
-          --       ﰇ  
-        },
+        -- {
+        --   condition = function()
+        --     if not ar.is_available('nvim-dap') then return false end
+        --     local session = require('dap').session()
+        --     return session ~= nil
+        --   end,
+        --   provider = function()
+        --     return codicons.misc.bug_alt
+        --       .. ' '
+        --       .. require('dap').status()
+        --       .. ' '
+        --   end,
+        --   hl = { fg = 'red' },
+        --   {
+        --     provider = ' ',
+        --     on_click = {
+        --       callback = function() require('dap').step_into() end,
+        --       name = 'heirline_dap_step_into',
+        --     },
+        --   },
+        --   { provider = ' ' },
+        --   {
+        --     provider = ' ',
+        --     on_click = {
+        --       callback = function() require('dap').step_out() end,
+        --       name = 'heirline_dap_step_out',
+        --     },
+        --   },
+        --   { provider = ' ' },
+        --   {
+        --     provider = ' ',
+        --     on_click = {
+        --       callback = function() require('dap').step_over() end,
+        --       name = 'heirline_dap_step_over',
+        --     },
+        --   },
+        --   { provider = ' ' },
+        --   {
+        --     provider = ' ',
+        --     hl = { fg = 'green' },
+        --     on_click = {
+        --       callback = function() require('dap').run_last() end,
+        --       name = 'heirline_dap_run_last',
+        --     },
+        --   },
+        --   { provider = ' ' },
+        --   {
+        --     provider = ' ',
+        --     hl = { fg = 'red' },
+        --     on_click = {
+        --       callback = function()
+        --         require('dap').terminate()
+        --         require('dapui').close({})
+        --       end,
+        --       name = 'heirline_dap_close',
+        --     },
+        --   },
+        --   --       ﰇ  
+        -- },
         -- Package Info
         {
           condition = function() return fn.expand('%') == 'package.json' end,
