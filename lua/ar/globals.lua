@@ -78,13 +78,13 @@ function ar.get_visual_range()
 end
 
 function ar.get_visual_text()
-  local a_orig = vim.fn.getreg('a')
-  local mode = vim.fn.mode()
-  if mode ~= 'v' and mode ~= 'V' then vim.cmd([[normal! gv]]) end
+  local a_orig = fn.getreg('a')
+  local mode = fn.mode()
+  if mode ~= 'v' and mode ~= 'V' then cmd([[normal! gv]]) end
 
-  vim.cmd([[normal! "aygv]])
-  local text = vim.fn.getreg('a')
-  vim.fn.setreg('a', a_orig)
+  cmd([[normal! "aygv]])
+  local text = fn.getreg('a')
+  fn.setreg('a', a_orig)
   return text
 end
 
@@ -127,10 +127,10 @@ end
 function ar.project_config(file)
   if not file then return end
   local json = file:read('*a')
-  local status, table = pcall(vim.fn.json_decode, json)
+  local status, table = pcall(fn.json_decode, json)
   io.close(file)
   if not status then
-    vim.cmd("echohl ErrorMsg | echo 'Error: Invalid json' | echohl None")
+    cmd("echohl ErrorMsg | echo 'Error: Invalid json' | echohl None")
     -- vim.notify('Invalid json found in .rvim.json', 'error')
     return
   end
@@ -283,8 +283,8 @@ local LATEST_NIGHTLY_MINOR = 10
 function ar.nightly() return vim.version().minor >= LATEST_NIGHTLY_MINOR end
 
 function ar.reload_all()
-  vim.cmd('checktime')
-  vim.cmd('Gitsigns refresh')
+  cmd('checktime')
+  cmd('Gitsigns refresh')
 end
 
 --- Run a command
@@ -335,7 +335,7 @@ function ar.visual_cmd(command)
   )
   local range = fmt('%d,%d', start_pos[2], end_pos[2])
   local full_cmd = fmt(':%s%s', range, command)
-  vim.cmd(full_cmd)
+  cmd(full_cmd)
 end
 
 --- Add options to menu
@@ -351,10 +351,10 @@ function ar.escape_pattern(text) return text:gsub('([^%w])', '%%%1') end
 
 --- copy some text to clipboard
 ---@param to_copy string
-function ar.copy_to_clipboard(to_copy) vim.fn.setreg('+', to_copy) end
+function ar.copy_to_clipboard(to_copy) fn.setreg('+', to_copy) end
 
 function ar.load_colorscheme(name)
-  ar.pcall('theme failed to load because', vim.cmd.colorscheme, name)
+  ar.pcall('theme failed to load because', cmd.colorscheme, name)
 end
 
 -- Check if root directory is a git repo
@@ -444,7 +444,7 @@ function ar.create_select_menu(prompt, options_table)
           frecency.update_item(option_names[item], { prompt = prompt })
         end
         if type(action) == 'string' then
-          vim.cmd(action)
+          cmd(action)
         elseif type(action) == 'function' then
           action()
         end
@@ -626,7 +626,7 @@ end
 --- Copy `text` to system clipboard
 ---@param text string
 function ar.copy(text)
-  vim.fn.setreg('+', text)
+  fn.setreg('+', text)
   vim.notify('Copied to clipboard', vim.log.levels.INFO)
 end
 
@@ -699,7 +699,7 @@ function ar.list.qf.delete(opts)
   local winid = api.nvim_get_current_win()
   local is_loclist = fn.win_gettype(winid) == 'loclist'
   local what = { items = 0, title = 0 }
-  local list = is_loclist and fn.getloclist(0, what) or vim.fn.getqflist(what)
+  local list = is_loclist and fn.getloclist(0, what) or fn.getqflist(what)
   if #list.items > 0 then
     local row, col = unpack(api.nvim_win_get_cursor(0))
     for pos = opts.line2, opts.line1, -1 do
@@ -854,7 +854,7 @@ end
 ---check if a certain feature/version/commit exists in nvim
 ---@param feature string
 ---@return boolean
-function ar.has(feature) return vim.fn.has(feature) > 0 end
+function ar.has(feature) return fn.has(feature) > 0 end
 
 --- Find the first entry for which the predicate returns true.
 -- @param t The table
