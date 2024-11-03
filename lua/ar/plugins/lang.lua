@@ -139,8 +139,17 @@ return {
     'razak17/cronex.nvim',
     cond = not minimal,
     build = 'npm install -g cronstrue',
-    cmd = { 'CronExplainedEnable', 'CronExplainedDisable' },
-    event = { 'BufEnter', 'BufNewFile' },
+    cmd = {
+      'CronExplainedEnable',
+      'CronExplainedDisable',
+      'CronExplainedToggle',
+    },
+    init = function()
+      ar.add_to_menu(
+        'command_palette',
+        { ['Toggle Cronex'] = 'CronExplainedToggle' }
+      )
+    end,
     opts = {
       file_patterns = {
         '*.yaml',
