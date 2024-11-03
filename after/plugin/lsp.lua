@@ -164,7 +164,7 @@ end
 ---@param client vim.lsp.Client
 local function jump_to_first_definition(result, client)
   if #result == 1 then
-    lsp.util.jump_to_location(result[1], client.offset_encoding)
+    vim.lsp.util.show_document(result[1], client.offset_encoding)
     return
   end
 
@@ -199,7 +199,7 @@ lsp.handlers[M.textDocument_definition] = function(_, result, ctx, _)
     if vim.islist(result) then
       jump_to_first_definition(result, client)
     else
-      lsp.util.jump_to_location(result, client.offset_encoding)
+      vim.lsp.util.show_document(result, client.offset_encoding)
     end
   end
 end
