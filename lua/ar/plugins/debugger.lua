@@ -353,6 +353,7 @@ return {
       { 'theHamsta/nvim-dap-virtual-text', opts = { all_frames = true } },
       {
         'Weissle/persistent-breakpoints.nvim',
+        cond = false,
         event = { 'BufReadPost' },
         keys = {
           {
