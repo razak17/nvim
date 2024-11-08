@@ -4,7 +4,7 @@ local icons, separators = ui.icons, ui.icons.separators
 local minimal, niceties = ar.plugins.minimal, ar.plugins.niceties
 
 return {
-  { 'lewis6991/spaceless.nvim', lazy = false, cond = not minimal },
+  { 'razak17/spaceless.nvim', lazy = false, cond = not minimal },
   {
     'razak17/lspkind.nvim',
     config = function() require('lspkind').init({ preset = 'codicons' }) end,
