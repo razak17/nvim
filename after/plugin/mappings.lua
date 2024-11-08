@@ -47,6 +47,12 @@ nnoremap(']<space>', [[<cmd>put =repeat(nr2char(10), v:count1)<cr>]], {
 nnoremap('<leader>x', '"_x', { desc = 'delete char (no copy)' })
 -- Greatest remap ever
 vnoremap('<leader>p', '"_dP', { desc = 'greatest remap' })
+-- Keep cursor position on paste
+nnoremap('p', function()
+  local row, col = unpack(api.nvim_win_get_cursor(0))
+  vim.cmd('put')
+  api.nvim_win_set_cursor(0, { row + 1, col })
+end)
 -- Next greatest remap ever : asbjornHaland
 map({ 'n', 'x' }, '<leader>y', '"+y', { desc = 'yank' })
 map({ 'n', 'x' }, '<leader>Y', '"_Y', { desc = 'yank' })
