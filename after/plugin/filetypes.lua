@@ -158,7 +158,7 @@ settings({
     function()
       if is_available('LuaSnip') and is_available('snips') then
         local ls = require('luasnip')
-        local jsr = require('snips.javascriptreact')
+        local jsr = require('snips.typescriptreact')
 
         local s = ls.s
 
