@@ -213,9 +213,14 @@ return {
         },
       },
       {
+        view = 'mini',
+        opts = { title = '' },
+        filter = { kind = { 'echo', 'echomsg' } },
+      },
+      {
         view = 'notify',
         opts = { title = '' },
-        filter = { kind = { 'emsg', 'echo', 'echomsg' } },
+        filter = { kind = { 'emsg' } },
       },
       {
         filter = {
