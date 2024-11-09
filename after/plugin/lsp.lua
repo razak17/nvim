@@ -685,6 +685,8 @@ diagnostic.config({
 })
 
 if not ar.is_available('noice.nvim') then
+  -- require('ar.lsp_float').apply()
+
   lsp.handlers['textDocument/hover'] = function(...)
     local hover_handler = lsp.with(lsp.handlers.hover, {
       border = border,
