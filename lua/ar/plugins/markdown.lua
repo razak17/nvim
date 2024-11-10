@@ -3,6 +3,9 @@ local minimal, niceties = ar.plugins.minimal, ar.plugins.niceties
 
 -- Example for configuring Neovim to load user-installed installed Lua rocks:
 local rocks_dir = vim.env.HOME .. '/.luarocks/share/lua/5.1'
+if vim.env.ASDF_DIR then
+  rocks_dir = vim.env.ASDF_DIR .. '/installs/lua/5.1/luarocks/share/lua/5.1'
+end
 package.path = package.path .. ';' .. rocks_dir .. '/?/init.lua;'
 package.path = package.path .. ';' .. rocks_dir .. '/?.lua;'
 
