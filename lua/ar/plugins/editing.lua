@@ -407,6 +407,7 @@ return {
         ['high'] = 'low',
         ['open'] = 'close',
         ['and'] = 'or',
+        ['rounded'] = 'single',
       },
     },
   },
