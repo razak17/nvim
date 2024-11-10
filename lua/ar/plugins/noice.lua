@@ -214,7 +214,7 @@ return {
       },
       {
         view = 'mini',
-        opts = { title = '' },
+        opts = { title = '', skip = true },
         filter = { kind = { 'echo', 'echomsg' } },
       },
       {
