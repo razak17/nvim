@@ -1,4 +1,3 @@
-local L = vim.log.levels
 local fmt = string.format
 local cwd = fmt('%s', vim.fn.getcwd())
 local icons = ar.ui.icons
@@ -640,7 +639,7 @@ return {
     cond = enabled,
     -- stylua: ignore
     keys = {
-      { '<leader>gL', "<Cmd>lua require'git-log'.check_log()<CR>", mode = { 'n', 'x' }, desc = 'git-log: show log', },
+      { '<leader>gL', "<Cmd>lua require'git-log'.check_log()<CR>", mode = { 'n', 'x' }, desc = 'git-log: show line/selection log', },
     },
     dependencies = { 'niuiic/core.nvim' },
   },
