@@ -17,7 +17,7 @@ local is_available = ar.is_available
 local conform = is_available('conform.nvim')
 
 local diagnostic = vim.diagnostic
-local augroup, lsp_icons, border =
+local augroup, diag_icons, border =
   ar.augroup, ar.ui.codicons.lsp, ar.ui.current.border
 
 local format_exclusions = {
@@ -640,10 +640,10 @@ local max_height = math.min(math.floor(vim.o.lines * 0.3), 30)
 ---@param kind? string
 local function get_signs(kind)
   return {
-    [S.WARN] = kind and fmt('DiagnosticSignWarn%s', kind) or lsp_icons.warn,
-    [S.INFO] = kind and fmt('DiagnosticSignInfo%s', kind) or lsp_icons.info,
-    [S.HINT] = kind and fmt('DiagnosticSignHint%s', kind) or lsp_icons.hint,
-    [S.ERROR] = kind and fmt('DiagnosticSignError%s', kind) or lsp_icons.error,
+    [S.WARN] = kind and fmt('DiagnosticSignWarn%s', kind) or diag_icons.warn,
+    [S.INFO] = kind and fmt('DiagnosticSignInfo%s', kind) or diag_icons.info,
+    [S.HINT] = kind and fmt('DiagnosticSignHint%s', kind) or diag_icons.hint,
+    [S.ERROR] = kind and fmt('DiagnosticSignError%s', kind) or diag_icons.error,
   }
 end
 
@@ -678,7 +678,7 @@ diagnostic.config({
     source = true,
     prefix = function(diag)
       local level = diagnostic.severity[diag.severity]
-      local prefix = fmt('%s ', lsp_icons[level:lower()])
+      local prefix = fmt('%s ', diag_icons[level:lower()])
       return prefix, 'Diagnostic' .. level:gsub('^%l', string.upper)
     end,
   },
