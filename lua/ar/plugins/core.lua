@@ -248,10 +248,10 @@ return {
     config = function()
       local g = require('genghis')
       map('n', '<leader><localleader>fp', g.copyFilepath, { desc = 'genghis: yank filepath' })
-      map('n', '<leader><localleader>fn', g.copyFilename, { desc = 'genghis: yank filename' })
+      map('n', '<leader><localleader>ff', g.copyFilename, { desc = 'genghis: yank filename' })
       map('n', '<leader><localleader>fr', g.renameFile, { desc = 'genghis: rename file' })
       map('n', '<leader><localleader>fm', g.moveAndRenameFile, { desc = 'genghis: move and rename' })
-      map('n', '<leader><localleader>fc', g.createNewFile, { desc = 'genghis: create new file' })
+      map('n', '<leader><localleader>fn', g.createNewFile, { desc = 'genghis: create new file' })
       map('n', '<leader><localleader>fD', g.duplicateFile, { desc = 'genghis: duplicate current file' })
       map(
         'n',
