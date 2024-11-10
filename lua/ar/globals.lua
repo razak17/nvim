@@ -347,9 +347,10 @@ function ar.visual_cmd(command)
   local full_cmd = fmt(':%s%s', range, command)
   cmd(full_cmd)
 end
+---@alias MenuOptions 'ai' | 'command_palette' | 'git' | 'lsp' | 'toggle'
 
 --- Add options to menu
----@param name string
+---@param name MenuOptions
 ---@param options table
 function ar.add_to_menu(name, options)
   ar.menu[name].options = ar.menu[name].options or {}
