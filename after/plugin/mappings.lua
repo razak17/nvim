@@ -221,6 +221,7 @@ local function new_file_in_current_dir()
   vim.ui.input({
     prompt = 'New file name: ',
     default = '',
+    completion = "file",
   }, function(file)
     if not file or file == '' then return end
     vim.cmd('e ' .. fn.expand('%:p:h') .. '/' .. file)
