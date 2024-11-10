@@ -182,8 +182,14 @@ return {
   {
     'https://git.sr.ht/~p00f/alabaster.nvim',
     cond = ar.colorscheme == 'alabaster',
-    lazy = false,
-    priority = 1000,
+    priority = get_priority('alabaster'),
+    event = get_event('alabaster'),
+  },
+  {
+    'wtfox/jellybeans.nvim',
+    cond = ar.colorscheme == 'jellybeans',
+    priority = get_priority('jellybeans'),
+    event = get_event('jellybeans'),
   },
   -- }}}
   --------------------------------------------------------------------------------
