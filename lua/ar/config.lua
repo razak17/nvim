@@ -29,7 +29,7 @@ local env = vim.env
 ---@alias ArPythonLsp 'pyright' | 'ruff' | 'jedi_language_server' | 'basedpyright'
 ---@alias ArCompletionIcons 'lspkind' | 'mini.icons'
 ---@alias ArWhichGx 'local' | 'plugin'
----@alias ArWhichLspProgress 'builtin' | 'noice'
+---@alias ArWhichLspProgress 'builtin' | 'noice' | 'snacks'
 ---@alias ArWhichStatuscolumn 'local' | 'plugin'
 ---@alias ArWhichWinbar 'local' | 'plugin'
 
@@ -220,7 +220,7 @@ local namespace = {
         'yaml',
       },
     },
-    progress = { enable = true, variant = 'noice' },
+    progress = { enable = true, variant = 'snacks' },
     semantic_tokens = { enable = false },
     signs = { enable = false },
     workspace_diagnostics = { enable = false },
