@@ -191,6 +191,14 @@ return {
     priority = get_priority('jellybeans'),
     event = get_event('jellybeans'),
   },
+  {
+    'neanias/everforest-nvim',
+    cond = ar.colorscheme == 'everforest',
+    priority = get_priority('everforest'),
+    event = get_event('everforest'),
+    opts = {},
+    config = function(_, opts) require('everforest').setup(opts) end,
+  },
   -- }}}
   --------------------------------------------------------------------------------
   -- Disabled
