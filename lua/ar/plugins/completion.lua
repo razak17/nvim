@@ -13,12 +13,14 @@ ar.completion.config = {
     ['crates'] = { icon = codicons.misc.package, hl = 'CmpItemKindDynamic' },
     ['copilot'] = { icon = codicons.misc.octoface, hl = 'CmpItemKindCopilot' },
     ['nerdfonts'] = { icon = '', hl = 'CmpItemKindNerdFont' },
+    ['minuet'] = { icon = '󱗻', hl = 'CmpItemKindDynamic' },
     ['nvim_px_to_rem'] = { icon = '', hl = 'CmpItemKindNerdFont' },
     ['Color'] = { icon = '' },
   },
   menu = {
     Color = '[COLOR]',
     copilot = '[CPL]',
+    minuet = '[MINUET]',
     codeium = '[CM]',
     nvim_lsp = '[LSP]',
     luasnip = '[SNIP]',
@@ -166,7 +168,11 @@ return {
       end
 
       return {
-        performance = { debounce = 0, throttle = 0 },
+        performance = {
+          debounce = 0,
+          throttle = 0,
+          fetching_timeout = 2000,
+        },
         preselect = cmp.PreselectMode.None,
         window = {
           completion = cmp.config.window.bordered({
@@ -223,6 +229,7 @@ return {
           }),
           ['<C-u>'] = cmp.mapping.complete(),
           ['<CR>'] = cmp.mapping.confirm({ select = false }), -- If nothing is selected don't complete
+          ['<A-y>'] = require('minuet').make_cmp_map(),
         },
         formatting = {
           expandable_indicator = true,
@@ -303,6 +310,7 @@ return {
         },
         sources = {
           { name = 'copilot', priority = 11, group_index = 1 },
+          { name = 'minuet', priority = 11, group_index = 1 },
           { name = 'codeium', priority = 11, group_index = 1 },
           { name = 'nvim_px_to_rem', priority = 11, group_index = 1 },
           { name = 'nvim_lsp', priority = 10, group_index = 1 },
@@ -438,6 +446,56 @@ return {
                 },
               })
             end,
+          })
+        end,
+      },
+      {
+        'milanglacier/minuet-ai.nvim',
+        cmd = { 'MinuetChangeProvider' },
+        config = function()
+          require('minuet').setup({
+            provider = 'claude',
+            request_timeout = 4,
+            throttle = 2000,
+            notify = 'error',
+            provider_options = {
+              gemini = {
+                optional = {
+                  generationConfig = {
+                    maxOutputTokens = 256,
+                    topP = 0.9,
+                  },
+                  safetySettings = {
+                    {
+                      category = 'HARM_CATEGORY_DANGEROUS_CONTENT',
+                      threshold = 'BLOCK_NONE',
+                    },
+                    {
+                      category = 'HARM_CATEGORY_HATE_SPEECH',
+                      threshold = 'BLOCK_NONE',
+                    },
+                    {
+                      category = 'HARM_CATEGORY_HARASSMENT',
+                      threshold = 'BLOCK_NONE',
+                    },
+                    {
+                      category = 'HARM_CATEGORY_SEXUALLY_EXPLICIT',
+                      threshold = 'BLOCK_NONE',
+                    },
+                  },
+                },
+              },
+              claude = {
+                max_tokens = 512,
+                model = 'claude-3-5-haiku-20241022',
+              },
+              openai = {
+                optional = {
+                  max_tokens = 256,
+                  top_p = 0.9,
+                },
+              },
+            },
           })
         end,
       },
