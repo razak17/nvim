@@ -27,6 +27,19 @@ return {
     end,
   },
   {
+    'NvChad/nvim-colorizer.lua',
+    config = function() require('colorizer').setup() end,
+    cmd = {
+      'ColorizerAttachToBuffer',
+      'ColorizerDetachFromBuffer',
+      'ColorizerReloadAllBuffers',
+      'ColorizerToggle',
+    },
+    init = function()
+      ar.add_to_menu('toggle', { ['Toggle Colorizer'] = 'ColorizerToggle' })
+    end,
+  },
+  {
     'brenoprata10/nvim-highlight-colors',
     cond = not minimal,
     cmd = { 'HighlightColors' },
