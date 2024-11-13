@@ -199,6 +199,13 @@ return {
     opts = {},
     config = function(_, opts) require('everforest').setup(opts) end,
   },
+  {
+    'wnkz/monoglow.nvim',
+    cond = ar.colorscheme == 'monoglow',
+    priority = get_priority('monoglow'),
+    event = get_event('monoglow'),
+    opts = {},
+  },
   -- }}}
   --------------------------------------------------------------------------------
   -- Disabled
