@@ -101,12 +101,7 @@ local function show_related_locations(diag)
 end
 
 local publish_handler = lsp.handlers[M.textDocument_publishDiagnostics]
-lsp.handlers[M.textDocument_publishDiagnostics] = function(
-  err,
-  result,
-  ctx,
-  config
-)
+lsp.handlers[M.textDocument_publishDiagnostics] = function(err, result, ctx)
   result.diagnostics = vim.tbl_map(show_related_locations, result.diagnostics)
 
   local client = lsp.get_client_by_id(ctx.client_id)
@@ -150,7 +145,7 @@ lsp.handlers[M.textDocument_publishDiagnostics] = function(
     end
   end
 
-  publish_handler(err, result, ctx, config)
+  publish_handler(err, result, ctx)
 end
 
 --------------------------------------------------------------------------------
@@ -188,7 +183,7 @@ local function jump_to_first_definition(result, client)
   end
 end
 
-lsp.handlers[M.textDocument_definition] = function(_, result, ctx, _)
+lsp.handlers[M.textDocument_definition] = function(_, result, ctx)
   local client = vim.lsp.get_client_by_id(ctx.client_id)
   if client then
     if result == nil or vim.tbl_isempty(result) then
