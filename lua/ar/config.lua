@@ -129,6 +129,7 @@ local env = vim.env
 ---@field colors ArCond
 ---@field filetypes ArCond
 ---@field mappings ArCond
+---@field notifier string
 ---@field numbers ArCond
 ---@field rooter ArCond
 ---@field ui_select ArCond
@@ -167,6 +168,7 @@ local namespace = {
     current = true,
   },
   colorscheme = 'onedark',
+  notifier = 'nvim-notify',
   debug = { enable = false },
   frecency = { enable = true },
   git = {},
@@ -220,7 +222,7 @@ local namespace = {
         'yaml',
       },
     },
-    progress = { enable = true, variant = 'snacks' },
+    progress = { enable = true, variant = 'noice' },
     semantic_tokens = { enable = false },
     signs = { enable = false },
     workspace_diagnostics = { enable = false },

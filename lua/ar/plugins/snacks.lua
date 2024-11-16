@@ -60,7 +60,7 @@ return {
       },
       bufdelete = { enabled = false },
       notifier = {
-        enabled = true,
+        enabled = ar.notifier == 'snacks',
         timeout = 3000,
         top_down = false,
         margin = { top = 0, right = 1, bottom = 1 },
