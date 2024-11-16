@@ -206,6 +206,12 @@ return {
     event = get_event('monoglow'),
     opts = {},
   },
+  {
+    'masar3141/mono-jade',
+    cond = ar.colorscheme == 'mono-jade',
+    priority = get_priority('mono-jade'),
+    event = get_event('mono-jade'),
+  },
   -- }}}
   --------------------------------------------------------------------------------
   -- Disabled
