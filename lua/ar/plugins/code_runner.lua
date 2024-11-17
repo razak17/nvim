@@ -37,7 +37,7 @@ return {
     },
   },
   {
-    'is0n/jaq-nvim',
+    'razak17/jaq-nvim',
     cond = not minimal,
     cmd = 'Jaq',
     keys = {
