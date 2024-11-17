@@ -7,7 +7,7 @@ return {
   -- Code Runner
   --------------------------------------------------------------------------------
   {
-    'trimclain/builder.nvim',
+    'razak17/builder.nvim',
     cond = false,
     cmd = 'Build',
     -- stylua: ignore
