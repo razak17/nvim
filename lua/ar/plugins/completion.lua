@@ -229,7 +229,7 @@ return {
           }),
           ['<C-u>'] = cmp.mapping.complete(),
           ['<CR>'] = cmp.mapping.confirm({ select = false }), -- If nothing is selected don't complete
-          ['<A-y>'] = require('minuet').make_cmp_map(),
+          -- ['<A-y>'] = require('minuet').make_cmp_map(),
         },
         formatting = {
           expandable_indicator = true,
@@ -451,6 +451,7 @@ return {
       },
       {
         'milanglacier/minuet-ai.nvim',
+        cond = false,
         cmd = { 'MinuetChangeProvider' },
         config = function()
           require('minuet').setup({
