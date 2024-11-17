@@ -1,7 +1,6 @@
 local minimal = ar.plugins.minimal
 
 return {
-  { 'nvchad/volt' },
   {
     'nvchad/minty',
     cond = not minimal,

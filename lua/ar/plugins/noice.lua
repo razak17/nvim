@@ -267,7 +267,6 @@ return {
           event = 'lsp',
           kind = 'progress',
           cond = function(message)
-            print('noice.lua:269: message=' .. vim.inspect(message))
             local client = vim.tbl_get(message.opts, 'progress', 'client')
             if client == 'lua_ls' then
               local content = vim.tbl_get(message.opts, 'progress', 'message')
