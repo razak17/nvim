@@ -46,14 +46,18 @@ return {
     opts = {
       cmds = {
         external = {
-          markdown = 'glow %',
-          typescript = 'ts-node %',
-          javascript = 'node %',
-          python = 'python %',
-          rust = 'cargo run',
+          c = 'gcc % -o $fileBase && ./$fileBase',
           cpp = 'g++ % -o $fileBase && ./$fileBase',
           go = 'go run %',
+          java = 'java %',
+          javascript = 'node %',
           lua = 'lua %',
+          markdown = 'glow %',
+          python = 'python %',
+          rust = 'cargo run',
+          sh = 'sh %',
+          typescript = 'ts-node %',
+          zsh = 'zsh %',
         },
       },
       behavior = { default = 'float', startinsert = true },
