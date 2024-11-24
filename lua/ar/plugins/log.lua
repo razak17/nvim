@@ -3,7 +3,24 @@ local minimal = ar.plugins.minimal
 local niceties = ar.plugins.niceties
 
 return {
-
+  {
+    'Goose97/timber.nvim',
+    cond = not minimal and niceties,
+    event = 'VeryLazy',
+    opts = {
+      keymaps = {
+        insert_log_below = '<leader>p;j',
+        insert_log_above = '<leader>p;k',
+        insert_batch_log = '<leader>p;b',
+        add_log_targets_to_batch = 'g;a',
+        insert_log_below_operator = 'g<S-l>j',
+        insert_log_above_operator = 'g<S-l>k',
+        insert_batch_log_operator = 'g<S-l>b',
+        add_log_targets_to_batch_operator = 'g<S-l>a',
+      },
+    },
+    config = function(_, opts) require('timber').setup(opts) end,
+  },
   {
     'chrisgrieser/nvim-chainsaw',
     cond = not minimal,
