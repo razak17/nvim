@@ -212,6 +212,14 @@ return {
     priority = get_priority('mono-jade'),
     event = get_event('mono-jade'),
   },
+  {
+    'nuvic/flexoki-nvim',
+    name = 'flexoki',
+    cond = ar.colorscheme == 'flexoki',
+    priority = get_priority('flexoki'),
+    event = get_event('flexoki'),
+    opts = {},
+  },
   -- }}}
   --------------------------------------------------------------------------------
   -- Disabled
