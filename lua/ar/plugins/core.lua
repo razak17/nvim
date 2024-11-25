@@ -207,6 +207,27 @@ return {
   ------------------------------------------------------------------------------
   { 'meznaric/key-analyzer.nvim', cmd = { 'KeyAnalyzer' }, opts = {} },
   {
+    'mikesmithgh/kitty-scrollback.nvim',
+    cmd = { 'KittyScrollbackGenerateKittens', 'KittyScrollbackCheckHealth' },
+    event = { 'User KittyScrollbackLaunch' },
+    config = function()
+      require('kitty-scrollback').setup({
+        {
+          callbacks = {
+            after_ready = vim.defer_fn(
+              function()
+                vim.fn.confirm(
+                  vim.env.NVIM_APPNAME .. ' kitty-scrollback.nvim example!'
+                )
+              end,
+              1000
+            ),
+          },
+        },
+      })
+    end,
+  },
+  {
     'lambdalisue/suda.vim',
     lazy = false,
     init = function()
