@@ -24,6 +24,9 @@ return {
           title = '',
         },
       },
+      opts = {
+        win_options = { concealcursor = '', conceallevel = 0 },
+      },
     },
     messages = {
       enabled = true,
