@@ -350,6 +350,7 @@ ar.telescope = {
   extension_to_plugin = {
     ['cmdline'] = 'telescope-cmdline.nvim',
     ['directory'] = 'telescope-directory.nvim',
+    -- ['dir'] = 'dir-telescope.nvim',
     ['egrepify'] = 'telescope-egrepify.nvim',
     ['file_browser'] = 'telescope-file-browser.nvim',
     ['frecency'] = 'telescope-frecency.nvim',
@@ -849,6 +850,7 @@ return {
   { 'catgoose/telescope-helpgrep.nvim', cond = min_enabled },
   { 'razak17/telescope-lazy.nvim', cond = min_enabled },
   { 'fbuchlak/telescope-directory.nvim', cond = min_enabled, opts = {} },
+  { 'princejoogie/dir-telescope.nvim', cond = false, opts = {} },
   { 'dapc11/telescope-yaml.nvim', cond = min_enabled },
   { 'crispgm/telescope-heading.nvim', cond = min_enabled },
   { 'chip/telescope-software-licenses.nvim', cond = min_enabled },
