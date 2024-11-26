@@ -181,6 +181,7 @@ local namespace = {
     image = { 'jpg', 'png', 'jpeg', 'ico', 'gif' },
     video = { 'mp4', 'mkv' },
   },
+  kitty_scrollback = { enable = env.KITTY_SCROLLBACK_NVIM == 'true' },
   ---@type ArLsp
   lsp = {
     disabled = {

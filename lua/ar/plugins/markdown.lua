@@ -43,7 +43,7 @@ return {
   },
   {
     '3rd/image.nvim',
-    cond = not minimal and not vim.g.neovide,
+    cond = not minimal and not vim.g.neovide and ar.kitty_scrollback.enable,
     ft = { 'markdown' },
     opts = {
       backend = 'kitty',
