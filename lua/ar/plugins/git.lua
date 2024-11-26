@@ -192,6 +192,17 @@ return {
         )
       end
 
+      local function cherry_pick_from_hash()
+        vim.ui.input(
+          { prompt = 'Enter git commit id:', kind = 'center_win' },
+          function(input)
+            if input ~= nil then
+              vim.cmd(':term! git cherry-pick ' .. input)
+            end
+          end
+        )
+      end
+
       ar.add_to_menu('git', {
         ['Browse File Commit History'] = 'DiffviewFileHistory %',
         ['Conflict Show Base'] = function() diffview_conflict('base') end,
@@ -200,6 +211,7 @@ return {
         ['Show Commit At Line'] = function() show_commit_at_line() end,
         ['Browse Project History'] = function() project_history() end,
         ['Show Commit From Hash'] = function() display_commit_from_hash() end,
+        ['Cherry Pick From Hash'] = function() cherry_pick_from_hash() end,
       })
     end,
     opts = {
