@@ -36,6 +36,7 @@ return {
           -- 'FileType',
         },
         command = function(args)
+          if not ui.show_cursorline then return end
           if not ui.show_cursorline(args.buf) then
             require('reticle').set_cursorline(false)
             return
