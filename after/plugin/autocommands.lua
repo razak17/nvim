@@ -158,7 +158,7 @@ local function can_save()
     and not vim.bo.readonly
     and not vim.tbl_contains(save_excluded, vim.bo.filetype)
     and ar.autosave.enable
-    and ar.kitty_scrollback.enable
+    -- and ar.kitty_scrollback.enable
 end
 
 augroup('UpdateVim', {
