@@ -159,6 +159,8 @@ local function colorscheme_overrides()
       { NeogitDiffDelete = { link = 'DiffDelete' } },
       { ColorColumn = { link = 'Cursorline' } },
       { Todo = { link = 'Constant' } },
+      { Winbar = { link = 'Variable' } },
+      { WinbarNC = { link = 'LineNr' } },
     },
   }
   local hls = overrides[vim.g.colors_name]
