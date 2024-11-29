@@ -86,7 +86,7 @@ return {
   {
     'razak17/lab.nvim',
     event = { 'InsertEnter' },
-    cond = not minimal,
+    cond = not minimal and ar.completion.enable,
     keys = {
       { '<leader>rl', ':Lab code run<CR>', desc = 'lab: run' },
       { '<leader>rq', ':Lab code stop<CR>', desc = 'lab: stop' },
