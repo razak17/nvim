@@ -3,7 +3,7 @@ local enabled = not ar.noplugin and ar.plugin.large_file.enable
 if not ar or ar.none or not enabled then return end
 
 local api, fn, cmd, go = vim.api, vim.fn, vim.cmd, vim.go
-local bo, o, wo = vim.bo, vim.o, vim.wo
+local bo, o, wo, opt_l = vim.bo, vim.o, vim.wo, vim.opt_local
 
 ar.large_file = {
   enable = true,
@@ -36,7 +36,7 @@ local function handle_bigfile(bufnr)
     event = { 'BufEnter', 'BufReadPre', 'BufWritePre', 'BufReadPost' },
     command = function()
       cmd('syntax clear')
-      vim.opt_local.syntax = 'OFF'
+      opt_l.syntax = 'OFF'
     end,
     buffer = bufnr,
   }, {
@@ -45,6 +45,7 @@ local function handle_bigfile(bufnr)
     buffer = bufnr,
   })
 
+  opt_l.syntax = 'OFF'
   wo.wrap = false
   -- bo.bufhidden = 'unload'
   bo.swapfile = false
