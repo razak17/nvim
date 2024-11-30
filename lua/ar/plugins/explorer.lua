@@ -322,7 +322,7 @@ return {
       windows = {
         preview = true,
         width_focus = 30,
-        width_preview = 30,
+        width_preview = 50,
       },
       mappings = { reset = ',', reveal_cwd = '.' },
       options = {
