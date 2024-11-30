@@ -576,6 +576,19 @@ function ar.open(path, notify)
   end
 end
 
+--- Open the current file in the file manager
+---@param file_path string
+function ar.open_in_file_manager(file_path)
+  if file_path == '' then
+    print('File path is empty!')
+    return
+  end
+  local exe = ar.apps.explorer
+  if exe and fn.executable(exe) then
+    vim.system({ exe, file_path }, { detach = true })
+  end
+end
+
 --- open / play media file
 ---@param path string
 ---@param notify? boolean

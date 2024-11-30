@@ -221,7 +221,7 @@ local function new_file_in_current_dir()
   vim.ui.input({
     prompt = 'New file name: ',
     default = '',
-    completion = "file",
+    completion = 'file',
   }, function(file)
     if not file or file == '' then return end
     vim.cmd('e ' .. fn.expand('%:p:h') .. '/' .. file)
@@ -516,6 +516,12 @@ nnoremap(
   ":lua require'ar.menus.file_select'.toggle_file_diff()<CR>",
   { desc = 'toggle file diff' }
 )
+--------------------------------------------------------------------------------
+-- Open in finder
+nnoremap('<leader><localleader>fo', function()
+  local file_path = vim.fn.expand('%:p')
+  ar.open_in_file_manager(file_path)
+end, { desc = 'open in file manager' })
 --------------------------------------------------------------------------------
 -- Ruslings
 nnoremap('<leader><localleader>rd', function()

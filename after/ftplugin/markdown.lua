@@ -354,13 +354,9 @@ local function return_to_position()
 end
 
 -- Open current file in finder
-local function open_in_finder()
+local function open_in_file_manager()
   local file_path = fn.expand('%:p')
-  if file_path ~= '' then
-    ar.open_media(file_path, true)
-  else
-    print('No file is currently open')
-  end
+  ar.open_in_file_manager(file_path)
 end
 
 -- Open current file in Neovide
@@ -435,7 +431,12 @@ map(
   with_desc('return to position before jumping')
 )
 
-map('n', '<leader><leader>fo', open_in_finder, with_desc('open in finder'))
+map(
+  'n',
+  '<leader><leader>fo',
+  open_in_file_manager,
+  with_desc('open in finder')
+)
 
 map('n', '<leader><leader>fn', open_in_neovide, with_desc('open in neovide'))
 
