@@ -50,6 +50,17 @@ return {
         function() require('snacks').terminal() end,
         desc = 'snacks: toggle terminal',
       },
+
+      {
+        '<leader>.',
+        function() require('snacks').scratch() end,
+        desc = 'snacks: toggle scratch buffer',
+      },
+      {
+        '<leader>oS',
+        function() require('snacks').scratch.select() end,
+        desc = 'snacks: select scratch buffer',
+      },
     },
     opts = {
       styles = {
@@ -72,6 +83,7 @@ return {
           trace = diag_icons.trace,
         },
       },
+      snacks = {},
       statuscolumn = { enabled = false },
       quickfile = { enabled = false },
       words = { enabled = false },
