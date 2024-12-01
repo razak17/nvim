@@ -1,7 +1,7 @@
 return {
   {
     'yarospace/lua-console.nvim',
-    keys = '<leader>ok',
+    keys = { { '<leader>ok', desc = 'lua-console: toggle' } },
     opts = {
       buffer = {
         prepend_result_with = '=> ',

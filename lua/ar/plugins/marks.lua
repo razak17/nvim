@@ -108,9 +108,10 @@ return {
       },
     },
     cmd = 'Grapple',
+    -- stylua: ignore
     keys = {
       { '<leader>ma', '<Cmd>Grapple toggle<CR>', desc = 'grapple: toggle tag' },
-      { '<leader>M', '<Cmd>Grapple toggle_tags<CR>', 'grapple: toggle tags' },
+      { '<leader>M', '<Cmd>Grapple toggle_tags<CR>', desc = 'grapple: toggle tags' },
     },
   },
   {
