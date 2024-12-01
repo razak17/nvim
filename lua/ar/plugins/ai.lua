@@ -20,6 +20,13 @@ local models = ar.ai.models
 
 return {
   {
+    'napisani/context-nvim',
+    cond = not minimal and ar.ai.enable and false,
+    cmd = { 'ContextNvim' },
+    opts = {},
+    config = function(_, opts) require('context_nvim').setup(opts) end,
+  },
+  {
     'yetone/avante.nvim',
     cond = not minimal and ar.ai.enable and false,
     init = function()
