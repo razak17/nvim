@@ -149,6 +149,19 @@ M.file_name = {
   },
 }
 
+M.pretty_path = {
+  provider = function(self)
+    local filename = vim.fn.fnamemodify(self.filename, ':p:h')
+    if filename == '' then return '[No Name]' end
+    local pretty_path = require('ar.pretty_path')
+    return ' ' .. pretty_path.pretty_path()
+  end,
+  on_click = {
+    callback = function() vim.cmd('Telescope find_files') end,
+    name = 'find_files',
+  },
+}
+
 M.file_size = {
   provider = function()
     local bufnr = api.nvim_get_current_buf()

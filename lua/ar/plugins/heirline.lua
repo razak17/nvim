@@ -175,7 +175,7 @@ return {
         utils.insert(
           file_block,
           utils.insert(
-            statusline.file_name,
+            statusline.pretty_path,
             statusline.file_flags,
             statusline.file_size
           )
