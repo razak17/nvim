@@ -535,4 +535,14 @@ return {
       { mode = 'x', '<localleader>nt', ":lua require'nag'.tab()<CR>", desc = 'nag: split tab', },
     },
   },
+  {
+    'kelvinauta/focushere.nvim',
+    cmd = { 'FocusHere', 'FocusClear' },
+    -- stylua: ignore
+    keys = {
+      { '<leader>of', ':FocusHere<CR>', desc = 'focus: here', silent = true, mode = { 'v' } },
+      { '<leader>of', ':FocusClear<CR>', desc = 'focus: clear', silent = true, mode = { 'n' } },
+    },
+    opts = {},
+  },
 }
