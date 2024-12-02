@@ -2,7 +2,6 @@ local border = ar.ui.current.border
 
 return {
   'stevearc/dressing.nvim',
-  -- cond = not ar.plugins.minimal and ar.plugins.niceties,
   event = 'BufRead',
   cond = not ar.plugins.minimal,
   init = function()

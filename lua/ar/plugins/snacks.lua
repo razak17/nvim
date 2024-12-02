@@ -61,6 +61,16 @@ return {
         function() require('snacks').scratch.select() end,
         desc = 'snacks: select scratch buffer',
       },
+      {
+        '<leader>ps',
+        function() require('snacks').profiler.scratch() end,
+        desc = 'snacks: profiler scratch buffer',
+      },
+      {
+        '<leader>pu',
+        function() require('snacks').profiler.toggle() end,
+        desc = 'snacks: toggle profiler',
+      },
     },
     opts = {
       styles = {
@@ -82,6 +92,9 @@ return {
           debug = codicons.misc.bug_alt,
           trace = diag_icons.trace,
         },
+      },
+      profiler = {
+        pick = { picker = 'telescope' },
       },
       snacks = {},
       statuscolumn = { enabled = false },
@@ -155,5 +168,6 @@ return {
         })
       end
     end,
+    config = function(_, opts) require('snacks').setup(opts) end,
   },
 }
