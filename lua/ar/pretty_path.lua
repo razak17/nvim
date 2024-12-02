@@ -1,9 +1,10 @@
+local fn, uv = vim.fn, vim.uv
 local M = {}
 
 ---@return string
 function M.norm(path)
   if path:sub(1, 1) == '~' then
-    local home = vim.uv.os_homedir()
+    local home = uv.os_homedir()
     if not home or home == '' then return path end
     if home:sub(-1) == '\\' or home:sub(-1) == '/' then
       home = home:sub(1, -2)
@@ -15,29 +16,21 @@ function M.norm(path)
 end
 
 function M.root_cwd()
-  local path = vim.uv.cwd()
+  local path = uv.cwd()
   if path == '' or path == nil then return nil end
-  path = vim.uv.fs_realpath(path) or path
+  path = uv.fs_realpath(path) or path
   return M.norm(path)
 end
 
 function M.pretty_path()
-  local opts = {
-    relative = 'cwd',
-    modified_hl = 'MatchParen',
-    directory_hl = '',
-    filename_hl = 'Bold',
-    modified_sign = '',
-    readonly_icon = ' 󰌾 ',
-    length = 3,
-  }
+  local opts = { relative = 'cwd', length = 3 }
 
-  local path = vim.fn.expand('%:p') --[[@as string]]
+  local path = fn.expand('%:p') --[[@as string]]
 
   if path == '' then return '' end
 
   path = M.norm(path)
-  local root = vim.uv.cwd()
+  local root = uv.cwd()
   local cwd = M.root_cwd()
 
   if opts.relative == 'cwd' and path:find(cwd, 1, true) == 1 then
@@ -58,8 +51,9 @@ function M.pretty_path()
   local dir = ''
   if #parts > 1 then
     dir = table.concat({ unpack(parts, 1, #parts - 1) }, sep)
+    dir = dir .. sep
   end
-  return dir
+  return dir .. parts[#parts]
 end
 
 return M
