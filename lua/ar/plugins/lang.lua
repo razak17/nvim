@@ -207,9 +207,21 @@ return {
     cond = ar.lsp.enable,
     -- stylua: ignore
     keys = {
-      { '<localleader>lt', '<cmd>TWValues<cr>', desc = 'tw-values: show values', },
+      { '<localleader>lt', '<Cmd>TWValues<cr>', desc = 'tw-values: show values', },
     },
     opts = { border = border, show_unknown_classes = true },
+  },
+  {
+    'atiladefreitas/tinyunit',
+    keys = {
+      { '<leader>tu', desc = 'tinyunit: open', mode = { 'n', 'x' } },
+    },
+    opts = {
+      keymap = {
+        open = 'tu',
+        close = 'q',
+      },
+    },
   },
   -- Python
   --------------------------------------------------------------------------------
