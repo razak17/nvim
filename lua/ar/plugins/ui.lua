@@ -485,37 +485,4 @@ return {
       },
     },
   },
-  {
-    'shellRaining/hlchunk.nvim',
-    enabled = false,
-    cond = not minimal and false,
-    event = 'BufRead',
-    config = function()
-      require('hlchunk').setup({
-        indent = {
-          chars = { '▏' },
-          style = {
-            { fg = highlight.get('IndentBlanklineChar', 'fg') },
-          },
-        },
-        blank = { enable = false },
-        chunk = {
-          chars = {
-            horizontal_line = '─',
-            vertical_line = '│',
-            left_top = '┌',
-            left_bottom = '└',
-            right_arrow = '─',
-          },
-          style = highlight.tint(
-            highlight.get('IndentBlanklineContextChar', 'fg'),
-            -0.2
-          ),
-        },
-        line_num = {
-          style = highlight.get('CursorLineNr', 'fg'),
-        },
-      })
-    end,
-  },
 }
