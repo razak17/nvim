@@ -57,6 +57,7 @@ return {
         { '<localleader>lc', group = 'Call Hierarchy' },
         { '<localleader>lr', group = 'Rulebook' },
         { '<localleader>m', group = 'Markdown' },
+        { '<localleader>n', group = 'Neogen/Notifications' },
         { '<leader><leader>', group = 'Advanced' },
         { '<leader><leader>a', desc = 'Actions' },
         { '<leader><leader>g', group = 'Git' },
