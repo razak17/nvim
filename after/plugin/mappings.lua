@@ -513,7 +513,7 @@ nnoremap(
 -- File Diff
 nnoremap(
   '<leader>fd',
-  ":lua require'ar.menus.file_select'.toggle_file_diff()<CR>",
+  ":lua require'ar.menus.command_palette'.toggle_file_diff()<CR>",
   { desc = 'toggle file diff' }
 )
 --------------------------------------------------------------------------------
