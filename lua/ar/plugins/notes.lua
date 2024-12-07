@@ -82,4 +82,23 @@ return {
       },
     },
   },
+  {
+    'atiladefreitas/dooing',
+    cmd = { 'Dooing' },
+    init = function()
+      require('which-key').add({
+        { '<leader><localleader>d', group = 'Dooing' },
+      })
+    end,
+    keys = {
+      { '<leader><localleader>do', desc = 'dooing: toggle window' },
+      { '<leader><localleader>dx', desc = 'dooing: remove duplicates' },
+    },
+    opts = {
+      keymaps = {
+        toggle_window = '<leader><localleader>do',
+        remove_duplicates = '<leader><localleader>dx',
+      },
+    },
+  },
 }
