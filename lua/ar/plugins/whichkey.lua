@@ -34,7 +34,7 @@ return {
         { '<leader>gs', group = 'Stash' },
         { '<leader>gy', group = 'Yank' },
         { '<leader>h', group = 'Gitsigns' },
-        { '<leader>i', group = 'Toggler' },
+        { '<leader>i', group = 'Toggler/Swap' },
         { '<leader>l', group = 'LSP' },
         { '<leader>m', group = 'Marks' },
         { '<leader>n', group = 'Notify' },
