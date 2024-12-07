@@ -376,6 +376,15 @@ return {
       highlight_node_at_cursor = true,
     },
   },
+  {
+    'Wansmer/binary-swap.nvim',
+    cond = false,
+    -- stylua: ignore
+    keys = {
+      { '<leader>iA', function() require('binary-swap').swap_operands() end, desc = 'binary-swap: swap' },
+      { '<leader>iB', function() require('binary-swap').swap_operands_with_operator() end, desc = 'binary-swap: swap with operator' },
+    },
+  },
   ------------------------------------------------------------------------------
   -- Toggle Text
   ------------------------------------------------------------------------------
