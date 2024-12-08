@@ -80,6 +80,7 @@ local env = vim.env
 ---@field interceptor ArPluginItem
 ---@field last_place ArPluginItem
 ---@field large_file ArPluginItem
+---@field big_file ArPluginItem
 ---@field notepad ArPluginItem
 ---@field remote_sync ArPluginItem
 ---@field smart_splits ArPluginItem
@@ -269,6 +270,7 @@ local namespace = {
   noplugin = false,
   ---@type ArPlugin
   plugin = {
+    big_file = { enable = true },
     env = { enable = true },
     interceptor = { enable = true },
     last_place = { enable = true },

@@ -79,6 +79,7 @@ return {
         notification = { border = 'single' },
         ['notification.history'] = { border = border },
       },
+      bigfile = { enabled = false },
       bufdelete = { enabled = false },
       notifier = {
         enabled = ar.notifier == 'snacks',

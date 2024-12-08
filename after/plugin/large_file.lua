@@ -6,7 +6,7 @@ local api, fn, cmd, go = vim.api, vim.fn, vim.cmd, vim.go
 local bo, o, wo, opt_l = vim.bo, vim.o, vim.wo, vim.opt_local
 
 ar.large_file = {
-  enable = true,
+  enable = false,
   exclusions = { 'NeogitCommitMessage' },
   -- 1MB if lsp is enabled else 500KB
   limit = ar.lsp.enable and 1024 or 500,
@@ -46,7 +46,9 @@ local function handle_bigfile(bufnr)
   })
 
   opt_l.syntax = 'OFF'
+  cmd.filetype('off')
   wo.wrap = false
+  wo.statuscolumn = ''
   -- bo.bufhidden = 'unload'
   bo.swapfile = false
   wo.foldmethod = 'manual'
@@ -75,9 +77,11 @@ ar.augroup('LargeFileAutocmds', {
     local is_large_file = line_count > lf.line_count or filesize > lf.limit
 
     vim.b[args.buf].is_large_file = is_large_file
-    if not is_large_file then return end
-
-    handle_bigfile(args.buf)
+    if is_large_file then
+      handle_bigfile(args.buf)
+    else
+      cmd.filetype('on')
+    end
   end,
 }, {
   event = { 'BufWinEnter' },
