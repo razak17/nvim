@@ -14,6 +14,11 @@ return {
   -- Markdown
   --------------------------------------------------------------------------------
   {
+    'sotte/presenting.nvim',
+    opts = {},
+    cmd = { 'Presenting' },
+  },
+  {
     'bullets-vim/bullets.vim',
     cond = not minimal,
     ft = { 'markdown' },
