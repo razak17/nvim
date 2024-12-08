@@ -81,6 +81,7 @@ return {
       },
       bigfile = { enabled = false },
       bufdelete = { enabled = false },
+      quickfile = { enabled = true },
       notifier = {
         enabled = ar.notifier == 'snacks',
         timeout = 3000,
