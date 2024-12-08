@@ -25,6 +25,7 @@ local env = vim.env
 ---@field servers table
 
 ---@alias ArAIModel 'claude' | 'gemini' | 'openai' | 'copilot'
+---@alias ArExplorerRename 'local' | 'snacks'
 ---@alias ArTypescriptLsp 'ts_ls' | 'typescript-tools' | 'vtsls'
 ---@alias ArPythonLsp 'pyright' | 'ruff' | 'jedi_language_server' | 'basedpyright'
 ---@alias ArCompletionIcons 'lspkind' | 'mini.icons'
@@ -38,6 +39,9 @@ local env = vim.env
 ---@field gemini boolean
 ---@field openai boolean
 ---@field copilot boolean
+
+---@class ArExplorer
+---@field rename ArExplorerRename
 
 ---@class ArGx
 ---@field enable boolean
@@ -171,6 +175,10 @@ local namespace = {
   colorscheme = 'onedark',
   notifier = 'nvim-notify',
   debug = { enable = false },
+  ---@type ArExplorer
+  explorer = {
+    rename = 'snacks',
+  },
   frecency = { enable = true },
   git = {},
   ---@type ArGx

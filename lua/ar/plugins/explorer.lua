@@ -5,22 +5,11 @@ local api, fn = vim.api, vim.fn
 ---@param from string
 ---@param to string
 local function on_rename(from, to)
-  local clients = vim.lsp.get_clients()
-  for _, client in ipairs(clients) do
-    if client.supports_method('workspace/willRenameFiles') then
-      ---@diagnostic disable-next-line: missing-parameter, invisible
-      local resp = client.request_sync('workspace/willRenameFiles', {
-        files = {
-          {
-            oldUri = vim.uri_from_fname(from),
-            newUri = vim.uri_from_fname(to),
-          },
-        },
-      }, 1000)
-      if resp and resp.result ~= nil then
-        vim.lsp.util.apply_workspace_edit(resp.result, client.offset_encoding)
-      end
-    end
+  if ar.explorer.rename == 'local' then ar.helpers.on_rename_file(from, to) end
+  if ar.explorer.rename == 'snacks' then
+    local snacks_ok, snacks = pcall(require, 'snacks')
+    if not snacks_ok then return end
+    snacks.rename.on_rename_file(from, to)
   end
 end
 
