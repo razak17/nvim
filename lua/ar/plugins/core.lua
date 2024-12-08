@@ -207,6 +207,11 @@ return {
   ------------------------------------------------------------------------------
   { 'meznaric/key-analyzer.nvim', cmd = { 'KeyAnalyzer' }, opts = {} },
   {
+    'gcanoxl/cloc.nvim',
+    cond = false,
+    opts = {},
+  },
+  {
     'mikesmithgh/kitty-scrollback.nvim',
     cmd = { 'KittyScrollbackGenerateKittens', 'KittyScrollbackCheckHealth' },
     event = { 'User KittyScrollbackLaunch' },

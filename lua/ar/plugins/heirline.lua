@@ -394,6 +394,17 @@ return {
             name = 'update_plugins',
           },
         },
+        -- cloc
+        {
+          update = { 'User', pattern = 'ClocStatusUpdated' },
+          condition = function() return ar.is_available('cloc.nvim') end,
+          provider = function(_)
+            local status = require('cloc').get_status()
+            if status.statusCode == 'loading' then return 'Clocing...' end
+            if status.statusCode == 'error' then return 'Error' end
+            return ' ' .. status.data[1].code
+          end,
+        },
         -- Word Count
         {
           condition = function() return vim.bo.filetype == 'markdown' end,
