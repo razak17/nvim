@@ -100,8 +100,7 @@ return {
       },
       snacks = {},
       statuscolumn = { enabled = false },
-      quickfile = { enabled = false },
-      words = { enabled = false },
+      words = { enabled = true },
     },
     init = function()
       local snacks = require('snacks')
