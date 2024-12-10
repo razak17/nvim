@@ -8,7 +8,7 @@ return {
       ar.add_to_menu('toggle', {
         ['Toggle Color Picker'] = function()
           -- For border or without border
-          require('minty.huefy').open({ border = false })
+          require('minty.huefy').open()
           -- add border=false for flat look on shades window
         end,
       })
@@ -26,7 +26,7 @@ return {
     end,
   },
   {
-    'NvChad/nvim-colorizer.lua',
+    'catgoose/nvim-colorizer.lua',
     config = function() require('colorizer').setup() end,
     cmd = {
       'ColorizerAttachToBuffer',
