@@ -417,6 +417,7 @@ return {
         ['open'] = 'close',
         ['and'] = 'or',
         ['rounded'] = 'single',
+        ['GET'] = 'POST',
       },
     },
   },
