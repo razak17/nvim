@@ -94,4 +94,13 @@ return {
     cond = not minimal,
     cmd = { 'ConvertFindNext', 'ConvertFindCurrent' },
   },
+  {
+    'eero-lehtinen/oklch-color-picker.nvim',
+    init = function()
+      ar.add_to_menu('toggle', {
+        ['Toggle Color Picker'] = "lua require('oklch-color-picker').pick_under_cursor()",
+      })
+    end,
+    opts = {},
+  },
 }
