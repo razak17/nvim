@@ -434,6 +434,18 @@ return {
     },
   },
   {
+    'Davidyz/inlayhint-filler.nvim',
+    -- NOTE: Doesn't work when nvim-lsp-endhints is enabled
+    cond = ar.lsp.enable and false,
+    keys = {
+      {
+        '<leader>lH',
+        function() require('inlayhint-filler').fill() end,
+        desc = 'insert inlay-hint under cursor intobuffer.',
+      },
+    },
+  },
+  {
     'artemave/workspace-diagnostics.nvim',
     cond = ar.lsp.enable and ar.lsp.workspace_diagnostics.enable,
     opts = {},
