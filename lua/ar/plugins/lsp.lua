@@ -535,6 +535,9 @@ return {
       },
     },
   },
+  ------------------------------------------------------------------------------
+  -- Disabled {{{1
+  ------------------------------------------------------------------------------
   {
     'kosayoda/nvim-lightbulb',
     enabled = false,
@@ -607,6 +610,33 @@ return {
     end,
   },
   {
+    'aznhe21/actions-preview.nvim',
+    enabled = false,
+    cond = ar.lsp.enable and ar.plugins.niceties,
+    -- stylua: ignore
+    keys = {
+      { '<leader>lA', function() require('actions-preview').code_actions() end, desc = 'code action preview' },
+    },
+    init = function()
+      ar.add_to_menu('lsp', {
+        ['Preview Code Actions'] = 'lua require("actions-preview").code_actions()',
+      })
+    end,
+    config = function()
+      require('actions-preview').setup({
+        telescope = ar.telescope.vertical(),
+      })
+    end,
+  },
+  {
+    'mhanberg/output-panel.nvim',
+    event = 'VeryLazy',
+    cond = not minimal,
+    enabled = false,
+    cmd = 'OutputPanel',
+    config = function() require('output_panel').setup() end,
+  },
+  {
     'Wansmer/symbol-usage.nvim',
     enabled = false,
     cond = ar.lsp.enable and false,
@@ -675,25 +705,6 @@ return {
     end,
   },
   {
-    'aznhe21/actions-preview.nvim',
-    enabled = false,
-    cond = ar.lsp.enable and ar.plugins.niceties,
-    -- stylua: ignore
-    keys = {
-      { '<leader>lA', function() require('actions-preview').code_actions() end, desc = 'code action preview' },
-    },
-    init = function()
-      ar.add_to_menu('lsp', {
-        ['Preview Code Actions'] = 'lua require("actions-preview").code_actions()',
-      })
-    end,
-    config = function()
-      require('actions-preview').setup({
-        telescope = ar.telescope.vertical(),
-      })
-    end,
-  },
-  {
     'luckasRanarison/clear-action.nvim',
     enabled = false,
     cond = ar.lsp.enable and ar.plugins.niceties,
@@ -744,13 +755,5 @@ return {
         },
       },
     },
-  },
-  {
-    'mhanberg/output-panel.nvim',
-    event = 'VeryLazy',
-    cond = not minimal,
-    enabled = false,
-    cmd = 'OutputPanel',
-    config = function() require('output_panel').setup() end,
   },
 }
