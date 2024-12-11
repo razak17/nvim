@@ -62,6 +62,18 @@ return {
         desc = 'snacks: select scratch buffer',
       },
       {
+        '<leader>of',
+        function() require('snacks').zen.zen() end,
+        desc = 'snacks: toggle zen',
+        mode = { 'n', 'x' },
+      },
+      {
+        '<leader>oz',
+        function() require('snacks').zen.zoom() end,
+        desc = 'snacks: toggle zoom',
+        mode = { 'n', 'x' },
+      },
+      {
         '<leader>ps',
         function() require('snacks').profiler.scratch() end,
         desc = 'snacks: profiler scratch buffer',
@@ -98,9 +110,9 @@ return {
       profiler = {
         pick = { picker = 'telescope' },
       },
-      snacks = {},
       statuscolumn = { enabled = false },
       words = { enabled = true },
+      zen = {},
     },
     init = function()
       local snacks = require('snacks')

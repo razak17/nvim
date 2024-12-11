@@ -547,6 +547,7 @@ return {
   },
   {
     'kelvinauta/focushere.nvim',
+    cond = false,
     cmd = { 'FocusHere', 'FocusClear' },
     -- stylua: ignore
     keys = {
