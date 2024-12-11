@@ -147,6 +147,7 @@ return {
   },
   {
     'echasnovski/mini.misc',
+    cond = false,
     init = function()
       ar.add_to_menu(
         'toggle',

@@ -50,29 +50,6 @@ return {
         function() require('snacks').terminal() end,
         desc = 'snacks: toggle terminal',
       },
-
-      {
-        '<leader>.',
-        function() require('snacks').scratch() end,
-        desc = 'snacks: toggle scratch buffer',
-      },
-      {
-        '<leader>oS',
-        function() require('snacks').scratch.select() end,
-        desc = 'snacks: select scratch buffer',
-      },
-      {
-        '<leader>of',
-        function() require('snacks').zen.zen() end,
-        desc = 'snacks: toggle zen',
-        mode = { 'n', 'x' },
-      },
-      {
-        '<leader>oz',
-        function() require('snacks').zen.zoom() end,
-        desc = 'snacks: toggle zoom',
-        mode = { 'n', 'x' },
-      },
       {
         '<leader>ps',
         function() require('snacks').profiler.scratch() end,
@@ -110,6 +87,7 @@ return {
       profiler = {
         pick = { picker = 'telescope' },
       },
+      dim = {},
       statuscolumn = { enabled = false },
       words = { enabled = true },
       zen = {},
@@ -150,6 +128,10 @@ return {
             snacks.dim.enable({ enabled = true })
           end
         end,
+        ['Toggle Zoom'] = "lua require('snacks').zen.zoom()",
+        ['Toggle Zen'] = "lua require('snacks').zen.zen()",
+        ['Toggle Scratch'] = "lua require('snacks').scratch()",
+        ['Toggle Scratch Buffer'] = "lua require('snacks').scratch.select()",
       })
       vim.api.nvim_create_autocmd('User', {
         pattern = 'VeryLazy',
