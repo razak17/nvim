@@ -143,6 +143,13 @@ return {
           snacks.toggle.option('relativenumber', { name = 'Relative Number' })
         end,
         ['Toggle Terminal'] = function() snacks.terminal() end,
+        ['Toggle Dim'] = function()
+          if snacks.dim.enabled then
+            snacks.dim.disable()
+          else
+            snacks.dim.enable({ enabled = true })
+          end
+        end,
       })
       vim.api.nvim_create_autocmd('User', {
         pattern = 'VeryLazy',
