@@ -34,7 +34,7 @@ end, { silent = false })
 -----------------------------------------------------------------------------//
 -- Add Empty space above and below
 -----------------------------------------------------------------------------//
-nnoremap('[<space>', [[<cmd>put! =repeat(nr2char(10), v:count1)<cr>'[]], {
+nnoremap('[<space>', [[<cmd>put! =repeat(nr2char(10), v:count1)<cr>]], {
   desc = 'add space above',
 })
 nnoremap(']<space>', [[<cmd>put =repeat(nr2char(10), v:count1)<cr>]], {
