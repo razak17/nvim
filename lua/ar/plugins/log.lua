@@ -95,101 +95,35 @@ return {
   },
   {
     'andrewferrier/debugprint.nvim',
-    keys = {
-      {
-        '<leader>pp',
-        function() return require('debugprint').debugprint({ variable = true }) end,
-        expr = true,
-        desc = 'debugprint: cursor',
+    event = 'VeryLazy',
+    opts = {
+      keymaps = {
+        normal = {
+          plain_below = 'g?p',
+          plain_above = 'g?P',
+          variable_below = 'g?v',
+          variable_above = 'g?V',
+          variable_below_alwaysprompt = 'g?a',
+          variable_above_alwaysprompt = 'g?A',
+          textobj_below = 'g?o',
+          textobj_above = 'g?O',
+          toggle_comment_debug_prints = 'g?u',
+          delete_debug_prints = 'g?x',
+        },
+        insert = {
+          plain = '<C-g>p',
+          variable = '<C-g>v',
+        },
+        visual = {
+          variable_below = 'g?v',
+          variable_above = 'g?V',
+        },
       },
-      {
-        '<leader>pP',
-        function()
-          return require('debugprint').debugprint({
-            above = true,
-            variable = true,
-          })
-        end,
-        expr = true,
-        desc = 'debugprint: cursor (above)',
-      },
-      {
-        '<leader>pi',
-        function()
-          return require('debugprint').debugprint({
-            ignore_treesitter = true,
-            variable = true,
-          })
-        end,
-        expr = true,
-        desc = 'debugprint: prompt',
-      },
-      {
-        '<leader>pI',
-        function()
-          return require('debugprint').debugprint({
-            ignore_treesitter = true,
-            above = true,
-            variable = true,
-          })
-        end,
-        expr = true,
-        desc = 'debugprint:prompt (above)',
-      },
-      {
-        '<leader>po',
-        function() return require('debugprint').debugprint({ motion = true }) end,
-        expr = true,
-        desc = 'debugprint: operator',
-      },
-      {
-        '<leader>pO',
-        function()
-          return require('debugprint').debugprint({
-            above = true,
-            motion = true,
-          })
-        end,
-        expr = true,
-        desc = 'debugprint: operator (above)',
-      },
-      {
-        '<leader>px',
-        '<Cmd>DeleteDebugPrints<CR>',
-        desc = 'debugprint: clear all',
+      commands = {
+        toggle_comment_debug_prints = 'ToggleCommentDebugPrints',
+        delete_debug_prints = 'DeleteDebugPrints',
+        reset_debug_prints_counter = 'ResetDebugPrintsCounter',
       },
     },
-    opts = { create_keymaps = false },
-    config = function(opts)
-      require('debugprint').setup(opts)
-
-      local svelte = {
-        left = 'console.log("',
-        right = '")',
-        mid_var = '", ',
-        right_var = ')',
-      }
-      local python = {
-        left = 'print(f"',
-        right = '"',
-        mid_var = '{',
-        right_var = '}")',
-      }
-      local js = {
-        left = 'console.log("',
-        right = '")',
-        mid_var = '", ',
-        right_var = ')',
-      }
-      require('debugprint').add_custom_filetypes({
-        python = python,
-        svelte = svelte,
-        javascript = js,
-        javascriptreact = js,
-        typescript = js,
-        typescriptreact = js,
-        tsx = js,
-      })
-    end,
   },
 }
