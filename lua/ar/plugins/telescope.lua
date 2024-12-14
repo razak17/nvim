@@ -165,6 +165,7 @@ local function file_browser(opts)
 end
 
 local function egrepify() extensions('egrepify')({})() end
+local function ecolog() extensions('ecolog', 'env')(ar.telescope.minimal_ui())() end
 local function helpgrep() extensions('helpgrep')({})() end
 local function frecency(opts)
   opts = vim.tbl_extend('keep', opts or {}, { workspace = 'CWD' })
@@ -352,6 +353,7 @@ ar.telescope = {
     ['directory'] = 'telescope-directory.nvim',
     -- ['dir'] = 'dir-telescope.nvim',
     ['egrepify'] = 'telescope-egrepify.nvim',
+    ['ecolog'] = 'ecolog.nvim',
     ['file_browser'] = 'telescope-file-browser.nvim',
     ['frecency'] = 'telescope-frecency.nvim',
     ['git_branch'] = 'telescope-git-branch.nvim',
@@ -475,6 +477,7 @@ return {
       { '<leader>fc', nvim_config, desc = 'nvim config' },
       { '<leader>fd', aerial, desc = 'aerial' },
       { '<leader>fe', egrepify, desc = 'egrepify' },
+      { '<leader>f;', ecolog, desc = 'ecolog' },
       { '<leader>fga', live_grep_args, desc = 'live-grep-args: grep' },
       { '<leader>fgw', live_grep_args_word, desc = 'live-grep-args: word' },
       { '<leader>fgs', live_grep_args_selection, desc = 'live-grep-args: selection', mode = { 'x' } },

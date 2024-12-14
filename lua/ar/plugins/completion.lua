@@ -45,6 +45,7 @@ ar.completion.config = {
     nvim_px_to_rem = '[PX2REM]',
     ['vim-dadbod-completion'] = '[DB]',
     dotenv = '[DOTENV]',
+    ecolog = '[ECOLOG]',
   },
 }
 
@@ -355,6 +356,7 @@ return {
           { name = 'norg', group_index = 2 },
           { name = 'nerdfonts', group_index = 3 },
           { name = 'dotenv', group_index = 4 },
+          { name = 'ecolog', group_index = 1 },
           { name = 'lazydev', group_index = 0 },
         },
       }
@@ -419,7 +421,7 @@ return {
       'saadparwaiz1/cmp_luasnip',
       { 'hrsh7th/cmp-emoji', cond = not minimal },
       { 'fazibear/cmp-nerdfonts', cond = not minimal },
-      { 'SergioRibera/cmp-dotenv', cond = not minimal },
+      { 'SergioRibera/cmp-dotenv', cond = not minimal and false },
       { 'ryo33/nvim-cmp-rust', ft = { 'rust' } },
       { 'Gelio/cmp-natdat', opts = {} },
       { 'hrsh7th/cmp-nvim-lsp', cond = ar.lsp.enable },
@@ -525,6 +527,40 @@ return {
     cond = ar.completion.enable and not minimal,
     ft = { 'css', 'scss' },
     opts = { show_virtual_text = true },
+  },
+  {
+    'philosofonusus/ecolog.nvim',
+    -- stylua: ignore
+    keys = {
+      { '<leader>ep', '<Cmd>EcologPeek<cr>', desc = 'ecolog: peek variable' },
+      { '<leader>el', '<Cmd>EcologShelterLinePeek<cr>', desc = 'ecolog: peek line' },
+    },
+    init = function()
+      ar.add_to_menu('toggle', {
+        ['Toggle Ecolog Shelter'] = 'EcologShelterToggle',
+      })
+      ar.add_to_menu('command_palette', {
+        ['Ecolog Select'] = 'EcologSelect',
+        ['Ecolog Goto'] = 'EcologGoto',
+        ['Ecolog Goto Var'] = 'EcologGotoVar',
+      })
+    end,
+    lazy = false,
+    opts = {
+      preferred_environment = 'local',
+      types = true,
+      integrations = { lspsaga = false, lsp = false },
+      shelter = {
+        configuration = { partial_mode = true, mask_char = '*' },
+        modules = {
+          files = true,
+          peek = false,
+          telescope = true,
+          cmp = true,
+        },
+      },
+      path = vim.fn.getcwd(),
+    },
   },
   --------------------------------------------------------------------------------
   -- Disabled

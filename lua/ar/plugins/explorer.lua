@@ -291,7 +291,7 @@ return {
         desc = 'open mini.files (directory of current file)',
       },
       {
-        '<leader>ep',
+        '<leader>e.',
         function()
           local mf = require('mini.files')
           if not mf.close() then

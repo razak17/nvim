@@ -147,7 +147,7 @@ return {
   },
   {
     'laytan/cloak.nvim',
-    cond = not minimal,
+    cond = not minimal and false,
     event = 'VeryLazy',
     init = function()
       ar.add_to_menu('toggle', { ['Toggle Cloak'] = 'CloakToggle' })
