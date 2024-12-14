@@ -23,39 +23,30 @@ return {
   },
   {
     'chrisgrieser/nvim-chainsaw',
+    ft = 'lua', -- in lua, load directly for `Chainsaw` global
     cond = not minimal,
-    config = function()
-      require('chainsaw').setup({ marker = '[🪲 chainsaw]' })
-    end,
+    opts = {
+      marker = '🪲',
+      visuals = { sign = '' },
+    },
     init = function()
       require('which-key').add({ { '<leader>pl', group = 'Chainsaw' } })
     end,
     keys = {
-      {
-        '<leader>pll',
-        function() require('chainsaw').messageLog() end,
-        desc = 'message log',
-      },
-      {
-        '<leader>plo',
-        function() require('chainsaw').objectLog() end,
-        desc = 'object log',
-      },
-      {
-        '<leader>plp',
-        function() require('chainsaw').variableLog() end,
-        desc = 'variable log',
-      },
-      {
-        '<leader>plb',
-        function() require('chainsaw').beepLog() end,
-        desc = 'beep log',
-      },
-      {
-        '<leader>plr',
-        function() require('chainsaw').removeLogs() end,
-        desc = 'remove logs',
-      },
+      -- stylua: ignore start
+      { "<leader>pll", function() require("chainsaw").variableLog() end, mode = { "n", "x" }, desc = "󰀫 variable" },
+      { "<leader>plo", function() require("chainsaw").objectLog() end, mode = { "n", "x" }, desc = "⬟ object" },
+      { "<leader>pla", function() require("chainsaw").assertLog() end, mode = { "n", "x" }, desc = "󱈸 assert" },
+      { "<leader>plt", function() require("chainsaw").typeLog() end, mode = { "n", "x" }, desc = "󰜀 type" },
+      { "<leader>plm", function() require("chainsaw").messageLog() end, desc = "󰍩 message" },
+      { "<leader>ple", function() require("chainsaw").emojiLog() end, desc = "󰞅 emoji" },
+      { "<leader>pls", function() require("chainsaw").sound() end, desc = "󰂚 sound" },
+      { "<leader>plp", function() require("chainsaw").timeLog() end, desc = "󱎫 performance" },
+      { "<leader>pld", function() require("chainsaw").debugLog() end, desc = "󰃤 debugger" },
+      { "<leader>plS", function() require("chainsaw").stacktraceLog() end, desc = " stacktrace" },
+      { "<leader>plc", function() require("chainsaw").clearLog() end, desc = "󰃢 clear console" },
+      { "<leader>plr", function() require("chainsaw").removeLogs() end, desc = "󰅗 remove logs" },
+      -- stylua: ignore end
     },
   },
   {
