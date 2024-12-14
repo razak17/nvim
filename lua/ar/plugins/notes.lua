@@ -9,11 +9,11 @@ return {
         { '<leader><localleader>o', group = 'Obsidian' },
       })
     end,
-    event = 'BufRead ' .. sync('obsi<leader>dian') .. '/*.md',
+    event = 'BufRead ' .. sync('obsidian') .. '/*.md',
     -- stylua: ignore
     keys = {
-      { '<leader><localleader>ob', '<leader><Cmd>ObsidianBacklinks<CR>', desc = 'obsidian: buffer backlinks', },
-      { '<leader><localleader>od', '<leader><Cmd>ObsidianToday<CR>', desc = 'obsidian: open daily note', },
+      { '<leader><localleader>ob', '<Cmd>ObsidianBacklinks<CR>', desc = 'obsidian: buffer backlinks', },
+      { '<leader><localleader>od', '<Cmd>ObsidianToday<CR>', desc = 'obsidian: open daily note', },
       { '<leader><localleader>on', ':ObsidianNew ', desc = 'obsidian: new note' },
       { '<leader><localleader>oy', '<Cmd>ObsidianYesterday<CR>', desc = 'obsidian: previous daily note', },
       { '<leader><localleader>oo', ':ObsidianOpen ', desc = 'obsidian: open in app' },
