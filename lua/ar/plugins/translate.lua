@@ -7,9 +7,7 @@ return {
     'potamides/pantran.nvim',
     cond = not minimal,
     init = function()
-      require('which-key').add({
-        { '<leader><leader>T', group = 'Translate' },
-      })
+      vim.g.whichkey_add_spec({ '<leader><leader>T', group = 'Translate' })
     end,
     keys = {
       {

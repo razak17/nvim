@@ -374,9 +374,7 @@ return {
     cond = ar.lsp.enable,
     cmd = { 'AnyJump', 'AnyJumpArg', 'AnyJumpLastResults' },
     init = function()
-      require('which-key').add({
-        { '<leader><localleader>j', group = 'Any Jump' },
-      })
+      vim.g.whichkey_add_spec({ '<leader><localleader>j', group = 'Any Jump' })
     end,
     -- stylua: ignore
     keys = {
@@ -388,7 +386,7 @@ return {
   {
     'folke/trouble.nvim',
     init = function()
-      require('which-key').add({ { '<localleader>x', group = 'Trouble' } })
+      vim.g.whichkey_add_spec({ '<localleader>x', group = 'Trouble' })
       ar.add_to_menu('command_palette', {
         ['Trouble Diagnostics'] = 'TroubleToggle',
       })

@@ -890,7 +890,7 @@ return {
     cond = min_enabled,
     opts = {},
     init = function()
-      require('which-key').add({ { '<localleader>r', group = 'Monorepo' } })
+      vim.g.whichkey_add_spec({ '<localleader>r', group = 'Monorepo' })
     end,
     -- stylua: ignore
     keys = {
@@ -905,8 +905,9 @@ return {
     'dimaportenko/project-cli-commands.nvim',
     cond = min_enabled,
     init = function()
-      require('which-key').add({
-        { '<leader><localleader>P', group = 'Project cli commands' },
+      vim.g.whichkey_add_spec({
+        '<leader><localleader>P',
+        group = 'Project cli commands',
       })
     end,
     -- stylua: ignore

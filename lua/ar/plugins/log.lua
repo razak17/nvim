@@ -30,7 +30,7 @@ return {
       visuals = { sign = '' },
     },
     init = function()
-      require('which-key').add({ { '<leader>pl', group = 'Chainsaw' } })
+      vim.g.whichkey_add_spec({ '<leader>pl', group = 'Chainsaw' })
     end,
     keys = {
       -- stylua: ignore start

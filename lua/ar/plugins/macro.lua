@@ -17,19 +17,19 @@ return {
   {
     'ecthelionvi/NeoComposer.nvim',
     init = function()
-      require('which-key').add({
+      vim.g.whichkey_add_spec({
         { '<localleader>q', group = 'NeoComposer' },
         { '<localleader>qr', desc = 'neocomposer: toggle record' },
-        { '<localleader>qq', desc = 'neocomposer: play macro' },
         { '<localleader>qy', desc = 'neocomposer: yank macro' },
         { '<localleader>qs', desc = 'neocomposer: stop macro' },
         { '<localleader>qn', desc = 'neocomposer: cycle next' },
         { '<localleader>qp', desc = 'neocomposer: cycle prev' },
         { '<localleader>qm', desc = 'neocomposer: toggle menu' },
       })
-      require('which-key').add({
-        mode = { 'x' },
-        { '<localleader>qq', desc = 'neocomposer: play macro' },
+      vim.g.whichkey_add_spec({
+        '<localleader>qq',
+        desc = 'neocomposer: play macro',
+        mode = { 'n', 'x' },
       })
     end,
     enabled = false,

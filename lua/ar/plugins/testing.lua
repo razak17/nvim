@@ -19,7 +19,7 @@ return {
     'nvim-neotest/neotest',
     cond = not minimal,
     init = function()
-      require('which-key').add({
+      vim.g.whichkey_add_spec({
         { '<leader>t', group = 'Testing' },
         { '<leader>tc', group = 'Coverage' },
         { '<leader>tn', group = 'Neotest' },

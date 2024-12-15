@@ -10,12 +10,10 @@ return {
   {
     'gbprod/yanky.nvim',
     init = function()
-      require('which-key').add({
-        { '<localleader>y', group = 'Yanky' },
-      })
-      require('which-key').add({
-        mode = { 'x' },
-        { '<localleader>y', group = 'Yanky' },
+      vim.g.whichkey_add_spec({
+        '<localleader>y',
+        group = 'Yanky',
+        mode = { 'n', 'x' },
       })
     end,
     cond = not minimal,
@@ -276,9 +274,7 @@ return {
     'ThePrimeagen/refactoring.nvim',
     cond = not minimal,
     init = function()
-      require('which-key').add({
-        { '<leader><leader>r', group = 'Refactoring' },
-      })
+      require('which-key').add({ '<leader><leader>r', group = 'Refactoring' })
       require('which-key').add({
         mode = { 'x' },
         { '<leader><leader>r', group = 'Refactoring' },
@@ -495,9 +491,10 @@ return {
     'sQVe/sort.nvim',
     cmd = { 'Sort' },
     init = function()
-      require('which-key').add({
+      vim.g.whichkey_add_spec({
+        '<localleader>S',
+        group = 'Sort',
         mode = { 'x' },
-        { '<localleader>S', group = 'Sort' },
       })
     end,
     keys = {
@@ -569,9 +566,10 @@ return {
     cond = not minimal,
     dependencies = { 'haolian9/infra.nvim' },
     init = function()
-      require('which-key').add({
+      vim.g.whichkey_add_spec({
+        '<localleader>n',
+        group = 'Nag',
         mode = { 'x' },
-        { '<localleader>n', group = 'Nag' },
       })
     end,
     -- stylua: ignore

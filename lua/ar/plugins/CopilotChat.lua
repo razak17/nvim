@@ -34,7 +34,7 @@ return {
     },
     branch = 'canary',
     init = function()
-      require('which-key').add({ { '<leader>ac', group = 'CopilotChat' } })
+      vim.g.whichkey_add_spec({ '<leader>ac', group = 'CopilotChat' })
 
       ar.add_to_menu('copilot_chat', {
         ['Clear Buffer and Chat History'] = 'CopilotChatReset',

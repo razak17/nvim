@@ -9,9 +9,7 @@ return {
     ft = { 'rust' },
     cond = enabled,
     init = function()
-      require('which-key').add({
-        { '<leader><leader>r', group = 'Rustaceanvim' },
-      })
+      vim.g.whichkey_add_spec({ '<leader><leader>r', group = 'Rustaceanvim' })
     end,
     config = function()
       vim.g.rustaceanvim = {
@@ -96,9 +94,7 @@ return {
   {
     'Saecki/crates.nvim',
     init = function()
-      require('which-key').add({
-        { '<leader><localleader>c', group = 'Crates' },
-      })
+      vim.g.whichkey_add_spec({ '<leader><localleader>c', group = 'Crates' })
     end,
     cond = not ar.plugins.minimal,
     event = 'BufRead Cargo.toml',

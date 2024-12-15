@@ -6,7 +6,7 @@ return {
     cond = not minimal,
     ft = { 'http' },
     init = function()
-      require('which-key').add({ { '<leader>rk', group = 'Kulala' } })
+      vim.g.whichkey_add_spec({ '<leader>rk', group = 'Kulala' })
     end,
     -- stylua: ignore
     keys = {
@@ -27,11 +27,7 @@ return {
     enabled = false,
     cond = not minimal and false, -- archived
     ft = { 'http', 'json' },
-    init = function()
-      require('which-key').add({
-        { '<leader>rr', group = 'Rest' },
-      })
-    end,
+    init = function() vim.g.whichkey_add_spec({ '<leader>rr', group = 'Rest' }) end,
     -- stylua: ignore
     keys = {
       { '<leader>rrs', '<Plug>RestNvim', desc = 'rest: run', buffer = 0 },

@@ -25,9 +25,7 @@ return {
     cond = not minimal,
     build = 'sh install.sh npm',
     init = function()
-      require('which-key').add({
-        { '<leader><leader>t', group = 'JSON to types' },
-      })
+      vim.g.whichkey_add_spec({ '<leader><leader>t', group = 'JSON to types' })
     end,
     keys = {
       {
@@ -112,7 +110,7 @@ return {
     cond = not minimal,
     -- ft = { 'javascript', 'javascriptreact' },
     init = function()
-      require('which-key').add({
+      vim.g.whichkey_add_spec({
         { '<leader><leader>J', group = 'jSdoc Switch' },
         { '<leader><leader>Jd', desc = 'doc switch' },
       })
@@ -236,9 +234,7 @@ return {
   {
     'linux-cultist/venv-selector.nvim',
     init = function()
-      require('which-key').add({
-        { '<localleader>lv', group = 'Venv Selector' },
-      })
+      vim.g.whichkey_add_spec({ '<localleader>lv', group = 'Venv Selector' })
     end,
     cond = ar.lsp.enable,
     cmd = 'VenvSelect',
@@ -395,9 +391,7 @@ return {
     cond = not minimal and false,
     event = 'BufRead package.json',
     config = function()
-      require('which-key').add({
-        { '<localleader>P', group = 'Package Info' },
-      })
+      vim.g.whichkey_add_spec({ '<localleader>P', group = 'Package Info' })
 
       highlight.plugin('package-info', {
         theme = {

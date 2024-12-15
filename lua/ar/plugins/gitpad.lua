@@ -2,7 +2,7 @@ return {
   {
     'yujinyuz/gitpad.nvim',
     init = function()
-      require('which-key').add({ { '<localleader>p', group = 'Pad' } })
+      vim.g.whichkey_add_spec({ '<localleader>p', group = 'Pad' })
     end,
     opts = {
       title = 'Notes',

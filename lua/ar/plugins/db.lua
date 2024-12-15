@@ -3,7 +3,7 @@ return {
   {
     'kristijanhusak/vim-dadbod-ui',
     init = function()
-      require('which-key').add({ { '<leader><leader>d', group = 'Dadbod' } })
+      vim.g.whichkey_add_spec({ '<leader><leader>d', group = 'Dadbod' })
 
       local function open_db_common(db_name)
         vim.cmd([[tabnew]])

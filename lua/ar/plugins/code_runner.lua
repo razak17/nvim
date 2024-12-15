@@ -113,7 +113,7 @@ return {
     'razak17/executor.nvim',
     cond = not minimal,
     init = function()
-      require('which-key').add({ { '<leader><leader>x', group = 'Executor' } })
+      vim.g.whichkey_add_spec({ '<leader><leader>x', group = 'Executor' })
     end,
     -- stylua: ignore
     keys = {
@@ -150,9 +150,7 @@ return {
     cmd = { 'SnipRun', 'SnipInfo' },
     cond = not minimal,
     init = function()
-      require('which-key').add({
-        { '<leader>rs', group = 'SnipRun' },
-      })
+      vim.g.whichkey_add_spec({ '<leader>rs', group = 'SnipRun' })
     end,
     keys = {
       { mode = 'v', '<leader>rr', ':SnipRun<CR>', desc = 'sniprun: run code' },

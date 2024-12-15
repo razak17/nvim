@@ -97,7 +97,7 @@ return {
     cmd = 'FzfLua',
     cond = not minimal,
     init = function()
-      require('which-key').add({
+      vim.g.whichkey_add_spec({
         { '<localleader>f', group = 'Picker' },
         { '<localleader>fg', group = 'Git' },
         { '<localleader>fv', group = 'Vim' },
@@ -332,7 +332,7 @@ return {
     'camspiers/snap',
     cond = not minimal,
     init = function()
-      require('which-key').add({ { '<leader><leader>f', group = 'Snap' } })
+      vim.g.whichkey_add_spec({ '<leader><leader>f', group = 'Snap' })
     end,
     config = function()
       ar.highlight.plugin('snap', {

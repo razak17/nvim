@@ -1,3 +1,10 @@
+---Set up plugin-specific groups cleanly with the plugin config.
+---@param spec wk.Spec
+vim.g.whichkey_add_spec = function(spec)
+  -- Deferred to ensure spec is loaded after whichkey itself
+  vim.defer_fn(function() require('which-key').add(spec) end, 1500)
+end
+
 return {
   'folke/which-key.nvim',
   event = 'VeryLazy',

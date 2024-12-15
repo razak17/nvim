@@ -5,9 +5,7 @@ return {
     'epwalsh/obsidian.nvim',
     cond = not ar.plugins.minimal,
     init = function()
-      require('which-key').add({
-        { '<leader><localleader>o', group = 'Obsidian' },
-      })
+      vim.g.whichkey_add_spec({ '<leader><localleader>o', group = 'Obsidian' })
     end,
     event = 'BufRead ' .. sync('obsidian') .. '/*.md',
     -- stylua: ignore
@@ -38,7 +36,7 @@ return {
     cond = false,
     ft = 'norg',
     init = function()
-      require('which-key').add({ { '<localleader>n', group = 'Neorg' } })
+      vim.g.whichkey_add_spec({ '<localleader>n', group = 'Neorg' })
     end,
     keys = {
       { '<localleader>nx', '<cmd>Neorg return<CR>', 'neorg: return' },
@@ -86,9 +84,7 @@ return {
     'atiladefreitas/dooing',
     cmd = { 'Dooing' },
     init = function()
-      require('which-key').add({
-        { '<leader><localleader>d', group = 'Dooing' },
-      })
+      vim.g.whichkey_add_spec({ '<leader><localleader>d', group = 'Dooing' })
     end,
     keys = {
       { '<leader><localleader>do', desc = 'dooing: toggle window' },

@@ -15,7 +15,7 @@ return {
     cmd = { 'UrlView' },
     cond = not minimal,
     init = function()
-      require('which-key').add({ { '<localleader>u', group = 'URL' } })
+      vim.g.whichkey_add_spec({ '<localleader>u', group = 'URL' })
     end,
     -- stylua: ignore
     keys = {

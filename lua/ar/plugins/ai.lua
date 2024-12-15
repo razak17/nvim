@@ -30,7 +30,7 @@ return {
     'yetone/avante.nvim',
     cond = not minimal and ar.ai.enable and false,
     init = function()
-      require('which-key').add({ { '<leader>av', group = 'Avante' } })
+      vim.g.whichkey_add_spec({ '<leader>av', group = 'Avante' })
 
       ar.add_to_menu('ai', {
         ['Toggle Avante Chat'] = 'AvanteToggle',
@@ -104,7 +104,7 @@ return {
     'olimorris/codecompanion.nvim',
     cond = not minimal and ar.ai.enable,
     init = function()
-      require('which-key').add({ { '<leader>ak', group = 'Codecompanion' } })
+      vim.g.whichkey_add_spec({ '<leader>ak', group = 'Codecompanion' })
       ar.add_to_menu('ai', {
         ['Toggle Codecompanion Chat'] = 'CodeCompanionChat',
         ['Codecompanion Actions'] = 'CodeCompanionActions',
@@ -196,7 +196,7 @@ return {
     cmd = 'Copilot',
     event = 'InsertEnter',
     init = function()
-      require('which-key').add({ { '<leader>ap', group = 'Copilot' } })
+      vim.g.whichkey_add_spec({ '<leader>ap', group = 'Copilot' })
 
       ar.add_to_menu('ai', {
         ['Toggle Copilot Auto Trigger'] = 'lua require("copilot.suggestion").toggle_auto_trigger()',
@@ -240,9 +240,7 @@ return {
   {
     'piersolenski/wtf.nvim',
     cond = not minimal and ar.lsp.enable and ar.ai.enable,
-    init = function()
-      require('which-key').add({ { '<leader>aw', group = 'wtf' } })
-    end,
+    init = function() vim.g.whichkey_add_spec({ '<leader>aw', group = 'wtf' }) end,
     -- stylua: ignore
     keys = {
       { '<leader>awo', function() require('wtf').ai() end, desc = 'wtf: debug diagnostic with AI', },

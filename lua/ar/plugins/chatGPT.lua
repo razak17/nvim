@@ -9,7 +9,7 @@ return {
       'ChatGPTEditWithInstructions',
     },
     init = function()
-      require('which-key').add({ { '<leader>ag', group = 'chatGPT' } })
+      vim.g.whichkey_add_spec({ '<leader>ag', group = 'chatGPT' })
 
       ar.add_to_menu('ai', {
         ['ChatGPT Prompt'] = 'ChatGPT',

@@ -85,7 +85,7 @@ return {
     cond = not minimal and niceties,
     event = { 'BufReadPost', 'BufNewFile' },
     init = function()
-      require('which-key').add({ { '<localleader>s', group = 'Strict' } })
+      vim.g.whichkey_add_spec({ '<localleader>s', group = 'Strict' })
     end,
     -- stylua: ignore
     keys = {
@@ -170,7 +170,7 @@ return {
   {
     'folke/zen-mode.nvim',
     init = function()
-      require('which-key').add({ { '<localleader>z', group = 'Zen' } })
+      vim.g.whichkey_add_spec({ '<localleader>z', group = 'Zen' })
       ar.add_to_menu('toggle', { ['Toggle ZenMode'] = 'ZenMode' })
     end,
     cmd = 'ZenMode',
@@ -277,7 +277,7 @@ return {
     event = 'BufReadPost',
     cmd = { 'TodoTelescope', 'TodoTrouble', 'TodoQuickFix', 'TodoDots' },
     init = function()
-      require('which-key').add({ { '<localleader>t', group = 'TODO' } })
+      vim.g.whichkey_add_spec({ '<localleader>t', group = 'TODO' })
     end,
     -- stylua: ignore
     keys = {
@@ -299,9 +299,7 @@ return {
   {
     'LudoPinelli/comment-box.nvim',
     init = function()
-      require('which-key').add({
-        { '<leader><leader>b', group = 'Comment Box' },
-      })
+      vim.g.whichkey_add_spec({ '<leader><leader>b', group = 'Comment Box' })
     end,
     cond = not minimal and niceties,
     config = function(_, opts) require('comment-box').setup(opts) end,

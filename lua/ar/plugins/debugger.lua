@@ -50,7 +50,7 @@ return {
     'mfussenegger/nvim-dap',
     cond = not minimal,
     init = function()
-      require('which-key').add({
+      vim.g.whichkey_add_spec({
         { '<localleader>d', group = 'Dap' },
         { '<localleader>db', group = 'Breakpoint' },
         { '<localleader>dr', group = 'Run' },
