@@ -71,19 +71,15 @@ local function delete_image_under_cursor()
       vim.notify('URL image cannot be deleted from disk', L.WARN)
     else
       local absolute_image_path = get_absolute_path(image_path)
-      vim.ui.input({
-        prompt = 'Delete image file? (y/n) ',
-      }, function(input)
-        if input == 'y' or input == 'Y' then
-          local success, _ = pcall(
-            function() ar.trash_file(fn.fnameescape(absolute_image_path)) end
-          )
-          if success then
-            cmd([[lua require("image").clear()]])
-            cmd('edit!')
-          end
+      if fn.confirm('Delete image file?', '&Yes\n&No') == 1 then
+        local success, _ = pcall(
+          function() ar.trash_file(fn.fnameescape(absolute_image_path)) end
+        )
+        if success then
+          cmd([[lua require("image").clear()]])
+          cmd('edit!')
         end
-      end)
+      end
     end
   else
     vim.notify('No image found under the cursor', L.WARN)

@@ -291,11 +291,9 @@ return {
         'n',
         '<leader><localleader>fd',
         function ()
-          vim.ui.input({
-            prompt = 'Delete file? (y/n) ',
-          }, function(input)
-            if input == 'y' or input == 'Y' then g.trashFile() end
-          end)
+          if vim.fn.confirm('Delete file?', '&Yes\n&No') == 1 then
+            g.trashFile()
+          end
         end,
         { desc = 'genghis: move to trash' }
       )
