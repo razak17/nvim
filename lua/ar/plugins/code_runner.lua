@@ -86,7 +86,9 @@ return {
   {
     'razak17/lab.nvim',
     event = { 'InsertEnter' },
-    cond = not minimal and ar.completion.enable,
+    cond = not minimal
+      and ar.completion.enable
+      and ar.completion.variant == 'cmp',
     keys = {
       { '<leader>rl', ':Lab code run<CR>', desc = 'lab: run' },
       { '<leader>rq', ':Lab code stop<CR>', desc = 'lab: stop' },
@@ -196,14 +198,10 @@ return {
       filetype = {
         v = 'v run',
         tex = function(...)
-          if vim.g.tectonic == nil then
-            vim.system({ 'tectonic', '-X', 'build', '--open' })
-            vim.fn.jobstart(
-              "tectonic -X watch -x 'build --keep-intermediates --keep-logs'"
-            )
-            -- vim.system { "tectonic", "-X", "watch", "-x", "'build --keep-intermediates --keep-logs'" }
-            vim.g.tectonic = 1
-          end
+          require('code_runner.hooks.tectonic').build(
+            preview_cmd,
+            { '--keep-logs' }
+          )
         end,
         markdown = function(...)
           local hook = require('code_runner.hooks.preview_pdf')
