@@ -56,7 +56,7 @@ local window_hint = [[
 ^^^^^^^^^^^^-------------  ^^-----------^^   ^^---------------
 ^ ^ _k_ ^ ^  ^ ^ _K_ ^ ^   ^   _<C-k>_   ^   _s_: horizontally
 _h_ ^ ^ _l_  _H_ ^ ^ _L_   _<C-h>_ _<C-l>_   _v_: vertically
-^ ^ _j_ ^ ^  ^ ^ _J_ ^ ^   ^   _<C-j>_   ^   _q_, _c_: close
+^ ^ _j_ ^ ^  ^ ^ _J_ ^ ^   ^   _<C-j>_   ^   _q_: close
 focus^^^^^^  window^^^^^^  ^_=_: equalize^   _o_: remain only
 ^ ^ ^ ^ ^ ^  ^ ^ ^ ^ ^ ^   ^^ ^          ^   _t_: move to new tab
 ^ ^ ^ ^ ^ ^  ^ ^ ^ ^ ^ ^   ^^ ^          ^
@@ -189,6 +189,7 @@ return {
         { 'j', '<C-w>j' },
         { 'k', pcmd('wincmd k', 'E11', 'close') },
         { 'l', '<C-w>l' },
+        { 'N', '<Cmd>tabnew<CR>' },
         { 't', '<C-w>T' },
 
         { 'o', '<C-w>o', { exit = true, desc = 'remain only' } },
@@ -210,7 +211,7 @@ return {
         { 'K', function() splits.swap_buf_up() end },
         { 'L', function() splits.swap_buf_right() end },
 
-        { 'c', pcmd('close', 'E444') },
+        -- { 'c', pcmd('close', 'E444') },
         { 'q', pcmd('close', 'E444'), { desc = 'close window' } },
         { '<C-c>', pcmd('close', 'E444'), { desc = false } },
         { '<C-q>', pcmd('close', 'E444'), { desc = false } },
