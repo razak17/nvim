@@ -54,7 +54,7 @@ return {
     -- 'hrsh7th/nvim-cmp',
     'iguanacucumber/magazine.nvim',
     name = 'nvim-cmp',
-    cond = ar.completion.enable,
+    cond = ar.completion.enable and ar.completion.variant == 'cmp',
     event = 'InsertEnter',
     opts = function()
       local snippet = vim.snippet

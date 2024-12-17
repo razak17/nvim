@@ -28,6 +28,7 @@ local env = vim.env
 ---@alias ArExplorerRename 'local' | 'snacks'
 ---@alias ArTypescriptLsp 'ts_ls' | 'typescript-tools' | 'vtsls'
 ---@alias ArPythonLsp 'pyright' | 'ruff' | 'jedi_language_server' | 'basedpyright'
+---@alias ArCompletion 'cmp' | 'blink'
 ---@alias ArCompletionIcons 'lspkind' | 'mini.icons'
 ---@alias ArWhichGx 'local' | 'plugin'
 ---@alias ArWhichLspProgress 'builtin' | 'noice' | 'snacks'
@@ -311,6 +312,8 @@ local namespace = {
     enable = env.RVIM_COMPLETION_ENABLED == '1',
     ---@type ArCompletionIcons
     icons = 'lspkind',
+    ---@type ArCompletion
+    variant = 'cmp',
   },
   treesitter = {
     enable = env.RVIM_TREESITTER_ENABLED == '1',

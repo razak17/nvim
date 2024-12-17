@@ -11,6 +11,26 @@ return {
     build = 'make install_jsregexp',
     keys = {
       { '<leader>S', '<cmd>LuaSnipEdit<CR>', desc = 'LuaSnip: edit snippet' },
+      {
+        '<tab>',
+        function()
+          return require('luasnip').jumpable(1) and '<Plug>luasnip-jump-next'
+            or '<tab>'
+        end,
+        expr = true,
+        silent = true,
+        mode = 'i',
+      },
+      {
+        '<tab>',
+        function() require('luasnip').jump(1) end,
+        mode = 's',
+      },
+      {
+        '<s-tab>',
+        function() require('luasnip').jump(-1) end,
+        mode = { 'i', 's' },
+      },
     },
     config = function()
       local ls = require('luasnip')
@@ -60,14 +80,14 @@ return {
       --   if ls.choice_active() then ls.change_choice(1) end
       -- end)
 
-      vim.keymap.set({ 's', 'i' }, '<c-l>', function()
-        if ls.expand_or_jumpable() then ls.expand_or_jump() end
-      end)
-
-      vim.keymap.set({ 's', 'i' }, '<c-b>', function()
-        if not ls.jumpable(-1) then return '<S-Tab>' end
-        ls.jump(-1)
-      end)
+      -- vim.keymap.set({ 's', 'i' }, '<c-l>', function()
+      --   if ls.expand_or_jumpable() then ls.expand_or_jump() end
+      -- end)
+      --
+      -- vim.keymap.set({ 's', 'i' }, '<c-b>', function()
+      --   if not ls.jumpable(-1) then return '<S-Tab>' end
+      --   ls.jump(-1)
+      -- end)
 
       require('luasnip').config.setup({ store_selection_keys = '<C-x>' })
 

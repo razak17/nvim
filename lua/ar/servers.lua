@@ -353,33 +353,40 @@ local function get(name)
   local config = servers[name]
   if not config then return nil end
   if type(config) == 'function' then config = config() end
-  local ok, cmp_nvim_lsp = ar.pcall(require, 'cmp_nvim_lsp')
-  if ok then config.capabilities = cmp_nvim_lsp.default_capabilities() end
-  config.capabilities = vim.tbl_deep_extend('keep', config.capabilities or {}, {
-    workspace = {
-      didChangeWatchedFiles = { dynamicRegistration = false },
-    },
-    textDocument = {
-      colorProvider = { dynamicRegistration = true },
-      foldingRange = { dynamicRegistration = false, lineFoldingOnly = true },
-      completion = {
-        completionItem = { documentationFormat = { 'markdown', 'plaintext' } },
-        editsNearCursor = true,
-      },
-      codeAction = {
-        dynamicRegistration = false,
-        codeActionLiteralSupport = {
-          codeActionKind = {
-            valueSet = (function()
-              local res = vim.tbl_values(vim.lsp.protocol.CodeActionKind)
-              table.sort(res)
-              return res
-            end)(),
-          },
-        },
-      },
-    },
-  })
+  local has_cmp, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
+  local has_blink, blink = pcall(require, 'blink.cmp')
+  config.capabilities = vim.tbl_deep_extend(
+    'force',
+    config.capabilities or {},
+    vim.lsp.protocol.make_client_capabilities(),
+    has_cmp and cmp_nvim_lsp.default_capabilities() or {},
+    has_blink and blink.get_lsp_capabilities() or {}
+  )
+  -- config.capabilities = vim.tbl_deep_extend('keep', config.capabilities or {}, {
+  --   workspace = {
+  --     didChangeWatchedFiles = { dynamicRegistration = false },
+  --   },
+  --   textDocument = {
+  --     colorProvider = { dynamicRegistration = true },
+  --     foldingRange = { dynamicRegistration = false, lineFoldingOnly = true },
+  --     completion = {
+  --       completionItem = { documentationFormat = { 'markdown', 'plaintext' } },
+  --       editsNearCursor = true,
+  --     },
+  --     codeAction = {
+  --       dynamicRegistration = false,
+  --       codeActionLiteralSupport = {
+  --         codeActionKind = {
+  --           valueSet = (function()
+  --             local res = vim.tbl_values(vim.lsp.protocol.CodeActionKind)
+  --             table.sort(res)
+  --             return res
+  --           end)(),
+  --         },
+  --       },
+  --     },
+  --   },
+  -- })
   if name == 'clangd' then
     config.capabilities.offsetEncoding = { 'utf-16' }
     config.capabilities.general = {
