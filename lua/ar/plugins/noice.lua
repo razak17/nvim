@@ -247,37 +247,31 @@ return {
         },
         opts = { skip = true },
       },
-      -- skip validation messages from jdtls
       {
         filter = {
           event = 'lsp',
           kind = 'progress',
           cond = function(message)
             local client = vim.tbl_get(message.opts, 'progress', 'client')
+            -- skip validation messages from jdtls
             if client == 'jdtls' then
               local content = vim.tbl_get(message.opts, 'progress', 'message')
               return content == 'Validate documents'
             end
-
-            return false
-          end,
-        },
-        opts = { skip = true },
-      },
-      -- skip diagnosing messages from lua_ls
-      {
-        filter = {
-          event = 'lsp',
-          kind = 'progress',
-          cond = function(message)
-            local client = vim.tbl_get(message.opts, 'progress', 'client')
+            -- skip diagnosing messages from lua_ls
             if client == 'lua_ls' then
               local content = vim.tbl_get(message.opts, 'progress', 'message')
               if content == nil then return false end
               local is_processing = string.match(content, '^lua/(.-)%.lua$')
                 ~= nil
-              return content ~= nil and not is_processing
+              if content ~= nil and not is_processing then
+                return content ~= nil and not is_processing
+              else
+                -- print('content=' .. vim.inspect(content))
+                return true
+              end
             end
+
             return false
           end,
         },
