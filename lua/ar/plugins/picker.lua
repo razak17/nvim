@@ -166,7 +166,7 @@ return {
         },
         winopts = {
           border = ui.border.rectangle,
-          hl = {
+          hls = {
             border = 'PickerBorder',
             preview_border = 'FzfLuaPreviewBorder',
           },
