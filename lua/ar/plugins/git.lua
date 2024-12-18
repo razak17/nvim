@@ -198,9 +198,7 @@ return {
         vim.ui.input(
           { prompt = 'Enter git commit id:', kind = 'center_win' },
           function(input)
-            if input ~= nil then
-              vim.cmd(':term! git cherry-pick ' .. input)
-            end
+            if input ~= nil then vim.cmd(':term! git cherry-pick ' .. input) end
           end
         )
       end

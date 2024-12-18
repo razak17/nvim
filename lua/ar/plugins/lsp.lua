@@ -422,6 +422,13 @@ return {
     opts = { lsp = { auto_attach = true } },
   },
   {
+    'artemave/workspace-diagnostics.nvim',
+    cond = ar.lsp.enable and ar.lsp.workspace_diagnostics.enable,
+    opts = {},
+  },
+  --------------------------------------------------------------------------------
+  -- Inlay Hints
+  {
     'chrisgrieser/nvim-lsp-endhints',
     cond = ar.lsp.enable,
     event = 'LspAttach',
@@ -442,11 +449,6 @@ return {
         desc = 'insert inlay-hint under cursor intobuffer.',
       },
     },
-  },
-  {
-    'artemave/workspace-diagnostics.nvim',
-    cond = ar.lsp.enable and ar.lsp.workspace_diagnostics.enable,
-    opts = {},
   },
   -- }}}
   --------------------------------------------------------------------------------
