@@ -774,7 +774,7 @@ return {
           auto_quoting = true,
           mappings = {
             i = {
-              ['<c-k>'] = require('telescope-live-grep-args.actions').quote_prompt(),
+              ['<c-y>'] = require('telescope-live-grep-args.actions').quote_prompt(),
               ['<c-i>'] = require('telescope-live-grep-args.actions').quote_prompt({
                 postfix = ' --iglob ',
               }),
