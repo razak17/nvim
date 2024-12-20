@@ -356,6 +356,7 @@ ar.telescope = {
     ['ecolog'] = 'ecolog.nvim',
     ['file_browser'] = 'telescope-file-browser.nvim',
     ['frecency'] = 'telescope-frecency.nvim',
+    ['fzf'] = 'telescope-fzf-native.nvim',
     ['git_branch'] = 'telescope-git-branch.nvim',
     ['git_file_history'] = 'git_file_history',
     ['harpoon'] = 'harpoon',
@@ -737,6 +738,7 @@ return {
           },
         },
         extensions = {
+          fzf = {},
           persisted = dropdown(),
           menufacture = {
             mappings = { main_menu = { [{ 'i', 'n' }] = '<C-;>' } },
@@ -842,6 +844,7 @@ return {
       )
     end,
   },
+  { 'nvim-telescope/telescope-fzf-native.nvim', cond = min_enabled },
   { 'molecule-man/telescope-menufacture', cond = min_enabled },
   { 'biozz/whop.nvim', cond = min_enabled, opts = {} },
   { 'nvim-telescope/telescope-node-modules.nvim', cond = min_enabled },
