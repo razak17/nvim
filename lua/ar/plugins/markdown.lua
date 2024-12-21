@@ -247,7 +247,7 @@ return {
       },
       checkbox = {
         enabled = true,
-        position = 'overlay',
+        position = 'inline',
         unchecked = {
           icon = '', -- 🔲
           highlight = '@markup.list.unchecked',
