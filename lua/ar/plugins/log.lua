@@ -27,7 +27,7 @@ return {
     cond = not minimal,
     opts = {
       marker = '🪲',
-      visuals = { sign = '' },
+      visuals = { icon = '' },
     },
     init = function()
       vim.g.whichkey_add_spec({ '<leader>pl', group = 'Chainsaw' })
