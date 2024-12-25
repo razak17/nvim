@@ -6,7 +6,6 @@ local diag_icons = ar.ui.codicons.lsp
 return {
   {
     'folke/snacks.nvim',
-    cond = not minimal,
     priority = 1000,
     lazy = false,
     keys = {
