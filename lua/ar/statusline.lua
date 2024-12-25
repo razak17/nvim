@@ -32,7 +32,7 @@ function M.list_branches()
   end)
 end
 
-local function git_remote_sync()
+function M.git_remote_sync()
   if not _G.GitStatus then
     _G.GitStatus = { ahead = 0, behind = 0, status = nil }
   end
@@ -53,7 +53,7 @@ local function git_remote_sync()
       GitStatus.status = 'pending'
       vim.schedule(
         function()
-          vim.api.nvim_exec_autocmds('User', { pattern = 'GitStatusChanged' })
+          api.nvim_exec_autocmds('User', { pattern = 'GitStatusChanged' })
         end
       )
     end,
@@ -69,7 +69,7 @@ local function git_remote_sync()
         { ahead = tonumber(ahead), behind = tonumber(behind), status = 'done' }
       vim.schedule(
         function()
-          vim.api.nvim_exec_autocmds('User', { pattern = 'GitStatusChanged' })
+          api.nvim_exec_autocmds('User', { pattern = 'GitStatusChanged' })
         end
       )
     end,
@@ -78,7 +78,7 @@ local function git_remote_sync()
   git_fetch:start()
   git_upstream:start()
 end
-ar.command('GitRemoteSync', git_remote_sync)
+ar.command('GitRemoteSync', M.git_remote_sync)
 
 local function git_push_pull(action, _)
   local branch = vim.fn.systemlist('git rev-parse --abbrev-ref HEAD')[1]

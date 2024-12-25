@@ -106,67 +106,70 @@ return {
         },
         -- Git
         {
-          condition = function() return is_git_repo() end,
-          init = function(self) self.status_dict = vim.b.gitsigns_status_dict end,
+          -- condition = conditions.is_git_repo,
+          init = function(self)
+            self.status_dict = vim.b.gitsigns_status_dict
+            -- statusline.git_remote_sync()
+          end,
+          update = {
+            'User',
+            pattern = { 'GitSignsUpdate', 'GitSignsChanged' },
+            callback = function() vim.schedule(vim.cmd.redrawstatus) end,
+          },
           {
+            provider = function(self)
+              if self.status_dict then
+                return codicons.git.branch
+                  .. ' '
+                  .. (
+                    self.status_dict.head == '' and 'main'
+                    or self.status_dict.head
+                  )
+              end
+            end,
+            on_click = {
+              callback = function() statusline.list_branches() end,
+              name = 'git_change_branch',
+            },
+            hl = { fg = 'yellowgreen' },
+          },
+          {
+            condition = function() return GitStatus ~= nil end,
+            update = { 'User', pattern = 'GitStatusChanged' },
             {
-              provider = function(self)
-                if self.status_dict then
-                  return codicons.git.branch
-                    .. ' '
-                    .. (
-                      self.status_dict.head == '' and 'main'
-                      or self.status_dict.head
-                    )
-                end
-              end,
-              on_click = {
-                callback = function() statusline.list_branches() end,
-                name = 'git_change_branch',
-              },
-              hl = { fg = 'yellowgreen' },
+              condition = function() return GitStatus.status == 'pending' end,
+              provider = ' ' .. codicons.git.pending,
             },
             {
-              condition = function()
-                return (
-                  GitStatus ~= nil
-                  and (GitStatus.ahead ~= 0 or _G.GitStatus.behind ~= 0)
-                )
+              provider = function()
+                return ' ' .. GitStatus.behind .. icons.misc.arrow_down
               end,
-              update = { 'User', pattern = 'GitStatusChanged' },
-              {
-                condition = function() return GitStatus.status == 'pending' end,
-                provider = codicons.git.pending,
+              hl = function()
+                return {
+                  fg = GitStatus.behind == 0 and fg or 'pale_red',
+                }
+              end,
+              on_click = {
+                callback = function()
+                  if GitStatus.behind > 0 then statusline.git_pull() end
+                end,
+                name = 'git_pull',
               },
-              {
-                provider = function()
-                  return GitStatus.behind .. icons.arrow_down
+            },
+            {
+              provider = function()
+                return ' ' .. GitStatus.ahead .. icons.misc.arrow_up
+              end,
+              hl = function()
+                return {
+                  fg = GitStatus.ahead == 0 and fg or 'yellowgreen',
+                }
+              end,
+              on_click = {
+                callback = function()
+                  if _G.GitStatus.ahead > 0 then statusline.git_push() end
                 end,
-                hl = function()
-                  return {
-                    fg = GitStatus.behind == 0 and fg or 'pale_red',
-                  }
-                end,
-                on_click = {
-                  callback = function()
-                    if GitStatus.behind > 0 then statusline.git_pull() end
-                  end,
-                  name = 'git_pull',
-                },
-              },
-              {
-                provider = function() return GitStatus.ahead .. icons.arrow_up end,
-                hl = function()
-                  return {
-                    fg = GitStatus.ahead == 0 and fg or 'yellowgreen',
-                  }
-                end,
-                on_click = {
-                  callback = function()
-                    if _G.GitStatus.ahead > 0 then statusline.git_push() end
-                  end,
-                  name = 'git_push',
-                },
+                name = 'git_push',
               },
             },
           },
@@ -923,6 +926,22 @@ return {
       }
 
       require('heirline').setup(opts)
+      ar.augroup('HeirlineGitRemote', {
+        event = { 'VimEnter' },
+        command = function()
+          local timer = vim.loop.new_timer()
+          timer:start(0, 120000, function() statusline.git_remote_sync() end)
+        end,
+      }, {
+        event = { 'User' },
+        pattern = {
+          'Neogit*',
+        },
+        command = function()
+          local timer = vim.loop.new_timer()
+          timer:start(0, 120000, function() statusline.git_remote_sync() end)
+        end,
+      })
     end,
   },
 }
