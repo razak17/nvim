@@ -40,16 +40,6 @@ return {
               { 'kind_icon', gap = 2, 'source_name' },
             },
             treesitter = { 'lsp' },
-            components = {
-              source_name = {
-                width = { fill = true },
-                -- source_name or source_id are supported
-                text = function(ctx)
-                  return '[' .. string.upper(ctx.source_name) .. ']'
-                end,
-                highlight = 'BlinkCmpSource',
-              },
-            },
           },
         },
         documentation = {
@@ -94,20 +84,22 @@ return {
           enabled = true,
         },
         providers = {
+          lsp = { name = '[LSP]' },
+          path = { name = '[PATH]' },
+          snippets = { name = '[SNIP]' },
+          buffer = { name = '[BUF]' },
           copilot = {
             enabled = ar.ai.enable,
-            name = 'copilot',
+            name = '[CPL]',
             module = 'blink-cmp-copilot',
             kind = 'Copilot',
             score_offset = 100,
             async = true,
           },
           luasnip = {
-            name = 'luasnip',
+            name = '[SNIP]',
             module = 'blink.compat.source',
-
             score_offset = -3,
-
             opts = {
               use_show_condition = false,
               show_autosnippets = true,
@@ -115,26 +107,23 @@ return {
           },
           ripgrep = {
             module = 'blink-ripgrep',
-            name = 'Ripgrep',
+            name = '[RG]',
+            transform_items = function(_, items)
+              for _, item in ipairs(items) do
+                item.kind = require('blink.cmp.types').CompletionItemKind.Field
+              end
+              return items
+            end,
             opts = {
-              -- For many options, see `rg --help` for an exact description of
-              -- the values that ripgrep expects.
-
               -- the minimum length of the current word to start searching
               -- (if the word is shorter than this, the search will not start)
-              prefix_min_len = 3,
-
+              prefix_min_len = 5,
               -- The number of lines to show around each match in the preview window
               context_size = 5,
-
-              -- The maximum file size that ripgrep should include in its search.
-              -- Useful when your project contains large files that might cause
-              -- performance issues.
-              -- Examples: "1024" (bytes by default), "200K", "1M", "1G"
               max_filesize = '1M',
             },
           },
-          dadbod = { name = 'Dadbod', module = 'vim_dadbod_completion.blink' },
+          dadbod = { name = '[DB]', module = 'vim_dadbod_completion.blink' },
         },
       },
       keymap = {
