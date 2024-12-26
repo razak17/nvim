@@ -17,6 +17,7 @@ local is_available = ar.is_available
 local conform = is_available('conform.nvim')
 
 local diagnostic = vim.diagnostic
+local utils = require('ar.utils.lsp')
 local augroup, diag_icons, border =
   ar.augroup, ar.ui.codicons.lsp, ar.ui.current.border
 
@@ -230,7 +231,7 @@ local function references_handler()
         local contents = path:read()
         local it = contents:gmatch('([^\n]*)\n?')
         local line = ''
-        for _i = 0, lnum, 1 do
+        for _ = 0, lnum, 1 do
           line = it()
         end
         return not line:match('^%s*import ')
@@ -591,6 +592,35 @@ local function setup_autocommands(client, buf)
   end
 end
 
+-- Ref: https://github.com/CRAG666/dotfiles/blob/main/config/nvim/lua/config/lsp/init.lua
+local lsp_autostop_pending
+---Automatically stop LSP servers that no longer attach to any buffers
+---
+---  Once `BufDelete` is triggered, wait for 60s before checking and
+---  stopping servers, in this way the callback will be invoked once
+---  every 60 seconds at most and can stop multiple clients at once
+---  if possible, which is more efficient than checking and stopping
+---  clients on every `BufDelete` events
+
+local function setup_lsp_stop_detached()
+  ar.augroup('LspAutoStop', {
+    event = { 'BufDelete' },
+    desc = 'Automatically stop detached language servers.',
+    command = function()
+      if lsp_autostop_pending then return end
+      lsp_autostop_pending = true
+      vim.defer_fn(function()
+        lsp_autostop_pending = nil
+        for _, client in ipairs(vim.lsp.get_clients()) do
+          if vim.tbl_isempty(client.attached_buffers) then
+            utils.soft_stop(client)
+          end
+        end
+      end, 60000)
+    end,
+  })
+end
+
 -- Add buffer local mappings, autocommands etc for attaching servers
 -- this runs for each client because they have different capabilities so each time one
 -- attaches it might enable autocommands or mappings that the previous client did not support
@@ -599,6 +629,7 @@ end
 local function on_attach(client, bufnr)
   setup_autocommands(client, bufnr)
   setup_mappings(client, bufnr)
+  setup_lsp_stop_detached()
   if ar.lsp.semantic_tokens.enable then setup_semantic_tokens(client, bufnr) end
   if not ar.completion.enable then require('ar.compl')(client, bufnr) end
   if is_available('workspace-diagnostics.nvim') then
