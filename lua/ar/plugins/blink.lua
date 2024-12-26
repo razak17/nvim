@@ -76,6 +76,7 @@ return {
               'luasnip',
               'ripgrep',
               'dadbod',
+              'nvim-px-to-rem',
             }
 
             if
@@ -133,6 +134,10 @@ return {
             opts = { prefix_min_len = 5 },
           },
           dadbod = { name = '[DB]', module = 'vim_dadbod_completion.blink' },
+          ['nvim-px-to-rem'] = {
+            module = 'nvim-px-to-rem.integrations.blink',
+            name = '[PX2REM]',
+          },
         },
       },
       keymap = {
@@ -220,6 +225,7 @@ return {
       'mikavilpas/blink-ripgrep.nvim',
       'L3MON4D3/LuaSnip',
       'saadparwaiz1/cmp_luasnip',
+      'jsongerber/nvim-px-to-rem',
       { 'giuxtaposition/blink-cmp-copilot', cond = ar.ai.enable },
       {
         'saghen/blink.compat',
