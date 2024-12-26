@@ -158,7 +158,10 @@ end
 ---@param result table # A list of Location
 ---@param client vim.lsp.Client
 local function jump_to_first_definition(result, client)
-  if #result == 1 then
+  local results = lsp.util.locations_to_items(result, client.offset_encoding)
+  if
+    #results == 1 or (#results == 2 and results[1].lnum == results[2].lnum)
+  then
     lsp.util.show_document(result[1], client.offset_encoding)
     return
   end
@@ -173,7 +176,6 @@ local function jump_to_first_definition(result, client)
     return
   end
 
-  local results = lsp.util.locations_to_items(result, client.offset_encoding)
   local lnum, filename = results[1].lnum, results[1].filename
 
   for _, val in pairs(results) do
@@ -187,7 +189,7 @@ end
 ---@param result table
 ---@param ctx table
 local function goto_definition_handler(client, result, ctx)
-  if result == nil or vim.tbl_isempty(result) then
+  if not result or vim.tbl_isempty(result) then
     local _ = lsp.log.info() and lsp.log.info(ctx.method, 'No location found')
     return nil
   end
@@ -195,6 +197,9 @@ local function goto_definition_handler(client, result, ctx)
   if vim.islist(result) then
     jump_to_first_definition(result, client)
   else
+    if type(result) == 'table' and client.name == 'lua_ls' then
+      result = { result[1] }
+    end
     lsp.util.show_document(result, client.offset_encoding)
   end
   vim.cmd([[norm! zz]])
