@@ -1,3 +1,7 @@
+local fmt = string.format
+local ui, highlight = ar.ui, ar.highlight
+local border, lsp_hls = ui.current.border, ui.lsp.highlights
+
 return {
   {
     'saghen/blink.cmp',
@@ -27,6 +31,9 @@ return {
           },
         },
         menu = {
+          border = border,
+          winblend = 0,
+          winhighlight = 'NormalFloat:NormalFloat,CursorLine:PmenuSel,NormalFloat:NormalFloat',
           draw = {
             columns = {
               { 'label', gap = 1 },
@@ -37,7 +44,9 @@ return {
               source_name = {
                 width = { fill = true },
                 -- source_name or source_id are supported
-                text = function(ctx) return '[' .. ctx.source_name .. ']' end,
+                text = function(ctx)
+                  return '[' .. string.upper(ctx.source_name) .. ']'
+                end,
                 highlight = 'BlinkCmpSource',
               },
             },
@@ -117,6 +126,43 @@ return {
       },
     },
     config = function(_, opts)
+      local hl_defs = vim
+        .iter(lsp_hls)
+        :map(
+          function(key, value)
+            return {
+              [fmt('BlinkCmpKind%s', key)] = { fg = { from = value } },
+            }
+          end
+        )
+        :totable()
+
+      highlight.plugin('BlinkCmp', {
+        theme = {
+          ['onedark'] = vim.tbl_extend('force', hl_defs, {
+            { BlinkCmpLabelDescription = { fg = { from = 'MsgSeparator' } } },
+            {
+              BlinkCmpLabelDeprecated = {
+                strikethrough = true,
+                inherit = 'Comment',
+              },
+            },
+            {
+              BlinkCmpLabelMatch = { fg = { from = 'WildMenu' }, bold = true },
+            },
+            { BlinkCmpLabelDetail = { fg = { from = 'WildMenu' } } },
+            { BlinkCmpLabel = { fg = { from = 'Comment' } } },
+            {
+              BlinkCmpSource = {
+                fg = { from = 'Comment' },
+                italic = true,
+                bold = true,
+              },
+            },
+          }),
+        },
+      })
+
       local symbols = require('lspkind').symbol_map
       opts.appearance = opts.appearance or {}
       opts.appearance.kind_icons = vim.tbl_extend('keep', {
